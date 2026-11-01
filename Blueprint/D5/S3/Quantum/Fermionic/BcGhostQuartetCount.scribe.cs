@@ -5,7 +5,7 @@ internal sealed class BcGhostQuartetCountDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name, string prose, DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
         DescribeId.Create("bc-ghost-quartet-count-" + name.Replace("_", "-").ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Quantum/Fermionic/BcGhostQuartetCount." + name),
-        H(name.Replace("_", "")), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+        H(name.Replace("_", " ")), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual original bc mode sum has a natural occupation count, a spectral inverse, a two-dimensional full ground and a one-dimensional literal relative ground.",
         H("Actual ghost quartet count on the original Fock carrier"), Blocks(
