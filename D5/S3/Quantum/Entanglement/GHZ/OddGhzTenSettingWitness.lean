@@ -731,7 +731,7 @@ private theorem blockOp_entry {d : ℕ} [NeZero d] (x y t u : ZMod d) :
   simp only [blockOp, Matrix.add_apply, Matrix.smul_apply, Matrix.sum_apply,
     Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul, Matrix.one_apply, fourier_product]
   simp
-private theorem quadratic_smul {ι : Type*} [Fintype ι] (g : ι → ℂ) (r : ℝ) (A : Matrix ι ι ℂ) :
+theorem quadratic_smul {ι : Type*} [Fintype ι] (g : ι → ℂ) (r : ℝ) (A : Matrix ι ι ℂ) :
     (star g ⬝ᵥ (((r : ℂ) • A) *ᵥ g)).re = r * (star g ⬝ᵥ (A *ᵥ g)).re := by
   simpa only [Fintype.sum_unique] using
     quadratic_sum (κ := Unit) g (fun _ => r) (fun _ => A)
