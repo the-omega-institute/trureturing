@@ -62,7 +62,9 @@ private theorem K_spec (hG : G.Connected) :
       · rintro (rfl | ⟨w, hw, hv⟩)
         · simp
         · have hd := hG.dist_triangle (u := u) (v := w) (w := v)
-          rw [SimpleGraph.dist_eq_one_iff_adj.mpr ((show G.Adj _ _ from by simpa only [SimpleGraph.mem_neighborFinset] using hw))] at hd
+          have he : G.dist u w = 1 := SimpleGraph.dist_eq_one_iff_adj.mpr
+            (by simpa only [SimpleGraph.mem_neighborFinset] using hw)
+          rw [he] at hd
           have := (ih w v).mp hv
           omega
       · intro hv
