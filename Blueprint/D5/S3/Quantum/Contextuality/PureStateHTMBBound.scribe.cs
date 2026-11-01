@@ -105,7 +105,10 @@ internal sealed class PureStateHTMBBoundDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The bound concerns all finite complex dimensions with both parity equivalences. "
                             + "It does not assert an infinite-dimensional extension or a bound for mixed preparations."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tavakoli-zambrini-cruzeiro-uola-abbott-2021-pure-state-htmb"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ValueDefinition()
     {

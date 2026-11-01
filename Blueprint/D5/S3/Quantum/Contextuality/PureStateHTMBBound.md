@@ -34,6 +34,10 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\psi: \left(\left(\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/PureStateHTMBBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tavakoli-zambrini-cruzeiro-uola-abbott-2021-pure-state-htmb` (proved) by `D5/S3/Quantum/Contextuality/PureStateHTMBBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tavakoli-zambrini-cruzeiro-uola-abbott-2021-pure-state-htmb","declaration_gid":"D5/S3/Quantum/Contextuality/PureStateHTMBBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Armin Tavakoli; Emmanuel Zambrini Cruzeiro; Roope Uola; Alastair A. Abbott (2021). *Bounding and simulating contextual correlations in quantum theory*. DOI: [10.1103/PRXQuantum.2.020334](https://doi.org/10.1103/PRXQuantum.2.020334). URL: <https://arxiv.org/abs/2010.04751v3>.
