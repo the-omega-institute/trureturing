@@ -73,7 +73,7 @@ internal static class PolygonEarContractionFormula
     internal static Formula Or(Formula a, Formula b) => R(a, Lor, b);
     internal static Formula In(Formula a, Formula b) => R(a, InMacro, b);
     internal static Formula Add(Formula a, Formula b) => R(a, Plus, b);
-    internal static Formula EqType(Formula a, Formula b) => R(a, Simeq, b);
+    internal static Formula EqType(Formula a, Formula b) => C("Equiv", a, b);
     internal static Formula V(Formula k) => C("ZMod", k);
     internal static Formula Ch(Formula k) => C("Symtwo", V(k));
     internal static Formula Fs(Formula k) => C("Finset", Ch(k));
