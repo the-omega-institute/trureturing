@@ -426,7 +426,7 @@ theorem seed_degrees (n : ℕ) (v : Fin 4) :
       rw [faceCount_old, ih, pow_succ]
       ring
   induction n with
-  | zero => revert v; decide
+  | zero => clear h; revert v; decide
   | succ n ih =>
     change degreeCount (n + 1) (Sum.inl (seed n v)) = _
     rw [degreeCount_old, ih, h]

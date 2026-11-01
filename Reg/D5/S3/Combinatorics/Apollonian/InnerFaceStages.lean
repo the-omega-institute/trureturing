@@ -785,5 +785,162 @@ def registration_cutoff_adjacency : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_
   familyRecord := none
   options := #[]
 
+
+abbrev seedMapSignature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => Fin 4) Vertex
+
+abbrev faceCount_old_actual : Realization stageSignature :=
+  realize stageSignature (fun _ n v => faceCount (n+1) (Sum.inl v)) (fun e => nomatch e)
+abbrev faceCount_old_arena : Arena where
+  signature := stageSignature
+  Law R := ∀ n (v : Vertex n), R.readout () n v = 2 * faceCount n v
+private def faceCount_old_rejected : Realization stageSignature :=
+  realize stageSignature (fun _ _ _ => 0) (fun e => nomatch e)
+private theorem faceCount_old_reject : ¬ faceCount_old_arena.Law faceCount_old_rejected := by
+  intro h
+  have hh : (0 : ℕ) = 4 := h 0 0
+  omega
+def faceCount_old_family : Registration faceCount_old_arena
+    (type_of% (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.faceCount_old)) where
+  actual := faceCount_old_actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.faceCount_old,
+    faceCount_old_rejected, faceCount_old_reject⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ faceCount_old_reject
+  dependence := by
+    intro i
+    cases i
+    refine ⟨0, 0, 3, ?_⟩
+    decide
+def registration_faceCount_old : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.faceCount_old)
+    (Realization stageSignature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.faceCount_old_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.faceCount_old_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨faceCount_old_arena⟩
+  objectArena := .source ⟨faceCount_old_arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source faceCount_old_arena ⟨faceCount_old_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize stageSignature (fun _ n v => faceCount (n+1) (Sum.inl v)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Apollonian.InnerFaceStages
+    definition := none
+    coordinates := #[0]
+    readouts := #[{ path := #["body","body","fn","arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev degreeCount_old_actual : Realization stageSignature :=
+  realize stageSignature (fun _ n v => degreeCount (n+1) (Sum.inl v)) (fun e => nomatch e)
+abbrev degreeCount_old_arena : Arena where
+  signature := stageSignature
+  Law R := ∀ n (v : Vertex n), R.readout () n v = degreeCount n v + faceCount n v
+private def degreeCount_old_rejected : Realization stageSignature :=
+  realize stageSignature (fun _ _ _ => 0) (fun e => nomatch e)
+private theorem degreeCount_old_reject : ¬ degreeCount_old_arena.Law degreeCount_old_rejected := by
+  intro h
+  have hh : (0 : ℕ) = 5 := h 0 0
+  omega
+def degreeCount_old_family : Registration degreeCount_old_arena
+    (type_of% (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.degreeCount_old)) where
+  actual := degreeCount_old_actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.degreeCount_old,
+    degreeCount_old_rejected, degreeCount_old_reject⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ degreeCount_old_reject
+  dependence := by
+    intro i
+    cases i
+    refine ⟨0, 0, 3, ?_⟩
+    decide
+def registration_degreeCount_old : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.degreeCount_old)
+    (Realization stageSignature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.degreeCount_old_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.degreeCount_old_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨degreeCount_old_arena⟩
+  objectArena := .source ⟨degreeCount_old_arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source degreeCount_old_arena ⟨degreeCount_old_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize stageSignature (fun _ n v => degreeCount (n+1) (Sum.inl v)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Apollonian.InnerFaceStages
+    definition := none
+    coordinates := #[0]
+    readouts := #[{ path := #["body","body","fn","arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev seed_injective_actual : Realization seedMapSignature :=
+  realize seedMapSignature (fun _ n v => seed n v) (fun e => nomatch e)
+abbrev seed_injective_arena : Arena where
+  signature := seedMapSignature
+  Law R := ∀ n, Function.Injective (R.readout () n)
+private def seed_injective_rejected : Realization seedMapSignature :=
+  realize seedMapSignature (fun _ n _ => seed n 0) (fun e => nomatch e)
+private theorem seed_injective_reject : ¬ seed_injective_arena.Law seed_injective_rejected := by
+  intro h
+  have hh : (0 : Fin 4) = 1 := h 0 (show seed 0 0 = seed 0 0 from rfl)
+  exact (by decide : (0 : Fin 4) ≠ 1) hh
+def seed_injective_family : Registration seed_injective_arena
+    (type_of% (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.seed_injective)) where
+  actual := seed_injective_actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.seed_injective,
+    seed_injective_rejected, seed_injective_reject⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ seed_injective_reject
+  dependence := by
+    intro i
+    cases i
+    refine ⟨0, 0, 1, ?_⟩
+    decide
+def registration_seed_injective : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Apollonian.InnerFaceStages.seed_injective)
+    (Realization seedMapSignature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.seed_injective_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages.seed_injective_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨seed_injective_arena⟩
+  objectArena := .source ⟨seed_injective_arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source seed_injective_arena ⟨seed_injective_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize seedMapSignature (fun _ n v => seed n v) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Apollonian.InnerFaceStages
+    definition := none
+    coordinates := #[0]
+    readouts := #[{ path := #["body","arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.Combinatorics.Apollonian.InnerFaceStages
