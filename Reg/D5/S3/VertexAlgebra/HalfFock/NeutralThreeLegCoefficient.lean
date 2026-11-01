@@ -4,6 +4,7 @@ import D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators TensorProduct
+open private creationPolynomial rightPolynomial correctionAt from D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient
 namespace Reg.D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient
 open _root_.D5.S3.VertexAlgebra
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
@@ -125,6 +126,31 @@ theorem source_bridge : (type_of% (@nativeNeutralCoefficient_eq_laurent_coeffici
     law actual := Iff.rfl
 end Laurent
 
+namespace ProjectedExpansion
+abbrev signature := Laurent.signature
+
+def actual : Realization signature := realize _ (fun _ p g =>
+  ∑ shift ∈ (LatticeHalfFockFiniteCorrection.Corr p.D 0 (MvPolynomial.monomial p.d 1)).support,
+    ∑ mon ∈ ((LatticeHalfFockFiniteCorrection.Corr p.D 0 (MvPolynomial.monomial p.d 1)) shift).support,
+      ((LatticeHalfFockFiniteCorrection.Corr p.D 0 (MvPolynomial.monomial p.d 1)) shift).coeff mon •
+        ∑ m ∈ nativeModeBox p.D (nativeNeutralModeProjection p.D p.output p.input) (occurrences p.D mon),
+          if p.e + 2 * (shift : ℤ) + 2 * modeSum p.D (occurrences p.D mon) m +
+              jetShift p.D (occurrences p.D mon) = 0 then
+            ((creationPolynomial p.D (occurrences p.D mon) m *
+              rightPolynomial p.D (occurrences p.D mon) m (MvPolynomial.monomial p.input 1)).coeff p.output) • g
+          else 0) (fun e => nomatch e)
+
+def law (R : Realization signature) : Prop :=
+  ∀ (D : LatticeData) (hu : IsUnit D.G.det) (d input output : Index D →₀ ℕ)
+    (e : ℤ) (g : ActualGround D hu),
+    nativeOutputProjection D hu output
+      (nativeNeutralCoefficient D hu d e (MvPolynomial.monomial input 1 ⊗ₜ[ℂ] g)) =
+        R.readout () ⟨D, hu, d, input, output, e⟩ g
+
+theorem source_bridge : (type_of% (@nativeNeutralCoefficient_finite_projected_expansion)) ↔
+    law actual := Iff.rfl
+end ProjectedExpansion
+
 namespace Energy
 abbrev signature := Laurent.signature
 
@@ -143,4 +169,116 @@ def law (R : Realization signature) : Prop :=
 theorem source_bridge : (type_of% (@nativeNeutralCoefficient_output_energy_selection)) ↔
     law actual := Iff.rfl
 end Energy
+namespace Evaluation
+structure Params where
+  D : LatticeData
+  hu : IsUnit D.G.det
+  T : ℂˣ
+  d : Index D →₀ ℕ
+  input : Index D →₀ ℕ
+  output : Index D →₀ ℕ
+abbrev signature : Signature where
+  Params := Params
+  State p := ActualGround p.D p.hu
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ActualGround p.D p.hu
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize _ (fun _ p g =>
+  ∑ e ∈ (nativeNeutralLaurentCoefficients p.D p.d p.input p.output).support,
+    (p.T : ℂ) ^ e • nativeOutputProjection p.D p.hu p.output
+      (nativeNeutralCoefficient p.D p.hu p.d e
+        (MvPolynomial.monomial p.input 1 ⊗ₜ[ℂ] g))) (fun e => nomatch e)
+
+def law (R : Realization signature) : Prop :=
+  ∀ (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (g : ActualGround D hu),
+    nativeNeutralLaurentEntry D T d input output • g =
+      R.readout () ⟨D, hu, T, d, input, output⟩ g
+
+theorem source_bridge : (type_of% (@nativeNeutralLaurentEntry_ground_identity)) ↔
+    law actual := Iff.rfl
+end Evaluation
+
+namespace AtEnergy
+abbrev signature := Evaluation.signature
+
+def actual : Realization signature := realize _ (fun _ p g =>
+  let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight p.D p.output : ℤ) -
+    (LatticeHalfFockGradedTrace.oddWeight p.D p.input : ℤ) - 2 * nativeSourceEnergy p.D p.d
+  (p.T : ℂ) ^ E • nativeOutputProjection p.D p.hu p.output
+    (nativeNeutralCoefficient p.D p.hu p.d E
+      (MvPolynomial.monomial p.input 1 ⊗ₜ[ℂ] g))) (fun e => nomatch e)
+
+def law (R : Realization signature) : Prop :=
+  ∀ (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (g : ActualGround D hu),
+    nativeNeutralLaurentEntry D T d input output • g =
+      R.readout () ⟨D, hu, T, d, input, output⟩ g
+
+theorem source_bridge : (type_of% (@nativeNeutralLaurentEntry_at_energy)) ↔
+    law actual := Iff.rfl
+end AtEnergy
+
+namespace RawNormal
+structure Params where
+  D : LatticeData
+  T : ℂˣ
+abbrev signature : Signature where
+  Params := Params
+  State p := (Index p.D →₀ ℕ) × (Index p.D →₀ ℕ) × (Index p.D →₀ ℕ)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize _ (fun _ p s =>
+  ∑ shift ∈ (LatticeHalfFockFiniteCorrection.Corr p.D 0 (MvPolynomial.monomial s.1 1)).support,
+    ∑ mon ∈ ((LatticeHalfFockFiniteCorrection.Corr p.D 0 (MvPolynomial.monomial s.1 1)) shift).support,
+      ((LatticeHalfFockFiniteCorrection.Corr p.D 0 (MvPolynomial.monomial s.1 1)) shift).coeff mon *
+        (p.T : ℂ) ^ (-2 * (shift : ℤ)) *
+        ∑ m ∈ nativeModeBox p.D (nativeNeutralModeProjection p.D s.2.2 s.2.1) (occurrences p.D mon),
+          (nativeRawNormalTerm p.D p.T (occurrences p.D mon) m
+            (MvPolynomial.monomial s.2.1 1)).coeff s.2.2) (fun e => nomatch e)
+
+def law (R : Realization signature) : Prop :=
+  ∀ (D : LatticeData) (T : ℂˣ) (d input output : Index D →₀ ℕ),
+    nativeNeutralLaurentEntry D T d input output =
+      R.readout () ⟨D, T⟩ (d, input, output)
+
+theorem source_bridge : (type_of% (@nativeNeutralLaurentEntry_raw_normal_expansion)) ↔
+    law actual := Iff.rfl
+end RawNormal
+
+namespace SourceInsertion
+abbrev signature : Signature where
+  Params := RawNormal.Params
+  State p := (Index p.D →₀ ℕ) × (Index p.D →₀ ℕ) × (Index p.D →₀ ℕ) × Index p.D
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize _ (fun _ p s =>
+    nativeNormalReadout p.D p.T s.2.1 s.2.2.1
+      (MvPolynomial.X s.2.2.2 * correctionAt p.D p.T (MvPolynomial.monomial s.1 1)) +
+    ∑ b ∈ s.1.support, (s.1 b : ℂ) * nativeSourceSourceKernel p.D p.T s.2.2.2 b *
+      nativeNeutralLaurentEntry p.D p.T (s.1 - Finsupp.single b 1) s.2.1 s.2.2.1)
+  (fun e => nomatch e)
+
+def law (R : Realization signature) : Prop :=
+  ∀ (D : LatticeData) (T : ℂˣ) (d input output : Index D →₀ ℕ) (a : Index D),
+    nativeNeutralLaurentEntry D T (d + Finsupp.single a 1) input output =
+      R.readout () ⟨D, T⟩ (d, input, output, a)
+
+theorem source_bridge : (type_of% (@nativeNeutralLaurentEntry_source_insertion)) ↔
+    law actual := Iff.rfl
+end SourceInsertion
 end Reg.D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient

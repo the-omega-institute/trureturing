@@ -14,7 +14,7 @@ internal sealed class NeutralThreeLegCoefficientDocument : IScribeDocumentDefini
             Paragraph(Text("The common finite mode set is {-k-1 : k is an output frequency} union {k : k is an input frequency}. Positive currents mix colours only at a fixed frequency. A negative mode outside the output frequency support can create a nonzero full vector, but its specified output coefficient vanishes. The support theorem therefore extracts that coefficient before restricting the sum.")),
             Paragraph(Text("The flat normal recursion is factored into creation multiplication on the left and Gram-weighted annihilation on the right. The proof uses the existing same-sign Heisenberg commutation law, the native monomial derivative and actual pointwise finite-support theorem. Ground vectors are carried by identity; no scalar ground vacuum is chosen.")),
             Paragraph(Text("The existing energy covariance supplies e = 2(E_T(output)-E_T(input)-E_S(source)), in doubled integral twisted-energy coordinates. The actual coefficients are represented by a finitely supported scalar Laurent polynomial. Evaluation is allowed only at a complex unit T and is a finite sum.")),
-            Paragraph(Text("The raw source-output and source-input blocks are consumed in the actual finite evaluated normal-operator expansion. The source-specific bridge from finite Corr and this normal action to the factorial coefficient of exp(SS/2 + SO + SI + IO) remains unproved. In particular, the actual entry divided by source d! and input h!, with ordinary output coefficient, has not yet been identified with the full block GaussianCoefficient.")),
+            Paragraph(Text("The raw source-output and source-input blocks are consumed in the actual finite evaluated normal-operator expansion. Source insertion in the actual entry separates the unpaired normal readout from a sum d(b) SS(a,b) times the entry with one b removed. The SS block is therefore also connected to the actual field, with repeated-source multiplicities and diagonal entry p rather than 2p. The remaining bridge identifies the unpaired branch and identity propagation with the factorial coefficient of exp(SS/2 + SO + SI + IO). The actual entry divided by source d! and input h!, with ordinary output coefficient, has not yet been identified with the full block GaussianCoefficient.")),
             Paragraph(Text("The intended remaining combinatorics is classical labelled-position Wick/Isserlis and the exponential formula: equal labels are distinct positions, so diagonal pairing counts have factors 2^m m! and off-diagonal counts m!. Wick (1950, Physical Review 80, 268) and Isserlis (1918, Biometrika 12, 134-139) supply the classical provenance; OriginalCorrectionGaussian supplies the repository actual Corr source-vacuum theorem. No new global novelty, positivity, unitarity, analytic completion, sewing, string-theory completion or AdS/CFT result is asserted.")),
             Describe.Lean(
                 DescribeId.Create("native-neutral-source"),
@@ -113,6 +113,14 @@ internal sealed class NeutralThreeLegCoefficientDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("The finite scalar evaluation times any ground vector equals the finite Laurent-weighted sum of the actual projected correctedField coefficients."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("native-evaluation-at-energy"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentEntry_at_energy"),
+                H("Evaluation of the unique actual energy coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every repeated occupation and arbitrary ground vector, the finite Laurent evaluation equals T to the forced exponent times the actual corrected coefficient at that exponent. All other entries vanish by the native energy covariance."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("native-raw-normal-term"),
                 DeclarationHandle.Create(Prefix + "nativeRawNormalTerm"),
                 H("Raw mixed blocks in normal order"),
@@ -127,5 +135,21 @@ internal sealed class NeutralThreeLegCoefficientDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The full actual finite Laurent entry equals the finite Corr shift and monomial expansion of these raw normal-mode operators. This is not yet the exponential coefficient of the full three-leg block matrix."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("native-normal-readout"),
+                DeclarationHandle.Create(Prefix + "nativeNormalReadout"),
+                H("Linear readout of the actual finite normal action"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The monomial basis extends the finite raw normal-mode coefficient action linearly to source polynomials, using the proved input/output frequency box."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("native-source-insertion"),
+                DeclarationHandle.Create(Prefix + "nativeNeutralLaurentEntry_source_insertion"),
+                H("Actual entry source insertion with SS contractions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary repeated occupations, inserting source a gives the unpaired normal readout plus the sum over b of d(b) SS(a,b) times the native entry with one b removed. The proof evaluates the actual correction lift at T to minus two and reuses its source-partial formula. No Gaussian coefficient equality is assumed. Identification of the unpaired readout with the full three-leg Gaussian recurrence remains open."))),
                 DescribeRole.Theorem))));
 }

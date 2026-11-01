@@ -29,8 +29,6 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators TensorProduct
 
-open private current_identity_coefficient from D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
-open private current_charged_zero_identity from D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
 
 namespace D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient
 
@@ -40,6 +38,7 @@ open LatticeHalfFockFockNormalField
 open LatticeHalfFock
 open LatticeHalfFockFiniteCorrection
 open LatticeHalfFockCorrectedField
+open LatticeHalfFockCorrectedConformal
 open LatticeHalfFockChargedTensorCoefficients
 open HalfFockSpectralFiberSource
 open D5.S3.VertexAlgebra.TwistedGround.OriginalCorrectionGaussian
@@ -370,7 +369,7 @@ private theorem leftAction_tmul (D : LatticeData) (hu : IsUnit D.G.det)
     · simp only [Module.End.mul_apply, ih, jetCurrent, LinearMap.smul_apply,
         tensorCurrent, tensorEnd, TensorProduct.map_tmul, LinearMap.id_apply,
         current, if_pos h, LinearMap.mulLeft_apply]
-      rw [← TensorProduct.smul_tmul']
+      rw [TensorProduct.smul_tmul']
       congr 1
       simp [smul_mul_assoc, mul_assoc]
     · exact ih m.2
@@ -388,8 +387,8 @@ private theorem rightAction_tmul (D : LatticeData) (hu : IsUnit D.G.det)
     · exact ih m.2 p
     · simp only [Module.End.mul_apply, jetCurrent, LinearMap.smul_apply,
         tensorCurrent, tensorEnd, TensorProduct.map_tmul, LinearMap.id_apply,
-        ← TensorProduct.smul_tmul', ih]
-      rfl
+        TensorProduct.smul_tmul']
+      exact ih m.2 _
 
 private theorem flatTerm_tmul (D : LatticeData) (hu : IsUnit D.G.det)
     (word : List (Index D)) (m : ModeTuple D word) (e : ℤ)
@@ -493,19 +492,27 @@ theorem nativeNeutralCoefficient_projected_support
     have hle : nativeNegativeOccupation D word m ≤ output := by
       by_contra hh
       rw [creationPolynomial_monomial, smul_mul_assoc, coeff_smul,
-        coeff_monomial_mul', if_neg hh, mul_zero] at hc
+        coeff_monomial_mul', if_neg hh, smul_zero] at hc
       exact hc rfl
     have hp := rightPolynomial_positive_support D
       (input.support.image (fun a => (a.2 : ℤ))) word m (monomial input 1)
       (current_monomial_frequency_vanish D input) hr
     have hm := negative_modes_support D output word m hle
-    induction word with
-    | nil => trivial
-    | cons a w ih =>
-      refine ⟨?_, ih m.2 hp.2 hm.2⟩
-      by_cases h : m.1 < 0
-      · exact Finset.mem_union_left _ (hm.1 h)
-      · exact Finset.mem_union_right _ (hp.1 (by omega))
+    have combine (w : List (Index D)) : ∀ m : ModeTuple D w,
+        allModes D (fun n => 0 ≤ n →
+          n ∈ input.support.image (fun a => (a.2 : ℤ))) w m →
+        allModes D (fun n => n < 0 →
+          n ∈ output.support.image (fun a => -(a.2 : ℤ) - 1)) w m →
+        allModes D (fun n => n ∈ nativeNeutralModeProjection D output input) w m := by
+      induction w with
+      | nil => intros; trivial
+      | cons a w ih =>
+        intro m hp hm
+        refine ⟨?_, ih m.2 hp.2 hm.2⟩
+        by_cases h : m.1 < 0
+        · exact Finset.mem_union_left _ (hm.1 h)
+        · exact Finset.mem_union_right _ (hp.1 (by omega))
+    exact combine word m hp hm
   · exact (hn (map_zero _)).elim
 
 /-- The common finite mode set is independent of the Hahn exponent. The
@@ -535,7 +542,7 @@ private theorem neutralSource_grade (D : LatticeData) (d : Index D →₀ ℕ) :
   refine ⟨(0, d), ?_, ?_⟩
   · simp [LatticePositiveEnergy.energy, LatticePositiveEnergy.chargeEnergy,
       LatticeGeneratingFieldLocality.bilinear, nativeSourceEnergy,
-      LatticePositiveEnergy.oscillatorEnergy]
+      LatticePositiveEnergy.oscillatorEnergy, sourceWeight] <;> rfl
   · simp [LatticePositiveEnergy.carrierBasis_apply, neutralSource]
 
 private theorem monomial_tensor_energy (D : LatticeData) (hu : IsUnit D.G.det)
@@ -563,7 +570,7 @@ private theorem outputProjection_energy (D : LatticeData) (hu : IsUnit D.G.det)
     | monomial d c =>
       have hm : (monomial d c : Oscillator D) = c • monomial d 1 := by
         simp [smul_monomial]
-      rw [hm, TensorProduct.smul_tmul', map_smul, monomial_tensor_energy,
+      rw [hm, ← TensorProduct.smul_tmul', map_smul, monomial_tensor_energy,
         map_smul, map_smul]
       by_cases h : d = output
       · subst d
@@ -600,7 +607,7 @@ theorem nativeNeutralCoefficient_output_energy_selection
         (LatticeHalfFockGradedTrace.oddWeight D input : ℂ) -
         2 * (nativeSourceEnergy D d : ℂ) := by
       push_cast at hz
-      linear_combination 2 * hz
+      linear_combination -2 * hz
     exact_mod_cast hz'
   exact ((smul_eq_zero).mp (by rw [sub_smul, hp, sub_self])).resolve_left
     (sub_ne_zero.mpr hc)
@@ -622,15 +629,14 @@ theorem nativeNeutralCoefficient_finite_projected_expansion
                 ((creationPolynomial D (occurrences D mon) m *
                   rightPolynomial D (occurrences D mon) m (monomial input 1)).coeff output) • g
               else 0 := by
-  rw [nativeNeutralCoefficient_shift_expansion]
-  simp only [map_sum]
+  rw [nativeNeutralCoefficient_native_expansion]
+  simp only [map_sum, map_smul]
   apply Finset.sum_congr rfl
   intro shift hs
-  rw [polynomialField_expansion]
-  simp only [map_sum, map_smul, LinearMap.coe_sum, Finset.sum_apply]
   apply Finset.sum_congr rfl
   intro mon hm
   congr 1
+  rw [← wordField_coefficient]
   rw [nativeNeutralCoefficient_frequency_projected_mode_sum]
   apply Finset.sum_congr rfl
   intro m hmem
@@ -661,7 +667,7 @@ theorem nativeNeutralCoefficient_eq_laurent_coefficients
       (nativeNeutralCoefficient D hu d e (monomial input 1 ⊗ₜ[ℂ] g)) =
       nativeNeutralLaurentCoefficients D d input output e • g := by
   rw [nativeNeutralCoefficient_finite_projected_expansion]
-  simp only [nativeNeutralLaurentCoefficients, Finsupp.sum_apply, Finset.sum_smul,
+  simp only [nativeNeutralLaurentCoefficients, Finsupp.finsetSum_apply, Finset.sum_smul,
     Finset.smul_sum]
   apply Finset.sum_congr rfl
   intro shift hs
@@ -693,6 +699,28 @@ theorem nativeNeutralLaurentEntry_ground_identity
   simp only [nativeNeutralLaurentEntry, Finsupp.sum, Finset.sum_smul,
     nativeNeutralCoefficient_eq_laurent_coefficients, smul_smul, mul_comm]
 
+/-- The finite actual Laurent evaluation is the single allowed energy
+coefficient, on the whole ground module. All other terms vanish by the native
+full-field energy theorem. -/
+theorem nativeNeutralLaurentEntry_at_energy
+    (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) (g : ActualGround D hu) :
+    let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight D output : ℤ) -
+      (LatticeHalfFockGradedTrace.oddWeight D input : ℤ) - 2 * nativeSourceEnergy D d
+    nativeNeutralLaurentEntry D T d input output • g =
+      (T : ℂ) ^ E • nativeOutputProjection D hu output
+        (nativeNeutralCoefficient D hu d E (monomial input 1 ⊗ₜ[ℂ] g)) := by
+  classical
+  dsimp only
+  rw [nativeNeutralLaurentEntry_ground_identity]
+  apply Finset.sum_eq_single
+  · intro e he hne
+    rw [nativeNeutralCoefficient_output_energy_selection D hu d input output g e hne,
+      smul_zero]
+  · intro hnot
+    rw [nativeNeutralCoefficient_eq_laurent_coefficients,
+      Finsupp.notMem_support_iff.mp hnot, zero_smul, smul_zero]
+
 /-! The four raw finite bilinear pieces are recorded directly in the native
 coordinates.  These are coefficient symbols, rather than a replacement
 field: the corrected field and its finite mode expansion above remain the
@@ -703,17 +731,6 @@ def nativeSourceSourceKernel (D : LatticeData) (T : ℂ)
   pairScalar (sourceWeight D a) (sourceWeight D b) *
     (D.G a.1 b.1 : ℂ) *
       T ^ (-2 * (sourceWeight D a : ℤ) - 2 * (sourceWeight D b : ℤ))
-
-theorem nativeSourceSourceKernel_eq_covariance
-    (D : LatticeData) (T : ℂ) (hT : T ≠ 0) (a b : Index D) :
-    nativeSourceSourceKernel D T a b =
-      covariance D (T ^ (-2 : ℤ)) a b := by
-  unfold nativeSourceSourceKernel covariance
-  rw [← zpow_natCast, ← zpow_mul]
-  congr 3
-  simp only [sourceWeight, Nat.cast_add, Nat.cast_one]
-  push_cast
-  ring
 
 def nativeSourceOutputKernel (D : LatticeData) (T : ℂ)
     (a b : Index D) : ℂ :=
@@ -771,9 +788,8 @@ private theorem rawModeOperator_eq (D : LatticeData) (T : ℂˣ)
       hm, he, current, smul_smul]
     rw [mul_comm]
   · have hm : ((m.toNat : ℕ) : ℤ) = m := Int.toNat_of_nonneg (by omega)
-    have he : -2 * (((m.toNat : ℕ) : ℤ)) - 2 * (sourceWeight D a : ℤ) - 1 =
+    have he : -2 * m - 2 * (sourceWeight D a : ℤ) - 1 =
         -2 * m - 2 * (a.2 : ℤ) - 3 := by
-      rw [hm]
       simp only [sourceWeight, Nat.cast_add, Nat.cast_one]
       ring
     simp only [rawModeOperator, if_neg h, nativeSourceInputKernel, hm, he, current,
@@ -838,7 +854,7 @@ theorem nativeNeutralLaurentEntry_raw_normal_expansion
     intro e he
     simp [mul_comm]
   rw [nativeNeutralLaurentEntry, ← hev]
-  simp only [nativeNeutralLaurentCoefficients, map_sum, Finsupp.lsum_single,
+  simp only [nativeNeutralLaurentCoefficients, ev, map_sum, Finsupp.lsum_single,
     LinearMap.smul_apply, LinearMap.id_apply, nativeRawNormalTerm_eq, coeff_smul,
     smul_eq_mul, Finset.mul_sum]
   apply Finset.sum_congr rfl
@@ -854,8 +870,149 @@ theorem nativeNeutralLaurentEntry_raw_normal_expansion
   rw [he, zpow_add₀ (Units.ne_zero T)]
   ring
 
+open LatticeHalfFockCurrentCorrection
+open private pairDerivation_source_partials from
+  D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+
+private def correctionEvaluation (D : LatticeData) (T : ℂˣ) :
+    CorrectionPolynomial D →ₐ[ℂ] Oscillator D :=
+  aeval (fun a => a.elim (C ((T : ℂ) ^ (-2 : ℤ))) X)
+
+private def correctionAt (D : LatticeData) (T : ℂˣ) :
+    Oscillator D →ₗ[ℂ] Oscillator D :=
+  (correctionEvaluation D T).toLinearMap.comp (correctionLift D 0)
+
+private theorem correctionEvaluation_option (D : LatticeData) (T : ℂˣ)
+    (q : CorrectionPolynomial D) :
+    correctionEvaluation D T q =
+      Polynomial.eval (C ((T : ℂ) ^ (-2 : ℤ))) (optionEquivLeft ℂ (Index D) q) := by
+  induction q using MvPolynomial.induction_on with
+  | C c => simp [correctionEvaluation, algebraMap_eq]
+  | add p q hp hq => simp only [map_add, Polynomial.eval_add, hp, hq]
+  | mul_X p a hp =>
+      cases a <;> simp [map_mul, hp, correctionEvaluation, algebraMap_eq]
+
+private theorem correctionAt_shift_sum (D : LatticeData) (T : ℂˣ)
+    (p : Oscillator D) :
+    correctionAt D T p =
+      ∑ s ∈ (Corr D 0 p).support, (T : ℂ) ^ (-2 * (s : ℤ)) • Corr D 0 p s := by
+  change correctionEvaluation D T (correctionLift D 0 p) = _
+  rw [correctionEvaluation_option]
+  change Polynomial.eval (C ((T : ℂ) ^ (-2 : ℤ))) (correctionPolynomial D 0 p) = _
+  rw [Polynomial.eval_eq_sum]
+  change (∑ s ∈ (Corr D 0 p).support,
+    (Corr D 0 p s) * C ((T : ℂ) ^ (-2 : ℤ)) ^ s) = _
+  apply Finset.sum_congr rfl
+  intro s hs
+  have hexp : ((T : ℂ) ^ (-2 : ℤ)) ^ s = (T : ℂ) ^ (-2 * (s : ℤ)) := by
+    rw [← zpow_natCast, ← zpow_mul]
+  rw [← map_pow, hexp, mul_comm, C_mul']
+
+private theorem correctionEvaluation_pair (D : LatticeData) (T : ℂˣ)
+    (a b : Index D) :
+    correctionEvaluation D T (pairPolynomial D a b) = C (nativeSourceSourceKernel D T a b) := by
+  have hexp : ((T : ℂ) ^ (-2 : ℤ)) ^ (sourceWeight D a + sourceWeight D b) =
+      (T : ℂ) ^ (-2 * (sourceWeight D a : ℤ) - 2 * (sourceWeight D b : ℤ)) := by
+    rw [← zpow_natCast, ← zpow_mul]
+    congr 1
+    push_cast
+    ring
+  simp only [pairPolynomial, correctionEvaluation, map_mul, aeval_C, aeval_X,
+    Option.elim_none, map_pow, algebraMap_eq]
+  rw [← map_pow, hexp, ← map_mul]
+  rfl
+
+private theorem correctionAt_X_mul (D : LatticeData) (T : ℂˣ)
+    (p : Oscillator D) (a : Index D) :
+    correctionAt D T (p * X a) =
+      X a * correctionAt D T p + ∑ b ∈ p.vars,
+        nativeSourceSourceKernel D T a b • correctionAt D T (pderiv b p) := by
+  change correctionEvaluation D T (correctionLift D 0 (p * X a)) = _
+  rw [correctionLift_X_mul]
+  simp only [insertion, LinearMap.add_apply, LinearMap.mulLeft_apply,
+    Derivation.coeFn_coe, add_mul, pairDerivation_source_partials, map_add,
+    map_mul, map_sum, correctionEvaluation_pair]
+  have hsingleton : correctionEvaluation D T (singletonPolynomial D 0 a) = 0 := by
+    simp [singletonPolynomial, LatticeGeneratingFieldLocality.bilinear,
+      correctionEvaluation, algebraMap_eq]
+  rw [hsingleton, zero_mul, add_zero]
+  simp only [correctionEvaluation, aeval_X, Option.elim_some, C_mul']
+  rfl
+
+/-- Linear normal readout of the literal finite raw-mode action. Its mode box
+is the already proved input/output frequency box, independent of exponent. -/
+def nativeNormalReadout (D : LatticeData) (T : ℂˣ)
+    (input output : Index D →₀ ℕ) : Oscillator D →ₗ[ℂ] ℂ :=
+  (basisMonomials (Index D) ℂ).constr ℂ (fun mon =>
+    ∑ m ∈ nativeModeBox D (nativeNeutralModeProjection D output input) (occurrences D mon),
+      (nativeRawNormalTerm D T (occurrences D mon) m (monomial input 1)).coeff output)
+
+private theorem nativeNormalReadout_monomial (D : LatticeData) (T : ℂˣ)
+    (input output mon : Index D →₀ ℕ) :
+    nativeNormalReadout D T input output (monomial mon 1) =
+      ∑ m ∈ nativeModeBox D (nativeNeutralModeProjection D output input) (occurrences D mon),
+        (nativeRawNormalTerm D T (occurrences D mon) m (monomial input 1)).coeff output :=
+  (basisMonomials (Index D) ℂ).constr_basis ℂ _ mon
+
+private theorem nativeNormalReadout_expansion (D : LatticeData) (T : ℂˣ)
+    (input output : Index D →₀ ℕ) (p : Oscillator D) :
+    nativeNormalReadout D T input output p =
+      ∑ mon ∈ p.support, p.coeff mon *
+        nativeNormalReadout D T input output (monomial mon 1) := by
+  conv_lhs => rw [p.as_sum]
+  simp only [map_sum]
+  apply Finset.sum_congr rfl
+  intro mon hm
+  rw [show (monomial mon (p.coeff mon) : Oscillator D) =
+    p.coeff mon • monomial mon 1 by simp [smul_monomial], map_smul, smul_eq_mul]
+
+private theorem nativeNeutralLaurentEntry_readout (D : LatticeData) (T : ℂˣ)
+    (d input output : Index D →₀ ℕ) :
+    nativeNeutralLaurentEntry D T d input output =
+      nativeNormalReadout D T input output (correctionAt D T (monomial d 1)) := by
+  rw [nativeNeutralLaurentEntry_raw_normal_expansion, correctionAt_shift_sum]
+  simp only [map_sum, map_smul, smul_eq_mul, nativeNormalReadout_expansion,
+    Finset.mul_sum, nativeNormalReadout_monomial]
+  apply Finset.sum_congr rfl
+  intro s hs
+  apply Finset.sum_congr rfl
+  intro mon hm
+  ring
+
+/-- Source insertion in the actual full Laurent entry. The paired branch
+uses the literal SS kernel with multiplicity d(b), including diagonal pairs;
+the unpaired branch retains the actual normal readout. This is a recurrence
+for the native field, not a Gaussian identity assumed as input. -/
+theorem nativeNeutralLaurentEntry_source_insertion
+    (D : LatticeData) (T : ℂˣ) (d input output : Index D →₀ ℕ) (a : Index D) :
+    nativeNeutralLaurentEntry D T (d + Finsupp.single a 1) input output =
+      nativeNormalReadout D T input output
+        (X a * correctionAt D T (monomial d 1)) +
+      ∑ b ∈ d.support, (d b : ℂ) * nativeSourceSourceKernel D T a b *
+        nativeNeutralLaurentEntry D T (d - Finsupp.single b 1) input output := by
+  rw [nativeNeutralLaurentEntry_readout,
+    show (monomial (d + Finsupp.single a 1) 1 : Oscillator D) =
+      monomial d 1 * X a by simp [X], correctionAt_X_mul, map_add, map_sum,
+    vars_monomial (one_ne_zero : (1 : ℂ) ≠ 0)]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro b hb
+  have hderiv : pderiv b (monomial d (1 : ℂ)) =
+      (d b : ℂ) • monomial (d - Finsupp.single b 1) 1 := by
+    simp [pderiv_monomial, smul_monomial]
+  rw [hderiv, map_smul, map_smul, map_smul,
+    ← nativeNeutralLaurentEntry_readout]
+  simp only [smul_eq_mul]
+  ring
+
+#print axioms nativeNeutralLaurentEntry_source_insertion
 #print axioms nativeNeutralCoefficient_source
 #print axioms nativeNeutralCoefficient_shift_expansion
 #print axioms nativeNeutralCoefficient_native_expansion
+#print axioms nativeNeutralCoefficient_projected_support
+#print axioms nativeNeutralCoefficient_frequency_projected_mode_sum
+#print axioms nativeNeutralCoefficient_eq_laurent_coefficients
+#print axioms nativeNeutralLaurentEntry_at_energy
+#print axioms nativeNeutralLaurentEntry_raw_normal_expansion
 
 end D5.S3.VertexAlgebra.HalfFock.NeutralThreeLegCoefficient
