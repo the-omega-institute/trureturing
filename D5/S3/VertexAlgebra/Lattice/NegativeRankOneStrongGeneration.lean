@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual all-state outer-insertion obstruction for negative rank one.
+   digest: Arbitrary-state failure of finite negative-word strong generation in negative rank one.
 -/
 
 import D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
@@ -28,7 +28,7 @@ noncomputable section
 def groundCoefficient (D : LatticeData) (q : Charge D) : Carrier D →ₗ[ℂ] ℂ :=
   (Finsupp.lapply (q, 0)).comp (carrierCoeffEquiv D).toLinearMap
 
-@[simp] theorem groundCoefficient_apply (D : LatticeData) (q : Charge D)
+@[simp] private theorem groundCoefficient_apply (D : LatticeData) (q : Charge D)
     (v : Carrier D) :
     groundCoefficient D q v = (v q).coeff 0 := by
   rfl
@@ -36,7 +36,7 @@ def groundCoefficient (D : LatticeData) (q : Charge D) : Carrier D →ₗ[ℂ] �
 /- This is the exact projection consequence of the original all-state grading;
    it applies to arbitrary oscillator polynomials and arbitrary finite charge
    mixtures, with no positivity or global lower-bound premise. -/
-theorem groundCoefficient_mode_eq_zero_of_grade_mismatch
+private theorem groundCoefficient_mode_eq_zero_of_grade_mismatch
     (D : LatticeData) (m n k : ℤ) (q : Charge D) (u v : Carrier D)
     (hu : u ∈ grade D m) (hv : v ∈ grade D n)
     (hneq : energy D (q, 0) ≠ m + n - k - 1) :
@@ -48,7 +48,7 @@ theorem groundCoefficient_mode_eq_zero_of_grade_mismatch
 /- The strict inequality which drives the positive-charge outer insertion in
    G=-2d.  The factors r,t are arbitrary oscillator degrees; no lower bound
    on the total charge energy is used. -/
-theorem negative_rank_one_outer_energy_mismatch
+private theorem negative_rank_one_outer_energy_mismatch
     (d s q r t k : ℤ)
     (hd : 0 < d) (hs : 0 < s) (hsq : s < q)
     (hr : 0 ≤ r) (ht : 0 ≤ t) (hk : k < 0) :
@@ -58,27 +58,8 @@ theorem negative_rank_one_outer_energy_mismatch
   have hprod : 0 < 2 * d * s * (q - s) := by positivity
   nlinarith
 
-/- A directly consumable all-state specialization: whenever the two input
-   homogeneous grades have the negative rank-one values and the output charge
-   is q=s+(q-s), the oscillator-constant output of every strictly negative
-   mode vanishes. The grade hypotheses are intentionally explicit so this
-   statement remains faithful to the actual grading API. -/
-theorem negative_rank_one_outer_insertion_zero
-    (d s q r t k : ℤ) (D : LatticeData)
-    (u v : Carrier D) (charge : Charge D)
-    (hd : 0 < d) (hs : 0 < s) (hsq : s < q)
-    (hr : 0 ≤ r) (ht : 0 ≤ t) (hk : k < 0)
-    (hu : u ∈ grade D (r - d * s ^ 2))
-    (hv : v ∈ grade D (t - d * (q - s) ^ 2))
-    (hcharge : energy D (charge, 0) = -d * q ^ 2) :
-    groundCoefficient D charge (((Y D u)[[k]]) v) = 0 := by
-  apply groundCoefficient_mode_eq_zero_of_grade_mismatch D
-      (r - d * s ^ 2) (t - d * (q - s) ^ 2) k charge u v hu hv
-  rw [hcharge]
-  exact negative_rank_one_outer_energy_mismatch d s q r t k hd hs hsq hr ht hk
-
 /-- The actual even rank-one datum; positivity of d is used only in the theorem. -/
-def datum (d : ℤ) : LatticeData where
+abbrev datum (d : ℤ) : LatticeData where
   rank := 1
   G := fun _ _ => -2 * (d : ℤ)
   symmetric := by intros; rfl
@@ -104,7 +85,8 @@ private theorem charge_eq (d : ℤ) (a : Charge (datum d)) :
 
 private theorem bilinear_charge (d : ℤ) (s t : ℤ) :
     bilinear (datum d) (charge d s) (charge d t) = -2 * (d : ℤ) * s * t := by
-  simp [bilinear, datum, charge, Fin.sum_univ_one]
+  change (∑ _i : Fin 1, ∑ _j : Fin 1, s * (-2*d) * t) = -2*d*s*t
+  rw [Fin.sum_univ_one, Fin.sum_univ_one]
   ring
 
 private theorem charge_energy (d : ℤ) (s : ℤ) :
@@ -145,28 +127,30 @@ private theorem basis_outer_zero (d : ℤ) (hd : 0 < d) (s q k : ℤ)
       (energy (datum d) (charge d (q-s), f)) k (charge d q)
       _ _ (basis_grade _ _) (basis_grade _ _)
     rw [basis_energy, basis_energy, basis_energy]
-    simp only [oscillatorEnergy, map_zero, Nat.cast_zero, zero_sub]
+    simp only [show oscillatorEnergy (0 : Exponent (datum d)) = 0 by
+      simp [oscillatorEnergy], Nat.cast_zero, zero_sub]
     rcases he with hp | hp
-    · exact negative_rank_one_outer_energy_mismatch (d : ℤ) s q
+    · simpa only [neg_mul] using negative_rank_one_outer_energy_mismatch (d : ℤ) s q
         (oscillatorEnergy e) (oscillatorEnergy f) k (by omega) hp hsq
         (by positivity) (by positivity) hk
     · by_cases hp' : 0 < s
-      · exact negative_rank_one_outer_energy_mismatch (d : ℤ) s q
+      · simpa only [neg_mul] using negative_rank_one_outer_energy_mismatch (d : ℤ) s q
           (oscillatorEnergy e) (oscillatorEnergy f) k (by omega) hp' hsq
           (by positivity) (by positivity) hk
       · have hz : s = 0 := by omega
         have hr : 0 < oscillatorEnergy e :=
           Nat.pos_of_ne_zero (fun h => hp ((oscillatorEnergy_eq_zero_iff _ _).mp h))
+        have hr' : (0 : ℤ) < oscillatorEnergy e := by exact_mod_cast hr
         subst s
         have ht : (0 : ℤ) ≤ oscillatorEnergy f := by positivity
-        norm_num
-        omega
+        intro h
+        nlinarith
   · rw [carrierBasis_apply, carrierBasis_apply]
     change groundCoefficient (datum d) (charge d q)
       (((Y (datum d) (Finsupp.single (charge d s) (MvPolynomial.monomial e 1)))[[k]])
         (Finsupp.single β (MvPolynomial.monomial f 1))) = 0
     rw [LatticeSectorIntertwiner.charge_homogeneity, groundCoefficient_apply,
-      Finsupp.single_eq_of_ne]
+      Finsupp.single_eq_of_ne']
     · simp
     · intro h
       apply hb
@@ -191,7 +175,8 @@ private theorem outer_positive (d : ℤ) (hd : 0 < d) (s q k : ℤ)
     intro e
     apply (carrierBasis (datum d)).ext
     intro a
-    exact basis_outer_zero d hd s q k hs.le hsq hk e (Or.inl hs) a
+    simpa only [carrierBasis_apply] using
+      basis_outer_zero d hd s q k hs.le hsq hk e (Or.inl hs) a
   exact congrArg (fun f => f p v) hL
 
 private theorem outer_zero (d : ℤ) (hd : 0 < d) (q k : ℤ)
@@ -219,17 +204,23 @@ private theorem outer_zero (d : ℤ) (hd : 0 < d) (q k : ℤ)
       change groundCoefficient (datum d) (charge d q)
         (mode (datum d) k (Finsupp.single (charge d 0) (MvPolynomial.monomial 0 1))
           (carrierBasis (datum d) a)) = _
-      simp [mode, ← vacuum, stateField_vacuum, identity_modes, R,
-        MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, apply_ite]
+      have hc : Finsupp.single (charge d 0)
+          (MvPolynomial.monomial (0 : Exponent (datum d)) (1 : ℂ)) = vacuum (datum d) := by
+        simp [vacuum]
+      rw [hc]
+      by_cases hk' : k = -1 <;>
+        simp [mode, stateField_vacuum, identity_modes, hk', R,
+          MvPolynomial.lcoeff, MvPolynomial.coeff_monomial]
     · have hz := basis_outer_zero d hd 0 q k (by omega) hq hk e (Or.inr he) a
-      change L (MvPolynomial.monomial e 1) (carrierBasis (datum d) a) = _ at hz ⊢
+      rw [carrierBasis_apply] at hz
+      change L (MvPolynomial.monomial e 1) (carrierBasis (datum d) a) = _
       rw [hz]
       simp [R, MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, he]
   have hh := congrArg (fun f => f p v) hL
   simpa [L, R, MvPolynomial.lcoeff, apply_ite] using hh
 
 /-- A palette letter retains an arbitrary oscillator polynomial and integer mode. -/
-structure Letter (d : ℤ) where
+private structure Letter (d : ℤ) where
   weight : ℤ
   polynomial : Oscillator (datum d)
   index : ℤ
@@ -250,7 +241,7 @@ private def Good {d : ℤ} (M : ℤ) (w : List (Letter d)) : Prop :=
 private theorem wordOperator_append {d : ℤ} (l r : List (Letter d)) :
     wordOperator (l ++ r) = wordOperator l * wordOperator r := by
   induction l with
-  | nil => simp [wordOperator]
+  | nil => ext v; rfl
   | cons a l ih => simp [wordOperator, ih, mul_assoc]
 
 private def wordCharge {d : ℤ} : List (Letter d) → ℤ
@@ -265,7 +256,9 @@ private theorem word_charge {d : ℤ} (w : List (Letter d)) :
     obtain ⟨p, hp⟩ := ih
     have h := LatticeSectorIntertwiner.charge_homogeneity (datum d)
       (charge d a.weight) (charge d (wordCharge w)) a.polynomial p a.index
-    refine ⟨_, ?_⟩
+    refine ⟨(mode (datum d) a.index (letterState a)
+      (Finsupp.single (charge d (wordCharge w)) p))
+        (charge d (a.weight + wordCharge w)), ?_⟩
     change mode (datum d) a.index (letterState a) (paletteWord w) = _
     rw [hp]
     exact h
@@ -285,7 +278,7 @@ private theorem all_negative_zero {d : ℤ} (q : ℤ) (hq : 0 < q)
       omega
   have hc := hnonpos w hw
   obtain ⟨p, hp⟩ := word_charge w
-  rw [hp, groundCoefficient_apply, Finsupp.single_eq_of_ne]
+  rw [hp, groundCoefficient_apply, Finsupp.single_eq_of_ne']
   · simp
   · simpa using (show wordCharge w ≠ q by omega)
 
@@ -297,7 +290,7 @@ private def correction {d : ℤ} (b a : Letter d) (j : ℕ) : Letter d where
 
 private theorem correction_state {d : ℤ} (b a : Letter d) (j : ℕ) :
     letterState (correction b a j) =
-      LatticeAllStateLocality.mu (datum d) (letterState b) j (letterState a) := by
+      LatticeAllStateReconstruction.mu (datum d) (letterState b) j (letterState a) := by
   exact (LatticeSectorIntertwiner.charge_homogeneity (datum d)
     (charge d b.weight) (charge d a.weight) b.polynomial a.polynomial j).symm
 
@@ -344,7 +337,7 @@ private theorem move_nonnegative (d : ℤ) (hd : 0 < d) (M q : ℤ)
       intro c hc
       apply hg c
       simpa only [List.mem_append, List.mem_cons, List.mem_singleton,
-        or_assoc, or_left_comm, or_comm] using hc
+        List.not_mem_nil, or_false, or_assoc, or_left_comm, or_comm] using hc
     have swapped := ih a (b :: r) (by simpa [List.length_append] using hn)
       hswap hln ha
     let F : Module.End ℂ (Carrier (datum d)) →ₗ[ℂ] ℂ :=
@@ -382,6 +375,10 @@ private theorem move_nonnegative (d : ℤ) (hd : 0 < d) (M q : ℤ)
     have hswapF : F (mode (datum d) a.index (letterState a) *
         mode (datum d) b.index (letterState b)) = 0 := by
       simpa [F, paletteWord, wordOperator_append, wordOperator, mul_assoc] using swapped
+    change F (mode (datum d) b.index (letterState b) *
+      mode (datum d) a.index (letterState a)) -
+      F (mode (datum d) a.index (letterState a) *
+        mode (datum d) b.index (letterState b)) = 0 at comm
     rw [hswapF, sub_zero] at comm
     simpa [F, paletteWord, wordOperator_append, wordOperator, mul_assoc] using comm
 
@@ -462,7 +459,7 @@ def StronglyGenerates (D : LatticeData) (S : Finset (Carrier D)) : Prop :=
   negativeWordSpan D S = ⊤
 
 private def familyBound (d : ℤ) (S : Finset (Carrier (datum d))) : ℕ :=
-  S.sup (fun u => u.support.sup (fun α => (α 0).natAbs))
+  by classical exact S.sup (fun u => u.support.sup (fun α => (α 0).natAbs))
 
 private theorem familyBound_spec (d : ℤ) (S : Finset (Carrier (datum d)))
     (u : Carrier (datum d)) (hu : u ∈ S) (α : Charge (datum d)) (hα : α ∈ u.support) :
@@ -501,7 +498,8 @@ private theorem negativeWord_mem_palette (d : ℤ) (S : Finset (Carrier (datum d
 /-- No finite family of arbitrary mixed-charge oscillator states strongly generates
 the actual negative rank-one lattice carrier by right-nested negative modes. -/
 theorem negative_rank_one_no_finite_strong_generation (d : ℤ) (hd : 0 < d)
-    (S : Finset (Carrier (datum d))) : negativeWordSpan (datum d) S ≠ ⊤ := by
+    (S : Finset (Carrier (datum d))) : ¬ StronglyGenerates (datum d) S := by
+  change negativeWordSpan (datum d) S ≠ ⊤
   classical
   let M : ℤ := familyBound d S
   let q : ℤ := M + 1
