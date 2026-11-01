@@ -132,8 +132,8 @@ private def sigmaFinSucc {m : ℕ} (Z : Fin (m + 1) → Type)
     · change Continuous (fun x : Z j.succ =>
         (Sum.inr (Sigma.mk j x) : Z 0 ⊕ (Σ i : Fin m, Z i.succ)))
       exact continuous_inr.comp
-        (show Continuous (Sigma.mk j : Z j.succ → (Σ i : Fin m, Z i.succ)) from
-          continuous_sigmaMk))
+        (@continuous_sigmaMk (Fin m) (fun i : Fin m => Z i.succ)
+          (fun i => inferInstance) j))
   continuous_invFun := continuous_sigmaMk.sumElim
     (continuous_sigma_iff.mpr (fun i => continuous_sigmaMk))
 
@@ -220,5 +220,20 @@ theorem compact_sourceSP_smul_eq_zero {X : Type} [TopologicalSpace X] [CompactSp
   letI := compact_sourceSP_torsionFree h q hq
   apply (smul_eq_zero_iff_right hn).mp
   simpa only [Int.cast_id] using (Int.cast_smul_eq_zsmul ℤ n z).trans hz
+
+set_option pp.universes true
+#check @SphereHomologyAllDegrees.isTorsionFree_singularHomology_sphere
+#check @OpenCoverHomology.inclusionIso
+#check @PointedWedgeHomology.homologyIso
+#check @finite_bouquet_torsionFree
+#check @finite_model_torsionFree
+#check @compact_wedge_torsionFree
+#check @compact_sourceSP_torsionFree
+#check @compact_sourceSP_smul_eq_zero
+#print axioms finite_bouquet_torsionFree
+#print axioms finite_model_torsionFree
+#print axioms compact_wedge_torsionFree
+#print axioms compact_sourceSP_torsionFree
+#print axioms compact_sourceSP_smul_eq_zero
 
 end D5.S3.Geometry.SphereBouquetHomology
