@@ -265,7 +265,7 @@ private theorem high_interpolate (W J z t h : ℤ)
     fin_cases i <;> dsimp [high_margin,scaled_margin,grain_q] <;> ring
   have hn := add_nonneg (mul_nonneg (sub_nonneg.mpr hh.2) h0) (mul_nonneg hh.1 h1)
   rw [←he] at hn
-  exact nonneg_of_mul_nonneg_left hn (by positivity)
+  exact nonneg_of_mul_nonneg_right hn (by positivity)
 
 private theorem high_arithmetic (W J z t : ℤ)
     (hW : 1≤W) (hJ : 1≤J) (hz : 4≤z)

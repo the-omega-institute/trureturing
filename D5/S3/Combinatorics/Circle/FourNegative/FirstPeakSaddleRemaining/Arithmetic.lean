@@ -60,7 +60,7 @@ private theorem scaled_to_rectangle (t z x y g q r h scale ps js v : ℤ)
       scale*(z+1)*rectangle t z x y g q r h v i := by
     fin_cases i <;> dsimp [scaled_margin,rectangle] <;> nlinarith only [hp]
   rw [he] at hi
-  exact nonneg_of_mul_nonneg_left hi (mul_pos hs hz)
+  exact nonneg_of_mul_nonneg_right hi (mul_pos hs hz)
 
 private def grain_q (K J t : ℤ) : ℤ := 2*K*J*t-4*K*J
 
@@ -126,8 +126,7 @@ private noncomputable def native_of_selection (a b c d : ℕ)
     norm_cast
   have hgg : (g:ℤ)=4*(2:ℤ)^(b-d-1)*2^(a-b-1) := by
     dsimp [g,l]
-    simp only [Nat.cast_pow,Nat.cast_ofNat]
-    exact hg
+    exact_mod_cast hg
   have hr : (rn:ℤ)=sel.r := Int.toNat_of_nonneg (by have := sel.r_bounds; omega)
   have hh : (hn:ℤ)=sel.h := Int.toNat_of_nonneg sel.h_bounds.1
   have hv : (vn:ℤ)=sel.v := Int.toNat_of_nonneg sel.v_bounds.1
@@ -187,11 +186,16 @@ private noncomputable def native_of_selection (a b c d : ℕ)
       rw [hf] at heb
       contradiction
   · have hq : (sn:ℤ)-(rn:ℤ)=grain_q (2^(b-d-1)) (2^(a-b-1)) (2^d) := by
-      rw [hs,hr,hgg,ht]
-      dsimp [grain_q]
-      ring
+      calc
+        (sn:ℤ)-(rn:ℤ) = (g:ℤ)*((2:ℤ)^(d-1)-1) := by rw [hs,hr]; ring
+        _ = grain_q (2^(b-d-1)) (2^(a-b-1)) (2^d) := by
+          rw [hgg]
+          dsimp [grain_q]
+          rw [ht]
+          ring
     intro i
-    simpa only [hq,hr,hh,hv,hx,hy,hg] using sel.good i
+    rw [hq,hr,hh,hv,hx,hy,hg]
+    exact sel.good i
 
 /-- High-middle scaled integer j and p, affine in the physical h. -/
 private def high_margin (W J z t h : ℤ) : Fin 4 → ℤ :=

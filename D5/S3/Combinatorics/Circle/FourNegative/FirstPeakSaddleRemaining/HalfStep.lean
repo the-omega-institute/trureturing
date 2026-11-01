@@ -123,7 +123,7 @@ private theorem half_interpolate (K F e T h r : ℤ)
       (mul_nonneg (show 0≤r-1 by omega) (corners.lo_hi i))
     change 0≤(2*F*e-r)*f 1 1+(r-1)*f 1 (2*F*e) at hn
     rw [←hid] at hn
-    exact nonneg_of_mul_nonneg_left hn hwidth
+    exact nonneg_of_mul_nonneg_right hn hwidth
   have hhi : 0≤f (2*K) r := by
     have hid : (2*F*e-1)*f (2*K) r =
         (2*F*e-r)*f (2*K) 1+(r-1)*f (2*K) (2*F*e) := by
@@ -134,14 +134,14 @@ private theorem half_interpolate (K F e T h r : ℤ)
       (mul_nonneg (show 0≤r-1 by omega) (corners.hi_hi i))
     change 0≤(2*F*e-r)*f (2*K) 1+(r-1)*f (2*K) (2*F*e) at hn
     rw [←hid] at hn
-    exact nonneg_of_mul_nonneg_left hn hwidth
+    exact nonneg_of_mul_nonneg_right hn hwidth
   have hid : (2*K-1)*f h r=(2*K-h)*f 1 r+(h-1)*f (2*K) r := by
     dsimp [f]
     fin_cases i <;> dsimp [half_margin,scaled_margin,grain_q] <;> ring
   have hn := add_nonneg (mul_nonneg (show 0≤2*K-h by omega) hlo)
     (mul_nonneg (show 0≤h-1 by omega) hhi)
   rw [←hid] at hn
-  exact nonneg_of_mul_nonneg_left hn (by omega)
+  exact nonneg_of_mul_nonneg_right hn (by omega)
 
 
 /-- The last +1 makes r positive even at exact multiples of 2J. -/
