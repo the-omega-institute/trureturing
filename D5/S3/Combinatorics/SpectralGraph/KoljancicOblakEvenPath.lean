@@ -61,7 +61,10 @@ theorem continuant_linearization (q dq : ℕ → ℝ) (n : ℕ) :
     (deformedContinuant q dq n).coeff 0 = continuant q n ∧
       (deformedContinuant q dq n).coeff 1 = variation q dq n := by
   induction n using Nat.twoStepInduction with
-  | zero => simp [deformedContinuant, continuant, variation]
+  | zero =>
+      constructor
+      · simp [deformedContinuant, continuant]
+      · exact coeff_eq_zero_of_natDegree_lt (by simp [deformedContinuant])
   | one => simp [deformedContinuant, continuant, variation]
   | more n h0 h1 =>
       constructor <;>
@@ -172,19 +175,17 @@ theorem weighted_path_charpoly (b : ℕ → ℝ) (n : ℕ) :
         simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
           Matrix.diagonal_apply, Fin.succ_inj, shift2]
       have row (j : Fin n) : (weightedPath b (n + 2)).charmatrix 0 j.succ.succ = 0 := by
-        rw [Matrix.charmatrix_apply_ne (by simp)]
-        simp [weightedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          weightedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
       have col (i : Fin n) : (weightedPath b (n + 2)).charmatrix i.succ.succ 0 = 0 := by
-        rw [Matrix.charmatrix_apply_ne (by simp)]
-        simp [weightedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          weightedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
       have diag : (weightedPath b (n + 2)).charmatrix 0 0 = X := by
         simp [Matrix.charmatrix_apply_eq, weightedPath]
       have upper : (weightedPath b (n + 2)).charmatrix 0 1 = -C (b n) := by
-        rw [Matrix.charmatrix_apply_ne (by simp)]
-        simp [weightedPath]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, weightedPath]
       have lower : (weightedPath b (n + 2)).charmatrix 1 0 = -C (b n) := by
-        rw [Matrix.charmatrix_apply_ne (by simp)]
-        simp [weightedPath]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, weightedPath]
       unfold Matrix.charpoly
       rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
         _ row col, minor1, minor2, diag, upper, lower]
