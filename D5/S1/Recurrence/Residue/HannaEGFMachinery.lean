@@ -21,6 +21,7 @@ eCoeff_inv: proof_shape: bind-only; escape_witness: none; consumer: integral_inv
 eCoeff_inner: proof_shape: bind-only; escape_witness: none; consumer: eCoeff_rhs
 eCoeff_rhs: proof_shape: bind-only; escape_witness: none; consumer: solution_sequence, residual_transfer, integral_solution_exists_unique
 solution_sequence: proof_shape: bind-only; escape_witness: none; consumer: integral_solution_exists_unique, any_solution_integral
+The inverse specification and coefficient/solution identities above use owner application and recurrence, coefficient or algebra normalization; they supply no escape content.
 clear_inverse_power: proof_shape: bind-only; escape_witness: none; consumer: HannaA232696Congruences.cleared2, cleared4
 expSum_mod: proof_shape: bind-only; escape_witness: none; consumer: HannaA232695Congruences.result
 expSum_four_mod_eight: proof_shape: bind-only; escape_witness: none; consumer: HannaA232694Congruences.result
