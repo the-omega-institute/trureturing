@@ -10,6 +10,8 @@ import D5.S3.VertexAlgebra.LatticeSugawaraVirasoro
 import D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
 import Mathlib.LinearAlgebra.TensorProduct.Map
 
+/-! The original matter and ghost modes define a statewise finite tensor charge. -/
+
 set_option backward.isDefEq.respectTransparency false
 
 open scoped BigOperators TensorProduct VertexOperator
@@ -47,7 +49,8 @@ private theorem summand_product (D : LatticeData)
     summand D H m = matterMode D H m * ghostC D (-m) := by
   apply TensorProduct.ext'
   intro v w
-  simp [summand, matterMode, ghostC, Module.End.mul_apply]
+  simp only [summand, matterMode, ghostC, Module.End.mul_apply,
+    TensorProduct.map_tmul, LinearMap.id_apply]
 
 /-- The upper bound comes from the actual Sugawara vertex operator at index m+1. -/
 def upper (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -97,7 +100,9 @@ theorem summand_finite (D : LatticeData)
     have hy0 : summand D H m y = 0 := by
       by_contra hz
       exact hn (Or.inr hz)
-    exact hm (by rw [map_add, hx0, hy0, add_zero])
+    apply hm
+    change summand D H m (x+y) = 0
+    rw [map_add, hx0, hy0, add_zero]
 
 /-- This is a sum of state actions, never a sum of an infinite endomorphism family. -/
 def T (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
@@ -198,7 +203,9 @@ theorem ward_b (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
       apply Finset.sum_congr rfl
       intro m hm
       have h := LinearMap.congr_fun (summand_b D H m r) x
-      by_cases he : m = r <;> simpa [he] using h
+      by_cases he : m = r <;>
+        simpa only [LinearMap.add_apply, Module.End.mul_apply, he, if_true, if_false,
+          LinearMap.zero_apply] using h
     _ = _ := by simp [s]
 
 /-- All-integer c Ward identity on the actual tensor carrier. -/

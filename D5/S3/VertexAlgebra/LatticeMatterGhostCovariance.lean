@@ -8,6 +8,8 @@
 
 import D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 
+/-! Finite translation of original operator actions leaves the matter central anomaly. -/
+
 set_option backward.isDefEq.respectTransparency false
 
 open scoped BigOperators TensorProduct
@@ -54,7 +56,9 @@ private theorem paired_finite (D : LatticeData)
     have hy0 : paired D H r k y = 0 := by
       by_contra hz
       exact hn (Or.inr hz)
-    exact hk (by rw [map_add, hx0, hy0, add_zero])
+    apply hk
+    change paired D H r k (x+y) = 0
+    rw [map_add, hx0, hy0, add_zero]
 
 /-- A finite-support translation proved by a bijection of the actual finite captures. -/
 private theorem finite_shift {E : Type*} [AddCommGroup E] (f : ℤ → E)
