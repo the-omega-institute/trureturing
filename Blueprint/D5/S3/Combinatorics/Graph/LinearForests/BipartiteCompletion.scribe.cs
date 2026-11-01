@@ -1,10 +1,50 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LinearForests;
 
 internal sealed class BipartiteCompletionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/LinearForests/BipartiteCompletion.";
+
+    private static Formula Name(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Exists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+    private static Formula Imp(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+    private static Formula Le(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula Eq(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula DegreeBound(string graph) =>
+        All("x", F.Id("alpha"), Le(Call("degree", F.Id(graph), F.Id("x")), D(2)));
+    private static Formula Independent(string graph, string part) =>
+        Call("IsIndepSet", F.Id(graph), F.Id(part));
+    private static Formula Hypotheses() =>
+        And(Independent("G", "A"), And(Independent("G", "B"),
+            And(Call("Disjoint", F.Id("A"), F.Id("B")),
+                And(Eq(Call("union", F.Id("A"), F.Id("B")), Call("univ", F.Id("alpha"))),
+                    And(Call("IsAcyclic", F.Id("G")),
+                        And(DegreeBound("G"), Lt(Call("card", F.Id("A")), Call("card", F.Id("B")))))))));
+    private static Formula Conclusion() =>
+        Exists("H", Call("SimpleGraph", F.Id("alpha")),
+            And(Le(F.Id("G"), F.Id("H")), And(Call("IsAcyclic", F.Id("H")),
+                And(DegreeBound("H"), And(Independent("H", "A"), And(Independent("H", "B"),
+                    All("u", F.Id("alpha"), Imp(Call("mem", F.Id("u"), F.Id("A")),
+                        Eq(Call("degree", F.Id("H"), F.Id("u")), D(2)))))))));
+    private static Formula Statement() =>
+        All("alpha", Name("Type"),
+            Imp(And(Call("Fintype", F.Id("alpha")), Call("DecidableEq", F.Id("alpha"))),
+                All("G", Call("SimpleGraph", F.Id("alpha")),
+                    All("A", Call("Finset", F.Id("alpha")),
+                        All("B", Call("Finset", F.Id("alpha")), Imp(Hypotheses(), Conclusion()))))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every finite bipartite linear forest with a strictly larger B part admits a color-preserving supergraph on the same full vertex type, still a linear forest, in which every A vertex has degree two.",
@@ -13,7 +53,7 @@ internal sealed class BipartiteCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("saturating-extension"),
                 DeclarationHandle.Create(Prefix + "exists_saturating_extension"),
                 H("Saturation on the full original carrier"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let alpha be any finite type with decidable equality, G an actual simple graph on alpha, and A and B actual finite sets. Assume that each part is independent in G, the parts are disjoint and cover every vertex, G is acyclic, every degree is at most two, and card(A) is strictly less than card(B). There exists an actual graph H on exactly alpha containing every edge of G. The graph H is acyclic, every degree is at most two, both original parts remain independent, and every vertex of A has degree exactly two. No decomposition, matching, completion or saturability witness is assumed.")),
