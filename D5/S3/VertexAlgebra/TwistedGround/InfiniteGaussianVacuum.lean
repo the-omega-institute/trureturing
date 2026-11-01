@@ -55,9 +55,12 @@ theorem vacuum_trace_log (A B : Data I) :
     apply tsum_congr
     intro m
     rw [TraceClassPowerSeries.logTerm, htrace F m]
-    ring
+    have hm : (m : ℂ) + 1 ≠ 0 := by
+      exact_mod_cast Nat.succ_ne_zero m
+    field_simp [hm]
+    <;> ring
   have hexp := (Complex.continuous_exp.tendsto _).comp hloglim
   refine ⟨hocc, hlog, ?_⟩
-  exact tendsto_nhds_unique hocclim (by simpa only [← hcut] using hexp)
+  exact tendsto_nhds_unique hocclim (by simpa only [Function.comp_def, ← hcut] using hexp)
 
 end D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianVacuum
