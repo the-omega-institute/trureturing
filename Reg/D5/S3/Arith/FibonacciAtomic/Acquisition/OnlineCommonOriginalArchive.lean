@@ -136,7 +136,7 @@ def sourceRegistration : Registration arena (type_of% (@complete_online_archive)
     fun i => nomatch i⟩
   dependence := dependence
 
-def registration : Contract.Registration (@complete_online_archive)
+def registration : Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0} (@complete_online_archive)
     (Realization signature) Type Unit where
   unitName := `completeOnlineArchive
   realizationName :=

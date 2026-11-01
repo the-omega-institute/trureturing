@@ -100,7 +100,7 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
                 + "and its cost equals the maximum of the delivered request costs. All paid reads are counted "
                 + "with multiplicity. The invariant has no bound on source letters, total work or storage."),
             Definition("Compatible", "A completed request preserves the old archive", Compatibility(),
-                "The divisor d reduces residues from the new envelope to the old one. The last equality concerns "
+                "The divisor d reduces residues from the new envelope to the old one. The current-register equality concerns "
                 + "current at the upgrade entry, not current at the original cut. Old intervening continuations "
                 + "are preserved. Past labels agree at every common authentic cut."),
             Definition("ArchiveService", "Covered arithmetic and synchronized continued use", ServiceFormula(),
