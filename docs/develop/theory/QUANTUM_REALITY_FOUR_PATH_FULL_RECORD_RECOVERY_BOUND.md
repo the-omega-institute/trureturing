@@ -1667,3 +1667,129 @@ $$
 成立，或至少使其在积分意义下给出 $\int\rho\,d\mu\le C\varepsilon$？若答案为否，应给出使 $\rho/g$ 发散的合法原始对序列。任何结论都必须保持同一 $U$ 作用于一个原始结果的全部谱列，并允许奇异效果、零列与任意小结果权重。该问题是生产者层的二次 coercivity 问题；定理 10.3 的通道级平方根估计不替代它。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 12. 生产者层的线性 coercivity
+
+问题 11.4 的线性版本可以在同一固定记录上成立。关键是把效果的平方距离与实际共享反馈的相位余量放在同一个局部坐标中；单独对效果做谱分解会丢掉后者。本节只证明存在一个依赖固定记录的常数，不求最佳值。
+
+**引理 12.1（优化圆周附近的共同射线）。** 设 $\sigma\in\{+,-\}$，令
+$P_\sigma=b_\sigma b_\sigma^\dagger$，并写
+
+$$
+B=(E^{\mathsf T})^{1/2},\qquad b_\ell=Be_\ell,\qquad
+t_\sigma(E)=\operatorname{Tr}\bigl((I-P_\sigma)E^{\mathsf T}\bigr).
+$$
+
+存在包含 $\mathcal S_\sigma$ 的邻域 $\mathcal N_\sigma$ 及常数 $C_\sigma<\infty$，使 $(E,U)\in\mathcal N_\sigma$ 时，两列都能写成
+
+$$
+b_\ell=z_\ell b_\sigma+r_\ell,\qquad r_\ell\perp b_\sigma,\qquad |z_\ell|\ge\tfrac13,
+$$
+
+且
+
+$$
+\sum_{\ell=1}^2\|r_\ell\|^2=t_\sigma(E),\qquad
+\|E-E_\sigma\|_{\mathrm F}^2\le2t_\sigma(E),\qquad
+t_\sigma(E)\le1600\,a(E).
+$$
+
+此外，
+
+$$
+\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le C_\sigma\bigl(a(E)+\tau(E,U)\bigr).
+$$
+
+**证明。** 在 $\mathcal S_\sigma$ 上，$B$ 的两列分别是 $(b_\sigma)_\ell b_\sigma$，而 (9.21) 给出 $(b_\sigma)_\ell\ne0$ 且 $R_0b_\sigma$ 的四个坐标均非零。正平方根的连续性给出一个邻域，其中 $|z_\ell|\ge1/3$，且每一列的另一坐标严格小于主坐标；这就固定了上述分解。
+
+由 $\sum_\ell b_\ell b_\ell^\dagger=E^{\mathsf T}$，取 $I-P_\sigma$ 的迹得第一式。在基 $(b_\sigma,b_{-\sigma})$ 中，任意 $E$ 可写成
+
+$$
+T^\dagger E^{\mathsf T}T
+=\begin{pmatrix}1-t&z\\\bar z&t\end{pmatrix},\qquad
+0\le t\le1,\quad |z|^2\le t(1-t),
+$$
+
+其中 $t=t_\sigma(E)$。因此
+
+$$
+\|E-E_\sigma\|_{\mathrm F}^2=2(t^2+|z|^2)\le2t.
+$$
+
+在当前邻域中，$d_\ell^2=\operatorname{dist}(b_\ell,\mathcal E)^2=\|r_\ell\|^2$。定理 8.2 的第二个估计给
+$\sum_\ell d_\ell^2\le1600\sum_\ell\delta(b_\ell)=1600a(E)$，从而得到第三式。
+
+再取一个使 $|z_\ell|^2\ge(1-t)/2\ge1/4$ 的列，记
+$v_\ell=R_0b_\ell$、$v_\sigma=R_0b_\sigma$、
+$D_\sigma=\operatorname{diag}(v_\sigma)$、
+$A_\sigma=\operatorname{diag}(|v_\sigma|)$ 及
+$m_\sigma=\min_i|(v_\sigma)_i|>0$。坐标模长的 1-Lipschitz 性给出
+
+$$
+\|\operatorname{diag}(|v_\ell|)-|z_\ell|A_\sigma\|_{\mathrm{HS}}
+\le\|R_0\|_{\mathrm{op}}\|r_\ell\|.
+$$
+
+对 $K_\ell=U\operatorname{diag}(v_\ell)$ 使用引理 10.1，取其相位 $\lambda$，并令
+$\mu=\lambda|z_\ell|/z_\ell$。因为 $U_\sigma D_\sigma=A_\sigma$，三角不等式给出
+
+$$
+\|(U-\mu U_\sigma)z_\ell D_\sigma\|_{\mathrm{HS}}
+\le\sqrt{2\tau_\ell}+2\|R_0\|_{\mathrm{op}}\|r_\ell\|.
+$$
+
+邻域可再缩小，使 $|z_\ell|m_\sigma\ge m_\sigma/2$。除以这个下界并平方，得到
+
+$$
+\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le\frac{16}{m_\sigma^2}\tau_\ell
+  +\frac{32\|R_0\|_{\mathrm{op}}^2}{m_\sigma^2}\|r_\ell\|^2
+\le C_\sigma(a+\tau).
+$$
+
+这同时处理了 $E$ 的秩一边界；没有对矩阵平方根作可微性假设。$\square$
+
+**定理 12.2（生产者层线性 coercivity）。** 在定义 11.1 的同一 $\rho$ 与 $g$ 下，存在
+$C_{\mathrm{prod}}<\infty$，仅依赖固定记录 $R_0,b_\pm,U_\pm$，使得
+
+$$
+\boxed{\qquad
+\rho(E,U)\le C_{\mathrm{prod}}\,g(E,U)
+\qquad((E,U)\in\mathcal K).}
+$$
+
+因此定义 1.2 的任意有限全结果协议都满足
+
+$$
+\boxed{\qquad
+\int_{\mathcal K}\rho(E,U)\,d\mu(E,U)
+\le8C_{\mathrm{prod}}\,\varepsilon,\qquad}
+$$
+
+只要 $\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon$。
+
+**证明。** 由引理 12.1，在每个 $\mathcal N_\sigma$ 中，以 $\sigma$ 作为定义 11.1
+中最小值的候选，得到
+
+$$
+\rho(E,U)
+\le \|E-E_\sigma\|_{\mathrm F}^2
++\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le C'_\sigma g(E,U).
+$$
+
+取两个邻域的不交并 $\mathcal N$。引理 11.2 表明
+$g^{-1}(0)=\mathcal S\subset\mathcal N$，故紧集
+$\mathcal K\setminus\mathcal N$ 上 $g$ 有严格正的最小值 $m$。令
+$R_\rho=\max_\mathcal K\rho$，则该补集上
+$\rho\le(R_\rho/m)g$。与两个局部常数取最大即得全局
+$C_{\mathrm{prod}}$。
+
+最后对协议的测度积分，并使用引理 9.3 的实际缺陷预算
+$\int g\,d\mu\le8\varepsilon$，得到第二式。该结论不改变原始结果的反馈共享，也不对结果数或最小结果权重作假设。$\square$
+
+定理 12.2 关闭问题 11.4 的存在性版本。这里的常数来自固定记录的局部非退化下界与紧性，尚未给出显式闭式或最佳值；这两个量化问题仍可单独研究。定理 10.3 的通道距离平方根上界及命题 10.4 的锐性不受影响：生产者距离是平方 Frobenius 距离，而通道范数仍可只呈平方根级稳定。
+
+## 追加锚（本行以下为增补区）
