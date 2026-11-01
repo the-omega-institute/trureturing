@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Products;
 
@@ -24,8 +26,85 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
             Node("rectangle", "oneBasedRectangleEmbedding", "Convert inclusive bounds into a finite induced embedding",
                 "Given coordinate injectivity, exact square adjacency and bounds 1 <= rotate(c(v)).x <= n and 1 <= rotate(c(v)).y <= m for every v, subtract one from both rotated coordinates and obtain a graph embedding into Fin n times Fin m. A graph embedding reflects as well as preserves adjacency. The bounds and local checker remain actual proof obligations in its concrete consumer.", DescribeRole.Definition))));
 
+    private static Formula Statement(string declaration)
+    {
+        var v = I("V"); var g = I("G"); var c = I("c");
+        var a = I("a"); var b = I("b"); var q = I("q"); var w = I("w");
+        var t = I("t"); var r = I("r"); var key = I("key"); var xs = I("xs");
+        var n = I("n"); var m = I("m"); var p = I("p");
+        var point = C("Point"); var tree = C("Occupancy", v);
+        var some = (Formula x) => C("some", x);
+        var preserve = All("q", C("List", C("Bool")), All("w", v,
+            Imp(Equal(C("read", t, q), some(w)), Equal(C("read", r, q), some(w)))));
+        var hadj = All("a", v, All("b", v,
+            Bicond(C("Adj", g, a, b), C("squareAdj", C("apply", c, a), C("apply", c, b)))));
+        var injection = C("Injective", c);
+        var product = C("strongProduct", C("pathGraph", n), C("pathGraph", m));
+        var finitePoint = C("Prod", C("Fin", n), C("Fin", m));
+        var bounds = All("a", v, And(LessEqual(D(1), C("fst", C("rotate", C("apply", c, a)))),
+            And(LessEqual(C("fst", C("rotate", C("apply", c, a))), n),
+            And(LessEqual(D(1), C("snd", C("rotate", C("apply", c, a)))),
+                LessEqual(C("snd", C("rotate", C("apply", c, a))), m)))));
+        var vs = I("vs"); var es = I("es");
+        return declaration switch
+        {
+            "Occupancy.insert_spec" => All("V", C("Type"), All("key", C("List", C("Bool")),
+                    All("t", tree, All("r", tree, All("a", v,
+                    Imp(Equal(C("insert", t, key, a), some(r)),
+                        And(Equal(C("read", r, key), some(a)), preserve))))))),
+            "Occupancy.fill_spec" => All("V", C("Type"), All("key", C("Function", v, C("List", C("Bool"))),
+                    All("xs", C("List", v), All("t", tree, All("r", tree,
+                    Imp(Equal(C("fill", key, xs, t), some(r)), And(preserve,
+                        All("a", v, Imp(C("ListMem", a, xs),
+                            Equal(C("read", r, C("apply", key, a)), some(a))))))))))),
+            "routingCheck_sound" => Checker(All("vs", C("List", v),
+                    All("es", C("List", C("Prod", v, v)), All("c", C("Function", v, point),
+                    Imp(All("a", v, C("ListMem", a, vs)),
+                    Imp(All("a", v, All("b", v, Bicond(C("Adj", g, a, b),
+                        Or(C("ListMem", C("Pair", a, b), es), C("ListMem", C("Pair", b, a), es))))),
+                    Imp(Equal(C("routingCheck", g, vs, es, c), C("true")), And(injection, hadj)))))))),
+            "rotation_adjacency" => All("p", point, All("q", point,
+                    Bicond(C("kingAdj", C("rotate", p), C("rotate", q)), C("squareAdj", p, q)))),
+            "strongProduct" => All("V", C("Type"), All("W", C("Type"),
+                    All("G", C("SimpleGraph", v), All("H", C("SimpleGraph", I("W")),
+                    Seq(C("strongProduct", g, I("H")), Colon,
+                        C("SimpleGraph", C("Prod", v, I("W")))))))),
+            "strong_paths_iff" => All("n", C("Nat"), All("m", C("Nat"),
+                    All("p", finitePoint, All("q", finitePoint,
+                    Bicond(C("Adj", product, p, q), C("kingAdj", IntCoordinates(p), IntCoordinates(q))))))),
+            "oneBasedRectangleEmbedding" => All("V", C("Type"), All("G", C("SimpleGraph", v),
+                    All("c", C("Function", v, point), Imp(injection, Imp(hadj,
+                    All("n", C("Nat"), All("m", C("Nat"),
+                        Imp(bounds, C("GraphEmbedding", g, product))))))))),
+            _ => throw new System.ArgumentException(declaration),
+        };
+    }
+
+    private static Formula IntCoordinates(Formula p) => C("Pair",
+        C("IntCast", C("val", C("fst", p))), C("IntCast", C("val", C("snd", p))));
+    private static Formula Checker(Formula b) => All("V", C("Type"), Inst("DecidableEq", I("V"),
+        All("G", C("SimpleGraph", I("V")), Inst("DecidableRel", C("Adj", I("G")), b))));
+    private static Formula I(string n) => F.Id(n);
+    private static Formula C(string n, params Formula[] a) => a.Length == 0
+        ? new Formula.NamedConstant(FormulaIdentifier.Create(n))
+        : new Formula.FunctionCall(FormulaIdentifier.Create(n), [.. a]);
+    private static Formula All(string n, Formula t, Formula b) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
+    private static Formula Inst(string n, Formula a, Formula b) => Seq(OpenBracket, C(n, a), CloseBracket, Sp, b);
+    private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula LessEqual(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Bicond(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+
     private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole role) => Describe.Lean(
-            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            DescribeId.Create(id), DeclarationHandle.Create(declaration switch
+            {
+                "Occupancy.insert_spec" => "D5/S3/Combinatorics/Graph/Products/LatticeRouting/Occupancy.insert_spec",
+                "Occupancy.fill_spec" => "D5/S3/Combinatorics/Graph/Products/LatticeRouting/Occupancy.fill_spec",
+                _ => Prefix + declaration
+            }), H(title),
+            StatementSource.FromAuthor(Disp(Statement(declaration))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Products;
 
@@ -16,8 +18,34 @@ internal sealed class IntegerPolylineDocument : IScribeDocumentDefinition
             Node("verifier", "expand_eq_verifier", "The two endpoint conventions agree exactly",
                 "For every axis-aligned p, expand(p)=verifierExpand(p). The segment endpoint identity joins the left-closed prefixes into the initial-point/right-closed loop. This proves the semantics used to import the actual 1,283 routing corners, including detours and repeated consecutive corners. It supplies no geometric nonintersection or homology assertion."))));
 
+    private static Formula Statement(string declaration)
+    {
+        var p = I("p"); var i = I("i");
+        var body = declaration switch
+        {
+            "sample_eq_getD" => All("i", C("Nat"), Equal(C("sample", p, i),
+                C("getD", C("getElemOptional", C("expand", p), i), C("Pair", D(0), D(0))))),
+            "length_expand" => Imp(new Formula.Not(Equal(p, C("Nil"))),
+                Equal(C("ListLength", C("expand", p)), Add(C("length", p), D(1)))),
+            "expand_eq_verifier" => Imp(C("axisAligned", p),
+                Equal(C("expand", p), C("verifierExpand", p))),
+            _ => throw new System.ArgumentException(declaration)
+        };
+        return All("p", C("List", C("Point")), body);
+    }
+
+    private static Formula I(string n) => F.Id(n);
+    private static Formula C(string n, params Formula[] a) => a.Length == 0
+        ? new Formula.NamedConstant(FormulaIdentifier.Create(n))
+        : new Formula.FunctionCall(FormulaIdentifier.Create(n), [.. a]);
+    private static Formula All(string n, Formula t, Formula b) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
+    private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+
     private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(Statement(declaration))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }

@@ -132,9 +132,9 @@ induced embedding has target `P_9337` strong `P_9061`. The literal transform
 `T(x,y) = (x+y+25,x-y+1705)` has inclusive one-based bounds; the map into
 `Fin 9337` times `Fin 9061` subtracts one from both coordinates.
 
-The source defines a fresh occupancy checker, proves its generic soundness
-for injection and both adjacency directions, and applies it to the literal
-routes through a concrete kernel-reduction obligation. The candidate routing
+The source defines a fresh occupancy checker, contains proposed generic
+soundness proofs for injection and both adjacency directions, and applies it
+to the literal routes through a concrete kernel-reduction obligation. The candidate routing
 sources remain uncompiled; this entry records the exact intended interface,
 not a verified embedding. `PrescribedSubdivision`, `IntegerPolyline` and
 `LatticeRouting` supply the consumed tagged paths, corner-expansion semantics
