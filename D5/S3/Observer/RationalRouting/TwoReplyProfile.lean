@@ -291,6 +291,36 @@ private theorem no_interior_cut_same {B : ℕ} {C : ProfileCell}
     have ht := different_reply_cut hm hl
     exact h m hm hmB _ ⟨hx.2.1.trans_lt ht.1, ht.2.trans_lt hy.2.2⟩
 
+private theorem target_constant_exact {B : ℕ} {C : ProfileCell}
+    (hl : 0 ≤ C.lower) {x : ℚ} (hx : C.Contains x) :
+    findCut B C = none ↔ ∀ y : ℚ, C.Contains y → SameInstant B y x := by
+  constructor
+  · intro hn y hy
+    exact no_interior_cut_same ((find_cut_spec B C).2 hn) hy hx
+  · intro constant
+    cases he : findCut B C with
+    | none => rfl
+    | some cut =>
+      obtain ⟨j,m⟩ := cut
+      obtain ⟨hm,hmB,hlt,hut⟩ := (find_cut_spec B C).1 j m he
+      let t : ℚ := (j : ℚ) / m
+      have ht : C.Contains t := ⟨hl.trans_lt hlt, hlt.le, hut⟩
+      let y := (C.lower + t) / 2
+      have hy : C.Contains y := ⟨by dsimp [y]; linarith [ht.1],
+        by dsimp [y]; linarith, by dsimp [y]; linarith⟩
+      have hp : (0 : ℚ) < m := by exact_mod_cast (show 0 < m by omega)
+      have hs : reply m y < j := by
+        apply Int.floor_lt.mpr
+        have hyt : y < t := by dsimp [y]; linarith
+        simpa only [t, mul_comm] using (lt_div_iff₀ hp).mp hyt
+      have hb : j ≤ reply m t := by
+        apply Int.le_floor.mpr
+        dsimp [t]
+        rw [mul_div_cancel₀ _ hp.ne']
+      rw [constant y hy m hm hmB] at hs
+      rw [constant t ht m hm hmB] at hb
+      omega
+
 private theorem raw_fraction_bounds (D s : ℕ) (hs : 1 ≤ s) (p r : ℤ) :
     reply D ((p : ℚ) / s) = r ↔
       r * (s : ℤ) ≤ (D : ℤ) * p ∧ (D : ℤ) * p < (r + 1) * s := by
@@ -506,6 +536,90 @@ private theorem determined_reply_correct {A : PositiveMatrix} (hA : Unimodular A
   · have her := Option.some.inj hr
     omega
 
+private theorem threshold_order {A : PositiveMatrix} (hA : Unimodular A)
+    (D : ℕ) (r : ℤ) {y : ℚ} (hy : 0 ≤ y) :
+    ((D : ℚ) * mobius A y < r ↔
+      thresholdSlope A D r * y < thresholdIntercept A D r) ∧
+    ((r : ℚ) < (D : ℚ) * mobius A y ↔
+      thresholdIntercept A D r < thresholdSlope A D r * y) := by
+  have hd : (0 : ℚ) < A.d := by exact_mod_cast (diagonal_positive hA).2
+  have hp : 0 < (A.c : ℚ) * y + A.d := by positivity
+  dsimp [mobius, thresholdSlope, thresholdIntercept]
+  rw [← mul_div_assoc, div_lt_iff₀ hp, lt_div_iff₀ hp]
+  constructor <;> constructor <;> intro h <;> nlinarith
+
+private theorem determined_reply_exact {A : PositiveMatrix} (hA : Unimodular A)
+    {C : ProfileCell} (hl : 0 ≤ C.lower) {D : ℕ} (hD : 1 ≤ D)
+    {x : ℚ} (hx : C.Contains x) (r : ℤ) :
+    determinedReply A C D = some r ↔
+      ∀ y : ℚ, C.Contains y → reply D (mobius A y) = r := by
+  constructor
+  · intro hr y hy
+    exact determined_reply_correct hA hl hD hy hr
+  · intro constant
+    let l := reply D (mobius A C.lower)
+    let h := ⌈(D : ℚ) * mobius A C.upper⌉ - 1
+    have hp : (0 : ℚ) < D := by exact_mod_cast (show 0 < D by omega)
+    have hlo : l ≤ reply D (mobius A x) :=
+      Int.floor_mono (mul_le_mul_of_nonneg_left
+        (mobius_lower_bound hA hl hx.1 hx.2.1) hp.le)
+    have hup : reply D (mobius A x) ≤ h := by
+      have hh := Int.floor_lt_ceil_of_lt (mul_lt_mul_of_pos_left
+        (mobius_strict hA hx.1 (hx.1.trans hx.2.2) hx.2.2) hp)
+      dsimp [h]
+      change reply D (mobius A x) < _ at hh
+      omega
+    have he : l = h := by
+      by_contra hn
+      have hlt : l < h := by omega
+      let j : ℤ := l + 1
+      have hjl : (D : ℚ) * mobius A C.lower < j := by
+        simpa only [j, l, reply, Int.cast_add, Int.cast_one] using
+          Int.lt_floor_add_one ((D : ℚ) * mobius A C.lower)
+      have hju : (j : ℚ) < (D : ℚ) * mobius A C.upper := by
+        apply Int.lt_ceil.mp
+        dsimp [j, h] at *
+        omega
+      have hL := (threshold_order hA D j hl).1.mp hjl
+      have hU := (threshold_order hA D j (hx.1.trans hx.2.2).le).2.mp hju
+      have hk : 0 < thresholdSlope A D j := by
+        by_contra hn
+        have hh := mul_le_mul_of_nonpos_left (hx.2.1.trans_lt hx.2.2).le
+          (le_of_not_gt hn)
+        linarith
+      let t := thresholdIntercept A D j / thresholdSlope A D j
+      have hlt : C.lower < t := (lt_div_iff₀ hk).mpr (by simpa [mul_comm] using hL)
+      have hut : t < C.upper := (div_lt_iff₀ hk).mpr (by simpa [mul_comm] using hU)
+      have ht : C.Contains t := ⟨hl.trans_lt hlt, hlt.le, hut⟩
+      let y := (C.lower + t) / 2
+      have hy : C.Contains y := ⟨by dsimp [y]; linarith [ht.1],
+        by dsimp [y]; linarith, by dsimp [y]; linarith⟩
+      have hsmall : reply D (mobius A y) < j := by
+        apply Int.floor_lt.mpr
+        apply (threshold_order hA D j hy.1.le).1.mpr
+        have htval : thresholdSlope A D j * t = thresholdIntercept A D j := by
+          dsimp [t]; field_simp
+        have hyt : y < t := by dsimp [y]; linarith
+        have hh := mul_lt_mul_of_pos_left hyt hk
+        linarith
+      have hlarge : j ≤ reply D (mobius A t) := by
+        apply Int.le_floor.mpr
+        have htval : thresholdSlope A D j * t = thresholdIntercept A D j := by
+          dsimp [t]; field_simp
+        have hn : ¬ (D : ℚ) * mobius A t < j := by
+          rw [(threshold_order hA D j ht.1.le).1]
+          linarith
+        exact le_of_not_gt hn
+      rw [constant y hy] at hsmall
+      rw [constant t ht] at hlarge
+      omega
+    have hr : l = r := by
+      have hc := constant x hx
+      omega
+    dsimp only [determinedReply]
+    change (if l = h then some l else none) = some r
+    rw [ite_eq_left he, hr]
+
 def readOrDerive (A : PositiveMatrix) (C : ProfileCell) (D : ℕ)
     (next : ℤ → ProfileProgram) : ProfileProgram :=
   match determinedReply A C D with
@@ -533,7 +647,7 @@ private theorem read_or_derive_trace {A : PositiveMatrix} (hA : Unimodular A)
   | none => simp [ProfileProgram.actualReads, he]
   | some r =>
       have hr := determined_reply_correct hA hl hD hx he
-      simp [he, hr]
+      rw [ite_eq_left he, hr]
 
 def splitInterval (C : ProfileCell) (t : ℚ) (upperSide : Bool) : ProfileCell :=
   if upperSide then ⟨max C.lower t, C.upper⟩ else ⟨C.lower, min C.upper t⟩
@@ -728,15 +842,32 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
     let z := attain u x
     let program := acquireProfile A I B
     let C := program.execute z
+    let Q := profileScale A I B
+    let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) z)
     C = containingCell B x ∧
       (∀ y : ℚ, C.Contains y ↔ 0 < y ∧ SameFuture B y x) ∧
       (∀ v : List Bool, ∀ m : ℕ, 1 ≤ m → m ≤ B →
         C.evaluate v m = reply m (attain v x)) ∧
-      TwoReplyTrace (profileScale A I B) z (program.actualReads z) := by
+      TwoReplyTrace Q z (program.actualReads z) ∧
+      (findCut B I = none ↔ ∀ y : ℚ, I.Contains y → SameFuture B y x) ∧
+      (∀ r : ℤ, determinedReply A I (Q ^ 2) = some r ↔
+        ∀ y : ℚ, I.Contains y → reply (Q ^ 2) (mobius A y) = r) ∧
+      (∀ s : ℕ, 1 ≤ s → ∀ r : ℤ, determinedReply A J s = some r ↔
+        ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r) := by
   dsimp only
   rw [chronological_matrix u hx.1]
   obtain ⟨he, ht⟩ := acquisition_spec (unimodular_wordMatrix u.reverse) hl hB hx
-  refine ⟨he, ?_, ?_, ht⟩
+  let A := wordMatrix u.reverse
+  have hA := unimodular_wordMatrix u.reverse
+  let Q := profileScale A I B
+  have hQ : 1 ≤ Q := by
+    have hd := (diagonal_positive hA).2
+    dsimp [Q, profileScale]
+    simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * originalUpper I + A.d by omega)
+  have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
+  let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
+  have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
+  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_⟩
   · rw [he]
     intro y
     rw [containing_cell_exact B hB hx.1 y]
@@ -748,5 +879,15 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   · rw [he]
     exact (containing_cell_evaluator B hB hx.1).2 x
       ((containing_cell_exact B hB hx.1 x).mpr ⟨hx.1, fun _ _ _ => rfl⟩)
+  · rw [target_constant_exact hl hx]
+    constructor
+    · intro hi y hy
+      exact (instantaneous_iff_full_future hy.1 hx.1).mp (hi y hy)
+    · intro hf y hy
+      exact (instantaneous_iff_full_future hy.1 hx.1).mpr (hf y hy)
+  · intro r
+    exact determined_reply_exact hA hl hD hx r
+  · intro s hs r
+    exact determined_reply_exact hA (first_interval_lower_nonneg _ _ _ _) hs hJ r
 
 end D5.S3.Observer.RationalRouting
