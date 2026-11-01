@@ -17,7 +17,7 @@ open scoped BigOperators
 
 namespace D5.S3.VertexAlgebra.TwistedGround.ElementaryGaussianContraction
 
-open OriginalCorrectionGaussian (nativeMoment nativeMoment_step)
+open OriginalCorrectionGaussian (nativeMoment nativeMoment_step sub_single_degree occupation_nonzero)
 open FactorialFockQuadraticEstimate (gaussianCoefficient gaussianCoefficient_zero)
 open FactorialFockMetric (weight weight_pos weight_add_single)
 
@@ -25,16 +25,6 @@ universe u v w
 variable {I : Type u} {J : Type v} {E : Type w}
 variable [Fintype I] [DecidableEq I] [Fintype J] [DecidableEq J]
 variable [Fintype E] [DecidableEq E]
-
-private theorem sub_degree (d : I →₀ ℕ) (i : I) (hi : d i ≠ 0) :
-    (d - Finsupp.single i 1).degree + 1 = d.degree := by
-  have h := congrArg Finsupp.degree (Finsupp.sub_add_single_one_cancel hi)
-  simpa only [map_add, Finsupp.degree_single] using h
-
-private theorem exists_entry (d : I →₀ ℕ) (h : d ≠ 0) : ∃ i, d i ≠ 0 := by
-  by_contra hn
-  push_neg at hn
-  exact h (Finsupp.ext hn)
 
 private theorem join_add_left (d : I →₀ ℕ) (n : J →₀ ℕ) (i : I) :
     (d + Finsupp.single i 1).sumElim n =
@@ -90,16 +80,16 @@ private theorem shared_support (M : (I →₀ ℕ) → (J →₀ ℕ) → ℂ)
     | h k ih =>
       intro d hd n hn
       have hn0 : n ≠ 0 := by intro hz; subst n; simp at hn
-      obtain ⟨a, ha⟩ := exists_entry n hn0
+      obtain ⟨a, ha⟩ := occupation_nonzero n hn0
       let r := n - Finsupp.single a 1
       have hr : r + Finsupp.single a 1 = n := Finsupp.sub_add_single_one_cancel ha
-      have hrd : r.degree + 1 = n.degree := sub_degree n a ha
+      have hrd : r.degree + 1 = n.degree := sub_single_degree n a ha
       rw [← hr, hstep]
       apply Finset.sum_eq_zero
       intro i hi
       by_cases hz : d i = 0
       · simp [hz]
-      · have hdd := sub_degree d i hz
+      · have hdd := sub_single_degree d i hz
         rw [ih _ (by omega) _ rfl r (by omega), mul_zero]
   exact go d.degree d rfl n h
 
@@ -242,7 +232,7 @@ private theorem pairing_step
     intro n hn
     by_cases hz : n a = 0
     · simp [hz]
-    · have hd := sub_degree n a hz
+    · have hd := sub_single_degree n a hz
       rw [hf _ _ (by omega)]
       simp
   have hsum₁ : Function.HasFiniteSupport (fun n : J →₀ ℕ =>
@@ -261,7 +251,7 @@ private theorem pairing_step
     intro a ha
     by_cases hz : n a = 0
     · simp [hz]
-    · have hd := sub_degree n a hz
+    · have hd := sub_single_degree n a hz
       rw [hf _ _ (by omega)]
       simp
   have hsep : pairing F G (d + Finsupp.single i 1) e =
@@ -321,10 +311,10 @@ private theorem right_boundary
       by_cases hz : e = 0
       · subst e
         simp [moment_zero]
-      obtain ⟨j, hj⟩ := exists_entry e hz
+      obtain ⟨j, hj⟩ := occupation_nonzero e hz
       let r := e - Finsupp.single j 1
       have hr : r + Finsupp.single j 1 = e := Finsupp.sub_add_single_one_cancel hj
-      have hd : r.degree + 1 = k := (sub_degree e j hj).trans he
+      have hd : r.degree + 1 = k := (sub_single_degree e j hj).trans he
       rw [← hr, step_right A hA, step_right B hB]
       simp only [Finsupp.zero_apply, Nat.cast_zero, zero_mul, Finset.sum_const_zero, zero_add]
       apply Finset.sum_congr rfl
@@ -373,10 +363,10 @@ private theorem moment_contraction (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
         have hb := right_boundary (effectiveKernel P Q R S) (rightKernel Q S)
           (effective_symm P Q R S hP hQ) (right_symm Q S hQ) (by intros; rfl) e
         simpa [F, G, moment_zero, weight] using hb.symm
-      obtain ⟨i, hi⟩ := exists_entry d hz
+      obtain ⟨i, hi⟩ := occupation_nonzero d hz
       let r := d - Finsupp.single i 1
       have hr : r + Finsupp.single i 1 = d := Finsupp.sub_add_single_one_cancel hi
-      have hrd : r.degree + 1 = k := (sub_degree d i hi).trans hd
+      have hrd : r.degree + 1 = k := (sub_single_degree d i hi).trans hd
       rw [← hr, pairing_step F G P R S hf hF hG,
         step_left _ (effective_symm P Q R S hP hQ)]
       change (∑ l, (r l : ℂ) * P i l * pairing F G (r - Finsupp.single l 1) e) +

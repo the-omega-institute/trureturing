@@ -247,7 +247,7 @@ private theorem sourceMoment_step (D : LatticeData) (z : ℂ)
   · intro j hj hnot
     simp [Finsupp.notMem_support_iff.mp hnot]
 
-private theorem sub_single_degree (d : I →₀ ℕ) (j : I) (hj : d j ≠ 0) :
+theorem sub_single_degree (d : I →₀ ℕ) (j : I) (hj : d j ≠ 0) :
     (d - Finsupp.single j 1).degree + 1 = d.degree := by
   have h := congrArg Finsupp.degree (Finsupp.sub_add_single_one_cancel hj)
   simpa only [map_add, Finsupp.degree_single] using h
@@ -312,7 +312,7 @@ theorem nativeMoment_step (A : Matrix I I ℂ)
         omega
       simp [nativeMoment, gaussianCoefficient_odd A _ hd]
 
-private theorem occupation_nonzero (d : I →₀ ℕ) (hd : d ≠ 0) :
+theorem occupation_nonzero (d : I →₀ ℕ) (hd : d ≠ 0) :
     ∃ i, d i ≠ 0 := by
   by_contra h
   push_neg at h

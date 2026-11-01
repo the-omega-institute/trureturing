@@ -1,6 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.TwistedGround.ElementaryGaussianContraction
 
 set_option autoImplicit false
@@ -86,6 +85,7 @@ private theorem rejected_fails : ¬ arena.{u,v,w}.Law rejected := by
   have hv := (bridge.mp (@coefficient_contraction.{u,v,w})) zeroParameters 0
   change _ = (0 : ℂ) at hh
   rw [hv] at hh
+  dsimp only [zeroParameters] at hh
   change gaussianCoefficient _ ((0 : PUnit.{u+1} →₀ ℕ).sumElim 0) = 0 at hh
   simpa only [Finsupp.sumElim_zero_zero, gaussianCoefficient_zero, one_ne_zero] using hh
 
@@ -93,6 +93,7 @@ private theorem dependence : ObservationalDependence signature.{u,v,w} actual :=
   intro role
   refine ⟨zeroParameters, 0, Finsupp.single PUnit.unit 1, ?_⟩
   intro h
+  dsimp only [zeroParameters] at h
   change gaussianCoefficient _ ((0 : PUnit.{u+1} →₀ ℕ).sumElim 0) =
     gaussianCoefficient _ ((Finsupp.single PUnit.unit 1 : PUnit.{u+1} →₀ ℕ).sumElim 0) at h
   rw [Finsupp.sumElim_zero_zero, gaussianCoefficient_zero,
@@ -103,7 +104,15 @@ def evidence : Registration arena.{u,v,w} (type_of% (@coefficient_contraction.{u
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp coefficient_contraction, rejected, rejected_fails⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_fails
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

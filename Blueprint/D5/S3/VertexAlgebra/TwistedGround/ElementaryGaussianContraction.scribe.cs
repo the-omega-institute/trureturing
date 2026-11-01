@@ -5,15 +5,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround;
 internal sealed class ElementaryGaussianContractionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/ElementaryGaussianContraction.";
-    private static readonly LibraryNoteRef Background =
-        LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite native Gaussian contraction with zero shared diagonal",
         H("Elementary factorial Gaussian contraction"),
         Blocks(
             Paragraph(Text("Let I, J and E be arbitrary finite mode types, including empty types. The external occupations d and e and shared occupation n are finitely supported natural families. P on I and Q on E are arbitrary complex symmetric matrices. R from I to J and S from J to E are arbitrary complex matrices. All products are bilinear; transpose has no complex conjugation.")),
-            Paragraph(Text("This is classical formal Gaussian, Bargmann/Fock and Wick calculus. The imported native Gaussian coefficient and factorial Fock metric supply the normalization. The FLM reference records the surrounding vertex algebra context; no exact FLM theorem or literature novelty is claimed. The retained inference is the native finite contraction, with a proved support bound and exact factorial reindexing.")),
+            Paragraph(Text("The factorial normalization is classical symmetric/Bargmann Fock normalization, and the Gaussian pairing is classical Wick calculus. No literature novelty or exact external theorem attribution is claimed. AssessedProvenance.FromRepo records reuse of FactorialFockMetric and FactorialFockQuadraticEstimate, together with the unchanged nativeMoment and nativeMoment_step suppliers in OriginalCorrectionGaussian. The retained inference is the native finite contraction, with a proved support bound and exact factorial reindexing.")),
             D("leftKernel", "First block kernel", "The blocks are P, R, transpose(R), and zero on J. Its shared diagonal vanishes."),
             D("rightKernel", "Second block kernel", "The blocks are zero on J, S, transpose(S), and Q. Its shared diagonal vanishes."),
             D("effectiveKernel", "Bilinear effective kernel", "The blocks are P, R S, transpose(R S), and Q. Matrix multiplication sums exactly over the finite shared mode type."),
@@ -25,10 +23,10 @@ internal sealed class ElementaryGaussianContractionDocument : IScribeDocumentDef
     private static DocumentBlock D(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("elementary-gaussian-contraction-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Background), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static DocumentBlock N(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("elementary-gaussian-contraction-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Background), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
