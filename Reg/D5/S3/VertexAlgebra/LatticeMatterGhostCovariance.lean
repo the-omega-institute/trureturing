@@ -42,7 +42,8 @@ private def zeroLattice : LatticeData where
   even_diagonal := by intros; simp
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h zeroLattice 0 (Subsingleton.elim _ _) (Subsingleton.elim _ _) 0
+  exact h zeroLattice 0 (by funext i; exact Fin.elim0 i)
+    (by funext i; exact Fin.elim0 i) 0
 
 def family : Registration arena (type_of% @covariance) where
   actual := actual
