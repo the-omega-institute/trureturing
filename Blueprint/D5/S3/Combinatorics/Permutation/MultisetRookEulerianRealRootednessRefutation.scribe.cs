@@ -10,7 +10,7 @@ internal sealed class MultisetRookEulerianRealRootednessRefutationDocument : ISc
         LibraryNoteRef.Create("D5/L/PermutationPatterns/alexanderssonjalquemener2025rook");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact remaining-content counting for full multiset rook-Eulerian polynomials.",
+        "Remaining-content counting for the full multiset rook-Eulerian polynomial.",
         H("The full multiset rook-Eulerian polynomial"),
         Blocks(
             Paragraph(Text("The source is Alexandersson, Jal and Quemener, arXiv:2502.05939v1, Section 3.3, equation (10) and the first clause of Conjecture 28. A word contains a(c) copies of the positive letter c+1 and fits the row bounds l. Repeated letters and repeated columns are allowed. The polynomial R is the original sum of X raised to the strict adjacent ascent count, over distinct words W. The original W, asc and R definitions are used directly. There is no initial or terminal ascent, skew inner board, nonattacking restriction or first-letter refinement.")),

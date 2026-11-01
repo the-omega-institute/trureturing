@@ -88,14 +88,18 @@ internal sealed class SourceJensenPositiveExtensionDocument : IScribeDocumentDef
 
     private static Formula LAll(string x, Formula t, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), t, body);
-    private static Formula LCall(string name, params Formula[] args) => new Formula.Apply(F.Id(name), args);
+    private static Formula LCall(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
     private static Formula LaguerrePredicate => LCall("LaguerreAt", F.Id("p"), F.Id("x"));
     private static Formula RealPolynomials => Seq(Reals, OpenBracket, F.Id("X"), CloseBracket);
-    private static Formula LaguerreDefinition() => Disp(LAll("p", RealPolynomials, LAll("x", Reals,
-        Equal(LaguerrePredicate, new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual,
-            Subtract(new Formula.Power(LCall("eval", LCall("derivative", F.Id("p")), F.Id("x")), D(2)),
-                Multiply(LCall("eval", F.Id("p"), F.Id("x")),
-                    LCall("eval", LCall("derivative", LCall("derivative", F.Id("p"))), F.Id("x"))))))));
+    private static Formula LaguerreDefinition()
+    {
+        var p = F.Id("p"); var x = F.Id("x");
+        var first = LCall("eval", LCall("derivative", p), x);
+        var second = LCall("eval", LCall("derivative", LCall("derivative", p)), x);
+        var expression = Subtract(new Formula.Power(first, D(2)), Multiply(LCall("eval", p, x), second));
+        var nonnegative = new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, expression);
+        return Disp(LAll("p", RealPolynomials, LAll("x", Reals, Equal(LaguerrePredicate, nonnegative))));
+    }
     private static Formula LaguerreStatement() => Disp(LAll("p", RealPolynomials,
         new Formula.Logic(LCall("Splits", F.Id("p")), FormulaLogicOperator.Implies,
             LAll("x", Reals, LaguerrePredicate))));
