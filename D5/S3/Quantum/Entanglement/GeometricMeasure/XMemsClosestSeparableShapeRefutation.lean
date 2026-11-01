@@ -135,7 +135,8 @@ private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
     have he (k : Fin 3) : ‖p k 0 1‖ ^ 2 ≤ a k * b k := by
       simpa only [Complex.normSq_eq_norm_sq, a, b] using
         D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound (hp k).1 0 1
-    simpa [product, norm_prod, ← Finset.prod_pow, Fin.prod_univ_succ, mul_pow] using
+    dsimp only [product]
+    simpa [norm_prod, Fin.prod_univ_succ, mul_pow] using
       Finset.prod_le_prod₀ (fun k (_ : k ∈ Finset.univ) => sq_nonneg ‖p k 0 1‖)
         (fun k (_ : k ∈ Finset.univ) => he k)
   have he : (∏ k, a k * b k) =
@@ -218,10 +219,10 @@ private theorem shape_distance (a b : ℝ) (d : ℂ) :
         3 * ((1 - a - b) / 3) ^ 2 + 2 * ((11 / 112 - d.re) ^ 2 + d.im ^ 2) := by
   rw [hsSq_entries]
   simp only [sum_words]
-  norm_num [xmems, cssShape, Complex.normSq_apply,
+  dsimp only [xmems, cssShape]
+  norm_num [Complex.normSq_apply,
     show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide,
-    Fin.exists_fin_succ]
+    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide]
   ring
 
 private theorem shape_lower (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ)
@@ -229,10 +230,9 @@ private theorem shape_lower (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ
     (109 / 23520 : ℝ) ≤ hsSq (xmems 3 (11 / 112)) σ := by
   obtain ⟨a, b, d, _, _, _, _, _, _, rfl⟩ := hs
   have hd := separable_bounds (cssShape 3 a b d) hσ
-  norm_num [cssShape,
-    show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide,
-    Fin.exists_fin_succ] at hd
+  dsimp only [cssShape] at hd
+  norm_num [show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
+    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide] at hd
   rw [shape_distance]
   nlinarith only [hd, sq_nonneg (a / 2 - 3 / 16), sq_nonneg (b / 3 - 3 / 16),
     sq_nonneg ((1 - a - b) / 3 - 1 / 48), sq_nonneg (d.re - 1 / 16), sq_nonneg d.im]
@@ -263,14 +263,16 @@ private theorem star_character (c : ZMod 3) :
 private theorem localState_entry (t : ℝ) (c : ZMod 3) (i j : Fin 2) :
     localState t c i j = (magnitude t i * magnitude t j : ℝ) *
       ZMod.stdAddChar (c * ((i.val : ZMod 3) - (j.val : ZMod 3))) := by
-  simp only [localState, Matrix.vecMulVec_apply, Pi.star_apply, localVector, star_mul',
-    star_character, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
+  dsimp only [localState]
+  simp only [Matrix.vecMulVec_apply, Pi.star_apply]
+  dsimp only [localVector]
+  simp only [star_mul', star_character, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
   rw [mul_sub, sub_eq_add_neg, AddChar.map_add_eq_mul]
   ring
 
 private theorem magnitude_sq (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (i : Fin 2) :
     magnitude t i ^ 2 = if i = 0 then t else 1 - t := by
-  unfold magnitude
+  dsimp only [magnitude]
   split_ifs
   · exact Real.sq_sqrt ht
   · exact Real.sq_sqrt (sub_nonneg.mpr ht1)
@@ -280,7 +282,7 @@ private theorem localState_density (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) (c :
   refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
   simp only [Matrix.trace, Matrix.diag, Fin.sum_univ_succ, Fin.sum_univ_zero,
     localState_entry]
-  norm_num [← Complex.ofReal_mul, ← Complex.ofReal_add, ← pow_two, magnitude_sq t ht ht1]
+  norm_num [← pow_two, magnitude_sq t ht ht1]
 
 private def phaseProduct (a b : ZMod 3) :
     Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ :=
@@ -301,9 +303,10 @@ private theorem phaseProduct_entry (a b : ZMod 3) (x y : Fin 3 → Fin 2) :
         (ZMod.stdAddChar (a * (((x 0).val : ZMod 3) - ((y 0).val : ZMod 3))) *
           ZMod.stdAddChar (b * (((x 1).val : ZMod 3) - ((y 1).val : ZMod 3))) *
           ZMod.stdAddChar ((-a-b) * (((x 2).val : ZMod 3) - ((y 2).val : ZMod 3)))) := by
-      simp only [phaseProduct, product, Fin.prod_univ_succ, Fin.prod_univ_zero,
+      dsimp only [phaseProduct, product, wordMagnitude]
+      simp only [Fin.prod_univ_succ, Fin.prod_univ_zero,
         Matrix.cons_val_zero, Matrix.cons_val_succ, mul_one, localState_entry,
-        wordMagnitude, Complex.ofReal_mul, Fin.succ_zero_eq_one, Fin.succ_one_eq_two]
+        Complex.ofReal_mul, Fin.succ_zero_eq_one, Fin.succ_one_eq_two]
       ring
     _ = _ := by
       rw [← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
@@ -342,7 +345,8 @@ private theorem wordMagnitude_sq (x : Fin 3 → Fin 2) :
       (if x 0 = 0 then 9 / 10 else 1 / 10) *
       (if x 1 = 0 then 199 / 400 else 201 / 400) *
       (if x 2 = 0 then 199 / 400 else 201 / 400) := by
-  simp only [wordMagnitude, mul_pow,
+  dsimp only [wordMagnitude]
+  simp only [mul_pow,
     magnitude_sq (9 / 10) (by norm_num) (by norm_num),
     magnitude_sq (199 / 400) (by norm_num) (by norm_num)]
   norm_num
@@ -355,7 +359,8 @@ private theorem corner_magnitude : wordMagnitude ![0,0,0] * wordMagnitude ![1,1,
   calc
     _ = (Real.sqrt (9 / 10) * Real.sqrt (1 / 10)) *
         Real.sqrt (199 / 400) ^ 2 * Real.sqrt (201 / 400) ^ 2 := by
-      norm_num [wordMagnitude, magnitude]
+      dsimp only [wordMagnitude, magnitude]
+      norm_num
       ring
     _ = _ := by rw [hr, Real.sq_sqrt (by norm_num), Real.sq_sqrt (by norm_num)]; norm_num
 
@@ -375,11 +380,11 @@ private theorem tau_mixture : tau =
   rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, phase_average_entry]
   rcases word_cases x with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     rcases word_cases y with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
-    norm_num [tau, wordIndex, product, Fin.prod_univ_succ, localState_entry,
-      magnitude, wordMagnitude_sq, ← pow_two, corner_magnitude, hc,
-      show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-      show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide,
-      Complex.real_smul, ← Complex.ofReal_mul]
+    dsimp only [tau, wordIndex, product] <;>
+    simp only [Fin.prod_univ_succ, Fin.prod_univ_zero, localState_entry] <;>
+    dsimp only [magnitude] <;>
+    norm_num [wordMagnitude_sq, ← pow_two, corner_magnitude, hc,
+      Complex.real_smul]
 
 private theorem tau_separable : tau ∈ FullySeparable 3 := by
   have hp (a b : ZMod 3) : phaseProduct a b ∈ FullySeparable 3 := by
@@ -415,10 +420,10 @@ private theorem tau_distance : hsSq (xmems 3 (11 / 112)) tau =
     (417965512477 / 90316800000000 : ℝ) := by
   rw [hsSq_entries]
   simp only [sum_words]
-  norm_num [xmems, tau, wordIndex, Complex.normSq_apply,
+  dsimp only [xmems, tau, wordIndex]
+  norm_num [Complex.normSq_apply,
     show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by decide,
-    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide,
-    Fin.exists_fin_succ]
+    show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by decide]
 
 private theorem distance_gap : (417965512477 / 90316800000000 : ℝ) < 109 / 23520 := by
   norm_num
