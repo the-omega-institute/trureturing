@@ -620,18 +620,43 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
           Matrix.diagonal_apply, Fin.succ_inj, shift2]
       have row (j : Fin (s + 1 + r)) :
           (joinedPath bL bR a (r + 2) s).charmatrix 0 j.succ.succ = 0 := by
-        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
-          joinedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
+        have hn : (0 : Fin (s + 1 + (r + 2))) ≠ j.succ.succ := by
+          intro he
+          have hv := congrArg Fin.val he
+          simp only [Fin.val_zero, Fin.val_succ] at hv
+          omega
+        rw [Matrix.charmatrix_apply_ne hn]
+        have hm : joinedPath bL bR a (r + 2) s 0 j.succ.succ = 0 := by
+          unfold joinedPath
+          rw [if_neg hn]
+          dsimp only [Fin.val_zero, Fin.val_succ]
+          rw [if_neg (show ¬ (0 + 1 = j.val + 1 + 1) by omega),
+            if_neg (show ¬ (j.val + 1 + 1 + 1 = 0) by omega)]
+        rw [hm, map_zero, neg_zero]
       have col (i : Fin (s + 1 + r)) :
           (joinedPath bL bR a (r + 2) s).charmatrix i.succ.succ 0 = 0 := by
-        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
-          joinedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
+        have hn : i.succ.succ ≠ (0 : Fin (s + 1 + (r + 2))) := by
+          intro he
+          have hv := congrArg Fin.val he
+          simp only [Fin.val_zero, Fin.val_succ] at hv
+          omega
+        rw [Matrix.charmatrix_apply_ne hn]
+        have hm : joinedPath bL bR a (r + 2) s i.succ.succ 0 = 0 := by
+          unfold joinedPath
+          rw [if_neg hn]
+          dsimp only [Fin.val_zero, Fin.val_succ]
+          rw [if_neg (show ¬ (i.val + 1 + 1 + 1 = 0) by omega),
+            if_neg (show ¬ (0 + 1 = i.val + 1 + 1) by omega)]
+        rw [hm, map_zero, neg_zero]
+      have hone : (1 : Fin (s + 1 + (r + 2))).val = 1 := by
+        change 1 % (s + 1 + (r + 2)) = 1
+        exact Nat.mod_eq_of_lt (by omega)
       have diag : (joinedPath bL bR a (r + 2) s).charmatrix 0 0 = X := by
         simp [Matrix.charmatrix_apply_eq, joinedPath]
       have upper : (joinedPath bL bR a (r + 2) s).charmatrix 0 1 = -C (bL 0) := by
-        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath, hone]
       have lower : (joinedPath bL bR a (r + 2) s).charmatrix 1 0 = -C (bL 0) := by
-        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath, hone]
       unfold Matrix.charpoly
       rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
         _ row col, minor1, minor2, diag, upper, lower]
@@ -641,5 +666,41 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
       rw [h1, h0, continuant_front (fun k => bL k ^ 2) (r + 1),
         continuant_front (fun k => bL k ^ 2) r, map_pow]
       ring
+
+private lemma continuant_derivative (b db : ℕ → ℝ) (n : ℕ) (x : ℝ) :
+    HasDerivAt (fun t : ℝ => (continuant (fun k => (b k + t * db k) ^ 2) n).eval x)
+      ((variation (fun k => b k ^ 2) (fun k => 2 * b k * db k) n).eval x) 0 := by
+  induction n using Nat.twoStepInduction with
+  | zero => simpa [continuant, variation] using hasDerivAt_const (0 : ℝ) (1 : ℝ)
+  | one => simpa [continuant, variation] using hasDerivAt_const (0 : ℝ) x
+  | more n h0 h1 =>
+      have he : HasDerivAt (fun t : ℝ => (b n + t * db n) ^ 2) (2 * b n * db n) 0 := by
+        convert (((hasDerivAt_id (0 : ℝ)).mul_const (db n)).const_add (b n)).pow 2 using 1 <;>
+          simp <;> ring
+      convert (h1.const_mul x).sub (he.mul h0) using 1 <;>
+        simp [continuant, variation] <;> ring
+
+/-- The algebraic joined variation is the actual first derivative of every
+spectral evaluation of the characteristic polynomial along arbitrary edge and
+central-loop perturbations. Squared-edge variations are `2*b*db`. -/
+theorem joined_path_charpoly_derivative (bL bR dbL dbR : ℕ → ℝ)
+    (a da : ℝ) (r s : ℕ) (x : ℝ) :
+    HasDerivAt (fun t : ℝ =>
+      ((joinedPath (fun k => bL k + t * dbL k) (fun k => bR k + t * dbR k)
+        (a + t * da) r s).charpoly).eval x)
+      ((joinedVariation (fun k => bL k ^ 2) (fun k => bR k ^ 2)
+        (fun k => 2 * bL k * dbL k) (fun k => 2 * bR k * dbR k) a da r s).eval x) 0 := by
+  have hL := continuant_derivative bL dbL r x
+  have hL1 := continuant_derivative bL dbL (r + 1) x
+  have hR := continuant_derivative bR dbR s x
+  have hR1 := continuant_derivative bR dbR (s + 1) x
+  have ha : HasDerivAt (fun t : ℝ => x + (a + t * da)) da 0 := by
+    simpa using (((hasDerivAt_id (0 : ℝ)).mul_const da).const_add a).const_add x
+  convert ((hL1.mul hR).add (hL.mul hR1)).sub ((ha.mul hL).mul hR) using 1
+  · funext t
+    simp only [joined_path_charpoly, eval_add, eval_sub, eval_mul, eval_X, eval_C]
+  · simp only [joinedVariation, eval_add, eval_sub, eval_mul, eval_neg, eval_X, eval_C,
+      zero_mul, add_zero]
+    ring
 
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath

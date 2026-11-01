@@ -625,4 +625,102 @@ def joinedMatrixRegistration :
   familyRecord := none
   options := #[]
 
+structure TangentParams where
+  bL : ℕ → ℝ
+  bR : ℕ → ℝ
+  dbL : ℕ → ℝ
+  dbR : ℕ → ℝ
+  a : ℝ
+  da : ℝ
+  r : ℕ
+  s : ℕ
+  x : ℝ
+
+abbrev tangentSignature : DependentFamily.Signature where
+  Params := TangentParams
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def tangentActual : DependentFamily.Realization tangentSignature :=
+  DependentFamily.realize tangentSignature
+    (fun _ p t => ((joinedPath (fun k => p.bL k + t * p.dbL k)
+      (fun k => p.bR k + t * p.dbR k) (p.a + t * p.da) p.r p.s).charpoly).eval p.x)
+    (fun e => nomatch e)
+
+abbrev tangentArena : DependentFamily.Arena where
+  signature := tangentSignature
+  Law := fun R => ∀ (bL bR dbL dbR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) (x : ℝ),
+    HasDerivAt (fun t : ℝ => R.readout () ⟨bL, bR, dbL, dbR, a, da, r, s, x⟩ t)
+      ((joinedVariation (fun k => bL k ^ 2) (fun k => bR k ^ 2)
+        (fun k => 2 * bL k * dbL k) (fun k => 2 * bR k * dbR k) a da r s).eval x) 0
+
+abbrev tangentSourceScope := type_of% (@joined_path_charpoly_derivative)
+
+lemma tangent_source_bridge : tangentSourceScope ↔ tangentArena.Law tangentActual := Iff.rfl
+
+lemma tangent_actual_positive : tangentArena.Law tangentActual :=
+  tangent_source_bridge.mp joined_path_charpoly_derivative
+
+def tangentRejected : DependentFamily.Realization tangentSignature :=
+  DependentFamily.realize tangentSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+lemma tangent_rejected_law : ¬ tangentArena.Law tangentRejected := by
+  intro h
+  have he := h (fun _ => 0) (fun _ => 0) (fun _ => 0) (fun _ => 0) 0 1 0 0 0
+  change HasDerivAt (fun _ : ℝ => 0) _ 0 at he
+  have hc := he.unique (hasDerivAt_const (0 : ℝ) (0 : ℝ))
+  norm_num [joinedVariation, continuant, variation] at hc
+
+lemma tangent_dependence :
+    DependentFamily.ObservationalDependence tangentSignature tangentActual := by
+  intro role
+  refine ⟨⟨(fun _ => 0), (fun _ => 0), (fun _ => 0), (fun _ => 0), 0, 1, 0, 0, 0⟩,
+    0, 1, ?_⟩
+  norm_num [tangentActual, DependentFamily.realize, joined_path_charpoly, continuant]
+
+def tangentFamilyRegistration : DependentFamily.Registration tangentArena tangentSourceScope where
+  actual := tangentActual
+  bridge := tangent_source_bridge
+  variation := ⟨tangent_actual_positive, tangentRejected, tangent_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨tangentRejected, ?_, rfl, tangent_rejected_law⟩
+      intro index hne
+      exact False.elim (hne (Subsingleton.elim _ _))
+    · intro e; exact nomatch e
+  dependence := tangent_dependence
+
+def tangentRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@joined_path_charpoly_derivative) (DependentFamily.Realization tangentSignature) Type Unit where
+  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.joined_path_charpoly_derivative.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.tangentFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨tangentArena⟩
+  objectArena := .source ⟨tangentArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source tangentArena ⟨tangentFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize tangentSignature
+    (fun _ p t => ((joinedPath (fun k => p.bL k + t * p.dbL k)
+      (fun k => p.bR k + t * p.dbR k) (p.a + t * p.da) p.r p.s).charpoly).eval p.x)
+    (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := some ℝ
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
