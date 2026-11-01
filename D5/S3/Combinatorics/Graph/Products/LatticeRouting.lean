@@ -276,25 +276,6 @@ theorem strong_paths_iff {n m : ℕ} (p q : Fin n × Fin m) :
   simp only [abs_eq_max_neg, max_def]
   split_ifs <;> omega
 
-/-- Finite rectangle bounds are actual integer inequalities, not an assumed embedding. -/
-def rectangleEmbedding {V : Type} (G : SimpleGraph V) (c : V → Point)
-    (hinj : Function.Injective c)
-    (hadj : ∀ v w, G.Adj v w ↔ squareAdj (c v) (c w))
-    {n m : ℕ}
-    (hb : ∀ v, 0 ≤ (rotate (c v)).1 ∧ (rotate (c v)).1 < n ∧
-      0 ≤ (rotate (c v)).2 ∧ (rotate (c v)).2 < m) :
-    G ↪g strongProduct (SimpleGraph.pathGraph n) (SimpleGraph.pathGraph m) where
-  toFun v := finPoint (rotate (c v)) (hb v)
-  inj' v w h := by
-    apply hinj
-    apply rotate_injective
-    have h' := congrArg (fun x : Fin n × Fin m => ((x.1.val : ℤ), (x.2.val : ℤ))) h
-    simpa only [finPoint_cast] using h'
-  map_rel_iff' := by
-    intro v w
-    rw [strong_paths_iff, finPoint_cast, finPoint_cast, rotation_adjacency]
-    exact (hadj v w).symm
-
 /-- Explicit conversion from the paper's `{1,...,n}` labels to `Fin n`.
 The supplied rotation has extrema 1 and n, so this conversion is essential. -/
 def zeroBased (p : Point) : Point := (p.1 - 1, p.2 - 1)

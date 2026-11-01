@@ -695,38 +695,6 @@ theorem actual_T_bounds (v : Vertex) :
   exact of_decide_eq_true
     ((List.all_eq_true.mp boundary_check_success) v (subdivision.mem_vertices v))
 
-def xmaxWitness : Vertex := .inr ⟨⟨161, by decide⟩, ⟨363, by decide⟩⟩
-
-theorem literal_T_xmax : (rotate (coordinate xmaxWitness)).1 = 9337 := by decide
-
-theorem literal_T_not_strict_x_bound :
-    ¬ (∀ v : Vertex, (rotate (coordinate v)).1 < 9337) := by
-  intro h
-  have hw := h xmaxWitness
-  rw [literal_T_xmax] at hw
-  omega
-
-def ymaxWitness : Vertex := .inr ⟨⟨159, by decide⟩, ⟨99, by decide⟩⟩
-
-theorem literal_T_ymax : (rotate (coordinate ymaxWitness)).2 = 9061 := by decide
-
-theorem literal_T_not_strict_y_bound :
-    ¬ (∀ v : Vertex, (rotate (coordinate v)).2 < 9061) := by
-  intro h
-  have hw := h ymaxWitness
-  rw [literal_T_ymax] at hw
-  omega
-
-
-theorem actual_Fin_bounds (v : Vertex) :
-    0 ≤ (zeroBased (rotate (coordinate v))).1 ∧
-      (zeroBased (rotate (coordinate v))).1 < 9337 ∧
-    0 ≤ (zeroBased (rotate (coordinate v))).2 ∧
-      (zeroBased (rotate (coordinate v))).2 < 9061 := by
-  have h := actual_T_bounds v
-  dsimp [zeroBased]
-  omega
-
 def rectangle : SimpleGraph (Fin 9337 × Fin 9061) :=
   strongProduct (SimpleGraph.pathGraph 9337) (SimpleGraph.pathGraph 9061)
 
@@ -735,12 +703,6 @@ also has n vertices, labelled 0,...,n-1. The explicit conversion preserves n. -/
 def inducedEmbedding : RoutedGraph ↪g rectangle :=
   oneBasedRectangleEmbedding RoutedGraph coordinate exact_square_routing.1
     exact_square_routing.2 actual_T_bounds
-
-/-- The literal, unnormalized T is also retained with its valid strict Fin bounds. -/
-def literalTEmbedding : RoutedGraph ↪g
-    strongProduct (SimpleGraph.pathGraph 9338) (SimpleGraph.pathGraph 9062) :=
-  rectangleEmbedding RoutedGraph coordinate exact_square_routing.1 exact_square_routing.2
-    (fun v => by have h := actual_T_bounds v; omega)
 
 def selected : Set (Fin 9337 × Fin 9061) := Set.range inducedEmbedding
 
