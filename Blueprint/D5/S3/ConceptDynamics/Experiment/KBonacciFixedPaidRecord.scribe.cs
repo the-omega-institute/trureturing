@@ -85,7 +85,7 @@ internal sealed class KBonacciFixedPaidRecordDocument : IScribeDocumentDefinitio
             Def("label",Bound(All("u",bits,All("r",Fin,All("t",Fin,
                 Seq(Eqn(Call("label",u),Call("some",Seq(Open,F.Id("r"),Comma,F.Id("t"),Close))),Sp,Iff,Sp,
                     Eqn(Call("live",u),Call("endpoint",Seq(K,Minus,D(1),Minus,F.Id("r")),F.Id("t")))))))),
-                "When the actual cumulative word operator is a nonzero endpoint E(p,t), its label is (k - 1 - p,t), representing source prefix length j = k - p. Otherwise the label is none. Only nonempty window prefixes are used; their operator is either zero or such an endpoint by the actual endpoint theorem."),
+                "The endpoint E(p,t) has entry one precisely when its row i equals t and its source column s satisfies s + p < k; all other entries are zero. When the actual cumulative word operator is this nonzero endpoint, its label is (k - 1 - p,t), representing source prefix length j = k - p. Otherwise the label is none. Only nonempty window prefixes are used; their operator is either zero or such an endpoint by the actual endpoint theorem."),
             Def("surviving",Bound(All("A",Arr,All("q",Seq(Fin,Sp,Times,Sp,Fin),
                 Seq(F.Id("q"),Sp,InMacro,Sp,Call("surviving",a),Sp,Iff,Sp,
                     Exists,Sp,u,Colon,Sp,bits,Comma,Sp,u,Sp,InMacro,Sp,

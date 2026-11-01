@@ -57,7 +57,7 @@ internal sealed class KBonacciPrefixCompletionDocument : IScribeDocumentDefiniti
             All("r", Fin, All("t", Fin, Seq(selected, Sp, Implies, Sp, productsEqual))));
         Formula worldLaw = Seq(
             OpenBrace, Open, c, Comma, F.Id("l"), Close, Colon, Sp,
-            Vec, Sp, Times, Sp, Vec, Sp, Vert, Sp, Open, All("i", Fin, Seq(D(0), Sp, Lt, Sp, Sub(c,i))), Close, Sp, Land, Sp,
+            Open, Vec, Close, Sp, Times, Sp, Open, Vec, Close, Sp, Vert, Sp, Open, All("i", Fin, Seq(D(0), Sp, Lt, Sp, Sub(c,i))), Close, Sp, Land, Sp,
             Open, All("i", Fin, Seq(D(0), Sp, Leq, Sp, Sub(F.Id("l"),i))), Close,
             Sp, Land, Sp, F.Id("l"), Sp, Neq, Sp, D(0), CloseBrace);
         return DocumentDefinition.Create(ScribeNode.Create(
