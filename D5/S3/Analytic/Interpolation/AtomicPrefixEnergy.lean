@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Interpolation/AtomicPrefixEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.Set,
-     mathlib/module/Mathlib.MeasureTheory.Group.Integral]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.Set, mathlib/module/Mathlib.MeasureTheory.Group.Integral]
    utility: none
    digest: Exact shifted hinge, exponential energy and coercivity for zero-mass complex atoms. -/
 
