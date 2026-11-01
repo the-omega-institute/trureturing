@@ -504,6 +504,8 @@ def main(argv=None):
     removal.add_argument("--force", action="store_true")
     removal.add_argument("--preview", action="store_true")
     removal.add_argument("--expected", action="append", default=[])
+    pending = commands.add_parser("removal-pending")
+    pending.add_argument("--path", type=Path, required=True)
     qualification = commands.add_parser("qualify")
     qualification.add_argument("--path", action="append", type=Path, required=True)
     qualification.add_argument("--stream", action="store_true")
@@ -561,6 +563,9 @@ def main(argv=None):
                 result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 0
+        elif options.action == "removal-pending":
+            from worktree_preservation import removal_pending
+            print(json.dumps(removal_pending(options)), flush=True)
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
