@@ -201,7 +201,7 @@ theorem cusp_quadratic_limit :
     (hw.mono fun t ht => hasDerivAt_R ht.1 ht.2)
     (Eventually.of_forall fun t => by
       convert (hasDerivAt_id t).pow 2 using 1 <;> ring)
-    (hw.mono fun t ht => by dsimp; positivity) _ _ hfirst
+    (hw.mono fun t ht => (mul_pos (by norm_num : (0 : ℝ) < 2) ht.1).ne') _ _ hfirst
   · simpa [R_zero] using R_continuous.continuousAt.tendsto.mono_left
       (y := 𝓝[>] 0) nhdsWithin_le_nhds
   · simpa using (show ContinuousAt (fun t : ℝ => t ^ 2) 0 by
