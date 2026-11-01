@@ -82,7 +82,10 @@ internal sealed class StabilizerAsymmetryShannonBoundRefutationDocument : IScrib
                             + "the zero matrix is strictly upper triangular because every entry is zero. "
                             + "The two entropy values would give 4 log 2 − (9/8) log 3 ≤ 2 log 2, "
                             + "contradicting the strict logarithmic inequality. Thus the Shannon lower bound fails already for k = N = 3 and R = I."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tarabunga-frau-haug-tirrito-piroli-2025-shannon-branch-bound"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("shannon-bound-" + id), DeclarationHandle.Create(Prefix + declaration),
