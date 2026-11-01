@@ -18,6 +18,30 @@ Mathlib revision selected by this repository's `lake-manifest.json`, delete that
 adapted declaration and replace its uses with direct references to the selected
 Mathlib declaration.
 
+The exact Catalan count cone in
+`D5/S3/Geometry/Polygons/PolygonCatalanSupplier.lean` retains the original
+copyright and author headers of Ashvin A. Swaminathan and Alexey Sorokin.
+The immutable source is https://github.com/AxiomMath/ClusterAlgebras/tree/a9174706bce3bcb0fa342b4614f98ef2acb7f91c.
+There is no NOTICE file in its 513-file source tree. The complete LICENSE has
+SHA-256 `c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c`.
+The source pins Lean 4.31.0; this repository selects Lean 4.35.0 and Mathlib
+`56a005855ea17e0b0958f73ec801ae140b0a1679`. This is a source transplant.
+
+| Source | Source SHA-256 | Retained source lines |
+| --- | --- | --- |
+| `ClusterAlgebras/PolygonTriangulation.lean` | `55028ccea628bbb03a4a280ea592312b73a5556e8778eb0e233f560925bf7274` | 47–50, 56–83, 88–95, 143–153 |
+| `ClusterAlgebras/TypeA/Catalan.lean` | `a2619b6452e3915dcd11a4d77b1ffb3eee874760369a3fc3ed2c301a51334d82` | 27–46 |
+| `ClusterAlgebras/TypeA/Interval.lean` | `f634c80fe40b42acfb3ccbd8335fbfde1bd8d97515471732275873f04ea9faeb` | 51–555 |
+| `ClusterAlgebras/TypeA/Polygon.lean` | `a9308cdc283b71be372d254ee8098700188e8569017d869f5b65769d54956364` | 62–67, 74–239, 286–304, 347–387, 415–458 |
+| `ClusterAlgebras/TypeA/Flips.lean` | `0d9969e370379d31abb3248e5e6dad19404e621c69fb90309ef2e6adf06481f7` | 535–548 |
+
+Only module/import/public/attribute and namespace-boundary metadata are
+adapted. Original declaration names and proof bodies are retained. Fan and
+flip declarations are excluded. The consumer identifies the complete original
+triangulation carrier by the identity on chord sets and applies
+`ClusterAlgebras.TypeA.encard_setOf_isTriangulation`; `catalanNumber` is
+extensionally and definitionally Mathlib's `catalan`.
+
 The adapted source is distributed under the Apache License, Version 2.0 below.
 
                                  Apache License
