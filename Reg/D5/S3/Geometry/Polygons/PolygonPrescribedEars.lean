@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import D5.S3.Geometry.Polygons.PolygonPrescribedEars
 import D5.S3.Geometry.Polygons.PolygonCompressionTrace
 
+/-! The complete existential telescope with its actual complete-ear observation. -/
+
 namespace Reg.D5.S3.Geometry.Polygons.PolygonPrescribedEars
 open _root_.D5.S3.Geometry.Polygons
 open PolygonEarSlide PolygonEarSlide.Carrier PolygonEarSlide.Actual PolygonEarContraction
@@ -44,7 +46,7 @@ private theorem sample_compatible : Compatible ({0, 2, 4} : Finset (ZMod 14)) :=
   intro i hi j hj _ hc
   have h := (PolygonCompressionTrace.cross_ear_iff_adjacent (by decide) i j).mp hc
   simp only [mem_insert, mem_singleton] at hi hj
-  rcases hi with rfl | rfl | rfl <;> rcases hj with rfl | rfl | rfl <;> norm_num at h
+  rcases hi with rfl | rfl | rfl <;> rcases hj with rfl | rfl | rfl <;> revert h <;> decide
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -52,7 +54,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by decide) (by decide)
   change (∅ : Finset (ZMod 14)) = {0, 2, 4} at he
   have h0 : (0 : ZMod 14) ∈ (∅ : Finset (ZMod 14)) := by rw [he]; simp
-  exact not_mem_empty _ h0
+  simpa using h0
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -61,7 +63,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro h
   have hi : (0 : ZMod 14) ∈ EarCenters {ear (0 : ZMod 14)} := by simp
   rw [← h] at hi
-  simpa [EarCenters] using hi
+  simp [EarCenters] at hi
 
 def source_registration :
     Registration arena (type_of% @_root_.D5.S3.Geometry.Polygons.PolygonPrescribedEars.prescribed_complete_ears) where
@@ -113,4 +115,5 @@ def registration : Contract.Registration
   familyRecord := none
   options := #[]}
 
+end
 end Reg.D5.S3.Geometry.Polygons.PolygonPrescribedEars
