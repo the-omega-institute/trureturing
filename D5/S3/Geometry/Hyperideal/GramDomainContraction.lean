@@ -68,7 +68,7 @@ private theorem c4_swapAC (a b c d e f : ℝ) :
   unfold c4
   ring
 
-private theorem twice_sqrt_product_le_add (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
+theorem twice_sqrt_product_le_add (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
     2*Real.sqrt (u*v) ≤ u+v := by
   calc
     2*Real.sqrt (u*v) = 2*Real.sqrt u*Real.sqrt v := by

@@ -26,6 +26,16 @@ has stronger hypotheses than Simon's original theorem. It is not the full
 original equivalence. Right-closed instead of open intervals represent
 the same Lebesgue almost-everywhere classes.
 
+The same Theorem 1 also has a compactness conclusion in C(0,T;B) for
+p = infinity. Section 1 defines this continuous-function space on the
+closed interval [0,T], while L-infinity is a space of almost-everywhere
+classes. The proof uses right means and opposite time directions. The
+theorem does not separately state an arbitrary-family continuous lifting
+with a common modulus and uniqueness in the absence of the integral
+compactness premise. The local-window consistency and representative
+construction in `IntervalLInfinityRepresentative` are derived arguments,
+without an originality claim or exact separate literature attestation.
+
 The equal-mesh estimate bounds the whole-interval power error by
 2 divided by the cell width times the integral, over positive shifts
 up to that width, of the internal translation power error. Its cells
