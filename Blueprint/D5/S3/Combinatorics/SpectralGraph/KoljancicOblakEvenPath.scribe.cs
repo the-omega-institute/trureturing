@@ -37,8 +37,10 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
                 "The actual characteristic polynomial of the weighted branch equals the continuant with squared edge parameters, in every order including zero and one. First-row expansion uses the existing det_sparse_front supplier in ForbiddenNeighbourDeterminant; both remaining principal submatrices have the same reversed-edge convention.", formula: Characteristic()),
             Node("joined-variation", "Complete central-loop variation", "joinedVariation", DescribeRole.Definition,
                 "Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. This is an algebraic carrier; the joined matrix characteristic correspondence is still required.", formula: JoinedDefinition()),
+            Node("joined-deformation", "Actual simultaneous algebraic perturbation", "deformedJoinedContinuant", DescribeRole.Definition,
+                "Replace the central loop by a plus z times da and each branch squared edge parameter by q plus z times dq in the joined expression. The outer polynomial variable is z and the inner variable X is spectral. In the formula C embeds into the applicable coefficient ring. The complete coefficient-one product rule identifies this perturbation coefficient with joinedVariation; that identity is consumed in the recovery theorem.", formula: JoinedDeformation()),
             Node("joined-recovery", "Separation of central and branch variations", "joined_variation_injective", DescribeRole.Theorem,
-                "For every pair of branch lengths with odd sum, nonzero central loop and nonzero branch edge parameters, coprime branch continuants make the complete joined variation injective. The recovered edge indices below each branch length include its attaching edge. No lower bound on either individual branch length is imposed. Reflection X to -X separates the odd part C(a) times the product variation plus C(da)UV. Its leading coefficient recovers da, after which coprimality and strict degree bounds separate both branch variations. Applying the same separation to the remaining adjacent continuants and using branch_variation_injective recovers all edge parameters. This theorem assumes coprimality; it does not construct the required branches or prove the complete nSSP claim.", formula: JoinedRecovery()),
+                "For every pair of branch lengths with odd sum, nonzero central loop and nonzero branch edge parameters, coprime branch continuants make the coefficient of z in the actual algebraic joined perturbation injective. The recovered edge indices below each branch length include its attaching edge. No lower bound on either individual branch length is imposed. The complete product rule first identifies that coefficient with joinedVariation. Reflection X to -X then separates the odd part C(a) times the product variation plus C(da)UV. Its leading coefficient recovers da, after which coprimality and strict degree bounds separate both branch variations. Applying the same separation to the remaining adjacent continuants and using branch_variation_injective recovers all edge parameters. This theorem assumes coprimality; it does not construct the required branches or prove the complete nSSP claim.", formula: JoinedRecovery()),
             Node("coprime", "Uniform positive coprime branch construction", "coprime_positive_branches", DescribeRole.Theorem,
                 "Every pair of lengths with odd sum admits two strictly positive squared-edge parameter sequences whose continuants are coprime. Put unit parameters on an even-length branch and a common positive parameter t on the other branch. The first branch has nonzero constant coefficient. The spectral resultant is a polynomial in t; at t=0 the other branch becomes X to its length, so the resultant is nonzero. A positive t outside its finite root set gives the required pair. Swapping the branches covers the other parity orientation. Zero and one lengths need no exceptions, and the final selected t is strictly positive; zero is used only to prove that the parameter polynomial is not identically zero.", formula: CoprimeBranches()),
             Paragraph(Text("The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
@@ -160,8 +162,22 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
         Formula body = Imp(Ne(a, D(0)), Imp(Call("Odd", Add(r, s)),
             Imp(Nonzero(ql, r), Imp(Nonzero(qr, s),
                 Imp(Call("IsCoprime", Call("continuant", ql, r), Call("continuant", qr, s)),
-                    Imp(Eq(Call("joinedVariation", ql, qr, dl, dr, a, da, r, s), D(0)), result))))));
+                    Imp(Eq(Call("coeff", Call("deformedJoinedContinuant", ql, qr, dl, dr, a, da, r, s), D(1)), D(0)), result))))));
         return JoinedBinders(body);
+    }
+
+    private static Formula JoinedDeformation()
+    {
+        Formula ql = V("qL"), qr = V("qR"), dl = V("dqL"), dr = V("dqR");
+        Formula a = V("a"), da = V("da"), r = V("r"), s = V("s");
+        Formula x = Call("C", V("X")), z = V("z");
+        Formula P(Formula q, Formula d, Formula n) => Call("deformedContinuant", q, d, n);
+        Formula u = P(ql, dl, r), v = P(qr, dr, s);
+        Formula loop = Add(Call("C", Call("C", a)), Mul(Call("C", Call("C", da)), z));
+        Formula expr = Sub(Sub(Mul(Mul(Sub(x, loop), u), v),
+            Mul(Sub(Mul(x, u), P(ql, dl, Add(r, D(1)))), v)),
+            Mul(u, Sub(Mul(x, v), P(qr, dr, Add(s, D(1))))));
+        return JoinedBinders(Eq(Call("deformedJoinedContinuant", ql, qr, dl, dr, a, da, r, s), expr));
     }
 
     private static Formula JoinedBinders(Formula body)

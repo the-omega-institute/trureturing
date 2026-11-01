@@ -363,7 +363,7 @@ abbrev joinedSignature : DependentFamily.Signature where
 
 def joinedActual : DependentFamily.Realization joinedSignature :=
   DependentFamily.realize joinedSignature
-    (fun _ p d => joinedVariation p.1.1 p.1.2 d.2.1 d.2.2 p.2.1 d.1 p.2.2.1 p.2.2.2)
+    (fun _ p d => (deformedJoinedContinuant p.1.1 p.1.2 d.2.1 d.2.2 p.2.1 d.1 p.2.2.1 p.2.2.2).coeff 1)
     (fun e => nomatch e)
 
 abbrev joinedArena : DependentFamily.Arena where
@@ -397,7 +397,8 @@ lemma joined_dependence :
   cases role
   refine ⟨(((fun _ => 1), (fun _ => 1)), (1, 0, 1)),
     (1, (fun _ => 0), (fun _ => 0)), (0, (fun _ => 0), (fun _ => 0)), ?_⟩
-  simp [joinedActual, DependentFamily.realize, joinedVariation, continuant, variation]
+  simp [joinedActual, DependentFamily.realize, deformedJoinedContinuant,
+    deformedContinuant, mul_coeff_one]
 
 def joinedFamilyRegistration : DependentFamily.Registration joinedArena joinedSourceScope where
   actual := joinedActual
@@ -427,7 +428,7 @@ def joinedRegistration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
   readout := some (DependentFamily.realize joinedSignature
-    (fun _ p d => joinedVariation p.1.1 p.1.2 d.2.1 d.2.2 p.2.1 d.1 p.2.2.1 p.2.2.2)
+    (fun _ p d => (deformedJoinedContinuant p.1.1 p.1.2 d.2.1 d.2.2 p.2.1 d.1 p.2.2.1 p.2.2.2).coeff 1)
     (fun e => nomatch e))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial

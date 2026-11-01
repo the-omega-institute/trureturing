@@ -237,6 +237,28 @@ def joinedVariation (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) : ℝ
     variation qL dqL r * (X * continuant qR s - continuant qR (s + 1)) -
     continuant qL r * (X * variation qR dqR s - variation qR dqR (s + 1))
 
+/-- Simultaneously perturb the loop and all squared edges in the joined
+branch expression. The outer variable is the perturbation parameter. -/
+def deformedJoinedContinuant (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) :
+    (ℝ[X])[X] :=
+  (C X - (C (C a) + C (C da) * X)) *
+      deformedContinuant qL dqL r * deformedContinuant qR dqR s -
+    (C X * deformedContinuant qL dqL r - deformedContinuant qL dqL (r + 1)) *
+      deformedContinuant qR dqR s -
+    deformedContinuant qL dqL r *
+      (C X * deformedContinuant qR dqR s - deformedContinuant qR dqR (s + 1))
+
+private lemma joined_linearization (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) :
+    (deformedJoinedContinuant qL qR dqL dqR a da r s).coeff 1 =
+      joinedVariation qL qR dqL dqR a da r s := by
+  simp [deformedJoinedContinuant, joinedVariation, mul_coeff_one,
+    (continuant_linearization qL dqL r).1, (continuant_linearization qL dqL r).2,
+    (continuant_linearization qR dqR s).1, (continuant_linearization qR dqR s).2,
+    (continuant_linearization qL dqL (r + 1)).1,
+    (continuant_linearization qL dqL (r + 1)).2,
+    (continuant_linearization qR dqR (s + 1)).1,
+    (continuant_linearization qR dqR (s + 1)).2] <;> ring
+
 private lemma coprime_separation (U V dU dV : ℝ[X]) (hUV : IsCoprime U V)
     (hdU : dU.degree < U.degree) (hdV : dV.degree < V.degree)
     (h : dU * V + U * dV = 0) : dU = 0 ∧ dV = 0 := by
@@ -256,8 +278,9 @@ theorem joined_variation_injective (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r
     (ha : a ≠ 0) (hodd : Odd (r + s))
     (hL : ∀ k < r, qL k ≠ 0) (hR : ∀ k < s, qR k ≠ 0)
     (hcop : IsCoprime (continuant qL r) (continuant qR s))
-    (hz : joinedVariation qL qR dqL dqR a da r s = 0) :
+    (hz : (deformedJoinedContinuant qL qR dqL dqR a da r s).coeff 1 = 0) :
     da = 0 ∧ (∀ k < r, dqL k = 0) ∧ (∀ k < s, dqR k = 0) := by
+  rw [joined_linearization] at hz
   let U := continuant qL r
   let V := continuant qR s
   let dU := variation qL dqL r
@@ -382,7 +405,8 @@ private lemma positive_coprime_right (r s : ℕ) (hr : Even r) :
   let B := U.map (C : ℝ →+* ℝ[X])
   let R := resultant B (parameterContinuant s) r s
   have hB (t : ℝ) : B.map (evalRingHom t) = U := by
-    simp [B, map_map]
+    ext k
+    simp [B]
   have hR (t : ℝ) : R.eval t =
       resultant U (continuant (fun _ => t) s) r s := by
     have hm := resultant_map_map B (parameterContinuant s) r s (evalRingHom t)
