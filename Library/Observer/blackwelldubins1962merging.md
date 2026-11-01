@@ -47,3 +47,14 @@ required. Decreasing fields and the further conditional-law bridges needed
 for the paper's predictive-merging theorem are outside this formal result.
 No literature novelty is claimed. The note cites mathematics only and
 reproduces no external implementation or paper text.
+
+## Verified locator
+
+DOI: 10.1214/aoms/1177704456
+
+DOI URL: https://doi.org/10.1214/aoms/1177704456
+
+Verified original full text: http://www.dklevine.com/archive/refs4565.pdf,
+Theorem 2, page 883, equation (2), including the joint almost-everywhere and
+L1 conclusions. The theorem locator is verified against this original-paper
+copy; the DOI and its URL identify the publication.
