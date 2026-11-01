@@ -4,8 +4,7 @@
    mirror-E: none(waiver:nearest-ray-comparison)
    anchors: []
    utility: none
-   digest: A finite-family squared-error comparison aggregates a two-term Hilbert--Schmidt decomposition.
- -/
+   digest: A finite-family squared-error comparison aggregates a two-term Hilbert--Schmidt decomposition. -/
 
 import D5.S3.Quantum.Recovery.FourPathWeightedEqualityRemainder
 import Mathlib.Analysis.InnerProductSpace.Basic
