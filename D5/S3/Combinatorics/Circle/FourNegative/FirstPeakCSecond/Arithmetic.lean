@@ -135,8 +135,10 @@ private theorem uniform_bounds (a b c d : ℕ)
         have hh := chart_small_corner 0 0 (H-1) 0 (by omega) (by omega) (by omega) (by omega)
         have hg : grain a 3 4 2=H := by simp [grain,grainExponent,corner,H]
         have hs : reserve a 3 4 2=11*H := by simp [reserve,corner,hg]; ring
-        convert hh using 1 <;> simp [show (1:ℤ)+(H-1)=H by ring,hg,hs] <;> try omega
-        all_goals first | simpa using hx | ring
+        have ha : a - 5 = a - 4 - 1 := by omega
+        convert hh using 1 <;>
+          simp [show (1:ℤ)+(H-1)=H by ring,hg,hs,ha] <;>
+          first | simpa using hx | ring | exact ha | omega
 
 private theorem reserve_capacity (a b c d : ℕ)
     (hd : 2≤d) (hdb : d<b) (hbc : b<c) (hca : c<a) :
@@ -209,10 +211,11 @@ private theorem later_gates (B L M D z H r : ℤ)
   | true =>
     change 0≤L-B-H*M ∧ 0≤2*B-L-1 at hthird
     dsimp only
-    simp only [if_pos rfl]
+    simp only [ite_true]
+    have hzhalf : (1 : ℤ) < z / 2 := by nlinarith [hz, hzdiv]
     have hrDz : z≤r*D := by
       nlinarith only [hr.1,hD,hz,mul_nonneg (show 0≤r-1 by omega) (show 0≤D by omega)]
-    refine ⟨by omega,by omega,g1,k1,?_,?_⟩
+    refine ⟨by omega,hzhalf,g1,k1,?_,?_⟩
     · constructor <;> nlinarith
     · constructor <;> nlinarith
   | false =>
@@ -233,7 +236,7 @@ private theorem later_gates (B L M D z H r : ℤ)
     have hrDz : z+1≤r*D := by
       nlinarith only [hr.1,hD,hz,mul_nonneg (show 0≤r-1 by omega) (show 0≤D by omega)]
     dsimp only
-    simp only [if_neg (by decide)]
+    simp only [ite_false]
     refine ⟨hw,hwcap,g1,k1,?_,?_⟩
     · constructor <;> nlinarith
     · constructor <;> nlinarith
