@@ -40,6 +40,10 @@ internal sealed class FullFutureProfileDocument : IScribeDocumentDefinition
     private static Formula App(string name, params Formula[] arguments) =>
         F.Seq(F.Operatorname, F.Sp, F.Grp(F.Id(name)), F.Open, F.Seq(arguments), F.Close);
 
+    private static Formula Let(string name, Formula type, Formula value) =>
+        F.Seq(F.Operatorname, F.Sp, F.Grp(F.Id("let")), F.Sp, F.Id(name), F.Colon, F.Sp,
+            type, F.Eq, value, F.Semi, F.Sp);
+
     private static Formula InstantStatement() => F.Disp(F.Seq(
         F.Forall, F.Sp, F.Id("B"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
         F.Id("x"), F.Comma, F.Id("y"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
@@ -59,6 +63,7 @@ internal sealed class FullFutureProfileDocument : IScribeDocumentDefinition
         F.Forall, F.Sp, F.Id("B"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
         F.Id("y"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
         F.D(1), F.Le, F.Sp, F.Id("B"), F.Land, F.Sp, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow, F.Sp,
+        Let("C", App("ProfileCell"), App("containingCell", F.Id("B"), F.Comma, F.Id("y"))),
         F.Open, App("Contains", F.Id("C"), F.Comma, App("representative", F.Id("C"))), F.Land, F.Sp,
         F.Open, F.Forall, F.Sp, F.Id("x"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
         App("Contains", F.Id("C"), F.Comma, F.Id("x")), F.Longrightarrow, F.Sp,
