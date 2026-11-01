@@ -119,7 +119,10 @@ private theorem native_bounds (a b s : ℕ) (hs : 2≤s)
   have hp0 := p0_power a b s hs ha hb hbs
   have hsafe : 1+epsilon a b≤p0 b s := by
     rw [hp0]
-    omega
+    calc
+      1+epsilon a b ≤ 2*lambda a b := by omega
+      _ ≤ 2^(b-s-1) := hlow
+      _ ≤ 2^(b-s-1)+2^(b-2*s) := Nat.le_add_right _ _
   have hpbound : p a b s≤H b s := by
     dsimp only [p,H]
     rw [hp0]
