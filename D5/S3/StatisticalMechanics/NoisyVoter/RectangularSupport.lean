@@ -62,16 +62,17 @@ private theorem K_spec (hG : G.Connected) :
       · rintro (rfl | ⟨w, hw, hv⟩)
         · simp
         · have hd := hG.dist_triangle (u := u) (v := w) (w := v)
-          rw [SimpleGraph.dist_eq_one_iff_adj.mpr (SimpleGraph.mem_neighborFinset.mp hw)] at hd
+          rw [SimpleGraph.dist_eq_one_iff_adj.mpr ((show G.Adj _ _ from by simpa only [SimpleGraph.mem_neighborFinset] using hw))] at hd
           have := (ih w v).mp hv
           omega
       · intro hv
         obtain ⟨p, hp⟩ := hG.exists_walk_length_eq_dist u v
         cases p with
         | nil => exact Or.inl rfl
-        | @cons w v huw p =>
+        | cons huw p =>
             right
-            refine ⟨w, SimpleGraph.mem_neighborFinset.mpr huw, (ih w v).mpr ?_⟩
+            refine ⟨_, by simpa only [SimpleGraph.mem_neighborFinset] using huw,
+              (ih _ _).mpr ?_⟩
             have hd := G.dist_le p
             simp only [SimpleGraph.Walk.length_cons] at hp
             omega
@@ -96,18 +97,25 @@ private theorem L_spec (u : V) (N : ℕ) (l : Label V) :
   | inr p =>
       rcases p with ⟨n, v⟩
       simp only [L, Finset.mem_union, Finset.mem_image, Finset.mem_biUnion,
-        Finset.mem_range, Sum.inl.injEq, Sum.inr.injEq, Sum.inl_ne_inr, false_and,
-        exists_false, false_or, Prod.mk.injEq]
+        Finset.mem_range]
       constructor
-      · rintro ⟨k, hk, w, hw, he, rfl⟩
-        have he' : k+1 = n.val := congrArg PNat.val he
-        exact ⟨by omega, hw⟩
+      · rintro (⟨w, hw, he⟩ | ⟨k, hk, w, hw, he⟩)
+        · cases he
+        · have he' := Sum.inr.inj he
+          have ht := congrArg (fun p : ℕ+ × V => p.1.val) he'
+          have hv := congrArg Prod.snd he'
+          dsimp at hv
+          exact ⟨by dsimp at ht; omega, hv ▸ hw⟩
       · rintro ⟨hn, hv⟩
-        refine ⟨n.val-1, by have := n.pos; omega, v, hv, ?_, rfl⟩
-        apply Subtype.ext
-        have := n.pos
-        simp only
-        omega
+        right
+        refine ⟨n.val-1, by have := n.pos; omega, v, hv, ?_⟩
+        congr 1
+        apply Prod.ext
+        · apply Subtype.ext
+          have := n.pos
+          change n.val - 1 + 1 = n.val
+          omega
+        · rfl
 
 private theorem rectangle_positive (u : V) (N : ℕ) :
     ∀ c ∈ rectangle G u N, positive c := by
@@ -142,7 +150,7 @@ private theorem inputs_subset_rectangle (hG : G.Connected) (u : V) (N : ℕ) :
       simp only [inputs, Finset.mem_union, Finset.mem_biUnion] at hc
       rcases hc with hc | ⟨w, hw, hc⟩
       · exact local_mem c hc
-      · have hadj := SimpleGraph.mem_neighborFinset.mp hw
+      · have hadj := (show G.Adj _ _ from by simpa only [SimpleGraph.mem_neighborFinset] using hw)
         have hd := hG.dist_triangle (u := u) (v := v) (w := w)
         rw [SimpleGraph.dist_eq_one_iff_adj.mpr hadj] at hd
         exact ih w (by omega) hc
@@ -159,7 +167,9 @@ private theorem source_in_L (hG : G.Connected)
       intro v hv ω
       simp only [source]
       split_ifs
-      · exact (L_spec u N _).mpr ⟨by omega, (K_spec hG _ _ _).mpr (by omega)⟩
+      · apply (L_spec u N _).mpr
+        change n+1 ≤ N ∧ v ∈ K G u N
+        exact ⟨by omega, (K_spec hG _ _ _).mpr (by omega)⟩
       · have hadj := (x (.choice (n+1) v) ω).property
         have hd := hG.dist_triangle (u := u) (v := v)
           (w := (x (.choice (n+1) v) ω).val)
@@ -170,12 +180,10 @@ private theorem source_in_L (hG : G.Connected)
 measurable reconstruction of all native opinion/source observations, including N=0.
 No probability or independence premise is needed for this pathwise prerequisite. -/
 theorem rectangular_history_support (hG : G.Connected)
-    (base : (c : Coord V) → Value G c) (u : V) (N : ℕ) :
+    (hNbr : ∀ v, ∃ w, G.Adj v w) (u : V) (N : ℕ) :
     (∀ v, v ∈ K G u N ↔ G.dist u v ≤ N) ∧ Countable V ∧
-    (∀ l, l ∈ L G u N ↔
-      match l with
-      | .inl v => v ∈ K G u N
-      | .inr p => p.1.val ≤ N ∧ p.2 ∈ K G u N) ∧
+    (∀ v, Sum.inl v ∈ L G u N ↔ v ∈ K G u N) ∧
+    (∀ (n : ℕ+) v, Sum.inr (n, v) ∈ L G u N ↔ n.val ≤ N ∧ v ∈ K G u N) ∧
     (∀ c ∈ rectangle G u N, positive c) ∧
     ∃ f : RectangleState G u N → Fin (N+1) → Bool × Label V,
       Measurable f ∧
@@ -183,6 +191,10 @@ theorem rectangular_history_support (hG : G.Connected)
         history x u N ω = f (restrictRectangle x u N ω) ∧
         ∀ s : Fin (N+1), source x s.val u ω ∈ L G u N := by
   classical
+  let base : (c : Coord V) → Value G c := fun c =>
+    match c with
+    | .initial _ | .fresh _ _ | .refresh _ _ => false
+    | .choice _ v => ⟨(hNbr v).choose, (hNbr v).choose_spec⟩
   have hsub : historyInputs (G := G) u N ⊆ rectangle G u N := by
     intro c hc
     obtain ⟨n, hn, hc⟩ := Finset.mem_biUnion.mp hc
@@ -193,7 +205,8 @@ theorem rectangular_history_support (hG : G.Connected)
   let restriction (z : RectangleState G u N) : InputState (G := G) u N :=
     fun c => z ⟨c.val, hsub c.property⟩
   let f := decode base u N ∘ restriction
-  refine ⟨K_spec hG N u, vertices_countable hG u, L_spec u N,
+  refine ⟨K_spec hG N u, vertices_countable hG u,
+    (fun v => L_spec u N (.inl v)), (fun n v => L_spec u N (.inr (n, v))),
     rectangle_positive u N, f, measurable_of_finite _, ?_⟩
   intro x ω
   constructor
