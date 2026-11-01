@@ -175,12 +175,8 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def identity_decidable (c : Perm (Fin 2)) : Decidable (c = 1) :=
-  decidable_of_iff (c 0 = 0 ∧ c 1 = 1)
-    (by simp only [Equiv.ext_iff, Fin.forall_fin_two, Perm.one_apply])
-
 def actual : Realization signature :=
-  realize signature (fun _ _ c => @decide (c = 1) (identity_decidable c))
+  realize signature (fun _ _ c => @decide (c = 1) (Classical.propDecidable _))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
