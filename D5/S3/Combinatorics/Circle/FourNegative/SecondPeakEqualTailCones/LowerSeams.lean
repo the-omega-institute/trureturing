@@ -53,12 +53,12 @@ private theorem lower_local_increments (x y z u c f e : ℤ)
   dsimp only
   constructor
   · intro r
-    fin_cases r <;> dsimp only [lowerAllocation,dot,successor,termOrder,Fin.castSucc]
+    fin_cases r <;> dsimp only [lowerAllocation,dot,successor,termOrder,Fin.castSucc] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
     · linear_combination (heads x y z 0)*hu+r0
     · linear_combination (heads x y z 3)*he+r3
     · linear_combination (heads x y z 1)*hu+r1
   · intro r
-    fin_cases r <;> dsimp only [lowerAllocation,dot,newSuccessor,termOrder,Fin.castSucc] <;> simp only [hn0]
+    fin_cases r <;> dsimp only [lowerAllocation,dot,newSuccessor,termOrder,Fin.castSucc] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] <;> simp only [hn0]
     · linear_combination (2*heads x y z 0)*hu+r4
     · linear_combination (newHeads x y z 3)*he+r7
     · linear_combination (newHeads x y z 1)*hu+r5
@@ -88,8 +88,9 @@ private theorem lower_cumulative_seams (x y z u c f e : ℤ)
   have b1 := h.2 1
   have b2 := h.2 2
   dsimp only [Fin.castSucc] at a0 a1 a2 b0 b1 b2 ⊢
+  simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at a0 a1 a2 b0 b1 b2
   constructor <;> funext r <;> fin_cases r <;>
-    dsimp only [doubledSeams] <;> linarith
+    dsimp only [doubledSeams] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] <;> linarith
 
 private theorem lower_last_seams (x y z u c f e : ℤ)
     (hu : 2*(u+1)=z) (hf : 2*(f+1)=y) (he : 2*(e+1)=x) :
@@ -105,6 +106,7 @@ private theorem lower_last_seams (x y z u c f e : ℤ)
   have r8 : newHeads x y z 0=2*heads x y z 0 := rfl
   rw [←hu,←hf,←he] at r0 r1 r2 r3 r4 r5 r6 r7 r8 ⊢
   dsimp only [doubledSeams,dot,lowerAllocation,successor,newSuccessor]
+  simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
   constructor
   · linear_combination r0+r1+r2+r3
   · linear_combination r4+r5+r6+r7-2*r8
@@ -207,7 +209,7 @@ private theorem lower_gate_bounds (x y z u c f e : ℤ)
   dsimp only [gate]
   rw [seams.1,seams.2]
   fin_cases r <;> fin_cases slot <;>
-    dsimp only [successor,newSuccessor] <;> change 0≤_ <;>
+    dsimp only [successor,newSuccessor] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] <;> change 0≤_ <;>
     dsimp only [A,B,L,M,Bn,Ln,Mn] at * <;>
     linarith only [p0,p1,p2,p3,o2,o2cap,o3,o3cap,n2,n2cap,n3,n3cap]
 

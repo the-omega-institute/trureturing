@@ -72,6 +72,7 @@ private theorem lower_polynomial_checks (x y z u c wf xf : ℤ)
   have b4 := hg 2 2
   have b5 := hg 2 3
   dsimp only [gate,doubledSeams] at a0 a1 a2 a3 a4 a5 b0 b1 b2 b3 b4 b5 ht
+  simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at a0 a1 a2 a3 a4 a5 b0 b1 b2 b3 b4 b5 ht
   dsimp only
   constructor
   · apply checks_four
@@ -82,7 +83,7 @@ private theorem lower_polynomial_checks (x y z u c wf xf : ℤ)
     · linarith [a3]
     · linarith [a4]
     · linarith [a5]
-    · dsimp only [successor]
+    · simp only [successor,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
       linarith
   · apply checks_four
     · linarith [ht.2]
@@ -92,7 +93,7 @@ private theorem lower_polynomial_checks (x y z u c wf xf : ℤ)
     · linarith [b3]
     · linarith [b4]
     · linarith [b5]
-    · dsimp only [newSuccessor]
+    · simp only [newSuccessor,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
       linarith
 
 private def lowerOldPackets (a b s : ℕ) : List (List ℕ×ℕ) :=

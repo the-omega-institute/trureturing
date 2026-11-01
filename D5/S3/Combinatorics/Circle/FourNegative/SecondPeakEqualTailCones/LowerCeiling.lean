@@ -98,7 +98,8 @@ private theorem lower_rounding_capacity (a b s : ℕ) (hs : 2≤s)
   have hc : M-L≤2*L*(lowerC a b s:ℤ) ∧
       2*L*(lowerC a b s:ℤ)≤M+L-1 := by
     have h := ceilMask_bounds (M-L) (2*L) (by omega) (by omega)
-    change M-L≤2*L*(lowerC a b s:ℤ) ∧ _ at h
+    change M-L≤2*L*(lowerC a b s:ℤ) ∧
+      2*L*(lowerC a b s:ℤ)≤M-L+2*L-1 at h
     constructor <;> linarith [h.1,h.2]
   have half : (2:ℤ)^b=2*(2:ℤ)^(b-1) := by
     conv_lhs => rw [show b=(b-1)+1 by omega,pow_succ]

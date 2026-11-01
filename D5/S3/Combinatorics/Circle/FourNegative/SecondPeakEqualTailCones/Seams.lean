@@ -48,6 +48,7 @@ private theorem last_seams (x y z u h p c f e : ℤ)
   have r8 : newHeads x y z 0=2*heads x y z 0 := rfl
   rw [←hu,←hf,←he] at r0 r1 r2 r3 r4 r5 r6 r7 r8 ⊢
   dsimp only [doubledSeams,dot,allocation,successor,newSuccessor]
+  simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
   constructor
   · linear_combination r0+r1+r2+r3
   · linear_combination r4+r5+r6+r7-2*r8
