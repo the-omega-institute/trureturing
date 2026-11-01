@@ -6,9 +6,9 @@ Minus-one physical joint transport with a periodic daughter
 
 **Theorem 1.1 (Minus-one physical joint transport with a periodic daughter).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening.periodic_daughter_joint_shortening`
+Lean statement: `D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening/Construction.periodic_daughter_joint_shortening`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening.periodic_daughter_joint_shortening` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening/Construction.periodic_daughter_joint_shortening` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,4 +34,4 @@ Full arbitrary b-maximum J and CircleJ/C3.1 remain open.
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening.periodic_daughter_joint_shortening`
+- Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicDaughterJointShortening/Construction.periodic_daughter_joint_shortening`
