@@ -57,8 +57,7 @@ private theorem pow_monomial (n c eu ev ew i j k : ℕ)
     (he : n=c+eu*i+ev*j+ew*k) :
     (2:ℤ)^n=2^c*((2:ℤ)^eu)^i*((2:ℤ)^ev)^j*((2:ℤ)^ew)^k := by
   rw [he]
-  simp only [pow_add,pow_mul]
-  ring
+  simp only [pow_add,pow_mul] <;> ring
 
 private theorem native_coordinates (a b s : ℕ) (hs : 2≤s)
     (ha : s+1≤a) (hb : a+1≤b) (hbs : 2*s≤b)

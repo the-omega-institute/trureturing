@@ -53,12 +53,14 @@ private theorem lower_local_increments (x y z u c f e : ℤ)
   dsimp only
   constructor
   · intro r
-    fin_cases r <;> dsimp only [lowerAllocation,dot,successor,termOrder,Fin.castSucc] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
+    fin_cases r <;> norm_num [lowerAllocation,dot,successor,termOrder,
+      Fin.castSucc,Fin.castAdd,Fin.castLE]
     · linear_combination (heads x y z 0)*hu+r0
     · linear_combination (heads x y z 3)*he+r3
     · linear_combination (heads x y z 1)*hu+r1
   · intro r
-    fin_cases r <;> dsimp only [lowerAllocation,dot,newSuccessor,termOrder,Fin.castSucc] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] <;> simp only [hn0]
+    fin_cases r <;> norm_num [lowerAllocation,dot,newSuccessor,termOrder,hn0,
+      Fin.castSucc,Fin.castAdd,Fin.castLE]
     · linear_combination (2*heads x y z 0)*hu+r4
     · linear_combination (newHeads x y z 3)*he+r7
     · linear_combination (newHeads x y z 1)*hu+r5
@@ -87,10 +89,9 @@ private theorem lower_cumulative_seams (x y z u c f e : ℤ)
   have b0 := h.2 0
   have b1 := h.2 1
   have b2 := h.2 2
-  dsimp only [Fin.castSucc] at a0 a1 a2 b0 b1 b2 ⊢
-  simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at a0 a1 a2 b0 b1 b2
+  norm_num [Fin.castSucc,Fin.castAdd,Fin.castLE,termOrder] at a0 a1 a2 b0 b1 b2
   constructor <;> funext r <;> fin_cases r <;>
-    dsimp only [doubledSeams] <;> simp only [Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] <;> linarith
+    norm_num [doubledSeams] <;> linarith
 
 private theorem lower_last_seams (x y z u c f e : ℤ)
     (hu : 2*(u+1)=z) (hf : 2*(f+1)=y) (he : 2*(e+1)=x) :
