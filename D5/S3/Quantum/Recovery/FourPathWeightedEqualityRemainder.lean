@@ -4,8 +4,7 @@
    mirror-E: none(waiver:weighted-equality-remainder)
    anchors: []
    utility: none
-   digest: A unitary four-path matrix is quadratically close to a phased nonnegative diagonal, with the trace defect as remainder.
--/
+   digest: A unitary four-path matrix is quadratically close to a phased nonnegative diagonal, with the trace defect as remainder. -/
 
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 import D5.S3.Quantum.GNSMatrix
