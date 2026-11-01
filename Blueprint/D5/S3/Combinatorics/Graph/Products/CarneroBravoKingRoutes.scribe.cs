@@ -27,6 +27,8 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
                 "The endpoint-pair map from Edge to unordered pairs of original natural labels is injective. Together with the exact inventory this identifies the routes with the edges of the actual original simple graph.", DescribeRole.Theorem),
             Node("base-graph", "baseGraph_iff_endpoints", "Exact old-graph incidence",
                 "For all a,b in Original, baseGraph.Adj(a,b) iff some route has endpoints (a,b) in one of the two orders. No replacement graph or assumed graph isomorphism occurs in this interface.", DescribeRole.Theorem),
+            Node("occupancy-values", "actual_tree_fills", "Every occupancy value is the actual successful fill",
+                "For each of the sixteen buckets, bucketFill of the original tag list is some(actualTrees(b)). The closed tree values are normalized inside Lean and each fill equation is checked by the kernel. This proves successful fresh insertion; no assumed correctness record or native evaluator supplies the equation. Subsequent local queries use these verified values.", DescribeRole.Theorem),
             Node("routing-reduction", "routing_check_success", "The actual occupancy check",
                 "routingCheck on the natural tags of the actual old and fresh vertices equals true. An interior tag is its actual edge number and natural position; rawCoordinate uses the same corner sampler. The tag map is proved injective, its enumerated list is proved complete, and its edge inventory and graph adjacency are proved equivalent to those of RoutedGraph. Sixteen coordinate buckets are checked separately by ordinary kernel reduction and combined by a proved soundness theorem. Neighbor queries select their own coordinate bucket, so cross-boundary adjacencies are included. It checks freshness and all four spatial neighbors of each occupied point; it does not enumerate every pair of the 93,999 vertices.", DescribeRole.Theorem),
             Node("exact-routing", "exact_square_routing", "Injection and both adjacency implications",
@@ -63,7 +65,7 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
                 C("squareAdj", C("coordinate", v), C("coordinate", w)))));
         var routing = C("routingCheck", C("routingBucket"), C("routingBuckets"),
             C("rawVertices", d, C("originalVertices"), C("edgeIndices")),
-            C("rawEdgePairs", d, C("edgeIndices")), C("rawCoordinate"), C("rawGraph", d));
+            C("rawEdgePairs", d, C("edgeIndices")), C("rawCoordinate"), C("rawGraph", d), C("actualTrees"));
         var rv = C("rotate", C("coordinate", v));
         return declaration switch
         {
@@ -82,6 +84,10 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
                 Bicond(C("Adj", C("baseGraph"), a, b), Ex("e", edge,
                     Or(And(Equal(a, C("left", d, e)), Equal(b, C("right", d, e))),
                        And(Equal(a, C("right", d, e)), Equal(b, C("left", d, e)))))))),
+            "actual_tree_fills" => All("b", C("Nat"), Imp(C("ListMem", b, C("routingBuckets")),
+                Equal(C("bucketFill", C("routingBucket"),
+                    C("rawVertices", d, C("originalVertices"), C("edgeIndices")), C("rawCoordinate"), b),
+                    C("some", C("apply", C("actualTrees"), b))))),
             "routing_check_success" => Equal(routing, C("true")),
             "exact_square_routing" => And(C("Injective", C("coordinate")), exactAdj),
             "actual_T_bounds" => All("v", vertex,
@@ -117,6 +123,7 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
     private static Formula LessEqual(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Or(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Bicond(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);

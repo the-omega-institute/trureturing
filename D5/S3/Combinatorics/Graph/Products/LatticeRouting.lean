@@ -185,12 +185,12 @@ def bucketTree (b : B) : Occupancy V := (bucketFill bucket vs c b).getD .empty
 
 /-- Select a tree using a key from the supplied list. The returned tree therefore
 uses the list's key, independently of the expression computing the query key. -/
-def selectTree (b : B) : List B → Occupancy V
+def selectTree (trees : B → Occupancy V) (b : B) : List B → Occupancy V
   | [] => .empty
-  | a :: as => if b = a then bucketTree bucket vs c a else selectTree b as
+  | a :: as => if b = a then trees a else selectTree trees b as
 
-theorem selectTree_eq (b : B) (hb : b ∈ bs) :
-    selectTree bucket vs c b bs = bucketTree bucket vs c b := by
+theorem selectTree_eq (trees : B → Occupancy V) (b : B) (hb : b ∈ bs) :
+    selectTree trees b bs = trees b := by
   induction bs with
   | nil => simp at hb
   | cons a as ih =>
@@ -199,64 +199,60 @@ theorem selectTree_eq (b : B) (hb : b ∈ bs) :
     · have hm : b ∈ as := (List.mem_cons.mp hb).resolve_left h
       simpa only [selectTree, h, ↓reduceIte] using ih hm
 
-def routingLookup (q : Point) : Option V :=
-  (selectTree bucket vs c (bucket q) bs).read (pointKey q)
+def routingLookup (trees : B → Occupancy V) (q : Point) : Option V :=
+  (selectTree trees (bucket q) bs).read (pointKey q)
 
 def edgeCheck : Bool := es.all fun e => decide (squareAdj (c e.1) (c e.2))
 
 variable (G : SimpleGraph V) [DecidableRel G.Adj]
 
-def localCheck (xs : List V) : Bool :=
+def localCheck (trees : B → Occupancy V) (xs : List V) : Bool :=
   xs.all fun v => (neighbors (c v)).all fun q =>
-    match routingLookup bucket bs vs c q with
+    match routingLookup bucket bs trees q with
     | none => true
     | some w => decide (c w ≠ q ∨ G.Adj v w)
 
-/-- Each bucket checks fresh insertion, every outgoing listed edge, and all four
-spatial queries of each vertex in that bucket. Queries use the appropriate
-bucket of the queried coordinate, including queries across bucket boundaries. -/
-def bucketCheck (b : B) : Bool :=
-  (bucketFill bucket vs c b).isSome &&
-    (edgeCheck (bucketEdges bucket es c b) c &&
-      localCheck bucket bs vs c G (bucketVertices bucket vs c b))
+/-- Each bucket checks every outgoing listed edge and all four spatial queries
+of each vertex. Queries use their own coordinate bucket, including queries
+across boundaries. The soundness theorem separately requires the exact fill
+equations for the supplied trees. -/
+def bucketCheck (trees : B → Occupancy V) (b : B) : Bool :=
+  edgeCheck (bucketEdges bucket es c b) c &&
+    localCheck bucket bs c G trees (bucketVertices bucket vs c b)
 
-def routingCheck : Bool := bs.all (bucketCheck bucket bs vs es c G)
+def routingCheck (trees : B → Occupancy V) : Bool :=
+  bs.all (bucketCheck bucket bs vs es c G trees)
 
-/-- The checked tags may encode a different vertex type. Every coordinate's
-bucket occurs in bs. The coding is injective, complete in vs, and exact for
-both the original adjacency and the listed edge inventory. -/
-theorem routingCheck_sound {W : Type w} (H : SimpleGraph W) (f : W → V)
+/-- The coding is injective, complete and exact for the original graph. Each
+supplied tree must equal the actual successful fresh fill of its bucket. -/
+theorem routingCheck_sound {W : Type w} (trees : B → Occupancy V)
+    (H : SimpleGraph W) (f : W → V)
     (hb : ∀ q, bucket q ∈ bs)
+    (hfilled : ∀ b ∈ bs, bucketFill bucket vs c b = some (trees b))
     (hf : Function.Injective f)
     (hvs : ∀ w, f w ∈ vs)
     (hes : ∀ w z, H.Adj w z ↔ (f w, f z) ∈ es ∨ (f z, f w) ∈ es)
     (hgraph : ∀ w z, G.Adj (f w) (f z) ↔ H.Adj w z)
-    (h : routingCheck bucket bs vs es c G = true) :
+    (h : routingCheck bucket bs vs es c G trees = true) :
     Function.Injective (fun w => c (f w)) ∧
       ∀ w z, H.Adj w z ↔ squareAdj (c (f w)) (c (f z)) := by
   have parts (b : B) (hmem : b ∈ bs) :
-      (bucketFill bucket vs c b).isSome = true ∧
       edgeCheck (bucketEdges bucket es c b) c = true ∧
-      localCheck bucket bs vs c G (bucketVertices bucket vs c b) = true := by
+      localCheck bucket bs c G trees (bucketVertices bucket vs c b) = true := by
     simpa only [bucketCheck, Bool.and_eq_true] using
       (List.all_eq_true.mp h b hmem)
-  have hread (w : W) : routingLookup bucket bs vs c (c (f w)) = some (f w) := by
-    have hfill := (parts (bucket (c (f w))) (hb _)).1
+  have hread (w : W) : routingLookup bucket bs trees (c (f w)) = some (f w) := by
     unfold routingLookup
-    rw [selectTree_eq bucket bs vs c _ (hb _)]
-    unfold bucketTree
-    cases ht : bucketFill bucket vs c (bucket (c (f w))) with
-    | none => simp only [ht, Option.isSome_none, Bool.false_eq_true] at hfill
-    | some t =>
-      simp only [Option.getD_some]
-      exact (Occupancy.fill_spec (fun v => pointKey (c v))
-        (bucketVertices bucket vs c (bucket (c (f w)))) .empty t ht).2
-        (f w) (by simp [bucketVertices, hvs w])
+    rw [selectTree_eq bs trees _ (hb _)]
+    exact (Occupancy.fill_spec (fun v => pointKey (c v))
+      (bucketVertices bucket vs c (bucket (c (f w)))) .empty
+      (trees (bucket (c (f w)))) (hfilled _ (hb _))).2
+      (f w) (by simp [bucketVertices, hvs w])
   have hedge (a b : V) (he : (a, b) ∈ es) : squareAdj (c a) (c b) := by
     have he' : (a, b) ∈ bucketEdges bucket es c (bucket (c a)) := by
       simp [bucketEdges, he]
     exact of_decide_eq_true
-      (List.all_eq_true.mp (parts _ (hb (c a))).2.1 (a, b) he')
+      (List.all_eq_true.mp (parts _ (hb (c a))).1 (a, b) he')
   constructor
   · intro w z heq
     change c (f w) = c (f z) at heq
@@ -271,7 +267,7 @@ theorem routingCheck_sound {W : Type w} (H : SimpleGraph W) (f : W → V)
       · exact (squareAdj_symm _ _).mpr (hedge _ _ he)
     · intro hsq
       have hq : c (f z) ∈ neighbors (c (f w)) := (squareAdj_iff_mem _ _).mp hsq
-      have hw := List.all_eq_true.mp (parts _ (hb (c (f w)))).2.2
+      have hw := List.all_eq_true.mp (parts _ (hb (c (f w)))).2
         (f w) (by simp [bucketVertices, hvs w])
       have hz := List.all_eq_true.mp hw (c (f z)) hq
       rw [hread z] at hz

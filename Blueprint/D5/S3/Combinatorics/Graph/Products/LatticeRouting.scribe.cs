@@ -10,13 +10,13 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A sparse occupancy checker certifies injectivity and both directions of lattice adjacency.",
         H("Induced lattice routing certificates"), Blocks(
-            Paragraph(Text("Points are pairs of integers. Square adjacency means Manhattan distance one. The checker uses complete vertex and oriented-edge lists and a complete list of coordinate buckets. Each bucket checks freshness and outgoing edges locally; every spatial query selects the bucket of its queried coordinate, including across bucket boundaries. It neither assumes an embedding nor takes a certificate-correctness record as a hypothesis.")),
+            Paragraph(Text("Points are pairs of integers. Square adjacency means Manhattan distance one. The checker uses complete vertex and oriented-edge lists and a complete list of coordinate buckets. The supplied tree of every listed bucket must equal its actual successful fresh fill. Each bucket then checks outgoing edges locally; every spatial query selects the bucket of its queried coordinate, including across bucket boundaries. It neither assumes an embedding nor takes a certificate-correctness record as a hypothesis.")),
             Node("fresh-insert", "Occupancy.insert_spec", "Insertion records a fresh key and preserves old lookups",
                 "A successful insertion gives read(next,key)=some(v) and preserves every previous successful lookup. Occupied keys are rejected even when their stored value equals the proposed value. Induction on the key proves this invariant.", DescribeRole.Theorem),
             Node("fill", "Occupancy.fill_spec", "Filling preserves occupancy and stores every listed vertex",
                 "Successful fill preserves all old lookups and stores every a in xs at key(a). No injective hash assumption is needed: successful fresh insertion proves the needed uniqueness on the actual occupied vertices.", DescribeRole.Theorem),
             Node("soundness", "routingCheck_sound", "Success proves an induced routing",
-                "Let f inject the vertices of H into the checked tag type of G. Every f(w) must occur in vs; H adjacency must be exactly the listed tag-pair inventory and must agree with G adjacency on the image of f. Every coordinate must select a bucket in the supplied list. If routingCheck is true, c composed with f is injective and preserves and reflects H adjacency. Edge checking proves the forward implication. Four spatial queries per occupied tag and the fill invariant prove the reverse implication. A retrieved hash-collision value is checked against its actual coordinate. The concrete consumer proves its tag injection and graph correspondence; neither is an assumed certificate-correctness record.", DescribeRole.Theorem),
+                "Let f inject the vertices of H into the checked tag type of G. Every f(w) must occur in vs; H adjacency must be exactly the listed tag-pair inventory and must agree with G adjacency on the image of f. Every coordinate must select a listed bucket, and each supplied tree must equal the actual successful fresh fill of that bucket. If routingCheck is true, c composed with f is injective and preserves and reflects H adjacency. Edge checking proves the forward implication. Four spatial queries per occupied tag and the fill invariant prove the reverse implication. A retrieved hash-collision value is checked against its actual coordinate. The concrete consumer proves its tag injection and graph correspondence; neither is an assumed certificate-correctness record.", DescribeRole.Theorem),
             Node("rotation", "rotation_adjacency", "The integral rotation preserves the required adjacency",
                 "rotate(x,y)=(x+y+25,x-y+1705). The identity max(abs(a+b),abs(a-b))=abs(a)+abs(b) gives the exact equivalence, including all coordinate signs. The rotation is injective.", DescribeRole.Theorem),
             Node("strong", "strongProduct", "The actual strong product",
@@ -58,11 +58,15 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
                 C("squareAdj", C("apply", c, fa), C("apply", c, fb))))));
         var codedPremises = Imp(C("Injective", f),
             Imp(All("a", wt, C("ListMem", fa, vs)), Imp(codedInventory,
-            Imp(codedAdj, Imp(Equal(C("routingCheck", I("bucket"), I("bs"), vs, es, c, g), C("true")), codedResult)))));
+            Imp(codedAdj, Imp(Equal(C("routingCheck", I("bucket"), I("bs"), vs, es, c, g, I("trees")), C("true")), codedResult)))));
+        var fills = All("b", I("B"), Imp(C("ListMem", b, I("bs")),
+            Equal(C("bucketFill", I("bucket"), vs, c, b),
+                C("some", C("apply", I("trees"), b)))));
         var soundness = Imp(All("q", point,
-            C("ListMem", C("apply", I("bucket"), q), I("bs"))), codedPremises);
+            C("ListMem", C("apply", I("bucket"), q), I("bs"))), Imp(fills, codedPremises));
         soundness = All("f", C("Function", wt, v), soundness);
         soundness = All("H", C("SimpleGraph", wt), soundness);
+        soundness = All("trees", C("Function", I("B"), tree), soundness);
         soundness = All("W", C("Type"), soundness);
         soundness = Inst("DecidableRel", C("Adj", g), soundness);
         soundness = All("G", C("SimpleGraph", v), soundness);

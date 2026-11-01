@@ -3,10 +3,13 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.inducedEmbedding; premises=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.routing_check_success,D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.boundary_check_success
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.inducedEmbedding; premises=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.actual_tree_fills,D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.routing_check_success,D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.boundary_check_success
    digest: The prescribed 178-route subdivision maps as an induced subgraph into the 9337 by 9061 king grid. -/
 import D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 import D5.S3.Combinatorics.Graph.Products.IntegerPolyline
+import Lean.Meta.Reduce
+import Lean.Meta.Tactic.AuxLemma
+import Lean.Elab.Tactic.ElabTerm
 
 /-!
 The literal coordinates and corner lists come from `king-coordinate-certificate.json`,
@@ -707,52 +710,131 @@ def routingBuckets : List ℕ := List.range 16
 theorem routing_bucket_mem (q : Point) : routingBucket q ∈ routingBuckets :=
   List.mem_range.mpr (Nat.mod_lt _ (by decide))
 
+/-- Closed occupancy values are normalized in Lean. Every value is separately
+checked against the original fill expression by a kernel-checked equality. -/
+local elab "king_occupancy_value " t:term : tactic => do
+  let e ← Lean.Elab.Term.elabTermAndSynthesize t none
+  if e.hasMVar || e.hasFVar then throwError "Expected a closed occupancy expression"
+  let e ← Lean.Meta.reduce e
+  Lean.Elab.Tactic.closeMainGoalUsing `king_occupancy_value fun _ _ => pure e
+
+local elab "king_kernel_rfl" : tactic => do
+  Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_rfl fun expected _ => do
+    let some (_, _, rhs) := expected.eq? | throwError "Expected a closed equality"
+    let pf ← Lean.Meta.mkEqRefl rhs
+    let name ← Lean.withOptions (Lean.Elab.async.set · false) <|
+      Lean.Meta.mkAuxLemma [] expected pf
+    return Lean.mkConst name
+
+private def sourceBucketTree (b : ℕ) : Occupancy RawVertex :=
+  bucketTree routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate b
+
+private def occupancy0 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 0)
+private def occupancy1 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 1)
+private def occupancy2 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 2)
+private def occupancy3 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 3)
+private def occupancy4 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 4)
+private def occupancy5 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 5)
+private def occupancy6 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 6)
+private def occupancy7 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 7)
+private def occupancy8 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 8)
+private def occupancy9 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 9)
+private def occupancy10 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 10)
+private def occupancy11 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 11)
+private def occupancy12 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 12)
+private def occupancy13 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 13)
+private def occupancy14 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 14)
+private def occupancy15 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 15)
+
+def actualTrees : ℕ → Occupancy RawVertex
+  | 0 => occupancy0
+  | 1 => occupancy1
+  | 2 => occupancy2
+  | 3 => occupancy3
+  | 4 => occupancy4
+  | 5 => occupancy5
+  | 6 => occupancy6
+  | 7 => occupancy7
+  | 8 => occupancy8
+  | 9 => occupancy9
+  | 10 => occupancy10
+  | 11 => occupancy11
+  | 12 => occupancy12
+  | 13 => occupancy13
+  | 14 => occupancy14
+  | 15 => occupancy15
+  | _ => .empty
+
+private theorem occupancy_fill0 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 0 = some occupancy0 := by king_kernel_rfl
+private theorem occupancy_fill1 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 1 = some occupancy1 := by king_kernel_rfl
+private theorem occupancy_fill2 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 2 = some occupancy2 := by king_kernel_rfl
+private theorem occupancy_fill3 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 3 = some occupancy3 := by king_kernel_rfl
+private theorem occupancy_fill4 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 4 = some occupancy4 := by king_kernel_rfl
+private theorem occupancy_fill5 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 5 = some occupancy5 := by king_kernel_rfl
+private theorem occupancy_fill6 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 6 = some occupancy6 := by king_kernel_rfl
+private theorem occupancy_fill7 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 7 = some occupancy7 := by king_kernel_rfl
+private theorem occupancy_fill8 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 8 = some occupancy8 := by king_kernel_rfl
+private theorem occupancy_fill9 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 9 = some occupancy9 := by king_kernel_rfl
+private theorem occupancy_fill10 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 10 = some occupancy10 := by king_kernel_rfl
+private theorem occupancy_fill11 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 11 = some occupancy11 := by king_kernel_rfl
+private theorem occupancy_fill12 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 12 = some occupancy12 := by king_kernel_rfl
+private theorem occupancy_fill13 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 13 = some occupancy13 := by king_kernel_rfl
+private theorem occupancy_fill14 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 14 = some occupancy14 := by king_kernel_rfl
+private theorem occupancy_fill15 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 15 = some occupancy15 := by king_kernel_rfl
+
+theorem actual_tree_fills (b : ℕ) (hb : b ∈ routingBuckets) :
+    bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices)
+      rawCoordinate b = some (actualTrees b) := by
+  have hl : b < 16 := List.mem_range.mp hb
+  have hcases : b = 0 ∨ b = 1 ∨ b = 2 ∨ b = 3 ∨ b = 4 ∨ b = 5 ∨ b = 6 ∨ b = 7 ∨ b = 8 ∨ b = 9 ∨ b = 10 ∨ b = 11 ∨ b = 12 ∨ b = 13 ∨ b = 14 ∨ b = 15 := by omega
+  rcases hcases with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  · exact occupancy_fill0
+  · exact occupancy_fill1
+  · exact occupancy_fill2
+  · exact occupancy_fill3
+  · exact occupancy_fill4
+  · exact occupancy_fill5
+  · exact occupancy_fill6
+  · exact occupancy_fill7
+  · exact occupancy_fill8
+  · exact occupancy_fill9
+  · exact occupancy_fill10
+  · exact occupancy_fill11
+  · exact occupancy_fill12
+  · exact occupancy_fill13
+  · exact occupancy_fill14
+  · exact occupancy_fill15
+
 def actualBucketCheck (b : ℕ) : Bool :=
   bucketCheck routingBucket routingBuckets
     (subdivision.rawVertices originalVertices edgeIndices)
-    (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph b
+    (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph actualTrees b
 
 /-- Each reduction checks the actual tags and routes with the same global
 query dispatch. The partition bounds the size of each kernel reduction. -/
-private theorem routing_bucket_0 : actualBucketCheck 0 = true := by
-  decide +kernel
-private theorem routing_bucket_1 : actualBucketCheck 1 = true := by
-  decide +kernel
-private theorem routing_bucket_2 : actualBucketCheck 2 = true := by
-  decide +kernel
-private theorem routing_bucket_3 : actualBucketCheck 3 = true := by
-  decide +kernel
-private theorem routing_bucket_4 : actualBucketCheck 4 = true := by
-  decide +kernel
-private theorem routing_bucket_5 : actualBucketCheck 5 = true := by
-  decide +kernel
-private theorem routing_bucket_6 : actualBucketCheck 6 = true := by
-  decide +kernel
-private theorem routing_bucket_7 : actualBucketCheck 7 = true := by
-  decide +kernel
-private theorem routing_bucket_8 : actualBucketCheck 8 = true := by
-  decide +kernel
-private theorem routing_bucket_9 : actualBucketCheck 9 = true := by
-  decide +kernel
-private theorem routing_bucket_10 : actualBucketCheck 10 = true := by
-  decide +kernel
-private theorem routing_bucket_11 : actualBucketCheck 11 = true := by
-  decide +kernel
-private theorem routing_bucket_12 : actualBucketCheck 12 = true := by
-  decide +kernel
-private theorem routing_bucket_13 : actualBucketCheck 13 = true := by
-  decide +kernel
-private theorem routing_bucket_14 : actualBucketCheck 14 = true := by
-  decide +kernel
-private theorem routing_bucket_15 : actualBucketCheck 15 = true := by
-  decide +kernel
+private theorem routing_bucket_0 : actualBucketCheck 0 = true := by decide +kernel
+private theorem routing_bucket_1 : actualBucketCheck 1 = true := by decide +kernel
+private theorem routing_bucket_2 : actualBucketCheck 2 = true := by decide +kernel
+private theorem routing_bucket_3 : actualBucketCheck 3 = true := by decide +kernel
+private theorem routing_bucket_4 : actualBucketCheck 4 = true := by decide +kernel
+private theorem routing_bucket_5 : actualBucketCheck 5 = true := by decide +kernel
+private theorem routing_bucket_6 : actualBucketCheck 6 = true := by decide +kernel
+private theorem routing_bucket_7 : actualBucketCheck 7 = true := by decide +kernel
+private theorem routing_bucket_8 : actualBucketCheck 8 = true := by decide +kernel
+private theorem routing_bucket_9 : actualBucketCheck 9 = true := by decide +kernel
+private theorem routing_bucket_10 : actualBucketCheck 10 = true := by decide +kernel
+private theorem routing_bucket_11 : actualBucketCheck 11 = true := by decide +kernel
+private theorem routing_bucket_12 : actualBucketCheck 12 = true := by decide +kernel
+private theorem routing_bucket_13 : actualBucketCheck 13 = true := by decide +kernel
+private theorem routing_bucket_14 : actualBucketCheck 14 = true := by decide +kernel
+private theorem routing_bucket_15 : actualBucketCheck 15 = true := by decide +kernel
 
 /-- All buckets succeed by ordinary kernel reduction, with no native evaluator,
 external certificate-correctness premise, or additional axiom. -/
 theorem routing_check_success :
     routingCheck routingBucket routingBuckets
       (subdivision.rawVertices originalVertices edgeIndices)
-      (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph = true := by
+      (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph actualTrees = true := by
   change ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] : List ℕ).all actualBucketCheck = true
   simp only [List.all_cons, List.all_nil, routing_bucket_0,
     routing_bucket_1,
@@ -777,8 +859,8 @@ theorem exact_square_routing :
   by
     have h := routingCheck_sound routingBucket routingBuckets
       (subdivision.rawVertices originalVertices edgeIndices)
-      (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph RoutedGraph subdivision.code
-      routing_bucket_mem subdivision.code_injective
+      (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph actualTrees RoutedGraph subdivision.code
+      routing_bucket_mem actual_tree_fills subdivision.code_injective
       (subdivision.mem_raw_vertices originalVertices edgeIndices mem_original_vertices mem_edge_indices)
       (subdivision.adj_iff_raw_edge_pairs edgeIndices mem_edge_indices)
       subdivision.raw_graph_code_iff routing_check_success
@@ -794,38 +876,22 @@ def bucketBoundaryCheck (b : ℕ) : Bool :=
 
 def boundaryCheck : Bool := routingBuckets.all bucketBoundaryCheck
 
-private theorem boundary_bucket_0 : bucketBoundaryCheck 0 = true := by
-  decide +kernel
-private theorem boundary_bucket_1 : bucketBoundaryCheck 1 = true := by
-  decide +kernel
-private theorem boundary_bucket_2 : bucketBoundaryCheck 2 = true := by
-  decide +kernel
-private theorem boundary_bucket_3 : bucketBoundaryCheck 3 = true := by
-  decide +kernel
-private theorem boundary_bucket_4 : bucketBoundaryCheck 4 = true := by
-  decide +kernel
-private theorem boundary_bucket_5 : bucketBoundaryCheck 5 = true := by
-  decide +kernel
-private theorem boundary_bucket_6 : bucketBoundaryCheck 6 = true := by
-  decide +kernel
-private theorem boundary_bucket_7 : bucketBoundaryCheck 7 = true := by
-  decide +kernel
-private theorem boundary_bucket_8 : bucketBoundaryCheck 8 = true := by
-  decide +kernel
-private theorem boundary_bucket_9 : bucketBoundaryCheck 9 = true := by
-  decide +kernel
-private theorem boundary_bucket_10 : bucketBoundaryCheck 10 = true := by
-  decide +kernel
-private theorem boundary_bucket_11 : bucketBoundaryCheck 11 = true := by
-  decide +kernel
-private theorem boundary_bucket_12 : bucketBoundaryCheck 12 = true := by
-  decide +kernel
-private theorem boundary_bucket_13 : bucketBoundaryCheck 13 = true := by
-  decide +kernel
-private theorem boundary_bucket_14 : bucketBoundaryCheck 14 = true := by
-  decide +kernel
-private theorem boundary_bucket_15 : bucketBoundaryCheck 15 = true := by
-  decide +kernel
+private theorem boundary_bucket_0 : bucketBoundaryCheck 0 = true := by decide +kernel
+private theorem boundary_bucket_1 : bucketBoundaryCheck 1 = true := by decide +kernel
+private theorem boundary_bucket_2 : bucketBoundaryCheck 2 = true := by decide +kernel
+private theorem boundary_bucket_3 : bucketBoundaryCheck 3 = true := by decide +kernel
+private theorem boundary_bucket_4 : bucketBoundaryCheck 4 = true := by decide +kernel
+private theorem boundary_bucket_5 : bucketBoundaryCheck 5 = true := by decide +kernel
+private theorem boundary_bucket_6 : bucketBoundaryCheck 6 = true := by decide +kernel
+private theorem boundary_bucket_7 : bucketBoundaryCheck 7 = true := by decide +kernel
+private theorem boundary_bucket_8 : bucketBoundaryCheck 8 = true := by decide +kernel
+private theorem boundary_bucket_9 : bucketBoundaryCheck 9 = true := by decide +kernel
+private theorem boundary_bucket_10 : bucketBoundaryCheck 10 = true := by decide +kernel
+private theorem boundary_bucket_11 : bucketBoundaryCheck 11 = true := by decide +kernel
+private theorem boundary_bucket_12 : bucketBoundaryCheck 12 = true := by decide +kernel
+private theorem boundary_bucket_13 : bucketBoundaryCheck 13 = true := by decide +kernel
+private theorem boundary_bucket_14 : bucketBoundaryCheck 14 = true := by decide +kernel
+private theorem boundary_bucket_15 : bucketBoundaryCheck 15 = true := by decide +kernel
 
 theorem boundary_check_success : boundaryCheck = true := by
   change ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] : List ℕ).all bucketBoundaryCheck = true
