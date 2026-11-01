@@ -4408,17 +4408,37 @@ cut immediately AFTER inner return but BEFORE list advancement, the raw
 cursor can still name the just-completed row. Resolving the semantic
 next mark then follows that row's actual next link; treating its current
 raw target as untouched would execute the wrong operation. After
-advancement the cursor itself names the next row. The saved control
-location distinguishes these cases. At a last row's completed return,
-the resolved mark is exhaustion even before the raw cursor is cleared.
-This resolution uses actual subphase/continuation and links, not source
-geometry alone or a convention that the cursor has already advanced.
+advancement the cursor names the next row or records exhaustion. The
+saved control location distinguishes these cases. Released consumed rows
+are not needed to resolve the next mark from the retained current row
+and suffix. At a last row's completed return, the resolved mark is
+exhaustion even before the raw cursor is cleared. If $F$'s exhausted
+frontier has also been cleared during pending outer output/return, the
+actual exhausted subphase still resolves $\top$ without dereferencing
+any released row. This resolution uses actual subphase/continuation and
+live links, not source geometry alone or a convention that the cursor
+has already advanced.
 
-If requested, finite stationary scanning of the sealed list can count
-completed rows relative to that resolved cut with an exact backed
-integer; a raw cursor still on the returned row counts that row as
-completed. The acquisition phase already determines zero without such
-a scan. An optional exact progress field may instead be initialized to
+An optional direct completed-row scan requires the original sealed-list
+head and entire completed prefix, with the links needed to locate the
+resolved cut, to remain actually backed from sealing through that scan.
+Their retention, reads, finite exact counting and later clearing/reuse
+are charged; a raw cursor still on the returned row counts that row as
+completed. LAB13.3 permits consumed rows to be released, so this scan is
+unavailable after the required prefix backing is lost: the retained
+suffix is not a record of the consumed prefix.
+
+For the active $F$ call without that optional retention, paid stationary
+acquisition of current syntax $y$ together with the resolved next mark $p$
+still gives
+$u=D_p(y)$ and exact $j$ by Proposition 43.4. Count the original leaves
+before $p$ in this recovered description; at exhaustion use
+$u=\delta(y)$ and $j=L(u)$, even while outer return is pending and all
+frontier rows have been released. This reconstructs no physical old
+list. Before sealing, the acquisition phase instead determines $j=0$
+without presuming an old list or a next-row operand.
+
+An optional exact progress field may instead be initialized to
 zero and incremented once per completed inner return, retaining its
 actual pending-control distinction during the update. Such a field is
 an additional paid implementation choice, not an existing field assumed
