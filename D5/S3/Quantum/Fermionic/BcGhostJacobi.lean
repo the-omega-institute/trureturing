@@ -92,10 +92,9 @@ private theorem jacobi_cyclic_zero (r : ℤ) (ab : ℤ × ℤ) :
   rcases ab with ⟨a,b⟩
   dsimp only [jacobiTerm, cycle, Equiv.coe_fn_mk]
   have hd : r-b-(r-a-b) = a := by omega
-  have he : r-(r-a-b)-(r-b-(r-a-b)) = b := by omega
+  have he : r-(r-a-b)-a = b := by omega
   rw [hd, he]
-  rw [← ccc_cycle a b (r-a-b), ccc_cycle (r-a-b) a b,
-    ← ccc_cycle a b (r-a-b)]
+  rw [← ccc_cycle a b (r-a-b), ccc_cycle (r-a-b) a b]
   rw [← add_smul, ← add_smul]
   have hc : (1/4 : ℂ) * ((2*(a+b)-r : ℤ) : ℂ) * ((a-b : ℤ) : ℂ) +
       (1/4 : ℂ) * ((2*(b+(r-a-b))-r : ℤ) : ℂ) * ((b-(r-a-b) : ℤ) : ℂ) +
@@ -116,11 +115,15 @@ private theorem jacobi_sum_zero (r : ℤ) (v : Fock) :
   have hc₂ : (∑ᶠ ab, f (cycle r (cycle r ab))) = ∑ᶠ ab, f ab :=
     (finsum_comp_equiv (cycle r)).trans hc₁
   have hz : (∑ᶠ ab, f ab) + (∑ᶠ ab, f ab) + (∑ᶠ ab, f ab) = 0 := by
-    rw [← hc₁, ← hc₂, ← finsum_add_distrib hf hg,
-      ← finsum_add_distrib (hf.add hg) hh]
-    apply finsum_eq_zero_of_forall_eq_zero
-    intro ab
-    exact LinearMap.congr_fun (jacobi_cyclic_zero r ab) v
+    calc
+      _ = ((∑ᶠ ab, f ab) + (∑ᶠ ab, f (cycle r ab))) +
+          (∑ᶠ ab, f (cycle r (cycle r ab))) := by rw [hc₁, hc₂]
+      _ = ∑ᶠ ab, f ab + f (cycle r ab) + f (cycle r (cycle r ab)) := by
+        rw [← finsum_add_distrib hf hg, ← finsum_add_distrib (hf.add hg) hh]
+      _ = 0 := by
+        apply finsum_eq_zero_of_forall_eq_zero
+        intro ab
+        exact LinearMap.congr_fun (jacobi_cyclic_zero r ab) v
   have hthree : (3 : ℂ) • (∑ᶠ ab, f ab) = 0 := by
     simpa only [show (3 : ℂ) = 1+1+1 by norm_num, add_smul, one_smul] using hz
   exact (smul_eq_zero.mp hthree).resolve_left (by norm_num)
@@ -145,7 +148,7 @@ private theorem jacobi_second (r p a : ℤ) (v : Fock) :
     -(((1/2 : ℂ) * ((2*p-r : ℤ) : ℂ)) • c p (rTerm (r-p) a v)) =
       jacobiTerm r (cycle r (p,a)) v := by
   dsimp only [rTerm, jacobiTerm, cycle, Equiv.coe_fn_mk]
-  simp only [LinearMap.smul_apply, map_smul, smul_smul]
+  simp only [LinearMap.smul_apply, map_smul, smul_smul, Module.End.mul_apply]
   rw [show r-a-(r-p-a) = p by omega]
   have he := LinearMap.congr_fun (ccc_cycle p a (r-p-a)) v
   simp only [Module.End.mul_apply] at he

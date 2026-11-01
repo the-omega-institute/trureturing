@@ -28,7 +28,53 @@ namespace D5.S3.Quantum.Fermionic.BcGhostBRST
 
 /-- Normal ordering of c_p c_q b_{-p-q}, with the actual vacuum cuts. -/
 def cubic (p q : ℤ) : Module.End ℂ Fock :=
-  if -p-q ≤ -2 then b (-p-q) * c p * c q else c p * c q * b (-p-q)
+  if p ≤ 1 then
+    if q ≤ 1 then c p*c q*b (-p-q)
+    else if -p-q ≤ -2 then -(c p*b (-p-q)*c q) else c p*c q*b (-p-q)
+  else if q ≤ 1 then
+    if -p-q ≤ -2 then c q*b (-p-q)*c p else -(c q*c p*b (-p-q))
+  else if -p-q ≤ -2 then b (-p-q)*c p*c q else c p*c q*b (-p-q)
+
+/-- CAR identifies the stable ordering with a useful cyclic expression.
+Every contraction used here is zero in its actual creator/annihilator branch. -/
+private theorem cubic_eq (p q : ℤ) : cubic p q =
+    if -p-q ≤ -2 then b (-p-q)*c p*c q else c p*c q*b (-p-q) := by
+  have hcc := ghost_c_car p q
+  by_cases hp : p ≤ 1
+  · by_cases hq : q ≤ 1
+    · by_cases hk : -p-q ≤ -2
+      · have hbp : b (-p-q)*c p+c p*b (-p-q) = 0 := by
+          rw [ghost_mixed_car, if_neg (by omega)]
+        have hbq : b (-p-q)*c q+c q*b (-p-q) = 0 := by
+          rw [ghost_mixed_car, if_neg (by omega)]
+        simp only [cubic, hp, hq, hk, if_true]
+        calc
+          _ = b (-p-q)*c p*c q+c p*(b (-p-q)*c q+c q*b (-p-q)) -
+              (b (-p-q)*c p+c p*b (-p-q))*c q := by noncomm_ring
+          _ = _ := by rw [hbp, hbq]; simp
+      · simp [cubic, hp, hq, hk]
+    · by_cases hk : -p-q ≤ -2
+      · have hbp : b (-p-q)*c p+c p*b (-p-q) = 0 := by
+          rw [ghost_mixed_car, if_neg (by omega)]
+        simp only [cubic, hp, hq, hk, if_true, if_false]
+        calc
+          _ = b (-p-q)*c p*c q-(b (-p-q)*c p+c p*b (-p-q))*c q := by noncomm_ring
+          _ = _ := by rw [hbp]; simp
+      · simp [cubic, hp, hq, hk]
+  · by_cases hq : q ≤ 1
+    · by_cases hk : -p-q ≤ -2
+      · have hbq : b (-p-q)*c q+c q*b (-p-q) = 0 := by
+          rw [ghost_mixed_car, if_neg (by omega)]
+        simp only [cubic, hp, hq, hk, if_true, if_false]
+        calc
+          _ = b (-p-q)*c p*c q-b (-p-q)*(c p*c q+c q*c p) +
+              (b (-p-q)*c q+c q*b (-p-q))*c p := by noncomm_ring
+          _ = _ := by rw [hcc, hbq]; simp
+      · simp only [cubic, hp, hq, hk, if_true, if_false]
+        calc
+          _ = c p*c q*b (-p-q)-(c p*c q+c q*c p)*b (-p-q) := by noncomm_ring
+          _ = _ := by rw [hcc]; simp
+    · simp [cubic, hp, hq]
 
 /-- The coefficient includes the one half for the full ordered pair sum. -/
 def cubicTerm (pq : ℤ × ℤ) : Module.End ℂ Fock :=
@@ -43,7 +89,7 @@ private theorem cubic_p_zero (p q : ℤ) (v : Fock) (hp : 2 ≤ p)
   · have he : b (-p-q) * c p * c q = -(b (-p-q) * c q * c p) := by
       rw [mul_assoc, c_swap p q]
       simp only [mul_neg, ← mul_assoc]
-    simp only [cubic, if_pos hk, he, LinearMap.neg_apply, Module.End.mul_apply,
+    simp only [cubic_eq, if_pos hk, he, LinearMap.neg_apply, Module.End.mul_apply,
       hv, map_zero, neg_zero]
   · have hbc : b (-p-q) * c p + c p * b (-p-q) = 0 := by
       rw [ghost_mixed_car, if_neg (by omega)]
@@ -54,11 +100,11 @@ private theorem cubic_p_zero (p q : ℤ) (v : Fock) (hp : 2 ≤ p)
         _ = c q * b (-p-q) * c p - c q *
             (b (-p-q) * c p + c p * b (-p-q)) := by noncomm_ring
         _ = _ := by rw [hbc]; simp
-    simp only [cubic, if_neg hk, he, Module.End.mul_apply, hv, map_zero]
+    simp only [cubic_eq, if_neg hk, he, Module.End.mul_apply, hv, map_zero]
 
 private theorem cubic_swap (p q : ℤ) : cubic p q = -cubic q p := by
   have he : -p-q = -q-p := by omega
-  simp only [cubic, ← he]
+  simp only [cubic_eq, ← he]
   split_ifs
   · rw [mul_assoc, c_swap p q]
     simp only [mul_neg, ← mul_assoc]
@@ -71,7 +117,7 @@ private theorem cubic_q_zero (p q : ℤ) (v : Fock) (hq : 2 ≤ q)
 
 private theorem cubic_b_zero (p q : ℤ) (v : Fock) (hk : -1 ≤ -p-q)
     (hv : b (-p-q) v = 0) : cubic p q v = 0 := by
-  simp [cubic, show ¬-p-q ≤ -2 by omega, Module.End.mul_apply, hv]
+  simp [cubic_eq, show ¬-p-q ≤ -2 by omega, Module.End.mul_apply, hv]
 
 private theorem c_ket_tail (p : ℤ) (S : Finset ℕ)
     (hp : (S.sup id + 3 : ℕ) < p) : c p (ket S) = 0 := by
@@ -166,13 +212,13 @@ theorem cubic_b (p q r : ℤ) :
   have hp : r+p = 0 ↔ p+r = 0 := by omega
   have hq : r+q = 0 ↔ q+r = 0 := by omega
   by_cases hk : -p-q ≤ -2
-  · simp only [cubic, if_pos hk, normal, if_pos hk]
+  · simp only [cubic_eq, if_pos hk, normal, if_pos hk]
     calc
       _ = (b (-p-q) * c p) * (c q * b r + b r * c q) -
           b (-p-q) * (b r * c p + c p * b r) * c q +
           (b (-p-q) * b r + b r * b (-p-q)) * c p * c q := by noncomm_ring
       _ = _ := by rw [hbb, hbp, hbq]; simp only [hp, hq]; split_ifs <;> simp
-  · simp only [cubic, if_neg hk, normal, if_neg hk]
+  · simp only [cubic_eq, if_neg hk, normal, if_neg hk]
     calc
       _ = (b r * c p + c p * b r) * c q * b (-p-q) -
           c p * (b r * c q + c q * b r) * b (-p-q) +
@@ -187,13 +233,13 @@ theorem cubic_c (p q r : ℤ) :
   have hpc := ghost_c_car p r
   have hqc := ghost_c_car q r
   by_cases hk : -p-q ≤ -2
-  · simp only [cubic, if_pos hk]
+  · simp only [cubic_eq, if_pos hk]
     calc
       _ = b (-p-q) * c p * (c q * c r + c r * c q) -
           b (-p-q) * (c p * c r + c r * c p) * c q +
           (b (-p-q) * c r + c r * b (-p-q)) * c p * c q := by noncomm_ring
       _ = _ := by rw [hbp, hpc, hqc]; split_ifs <;> simp
-  · simp only [cubic, if_neg hk]
+  · simp only [cubic_eq, if_neg hk]
     calc
       _ = c p * c q * (b (-p-q) * c r + c r * b (-p-q)) -
           c p * (c q * c r + c r * c q) * b (-p-q) +
@@ -215,7 +261,7 @@ private theorem cubic_vacuum (p q : ℤ) : cubic p q vacuum = 0 := by
     have h := ghost_c_car 1 1
     have htwo : (2 : ℂ) • (c 1 * c 1) = 0 := by simpa only [two_smul] using h
     exact (smul_eq_zero.mp htwo).resolve_left (by norm_num)
-  simp [cubic, mul_assoc, hcc]
+  simp [cubic_eq, mul_assoc, hcc]
 
 /-- The actual SL₂ vacuum is killed by the full cubic, with no intercept term. -/
 theorem Qg_vacuum : Qg vacuum = 0 := by

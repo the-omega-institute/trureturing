@@ -144,9 +144,10 @@ private theorem odd_anticommutant_zero (A : Module.End ℂ Fock)
       _ = parity*(A*parity) := by rw [hα]; simp [smul_mul_assoc, mul_smul_comm]
       _ = _ := by noncomm_ring
   have hh := congrArg (fun T : Module.End ℂ Fock => T*parity) hodd
-  have htwo : (2 : ℂ) • A = 0 := by
-    simpa only [add_mul, zero_mul, ← mul_assoc, ← he, two_smul,
-      mul_assoc A parity parity, parity_involution, mul_one] using hh
+  have hPAP : parity*A*parity+A = 0 := by
+    simpa only [add_mul, zero_mul, mul_assoc, parity_involution, mul_one] using hh
+  rw [← he] at hPAP
+  have htwo : (2 : ℂ) • A = 0 := by simpa only [two_smul] using hPAP
   exact (smul_eq_zero.mp htwo).resolve_left (by norm_num)
 
 def anomalyCoefficient (r : ℤ) : ℂ := (26/12 : ℂ) * ((r : ℂ)^3-r)
