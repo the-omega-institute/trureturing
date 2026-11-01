@@ -206,6 +206,7 @@ theorem routingCheck_sound {W : Type v} (H : SimpleGraph W) (f : W → V)
     have hread (w : W) : t.read (pointKey (c (f w))) = some (f w) := hall (f w) (hvs w)
     constructor
     · intro w z heq
+      change c (f w) = c (f z) at heq
       have hw := hread w
       rw [heq, hread z] at hw
       exact hf (Option.some.inj hw.symm)
