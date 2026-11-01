@@ -8,9 +8,6 @@
 
 import D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
 import Mathlib.Analysis.InnerProductSpace.Positive
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Module
 
 /-!
 The HTMB scenario and pure-state conjecture of Tavakoli, Zambrini Cruzeiro, Uola and Abbott,
