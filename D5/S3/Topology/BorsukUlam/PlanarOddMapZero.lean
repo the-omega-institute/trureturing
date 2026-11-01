@@ -10,6 +10,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.Convex.Contractible
 import Mathlib.Topology.Homotopy.Lifting
+import D5.S3.Topology.TauCeti.Analysis.Normed.Module.Normalize
 
 /-! The planar Borsuk--Ulam route used by the chiral-event settlement. -/
 
@@ -46,7 +47,7 @@ private theorem hemisphere_mem (z : ℂ) (hz : z ∈ Metric.closedBall (0 : ℂ)
   nlinarith [norm_nonneg (hemisphere z)]
 
 private def diskBoundary (z : Circle) : Metric.closedBall (0 : ℂ) 1 :=
-  ⟨z, mem_closedBall_zero_iff.mpr (le_of_eq (Circle.norm_coe z))⟩
+  ⟨z, Metric.sphere_subset_closedBall z.property⟩
 
 private theorem diskBoundary_continuous : Continuous diskBoundary :=
   continuous_subtype_val.subtype_mk _
@@ -71,11 +72,7 @@ theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)
   have hq : Continuous q := hf.comp_continuous
     (hemisphere_continuous.comp continuous_subtype_val) (fun z => hemisphere_mem z z.property)
   have hqne : ∀ z : D, q z ≠ 0 := fun z => hne _ (hemisphere_mem z z.property)
-  let g : C(D, Circle) :=
-    ⟨fun z => ⟨q z / (‖q z‖ : ℂ), mem_sphere_zero_iff_norm.mpr (by
-      rw [norm_div, Complex.norm_real, Real.norm_eq_abs, abs_norm, div_self (norm_ne_zero_iff.mpr (hqne z))])⟩,
-      (hq.div (Complex.continuous_ofReal.comp hq.norm)
-        (fun z => Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (hqne z)))).subtype_mk _⟩
+  let g : C(D, Circle) := TauCeti.normalizeToSphere q hq hqne
   let d₀ : D := ⟨0, by simp [D]⟩
   obtain ⟨r₀, hr₀⟩ := Circle.exp_surjective (g d₀)
   obtain ⟨F, hF, _⟩ := Circle.isCoveringMap_exp.existsUnique_continuousMap_lifts g d₀ r₀ hr₀
@@ -85,12 +82,12 @@ theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)
     congrFun hF.2 (diskBoundary z)
   have hgodd (z : Circle) : g (diskBoundary (-z)) = -g (diskBoundary z) := by
     apply Circle.ext
-    change q (diskBoundary (-z)) / (‖q (diskBoundary (-z))‖ : ℂ) =
-      -(q (diskBoundary z) / (‖q (diskBoundary z)‖ : ℂ))
+    change NormedSpace.normalize (q (diskBoundary (-z))) =
+      -NormedSpace.normalize (q (diskBoundary z))
     have hqodd : q (diskBoundary (-z)) = -q (diskBoundary z) := by
       exact (congrArg f (hemisphere_boundary_neg z)).trans
         (hodd _ (hemisphere_mem _ (diskBoundary z).property))
-    rw [hqodd, norm_neg, neg_div]
+    rw [hqodd, NormedSpace.normalize_neg]
   let delta : Circle → ℝ := fun z => l (-z) - l z
   have hdelta : Continuous delta := (hl.comp continuous_neg).sub hl
   have hexp (z : Circle) : Circle.exp (delta z) = -1 := by
