@@ -165,6 +165,9 @@ theorem weighted_equality_remainder (v : Index → ℂ)
     nlinarith [hfactor]
   refine ⟨λ, hλ, ?_⟩
   rw [hnorm_expand]
-  exact hweighted.trans (by nlinarith [hfinal])
+  calc
+    2 * ∑ i, a i * r i ≤ 2 * (radius v * (radius v - traceRadius U v)) := by
+      exact mul_le_mul_of_nonneg_left hweighted (by norm_num)
+    _ ≤ 2 * remainder U v := hfinal
 
 end D5.S3.Quantum.Recovery.FourPathWeightedEqualityRemainder
