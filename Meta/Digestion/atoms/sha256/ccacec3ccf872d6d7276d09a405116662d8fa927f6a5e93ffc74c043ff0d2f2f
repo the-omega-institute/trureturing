@@ -1,0 +1,40 @@
+置 $d=|J_0|\ge1$。对 $r$ 元 $R\subseteq J_0$，式(37.7)只依赖 $r$，记本侧权重为
+
+$$
+\omega_r^{pq}=\sum_{j=0}^{d-r}(-1)^j\binom{d-r}{j}D_{r+j}^{pq},
+\qquad \sum_{r=0}^d\binom dr\omega_r^{pq}=N_{pq}.
+\tag{37.9}
+$$
+
+Leader–Tan [B32-LT] Lemma4 的翻转注入在此保留全部条件：从精确迹 $R+h$ 翻转 $h\in J_0\setminus R$，新增对角线交叉 $h$，故不是 $K\cup J_0$ 中的其他耳；其余对角线不变。翻转后 $h$ 的中心恰接一条内部对角线，逆翻转唯一。因此
+
+$$
+\omega_0^{pq}\ge\omega_1^{pq}\ge\cdots\ge\omega_d^{pq},
+\qquad \omega_0^{pq}>\omega_1^{pq}.
+\tag{37.10}
+$$
+
+末个严格性按定理B-34.4证明中的扇形见证核对：删除 $P$ 的 $p$ 个中心，剩余凸多边形有 $m=n-p\ge10$ 个顶点。固定 $h\in J_0$，以其中心为根作完整扇形。$Q\cup J_0$ 的耳中心及其邻点都未被删去；根的两边界邻点仍是原邻点，且都不是 $Q\cup J_0$ 的中心，因为这些耳与 $h$ 兼容。扇形的两耳中心恰为根的两邻点，故它避开 $Q\cup J_0$。添回 $P$ 后得到本侧空 $J_0$ 迹完成，其在根接有至少 $m-3>1$ 条内部对角线，不在单点迹 $\{h\}$ 的翻转像中。反侧删除 $Q$ 后同样有 $n-q\ge10$，亦得(37.10)的反侧版本。
+
+现在分别应用式(34.13)的有限和恒等式。对非空向上族 $\mathscr V\subseteq2^{J_0}$ 且 $\varnothing\notin\mathscr V$，置
+$\beta_r=|\mathscr V^{(r)}|/\binom dr$。包含边双计数给 $\beta_r\le\beta_{r+1}$，且 $\beta_0=0,\beta_d=1$。写 $B_r=\binom dr$，有
+
+$$
+N_{pq}|\mathscr V|-2^d\sum_{R\in\mathscr V}\omega_{|R|}^{pq}
+=\sum_{0\le r<s\le d}B_rB_s(\omega_r^{pq}-\omega_s^{pq})(\beta_s-\beta_r)>0.
+\tag{37.11}
+$$
+
+各项非负，$(0,d)$ 项由(37.10)严格正。反侧有自己的 $N_{qp},\omega^{qp}$ 和同样严格的估计。交叉相交使 $\mathscr C_0,\mathscr D_0$ 均不含空集，补集映射又给 $|\mathscr C_0|+|\mathscr D_0|\le2^d$，所以
+
+$$
+\frac{|\mathcal C|}{N_{pq}}+\frac{|\mathcal D'|}{N_{qp}}
+\le\frac{\sum_{R\in\mathscr C_0}\omega_{|R|}^{pq}}{N_{pq}}
+ +\frac{\sum_{R\in\mathscr D_0}\omega_{|R|}^{qp}}{N_{qp}}
+<\frac{|\mathscr C_0|+|\mathscr D_0|}{2^d}\le1.
+$$
+
+若一原族为空，(37.4)只剩另一族是其完整条件纤维的子集，等号恰为该子集取满。这证明全部等号情形。
+
+上述局部对应消费 [B32-LT] Theorem2证明及引理B-34.3的实际双族版本；严格层估计消费定理B-34.4证明的有限和与扇形见证。新增条件是两侧分别使用(37.6)–(37.11)的归一化律，特别允许 $p\ne q$。独立耳数限制 $|K|+d\le\lfloor n/2\rfloor$ 保留奇偶两类；在 $n=14,15$ 且 $|K|=6$ 时仍有 $d\le1$，$d=1$ 已包含在严格的 $(0,d)$ 项中。∎
+
