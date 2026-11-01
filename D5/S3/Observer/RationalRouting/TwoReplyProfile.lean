@@ -7,6 +7,7 @@
    digest: Original bounded-scale future profiles are acquired at the actual moving cut. -/
 
 import D5.S3.Observer.RationalRouting.FullFutureProfile
+import Mathlib.Data.Nat.Size
 
 /-! Exact original intervals and acquisition at one attained current state. -/
 
@@ -1017,6 +1018,44 @@ private theorem containing_cell_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) 
   have h := endpoint_scan_denominators B hB y
   exact ⟨(endpoint_den_bound _).trans h.1,(endpoint_den_bound _).trans h.2⟩
 
+/-- Binary widths of the actual scale names and nonnegative complete replies.
+One delimiter bit per integer is included. Provenance and service work are separate. -/
+def replyWidths : List (ℕ × ℤ) → ℕ
+  | [] => 0
+  | (D,r) :: rows => (Nat.size D + 1) + (Nat.size r.toNat + 1) + replyWidths rows
+
+private theorem product_size (a b : ℕ) : Nat.size (a*b) ≤ Nat.size a + Nat.size b := by
+  apply Nat.size_le.mpr
+  rw [pow_add]
+  calc
+    a*b ≤ a * 2^Nat.size b := Nat.mul_le_mul_left a (Nat.lt_size_self b).le
+    _ < 2^Nat.size a * 2^Nat.size b :=
+      mul_lt_mul_of_pos_right (Nat.lt_size_self a) (by positivity)
+
+private theorem bounded_reply_size {z : ℚ} {V D : ℕ}
+    (hz : 0 < z) (hV : z < V) (hD : 1 ≤ D) :
+    Nat.size (reply D z).toNat ≤ Nat.size D + Nat.size V := by
+  obtain ⟨hn,hu⟩ := bounded_reply hz hV hD
+  have he : ((reply D z).toNat : ℤ) = reply D z := Int.toNat_of_nonneg hn
+  have hn' : (reply D z).toNat < D*V := by
+    exact_mod_cast (show ((reply D z).toNat : ℤ) < ((D*V : ℕ) : ℤ) by
+      rw [he]; exact_mod_cast hu)
+  exact (Nat.size_le_size hn'.le).trans (product_size D V)
+
+private theorem trace_widths {Q V : ℕ} (hQ : 1 ≤ Q) {z : ℚ}
+    (hz : 0 < z) (hV : z < V) {rows : List (ℕ × ℤ)}
+    (trace : TwoReplyTrace Q z rows) :
+    replyWidths rows ≤ 6*Nat.size Q + 2*Nat.size V + 4 := by
+  obtain ⟨s,hs,hsQ,ht⟩ := trace
+  have hd : Nat.size (Q^2) ≤ 2*Nat.size Q := by
+    simpa only [pow_two,two_mul] using product_size Q Q
+  have hs' := Nat.size_le_size hsQ
+  have hr := bounded_reply_size hz hV (one_le_pow₀ hQ : 1 ≤ Q^2)
+  have hh := bounded_reply_size hz hV hs
+  rcases ht with ht | ht | ht | ht <;> subst rows <;>
+    simp only [replyWidths] <;> omega
+
+
 /-- Actual acquisition on one authentic chronological prefix. The finite
 output is exactly the original cell and evaluates every future word and every
 scale through the requested bound; the actual-read trace has at most two rows. -/
@@ -1041,7 +1080,8 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
         ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r) ∧
       AcquisitionScans A I B z C ∧
       BoundedReplies Q V (program.actualReads z) ∧
-      C.lower.den ≤ B ∧ C.upper.den ≤ B := by
+      C.lower.den ≤ B ∧ C.upper.den ≤ B ∧
+      replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4 := by
   dsimp only
   rw [chronological_matrix u hx.1]
   obtain ⟨he, ht⟩ := acquisition_spec (unimodular_wordMatrix u.reverse) hl hB hx
@@ -1055,7 +1095,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
   let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
   have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
-  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [he]
     intro y
     rw [containing_cell_exact B hB hx.1 y]
@@ -1084,5 +1124,9 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
     simpa only [Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
   · rw [he]
     exact containing_cell_denominators B hB x
+  · have hz := current_value_bounds hA hx.1
+      (hx.2.2.trans_le (original_upper_bounds hx).2)
+    apply trace_widths hQ hz.1 _ ht
+    simpa only [Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
 
 end D5.S3.Observer.RationalRouting

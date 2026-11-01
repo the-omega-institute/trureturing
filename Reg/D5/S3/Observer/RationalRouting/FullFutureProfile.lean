@@ -27,6 +27,7 @@ def actual : Realization signature := realize signature (fun _ p y => @decide (S
 def rejected : Realization signature := realize signature (fun _ _ _ => true) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
+  classical
   intro _
   refine ⟨⟨1,1⟩,1,2,?_⟩
   intro he
@@ -120,6 +121,7 @@ def actual : Realization signature := realize signature (fun _ By x => @decide (
 def rejected : Realization signature := realize signature (fun _ _ _ => true) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
+  classical
   intro _
   refine ⟨⟨1,1⟩,1,0,?_⟩
   intro he
@@ -211,6 +213,7 @@ def actual : Realization signature := realize signature (fun _ Byw m => (contain
 def rejected : Realization signature := realize signature (fun _ _ _ => 0) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
+  classical
   intro _
   refine ⟨⟨1,1,[]⟩,1,2,?_⟩
   norm_num [actual,realize,ProfileCell.evaluate,containingCell,
@@ -295,6 +298,7 @@ def actual : Realization signature := realize signature (fun _ B y => fastContai
 def rejected : Realization signature := realize signature (fun _ _ _ => ⟨0,1⟩) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
+  classical
   intro _
   refine ⟨1,1,2,?_⟩
   change fastContainingCell 1 1 ≠ fastContainingCell 1 2

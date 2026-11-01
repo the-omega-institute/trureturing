@@ -64,7 +64,8 @@ def arena : Arena where
         ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r) ∧
       AcquisitionScans A I B z C ∧
       BoundedReplies Q V (program.actualReads z) ∧
-      C.lower.den ≤ B ∧ C.upper.den ≤ B
+      C.lower.den ≤ B ∧ C.upper.den ≤ B ∧
+      replyWidths (program.actualReads z) ≤ 6*Nat.size Q + 2*Nat.size V + 4
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
