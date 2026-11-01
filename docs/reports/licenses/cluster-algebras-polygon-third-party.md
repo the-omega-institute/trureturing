@@ -36,11 +36,71 @@ The source pins Lean 4.31.0; this repository selects Lean 4.35.0 and Mathlib
 | `ClusterAlgebras/TypeA/Flips.lean` | `0d9969e370379d31abb3248e5e6dad19404e621c69fb90309ef2e6adf06481f7` | 535–548 |
 
 Only module/import/public/attribute and namespace-boundary metadata are
-adapted. Original declaration names and proof bodies are retained. Fan and
-flip declarations are excluded. The consumer identifies the complete original
+adapted. Original declaration names and proof bodies are retained. Fan declarations are excluded from this count cone. The 32 additional
+flip-only declarations have the separate owner specified below. The consumer identifies the complete original
 triangulation carrier by the identity on chord sets and applies
 `ClusterAlgebras.TypeA.encard_setOf_isTriangulation`; `catalanNumber` is
 extensionally and definitionally Mathlib's `catalan`.
+
+The flip source owner is
+`D5/S3/Geometry/Polygons/PolygonTraceFlip.lean`. It imports the sole shared
+supplier `PolygonCatalanSupplier` and retains only the following 32 additional
+declarations, with the original `ClusterAlgebras` identities and exact source
+texts (excluding the final line terminator). The count owner's 69 declarations
+and this flip-only set have 101 unique identities: the original 75-declaration
+flip cone shares 43 identities with the count cone. No shared declaration is
+copied into the flip owner. These source-ownership statements do not assert
+integration or verification of a dependent module.
+
+The flip-only source attribution is Copyright (c) 2026 Axiom Math;
+Ashvin A. Swaminathan (`PolygonTriangulation.lean`) and Alexey Sorokin
+(`TypeA/Polygon.lean`, `FiniteType/External.lean`). The receiver-pinned
+Mathlib replacement condition above also applies to every retained flip-only
+declaration. Module, import, public-section and attribute metadata are adapted;
+the declaration names and proof bodies in this table are exact licensed reuse.
+The local conditioned trace construction and injective reconstruction are
+separate repository mathematics, not part of the source transplant.
+
+| Flip-only source | Source SHA-256 |
+| --- | --- |
+| `ClusterAlgebras/FiniteType/External.lean` | `f6198da90d8a36ed9e34fad2a104a6f7470ba56ecbc6db00651299a64cc806b3` |
+| `ClusterAlgebras/PolygonTriangulation.lean` | `55028ccea628bbb03a4a280ea592312b73a5556e8778eb0e233f560925bf7274` |
+| `ClusterAlgebras/TypeA/Polygon.lean` | `a9308cdc283b71be372d254ee8098700188e8569017d869f5b65769d54956364` |
+
+| Original identity | Source and inclusive lines | Exact declaration SHA-256 |
+| --- | --- | --- |
+| `ClusterAlgebras.sbtw_rotate_four` | `ClusterAlgebras/PolygonTriangulation.lean` 101–105 | `6e0fedc2b33d0748958aab6763d286325e1b7291118bc3b5684f7ee2b9b51b43` |
+| `ClusterAlgebras.Cross.symm` | `ClusterAlgebras/PolygonTriangulation.lean` 108–112 | `ecb1d08006804127e30cea6426802891b8dc7f1b545c903f40d240c617586292` |
+| `ClusterAlgebras.segments` | `ClusterAlgebras/PolygonTriangulation.lean` 157–158 | `c6dcfd3f379629e5547ba74439738c247c03a8b9147228e011e713243955e4e1` |
+| `ClusterAlgebras.mem_segments` | `ClusterAlgebras/PolygonTriangulation.lean` 162–164 | `a2adeacd889f0f4dabec6aecbc5779de6e65286d093ca17136b1076e2aa3f976` |
+| `ClusterAlgebras.flipTriangulation` | `ClusterAlgebras/FiniteType/External.lean` 55–57 | `c89b2bf15e3975e66a7fc82d8dc1b2fa1ee52c7cba381d514ad07d13db9a0ee0` |
+| `ClusterAlgebras.IsFlipReplacement` | `ClusterAlgebras/FiniteType/External.lean` 63–65 | `06e6979319283946aa41e060464d1cf2f91d450c39fc4fcf2ca2b3b4f286cfc7` |
+| `ClusterAlgebras.TypeA.not_cross_self` | `ClusterAlgebras/TypeA/Polygon.lean` 243–246 | `d8239b2c8369766d18cb7b0f270aeeb756075a4d0a5d2c5a88b29674df39caf5` |
+| `ClusterAlgebras.TypeA.basePos_self` | `ClusterAlgebras/TypeA/Polygon.lean` 260–261 | `0021bc35fbd60f9e8128d0ea6370697e0650d617b4cc58d4b6e724bdd0e3fd92` |
+| `ClusterAlgebras.TypeA.basePos_self_lt_of_ne` | `ClusterAlgebras/TypeA/Polygon.lean` 264–267 | `08beb3b6115db1ad34dcfab111fbd19720d5b2c1353de0100f9bca1c1c78d9ef` |
+| `ClusterAlgebras.TypeA.sbtw_iff_basePos` | `ClusterAlgebras/TypeA/Polygon.lean` 272–275 | `6d2f67d866993642407944312cf8bdfd699ed50688361ebf1a859ce85f4680fb` |
+| `ClusterAlgebras.TypeA.bijOn_basePosSeg_isSide` | `ClusterAlgebras/TypeA/Polygon.lean` 316–345 | `ce5103c51bdf9913aa1b7190e1d18e7e47a9fb497bbc23df0076a56992ea9afa` |
+| `ClusterAlgebras.TypeA.not_cross_of_isSide` | `ClusterAlgebras/TypeA/Polygon.lean` 396–403 | `3160b0ffa5459fdd761225975a8f1e251980efaa0a735456d4333bfc23e77ac1` |
+| `ClusterAlgebras.TypeA.IsTriangulation.not_cross` | `ClusterAlgebras/TypeA/Polygon.lean` 407–413 | `6b712320d0f1b927e8f1d9ad356af4064c08c45da92ef0da61cceff513184c9c` |
+| `ClusterAlgebras.TypeA.mem_segments_iff_basePosSeg` | `ClusterAlgebras/TypeA/Polygon.lean` 463–471 | `7dcc9301f2ecd0931a68c14a65653e5b37a0996c5a3fd6704db6e79c571833fb` |
+| `ClusterAlgebras.TypeA.isSegment_mk_of_ne` | `ClusterAlgebras/TypeA/Polygon.lean` 477–478 | `be5581a41bda8276c17f18583831bcfa4c333c9da2d3676742dd9515db9fc3df` |
+| `ClusterAlgebras.TypeA.mem_segments_iff_of_basePos_lt` | `ClusterAlgebras/TypeA/Polygon.lean` 482–486 | `6e094127bf5c2aae353cbd3e630e8318bad1264c89eb88f51ee9cff378b49bd1` |
+| `ClusterAlgebras.TypeA.IsTriangulation.existsUnique_apex` | `ClusterAlgebras/TypeA/Polygon.lean` 492–521 | `75e69cd9b7dc0388dace468c9ed82ae808d8416db093f02772b302496f32b7c1` |
+| `ClusterAlgebras.TypeA.quadrilateral_basePos` | `ClusterAlgebras/TypeA/Polygon.lean` 531–540 | `05b45a5229561c70bd633cb31e92563f348be00251911499ec9c0ae216ed76a1` |
+| `ClusterAlgebras.TypeA.quadrilateral_cross` | `ClusterAlgebras/TypeA/Polygon.lean` 545–554 | `a9bee7496829d13974b4b1a77aecaad00354d6281e78448c4ed6b03bef839c2f` |
+| `ClusterAlgebras.TypeA.cross_mk_of_interleave` | `ClusterAlgebras/TypeA/Polygon.lean` 583–588 | `dca2abcc45390c313879296bc86fe1f6aea02d0ee64556e14bcf48b032533fbe` |
+| `ClusterAlgebras.TypeA.quadrilateral_cross_left_of_basePos` | `ClusterAlgebras/TypeA/Polygon.lean` 591–607 | `ab0b6538ed35d054b54b4d9c5ab10ad9ea7ea840b99b517d4ce3d9f50bb3dfe6` |
+| `ClusterAlgebras.TypeA.quadrilateral_cross_right_of_basePos` | `ClusterAlgebras/TypeA/Polygon.lean` 611–630 | `af6dd2f003cd53ca9e0ae7056c6dbeffeb885d2ffb0a7d1f6fc9e04170cdb932` |
+| `ClusterAlgebras.TypeA.quadrilateral_cross_left` | `ClusterAlgebras/TypeA/Polygon.lean` 635–646 | `23d4f4a97227224a68317a5e4b89307829881962f4379e6ef27f916243a378f1` |
+| `ClusterAlgebras.TypeA.quadrilateral_cross_right` | `ClusterAlgebras/TypeA/Polygon.lean` 651–664 | `e9cd3b8f75a26486f998e899a24604fdb022692d898c6a7fa03f3a3eecf5edf4` |
+| `ClusterAlgebras.TypeA.IsFlipQuadrilateral` | `ClusterAlgebras/TypeA/Polygon.lean` 674–676 | `33d00c634af9ba8d917bf290d871d42a020a9f74f093d83c76aada3b705cafcb` |
+| `ClusterAlgebras.TypeA.IsDiagonal.exists_sbtw` | `ClusterAlgebras/TypeA/Polygon.lean` 681–689 | `180cc0a13d06e253c81a3a38084d270764518c86bfa0a253df138bc1204ddb83` |
+| `ClusterAlgebras.TypeA.mem_segments_flipTriangulation` | `ClusterAlgebras/TypeA/Polygon.lean` 692–696 | `2b2d4a551319cda3bdbe41042b19bf919b2be27dd749d96609c2ee43c3a07d7c` |
+| `ClusterAlgebras.TypeA.IsFlipQuadrilateral.rim_ne` | `ClusterAlgebras/TypeA/Polygon.lean` 699–704 | `ddbdecd2ca0deeb9a23f9bb55ab2d395ee1b92633b91c32fb2f8a2c3398b9769` |
+| `ClusterAlgebras.TypeA.IsTriangulation.existsUnique_apex_of_mem` | `ClusterAlgebras/TypeA/Polygon.lean` 710–718 | `f91158540de413a73c337985ade78709b0bc310db962b1394f7de1cc1c910854` |
+| `ClusterAlgebras.TypeA.IsFlipQuadrilateral.isFlipReplacement` | `ClusterAlgebras/TypeA/Polygon.lean` 723–762 | `561d403614d62d665eb01761ecf43715de363faca4e4dab6e8d110b72c576a4f` |
+| `ClusterAlgebras.TypeA.IsFlipQuadrilateral.eq_of_isFlipReplacement` | `ClusterAlgebras/TypeA/Polygon.lean` 766–784 | `3f3331173e5bae2426a5fc09bc0b3ec1850456355f14c6f85c7748d0bb6f4123` |
+| `ClusterAlgebras.TypeA.IsTriangulation.existsUnique_isFlipReplacement` | `ClusterAlgebras/TypeA/Polygon.lean` 847–854 | `5f423818cf2356a226295a749c233fe6e3ab454cdcbc92338a1d5cefc0af8d35` |
 
 The adapted source is distributed under the Apache License, Version 2.0 below.
 
