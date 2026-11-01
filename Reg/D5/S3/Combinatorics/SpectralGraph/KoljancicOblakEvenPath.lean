@@ -573,9 +573,13 @@ def joinedMatrixRejected : DependentFamily.Realization joinedMatrixSignature :=
 lemma joinedMatrix_rejected_law : ¬ joinedMatrixArena.Law joinedMatrixRejected := by
   intro h
   have he := h (fun _ => 0) (fun _ => 0) 0 0 0
-  have hc := congrArg (fun p : ℝ[X] => p.coeff 0) he
-  norm_num [joinedMatrixRejected, joinedMatrixActual, DependentFamily.realize,
-    joined_path_charpoly, continuant, coeff_add] at hc
+  have hp := joinedMatrix_actual_positive (fun _ => 0) (fun _ => 0) 0 0 0
+  change joinedMatrixActual.readout () (0, 0)
+    ((fun _ => 0), (fun _ => 0), (0 : ℝ)) + 1 = _ at he
+  rw [hp] at he
+  have hz : (1 : ℝ[X]) = 0 := by
+    linear_combination he
+  exact one_ne_zero hz
 
 lemma joinedMatrix_dependence :
     DependentFamily.ObservationalDependence joinedMatrixSignature joinedMatrixActual := by
