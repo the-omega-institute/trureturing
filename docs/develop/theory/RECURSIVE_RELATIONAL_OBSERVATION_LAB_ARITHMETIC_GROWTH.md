@@ -1521,3 +1521,299 @@ their original domains. No full-programme completion follows. $\square$
 [AQBR]: RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Old-frontier batches without a fixed left-first schedule
+
+**Definition 15.1 (one acquired cohort and its projected observation).**
+Use the attained domain $\mathcal D_+$, actual $P/S$ guards and material
+representation of Definitions 1.1 and 9.1. At an entry $u\in\mathcal D_+$,
+acquire and seal the complete OLD logical frontier as in Definition 9.3:
+each row has its authentic address, alpha/beta tag and actual reference.
+A batch selects distinct rows of this one cohort, in any supplied order,
+and calls $P_p$ on an entry-alpha row or $S_p$ on an entry-beta row.
+Each old row is used at most once; new children and beta's unary marker
+are ineligible. There are no intervening source edits. Consider only cuts
+after complete inner return, including its tape/arithmetic maintenance,
+literal reply and acknowledgement; an unfinished inner commit is excluded.
+An empty prefix and a prefix leaving unused old rows are admitted.
+
+This is the union of these legal supplied schedules, an alternative
+contract to the installed left-first $\mathsf R$ (native $F$), not a new
+opcode or a change to that macro. Row acquisition, supplied selection and
+order, retained row/selection backing, exact counting and all original
+navigation, reference comparisons, guards, records, traffic and returns
+are charged. Assumption AA20.1's common root/epoch, exclusive current
+rights and sufficient finite material per finite run remain premises.
+No fixed finite arena is asserted for the union of all finite batches.
+
+Write $\Lambda(t)$ for logical leaf addresses and $h$ for the literal
+successful-event word of this batch prefix. Its projected observation is
+$(y,k)$, where $y$ is the acquired current logical syntax and $k=|h|$ is
+an exact acquired successful count, or an internal mathematical projection
+when not acquired. Residues do not supply this exact count. The projection
+forgets the entry list, operands, schedule and ancestral tapes; these may
+still exist in the full state. The fibres below count logical descriptions,
+not collisions of complete controllers or equality of physical references.
+
+**Theorem 15.2 (complete source, support and indexed-suffix inverse).**
+For $y\in\mathcal D_+$ define the following tagged candidate positions:
+
+$$
+\begin{aligned}
+C_S(y)&=\{p:y_p=\langle\beta,\alpha\rangle\},\\
+C_P(y)&=\{p\in\Lambda(y):y_p=\beta,\ p\text{ ends in }R\},\\
+C(y)&=C_S(y)\sqcup C_P(y),\qquad M(y)=|C(y)|.
+\end{aligned}
+\tag{LAGB.1}
+$$
+
+The tag specifies $e_p=S_p$ or $P_p$. Positions in $C(y)$ are pairwise
+prefix-incomparable. For $A\subseteq C(y)$ let $U_A(y)$ replace each
+selected exact cherry by beta and each selected bare beta leaf by alpha.
+These are operations on DESCRIPTIONS, not permitted reverse source edits.
+Then $U_A(y)\in\mathcal D_+$, different $A$ give different entries, and
+the entire projected fibre is
+
+$$
+\{(u,h):u\xrightarrow[\rm old]{h}y,\ |h|=k\}
+ =\{(U_A(y),(e_{p_1},\ldots,e_{p_k})):
+       A\subseteq C(y),\ |A|=k,\ (p_1,\ldots,p_k)\in\operatorname{Perm}(A)\}.
+\tag{LAGB.2}
+$$
+
+Here the left side ranges over exactly Definition 15.1's batches.
+It is empty for a negative/noninteger $k$ or $k>M(y)$; otherwise its
+entry/support alternatives number $\binom{M(y)}k$ and its literal
+chronological suffix alternatives number $\binom{M(y)}k k!$.
+
+Let $E(t)$ be AA17.1's labelled generation-event set and
+$n(t)=a(t)+2b(t)-1=|E(t)|$. For every listed alternative,
+
+$$
+E(U_A(y))=E(y)\setminus\{e_p:p\in A\},\qquad
+n(U_A(y))=n(y)-k.
+\tag{LAGB.3}
+$$
+
+If $A_i=\{p_1,\ldots,p_i\}$, its $i$th batch cut is
+$U_{A\setminus A_i}(y)$ and event $e_{p_i}$ has full generation index
+$n(y)-k+i$. This determines the batch suffix and its source cuts when
+$A$ and its order are supplied, without selecting the earlier ancestral
+chronology.
+
+Proof. Distinct original leaves are prefix-incomparable. LAB9.4's actual
+operand argument applies in every order: an edit at one old row changes
+neither another row's subtree nor its root reference. Before a selected
+row is called, its acquired tag, reference and address therefore still
+agree with the current source. Its original guard succeeds; no newly
+created leaf is a selected row. Completed original calls give the stated
+coherent cuts under AA20.1 and LAB11.2's accepted-event invariant.
+
+A processed beta row is consequently an exact $\langle\beta,\alpha\rangle$
+cherry at $y$: neither child is an old target. A processed alpha row is
+a bare beta. Its address ends in $R$, since an entry in $\mathcal D_+$
+has neither a root alpha nor an $L$-ending alpha. Thus every actual
+processed support is a subset of (LAGB.1). Exact cherries contain no
+candidate below them: their left beta ends in $L$, and their right leaf
+is alpha. Bare candidate leaves have no logical descendants. This proves
+prefix-incomparability and makes all the descriptive replacements disjoint.
+
+Conversely, reverse any chosen candidates descriptively. Reversing a
+cherry inserts beta, and inserting alpha at a bare candidate is allowed
+only at an $R$-ending address, so the birth-type condition is preserved.
+The result remains beta-positive: its leftmost beta cannot be reversed
+to alpha; a selected cherry containing it replaces it by beta. If the
+root cherry is selected the result is beta, never alpha. AA17.2 therefore
+makes this an attained entry in $\mathcal D_+$. Each chosen position is
+now a distinct original leaf of the correct tag. The preceding actual
+guard argument realizes every permutation, with endpoint exactly $y$.
+At any candidate position the two choices leave different constructors
+in the entry; disjointness prevents another choice from hiding that
+difference. This proves both completeness and injectivity. Ordinary
+subset/permutation counting gives the displayed sizes, with $0!=1$.
+
+At a reversed promotion only $P_p$ is removed from AA17.1's event set;
+at a reversed exact cherry only $S_p$ is removed. That cherry's born-beta
+left child and untouched born-alpha right child have no local events.
+All other events persist. These removed events are maximal, so the
+remaining set is a lower causal cut. AA17.2's source correspondence gives
+(LAGB.3); applying the same replacements to the unexecuted selected
+positions gives every intermediate cut. Each $P/S$ adds one event,
+proving the index formula. Any earlier lawful word ending at $U_A(y)$
+can precede the suffix; that earlier word has not been reconstructed.
+At $y=\beta$, $C(y)$ is empty: only the empty batch at beta is admitted,
+not a root promotion from excluded alpha. At the root cherry,
+$C(y)=\{\varepsilon:S\}$: the zero-event entry is $y$, and the sole one-event
+entry is beta. Thus root cherries are included while root beta reversal
+is excluded. $\square$
+
+**Theorem 15.3 (the exact remaining original-call menu).** For a processed
+support $A=A_S\sqcup A_P$ in Theorem 15.2 put
+
+$$
+\begin{aligned}
+B_y(A)&=A_P\ \cup\ \bigcup_{p\in A_S}\{pL,pR\},\\
+\mathcal N_y(A)&=\{P_q:q\in\Lambda(y)\setminus B_y(A),\ y_q=\alpha\}
+ \ \cup\ \{S_q:q\in\Lambda(y)\setminus B_y(A),\ y_q=\beta\}.
+\end{aligned}
+\tag{LAGB.4}
+$$
+
+This is precisely the allowable remaining ORIGINAL-row source-call menu,
+independent of the order already used. For fixed $y$ the map
+$A\mapsto\mathcal N_y(A)$ is injective. Exhaustion holds exactly when
+$\Lambda(y)=B_y(A)$, equivalently when
+$A=C(y)$ AND $\Lambda(y)=B_y(C(y))$. In particular $k=M(y)$ alone is not
+an exhaustion test.
+
+Proof. Every untouched original row is still a current leaf with its
+original tag, reference and enabled guard. A processed promotion leaves
+a current beta at its old row, but that row has already been used: its
+primitive $S$ guard does not grant old-cohort eligibility. A processed
+split replaces its old row by two new leaves, both ineligible. These
+are exactly the exclusions in $B_y(A)$; all other current leaves are
+untouched original rows. Actual calls still require their authentic
+operands and current authority. A saved control location may first owe
+selection, list advancement, output or return rather than a source call;
+$\mathcal N_y(A)$ is a source-call menu, not that protocol instruction.
+
+For $p\in C_P(y)$, $S_p$ belongs to this menu exactly when $p\notin A$.
+For $p\in C_S(y)$, both $S_{pL}$ and $P_{pR}$ belong exactly when
+$p\notin A$. Their disjoint address blocks recover every membership
+bit of $A$, proving injectivity. The menu is empty exactly when all
+current leaves are excluded. Every unselected candidate leaves its
+nonempty block in the menu, proving the equivalent exhaustion condition.
+
+For a concrete boundary take $y=\langle\beta,\beta\rangle$. Here
+$C(y)=\{R:P\}$ and $M=1$. Choosing all candidates gives entry
+$\langle\beta,\alpha\rangle$ and suffix $P_R$, but leaves
+$\mathcal N_y(A)=\{S_L\}$. At beta, even $k=M=0$ leaves $S_\varepsilon$.
+Thus maximal candidate selection can leave an unprocessed original leaf
+outside all candidate blocks. $\square$
+
+**Proposition 15.4 (known policies and a deterministic collision).**
+Suppose a known deterministic policy $\pi$ assigns to each entry $u$ a
+complete permutation of its old rows; any further policy inputs are
+fixed and declared. Only PREFIXES of that permutation are admitted.
+In (LAGB.2) keep exactly those pairs $(A,\sigma)$ for which $\sigma$ is
+the length-$k$ prefix of $\pi(U_A(y))$. This is the complete policy-filtered
+fibre. On a nonempty such fibre, entry, processed support and remaining
+menu are recoverable from $(y,k,\pi)$ exactly when the surviving support
+set is a singleton. Determinism alone does not ensure this condition.
+
+Proof. Filtering is precisely the added scheduling premise, so necessity
+and sufficiency follow from Theorem 15.2. Its entry injectivity and
+Theorem 15.3's menu injectivity identify the three recovery conditions.
+More generally, for a declared family $\mathscr P_\pi(u)$ of admitted
+prefixes, keep exactly those $(A,\sigma)$ with
+$\sigma\in\mathscr P_\pi(U_A(y))$; the same singleton-support criterion
+holds. This also allows declared stopping conditions. Each support has
+at most one admitted order when the policy has no projected hidden input.
+Sorting a selected subset by a comparator would give a different
+contract: its sorted word need not be a prefix of the FULL old-row order.
+If a deterministic controller has additional hidden acquired inputs,
+use its admitted-prefix relation over those inputs instead; determinism
+of the full controller cannot silently fix their projection.
+
+For an explicit counterexample, order all old rows by increasing logical
+depth and then lexicographically with $L<R$. Let
+
+$$
+y=\langle\langle\beta,\alpha\rangle,\beta\rangle,\qquad k=1.
+\tag{LAGB.5}
+$$
+
+Its two candidates are $L:S$ and $R:P$. Entry
+$u_1=\langle\beta,\beta\rangle$ has breadth-first first row $L$ and suffix
+$S_L$; entry $u_2=\langle\langle\beta,\alpha\rangle,\alpha\rangle$
+has first row $R$ and suffix $P_R$. Both give exactly (LAGB.5).
+The entries are attained respectively by
+$P_\varepsilon S_\varepsilon P_R$ and
+$P_\varepsilon S_\varepsilon S_L$. Their remaining menus are respectively
+$\{S_R\}$ and $\{S_{LL},P_{LR}\}$, so the collision affects lawful
+continuation, not just a name for the past.
+
+In contrast, [Rooted Boundary History §43, Theorem 43.2][RBHBATCH]
+supplies at most one native left-first entry at each fixed admissible
+$(y,k)$ on $\mathcal D_+$. That schedule premise removes the conditional
+support distinction on its own domain; it neither supplies an exact
+count for free nor reconstructs arbitrary earlier primitive chronology.
+Its native full-prefix, Busy and acquisition conditions remain in force.
+$\square$
+
+**Proposition 15.5 (conditional labels and the four source views).**
+On Definition 15.1's projected observation contract, for an admissible
+$(y,k)$ a separating finite supplement needs and can attain exactly
+$\binom{M(y)}k$ conditional values for entry, processed support or complete
+remaining menu, and exactly $\binom{M(y)}k k!$ for the literal chronological
+batch suffix. The corresponding static fixed-width content bounds are
+
+$$
+\left\lceil\log_2\binom{M(y)}k\right\rceil,
+\qquad
+\left\lceil\log_2\left(\binom{M(y)}k k!\right)\right\rceil.
+\tag{LAGB.6}
+$$
+
+The same statements hold when $y$ is instead its acquired oriented
+material source support, its terminal boundary or its labelled causal
+membership order. They do not recover an arbitrary ancestral serial
+history or constitute an inverse source actuator.
+
+Proof. Theorems 15.2–15.3 give exactly the distinct task answers on this
+same fibre. A supplement must distinguish them; numbering the finite
+subsets, or the subsets with their permutations, attains these conditional
+alphabet sizes. This is the ordinary finite-fibre separation argument
+already used in AA19.2, not a new coding or online retention theorem.
+A known policy or a further supplied observation $Z$ instead restricts
+(LAGB.2) to its compatible pairs. The exact bounds then use the number
+of surviving supports for the first task and surviving ordered suffixes
+for the second; an empty fibre is an incompatible observation.
+
+For example a complete tagged OLD frontier determines the entry by
+prefix parsing, and comparison with $y$ determines which old rows were
+processed. Tagged processed operands with their backed logical addresses
+determine support; their chronological trace also determines suffix order.
+Retained indices or request traces determine these only when their
+interpretation actually identifies the completed addressed events.
+If the complete AA tapes are lawfully acquired, AA19.2 recovers the whole
+primitive word at $y$; its last $k$ events give the batch suffix and the
+preceding source cut. Thus these stronger inputs can shrink or remove
+the displayed ambiguity. No compulsory extra archive or collision of the
+actual tape-retaining LAB controller follows. AA's Ready-only recall
+service has not become a new external read port during an outer Busy call.
+
+For the source views use AA17.3 literally: terminal alpha, unary beta,
+binary branch. Prefix closure of the actual terminal antichain gives
+material support; maximal support addresses give that antichain; arity
+parses the syntax. Retain beta's unary marker, excluding auxiliary tape
+edges. A bare untyped logical skeleton is insufficient for this parsing.
+AA17.2 identifies the syntax with its labelled causal membership order.
+Hence each of these current acquired views computes $C(y)$ and the same
+inverse entries, menus and source cuts. The supplement's order coordinate
+supplies the relative serial batch time; causal membership alone supplies
+no such order. All acquisition, bindings, rights and finite backing remain
+separate premises from the abstract inverse on acquired descriptions.
+
+The generic configuration/enabling distinction is classical in Winskel,
+[*Event Structures* (1987), §§1.1.1–1.1.3][WINBATCH]; commutation of
+independent letters is the trace-monoid framework of Abbes–Mairesse,
+[arXiv:1407.5879v3, §2.1][AMBATCH]. The existing
+[EnabledPathSwapConnectivity.result][SWAPBATCH] and
+[ConfigurationPathTransport finite histories][PATHBATCH] supply generic
+extension, exchange and event-count facts, not the source-specific
+candidate/menu correspondence (LAGB.1)–(LAGB.4). That correspondence is a
+`repo-derived` application of AA17–19 and LAB9's actual guards, with LAB10–13's
+same-run ownership and record conditions. It carries no worldwide-novelty
+or fresh Lean-certification claim. Static label sizes do not minimize total
+memory, online maintenance, navigation, traffic, elapsed duration or source
+material, and no primitive deletion, reset or reverse permission is added.
+$\square$
+
+[RBHBATCH]: RECURSIVE_RELATIONAL_OBSERVATION_ROOTED_BOUNDARY_HISTORY_RECOVERY.md#43-native-partial-frontier-recognizability-and-complete-unfinished-history-fibres
+[WINBATCH]: https://www.cl.cam.ac.uk/~gw104/Winskel1987_Chapter_EventStructures.pdf
+[AMBATCH]: https://arxiv.org/abs/1407.5879v3
+[SWAPBATCH]: ../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean
+[PATHBATCH]: ../../../D5/S3/ConceptDynamics/Fibers/ConfigurationPathTransport.lean
+
+## 追加锚（本行以下为增补区）
