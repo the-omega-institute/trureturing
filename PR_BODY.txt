@@ -1,8 +1,0 @@
-This digestion-only PR closes two residual atoms in the CFMP geometric realization group transport source using existing frozen Lean declarations.
-
-Covered atoms:
-
-- `4fcf06d753d2977a13ce23add8cdb5ba5a203d114d456325a2285ba8f98d058b` (Theorem 120.1) via `D5/S3/Geometry/Hyperideal/SixIndependentLengthRemainder.determinant_remainder_identity`.
-- `0156b31e28810681a554f93b272ec7b6f4868289dd0c521107a6c6c17125960e` (Theorem 120.2) via `D5/S3/Geometry/Hyperideal/SixIndependentLengthStability.asymmetry_remainder_le_envelope`.
-
-The canonical `make cover` writer moved both ledger entries from `residual-open` to `absorbed-closed`, with empty unresolved subitems. The writer's scoped Lean report completed successfully for the selected frozen modules and their dependencies. No Lean, Scribe, Python, or documentation source was added. The unformalized global geometric corollary 120.3 and its global realization/gluing obligations remain outside this coverage.
