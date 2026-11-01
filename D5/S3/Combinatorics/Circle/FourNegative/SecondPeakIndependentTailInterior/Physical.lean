@@ -6,6 +6,7 @@
    utility: none
    digest: UXWV physical occurrence inventory and both weighted bank masses. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Supports
+import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 2000000

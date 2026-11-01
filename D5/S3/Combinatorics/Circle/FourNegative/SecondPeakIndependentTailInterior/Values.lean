@@ -14,7 +14,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInter
 open private Parameters Parameters.a Parameters.b Parameters.c Parameters.d
   Parameters.hc Parameters.hd Parameters.ha Parameters.hb r s v dyadic_eqs from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Parameters
-open private lengths offsets nativeMask from
+open private lengths offsets nativeMask roundingD roundingW from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Supports
 open private modelMask modelExpr mask_coordinates from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Arithmetic
@@ -28,7 +28,7 @@ open private sourceMod base newBase charge nextBase nextNewBase chainLength chai
 open scoped BigOperators
 
 private def Nq (p : Parameters) : ℚ :=
-  (8*2^(r p)*2^p.c*2^p.d)*(16*2^(r p)*2^p.c*2^p.d*2^(s p))*2^p.c*2^p.d-1
+  (2^(r p)*2^p.c*2^p.d)*(2*2^(r p)*2^p.c*2^p.d*2^(s p))*2^p.c*2^p.d-1
 
 private theorem head_coordinates (p : Parameters) (chain : Fin 4) :
     (base p.a p.b p.c p.d chain : ℚ) =
@@ -121,10 +121,10 @@ private theorem negative_coordinates (p : Parameters) (j : Fin 4) :
 private theorem mass_coordinates (p : Parameters) (j : Fin 4) :
     (((bank p j).map (oldValue p.a p.b p.c p.d)).sum : ℚ) =
       qMass (2^p.c) (2^p.d) (2^(r p)) (2^(s p)) (if p.c = 2 then 2*2^(v p)-1 else 2*2^(v p))
-        1 (2^(s p)-1) (3*2^(s p)) 0 j ∧
+        (roundingD p) (roundingW p) 0 j ∧
     (((bank p j).map (newValue p.a p.b p.c p.d)).sum : ℚ) =
       qMass (2^p.c) (2^p.d) (2^(r p)) (2^(s p)) (if p.c = 2 then 2*2^(v p)-1 else 2*2^(v p))
-        1 (2^(s p)-1) (3*2^(s p)) 1 j := by
+        (roundingD p) (roundingW p) 1 j := by
   constructor
   · rw [(bank_masses p j).1]
     push_cast

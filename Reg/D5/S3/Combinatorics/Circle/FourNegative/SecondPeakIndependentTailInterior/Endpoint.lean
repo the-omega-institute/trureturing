@@ -47,7 +47,7 @@ def deleted (side : Bool) : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a b c d : ℕ) (_hc : 2 ≤ c) (_hd : c+2 ≤ d)
-    (_ha : c+d+3 ≤ a) (_hb : a+1 ≤ b),
+    (_ha : c+d ≤ a) (_hb : a+1 ≤ b),
     ∃ sigma : List (Fin (a+b+c+d)),
       R.readout false ⟨a,b,c,d⟩ (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
       R.readout true ⟨a,b,c,d⟩ (2*(1+2^a+2^(a+b)+2^(a+b+c)))

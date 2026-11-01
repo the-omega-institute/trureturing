@@ -6,6 +6,7 @@
    utility: none
    digest: Exhaustive disjoint native bit supports, including literal complements. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakIndependentTailInterior.Parameters
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 2000000
@@ -26,19 +27,150 @@ private def uSupport (p : Parameters) : Fin 4 → Finset ℕ :=
   ![A,Finset.range (p.d-1) \ (A ∪ B),B,∅]
 private def vSupport (p : Parameters) : Fin 4 → Finset ℕ :=
   ![Finset.range (p.c-1),∅,∅,∅]
+private def wFirst (p : Parameters) : Finset ℕ :=
+  if r p = 0 then
+    if p.c = 2 then Finset.range (s p+2)
+    else if p.c = 3 then
+      if s p = 0 then {1} else insert (s p+1) (insert (s p) (Finset.range (s p-1)))
+    else if s p = 0 then ∅ else insert (s p) (Finset.range (s p-1))
+  else if r p = 1 then
+    if p.c = 2 then Finset.range (s p+2) else Finset.range (s p+1)
+  else if r p = 2 then insert (s p+1) (Finset.range (s p))
+  else Finset.range (s p)
 private def wSupport (p : Parameters) : Fin 4 → Finset ℕ :=
-  let A := Finset.range (s p)
-  let B := {s p,s p+1}
-  ![A,∅,B,Finset.range (p.b-1) \ (A ∪ B)]
+  ![wFirst p,∅,Finset.range (s p+2) \ wFirst p,
+    Finset.range (p.b-1) \ Finset.range (s p+2)]
+private def xFirst (p : Parameters) : Finset ℕ :=
+  if r p = 0 then
+    if p.c = 2 then {p.d-3}
+    else if p.c = 3 then {p.d-3,1}
+    else {p.d-3,p.c-2,p.c-3}
+  else if r p = 1 then
+    if p.c = 2 then {p.d-2,1} else {p.d-2,p.c-1,p.c-2}
+  else if r p = 2 then {p.d-1,p.c,p.c-1}
+  else {r p+p.d-3,r p+p.c-2,r p+p.c-3,r p-2}
 private def xSupport (p : Parameters) : Fin 4 → Finset ℕ :=
-  let A := {r p+p.d,r p+p.c+1,r p+p.c,r p+1}
-  let B := {r p+p.c+p.d}
+  let A := xFirst p
+  let B := {p.a-3}
   let P := {0}
   ![A,B,Finset.range (p.a-1) \ ((A ∪ B) ∪ P),P]
+
+private def roundingD (p : Parameters) : ℚ :=
+  let z : ℚ := 2^p.c
+  let w : ℚ := 2^p.d
+  if r p = 0 then
+    if p.c = 2 then w/8 else if p.c = 3 then w/8+2 else (w+3*z)/8
+  else if r p = 1 then
+    if p.c = 2 then w/4+2 else (w+3*z)/4
+  else if r p = 2 then (w+3*z)/2
+  else 2^(r p)*(w+3*z+2)/8
+private def roundingEps (p : Parameters) : ℚ := if s p = 0 then 1/2 else 0
+private def roundingW (p : Parameters) : ℚ :=
+  let q : ℚ := 2^(s p)
+  if r p = 0 then
+    if p.c = 2 then 4*q-1
+    else if p.c = 3 then 7*q/2-1-roundingEps p
+    else 3*q/2-1-roundingEps p
+  else if r p = 1 then
+    if p.c = 2 then 4*q-1 else 2*q-1
+  else if r p = 2 then 3*q-1
+  else q-1
+
+private theorem xFirst_bounds (p : Parameters) (e : ℕ) (he : e ∈ xFirst p) :
+    0 < e ∧ e < p.a-3 := by
+  have hc := p.hc; have hd := p.hd; have ha := p.ha
+  have heA := (parameter_eqs p).1
+  by_cases h0 : r p = 0 <;> by_cases h1 : r p = 1 <;>
+    by_cases h2 : r p = 2 <;> by_cases hc2 : p.c = 2 <;> by_cases hc3 : p.c = 3 <;>
+    simp_all [xFirst] <;> omega
+
+private theorem wFirst_bounds (p : Parameters) (e : ℕ) (he : e ∈ wFirst p) :
+    e < s p+2 := by
+  by_cases h0 : r p = 0 <;> by_cases h1 : r p = 1 <;>
+    by_cases h2 : r p = 2 <;> by_cases hc2 : p.c = 2 <;>
+    by_cases hc3 : p.c = 3 <;> by_cases hs : s p = 0 <;>
+    simp_all [wFirst] <;> omega
 private def support (p : Parameters) (bank chain : Fin 4) : Finset ℕ :=
   (![uSupport p,vSupport p,wSupport p,xSupport p] : Fin 4 → Fin 4 → Finset ℕ) chain bank
 private def nativeMask (p : Parameters) (bank chain : Fin 4) : ℕ :=
   ∑ e ∈ support p bank chain, 2^e
+
+private theorem power_sub_q (n k : ℕ) (hk : k ≤ n) :
+    (2 : ℚ)^(n-k) = 2^n / 2^k := by
+  apply (eq_div_iff (by positivity : (2 : ℚ)^k ≠ 0)).2
+  rw [← pow_add, Nat.sub_add_cancel hk]
+
+private theorem sum_pair_q (i j : ℕ) (h : i ≠ j) :
+    (∑ e ∈ ({i,j} : Finset ℕ), (2 : ℚ)^e) = 2^i+2^j := by simp [h]
+private theorem sum_triple_q (i j k : ℕ)
+    (hij : i ≠ j) (hik : i ≠ k) (hjk : j ≠ k) :
+    (∑ e ∈ ({i,j,k} : Finset ℕ), (2 : ℚ)^e) = 2^i+2^j+2^k := by
+  simp [hij,hik,hjk,add_assoc]
+private theorem sum_quad_q (i j k l : ℕ)
+    (hij : i ≠ j) (hik : i ≠ k) (hil : i ≠ l)
+    (hjk : j ≠ k) (hjl : j ≠ l) (hkl : k ≠ l) :
+    (∑ e ∈ ({i,j,k,l} : Finset ℕ), (2 : ℚ)^e) = 2^i+2^j+2^k+2^l := by
+  simp [hij,hik,hil,hjk,hjl,hkl,add_assoc]
+
+private theorem native_X0 (p : Parameters) :
+    (nativeMask p 0 3 : ℚ) = roundingD p := by
+  simp only [nativeMask,Nat.cast_sum,Nat.cast_pow,Nat.cast_ofNat]
+  change (∑ e ∈ xFirst p, (2 : ℚ)^e) = roundingD p
+  have hc := p.hc; have hd := p.hd
+  dsimp only [xFirst,roundingD]
+  split_ifs with h0 hc2 hc3 h1 hc2 h2
+  · simp only [Finset.sum_singleton]
+    simpa using power_sub_q p.d 3 (by omega)
+  · rw [sum_pair_q _ _ (by omega)]
+    rw [power_sub_q p.d 3 (by omega)]
+    norm_num
+  · rw [sum_triple_q _ _ _ (by omega) (by omega) (by omega)]
+    rw [power_sub_q p.d 3 (by omega),power_sub_q p.c 2 (by omega),
+      power_sub_q p.c 3 (by omega)]
+    norm_num; ring
+  · rw [sum_pair_q _ _ (by omega)]
+    rw [power_sub_q p.d 2 (by omega)]
+    norm_num
+  · rw [sum_triple_q _ _ _ (by omega) (by omega) (by omega)]
+    rw [power_sub_q p.d 2 (by omega),power_sub_q p.c 1 (by omega),
+      power_sub_q p.c 2 (by omega)]
+    norm_num; ring
+  · rw [sum_triple_q _ _ _ (by omega) (by omega) (by omega)]
+    rw [power_sub_q p.d 1 (by omega),power_sub_q p.c 1 (by omega)]
+    norm_num; ring
+  · have hr : 3 ≤ r p := by omega
+    rw [sum_quad_q _ _ _ _ (by omega) (by omega) (by omega)
+      (by omega) (by omega) (by omega)]
+    rw [power_sub_q (r p+p.d) 3 (by omega),
+      power_sub_q (r p+p.c) 2 (by omega),
+      power_sub_q (r p+p.c) 3 (by omega),power_sub_q (r p) 2 (by omega)]
+    simp only [pow_add]; norm_num; ring
+
+private theorem sum_range_rat (n : ℕ) :
+    (∑ e ∈ Finset.range n, (2 : ℚ)^e) = 2^n-1 := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [Finset.sum_range_succ,ih,pow_succ]; ring
+
+private theorem native_W0 (p : Parameters) :
+    (nativeMask p 0 2 : ℚ) = roundingW p := by
+  simp only [nativeMask,Nat.cast_sum,Nat.cast_pow,Nat.cast_ofNat]
+  change (∑ e ∈ wFirst p, (2 : ℚ)^e) = roundingW p
+  dsimp only [wFirst,roundingW,roundingEps]
+  split_ifs with h0 hc2 hc3 hs hs h1 hc2 h2
+  · rw [sum_range_rat]; simp only [pow_add]; norm_num; ring
+  · simp [hs]; norm_num
+  · rw [Finset.sum_insert (by simp),Finset.sum_insert (by simp),sum_range_rat]
+    rw [power_sub_q (s p) 1 (by omega)]
+    simp only [pow_succ]; norm_num; ring
+  · simp [hs]; norm_num
+  · rw [Finset.sum_insert (by simp),sum_range_rat]
+    rw [power_sub_q (s p) 1 (by omega)]
+    norm_num; ring
+  · rw [sum_range_rat]; simp only [pow_add]; norm_num; ring
+  · rw [sum_range_rat,pow_succ]; ring
+  · rw [Finset.sum_insert (by simp),sum_range_rat,pow_succ]; ring
+  · rw [sum_range_rat]
 
 private theorem support_partition (p : Parameters) :
     (∀ chain bank, support p bank chain ⊆ Finset.range (lengths p chain)) ∧
@@ -47,8 +179,11 @@ private theorem support_partition (p : Parameters) :
       support p 3 chain = Finset.range (lengths p chain)) := by
   have hc := p.hc; have hd := p.hd; have ha := p.ha; have hb := p.hb
   obtain ⟨heA,heB,heD⟩ := parameter_eqs p
+  have X (e : ℕ) : e ∈ xFirst p → 0 < e ∧ e < p.a-3 := xFirst_bounds p e
+  have W (e : ℕ) : e ∈ wFirst p → e < s p+2 := wFirst_bounds p e
   constructor
   · intro chain bank e he
+    have hX := X e; have hW := W e
     by_cases h : p.c = 2
     all_goals fin_cases chain <;> fin_cases bank <;>
       simp [support,uSupport,vSupport,wSupport,xSupport,lengths,h] at he ⊢ <;> omega
@@ -56,12 +191,14 @@ private theorem support_partition (p : Parameters) :
   · intro chain j k hjk
     apply Finset.disjoint_left.mpr
     intro e he hf
+    have hX := X e; have hW := W e
     by_cases h : p.c = 2
     all_goals fin_cases chain <;> fin_cases j <;> fin_cases k <;>
       simp_all [support,uSupport,vSupport,wSupport,xSupport]
     all_goals omega
   · intro chain
     ext e
+    have hX := X e; have hW := W e
     by_cases h : p.c = 2
     all_goals fin_cases chain <;>
       simp [support,uSupport,vSupport,wSupport,xSupport,lengths,h] <;> omega

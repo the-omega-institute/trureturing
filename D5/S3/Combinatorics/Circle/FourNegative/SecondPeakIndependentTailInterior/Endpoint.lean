@@ -19,7 +19,7 @@ open private physical_first_ear from
 physical source permutation, used unchanged after the literal first ear. -/
 theorem actualSource_independent_tail_interior_first_ear
     (a b c d : ℕ) (hc : 2≤c) (hd : c+2≤d)
-    (ha : c+d+3≤a) (hb : a+1≤b) :
+    (ha : c+d≤a) (hb : a+1≤b) :
     ∃ sigma : List (Fin (a+b+c+d)),
       OriginalOrder (a+b+c+d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
       OriginalOrder (a+b+c+d+1) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
