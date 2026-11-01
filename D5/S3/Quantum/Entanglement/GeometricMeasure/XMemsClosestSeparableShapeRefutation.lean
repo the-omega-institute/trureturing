@@ -4,10 +4,10 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/GeometricMeasure/XMemsClosestSeparableShapeRefutation.claim; result=D5/S3/Quantum/Entanglement/GeometricMeasure/XMemsClosestSeparableShapeRefutation.result; claim=D5/S3/Quantum/Entanglement/GeometricMeasure/XMemsClosestSeparableShapeRefutation.claim
-   digest: A fully separable three-qubit state beats every state of the conjectured CSS shape. -/
+   digest: A fully separable 3-qubit state beats every fully separable state of CSS shape. -/
 
 import D5.S3.Geometry.Hyperideal.GramDomainContraction
-import D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
+import D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation
 import D5.S3.Quantum.Information.BargmannImaginaryMaximizers
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
@@ -96,13 +96,8 @@ private theorem fullySeparable_iff (n : ℕ) (ρ : Matrix (Fin n → Fin 2) (Fin
 
 private theorem sum_words {α : Type*} [AddCommMonoid α] (f : (Fin 3 → Fin 2) → α) :
     ∑ x, f x = f ![0,0,0] + f ![0,0,1] + f ![0,1,0] + f ![0,1,1] +
-      f ![1,0,0] + f ![1,0,1] + f ![1,1,0] + f ![1,1,1] := by
-  let e : (Fin 3 → Bool) ≃ (Fin 3 → Fin 2) :=
-    Equiv.piCongrRight (fun _ => finTwoEquiv.symm)
-  rw [← e.sum_comp f]
-  have h := D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.sum_strings
-    (fun s => f (e s))
-  convert h using 1; congr 8 <;> funext i <;> fin_cases i <;> rfl
+      f ![1,0,0] + f ![1,0,1] + f ![1,1,0] + f ![1,1,1] :=
+  D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.sum_bits f
 
 private theorem hsSq_entries {n : ℕ}
     (ρ σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :

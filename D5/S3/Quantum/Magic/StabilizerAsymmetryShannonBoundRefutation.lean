@@ -62,7 +62,7 @@ private def coeff (x : Fin 3 → ZMod 2) : ℝ :=
 
 private def witness (x : Fin 3 → ZMod 2) : ℂ := (coeff x : ℂ) / (Real.sqrt 8 : ℂ)
 
-private lemma sum_bits {α : Type*} [AddCommMonoid α] (f : (Fin 3 → ZMod 2) → α) :
+lemma sum_bits {α : Type*} [AddCommMonoid α] (f : (Fin 3 → ZMod 2) → α) :
     (∑ x, f x) = f ![0, 0, 0] + f ![0, 0, 1] + f ![0, 1, 0] + f ![0, 1, 1] +
       f ![1, 0, 0] + f ![1, 0, 1] + f ![1, 1, 0] + f ![1, 1, 1] := by
   classical
