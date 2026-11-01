@@ -6,11 +6,8 @@
    utility: none
    digest: Every earliest adjacent-pair swapping history minimizes accumulated dephasing. -/
 
-import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.Data.List.MinMax
-import Mathlib.Data.Finset.Max
-import Mathlib.Logic.Function.Iterate
-import Mathlib.Tactic.Linarith
+import Mathlib.Data.Finset.Lattice.Fold
 
 /-! The swapping recurrences (38) and (39) of Kamin, Shchukin, Schmidt and van Loock,
 arXiv:2203.10318v1. Ready times range over all natural numbers, including the source's
@@ -67,16 +64,19 @@ private def boundary (p : ℕ) (x : List ℕ) : ℤ :=
 
 private theorem merge_cons (a : ℕ) (x : List ℕ) (i : ℕ) :
     merge (a :: x) (i + 1) = a :: merge x i := by
-  simp [merge, Nat.add_assoc]
+  dsimp only [merge]
+  simp [Nat.add_assoc]
 
 private theorem boundary_cons (p a : ℕ) (x : List ℕ) :
     boundary p (a :: x) = (max p a : ℕ) - (a : ℤ) + boundary a x := by
-  simp [boundary, Nat.cast_add]
+  dsimp only [boundary]
+  simp [Int.natCast_add]
   omega
 
 private theorem merge_length (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
     (merge x i).length + 1 = x.length := by
-  simp only [merge, List.length_append, List.length_take, List.length_cons, List.length_drop]
+  dsimp only [merge]
+  simp only [List.length_append, List.length_take, List.length_cons, List.length_drop]
   omega
 
 private theorem maximum_merge (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
@@ -88,7 +88,9 @@ private theorem maximum_merge (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
     | cons a x =>
       cases x with
       | nil => simp at h
-      | cons b x => simp [merge, max_assoc]
+      | cons b x =>
+        dsimp only [merge]
+        simp [max_assoc]
   | succ i ih =>
     cases x with
     | nil => simp at h
@@ -98,9 +100,12 @@ private theorem maximum_merge (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
 private theorem potential_eq_boundary (x : List ℕ) :
     potential x = boundary (x.foldr max 0) x := by
   cases x with
-  | nil => simp [potential, boundary]
+  | nil =>
+    dsimp only [potential, boundary]
+    simp
   | cons a x =>
-    simp [potential, boundary, Nat.cast_add]
+    dsimp only [potential, boundary]
+    simp [Int.natCast_add]
 
 private theorem boundary_step_le (p : ℕ) (x : List ℕ) (i : ℕ)
     (h : i + 1 < x.length) :
@@ -114,15 +119,22 @@ private theorem boundary_step_le (p : ℕ) (x : List ℕ) (i : ℕ)
       | nil => simp at h
       | cons b x =>
         cases x with
-        | nil => simp [boundary, merge, swapCost, Nat.cast_add]; omega
-        | cons c x => simp [boundary, merge, swapCost, Nat.cast_add]; omega
+        | nil =>
+          dsimp only [boundary, merge, swapCost]
+          simp [Int.natCast_add]
+          omega
+        | cons c x =>
+          dsimp only [boundary, merge, swapCost]
+          simp [Int.natCast_add]
+          omega
   | succ i ih =>
     cases x with
     | nil => simp at h
     | cons a x =>
       rw [merge_cons, boundary_cons, boundary_cons]
       have hi := ih a x (by simpa using h)
-      simp only [swapCost, List.getElem?_cons_succ, Nat.add_assoc] at *
+      dsimp only [swapCost] at *
+      simp only [List.getElem?_cons_succ, Nat.add_assoc] at *
       omega
 
 private theorem boundary_step_eq (p : ℕ) (x : List ℕ) (i : ℕ)
@@ -142,11 +154,13 @@ private theorem boundary_step_eq (p : ℕ) (x : List ℕ) (i : ℕ)
         have hl := hg 0 (by simp)
         cases x with
         | nil =>
-          simp [boundary, merge, swapCost, Nat.cast_add] at hl ⊢
+          dsimp only [boundary, merge, swapCost] at hl ⊢
+          simp [Int.natCast_add] at hl ⊢
           omega
         | cons c x =>
           have hr := hg 2 (by simp)
-          simp [boundary, merge, swapCost, Nat.cast_add] at hl hr ⊢
+          dsimp only [boundary, merge, swapCost] at hl hr ⊢
+          simp [Int.natCast_add] at hl hr ⊢
           omega
   | succ i ih =>
     cases x with
@@ -156,7 +170,8 @@ private theorem boundary_step_eq (p : ℕ) (x : List ℕ) (i : ℕ)
       have hi := ih a x (by simpa using h) (fun j hj => by
         have hjg := hg (j + 1) (by simpa using Nat.succ_lt_succ hj)
         simpa [Nat.add_assoc] using hjg)
-      simp only [swapCost, List.getElem?_cons_succ, Nat.add_assoc] at *
+      dsimp only [swapCost] at *
+      simp only [List.getElem?_cons_succ, Nat.add_assoc] at *
       omega
 
 private theorem potential_step_le (x : List ℕ) (i : ℕ) (h : i + 1 < x.length) :
@@ -200,10 +215,14 @@ private theorem greedy_exists (x : List ℕ) (h : 1 < x.length) :
 private theorem potential_terminal (x : List ℕ) (h : x.length ≤ 1) :
     potential x = 0 := by
   cases x with
-  | nil => simp [potential]
+  | nil =>
+    dsimp only [potential]
+    simp
   | cons a x =>
     cases x with
-    | nil => simp [potential]
+    | nil =>
+      dsimp only [potential]
+      simp
     | cons b x => simp at h
 
 private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) :
@@ -212,11 +231,13 @@ private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) 
   | zero =>
     have hx : x = [] := List.length_eq_zero_iff.mp (by omega)
     subst x
-    simp [potential]
+    dsimp only [potential]
+    simp
   | succ n ih =>
     rw [Function.iterate_succ_apply']
     by_cases hx : 1 < x.length
-    · simp only [bellman, dif_pos hx]
+    · dsimp only [bellman]
+      simp only [dite_eq_left hx]
       have hn : (Finset.range (x.length - 1)).Nonempty :=
         ⟨0, Finset.mem_range.mpr (by omega)⟩
       apply le_antisymm
@@ -227,14 +248,15 @@ private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) 
           (fun j => swapCost x j + ((bellman^[n]) (fun _ => 0)) (merge x j)) him
         have hrec := ih (merge x i) (by have := merge_length x i hi.1; omega)
         have hcast := Int.ofNat_le.mpr hm
-        rw [Nat.cast_add, hrec, ← potential_step_eq x i hi] at hcast
+        rw [Int.natCast_add, hrec, ← potential_step_eq x i hi] at hcast
         exact hcast
       · obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_inf' hn
           (fun j => swapCost x j + ((bellman^[n]) (fun _ => 0)) (merge x j))
         have hiv : i + 1 < x.length := by have := Finset.mem_range.mp hi; omega
-        rw [he, Nat.cast_add, ih (merge x i) (by have := merge_length x i hiv; omega)]
+        rw [he, Int.natCast_add, ih (merge x i) (by have := merge_length x i hiv; omega)]
         exact potential_step_le x i hiv
-    · simp only [bellman, dif_neg hx, Nat.cast_zero]
+    · dsimp only [bellman]
+      simp only [dite_eq_right hx, Int.natCast_zero]
       exact (potential_terminal x (by omega)).symm
 
 private theorem dstar_potential (x : List ℕ) : (dstar x : ℤ) = potential x := by
@@ -248,11 +270,11 @@ private theorem greedy_cost_potential (x : List ℕ) (hs : List ℕ)
   | cons i hs ih =>
     obtain ⟨hi, ht⟩ := h
     change ((swapCost x i + runCost (merge x i) hs : ℕ) : ℤ) = _
-    rw [Nat.cast_add, ih (merge x i) ht, ← potential_step_eq x i hi]
+    rw [Int.natCast_add, ih (merge x i) ht, ← potential_step_eq x i hi]
 
 /-- The earliest-pair conjecture (41), for every number of segments and every tie choice. -/
 theorem result : claim := by
   intro x hs h
-  exact_mod_cast (greedy_cost_potential x hs h).trans (dstar_potential x).symm
+  exact Int.ofNat_inj.mp ((greedy_cost_potential x hs h).trans (dstar_potential x).symm)
 
 end D5.S3.Quantum.Optimization.SwapEarliestDephasingOptimality
