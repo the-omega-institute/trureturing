@@ -39,7 +39,7 @@ private theorem support_eq_mask (len off m : ℕ) (hm : m<2^len) :
   · rintro ⟨e,_,he,rfl⟩; exact ⟨e,he,rfl⟩
 
 private theorem support_bound (len off m i : ℕ) (hm : m<2^len)
-    (hi : i∈support off m) : off≤i ∧ i<off+len := by
+    (hi : i∈support off m) : off ≤ i ∧ i < off+len := by
   obtain ⟨e,he,rfl⟩ := (mem_shift off i m.bitIndices.toFinset).mp hi
   have hh := bit_bound len m e hm he
   omega
@@ -59,11 +59,16 @@ private theorem reserve_bits (e s r : ℕ) (hs : 1≤s) (hdiv : 2^e∣s)
   classical
   obtain ⟨k,hk⟩ := hdiv
   have hG : 1≤(2:ℕ)^e := Nat.one_le_two_pow
-  have hkpos : 1≤k := by by_contra hn; have : k=0 := by omega; simp [this] at hk; omega
+  have hkpos : 1≤k := by
+    by_contra hn
+    have hk0 : k=0 := by omega
+    have hs0 : s=0 := by simpa only [hk0,Nat.mul_zero] using hk
+    omega
   have hsplit : s-1=2^e*(k-1)+(2^e-1) := by
     have he : 2^e*(k-1)+2^e=s := by
-      rw [←Nat.mul_add,show k-1+1=k by omega]
-      exact hk.symm
+      calc
+        2^e*(k-1)+2^e=2^e*(k-1+1) := by rw [Nat.mul_add,Nat.mul_one]
+        _ = s := by rw [Nat.sub_add_cancel hkpos]; exact hk.symm
     omega
   have hrG : r-1<2^e := by omega
   have hsub : (r-1).bitIndices.toFinset ⊆ (s-1).bitIndices.toFinset := by
@@ -104,9 +109,9 @@ private def banks (a b c d p q w : ℕ) : Fin 3 → Finset ℕ :=
 
 private theorem positive_mem (a b c d : ℕ) (r : Fin 4) (i : ℕ) :
     i∈positives a b c d r ↔
-      if r=0 then i<d-1 else if r=1 then d≤i ∧ i<d+(c-1)
-      else if r=2 then d+c≤i ∧ i<d+c+(b-1)
-      else d+c+b≤i ∧ i<d+c+b+(a-1) := by
+      if r=0 then i<d-1 else if r=1 then d ≤ i ∧ i < d+(c-1)
+      else if r=2 then d+c ≤ i ∧ i < d+c+(b-1)
+      else d+c+b ≤ i ∧ i < d+c+b+(a-1) := by
   fin_cases r <;> simp [positives,mem_shift,Finset.mem_range] <;> omega
 
 private theorem banks_inventory (a b c d p q w : ℕ)
@@ -151,8 +156,8 @@ private theorem banks_inventory (a b c d p q w : ℕ)
     all_goals simp only [banks,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
       Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,
       Matrix.vecTail,Function.comp_apply,Finset.mem_union,Finset.mem_sdiff] at hi hj
-    all_goals have hPi : i∈support (d+c+b) p → d+c+b≤i ∧ i<d+c+b+(a-1) := bp i
-    all_goals have hQi : i∈support (d+c+b) q → d+c+b≤i ∧ i<d+c+b+(a-1) := bq i
+    all_goals have hPi : i∈support (d+c+b) p → d+c+b ≤ i ∧ i < d+c+b+(a-1) := bp i
+    all_goals have hQi : i∈support (d+c+b) q → d+c+b ≤ i ∧ i < d+c+b+(a-1) := bq i
     all_goals simp only [positive_mem] at hi hj
     all_goals simp at hi hj
     all_goals first | tauto | omega
@@ -175,7 +180,7 @@ private theorem banks_inventory (a b c d p q w : ℕ)
 private theorem shift_sum (off n : ℕ) (f : ℕ→ℤ) (B : ℤ)
     (hf : ∀ e<n,f (off+e)=(2:ℤ)^e*B) :
     (∑ i∈shift off (Finset.range n),f i)=(2^n-1)*B := by
-  rw [shift,Finset.sum_image (by intro i hi j hj he; omega)]
+  rw [shift,Finset.sum_image (by intro i hi j hj he; exact Nat.add_left_cancel he)]
   have he : (∑ e∈Finset.range n,f (off+e))=(∑ e∈Finset.range n,(2:ℤ)^e)*B := by
     rw [Finset.sum_mul]
     exact Finset.sum_congr rfl (fun e he => hf e (Finset.mem_range.mp he))
@@ -253,8 +258,8 @@ private theorem first_length (a b c d p q m : ℕ)
     have hu := (positive_mem a b c d 0 i).mp hj
     simp at hx hu; omega
   have hcX : (positives a b c d 3).card=a-1 := by
-    simp only [positives,Matrix.cons_val_three,shift]
-    rw [Finset.card_image_of_injective _ (fun _ _ h => Nat.add_left_cancel h)]
+    change (shift (d+c+b) (Finset.range (a-1))).card=a-1
+    rw [shift,Finset.card_image_of_injective _ (fun _ _ h => Nat.add_left_cancel h)]
     simp
   have hcU : (positives a b c d 0).card=d-1 := by simp [positives]
   have hcm : (support (d+c+b) m).card=m.bitIndices.toFinset.card := by
