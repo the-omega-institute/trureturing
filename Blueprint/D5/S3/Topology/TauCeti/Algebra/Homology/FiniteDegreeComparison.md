@@ -12,7 +12,9 @@ $$\begin{aligned}\forall C: \operatorname{Type}\left(u\right), [\operatorname{Ca
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/TauCeti/Algebra/Homology/FiniteDegreeComparison.finite_degree_comparison_total_map` (`✓ std3`). ∎
 
-*Citation.* The Tau Ceti contributors; Claude (extension-homology support) (2026). *First-quadrant row-to-total quasi-isomorphism comparison*. URL: <https://github.com/TauCetiProject/TauCeti/blob/580580ea8726c50dcf98e199fa0a7caef5a74302/TauCeti/Algebra/Homology/TotalComplex.lean>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* The Tau Ceti contributors; Claude (extension-homology support) (2026). *First-quadrant row-to-total quasi-isomorphism comparison*. URL: <https://github.com/TauCetiProject/TauCeti/blob/580580ea8726c50dcf98e199fa0a7caef5a74302/TauCeti/Algebra/Homology/TotalComplex.lean>.
 
 *Commentary.*
 
