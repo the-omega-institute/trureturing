@@ -431,16 +431,8 @@ private theorem route_claim
     (hcollision : ∀ v,
       v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) →
         family v ∈ collisionEvents)
-    (hall : ∀ v,
-      v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) →
-        family v ∈ allEvents)
-    (hcont : ContinuousOn family
-      (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))
     (hchir : ∀ v,
       v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) → chiral (family v))
-    (hneg : ∀ v, family (-v) =
-      act rotation 1 (Equiv.swap 0 1)
-        (parity (family v)))
     (hcomplex : ∀ om, collisionEvents ⊆ om → ∀ f₁ f₂,
       admissible om f₁ → admissible om f₂ →
       ContinuousOn (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
@@ -493,8 +485,7 @@ private theorem route_claim
       simpa using h
 
 theorem result : claim := by
-  apply route_claim family_mem_collision family_mem_all family_continuous family_chiral
-    family_neg
+  apply route_claim family_mem_collision family_chiral
   · intro om hom f₁ f₂ hf₁ hf₂
     exact family_admissible_zero om hom f₁ f₂ hf₁ hf₂
   · intro om hom f hf v hv
