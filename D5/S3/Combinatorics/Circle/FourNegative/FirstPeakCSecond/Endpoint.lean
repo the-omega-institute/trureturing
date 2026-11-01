@@ -109,6 +109,12 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
     change UniformBounds x y z t H g s at bounds
     rcases bounds with ⟨boldLower,boldUpper,bnewLower,bnewUpper,
       btightOld,btightCeil,bgrainCapacity,bthird⟩
+    change 0≤t*A-2*s*M at boldLower
+    change 0≤A-1-(t*A-2*s*M) at boldUpper
+    change 0≤2*(t-1)*A-2*s*Mn at bnewLower
+    change 0≤A-1-(2*(t-1)*A-2*s*Mn) at bnewUpper
+    change (z=2*y ∧ 0≤L-B-H*M ∧ 0≤2*B-L-1) ∨
+      (4*y≤z ∧ 0≤L-2*B-H*D ∧ 0≤z*B-2*L-1) at bthird
     have caps := reserve_capacity a b c d hd hdb hbc hca
     change 1≤g ∧ 1≤s ∧ 2*s≤x ∧ g∣s at caps
     have hsn : (sn:ℤ)=s := reserve_cast a b c d hd
@@ -368,9 +374,9 @@ theorem actualSource_first_peak_c_second_joint_lift (a b c d : ℕ)
       rw [nt3.2]
       omega
     have oldfirst : 0≤t*A-2*s*M ∧ t*A-2*s*M≤A-1 := by
-      exact ⟨boldLower,by have hh := boldUpper; omega⟩
+      exact ⟨boldLower,sub_nonneg.mp boldUpper⟩
     have newfirst : 0≤2*(t-1)*A-2*s*Mn ∧ 2*(t-1)*A-2*s*Mn≤A-1 := by
-      exact ⟨bnewLower,by have hh := bnewUpper; omega⟩
+      exact ⟨bnewLower,sub_nonneg.mp bnewUpper⟩
     -- These equations identify the seams of this very word, in both rows.
     have S0 : 2*((P.toList.map f).sum+f nx)=t*A-2*s*M := by nlinarith only [m0,nf0,relx]
     have S1 : (P.toList.map f).sum+f nx+(Q.toList.map f).sum+f nu=B-r*M := by
