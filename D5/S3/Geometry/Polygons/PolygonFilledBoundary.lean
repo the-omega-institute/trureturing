@@ -75,7 +75,7 @@ private theorem hull_eq {poly : Polygon E n} {C : Set E}
     simpa only [Polygon.edgeSet, affineSegment_eq_segment] using hi
   exact (not_lt_of_ge (hmax hx)) ((hfK y hyK).trans hfx)
 
-private theorem level_mem_line [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
+theorem level_mem_line [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
     {a b x : E} (hab : a ≠ b) (f : E →L[ℝ] ℝ) (hf : f ≠ 0)
     (hfb : f b = f a) (hfx : f x = f a) : x ∈ line[ℝ,a,b] := by
   by_contra hx

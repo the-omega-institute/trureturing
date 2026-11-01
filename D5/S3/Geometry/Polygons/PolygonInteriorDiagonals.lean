@@ -64,7 +64,7 @@ private theorem triple_spans [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2
   simp [hdim]
 
 omit [NeZero n] in
-private theorem interior_nonempty [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
+theorem interior_nonempty [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
     (hn : 3 ≤ n) {poly : Polygon E n} (hB : BoundaryModel poly) :
     (interior (convexHull ℝ (range poly.vertices))).Nonempty := by
   let a : Fin n := ⟨0, by omega⟩
@@ -83,7 +83,7 @@ private theorem interior_nonempty [FiniteDimensional ℝ E] (hdim : finrank ℝ 
   rintro _ ⟨i,rfl⟩
   fin_cases i <;> simp
 
-private theorem common_level_only_two [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
+theorem common_level_only_two [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
     {K : Set E} {a b c : E} (ha : a ∈ K.extremePoints ℝ)
     (hb : b ∈ K.extremePoints ℝ) (hc : c ∈ K.extremePoints ℝ)
     (hab : a ≠ b) (f : E →L[ℝ] ℝ) (hf : f ≠ 0)
@@ -125,7 +125,7 @@ theorem maximal_endpoints {K : Set E} {a b z : E}
     nlinarith
 
 omit [NeZero n] in
-private theorem supporting_pair_is_side [FiniteDimensional ℝ E]
+theorem supporting_pair_is_side [FiniteDimensional ℝ E]
     (hdim : finrank ℝ E = 2) {poly : Polygon E n} (hB : BoundaryModel poly)
     {a b : Fin n} (hab : a ≠ b) (f : E →L[ℝ] ℝ) (hf : f ≠ 0)
     (hmax : ∀ x ∈ convexHull ℝ (range poly.vertices), f x ≤ f (poly a))
@@ -183,7 +183,7 @@ private theorem supporting_pair_is_side [FiniteDimensional ℝ E]
     exact False.elim (hzne b he.symm)
 
 omit [NormedAddCommGroup E] [NormedSpace ℝ E] in
-private theorem vertex_succ (poly : Polygon E n) (i : ZMod n) :
+theorem vertex_succ (poly : Polygon E n) (i : ZMod n) :
     vertex poly (i+1) = poly (finRotate n ((ZMod.finEquiv n).symm i)) := by
   simp [vertex,finRotate_apply]
 
