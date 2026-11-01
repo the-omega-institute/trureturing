@@ -127,8 +127,7 @@ private lemma expectation_one (ψ : Word (Fin 3) 3 → ℂ) :
 
 private lemma expectation_sub (a c : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
     (ψ : Word (Fin 3) 3 → ℂ) : readout (a - c) ψ = readout a ψ - readout c ψ := by
-  classical
-  simp [readout, sub_mulVec, dotProduct_sub]
+  exact RHLinalg.hermForm_sub a c ψ
 
 private lemma support_expectation (ψ : Word (Fin 3) 3 → ℂ) :
     readout (supportProjector 3 3) ψ =
