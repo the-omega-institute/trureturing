@@ -20,7 +20,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ k L => (fwdDiff (1 : Nat))^[k] catalanMoment L)
+  realize signature (fun _ L k => (fwdDiff (1 : Nat))^[k] catalanMoment L)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -29,10 +29,10 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law O := ∀ (L k : Nat) (_hL : 1 ≤ L),
-    0 < O.readout () k L ∧
-      3 * ((L : Real) + k) * O.readout () k L ≤
-        ((L : Real) + k + 2) * O.readout () (k + 1) L ∧
-      O.readout () (k + 1) L < 3 * O.readout () k L
+    0 < O.readout () L k ∧
+      3 * ((L : Real) + k) * O.readout () L k ≤
+        ((L : Real) + k + 2) * O.readout () L (k + 1) ∧
+      O.readout () L (k + 1) < 3 * O.readout () L k
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -41,8 +41,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 1, 2, ?_⟩
-  norm_num [actual, realize, beta_moment_formula, catalan_one, catalan_two]
+  refine ⟨1, 0, 2, ?_⟩
+  norm_num [actual, realize, Function.iterate_succ_apply', fwdDiff,
+    beta_moment_formula, catalan_zero, catalan_one, catalan_two, catalan_three]
 
 def family : Registration arena (type_of% @catalan_difference_ratio_envelope) where
   actual := actual
@@ -80,10 +81,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Constants.Moments.CatalanDifferenceMoments
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

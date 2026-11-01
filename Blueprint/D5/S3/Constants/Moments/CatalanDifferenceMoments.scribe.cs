@@ -78,4 +78,10 @@ internal sealed class CatalanDifferenceMomentsDocument : IScribeDocumentDefiniti
         Seq(Operatorname, Grp(F.Id("A")), Open, l, Comma, k, Close);
 
     private static Formula Par(Formula formula) => Seq(Open, formula, Close);
+
+    private static Formula Quantify(string name, Formula type, Formula body) => Seq(Forall, Sp,
+        Par(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, Par(body));
+
+    private static Formula Implication(Formula premise, Formula conclusion) =>
+        new Formula.Logic(Par(premise), FormulaLogicOperator.Implies, Par(conclusion));
 }
