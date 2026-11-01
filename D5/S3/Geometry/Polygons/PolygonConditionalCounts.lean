@@ -23,7 +23,7 @@ open PolygonEarSlide PolygonEarSlide.Carrier PolygonEarSlide.Actual PolygonEarCo
 
 variable {n : ℕ} [NeZero n]
 
-private def allEquiv :
+def allEquiv :
     {T : Finset (Sym2 (ZMod n)) // IsTriangulation T} ≃
       {T : Finset (Sym2 (ZMod n)) // ClusterAlgebras.IsTriangulation T} where
   toFun T := ⟨T.val, ⟨T.property.isDiagonal, T.property.noncrossing, T.property.maximal⟩⟩
