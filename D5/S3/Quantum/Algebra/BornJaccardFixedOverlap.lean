@@ -7,8 +7,6 @@
    digest: Actual compression and simultaneous fixed-overlap interval attainment. -/
 
 import D5.S3.Quantum.Algebra.BornJaccardTracialClassification
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.Tactic.FinCases
 
 /-! Simultaneous actual-line constructions in a two-dimensional projection interval. -/
 
@@ -70,7 +68,7 @@ private theorem projection_orthogonal_sup (R U : Submodule ℂ (H n))
       R.inner_right_of_mem_orthogonal (R.starProjection_apply_mem x) (hU hb)
     have hR := R.starProjection_inner_eq_zero x a ha
     have hV := U.starProjection_inner_eq_zero x b hb
-    simp only [inner_sub_left, inner_add_left] at hR hV
+    simp only [inner_sub_left] at hR hV
     simp only [inner_sub_left, inner_add_left, inner_add_right]
     rw [hUR, hRU]
     linear_combination hR + hV
@@ -138,9 +136,9 @@ private theorem interval_defect (rho : Module.End ℂ (H n))
   have hwn := weight_orthogonal_sup rho R N (hN.trans hT)
   have hd : c + (weight rho R + weight rho T) ≠ 0 := by linarith
   simp only [distance, hj, hi, sup_eq_right.mpr hLT, inf_eq_left.mpr hLT,
-    sup_eq_left.mpr hNT, inf_eq_right.mpr hNT, hwt, hwl, hwn, if_neg hd]
+    sup_eq_left.mpr hNT, inf_eq_right.mpr hNT, hwt, hwl, hwn, ite_eq_right hd]
   field_simp [ne_of_gt hden, hd]
-  <;> ring
+  ring
 
 private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
     (hee : inner ℂ e e = 1) (hff : inner ℂ f f = 1)
@@ -185,7 +183,7 @@ private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
     exact_mod_cast (show a * a - b * -b = 1 by nlinarith [hab])
   have huv : inner ℂ u v = (r : ℂ) := by
     simp only [u, v, inner_add_left, inner_sub_right, inner_smul_left, inner_smul_right,
-      Complex.conj_ofReal, hee, hff, hef, hfe, mul_one, mul_zero, sub_zero, zero_sub,
+      Complex.conj_ofReal, hee, hff, hef, hfe, mul_one, mul_zero,
       add_zero, zero_add]
     exact_mod_cast (show a * a - b * b = r by nlinarith [hab'])
   have hjoin : (ℂ ∙ u) ⊔ (ℂ ∙ v) = E := by
@@ -227,7 +225,7 @@ private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
     have hα0 : α = 0 := by
       have hh : α * (2 * (b : ℂ)) = 0 := by rw [← hαβ] at h₂; linear_combination h₂
       exact (mul_eq_zero.mp hh).resolve_right (mul_ne_zero (by norm_num) hbc)
-    simpa only [Submodule.mem_bot, ← hα, hα0, zero_smul]
+    simp only [Submodule.mem_bot, ← hα, hα0, zero_smul]
   have hwu : weight rho (ℂ ∙ u) = (M + m + r * (M - m)) / 2 := by
     rw [weight_unit_line rho u huu]
     have hq : inner ℂ u (rho u) = ((a ^ 2 * M + b ^ 2 * m : ℝ) : ℂ) := by
@@ -251,6 +249,7 @@ private theorem pair_construction (rho : Module.End ℂ (H n)) (e f : H n)
   exact ⟨u, v, huE, hvE, huu, hvv, huv, hinf, hjoin, hwu, hwv⟩
 
 set_option maxHeartbeats 800000 in
+-- Dependent spectral-basis coercions require additional elaboration work.
 /-- For every allowed overlap, actual lines attain the proposed sharp value in
 the original interval distance. The universal upper bound is a separate assertion. -/
 private theorem fixed_overlap_attainment (_hn : 2 ≤ n)
@@ -338,8 +337,8 @@ private theorem fixed_overlap_attainment (_hn : 2 ≤ n)
     have h := congrArg Complex.re hvv
     norm_num [inner_self_eq_norm_sq_to_K, pow_two, Complex.mul_re] at h
     nlinarith [norm_nonneg v]
-  have hu0 : u ≠ 0 := by intro h; simpa [h] using hun
-  have hv0 : v ≠ 0 := by intro h; simpa [h] using hvn
+  have hu0 : u ≠ 0 := by intro h; simp [h] at hun
+  have hv0 : v ≠ 0 := by intro h; simp [h] at hvn
   have hL : ℂ ∙ u ≤ T := (Submodule.span_singleton_le_iff_mem _ _).2 huT
   have hN : ℂ ∙ v ≤ T := (Submodule.span_singleton_le_iff_mem _ _).2 hvT
   have hdef := interval_defect A c R T (ℂ ∙ u) (ℂ ∙ v)
@@ -375,7 +374,7 @@ private theorem coordinate_overlap_bound (a b c d : ℂ)
         (Complex.normSq c - Complex.normSq b) := by
     dsimp [z, w]
     simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im,
-      Complex.mul_re, Complex.mul_im, Complex.star_def, Complex.conj_re, Complex.conj_im]
+      Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im]
     ring
   have hb : Complex.normSq b = 1 - Complex.normSq a := by linarith
   have hd : Complex.normSq d = 1 - Complex.normSq c := by linarith
@@ -410,7 +409,7 @@ private theorem unit_pair_geometry (T : Submodule ℂ (H n))
     (sup_le ((Submodule.span_singleton_le_iff_mem _ _).2 huT)
       ((Submodule.span_singleton_le_iff_mem _ _).2 hvT)) ?_⟩
   have h := Submodule.finrank_sup_add_finrank_inf_eq (ℂ ∙ u) (ℂ ∙ v)
-  rw [hinf, Submodule.finrank_bot, add_zero, hLu, hNv] at h
+  rw [hinf, finrank_bot, add_zero, hLu, hNv] at h
   exact h.trans hT.symm
 
 private theorem compression_quadratic (A : Module.End ℂ (H n))
@@ -423,8 +422,9 @@ private theorem compression_quadratic (A : Module.End ℂ (H n))
   let B := hs.eigenvectorBasis hT
   have hdiag (i : Fin 2) : inner ℂ (B i) (compression A T x) =
       (hs.eigenvalues hT i : ℂ) * inner ℂ (B i) x := by
-    simpa only [B, OrthonormalBasis.repr_apply_apply] using
-      hs.eigenvectorBasis_apply_self_apply hT x i
+    rw [← hs, hs.apply_eigenvectorBasis hT i, inner_smul_left]
+    change star (hs.eigenvalues hT i : ℂ) * inner ℂ (B i) x = _
+    rw [Complex.star_def, Complex.conj_ofReal]
   have h := congrArg Complex.re (B.sum_inner_mul_inner x (compression A T x))
   simp only [Fin.sum_univ_two, hdiag] at h
   rw [← h, ← inner_conj_symm x (B 0), ← inner_conj_symm x (B 1)]
@@ -434,6 +434,7 @@ private theorem compression_quadratic (A : Module.End ℂ (H n))
   ring
 
 set_option maxHeartbeats 1200000 in
+-- The full dependent line-pair telescope and its spectral coercions are retained.
 /-- The exact maximum over every actual ordered line pair of fixed overlap in an
 arbitrary two-dimensional orthogonal interval, for the actual density compression. -/
 theorem fixed_overlap_maximum (hn : 2 ≤ n)
