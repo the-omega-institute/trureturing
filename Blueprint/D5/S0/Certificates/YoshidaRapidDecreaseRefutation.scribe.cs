@@ -42,16 +42,21 @@ internal sealed class YoshidaRapidDecreaseRefutationDocument : IScribeDocumentDe
                     + "Its threshold forces alpha squared to be at least 1117+sqrt(2233), "
                     + "which is larger. This contradiction concerns the coefficient "
                     + "question; it asserts no failure of Laguerre-Polya membership.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yoshida-rapid-decrease"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
-        Node(id, title, declaration, formula, Blocks(Paragraph(Text(prose))), role, provenance);
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
+        Node(id, title, declaration, formula, Blocks(Paragraph(Text(prose))), role, provenance, resolution);
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, BlockSequence prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, BlockSequence prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(formula), provenance, prose, role);
+            H(title), StatementSource.FromAuthor(formula), provenance, prose, role, resolution);
 
     private static BlockSequence QuestionProse()
     {

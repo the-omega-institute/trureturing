@@ -50,6 +50,10 @@ $$\neg ((\exists a \in \mathbb{N} \to \mathbb{R},\; RapidlyDecreasing\left(a\rig
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/YoshidaRapidDecreaseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/yoshida-rapid-decrease` (refuted) by `D5/S0/Certificates/YoshidaRapidDecreaseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"yoshida-rapid-decrease","declaration_gid":"D5/S0/Certificates/YoshidaRapidDecreaseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Rintaro Yoshida (2010). *On some questions of Fisk and Brändén*. DOI: [10.48550/arXiv.1005.4218](https://doi.org/10.48550/arXiv.1005.4218). URL: <https://arxiv.org/abs/1005.4218v1>.
