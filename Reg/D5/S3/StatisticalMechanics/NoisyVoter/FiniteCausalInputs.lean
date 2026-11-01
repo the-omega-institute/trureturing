@@ -11,6 +11,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.StatisticalMechanics.NoisyVoter.RepetitionVarianceLinear
 open _root_.D5.S3.StatisticalMechanics.NoisyVoter.AncestralSources
 open _root_.D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
+open scoped BigOperators
 
 noncomputable section
 
@@ -189,6 +190,124 @@ theorem law_bridge : (type_of% (@history_law_of_positive_coordinate_laws)) ↔
     exact @h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
   · intro h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
     exact @h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
+
+private theorem test_independent : ProbabilityTheory.iIndepFun
+    (fun c : {c : Coord Bool // positive c} => testAssignment true c.val)
+    (MeasureTheory.Measure.dirac ()) := by
+  classical
+  rw [ProbabilityTheory.iIndepFun_iff_measure_inter_preimage_eq_mul]
+  intro s sets _
+  let f (c : {c : Coord Bool // positive c}) : Set Unit :=
+    testAssignment true c.val ⁻¹' sets c
+  change (MeasureTheory.Measure.dirac ()) (⋂ c ∈ s, f c) =
+    ∏ c ∈ s, (MeasureTheory.Measure.dirac ()) (f c)
+  have hd (A : Set Unit) : (MeasureTheory.Measure.dirac ()) A =
+      if () ∈ A then 1 else 0 := by
+    rw [MeasureTheory.Measure.dirac_apply' () (Set.toFinite A).measurableSet]
+    simp only [Set.indicator_apply, Pi.one_apply]
+  by_cases h : ∀ c ∈ s, () ∈ f c
+  · have hi : () ∈ ⋂ c ∈ s, f c := by simpa using h
+    rw [hd, if_pos hi]
+    symm
+    apply Finset.prod_eq_one
+    intro c hc
+    rw [hd, if_pos (h c hc)]
+  · push_neg at h
+    obtain ⟨c, hc, hn⟩ := h
+    have hi : () ∉ ⋂ c ∈ s, f c := by
+      intro h
+      exact hn ((Set.mem_iInter.mp (Set.mem_iInter.mp h c)) hc)
+    rw [hd, if_neg hi]
+    symm
+    apply Finset.prod_eq_zero hc
+    rw [hd, if_neg hn]
+
+private theorem test_laws (c : {c : Coord Bool // positive c}) :
+    ProbabilityTheory.HasLaw (testAssignment true c.val)
+      (MeasureTheory.Measure.dirac (testAssignment true c.val ()))
+      (MeasureTheory.Measure.dirac ()) where
+  aemeasurable := (measurable_of_finite _).aemeasurable
+  map_eq := MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()
+
+private theorem law_rejected_law : ¬ lawArena.Law lawRejected := by
+  intro h
+  have he := h Bool Unit Unit ⊤
+    (MeasureTheory.Measure.dirac ()) (MeasureTheory.Measure.dirac ())
+    (testAssignment true) (testAssignment true)
+    (fun c => MeasureTheory.Measure.dirac (testAssignment true c.val ()))
+    (fun _ _ => measurable_of_finite _) (fun _ _ => measurable_of_finite _)
+    test_independent test_independent test_laws test_laws true 0
+  change (0 : MeasureTheory.Measure (Fin 1 → Bool × Label Bool)) =
+    (MeasureTheory.Measure.dirac ()).map (history (testAssignment true) true 0) at he
+  rw [MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()] at he
+  have hu := congrArg (fun μ => μ Set.univ) he
+  simpa using hu
+
+def law_family : Registration lawArena (type_of% (@history_law_of_positive_coordinate_laws)) where
+  actual := lawActual
+  bridge := law_bridge
+  variation := ⟨law_bridge.mp @history_law_of_positive_coordinate_laws,
+    lawRejected, law_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨lawRejected, ?_, rfl, law_rejected_law⟩
+      intro j hji
+      exact (hji (show j = i by cases i; cases j; rfl)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    cases i
+    refine ⟨⟨Bool, Unit, Unit, ⊤, inferInstance, inferInstance, inferInstance,
+      MeasureTheory.Measure.dirac (), MeasureTheory.Measure.dirac (), testAssignment true,
+      (fun c => MeasureTheory.Measure.dirac (testAssignment true c.val ())), true, 0⟩,
+      testAssignment true, testAssignment false, ?_⟩
+    intro h
+    change (MeasureTheory.Measure.dirac ()).map (history (testAssignment true) true 0) =
+      (MeasureTheory.Measure.dirac ()).map (history (testAssignment false) true 0) at h
+    rw [MeasureTheory.Measure.map_dirac' (measurable_of_finite _) (),
+      MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()] at h
+    have he := congrArg (fun f => (f 0).1) (MeasureTheory.injective_dirac h)
+    change true = false at he
+    exact Bool.true_ne_false he
+
+def law_registration : Contract.Registration
+    (@history_law_of_positive_coordinate_laws) (Realization lawSignature)
+    (type_of% (@history)) Unit where
+  unitName := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs.history_law_of_positive_coordinate_laws.__information_unit
+  realizationName := ``law_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨lawArena⟩
+  objectArena := .source ⟨lawArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source lawArena ⟨law_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize lawSignature (fun _ p x => by
+    letI := p.locallyFinite
+    letI := p.measurableΩ
+    exact p.P.map (history x p.u p.N)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some (@history)
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 18, 19]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := some #["fn", "arg", "fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end
 end Reg.D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
