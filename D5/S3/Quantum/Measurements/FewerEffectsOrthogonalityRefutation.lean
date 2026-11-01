@@ -16,6 +16,7 @@ square root and squared Frobenius distance are those of Section III. The constru
 has ranks 2,2,2,4 in dimension ten; projectors of ranks 2,2,3,3 give a smaller value. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
@@ -60,28 +61,83 @@ private def competitor : Fin 4 → Matrix (Fin 10) (Fin 10) ℂ :=
 
 private theorem construction_sqrt (i : Fin 4) :
     CFC.sqrt (construction 4 10 i) = construction 4 10 i := by
-  sorry
+  apply CFC.sqrt_unique
+  · dsimp only [construction]
+    rw [Matrix.diagonal_mul_diagonal]
+    congr 1
+    funext k
+    split_ifs <;> simp
+  · apply Matrix.PosSemidef.nonneg
+    dsimp only [construction]
+    apply Matrix.PosSemidef.diagonal
+    intro k
+    split_ifs <;> simp <;> split_ifs <;> simp
 
 private theorem competitor_sqrt (i : Fin 4) :
     CFC.sqrt (competitor i) = competitor i := by
-  sorry
+  apply CFC.sqrt_unique
+  · dsimp only [competitor]
+    rw [Matrix.diagonal_mul_diagonal]
+    congr 1
+    funext k
+    split_ifs <;> simp
+  · apply Matrix.PosSemidef.nonneg
+    dsimp only [competitor]
+    apply Matrix.PosSemidef.diagonal
+    intro k
+    split_ifs <;> simp <;> split_ifs <;> simp
 
 private theorem construction_gram :
     gram (construction 4 10) = Matrix.diagonal ![2, 2, 2, 4] := by
-  sorry
+  ext i j
+  change Matrix.trace (CFC.sqrt (construction 4 10 i) *
+    CFC.sqrt (construction 4 10 j)) = _
+  rw [construction_sqrt, construction_sqrt]
+  dsimp only [construction]
+  rw [Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Fin.sum_univ_succ, Matrix.diagonal_apply]
 
 private theorem competitor_gram :
     gram competitor = Matrix.diagonal ![2, 2, 3, 3] := by
-  sorry
+  ext i j
+  change Matrix.trace (CFC.sqrt (competitor i) * CFC.sqrt (competitor j)) = _
+  rw [competitor_sqrt, competitor_sqrt]
+  dsimp only [competitor]
+  rw [Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Fin.sum_univ_succ, Matrix.diagonal_apply]
 
 private theorem competitor_povm : IsPOVMWith 4 10 competitor := by
-  sorry
+  constructor
+  · intro i
+    constructor
+    · dsimp only [competitor]
+      apply Matrix.PosSemidef.diagonal
+      intro k
+      split_ifs <;> simp <;> split_ifs <;> simp
+    · intro hzero
+      have hdiag := congrFun (congrFun competitor_gram i) i
+      change Matrix.trace (CFC.sqrt (competitor i) * CFC.sqrt (competitor i)) = _ at hdiag
+      rw [hzero, CFC.sqrt_zero, zero_mul, Matrix.trace_zero] at hdiag
+      fin_cases i <;> norm_num [Matrix.diagonal_apply] at hdiag
+  · ext k l
+    change (∑ i, competitor i) k l = (1 : Matrix (Fin 10) (Fin 10) ℂ) k l
+    simp only [Matrix.sum_apply, Fin.sum_univ_succ]
+    dsimp only [competitor]
+    fin_cases k <;> fin_cases l <;> norm_num [Matrix.diagonal_apply, Matrix.one_apply]
 
 private theorem construction_orthogonality : orthogonality (construction 4 10) = 12 := by
-  sorry
+  change (∑ i, ∑ j, Complex.normSq
+    (gram (construction 4 10) i j - (1 : Matrix (Fin 4) (Fin 4) ℂ) i j)) = 12
+  rw [construction_gram]
+  norm_num [Fin.sum_univ_succ, Matrix.diagonal_apply, Matrix.one_apply, Complex.normSq_apply]
 
 private theorem competitor_orthogonality : orthogonality competitor = 10 := by
-  sorry
+  change (∑ i, ∑ j, Complex.normSq
+    (gram competitor i j - (1 : Matrix (Fin 4) (Fin 4) ℂ) i j)) = 10
+  rw [competitor_gram]
+  norm_num [Fin.sum_univ_succ, Matrix.diagonal_apply, Matrix.one_apply, Complex.normSq_apply]
 
 /-- The constructed POVM fails to minimize orthogonality, already for four effects
 on a ten dimensional space. -/
