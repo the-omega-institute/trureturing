@@ -119,8 +119,9 @@ private lemma expectation_add (a c : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) �
 
 private lemma expectation_smul (r : ℝ) (a : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
     (ψ : Word (Fin 3) 3 → ℂ) : readout (r • a) ψ = r * readout a ψ := by
-  simpa only [readout, ← Complex.coe_smul] using
-    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.quadratic_smul ψ r a
+  change (star ψ ⬝ᵥ ((r • a) *ᵥ ψ)).re = r * (star ψ ⬝ᵥ (a *ᵥ ψ)).re
+  rw [← Complex.coe_smul r a]
+  exact D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.quadratic_smul ψ r a
 
 private lemma expectation_one (ψ : Word (Fin 3) 3 → ℂ) :
     readout 1 ψ = ∑ x, Complex.normSq (ψ x) := by
