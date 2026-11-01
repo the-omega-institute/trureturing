@@ -65,16 +65,16 @@ private theorem uniform_bounds (a b c d : ℕ)
     have hY : 0≤Y := by dsimp [Y]; have := one_le_pow₀ (n := b-d-1) (by norm_num : (1:ℤ)≤2); omega
     have hE : 0≤E := by dsimp [E]; have := one_le_pow₀ (n := c-b-2) (by norm_num : (1:ℤ)≤2); omega
     have hy : (2:ℤ)^b=2*2^d*(1+Y) := by
-      dsimp [Y]; rw [gap_power b d 1 (by omega)]; norm_num; ring
+      dsimp [Y]; rw [gap_power b d 1 (by omega)]; norm_num
     have hz : (2:ℤ)^c=4*2^b*(1+E) := by
-      dsimp [E]; rw [gap_power c b 2 hsep]; norm_num; ring
+      dsimp [E]; rw [gap_power c b 2 hsep]; norm_num
     have hg : grain a b c d=4*(1+E)*(1+Y)*H := by
       dsimp [grain,grainExponent]; rw [if_neg hn]
       calc
         (2:ℤ)^(a-d-2)=4*2^(c-b-2)*2^(b-d-1)*2^(a-c-1) := by
           calc
             (2:ℤ)^(a-d-2)=2^(2+(c-b-2)+(b-d-1)+(a-c-1)) := by congr 1; omega
-            _ = _ := by simp only [pow_add]; norm_num; ring
+            _ = _ := by simp only [pow_add]; norm_num
         _ = _ := by dsimp [E,Y,H]; ring
     have hh := chart_separated Y T (H-1) E hY hT (by omega) hE
     have et : 4+T=(2:ℤ)^d := by dsimp [T]; ring
@@ -91,7 +91,7 @@ private theorem uniform_bounds (a b c d : ℕ)
         norm_num at hh; dsimp [T]; omega
       have hY : 0≤Y := by dsimp [Y]; have := one_le_pow₀ (n := b-d-1) (by norm_num : (1:ℤ)≤2); omega
       have hy : (2:ℤ)^b=2*2^d*(1+Y) := by
-        dsimp [Y]; rw [gap_power b d 1 (by omega)]; norm_num; ring
+        dsimp [Y]; rw [gap_power b d 1 (by omega)]; norm_num
       have hz : (2:ℤ)^c=2*2^b := by rw [hcb,pow_succ]; ring
       have hg : grain a b c d=2*(1+Y)*H := by
         dsimp [grain,grainExponent]; rw [if_neg hn]
@@ -99,7 +99,7 @@ private theorem uniform_bounds (a b c d : ℕ)
           (2:ℤ)^(a-d-2)=2*2^(b-d-1)*2^(a-c-1) := by
             calc
               (2:ℤ)^(a-d-2)=2^(1+(b-d-1)+(a-c-1)) := by congr 1; omega
-              _ = _ := by simp only [pow_add]; norm_num; ring
+              _ = _ := by simp only [pow_add]; norm_num
           _ = _ := by dsimp [Y,H]; ring
       have hh := chart_adjacent_t8 Y T (H-1) 0 hY hT (by omega) (by omega)
       have et : 8+T=(2:ℤ)^d := by dsimp [T]; ring
@@ -114,7 +114,7 @@ private theorem uniform_bounds (a b c d : ℕ)
         have hT : 0≤T := by dsimp [T]; rw [hd2]; norm_num
         have hY : 0≤Y := by dsimp [Y]; have := one_le_pow₀ (n := b-d-2) (by norm_num : (1:ℤ)≤2); omega
         have hy : (2:ℤ)^b=4*2^d*(1+Y) := by
-          dsimp [Y]; rw [gap_power b d 2 hy4]; norm_num; ring
+          dsimp [Y]; rw [gap_power b d 2 hy4]; norm_num
         have hz : (2:ℤ)^c=2*2^b := by rw [hcb,pow_succ]; ring
         have hg : grain a b c d=4*(1+Y)*H := by
           dsimp [grain,grainExponent]; rw [if_neg hn]
@@ -122,7 +122,7 @@ private theorem uniform_bounds (a b c d : ℕ)
             (2:ℤ)^(a-d-2)=4*2^(b-d-2)*2^(a-c-1) := by
               calc
                 (2:ℤ)^(a-d-2)=2^(2+(b-d-2)+(a-c-1)) := by congr 1; omega
-                _ = _ := by simp only [pow_add]; norm_num; ring
+                _ = _ := by simp only [pow_add]; norm_num
             _ = _ := by dsimp [Y,H]; ring
         have hh := chart_adjacent_y4 Y T (H-1) 0 hY hT (by omega) (by omega)
         have et : 4+T=(2:ℤ)^d := by dsimp [T]; ring
@@ -135,7 +135,8 @@ private theorem uniform_bounds (a b c d : ℕ)
         have hh := chart_small_corner 0 0 (H-1) 0 (by omega) (by omega) (by omega) (by omega)
         have hg : grain a 3 4 2=H := by simp [grain,grainExponent,corner,H]
         have hs : reserve a 3 4 2=11*H := by simp [reserve,corner,hg]; ring
-        convert hh using 1 <;> simp [show (1:ℤ)+(H-1)=H by ring,hg,hs]
+        have hsub : a - 5 = a - 4 - 1 := by omega
+        convert hh using 1 <;> simp [show (1:ℤ)+(H-1)=H by ring,hg,hs,hsub]
         all_goals first | simpa using hx | ring
 
 private theorem reserve_capacity (a b c d : ℕ)
@@ -151,7 +152,7 @@ private theorem reserve_capacity (a b c d : ℕ)
     have hx : (2:ℤ)^a=32*grain a 3 4 2 := by
       simp only [grain,grainExponent,corner,if_pos (by decide : 2=2 ∧ 3=3 ∧ 4=4)]
       rw [power_split a 5 (by omega)]; norm_num
-    simp only [reserve,corner,if_pos (by decide : 2=2 ∧ 3=3 ∧ 4=4)]
+    simp [reserve, corner]
     refine ⟨hg,by nlinarith,by nlinarith [hx],dvd_mul_right _ _⟩
   · have hx : (2:ℤ)^a=4*2^d*grain a b c d := by
       dsimp [grain,grainExponent]; rw [if_neg hc]
