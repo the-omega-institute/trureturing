@@ -79,14 +79,16 @@ def rRegistration : Registration rArena
     · intro i
       refine ⟨rBad, ?_, rfl, rBadLaw⟩
       intro j h
-      exact (h (Subsingleton.elim _ _)).elim
+      cases i
+      cases j
+      exact (h rfl).elim
     · intro i
       exact nomatch i
   dependence := rDependence
 
 abbrev ZSig : Signature where
   Params := Decomposition
-  State d := ℤ × (Fin d.m → Bool → ℤ)
+  State _ := ℤ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -95,14 +97,14 @@ abbrev ZSig : Signature where
   finiteAnchor := inferInstance
 
 def zActual : Realization ZSig :=
-  realize ZSig (fun _ d s => evaluation d.graph s.1) (fun e => nomatch e)
+  realize ZSig (fun _ d x => evaluation d.graph x) (fun e => nomatch e)
 def zBad : Realization ZSig :=
   realize ZSig (fun _ _ _ => 1) (fun e => nomatch e)
 def zArena : Arena where
   signature := ZSig
   Law r := ∀ (d : Decomposition) (x : ℤ) (table : Fin d.m → Bool → ℤ),
     (∀ i b, message d x i b = table i b) → tableEvaluation d x table = 0 →
-      r.readout () d (x,table) = 0
+      r.readout () d x = 0
 
 theorem zBridge : (∀ (d : Decomposition) (x : ℤ) (table : Fin d.m → Bool → ℤ),
     (∀ i b, message d x i b = table i b) → tableEvaluation d x table = 0 →
@@ -117,8 +119,7 @@ theorem zBadLaw : ¬ zArena.Law zBad := by
 
 theorem zDependence : ObservationalDependence ZSig zActual := by
   intro i
-  let table : Fin one.m → Bool → ℤ := fun i => Fin.elim0 i
-  refine ⟨one, (0,table), (1,table), ?_⟩
+  refine ⟨one, 0, 1, ?_⟩
   change evaluation one.graph 0 ≠ evaluation one.graph 1
   rw [reassembly, reassembly]
   decide
@@ -135,68 +136,12 @@ def zRegistration : Registration zArena
     · intro i
       refine ⟨zBad, ?_, rfl, zBadLaw⟩
       intro j h
-      exact (h (Subsingleton.elim _ _)).elim
+      cases i
+      cases j
+      exact (h rfl).elim
     · intro i
       exact nomatch i
   dependence := zDependence
 
-
-noncomputable def registration_1 : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.reassembly)
-    (type_of% (realize RSig (fun _ d x => evaluation d.graph x) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.reassembly.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.rRegistration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨rArena⟩
-  objectArena := .source ⟨rArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source rArena ⟨rRegistration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize RSig (fun _ d x => evaluation d.graph x) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "fn", "arg"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
-noncomputable def registration_2 : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.zero_of_messages)
-    (type_of% (realize ZSig (fun _ d s => evaluation d.graph s.1) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.zero_of_messages.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.zRegistration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨zArena⟩
-  objectArena := .source ⟨zArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source zArena ⟨zRegistration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize ZSig (fun _ d s => evaluation d.graph s.1) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "fn", "arg"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly

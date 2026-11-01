@@ -67,7 +67,7 @@ internal sealed class MinusFourReassemblyDocument : IScribeDocumentDefinition
         var i = FormulaDsl.Id("i"); var b = FormulaDsl.Id("b");
         var entries = All("i", Call("Fin", Call("m", d)), All("b", FormulaDsl.Id("Bool"),
             Eq(Call("message", d, x, i, b), Call("table", i, b))));
-        var tableType = Seq(Call("Fin", Call("m", d)), To, FormulaDsl.Id("Bool"), To, Integer);
+        var tableType = Seq(Call("Fin", Call("m", d)), Sp, To, Sp, FormulaDsl.Id("Bool"), Sp, To, Sp, Integer);
         return All("d", FormulaDsl.Id("Decomposition"), All("x", Integer, All("table", tableType,
             ImpliesF(entries, ImpliesF(Eq(Call("tableEvaluation", d, x, table), D(0)),
                 Eq(Call("evaluation", Call("graph", d), x), D(0)))))));
