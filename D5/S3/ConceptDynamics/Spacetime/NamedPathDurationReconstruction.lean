@@ -6,7 +6,9 @@
    utility: none
    digest: Positive clocks reconstruct recurrent named paths iff there is no branching. -/
 
-import Mathlib.Combinatorics.Quiver.Path
+import Mathlib.Combinatorics.Quiver.Path.Weight
+import Mathlib.Algebra.FreeMonoid.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.List
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
 
@@ -36,25 +38,47 @@ def duration (d : ∀ {a b : V}, (a ⟶ b) → ℝ) {a b : V} : Quiver.Path a b 
 def readout (d : ∀ {a b : V}, (a ⟶ b) → ℝ) (r : V)
     (p : Σ b : V, Quiver.Path r b) : V × ℝ := (p.1, duration d p.2)
 
+private theorem edgeWord_eq_weight {a b : V} (p : Quiver.Path a b) :
+    edgeWord p = FreeMonoid.toList (Quiver.Path.weight
+      (fun {a b} e => FreeMonoid.of (⟨a, b, e⟩ : NamedEdge V)) p) := by
+  induction p with
+  | nil => rw [edgeWord, Quiver.Path.weight_nil, FreeMonoid.toList_one]
+  | cons p e ih =>
+    rw [edgeWord, Quiver.Path.weight_cons, FreeMonoid.toList_mul, FreeMonoid.toList_of, ih]
+
+private theorem duration_eq_addWeight (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    {a b : V} (p : Quiver.Path a b) : duration d p = Quiver.Path.addWeight d p := by
+  induction p with
+  | nil => rw [duration, Quiver.Path.addWeight_nil]
+  | cons p e ih => rw [duration, Quiver.Path.addWeight_cons, ih]
+
 private theorem edgeWord_comp {a b c : V} (p : Quiver.Path a b) (q : Quiver.Path b c) :
     edgeWord (p.comp q) = edgeWord p ++ edgeWord q := by
-  induction q with
-  | nil => simp [edgeWord]
-  | cons q e ih => simp [edgeWord, ih, List.append_assoc]
+  simpa only [edgeWord_eq_weight, FreeMonoid.toList_mul] using
+    congrArg FreeMonoid.toList (Quiver.Path.weight_comp
+      (fun {a b} e => FreeMonoid.of (⟨a, b, e⟩ : NamedEdge V)) p q)
 
 private theorem duration_comp (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
     {a b c : V} (p : Quiver.Path a b) (q : Quiver.Path b c) :
     duration d (p.comp q) = duration d p + duration d q := by
-  induction q with
-  | nil => simp [duration]
-  | cons q e ih => simp [duration, ih, add_assoc]
+  simpa only [duration_eq_addWeight] using Quiver.Path.addWeight_comp d p q
+
+private theorem duration_eq_sum (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    {a b : V} (p : Quiver.Path a b) :
+    duration d p = ((edgeWord p).map fun e => d e.2.2).sum := by
+  induction p with
+  | nil => rfl
+  | cons p e ih => simp only [duration, edgeWord, List.map_append, List.map_singleton,
+      List.sum_append, List.sum_singleton, ih]
 
 private theorem duration_nonneg (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
     (hd : ∀ {a b : V} (e : a ⟶ b), 0 < d e) {a b : V} (p : Quiver.Path a b) :
     0 ≤ duration d p := by
-  induction p with
-  | nil => exact le_rfl
-  | cons p e ih => exact add_nonneg ih (le_of_lt (hd e))
+  rw [duration_eq_sum]
+  apply List.sum_nonneg
+  intro t ht
+  obtain ⟨e, _, rfl⟩ := List.mem_map.mp ht
+  exact (hd e.2.2).le
 
 private theorem duration_pos (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
     (hd : ∀ {a b : V} (e : a ⟶ b), 0 < d e) {a b : V} (p : Quiver.Path a b)

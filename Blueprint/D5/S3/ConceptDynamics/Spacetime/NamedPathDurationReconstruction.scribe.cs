@@ -5,7 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Spacetime;
 internal sealed class NamedPathDurationReconstructionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Positive additive duration detects all rooted named paths exactly in the absence of branching.",
+        "On a recurrent quiver, positive additive duration detects all rooted named paths "
+        + "exactly in the absence of branching.",
         H("Named Paths and Positive Duration"),
         Blocks(
             Describe.Lean(
