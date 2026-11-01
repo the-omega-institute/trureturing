@@ -1263,7 +1263,7 @@ private theorem grid_operand_widths (B : ℕ) (y : ℚ) :
   simp only [integerWidth,Int.natAbs_natCast] at *
   simp only [gridOperands,List.mem_cons,List.not_mem_nil,or_false] at hk
   rcases hk with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;>
-    simp only [integerWidth,Int.natAbs_natCast,Int.natAbs_zero,Nat.size_zero] <;> omega
+    (try simp only [integerWidth,Int.natAbs_natCast,Int.natAbs_zero,Nat.size_zero]) <;> omega
 
 private theorem representative_width (C : ProfileCell) :
     rationalWidth C.representative ≤ C.width+2 := by
@@ -1285,6 +1285,7 @@ private theorem representative_width (C : ProfileCell) :
     simp only [integerWidth,Int.natAbs_natCast] at hm
     dsimp only [integerWidth] at htwo
     push_cast at hw ⊢
+    dsimp only [integerWidth] at *
     omega
 
 private theorem split_interval_width (C : ProfileCell) (t : ℚ) (side : Bool) :
@@ -1538,7 +1539,6 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
       (hx.2.2.trans_le (original_upper_bounds hx).2)
     apply trace_widths hQ hz.1 _ ht
     simpa only [Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
-
   · rw [he]
     exact (containing_cell_numerators B hB hx.1 (originalUpper I)
       (hx.2.2.trans_le (original_upper_bounds hx).2)).1
