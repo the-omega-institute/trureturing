@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Geometry/Hyperideal/OriginalCosineAllEdges
    mirror-E: none(waiver:original-cosine-all-edges)
    anchors: []
-   utility: OriginalCosineDeterminantInterface
+   utility: none
    digest: Six target-edge original cosine bounds share one determinant sign. -/
 
 import D5.S3.Geometry.Hyperideal.OriginalCosineDeterminantInterface
