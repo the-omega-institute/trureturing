@@ -55,22 +55,22 @@ def lattice : Set (P → ℤ) := Set.range (incidence (P := P) (L := L))
 
 variable [ProjectivePlane P L]
 
-private abbrev q : ℤ := (ProjectivePlane.order P L : ℤ)
+abbrev q : ℤ := (ProjectivePlane.order P L : ℤ)
 
-private lemma q_ge_two : 2 ≤ q (P := P) (L := L) := by
+lemma q_ge_two : 2 ≤ q (P := P) (L := L) := by
   exact_mod_cast ProjectivePlane.one_lt_order P L
 
-private lemma row_total (l : L) : ∑ x : P, row l x = q (P := P) (L := L) + 1 := by
+lemma row_total (l : L) : ∑ x : P, row l x = q (P := P) (L := L) + 1 := by
   have h := ProjectivePlane.pointCount_eq P l
   rw [pointCount, Nat.card_eq_fintype_card, Fintype.card_subtype] at h
   simpa [row, Finset.sum_ite, q] using congrArg (fun n : ℕ => (n : ℤ)) h
 
-private lemma column_total (x : P) : ∑ l : L, row l x = q (P := P) (L := L) + 1 := by
+lemma column_total (x : P) : ∑ l : L, row l x = q (P := P) (L := L) + 1 := by
   have h := ProjectivePlane.lineCount_eq L x
   rw [lineCount, Nat.card_eq_fintype_card, Fintype.card_subtype] at h
   simpa [row, Finset.sum_ite, q] using congrArg (fun n : ℕ => (n : ℤ)) h
 
-private lemma row_gram (l k : L) :
+lemma row_gram (l k : L) :
     ∑ x : P, row l x * row k x = if l = k then q (P := P) (L := L) + 1 else 1 := by
   classical
   by_cases h : l = k
@@ -88,7 +88,7 @@ private lemma row_gram (l k : L) :
       by_cases hl : y ∈ l <;> by_cases hk : y ∈ k <;> simp_all [row]
     · simp
 
-private lemma column_gram (x y : P) :
+lemma column_gram (x y : P) :
     ∑ l : L, row l x * row l y = if x = y then q (P := P) (L := L) + 1 else 1 := by
   classical
   by_cases h : x = y
