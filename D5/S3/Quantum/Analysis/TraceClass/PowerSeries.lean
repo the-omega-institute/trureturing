@@ -6,12 +6,15 @@
    utility: none
    digest: Noncommuting trace power errors and absolutely convergent trace logarithms. -/
 
+
 import D5.S3.Quantum.Analysis.TraceClass.Pairing
 import Mathlib.Analysis.SpecificLimits.Normed
 
 /-! Trace powers use the genuine unconditional trace, with the Physlib ideal suppliers. -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped BigOperators
 open Filter Topology
@@ -46,8 +49,10 @@ private theorem rightMul_norm (T : TraceClass H) (A : H →L[ℂ] H) :
   calc
     _ ≤ ‖(1 : H →L[ℂ] H)‖ * traceNorm T.val T.property * ‖A‖ := by simpa using h
     _ ≤ 1 * traceNorm T.val T.property * ‖A‖ := by
-      gcongr
-      exact ContinuousLinearMap.norm_id_le
+      exact mul_le_mul_of_nonneg_right
+        (mul_le_mul_of_nonneg_right
+          (show ‖(1 : H →L[ℂ] H)‖ ≤ 1 from ContinuousLinearMap.norm_id_le)
+          (traceNorm_nonneg _ _)) (norm_nonneg _)
     _ = _ := by ring
 
 /-- Positive powers are trace class; the zeroth power is never assumed trace class. -/
@@ -61,9 +66,10 @@ private theorem positivePower_coe (T : TraceClass H) (m : ℕ) :
 private theorem op_power_le (T : H →L[ℂ] H) {q : ℝ}
     (hq : 0 ≤ q) (hT : ‖T‖ ≤ q) (m : ℕ) : ‖T ^ m‖ ≤ q ^ m := by
   cases m with
-  | zero => simpa only [pow_zero] using (ContinuousLinearMap.norm_id_le (𝕜 := ℂ) (E := H))
-  | succ m => exact (norm_pow_le' T (Nat.succ_pos _)).trans
-      (pow_le_pow_left₀ (norm_nonneg _) hT _)
+  | zero =>
+      change ‖(1 : H →L[ℂ] H)‖ ≤ 1
+      exact ContinuousLinearMap.norm_id_le
+  | succ m => exact (norm_pow_le' T (Nat.succ_pos m)).trans (pow_le_pow_left₀ (norm_nonneg _) hT _)
 
 /-- The original trace of T^(m+1), rather than a finite-cutoff definition. -/
 def powerTrace (T : TraceClass H) (m : ℕ) : ℂ :=
@@ -148,13 +154,15 @@ private theorem logDenom_norm (m : ℕ) :
 private theorem logTerm_norm_le (T : TraceClass H) {q : ℝ}
     (hq : 0 ≤ q) (hT : ‖T.val‖ ≤ q) (m : ℕ) :
     ‖logTerm T m‖ ≤ (‖T‖ / 2) * q ^ m := by
-  have hm : (1 : ℝ) ≤ m + 1 := by positivity
+  have hm : (1 : ℝ) ≤ m + 1 := by linarith [Nat.cast_nonneg (α := ℝ) m]
   simp only [logTerm, norm_div, logDenom_norm]
   calc
     _ ≤ (‖T‖ * q ^ m) / (2 * (m + 1 : ℝ)) := by
       gcongr
       exact powerTrace_norm_le T hq hT m
-    _ ≤ (‖T‖ * q ^ m) / 2 := by gcongr <;> positivity
+    _ ≤ (‖T‖ * q ^ m) / 2 :=
+      div_le_div_of_nonneg_left (mul_nonneg (norm_nonneg _) (pow_nonneg hq _))
+        (by norm_num) (by linarith)
     _ = _ := by ring
 
 /-- Absolute convergence for every trace-class strict contraction. -/

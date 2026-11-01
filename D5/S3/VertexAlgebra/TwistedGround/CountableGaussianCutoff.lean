@@ -6,14 +6,18 @@
    utility: none
    digest: Native whole-occupation and two-coordinate Gaussian cutoffs. -/
 
+
 import D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianFock
 import D5.S3.Quantum.Analysis.TraceClass.Pairing
 import D5.S3.Quantum.Analysis.TraceClass.FiniteBlocks
+import D5.S3.Quantum.Analysis.TraceClass.PowerSeries
 import Mathlib.Analysis.Normed.Group.Tannery
 
 /-! Whole occupation sums and actual two-sided one-particle cutoffs. -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped BigOperators InnerProductSpace lp ENNReal
 open Filter Topology
@@ -47,15 +51,20 @@ def occupationCutoff (A B : Data I) (F : Finset I) : ℂ :=
 /-- Whole support cutoff, with no particle or degree restriction. -/
 theorem occupationCutoff_tendsto (A B : Data I) :
     Tendsto (occupationCutoff A B) atTop (𝓝 (∑' d, occupationTerm A B d)) := by
-  classical
   let f : Finset I → Occupation I → ℂ := fun F d =>
     if d.support ⊆ F then occupationTerm A B d else 0
   have h := tendsto_tsum_of_dominated_convergence (𝓕 := atTop) (occupation_norm_summable A B)
     (f := f) (g := occupationTerm A B) ?_ ?_
   · convert h using 1
     funext F
-    exact (tsum_subtype (s := {d : Occupation I | d.support ⊆ F})
-      (f := occupationTerm A B)).symm
+    let S : Set (Occupation I) := {d | d.support ⊆ F}
+    change (∑' d : S, occupationTerm A B d.val) = _
+    calc
+      _ = ∑' d, S.indicator (occupationTerm A B) d := tsum_subtype S _
+      _ = _ := by
+        apply tsum_congr
+        intro d
+        by_cases hd : d.support ⊆ F <;> simp [S, f, Set.indicator, hd]
   · intro d
     apply tendsto_const_nhds.congr'
     filter_upwards [eventually_ge_atTop (commonBlock {d})] with F hF
@@ -65,6 +74,35 @@ theorem occupationCutoff_tendsto (A B : Data I) :
   · exact Filter.Eventually.of_forall (fun F d => by
       dsimp [f]
       split_ifs <;> simp)
+
+private def occupationEquiv (F : Finset I) :
+    {d : Occupation I // d.support ⊆ F} ≃ Occupation F where
+  toFun d := restrictOccupation F d.val
+  invFun d := ⟨d.mapDomain (fun i : F => i.val), by
+    intro i hi
+    obtain ⟨j, _, rfl⟩ := Finset.mem_image.mp (Finsupp.mapDomain_support hi)
+    exact j.property⟩
+  left_inv d := Subtype.ext (extend_restrict F d.val d.property)
+  right_inv d := Finsupp.comapDomain_mapDomain (fun i : F => i.val) Subtype.val_injective d
+
+private theorem occupationCutoff_eq_block (A B : Data I) (F : Finset I) :
+    occupationCutoff A B F = ∑' d : Occupation F, (weight d : ℂ) *
+      FactorialFockQuadraticEstimate.gaussianCoefficient (A.block F) d *
+      FactorialFockQuadraticEstimate.gaussianCoefficient (B.block F) d := by
+  let g : Occupation F → ℂ := fun d => (weight d : ℂ) *
+    FactorialFockQuadraticEstimate.gaussianCoefficient (A.block F) d *
+    FactorialFockQuadraticEstimate.gaussianCoefficient (B.block F) d
+  calc
+    occupationCutoff A B F = ∑' d : {d : Occupation I // d.support ⊆ F},
+        g (occupationEquiv F d) := by
+      apply tsum_congr
+      intro d
+      dsimp only [occupationTerm, occupationEquiv, g]
+      rw [coefficient_on_block A.kernel F d.val d.property,
+        coefficient_on_block B.kernel F d.val d.property,
+        ← weight_restrict F d.val d.property]
+      rfl
+    _ = _ := (occupationEquiv F).tsum_eq g
 
 /-- The omitted mass is indexed by both matrix coordinates. -/
 def matrixTailSquare (D : Data I) (F : Finset I) : ℝ :=
@@ -84,7 +122,9 @@ theorem matrixTailSquare_tendsto (D : Data I) :
     (f := fun F : Finset I => fun ij : I × I =>
       if ij.1 ∈ F ∧ ij.2 ∈ F then (0 : ℝ) else ‖D.kernel ij.1 ij.2‖ ^ 2)
     (g := fun _ => (0 : ℝ)) ?_ ?_
-  · simpa only [matrixTailSquare, tsum_zero] using h
+  · change Tendsto (fun F => ∑' ij : I × I,
+      if ij.1 ∈ F ∧ ij.2 ∈ F then (0 : ℝ) else ‖D.kernel ij.1 ij.2‖ ^ 2) atTop (𝓝 0)
+    simpa only [tsum_zero] using h
   · intro ij
     apply tendsto_const_nhds.congr'
     filter_upwards [eventually_ge_atTop ({ij.1, ij.2} : Finset I)] with F hF
@@ -105,7 +145,7 @@ private theorem inclusion_apply (F : Finset I) (x : EuclideanSpace ℂ F) (i : I
     · simp
     · intro j hj
       have hji : i ≠ j.val := fun h => hj (Subtype.ext h.symm)
-      simp [hji]
+      simp [hji, Ne.symm hji]
   · rw [dif_neg hi]
     apply Finset.sum_eq_zero
     intro j _
@@ -119,7 +159,9 @@ def coordinateProjection (F : Finset I) : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ) 
 
 private theorem projection_apply (F : Finset I) (x : ℓ²(I, ℂ)) (i : I) :
     coordinateProjection F x i = if i ∈ F then x i else 0 := by
-  simp only [coordinateProjection, ContinuousLinearMap.comp_apply, inclusion_apply]
+  change Data.finiteInclusion F
+    (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap x) i = _
+  rw [inclusion_apply]
   split_ifs <;> simp [Data.finiteInclusion_adjoint_apply]
 
 private theorem projection_norm_le (F : Finset I) : ‖coordinateProjection F‖ ≤ 1 := by
@@ -138,9 +180,11 @@ private theorem projection_single (F : Finset I) (j : I) :
       if j ∈ F then lp.single 2 j (1 : ℂ) else 0 := by
   apply lp.ext
   funext i
-  simp only [projection_apply, lp.single_apply, Pi.single_apply]
-  by_cases hj : j ∈ F <;> by_cases hi : i ∈ F <;> simp [hj, hi]
-  all_goals aesop
+  by_cases hij : i = j
+  · subst i
+    by_cases hj : j ∈ F <;> simp [projection_apply, hj, lp.single_apply]
+  · by_cases hi : i ∈ F <;> by_cases hj : j ∈ F <;>
+      simp [projection_apply, hi, hj, lp.single_apply, Pi.single_apply, hij, Ne.symm hij]
 
 private theorem compressed_entry (D : Data I) (F : Finset I) (i j : I) :
     compressed D F (lp.single 2 j (1 : ℂ)) i =
@@ -155,7 +199,7 @@ private theorem column_square (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ)) (j : I
       ‖T (lp.single 2 j (1 : ℂ))‖ ^ 2 := by
   simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
     (lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num)
-      (T (lp.single 2 j (1 : ℂ)))) .tsum_eq
+      (T (lp.single 2 j (1 : ℂ)))).tsum_eq
 
 private theorem matrix_columns (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
     (hT : Summable (fun ij : I × I => ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2)) :
@@ -169,10 +213,13 @@ private theorem matrix_columns (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
     ‖T (lp.single 2 ji.1 (1 : ℂ)) ji.2‖)).mp hs
   constructor
   · simpa only [column_square] using hp.2
-  · rw [← (Equiv.prodComm I I).tsum_eq
-      (fun ij : I × I => ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2),
-      hs.tsum_prod']
-    simp only [column_square]
+  · calc
+      (∑' j, ‖T (lp.single 2 j (1 : ℂ))‖ ^ 2) =
+          ∑' ji : I × I, ‖T (lp.single 2 ji.1 (1 : ℂ)) ji.2‖ ^ 2 := by
+        simpa only [column_square] using (hs.tsum_prod' hp.1).symm
+      _ = ∑' ij : I × I, ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2 :=
+        (Equiv.prodComm I I).tsum_eq
+          (fun ij : I × I => ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2)
 
 private theorem matrix_isHilbertSchmidt (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
     (hT : Summable (fun ij : I × I => ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2)) :
@@ -182,7 +229,7 @@ private theorem matrix_isHilbertSchmidt (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, �
   refine ⟨Set.range b, TraceClassFiniteBlocks.setBasis b, ?_⟩
   apply e.summable_iff.mp
   simpa only [Function.comp_def, TraceClassFiniteBlocks.setBasis_apply,
-    Equiv.ofInjective_apply, b, coordinateBasis_apply] using (matrix_columns T hT).1
+    Equiv.ofInjective_apply, e, b, coordinateBasis_apply] using (matrix_columns T hT).1
 
 /-- Native Hilbert--Schmidt size, computed from the actual coordinate matrix. -/
 def hsSize (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ)) : ℝ :=
@@ -196,7 +243,7 @@ private theorem hs_basis_square (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
   let e := Equiv.ofInjective b b.orthonormal.linearIndependent.injective
   rw [← e.tsum_eq]
   simpa only [TraceClassFiniteBlocks.setBasis_apply, Equiv.ofInjective_apply,
-    b, coordinateBasis_apply] using (matrix_columns T hT).2
+    e, b, coordinateBasis_apply] using (matrix_columns T hT).2
 
 private theorem compressed_summable (D : Data I) (F : Finset I) :
     Summable (fun ij : I × I =>
@@ -233,7 +280,7 @@ private theorem compressed_hs_le (D : Data I) (F : Finset I) :
 /-- Genuine HS errors converge to zero, including zero-dimensional modes. -/
 theorem hs_compression_tendsto (D : Data I) :
     Tendsto (fun F => hsSize (D.oneParticle - compressed D F)) atTop (𝓝 0) := by
-  simpa only [hs_compression_error, Real.sqrt_zero] using
+  simpa only [hs_compression_error, Real.sqrt_zero, Function.comp_def] using
     (Real.continuous_sqrt.tendsto 0).comp (matrixTailSquare_tendsto D)
 
 private theorem hs_product_bound (R S : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
@@ -294,15 +341,17 @@ theorem product_error_le (A B : Data I) (F : Finset I) :
     _ ≤ hsSize X * hsSize B.oneParticle + hsSize (compressed A F) * hsSize Y :=
       add_le_add hU hV
     _ ≤ hsSize X * hsSize B.oneParticle + hsSize A.oneParticle * hsSize Y :=
-      add_le_add_left (mul_le_mul_of_nonneg_right (compressed_hs_le A F)
-        (Real.sqrt_nonneg _)) _
+      add_le_add le_rfl (mul_le_mul_of_nonneg_right (compressed_hs_le A F)
+        (Real.sqrt_nonneg _))
     _ = delta A B F := by simp only [X, Y, hs_compression_error, delta]
 
 private theorem delta_tendsto (A B : Data I) :
     Tendsto (delta A B) atTop (𝓝 0) := by
   have hA := (Real.continuous_sqrt.tendsto 0).comp (matrixTailSquare_tendsto A)
   have hB := (Real.continuous_sqrt.tendsto 0).comp (matrixTailSquare_tendsto B)
-  simpa only [delta, Real.sqrt_zero, zero_mul, mul_zero, add_zero] using
+  change Tendsto (fun F => Real.sqrt (matrixTailSquare A F) * hsSize B.oneParticle +
+    hsSize A.oneParticle * Real.sqrt (matrixTailSquare B F)) atTop (𝓝 0)
+  simpa only [Function.comp_def, Real.sqrt_zero, zero_mul, mul_zero, add_zero] using
     (hA.mul_const (hsSize B.oneParticle)).add (hB.const_mul (hsSize A.oneParticle))
 
 /-- Actual trace-norm convergence of the separately compressed product. -/
@@ -312,5 +361,185 @@ theorem cutoffProduct_tendsto (A B : Data I) :
     (product_error_le A B) (delta_tendsto A B)
   rw [tendsto_iff_norm_sub_tendsto_zero]
   simpa only [norm_sub_rev] using h
+
+private theorem compressed_norm_le (D : Data I) (F : Finset I) :
+    ‖compressed D F‖ ≤ D.q := by
+  have hq := D.q_nonneg
+  calc
+    ‖compressed D F‖ ≤ (‖coordinateProjection F‖ * ‖D.oneParticle‖) *
+        ‖coordinateProjection F‖ := (norm_mul_le _ _).trans
+      (mul_le_mul_of_nonneg_right (norm_mul_le _ _) (norm_nonneg _))
+    _ ≤ (1 * D.q) * 1 := by
+      gcongr
+      · exact projection_norm_le F
+      · exact D.opNorm_le
+      · exact projection_norm_le F
+    _ = D.q := by ring
+
+private theorem product_op_norm (A B : Data I) :
+    ‖(product A B).val‖ ≤ A.q * B.q :=
+  (norm_mul_le _ _).trans
+    (mul_le_mul A.opNorm_le B.opNorm_le (norm_nonneg _) A.q_nonneg)
+
+private theorem cutoff_op_norm (A B : Data I) (F : Finset I) :
+    ‖(cutoffProduct A B F).val‖ ≤ A.q * B.q :=
+  (norm_mul_le _ _).trans
+    (mul_le_mul (compressed_norm_le A F) (compressed_norm_le B F)
+      (norm_nonneg _) A.q_nonneg)
+
+private theorem product_q_lt_one (A B : Data I) : A.q * B.q < 1 :=
+  lt_of_le_of_lt ((mul_le_mul_of_nonneg_left B.q_lt_one.le A.q_nonneg).trans_eq
+    (mul_one A.q)) A.q_lt_one
+
+private theorem native_log_error (A B : Data I) (F : Finset I) :
+    ‖TraceClassPowerSeries.traceLog (product A B) -
+        TraceClassPowerSeries.traceLog (cutoffProduct A B F)‖ ≤
+      delta A B F / (2 * (1 - A.q * B.q)) := by
+  exact (TraceClassPowerSeries.traceLog_error_le _ _ (mul_nonneg A.q_nonneg B.q_nonneg)
+    (product_q_lt_one A B) (product_op_norm A B) (cutoff_op_norm A B F)).trans
+    (div_le_div_of_nonneg_right (product_error_le A B F) (by
+      have := product_q_lt_one A B
+      positivity))
+
+/-- Trace-log cutoffs converge to the genuine original trace series. -/
+theorem traceLog_cutoff_tendsto (A B : Data I) :
+    Tendsto (fun F => TraceClassPowerSeries.traceLog (cutoffProduct A B F)) atTop
+      (𝓝 (TraceClassPowerSeries.traceLog (product A B))) := by
+  have hd := (delta_tendsto A B).div_const (2 * (1 - A.q * B.q))
+  have h := squeeze_zero (fun F => norm_nonneg
+    (TraceClassPowerSeries.traceLog (product A B) -
+      TraceClassPowerSeries.traceLog (cutoffProduct A B F))) (native_log_error A B)
+    (by simpa only [zero_div] using hd)
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  simpa only [norm_sub_rev] using h
+
+private def embedded (F : Finset I) (M : Matrix F F ℂ) : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ) :=
+  (Data.finiteInclusion F).toContinuousLinearMap.comp
+    ((Matrix.toEuclideanCLM (𝕜 := ℂ) M).comp
+      (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap))
+
+private theorem compressed_embedded (D : Data I) (F : Finset I) :
+    compressed D F = embedded F (D.block F) := by
+  rw [embedded, ← D.compression_eq_matrix F]
+  simp only [compressed, coordinateProjection, Data.compression,
+    ContinuousLinearMap.mul_def, ContinuousLinearMap.comp_assoc]
+
+private theorem embedded_mul (F : Finset I) (M N : Matrix F F ℂ) :
+    embedded F (M * N) = embedded F M * embedded F N := by
+  rw [embedded, map_mul]
+  simp only [embedded, ContinuousLinearMap.mul_def, ContinuousLinearMap.comp_assoc]
+  rw [← ContinuousLinearMap.comp_assoc
+    (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap)
+    (Data.finiteInclusion F).toContinuousLinearMap,
+    (Data.finiteInclusion F).adjoint_comp_self]
+  simp only [ContinuousLinearMap.one_def, ContinuousLinearMap.id_comp]
+
+private theorem cutoff_power_embedded (A B : Data I) (F : Finset I) (m : ℕ) :
+    (cutoffProduct A B F).val ^ (m + 1) =
+      embedded F ((A.block F * B.block F) ^ (m + 1)) := by
+  have hb : (cutoffProduct A B F).val = embedded F (A.block F * B.block F) := by
+    rw [embedded_mul, ← compressed_embedded, ← compressed_embedded]
+    rfl
+  rw [hb]
+  induction m with
+  | zero => simp only [zero_add, pow_one]
+  | succ m ih =>
+      calc
+        embedded F (A.block F * B.block F) ^ (m + 1 + 1) =
+            embedded F (A.block F * B.block F) ^ (m + 1) *
+              embedded F (A.block F * B.block F) := pow_succ _ _
+        _ = embedded F ((A.block F * B.block F) ^ (m + 1)) *
+              embedded F (A.block F * B.block F) := by rw [ih]
+        _ = embedded F ((A.block F * B.block F) ^ (m + 1) *
+              (A.block F * B.block F)) := (embedded_mul _ _ _).symm
+        _ = _ := by rw [← pow_succ]
+
+private theorem embedded_diagonal (F : Finset I) (M : Matrix F F ℂ) (i : I) :
+    ⟪coordinateBasis I i, embedded F M (coordinateBasis I i)⟫_ℂ =
+      if h : i ∈ F then M ⟨i, h⟩ ⟨i, h⟩ else 0 := by
+  simp only [coordinateBasis_apply, lp.inner_single_left, RCLike.inner_apply,
+    map_one, mul_one, embedded, ContinuousLinearMap.comp_apply]
+  change Data.finiteInclusion F ((Matrix.toEuclideanCLM (𝕜 := ℂ) M)
+    (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap
+      (lp.single 2 i (1 : ℂ)))) i = _
+  rw [inclusion_apply]
+  by_cases hi : i ∈ F
+  · rw [dite_eq_left hi, dite_eq_left hi]
+    simp only [Matrix.ofLp_toEuclideanCLM, Matrix.mulVec, dotProduct,
+      Data.finiteInclusion_adjoint_apply, lp.single_apply, Pi.single_apply]
+    rw [Fintype.sum_eq_single (⟨i, hi⟩ : F)]
+    · simp
+    · intro j hj
+      have hji : i ≠ j.val := fun h => hj (Subtype.ext h.symm)
+      simp [hji, Ne.symm hji]
+  · simp only [dite_eq_right hi]
+
+private theorem embedded_trace (F : Finset I) (M : Matrix F F ℂ)
+    (hM : IsTraceClass (embedded F M)) : trace (embedded F M) hM = Matrix.trace M := by
+  rw [TraceClassFiniteBlocks.trace_on_basis (coordinateBasis I) hM]
+  simp only [embedded_diagonal]
+  have he : (∑' i : I, if h : i ∈ F then M ⟨i, h⟩ ⟨i, h⟩ else 0) =
+      ∑' i : F, M i i := by
+    let f : I → ℂ := fun i => if h : i ∈ F then M ⟨i, h⟩ ⟨i, h⟩ else 0
+    calc
+      _ = ∑' i, (F : Set I).indicator f i := by
+        apply tsum_congr
+        intro i
+        by_cases hi : i ∈ F <;> simp [f, Set.indicator, hi]
+      _ = ∑' i : F, f i := (tsum_subtype (F : Set I) f).symm
+      _ = ∑' i : F, M i i := by
+        apply tsum_congr
+        intro i
+        simp [f, i.property]
+  rw [he, tsum_fintype]
+  rfl
+
+/-- Every positive power of the real compressed product has exactly the finite block trace. -/
+theorem cutoff_power_trace (A B : Data I) (F : Finset I) (m : ℕ) :
+    TraceClassPowerSeries.powerTrace (cutoffProduct A B F) m =
+      Matrix.trace ((A.block F * B.block F) ^ (m + 1)) := by
+  have he : (TraceClassPowerSeries.positivePower (cutoffProduct A B F) m).val =
+      embedded F ((A.block F * B.block F) ^ (m + 1)) := by
+    change (cutoffProduct A B F).val ^ m * (cutoffProduct A B F).val = _
+    rw [← pow_succ, cutoff_power_embedded]
+  exact (TraceClass.trace_transport he _).trans (embedded_trace _ _ _)
+
+/-- The joint analytical bridge for the same two native data. No finite vacuum identity is a premise. -/
+theorem native_cutoff_bridge (A B : Data I) :
+    Summable (fun d => ‖occupationTerm A B d‖) ∧
+    Tendsto (occupationCutoff A B) atTop (𝓝 (∑' d, occupationTerm A B d)) ∧
+    Tendsto (fun F => hsSize (A.oneParticle - compressed A F)) atTop (𝓝 0) ∧
+    Tendsto (fun F => hsSize (B.oneParticle - compressed B F)) atTop (𝓝 0) ∧
+    (∀ F, ‖product A B - cutoffProduct A B F‖ ≤ delta A B F) ∧
+    Tendsto (cutoffProduct A B) atTop (𝓝 (product A B)) ∧
+    Summable (fun m => ‖TraceClassPowerSeries.logTerm (product A B) m‖) ∧
+    (∀ F, Summable (fun m => ‖TraceClassPowerSeries.logTerm (cutoffProduct A B F) m‖)) ∧
+    (∀ F m, ‖TraceClassPowerSeries.powerTrace (product A B) m -
+        TraceClassPowerSeries.powerTrace (cutoffProduct A B F) m‖ ≤
+      (m + 1 : ℝ) * (A.q * B.q) ^ m * delta A B F) ∧
+    (∀ F, ‖TraceClassPowerSeries.traceLog (product A B) -
+        TraceClassPowerSeries.traceLog (cutoffProduct A B F)‖ ≤
+      delta A B F / (2 * (1 - A.q * B.q))) ∧
+    Tendsto (fun F => TraceClassPowerSeries.traceLog (cutoffProduct A B F)) atTop
+      (𝓝 (TraceClassPowerSeries.traceLog (product A B))) ∧
+    (∀ F m, TraceClassPowerSeries.powerTrace (cutoffProduct A B F) m =
+      Matrix.trace ((A.block F * B.block F) ^ (m + 1))) ∧
+    (∀ F, occupationCutoff A B F = ∑' d : Occupation F, (weight d : ℂ) *
+      FactorialFockQuadraticEstimate.gaussianCoefficient (A.block F) d *
+      FactorialFockQuadraticEstimate.gaussianCoefficient (B.block F) d) := by
+  refine ⟨occupation_norm_summable A B, occupationCutoff_tendsto A B,
+    hs_compression_tendsto A, hs_compression_tendsto B, product_error_le A B,
+    cutoffProduct_tendsto A B, ?_, ?_, ?_, native_log_error A B,
+    traceLog_cutoff_tendsto A B, cutoff_power_trace A B, occupationCutoff_eq_block A B⟩
+  · exact TraceClassPowerSeries.logTerm_norm_summable _ (mul_nonneg A.q_nonneg B.q_nonneg)
+      (product_q_lt_one A B) (product_op_norm A B)
+  · intro F
+    exact TraceClassPowerSeries.logTerm_norm_summable _ (mul_nonneg A.q_nonneg B.q_nonneg)
+      (product_q_lt_one A B) (cutoff_op_norm A B F)
+  · intro F m
+    exact (TraceClassPowerSeries.powerTrace_error_le _ _ (mul_nonneg A.q_nonneg B.q_nonneg)
+      (product_op_norm A B) (cutoff_op_norm A B F) m).trans
+      (mul_le_mul_of_nonneg_left (product_error_le A B F)
+        (mul_nonneg (by positivity) (pow_nonneg (mul_nonneg A.q_nonneg B.q_nonneg) _)))
 
 end D5.S3.VertexAlgebra.TwistedGround.CountableGaussianCutoff
