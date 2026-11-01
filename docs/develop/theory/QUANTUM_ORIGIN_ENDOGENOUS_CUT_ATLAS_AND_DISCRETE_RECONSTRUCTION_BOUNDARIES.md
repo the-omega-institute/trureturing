@@ -3496,3 +3496,726 @@ $$
 移除受控 $J$ 或复叠加前提后，(36.2) 的构造不再有同一合同；增加逆追加、重置或跨轨道源门后，(34.5) 的证明也不再适用。因而一组菜单内的反例不能给出撤去某项量子原则后所有模型都失败的全称结论，这正是 [V77 定义 1.1 的反向见证范围](AURIC_REVERSE_LOCATION_OF_QUANTUM_AXIOMS_BINARY_WITNESSES_AND_INTERNAL_COMPATIBILITY_V77.md)。其定理 10.1 的满锚覆盖不能由几个基概率替代；此处以完整源条目假设和分级证明承担该义务。完整系统保距与局部记录信息之别也与 [V78 定理 9.1 及 §9.1](AURIC_GATE_MANIFOLDS_INTEGRABLE_RELATIONS_TANGENT_KERNELS_AND_RECURSIVE_ERROR_V78.md) 相容；(36.5) 说明记录距离如何带着分支权重变化，并未产生 ready 记录或概率律的来源。故定义 38.1 的取得桥梁仍为待定问题。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 共同内部参照的有限轨道框架合同
+
+**定义 39.1（同一实载体上的根、框架与全局比较）。** 设 $(V,g)$ 为非零有限维实内积空间，$D=\dim_{\mathbb R}V$。所有伴随、正性与算子范数均相对于同一个 $g$；$\|\cdot\|_{\mathrm{HS}}$ 为 Hilbert–Schmidt 范数。取实线性生成元 $A$、单位根向量 $\Omega_0$ 及带宽常数 $M$，满足
+
+$$
+A^*=-A,\qquad \|A\|\le M,\qquad
+\|\Omega_0\|=1,\qquad \omega=\|A\Omega_0\|>0.
+\tag{39.1}
+$$
+
+选定同一实际载体上的有限个正交运输 $U_i$、权重 $\alpha_i>0$，$\sum_i\alpha_i=1$，并给定共同轨道框架的下界 $\mu>0$ 及全局交换子界 $\epsilon_i\ge0$：
+
+$$
+x_i=U_i\Omega_0,\qquad
+\mathsf F=\sum_i\alpha_i|x_i\rangle\langle x_i|
+\succeq\mu I_V,\qquad
+\|[A,U_i]\|\le\epsilon_i.
+\tag{39.2}
+$$
+
+其中 $|x\rangle\langle x|$ 表示实秩一算子 $y\mapsto xg(x,y)$，$[S,T]=ST-TS$。框架条件等价于对每个 $y\in V$ 都有 $\sum_i\alpha_i g(x_i,y)^2\ge\mu\|y\|^2$；它要求这些实际运输后的输入共同覆盖全部方向，并给出覆盖的定量条件数，不是仅列举状态名称或断言轨道张成。定义同根残差与其传播预算
+
+$$
+\begin{aligned}
+B&=A^2+\omega^2I_V,\qquad r=\|B\Omega_0\|,\\
+\Delta&=\left(\frac1\mu\sum_i\alpha_i
+                    (r+2M\epsilon_i)^2\right)^{1/2}.
+\end{aligned}
+\tag{39.3}
+$$
+
+这里 $\Omega_0$ 专指根向量。$\mu$ 约束同一组 $x_i$ 的全部实线性组合，$M$ 约束整个生成元，$\epsilon_i$ 约束整个载体上的两条路由 $AU_i$ 与 $U_iA$。单根速度、单根交换子或某个固定时刻的端点比较，均不替代这些不同量词的前件。
+
+**定义 39.2（同根精确供应结果及其稳定化目标）。** [V78 二元失败续稿 §4.4 定理 4.5](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-5) 在 $A^*=-A$、全部运输与 $A$ 精确对易、单位根轨道张成且 $\omega>0$ 时给出
+
+$$
+\|(A^2+\omega^2I)\Omega_0\|=0
+\quad\Longleftrightarrow\quad A^2=-\omega^2I_V.
+\tag{39.4}
+$$
+
+该传播使用精确对易与定性张成。下面的应用以 (39.2) 的实际有限框架将非零根残差传播为统一算子界，再构造同一载体上的共同参照与门的比较算子。它没有把定性张成直接当成稳定性前件。
+
+## 40. 从同根残差到复方向、实际参照流与有限门字的稳定比较
+
+**定理 40.1（共同参照的有限框架稳定应用）。** 在定义 39.1 下，首先有
+
+$$
+\|A^2+\omega^2I_V\|\le\Delta.
+\tag{40.1}
+$$
+
+若满足严格谱裕量
+
+$$
+\Delta<\omega^2,\qquad
+ a=\sqrt{\omega^2-\Delta}>0,\qquad
+\eta=\frac{\Delta}{\omega+\sqrt{\omega^2-\Delta}}
+     =\omega-\sqrt{\omega^2-\Delta},
+\tag{40.2}
+$$
+
+则同一实数据定义的
+
+$$
+P=(-A^2)^{1/2},\qquad \mathcal J=AP^{-1}
+\tag{40.3}
+$$
+
+满足
+
+$$
+\mathcal J^*=-\mathcal J,\qquad
+\mathcal J^2=-I_V,\qquad
+\mathcal J^*\mathcal J=I_V,\qquad
+\|A-\omega\mathcal J\|\le\eta.
+\tag{40.4}
+$$
+
+因此 $D$ 为偶数，以下标量作用及内积在 $V$ 上给出对第二变量复线性的复 Hilbert 结构：
+
+$$
+(u+iv)x=ux+v\mathcal Jx,\qquad
+h(x,y)=g(x,y)+i\,g(\mathcal Jx,y).
+\tag{40.5}
+$$
+
+对于实际已给定的正交参照流 $R_t=e^{tA}$，令 $R_t^0=e^{\omega t\mathcal J}$、$t_*=\pi/(2\omega)$，则
+
+$$
+\begin{aligned}
+\|R_t-R_t^0\|&\le\min\{2,|t|\eta\},\qquad t\in\mathbb R,\\
+\|R_{t_*}-\mathcal J\|&\le
+           \min\{2,\pi\eta/(2\omega)\}.
+\end{aligned}
+\tag{40.6}
+$$
+
+对任意同载体上的实线性算子 $U$，若 $\|[A,U]\|\le\epsilon$，则
+
+$$
+\|[\mathcal J,U]\|\le\epsilon/a.
+\tag{40.7}
+$$
+
+若该 $U$ 还正交且 $b=\epsilon/(2a)<1$，置
+
+$$
+\begin{aligned}
+U_c&=(U-\mathcal J U\mathcal J)/2,\qquad
+U_a=(U+\mathcal J U\mathcal J)/2,\\
+U^0&=U_c(U_c^*U_c)^{-1/2},\qquad
+\chi(b)=b+1-\sqrt{1-b^2}.
+\end{aligned}
+\tag{40.8}
+$$
+
+则 $U^0$ 对 $g$ 正交、与 $\mathcal J$ 对易，因而对 $h$ 酉，并且
+
+$$
+\|U-U^0\|\le\chi(b).
+\tag{40.9}
+$$
+
+对一条指定的有限门字，每次出现的正交门 $W_j$ 都有其全局界 $\|[A,W_j]\|\le\varepsilon_j$，$b_j=\varepsilon_j/(2a)<1$，则其相应比较门满足
+
+$$
+\|W_L\cdots W_1-W_L^0\cdots W_1^0\|
+\le\min\left\{2,\sum_{j=1}^L\chi(b_j)\right\}.
+\tag{40.10}
+$$
+
+所有比较均使用同一 $g,A,\Omega_0,\mathcal J$。式 (40.1) 是充分估计，不宣称必要或最优。
+
+证明。先将根残差沿实际运输传播：
+
+$$
+\begin{aligned}
+Bx_i&=U_iB\Omega_0+[A^2,U_i]\Omega_0,\\
+[A^2,U_i]&=A[A,U_i]+[A,U_i]A,\\
+\|Bx_i\|&\le r+2M\epsilon_i.
+\end{aligned}
+\tag{40.11}
+$$
+
+对于这些加权轨道向量，标准有限框架算子不等式给出
+
+$$
+\mu\|B\|_{\mathrm{HS}}^2
+\le\operatorname{Tr}(B\mathsf F B^*)
+=\sum_i\alpha_i\|Bx_i\|^2.
+\tag{40.12}
+$$
+
+具体地，$B(\mathsf F-\mu I)B^*\succeq0$，取迹即得第一步；第二步逐项取实秩一算子的迹。再用 $\|B\|\le\|B\|_{\mathrm{HS}}$ 即得 (40.1)。框架的分析／合成与正框架算子是成熟工具，参见 O. Christensen, [An Introduction to Frames and Riesz Bases, 2nd ed.](https://doi.org/10.1007/978-3-319-25613-9)，关于 Hilbert 空间框架与框架算子的章节；本处将其用于 (40.11) 的同根路由残差，不另立一般框架定理。
+
+若实际向量残差 $Bx_i$ 也已给定，令 $T:\mathbb R^n\to V$ 的第 $i$ 列为 $\sqrt{\alpha_i}x_i$，$Y=BT$。因为 $TT^*=\mathsf F\succeq\mu I$，$S=T^*\mathsf F^{-1}$ 满足 $TS=I$ 及 $S^*S=\mathsf F^{-1}$，故 $B=YS$ 给出更直接的
+
+$$
+\|B\|\le\|Y\|/\sqrt\mu.
+\tag{40.13}
+$$
+
+式 (39.3) 以 $\|Y\|\le\|Y\|_{\mathrm{HS}}$ 忽略了不同残差向量间的有利关系。同一个论证还说明如何从完整框架上的路由比较取得前件：若 $\rho_{ij}\ge\|[A,U_i]x_j\|$，则
+
+$$
+\|[A,U_i]\|\le
+\left(\frac1\mu\sum_j\alpha_j\rho_{ij}^2\right)^{1/2}.
+\tag{40.14}
+$$
+
+这里确实需要每个 $x_j$ 上的联合路由 $AU_ix_j$ 与 $U_iAx_j$，不能只给 $[A,U_i]\Omega_0$。
+
+由于 $-A^2=A^*A$ 为实对称正算子，(40.1) 与严格裕量给出
+
+$$
+a^2I\preceq-A^2\preceq(\omega^2+\Delta)I.
+\tag{40.15}
+$$
+
+有限维实谱演算使 $P$ 正定且与 $A$ 对易；$A$ 可逆。于是直接相乘得到 (40.4) 的三个恒等式。这是实反对称算子的标准极分解：一般极分解与正规算子的极因子对易可参见 N. J. Higham, [Computing the Polar Decomposition—with Applications](https://eprints.maths.manchester.ac.uk/694/1/high86p.pdf), SIAM J. Sci. Stat. Comput. 7 (1986), 1160–1174，定理 1.1、引理 2.1，[DOI](https://doi.org/10.1137/0907079)。这些结果作为本应用的中间工具。
+
+$P$ 的谱在 $[\sqrt{\omega^2-\Delta},\sqrt{\omega^2+\Delta}]$ 内。下端到 $\omega$ 的距离不少于上端到 $\omega$ 的距离，因为
+
+$$
+\sqrt{\omega^2-\Delta}+\sqrt{\omega^2+\Delta}\le2\omega.
+$$
+
+因此 $A=\mathcal JP$ 和 $\mathcal J$ 正交给 $\|A-\omega\mathcal J\|=\|P-\omega I\|\le\eta$。$\mathcal J^2=-I$ 使 $V$ 成为复向量空间，故 $D$ 偶数；$\mathcal J^*=-\mathcal J$ 给
+
+$$
+h(x,\mathcal Jy)=ih(x,y),\quad
+h(\mathcal Jx,y)=-ih(x,y),\quad
+h(y,x)=\overline{h(x,y)},\quad
+h(x,x)=g(x,x).
+$$
+
+这正是 [V78 二元失败续稿 §4.2 推论 4.3](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-3) 的实—复构造；成熟一般对应另见 J. C. Baez, [Division Algebras and Quantum Theory](https://arxiv.org/abs/1101.5690)，定理 7。这里精确复方向由实际 $A$ 的极因子给定，而 $A$ 本身只与单频率生成元相差至多 $\eta$。
+
+对 $t\ge0$，在同一实算子空间使用 Duhamel 恒等式：
+
+$$
+e^{tA}-e^{\omega t\mathcal J}
+=\int_0^t e^{(t-s)A}(A-\omega\mathcal J)
+                         e^{\omega s\mathcal J}\,ds.
+$$
+
+两侧的指数因子正交，故范数至多 $t\eta$；$t<0$ 对负生成元同理。两正交算子之差至多二。$e^{\pi\mathcal J/2}=\mathcal J$ 给 (40.6)。
+
+为证明运输相容界，记 $E=[A,U]$、$C=\mathcal JU-U\mathcal J$。由 $A=\mathcal JP$、$P\mathcal J=\mathcal JP$ 及 $\mathcal J^2=-I$ 逐项展开可得
+
+$$
+PC+CP=E+\mathcal JE\mathcal J.
+\tag{40.16}
+$$
+
+正定 Sylvester 方程的积分解在此为
+
+$$
+C=\int_0^\infty e^{-tP}(E+\mathcal JE\mathcal J)e^{-tP}\,dt.
+\tag{40.17}
+$$
+
+对被积式求导后积分即验证该式；$P\succeq aI$ 保证无穷端消失。唯一性也可在 $P$ 的实正交特征基上逐项验证：每个矩阵元乘上两个正特征值之和。标准供应是 R. Bhatia–P. Rosenthal, [How and Why to Solve the Operator Equation AX−XB=Y](https://doi.org/10.1112/S0024609396001828), Bull. London Math. Soc. 29 (1997), 1–21；正稳定情形的积分解亦见 [Higham 的 Sylvester 方程说明](https://nhigham.com/2020/09/01/what-is-the-sylvester-equation/)。这里对应其一般形式中的两个系数 $P,-P$，谱由至少 $2a$ 的间隔分开。因为 $\|E+\mathcal JE\mathcal J\|\le2\epsilon$，积分范数至多
+
+$$
+\int_0^\infty2\epsilon e^{-2at}\,dt=\epsilon/a,
+$$
+
+得到 (40.7)，全过程不预设物理复载体。
+
+最后，(40.8) 的 $U_c$ 与 $\mathcal J$ 对易，$U_a$ 与其反对易，并且
+
+$$
+\|U_a\|=\tfrac12\|[\mathcal J,U]\|\le b.
+$$
+
+将 $U^*U=I$ 的复线性部分取出；两个交叉项反复线性，得到
+
+$$
+U_c^*U_c+U_a^*U_a=I,\qquad
+(1-b^2)I\preceq U_c^*U_c\preceq I.
+\tag{40.18}
+$$
+
+因此 $U_c$ 可逆，其标准正交极因子 $U^0$ 与 $\mathcal J$ 对易，且对 $g$ 正交。由 (40.5) 它对 $h$ 酉。若 $Q=(U_c^*U_c)^{1/2}$，则 $U_c=U^0Q$，$\sqrt{1-b^2}I\preceq Q\preceq I$，所以
+
+$$
+\begin{aligned}
+\|U-U^0\|&\le\|U_a\|+\|U_c-U^0\|\\
+&=\|U_a\|+\|Q-I\|\le b+1-\sqrt{1-b^2}.
+\end{aligned}
+$$
+
+这给出的是上述谱区间直接导出的算子范数界，不将 Higham 的 Frobenius 范数最优逼近定理改称同一估计。对有限门字逐项相减并用每个前后缀的正交性，得 (40.10)；再用两个正交乘积之差至多二即可。逆元也可一致处理：$[A,W^{-1}]=-W^{-1}[A,W]W^{-1}$，且 $W^{-1}$ 的复线性部分为 $W_c^*$，其极因子为 $(W^0)^*$。$\square$
+
+## 41. 根残差、实际周期与比较门关系的三类边界
+
+**定理 41.1（循环根可隐藏零频率方向）。** 令
+
+$$
+V=\mathbb R^3,\qquad
+J_0=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+A=J_0\oplus0,
+$$
+
+$$
+G=SO(2)\times\{+1,-1\},\qquad
+\Omega_\tau=(\sqrt{1-\tau^2}e_1,\tau),\quad0<\tau<1.
+\tag{41.1}
+$$
+
+$G$ 与 $A$ 精确对易，根的 $G$ 轨道张成 $V$，但
+
+$$
+\omega^2=1-\tau^2,\qquad
+r^2=\tau^2(1-\tau^2)\longrightarrow0.
+\tag{41.2}
+$$
+
+当 $\tau<1/\sqrt2$ 时，$\|A^2+\omega^2I\|=\omega^2$；不存在正交复结构，任何有效统一上界都不能满足 (40.2)。取第一分量为 $\sqrt{1-\tau^2}e_1$ 或 $\sqrt{1-\tau^2}e_2$、最后分量为 $\pm\tau$ 的四个实际轨道点，等权框架算子为
+
+$$
+\mathsf F=\operatorname{diag}\bigl((1-\tau^2)/2,
+                  (1-\tau^2)/2,\tau^2\bigr).
+\tag{41.3}
+$$
+
+证明。四点的和差分别给出两个平面方向和第三轴，故根循环。$B=A^2+\omega^2I$ 在平面上为 $-\tau^2I$，在第三轴上为 $1-\tau^2$，代入根即得 (41.2) 及其算子范数。实奇维上 $\mathcal J^2=-I$ 不可能，因为取实行列式给 $\det(\mathcal J)^2=(-1)^3=-1$。四点的外积中混合项抵消，得到 (41.3)，其最小特征值趋于零。这是 (39.4) 的零残差传播与非零残差稳定传播的区别。$\square$
+
+**定理 41.2（共同复方向不强制实际共同频率或精确周期）。** 在 $\mathbb R^4$ 上取参数 $0<\tau<1$，并令
+
+$$
+A=J_0\oplus\sqrt2J_0,\qquad G=SO(2)\times SO(2),\qquad
+\Omega_\tau=(\sqrt{1-\tau^2}e_1,\tau e_1).
+\tag{41.4}
+$$
+
+根循环，全部交换子为零，并且当 $\tau\to0^+$ 时，
+
+$$
+\omega^2=1+\tau^2,\qquad
+r^2=\tau^2(1-\tau^2)\longrightarrow0,\qquad
+\|A^2+\omega^2I\|\longrightarrow1.
+\tag{41.5}
+$$
+
+它有极复结构 $J_0\oplus J_0$，但流 $e^{tA}$ 没有非零共同周期。即使保持良态框架及 (40.2)，仍可有任意小的 $\Delta>0$ 而没有非零共同周期。
+
+证明。两个非零根分量可由独立平面转动张成两个整块。$B$ 的两块为 $\tau^2I$ 和 $-(1-\tau^2)I$，即得 (41.5)。共同周期 $T\ne0$ 将要求 $T\in2\pi\mathbb Z$ 且 $\sqrt2T\in2\pi\mathbb Z$，与频率比无理矛盾。
+
+为验证严格裕量也不供应精确周期，另取 $q>1$ 无理且 $q\to1$，令 $A_q=J_0\oplus qJ_0$、$\Omega=(e_1,e_1)/\sqrt2$。在同一 $G$ 轨道中取八个点 $(s e_k,t e_k)/\sqrt2$，$k=1,2$，$s,t\in\{+1,-1\}$，等权得到 $\mathsf F=I_4/4$。此时 $M=q$、所有 $\epsilon_i=0$，并且
+
+$$
+\omega^2=(1+q^2)/2,\quad r=(q^2-1)/2,\quad
+\Delta=q^2-1\longrightarrow0.
+\tag{41.6}
+$$
+
+只要 $1<q<\sqrt3$ 就有 $\Delta<\omega^2$，但无理频率比仍排除非零共同周期。故 (40.6) 只保证指定时间范围的比较，不能把比较流的周期移给实际流。可见读出自身的周期另由 [V78 圆、周期与内生时钟续稿 §§5–7](AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md) 的可见频率及相应读出合同决定；共同标量相位圆也不等于改变纯态射线的 Bloch 球轨迹。$\square$
+
+**定理 41.3（逐门极修复可破坏原来精确成立的关系词）。** 即使 (39.2) 的参照框架有 $\Delta=0$，并且有限个实际门的交换子误差任意小，定理 40.1 的逐门比较也不保证保留原门之间的全部精确群关系。
+
+证明。在实 Euclidean 四元数空间 $V=\mathbb H$ 上，记 $L_qx=qx$、$R_qx=xq$。取 $A=L_{\mathbf i}$、$\Omega_0=1$，四个框架运输 $R_1,R_{\mathbf i},R_{\mathbf j},R_{\mathbf k}$ 等权。它们与 $A$ 精确对易，$\mathsf F=I_4/4$、$\omega=a=1$、$r=\Delta=0$，极复结构为 $\mathcal J=L_{\mathbf i}$。
+
+令 $K=L_{\mathbf j}$、$N=L_{\mathbf k}$，则 $K^2=N^2=-I$、$KN=\mathcal J$，且 $K,N$ 均与 $\mathcal J$ 反对易。对 $0<\theta<\pi/4$ 置 $c=\cos\theta$、$s=\sin\theta$，取实际正交门
+
+$$
+U=cI+sK,\qquad V_1=cI+sN,\qquad W=(UV_1)^{-1}.
+\tag{41.7}
+$$
+
+其关系 $WUV_1=I$ 精确成立。$U_c=(V_1)_c=cI$，故 $U^0=V_1^0=I$；但
+
+$$
+(UV_1)_c=c^2I+s^2\mathcal J,\qquad
+W_c=c^2I-s^2\mathcal J,
+$$
+
+$$
+W^0U^0V_1^0
+=\frac{c^2I-s^2\mathcal J}{\sqrt{c^4+s^4}}\ne I.
+\tag{41.8}
+$$
+
+其严格门裕量也全部成立：$U,V_1$ 的反复线性部分范数均为 $s<1$；$W$ 的为 $\sqrt2sc<1$，相应 $\epsilon=2\|U_a\|$ 等可随 $\theta\to0$ 趋零。这里用 $[\mathcal J,U]=2\mathcal JU_a$ 验证全局界。原来的精确关系词因而只得到 (40.10) 对修复后关系词到 $I$ 的距离界，不能得到距离零。四元数乘法只用于构造一个明确实四维反例，不改变 (40.5) 的标量选择。$\square$
+
+## 42. 有限框架应用的维数与操作取得边界
+
+**定理 42.1（归一化框架的维数界与非全群一致性）。** 在定义 39.1 下，$\mu\le1/D$。有限个轨道向量不能在无限维实 Hilbert 载体上满足 $\mathsf F\succeq\mu I$、$\mu>0$。若仅给定生成元门的交换子界，(40.10) 只控制指定的有限门字；它不提供所有字长上一致的小误差。
+
+证明。全部 $x_i$ 为单位向量，故 $\operatorname{Tr}\mathsf F=\sum_i\alpha_i=1$；取 (39.2) 的迹得 $D\mu\le1$。无限维上有限个 $x_i$ 的张成有非零正交补，$\mathsf F$ 在该补上为零，直接违反正下界。对正交门 $S,T$，$[A,ST]=[A,S]T+S[A,T]$，故其交换子界按门字长度累加；(40.10) 的和同样随实际出现次数累加。具体地，在定理 41.3 中取 $\theta=\pi/n$、$n>4$，则 $\|[A,U]\|=2\sin(\pi/n)\to0$、$U^0=I$，但 $U^n=-I$，故 $\|U^n-(U^0)^n\|=2$。没有额外全群假设时，只有通用上界二，没有从有限生成元误差到所有门字统一趋零的结论。故增加定性张成的历史数目不产生与维数无关的证书，也没有由这些有限界推出无限历史极限。$\square$
+
+**定义 42.2（比较算子与实际菜单）。** 实际可调用的操作菜单是另行指定的算子集合及其允许的组合、持续时间和读出。定理 40.1 的 $\mathcal J,U^0,R_t^0$ 是由 (39.1)–(39.3) 定义的比较结构，不因其存在就成为该菜单的成员。若实际菜单只给若干持续时间，$t_*=\pi/(2\omega)$ 的流值存在并不等于可调用该持续时间。框架输入的取得、共同内积比较、带宽和全局路由界仍各是明确前件。
+
+**定理 42.3（复结构、原门、反转与概率层的非同一性）。** 定理 40.1 不使原实门自动复线性；其前件也没有给出 Born 概率律、CPTP 仪器或原生恢复操作。$\mathcal J$ 不等于第 34–38 节的字反转，定理也不提供共同运输交换子代数中全部复结构的唯一性。
+
+证明。在定理 41.3 中，$0<\theta<\pi/4$ 时 $[\mathcal J,U]\ne0$，尽管该界可任意小，且参照本身已有精确 $\Delta=0$。因此原门不是 (40.5) 的复线性算子；它与酉比较门的距离小不自动把它变成复量子通道。前件仅包含实向量、线性映射和范数，没有概率赋值、效果读出或张量参考下的过程合法性，故这些另有合同的对象不由 (40.1)–(40.10) 指定。这里复结构的存在不充当 Born 或完全正性的证明。
+
+第 34–38 节的字反转 $J_{\mathrm{word}}$ 满足 $J_{\mathrm{word}}^2=I$，本处 $\mathcal J^2=-I$。非零实载体上的可逆识别保持算子平方，不能将二者识别；它们原本也作用于不同的已声明接口。因此本构造不取得受控字反转、相干前缀查询、失败码解码或重试恢复，定义 38.1 的取得桥梁不因此闭合。
+
+最后，$A$ 与 $\omega>0$ 固定后 (40.3) 的极因子已确定，但这不是对全部共同运输复结构的分类。例如 $\mathbb H$ 上的单位四元数左乘与不同的单位纯虚四元数右乘均对易，后者给出多种正交复结构。[V78 二元失败续稿 §4.3 定理 4.4](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-4) 另以不可约性及参考本身属于全部运输的中央参考前件得到唯一化；该额外工作没有由近似相容替代。上述稳定应用沿用框架、实谱演算、Sylvester 方程及正交极分解作为已归属的中间方法，其承重关系是同一实际轨道根残差与有限操作比较间的条件桥梁，不是这些通用方法的独立新分类或文献优先权主张。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 43. The actual skew-commutant interface for unchanged transports
+
+**定义 43.1（Real carrier, actual generators and diagnostic gap）。** Let $(V,g)$ be a nonzero finite-dimensional real inner-product space, $N=\dim_{\mathbb R}V$. All adjoints and operator norms refer to $g$. Let $U_1,\ldots,U_m$ be actual orthogonal transports on this same carrier, with weights $\beta_s>0$, $\sum_s\beta_s=1$, and let $G$ be the group they generate. Its closure has the same commutant and invariant subspaces: commutation and invariance are closed conditions in finite dimension. Taking that closure is a mathematical description, not an additional operation in a control menu.
+
+Use the real Hilbert space of skew operators
+
+$$
+\mathfrak s=\{T\in\operatorname{End}_{\mathbb R}(V):T^*=-T\},\qquad
+\langle S,T\rangle_{\mathrm{HS}}=\operatorname{Tr}(S^*T).
+\tag{43.1}
+$$
+
+Define $C_s(T)=U_sTU_s^*$ and the joint diagnostic interface
+
+$$
+\begin{aligned}
+\mathscr D(T)&=\bigl(\sqrt{\beta_s}(I-C_s)T\bigr)_{s=1}^m,\\
+\mathfrak c&=\ker\mathscr D
+=\{T\in\mathfrak s:[T,U_s]=0\text{ for every }s\},\\
+\mathscr L&=\mathscr D^*\mathscr D
+=\sum_s\beta_s(2I-C_s-C_s^*)\succeq0.
+\end{aligned}
+\tag{43.2}
+$$
+
+Each $C_s$ is a Hilbert–Schmidt isometry of $\mathfrak s$, and $\ker\mathscr L=\mathfrak c$. If $\mathscr L\ne0$, let $\lambda>0$ be a certified lower bound on its spectrum on $\mathfrak c^\perp$; equivalently require
+
+$$
+\sum_s\beta_s\|[T,U_s]\|_{\mathrm{HS}}^2
+\ge\lambda\|T\|_{\mathrm{HS}}^2
+\quad(T\in\mathfrak s\cap\mathfrak c^\perp).
+\tag{43.3}
+$$
+
+The residual equality follows from $(I-C_s)T=[T,U_s]U_s^*$. For each fixed nonzero finite diagnostic operator the smallest positive eigenvalue exists, but this does not supply a uniform lower bound for a varying family. This gap is a property of the joint constraints on skew matrices, not a lower frequency of a reference on $V$, an input-frame bound, or a physical mixing rate.
+
+Let $A\in\mathfrak s$ be the actual reference generator, and suppose the full Hilbert–Schmidt residual bounds are
+
+$$
+\|[A,U_s]\|_{\mathrm{HS}}\le e_s,\qquad
+\delta=\left(\frac{\sum_s\beta_s e_s^2}{\lambda}\right)^{1/2}.
+\tag{43.4}
+$$
+
+Let $\Pi:\mathfrak s\to\mathfrak c$ be orthogonal projection and put $A_0=\Pi A$. When $\mathscr L=0$, use $A_0=A$ and $\delta=0$ directly; there is no division by a nonexistent positive eigenvalue. If $\mathfrak s=\{0\}$, then $A=0$ and neither nonzero-reference criterion below can hold. The projection may equivalently be written $\Pi=I-\mathscr D^+\mathscr D$ with the finite Moore–Penrose inverse. No physical pseudoinverse operation is included in this definition.
+
+**定义 43.2（Supplier correspondence and the additional premise）。** [V78 binary-failure continuation §3.2, Theorem 3.4](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-3-4) bounds squared distance to a joint linear kernel by residual energy divided by its positive spectral gap. Here its variable is the skew operator $A$, its carrier is $\mathfrak s$, and its constraints are $(\sqrt{\beta_s}(I-C_s))_s$. The projected operator then meets the exact commutation premise of [the same supplier's §4.1, Theorem 4.2](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-2) when the actual real transport action is irreducible and the projected skew reference is nonzero. Sections 39–42 instead compare the original reference with a polar structure and nearby repaired gates. The present application keeps every $U_s$ and its product relations unchanged, using the additional actual joint diagnostic gap (43.3).
+
+## 44. Exact common complex structure and quantitative reference comparison
+
+**定理 44.1（Generator-gap application with unchanged transports）。** In Definition 43.1,
+
+$$
+\|A-A_0\|\le\|A-A_0\|_{\mathrm{HS}}\le\delta.
+\tag{44.1}
+$$
+
+There are two sufficient routes to an exact common complex structure on the same actual carrier.
+
+For the general-carrier route, assume a certified lower singular-value bound $a>0$ for $A$ and the strict margin
+
+$$
+\|Ax\|\ge a\|x\|\quad(x\in V),\qquad \delta<a.
+\tag{44.2}
+$$
+
+Then $A_0$ is invertible, and
+
+$$
+P_0=(-A_0^2)^{1/2},\qquad J_0=A_0P_0^{-1}
+\tag{44.3}
+$$
+
+satisfy
+
+$$
+J_0^2=-I,\quad J_0^*=-J_0,\quad J_0^*J_0=I,
+\qquad [J_0,U]=0\quad(U\in G).
+\tag{44.4}
+$$
+
+With $J=A(-A^2)^{-1/2}$ the polar structure of the original reference,
+
+$$
+\|J-J_0\|\le\frac{2\delta}{2a-\delta}.
+\tag{44.5}
+$$
+
+For the alternative irreducible-carrier route, assume that the actual $G$ is real irreducible and that a unit root $\Omega_0$ satisfies
+
+$$
+\omega=\|A\Omega_0\|>\delta.
+\tag{44.6}
+$$
+
+This route requires no known lower singular-value bound for $A$. There is $\nu>0$ with
+
+$$
+A_0^2=-\nu^2I,\qquad J_0=A_0/\nu,
+\tag{44.7}
+$$
+
+and (44.4) holds. Moreover,
+
+$$
+|\nu-\omega|\le\delta,\qquad
+\|A-\nu J_0\|\le\delta,\qquad
+\|A-\omega J_0\|\le2\delta.
+\tag{44.8}
+$$
+
+For the actual reference flow $R_t=e^{tA}$,
+
+$$
+\begin{aligned}
+\|R_t-e^{\nu tJ_0}\|&\le\min\{2,|t|\delta\},\qquad t\in\mathbb R,\\
+\|R_{\pi/(2\nu)}-J_0\|&\le\min\{2,\pi\delta/(2\nu)\}.
+\end{aligned}
+\tag{44.9}
+$$
+
+Under either route, $N$ is even and
+
+$$
+(u+iv)x=ux+vJ_0x,\qquad
+h_0(x,y)=g(x,y)+i\,g(J_0x,y)
+\tag{44.10}
+$$
+
+defines a complex inner product, linear in its second variable, for which every original $U\in G$ is unitary. All original products, inverses and exact relations hold for these same operators. Even without either nondegeneracy route, the projection estimate gives the whole-group bound
+
+$$
+\|[A,U]\|\le2\delta\qquad(U\in G).
+\tag{44.11}
+$$
+
+If the preceding root/frame certificate supplies
+
+$$
+\|A^2+\omega^2I\|\le\Delta<\omega^2,\qquad
+ a=\sqrt{\omega^2-\Delta},\qquad \eta=\omega-a,
+\tag{44.12}
+$$
+
+and $\delta<a$, then the general route additionally gives
+
+$$
+\begin{aligned}
+\|A_0-\omega J_0\|&\le\eta+\delta,\\
+\|A-\omega J_0\|&\le\eta+2\delta,\\
+\|e^{tA}-e^{\omega tJ_0}\|&\le
+                 \min\{2,|t|(\eta+2\delta)\}.
+\end{aligned}
+\tag{44.13}
+$$
+
+This last route retains the original root-based frequency calibration without irreducibility. The diagnostic gap, the input-frame/root defect and the reference singular margin have distinct hypotheses and cannot substitute for one another. The general-carrier route permits multiple nonzero frequencies of $A_0$; irreducibility is what gives the single-frequency conclusion in (44.7). These are sufficient criteria, not a classification of every possible model.
+
+Proof. The identity $\mathscr L=\mathscr D^*\mathscr D$ follows because the adjoint of each $C_s$ is its inverse. Its kernel is the common zero-residual space, as each summand in $\|\mathscr D(T)\|^2$ is nonnegative. Write $A=A_0+A_\perp$ in $\mathfrak c\oplus\mathfrak c^\perp$. Applying the supplier's Theorem 3.4 to precisely this interface gives
+
+$$
+\lambda\|A_\perp\|_{\mathrm{HS}}^2
+\le\langle A,\mathscr LA\rangle_{\mathrm{HS}}
+=\sum_s\beta_s\|[A,U_s]\|_{\mathrm{HS}}^2
+\le\sum_s\beta_se_s^2.
+\tag{44.14}
+$$
+
+The operator norm is at most the Hilbert–Schmidt norm, giving (44.1). If $\lambda$ is the least positive eigenvalue, its unit eigenvector attains the Hilbert–Schmidt distance inequality. No optimal operator-norm constant is asserted. When $\mathscr L=0$, the projection is the identity and (44.1) holds with $\delta=0$.
+
+Under (44.2), $\|A_0x\|\ge(a-\delta)\|x\|>0$ for $x\ne0$. Thus $A_0$ is invertible. Its skew adjointness and real spectral calculus give (44.3)–(44.4). Each unchanged $U_s$ commutes with $A_0$, hence with $-A_0^2$, its positive square root and its inverse; this extends to every product and inverse. The polar and real spectral steps are mature tools; see N. J. Higham, [Computing the Polar Decomposition—with Applications](https://eprints.maths.manchester.ac.uk/694/1/high86p.pdf), SIAM J. Sci. Stat. Comput. 7 (1986), 1160–1174, Theorem 1.1 and Lemma 2.1, [DOI](https://doi.org/10.1137/0907079). They are intermediate steps in this actual-commutant application.
+
+For clarity, the particular operator-norm polar comparison (44.5) follows from a self-contained Sylvester calculation. For invertible real maps $B=VP$, $C=WQ$ with orthogonal polar factors, put $E=B-C$ and $X=I-V^*W$. Direct expansion gives
+
+$$
+PX+XQ=V^*E-E^*W.
+\tag{44.15}
+$$
+
+If $P\succeq pI$ and $Q\succeq qI$, $p,q>0$, its unique solution is
+
+$$
+X=\int_0^\infty e^{-tP}(V^*E-E^*W)e^{-tQ}\,dt.
+\tag{44.16}
+$$
+
+Differentiating the integrand verifies the equation, and diagonalizing $P$ and $Q$ on the two sides gives uniqueness since every sum of eigenvalues is positive. Hence $\|X\|\le2\|E\|/(p+q)$. Apply this to $A,A_0$, with $p=a$, $q=a-\delta$, and use $\|J-J_0\|=\|I-J^*J_0\|$ to obtain (44.5). The standard integral method is credited to the Sylvester-equation framework of R. Bhatia–P. Rosenthal, [How and Why to Solve the Operator Equation AX−XB=Y](https://doi.org/10.1112/S0024609396001828), Bull. London Math. Soc. 29 (1997), 1–21; see also [Higham's integral-solution exposition](https://nhigham.com/2020/09/01/what-is-the-sylvester-equation/). This matrix integral is not an infinite-time physical operation, nor is (44.5) identified with Higham's Frobenius-norm approximation theorem.
+
+Under the alternative (44.6), $\|A_0\Omega_0\|\ge\omega-\delta>0$, so $A_0\ne0$. The real self-adjoint operator $A_0^2$ commutes with $G$; all its eigenspaces are invariant. Real irreducibility makes it scalar. Since $-A_0^2=A_0^*A_0\succeq0$ and $A_0\ne0$, it equals $\nu^2I$ for some $\nu>0$. This is the skew-generator step of the supplier's Theorem 4.2, using the standard self-adjoint irreducibility argument, not a new real Schur theorem. Since $\|A_0\Omega_0\|=\nu$, comparison with $\|A\Omega_0\|=\omega$ gives the first bound of (44.8); (44.1) gives the second, and their triangle inequality gives the third. Irreducibility supplies an independent exact structural premise, not a consequence of small generator residuals.
+
+In both routes the usual real complex-structure construction proves (44.10) and the evenness of $N$, exactly as in [the supplier's §4.2, Corollary 4.3](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-3); the mature general correspondence is also [Baez, Division Algebras and Quantum Theory, Theorem 7](https://arxiv.org/abs/1101.5690). In particular $h_0(x,x)=g(x,x)$ and $h_0(x,J_0y)=ih_0(x,y)$. Orthogonality and exact commutation with $J_0$ give $h_0(Ux,Uy)=h_0(x,y)$. No gate is repaired. For any $U\in G$, $[A,U]=[A-A_0,U]$ and $\|U\|=1$ give (44.11). Its lack of a word-length factor comes from the stronger distance-to-common-commutant input, not from adding separate small generator estimates.
+
+Duhamel's identity for the two orthogonal flows gives (44.9), using $A_0=\nu J_0$ and (44.1); differences of orthogonal maps have norm at most two. At $t=\pi/(2\nu)$ the comparison exponential equals $J_0$. This remains an estimate for the actual flow at a specified duration, not an assertion that this duration is callable.
+
+Finally, (44.12) bounds the singular values of $A$ between $a$ and $\sqrt{\omega^2+\Delta}$. The elementary bounds $\|A_0x\|\ge\|Ax\|-\delta\|x\|$ and $\|A_0x\|\le\|Ax\|+\delta\|x\|$ place the singular values of $A_0$ in
+
+$$
+[a-\delta,\sqrt{\omega^2+\Delta}+\delta].
+$$
+
+The lower-end deviation of the unperturbed interval from $\omega$ is the larger one, as in the proof of Theorem 40.1. Thus $\|P_0-\omega I\|\le\eta+\delta$ and $A_0=J_0P_0$ give the first bound of (44.13); (44.1) gives the second, and Duhamel's identity the third. Actual directional residual data may improve the certified operator bound in (44.1), but this proof uses only the stated $\delta$.
+
+For actual probe certificates, global operator-norm readings $\|[A,U_s]\|\le\epsilon_s$ can supply the Hilbert–Schmidt bounds $e_s=\sqrt N\,\epsilon_s$, hence the valid choice
+
+$$
+\delta_{\mathrm{op}}=
+\left(\frac{N}{\lambda}\sum_s\beta_s\epsilon_s^2\right)^{1/2}.
+\tag{44.17}
+$$
+
+Alternatively let actual unit probe vectors $x_j$ and positive weights $\alpha_j$, $\sum_j\alpha_j=1$, on the same carrier satisfy $\mathsf F=\sum_j\alpha_j|x_j\rangle\langle x_j|\succeq\mu I$, $\mu>0$. If $\rho_{sj}\ge\|[A,U_s]x_j\|$, the same trace argument as (40.12) gives
+
+$$
+\begin{aligned}
+\mu\|[A,U_s]\|_{\mathrm{HS}}^2
+&\le\sum_j\alpha_j\rho_{sj}^2,\\
+\delta_{\mathrm{frame}}&=
+\left(\frac{\sum_{s,j}\beta_s\alpha_j\rho_{sj}^2}
+{\lambda\mu}\right)^{1/2}.
+\end{aligned}
+\tag{44.18}
+$$
+
+Thus $\delta_{\mathrm{frame}}$ is another valid input to Theorem 44.1. These are standard finite-frame and Hilbert–Schmidt estimates used inside the transport application, with the dimensional factor retained in (44.17); the frame supplier is [Christensen, An Introduction to Frames and Riesz Bases](https://doi.org/10.1007/978-3-319-25613-9). A root-only commutator test does not give (44.18).
+
+The generator maps, their exact joint kernel and an actual lower bound on its complement remain inputs. A nominal positive gap for rounded matrices does not transfer to the actual interface without control of changes in the kernel: an exact fixed direction can disappear and become a new arbitrarily small positive eigenvalue. The theorem supplies neither a finite-precision zero test nor a native or efficient gap-acquisition protocol. $\square$
+
+## 45. A real QZX instance with exact gap 4/3 and a menu-sensitive echo
+
+**定理 45.1（Exact diagnostic gap, unchanged finite transports and the qualified echo construction）。** On the real Euclidean space $V=\mathbb R^2\oplus\mathbb R^2$, define
+
+$$
+\begin{gathered}
+J_2=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+J_c=\begin{pmatrix}J_2&0\\0&J_2\end{pmatrix},\qquad
+Q=(I_4+\sqrt3J_c)/2,\\
+Z=\begin{pmatrix}I_2&0\\0&-I_2\end{pmatrix},\qquad
+X=\begin{pmatrix}0&I_2\\I_2&0\end{pmatrix}.
+\end{gathered}
+\tag{45.1}
+$$
+
+Take the actual generators $(Q,Z,X)$ with equal weights $1/3$. Their action is real irreducible, their full real commutant is $\mathbb RI_4+\mathbb RJ_c$, their skew commutant is $\mathbb RJ_c$, and the least positive diagnostic eigenvalue is
+
+$$
+\lambda_+=4/3.
+\tag{45.2}
+$$
+
+For $0<\rho<1$, let the actual skew reference and unit root be
+
+$$
+A_\rho=\operatorname{diag}(J_2,(1+\rho)J_2),\qquad
+\Omega_0=e_1.
+\tag{45.3}
+$$
+
+Its commutators with $Q,Z$ vanish; its commutator with $X$ has operator norm $\rho$ and Hilbert–Schmidt norm $2\rho$. Consequently (43.4) gives $\delta=\rho<\omega=1$, while the exact projection is
+
+$$
+A_0=(1+\rho/2)J_c,\qquad
+\|A_\rho-A_0\|=\rho/2,\qquad
+\|A_\rho-A_0\|_{\mathrm{HS}}=\rho.
+\tag{45.4}
+$$
+
+The finite group-word menu generated solely by $Q,Z,X$ contains no $J_c$. If, in addition, arbitrary real durations of the actual reference flow $R_t=e^{tA_\rho}$ and the gate $X$ are callable, the larger menu does implement the exact echo
+
+$$
+e^{tA_0}=R_{t/2}X R_{t/2}X\qquad(t\in\mathbb R).
+\tag{45.5}
+$$
+
+In particular, with $\nu=1+\rho/2$ and $t=\pi/(2\nu)$ this echo equals $J_c$, using two actual reference durations $\pi/(4\nu)$. This positive construction concerns this example and its additional duration contract. If $\rho$ is irrational, the original reference flow nevertheless has no nonzero operator period, while its comparison flow has period $2\pi/\nu$.
+
+Proof. All matrices in (45.1) are real orthogonal, $Q^3=-I_4$ and $Q^6=I_4$. Since $J_c=(2Q-I_4)/\sqrt3$, a real map commutes with $Q$ exactly when it commutes with $J_c$. Commutation also with $Z$ makes it block diagonal, with each two-dimensional block commuting with $J_2$ and hence of the form $a_jI_2+b_jJ_2$. Commutation with $X$ equates the blocks. This proves the two commutant statements. An invariant real subspace would have a commuting orthogonal projection, whose skew coefficient must vanish in this algebra and whose scalar coefficient is zero or one. Thus the real action is irreducible.
+
+Conjugation by $X$ and by $Z$ gives commuting self-adjoint involutions on $\mathfrak s$: $XZ=-ZX$, and the scalar sign disappears under conjugation. Their common fixed space in $\mathfrak s$ is already $\mathbb RJ_c$, because a skew map commuting with $Z$ is block diagonal and commuting with $X$ equates its two skew two-dimensional blocks. On the orthogonal complement, their contribution to $\mathscr L$ has eigenvalues $4/3$ or $8/3$. The $Q$ contribution is positive and annihilates $\mathbb RJ_c$, so $\lambda_+\ge4/3$. The nonzero skew map $J_cZ$ is fixed by conjugation with $Q,Z$ and negated by conjugation with $X$; it attains $4/3$, proving (45.2).
+
+The commutator with $X$ has two off-diagonal blocks $\pm\rho J_2$, giving its stated two norms. Substitution into (43.4) gives $\delta=\sqrt{(4\rho^2/3)/(4/3)}=\rho$. Orthogonal projection of $A_\rho$ onto $\mathbb RJ_c$ averages the two frequencies, and the two diagonal error blocks are $\pm(\rho/2)J_2$. This proves (45.4), a nonzero instance of the irreducible criterion obtained from wholly real matrix data, with every actual transport relation retained.
+
+For the finite-word assertion, $Q$ is central and $XZ=-ZX=Q^3ZX$, so every word in $Q,Z,X$ and their inverses has form
+
+$$
+Q^kX^uZ^v,\qquad k\in\mathbb Z,\quad u,v\in\{0,1\}.
+\tag{45.6}
+$$
+
+If $u$ or $v$ is nonzero its block-index matrix is not scalar, so it cannot equal $J_c$. If both vanish, its common internal rotation angle is $k\pi/3$, which is never $\pi/2$ modulo $2\pi$. Thus the no-command conclusion applies precisely to this finite QZX word menu; it is not a conclusion about every menu containing a callable reference flow.
+
+For that stronger menu, direct block multiplication gives
+
+$$
+XA_\rho X=\operatorname{diag}((1+\rho)J_2,J_2),\qquad
+[A_\rho,XA_\rho X]=0,\qquad
+(A_\rho+XA_\rho X)/2=A_0.
+$$
+
+Since $X^2=I$, $XR_{t/2}X=e^{(t/2)XA_\rho X}$. Commutation of the displayed two generators then proves (45.5). The quarter-turn duration follows from $A_0=\nu J_c$. No controlled-$Q$ synthesis or general acquisition theorem is used here.
+
+Finally, a nonzero period $T$ of $e^{tA_\rho}$ would require both $T$ and $(1+\rho)T$ in $2\pi\mathbb Z$, impossible for irrational $\rho$. The comparison generator has the single frequency $\nu$. This is the phase-versus-commensurability distinction of [V78 circles, periods and endogenous clocks, Theorem 5.1 and §5.2](https://github.com/the-omega-institute/trureturing/blob/615d1d58b1cf668e5979245ecb6bdc9ac5ec1525/docs/develop/theory/AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md). Its Theorem 7.1 separately characterizes visible-readout periods. $\square$
+
+## 46. A nondegenerate single-frequency reference with no common complex structure
+
+**定理 46.1（Small individual generator defects do not replace the joint gap）。** On $\mathbb R^4$ let $E_{ij}$ be the coordinate matrix units, $L_{1j}=E_{j1}-E_{1j}$ for $j=2,3,4$, and
+
+$$
+U_j(\theta)=e^{\theta L_{1j}},\qquad
+0<\theta<\pi,\qquad A=J_2\oplus J_2.
+\tag{46.1}
+$$
+
+The reference satisfies $A^2=-I_4$, has least singular value one, and for every unit root $\Omega_0$ has $\omega=1$ and zero root frequency residual. Yet
+
+$$
+\|[A,U_j(\theta)]\|
+\le2\|U_j(\theta)-I\|
+=4\sin(\theta/2)\longrightarrow0\quad(\theta\to0^+).
+\tag{46.2}
+$$
+
+For every such $\theta$, the actual generated action is real irreducible, its full real commutant is $\mathbb RI_4$, and its skew commutant is zero; hence no complex structure commutes with all its transports. For fixed positive weights $\beta_j$ summing to one, its least positive diagnostic eigenvalue obeys
+
+$$
+\lambda_+(\theta)
+\le\frac{\sum_j\beta_j\|[A,U_j(\theta)]\|_{\mathrm{HS}}^2}{4}
+\longrightarrow0.
+\tag{46.3}
+$$
+
+Every valid $\delta$ from (43.4) is at least two, so neither $\delta<a=1$ nor $\delta<\omega=1$ holds.
+
+Proof. A real map $T$ commuting with $U_j(\theta)$ also commutes with its inverse $U_j(\theta)^*$, and therefore with
+
+$$
+L_{1j}=\frac{U_j(\theta)-U_j(\theta)^*}{2\sin\theta},\qquad
+-L_{1j}^2=E_{11}+E_{jj}.
+\tag{46.4}
+$$
+
+The simultaneous eigenspaces of the three diagonal projections on the right are exactly the four coordinate lines, with membership patterns $(1,1,1)$, $(1,0,0)$, $(0,1,0)$, $(0,0,1)$. Thus $T$ is diagonal. Commuting with each $L_{1j}$ equates its first and $j$th diagonal entries, making $T$ scalar. Its skew part is consequently zero and cannot contain a map squaring to $-I$. The same invariant-subspace orthogonal-projection argument proves real irreducibility. Every nonzero root is cyclic because the real span of its group orbit is a nonzero invariant subspace.
+
+The stated reference properties follow from $A^2=-I_4$. Its norm is one, so $[A,U_j]=[A,U_j-I]$ gives the inequality in (46.2); the norm of a plane rotation minus the identity is $2\sin(\theta/2)$. Here $\Pi A=0$ and $\|A\|_{\mathrm{HS}}=2$. The Rayleigh quotient at $A$ gives (46.3), and its numerator tends to zero by $\|T\|_{\mathrm{HS}}\le2\|T\|$ in dimension four. For each fixed $\theta$ the skew kernel is zero, so the positive diagnostic spectrum is nonempty. Equation (44.1) then forces $\delta\ge\|A-\Pi A\|_{\mathrm{HS}}=2$. This gives a concrete obstruction to removing the gap even with an exactly nondegenerate, exactly single-frequency reference and a cyclic root. Real irreducibility does not make small commutators exact. $\square$
+
+## 47. Exact compatibility, operation menus and the remaining interfaces
+
+**定义 47.1（Geometric reconstruction and acquisition are separate contracts）。** The data in Definition 43.1 include an actual finite real carrier, its common inner product, the same actual orthogonal generators, a skew reference, their exact joint kernel, a certified gap on its complement, and either (44.2) or (44.6). Acquiring or calibrating those data is a separate source obligation. A word-history carrier is not identified with $V$ by matching a dimension. A menu of callable operations must additionally specify available maps, controls, durations and readouts. Algebraically defined projection and polar maps are not inserted into that menu by definition; Theorem 45.1 supplies an exact echo only under its explicitly stronger duration contract.
+
+**定理 47.2（Scope of the unchanged-transport conclusion）。** Theorem 44.1 establishes exact complex linearity and unitarity of the original transports under its stated real hypotheses. It does not classify all commuting complex structures, derive a Born probability law or complete instruments, supply ready records or native recovery, or assert an infinite-carrier limit.
+
+Proof. The same original $U_s$ commute with $J_0$, and (44.10) changes the scalar description on the same real space; it does not change the maps or any of their product identities. By contrast, it supplies no probability assignment, effect menu, tensor-reference process contract, or control primitive. Accordingly Born probabilities, CPTP instruments, independent ready records, coherent prefix access, word reversal and failure-code recovery require their own specified interfaces, as in §§34–38 and [the clocks continuation §11.3](https://github.com/the-omega-institute/trureturing/blob/615d1d58b1cf668e5979245ecb6bdc9ac5ec1525/docs/develop/theory/AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md). The operator $J_0^2=-I$ is different from the eraser interface's word reflection with square $I$. Central reference phase also preserves pure-state rays; it is not a trajectory moving a ray on the Bloch sphere.
+
+A fixed projected $A_0$ determines its polar factor, but does not imply uniqueness among all complex structures commuting with $G$. Quaternionic alternatives retain the extra central-reference issue in [V78 binary-failure continuation §4.3, Theorem 4.4](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-4), whose irreducibility and reference-membership hypotheses do separate work. No unbounded word-program approximation or infinite-carrier extension is used in any argument here.
+
+Projection onto a linear kernel, its positive-gap bound, polar decomposition, the Sylvester integral and the self-adjoint irreducibility step remain credited intermediate tools. Their application here relates actual generator defects to exact compatibility with unchanged transports, with the real QZX gap certificate, the menu-sensitive echo and the degenerating-gap obstruction. These applications do not assert novelty of those general tools or literature priority. $\square$
+
+## 追加锚（本行以下为增补区）

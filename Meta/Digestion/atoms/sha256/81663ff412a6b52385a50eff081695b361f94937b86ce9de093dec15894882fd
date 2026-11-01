@@ -1,0 +1,40 @@
+**Proposition 8.3 (proportional refinement and the actual defect).** Replace any vector $b$ in a finite family by proportional pieces $t_1b,\ldots,t_rb$, where $r\ge1$, $t_\ell\in\mathbb C$, and $\sum_\ell|t_\ell|^2=1$. This preserves its contribution to completeness and to each of
+
+$$
+\sum_j\delta(b_j),\qquad
+\sum_j d_j^2,\qquad
+\sum_j\frac{p_jq_j}{w_j}.
+$$
+
+When this is a refinement of (3.3)--(3.4) retaining the same original outcome and feedback $U_y$ on every piece, it preserves the actual channel and $\sum_j\tau_j$ as well. The contributions to the quartic sums $\sum_jp_jq_j$ and $\sum_jd_j^4$ are instead multiplied by $\sum_\ell|t_\ell|^4\le1$.
+
+Proof. For the pieces, $p_\ell=|t_\ell|^2p$, $q_\ell=|t_\ell|^2q$, and $w_\ell=|t_\ell|^2w$. Degree-two homogeneity of (8.4) gives $\delta(t_\ell b)=|t_\ell|^2\delta(b)$; (8.3) gives the same scaling for squared ray distance. For $t_\ell\ne0$ and $w>0$,
+
+$$
+\frac{p_\ell q_\ell}{w_\ell}
+=|t_\ell|^2\frac{pq}{w}.
+$$
+
+Zero pieces and the zero vector satisfy the same identity under the convention of Definition 8.1. Summation proves the three aggregate conservation statements, while
+$\sum_\ell(t_\ell b)(t_\ell b)^\dagger=bb^\dagger$ proves completeness conservation. The corresponding actual Kraus operators are $t_\ell K$, since the original $U_y$ remains common. Hence
+
+$$
+\sum_\ell(t_\ell K)X(t_\ell K)^\dagger=KXK^\dagger
+$$
+
+for every $X$, and both terms defining $\tau$ scale by $|t_\ell|^2$. This proves the channel and trace-defect assertions. Finally, each quartic contribution scales by $|t_\ell|^4$. The inequality $\sum_\ell|t_\ell|^4\le(\sum_\ell|t_\ell|^2)^2=1$ proves the stated decrease. In particular, $r$ equal pieces $b/\sqrt r$ preserve the actual total defect and the ordinary aggregate squared distance, while dividing the quartic contributions by $r$. The ordinary aggregate bound (8.6) is therefore compatible with arbitrary proportional refinement. $\square$
+
+The coefficient separation (8.12) and (8.18) strengthens the source-specific certificate of Lemma 2.1. Its protocol application uses the actual-feedback trace estimate (3.12), the fixed-decomposition estimate cited there from Gregoratti--Werner, Proposition 8, rather than a new fidelity-to-diamond upper bound. Theorem 3.1 supplies the existing lower witness, and the attaining channel remains the one in Theorem 6.2. No global literature-priority claim is made for this equality-gap argument.
+
+Theorem 8.2 controls the certificate vectors in the actual feedback-preserving refinement, including an ordinary aggregate squared-distance bound. At exact optimality every nonzero refined vector lies on one of the two certificate rays. What remains unproved is the control of the actual corrected Kraus operators, with their common feedback across spectral pieces, that would turn the two defect budgets into a bound on $\|\Phi-\Phi_*\|_\diamond$, uniform over every finite outcome count, arbitrary $U(4)$ feedback, and every finite untouched reference. This section establishes neither implemented-channel uniqueness at $\varepsilon=0$, qualitative channel stability, nor the quantitative square-root rate.
+
+The unresolved assertion is that there exists a finite $K>0$ such that, for every protocol of Definition 1.2 and every $\varepsilon\in[0,1]$,
+
+$$
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon
+\quad\Longrightarrow\quad
+\|\Phi-\Phi_*\|_\diamond\le K\sqrt\varepsilon.
+$$
+
+Here $\Phi_*$ is exactly (6.14), $K$ is independent of all effects, feedback and finite outcome counts, and both norms are the unhalved norm (1.6), including every finite untouched reference. The record (1.1) and retention of every original outcome remain fixed.
+
