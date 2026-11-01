@@ -134,15 +134,17 @@ private lemma gap_spoke (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
     rw [diagonal_iff]
     have h0 := ZMod.val_zero (n := n)
     have hv := ZMod.val_natCast_of_lt (show c < n by omega)
-    have hv1 := ZMod.val_natCast_of_lt (show 1 < n by omega)
+    have hv1 : (1 : ZMod n).val = 1 := by
+      simpa using ZMod.val_natCast_of_lt (show 1 < n by omega)
     have hvp := ZMod.val_natCast_of_lt (show c+1 < n by omega)
     refine ⟨?_, ?_, ?_⟩
     · intro he; have hh := congrArg ZMod.val he; simp only [h0, hv] at hh; omega
     · intro he; have hh := congrArg ZMod.val he
       simp only [zero_add, h0, hv, hv1] at hh; omega
     · intro he
-      change (0 : ZMod n) = ((c+1 : ℕ) : ZMod n) at he
-      have hh := congrArg ZMod.val he; simp only [h0, hvp] at hh; omega
+      have he' : (0 : ZMod n) = ((c+1 : ℕ) : ZMod n) := by
+        simpa only [Nat.cast_add, Nat.cast_one] using he
+      have hh := congrArg ZMod.val he'; simp only [h0, hvp] at hh; omega
   have hc : Cross s((a : ZMod n), (b : ZMod n)) s(0, (c : ZMod n)) := by
     refine ⟨(a : ZMod n), (b : ZMod n), (c : ZMod n), 0,
       rfl, Sym2.eq_swap, ?_, ?_⟩ <;>
@@ -190,7 +192,7 @@ private lemma gap_maximal (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
       convert hnext using 1 <;> push_cast <;> ring
     exact gap_spoke hn P h a b (a+2) ha (by omega) (by omega) hb hcnext
 
-theorem fan_isTriangulation (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
+private theorem fan_geometry (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
     (hP : Independent P) (hh : h ∉ P) : IsTriangulation (fan P h) := by
   refine ⟨?_, ?_, ?_⟩
   · intro e he
@@ -236,14 +238,27 @@ theorem fan_isTriangulation (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
         intro hv
         apply (diagonal_iff x y).1 he |>.1
         rw [← hx, ← hy, hv]
+      have he' : IsDiagonal s(((x-h).val : ZMod n)+h, ((y-h).val : ZMod n)+h) := by
+        simpa only [hx, hy] using he
+      have hout' : s(((x-h).val : ZMod n)+h, ((y-h).val : ZMod n)+h) ∉ fan P h := by
+        simpa only [hx, hy] using hout
+      have hxP' : ((x-h).val : ZMod n)+h ∉ P := by simpa only [hx] using hxP
+      have hyP' : ((y-h).val : ZMod n)+h ∉ P := by simpa only [hy] using hyP
       rcases lt_or_gt_of_ne hne with hlt | hlt
-      · rw [← hx, ← hy] at he hout ⊢
-        exact gap_maximal hn P h hP _ _ hlt (ZMod.val_lt _) he hout
-          (hx ▸ hxP) (hy ▸ hyP)
-      · have hs : s(x,y) = s(y,x) := Sym2.eq_swap
-        rw [hs, ← hx, ← hy] at he hout ⊢
-        exact gap_maximal hn P h hP _ _ hlt (ZMod.val_lt _) he hout
-          (hy ▸ hyP) (hx ▸ hxP)
+      · have hres := gap_maximal hn P h hP _ _ hlt (ZMod.val_lt _) he' hout' hxP' hyP'
+        simpa only [hx, hy] using hres
+      · have heSwap : IsDiagonal
+            s(((y-h).val : ZMod n)+h, ((x-h).val : ZMod n)+h) := by
+          rw [Sym2.eq_swap]
+          exact he'
+        have houtSwap :
+            s(((y-h).val : ZMod n)+h, ((x-h).val : ZMod n)+h) ∉ fan P h := by
+          rw [Sym2.eq_swap]
+          exact hout'
+        have hres := gap_maximal hn P h hP _ _ hlt (ZMod.val_lt _)
+          heSwap houtSwap hyP' hxP'
+        rw [Sym2.eq_swap]
+        simpa only [hx, hy] using hres
 
 private lemma ear_bounds (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n) :
     P ⊆ EarCenters (fan P h) ∧
@@ -262,5 +277,158 @@ private lemma ear_bounds (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n) :
       simp [hi]
     · have hi : i=h-1 := by linear_combination -he
       simp [hi]
+
+/-- The literal union is maximal on all original internal diagonals, with controlled ears. -/
+theorem fan_triangulation (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
+    (hP : Independent P) (hh : h ∉ P) :
+    IsTriangulation (fan P h) ∧ P ⊆ EarCenters (fan P h) ∧
+      EarCenters (fan P h) ⊆ P ∪ {h-1,h+1} :=
+  ⟨fan_geometry hn P h hP hh, ear_bounds hn P h⟩
+
+/-- Two distinct original internal spokes cross the root ear. -/
+theorem fan_two_crossings (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
+    (hsize : P.card+4 < n) :
+    ∃ e ∈ fan P h, ∃ f ∈ fan P h, e ≠ f ∧ IsDiagonal e ∧ IsDiagonal f ∧
+      Cross e (ear h) ∧ Cross f (ear h) := by
+  let B : Finset (ZMod n) := P ∪ {h,h-1,h+1}
+  have hB : B.card ≤ P.card+3 := by
+    have h3 : ({h,h-1,h+1} : Finset (ZMod n)).card ≤ 3 := by
+      exact (card_insert_le _ _).trans
+        (Nat.add_le_add_right ((card_insert_le _ _).trans (by simp)) 1)
+    exact (card_union_le _ _).trans (Nat.add_le_add_left h3 _)
+  have htargets : 1 < (univ \ B).card := by
+    rw [card_sdiff (subset_univ B), card_univ, ZMod.card]
+    omega
+  obtain ⟨j, hj, k, hk, hjk⟩ := one_lt_card.mp htargets
+  have good (x : ZMod n) (hx : x ∈ univ \ B) :
+      x ∉ P ∧ IsDiagonal s(h,x) := by
+    have hxB := (mem_sdiff.mp hx).2
+    have hxP : x ∉ P := fun hxp => hxB (mem_union_left _ hxp)
+    have hx0 : x ≠ h := by intro he; apply hxB; simp [B, he]
+    have hxm : x ≠ h-1 := by intro he; apply hxB; simp [B, he]
+    have hxp : x ≠ h+1 := by intro he; apply hxB; simp [B, he]
+    refine ⟨hxP, (diagonal_iff _ _).2 ⟨hx0.symm, hxp, ?_⟩⟩
+    intro he
+    apply hxm
+    linear_combination -he
+  obtain ⟨hjP, hjd⟩ := good j hj
+  obtain ⟨hkP, hkd⟩ := good k hk
+  refine ⟨s(h,j), spoke_mem hjP hjd, s(h,k), spoke_mem hkP hkd,
+    ?_, hjd, hkd, cross_ear_spoke hn h j hjd, cross_ear_spoke hn h k hkd⟩
+  intro he
+  rw [Sym2.eq_iff] at he
+  rcases he with ⟨_, he⟩ | ⟨he, hf⟩
+  · exact hjk he
+  · exact hjk (hf.trans he)
+
+private lemma choose_root (P Q : Finset (ZMod n)) (hsize : P.card+2*Q.card < n) :
+    ∃ h : ZMod n, h ∉ P ∧ h-1 ∉ Q ∧ h+1 ∉ Q := by
+  let B := (P ∪ Q.image (fun q => q-1)) ∪ Q.image (fun q => q+1)
+  have hB : B.card ≤ P.card+2*Q.card := by
+    have h1 := card_union_le P (Q.image (fun q => q-1))
+    have h2 := card_union_le (P ∪ Q.image (fun q => q-1)) (Q.image (fun q => q+1))
+    have h3 := card_image_le (s := Q) (f := fun q => q-1)
+    have h4 := card_image_le (s := Q) (f := fun q => q+1)
+    dsimp [B]
+    omega
+  have hb : B.card < (univ : Finset (ZMod n)).card := by
+    rw [card_univ, ZMod.card]
+    omega
+  obtain ⟨h, _, hh⟩ := exists_mem_notMem_of_card_lt_card hb
+  refine ⟨h, ?_, ?_, ?_⟩
+  · intro hp; exact hh (mem_union_left _ (mem_union_left _ hp))
+  · intro hq
+    apply hh
+    apply mem_union_right
+    exact mem_image.mpr ⟨h-1, hq, by ring⟩
+  · intro hq
+    apply hh
+    apply mem_union_left
+    apply mem_union_right
+    exact mem_image.mpr ⟨h+1, hq, by ring⟩
+
+private lemma conditioned_completion (hn : 6 ≤ n) (P Q J : Finset (ZMod n))
+    (h : ZMod n) (hP : Independent P) (hh : h ∉ P)
+    (hdisj : Disjoint P (Q ∪ J)) (hm : h-1 ∉ Q ∪ J) (hp : h+1 ∉ Q ∪ J) :
+    ∃ T : ConditionFiber P Q J ∅, T.val = fan P h := by
+  have ht := fan_triangulation hn P h hP hh
+  have avoid : Disjoint (Q ∪ J) (EarCenters (fan P h)) := by
+    apply disjoint_left.mpr
+    intro i hi hiE
+    rcases mem_union.mp (ht.2.2 hiE) with hiP | hiN
+    · exact disjoint_left.mp hdisj hiP hi
+    · simp only [mem_insert, mem_singleton] at hiN
+      rcases hiN with rfl | rfl
+      · exact hm hi
+      · exact hp hi
+  refine ⟨⟨fan P h, ht.1, ht.2.1, ?_, ?_⟩, rfl⟩
+  · exact disjoint_left.mpr fun i hi hiE =>
+      disjoint_left.mp avoid (mem_union_left J hi) hiE
+  · apply eq_empty_iff_forall_notMem.mpr
+    intro i hi
+    exact disjoint_left.mp avoid (mem_union_right Q (mem_inter.mp hi).2)
+      (mem_inter.mp hi).1
+
+private lemma compatible_neighbors (hn : 6 ≤ n) (S : Finset (ZMod n))
+    (h : ZMod n) (hc : ∀ i ∈ S, ¬Cross (ear h) (ear i)) :
+    h-1 ∉ S ∧ h+1 ∉ S := by
+  refine ⟨?_, ?_⟩
+  · intro hi
+    apply hc _ hi
+    exact cross_symm (by simpa only [sub_add_cancel] using adjacent_cross hn (h-1))
+  · intro hi
+    exact hc _ hi (adjacent_cross hn h)
+
+/-- Actual original-carrier positivity and a terminal empty-trace fan with two crossings. -/
+theorem source_conditioned_witnesses (hn : 14 ≤ n) (P Q : Finset (ZMod n))
+    (hdisj : Disjoint P Q)
+    (hcompat : (↑(P ∪ Q) : Set (ZMod n)).Pairwise
+      (fun i j => ¬Cross (ear i) (ear j)))
+    (hcases : (P.card = 2 ∧ Q.card = 2) ∨ (P.card = 3 ∧ Q.card = 3) ∨
+      (P.card = 2 ∧ Q.card = 4) ∨ (P.card = 4 ∧ Q.card = 2)) :
+    Nonempty (ConditionFiber P Q ∅ ∅) ∧
+      0 < Nat.card (ConditionFiber P Q ∅ ∅) ∧
+      (∃ h : ZMod n, h ∉ P ∧
+        ∃ T : ConditionFiber P Q ∅ ∅, T.val = fan P h) ∧
+      ∀ H : Finset (ZMod n), H ⊆ E_K (P ∪ Q) →
+        (H : Set (ZMod n)).Pairwise (fun i j => ¬Cross (ear i) (ear j)) →
+        ∀ h ∈ H, ∃ T : ConditionFiber P Q H ∅, T.val = fan P h ∧
+          ∃ e ∈ T.val, ∃ f ∈ T.val, e ≠ f ∧ IsDiagonal e ∧ IsDiagonal f ∧
+            Cross e (ear h) ∧ Cross f (ear h) := by
+  have hn6 : 6 ≤ n := by omega
+  have hP : Independent P := independent_of_noncrossing hn6 P
+    (fun i hi j hj hij => hcompat (mem_union_left Q hi) (mem_union_left Q hj) hij)
+  have hbound : P.card+2*Q.card < n ∧ P.card+4 < n := by
+    rcases hcases with ⟨hp,hq⟩ | ⟨hp,hq⟩ | ⟨hp,hq⟩ | ⟨hp,hq⟩ <;> omega
+  obtain ⟨r, hrP, hrm, hrp⟩ := choose_root P Q hbound.1
+  obtain ⟨T, hT⟩ := conditioned_completion hn6 P Q ∅ r hP hrP
+    (by simpa using hdisj) (by simpa using hrm) (by simpa using hrp)
+  have hnon : Nonempty (ConditionFiber P Q ∅ ∅) := ⟨T⟩
+  have hpos : 0 < Nat.card (ConditionFiber P Q ∅ ∅) := by
+    letI := hnon
+    exact Nat.card_pos
+  refine ⟨hnon, hpos, ⟨r, hrP, T, hT⟩, ?_⟩
+  intro H hHE hH h hhH
+  have hE := (mem_filter.mp (hHE hhH)).2
+  have hhP : h ∉ P := fun hp => hE.1 (mem_union_left Q hp)
+  have hdisjH : Disjoint P (Q ∪ H) := by
+    apply disjoint_left.mpr
+    intro i hi hqi
+    rcases mem_union.mp hqi with hqi | hhi
+    · exact disjoint_left.mp hdisj hi hqi
+    · exact (mem_filter.mp (hHE hhi)).2.1 (mem_union_left Q hi)
+  have hQneighbors := compatible_neighbors hn6 Q h
+    (fun i hi => hE.2 i (mem_union_right P hi))
+  have hHneighbors := compatible_neighbors hn6 H h (by
+    intro i hi
+    by_cases he : h = i
+    · rw [← he]; exact not_cross_self _
+    · exact hH hhH hi he)
+  obtain ⟨U, hU⟩ := conditioned_completion hn6 P Q H h hP hhP hdisjH
+    (by simpa only [mem_union, not_or] using ⟨hQneighbors.1, hHneighbors.1⟩)
+    (by simpa only [mem_union, not_or] using ⟨hQneighbors.2, hHneighbors.2⟩)
+  refine ⟨U, hU, ?_⟩
+  rw [hU]
+  exact fan_two_crossings hn6 P h hbound.2
 
 end D5.S3.Geometry.Polygons.PolygonConditionedFan
