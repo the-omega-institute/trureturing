@@ -26,6 +26,7 @@ open scoped BigOperators ComplexOrder Matrix.Norms.Frobenius
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction
   (IsFullySeparableLocal density_psd)
+open D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation (sum_bits)
 
 namespace D5.S3.Quantum.Entanglement.GeometricMeasure.XMemsClosestSeparableShapeRefutation
 
@@ -94,11 +95,6 @@ private theorem fullySeparable_iff (n : ℕ) (ρ : Matrix (Fin n → Fin 2) (Fin
       simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul, Matrix.piProd,
         Matrix.of_apply, CStarMatrix.ofMatrix_symm_apply] using
         (he x y).symm
-
-private theorem sum_words {α : Type*} [AddCommMonoid α] (f : (Fin 3 → Fin 2) → α) :
-    ∑ x, f x = f ![0,0,0] + f ![0,0,1] + f ![0,1,0] + f ![0,1,1] +
-      f ![1,0,0] + f ![1,0,1] + f ![1,1,0] + f ![1,1,1] :=
-  D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.sum_bits f
 
 private theorem hsSq_entries {n : ℕ}
     (ρ σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
@@ -243,7 +239,18 @@ private theorem shape_distance (a b : ℝ) (d : ℂ) :
       2 * (1 / 5 - a / 2) ^ 2 + 3 * (1 / 5 - b / 3) ^ 2 +
         3 * ((1 - a - b) / 3) ^ 2 + 2 * ((11 / 112 - d.re) ^ 2 + d.im ^ 2) := by
   rw [hsSq_entries]
-  simp only [sum_words]
+  let f (x y : Fin 3 → Fin 2) := Complex.normSq (xmems 3 (11 / 112) x y - (cssShape 3 a b d) x y)
+  change ∑ x, ∑ y, f x y = _
+  have row (x : Fin 3 → Fin 2) : ∑ y, f x y =
+      f x ![0,0,0] + f x ![0,0,1] + f x ![0,1,0] + f x ![0,1,1] +
+        f x ![1,0,0] + f x ![1,0,1] + f x ![1,1,0] + f x ![1,1,1] :=
+    sum_bits (f x)
+  have column (y : Fin 3 → Fin 2) : ∑ x, f x y =
+      f ![0,0,0] y + f ![0,0,1] y + f ![0,1,0] y + f ![0,1,1] y +
+        f ![1,0,0] y + f ![1,0,1] y + f ![1,1,0] y + f ![1,1,1] y :=
+    sum_bits (fun x => f x y)
+  simp only [row, Finset.sum_add_distrib, column]
+  dsimp only [f]
   dsimp only [xmems, cssShape]
   norm_num [Complex.normSq_apply,
     show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
@@ -406,7 +413,12 @@ private theorem word_cases (x : Fin 3 → Fin 2) :
     x = ![0,0,0] ∨ x = ![0,0,1] ∨ x = ![0,1,0] ∨ x = ![0,1,1] ∨
       x = ![1,0,0] ∨ x = ![1,0,1] ∨ x = ![1,1,0] ∨ x = ![1,1,1] := by
   classical
-  have h := sum_words (fun y => if x = y then (1 : ℕ) else 0)
+  have h : (∑ y : Fin 3 → Fin 2, if x = y then (1 : ℕ) else 0) =
+      (if x = ![0,0,0] then 1 else 0) + (if x = ![0,0,1] then 1 else 0) +
+      (if x = ![0,1,0] then 1 else 0) + (if x = ![0,1,1] then 1 else 0) +
+      (if x = ![1,0,0] then 1 else 0) + (if x = ![1,0,1] then 1 else 0) +
+      (if x = ![1,1,0] then 1 else 0) + (if x = ![1,1,1] then 1 else 0) :=
+    sum_bits (fun y : Fin 3 → Fin 2 => if x = y then (1 : ℕ) else 0)
   by_contra hx
   simp only [not_or] at hx
   simp_all
@@ -464,7 +476,18 @@ private theorem tau_separable : IsFullySeparableLocal tau := by
 private theorem tau_distance : hsSq (xmems 3 (11 / 112)) tau =
     (417965512477 / 90316800000000 : ℝ) := by
   rw [hsSq_entries]
-  simp only [sum_words]
+  let f (x y : Fin 3 → Fin 2) := Complex.normSq (xmems 3 (11 / 112) x y - (tau) x y)
+  change ∑ x, ∑ y, f x y = _
+  have row (x : Fin 3 → Fin 2) : ∑ y, f x y =
+      f x ![0,0,0] + f x ![0,0,1] + f x ![0,1,0] + f x ![0,1,1] +
+        f x ![1,0,0] + f x ![1,0,1] + f x ![1,1,0] + f x ![1,1,1] :=
+    sum_bits (f x)
+  have column (y : Fin 3 → Fin 2) : ∑ x, f x y =
+      f ![0,0,0] y + f ![0,0,1] y + f ![0,1,0] y + f ![0,1,1] y +
+        f ![1,0,0] y + f ![1,0,1] y + f ![1,1,0] y + f ![1,1,1] y :=
+    sum_bits (fun x => f x y)
+  simp only [row, Finset.sum_add_distrib, column]
+  dsimp only [f]
   dsimp only [xmems, tau, wordIndex, finFunctionFinEquiv]
   norm_num [Complex.normSq_apply, Fin.sum_univ_succ, Fin.rev,
     show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
