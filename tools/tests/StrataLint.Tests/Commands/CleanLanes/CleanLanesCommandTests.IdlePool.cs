@@ -173,6 +173,7 @@ public sealed partial class CleanLanesCommandTests
         const string failedBranch = "lane/governance/idle-failed";
         var removedPath = fixture.AddMergedLane(removedBranch);
         var failedPath = fixture.AddMergedLane(failedBranch);
+        var judge = fixture.AddGitlessJudgeSnapshot("trureturing-idle-failure-control");
         var payload = JsonSerializer.Serialize(new
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
@@ -200,6 +201,8 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("failed", failed.GetProperty("action").GetString());
         Assert.Contains("revalidate", failed.GetProperty("reason").GetString(), StringComparison.Ordinal);
         Assert.Contains("git fetch timed out", failed.GetProperty("reason").GetString(), StringComparison.Ordinal);
+        Assert.False(Directory.Exists(judge));
+        Assert.Contains(items, row => ItemMatches(row, judge, "removed", "gitless_judge_snapshot"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(2, summary.GetProperty("removed_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("failed_count").GetInt32());
