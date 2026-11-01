@@ -146,7 +146,7 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_support_fence_i
 
 *Commentary.*
 
-The zero-based alternating complement leaves even coordinates unchanged and complements odd coordinates. The native recursive Adm n predicate is equivalent to the alternating fence upper-set inequalities on transformed supports, for every n including zero.
+The zero-based alternating complement leaves even coordinates unchanged and complements odd coordinates. AdmissibleCount.adm_iff_no_adjacent_true supplies the shared adjacency characterization of the native recursive Adm n predicate. This is equivalent to the alternating fence upper-set inequalities on transformed supports, for every n including zero.
 
 **Definition 1.13 (Every fence row has a legal inverse native word).**
 

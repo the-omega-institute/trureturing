@@ -13,12 +13,12 @@ endpoint_identity:
 admission_basis: escape-witness
 Direct frozen dependency keys (GID; statement_id):
 Assignment = PredictiveThermodynamic.Physical.Assignment; sha256:186896178b3ea09d109f4546cae53a1b2c485c3990a05a1b88d8deaaae3e423f
-Chain dependencies: D5.S3.Quantum.SpinChains.SupersymmetricFermion.FullEndpointIdentity, D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression; freeze in topological import D5.S1.Words.AdmissibleWords.AdmissibleCount
-import order.
+Chain dependencies: D5.S3.Quantum.SpinChains.SupersymmetricFermion.FullEndpointIdentity, D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression; freeze in topological import order.
 Reused predicate: D5/S1/Words/AdmissibleWords/AdmissibleCount.Adm.
 Pointwise exclusion: D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true; sha256:304ace6fff228e5b2d4b05c9c7aed7b23d949d0408f0b79dadf4d78143d4fbd4.
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Quantum.Dynamics.PronkoFredkinAntiAdjointExpansion
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.FullEndpointIdentity
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
