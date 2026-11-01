@@ -213,7 +213,7 @@ private theorem remainder_eq (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d<
   have hw := bits_region (b-1) (d+c) (JointChoice.h ch) i
   have hm := bits_region (a-1) (d+c+b) ((JointChoice.s ch)-1) i
   have hx := bits_submask (a-1) (d+c+b) ((JointChoice.s ch)-1) ((JointChoice.r ch)-1) (JointChoice.submask ch)
-  have hx' : i∈bits (a-1) (d+c+b) ((JointChoice.r ch)-1) → i∈bits (a-1) (d+c+b) ((JointChoice.s ch)-1) := hx
+  have hx' : i∈bits (a-1) (d+c+b) ((JointChoice.r ch)-1) → i∈bits (a-1) (d+c+b) ((JointChoice.s ch)-1) := fun hi => hx hi
   simp only [selected,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,
     Matrix.vecTail,Function.comp_apply,bits_full,
@@ -287,7 +287,8 @@ private theorem selected_mass (a b c d : ℕ) (hd : 3≤d) (hc : 2≤c) (hdb : d
     Finset.sum_union duv,mU,mW,mX,mQ,mV,mv,mu]
   have huN : 1≤2^(d-1) := Nat.one_le_two_pow
   have hxN : 1≤2^(a-1) := Nat.one_le_two_pow
-  rw [Nat.cast_sub huN,Nat.cast_sub hxN,Nat.cast_sub hs,Nat.cast_sub hb.1]
+  have hcN : 1≤2^(c-1) := Nat.one_le_two_pow
+  rw [Nat.cast_sub huN,Nat.cast_sub hxN,Nat.cast_sub hs,Nat.cast_sub hb.1,Nat.cast_sub hcN]
   push_cast
   constructor
   · ring
