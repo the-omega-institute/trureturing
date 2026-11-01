@@ -29,13 +29,6 @@ def ghostNumber : Module.End ℂ Fock :=
   Finsupp.lsum ℂ fun S => (LinearMap.id : ℂ →ₗ[ℂ] ℂ).smulRight
     ((charge S : ℂ) • ket S)
 
-private theorem ext_ket {T U : Module.End ℂ Fock}
-    (h : ∀ S, T (ket S) = U (ket S)) : T = U := by
-  apply Finsupp.lhom_ext
-  intro S a
-  have hs : Finsupp.single S a = a • ket S := by simp [ket]
-  simp only [hs, map_smul, h]
-
 @[simp] private theorem number_ket (S : Finset ℕ) :
     ghostNumber (ket S) = (charge S : ℂ) • ket S := by
   simp only [ghostNumber, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
@@ -60,24 +53,14 @@ private theorem charge_sum (S : Finset ℕ) : charge S = ∑ j ∈ S, siteSign j
   | empty => simp [charge]
   | @insert j S hj ih => rw [charge_insert j S hj, Finset.sum_insert hj, ih]; omega
 
-private theorem create_on_ket (j : ℕ) (S : Finset ℕ) :
-    create j (ket S) = if j ∈ S then 0 else phase j S • ket (insert j S) := by
-  simp only [create, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
-    LinearMap.id_apply, one_smul]
-
-private theorem annihilate_on_ket (j : ℕ) (S : Finset ℕ) :
-    annihilate j (ket S) = if j ∈ S then phase j S • ket (S.erase j) else 0 := by
-  simp only [annihilate, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
-    LinearMap.id_apply, one_smul]
-
 private theorem number_create (j : ℕ) :
     ghostNumber * create j - create j * ghostNumber = (siteSign j : ℂ) • create j := by
-  apply ext_ket
+  apply end_ext
   intro S
   classical
   by_cases hj : j ∈ S
-  · simp [Module.End.mul_apply, create_on_ket, hj]
-  · simp only [LinearMap.sub_apply, Module.End.mul_apply, create_on_ket,
+  · simp [Module.End.mul_apply, create_ket, hj]
+  · simp only [LinearMap.sub_apply, Module.End.mul_apply, create_ket,
       if_neg hj, map_smul, number_ket, LinearMap.smul_apply]
     rw [charge_insert j S hj, Int.cast_add]
     module
@@ -85,15 +68,15 @@ private theorem number_create (j : ℕ) :
 private theorem number_annihilate (j : ℕ) :
     ghostNumber * annihilate j - annihilate j * ghostNumber =
       -(siteSign j : ℂ) • annihilate j := by
-  apply ext_ket
+  apply end_ext
   intro S
   classical
   by_cases hj : j ∈ S
-  · simp only [LinearMap.sub_apply, Module.End.mul_apply, annihilate_on_ket,
+  · simp only [LinearMap.sub_apply, Module.End.mul_apply, annihilate_ket,
       if_pos hj, map_smul, number_ket, LinearMap.smul_apply]
     rw [charge_erase j S hj, Int.cast_sub]
     module
-  · simp [Module.End.mul_apply, annihilate_on_ket, hj]
+  · simp [Module.End.mul_apply, annihilate_ket, hj]
 
 /-- The SL2 vacuum has ghost number zero. -/
 private theorem ghost_number_vacuum : ghostNumber vacuum = 0 := by
@@ -138,13 +121,13 @@ private theorem occupation_projection (j : ℕ) (S : Finset ℕ) :
         exact ⟨hi, hlt⟩
       · rintro ⟨hi, hlt⟩
         exact ⟨⟨by omega, hi⟩, hlt⟩
-    simp only [Module.End.mul_apply, annihilate_on_ket, if_pos hj, map_smul,
-      create_on_ket, Finset.notMem_erase, ite_false, Finset.insert_erase hj,
+    simp only [Module.End.mul_apply, annihilate_ket, if_pos hj, map_smul,
+      create_ket, Finset.notMem_erase, ite_false, Finset.insert_erase hj,
       smul_smul, phase, hl, ← pow_add]
     have he : lowerCount j S + lowerCount j S = 2 * lowerCount j S := by omega
     rw [he, pow_mul]
     norm_num
-  · simp [Module.End.mul_apply, annihilate_on_ket, hj]
+  · simp [Module.End.mul_apply, annihilate_ket, hj]
 
 private theorem siteTerm_ket (j : ℕ) (S : Finset ℕ) :
     siteTerm j (ket S) = if j ∈ S then (siteSign j : ℂ) • ket S else 0 := by
