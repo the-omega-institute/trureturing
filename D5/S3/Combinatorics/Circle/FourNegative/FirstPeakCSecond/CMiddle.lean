@@ -104,7 +104,8 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
   have nb1:=native_balance a b c d 1 ha hb hc hd
   have nb3:=native_balance a b c d 3 ha hb hc hd
   have ua:=congrArg (fun z : ℤ => z*v.A) uf
-  simp only [chainLength,←ht] at ua
+  change (2*(full a b c d 0:ℤ)+2)*v.A=2^d*v.A at ua
+  rw [←ht] at ua
   simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
     Matrix.cons_val_succ,Matrix.cons_val_zero'] at nb0 nb1 nb3
   simp only [←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn,hm,hq,hwn]
@@ -158,14 +159,14 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
       simp [chainLength] at uf xf vf
       nlinarith only [nb3.1,nb0.1,nb1.1]
     · exact hzero
-    · omega
-    · omega
-    · omega
-    · omega
+    · linarith only [t0.1,hmN]
+    · linarith only [t1.1,hmN]
+    · linarith only [t2.1,hmN]
+    · linarith only [t3.1,hmN]
     · exact hgate.1
     · exact hgate.2.2.1
     · exact hgate.2.2.2.2.1
-    · have := (chain_values a b c d ha hb hc hd).1 3; omega
+    · simpa only [←hM] using ((chain_values a b c d ha hb hc hd).1 3).1
   have newChecks : packetChecks (newValue a b c d) (sourceMod a b c d) 0
       (freshAfter (size a b c d) 1 bs) := by
     apply four_checks _ _ _ _ _ _ _ _ _ _
@@ -184,14 +185,14 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
       simp [chainLength] at uf xf vf
       nlinarith only [nb3.2,nb0.2,nb1.2]
     · exact hzeron
-    · omega
-    · omega
-    · omega
-    · omega
+    · exact t0.2
+    · exact t1.2
+    · exact t2.2
+    · exact t3.2
     · exact hgate.2.1
     · exact hgate.2.2.2.1
     · exact hgate.2.2.2.2.2
-    · have := new_base_bounds a b c d ha hb hc hd 3; omega
+    · simpa only [←hMn] using (new_base_bounds a b c d ha hb hc hd 3).1
   refine ⟨hp,hj,?_,?_⟩
   · exact (strip_iff_packetChecks _ _ _ bs ⟨by omega,by
       have := (chain_values a b c d ha hb hc hd).1 0; omega⟩
@@ -319,14 +320,14 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
       simp [chainLength] at uf vf xf
       nlinarith only [nb1.1,nb0.1,nb3.1,hrank.1]
     · exact hzero
-    · omega
-    · omega
-    · omega
-    · omega
-    · exact ⟨g0,by omega⟩
-    · exact ⟨g4,by omega⟩
-    · exact ⟨g8,by omega⟩
-    · omega
+    · linarith only [t0.1,hmN]
+    · linarith only [t1.1,hmN]
+    · linarith only [t2.1,hmN]
+    · linarith only [t3.1,hmN]
+    · exact ⟨g0,by linarith only [g1]⟩
+    · exact ⟨g4,by linarith only [g5]⟩
+    · exact ⟨g8,by linarith only [g9]⟩
+    · linarith only [g13]
   have newChecks : packetChecks (newValue a d c d) (sourceMod a d c d) 0
       (freshAfter (size a d c d) 2 bs) := by
     apply four_checks _ _ _ _ _ _ _ _ _ _
@@ -352,14 +353,14 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
       have hm' : v.Mn=2*v.M-v.D := rfl
       nlinarith only [nb1.2,nb0.2,nb3.2,hrank.1]
     · exact hzeron
-    · omega
-    · omega
-    · omega
-    · omega
-    · exact ⟨g2,by omega⟩
-    · exact ⟨g6,by omega⟩
-    · exact ⟨g10,by omega⟩
-    · omega
+    · exact t0.2
+    · exact t1.2
+    · exact t2.2
+    · exact t3.2
+    · exact ⟨g2,by linarith only [g3]⟩
+    · exact ⟨g6,by linarith only [g7]⟩
+    · exact ⟨g10,by linarith only [g11]⟩
+    · linarith only [g15]
   have fpos:=packet_positive a d c d ha hd hc hd 0 q 0 Rn
   have gpos:=fresh_positive a d c d 2 bs ha hd hc hd (by
     intro P hP i hi; exact (fpos.2 P hP i hi).2)
@@ -783,7 +784,7 @@ private theorem equal_v1 (a c d : ℕ)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;>
     dsimp [VGates,actualRow,model] <;> simp only [hc1,ha1,pow_one] <;>
-    dsimp [t] <;> ring_nf <;> simp only [iff_self,implies_true]
+    dsimp [t] <;> ring_nf <;> first | rfl | (simp only [iff_self,implies_true]) | norm_num
 
 /- Equality V2: h=2,e>=4,t>=8. R=6f+1 is odd before toNat. -/
 private theorem equal_v2 (a c d : ℕ)
@@ -801,7 +802,7 @@ private theorem equal_v2 (a c d : ℕ)
     (by omega) (by omega) (by omega) (by rw [hz]; nlinarith) (by rw [hx]; nlinarith)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;> dsimp [VGates,actualRow] <;> simp only [he] <;>
-    dsimp [model] <;> simp only [ha1,pow_one] <;> dsimp [t,f] <;> ring_nf <;> simp only [iff_self,implies_true]
+    dsimp [model] <;> simp only [ha1,pow_one] <;> dsimp [t,f] <;> ring_nf <;> first | rfl | (simp only [iff_self,implies_true]) | norm_num
 
 /- Equality V3: h=2,t=4,e>=16. The e=4,8 corners are literal finite words. -/
 private theorem equal_v3 (a c : ℕ) (hc : 6≤c) (hac : a=c+1) : NatJoint a 2 c 2 := by
@@ -818,7 +819,7 @@ private theorem equal_v3 (a c : ℕ) (hc : 6≤c) (hac : a=c+1) : NatJoint a 2 c
     (by omega) (by omega) (by omega) (by rw [hz]; nlinarith) (by rw [hx]; nlinarith)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;> dsimp [VGates,actualRow] <;> simp only [he] <;>
-    dsimp [model] <;> simp only [ha1,pow_one] <;> norm_num <;> dsimp [f] <;> ring_nf <;> simp only [iff_self,implies_true]
+    dsimp [model] <;> simp only [ha1,pow_one] <;> norm_num <;> dsimp [f] <;> ring_nf <;> first | rfl | (simp only [iff_self,implies_true]) | norm_num
 
 /- Six isolated finite words. Only concrete list permutation and integer
 reduction are used here. The recursive strip proposition covers every natural
