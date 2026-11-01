@@ -55,3 +55,5 @@ The exact scope is the strict-saddle family a>b>d>c>=2. It includes every expone
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle.actualSource_first_peak_saddle_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle/Native](FirstPeakSaddle/Native.md)
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle/Physical](FirstPeakSaddle/Physical.md)
