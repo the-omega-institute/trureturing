@@ -1,6 +1,5 @@
 # 情境时空算术的量子扩展
 
-
 ## 1. 载体、状态与算术桥接
 
 [正文](ContextualSpacetimeQuantum/001_016_FOUNDATIONS_AND_RECORDS.md#section-1)
@@ -4308,4 +4307,3 @@
 ## 追加锚（本行以下为增补区）
 
 [正文](ContextualSpacetimeQuantum/351_354_READOUT_CLOSURE_AND_REALIZATION.md#entry-1077)
-
