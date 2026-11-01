@@ -20,7 +20,7 @@ For every natural base k and every finite word ds over Fin k, Value(k,ds) is its
 
 **Definition 1.2 (Correctness on every representation).**
 
-$$\forall B \in \operatorname{Type}\left(\right),\; [\operatorname{Fintype}\left(B\right)] \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to B),\; (\operatorname{Machine}\left(k, a\right) \iff 2 \le k \land \left(\exists q \in \mathrm{Nat},\; 0 < q \land \left(\exists s \in \operatorname{Fin}\left(q\right),\; \exists t \in (\operatorname{Fin}\left(q\right) \to (\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(q\right))),\; \exists o \in (\operatorname{Fin}\left(q\right) \to B),\; \forall n \in \mathrm{Nat},\; \forall ds \in \operatorname{List}\left(\operatorname{Fin}\left(k\right)\right),\; \operatorname{Value}\left(k, ds\right) = n \Rightarrow \operatorname{o}\left(\operatorname{Fold}\left(ds, t, s\right)\right) = \operatorname{a}\left(n\right)\right)\right))$$
+$$\forall B \in \mathrm{Type},\; [\operatorname{Fintype}\left(B\right)] \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to B),\; (\operatorname{Machine}\left(k, a\right) \iff 2 \le k \land \left(\exists q \in \mathrm{Nat},\; 0 < q \land \left(\exists s \in \operatorname{Fin}\left(q\right),\; \exists t \in (\operatorname{Fin}\left(q\right) \to (\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(q\right))),\; \exists o \in (\operatorname{Fin}\left(q\right) \to B),\; \forall n \in \mathrm{Nat},\; \forall ds \in \operatorname{List}\left(\operatorname{Fin}\left(k\right)\right),\; \operatorname{Value}\left(k, ds\right) = n \Rightarrow \operatorname{o}\left(\operatorname{Fold}\left(ds, t, s\right)\right) = \operatorname{a}\left(n\right)\right)\right))$$
 
 *Formalization.* `D5/S0/Automata/FiniteKernelDFAO.IsKAutomaticSequence` (`✓ std3`).
 
@@ -32,7 +32,7 @@ For a finite output type B, Machine(k,a) requires k at least two and a positive 
 
 **Definition 1.3 (Arithmetic kernel).**
 
-$$\forall D \in \operatorname{Type}\left(\right)^{*},\; \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; \operatorname{Kernel}\left(k, a\right) = \{b: (\mathrm{Nat} \to D) \mid \exists e \in \mathrm{Nat},\; \exists r \in \mathrm{Nat},\; r < k^{e} \land b = (n: \mathrm{Nat} \mapsto \operatorname{a}\left(k^{e} \cdot n + r\right))\}$$
+$$\forall D \in \mathrm{Type}^{*},\; \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; \operatorname{Kernel}\left(k, a\right) = \{b: (\mathrm{Nat} \to D) \mid \exists e \in \mathrm{Nat},\; \exists r \in \mathrm{Nat},\; r < k^{e} \land b = (n: \mathrm{Nat} \mapsto \operatorname{a}\left(k^{e} \cdot n + r\right))\}$$
 
 *Formalization.* `D5/S0/Automata/FiniteKernelDFAO.kKernel` (`✓ std3`).
 
@@ -44,7 +44,7 @@ For any output type D in any universe, Kernel(k,a) consists of the decimations n
 
 **Definition 1.4 (Finite-kernel automaticity).**
 
-$$\forall D \in \operatorname{Type}\left(\right)^{*},\; \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; (\operatorname{Automatic}\left(k, a\right) \iff 2 \le k \land \operatorname{Finite}\left(\operatorname{Kernel}\left(k, a\right)\right))$$
+$$\forall D \in \mathrm{Type}^{*},\; \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; (\operatorname{Automatic}\left(k, a\right) \iff 2 \le k \land \operatorname{Finite}\left(\operatorname{Kernel}\left(k, a\right)\right))$$
 
 *Formalization.* `D5/S0/Automata/FiniteKernelDFAO.IsKAutomatic` (`✓ std3`).
 
@@ -56,7 +56,7 @@ Automatic(k,a) is the conjunction of k at least two and finiteness of the type o
 
 **Theorem 1.5 (One-digit kernel closure).**
 
-$$\forall D \in \operatorname{Type}\left(\right)^{*},\; \forall q \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; \forall b \in (\mathrm{Nat} \to D),\; \forall j \in \mathrm{Nat},\; b \in \operatorname{Kernel}\left(q, a\right) \Rightarrow \left(j < q \Rightarrow (n: \mathrm{Nat} \mapsto \operatorname{b}\left(q \cdot n + j\right)) \in \operatorname{Kernel}\left(q, a\right)\right)$$
+$$\forall D \in \mathrm{Type}^{*},\; \forall q \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; \forall b \in (\mathrm{Nat} \to D),\; \forall j \in \mathrm{Nat},\; b \in \operatorname{Kernel}\left(q, a\right) \Rightarrow \left(j < q \Rightarrow (n: \mathrm{Nat} \mapsto \operatorname{b}\left(q \cdot n + j\right)) \in \operatorname{Kernel}\left(q, a\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/FiniteKernelDFAO.chr_kernel_lam_mem` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ Decimating a kernel element b by a digit j less than q gives another member of t
 
 **Theorem 1.6 (The original sequence is a kernel state).**
 
-$$\forall D \in \operatorname{Type}\left(\right)^{*},\; \forall q \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; a \in \operatorname{Kernel}\left(q, a\right)$$
+$$\forall D \in \mathrm{Type}^{*},\; \forall q \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to D),\; a \in \operatorname{Kernel}\left(q, a\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/FiniteKernelDFAO.chr_self_mem_kernel` (`✓ std3`). ∎
 
@@ -80,7 +80,7 @@ The exponent zero and residue zero put every sequence a in its own q-kernel, eve
 
 **Theorem 1.7 (Eilenberg's finite-kernel equivalence).**
 
-$$\forall B \in \operatorname{Type}\left(\right),\; [\operatorname{Fintype}\left(B\right)] \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to B),\; (2 \le k \land \operatorname{Finite}\left(\operatorname{Kernel}\left(k, a\right)\right) \iff 2 \le k \land \left(\exists q \in \mathrm{Nat},\; 0 < q \land \left(\exists s \in \operatorname{Fin}\left(q\right),\; \exists t \in (\operatorname{Fin}\left(q\right) \to (\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(q\right))),\; \exists o \in (\operatorname{Fin}\left(q\right) \to B),\; \forall n \in \mathrm{Nat},\; \forall ds \in \operatorname{List}\left(\operatorname{Fin}\left(k\right)\right),\; \operatorname{Value}\left(k, ds\right) = n \Rightarrow \operatorname{o}\left(\operatorname{Fold}\left(ds, t, s\right)\right) = \operatorname{a}\left(n\right)\right)\right))$$
+$$\forall B \in \mathrm{Type},\; [\operatorname{Fintype}\left(B\right)] \forall k \in \mathrm{Nat},\; \forall a \in (\mathrm{Nat} \to B),\; (2 \le k \land \operatorname{Finite}\left(\operatorname{Kernel}\left(k, a\right)\right) \iff 2 \le k \land \left(\exists q \in \mathrm{Nat},\; 0 < q \land \left(\exists s \in \operatorname{Fin}\left(q\right),\; \exists t \in (\operatorname{Fin}\left(q\right) \to (\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(q\right))),\; \exists o \in (\operatorname{Fin}\left(q\right) \to B),\; \forall n \in \mathrm{Nat},\; \forall ds \in \operatorname{List}\left(\operatorname{Fin}\left(k\right)\right),\; \operatorname{Value}\left(k, ds\right) = n \Rightarrow \operatorname{o}\left(\operatorname{Fold}\left(ds, t, s\right)\right) = \operatorname{a}\left(n\right)\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/FiniteKernelDFAO.isKAutomatic_iff_isKAutomaticSequence` (`✓ std3`). ∎
 
