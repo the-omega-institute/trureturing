@@ -272,8 +272,8 @@ theorem feasible_of_independent {H : Finset (ZMod n)} (hH : Independent H) :
   simp only [mem_feasible, mem_powerset]
   exact ⟨And.left, fun h => ⟨h, independent_subset hH h⟩⟩
 
-/-- A block-start ear replacement stays in the full independent trace universe. -/
 omit [NeZero n] in
+/-- A block-start ear replacement stays in the full independent trace universe. -/
 theorem shift_mem_feasible {H X : Finset (ZMod n)} {a : ZMod n}
     (ha0 : a ∉ H) (ha1 : a + 1 ∈ H) (hX : X ∈ feasible H) :
     shift (a + 1) (a + 2) X ∈ feasible H := by
@@ -295,8 +295,8 @@ theorem shift_mem_feasible {H X : Finset (ZMod n)} {a : ZMod n}
         exact ha0 (hia ▸ hXH (mem_erase.mp hi).2)
       · exact hXI i (mem_erase.mp hi).2 (mem_erase.mp hi1).2
 
-/-- Consecutive neighbours are excluded by any trace containing the middle ear. -/
 omit [NeZero n] in
+/-- Consecutive neighbours are excluded by any trace containing the middle ear. -/
 theorem local_excludes {H X : Finset (ZMod n)} {a : ZMod n}
     (hX : X ∈ feasible H) (ht : a + 2 ∈ X) : a + 1 ∉ X ∧ a + 3 ∉ X := by
   have hI := (mem_feasible.mp hX).2

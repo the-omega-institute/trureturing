@@ -47,15 +47,18 @@ noncomputable def deletionSystem (hn : 14 ≤ n) (P Q : Finset (ZMod n))
     obtain ⟨a, ha0, ha1, ha2⟩ := block_start H hp hadj
     have hval (k : ℕ) (hk : k < n) : (k : ZMod n).val = k :=
       ZMod.val_natCast_of_lt hk
+    have hvone : (1 : ZMod n).val = 1 := by simpa using hval 1 (by omega)
+    have hvtwo : (2 : ZMod n).val = 2 := by simpa using hval 2 (by omega)
+    have hvthree : (3 : ZMod n).val = 3 := by simpa using hval 3 (by omega)
     have hst : a + (1 : ZMod n) ≠ a + 2 := by
       intro he
       have hv := congrArg ZMod.val (add_left_cancel he)
-      rw [hval 1 (by omega), hval 2 (by omega)] at hv
+      rw [hvone, hvtwo] at hv
       omega
     have hsu : a + (1 : ZMod n) ≠ a + 3 := by
       intro he
       have hv := congrArg ZMod.val (add_left_cancel he)
-      rw [hval 1 (by omega), hval 3 (by omega)] at hv
+      rw [hvone, hvthree] at hv
       omega
     refine ⟨a + 1, a + 2, a + 3, ha2, hst, hsu,
       fun X hX ht => local_excludes hX ht,
@@ -96,14 +99,15 @@ theorem original_card_le_trace_mass (P Q H : Finset (ZMod n))
       intro T U he
       apply Subtype.ext
       apply Subtype.ext
-      exact congrArg Subtype.val he
+      exact congrArg (fun x : ConditionFiber P Q H X => x.1) he
     have : Finite (ConditionFiber P Q H X) := by unfold ConditionFiber; infer_instance
     simpa only [Nat.card_eq_fintype_card, Fintype.card_coe] using
-      Nat.card_le_card_of_injective hf
+      Nat.card_le_card_of_injective f hf
   unfold mass familyTraces
   rw [hc, Nat.cast_sum]
   apply sum_le_sum
   intro X _
+  unfold weight
   exact_mod_cast hbound X
 
 /-- A common ear of opposite conditioned members lies in the entire allowed support. -/
