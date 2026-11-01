@@ -13,6 +13,8 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Topology.MetricSpace.IsometricSMul
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import D5.S3.Topology.BorsukUlam.PlanarOddMapZero
 
@@ -95,7 +97,35 @@ private theorem family_mem_all
     (v : EuclideanSpace ℝ (Fin 3))
     (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
     family v ∈ allEvents := by
-  sorry
+  have hvnorm : ‖v‖ = 1 := mem_sphere_zero_iff_norm.mp hv
+  have hsq : v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = 1 := by
+    simpa [hvnorm, Fin.sum_univ_three] using (EuclideanSpace.real_norm_sq_eq v).symm
+  have hs : -1 ≤ v 0 := by nlinarith [sq_nonneg (v 1), sq_nonneg (v 2)]
+  have hsn : v 0 ≤ 1 := by nlinarith [sq_nonneg (v 1), sq_nonneg (v 2)]
+  have ht : -1 ≤ v 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2)]
+  have htn : v 1 ≤ 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2)]
+  have h4t : 0 ≤ 4 + v 1 := by linarith
+  have h4tn : 0 ≤ 4 - v 1 := by linarith
+  have hsa : (Real.sqrt (4 + v 1)) ^ 2 = 4 + v 1 := Real.sq_sqrt h4t
+  have hsb : (Real.sqrt (4 - v 1)) ^ 2 = 4 - v 1 := Real.sq_sqrt h4tn
+  intro i
+  fin_cases i
+  · change 0 ≤ (30 : ℝ) ∧ 0 ^ 2 + 0 ^ 2 + 1 ^ 2 ≤ 30 ^ 2
+    norm_num
+  · change 0 ≤ (20 : ℝ) ∧ 0 ^ 2 + 0 ^ 2 + (-1 : ℝ) ^ 2 ≤ 20 ^ 2
+    norm_num
+  · constructor
+    · change 0 ≤ 10 + v 0
+      linarith
+    · change (Real.sqrt (4 + v 1)) ^ 2 + 0 ^ 2 + v 2 ^ 2 ≤ (10 + v 0) ^ 2
+      rw [hsa]
+      nlinarith
+  · constructor
+    · change 0 ≤ 10 - v 0
+      linarith
+    · change 0 ^ 2 + (Real.sqrt (4 - v 1)) ^ 2 + (-v 2) ^ 2 ≤ (10 - v 0) ^ 2
+      rw [hsb]
+      nlinarith
 
 private theorem family_continuous :
     ContinuousOn family
