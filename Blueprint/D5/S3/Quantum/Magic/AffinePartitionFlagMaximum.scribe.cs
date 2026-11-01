@@ -164,7 +164,7 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
         QCall("Set", "Nonempty", CoeSet(value, carrier));
 
     private static Formula Disjoint(Formula left, Formula right, Formula carrier) =>
-        QCall("Set", "Disjoint", CoeSet(left, carrier), CoeSet(right, carrier));
+        App(Qualified("Disjoint"), CoeSet(left, carrier), CoeSet(right, carrier));
 
     private static Formula Subtype(Formula type, Formula variable, Formula predicate) =>
         App(Qualified("Subtype"), LambdaOf(variable, type, predicate));
