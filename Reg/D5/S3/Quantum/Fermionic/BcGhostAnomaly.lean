@@ -116,6 +116,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrArg (fun A : Module.End ℂ Fock => A vacuum ∅) (h 0 1)
   norm_num [rejected, realize, vacuum, ket] at he
+  simp only [LinearMap.neg_apply, Module.End.one_apply, Finsupp.neg_apply,
+    Finsupp.single_eq_same] at he
+  norm_num at he
 private theorem actual_dependence : actual.readout () 0 0 ≠ actual.readout () 0 2 := by
   intro h
   change R 0 = R 2 at h
@@ -188,8 +191,9 @@ def rejected : Realization signature := realize signature (fun _ _ v => v) (fun 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrArg (fun v : Fock => v ∅) (h vacuum)
-  norm_num [rejected, realize, vacuum, parity_ket] at he <;>
-    norm_num [ket] at he
+  norm_num [rejected, realize, vacuum, parity_ket] at he
+  simp only [ket, Finsupp.add_apply, Finsupp.single_eq_same] at he
+  norm_num at he
 private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () (b (-2) vacuum) := by
   change Qg 0 ≠ Qg (b (-2) vacuum)
   exact _root_.Reg.D5.S3.Quantum.Fermionic.BcGhostCubic.Vacuum.actual_dependence
