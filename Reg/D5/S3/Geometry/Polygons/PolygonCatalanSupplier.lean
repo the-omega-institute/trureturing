@@ -11,9 +11,6 @@ targets and missing evidence are disclosed for issue #24755.
 -/
 namespace Reg.D5.S3.Geometry.Polygons.PolygonCatalanSupplier
 
-abbrev target_0_scope := type_of% (@_root_.ClusterAlgebras.IsDiagonal.isSegment)
-def target_0_source : target_0_scope := @_root_.ClusterAlgebras.IsDiagonal.isSegment
-
 abbrev target_1_scope := type_of% (@_root_.ClusterAlgebras.catalanNumber_zero)
 def target_1_source : target_1_scope := @_root_.ClusterAlgebras.catalanNumber_zero
 

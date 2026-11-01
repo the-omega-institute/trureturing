@@ -38,11 +38,6 @@ namespace ClusterAlgebras
 
 variable {m : ℕ} [NeZero m]
 
-/-- Circular betweenness on `ZMod m` is decidable. -/
-instance instDecidableSbtwZMod (a b c : ZMod m) : Decidable (sbtw a b c) := by
-  match m, ‹NeZero m›, a, b, c with
-  | (n + 1), _, a, b, c => exact decidable_of_iff _ Fin.sbtw_iff.symm
-
 /-! ### Segments, sides and diagonals -/
 
 /-- A **segment** of the convex `m`-gon: a two-element subset of `ZMod m`, presented as an
@@ -68,20 +63,12 @@ instance instDecidablePredIsSide : DecidablePred (IsSide (m := m)) := fun _ => b
 instance instDecidablePredIsDiagonal : DecidablePred (IsDiagonal (m := m)) := fun _ => by
   unfold IsDiagonal; infer_instance
 
-omit [NeZero m] in
-/-- A diagonal is in particular a segment. -/
-theorem IsDiagonal.isSegment {e : Sym2 (ZMod m)} (h : IsDiagonal e) : IsSegment e := h.1
-
 /-! ### Crossing -/
 
 /-- Two segments **cross** when, naming their endpoints suitably, each of the two arcs that
 `{a, b}` cuts `ZMod m` into contains one endpoint of `{c, d}`: `sbtw a c b` and `sbtw b d a`. -/
 def Cross (e f : Sym2 (ZMod m)) : Prop :=
   ∃ a b c d : ZMod m, e = s(a, b) ∧ f = s(c, d) ∧ sbtw a c b ∧ sbtw b d a
-
-/-- Crossing is decidable. -/
-instance instDecidableCross (e f : Sym2 (ZMod m)) : Decidable (Cross e f) := by
-  unfold Cross; infer_instance
 
 /-- A **triangulation** of the convex `m`-gon: a set of pairwise non-crossing diagonals,
 maximal with that property. Maximality says every diagonal outside `T` crosses some element
@@ -631,12 +618,6 @@ namespace ClusterAlgebras
 namespace TypeA
 
 variable {m : ℕ} [NeZero m]
-
-/-- Being a triangulation is decidable: every quantifier ranges over a finite type. -/
-instance instDecidablePredIsTriangulation : DecidablePred (IsTriangulation (m := m)) := fun T =>
-  decidable_of_iff ((∀ e ∈ T, IsDiagonal e) ∧ (∀ e ∈ T, ∀ f ∈ T, ¬Cross e f) ∧
-      ∀ e, IsDiagonal e → e ∉ T → ∃ f ∈ T, Cross e f)
-    ⟨fun ⟨h₁, h₂, h₃⟩ => ⟨h₁, h₂, h₃⟩, fun h => ⟨h.1, h.2, h.3⟩⟩
 
 /-! ### Reading the polygon from a base point -/
 
