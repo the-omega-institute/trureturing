@@ -8,6 +8,20 @@
 import D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 import D5.S3.Combinatorics.Graph.Products.IntegerPolyline
 
+/-!
+The literal coordinates and corner lists come from `king-coordinate-certificate.json`,
+SHA-256 `267ae600f78c5960f03ca942d86c9fda2c23a2a9e2752f8022eed266e355b24f`.
+The original labels and edges come from `graph-construction.json`, SHA-256
+`ff9876310835eca475074719e41da20ea0d5056d76b996c3ea7d5b63fcaa0980`.
+These hashes identify scientific inputs, not proof premises. Every geometric
+success obligation is stated below as a proposition about the actual Lean data.
+
+This supplies the routing interface for Carnero Bravo, arXiv:2505.06457v2,
+Question 32. It supplies neither singular homology nor a sphere-wedge obstruction.
+The original seed is Adamaszek's and the graph-move route follows Barmak/Lozin;
+the coordinate certificate is a local construction with no originality claim.
+-/
+
 set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option maxRecDepth 1000000
