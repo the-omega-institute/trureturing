@@ -152,7 +152,7 @@ private theorem first_interval_exact {A : PositiveMatrix} (hA : Unimodular A)
       linarith
     exact lt_of_le_of_lt (mul_nonpos_of_nonpos_of_nonneg hn hy.le) hl
   by_cases hu : 0 < thresholdSlope A D (r + 1)
-  · simp only [firstInterval, if_pos hu, ProfileCell.Contains, max_le_iff, lt_min_iff]
+  · simp only [firstInterval, ite_eq_left hu, ProfileCell.Contains, max_le_iff, lt_min_iff]
     constructor
     · rintro ⟨hy, ⟨hil, ⟨_, hl⟩⟩, hiu, hh⟩
       refine ⟨⟨hy, hil, hiu⟩, (raw_cell_inequalities hA D r hy).mpr ?_⟩
@@ -162,7 +162,7 @@ private theorem first_interval_exact {A : PositiveMatrix} (hA : Unimodular A)
       have ht := (raw_cell_inequalities hA D r hy).mp hh
       exact ⟨hy, ⟨hil, ⟨hy.le, (div_le_iff₀ hk).mpr (by simpa only [mul_comm] using ht.1)⟩⟩,
         hiu, (lt_div_iff₀ hu).mpr (by simpa only [mul_comm] using ht.2)⟩
-  · simp only [firstInterval, if_neg hu, ProfileCell.Contains, max_le_iff]
+  · simp only [firstInterval, ite_eq_right hu, ProfileCell.Contains, max_le_iff]
     constructor
     · rintro ⟨hy, ⟨hil, ⟨_, hl⟩⟩, hiu⟩
       refine ⟨⟨hy, hil, hiu⟩, (raw_cell_inequalities hA D r hy).mpr ?_⟩
@@ -400,7 +400,6 @@ private theorem transport_value {A : PositiveMatrix} (hA : Unimodular A)
   push_cast
   rw [hjq]
   field_simp
-  <;> ring
 
 private theorem cut_integer_bounds {I : ProfileCell} (hl : 0 ≤ I.lower)
     {U m : ℕ} (hm : 1 ≤ m) (hU : I.upper ≤ (U : ℚ)) {j : ℤ}
@@ -644,7 +643,7 @@ private theorem read_or_derive_trace {A : PositiveMatrix} (hA : Unimodular A)
         (next (reply D (mobius A x))).actualReads (mobius A x) := by
   unfold readOrDerive
   cases he : determinedReply A C D with
-  | none => simp [ProfileProgram.actualReads, he]
+  | none => simp [ProfileProgram.actualReads]
   | some r =>
       have hr := determined_reply_correct hA hl hD hx he
       simp [hr]
@@ -985,14 +984,17 @@ private theorem trace_payload {Q V : ℕ} (hQ : 1 ≤ Q) {z : ℚ}
   have hQQ : Q ≤ Q^2 := by nlinarith
   have first := bounded_reply hz hV hD
   have second := bounded_reply hz hV hs
+  push_cast at first
   rcases ht with ht | ht | ht | ht <;> subst rows <;>
     simp [BoundedReplies,hD,hs,hsQ.trans hQQ,first.1,first.2,second.1,second.2]
 
 private theorem endpoint_den_bound (e : GridEndpoint) : e.value.den ≤ e.denominator := by
-  have h := Rat.den_dvd e.numerator (e.denominator : ℤ)
-  rw [Rat.divInt_eq_div] at h
-  have hd : e.value.den ∣ e.denominator := by
-    exact_mod_cast h
+  have hd : (e.numerator /. (e.denominator : ℤ)).den ∣ e.denominator :=
+    Int.natCast_dvd_natCast.mp (Rat.den_dvd e.numerator (e.denominator : ℤ))
+  have he : e.value = e.numerator /. (e.denominator : ℤ) := by
+    rw [Rat.divInt_eq_div]
+    simp only [GridEndpoint.value,Int.cast_natCast]
+  rw [he]
   exact Nat.le_of_dvd e.positive hd
 
 private theorem endpoint_scan_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
@@ -1007,7 +1009,7 @@ private theorem endpoint_scan_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
       split_ifs <;> exact ⟨le_rfl,le_rfl⟩
     · obtain ⟨hl,hu⟩ := ih (by omega)
       simp only [scanEndpoints,ite_eq_right hn,GridEndpoint.maximum,GridEndpoint.minimum]
-      split_ifs <;> constructor <;> dsimp only <;> omega
+      split_ifs <;> constructor <;> omega
 
 private theorem containing_cell_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
     (containingCell B y).lower.den ≤ B ∧ (containingCell B y).upper.den ≤ B := by
