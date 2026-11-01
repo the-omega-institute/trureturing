@@ -59,24 +59,26 @@ private theorem attain_append (u v : List Bool) (x : ℚ) :
 private theorem matrix_cons_eval (b : Bool) (w : List Bool) {x : ℚ} (hx : 0 < x) :
     mobius (wordMatrix (b :: w)) x = step b (mobius (wordMatrix w) x) := by
   have hp := denominator_positive (unimodular_wordMatrix w) hx
-  have hz := mobius_positive (unimodular_wordMatrix w) hx
+  let N : ℚ := (wordMatrix w).a * x + (wordMatrix w).b
+  let D : ℚ := (wordMatrix w).c * x + (wordMatrix w).d
+  have hD : D ≠ 0 := hp.ne'
   cases b
-  · have hsum : (wordMatrix w).c * x + (wordMatrix w).d +
-        ((wordMatrix w).a * x + (wordMatrix w).b) ≠ 0 := by
-      have hn : 0 < ((wordMatrix w).a : ℚ) * x + (wordMatrix w).b := by
-        have ha : (0 : ℚ) < (wordMatrix w).a := by
-          exact_mod_cast (diagonal_positive (unimodular_wordMatrix w)).1
-        positivity
-      linarith
-    ring_nf at hsum
-    dsimp [wordMatrix, PositiveMatrix.mul, leftStep, mobius, step]
-    push_cast
-    field_simp [hp.ne', hsum]
-    <;> ring
-  · dsimp [wordMatrix, PositiveMatrix.mul, rightStep, mobius, step]
-    push_cast
-    field_simp [hp.ne']
-    <;> ring
+  · have he : mobius (wordMatrix (false :: w)) x = N / (D + N) := by
+      dsimp [wordMatrix, PositiveMatrix.mul, leftStep, mobius, N, D]
+      push_cast
+      congr 1 <;> ring
+    rw [he]
+    change N / (D + N) = (N / D) / (1 + N / D)
+    generalize hNN : N = n at *
+    generalize hDD : D = d at *
+    field_simp [hD]
+  · have he : mobius (wordMatrix (true :: w)) x = (N + D) / D := by
+      dsimp [wordMatrix, PositiveMatrix.mul, rightStep, mobius, N, D]
+      push_cast
+      congr 1 <;> ring
+    rw [he]
+    change (N + D) / D = N / D + 1
+    rw [add_div, div_self hD]
 
 private theorem chronological_matrix (u : List Bool) {x : ℚ} (hx : 0 < x) :
     attain u x = mobius (wordMatrix u.reverse) x := by
@@ -412,7 +414,7 @@ private theorem first_interval_cut_unique {A : PositiveMatrix} (hA : Unimodular 
   have hQ : 1 ≤ Q := by
     have hd := (diagonal_positive hA).2
     dsimp [Q]
-    nlinarith
+    simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * U + A.d by omega)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
   intro j₁ j₂ m₁ m₂ hm₁ hm₁B hm₂ hm₂B hl₁ hu₁ hl₂ hu₂
   have hpos₁ : 0 < (j₁ : ℚ) / m₁ :=
@@ -439,5 +441,310 @@ private theorem first_interval_cut_unique {A : PositiveMatrix} (hA : Unimodular 
   · exact False.elim ((ne_of_lt (mobius_strict hA hpos₁ hpos₂ h)) he)
   · exact h
   · exact False.elim ((ne_of_lt (mobius_strict hA hpos₂ hpos₁ h)) he.symm)
+
+private theorem interval_representative {C : ProfileCell} {x : ℚ} (hx : C.Contains x) :
+    C.Contains C.representative := by
+  dsimp [ProfileCell.Contains, ProfileCell.representative]
+  split_ifs with hl
+  · exact ⟨hl, le_rfl, hx.2.1.trans_lt hx.2.2⟩
+  · have hu : 0 < C.upper := hx.1.trans hx.2.2
+    exact ⟨by positivity, by linarith, by linarith⟩
+
+private theorem cell_congr {B : ℕ} {x y : ℚ} (h : SameInstant B x y) :
+    containingCell B x = containingCell B y := by
+  induction B with
+  | zero => rfl
+  | succ n ih =>
+    have hl : SameInstant n x y := fun m hm hmB => h m hm (by omega)
+    have he := h (n + 1) (by omega) le_rfl
+    simp only [containingCell, he, ih hl]
+
+/-- A read-only program has only completed output and actual current read
+instructions. Its continuation receives the entire integer reply. -/
+inductive ProfileProgram where
+  | done (output : ProfileCell)
+  | read (scale : ℕ) (next : ℤ → ProfileProgram)
+
+def ProfileProgram.execute (z : ℚ) : ProfileProgram → ProfileCell
+  | .done C => C
+  | .read D next => (next (reply D z)).execute z
+
+/-- Derived values do not produce entries in this actual-read trace. -/
+def ProfileProgram.actualReads (z : ℚ) : ProfileProgram → List (ℕ × ℤ)
+  | .done _ => []
+  | .read D next => (D, reply D z) :: (next (reply D z)).actualReads z
+
+/-- Exact endpoint bounds of a proposed current reply. The upper original
+endpoint is excluded, hence the ceiling minus one. -/
+def determinedReply (A : PositiveMatrix) (C : ProfileCell) (D : ℕ) : Option ℤ :=
+  let l := reply D (mobius A C.lower)
+  let h := ⌈(D : ℚ) * mobius A C.upper⌉ - 1
+  if l = h then some l else none
+
+private theorem mobius_lower_bound {A : PositiveMatrix} (hA : Unimodular A)
+    {l x : ℚ} (hl : 0 ≤ l) (hx : 0 < x) (hlx : l ≤ x) :
+    mobius A l ≤ mobius A x := by
+  have hd : (A.a : ℚ) * A.d - (A.b : ℚ) * A.c = 1 := by
+    have he : (A.a : ℚ) * A.d = (A.b : ℚ) * A.c + 1 := by exact_mod_cast hA
+    linarith
+  have hdpos : (0 : ℚ) < A.d := by exact_mod_cast (diagonal_positive hA).2
+  have hpl : 0 < (A.c : ℚ) * l + A.d := by positivity
+  dsimp [mobius]
+  rw [div_le_div_iff₀ hpl (denominator_positive hA hx)]
+  have he : ((A.a : ℚ) * x + A.b) * ((A.c : ℚ) * l + A.d) -
+      ((A.a : ℚ) * l + A.b) * ((A.c : ℚ) * x + A.d) = x - l := by
+    linear_combination (x - l) * hd
+  linarith
+
+private theorem determined_reply_correct {A : PositiveMatrix} (hA : Unimodular A)
+    {C : ProfileCell} (hl : 0 ≤ C.lower) {D : ℕ} (hD : 1 ≤ D)
+    {x : ℚ} (hx : C.Contains x) {r : ℤ} (hr : determinedReply A C D = some r) :
+    reply D (mobius A x) = r := by
+  have hp : (0 : ℚ) < D := by exact_mod_cast (show 0 < D by omega)
+  have hlo : reply D (mobius A C.lower) ≤ reply D (mobius A x) :=
+    Int.floor_mono (mul_le_mul_of_nonneg_left (mobius_lower_bound hA hl hx.1 hx.2.1) hp.le)
+  have hup : reply D (mobius A x) < ⌈(D : ℚ) * mobius A C.upper⌉ :=
+    Int.floor_lt_ceil_of_lt (mul_lt_mul_of_pos_left
+      (mobius_strict hA hx.1 (hx.1.trans hx.2.2) hx.2.2) hp)
+  dsimp only [determinedReply] at hr
+  split_ifs at hr with he
+  · have her := Option.some.inj hr
+    omega
+
+def readOrDerive (A : PositiveMatrix) (C : ProfileCell) (D : ℕ)
+    (next : ℤ → ProfileProgram) : ProfileProgram :=
+  match determinedReply A C D with
+  | some r => next r
+  | none => .read D next
+
+private theorem read_or_derive_execute {A : PositiveMatrix} (hA : Unimodular A)
+    {C : ProfileCell} (hl : 0 ≤ C.lower) {D : ℕ} (hD : 1 ≤ D)
+    {x : ℚ} (hx : C.Contains x) (next : ℤ → ProfileProgram) :
+    (readOrDerive A C D next).execute (mobius A x) =
+      (next (reply D (mobius A x))).execute (mobius A x) := by
+  unfold readOrDerive
+  cases he : determinedReply A C D with
+  | none => rfl
+  | some r => rw [determined_reply_correct hA hl hD hx he]
+
+private theorem read_or_derive_trace {A : PositiveMatrix} (hA : Unimodular A)
+    {C : ProfileCell} (hl : 0 ≤ C.lower) {D : ℕ} (hD : 1 ≤ D)
+    {x : ℚ} (hx : C.Contains x) (next : ℤ → ProfileProgram) :
+    (readOrDerive A C D next).actualReads (mobius A x) =
+      (if determinedReply A C D = none then [(D, reply D (mobius A x))] else []) ++
+        (next (reply D (mobius A x))).actualReads (mobius A x) := by
+  unfold readOrDerive
+  cases he : determinedReply A C D with
+  | none => simp [ProfileProgram.actualReads, he]
+  | some r =>
+      have hr := determined_reply_correct hA hl hD hx he
+      simp [he, hr]
+
+def splitInterval (C : ProfileCell) (t : ℚ) (upperSide : Bool) : ProfileCell :=
+  if upperSide then ⟨max C.lower t, C.upper⟩ else ⟨C.lower, min C.upper t⟩
+
+private theorem split_interval_exact (C : ProfileCell) (t x : ℚ) (upperSide : Bool) :
+    (splitInterval C t upperSide).Contains x ↔
+      C.Contains x ∧ (if upperSide then t ≤ x else x < t) := by
+  cases upperSide <;>
+    simp only [splitInterval, Bool.false_eq_true, ite_false, ite_true,
+      ProfileCell.Contains, max_le_iff, lt_min_iff]
+  <;> tauto
+
+private theorem split_no_cut {B : ℕ} {C : ProfileCell} {j : ℤ} {m : ℕ}
+    (hm : 1 ≤ m) (hmB : m ≤ B)
+    (unique : ∀ j' : ℤ, ∀ m' : ℕ, 1 ≤ m' → m' ≤ B →
+      C.lower < (j' : ℚ) / m' → (j' : ℚ) / m' < C.upper →
+      (j' : ℚ) / m' = (j : ℚ) / m)
+    (side : Bool) :
+    ∀ m' : ℕ, 1 ≤ m' → m' ≤ B → ∀ j' : ℤ,
+      ¬ ((splitInterval C ((j : ℚ) / m) side).lower < (j' : ℚ) / m' ∧
+        (j' : ℚ) / m' < (splitInterval C ((j : ℚ) / m) side).upper) := by
+  intro m' hm' hm'B j' hh
+  cases side
+  · simp only [splitInterval, Bool.false_eq_true, ite_false] at hh
+    have he := unique j' m' hm' hm'B hh.1 (lt_min_iff.mp hh.2).1
+    have ht := (lt_min_iff.mp hh.2).2
+    exact (lt_irrefl _) (he ▸ ht)
+  · simp only [splitInterval, ite_true] at hh
+    have he := unique j' m' hm' hm'B (max_lt_iff.mp hh.1).1 hh.2
+    have ht := (max_lt_iff.mp hh.1).2
+    exact (lt_irrefl _) (he ▸ ht)
+
+def originalUpper (I : ProfileCell) : ℕ := (Int.ceil I.upper).toNat
+
+def profileScale (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) : ℕ :=
+  B * (A.c * originalUpper I + A.d)
+
+/-- The finite controller receives only the known matrix, earned interval,
+requested resolution and actual replies. There is no source-valued argument. -/
+def acquireProfile (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) : ProfileProgram :=
+  if findCut B I = none then .done (containingCell B I.representative)
+  else
+    let Q := profileScale A I B
+    readOrDerive A I (Q ^ 2) fun r =>
+      let J := firstInterval A (Q ^ 2) I r
+      match findCut B J with
+      | none => .done (containingCell B J.representative)
+      | some (j, m) =>
+          let s := transportDenominator A j m
+          let p := transportNumerator A j m
+          readOrDerive A J s fun h =>
+            let K := splitInterval J ((j : ℚ) / m) (decide (p ≤ h))
+            .done (containingCell B K.representative)
+
+private theorem original_upper_bounds {I : ProfileCell} {x : ℚ} (hx : I.Contains x) :
+    1 ≤ originalUpper I ∧ I.upper ≤ (originalUpper I : ℚ) := by
+  have hp : 0 < (Int.ceil I.upper) := Int.ceil_pos.mpr (hx.1.trans hx.2.2)
+  have he : ((Int.ceil I.upper).toNat : ℤ) = Int.ceil I.upper :=
+    Int.toNat_of_nonneg hp.le
+  constructor
+  · dsimp [originalUpper]; omega
+  · have he' : (originalUpper I : ℚ) = (Int.ceil I.upper : ℤ) := by
+      exact_mod_cast he
+    rw [he']
+    exact Int.le_ceil _
+
+private theorem current_cut_compare {A : PositiveMatrix} (hA : Unimodular A)
+    {j : ℤ} {m : ℕ} (hm : 1 ≤ m) (hj : 0 < j) {x : ℚ} (hx : 0 < x) :
+    transportNumerator A j m ≤ reply (transportDenominator A j m) (mobius A x) ↔
+      (j : ℚ) / m ≤ x := by
+  have ht : (0 : ℚ) < (j : ℚ) / m := by
+    apply div_pos <;> exact_mod_cast (by omega : 0 < _)
+  have hd : (0 : ℚ) < transportDenominator A j m := by
+    have ha : 0 < A.d := (diagonal_positive hA).2
+    dsimp [transportDenominator]
+    positivity
+  have he : (transportNumerator A j m ≤
+      reply (transportDenominator A j m) (mobius A x)) ↔
+      mobius A ((j : ℚ) / m) ≤ mobius A x := by
+    rw [transport_value hA hm hj, div_le_iff₀ hd, reply, Int.le_floor]
+    simp only [mul_comm]
+  rw [he]
+  constructor
+  · intro h
+    by_contra hn
+    exact (not_lt_of_ge h) (mobius_strict hA hx ht (lt_of_not_ge hn))
+  · intro h
+    rcases lt_or_eq_of_le h with hh | hh
+    · exact (mobius_strict hA ht hx hh).le
+    · simp [hh]
+
+/-- This trace describes genuine current replies only; its optional singleton
+may be the second scale when the first reply was derived from earlier evidence. -/
+def TwoReplyTrace (Q : ℕ) (z : ℚ) (rows : List (ℕ × ℤ)) : Prop :=
+  ∃ s : ℕ, 1 ≤ s ∧ s ≤ Q ∧
+    (rows = [] ∨ rows = [(Q ^ 2, reply (Q ^ 2) z)] ∨
+      rows = [(s, reply s z)] ∨
+      rows = [(Q ^ 2, reply (Q ^ 2) z), (s, reply s z)])
+
+private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
+    {I : ProfileCell} (hl : 0 ≤ I.lower) {B : ℕ} (hB : 1 ≤ B)
+    {x : ℚ} (hx : I.Contains x) :
+    (acquireProfile A I B).execute (mobius A x) = containingCell B x ∧
+      TwoReplyTrace (profileScale A I B) (mobius A x)
+        ((acquireProfile A I B).actualReads (mobius A x)) := by
+  obtain ⟨hU, hIU⟩ := original_upper_bounds hx
+  let Q := profileScale A I B
+  have hQ : 1 ≤ Q := by
+    have hd := (diagonal_positive hA).2
+    dsimp [Q, profileScale]
+    simpa using Nat.mul_le_mul hB (show 1 ≤ A.c * originalUpper I + A.d by omega)
+  have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
+  have finish {C : ProfileCell} (hCx : C.Contains x)
+      (hn : ∀ m : ℕ, 1 ≤ m → m ≤ B → ∀ j : ℤ,
+        ¬ (C.lower < (j : ℚ) / m ∧ (j : ℚ) / m < C.upper)) :
+      containingCell B C.representative = containingCell B x := by
+    exact cell_congr (no_interior_cut_same hn (interval_representative hCx) hCx)
+  unfold acquireProfile
+  split_ifs with hstart
+  · constructor
+    · exact finish hx ((find_cut_spec B I).2 hstart)
+    · exact ⟨1, le_rfl, hQ, Or.inl rfl⟩
+  · change (readOrDerive A I (Q ^ 2) _).execute (mobius A x) = _ ∧
+      TwoReplyTrace Q (mobius A x) ((readOrDerive A I (Q ^ 2) _).actualReads (mobius A x))
+    rw [read_or_derive_execute hA hl hD hx,
+      read_or_derive_trace hA hl hD hx]
+    let r := reply (Q ^ 2) (mobius A x)
+    let J := firstInterval A (Q ^ 2) I r
+    have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx, rfl⟩
+    have hJl : 0 ≤ J.lower := first_interval_lower_nonneg A (Q ^ 2) I r
+    cases hcut : findCut B J with
+    | none =>
+      change (ProfileProgram.done (containingCell B J.representative)).execute _ = _ ∧
+        TwoReplyTrace Q (mobius A x)
+          ((if determinedReply A I (Q ^ 2) = none then [(Q ^ 2, r)] else []) ++ [])
+      constructor
+      · exact finish hJ ((find_cut_spec B J).2 hcut)
+      · refine ⟨1, le_rfl, hQ, ?_⟩
+        split_ifs <;> simp [r]
+    | some cut =>
+      obtain ⟨j, m⟩ := cut
+      obtain ⟨hm, hmB, hjl, hju⟩ := (find_cut_spec B J).1 j m hcut
+      have hjI : I.lower < (j : ℚ) / m ∧ (j : ℚ) / m < I.upper := by
+        have hp : 0 < (j : ℚ) / m := hJl.trans_lt hjl
+        have hi := (first_interval_exact hA hD hx.1 rfl _).mp ⟨hp, hjl.le, hju⟩
+        exact ⟨(le_max_left _ _).trans_lt hjl, hi.1.2.2⟩
+      obtain ⟨hj, hjU⟩ := cut_integer_bounds hl hm hIU hjI
+      obtain ⟨hs, hsQ⟩ := transport_bounds hA hm hmB hj.le hjU
+      let s := transportDenominator A j m
+      let p := transportNumerator A j m
+      let h := reply s (mobius A x)
+      let side := decide (p ≤ h)
+      let K := splitInterval J ((j : ℚ) / m) side
+      have hcompare : p ≤ h ↔ (j : ℚ) / m ≤ x := current_cut_compare hA hm hj hx.1
+      have hK : K.Contains x := by
+        apply (split_interval_exact J ((j : ℚ) / m) x side).mpr
+        refine ⟨hJ, ?_⟩
+        dsimp [side]
+        by_cases hh : p ≤ h
+        · simpa [hh] using hcompare.mp hh
+        · simpa [hh] using (lt_of_not_ge (fun hh' => hh (hcompare.mpr hh')))
+      have hKn := split_no_cut hm hmB
+        (fun j' m' hm' hm'B hj'l hj'u =>
+          first_interval_cut_unique hA hB hl hIU hx j' j m' m
+            hm' hm'B hm hmB hj'l hj'u hjl hju) side
+      change (readOrDerive A J s _).execute (mobius A x) = _ ∧
+        TwoReplyTrace Q (mobius A x)
+          ((if determinedReply A I (Q ^ 2) = none then [(Q ^ 2, r)] else []) ++
+            (readOrDerive A J s _).actualReads (mobius A x))
+      rw [read_or_derive_execute hA hJl hs hJ,
+        read_or_derive_trace hA hJl hs hJ]
+      constructor
+      · exact finish hK hKn
+      · refine ⟨s, hs, hsQ, ?_⟩
+        change ((if determinedReply A I (Q ^ 2) = none then [(Q ^ 2, r)] else []) ++
+          ((if determinedReply A J s = none then [(s, h)] else []) ++ [])) = [] ∨ _
+        split_ifs <;> simp [r, h]
+
+/-- Actual acquisition on one authentic chronological prefix. The finite
+output is exactly the original cell and evaluates every future word and every
+scale through the requested bound; the actual-read trace has at most two rows. -/
+theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
+    (hB : 1 ≤ B) (hl : 0 ≤ I.lower) {x : ℚ} (hx : I.Contains x) :
+    let A := wordMatrix u.reverse
+    let z := attain u x
+    let program := acquireProfile A I B
+    let C := program.execute z
+    C = containingCell B x ∧
+      (∀ y : ℚ, C.Contains y ↔ 0 < y ∧ SameFuture B y x) ∧
+      (∀ v : List Bool, ∀ m : ℕ, 1 ≤ m → m ≤ B →
+        C.evaluate v m = reply m (attain v x)) ∧
+      TwoReplyTrace (profileScale A I B) z (program.actualReads z) := by
+  dsimp only
+  rw [chronological_matrix u hx.1]
+  obtain ⟨he, ht⟩ := acquisition_spec (unimodular_wordMatrix u.reverse) hl hB hx
+  refine ⟨he, ?_, ?_, ht⟩
+  · rw [he]
+    intro y
+    rw [containing_cell_exact B hB hx.1 y]
+    constructor
+    · rintro ⟨hy, hi⟩
+      exact ⟨hy, (instantaneous_iff_full_future hy hx.1).mp hi⟩
+    · rintro ⟨hy, hi⟩
+      exact ⟨hy, (instantaneous_iff_full_future hy hx.1).mpr hi⟩
+  · rw [he]
+    exact (containing_cell_evaluator B hB hx.1).2 x
+      ((containing_cell_exact B hB hx.1 x).mpr ⟨hx.1, fun _ _ _ => rfl⟩)
 
 end D5.S3.Observer.RationalRouting
