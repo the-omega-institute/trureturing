@@ -273,3 +273,92 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end LogRatio
 
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+
+namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.TrivialDerivative
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature := realize signature (fun _ _ t => trivialT t) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law F := ∀ {t : ℝ}, 0 < t → HasDerivAt (F.readout () ())
+    (F.readout () () t + Real.log (1 - Real.exp (-(2 * t))) / 2) t
+
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hh
+  have hd := hh (t := 1) zero_lt_one
+  have he := hd.unique (hasDerivAt_const (1 : ℝ) (0 : ℝ))
+  change 0 + Real.log (1 - Real.exp (-(2 * (1 : ℝ)))) / 2 = 0 at he
+  have ha : 0 < 1 - Real.exp (-(2 * (1 : ℝ))) :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (by norm_num))
+  have hb : 1 - Real.exp (-(2 * (1 : ℝ))) < 1 := by linarith [Real.exp_pos (-(2 * (1 : ℝ)))]
+  linarith [Real.log_neg ha hb]
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  by_contra hh
+  push_neg at hh
+  have he : trivialT = fun _ : ℝ => trivialT 1 := by
+    funext t
+    exact hh () t 1
+  have hz (t : ℝ) : HasDerivAt trivialT 0 t := by rw [he]; exact hasDerivAt_const _ _
+  have h₁ := (trivialT_derivative (t := 1) zero_lt_one).unique (hz 1)
+  have h₂ := (trivialT_derivative (t := 2) (by norm_num)).unique (hz 2)
+  have ht : trivialT 1 = trivialT 2 := hh () 1 2
+  have ha : 0 < 1 - Real.exp (-(2 * (1 : ℝ))) :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (by norm_num))
+  have hb : 1 - Real.exp (-(2 * (1 : ℝ))) < 1 - Real.exp (-(2 * (2 : ℝ))) := by
+    linarith [Real.exp_lt_exp.mpr (show -(2 * (2 : ℝ)) < -(2 * (1 : ℝ)) by norm_num)]
+  linarith [Real.log_lt_log ha hb]
+
+def evidence : Registration arena (type_of% @trivialT_derivative) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@trivialT_derivative, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@trivialT_derivative) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.trivialT_derivative.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.TrivialDerivative.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ t => trivialT t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.TrivialDerivative

@@ -8,7 +8,7 @@ internal sealed class ActualKernelLocalPositivityDocument : IScribeDocumentDefin
         "A common short window gives strict positivity for every finite configuration of the complete arithmetic kernel.",
         H("Local strict positivity of the actual prime kernel"),
         Blocks(
-            Describe.Lean(DescribeId.Create("actualkernellocalpositivity-trivialT-derivative"),
+            Describe.Lean(DescribeId.Create("actualkernellocalpositivity-trivialt-derivative"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.trivialT_derivative"),
                 H("The complete trivial-tail derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every t>0, the derivative of the full trivial-zero tail is trivialT(t)+log(1-exp(-2*t))/2. This original supplier is used in the compact estimate after exponential damping."))), DescribeRole.Theorem),

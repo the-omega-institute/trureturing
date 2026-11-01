@@ -7,7 +7,7 @@ internal sealed class ActualKernelNearNodeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Quantitative actual-kernel near-node Schur insertion", H("Quantitative actual-kernel near-node Schur insertion"),
         Blocks(
-            Describe.Lean(DescribeId.Create("actualkernelnearnode-H"),
+            Describe.Lean(DescribeId.Create("actualkernelnearnode-h"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelNearNode.H"),
                 H("The actual finite Gram matrix"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every cardinality n and real node map x:Fin(n)->Real, H(i,k)=K(x(i)-x(k))."))), DescribeRole.Definition),
@@ -15,7 +15,7 @@ internal sealed class ActualKernelNearNodeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelNearNode.b"),
                 H("The actual insertion column"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For an anchor j and displacement h, b(h)(i)=K(x(i)-x(j)-h)."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("actualkernelnearnode-S"),
+            Describe.Lean(DescribeId.Create("actualkernelnearnode-s"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelNearNode.S"),
                 H("The actual Schur remainder"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("S(h)=M-b(h)^T*H^(-1)*b(h), with M=firstLiMass=K(0). All statements requiring an inverse identity assume the actual H is positive definite."))), DescribeRole.Definition),
@@ -47,8 +47,8 @@ internal sealed class ActualKernelNearNodeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelNearNode.augmented"),
                 H("The augmented actual Gram matrix"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The rows and columns are indexed by Fin(n)+Unit. The old points remain x(i), the new point is x(j)+h, and every entry is K evaluated on the corresponding actual point difference."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("actualkernelnearnode-explicit-near-node-posDef"),
+            Describe.Lean(DescribeId.Create("actualkernelnearnode-explicit-near-node-posdef"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelNearNode.explicit_near_node_posDef"),
                 H("Insertion for every injective actual configuration"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every finite injective real node map x, every anchor j and every positive definite actual H, there exist g>0,d,N with the displayed arithmetic bounds, positive explicit rho, and for all 0<abs(h)<=rho both the positive Schur certificate and strict positive definiteness of the augmented actual Gram matrix. The construction takes half the minimum of the positive anchor gaps, using the value one for the anchor itself, and d=g+sum(i) abs(x(i)-x(j)); N=ceil(exp(d))+1 is sufficient. The block argument uses the positive scalar Schur complement to obtain both semidefiniteness and invertibility, then strict definiteness. Mathlib PosDef.fromBlocks_11 alone supplies only semidefiniteness. These radii depend on conditioning, node gaps and the actual finite Mangoldt masses. They provide no uniform prescribed integer insertion, no far-block estimate, and no global RH or Robin conclusion. The source atom also asks for asymptotic equivalence of S(h) with r*log(1/r); the quantitative statements here do not independently claim that atom is fully covered."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every finite injective real node map x, every anchor j and every positive definite actual H, there exist g>0,d,N with the displayed arithmetic bounds, positive explicit rho, and for all 0<abs(h)<=rho both the positive Schur certificate and strict positive definiteness of the augmented actual Gram matrix. The construction takes half the minimum of the positive anchor gaps, using the value one for the anchor itself, and d=g+sum(i) abs(x(i)-x(j)); N=ceil(exp(d))+1 is sufficient. The block argument uses the positive scalar Schur complement to obtain both semidefiniteness and invertibility, then strict definiteness. Mathlib PosDef.fromBlocks_11 alone supplies only semidefiniteness. These radii depend on conditioning, node gaps and the actual finite Mangoldt masses. They provide no uniform prescribed integer insertion, no far-block estimate, and no global RH or Robin conclusion. The displayed quantitative inequalities do not assert the separate asymptotic-equivalence statement."))), DescribeRole.Theorem))));
 }

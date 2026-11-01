@@ -86,7 +86,8 @@ private lemma schur_identity {n : ℕ} (x : Fin n → ℝ) (j : Fin n)
   have hc₂ : u x j h ⬝ᵥ ((H x)⁻¹ *ᵥ v) = u x j h j := by
     rw [hi, Matrix.dotProduct_single_one]
   dsimp only [S]
-  rw [hu, Matrix.mulVec_add, add_dotProduct, dotProduct_add, dotProduct_add,
+  rw [hu]
+  simp only [Matrix.mulVec_add, add_dotProduct, dotProduct_add,
     hi, Matrix.dotProduct_single_one, hv, hc₁, hc₂, hj]
   ring
 

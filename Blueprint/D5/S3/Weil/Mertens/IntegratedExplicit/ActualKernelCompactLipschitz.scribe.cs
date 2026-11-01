@@ -7,15 +7,15 @@ internal sealed class ActualKernelCompactLipschitzDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit Lipschitz control for the actual arithmetic kernel", H("Explicit Lipschitz control for the actual arithmetic kernel"),
         Blocks(
-            Describe.Lean(DescribeId.Create("actualkernelcompactlipschitz-A"),
+            Describe.Lean(DescribeId.Create("actualkernelcompactlipschitz-a"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelCompactLipschitz.A"),
                 H("Reciprocal arithmetic mass"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A(N) is the finite sum of the actual von Mangoldt values Lambda(n)/n for n<N. The n=0 term is zero under the real division convention."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("actualkernelcompactlipschitz-P"),
+            Describe.Lean(DescribeId.Create("actualkernelcompactlipschitz-p"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelCompactLipschitz.P"),
                 H("Arithmetic mass"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("P(N) is the finite sum of the actual von Mangoldt values Lambda(n) for n<N."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("actualkernelcompactlipschitz-L"),
+            Describe.Lean(DescribeId.Create("actualkernelcompactlipschitz-l"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelCompactLipschitz.L"),
                 H("The explicit compact constant"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("L(a,b,N) equals one half of exp(b/2)*(A(N)+abs(EulerGamma-1)+b)+P(N)+abs(log(2*pi))+1+abs(log(1-exp(-2*a)))."))), DescribeRole.Definition),

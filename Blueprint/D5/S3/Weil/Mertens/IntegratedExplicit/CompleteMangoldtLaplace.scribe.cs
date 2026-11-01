@@ -7,7 +7,7 @@ internal sealed class CompleteMangoldtLaplaceDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Inclusive Mangoldt ramps and complete Mertens transform", H("Inclusive Mangoldt ramps and complete Mertens transform"),
         Blocks(
-            Describe.Lean(DescribeId.Create("completemangoldtlaplace-mangoldtPart-eq-range"),
+            Describe.Lean(DescribeId.Create("completemangoldtlaplace-mangoldtpart-eq-range"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_eq_range"),
                 H("The exact finite ramp window"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every nonnegative real t and every natural N with t<N, the complete Mangoldt ramp sum equals the finite sum over n<N. The strict window cutoff retains every nonzero arithmetic ramp."))), DescribeRole.Theorem),
