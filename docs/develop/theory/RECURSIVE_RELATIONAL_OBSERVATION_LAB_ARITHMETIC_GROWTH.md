@@ -3911,8 +3911,7 @@ prescribed-pair warning of Bastide--Groenland--Jacob--Johnston,
 arXiv:2207.07391v2, together with directed-hypercube routing of
 Chakrabarty--Seshadhri, arXiv:2409.02206v2. The edge/vertex distinction
 and prescribed-pair boundary are also treated by
-Briet--Chakraborty--Garcia-Soriano--Matsliah, *Monotonicity of Boolean
-functions*, DOI 10.1007/s00493-012-2765-1. Balanced discrepancy and
+Briet--Chakraborty--Garcia-Soriano--Matsliah, *Monotonicity Testing and Shortest-Path Routing on the Cube*, DOI 10.1007/s00493-012-2765-1. Balanced discrepancy and
 pseudoarboricity supply the mature orientation language (Ghaffari et al.,
 arXiv:1706.04746v2; Blumenstock--Fischer, arXiv:1811.06803v4), while
 Rivest--Shamir (1982) supplies only the monotone-write/rank-phase context.
