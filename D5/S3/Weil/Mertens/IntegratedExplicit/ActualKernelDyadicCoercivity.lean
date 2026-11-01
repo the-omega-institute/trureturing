@@ -500,23 +500,16 @@ private lemma tentEnergy_eq_integral {n : ℕ} (x : Fin n → ℝ)
     tentEnergy x c s = ∫ u : ℝ,
       Complex.normSq (D5.S3.Analytic.Interpolation.AveragedBoxEnergy.boxSum x c s u) := by
   classical
-  have hterm (i : Fin n) :
-      (Ico (x i) (x i + s)).indicator (fun _ => c i) =ᵐ[volume]
-        fun u => intervalVector s (x i) u * c i := by
-    have he : (Ico (x i) (x i + s)).indicator (fun _ : ℝ => c i) =ᵐ[volume]
-        (Icc (x i) (x i + s)).indicator (fun _ : ℝ => c i) :=
-      indicator_ae_eq_of_ae_eq_set Ico_ae_eq_Icc
-    filter_upwards [he] with u hu
-    rw [hu]
+  have hsum (u : ℝ) :
+      D5.S3.Analytic.Interpolation.AveragedBoxEnergy.boxSum x c s u =
+        ∑ i, intervalVector s (x i) u * c i := by
+    apply Finset.sum_congr rfl
+    intro i _
     by_cases hi : u ∈ Icc (x i) (x i + s) <;> simp [intervalVector, hi]
-  have hsum : D5.S3.Analytic.Interpolation.AveragedBoxEnergy.boxSum x c s =ᵐ[volume]
-      fun u => ∑ i, intervalVector s (x i) u * c i := by
-    filter_upwards [ae_all_iff.mpr hterm] with u hu
-    exact Finset.sum_congr rfl (fun i _ => hu i)
   rw [tentEnergy, quadratic_eq_re, ← (triangle_quadratic s x c).2,
     integral_complex_ofReal]
   simp only [Complex.ofReal_re]
-  exact integral_congr_ae (hsum.mono (fun u hu => congrArg Complex.normSq hu.symm))
+  exact integral_congr_ae (ae_of_all _ (fun u => congrArg Complex.normSq (hsum u).symm))
 
 private lemma tentEnergy_nonneg {n : ℕ} (x : Fin n → ℝ) (c : Fin n → ℂ) (s : ℝ) :
     0 ≤ tentEnergy x c s := by

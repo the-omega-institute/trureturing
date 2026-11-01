@@ -187,14 +187,17 @@ private theorem rect_subset_strip (x : ι → ℝ) {g a : ℝ} (hg : 0 < g) (hga
   change x i - 7 * a / 4 ≤ v ∧ v ≤ x i - 5 * a / 4 at hv
   constructor <;> dsimp only <;> linarith [hu.1, hu.2, hv.1, hv.2]
 
-/-- Half-open boxes; replacing them by closed boxes changes no energy integral. -/
+/-- The literal finite closed-box sum. -/
 def boxSum (x : ι → ℝ) (c : ι → ℂ) (s u : ℝ) : ℂ :=
+  ∑ i, (Icc (x i) (x i + s)).indicator (fun _ => c i) u
+
+private def halfOpenBoxSum (x : ι → ℝ) (c : ι → ℂ) (s u : ℝ) : ℂ :=
   ∑ i, (Ico (x i) (x i + s)).indicator (fun _ => c i) u
 
-private lemma boxSum_eq_prefix (x : ι → ℝ) (c : ι → ℂ) {s : ℝ} (hs : 0 ≤ s)
-    (u : ℝ) : boxSum x c s u = prefix x c u - prefix x c (u - s) := by
+private lemma halfOpenBoxSum_eq_prefix (x : ι → ℝ) (c : ι → ℂ) {s : ℝ} (hs : 0 ≤ s)
+    (u : ℝ) : halfOpenBoxSum x c s u = prefix x c u - prefix x c (u - s) := by
   classical
-  rw [boxSum, prefix, prefix, ← Finset.sum_sub_distrib]
+  rw [halfOpenBoxSum, prefix, prefix, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro i _
   by_cases hi : x i ≤ u
@@ -208,6 +211,16 @@ private lemma boxSum_eq_prefix (x : ι → ℝ) (c : ι → ℂ) {s : ℝ} (hs :
   · have hi' : ¬ x i ≤ u - s := by linarith
     have hn : u ∉ Ico (x i) (x i + s) := fun hu => hi hu.1
     simp [hi, hi', hn]
+
+private lemma halfOpenBoxSum_ae_eq_boxSum (x : ι → ℝ) (c : ι → ℂ) (s : ℝ) :
+    halfOpenBoxSum x c s =ᵐ[volume] boxSum x c s := by
+  classical
+  have hterm (i : ι) :
+      (Ico (x i) (x i + s)).indicator (fun _ : ℝ => c i) =ᵐ[volume]
+        (Icc (x i) (x i + s)).indicator (fun _ : ℝ => c i) :=
+    indicator_ae_eq_of_ae_eq_set Ico_ae_eq_Icc
+  filter_upwards [ae_all_iff.mpr hterm] with u hu
+  exact Finset.sum_congr rfl (fun i _ => hu i)
 
 private def differenceEnergy (x : ι → ℝ) (c : ι → ℂ) (p : ℝ × ℝ) : ℝ :=
   Complex.normSq (prefix x c p.1 - prefix x c p.2)
@@ -342,9 +355,15 @@ private lemma strip_integral_eq_average (x : ι → ℝ) (c : ι → ℂ) {a : �
   intro s
   by_cases hs : s ∈ Icc a (2 * a)
   · simp only [widthEnergy, indicator_of_mem hs]
-    congr 1
-    funext u
-    rw [boxSum_eq_prefix x c (ha.le.trans hs.1)]
+    calc
+      (∫ u : ℝ, Complex.normSq (prefix x c u - prefix x c (u - s))) =
+          ∫ u : ℝ, Complex.normSq (halfOpenBoxSum x c s u) := by
+        congr 1
+        funext u
+        rw [halfOpenBoxSum_eq_prefix x c (ha.le.trans hs.1)]
+      _ = ∫ u : ℝ, Complex.normSq (boxSum x c s u) :=
+        integral_congr_ae ((halfOpenBoxSum_ae_eq_boxSum x c s).mono
+          (fun u hu => congrArg Complex.normSq hu))
   · simp [widthEnergy, hs]
 
 /-- All separated jumps are captured in every dyadic-width averaging band. -/
