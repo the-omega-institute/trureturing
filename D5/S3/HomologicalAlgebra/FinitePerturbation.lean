@@ -20,12 +20,21 @@ The classical basic perturbation lemma of Gugenheim--Lambe--Stasheff, with finit
 polynomials and a one-sided nilpotence bound. This is an algebraic inference;
 it supplies no physical BRST nilpotence, quartet contraction or no-ghost input.
 -/
+/-
+proof_shape: finite_perturbation: content
+admission_basis: escape-witness
+escape_witness: master, deriving the transferred Maurer--Cartan identity by
+  invertible noncommutative residual cancellation, consumed by the full retraction.
+The elementary inverse, push-through and representative helpers are consumed
+proof organization; geometric sums and nilpotent units come from pinned Mathlib.
+No mathematical novelty is asserted.
+-/
 namespace D5.S3.HomologicalAlgebra.FinitePerturbation
 
 open Finset
 
 section Ring
-variable {S : Type* } [Ring S]
+variable {S : Type*} [Ring S]
 
 def inversePolynomial (a : S) (n : ℕ) : S := ∑ j ∈ range n, (-a) ^ j
 
@@ -38,9 +47,7 @@ private theorem series_inverse (a : S) (n : ℕ) (ha : a ^ n = 0) :
 
 private theorem opposite_power (h t : S) (n : ℕ) :
     (t * h) ^ (n + 1) = t * (h * t) ^ n * h := by
-  induction n with
-  | zero => simp
-  | succ n ih => rw [pow_succ, ih, pow_succ]; noncomm_ring
+  rw [pow_succ, ← mul_assoc, mul_pow_mul]
 
 private theorem inverse_push (h t k j : S)
     (hk : k * (1 + h * t) = 1) (hk' : (1 + h * t) * k = 1)
@@ -56,11 +63,10 @@ private theorem inverse_push (h t k j : S)
       _ = j * t * ((1 + h * t) * k) := by noncomm_ring
       _ = j * t := by rw [hk', mul_one]
 
-private theorem master (d h t e k j : S)
+private theorem master (d h t e k : S)
     (hd : d * d = 0) (hD : (d + t) * (d + t) = 0)
     (hc : d * h + h * d = 1 - e)
     (hk : k * (1 + h * t) = 1) (hk' : (1 + h * t) * k = 1)
-    (hj : j * (1 + t * h) = 1) (hj' : (1 + t * h) * j = 1)
     (uk : IsUnit (1 + h * t)) (uj : IsUnit (1 + t * h)) :
     let T := t * k
     d * T + T * d + T * e * T = 0 := by
@@ -97,7 +103,7 @@ private theorem core (d h t e k j : S)
     (d + t) * (k * h) + (k * h) * (d + t) = 1 - k * e * j := by
   dsimp only
   let T := t * k
-  have hm : d * T + T * d + T * e * T = 0 := master d h t e k j hd hD hc hk hk' hj hj' uk uj
+  have hm : d * T + T * d + T * e * T = 0 := master d h t e k hd hD hc hk hk' uk uj
   have hp := inverse_push h t k j hk hk' hj' hj
   have ht : T = j * t := hp.2
   have hkt : k = 1 - h * T := by
@@ -128,7 +134,7 @@ private theorem core (d h t e k j : S)
 end Ring
 
 section Modules
-variable {R U V : Type* } [CommRing R]
+variable {R U V : Type*} [CommRing R]
   [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
 
 /-- Only the unperturbed identities and the actual perturbed square enter the input. -/
@@ -198,8 +204,8 @@ private theorem finite_retraction (n : ℕ) (hn : 1 ≤ n)
   obtain ⟨pushh, pusht⟩ := inverse_push c.h c.delta (c.K n) (c.J n) kl kr jr jl
   let T : Module.End R V := c.delta * c.K n
   have tm : c.d0 * T + T * c.d0 + T * (c.i.comp c.p) * T = 0 :=
-    master c.d0 c.h c.delta (c.i.comp c.p) (c.K n) (c.J n)
-      c.d0_sq c.perturbed_sq c.contraction kl kr jl jr uk uj
+    master c.d0 c.h c.delta (c.i.comp c.p) (c.K n)
+      c.d0_sq c.perturbed_sq c.contraction kl kr uk uj
   obtain ⟨dk, jd, hom⟩ := core c.d0 c.h c.delta (c.i.comp c.p) (c.K n) (c.J n)
       c.d0_sq c.perturbed_sq c.contraction kl kr jl jr uk uj
   have kform : c.K n = 1 - c.h * T := by

@@ -1,5 +1,6 @@
 import D5.S3.HomologicalAlgebra.FinitePerturbation
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
+import Mathlib.Algebra.Module.LinearMap.Prod
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
@@ -42,7 +43,7 @@ noncomputable def model : Input (R := ℂ) (U := U) (V := V) :=
 private theorem binding : model.d0 = d0 ∧ model.h = h ∧ model.delta = delta ∧
     model.i = i ∧ model.p = p := Classical.choose_spec input
 
-example : (model.h*model.delta)^2 = 0 := by
+private theorem nilpotent : (model.h*model.delta)^2 = 0 := by
   rw [binding.2.1, binding.2.2.1, pow_two]
   ext x <;> simp [h,delta,Module.End.mul_apply]
 
@@ -61,4 +62,29 @@ example : delta ≠ 0 ∧ model.I 2 (1,0) = ((1,0),(-1,0)) ∧
     have val := DFunLike.congr_fun eq (1,0)
     rw [transfer] at val
     norm_num at val
+private theorem checked : model.Conclusion 2 :=
+  finite_perturbation model 2 (by decide) nilpotent
+
+example : model.D ≠ model.d0 ∧ model.I 2 ≠ model.i ∧
+    model.h*model.delta ≠ 0 ∧ model.delta*model.h = 0 := by
+  have bi := binding
+  refine ⟨?_,?_,?_,?_⟩
+  · intro eq
+    have val := DFunLike.congr_fun eq ((1,0),(0,0))
+    norm_num [D,bi.1,bi.2.2.1,d0,delta] at val
+  · intro eq
+    have val := DFunLike.congr_fun eq (1,0)
+    norm_num [I,K,inversePolynomial,Finset.sum_range_succ,
+      bi.2.1,bi.2.2.1,bi.2.2.2.1,h,delta,i] at val
+  · intro eq
+    have val := DFunLike.congr_fun eq ((1,0),(0,0))
+    norm_num [bi.2.1,bi.2.2.1,h,delta] at val
+  · rw [bi.2.1,bi.2.2.1]
+    ext x <;> simp [h,delta]
+
+set_option pp.universes true in
+#check @Input.finite_perturbation
+#print axioms Input.finite_perturbation
+#print axioms checked
+
 end FinitePerturbationCheck
