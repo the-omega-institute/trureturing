@@ -97,6 +97,7 @@ theorem external_scaling {X : Type u} {I : Type v}
   simp only [Function.comp_apply, Sum.elim_inl, Sum.elim_inr, one_pow,
     Finsupp.prod_const_one, mul_one]
   congr 1
-  simp [Finsupp.prod, ← Finset.prod_pow_eq_pow_sum, Finsupp.degree, Finsupp.sum]
+  change (∏ i ∈ d.support, t ^ d i) = t ^ d.degree
+  rw [Finset.prod_pow_eq_pow_sum, Finsupp.degree_apply]
 
 end D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientScaling

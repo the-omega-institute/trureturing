@@ -269,13 +269,18 @@ theorem sewing (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
       coefficient (kernel P A R) (d.sumElim n) *
       coefficient (rightKernel Q B S) (n.sumElim e)) =
       Complex.exp (TraceClassPowerSeries.traceLog (product A B)) *
-        gaussianCoefficient (effectiveKernel P Q A B R S) (d.sumElim e) := by
+        coefficient (effectiveKernel P Q A B R S) (d.sumElim e) := by
   have hswap (n : Occupation I) :
       coefficient (rightKernel Q B S) (n.sumElim e) = row Q B S e n := by
     have h := coefficient_rename (rightKernel Q B S) Sum.swap
       (fun _ _ h => by simpa only [Sum.swap_swap] using congrArg Sum.swap h) (e.sumElim n)
     rw [Finsupp.mapDomain_swap_sumElim] at h
     exact h
+  have hfinite : coefficient (effectiveKernel P Q A B R S) (d.sumElim e) =
+      gaussianCoefficient (effectiveKernel P Q A B R S) (d.sumElim e) := by
+    simpa using coefficient_finite_inclusion (effectiveKernel P Q A B R S)
+      id Function.injective_id (d.sumElim e)
+  rw [hfinite]
   simp_rw [hswap]
   exact sewing_rows P Q A B R S hP hQ d e
 

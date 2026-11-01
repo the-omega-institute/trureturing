@@ -49,7 +49,7 @@ def arena : Arena where
       V.readout () ⟨I,n⟩ (fun m => coefficient (kernel P A R) (d.sumElim m)) *
       coefficient (rightKernel Q B S) (n.sumElim e)) =
       Complex.exp (TraceClassPowerSeries.traceLog (product A B)) *
-        gaussianCoefficient (effectiveKernel P Q A B R S) (d.sumElim e)
+        coefficient (effectiveKernel P Q A B R S) (d.sumElim e)
 
 private theorem rejected_fails : ¬ arena.{u,v,w}.Law rejected := by
   intro h
@@ -67,7 +67,7 @@ private theorem rejected_fails : ¬ arena.{u,v,w}.Law rejected := by
     inferInstance inferInstance inferInstance inferInstance inferInstance
     0 0 Z Z (fun _ => 0) (fun _ => 0) (by simp) (by simp) 0 0).2
   have hz : (0 : ℂ) = Complex.exp (TraceClassPowerSeries.traceLog (product Z Z)) := by
-    simpa [rejected, realize, gaussianCoefficient_zero] using hh
+    simpa [rejected, realize, coefficient, restrictOccupation, gaussianCoefficient_zero] using hh
   exact Complex.exp_ne_zero _ hz.symm
 
 private theorem actual_dependence : ObservationalDependence signature.{v} actual := by
