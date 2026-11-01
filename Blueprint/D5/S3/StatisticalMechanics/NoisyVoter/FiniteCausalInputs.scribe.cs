@@ -21,7 +21,7 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
             Node("joint-law", "history_law_of_positive_coordinate_laws", "The positive-time coordinate law determines the joint history law", LawTransport(),
                 "The two coordinate families may live on different measurable spaces with different measures. On each space, require mutual independence of the family indexed by initial and strictly positive-time coordinates, measurability of those coordinates, and the same prescribed marginal laws. Then the complete joint opinion-and-source history laws agree, using the same graph, root and horizon. Neither measurability nor independence nor a marginal law is required for a fresh, refresh or choice coordinate at time zero. The common marginal family is arbitrary and may be specialized to fair opinion coins, noisy refresh controls and uniform choices on the actual neighbour sets."),
             Paragraph(Text("For repetition observations with lag d at times i and i+d, the horizon N=t+d includes every observation, including the empty repetition sum at t=0. Retaining source labels jointly also retains every equality among sources, rather than identifying sources whenever their opinion colours happen to agree. The result transports the full source partition and does not assert independence of source collisions.")),
-            Paragraph(Text("This finite reconstruction supplies the finite-input and realization-independence parts of the ancestral-collision argument. The exact variance decomposition with both the variance of the collision count and the expected squared pair multiplicities, its two remainder identities, and its almost-sure equality criterion require further arguments. Equality of the finite product input laws is obtained from the specified independence and marginals, and the common deterministic decoder then transports it to the joint history."))), []));
+            Paragraph(Text("This finite reconstruction supplies the finite-coordinate determination assertion in the opening paragraph of the proof of Theorem 2.1 in the ancestral-collision source. The recursive input set is used directly; no identification with the displayed graph ball or countability conclusion is asserted. The exact variance decomposition with both the variance of the collision count and the expected squared pair multiplicities, its two remainder identities, and its almost-sure equality criterion require further arguments. Equality of the finite product input laws is obtained from the specified independence and marginals, and the common deterministic decoder then transports it to the joint history."))), []));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("voter-causal-" + id),
@@ -53,8 +53,8 @@ internal sealed class FiniteCausalInputsDocument : IScribeDocumentDefinition
     private static Formula PositiveCoords() => Seq(OpenBrace, X("c"), Colon, Coord(), Bar,
         Call("positive", X("c")), CloseBrace);
     private static Formula Val() => Call("val", X("c"));
-    private static Formula PositiveFamily(string family) => Seq(Open, LambdaLower, X("c"), Colon,
-        PositiveCoords(), Comma, App(X(family), Val()), Close);
+    private static Formula PositiveFamily(string family) => Seq(Open, LambdaLower, Sp, X("c"), Colon,
+        PositiveCoords(), Sp, Mapsto, Sp, App(X(family), Val()), Close);
     private static Formula Graph(Formula body) => All("G", Call("SimpleGraph", X("V")),
         Inst(Seq(X("G"), Dot, Named("LocallyFinite")), body));
     private static Formula RootHorizon(Formula body) =>

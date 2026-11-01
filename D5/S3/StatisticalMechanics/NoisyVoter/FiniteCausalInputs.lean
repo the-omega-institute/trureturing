@@ -183,7 +183,7 @@ theorem history_law_of_positive_coordinate_laws [MeasurableSpace Ω] [Measurable
     (u : V) (N : ℕ) :
     P.map (history x u N) = Q.map (history y u N) := by
   classical
-  letI := hix.isProbabilityMeasure
+  have := hix.isProbabilityMeasure
   have hΩ : Nonempty Ω := by
     by_contra h
     have hz : (Set.univ : Set Ω) = ∅ := by
@@ -197,7 +197,9 @@ theorem history_law_of_positive_coordinate_laws [MeasurableSpace Ω] [Measurable
     ⟨c.val, (finite_history_factorization (Ω := Ω) base u N).1 c.val c.property⟩
   have hinj : Function.Injective inclusion := by
     intro a b h
-    exact Subtype.ext (congrArg Subtype.val h)
+    have hv : a.val = b.val :=
+      congrArg (fun c : {c : Coord V // positive c} => c.val) h
+    exact Subtype.ext hv
   have hmx : Measurable (restrictInputs x u N) :=
     measurable_pi_iff.mpr (fun c => hx c.val (inclusion c).property)
   have hmy : Measurable (restrictInputs y u N) :=

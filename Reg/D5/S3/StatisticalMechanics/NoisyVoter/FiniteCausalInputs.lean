@@ -45,7 +45,7 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ {V Ω : Type} {G : SimpleGraph V} [hG : G.LocallyFinite]
+  Law R := ∀ {V Ω : Type} {G : SimpleGraph V} [_hG : G.LocallyFinite]
     (base : (c : Coord V) → Value G c) (u : V) (N : ℕ),
     (∀ c ∈ historyInputs (G := G) u N, positive c) ∧
       ∀ (x : (c : Coord V) → Ω → Value G c) (ω : Ω),
@@ -92,7 +92,7 @@ def factorization_family : Registration arena (type_of% (@finite_history_factori
     intro h
     have he := congrArg (fun f => (f 0).1) h
     change true = false at he
-    exact Bool.true_ne_false he
+    cases he
 
 def factorization_registration : Contract.Registration
     (@finite_history_factorization) (Realization signature) (type_of% (@history)) Unit where
@@ -156,17 +156,17 @@ def lawRejected : Realization lawSignature :=
 
 def lawArena : Arena where
   signature := lawSignature
-  Law R := ∀ {V Ω Ω' : Type} {G : SimpleGraph V} [hG : G.LocallyFinite]
-    [mΩ : MeasurableSpace Ω] [mΩ' : MeasurableSpace Ω']
+  Law R := ∀ {V Ω Ω' : Type} {G : SimpleGraph V} [_hG : G.LocallyFinite]
+    [_mΩ : MeasurableSpace Ω] [_mΩ' : MeasurableSpace Ω']
     (P : MeasureTheory.Measure Ω) (Q : MeasureTheory.Measure Ω')
     (x : (c : Coord V) → Ω → Value G c) (y : (c : Coord V) → Ω' → Value G c)
     (μ : (c : {c : Coord V // positive c}) → MeasureTheory.Measure (Value G c.val))
-    (hx : ∀ c, positive c → Measurable (x c))
-    (hy : ∀ c, positive c → Measurable (y c))
-    (hix : ProbabilityTheory.iIndepFun (fun c : {c : Coord V // positive c} => x c.val) P)
-    (hiy : ProbabilityTheory.iIndepFun (fun c : {c : Coord V // positive c} => y c.val) Q)
-    (hlx : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (x c.val) (μ c) P)
-    (hly : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (y c.val) (μ c) Q)
+    (_hx : ∀ c, positive c → Measurable (x c))
+    (_hy : ∀ c, positive c → Measurable (y c))
+    (_hix : ProbabilityTheory.iIndepFun (fun c : {c : Coord V // positive c} => x c.val) P)
+    (_hiy : ProbabilityTheory.iIndepFun (fun c : {c : Coord V // positive c} => y c.val) Q)
+    (_hlx : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (x c.val) (μ c) P)
+    (_hly : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (y c.val) (μ c) Q)
     (u : V) (N : ℕ),
       P.map (R.readout () ⟨V, Ω, G, u, N⟩ x) = Q.map (history y u N)
 
@@ -194,20 +194,20 @@ private theorem test_independent : ProbabilityTheory.iIndepFun
     simp only [Set.indicator_apply, Pi.one_apply]
   by_cases h : ∀ c ∈ s, () ∈ f c
   · have hi : () ∈ ⋂ c ∈ s, f c := by simpa using h
-    rw [hd, if_pos hi]
+    rw [hd, ite_eq_left hi]
     symm
     apply Finset.prod_eq_one
     intro c hc
-    rw [hd, if_pos (h c hc)]
-  · push_neg at h
+    rw [hd, ite_eq_left (h c hc)]
+  · push Not at h
     obtain ⟨c, hc, hn⟩ := h
     have hi : () ∉ ⋂ c ∈ s, f c := by
       intro h
       exact hn ((Set.mem_iInter.mp (Set.mem_iInter.mp h c)) hc)
-    rw [hd, if_neg hi]
+    rw [hd, ite_eq_right hi]
     symm
     apply Finset.prod_eq_zero hc
-    rw [hd, if_neg hn]
+    rw [hd, ite_eq_right hn]
 
 private theorem test_laws (c : {c : Coord Bool // positive c}) :
     ProbabilityTheory.HasLaw (testAssignment true c.val)
@@ -224,6 +224,10 @@ private theorem law_rejected_law : ¬ lawArena.Law lawRejected := by
     (fun c => MeasureTheory.Measure.dirac (testAssignment true c.val ()))
     (fun _ _ => measurable_of_finite _) (fun _ _ => measurable_of_finite _)
     test_independent test_independent test_laws test_laws true 0
+  change (MeasureTheory.Measure.dirac ()).map
+      (fun (_ : Unit) (n : Fin 1) =>
+        (!(nvm (testAssignment true) n.val true ()), source (testAssignment true) n.val true ())) =
+    (MeasureTheory.Measure.dirac ()).map (history (testAssignment true) true 0) at he
   rw [MeasureTheory.Measure.map_dirac' (measurable_of_finite _) (),
     MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()] at he
   have hb := congrArg (fun f => (f 0).1) (MeasureTheory.injective_dirac he)
@@ -250,7 +254,7 @@ def law_family : Registration lawArena (type_of% (@history_law_of_positive_coord
     intro h
     have he := congrArg (fun f => (f () 0).1) h
     change true = false at he
-    exact Bool.true_ne_false he
+    cases he
 
 def law_registration : Contract.Registration
     (@history_law_of_positive_coordinate_laws) (Realization lawSignature)
