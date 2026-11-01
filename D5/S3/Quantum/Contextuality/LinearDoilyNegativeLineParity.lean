@@ -303,7 +303,7 @@ private theorem line_sign {N : ℕ}
 private def modelForm (a b : Fin 4 → ZMod 2) : ZMod 2 :=
   a 0 * b 1 + a 1 * b 0 + a 2 * b 3 + a 3 * b 2
 
-theorem B_add_left {N : ℕ} (u v w : Fin N → ZMod 2 × ZMod 2) :
+private theorem B_add_left {N : ℕ} (u v w : Fin N → ZMod 2 × ZMod 2) :
     B (u + v) w = B u w + B v w := by
   unfold B
   rw [← Finset.sum_add_distrib]

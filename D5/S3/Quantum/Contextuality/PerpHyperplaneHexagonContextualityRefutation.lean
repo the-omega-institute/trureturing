@@ -66,10 +66,6 @@ private def counterexample : Finset (Finset point) := by
   classical
   exact (lines w).filter fun l => ∀ q ∈ l, B pole q = 0
 
-private theorem counterexample_subset : counterexample ⊆ lines w := by
-  classical
-  exact Finset.filter_subset _ _
-
 private def triple (u v : point) : Finset point := {u, v, u + v}
 
 private def exponent (u v : point) : ZMod 4 :=
@@ -357,7 +353,7 @@ private theorem counterexample_degree_le : contextualityDegree counterexample �
     · intro hl
       obtain ⟨hc, hn⟩ := Finset.mem_filter.mp hl
       refine Finset.mem_inter.mpr ⟨hc, Finset.mem_filter.mpr
-        ⟨counterexample_subset hc, ?_⟩⟩
+        ⟨Finset.filter_subset _ _ hc, ?_⟩⟩
       by_contra hp
       delta lineSign at hn
       simp [hp] at hn
@@ -407,7 +403,8 @@ fifteen lines with every classical hexagon. -/
 theorem result : ¬ claim := by
   classical
   intro hc
-  obtain ⟨h, hh, he⟩ := hc counterexample counterexample_subset counterexample_contextual
+  obtain ⟨h, hh, he⟩ :=
+    hc counterexample (Finset.filter_subset _ _) counterexample_contextual
   have hlo := hexagon_intersection_ge h hh
   have hhi := counterexample_degree_le
   omega
