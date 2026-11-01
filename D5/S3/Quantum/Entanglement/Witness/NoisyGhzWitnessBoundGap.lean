@@ -167,8 +167,9 @@ private lemma ghz_expectation (ψ : Word (Fin 3) 3 → ℂ) :
   have hghz : ghz 3 3 ∘ e = D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz 3 := by
     funext p
     rcases p with ⟨i, j, k⟩
+    rw [Function.comp_apply, ghz.eq_1]
     fin_cases i <;> fin_cases j <;> fin_cases k <;>
-      norm_num [ghz, D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz,
+      norm_num [D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz,
         e, Function.comp_def, Fin.sum_univ_succ, Pi.single_apply, Fin.forall_fin_succ]
   have hoverlap : star (ghz 3 3) ⬝ᵥ ψ =
       star (D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.ghz 3) ⬝ᵥ (ψ ∘ e) := by
