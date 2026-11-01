@@ -62,7 +62,7 @@ def source_registration :
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@von_neumann_entropy_basisPinchingState.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.von_neumann_entropy_basisPinchingState.__information_unit
+  unitName := `Reg.D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.unit
   realizationName :=
     `Reg.D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.source_registration
   realizationSource := none
