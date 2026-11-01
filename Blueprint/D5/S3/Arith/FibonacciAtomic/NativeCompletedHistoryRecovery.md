@@ -56,4 +56,5 @@ The same-source acquisition, rights, lawful stationary traversal, complete ances
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair](Geometry/NativeGuardedLeafRepair.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/NativeLocalSourceExecution](NativeLocalSourceExecution.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion](Observer/Constructor/NativeFiniteNormalInversion.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates](SourceCoordinates/IntrinsicSubstitutionCoordinates.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer](SourceTransportCentralizer.md)
