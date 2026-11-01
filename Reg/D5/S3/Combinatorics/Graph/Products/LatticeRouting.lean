@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Graph.Products.LatticeRouting
 import Mathlib.Tactic.NormNum
 
+/-! Integer-state readouts for the exact rotation identity. -/
+
 set_option autoImplicit false
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -52,7 +54,7 @@ def family : Registration arena (type_of% rotation_identity) where
     · intro role
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro other hne
-      exact (hne (Subsingleton.elim other role)).elim
+      exact (hne (Subsingleton.elim (α := Unit) other role)).elim
     · intro anchor
       exact nomatch anchor
   dependence := actual_dependence
