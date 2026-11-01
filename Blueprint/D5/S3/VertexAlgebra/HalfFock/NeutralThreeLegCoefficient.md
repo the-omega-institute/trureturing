@@ -169,3 +169,4 @@ For arbitrary finite repeated source, input and output occupations, any finite l
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeThreeLegOccupation`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeThreeLegRawPolynomial`
 - Dependency: [D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegModeExpansion](NeutralThreeLegModeExpansion.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian](../TwistedGround/OriginalCorrectionGaussian.md)
