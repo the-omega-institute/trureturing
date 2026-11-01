@@ -9,6 +9,7 @@
 import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.Tactic
+import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
 /-! Branch-polynomial algebra for the complete positive-even double-path nSSP event. -/
 
@@ -112,5 +113,66 @@ theorem branch_variation_injective (q dq : ℕ → ℝ) (n : ℕ)
       rcases Nat.lt_or_eq_of_le (Nat.le_of_lt_succ hk) with hlt | rfl
       · exact hi k hlt
       · exact hd
+
+/-- A zero-diagonal weighted path, numbered from the endpoint opposite the recurrence.
+Reversing the vertex order makes the newly attached edge have index `n - 2`. -/
+def weightedPath (b : ℕ → ℝ) (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
+  fun i j => if i.val + 1 = j.val then b (n - 2 - i.val)
+    else if j.val + 1 = i.val then b (n - 2 - j.val) else 0
+
+/-- The branch recurrence is the actual characteristic polynomial, including empty branches. -/
+theorem weighted_path_charpoly (b : ℕ → ℝ) (n : ℕ) :
+    (weightedPath b n).charpoly = continuant (fun k => b k ^ 2) n := by
+  classical
+  induction n using Nat.twoStepInduction with
+  | zero => simp [continuant, Matrix.charpoly_isEmpty]
+  | one =>
+      have hz : weightedPath b 1 = 0 := by
+        ext i j
+        have hi : i.val = 0 := by omega
+        have hj : j.val = 0 := by omega
+        simp [weightedPath, hi, hj]
+      simp [hz, continuant]
+  | more n h0 h1 =>
+      have shift1 (i j : Fin (n + 1)) :
+          weightedPath b (n + 2) i.succ j.succ = weightedPath b (n + 1) i j := by
+        simp only [weightedPath, Fin.val_succ, Nat.add_right_cancel_iff]
+        split_ifs <;> first | rfl | (congr 1 <;> omega)
+      have shift2 (i j : Fin n) :
+          weightedPath b (n + 2) i.succ.succ j.succ.succ = weightedPath b n i j := by
+        simp only [weightedPath, Fin.val_succ, Nat.add_right_cancel_iff]
+        split_ifs <;> first | rfl | (congr 1 <;> omega)
+      have minor1 : (weightedPath b (n + 2)).charmatrix.submatrix Fin.succ Fin.succ =
+          (weightedPath b (n + 1)).charmatrix := by
+        ext i j
+        simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
+          Matrix.diagonal_apply, Fin.succ_inj, shift1]
+      have minor2 : (weightedPath b (n + 2)).charmatrix.submatrix
+          (fun i : Fin n => i.succ.succ) (fun j : Fin n => j.succ.succ) =
+          (weightedPath b n).charmatrix := by
+        ext i j
+        simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
+          Matrix.diagonal_apply, Fin.succ_inj, shift2]
+      have row (j : Fin n) : (weightedPath b (n + 2)).charmatrix 0 j.succ.succ = 0 := by
+        rw [Matrix.charmatrix_apply_ne (by simp)]
+        simp [weightedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
+      have col (i : Fin n) : (weightedPath b (n + 2)).charmatrix i.succ.succ 0 = 0 := by
+        rw [Matrix.charmatrix_apply_ne (by simp)]
+        simp [weightedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
+      have diag : (weightedPath b (n + 2)).charmatrix 0 0 = X := by
+        simp [Matrix.charmatrix_apply_eq, weightedPath]
+      have upper : (weightedPath b (n + 2)).charmatrix 0 1 = -C (b n) := by
+        rw [Matrix.charmatrix_apply_ne (by simp)]
+        simp [weightedPath]
+      have lower : (weightedPath b (n + 2)).charmatrix 1 0 = -C (b n) := by
+        rw [Matrix.charmatrix_apply_ne (by simp)]
+        simp [weightedPath]
+      unfold Matrix.charpoly
+      rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
+        _ row col, minor1, minor2, diag, upper, lower]
+      change X * (weightedPath b (n + 1)).charpoly -
+        (-C (b n)) * (-C (b n)) * (weightedPath b n).charpoly = _
+      rw [h0, h1, continuant, map_pow]
+      ring
 
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
