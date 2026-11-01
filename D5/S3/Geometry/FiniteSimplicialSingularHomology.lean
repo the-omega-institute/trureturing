@@ -57,7 +57,7 @@ open TauCeti.OrderedCechSingular
 abbrev Z : ModuleCat ℤ := ModuleCat.of ℤ ℤ
 
 /-- Actual increasing faces: no truncation or dimension bound is imposed on `K`. -/
-def Face (p : ℕ) := {s : Finset V // s ∈ K ∧ s.card = p + 1}
+abbrev Face (p : ℕ) := {s : Finset V // s ∈ K ∧ s.card = p + 1}
 
 instance (p : ℕ) : Fintype (Face K p) := by
   classical
@@ -85,6 +85,7 @@ def cechι {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
     Z ⟶ ((cechSingular K).X p).X q :=
   TauCeti.OrderedCover.basisι Z s hs σ hσ
 
+omit [Fintype V] in
 @[ext]
 theorem cech_hom_ext {p q : ℕ} {M : ModuleCat ℤ}
     {f g : ((cechSingular K).X p).X q ⟶ M}
@@ -92,6 +93,7 @@ theorem cech_hom_ext {p q : ℕ} {M : ModuleCat ℤ}
       cechι K s hs σ hσ ≫ g) : f = g :=
   TauCeti.OrderedCover.basis_hom_ext Z h
 
+omit [Fintype V] in
 @[reassoc]
 theorem cechι_horizontal {p q : ℕ} (s : Finset V) (hs : s.card = p + 2)
     (σ : (smallSet K) _⦋q⦌)
@@ -102,6 +104,7 @@ theorem cechι_horizontal {p q : ℕ} (s : Finset V) (hs : s.card = p + 2)
           σ (fun w hw => hσ w (mem_of_mem_erase hw)) :=
   TauCeti.OrderedCover.basisι_d Z s hs σ hσ
 
+omit [Fintype V] in
 @[reassoc]
 theorem cechι_vertical {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
     (σ : (smallSet K) _⦋q + 1⦌)
@@ -117,10 +120,10 @@ theorem cechι_vertical {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
     Preadditive.comp_sum, Preadditive.comp_zsmul]
   apply Finset.sum_congr rfl
   intro i hi
-  simp [cechι, rows, SimplicialObject.δ, Preadditive.zsmul_comp]
+  simp [cechι, rows, SimplicialObject.δ]
 
 /-- Any simplex carried by the intersection witnesses that its finite set is a face. -/
-def carriedFace {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
+abbrev carriedFace {p q : ℕ} (s : Finset V) (hs : s.card = p + 1)
     (σ : (smallSet K) _⦋q⦌)
     (hσ : ∀ v ∈ s, σ ∈ (memberSet K v).obj (Opposite.op ⦋q⦌)) : Face K p := by
   refine ⟨s, ?_, hs⟩
@@ -294,6 +297,7 @@ def intersectionSimplexEquiv {p : ℕ} (s : Face K p) (q : ℕ) :
     ext z
     simp
 
+omit [Fintype V] in
 theorem intersectionSimplexEquiv_face {p q : ℕ} (s : Face K p)
     (σ : (TopCat.toSSet.obj (TopCat.of (intersection K s.val))) _⦋q + 1⦌)
     (i : Fin (q + 2)) :
@@ -311,6 +315,7 @@ private def intersectionColumnMap {p : ℕ} (s : Face K p) (q : ℕ) :
     cechι K s.val s.property.2 (intersectionSimplexEquiv K s q σ).val
       (intersectionSimplexEquiv K s q σ).property
 
+omit [Fintype V] in
 @[reassoc]
 private theorem ι_intersectionColumnMap {p q : ℕ} (s : Face K p)
     (σ : (TopCat.toSSet.obj (TopCat.of (intersection K s.val))) _⦋q⦌) :
@@ -330,7 +335,7 @@ private theorem intersectionColumnMap_comm {p : ℕ} (s : Face K p) (q : ℕ) :
   simp only [Preadditive.zsmul_comp, ι_intersectionColumnMap]
   apply Finset.sum_congr rfl
   intro i hi
-  rw [intersectionSimplexEquiv_face]
+  simp only [intersectionSimplexEquiv_face]
 
 private def intersectionColumnι {p : ℕ} (s : Face K p) :
     intersectionChains K s ⟶ (cechSingular K).X p where
@@ -384,7 +389,6 @@ private theorem cechι_columnToCoproduct {p q : ℕ}
           (carriedFace K s hs σ hσ)).f q := by
   rw [cechι, TauCeti.OrderedCover.basisι_eq]
   simp only [columnToCoproduct, Category.assoc, Sigma.ι_comp_desc]
-  rfl
 
 private def coproductToColumn (p : ℕ) : columnCoproduct K p ⟶ (cechSingular K).X p :=
   Sigma.desc (intersectionColumnι K)
@@ -407,9 +411,10 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
     intro s hs σ hσ
     change (cechι K s hs σ hσ ≫ (columnToCoproduct K p).f q) ≫
       (coproductToColumn K p).f q = cechι K s hs σ hσ
-    rw [cechι_columnToCoproduct, Category.assoc, ι_coproductToColumn,
-      ι_intersectionColumnι]
-    simp only [Equiv.apply_symm_apply]
+    rw [cechι_columnToCoproduct, Category.assoc, ι_coproductToColumn]
+    simpa only [Equiv.apply_symm_apply] using
+      ι_intersectionColumnι K (carriedFace K s hs σ hσ)
+        ((intersectionSimplexEquiv K (carriedFace K s hs σ hσ) q).symm ⟨σ, hσ⟩)
   inv_hom_id := by
     apply Sigma.hom_ext
     intro s
@@ -423,10 +428,10 @@ def columnCoproductIso (p : ℕ) : (cechSingular K).X p ≅ columnCoproduct K p 
       (TopCat.toSSet.obj (TopCat.of (intersection K s.val))).ιChainComplex σ ≫
         (Sigma.ι (fun t : Face K p => intersectionChains K t) s).f q
     rw [ι_intersectionColumnι, cechι_columnToCoproduct]
-    have hF : carriedFace K s.val s.property.2
-        (intersectionSimplexEquiv K s q σ).val
-        (intersectionSimplexEquiv K s q σ).property = s := Subtype.ext rfl
-    simp only [hF, Equiv.symm_apply_apply]
+    change (TopCat.toSSet.obj (TopCat.of (intersection K s.val))).ιChainComplex
+        ((intersectionSimplexEquiv K s q).symm (intersectionSimplexEquiv K s q σ)) ≫
+        (Sigma.ι (fun t : Face K p => intersectionChains K t) s).f q = _
+    rw [Equiv.symm_apply_apply]
 
 private theorem homologyMap_sigmaMap_isIso {J : Type} [Finite J]
     {A B : J → ChainComplex (ModuleCat ℤ) ℕ} (f : ∀ j, A j ⟶ B j)
@@ -453,6 +458,18 @@ private def coproductColumnAugmentation (p : ℕ) :
       coefficientAugmentation Z (TopCat.toSSet.obj (TopCat.of (intersection K s.val)))) ≫
     sigmaComparison (ChainComplex.single₀ (ModuleCat ℤ)) (fun _ : Face K p => Z)
 
+omit [Fintype V] in
+private theorem summand_coproductColumnAugmentation (p : ℕ) (s : Face K p) :
+    (Sigma.ι (fun t : Face K p => intersectionChains K t) s).f 0 ≫
+        (coproductColumnAugmentation K p).f 0 =
+      (coefficientAugmentation Z
+        (TopCat.toSSet.obj (TopCat.of (intersection K s.val)))).f 0 ≫
+          faceι K s := by
+  change (Sigma.ι (fun t : Face K p => intersectionChains K t) s ≫
+    coproductColumnAugmentation K p).f 0 = _
+  rw [coproductColumnAugmentation, Sigma.ι_map_assoc, ι_comp_sigmaComparison]
+  rfl
+
 private theorem columnAugmentation_factorization (p : ℕ) :
     columnAugmentation K p = (columnCoproductIso K p).hom ≫
       coproductColumnAugmentation K p := by
@@ -464,11 +481,9 @@ private theorem columnAugmentation_factorization (p : ℕ) :
   erw [columnAugmentation, ChainComplex.toSingle₀Equiv_symm_apply_f_zero,
     cechι_coefficientSum, ← Category.assoc,
     cechι_columnToCoproduct]
-  simp only [coproductColumnAugmentation, HomologicalComplex.comp_f, Category.assoc,
-    ← HomologicalComplex.comp_f, Sigma.ι_map_assoc, ι_comp_sigmaComparison,
-    HomologicalComplex.comp_f, ChainComplex.single₀_map_f_zero,
-    ι_coefficientAugmentation, Category.id_comp]
-  rfl
+  rw [Category.assoc, summand_coproductColumnAugmentation, ← Category.assoc]
+  erw [ι_coefficientAugmentation]
+  exact (Category.id_comp _).symm
 
 /-- Every column comparison is induced by the actual coefficient sum. -/
 theorem columnAugmentation_isIso (p q : ℕ) :

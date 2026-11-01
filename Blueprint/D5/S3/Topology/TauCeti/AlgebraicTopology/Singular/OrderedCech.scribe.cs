@@ -9,7 +9,7 @@ internal sealed class OrderedCechDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ordered Cech-singular double complex.", H("The ordered Cech-singular double complex"), Blocks(
             Node("bicomplex", "bicomplex", "Ordered intersections in each simplicial degree",
-                "For a simplicial set A covered by a linearly ordered family P of subcomplexes, the ordered intersection complexes in each simplicial degree form rows. Alternating singular face maps define a commuting bicomplex with coefficients in an object R of a preadditive category with the required coproducts and zero object.", DescribeRole.Definition),
+                "For a simplicial set A covered by a linearly ordered family P of subcomplexes, the ordered intersection complexes in each simplicial degree form rows. Alternating singular face maps define a commuting bicomplex with coefficients in an object R of an abelian category with the required coproducts.", DescribeRole.Definition),
             Node("horizontalaugmentation", "horizontalAugmentation", "The specified augmentation",
                 "In each singular degree the horizontal augmentation is the ordered-cover augmentation on the same simplex generators. It sends each singleton-indexed simplex to that simplex and is zero in positive ordered degree.", DescribeRole.Definition),
             Node("horizontal-total-comparison", "horizontal_total_comparison", "The finite-degree total comparison",
