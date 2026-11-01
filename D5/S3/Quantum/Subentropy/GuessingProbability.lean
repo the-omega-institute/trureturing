@@ -38,7 +38,7 @@ def successProbabilitySet (p : X → ℝ) (rho : X → DensityState B) : Set ℝ
 def pGuess (p : X → ℝ) (rho : X → DensityState B) : ℝ :=
   sSup (successProbabilitySet p rho)
 
-private theorem success_bounds (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
+theorem success_bounds (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
     (hs : ∑ x, p x = 1) (rho : X → DensityState B)
     (M : X → Matrix B B ℂ) (hM : ∀ x, (M x).PosSemidef)
     (hsM : ∑ x, M x = 1) : 0 ≤ successProbability p rho M ∧

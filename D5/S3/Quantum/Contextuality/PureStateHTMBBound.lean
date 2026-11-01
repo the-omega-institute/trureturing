@@ -6,8 +6,9 @@
    utility: none
    digest: Pure preparations obey the two-trit HTMB noncontextuality bound. -/
 
+import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
-import Mathlib.Analysis.InnerProductSpace.Positive
+import D5.S3.Quantum.Subentropy.GuessingProbability
 
 /-!
 The HTMB scenario and pure-state conjecture of Tavakoli, Zambrini Cruzeiro, Uola and Abbott,
@@ -21,6 +22,7 @@ noncomputable section
 
 open Matrix
 open scoped BigOperators InnerProductSpace ComplexOrder
+open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
   (projector trace_projectors)
 
@@ -119,13 +121,10 @@ private theorem projector_difference_span {d : ℕ}
       exact hn
     have hp : projector b = projector a := by
       rw [← hz]
-      ext r t
-      change (z * a r) * star (z * a t) = a r * star (a t)
-      rw [star_mul]
-      calc
-        _ = (z * star z) * (a r * star (a t)) := by ring
-        _ = _ := by simp only [RCLike.star_def, Complex.mul_conj', hz1, one_pow, Complex.ofReal_one,
-          one_mul]
+      change vecMulVec (z • a.ofLp) (star (z • a.ofLp)) =
+        vecMulVec a.ofLp (star a.ofLp)
+      simp [star_smul, smul_vecMulVec, vecMulVec_smul, smul_smul,
+        RCLike.star_def, RCLike.conj_mul, hz1]
     apply hne
     rw [← h, hp, sub_self]
   let s := Submodule.span ℂ ({c, e} : Set (EuclideanSpace ℂ (Fin d)))
@@ -225,38 +224,24 @@ private theorem discrimination_bound {d : ℕ}
     _ = Module.finrank ℂ s := by simp
     _ ≤ 2 := by exact_mod_cast hs
 
-private theorem effect_bound {d : ℕ}
-    (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1)
-    (m : ZMod 3 → Matrix (Fin d) (Fin d) ℂ)
-    (hm : (∀ b, (m b).PosSemidef) ∧ ∑ b, m b = 1) (b : ZMod 3) :
-    0 ≤ (projector v * m b).trace.re ∧ (projector v * m b).trace.re ≤ 1 := by
-  classical
-  have hnonneg : ∀ k, 0 ≤ (projector v * m k).trace.re := by
-    intro k
-    rw [trace_mul_comm, projector, mul_vecMulVec, trace_vecMulVec, dotProduct_comm]
-    exact (hm.1 k).re_dotProduct_nonneg v
-  refine ⟨hnonneg b, ?_⟩
-  calc
-    (projector v * m b).trace.re ≤ ∑ k, (projector v * m k).trace.re :=
-      Finset.single_le_sum (fun k _ => hnonneg k) (Finset.mem_univ b)
-    _ = (projector v * ∑ k, m k).trace.re := by
-      simp [Matrix.mul_sum, trace_sum]
-    _ = 1 := by
-      rw [hm.2, mul_one, projector, trace_vecMulVec]
-      change (⟪v, v⟫_ℂ).re = 1
-      rw [inner_self_eq_one_of_norm_eq_one hv]
-      rfl
-
 private theorem discrimination_three {d : ℕ}
     (v : ZMod 3 → EuclideanSpace ℂ (Fin d))
     (m : ZMod 3 → Matrix (Fin d) (Fin d) ℂ)
     (hv : ∀ b, ‖v b‖ = 1)
     (hm : (∀ b, (m b).PosSemidef) ∧ ∑ b, m b = 1) :
     ∑ b, (projector (v b) * m b).trace.re ≤ 3 := by
-  calc
-    _ ≤ ∑ _b : ZMod 3, (1 : ℝ) :=
-      Finset.sum_le_sum fun b _ => (effect_bound (v b) (hv b) m hm b).2
-    _ = 3 := by norm_num
+  classical
+  let rho : ZMod 3 → DensityState (Fin d) := fun b =>
+    D5.S3.Quantum.Foundation.FiniteDiamondDistance.pureState (v b).ofLp (by
+      simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using
+        inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ) (hv b))
+  have h := (D5.S3.Quantum.Subentropy.GuessingProbability.success_bounds
+    (fun _ : ZMod 3 => (1 / 3 : ℝ))
+    (fun _ => by norm_num) (by norm_num) rho m hm.1 hm.2).2
+  change (∑ b, (1 / 3 : ℝ) * (m b * projector (v b)).trace.re) ≤ 1 at h
+  simp_rw [trace_mul_comm (m _)] at h
+  rw [← Finset.mul_sum] at h
+  linarith
 
 private theorem constant_discrimination {d : ℕ}
     (v : ZMod 3 → EuclideanSpace ℂ (Fin d))
