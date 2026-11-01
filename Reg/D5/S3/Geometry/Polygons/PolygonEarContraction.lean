@@ -3,12 +3,9 @@ import Reg.Support.DependentFamily
 import D5.S3.Geometry.Polygons.PolygonEarContraction
 
 /-!
-The source witnesses below retain the exact dependent telescopes and actual
-readouts. For these targets a DependentFamily realization still requires a
-source reconstruction equivalence for the full changing ZMod/Finset domain,
-a lawful enrolled readout, whole-family variation and sensitivity, and actual
-observational dependence. No Contract.Registration or declared_validated
-status is asserted. The unfinished targets are disclosed under issue #24755.
+The source witnesses retain the complete dependent telescopes. Cardinality
+observations count the original and reduced centre sets. The compatibility
+observation is the decision bit of compatibility after vertex deletion.
 -/
 
 namespace Reg.D5.S3.Geometry.Polygons.PolygonEarContraction
