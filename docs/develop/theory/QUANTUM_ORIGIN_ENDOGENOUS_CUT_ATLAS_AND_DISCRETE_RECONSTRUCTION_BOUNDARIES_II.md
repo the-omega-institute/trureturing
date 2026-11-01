@@ -3258,3 +3258,1056 @@ Thus the local channel and coefficient in (119.1) have this exact antecedent. Th
 The cited Ebler et al. circuit transforms queried unitary operations; its complete circuit is not identified here with the state-family decoder of Theorem 123.1. Equations (127.1)–(127.2) identify its local exterior input channel precisely. The mixed-state trace-distance minimax claim and the orientation-sector success/error frontier retain the assumptions and proofs given in §§118–126. No priority claim is made for either local channel or for their application here.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 128. Fixed-rank mixed copies and two finite separations
+
+**定义 128.1（Uniform subspace orbit and error convention）。** Fix integers $N\ge1$ and $1\le r<q$. For a rank-$r$ orthogonal projector $P_0$ on $H=\mathbb C^q$, let
+
+$$
+P_U=UP_0U^*,\qquad \tau_U=P_U/r,\qquad U\in U(q).
+\tag{128.1}
+$$
+
+The local task supplies $\tau_U^{\otimes N}$ and requests $\tau_U^{\mathsf T}$ in the fixed coordinate basis. Throughout this addition, $D(A,B)=\|A-B\|_1/2$ for normalized densities. The Haar measure on each unitary group is normalized. Uniform rank means the density is uniform on its support, with the rank known and the support unknown; it does not mean that its support has a known coordinate basis.
+
+The two-party task uses independently varying rank-$r$ projectors $P_U,P_V$, with $\rho_U=P_U/r$, $\sigma_V=P_V/r$, and $N$ copies per party. The independent-copy and internally aligned preparation contracts are those of Definition 94.1. Their populated equal-weight orientation-sector counts are respectively
+
+$$
+M_{\rm ind}=2^{2N-1},\qquad M_{\rm grp}=2.
+\tag{128.2}
+$$
+
+The fixed-label target is $\iota_{\rm out}(\rho_U\otimes_{\mathbb C}\sigma_V)$. A deterministic decoder here is a fixed real completely positive map, trace nonincreasing on the entire real input cone, whose success is one on every supplied input. Global trace preservation is sufficient but is not required.
+
+**定理 128.2（Finite local and joint-real separations from the pure frontier）。** Every complex completely positive trace-preserving map $C$ from $48$ four-dimensional copies to one four-dimensional output obeys
+
+$$
+\sup_U D\bigl(C(\tau_U^{\otimes48}),\tau_U^{\mathsf T}\bigr)
+\ge\frac1{17}>\frac3{52},
+\qquad q=4,\quad r=2.
+\tag{128.3}
+$$
+
+Every deterministic real decoder $L$ in either preparation contract, with $q=4$, $r=2$ and $N=96$ for each party, obeys
+
+$$
+\sup_{U,V}D\left(
+L\bigl(\eta(\rho_U,\sigma_V)\bigr),
+\iota_{\rm out}(\rho_U\otimes\sigma_V)\right)
+\ge\frac1{32M}>\frac3{100M}.
+\tag{128.4}
+$$
+
+The same joint lower bound holds when error is measured only after the compatible-output twirl. The rightmost quantities in (128.3) and (128.4) are the established pure-copy local optimum and pure-copy deterministic real-decoder frontier at the same dimensions, counts and preparation contract. In the grouped contract the real lower bound is $1/64$, above the pure value $3/200$ by $1/1600$. These are sufficient finite separating counts; they are not asserted to be the smallest such counts. The proofs occupy §§129–134.
+
+## 129. Haar projector moments and positive Schur weights
+
+**命题 129.1（Orbit moment decomposition）。** Write the Schur–Weyl decomposition as
+
+$$
+H^{\otimes m}
+=\bigoplus_{\lambda\vdash m,\,\ell(\lambda)\le q}
+\mathbb U_\lambda^{(q)}\otimes\mathbb V_\lambda.
+\tag{129.1}
+$$
+
+Let $d_\lambda(q)=\dim\mathbb U_\lambda^{(q)}$, let $f_\lambda=\dim\mathbb V_\lambda$, and let $Q_\lambda^{(m)}$ be the full isotypic projector. Set $d_\lambda(r)=0$ if $\ell(\lambda)>r$. Then
+
+$$
+T_m:=\int P_U^{\otimes m}\,dU
+=\sum_\lambda t_\lambda Q_\lambda^{(m)},
+\qquad t_\lambda=\frac{d_\lambda(r)}{d_\lambda(q)}.
+\tag{129.2}
+$$
+
+For $m=N$ abbreviate $Q_\lambda=Q_\lambda^{(N)}$. The positive-weight diagrams are exactly those with at most $r$ rows, and for every orbit point
+
+$$
+\begin{aligned}
+w_\lambda
+&=\operatorname{Tr}(Q_\lambda\tau_U^{\otimes N})
+=\frac{f_\lambda d_\lambda(r)}{r^N},
+&\sum_\lambda w_\lambda&=1,\\
+\tau_{U,\lambda}
+&=Q_\lambda\tau_U^{\otimes N}Q_\lambda/w_\lambda,
+&\tau_U^{\otimes N}&=\sum_{w_\lambda>0}w_\lambda\tau_{U,\lambda}.
+\end{aligned}
+\tag{129.3}
+$$
+
+Proof. The permutation-invariant operator $P_0^{\otimes m}$ is block diagonal in (129.1), with the identity on each multiplicity factor $\mathbb V_\lambda$. Its restriction on the $\mathbb U_\lambda^{(q)}$ factor has trace $d_\lambda(r)$, as follows by decomposing $(\operatorname{Ran}P_0)^{\otimes m}\cong(\mathbb C^r)^{\otimes m}$. Averaging its unitary conjugates replaces each irreducible matrix block by its trace divided by $d_\lambda(q)$ and removes off-diagonal irreducible blocks. This proves (129.2).
+
+The central permutation projectors commute with $U^{\otimes N}$ and with $P_U^{\otimes N}$. Taking their traces before averaging gives $f_\lambda d_\lambda(r)$ independently of $U$. Division by $r^N$ proves the weights and the normalized orthogonal convex decomposition in (129.3). Their sum is one because the original tensor power has trace one. $\square$
+
+The conditional block states in (129.3) describe an existing convex decomposition of the supplied input. They do not grant additional source-preparation or Haar-twirling operations.
+
+## 130. The established Schur support bound with actual success weights
+
+The coefficient used here is the one-output specialization of Marco Fanizza, Dmitry Grinko, Thilo Scharnhorst and Jack Spilecki, [*Optimal cloning of mixed states*, §4, Proposition 4.2, equations (18)–(19)](https://arxiv.org/pdf/2608.27298v1). Their copy number $n=N$, dimension $d=q$ and output number $k=1$ give $(r+\lambda_1)/(q+\lambda_1)$. Their equation (19) displays the Littlewood–Richardson and hook-content estimate underlying this coefficient. The local operator estimate holds for $1\le r<q$; restrictions used for their later sample-complexity consequence are not extra assumptions on the displayed one-output estimate. The proof below fixes its input-block normalization and keeps each completely positive component's actual success weight.
+
+**引理 130.1（Support reading of a subnormalized block map）。** For any complex completely positive map $C_\lambda$ from the entire positive-weight $\lambda$ input block to $H$, define
+
+$$
+\beta_\lambda=\int\operatorname{Tr}C_\lambda(\tau_{U,\lambda})\,dU,
+\qquad
+f_{\lambda,{\rm out}}=\int\operatorname{Tr}\left(P_U^{\mathsf T}
+C_\lambda(\tau_{U,\lambda})\right)\,dU.
+\tag{130.1}
+$$
+
+No trace-preservation or separate normalization assumption is imposed on $C_\lambda$. Then
+
+$$
+f_{\lambda,{\rm out}}\le\gamma_\lambda\beta_\lambda,
+\qquad \gamma_\lambda=\frac{r+\lambda_1}{q+\lambda_1}.
+\tag{130.2}
+$$
+
+Proof. Use the input-first Choi matrix $J\succeq0$ of the map, supported on $Q_\lambda\otimes I_q$. The central projector $Q_\lambda$ is real in tensor coordinate bases: its symmetric-group character formula is a real linear combination of real permutation matrices. Since it is also self-adjoint, $Q_\lambda^{\mathsf T}=Q_\lambda$. Transposing the Choi input and conjugating the Haar variable give the success and support testers
+
+$$
+\begin{aligned}
+A_\lambda&=\frac{t_\lambda}{r^Nw_\lambda}(Q_\lambda\otimes I_q),\\
+R_\lambda&=\frac{(Q_\lambda\otimes I_q)T_{N+1}
+(Q_\lambda\otimes I_q)}{r^Nw_\lambda},\\
+\beta_\lambda&=\operatorname{Tr}(JA_\lambda),
+\qquad f_{\lambda,{\rm out}}=\operatorname{Tr}(JR_\lambda).
+\end{aligned}
+\tag{130.3}
+$$
+
+Here $t_\lambda>0$ on the populated block. In particular $t_\lambda/(r^Nw_\lambda)=1/(f_\lambda d_\lambda(q))$, so the averaged normalized input really has trace one.
+
+Tensoring $\mathbb U_\lambda^{(q)}$ with the defining output representation branches into diagrams $\mu$ obtained by adding one box to $\lambda$. The central $(N+1)$-slot projectors commute with every permutation of the first $N$ slots, hence with $Q_\lambda\otimes I_q$. On each such restricted branch the ratio of the two tester eigenvalues is $t_\mu/t_\lambda$.
+
+For a box $b$ in row $i$ and column $j$, write $c(b)=j-i$. The hook-content dimension formula, with its identical hook factors canceled between dimensions $r$ and $q$, gives
+
+$$
+t_\lambda=\prod_{b\in\lambda}\frac{r+c(b)}{q+c(b)},
+\qquad
+\frac{t_\mu}{t_\lambda}=\frac{r+c}{q+c}
+\quad\text{if }\ell(\mu)\le r,
+\tag{130.4}
+$$
+
+where $c$ is the added-box content. If $\ell(\mu)>r$, then $t_\mu=0$. For the remaining branches $q+c>0$, and $(r+c)/(q+c)$ is increasing in $c$ because $q>r$. Every addable box has $c\le\lambda_1$, and addition to the first row has exactly $c=\lambda_1$ and is allowed. Therefore
+
+$$
+R_\lambda\preceq\frac{r+\lambda_1}{q+\lambda_1}A_\lambda.
+\tag{130.5}
+$$
+
+Pairing this inequality with $J\succeq0$ proves (130.2). It bounds the actual Haar means even if success depends on the unknown subspace. $\square$
+
+**推论 130.2（Local trace-distance lower bound）。** Every complex completely positive trace-preserving channel $C:\mathcal L(H^{\otimes N})\to\mathcal L(H)$ satisfies
+
+$$
+\sup_U D\bigl(C(\tau_U^{\otimes N}),\tau_U^{\mathsf T}\bigr)
+\ge(q-r)\sum_\lambda\frac{w_\lambda}{q+\lambda_1}.
+\tag{130.6}
+$$
+
+Proof. The target-support projector $P_U^{\mathsf T}$ is an effect with target expectation one. For a normalized output $Y_U$,
+
+$$
+D(Y_U,\tau_U^{\mathsf T})
+\ge1-\operatorname{Tr}(P_U^{\mathsf T}Y_U).
+\tag{130.7}
+$$
+
+The effect here is $P_U^{\mathsf T}$, not the mixed density $\tau_U^{\mathsf T}=P_U^{\mathsf T}/r$; no factor $1/r$ belongs in the support reading. A trace-preserving channel has success one on every normalized block state in (129.3). Apply Lemma 130.1 to its block restrictions, weight by $w_\lambda$, and average (130.7). The average lower bound is $\sum_\lambda w_\lambda(1-\gamma_\lambda)$, which is (130.6); the supremum is at least the average. $\square$
+
+No covariance assumption on the competing channel was used. This argument alone supplies a lower bound, without asserting an attaining mixed-state channel or a minimax equality.
+
+## 131. An elementary rank-two spin moment gives the local separation
+
+**命题 131.1（Rank-two estimate and the 48-copy example）。** For $r=2$ and $q>2$,
+
+$$
+\sup_U D\bigl(C(\tau_U^{\otimes N}),\tau_U^{\mathsf T}\bigr)
+\ge\frac{q-2}{q+N/2+\sqrt{3N}/2}
+\tag{131.1}
+$$
+
+for every complex completely positive trace-preserving $C$.
+
+Proof. The populated diagrams have at most two rows and can be written
+
+$$
+\lambda=(N/2+s,N/2-s),
+\qquad s\ge0,
+\tag{131.2}
+$$
+
+where $s$ is an integer for even $N$ and a half-integer for odd $N$, and the row lengths are nonnegative integers. The weights $w_\lambda=f_\lambda d_\lambda(2)/2^N$ are exactly the total-spin weights of $I_{2^N}/2^N$ on $(\mathbb C^2)^{\otimes N}$: the $U(2)$ block has spin $s$ and dimension $2s+1$.
+
+Let $\sigma_a$, $a=x,y,z$, be the Pauli matrices and put $S_a=\frac12\sum_{j=1}^N\sigma_a^{(j)}$. The quadratic Casimir $S_x^2+S_y^2+S_z^2$ is $s(s+1)$ on the spin-$s$ block. This follows, for example, from the highest-weight $s$ vector, the identities $S^2=S_z^2+S_z+S_-S_+$ and $S_+|s,s\rangle=0$, and commutation of $S^2$ with the lowering operator. On the maximally mixed tensor power every cross-copy Pauli product has zero trace, while $(\sigma_a^{(j)})^2=I$. Thus
+
+$$
+\mathbb E_w[s(s+1)]
+=2^{-N}\operatorname{Tr}(S_x^2+S_y^2+S_z^2)
+=\frac{3N}{4}.
+\tag{131.3}
+$$
+
+Consequently $\mathbb E_ws^2\le3N/4$ and, by Cauchy–Schwarz, $\mathbb E_ws\le\sqrt{3N}/2$. Convexity of $x\mapsto1/(q+N/2+x)$, followed by its monotonic decrease, gives
+
+$$
+\begin{aligned}
+(q-2)\mathbb E_w\frac1{q+\lambda_1}
+&\ge\frac{q-2}{q+N/2+\mathbb E_ws}\\
+&\ge\frac{q-2}{q+N/2+\sqrt{3N}/2}.
+\end{aligned}
+\tag{131.4}
+$$
+
+Combine with (130.6). $\square$
+
+At $q=4,N=48$, the denominator in (131.1) is $4+24+6=34$, so the bound is $1/17$. The established pure-copy error is $(q-1)/(N+q)=3/52$ by §104. Their difference is $1/884$, since $52>51$. This proves (128.3). The spin calculation is a finite-dimensional representation identity in the rank-two support; it does not add a physical spin premise to the source.
+
+## 132. Joint real processing obeys a block-pair support bound
+
+**引理 132.1（Both real Kraus components with arbitrary joint programs）。** In the unique bad orientation sector, take the complex input and target support effect
+
+$$
+X_{U,V}=\rho_U^{\otimes N}\otimes(\sigma_V^{\mathsf T})^{\otimes N},
+\qquad E_{U,V}=P_U\otimes P_V.
+\tag{132.1}
+$$
+
+Restrict a real completely positive decoder to this standalone sector and apply the compatible-output twirl. As in §105, its complex action has the form
+
+$$
+B(X)=B_M(X)+B_N(X^{\mathsf T}),
+\qquad
+B_M(X)=\sum_hM_hXM_h^*,\quad
+B_N(X)=\sum_hN_hXN_h^*.
+\tag{132.2}
+$$
+
+The transpose is the full transpose of the entire sector input. No local complex completely positive transpose operation is assumed.
+
+Fix populated Schur labels $\lambda,\kappa$ of the two factors, and use their normalized conditional input product. Write $\beta_M,\beta_N$ for the actual Haar mean success weights of the two terms on that product, and $\overline f_{\lambda\kappa}$ for the full mean output reading of $E_{U,V}$. Then
+
+$$
+\overline f_{\lambda\kappa}
+\le\gamma_\kappa\beta_M+\gamma_\lambda\beta_N
+\le\max\{\gamma_\lambda,\gamma_\kappa\}(\beta_M+\beta_N).
+\tag{132.3}
+$$
+
+Proof. For $B_M$, the Choi input transpose changes Bob's supplied conditional state with label $\sigma_V^{\mathsf T}$ back to the orientation of the target support $P_V$. His joint input/output Haar tester is the support tester of Lemma 130.1, up to conjugating the Haar variable. For Alice, use the pointwise effect inequality $P_U\preceq I$. Her averaged joint tester is bounded by her averaged transposed input tensored with the output identity. Since the orbit variables are independent, the joint tester is the tensor product of these two local testers, with tensor factors reordered into input-first order. All these operators are positive. Tensor the Bob inequality $R_\kappa\preceq\gamma_\kappa A_\kappa$ with the positive Alice success tester and pair with the arbitrary joint Choi matrix of $B_M$. This yields an output reading at most $\gamma_\kappa\beta_M$.
+
+In the $B_N(X^{\mathsf T})$ term the input becomes $(\rho_U^{\mathsf T})^{\otimes N}\otimes\sigma_V^{\otimes N}$. The identical argument gives the Alice support bound $\gamma_\lambda\beta_N$, using only the identity bound for Bob's target effect. Real Schur projectors preserve the same block labels under this full transpose. Adding the two bounds proves (132.3). The proof uses a joint Choi matrix for each term, and imposes neither product processing nor a fixed choice of corrected party. $\square$
+
+For equal $q,r$, the coefficient $\gamma_\lambda$ increases with $\lambda_1$. If total mean success on the normalized block pair is one, (132.3) therefore gives
+
+$$
+1-\overline f_{\lambda\kappa}
+\ge\frac{q-r}{q+\max\{\lambda_1,\kappa_1\}}.
+\tag{132.4}
+$$
+
+The success-one hypothesis concerns the sum of the two real Kraus components. Neither component is individually assumed to preserve trace.
+
+## 133. Deterministic normalization is first by orientation, then inside the bad sector
+
+**引理 133.1（Success one on every populated bad-sector block pair）。** Under Definition 128.1's deterministic real-decoder premise, $\beta_M+\beta_N=1$ in (132.3) for every populated normalized bad-sector block pair.
+
+Proof. First fix $U,V$ and decompose the actual supplied real input into its $M$ positive orientation components, each normalized and weighted $1/M$. Trace nonincrease on the full real cone bounds the success on each standalone normalized orientation component by one. Their weighted mean is the stipulated total success one. Positivity of all orientation weights forces success one on every populated component, in particular on the unique bad sector, for these $U,V$.
+
+Only now decompose the bad-sector input (132.1). It is a product of two identical-copy tensor powers, so (129.3) gives normalized block-pair states with strictly positive weights $w_\lambda w_\kappa$. Their weights sum to one. The same trace-nonincreasing restriction bounds the success on each normalized pair by one. Their weighted mean is the bad-sector success one just proved. Hence every populated normalized pair has total success one, for every $U,V$. Averaging over $U,V$ and using (132.2) gives $\beta_M+\beta_N=1$. $\square$
+
+This two-stage argument uses identical-copy Schur decompositions only inside the unique bad sector. Other orientation charts need not be identical-copy Schur diagonal. It also uses the full-cone trace-nonincreasing premise: success one on an ensemble alone would not bound the success of its normalized components without that premise.
+
+**推论 133.2（Deterministic bad-sector loss）。** Every deterministic real decoder in this setting has bad-sector Haar mean target-support loss at least
+
+$$
+\sum_{\lambda,\kappa}w_\lambda w_\kappa
+\frac{q-r}{q+\max\{\lambda_1,\kappa_1\}}.
+\tag{133.1}
+$$
+
+Proof. Apply (132.4) to each block pair using Lemma 133.1, and take its positive weighted mean. $\square$
+
+## 134. A 96-copy separation survives block-dependent side choice
+
+**命题 134.1（Rank-two joint estimate）。** For $r=2$, $q>2$ and $N$ copies per party, define
+
+$$
+\Delta_{N,q}:=\frac{q-2}{q+N/2+\sqrt{3N/2}}.
+\tag{134.1}
+$$
+
+Every deterministic decoder in either stated preparation contract satisfies
+
+$$
+\sup_{U,V}D\left(
+L\bigl(\eta(\rho_U,\sigma_V)\bigr),
+\iota_{\rm out}(\rho_U\otimes\sigma_V)\right)
+\ge\frac{\Delta_{N,q}}M.
+\tag{134.2}
+$$
+
+Proof. Under the product block weights $w_\lambda w_\kappa$, write $\lambda_1=N/2+s_A$ and $\kappa_1=N/2+s_B$. Both marginal second moments satisfy (131.3). Therefore
+
+$$
+\begin{aligned}
+\mathbb E\max\{s_A,s_B\}
+&\le\sqrt{\mathbb E\max\{s_A,s_B\}^2}\\
+&\le\sqrt{\mathbb E(s_A^2+s_B^2)}
+\le\sqrt{3N/2}.
+\end{aligned}
+\tag{134.3}
+$$
+
+This estimate concerns the supplied block distribution; any decoder's later choice of side leaves it unchanged. Jensen's inequality and the monotonic decrease of the reciprocal give
+
+$$
+\mathbb E\frac{q-2}{q+\max\{\lambda_1,\kappa_1\}}
+\ge\frac{q-2}{q+N/2+\mathbb E\max\{s_A,s_B\}}
+\ge\Delta_{N,q}.
+\tag{134.4}
+$$
+
+Thus (133.1) bounds the bad-sector mean support loss by $\Delta_{N,q}$. Each other orientation sector has success one by the first stage of Lemma 133.1, and its normalized positive output has support reading at most one. Its support loss is therefore nonnegative. The bad sector has weight $1/M$, so the whole compatible output has mean support loss at least $\Delta_{N,q}/M$. The target is supported on $E_{U,V}$ and has expectation one there; trace distance is at least this support loss, and worst distance is at least its Haar mean.
+
+For a general real output, first apply the compatible-output twirl of §§80 and 84. It fixes the target, preserves trace and contracts trace distance. Under normalized realification the compatible output has the same trace distance and the same support-effect reading as its complex representative. Consequently the bound for the twirled output also bounds the original normalized real output. $\square$
+
+For $q=4$, the bad-sector estimate is $\Delta_{N,4}=4/(N+8+\sqrt{6N})$. At $N=96$, $\sqrt{6N}=24$ and $\Delta_{96,4}=1/32>3/100$. The pure-copy bad-sector optimum is $3/(96+4)=3/100$ by §§104–106. This proves (128.4), with
+
+$$
+\begin{aligned}
+M=2 &: \quad \frac1{64}>\frac3{200},
+\qquad \frac1{64}-\frac3{200}=\frac1{1600},\\
+M=2^{191} &: \quad \frac1{32\,2^{191}}>\frac3{100\,2^{191}}.
+\end{aligned}
+\tag{134.5}
+$$
+
+The lower bound permits arbitrary real joint processing, including block-dependent mixtures of the complex-linear and complex-antilinear components. It does not assume an advance commitment to correcting Alice or Bob.
+
+## 135. Scope of the mixed separation and the retained earlier frontiers
+
+**定义 135.1（What the finite orbit lower bounds decide）。** The examples prove that the pure optimum cannot be extended as a uniform guarantee to all mixed powers for arbitrary dimensions and copy counts, even when the real decoder can process both parties jointly. Restriction to the rank-two orbit is enough for this obstruction to an all-mixed guarantee.
+
+The pure-copy frontier of §106 retains its pure-family domain. The exact-copy success bound of §§98–99, the all-count qubit mixed result of §113 and the $k,l\in\{1,2\}$ arbitrary-dimension mixed result of §123 retain their stated domains. The four-dimensional examples use 48 or 96 copies and do not change any of those statements.
+
+The estimates in §§131 and 134 use second moments and Jensen bounds; they do not give the exact mixed minimax value, the smallest separating count, an efficient implementation, or an attaining all-spectrum mixed channel. Conditional success can select Schur blocks. The deterministic success-one argument in §133 does not transfer unchanged to a postselected task.
+
+The distinction is operational: purity and uniform support rank constrain different repeated-copy information. Their approximation guarantees need not coincide under the same abstract channel class. These results use that class and the supplied preparation contracts; they do not derive them from a conservation principle or from agreement of local observations.
+
+## 136. Sources, joint-real reuse and implementation limits for the separation
+
+The orientation-sector algebra, normalized real charts and two preparation contracts are those of §§94–101, using V53 §7. The pure-copy comparison and real Kraus decomposition are those of §§102–110. The local Schur support coefficient is explicitly the established one-output bound in Fanizza–Grinko–Scharnhorst–Spilecki, [§4, equations (18)–(19)](https://arxiv.org/pdf/2608.27298v1). The joint-real application retains both Kraus components and their actual success weights as displayed in §§132–134. No priority claim is made for this combination or for its finite examples.
+
+Schur–Weyl decomposition, defining-representation branching, hook-content dimensions, spin Casimir values and Jensen's inequality are standard tools. General representation background is W. Fulton and J. Harris, *Representation Theory: A First Course*, Graduate Texts in Mathematics 129, Springer; the hook-content/Littlewood–Richardson argument used here is also displayed in the cited Fanizza et al. estimate. The Choi convention is J. Watrous, [*The Theory of Quantum Information*, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The needed projector coefficients, normalization, branch ratio and spin moments are given explicitly above.
+
+Implementation premises remain the independently supplied powers, known rank contract, sector instruments, permitted chart routing, channel dilations and any chosen full real conjugation. The proof's block decompositions and Haar averages need no physical Haar-twirling service, but they grant no native instrument or source control. There is no gate-count guarantee, clean controller or reference return, free erasure, cloning operation, Born-rule derivation or quantum-origin conclusion. The entire decoder's arbitrary external-reference preservation is not the fixed-label output-density task bounded here.
+
+## 追加锚（本行以下为增补区）
+
+
+## 137. The fixed-rank orbit task has a finite acceptance-cost frontier
+
+**定义 137.1（Known ranks, unknown independent supports）。** Fix $d,e\ge2$, $k,l\ge1$, $1\le r_A<d$ and $1\le r_B<e$. Let $P_U,Q_V$ vary independently over all orthogonal projectors of ranks $r_A,r_B$ in $\mathbb C^d,\mathbb C^e$. Supply copies of
+
+$$
+\rho_U=P_U/r_A,\qquad \sigma_V=Q_V/r_B
+\tag{137.1}
+$$
+
+in either preparation contract of Definition 94.1. Thus the actual real input is
+
+$$
+\begin{aligned}
+\eta_{\rm ind}(\rho,\sigma)
+&=\bigl(\mathscr R_A(\rho)/2\bigr)^{\otimes_{\mathbb R}k}
+\otimes_{\mathbb R}\bigl(\mathscr R_B(\sigma)/2\bigr)^{\otimes_{\mathbb R}l},\\
+\eta_{\rm grp}(\rho,\sigma)
+&=\iota_{A,k}(\rho^{\otimes_{\mathbb C}k})
+\otimes_{\mathbb R}\iota_{B,l}(\sigma^{\otimes_{\mathbb C}l}).
+\end{aligned}
+\tag{137.2}
+$$
+
+The normalized charts and their carrier spaces are those of §§94–99. There are $M=2^{k+l-1}$ or $M=2$ equal populated orientation sectors, respectively. Exactly one is bad; each other sector admits exact matching and routing. Put $p_0=1-1/M$. The target is $\iota_{\rm out}(\rho_U\otimes_{\mathbb C}\sigma_V)$ in fixed local labels.
+
+For $\lambda\vdash k$ with $\ell(\lambda)\le r_A$ and $\kappa\vdash l$ with $\ell(\kappa)\le r_B$, use the representation dimensions of §129 and define
+
+$$
+\begin{aligned}
+w_\lambda&=\frac{f_\lambda d_\lambda(r_A)}{r_A^k},
+&v_\kappa&=\frac{f_\kappa d_\kappa(r_B)}{r_B^l},\\
+\pi_{\lambda\kappa}&=w_\lambda v_\kappa,
+&\zeta_{\lambda\kappa}
+&=\min\left\{\frac{d-r_A}{d+\lambda_1},
+\frac{e-r_B}{e+\kappa_1}\right\}.
+\end{aligned}
+\tag{137.3}
+$$
+
+The weights are positive, sum to one and are independent of the unknown supports. For $0\le b\le1$, define
+
+$$
+\mathcal L(b)=\min\left\{
+\sum_{\lambda,\kappa}\pi_{\lambda\kappa}\zeta_{\lambda\kappa}
+ z_{\lambda\kappa}:
+0\le z_{\lambda\kappa}\le1,\quad
+\sum_{\lambda,\kappa}\pi_{\lambda\kappa}z_{\lambda\kappa}=b
+\right\}.
+\tag{137.4}
+$$
+
+This is a finite feasible optimization: taking every $z_{\lambda\kappa}=b$ is feasible. The quantity $b$ is the accepted probability mass within the bad sector, before its orientation weight $1/M$.
+
+**定理 137.2（Sharp heralding frontier on the specified uniform-rank orbits）。** For $0<p\le1$, among all fixed real completely positive maps trace nonincreasing on the entire input cone and with success at least $p$ at every $U,V$, the minimum worst conditional half trace error is
+
+$$
+\epsilon^*_{\rm orbit}(p)
+=\frac{\mathcal L\bigl(\max\{0,Mp-(M-1)\}\bigr)}{Mp}.
+\tag{137.5}
+$$
+
+This equality holds for compatible-output error and for the original normalized real-output trace distance. An attaining map has success exactly $p$ at every orbit point. Competing maps may have support-dependent success and arbitrary joint real processing.
+
+Equivalently, if $E_{U,V}$ is the compatible complex subnormalized output of a success map and $s_{U,V}=\operatorname{Tr}E_{U,V}$, an error guarantee $\epsilon$ means
+
+$$
+\frac12\|E_{U,V}-s_{U,V}(\rho_U\otimes\sigma_V)\|_1
+\le\epsilon s_{U,V}
+\tag{137.6}
+$$
+
+for every orbit point. This form keeps actual success weights inside the inequality. The theorem concerns known uniform support ranks and arbitrary unknown supports. It is not an all-spectrum mixed-state frontier. Its proof is given in §§138–145.
+
+## 138. A normalized first-row Schur Choi channel on every input block
+
+**命题 138.1（First-row branch projector and partial-trace normalization）。** Locally let $H=\mathbb C^q$, $t\ge1$, and let $Q_\lambda=Q_\lambda^{(t)}$ be the full Schur isotypic projector for any $\lambda\vdash t$ with at most $q$ rows. Let $\mu$ be obtained by adding one box to the first row of $\lambda$. Set
+
+$$
+\begin{aligned}
+\Pi_{\lambda\to\mu}
+&=(Q_\lambda\otimes I_q)Q_\mu^{(t+1)}(Q_\lambda\otimes I_q),\\
+J_\lambda
+&=\frac{d_\lambda(q)}{d_\mu(q)}\Pi_{\lambda\to\mu}.
+\end{aligned}
+\tag{138.1}
+$$
+
+Then $J_\lambda$ is the input-first Choi matrix of a complex completely positive trace-preserving channel $C_\lambda$ from the whole $\lambda$ input block to $H$.
+
+Proof. The central projector $Q_\mu^{(t+1)}$ commutes with every permutation of the first $t$ slots, hence with $Q_\lambda\otimes I_q$. Their product $\Pi_{\lambda\to\mu}$ is therefore an orthogonal projector. By the defining-representation branching rule, $\mathbb U_\mu^{(q)}$ occurs once in $\mathbb U_\lambda^{(q)}\otimes H$. The input multiplicity factor $\mathbb V_\lambda$ is retained. Thus
+
+$$
+\operatorname{rank}\Pi_{\lambda\to\mu}=d_\mu(q)f_\lambda.
+\tag{138.2}
+$$
+
+The output partial trace commutes with $U(q)$ acting on all $t$ inputs and with their symmetric-group action. On the full $\lambda$ isotypic space, these two commuting actions make their joint commutant scalar. Its trace fixes the scalar:
+
+$$
+\operatorname{Tr}_o\Pi_{\lambda\to\mu}
+=\frac{d_\mu(q)}{d_\lambda(q)}Q_\lambda,
+\qquad
+\operatorname{Tr}_oJ_\lambda=Q_\lambda.
+\tag{138.3}
+$$
+
+The Choi matrix is positive, so this is complete positivity and trace preservation on the input block. The projector $Q_\lambda$ is real, as in Lemma 130.1, and its input-transposed embedding is the same block. The statement therefore holds as a channel on the entire complex block, including arbitrary untouched complex reference systems. $\square$
+
+The Choi projectors in (138.1) commute with the diagonal unitary action on all $t+1$ slots. The input-first Choi identity consequently gives conjugate-output covariance:
+
+$$
+C_\lambda\bigl(U^{\otimes t}X(U^*)^{\otimes t}\bigr)
+=\overline U\,C_\lambda(X)U^{\mathsf T}.
+\tag{138.4}
+$$
+
+For $\lambda=(t)$, formula (138.1) is the established symmetric-power channel
+$d_{(t)}(q)\Pi_{{\rm sym},t+1}/d_{(t+1)}(q)$ of §104 and Brzić–Grinko–Studziński–Quintino, [Theorem 1](https://arxiv.org/pdf/2603.23628v3). Its normalization and pure-copy action are reused here.
+
+The branch choice differs from the exterior channel of §119. For the two-copy antisymmetric input $\lambda=(1,1)$, (138.1) selects $\mu=(2,1)$, whereas (119.1) selects $\mu=(1,1,1)$ and has Choi matrix $3\Pi_{{\rm alt},3}/(q-2)$. Both are valid block channels where defined; they are different maps on the same input block. The present branch maximizes the fixed-rank support reading. It does not identify or replace the earlier channel's nonsymmetric action.
+
+## 139. First-row channels saturate the established support bound pointwise
+
+**定理 139.1（Attaining local uniform-orbit block output）。** Fix $1\le r<q$ and $\tau_U=P_U/r$. For every populated $\lambda\vdash t$, let
+
+$$
+w_\lambda=\frac{f_\lambda d_\lambda(r)}{r^t},
+\qquad
+\tau_{U,\lambda}=Q_\lambda\tau_U^{\otimes t}Q_\lambda/w_\lambda,
+\qquad
+\gamma_\lambda=\frac{r+\lambda_1}{q+\lambda_1}.
+\tag{139.1}
+$$
+
+The channel of Proposition 138.1 satisfies, at every $U$,
+
+$$
+C_\lambda(\tau_{U,\lambda})
+=\gamma_\lambda\frac{P_U^{\mathsf T}}r
++(1-\gamma_\lambda)\frac{I-P_U^{\mathsf T}}{q-r}.
+\tag{139.2}
+$$
+
+Its exact half trace error is
+
+$$
+D\bigl(C_\lambda(\tau_{U,\lambda}),\tau_U^{\mathsf T}\bigr)
+=1-\gamma_\lambda=\frac{q-r}{q+\lambda_1}.
+\tag{139.3}
+$$
+
+Proof. The support coefficient is the established one-output Schur bound credited to Fanizza–Grinko–Scharnhorst–Spilecki, [equations (18)–(19)](https://arxiv.org/pdf/2608.27298v1), and derived with actual success normalization in Lemma 130.1. On the branch adding a box of content $c$, its two testers have ratio $(r+c)/(q+c)$. First-row addition has $c=\lambda_1$ and therefore exactly $\gamma_\lambda$. Since $J_\lambda$ is supported entirely on that branch, the mean target-support reading is $\gamma_\lambda$ times the mean success. The channel preserves trace, so the latter is one.
+
+Covariance (138.4) and the corresponding unitary covariance of the conditional inputs make the support reading independent of $U$. Hence the support reading is $\gamma_\lambda$ at every orbit point. At a coordinate support, the conditional input is invariant under $U(r)\times U(q-r)$. Covariance makes the output commute with the conjugate stabilizer. Its commutant on $H$ consists of a scalar on the support and a scalar on its orthogonal complement: independent scalar phases also remove off-diagonal terms between them. Trace one and support reading $\gamma_\lambda$ determine those scalars, proving (139.2). Covariance gives the same formula for every support.
+
+Subtracting the target gives a negative part $(1-\gamma_\lambda)P_U^{\mathsf T}/r$ on the support and a positive part of equal trace on its orthogonal complement. Their supports are orthogonal, so the half trace norm is $1-\gamma_\lambda$. $\square$
+
+The stabilizer argument uses the density's uniformity on its support. Formula (139.2) is not asserted for a general nonuniform spectrum. The support coefficient itself is a reused literature bound; the displayed channel, stabilizer output and later joint acceptance construction specify its use in this orbit task without a priority claim.
+
+## 140. Conditioning on a Schur label preserves the retained orbit marginal
+
+**引理 140.1（The unchanged one-copy density after label conditioning）。** For every populated conditional state in (139.1), each retained input copy has marginal exactly the original orbit density:
+
+$$
+\operatorname{Tr}_{\widehat j}\tau_{U,\lambda}=P_U/r=\tau_U,
+\qquad j=1,\ldots,t.
+\tag{140.1}
+$$
+
+Proof. The original tensor power is supported on $(\operatorname{Ran}P_U)^{\otimes t}$. The Schur projector is a linear combination of permutations, which preserve that tensor subspace. Therefore every one-copy conditional marginal is supported on $\operatorname{Ran}P_U$. The tensor power and Schur projector both commute with every common unitary acting on this support. Each marginal thus commutes with all of $U(r)$ on that support and is scalar there. Its trace is one, so the scalar is $1/r$. This works for every copy $j$. $\square$
+
+The two parties' conditional inputs remain a product after separate Schur-label measurements, because their supplied tensor powers were a product. Lemma 140.1 permits the decoder to choose a corrected party after reading both labels while retaining the other party's desired density. For a nonuniform mixed power, Schur conditioning can change a retained one-copy marginal. No corresponding all-spectrum identity is used.
+
+## 141. Correcting the better side attains each bad-block loss
+
+**命题 141.1（A real channel for every populated pair of labels）。** In the bad sector, measure the local Schur labels of
+
+$$
+\rho_U^{\otimes k}\otimes(\sigma_V^{\mathsf T})^{\otimes l}.
+\tag{141.1}
+$$
+
+Their probabilities are $\pi_{\lambda\kappa}$ from (137.3), independent of $U,V$. For each outcome there is a full-block real completely positive trace-preserving channel with exact output error $\zeta_{\lambda\kappa}$.
+
+Proof. Write
+
+$$
+\gamma^A_\lambda=\frac{r_A+\lambda_1}{d+\lambda_1},
+\qquad
+\gamma^B_\kappa=\frac{r_B+\kappa_1}{e+\kappa_1}.
+\tag{141.2}
+$$
+
+If Bob's loss $1-\gamma^B_\kappa$ is smaller, apply $C_\kappa$ to his transposed conditional block and retain one Alice copy. Theorems 139.1 and Lemma 140.1 give the product output
+
+$$
+\rho_U\otimes\left[
+\gamma^B_\kappa\sigma_V
++(1-\gamma^B_\kappa)\frac{I-Q_V}{e-r_B}\right].
+\tag{141.3}
+$$
+
+If Alice's loss is smaller, first apply full real coordinate conjugation to the entire bad complex carrier. This changes the input to $(\rho_U^{\mathsf T})^{\otimes k}\otimes\sigma_V^{\otimes l}$. The Schur projectors are real, so the measured labels are unchanged. Apply $C_\lambda$ to Alice and retain one Bob copy. Ties can be resolved by a fixed choice.
+
+Local complex channels have real completely positive lifts, the Schur instrument consists of orthogonal projections, and conjugation of the whole complex carrier is a real orthogonal operation. Thus these are real completely positive channels on the entire corresponding block, with trace one on normalized block inputs.
+
+Put $T_{U,V}=\rho_U\otimes\sigma_V$ and $S_{U,V}=P_U\otimes Q_V$. In either case the chosen block output has the form
+
+$$
+(1-\zeta_{\lambda\kappa})T_{U,V}
++\zeta_{\lambda\kappa}N_{U,V;\lambda\kappa},
+\qquad
+N_{U,V;\lambda\kappa}\succeq0,
+\quad\operatorname{Tr}N_{U,V;\lambda\kappa}=1,
+\quad S_{U,V}N_{U,V;\lambda\kappa}=0.
+\tag{141.4}
+$$
+
+Its noise is supported orthogonally to the common target support, giving exact error $\zeta_{\lambda\kappa}$. Positive mixtures retain this common target part and orthogonal noise. $\square$
+
+The full conjugation in this construction is real linear on the entire carrier. It does not require a local complex completely positive transpose, nor a positive extension of an independent real-input encoding to arbitrary entangled complex inputs.
+
+## 142. The acceptance-cost function is attained by a threshold in block loss
+
+**命题 142.1（Threshold rule and finite dual formula）。** The function in (137.4) is convex, nondecreasing, continuous and piecewise linear on $[0,1]$, with
+
+$$
+\mathcal L(0)=0,\qquad
+\mathcal L(1)=\sum_{\lambda,\kappa}\pi_{\lambda\kappa}\zeta_{\lambda\kappa}.
+\tag{142.1}
+$$
+
+A minimizer accepts the smallest $\zeta_{\lambda\kappa}$ values first, with fractional acceptance allowed at the boundary value. Equivalently,
+
+$$
+\mathcal L(b)=\sup_{a\in\mathbb R}
+\left[
+ ab-\sum_{\lambda,\kappa}\pi_{\lambda\kappa}
+ (a-\zeta_{\lambda\kappa})_+
+\right].
+\tag{142.2}
+$$
+
+Proof. If an accepted label pair has larger loss than a rejected pair, transfer a small equal amount of weighted probability mass from the former to the latter. The success constraint is unchanged and the cost decreases. Repeating this exchange yields the threshold rule; one boundary fraction reaches any desired $b\in[0,1]$.
+
+For every feasible acceptance vector and every $a$,
+
+$$
+\sum_{\lambda,\kappa}\pi_{\lambda\kappa}\zeta_{\lambda\kappa}z_{\lambda\kappa}
+=ab+\sum_{\lambda,\kappa}\pi_{\lambda\kappa}
+(\zeta_{\lambda\kappa}-a)z_{\lambda\kappa}
+\ge ab-\sum_{\lambda,\kappa}\pi_{\lambda\kappa}
+(a-\zeta_{\lambda\kappa})_+.
+\tag{142.3}
+$$
+
+Choosing $a$ equal to a threshold value gives equality for the threshold vector, including any boundary fraction. At $b=0$ or $b=1$, use a threshold below every loss or above every loss, respectively. This proves (142.2). The ordered finite thresholds give a continuous piecewise-linear function whose slopes are the successive nonnegative losses, proving all the stated properties. $\square$
+
+The thresholds use known representation labels and their known orbit probabilities. They do not depend on the unknown subspaces. Proposition 141.1 followed by acceptance factors $z_{\lambda\kappa}$ attains the cost $\mathcal L(b)$ with bad-sector success exactly $b$ at every orbit point.
+
+## 143. A joint-real lower bound keeps variable success inside every block inequality
+
+**引理 143.1（Subnormalized support loss for arbitrary joint real processing）。** For any full-cone real completely positive trace-nonincreasing success map, restrict to the bad orientation sector, then to a populated normalized pair of Schur blocks. Apply the compatible-output twirl. Let $\beta_{\lambda\kappa}$ be the combined Haar mean success of its complex-linear and full-transpose Kraus parts, and let $\overline f_{\lambda\kappa}$ be their mean reading of $S_{U,V}=P_U\otimes Q_V$. Then
+
+$$
+0\le\beta_{\lambda\kappa}\le1,
+\qquad
+\overline f_{\lambda\kappa}
+\le\max\{\gamma^A_\lambda,\gamma^B_\kappa\}\beta_{\lambda\kappa}
+=(1-\zeta_{\lambda\kappa})\beta_{\lambda\kappa}.
+\tag{143.1}
+$$
+
+Proof. Use the real Kraus decomposition (132.2). In its complex-linear part, Bob's Choi input transpose and target support combine into his local support tester. Lemma 130.1 bounds its contribution by $\gamma^B_\kappa$ times that component's actual mean success. Alice's target support is bounded by the identity, which permits arbitrary joint processing of her unknown copies as in Lemma 132.1. In the full-input-transpose part the roles reverse, giving $\gamma^A_\lambda$ times its actual mean success. The same argument applies with the different ranks, dimensions and counts in (141.2). Add the two contributions and bound by their larger coefficient.
+
+Each normalized block pair embeds as a positive standalone real sector state. Trace nonincrease on the entire real cone gives the pointwise total success bound one and hence $\beta_{\lambda\kappa}\le1$. No success-one normalization, product-map premise or fixed corrected side is used. $\square$
+
+Let
+
+$$
+b_{\rm actual}=\sum_{\lambda,\kappa}\pi_{\lambda\kappa}\beta_{\lambda\kappa}
+\tag{143.2}
+$$
+
+be the bad sector's actual Haar mean success. Its mean subnormalized support loss is at least
+
+$$
+\sum_{\lambda,\kappa}\pi_{\lambda\kappa}
+\zeta_{\lambda\kappa}\beta_{\lambda\kappa}
+\ge\mathcal L(b_{\rm actual}),
+\tag{143.3}
+$$
+
+because the actual mean success vector is feasible in (137.4). Success can vary with both supports and labels. Keeping it in this feasible vector is what permits a sharp heralded lower bound.
+
+## 144. Guaranteed success gives the lower frontier for both output metrics
+
+**命题 144.1（Necessity with input-dependent success）。** Every competing success map with guaranteed success at least $p>0$ and worst conditional error $\epsilon$ on the orbit family obeys the lower bound in (137.5).
+
+Proof. Let $\overline p>0$ be the map's overall Haar mean success. The other $M-1$ orientation sectors have mean success at most one each before their $1/M$ weights. Thus
+
+$$
+b_{\rm actual}\ge\max\{0,M\overline p-(M-1)\}.
+\tag{144.1}
+$$
+
+For each orbit point, test the effect $I-S_{U,V}$ against the compatible subnormalized output. Its target reading is zero. Inequality (137.6) implies that missing target-support weight is at most $\epsilon$ times the actual success. Every orientation sector's subnormalized support loss is nonnegative. Average over the two supports and use (143.3), the bad-sector weight $1/M$ and monotonicity of $\mathcal L$ to obtain
+
+$$
+\epsilon\,\overline p
+\ge\frac1M\mathcal L(b_{\rm actual})
+\ge\frac1M\mathcal L\bigl(\max\{0,M\overline p-(M-1)\}\bigr).
+\tag{144.2}
+$$
+
+The resulting ratio is nondecreasing in $\overline p$. Below $p_0$ it is zero. Above $p_0$, set $b=M\overline p-(M-1)$; the ratio is $\mathcal L(b)/(b+M-1)$. For $0<x\le y$, convexity and $\mathcal L(0)=0$ give $\mathcal L(x)/x\le\mathcal L(y)/y$, while $x/(x+M-1)\le y/(y+M-1)$. These quantities are nonnegative, so their products give the required monotonicity; the endpoint $x=0$ follows directly. Since $\overline p\ge p$, (144.2) yields (137.5) as a lower bound.
+
+If the map instead has a bound for original normalized real outputs, twirling fixes the target, preserves success and contracts trace distance, giving the compatible bound used above. Thus the same lower bound applies to that stronger output metric. $\square$
+
+No step replaces an input-dependent success probability by an unweighted normalized output average. The Haar means enter only after the pointwise subnormalized error inequality.
+
+## 145. Uniform acceptance and orthogonal noise attain the frontier
+
+**命题 145.1（Full-cone attaining map with success exactly $p$）。** The lower bound in Theorem 137.2 is attained for every $0<p\le1$ in both output metrics.
+
+Proof. For $p\le p_0$, reject the bad sector and scale all exact good-sector maps by $p/p_0$. This has success exactly $p$ and exact output at every orbit point.
+
+For $p>p_0$, accept all good sectors. Within the bad sector use Proposition 141.1 with a threshold acceptance vector attaining $\mathcal L(b)$, where
+
+$$
+b=Mp-(M-1)\in(0,1].
+\tag{145.1}
+$$
+
+The label probabilities are independent of the supports, so bad success is $b$ and total success is $p_0+b/M=p$ at every orbit point. The compatible complex subnormalized output has the form
+
+$$
+E_{U,V}=\left(p-\frac{\mathcal L(b)}M\right)T_{U,V}+Z_{U,V},
+\qquad
+Z_{U,V}\succeq0,\quad
+\operatorname{Tr}Z_{U,V}=\frac{\mathcal L(b)}M,\quad
+S_{U,V}Z_{U,V}=0.
+\tag{145.2}
+$$
+
+Indeed each accepted block contributes the common target part and orthogonal noise in (141.4), and all good sectors contribute only the target. The positive and negative parts of $E_{U,V}-pT_{U,V}$ are therefore supported orthogonally and have equal trace $\mathcal L(b)/M$. After normalization the exact error is $\mathcal L(b)/(Mp)$, at every orbit point.
+
+The direct-sum sector and Schur instruments, acceptance factors in $[0,1]$, trace-preserving branch channels and permitted full real conjugation make a real completely positive trace-nonincreasing map on the entire input cone. Reject unpopulated blocks and any complement of the grouped preparation support. At $p=1$, if global trace preservation is requested, append a replacement channel on that unused complement without changing the supplied-family action. The attaining outputs are compatible, and normalized realification preserves their trace distance. Thus the same exact error is attained in the original real-output metric. $\square$
+
+Together Propositions 144.1 and 145.1 prove Theorem 137.2. The attaining construction uses label-dependent side choices and acceptance; the lower bound permits the larger class of arbitrary real joint processing.
+
+## 146. Recoveries and a copy-dependent change of relative difficulty
+
+**推论 146.1（Pure and one-copy specializations）。** When $r_A=r_B=1$, the only populated diagrams are $\lambda=(k)$ and $\kappa=(l)$. Hence
+
+$$
+\zeta=\min\left\{\frac{d-1}{d+k},\frac{e-1}{e+l}\right\},
+\qquad\mathcal L(b)=\zeta b,
+\tag{146.1}
+$$
+
+and (137.5) is exactly the pure-copy frontier of Theorem 106.1. The local channel (138.1) recovers its symmetric-power attaining channel.
+
+When $k=l=1$, both preparation contracts have $M=2$ and the only labels are $(1),(1)$. Therefore
+
+$$
+\zeta=\min\left\{\frac{d-r_A}{d+1},\frac{e-r_B}{e+1}\right\},
+\qquad
+\epsilon^*_{\rm orbit}(p)=\zeta\frac{\max\{0,2p-1\}}{2p}.
+\tag{146.2}
+$$
+
+Proof. Substitute the stated single positive-weight label pair into (137.3)–(137.5). $\square$
+
+For $d=e=4$ and $r_A=r_B=2$, deterministic one-copy orbit error is $1/5$, below the pure one-copy value $3/10$. With $96$ copies per party in the grouped contract, §§133–134 give $\mathcal L(1)\ge1/32$, so the now exactly characterized orbit optimum is at least $1/64$, above the pure value $3/200$. Thus the relative difficulty of these two fixed families can change with copy count. No smallest crossing count is asserted.
+
+The first-row channel's orbit optimality does not make it identical to the two-copy all-mixed construction of §§118–124. Those sections optimize a worst case over all local densities for one or two supplied copies; they do not assert pointwise optimality for every fixed-rank orbit. The different branch choices identified in §138 are consistent with these different optimization domains.
+
+For the all-spectrum mixed task, every fixed-rank uniform orbit supplies the necessary lower bound (137.5), and the largest of these bounds over admissible rank pairs remains necessary. It need not be sufficient. For general spectra the Schur probabilities and conditioned one-copy marginals vary with that spectrum; Lemma 140.1 and the uniform-success construction do not transfer without further arguments. The all-spectrum mixed minimax frontier and its attaining channel remain unresolved here.
+
+## 147. Attribution and the operational boundary of the orbit frontier
+
+The normalized real-chart embeddings and the distinction between compatible and original real-output errors reuse §§80, 84 and 89–93. The two preparation contracts and exact good-sector matching reuse §§94–101. The pure-copy symmetric channel reuses §104 and Brzić–Grinko–Studziński–Quintino, [*Optimal physical approximations of pure-state cloning and transposition are complementary channels*, Theorem 1](https://arxiv.org/pdf/2603.23628v3). The exact local Schur support inequality reuses Fanizza–Grinko–Scharnhorst–Spilecki, [*Optimal cloning of mixed states*, §4, equations (18)–(19)](https://arxiv.org/pdf/2608.27298v1), with the one-output correspondence of §130. It is not presented as a new coefficient.
+
+Schur–Weyl decomposition, one-box branching, covariant Choi operators, stabilizer commutants and threshold acceptance are standard tools. General background is W. Fulton and J. Harris, *Representation Theory: A First Course*, Graduate Texts in Mathematics 129, Springer, and J. Watrous, [*The Theory of Quantum Information*, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The partial-trace normalization, exact support saturation, retained marginal and accepted-weight argument required for this orbit application are displayed in §§138–145. No priority claim is made for their combination or the resulting orbit-decoding formula.
+
+The acquisition and operation premises are independently supplied powers, known ranks, orientation instruments, Schur instruments, chart routing, local channel dilations and optional full real conjugation. Their existence in the abstract channel class supplies no native source control, efficient circuit, clean record or reference return, free reset or erasure, Born rule or derivation of complex quantum structure. Local complex complete positivity permits untouched complex references for the individual block channels; arbitrary reference preservation by the entire real decoder is a separate task from its fixed-label output-density guarantee.
+
+## 追加锚（本行以下为增补区）
+
+
+## 148. A heralded separation persists on an explicit strictly full-rank family
+
+**定义 148.1（Grouped powers of a known positive spectrum）。** Take both local complex dimensions to be four, $N=96$ copies per party, and the internally aligned preparation contract of Definition 94.1. Let $P_U,Q_V$ vary independently over rank-two orthogonal projectors on $\mathbb C^4$. For a fixed known $0<\theta\le10^{-6}$, put
+
+$$
+\rho_{U,\theta}=(1-\theta)P_U/2+\theta I_4/4,
+\qquad
+\sigma_{V,\theta}=(1-\theta)Q_V/2+\theta I_4/4.
+\tag{148.1}
+$$
+
+Each density has strictly positive spectrum
+$((2-\theta)/4,(2-\theta)/4,\theta/4,\theta/4)$.
+The actual supplied real input and normalized target are
+
+$$
+\begin{aligned}
+\eta_\theta(U,V)
+&=\iota_{A,N}(\rho_{U,\theta}^{\otimes_{\mathbb C}N})
+\otimes_{\mathbb R}\iota_{B,N}(\sigma_{V,\theta}^{\otimes_{\mathbb C}N}),\\
+T_\theta(U,V)
+&=\iota_{\rm out}(\rho_{U,\theta}\otimes_{\mathbb C}\sigma_{V,\theta}).
+\end{aligned}
+\tag{148.2}
+$$
+
+The normalized charts and their carrier spaces are fixed. Let $\epsilon_\theta(p)$ be the infimum worst conditional half trace error over all fixed real completely positive maps trace nonincreasing on the full input cone and with success at least $p$ on every $\eta_\theta(U,V)$. One may use the compatible-output error or require the original normalized real-output trace distance. The decoder may depend on the known $\theta$, but is fixed across the unknown supports $U,V$.
+
+**定理 148.2（A finite full-rank gap with five percent allowed failure）。** For the family in Definition 148.1,
+
+$$
+\epsilon_\theta(19/20)
+\ge\frac3{208}-\frac{1996}{19}\theta
+>\frac{27}{1900}+\frac{21}{197600},
+\qquad 0<\theta\le10^{-6}.
+\tag{148.3}
+$$
+
+The pure-input optimum at the same dimension, counts, grouped preparation contract and guaranteed success $19/20$ is $27/1900$ by Theorem 106.1. Thus a strict gap survives both the permitted failure weight and strictly positive local spectra. The bound is necessary; it does not give an attaining channel on this full-rank family or an all-spectrum mixed-state optimum. The proof occupies §§149–153.
+
+The operation class is the stated full real success-map class. Trace weights acquire a probability interpretation under the supplied instrument/Born contract; this result does not derive that contract.
+
+## 149. A rank-two heralding certificate retains actual rejected weight
+
+**命题 149.1（A lower certificate before the full-rank perturbation）。** At $\theta=0$, define
+
+$$
+G(u)=\max\left\{0,\frac1{26}-\frac{19}{832u}\right\},
+\qquad 0<u\le1.
+\tag{149.1}
+$$
+
+Every decoder on the grouped rank-two family with guaranteed success at least $p>0$ has worst conditional error at least $G(p)$. This bound permits arbitrary joint real processing and support-dependent success.
+
+Proof. There are two orientation sectors of weight $1/2$. The bad sector is
+$\rho_{U,0}^{\otimes96}\otimes(\sigma_{V,0}^{\mathsf T})^{\otimes96}$.
+Its populated normalized Schur-block pairs have support-independent weights $\pi_{\lambda\kappa}=w_\lambda w_\kappa$. The block support inequality in Lemma 132.1, with its actual combined success weight, has loss coefficient
+
+$$
+\zeta_{\lambda\kappa}
+=\frac2{4+\max\{\lambda_1,\kappa_1\}}.
+\tag{149.2}
+$$
+
+Let $\beta_{\lambda\kappa}\in[0,1]$ be the actual Haar mean success on each normalized block pair. Then its mean subnormalized missing target-support reading is at least $\zeta_{\lambda\kappa}\beta_{\lambda\kappa}$. This follows from the real Kraus decomposition and the Schur support bound, without deterministic normalization of either component or the total block map. The target-support effect is $P_U\otimes Q_V$, with target expectation one at $\theta=0$.
+
+Write $\lambda_1=48+s_A$, $\kappa_1=48+s_B$. Equation (131.3) gives $\mathbb E[s(s+1)]=72$ for each marginal. As in (134.3), $\mathbb E\max\{s_A,s_B\}\le12$. Jensen's inequality and nonnegativity of the spins give, respectively,
+
+$$
+D_0:=\sum_{\lambda,\kappa}\pi_{\lambda\kappa}\zeta_{\lambda\kappa}
+\ge\frac2{52+12}=\frac1{32},
+\qquad
+\zeta_{\lambda\kappa}\le\frac2{52}=\frac1{26}.
+\tag{149.3}
+$$
+
+For bad-sector mean success $b=\sum\pi_{\lambda\kappa}\beta_{\lambda\kappa}$, its mean subnormalized support loss therefore satisfies
+
+$$
+\begin{aligned}
+\ell_{\rm bad}
+&\ge\sum_{\lambda,\kappa}\pi_{\lambda\kappa}
+\zeta_{\lambda\kappa}\beta_{\lambda\kappa}\\
+&=D_0-\sum_{\lambda,\kappa}\pi_{\lambda\kappa}
+\zeta_{\lambda\kappa}(1-\beta_{\lambda\kappa})\\
+&\ge\frac1{32}-\frac{1-b}{26}.
+\end{aligned}
+\tag{149.4}
+$$
+
+This estimates the benefit of rejecting branches through their actual total rejected weight. Let $\overline p$ be overall Haar mean success. The other orientation sector has mean success at most one, so $b\ge2\overline p-1$. Its support loss is nonnegative. A pointwise conditional error guarantee $\epsilon$ bounds total mean subnormalized support loss by $\epsilon\overline p$. Hence
+
+$$
+\epsilon\overline p
+\ge\frac12\left(\frac1{32}-\frac{2(1-\overline p)}{26}\right),
+\qquad
+\epsilon\ge\max\left\{0,\frac1{26}-\frac{19}{832\overline p}\right\}.
+\tag{149.5}
+$$
+
+The positive part uses nonnegative trace distance. Since $G$ is nondecreasing and $\overline p\ge p$, this proves the certificate. For general real outputs, first apply the trace-preserving compatible-output twirl that fixes the target and contracts distance; its complex chart has the same support readings. $\square$
+
+This proof reuses the support inequality and rank-two moment from §§130–134. It needs no attaining channel from the exact orbit construction of §§137–145.
+
+## 150. A finite interval of guaranteed success is separated from the pure frontier
+
+**推论 150.1（A sufficient separation interval）。** With four-dimensional local systems, 96 copies per party and grouped alignment, the rank-two certificate is strictly above the pure-input optimum for every
+
+$$
+\frac{163}{176}<p\le1.
+\tag{150.1}
+$$
+
+Proof. The established pure frontier is
+
+$$
+\epsilon^*_{\rm pure}(p)
+=\frac3{100}\frac{\max\{0,2p-1\}}{2p}.
+\tag{150.2}
+$$
+
+For $p>163/176$, both positive branches apply, and direct subtraction gives
+
+$$
+G(p)-\epsilon^*_{\rm pure}(p)
+=\frac{176p-163}{20800p}>0.
+\tag{150.3}
+$$
+
+At the value used in Theorem 148.2,
+
+$$
+G(19/20)=\frac3{208},\qquad
+\epsilon^*_{\rm pure}(19/20)=\frac{27}{1900},\qquad
+\frac3{208}-\frac{27}{1900}=\frac{21}{98800}.
+\tag{150.4}
+$$
+
+At $p=1$, the certificate recovers $1/64-3/200=1/1600$. $\square$
+
+The interval is sufficient for this certificate to separate the two tasks. A lower success guarantee is not thereby proved to attain the pure benchmark, and $163/176$ is not claimed to be the exact crossing threshold of their minimax values.
+
+## 151. Postselection continuity includes the failure flag
+
+**引理 151.1（Normalized-output continuity for a fixed success map）。** Let $\eta_0(x),\eta_1(x)$ be normalized input families on the same real or complex matrix space, with normalized targets $T_0(x),T_1(x)$ on the same output space. Suppose, uniformly in the common index $x$,
+
+$$
+D(\eta_0(x),\eta_1(x))\le\delta,
+\qquad D(T_0(x),T_1(x))\le h.
+\tag{151.1}
+$$
+
+Here $D(A,B)=\|A-B\|_1/2$ also denotes the unnormalized half trace norm when $A,B$ have different traces. For a fixed completely positive trace-nonincreasing map $K$, set $E_i=K(\eta_i)$ and $s_i=\operatorname{Tr}E_i$. Then
+
+$$
+D(E_0,E_1)+\frac{|s_0-s_1|}{2}\le\delta,
+\qquad |s_0-s_1|\le\delta.
+\tag{151.2}
+$$
+
+If both successes are positive, then
+
+$$
+D(E_0/s_0,E_1/s_1)
+\le\frac{\delta}{\max\{s_0,s_1\}}.
+\tag{151.3}
+$$
+
+Proof. The effect $F=I-K^*(I)$ is positive by trace nonincrease. The completed map
+
+$$
+\widehat K(X)=K(X)\oplus\operatorname{Tr}(FX)
+\tag{151.4}
+$$
+
+is completely positive and trace preserving, with its second summand a scalar failure flag. This is valid over either the real or complex matrix spaces. Trace-distance contraction and the direct-sum trace norm give the first inequality in (151.2). Since $D(E_0,E_1)\ge|\operatorname{Tr}(E_0-E_1)|/2$, it also gives the second.
+
+For example, if $s_0\le s_1$, write
+
+$$
+\frac{E_0}{s_0}-\frac{E_1}{s_1}
+=\frac{E_0-E_1}{s_1}
++E_0\left(\frac1{s_0}-\frac1{s_1}\right).
+\tag{151.5}
+$$
+
+Its half norm is at most
+$[D(E_0,E_1)+(s_1-s_0)/2]/s_1\le\delta/s_1$.
+The other ordering is symmetric. This proves (151.3). $\square$
+
+**推论 151.2（Transfer of a necessary conditional-error bound）。** Suppose $K$ has success at least $p>\delta$ and worst conditional error $\epsilon_1$ on family 1. If $F_0(u)$ is any valid lower bound for family 0 at guaranteed success $u$, then
+
+$$
+\epsilon_1\ge F_0(p-\delta)-h-\frac\delta p.
+\tag{151.6}
+$$
+
+Proof. By (151.2), success on family 0 is at least $p-\delta>0$. For each $x$, (151.3) and $s_1\ge p$ give normalized-output distance at most $\delta/p$ between the two families. The target triangle inequality therefore gives family-0 conditional error at most $\epsilon_1+h+\delta/p$. Apply its necessary lower bound at success $p-\delta$. $\square$
+
+The map may be chosen for the known specification of family 1, including a known perturbation parameter; the same chosen map is then tested on family 0. No common optimal map for both families is assumed. For an incompatible real output, compose with the fixed compatible-output twirl first. It preserves success and fixes the targets here, and normalized realification preserves the chart trace distance. The same transfer thus applies to compatible-output accuracy; an original-real-output guarantee implies that compatible guarantee.
+
+## 152. Exact source and target distances for the positive-spectrum perturbation
+
+**命题 152.1（Orthogonal-mixture distances for the actual grouped powers）。** For the families in (148.1)–(148.2), let $a=1-\theta/2$. Uniformly in $U,V$,
+
+$$
+\begin{aligned}
+\delta_\theta
+&:=D(\eta_\theta(U,V),\eta_0(U,V))
+=1-(1-\theta/2)^{192}\le96\theta,\\
+h_\theta
+&:=D(T_\theta(U,V),T_0(U,V))
+=1-(1-\theta/2)^2
+=\theta-\theta^2/4\le\theta.
+\end{aligned}
+\tag{152.1}
+$$
+
+Proof. Locally,
+
+$$
+\rho_{U,\theta}=a\,P_U/2+(1-a)(I-P_U)/2,
+\tag{152.2}
+$$
+
+and the two normalized summands have orthogonal supports. In its $N$-copy tensor power the all-original-support term is $a^N\rho_{U,0}^{\otimes N}$; every other term is supported orthogonally to it. The normalized realification of each party's complex tensor power preserves this orthogonality. The grouped real tensor product of the two parties therefore has original-support term $a^{2N}\eta_0$, with all remaining positive terms outside that support. Its half trace distance from $\eta_0$ is exactly $1-a^{2N}$. Set $2N=192$ and use $1-(1-x)^{192}\le192x$ for $0\le x\le1$.
+
+The two-factor target has the corresponding original-support weight $a^2$, with the same orthogonal-mixture structure. Normalized output realification preserves the distance, giving $1-a^2=\theta-\theta^2/4$. $\square$
+
+These distances concern the actual independently supplied powers in the grouped contract. They do not transfer to a different correlated repeated-preparation contract, and require no positive independent-realification encoding for arbitrary entangled complex inputs.
+
+Apply Corollary 151.2 with the certificate $F_0=G$ to obtain, whenever $p>\delta_\theta$,
+
+$$
+\epsilon_\theta(p)
+\ge G(p-\delta_\theta)-h_\theta-\frac{\delta_\theta}{p}.
+\tag{152.3}
+$$
+
+The inequality holds for every competing map and hence for the infimum in Definition 148.1. A negative right side supplies no additional obstruction. At $\theta>0$ the target has full support on the aligned complex output space; the $h_\theta$ deduction is essential when transferring the rank-two support certificate to that full-rank target.
+
+## 153. Exact constants at ninety-five percent guaranteed success
+
+**命题 153.1（The explicit positive-spectrum margin）。** For $p=19/20$ and $0<\theta\le10^{-6}$, equation (152.3) gives (148.3).
+
+Proof. First,
+
+$$
+p-\delta_\theta\ge\frac{19}{20}-\frac{96}{10^6}>\frac9{10}.
+\tag{153.1}
+$$
+
+On $[9/10,1]$ the positive branch of $G$ applies and
+
+$$
+G'(u)=\frac{19}{832u^2}
+\le\frac{19}{832(9/10)^2}<\frac1{32}.
+\tag{153.2}
+$$
+
+Thus $G(p-\delta_\theta)\ge G(p)-\delta_\theta/32$. Equations (150.4), (152.1) and (152.3) yield
+
+$$
+\begin{aligned}
+\epsilon_\theta(19/20)
+&\ge\frac3{208}
+-\left(\frac1{32}+\frac{20}{19}\right)\delta_\theta-h_\theta\\
+&\ge\frac3{208}-\frac{1996}{19}\theta.
+\end{aligned}
+\tag{153.3}
+$$
+
+The coefficient is $96/32+96(20/19)+1=1996/19<106$. Moreover,
+
+$$
+\frac{106}{10^6}=\frac{53}{500000}
+<\frac{21}{197600}
+=\frac12\left(\frac3{208}-\frac{27}{1900}\right).
+\tag{153.4}
+$$
+
+The strict comparison is the integer inequality
+$53(197600)=10472800<10500000=21(500000)$.
+Combining (153.3)–(153.4) proves
+
+$$
+\epsilon_\theta(19/20)
+\ge\frac3{208}-\frac{1996}{19}\theta
+>\frac{27}{1900}+\frac{21}{197600}.
+\tag{153.5}
+$$
+
+This is Theorem 148.2. At $\theta=10^{-6}$, each local eigenvalue is at least $1/4000000$. Thus the theorem includes an explicit strictly positive spectrum, in addition to every smaller positive perturbation in its stated range. $\square$
+
+## 154. What the full-rank certificate settles and what it leaves open
+
+**定义 154.1（Robust necessary bound, with a specified preparation contract）。** The result excludes the pure benchmark on the stated full-rank orbit family at guaranteed success $19/20$. The mixed-family obstruction therefore does not depend on actual zero eigenvalues or deterministic success. The fixed known positive spectrum and grouped powers remain part of the statement.
+
+The certificate is not the exact optimum on that family, a smallest separating copy count, a sharp heralding crossing, or an all-spectrum mixed construction. The exact uniform-rank orbit frontier of Theorem 137.2 is compatible with the argument but is not required for it. Restricting an all-mixed task to the displayed positive-spectrum family yields the same necessary obstruction; sufficiency for arbitrary spectra remains unresolved.
+
+The pure-copy frontier, the all-count qubit mixed result and the one-or-two-copy arbitrary-dimension mixed result retain their existing domains. The present four-dimensional 96-copy example has a different spectrum and copy range. Its continuity proof compares the same fixed success map on two input families, and does not identify their optimizers or transfer an attaining rank-two map to the full-rank task.
+
+## 155. Sources and implementation limits for the full-rank application
+
+The normalized real charts and success/error conventions reuse §§80, 84 and 89–93. The preparation contract and sector weights reuse §§94–101. The pure comparison is Theorem 106.1. The local Schur support coefficient is the established one-output inequality of Fanizza–Grinko–Scharnhorst–Spilecki, [*Optimal cloning of mixed states*, §4, equations (18)–(19)](https://arxiv.org/pdf/2608.27298v1), carried with actual real-Kraus success weights in §§130–134. The rank-two spin calculation of §131 supplies (149.3).
+
+Trace-norm contraction, completion by a failure flag, orthogonal-state mixtures and postselection normalization are standard channel tools; the Choi/Kraus and quantum-operation background is J. Watrous, [*The Theory of Quantum Information*, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The exact normalization, source/target distances and finite margin used here are displayed in §§151–153. No priority claim is made for their combination in this mixed-copy application.
+
+The grouped preparation, independent local tensor powers, fixed labels, operation access and discarded records remain supplied implementation premises. The result gives no efficient circuit, clean source or reference return, free reset or erasure, arbitrary external-reference preservation, cloning operation, Born-law derivation or derivation of complex amplitudes from information conservation. Correct fixed-label output density and the trace-weight accounting proved here are the stated mathematical task.
+
+## 追加锚（本行以下为增补区）
