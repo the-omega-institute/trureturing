@@ -1,4 +1,4 @@
-# Every natural s,t>=2; source preparation draft
+# Every natural s,t>=2; kernel-compiled source realization
 
 ## Abstract
 
@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/EqualFirstTwoLast/Endpo
 
 *Commentary.*
 
-SOURCE PREPARATION ONLY: the Lean endpoint, this Scribe source and the matching Reg source have not been compiled in this attempt. They do not assert kernel acceptance, successful audit registration or official delivery. The exact ordinary construction and polynomial certificates are caller-derived; the earlier Pro partial check did not verify the full OriginalOrder reconstruction.
+The Lean endpoint, this Scribe source and the matching Reg source compile in the scoped canonical checks. The endpoint is kernel-verified and the Reg source-equivalence record is declared_validated; this unit does not claim official delivery. The exact ordinary construction and polynomial certificates are caller-derived.
 
 For all natural s,t>=2, put k=3s+t and A=1+2^s+2^(2s)+2^(2s+t). The proposed endpoint gives one permutation sigma of the original Fin(k) labels and one natural cut<=k with both OriginalOrder(k,A,sigma) and OriginalOrder(k+1,2A,earWord(k,sigma,cut)). Both predicates include the full zero sum and every natural take-prefix, including empty, full and overlong takes. Repeated values, nonprimitive seeds and all parameter sizes remain in scope.
 
@@ -30,7 +30,7 @@ In the lower region s>=t+2, let h=s-t-1>=1, m=2^h and p=m-1, so q=2zm. Move exac
 
 When neither separated chart applies, t<=s+1 and s<=t+1. These inequalities imply max(max s s)(max t s)<=min(min s s)(min t s)+1. The proof directly consumes BalancedGaps.actualSource_balanced_gaps_joint_lift at (s,s,t,s); it introduces no retained bind-only balanced theorem. Together these regions exhaust all s,t>=2.
 
-The Arithmetic draft contains all 34 exact coefficient certificates. Finite controls from the caller are diagnostic only and are not hypotheses or replacements for these identities. The matching Reg draft retains the full s,t,hs,ht telescope, the existential physical permutation and cut, and both old and new OriginalOrder readouts through DependentFamily. It remains uncompiled, including its source-selection paths and current binding evidence. The unrestricted four-gap assertion J and C3.1 remain OPEN.
+The Arithmetic draft contains all 34 exact coefficient certificates. Finite controls from the caller are diagnostic only and are not hypotheses or replacements for these identities. The matching Reg source retains the full s,t,hs,ht telescope, the existential physical permutation and cut, and both old and new OriginalOrder readouts through DependentFamily. Its source-selection record has coordinates [0,1] and two actual readouts, and the scoped report records declared_validated. The unrestricted four-gap assertion J and C3.1 remain OPEN.
 
 ## References
 

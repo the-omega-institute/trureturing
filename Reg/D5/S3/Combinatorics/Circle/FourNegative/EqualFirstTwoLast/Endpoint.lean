@@ -2,8 +2,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Endpoint
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! UNCOMPILED registration draft for both actual readouts over the complete
-two-coordinate telescope. No registration validation or binding evidence is claimed. -/
+/-! Registration for both actual readouts over the complete two-coordinate
+telescope. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit

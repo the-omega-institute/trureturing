@@ -8,9 +8,9 @@
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Source
 import D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Endpoint
 
-/-! UNCOMPILED source preparation from the caller's exact ordinary construction.
+/-! Source realization from the caller's exact ordinary construction.
 The full unrestricted four-gap J and C3.1 remain open. Finite diagnostics are
-not premises. No independent complete validation is claimed. -/
+not premises. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast
