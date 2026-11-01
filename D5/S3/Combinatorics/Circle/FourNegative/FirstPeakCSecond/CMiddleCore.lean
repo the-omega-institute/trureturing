@@ -31,9 +31,6 @@ open private packetChecks strip_iff_packetChecks
 open private strip_append_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
-open private Row model
-  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddlePolynomials
-
 /- Integer choices are made before any toNat conversion. -/
 private def ceil (B Mn : ℤ) : ℤ := (B+Mn-1)/Mn
 

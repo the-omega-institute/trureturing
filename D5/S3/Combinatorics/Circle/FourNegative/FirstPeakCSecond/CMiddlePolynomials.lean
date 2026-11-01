@@ -14,7 +14,7 @@ import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
-private structure Row where
+structure Row where
   x : ℤ
   y : ℤ
   z : ℤ
@@ -28,7 +28,7 @@ private structure Row where
   Ln : ℤ
   Mn : ℤ
 
-private def model (y t e h : ℤ) : Row :=
+def model (y t e h : ℤ) : Row :=
   let z := e*t
   let x := e*h*t
   let D := y*z+y+1

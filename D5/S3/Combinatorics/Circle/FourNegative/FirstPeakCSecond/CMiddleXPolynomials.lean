@@ -14,9 +14,6 @@ import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
-open private Row model
-  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddlePolynomials
-
 private theorem cert_h4_e2_t8_old_first_lower (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
   let v := model (8+T) (8+T) (2) (4+H)

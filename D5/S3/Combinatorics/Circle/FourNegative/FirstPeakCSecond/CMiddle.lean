@@ -34,7 +34,7 @@ open private packetChecks strip_iff_packetChecks
 open private strip_append_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
-open private Row model margins_strict_adjacent margins_strict_separated
+open private margins_strict_adjacent margins_strict_separated
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddlePolynomials
 open private margins_h2_e2 margins_h2_t8 margins_h2_t4_e16
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddleVPolynomials
