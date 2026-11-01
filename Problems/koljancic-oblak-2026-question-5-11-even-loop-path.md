@@ -3,7 +3,7 @@ slug: koljancic-oblak-2026-question-5-11-even-loop-path
 bibkey: koljancic2026nssp
 doi: 10.48550/arXiv.2604.21552
 url: https://arxiv.org/abs/2604.21552v1
-triage: open
+triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.claim
 ---
