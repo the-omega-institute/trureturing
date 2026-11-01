@@ -47,7 +47,9 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
                 "The vertex set is Fin(s+1+r), with the loop at vertex r. The left branch edges have weights bL(0) through bL(r-1) from its far endpoint towards the loop; the right branch edges have weights bR(s-1) down to bR(0) from the loop towards its far endpoint. All diagonal entries except the central loop are zero. Natural-number subtraction in the displayed edge indices is truncated subtraction. Empty branches, either endpoint and the single-vertex carrier are included.", formula: JoinedMatrixDefinition()),
             Node("joined-characteristic", "Actual central-loop characteristic identity", "joined_path_charpoly", DescribeRole.Theorem,
                 "For every pair of real edge sequences, every real loop weight and every pair of natural branch lengths, the characteristic polynomial of joinedPath equals the displayed branch-continuant expression. This is also (X-C(a))UV-FV-UG with U=P_left(r), V=P_right(s), F=XU-P_left(r+1) and G=XV-P_right(s+1). The proof uses the actual matrix determinant, the frozen sparse determinant expansion, the existing weighted_path_charpoly, and induction from either empty or one-vertex left branches. The front recurrence for continuants aligns the far-end deletion with the squared edge indexing. The formula assumes neither nonzero weights nor parity, and includes every endpoint and empty branch. It does not establish the support-tangent or unrestricted commutant bridges.", formula: JoinedMatrixCharacteristic()),
-            Paragraph(Text("The remaining whole-event bridges are the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
+            Node("matrix-derivative", "Actual characteristic variation along edge and loop perturbations", "joined_path_charpoly_derivative", DescribeRole.Theorem,
+                "For every real edge and variation sequence, every loop weight and variation, every pair of natural branch lengths and every real spectral value x, the actual characteristic polynomial evaluated at x has the displayed derivative at perturbation parameter zero. Each edge is perturbed by b+t*db and the central loop by a+t*da. The squared-edge first variations are 2*b*db, with the complete joined product rule retained. The proof differentiates the continuant recurrence and applies joined_path_charpoly to the actual perturbed matrix. Zero edge weights, empty branches and endpoints remain included. This gives evaluated characteristic derivatives; the coefficient/adjugate trace and unrestricted commutant arguments, and the representation of all relevant support tangents, remain separate obligations.", formula: JoinedMatrixDerivative()),
+            Paragraph(Text("The remaining whole-event bridges are the representation of every relevant matrix support tangent by edge and loop variations; passage from evaluated characteristic derivatives to characteristic coefficients and the adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
             Paragraph(Text("Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.")))));
 
     private static DocumentBlock Node(string id, string title, string name, DescribeRole role, string prose,
@@ -168,6 +170,25 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
             Mul(P(bl, r), P(br, Add(s, D(1))))),
             Mul(Mul(Add(V("X"), Call("C", a)), P(bl, r)), P(br, s)));
         return JoinedMatrixBinders(Eq(Call("charpoly", Call("joinedPath", bl, br, a, r, s)), expr));
+    }
+
+    private static Formula JoinedMatrixDerivative()
+    {
+        Formula bl = V("bL"), br = V("bR"), dl = V("dbL"), dr = V("dbR");
+        Formula a = V("a"), da = V("da"), r = V("r"), s = V("s"), x = V("x");
+        Formula k = V("k"), t = V("t"), real = Seq(Operatorname, Grp(V("Real")));
+        Formula lambda(string name, Formula type, Formula body) =>
+            Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, body);
+        Formula square(Formula b) => lambda("k", Nat(), new Formula.Power(App(b, k), D(2)));
+        Formula delta(Formula b, Formula d) => lambda("k", Nat(), Mul(Mul(D(2), App(b, k)), App(d, k)));
+        Formula perturb(Formula b, Formula d) => lambda("k", Nat(), Add(App(b, k), Mul(t, App(d, k))));
+        Formula matrix = Call("joinedPath", perturb(bl, dl), perturb(br, dr), Add(a, Mul(t, da)), r, s);
+        Formula function = lambda("t", real, Call("eval", x, Call("charpoly", matrix)));
+        Formula derivative = Call("eval", x, Call("joinedVariation", square(bl), square(br),
+            delta(bl, dl), delta(br, dr), a, da, r, s));
+        Formula body = Call("HasDerivAt", function, derivative, D(0));
+        return All("bL", Sequence(), All("bR", Sequence(), All("dbL", Sequence(), All("dbR", Sequence(),
+            All("a", real, All("da", real, All("r", Nat(), All("s", Nat(), All("x", real, body)))))))));
     }
 
     private static Formula JoinedDefinition()

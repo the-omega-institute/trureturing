@@ -625,7 +625,7 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
           have hv := congrArg Fin.val he
           simp only [Fin.val_zero, Fin.val_succ] at hv
           omega
-        rw [Matrix.charmatrix_apply_ne hn]
+        rw [Matrix.charmatrix_apply_ne _ _ _ hn]
         have hm : joinedPath bL bR a (r + 2) s 0 j.succ.succ = 0 := by
           unfold joinedPath
           rw [if_neg hn]
@@ -640,7 +640,7 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
           have hv := congrArg Fin.val he
           simp only [Fin.val_zero, Fin.val_succ] at hv
           omega
-        rw [Matrix.charmatrix_apply_ne hn]
+        rw [Matrix.charmatrix_apply_ne _ _ _ hn]
         have hm : joinedPath bL bR a (r + 2) s i.succ.succ 0 = 0 := by
           unfold joinedPath
           rw [if_neg hn]
@@ -675,10 +675,17 @@ private lemma continuant_derivative (b db : ℕ → ℝ) (n : ℕ) (x : ℝ) :
   | one => simpa [continuant, variation] using hasDerivAt_const (0 : ℝ) x
   | more n h0 h1 =>
       have he : HasDerivAt (fun t : ℝ => (b n + t * db n) ^ 2) (2 * b n * db n) 0 := by
-        convert (((hasDerivAt_id (0 : ℝ)).mul_const (db n)).const_add (b n)).pow 2 using 1 <;>
-          simp <;> ring
-      convert (h1.const_mul x).sub (he.mul h0) using 1 <;>
-        simp [continuant, variation] <;> ring
+        have hf : HasDerivAt (fun t : ℝ => b n + t * db n) (db n) 0 := by
+          simpa using ((hasDerivAt_id (0 : ℝ)).mul_const (db n)).const_add (b n)
+        simpa using hf.pow 2
+      have H := (h1.const_mul x).sub (he.mul h0)
+      refine (H.congr_deriv ?_).congr_of_eventuallyEq ?_
+      · simp only [variation, eval_sub, eval_mul, eval_X, eval_C,
+          Pi.mul_apply, Pi.pow_apply, zero_mul, add_zero]
+        ring
+      · exact Filter.Eventually.of_forall (fun t => by
+          simp only [continuant, eval_sub, eval_mul, eval_X, eval_C,
+            Pi.sub_apply, Pi.mul_apply])
 
 /-- The algebraic joined variation is the actual first derivative of every
 spectral evaluation of the characteristic polynomial along arbitrary edge and
@@ -696,11 +703,13 @@ theorem joined_path_charpoly_derivative (bL bR dbL dbR : ℕ → ℝ)
   have hR1 := continuant_derivative bR dbR (s + 1) x
   have ha : HasDerivAt (fun t : ℝ => x + (a + t * da)) da 0 := by
     simpa using (((hasDerivAt_id (0 : ℝ)).mul_const da).const_add a).const_add x
-  convert ((hL1.mul hR).add (hL.mul hR1)).sub ((ha.mul hL).mul hR) using 1
-  · funext t
-    simp only [joined_path_charpoly, eval_add, eval_sub, eval_mul, eval_X, eval_C]
+  have H := ((hL1.mul hR).add (hL.mul hR1)).sub ((ha.mul hL).mul hR)
+  refine (H.congr_deriv ?_).congr_of_eventuallyEq ?_
   · simp only [joinedVariation, eval_add, eval_sub, eval_mul, eval_neg, eval_X, eval_C,
-      zero_mul, add_zero]
+      Pi.mul_apply, Pi.add_apply, Pi.sub_apply, zero_mul, add_zero]
     ring
+  · exact Filter.Eventually.of_forall (fun t => by
+      simp only [joined_path_charpoly, eval_add, eval_sub, eval_mul, eval_X, eval_C,
+        Pi.sub_apply, Pi.add_apply, Pi.mul_apply])
 
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
