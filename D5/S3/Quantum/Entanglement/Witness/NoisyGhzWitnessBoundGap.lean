@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.MultiEntropyPositivityRefutation
 import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
+import D5.S3.Zeros.CriticalPoints.RankOneTraceBound
 
 /-! The geometric GME measure and optimized witness bound of Xu et al.,
 arXiv:2211.05563v1, Section "Estimating entanglement measures" and Appendix
@@ -486,17 +487,6 @@ private lemma pure_lower (ψ : Word (Fin 3) 3 → ℂ) (hψ : IsUnitState ψ) :
   dsimp only [geometricMeasurePure]
   linarith
 
-private lemma trace_expectation (a : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
-    (ψ : Word (Fin 3) 3 → ℂ) (hψ : IsUnitState ψ) :
-    (trace (rankOneDensity ψ * a)).re = readout a ψ := by
-  have hn : star ψ ⬝ᵥ ψ = 1 := by
-    rw [D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self]
-    simpa only [← Complex.normSq_eq_norm_sq, Complex.ofReal_one] using
-      congrArg (fun x : ℝ => (x : ℂ)) hψ
-  rw [trace_mul_comm]
-  exact congrArg Complex.re
-    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake ψ hn a).2.2.symm
-
 private lemma trace_b : (trace (noisyGhz 3 3 (3 / 8) * b)).re - 1 / 9 = 13 / 108 := by
   classical
   obtain ⟨_, _, hgp, _⟩ := projector_data
@@ -547,12 +537,14 @@ private lemma average_lower (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word (
   classical
   have htrace : (trace (noisyGhz 3 3 (3 / 8) * b)).re =
       ∑ i, p i * readout b (ψ i) := by
-    rw [he]
-    simp only [Finset.sum_mul, smul_mul_assoc, trace_sum, trace_smul, Complex.re_sum,
-      Complex.real_smul, Complex.re_ofReal_mul]
-    apply Finset.sum_congr rfl
-    intro i _
-    rw [trace_expectation b (ψ i) (hu i)]
+    rw [trace_mul_comm, he]
+    have ht := congrArg Complex.re
+      (D5.S3.Zeros.CriticalPoints.RankOneTraceBound.trace_rank_one_sum
+        (fun i => WithLp.toLp 2 (ψ i)) p (fun _ => 1) b)
+    simpa only [mul_one, rankOneDensity, ← Complex.coe_smul,
+      EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply,
+      WithLp.ofLp_toLp, Complex.re_sum, Complex.re_ofReal_mul, readout,
+      dotProduct_comm] using ht
   have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) =>
     mul_le_mul_of_nonneg_left (pure_lower (ψ i) (hu i)) (hp i))
   have ht := trace_b
