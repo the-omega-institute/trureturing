@@ -20,7 +20,7 @@ abbrev Fock := CountableOccupationFock.Fock
 
 def down : Fock := c 1 vacuum
 
-@[simp] theorem down_eq : down = ket {1} := ghost_vacuum.2.2.1
+@[simp] private theorem down_eq : down = ket {1} := ghost_vacuum.2.2.1
 
 def relative : Submodule ℂ Fock := LinearMap.ker (b 0)
 
@@ -32,15 +32,15 @@ def bneg (r : ℕ) : Module.End ℂ Fock := b (-(r : ℤ))
 
 def cneg (r : ℕ) : Module.End ℂ Fock := c (-(r : ℤ))
 
-@[simp] theorem bneg_one : bneg 1 = annihilate 1 := by
+@[simp] private theorem bneg_one : bneg 1 = annihilate 1 := by
   simp [bneg, b]
 
-theorem bneg_succ (r : ℕ) (hr : 2 ≤ r) :
+private theorem bneg_succ (r : ℕ) (hr : 2 ≤ r) :
     bneg r = create (2 * (r - 2)) := by
   obtain ⟨q, rfl⟩ := Nat.exists_eq_add_of_le hr
   simp [bneg, b]
 
-@[simp] theorem cneg_eq (r : ℕ) : cneg r = create (2 * r + 3) := by
+@[simp] private theorem cneg_eq (r : ℕ) : cneg r = create (2 * r + 3) := by
   simp [cneg, c]
 
 def asc (S : Finset ℕ) : List ℕ := S.sort (· ≤ ·)
@@ -62,13 +62,13 @@ def sign (B C : Finset ℕ) : ℂ := (-1 : ℂ) ^ signExponent B C
 
 def Wcoord (B C : Finset ℕ) : Fock := sign B C • ket (occ B C)
 
-theorem gword_append (xs ys : List (Module.End ℂ Fock)) :
+private theorem gword_append (xs ys : List (Module.End ℂ Fock)) :
     gword (xs ++ ys) = gword xs * gword ys := by
   induction xs with
   | nil => simp [gword]
   | cons x xs ih => simp [gword, ih, mul_assoc]
 
-theorem W_eq_bword_cword (B C : Finset ℕ) :
+private theorem W_eq_bword_cword (B C : Finset ℕ) :
     W B C = gword ((asc B).map bneg) (gword ((asc C).map cneg) down) := by
   simp [W, gword_append]
 
@@ -344,17 +344,17 @@ def occToPair (S : Finset ℕ) : pairCarrier :=
   ⟨(invB S, invC S), by simp [occ, invB, invC]
     <;> aesop⟩
 
-theorem invB_occ (B C : Finset ℕ) (h3 : 3 ∉ occ B C) : invB (occ B C) = B := by
+private theorem invB_occ (B C : Finset ℕ) (h3 : 3 ∉ occ B C) : invB (occ B C) = B := by
   ext r
   simp [invB, occ]
   omega
 
-theorem invC_occ (B C : Finset ℕ) (h3 : 3 ∉ occ B C) : invC (occ B C) = C := by
+private theorem invC_occ (B C : Finset ℕ) (h3 : 3 ∉ occ B C) : invC (occ B C) = C := by
   ext s
   simp [invC, occ]
   omega
 
-theorem occ_inv (S : Finset ℕ) (h3 : 3 ∉ S) : occ (invB S) (invC S) = S := by
+private theorem occ_inv (S : Finset ℕ) (h3 : 3 ∉ S) : occ (invB S) (invC S) = S := by
   ext j
   simp [occ, invB, invC]
   omega
@@ -379,7 +379,7 @@ private theorem W_mem_relative (B C : Finset ℕ) : W B C ∈ relative := by
 
 def Wrel (p : pairCarrier) : relative := ⟨W p.1 p.2, W_mem_relative p.1 p.2⟩
 
-theorem relative_coeff_three (v : relative) {S : Finset ℕ} (hS : 3 ∈ S) :
+private theorem relative_coeff_three (v : relative) {S : Finset ℕ} (hS : 3 ∈ S) :
     v.1 S = 0 := by
   have hb : annihilate 3 v.1 = 0 := by
     simpa [relative, b] using v.2
@@ -407,7 +407,7 @@ private theorem no_three_annihilate (v : Fock)
       · exact False.elim (h S (by simp [hS]) hS)
       · simp [map_smul, annihilate_ket, hS]
 
-theorem relative_eq_supportedAllowed : relative = supportedAllowed := by
+private theorem relative_eq_supportedAllowed : relative = supportedAllowed := by
   apply Submodule.ext
   intro v
   constructor
