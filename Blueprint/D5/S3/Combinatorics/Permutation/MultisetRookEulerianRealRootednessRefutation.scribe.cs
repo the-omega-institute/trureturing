@@ -44,10 +44,7 @@ internal sealed class MultisetRookEulerianRealRootednessRefutationDocument : ISc
                     Paragraph(Math(ConcretePolynomial())),
                     Paragraph(Text("In particular R(1)=73492650 and the degree is 11. At x=-1/100 the value of (R'(x))^2-R(x)R''(x) is exactly -2294232329562528073294509555513/12500000000000000000000000000000000000, which is negative. The original laguerre_splits theorem in SourceJensenPositiveExtension states that every real polynomial splitting over the reals has a nonnegative value of this expression at every real argument. Its hypotheses require no positivity, monicity, nonzero condition, root sign or simple roots. Applying it directly contradicts the displayed value.")),
                     Paragraph(Text("Thus the first clause of Conjecture 28 fails for the original full multiset polynomial. This conclusion uses neither refined interlacing nor numerical root isolation. It preserves repeated columns and strict adjacent ascents. The earlier six-row interlacing counterexample remains a separate result about the second clause. Rectangular-board theorems and the distinct-letter theorem are unaffected."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("alexandersson-jal-quemener-2025-rook-eulerian-interlacing"),
-                    ResolutionKind.Refuted))
+                DescribeRole.Theorem)
         ), []));
 
     private static Formula Id(string s) => F.Id(s);
