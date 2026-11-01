@@ -2469,3 +2469,126 @@ $$
 该选择只改变 Young 分解的参数与邻域阈值，不改变反馈共享、奇异效果或结果权重的适用范围；最优常数仍未由此得到。
 
 ## 追加锚（本行以下为增补区）
+
+## 21. rank-one 局部方向的相位极值
+
+第 20 节的下界路径选取了相对证书坐标的纯虚方向。这个选择可以在同一个共享反馈族内直接检验，而不需要把它提升为全局最优性的主张。令
+
+$$
+T=\frac1{\sqrt2}\begin{pmatrix}1&1\\e^{-i\pi/4}&-e^{-i\pi/4}\end{pmatrix},\qquad
+h=\frac1{\sqrt2},\qquad
+b(t,\psi)=T\begin{pmatrix}\cos t\\e^{i\psi}\sin t\end{pmatrix},\qquad
+E(t,\psi)=\overline{b(t,\psi)}\,\overline{b(t,\psi)}^{\dagger}.
+$$
+
+保留同一个原始结果的共享反馈，并置
+
+$$
+U(t,x)=\operatorname{diag}(e^{-ixt},e^{ixt},1,1)U_+,\qquad x\in\mathbb R.
+$$
+
+记 $\theta=\pi/8$、$L_0=\sqrt2+2c$，并令
+
+$$
+A=\sqrt2L_0=\sqrt2(\sqrt2+2c),\qquad
+D=2L_0\left(\frac1{\sqrt2}-\frac1{8c^3}\right)>0,
+$$
+
+其中最后的不等式由 $c>1/\sqrt2$ 得到。
+
+**命题 21.1（相位方向的二阶展开）。** 对固定的 $\psi,x$，当 $t\to0$ 时，定义 11.1 的生产者距离与缺陷满足
+
+$$
+\rho(E(t,\psi),U(t,x))
+=2(1+x^2)t^2+O(t^4),
+$$
+
+$$
+a(E(t,\psi))
+=\bigl(\kappa_0+D\cos^2\psi\bigr)t^2+O(t^4),
+$$
+
+$$
+g(E(t,\psi),U(t,x))
+=\bigl[\kappa_0+A(1+x^2-2x\sin\psi)\bigr]t^2+O(t^4),
+$$
+
+其中 $\kappa_0$ 与第 20 节相同：
+
+$$
+\kappa_0=2-\sqrt2+2\sqrt2(2s-c).
+$$
+
+因此在 $x>0$ 的这条 rank-one 共享反馈族内，固定 $x$ 时局部商
+
+$$
+\lim_{t\to0}\frac{\rho(E(t,\psi),U(t,x))}{g(E(t,\psi),U(t,x))}
+=\frac{2(1+x^2)}{\kappa_0+A(1+x^2-2x\sin\psi)}
+$$
+
+关于 $\psi$ 在 $\psi=\pi/2$ 处唯一达到最大值；$x<0$ 时唯一最大方向为 $\psi=-\pi/2$。在 $x>0$ 且取 $\psi=\pi/2$ 时，这个商退化为第 20 节的
+
+$$
+R(x)=\frac{2(1+x^2)}{\kappa_0+A(x-1)^2}.
+$$
+
+**证明。** 对 rank-one 效果，$(E^{\mathsf T})^{1/2}=bb^\dagger$，所以两列的实际反馈缺陷按比例相加，$a(E)=\delta(b)$，而
+
+$$
+\tau(E,U)=\|R_0b\|_{\ell^1}^2
+-\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b)\right)\right|^2.
+$$
+
+写 $\xi=\cos t$、$\eta=e^{i\psi}\sin t$。式 (2.3) 中的量满足
+
+$$
+x_0=\operatorname{Re}(\xi\overline\eta)=\cos t\sin t\cos\psi,\qquad
+y_0=\operatorname{Im}(\xi\overline\eta)=-\cos t\sin t\sin\psi,
+$$
+
+且
+
+$$
+a_0=\sqrt{c^2\cos^2t+s^2\sin^2t},\qquad
+m_0=c\cos^2t+s\sin^2t.
+$$
+
+将式 (2.6)--(2.8) 中的两个和式在 $t=0$ 附近展开平方根，得到
+
+$$
+\|R_0b\|_{\ell^1}
+=L_0+\left[-\frac{\cos^2\psi}{\sqrt2}
++\frac{s^2-c^2}{c}-\frac{\sin^2\psi}{8c^3}\right]t^2+O(t^4).
+$$
+
+另一方面，乘上 $U_+$ 的固定极坐标相位后，四个坐标可写成
+
+$$
+\frac{\xi+\eta}{\sqrt2},\quad
+\frac{\xi-\eta}{\sqrt2},\quad
+c\xi+is\eta,\quad c\xi-is\eta.
+$$
+
+因此带入 $U(t,x)$ 的迹恰为
+
+$$
+S(t)=2\cos t\,(h\cos(xt)+c)-2ih e^{i\psi}\sin t\sin(xt).
+$$
+
+它的零阶项为 $L_0$，且无奇次项；直接取模平方的二阶项并与上一个展开相减，化简得到
+
+$$
+g(E,U)=
+\bigl[\kappa_0+A(1+x^2-2x\sin\psi)\bigr]t^2+O(t^4).
+$$
+
+在该化简中，$a(E)$ 的相位项为 $D\cos^2\psi$，而 $\tau(E,U)$ 的相应常数项为其相反数；剩下的线性项正是 $-2Ax\sin\psi$。反馈相位商距离独立于 $\psi$，因为
+
+$$
+\min_{|\mu|=1}\|U(t,x)-\mu U_+\|_{\mathrm F}^2
+=8\sin^2(xt/2),
+$$
+
+而效果距离为 $2\sin^2t$。这证明了 $\rho$ 的第一式。最后，$A>0$ 且 $x>0$ 时，分母关于 $\sin\psi$ 严格递减，故唯一最大方向为 $\sin\psi=1$；$x<0$ 同理。代入 $\psi=\pi/2$ 即得 $R(x)$。$\square$
+
+该命题只解决给定 rank-one、共享反馈扰动族的二阶方向优化。它没有证明全局 $C_{\mathrm{prod}}$ 的最优性，也没有排除有限 $t$ 或非 rank-one 效果给出更大的商；当前全局下界仍为 $29.3209568043\ldots$，而全局最佳常数保持 open。
