@@ -579,19 +579,19 @@ def profileScale (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) : ℕ :=
 /-- The finite controller receives only the known matrix, earned interval,
 requested resolution and actual replies. There is no source-valued argument. -/
 def acquireProfile (A : PositiveMatrix) (I : ProfileCell) (B : ℕ) : ProfileProgram :=
-  if findCut B I = none then .done (containingCell B I.representative)
+  if findCut B I = none then .done (fastContainingCell B I.representative)
   else
     let Q := profileScale A I B
     readOrDerive A I (Q ^ 2) fun r =>
       let J := firstInterval A (Q ^ 2) I r
       match findCut B J with
-      | none => .done (containingCell B J.representative)
+      | none => .done (fastContainingCell B J.representative)
       | some (j, m) =>
           let s := transportDenominator A j m
           let p := transportNumerator A j m
           readOrDerive A J s fun h =>
             let K := splitInterval J ((j : ℚ) / m) (decide (p ≤ h))
-            .done (containingCell B K.representative)
+            .done (fastContainingCell B K.representative)
 
 private theorem original_upper_bounds {I : ProfileCell} {x : ℚ} (hx : I.Contains x) :
     1 ≤ originalUpper I ∧ I.upper ≤ (originalUpper I : ℚ) := by
@@ -654,7 +654,8 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
   have finish {C : ProfileCell} (hCx : C.Contains x)
       (hn : ∀ m : ℕ, 1 ≤ m → m ≤ B → ∀ j : ℤ,
         ¬ (C.lower < (j : ℚ) / m ∧ (j : ℚ) / m < C.upper)) :
-      containingCell B C.representative = containingCell B x := by
+      fastContainingCell B C.representative = containingCell B x := by
+    rw [fast_containing_cell_eq]
     exact cell_congr (no_interior_cut_same hn (interval_representative hCx) hCx)
   unfold acquireProfile
   split_ifs with hstart
@@ -671,7 +672,7 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
     have hJl : 0 ≤ J.lower := first_interval_lower_nonneg A (Q ^ 2) I r
     cases hcut : findCut B J with
     | none =>
-      change (ProfileProgram.done (containingCell B J.representative)).execute _ = _ ∧
+      change (ProfileProgram.done (fastContainingCell B J.representative)).execute _ = _ ∧
         TwoReplyTrace Q (mobius A x)
           ((if determinedReply A I (Q ^ 2) = none then [(Q ^ 2, r)] else []) ++ [])
       constructor

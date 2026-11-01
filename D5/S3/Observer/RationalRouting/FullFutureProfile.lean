@@ -201,4 +201,87 @@ theorem containing_cell_evaluator (B : ℕ) (hB : 1 ≤ B) {y : ℚ} (hy : 0 < y
     exact (hr.2 n hn hnB).trans (hxy.2 n hn hnB).symm
   exact ((instantaneous_iff_full_future hr.1 hxy.1).mp hi w) m hm hmB
 
+/-- An unreduced selected endpoint. Proofs of positivity are erased in execution. -/
+structure GridEndpoint where
+  numerator : ℤ
+  denominator : ℕ
+  positive : 0 < denominator
+
+def GridEndpoint.value (e : GridEndpoint) : ℚ := (e.numerator : ℚ) / e.denominator
+
+def GridEndpoint.le (e f : GridEndpoint) : Prop :=
+  e.numerator * (f.denominator : ℤ) ≤ f.numerator * e.denominator
+
+instance (e f : GridEndpoint) : Decidable (e.le f) := inferInstanceAs (Decidable (_ ≤ _))
+
+def GridEndpoint.maximum (e f : GridEndpoint) : GridEndpoint := if e.le f then f else e
+def GridEndpoint.minimum (e f : GridEndpoint) : GridEndpoint := if e.le f then e else f
+
+private theorem endpoint_le (e f : GridEndpoint) : e.le f ↔ e.value ≤ f.value := by
+  have he : (0 : ℚ) < e.denominator := by exact_mod_cast e.positive
+  have hf : (0 : ℚ) < f.denominator := by exact_mod_cast f.positive
+  rw [GridEndpoint.value, GridEndpoint.value, div_le_div_iff₀ he hf]
+  exact_mod_cast (Iff.rfl : e.le f ↔ _)
+
+private theorem endpoint_maximum (e f : GridEndpoint) :
+    (e.maximum f).value = max e.value f.value := by
+  unfold GridEndpoint.maximum
+  split_ifs with h
+  · exact (max_eq_right ((endpoint_le e f).mp h)).symm
+  · exact (max_eq_left (le_of_not_ge (fun hh => h ((endpoint_le e f).mpr hh)))).symm
+
+private theorem endpoint_minimum (e f : GridEndpoint) :
+    (e.minimum f).value = min e.value f.value := by
+  unfold GridEndpoint.minimum
+  split_ifs with h
+  · exact (min_eq_left ((endpoint_le e f).mp h)).symm
+  · exact (min_eq_right (le_of_not_ge (fun hh => h ((endpoint_le e f).mpr hh)))).symm
+
+def zeroEndpoint : GridEndpoint := ⟨0, 1, by omega⟩
+def oneEndpoint : GridEndpoint := ⟨1, 1, by omega⟩
+
+/-- Exactly one integer division at a denominator. No rational is constructed here. -/
+def gridQuotient (m : ℕ) (y : ℚ) : ℤ := ((m : ℤ) * y.num) / (y.den : ℤ)
+
+private theorem grid_quotient_eq (m : ℕ) (y : ℚ) : gridQuotient m y = reply m y := by
+  rw [gridQuotient, reply, ← Rat.floor_intCast_div_natCast]
+  congr 1
+  push_cast
+  rw [mul_div_assoc, Rat.num_div_den]
+
+def scanEndpoints : ℕ → ℚ → GridEndpoint × GridEndpoint
+  | 0, _ => (zeroEndpoint, oneEndpoint)
+  | n + 1, y =>
+      let j := gridQuotient (n + 1) y
+      let l : GridEndpoint := ⟨j, n + 1, Nat.succ_pos n⟩
+      let r : GridEndpoint := ⟨j + 1, n + 1, Nat.succ_pos n⟩
+      if n = 0 then (zeroEndpoint.maximum l, r)
+      else let C := scanEndpoints n y; (C.1.maximum l, C.2.minimum r)
+
+/-- Only the two selected endpoints are converted to reduced rationals. -/
+def fastContainingCell (B : ℕ) (y : ℚ) : ProfileCell :=
+  let C := scanEndpoints B y
+  ⟨C.1.value, C.2.value⟩
+
+/-- Integer cross-product selection computes the same exact cell as the
+mathematical grid intersection, while avoiding reductions in the scan. -/
+theorem fast_containing_cell_eq (B : ℕ) (y : ℚ) :
+    fastContainingCell B y = containingCell B y := by
+  induction B with
+  | zero => simp [fastContainingCell, scanEndpoints, GridEndpoint.value,
+      zeroEndpoint, oneEndpoint, containingCell]
+  | succ n ih =>
+    have he₁ := congrArg ProfileCell.lower ih
+    have he₂ := congrArg ProfileCell.upper ih
+    simp only [fastContainingCell] at he₁ he₂
+    by_cases hn : n = 0
+    · subst n
+      simp only [fastContainingCell, scanEndpoints, ite_true, endpoint_maximum]
+      simp [GridEndpoint.value, zeroEndpoint, grid_quotient_eq, containingCell]
+    · simp only [fastContainingCell, scanEndpoints, ite_eq_right hn,
+        endpoint_maximum, endpoint_minimum]
+      rw [he₁, he₂]
+      simp only [containingCell, ite_eq_right hn, GridEndpoint.value,
+        grid_quotient_eq, Int.cast_add, Int.cast_one]
+
 end D5.S3.Observer.RationalRouting
