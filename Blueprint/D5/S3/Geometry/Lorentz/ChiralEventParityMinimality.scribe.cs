@@ -14,11 +14,9 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
         "Any two continuous invariant parity-odd real variables vanish together on a chiral four-particle event in each of the two event classes.",
         H("A lower bound of three chiral-event variables"),
         Blocks(
-            Node("four-vector", "fourVector", "Real four-vectors", FourVectorFormula(),
-                "A four-vector has four real coordinates, with coordinate zero the energy and coordinates one, two and three the spatial momentum. "
-                    + "This is the ambient space in prelims.tex:21–23 of arXiv:2008.05206v6; the forward-cone restriction is imposed separately.", true),
             Node("event", "event", "Ordered four-particle events", EventFormula(),
                 "An event is an ordered quadruple of four-vectors, indexed in the order p, q, a, b. "
+                    + "Each four-vector has type Fin 4 → ℝ, with coordinate zero the energy and coordinates one, two and three the spatial momentum, as in prelims.tex:21–23 of arXiv:2008.05206v6. "
                     + "The two interchangeable pairs are the first two and last two entries. "
                     + "The source's two event classes and their common symmetry group are specified in prelims.tex:656–666. "
                     + "The ambient type itself imposes no forward-cone or collision condition.", true),
@@ -66,8 +64,7 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
             Node("family", "family", "A sphere of four-particle events", FamilyFormula(),
                 "For v on the unit sphere, write s, t and d for its three real coordinates and aa and bb for the indicated positive square roots. "
                     + "The first two momenta are fixed; the final two encode the sphere coordinates in their energies, transverse lengths and opposite longitudinal coordinates. "
-                    + "The formula is defined on all of Euclidean three-space; its collision membership and chirality are used on the unit sphere. "
-                    + "WithLp.ofLp explicitly exposes the coordinate function of the Euclidean vector.", false),
+                    + "The formula is defined on all of Euclidean three-space; its collision membership and chirality are used on the unit sphere.", false),
             Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
@@ -114,7 +111,6 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
-    private static Formula FourVectorFormula() => Equal(Local("fourVector"), Arrow(FinOf(D(4)), Reals()));
     private static Formula EventFormula() => Equal(Local("event"), Arrow(FinOf(D(4)), VectorType()));
     private static Formula EtaFormula() => Equal(Local("eta"), At(Qualified("Matrix", "diagonal"),
         Vec(D(1), Negative(D(1)), Negative(D(1)), Negative(D(1)))));
@@ -179,9 +175,9 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
                     Some("x", EventType(), And(Member(X("x"), X("om")), And(LocalCall("chiral", X("x")),
                         And(Equal(At(X("f₁"), X("x")), D(0)), Equal(At(X("f₂"), X("x")), D(0))))))))))));
     private static Formula FamilyFormula() => All("v", EuclideanType(), Equal(LocalCall("family", X("v")),
-        LetIn("s", At(At(Qualified("WithLp", "ofLp"), X("v")), D(0)),
-        LetIn("t", At(At(Qualified("WithLp", "ofLp"), X("v")), D(1)),
-        LetIn("d", At(At(Qualified("WithLp", "ofLp"), X("v")), D(2)),
+        LetIn("s", Coordinate("v", 0),
+        LetIn("t", Coordinate("v", 1),
+        LetIn("d", Coordinate("v", 2),
         LetIn("aa", At(Qualified("Real", "sqrt"), Add(D(4), X("t"))),
         LetIn("bb", At(Qualified("Real", "sqrt"), Subtract(D(4), X("t"))),
             Vec(Vec(D(3, 0), D(0), D(0), D(1)), Vec(D(2, 0), D(0), D(0), Negative(D(1))),
@@ -218,7 +214,7 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula FinOf(Formula size) => At(Qualified("Fin"), size);
-    private static Formula VectorType() => Local("fourVector");
+    private static Formula VectorType() => Arrow(FinOf(D(4)), Reals());
     private static Formula EventType() => Local("event");
     private static Formula SetType(Formula type) => At(Qualified("Set"), type);
     private static Formula MatrixType() => At(Qualified("Matrix"), FinOf(D(4)), FinOf(D(4)), Reals());
