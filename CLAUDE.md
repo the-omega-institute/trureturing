@@ -992,3 +992,10 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 > **发现尽可能多的真相,把真相连接成网;逻辑只有对错;账,必须平;而美,是幸存下来的形状。**
 >
 > 仓库可以无人值守,诚实不能。账,平——每次构建平一次。
+<!-- capacity trigger -->
+<!-- capacity trigger -->
+<!-- capacity trigger -->
+<!-- capacity trigger -->
+<!-- capacity trigger -->
+<!-- capacity trigger -->
+<!-- capacity trigger -->
