@@ -138,8 +138,9 @@ private theorem number_vacuumState : number vacuumState = 0 := by
 
 private theorem number_chargedState : number chargedState = chargedState := by
   have h : _root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghostNumber (ket {1}) = ket {1} := by
-    simp [_root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghostNumber,
-      _root_.D5.S3.Quantum.Fermionic.BcGhostCharge.charge, ket]
+    simp only [_root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghostNumber,
+      ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
+    norm_num [_root_.D5.S3.Quantum.Fermionic.BcGhostCharge.charge]
   simp [number, liftGhost, chargedState, h]
 
 namespace Capture

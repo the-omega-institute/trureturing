@@ -38,7 +38,8 @@ private theorem ext_ket {T U : Module.End ℂ Fock}
 
 @[simp] private theorem number_ket (S : Finset ℕ) :
     ghostNumber (ket S) = (charge S : ℂ) • ket S := by
-  simp [ghostNumber, ket]
+  simp only [ghostNumber, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
+    LinearMap.id_apply, one_smul]
 
 private theorem charge_insert (j : ℕ) (S : Finset ℕ) (hj : j ∉ S) :
     charge (insert j S) = charge S + siteSign j := by
@@ -61,11 +62,13 @@ private theorem charge_sum (S : Finset ℕ) : charge S = ∑ j ∈ S, siteSign j
 
 private theorem create_on_ket (j : ℕ) (S : Finset ℕ) :
     create j (ket S) = if j ∈ S then 0 else phase j S • ket (insert j S) := by
-  simp [create, ket]
+  simp only [create, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
+    LinearMap.id_apply, one_smul]
 
 private theorem annihilate_on_ket (j : ℕ) (S : Finset ℕ) :
     annihilate j (ket S) = if j ∈ S then phase j S • ket (S.erase j) else 0 := by
-  simp [annihilate, ket]
+  simp only [annihilate, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
+    LinearMap.id_apply, one_smul]
 
 private theorem number_create (j : ℕ) :
     ghostNumber * create j - create j * ghostNumber = (siteSign j : ℂ) • create j := by
@@ -125,16 +128,19 @@ private theorem occupation_projection (j : ℕ) (S : Finset ℕ) :
     (create j * annihilate j) (ket S) = if j ∈ S then ket S else 0 := by
   classical
   by_cases hj : j ∈ S
-  · have hp : phase j (S.erase j) = phase j S := by
-      unfold phase lowerCount
-      congr 1
+  · have hl : lowerCount j (S.erase j) = lowerCount j S := by
+      unfold lowerCount
       congr 1
       ext i
       simp only [Finset.mem_filter, Finset.mem_erase]
-      omega
+      constructor
+      · rintro ⟨⟨_, hi⟩, hlt⟩
+        exact ⟨hi, hlt⟩
+      · rintro ⟨hi, hlt⟩
+        exact ⟨⟨by omega, hi⟩, hlt⟩
     simp only [Module.End.mul_apply, annihilate_on_ket, if_pos hj, map_smul,
       create_on_ket, Finset.notMem_erase, ite_false, Finset.insert_erase hj,
-      hp, smul_smul, phase, ← pow_add]
+      smul_smul, phase, hl, ← pow_add]
     have he : lowerCount j S + lowerCount j S = 2 * lowerCount j S := by omega
     rw [he, pow_mul]
     norm_num
@@ -143,7 +149,8 @@ private theorem occupation_projection (j : ℕ) (S : Finset ℕ) :
 private theorem siteTerm_ket (j : ℕ) (S : Finset ℕ) :
     siteTerm j (ket S) = if j ∈ S then (siteSign j : ℂ) • ket S else 0 := by
   classical
-  simp [siteTerm, occupation_projection, apply_ite]
+  simp only [siteTerm, LinearMap.smul_apply, occupation_projection]
+  split_ifs <;> simp
 
 /-- Normal order is taken relative to the exact ghost vacuum cuts. -/
 def normalTerm (n : ℤ) : Module.End ℂ Fock :=

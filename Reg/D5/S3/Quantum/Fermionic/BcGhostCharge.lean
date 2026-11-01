@@ -35,7 +35,9 @@ def rejected : Realization signature := realize signature (fun _ _ _ => 0)
   (fun e => nomatch e)
 
 private theorem number_singleton : ghostNumber (ket {1}) = ket {1} := by
-  simp [ghostNumber, ket, charge]
+  simp only [ghostNumber, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
+    LinearMap.id_apply, one_smul]
+  norm_num [charge]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
