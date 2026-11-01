@@ -96,7 +96,9 @@ end Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex
 These exact source types and their positive evidence retain all category,
 shape, degree and short-exactness parameters. They supply no variation,
 sensitivity, observational dependence or completed registration. The existing
-row-to-total source family and its issue reference remain unchanged.
+row-to-total source family and its issue reference remain unchanged. The
+exposed source obligations are specified in
+https://github.com/the-omega-institute/trureturing/issues/24858#issuecomment-6553560856.
 -/
 
 namespace Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed

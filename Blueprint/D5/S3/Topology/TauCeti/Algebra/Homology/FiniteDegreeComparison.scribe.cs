@@ -43,7 +43,7 @@ internal sealed class FiniteDegreeComparisonDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Topology/TauCeti/Algebra/Homology/FiniteDegreeComparison.finite_degree_comparison_total_map"),
                 H("Isomorphisms below the boundary and epimorphism on it"),
                 StatementSource.FromAuthor(Statement),
-                AssessedProvenance.FromLiterature(
+                AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/Topology/tauceti2026totalcomparison")),
                 Blocks(
                     Paragraph(Text("Assume the actual column homology map is an isomorphism when p+q is at "

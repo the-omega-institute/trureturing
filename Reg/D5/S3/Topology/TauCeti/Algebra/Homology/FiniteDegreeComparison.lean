@@ -13,7 +13,9 @@ readout observes the actual total homology isomorphisms and boundary epimorphism
 The source equivalence and actual positive law are supplied. Whole-family
 variation, role sensitivity, actual observational dependence, enrolled source
 selection and raw occurrence reconstruction are not supplied. These source
-bridges do not constitute a completed four-slot registration.
+bridges do not constitute a completed four-slot registration. The missing
+evidence is specified in
+https://github.com/the-omega-institute/trureturing/issues/24858#issuecomment-6553560856.
 -/
 
 set_option autoImplicit false
