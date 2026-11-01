@@ -8,8 +8,11 @@
 
 import D5.S3.Geometry.Hyperideal.OriginalCosineDeterminantInterface
 
+/-! The common determinant criterion for all six target-edge original cosines. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option maxHeartbeats 800000
 
 namespace D5.S3.Geometry.Hyperideal.OriginalCosineAllEdges
 
@@ -30,8 +33,10 @@ private theorem ratio_strict_iff {p q n : Real} (hp : 0 < p) (hq : 0 < q) :
   have hqs : (Real.sqrt q) ^ 2 = q := Real.sq_sqrt (le_of_lt hq)
   constructor
   · rintro ⟨hl, hu⟩
-    have hl' : -(Real.sqrt p * Real.sqrt q) < n := (lt_div_iff₀ hden).mp hl
-    have hu' : n < Real.sqrt p * Real.sqrt q := (div_lt_iff₀ hden).mp hu
+    have hl' : -(Real.sqrt p * Real.sqrt q) < n := by
+      simpa using (lt_div_iff₀ hden).mp hl
+    have hu' : n < Real.sqrt p * Real.sqrt q := by
+      simpa using (div_lt_iff₀ hden).mp hu
     nlinarith [sq_nonneg (n + Real.sqrt p * Real.sqrt q),
       sq_nonneg (n - Real.sqrt p * Real.sqrt q)]
   · intro h
@@ -41,7 +46,8 @@ private theorem ratio_strict_iff {p q n : Real} (hp : 0 < p) (hq : 0 < q) :
     have hupp : n < Real.sqrt p * Real.sqrt q := by
       nlinarith [sq_nonneg (n + Real.sqrt p * Real.sqrt q),
         sq_nonneg (n - Real.sqrt p * Real.sqrt q)]
-    exact ⟨(lt_div_iff₀ hden).mpr hlow, (div_lt_iff₀ hden).mpr hupp⟩
+    exact ⟨by simpa using (lt_div_iff₀ hden).mpr hlow,
+      by simpa using (div_lt_iff₀ hden).mpr hupp⟩
 
 private theorem strict_cosine_iff_det_neg (r a b o c d : Real)
     (hr : 1 < r) (ha : 1 < a) (hb : 1 < b) (ho : 1 < o)
@@ -135,8 +141,8 @@ theorem all_edges_strict_iff_det_neg (r a b o c d : Real)
       strictCosine c r d a o b ∧
       strictCosine d r c b o a := by
   have h0 := strict_cosine_iff_det_neg r a b o c d hr ha hb ho hc hd
-  have h1 := strict_cosine_iff_det_neg a r b c o d ha hr hb ho hc hd
-  have h2 := strict_cosine_iff_det_neg b r a d o c hb hr ha ho hd hc
+  have h1 := strict_cosine_iff_det_neg a r b c o d ha hr hb hc ho hd
+  have h2 := strict_cosine_iff_det_neg b r a d o c hb hr ha hd ho hc
   have h3 := strict_cosine_iff_det_neg o a d r c b ho ha hd hr hc hb
   have h4 := strict_cosine_iff_det_neg c r d a o b hc hr hd ha ho hb
   have h5 := strict_cosine_iff_det_neg d r c b o a hd hr hc hb ho ha
