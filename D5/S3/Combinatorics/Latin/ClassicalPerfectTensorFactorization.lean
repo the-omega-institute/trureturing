@@ -148,8 +148,6 @@ private theorem gate_perfect {x : Type u} [Fintype x] (f : x × x → x × x)
 private theorem factors_bijective {x : Type u} [Fintype x] [Nonempty x]
     (a b c : x × x → x × x) (h : IsIndexOneOA (circuitGraph a b c) 3) :
     Function.Bijective a ∧ Function.Bijective b ∧ Function.Bijective c := by
-  classical
-  let d : x := Classical.choice inferInstance
   let la : x × x × x → x × x × x :=
     fun t => ((a (t.1, t.2.1)).1, (a (t.1, t.2.1)).2, t.2.2)
   let lb : x × x × x → x × x × x :=
@@ -169,24 +167,15 @@ private theorem factors_bijective {x : Type u} [Fintype x] [Nonempty x]
   have hlb : Function.Bijective lb := hclb.1.of_comp.bijective_of_finite
   have hlc : Function.Bijective lc := (Function.Bijective.of_comp_iff _ hlb).mp hclb
   refine ⟨?_, ?_, ?_⟩
-  · apply Function.Injective.bijective_of_finite
-    intro s t he
-    have heq : la (s.1, s.2, d) = la (t.1, t.2, d) := by
-      dsimp only [la]
-      simpa only [Prod.mk.eta] using congrArg (fun v : x × x => (v.1, v.2, d)) he
-    exact congrArg (fun v : x × x × x => (v.1, v.2.1)) (hla.1 heq)
-  · apply Function.Injective.bijective_of_finite
-    intro s t he
-    have heq : lb (s.1, d, s.2) = lb (t.1, d, t.2) := by
-      dsimp only [lb]
-      simpa only [Prod.mk.eta] using congrArg (fun v : x × x => (v.1, d, v.2)) he
-    exact congrArg (fun v : x × x × x => (v.1, v.2.2)) (hlb.1 heq)
-  · apply Function.Injective.bijective_of_finite
-    intro s t he
-    have heq : lc (d, s) = lc (d, t) := by
-      dsimp only [lc]
-      simpa only [Prod.mk.eta] using congrArg (fun v : x × x => (d, v)) he
-    exact congrArg Prod.snd (hlc.1 heq)
+  · exact ((Prod.map_bijective (f := a) (g := (id : x → x))).mp
+      ((Equiv.prodAssoc x x x).symm.bijective.comp
+        (hla.comp (Equiv.prodAssoc x x x).bijective))).1
+  · exact ((Prod.map_bijective (f := b) (g := (id : x → x))).mp
+      ((Equiv.prodAssoc x x x).symm.bijective.comp
+        ((Equiv.prodCongr (Equiv.refl x) (Equiv.prodComm x x)).bijective.comp
+          (hlb.comp ((Equiv.prodCongr (Equiv.refl x) (Equiv.prodComm x x)).bijective.comp
+            (Equiv.prodAssoc x x x).bijective))))).1
+  · exact ((Prod.map_bijective (f := (id : x → x)) (g := c)).mp hlc).2
 
 private theorem first_latin {x : Type u} [Fintype x] [Nonempty x]
     (a b c : x × x → x × x) (h : IsIndexOneOA (circuitGraph a b c) 3)
@@ -420,7 +409,7 @@ theorem result : claim := by
   · have : IsEmpty x := not_nonempty_iff.mp hn
     have he (f : x × x → x × x) : IsIndexOneOA (gateGraph f) 2 := by
       intro cols _
-      exact ⟨fun t => isEmptyElim t.1, fun t => isEmptyElim (t 0)⟩
+      exact Function.Bijective.of_isEmpty _
     exact ⟨he a, he b, he c⟩
 
 end D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization
