@@ -12,38 +12,58 @@ noncomputable section
 namespace Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCovariance
 open Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 
+abbrev signature : Signature where
+  Params := Σ D : LatticeData, Σ _ : Matrix (Fin D.rank) (Fin D.rank) ℂ, ℤ
+  State p := Module.End ℂ (State p.1)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def lhs (p : signature.Params) : signature.State p :=
+  T p.1 p.2.1 * (matterMode p.1 p.2.1 p.2.2 + ghostVirasoro p.1 p.2.2) -
+    (matterMode p.1 p.2.1 p.2.2 + ghostVirasoro p.1 p.2.2) * T p.1 p.2.1
+def actual : Realization signature := realize signature
+  (fun _ p y => lhs p = y) (fun e => nomatch e)
+def rejected : Realization signature := realize signature
+  (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
-  signature := Equality.signature
+  signature := signature
   Law R := ∀ (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (_ : H * gramComplex D = 1) (_ : gramComplex D * H = 1) (r : ℤ),
-    R.readout () ⟨Module.End ℂ (State D),
-      T D H * (matterMode D H r + ghostVirasoro D r) -
-        (matterMode D H r + ghostVirasoro D r) * T D H⟩
-      ((-((D.rank : ℂ)/12*((r : ℂ)^3-r))) • ghostC D r)
+    R.readout () ⟨D,H,r⟩ ((-((D.rank : ℂ)/12*((r : ℂ)^3-r))) • ghostC D r)
 private def zeroLattice : LatticeData where
   rank := 0
   G := 0
   symmetric := by intros; simp
   even_diagonal := by intros; simp
-private theorem rejected_law : ¬ arena.Law Equality.rejected := by
+private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h zeroLattice 0 (Subsingleton.elim _ _) (Subsingleton.elim _ _) 0
 
 def family : Registration arena (type_of% @covariance) where
-  actual := Equality.actual
+  actual := actual
   bridge := Iff.rfl
-  variation := ⟨covariance, Equality.rejected, rejected_law⟩
+  variation := ⟨covariance, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro role
-      refine ⟨Equality.rejected, ?_, rfl, rejected_law⟩
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro other hne
       exact (hne (Subsingleton.elim other role)).elim
     · intro e; exact nomatch e
-  dependence := Equality.dependence
+  dependence := by
+    intro role
+    letI := state_nontrivial zeroLattice
+    let p : signature.Params := ⟨zeroLattice,0,0⟩
+    obtain ⟨y, hy⟩ := exists_ne (lhs p)
+    refine ⟨p, lhs p, y, ?_⟩
+    intro h
+    exact hy (Eq.mp h rfl).symm
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@covariance) (Realization Equality.signature) Unit Unit where
+    (@covariance) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCovariance.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.LatticeMatterGhostCovariance.family
   realizationSource := none
@@ -55,7 +75,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Equality.signature Equality.actual.readout Equality.actual.anchor)
+  readout := some (realize Equality.signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -63,7 +83,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.LatticeMatterGhostCovariance
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn"]
       stateBinder := 0
