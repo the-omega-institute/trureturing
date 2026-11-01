@@ -55,7 +55,8 @@ def rejected : Realization signature :=
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (t := 1 / 2) (by norm_num) le_rfl
-  norm_num [rejected, realize] at hh
+  change |(1 : ℝ)| ≤ 2 * (1 / 2 : ℝ) ^ 2 at hh
+  norm_num at hh
 
 def evidence : Registration arena (type_of% @cusp_remainder_bound) where
   actual := actual

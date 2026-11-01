@@ -214,7 +214,7 @@ def rejected : Realization scalarSignature :=
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he : (1 : ℝ) = 1 / 2 := Filter.tendsto_nhds_unique Filter.tendsto_const_nhds h
+  have he : (1 : ℝ) = 1 / 2 := tendsto_nhds_unique Filter.tendsto_const_nhds h
   norm_num at he
 
 def evidence : Registration arena (type_of% @log_argument_ratio_limit) where
@@ -228,12 +228,12 @@ def evidence : Registration arena (type_of% @log_argument_ratio_limit) where
     by_contra hh
     push_neg at hh
     have hz (t : ℝ) : t / (1 - Real.exp (-(2 * t))) = 0 := by
-      have hh' := hh () 0 t
+      have hh' := hh () (0 : ℝ) t
       simpa [actualRatio, realize] using hh'.symm
     have hl := log_argument_ratio_limit
     simp only [hz] at hl
     have he : (0 : ℝ) = 1 / 2 :=
-      Filter.tendsto_nhds_unique Filter.tendsto_const_nhds hl
+      tendsto_nhds_unique Filter.tendsto_const_nhds hl
     norm_num at he
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
