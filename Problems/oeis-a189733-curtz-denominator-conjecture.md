@@ -29,7 +29,6 @@ the six-tuples for every natural k, including zero, with no extra premise.
 This is Paul Curtz's externally named OEIS conjecture. Its exact statement
 and quantifiers appear in issue
 [#25342](https://github.com/the-omega-institute/trureturing/issues/25342).
-The event and deadline in its `research-prereg-v1` comment remain unchanged.
 The proof concerns the six formulas; no separate theorem about the entry's
 empirical generating function or the lower-triangular extension is claimed.
 
