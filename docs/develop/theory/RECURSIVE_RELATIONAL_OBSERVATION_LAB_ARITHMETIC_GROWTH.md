@@ -3618,3 +3618,306 @@ made. The long-term RRO objective remains open beyond this finite
 appendix.
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Fixed-encoder cut labels on the full native beta comb
+
+**Definition 23.1 (local cut-label contract).** Fix a finite nonempty
+actually attained history set
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\}.
+$$
+The public effective data include the current $y$, the antichain menus
+$U_J$, the fixed native rank-$r$ codes
+$$
+Q_h\subseteq U_{J(h)},\qquad |Q_h|=r,
+$$
+and the common default label $0$. The codes are distinct and are fixed
+before the run; they are not a history-dependent coloring. At every
+declared completed-call cut and at the final recall cut, the accessible
+state is the current geometry $R$ together with one value in one fixed
+nonempty finite label alphabet containing $0$, shared across all cuts. All scratch, decoded identity, last reply, parser,
+output, cursor, phase, control, alias, and other history-dependent
+supplements are cleared at the cut. Fixed public tables, paid transient
+calculation and acquisition, source material, authentic references, and
+the protocol phases retain their separate costs.
+
+For each $h$, let $\mathfrak P_h$ be the finite set of saturated legal
+paths
+$$
+\gamma_h=(R_{h,0},\ldots,R_{h,n_h}),\qquad
+R_{h,0}=Q_h,\quad R_{h,n_h}=U_{J(h)},\quad
+R_{h,i+1}=R_{h,i}\cup\{p_{h,i}\},
+$$
+where every $p_{h,i}$ is an untouched original row of $U_{J(h)}$.
+Singleton paths are allowed. For a choice
+${\boldsymbol\gamma}=(\gamma_h)_{h\in\mathcal H}$ define its local
+congestion by
+$$
+\operatorname{cong}({\boldsymbol\gamma})
+ =\max_R\bigl|\{h:R\in\gamma_h\}\bigr|,
+$$
+where the maximum includes initial and terminal vertices. The fixed-encoder
+capacity is
+$$
+M_{\rm fixed}
+ :=\min_{{\boldsymbol\gamma}\in\prod_h\mathfrak P_h}
+      \operatorname{cong}({\boldsymbol\gamma}).
+\tag{LAGF.1}
+$$
+
+**Theorem 23.2 (exact prescribed-path capacity).** Under the local
+cut-label contract, the least possible fixed label alphabet is exactly
+the number in (LAGF.1). This statement permits $|U_J|=r$; it does not add
+the condition $|U_J|>r$.
+
+Proof. Fix a prescribed family of paths. At a cut with geometry $R$, let
+$\mathcal H_R=\{h:R\in\gamma_h\}$. If two histories in $\mathcal H_R$
+had the same label, deterministic permitted-state factorization would
+give the same next call, next geometry, and next label. Their prescribed
+tails would then coincide. Distinct supports cannot have the same
+terminal menu because the $U_J$ form an antichain. Equal supports with
+different $\sigma$ cannot have the same final recall. Hence the labels
+at $R$ are injective on $\mathcal H_R$, giving the lower bound
+$|\Lambda|\ge\operatorname{cong}({\boldsymbol\gamma})$.
+
+In particular, an initial collision $Q_h=Q_{h'}$ would put two histories
+at the same current source with the common default label. The first
+permitted transition is then identical even if unbounded newly generated
+memory is allowed. Different menus cannot both be completed from that
+state, and different final words cannot both be recalled, so later memory
+cannot repair the collision.
+
+For the converse, fix a path family of congestion $M$ and use the one
+alphabet
+$$
+\Lambda_M=\{0,\ldots,M-1\}
+$$
+at every cut, including initialization and recall. At each reached vertex
+$R$, enumerate $\mathcal H_R$ in the fixed public history order and define
+an injection
+$$
+\lambda_R:\mathcal H_R\hookrightarrow\Lambda_M,\qquad
+\lambda_R(h_i)=i-1\quad(1\le i\le|\mathcal H_R|).
+$$
+All initial vertices have rank $r$, all later vertices have larger rank,
+and the initial codes are distinct. Thus $\mathcal H_{Q_h}=\{h\}$ and
+$\lambda_{Q_h}(h)=0$, literally the same default value already in
+$\Lambda_M$. No additional value is identified with or adjoined to this
+alphabet.
+
+The fixed finite table has input $(R,j)$ alone. For an occupied input
+$(R,\lambda_R(h))$ at a nonterminal vertex of $\gamma_h$, it returns the
+next original row $p$ and the value $\lambda_{R\cup\{p\}}(h)\in\Lambda_M$;
+at the terminal it returns Stop and $\sigma_h$. The injection makes this
+a single-valued table even at a shared middle or terminal. A current
+traversal obtains $R$, and the decoding and lookup are transient; only
+the displayed value in $\Lambda_M$ crosses the next counted cut. The
+current rank $|R|$ and this table determine the action without a retained
+initialization marker, phase or extra symbol. At a vertex of maximal
+occupancy all $M$ values are used, so this is exactly $M$ values globally,
+including $0$. Taking the minimum proves (LAGF.1). This is an effective
+finite search on the actually attained histories and menus. It makes no
+efficient-table or uniform-global-ROM claim. If $M=1$, every label at
+every cut is literally $0$, including along a nontrivial path. A singleton
+path starts and stops at $(Q_h,0)$ with no call or extra state. The cases
+$r=0$, terminal antichainness and path intersections are included: the
+common empty initial code permits only one history under injectivity,
+and intersections are counted at their shared geometry. $\square$
+
+**Definition 23.3 (the complete paired code on the native comb).** Let
+$m=2\ell$, $k=\ell-1$, and let
+$$
+y_0=\beta,\qquad y_{j+1}=\langle y_j,\beta\rangle.
+$$
+Use candidate indices $I=\{0,\ldots,2\ell-1\}$ with
+$p_i=L^iR$ and the uncovered candidate $z=L^{2\ell}$. For every
+$J\in\binom I{\ell-1}$ put
+$$
+U_J=\{z\}\cup(I\setminus J),\qquad
+N=\binom{2\ell}{\ell-1}.
+\tag{LAGF.2}
+$$
+Partition $I$ into fixed disjoint pairs
+$P_1,\ldots,P_\ell$. A rank-$\ell$ code in the accepted encoder always
+contains $z$. Classify the pair indices as full $A$, singleton $S$ with
+one selected value in each pair, and empty $C$. Its size equation is
+$$
+|C|=|A|+1.
+\tag{LAGF.3}
+$$
+For each fixed singleton data $(S,\text{selected values})$, put
+$a=|A|$ and let $W$ be the remaining $2a+1$ pair indices. Choose once
+and for all an effective containment perfect matching
+$$
+\mu_W:\binom W a\longrightarrow\binom W{a+1},
+\qquad A\subset\mu_W(A).
+\tag{LAGF.4}
+$$
+Such a matching exists because the inclusion graph is $(a+1)$-regular
+on both sides; a finite lexicographic search is an effective choice. Write
+$\mu_W(A)=A\cup\{c(A)\}$. Define
+$$
+Q(A)=\{z\}\cup\bigcup_{i\in A}P_i
+       \cup\{\text{the selected value in }P_i:i\in S\},
+$$
+and assign to it the terminal
+$$
+U(A)=Q(A)\cup P_{c(A)},\qquad
+J(A)=I\setminus(U(A)\setminus\{z\}).
+\tag{LAGF.5}
+$$
+The sole old order $\sigma_{J(A)}$ is the increasing order of the
+typed promotions at the members of $J(A)$.
+
+**Theorem 23.4 (full-family bijection and free cost).** The construction
+of Definition 23.3 assigns all $N$ accepted rank-$\ell$ starts and all
+$N$ terminal menus exactly once. It has terminal multiplicity
+$D=1$. Consequently the existing free-re-encoding theorem gives free
+capacity one in this family, while the fixed encoder retains the paired
+codes and may not re-pair their endpoints.
+
+Proof. Every rank-$\ell$ subset containing $z$ has a unique triple
+$(A,S,C)$ with its selected singleton values and satisfying (LAGF.3), so
+(LAGF.4) assigns it exactly one $c(A)$ and one terminal. Conversely, let
+$T=U_J\setminus\{z\}$ be any terminal candidate set, so $|T|=\ell+1$.
+Write $B,S,C_T$ for its full, singleton and empty pair-index sets, retaining
+the selected value at every singleton. Their two size equations are
+$$
+|B|+|S|+|C_T|=\ell,\qquad 2|B|+|S|=\ell+1.
+$$
+Consequently, for $a=|C_T|=|B|-1\ge0$,
+$$
+|B|=a+1,\qquad |S|=\ell-2a-1,\qquad |C_T|=a,
+\qquad 0\le a\le\left\lfloor\frac{\ell-1}{2}\right\rfloor.
+$$
+In particular $W=B\cup C_T$ has size $2a+1$ and is precisely the
+complement of this singleton data's pair-index set. Apply the already
+chosen matching (LAGF.4) for that same singleton data: since
+$B\in\binom W{a+1}$, its unique inverse is
+$A=\mu_W^{-1}(B)\in\binom W a$. Containment gives $A\subset B$, so
+$B\setminus A=\{c(A)\}$. The recovered code has full set $A$, the
+unchanged singleton data, and empty set $W\setminus A$ of size $a+1$;
+its candidate count is $2a+(\ell-2a-1)=\ell-1$. Removing the full pair
+$P_{c(A)}$ from $U_J$ therefore gives exactly this accepted rank-$\ell$
+code, and (LAGF.5) sends it back to $U_J$. Conversely, starting from a
+code and applying this inverse returns the same $A$ by the matching's
+injectivity. This proves both inverse identities for every constituent
+matching, without discarding any start, terminal or support. There are
+$\binom{2\ell}{\ell-1}=N$ starts and
+$\binom{2\ell}{\ell+1}=N$ terminals, each used exactly once. The increasing
+order is unique, so $D=1$. The terminal and free costs are therefore one
+by the already established terminal/free result; this paragraph does not
+alter that result. $\square$
+
+**Theorem 23.5 (sharp fixed-encoder value).** For every $\ell\ge1$, in
+the complete paired family of Definition 23.3,
+$$
+M_{\rm fixed}=\left\lceil\frac\ell2\right\rceil.
+\tag{LAGF.6}
+$$
+This holds for every constituent finite matching chosen in (LAGF.4).
+
+Proof. A code $Q(A)$ and its terminal $U(A)$ differ by the two members of
+the single pair $P_{c(A)}$. Its prescribed path has exactly two possible
+middle geometries, according to which member of that pair is written
+first. Form a simple graph $G$ whose vertices are all such middle
+geometries and whose edge for a history joins its two possible middles.
+At a middle $R$, an incident edge is determined by a singleton pair
+$P_i$ of $R$: deleting its displayed member recovers the preceding code,
+and the matching then determines the unique history. Hence no pair gives
+parallel edges and $\deg_G(R)$ is at most the number of singleton pairs,
+therefore at most $\ell$.
+
+There is a forced full subgraph. Restrict to middles with no full or
+empty pair, so every pair is singleton. These $2^\ell$ vertices are the
+vertices of the $\ell$-cube. For each vertex and each coordinate $i$, the
+code obtained by deleting its displayed member in $P_i$ has $a=0$ and the
+one-pair matching in (LAGF.4) forces $c=i$. Its history edge is exactly
+the cube edge flipping coordinate $i$. Thus every constituent matching
+contains the full cube, with $\ell2^{\ell-1}$ forced history edges.
+
+Choosing one middle for each history is orienting its edge toward the
+chosen middle. On the forced cube the sum of occupancies is
+$\ell2^{\ell-1}$, so some vertex has occupancy at least
+$\lceil\ell/2\rceil$. This proves the lower bound for every permissible
+choice of the two calls.
+
+For the upper bound use the balanced-orientation lemma: every finite
+simple graph of maximum degree at most $\ell$ has an orientation with
+indegree at most $\lceil\ell/2\rceil$. To see this, in each connected
+component add a dummy vertex adjacent to every odd-degree vertex. All
+degrees are then even, so an Euler tour, oriented along its traversal,
+gives equal in- and out-degree. Deleting the dummy edges leaves at every
+original vertex the two degrees differing by at most one. Orient each
+history edge toward its selected middle. The resulting label occupancy
+is its indegree and is at most $\lceil\ell/2\rceil$. The initial codes
+are all distinct and the terminal menus are all distinct by
+Theorem 23.4, so initial and final occupancies are one. The general
+formula (LAGF.1) now gives (LAGF.6). $\square$
+
+**Proposition 23.6 (native realization and transport boundary).** The
+full family above is an actually attained LAB family under the same
+conditional owner-installed session and paid access premises as
+Definitions 18.1 and 20.1--20.3. Starting from the known alpha root,
+promote the root, split the successive left-spine betas at
+$L^0,L^1,\ldots,L^{2\ell-1}$, and promote the newly created right alpha
+at $p_i$ exactly when $i\notin J$. This prepares the actual $x_J$.
+Acquire and seal its original frontier, then perform the promotions at
+the members of $J$ in increasing order, with complete returns; this
+attains the common $y_{2\ell}$ and the known order $\sigma_J$.
+
+At that source, each prescribed code write is a split at a distinct
+original beta row. The two remaining writes are the two members of the
+one pair $P_{c(A)}$, in the selected order. Traversal obtains each
+current operand and authentic reference before the call. No newborn row,
+decoration, refusal, cohort bit, old cursor, or hidden output is used.
+After reset, the current geometry and the one retained label are
+reacquired at each cut; the label is changed only by the local transition
+table of Theorem 23.2. Every call still performs the original guard,
+reservation, source edit, all ancestral-tape and arithmetic updates,
+literal reply, End/ACK, full INNER return, and lawful tail.
+
+The proof is conditional on LAB20's owner-installed session access,
+authenticated current-reference acquisition, sufficient backing, and
+Ready-to-Ready/INNER return premises. It does not turn an arbitrary legacy
+Busy state into a reset command, and public descriptions provide neither
+references nor permissions. AA17's syntax, material-support,
+terminal-boundary, and labelled causal-membership maps transport the same
+current geometry and label; they do not recover the erased chronology.
+No full-history reconstruction, total or peak resource optimum,
+thermodynamic erasure, deployed-device claim, or universal spacetime
+completion follows. $\square$
+
+**Corollary 23.7 (comparison and checks).** The fixed alphabet has
+supplementary fixed-width cost
+$$
+\left\lceil\log_2\left\lceil\frac\ell2\right\rceil\right\rceil
+$$
+bits. The terminal multiplicity and free-re-encoding cost are both one;
+the latter is the existing Theorem 18.3/21 result in its stated domain.
+Whole-history memory newly decoded after reset is valid, while retaining
+the pre-reset transcript would violate Definition 23.1. For $\ell=1,2$
+the formula gives one label. For $\ell=3$, there are
+$$
+N=\binom62=15,\qquad 3\cdot2^2=12
+$$
+forced cube edges and $2^3=8$ all-single middle geometries, giving exact
+fixed capacity $2$ versus free cost $1$. This is the first strict example
+inside this family, not a claim of a globally smallest example. The
+long-term space--time--boundary--memory objective remains open.
+
+The matching and path suppliers are the finite Hall theorem and the
+prescribed-pair warning of Bastide--Groenland--Jacob--Johnston,
+arXiv:2207.07391v2, together with directed-hypercube routing of
+Chakrabarty--Seshadhri, arXiv:2409.02206v2. The edge/vertex distinction
+and prescribed-pair boundary are also treated by
+Briet--Chakraborty--Garcia-Soriano--Matsliah, *Monotonicity of Boolean
+functions*, DOI 10.1007/s00493-012-2765-1. Balanced discrepancy and
+pseudoarboricity supply the mature orientation language (Ghaffari et al.,
+arXiv:1706.04746v2; Blumenstock--Fischer, arXiv:1811.06803v4), while
+Rivest--Shamir (1982) supplies only the monotone-write/rank-phase context.
+These sources are suppliers for standard combinatorics; the fixed native
+intermediate-capacity synthesis and its LAB realization are repo-derived.
+
+
+## 追加锚（本行以下为增补区）
