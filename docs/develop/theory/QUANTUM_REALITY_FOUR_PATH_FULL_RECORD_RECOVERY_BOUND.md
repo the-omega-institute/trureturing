@@ -628,3 +628,179 @@ The rank-two correlation example in Buscemi–Chiribella–D’Ariano, [*Inverti
 The derivation is therefore a source-specific application of the existing basis, polar correction, and elementary norm inequalities, with the lower bound supplied by Theorem 3.1; it does not assert a new general norm theorem or global literature priority. Every premise used for the exact value is displayed above or in the cited existing lower theorem, and no inaccessible manuscript or unpublished protocol claim is a premise. The construction fixes the record, effects, and feedback exactly and proves a channel identity on arbitrary operators; it supplies no additional premise about uncertain physical implementations or access to measured probabilities. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A quadratic equality gap for complete refinements
+
+**Definition 8.1 (certificate coordinates and ray distance).** Let \(T\) be the unitary in (3.5). For a finite family \(b_j\in\mathbb C^2\), write
+
+$$
+b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},
+\qquad p_j=|\xi_j|^2,\qquad q_j=|\eta_j|^2.
+\tag{8.1}
+$$
+
+Let
+
+$$
+\mathcal E=T(\mathbb C\times\{0\})\ \cup\ T(\{0\}\times\mathbb C)
+\tag{8.2}
+$$
+
+be the union of the two extremal complex rays. Since \(T\) is unitary, the squared Euclidean distance from \(b_j\) to \(\mathcal E\) is
+
+$$
+d_j^2=\operatorname{dist}(b_j,\mathcal E)^2=\min\{p_j,q_j\}.
+\tag{8.3}
+$$
+
+For the pointwise certificate of (3.9), put
+
+$$
+\delta(b)=b^\dagger H b-\|R_0b\|_{\ell^1}^2.
+\tag{8.4}
+$$
+
+**Theorem 8.2 (uniform quadratic gap and complete-resolution consequence).** For every \(b\in\mathbb C^2\),
+
+$$
+\delta(b)\ge \frac1{800}\,|\xi|^2|\eta|^2,
+\qquad b=T(\xi,\eta)^{\mathsf T}.
+\tag{8.5}
+$$
+
+Equality in the certificate \(\delta(b)=0\) holds exactly for \(b=0\) or \(b\in\mathcal E\). Consequently, if a finite complete resolution satisfies \(\sum_j b_jb_j^\dagger=I_2\), then
+
+$$
+\sum_j p_jq_j\le 800\sum_j\delta(b_j).
+\tag{8.6}
+$$
+
+If the protocol satisfies the near-optimality premise
+\(\|\Phi-\operatorname{id}\|_\diamond\le1-c+\varepsilon\), then (3.11)--(3.15) give
+\(\eta=(1+c)/2-f\le\varepsilon/2\). The two nonnegative equality-chain defects in (3.8)--(3.13) sum to \(16\eta\), so in particular
+\(\sum_j\delta(b_j)\le8\varepsilon\). Under this premise, (8.6) gives
+
+$$
+\sum_j p_jq_j\le6400\varepsilon,
+\qquad
+\sum_j d_j^4\le6400\varepsilon.
+\tag{8.7}
+$$
+
+Thus the second equality-chain defect has an outcome-count-independent fourth-power distance consequence for the actual extremal rays of the \(C_0\) certificate.
+
+Proof. The homogeneity of (8.4) allows us to assume \(p+q=1\) when \(b\ne0\), where \(p=|\xi|^2\), \(q=|\eta|^2\). Use the notation \(x,y,a,m,I,L,A,B\) from (2.3) and (2.8). Equations (2.6) and (2.7) give
+
+$$
+A+B\le I-d,
+\qquad
+d=\frac{x^2}{\sqrt2}+\frac{y^2}{8a^3}
+\ge pq\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}.
+\tag{8.8}
+$$
+
+The exact identity (2.10) can be written
+
+$$
+I-L=\gamma(a,p,q)\,pq,
+\qquad
+\gamma(a,p,q)=\frac{4\sqrt2(c-s)^2}{(a+m)(I+L)}.
+\tag{8.9}
+$$
+
+We first obtain a uniform lower gap between the two coefficients in (8.8) and (8.9). Put \(e=(c-s)^2=2s^2\). Since \(a,m\ge s\) and \(L\ge\sqrt2+2m\), the denominator in (8.9) obeys
+
+$$
+(a+m)(I+L)\ge4\sqrt2s+8s^2.
+\tag{8.10}
+$$
+
+The elementary radical inequality
+
+$$
+4\sqrt2s+8s^2\ge8\sqrt2e
+\tag{8.11}
+$$
+
+follows from \(e=2s^2\) and \(\sqrt2+2s\ge4\sqrt2s\); after squaring the latter positive inequality it is \(17\sqrt2\ge24\), which follows from \(2>(24/17)^2\). Hence \(\gamma(a,p,q)\le1/2\).
+
+If \(a\le3/5\), then \(1/(8a^3)\ge125/216\), and \(1/\sqrt2\ge125/216\). Therefore
+
+$$
+\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
+\ge\frac{125}{216}-\frac12>\frac1{800}.
+\tag{8.12}
+$$
+
+For \(a\ge3/5\), the second denominator estimate in the proof of Lemma 2.1 gives
+
+$$
+(a+m)(I+L)\ge\frac{19}{5}\sqrt2\,a+\frac{361}{50}a^2.
+\tag{8.13}
+$$
+
+Let
+
+$$
+F(t)=\frac{19}{5}\sqrt2+\frac{361}{50}t
+      -\frac{3200}{99}\sqrt2 e\,t^2.
+\tag{8.14}
+$$
+
+This is concave. On \([3/5,c]\) its endpoint values are positive. To check this without approximation, use
+
+$$
+\frac75<\sqrt2<\frac{99}{70},
+\qquad \frac9{10}<c<1,
+\qquad c^2=\frac{2+\sqrt2}{4}<\frac{239}{280},
+\tag{8.15}
+$$
+
+which give
+
+$$
+F(3/5)>\frac{2413}{250}-\frac{83520}{17325}>0,
+\qquad
+F(c)>\frac{5909}{500}-\frac{55448}{4851}>0.
+\tag{8.16}
+$$
+
+Concavity then gives \(F(t)>0\) throughout the interval. Combining (8.13)--(8.14) yields
+
+$$
+(a+m)(I+L)\ge\frac{3200}{99}\sqrt2 e\,a^3,
+\qquad
+\gamma(a,p,q)\le\frac{99}{800a^3}.
+\tag{8.17}
+$$
+
+Since \(a\le c<1\), (8.17) implies
+
+$$
+\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
+\ge\frac1{8a^3}-\frac{99}{800a^3}
+=\frac1{800a^3}\ge\frac1{800}.
+\tag{8.18}
+$$
+
+Equations (8.8), (8.9), (8.12), and (8.18) therefore give
+
+$$
+L-(A+B)\ge\frac{pq}{800}.
+\tag{8.19}
+$$
+
+Because \(L^2\ge2\), \(L+A+B\ge1\), and the defect is
+
+$$
+\delta(b)=L^2-(A+B)^2=(L-(A+B))(L+A+B),
+$$
+
+we obtain \(\delta(b)\ge pq/800\) in the normalized case. Rescaling gives (8.5) for arbitrary \(b\). If \(pq=0\), then \(x=y=0\), (2.10) gives \(I=L\), and (2.6)--(2.7) give \(A+B=I\); hence \(\delta(b)=0\). If \(pq>0\), (8.5) is strict, so these are all equality cases. Finally, (8.6) follows by summing (8.5), and (8.7) follows from \(\min(p_j,q_j)^2\le p_jq_j\). \(\square\)
+
+**Proposition 8.3 (the controlled aggregate and its boundary).** The consequence (8.7) is invariant under arbitrary splitting of a refined Kraus vector into proportional pieces. A bound on the ordinary aggregate \(\sum_j d_j^2\) cannot follow from \(\sum_j\delta(b_j)\) with a constant independent of the number of pieces.
+
+Proof. Replacing one vector \(b\) by \(m\) copies \(m^{-1/2}b\) preserves \(\sum_jb_jb_j^\dagger\). It multiplies \(\sum_j p_jq_j\) by \(1/m\), and it also multiplies \(\sum_jd_j^4\) by \(1/m\), exactly as in (8.7). In contrast, \(\sum_jd_j^2\) is unchanged. For a concrete complete resolution, take the two \(T\)-coordinate vectors \(z_1=(1,1)^{\mathsf T}/\sqrt2\) and \(z_2=(1,-1)^{\mathsf T}/\sqrt2\), and set \(b_i=Tz_i\). Then \(\sum_i b_ib_i^\dagger=I_2\), while each \(d_i^2=1/2\). Splitting both vectors into \(m\) proportional pieces leaves \(\sum_jd_j^2=1\) and sends \(\sum_jp_jq_j\) to \(1/(2m)\). Thus no outcome-count-independent inequality of the form \(\sum_jd_j^2\le C\sum_j\delta(b_j)\) is possible. This is the obstruction to upgrading (8.7) to an ordinary aggregate Euclidean distance without an additional normalization or a new structural hypothesis. \(\square\)
+
+Theorem 8.2 supplies only the equality-set bridge for the complete refinement. It does not align the common feedback unitary across spectral pieces, lift the controlled aggregate to the reference-inclusive diamond norm, or classify the \(\varepsilon=0\) implemented channel. Therefore the exact uniform square-root stability assertion for the original full-record arbitrary-feedback class remains unresolved.
+
