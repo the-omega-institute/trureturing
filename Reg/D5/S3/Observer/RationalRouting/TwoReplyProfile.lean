@@ -63,7 +63,8 @@ def arena : Arena where
       (∀ s : ℕ, 1 ≤ s → ∀ r : ℤ, determinedReply A J s = some r ↔
         ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r) ∧
       AcquisitionScans A I B z C ∧
-      BoundedReplies Q V (program.actualReads z)
+      BoundedReplies Q V (program.actualReads z) ∧
+      C.lower.den ≤ B ∧ C.upper.den ≤ B
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

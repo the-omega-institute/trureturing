@@ -833,8 +833,8 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
           ((if determinedReply A J s = none then [(s, h)] else []) ++ [])) = [] ∨ _
         split_ifs <;> simp [r, h, s, ProfileProgram.actualReads]
 
-/-- Exact arithmetic trace of the original-denominator cut scan. The two
-counters charge integer divisions and integer cross-product comparisons. -/
+/-- Exact arithmetic trace of the original-denominator cut scan. The
+counter charges one integer division and one cross-product comparison per step. -/
 inductive CutScanRun : ℕ → ProfileCell → Option (ℤ × ℕ) → ℕ → Prop where
   | zero (C) : CutScanRun 0 C none 0
   | found (n : ℕ) (C : ProfileCell)
@@ -986,10 +986,34 @@ private theorem trace_payload {Q V : ℕ} (hQ : 1 ≤ Q) {z : ℚ}
   have first := bounded_reply hz hV hD
   have second := bounded_reply hz hV hs
   rcases ht with ht | ht | ht | ht <;> subst rows <;>
-    simp only [BoundedReplies,List.mem_nil_iff,List.mem_cons,forall_eq_or_imp,
-      Prod.mk.injEq,forall_false,forall_const,Prod.fst,Prod.snd]
-  all_goals first | trivial | exact ⟨hD,le_rfl,first⟩ | exact ⟨hs,hsQ.trans hQQ,second⟩ |
-    exact ⟨⟨hD,le_rfl,first⟩,⟨hs,hsQ.trans hQQ,second⟩⟩
+    simp [BoundedReplies,hD,hs,hsQ.trans hQQ,first.1,first.2,second.1,second.2]
+
+private theorem endpoint_den_bound (e : GridEndpoint) : e.value.den ≤ e.denominator := by
+  have h := Rat.den_dvd e.numerator (e.denominator : ℤ)
+  rw [Rat.divInt_eq_div] at h
+  have hd : e.value.den ∣ e.denominator := by
+    exact_mod_cast h
+  exact Nat.le_of_dvd e.positive hd
+
+private theorem endpoint_scan_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
+    (scanEndpoints B y).1.denominator ≤ B ∧
+      (scanEndpoints B y).2.denominator ≤ B := by
+  induction B with
+  | zero => omega
+  | succ n ih =>
+    by_cases hn : n=0
+    · subst n
+      simp only [scanEndpoints,ite_true,GridEndpoint.maximum]
+      split_ifs <;> exact ⟨le_rfl,le_rfl⟩
+    · obtain ⟨hl,hu⟩ := ih (by omega)
+      simp only [scanEndpoints,ite_eq_right hn,GridEndpoint.maximum,GridEndpoint.minimum]
+      split_ifs <;> constructor <;> dsimp only <;> omega
+
+private theorem containing_cell_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
+    (containingCell B y).lower.den ≤ B ∧ (containingCell B y).upper.den ≤ B := by
+  rw [← fast_containing_cell_eq]
+  have h := endpoint_scan_denominators B hB y
+  exact ⟨(endpoint_den_bound _).trans h.1,(endpoint_den_bound _).trans h.2⟩
 
 /-- Actual acquisition on one authentic chronological prefix. The finite
 output is exactly the original cell and evaluates every future word and every
@@ -1014,7 +1038,8 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
       (∀ s : ℕ, 1 ≤ s → ∀ r : ℤ, determinedReply A J s = some r ↔
         ∀ y : ℚ, J.Contains y → reply s (mobius A y) = r) ∧
       AcquisitionScans A I B z C ∧
-      BoundedReplies Q V (program.actualReads z) := by
+      BoundedReplies Q V (program.actualReads z) ∧
+      C.lower.den ≤ B ∧ C.upper.den ≤ B := by
   dsimp only
   rw [chronological_matrix u hx.1]
   obtain ⟨he, ht⟩ := acquisition_spec (unimodular_wordMatrix u.reverse) hl hB hx
@@ -1028,7 +1053,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
   have hD : 1 ≤ Q ^ 2 := one_le_pow₀ hQ
   let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) (mobius A x))
   have hJ : J.Contains x := (first_interval_exact hA hD hx.1 rfl x).mpr ⟨hx,rfl⟩
-  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨he, ?_, ?_, ht, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [he]
     intro y
     rw [containing_cell_exact B hB hx.1 y]
@@ -1055,5 +1080,7 @@ theorem acquired_original_profile (u : List Bool) (I : ProfileCell) (B : ℕ)
       (hx.2.2.trans_le (original_upper_bounds hx).2)
     apply trace_payload hQ hz.1 _ ht
     simpa only [Nat.cast_add,Nat.cast_mul,Nat.cast_one] using hz.2
+  · rw [he]
+    exact containing_cell_denominators B hB x
 
 end D5.S3.Observer.RationalRouting
