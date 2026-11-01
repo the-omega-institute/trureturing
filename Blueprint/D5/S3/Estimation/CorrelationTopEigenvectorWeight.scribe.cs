@@ -98,7 +98,10 @@ internal sealed class CorrelationTopEigenvectorWeightDocument : IScribeDocumentD
                             + "It follows that (μ i−μ j)((e i)²−(e j)²) < 0. Maximality gives μ j ≤ μ i, hence (e i)² < (e j)². "
                             + "Since delta n is u multiplied by the positive reciprocal square root of n, multiplying by its square preserves this strict inequality and gives the required comparison of weights. "
                             + "The common threshold from the limit estimates therefore supplies the required matrix in every n ≥ m, proving the reverse implication."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("stepanov-herrmann-guhr-2021-correlation-top-eigenvector-weight"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
