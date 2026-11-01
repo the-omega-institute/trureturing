@@ -89,7 +89,6 @@ private lemma r1_limit : Tendsto r1 (𝓝[>] 0) (𝓝 0) := by
     apply hm.congr'
     filter_upwards [self_mem_nhdsWithin] with t ht
     change 0 < t at ht
-    dsimp
     field_simp [ht.ne']
     <;> ring
   have hh := (((hk.div_const 2).sub hep).add
@@ -120,18 +119,18 @@ private lemma quotient_finite_part :
   have hf (t : ℝ) : HasDerivAt f (f₁ t) t := by
     convert (((hasDerivAt_id t).const_mul 2).mul
       (((hasDerivAt_id t).neg.div_const 2).exp)).sub
-        (((hasDerivAt_id t).const_mul 2).exp) |>.add_const 1 using 1 <;> dsimp [f, f₁] <;> ring
+        (((hasDerivAt_id t).const_mul 2).exp) |>.add_const 1 using 1 <;> (try funext u) <;> dsimp [f, f₁] <;> ring
   have hf₁ (t : ℝ) : HasDerivAt f₁ (f₂ t) t := by
     convert (((hasDerivAt_const t (2 : ℝ)).sub (hasDerivAt_id t)).mul
       (((hasDerivAt_id t).neg.div_const 2).exp)).sub
-        ((((hasDerivAt_id t).const_mul 2).exp).const_mul 2) using 1 <;> dsimp [f₁, f₂] <;> ring
+        ((((hasDerivAt_id t).const_mul 2).exp).const_mul 2) using 1 <;> (try funext u) <;> dsimp [f₁, f₂] <;> ring
   have hg (t : ℝ) : HasDerivAt g (g₁ t) t := by
     convert ((hasDerivAt_id t).const_mul 2).mul
-      ((((hasDerivAt_id t).const_mul 2).exp).sub_const 1) using 1 <;> dsimp [g, g₁] <;> ring
+      ((((hasDerivAt_id t).const_mul 2).exp).sub_const 1) using 1 <;> (try funext u) <;> dsimp [g, g₁] <;> ring
   have hg₁ (t : ℝ) : HasDerivAt g₁ (g₂ t) t := by
     convert (((((hasDerivAt_id t).const_mul 2).exp).sub_const 1).const_mul 2).add
       (((hasDerivAt_id t).const_mul 4).mul
-        (((hasDerivAt_id t).const_mul 2).exp)) using 1 <;> dsimp [g₁, g₂] <;> ring
+        (((hasDerivAt_id t).const_mul 2).exp)) using 1 <;> (try funext u) <;> dsimp [g₁, g₂] <;> ring
   have hlim : Tendsto (fun t => f₂ t / g₂ t) (𝓝[>] 0) (𝓝 (-3 / 4)) := by
     have hc : ContinuousAt (fun t => f₂ t / g₂ t) 0 := by
       apply ContinuousAt.div <;> dsimp [f₂, g₂]
@@ -174,11 +173,13 @@ private lemma r2_limit :
   have he : Tendsto (fun t : ℝ => Real.exp (t / 2)) (𝓝[>] 0) (𝓝 1) := by
     simpa using (show ContinuousAt (fun t : ℝ => Real.exp (t / 2)) 0 by
       fun_prop).tendsto.mono_left (y := 𝓝[>] 0) nhdsWithin_le_nhds
-  convert ((hk.div_const 4).sub he).add quotient_finite_part using 1
-  · funext t
-    dsimp [r2, D2]
-    ring
-  · ring
+  have h := ((hk.div_const 4).sub he).add quotient_finite_part
+  have hc : firstLiMass / 4 - 1 + (-3 / 4) = (firstLiMass - 7) / 4 := by ring
+  rw [hc] at h
+  convert h using 1
+  funext t
+  dsimp [r2, D2]
+  ring
 
 /-- The exact quadratic coefficient after removal of the logarithmic and linear cusp terms. -/
 theorem cusp_quadratic_limit :
@@ -186,8 +187,8 @@ theorem cusp_quadratic_limit :
       (𝓝 ((firstLiMass - 7) / 8)) := by
   have hw : ∀ᶠ t : ℝ in 𝓝[>] 0, 0 < t ∧ t < Real.log 2 := by
     filter_upwards [self_mem_nhdsWithin,
-      (Iio_mem_nhds (Real.log_pos (by norm_num : (1 : ℝ) < 2))).filter_mono
-        nhdsWithin_le_nhds] with t ht ht2
+      Filter.Eventually.filter_mono nhdsWithin_le_nhds
+        (Iio_mem_nhds (Real.log_pos (by norm_num : (1 : ℝ) < 2)))] with t ht ht2
     exact ⟨ht, ht2⟩
   have hfirst : Tendsto (fun t : ℝ => r1 t / (2 * t)) (𝓝[>] 0)
       (𝓝 ((firstLiMass - 7) / 8)) := by
@@ -196,11 +197,13 @@ theorem cusp_quadratic_limit :
       (Eventually.of_forall fun _ => by norm_num) r1_limit _ _
     · simpa using (show ContinuousAt (fun t : ℝ => 2 * t) 0 by
         fun_prop).tendsto.mono_left (y := 𝓝[>] 0) nhdsWithin_le_nhds
-    · convert r2_limit.div_const 2 using 1 <;> ring
+    · have hc : (firstLiMass - 7) / 4 / 2 = (firstLiMass - 7) / 8 := by ring
+      simpa only [hc] using r2_limit.div_const 2
   apply HasDerivAt.lhopital_zero_nhdsGT (f' := r1) (g' := fun t : ℝ => 2 * t)
     (hw.mono fun t ht => hasDerivAt_R ht.1 ht.2)
     (Eventually.of_forall fun t => by
-      convert (hasDerivAt_id t).pow 2 using 1 <;> ring)
+      convert (hasDerivAt_id t).pow 2 using 1 <;>
+        (try funext u) <;> simp only [Pi.pow_apply, id_eq] <;> ring)
     (hw.mono fun t ht => (mul_pos (by norm_num : (0 : ℝ) < 2) ht.1).ne') _ _ hfirst
   · simpa [R_zero] using R_continuous.continuousAt.tendsto.mono_left
       (y := 𝓝[>] 0) nhdsWithin_le_nhds
@@ -320,7 +323,7 @@ private lemma r1_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
     simpa using (tendsto_const_nhds.sub r1_limit).abs
   apply le_of_tendsto hlim
   filter_upwards [self_mem_nhdsWithin,
-    (Iio_mem_nhds ht).filter_mono nhdsWithin_le_nhds] with ε hε hεt
+    Filter.Eventually.filter_mono nhdsWithin_le_nhds (Iio_mem_nhds ht)] with ε hε hεt
   change 0 < ε at hε
   have hd (x : ℝ) (hx : x ∈ Icc ε t) :
       HasDerivWithinAt r1 (r2 x) (Icc ε t) x :=
@@ -339,12 +342,14 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
   have hp (x : ℝ) (hx : x ∈ Ioo 0 t) :
       HasDerivAt (fun u : ℝ => 2 * u ^ 2 + R u) (4 * x + r1 x) x := by
     convert (((hasDerivAt_id x).pow 2).const_mul 2).add
-      (hasDerivAt_R hx.1 (hx.2.le.trans ht' |>.trans_lt half_lt_log_two)) using 1 <;> ring
+      (hasDerivAt_R hx.1 (hx.2.le.trans ht' |>.trans_lt half_lt_log_two)) using 1 <;>
+        (try funext u) <;> simp only [Pi.pow_apply, Pi.mul_apply, Pi.add_apply, id_eq] <;> ring
   have hm (x : ℝ) (hx : x ∈ Ioo 0 t) :
       HasDerivAt (fun u : ℝ => 2 * u ^ 2 - R u) (4 * x - r1 x) x := by
     convert (((hasDerivAt_id x).pow 2).const_mul 2).sub
-      (hasDerivAt_R hx.1 (hx.2.le.trans ht' |>.trans_lt half_lt_log_two)) using 1 <;> ring
-  have hmono₊ : MonotoneOn (fun u : ℝ => 2 * u ^ 2 + R u) (Icc 0 t) := by
+      (hasDerivAt_R hx.1 (hx.2.le.trans ht' |>.trans_lt half_lt_log_two)) using 1 <;>
+        (try funext u) <;> simp only [Pi.pow_apply, Pi.mul_apply, Pi.sub_apply, id_eq] <;> ring
+  have hmono_add : MonotoneOn (fun u : ℝ => 2 * u ^ 2 + R u) (Icc 0 t) := by
     apply monotoneOn_of_deriv_nonneg (convex_Icc 0 t)
       ((continuous_const.mul (continuous_id.pow 2)).add R_continuous).continuousOn
     · rw [interior_Icc]
@@ -354,7 +359,7 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
       rw [(hp x hx).deriv]
       have h := (abs_le.mp (r1_bound hx.1 (hx.2.le.trans ht'))).1
       linarith
-  have hmono₋ : MonotoneOn (fun u : ℝ => 2 * u ^ 2 - R u) (Icc 0 t) := by
+  have hmono_sub : MonotoneOn (fun u : ℝ => 2 * u ^ 2 - R u) (Icc 0 t) := by
     apply monotoneOn_of_deriv_nonneg (convex_Icc 0 t)
       ((continuous_const.mul (continuous_id.pow 2)).sub R_continuous).continuousOn
     · rw [interior_Icc]
@@ -364,8 +369,8 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
       rw [(hm x hx).deriv]
       have h := (abs_le.mp (r1_bound hx.1 (hx.2.le.trans ht'))).2
       linarith
-  have hp₀ := hmono₊ ⟨le_rfl, ht.le⟩ ⟨ht.le, le_rfl⟩ ht.le
-  have hm₀ := hmono₋ ⟨le_rfl, ht.le⟩ ⟨ht.le, le_rfl⟩ ht.le
+  have hp₀ := hmono_add ⟨le_rfl, ht.le⟩ ⟨ht.le, le_rfl⟩ ht.le
+  have hm₀ := hmono_sub ⟨le_rfl, ht.le⟩ ⟨ht.le, le_rfl⟩ ht.le
   simp only [R_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero,
     zero_add, sub_zero] at hp₀ hm₀
   exact abs_le.mpr ⟨by linarith, by linarith⟩
