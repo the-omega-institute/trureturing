@@ -1,6 +1,6 @@
 import D5.S3.HomologicalAlgebra.FinitePerturbation
 import Mathlib.Basic.Complex.Basic
-import Mathlib.Algebra.Module.LinearMap.Prod
+import Mathlib.LinearAlgebra.Prod
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
