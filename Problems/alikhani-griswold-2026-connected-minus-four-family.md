@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2608.00109
 url: https://arxiv.org/abs/2608.00109v1
 triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.connected_of_predecessor
+  - D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result
 ---
 
 # Connected graphs with ordinary domination root minus four

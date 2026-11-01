@@ -6,6 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
 internal sealed class MinusFourReassemblyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/alikhanigriswold2026integerdominationroots");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A rooted-component decomposition gives a general weighted domination identity. Its checked application to the published graph, followed by support replication, gives connected graphs of unbounded order with root minus four.",
@@ -32,17 +34,21 @@ internal sealed class MinusFourReassemblyDocument : IScribeDocumentDefinition
             Node("message-soundness", "Soundness of the message checker", "zero_of_messages", Soundness(),
                 "The inputs are an arbitrary d, integer x and table. The first premise requires every entry to equal the exact message for that same d, weight and root state; the second requires the covered core expression for the same table to vanish. Substitute the first premise into the general reassembly identity and then use the second. Both premises are checked in the live application below. This theorem does not assume the graph's evaluation is zero."),
             Node("family-result", "The complete connected unbounded-order event", "result", FamilyEvent(),
-                "The application supplies the published 33-vertex graph with its actual 36 edges. Its core is the four-cycle on labels zero through three; branch sizes are 2,2,2,2,6,3,3,9. The vertex equivalence and all local graph laws are checked as input fields of this particular decomposition. At weight minus four, the selected-root message vector is 12,12,12,12,972,-36,-36,-20736 and the omitted-root vector is -4,-4,-4,-4,-1024,16,16,5888. The exact message equalities and covered core cancellation are kernel decisions passed directly to zero_of_messages. They are not retained as separate positive finite theorems. The original ConsecutiveCycleSumsGraph.connected_of_predecessor supplier proves base connectedness from the decreasing parent map on the full vertex set; the pinned induced-universe isomorphism transports its conclusion to the base graph. Vertex five has sole neighbor four. Use N+1 copies of the base, connect their supports four to a hub, and add one hub pendant. The existing replication equivalences and leaf domination identity give evaluation x(x+2) times the base evaluation to the power N+1. At minus four this is zero, and copied paths through the support prove connectedness. The order is 33(N+1)+2, which exceeds N. A finite vertex equivalence gives the exact graph on Fin n."),
+                "The application supplies the published 33-vertex graph with its actual 36 edges. Its core is the four-cycle on labels zero through three; branch sizes are 2,2,2,2,6,3,3,9. The vertex equivalence and all local graph laws are checked as input fields of this particular decomposition. At weight minus four, the selected-root message vector is 12,12,12,12,972,-36,-36,-20736 and the omitted-root vector is -4,-4,-4,-4,-1024,16,16,5888. The exact message equalities and covered core cancellation are kernel decisions passed directly to zero_of_messages. They are not retained as separate positive finite theorems. The original ConsecutiveCycleSumsGraph.connected_of_predecessor supplier proves base connectedness from the decreasing parent map on the full vertex set; the pinned induced-universe isomorphism transports its conclusion to the base graph. Vertex five has sole neighbor four. Use N+1 copies of the base, connect their supports four to a hub, and add one hub pendant. The existing replication equivalences and leaf domination identity give evaluation x(x+2) times the base evaluation to the power N+1. At minus four this is zero, and copied paths through the support prove connectedness. The order is 33(N+1)+2, which exceeds N. A finite vertex equivalence gives the exact graph on Fin n.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alikhani-griswold-2026-connected-minus-four-family"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The source question is Section 4 item 3 of Alikhani and Griswold, arXiv:2608.00109v1. The base graph and its reported finite root are prior art. The graph data and proofs here are independently written with attribution. The general weighted composition and its family application are repository derivations, without a worldwide priority claim. The conclusion uses ordinary domination and requires only graph connectedness; it imposes no degree, cyclomatic number or connected-subset condition. No smallest-order or other-root claim is made."))), []));
 
     private static DocumentBlock Definition(string id, string title, string name, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
-    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose) =>
+    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, resolution);
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id(name))), [.. args]);
