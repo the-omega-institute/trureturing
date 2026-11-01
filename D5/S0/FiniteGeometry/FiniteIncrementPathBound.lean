@@ -164,7 +164,7 @@ theorem exists_uniform_bound [FiniteDimensional ℝ E] (V : Finset E) :
   · intro k hk
     have hkR := hmax k hk
     rw [hR] at hkR
-    have hsumB := Finset.sum_nonneg (fun u _ => hB u)
+    have hsumB : 0 ≤ ∑ u ∈ T, B u := Finset.sum_nonneg (fun u _ => hB u)
     linarith
   · have hRpos : 0 < R := lt_of_le_of_ne (norm_nonneg (w j)) (Ne.symm hR)
     have hy : w j ≠ 0 := norm_ne_zero_iff.mp hR

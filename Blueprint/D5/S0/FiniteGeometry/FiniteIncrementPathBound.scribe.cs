@@ -42,7 +42,7 @@ internal sealed class FiniteIncrementPathBoundDocument : IScribeDocumentDefiniti
                     + "adding one gives a single C for every length and every schedule. If R is zero "
                     + "the conclusion is immediate; an empty cap cover excludes R > 0.")),
                 Paragraph(Text(
-                    "For an integer lattice with a fixed positive-definite quadratic form, an isometric "
+                    "For a fixed finite step set in an integer lattice with a fixed positive-definite quadratic form, an isometric "
                     + "change of coordinates turns the nonpositive quadratic pairing rule into this inner "
                     + "product rule. The resulting bounded ellipsoid contains only finitely many integer "
                     + "states. This is an application conditional on that change of coordinates and lattice "
