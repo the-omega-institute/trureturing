@@ -145,7 +145,7 @@ private theorem basis_outer_zero (d : ℕ) (hd : 0 < d) (s q k : ℤ)
       (energy (datum d) (charge d (q-s), f)) k (charge d q)
       _ _ (basis_grade _ _) (basis_grade _ _)
     rw [basis_energy, basis_energy, basis_energy]
-    simp only [oscillatorEnergy_eq_zero_iff, Nat.cast_zero, zero_sub]
+    simp only [oscillatorEnergy, map_zero, Nat.cast_zero, zero_sub]
     rcases he with hp | hp
     · exact negative_rank_one_outer_energy_mismatch (d : ℤ) s q
         (oscillatorEnergy e) (oscillatorEnergy f) k (by omega) hp hsq
@@ -194,6 +194,40 @@ private theorem outer_positive (d : ℕ) (hd : 0 < d) (s q k : ℤ)
     exact basis_outer_zero d hd s q k hs.le hsq hk e (Or.inl hs) a
   exact congrArg (fun f => f p v) hL
 
+private theorem outer_zero (d : ℕ) (hd : 0 < d) (q k : ℤ)
+    (hq : 0 < q) (hk : k < 0)
+    (p : Oscillator (datum d)) (v : Carrier (datum d)) :
+    groundCoefficient (datum d) (charge d q)
+      (mode (datum d) k (Finsupp.single (charge d 0) p) v) =
+      p.coeff 0 * (if k = -1 then groundCoefficient (datum d) (charge d q) v else 0) := by
+  classical
+  let L : Oscillator (datum d) →ₗ[ℂ] Carrier (datum d) →ₗ[ℂ] ℂ :=
+    { toFun := fun p => (groundCoefficient (datum d) (charge d q)).comp
+        (mode (datum d) k (Finsupp.single (charge d 0) p))
+      map_add' := by intros; ext; simp [mode]
+      map_smul' := by intros; ext; simp [mode] }
+  let R : Oscillator (datum d) →ₗ[ℂ] Carrier (datum d) →ₗ[ℂ] ℂ :=
+    (MvPolynomial.lcoeff 0).smulRight
+      (if k = -1 then groundCoefficient (datum d) (charge d q) else 0)
+  have hL : L = R := by
+    apply (MvPolynomial.basisMonomials (Index (datum d)) ℂ).ext
+    intro e
+    apply (carrierBasis (datum d)).ext
+    intro a
+    by_cases he : e = 0
+    · subst e
+      change groundCoefficient (datum d) (charge d q)
+        (mode (datum d) k (Finsupp.single (charge d 0) (MvPolynomial.monomial 0 1))
+          (carrierBasis (datum d) a)) = _
+      simp [mode, ← vacuum, stateField_vacuum, identity_modes, R,
+        MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, apply_ite]
+    · have hz := basis_outer_zero d hd 0 q k (by omega) hq hk e (Or.inr he) a
+      change L (MvPolynomial.monomial e 1) (carrierBasis (datum d) a) = _ at hz ⊢
+      rw [hz]
+      simp [R, MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, he]
+  have hh := congrArg (fun f => f p v) hL
+  simpa [L, R, MvPolynomial.lcoeff, apply_ite] using hh
+
 /-- A palette letter retains an arbitrary oscillator polynomial and integer mode. -/
 structure Letter (d : ℕ) where
   weight : ℤ
@@ -212,6 +246,179 @@ private def paletteWord {d : ℕ} (w : List (Letter d)) : Carrier (datum d) :=
 
 private def Good {d : ℕ} (M : ℤ) (w : List (Letter d)) : Prop :=
   ∀ a ∈ w, -M ≤ a.weight ∧ a.weight ≤ M ∧ a.index < 0
+
+private theorem wordOperator_append {d : ℕ} (l r : List (Letter d)) :
+    wordOperator (l ++ r) = wordOperator l * wordOperator r := by
+  induction l with
+  | nil => simp [wordOperator]
+  | cons a l ih => simp [wordOperator, ih, mul_assoc]
+
+private def wordCharge {d : ℕ} : List (Letter d) → ℤ
+  | [] => 0
+  | a :: w => a.weight + wordCharge w
+
+private theorem word_charge {d : ℕ} (w : List (Letter d)) :
+    ∃ p : Oscillator (datum d), paletteWord w = Finsupp.single (charge d (wordCharge w)) p := by
+  induction w with
+  | nil => exact ⟨1, rfl⟩
+  | cons a w ih =>
+    obtain ⟨p, hp⟩ := ih
+    have h := LatticeSectorIntertwiner.charge_homogeneity (datum d)
+      (charge d a.weight) (charge d (wordCharge w)) a.polynomial p a.index
+    refine ⟨_, ?_⟩
+    change mode (datum d) a.index (letterState a) (paletteWord w) = _
+    rw [hp]
+    exact h
+
+private theorem all_negative_zero {d : ℕ} (q : ℤ) (hq : 0 < q)
+    (w : List (Letter d)) (hw : ∀ a ∈ w, a.weight < 0) :
+    groundCoefficient (datum d) (charge d q) (paletteWord w) = 0 := by
+  have hnonpos : ∀ w : List (Letter d), (∀ a ∈ w, a.weight < 0) → wordCharge w ≤ 0 := by
+    intro w
+    induction w with
+    | nil => simp [wordCharge]
+    | cons a w ih =>
+      intro hw
+      have ha := hw a (by simp)
+      have ht := ih (fun b hb => hw b (by simp [hb]))
+      change a.weight + wordCharge w ≤ 0
+      omega
+  have hc := hnonpos w hw
+  obtain ⟨p, hp⟩ := word_charge w
+  rw [hp, groundCoefficient_apply, Finsupp.single_eq_of_ne]
+  · simp
+  · simpa using (show wordCharge w ≠ q by omega)
+
+private def correction {d : ℕ} (b a : Letter d) (j : ℕ) : Letter d where
+  weight := b.weight + a.weight
+  polynomial := (mode (datum d) (j : ℤ) (letterState b) (letterState a))
+    (charge d (b.weight + a.weight))
+  index := b.index + a.index - j
+
+private theorem correction_state {d : ℕ} (b a : Letter d) (j : ℕ) :
+    letterState (correction b a j) =
+      LatticeAllStateLocality.mu (datum d) (letterState b) j (letterState a) := by
+  exact (LatticeSectorIntertwiner.charge_homogeneity (datum d)
+    (charge d b.weight) (charge d a.weight) b.polynomial a.polynomial j).symm
+
+private theorem correction_good {d : ℕ} (M : ℤ) (b a : Letter d)
+    (hb : -M ≤ b.weight ∧ b.weight ≤ M ∧ b.index < 0)
+    (ha : -M ≤ a.weight ∧ a.weight ≤ M ∧ a.index < 0)
+    (hbn : b.weight < 0) (han : 0 ≤ a.weight) (j : ℕ) :
+    -M ≤ (correction b a j).weight ∧ (correction b a j).weight ≤ M ∧
+      (correction b a j).index < 0 := by
+  dsimp [correction]
+  omega
+
+private theorem move_nonnegative (d : ℕ) (hd : 0 < d) (M q : ℤ)
+    (hM : 0 ≤ M) (hq : M < q) (N : ℕ)
+    (short : ∀ w : List (Letter d), w.length < N → Good M w →
+      groundCoefficient (datum d) (charge d q) (paletteWord w) = 0)
+    (l : List (Letter d)) :
+    ∀ (a : Letter d) (r : List (Letter d)), (l ++ a :: r).length = N →
+      Good M (l ++ a :: r) → (∀ b ∈ l, b.weight < 0) → 0 ≤ a.weight →
+      groundCoefficient (datum d) (charge d q) (paletteWord (l ++ a :: r)) = 0 := by
+  classical
+  induction l using List.reverseRecOn with
+  | nil =>
+    intro a r hn hg hl ha
+    have ha' := hg a (by simp)
+    have hr : Good M r := fun b hb => hg b (by simp [hb])
+    change groundCoefficient (datum d) (charge d q)
+      (mode (datum d) a.index (letterState a) (paletteWord r)) = 0
+    by_cases hp : 0 < a.weight
+    · exact outer_positive d hd a.weight q a.index hp (by omega) ha'.2.2
+        a.polynomial (paletteWord r)
+    · have hz : a.weight = 0 := by omega
+      unfold letterState
+      rw [hz, outer_zero d hd q a.index (by omega) ha'.2.2]
+      have hs := short r (by simp only [List.nil_append, List.length_cons] at hn; omega) hr
+      simp [hs]
+  | append_singleton l b ih =>
+    intro a r hn hg hl ha
+    have hb := hg b (by simp)
+    have ha' := hg a (by simp)
+    have hbn := hl b (by simp)
+    have hln : ∀ c ∈ l, c.weight < 0 := fun c hc => hl c (by simp [hc])
+    have hswap : Good M (l ++ a :: b :: r) := by
+      intro c hc
+      apply hg c
+      simpa only [List.mem_append, List.mem_cons, List.mem_singleton,
+        or_assoc, or_left_comm, or_comm] using hc
+    have swapped := ih a (b :: r) (by simpa [List.length_append] using hn)
+      hswap hln ha
+    let F : Module.End ℂ (Carrier (datum d)) →ₗ[ℂ] ℂ :=
+      ((groundCoefficient (datum d) (charge d q)).comp (wordOperator l)).comp
+        (LinearMap.applyₗ (paletteWord r))
+    have corrections : F (∑ᶠ j : ℕ,
+        LatticeActualStateFieldCalculus.commutatorTerm (datum d)
+          (letterState b) (letterState a) b.index a.index j) = 0 := by
+      rw [map_finsum F (LatticeActualStateFieldCalculus.commutator_terms_finite
+        (datum d) (letterState b) (letterState a) b.index a.index)]
+      apply finsum_eq_zero_of_forall_eq_zero
+      intro j
+      have hj : Good M (l ++ correction b a j :: r) := by
+        intro c hc
+        rcases List.mem_append.mp hc with hc | hc
+        · exact hg c (by simp [hc])
+        · rcases List.mem_cons.mp hc with hc | hc
+          · subst c; exact correction_good M b a hb ha' hbn ha j
+          · exact hg c (by simp [hc])
+      have hz := short (l ++ correction b a j :: r)
+        (by simp only [List.length_append, List.length_cons, List.length_singleton] at hn ⊢
+            omega) hj
+      unfold LatticeActualStateFieldCalculus.commutatorTerm
+      rw [← correction_state]
+      change F (StateFieldResidueReconstruction.integerBinomial b.index j •
+        mode (datum d) (correction b a j).index (letterState (correction b a j))) = 0
+      rw [map_smul]
+      have hF : F (mode (datum d) (correction b a j).index
+          (letterState (correction b a j))) = 0 := by
+        simpa [F, paletteWord, wordOperator_append, wordOperator] using hz
+      simp [hF]
+    have comm := congrArg F (LatticeActualStateFieldCalculus.mode_commutator
+      (datum d) (letterState b) (letterState a) b.index a.index)
+    rw [map_sub, corrections] at comm
+    have hswapF : F (mode (datum d) a.index (letterState a) *
+        mode (datum d) b.index (letterState b)) = 0 := by
+      simpa [F, paletteWord, wordOperator_append, wordOperator, mul_assoc] using swapped
+    rw [hswapF, sub_zero] at comm
+    simpa [F, paletteWord, wordOperator_append, wordOperator, mul_assoc] using comm
+
+private theorem split_nonnegative {d : ℕ} (w : List (Letter d))
+    (h : ¬ ∀ a ∈ w, a.weight < 0) :
+    ∃ l a r, w = l ++ a :: r ∧ (∀ b ∈ l, b.weight < 0) ∧ 0 ≤ a.weight := by
+  induction w with
+  | nil => simp at h
+  | cons b w ih =>
+    by_cases hb : 0 ≤ b.weight
+    · exact ⟨[], b, w, rfl, by simp, hb⟩
+    · have ht : ¬ ∀ a ∈ w, a.weight < 0 := by
+        intro ht; apply h; intro a ha
+        rcases List.mem_cons.mp ha with rfl | ha
+        · omega
+        · exact ht a ha
+      obtain ⟨l, a, r, hw, hl, ha⟩ := ih ht
+      refine ⟨b :: l, a, r, by simp [hw], ?_, ha⟩
+      intro c hc
+      rcases List.mem_cons.mp hc with rfl | hc
+      · omega
+      · exact hl c hc
+
+private theorem palette_word_zero (d : ℕ) (hd : 0 < d) (M q : ℤ)
+    (hM : 0 ≤ M) (hq : M < q) (w : List (Letter d)) (hw : Good M w) :
+    groundCoefficient (datum d) (charge d q) (paletteWord w) = 0 := by
+  suffices H : ∀ N : ℕ, ∀ w : List (Letter d), w.length = N → Good M w →
+      groundCoefficient (datum d) (charge d q) (paletteWord w) = 0 from H _ w rfl hw
+  intro N
+  induction N using Nat.strong_induction_on with
+  | h N ih =>
+    intro w hn hg
+    by_cases hneg : ∀ a ∈ w, a.weight < 0
+    · exact all_negative_zero q (by omega) w hneg
+    · obtain ⟨l, a, r, rfl, hl, ha⟩ := split_nonnegative w hneg
+      exact move_nonnegative d hd M q hM hq N
+        (fun w hw hg => ih w.length hw w rfl hg) l a r hn hg hl ha
 
 end
 end D5.S3.VertexAlgebra.Lattice.NegativeRankOneStrongGeneration

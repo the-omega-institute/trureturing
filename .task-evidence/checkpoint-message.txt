@@ -1,1 +1,0 @@
-WIP: construct actual negative rank-one datum and palette word model
