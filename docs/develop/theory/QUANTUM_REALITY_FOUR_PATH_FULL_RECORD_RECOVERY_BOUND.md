@@ -2426,12 +2426,21 @@ $$
 \qquad \lambda=17744.
 $$
 
-使用 $\sqrt2<99/70$，三项分别满足
+使用
+
+$$
+\sqrt2<\frac{1414214}{10^6},
+\qquad
+\left(\frac{1414214}{10^6}\right)^2-2
+=\frac{309449}{250000000000}>0,
+$$
+
+三项分别满足
 
 $$
 \begin{aligned}
-C_a&<\frac{234713650320}{1731149}=135582.5815\ldots,\\
-C_\tau&<\frac{1058202853}{7805}=135580.1222\ldots,\\
+C_a&<\frac{20956099635267}{154566875}=135579.5001\ldots,\\
+C_\tau&<\frac{7558433045089}{55750000}=135577.2744\ldots,\\
 C_{\mathrm{comp}}&=\frac{7185600}{53}=135577.3585\ldots.
 \end{aligned}
 $$
@@ -2440,9 +2449,9 @@ $$
 
 $$
 \boxed{\qquad
-C_{\mathrm{prod}}<135583,
+C_{\mathrm{prod}}<135580,
 \qquad
-\int\rho\,d\mu\le1{,}084{,}664\,\varepsilon.
+\int\rho\,d\mu\le1{,}084{,}640\,\varepsilon.
 \qquad}
 $$
 
