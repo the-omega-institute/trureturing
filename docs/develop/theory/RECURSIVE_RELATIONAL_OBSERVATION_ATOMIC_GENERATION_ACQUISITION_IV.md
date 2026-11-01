@@ -1093,3 +1093,396 @@ law is asserted. The broader mutual-recovery and minimal-generator
 programme is not settled by this finite native obstruction.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Nested native blocks and their complete endpoint fibres
+
+**Definition 13.1 (blocks on the actual left beta spine).** Retain the
+entire domain and head-observation contract of Definition 9.1. With
+$C_j(x)$ as in (IV.16), for $d\ge1$ put
+
+$$
+\begin{aligned}
+D_d(x)&=\langle C_{d-1}(x),\beta\rangle,\\
+q_0&=0,\qquad q_i=\sum_{j=1}^i d_j,\\
+t_0&=\beta,\qquad
+t_i=D_{d_1}(D_{d_2}(\cdots D_{d_i}(\beta)\cdots))
+\quad(1\le i\le r),
+\end{aligned}
+\tag{IV.26}
+$$
+
+where $r\ge1$ and $d_1,\ldots,d_r$ are positive integers. These $d_i$
+count splits, not ordinal-code widths. The deepest left beta of $t_i$
+is at $L^{q_i}$. Each expression specifies an endpoint term; $D_d$ is
+not an added graft operation. All constructions below use only (IV.1).
+
+**Proposition 13.2 (the full native product, including delayed
+promotions).** For every such vector of block lengths, the complete
+fibre of $t_r$ has
+
+$$
+\begin{aligned}
+F(t_r)&=\prod_{i=1}^r
+ \left(\sum_{j=i}^r d_j+r-i\right),\\
+a(t_r)&=q_r-r,\qquad c(t_r)=r+1,\qquad
+N(t_r)=q_r+r+1.
+\end{aligned}
+\tag{IV.27}
+$$
+
+Every member of this fibre is an admitted native history, including
+histories that do not pass through one or more selected $t_i$.
+
+Proof. Write the actual addressed events as
+
+$$
+\rho=P_\varepsilon,\qquad
+A_j=S_{L^{j-1}}\ (1\le j\le q_r),\qquad
+Q_i=P_{L^{q_{i-1}}R}\ (1\le i\le r).
+\tag{IV.28}
+$$
+
+There are $q_r$ branches, all on the left spine. The right child born
+at its $(q_{i-1}+1)$st split is a final beta leaf, requiring exactly
+$Q_i$. Every other right child remains alpha, and the deepest left leaf
+is born beta. Thus AA Theorem 17.2 reconstructs exactly the displayed
+event set, with generating relations
+
+$$
+\rho<A_1<\cdots<A_{q_r},\qquad
+A_{q_{i-1}+1}<Q_i\quad(1\le i\le r).
+\tag{IV.29}
+$$
+
+The $Q_i$ have no successors. There is no promotion at a left-born
+position, no right split, and no additional event that can disappear
+from the final term. Conversely every linear extension of (IV.29) is
+legal at every prefix and ends at $t_r$, by that same source theorem.
+In particular this identifies the full native fibre without restricting
+the schedule to block-completed histories.
+
+Remove the forced first event $\rho$. Remove $Q_1,Q_2,\ldots,Q_r$ in
+that order to count the extensions. In the reduced order with
+$Q_1,\ldots,Q_i$ absent, every remaining promotion $Q_j$, $j>i$, is
+anchored strictly after $A_{q_{i-1}+1}$. The latter split therefore has
+position $q_{i-1}+1$ in every extension of that reduced order. Its word
+has length $q_r+r-i$. Reinserting $Q_i$ has precisely
+
+$$
+(q_r+r-i)-(q_{i-1}+1)+1
+=q_r-q_{i-1}+r-i
+\tag{IV.30}
+$$
+
+slots after its anchor, including immediately after the anchor and at
+the end. Each slot is legal, since this is $Q_i$'s only prerequisite
+apart from the already forced split ancestors, and it has no successors.
+Deletion and insertion are inverse operations. Hence the number of
+extensions before each deletion is the constant (IV.30) times the
+number after it. After all deletions only the one split-chain order
+remains. Multiplication proves the first line of (IV.27).
+
+Equivalently, for the beta-born suffix terms $x$ in (IV.26), AA Theorem
+19.2's local shuffle product gives
+$F(D_d(x))=(d+e_\beta(x))F(x)$: the left child has
+$d-1+e_\beta(x)$ events and the right beta child has its one promotion.
+Also $e_\beta(D_d(x))=d+1+e_\beta(x)$ and $e_\beta(\beta)=0$.
+These identities give the same factors, retaining the events in all
+deeper blocks rather than multiplying conditional suffix counts.
+
+Each split increases the leaf count by one and preserves the beta-leaf
+count; $\rho$ and the $r$ right promotions give $r+1$ beta leaves.
+Thus the remaining $q_r-r$ leaves are alpha and the native event count
+is $q_r+r+1$, also directly visible in (IV.28). For example,
+$(d_1,d_2)=(3,2)$ gives $F(t_2)=6\cdot2=12$. Only
+$3\cdot2=6$ histories finish the first block before entering the second;
+the other six delay $Q_1$ beyond that cut. The product
+$\prod_i d_i$ counts just such block-completed concatenations, not the
+complete endpoint fibre. $\square$
+
+## 14. Inherited cylinders along actual source cuts
+
+**Theorem 14.1 (rounded depth is paid at every selected cut).** Every
+recorder on the full native domain satisfying (IV.14)–(IV.15), whether
+computable or not, obeys
+
+$$
+M_J(t_r)\ge M_J(\beta)+
+ \sum_{i=1}^r\lceil\log_2d_i\rceil
+\ge\sum_{i=1}^r\lceil\log_2d_i\rceil.
+\tag{IV.31}
+$$
+
+No common word length at a source, per-event code, block delimiter or
+prefix freedom across different sources is assumed.
+
+Proof. At $t_{i-1}$ put $p=L^{q_{i-1}}$. Its current subtree at $p$
+is beta. The new splits are
+$S_p,S_{pL},\ldots,S_{pL^{d_i-1}}$, in that forced order, and its new
+promotion is $Q_i=P_{pR}$. The first split creates the actual right
+alpha on which $Q_i$ acts. For each $k\in\{1,\ldots,d_i\}$ the suffix
+
+$$
+v_{i,k}=
+ \left(\prod_{j=0}^{k-1}S_{pL^j}\right)
+ P_{pR}
+ \left(\prod_{j=k}^{d_i-1}S_{pL^j}\right)
+\tag{IV.32}
+$$
+
+is legal, with products denoting concatenation in increasing $j$ and
+an empty product denoting the empty word. The first split uses the
+current beta at $p$; each subsequent split uses the beta born to the
+left of the preceding split. $Q_i$ leaves those operands unchanged.
+All $d_i$ suffixes have $d_i+1$ events and end at
+$t_i$. Every $h\in\mathcal H(t_{i-1})$ admits every one of them:
+all events of its current source are complete, independently of their
+earlier serial order. These are distinct actual extensions, and are
+exactly the extensions from this cut to $t_i$ because they contain
+precisely the difference of the two endpoint event sets. Their use
+does not exclude other histories in $\mathcal H(t_i)$.
+
+The finite nonempty fibre at $t_{i-1}$ has a history $h_*$ attaining
+$M_J(t_{i-1})$. Literal prefix preservation at each enabled edit makes
+$x=J(h_*)$ a prefix of all $J(h_*v_{i,k})$. Those $d_i$ words are
+distinct and prefix-free in the full fibre at $t_i$. Apply the mature
+binary-cylinder bound (IV.22), with $L=M_J(t_i)$. After stripping $x$,
+their depth-$L-|x|$ cylinders are disjoint and nonempty, so
+
+$$
+d_i\le2^{M_J(t_i)-M_J(t_{i-1})},\qquad
+M_J(t_i)\ge M_J(t_{i-1})+\lceil\log_2d_i\rceil.
+\tag{IV.33}
+$$
+
+This includes $d_i=1$ and an empty residual word. Summing these
+inequalities and using $M_J(\beta)\ge0$ proves (IV.31). The maximizing
+history may depend on $J$ and on the cut. No nested choice of maximizing
+histories is needed, since every history at each cut admits the displayed
+suffixes. The old bits may have been delayed or encoded jointly in any
+way; only their literal preservation and terminal fibrewise prefix
+freedom were used. $\square$
+
+## 15. No finite uniform additive redundancy at the head
+
+**Theorem 15.1 (a recorder-independent unbounded native family).** For
+each integer $r\ge1$ choose
+
+$$
+d_i=8^{r-i+1}+1\quad(1\le i\le r),\qquad
+T_r=t_r,\qquad B_r=\frac{3r(r+1)}2.
+\tag{IV.34}
+$$
+
+This is one explicit computable family of actual finite native sources,
+independent of the recorder. For every $r\ge1$ and every full-domain
+$J$ satisfying (IV.14)–(IV.15),
+
+$$
+\begin{aligned}
+M_J(T_r)&\ge B_r+r,\\
+G(T_r)&\le B_r+\lceil r/2\rceil,\\
+M_J(T_r)-G(T_r)&\ge\lfloor r/2\rfloor.
+\end{aligned}
+\tag{IV.35}
+$$
+
+Consequently $\Delta(J)=+\infty$ for every such recorder. In particular
+there are no finite universal $C\ge0$ and single deterministic computable
+horizon-independent recorder, with $J(\varnothing)=\varepsilon$ and the
+stated head decoder, satisfying $M_J(t)\le G(t)+C$ at every actual source.
+The same negative conclusion holds without a computability assumption.
+
+Proof. For $m\ge1$,
+$2^{3m}<8^m+1\le2^{3m+1}$, so
+$\lceil\log_2(8^m+1)\rceil=3m+1$. Theorem 14.1 gives
+$M_J(T_r)\ge\sum_{m=1}^r(3m+1)=B_r+r$.
+
+Reindex the exact complete-fibre product (IV.27) by $m=r-i+1$:
+
+$$
+F(T_r)=\prod_{m=1}^r f_m,\qquad
+f_m=\sum_{k=1}^m8^k+2m-1.
+\tag{IV.36}
+$$
+
+For all $m\ge1$ one has $f_m\le(5/4)8^m$. Indeed $f_1=9\le10$.
+For $m\ge2$, the induction hypothesis gives
+
+$$
+\begin{aligned}
+f_m&=8^m+f_{m-1}+2\\
+&\le\frac{37}{32}8^m+2
+ \le\frac54\,8^m,
+\end{aligned}
+\tag{IV.37}
+$$
+
+where the last inequality uses $2\le(3/32)8^m$, valid already at
+$m=2$ and preserved as $m$ increases. Therefore
+
+$$
+F(T_r)\le(5/4)^r2^{B_r}<2^{B_r+r/2},
+\qquad G(T_r)\le B_r+\lceil r/2\rceil,
+\tag{IV.38}
+$$
+
+using $(5/4)^2=25/16<2$ and $r\ge1$. Combining the two bounds proves
+(IV.35), since $r-\lceil r/2\rceil=\lfloor r/2\rfloor$.
+
+The quantifier order is $\forall r\ge1\ \forall J$: the same $T_r$
+works for every admissible $J$. Only the history attaining its maximum
+may depend on $J$. For any finite real $C\ge0$, take
+$r=2(\lfloor C\rfloor+1)$. Then
+$\lfloor r/2\rfloor>C$, and this $T_r$ violates the proposed bound for
+every such recorder. Thus even allowing a choice of recorder after
+choosing $C$ cannot help. The argument neither bounds just one recorder
+nor fixes a finite future horizon. It does not use the normalization at
+the empty history, and hence also excludes the normalized subclass.
+This answers Question 12.2's finite-$C$ question by an all-parameter
+ordinary mathematical proof. $\square$
+
+## 16. Returned-cut acquisition and the four recovery expressions
+
+**Correspondence 16.1 (the original source and service conditioning).**
+For every finite $r$, the family (IV.34) starts at the same known alpha,
+uses its forced actual root promotion, and then only the beta-left
+splits and right-born promotions (IV.28). Its counts are
+$a=q_r-r$, $c=r+1$, $N=q_r+r+1$. The native reachability and legality
+argument applies to the entire complete fibre, not just the histories
+passing through the selected cuts. AA Assumption 20.1, Assumption 5.1
+and AAII Theorem 96.2 admit each such finite history by supplying its
+ordinary addressed $P/S$ request frames with sufficient finite backing
+and finite progress. Material may depend on the actual finite execution;
+no one fixed finite-capacity device is assumed to realize all $r$.
+
+The genuine source/root reference, bound journal/input/output references,
+current exclusive source and record rights, installed finite program
+and paid workspace are the same acquired prerequisites as in §11.
+Neither a numerical endpoint description nor (IV.36) creates an object
+reference or grants access. Missing rights or a wrong phase still disable
+the primitive, with no additional refusal reply. The complete original
+Tag, $P$, $S$, HasPromotion, HasSplit, FetchGrowth and Next requests,
+their eight full reply forms, address/index payloads, absence/type
+refusals, OutOfRange and BadFrame cases are exactly those of AAII
+Definition 96.1 and Correspondence 11.1.
+
+Each completed request still reserves its real backing, serializes source
+edit and record maintenance, builds and seals its whole reply, performs
+Print and reply **End**, receives the supplied local ACK, Returns to
+that same actual root and clears occupied work before Ready. Incomplete
+ingress retains only its acquired prefix and pending backed state until
+completion is supplied. Excluding journal end, length and absence as
+decoding observations removes none of these reply, acknowledgement or
+return events. No busy-cut inverse, interrupt or crash recovery follows.
+
+On this conditioning, a hypothetical alternative installation satisfying
+Definition 9.1's binary-only head contract induces a recorder covered by
+Theorem 15.1. Its decoder may acquire the current source and compute any
+finite source-dependent count or codebook in paid scratch; it still
+cannot satisfy a finite uniform additive payload bound. A varying
+observable entry, header, capacity, allocator state or other serial
+archive would be additional conditioning, as already excluded by that
+definition. Paying for such a channel does not make it uninformative.
+This implication supplies no new installation: §11's acquired ordinal
+service remains the existing computable member of the class, with its
+stated nonoptimal upper bound.
+
+**Proposition 16.2 (serial distinctions still drive original returned
+answers and real Next edits).** The native family contains histories
+with the same current geometry and boundary but distinct original
+FetchGrowth replies and distinct actual Next edits. More generally every
+two distinct histories in $\mathcal H(T_r)$ are separated by an original
+FetchGrowth request. Thus the serial distinctions charged in (IV.35)
+belong to the unchanged full task.
+
+Proof. Since $d_1\ge9$, the two words
+
+$$
+u_0=\rho A_1Q_1A_2\cdots A_{d_1},\qquad
+u_1=\rho A_1A_2Q_1A_3\cdots A_{d_1}
+\tag{IV.39}
+$$
+
+are legal histories of $t_1$. Append to both the same legal concatenation
+$v$ of suffixes (IV.32) for blocks $2,\ldots,r$, taking $v=\varepsilon$
+when $r=1$. The resulting histories $h_0=u_0v$, $h_1=u_1v$ end at the
+same $T_r$. FetchGrowth$(3)$ returns respectively $P_R$ and $S_L$.
+On that same current source, $R$ is a beta leaf and the leftmost logical
+leaf below $L$ is the beta at $L^{q_r}$. Hence Next$(3)$ executes
+respectively $S_R$ and $S_{L^{q_r}}$. These are edits on the actual
+current source after the internal recall, not on a historical scratch
+tree. The single outer Next reply retains both the old recalled pair
+and its actual new pair, followed by the original completion and Return
+phases; no external Recall or extra ACK is inserted.
+
+For arbitrary distinct $h,h'\in\mathcal H(T_r)$, their common finite
+event count ensures an index $k\in\{1,\ldots,N(T_r)\}$ at which their
+literal kinds or full addresses differ. FetchGrowth$(k)$ returns those
+different pairs. Thus the full original task must distinguish every
+member of the fibre. AA Definition 17.3 still gives
+$S_0\leftrightarrow B_0\leftrightarrow T_r$ by arity parsing, prefix
+closure and maximal elements, including beta's unary marker. Those bare
+source views determine the causal order, and identify neither $h_0$
+nor $h_1$ as the selected serial extension. $\square$
+
+On the acquired ordinal installation, AAII Theorem 97.2's inverse routes
+between supplemented space $(S_0,J_{\rm ord})$, supplemented boundary
+$(B_0,J_{\rm ord})$, successful serial time $h$, and retained callable
+memory still factor through the same actual $(t,h)$ and commute with
+the complete original service. Theorem 15.1 changes the attainable
+payload boundary for a forward head supplement with immutable prefixes:
+even the static per-source prefix-code width $G(t)$ plus any fixed
+constant cannot suffice uniformly. This does not remove the existing
+mutual recovery on the supplemented returned image, and it adds no
+serial inverse from bare geometry or boundary. Successful time remains
+generation order, excluding physical duration and the wider I/O,
+controller, query and refusal chronology.
+
+The charge in (IV.35) is only the maximum number of binary data bits
+at a specified current source. Actual source vertices and fields,
+journal headers and links, reference widths and bindings, granted
+access, scans/reads/writes, edits, arithmetic, scratch replay, reserved
+and coexisting old/new backing, ingress and pending work, full output,
+Print, End, ACK, root Return, cleanup and retained cleared capacity keep
+their separate charges from §11 and AAII Definition 97.3. No total-cost,
+runtime, latency, energy or general physical or quantum impossibility
+is entailed by this binary observation-contract lower bound.
+
+## 17. Suppliers and the remaining redundancy boundary
+
+**Correspondence 17.1 (repo-derived synthesis and its scope).** The
+finite prefix-cylinder inequality used inside Theorem 14.1 is (IV.22),
+the mature Kraft counting principle already separated in §12.1 and
+represented by the existing PrefixFreeCode and KraftConverse suppliers.
+AA Theorems 17.2 and 19.2 supply actual native event legality and complete
+shuffle enumeration. Cover's primary
+[*Enumerative Source Encoding*, §I, Propositions 1–2 and inverse
+algorithm](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf)
+supplies static finite-set indexing: here one endpoint's histories have
+the common length $N(t)$ over its finite addressed-event alphabet.
+Neither that fixed-endpoint indexing nor the static prefix/cylinder
+principle imposes simultaneous native literal-prefix coherence.
+These ingredients and the acquired service of §11 are reused suppliers.
+
+The additional repo-derived ordinary mathematical synthesis is the
+decreasing native block family, its exact complete-fibre product with
+all delayed promotions included, and the comparison of the accumulated
+integer depth increments with that full product. The $17/63$ obstruction
+of Theorem 10.1 retains its stated endpoints and conclusion;
+the proof of Theorem 15.1 does not require that certificate. No worldwide
+novelty, exhaustive literature coverage or Lean/kernel certification of
+the new statements is asserted.
+
+Question 12.2's $\Delta(J)$ is therefore infinite for every member of its
+class, including computable members. The sharp attainable unbounded
+redundancy as a function of source size or event count is not determined
+here. The end-visible complete-word optimum of §§1–8, the rewriting
+rank of AAII §§75–83, the backward-readable weighted record of AAII §99,
+the exact-width obstruction of AAII §100 and the ordinal upper of §11
+retain their respective observation and update contracts. The present
+head obstruction supplies no optimal replacement code or global resource
+ordering, and the broader space/time/boundary/memory recovery programme
+remains open.
+
+## 追加锚（本行以下为增补区）
