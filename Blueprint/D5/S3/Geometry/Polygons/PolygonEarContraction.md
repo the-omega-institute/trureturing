@@ -186,7 +186,31 @@ $$\forall m \in Nat,\; \forall P \in \operatorname{Finset}\left(\operatorname{ZM
 
 Erase the selected centre and relabel every other forced centre.
 
-**Definition 1.16 (All other forced ears survive).**
+**Theorem 1.16 (Exact number of remaining prescribed centres).**
+
+$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left((m + 1)\right)\right),\; ((6 \leq m) \implies ((1 \in P) \implies (\operatorname{card}\left(\operatorname{reducedCenters}\left(P\right)\right) = \operatorname{natSub}\left(\operatorname{card}\left(P\right), 1\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonEarContraction.reduced_centres_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Dropping a vertex is injective on the retained centres. Erasing the selected centre therefore decreases the cardinality by exactly one.
+
+**Theorem 1.17 (Compatibility after deletion).**
+
+$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left((m + 1)\right)\right),\; ((6 \leq m) \implies (\operatorname{Compatible}\left(P\right) \implies ((1 \in P) \implies \operatorname{Compatible}\left(\operatorname{reducedCenters}\left(P\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonEarContraction.reduced_centres_compatible` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The other compatible forced ears avoid the deleted centre and its two neighbours. Their chords lift to the original ears, so a crossing after deletion would give an original crossing.
+
+**Definition 1.18 (All other forced ears survive).**
 
 $$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left((m + 1)\right)\right),\; \forall h \in (6 \leq m),\; \forall g \in \operatorname{Compatible}\left(P\right),\; \forall b \in (1 \in P),\; (\operatorname{hasType}\left(\operatorname{forcedOneEquiv}\left(h, P, g, b\right), \operatorname{Equiv}\left(\operatorname{H}\left((m + 1), P\right), \operatorname{H}\left(m, \operatorname{reducedCenters}\left(P\right)\right)\right)\right) \land ((\forall T \in \operatorname{H}\left((m + 1), P\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{forcedOneEquiv}\left(h, P, g, b\right), T\right)\right) = \operatorname{reduce}\left(\operatorname{val}\left(T\right)\right))) \land (\forall U \in \operatorname{H}\left(m, \operatorname{reducedCenters}\left(P\right)\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{symm}\left(\operatorname{forcedOneEquiv}\left(h, P, g, b\right)\right), U\right)\right) = \operatorname{expand}\left(\operatorname{val}\left(U\right)\right)))))$$
 
@@ -198,7 +222,7 @@ $$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall P \in \ope
 
 Compatibility with ear(1) excludes neighbouring centres 0 and 2. For every other selected centre, all three original vertices survive and the relabelled ear lifts to exactly the original ear. Survival is derived from compatibility.
 
-**Definition 1.17 (Iterated actual deletion).**
+**Definition 1.19 (Iterated actual deletion).**
 
 $$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall h \in (6 \leq \operatorname{natSub}\left(n, \operatorname{card}\left(P\right)\right)),\; \forall g \in \operatorname{Compatible}\left(P\right),\; (\operatorname{hasType}\left(\operatorname{forcedEquiv}\left(P, h, g\right), \operatorname{Equiv}\left(\operatorname{H}\left(n, P\right), \operatorname{A}\left(\operatorname{natSub}\left(n, \operatorname{card}\left(P\right)\right)\right)\right)\right) \land (\operatorname{forcedEquiv}\left(P, h, g\right) = \operatorname{choice}\left(\operatorname{forcedequivexists}\left(n, P, h, g\right)\right)))$$
 
@@ -210,7 +234,7 @@ $$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall P \in \ope
 
 Induction deletes one forced original centre at a time and composes full correspondences. The forced-set cardinality decreases by one. This gives every triangulation of the polygon with n-card(P) vertices, under precisely the displayed remaining-size premise.
 
-**Theorem 1.18 (Compatible centres occupy at most half the boundary).**
+**Theorem 1.20 (Compatible centres occupy at most half the boundary).**
 
 $$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; ((6 \leq n) \implies (\operatorname{Compatible}\left(P\right) \implies (\operatorname{mul}\left(2, \operatorname{card}\left(P\right)\right) \leq n)))$$
 
@@ -240,6 +264,8 @@ Adjacent ear centres have crossing ears. A compatible set is disjoint from its t
 - Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.reduce_expand`
 - Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.reduce_isTriangulation`
 - Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.reducedCenters`
+- Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.reduced_centres_card`
+- Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.reduced_centres_compatible`
 - Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.vertexDrop`
 - Truth anchor: `D5/S3/Geometry/Polygons/PolygonEarContraction.vertexLift`
 - Dependency: [D5/S3/Geometry/Polygons/PolygonEarSlide](PolygonEarSlide.md)

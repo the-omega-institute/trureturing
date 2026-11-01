@@ -9,7 +9,25 @@ internal sealed class SourceJensenPositiveExtensionDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Nonnegative source residues exactly characterize positive real extension.",
         H("Source Jensen Positive Extension"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("laguerre-at"),
+                DeclarationHandle.Create("D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.LaguerreAt"),
+                H("The Laguerre expression"), StatementSource.FromAuthor(LaguerreDefinition()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a real polynomial p and real x, LaguerreAt means that "
+                    + "p'(x)^2-p(x)p''(x) is nonnegative. The definition includes zero and constant polynomials."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("laguerre-splits"),
+                DeclarationHandle.Create("D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.laguerre_splits"),
+                H("Splitting implies the Laguerre inequality"), StatementSource.FromAuthor(LaguerreStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every real polynomial splitting over the reals satisfies the "
+                    + "Laguerre inequality at every real argument. There is no nonzero, monic, coefficient-sign, "
+                    + "root-sign or simple-root hypothesis. At a root the expression is a square. Away from "
+                    + "the roots, differentiating the finite logarithmic derivative gives a nonnegative sum "
+                    + "of reciprocal squares weighted by root multiplicities."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("source-jensen-positive-extension"),
             DeclarationHandle.Create(
                 "D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.source_jensen_positive_extension"),
@@ -67,6 +85,24 @@ internal sealed class SourceJensenPositiveExtensionDocument : IScribeDocumentDef
                     + "establish no global original-core real-rootedness, RH or strict "
                     + "Robin for every integer above 5040."))),
             DescribeRole.Theorem))));
+
+    private static Formula LAll(string x, Formula t, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), t, body);
+    private static Formula LCall(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula LaguerrePredicate => LCall("LaguerreAt", F.Id("p"), F.Id("x"));
+    private static Formula RealPolynomials => Seq(Reals, OpenBracket, F.Id("X"), CloseBracket);
+    private static Formula LaguerreDefinition()
+    {
+        var p = F.Id("p"); var x = F.Id("x");
+        var first = LCall("eval", LCall("derivative", p), x);
+        var second = LCall("eval", LCall("derivative", LCall("derivative", p)), x);
+        var expression = Subtract(new Formula.Power(first, D(2)), Multiply(LCall("eval", p, x), second));
+        var nonnegative = new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, expression);
+        return Disp(LAll("p", RealPolynomials, LAll("x", Reals, Equal(LaguerrePredicate, nonnegative))));
+    }
+    private static Formula LaguerreStatement() => Disp(LAll("p", RealPolynomials,
+        new Formula.Logic(LCall("Splits", F.Id("p")), FormulaLogicOperator.Implies,
+            LAll("x", Reals, LaguerrePredicate))));
 
     private static Formula Eta => Seq(Mathrm, Grp(F.Id("eta")));
     private static Formula Nn => F.Id("n");
