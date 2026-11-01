@@ -223,7 +223,8 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
       congr 1
       simp [bStepExponent, Finset.sum_insert hxnot]
 
-private theorem bword_asc (B C : Finset ℕ) (hB : positiveSet B) :
+private theorem bword_asc (B C : Finset ℕ)
+    (hB : positiveSet B) (h1 : 1 ∉ B) :
     gword ((asc B).map bneg) (ket (cOcc (asc C))) =
       (-1 : ℂ) ^ ((B.filter (fun r => 3 ≤ r)).card +
         ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)).card) •
@@ -232,6 +233,9 @@ private theorem bword_asc (B C : Finset ℕ) (hB : positiveSet B) :
     intro r hr
     have hrB : r ∈ B := by simpa [asc] using hr
     have hrpos : 1 ≤ r := hB r hrB
+    have hrne : r ≠ 1 := by
+      intro he
+      exact h1 (he ▸ hrB)
     omega
   rw [bword_sorted (asc B) C (asc_sorted B) (asc_nodup B) htwo]
   congr 1
@@ -250,17 +254,6 @@ private theorem asc_insert_one (B : Finset ℕ) (hB : 1 ∉ B) :
     omega
   · exact hB
 
-private theorem bword_erase_one (B C : Finset ℕ)
-    (hB : positiveSet B) (hC : positiveSet C) (h1 : 1 ∈ B) :
-    gword ((asc (B.erase 1)).map bneg) (ket (cOcc (asc C))) =
-      (-1 : ℂ) ^ ((B.filter (fun r => 3 ≤ r)).card +
-        ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)).card) •
-        ket (cOcc (asc C) ∪ ((B.erase 1).image bSite)) := by
-  simpa [Finset.filter_erase, h1] using
-    (bword_asc (B.erase 1) C (by
-      intro r hr
-      exact hB r (Finset.mem_of_mem_erase hr)))
-
 private theorem W_is_Wcoord (B C : Finset ℕ)
     (hBpos : positiveSet B) (hCpos : positiveSet C) : W B C = Wcoord B C := by
   classical
@@ -275,6 +268,10 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
   · rw [show B = insert 1 (B.erase 1) by exact (Finset.insert_erase hB).symm,
       asc_insert_one (B.erase 1) (Finset.notMem_erase 1 B)]
     rw [gword, bneg_one, map_smul, annihilate_ket]
+    have hErasePos : positiveSet (B.erase 1) := by
+      intro r hr
+      exact hBpos r (Finset.mem_of_mem_erase hr)
+    rw [bword_asc (B.erase 1) C hErasePos (Finset.notMem_erase 1 B)]
     have hstate : 1 ∈ cOcc (asc C) ∪ (B.erase 1).image bSite := by
       simp [cOcc]
     rw [if_pos hstate]
@@ -334,6 +331,7 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
     simp [hB]
   · have hErase : B.erase 1 = B := Finset.erase_eq_of_not_mem hB
     rw [hErase]
+    rw [bword_asc B C hBpos hB]
     unfold Wcoord sign signExponent occ bOcc
     simp [hB, hzeroB, hzeroC, cOcc, asc]
 
@@ -494,16 +492,6 @@ private theorem basisEquiv_single (p : pairCarrier) :
   simp [signEquiv, signMap, ketEquiv, Wrel,
     W_is_Wcoord p.1 p.2 (Subtype.prop p).1 (Subtype.prop p).2]
 
-private theorem pairToOcc_injective : Function.Injective pairToOcc := by
-  intro p q h
-  apply Subtype.ext
-  apply Prod.ext
-  · rw [← invB_occ p.1.1 p.1.2 (Subtype.prop p).1,
-    ← invB_occ q.1.1 q.1.2 (Subtype.prop q).1, h]
-  · rw [← invC_occ p.1.1 p.1.2 (Subtype.prop p).2,
-    ← invC_occ q.1.1 q.1.2 (Subtype.prop q).2, h]
-
-
 def bPrefix (r : ℕ) (B : Finset ℕ) : ℕ := (B.filter (fun t => t < r)).card
 
 def cPrefix (r : ℕ) (C : Finset ℕ) : ℕ := (C.filter (fun t => t < r)).card
@@ -580,12 +568,6 @@ private theorem bpos_W (r : ℕ) (B C : Finset ℕ)
     simp [Wcoord, b, occ, sign, signExponent, cPrefix, hmem]
   · simp [Wcoord, b, occ, sign, signExponent, cPrefix, hmem]
 
-private theorem bneg_cpos_intertwining (r : ℕ) :
-    ∀ (B C : Finset ℕ), 1 ≤ r → positiveSet B → positiveSet C →
-      bneg r (W B C) =
-      if r ∈ B then 0 else (-1 : ℂ) ^ bPrefix r B • W (insert r B) C :=
-  fun B C hr hB hC => bneg_W r B C hr hB hC
-
 private theorem native_occupation_projections (r : ℕ) (B C : Finset ℕ)
     (hr : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
     bneg r (c (r : ℤ) (W B C)) =
@@ -596,18 +578,6 @@ private theorem native_occupation_projections (r : ℕ) (B C : Finset ℕ)
     cneg_W r B C hr hB hC, bpos_W r B C hr hB hC]
   by_cases hB : r ∈ B <;> by_cases hC : r ∈ C <;>
     simp [hB, hC, bPrefix, cPrefix, Finset.erase_insert]
-
-private theorem positive_modes_kill_down :
-    (∀ r : ℕ, b (r : ℤ) down = 0) ∧
-    (∀ r : ℤ, 2 ≤ r → c r down = 0) := by
-  rw [down_eq]
-  constructor
-  · intro r
-    have h : ¬(r : ℤ) ≤ -2 := by omega
-    simp [b, h, annihilate_ket]
-  · intro r hr
-    have h : ¬r ≤ 1 := by omega
-    simp [c, h, annihilate_ket]
 
 private theorem relative_pbw_mode_intertwining :
     (∀ (r : ℕ) (B C : Finset ℕ), 1 ≤ r → positiveSet B → positiveSet C →
