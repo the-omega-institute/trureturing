@@ -4220,193 +4220,538 @@ Projection onto a linear kernel, its positive-gap bound, polar decomposition, th
 
 ## 追加锚（本行以下为增补区）
 
-## 48. 四维严格秩一桥与十一行列式残差
+## 48. A calibrated real reference and the coherent query contract
 
-**引理 48.1（四维 Gaussian 格的秩一抽取阈值）。** 令 $R=\mathbb Z[i]$。若 $H\in\operatorname{Herm}_r(R)$ 为正定，且 $1\le r\le3$，则存在 $0\ne q\in R^r$ 使
+**定义 48.1（Actual fixed reference and the phase-fixed target）。** Let $V$ be a nonzero finite-dimensional real inner-product space. Supply an actual orthogonal reference command $Q$ and a known calibrated angle $0<\theta\le\pi/2$ satisfying the all-input operator identity
 
 $$
-q^*H^{-1}q\le1,\qquad 0<qq^*\le H.
+Q+Q^*=2\cos\theta\,I.
 \tag{48.1}
 $$
 
-当 $r=4$ 时，同一结论在 $\det H\ge12$ 时成立。
-
-**证明。** 令 $D=\det H$。在实化的对偶格 $H^{-1}R^r$ 上使用 Hermitian 范数。其欧氏余体积为 $D^{-1}$，故普通实 Hermite 界给出某个非零 $q\in R^r$ 满足
+Write $c=\cos\theta$, $s=\sin\theta$ and
 
 $$
-q^*H^{-1}q\le\gamma_{2r}D^{-1/r}.
+J=(Q-cI)/s,\qquad Q_r=\cos r\,I+\sin r\,J.
 \tag{48.2}
 $$
 
-置 $a=Dq^*H^{-1}q=q^*\operatorname{adj}(H)q\in\mathbb Z_{>0}$。对于 $r=2,3$，已有式 (33.5) 及其后的整数性计算给出 $a<D+1$，因而 $a\le D$。$r=1$ 时取 $q=1$ 即可。
-
-当 $r=4$ 时，普通实常数 $\gamma _8=2$。Vance，[A Mordell Inequality for Lattices over Maximal Orders](https://arxiv.org/html/0810.2336v5)，§4.2 的 Table 3 在实维数 $8$ 列出 $E_8$ 的 Hermite 不变量 $2$，并在该表说明中明确指出维数不超过 $8$ 的这些格已证明为普通实格最优；因此这里使用的是全部实八维格的界，而非仅对某个 Gaussian 子类的猜测。若 $D\ge16$，则 $2D^{3/4}\le D<D+1$；对 $D=12,13,14,15$ 直接有 $2D^{3/4}<D+1$。由 (48.2)，$a\le2D^{3/4}<D+1$，故仍有 $a\le D$。
-
-最后，对任意 $z\in\mathbb C^r$，$H$-内积的 Cauchy 不等式给出
+From $Q^*=2cI-Q$ and $Q^*Q=I$, real multiplication gives
 
 $$
-|q^*z|^2\le(q^*H^{-1}q)(z^*Hz)\le z^*Hz,
-$$
-
-即 $0<qq^*\le H$。$\square$
-
-**引理 48.2（严格秩一效果的同网格奇偶完成）。** 在定义 16.1 的 $d=4$ 网格中，令 $e(Y)=p(Y)-\operatorname{Tr}(HY)$。当 $N=2^m\ge2048$ 时，每个秩一效果 $X\in K_{4,m}$ 且 $\|X\|_{\rm op}<1$ 都满足
-
-$$
-|e(X)|\le53142\,\epsilon.
+J^*=-J,\qquad J^2=-I,\qquad J^*J=I,\qquad Q=Q_\theta.
 \tag{48.3}
 $$
 
-**证明。** 记 $\pi=1+i$。沿用定义 16.1 和定理 24.1 的常数
+In particular $V$ has even real dimension. The $Q_r$ are comparison matrices; only $Q$ is initially callable. This is the fixed-reference real algebra of [V78 binary-failure continuation §4.1, Theorem 4.2](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-2), without granting every time of a reference flow. Any given orthogonal transport commuting with $Q$ also commutes with $J$.
+
+The required action uses an input-independent unit ready vector $|0\rangle$ of a finite real controller and is the phase-fixed, clean linear identity
 
 $$
- c_4=\frac1{52},\qquad K_4=102,\qquad
- U_4=(2\cdot128-1)K_4+4(128-1)=26518.
+\mathcal V(|0\rangle\otimes x)=|0\rangle\otimes Jx
+\qquad(x\in V).
 \tag{48.4}
 $$
 
-因此 $\|Y\|_{\rm op}\le c_4$ 时 $|e(Y)|\le102\epsilon$，而
-$\|Y\|_{\rm op}\le1-16/N$ 时 $|e(Y)|\le26518\epsilon$.
+It acts on every unknown source vector and returns the controller exactly to ready. The identity consequently persists after tensoring the identity on any untouched finite real reference. Under the complex structure $J$, the source-only complex channel $\operatorname{Ad}_J$ is the identity channel. Thus (48.4) targets the actual real quarter turn, including its coherent action against a bypass branch; it is not the task of implementing that source-only identity channel.
 
-由 §§31–33 使用的饱和子模论证，存在本原 $v\in R^4$ 和整数 $t\ge1$ 使
+**假设 48.2（Forward coherent queries and free controller operations）。** Free operations are known real orthogonal maps acting only on a finite real controller initially in an input-independent pure ready vector. A forward reference query is $Q$ itself or its supplied controlled version
 
 $$
-X=\frac{t\,vv^*}{N},\qquad s=\|v\|^2,\qquad ts<N.
+\mathcal Q_P=(I-P)\otimes I+P\otimes Q,
 \tag{48.5}
 $$
 
-若 $t\ge2$，把 $t=t_1+t_2$ 分成两个正整数且 $t_i\le\lceil t/2\rceil$。两个子效果的范数严格小于 $2/3$, 因为 $\lceil t/2\rceil/t\le2/3$；它们及其和仍在原网格中。由于 $N\ge2048$, 它们满足上侧条件 $\|Y\|\le1-16/N$。式 (16.4) 遂给出
+where $P$ is a known orthogonal flag projection on the controller. A flag may be a Boolean condition on several controller bits; its finite known logic is part of the controller and does not query the source. Every forward $Q$ call, controlled or unconditional, is counted. The source menu supplies no free $Q^{-1}$, arbitrary fractional reference time, source re-preparation, source swap or $J$ command. Protocols are finite products of these queries and free controller operations. There is no measurement, postselection, discarded branch or external outcome feedback in the constructions below. The contract supplies coherent control of this particular $Q$; it does not infer control of an unknown device from its source-only channel.
+
+## 49. Optimal total query count for a clean real quarter turn
+
+**定理 49.1（Exact all-input construction and matching coherent lower bounds）。** Under Definition 48.1 and Assumption 48.2, the minimum total number of forward reference calls for (48.4) is
 
 $$
-|e(X)|\le2U_4\epsilon+2\epsilon=53038\epsilon.
-\tag{48.6}
+n_{\min}=\left\lceil\frac{\pi}{2\theta}\right\rceil.
+\tag{49.1}
 $$
 
-以下设 $t=1$, 于是 $s<N$。对 $v_j\equiv0\pmod\pi$ 的坐标置 $w_j=0$，对其余坐标取 Gaussian 单位 $w_j\in\{1,-1,i,-i\}$，并记 $r=\|w\|^2$。本原性给出 $1\le r\le4$，且 $r\equiv s\equiv k\pmod2$, 其中 $k=N-s\ge1$；同时 $w\equiv v\pmod\pi$。
-
-若 $r\le k$, 则 $vv^*+ww^*\le(s+r)I_4\le NI_4$。只有两种情形需要改选单位相位：
-
-* $k=1,r=3$. 三个非零坐标记为 $\alpha_j=\overline v_jw_j$. 先选两个单位使 $\operatorname{Re}(\alpha_1\overline{\alpha_2})\le-1$, 再用第三个单位的相反两相之一使 $\operatorname{Re}((\alpha_1+\alpha_2)\overline{\alpha_3})\le0$. 于是
-  $|v^*w|^2\le s-2=N-3=k(N-r)$.
-* $k=2,r=4$. 对前两个坐标作同样的选择；随后逐次在相反两相中选择，使每次新增项与当前和的实部不正。于是
-  $|v^*w|^2\le s-2=N-4\le2(N-4)=k(N-r)$.
-
-在两种例外中，矩阵 $C=(v\;w)$ 的 Gram 矩阵满足
+The upper bound uses one real two-dimensional work controller and, for $0<\theta<\pi/2$, three known controller rotations, two controlled queries and $n_{\min}-2$ unconditional forward calls. For $\theta=\pi/2$, one call suffices. For any protocol with $n$ queries whose terminal joint vector on a unit ready input is within $0\le\epsilon\le2$ of the phase-fixed target, the same menu gives
 
 $$
-C^*C\le NI_2,\qquad\text{hence}\qquad vv^*+ww^*=CC^*\le NI_4.
-\tag{48.7}
+\epsilon\ge
+2\sin\!\left(\frac{[\pi/2-n\theta]_+}{2}\right).
+\tag{49.2}
 $$
 
-令 $u=(v+w)/\pi$, $z=(v-w)/\pi$, 以及
+This is a joint coherent vector-error lower bound, including controller return, for any finite controller dimension and any free real orthogonal controller gates. Only the total query count is optimized; exact calibration and controller-rotation synthesis remain supplied resources.
+
+Proof. Fix a protocol using $n$ queries. Replace every query by the corresponding $Q_r$ or controlled $Q_r$, $0\le r\le\theta$, holding all controller matrices and flags fixed even if their values were chosen using the known $\theta$. Denote the joint orthogonal circuit by $W(r)$. For any fixed unit source vector $x$, the curve
 
 $$
-W=\frac{ww^*}{N},\qquad F=\frac{uu^*}{N},\qquad G=\frac{zz^*}{N}.
+\gamma(r)=W(r)(|0\rangle\otimes x)
+\tag{49.3}
 $$
 
-则这些矩阵和共同和均属原 $K_{4,m}$，并且
+lies on a real unit sphere. At $r=0$ all queries are identities, so $\gamma(0)=a\otimes x$ for some unit controller vector $a$. The exact target is $|0\rangle\otimes Jx$, orthogonal to $\gamma(0)$ since $g(x,Jx)=0$.
+
+Each unconditional query has derivative $JQ_r$ of norm one; for a controlled query,
 
 $$
-X+W=F+G\le I_4.
-\tag{48.8}
+\frac{d}{dr}\mathcal Q_P(r)=P\otimes JQ_r
+\tag{49.4}
 $$
 
-此外 $\|W\|=r/N\le4/N\le c_4$, 而
+has norm at most one. Product differentiation and orthogonality of every remaining factor give $\|\gamma'(r)\|\le n$. The intrinsic distance between orthogonal unit vectors on the round sphere is $\pi/2$, so
 
 $$
-\max(\|F\|,\|G\|)\le\frac{(\sqrt{N-1}+2)^2}{2N}\le\frac34\le1-\frac{16}{N}\qquad(N\ge2048).
-\tag{48.9}
+n\theta\ge\operatorname{length}(\gamma)\ge\pi/2.
+\tag{49.5}
 $$
 
-对 (48.8) 使用四项关系式 (33.4)，再使用 (48.4) 的局部与上侧估计，得到
+The sphere distance is the standard round-sphere length bound; see J. M. Lee, [Introduction to Riemannian Manifolds, Chapter 6, Geodesics and Distance](https://doi.org/10.1007/978-3-319-91755-9_6). In this instance it also follows directly by differentiating the angle from the starting unit vector: Cauchy–Schwarz bounds that angle's derivative by path speed, and continuity covers the endpoints. This is an intermediate geometric estimate for the fixed reference circuit, not an independent sphere theorem. The substitution does not assume correctness of the circuit at any $r\ne\theta$.
+
+For the error version, spherical distance between unit vectors of chord distance at most $\epsilon$ is at most $2\arcsin(\epsilon/2)$. The triangle inequality from $\gamma(0)$ through $\gamma(\theta)$ to the phase-fixed target gives
 
 $$
-|e(X)|\le(102+2\cdot26518+4)\epsilon=53142\epsilon.
-$$
-$\square$
-
-**定理 48.3（严格收缩效果的十一行列式残差分解）。** 令 $N=2^m$，$A\in\operatorname{Herm}_4(R)$ 满足 $A\succeq0$ 且 $A\prec NI_4$。则存在有限个非零 $v_j\in R^4$ 以及一个矩阵 $G$，使
-
-$$
-A=\sum_{j=1}^{\ell}v_jv_j^*+G,
-\tag{48.10}
+\pi/2\le n\theta+2\arcsin(\epsilon/2).
 $$
 
-并且 $G=0$, 或者 $G\succ0$、$\det G\le11$, 且
+Taking the positive part and inverting the increasing sine on the relevant interval proves (49.2), including the zero lower bound when $n\theta\ge\pi/2$.
 
-$$
-\{X\in\operatorname{Herm}_4(R):0\le X\le G\}=\{0,G\}.
-\tag{48.11}
-$$
-
-**证明。** 对任意半正定积分矩阵 $B$，其积分核是饱和 $R$-子模；取 Gaussian 幺模坐标后
-
-$$
-V^*BV=\begin{pmatrix}J&0\\0&0\end{pmatrix},\qquad J\succ0.
-\tag{48.12}
-$$
-
-若 $\operatorname{rank}B\le3$, 引理 48.1 在正定块 $J$ 上给出一个非零积分秩一子效应，拉回后得到 $0<vv^*\le B$. 对秩四的 $B$, 同样可做此事，只要 $\det B\ge12$。每次减去 $vv^*$ 后仍为积分半正定矩阵，而迹至少减少 $1$, 所以这个过程在有限步后停止于 $0$ 或一个正定矩阵 $G$ 满足 $\det G\le11$ 且不含非零积分秩一子效应。
-
-说明最后的 $G$ 必为区间原子。若存在 $0<X<G$ 的积分 Hermitian 矩阵，置 $Y=G-X$. 若 $X$ 或 $Y$ 奇异且非零，则秩至多三的情形已经给出一个 $vv^*\le X$ 或 $vv^*\le Y$, 与停止条件矛盾。若二者均正定，则 Minkowski 行列式不等式给出
-
-$$
-\det(G)^{1/4}\ge\det(X)^{1/4}+\det(Y)^{1/4}\ge2,
-$$
-
-因为正定积分矩阵的行列式是正整数；这与 $\det G\le11$ 矛盾。因此 (48.11) 成立。若过程在某一步降为奇异矩阵，秩至多三的抽取会继续到零，故非零余项必为正定。式 (48.10) 遂得证。$\square$
-
-**定理 48.4（原网格严格收缩目标的有界残差归约）。** 设 $N\ge2048$, $E\in K_{4,m}$ 且 $\|E\|_{\rm op}<1$. 令 $A=NE$, 并取定理 48.3 的分解。置
-
-$$
-Q_j=\frac{v_jv_j^*}{N},\qquad G_0=\frac GN,\qquad
- e(G_0)=\begin{cases}p(G_0)-\operatorname{Tr}(HG_0),&G\ne0,\\ p(0),&G=0.\end{cases}
-$$
-
-则所有 $Q_j,G_0$ 及其任意部分和都属于原 $K_{4,m}$，并存在一个仅依赖于上述常数的显式界
-
-$$
-|e(E)-e(G_0)|\le902824\,\epsilon.
-\tag{48.13}
-$$
-
-**证明。** 由 $0\le G\le A<NI_4$, 每个 $Q_j$ 及 $G_0$ 都是原网格中的效果，且所有部分和仍不超过 $E$. 记 $\operatorname{tr}(Q_j)=\|v_j\|^2/N$. 将迹大于 $1/3$ 的单项列为大项；至多 $11$ 项。其余单项的迹至多 $1/3$, 按原顺序累积成若干组，每个完成组的迹属于 $[1/3,2/3)$, 最后未完成组的迹小于 $1/3$. 因 $\operatorname{Tr}(E)\le4$, 这样的组至多 $12$ 个。记大项数和小组数分别为 $L\le11$ 与 $M\le12$.
-
-每个大项是严格秩一效果：若某个 $Q_j$ 有范数 $1$, 则 $Q_j\le E$ 会迫使 $\|E\|\ge1$, 与假设矛盾。因此引理 48.2 给出其误差至多 $53142\epsilon$. 每个小组 $B_\nu$ 是一个原网格效果，且
-
-$$
-\|B_\nu\|\le\operatorname{Tr}(B_\nu)<\frac23\le1-\frac{16}{N},
-$$
-
-所以定理 24.1 给出 $|e(B_\nu)|\le26518\epsilon$。由 (16.4) 逐项相加，至多 $L+M\le23$ 次，得
+For the matching construction, $\theta=\pi/2$ gives $Q=J$ directly. Otherwise define
 
 $$
 \begin{aligned}
-|e(E)-e(G_0)|
-&\le 11\cdot53142\,\epsilon+12\cdot26518\,\epsilon
-   +2\cdot23\,\epsilon\\
-&=902824\,\epsilon.
+n&=\left\lceil\frac{\pi}{2\theta}\right\rceil\ge2,\\
+\phi&=\frac\pi2-(n-2)\theta,\qquad
+u=\phi-\theta.
 \end{aligned}
-$$
-当 $G=0$ 时，首项是 $e(0)=p(0)$，而 $0\le p(0)\le2\epsilon$；这正是上式中允许的零项。$\square$
-
-**推论 48.5（严格收缩范围内四维二次裕量归约的剩余义务）。** 本归约继承定理 48.4 的条件 $N\ge2048$, $E\in K_{4,m}$ 且 $\|E\|_{\rm op}<1$；原下侧分支中范数等于 $1$ 的效果不在此直接归约的适用范围内。引理 48.2 和定理 48.4 只移除原事件中的秩一贡献；它们没有证明原事件。若 $E$ 还满足原显示的二次谱析取
-
-$$
-\lambda_{\max}(E)\le1-A N^{-2}\quad\text{或}\quad
-\lambda_{\min}(E)\ge A N^{-2},\qquad A>2,
-\tag{48.14}
+\tag{49.6}
 $$
 
-则仍须对定理 48.3 产生的单个正定区间原子 $G_0=G/N$ 建立一个统一的、与 $N,\epsilon,p$ 无关的常数 $C_{\rm atom}$，使
+Here the auxiliary scalar $u$ satisfies $\theta<\phi\le2\theta$, $0<u\le\theta$ and $\phi\le\pi/2$. Put
 
 $$
-|e(G_0)|\le C_{\rm atom}(\epsilon+N^{-1}).
-\tag{48.15}
+\begin{gathered}
+t=\sqrt{\sin^2\theta-\sin^2u},\qquad
+L=\sqrt{t^2+\sin^2\phi}>0,\\
+d=\frac{\sin u}{\sin\theta},\qquad
+e=\frac{t}{\sin\theta},\qquad
+a=\frac tL,\qquad b=\frac{\sin\phi}{L}.
+\end{gathered}
+\tag{49.7}
 $$
 
-当 $G=0$ 时 (48.15) 按 $|e(0)|=p(0)\le2\epsilon$ 解释。上侧条件在 $G_0\le E$ 时可传给 $G_0$,但下侧条件一般不能由 $G_0\le E$ 传递；所以 (48.15) 必须覆盖由原下侧分支产生的原子，而不能把定理 24.1 的线性裕量误称为二次裕量结论。因此，式 (48.15) 的统一原子估计与完整的二次裕量结论仍未由本节的部分结果证明。$\square$
+All coefficients are nonnegative and $d^2+e^2=a^2+b^2=1$. Use the real unit work vectors and rotations
 
-本节的新增承重是四维原 Gaussian 网格上的严格秩一同网格完成、以及把任意严格收缩效果归约为至多一个行列式不超过 $11$ 的正定区间原子并给出有界表误差；式 (48.14)–(48.15) 保留原事件的量词和未决边界。Hermite 常数、Minkowski 行列式不等式、Gaussian 饱和子模与既有 §§31–33 的原语只作为证明中的明确中间工具使用，不把它们另列为新结论。
+$$
+\begin{gathered}
+v=\begin{pmatrix}a\\b\end{pmatrix},\qquad
+w=\begin{pmatrix}-a\\b\end{pmatrix},\\
+B_v=\begin{pmatrix}a&-b\\b&a\end{pmatrix},\qquad
+B_w=\begin{pmatrix}-a&-b\\b&-a\end{pmatrix},\qquad
+R=\begin{pmatrix}d&-e\\e&d\end{pmatrix}.
+\end{gathered}
+\tag{49.8}
+$$
+
+Thus $B_v|0\rangle=v$ and $B_w|0\rangle=w$. With $D_Q=\operatorname{diag}(I,Q)$ a single controlled query, define the two-query block
+
+$$
+F=D_Q(R\otimes I)D_Q
+=\begin{pmatrix}dI&-eQ\\eQ&dQ^2\end{pmatrix}.
+\tag{49.9}
+$$
+
+Its key all-input identity is
+
+$$
+F(v\otimes x)=w\otimes Q_\phi x
+\qquad(x\in V).
+\tag{49.10}
+$$
+
+Indeed,
+
+$$
+t^2=\sin(\theta-u)\sin\phi,\qquad
+\sin u-\cos\theta\sin\phi=-\sin\theta\cos\phi.
+\tag{49.11}
+$$
+
+Expand both rows of (49.9) on $v$ in $I,J$, using $Q=cI+sJ$ and $Q^2=\cos(2\theta)I+\sin(2\theta)J$. The first row has coefficients $-a\cos\phi,-a\sin\phi$; the second has $b\cos\phi,b\sin\phi$, by (49.7) and (49.11). These are exactly the rows of $w\otimes Q_\phi$. No source vector was selected in this calculation.
+
+The actual circuit is
+
+$$
+\mathcal V=(B_w^T\otimes I)
+ (I_2\otimes Q^{n-2})
+ D_Q(R\otimes I)D_Q(B_v\otimes I).
+\tag{49.12}
+$$
+
+Its two controlled calls and $n-2$ unconditional calls total $n$. Because $Q^{n-2}Q_\phi=Q_{\pi/2}=J$, (49.10) proves (48.4). The controller returns exactly to ready; both coherent rows are retained and recombined. The boundary $t=0$ is valid in the same formulas: it occurs when $u=\theta$, so $a=e=0$, $b=d=1$, and the action reduces to the exact power $Q^n=J$. No division by $t$ occurs.
+
+The two-query recombination uses established controlled-operation algebra related to A. M. Childs–N. Wiebe, [Hamiltonian Simulation Using Linear Combinations of Unitary Operations](https://arxiv.org/pdf/1202.5822v1), §II, Lemma 2, equations (2)–(3). The exact real clean factorization (49.7)–(49.12) is verified above using the uniform-angle identity, without selecting an outcome. G. H. Low–I. L. Chuang, [Optimal Hamiltonian Simulation by Quantum Signal Processing](https://arxiv.org/pdf/1606.02685v2), Figure 1 and equations (2)–(6), supplies the mature eigenphase-processing context; complex controller phase gates from a general signal-processing circuit are not free premises here. Combining (49.5) with this construction proves (49.1). $\square$
+
+## 50. The explicit pi/3 circuit and the finite QZX menu extension
+
+**定理 50.1（Two-call acquisition for the concrete real reference）。** For the fixed command
+
+$$
+Q=(I+\sqrt3J)/2,\qquad \theta=\pi/3,\qquad
+Q^2-Q+I=0,
+\tag{50.1}
+$$
+
+Theorem 49.1 gives $n=2$, $\phi=\pi/2$ and
+
+$$
+a=d=1/\sqrt3,\qquad b=e=\sqrt{2/3},\qquad R=B_v.
+\tag{50.2}
+$$
+
+Its exact clean circuit is
+
+$$
+(B_w^T\otimes I)D_Q(B_v\otimes I)D_Q(B_v\otimes I).
+\tag{50.3}
+$$
+
+For the real QZX carrier of Theorem 45.1, take $J=J_c=\operatorname{diag}(J_2,J_2)$ and its same actual $Q,Z,X$. The circuit realizes $J_c$ under the additional controlled-$Q$/ready-controller contract, although $J_c$ is absent from the original finite QZX word menu. Even if unconditional $X$ and $Z$ are also uncharged operations in this particular example, its exact minimum remains two $Q$ calls. This statement does not grant free controlled $X,Z$ or arbitrary source gates.
+
+Proof. On the prepared work vector $(a,b)^T$, the two rows of $F$ in (49.9) are
+
+$$
+\begin{aligned}
+a^2I-b^2Q&=(I-2Q)/3=-J/\sqrt3,\\
+ab(Q+Q^2)&=\sqrt2(2Q-I)/3=\sqrt{2/3}\,J.
+\end{aligned}
+\tag{50.4}
+$$
+
+Thus $F(v\otimes x)=(-a,b)^T\otimes Jx$ for every $x$, and $B_w^T$ returns that vector to ready, proving (50.3). Both rows are amplitudes of an orthogonal matrix identity; no success probability or amplitude-to-frequency rule is invoked.
+
+Theorem 45.1 already gives the exact skew-commutator gap $4/3$ and the finite-word form $Q^kX^uZ^v$, which contains no $J_c$. Its word obstruction and (50.3) have different menus: the explicitly added resource here is controlled $Q$ with the ready real controller. This construction needs neither a projected-reference command $A_0$ nor arbitrary callable reference durations; the additional-duration echo in (45.5) is a separate sufficient extension of the same example.
+
+For the lower bound with free unconditional $X,Z$, identify $V=\mathbb R^2_{\mathrm{index}}\otimes\mathbb R^2_{\mathrm{plane}}$. Those two gates act only on the block index and commute with every $Q_r$. They commute also with every controlled query and controller-only gate, so their total source product can be moved outside the query circuit. Choose a real unit product vector $x=u\otimes v$. At $r=0$ the endpoint is $a\otimes Fu\otimes v$ for an orthogonal block-index product $F$; the target is $|0\rangle\otimes u\otimes J_2v$. They remain orthogonal because $\langle v,J_2v\rangle=0$. The derivative estimate in the proof of (49.5) is unchanged, so $n\pi/3\ge\pi/2$ still requires two calls. This argument is specific to those unconditioned source gates. $\square$
+
+## 51. Coherent enabling and the two-branch SU(2) control module
+
+**定理 51.1（Controlled quarter turn at the same optimum and a 2n upper bound）。** Let $n=\lceil\pi/(2\theta)\rceil$ under the same actual reference and query contract. An outer controller bit can enable the clean construction at the same total $n$-query cost, with work-ready action
+
+$$
+|0\rangle\otimes x_0+|1\rangle\otimes x_1
+\longmapsto
+|0\rangle\otimes x_0+|1\rangle\otimes Jx_1
+\qquad(x_0,x_1\in V).
+\tag{51.1}
+$$
+
+The work controller returns to ready on both outer branches. The exact phase-fixed minimum for this controlled task is also $n$. Using the induced complex structure $J$, define for a complex $2\times2$ matrix $M$ the real block representation on $V\oplus V$
+
+$$
+\rho_J(M)_{ab}=\operatorname{Re}(M_{ab})I+
+                         \operatorname{Im}(M_{ab})J.
+\tag{51.2}
+$$
+
+Every $\rho_J(M)$ with $M\in SU(2)$ has an exact construction with at most $2n$ forward reference queries and known controller-only real orthogonal gates. For $\theta=\pi/3$, this is at most four $Q$ calls. This is an upper bound for the two-branch module, not an optimal per-matrix query claim or arbitrary source-gate synthesis.
+
+Proof. Enable each known controller rotation in (49.12) only on the outer branch $z=1$, and conjoin that condition with every query flag. The $n-2$ unconditional source queries become queries flagged by $z=1$. On $z=0$ all factors are identities; on $z=1$ the displayed clean circuit acts. Hence the work controller returns to ready and linearity proves (51.1) for arbitrary coherent outer/source inputs. For $\theta=\pi/2$ a single outer-controlled $Q=J$ gives the same result. No generic rule for controlling an unknown gate is used: every controlled source factor is the supplied primitive (48.5), and all other controlled factors are known controller matrices. Conversely, fixing the outer input to one in an implementation of (51.1) solves (48.4), so the lower bound (49.5) applies.
+
+The representation $\rho_J$ preserves products and adjoints by $J^2=-I$ and $J^*=-J$. The acquired controlled quarter turn and free real rotations are
+
+$$
+\mathcal S=\operatorname{diag}(I,J)=\rho_J(\operatorname{diag}(1,i)),
+\qquad
+\mathcal R_\alpha=
+\begin{pmatrix}\cos\alpha\,I&-\sin\alpha\,I\\
+\sin\alpha\,I&\cos\alpha\,I\end{pmatrix},
+\tag{51.3}
+$$
+
+and direct multiplication gives
+
+$$
+\mathcal S\mathcal R_\beta\mathcal S^{-1}
+=\begin{pmatrix}\cos\beta\,I&\sin\beta\,J\\
+\sin\beta\,J&\cos\beta\,I\end{pmatrix}.
+\tag{51.4}
+$$
+
+The standard two-axis Euler decomposition supplies the form
+
+$$
+\rho_J(M)=\mathcal R_\alpha\mathcal S\mathcal R_\beta
+                 \mathcal S^{-1}\mathcal R_\gamma,
+\qquad M\in SU(2).
+\tag{51.5}
+$$
+
+For the mature single-qubit Euler framework, see M. A. Nielsen–I. L. Chuang, [Quantum Computation and Quantum Information, §4.2](https://doi.org/10.1017/CBO9780511976667). The precise two-axis form needed here is self-contained: write
+
+$$
+M=\begin{pmatrix}x+iy&z+iw\\-z+iw&x-iy\end{pmatrix},
+\qquad x^2+y^2+z^2+w^2=1.
+$$
+
+Choose $\beta$ so that $\cos\beta=\sqrt{x^2+z^2}$ and $\sin\beta=\sqrt{y^2+w^2}$, and choose angles $A,B$ with
+
+$$
+\begin{aligned}
+\cos\beta\cos A&=x,&-\cos\beta\sin A&=z,\\
+-\sin\beta\sin B&=y,&\sin\beta\cos B&=w.
+\end{aligned}
+\tag{51.6}
+$$
+
+When a prefactor is zero its corresponding angle is arbitrary. Taking $\alpha=(A+B)/2$ and $\gamma=(A-B)/2$ verifies (51.5) by multiplication.
+
+Finally, $\mathcal S^{-1}=\operatorname{diag}(I,-J)$ is a free real sign on the second controller branch followed by $\mathcal S$. Thus each of $\mathcal S,\mathcal S^{-1}$ uses $n$ reference calls; no inverse query is required. This proves the $2n$ bound. The intermediate work controller is returned to ready by each controlled-quarter-turn implementation and can be reused.
+
+If the given original transports commute with $J$, every block in (51.2) commutes with their diagonal action on $V\oplus V$. The resulting compatible complex control is confined to this two-branch module. It does not implement arbitrary operators on $V$, nor imply independence of a real source factor from every controller superposition. The real-to-complex inner-product description remains the one in [V78 binary-failure continuation §4.2, Corollary 4.3](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-3). $\square$
+
+## 52. Matched coherent errors and the acquisition boundary
+
+**定理 52.1（Matched query and controller errors for the clean construction）。** Suppose an actual orthogonal query $\widetilde Q$ is matched to one ideal $Q$ satisfying (48.1), with $\|\widetilde Q-Q\|\le\epsilon_Q$. If the three work-controller rotations are exact, the corresponding $n$-call circuit satisfies
+
+$$
+\|\widetilde{\mathcal V}-\mathcal V\|
+\le\min\{2,n\epsilon_Q\}.
+\tag{52.1}
+$$
+
+If the three actual controller rotations are also orthogonal and have respective operator-norm errors at most $\epsilon_v,\epsilon_R,\epsilon_w$ relative to $B_v,R,B_w^T$, then
+
+$$
+\|\widetilde{\mathcal V}-\mathcal V\|
+\le\min\{2,n\epsilon_Q+\epsilon_v+\epsilon_R+\epsilon_w\}.
+\tag{52.2}
+$$
+
+Absent rotations in the one-query $\theta=\pi/2$ construction have zero error contributions. The same bounds hold for the coherently enabled implementation (51.1), on all outer-controller/source inputs with ready work controller, and after tensoring an untouched finite real reference. On unit ready inputs the work-not-ready component is bounded by the corresponding error budget.
+
+Proof. For a fixed flag $P$, the controlled-query difference is $P\otimes(\widetilde Q-Q)$, of norm at most $\epsilon_Q$; the same holds for an unconditional query. The difference of two products is the sum of terms with one changed factor and ideal or actual orthogonal prefixes and suffixes. Applying this standard product telescoping to the displayed clean circuit gives $n\epsilon_Q$ plus the errors of its three controller matrices. Both complete circuits are orthogonal, so their difference has norm at most two. Enabling a known controller factor on the outer branch changes its error into a block-diagonal matrix with the same bound, and conjoining a query flag retains its query bound. Thus the same reasoning covers the controlled implementation. Real tensoring by an identity preserves operator norm; projection onto the work-not-ready space is a contraction and annihilates the ideal ready output. These are coherent norm estimates for the actual matched circuits, not probability or conditional-normalization statements. $\square$
+
+**定义 52.2（Scope of the acquired bridge）。** The exact result starts from the global real relation (48.1), its calibrated scalar angle, an actually supplied controlled-$Q$ command, exact known controller rotations and a ready real-controller factor. A root-only comparison does not certify that all-input relation or the matching used in (52.1)–(52.2); a comparison commutator gap does not install (48.5). The finite tensor interface, availability of those coherent controls, preparation of an independent ready controller and calibration/synthesis costs are acquisition premises, not consequences of the construction. For a generic interface, a comparison $J_0$ or $e^{tA_0}$ alone supplies neither (48.1) nor the controlled-reference primitive. The menu, period and visibility distinctions also remain those of [V78 circles, periods and endogenous clocks, Theorem 5.1, §§5.2 and 11.3](https://github.com/the-omega-institute/trureturing/blob/615d1d58b1cf668e5979245ecb6bdc9ac5ec1525/docs/develop/theory/AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md).
+
+**定理 52.3（The phase-fixed operation does not supply the remaining quantum interfaces）。** The construction acquires the actual clean quarter turn and its relative controlled action in the stated menu. It derives no Born probability rule, instrument-completeness law, source preparation, physical tensor-product or ready-controller independence principle, arbitrary source control, or decoder for the earlier failure code.
+
+Proof. Every construction is a real orthogonal matrix identity on the declared joint linear interface; both rows of (50.4) are retained. The norm bounds describe joint vectors and operators. No probability assignment, outcome map or completeness rule appears as a conclusion. The real tensor product and input-ready factor are specified by the query contract rather than derived from an underlying source. Equations (51.2)–(51.5) restrict the available new matrices to their stated two-branch form; they do not furnish arbitrary source matrices. Under the derived complex scalar action, $J=iI$ and hence $\operatorname{Ad}_J$ fixes every complex source density matrix, while (51.1) fixes a relative branch action that the source-only channel omits. This explains why the phase-fixed query lower bound is not a lower bound for that identity channel. Finally $J^2=-I$ differs from the eraser word reflection's square $I$, and no failure-code decoding or recovery command is included. The finite-dimensional argument asserts no infinite-carrier limit. The conditional application uses credited linear-combination, eigenphase-processing, Euler and sphere tools without claiming novelty or literature priority for those general methods. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 53. One real forward-reference circuit for an unknown angle
+
+**定义 53.1（Interval calibration and a fixed ready-output target）。** Let $V$ be a nonzero finite-dimensional real inner-product space with a fixed orthogonal complex structure
+
+$$
+J^*=-J,\qquad J^2=-I,\qquad J^*J=I.
+\tag{53.1}
+$$
+
+The actual callable source reference belongs to the common realization
+
+$$
+Q_\theta=\cos\theta\,I+\sin\theta\,J,\qquad
+\theta\in E=[a,b],\qquad0<a<b\le\pi/2.
+\tag{53.2}
+$$
+
+The actual angle is unknown in $E$. A circuit may depend on $E$, its requested accuracy and supplied classical descriptions, but every controller matrix, query flag and query location is independent of the actual $\theta$. The same circuit must work for every angle in $E$.
+
+Supply a finite real controller $C$, a fixed pure unit ready vector $e_0$, and arbitrary real orthogonal controller-only gates. A forward query is
+
+$$
+D_P(Q_\theta)=(I-P)\otimes I+P\otimes Q_\theta
+\tag{53.3}
+$$
+
+for a known real orthogonal controller projection $P$; an unconditional query has $P=I$. Every such call is counted. There is no inverse query, free fractional reference time, source preparation, source swap or other free source gate. This is Assumption 48.2 with a different calibration quantifier.
+
+For a finite circuit $W$, define its ready-input map and phase-fixed target by
+
+$$
+T_W(\theta)x=W(Q_\theta)(e_0\otimes x),\qquad
+T_Jx=e_0\otimes Jx,
+\tag{53.4}
+$$
+
+and the joint real operator-norm error by
+
+$$
+\epsilon_W(E)=\sup_{\theta\in E}\|T_W(\theta)-T_J\|.
+\tag{53.5}
+$$
+
+All unknown source inputs and the same fixed controller return are included. This target fixes the actual real action and its sign, rather than the source-only complex channel $\operatorname{Ad}_J$, which is the identity under $J$. Fixing the outer input to one in the clean controlled-$J$ task restricts it to (53.4), so the lower bounds below also apply to that task.
+
+## 54. A positive calibration-interval error floor independent of query count
+
+**定理 54.1（Forward real-circuit obstruction on a nonzero angle interval）。** Under Definition 53.1, put $L=b-a$ and $m=L/(2\pi)$. Every finite circuit, regardless of its query count or finite controller dimension, satisfies
+
+$$
+\epsilon_W(E)\ge2^{-(1-m)/m}=2^{\,1-2\pi/L}>0.
+\tag{54.1}
+$$
+
+For example, $E=[\pi/6,\pi/2]$ has $L=\pi/3$, $m=1/6$, and
+
+$$
+\epsilon_W(E)\ge1/32.
+\tag{54.2}
+$$
+
+For a requested uniform error $0<\epsilon<1$, a necessary condition is
+
+$$
+L\le\frac{2\pi}{1+\log_2(1/\epsilon)}.
+\tag{54.3}
+$$
+
+The same positive floor bounds angle-averaged coherent error: for every $p>0$,
+
+$$
+\left(\frac1L\int_a^b\|T_W(t)-T_J\|^p\,dt\right)^{1/p}
+\ge2^{\,1-2\pi/L}.
+\tag{54.4}
+$$
+
+These are necessary bounds in the stated operation model, not sharpness claims, matching optimal circuits, sufficient calibration algorithms or an optimal calibration law.
+
+Proof. Choose a real orthonormal controller basis with the ready vector first. Replace each query by the auxiliary controller matrix $D_P(z)=I-P+zP$. A circuit with $n$ forward calls becomes the real matrix polynomial
+
+$$
+W(z)=R_nD_{P_n}(z)R_{n-1}\cdots D_{P_1}(z)R_0.
+\tag{54.5}
+$$
+
+Its degree is at most $n$. On the auxiliary complexification of $C$, each $D_P(e^{it})$ is unitary, since the orthogonal ranges of $P$ and $I-P$ receive unit-modulus scalars. Each real orthogonal $R_j$ is also unitary there. Consequently the ready-to-ready polynomial obeys
+
+$$
+f(z)=\langle e_0,W(z)e_0\rangle\in\mathbb R[z],\qquad
+|f(e^{it})|\le1\ (t\in\mathbb R),\qquad f(0)\in\mathbb R.
+\tag{54.6}
+$$
+
+The complexification is an auxiliary analytic proof object; it supplies no complex controller gate to the actual real circuit.
+
+Evaluation of real polynomials at $Q_\theta$ preserves products. Thus the physical ready-to-ready source block is exactly $f(Q_\theta)$. If $f(e^{i\theta})=u+iv$, then
+
+$$
+f(Q_\theta)=uI+vJ,\qquad
+\|f(Q_\theta)-J\|=|f(e^{i\theta})-i|.
+\tag{54.7}
+$$
+
+For the norm identity, the adjoint product of $uI+(v-1)J$ with itself is $(u^2+(v-1)^2)I$ and $V\ne0$. Projecting the joint output onto ready is a contraction, so pointwise
+
+$$
+e_W(\theta):=|f(e^{i\theta})-i|
+\le\|T_W(\theta)-T_J\|.
+\tag{54.8}
+$$
+
+Only necessary polynomial properties of actual circuits are used; no converse synthesis of every bounded real polynomial is assumed.
+
+Put $h(z)=f(z)-i$. Since $f(0)$ is real,
+
+$$
+|h(0)|=\sqrt{f(0)^2+1}\ge1.
+\tag{54.9}
+$$
+
+Thus $h$ is a nonzero polynomial with nonzero center value. The ordinary polynomial specialization of Jensen's formula gives
+
+$$
+\frac1{2\pi}\int_0^{2\pi}\log|h(e^{it})|\,dt
+=\log|h(0)|+
+\sum_{|\alpha|<1}\operatorname{mult}_h(\alpha)
+                         \log\frac1{|\alpha|}\ge0.
+\tag{54.10}
+$$
+
+The sum is over roots in the open unit disk. The established analytic supplier is [mathlib's `AnalyticOnNhd.circleAverage_log_norm`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Complex/JensenFormula.lean): its analytic-neighborhood, nonzero-radius and nonzero-center hypotheses hold for this polynomial at center zero and radius one. Boundary roots contribute zero to the closed-disk formula. Their logarithmic singularities are integrable: near a root of multiplicity $k$, the logarithm is $k\log|t-t_0|$ plus a bounded continuous term. Thus the displayed identity uses finite-polynomial Jensen theory, including the almost-everywhere meaning at zeros, without an infinite Hardy boundary-limit argument or a premise excluding boundary zeros. Jensen theory is a credited intermediate analytic tool, not a new general formula asserted by the circuit application.
+
+By (54.6), $|h(e^{it})|\le2$ everywhere. If the uniform joint error is at most some $\epsilon>0$, (54.8) bounds $|h|$ by $\epsilon$ on the arc $[a,b]$. Split (54.10) into that arc and its complement:
+
+$$
+0\le m\log\epsilon+(1-m)\log2.
+\tag{54.11}
+$$
+
+Solving yields (54.1). Exactly zero error is impossible as well: $h$ would vanish on the entire nonzero arc, making the polynomial identically zero and contradicting (54.9). Equivalently, apply (54.11) to every positive $\epsilon$. Substitution gives (54.2), and rearranging (54.1) for $0<\epsilon<1$ gives (54.3). Since no part of the bound depends on degree or controller dimension, any sequence of finite circuits under this same fixed-interval contract retains the positive floor.
+
+For the average form, the complement contributes at most $(2\pi-L)\log2$ to the logarithmic integral. Hence
+
+$$
+\frac1L\int_a^b\log e_W(t)\,dt
+\ge-\frac{1-m}{m}\log2.
+\tag{54.12}
+$$
+
+The normalized geometric mean of $e_W$ is therefore at least $2^{1-2\pi/L}$. Its finitely many possible zeros have integrable logarithms as above. Concavity of $\log$ applied to $e_W^p$, together with (54.8), gives
+
+$$
+\begin{aligned}
+\left(\frac1L\int_a^b\|T_W(t)-T_J\|^p\,dt\right)^{1/p}
+&\ge\left(\frac1L\int_a^b e_W(t)^p\,dt\right)^{1/p}\\
+&\ge\exp\left(\frac1L\int_a^b\log e_W(t)\,dt\right)
+\ge2^{\,1-2\pi/L}.
+\end{aligned}
+\tag{54.13}
+$$
+
+This proves (54.4). The angle integrals are normalized $L^p$ means of coherent vector errors; they do not assume a physical angle distribution or measurement probability rule. $\square$
+
+## 55. A fixed centered circuit gives a constructive upper estimate
+
+**定理 55.1（Calibrated midpoint comparison under the interval contract）。** In Definition 53.1, set
+
+$$
+\theta_0=(a+b)/2,\qquad
+n_0=\left\lceil\frac{\pi}{2\theta_0}\right\rceil.
+\tag{55.1}
+$$
+
+Use the exact real quarter-turn circuit of Theorem 49.1 for $\theta_0$, holding all its controller rotations fixed while the actual angle varies over $E$. This particular fixed circuit $W_0$ obeys
+
+$$
+\epsilon_{W_0}(E)\le\min\{2,2n_0\sin(L/4)\}.
+\tag{55.2}
+$$
+
+The estimate includes all work-not-ready components. The same bound applies to the coherently enabled construction of Theorem 51.1. In particular, for the infimum over all finite circuits in this menu,
+
+$$
+2^{\,1-2\pi/L}
+\le\inf_W\epsilon_W(E)
+\le\min\{2,2n_0\sin(L/4)\}.
+\tag{55.3}
+$$
+
+Proof. At $\theta_0$ the chosen circuit's ready-input map is exactly $T_J$. All $Q_\theta$ share the same $J$, so real multiplication gives
+
+$$
+\|Q_\theta-Q_{\theta_0}\|
+=2\left|\sin\frac{\theta-\theta_0}{2}\right|
+\le2\sin(L/4).
+\tag{55.4}
+$$
+
+A controlled-query difference has no larger norm. Product telescoping over its $n_0$ calls, with all ideal and actual factors orthogonal, bounds the full joint-circuit difference by $2n_0\sin(L/4)$ and also by two. Restriction to ready inputs preserves the upper bound and retains all leakage from ready. The same reasoning applies after coherent enabling, by Theorem 52.1. This proves (55.2); combine it with Theorem 54.1 for (55.3).
+
+The two bounds need not match and do not classify the best interval approximation. A fixed nonzero $L$ has the positive lower floor. As $L\to0$ with its midpoint bounded away from zero, $n_0$ stays bounded and the constructive upper estimate tends to zero. $\square$
+
+## 56. Calibration quantifiers and the limits of the interval obstruction
+
+**定义 56.1（The contracts excluded from the analytic argument）。** The polynomial proof uses forward calls and real controller matrices independent of the actual angle. Inverse queries introduce Laurent powers; complex controller phases remove the real-coefficient restriction and therefore the reason that $f(0)$ is real in (54.9). Those changes invalidate corresponding premises of the proof but do not themselves give replacement synthesis results. A measured angle-dependent calibration record, variable controller output, heralded branch, discarded work output, source-only channel target or additional free source operations is a different contract from (53.3)–(53.5). No lower bound for all conceivable physical calibration or reference-extraction procedures is asserted.
+
+**定理 56.2（Compatibility with the calibrated bridge and the remaining acquisition boundary）。** The interval obstruction does not contradict Theorem 49.1's exact calibrated construction. It holds already for $V=\mathbb R^2$ with its ordinary quarter turn, and adding an untouched finite real reference does not weaken its lower bound. It supplies no Born probability law, preparation or instrument structure, tensor-independence principle, native decoder, or identification with source-word reversal.
+
+Proof. A single calibrated angle or finite angle set has zero arc measure and is outside Theorem 54.1. More specifically, Theorem 49.1 chooses its controller rotations using the actual calibrated angle, whereas Definition 53.1 requires one fixed circuit for every angle of a nonzero interval. The centered circuit in Theorem 55.1 uses only the fixed midpoint and is admissible under that interval quantifier. Thus neither the calibrated query minimum nor its resource contract is revised.
+
+Every step of the polynomial lower bound works on the same two-dimensional realization $Q_\theta=\cos\theta I+\sin\theta J$ as well as in higher finite dimension. It compares one common actual carrier and fixed $J$ across the interval, not unrelated maps optimized separately at each angle. Untouched-reference inputs include the original source inputs, so requiring them cannot lower a necessary error bound. The tensor extension of the centered upper estimate also follows from the same global operator-norm bound.
+
+The distinction between comparison maps and callable operations remains the one in Definition 42.2 and Definition 47.1: a polar complex structure, projected reference or diagnostic commutator gap does not supply the actual controlled oracle or calibrate its angle. The current argument changes a calibration quantifier inside an explicitly supplied coherent real menu. Its complex variable is auxiliary to the polynomial proof, and its norms and angle averages specify no outcome probabilities, physical preparations or instruments. Tensor independence is an interface premise rather than a derived physical law. The map $J^2=-I$ also differs from source-word reversal with square $I$, and no decoder or recovery operation appears in the circuit menu. No infinite-carrier extension is asserted. $\square$
 
 ## 追加锚（本行以下为增补区）
