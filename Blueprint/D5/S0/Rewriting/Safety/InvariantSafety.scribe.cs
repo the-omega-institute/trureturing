@@ -124,7 +124,7 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "removed checkout. Removing only the checkout does not remove that support. "
                         + "This is the surviving-witness case of the inductive-invariant argument: "
                         + "each permitted deletion retains a support witness for every required item. "
-                        + "The same cleanup invocation must exclude that branch from orphan retirement. "
+                        + "Automatic cleanup retains task and recovery branches without a branch sweep. "
                         + "Native git worktree add on the retained branch reconstructs its tracked "
                         + "snapshot, subject to intact objects and normal checkout semantics. "
                         + "Neither a remote nor publication confirmation is needed for this local route. "

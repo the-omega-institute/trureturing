@@ -395,8 +395,8 @@ class LockRecoveryCases:
                 patch.object(preservation, "git", side_effect=observe_native):
             item = preservation.remove(self.removal_options())["items"][0]
         self.assertEqual("removed", item["outcome"])
-        self.assertEqual([175], observed)
-        self.assertEqual((signal.ITIMER_REAL, 300), timer.call_args_list[0].args)
+        self.assertEqual([1675], observed)
+        self.assertEqual((signal.ITIMER_REAL, 1800), timer.call_args_list[0].args)
         self.assertEqual((signal.ITIMER_REAL, 0, 0), timer.call_args_list[-1].args)
 
     def test_removal_expired_budget_never_starts_native_unregistration(self):
@@ -407,7 +407,7 @@ class LockRecoveryCases:
         native_payload, native_git = preservation.remove_payload, preservation.git
         def exhaust_budget(target):
             native_payload(target)
-            clock[0] += 300
+            clock[0] += 1800
         def no_native(path, *args, **kwargs):
             self.assertNotEqual(("worktree", "remove"), args[:2])
             return native_git(path, *args, **kwargs)
@@ -437,9 +437,9 @@ class LockRecoveryCases:
                 patch.object(os, "unlink", side_effect=expire_during_unlink):
             item = preservation.remove(self.removal_options())["items"][0]
         self.assertEqual("partial_or_indeterminate", item["outcome"])
-        self.assertIn("timed out after 300 seconds", item["error"])
+        self.assertIn("timed out after 1800 seconds", item["error"])
         self.assertEqual(previous, signal.getsignal(signal.SIGALRM))
-        self.assertEqual((signal.ITIMER_REAL, 300), timer.call_args_list[0].args)
+        self.assertEqual((signal.ITIMER_REAL, 1800), timer.call_args_list[0].args)
         self.assert_removal_recoverable(metadata)
         self.remove()
         self.assertFalse(self.tree.exists())
