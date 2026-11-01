@@ -3228,3 +3228,33 @@ Implementation requires the stated copies, sector instruments, within-type routi
 The corrected complex channel acts with arbitrary untouched complex references on its own full tensor domain. The real decoder's stated task is its fixed-label output marginal on the supplied family, with no assertion that it preserves arbitrary source-reference relations. Unknown preparation weights, native source-control availability and reference-return costs remain separate questions. The results derive no cloning operation, Born rule, source-independence law or general quantum-origin conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 127. The exterior-square channel has an exact literature antecedent
+
+**定义 127.1（The established exterior-channel ingredient）。** The antisymmetric channel $\mathcal A_q$ in §§118–119, for $q\ge3$, is the restriction of the decoder channel of Daniel Ebler, Michał Horodecki, Marcin Marciniak, Tomasz Młynik, Marco Túlio Quintino and Michał Studziński, [*Optimal universal quantum circuits for unitary complex conjugation*, equations (26) and (34)](https://arxiv.org/pdf/2206.00107v3), to its exterior-square input block. Their equation (26) defines $A(d,m)$ as the orthogonal projector onto $\bigwedge^m\mathbb C^d$, using normalized alternating vectors. Their input-first Choi convention agrees with (119.1).
+
+In their equation (34), take $d=q$ and $k=2$, where their $k$ counts queried unitary uses and input tensor factors. The decoder Choi operator is
+
+$$
+D_{OF}
+=\frac{\binom q2}{\binom q3}A(q,3)_{OF}
++\bigl(I_{H^{\otimes2}}-A(q,2)\bigr)_O\otimes\sigma_F,
+\qquad H=\mathbb C^q,
+\tag{127.1}
+$$
+
+with any density $\sigma_F$. Since $A(q,3)$ is supported inside $\bigwedge^2H\otimes H$, compression of the input to $\bigwedge^2H$ removes the second summand and leaves
+
+$$
+J_{\mathcal A_q}
+=\frac{\binom q2}{\binom q3}\Pi_{{\rm alt},3}
+=\frac3{q-2}\Pi_{{\rm alt},3}.
+\tag{127.2}
+$$
+
+Thus the local channel and coefficient in (119.1) have this exact antecedent. The symmetric local channel is separately the $N=2$, $d=q$, $K=1$ case of Brzić–Grinko–Studziński–Quintino, [Theorem 1 and equations (1)–(7)](https://arxiv.org/pdf/2603.23628v3), as specified in §§104 and 125. The formulas in §§118–124 combine these established local ingredients and calculate their repeated-density action and real orientation-decoding consequences.
+
+The cited Ebler et al. circuit transforms queried unitary operations; its complete circuit is not identified here with the state-family decoder of Theorem 123.1. Equations (127.1)–(127.2) identify its local exterior input channel precisely. The mixed-state trace-distance minimax claim and the orientation-sector success/error frontier retain the assumptions and proofs given in §§118–126. No priority claim is made for either local channel or for their application here.
+
+## 追加锚（本行以下为增补区）
