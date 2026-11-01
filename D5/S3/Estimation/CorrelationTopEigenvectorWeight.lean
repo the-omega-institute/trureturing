@@ -6,8 +6,10 @@
    utility: none
    digest: The remaining correlation domain admits the weight gap exactly above sigma=c. -/
 
-import D5.S3.Estimation.CorrelationWeightSpectralBound
-import D5.S3.Estimation.RankTwoEigenvectorWeight
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.Linarith
 import D5.S3.Weil.ZetaLinear.PosIndex
 
 /-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
@@ -20,6 +22,178 @@ open scoped BigOperators RealInnerProductSpace ComplexOrder Topology
 namespace D5.S3.Estimation.CorrelationTopEigenvectorWeight
 
 noncomputable section
+
+private lemma two_point_energy {n : ℕ} (hn : 3 ≤ n) (μ : Fin n → ℝ)
+    (hsum : ∑ j, μ j = 0) (i j : Fin n) (hij : i ≠ j) :
+    (n : ℝ) * (μ i + μ j) ^ 2 ≤
+      2 * ((n : ℝ) - 2) * ∑ k, μ k ^ 2 := by
+  classical
+  let s := (univ.erase i).erase j
+  have hj : j ∈ univ.erase i := mem_erase.mpr ⟨hij.symm, mem_univ _⟩
+  have hcard : (s.card : ℝ) = (n : ℝ) - 2 := by
+    simp only [s, card_erase_of_mem hj, card_erase_of_mem (mem_univ i), card_univ,
+      Fintype.card_fin]
+    rw [Nat.cast_sub (by omega), Nat.cast_sub (by omega)]
+    norm_num
+    ring
+  have hrest : ∑ k ∈ s, μ k = -(μ i + μ j) := by
+    have hi := sum_erase_add univ μ (mem_univ i)
+    have hj := sum_erase_add (univ.erase i) μ hj
+    dsimp only [s]
+    linarith
+  have hrestsq : (∑ k ∈ s, μ k ^ 2) + (μ i ^ 2 + μ j ^ 2) =
+      ∑ k, μ k ^ 2 := by
+    have hi := sum_erase_add univ (fun k => μ k ^ 2) (mem_univ i)
+    have hj := sum_erase_add (univ.erase i) (fun k => μ k ^ 2) hj
+    dsimp only [s]
+    linarith
+  have hcs := sum_mul_sq_le_sq_mul_sq s μ (fun _ => (1 : ℝ))
+  simp only [mul_one, one_pow, sum_const, nsmul_eq_mul, mul_one, hrest, hcard,
+    neg_sq] at hcs
+  have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : 0 ≤ (n : ℝ) - 2 := by linarith
+  have hpair := mul_nonneg hn0 (sq_nonneg (μ i - μ j))
+  nlinarith [hrestsq]
+
+private lemma top_pair_of_weights {n : ℕ} (hn : 3 ≤ n) (μ w : Fin n → ℝ)
+    (hw : ∀ j, 0 ≤ w j) (hsum : ∑ j, w j = 1) (i : Fin n)
+    (htop : ∀ j, μ j ≤ μ i) (hhalf : w i < 1 / 2) :
+    ∃ j, j ≠ i ∧ 2 * (∑ k, μ k * w k) ≤ μ i + μ j := by
+  classical
+  have hne : (univ.erase i).Nonempty := by
+    apply card_pos.mp
+    rw [card_erase_of_mem (mem_univ i), card_univ, Fintype.card_fin]
+    omega
+  obtain ⟨j, hj, hmax⟩ := exists_max_image (univ.erase i) μ hne
+  refine ⟨j, (mem_erase.mp hj).1, ?_⟩
+  have hsumle : ∑ k ∈ univ.erase i, μ k * w k ≤
+      μ j * ∑ k ∈ univ.erase i, w k := by
+    rw [mul_sum]
+    exact sum_le_sum fun k hk => mul_le_mul_of_nonneg_right (hmax k hk) (hw k)
+  have hsw := sum_erase_add univ w (mem_univ i)
+  rw [hsum] at hsw
+  have hrest : ∑ x ∈ univ.erase i, w x = 1 - w i := by linarith
+  rw [hrest] at hsumle
+  have hsm := sum_erase_add univ (fun k => μ k * w k) (mem_univ i)
+  have hdiff := mul_nonneg (sub_nonneg.mpr (htop j))
+    (show 0 ≤ 1 / 2 - w i by linarith)
+  nlinarith
+
+/-- A top spectral weight below one half forces a larger centered second moment. -/
+private theorem centered_energy_strict {n : ℕ} (hn : 3 ≤ n) (c σ : ℝ) (hc : 0 < c)
+    (μ w : Fin n → ℝ) (hμ : ∑ j, μ j = 0)
+    (henergy : ∑ j, μ j ^ 2 = (n : ℝ) * ((n : ℝ) - 1) * (c ^ 2 + σ ^ 2))
+    (hw : ∀ j, 0 ≤ w j) (hsum : ∑ j, w j = 1)
+    (hrayleigh : ∑ j, μ j * w j = ((n : ℝ) - 1) * c)
+    (i : Fin n) (htop : ∀ j, μ j ≤ μ i) (hhalf : w i < 1 / 2) :
+    c ^ 2 < σ ^ 2 := by
+  obtain ⟨j, hji, hpair⟩ := top_pair_of_weights hn μ w hw hsum i htop hhalf
+  have hbound := two_point_energy hn μ hμ i j hji.symm
+  have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn2 : 0 < (n : ℝ) - 2 := by linarith
+  have hn1 : 0 < (n : ℝ) - 1 := by linarith
+  rw [hrayleigh] at hpair
+  have hpair0 : 0 < μ i + μ j := lt_of_lt_of_le (by positivity) hpair
+  have hsquare : (2 * ((n : ℝ) - 1) * c) ^ 2 ≤ (μ i + μ j) ^ 2 := by
+    exact pow_le_pow_left₀ (by positivity) (by nlinarith) 2
+  rw [henergy] at hbound
+  have hlarge : 2 * (n : ℝ) * ((n : ℝ) - 1) ^ 2 * c ^ 2 ≤
+      ((n : ℝ) - 2) * (n : ℝ) * ((n : ℝ) - 1) * (c ^ 2 + σ ^ 2) := by
+    nlinarith only [hbound,
+      mul_le_mul_of_nonneg_left hsquare (show 0 ≤ (n : ℝ) by positivity)]
+  have hcancel : 2 * ((n : ℝ) - 1) * c ^ 2 ≤
+      ((n : ℝ) - 2) * (c ^ 2 + σ ^ 2) := by
+    have hnpos : 0 < (n : ℝ) * ((n : ℝ) - 1) := by positivity
+    apply (mul_le_mul_iff_right₀ hnpos).mp
+    nlinarith only [hlarge]
+  by_contra h
+  have hle : σ ^ 2 ≤ c ^ 2 := le_of_not_gt h
+  have hmul := mul_le_mul_of_nonneg_left hle hn2.le
+  nlinarith [sq_pos_of_pos hc]
+
+/-- A two-column factorization and a strict half-trace estimate force a larger weight
+away from any maximal diagonal entry. -/
+private theorem weight_gap {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (μ e s : ι → ℝ) (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
+    (hdiag : ∀ i j, (if i = j then μ i else 0) =
+      a * (s i * s j) + b * (e i * e j))
+    (hgap : 2 * (∑ j, μ j * e j ^ 2) < (∑ j, μ j) * ∑ j, e j ^ 2)
+    (i : ι) (htop : ∀ j, μ j ≤ μ i) :
+    ∃ j, j ≠ i ∧ e i ^ 2 < e j ^ 2 := by
+  classical
+  have hself : ∀ j, μ j = a * s j ^ 2 + b * e j ^ 2 := by
+    intro j
+    simpa only [ite_true, ← sq] using hdiag j j
+  have hμ : ∀ j, 0 ≤ μ j := fun j => by rw [hself]; positivity
+  have hzero : ∀ j, μ j = 0 → e j = 0 := by
+    intro j hj
+    have heq := hself j
+    rw [hj] at heq
+    have ha0 := mul_nonneg ha.le (sq_nonneg (s j))
+    have hb0 := mul_nonneg hb.le (sq_nonneg (e j))
+    have hz : b * e j ^ 2 = 0 := by linarith
+    exact sq_eq_zero_iff.mp ((mul_eq_zero.mp hz).resolve_left hb.ne')
+  let x : Matrix ι (Fin 2) ℝ := fun j t => if t = 0 then a * s j else b * e j
+  let y : Matrix (Fin 2) ι ℝ := fun t j => if t = 0 then s j else e j
+  have hfactor : diagonal μ = x * y := by
+    ext j k
+    change (if j = k then μ j else 0) = ∑ t : Fin 2, x j t * y t k
+    simp only [Fin.sum_univ_two]
+    norm_num [x, y, mul_assoc]
+    exact hdiag j k
+  let t := univ.filter (fun j => μ j ≠ 0)
+  have hcard : t.card ≤ 2 := by
+    have hr : (diagonal μ).rank ≤ 2 := by
+      rw [hfactor]
+      exact (rank_mul_le_left x y).trans (by simpa using rank_le_card_width x)
+    simpa only [rank_diagonal, Fintype.card_subtype, t] using hr
+  have hex : ∃ j, j ≠ i ∧ μ j ≠ 0 := by
+    by_contra h
+    have hz : ∀ j, j ≠ i → μ j = 0 := by
+      intro j hji
+      by_contra hj
+      exact h ⟨j, hji, hj⟩
+    have hm : ∑ j, μ j = μ i := by
+      apply sum_eq_single i
+      · intro j _ hji; exact hz j hji
+      · simp
+    have he : ∑ j, e j ^ 2 = e i ^ 2 := by
+      apply sum_eq_single i
+      · intro j _ hji; rw [hzero j (hz j hji)]; norm_num
+      · simp
+    have hme : ∑ j, μ j * e j ^ 2 = μ i * e i ^ 2 := by
+      apply sum_eq_single i
+      · intro j _ hji; rw [hz j hji, zero_mul]
+      · simp
+    rw [hm, he, hme] at hgap
+    nlinarith only [hgap, mul_nonneg (hμ i) (sq_nonneg (e i))]
+  obtain ⟨j, hji, hjμ⟩ := hex
+  have hiμ : μ i ≠ 0 := ne_of_gt ((lt_of_le_of_ne (hμ j) hjμ.symm).trans_le (htop j))
+  have hi : i ∈ t := mem_filter.mpr ⟨mem_univ _, hiμ⟩
+  have hj : j ∈ t.erase i := mem_erase.mpr ⟨hji, mem_filter.mpr ⟨mem_univ _, hjμ⟩⟩
+  have hrest : (t.erase i).card ≤ 1 := by rw [card_erase_of_mem hi]; omega
+  have hz : ∀ k, k ≠ i → k ≠ j → μ k = 0 := by
+    intro k hki hkj
+    by_contra hk
+    have hkt : k ∈ t.erase i := mem_erase.mpr ⟨hki, mem_filter.mpr ⟨mem_univ _, hk⟩⟩
+    exact hkj (card_le_one.mp hrest k hkt j hj)
+  have hsum : ∀ f : ι → ℝ, (∀ k, k ≠ i → k ≠ j → f k = 0) →
+      ∑ k, f k = f i + f j := by
+    intro f hf
+    rw [← sum_subset (subset_univ ({i, j} : Finset ι))]
+    · exact sum_pair hji.symm
+    · intro k _ hk
+      simp only [mem_insert, mem_singleton, not_or] at hk
+      exact hf k hk.1 hk.2
+  have hm := hsum μ hz
+  have he := hsum (fun k => e k ^ 2) (fun k hki hkj => by rw [hzero k (hz k hki hkj)]; norm_num)
+  have hme := hsum (fun k => μ k * e k ^ 2)
+    (fun k hki hkj => by rw [hz k hki hkj, zero_mul])
+  rw [hm, he, hme] at hgap
+  refine ⟨j, hji, ?_⟩
+  by_contra h
+  have hd := mul_nonneg (sub_nonneg.mpr (htop j)) (sub_nonneg.mpr (le_of_not_gt h))
+  nlinarith only [hgap, hd]
 
 /-- A real positive semidefinite matrix with unit diagonal. -/
 def IsCorrelation {n : ℕ} (c : Matrix (Fin n) (Fin n) ℝ) : Prop :=
@@ -243,7 +417,7 @@ private lemma segment_obstruction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
   by_cases hn : 3 ≤ n
   · obtain ⟨μ, w, i, hμ, he, hw, hws, hr, ht, hh⟩ :=
       correlation_spectral_data hn a ha (hs ▸ hc) hgap
-    have hb := CorrelationWeightSpectralBound.centered_energy_strict
+    have hb := centered_energy_strict
       hn (meanCorr a) (stdCorr a) (hm ▸ hc) μ w hμ he hw hws hr i ht hh
     rw [hm, hs] at hb
     exact (lt_irrefl _ hb)
@@ -710,7 +884,7 @@ private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     dsimp only [roundedZ] at hmul
     field_simp (disch := first | assumption | positivity | linarith) at hmul
     nlinarith only [hmul]
-  obtain ⟨j, hji, hweight⟩ := RankTwoEigenvectorWeight.weight_gap μ e f a b ha hb hdiag
+  obtain ⟨j, hji, hweight⟩ := weight_gap μ e f a b ha hb hdiag
     hscalar i (fun j => sub_le_sub_right (htop j) d)
   refine ⟨j, hji, ?_⟩
   have hd : delta n = (Real.sqrt (n : ℝ))⁻¹ • u := by
