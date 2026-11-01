@@ -1,0 +1,3 @@
+WIP: identify fixed vectors with functions on arbitrary finite basis orbits
+
+Core equivalence and dimension proof drafted; canonical make lean is queued on the existing donor build. No compilation success claimed.
