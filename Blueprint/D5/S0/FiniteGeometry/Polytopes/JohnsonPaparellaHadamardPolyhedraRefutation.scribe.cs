@@ -100,10 +100,11 @@ internal sealed class JohnsonPaparellaHadamardPolyhedraRefutationDocument : IScr
             Conjunction(Converse(n, k, true), Converse(n, k, false)))));
     }
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolutionClaim = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Module + "." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolutionClaim);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hadamard closure does not imply exact spectracone representation.",
@@ -123,5 +124,6 @@ internal sealed class JohnsonPaparellaHadamardPolyhedraRefutationDocument : IScr
             Node("claim", "Question 9.1", Seq(Named("claim"), Iff, Sp, Parenthesized(ClaimBody())), AssessedProvenance.FromLiterature(Source),
                 "Page 27, Question 9.1: “If K is a polyhedral cone (polytope) that is closed with respect to the Hadamard product, is there an invertible matrix S such that K = 𝒞(S) (K = 𝒫(S))?” The proposition asks both converses for every positive n and every subset of Fin n → ℂ. Vector multiplication is coordinatewise. The diagonalizer has the same size n; no identity, dimension, pointedness or spectral-admissibility condition is added.", DescribeRole.Definition),
             Node("result", "A negative answer to Question 9.1", Seq(Neg, Sp, Parenthesized(ClaimBody())), AssessedProvenance.FromRepo(Source),
-                "The explicit m = 10 cone in three coordinates has fourteen real supporting inequalities and three reality equations. Products of its generators lie in the cone, and a nonnegative three-generator decomposition extends this property to all cone points. Ten boundary edge midpoints require distinct active nonzero linear forms. A three-by-three complex diagonalizer supplies nine entry forms, and their imaginary parts vanish on the real span. The resulting contradiction refutes the cone converse and hence the conjunction in Question 9.1. The unbounded family and the separate polytope converse are outside this theorem.", DescribeRole.Theorem))));
+                "The explicit m = 10 cone in three coordinates has fourteen real supporting inequalities and three reality equations. Products of its generators lie in the cone, and a nonnegative three-generator decomposition extends this property to all cone points. Ten boundary edge midpoints require distinct active nonzero linear forms. A three-by-three complex diagonalizer supplies nine entry forms, and their imaginary parts vanish on the real span. The resulting contradiction refutes the cone converse and hence the conjunction in Question 9.1. The unbounded family and the separate polytope converse are outside this theorem.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("jp2025"), ResolutionKind.Refuted)))));
 }

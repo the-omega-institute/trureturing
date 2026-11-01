@@ -94,6 +94,10 @@ $$\neg (\forall n: \mathbb{N}, 0<n\implies \forall K: \operatorname{Set}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S0/FiniteGeometry/Polytopes/JohnsonPaparellaHadamardPolyhedraRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jp2025` (refuted) by `D5/S0/FiniteGeometry/Polytopes/JohnsonPaparellaHadamardPolyhedraRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jp2025","declaration_gid":"D5/S0/FiniteGeometry/Polytopes/JohnsonPaparellaHadamardPolyhedraRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Charles R. Johnson; Pietro Paparella (2025). *Perron similarities and the nonnegative inverse eigenvalue problem*. DOI: [10.1090/tran/9596](https://doi.org/10.1090/tran/9596). URL: <https://arxiv.org/abs/2409.07682v4>.
