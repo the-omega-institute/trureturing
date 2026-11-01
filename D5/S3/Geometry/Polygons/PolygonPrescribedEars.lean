@@ -10,6 +10,8 @@ import D5.S3.Geometry.Polygons.PolygonEarContraction
 import D5.S3.Geometry.Polygons.PolygonCatalanSupplier
 import D5.S3.Geometry.Polygons.PolygonConditionedFan
 
+/-! Exact ear sets from double fans and actual ear insertion. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open Finset
@@ -159,8 +161,9 @@ private theorem native_two_ears {n : ℕ} [NeZero n] (hn : 6 ≤ n)
   have hcross : ¬Cross (ear (1 : ZMod n)) (ear b) := by
     intro h
     apply hc
-    apply cross_ear_shift_iff.mp
-    simpa only [hi] using h
+    apply (cross_ear_shift_iff (i := i) (j := j) (a := a)).mp
+    rw [hi]
+    exact h
   have hb0 : b ≠ 0 := by
     intro h
     apply hcross
@@ -183,7 +186,10 @@ private theorem native_two_ears {n : ℕ} [NeZero n] (hn : 6 ≤ n)
       intro h
       apply hb2
       apply ZMod.val_injective n
-      rwa [ZMod.val_natCast_of_lt (show 2<n by omega)]
+      have hv : (2 : ZMod n).val = 2 := by
+        change (((2 : ℕ) : ZMod n)).val = 2
+        exact ZMod.val_natCast_of_lt (by omega)
+      rwa [hv]
     omega
   obtain ⟨U,hU,hE⟩ := native_doubleFan hn (b.val-1) (by omega) (by omega)
   have hbcast : (((b.val-1+1 : ℕ)) : ZMod n)=b := by
@@ -222,15 +228,17 @@ private theorem expand_exact {m : ℕ} [NeZero m] (hm : 6 ≤ m)
   rw [reduce_expand (by omega) hU,hE] at hsubC
   have hcard := card_le_card hsubC
   rw [reduced_centres_card hm h1C,reduced_centres_card hm h1] at hcard
-  refine ⟨hT,eq_of_subset_of_card_le hsub ?_⟩
+  refine ⟨hT,(eq_of_subset_of_card_le hsub ?_).symm⟩
   have hpos := card_pos.mpr (show P.Nonempty from ⟨1,h1⟩)
+  have hposC := card_pos.mpr (show (EarCenters (expand U)).Nonempty from ⟨1,h1C⟩)
   omega
 
-private theorem exists_exact {n : ℕ} [NeZero n] (P : Finset (ZMod n))
-    (hP : Compatible P) (hcard : 2 ≤ P.card) (hsize : 6 ≤ n-P.card) :
-    ∃ T : Finset (Sym2 (ZMod n)), IsTriangulation T ∧ EarCenters T = P := by
+private theorem exists_exact (n : ℕ) :
+    ∀ [NeZero n] (P : Finset (ZMod n)), Compatible P → 2 ≤ P.card → 6 ≤ n - P.card →
+      ∃ T : Finset (Sym2 (ZMod n)), IsTriangulation T ∧ EarCenters T = P := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
+    intro inst P hP hcard hsize
     by_cases htwo : P.card=2
     · obtain ⟨i,j,hij,rfl⟩ := card_eq_two.mp htwo
       exact native_two_ears (by omega) i j hij (hP (by simp) (by simp) hij)
@@ -269,6 +277,7 @@ theorem prescribed_complete_ears {n : ℕ} [NeZero n] (hn : 14 ≤ n)
     (P : Finset (ZMod n)) (hP : Compatible P) (hcard : 3 ≤ P.card)
     (hsize : 6 ≤ n-P.card) :
     ∃ T : Finset (Sym2 (ZMod n)), IsTriangulation T ∧ EarCenters T = P := by
-  exact exists_exact P hP (by omega) hsize
+  have hnzero : n ≠ 0 := by omega
+  exact exists_exact n P hP (by omega) hsize
 
 end D5.S3.Geometry.Polygons.PolygonPrescribedEars
