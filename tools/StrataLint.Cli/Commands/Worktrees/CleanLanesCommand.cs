@@ -117,11 +117,9 @@ internal static partial class CleanLanesCommand
             var failedCount = events.Count(static item => item.Action == "failed");
             var partialCount = events.Count(static item => item.Action == "partially_removed");
             var globalFailures = events.Count(static item =>
-                item.Action is "failed" or "partially_removed" && !IsSingleWorktreeResult(item));
+                item.Action is "failed" or "partially_removed" && !IsSingleItemResult(item));
             var warnings = new StringBuilder();
-            foreach (var item in events.Where(static item => IsSingleWorktreeResult(item)
-                && item.Action is "skipped" or "failed" or "partially_removed" or "deferred"
-                && item.Reason is not ("main_worktree" or "idle_pool"))
+            foreach (var item in events.Where(NeedsWarning)
                 .GroupBy(static item => item.Path, StringComparer.Ordinal).Select(static group => group.First()))
             {
                 warnings.Append(JsonSerializer.Serialize(new
@@ -353,7 +351,7 @@ internal static partial class CleanLanesCommand
             var preview = qualification ?? PreviewLane(repositoryRoot, item, runner);
             if (preview.Reason is not null)
             {
-                events.Add(QualificationEvent(item, preview));
+                events.Add(WithSelection(QualificationEvent(item, preview), selection));
                 continue;
             }
             events.Add(WithSelection(new CleanLaneEvent(
@@ -374,6 +372,16 @@ internal static partial class CleanLanesCommand
 
     private static bool IsSingleWorktreeResult(CleanLaneEvent item) => item.Path is not null
         && item.Kind is "stale_worktree" or "lane_worktree" or "idle_worktree";
+
+    private static bool IsSingleItemResult(CleanLaneEvent item) => IsSingleWorktreeResult(item)
+        || item.Path is not null && item.Kind == "temp_judge";
+
+    private static bool NeedsWarning(CleanLaneEvent item) => IsSingleItemResult(item)
+        && (item.Action is "failed" or "partially_removed" or "deferred"
+            || IsSingleWorktreeResult(item) && item.Action == "skipped"
+                && (item.SelectedForRemoval || item.Reason is not
+                    ("main_worktree" or "nested_worktree" or "recently_updated" or "not_far_behind"
+                    or "locked_recent" or "initialization_in_progress" or "idle_pool" or "idle_locked" or "idle_dirty")));
 
     private static string[] ReadManagedBranches(string repositoryRoot, IWorktreeProcessRunner runner) =>
         Decode(RunGit(repositoryRoot,
@@ -507,7 +515,8 @@ internal static partial class CleanLanesCommand
                 catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
                 {
                     events.Add(new CleanLaneEvent("temp_judge", path, null, null,
-                        "partially_removed", "temporary_directory_partial_or_indeterminate"));
+                        "partially_removed", "temporary_directory_partial_or_indeterminate",
+                        Diagnostic: exception.GetType().Name + ":" + BoundedDiagnostic(exception.Message)));
                     continue;
                 }
             }
@@ -629,7 +638,8 @@ internal static partial class CleanLanesCommand
         new("lane_worktree", item.Path, item.Branch, item.Head, "skipped", reason);
 
     private static CleanLaneEvent WithSelection(CleanLaneEvent item, ReclaimSelection selection) =>
-        item with { SelectionReason = selection.Reason, SelectionDetail = selection.Detail };
+        item with { SelectionReason = selection.Reason, SelectionDetail = selection.Detail,
+            SelectedForRemoval = selection.BlockReason is null };
 
     private static IReadOnlyList<string> DefaultTempRoots() =>
         new[] { "/tmp", Path.GetTempPath() }
@@ -650,5 +660,6 @@ internal static partial class CleanLanesCommand
         string? SelectionReason = null,
         string? SelectionDetail = null,
         JsonElement? NativeLocks = null,
-        string? Diagnostic = null);
+        string? Diagnostic = null,
+        bool SelectedForRemoval = false);
 }

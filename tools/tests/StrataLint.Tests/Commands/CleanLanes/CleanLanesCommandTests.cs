@@ -99,15 +99,18 @@ public sealed partial class CleanLanesCommandTests
         else Assert.Empty(CleanLanesCommand.ParseArguments(arguments).ActivePaths);
     }
 
-    [Fact]
-    public void UnreadableRegisteredLaneIsSkippedWithoutHidingHealthyLanes()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void UnreadableRegisteredLaneIsSkippedWithoutHidingHealthyLanes(bool missing)
     {
         using var fixture = new CleanLanesFixture();
         var unreadable = fixture.AddLandedLane("harness/unreadable");
         var healthy = fixture.AddLandedLane("harness/healthy");
-        File.Delete(Path.Combine(unreadable, ".git"));
+        if (missing) Directory.Delete(unreadable, recursive: true);
+        else File.Delete(Path.Combine(unreadable, ".git"));
 
-        Assert.True(Directory.Exists(unreadable));
+        Assert.Equal(!missing, Directory.Exists(unreadable));
         Assert.False(File.Exists(Path.Combine(unreadable, ".git")));
 
         var result = fixture.Run();
@@ -115,9 +118,11 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         var items = ReadItems(result.Output);
         Assert.Contains(items, item =>
-            ItemMatches(item, unreadable, "skipped", "unreadable"));
+            ItemMatches(item, unreadable, "skipped", missing ? "missing" : "unreadable"));
         Assert.Contains(items, item =>
             ItemMatches(item, healthy, "would_remove", "merged_to_dev"));
+        var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
+        Assert.Equal(unreadable, warning.GetProperty("path").GetString());
     }
 
     [Fact]

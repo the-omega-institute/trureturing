@@ -99,6 +99,7 @@ internal static partial class CleanLanesCommand
                 {
                     Kind = "idle_worktree",
                     Action = outcome == "would_remove" ? "would_remove" : removalEvent.Action,
+                    SelectedForRemoval = ReadOptional("stage") is "remove" or "revalidate",
                 });
                 if (outcome != "retained" || reason != "idle_pool") completeRemoval(item, removal);
             }

@@ -81,6 +81,8 @@ public sealed partial class CleanLanesCommandTests
         }
         else Assert.Equal("initialization_in_progress", reason);
         Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, lane, failed ? "failed" : "skipped", reason));
+        Assert.Equal(outcome == "refused" && stage == "batch" ? 0 : 1,
+            ReadEvents(result.Error, "clean_lanes_warning").Count);
     }
 
     public static IEnumerable<object[]> QualificationBoundaries()
