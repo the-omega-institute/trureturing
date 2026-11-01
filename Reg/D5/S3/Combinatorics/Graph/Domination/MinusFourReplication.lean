@@ -138,6 +138,8 @@ noncomputable def registration :
 #print axioms familyRegistration
 #print axioms registration
 
+end
+
 end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication
 
 namespace Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication.SupportEvaluation
@@ -276,4 +278,56 @@ noncomputable def registration :
 #print axioms familyRegistration
 #print axioms registration
 
+end
+
 end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication.SupportEvaluation
+
+namespace Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication.Connectivity
+
+open LeanInformationAudit
+open _root_.D5.S3.Combinatorics.Graph.LocalDominatingStemBoundReplication
+open _root_.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+
+universe u
+noncomputable section
+
+structure Params where
+  V : Type u
+  finite : Fintype V
+  equality : DecidableEq V
+  graph : SimpleGraph V
+  support : V
+  copies : ℕ
+
+def signature : DependentFamily.Signature where
+  Params := Params.{u}
+  State p := RepVertex p.copies p.V × RepVertex p.copies p.V
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature :=
+  DependentFamily.realize signature (fun _ p ab =>
+    (replicated p.graph {p.support} p.copies).Reachable ab.1 ab.2) (fun e => nomatch e)
+
+def arena : DependentFamily.Arena where
+  signature := signature
+  Law R := ∀ p, p.graph.Connected → ∀ a b, R.readout () p (a,b)
+
+abbrev sourceScope := type_of% (@support_replication_connected.{u})
+
+theorem source_bridge : sourceScope ↔ arena.Law actual := by
+  constructor
+  · intro h p hp a b
+    exact (@h p.V p.finite p.equality p.graph p.support hp p.copies).preconnected a b
+  · intro h V finite equality graph support hp copies
+    exact ⟨fun a b => h ⟨V,finite,equality,graph,support,copies⟩ hp a b, ⟨hub copies⟩⟩
+
+theorem actual_positive : arena.Law actual := source_bridge.mp support_replication_connected
+
+end
+end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication.Connectivity

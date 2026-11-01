@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Domination/MinusFourReassembly
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.result; premises=D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.label_bijective,D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.leaf_neighbors,D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.root_leaf_edge,D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.nonroot_neighbors,D5/S3/Combinatorics/Graph/Domination/MinusFourReassembly.core_neighbors
    digest: Restriction and reassembly for the actual source graph. -/
 
 import D5.S3.Combinatorics.Graph.Domination.MinusFourBaseStates

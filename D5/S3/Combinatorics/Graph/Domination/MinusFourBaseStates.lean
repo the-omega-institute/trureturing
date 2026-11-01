@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Domination/MinusFourBaseStates
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates.result_of_reassembly; premises=D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates.local_messages,D5/S3/Combinatorics/Graph/Domination/MinusFourBaseStates.core_cancellation
    digest: Local weighted domination states of the eight actual source components. -/
 
 import D5.S3.Combinatorics.Graph.Domination.MinusFourFamily

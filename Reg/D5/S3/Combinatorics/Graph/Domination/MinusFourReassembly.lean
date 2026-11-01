@@ -105,4 +105,46 @@ noncomputable def registration :
 #print axioms familyRegistration
 #print axioms registration
 
+end
+
 end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
+
+namespace Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.Reassembly
+
+open LeanInformationAudit Finset
+open _root_.D5.S3.Combinatorics.Graph.DominatingSetAverage
+open _root_.D5.S3.Combinatorics.Graph.Domination.MinusFourReplication
+open _root_.D5.S3.Combinatorics.Graph.Domination.MinusFourFamily
+open _root_.D5.S3.Combinatorics.Graph.Domination.MinusFourBaseStates
+open _root_.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+
+noncomputable section
+attribute [local instance] Classical.propDecidable
+
+def signature : DependentFamily.Signature where
+  Params := Unit
+  State _ := Finset (Fin 33)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature :=
+  DependentFamily.realize signature (fun _ _ S => S.card) (fun e => nomatch e)
+
+def arena : DependentFamily.Arena where
+  signature := signature
+  Law R := (∑ S ∈ domSets sourceGraph, (-4 : ℤ) ^ R.readout () () S) = stateEvaluation
+
+abbrev sourceScope := type_of% (@source_reassembly)
+
+theorem source_bridge : sourceScope ↔ arena.Law actual := Iff.rfl
+
+theorem actual_positive : arena.Law actual := source_bridge.mp source_reassembly
+
+
+end
+end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly.Reassembly

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Domination/MinusFourFamily
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.result_of_base_root; premises=D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.source_leaf,D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.source_leaf_edge,D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.parent_edge,D5/S3/Combinatorics/Graph/Domination/MinusFourFamily.parent_lower
    digest: The exact published graph and the support-replication reduction for the minus-four family question. -/
 
 import D5.S3.Combinatorics.Graph.Domination.MinusFourReplication

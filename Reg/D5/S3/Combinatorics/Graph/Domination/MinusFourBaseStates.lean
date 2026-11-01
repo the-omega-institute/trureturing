@@ -109,4 +109,6 @@ noncomputable def registration :
 #print axioms familyRegistration
 #print axioms registration
 
+end
+
 end Reg.D5.S3.Combinatorics.Graph.Domination.MinusFourBaseStates
