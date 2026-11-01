@@ -7,7 +7,6 @@ set_option relaxedAutoImplicit false
 
 open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution composition)
 open _root_.D5.S3.Arith.FibonacciAtomic.NativeLocalSourceExecution
-open _root_.D5.S3.Arith.FibonacciAtomic.NativeLocalSourceExecution
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -49,7 +48,7 @@ private theorem actual_law : arena.Law actual := by exact native_execution
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  have impossible := (law (.of true)).1
+  have impossible := (law.1 (.of true)).1
   change (none : Option Source) = some (substitution (.of true)) at impossible
   cases impossible
 

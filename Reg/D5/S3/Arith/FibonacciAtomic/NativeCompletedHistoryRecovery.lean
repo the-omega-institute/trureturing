@@ -5,6 +5,7 @@ import Reg.Support.DependentFamily
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution composition)
 open _root_.D5.S3.Arith.FibonacciAtomic.NativeLocalSourceExecution
 open _root_.D5.S3.Arith.FibonacciAtomic.NativeCompletedHistoryRecovery
@@ -29,7 +30,7 @@ abbrev rejected : Realization signature := realize signature (fun _ _ _ => none)
 
 abbrev arena : Arena where
   signature := signature
-  Law A := (∀ (n0 : Nat) (z t : Source) (W : List Letter),
+  Law A :=     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
       A.readout () n0 z = some (t,W) ↔
         1 < n0 ∧ Native t ∧ eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z : Source),
@@ -51,13 +52,25 @@ abbrev arena : Arena where
     (∀ (A : Type) (E : List Letter → A) (U : List Letter),
       (∃ D : A → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (E W) = W) ↔
-          E (.F :: U) ≠ E (.G :: U))
+          E (.F :: U) ≠ E (.G :: U)) ∧
+    (∀ (t : Source) (es : List NativeLocalSourceExecution.Event),
+      NativeLocalSourceExecution.replay t es =
+        Geometry.NativeGuardedLeafRepair.run t (es.map toCall)) ∧
+    (∀ t : Source, Native t ↔
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧ t ≠ .of true) ∧
+    (∀ (t : Source) (W : List Letter), Native t →
+      Geometry.NativeGuardedLeafRepair.run t (primitiveWord t W) = some (run t W) ∧
+      (primitiveWord t W).length = eventIndex (run t W) - eventIndex t) ∧
+    (∀ U : List Letter,
+      ∃ D : Bool → List Letter, ∀ W : List Letter,
+        run (.of false) W = run K U → D (firstChoice W) = W)
 
 private theorem actual_law : arena.Law actual := by exact completed_history_recovery
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  have impossible := (law 2 K K []).mpr ⟨by decide,rfl,rfl,rfl⟩
+  have impossible := (law.1 2 K K []).mpr ⟨by decide,rfl,rfl,rfl⟩
   change (none : Option (Source × List Letter)) = some (K,[]) at impossible
   cases impossible
 

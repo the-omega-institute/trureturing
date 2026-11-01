@@ -9,6 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.NativeLocalSourceExecution
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFiniteNormalInversion
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
+import D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -185,7 +186,7 @@ private theorem rho_predecessor_complete (t : Source) : rhoPredecessor (substitu
   have image : Observer.NativeImageSaturationInterface.NativeImage 1
       (Observer.NativeCompletionPrefixLifting.embed (substitution t)) := by
     refine ⟨Observer.NativeCompletionPrefixLifting.embed t, ?_⟩
-    exact Observer.NativeCompletionPrefixLifting.iterate_embed 1 t
+    exact Observer.CompletionHomogeneousFixedPoints.iterate_embed 1 t
   obtain ⟨_,_,D,⟨hD,_,eq⟩,_⟩ := finite_normal_inverse 1 (substitution t) image
   have inj : Function.Injective substitution :=
     SourceTransportCentralizer.source_transport_centralizer.2.2.1 substitution
@@ -429,6 +430,136 @@ private theorem supplement_separation {A : Type} (E : List Letter → A)
     · simp
     · simp [Ne.symm different]
 
+/-- Literal original guarded calls; tags carry their actual P/S meaning. -/
+def toCall (e : NativeLocalSourceExecution.Event) : Geometry.NativeGuardedLeafRepair.Call :=
+  if e.2 then .promote e.1 else .split e.1
+
+def fromCall : Geometry.NativeGuardedLeafRepair.Call → NativeLocalSourceExecution.Event
+  | .promote p => (p,true)
+  | .split p => (p,false)
+
+private theorem to_from (c : Geometry.NativeGuardedLeafRepair.Call) : toCall (fromCall c) = c := by
+  cases c <;> rfl
+
+private theorem edit_canonical (t : Source) (p : NativeLocalSourceExecution.Address) (k : Bool) :
+    NativeLocalSourceExecution.edit t p k =
+      if ActualLeafHistoryRigidity.subtree p t = some (.of k) then
+        some (ActualImageAddressCertificate.replace t p (substitution (.of k))) else none := by
+  induction p generalizing t with
+  | nil =>
+    cases t with
+    | of b => cases b <;> cases k <;> rfl
+    | mul l r => cases k <;> rfl
+  | cons d p ih =>
+    cases t with
+    | of b => cases b <;> cases d <;> cases k <;> rfl
+    | mul l r =>
+      cases d <;>
+        simp only [NativeLocalSourceExecution.edit,ActualLeafHistoryRigidity.subtree,
+          ActualImageAddressCertificate.replace,ih] <;> split_ifs <;> rfl
+
+private theorem guarded_cons (t : Source) (p : NativeLocalSourceExecution.Address)
+    (k : Bool) (cs : List Geometry.NativeGuardedLeafRepair.Call) :
+    Geometry.NativeGuardedLeafRepair.run t (toCall (p,k) :: cs) =
+      (NativeLocalSourceExecution.edit t p k).bind
+        (fun u => Geometry.NativeGuardedLeafRepair.run u cs) := by
+  rw [edit_canonical]
+  cases k <;> cases hs : ActualLeafHistoryRigidity.subtree p t with
+  | none => simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs]
+  | some v =>
+    cases v with
+    | of b => cases b <;> simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs,
+        substitution,FreeMagma.lift_of]
+    | mul l r => simp [Geometry.NativeGuardedLeafRepair.run,toCall,hs]
+
+private theorem replay_guarded (t : Source) (es : List NativeLocalSourceExecution.Event) :
+    NativeLocalSourceExecution.replay t es =
+      Geometry.NativeGuardedLeafRepair.run t (es.map toCall) := by
+  induction es generalizing t with
+  | nil => rfl
+  | cons e es ih =>
+    rcases e with ⟨p,k⟩
+    simp only [List.map_cons,guarded_cons,NativeLocalSourceExecution.replay,ih]
+
+private theorem guarded_replay (t : Source) (cs : List Geometry.NativeGuardedLeafRepair.Call) :
+    Geometry.NativeGuardedLeafRepair.run t cs =
+      NativeLocalSourceExecution.replay t (cs.map fromCall) := by
+  have identity : (fun c => toCall (fromCall c)) = id := funext to_from
+  simpa only [List.map_map,Function.comp_def,identity,List.map_id] using
+    (replay_guarded t (cs.map fromCall)).symm
+
+private theorem guarded_attained (t : Source) : Native t ↔
+    (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+      Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧ t ≠ .of true := by
+  rw [NativeLocalSourceExecution.native_execution.2.2.2.2.2 t]
+  constructor
+  · rintro ⟨⟨es,h⟩,ne⟩
+    exact ⟨⟨es.map toCall,(replay_guarded (.of true) es).symm.trans h⟩,ne⟩
+  · rintro ⟨⟨cs,h⟩,ne⟩
+    exact ⟨⟨cs.map fromCall,(guarded_replay (.of true) cs).symm.trans h⟩,ne⟩
+
+private theorem guarded_append (t : Source) (cs ds : List Geometry.NativeGuardedLeafRepair.Call) :
+    Geometry.NativeGuardedLeafRepair.run t (cs ++ ds) =
+      (Geometry.NativeGuardedLeafRepair.run t cs).bind
+        (fun u => Geometry.NativeGuardedLeafRepair.run u ds) := by
+  have step (t : Source) (c : Geometry.NativeGuardedLeafRepair.Call)
+      (cs : List Geometry.NativeGuardedLeafRepair.Call) :
+      Geometry.NativeGuardedLeafRepair.run t (c :: cs) =
+        (NativeLocalSourceExecution.edit t (fromCall c).1 (fromCall c).2).bind
+          (fun u => Geometry.NativeGuardedLeafRepair.run u cs) := by
+    simpa only [to_from] using guarded_cons t (fromCall c).1 (fromCall c).2 cs
+  induction cs generalizing t with
+  | nil => rfl
+  | cons c cs ih => simp only [List.cons_append,step,ih,Option.bind_assoc]
+
+/-- Each macro seals its own old frontier or acquires its current leftmost beta. -/
+def macroCalls (X : Letter) (t : Source) : List Geometry.NativeGuardedLeafRepair.Call :=
+  match X with
+  | .F => (NativeLocalSourceExecution.oldFrontier t).map toCall
+  | .G => [.split (NativeLocalSourceExecution.leftmost t)]
+
+/-- The complete chronological native primitive expansion; no macro delimiters
+are added to the source records. -/
+def primitiveWord : Source → List Letter → List Geometry.NativeGuardedLeafRepair.Call
+  | _, [] => []
+  | t, X :: W => macroCalls X t ++ primitiveWord (act X t) W
+
+private theorem macro_calls (X : Letter) (t : Source) (hn : Native t) :
+    Geometry.NativeGuardedLeafRepair.run t (macroCalls X t) = some (act X t) := by
+  cases X with
+  | F => exact (replay_guarded t _).symm.trans (NativeLocalSourceExecution.native_execution.1 t).1
+  | G =>
+    change Geometry.NativeGuardedLeafRepair.run t
+      (toCall (NativeLocalSourceExecution.leftmost t,false) :: []) = _
+    rw [guarded_cons,(NativeLocalSourceExecution.native_execution.2.1 t hn).1]
+    rfl
+
+private theorem primitive_word (t : Source) (W : List Letter) (hn : Native t) :
+    Geometry.NativeGuardedLeafRepair.run t (primitiveWord t W) = some (run t W) := by
+  induction W generalizing t with
+  | nil => rfl
+  | cons X W ih =>
+    rw [primitiveWord,guarded_append,macro_calls X t hn]
+    exact ih (act X t) (act_native X t hn)
+
+private theorem primitive_length (t : Source) (W : List Letter) (hn : Native t) :
+    (primitiveWord t W).length = eventIndex (run t W) - eventIndex t := by
+  have h := NativeLocalSourceExecution.native_execution.2.2.1 t (run t W)
+    ((primitiveWord t W).map fromCall)
+    ((guarded_replay t (primitiveWord t W)).symm.trans (primitive_word t W hn))
+  simp only [List.length_map] at h
+  omega
+
+/-- A concrete supplementary bit records the first completed macro. -/
+def firstChoice : List Letter → Bool
+  | .F :: _ => true
+  | _ => false
+
+private theorem first_choice_sufficient (U : List Letter) :
+    ∃ D : Bool → List Letter, ∀ W : List Letter,
+      run (.of false) W = run K U → D (firstChoice W) = W := by
+  exact (supplement_separation firstChoice U).mpr (by decide)
+
 /-- The complete finite recovery statement on the native ordered syntax.
 No old tree, entry composition, entry depth or word length is supplied. -/
 theorem completed_history_recovery :
@@ -454,9 +585,23 @@ theorem completed_history_recovery :
     (∀ (A : Type) (E : List Letter → A) (U : List Letter),
       (∃ D : A → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (E W) = W) ↔
-          E (.F :: U) ≠ E (.G :: U)) := by
+          E (.F :: U) ≠ E (.G :: U)) ∧
+    (∀ (t : Source) (es : List NativeLocalSourceExecution.Event),
+      NativeLocalSourceExecution.replay t es =
+        Geometry.NativeGuardedLeafRepair.run t (es.map toCall)) ∧
+    (∀ t : Source, Native t ↔
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧ t ≠ .of true) ∧
+    (∀ (t : Source) (W : List Letter), Native t →
+      Geometry.NativeGuardedLeafRepair.run t (primitiveWord t W) = some (run t W) ∧
+      (primitiveWord t W).length = eventIndex (run t W) - eventIndex t) ∧
+    (∀ U : List Letter,
+      ∃ D : Bool → List Letter, ∀ W : List Letter,
+        run (.of false) W = run K U → D (firstChoice W) = W) := by
   refine ⟨recover_iff,?_,?_,previous_sound,run_injective,beta_empty,beta_fibre,
-    fun _ E U => supplement_separation E U⟩
+    fun _ E U => supplement_separation E U,replay_guarded,guarded_attained,
+    fun t W hn => ⟨primitive_word t W hn,primitive_length t W hn⟩,
+    first_choice_sufficient⟩
   · intro n0 z
     constructor
     · intro h ⟨t,W,good⟩
