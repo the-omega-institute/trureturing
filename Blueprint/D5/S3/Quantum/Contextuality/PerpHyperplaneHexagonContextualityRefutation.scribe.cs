@@ -174,10 +174,12 @@ internal sealed class PerpHyperplaneHexagonContextualityRefutationDocument : ISc
                     Paragraph(Text(
                         "The six triples {XII,IXI,XXI}, {IZI,ZII,ZZI}, {XZI,ZXI,YYI}, "
                         + "{XII,IZI,XZI}, {IXI,ZII,ZXI} and {XXI,ZZI,YYI} all lie in C. "
-                        + "Every label occurs an even number of times, so the sum of their "
-                        + "assignment parities is zero for every binary assignment. Their line "
-                        + "signs sum to one, since only the last context is negative. Thus every "
-                        + "assignment violates at least one of these six lines, and the "
+                        + "Map the nine row-major labels to the square in RankOfContextualityNonPowerTwo. "
+                        + "Convert an assignment value to true exactly when it is one in ZMod 2. "
+                        + "The frozen Square.parity_miss gives a context whose Boolean parity differs "
+                        + "from its target; Square.bv_parity identifies that parity with the binary sum. "
+                        + "The Pauli sign agrees with the target, since only the last context is negative. "
+                        + "Thus every assignment violates at least one of these six lines, and the "
                         + "contextuality degree of C is positive. The constant zero assignment "
                         + "violates exactly the twelve negative lines, giving degree at most twelve.")),
                     Paragraph(Text(

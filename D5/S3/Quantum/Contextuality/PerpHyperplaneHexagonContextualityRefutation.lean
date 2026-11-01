@@ -7,6 +7,9 @@
    digest: The perp hyperplane refutes the classical-hexagon contextuality conjecture. -/
 
 import D5.S3.Quantum.Contextuality.LinearDoilyNegativeLineParity
+import D5.S3.Combinatorics.Graph.DominatingSetAverageBound
+import D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates
+import D5.S3.QuantumContext.RankOfContextualityNonPowerTwo
 
 /-! The line-set reading of Saniga et al., arXiv:2312.07738v3, preregistered in #24997.
 Assignments and line signs use additive binary notation: one denotes a negative sign.
@@ -15,9 +18,11 @@ The witness consists of all isotropic lines inside the perp of the observable II
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 
 open scoped BigOperators
 open D5.S3.Quantum.Contextuality.LinearDoilyNegativeLineParity
+open D5.S3.QuantumContext.RankOfContextualityNonPowerTwo
 
 namespace D5.S3.Quantum.Contextuality.PerpHyperplaneHexagonContextualityRefutation
 
@@ -127,9 +132,29 @@ private theorem triple_line (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
   · simp [triple, hne, Ne.symm hsu, Ne.symm hsv]
   · intro a ha b hbmem hab
     simp only [triple, Finset.mem_insert, Finset.mem_singleton] at ha hbmem
-    rcases ha with rfl | rfl | rfl <;> rcases hbmem with rfl | rfl | rfl <;>
-      simp_all [triple, B_add_right, B_self, B_comm, add_comm]
-    all_goals rw [add_comm _ (_ + _), CharTwo.add_cancel_right]
+    rcases ha with rfl | rfl | rfl <;> rcases hbmem with rfl | rfl | rfl
+    · simp_all only [ne_eq, not_true_eq_false]
+    · simp_all only [ne_eq, not_false_eq_true, add_eq_left, add_eq_right, triple,
+        Finset.mem_insert, Finset.mem_singleton, or_true, and_self]
+    · simp_all only [ne_eq, B_comm, add_comm, add_eq_right, not_false_eq_true,
+        add_eq_left, right_eq_add, triple, Finset.mem_insert, Finset.mem_singleton,
+        or_false, false_or, B_add_right, B_self, add_zero, and_true]
+      rw [add_comm _ (_ + _), CharTwo.add_cancel_right]
+    · simp_all only [ne_eq, B_comm, add_comm, add_eq_right, not_false_eq_true,
+        add_eq_left, triple, Finset.mem_insert, Finset.mem_singleton, or_true, and_self]
+    · simp_all only [ne_eq, not_true_eq_false]
+    · simp_all only [ne_eq, add_eq_left, not_false_eq_true, add_eq_right,
+        right_eq_add, triple, Finset.mem_insert, Finset.mem_singleton, left_eq_add,
+        or_self, or_false, B_add_right, B_comm, B_self, add_zero, and_self]
+    · simp_all only [ne_eq, B_comm, add_comm, add_eq_right, not_false_eq_true,
+        add_eq_left, triple, Finset.mem_insert, Finset.mem_singleton, or_false,
+        false_or, B_add_right, B_self, add_zero, and_true]
+      rw [add_comm _ (_ + _), CharTwo.add_cancel_right]
+    · simp_all only [ne_eq, add_eq_left, not_false_eq_true, add_eq_right, triple,
+        add_comm, Finset.mem_insert, Finset.mem_singleton, left_eq_add, or_self,
+        or_false, B_comm, B_add_right, B_self, add_zero, and_self]
+    · simp_all only [ne_eq, add_eq_left, not_false_eq_true, add_eq_right,
+        not_true_eq_false]
 
 private theorem phase_exponent (u v : point) :
     phase u v = AddChar.zmodChar 4 Complex.I_pow_four (exponent u v) := by
@@ -206,14 +231,10 @@ private theorem negative_certificate_exact :
 
 private theorem incidence_swap (h : Finset (Finset point)) (s : Finset point) :
     (∑ l ∈ h, (l ∩ s).card) = ∑ q ∈ s, (h.filter fun l => q ∈ l).card := by
-  classical
-  have he (l : Finset point) : (l ∩ s).card = ∑ q ∈ s, if q ∈ l then 1 else 0 := by
-    rw [Finset.inter_comm, ← Finset.filter_mem_eq_inter]
-    simp only [Finset.card_eq_sum_ones, Finset.sum_filter]
-  simp_rw [he, Finset.card_eq_sum_ones, Finset.sum_filter]
-  exact Finset.sum_comm
+  exact D5.S3.Combinatorics.Graph.DominatingSetAverageBound.sum_inter_card h s id
 
-private theorem binary_cases : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
+private theorem binary_cases : ∀ x : ZMod 2, x = 0 ∨ x = 1 :=
+  Fin.forall_fin_two.mpr ⟨Or.inl rfl, Or.inr rfl⟩
 
 private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
     (l ∩ perpPoints).card = if l ∈ counterexample then 3 else 1 := by
@@ -236,9 +257,15 @@ private theorem line_perp_profile (l : Finset point) (hl : l ∈ lines w) :
   have hm : triple u v ∈ counterexample ↔ B pole u = 0 ∧ B pole v = 0 := by
     delta counterexample
     simp only [Finset.mem_filter, hl, true_and]
-    simp [triple, B_add_right]
-    intro hpu hpv
-    rw [hpu, hpv, zero_add]
+    constructor
+    · intro h
+      exact ⟨h u (by simp [triple]), h v (by simp [triple])⟩
+    · rintro ⟨hpu, hpv⟩ q hq
+      simp only [triple, Finset.mem_insert, Finset.mem_singleton] at hq
+      rcases hq with rfl | rfl | rfl
+      · exact hpu
+      · exact hpv
+      · rw [B_add_right, hpu, hpv, zero_add]
   rw [he]
   simp only [hm]
   rcases binary_cases (B pole u) with hx | hx <;>
@@ -293,44 +320,57 @@ private theorem square_mem (i : Fin 6) : squareLine i ∈ counterexample := by
   delta squareLine
   simp [triple, B_add_right, hpu, hpv]
 
-private theorem square_even : ∀ q : point,
-    (∑ i : Fin 6, if q ∈ squareLine i then (1 : ZMod 2) else 0) = 0 := by decide
+private def squarePoint : Fin 9 → point :=
+  ![![(1, 0), (0, 0), (0, 0)], ![(0, 0), (1, 0), (0, 0)],
+    ![(1, 0), (1, 0), (0, 0)], ![(0, 0), (0, 1), (0, 0)],
+    ![(0, 1), (0, 0), (0, 0)], ![(0, 1), (0, 1), (0, 0)],
+    ![(1, 0), (0, 1), (0, 0)], ![(0, 1), (1, 0), (0, 0)],
+    ![(1, 1), (1, 1), (0, 0)]]
 
-private theorem square_parity (f : point → ZMod 2) :
-    (∑ i : Fin 6, ∑ q ∈ squareLine i, f q) = 0 := by
+private theorem square_sign (i : Fin 6) :
+    lineSign (squareLine i) =
+      (Square.target i).toNat := by
   classical
-  calc
-    _ = ∑ i : Fin 6, ∑ q : point, if q ∈ squareLine i then f q else 0 := by
-      apply Finset.sum_congr rfl
-      intro i _
-      simp only [Finset.sum_ite_mem, Finset.univ_inter]
-    _ = ∑ q : point, ∑ i : Fin 6, if q ∈ squareLine i then f q else 0 :=
-      Finset.sum_comm
-    _ = ∑ q : point,
-        (∑ i : Fin 6, if q ∈ squareLine i then (1 : ZMod 2) else 0) * f q := by
-      apply Finset.sum_congr rfl
-      intro q _
-      rw [Finset.sum_mul]
-      simp
-    _ = 0 := by simp_rw [square_even, zero_mul]; simp
-
-private theorem square_signs : (∑ i : Fin 6, lineSign (squareLine i)) = 1 := by
-  classical
-  have he (i : Fin 6) : lineSign (squareLine i) = if i = 5 then 1 else 0 := by
-    obtain ⟨hu, hv, hne, hb, _, _, hs⟩ := square_data i
-    delta lineSign squareLine
-    simp only [triple_negative _ _ hu hv hne hb, hs]
-  simp_rw [he]
-  simp
+  obtain ⟨hu, hv, hne, hb, _, _, hs⟩ := square_data i
+  simp only [lineSign, squareLine, triple_negative _ _ hu hv hne hb, hs,
+    Square.target]
+  split_ifs <;> rfl
 
 private theorem square_violation (f : point → ZMod 2) :
     ∃ i : Fin 6, (∑ q ∈ squareLine i, f q) ≠ lineSign (squareLine i) := by
-  by_contra hn
-  push Not at hn
-  have he := Finset.sum_congr (s₁ := (Finset.univ : Finset (Fin 6))) rfl
-    (fun i _ => hn i)
-  rw [square_parity f, square_signs] at he
-  exact zero_ne_one he
+  classical
+  let g : Fin 9 → Bool := fun j => decide (f (squarePoint j) = 1)
+  obtain ⟨i, hi⟩ :=
+    Square.parity_miss g
+  refine ⟨i, fun he => hi ?_⟩
+  have hlabels : ∀ x : Fin 6,
+      squareLine x = (Finset.univ : Finset (Fin 3)).image (fun j =>
+        squarePoint (Square.idx x j)) ∧
+      Function.Injective (fun j : Fin 3 =>
+        squarePoint (Square.idx x j)) :=
+    by decide
+  have hsum : (∑ q ∈ squareLine i, f q) =
+      ∑ j : Fin 3, ((g (Square.idx i j)).toNat : ZMod 2) := by
+    rw [(hlabels i).1, Finset.sum_image (fun a _ b _ hab => (hlabels i).2 hab)]
+    apply Finset.sum_congr rfl
+    intro j _
+    exact (D5.S3.QuantumBounds.MerminMeasurementDependence.boolBit_bitBool _).symm
+  rw [hsum, square_sign] at he
+  have hparity (a : Fin 3 → Bool) :
+      ((Square.parity3 a).toNat : ZMod 2) =
+        ∑ j : Fin 3, ((a j).toNat : ZMod 2) := by
+    have hp := congrArg (fun n : ℕ => (n : ZMod 2)) (Square.bv_parity a)
+    simpa only [ZMod.natCast_mod, Nat.cast_add, Fin.sum_univ_succ,
+      Fin.sum_univ_zero, add_zero, add_assoc, Fin.succ_zero_eq_one,
+      Fin.succ_one_eq_two] using hp
+  have hget : (fun j : Fin 3 => g ((Square.C i).get j)) =
+      (fun j => g (Square.idx i j)) := by
+    funext j
+    exact congrArg g (Product.pm_get_idx i j)
+  rw [hget]
+  have hinj : Function.Injective (fun b : Bool => (b.toNat : ZMod 2)) := by decide
+  apply hinj
+  exact (hparity _).trans he
 
 private theorem counterexample_contextual : 0 < contextualityDegree counterexample := by
   classical
