@@ -24,8 +24,8 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
 
     private static Formula NativeExecutionFormula()
     {
-        Formula source = Id("Source");
-        Formula events = Call("List", Id("Event"));
+        Formula source = FormulaDsl.Id("Source");
+        Formula events = Call("List", FormulaDsl.Id("Event"));
 
         Formula All(Formula body, params Formula.BoundVariable[] variables) =>
             new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
@@ -52,11 +52,11 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
         Formula Num(long value) => new Formula.Number(value);
         Formula.BoundVariable B(string name, Formula domain) =>
             new(FormulaIdentifier.Create(name), domain);
-        Formula Of(bool value) => App("of", Id(value ? "true" : "false"));
+        Formula Of(bool value) => App("of", FormulaDsl.Id(value ? "true" : "false"));
         Formula Some(Formula value) => App("some", value);
         Formula Length(Formula value) => App("length", value);
         Formula Native(Formula value) => App("Native", value);
-        Formula NativeAt(bool a, Formula value) => App("native", Id(a ? "true" : "false"), value);
+        Formula NativeAt(bool a, Formula value) => App("native", FormulaDsl.Id(a ? "true" : "false"), value);
         Formula EventIndex(Formula value) => App("eventIndex", value);
         Formula OldFrontier(Formula value) => App("oldFrontier", value);
         Formula Replay(Formula value, Formula word) => App("replay", value, word);
@@ -66,9 +66,9 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
         Formula Leftmost(Formula value) => App("leftmost", value);
         Formula SplitLeft(Formula value) => App("splitLeft", value);
 
-        var t = Id("t");
-        var u = Id("u");
-        var es = Id("es");
+        var t = FormulaDsl.Id("t");
+        var u = FormulaDsl.Id("u");
+        var es = FormulaDsl.Id("es");
         var clause1 = All(
             And(
                 Eq(Replay(t, App("oldFrontier", t)), Some(Substitution(t))),
@@ -79,7 +79,7 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
             Implies(
                 Native(t),
                 And(
-                    Eq(Edit(t, Leftmost(t), Id("false")), Some(SplitLeft(t))),
+                    Eq(Edit(t, Leftmost(t), FormulaDsl.Id("false")), Some(SplitLeft(t))),
                     Native(SplitLeft(t)),
                     Eq(Composition(SplitLeft(t)),
                         App("add", Composition(t), App("pair", Num(1), Num(0)))))),
@@ -100,7 +100,7 @@ internal sealed class NativeLocalSourceExecutionDocument : IScribeDocumentDefini
         var clause5 = All(
             Iff(
                 Exists("es", events, Eq(Replay(Of(true), es), Some(t))),
-                Eq(NativeAt(true, t), Id("true"))),
+                Eq(NativeAt(true, t), FormulaDsl.Id("true"))),
             B("t", source));
         var clause6 = All(
             Iff(

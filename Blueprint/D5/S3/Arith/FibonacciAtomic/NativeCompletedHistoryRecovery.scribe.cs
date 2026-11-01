@@ -35,14 +35,14 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
 
     private static Formula CompletedHistoryRecoveryFormula()
     {
-        Formula source = Id("Source");
-        Formula nat = Id("Nat");
-        Formula letter = Id("Letter");
+        Formula source = FormulaDsl.Id("Source");
+        Formula nat = FormulaDsl.Id("Nat");
+        Formula letter = FormulaDsl.Id("Letter");
         Formula letters = Call("List", letter);
-        Formula calls = Id("NativeGuardedLeafRepairCall");
+        Formula calls = FormulaDsl.Id("NativeGuardedLeafRepairCall");
         Formula callList = Call("List", calls);
-        Formula eventList = Call("List", Id("Event"));
-        Formula address = Id("Address");
+        Formula eventList = Call("List", FormulaDsl.Id("Event"));
+        Formula address = FormulaDsl.Id("Address");
 
         Formula All(Formula body, params Formula.BoundVariable[] variables) =>
             new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
@@ -50,8 +50,8 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
             new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
         Formula ExistsUnique(string name, Formula domain, Func<Formula, Formula> property)
         {
-            var chosen = Id(name);
-            var other = Id(name + "2");
+            var chosen = FormulaDsl.Id(name);
+            var other = FormulaDsl.Id(name + "2");
             return Exists(name, domain,
                 And(property(chosen), All(Implies(property(other), Eq(other, chosen)), B(name + "2", domain))));
         }
@@ -83,7 +83,7 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
         Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(domain, codomain);
         Formula.BoundVariable B(string name, Formula domain) =>
             new(FormulaIdentifier.Create(name), domain);
-        Formula Of(bool value) => App("of", Id(value ? "true" : "false"));
+        Formula Of(bool value) => App("of", FormulaDsl.Id(value ? "true" : "false"));
         Formula Some(Formula value) => App("some", value);
         Formula Pair(Formula left, Formula right) => App("pair", left, right);
         Formula Run(Formula t, Formula w) => App("run", t, w);
@@ -95,25 +95,25 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
         Formula Length(Formula value) => App("length", value);
         Formula Attained(Formula t) =>
             Exists("cs", callList,
-                Eq(App("guardedRun", Of(true), Id("cs")), Some(t)));
+                Eq(App("guardedRun", Of(true), FormulaDsl.Id("cs")), Some(t)));
         Formula Mem(Formula p, Formula set) => App("mem", p, set);
         Formula Material(Formula t) => App("material", t);
         Formula Word(Formula t, Formula w) => App("primitiveWord", t, w);
         Formula NativeRun(Formula t, Formula labels, Formula next, Formula x, Formula word) =>
             App("nativeRun", t, labels, next, x, word);
-        Formula Empty() => Id("nil");
+        Formula Empty() => FormulaDsl.Id("nil");
         Formula Cons(Formula head, Formula tail) => App("cons", head, tail);
-        Formula LetterF() => Id("F");
-        Formula LetterG() => Id("G");
+        Formula LetterF() => FormulaDsl.Id("F");
+        Formula LetterG() => FormulaDsl.Id("G");
 
-        var n0 = Id("n0");
-        var z = Id("z");
-        var t = Id("t");
-        var p = Id("p");
-        var w = Id("W");
-        var x = Id("X");
-        var s = Id("s");
-        var v = Id("V");
+        var n0 = FormulaDsl.Id("n0");
+        var z = FormulaDsl.Id("z");
+        var t = FormulaDsl.Id("t");
+        var p = FormulaDsl.Id("p");
+        var w = FormulaDsl.Id("W");
+        var x = FormulaDsl.Id("X");
+        var s = FormulaDsl.Id("s");
+        var v = FormulaDsl.Id("V");
 
         var clause1 = All(
             Iff(
@@ -123,11 +123,11 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
             B("n0", nat), B("z", source), B("t", source), B("W", letters));
         var clause2 = All(
             Iff(
-                Eq(Recover(n0, z), Id("none")),
+                Eq(Recover(n0, z), FormulaDsl.Id("none")),
                 new Formula.Not(Exists("t", source,
                     Exists("W", letters,
-                        And(Lt(Num(1), n0), Attained(Id("t")),
-                            Eq(EventIndex(Id("t")), n0), Eq(Run(Id("t"), Id("W")), z)))))),
+                        And(Lt(Num(1), n0), Attained(FormulaDsl.Id("t")),
+                            Eq(EventIndex(FormulaDsl.Id("t")), n0), Eq(Run(FormulaDsl.Id("t"), FormulaDsl.Id("W")), z)))))),
             B("n0", nat), B("z", source));
         var clause3 = All(
             Implies(
@@ -154,29 +154,29 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
             B("W", letters));
         var clause7 = All(
             Implies(
-                Exists("W", letters, And(Ne(Id("W"), Empty()), Eq(Run(Of(false), Id("W")), z))),
+                Exists("W", letters, And(Ne(FormulaDsl.Id("W"), Empty()), Eq(Run(Of(false), FormulaDsl.Id("W")), z))),
                 ExistsUnique("U", letters, u =>
                     And(
-                        Eq(Recover(Num(2), z), Some(Pair(Id("K"), u))),
+                        Eq(Recover(Num(2), z), Some(Pair(FormulaDsl.Id("K"), u))),
                         All(
                             Iff(
-                                Eq(Run(Of(false), Id("W")), z),
-                                Or(Eq(Id("W"), Cons(LetterF(), u)), Eq(Id("W"), Cons(LetterG(), u)))),
+                                Eq(Run(Of(false), FormulaDsl.Id("W")), z),
+                                Or(Eq(FormulaDsl.Id("W"), Cons(LetterF(), u)), Eq(FormulaDsl.Id("W"), Cons(LetterG(), u)))),
                             B("W", letters))))),
             B("z", source));
         var clause8 = All(
             Iff(
-                Exists("D", Arrow(Id("A"), letters),
+                Exists("D", Arrow(FormulaDsl.Id("A"), letters),
                     All(
-                        Implies(Eq(Run(Of(false), w), Run(Id("K"), Id("U"))),
+                        Implies(Eq(Run(Of(false), w), Run(FormulaDsl.Id("K"), FormulaDsl.Id("U"))),
                             Eq(App("D", App("E", w)), w)),
                         B("W", letters))),
-                Ne(App("E", Cons(LetterF(), Id("U"))), App("E", Cons(LetterG(), Id("U"))))),
-            B("A", Id("Type")), B("E", Arrow(letters, Id("A"))), B("U", letters));
+                Ne(App("E", Cons(LetterF(), FormulaDsl.Id("U"))), App("E", Cons(LetterG(), FormulaDsl.Id("U"))))),
+            B("A", FormulaDsl.Id("Type")), B("E", Arrow(letters, FormulaDsl.Id("A"))), B("U", letters));
         var clause9 = All(
             Eq(
-                App("replay", t, Id("es")),
-                App("guardedRun", t, App("map", Id("es"), Id("toCall")))),
+                App("replay", t, FormulaDsl.Id("es")),
+                App("guardedRun", t, App("map", FormulaDsl.Id("es"), FormulaDsl.Id("toCall")))),
             B("t", source), B("es", eventList));
         var clause10 = All(
             Iff(Native(t), And(Attained(t), Ne(t, Of(true)))),
@@ -196,19 +196,19 @@ internal sealed class NativeCompletedHistoryRecoveryDocument : IScribeDocumentDe
                 Implies(new Formula.Not(Mem(p, Material(t))), Eq(App("y", p), Num(0)))),
             B("p", address));
         var materialExecution = Eq(
-            NativeRun(t, Id("labels"), Id("next"), Id("x"), Word(t, w)),
-            Some(App("quad", Run(t, w), Id("labelsPrime"), Id("nextPrime"), Id("y"))));
-        var materialAnswer = Exists("labelsPrime", Id("RawMap"),
-            Exists("nextPrime", Id("Int"),
-                Exists("y", Id("Value"), And(materialExecution, preservedValues, freshValues))));
+            NativeRun(t, FormulaDsl.Id("labels"), FormulaDsl.Id("next"), FormulaDsl.Id("x"), Word(t, w)),
+            Some(App("quad", Run(t, w), FormulaDsl.Id("labelsPrime"), FormulaDsl.Id("nextPrime"), FormulaDsl.Id("y"))));
+        var materialAnswer = Exists("labelsPrime", FormulaDsl.Id("RawMap"),
+            Exists("nextPrime", FormulaDsl.Id("Int"),
+                Exists("y", FormulaDsl.Id("Value"), And(materialExecution, preservedValues, freshValues))));
         var clause12 = All(
             Implies(Native(t), All(materialAnswer,
-                B("labels", Id("RawMap")), B("next", Id("Int")), B("x", Id("Value")))),
+                B("labels", FormulaDsl.Id("RawMap")), B("next", FormulaDsl.Id("Int")), B("x", FormulaDsl.Id("Value")))),
             B("t", source), B("W", letters));
         var clause13 = All(
-            Exists("D", Arrow(Id("Bool"), letters),
+            Exists("D", Arrow(FormulaDsl.Id("Bool"), letters),
                 All(
-                    Implies(Eq(Run(Of(false), w), Run(Id("K"), Id("U"))),
+                    Implies(Eq(Run(Of(false), w), Run(FormulaDsl.Id("K"), FormulaDsl.Id("U"))),
                         Eq(App("D", App("firstChoice", w)), w)),
                     B("W", letters))),
             B("U", letters));
