@@ -162,7 +162,7 @@ public sealed class TheoryDeltaCliTests
         Assert.Contains(changes.Entries, change => change.Path.Value == Document && change.Kind == RawChangeKind.Added);
         var accepted = Run();
         Assert.Equal(0, accepted.ExitCode);
-        Assert.Empty(accepted.StandardError);
+        AdmissionStandardError.AssertOnlyTimingEvents(accepted.StandardError);
         using var output = JsonDocument.Parse(accepted.StandardOutput);
         Assert.Equal(["SL-003", "SL-015"], output.RootElement.GetProperty("executed")
             .EnumerateArray().Select(static value => value.GetString()!).ToArray());

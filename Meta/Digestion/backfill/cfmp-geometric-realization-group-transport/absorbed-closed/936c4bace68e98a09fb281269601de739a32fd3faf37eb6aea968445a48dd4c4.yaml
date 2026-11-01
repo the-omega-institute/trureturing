@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:936c4bace68e98a09fb281269601de739a32fd3faf37eb6aea968445a48dd4c4
+  normalized_sha256: sha256:936c4bace68e98a09fb281269601de739a32fd3faf37eb6aea968445a48dd4c4
+cas_ref: sha256:936c4bace68e98a09fb281269601de739a32fd3faf37eb6aea968445a48dd4c4
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/NoncommutativeCentralReturn.commutative_of_central_low_return
+    target_statement_id: sha256:94eebaa798899eb81fea72b5cecf530e2c9198d7d1e5f50015c5f8fceb8f2a0a
+receipts:
+  unresolved_subitems: []

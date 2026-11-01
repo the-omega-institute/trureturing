@@ -1,0 +1,25 @@
+## 129. Degree criteria, orbit capacity and ordinary covers
+
+The two tetrahedral degree multisets are
+
+    even i: {6,6,8,8,8,8},
+    odd i:  {6,8,8,8,8,8}.
+
+Thus no combinatorial automorphism group can act transitively on tetrahedra: actual edge degree is invariant. This is not an application of the repository's tetrahedron-transitive theorem. The two actual geometric shapes are also noncongruent by Lemma 126.3.
+
+The degree-six local graph in an even tetrahedron is an opposite pair, and in an odd tetrahedron it is a single edge; it is not the pure P4 class. The uniform degree-class rainbow theorem cannot apply under any rainbow coloring: in an odd tetrahedron A B has degree six while its opposite edge has degree eight, whereas a rainbow coloring puts opposite edges in the same color, and the theorem requires fixed degree within each color. The matching-type rectangular criterion with high threshold thirteen does not apply because radial edges have degree eight. A degree-six internal edge also has an opposite degree-eight occurrence in each odd tetrahedron, so even the required critical-opposite matching fails there.
+
+Every occurrence of every central degree-six edge has four degree-eight adjacent slots. Therefore the actual-quotient obstruction already proved in [CFMP_UEMURA_PROVENANCE.md, §2](CFMP_UEMURA_PROVENANCE.md) excludes Uemura's full canonical box condition for every allowed parameter. This comparison is optional; the construction itself proves geometricity independently of that obstruction.
+
+The purely combinatorial assignment 2π/d(e) at every edge occurrence is a strict positive angle structure: the actual edge sums are 2π, and each tetrahedral vertex has at most one axial edge of degree at least six and two pole edges of degree eight. Its angle sum is therefore at most π/3+π/4+π/4=5π/6<π. Together with the proved manifold and negative-Euler boundary conditions, this supplies the strict-angle premise of the existing maximum-volume/orbit-capacity theorem independently of the constructed metric.
+
+There is an important exact overlap with the repository's main §40 orbit-capacity theorem. Left multiplication by G is a genuine face-pairing automorphism, transitive on the cell indices for each fixed tetrahedral position i. Let O_i be that orbit. A transported flat opposite pair has two possibilities:
+
+- If it is the central/equatorial pair, each equatorial edge of label i receives 2m_i π-angle occurrences from O_i, exceeding two.
+- If it is either transverse opposite pair, one selected pole-edge label receives four π-angle occurrences from O_i, one from each of its four cell sectors, again exceeding two.
+
+The position framing is preserved by left multiplication, so these transported pairs are well-defined. Both candidates are excluded by the old capacity rule, which therefore already proves geometric existence for the regular finite quotients in both constructions. Thus this explicit geometric construction is also within the existing orbit-capacity criterion; it does not extend that criterion's sufficient hypotheses.
+
+The construction uses a classical hyperideal polyhedron theorem and elementary finite gluing. It does not claim general minimum-six CFMP, a new general hyperideal polyhedron theorem, or priority over the literature on bipyramid subdivisions and polyhedral manifold constructions.
+
+Finally, the compact connected base manifold has χ=−54 and nonempty boundary, so b_1=b_2+55≥55. Its fundamental group surjects onto Z. Ordinary connected n-sheeted cyclic covers therefore give genuine triangulations with 288n tetrahedra, 72n degree-six edges and 162n degree-eight edges, retaining both local shapes. The Euler characteristic is −54n, so these manifolds are pairwise nonhomeomorphic. The cover is an ordinary manifold cover and preserves complete edge stars; it is not a branched group lift.
