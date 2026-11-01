@@ -120,13 +120,6 @@ theorem column_square_sum (D : Data (S ⊕ T)) :
   rw [← (matrix_square_summable D).tsum_prod]
   exact (matrix_square_sum D)
 
-/-- Every actual column converges in the output Hilbert norm. -/
-theorem column_hasSum (D : Data (S ⊕ T)) (d : Occupation S) :
-    HasSum (fun h : Occupation T => matrixCoefficient D h d • hilbertBasis T h)
-      (column D d) := by
-  change HasSum (fun h => (hilbertBasis T).repr (column D d) h • hilbertBasis T h) _
-  exact (hilbertBasis T).hasSum_repr _
-
 /-- Natural orthogonal sum of source and output occupation coordinates. -/
 abbrev Ambient (S : Type u) (T : Type v) := ℓ²(Occupation S ⊕ Occupation T, ℂ)
 
