@@ -1817,3 +1817,265 @@ $\square$
 [PATHBATCH]: ../../../D5/S3/ConceptDynamics/Fibers/ConfigurationPathTransport.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 16. One old-row decision versus a complete native continuation
+
+**Definition 16.1 (the conditional continuation contract).** Fix a
+nonempty acquired fibre $(y,k)$ of Definition 15.1, so $y\in\mathcal D_+$
+and $0\le k\le M(y)$. All cuts are after complete inner return, at the
+same declared outer phase. Use Theorems 15.2–15.3 as suppliers, writing
+$C=C_S(y)$, $P=C_P(y)$ and $A=C\sqcup P$, $M=|A|$, for their candidate basis;
+thus this $A$ is their $C(y)$. Keep candidate types explicit as $(C,p)$
+and $(P,p)$. For $J\subseteq A$, $|J|=k$, write $x_J(y)=U_J(y)$ for
+Theorem 15.2's inverse entry, and put
+
+$$
+\begin{aligned}
+B_{(C,p)}&=\{pL,pR\},& B_{(P,p)}&=\{p\},\\
+Z_y&=\Lambda(y)\setminus\bigcup_{c\in A}B_c,&
+U_y(J)&=Z_y\sqcup\bigsqcup_{c\in A\setminus J}B_c.
+\end{aligned}
+\tag{LAGC.1}
+$$
+
+The suppliers identify all $\binom Mk$ supports with distinct attained
+entries and distinct remaining original-row menus, whose address sets
+are $U_y(J)$. The nonempty blocks are disjoint. Exhaustion is exactly
+$Z_y=\varnothing$ and $J=A$. Chronological order is not a target here.
+
+Compare two tasks on this SAME fibre. Task A chooses one eligible
+original call, with Stop exactly when exhausted. Task B deterministically
+executes every remaining original logical leaf exactly once, excludes
+newly born leaves, and then completes the outer reply, acknowledgement,
+root return and cleanup. This is the arbitrary-order single-frontier
+contract of §15, not the installed fixed-left $\mathsf R$ or native $F$.
+The common outer binding, connections, pending protocol obligations and
+all other task inputs are fixed and declared. The ordinary source-based
+return tail and arithmetic/tape invariant remain those of §§10–11.
+
+An initial supplementary label is the only input allowed to depend on
+the omitted past. Subsequent source reads, guards and replies depend
+only on the current logical source and the actually chosen primitive;
+scratch may retain the decoder's own subsequent observations and choices.
+No hidden cohort, old-list cursor, FetchGrowth/Next, tape query, allocation
+ordinal, history-bearing pointer identity, refusal, capacity/timing
+observation, refreshed hidden-state readout or cut-specific program is
+another input. The source's genuine root/grants and authentic operand
+acquisition are still required. Their paid use does not expose an erased
+old-cohort flag. The initial label is a finite description with owned
+backing, not an object reference or permission.
+
+**Theorem 16.2 (exact support transport through an original call).**
+Let $q\in U_y(J)$ and execute its current-tag $P_q$ or $S_q$ to full
+inner return, obtaining $y'$. Set $c_q=(P,q)$ after promotion and
+$c_q=(C,q)$ after split. The old candidates that disappear are exactly
+
+$$
+D_q=\bigl(\{(P,q)\}\cap A\bigr)\ \cup\
+\{(C,p)\in A:q=pL\text{ or }q=pR\}.
+\tag{LAGC.2}
+$$
+
+This set has at most one member, all unselected. Typed logical addresses
+give the canonical inclusion $i:A\setminus D_q\hookrightarrow A(y')$,
+and
+
+$$
+\begin{aligned}
+A(y')&=i(A\setminus D_q)\sqcup\{c_q\},\\
+J'&=i(J)\sqcup\{c_q\},& k'&=k+1,\\
+x_{J'}(y')&=x_J(y),& U_{y'}(J')&=U_y(J)\setminus\{q\}.
+\end{aligned}
+\tag{LAGC.3}
+$$
+
+No child born in this call becomes eligible. The inclusion preserves
+typed addresses, not integer positions in an enumeration of candidates.
+
+Proof. Eligibility excludes every block of a selected candidate, so no
+selected bare beta or exact cherry can be altered by this call. An alpha
+at $q$ ends in $R$; promotion creates $(P,q)$ and destroys an old exact
+parent cherry precisely when that alpha was its right leaf. It creates
+no parent cherry. A beta split creates the exact cherry $(C,q)$; it
+destroys $(P,q)$ when $q$ ends in $R$, or an exact parent cherry when
+$q$ was its left beta. These two cases cannot coexist, because that
+left child ends in $L$. All other candidates are disjoint and persist;
+no other position can change its candidate status. This proves (LAGC.2)
+and the first line of (LAGC.3), including the assertion that $D_q\cap J$
+is empty. In particular an unselected bare beta can change from type P
+to type C AT THE SAME ADDRESS; disappearance is not confined to parents.
+
+The new event is at a previously unused original row. Reversing $c_q$
+descriptively undoes exactly that event, and reversing the persistent
+selected candidates then gives $x_J(y)$. The supplier's inverse therefore
+gives $x_{J'}(y')=x_J(y)$. A promotion leaves its old leaf at $q$, now
+excluded by $B_{c_q}$. A split replaces $q$ by $qL,qR$, both excluded
+by $B_{c_q}$. Other selected blocks and other untouched original leaves
+are unchanged. This proves the menu update and the exclusion of new
+children. At the root beta, $A=J=\varnothing$, $U=\{\varepsilon\}$;
+the split gives the selected root cherry and an empty menu. Thus root
+splitting requires no root P candidate. At a disappearing parent cherry
+the parent was unselected, while the new child-address event is selected;
+the inverse and menu arguments still apply. $\square$
+
+**Theorem 16.3 (exact conditional one-decision alphabet).** Under
+Definition 16.1 the minimum number of supplementary label values for
+Task A is
+
+$$
+L_A(y,k)=
+\begin{cases}
+1,&Z_y\ne\varnothing\text{ or }k=M,\\
+k+1,&Z_y=\varnothing\text{ and }k<M.
+\end{cases}
+\tag{LAGC.4}
+$$
+
+Proof. Apply the existing [safe-compatible partition equivalence][SAFECONT],
+`supports_deterministic_safe_policy_iff_safe_compatible_partition`, with
+states the size-$k$ subsets of $A$, actions the current-tag calls together
+with Stop, and legal actions the supplier's menu, or just Stop at
+exhaustion. Its common-enabled-action criterion is supplied by
+`deterministic_safe_policy_exists_iff`; it need not be reproved here.
+
+If $Z_y$ is nonempty, choose its lexicographically first leaf. If $k=M$
+and $Z_y$ is empty, choose Stop. These constant readouts are surjective
+onto a singleton because the fibre is nonempty. In the remaining case
+fix publicly $k+1$ distinct candidates $d_1,\ldots,d_{k+1}$. Label a
+support by the first $i$ with $d_i\notin J$, and choose a canonical leaf
+of $B_{d_i}$. This is safe. Every label is attained: the support
+$\{d_1,\ldots,d_{k+1}\}\setminus\{d_i\}$ has size $k$ and its first
+omitted candidate in this list is exactly $d_i$. This verifies the finite
+SURJECTIVE interface rather than counting unused symbols.
+
+Conversely suppose at most $k$ effective labels suffice in this case.
+Every menu is nonempty, so no label can correctly choose Stop. Each
+label's fixed safe call lies in one unique candidate block. The at most
+$k$ such candidates extend to a size-$k$ support $J$. Whichever label
+this $J$ receives, its prescribed call is in a selected block and is
+forbidden. This contradicts the common-enabled-action criterion.
+For $k=0$ a nonempty fibre still requires at least one value. Thus all
+cases attain the stated minimum. This one-decision label need not have
+an update that solves the next decision. $\square$
+
+**Theorem 16.4 (exact initial alphabet for one complete continuation).**
+Under the same contract, the minimum INITIAL supplementary alphabet
+for Task B is
+
+$$
+L_B(y,k)=\binom{M(y)}k.
+\tag{LAGC.5}
+$$
+
+Proof. Suppose distinct supports $J_1,J_2$ receive the same label under
+one proposed complete policy. The acquired source, exact count, declared
+outer phase and every other decoder input agree. Determinism and the
+source-only observation contract imply identical future choices and
+observations as long as both executions remain legal. A call forbidden
+in either execution is already failure; probing it for a refusal is not
+an admissible way to learn. Stop while either menu is nonempty is also
+failure. If both runs succeed finitely, their common word must enumerate
+both $U_y(J_1)$ and $U_y(J_2)$ exactly once and then Stop. Those sets are
+unequal by Theorem 15.3, so this is impossible. Hence initial labels must
+separate all $\binom Mk$ supports. This argument concerns ONE chosen
+successful policy, without assuming preservation of every possible action.
+
+For the upper bound, enumerate the typed candidates from the acquired
+source and encode the actual size-$k$ subset by its finite-subset rank.
+Ranking/unranking is the mature constant-weight enumeration of Cover,
+[*Enumerative Source Encoding*, IEEE TIT 19(1), 73–77, §I Propositions
+1–2 and inverse, §II Example 2][COVERCONT]. All $\binom Mk$ ranks occur
+by Theorem 15.2. Decode $J$, derive $U_y(J)$, and choose its first leaf
+when nonempty. Acquire the REAL current operand by paid traversal from
+the bound root, parsing terminal alpha, unary beta and binary branch;
+construct the actual addressed frame and execute the original guarded
+call, all tape/arithmetic maintenance, literal reply, acknowledgement
+and inner return. Theorem 16.2 supplies $J'$ from this known call and
+the current source. Re-enumerate $A(y')$ and re-rank $J'$ against that
+basis before repeating. The natural number $|U|$ decreases by one at
+each iteration. At zero, take the declared finite outer return tail,
+including its full reply, supplied acknowledgement, root return and
+clearing of owned transient backing as in Theorem 11.2. The existing
+guard, synchronization and completion suppliers apply to every chosen
+original row; no source edit or reverse actuator has been added.
+
+This is one finite procedure with backed loops and the sufficient finite
+resources of AA20.1, not a program chosen separately for each hidden
+entry. At actual batch entry $J=\varnothing$; each really completed call
+earns the update. At an arbitrary later cut, $y,k$ alone do not recreate
+a forgotten non-singleton support. An old rank or positional mask is
+not invariant under (LAGC.3): candidates can disappear or change type,
+and enumeration positions can shift. Later conditional radices
+$\binom{M(y')}{k+1}$ and working alphabets may grow. The upper bound
+claims an initial label size, not constant-width working space. In
+particular the refreshed $r(\mathrm{successor})$ in
+[FiniteConfigurationAcquisition][REFRESHCONT] is a different input
+contract; that oracle is not used here. $\square$
+
+**Proposition 16.5 (a strict native separation).** At
+
+$$
+y=\langle\langle\beta,\beta\rangle,\beta\rangle,\qquad k=1,
+\tag{LAGC.6}
+$$
+
+$C=\varnothing$, $P=\{LR,R\}$ and $Z_y=\{LL\}$, so $L_A=1$ while
+$L_B=2$. More generally the left comb of $m+1$ beta leaves has
+$L_A=1$ and $L_B=\binom mk$ for $0\le k\le m$.
+
+Proof. Entry $x_1=\langle\langle\beta,\alpha\rangle,\beta\rangle$
+followed by $P_{LR}$ gives (LAGC.6) with $U_1=\{LL,R\}$; entry
+$x_2=\langle\langle\beta,\beta\rangle,\alpha\rangle$ followed by
+$P_R$ gives the same source and count with $U_2=\{LL,LR\}$. Both entries
+are in $\mathcal D_+$ by AA17.2. One label can choose the common call
+$S_{LL}$. After its full inner return, both current syntaxes are
+$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle$,
+but the residual sets are respectively $\{R\}$ and $\{LR\}$. Neither a
+common next call nor a common correct Stop exists. For the comb, write
+$t_0=\beta$, $t_{m+1}=\langle t_m,\beta\rangle$. Its $m$ candidates
+are exactly its $R$-ending bare beta leaves, and its only uncovered leaf
+is $L^m$; apply (LAGC.4)–(LAGC.5). $\square$
+
+**Proposition 16.6 (source-view transport and conditional price).**
+Theorems 16.2–16.4 hold with the public $y$ replaced by its acquired
+oriented material source support, terminal boundary, or labelled causal
+membership order on that SAME root/source. Their initial fixed-width
+supplementary content prices are $\lceil\log_2 L_A\rceil$ and
+$\lceil\log_2 L_B\rceil$ bits, conditional on the fixed exact $y,k$
+and Definition 16.1's reduced input contract. They are not total-memory,
+acquisition, navigation, traffic, duration or source-material optima.
+
+Proof. AA17.3 gives prefix closure from terminal boundary to material
+support, maximal addresses in the reverse direction, and arity parsing
+to syntax; the unary beta marker is retained and auxiliary tape edges
+are excluded. AA17.2 gives the corresponding labelled causal membership
+order. These inverses recover precisely the same $y$, hence the same
+typed candidates, blocks, supports and updates. With $J$ they recover
+the entry and its residual old cohort, without selecting an ancestral
+serial order. Mere descriptions, parsing and mathematical recovery do
+not grant a root binding, operand reference, current authority or an
+execution right. A split may reuse an old material unary marker as its
+new left logical child: material pointer age is not old logical-cohort
+membership. No numeral-to-capability cast follows from any label.
+
+The bit prices are the ordinary fixed-width encoding of the attained
+label alphabets. They exclude the public source and count, genuine
+references/grants, source tapes, scratch, finite program, full traffic,
+acquisition and all operations/backing; these remain owned and paid
+under §§9–15 and AA20.1. A retained complete OLD list or lawfully acquired
+full AA event tapes can already determine $J$, as Proposition 15.5
+explains. Condition on those inputs and their actual compatible fibre
+instead of duplicating an archive or claiming additional-memory lower
+bounds for the installed tape-retaining apparatus. No Ready-only tape
+service is thereby exposed during Busy. The new source-specific content
+is (LAGC.2)–(LAGC.5)'s transport and chosen-task distinction, a
+`repo-derived` consequence of the stated suppliers. The generic safe
+partition and finite enumeration results do not themselves compute
+these native counts. No fresh Lean certification or worldwide novelty
+is asserted. $\square$
+
+[SAFECONT]: ../../../D5/S3/ConceptDynamics/Agency/MinimumSafeObservationAlphabet.lean
+[COVERCONT]: https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf
+[REFRESHCONT]: ../../../D5/S3/ConceptDynamics/Agency/FiniteConfigurationAcquisition.lean
+
+## 追加锚（本行以下为增补区）
