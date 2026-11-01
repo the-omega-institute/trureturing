@@ -97,12 +97,12 @@ theorem seam_origin_all (i : Fin n) :
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
   induction i using Fin.induction with
   | zero => exact Relation.EqvGen.refl _
-  | @succ m i ih =>
-      have hnext : next hn i.castSucc = i.succ := by
+  | succ j ih =>
+      have hnext : next hn j.castSucc = j.succ := by
         apply Fin.ext
         simp [next]
       rw [← hnext]
-      exact Relation.EqvGen.trans _ _ _ ih (seam_origin_step hn i.castSucc)
+      exact Relation.EqvGen.trans _ _ _ ih (seam_origin_step hn j.castSucc)
 
 theorem seam_origin_radial_zero (i : Fin n) :
     radialSize (edge i 0 (by norm_num) (by norm_num)) = 0 := by
