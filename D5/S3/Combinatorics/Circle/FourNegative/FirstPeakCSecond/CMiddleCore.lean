@@ -167,7 +167,7 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   have hvMn : 0<v.Mn := by omega
   have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D g hvB hvM hvMn hvD
-    (by dsimp [v,model]) (by simpa only [hrel, mul_assoc] using hF) (by linarith only [hg])
+    (by dsimp [v,model]) (by rw [show v.Mn-v.M=v.t*v.y*v.z from hrel]; simpa only [mul_assoc] using hF) (by linarith only [hg])
   change 1≤r ∧ r≤g ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hg0 : 0≤g := by omega
@@ -233,7 +233,7 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
     (by
       have hz : 4≤v.z := by dsimp [v,model]; omega
       omega)
-    (by rfl) (by simpa only [hrel, mul_assoc] using F) (by linarith)
+    (by rfl) (by rw [show v.Mn-v.M=v.t*v.y*v.z from hrel]; simpa only [mul_assoc] using F) (by linarith)
   change 1≤r ∧ r≤h ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hrD : v.z+1≤r*v.D := by
@@ -256,7 +256,13 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
   · constructor <;> nlinarith [hc.2.2.1,hc.2.2.2.2.1,hc.2.2.2.2.2]
   · constructor <;> nlinarith [hc.2.2.1,hc.2.2.2.2.2]
   · constructor <;> nlinarith [hs2,W]
-  · constructor <;> nlinarith [hs2,W]
+  · constructor
+    · nlinarith only [k2,hs2,hrD]
+    · change 2*(v.Ln-r*v.Mn-v.Bn)≤v.Ln-1
+      rw [hl,hb]
+      have hW : v.L≤2*v.B-1 := by linarith only [W]
+      have hz : 0≤v.z := by dsimp [v,model]; omega
+      nlinarith only [hc.2.2.1,hW,hB',hz]
 
 /- The dynamic first bank retains its actual ceil-dependent s=5h+r. -/
 set_option maxHeartbeats 10000000 in
@@ -290,7 +296,7 @@ private theorem dynamic_first (h : ℤ) (hh : 8≤h)
   have hvMn : 0<v.Mn := by omega
   have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D h hvB hvM hvMn
-    (by norm_num [v,model]) (by rfl) (by simpa only [hrel, mul_assoc] using F) (by linarith)
+    (by norm_num [v,model]) (by rfl) (by rw [show v.Mn-v.M=v.t*v.y*v.z from hrel]; simpa only [mul_assoc] using F) (by linarith)
   change 1≤r ∧ r≤h ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hrLo := mul_le_mul_of_nonneg_right hc.2.2.1 (show 0≤v.M by omega)
@@ -546,9 +552,10 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   obtain ⟨j,hj,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
   rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega)]
   have hcond : j+1 < chainLength a b c d r := by omega
-  simp [hcond]
-  exact ⟨mul_nonneg (by positivity) (by have := (h.1 r).1; omega),
-    mul_nonneg (by positivity) (by have := hn.1; omega)⟩
+  simp only [if_pos hcond]
+  have hp : (0:ℤ)≤2^j := by positivity
+  exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
+    mul_nonneg hp (by have := hn.1; omega)⟩
 
 private theorem complement_mass (a b c d m : ℕ) (r : Fin 4)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -604,7 +611,7 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
   simp only [hx,←he]
-  repeat' constructor <;> try trivial <;> ring
+  repeat' constructor <;> ring
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
