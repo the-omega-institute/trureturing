@@ -7,7 +7,7 @@
    digest: The prescribed 178-route subdivision maps as an induced subgraph into the 9337 by 9061 king grid. -/
 import D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 import D5.S3.Combinatorics.Graph.Products.IntegerPolyline
-import Lean.Meta.Reduce
+import Lean.Meta.Eval
 import Lean.Meta.Tactic.AuxLemma
 import Lean.Elab.Tactic.ElabTerm
 
@@ -47,146 +47,76 @@ structure RouteLiteral where
 def oldLabels : Finset ℕ := {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 47, 48, 49, 50, 52, 53, 54, 55, 57, 58, 59, 60, 62, 63, 64, 65, 66, 67, 68, 70, 71, 72, 74, 75, 76, 77, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 93, 94, 95, 96, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 138, 139, 140, 141, 142, 143, 144, 146, 147, 148, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165}
 
 def oldCoordinates : List (ℕ × Point) := [
-  (11, (4476, 960)),
-  (12, (5280, 1308)),
-  (13, (5148, 1248)),
-  (14, (4668, 1620)),
-  (15, (552, 1572)),
-  (16, (456, 1596)),
-  (17, (600, 0)),
-  (18, (756, 72)),
-  (19, (1488, 84)),
-  (20, (5412, 1380)),
-  (21, (5508, 1560)),
-  (22, (5580, 1548)),
-  (23, (4548, 384)),
-  (24, (4716, 900)),
-  (25, (4800, 756)),
-  (26, (96, 1668)),
-  (27, (384, 1644)),
-  (28, (480, 1632)),
-  (29, (6912, 120)),
-  (30, (2196, 216)),
-  (31, (2064, 204)),
-  (32, (6924, 1212)),
-  (33, (6228, 1200)),
-  (34, (6228, 1188)),
-  (35, (6192, 276)),
-  (36, (2568, 312)),
-  (37, (2388, 300)),
-  (38, (6504, 720)),
-  (39, (6504, 708)),
-  (40, (6576, 696)),
-  (42, (4560, 1128)),
-  (43, (5160, 1344)),
-  (44, (4572, 1488)),
-  (45, (5340, 1476)),
-  (47, (3624, 684)),
-  (48, (3804, 492)),
-  (49, (4272, 864)),
-  (50, (4476, 852)),
-  (52, (456, 1440)),
-  (53, (96, 1656)),
-  (54, (600, 60)),
-  (55, (24, 1680)),
-  (57, (7572, 660)),
-  (58, (7500, 1164)),
-  (59, (7008, 648)),
-  (60, (6924, 1068)),
-  (62, (6132, 1056)),
-  (63, (6744, 1044)),
-  (64, (6192, 1020)),
-  (65, (6360, 804)),
-  (66, (3264, 564)),
-  (67, (3324, 636)),
-  (68, (3420, 624)),
-  (70, (3228, 792)),
-  (71, (3348, 984)),
-  (72, (3444, 1320)),
-  (74, (2448, 1260)),
-  (75, (2436, 972)),
-  (76, (2268, 948)),
-  (77, (2268, 768)),
-  (78, (1032, 936)),
-  (79, (852, 1236)),
-  (80, (780, 1284)),
-  (82, (7644, 516)),
-  (83, (7692, 552)),
-  (84, (7752, 600)),
-  (86, (1128, 144)),
-  (87, (1128, 132)),
-  (88, (1248, 108)),
-  (90, (2700, 348)),
-  (91, (2412, 336)),
-  (92, (2244, 324)),
-  (93, (2244, 288)),
-  (94, (4872, 372)),
-  (95, (5004, 540)),
-  (96, (5124, 588)),
-  (98, (2088, 240)),
-  (99, (2364, 264)),
-  (100, (2544, 252)),
-  (101, (2664, 228)),
-  (102, (1260, 1152)),
-  (103, (1572, 1140)),
-  (104, (1716, 1116)),
-  (105, (1860, 876)),
-  (106, (1944, 192)),
-  (107, (1680, 180)),
-  (108, (1536, 168)),
-  (109, (1260, 156)),
-  (110, (4572, 1464)),
-  (111, (4812, 1608)),
-  (112, (4956, 1584)),
-  (113, (5160, 1452)),
-  (114, (3828, 528)),
-  (115, (3924, 576)),
-  (116, (4008, 672)),
-  (117, (4368, 840)),
-  (118, (444, 48)),
-  (119, (264, 36)),
-  (120, (168, 24)),
-  (121, (84, 12)),
-  (122, (7476, 1092)),
-  (123, (7236, 1080)),
-  (124, (7116, 828)),
-  (125, (7008, 816)),
-  (126, (6312, 1176)),
-  (127, (6312, 1104)),
-  (128, (6432, 1032)),
-  (129, (6360, 1008)),
-  (130, (2712, 408)),
-  (131, (2928, 432)),
-  (132, (3036, 456)),
-  (133, (3516, 480)),
-  (134, (4188, 996)),
-  (135, (4104, 1392)),
-  (136, (4044, 1428)),
-  (138, (876, 1416)),
-  (139, (792, 1404)),
-  (140, (696, 1332)),
-  (141, (696, 1296)),
-  (142, (7872, 612)),
-  (143, (7968, 780)),
-  (144, (8028, 924)),
-  (146, (1500, 96)),
-  (147, (7320, 360)),
-  (148, (7200, 396)),
-  (150, (6060, 912)),
-  (151, (5940, 888)),
-  (152, (5880, 744)),
-  (153, (5820, 732)),
-  (154, (4044, 1536)),
-  (155, (3732, 1524)),
-  (156, (3636, 1512)),
-  (157, (3624, 1368)),
-  (158, (5820, 1224)),
-  (159, (5748, 1272)),
-  (160, (5688, 1356)),
-  (161, (5688, 1500)),
-  (162, (7572, 504)),
-  (163, (7452, 468)),
-  (164, (7332, 444)),
+  (11, (4476, 960)), (12, (5280, 1308)),
+  (13, (5148, 1248)), (14, (4668, 1620)),
+  (15, (552, 1572)), (16, (456, 1596)),
+  (17, (600, 0)), (18, (756, 72)),
+  (19, (1488, 84)), (20, (5412, 1380)),
+  (21, (5508, 1560)), (22, (5580, 1548)),
+  (23, (4548, 384)), (24, (4716, 900)),
+  (25, (4800, 756)), (26, (96, 1668)),
+  (27, (384, 1644)), (28, (480, 1632)),
+  (29, (6912, 120)), (30, (2196, 216)),
+  (31, (2064, 204)), (32, (6924, 1212)),
+  (33, (6228, 1200)), (34, (6228, 1188)),
+  (35, (6192, 276)), (36, (2568, 312)),
+  (37, (2388, 300)), (38, (6504, 720)),
+  (39, (6504, 708)), (40, (6576, 696)),
+  (42, (4560, 1128)), (43, (5160, 1344)),
+  (44, (4572, 1488)), (45, (5340, 1476)),
+  (47, (3624, 684)), (48, (3804, 492)),
+  (49, (4272, 864)), (50, (4476, 852)),
+  (52, (456, 1440)), (53, (96, 1656)),
+  (54, (600, 60)), (55, (24, 1680)),
+  (57, (7572, 660)), (58, (7500, 1164)),
+  (59, (7008, 648)), (60, (6924, 1068)),
+  (62, (6132, 1056)), (63, (6744, 1044)),
+  (64, (6192, 1020)), (65, (6360, 804)),
+  (66, (3264, 564)), (67, (3324, 636)),
+  (68, (3420, 624)), (70, (3228, 792)),
+  (71, (3348, 984)), (72, (3444, 1320)),
+  (74, (2448, 1260)), (75, (2436, 972)),
+  (76, (2268, 948)), (77, (2268, 768)),
+  (78, (1032, 936)), (79, (852, 1236)),
+  (80, (780, 1284)), (82, (7644, 516)),
+  (83, (7692, 552)), (84, (7752, 600)),
+  (86, (1128, 144)), (87, (1128, 132)),
+  (88, (1248, 108)), (90, (2700, 348)),
+  (91, (2412, 336)), (92, (2244, 324)),
+  (93, (2244, 288)), (94, (4872, 372)),
+  (95, (5004, 540)), (96, (5124, 588)),
+  (98, (2088, 240)), (99, (2364, 264)),
+  (100, (2544, 252)), (101, (2664, 228)),
+  (102, (1260, 1152)), (103, (1572, 1140)),
+  (104, (1716, 1116)), (105, (1860, 876)),
+  (106, (1944, 192)), (107, (1680, 180)),
+  (108, (1536, 168)), (109, (1260, 156)),
+  (110, (4572, 1464)), (111, (4812, 1608)),
+  (112, (4956, 1584)), (113, (5160, 1452)),
+  (114, (3828, 528)), (115, (3924, 576)),
+  (116, (4008, 672)), (117, (4368, 840)),
+  (118, (444, 48)), (119, (264, 36)),
+  (120, (168, 24)), (121, (84, 12)),
+  (122, (7476, 1092)), (123, (7236, 1080)),
+  (124, (7116, 828)), (125, (7008, 816)),
+  (126, (6312, 1176)), (127, (6312, 1104)),
+  (128, (6432, 1032)), (129, (6360, 1008)),
+  (130, (2712, 408)), (131, (2928, 432)),
+  (132, (3036, 456)), (133, (3516, 480)),
+  (134, (4188, 996)), (135, (4104, 1392)),
+  (136, (4044, 1428)), (138, (876, 1416)),
+  (139, (792, 1404)), (140, (696, 1332)),
+  (141, (696, 1296)), (142, (7872, 612)),
+  (143, (7968, 780)), (144, (8028, 924)),
+  (146, (1500, 96)), (147, (7320, 360)),
+  (148, (7200, 396)), (150, (6060, 912)),
+  (151, (5940, 888)), (152, (5880, 744)),
+  (153, (5820, 732)), (154, (4044, 1536)),
+  (155, (3732, 1524)), (156, (3636, 1512)),
+  (157, (3624, 1368)), (158, (5820, 1224)),
+  (159, (5748, 1272)), (160, (5688, 1356)),
+  (161, (5688, 1500)), (162, (7572, 504)),
+  (163, (7452, 468)), (164, (7332, 444)),
   (165, (7200, 420))
 ]
 
@@ -710,12 +640,55 @@ def routingBuckets : List ℕ := List.range 16
 theorem routing_bucket_mem (q : Point) : routingBucket q ∈ routingBuckets :=
   List.mem_range.mpr (Nat.mod_lt _ (by decide))
 
-/-- Closed occupancy values are normalized in Lean. Every value is separately
-checked against the original fill expression by a kernel-checked equality. -/
+/-- The evaluator supplies untrusted tree values. The exact fill equations
+below are checked by the kernel against the original literal enumeration. -/
+open Lean Meta in
+private unsafe def quoteOccupancyValue (input : Expr) : MetaM Expr := do
+  let rawTy := mkConst ``RawVertex
+  let treeTy := mkApp (mkConst ``Occupancy [.zero]) rawTy
+  let t ← evalExpr (Occupancy RawVertex) treeTy input
+  let oldTy := mkConst ``Original
+  let pairTy := mkApp2 (mkConst ``Prod [.zero, .zero]) (mkConst ``Edge) (mkConst ``Nat)
+  let inl := mkApp2 (mkConst ``Sum.inl [.zero, .zero]) oldTy pairTy
+  let inr := mkApp2 (mkConst ``Sum.inr [.zero, .zero]) oldTy pairTy
+  let oldPred := (← whnf oldTy).appArg!
+  let mut olds : Array (ℕ × Expr) := #[]
+  for a in originalVertices do
+    let n := toExpr a.val
+    let pf ← mkDecideProof (mkApp oldPred n)
+    let v ← mkAppOptM ``Subtype.mk #[some (mkConst ``Nat), some oldPred, some n, some pf]
+    olds := olds.push (a.val, v)
+  let quoteV (v : RawVertex) : MetaM Expr := do
+    match v with
+    | .inl a =>
+      let some (_, e) := olds.find? (fun p => p.1 == a.val) |
+        throwError "Original vertex absent from literal inventory"
+      return mkApp inl e
+    | .inr p => return mkApp inr (toExpr p)
+  let empty := mkApp (mkConst ``Occupancy.empty [.zero]) rawTy
+  let node := mkApp (mkConst ``Occupancy.node [.zero]) rawTy
+  let noneC := mkApp (mkConst ``Option.none [.zero]) rawTy
+  let someC := mkApp (mkConst ``Option.some [.zero]) rawTy
+  let rec quoteTree (t : Occupancy RawVertex) : MetaM Expr := do
+    match t with
+    | .empty => return empty
+    | .node v l r =>
+      let v ← match v with
+        | .none => pure noneC
+        | .some v => do
+          let ev ← quoteV v
+          pure (mkApp someC ev)
+      let l ← quoteTree l
+      let r ← quoteTree r
+      return mkApp3 node v l r
+  quoteTree t
+
 local elab "king_occupancy_value " t:term : tactic => do
   let e ← Lean.Elab.Term.elabTermAndSynthesize t none
   if e.hasMVar || e.hasFVar then throwError "Expected a closed occupancy expression"
-  let e ← Lean.Meta.reduce e
+  let e ← unsafe quoteOccupancyValue e
+  let e ← Lean.instantiateMVars e
+  if e.hasMVar || e.hasFVar then throwError "Expected a closed occupancy value"
   Lean.Elab.Tactic.closeMainGoalUsing `king_occupancy_value fun _ _ => pure e
 
 local elab "king_kernel_rfl" : tactic => do
@@ -729,24 +702,24 @@ local elab "king_kernel_rfl" : tactic => do
 private def sourceBucketTree (b : ℕ) : Occupancy RawVertex :=
   bucketTree routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate b
 
-private def occupancy0 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 0)
-private def occupancy1 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 1)
-private def occupancy2 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 2)
-private def occupancy3 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 3)
-private def occupancy4 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 4)
-private def occupancy5 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 5)
-private def occupancy6 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 6)
-private def occupancy7 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 7)
-private def occupancy8 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 8)
-private def occupancy9 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 9)
-private def occupancy10 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 10)
-private def occupancy11 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 11)
-private def occupancy12 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 12)
-private def occupancy13 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 13)
-private def occupancy14 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 14)
-private def occupancy15 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 15)
+private noncomputable def occupancy0 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 0)
+private noncomputable def occupancy1 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 1)
+private noncomputable def occupancy2 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 2)
+private noncomputable def occupancy3 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 3)
+private noncomputable def occupancy4 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 4)
+private noncomputable def occupancy5 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 5)
+private noncomputable def occupancy6 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 6)
+private noncomputable def occupancy7 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 7)
+private noncomputable def occupancy8 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 8)
+private noncomputable def occupancy9 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 9)
+private noncomputable def occupancy10 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 10)
+private noncomputable def occupancy11 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 11)
+private noncomputable def occupancy12 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 12)
+private noncomputable def occupancy13 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 13)
+private noncomputable def occupancy14 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 14)
+private noncomputable def occupancy15 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 15)
 
-def actualTrees : ℕ → Occupancy RawVertex
+noncomputable def actualTrees : ℕ → Occupancy RawVertex
   | 0 => occupancy0
   | 1 => occupancy1
   | 2 => occupancy2
@@ -805,7 +778,7 @@ theorem actual_tree_fills (b : ℕ) (hb : b ∈ routingBuckets) :
   · exact occupancy_fill14
   · exact occupancy_fill15
 
-def actualBucketCheck (b : ℕ) : Bool :=
+noncomputable def actualBucketCheck (b : ℕ) : Bool :=
   bucketCheck routingBucket routingBuckets
     (subdivision.rawVertices originalVertices edgeIndices)
     (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph actualTrees b
