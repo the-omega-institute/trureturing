@@ -561,7 +561,7 @@ lemma cycle_distance (m : ℕ) :
           dsimp [k, WellCoveredPowerCliqueProduct.cycleMetric, Nat.dist]
           omega
 
-private lemma base_diameter (m : ℕ) : (cycleGraph (m + 3)).diam = (m + 3) / 2 := by
+lemma base_diameter (m : ℕ) : (cycleGraph (m + 3)).diam = (m + 3) / 2 := by
   have hf := (connected_iff_ediam_ne_top).mp (base_connected m)
   apply Nat.le_antisymm
   · obtain ⟨i, j, hij⟩ := (cycleGraph (m + 3)).exists_dist_eq_diam

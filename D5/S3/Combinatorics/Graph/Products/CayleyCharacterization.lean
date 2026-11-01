@@ -16,7 +16,7 @@ namespace CayleySquare
 
 variable {V : Type}
 
-private theorem maximal_iff (G : SimpleGraph V) (I : Finset V) :
+theorem maximal_iff (G : SimpleGraph V) (I : Finset V) :
     IsMaximalIndep G I ↔ Maximal G.IsIndepSet (I : Set V) := by
   classical
   constructor
