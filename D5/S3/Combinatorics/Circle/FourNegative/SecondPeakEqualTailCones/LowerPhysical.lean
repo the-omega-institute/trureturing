@@ -69,7 +69,6 @@ private theorem lower_inventory (a b s : ℕ) (hs : 2≤s)
       simpa using (List.range'_append_1 (s:=0) (m:=2*s) (n:=b))
     have hj3 : List.range' 0 (2*s+b)++List.range' (2*s+b) a=List.range' 0 (2*s+b+a) := by
       simpa using (List.range'_append_1 (s:=0) (m:=2*s+b) (n:=a))
-    simp only [←List.append_assoc]
     rw [hj1,hj2,hj3]
     simp only [←List.range_eq_range']
     congr 1
@@ -162,7 +161,7 @@ private theorem lower_bank_masses (a b s : ℕ) (hs : 2≤s)
     simpa [start,length] using full 3
   intro r
   fin_cases r <;> dsimp only [lowerBank,dot,lowerNativeAllocation,lowerAllocation] <;>
-    simp only [List.map_append,List.sum_append]
+    (try simp only [List.map_append,List.sum_append])
   · rw [su]
     dsimp [B,v]
     ring

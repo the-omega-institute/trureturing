@@ -72,7 +72,10 @@ private theorem bank_inventory (a b s : ℕ) (hs : 2≤s)
           ↑(W (F b ^^^ H b s) ++ (W (H b s ^^^ p a b s) ++ W (p a b s))) := by
         simp only [←Multiset.coe_add]; ac_rfl
       _ = ↑(W (F b ^^^ H b s) ++ W (H b s)) := by
-        simp only [←Multiset.coe_add]; rw [Multiset.coe_eq_coe.mpr split.1]
+        have hsplit := Multiset.coe_eq_coe.mpr split.1
+        simp only [←Multiset.coe_add] at hsplit ⊢
+        exact congrArg
+          (fun t : Multiset ℕ => (↑(W (F b ^^^ H b s)) : Multiset ℕ)+t) hsplit
       _ = _ := Multiset.coe_eq_coe.mpr split.2.1
   have merge (o n : ℕ) (hn : 1≤n) :
       List.range' o (n-1)++[o+n-1]=List.range' o n := by
@@ -97,7 +100,6 @@ private theorem bank_inventory (a b s : ℕ) (hs : 2≤s)
       simpa using (List.range'_append_1 (s:=0) (m:=2*s) (n:=b))
     have hj3 : List.range' 0 (2*s+b)++List.range' (2*s+b) a=List.range' 0 (2*s+b+a) := by
       simpa using (List.range'_append_1 (s:=0) (m:=2*s+b) (n:=a))
-    simp only [←List.append_assoc]
     rw [hj1,hj2,hj3]
     simp only [←List.range_eq_range']
     congr 1
@@ -143,7 +145,7 @@ private theorem bank_positive (a b s : ℕ) (hs : 2≤s) (ha : s+1≤a)
       exact positive_row a b s (by omega) (by omega) hs side r e he
   intro r i hi
   fin_cases r <;> dsimp [bank] at hi
-  all_goals simp only [List.mem_append] at hi
+  all_goals try simp only [List.mem_append] at hi
   all_goals repeat' first
     | exact positive 0 _ i hi
     | exact positive 1 _ i hi
@@ -199,7 +201,7 @@ private theorem bank_masses (a b s : ℕ) (hs : 2≤s)
     rw [chamberLabels_full]; simpa [start,length] using full 1
   intro r
   fin_cases r <;> dsimp [bank,dot,nativeAllocation,allocation] <;>
-    simp only [List.map_append,List.sum_append]
+    (try simp only [List.map_append,List.sum_append])
   · rw [su,wp]; dsimp [B,v]; ring
   · rw [sv,xc,whp]; dsimp [B,v]; ring
   · rw [wfh]; dsimp [B,v]; ring
