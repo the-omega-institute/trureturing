@@ -547,18 +547,4 @@ lemma basisι_augmentation (s : Finset ι) (hs : #s = 1) (a : A)
   exact (congrArg (fun f ↦ single R P 0 s a ha ≫ f)
     (augmentation_f_zero R P)).trans (single_epsilon0 R P hs a ha)
 
-/-- Naturality concerns the augmentation itself, not its chosen contraction. -/
-@[reassoc]
-lemma map_augmentation (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) :
-    map R f hf ≫ augmentation R Q =
-      augmentation R P ≫ (ChainComplex.single₀ C).map
-        ((sigmaConst.obj R).map (TypeCat.ofHom f)) := by
-  apply HomologicalComplex.to_single_hom_ext
-  apply basis_hom_ext R
-  intro s hs a ha
-  simp only [HomologicalComplex.comp_f, Category.assoc, basisι_map_assoc,
-    basisι_augmentation, basisι_augmentation_assoc,
-    ChainComplex.single₀_map_f_zero]
-  simpa using (Sigma.ι_comp_map' f (fun _ : A => 𝟙 R) a)
-
 end TauCeti.OrderedCover

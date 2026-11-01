@@ -125,13 +125,5 @@ internal sealed class OrderedCechCoverDocument : IScribeDocumentDefinition
                     + "and a function f from A to B taking P(i) into Q(i) for every i, there is a chain map from "
                     + "the ordered free complex of P to that of Q. It sends each generator (s,a) to (s,f(a)). "
                     + "The finite index set and every deletion sign are preserved. These maps preserve identity "
-                    + "and composition."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("natural-cover-augmentation"),
-                DeclarationHandle.Create(Owner + "map_augmentation"), H("Naturality of the specified augmentation"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every such cover-preserving function, the chain map followed by the "
-                    + "target augmentation equals the source augmentation followed by the map on the complex "
-                    + "concentrated at zero induced by f on the point coproducts. This naturality concerns the "
-                    + "specified augmentation; no naturality of the chosen contraction vertex is assumed."))),
-                DescribeRole.Theorem))));
+                    + "and composition."))), DescribeRole.Definition))));
 }
