@@ -125,7 +125,7 @@ internal sealed class KBonacciActualEndpointOperatorsDocument : IScribeDocumentD
         var c = F.Id("c"); var ell = F.Id("l");
         var real = Seq(Mathbb, Grp(F.Id("R")));
         var fin = Call("Fin", k);
-        var vec = Seq(fin, Sp, To, Sp, real);
+        var vec = Par(Seq(fin, Sp, To, Sp, real));
         var relation = Call("Matrix", fin, fin, real);
         var Cj = Seq(F.Id("C"), Underscore, Grp(j));
         var ci = Seq(c, Underscore, Grp(i));
@@ -149,8 +149,8 @@ internal sealed class KBonacciActualEndpointOperatorsDocument : IScribeDocumentD
                     + "same c and uses the same l. The target is the initial relation with entries "
                     + "c_i l_t, without selecting absolute scales for the factors.")),
             new DocumentBlock.DisplayFormula(Rows(
-                Equal(Call("World", k), Seq(OpenBrace, Par(Seq(c, Comma, ell)), Colon, Par(vec),
-                    Sp, Times, Sp, Par(vec), Sp, Vert, Sp,
+                Equal(Call("World", k), Seq(OpenBrace, Par(Seq(c, Comma, ell)), Colon, vec,
+                    Sp, Times, Sp, vec, Sp, Vert, Sp,
                     And(All(i, fin, Rel(D(0), Lt, ci)), All(i, fin, Rel(D(0), Leq, li)),
                         NotEqual(ell, D(0))), CloseBrace)),
                 Equal(Cj, Seq(Sum, Underscore, Grp(Seq(i, Colon, fin, Comma, i, Lt, j)), ci)),
