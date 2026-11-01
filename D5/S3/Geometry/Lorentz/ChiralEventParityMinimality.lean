@@ -6,18 +6,7 @@
    utility: none
    digest: Two continuous invariant parity-odd variables vanish on a chiral event. -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.Topology.MetricSpace.IsometricSMul
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FunProp
 import D5.S3.Topology.BorsukUlam.PlanarOddMapZero
 
 /-! The preregistered two-variable lower bound for chiral four-particle events. -/
