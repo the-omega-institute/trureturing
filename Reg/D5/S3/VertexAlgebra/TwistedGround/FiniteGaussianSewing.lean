@@ -6,7 +6,7 @@ import Mathlib.Tactic
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-open scoped BigOperators
+open scoped BigOperators Ring
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
@@ -110,9 +110,11 @@ def convergenceArena : Arena where
 
 private theorem convergence_rejected_fails : ¬ convergenceArena.{u,v,w}.Law rejectedOne := by
   intro h
+  have hn : ‖Matrix.toEuclideanCLM
+      (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ)‖ < 1 := by simp
   have hh := @h PUnit.{u+1} inferInstance inferInstance PUnit.{v+1} PUnit.{w+1}
     inferInstance inferInstance inferInstance inferInstance 0 0
-    (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
+    (fun _ _ => rfl) (fun _ _ => rfl) hn hn 0 0
   have hs : Summable (fun _ : PUnit.{u+1} →₀ ℕ => (1 : ℝ)) := by
     apply Summable.of_nonneg_of_le (fun _ => zero_le_one) _ hh
     intro n
@@ -187,9 +189,11 @@ def expansionArena : Arena where
 
 private theorem expansion_rejected_fails : ¬ expansionArena.{u,v,w}.Law rejectedZero := by
   intro h
+  have hn : ‖Matrix.toEuclideanCLM
+      (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ)‖ < 1 := by simp
   obtain ⟨p, q, hp, hq, hs, heq⟩ := @h PUnit.{u+1} inferInstance inferInstance
     PUnit.{v+1} PUnit.{w+1} inferInstance inferInstance inferInstance inferInstance
-    0 0 (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
+    0 0 (fun _ _ => rfl) (fun _ _ => rfl) hn hn 0 0
   have hh := congrFun hp 0
   simpa [rejectedZero, realize, row, gaussianCoefficient_zero] using hh
 
@@ -357,7 +361,8 @@ private theorem wick_rejected_fails : ¬ wickArena.{u}.Law rejected := by
   have hh := (@h I inferInstance inferInstance 0 0
     (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp)).2.1
       0 (Finsupp.single i 1) i
-  simpa [rejected, realize, covariance, Ring.inverse_one, h00] using hh
+  have hd : (default : I) = i := Subsingleton.elim _ _
+  simpa [rejected, realize, covariance, Ring.inverse_one, hd, h00] using hh
 
 def wickEvidence : Registration wickArena.{u}
     (type_of% (@bilinearMoment_wick_recursion.{u})) where
