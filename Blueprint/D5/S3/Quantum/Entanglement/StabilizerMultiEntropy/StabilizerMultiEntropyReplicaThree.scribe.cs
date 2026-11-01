@@ -36,12 +36,12 @@ internal sealed class StabilizerMultiEntropyReplicaThreeDocument : IScribeDocume
 
     private static Formula ReductionFormula() => All(V("N"), Nat, All(V("q"), Nat,
         Imp(LeqRel(D(3), V("q")), All(Psi, State(V("N")),
-            Imp(StabilizerNorm(Psi, V("N")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
+            ImpP(StabilizerNorm(Psi, V("N")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
                 Equal(Call("S", D(3), V("q"), V("col"), Psi),
                     Multiply(Pow(D(3), Difference(D(2), Typed(V("q"), IntZ))),
                         Parenthesized(Seq(
-                            SumOver(Mem(V("pi"), Call("partitionsOfCard", V("q"), D(3))),
-                                Multiply(D(3), Call("coarseMultiEntropy", V("pi"), V("col"), Psi))),
+                            SumOver(Mem(Pi, Call("partitionsOfCard", V("q"), D(3))),
+                                Multiply(D(3), Call("coarseMultiEntropy", Pi, V("col"), Psi))),
                             Sp, Plus, Sp,
                             SumOver(Mem(SigmaLower, Call("partitionsOfCard", V("q"), D(2))),
                                 Multiply(Difference(D(3), SumOver(Mem(V("B"), Call("parts", SigmaLower)),
@@ -50,36 +50,47 @@ internal sealed class StabilizerMultiEntropyReplicaThreeDocument : IScribeDocume
 
     private static Formula VanishingCriterionFormula() => All(V("q"), Nat,
         Imp(LeqRel(D(2), V("q")), All(V("c"), Arrow(Call("PartyPartition", V("q")), Real),
-            Conj(All(V("N"), Nat, All(Gamma, BinMatrix(V("N")), All(Psi, State(V("N")),
+            ConjAll(
+                All(V("N"), Nat, All(Gamma, BinMatrix(V("N")), All(Psi, State(V("N")),
                     Imp(Call("IsGraphFormOf", Gamma, Psi), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
                         Equal(LinearComb(V("q"), V("c"), V("col"), Psi),
                             Multiply(Fraction(Call("log", D(2)), D(2)),
                                 SumOver(Mem(SigmaLower, Call("twoOrThreePartitions", V("q"))),
                                     Multiply(Call("coarseWeight", V("c"), SigmaLower),
                                         Call("partitionRank", Gamma, V("col"), SigmaLower)))))))))),
-                Imp(All(SigmaLower, Call("twoOrThreePartitions", V("q")),
-                        Equal(Call("coarseWeight", V("c"), SigmaLower), D(0))),
+                ImpP(
+                    All(SigmaLower, Call("PartyPartition", V("q")),
+                        Imp(Mem(SigmaLower, Call("twoOrThreePartitions", V("q"))),
+                            Equal(Call("coarseWeight", V("c"), SigmaLower), D(0)))),
                     All(V("N"), Nat, All(Psi, State(V("N")),
-                        Imp(StabilizerNorm(Psi, V("N")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
+                        ImpP(StabilizerNorm(Psi, V("N")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
                             Equal(LinearComb(V("q"), V("c"), V("col"), Psi), D(0)))))))))));
 
     private static Formula DeterminationFormula() => All(V("N"), Nat, All(V("M"), Nat, All(V("q"), Nat,
         Imp(LeqRel(D(2), V("q")), All(Psi, State(V("N")), All(Phi, State(V("M")),
-            Imp(Conj(StabilizerNorm(Psi, V("N")), StabilizerNorm(Phi, V("M"))),
+            ImpP(ConjAll(StabilizerNorm(Psi, V("N")), StabilizerNorm(Phi, V("M"))),
                 All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))), All(V("colB"), Arrow(Fin(V("M")), Fin(V("q"))),
-                    Imp(All(SigmaLower, Call("twoOrThreePartitions", V("q")),
-                            Equal(Call("coarseMultiEntropy", SigmaLower, V("col"), Psi),
-                                Call("coarseMultiEntropy", SigmaLower, V("colB"), Phi))),
-                        Conj(All(Rho, Call("nontrivialPartitions", V("q")),
-                                Equal(Call("coarseMultiEntropy", Rho, V("col"), Psi),
-                                    Call("coarseMultiEntropy", Rho, V("colB"), Phi))),
+                    ImpP(ConjAll(
+                            All(SigmaLower, Call("PartyPartition", V("q")),
+                                Imp(Mem(SigmaLower, Call("partitionsOfCard", V("q"), D(2))),
+                                    Equal(Call("coarseMultiEntropy", SigmaLower, V("col"), Psi),
+                                        Call("coarseMultiEntropy", SigmaLower, V("colB"), Phi)))),
+                            All(Pi, Call("PartyPartition", V("q")),
+                                Imp(Mem(Pi, Call("partitionsOfCard", V("q"), D(3))),
+                                    Equal(Call("coarseMultiEntropy", Pi, V("col"), Psi),
+                                        Call("coarseMultiEntropy", Pi, V("colB"), Phi))))),
+                        ConjAll(
+                            All(Rho, Call("PartyPartition", V("q")),
+                                Imp(Mem(Rho, Call("nontrivialPartitions", V("q"))),
+                                    Equal(Call("coarseMultiEntropy", Rho, V("col"), Psi),
+                                        Call("coarseMultiEntropy", Rho, V("colB"), Phi)))),
                             Equal(Call("S", D(3), V("q"), V("col"), Psi),
                                 Call("S", D(3), V("q"), V("colB"), Phi)))))))))))));
 
     private static Formula LinearComb(Formula q, Formula c, Formula col, Formula psi) =>
         SumOver(Mem(Rho, Call("nontrivialPartitions", q)),
             Multiply(Apply(c, Rho), Call("coarseMultiEntropy", Rho, col, psi)));
-    private static Formula StabilizerNorm(Formula psi, Formula n) => Conj(
+    private static Formula StabilizerNorm(Formula psi, Formula n) => ConjAll(
         Call("StabilizedBy", V("pauliSet"), psi),
         Equal(SumOver(Typed(V("x"), Arrow(Fin(n), Fin(D(2)))), Pow(new Formula.Norm(Apply(psi, V("x"))), D(2))), D(1)));
     private static Formula BinMatrix(Formula n) => Call("Matrix", Fin(n), Fin(n), Call("ZMod", D(2)));
@@ -104,7 +115,9 @@ internal sealed class StabilizerMultiEntropyReplicaThreeDocument : IScribeDocume
     private static Formula LeqRel(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Mem(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, Parenthesized(b));
-    private static Formula Conj(Formula a, Formula b) => Seq(a, Sp, Land, Sp, Parenthesized(b));
+    private static Formula ImpP(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Rightarrow, Sp, Parenthesized(b));
+    private static Formula ConjAll(params Formula[] items) =>
+        Seq([.. items.SelectMany((x, i) => i == 0 ? new[] { Parenthesized(x) } : new[] { Sp, Land, Sp, Parenthesized(x) })]);
     private static Formula Multiply(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
     private static Formula Difference(Formula a, Formula b) => Parenthesized(Seq(a, Sp, Minus, Sp, b));
     private static Formula Pow(Formula a, Formula b) => Seq(a, Caret, Grp(b));
