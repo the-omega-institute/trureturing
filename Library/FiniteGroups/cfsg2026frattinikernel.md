@@ -3,6 +3,7 @@ bibkey: cfsg2026frattinikernel
 authors: Qiuzhen-CFSG contributors
 year: 2026
 title: CFSG Frattini automorphism kernel
+doi: null
 url: https://github.com/Qiuzhen-CFSG/CFSG/blob/0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7/Theory/GroupTheory/PGroup/FrattiniAutomorphismKernel.lean
 claim: The kernel of the automorphism action on the Frattini quotient of any finite p-group is a p-group.
 strata_touched:
