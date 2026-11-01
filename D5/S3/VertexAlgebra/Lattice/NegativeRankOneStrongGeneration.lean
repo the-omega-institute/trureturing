@@ -81,9 +81,6 @@ abbrev datum (d : ℤ) : LatticeData where
 
 def charge (d : ℤ) (s : ℤ) : Charge (datum d) := fun _ => s
 
-@[simp] private theorem charge_add (d : ℤ) (s t : ℤ) :
-    charge d s + charge d t = charge d (s + t) := rfl
-
 @[simp] private theorem charge_zero (d : ℤ) : charge d 0 = 0 := rfl
 
 private theorem charge_eq (d : ℤ) (a : Charge (datum d)) :
@@ -234,7 +231,7 @@ private theorem outer_zero (d : ℤ) (hd : 0 < d) (q k : ℤ)
         (mode (datum d) k (Finsupp.single (charge d 0) (MvPolynomial.monomial e 1))
           (carrierBasis (datum d) a)) = _
       rw [hz]
-      simp [R, MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, he, Ne.symm he]
+      simp [R, MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, he]
   have hh := congrArg (fun f => f p v) hL
   by_cases hk' : k = -1 <;> simpa [L, R, MvPolynomial.lcoeff, hk'] using hh
 
@@ -323,7 +320,7 @@ private theorem correction_good {d : ℤ} (M : ℤ) (b a : Letter d)
   omega
 
 private theorem move_nonnegative (d : ℤ) (hd : 0 < d) (M q : ℤ)
-    (hM : 0 ≤ M) (hq : M < q) (N : ℕ)
+    (_hM : 0 ≤ M) (hq : M < q) (N : ℕ)
     (short : ∀ w : List (Letter d), w.length < N → Good M w →
       groundCoefficient (datum d) (charge d q) (paletteWord w) = 0)
     (l : List (Letter d)) :
