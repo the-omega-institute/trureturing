@@ -195,7 +195,7 @@ private theorem old_incident_children (n : ℕ) (f : Face n) (v : Vertex n) :
     simp [hn, h]
 
 /-- Every old incident inner face gives exactly two incident children. -/
-private theorem faceCount_old (n : ℕ) (v : Vertex n) :
+theorem faceCount_old (n : ℕ) (v : Vertex n) :
     faceCount (n + 1) (Sum.inl v) = 2 * faceCount n v := by
   classical
   simp only [faceCount, Face, Fintype.sum_prod_type, old_incident_children]
@@ -213,7 +213,7 @@ private theorem faceCount_new (n : ℕ) (f : Face n) :
   simp
 
 /-- The ordinary adjacency row gains exactly one neighbour per incident inner face. -/
-private theorem degreeCount_old (n : ℕ) (v : Vertex n) :
+theorem degreeCount_old (n : ℕ) (v : Vertex n) :
     degreeCount (n + 1) (Sum.inl v) = degreeCount n v + faceCount n v := by
   unfold degreeCount
   rw [Fintype.sum_sum_type]

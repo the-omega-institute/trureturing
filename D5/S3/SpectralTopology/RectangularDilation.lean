@@ -55,10 +55,12 @@ private theorem second_eq_of_positive_roots
     hB.eigenvalues₀ ⟨1,hb⟩ = hA.eigenvalues₀ ⟨1,ha⟩ := by
   have hAr : A.charpoly.roots.map Complex.re = (List.ofFn hA.eigenvalues₀ : Multiset ℝ) := by
     rw [hA.roots_charpoly_eq_eigenvalues₀, Multiset.map_map]
-    simp only [Function.comp_def, RCLike.ofReal_re, Fin.univ_val_map]
+    simp only [Function.comp_def, Fin.univ_val_map]
+    rfl
   have hBr : B.charpoly.roots.map Complex.re = (List.ofFn hB.eigenvalues₀ : Multiset ℝ) := by
     rw [hB.roots_charpoly_eq_eigenvalues₀, Multiset.map_map]
-    simp only [Function.comp_def, RCLike.ofReal_re, Fin.univ_val_map]
+    simp only [Function.comp_def, Fin.univ_val_map]
+    rfl
   rw [hAr, hBr] at hr
   have hl : (List.ofFn hA.eigenvalues₀).filter (fun y => decide (0 < y)) =
       (List.ofFn hB.eigenvalues₀).filter (fun y => decide (0 < y)) := by
@@ -96,7 +98,7 @@ theorem unequal_dilation_second
   let T := ι ⊕ κ
   let X : Matrix T T ℂ := fromBlocks 0 B 0 0
   let G : Matrix T T ℂ := fromBlocks (B * Bᴴ) 0 0 0
-  have hG : G.IsHermitian := (isHermitian_mul_conjTranspose_self B).fromBlocks rfl isHermitian_zero
+  have hG : G.IsHermitian := (isHermitian_mul_conjTranspose_self B).fromBlocks (by simp) isHermitian_zero
   have hXX : X * Xᴴ = G := by
     simp [X, G, fromBlocks_conjTranspose, fromBlocks_multiply]
   have hn : 1 < Fintype.card T := by dsimp [T]; simp only [Fintype.card_sum]; omega
