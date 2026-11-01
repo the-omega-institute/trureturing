@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice;
 
 internal sealed class LatticeActualC2Document : IScribeDocumentDefinition
 {
