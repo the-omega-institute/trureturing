@@ -8,13 +8,27 @@ motivation_gids:
   - D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.claim
 ---
 
-## Exact event
+# Even double paths with a nonempty loop set allow nSSP
+
+## Problem
 
 Koljančić–Oblak Question 5.11 asks whether every positive even order n and every nonempty loop set L on the double path admit a real nSSP matrix with exactly that pattern. Both orientations of every consecutive path edge occur, and only the loops at vertices in L are added. The final witness has no sign, symmetry, trace, spectrum or genericity restriction. The real test matrix X is unrestricted; the defining equations are entrywise A times X equal to zero and A times transpose X minus transpose X times A equal to zero.
 
 The exact Lean proposition is `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.claim`. Unit #25129, preregistration comment 6554378006, owns this event. The companion `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPathNSSP.result` has this exact proposition as its type. Both mathematical hosts are frozen. The result proves the full event stated here.
 
-## Mathematical route
+The source is Sara Koljančić and Polona Oblak, *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*, arXiv:2604.21552v1, Question 5.11, with Definitions 1.1, 1.3 and 1.5 fixing nSSP, allowing a pattern and double-path loops. The later Electronic Journal of Linear Algebra publication, volume 42, pages 755–779, DOI 10.13001/ela.2026.10523, states Question 5.11 on PDF page 22, printed page 776. The linked Library note owns the source and license correspondence.
+
+For every natural n with 0 < n and Even n, and every nonempty finite set L of vertices in Fin n, there exists a real matrix A indexed by Fin n whose nonzero entries are exactly the two orientations of consecutive path edges and the diagonal entries selected by L. For every real matrix X on the same indices, A ∘ X = 0 together with A * Xᵀ − Xᵀ * A = 0 implies X = 0. Here ∘ is the entrywise product. This includes n = 2 and singleton endpoint loops; no restriction on X or extra premise on A is added to the event.
+
+## Motivation
+
+The frozen recurrence and matrix relations connect local branch information to the unrestricted nSSP test. An exact-support witness for every nonempty loop set requires both a one-loop construction at any vertex and a support enlargement that preserves injectivity.
+
+## Gap
+
+The final result discharges the coprime-branch, spectral, support and openness conditions used inside its proof, so none remains a hypothesis of the full event. The remaining source-owner audit gaps are the nine unfinished registrations detailed in Evidence. Odd orders and empty loop sets lie outside this theorem, and literature priority is not asserted.
+
+## Route
 
 Choose a single loop in L, construct a symmetric weighted path with that loop, and enlarge the exact support after establishing nSSP. The sufficient one-loop construction uses coprime branch characteristic polynomials and an injective coefficient variation. The branch recurrence recovery theorem handles the last step of recovering internal edge variations from two consecutive zero branch variations, including empty and length-one branches.
 
@@ -22,7 +36,13 @@ The zero-diagonal branch characteristic correspondence and the algebraic constan
 
 For arbitrary nonempty L, choose a vertex l in L and use branch lengths l.val and n-1-l.val; even n makes their sum odd. The nSSP test map sends an unrestricted matrix X to the pair of its entrywise product with A and the transpose commutator. It is linear in X and continuous as a family in A. The set of injective continuous linear maps on a finite-dimensional domain is open. Add a sufficiently small positive value at precisely the other loops of L: each new loop is nonzero, the selected loop and every edge are unchanged, and all other entries stay zero. This proves the complete exact-support event. It does not require similarity preservation from the published Superpattern Lemma.
 
-## Declaration scope
+## Falsifier
+
+A counterexample would be a positive even order and nonempty loop set for which no exact-support real witness has nSSP. Failure of a chosen symmetric construction is not such a counterexample. Completion requires a kernel-checked proof of the unchanged full claim with an admissible axiom closure and matching source exposition. A recurrence milestone, finite enumeration, one-loop-only theorem or source citation is insufficient.
+
+## Evidence
+
+### Declaration scope
 
 | Declaration | Proof shape | Mathematical role |
 | --- | --- | --- |
@@ -53,12 +73,12 @@ Private `continuant_derivative` is a content inductive differentiation of the br
 
 All nine unfinished audits are disclosed under CLAUDE.md §3.9 at https://github.com/the-omega-institute/trureturing/issues/25129#issuecomment-6558078579 . This linked-issue exception permits mathematical delivery and does not assert audit completion.
 
-## Falsifier and acceptance boundary
-
-A counterexample would be a positive even order and nonempty loop set for which no exact-support real witness has nSSP. Failure of a chosen symmetric construction is not such a counterexample. Completion requires a kernel-checked proof of the unchanged full claim with an admissible axiom closure and matching source exposition. A recurrence milestone, finite enumeration, one-loop-only theorem or source citation is insufficient.
-
-Source and license correspondence are in `Library/Eigenstructure/koljancic2026nssp.md`. No global priority or exhaustive nonresolution claim is made.
-
 ## Triage
 
 The retained exact result is an existential theorem for every positive even order and every nonempty loop set, with every real test matrix included. The proof selects structured witnesses; the event itself adds no structural assumption. No mathematical bridge remains as a hypothesis of the final theorem. Source-bound audit completion remains outstanding under the linked-issue exception in CLAUDE.md §3.9. The theorem does not settle odd orders or the empty-loop-set question.
+
+## ASSUMED-UNVERIFIED
+
+Source and license correspondence are in `Library/Eigenstructure/koljancic2026nssp.md`. No global priority or exhaustive nonresolution claim is made.
+
+Exhaustive literature completeness, worldwide nonresolution and global priority are not established. The authenticated arXiv source carries CC BY-SA 4.0; the publisher edition’s separate reuse license is unverified. The nine source-bound audits remain unfinished under the linked-issue exception, separately from the frozen mathematical proof. This theorem supplies no conclusion for odd orders or empty loop sets.
