@@ -6,11 +6,6 @@
    utility: none
    digest: The remaining correlation domain admits the weight gap exactly above sigma=c. -/
 
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.Linarith
 import D5.S3.Weil.ZetaLinear.PosIndex
 
 /-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
