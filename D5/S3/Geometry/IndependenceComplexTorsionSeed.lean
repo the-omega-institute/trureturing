@@ -113,20 +113,24 @@ def TriangleSimplex := {p : Vertex × Vertex × Vertex //
     ({p.1, p.2.1, p.2.2} : Finset Vertex) ∈ seedComplex}
 
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 private theorem edge_enumeration : ∀ a b : Vertex,
     (a < b ∧ ({a, b} : Finset Vertex) ∈ seedComplex) ↔
       ∃ e : EdgeIndex, edge e = (a, b) := by
   decide
 
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 private theorem triangle_enumeration : ∀ a b c : Vertex,
     (a < b ∧ b < c ∧ ({a, b, c} : Finset Vertex) ∈ seedComplex) ↔
       ∃ t : TriangleIndex, triangle t = (a, b, c) := by
   decide
 
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 private theorem edge_injective : Function.Injective edge := by decide
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 private theorem triangle_injective : Function.Injective triangle := by decide
 
 /-- This equivalence certifies that every actual edge occurs, exactly once.
@@ -174,6 +178,7 @@ noncomputable def d2 : C2 →ₗ[ℤ] C1 :=
   Fintype.linearCombination ℤ triangleBoundary
 
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 private theorem triangleBoundary_cycle :
     ∀ t : TriangleIndex, d1 (triangleBoundary t) = 0 := by
   decide
@@ -213,9 +218,10 @@ def nonTreeCocycle : Fin 22 → ZMod 2 := ![
   1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0,
   0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0]
 
+set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 /-- A full edge functional, with its zero-on-tree and retained non-tree values
 included in its type. No spanning-tree theorem is needed for the detection proof. -/
-set_option maxHeartbeats 2000000 in
 def extendedCocycle : {w : EdgeIndex → ZMod 2 //
     (∀ i : Fin 10, w (treeEdge i) = 0) ∧
     (∀ i : Fin 22, w (nonTreeEdge i) = nonTreeCocycle i)} :=
@@ -227,6 +233,7 @@ def detector : C1 →ₗ[ℤ] ZMod 2 :=
   Fintype.linearCombination ℤ extendedCocycle.val
 
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
 private theorem detector_triangleBoundary :
     ∀ t : TriangleIndex, detector (triangleBoundary t) = 0 := by
   decide
@@ -236,16 +243,19 @@ theorem detector_d2 (c : C2) : detector (d2 c) = 0 := by
   change detector (∑ t, c t • triangleBoundary t) = 0
   simp only [map_sum, map_smul, detector_triangleBoundary, smul_zero, Finset.sum_const_zero]
 
-/-- The retained edge vector is a cycle. -/
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
+/-- The retained edge vector is a cycle. -/
 theorem d1_z : d1 z = 0 := by decide
 
-/-- The retained triangle chain bounds twice the cycle, with integral coefficients. -/
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
+/-- The retained triangle chain bounds twice the cycle, with integral coefficients. -/
 theorem d2_boundingChain : d2 boundingChain = (2 : ℕ) • z := by decide
 
-/-- The full edge cocycle takes value one on the displayed cycle. -/
 set_option maxHeartbeats 2000000 in
+-- Exhaustive kernel reduction of the fixed finite chain tables.
+/-- The full edge cocycle takes value one on the displayed cycle. -/
 theorem detector_z : detector z = 1 := by decide
 
 /-- In particular the cycle is not an integral boundary. -/
