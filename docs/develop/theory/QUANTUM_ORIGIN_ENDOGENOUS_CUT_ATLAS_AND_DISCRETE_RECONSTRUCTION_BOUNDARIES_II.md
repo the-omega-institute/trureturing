@@ -4740,3 +4740,260 @@ V78's shared-history framework distinguishes a sufficient common relation from t
 The affine-class optimum, uniform all-spectrum upper bound and fixed-spectrum determinant bound are distinct conclusions. Neither $\mathcal U_{N,q}$ nor (162.2) is asserted to solve the full mixed-state minimax constant or sharp success/error curve. Native Schur access, dilations, routing, discarded records, external-reference preservation and clean source return retain separate operation contracts. This construction supplies no free instrument, efficient implementation, clean reference return or additional state information for side selection. The claims here are conditional paper deductions, without Lean compilation, experimental validation or a physical realization claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 164. Complement determinant quantization and original-menu capacity
+
+**定义 164.1（The unchanged four-dimensional table and integral atoms）。** Let $R=\mathbb Z[i]$. For a dyadic integer $N=2^m$, $m\ge1$, retain the single complete table $p:K_{4,m}\to[0,1]$, all labelled two- and three-result menus including zero and repeated effects, their tolerance $\epsilon\in[0,1/10]$, and the original coordinate tomography matrix $H$ from the [companion volume, Definition 16.1](https://github.com/the-omega-institute/trureturing/blob/4e274edb55f70418baa5abf9c318600017fb6e8c/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md). Write
+
+$$
+e(X)=p(X)-\operatorname{Tr}(HX),\qquad X\in K_{4,m}.
+\tag{164.1}
+$$
+
+A nonzero $G\in\operatorname{Herm}_4(R)$ with $G\succeq0$ is an integral interval atom if
+
+$$
+\{X\in\operatorname{Herm}_4(R):0\preceq X\preceq G\}=\{0,G\}.
+\tag{164.2}
+$$
+
+The spectral predicate for an original target is still
+
+$$
+\lambda_{\max}(E)\le1-A/N^2
+\quad\text{or}\quad
+\lambda_{\min}(E)\ge A/N^2,
+\qquad A>2.
+\tag{164.3}
+$$
+
+There is no relation between tables at different scales. In particular, no congruence covariance of $p$ is supplied.
+
+**定理 164.2（Determinant dichotomy, complementary-atom confinement and legal multiplicity）。** Let $N$ be an integer and let $G\in\operatorname{Herm}_4(R)$ satisfy
+
+$$
+0\prec G\prec NI_4,\qquad
+1\le d:=\det G<N.
+$$
+
+Put $B=NI_4-G$ and $D=\det B$. Then
+
+$$
+D=d+kN\quad\text{for some integer }k\ge0.
+\tag{164.4}
+$$
+
+If $k=0$, both endpoint gaps satisfy
+
+$$
+\lambda_{\min}(G)\le\frac{4d}{N},\qquad
+\lambda_{\min}(B)\le\frac{4d}{N}.
+\tag{164.5}
+$$
+
+Consequently, if $N>11$, $d\le11$, and
+
+$$
+\lambda_{\max}(G)\le N-A/N,\qquad A>44,
+\tag{164.6}
+$$
+
+then $D\ge N+d$. In particular $B$ is not an integral interval atom. If instead $G$ and $B$ are both positive-definite integral interval atoms and $N>11$, their determinants are equal and at most $11$, and
+
+$$
+\lambda_{\min}(G/N)\le\frac{44}{N^2},\qquad
+1-\lambda_{\max}(G/N)\le\frac{44}{N^2}.
+\tag{164.7}
+$$
+
+Under the hypotheses $d\le11$ and (164.6), if $N\ge2048$, define
+
+$$
+\eta=2D^{-1/4},\qquad
+ t=\left\lfloor\frac{D^{1/4}}2\right\rfloor.
+$$
+
+There is $0\ne q\in R^4$ such that
+
+$$
+qq^*\preceq\eta B,\qquad
+ tqq^*\preceq B,\qquad
+ t\ge\left\lfloor\frac{(N+d)^{1/4}}2\right\rfloor\ge3.
+\tag{164.8}
+$$
+
+For a dyadic $N\ge2048$ and any original table of Definition 164.1, set
+
+$$
+X_j=\frac{jqq^*}{N},\qquad
+Y_j=\frac{G+jqq^*}{N},\qquad 1\le j\le t.
+$$
+
+All these are original-grid effects. Each $X_j$ is strict rank one, meaning $\|X_j\|_{\rm op}<1$, and $Y_j\prec I_4$ for $j<t$. Their errors satisfy, separately for every such $j$,
+
+$$
+|e(Y_j)-e(G/N)|\le53144\epsilon.
+\tag{164.9}
+$$
+
+Proof. The characteristic polynomial of an integral Hermitian matrix belongs to $\mathbb Z[x]$. Indeed its coefficients are signed sums of principal determinants, and each principal determinant is both a Gaussian integer and real. This is the classical principal-minor coefficient formula, also stated in the [pinned Mathlib source as `Matrix.charpoly_coeff_eq_sum_minors`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean). Write
+
+$$
+f(x)=\det(xI_4-G)
+=x^4-s_1x^3+s_2x^2-s_3x+d,
+\qquad s_1,s_2,s_3\in\mathbb Z.
+$$
+
+Since the dimension is even, $f(0)=d$ and $f(N)=D$. Reduction modulo $N$ gives $D\equiv d\pmod N$. Positivity makes $D$ a positive integer; since $0<d<N$, the multiplier in (164.4) is nonnegative.
+
+Suppose $D=d$. The equality $f(N)=f(0)$ yields
+
+$$
+s_3=N(N^2-Ns_1+s_2).
+\tag{164.10}
+$$
+
+If $g_1,\ldots,g_4>0$ are the eigenvalues of $G$, then $s_3=d\sum_{a=1}^4g_a^{-1}>0$. Thus (164.10) makes $s_3$ a positive integral multiple of $N$. With $a=\min_a g_a$,
+
+$$
+N\le s_3=d\sum_{a=1}^4g_a^{-1}\le\frac{4d}{a},
+$$
+
+which gives the first inequality in (164.5). Interchanging $G$ and $B$ gives the other: both determinants equal $d$ and their sum is $NI_4$.
+
+Under (164.6), $\lambda_{\min}(B)\ge A/N>44/N\ge4d/N$, so $k=0$ is impossible. This proves $D\ge N+d$. The [companion volume, Lemma 57.1](https://github.com/the-omega-institute/trureturing/blob/4e274edb55f70418baa5abf9c318600017fb6e8c/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md) shows that a positive-definite four-dimensional integral interval atom has determinant at most $11$. Hence $B$ cannot be an atom. If both $G$ and $B$ are positive-definite atoms, that bound puts both determinants in $\{1,\ldots,11\}$. For $N>11$ their congruence forces equality, and (164.5), divided by $N$, gives (164.7).
+
+For the capacity assertion reuse equation (57.2) of that same lemma. The ordinary real eight-dimensional Hermite constant is $\gamma_8=2$, as recorded by Stephanie Vance, [A Mordell Inequality for Lattices over Maximal Orders, §4.2, Table 3 and its preceding paragraph](https://arxiv.org/html/0810.2336v5#S4.T3). The paragraph states ordinary-lattice optimality in dimensions at most eight; the bound is not restricted to a special Gaussian subclass. Applied to $B$, it supplies $0\ne q\in R^4$ with
+
+$$
+c:=q^*B^{-1}q\le2D^{-1/4}=\eta<1,
+$$
+
+where $D\ge N+d\ge2049>16$. Cauchy--Schwarz in the $B$ inner product gives $qq^*\preceq cB\preceq\eta B$. Since $t\eta\le1$, this proves $tqq^*\preceq B$. The lower bound on $t$ follows from $D\ge N+d$ and $N+d>6^4$.
+
+For $1\le j\le t$, all entries of $X_j,Y_j$ lie on the original grid, and
+
+$$
+0\preceq jqq^*\preceq B\prec NI_4,\qquad
+0\prec G+jqq^*\preceq NI_4.
+$$
+
+Thus $X_j$ has norm strictly less than one. If $j<t$, then $j\eta\le j/t<1$, so $B-jqq^*\succeq(1-j\eta)B\succ0$ and $Y_j\prec I_4$. At $j=t$ only $Y_t\preceq I_4$ is asserted. Compare the actual permitted menus
+
+$$
+(G/N,X_j,I_4-Y_j),\qquad(Y_j,I_4-Y_j).
+$$
+
+Their defects differ by $e(G/N)+e(X_j)-e(Y_j)$, whose absolute value is at most $2\epsilon$. Lemma 57.2 of the companion volume gives $|e(X_j)|\le53142\epsilon$, proving (164.9) without summing errors over $j$.
+
+These statements have a direct consumer in the original quadratic-margin problem. For an upper-margin target, Theorems 57.3--57.4 of the companion volume produce $G=0$ or an atom with $G\preceq NE$, determinant at most $11$, and error transfer at most $902824\epsilon$. A nonzero residual inherits that upper margin, so (164.6)--(164.9) apply when $A>44$. For a lower-margin target first put $F=I_4-E$. Then $F$ has the required strict upper margin, even if $\|E\|_{\rm op}=1$. The original binary menu and $|\operatorname{Tr}H-1|\le9\epsilon$ give
+
+$$
+|e(E)+e(F)|\le10\epsilon.
+\tag{164.11}
+$$
+
+Thus complementing before extraction avoids any claim that a subatom inherits a lower margin. The remaining coarse dyadic scales $N<2048$ have $N\le1024$; the reused bound $\|H\|_{\rm op}\le8$ gives $|e(E)|\le33\le33792/N$.
+
+Equation (164.9) bounds a difference of errors. It supplies no absolute bound on $e(G/N)$. In fact, if $G$ is an atom and $j<t$, the legal decomposition $NY_j=G+jqq^*$ already has $G$ as its residual in the companion volume's Theorem 57.3. The multiplicity can therefore grow while that residual stays unchanged. The determinant confinement and its finite-table consequences here are repo-derived applications of the credited coefficient and Hermite tools; no classification of Gaussian forms or general covariance of table values is used. $\square$
+
+## 165. Two exceptional effects cannot refute the quadratic-margin event
+
+**定理 165.1（Noisy two-effect support certificate with the original tomography）。** For each $m\ge1$, let $N=2^m$ and let $p$ satisfy exactly Definition 164.1. Suppose there exists a density matrix $\rho\succeq0$, $\operatorname{Tr}\rho=1$, such that
+
+$$
+\#\{X\in K_{4,m}:p(X)\ne\operatorname{Tr}(\rho X)\}\le2.
+\tag{165.1}
+$$
+
+The exceptional effects are arbitrary: they may be singular, complementary, endpoints, or a single self-complementary effect. Their deviations need not be opposite. Then, using the original $H$ pinned by $p$, every target in the unchanged spectral disjunction with $A=45$ satisfies
+
+$$
+\lambda_{\max}(E)\le1-\frac{45}{N^2}
+\quad\text{or}\quad
+\lambda_{\min}(E)\ge\frac{45}{N^2}
+\quad\Longrightarrow\quad
+|p(E)-\operatorname{Tr}(HE)|\le264(\epsilon+N^{-1}).
+\tag{165.2}
+$$
+
+For $N\ge16$ the sharper bound $106\epsilon$ holds. Thus (165.1) defines a whole class satisfying the original event with $A=45,C=264$, including every two-point perturbation of the trace table used in the companion volume's §32.
+
+Proof. Put $q_\rho(X)=\operatorname{Tr}(\rho X)$, $\delta(X)=p(X)-q_\rho(X)$, and $S=\{X:\delta(X)\ne0\}$. Every original menu has $q_\rho$-sum one, so its $\delta$-sum has absolute value at most $\epsilon$. Assume first $N\ge16$.
+
+If $|\delta(X)|\le2\epsilon$ for every effect, let $L=H-\rho$. On every original tomography projection $Q$,
+
+$$
+|\operatorname{Tr}(LQ)|=|\delta(Q)|\le2\epsilon.
+$$
+
+The coefficient expansion (16.6)--(16.7) of the companion volume, with $d=4$ and $\|E\|_{\rm op}\le1$, has total absolute coefficient sum at most $52$. Hence
+
+$$
+|\operatorname{Tr}(LE)|\le104\epsilon,\qquad
+|e(E)|\le|\delta(E)|+|\operatorname{Tr}(LE)|\le106\epsilon
+\tag{165.3}
+$$
+
+for every effect, without a spectral restriction.
+
+If $S\subseteq\{0,I_4\}$, the menus $(0,I_4)$ and $(0,0,I_4)$ give
+
+$$
+|\delta(0)+\delta(I_4)|\le\epsilon,\qquad
+|2\delta(0)+\delta(I_4)|\le\epsilon.
+$$
+
+Thus $|\delta(0)|\le2\epsilon$ and $|\delta(I_4)|\le3\epsilon$. All tomography projections lie outside these endpoints, so $H=\rho$ and every error is at most $3\epsilon$.
+
+It remains to treat $S\not\subseteq\{0,I_4\}$ and $|\delta(U)|>2\epsilon$ for some $U$. Such a $U$ cannot be an endpoint. Indeed, the binary menu for an endpoint and its complement would force the other endpoint into $S$; since $\#S\le2$, that would imply $S\subseteq\{0,I_4\}$. Put $V=I_4-U$. The binary menu $(U,V)$ forces $V\in S$, because otherwise $|\delta(U)|\le\epsilon$. Also $V\ne U$, since the allowed repeated menu $(U,U)$ would give $2|\delta(U)|\le\epsilon$ if $V=U$. Consequently
+
+$$
+S=\{U,V\},\qquad
+|\delta(V)|\ge|\delta(U)|-\epsilon>\epsilon.
+\tag{165.4}
+$$
+
+Both $U,V$ are nonzero and distinct from $I_4$.
+
+Suppose $V=X+Y$ is a proper original-grid decomposition with $X,Y\ne0$ and $X,Y\succeq0$. Neither summand equals $V$. In the permitted menu $(U,X,Y)$ the only possible exceptional entries are therefore copies of $U$. Its deviation is $(1+n)\delta(U)$, where $n\in\{0,1,2\}$ counts the summands equal to $U$. Its absolute value exceeds $\epsilon$, a contradiction. Thus $V$ is a grid interval atom. Applying the identical argument to a proper decomposition of $U$, using the menu containing $V$ and $|\delta(V)|>\epsilon$, shows that $U$ is also a grid interval atom. This argument uses the noisy menu inequalities directly and keeps all labels and repetitions.
+
+Let $G=NU$ and $B=NV$. Scaling by $N$ makes them integral interval atoms with $G+B=NI_4$. They must both be positive definite. To see this, suppose $G$ is singular. The rank-at-most-three extraction in the proof of the companion volume's Theorem 57.3 supplies $0\ne v\in R^4$ with $vv^*\preceq G$. Atomicity forces $G=vv^*$. Put $s=\|v\|^2$, a positive integer with $s\le N$. If $s=N$, then $B=NI_4-vv^*$ has rank three. The same extraction and atomicity would force $B$ to have rank one, a contradiction. If $s<N$, then $B$ is positive definite and
+
+$$
+\det B=N^3(N-s)\ge N^3>11,
+$$
+
+contradicting the determinant bound for positive-definite integral interval atoms. This proves $G\succ0$; interchanging $G,B$ proves $B\succ0$.
+
+Theorem 164.2 now gives (164.7) for both $U$ and $V$. In particular each exceptional effect obeys
+
+$$
+\lambda_{\min}(X)\le\frac{44}{N^2},\qquad
+1-\lambda_{\max}(X)\le\frac{44}{N^2},
+\qquad X\in\{U,V\}.
+\tag{165.5}
+$$
+
+Neither exceptional effect satisfies either branch of (165.2). Since $U,V$ have rank four, every rank-one tomography projection is outside $S$, and $H=\rho$ exactly. Every eligible target consequently has zero error in this case. Together with (165.3) and the endpoint case this proves the $106\epsilon$ bound for $N\ge16$.
+
+For the remaining dyadic scales $N\le8$, the original table bounds from Theorem 16.2 of the companion volume give
+
+$$
+|e(E)|\le p(E)+|\operatorname{Tr}(HE)|
+\le1+\|H\|_{\rm op}\operatorname{Tr}(E)
+\le33\le264/N.
+$$
+
+Combining the two regimes proves (165.2). The coefficient expansion and rank-one extraction are reused intermediate tools. The repo-derived conclusion is a uniform certificate for all tables with at most two exceptional effects, for every density baseline, with approximate menus and the actual pinned tomography retained.
+
+For unrestricted original tables, (165.1) is not supplied. The remaining upper-margin atom estimate is still
+
+$$
+|e(G/N)|\le C_{\rm atom}(\epsilon+N^{-1})
+\tag{165.6}
+$$
+
+with one finite constant independent of $N,p,\epsilon$, for all positive-definite integral interval atoms of determinant at most $11$ satisfying an upper margin $A/N^2$ for some fixed $A>44$. Equations (164.8)--(164.9) do not prove (165.6). Nor does (164.7) apply to residual pairs satisfying only $G+G'\preceq NI_4$: its coefficient divisibility used exact complementarity. The original unrestricted existential event is therefore neither proved nor refuted by these results. $\square$
+
+## 追加锚（本行以下为增补区）

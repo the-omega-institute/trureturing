@@ -1531,3 +1531,1323 @@ Eliminating $\sin^2t$ gives the final identity. The effects remain complete, eac
 Theorem 10.3 closes the quantitative assertion left open after Section 9, while Proposition 10.4 records that its exponent cannot be improved using the same protocol class. The proof uses the degree-two homogeneous defect budget; the quartic statistics in Proposition 8.3 alone would be presentation-dependent under proportional refinement. The estimate is deliberately conservative and does not claim an optimal constant.
 
 ## 追加锚（本行以下为增补区）
+## 11. 原始效果与共享反馈的定性刚性
+
+Theorem 10.3 controls the implemented channel in the full reference-inclusive diamond norm.  The next distinction is at the producer level: an original outcome carries one normalized effect and one feedback unitary, and spectral refinement must not replace that shared unitary by separate controls.  This section extracts a uniform qualitative modulus for those original pairs.  Its consumer is a weighted producer certificate: near-optimal implementations can certify clustering of normalized effects and their actual feedback around the two joint optimizer classes, with no claim of uniform control for arbitrarily small-weight outcomes.  It does not assert a power law; the quadratic producer coercivity remains a separate open target.
+
+**定义 11.1（原始对的距离与联合缺陷）。** 保持定义 9.1 的紧空间
+
+$$
+\mathcal K=\operatorname{Dens}_2\times U(4)
+$$
+
+及定理 9.4 的两个优化集
+
+$$
+\mathcal S_\sigma
+ =\{(E_\sigma,e^{i\varphi}U_\sigma):\varphi\in\mathbb R\},
+\qquad
+\mathcal S=\mathcal S_+\cup\mathcal S_-.
+$$
+
+在 $\mathcal K$ 上定义
+
+$$
+\rho(E,U)
+ =\min_{\sigma\in\{+,-\},\ |\lambda|=1}
+ \left(\|E-E_\sigma\|_{\mathrm F}^2
+       +\|U-\lambda U_\sigma\|_{\mathrm F}^2\right)
+$$
+
+以及
+
+$$
+g(E,U)=a(E)+\tau(E,U),
+$$
+
+其中 $a$ 与 $\tau$ 正是式 (9.12) 的连续缺陷。$\rho$ 对反馈的标量相位取商，保留效果与反馈的共同符号选择；它不把同一原始结果的两个谱向量当成两个可重新控制的结果。
+
+**引理 11.2（单原始对的零集）。** 对所有 $(E,U)\in\mathcal K$，
+
+$$
+\boxed{\quad g(E,U)=0\quad\Longleftrightarrow\quad
+       \rho(E,U)=0\quad\Longleftrightarrow\quad
+       (E,U)\in\mathcal S.\quad}
+$$
+
+**证明。** 若 $(E,U)\in\mathcal S_\sigma$，式 (9.12) 中的两个平方根列均位于相同的证书射线上，且 $U$ 只是式 (6.3) 的极坐标修正乘以标量相位；故 $a=\tau=0$，从而 $\rho=0$。
+
+反之，$g=0$ 时，式 (9.12) 的每个非负项都为零。由定理 8.2 的等号刻画，每个非零列
+
+$$
+b_\ell(E)=(E^{\mathsf T})^{1/2}e_\ell
+$$
+
+位于两个证书复射线之一。其像 $R_0b_\ell(E)$ 的四个坐标均非零，因此 $\tau=0$ 迫使不等式
+
+$$
+\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b_\ell(E))\right)\right|
+\le\sum_i\left|(R_0b_\ell(E))_i\right|
+$$
+
+逐项取等号。于是 $U$ 为相应极坐标修正乘以一个共同标量相位。一个 $U$ 不可能同时修正两个不同的证书射线，因为式 (9.24) 不是标量矩阵；而 $\operatorname{Tr}E=1$ 保证至少一个列非零。所以全部非零列在同一射线上。由
+
+$$
+\sum_\ell b_\ell(E)b_\ell(E)^\dagger=E^{\mathsf T}
+$$
+
+及迹一归一化，得到 $E=E_\sigma$，并且 $U=e^{i\varphi}U_\sigma$。这正是 $(E,U)\in\mathcal S_\sigma$。$\square$
+
+**定理 11.3（原始对的统一定性模）。** 定义
+
+$$
+\omega(r)=\max\{\rho(E,U):(E,U)\in\mathcal K,\ g(E,U)\le r\}
+$$
+
+（当集合非空时；对超出 $g$ 的最大值的 $r$ 取同一常数延拓）。则 $\omega$ 有限、单调不减，并且
+
+$$
+\boxed{\qquad \lim_{r\downarrow0}\omega(r)=0.\qquad}
+$$
+
+令 $R_\rho=\max_{\mathcal K}\rho<\infty$，对 $s\ge0$ 定义
+
+$$
+\Omega(s)=\inf_{r>0}\left(2\omega(r)+\frac{R_\rho s}{r}\right).
+$$
+
+则对定义 1.2 的任意有限全结果协议，若其效果与实际反馈给出式 (9.3) 的测度 $\mu$，且 $\varepsilon\ge0$ 满足
+
+$$
+\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon,
+$$
+
+就有
+
+$$
+\boxed{
+\int_{\mathcal K}\rho(E,U)\,d\mu(E,U)
+ \le \Omega(8\varepsilon),
+\qquad
+\lim_{\varepsilon\downarrow0}\Omega(8\varepsilon)=0.
+}
+$$
+
+等价地，若原协议写成有限效果族，则
+
+$$
+\sum_{y:D_y\ne0}\operatorname{Tr}(D_y)\,
+ \rho\!\left(\frac{D_y}{\operatorname{Tr}D_y},U_y\right)
+ \le\Omega(8\varepsilon).
+$$
+
+**证明。** $\mathcal K$ 紧，且正平方根、$a$、$\tau$ 连续；对有限个符号和紧单位圆取最小值后，$\rho$ 也连续。引理 11.2 说明 $g^{-1}(0)=\mathcal S=\rho^{-1}(0)$。若存在 $\eta>0$、$r_n\downarrow0$ 及 $(E_n,U_n)$ 使 $g(E_n,U_n)\le r_n$ 而 $\rho(E_n,U_n)\ge\eta$，紧性给出收敛子列。连续性使极限点同时满足 $g=0$ 与 $\rho\ge\eta$，矛盾。因此 $\omega(r)\to0$。
+
+对任意 $r>0$，将 $\mathcal K$ 分成 $g\le r$ 与 $g>r$ 两部分。在前一部分 $\rho\le\omega(r)$；在后一部分 $\rho\le R_\rho$ 且 $1\le g/r$。因为 $\mu(\mathcal K)=2$，
+
+$$
+\begin{aligned}
+\int\rho\,d\mu
+&\le2\omega(r)+R_\rho\,\mu\{g>r\}\\
+&\le2\omega(r)+\frac{R_\rho}{r}\int g\,d\mu.
+\end{aligned}
+$$
+
+引理 9.3 的实际缺陷预算给出 $\int g\,d\mu\le8\varepsilon$。先对 $r$ 取下确界即得第一式。给定 $\eta>0$，先取 $r$ 使 $2\omega(r)<\eta/2$，再令 $s$ 足够小使 $R_\rho s/r<\eta/2$，故 $\Omega(s)\to0$。最后将 $d\mu$ 的原子表达式 (9.3) 代回即可。$\square$
+
+这个结果保留了原始结果的反馈共享关系，并且对结果数与最小结果权重不作假设。它只给出存在性的定性模；没有把 $\Omega$ 误称为平方根，也没有由紧性推出任何显式幂次或最佳常数。
+
+**问题 11.4（生产者层的定量缺口）。** 在定理 11.3 的同一距离 $\rho$ 与缺陷 $g$ 下，是否存在仅依赖固定记录的有限常数 $C$，使
+
+$$
+\rho(E,U)\le C\,g(E,U)
+\quad\text{对所有 }(E,U)\in\mathcal K
+$$
+
+成立，或至少使其在积分意义下给出 $\int\rho\,d\mu\le C\varepsilon$？若答案为否，应给出使 $\rho/g$ 发散的合法原始对序列。任何结论都必须保持同一 $U$ 作用于一个原始结果的全部谱列，并允许奇异效果、零列与任意小结果权重。该问题是生产者层的二次 coercivity 问题；定理 10.3 的通道级平方根估计不替代它。
+
+## 追加锚（本行以下为增补区）
+
+
+## 12. 生产者层的线性 coercivity
+
+问题 11.4 的线性版本可以在同一固定记录上成立。关键是把效果的平方距离与实际共享反馈的相位余量放在同一个局部坐标中；单独对效果做谱分解会丢掉后者。本节只证明存在一个依赖固定记录的常数，不求最佳值。
+
+**引理 12.1（优化圆周附近的共同射线）。** 设 $\sigma\in\{+,-\}$，令
+$P_\sigma=b_\sigma b_\sigma^\dagger$，并写
+
+$$
+B=(E^{\mathsf T})^{1/2},\qquad b_\ell=Be_\ell,\qquad
+t_\sigma(E)=\operatorname{Tr}\bigl((I-P_\sigma)E^{\mathsf T}\bigr).
+$$
+
+存在包含 $\mathcal S_\sigma$ 的邻域 $\mathcal N_\sigma$ 及常数 $C_\sigma<\infty$，使 $(E,U)\in\mathcal N_\sigma$ 时，两列都能写成
+
+$$
+b_\ell=z_\ell b_\sigma+r_\ell,\qquad r_\ell\perp b_\sigma,\qquad |z_\ell|\ge\tfrac13,
+$$
+
+且
+
+$$
+\sum_{\ell=1}^2\|r_\ell\|^2=t_\sigma(E),\qquad
+\|E-E_\sigma\|_{\mathrm F}^2\le2t_\sigma(E),\qquad
+t_\sigma(E)\le1600\,a(E).
+$$
+
+此外，
+
+$$
+\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le C_\sigma\bigl(a(E)+\tau(E,U)\bigr).
+$$
+
+**证明。** 在 $\mathcal S_\sigma$ 上，$B$ 的两列分别是 $(b_\sigma)_\ell b_\sigma$，而 (9.21) 给出 $(b_\sigma)_\ell\ne0$ 且 $R_0b_\sigma$ 的四个坐标均非零。正平方根的连续性给出一个邻域，其中 $|z_\ell|\ge1/3$，且每一列的另一坐标严格小于主坐标；这就固定了上述分解。
+
+由 $\sum_\ell b_\ell b_\ell^\dagger=E^{\mathsf T}$，取 $I-P_\sigma$ 的迹得第一式。在基 $(b_\sigma,b_{-\sigma})$ 中，任意 $E$ 可写成
+
+$$
+T^\dagger E^{\mathsf T}T
+=\begin{pmatrix}1-t&z\\\bar z&t\end{pmatrix},\qquad
+0\le t\le1,\quad |z|^2\le t(1-t),
+$$
+
+其中 $t=t_\sigma(E)$。因此
+
+$$
+\|E-E_\sigma\|_{\mathrm F}^2=2(t^2+|z|^2)\le2t.
+$$
+
+在当前邻域中，$d_\ell^2=\operatorname{dist}(b_\ell,\mathcal E)^2=\|r_\ell\|^2$。定理 8.2 的第二个估计给
+$\sum_\ell d_\ell^2\le1600\sum_\ell\delta(b_\ell)=1600a(E)$，从而得到第三式。
+
+再取一个使 $|z_\ell|^2\ge(1-t)/2\ge1/4$ 的列，记
+$v_\ell=R_0b_\ell$、$v_\sigma=R_0b_\sigma$、
+$D_\sigma=\operatorname{diag}(v_\sigma)$、
+$A_\sigma=\operatorname{diag}(|v_\sigma|)$ 及
+$m_\sigma=\min_i|(v_\sigma)_i|>0$。坐标模长的 1-Lipschitz 性给出
+
+$$
+\|\operatorname{diag}(|v_\ell|)-|z_\ell|A_\sigma\|_{\mathrm{HS}}
+\le\|R_0\|_{\mathrm{op}}\|r_\ell\|.
+$$
+
+对 $K_\ell=U\operatorname{diag}(v_\ell)$ 使用引理 10.1，取其相位 $\lambda$，并令
+$\mu=\lambda|z_\ell|/z_\ell$。因为 $U_\sigma D_\sigma=A_\sigma$，三角不等式给出
+
+$$
+\|(U-\mu U_\sigma)z_\ell D_\sigma\|_{\mathrm{HS}}
+\le\sqrt{2\tau_\ell}+2\|R_0\|_{\mathrm{op}}\|r_\ell\|.
+$$
+
+邻域可再缩小，使 $|z_\ell|m_\sigma\ge m_\sigma/2$。除以这个下界并平方，得到
+
+$$
+\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le\frac{16}{m_\sigma^2}\tau_\ell
+  +\frac{32\|R_0\|_{\mathrm{op}}^2}{m_\sigma^2}\|r_\ell\|^2
+\le C_\sigma(a+\tau).
+$$
+
+这同时处理了 $E$ 的秩一边界；没有对矩阵平方根作可微性假设。$\square$
+
+**定理 12.2（生产者层线性 coercivity）。** 在定义 11.1 的同一 $\rho$ 与 $g$ 下，存在
+$C_{\mathrm{prod}}<\infty$，仅依赖固定记录 $R_0,b_\pm,U_\pm$，使得
+
+$$
+\boxed{\qquad
+\rho(E,U)\le C_{\mathrm{prod}}\,g(E,U)
+\qquad((E,U)\in\mathcal K).}
+$$
+
+因此定义 1.2 的任意有限全结果协议都满足
+
+$$
+\boxed{\qquad
+\int_{\mathcal K}\rho(E,U)\,d\mu(E,U)
+\le8C_{\mathrm{prod}}\,\varepsilon,\qquad}
+$$
+
+只要 $\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon$。
+
+**证明。** 由引理 12.1，在每个 $\mathcal N_\sigma$ 中，以 $\sigma$ 作为定义 11.1
+中最小值的候选，得到
+
+$$
+\rho(E,U)
+\le \|E-E_\sigma\|_{\mathrm F}^2
++\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le C'_\sigma g(E,U).
+$$
+
+取两个邻域的不交并 $\mathcal N$。引理 11.2 表明
+$g^{-1}(0)=\mathcal S\subset\mathcal N$，故紧集
+$\mathcal K\setminus\mathcal N$ 上 $g$ 有严格正的最小值 $m$。令
+$R_\rho=\max_\mathcal K\rho$，则该补集上
+$\rho\le(R_\rho/m)g$。与两个局部常数取最大即得全局
+$C_{\mathrm{prod}}$。
+
+最后对协议的测度积分，并使用引理 9.3 的实际缺陷预算
+$\int g\,d\mu\le8\varepsilon$，得到第二式。该结论不改变原始结果的反馈共享，也不对结果数或最小结果权重作假设。$\square$
+
+定理 12.2 关闭问题 11.4 的存在性版本。这里的常数来自固定记录的局部非退化下界与紧性，尚未给出显式闭式或最佳值；这两个量化问题仍可单独研究。定理 10.3 的通道距离平方根上界及命题 10.4 的锐性不受影响：生产者距离是平方 Frobenius 距离，而通道范数仍可只呈平方根级稳定。
+
+## 13. 局部常数与全局常数的下界
+
+定理 12.2 中的局部常数可以只用固定记录的显式数值写出。令
+
+$$
+\kappa_R=\|R_0\|_{\mathrm{op}}^2=2+\frac1{\sqrt2},
+\qquad s=\sin(\pi/8),
+$$
+
+则 $m_+=\min_i|(R_0b_+)_i|=1/\sqrt2$，而
+$m_-=\min_i|(R_0b_-)_i|=s$。在引理 12.1 的邻域中再缩小使所选主系数满足
+$|z_\ell|\ge1/2$，其证明中的同一估计给出
+
+$$
+\rho(E,U)
+\le \left(3200+\frac{51200\kappa_R}{m_\sigma^2}\right)a(E)
+      +\frac{16}{m_\sigma^2}\tau(E,U).
+$$
+
+因此可取局部系数
+
+$$
+C_{+,\mathrm{loc}}=208000+51200\sqrt2,
+\qquad
+C_{-,\mathrm{loc}}=515200+307200\sqrt2.
+$$
+
+这里使用了
+$s^2=(2-\sqrt2)/4$ 及
+$\kappa_R/s^2=10+6\sqrt2$。这些数值是显式的局部上界，不是全局最佳常数。
+
+事实上，固定记录还允许把补集上的紧性最小值替换成显式的缺陷下界。对
+$F=E^{\mathsf T}$ 在 $(b_\sigma,b_{-\sigma})$ 基中的表示
+
+$$
+F=\begin{pmatrix}1-t&z\\\bar z&t\end{pmatrix},
+\qquad t=t_\sigma(E),
+$$
+
+令 $B=F^{1/2}$，并写每列的两个射线坐标平方为 $p_\ell,q_\ell$。正性和
+$\operatorname{Tr}B^2=1$ 给出
+
+$$
+\sum_{\ell=1}^2\min\{p_\ell,q_\ell\}=\min\{t,1-t\}.
+$$
+
+具体地，在该基中写 $B=\left(\begin{smallmatrix}A&C\\\bar C&D\end{smallmatrix}\right)$；标准基的两个坐标模均为
+$1/\sqrt2$，于是
+
+$$
+|p_1-q_1|+|p_2-q_2|=|A-D|(A+D)=|A^2-D^2|=|1-2t|.
+$$
+
+结合定理 8.2，若 $t\in[\delta,1-\delta]$，则
+$a(E)\ge\delta/1600$。
+取 $\delta=1/30$，并令
+$\mathcal N_\sigma=\{E:t_\sigma(E)<\delta\}\times U(4)$。在 $t\le\delta$ 时，二阶正平方根公式
+
+$$
+F^{1/2}=\frac{F+\sqrt{\det F}\,I}{\sqrt{1+2\sqrt{\det F}}}
+$$
+
+保证两个主射线坐标的模大于 $\sqrt\delta$，而每个次坐标平方不超过 $\delta$；故引理 12.1 的同一射线分解在整个 $\mathcal N_\sigma$ 上成立，且可选列满足
+$|z_\ell|^2\ge(1-\delta)/2$。补集满足 $t\in[\delta,1-\delta]$，并且
+$\rho\le10$。因此
+
+$$
+\boxed{
+C_{\mathrm{prod}}
+\le \frac{7\,772\,800+4\,608\,000\sqrt2}{29}
+<493\,000.}
+$$
+
+这里的上界仍然是保守的，但不再含未计算的紧性最小值。
+
+还可以从合法的共享反馈路径得到全局常数的非平凡下界。令
+
+$$
+\xi_t=\cos t,\qquad \eta_t=i\sin t,
+\qquad b(t)=T(\xi_t,\eta_t)^{\mathsf T},
+$$
+
+取 $E_t=\overline{b(t)}\,\overline{b(t)}^\dagger$，并令
+
+$$
+U_t=\operatorname{diag}(e^{-it},e^{it},1,1)U_+.
+$$
+
+当 $|t|<\pi/8$ 时，同一个 $U_t$ 作用于该原始结果的全部谱列，且
+$\tau(E_t,U_t)=0$。此时
+
+$$
+a(E_t)=\delta(b(t))
+= (\sqrt2+2c)^2\cos^2t+(\sqrt2+2s)^2\sin^2t
+  -(\sqrt2+2c\cos t)^2.
+$$
+
+若
+
+$$
+\kappa_*=2-\sqrt2+2\sqrt2(2s-c)>0,
+$$
+
+则在 $t\to0$ 时直接展开得到
+
+$$
+a(E_t)=\kappa_*t^2+O(t^4),\qquad
+\rho(E_t,U_t)=4t^2+O(t^4).
+$$
+
+其中效果项为 $\|E_t-E_+\|_{\mathrm F}^2=2\sin^2t$，反馈相位商项为
+$4(1-\cos t)$。故任何满足定理 12.2 的全局系数都必须满足
+
+$$
+\boxed{
+C_{\mathrm{prod}}\ge\frac4{\kappa_*}
+ =29.1025694938\ldots .}
+$$
+
+该路径保留一个原始结果的共享反馈，因而不使用把谱列拆成独立控制的非法反例。它只给出下界；全局最佳常数仍是开放问题。
+
+## 14. 两列加权估计与改进的显式常数
+
+上一节的局部估计只选取一列来控制反馈。把两列的系数平方作为权重相加，可以同时保留共享反馈约束并降低常数。以下计算给出一个替代上一节数值上界的全局显式界。
+
+取
+
+$$
+\eta=\frac1{17},\qquad
+\mathcal N_\sigma=\{E:t_\sigma(E)<\eta\}\times U(4).
+$$
+
+在 $(b_\sigma,b_{-\sigma})$ 基中写
+
+$$
+F=E^{\mathsf T}=\begin{pmatrix}1-t&z\\\bar z&t\end{pmatrix},
+\qquad |z|^2\le t(1-t).
+$$
+
+令 $u=\sqrt{\det F}$。二阶正平方根的恒等式为
+
+$$
+B=F^{1/2}=\frac{F+uI}{\sqrt{1+2u}}.
+$$
+
+标准基的两个坐标在该基中的模均为 $h=1/\sqrt2$，所以每一列 $b_\ell=Be_\ell$ 的 $b_\sigma$ 坐标满足
+
+$$
+|z_\ell|\ge
+\frac{h\bigl(1-t-\sqrt{t(1-t)}\bigr)}{\sqrt{1+2\sqrt{t(1-t)}}}.
+$$
+
+当 $t<1/17$ 时，$\sqrt{t(1-t)}\le4/17$，从而
+
+$$
+|z_\ell|^2\ge\frac{72}{425}>\frac1{17}>|r_\ell|^2,
+\qquad
+b_\ell=z_\ell b_\sigma+r_\ell,\qquad r_\ell\perp b_\sigma.
+$$
+
+这里 $r_\ell$ 是 $b_{-\sigma}$ 方向分量。由完备关系，
+
+$$
+\sum_{\ell=1}^2|z_\ell|^2=1-t,
+\qquad
+\sum_{\ell=1}^2\|r_\ell\|^2=t.
+$$
+
+定理 8.2 给出 $t\le1600a(E)$，而二元矩阵的直接展开给出
+
+$$
+\|E-E_\sigma\|_{\mathrm F}^2
+=2\bigl(t^2+|z|^2\bigr)\le2t\le3200a(E).
+$$
+
+对每一列重复引理 10.1 的模长估计。置
+$\kappa_R=\|R_0\|_{\mathrm{op}}^2$、
+$m_\sigma=\min_i|(R_0b_\sigma)_i|$，并令
+$d_U^2=\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2$。
+存在相位 $\mu_\ell$ 使
+
+$$
+|z_\ell|^2m_\sigma^2d_U^2
+\le4\tau_\ell+8\kappa_R\|r_\ell\|^2.
+$$
+
+两列相加并使用 $t<\eta$，得到
+
+$$
+d_U^2\le
+\frac{4}{m_\sigma^2(1-\eta)}\tau(E,U)
++\frac{12800\kappa_R}{m_\sigma^2(1-\eta)}a(E).
+$$
+
+因此在 $\mathcal N_\sigma$ 内，
+
+$$
+\rho(E,U)\le
+\left(3200+\frac{12800\kappa_R}{m_\sigma^2(1-\eta)}\right)a(E)
++\frac{4}{m_\sigma^2(1-\eta)}\tau(E,U).
+$$
+
+固定记录给出
+
+$$
+\kappa_R=2+\frac1{\sqrt2},\qquad
+m_+^2=\frac12,
+\qquad m_-^2=\sin^2(\pi/8)=\frac{2-\sqrt2}{4}.
+$$
+
+故
+
+$$
+C_{+,\mathrm{loc}}=57600+13600\sqrt2,
+\qquad
+C_{-,\mathrm{loc}}=139200+81600\sqrt2.
+$$
+
+在两个邻域的补集上，令 $F^{1/2}=\left(\begin{smallmatrix}A&C\\\bar C&D\end{smallmatrix}\right)$，并以标准基计算列坐标平方 $p_\ell,q_\ell$。正性、$B^2=F$ 和 $A+D=\operatorname{Tr}B$ 给出精确恒等式
+
+$$
+\sum_{\ell=1}^2\min\{p_\ell,q_\ell\}=\min\{t,1-t\}.
+$$
+
+结合定理 8.2，若 $t\in[\eta,1-\eta]$，则
+
+$$
+a(E)\ge\frac{\eta}{1600}=\frac1{27200}.
+$$
+
+另一方面，取距离定义中的较近投影，效果项至多为 $1$；任意两个四阶酉矩阵的相位商 Frobenius 距离至多为 $8$。所以
+
+$$
+\rho(E,U)\le9
+$$
+
+在补集上成立。于是补集的系数至多为 $244800$，从而整个紧参数空间满足
+
+$$
+\boxed{
+C_{\mathrm{prod}}\le139200+81600\sqrt2<254600.}
+$$
+
+相应的协议积分界可以取
+
+$$
+\boxed{\displaystyle
+\int\rho\,d\mu
+\le8(139200+81600\sqrt2)\,\varepsilon
+<2036800\,\varepsilon.}
+$$
+
+该界仍不是最佳值。为提高下界，保留同一共享反馈并令
+
+$$
+U_t=\operatorname{diag}(e^{-ixt},e^{ixt},1,1)U_+,
+\qquad
+x>1,
+$$
+
+同时取 $b(t)=T(\cos t,i\sin t)^{\mathsf T}$、
+$E_t=\overline{b(t)}\,\overline{b(t)}^\dagger$。在 $t\to0$ 时，取相位商后的反馈偏差和效果偏差满足
+
+$$
+\rho(E_t,U_t)=2(1+x^2)t^2+O(t^4),
+$$
+
+而共同实际反馈产生的缺陷为
+
+$$
+g(E_t,U_t)=\bigl(\kappa_0+A(x-1)^2\bigr)t^2+O(t^4),
+$$
+
+其中
+
+$$
+\kappa_0=2-\sqrt2+2\sqrt2(2\sin(\pi/8)-\cos(\pi/8)),
+\qquad
+A=\sqrt2\bigl(\sqrt2+2\cos(\pi/8)\bigr).
+$$
+
+令 $x_*$ 为
+
+$$
+A(x_*^2-1)=\kappa_0x_*.
+$$
+
+其唯一正根为
+
+$$
+x_*=
+\frac{\kappa_0+\sqrt{\kappa_0^2+4A^2}}{2A}>1.
+$$
+
+对
+$R(x)=2(1+x^2)/(\kappa_0+A(x-1)^2)$，导数的符号由
+$-Ax^2+\kappa_0x+A$ 决定；因此该正根给出 $x>0$ 上的最大局部商。
+
+则 $x_*=1.01500811195\ldots$，并得到合法共享反馈路径的下界
+
+$$
+\boxed{
+C_{\mathrm{prod}}\ge
+\frac{2(1+x_*^2)}{\kappa_0+A(x_*-1)^2}
+=29.3209568043\ldots .}
+$$
+
+这里的反馈仍对该原始结果的全部谱列共同作用；可将该归一化效果作为任意正权重的一个原始协议结果，因此没有使用独立拆分反馈或后选择。
+
+## 15. 进一步的交叉项控制
+
+还可以直接控制两列估计中的交叉项。取
+
+$$
+\eta=\frac1{10},
+\qquad \mathcal N_\sigma=\{E:t_\sigma(E)<\eta\}\times U(4).
+$$
+
+此时 $\sqrt{\eta(1-\eta)}=3/10$，正平方根公式给出每列主坐标平方至少为
+
+$$
+\frac12\frac{(3/5)^2}{8/5}=\frac9{80}>\eta.
+$$
+
+所以两列仍可相对于同一个 $b_\sigma$ 分解。沿用上一节的记号，对每列的估计先不使用平方和不等式，得到
+
+$$
+m_\sigma^2(1-t)d_U^2
+\le2\tau+4\kappa_Rt+4\sqrt{2\kappa_R\tau t}.
+$$
+
+用 $2\sqrt{AB}\le32A+B/32$，其中 $A=\tau$、$B=8\kappa_Rt$，得到
+
+$$
+d_U^2\le
+\frac{34}{m_\sigma^2(1-\eta)}\tau
++\frac{17\kappa_R}{4m_\sigma^2(1-\eta)}t.
+$$
+
+结合 $t\le1600a(E)$ 和 $\|E-E_\sigma\|_{\mathrm F}^2\le3200a(E)$，在 $\mathcal N_\sigma$ 内有
+
+$$
+\rho(E,U)\le
+\left(3200+\frac{6800\kappa_R}{m_\sigma^2(1-\eta)}\right)a(E)
++\frac{34}{m_\sigma^2(1-\eta)}\tau(E,U).
+$$
+
+负分支给出最大的局部系数：
+
+$$
+C_{-,\mathrm{loc}}
+=\frac{708800+408000\sqrt2}{9}
+=142866.570\ldots .
+$$
+
+补集上仍有 $a(E)\ge\eta/1600=1/16000$ 及 $\rho\le9$，故其系数至多为 $144000$。因此得到更简洁的全局界
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}\le144000,
+\qquad
+\int\rho\,d\mu\le1{,}152{,}000\,\varepsilon.
+\qquad}
+$$
+
+该常数只使用固定记录、共享反馈和完整两列缺陷预算；最佳全局常数仍未确定。前述显式上界均由本界严格改进。
+
+## 16. 局部与补集阈值的再平衡
+
+阈值与交叉项参数还可以共同再平衡。取
+
+$$
+\eta=\frac{53}{500},
+\qquad \theta=1024
+$$
+
+并在交叉项中使用
+
+$$
+2\sqrt{AB}\le\theta A+\frac{B}{\theta},
+\qquad A=\tau,\quad B=8\kappa_Rt.
+$$
+
+有
+
+$$
+m_\sigma^2(1-t)d_U^2
+\le1026\tau+\frac{513}{128}\kappa_Rt.
+$$
+
+阈值仍保证共同主射线。事实上
+
+$$
+\sqrt{\eta(1-\eta)}=\frac{\sqrt{23691}}{500}<\frac{77}{250},
+$$
+
+故每列主坐标平方至少为
+
+$$
+\frac12\frac{(293/500)^2}{202/125}
+=\frac{85849}{808000}>\frac{53}{500},
+$$
+
+而次坐标平方小于 $t<\eta$。局部负分支的 $a(E)$ 系数为
+
+$$
+3200+\frac{1600\,(513/128)(10+6\sqrt2)}{447/500}
+=135791.5736\ldots,
+$$
+
+其 $\tau$ 系数约为 $7837$，不构成最大项。补集上
+
+$$
+a(E)\ge\frac{\eta}{1600},
+\qquad
+\frac{\rho}{g}\le\frac{14400}{\eta}
+=\frac{7200000}{53}=135849.0566\ldots .
+$$
+
+因此得到当前显式上界
+
+$$
+\boxed{\qquad C_{\mathrm{prod}}<135850.\qquad}
+$$
+
+积分形式可取 $\int\rho\,d\mu\le1{,}086{,}800\,\varepsilon$。该阈值只改善常数，不改变共享反馈、奇异效果或任意小结果权重的适用范围。
+
+## 17. 相位最小值与当前可认证界
+
+引理 10.1 对每个列 $K_\ell$ 分别产生相位 $\lambda_\ell$，从而分别产生 $\mu_\ell$；不需要这些相位相同。事实上，对
+
+$$
+d_U^2=\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+$$
+
+有 $d_U^2\le\|U-\mu_\ell U_\sigma\|_{\mathrm F}^2$ 对每个 $\ell$ 成立。因此可在每列先用各自的相位，再把同一个 $d_U^2$ 的加权上界相加。第 19 节给出保留交叉项的完整聚合；下面先记录只使用一个列的保守界。
+
+取
+
+$$
+\delta=\frac{13}{400},
+\qquad
+\mathcal N_\sigma=\{E:t_\sigma(E)<\delta\}\times U(4).
+$$
+
+在该邻域，正平方根公式与
+
+$$
+\sqrt{\delta(1-\delta)}=\frac{\sqrt{5031}}{400}<\frac9{50}
+$$
+
+给出每列的 $b_\sigma$ 坐标平方大于 $\delta$，而次坐标平方的总和为 $t<\delta$；故两列确实都以同一 $\sigma$ 射线为主。选取 $p_\ell=|z_\ell|^2$ 较大的列，则
+
+$$
+p_\ell\ge\frac{1-t}{2}\ge\frac{1-\delta}{2}.
+$$
+
+对这一个列使用引理 10.1 的单列相位，得到同一个 $d_U$ 的合法上界
+
+$$
+d_U^2
+\le\frac{8}{m_\sigma^2(1-\delta)}\tau(E,U)
++\frac{25600\kappa_R}{m_\sigma^2(1-\delta)}a(E).
+$$
+
+再用 $\|E-E_\sigma\|_{\mathrm F}^2\le3200a(E)$，固定记录的负分支常数为
+
+$$
+C_{-,\mathrm{loc}}
+=3200+\frac{25600(10+6\sqrt2)}{1-13/400}
+=492319.5899\ldots .
+$$
+
+补集上的精确二列恒等式给出 $a(E)\ge\delta/1600$，而 $\rho\le9$，所以补集系数至多为
+
+$$
+\frac{14400}{\delta}=\frac{5760000}{13}=443076.9231\ldots .
+$$
+
+故当前不依赖共同相位假设的认证结果是
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}\le492320,
+\qquad
+\int\rho\,d\mu\le3{,}938{,}560\,\varepsilon.
+\qquad}
+$$
+
+该单列界不使用另一列的相位；两列的相位最小值聚合见第 19 节。
+
+## 18. 无共同相位假设的单列 Young 优化
+
+单列方法本身还可用 Young 不等式优化。取
+
+$$
+\delta=\frac1{16},
+\qquad \lambda=17000.
+$$
+
+因为 $\sqrt{\delta(1-\delta)}=\sqrt{15}/16<1/4$，每列主坐标平方至少为
+
+$$
+\frac12\frac{(11/16)^2}{3/2}=\frac{121}{768}>\frac1{16},
+$$
+
+而次坐标平方小于 $t<\delta$。因此可选取一个满足
+$|z_\ell|^2\ge(1-t)/2$ 的列，并只使用该列产生的单个相位。
+
+对该列，交叉项满足
+
+$$
+4\sqrt{2\kappa_R\tau t}
+\le\lambda\tau+\frac{8\kappa_R}{\lambda}t.
+$$
+
+除以 $|z_\ell|^2m_\sigma^2\ge(1-\delta)m_\sigma^2/2$，再用 $t\le1600a(E)$，得到
+
+$$
+d_U^2\le
+\frac{2(\lambda+2)}{m_\sigma^2(1-\delta)}\tau
++\frac{(12800+25600/\lambda)\kappa_R}
+       {m_\sigma^2(1-\delta)}a(E).
+$$
+
+加入效果项 $\|E-E_\sigma\|_{\mathrm F}^2\le3200a(E)$ 后，负分支的局部 $a(E)$ 系数为
+
+$$
+C_{-,\mathrm{loc}}
+=3200+\frac{17{,}410{,}048}{1275}(10+6\sqrt2)
+=255615.4008\ldots,
+$$
+
+其反馈系数为 $247673.4251\ldots$；正分支的两个系数都更小。补集上 $\rho\le9$ 且
+$a(E)\ge\delta/1600$，故补集系数至多为 $230400$。使用有理界
+
+$$
+\sqrt2<\frac{1414214}{10^6},\qquad
+\left(\frac{1414214}{10^6}\right)^2-2
+=\frac{309449}{250000000000}>0,
+$$
+
+负分支的两个局部系数分别满足
+
+$$
+C_{-,\mathrm{loc}}<\frac{5092338777088}{19921875}<255616,
+\qquad
+\frac{2(\lambda+2)}{m_-^2(1-\delta)}
+<\frac{58048466428}{234375}<255616.
+$$
+
+正分支的两个系数更小，因此得到
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}\le255616,
+\qquad
+\int\rho\,d\mu\le2{,}044{,}928\,\varepsilon.
+\qquad}
+$$
+
+该单列改进不使用另一列的相位。
+
+## 19. 两列相位最小值的合法聚合
+
+对第 14--16 节的加权估计，所需的相位步骤可以直接由距离定义完成。对每个列，
+引理 10.1 给出某个相位 $\mu_\ell$ 及
+
+$$
+|z_\ell|^2m_\sigma^2
+\|U-\mu_\ell U_\sigma\|_{\mathrm F}^2
+\le2\tau_\ell+4\kappa_R\|r_\ell\|^2
++4\sqrt{2\kappa_R\tau_\ell}\,\|r_\ell\|.
+$$
+
+由于
+
+$$
+d_U^2=\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le\|U-\mu_\ell U_\sigma\|_{\mathrm F}^2
+$$
+
+对每个 $\ell$ 分别成立，乘以 $|z_\ell|^2m_\sigma^2$ 后求和，并用
+$\sum_\ell\tau_\ell=\tau$、$\sum_\ell\|r_\ell\|^2=t$ 以及 Cauchy--Schwarz，即得
+
+$$
+m_\sigma^2(1-t)d_U^2
+\le2\tau+4\kappa_Rt+4\sqrt{2\kappa_R\tau t}.
+$$
+
+现在取
+
+$$
+\eta=\frac{17}{160},
+\qquad \lambda=17000.
+$$
+
+只需保证每列的主坐标非零。此时
+$\sqrt{\eta(1-\eta)}=\sqrt{2431}/160<1/3$，正平方根公式中的分子
+$1-\eta-\sqrt{\eta(1-\eta)}$ 为正，因此两个 $z_\ell$ 均可用于上述分解；不要求以它们的模决定最近射线。
+
+Young 不等式给出
+
+$$
+4\sqrt{2\kappa_R\tau t}
+\le\lambda\tau+\frac{8\kappa_R}{\lambda}t.
+$$
+
+结合 $t\le1600a(E)$，负分支的局部系数为
+
+$$
+C_{-,\mathrm{loc}}
+=3200+\frac{1600(4+8/17000)(10+6\sqrt2)}{143/160}
+=\frac{181879680+104460288\sqrt2}{2431}
+=135585.6998\ldots,
+$$
+
+而反馈系数为
+
+$$
+\frac{10881280+5440640\sqrt2}{143}
+=129898.6495\ldots .
+$$
+
+补集上仍有 $\rho/g\le14400/\eta=2304000/17=135529.4118\ldots$。由 $\sqrt2<99/70$，局部两系数均小于 $135600$，故当前可认证的全局结果为
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}<135600,
+\qquad
+\int\rho\,d\mu\le1{,}084{,}800\,\varepsilon.
+\qquad}
+$$
+
+这一步保留同一原始结果的共享反馈，并允许奇异效果与任意小结果权重。
+
+## 20. Young 参数的有理优化
+
+第 19 节的估计可保留参数。对 $0<\eta<1/2$ 和 $\lambda>0$，负支的局部效果系数与反馈系数分别可取
+
+$$
+C_a(\eta,\lambda)
+=3200+
+\frac{1600(4+8/\lambda)(10+6\sqrt2)}{1-\eta},
+\qquad
+C_\tau(\eta,\lambda)
+=\frac{(\lambda+2)(4+2\sqrt2)}{1-\eta},
+$$
+
+而补集系数为
+
+$$
+C_{\mathrm{comp}}(\eta)=\frac{14400}{\eta}.
+$$
+
+取有理参数
+
+$$
+\eta=\frac{53}{499},
+\qquad \lambda=17744.
+$$
+
+使用
+
+$$
+\sqrt2<\frac{1414214}{10^6},
+\qquad
+\left(\frac{1414214}{10^6}\right)^2-2
+=\frac{309449}{250000000000}>0,
+$$
+
+三项分别满足
+
+$$
+\begin{aligned}
+C_a&<\frac{20956099635267}{154566875}=135579.5001\ldots,\\
+C_\tau&<\frac{7558433045089}{55750000}=135577.2744\ldots,\\
+C_{\mathrm{comp}}&=\frac{7185600}{53}=135577.3585\ldots.
+\end{aligned}
+$$
+
+故同一固定记录上的全局生产者界可收紧为
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}<135580,
+\qquad
+\int\rho\,d\mu\le1{,}084{,}640\,\varepsilon.
+\qquad}
+$$
+
+该选择只改变 Young 分解的参数与邻域阈值，不改变反馈共享、奇异效果或结果权重的适用范围；最优常数仍未由此得到。
+
+## 追加锚（本行以下为增补区）
+
+## 21. rank-one 共享反馈族的相位与全尺度极值
+
+第 14 节的下界路径选取了相对证书坐标的纯虚方向。这个选择可以在同一个共享反馈族内直接检验，而不需要把它提升为全局最优性的主张。令
+
+$$
+T=\frac1{\sqrt2}\begin{pmatrix}1&1\\e^{-i\pi/4}&-e^{-i\pi/4}\end{pmatrix},\qquad
+h=\frac1{\sqrt2},\qquad
+b(t,\psi)=T\begin{pmatrix}\cos t\\e^{i\psi}\sin t\end{pmatrix},\qquad
+E(t,\psi)=\overline{b(t,\psi)}\,\overline{b(t,\psi)}^{\dagger}.
+$$
+
+保留同一个原始结果的共享反馈，并置
+
+$$
+U(t,x)=\operatorname{diag}(e^{-ixt},e^{ixt},1,1)U_+,\qquad x\in\mathbb R.
+$$
+
+记 $\theta=\pi/8$、$L_0=\sqrt2+2c$，并令
+
+$$
+A=\sqrt2L_0=\sqrt2(\sqrt2+2c),\qquad
+D=2L_0\left(\frac1{\sqrt2}-\frac1{8c^3}\right)>0,
+$$
+
+其中最后的不等式由 $c>1/\sqrt2$ 得到。
+
+**命题 21.1（相位方向的二阶展开）。** 对固定的 $\psi,x$，当 $t\to0$ 时，定义 11.1 的生产者距离与缺陷满足
+
+$$
+\rho(E(t,\psi),U(t,x))
+=2(1+x^2)t^2+O(t^4),
+$$
+
+$$
+a(E(t,\psi))
+=\bigl(\kappa_0+D\cos^2\psi\bigr)t^2+O(t^4),
+$$
+
+$$
+g(E(t,\psi),U(t,x))
+=\bigl[\kappa_0+A(1+x^2-2x\sin\psi)\bigr]t^2+O(t^4),
+$$
+
+其中 $\kappa_0$ 与第 14 节相同：
+
+$$
+\kappa_0=2-\sqrt2+2\sqrt2(2s-c).
+$$
+
+因此在 $x>0$ 的这条 rank-one 共享反馈族内，固定 $x$ 时局部商
+
+$$
+\lim_{t\to0}\frac{\rho(E(t,\psi),U(t,x))}{g(E(t,\psi),U(t,x))}
+=\frac{2(1+x^2)}{\kappa_0+A(1+x^2-2x\sin\psi)}
+$$
+
+关于 $\psi$ 在 $\psi\equiv\pi/2\pmod{2\pi}$ 处唯一达到最大值；$x<0$ 时唯一最大方向为 $\psi\equiv-\pi/2\pmod{2\pi}$。在 $x>0$ 且取 $\psi=\pi/2$ 时，这个商退化为第 14 节的
+
+$$
+R(x)=\frac{2(1+x^2)}{\kappa_0+A(x-1)^2}.
+$$
+
+**证明。** 对 rank-one 效果，$(E^{\mathsf T})^{1/2}=bb^\dagger$，所以两列的实际反馈缺陷按比例相加，$a(E)=\delta(b)$，而
+
+$$
+\tau(E,U)=\|R_0b\|_{\ell^1}^2
+-\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b)\right)\right|^2.
+$$
+
+写 $\xi=\cos t$、$\eta=e^{i\psi}\sin t$。式 (2.3) 中的量满足
+
+$$
+x_0=\operatorname{Re}(\xi\overline\eta)=\cos t\sin t\cos\psi,\qquad
+y_0=\operatorname{Im}(\xi\overline\eta)=-\cos t\sin t\sin\psi,
+$$
+
+且
+
+$$
+a_0=\sqrt{c^2\cos^2t+s^2\sin^2t},\qquad
+m_0=c\cos^2t+s\sin^2t.
+$$
+
+将式 (2.6)--(2.8) 中的两个和式在 $t=0$ 附近展开平方根，得到
+
+$$
+\|R_0b\|_{\ell^1}
+=L_0+\left[-\frac{\cos^2\psi}{\sqrt2}
++\frac{s^2-c^2}{c}-\frac{\sin^2\psi}{8c^3}\right]t^2+O(t^4).
+$$
+
+另一方面，乘上 $U_+$ 的固定极坐标相位后，四个坐标可写成
+
+$$
+\frac{\xi+\eta}{\sqrt2},\quad
+\frac{\xi-\eta}{\sqrt2},\quad
+c\xi+is\eta,\quad c\xi-is\eta.
+$$
+
+因此带入 $U(t,x)$ 的迹恰为
+
+$$
+S(t)=2\cos t\,(h\cos(xt)+c)-2ih e^{i\psi}\sin t\sin(xt).
+$$
+
+它的零阶项为 $L_0$，且无奇次项；直接取模平方的二阶项并与上一个展开相减，化简得到
+
+$$
+g(E,U)=
+\bigl[\kappa_0+A(1+x^2-2x\sin\psi)\bigr]t^2+O(t^4).
+$$
+
+在该化简中，$a(E)$ 的相位项为 $D\cos^2\psi$，而 $\tau(E,U)$ 的相应常数项为其相反数；剩下的线性项正是 $-2Ax\sin\psi$。反馈相位商距离独立于 $\psi$，因为
+
+$$
+\min_{|\mu|=1}\|U(t,x)-\mu U_+\|_{\mathrm F}^2
+=8\sin^2(xt/2),
+$$
+
+而效果距离为 $2\sin^2t$。这证明了 $\rho$ 的第一式。最后，$A>0$ 且 $x>0$ 时，分母关于 $\sin\psi$ 严格递减，故唯一最大方向为 $\sin\psi=1$；$x<0$ 同理。代入 $\psi=\pi/2$ 即得 $R(x)$。$\square$
+
+**备注 21.2（纯虚方向的有限尺度约化）。** 在 $\psi=\pi/2$ 且 $0<t<\pi/8$ 时，令
+$u=(x-1)t$、$y=xt=u+t$、$L_+=\sqrt2+2c$、$L_-=\sqrt2+2s$。同一共享反馈族的缺陷可精确写成
+
+$$
+\rho_+(t,y)
+=2\sin^2t+8\sin^2\!\left(\frac y2\right),
+$$
+
+$$
+g(E(t,\pi/2),U(t,x))
+=L_+^2\cos^2t+L_-^2\sin^2t
+-\bigl(2c\cos t+\sqrt2\cos u\bigr)^2.
+$$
+
+第一式是到正号优化类 $\mathcal S_+$ 的候选距离。到另一优化类的候选距离为
+
+$$
+\rho_-(t,y)=2\cos^2t+8-4|\sin y|,
+\qquad
+\rho(E(t,\pi/2),U(t,x))=\min\{\rho_+(t,y),\rho_-(t,y)\}.
+$$
+
+故正号分支成立的精确条件是
+
+$$
+\frac12\cos(2t)+1+\cos y-|\sin y|\ge0.
+$$
+
+局部极值路径 $y=x_*t$ 在充分小的 $t$ 上满足该条件；有限尺度的全局商必须保留上述分支最小值。第二式中，$\tau$ 的两项与
+$\|R_0b\|_{\ell^1}^2$ 抵消，迹化为
+$2c\cos t+\sqrt2\cos u$。因此该扰动族的有限尺度商可以直接作为 $(t,u)$
+上的带分支二维三角函数比值研究；令 $t\to0$、$u=(x-1)t$ 即恢复命题 21.1 的
+$R(x)$。下一定理在这个共享反馈族内给出对所有相位和有限尺度统一的上界。
+
+**定理 21.3（rank-one 共享反馈族的全尺度上确界）。** 令
+
+$$
+d=L_+=\sqrt2+2c,\qquad e=L_-=\sqrt2+2s,
+$$
+
+并定义二次多项式
+
+$$
+f(z)=4z^2-2(\sqrt2d+e^2)z+\sqrt2de^2-2d^2.
+$$
+
+设 $\kappa$ 是 $f$ 的较小正根，即
+
+$$
+\kappa=
+\frac{\sqrt2d+e^2-\sqrt{(\sqrt2d-e^2)^2+8d^2}}4,
+\qquad
+R_*=\frac1\kappa=29.3209568043\ldots .
+$$
+
+对于本节定义的同一个原始对 $\bigl(E(t,\psi),U(t,x)\bigr)$，有
+
+$$
+0<\frac{\rho(E(t,\psi),U(t,x))}{g(E(t,\psi),U(t,x))}<R_*,
+\qquad 0<t<\frac\pi8,\quad x,\psi\in\mathbb R,
+$$
+
+且
+
+$$
+\boxed{\qquad
+\sup_{\substack{0<t<\pi/8\\x,\psi\in\mathbb R}}
+\frac{\rho(E(t,\psi),U(t,x))}{g(E(t,\psi),U(t,x))}
+=R_*.
+\qquad}
+$$
+
+**证明。** 置
+
+$$
+y=xt,\quad q=1-\cos y\in[0,2],\quad
+r=|\sin y|=\sqrt{2q-q^2},\quad
+C=\cos t,\quad S=\sin t,\quad
+P=d-\sqrt2q=2c+\sqrt2\cos y.
+$$
+
+这里 $C,S>0$，且 $P\ge2c-\sqrt2>0$。由于 $a(E)$ 与 $\tau(E,U)$ 中的
+$\|R_0b\|_{\ell^1}^2$ 抵消，命题 21.1 的精确迹式给出
+
+$$
+\begin{aligned}
+g(E(t,\psi),U(t,x))
+&=d^2C^2+e^2S^2
+-\left|CP-i\sqrt2e^{i\psi}S\sin y\right|^2\\
+&\ge d^2C^2+e^2S^2-(CP+\sqrt2Sr)^2\\
+&=:g_0.
+\end{aligned}
+$$
+
+这个下界正是对 $\psi$ 取最小值：当 $\sin y\ne0$ 时，取
+$\sin\psi=\operatorname{sgn}(\sin y)$ 即等号成立。展开得到
+
+$$
+g_0=C^2(2\sqrt2dq-2q^2)
++S^2(e^2-4q+2q^2)
+-2\sqrt2CSr(d-\sqrt2q).
+$$
+
+对任意 $\psi$，到正号优化类的效果距离都是 $2S^2$，反馈距离与 $\psi$ 无关，故
+
+$$
+\rho(E(t,\psi),U(t,x))\le\rho_+(t,y)=2S^2+4q.
+$$
+
+为比较这两个量，定义
+
+$$
+\begin{aligned}
+A_q&=q(2\sqrt2d-2q-4\kappa),\\
+B_q&=e^2-2\kappa-4(1+\kappa)q+2q^2,\\
+H_q&=\sqrt2r(d-\sqrt2q).
+\end{aligned}
+$$
+
+利用 $C^2+S^2=1$，有精确恒等式
+
+$$
+g_0-\kappa\rho_+
+=C^2A_q+S^2B_q-2CSH_q.
+$$
+
+又由 $r^2=2q-q^2$，直接展开得到
+
+$$
+\begin{aligned}
+A_qB_q-H_q^2
+&=2qf(\kappa)+Jq^2=Jq^2,\\
+J&=2\bigl(d^2-e^2-4\sqrt2d\kappa+8\kappa^2+10\kappa\bigr).
+\end{aligned}
+$$
+
+以下有理夹逼足以核对所需正性：
+
+$$
+\frac{141}{100}<\sqrt2<\frac{142}{100},\qquad
+\frac{326}{100}<d<\frac{327}{100},\qquad
+\frac{217}{100}<e<\frac{219}{100}.
+$$
+
+这些夹逼可用整数平方直接核对。具体地，
+
+$$
+1413^2<2\cdot1000^2<1415^2,
+$$
+
+以及
+
+$$
+\begin{aligned}
+1847^2&<3413\cdot1000,&1849^2&>3415\cdot1000,\\
+764^2&<585\cdot1000,&767^2&>587\cdot1000.
+\end{aligned}
+$$
+
+代入 $d=\sqrt2+\sqrt{2+\sqrt2}$、$e=\sqrt2+\sqrt{2-\sqrt2}$，得到
+$3260/1000<d<3264/1000$ 和 $2177/1000<e<2182/1000$，从而蕴含上列夹逼。因此
+
+$$
+\sqrt2e^2-2d
+>\frac{141}{100}\left(\frac{217}{100}\right)^2
+-2\cdot\frac{327}{100}
+=\frac{99549}{10^6}>0,
+$$
+
+而
+
+$$
+\begin{aligned}
+f(1/10)
+&<\frac1{25}
+-\frac15\left(\frac{141}{100}\frac{326}{100}
++\left(\frac{217}{100}\right)^2\right)\\
+&\qquad
++\frac{142}{100}\frac{327}{100}\left(\frac{219}{100}\right)^2
+-2\left(\frac{326}{100}\right)^2\\
+&=-\frac{40304463}{50000000}<0.
+\end{aligned}
+$$
+
+因此 $f(0)=d(\sqrt2e^2-2d)>0$，其较小根满足 $0<\kappa<1/10$。特别地，在 $q>0$ 时，
+
+$$
+\frac{A_q}{q}
+\ge2\sqrt2d-4-4\kappa
+>2\cdot\frac75\cdot\frac{16}5-4-\frac25
+=\frac{114}{25}>0,
+$$
+
+而
+
+$$
+\frac J2
+>\left(\frac{16}5\right)^2
+-\left(\frac{23}{10}\right)^2
+-4\cdot\frac32\cdot\frac{17}5\cdot\frac1{10}
+=\frac{291}{100}>0.
+$$
+
+故 $q>0$ 时，实对称矩阵
+$\begin{pmatrix}A_q&-H_q\\-H_q&B_q\end{pmatrix}$ 的首个主子式与行列式均为正，从而正定。
+当 $q=0$ 时，$A_q=H_q=0$，而 $B_q=e^2-2\kappa>0$；由于 $S>0$，仍有
+$C^2A_q+S^2B_q-2CSH_q>0$。综上，所有有限尺度都满足
+
+$$
+g(E(t,\psi),U(t,x))\ge g_0>\kappa\rho_+
+\ge\kappa\rho(E(t,\psi),U(t,x)).
+$$
+
+此外，$0<t<\pi/8$ 时效果不等于 $E_+$ 或 $E_-$，故 $\rho>0$，上述商有定义且严格小于 $R_*$。
+
+最后，由 $\kappa_0=e^2-\sqrt2d$ 和 $f(\kappa)=0$，令
+
+$$
+x_*=
+\frac{\sqrt2d}{\sqrt2d-2\kappa}>0.
+$$
+
+则
+
+$$
+\kappa_0+A(x-1)^2-2\kappa(1+x^2)
+=(\sqrt2d-2\kappa)(x-x_*)^2.
+$$
+
+命题 21.1 因而给出合法的同一共享反馈路径
+
+$$
+\lim_{t\downarrow0}
+\frac{\rho(E(t,\pi/2),U(t,x_*))}
+{g(E(t,\pi/2),U(t,x_*))}
+=\frac1\kappa=R_*.
+$$
+
+结合严格上界即得所述上确界。$\square$
+
+定理 21.3 只覆盖本节指定的 rank-one 效果与对角共享反馈族；它不覆盖任意 $U\in U(4)$，也不把一般非 rank-one 效果的全局最优常数判为已定。当前全局下界为 $R_*=29.3209568043\ldots$，一般生产者对的最佳 $C_{\mathrm{prod}}$ 仍为 open。
+
+## 追加锚（本行以下为增补区）

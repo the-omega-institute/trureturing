@@ -33,7 +33,8 @@ internal sealed class MultisetRookEulerianInterlacingRefutationDocument : IScrib
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("alexandersson-jal-quemener-2025-rook-eulerian-interlacing"),
-                    ResolutionKind.Refuted))
+                    ResolutionKind.Refuted,
+                    [DeclarationHandle.Create("D5/S3/Combinatorics/Permutation/MultisetRookEulerianRealRootednessRefutation.result")]))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, DescribeRole role) =>

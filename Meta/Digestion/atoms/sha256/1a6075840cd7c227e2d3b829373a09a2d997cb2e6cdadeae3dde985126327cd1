@@ -1,0 +1,50 @@
+**Proposition 10.4 (the square-root exponent is sharp for this protocol class).** Let $Z=P-Q$ and $W_t=e^{itZ}$. Keep the two effects of (6.2) and replace the actual feedbacks by
+
+$$
+U_\sigma(t)=W_tU_\sigma,\qquad \sigma\in\{+,-\}.
+\tag{10.18}
+$$
+
+The resulting two-outcome channel is $\Phi_t=\operatorname{Ad}(W_t)\circ\Phi_*$. Put
+
+$$
+q=1-c,\qquad
+\epsilon_t=\|\Phi_t-\operatorname{id}_{M_4}\|_\diamond-q,\qquad
+ d_t=\|\Phi_t-\Phi_*\|_\diamond.
+\tag{10.19}
+$$
+
+Then
+
+$$
+\boxed{\ \epsilon_t=\sqrt{q^2+4c\sin^2t}-q,\qquad
+ d_t=2c|\sin t|,\qquad
+ d_t^2=c(2q\epsilon_t+\epsilon_t^2).\ }
+$$
+
+Consequently $d_t/\sqrt{\epsilon_t}\to\sqrt{2cq}>0$ as $t\to0$, so no uniform bound $d_t\le K\epsilon_t^\beta$ can hold for any $\beta>1/2$.
+
+**Proof.** The channel $\Phi_*$ has cross-block coefficient $c$ in (6.14), while conjugation by $W_t$ changes it to $ce^{2it}$. For any $\lambda\in\mathbb C$, the cross-block map
+
+$$
+\Gamma_\lambda(X)=\lambda PXQ+\overline\lambda QXP
+$$
+
+has full unhalved diamond norm $|\lambda|$: the upper bound follows from
+$\Gamma_1=(\operatorname{id}-\operatorname{Ad}Z)/2$ and unitary phase conjugation, while $X=|1\rangle\langle3|$ gives the reverse bound. Therefore
+
+$$
+\|\Phi_t-\operatorname{id}\|_\diamond=|1-ce^{2it}|
+ =\sqrt{q^2+4c\sin^2t},
+$$
+
+and
+
+$$
+\|\Phi_t-\Phi_*\|_\diamond=|c(e^{2it}-1)|=2c|\sin t|.
+$$
+
+Eliminating $\sin^2t$ gives the final identity. The effects remain complete, each outcome retains one actual unitary, and all outcomes are included, so the family lies in the original protocol class. $\square$
+
+Theorem 10.3 closes the quantitative assertion left open after Section 9, while Proposition 10.4 records that its exponent cannot be improved using the same protocol class. The proof uses the degree-two homogeneous defect budget; the quartic statistics in Proposition 8.3 alone would be presentation-dependent under proportional refinement. The estimate is deliberately conservative and does not claim an optimal constant.
+
