@@ -89,7 +89,7 @@ private theorem regular_block (d w r : ℕ) (hd : 2 ≤ d)
     have he := geom_succ (d + 1) j.val (by omega)
     have hm := geom_mono (d + 1) (by omega) (show j.val + 1 ≤ r - 1 by omega)
     change (geom (d + 1) (j.val + 1) : ℤ) ≤ H d r at hm
-    simpa only [he] using hm
+    simpa only [he, q] using hm
   have hg0 : 0 ≤ G d r := by linarith [fs.G_ge, fs.q_ge]
   constructor
   · apply strip_of_prefix f _ _ _
@@ -111,8 +111,10 @@ private theorem regular_block (d w r : ℕ) (hd : 2 ≤ d)
     have hg1 := mul_le_mul_of_nonneg_left hgeo (show 0 ≤ 2 * (w : ℤ) by positivity)
     constructor <;> nlinarith only [he, hdft.1, hdft.2, hin, hb0, hb1, hg1,
       fs.regular_margin, fs.old_half]
-  · simp only [List.map_map, Function.comp_def]
-    simp_rw [hv]
+  · have hmap : f ∘ regularLabel d r hr j = regularValue d w r j.val := by
+      funext i
+      exact hv i
+    rw [List.map_map, hmap]
     have he := sum_double eta (regularValue d w r j.val) (beta d w)
       (defect d w j.val) (G d r) (regular_double d w r j.val hd hw hr)
     rw [htotal, hbeta] at he
@@ -177,7 +179,8 @@ private theorem top_block (d w r cut : ℕ) (hd : 2 ≤ d)
   let b := fun i : Fin d => beta d w i.castSucc
   have hbtotal : (tau.map b).sum = -(w : ℤ) := by
     have he := ear_sum d tau cut (beta d w)
-    rw [hnew.2.1, phase_fresh d w hd hw] at he
+    have hz : ((earWord d tau cut).map (beta d w)).sum = 0 := hnew.2.1
+    rw [hz, phase_fresh d w hd hw] at he
     change 0 = (tau.map b).sum + w at he
     omega
   have hbeta_prefix (h : ℕ) : -(w : ℤ) ≤ ((tau.take h).map b).sum ∧
@@ -185,14 +188,19 @@ private theorem top_block (d w r cut : ℕ) (hd : 2 ≤ d)
     by_cases hh : h ≤ cut
     · have he := ear_prefix_sum d tau cut hc (beta d w) h
       have hb := hnew.2.2 h
-      simp only [if_pos hh, add_zero] at he
+      change 0 ≤ (((earWord d tau cut).take h).map (beta d w)).sum ∧
+        (((earWord d tau cut).take h).map (beta d w)).sum ≤ modulus (d + 1) / 2 at hb
+      simp only [ite_eq_left hh, add_zero] at he
       rw [he, fs.daughter_half] at hb
       change 0 ≤ ((tau.take h).map b).sum ∧ ((tau.take h).map b).sum ≤ n d at hb
       exact ⟨by linarith [fs.w_nonneg], hb.2⟩
     · have hh' : ¬ h + 1 ≤ cut := by omega
       have he := ear_prefix_sum d tau cut hc (beta d w) (h + 1)
       have hb := hnew.2.2 (h + 1)
-      simp only [if_neg hh', Nat.add_sub_cancel, phase_fresh d w hd hw] at he
+      change 0 ≤ (((earWord d tau cut).take (h + 1)).map (beta d w)).sum ∧
+        (((earWord d tau cut).take (h + 1)).map (beta d w)).sum ≤
+          modulus (d + 1) / 2 at hb
+      simp only [ite_eq_right hh', Nat.add_sub_cancel, phase_fresh d w hd hw] at he
       rw [he, fs.daughter_half] at hb
       change 0 ≤ ((tau.take h).map b).sum + w ∧
         ((tau.take h).map b).sum + w ≤ n d at hb
@@ -219,8 +227,10 @@ private theorem top_block (d w r cut : ℕ) (hd : 2 ≤ d)
     have hb1 := mul_le_mul_of_nonneg_left hb.2 hH0
     have hhalfR := congrArg (fun z : ℤ => R d r * z) fs.base_half
     constructor <;> nlinarith only [ha0, ha1, hb0, hb1, hhalfR, fs.top_margin, fs.old_half]
-  · simp only [List.map_map, Function.comp_def]
-    simp_rw [hv]
+  · have hmap : f ∘ topLabel d r hr = topValue d w r := by
+      funext i
+      exact hv i
+    rw [List.map_map, hmap]
     have he := sum_linear tau (actualSource d w) b (R d r) (H d r)
     change (tau.map (topValue d w r)).sum = _ at he
     rw [he, hold.2.1, hbtotal]
@@ -256,7 +266,8 @@ private theorem daughter_order (d w r : ℕ) (hd : 2 ≤ d)
       · simpa using mul_nonneg hg0 hb.1
       · have hh := mul_le_mul_of_nonneg_left hb.2 hg0
         simpa using hh.trans fs.daughter_margin
-    · rw [hsum, heta.2.1, mul_zero]
+    · have hz : (eta.map (beta d w)).sum = 0 := heta.2.1
+      rw [hsum, hz, mul_zero]
   have hall (js : List (Fin r)) :
       InStrip f (modulus (length d r + 1) / 2) 0
           (js.flatMap (fun j => eta.map (daughterLabel d r hr j))) ∧
@@ -265,7 +276,7 @@ private theorem daughter_order (d w r : ℕ) (hd : 2 ≤ d)
     | nil =>
         have hp := (TwoRunSource.modulus_positive_odd (length d r + 1) (by omega)).1
         simp only [List.flatMap_nil, List.map_nil, List.sum_nil, InStrip]
-        exact ⟨⟨by omega, by omega⟩, rfl⟩
+        exact ⟨⟨by omega, by omega⟩, trivial⟩
     | cons j js ih =>
         simp only [List.flatMap_cons]
         constructor
@@ -275,7 +286,7 @@ private theorem daughter_order (d w r : ℕ) (hd : 2 ≤ d)
   have hh := hall (List.finRange r)
   refine ⟨daughter_perm d r hr eta heta.1, hh.2, ?_⟩
   intro h
-  simpa only [daughterWord, zero_add] using inStrip_prefix hh.1 h
+  simpa only [daughterWord, zero_add, Set.mem_Icc, f] using inStrip_prefix hh.1 h
 
 /-- Ascending full daughter blocks followed by the shortened top OLD block.
 The common cut inserts exactly the globally fresh label. All natural prefixes
@@ -305,7 +316,7 @@ public theorem periodic_daughter_joint_shortening
     ring
   refine ⟨hc, ⟨shortened_perm d r cut hr tau hold.1, hsum, ?_⟩, ?_⟩
   · intro h
-    simpa only [N, zero_add] using inStrip_prefix hstrip h
+    simpa only [N, zero_add, Set.mem_Icc] using inStrip_prefix hstrip h
   · rw [literal_ear d r cut hr tau hold.1]
     exact daughter_order d w r hd hw hr _ hnew
 
