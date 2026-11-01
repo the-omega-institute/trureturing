@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/FiniteSimplicialOpenCover.vertexOpen_cover`
 
 *Commentary.*
 
-The vertex stars are open in the coordinate subspace topology and cover the entire carrier. Every realized point has nonnegative coordinates summing to one, so some coordinate is positive. The carrier may be empty.
+The vertex stars are open in the coordinate subspace topology and cover the entire carrier. The existing FiniteConeCollapse.realization_mem_iff identifies a realized point with a point in an actual face simplex, giving nonnegative coordinates summing to one, so some coordinate is positive. The carrier may be empty.
 
 **Theorem 1.3 (Intersections detect faces).**
 
