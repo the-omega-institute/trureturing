@@ -279,7 +279,8 @@ private lemma joined_simple (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
   rw [hj] at H
   unfold HasSimpleEigenvalues at H ⊢
   unfold joinedPath
-  simpa only [Nat.add_right_comm s 1 r, e] using H
+  have hn : s + 1 + r = s + r + 1 := by omega
+  simpa only [hn, e] using H
 
 private lemma joined_diagonalization (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
     (hL : ∀ k < r, bL k ≠ 0) (hR : ∀ k < s, bR k ≠ 0) :
@@ -376,7 +377,9 @@ private def nsspTest {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) :
   map_add' X Y := by
     apply Prod.ext
     · ext i j; exact mul_add _ _ _
-    · simp only [transpose_add, Matrix.mul_add, Matrix.add_mul, Prod.add_snd]
+    · change A * (X + Y)ᵀ - (X + Y)ᵀ * A =
+        (A * Xᵀ - Xᵀ * A) + (A * Yᵀ - Yᵀ * A)
+      simp only [transpose_add, Matrix.mul_add, Matrix.add_mul]
       abel
   map_smul' c X := by
     apply Prod.ext
@@ -442,8 +445,9 @@ private lemma loop_enlargement {n : ℕ} (L : Finset (Fin n)) (l : Fin n) (hl : 
   let D : Matrix (Fin n) (Fin n) ℝ := diagonal (fun i => if i ∈ L ∧ i ≠ l then 1 else 0)
   let B : ℝ → Matrix (Fin n) (Fin n) ℝ := fun t => A + t • D
   have hc : Continuous B := continuous_const.add (continuous_id.smul continuous_const)
+  have hB0 : B 0 = A := by simp only [B, zero_smul, add_zero]
   have htend : Filter.Tendsto B (nhds 0) (nhds A) := by
-    simpa only [B, zero_smul, add_zero] using (hc.continuousAt : ContinuousAt B 0)
+    simpa only [hB0] using (hc.continuousAt : ContinuousAt B 0).tendsto
   have hevent : ∀ᶠ t in nhds (0 : ℝ), HasNSSP (B t) :=
     htend.eventually ((nssp_open n).mem_nhds ha)
   obtain ⟨eps, heps, hball⟩ := Metric.mem_nhds_iff.mp hevent
@@ -483,9 +487,7 @@ private lemma singleton_at {n : ℕ} (hn : 0 < n) (heven : Even n) (l : Fin n) :
     have he := Nat.even_iff.mp heven
     omega
   have H := singleton_witness r s hodd
-  rw [hnum] at H
-  have hl : (⟨r, by dsimp [r]; exact l.isLt⟩ : Fin n) = l := Fin.ext rfl
-  simpa only [hl] using H
+  simpa only [hnum] using H
 
 /-- The full existential event, with unrestricted real test matrices. -/
 theorem result : D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.claim := by
