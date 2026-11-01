@@ -130,7 +130,7 @@ def family : Registration arena.{u,v} (type_of% (@centeredGram_posSemidef_iff.{u
     fun e => nomatch e⟩
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@centeredGram_posSemidef_iff.{u,v}) (Realization signature.{u,v}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.FiniteGeometry.ProjectivePlaneRealSectors.__information_unit
   realizationName := `Reg.D5.S3.Geometry.FiniteGeometry.ProjectivePlaneRealSectors.family
@@ -158,7 +158,7 @@ def registration : LeanInformationAudit.Contract.Registration
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 6
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

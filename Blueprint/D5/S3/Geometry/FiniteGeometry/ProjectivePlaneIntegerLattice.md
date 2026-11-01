@@ -54,7 +54,79 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.lat
 
 M is exactly range F in Z^P. It is neither a saturation nor a rational span.
 
-**Theorem 1.5 (Total mass identity).**
+**Definition 1.5 (The derived integer order).**
+
+Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.q`
+
+*Formalization.* `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.q` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+q is Mathlib's derived order of this actual projective plane, cast to the integers.
+
+**Theorem 1.6 (Nondegeneracy forces order at least two).**
+
+Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.q_ge_two`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.q_ge_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original finite nondegenerate plane has integer order q at least two.
+
+**Theorem 1.7 (Each original line has q+1 points).**
+
+Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row_total`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row_total` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sum over original point coordinates of row(l,x) is q+1.
+
+**Theorem 1.8 (Each original point has q+1 incident lines).**
+
+Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.column_total`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.column_total` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sum over original lines of row(l,x) is q+1.
+
+**Theorem 1.9 (Original-line intersections).**
+
+Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row_gram`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row_gram` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer sum over points of row(l,x)*row(k,x) is q+1 if l=k and one otherwise.
+
+**Theorem 1.10 (Original-point pencils).**
+
+Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.column_gram`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.column_gram` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer sum over lines of row(l,x)*row(l,y) is q+1 if x=y and one otherwise.
+
+**Theorem 1.11 (Total mass identity).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.total_incidence`
 
@@ -66,7 +138,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.tot
 
 For every integer potential a, sum_x F(a)(x)=(q+1)*sum_l a(l). Interchanging finite sums uses the actual q+1 line cardinality.
 
-**Theorem 1.6 (Line mass identity).**
+**Theorem 1.12 (Line mass identity).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.lineSum_incidence`
 
@@ -78,7 +150,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.lin
 
 For every original line l and integer potential a, h_l(F(a))=q*a(l)+sum_k a(k). The self-intersection contributes q+1 and every other original line contributes one.
 
-**Theorem 1.7 (Unique original potentials).**
+**Theorem 1.13 (Unique original potentials).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.incidence_injective`
 
@@ -90,7 +162,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.inc
 
 F is injective on Z^L. Equality of totals fixes the coefficient total, and equality of original line sums fixes each integer coefficient. Only nonzero integer factors are cancelled.
 
-**Theorem 1.8 (Unique integer reconstruction).**
+**Theorem 1.14 (Unique integer reconstruction).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.integer_reconstruction`
 
@@ -102,7 +174,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.int
 
 For every integer z and integer s satisfying the total equation and every original-line divisibility, there is exactly one original integer potential a with F(a)=z, total coefficient sum s, and a(l)=(h_l(z)-s)/q after divisibility is known. Injectivity supplies uniqueness.
 
-**Theorem 1.9 (Divisibility-certified reconstruction).**
+**Theorem 1.15 (Divisibility-certified reconstruction).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.mem_lattice_iff`
 
@@ -114,7 +186,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.mem
 
 For every z in Z^P, z lies in M iff there is an INTEGER s with sum_x z(x)=(q+1)*s and q divides h_l(z)-s for EVERY original line l. After these divisibilities, the integer coefficient is (h_l(z)-s)/q. The dual pair-count identity gives q*F(a)(x)=q*z(x) at each original point; ambient integer cancellation reconstructs z.
 
-**Definition 1.10 (Boolean original supports).**
+**Definition 1.16 (Boolean original supports).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.indicator`
 
@@ -126,7 +198,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.ind
 
 indicator S is 1 on the original finite support S and 0 at every other original point.
 
-**Theorem 1.11 (Complete proper Boolean closure).**
+**Theorem 1.17 (Complete proper Boolean closure).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.boolean_mem_lattice_iff`
 
@@ -138,7 +210,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.boo
 
 For every nonempty proper original support S, indicator S is in M iff S is an original line. If indicator S=F(a), total mass gives 1<=s<=q. Line sums give 0<=q*a(l)+s<=q+1. If s>=2 all coefficients are nonpositive, contradicting their positive sum. For s=1 they are all 0 or 1 and exactly one is 1. This excludes ALL hidden larger proper Boolean members, not merely extra generator rows.
 
-**Definition 1.12 (Original integer unit vectors).**
+**Definition 1.18 (Original integer unit vectors).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.unit`
 
@@ -150,7 +222,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.uni
 
 unit x is the indicator of the singleton original point x.
 
-**Theorem 1.13 (The signed unit ideal).**
+**Theorem 1.19 (The signed unit ideal).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.unit_mem_lattice_iff`
 
@@ -162,7 +234,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.uni
 
 For every original x and every signed integer k, k*e_x is in M iff q*(q+1) divides k. A line avoiding x forces q to divide the integer coefficient total. The upper certificate is (q+1)*W_x-T, with W_x=sum_{l contains x}[l]=q*e_x+U and T=sum_l[l]=(q+1)*U.
 
-**Theorem 1.14 (The signed difference ideal).**
+**Theorem 1.20 (The signed difference ideal).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.difference_mem_lattice_iff`
 
@@ -174,7 +246,7 @@ Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.dif
 
 For all distinct original x,y and all signed integer k, k*(e_x-e_y) is in M iff q divides k. The coefficient total is zero, and a line through x but not y forces the lower bound. The upper certificate is W_x-W_y.
 
-**Theorem 1.15 (The signed full-total ideal).**
+**Theorem 1.21 (The signed full-total ideal).**
 
 Lean statement: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.constant_mem_lattice_iff`
 
@@ -197,6 +269,8 @@ Mere line-zero equations in an arbitrary target group do not establish this comp
 ## References
 
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.boolean_mem_lattice_iff`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.column_gram`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.column_total`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.constant_mem_lattice_iff`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.difference_mem_lattice_iff`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.incidence`
@@ -207,7 +281,11 @@ Mere line-zero equations in an arbitrary target group do not establish this comp
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.lineSum`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.lineSum_incidence`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.mem_lattice_iff`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.q`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.q_ge_two`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row_gram`
+- Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.row_total`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.total_incidence`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.unit`
 - Truth anchor: `D5/S3/Geometry/FiniteGeometry/ProjectivePlaneIntegerLattice.unit_mem_lattice_iff`

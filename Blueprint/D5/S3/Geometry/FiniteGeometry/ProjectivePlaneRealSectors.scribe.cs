@@ -62,7 +62,7 @@ internal sealed class ProjectivePlaneRealSectorsDocument : IScribeDocumentDefini
         DescribeId.Create("real-plane-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static DocumentBlock Thm(string name, string title, Formula f, string prose) => Describe.Lean(
-        DescribeId.Create("real-plane-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("real-plane-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(Plane(f))), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula Call(string s, params Formula[] args) => new Formula.Apply(Named(s), [.. args]);
@@ -71,9 +71,10 @@ internal sealed class ProjectivePlaneRealSectorsDocument : IScribeDocumentDefini
     private static Formula L() => F.Id("L");
     private static Formula Q() => Call("orderR", P(), L());
     private static Formula S() => Call("rootOrder", P(), L());
-    private static Formula V() => Mul(Arrow(P(), R()), Arrow(L(), R()));
-    private static Formula C() => Mul(Mul(R(), R()), Mul(Call("zeroSum", P()), Call("zeroSum", P())));
+    private static Formula V() => Product(Arrow(P(), R()), Arrow(L(), R()));
+    private static Formula C() => Product(Product(R(), R()), Product(Call("zeroSum", P()), Call("zeroSum", P())));
     private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, To, Sp, b, Close);
+    private static Formula Product(Formula a, Formula b) => Seq(Open, a, Sp, Times, Sp, b, Close);
     private static Formula Pair(Formula a, Formula b) => Seq(Open, a, Comma, Sp, b, Close);
     private static Formula All(Formula x, Formula t, Formula b) => Seq(Forall, Sp, x, Colon, Sp, t, Comma, Sp, b);
     private static Formula Plane(Formula b) => All(P(), Named("Type"), All(L(), Named("Type"), Seq(
@@ -99,7 +100,7 @@ internal sealed class ProjectivePlaneRealSectorsDocument : IScribeDocumentDefini
     private static Formula Act(Formula d, Formula z) => Call("gramAction", P(), L(), d, z);
     private static Formula Dot(Formula z, Formula w) => Call("vertexDot", P(), L(), z, w);
     private static Formula Scalar(string name, Formula d) => Call(name, P(), L(), d);
-    private static Formula Nn(Formula d) { Formula z=F.Id("z"); return All(z,V(),Le(F.D(0),Dot(z,Act(d,z)))); }
+    private static Formula Nn(Formula d) { Formula z=F.Id("z"); return Seq(Open,All(z,V(),Le(F.D(0),Dot(z,Act(d,z)))),Close); }
     private static Formula Interval(Formula d) => And(Le(Div(S(),Add(F.D(1),S())),d),Le(d,Div(Add(Q(),F.D(1)),Q())));
     private static Formula UniqueFormula() { Formula z=F.Id("z"), c=F.Id("c"); return All(z,V(),Seq(Exists,Bang,Sp,c,Colon,Sp,C(),Comma,Sp,Eq(Sector(c),z))); }
     private static Formula DimensionsFormula()
