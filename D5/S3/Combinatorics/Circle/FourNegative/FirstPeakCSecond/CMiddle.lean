@@ -202,7 +202,7 @@ private theorem rank_two (t e h : ℤ) :
     v.A-v.L=C ∧ v.B-v.M=t*C ∧
       v.M=(t+1)*(t*v.z+1) ∧ v.B=(t+1)*(t*v.x+1) := by
   dsimp [model]
-  repeat' constructor <;> ring
+  refine ⟨?_,?_,?_,?_⟩ <;> ring
 
 private def VGates (v : Row) (r R : ℤ) : Prop :=
   let C:=(v.x-v.z)*(v.t+1)
