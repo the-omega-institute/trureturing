@@ -12,6 +12,8 @@ internal sealed class BcGhostRelativeEnergyDocument : IScribeDocumentDefinition
         new Formula.Apply(V(name), [.. args]);
     private static Formula A(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Exists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Eqn(Formula x, Formula y) =>
         new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula And(Formula x, Formula y) =>
@@ -40,6 +42,8 @@ internal sealed class BcGhostRelativeEnergyDocument : IScribeDocumentDefinition
         var noThree = A("S", sets, Imp(C("mem", D(3), s), Eqn(C("coeff", v, s), D(0))));
         var exactEnergy = A("S", sets, Imp(C("nonzero", C("coeff", v, s)),
             Eqn(relative, C("Int.ofNat", ell))));
+        var groundLine = Exists("alpha", V("Complex"),
+            Eqn(v, Smul(V("alpha"), K(C("singleton", D(1))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The actual ghost Virasoro zero mode supplies a finite relative-energy grading on the literal b0 kernel.",
             H("Relative energy on the original bc ghost carrier"), Blocks(
@@ -57,8 +61,8 @@ internal sealed class BcGhostRelativeEnergyDocument : IScribeDocumentDefinition
                     Iffn(C("RelativeLevel", ell, v), And(noThree, exactEnergy)))),
                     "RelativeLevel means b0(v)=0 and (L0+id)(v)=ell*v. Injectivity of integer casting into Complex recovers the exact integral occupation level."),
                 Node("relative_ground_line", A("v", fock,
-                    Imp(And(C("RelativeKernel", v), Eqn(C("relativeOperator", v), D(0))),
-                        C("exists_scalar_multiple", v, K(C("singleton", D(1)))))),
+                    Iffn(And(C("RelativeKernel", v), Eqn(C("relativeOperator", v), D(0))),
+                        groundLine)),
                     "The shift is fixed by the actual identity L0(c1 vacuum)=-c1 vacuum. Relative energy is the indicator of the missing site one plus strictly positive contributions from sites other than one and three. The literal b0 kernel excludes site three, leaving only the ground line."),
                 Node("relative_level_support", A("ell", V("Nat"), A("v", fock,
                     Imp(C("RelativeLevel", ell, v), A("S", sets,

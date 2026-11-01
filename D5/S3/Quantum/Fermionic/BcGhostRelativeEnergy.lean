@@ -63,15 +63,15 @@ private theorem weighted_normal_ket (S : Finset ℕ) :
   rw [hactive]
   rw [Finset.sum_image (fun i _ j _ h => by
     simpa only [modeSite_siteMode] using congrArg modeSite h)]
-  simp_rw [normal_term_site, siteTerm_ket, modeSite_siteMode]
-  simp_rw [smul_smul]
-  rw [← Finset.sum_smul]
-  congr 1
-  rw [← Int.cast_sum]
-  congr 1
-  apply Finset.sum_congr rfl
-  intro j hj
-  simp [siteEnergy, hj]
+  calc
+    _ = ∑ j ∈ S, (siteEnergy j : ℂ) • ket S := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      simp [normal_term_site, siteTerm_ket, modeSite_siteMode, hj, smul_smul,
+        siteEnergy]
+    _ = (energy S : ℂ) • ket S := by
+      rw [← Finset.sum_smul, ← Int.cast_sum]
+      rfl
 
 theorem L_zero_ket (S : Finset ℕ) :
     L 0 (ket S) = (energy S : ℂ) • ket S := by
@@ -140,7 +140,10 @@ private theorem annihilate_output_mem_zero (v : Fock) (T : Finset ℕ)
       by_cases hS : 3 ∈ S
       · simp only [if_pos hS]
         have hnot : 3 ∉ S.erase 3 := Finset.not_mem_erase 3 S
-        simp [ket, hnot, hT]
+        have hne : S.erase 3 ≠ T := by
+          intro heq
+          exact hnot (heq.symm ▸ hT)
+        simp [ket, hne, Ne.symm hne]
       · simp [hS]
 
 theorem b_zero_kernel_iff (v : Fock) :
@@ -159,19 +162,18 @@ theorem b_zero_kernel_iff (v : Fock) :
     · rw [annihilate_coefficient_not_mem v T hT]
       rw [hv (insert 3 T) (Finset.mem_insert_self 3 T), mul_zero]
 
-theorem L_zero_down : L 0 (ket {1}) = -ket {1} := by
-  rw [L_zero_ket]
+theorem L_zero_down : L 0 (c 1 vacuum) = -(c 1 vacuum) := by
+  rw [ghost_vacuum.2.2.1, L_zero_ket]
   norm_num [energy, siteEnergy, siteMode, siteSign]
-
-theorem down_eq : c 1 vacuum = ket {1} := ghost_vacuum.2.2.1
-
-theorem L_zero_down_actual : L 0 (c 1 vacuum) = -(c 1 vacuum) := by
-  rw [down_eq, L_zero_down]
 
 theorem b_zero_down : b 0 (ket {1}) = 0 := by
   apply (b_zero_kernel_iff _).mpr
   intro S hS
-  simp [ket, hS]
+  have hne : ({1} : Finset ℕ) ≠ S := by
+    intro heq
+    subst S
+    simpa using hS
+  simp [ket, hne, Ne.symm hne]
 
 private theorem siteEnergy_nonneg_of_ne_one {j : ℕ} (h1 : j ≠ 1) :
     0 ≤ siteEnergy j := by
@@ -259,7 +261,7 @@ theorem relativeOperator_coefficient (v : Fock) (S : Finset ℕ) :
     (relativeOperator v) S = (relativeEnergy S : ℂ) * v S := by
   change (L 0 v) S + v S = _
   rw [L_zero_coefficient]
-  rw [Int.cast_add]
+  simp only [relativeEnergy, Int.cast_add, Int.cast_one]
   ring
 
 def RelativeKernel (v : Fock) : Prop := b 0 v = 0
@@ -277,9 +279,6 @@ theorem relativeOperator_invariant (v : Fock) (hb : RelativeKernel v) :
     _ = L 0 (b 0 v) + b 0 v := by
       rw [← LinearMap.congr_fun hcomm v]
     _ = 0 := by rw [hb, map_zero, add_zero]
-
-theorem N_invariant (v : Fock) (hb : RelativeKernel v) :
-    RelativeKernel (N v) := relativeOperator_invariant v hb
 
 theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) :
     RelativeLevel ell v ↔
@@ -303,60 +302,68 @@ theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) :
     · rw [he S hS]
       simp
 
-theorem relative_ground_line (v : Fock) (hb : RelativeKernel v)
-    (he : relativeOperator v = 0) : ∃ α : ℂ, v = α • ket {1} := by
-  have hlevel : RelativeLevel 0 v := by
-    refine ⟨hb, ?_⟩
-    simpa using he
-  obtain ⟨h3, hE⟩ := (relative_level_coeff_iff 0 v).mp hlevel
-  refine ⟨v {1}, ?_⟩
-  ext S
-  by_cases hS : S = {1}
-  · subst S
-    simp [ket]
-  · by_cases hcoef : v S = 0
-    · simp [hcoef, ket, hS]
-    · have h3S : 3 ∉ S := by
-        intro h3mem
-        exact hcoef (h3 S h3mem)
-      have hE0 : relativeEnergy S = 0 := hE S hcoef
-      have h1S : 1 ∈ S := by
-        by_contra hn
-        have hnon := energy_nonneg_of_not_mem_one hn
-        have : 0 < relativeEnergy S := by
-          unfold relativeEnergy
-          omega
-        omega
-      have hnonempty : (S.erase 1).Nonempty := by
-        by_contra hempty
-        have hEempty : S.erase 1 = ∅ := Finset.not_nonempty_iff_eq_empty.mp hempty
-        have hcases : S = ∅ ∨ S = {1} := (Finset.erase_eq_empty_iff S 1).mp hEempty
-        cases hcases with
-        | inl h => exact h1S (h ▸ Finset.not_mem_empty 1)
-        | inr h => exact hS h
-      obtain ⟨j, hj⟩ := hnonempty
-      have hj1 : j ≠ 1 := Finset.mem_erase.mp hj |>.1
-      have hj3 : j ≠ 3 := by
-        intro h; subst j; exact h3S (Finset.mem_of_mem_erase hj)
-      have hpos : 0 < siteEnergy j := by
-        exact siteEnergy_pos_of_ne_one_three hj1 hj3
-      have hsum : siteEnergy j ≤ ∑ k ∈ S.erase 1, siteEnergy k :=
-        Finset.single_le_sum (fun k hk => siteEnergy_nonneg_of_ne_one
-          (Finset.mem_erase.mp hk |>.1))
-          (Finset.mem_erase.mpr ⟨hj1, Finset.mem_of_mem_erase hj⟩)
-      have hsplit : relativeEnergy S = ∑ k ∈ S.erase 1, siteEnergy k := by
-        unfold relativeEnergy energy
-        rw [← Finset.sum_erase_add S siteEnergy h1S, siteEnergy_one]
-        ring
-      rw [hsplit] at hE0
-      have hsum' : siteEnergy j ≤ relativeEnergy S := by simpa [hsplit] using hsum
-      have : 0 < relativeEnergy S := lt_of_lt_of_le hpos hsum'
-      omega
+private theorem relative_ground : relativeOperator (ket {1}) = 0 := by
+  have hl : L 0 (ket {1}) = -ket {1} := by
+    simpa only [ghost_vacuum.2.2.1] using L_zero_down
+  change L 0 (ket {1}) + ket {1} = 0
+  rw [hl, neg_add_cancel]
 
-theorem relative_ground : relativeOperator (ket {1}) = 0 := by
-  rw [relativeOperator, L_zero_down]
-  ext S
-  simp [ket]
+theorem relative_ground_line (v : Fock) :
+    (RelativeKernel v ∧ relativeOperator v = 0) ↔ ∃ α : ℂ, v = α • ket {1} := by
+  constructor
+  · rintro ⟨hb, he⟩
+    have hlevel : RelativeLevel 0 v := by
+      refine ⟨hb, ?_⟩
+      simpa using he
+    obtain ⟨h3, hE⟩ := (relative_level_coeff_iff 0 v).mp hlevel
+    refine ⟨v {1}, ?_⟩
+    ext S
+    by_cases hS : S = {1}
+    · subst S
+      simp [ket]
+    · by_cases hcoef : v S = 0
+      · simp [hcoef, ket, hS, Ne.symm hS]
+      · have h3S : 3 ∉ S := by
+          intro h3mem
+          exact hcoef (h3 S h3mem)
+        have hE0 : relativeEnergy S = 0 := hE S hcoef
+        have h1S : 1 ∈ S := by
+          by_contra hn
+          have hnon := energy_nonneg_of_not_mem_one hn
+          have : 0 < relativeEnergy S := by
+            unfold relativeEnergy
+            omega
+          omega
+        have hnonempty : (S.erase 1).Nonempty := by
+          by_contra hempty
+          have hEempty : S.erase 1 = ∅ := Finset.not_nonempty_iff_eq_empty.mp hempty
+          have hcases : S = ∅ ∨ S = {1} := (Finset.erase_eq_empty_iff S 1).mp hEempty
+          cases hcases with
+          | inl h => exact h1S (h ▸ Finset.not_mem_empty 1)
+          | inr h => exact hS h
+        obtain ⟨j, hj⟩ := hnonempty
+        have hj1 : j ≠ 1 := Finset.mem_erase.mp hj |>.1
+        have hj3 : j ≠ 3 := by
+          intro h; subst j; exact h3S (Finset.mem_of_mem_erase hj)
+        have hpos : 0 < siteEnergy j := by
+          exact siteEnergy_pos_of_ne_one_three hj1 hj3
+        have hsum : siteEnergy j ≤ ∑ k ∈ S.erase 1, siteEnergy k :=
+          Finset.single_le_sum (fun k hk => siteEnergy_nonneg_of_ne_one
+            (Finset.mem_erase.mp hk |>.1))
+            (Finset.mem_erase.mpr ⟨hj1, Finset.mem_of_mem_erase hj⟩)
+        have hsplit : relativeEnergy S = ∑ k ∈ S.erase 1, siteEnergy k := by
+          unfold relativeEnergy energy
+          rw [← Finset.sum_erase_add S siteEnergy h1S, siteEnergy_one]
+          ring
+        rw [hsplit] at hE0
+        have hsum' : siteEnergy j ≤ relativeEnergy S := by simpa [hsplit] using hsum
+        have : 0 < relativeEnergy S := lt_of_lt_of_le hpos hsum'
+        omega
+  · rintro ⟨α, rfl⟩
+    constructor
+    · change b 0 (α • ket {1}) = 0
+      rw [map_smul, b_zero_down, smul_zero]
+    · rw [map_smul, relative_ground, smul_zero]
 
 private theorem relativeEnergy_eq_sum_erase_one (S : Finset ℕ) (h1 : 1 ∈ S) :
     relativeEnergy S = ∑ j ∈ S.erase 1, siteEnergy j := by
@@ -485,12 +492,16 @@ private theorem level_ket_mem_space (ell : ℕ) {S : Finset ℕ}
   rw [relative_level_coeff_iff]
   refine ⟨?_, ?_⟩
   · intro T hT
-    simp [ket, (mem_levelOccupationSets_iff ell S).mp hS |>.2.1, hT]
+    have hne : S ≠ T := by
+      intro heq
+      subst T
+      exact ((mem_levelOccupationSets_iff ell S).mp hS |>.2.1) hT
+    simp [ket, hne, Ne.symm hne]
   · intro T hT
     by_cases hTS : T = S
     · subst T
       exact (mem_levelOccupationSets_iff ell S).mp hS |>.2.2
-    · simp [ket, hTS] at hT
+    · simp [ket, hTS, Ne.symm hTS] at hT
 
 theorem relative_level_space_eq_span (ell : ℕ) :
     relativeLevelSpace ell = Submodule.span ℂ (levelKets ell) := by
