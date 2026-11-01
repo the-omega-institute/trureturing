@@ -66,19 +66,19 @@ abbrev shiftedArena : Arena where
   signature := normSignature
   Law R := ∀ {I : Type u} [Fintype I] (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (s : ℝ),
-    Integrable (fun v : ℝ => star (prefix x a (v + s)) * prefix x a v) ∧
-    Integrable (fun v : ℝ => ‖prefix x a v‖ ^ 2) ∧
+    Integrable (fun v : ℝ => star («prefix» x a (v + s)) * «prefix» x a v) ∧
+    Integrable (fun v : ℝ => ‖«prefix» x a v‖ ^ 2) ∧
     (∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)) =
-      -(∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v) ∧
+      -(∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v) ∧
     R.readout () () (∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)) ≤
-      ∫ v : ℝ, ‖prefix x a v‖ ^ 2
+      ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2
 
 private theorem shiftedRejectedLaw : ¬ shiftedArena.{u}.Law normRejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance (fun _ => 0) (fun _ => 0)
     (by simp) 0
   have hb := h0.2.2.2
-  norm_num [normRejected, realize, prefix] at hb
+  norm_num [normRejected, realize, «prefix»] at hb
 
 def shiftedFamily : Registration shiftedArena.{u}
     (type_of% @shifted_hinge_prefix_energy.{u}) where
@@ -183,7 +183,7 @@ abbrev energyArena : Arena where
   Law R := ∀ {I : Type u} [Fintype I] (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤ D)
     (hx : ∀ i j, |x i - x j| ≤ D),
-    let F := prefix x a
+    let F := «prefix» x a
     let E : ℝ := ∫ v : ℝ, ‖F v‖ ^ 2
     let C : ℝ → ℂ := fun s => ∫ v : ℝ, star (F (v + s)) * F v
     Integrable (fun v : ℝ => (R.readout () () (F v)) ^ 2) ∧
@@ -251,14 +251,14 @@ abbrev coercivityArena : Arena where
   Law R := ∀ {I : Type u} [Fintype I] (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤ D)
     (hx : ∀ i j, |x i - x j| ≤ D),
-    2 * lam * Real.exp (-lam * D) * (∫ v : ℝ, ‖prefix x a v‖ ^ 2) ≤
+    2 * lam * Real.exp (-lam * D) * (∫ v : ℝ, ‖«prefix» x a v‖ ^ 2) ≤
       R.readout () () (∑ i, ∑ j, star (a i) * a j * (Real.exp (-lam * |x i - x j|) : ℂ))
 
 private theorem coercivityRejectedLaw : ¬ coercivityArena.{u}.Law realPartRejected := by
   intro h
   have hb := @h (ULift.{u} Empty) inferInstance (fun _ => 0) (fun _ => 0)
     (by simp) 1 0 (by norm_num) (by norm_num) (by intro i; cases i.down)
-  norm_num [realPartRejected, realize, prefix] at hb
+  norm_num [realPartRejected, realize, «prefix»] at hb
 
 def coercivityFamily : Registration coercivityArena.{u}
     (type_of% @exponential_prefix_coercivity.{u}) where

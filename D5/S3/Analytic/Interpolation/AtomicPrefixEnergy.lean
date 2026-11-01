@@ -2,9 +2,10 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Interpolation/AtomicPrefixEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.Set, mathlib/module/Mathlib.MeasureTheory.Group.Integral]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.Set,
+     mathlib/module/Mathlib.MeasureTheory.Group.Integral]
    utility: none
-   digest: Exact shifted hinge energy and prefix correlation for zero-mass finite complex atoms. -/
+   digest: Exact shifted hinge, exponential energy and coercivity for zero-mass complex atoms. -/
 
 import Mathlib.Algebra.Star.BigOperators
 import Mathlib.Analysis.Complex.Basic
@@ -38,7 +39,7 @@ namespace D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 variable {I : Type*} [Fintype I]
 
 /-- The cumulative complex mass, including atoms at the endpoint. -/
-def prefix (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
+def «prefix» (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
   ∑ i, if x i ≤ t then a i else 0
 
 private def intervalStep (l b v : ℝ) : ℂ :=
@@ -68,10 +69,10 @@ private lemma intervalStep_overlap (l r b : ℝ) (hl : l ≤ b) (hr : r ≤ b) :
 /-- The common upper endpoint disappears because the full mass is zero. -/
 private lemma prefix_interval_expansion (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (b s : ℝ) (hb : ∀ i, x i - s ≤ b) (v : ℝ) :
-    prefix x a (v + s) = ∑ i, intervalStep (x i - s) b v * a i := by
+    «prefix» x a (v + s) = ∑ i, intervalStep (x i - s) b v * a i := by
   classical
   by_cases hv : v ≤ b
-  · unfold prefix
+  · unfold «prefix»
     apply Finset.sum_congr rfl
     intro i _
     have hm : v ∈ Icc (x i - s) b ↔ x i ≤ v + s := by
@@ -84,7 +85,7 @@ private lemma prefix_interval_expansion (x : I → ℝ) (a : I → ℂ)
       intro i
       have hbi := hb i
       linarith
-    simp [prefix, intervalStep, Set.indicator, mem_Icc, hv, hi, ha]
+    simp [«prefix», intervalStep, Set.indicator, mem_Icc, hv, hi, ha]
 
 /-- Simultaneous bounds exist without choosing an element of the index type. -/
 private lemma common_upper_bound (x : I → ℝ) (s : ℝ) :
@@ -93,26 +94,28 @@ private lemma common_upper_bound (x : I → ℝ) (s : ℝ) :
   refine ⟨∑ i, (|x i| + |s|), ?_, ?_⟩
   · intro i
     have hi : |x i| + |s| ≤ ∑ j, (|x j| + |s|) :=
-      Finset.single_le_sum (fun j _ => add_nonneg (abs_nonneg _) (abs_nonneg _))
+      Finset.single_le_sum (f := fun j => |x j| + |s|)
+        (fun j _ => add_nonneg (abs_nonneg (x j)) (abs_nonneg s))
         (Finset.mem_univ i)
     linarith [le_abs_self (x i), neg_le_abs s]
   · intro i
     have hi : |x i| + |s| ≤ ∑ j, (|x j| + |s|) :=
-      Finset.single_le_sum (fun j _ => add_nonneg (abs_nonneg _) (abs_nonneg _))
+      Finset.single_le_sum (f := fun j => |x j| + |s|)
+        (fun j _ => add_nonneg (abs_nonneg (x j)) (abs_nonneg s))
         (Finset.mem_univ i)
     linarith [le_abs_self (x i), abs_nonneg s]
 
 private lemma correlation_integral (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (s : ℝ) :
-    Integrable (fun v : ℝ => star (prefix x a (v + s)) * prefix x a v) ∧
-      (∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v) =
+    Integrable (fun v : ℝ => star («prefix» x a (v + s)) * «prefix» x a v) ∧
+      (∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v) =
         -(∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)) := by
   classical
   obtain ⟨b, hb₁, hb₂⟩ := common_upper_bound x s
-  have he (v : ℝ) : star (prefix x a (v + s)) * prefix x a v =
+  have he (v : ℝ) : star («prefix» x a (v + s)) * «prefix» x a v =
       ∑ i, ∑ j, star (a i) *
         (intervalStep (x i - s) b v * intervalStep (x j) b v) * a j := by
-    have hright : prefix x a v = ∑ j, intervalStep (x j) b v * a j := by
+    have hright : «prefix» x a v = ∑ j, intervalStep (x j) b v * a j := by
       simpa only [add_zero, sub_zero] using
         prefix_interval_expansion x a ha b 0 (by simpa only [sub_zero] using hb₂) v
     rw [prefix_interval_expansion x a ha b s hb₁ v, hright]
@@ -130,7 +133,7 @@ private lemma correlation_integral (x : I → ℝ) (a : I → ℂ)
       (intervalStep (x i - s) b v * intervalStep (x j) b v) * a j) :=
     integrable_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hi i j))
   refine ⟨his.congr (ae_of_all _ (fun v => (he v).symm)), ?_⟩
-  have hexp : (∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v) =
+  have hexp : (∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v) =
       ∑ i, ∑ j, star (a i) * ((b - max (x i - s) (x j) : ℝ) : ℂ) * a j := by
     simp_rw [he]
     rw [integral_finsetSum _ (fun i _ =>
@@ -182,48 +185,48 @@ The index type may be empty, nodes may repeat, and coefficients are arbitrary co
 numbers subject only to zero total mass. All integrals use Lebesgue measure. -/
 theorem shifted_hinge_prefix_energy (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (s : ℝ) :
-    Integrable (fun v : ℝ => star (prefix x a (v + s)) * prefix x a v) ∧
-    Integrable (fun v : ℝ => ‖prefix x a v‖ ^ 2) ∧
+    Integrable (fun v : ℝ => star («prefix» x a (v + s)) * «prefix» x a v) ∧
+    Integrable (fun v : ℝ => ‖«prefix» x a v‖ ^ 2) ∧
     (∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)) =
-      -(∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v) ∧
+      -(∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v) ∧
     ‖∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)‖ ≤
-      ∫ v : ℝ, ‖prefix x a v‖ ^ 2 := by
+      ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2 := by
   have hc := correlation_integral x a ha s
   have hc₀ := (correlation_integral x a ha 0).1
-  have hsquare : Integrable (fun v : ℝ => ‖prefix x a v‖ ^ 2) := by
-    have he (v : ℝ) : (star (prefix x a (v + 0)) * prefix x a v).re =
-        ‖prefix x a v‖ ^ 2 := by
+  have hsquare : Integrable (fun v : ℝ => ‖«prefix» x a v‖ ^ 2) := by
+    have he (v : ℝ) : (star («prefix» x a (v + 0)) * «prefix» x a v).re =
+        ‖«prefix» x a v‖ ^ 2 := by
       simp only [add_zero]
-      change (Complex.conj (prefix x a v) * prefix x a v).re = _
-      rw [← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re,
+      change (star («prefix» x a v) * «prefix» x a v).re = _
+      rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re,
         Complex.normSq_eq_norm_sq]
     exact hc₀.re.congr (ae_of_all _ he)
-  have hshift : Integrable (fun v : ℝ => ‖prefix x a (v + s)‖ ^ 2) :=
+  have hshift : Integrable (fun v : ℝ => ‖«prefix» x a (v + s)‖ ^ 2) :=
     hsquare.comp_add_right s
   have hmajor : Integrable (fun v : ℝ =>
-      (‖prefix x a (v + s)‖ ^ 2 + ‖prefix x a v‖ ^ 2) / 2) :=
+      (‖«prefix» x a (v + s)‖ ^ 2 + ‖«prefix» x a v‖ ^ 2) / 2) :=
     (hshift.add hsquare).div_const 2
-  have hyoung (v : ℝ) : ‖star (prefix x a (v + s)) * prefix x a v‖ ≤
-      (‖prefix x a (v + s)‖ ^ 2 + ‖prefix x a v‖ ^ 2) / 2 := by
+  have hyoung (v : ℝ) : ‖star («prefix» x a (v + s)) * «prefix» x a v‖ ≤
+      (‖«prefix» x a (v + s)‖ ^ 2 + ‖«prefix» x a v‖ ^ 2) / 2 := by
     rw [norm_mul, norm_star]
-    nlinarith [sq_nonneg (‖prefix x a (v + s)‖ - ‖prefix x a v‖)]
+    nlinarith [sq_nonneg (‖«prefix» x a (v + s)‖ - ‖«prefix» x a v‖)]
   have hmajor_integral : (∫ v : ℝ,
-      (‖prefix x a (v + s)‖ ^ 2 + ‖prefix x a v‖ ^ 2) / 2) =
-        ∫ v : ℝ, ‖prefix x a v‖ ^ 2 := by
+      (‖«prefix» x a (v + s)‖ ^ 2 + ‖«prefix» x a v‖ ^ 2) / 2) =
+        ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2 := by
     rw [integral_div, integral_add hshift hsquare,
-      integral_add_right_eq_self (fun v : ℝ => ‖prefix x a v‖ ^ 2) s]
+      integral_add_right_eq_self (fun v : ℝ => ‖«prefix» x a v‖ ^ 2) s]
     ring
   refine ⟨hc.1, hsquare, ?_, ?_⟩
   · rw [hc.2, neg_neg]
   · calc
       ‖∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)‖ =
-          ‖∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v‖ := by
+          ‖∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v‖ := by
         rw [hc.2, norm_neg]
-      _ ≤ ∫ v : ℝ, ‖star (prefix x a (v + s)) * prefix x a v‖ :=
+      _ ≤ ∫ v : ℝ, ‖star («prefix» x a (v + s)) * «prefix» x a v‖ :=
         norm_integral_le_integral_norm _
-      _ ≤ ∫ v : ℝ, (‖prefix x a (v + s)‖ ^ 2 + ‖prefix x a v‖ ^ 2) / 2 :=
+      _ ≤ ∫ v : ℝ, (‖«prefix» x a (v + s)‖ ^ 2 + ‖«prefix» x a v‖ ^ 2) / 2 :=
         integral_mono hc.1.norm hmajor hyoung
-      _ = ∫ v : ℝ, ‖prefix x a v‖ ^ 2 := hmajor_integral
+      _ = ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2 := hmajor_integral
 
 /-- Ordinary FTC for the exponential affine primitive. Both signs of `k` are
 used below; the primitive has no cusp. -/
@@ -237,7 +240,7 @@ private lemma integral_affine_exp (k : ℝ) (hk : k ≠ 0) (t a b : ℝ) :
     have hd := (((hasDerivAt_id s).const_mul k).exp.mul
       ((((hasDerivAt_const s t).sub (hasDerivAt_id s)).const_mul k).add_const 1)).div_const
         (k ^ 2)
-    convert hd using 1 <;> field_simp [hk] <;> ring
+    convert hd using 1 <;> dsimp <;> field_simp [hk] <;> ring
   · exact (by fun_prop : Continuous (fun s : ℝ =>
       (t - s) * Real.exp (k * s))).intervalIntegrable a b
 
@@ -267,10 +270,10 @@ theorem finite_window_exponential_hinge (lam D t : ℝ) (hlam : 0 < lam)
       _ = 0 := by simp
   have htrunc : (∫ s in (-D)..D, f s) = ∫ s in (-D)..t, f s := by
     have h := intervalIntegral.integral_add_adjacent_intervals
-      (hf.intervalIntegrable (-D) t) (hf.intervalIntegrable t D)
+      (hf.intervalIntegrable (μ := volume) (-D) t) (hf.intervalIntegrable t D)
     rw [htail, add_zero] at h
     exact h.symm
-  refine ⟨hf.integrableOn_Icc, ?_⟩
+  refine ⟨hf.integrableOn_Icc (μ := volume), ?_⟩
   change Real.exp (-lam * |t|) = Real.exp (-lam * D) +
     lam * Real.exp (-lam * D) * (t + D) +
     lam ^ 2 * (∫ s in Icc (-D) D, f s) - 2 * lam * max t 0
@@ -346,7 +349,7 @@ is integrable. No ordering, distinctness or nonemptiness assumption is used. -/
 theorem exponential_prefix_energy (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤ D)
     (hx : ∀ i j, |x i - x j| ≤ D) :
-    let F := prefix x a
+    let F := «prefix» x a
     let E : ℝ := ∫ v : ℝ, ‖F v‖ ^ 2
     let C : ℝ → ℂ := fun s => ∫ v : ℝ, star (F (v + s)) * F v
     Integrable (fun v : ℝ => ‖F v‖ ^ 2) ∧
@@ -357,8 +360,8 @@ theorem exponential_prefix_energy (x : I → ℝ) (a : I → ℂ)
       (2 * lam : ℂ) * (E : ℂ) -
         (lam ^ 2 : ℂ) * (∫ s in Icc (-D) D, (Real.exp (-lam * |s|) : ℂ) * C s) := by
   classical
-  let C : ℝ → ℂ := fun s => ∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v
-  let E : ℝ := ∫ v : ℝ, ‖prefix x a v‖ ^ 2
+  let C : ℝ → ℂ := fun s => ∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v
+  let E : ℝ := ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2
   let H : ℝ → ℂ := fun s =>
     ∑ i, ∑ j, star (a i) * a j * ((max (x i - x j - s) 0 : ℝ) : ℂ)
   have hHC (s : ℝ) : H s = -C s :=
@@ -378,13 +381,13 @@ theorem exponential_prefix_energy (x : I → ℝ) (a : I → ℂ)
   have hC0 : C 0 = (E : ℂ) := by
     dsimp [C, E]
     calc
-      (∫ v : ℝ, star (prefix x a (v + 0)) * prefix x a v) =
-          ∫ v : ℝ, ((‖prefix x a v‖ ^ 2 : ℝ) : ℂ) := by
+      (∫ v : ℝ, star («prefix» x a (v + 0)) * «prefix» x a v) =
+          ∫ v : ℝ, ((‖«prefix» x a v‖ ^ 2 : ℝ) : ℂ) := by
         apply integral_congr_ae
         exact ae_of_all _ (fun v => by
           simp only [add_zero]
-          change Complex.conj (prefix x a v) * prefix x a v = _
-          rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq])
+          change star («prefix» x a v) * «prefix» x a v = _
+          rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq])
       _ = _ := integral_complex_ofReal
   have hH0 : (∑ i, ∑ j, star (a i) * a j *
       ((max (x i - x j) 0 : ℝ) : ℂ)) = -(E : ℂ) := by
@@ -425,14 +428,14 @@ theorem exponential_prefix_energy (x : I → ℝ) (a : I → ℂ)
     calc
       _ = ∫ s in Icc (-D) D, -((Real.exp (-lam * |s|) : ℂ) * C s) := by
         apply integral_congr_ae
-        exact ae_of_all _ (fun s => by rw [hHC]; ring)
+        exact ae_of_all _ (fun s => by dsimp only; rw [hHC]; ring)
       _ = _ := integral_neg _
   have hcastWindow (t : ℝ) :
       ((∫ s in Icc (-D) D, max (t - s) 0 * Real.exp (-lam * |s|) : ℝ) : ℂ) =
         ∫ s in Icc (-D) D, (Real.exp (-lam * |s|) : ℂ) * ((max (t - s) 0 : ℝ) : ℂ) := by
     rw [← integral_complex_ofReal]
     apply integral_congr_ae
-    exact ae_of_all _ (fun s => by rw [Complex.ofReal_mul]; ring)
+    exact ae_of_all _ (fun s => by dsimp only; rw [Complex.ofReal_mul]; ring)
   have hpoint (i j : I) :
       (Real.exp (-lam * |x i - x j|) : ℂ) =
         (Real.exp (-lam * D) : ℂ) + (lam * Real.exp (-lam * D) : ℂ) *
@@ -481,7 +484,7 @@ private lemma integral_exp_abs_window (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤
     apply intervalIntegral.integral_eq_sub_of_hasDerivAt
       (f := fun s : ℝ => Real.exp (k * s) / k)
     · intro s _
-      simpa only [mul_one, mul_div_cancel_right₀ (Real.exp (k * s)) hk] using
+      simpa only [id_eq, mul_one, mul_div_cancel_right₀ (Real.exp (k * s)) hk] using
         (((hasDerivAt_id s).const_mul k).exp.div_const k)
     · exact (by fun_prop : Continuous (fun s : ℝ => Real.exp (k * s))).intervalIntegrable a b
   have hf : Continuous (fun s : ℝ => Real.exp (-lam * |s|)) := by fun_prop
@@ -494,6 +497,7 @@ private lemma integral_exp_abs_window (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤
     apply intervalIntegral.integral_congr
     intro s hs
     rw [uIcc_of_le (by linarith : -D ≤ (0 : ℝ))] at hs
+    dsimp only
     rw [abs_of_nonpos hs.2]
     congr 1
     ring
@@ -502,6 +506,7 @@ private lemma integral_exp_abs_window (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤
     apply intervalIntegral.integral_congr
     intro s hs
     rw [uIcc_of_le hD] at hs
+    dsimp only
     rw [abs_of_nonneg hs.1]
   rw [hleft, hright, hprimitive lam hlam.ne' (-D) 0,
     hprimitive (-lam) (neg_ne_zero.mpr hlam.ne') 0 D]
@@ -514,11 +519,11 @@ repeated nodes and a zero-length window require no separate nondegeneracy premis
 theorem exponential_prefix_coercivity (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (lam D : ℝ) (hlam : 0 < lam) (hD : 0 ≤ D)
     (hx : ∀ i j, |x i - x j| ≤ D) :
-    2 * lam * Real.exp (-lam * D) * (∫ v : ℝ, ‖prefix x a v‖ ^ 2) ≤
+    2 * lam * Real.exp (-lam * D) * (∫ v : ℝ, ‖«prefix» x a v‖ ^ 2) ≤
       (∑ i, ∑ j, star (a i) * a j * (Real.exp (-lam * |x i - x j|) : ℂ)).re := by
   classical
-  let E : ℝ := ∫ v : ℝ, ‖prefix x a v‖ ^ 2
-  let C : ℝ → ℂ := fun s => ∫ v : ℝ, star (prefix x a (v + s)) * prefix x a v
+  let E : ℝ := ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2
+  let C : ℝ → ℂ := fun s => ∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v
   have hfull := exponential_prefix_energy x a ha lam D hlam hD hx
   have hweight : IntegrableOn (fun s => (Real.exp (-lam * |s|) : ℂ) * C s)
       (Icc (-D) D) := hfull.2.2.2.1
@@ -534,8 +539,8 @@ theorem exponential_prefix_coercivity (x : I → ℝ) (a : I → ℂ)
     (by fun_prop : Continuous (fun s : ℝ => Real.exp (-lam * |s|) * E)).integrableOn_Icc
   have hreal : IntegrableOn (fun s : ℝ => Real.exp (-lam * |s|) * (C s).re)
       (Icc (-D) D) := by
-    simpa only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
-      using hweight.re
+    simpa only [RCLike.re_eq_complex_re, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, zero_mul, sub_zero] using hweight.re
   have hbound : (∫ s in Icc (-D) D, Real.exp (-lam * |s|) * (C s).re) ≤
       (2 * (1 - Real.exp (-lam * D)) / lam) * E := by
     calc
@@ -546,7 +551,8 @@ theorem exponential_prefix_coercivity (x : I → ℝ) (a : I → ℂ)
   have hrealIntegral :
       (∫ s in Icc (-D) D, (Real.exp (-lam * |s|) : ℂ) * C s).re =
         ∫ s in Icc (-D) D, Real.exp (-lam * |s|) * (C s).re := by
-    rw [← integral_re hweight]
+    change RCLike.re (∫ s in Icc (-D) D, (Real.exp (-lam * |s|) : ℂ) * C s) = _
+    rw [← integral_re hweight, RCLike.re_eq_complex_re]
     simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
   have hid :
       (∑ i, ∑ j, star (a i) * a j * (Real.exp (-lam * |x i - x j|) : ℂ)).re =
@@ -569,5 +575,10 @@ theorem exponential_prefix_coercivity (x : I → ℝ) (a : I → ℂ)
       field_simp [hlam.ne'] <;> ring
     _ ≤ _ := sub_le_sub_left
       (mul_le_mul_of_nonneg_left hbound (sq_nonneg lam)) _
+
+#print axioms shifted_hinge_prefix_energy
+#print axioms finite_window_exponential_hinge
+#print axioms exponential_prefix_energy
+#print axioms exponential_prefix_coercivity
 
 end D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
