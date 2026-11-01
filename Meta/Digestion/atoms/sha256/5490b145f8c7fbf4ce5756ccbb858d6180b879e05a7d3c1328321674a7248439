@@ -1,0 +1,34 @@
+**Theorem 11.2 (finite local implementation and complete material account).** The construction of Theorem 10.2 admits the finite representation and local-work bounds below, from binary integer input $H>1$. Its source-service account is the same-run sum (AQBRS.16), in addition to the separately specified material and retention coordinates. The costs of Theorem 11.1 refer to its one executed trajectory. If $u_i$ is the actual pre-call source and $\rho_H,\tau,\gamma_{\rm svc}$ are the supplied finite tariffs of current read, replacement and graft, its source-service work is exactly
+
+$$
+W_{\rm svc}=
+\sum_{i\in\mathcal I_{\rm read}}\rho_H(u_i)
++\sum_{i\in\mathcal I_R}\tau(u_i)
++\sum_{i\in\mathcal I_G}\gamma_{\rm svc}(u_i).
+\tag{AQBRS.16}
+$$
+
+The call sets include the closing words. Add the actual local bit work, public input and output handling, acknowledgements, installed code/data, handle binding and rights, source/backing provision, source retention and retained records. The tariffs are an external resource account, not accessible source-dependent answers. A global replacement on a represented tree need not cost one rewrite or one bit operation.
+
+**Proof.** An explicit finite local realization uses the binary input $H$; its factorization, CRT data, modular matrix order, digit-prefix and stage state; a buffer for the currently selected short word; a reverse traversal of that buffer for its closing word; and repetition counters. With $b=\lceil\log_2(H+1)\rceil$, there are $O(b)$ prime-axis and Fibonacci entries of $O(b)$ bits each. The order counter uses $O(b)$ bits since $L_H\le H^4$. Negative local residues are reduced to their nonnegative representatives. Trial division, repeated modular matrix multiplication, extended Euclid, modular arithmetic, and finite digit and word traversals give an effective algorithm from these exact integer representations. No exact comparison against arbitrary real names is involved.
+
+One may retain an explicit chronological tape with one fixed-size action/acknowledgement tag for each source call and a $b$-bit field for each paid gcd. For this actual acquisition its tape and local workspace have the conservative bound
+
+$$
+O\bigl(A+Qb+b^2\bigr)\text{ bits},
+\tag{AQBRS.17}
+$$
+
+beyond installed code, service/binding data and actual source storage. The word buffer is only $O(b)$ letters: this is the supplied short compiler's length bound. The tape is written as calls complete; it is not an assumed pre-entry archive. All writing and later retention are paid. If a different tape representation is required, charge that representation and its processing instead.
+
+For example a sequential binary implementation using school arithmetic has a conservative local-work upper bound
+
+$$
+O\bigl(H^4b^3+(A+Q+1)b^5\bigr)
+\tag{AQBRS.18}
+$$
+
+for public preparation, test choice/compilation, closing-loop control, tape writing, local decoding and residue output. Indeed, the order search has at most $H^4$ fixed-size modular matrix multiplications; trial division uses at most $H$ trials. Each uses $O(b)$-bit integers and fits the first allowance. The finite prime-axis tables, Euclidean and CRT calculations and short-word compilation per read fit $O(b^5)$ by sequential scans of $O(b)$ entries and ordinary binary arithmetic. Each emitted letter, acknowledgement and tape tag, including each repeated closing letter, fits the same allowance. Decoding and writing the two residue registers fit the last constant allowance. These deliberately loose bounds do not absorb source service or source storage. Installation and delivery of callable service blocks and authentic rights are additional supplied costs, not consequences of a local binary program.
+
+For a separately supplied finite continuation $V$, actual execution adds exactly its own $\#R(V)$ and $\#G(V)$ source calls, their service tariffs at their actual later states, and local updates, input handling and requested outputs. The installed predictor adds zero paid reads. Hypothetical evaluation pays its own word input and local arithmetic/output but executes no source letter. Retaining further histories or results adds their actual writes and storage; there is no acquisition-only bound on an unbounded future tape. A binary pair implementation can translate (AQBRS.14) into a source-dependent operand-length bound. A tree or other backend must supply its own quantity-to-material correspondence and tariffs. Sufficient finite backing for each fixed run is a premise; neither finite code nor finite $Q$ supplies bounded backing over all unbounded entries or all future continuations. No total-work, action-count, workspace, storage or physical implementation optimum is asserted. $\square$
+

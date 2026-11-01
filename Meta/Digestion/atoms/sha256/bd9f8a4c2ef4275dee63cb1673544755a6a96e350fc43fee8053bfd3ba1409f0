@@ -1,0 +1,32 @@
+**Proposition 8.1 (Symmetrized finite algebraic bound).** The same
+variational construction gives a lower bound without logarithmic
+means. For the centered symmetrized covariance of the six
+local Pauli observables, direct Pauli multiplication gives
+
+$$
+V_t^{\rm sym}=\begin{pmatrix}
+ I-p p^{\mathsf T}&T-pq^{\mathsf T}\\
+ T^{\mathsf T}-qp^{\mathsf T}&I-qq^{\mathsf T}
+ \end{pmatrix},
+\tag{8.1}
+$$
+
+where $p,q,T$ are the Pauli data of $A_t$.  For
+$W=(n_0\cdot\boldsymbol\sigma)\otimes(m_0\cdot\boldsymbol\sigma)$ and
+$c=n_0^{\mathsf T}Tm_0$,
+
+$$
+z^{\rm sym}=\binom{(m_0\cdot q)n_0-cp}{(n_0\cdot p)m_0-cq},
+ \qquad v^{\rm sym}=1-c^2,
+ \qquad e=n_0^{\mathsf T}T'm_0.
+\tag{8.2}
+$$
+
+The logarithmic-mean inequality $L(x,y)\leq(x+y)/2$ gives
+$\mathcal K_A\leq\mathcal K_A^{\rm sym}$ on centered observables.  Therefore the
+variational and Schur arguments remain valid with $V^{\rm sym}$ and
+its residual, yielding a finite matrix-algebra lower bound which still
+contains every one of the nine $T_{ij}$. The threshold
+$\kappa_t\leq1/2$ of Theorem 3.3 is not asserted
+for this weaker symmetrized form.
+

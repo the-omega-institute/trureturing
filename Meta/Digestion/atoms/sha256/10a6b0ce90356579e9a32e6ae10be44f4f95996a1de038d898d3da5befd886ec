@@ -1,0 +1,60 @@
+**Proposition 6.2 (All six core weights vanish).** Every global weight functional at an odd two-color population restricts to zero on the six core coefficient spaces.
+
+**Proof.** Let $w$ be any global weight functional. By [(5.5)](#eq-autos) and odd
+total degree, $F_S=-F_S$, so $F_S=0$.
+
+For $C$, all three of its rows in [(5.6)](#eq-seven) now apply. The first
+and odd degree give invariance under
+
+$$
+U(a,b,c,d)=(a-b,a,c,d).
+$$
+
+The next two give anti-invariance under
+
+$$
+J(a,b,c,d)=(b,a,c,d),\qquad
+ V(a,b,c,d)=(b,a,c,d+a-b).
+$$
+
+Hence $F_C$ is invariant under $S_0=J\circ V$, which fixes the first
+three coordinates and adds $a-b$ to $d$. It is also invariant under
+
+$$
+U^{-1}S_0U:(a,b,c,d)\mapsto(a,b,c,d-b).
+$$
+
+To check the order, $U$ first replaces $(a,b)$ by $(a-b,a)$, so the
+addition is $(a-b)-a=-b$; $U^{-1}$ restores $(a,b)$. Combining this
+shear's inverse with $S_0$ adds $a$ to $d$. Exactly the same operations
+add $r$ or $s$ to $u$. [Lemma 6.1](#lem-shears) proves independence of
+$d,u$. The $C$ automorphism in [(5.5)](#eq-autos) then simultaneously
+negates all remaining variables while fixing $F_C$. Odd degree forces
+$F_C=0$.
+
+For $P$, all four rows now apply. Call their substitutions
+$A_2,A_3,A_5,A_6$ in that order. Each changes the sign of $F_P$.
+Their compositions are
+
+$$
+A_3A_2:(a,b,c,d)\mapsto(a,b,c,d+a),\qquad
+ A_6A_5:(a,b,c,d)\mapsto(a,b,c,d-b).
+$$
+
+For example $c-a-(-a)=c$ and $d-a-2(-a)=d+a$ in the first, and
+$c+b+(-b)=c$, $d+b+2(-b)=d-b$ in the second. On the second color
+these add $r$ and $-s$ to $u$. [Lemma 6.1](#lem-shears) again eliminates
+$d,u$. The inverse prism automorphism then reads
+
+$$
+F_P(a,b,c;r,s,t)=F_P(a,b,a-b-d;r,s,r-s-u).
+$$
+
+Set $d=a-b$ and $u=r-s$; the left side is unchanged, and the right
+side has its third coordinates zero. Thus $F_P$ is also independent
+of $c,t$. The $A_2$ and $A_5$ relations now change its sign under
+$(a,r)\mapsto(-a,-r)$ and $(b,s)\mapsto(-b,-s)$ respectively.
+Their composition fixes $F_P$ but negates every remaining variable.
+Odd degree gives $F_P=0$. Finally [(5.8)](#eq-linkR)--[(5.10)](#eq-linkK)
+and invertibility give $F_R=F_B=F_K=0$. $\square$
+

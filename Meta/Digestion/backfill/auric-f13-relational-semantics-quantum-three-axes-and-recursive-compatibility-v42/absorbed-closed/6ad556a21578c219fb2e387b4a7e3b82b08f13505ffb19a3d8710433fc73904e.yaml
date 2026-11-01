@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6ad556a21578c219fb2e387b4a7e3b82b08f13505ffb19a3d8710433fc73904e
+  normalized_sha256: sha256:6ad556a21578c219fb2e387b4a7e3b82b08f13505ffb19a3d8710433fc73904e
+cas_ref: sha256:6ad556a21578c219fb2e387b4a7e3b82b08f13505ffb19a3d8710433fc73904e
+coverage_gids:
+  - gid: D5/S3/TotalVariation/TreeMarkovStability.actual_tree_stability
+    target_statement_id: sha256:9aa8641fe31d444f51c12f1a62a56ac21e06a5a667801c4ffd53ffeef3bd0c8e
+receipts:
+  unresolved_subitems: []

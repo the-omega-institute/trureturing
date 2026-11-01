@@ -113,7 +113,7 @@ private lemma folded_ratio_strictAnti {m d e : ℝ} (hd : 0 ≤ d) (hde : d < e)
       (Real.rpow_pos_of_pos (mul_pos hv.1 (sub_pos.mpr hv1.2)) _)).ne'
   simpa only [mul_div_mul_left _ _ hpu, mul_div_mul_left _ _ hpv] using H
 
-private lemma weighted_means_lt {p q W : ℝ → ℝ} {h : ℝ} (hh : 0 < h)
+lemma weighted_means_lt {p q W : ℝ → ℝ} {h : ℝ} (hh : 0 < h)
     (hp : IntervalIntegrable p volume 0 h) (hq : IntervalIntegrable q volume 0 h)
     (hpW : IntervalIntegrable (fun u => p u * W u) volume 0 h)
     (hqW : IntervalIntegrable (fun u => q u * W u) volume 0 h)

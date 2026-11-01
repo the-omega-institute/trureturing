@@ -1,0 +1,13 @@
+#### 定义 9.1（线性相干递归网络）
+
+有限 DAG 每个内部顶点 $v$ 配有限维复 Hilbert 空间 $\mathcal H_v$，边 $u\to v$ 配线性算子 $A_{vu}$，边界供应 $b_v$。令
+
+$$
+x_v=b_v+\sum_{u\to v}A_{vu}x_u,
+\qquad \mathcal H=\bigoplus_v\mathcal H_v.
+$$
+
+在任意拓扑排序下，块矩阵 $A$ 严格三角，因此 $A^m=0$ 对某个有限 $m$ 成立。这里多父节点的贡献是振幅求和；不能替换成每条来边单独要求相等。
+
+<a id="statement-9-2"></a>
+

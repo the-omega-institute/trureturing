@@ -38,6 +38,18 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
                         + "coordinatewise complex conjugation."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("basis-pinching-entropy"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."
+                        + "von_neumann_entropy_basisPinchingState"),
+                H("Entropy of the coordinate pinching"),
+                StatementSource.FromAuthor(PinchingEntropyFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The entropy of coordinate-basis pinching is the negative sum of each "
+                        + "real diagonal entry times its real logarithm."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("entropy-production-coherence-deletion-identity"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."
@@ -61,28 +73,49 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
     private static Formula Sub(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula DiagonalHomFormula()
     {
         Formula carrier = F.Id("n"), complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula coordinates = Seq(carrier, To, complex);
         Formula matrices = Call("Matrix", carrier, carrier, complex);
         Formula homType = Call("StarAlgHom", complex, coordinates, matrices);
+        Formula hom = Seq(Operatorname, Grp(F.Id("diagonalStarAlgHom")));
         Formula a = F.Id("a"), i = F.Id("i"), j = F.Id("j");
         Formula entry = Seq(
             Forall, Sp, a, Colon, Sp, coordinates, Comma, Sp,
-            Forall, Sp, i, Comma, Sp, j, Colon, Sp, carrier, Comma, Sp,
+            Forall, Sp, i, Sp, j, Colon, Sp, carrier, Comma, Sp,
             Call("diagonalStarAlgHom", a, i, j), Sp, Eq, Sp,
-            Call("ite", Seq(i, Eq, j), Call("apply", a, i), D(0)));
+            Call("ite", Seq(i, Eq, j), new Formula.Apply(a, [i]), D(0)));
         return Disp(Seq(
-            Forall, Sp, carrier, Colon, Sp, Call("Type"), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(carrier, Colon, Sp,
+                Operatorname, Grp(F.Id("Type")))), Sp,
             OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", carrier), CloseBracket, Comma, Sp,
-            Call("diagonalStarAlgHom"), Colon, Sp, homType, Comma, RowBreak, Grp(),
-            Call("toAlgHom", Call("diagonalStarAlgHom")), Sp, Eq, Sp,
-            Call("diagonalAlgHom", complex), Sp, Land, Sp, entry, Sp, Land, RowBreak, Grp(),
-            Forall, Sp, a, Colon, Sp, coordinates, Comma, Sp,
-            Call("diagonalStarAlgHom", Call("star", a)), Sp, Eq, Sp,
-            Call("star", Call("diagonalStarAlgHom", a))));
+            hom, Colon, Sp, homType, Comma, RowBreak, Grp(),
+            Call("toAlgHom", hom), Sp, Eq, Sp,
+            Call("diagonalAlgHom", complex), Sp, Land, Sp, Parenthesized(entry),
+            Sp, Land, RowBreak, Grp(), Parenthesized(Seq(
+                Forall, Sp, a, Colon, Sp, coordinates, Comma, Sp,
+                Call("diagonalStarAlgHom", Call("star", a)), Sp, Eq, Sp,
+                Call("star", Call("diagonalStarAlgHom", a))))));
+    }
+
+    private static Formula PinchingEntropyFormula()
+    {
+        Formula carrier = F.Id("n"), state = Rho, index = F.Id("i");
+        Formula diagonal = Call("Re", Call("densityMatrix", state, index, index));
+        Formula summand = Seq(diagonal, Sp, Call("log", diagonal));
+        return Disp(Seq(
+            Forall, Sp, Parenthesized(Seq(carrier, Colon, Sp,
+                Operatorname, Grp(F.Id("Type")))), Sp,
+            OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", carrier), CloseBracket, Comma, Sp,
+            Forall, Sp, state, Colon, Sp, Call("DensityState", carrier), Comma, Sp,
+            Call("vonNeumannEntropy", Call("basisPinchingState", state)), Sp, Eq, Sp,
+            Minus, Parenthesized(Seq(
+                new Formula.Subscript(Sum, Seq(index, Sp, Colon, Sp, carrier)), Sp, summand))));
     }
 
     private static Formula IdentityFormula()
@@ -94,11 +127,12 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
         Formula carrierType = Seq(Operatorname, Grp(F.Id("Type")));
         Formula matrixType = Call("Matrix", carrier, carrier, complex);
         Formula densityType = Call("DensityState", carrier);
-        Formula sequenceType = Seq(natural, Sp, Mapsto, Sp, densityType);
+        Formula sequenceType = Seq(natural, Sp, To, Sp, densityType);
+        Formula unitaryProof = F.Id("hU");
 
         Formula StateAt(Formula index) => Sub(sequence, index);
         Formula EvolvedAt(Formula index) =>
-            Call("unitaryConjugateState", unitary, StateAt(index));
+            Call("unitaryConjugateState", unitary, unitaryProof, StateAt(index));
         Formula PinchedAt(Formula index) =>
             Call("basisPinchingState", EvolvedAt(index));
         Formula TaxAt(Formula index) =>
@@ -108,34 +142,37 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
 
         Formula nextStep = Seq(step, Plus, D(1));
         Formula recurrence = Seq(
-            Forall, Sp, step, Sp, InMacro, Sp, natural, Comma, Sp,
+            Forall, Sp, step, Colon, Sp, natural, Comma, Sp,
             StateAt(nextStep), Sp, Eq, Sp, PinchedAt(step));
         Formula oneStep = Seq(
-            Forall, Sp, step, Sp, InMacro, Sp, natural, Comma, Sp,
-            Open,
-            EntropyAt(nextStep), Sp, Minus, Sp, EntropyAt(step), Sp, Eq, Sp,
-            TaxAt(step),
-            Sp, Land, Sp, D(0), Sp, Leq, Sp, TaxAt(step),
-            Close);
+            Forall, Sp, step, Colon, Sp, natural, Comma, Sp,
+            Parenthesized(Seq(
+                EntropyAt(nextStep), Sp, Minus, Sp, EntropyAt(step), Sp, Eq, Sp,
+                TaxAt(step),
+                Sp, Land, Sp, D(0), Sp, Leq, Sp, TaxAt(step))));
         Formula totalTax = Seq(
-            Sum, Underscore, Grp(step, Sp, Lt, Sp, horizon), Sp, TaxAt(step));
+            new Formula.Subscript(Sum,
+                new Formula.Relation(step, FormulaRelationOperator.MemberOf, Call("range", horizon))),
+            Sp, TaxAt(step));
         Formula telescope = Seq(
-            Forall, Sp, horizon, Sp, InMacro, Sp, natural, Comma, Sp,
+            Forall, Sp, horizon, Colon, Sp, natural, Comma, Sp,
             EntropyAt(horizon), Sp, Minus, Sp, EntropyAt(D(0)), Sp, Eq, Sp,
             totalTax);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, carrier, Colon, Sp, carrierType, Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(carrier, Colon, Sp, carrierType)), Sp,
+            OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", carrier), CloseBracket, Comma, Sp,
+            Forall, Sp,
             unitary, Colon, Sp, matrixType, Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(unitaryProof, Colon, Sp,
+                unitary, Sp, InMacro, Sp, Call("unitaryGroup", carrier, complex))), Comma, Sp,
+            Forall, Sp,
             sequence, Colon, Sp, sequenceType, Comma, RowBreak, Grp(),
-            Call("Fintype", carrier), Sp, Land, Sp,
-            Call("DecidableEq", carrier), Sp, Land, Sp,
-            unitary, Sp, InMacro, Sp, Call("unitaryGroup", carrier, complex), Sp,
-            Land, RowBreak, Grp(),
-            recurrence, Sp, Rightarrow, RowBreak, Grp(),
-            Open, oneStep, Close, Sp, Land, RowBreak, Grp(),
-            Open, telescope, Close, Dot,
+            Parenthesized(recurrence), Sp, Rightarrow, RowBreak, Grp(),
+            Parenthesized(oneStep), Sp, Land, RowBreak, Grp(),
+            Parenthesized(telescope), Dot,
             End, Grp(F.Id("gathered"))));
     }
 }

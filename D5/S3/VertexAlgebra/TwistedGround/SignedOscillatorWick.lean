@@ -51,10 +51,10 @@ namespace FactorialBilinear
 universe u
 variable {σ : Type u}
 
-private abbrev P (σ : Type u) := MvPolynomial σ ℂ
+abbrev P (σ : Type u) := MvPolynomial σ ℂ
 
 /-- Same existing occupation factorial; a complex BILINEAR form. -/
-private def form (σ : Type u) : LinearMap.BilinForm ℂ (P σ) :=
+def form (σ : Type u) : LinearMap.BilinForm ℂ (P σ) :=
   (MvPolynomial.basisMonomials σ ℂ).constr ℂ
     (fun d => (FactorialFockMetric.weight d : ℂ) • MvPolynomial.lcoeff ℂ d)
 
@@ -65,7 +65,7 @@ private theorem basis_left (d : σ →₀ ℕ) (q : P σ) :
   rw [Module.Basis.constr_basis]
   rfl
 
-private theorem monomial_left (d : σ →₀ ℕ) (a : ℂ) (q : P σ) :
+theorem monomial_left (d : σ →₀ ℕ) (a : ℂ) (q : P σ) :
     form σ (MvPolynomial.monomial d a) q =
       (FactorialFockMetric.weight d : ℂ) * a * q.coeff d := by
   have hm : MvPolynomial.monomial d a =
@@ -130,7 +130,7 @@ private theorem nondegenerate : (form σ).Nondegenerate := by
 end FactorialBilinear
 
 /-- No positive-definiteness premise: the invariant bilinear sign is negative. -/
-private def modeMatrix (D : LatticeData) (k : ℕ) :
+def modeMatrix (D : LatticeData) (k : ℕ) :
     Matrix (Fin D.rank) (Fin D.rank) ℂ :=
   (-frequency (k : ℤ)) • gramComplex D
 
@@ -144,7 +144,7 @@ private theorem mode_scalar_ne_zero (k : ℕ) : -frequency (k : ℤ) ≠ 0 := by
   have h := Complex.ofReal_ne_zero.mpr (show (k : ℝ) + 1 / 2 ≠ 0 by positivity)
   simpa using h
 
-private theorem complex_det_unit (D : LatticeData) (hu : IsUnit D.G.det) :
+theorem complex_det_unit (D : LatticeData) (hu : IsUnit D.G.det) :
     IsUnit (gramComplex D).det := by
   change IsUnit (D.G.map (Int.castRingHom ℂ)).det
   change IsUnit ((Int.castRingHom ℂ).mapMatrix D.G).det

@@ -99,15 +99,18 @@ public sealed partial class CleanLanesCommandTests
         else Assert.Empty(CleanLanesCommand.ParseArguments(arguments).ActivePaths);
     }
 
-    [Fact]
-    public void UnreadableRegisteredLaneIsSkippedWithoutHidingHealthyLanes()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void UnreadableRegisteredLaneIsSkippedWithoutHidingHealthyLanes(bool missing)
     {
         using var fixture = new CleanLanesFixture();
         var unreadable = fixture.AddLandedLane("harness/unreadable");
         var healthy = fixture.AddLandedLane("harness/healthy");
-        File.Delete(Path.Combine(unreadable, ".git"));
+        if (missing) Directory.Delete(unreadable, recursive: true);
+        else File.Delete(Path.Combine(unreadable, ".git"));
 
-        Assert.True(Directory.Exists(unreadable));
+        Assert.Equal(!missing, Directory.Exists(unreadable));
         Assert.False(File.Exists(Path.Combine(unreadable, ".git")));
 
         var result = fixture.Run();
@@ -115,9 +118,11 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         var items = ReadItems(result.Output);
         Assert.Contains(items, item =>
-            ItemMatches(item, unreadable, "skipped", "unreadable"));
+            ItemMatches(item, unreadable, "skipped", missing ? "missing" : "unreadable"));
         Assert.Contains(items, item =>
             ItemMatches(item, healthy, "would_remove", "merged_to_dev"));
+        var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
+        Assert.Equal(unreadable, warning.GetProperty("path").GetString());
     }
 
     [Fact]
@@ -188,8 +193,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWith(runner, "--force", "--lanes-only");
 
-        Assert.False(result.Success);
-        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
+        Assert.True(result.Success, result.Error);
+        Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.True(Directory.Exists(retained));
         Assert.True(fixture.BranchExists(retainedBranch));
         Assert.False(Directory.Exists(removed));
@@ -375,7 +380,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("removed", item.GetProperty("action").GetString());
         var recovery = item.GetProperty("recovery_branch").GetString()!;
         Assert.StartsWith("refs/heads/lane/governance/recovery-", recovery);
-        Assert.Equal(lanesOnly, fixture.BranchExists("lane/governance/recovery-old"));
+        Assert.True(fixture.BranchExists("lane/governance/recovery-old"));
         CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", stale, recovery["refs/heads/".Length..]);
         if (dirty)
         {
@@ -389,16 +394,14 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void LanesOnlySpareOrphanBranchesAndUnregisteredSnapshots()
+    public void LanesOnlySpareUnregisteredSnapshots()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/scoped");
-        fixture.AddOrphan("harness/orphan", merged: true);
         var snapshot = fixture.AddGitlessJudgeSnapshot("trureturing-snapshot");
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
-        Assert.True(fixture.BranchExists("harness/orphan"));
         Assert.True(Directory.Exists(snapshot));
     }
 
@@ -532,7 +535,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     private static bool IsProtocol(IReadOnlyList<string> arguments, string action) =>
-        arguments.Count > 5 && arguments[1] == "-c" && arguments[3] == "--source"
+        arguments.Count > 5 && arguments[0] == "-I" && arguments[1] == "-B" && arguments[3] == "--source"
         && arguments[5] == action;
 
     private static string ProtocolValue(IReadOnlyList<string> arguments, string option) =>

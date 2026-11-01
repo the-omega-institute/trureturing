@@ -61,7 +61,7 @@ def claim : Prop :=
   ∀ ρ : TwoQubit, ρ.PosSemidef → trace ρ = 1 →
     Real.sqrt (geometricDiscord ρ) ≤ maximalMutualCorrelation ρ
 
-private lemma density_expectation_bound {n : Type*} [Fintype n] [DecidableEq n]
+lemma density_expectation_bound {n : Type*} [Fintype n] [DecidableEq n]
     (ρ X : Matrix n n ℂ) (hρ : ρ.PosSemidef) (ht : trace ρ = 1) :
     ‖trace (ρ * X)‖ ≤ ‖X‖ := by
   let U := hρ.isHermitian.eigenvectorUnitary

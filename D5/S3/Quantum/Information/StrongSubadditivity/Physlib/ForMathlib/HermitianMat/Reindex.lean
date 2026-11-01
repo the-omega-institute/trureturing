@@ -1,0 +1,130 @@
+/- GID: D5/S3/Quantum/Information/StrongSubadditivity/Physlib/ForMathlib/HermitianMat/Reindex
+   generality: G
+   mirror-B: none(waiver:upstream-proof-closure)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Consumed Physlib strong-subadditivity proof closure. -/
+
+/- Adapted from leanprover-community/physlib, revision
+2725b6f621901d4cd330869e9b77105045c1582e, QuantumInfo/ForMathlib/HermitianMat/Reindex.lean.
+Changes: D5 import paths, bounded modules, and local supplier elaboration options.
+Retire this port when the receiving pinned Mathlib provides the equivalent declarations.
+Apache-2.0 license text is included in the sibling ForMathlib/Misc.lean. -/
+/-
+Copyright (c) 2025 Alex Meiburg. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Alex Meiburg
+-/
+module
+
+public import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Basic
+public import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.ContinuousLinearMap
+public import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.LinearEquiv
+
+/-!
+Much like `Matrix.reindex` and `Matrix.submatrix`, we can reindex a Hermitian matrix to get another
+Hermitian matrix; however, this only makes sense when both permutations are the same, accordingly,
+`HermitianMat.reindex` only takes one `Equiv` argument (as opposed to `Matrix.reindex`'s two).
+
+This file then gives relevant lemmas for simplifying this.
+-/
+
+@[expose] public section
+
+set_option relaxedAutoImplicit true
+namespace HermitianMat
+
+variable {d d₂ d₃ d₄ 𝕜 : Type*} [RCLike 𝕜]
+
+variable (A B : HermitianMat d 𝕜) (e : d ≃ d₂)
+
+def reindex (e : d ≃ d₂) : HermitianMat d₂ 𝕜 :=
+  ⟨A.mat.reindex e e, A.H.submatrix e.symm⟩
+
+@[simp]
+lemma mat_reindex : (A.reindex e).mat = A.mat.reindex e e := by
+  rfl
+
+/-! Our simp-normal form for expressions involving `HermitianMat.reindex` is that we try to push
+the reindexing as far out as possible, so that it can be absorbed by `HermitianMat.trace`, or
+cancelled our in a `HermitianMat.inner`. In places where it commutes (like `HermitianMat.inner`)
+we push it to the right side. One downside is that we're not as likely to hit `reindex_one`. -/
+
+@[simp]
+lemma reindex_refl (A : HermitianMat d 𝕜) :
+    A.reindex (.refl _) = A := by
+  rfl
+
+@[simp]
+lemma reindex_reindex (A : HermitianMat d 𝕜) (e : d ≃ d₂) (f : d₂ ≃ d₃) :
+    (A.reindex e).reindex f = A.reindex (e.trans f) := by
+  ext1; simp
+
+@[simp]
+lemma reindex_zero : (0 : HermitianMat d 𝕜).reindex e = 0 := by
+  ext1; simp
+
+@[simp]
+lemma reindex_one [DecidableEq d] [DecidableEq d₂] :
+    (1 : HermitianMat d 𝕜).reindex e = 1 := by
+  ext1
+  simp [reindex]
+
+@[simp]
+lemma reindex_add : A.reindex e + B.reindex e = (A + B).reindex e := by
+  ext1; simp [Matrix.submatrix_add]
+
+@[simp]
+lemma reindex_sub  : A.reindex e - B.reindex e = (A - B).reindex e := by
+  ext1; simp [Matrix.submatrix_sub]
+
+@[simp]
+lemma reindex_neg : (-A).reindex e = -(A.reindex e) := by
+  ext1; simp [Matrix.submatrix_neg]
+
+@[simp]
+lemma reindex_smul (c : ℝ) : (c • A).reindex e = c • (A.reindex e) := by
+  ext1; simp [Matrix.submatrix_smul]
+
+@[simp]
+lemma reindex_conj [Fintype d₂] [Fintype d] (B : Matrix d₃ d₂ 𝕜) :
+    (A.reindex e).conj B = A.conj (B.submatrix id e) := by
+  ext1
+  simp only [conj_apply, mat_reindex, Matrix.reindex_apply, mat_mk]
+  rw [← Matrix.submatrix_id_mul_right, Matrix.mul_assoc]
+  rw [← Matrix.submatrix_id_mul_left, ← Matrix.mul_assoc]
+  simp
+
+variable [Fintype d]
+
+set_option backward.isDefEq.respectTransparency false in
+lemma conj_submatrix (B : Matrix d₂ d₄ 𝕜) (e : d₃ ≃ d₂) (f : d → d₄) :
+    A.conj (B.submatrix e f) = (A.conj (B.submatrix id f)).reindex e.symm := by
+  ext1
+  simp [conj_apply, ← Matrix.submatrix_mul_equiv (e₂ := .refl d)]
+
+set_option backward.isDefEq.respectTransparency false in
+lemma reindex_eq_conj [DecidableEq d] (e : d ≃ d₂) :
+    A.reindex e = A.conj (Matrix.reindex e (.refl d) 1) := by
+  ext : 3
+  simp [-mat_apply, reindex, conj_apply, Matrix.submatrix,
+    Matrix.mul_apply, Matrix.one_apply]
+
+variable [Fintype d₂] [DecidableEq d] [DecidableEq d₂]
+
+set_option backward.isDefEq.respectTransparency false in
+lemma ker_reindex :
+    (A.reindex e).ker = A.ker.comap (LinearEquiv.euclideanOfRelabel 𝕜 e).toLinearMap := by
+  dsimp only [reindex, ker, lin]
+  simp only [mat_mk]
+  rw [Matrix.reindex_toEuclideanLin, LinearEquiv.ker_comp, LinearMap.ker_comp]
+
+@[simp]
+lemma ker_reindex_le_iff :
+    (A.reindex e).ker ≤ (B.reindex e).ker ↔ A.ker ≤ B.ker := by
+  rw [ker_reindex, ker_reindex]
+  apply Submodule.comap_le_comap_iff_of_surjective
+  exact LinearEquiv.surjective (LinearEquiv.euclideanOfRelabel 𝕜 e)
+
+end HermitianMat

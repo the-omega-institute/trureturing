@@ -1,0 +1,16 @@
+**Proposition 1.7 (The one-anchor unstable boundary).** For $g=0$, one anchor and one ordinary leg form a nonzero
+strut. The one-anchor Y with two differently colored ordinary legs is also nonzero.
+
+**Proof.** The strut has no trivalent vertex and admits none of the three relators. For the Y, the graph
+has one trivalent vertex, no possible IHX central edge, and no possible
+two-attachment CL. Its three distinct leaf types forbid an AS-negative
+automorphism. Its AS quotient is one-dimensional. Pruning these graphs
+gives an isolated anchor and zero relative $H^1$, so neither graph can
+be covered by the unrestricted wording of [Kuperberg, Lemma `l:sympow`](../../../Library/Topology/kuperberg2026oddvas.md).
+These are actual counterexamples to that extended wording, not to
+[Theorem 1.5](#thm-main). Our target, all its positive-genus cut factors,
+and the auxiliary two- and three-anchor local stars satisfy
+[(1.3)](#eq-stable). $\square$
+
+**Proof of Theorem 1.5.** The argument occupies Sections 2–8. The original quotient, coefficient viewpoint, and marked question are due to [Kuperberg](../../../Library/Topology/kuperberg2026oddvas.md), §§2–3 and §7. His Theorem 1.1 proves the one-color four-loop statement. The proof below keeps the two ordinary colors throughout.
+

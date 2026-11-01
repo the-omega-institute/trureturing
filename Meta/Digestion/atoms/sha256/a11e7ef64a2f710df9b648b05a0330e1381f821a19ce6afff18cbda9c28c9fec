@@ -1,0 +1,2 @@
+**Definition 2.1 (Pruned hull and skeleton).** For a stable connected graph $D$, delete non-anchor leaves and their
+edges repeatedly. 

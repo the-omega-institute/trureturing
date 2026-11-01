@@ -1,0 +1,10 @@
+**Proposition 3.4 (The full coefficient presentation).** The original stable quotient is the direct sum of its local coefficient algebras modulo signed flag isomorphisms and common-contraction IHX.
+
+**Proof.** For the three skeleton resolutions $G_i$ of [(1.1)](#eq-ihx), all central
+contractions have the same surviving flags and the same contracted graph
+$C$. Consequently every common coefficient $\alpha$ gives the genuine
+graph relation
+
+<a id="eq-global"></a>
+<a id="eq:global"></a>
+

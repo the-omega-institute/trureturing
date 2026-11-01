@@ -184,6 +184,7 @@ internal static partial class RepositoryRules
     internal static bool IsArtifactLineCapacityExcluded(string path) =>
         IsCapacityExcluded(path)
         || IsLibraryDocument(path)
+        || string.Equals(path, "CLAUDE.md", StringComparison.Ordinal)
         || Path.GetExtension(path).ToLowerInvariant() is
             ".json" or ".jsonl" or ".ndjson" or ".json5" or ".jsonc"
             or ".yaml" or ".yml" or ".toml" or ".csv" or ".tsv" or ".xml" or ".trx" or ".b64";

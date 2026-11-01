@@ -111,10 +111,11 @@ theorem tribonacci_binet_tendsto_zero :
     tendsto_const_nhds.mul hcombined
   simpa using hscaled
 
-/-- Every complex Tribonacci root other than the Perron root lies in the open unit disk. -/
-theorem abs_lt_one_of_tribonacci_root_ne_perron {z : Complex}
+private theorem root_relations_of_tribonacci_root_ne_perron {z : Complex}
     (hz : z ^ 3 = z ^ 2 + z + 1) (hz_ne : z ≠ (t : Complex)) :
-    ‖z‖ < 1 := by
+    z + star z = ((1 - t : ℝ) : ℂ) ∧
+      z * star z = ((t ^ 2 - t - 1 : ℝ) : ℂ) ∧
+      t * ‖z‖ ^ 2 = 1 := by
   have ht_cubic : (t : Complex) ^ 3 = (t : Complex) ^ 2 + (t : Complex) + 1 := by
     exact_mod_cast tribonacciConstant_cubic
   have hfactor :
@@ -162,9 +163,19 @@ theorem abs_lt_one_of_tribonacci_root_ne_perron {z : Complex}
   have hnormSq : Complex.normSq z = t⁻¹ := by
     rw [Complex.normSq_apply]
     nlinarith [hre, hre_mul]
+  refine ⟨?_, ?_, ?_⟩
+  · apply Complex.ext <;> simp <;> linarith
+  · change z * (starRingEnd ℂ) z = _
+    rw [mul_comm, ← Complex.normSq_eq_conj_mul_self, hnormSq, ht_inverse]
+  · rw [Complex.sq_norm, hnormSq, mul_inv_cancel₀ tribonacciConstant_ne_zero]
+
+/-- Every complex Tribonacci root other than the Perron root lies in the open unit disk. -/
+theorem abs_lt_one_of_tribonacci_root_ne_perron {z : Complex}
+    (hz : z ^ 3 = z ^ 2 + z + 1) (hz_ne : z ≠ (t : Complex)) :
+    ‖z‖ < 1 := by
+  have hnorm := (root_relations_of_tribonacci_root_ne_perron hz hz_ne).2.2
   apply (sq_lt_one_iff₀ (norm_nonneg z)).mp
-  rw [Complex.sq_norm, hnormSq]
-  exact inv_lt_one_of_one_lt₀ one_lt_tribonacciConstant
+  nlinarith [one_lt_tribonacciConstant, sq_nonneg ‖z‖]
 
 /-- The non-Perron members of the characteristic root multiset are inside the unit disk. -/
 theorem tribonacci_secondary_root_abs_lt_one {z : Complex}
@@ -182,5 +193,23 @@ theorem tribonacci_secondary_root_abs_lt_one {z : Complex}
   calc
     z ^ 3 = (z ^ 3 - z ^ 2 - z - 1) + (z ^ 2 + z + 1) := by ring
     _ = z ^ 2 + z + 1 := by rw [heval, zero_add]
+
+/-- The sum, product and norm relations of either secondary root reuse the
+same residual-quadratic computation as the unit-disk bound. -/
+theorem tribonacci_secondary_root_relations {z : Complex}
+    (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠ (t : Complex)) :
+    z + star z = ((1 - t : ℝ) : ℂ) ∧
+      z * star z = ((t ^ 2 - t - 1 : ℝ) : ℂ) ∧
+      t * ‖z‖ ^ 2 = 1 := by
+  have hpoly_ne : tribonacciCharacteristicPolynomial ≠ 0 := by
+    intro hzero
+    have heval := congrArg (Polynomial.eval (2 : Complex)) hzero
+    norm_num [tribonacciCharacteristicPolynomial] at heval
+  have hisRoot := (Polynomial.mem_roots hpoly_ne).mp hz
+  apply root_relations_of_tribonacci_root_ne_perron (hz_ne := hz_ne)
+  simp only [Polynomial.IsRoot, tribonacciCharacteristicPolynomial,
+    Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_one] at hisRoot
+  linear_combination hisRoot
 
 end D5.S0.Tower.Tribonacci.Binet

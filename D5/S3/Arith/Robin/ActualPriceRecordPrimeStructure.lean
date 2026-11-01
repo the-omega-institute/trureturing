@@ -320,7 +320,7 @@ theorem price_record_largest_prime_localization :
     change P / X - 1 < epsilon
     linarith only [hr]
 
-private theorem finite_theta_abel_upper {y z rho : ℝ} (hy : 1 < y) (hyz : y ≤ z)
+theorem finite_theta_abel_upper {y z rho : ℝ} (hy : 1 < y) (hyz : y ≤ z)
     (hrho : 0 ≤ rho)
     (htheta : ∀ t ∈ Set.Icc y z,
       (1 - rho) * t ≤ θ t ∧ θ t ≤ (1 + rho) * t) :
@@ -453,7 +453,7 @@ private theorem short_layer_gain_lower {m q : ℕ} (hq : q.Prime)
   have hh := hsmall.trans (hbase.trans hlog)
   convert hh using 1 <;> dsimp [x] <;> field_simp <;> ring
 
-private theorem actual_layer_tail_le {m q : ℕ} (hq : q.Prime) {k : ℕ}
+theorem actual_layer_tail_le {m q : ℕ} (hq : q.Prime) {k : ℕ}
     (hk : 1 ≤ k) (hkv : k ≤ m.factorization q + 1) :
     OriginalEndpointPrimeTail.layerTail m q ≤
       (q : ℝ)⁻¹ ^ k / (1 - (q : ℝ)⁻¹ ^ k) := by
@@ -524,7 +524,7 @@ private theorem medium_valuation {m P q : ℕ} {lam alpha kappa u y : ℝ}
   rw [hcancel] at he
   nlinarith only [hg, he, hscale, hprice, hk]
 
-private theorem finite_cubic_tail {u : ℝ} (hu : 0 < u) (S : Finset ℕ)
+theorem finite_cubic_tail {u : ℝ} (hu : 0 < u) (S : Finset ℕ)
     (hS : ∀ p ∈ S, u < (p : ℝ)) :
     (∑ p ∈ S, 1 / (p : ℝ) ^ 3) ≤ 2 / u ^ 2 := by
   classical

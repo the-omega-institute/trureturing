@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3c22306625d456951f0ee69d654f5cb3a1786e4d9e2b2a94a629524ec70e9979
+  normalized_sha256: sha256:3c22306625d456951f0ee69d654f5cb3a1786e4d9e2b2a94a629524ec70e9979
+cas_ref: sha256:3c22306625d456951f0ee69d654f5cb3a1786e4d9e2b2a94a629524ec70e9979
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.comp_moorePenroseInverse_comp
+    target_statement_id: sha256:764bfcdafda91fec792dbf6fa1fe93a5ec777937fcd18b7a711ccae0a0c80275
+receipts:
+  unresolved_subitems: []

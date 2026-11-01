@@ -1,0 +1,48 @@
+**Theorem 25.2 (rational acquisition realizes the unique-pulse hit degree).** The prior $P_b$ has decidable membership for finitely encoded rationals, is locally finite in the ordinary real metric, and has at most two members in every band $[n,n+1)$, $n\in\mathbb Z_{\ge0}$. Every member is isolated and hence semantically admits a finite relative singleton observation cell with all integer-scale ports. Nevertheless, for every fixed, explicitly conditional source-independent $O$, the following are equivalent:
+
+1. $H_b\le_T O$.
+2. There is an $O$-computable exhaustive cutoff satisfying (25.3).
+3. The original bit $\tau_b$ is pointwise-finitely acquired by an $O$-controller.
+4. The exact original rational is pointwise-finitely acquired by an $O$-controller.
+5. Any one, equivalently every one, of the exact original four finite views in Definition 25.1 is pointwise-finitely acquired by an $O$-controller.
+6. There is an $O$-computably enumerable sound complete labeled-cell family for $(P_b,\tau_b)$.
+
+In 3–5, stationary and forward acquisition have the same meaning of existence, by Theorem 24.3. From a supplied reduction in 1 one obtains a stationary exact-rational controller using at most two floor reads on each original. From a correct bit controller one obtains a total $O$-computable cutoff and a decision procedure for $H_b$. These constructions use the stated public program; they are uniform in such supplied codes and correctness promises, not an algorithm deciding whether an arbitrary presentation has those properties.
+
+Proof. Membership does not require deciding whether a row ever hits. Given an encoded rational $z$, reject $z<1$ and accept every integer $z\ge1$. Otherwise let $n=\lfloor z\rfloor\ge1$ and reduce $z-n$ to a positive fraction. Decide whether it is exactly $2^{-k}$ for an integer $k\ge2$, by testing that its reduced numerator is $1$ and its denominator is a power of two of that exponent. If not, reject. If so, accept exactly when the single terminating computation $b(n-1,k-2)$ returns $1$. This covers all and only (25.2). In band $[n,n+1)$, $n\ge1$, the integer $n$ and at most its one pulse occur; band zero is empty. A bounded real interval meets finitely many such bands and thus finitely many members. Every member has a positive ordinary isolation radius. Taking a sufficiently fine scale divisible by its reduced denominator gives a right cell containing no other member, as in the last part of Theorem 24.3. These singleton cells exist without an effective list of them.
+
+Suppose 1 holds. A total $O$-decision for $H_b$ yields a cutoff by returning $N(e)=0$ if the answer is no and, if the answer is yes, searching $b(e,0),b(e,1),\ldots$ until its hit $t$ and returning $N(e)=t$. The yes branch terminates by its premise and (25.3) follows. Conversely, given 2, evaluate $b(e,t)$ for the finite range $0\le t\le N(e)$. A hit proves membership in $H_b$; all zeros prove nonmembership by (25.3). Thus 1 and 2 are equivalent. This cutoff/hit equivalence is the classical first-occurrence principle, used here as a supplier rather than as a new computability theorem.
+
+For the acquisition upper bound, first read $q_1(x)=n$. On $P_b$ this identifies $e=n-1$ and its band, not which of its possible two members is present. Decide $e\in H_b$ by the supplied $O$-reduction. If the answer is no, the original is $n$ and return its reduced pair. If the answer is yes, search for the unique hit $t$ and put $D=2^{t+2}$. The only two promised possibilities and their reports are
+
+$$
+\begin{array}{c|c}
+\text{original }x& q_D(x)\\ \hline
+n&Dn\\
+n+2^{-(t+2)}&Dn+1.
+\end{array}
+\tag{25.4}
+$$
+
+The second exact read selects the correct original rational. All arithmetic, the search, and the finite reduction computation terminate on the selected branch. The known program $b$ does not initialize the controller with the unknown row or its hit time: the first report identifies the row and the declared reduction supplies its hit decision. Thus 1 implies 4, with the claimed read bound. Theorem 6.2's finite Euclidean decoder then constructs the original word and the other original finite views, giving 5. Each such view determines the original rational and therefore the integer bit, so 4 or 5 implies 3. These are output computations, not access to a stored original archive.
+
+For the matching lower bound, take a bit controller as in 3 and first replace it effectively by a stationary one using Theorem 24.3. On integer input $e$ to a reduction, simulate this program against the computably specified original $a_e=e+1$, computing each requested floor reply exactly and answering its oracle queries from the same fixed $O$. This integer is in $P_b$ for every $e$, so the simulation terminates and its correct output is $0$. Let
+
+$$
+D_*(e)=\max\bigl(\{1\}\cup\{D_i:\text{scales read in this simulation}\}\bigr),
+\qquad
+N(e)=\min\{N\ge0:2^{N+2}>D_*(e)\}.
+\tag{25.5}
+$$
+
+Both are total $O$-computable functions of $e$ and the controller code. The maximum also handles a run with no reads. If $t>N(e)$ were a hit in row $e$, the promised rational $y=a_e+2^{-(t+2)}$ would satisfy, for every one of the finitely many simulated reads,
+
+$$
+0<D_i2^{-(t+2)}<1,
+\qquad
+q_{D_i}(y)=D_i a_e=q_{D_i}(a_e).
+\tag{25.6}
+$$
+
+Replay induction gives the same complete finite computation and output on $y$: equal previous reports select the same next scale and the same oracle queries, since $O$ is fixed independently of the source. That output would be $0$ whereas $\tau_b(y)=1$. Correctness excludes every such hit. In fact every hit in row $e$ lies at most $N(e)$, which implies (25.3). Thus 3 implies 2, and the finite search through this computed cutoff decides $H_b$. The exact value $a_e$ is used only in this reduction's simulation; no acquisition program is handed its actual unknown rational. Conditions 3 and 6 are equivalent by Theorem 24.3, completing the equivalence and both reductions. $\square$
+

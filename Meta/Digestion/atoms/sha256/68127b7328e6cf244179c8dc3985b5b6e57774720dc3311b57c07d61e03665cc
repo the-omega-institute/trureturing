@@ -1,0 +1,62 @@
+**Proposition 39.12 (finite-prefix resource vector for that same controller).** Use $\lambda(n)=1+\lceil\log_2(n+1)\rceil$ for nonnegative integer widths, fixed binary delimiters, and schoolbook exact arithmetic. After entrance choose its earned interval as a fixed enclosing $I$ with $U=\lceil\sup I\rceil$, even as the working $K$ shrinks. For a unit slice, $U=k+1$, so source magnitude is explicitly charged. At acquisition $i$ let $B_i$ be its chosen frontier, let $a_i,b_i,c_i,d_i$ be the actual attained matrix entries, and put
+
+$$
+\begin{aligned}
+T_i&=c_iU+d_i,& V_i&=a_iU+b_i+1,\\
+Q_i&=B_iT_i,& \mu_i&=\lambda(\max(a_i,b_i,c_i,d_i)),\\
+W_i&=16\bigl(e_i+\lambda(B_i)+\lambda(U)+\mu_i+1\bigr).
+\end{aligned}
+\tag{39.20}
+$$
+
+Here $e_i$ bounds the binary widths of the endpoints of the working earned $K$ before that acquisition (use $1$ at a fresh unchanged original start). At that fresh start use $Q_i=B_i$, first obtain the band from its actual reply, and use $U=\lfloor x\rfloor+1$ in the ensuing analysis. The constants in $W_i$ cover the finite products, divisions, representative and endpoint computations below. In particular they are independent of the unknown reduced source denominator.
+
+The raw scales and acquired payloads obey
+
+$$
+D_i\le Q_i^2,\quad s_i\le Q_i,\qquad
+0\le r_i<D_iV_i,\quad 0\le h_i<s_iV_i.
+\tag{39.21}
+$$
+
+The total binary lengths of the two scale names and two actual integer replies at this upgrade, omitting any unneeded reads, are at most
+
+$$
+12\bigl(1+\log_2(B_i+1)+\log_2(T_i+1)+\log_2(V_i+1)\bigr).
+\tag{39.22}
+$$
+
+Let $\mu_{\max}$ be the maximum actual matrix width through the finite prefix. If $P_{\rm start}$ is the actual binary payload of starting evidence charged by $R_{\rm start}$ and $P_{\rm ent}$ is the actual sum of entrance scale-name and reply lengths, the cumulative paid binary payload is
+
+$$
+P_{\rm paid}=O\!\left(P_{\rm start}+P_{\rm ent}+\log(M+2)
+       +J\bigl(\mu_{\max}+\log(U+1)+1\bigr)\right).
+\tag{39.23}
+$$
+
+An explicit attained local bit-work bound for the acquisitions is
+
+$$
+O\!\left(\sum_{i=1}^{J}\bigl(B_iW_i^2+W_i^3\bigr)\right).
+\tag{39.24}
+$$
+
+Add entrance processing, all received request-name bits, actual matrix-update work, output work and provenance handling as described in the proof. These are different coordinates from paid reply count, full-profile resolution, raw scale, source-service costs and rights/backing.
+
+Proof. Since $0<x<U$ or $x\le U$ suffices for the bound and $cx+d\ge1$, the actual current value satisfies $0<z<V_i$. This proves (39.21) from the actual floor replies; original magnitude has not disappeared when the source moves. The two scales have logarithms at most $2\log Q_i$ and $\log Q_i$; the two replies have logarithms at most these plus $\log V_i$. The width convention then proves the conservative constant (39.22). On the sparse subsequence of acquired frontiers, the positive numbers $\log_2 B_i$ grow by at least a factor two, apart from the initial $1$ frontier. Their sum is at most $2\log_2 b_{\rm final}$. Also $T_i+1,V_i+1\le 3\cdot2^{\mu_i}(U+1)$. Combining these bounds with (39.19) proves (39.23). Entrance has its actual extra payload; at dyadic exponent $h$ it is $O(h+\lambda(a+b+c+d)+1)$ bits per reply, using $z<a/c\le a$ when $c>0$. Its local scan and arithmetic are charged through the attained final exponent, not hidden in $J$.
+
+For (39.24), compute (39.12), the two inverse endpoints of the first raw cell, their intersection with $K$, the possible transported cut, and the final representative. Each has only a fixed number of products and rational operations on input integers of the widths included in $W_i$. For example an inverse raw endpoint is $(d_ir_i-b_iD_i)/(a_iD_i-c_ir_i)$ before clipping. This also shows why the endpoint formula (39.11) and the forward denominator (39.14) cannot be interchanged. Cross-multiplication compares endpoints without enumerating intervening numerators. The scan for the unique interior cut takes one division and a constant number of comparisons per original denominator. The containing original-cell scan takes another such pass. Arithmetic on $W_i$-bit integers costs $O(W_i^2)$ per division/product. Only a constant number of selected fractions need reduction; Euclid uses $O(W_i)$ such steps, giving the conservative $O(W_i^3)$ term. No loop over all $1,\ldots,Q_i$ or over an LCM is present. The stated $O(B_i)$ scan is therefore attained by this decoder.
+
+Let $H$ be the number of actual post-binding action letters, $R$ the total actual reads including entrance, and $A_{\rm ack}$ the actual acknowledgement/binding encoding size. Updating the current matrix by a generator costs $O(\mu)$ bit work per letter and four integers of $O(\mu)$ space. Each entry is at most $2^H$, but using the measured actual $\mu$ avoids identifying action count with matrix width. Complete provenance can be retained in
+
+$$
+O\bigl(H+P_{\rm paid}+R\lambda(H+1)+A_{\rm ack}\bigr)
+\tag{39.25}
+$$
+
+bits, plus retained request names when they have a consumer. Store the original interval endpoints and current matrix as working state with $O(e+\mu+\lambda(B)+\lambda(U))$ bits, plus arithmetic workspace $O(W)$ and counters; selected endpoints are reduced to keep these widths literal. The next acquisition's $e_i$ charges their actual size. No separate full stage archives or $B_i$-entry tuples are required. Reports kept for provenance remain actual rows; derived floor values have no second paid-evidence status. Processing/encoding these rows costs at least their lengths and is added to (39.24).
+
+If a consumer asks for all instantaneous values through precision $m$, emit them by $m$ exact divisions at a representative, costing $O(mW^2)$ plus their output length. A word prediction at an authentic cut $t$ and continuation $v$ uses the recorded $u_t$ or its computed matrix. Replaying its $|u_t|+|v|$ letters and evaluating at a representative costs $O((|u_t|+|v|+m)\widehat W^2)$ when all $m$ coordinates are emitted, where $\widehat W$ includes that composed matrix, representative and output operand widths. Matrix entries grow by at most doubling per letter. A full-profile answer can instead emit only $B$ and the two cell endpoints; the infinitely many coordinates are available on demand, not emitted in finite time. Charge each received request's entire binary encoding, each chosen finite prediction word, all emitted bits and any replay used to reconstruct an old matrix. Even a hit has request and output work. Entrance rational inversion takes $O(W_{\rm ent}^3)$ per read as a conservative bound, and all its actual payload and acknowledgements enter (39.25).
+
+The installed source must complete every requested service, but no law for its internal time, storage, price or physical backing has been assumed. Those resources and lawful scale access remain separate premises/costs. Equations (39.21)–(39.24) assert neither movement-independent stationary cost nor a worldwide optimum, tariff law, competitive ratio or dominance over a construction with a different resource vector. $\square$
+

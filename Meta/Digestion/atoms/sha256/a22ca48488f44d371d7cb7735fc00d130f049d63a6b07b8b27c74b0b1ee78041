@@ -1,0 +1,19 @@
+**Definition 16.1 (nested predictive cells).** Fix any sequence of positive integers $s_0,s_1,\ldots$ with $s_n\mid s_{n+1}$ and $s_n\to\infty$. Repetitions are allowed. Write $\mathscr P_n$ for the actual partition of $\mathbb Q_{>0}$ into $\equiv_{s_n}$ cells. By Theorem 12.2 a cell of $\mathscr P_{n+1}$ lies in a unique cell of $\mathscr P_n$; this inclusion defines the restriction map. Let
+
+$$
+\mathscr L_{\mathbf s}
+ =\{(I_n)_{n\ge0}:I_n\in\mathscr P_n, I_{n+1}\subseteq I_n\},
+\qquad
+\iota(x)=(\text{the cell of }x\text{ in }\mathscr P_n)_n.
+\tag{16.1}
+$$
+
+These are compatible families of actual stage cells; no common rational realization is built into their definition. Write the endpoints of $I_n$ as $\ell_n,r_n$. The cell is $[\ell_n,r_n)\cap\mathbb Q$ when $\ell_n>0$ and $(0,r_n)\cap\mathbb Q$ when $\ell_n=0$. Its associated real interval has the same endpoint convention. Every upper endpoint is finite, and
+
+$$
+0\le\ell_n<r_n<\infty,\qquad r_n-\ell_n\le1/s_n.
+\tag{16.2}
+$$
+
+The inequality follows because predictive cells refine the raw $s_n$-floor cells. This carrier is an inverse limit of partitions of the fixed source, rather than a change to the original source of histories.
+

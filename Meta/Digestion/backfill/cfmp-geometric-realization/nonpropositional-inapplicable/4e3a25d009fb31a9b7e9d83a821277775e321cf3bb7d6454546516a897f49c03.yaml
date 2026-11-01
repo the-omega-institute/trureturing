@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e3a25d009fb31a9b7e9d83a821277775e321cf3bb7d6454546516a897f49c03
+  normalized_sha256: sha256:4e3a25d009fb31a9b7e9d83a821277775e321cf3bb7d6454546516a897f49c03
+cas_ref: sha256:4e3a25d009fb31a9b7e9d83a821277775e321cf3bb7d6454546516a897f49c03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This child contains only the section scope and explicit unresolved-boundary prose; it introduces no mathematical proposition or formal obligation.
+    previous_atom_id: eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
+    next_atom_id: null

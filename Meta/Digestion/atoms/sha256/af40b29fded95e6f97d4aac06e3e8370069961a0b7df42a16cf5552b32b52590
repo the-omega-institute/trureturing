@@ -1,0 +1,43 @@
+### 40.5. Sharpness, realizing families and already supplied original-family results
+
+**命题 B-40.2（exact core maxima; reuse of B-37.8 for the first partition）。** In the witness-free domain of B-40.1, the first partition in the table has exact maximum $A=4290$, and each of the other fourteen partitions has exact maximum $A=3690$. The first-partition value is also realized in the original four-witness domain for every permitted choice of its four complete-star witnesses. This is sharpness of $A$ only.
+
+For the first partition, reuse B-37.8 and (37.24)–(37.25) at $n=14$. The cyclic coordinate map sending old centre $j$ to $j-1$ modulo $14$ sends its pairs
+
+$$
+\{1,3\}/\{5,7\}/\{9,11\}\quad\longmapsto\quad
+\{0,2\}/\{4,6\}/\{8,10\},
+$$
+
+and sends its auxiliary ears $e_2,e_6,e_{10}$ to $e_1,e_5,e_9$. Its three actual containing-event subfamilies therefore force, respectively, the centre sets
+
+$$
+\{0,2,5,9\},\qquad\{1,4,6,9\},\qquad\{1,5,8,10\}.
+$$
+
+These are exactly the relabelled subfamilies $\mathcal Y_i$ of the published construction. B-37.8 proves that each lies in its exact matching trace, has $c_4=C_8=1430$ members, and that its full family $\mathcal F_\ast$ is full-ear-intersecting and contains every prescribed choice of the four complete-star witnesses. Thus it supplies $A=3c_4=4290$ in this normalized placement. Together with B-40.1, this proves optimality of its core objective; it makes no optimality claim about $|\mathcal F_\ast|$.
+
+For each row, the supplied finite proof and its source also justify realization directly from an already computed maximizing spanning clique $C$. Define
+
+$$
+\mathcal F_C=\{T\in\mathcal T_{14}:\ (i,\operatorname{Ear}(T))\in C
+\text{ for some }i\}.
+\tag{40.4}
+$$
+
+Take every actual triangulation with one of these positive complete ear masks. Clique adjacency ensures that any two resulting full ear sets intersect. Within a single mask they also intersect, since that mask contains its matching pair. The exact traces are precisely the active parts represented in $C$, all three parts are nonempty, and the number of actual triangulations is exactly $\sum_{(i,S)\in C}\omega(S)$. Thus the computed maximum weights are attained in the stated witness-free domain: $4290$ in the first row, with core counts $(1430,1430,1430)$, and $3690$ in every other row, with core counts $(1230,1230,1230)$. All actual diagonal completions are included. This explicit realizing construction is separate from (40.2), which only bounds an arbitrary original family and never completes or saturates it. No claim that the other fourteen constructions contain arbitrary prescribed star witnesses follows, and no classification of all maximizing families is asserted. $\square$
+
+For source attribution, B-39.4 gives $A\le5005$ in the original four-witness domain; its occurrence of $4290$ in (39.21) treats only its $m=3,p=3$ branch. It does not state the uniform $4290$ upper bound or the fifteen exact partition maxima. B-39.5 already gives $|\mathcal F|\le33258=L-126$ in the full long-gap three-active-core domain, for arbitrary prescribed complete-star witnesses and every actual completion. It therefore already supplies the strict bound consumed by B-37.9. The residual/classification chain is not new content supplied first by this appendix.
+
+The additional inequality $A\le4290<w_2=4344$ rules out the premise $A>w_2$ in this domain. Here $c_r=C_{12-r}$ and
+
+$$
+w_2=c_2-4c_3+6c_4-4c_5+c_6=4344,\qquad
+L=c_2+6c_3-10c_4+4c_5=33384.
+\tag{40.5}
+$$
+
+This is emptiness of that residual, not its inhabitation or an attained residual optimum. B-37.5 handles the existing complementary branches, while B-39.5 supplies the long-gap strict consumer independently of this appendix. The literal equality families and their existence statements remain those of B-33.3/B-33.4. No stronger total-family bound or new full-family equality classification is asserted here.
+
+B-38.4 has the separate gap multiset $(2,2,1,1,1,1)$, equivalently $E_0=\varnothing$; this appendix has $(3,1,1,1,1,1)$, equivalently $E_0\ne\varnothing$. A gap of length at least three has a centre adjacent to no selected centre, and the six positive gaps sum to eight, as in B-38.2 and B-39.2. No B-38 inequality is applied outside its domain. There is no extension of this finite result to $n\ge15$.
+

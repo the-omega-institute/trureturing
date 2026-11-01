@@ -1,0 +1,32 @@
+#### 定理 12.6（相容相位把三角边平方变成转移权重）
+
+取 $a=\sqrt\lambda$、$b=\sqrt{1-\lambda}$，
+
+$$
+P=|1\rangle\langle1|,\qquad
+Q=\begin{pmatrix}b^2&ab\\ab&a^2\end{pmatrix}.
+$$
+
+若上述非平凡酉编织关系成立，则 $G_Q$ 对任一计算基输入的保持概率是 $\lambda$，翻转概率是 $1-\lambda$。黄金情形得到
+
+$$
+\boxed{T=\begin{pmatrix}\varphi^{-2}&\varphi^{-1}\\
+\varphi^{-1}&\varphi^{-2}\end{pmatrix}.}
+$$
+
+<a id="proof-12-6"></a>
+
+**证明。** 
+向量 $(b,a)^T$ 为单位向量，故 $Q$ 为秩一投影，且与 $P$ 的重叠为 $a^2=\lambda$。定理 [12.4](#statement-12-4) 给 $|z-1|^2=1/\lambda$。非对角矩阵元为 $(z-1)ab$，其 Born 权重为
+
+$$
+|(z-1)ab|^2=\lambda^{-1}\lambda(1-\lambda)=1-\lambda.
+$$
+
+酉性使每列概率和为一，故保持权重为 $\lambda$。
+ ∎
+
+这条证明链同时使用了融合加乘、三角归一、投影重叠、相容相位和平方读出。项目路径投影的相邻编织关系在指定合法路径表示中成立；不能不加检验地推广到所有物理比特的任意子空间。$F$ 在这里也可以只是比较基底的矩阵，不因此被当成原生菜单里免费可调用的门。
+
+<a id="sec-13"></a>
+

@@ -3,6 +3,7 @@ import json
 import hashlib
 import os
 import platform
+import random
 import subprocess
 import datetime
 import shutil
@@ -23,22 +24,217 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         return dict(GITHUB_ACTIONS="false", GITHUB_EVENT_NAME="", GITHUB_REF="", GITHUB_REPOSITORY="",
                     GITHUB_SHA="not-an-input", GITHUB_RUN_ID="", GITHUB_RUN_ATTEMPT="", **changes)
 
+    def three_parts(self, snapshot, packed=None):
+        archive = snapshot / "lean-build.tgz"
+        packed = archive.read_bytes() if packed is None else packed
+        archive.unlink(missing_ok=True)
+        manifest = json.loads((snapshot / "manifest.json").read_text())
+        width = len(packed) * 2 // 5
+        manifest.update(archive_bytes=len(packed), archive_sha256=digest(packed), parts=[])
+        for index, start in enumerate(range(0, len(packed), width)):
+            chunk = packed[start:start + width]
+            name = f"lean-build.tgz.part-{index:02d}"
+            (snapshot / name).write_bytes(chunk)
+            manifest["parts"].append(dict(name=name, bytes=len(chunk), sha256=digest(chunk)))
+        self.assertEqual(3, len(manifest["parts"]))
+        self.assertLess(manifest["parts"][-1]["bytes"], width)
+        write(snapshot / "manifest.json", json.dumps(manifest))
+        return manifest
+
+    def reassembly_probe(self, failure="", append=False):
+        probe = self.bin / "sitecustomize.py"
+        prefix = probe.read_text() if append else ""
+        write(probe, prefix + '''
+import errno, json, os, pathlib, shutil, sys, tarfile
+if sys.argv[0].endswith("lean_cache_release.py"):
+    sys.path.insert(0, os.environ["FAKE_REASSEMBLY_HELPER"])
+    import cache_material
+    original_open, original_unlink = pathlib.Path.open, pathlib.Path.unlink
+    original_copy, original_extract, original_sha = shutil.copyfileobj, tarfile.TarFile.extractall, cache_material.sha
+    failure = os.environ["FAKE_REASSEMBLY_FAILURE"]
+    sources, validated = {}, {}
+    output = None
+    def record(**event):
+        with open(os.environ["FAKE_REASSEMBLY_LOG"], "a") as log:
+            log.write(json.dumps(event) + "\\n")
+    def sample(stage, operation):
+        files = {p.name: p.stat().st_size for p in stage.glob("lean-build.tgz*") if p.is_file()}
+        record(operation=operation, resident=sum(files.values()), files=files)
+    def sha(path):
+        value = original_sha(path)
+        if path.name.startswith("lean-build.tgz.part-") or path.name == "manifest.json":
+            validated[path.name] = validated.get(path.name, 0) + 1
+            if path.name.endswith("part-02"):
+                if failure == "part-digest" or (failure == "asset-digest" and validated[path.name] == 2):
+                    return "0" * 64
+                if failure == "part-size":
+                    with original_open(path, "r+b") as part:
+                        part.truncate(path.stat().st_size - 1)
+        return value
+    class Output:
+        def __init__(self, raw, stage): self.raw, self.stage, self.flushed = raw, stage, None
+        def __getattr__(self, name): return getattr(self.raw, name)
+        def __enter__(self): return self
+        def __exit__(self, *args):
+            result = self.raw.__exit__(*args)
+            sample(self.stage, "close")
+            return result
+        def write(self, block):
+            if failure == "enospc" and len(sources) == 2:
+                self.raw.write(block[:1])
+                raise OSError(errno.ENOSPC, "injected reassembly enospc")
+            result = self.raw.write(block)
+            sample(self.stage, "write")
+            return result
+        def flush(self):
+            if failure == "flush" and len(sources) == 2:
+                raise OSError(errno.EIO, "injected reassembly flush")
+            self.raw.flush()
+            self.flushed = self.raw.tell()
+            sample(self.stage, "flush")
+    def open_path(path, mode="r", *args, **kwargs):
+        global output
+        raw = original_open(path, mode, *args, **kwargs)
+        if path.name == "lean-build.tgz" and mode == "wb" and (path.parent / "manifest.json").is_file():
+            output = Output(raw, path.parent)
+            return output
+        return raw
+    def copy(source, target, *args, **kwargs):
+        if target is not output:
+            return original_copy(source, target, *args, **kwargs)
+        sources[pathlib.Path(source.name).name] = source
+        if len(sources) == 2 and failure in ("copy", "short", "long"):
+            target.write(source.read(1))
+            if failure == "copy":
+                raise OSError(errno.EIO, "injected reassembly copy")
+            if failure == "short": return
+        result = original_copy(source, target, *args, **kwargs)
+        if len(sources) == 2 and failure == "long": target.write(b"extra")
+        return result
+    def unlink(path, *args, **kwargs):
+        if output is not None and path.parent == output.stage and path.name in sources:
+            source = sources[path.name]
+            record(operation="unlink", name=path.name, stage=str(path.parent), closed=source.closed,
+                   position=output.tell(), flushed=output.flushed, validated=validated.copy())
+            sample(path.parent, "before-unlink")
+            if failure == "unlink" and len(sources) == 2:
+                raise OSError(errno.EIO, "injected reassembly unlink")
+        return original_unlink(path, *args, **kwargs)
+    def extract(archive, path, *args, **kwargs):
+        sample(pathlib.Path(archive.name).parent, "extract")
+        return original_extract(archive, path, *args, **kwargs)
+    pathlib.Path.open, pathlib.Path.unlink = open_path, unlink
+    shutil.copyfileobj, tarfile.TarFile.extractall, cache_material.sha = copy, extract, sha
+''')
+        log = self.root / "reassembly-events"
+        log.unlink(missing_ok=True)
+        return dict(PYTHONPATH=str(self.bin), FAKE_REASSEMBLY_HELPER=str(self.publisher.parent),
+                    FAKE_REASSEMBLY_LOG=str(log), FAKE_REASSEMBLY_FAILURE=failure)
+
+    def reassembly_events(self):
+        log = self.root / "reassembly-events"
+        return [json.loads(line) for line in log.read_text().splitlines()] if log.exists() else []
+
+    def assert_reassembly_released(self, manifest):
+        events = self.reassembly_events()
+        removals = [event for event in events if event["operation"] == "unlink"]
+        self.assertEqual([part["name"] for part in manifest["parts"]], [event["name"] for event in removals])
+        position = 0
+        for event, part in zip(removals, manifest["parts"]):
+            position += part["bytes"]
+            self.assertTrue(event["closed"])
+            self.assertEqual(position, event["position"])
+            self.assertEqual(position, event["flushed"])
+            self.assertTrue(all(event["validated"][name] == 2
+                for name in ["manifest.json", *[part["name"] for part in manifest["parts"]]]))
+        size = manifest["archive_bytes"]
+        self.assertEqual(size + max(part["bytes"] for part in manifest["parts"]),
+                         max(event["resident"] for event in events if "resident" in event))
+        extracted = next(event for event in events if event["operation"] == "extract")
+        self.assertEqual({"lean-build.tgz": size}, extracted["files"])
+
+    def test_multipart_restore_releases_validated_closed_flushed_parts_before_extraction(self):
+        payload = random.Random(31).randbytes(64 * 1024)
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        material.write_bytes(payload)
+        self.assertEqual(0, self.transport("publish").returncode)
+        manifest = self.three_parts(next(self.remote.iterdir()))
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.reassembly_probe())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(payload, material.read_bytes())
+        self.assert_reassembly_released(manifest)
+
+    def test_multipart_reassembly_failures_preserve_old_build_and_base(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        self.three_parts(next(self.remote.iterdir()))
+        write(self.root / ".lake/build/keep.txt", "old build")
+        write(self.root / ".lake/lean-report-seed-base.json", "old base")
+        lake = self.root / ".lake"
+        before = {str(p.relative_to(lake)): p.read_bytes() for p in lake.rglob("*") if p.is_file()}
+        staging = self.root / "private fetch staging"
+        staging.mkdir()
+        for failure in ("copy", "flush", "unlink", "enospc", "short", "long",
+                        "part-digest", "part-size", "asset-digest"):
+            with self.subTest(failure=failure):
+                result = self.transport("fetch", arguments=("--refresh-stale",),
+                                        TMPDIR=str(staging), **self.reassembly_probe(failure))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                reason = ("part checksum or size mismatch" if failure.startswith("part-") else
+                          "transferred asset digest mismatch" if failure == "asset-digest" else
+                          "part copy size mismatch" if failure in ("short", "long") else
+                          "injected reassembly " + failure)
+                self.assertIn(reason, result.stdout)
+                self.assertEqual(before, {str(p.relative_to(lake)): p.read_bytes() for p in lake.rglob("*") if p.is_file()})
+                self.assertEqual([], list(staging.iterdir()))
+                events = self.reassembly_events()
+                self.assertFalse(any(event["operation"] == "extract" for event in events))
+                removals = [event for event in events if event["operation"] == "unlink"]
+                self.assertEqual(0 if "digest" in failure or failure == "part-size" else
+                                 2 if failure == "unlink" else 1, len(removals))
+
+    def test_candidate_multipart_restore_releases_private_parts(self):
+        self.candidate_fixture()
+        tag = self.candidate_tag()
+        manifest = self.three_parts(self.remote / tag)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.candidate_transport("fetch", tag, **self.candidate_consumer(), **self.reassembly_probe())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        self.assertFalse((self.root / "build-runs").exists())
+        self.assert_reassembly_released(manifest)
+
+    def test_multipart_release_keeps_archive_hash_and_gzip_footer_validation(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        snapshot = next(self.remote.iterdir())
+        packed = (snapshot / "lean-build.tgz").read_bytes()
+        write(self.root / ".lake/build/keep.txt", "old build")
+        write(self.root / ".lake/lean-report-seed-base.json", "old base")
+        lake = self.root / ".lake"
+        before = {str(p.relative_to(lake)): p.read_bytes() for p in lake.rglob("*") if p.is_file()}
+        for failure in ("archive-hash", "truncated-gzip", "crc"):
+            with self.subTest(failure=failure):
+                damaged = packed[:-8] if failure == "truncated-gzip" else packed
+                if failure == "crc":
+                    damaged = packed[:-8] + bytes([packed[-8] ^ 1]) + packed[-7:]
+                manifest = self.three_parts(snapshot, damaged)
+                if failure == "archive-hash":
+                    manifest["archive_sha256"] = "0" * 64
+                    write(snapshot / "manifest.json", json.dumps(manifest))
+                result = self.transport("fetch", arguments=("--refresh-stale",), **self.reassembly_probe())
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn({"archive-hash": "archive checksum or size mismatch",
+                               "truncated-gzip": "end-of-stream", "crc": "CRC check failed"}[failure], result.stdout)
+                self.assertEqual(before, {str(p.relative_to(lake)): p.read_bytes() for p in lake.rglob("*") if p.is_file()})
+                self.assertFalse(any(event["operation"] == "extract" for event in self.reassembly_events()))
+
     def local_assets_fixture(self, multipart=False):
         subprocess.run(["git", "-C", str(self.root), "branch", "-M", "dev"], check=True, capture_output=True)
         self.assertEqual(0, self.transport("publish").returncode)
         snapshot = next(self.remote.iterdir())
         manifest = json.loads((snapshot / "manifest.json").read_text())
         if multipart:
-            archive = snapshot / "lean-build.tgz"
-            packed = archive.read_bytes()
-            archive.unlink()
-            chunks = (packed[:len(packed) // 2], packed[len(packed) // 2:])
-            manifest["parts"] = []
-            for index, chunk in enumerate(chunks):
-                name = f"lean-build.tgz.part-{index:02d}"
-                (snapshot / name).write_bytes(chunk)
-                manifest["parts"].append(dict(name=name, bytes=len(chunk), sha256=digest(chunk)))
-            write(snapshot / "manifest.json", json.dumps(manifest))
+            manifest = self.three_parts(snapshot)
         local = self.root / "local assets ' ; `touch UNEXPECTED`"
         local.mkdir()
         for part in manifest["parts"]:
@@ -116,8 +312,10 @@ ctypes.CDLL = cdll
                 originals = {p.name: (p.read_bytes(), p.stat()) for p in local.iterdir()}
                 write(self.root / ".lake/build/keep.txt", "old cache")
                 log = self.root / "local-gh-calls"
+                clone_probe = self.local_clone_probe()
+                assembly_probe = self.reassembly_probe(append=True)
                 environment = self.transport_environment(GITHUB_ACTIONS="false", FAKE_GH_LOG=str(log),
-                    **self.local_clone_probe(), LEAN_CACHE_REPOSITORY=str(self.root),
+                    **{**clone_probe, **assembly_probe}, LEAN_CACHE_REPOSITORY=str(self.root),
                     LEAN_CACHE_APPROVED_TAG=snapshot.name, LEAN_CACHE_APPROVED_PRODUCER=self.producer_commit,
                     LEAN_CACHE_LOCAL_ASSETS=str(local))
                 result = subprocess.run([shutil.which("make"), "-C", str(self.root),
@@ -138,6 +336,14 @@ ctypes.CDLL = cdll
                     content, status = originals[path.name]
                     self.assertEqual(content, path.read_bytes())
                     self.assertEqual((status.st_ino, status.st_mtime_ns), (path.stat().st_ino, path.stat().st_mtime_ns))
+                if multipart:
+                    self.assert_reassembly_released(json.loads((snapshot / "manifest.json").read_text()))
+                    self.assertTrue(all(event["stage"] != str(local) for event in self.reassembly_events()
+                                        if event["operation"] == "unlink"))
+                else:
+                    self.assertFalse(any(event["operation"] == "unlink" for event in self.reassembly_events()))
+                    self.assertEqual({"lean-build.tgz": (local / "lean-build.tgz").stat().st_size},
+                        next(event["files"] for event in self.reassembly_events() if event["operation"] == "extract"))
                 shutil.rmtree(snapshot)
                 shutil.rmtree(local)
                 log.unlink()

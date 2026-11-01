@@ -2,7 +2,6 @@
 
 from contextlib import ExitStack, contextmanager
 from contextvars import ContextVar
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,50 +15,166 @@ import time
 import uuid
 
 from worktree_protocol import (Refused, GitFailure, git, value, common, inventory, identity,
-                               acquire, git_scope, remote_endpoint, tree_scope)
-
-
-def remote_roots(source, branch):
-    roots = []
-    for remote in value(source, "remote").splitlines():
-        endpoint = remote_endpoint(source, remote)
-        refs = ["refs/heads/dev"]
-        if branch:
-            refs.append(branch)
-        result = git(source, "ls-remote", "--heads", "--", endpoint, *refs)
-        for row in result.stdout.splitlines():
-            oid, reference = row.split(b"\t")
-            if os.fsdecode(reference) not in refs:
-                raise Refused("unexpected_remote_ref")
-            tip = oid.decode("ascii")
-            git(source, "fetch", "--no-write-fetch-head", "--no-tags", "--", endpoint, tip)
-            roots.append(tip)
-    if not roots:
-        raise Refused("remote_preservation_unknown")
-    return roots
-
-
-def retained(source, oid, roots):
-    if not oid or set(oid) == {"0"}:
-        return
-    if git(source, "cat-file", "-t", oid).stdout.strip() != b"commit":
-        raise Refused("noncommit_recovery_object:" + oid)
-    if not any(git(source, "merge-base", "--is-ancestor", oid, root, check=False).returncode == 0
-               for root in roots):
-        raise Refused("local_only_history:" + oid)
-
-
-def reflog_oids(path):
-    for line in path.read_bytes().splitlines():
-        fields = line.split(b" ", 2)
-        if len(fields) != 3 or not all(re.fullmatch(rb"[0-9a-f]{40}|[0-9a-f]{64}", field)
-                                      for field in fields[:2]):
-            raise Refused("unknown_reflog:" + str(path))
-        yield from (field.decode("ascii") for field in fields[:2])
+                               acquire, git_scope, tree_scope)
 
 
 REMOVAL_RECORD = "worktree-removal"
 _PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
+
+
+def _declared_lake_dependency(path, target):
+    """Recognize one manifest-declared checkout under a Lake project."""
+    packages = path.parent
+    lake = packages.parent
+    project = lake.parent
+    if (packages.name != "packages" or lake.name != ".lake" or not path.name
+            or not project.is_relative_to(target)):
+        return None
+    manifest = project / "lake-manifest.json"
+    try:
+        info = manifest.lstat()
+        if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
+            return None
+        document = json.loads(manifest.read_text(encoding="utf-8"))
+        entries = document.get("packages") if isinstance(document, dict) else None
+        if not isinstance(entries, list):
+            return None
+        names = []
+        for entry in entries:
+            if not isinstance(entry, dict) or not isinstance(entry.get("name"), str):
+                return None
+            names.append(entry["name"])
+        return entries[names.index(path.name)] if names.count(path.name) == 1 else None
+    except (OSError, UnicodeError, json.JSONDecodeError, TypeError):
+        return None
+
+
+LAKE_CONFIG_KEYS = frozenset({
+    "core.repositoryformatversion", "core.filemode", "core.bare", "core.logallrefupdates",
+    "core.ignorecase", "core.precomposeunicode", "core.symlinks", "remote.origin.url",
+    "remote.origin.fetch", "remote.origin.promisor", "remote.origin.partialclonefilter",
+    "extensions.partialclone", "extensions.objectformat",
+})
+GIT_DEFAULT_DESCRIPTION = b"Unnamed repository; edit this file 'description' to name the repository.\n"
+
+
+def _lake_git_directory_problem(directory):
+    """Inspect bounded metadata entries without traversing their payload trees."""
+    if directory.name == "hooks":
+        for entry in directory.iterdir():
+            if not (entry.name.endswith(".sample") and stat.S_ISREG(entry.lstat().st_mode)):
+                return "hooks_entry:" + entry.name
+    elif directory.name == "info":
+        for entry in directory.iterdir():
+            if entry.name != "exclude" or not stat.S_ISREG(entry.lstat().st_mode):
+                return "info_entry:" + entry.name
+            if any(line and not line.startswith(b"#")
+                   for line in entry.read_bytes().splitlines()):
+                return "info_exclude"
+    elif directory.name == "objects":
+        for entry in directory.iterdir():
+            if (not stat.S_ISDIR(entry.lstat().st_mode)
+                    or not (entry.name in {"pack", "info"} or re.fullmatch(r"[0-9a-f]{2}", entry.name))):
+                return "objects_entry:" + entry.name
+            if entry.name == "info":
+                for child in entry.iterdir():
+                    mode = child.lstat().st_mode
+                    if child.name in {"packs", "commit-graph"} and stat.S_ISREG(mode):
+                        continue
+                    if child.name == "commit-graphs" and stat.S_ISDIR(mode):
+                        continue
+                    return "objects_info_entry:" + child.name
+    elif directory.name == "logs":
+        for entry in directory.iterdir():
+            mode = entry.lstat().st_mode
+            if entry.name == "HEAD" and stat.S_ISREG(mode):
+                continue
+            if entry.name == "refs" and stat.S_ISDIR(mode):
+                continue
+            return "logs_entry:" + entry.name
+    return None
+
+
+def _lake_git_shape_problem(path):
+    """Recognize only ordinary detached Lake clone metadata and visible indexes."""
+    metadata = path / ".git"
+    if not stat.S_ISDIR(metadata.lstat().st_mode):
+        return "git_directory"
+    files = {"HEAD", "config", "description", "index", "FETCH_HEAD", "packed-refs"}
+    directories = {"hooks", "info", "logs", "objects", "refs", "worktree-operations"}
+    for entry in metadata.iterdir():
+        mode = entry.lstat().st_mode
+        if entry.name in files and stat.S_ISREG(mode):
+            if entry.name == "description" and entry.read_bytes() != GIT_DEFAULT_DESCRIPTION:
+                return "description"
+            continue
+        if entry.name not in directories or not stat.S_ISDIR(mode):
+            return "git_entry:" + entry.name
+        if entry.name == "worktree-operations":
+            for lock in entry.iterdir():
+                info = lock.lstat()
+                if not (lock.name.endswith(".lock") and stat.S_ISREG(info.st_mode)
+                        and info.st_size == 0):
+                    return "scope_lock:" + lock.name
+        problem = _lake_git_directory_problem(entry)
+        if problem:
+            return problem
+    config = git(path, "config", "--local", "--no-includes", "--null", "--name-only", "--list")
+    if config.stderr:
+        raise Refused("config_inspection:" + os.fsdecode(config.stderr).strip())
+    for key in config.stdout.split(b"\0"):
+        if key and os.fsdecode(key) not in LAKE_CONFIG_KEYS:
+            return "config_key:" + os.fsdecode(key)
+    head = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
+    if head.returncode == 0:
+        return "attached_head"
+    if head.returncode != 1:
+        raise Refused("symbolic_ref_failed")
+    refs = git(path, "for-each-ref", "--format=%(refname)")
+    if refs.stderr:
+        raise Refused("reference_inspection:" + os.fsdecode(refs.stderr).strip())
+    if any(not ref.startswith((b"refs/tags/", b"refs/remotes/"))
+           for ref in refs.stdout.splitlines()):
+        return "reference_namespace"
+    for entry in git(path, "ls-files", "-v", "-z").stdout.split(b"\0"):
+        if entry and (entry[:1] == b"S" or entry[:1].islower()):
+            return "index_flags"
+    return None
+
+
+def reject_lake_local_content(path, target, package):
+    """Exempt only recognized Lake clones with fully covered visible content."""
+    relative = str(path.relative_to(target))
+    revision = package.get("rev")
+    if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", revision):
+        raise Refused("lake_dependency_check_failed:" + relative + ":manifest_revision")
+    try:
+        shape_problem = _lake_git_shape_problem(path)
+    except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
+    if shape_problem:
+        raise Refused("lake_dependency_unknown_shape:" + relative + ":" + shape_problem)
+    try:
+        status = git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all",
+                     "--ignore-submodules=none").stdout
+        manifest_type = git(path, "cat-file", "--batch-check=%(objecttype)",
+                            input=(revision + "\n").encode("ascii")).stdout.strip()
+        if manifest_type == b"commit":
+            manifest_commits = [revision]
+        elif manifest_type == revision.encode("ascii") + b" missing":
+            manifest_commits = []
+        else:
+            raise Refused("manifest_revision_object")
+        history = git(path, "rev-list", "--max-count=1", "HEAD", "--all", "--reflog",
+                      "--not", "--remotes", "--tags", *manifest_commits, "--")
+        if history.stderr:
+            raise Refused("history_inspection:" + os.fsdecode(history.stderr).strip())
+    except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
+    if status:
+        raise Refused("lake_dependency_dirty:" + relative)
+    if history.stdout.strip():
+        raise Refused("lake_dependency_local_history:" + relative)
 
 
 def reject_nested_git(target):
@@ -79,7 +194,11 @@ def reject_nested_git(target):
             if stat.S_ISDIR(info.st_mode) and info.st_dev != root_stat.st_dev:
                 raise Refused("device_boundary:" + str(child))
         if path != target and (".git" in folders or ".git" in files):
-            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+            package = _declared_lake_dependency(path, target)
+            if package is None:
+                raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+            reject_lake_local_content(path, target, package)
+            folders[:] = [name for name in folders if name != ".git"]
         if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
                                    check=False).returncode == 0:
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
@@ -129,12 +248,12 @@ def payload_removal_budget(force):
     if force:
         yield None
         return
-    deadline = time.monotonic() + 300
+    deadline = time.monotonic() + 1800
     def expired(signum, frame):
-        raise subprocess.TimeoutExpired(["worktree", "remove"], 300,
+        raise subprocess.TimeoutExpired(["worktree", "remove"], 1800,
                                         stderr=b"payload removal deadline expired")
     handler = signal.signal(signal.SIGALRM, expired)
-    previous = signal.setitimer(signal.ITIMER_REAL, 300)
+    previous = signal.setitimer(signal.ITIMER_REAL, 1800)
     try:
         yield deadline
     finally:
@@ -163,11 +282,31 @@ def ignored_by_snapshot(target, metadata, commit, paths):
         return set(result.stdout.split(b"\0")) >= set(paths)
 
 
-def interrupted_removal(target, metadata, stack, source, branch):
+def finished_operations(metadata):
+    for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
+        if (metadata / marker).exists():
+            raise Refused("unfinished_operation:" + marker)
+
+
+def removal_pending(options):
+    """Observe resumability without checkpointing or changing the removal record."""
+    target = options.path
+    with ExitStack() as stack:
+        qualify(options.source, target, stack)
+        branch = git_scope(stack, options.source, target)
+        _, metadata = identity(options.source, target)
+        removal = interrupted_removal(target, metadata, stack, options.source, branch,
+                                      reconverge=False)
+        return dict(event="worktree_removal_pending", path=str(target),
+                    commit=removal["commit"] if removal else None, pending=removal is not None)
+
+
+def interrupted_removal(target, metadata, stack, source, branch, *, reconverge=True):
     """Return the record of an earlier removal whose deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
         return None
+    finished_operations(metadata)
     removal = json.loads(record.read_text())
     commit = removal["commit"]
     predecessors = removal.get("predecessors", [])
@@ -187,6 +326,8 @@ def interrupted_removal(target, metadata, stack, source, branch):
     recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
             or recorded_tip.returncode or os.fsdecode(recorded_tip.stdout).strip() != commit):
+        if not reconverge:
+            raise Refused("interrupted_removal_identity_changed")
         from worktree_publication import commit_snapshot, recovery_root
         # Pin the old object before checkpointing; its former branch can have moved.
         predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))
@@ -452,7 +593,7 @@ def remove(options):
                     _PAYLOAD_PLAN.reset(payload_token)
                 remaining = None if deadline is None else deadline - time.monotonic()
                 if remaining is not None and remaining <= 0:
-                    raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
+                    raise subprocess.TimeoutExpired(["worktree", "remove"], 1800)
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=remaining)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
@@ -475,36 +616,3 @@ def remove(options):
     return dict(event="worktree_removal", items=outcomes,
                 status="failed" if any(item["outcome"] not in ("removed", "would_remove", "refused") for item in outcomes)
                 else "refused" if any(item["outcome"] == "refused" for item in outcomes) else "succeeded")
-
-
-def retire_branch(options):
-    reference = "refs/heads/" + options.branch
-    git(options.source, "check-ref-format", reference)
-    with ExitStack() as stack:
-        acquire(stack, options.source, "ref:" + reference, True)
-        if any(row.get("branch") == reference for row in inventory(options.source)):
-            raise Refused("branch_in_use")
-        current = value(options.source, "rev-parse", "--verify", reference)
-        if current != options.commit:
-            raise Refused("branch_identity_changed")
-        if value(options.source, "for-each-ref", "--format=%(symref)", reference):
-            raise Refused("symbolic_branch")
-        roots = remote_roots(options.source, reference)
-        retained(options.source, current, roots)
-        log = common(options.source) / "logs" / reference
-        if options.expected_reflog_sha256 is not None:
-            if (not re.fullmatch(r"[0-9a-f]{64}", options.expected_reflog_sha256)
-                    or not log.is_file() or log.is_symlink()
-                    or hashlib.sha256(log.read_bytes()).hexdigest() != options.expected_reflog_sha256):
-                raise Refused("branch_reflog_changed")
-        if log.exists():
-            for oid in set(reflog_oids(log)):
-                retained(options.source, oid, roots)
-        if not options.preview:
-            try:
-                git(options.source, "update-ref", "--no-deref", "-d", reference, current)
-            except (Refused, OSError, subprocess.SubprocessError) as error:
-                return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                            status="partial_or_indeterminate", error=str(error))
-        return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                    status="would_remove" if options.preview else "removed")

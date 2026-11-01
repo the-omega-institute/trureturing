@@ -1,0 +1,25 @@
+## 12. 五模式耗散的真正变分身份
+
+沿第 3 节固定内部纤维，令 $D(\kappa)=D(p(\kappa)\Vert p_*)$，
+
+$$
+a=\kappa(R-X-Y+\kappa),\quad b=(X-\kappa)(Y-\kappa),
+\quad D'(\kappa)=\log(a/b).
+$$
+
+定义对数平均
+
+$$
+\Lambda(a,b)=\begin{cases}(a-b)/(\log a-\log b),&a\ne b,\\a,&a=b,
+\end{cases}\quad M(\kappa)=\gamma\Lambda(a,b)>0,
+$$
+
+其中 $\gamma>0$。项目质量作用流就是
+
+$$
+\dot\kappa=\gamma(b-a)=-M(\kappa)D'(\kappa)
+=-\gamma R(\kappa-\kappa_*).
+$$
+
+<a id="statement-12-1"></a>
+

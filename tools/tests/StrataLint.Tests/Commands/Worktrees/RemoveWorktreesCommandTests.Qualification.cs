@@ -59,7 +59,7 @@ public sealed partial class RemoveWorktreesCommandTests
         {
             if (file != "python3" || !args.Contains("remove")) return null;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", $"""
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", $"""
                 p = sys.modules['worktree_protocol']
                 preservation = sys.modules['worktree_preservation']
                 original = preservation.qualify
@@ -72,7 +72,7 @@ public sealed partial class RemoveWorktreesCommandTests
                     return original(*args, **kwargs)
                 preservation.qualify = inject
                 sys.exit(p.main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
         var result = WorktreeCommand.Run(fixture.Main, ["remove", "--names", "qualification"], runner);

@@ -1,0 +1,8 @@
+**Definition 3.1 (executable view).** For a view $u$ with type tags, let $c(h)$ denote the entire declared input available to strategy selection and record updating. Require that $u(h)=u(k)$ imply:
+
+1. Equal current declared readouts and equal $c(h),c(k)$.
+2. For every named operation at the common type, equal enabledness.
+3. If that operation is legal, equal complete event labels, including any executed failure, and $u(h\cdot a)=u(k\cdot a)$.
+
+The comparison is for the same operation with the same parameters. A strategy using additional acquired information must expose that information in $c$ or refine the view. A private input cannot be replaced by an unrecorded oracle.
+

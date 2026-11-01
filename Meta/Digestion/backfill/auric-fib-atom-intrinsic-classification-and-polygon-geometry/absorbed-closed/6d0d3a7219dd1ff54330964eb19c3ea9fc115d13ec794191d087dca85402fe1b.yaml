@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6d0d3a7219dd1ff54330964eb19c3ea9fc115d13ec794191d087dca85402fe1b
+  normalized_sha256: sha256:6d0d3a7219dd1ff54330964eb19c3ea9fc115d13ec794191d087dca85402fe1b
+cas_ref: sha256:6d0d3a7219dd1ff54330964eb19c3ea9fc115d13ec794191d087dca85402fe1b
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonTraceFlip.actual_flip_trace_injective
+    target_statement_id: sha256:8124c6f7c560c0d58d54dc5f0fffdb6a67cc9303d200d1b909b649543130c257
+receipts:
+  unresolved_subitems: []

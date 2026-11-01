@@ -1,0 +1,30 @@
+#### 定理 9.2（相容预测、递归、最小元与驻点）
+
+任意 $W=W^\dagger\succ0$ 下，记 $B=I-A$。下列四项等价：
+
+1. $x$ 满足全部局部递归；
+2. $x=x_*=(I+A+\cdots+A^{m-1})b$；
+3. $x$ 是 $E_W(x)=\frac12\langle Bx-b,W(Bx-b)\rangle$ 的全局最小元；
+4. 对所有实变分方向（包括复向量的实、虚分量）都有 $\delta E_W=0$。
+
+解唯一，最小值为零，Hessian 为正定的 $B^\dagger WB$。若 $W\succeq w_0I$，则
+
+$$
+E_W(x)\ge \frac{w_0}{2\left\lVert B^{-1}\right\rVert^2}\left\lVert x-x_*\right\rVert^2.
+$$
+
+**证明。**
+
+有限几何级数给 $B^{-1}=I+A+\cdots+A^{m-1}$，故前两项等价。正性使 $E_W=0$ 当且仅当 $Bx=b$。变分为
+$\operatorname{Re}\langle B\eta,W(Bx-b)\rangle$，对全部 $\eta$ 为零当且仅当 $B^\dagger W(Bx-b)=0$；两矩阵可逆，故等价零残差。最后用 $x-x_*=B^{-1}(Bx-b)$。
+
+∎
+
+$A^k$ 的每个块是相应长度路径上有序算子乘积的和。因此该定理把整个路径谱的相干预测写为一个静态相容最小值。正的 $W$ 有很多选择，却给同一解；没有由这个等价唯一推出物理能量。
+
+甚至在这个严格凸情形，平行递归 $x\mapsto Ax+b$ 也未必逐步降低 $E_I$。取 $A=\left(\begin{smallmatrix}0&M\\0&0\end{smallmatrix}\right)$、$b=0$、$M>1$、$x=(M,1)$，则 $E_I(x)=1/2$，$E_I(Ax)=M^2/2$，但 $A^2x=0$。**有限步相容求解与逐步下降仍是不同命题。**
+
+已给定量子仪器时，也可把完整测量记录树上的未归一化分支算子置于 Hilbert–Schmidt 空间，使用同样线性残差结构。这里 CP、仪器及 Born 合同是输入；平方残差本身没有推导它们。
+
+<a id="sec-10"></a>
+

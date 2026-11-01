@@ -1,0 +1,39 @@
+### 证明
+
+对每个 $z$ 和决策 $d$，置
+
+$$
+ u_z(d)=\sum_kp(k)E(z\mid k)\ell(k,d).
+$$
+
+由（296.1），对每个 $w$ 有
+
+$$
+\sum_kp(k)F(w\mid k)\ell(k,d)
+=
+\sum_zT(w\mid z)u_z(d).
+$$
+
+有限决策集上的逐点不等式
+
+$$
+\min_d\sum_zT(w\mid z)u_z(d)
+\ge
+\sum_zT(w\mid z)\min_d u_z(d)
+$$
+
+成立。对 $w$ 求和，并使用 $\sum_wT(w\mid z)=1$，得到
+
+$$
+\begin{aligned}
+\mathcal R_F(p)
+&\ge
+\sum_w\sum_zT(w\mid z)\min_du_z(d)\\
+&=
+\sum_z\min_du_z(d)
+=\mathcal R_E(p).
+\end{aligned}
+$$
+
+证毕。
+

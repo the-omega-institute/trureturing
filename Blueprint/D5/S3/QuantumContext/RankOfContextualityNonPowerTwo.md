@@ -92,7 +92,91 @@ $$claim \iff \exists (m: Nat), \exists (k: Nat), \exists (C: (Fin\left(k\right) 
 
 Section 9 (Section IX in the arXiv source), PDF page 19: “Finally, it would be interesting to construct a quantum behavior having the rank of contextuality different from the power of 2 (the power of 2 is achieved by a tensor product of the Peres-Mermin behaviors).” The observable and context counts m and k, their lists C, the behavior P and its integer rank r are all existential. The final universal quantifier excludes every power 2^n, including n = 0.
 
-**Theorem 1.8 (A quantum rank that is not a power of two).**
+**Definition 1.8 (The square's row and column indices).**
+
+$$((\operatorname{Square}.\operatorname{idx}\left(0, 0\right) = 0) \land ((\operatorname{Square}.\operatorname{idx}\left(0, 1\right) = 1) \land ((\operatorname{Square}.\operatorname{idx}\left(0, 2\right) = 2) \land ((\operatorname{Square}.\operatorname{idx}\left(1, 0\right) = 3) \land ((\operatorname{Square}.\operatorname{idx}\left(1, 1\right) = 4) \land ((\operatorname{Square}.\operatorname{idx}\left(1, 2\right) = 5) \land ((\operatorname{Square}.\operatorname{idx}\left(2, 0\right) = 6) \land ((\operatorname{Square}.\operatorname{idx}\left(2, 1\right) = 7) \land ((\operatorname{Square}.\operatorname{idx}\left(2, 2\right) = 8) \land ((\operatorname{Square}.\operatorname{idx}\left(3, 0\right) = 0) \land ((\operatorname{Square}.\operatorname{idx}\left(3, 1\right) = 3) \land ((\operatorname{Square}.\operatorname{idx}\left(3, 2\right) = 6) \land ((\operatorname{Square}.\operatorname{idx}\left(4, 0\right) = 1) \land ((\operatorname{Square}.\operatorname{idx}\left(4, 1\right) = 4) \land ((\operatorname{Square}.\operatorname{idx}\left(4, 2\right) = 7) \land ((\operatorname{Square}.\operatorname{idx}\left(5, 0\right) = 2) \land ((\operatorname{Square}.\operatorname{idx}\left(5, 1\right) = 5) \land (\operatorname{Square}.\operatorname{idx}\left(5, 2\right) = 8)))))))))))))))))) \land (\forall (x: Fin\left(6\right)), (\operatorname{Square}.\operatorname{C}\left(x\right): List\left(Fin\left(9\right)\right)) = \operatorname{List}.\operatorname{cons}\left(\operatorname{Square}.\operatorname{idx}\left(x, 0\right), \operatorname{List}.\operatorname{cons}\left(\operatorname{Square}.\operatorname{idx}\left(x, 1\right), \operatorname{List}.\operatorname{cons}\left(\operatorname{Square}.\operatorname{idx}\left(x, 2\right), \operatorname{List}.\operatorname{nil}\right)\right)\right))$$
+
+*Formalization.* `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.idx` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
+
+*Commentary.*
+
+The eighteen equations list all three positions of each of the six contexts. Labels zero through eight are in row-major order; the first three contexts are rows and the last three are columns. The ordered context C(x) is the list of these three indices.
+
+**Definition 1.9 (The parity of three binary outcomes).**
+
+$$\forall (a: (Fin\left(3\right) \to Bool)), \operatorname{Square}.\operatorname{parity3}\left(a\right) = \operatorname{Bool}.\operatorname{xor}\left(\operatorname{Bool}.\operatorname{xor}\left(a\left(0\right), a\left(1\right)\right), a\left(2\right)\right)$$
+
+*Formalization.* `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.parity3` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
+
+*Commentary.*
+
+Exclusive-or of the three outcomes records whether an odd number are true.
+
+**Definition 1.10 (The square's prescribed context parities).**
+
+$$\forall (x: Fin\left(6\right)), \operatorname{Square}.\operatorname{target}\left(x\right) = ite\left(x = 5, \operatorname{Bool}.\operatorname{true}, \operatorname{Bool}.\operatorname{false}\right)$$
+
+*Formalization.* `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.target` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
+
+*Commentary.*
+
+Only context five, the third column, has target true, corresponding to a negative product.
+
+**Lemma 1.11 (Parity as a natural-number residue).**
+
+$$\forall (a: (Fin\left(3\right) \to Bool)), \operatorname{Bool}.\operatorname{toNat}\left(\operatorname{Square}.\operatorname{parity3}\left(a\right)\right) = \operatorname{Nat}.\operatorname{mod}\left(\operatorname{Bool}.\operatorname{toNat}\left(a\left(0\right)\right) + \operatorname{Bool}.\operatorname{toNat}\left(a\left(1\right)\right) + \operatorname{Bool}.\operatorname{toNat}\left(a\left(2\right)\right), 2\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.bv_parity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
+
+*Commentary.*
+
+The natural value of the Boolean parity is the sum of the three natural bit values modulo two.
+
+**Lemma 1.12 (Every assignment misses a square parity).**
+
+$$\forall (g: (Fin\left(9\right) \to Bool)), \exists (x: Fin\left(6\right)), \operatorname{Square}.\operatorname{parity3}\left(fun (i: Fin\left(3\right)) \mapsto g\left(\operatorname{List}.\operatorname{get}\left(\operatorname{Square}.\operatorname{C}\left(x\right), i\right)\right)\right) \ne \operatorname{Square}.\operatorname{target}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.parity_miss` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
+
+*Commentary.*
+
+For every Boolean assignment to the nine observables, at least one of the six context parities differs from its prescribed target.
+
+**Lemma 1.13 (Context lookup agrees with square indexing).**
+
+$$\forall (s: Fin\left(6\right)), \forall (i: Fin\left(3\right)), \operatorname{List}.\operatorname{get}\left(\operatorname{Square}.\operatorname{C}\left(s\right), i\right) = \operatorname{Square}.\operatorname{idx}\left(s, i\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.pm_get_idx` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
+
+*Commentary.*
+
+Looking up position i in the square context s gives its row-major observable index.
+
+**Theorem 1.14 (A quantum rank that is not a power of two).**
 
 $$claim$$
 
@@ -116,10 +200,16 @@ The behavior is the product of two Peres–Mermin squares: 18 observable labels,
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.IsQuantum`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.IsRankOfContextuality`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.NonContextual`
+- Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.bv_parity`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.claim`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.coverSizes`
+- Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.idx`
+- Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.parity3`
+- Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.parity_miss`
+- Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.pm_get_idx`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.restrict`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.result`
+- Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.target`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw](../Arith/FibonacciAtomic/NativeContinuation/JointLaw.md)
 - Dependency: [D5/S3/Entropy/Forgetting/PushforwardComposition](../Entropy/Forgetting/PushforwardComposition.md)
 - Dependency: [D5/S3/Entropy/Observation/MultiTargetInformationChain](../Entropy/Observation/MultiTargetInformationChain.md)

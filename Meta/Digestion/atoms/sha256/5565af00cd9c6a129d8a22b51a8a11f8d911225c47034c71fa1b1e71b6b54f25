@@ -1,0 +1,22 @@
+## 9. The universal funding assertion and exact pinching accounting
+
+**Open assertion 9.1 (Universal sign and positive-overlap funding).**
+For every actual complex PSD trace-one $\rho$ and independent
+$a,b\in[0,1]$, is $\Delta(\rho)\geq0$? A sufficient unresolved
+funding assertion for the bounds above is that, for every such source,
+one can choose an allowed PSD witness $N$ and product observable $W$
+so that
+
+$$
+ \int_{E_+}w_a(t)\frac{2\kappa_t-1}{1+\kappa_t}s_t\,dt
+ \leq\mathcal C_N+3\int_0^1w_a(t)\mathcal R_t\,dt
+ +\int_{E_-}w_a(t)\frac{1-2\kappa_t}{1+\kappa_t}s_t\,dt.
+$$
+
+No universal choice with this property is supplied by Theorems 3.3,
+4.2, and 5.1; nor do they supply a nonnegative local-field certificate
+for every pair of margins and independent biases. Failure of one of
+these lower certificates does not imply $\Delta<0$. The local family
+in Theorem 2.1 establishes a sharp diagonal restriction cost and support
+rotation, not a negative physical state or a universal sign theorem.
+

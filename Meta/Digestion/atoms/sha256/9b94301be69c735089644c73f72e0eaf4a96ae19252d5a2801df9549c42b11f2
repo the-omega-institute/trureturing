@@ -1,0 +1,60 @@
+**Theorem 9.6 (qualitative optimizer-channel stability for the original protocol class).** For every $\delta>0$ there exists $\varepsilon_\delta>0$ such that the following holds simultaneously for every finite integer $k\ge1$, every Hermitian positive semidefinite family $D_1,\ldots,D_k\in M_2(\mathbb C)$ with $\sum_{y=1}^kD_y=I_2$, and every family of actual feedback unitaries $U_1,\ldots,U_k\in U(4)$. For the fixed original record and its all-outcome channel
+
+$$
+\Phi(X)=\sum_{y=1}^k
+ U_y\bigl((R_0D_y^{\mathsf T}R_0^\dagger)\circ X\bigr)U_y^\dagger,
+\tag{9.33}
+$$
+
+one has
+
+$$
+\boxed{
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond
+ \le1-\cos(\pi/8)+\varepsilon_\delta
+\quad\Longrightarrow\quad
+\|\Phi-\Phi_*\|_\diamond<\delta.
+}
+\tag{9.34}
+$$
+
+Both norms are exactly the unhalved norm (1.6), with suprema over every finite untouched reference and every nonzero operator on reference and system. In particular the conclusion supplies one number $d=\|\Phi-\Phi_*\|_\diamond<\delta$ such that, for every finite $n\ge1$ and every $X\in M_n(\mathbb C)\otimes M_4(\mathbb C)$,
+
+$$
+\|(\operatorname{id}_{M_n}\otimes(\Phi-\Phi_*))(X)\|_1
+ \le d\,\|X\|_1.
+\tag{9.35}
+$$
+
+The tolerance $\varepsilon_\delta$ is independent of the finite outcome count, the effects, and the feedback.
+
+Proof. Fix $\delta>0$ and consider the closed subset of the compact set $\mathcal M$
+
+$$
+\mathcal A_\delta
+ =\{\mu\in\mathcal M:\|\Phi_\mu-\Phi_*\|_\diamond\ge\delta\}.
+\tag{9.36}
+$$
+
+Its compactness follows from Lemma 9.2. If it is empty, choose any positive $\varepsilon_\delta$, for example one. Otherwise the continuous nonnegative error excess has a minimum there:
+
+$$
+\eta_\delta
+ =\min_{\mu\in\mathcal A_\delta}
+       \left(\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond-q\right).
+\tag{9.37}
+$$
+
+It is strictly positive. If it were zero, a minimizing measure would have error $q$, so Theorem 9.4 would force its channel to be $\Phi_*$, contradicting membership in $\mathcal A_\delta$. The lower comparison is (9.15), consistent with Theorem 3.1 and the finite realization of Proposition 9.5; Theorem 6.2 supplies the attaining channel. Set
+
+$$
+\varepsilon_\delta=\eta_\delta/2>0.
+\tag{9.38}
+$$
+
+An original protocol satisfying the premise of (9.34) gives a measure (9.3) whose error excess is at most $\eta_\delta/2$. It cannot belong to $\mathcal A_\delta$, on which that excess is at least $\eta_\delta$. Hence its distance to the fixed $\Phi_*$ is strictly less than $\delta$.
+
+Equivalently, a failure of stability would provide original finite protocols with errors tending to $q$ but distances at least a fixed $\delta$. Sequential compactness of their normalized effect measures and (9.6) would give an exact optimizing limit still at distance at least $\delta$, contradicting Theorem 9.4. Proposition 9.5 also gives that limit a finite original realization. Every continuity assertion used here is in the full norm (1.6), so no restriction on the reference or on amplified operators enters either argument. $\square$
+
+The source-specific conclusions of this section are exact optimizer-channel uniqueness and qualitative stability at positive error tolerance, using the equality characterization and actual defect identity of Section 8. Compactness, the continuous positive square root, and Caratheodory's theorem are general ingredients; no literature-priority assertion is made. No quantitative modulus is evaluated or proved, and no $K\sqrt\varepsilon$ rate is established. The square-root assertion at the end of Section 8 remains unresolved. The conclusions concern the original finite full-record protocols only: no extension to postselection, changed records, infinite outcomes, nonunitary feedback, or physical acquisition of outcome probabilities is claimed.
+

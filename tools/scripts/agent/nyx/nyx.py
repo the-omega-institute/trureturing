@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
-"""nyx: one oracle (ChatGPT Pro) call through the NyxID oracle broker.
+"""nyx: an oracle (ChatGPT Pro) call through the NyxID oracle broker.
 
 usage: nyx.py ask <brief> <out>   one streamed chat completion; the answer text goes to <out>
        nyx.py pools               list broker pools and mark the one `ask` would use
 
 The route and terminal decision are those of the sshx oracle runner: a non-mutating pool
-listing, then one streamed `chat/completions` call that opens a fresh conversation. There is
-no retry, pool failover, task polling or call to the `nyxid oracle` CLI; a caller that wants
-another attempt runs `ask` again.
+listing, then a streamed `chat/completions` call that opens a fresh conversation. A transient
+or incomplete carrier result is retried with the same request, up to 100 reconnects by
+default. `NYX_RECONNECT_ATTEMPTS` can lower that bound for callers and tests (0 means one
+initial call and no reconnects). There is no pool failover, task polling or call to the
+`nyxid oracle` CLI.
 
 Environment: NYX_CLI names the nyxid executable (default `nyxid` on PATH); NYX_POOL selects
 a pool explicitly, which must be listed active with an online worker. Without NYX_POOL the
-active pool with the most online workers is used, and ties keep listing order.
+active pool with the most online workers is used, and ties keep listing order. Set
+NYX_RECONNECT_ATTEMPTS to a value from 0 through 100 to override the default reconnect bound.
 
 `ask` replaces these artifacts on every run: <out> (the answer, written only on completion),
 <out>.request.json, <out>.stream (the raw response stream), <out>.stderr and
@@ -35,6 +38,15 @@ CHAT_ROUTE = ("proxy", "request", "oracle", "api/v1/oracle/openai/v1/chat/comple
 DONE_VALUE = "[DONE]"
 MODEL_FIELDS = ("model_label", "observed_model_switcher", "observed_model_effort")
 ARTIFACT_SUFFIXES = ("", ".request.json", ".stream", ".stderr", ".status.json")
+DEFAULT_RECONNECTS = 100
+MAX_RECONNECTS = 100
+RETRYABLE_REASONS = frozenset({
+    "CARRIER_EXIT_NONZERO",
+    "STREAM_MALFORMED",
+    "BROKER_ERROR",
+    "STREAM_NOT_TERMINAL",
+    "TASK_ID_MISSING",
+})
 
 
 class UsageError(Exception):
@@ -176,6 +188,20 @@ def decide(carrier_exit: int, seen: dict[str, object]) -> str:
     return "COMPLETE"
 
 
+def reconnect_limit() -> int:
+    """Return the configured number of reconnects, bounded by the public contract."""
+    raw = os.environ.get("NYX_RECONNECT_ATTEMPTS")
+    if raw is None or raw == "":
+        return DEFAULT_RECONNECTS
+    try:
+        value = int(raw, 10)
+    except ValueError as error:
+        raise Failure("CONFIG_INVALID", "NYX_RECONNECT_ATTEMPTS must be an integer") from error
+    if value < 0 or value > MAX_RECONNECTS:
+        raise Failure("CONFIG_INVALID", f"NYX_RECONNECT_ATTEMPTS must be between 0 and {MAX_RECONNECTS}")
+    return value
+
+
 # ---- ask --------------------------------------------------------------------------------
 def artifact_paths(out: Path) -> dict[str, Path]:
     names = ("answer", "request", "stream", "stderr", "status")
@@ -220,7 +246,8 @@ def ask(brief: Path, out: Path) -> int:
         path.unlink(missing_ok=True)
     status = {"schema_version": 1, "status": "NOT_COMPLETE", "reason_code": "INTERNAL_ERROR", "pool": None,
               "carrier_exit": None, "task_id": None, "model": None, "broker_error": None,
-              "brief_ref": str(brief), "request_ref": None, "stream_ref": None, "stderr_ref": None}
+              "brief_ref": str(brief), "request_ref": None, "stream_ref": None, "stderr_ref": None,
+              "reconnect_limit": None, "attempts": 0, "reconnects": 0}
     try:
         try:
             text = brief.read_bytes().decode("utf-8")
@@ -231,26 +258,37 @@ def ask(brief: Path, out: Path) -> int:
         if pool is None:
             raise Failure("BROKER_UNAVAILABLE", "no eligible active pool with an online worker")
         status["pool"] = pool
+        reconnects = reconnect_limit()
+        status["reconnect_limit"] = reconnects
         request = {"model": f"oracle/{pool}", "stream": True, "messages": [{"role": "user", "content": text}]}
         paths["request"].write_text(json.dumps(request, ensure_ascii=False), encoding="utf-8")
         status["request_ref"] = str(paths["request"])
-        log(f"broker call starting: pool {pool}")
-        with paths["stream"].open("wb") as stream, paths["stderr"].open("wb") as stderr:
-            status["stream_ref"], status["stderr_ref"] = str(paths["stream"]), str(paths["stderr"])
-            try:
-                completed = subprocess.run([cli, *CHAT_ROUTE, "@" + paths["request"].name], cwd=out.parent,
-                                           stdin=subprocess.DEVNULL, stdout=stream, stderr=stderr, check=False)
-            except OSError as error:
-                raise Failure("BROKER_UNAVAILABLE", f"cannot run {cli}: {error}") from error
-        status["carrier_exit"] = completed.returncode
-        seen = observe(paths["stream"].read_bytes())
-        status["broker_error"] = seen["error"]
-        status["reason_code"] = decide(completed.returncode, seen)
-        if status["reason_code"] == "COMPLETE":
-            oracle = seen["oracle"]
-            write_atomically(paths["answer"], seen["answer"].encode("utf-8"))
-            status.update({"status": "COMPLETE", "task_id": oracle["task_id"], "answer_ref": str(paths["answer"]),
-                           "model": {field: oracle.get(field) for field in MODEL_FIELDS}})
+        for reconnect_index in range(reconnects + 1):
+            if reconnect_index:
+                status["reconnects"] = reconnect_index
+                log(f"broker reconnect {reconnect_index}/{reconnects}: pool {pool}")
+            else:
+                log(f"broker call starting: pool {pool}")
+            with paths["stream"].open("wb") as stream, paths["stderr"].open("wb") as stderr:
+                status["stream_ref"], status["stderr_ref"] = str(paths["stream"]), str(paths["stderr"])
+                try:
+                    completed = subprocess.run([cli, *CHAT_ROUTE, "@" + paths["request"].name], cwd=out.parent,
+                                               stdin=subprocess.DEVNULL, stdout=stream, stderr=stderr, check=False)
+                except OSError as error:
+                    raise Failure("BROKER_UNAVAILABLE", f"cannot run {cli}: {error}") from error
+            status["attempts"] = reconnect_index + 1
+            status["carrier_exit"] = completed.returncode
+            seen = observe(paths["stream"].read_bytes())
+            status["broker_error"] = seen["error"]
+            status["reason_code"] = decide(completed.returncode, seen)
+            if status["reason_code"] == "COMPLETE":
+                oracle = seen["oracle"]
+                write_atomically(paths["answer"], seen["answer"].encode("utf-8"))
+                status.update({"status": "COMPLETE", "task_id": oracle["task_id"], "answer_ref": str(paths["answer"]),
+                               "model": {field: oracle.get(field) for field in MODEL_FIELDS}})
+                break
+            if status["reason_code"] not in RETRYABLE_REASONS or reconnect_index >= reconnects:
+                break
     except Failure as failure:
         status["reason_code"] = failure.reason_code
         log(str(failure))
@@ -260,6 +298,7 @@ def ask(brief: Path, out: Path) -> int:
     error_text = error.get("code") if isinstance(error, dict) and "code" in error else error
     print(f"NYX_RESULT status={status['status']} reason={status['reason_code']} pool={status['pool'] or '-'}"
           f" task={status['task_id'] or '-'} model={model or '-'}"
+          f" attempts={status['attempts']} reconnects={status['reconnects']}"
           f" broker_error={'-' if error_text is None else json.dumps(error_text, ensure_ascii=False)}"
           f" status_file={paths['status']}")
     return 0 if status["status"] == "COMPLETE" else 1

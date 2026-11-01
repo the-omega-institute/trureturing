@@ -50,11 +50,11 @@ def parity : Module.End ℂ Fock :=
 def prefixEmbed (N : ℕ) : (Assignment N → ℂ) →ₗ[ℂ] Fock :=
   ∑ t : Assignment N, (LinearMap.proj t).smulRight (ket (occupationSet t))
 
-@[simp] private theorem annihilate_ket (j : ℕ) (S : Finset ℕ) :
+@[simp] theorem annihilate_ket (j : ℕ) (S : Finset ℕ) :
     annihilate j (ket S) = if j ∈ S then phase j S • ket (S.erase j) else 0 := by
   simp only [annihilate, ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
 
-@[simp] private theorem create_ket (j : ℕ) (S : Finset ℕ) :
+@[simp] theorem create_ket (j : ℕ) (S : Finset ℕ) :
     create j (ket S) = if j ∈ S then 0 else phase j S • ket (insert j S) := by
   simp only [create, ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
 
@@ -62,7 +62,7 @@ def prefixEmbed (N : ℕ) : (Assignment N → ℂ) →ₗ[ℂ] Fock :=
     parity (ket S) = (-1 : ℂ) ^ S.card • ket S := by
   simp only [parity, ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
 
-private theorem end_ext {T U : Module.End ℂ Fock}
+theorem end_ext {T U : Module.End ℂ Fock}
     (h : ∀ S, T (ket S) = U (ket S)) : T = U := by
   apply Finsupp.lhom_ext
   intro S a

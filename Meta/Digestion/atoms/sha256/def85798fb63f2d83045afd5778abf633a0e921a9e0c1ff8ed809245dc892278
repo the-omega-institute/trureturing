@@ -1,0 +1,51 @@
+**定义 B-33.2（全部候选等号族的显式迹表）。** 将六条耳按抽象 $K_4$ 的三个完美匹配分组：
+
+$$
+M_1=\{f_{12},f_{34}\},\quad
+M_2=\{f_{13},f_{24}\},\quad
+M_3=\{f_{14},f_{23}\},\qquad Q_i=D\setminus M_i.
+$$
+
+这些是实际耳的子集；抽象边端点与原多边形顶点分别解释。记 $\binom Dr=\{A\subseteq D:|A|=r\}$。
+
+当 $q=0$ 时，定义
+
+$$
+\mathscr U_0=\{S_1,S_2,S_3,S_4\}
+\cup\left(\binom D4\setminus\{Q_1,Q_2,Q_3\}\right)
+\cup\binom D5\cup\{D\}. \tag{33.3}
+$$
+
+固定 $i\in\{1,2,3\}$，把其余两个指标按 $j<k$ 排列。对每个 $x\in M_i$，独立地从下面这对三元迹中选一个 $E_x$：
+
+$$
+E_x\in\left\{M_j\cup\{x\},\ M_k\cup(M_i\setminus\{x\})\right\}.
+\tag{33.4}
+$$
+
+令 $E=(E_x)_{x\in M_i}$，并定义
+
+$$
+\begin{aligned}
+\mathscr B_{i,E}={}&\mathscr U_0\cup\{M_i,Q_j,Q_k\}\\
+&\cup\{M_i\cup\{z\}:z\in D\setminus M_i\}
+\cup\{E_x:x\in M_i\},\\
+\mathcal F_{i,E}={}&\Gamma[\mathscr B_{i,E}].
+\end{aligned} \tag{33.5}
+$$
+
+当 $q=1$ 时，由式(32.3)，唯一交叉对恰为某个 $M_i$ 的两元素。将该匹配记作 $P=\{x,y\}$，其余两个匹配按原指标递增记作 $A,B$。这里仅给匹配另取名字，不改变任何实际标号。定义
+
+$$
+\begin{aligned}
+\mathscr U_1={}&\{S_1,S_2,S_3,S_4\}
+\cup\{A\cup\{b\}:b\in B\}
+\cup\{B\cup\{a\}:a\in A\}\\
+&\cup\{H\in\mathscr C_1:|H|\ge4\},\\
+\mathscr B_A={}&\mathscr U_1\cup\{A,A\cup\{x\},A\cup\{y\}\},\\
+\mathscr B_B={}&\mathscr U_1\cup\{B,B\cup\{x\},B\cup\{y\}\},\\
+\mathcal F_A={}&\Gamma[\mathscr B_A],\qquad
+\mathcal F_B=\Gamma[\mathscr B_B].
+\end{aligned} \tag{33.6}
+$$
+

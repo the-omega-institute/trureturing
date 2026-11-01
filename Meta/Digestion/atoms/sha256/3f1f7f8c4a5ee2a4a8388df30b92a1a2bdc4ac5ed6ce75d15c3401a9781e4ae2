@@ -1,0 +1,37 @@
+#### 定理 10.2（递归合成等于变分消元）
+
+对酉 $U,V$、$w_1,w_2>0$，
+
+$$
+\min_z\{w_1\left\lVert z-Ux\right\rVert^2+w_2\left\lVert y-Vz\right\rVert^2\}
+=\frac{w_1w_2}{w_1+w_2}\left\lVert y-VUx\right\rVert^2.
+$$
+
+故任意链都有
+
+$$
+\min_{\psi_1,\ldots,\psi_{L-1}}
+\sum_{j=1}^Lw_j\left\lVert \psi_j-U_j\psi_{j-1}\right\rVert^2
+=\left(\sum_{j=1}^Lw_j^{-1}\right)^{-1}
+\left\lVert y-U_L\cdots U_1x\right\rVert^2,
+$$
+
+其中 $\psi_0=x,\psi_L=y$。
+
+**证明。**
+
+置 $z'=Vz$、$a=VUx$，酉性把左边变成 $w_1\left\lVert z'-a\right\rVert^2+w_2\left\lVert y-z'\right\rVert^2$。配方得到唯一最小 $z'=(w_1a+w_2y)/(w_1+w_2)$ 及所列余项；对链反复应用，等效倒权重相加。
+
+∎
+
+特别十个等权 $K$ 的内部消元给
+
+$$
+\min_{\rm internal}\sum_{j=1}^{10}\left\lVert \psi_j-K\psi_{j-1}\right\rVert^2
+=\frac{1}{10}\left\lVert y-x\right\rVert^2.
+$$
+
+门的合成关系变成恒等，但相容性代价的系数仍保留十层长度。忽略这个因子就丢失了变分度量信息。
+
+<a id="statement-10-3"></a>
+

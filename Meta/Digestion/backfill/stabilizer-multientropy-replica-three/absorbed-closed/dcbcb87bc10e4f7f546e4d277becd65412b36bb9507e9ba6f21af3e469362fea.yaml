@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:dcbcb87bc10e4f7f546e4d277becd65412b36bb9507e9ba6f21af3e469362fea
+  normalized_sha256: sha256:dcbcb87bc10e4f7f546e4d277becd65412b36bb9507e9ba6f21af3e469362fea
+cas_ref: sha256:dcbcb87bc10e4f7f546e4d277becd65412b36bb9507e9ba6f21af3e469362fea
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.IsGraphFormOf
+    target_statement_id: sha256:708e65fe39dc35176e42ab15b7e64ca90b92ef04cf45d9c103a2f9d89ce820d0
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.graphState
+    target_statement_id: sha256:5411bdaad7529fbec8002cfb1a0e35a7f45b2e2353c866e6d21fdb43e793d285
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.graph_form_existence_and_replica_rank_formula
+    target_statement_id: sha256:c0249bb6798d820208d8451c40065cf6469a0a5b054eecb61f9fe90e60d2f5c0
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.representatives_exist
+    target_statement_id: sha256:4e14b3f3463d9122f73e92a9047903c34be37556c65b22c32a4fbdd0b64e9f6c
+receipts:
+  unresolved_subitems: []

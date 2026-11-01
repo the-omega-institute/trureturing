@@ -1,0 +1,122 @@
+**定理 B-37.2（两种条件完成律的归一化严格和界）。** 在同一个 $n\ge14$ 多边形中，取互不相交的实际耳集 $P,Q$，其并 $K=P\cup Q$ 两两不交叉，且
+
+$$
+(p,q)=(|P|,|Q|)\in\{(2,2),(3,3),(2,4),(4,2)\}.
+$$
+
+这里 $p,q$ 是两集合的大小，不是六耳配置的交叉数。定义全部条件完成及共同耳载体为
+
+$$
+\begin{aligned}
+\mathcal X(P\mid Q)&=\{T\in\mathcal T_n:P\subseteq\operatorname{Ear}(T),
+\ Q\cap\operatorname{Ear}(T)=\varnothing\},\\
+E_K&=\{e\in\mathcal E_n\setminus K:e\text{ 兼容 }K\text{ 的每条耳}\},\\
+N_{pq}&=\sum_{j=0}^q(-1)^j\binom qj c_{p+j},
+\qquad c_h=C_{n-h-2}\quad(0\le h\le\lfloor n/2\rfloor).
+\end{aligned}
+\tag{37.3}
+$$
+
+则 $|\mathcal X(P\mid Q)|=N_{pq}>0$。对完整耳交叉相交子族
+$\mathcal C\subseteq\mathcal X(P\mid Q)$、$\mathcal D'\subseteq\mathcal X(Q\mid P)$，有
+
+$$
+\frac{|\mathcal C|}{N_{pq}}+\frac{|\mathcal D'|}{N_{qp}}\le1.
+\tag{37.4}
+$$
+
+两族均非空时严格小于一；等号恰为一侧为空、另一侧等于自己的全部条件完成。对于跨侧实际成员 $V,W$，准确有
+
+$$
+\operatorname{Ear}(V)\cap\operatorname{Ear}(W)
+=(\operatorname{Ear}(V)\cap E_K)\cap(\operatorname{Ear}(W)\cap E_K).
+\tag{37.5}
+$$
+
+证明。共同耳不能在 $K$ 内，又须兼容两成员分别强制的 $P,Q$，所以(37.5)成立。对禁止的 $Q$ 作有限容斥，用式(32.1)的实际删耳双射计每个含有事件，得到 $N_{pq}$。存在完整耳集恰为 $P$ 的剖分：$p=2$ 用定理B-32.3证明中的双耳构造；$p=3,4$ 用定理B-33.3证明中删耳、在邻点集合中选两个非相邻点、添回的构造。该构造只需选中中心独立、$p\ge3$ 及 $n-p\ge6$，不需其抽象边覆盖条件。因此它同样适用于这里的 $P$，并且避开 $Q$，证明 $N_{pq}>0$；反侧同理。
+
+以下消费第34节的局部双族对应与层比较，逐项保留这里的条件；不直接套用其 $q=1$ 四见证定理。对 $J\subseteq E_K$，把本侧在 $J$ 上的实际精确迹权重记作 $w_J^{pq}(R)$。若 $I\subseteq E_K$ 两两不交叉且 $r=|I|$，容斥给
+
+$$
+D_r^{pq}:=|\{T\in\mathcal X(P\mid Q):I\subseteq\operatorname{Ear}(T)\}|
+=\sum_{j=0}^q(-1)^j\binom qj c_{p+r+j}.
+\tag{37.6}
+$$
+
+相交的强制耳集计零。对 $R\subseteq J$ 再作容斥，得
+
+$$
+w_J^{pq}(R)=
+\sum_{V\subseteq J\setminus R}(-1)^{|V|}
+\begin{cases}
+D_{|R\cup V|}^{pq},&R\cup V\text{ 两两不交叉},\\
+0,&\text{否则},
+\end{cases}
+\quad(R\text{ 两两不交叉}).
+\tag{37.7}
+$$
+
+反侧的公式交换 $p,q$，不能将它们默认为同一权重。每个非零项满足
+$|K|+|R\cup V|\le\lfloor n/2\rfloor$，故(37.6)–(37.7)的全部下标合法，剩余多边形至少有 $\lceil n/2\rceil\ge7$ 个顶点。
+
+为核对第34节降交叉操作的适用性，在 $J$ 的一个连续块起点记
+$e_0\notin J$、$s=e_1,t=e_2\in J$，并记 $v=e_3$（只在 $e_3\in J$ 时作为迹元素）。这样的起点存在，因为 $J\subseteq E_K\ne\mathcal E_n$。局部五顶点记为 $v_0,\ldots,v_4$，于是 $s=v_0v_2,t=v_1v_3,v=v_2v_4$。$K$ 的中心均不在位置 $0,1,2,3$：这些位置或与 $s,t$ 冲突，或就是它们的中心。因此 $K$ 的任何耳均不以 $v_1,v_2$ 为端点。
+
+对 $R\subseteq J\setminus\{s,t,v\}$，引理B-34.3证明中的两个删耳映射给出本侧恒等式
+
+$$
+\begin{cases}
+w_J^{pq}(R+t)=w_J^{pq}(R+s),&v\notin J,\\
+w_J^{pq}(R+t)=w_J^{pq}(R+s)+w_J^{pq}(R+s+v),&v\in J.
+\end{cases}
+\tag{37.8}
+$$
+
+不可行迹仍计零。确切地，强制 $t$ 删除 $v_2$、将 $v_1$ 记为 $z$；强制 $s$ 删除 $v_1$、将 $v_2$ 记为 $z$，两侧留下同一循环序 $v_0,z,v_3,\ldots$。$R$ 的每条耳及全部强制 $P$、禁止 $Q$ 都避开这两个局部顶点，故原对角线条件逐条相同。$t$ 侧自动没有 $s,v$，$s$ 侧自动没有 $t$ 而让 $v$ 自由；这正是右侧的分拆。添回耳三角形给逆映射。反侧独立地保留强制 $Q$、禁止 $P$，同样满足(37.8)，无须假设两侧权重相等。
+
+这里同时降交叉的集合步骤也与引理B-34.3证明相同，理由如下。把两个可行迹族扩大为交叉相交的包含极大对，则每侧向上闭合，且若同侧含 $R+t$ 和可行的 $R+s+v$，必含 $R+s$。否则对侧有与 $R+s$ 不交的迹；它为接触 $R+t$ 必含 $t$，不能含 $v$，遂又与 $R+s+v$ 不交。若 $R+t$ 入选而 $R+s$ 未入选，就把前者换成 $R+s$ 及可行的 $R+s+v$。两目标此前都未入选，不同 $R$ 无重计，(37.8)分别保各侧权重。任何保留的含 $t$ 迹，其换 $t$ 为 $s$ 的迹已在原族内。
+
+替换后两侧在 $J\setminus\{t\}$ 上仍交叉相交。若两个输出迹在该集合上不交，它们不能都含 $s$。若都不含 $s$，它们均是保留的原迹，只能共同含 $t$；将其中一个的 $t$ 换成 $s$，便得到一对不交原迹，矛盾。若仅一个含 $s$ 而它是原迹，则它不含 $t$，已与另一原迹不交。若它是新迹，源为 $R+t$；另一输出迹是原迹，为接触该源必含 $t$，其 $t$ 被保留又保证换成 $s$ 的迹属于对侧原族，仍与源不交，矛盾。这穷尽情形。
+
+投影到 $J\setminus\{t\}$ 后，每个新迹的条件权重是全部原投影纤维权重之和，取尽相应完成只会增加各侧权重。再扩大到极大对并重复，每步删去 $t$，有限步到达同一个无交叉 $J_0$，在其上得到非空交叉相交向上族 $\mathscr C_0,\mathscr D_0$。两侧相应权重分别至少为原来 $|\mathcal C|,|\mathcal D'|$。若两原族非空，$J_0$ 不可能为空。原 $E_K$ 为空时，由(37.5)直接排除两原族均非空的情况。
+
+置 $d=|J_0|\ge1$。对 $r$ 元 $R\subseteq J_0$，式(37.7)只依赖 $r$，记本侧权重为
+
+$$
+\omega_r^{pq}=\sum_{j=0}^{d-r}(-1)^j\binom{d-r}{j}D_{r+j}^{pq},
+\qquad \sum_{r=0}^d\binom dr\omega_r^{pq}=N_{pq}.
+\tag{37.9}
+$$
+
+Leader–Tan [B32-LT] Lemma4 的翻转注入在此保留全部条件：从精确迹 $R+h$ 翻转 $h\in J_0\setminus R$，新增对角线交叉 $h$，故不是 $K\cup J_0$ 中的其他耳；其余对角线不变。翻转后 $h$ 的中心恰接一条内部对角线，逆翻转唯一。因此
+
+$$
+\omega_0^{pq}\ge\omega_1^{pq}\ge\cdots\ge\omega_d^{pq},
+\qquad \omega_0^{pq}>\omega_1^{pq}.
+\tag{37.10}
+$$
+
+末个严格性按定理B-34.4证明中的扇形见证核对：删除 $P$ 的 $p$ 个中心，剩余凸多边形有 $m=n-p\ge10$ 个顶点。固定 $h\in J_0$，以其中心为根作完整扇形。$Q\cup J_0$ 的耳中心及其邻点都未被删去；根的两边界邻点仍是原邻点，且都不是 $Q\cup J_0$ 的中心，因为这些耳与 $h$ 兼容。扇形的两耳中心恰为根的两邻点，故它避开 $Q\cup J_0$。添回 $P$ 后得到本侧空 $J_0$ 迹完成，其在根接有至少 $m-3>1$ 条内部对角线，不在单点迹 $\{h\}$ 的翻转像中。反侧删除 $Q$ 后同样有 $n-q\ge10$，亦得(37.10)的反侧版本。
+
+现在分别应用式(34.13)的有限和恒等式。对非空向上族 $\mathscr V\subseteq2^{J_0}$ 且 $\varnothing\notin\mathscr V$，置
+$\beta_r=|\mathscr V^{(r)}|/\binom dr$。包含边双计数给 $\beta_r\le\beta_{r+1}$，且 $\beta_0=0,\beta_d=1$。写 $B_r=\binom dr$，有
+
+$$
+N_{pq}|\mathscr V|-2^d\sum_{R\in\mathscr V}\omega_{|R|}^{pq}
+=\sum_{0\le r<s\le d}B_rB_s(\omega_r^{pq}-\omega_s^{pq})(\beta_s-\beta_r)>0.
+\tag{37.11}
+$$
+
+各项非负，$(0,d)$ 项由(37.10)严格正。反侧有自己的 $N_{qp},\omega^{qp}$ 和同样严格的估计。交叉相交使 $\mathscr C_0,\mathscr D_0$ 均不含空集，补集映射又给 $|\mathscr C_0|+|\mathscr D_0|\le2^d$，所以
+
+$$
+\frac{|\mathcal C|}{N_{pq}}+\frac{|\mathcal D'|}{N_{qp}}
+\le\frac{\sum_{R\in\mathscr C_0}\omega_{|R|}^{pq}}{N_{pq}}
+ +\frac{\sum_{R\in\mathscr D_0}\omega_{|R|}^{qp}}{N_{qp}}
+<\frac{|\mathscr C_0|+|\mathscr D_0|}{2^d}\le1.
+$$
+
+若一原族为空，(37.4)只剩另一族是其完整条件纤维的子集，等号恰为该子集取满。这证明全部等号情形。
+
+上述局部对应消费 [B32-LT] Theorem2证明及引理B-34.3的实际双族版本；严格层估计消费定理B-34.4证明的有限和与扇形见证。新增条件是两侧分别使用(37.6)–(37.11)的归一化律，特别允许 $p\ne q$。独立耳数限制 $|K|+d\le\lfloor n/2\rfloor$ 保留奇偶两类；在 $n=14,15$ 且 $|K|=6$ 时仍有 $d\le1$，$d=1$ 已包含在严格的 $(0,d)$ 项中。∎
+

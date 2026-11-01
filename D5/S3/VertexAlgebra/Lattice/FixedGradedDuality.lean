@@ -167,7 +167,7 @@ theorem fixedGrade_finiteDimensional (D : LatticeData)
   apply Subtype.ext
   exact congrArg (fun z : grade D h => (z : Carrier D)) hxy
 
-private theorem plusPart_mem_fixedSpace (D : LatticeData) (v : Carrier D) :
+theorem plusPart_mem_fixedSpace (D : LatticeData) (v : Carrier D) :
     plusPart D v ∈ fixedSpace D := by
   rw [mem_fixedSpace]
   have hi : theta D (theta D v) = v := theta_involutive D v

@@ -1,0 +1,117 @@
+### 证明：把局部核写成正三角核的混合
+
+定义
+
+$$
+r=-\mathscr K'(\delta)>0,
+\qquad
+L=\delta+\frac{\mathscr K(\delta)}r>\delta.
+$$
+
+再定义一个辅助核
+
+<a id="eq-8"></a>
+
+$$
+\boxed{
+\widetilde{\mathscr K}(t)
+=
+\int_0^\delta
+(s-|t|)_+\mathscr K''(s)\,ds
++
+r(L-|t|)_+.
+}
+\tag{8}
+$$
+
+其中 $u_+=\max(u,0)$。
+
+先证明它在所需窗口内就是实际核。对 $0<t\le\delta$，分部积分给出
+
+$$
+\begin{aligned}
+\int_t^\delta(s-t)\mathscr K''(s)\,ds
+={}&
+(\delta-t)\mathscr K'(\delta)\\
+&-\mathscr K(\delta)+\mathscr K(t).
+\end{aligned}
+$$
+
+利用
+
+$$
+\mathscr K'(\delta)=-r,
+\qquad
+r(L-\delta)=\mathscr K(\delta),
+$$
+
+得到
+
+<a id="eq-9"></a>
+
+$$
+\boxed{
+\widetilde{\mathscr K}(t)=\mathscr K(t)
+\quad(|t|\le\delta).
+}
+\tag{9}
+$$
+
+在 $t=0$ 处，积分也收敛，因为
+
+$$
+s\mathscr K''(s)\longrightarrow\frac12,
+\qquad
+s\mathscr K'(s)\longrightarrow0.
+$$
+
+接下来，对每个 $s>0$，三角核具有精确表示
+
+<a id="eq-10"></a>
+
+$$
+\boxed{
+(s-|u-v|)_+
+=
+\int_{\mathbb R}
+\mathbf1_{[u,u+s]}(x)
+\mathbf1_{[v,v+s]}(x)\,dx.
+}
+\tag{10}
+$$
+
+所以它是一个 Gram 核，其任意有限关系矩阵均正半定。
+
+而 $L$ 对应的三角核在互异节点上严格正定：如果
+
+$$
+\sum_{i=1}^{m}c_i\mathbf1_{[t_i,t_i+L]}=0
+\quad\text{几乎处处},
+$$
+
+将节点从小到大排列，最左侧只有第一个区间出现的非空部分迫使 $c_1=0$；依次重复，得到全部 $c_i=0$。
+
+因此，若
+
+$$
+H_L=\bigl[(L-|t_i-t_j|)_+\bigr],
+$$
+
+式 (8) 给出
+
+<a id="eq-11"></a>
+
+$$
+\boxed{
+H\succeq rH_L\succ0.
+}
+\tag{11}
+$$
+
+证毕。
+
+这类“局部正性可以无条件成立，而全局正性承载 RH 信息”的现象有经典研究背景，例如 Suzuki 对相关 screw 核的局部正定性定理。上面给出的是针对当前 $\mathscr K$ 的直接证明。[arxiv.org](https://arxiv.org/pdf/2206.03682?utm_source=chatgpt.com)
+
+---
+
+<a id="section-4"></a>

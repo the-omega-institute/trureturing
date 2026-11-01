@@ -1,0 +1,47 @@
+**Equation 3.4 (`eq:iso`).**
+
+$$
+[G,a]=\chi(\phi)[T,\phi_\#a],\qquad
+                 \phi_\#=(\phi^{-1})^*.
+$$
+
+This separates edge-direction signs from vertex AS signs. Contraction
+commutes with these signed chain maps by restriction to surviving edge
+IDs. Any sequence of nonloop contractions likewise restricts to the
+final edge set, so the coefficient maps are independent of contraction
+order when the surviving flag identifications agree.
+
+Here is a proof that these constructions identify the *entire*
+original quotient. Take the direct sum of the local algebras for all
+stable underlying skeletons, and quotient by [(3.4)](#eq-iso) and
+[(3.3)](#eq-global). Insertion gives a map from this presentation to the
+original quotient. It is surjective by pruning and cherry vanishing.
+In the other direction send each original diagram to the signed
+monomial [(2.5)](#eq-lambda) on its skeleton, or zero for branching trees.
+AS and CL are respected. Every IHX has precisely the common-pruning
+classification proved above: the first three cases are local and the
+degree-four case is exactly [(3.3)](#eq-global). The map therefore
+descends. The two composites are the identity by the same insertion
+normalization, proving the identification. In particular we have proved
+the needed source-presentation theorem, rather than citing the
+overbroad version at the unstable boundary.
+
+This also identifies the source's framed description. Given a framing
+$f:G\simeq\Phi$ (relative to $A$ when present), use $`f^*`$ to send model
+cohomology to actual cohomology. Altering $f$ and the model coefficient
+together by the corresponding homotopy automorphism has the same image.
+Conversely choose any framing to represent an actual coefficient;
+different choices are precisely these coinvariant identifications.
+The construction respects common contractions, AS, and actual graph
+isomorphisms. No extra determinant twist is introduced by the leg map.
+
+An important consequence is valid specifically for *absolute*
+cohomology. If $e$ is a bridge of an unanchored skeleton, the characteristic
+function of the component on its head side has coboundary $\mathbf e_e$.
+Thus a leg inserted on a skeleton bridge is zero in the actual quotient.
+This does not say every diagram with a bridge is zero. For relative
+cohomology, a bridge between two anchor-containing sides can survive:
+the two-anchor strut has one relative cochain coordinate and no vertex
+relations. None of the following bridge arguments use that false
+relative extrapolation. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "rich-word-long-marker-saturation"
+path = "docs/develop/theory/RICH_WORD_LONG_MARKER_SATURATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

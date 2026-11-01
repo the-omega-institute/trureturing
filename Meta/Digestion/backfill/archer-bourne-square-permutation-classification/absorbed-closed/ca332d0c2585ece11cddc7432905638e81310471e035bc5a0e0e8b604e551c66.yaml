@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ca332d0c2585ece11cddc7432905638e81310471e035bc5a0e0e8b604e551c66
+  normalized_sha256: sha256:ca332d0c2585ece11cddc7432905638e81310471e035bc5a0e0e8b604e551c66
+cas_ref: sha256:ca332d0c2585ece11cddc7432905638e81310471e035bc5a0e0e8b604e551c66
+coverage_gids:
+  - gid: D5/S3/Combinatorics/PermutationSquare/PermutationSquareFamilies.first_entry_two_and_three_classification
+    target_statement_id: sha256:ca2148f201883f216ad10d8cd17a469c3976d3a0a3dcfdb005e43ac63260831b
+receipts:
+  unresolved_subitems: []

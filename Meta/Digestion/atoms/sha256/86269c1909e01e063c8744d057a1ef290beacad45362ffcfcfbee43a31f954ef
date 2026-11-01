@@ -1,0 +1,22 @@
+**Definition 24.2 (labeled observation cells and their presentation).** A finite observation description is a list $s=((D_1,k_1),\ldots,(D_r,k_r))$ with $D_i\ge1$ and $k_i\ge0$. Its ambient and relative cells are
+
+$$
+\begin{aligned}
+C(s)&=\{y\in\mathbb Q_{>0}:q_{D_i}(y)=k_i\text{ for all }i\},\\
+C_\pi(s)&=P_\pi\cap C(s).
+\end{aligned}
+\tag{24.1}
+$$
+
+A single ambient cell is $[k/D,(k+1)/D)\cap\mathbb Q_{>0}$; for $k=0$ its lower endpoint is excluded by positivity. The empty list describes all positive rationals. Contradictory lists and lists missing the prior may describe empty relative cells. An $O$-computably enumerable family $\mathcal E_\pi$ of pairs $(s,\ell)$ is **sound** if
+
+$$
+(s,\ell)\in\mathcal E_\pi\ \Longrightarrow\
+\forall y\in C_\pi(s),\quad \tau_\pi(y)=\ell,
+\tag{24.2}
+$$
+
+and **complete** if every $x\in P_\pi$ belongs to at least one $C_\pi(s)$ with $(s,\tau_\pi(x))\in\mathcal E_\pi$. Enumeration means an effective staged listing, possibly with repetitions, relative to the declared $O$. Soundness on an empty relative cell is vacuous; completeness obtains no coverage from that cell. Neither condition requires recognizing emptiness.
+
+The general realizer and effective-open-set principles behind such listings are supporting mathematics: Pauly, *On the topological aspects of the theory of represented spaces*, [version 3, §§3–4](https://arxiv.org/html/1204.3763v3), defines computability through realizers and open-set names through Sierpiński-valued maps. Schröder, *Admissibly Represented Spaces and Qcb-Spaces*, [Proposition 2.4](https://arxiv.org/html/2004.09450v1), gives computability-implies-continuity on Baire-space names. Here a mathematical name can list $q_D(x)$ for $D=1,2,\ldots$, with domain restricted to names of promised originals. This representation is used to explain finite information, not supplied as an infinite observed input. The exact floor specialization and the effective forward simulation are established next and consumed by the rational prior in §25; the general realizer principle is not a separate new result.
+

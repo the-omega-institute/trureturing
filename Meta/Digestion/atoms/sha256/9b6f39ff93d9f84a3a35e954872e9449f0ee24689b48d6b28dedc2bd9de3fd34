@@ -1,0 +1,5 @@
+There is an important exact overlap with the repository's main §40 orbit-capacity theorem. Left multiplication by G is a genuine face-pairing automorphism, transitive on the cell indices for each fixed tetrahedral position i. Let O_i be that orbit. A transported flat opposite pair has two possibilities:
+
+- If it is the central/equatorial pair, each equatorial edge of label i receives 2m_i π-angle occurrences from O_i, exceeding two.
+- If it is either transverse opposite pair, one selected pole-edge label receives four π-angle occurrences from O_i, one from each of its four cell sectors, again exceeding two.
+

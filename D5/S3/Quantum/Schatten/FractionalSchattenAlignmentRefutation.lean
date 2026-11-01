@@ -36,7 +36,7 @@ private def a₀ : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![0, 1, 1, 2]
 private def a₁ : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![1, 0, 1, 2]
 private def b₁ : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![0, 1, 2, 1]
 
-private lemma word_diagonal {m : ℕ} (d₀ d₁ : Fin m → ℂ) (s : List Bool) :
+lemma word_diagonal {m : ℕ} (d₀ d₁ : Fin m → ℂ) (s : List Bool) :
     wordProduct (fun b : Bool => if b then diagonal d₁ else diagonal d₀) s =
       diagonal (fun k => d₀ k ^ s.count false * d₁ k ^ s.count true) := by
   induction s with
@@ -94,7 +94,7 @@ private lemma word_bounds (s : List Bool) :
   · simpa only [Complex.norm_natCast, Complex.natCast_re] using
       (Nat.cast_le (α := ℝ)).mpr (nat_gap (s.count false) (s.count true))
 
-private lemma norm_diagonal {m : ℕ} (d : Fin m → ℝ) (hd : ∀ k, 0 ≤ d k) (p : ℝ) :
+lemma norm_diagonal {m : ℕ} (d : Fin m → ℝ) (hd : ∀ k, 0 ≤ d k) (p : ℝ) :
     schattenNorm (diagonal (fun k => (d k : ℂ))) p = (∑ k, d k ^ p) ^ (1 / p) := by
   have hg : (diagonal (fun k => (d k : ℂ))).conjTranspose *
       (diagonal (fun k => (d k : ℂ))).conjTranspose.conjTranspose =

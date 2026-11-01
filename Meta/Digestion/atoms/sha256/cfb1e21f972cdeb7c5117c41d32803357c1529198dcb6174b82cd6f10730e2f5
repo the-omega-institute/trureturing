@@ -1,0 +1,158 @@
+**Theorem 3.1 (all finite full-record POVMs and all unitary feedback).** For every integer $k\ge1$, every Hermitian positive semidefinite family $D_1,\ldots,D_k\in M_2(\mathbb C)$ with $\sum_yD_y=I_2$, and every family $U_1,\ldots,U_k\in U(4)$, the map (1.4) satisfies
+
+$$
+\boxed{\ \|\Phi-\operatorname{id}_{M_4(\mathbb C)}\|_\diamond
+          \ge1-\cos(\pi/8).\ }
+\tag{3.1}
+$$
+
+The norm is exactly (1.6), with its supremum over all finite untouched references. Every original outcome is retained.
+
+Proof. Transpose preserves positivity of a Hermitian positive semidefinite matrix: for any $z$, $z^\dagger D_y^{\mathsf T}z=\overline{\bar z^\dagger D_y\bar z}\ge0$. By the finite-dimensional spectral theorem, choose vectors $b_{y\ell}\in\mathbb C^2$ such that
+
+$$
+D_y^{\mathsf T}=\sum_\ell b_{y\ell}b_{y\ell}^\dagger.
+\tag{3.2}
+$$
+
+Use the finite combined index $j=(y,\ell)$ and set
+
+$$
+b_j=b_{y\ell},\qquad v_j=R_0b_j,\qquad
+K_j=U_y\operatorname{diag}(v_j).
+\tag{3.3}
+$$
+
+The POVM completeness relation gives $\sum_jb_jb_j^\dagger=I_2$. Furthermore,
+
+$$
+(v_jv_j^\dagger)\circ X
+ =\operatorname{diag}(v_j)X\operatorname{diag}(v_j)^\dagger,
+\qquad \Phi(X)=\sum_jK_jXK_j^\dagger.
+\tag{3.4}
+$$
+
+This is a decomposition of the original channel. The added spectral index is used only in the proof; each term still has its original $U_y$. This is the feedback-preserving refinement of QUANTUM-REALITY, Proposition 395.2.
+
+Let $\alpha=e^{-i\pi/4}$ and write each $b_j$ in the unitary coordinates
+
+$$
+b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},
+\qquad
+T=\frac1{\sqrt2}
+\begin{pmatrix}1&1\\\alpha&-\alpha\end{pmatrix}.
+\tag{3.5}
+$$
+
+Indeed, $T^\dagger T=I_2$. Completeness becomes
+
+$$
+\sum_j
+\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix}
+\begin{pmatrix}\overline\xi_j&\overline\eta_j\end{pmatrix}=I_2,
+\qquad
+\sum_j|\xi_j|^2=\sum_j|\eta_j|^2=1.
+\tag{3.6}
+$$
+
+For any $\xi,\eta$, multiplication of the rows of $R_0T(\xi,\eta)^{\mathsf T}$ by the respective unit phases $1,e^{i\pi/4},e^{i\pi/8},e^{-i\pi/8}$ gives
+
+$$
+\begin{pmatrix}
+(\xi+\eta)/\sqrt2\\
+(\xi-\eta)/\sqrt2\\
+c\xi+is\eta\\
+c\xi-is\eta
+\end{pmatrix}.
+\tag{3.7}
+$$
+
+For example $(1+\alpha)/2=e^{-i\pi/8}c$ and $(1-\alpha)/2=ie^{-i\pi/8}s$ give the third row; $i\alpha=e^{i\pi/4}$ gives the fourth. These row phases preserve magnitudes. Lemma 2.1 and (3.6) therefore imply the complete-resolution bound
+
+$$
+\begin{aligned}
+\sum_j\|R_0b_j\|_{\ell^1}^2
+&\le (\sqrt2+2c)^2\sum_j|\xi_j|^2
+     +(\sqrt2+2s)^2\sum_j|\eta_j|^2\\
+&=(\sqrt2+2c)^2+(\sqrt2+2s)^2\\
+&=8+4\sqrt2(c+s)=8+8c.
+\end{aligned}
+\tag{3.8}
+$$
+
+Equivalently, (2.2) and (3.7) give, for every $b\in\mathbb C^2$, the pointwise quadratic certificate
+
+$$
+\|R_0b\|_{\ell^1}^2\le b^\dagger H b,
+\quad
+H=T\begin{pmatrix}(\sqrt2+2c)^2&0\\0&(\sqrt2+2s)^2\end{pmatrix}T^\dagger,
+\quad \operatorname{Tr}H=8+8c.
+\tag{3.9}
+$$
+
+Thus (3.8) holds for every finite resolution $\sum_jb_jb_j^\dagger=I_2$, including those arising from effects of arbitrary rank. It uses the common completeness constraint on all branches.
+
+The map $\Phi$ is completely positive by (3.4), and it is trace preserving because
+
+$$
+\begin{aligned}
+\sum_jK_j^\dagger K_j
+ &=\operatorname{diag}\left(\sum_j|(v_j)_i|^2\right)_{i=1}^4\\
+ &=\operatorname{diag}\left(
+      \left(R_0\Bigl(\sum_jb_jb_j^\dagger\Bigr)R_0^\dagger\right)_{ii}
+    \right)_{i=1}^4
+ =I_4.
+\end{aligned}
+\tag{3.10}
+$$
+
+Its normalized Choi matrix $J=J_\Phi$ is consequently positive semidefinite with trace one. Since $\langle\omega|(I\otimes K)|\omega\rangle=\operatorname{Tr}K/4$, its overlap with $\Pi$ is
+
+$$
+f=\langle\omega|J|\omega\rangle
+ =\frac1{16}\sum_j|\operatorname{Tr}K_j|^2.
+\tag{3.11}
+$$
+
+For every $j=(y,\ell)$, unitarity gives $|(U_y)_{ii}|\le1$. Hence
+
+$$
+|\operatorname{Tr}(U_y\operatorname{diag}(v_j))|
+ =\left|\sum_i(U_y)_{ii}(v_j)_i\right|
+ \le\sum_i|(v_j)_i|.
+\tag{3.12}
+$$
+
+This is the diagonal-Kraus specialization of Gregoratti–Werner, *Quantum Lost and Found*, [quant-ph/0209025v1, Proposition 8, equations (15)–(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8). In that proposition the uncorrected Kraus operators here are $t_j=\operatorname{diag}(v_j)$, the input dimension is four, and recovery is $X\mapsto U_yXU_y^\dagger$. Its fixed-decomposition bound is $4^{-2}\sum_j(\operatorname{Tr}|t_j|)^2$; here $\operatorname{Tr}|t_j|=\|v_j\|_{\ell^1}$. In particular, (3.12) applies to every original feedback unitary, regardless of its off-diagonal entries. Combining it with (3.8) gives
+
+$$
+f\le\frac1{16}\sum_j\|v_j\|_{\ell^1}^2
+ \le\frac{1+c}{2}.
+\tag{3.13}
+$$
+
+Finally, $Z=J-\Pi$ is Hermitian with trace zero. The two effects $\Pi$ and $I-\Pi$ have signed expectation values $f-1$ and $1-f$. The trace-norm bound for such a test gives
+
+$$
+\|Z\|_1\ge|\operatorname{Tr}(\Pi Z)|
+                   +|\operatorname{Tr}((I-\Pi)Z)|
+ =2(1-f).
+\tag{3.14}
+$$
+
+For completeness, for any positive effect $E$ and Hermitian $Z$, its spectral decomposition yields $|\operatorname{Tr}(EZ)|\le\operatorname{Tr}(E|Z|)$; summing over the two effects proves the inequality. Positivity and trace one of $J$ ensure $0\le f\le1$.
+
+The input $\Pi$ has trace norm one and its four-dimensional reference is allowed in (1.6). Thus
+
+$$
+\begin{aligned}
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond
+&\ge\|(\operatorname{id}_{M_4}\otimes(\Phi-\operatorname{id}_{M_4}))(\Pi)\|_1\\
+&=\|J-\Pi\|_1
+ \ge2(1-f)\ge1-c.
+\end{aligned}
+\tag{3.15}
+$$
+
+This is the necessary fidelity-to-diamond implication of QUANTUM-REALITY, Proposition 395.2, with total retained weight one. A single admissible reference input supplies a lower bound on the supremum over all references; no restriction of that supremum has been imposed. Substituting (2.1) proves (3.1). $\square$
+

@@ -1,0 +1,11 @@
+**Lemma 126.3.** The six tetrahedra alternate two noncongruent shapes, with a common pole-diagonal length and four common radial lengths.
+
+**Proof.** Rotation V_i↦V_{i+2}, reflection V_i↦V_{1−i}, and pole exchange A↔B preserve the prescribed angles. Uniqueness in Lemma 126.1 realizes these combinatorial symmetries as isometries of P. The first two act transitively on the six equatorial vertices and on the three edges of each parity. Including pole exchange makes all twelve pole–equator edges have one common length h. Write r for the length A B and s_3,s_4 for the respective equatorial lengths. The six tetrahedra therefore have edge-length multisets
+
+    {r,h,h,s_3,h,h}   (even i),
+    {r,h,h,s_4,h,h}   (odd i).
+
+The dihedral angle of T_i at its equatorial edge is exactly the boundary angle of P there, since that edge lies in only one subdivision tetrahedron: π/3 for even i and π/4 for odd i. If s_3=s_4, the two labeled tetrahedra would have all six corresponding lengths equal, hence the same dihedral angles, a contradiction. Thus s_3≠s_4. Their length multisets differ by cancellation of the same other five entries, so they cannot be congruent even after vertex relabeling. ∎
+
+Here r,h,s_3,s_4 are actual geometric lengths from P, not independently chosen local unknowns. Their existence and simultaneous face compatibility have been established before any finite gluing.
+

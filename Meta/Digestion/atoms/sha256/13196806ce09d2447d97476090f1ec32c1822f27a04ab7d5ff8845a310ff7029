@@ -1,0 +1,36 @@
+**Theorem 34.1 (one minimum for the bit and every exact original view).** For every public $b\ge1$, the uniform action minimum and the endpoint action minimum of Definition 33.1 both equal $m(b)$ for each of $\sigma_b,B,T,S,M$, and for $(B,T,S,M)$. A controller attaining the minimum uses exactly $m(b)$ source actions on every original of $P_b$, followed by reads and finite computations with no further source motion. Its endpoint run needs just one floor read. Thus the equality concerns actual acquisition of the original views, not merely separation by a potential test family.
+
+Proof. Compute a shortest word $u$ by Definition 33.3, with matrix $A_u$, and its reduced endpoint $t=P/2^k$ from (33.4). Here $k\ge0$ and $P=a+be$. Actually execute the chronological $u$ once on the one original source, retaining its known matrix or action list. The present unknown response is $z=f_u(x)$. Read the installed port $q_{2^k}$ and obtain its complete report $Q$. Strict increase in (33.7) and the endpoint convention give
+
+$$
+Q\ge P\quad\Longleftrightarrow\quad z\ge t
+ \quad\Longleftrightarrow\quad x=c_b\qquad(x\in P_b).
+\tag{34.1}
+$$
+
+Indeed the report is exactly $P$ at the endpoint and at most $P-1$ at every smaller prior member. This already acquires $\sigma_b$. For an exact-view request, on this yes branch output the known original rational $c_b$ and compute the requested original view as below.
+
+On the no branch the original is some $x_{b,n}$, with unknown finite $n>b$. Define known increasing rational thresholds at the current cut by
+
+$$
+t_j=f_u(x_{b,j}),\qquad
+r_j=(t_j+t_{j+1})/2\qquad(j\ge b+1).
+\tag{34.2}
+$$
+
+The actual $z=t_n$ never equals any $r_j$: $r_j$ lies strictly between two adjacent terms of the increasing sequence. There is an explicit stationary dyadic comparison with each such $r_j$. For $s=0,1,2,\ldots$, read $K_s=q_{2^s}(z)$, form the known rational endpoints
+
+$$
+\ell_s=K_s/2^s,\qquad v_s=(K_s+1)/2^s,
+\qquad z\in[\ell_s,v_s),
+\tag{34.3}
+$$
+
+and return below if $v_s\le r_j$, or above if $\ell_s>r_j$. Otherwise increase $s$. If $z<r_j$, eventually $v_s\le r_j$; if $z>r_j$, eventually $\ell_s>r_j$, because the interval width is $2^{-s}$ and $|z-r_j|>0$. Thus every comparison finishes finitely on the promised no branch. The program never inputs $z$ to an arithmetic operation: it computes only with the acquired integers, dyadic cells and known candidate thresholds. Nor does it require a uniform separation radius.
+
+Starting at $j=b+1$, use this actual read loop for $r_j$. On above, increment $j$; on below, output the known original $x_{b,j}$. If the actual index is $n$, every $j<n$ has $z=t_n\ge t_{j+1}>r_j$, while $j=n$ has $z=t_j<r_j$. The first below answer therefore occurs exactly at $j=n$. There are finitely many comparisons and each finishes, so the entire decoder terminates. All these reads are made at the one attained cut after $u$; no candidate test executes a separate motion or restarts a source. The construction is also valid with a public tail starting at any $n_0>b$, by starting this loop at $j=n_0$.
+
+Reduce the recovered original rational to its positive pair $(p,q)$. Use Definition 6.3's finite subtractive decoder: when $p<q$, peel $L$ and replace the known pair by $(p,q-p)$; when $p>q$, peel $R$ and replace it by $(p-q,q)$; equality forces $(1,1)$. The positive sum strictly decreases at each step. Reverse the peeled finite labels to obtain the original chronological word, then compute its named path and indexed prefix pairs from the root. These are ordinary calculations on the recovered original output, not inverse actions on the current source. They yield every requested exact original view and their joint tuple with no further source action. Their own arithmetic, storage and full finite output are charged.
+
+This proves a uniform upper bound $m(b)$, also an endpoint upper bound. Conversely, on the terminating endpoint run of any correct bit controller, Lemma 33.2 forces a read after an actual prefix whose length is at least $m(b)$. Its endpoint action count is therefore at least $m(b)$. This lower bound holds even when other originals are permitted unlimited finite motion. The same lemma transfers it to each exact view and the joint target. A uniform cap is a cap at the endpoint, so all the claimed minima follow. $\square$
+

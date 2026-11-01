@@ -1,0 +1,18 @@
+**Theorem 13.2 (necessary and sufficient finite single-path criterion).** Under Assumption 11.1 and Definition 13.1, a deterministic no-reset policy that always stops finitely and recovers $\tau$ exists if and only if
+
+$$
+D_{H_M}(A_j,\varepsilon)\text{ holds for every nonempty }
+A_j=\{x\in A:q_M(x)=j\}.
+\tag{13.2}
+$$
+
+Whenever it exists, a policy with at most $H_M$ actions and $H_M+1$ reads exists. Condition (13.2) is decidable by finite exact integer/rational computation from the supplied list. Neither the horizon nor the finite computation asserts a fixed memory or bit-cost bound.
+
+Proof. Induction on $k$ shows that $D_k(A',u)$ is exactly the existence of a decision tree with at most $k$ further actions, reading immediately after each action and returning the original target. A homogeneous block stops. Otherwise the first action is one common $a$, its actual read selects exactly one of the nonempty blocks (13.1), and each block must admit the remaining tree. This proves both directions of the induction, including $k=0$. The initial read gives the blocks in (13.2), so the criterion is sufficient and has the stated resource bound.
+
+For necessity take any successful policy. Insert a read at the initial cut and after every action; these nondisturbing reads can be retained while the old policy is simulated using only the reports it requested. Redundant requested reads can reuse the actual current report. This normalization does not add an action or any unacquired source-dependent input. On the finite prior there is one deterministic terminating run for each original candidate, so the normalized tree has finitely many reachable nodes, although no common bound was initially assumed.
+
+At a node reached after $H_M$ actions, take any two original candidates compatible with its entire fully read transcript. Theorem 12.1 implies identical future reports along every common continuation. The normalized policy therefore has identical further decisions and final output for this pair. Its correctness forces equal original targets. Every such node is consequently homogeneous and can be replaced by an immediate output. Earlier stopped nodes are homogeneous by the same correctness argument. The truncated tree has depth at most $H_M$, so the induction gives (13.2). Empty priors need no reads. Finally the recursion is finite, its action alphabet has size two, and all candidate transformations, floor comparisons and target comparisons are effective on the supplied finite encodings. This proves decidability.
+
+The elementary decision-tree induction is the usual adaptive distinguishing-experiment construction; the new source-specific content enabling its finite completeness here is Theorem 12.1 on the infinite rational carrier. The distinction between separately evaluated tests and one adaptive experiment is already explicit in van den Bos–Vaandrager, [arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2), §4, Definitions 10–11 and Figure 3, and in [Transport Memory Completion §§31.4–31.5 and 52](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md). No finite-automaton complexity or homing bound from that literature is used. $\square$
+

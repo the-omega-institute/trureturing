@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:91256c153ef4be78d5913d2a316289a3123a6e737468621b3170a2533a0eb618
+  normalized_sha256: sha256:91256c153ef4be78d5913d2a316289a3123a6e737468621b3170a2533a0eb618
+cas_ref: sha256:91256c153ef4be78d5913d2a316289a3123a6e737468621b3170a2533a0eb618
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/ParitySectorEntropyGap.parity_sector_whole_space_comparison
+    target_statement_id: sha256:67f0b16c13f1f21ee75afe8e4aa128e399f1166d787e662c756e618f3c32668b
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.subspace_gap_isometry_invariance_and_twirl
+    target_statement_id: sha256:ff684de076a877b55a6c24aac264689485858ddec08625add4218d473a1667b1
+receipts:
+  unresolved_subitems: []

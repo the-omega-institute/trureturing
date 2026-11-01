@@ -257,7 +257,7 @@ def partitionCount (r N : ℕ) : ℕ :=
   ∑ p : Nat.Partition N,
     ∏ k ∈ p.parts.toFinset, oddColourFactor r k (p.parts.count k)
 
-private def onesPartition (N : ℕ) : Nat.Partition N where
+def onesPartition (N : ℕ) : Nat.Partition N where
   parts := Multiset.replicate N 1
   parts_pos := by
     intro k hk

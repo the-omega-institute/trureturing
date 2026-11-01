@@ -1,0 +1,24 @@
+**Definition 1.1 (four-path record).** All vector spaces are finite-dimensional complex Hilbert spaces. Write $M_d(\mathbb C)$ for the $d$-by-$d$ complex matrices, $A^\dagger$ for the adjoint, and $A^{\mathsf T}$ for the ordinary transpose. Fix
+
+$$
+R_0=
+\begin{pmatrix}
+1&0\\
+0&1\\
+1/\sqrt2&1/\sqrt2\\
+1/\sqrt2&i/\sqrt2
+\end{pmatrix},
+\qquad C_0=R_0R_0^\dagger.
+\tag{1.1}
+$$
+
+If $r_i\in\mathbb C^2$ is the column vector whose entries are the $i$th row of $R_0$, the record coupling is the isometry
+
+$$
+V|i\rangle=|i\rangle\otimes|r_i\rangle,
+\qquad i=1,2,3,4.
+\tag{1.2}
+$$
+
+Each $r_i$ has norm one, and $(C_0)_{ij}=\langle r_j|r_i\rangle$. Thus discarding the record gives the Schur channel $X\mapsto C_0\circ X$, where $(A\circ X)_{ij}=A_{ij}X_{ij}$.
+

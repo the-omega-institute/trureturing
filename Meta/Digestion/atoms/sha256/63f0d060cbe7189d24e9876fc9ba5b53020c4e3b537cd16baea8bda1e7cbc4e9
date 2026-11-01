@@ -1,0 +1,13 @@
+**Proposition 20.3 (the golden-ratio separating pair).** Let $\phi=(1+\sqrt5)/2$. The anchor $\phi$ is cyclic with $c_\phi=LR$ and $p_\phi=2$, whereas $\phi+1$ is free. They lie in the same component, and the latter has an infinite predecessor record that is eventually periodic. More precisely,
+
+$$
+U_L(\phi)=\phi-1,\quad U_R(\phi-1)=\phi,
+\quad U_R(\phi)=\phi+1,
+\quad \mathcal F_\phi(\phi+1)=\{(LR)^kR:k\ge0\}.
+\tag{20.10}
+$$
+
+From the declared anchor $\phi+1$, every reachable endpoint instead has a singleton fiber.
+
+Proof. The identities follow from $\phi^2=\phi+1$. They give a two-edge cycle, and no one-edge return is possible at a positive irrational. The conjugate $\phi'=(1-\sqrt5)/2$ is negative, but the conjugate of $\phi+1$ is $(3-\sqrt5)/2>0$, so Theorem 20.2 applies to both. The shortest word from $\phi$ to $\phi+1$ is $R$, giving the displayed fiber. The predecessor of $\phi+1$ is $\phi$, after which the predecessor states alternate between $\phi-1$ and $\phi$. Thus an infinite, even eventually periodic, unmarked past does not force a return to the marked anchor. The two anchors are joined by the displayed $R$ edge. $\square$
+

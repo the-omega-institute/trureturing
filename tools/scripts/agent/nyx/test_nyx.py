@@ -22,12 +22,20 @@ FAKE_NYXID = textwrap.dedent('''\
     argv = sys.argv[1:]
     with (fake / "calls.jsonl").open("a", encoding="utf-8") as calls:
         calls.write(json.dumps({"argv": argv, "cwd": os.getcwd()}) + "\\n")
+    chat_number = sum(
+        1 for line in (fake / "calls.jsonl").read_text().splitlines()
+        if json.loads(line)["argv"] and json.loads(line)["argv"][-1].startswith("@")
+    )
+    def attempt_path(name):
+        original = Path(name)
+        attempted = fake / f"{original.stem}.{chat_number}{original.suffix}"
+        return attempted if attempted.exists() else fake / name
     def emit(name):
-        path = fake / name
+        path = attempt_path(name)
         if path.exists():
             sys.stdout.buffer.write(path.read_bytes())
     def code(name):
-        path = fake / name
+        path = attempt_path(name)
         return int(path.read_text()) if path.exists() else 0
     if argv == %(pools)r:
         emit("listing.json")
@@ -37,8 +45,9 @@ FAKE_NYXID = textwrap.dedent('''\
         # A non-streaming CLI buffers the response and loses it when the carrier fails.
         if code("chat.rc") == 0 or "--stream" in argv:
             emit("stream.sse")
-        if (fake / "chat.stderr").exists():
-            sys.stderr.write((fake / "chat.stderr").read_text())
+        stderr = attempt_path("chat.stderr")
+        if stderr.exists():
+            sys.stderr.write(stderr.read_text())
         sys.exit(code("chat.rc"))
     sys.stderr.write("fake nyxid: unexpected argv %%r\\n" %% (argv,))
     sys.exit(99)
@@ -99,9 +108,16 @@ class NyxContracts(unittest.TestCase):
         if stderr is not None:
             (self.fake / "chat.stderr").write_text(stderr)
 
+    def set_attempt(self, number, text, rc=0, stderr=None):
+        path = self.fake / f"stream.{number}.sse"
+        path.write_bytes(text.encode("utf-8") if isinstance(text, str) else text)
+        (self.fake / f"chat.{number}.rc").write_text(str(rc))
+        if stderr is not None:
+            (self.fake / f"chat.{number}.stderr").write_text(stderr)
+
     def run_nyx(self, *args, env=None, cwd=None):
         environment = {key: value for key, value in os.environ.items() if not key.startswith("NYX_")}
-        environment.update({"NYX_CLI": str(self.cli), "FAKE_DIR": str(self.fake)})
+        environment.update({"NYX_CLI": str(self.cli), "NYX_RECONNECT_ATTEMPTS": "0", "FAKE_DIR": str(self.fake)})
         environment.update(env or {})
         return subprocess.run([sys.executable, str(NYX), *map(str, args)], cwd=cwd or self.root,
                               env=environment, capture_output=True, text=True, check=False)
@@ -219,6 +235,31 @@ class NyxContracts(unittest.TestCase):
         self.assertFalse(self.out.exists())
         self.assertEqual(len(self.chat_calls()), 1)
         self.assertIn("--stream", self.chat_calls()[0]["argv"])
+
+    def test_disconnect_reconnects_and_keeps_only_the_completed_answer(self):
+        partial = sse(chunk("partial response"))
+        self.set_attempt(1, partial, rc=1)
+        self.set_attempt(2, GOOD_STREAM)
+        completed = self.run_nyx("ask", self.brief, self.out, env={"NYX_RECONNECT_ATTEMPTS": "2"})
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(self.out.read_text(encoding="utf-8"), "Hello, world.")
+        status = self.status()
+        self.assertEqual((status["attempts"], status["reconnects"], status["reconnect_limit"]), (2, 1, 2))
+        self.assertEqual(Path(status["stream_ref"]).read_bytes(), GOOD_STREAM.encode("utf-8"))
+        self.assertEqual(len(self.chat_calls()), 2)
+
+    def test_reconnect_limit_leaves_final_failed_attempt_without_an_answer(self):
+        partial = sse(chunk("partial response"))
+        self.set_attempt(1, partial, rc=1)
+        self.set_attempt(2, partial, rc=1)
+        self.set_attempt(3, partial, rc=1)
+        completed = self.run_nyx("ask", self.brief, self.out, env={"NYX_RECONNECT_ATTEMPTS": "2"})
+        self.assertEqual(completed.returncode, 1, completed.stdout)
+        status = self.status()
+        self.assertEqual((status["attempts"], status["reconnects"], status["reconnect_limit"]), (3, 2, 2))
+        self.assertEqual(status["reason_code"], "CARRIER_EXIT_NONZERO")
+        self.assertFalse(self.out.exists())
+        self.assertEqual(len(self.chat_calls()), 3)
 
     def test_crlf_lines_and_unicode_separators_are_preserved(self):
         self.set_stream(sse(chunk("a b ∑"), chunk(finish="stop", oracle=ORACLE), "[DONE]", newline="\r\n"))

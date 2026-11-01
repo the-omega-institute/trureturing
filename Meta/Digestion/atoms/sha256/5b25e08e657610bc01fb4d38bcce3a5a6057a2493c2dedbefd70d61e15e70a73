@@ -1,0 +1,24 @@
+**Theorem 15.2 (least current-read scale and arithmetic saturation).** Under Definition 15.1,
+
+$$
+q_D\text{ determines }\equiv_M
+\quad\Longleftrightarrow\quad
+\mathcal C_M\subseteq\mathcal G_D
+\quad\Longleftrightarrow\quad
+\Lambda_M\mid D.
+\tag{15.2}
+$$
+
+Thus $\Lambda_M$ is the least sufficient single current-read scale, both in the divisibility order and in the ordinary numerical order among positive integer scales. This minimum concerns determination of the specified predictive class by one floor report; it is not a minimum of report length, installation cost or history-acquisition resources. Furthermore, for every reduced $a/b>0$,
+
+$$
+M>ab\quad\Longrightarrow\quad a/b\in\mathcal C_M.
+\tag{15.3}
+$$
+
+Proof. The raw $D$-floor cells are $(0,1/D)\cap\mathbb Q$ and $[k/D,(k+1)/D)\cap\mathbb Q$ for $k\ge1$. If every predictive cut is a $D$-grid cut, none of these raw cells crosses a predictive cut, so Theorem 11.2 gives (15.1). Conversely suppose $z\in\mathcal C_M\setminus\mathcal G_D$. Choose a positive rational $x<z$ sufficiently close that $\mathcal G_D\cap(x,z]=\varnothing$. This is possible because $z$ is strictly inside a raw cell. Then $q_D(x)=q_D(z)$ while $x\not\equiv_M z$, proving the first equivalence including its endpoint direction.
+
+Every reduced denominator of a cut in $\mathcal C_M$ is at most $M$: grid denominators divide $M$, and the nongrid core has $a+b\le M$. Consequently $\Lambda_M\mid D$ puts every such cut on $\mathcal G_D$. For the converse, $1/b\in\mathcal C_M$ for each $1\le b\le M$. When $b\mid M$ it is a grid cut. Otherwise $b<M$, and $1\cdot(M-b)+b\cdot1=M$ has both coefficients positive, so (11.5) makes it a nongrid cut. Therefore $\mathcal C_M\subseteq\mathcal G_D$ forces $D/b$ to be an integer for every $b\le M$, exactly $\Lambda_M\mid D$. Every sufficient $D$ is a positive multiple of $\Lambda_M$, proving both stated minimalities. In particular $\Lambda_3=6$ and $\Lambda_4=12$; the extra cuts $1/2$ and $1/3$ respectively explain why the original scale alone does not suffice in these cases.
+
+For (15.3), choose $j\in\{1,\ldots,a\}$ with $bj\equiv M\pmod a$, using $\gcd(a,b)=1$; when $a=1$ take $j=1$. Since $bj\le ab<M$, the integer $h=(M-bj)/a$ is positive. Thus $ah+bj=M$ with $h,j>0$. If $b\mid M$ the fraction is on the grid, and otherwise (11.5) puts it in the nongrid core. The modular step is classical coprime arithmetic; the asserted consequence uses precisely this source's already derived cut formula. $\square$
+

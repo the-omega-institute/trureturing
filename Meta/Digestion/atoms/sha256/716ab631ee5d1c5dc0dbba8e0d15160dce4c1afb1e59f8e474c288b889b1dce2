@@ -1,0 +1,10 @@
+**Proposition 7.3 (a complete future boundary can erase endpoint and time).** Consider the actual archive-lifted process
+
+$$
+(n\bmod3,a^n)\longmapsto((n+1)\bmod3,a^{n+1})
+$$
+
+from $(0,\varepsilon)$. Let its only action always be legal, with constant event label and constant declared readout, and exclude the archive and work-state from the boundary tests. Then its entire response profile $B$ is constant. With $M=B$, boundary and memory recover each other but recover neither the work-state $n\bmod3$ nor the scalar count $n$, let alone the literal word.
+
+Proof. Every finite continuation has the same label word and constant cut readouts, independently of the starting $n$. In particular $\varepsilon$ and $a$ have equal boundary and memory but different work-states and counts. Even retaining the work-state does not recover chronology: $\varepsilon$ and $a^3$ have the same work-state and different counts. The full configurations remain distinct because their archives differ. This is the $C_3$ separation of [Process Geometry §34](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), with the projections specified explicitly. A fuller declared readout changes the boundary and requires a new kernel comparison. $\square$
+

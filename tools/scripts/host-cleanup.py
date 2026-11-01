@@ -98,10 +98,17 @@ class ProtectedPaths:
         return path in self.prefixes
 
 
+class RecoverySearchLimit(ValueError):
+    pass
+
+
 class RefRecovery:
-    """Check intact blobs against a bounded sample of retained commit trees."""
+    """Check intact path/blob pairs using sampled trees and bounded retained-history lookups."""
     REF_TIP_LIMIT = 16
     HISTORY_LIMIT = 32
+    HISTORY_LOOKUP_LIMIT = 128
+    HISTORY_LOOKUP_SECONDS = 15
+    HISTORY_SEARCH_SECONDS = 120
 
     def __init__(self, repository):
         self.repository = repository
@@ -145,13 +152,51 @@ class RefRecovery:
         for row in listing.split(b"\0"):
             if not row:
                 continue
-            metadata, separator, _ = row.partition(b"\t")
+            metadata, separator, path = row.partition(b"\t")
             fields = metadata.split()
             if not separator or len(fields) != 3:
                 raise ValueError("recovery_tree_unreadable")
             if fields[1] == b"blob":
-                self.reachable.add(fields[2])
+                self.reachable.add((path, fields[2]))
         self.scanned.add(commit)
+
+    def find_history(self, missing):
+        """Raw diffs certify a path's blob in a reachable commit or its reachable parent."""
+        if len(missing) > self.HISTORY_LOOKUP_LIMIT:
+            raise RecoverySearchLimit("lookup_count=" + str(len(missing)) +
+                                      " limit=" + str(self.HISTORY_LOOKUP_LIMIT))
+        preservation, _ = worktree_modules()
+        roots = b"\n".join(dict.fromkeys(oid for _, oid in self.roots)) + b"\n"
+        deadline = time.monotonic() + self.HISTORY_SEARCH_SECONDS
+        for path, oid in sorted(missing):
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise RecoverySearchLimit("history_deadline")
+            try:
+                evidence = preservation.git(self.repository, "--no-replace-objects", "--literal-pathspecs",
+                    "log", "--full-history", "-m", "--raw", "-z", "--no-abbrev", "--no-renames",
+                    "--no-ext-diff", "--no-textconv", "--format=", "--max-count=1",
+                    "--find-object=" + oid.decode("ascii"), "--stdin", "--", os.fsdecode(path),
+                    input=roots, timeout=min(remaining, self.HISTORY_LOOKUP_SECONDS)).stdout
+            except subprocess.TimeoutExpired as error:
+                raise RecoverySearchLimit("history_timeout") from error
+            if time.monotonic() >= deadline:
+                raise RecoverySearchLimit("history_deadline")
+            if not evidence:
+                continue
+            rows = evidence.split(b"\0")
+            if rows[-1] or len(rows) % 2 != 1:
+                raise ValueError("recovery_history_unreadable")
+            for metadata, name in zip(rows[0:-1:2], rows[1:-1:2]):
+                fields = re.fullmatch(rb":([0-7]{6}) ([0-7]{6}) ([0-9a-f]{40}|[0-9a-f]{64}) "
+                                      rb"([0-9a-f]{40}|[0-9a-f]{64}) [AMDT]", metadata.lstrip(b"\n"))
+                if fields is None:
+                    raise ValueError("recovery_history_unreadable")
+                old_mode, new_mode, old_oid, new_oid = fields.groups()
+                blob_modes = (b"100644", b"100755", b"120000")
+                if name == path and (old_oid == oid and old_mode in blob_modes or
+                                     new_oid == oid and new_mode in blob_modes):
+                    self.reachable.add((path, oid))
 
     def check(self, wanted):
         preservation, _ = worktree_modules()
@@ -184,15 +229,19 @@ class RefRecovery:
                 if wanted <= self.reachable:
                     break
         missing = set(wanted) - self.reachable
+        if missing and self.roots:
+            self.find_history(missing)
+            missing -= self.reachable
         if not missing:
             # Listing a blob does not establish that its bytes are present and intact.
+            wanted_blobs = sorted({oid for _, oid in wanted})
             with tempfile.TemporaryFile() as blobs:
                 subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "cat-file", "--batch"],
-                               input=b"\n".join(sorted(wanted)) + b"\n", stdout=blobs,
+                               input=b"\n".join(wanted_blobs) + b"\n", stdout=blobs,
                                stderr=subprocess.PIPE, check=True, timeout=60,
                                env=git_environment(), pass_fds=scope_fds())
                 blobs.seek(0)
-                for oid in sorted(wanted):
+                for oid in wanted_blobs:
                     header = blobs.readline().split()
                     if len(header) != 3 or header[:2] != [oid, b"blob"]:
                         raise ValueError("recovery_blob_unreadable")
@@ -206,7 +255,7 @@ class RefRecovery:
                         digest.update(chunk)
                         remaining -= len(chunk)
                     if blobs.read(1) != b"\n" or digest.hexdigest().encode("ascii") != oid:
-                        missing.add(oid)
+                        missing.update(pair for pair in wanted if pair[1] == oid)
         if preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout != refs:
             raise ValueError("recovery_refs_changed")
         return missing
@@ -273,7 +322,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
                         blob.update(b"blob " + str(info.st_size).encode("ascii") + b"\0")
                         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
                             blob.update(chunk)
-                        blueprint.add(blob.hexdigest().encode("ascii"))
+                        blueprint.add((os.fsencode(str(entry.relative_to(path))),
+                                       blob.hexdigest().encode("ascii")))
                         digest.update(blob.digest())
                 if entry.parent == path:
                     shape_reason = "lake_content" if entry.name == ".lake" else "unknown_top_level"
@@ -401,6 +451,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             result.update(action="kept", reason="unreadable", detail=str(error))
     except OSError as error:
         result.update(action="failed", reason=str(error))
+    except RecoverySearchLimit as error:
+        result.update(action="kept", reason="recovery_search_limit", detail=str(error))
     except (RuntimeError, ValueError, subprocess.SubprocessError) as error:
         if not remnant:
             raise
@@ -737,6 +789,10 @@ def clean_from_anchor(options, caller, disk_descriptor):
         if (options.verbose or category == "worktree_remnant" or result["action"] == "failed"
                 or result["reason"] == "unreadable"):
             emit("host_cleanup_item", category=category, **result)
+        if result["action"] == "failed":
+            print(json.dumps(dict(event="host_cleanup_warning", path=result["path"],
+                                  action=result["action"], reason=result["reason"],
+                                  diagnostic=result.get("detail") or result["reason"])), file=sys.stderr)
 
     def unobservable(path, error):
         reason = "vanished" if isinstance(error, FileNotFoundError) else "unreadable"
@@ -797,7 +853,7 @@ def clean_from_anchor(options, caller, disk_descriptor):
                         clean_staging(lake)
     except OSError as error:
         inventory_error = str(error)
-    failed = inventory_error is not None or lanes_exit != 0 or any(key.endswith(":failed") for key in counts)
+    failed = inventory_error is not None or lanes_exit != 0
     emit("host_cleanup_summary", mode="delete" if options.delete else "dry_run",
          min_age_hours=options.min_age_hours, counts=dict(counts), skipped=dict(skipped),
          candidate_apparent_bytes=apparent_bytes, worktree_exit=lanes_exit,

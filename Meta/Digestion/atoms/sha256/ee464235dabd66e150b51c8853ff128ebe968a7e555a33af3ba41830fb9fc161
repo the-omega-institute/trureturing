@@ -1,0 +1,54 @@
+**Proposition 10.3 (Validity and limits of the visible lower bound).**
+For every complex two-qubit state, including singular states,
+
+$$
+I_A=J_A+D(A\Vert\bar A)\geq\mathsf V(A)\geq0,
+\qquad
+\mathsf V(A)=0\ \Longleftrightarrow\ A=A_C\otimes A_D.
+\tag{10.7}
+$$
+
+For any measurable score lower estimate $0\leq\gamma_t\leq G_{A_t}(H)$,
+
+$$
+\Delta\geq\mathcal L_{\rm vis}(\gamma):=
+ \mathcal B_{\rm vis}+\int_0^1 w_a(t)(3\gamma_t-2s_t)\,dt.
+\tag{10.8}
+$$
+
+This lower bound need not be nonnegative, even when $\gamma_t$ is the
+full BKM curvature, as Proposition 10.4 shows.
+
+Proof.
+The pinching preserves both margins. A zero diagonal entry of
+$\bar A$ forces the corresponding row and column of $A$ to vanish by
+positivity. Hence
+$\operatorname{supp}A\subseteq\operatorname{supp}\bar A
+\subseteq\operatorname{supp}(A_C\otimes A_D)$.
+The logarithms of the latter two matrices are diagonal on their
+supports, so tracing them against $A$ or $\bar A$ gives the same result.
+Subtracting relative entropies gives
+$I_A=J_A+D(A\Vert\bar A)$.
+
+The standard CPTP relative-entropy data-processing and Pinsker bounds
+(Watrous, *The Theory of Quantum Information*) imply
+$D(B\Vert C)\geq\|B-C\|_2^2$ for density matrices with the necessary
+support inclusion. Indeed, measurement of the positive spectral
+projection of $B-C$ gives $D(B\Vert C)\geq2t^2$, where $t$ is the
+positive trace of $B-C$. Its positive and negative parts each have
+trace $t$, so $\|B-C\|_2^2\leq2t^2$.
+Pauli orthogonality now gives
+
+$$
+\|A-\bar A\|_2^2=\frac{\|T\|_F^2-c^2}{4}.
+$$
+
+This proves (10.7). If equality $\mathsf V(A)=0$ holds, the residual
+vanishes, so $A=\bar A$, and $J_A=0$ forces this classical state to be
+the product of its margins. The converse is direct. Finally insert
+$I_P+I_Q\geq\mathcal B_{\rm vis}$ and
+$g\geq\int w_a\gamma_t$, $h=\int w_a s_t$ into (1.4).
+The weighted curvature identity bounds $\int w_a\gamma_t$ by the
+finite number $g$, so all displayed weighted integrals are defined.
+All endpoint identities retain the supported interpretation of §3.
+

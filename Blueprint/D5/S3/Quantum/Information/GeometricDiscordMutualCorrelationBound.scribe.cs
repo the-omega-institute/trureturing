@@ -61,6 +61,9 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
                     + "mixed-state inequality on numerical evidence."),
             Node("rotateState", "Local change of basis", RotateStateFormula(),
                 "Conjugation by U* on the first qubit expresses the state in the basis U."),
+            PublishedTheorem("density_expectation_bound", "Density matrix expectation bound",
+                DensityExpectationFormula(),
+                "For every finite index type, a positive semidefinite complex matrix of trace one bounds the modulus of each trace expectation by the Euclidean operator norm."),
             PublishedTheorem("rotated_spin_witness", "Rotated spin correlations", RotatedSpinFormula(),
                 "Unit spin observables in any local basis provide admissible covariance values, "
                     + "so the absolute connected correlation is bounded by maximal mutual correlation."),
@@ -117,6 +120,20 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula DensityExpectationFormula()
+    {
+        Formula n = F.Id("n"), rho = F.Id("rho"), x = F.Id("X");
+        Formula matrix = Call("Matrix", n, n, Complexes());
+        Formula body = All(rho, matrix, All(x, matrix,
+            ImpliesTo(Call("PosSemidef", rho),
+                ImpliesTo(Equal(Call("trace", rho), D(1)),
+                    LE(new Formula.Norm(Call("trace", Mul(rho, x))), new Formula.Norm(x))))));
+        return new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("n"), Named("Type"),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body));
+    }
 
     private static Formula RotateStateFormula()
     {

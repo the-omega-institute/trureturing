@@ -1,0 +1,41 @@
+## 三、观察者必须预测什么：实际未来记录，而非默认知道隐藏后继
+
+项目新增的六状态反例非常值得重视。
+
+其核心可以这样表述：
+
+- 从 $s$ 出发，先输出 $0$，再以各 $1/2$ 的概率进入 $u,v$；
+- 从 $t$ 出发，先输出 $0$，然后确定进入 $w$；
+- $u$ 下一次确定输出 $0$；
+- $v$ 下一次确定输出 $1$；
+- $w$ 下一次以各 $1/2$ 的概率输出 $0,1$；
+- 此后全部进入永远输出 $0$ 的状态。
+
+因此，从 $s,t$ 出发都以各 $1/2$ 的概率产生
+
+$$
+0000\cdots,\qquad0100\cdots.
+$$
+
+**全部实际输出轨迹的概率律一致。**
+
+但是隐藏后继的结构不同：
+
+$$
+s\to \tfrac12 u+\tfrac12 v,
+\qquad
+t\to w.
+$$
+
+观察者看见第一个 $0$，无法据此判断实际进入了 $u,v,w$ 中的哪一个。甚至知道全部未来输出概率，也不能唯一恢复隐藏混合的分解。
+
+项目因此撤回了“实际轨迹同律就等于递归隐藏后继类相同”的一般断言。这个反例有对应的 [Lean 源文件](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.lean)，包含 `counterkernel_facts` 与 `result : ¬ claim` 的证明体；本次读取了相关声明，没有重建该工程。
+
+所以，“内生观察者用自身结构预测自身增长”可以采用如下严格版本：
+
+> 观察者保存一个由实际历史确定的预测状态。这个状态给出允许实验的未来结果分布，并在新结果实际出现后更新自己。
+
+这种状态表示已有成熟的 PSR——预测状态表示——与可观察算子模型背景。我们可以利用它们，修复项目刚刚发现的问题，而不必预设一个对所有世界、任务和读口都通用的观察者表示。[proceedings.neurips.cc](https://proceedings.neurips.cc/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf?utm_source=chatgpt.com)
+
+<a id="definition-1"></a>
+

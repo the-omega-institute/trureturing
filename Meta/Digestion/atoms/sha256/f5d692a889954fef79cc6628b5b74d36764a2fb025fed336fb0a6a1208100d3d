@@ -1,0 +1,31 @@
+**Definition 6.1 (two-outcome protocol for the fixed record).** Keep exactly $R_0$ and $C_0$ from (1.1), the ordinary transpose in (1.4), and the unhalved norm (1.6). Set
+
+$$
+\theta=\pi/8,\qquad c=\cos\theta,\qquad s=\sin\theta,
+\qquad h=1/\sqrt2,\qquad \alpha=e^{-i\pi/4}.
+\tag{6.1}
+$$
+
+Choose $k=2$, with outcomes labelled $+$ and $-$, and define the effects
+
+$$
+D_+=\frac12\begin{pmatrix}1&\alpha\\\bar\alpha&1\end{pmatrix},
+\qquad
+D_-=\frac12\begin{pmatrix}1&-\alpha\\-\bar\alpha&1\end{pmatrix},
+\tag{6.2}
+$$
+
+and feedback matrices
+
+$$
+\begin{aligned}
+U_+&=\operatorname{diag}
+ (1,e^{i\pi/4},e^{i\theta},e^{-i\theta}),\\
+U_-&=\operatorname{diag}
+ (1,-e^{i\pi/4},-i e^{i\theta},i e^{-i\theta}).
+\end{aligned}
+\tag{6.3}
+$$
+
+These choices use the two columns of the basis $T$ in (3.5), with the phase correction associated to the diagonal Kraus operators in (3.4); the corresponding general polar-correction construction is Gregoratti–Werner, [Proposition 8, equations (18)–(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8). Their feasibility and their full diamond error are established below.
+

@@ -1,0 +1,11 @@
+### 证明
+
+若 $\phi\in\operatorname{Rec}_{\mathcal T}(A)$，则
+
+$$
+O_\phi=\overline O_{\phi,A}\circ r_A
+=\overline O_{\phi,A}\circ g_{A,B}\circ r_B,
+$$
+
+故 $\phi\in\operatorname{Rec}_{\mathcal T}(B)$。第二项给出了反向因子化，因而在 $\mathcal T_0$ 上得到等号。证毕。
+

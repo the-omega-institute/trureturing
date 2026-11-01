@@ -1,0 +1,28 @@
+**约定 B-32.9（文献对应及结论的适用边界）。** 本节的条件是四个实际剖分的完整耳集，不是“每个剖分含一颗选定星”。结论把这一联合条件与几何交叉数、完整实现及固定见证下的大小极值连接；式(32.1)、Catalan 系数、有限容斥及极小边覆盖分类只作其中的中间步骤。这里不从 $|\mathcal F|>C_{n-3}$ 推出四见证存在，也不给避开四见证的全部族一个新的统一上界。
+
+Leader–Tan [B32-LT] Theorem2 的允许交耳集缺去至少一条耳，其界为 $T_{n-1}$；Theorem3 对全耳相交族给 $T_{n-1}+T_{n-3}$。其 Lemma8 的交叉相交乘积界也以允许耳集非全体为条件。§3 的压缩用缺失的相邻耳保证实际纤维权重对应；§4明确指出同一大小耳集的实际剖分权重未必相同。这里的 $\mathcal F$ 在 $q=0,1$ 时并不必然 $D$ 相交，命题B-32.7正给反例，故不能仅因 $D$ 是真子集就把 Theorem2 直接用在 $\mathcal F$ 上。式(32.6)保留实际纤维的容斥，给出的是额外四见证条件下的精确计数与极值。
+
+Talbot [B32-T] Theorem4 固定 $r$、$k\ge1$，要求 $n\ge2(k+1)r$，对循环 $k$ 分离 $r$ 元集 $A=\{a_1<\cdots<a_r\}$ 使用特定权重
+
+$$
+\prod_{i=1}^r\binom{a_{i+1}-a_i-1}{k},\qquad a_{r+1}=a_1+n.
+$$
+
+其证明把每个间隙补入恰 $k$ 个元素，得到 $(k+1)r$ 元集；相交来源的扩张纤维互不重叠，再用通常的 Erdős–Ko–Rado 界。这个权重及固定大小条件不能替换为任意耳纤维权重。类似地，[B32-W] 的 `weighted_decomposition` 作用于非空无重复字母表上的双重非嵌套避 $1322$ 词，权重输入是最后首次出现之后的长度；[B32-N] 的 `result` 和 [B32-K] 的 `catalytic_recurrence` 分别使用实际词计数与指定催化方程。它们不供应实际多边形耳集与词的保权、保交双射，本节也不以数值相同建立这样的双射。
+
+| 引文 | 数学内容及参数范围 |
+| --- | --- |
+| [B32-LT] Leader–Tan，*Some results on intersecting families of triangulations*，arXiv:2610.39116v1 | §2精确迹权重；§3 Lemma6删耳与容斥、Theorem2与Lemma8的非全允许耳集条件、Theorem3的全耳加性界；§4不同权重障碍；$T_m=C_{m-2}$ |
+| [B32-T] Talbot，*Intersecting Families of Separated Sets*，arXiv:math/0211314v1 | Theorem4及其证明，固定 $r,k$、$n\ge2(k+1)r$ 与指定间隙二项式乘积权重 |
+| [B32-CL] `CatalanLagrangeBridge` | `catalanUnit`、`q`、`q_subst_coefficient_transform`：有理形式幂级数、次数至少一；此处取 $G=1+z$ |
+| [B32-N] `NonnestingOneThreeTwoTwo` | `lagrange_coefficient` 的零常数项、固定点方程及 $1\le k\le j$；`result` 的对象为避 $1322$ 双重非嵌套词 |
+| [B32-W] `NonnestingOneThreeTwoTwoCount` | `weighted_decomposition` 的有限字母表与实际词长统计，不是多边形耳权重 |
+| [B32-K] `NonnestingOneThreeTwoTwoKernel` | `catalytic_recurrence` 的常数项一及完整催化方程，不预设实际耳集到词的对应 |
+
+[B32-LT]: https://arxiv.org/html/2610.39116v1
+[B32-T]: https://arxiv.org/pdf/math/0211314v1
+[B32-CL]: ../../../D5/S3/Combinatorics/Nonnesting/CatalanLagrangeBridge.lean
+[B32-N]: ../../../D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo.lean
+[B32-W]: ../../../D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwoCount.lean
+[B32-K]: ../../../D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwoKernel.lean
+

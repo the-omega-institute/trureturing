@@ -709,4 +709,154 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 end MomentSummability
 
+namespace WeightedSummability
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    (Σ _ : (ℕ → ℝ), Σ _ : ℕ, ℝ) (fun _ => ℕ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p n => ‖p.1 n * (n : ℝ) ^ p.2.1 *
+    Real.exp (-(n : ℝ) * p.2.2)‖) (fun e => nomatch e)
+
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {b : ℕ → ℝ} {B : ℝ}, 0 < B →
+    (∀ n, |b n| ≤ B ^ n) → ∀ (k : ℕ) {t : ℝ}, Real.log B < t →
+      Summable (fun n : ℕ => R.readout () ⟨b, k, t⟩ n)
+
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  have hh := h (b := fun _ => 0) (B := 1) (by norm_num)
+    (by intro n; simp) 0 (t := 1) (by norm_num)
+  norm_num [bad, realize, summable_const_iff] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨fun _ => 1, 1, 0⟩, 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def family : Registration arena (type_of% @summable_weighted) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@summable_weighted, bad, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual bad rejected
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@summable_weighted) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.WeightedSummability.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.WeightedSummability.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p n => ‖p.1 n * (n : ℝ) ^ p.2.1 *
+    Real.exp (-(n : ℝ) * p.2.2)‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Series
+    definition := none
+    coordinates := #[0, 4, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end WeightedSummability
+
+namespace WeightedDerivative
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    (ℕ → ℝ) (fun _ => ℕ) (fun _ => ℝ → ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ b k => weightedSeries b k) (fun e => nomatch e)
+
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => fun t => t) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {b : ℕ → ℝ} {B : ℝ}, 0 < B →
+    (∀ n, |b n| ≤ B ^ n) → ∀ (k : ℕ) {t : ℝ}, Real.log B < t →
+      HasDerivAt (R.readout () b k) (-weightedSeries b (k + 1) t) t
+
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  have hh := h (b := fun _ => 0) (B := 1) (by norm_num)
+    (by intro n; simp) 0 (t := 1) (by norm_num)
+  have he := hh.unique (hasDerivAt_id (1 : ℝ))
+  norm_num [weightedSeries] at he
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(fun n => if n = 0 then 1 else 0), 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  norm_num [actual, realize, weightedSeries, ite_mul] at he
+
+def family : Registration arena (type_of% @hasDerivAt_weighted) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hasDerivAt_weighted, bad, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual bad rejected
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@hasDerivAt_weighted) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.WeightedDerivative.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.WeightedDerivative.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ b k => weightedSeries b k)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Series
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end WeightedDerivative
+
 end Reg.D5.S3.Analytic.ExpRatioCM.Series

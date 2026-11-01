@@ -1,0 +1,26 @@
+**Definition 10.2 (Actual-correlation budget).** For a two-qubit state
+$A$, let $p,q,T$ be its actual Pauli data, and choose unit vectors $n,m$
+in the directions of its marginal Bloch vectors; use the $Z$ direction
+when a vector is zero. Put
+
+$$
+r=|p|,\quad s=|q|,\quad c=n^{\mathsf T}Tm,\qquad
+w_{uv}=\frac{1+ur+vs+uvc}{4},\quad u,v\in\{-1,1\}.
+\tag{10.5}
+$$
+
+These are the probabilities of the product spectral pinching
+$\bar A=\mathscr D_A(A)$ in the actual marginal eigenbases. Define
+
+$$
+\begin{aligned}
+M(A)&=S(A_C)+S(A_D),\\
+J_A&=M(A)+\sum_{u,v}w_{uv}\log w_{uv},\\
+\mathsf V(A)&=J_A+\frac{\|T\|_F^2-c^2}{4},\qquad
+ \mathcal B_{\rm vis}=\mathsf V(P)+\mathsf V(Q).
+\end{aligned}
+\tag{10.6}
+$$
+
+The usual zero conventions apply to the probabilities.
+

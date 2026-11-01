@@ -1,0 +1,9 @@
+**Definition 5.3 (Inverse transport of coefficients).** For completeness we specify the calculation that turns a signed flag
+map into a polynomial substitution. Let $R$ be a resolution of original
+$G$, let $\phi:R\to T$ be a signed edge isomorphism, and let the
+contractions be $T_G,T_R$. Then the map on target cycles back to the
+original cycles is
+
+<a id="eq-L"></a>
+<a id="eq:L"></a>
+

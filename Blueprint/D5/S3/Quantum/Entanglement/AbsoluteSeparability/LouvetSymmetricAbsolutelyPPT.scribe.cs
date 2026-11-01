@@ -40,6 +40,25 @@ internal sealed class LouvetSymmetricAbsolutelyPPTDocument : IScribeDocumentDefi
                 H("Conjecture 1"), StatementSource.FromAuthor(Disp(ClaimDefinition())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(ConjectureQuote + " The indices are all functions from Fin N to Fin d. The full-space characteristic polynomial includes d^N − D zero eigenvalues. N and d are at least two. Natural-number division in the threshold is Nat.div."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("lsappt-occupation-fiber-card"),
+                DeclarationHandle.Create(Prefix + "occupation_fiber_card"), H("Occupation fiber cardinality"),
+                StatementSource.FromAuthor(Disp(SiteTypes(All("x", Sites, All("a", Fin(X("d")),
+                    Eqn(At(Q("Fintype", "card"), Seq(OpenBrace, Typed(X("i"), Fin(X("N"))), Sp, Mid, Sp,
+                        Eqn(At(X("x"), X("i")), X("a")), CloseBrace)),
+                        At(Q("Multiset", "count"), X("a"), Occupation(X("x"))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The fiber of a word at a local level has cardinality equal to that level's occupation count."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("lsappt-symmetric-occupation-constant"),
+                DeclarationHandle.Create(Prefix + "symmetric_occupation_constant"),
+                H("Symmetric vectors are constant on occupation classes"),
+                StatementSource.FromAuthor(Disp(SiteTypes(All("v", Arr(Sites, Complexes),
+                    Imp(At(Q("D5", "S3", "Quantum", "Entanglement", "AbsoluteSeparability",
+                            "SymmetricAbsolutePPTPermutationFloor", "IsSymmetricVector"), X("v")),
+                        All("x", Sites, All("y", Sites,
+                            Imp(Eqn(Occupation(X("x")), Occupation(X("y"))),
+                                Eqn(At(X("v"), X("x")), At(X("v"), X("y"))))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("A vector invariant under site permutations has the same value on words with equal occupation multisets."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("lsappt-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Conjecture 1 holds"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
@@ -91,6 +110,8 @@ internal sealed class LouvetSymmetricAbsolutelyPPTDocument : IScribeDocumentDefi
 
 
     private static Formula Current(string name, params Formula[] args) => Local("LouvetSymmetricAbsolutelyPPT", name, args);
+    private static Formula Occupation(Formula x) =>
+        At(Q("D5", "S3", "Quantum", "Entanglement", "OccupancyWordSectors", "occupation"), x);
     private static Formula Dim => Current("D", X("N"), X("d"));
     private static Formula Threshold => Current("pmin", X("N"), X("d"));
     private static Formula Choose(Formula n, Formula k) => At(Q("Nat", "choose"), n, k);

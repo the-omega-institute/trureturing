@@ -1,0 +1,31 @@
+**Definition 40.4 (literal block target and retained interface).** Fix
+the same actual $t_0$, a public integer $n\ge0$, and the two blocks
+
+$$
+A=\mathsf G\mathsf R\mathsf R,\qquad
+B=\mathsf R\mathsf G\mathsf R\mathsf G,\qquad
+F(a,b)=(a+b+1,a+2b+1).
+\tag{40.8}
+$$
+
+For $\sigma\in\{0,1\}^n$, let $W_\sigma$ concatenate $A$ for a zero
+and $B$ for a one. Execute each macro by Definition 40.1 on that very
+source. The recovery target is the literal ordered macro-name word
+$W_\sigma$, equivalently $\sigma$. It is not the full addressed
+primitive trace, tree, tape, allocation history or physical duration.
+
+At the completed block cuts expose only the exact composition archive
+$Q_n=(v_0,v_1,\ldots,v_n)$. A retained record $Z(\sigma)$ is allowed in
+addition. A decoder receives $n$, the fixed source contract, $Q_n$ and
+$Z$, and must recover the target for every $\sigma$. Every further
+history-dependent discriminator available to it belongs to $Z$:
+retained requests, within-block readings, tree/tape access, lengths,
+timers, reference identities, dictionaries and external records are not
+unaccounted side information. The actual source and its tapes still
+exist; this restriction specifies the recovery interface, without
+asserting that those objects have equal values or have been erased.
+The archive is a mathematical view, not a new LAB reading primitive.
+If $v_0$ is actually acquired by a lawful paid frontier traversal, its
+rows follow by $F^j$; acquisition, maintenance and materialization of
+these values are separately charged.
+

@@ -1,95 +1,44 @@
-using StrataLint.Runtime;
-using System.Text;
 using StrataLint.Cli;
-using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
-    [Fact]
-    public void UnknownOrphanAncestryRetainsRefWithNamedReason()
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void BranchesRemainOutsideCleanupInBothModes(bool force, bool lanesOnly)
     {
         using var fixture = new CleanLanesFixture();
-        const string branch = "harness/unknown-orphan-merge";
-        fixture.AddOrphan(branch, merged: true);
-        var runner = fixture.CreateRunner((file, args, _) => file == "git"
-            && args.Take(2).SequenceEqual(["merge-base", "--is-ancestor"])
-                ? GitFailure("ancestry unavailable") : null);
+        string[] branches =
+        [
+            "lane/governance/unattached-merged", "harness/unattached-merged",
+            "lane/governance/recovery-existing", "feature/unattached-merged",
+        ];
+        foreach (var branch in branches) fixture.AddOrphan(branch, merged: true);
+        fixture.AddOrphan("harness/unattached-unmerged", merged: false);
+        var judge = fixture.AddGitlessJudgeSnapshot("trureturing-judge-control");
+        var before = CleanLanesFixture.Git(fixture.RepositoryRoot,
+            "for-each-ref", "--format=%(refname) %(objectname)", "refs/heads");
+        var runner = fixture.CreateRunner();
+        var arguments = new List<string>();
+        if (force) arguments.Add("--force");
+        if (lanesOnly) arguments.Add("--lanes-only");
 
-        var result = fixture.RunWithRaw(runner, "--force");
+        var result = fixture.RunWithRaw(runner, arguments.ToArray());
 
         Assert.True(result.Success, result.Error);
-        Assert.True(fixture.BranchExists(branch));
-        AssertItemProperty(ReadItems(result.Output), "branch", branch, "reason", "merged_state_unknown");
-    }
-
-    [Fact]
-    public void OrphanMergeJudgmentUsesDevInsteadOfAlternateBase()
-    {
-        using var fixture = new CleanLanesFixture();
-        const string branch = "harness/orphan-alternate-base";
-        fixture.AddOrphan(branch, merged: false);
-
-        var result = fixture.RunWithBase(branch, "--force");
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(fixture.BranchExists(branch));
-        AssertItemProperty(ReadItems(result.Output), "branch", branch, "reason", "unmerged");
-    }
-
-    [Fact]
-    public void BranchDeletedAfterEnumerationIsSkippedAndScanContinues()
-    {
-        using var fixture = new CleanLanesFixture();
-        const string vanished = "harness/race-a-vanished";
-        const string control = "harness/race-z-control";
-        fixture.AddOrphan(vanished, merged: true);
-        fixture.AddOrphan(control, merged: true);
-        var production = new ProductionWorktreeProcessRunner();
-        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
-        {
-            if (fileName != "git" || arguments.FirstOrDefault() != "for-each-ref") return null;
-
-            var listing = production.Run(
-                fileName,
-                arguments,
-                workingDirectory,
-                BoundedProcessRunner.HangDetectionBudget);
-            var deletion = production.Run(
-                "git",
-                ["update-ref", "-d", $"refs/heads/{vanished}"],
-                workingDirectory,
-                BoundedProcessRunner.HangDetectionBudget);
-            Assert.Equal(0, deletion.ExitCode);
-            return listing;
-        });
-
-        var result = fixture.RunWithRaw(runner, "--force");
-
-        Assert.True(result.Success, result.Error);
-        AssertItemProperty(ReadItems(result.Output), "branch", vanished, "reason", "vanished");
-        AssertItemProperty(ReadItems(result.Output), "branch", control, "action", "removed");
-        Assert.False(fixture.BranchExists(control));
-    }
-
-    [Fact]
-    public void BranchResolutionFailureOtherThanMissingRefStillFailsClosed()
-    {
-        using var fixture = new CleanLanesFixture();
-        const string branch = "harness/race-corrupt";
-        fixture.AddOrphan(branch, merged: true);
-        var runner = fixture.CreateRunner((fileName, arguments, _) =>
-            fileName == "git"
-            && arguments.FirstOrDefault() == "rev-parse"
-            && arguments.Any(argument => argument.StartsWith($"refs/heads/{branch}", StringComparison.Ordinal))
-                ? new ProcessOutput(128, [], Encoding.UTF8.GetBytes("fatal: bad object\n"))
-                : null);
-
-        var result = fixture.RunWithRaw(runner, "--force");
-
-        Assert.False(result.Success);
-        Assert.Contains("CLEAN_LANES_FAILED fatal: bad object", result.Error, StringComparison.Ordinal);
-        Assert.True(fixture.BranchExists(branch));
+        Assert.Equal(before, CleanLanesFixture.Git(fixture.RepositoryRoot,
+            "for-each-ref", "--format=%(refname) %(objectname)", "refs/heads"));
+        Assert.DoesNotContain(ReadItems(result.Output), item =>
+            item.GetProperty("kind").GetString() == "orphan_branch"
+            || item.GetProperty("path").ValueKind == System.Text.Json.JsonValueKind.Null
+                && item.GetProperty("branch").ValueKind != System.Text.Json.JsonValueKind.Null);
+        Assert.DoesNotContain(runner.Invocations, call => IsProtocol(call.Arguments, "retire-branch")
+            || call.FileName == "git" && call.Arguments.Contains("update-ref") && call.Arguments.Contains("-d"));
+        Assert.Equal(!force || lanesOnly, Directory.Exists(judge));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
     }
 }

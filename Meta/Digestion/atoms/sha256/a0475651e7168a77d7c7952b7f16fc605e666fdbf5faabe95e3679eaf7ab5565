@@ -1,0 +1,35 @@
+#### 定理 8.1（评分下的最优预测与塔式相容）
+
+给定同一实际联合律、实值 $Y\in L^2$ 和记录 $\sigma$ 代数 $\mathcal F$，令 $m_\mathcal F=\mathbb{E}[Y\mid\mathcal F]$。任意 $\mathcal F$ 可测平方可积预测 $g$ 满足
+
+$$
+\mathbb{E}[(Y-g)^2]=\mathbb{E}[(Y-m_\mathcal F)^2]+
+\mathbb{E}[(g-m_\mathcal F)^2].
+$$
+
+若 $\mathcal F\subset\mathcal G$，则
+
+$$
+\mathbb{E}[m_\mathcal G\mid\mathcal F]=m_\mathcal F,
+\quad
+\mathbb{E}[(Y-m_\mathcal F)^2]-\mathbb{E}[(Y-m_\mathcal G)^2]
+=\mathbb{E}[(m_\mathcal G-m_\mathcal F)^2].
+$$
+
+**证明。**
+
+展开平方，交叉项因 $\mathbb{E}[Y-m_\mathcal F\mid\mathcal F]=0$ 消失。塔式恒等式由条件期望对每个 $\mathcal F$ 事件的积分定义及唯一性得出。把较精细的预测代入相应正交分解即得风险差。
+
+∎
+
+这给“预测行为成为自身增长”的一个精确定义：新记录扩张可用信息，最佳平方评分风险下降多少，恰等于预测修正的平方量。该结论不保证真实轨迹的每次点误差都下降，也不在没有共同联合律时生效。对有限离散目标 $Y$，给定实际条件概率 $p(\cdot\mid R)$ 和预测概率 $q(\cdot\mid R)$，正概率事件上的 $q=0$ 按无穷损失处理，对数评分另有
+
+$$
+\mathbb{E}[-\log q(Y\mid R)]=H(Y\mid R)+
+\mathbb{E}_R D(p(\cdot\mid R)\Vert q(\cdot\mid R)),
+$$
+
+由展开定义直接得到；预测何为最优取决于评分 （[4](#ref-gneiting)）。
+
+<a id="statement-8-2"></a>
+

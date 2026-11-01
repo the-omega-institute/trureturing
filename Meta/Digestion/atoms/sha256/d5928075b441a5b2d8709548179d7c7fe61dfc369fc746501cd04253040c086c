@@ -1,0 +1,8 @@
+置 $d=|J_0|\ge1$。对 $r$ 元 $R\subseteq J_0$，式(37.7)只依赖 $r$，记本侧权重为
+
+$$
+\omega_r^{pq}=\sum_{j=0}^{d-r}(-1)^j\binom{d-r}{j}D_{r+j}^{pq},
+\qquad \sum_{r=0}^d\binom dr\omega_r^{pq}=N_{pq}.
+\tag{37.9}
+$$
+

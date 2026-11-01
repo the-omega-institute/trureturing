@@ -6,162 +6,6 @@
    utility: none
    digest: The n = 3 genuine four-party multi-entropy collapse for pure qubit stabilizer states. -/
 
-/-
-Per-declaration judgement:
-  shift: proof_shape: bind-only; escape_witness: none.
-    consumer: Z, Z_local_unitary_phase, Z_one, Z_smul, graph_replica_form, shiftEquiv, shift_delta.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  Z: proof_shape: bind-only; escape_witness: none.
-    consumer: S, Z_local_scalar, Z_local_unitary_phase, Z_one, Z_smul, claim, entropy_formula,
-      entropy_partition, graph_count, graph_replica_form, graph_scalar_norm, result,
-      stabilizer_replica_count, stabilizer_replica_positive.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  replicaOp: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_unitary_phase, replicaOp_permutation, replica_expand, replica_unitary.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  replica_expand: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_unitary_phase.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  replica_unitary: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_unitary_phase.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  shiftEquiv: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_unitary_phase.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  replicaPermutation: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_unitary_phase, replicaOp_permutation.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  replicaOp_permutation: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_unitary_phase.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  Z_local_unitary_phase: proof_shape: bind-only; escape_witness: none.
-    consumer: Z_local_scalar.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  delta: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_formula, entropy_partition, graph_count, graph_replica_form, rank_partition,
-      result, shift_delta, stabilizer_replica_count, stabilizer_replica_positive.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  shift_delta: proof_shape: bind-only; escape_witness: none.
-    consumer: graph_replica_form.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  bilinear_sum: proof_shape: bind-only; escape_witness: none.
-    consumer: quadratic_sum.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  Z_smul: proof_shape: bind-only; escape_witness: none.
-    consumer: graph_scalar_norm, stabilizer_replica_count.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  graph_replica_form: proof_shape: bind-only; escape_witness: none.
-    consumer: graph_count.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  quadratic_sum: proof_shape: bind-only; escape_witness: none.
-    consumer: graph_count.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  Z_one: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_formula, graph_scalar_norm.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  graph_norm: proof_shape: bind-only; escape_witness: none.
-    consumer: graph_scalar_norm.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  Z_local_scalar: proof_shape: bind-only; escape_witness: none.
-    consumer: graph_scalar_norm, stabilizer_replica_count.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  graph_scalar_norm: proof_shape: bind-only; escape_witness: none.
-    consumer: stabilizer_replica_count.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  graph_count: proof_shape: bind-only; escape_witness: none.
-    consumer: stabilizer_replica_count.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  representatives_exist: proof_shape: bind-only; escape_witness: none.
-    consumer: stabilizer_replica_positive.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  stabilizer_replica_count: proof_shape: bind-only; escape_witness: none.
-    consumer: result, stabilizer_replica_positive.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  stabilizer_replica_positive: proof_shape: bind-only; escape_witness: none.
-    consumer: result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  S: proof_shape: bind-only; escape_witness: none.
-    consumer: GM4, I3, entropy_formula, entropy_partition, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  I3: proof_shape: bind-only; escape_witness: none.
-    consumer: GM4, claim, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  GM4: proof_shape: bind-only; escape_witness: none.
-    consumer: claim, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  claim: proof_shape: bind-only; escape_witness: none.
-    consumer: result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  cutPattern: proof_shape: bind-only; escape_witness: none.
-    consumer: cutPattern_apply, entropy_partition, partitionSum, partition_count, rank_partition.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  cutPattern_apply: proof_shape: bind-only; escape_witness: none.
-    consumer: rank_partition.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  colourValue: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_partition, partitionSum, partition_count, rank_partition.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  modes1: proof_shape: bind-only; escape_witness: none.
-    consumer: partition_count, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  modes2: proof_shape: bind-only; escape_witness: none.
-    consumer: partition_count, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  modes3: proof_shape: bind-only; escape_witness: none.
-    consumer: partition_count, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  partitionSum: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_partition, partition_count, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  partition_count: proof_shape: content (after helper expansion);
-    escape_witness: arbitrary-label merger_sum_transport through ternary partition classification.
-    consumer: result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  partitionRank: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_partition, rank_partition, result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  rank_partition: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_partition.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  entropy_formula: proof_shape: bind-only; escape_witness: none.
-    consumer: entropy_partition.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  entropy_partition: proof_shape: bind-only; escape_witness: none.
-    consumer: result.
-    admission_basis: open-problem-resolution (#13575; Proved).
-  result: proof_shape: content (after helper expansion);
-    escape_witness: structural partition_count on the live entropy-partition path.
-    consumer: none (terminal settlement).
-    admission_basis: open-problem-resolution (#13575; Proved).
-Structural counting is provided by the consumed Combinatorics/Partitions
-TernaryPartitionCounting.result. Its arbitrary-label merger_sum_transport uses
-TernaryPartitionOrbit.result, with arbitrary target-anchor reanchoring. The local
-partition_count only checks the concrete sign-representative families and adapts
-its original matrix-valued statement to that arbitrary-weight counting theorem.
-Utility: none. The entropy conclusion and its original public contract are kept.
-Direct structural dependency:
-  D5/S3/Combinatorics/Partitions/TernaryPartitionCounting.result.
-Direct frozen dependencies:
-  GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.F₂
-    statement_id: sha256:e975fc48104d0cb1a40271fdfb5ec7fcfe2730a1c600ee81758d5e89253bd60f
-  GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign.eq_1
-    statement_id: sha256:47b1c4360f7294d639daaa81a4dc00aa903f52ef7b53aeca8f2a321008db2233
-  GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_sum
-    statement_id: sha256:cca15d93bbe8896cad48b7dfd75c8053ab080db717fab32f9ace58b5aaeec0b9
-  GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign_add
-    statement_id: sha256:9299cfc42d5d0ba183be190abb0eaa8f7ca19b25a002ecd815057449aad3e7ad
-  GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign
-    statement_id: sha256:815b3b55d18bbe94631f98e608ed75835a5ed6590c5cb4a958805cade90cb93d
-  GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.normalExponent
-    statement_id: sha256:582b0f2439e696a8856cf0d2c7099efbee950ed3b8702546f84c5b45cc7598f4
-  GID: D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.StabilizedBy
-    statement_id: sha256:84981833e6a3c38263d5476f28eb063fbdd1f76f4349d22a4bb67f3cb128d344
-  GID: D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.pauliSet
-    statement_id: sha256:856f9c10bdadcb60566b2de31e839e712c75cb4be32af461b413c9fdc95a1014
-  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.tensorOp
-    statement_id: sha256:0da7fdcc843e3d6cb83079e32e80fde7787e167c84a8fb99695fdb5e9ba7ba8e
--/
-
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuadraticForms.TernaryTranslationQuadraticNormalForm
 
@@ -340,7 +184,7 @@ private theorem Z_local_unitary_phase : ∀ (n q : ℕ) [NeZero n] {N : ℕ}
     _ = Z n q col ψ := (hZ ψ).symm
 
 /-- The replica translation assigned to a colour, with the last colour unshifted. -/
-private def delta {N q : ℕ} (col : Fin N → Fin q) (u : Fin N) : (Fin (q - 1) → ZMod 3) :=
+def delta {N q : ℕ} (col : Fin N → Fin q) (u : Fin N) : (Fin (q - 1) → ZMod 3) :=
   fun i => if (i : ℕ) = (col u : ℕ) then 1 else 0
 
 private lemma shift_delta {N q : ℕ} (col : Fin N → Fin q) (u : Fin N)
@@ -393,7 +237,7 @@ private theorem bilinear_sum {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2)) :
   omega
 
 /-- Scalar multiplication contributes one squared norm per replica. -/
-private theorem Z_smul {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
+theorem Z_smul {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
     (ψ : (Fin N → Fin 2) → ℂ) (c : ℂ) :
     Z n q col (c • ψ) = (star c * c) ^ (n ^ (q - 1)) * Z n q col ψ := by
   classical
@@ -478,7 +322,7 @@ private theorem quadratic_sum {N d : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
       rfl
 
 /-- At replica index one the contraction is exactly the squared norm. -/
-private theorem Z_one {N : ℕ} (q : ℕ) (col : Fin N → Fin q)
+theorem Z_one {N : ℕ} (q : ℕ) (col : Fin N → Fin q)
     (ψ : (Fin N → Fin 2) → ℂ) :
     Z 1 q col ψ = ((∑ x : Fin N → Fin 2, ‖ψ x‖ ^ 2 : ℝ) : ℂ) := by
   classical
@@ -501,7 +345,7 @@ private theorem graph_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2)) :
   simp [graphAmp.eq_1, norm_pow]
 
 /-- Product unitaries preserve replica contractions even with an arbitrary scalar. -/
-private theorem Z_local_scalar {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
+theorem Z_local_scalar {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
     (ψ : (Fin N → Fin 2) → ℂ) (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ u, U u ∈ Matrix.unitaryGroup (Fin 2) ℂ) (c : ℂ) :
     Z n q col (c • (tensorOp U *ᵥ ψ)) = Z n q col (c • ψ) := by
@@ -509,7 +353,7 @@ private theorem Z_local_scalar {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N →
   simpa only [one_smul, Matrix.mulVec_smul] using h
 
 /-- A normalized local-unitary graph amplitude has the reciprocal graph normalization. -/
-private theorem graph_scalar_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
+theorem graph_scalar_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
     (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ u, U u ∈ Matrix.unitaryGroup (Fin 2) ℂ) (c : ℂ)
     (hn : (∑ x : Fin N → Fin 2, ‖(c • (tensorOp U *ᵥ graphAmp A)) x‖ ^ 2) = 1) :
@@ -522,7 +366,7 @@ private theorem graph_scalar_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2)
   rw [h.symm, inv_mul_cancel₀ hz]
 
 /-- The replica form and the block count give the positive graph contraction. -/
-private theorem graph_count {N q : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
+theorem graph_count {N q : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
     (hA : ∀ u v, A u v = A v u) (col : Fin N → Fin q)
     (P : Finset ((Fin (q - 1) → ZMod 3))) (h0 : (0 : (Fin (q - 1) → ZMod 3)) ∉ P)
     (hP : ∀ t : (Fin (q - 1) → ZMod 3), t ≠ 0 → (t ∈ P ↔ -t ∉ P)) :
@@ -556,7 +400,7 @@ private theorem graph_count {N q : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
   exact inv_mul_cancel₀ (pow_ne_zero _ (by norm_num : (2 : ℂ) ≠ 0))
 
 /-- Negation pairs admit representatives at every ternary replica dimension. -/
-private theorem representatives_exist (d : ℕ) :
+theorem representatives_exist (d : ℕ) :
     ∃ P : Finset (Fin d → ZMod 3), (0 : (Fin d → ZMod 3)) ∉ P ∧
       ∀ t : (Fin d → ZMod 3), t ≠ 0 → (t ∈ P ↔ -t ∉ P) := by
   classical
@@ -732,7 +576,8 @@ private lemma rank_partition {N q : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
   ext u v
   simp [C, delta, cutPattern_apply, colourValue, Function.comp_def, ite_not]
 
-private theorem entropy_formula {N : ℕ} (ψ : (Fin N → Fin 2) → ℂ)
+/-- The reciprocal-power replica contraction yields the weighted rank sum for the multi-entropy. -/
+theorem entropy_formula {N : ℕ} (ψ : (Fin N → Fin 2) → ℂ)
     (hn : (∑ x : Fin N → Fin 2, ‖ψ x‖ ^ 2) = 1) (q : ℕ) (col : Fin N → Fin q)
     (A : Matrix (Fin N) (Fin N) (ZMod 2)) (P : Finset (Fin (q - 1) → ZMod 3))
     (hc : Z 3 q col ψ =

@@ -431,3 +431,308 @@ comparison $a(n,k+1)\le a(n,k)$ for arbitrary $k\ge4$, the global maximum
 at three, or the full conjecture.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Actual record coefficients and the binomial kernel expansion
+
+**Definition 8.1 (Actual fibers and independent variables).** For every
+$n,k\in\mathbb N$, let $a_{X,s}(n,k)$ count the literal permutations in
+$\operatorname{Av}_n(2413,3142)$ in class $X$ with exactly $k$ records of
+type $s$, where
+
+$$
+(X,s)\in\{(\mathrm{irreducible},\mathrm{rmax}),
+(\mathrm{irreducible},\mathrm{lmin}),
+(\mathrm{reducible},\mathrm{lmax}),
+(\mathrm{reducible},\mathrm{rmin})\}.
+$$
+
+The classes and strict, unshifted records are Definitions 1.1, 5.1 and
+6.1. In particular, irreducibility requires positive length and no proper
+direct cut; reducibility requires a proper direct cut. Both classes exclude
+the empty permutation, and only the irreducible class contains the
+singleton. Write $i(n,k)=a_{\mathrm{irreducible},\mathrm{rmax}}(n,k)$ and
+retain the actual series
+
+$$
+q(t)=\sum_{n\ge1}|\operatorname{Av}_n(2413,3142)|t^n,\qquad
+J(t,y)=\sum_{n\ge1,k\ge0}i(n,k)t^ny^k,\qquad J_k(t)=[y^k]J(t,y).
+$$
+
+Use independent variables $u,x,z$. In $\mathbb Q[u][[z]]$ take exactly the
+kernels of Definition 7.1, with $H=1+u$, $a=u(3+2u)$ and $b=uH^3$:
+
+$$
+M(z,u)=\frac{1}{1-az}C\!\left(\frac{bz^2}{(1-az)^2}\right),\quad
+T_r(u)=[z^r]M(z,u),\quad
+G_r=H^2(T_r+T_{r+1})-u(1-u)H(T_r+2T_{r+1}+T_{r+2}).
+$$
+
+Here $C(w)=\sum_{j\ge0}C_jw^j$ is the Catalan series, $C(0)=1$ and
+$C=1+wC^2$. All inverses in $z$ have constant term one, and every $T_r$
+is a polynomial in $u$. Substitution of $u=q(t)$ into a polynomial is
+therefore defined; substitution into a series in $u$ is also defined
+because $q(0)=0$.
+
+The source parameters are those of Chen, Kitaev and Zhang,
+[*Distributions of statistics on separable permutations*,
+arXiv:2404.18517v1](https://arxiv.org/pdf/2404.18517v1), Sections 1, 1.2
+and 2.2. The same definitions and equations (20)--(22) occur in their
+[author manuscript](https://zhangbiaomath.github.io/papers/2024-dam-separable-perms.pdf).
+The correspondence is
+
+| Source notation or convention | Notation here |
+| --- | --- |
+| A permutation $\pi_1\cdots\pi_n$ of $[n]$ | The permutation $p(i)=\pi_{i+1}-1$ of $\{0,\ldots,n-1\}$ |
+| A reducibility split at source index $j$, $2\le j\le n$ | A proper direct cut $c=j-1$, $0<c<n$ |
+| $S(t)$, excluding the empty permutation | $q(t)$ |
+| $I(t)$, the unmarked irreducible series | $I_0(t)$ of Definition 3.1 |
+| $S(t,y)$, with only rmax marked | $U(t,y)$ of Definition 3.1 |
+| $I(t,y)$, with only rmax marked | $J(t,y)$ |
+| Source $y$ and the source record index $k$ | The same $y$ and $k$, without an index shift |
+
+The independent $u$ in $M$ is specialized to the unmarked series $q(t)$;
+it is unrelated to the source's lmin marker. Likewise, $q(t)$ here is
+unrelated to the source's descent marker. Reindexing positions and values
+by the displayed order-preserving bijections preserves every strict record
+comparison and every cut condition.
+
+**Theorem 8.2 (The actual-fiber identity).** One has $J_0=0$, $J_1=t$,
+and for every integer $k\ge2$,
+
+$$
+J_k(t)=t^kH(q(t))^2
+\sum_{r=0}^{k-2}\binom{k-2}{r}T_r(q(t)).
+$$
+
+For every integer $k\ge3$, the exact adjacent difference is
+
+$$
+J_k(t)-J_{k+1}(t)
+=t^k\sum_{r=0}^{k-3}\binom{k-3}{r}G_r(q(t)).
+$$
+
+Both sums are finite, and every scalar multiplier in the second sum is
+a nonnegative integer.
+
+Proof. Use the actual scalar and weighted equations of Theorem 3.2:
+
+$$
+q=t+tq+q^2,\qquad
+J=ty+ty(1+q)J+q(1+q)J^2,\qquad [y^0]J=0.
+$$
+
+These are the actual-fiber equations, with the source correspondence in
+Definition 8.1. More explicitly, source equation (20) gives
+$U-J=I_0U=qJ$, whence $U=(1+q)J$. Equation (22) then gives
+$J=ty(1+U)+(U-J)U$, which is precisely the displayed weighted quadratic.
+Equation (21) is consistent with this reduction because
+$I_0(1+q)=q$, as in Theorem 3.2. Thus the coefficients being extracted
+are the actual positive permutation fibers.
+
+First work over the polynomial ring $\mathbb Q[u]$. There is a unique
+$F(x,u)\in x\mathbb Q[u][[x]]$ satisfying
+
+$$
+F=x+HxF+uHF^2.
+$$
+
+Indeed, if $F=\sum_{k\ge1}p_k(u)x^k$, the equation recursively specifies
+
+$$
+p_1=1,\qquad
+p_k=Hp_{k-1}+uH\sum_{j=1}^{k-1}p_jp_{k-j}\quad(k\ge2).
+$$
+
+Every term on the right has a smaller positive index, proving both
+existence and uniqueness coefficient by coefficient. The actual quadratic
+has the corresponding recurrence
+
+$$
+J_1=t,\qquad
+J_k=tH(q)J_{k-1}+qH(q)\sum_{j=1}^{k-1}J_jJ_{k-j}\quad(k\ge2).
+$$
+
+Induction therefore gives $J_k=t^kp_k(q)$ for every $k\ge1$.
+Equivalently $J(t,y)=F(ty,q(t))$. This substitution is legitimate in
+$\mathbb Q[[t]][[y]]$: at each fixed $y$-degree there is a single
+polynomial coefficient $p_k(q)$ multiplied by $t^k$. The equality is
+proved by recurrence and does not require division by $t$.
+
+To compute $F$, the defining Catalan equation gives, for the very same
+$M$ as in Definition 7.1,
+
+$$
+(1-az)M=1+bz^2M^2,\qquad M=1+azM+bz^2M^2.
+$$
+
+For example, its explicit coefficient expansion is
+
+$$
+M=\sum_{j\ge0}C_jb^jz^{2j}(1-az)^{-2j-1},\qquad
+T_r=\sum_{j=0}^{\lfloor r/2\rfloor}
+ C_j\binom{r}{2j}a^{r-2j}b^j.
+$$
+
+The coefficient formula follows by expanding $(1-az)^{-2j-1}$: its
+coefficient at $z^{r-2j}$ is $\binom{r}{2j}a^{r-2j}$, and terms with
+$2j>r$ vanish. In particular the series constructed here has exactly the
+supplied polynomial coefficients, with $T_0=1$ and $T_1=a$.
+
+Set
+
+$$
+B(x,u)=\frac{1}{1-x}M\!\left(\frac{x}{1-x},u\right),\qquad
+B_m(u)=[x^m]B(x,u).
+$$
+
+The inner substitution has zero constant term. Substituting
+$z=x/(1-x)$ and $M=(1-x)B$ into the quadratic for $M$ gives
+
+$$
+(1-x)B=1+axB+bx^2B^2,\qquad
+B=1+(1+a)xB+bx^2B^2.
+$$
+
+Now $1+a=H(1+2u)$ and $b=uH^3$. Put $\widetilde F=x+x^2H^2B$.
+Direct expansion yields
+
+$$
+\begin{aligned}
+x+Hx\widetilde F+uH\widetilde F^2
+ &=x+x^2H^2\bigl(1+H(1+2u)xB+uH^3x^2B^2\bigr)\\
+ &=x+x^2H^2B=\widetilde F.
+\end{aligned}
+$$
+
+Since $\widetilde F$ has zero constant term, uniqueness gives
+$F=\widetilde F$. Hence $p_k=H^2B_{k-2}$ for $k\ge2$.
+The definition of $B$ also gives
+
+$$
+B(x,u)=\sum_{r\ge0}T_r(u)\frac{x^r}{(1-x)^{r+1}},\qquad
+B_m(u)=\sum_{r=0}^m\binom{m}{r}T_r(u).
+$$
+
+Here the coefficient of $x^{m-r}$ in $(1-x)^{-r-1}$ is
+$\binom{m}{r}$; only $r\le m$ contributes. Combining this equality with
+$J_k=t^kp_k(q)$ proves the first displayed formula of the theorem.
+The zero-record fiber is empty at every positive length, giving $J_0=0$.
+
+For the difference formula, let $m=k-3\ge0$. Pascal's identity, extending
+binomial coefficients by zero outside their usual range, gives
+
+$$
+\begin{aligned}
+B_{m+1}&=\sum_{r=0}^m\binom mr(T_r+T_{r+1}),\\
+B_{m+2}&=\sum_{r=0}^m\binom mr(T_r+2T_{r+1}+T_{r+2}).
+\end{aligned}
+$$
+
+For the first equality, the coefficient of $T_j$ on the right is
+$\binom mj+\binom m{j-1}=\binom{m+1}j$, including $j=0,m+1$.
+Applying that identity twice proves the second equality, including
+$j=0,m+2$. Thus no endpoint term is omitted.
+The scalar quadratic gives $tH(q)=q(1-q)$. Therefore
+
+$$
+\begin{aligned}
+J_k-J_{k+1}
+ &=t^k\bigl(H(q)^2B_{m+1}(q)-tH(q)^2B_{m+2}(q)\bigr)\\
+ &=t^k\bigl(H(q)^2B_{m+1}(q)
+             -q(1-q)H(q)B_{m+2}(q)\bigr)\\
+ &=t^k\sum_{r=0}^m\binom mr
+   \bigl(H^2(T_r+T_{r+1})
+       -u(1-u)H(T_r+2T_{r+1}+T_{r+2})\bigr)\big|_{u=q}.
+\end{aligned}
+$$
+
+The last parenthesis is exactly $G_r$. The formula includes $k=3$,
+when $m=0$ and the sum consists of $G_0(q)$ alone. In that case the
+polynomial $G_0$ is the $F$ of Theorem 6.2, so this endpoint agrees with
+the existing first-decline formula.
+
+The weighted quadratic and its low coefficients are the intermediates
+of Theorem 3.2 and
+[RecordPeak.actual_record_rising](../../../D5/S1/Words/Patterns/Separable/RecordPeak.lean);
+the same actual quadratic occurs in the proof of
+[RecordFirstDecline.actual_four_record_first_decline](../../../D5/S1/Words/Patterns/Separable/RecordFirstDecline.lean).
+The inference here is the all-$k$ identity
+$F=x+x^2H^2(1-x)^{-1}M(x/(1-x),u)$ and its two binomial shifts,
+which identify every actual adjacent difference with the fixed kernels.
+
+**Theorem 8.3 (The four distributions have a weak maximum at three).**
+For each pair $(X,s)$ in Definition 8.1, every $n\in\mathbb N$ and every
+$k\ge3$ satisfy
+
+$$
+a_{X,s}(n,k+1)\le a_{X,s}(n,k).
+$$
+
+For each such pair, every $n\ge5$ and every $k\in\mathbb N$ satisfy
+
+$$
+\begin{aligned}
+k<3&\ \Longrightarrow\ a_{X,s}(n,k)\le a_{X,s}(n,k+1),\\
+k\ge3&\ \Longrightarrow\ a_{X,s}(n,k+1)\le a_{X,s}(n,k),\\
+a_{X,s}(n,k)&\le a_{X,s}(n,3).
+\end{aligned}
+$$
+
+These are the full four distributions, with a weak peak as in
+Chen--Kitaev--Zhang, arXiv:2404.18517v1, Section 3, Conjecture 2,
+page 17, and Table 4.
+
+Proof. Theorem 7.2, supplied by
+[RecordNewtonPositivity.actual_q_record_newton_nonnegative](../../../D5/S1/Words/Patterns/Separable/RecordNewtonPositivity.lean),
+gives $[t^h]G_r(q(t))\ge0$ for every $r,h\in\mathbb N$.
+For $k\ge3$, take the coefficient of $t^n$ in Theorem 8.2. Since $J$
+counts the positive actual fibers and $i(0,k)=0$, this gives the exact
+rational identity, at every natural $n$,
+
+$$
+i(n,k)-i(n,k+1)=
+\begin{cases}
+\displaystyle\sum_{r=0}^{k-3}\binom{k-3}{r}
+ [t^{n-k}]G_r(q(t)),&n\ge k,\\
+0,&n<k.
+\end{cases}
+$$
+
+Every summand in the first case is nonnegative by the cited sign law;
+the second case is zero. Consequently $i(n,k+1)\le i(n,k)$ for all
+natural $n$ and all $k\ge3$.
+
+Use the exact transports of Theorem 5.2, supplied by
+[RecordTransport.actual_four_record_transports_and_rising](../../../D5/S1/Words/Patterns/Separable/RecordTransport.lean):
+
+$$
+a_{\mathrm{irreducible},\mathrm{lmin}}(n,j)=i(n,j),\qquad
+a_{\mathrm{reducible},\mathrm{lmax}}(n,j)+\delta(n,j)=i(n,j),\qquad
+a_{\mathrm{reducible},\mathrm{rmin}}(n,j)+\delta(n,j)=i(n,j).
+$$
+
+Here $\delta(n,j)=1$ exactly at $n=j=1$. If $k\ge3$, both
+$\delta(n,k)$ and $\delta(n,k+1)$ vanish for every $n$. The three
+transport identities therefore carry the declining inequality to the
+other three distributions at every natural length, including zero and
+one. No positive-class convention changes at these endpoints.
+
+For $n\ge5$, Theorem 5.2 supplies all three rising comparisons $k<3$
+for these same four distributions; its hypothesis is only $n\ge4$.
+Fix one pair and such an $n$. If $k<3$, the finite rising chain from $k$
+to $3$ gives $a_{X,s}(n,k)\le a_{X,s}(n,3)$. If $k=3$ this is equality.
+If $k>3$, apply the declining comparison successively at
+$3,4,\ldots,k-1$ to obtain the same bound. These chains prove both
+unimodality and the global weak maximum at three.
+
+Every record-position set is a subset of the $n$ positions, so all four
+fibers are zero for $k>n$. At length zero both positive classes are empty;
+at length one the two irreducible distributions have their sole mass at
+$k=1$ and the two reducible distributions are zero. These facts agree
+with the all-length declining law and include the zero tails in the
+unimodality assertion. The sign law, the rising laws, the transports and
+the strict first decline of Theorem 6.2 are cited inputs; the all-index
+actual-fiber identity of Theorem 8.2 supplies their connection to every
+remaining declining comparison.
+
+## 追加锚（本行以下为增补区）

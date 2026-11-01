@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0664a92ac1b7ffbf0d9e73550bafa4e515d8ff536f8c53d3290b81667ace295d
+  normalized_sha256: sha256:0664a92ac1b7ffbf0d9e73550bafa4e515d8ff536f8c53d3290b81667ace295d
+cas_ref: sha256:0664a92ac1b7ffbf0d9e73550bafa4e515d8ff536f8c53d3290b81667ace295d
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Jacobi/FlagPruning.pruned_branching_component_vanishes
+    target_statement_id: sha256:1f91ea8f11bed122a05d604836f42828627bf048b1754738e396db52d37a9493
+receipts:
+  unresolved_subitems: []

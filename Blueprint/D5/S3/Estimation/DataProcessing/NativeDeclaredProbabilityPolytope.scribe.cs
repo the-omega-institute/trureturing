@@ -46,6 +46,33 @@ internal sealed class NativeDeclaredProbabilityPolytopeDocument : IScribeDocumen
                         + "The two maps are inverses. Zero coordinates remain on W; no support "
                         + "subtype or smaller carrier is used.")),
                 Paragraph(Text(
+                    "The same finite carrier also admits arbitrary real signed coordinates. For any real function p on W, "
+                        + "form the actual SignedMeasure s_p = sum over w of VectorMeasure.dirac(w,p(w)). "
+                        + "Measurable singletons make every subset measurable. Its mass on a subset E is the sum of p(w) over E, "
+                        + "so its singleton masses are exactly p. Finite additivity reconstructs every signed measure from its "
+                        + "singleton masses; hence this representation is both injective and surjective, including on an empty carrier. "
+                        + "There is no positivity, unit-mass or equal-mass premise in this signed correspondence. For any map f "
+                        + "to a measurable type with measurable singletons, the pushed-forward singleton mass at y is the full "
+                        + "finite sum of p(w) over f(w)=y. When the target is finite this is precisely the signed atomic "
+                        + "representation of the aggregated coordinates; positive and negative coefficients can cancel.")),
+                Paragraph(Text(
+                    "For two arbitrary real coordinate functions p and q, variation_apply_singleton and "
+                        + "SignedMeasure.totalVariation_eq_variation identify the full variation mass of s_p minus s_q "
+                        + "with sum over w of abs(p(w)-q(w)). This is twice Pinsker.totalVariation(p,q). "
+                        + "With the finite discrete topology and its Borel measurable structure all these measures are regular, "
+                        + "so SignedRieszRepresentation.signed_riesz_markov_kakutani identifies that same full variation "
+                        + "with the operator norm of signedFunctional(s_p-s_q). Mathlib MeasureTheory.tvDist also uses the full variation convention.")),
+                Paragraph(Text(
+                    "For actual probability laws mu and nu, massVector_mem_simplex supplies nonnegativity and total mass one, "
+                        + "and probabilitySimplexEquiv supplies the converse. Their signed difference has singleton coordinates "
+                        + "massVector(mu)-massVector(nu). Metric.total_variation_eq_sup_event_gap therefore gives the attained "
+                        + "maximum of abs(mu.real(E)-nu.real(E)) over all events E as one half of the full variation. "
+                        + "LeCam.le_cam_two_point_sum bounds every test's sum of errors below by one minus this statistical TV; "
+                        + "LeCamTight.le_cam_two_point_sum_tight attains it at the event where nu's singleton mass dominates mu's. "
+                        + "The event and common-mass testing formulas require equal total masses; nonnegativity additionally makes "
+                        + "the coordinates probability masses. On a singleton carrier the signed coordinates p=2 and q=0 have "
+                        + "half-L1 distance one but whole-event mass gap two, so the equal-mass condition cannot be dropped.")),
+                Paragraph(Text(
                     "For every finite indexed family of native laws and nonnegative real "
                         + "coefficients, equality to their ENNReal-weighted measure sum is "
                         + "equivalent to equality to the corresponding real coordinate sum. "

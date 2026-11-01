@@ -1,0 +1,8 @@
+**Convention 2.2 (Sector moments, extrinsic term and gap).** For $V\in\{E_d,O_d\}$ and $\mathbf a\in\mathbb Z_d^2$ let
+
+$$
+F_V(\mathbf a)=\mathbb E_{\psi}\,|\langle\psi|D_{\mathbf a}|\psi\rangle|^4 ,
+$$
+
+the expectation over the unitarily invariant probability measure on unit vectors $\psi\in V$. The extrinsic term of $V$ is $X(V)=\frac1d\sum_{\mathbf a\in\mathbb Z_d^2}F_V(\mathbf a)$, the intrinsic term is $I(k)=k\,\mathrm{tr}(Q_S\mathcal A_4^S)$ on $\mathbb C^k$, whose closed form is cited fact (d), and the gap of $V$ is $\Delta M(V)=I(k_V)-X(V)$. For every isometry $\mathcal E:\mathbb C^{k_V}\to\mathbb C^d$ with image $V$, $\Delta M(V)$ is the quantity $\Delta M(\mathcal E)$ of cited fact (c), with the single-qudit Weyl–Heisenberg group of $\mathbb C^{k_V}$ on the small space. Indeed, for a pure state $\phi$ on $\mathbb C^d$, $d\,\mathrm{tr}(Q\phi^{\otimes4})=\frac1d\sum_{\mathbf a}|\langle\phi|D_{\mathbf a}|\phi\rangle|^4$ because $\mathrm{tr}(D_{\mathbf a}^\dagger\phi)=\overline{\langle\phi|D_{\mathbf a}|\phi\rangle}$; this expression is linear in $\phi^{\otimes4}$, and $\mathcal E$ carries the Haar measure on unit vectors of $\mathbb C^{k_V}$ to the unitarily invariant measure on unit vectors of $V$, so $d\,\mathrm{tr}(Q\,\mathcal E^{\otimes4}(\mathcal A_4^S))=X(V)$; the first term of (c) is $I(k_V)$ by cited fact (d). Stance: repo-derived (specialization of the cited definitions).
+

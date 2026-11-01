@@ -92,10 +92,23 @@ The locally constant algebra separates points on K. The existing real Stone–We
 
 Repository search found no exact all-lifts signed-measure convergence theorem in the topology or total-variation owners. The pinned Mathlib suppliers are reused directly rather than reproved. The new synthesis supplies the all-choices quantifier needed in the ordinary signed-measure condition (F) of the Talagrand candidate. It proves stability for any already given norm-preserving lifts; it does not construct lifts or prove their existence by Hahn–Banach or Riesz representation. It does not formalize the transfinite recursion, CH bookkeeping, Banach-space preservation theorem or Problem 8.2. No literature novelty or official acceptance of that problem is asserted.
 
+**Theorem 1.7 (Signed integration under continuous pushforward).**
+
+Lean statement: `D5/S3/Topology/Measures/NormPreservingLifts.functional_map`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/NormPreservingLifts.functional_map` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary compact Borel source X and compact Borel target Y, every signed measure s, continuous p from X to Y and real continuous g on Y satisfy signedFunctional(s.map p)(g) = signedFunctional(s)(g composed with p). No Hausdorff, nonempty or injective-map premise is added. This is the existing private historical-capture integral-map supplier moved to its natural shared owner; historical capture and compact-family variation loss both consume it. The proof uses native vector integral_map and compact-source integrability.
+
 ## References
 
 - Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.apply_eq_of_supported_clopen`
 - Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.arbitrary_lifts_tendsto`
+- Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.functional_map`
 - Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.signedFunctional_norm_le`
 - Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.signedFunctional_sub_toSignedMeasure`
 - Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.totalVariation_map_of_mass`

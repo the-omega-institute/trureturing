@@ -1,0 +1,1 @@
+**定理 325.2（可行区域的下闭性与访问单调性）。** 若 \((c,\varepsilon)\in\mathcal F_{\mathcal T}\)，且 \(c'\ge c\)、\(\varepsilon'\ge\varepsilon\)，则 \((c',\varepsilon')\in\mathcal F_{\mathcal T}\)。若每个策略都可被某个细化访问层模拟，则访问权限扩大只会使 \(\varepsilon^*(c)\) 不增。

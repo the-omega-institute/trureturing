@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd3587952cf49fb74588934d12b77a0eb00f1dc6ac6f89c13f7a607a4b07b59b
+  normalized_sha256: sha256:fd3587952cf49fb74588934d12b77a0eb00f1dc6ac6f89c13f7a607a4b07b59b
+cas_ref: sha256:fd3587952cf49fb74588934d12b77a0eb00f1dc6ac6f89c13f7a607a4b07b59b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Reference [4]: NIST DLMF 26.3.1 and 26.3.4, identifying the factorial formula and binomial series. This payload is bibliographic metadata; settlement does not certify the external formulas or their applications.'
+    previous_atom_id: 6399df3e65fa6d8fe3eccaa0a9beee69164dfada28f3aab74f25099e840d0241
+    next_atom_id: null

@@ -198,7 +198,31 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.walk_l
 
 Exact source telescope, in the module declared generic contexts: theorem walk_law_score {n : ℕ} [NeZero n] (f : ZMod n → Fin 5 → ℝ) {a : ZMod n × Fin 3} (w : (layeredGraph n).Walk a a) : localScore f (walkLaw w) = Maths.MaxPlusPotential.walkWeight (fun e => f e.1 e.2) w / layerCount w 0
 
-**Theorem 1.17 (simple cycle winding).**
+**Theorem 1.17 (Positive coefficients use only forward edges).**
+
+$$\forall \left(V: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left(\forall \left(J: \operatorname{Type}\right), \left([\operatorname{Fintype}\left(E\right)] [\operatorname{DecidableEq}\left(E\right)] [\operatorname{Fintype}\left(J\right)] \forall \left(G: \operatorname{Maths.EdgeGraph}\left(V, E\right)\right), \left(\forall \left(coefficient: \left(\operatorname{Maths.AdditiveTransport.SignedEdge}\left(E\right)\right) \to \left(\mathbb{R}\right)\right), \left(\forall \left(weight: \left(J\right) \to \left(\mathbb{R}\right)\right), \left(\forall \left(base: \left(J\right) \to \left(V\right)\right), \left(\forall \left(cycle: \forall \left(i: J\right), \left(\operatorname{Maths.EdgeGraph.Walk}\left(\operatorname{Maths.AdditiveTransport.signedGraph}\left(G\right), base\left(i\right), base\left(i\right)\right)\right)\right), \left(\left(\forall \left(i: J\right), \left(\left(0: \mathbb{R}\right) \le weight\left(i\right)\right)\right) \Rightarrow \left(\left(\forall \left(i: J\right), \left(\operatorname{Maths.AdditiveTransport.IsSimpleCycle}\left(cycle\left(i\right)\right)\right)\right) \Rightarrow \left(\left(\forall \left(e: \operatorname{Maths.AdditiveTransport.SignedEdge}\left(E\right)\right), \left(coefficient\left(e\right) = \operatorname{Finset.sum}\left(\left(\operatorname{Finset.univ}: \operatorname{Finset}\left(J\right)\right), \lambda \left(j: J\right) \mapsto \left(weight\left(j\right) \cdot \operatorname{Maths.AdditiveTransport.circuitCoefficient}\left(cycle\left(j\right), e\right)\right)\right)\right)\right) \Rightarrow \left(\left(\forall \left(e: E\right), \left(coefficient\left(\operatorname{Prod.mk}\left(e, \operatorname{Bool.true}\right)\right) = \left(0: \mathbb{R}\right)\right)\right) \Rightarrow \left(\forall \left(i: J\right), \left(\left(\left(0: \mathbb{R}\right) < weight\left(i\right)\right) \Rightarrow \left(\forall \left(e: \operatorname{Maths.AdditiveTransport.SignedEdge}\left(E\right)\right), \left(\left(e \in \operatorname{Maths.EdgeGraph.Walk.edges}\left(cycle\left(i\right)\right)\right) \Rightarrow \left(\operatorname{Prod.snd}\left(e\right) = \operatorname{Bool.false}\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_coefficient_forward` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In a nonnegative simple-circuit decomposition whose reverse coefficients vanish, every edge of a positive-weight circuit has forward orientation.
+
+**Theorem 1.18 (No repeated vertex before the closing edge).**
+
+$$\forall \left(V: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left(\forall \left(G: \operatorname{Maths.EdgeGraph}\left(V, E\right)\right), \left(\forall \left(a: V\right), \left(\forall \left(edge: E\right), \left(\forall \left(initial: \operatorname{Maths.EdgeGraph.Walk}\left(G, \operatorname{Maths.EdgeGraph.target}\left(G, edge\right), a\right)\right), \left(\forall \left(legal: \operatorname{Maths.EdgeGraph.source}\left(G, edge\right) = a\right), \left(\left(\forall \left(v: V\right), \left(\forall \left(before: \operatorname{Maths.EdgeGraph.Walk}\left(G, \operatorname{Maths.EdgeGraph.target}\left(G, edge\right), v\right)\right), \left(\forall \left(inner: \operatorname{Maths.EdgeGraph.Walk}\left(G, v, v\right)\right), \left(\forall \left(after: \operatorname{Maths.EdgeGraph.Walk}\left(G, v, \operatorname{Maths.EdgeGraph.target}\left(G, edge\right)\right)\right), \left(\left(\operatorname{Maths.EdgeGraph.Walk.edges}\left(\operatorname{Maths.EdgeGraph.Walk.concat}\left(initial, edge, legal\right)\right) = \operatorname{List.append}\left(\operatorname{List.append}\left(\operatorname{Maths.EdgeGraph.Walk.edges}\left(before\right), \operatorname{Maths.EdgeGraph.Walk.edges}\left(inner\right)\right), \operatorname{Maths.EdgeGraph.Walk.edges}\left(after\right)\right)\right) \Rightarrow \left(\left(0 < \operatorname{Maths.EdgeGraph.Walk.length}\left(inner\right)\right) \Rightarrow \left(\left(0 < \operatorname{Maths.EdgeGraph.Walk.length}\left(before\right) + \operatorname{Maths.EdgeGraph.Walk.length}\left(after\right)\right) \Rightarrow \left(\operatorname{False}\right)\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(\operatorname{List.Nodup}\left(\operatorname{Maths.EdgeGraph.Walk.visited}\left(initial\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.cycle_initial_visited_nodup` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A cycle that has no proper positive closed subwalk visits each vertex at most once before its closing edge.
+
+**Theorem 1.19 (simple cycle winding).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.simple_cycle_winding`
 
@@ -210,7 +234,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.simple
 
 Exact source telescope, in the module declared generic contexts: theorem simple_cycle_winding {n : ℕ} [NeZero n] {a : ZMod n × Fin 3} (w : (layeredGraph n).Walk a a) (hw : IsSimpleCycle w) : 1 ≤ layerCount w 0 ∧ layerCount w 0 ≤ 3 ∧ w.length = n * layerCount w 0
 
-**Theorem 1.18 (local simple cycle decomposition).**
+**Theorem 1.20 (local simple cycle decomposition).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.local_simple_cycle_decomposition`
 
@@ -222,7 +246,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.local_
 
 Exact source telescope, in the module declared generic contexts: theorem local_simple_cycle_decomposition {n : ℕ} [NeZero n] (p : ZMod n → Fin 5 → ℝ) (hp : IsLocalLaw p) : ∃ (ι : Type) (_ : Fintype ι) (weight : ι → ℝ) (base : ι → ZMod n × Fin 3) (cycle : ∀ i, (layeredGraph n).Walk (base i) (base i)), (∀ i, 0 ≤ weight i) ∧ (∑ i, weight i) = 1 ∧ (∀ i, 0 < weight i → IsSimpleCycle (cycle i)) ∧ (∀ i, 0 < weight i → 1 ≤ layerCount (cycle i) 0 ∧ layerCount (cycle i) 0 ≤ 3) ∧ (∀ i, 0 < weight i → IsLocalLaw (walkLaw (cycle i))) ∧ (∀ j σ, p j σ = ∑ i, weight i * walkLaw (cycle i) j σ) ∧ ∀ i, weight i = layerCount (cycle i) 0 * (weight i / layerCount (cycle i) 0)
 
-**Definition 1.19 (positiveSupport).**
+**Definition 1.21 (positiveSupport).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positiveSupport`
 
@@ -234,7 +258,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positi
 
 Exact source telescope, in the module declared generic contexts: def positiveSupport {n : ℕ} [NeZero n] (p : ZMod n → Fin 5 → ℝ) : Finset (ZMod n × Fin 5) := Finset.univ.filter (fun e => 0 < p e.1 e.2)
 
-**Definition 1.20 (subtractCycle).**
+**Definition 1.22 (subtractCycle).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.subtractCycle`
 
@@ -246,7 +270,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.subtra
 
 Exact source telescope, in the module declared generic contexts: def subtractCycle {n : ℕ} {a : ZMod n × Fin 3} (p : ZMod n → Fin 5 → ℝ) (w : (layeredGraph n).Walk a a) (α : ℝ) : ZMod n → Fin 5 → ℝ := fun i σ => p i σ - α * w.edgeMultiplicity (i,σ)
 
-**Theorem 1.21 (positive cycle erasure).**
+**Theorem 1.23 (positive cycle erasure).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_cycle_erasure`
 
@@ -258,7 +282,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positi
 
 Exact source telescope, in the module declared generic contexts: theorem positive_cycle_erasure {n : ℕ} [NeZero n] (p : ZMod n → Fin 5 → ℝ) (hnonneg : ∀ i σ, 0 ≤ p i σ) (hbal : IsCirculation p) (hne : p ≠ 0) : ∃ (a : ZMod n × Fin 3) (w : (layeredGraph n).Walk a a) (α : ℝ), IsSimpleCycle w ∧ 0 < α ∧ (∀ e ∈ w.edges, α ≤ p e.1 e.2) ∧ (∃ e ∈ w.edges, p e.1 e.2=α) ∧ (∀ i σ, 0 ≤ subtractCycle p w α i σ) ∧ IsCirculation (subtractCycle p w α) ∧ (positiveSupport (subtractCycle p w α)).card < (positiveSupport p).card ∧ ∀ e, (w.edgeMultiplicity e : ℝ) = if e ∈ w.edges then 1 else 0
 
-**Definition 1.22 (HasPositiveCycleDecomposition).**
+**Definition 1.24 (HasPositiveCycleDecomposition).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.HasPositiveCycleDecomposition`
 
@@ -270,7 +294,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.HasPos
 
 Exact source telescope, in the module declared generic contexts: def HasPositiveCycleDecomposition {n : ℕ} [NeZero n] (p : ZMod n → Fin 5 → ℝ) : Prop := ∃ (ι : Type) (_ : Fintype ι) (base : ι → ZMod n × Fin 3) (cycle : ∀ i, (layeredGraph n).Walk (base i) (base i)) (α : ι → ℝ), (∀ i, IsSimpleCycle (cycle i) ∧ 0 < α i ∧ 1 ≤ layerCount (cycle i) 0 ∧ layerCount (cycle i) 0 ≤ 3 ∧ IsLocalLaw (walkLaw (cycle i)) ∧ (cycle i).length=layerCount (cycle i) 0 * n ∧ (∀ j, layerCount (cycle i) j=layerCount (cycle i) 0) ∧ ∀ e, ((cycle i).edgeMultiplicity e : ℝ) = if e ∈ (cycle i).edges then 1 else 0) ∧ (∑ i, (layerCount (cycle i) 0 : ℝ) * α i) = 1 ∧ (∀ j σ, p j σ = ∑ i, α i * (if (j,σ) ∈ (cycle i).edges then 1 else 0)) ∧ ∀ j σ, p j σ = ∑ i, ((layerCount (cycle i) 0 : ℝ) * α i) * walkLaw (cycle i) j σ
 
-**Theorem 1.23 (positive cycle decomposition).**
+**Theorem 1.25 (positive cycle decomposition).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_cycle_decomposition`
 
@@ -282,7 +306,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positi
 
 Exact source telescope, in the module declared generic contexts: theorem positive_cycle_decomposition {n : ℕ} [NeZero n] (p : ZMod n → Fin 5 → ℝ) (hp : IsLocalLaw p) : HasPositiveCycleDecomposition p
 
-**Definition 1.24 (HasPositiveCycleErasure).**
+**Definition 1.26 (HasPositiveCycleErasure).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.HasPositiveCycleErasure`
 
@@ -294,7 +318,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.HasPos
 
 Exact source telescope, in the module declared generic contexts: def HasPositiveCycleErasure {n : ℕ} [NeZero n] (p : ZMod n → Fin 5 → ℝ) : Prop := ∃ (a : ZMod n × Fin 3) (w : (layeredGraph n).Walk a a) (α : ℝ), IsSimpleCycle w ∧ 0 < α ∧ (∀ e ∈ w.edges, α ≤ p e.1 e.2) ∧ (∃ e ∈ w.edges, p e.1 e.2=α) ∧ (∀ i σ, 0 ≤ subtractCycle p w α i σ) ∧ IsCirculation (subtractCycle p w α) ∧ (positiveSupport (subtractCycle p w α)).card < (positiveSupport p).card ∧ ∀ e, (w.edgeMultiplicity e : ℝ) = if e ∈ w.edges then 1 else 0
 
-**Theorem 1.25 (local law compact).**
+**Theorem 1.27 (local law compact).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.local_law_compact`
 
@@ -312,6 +336,7 @@ Exact source telescope, in the module declared generic contexts: theorem local_l
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.HasPositiveCycleErasure`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.IsCirculation`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.IsLocalLaw`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.cycle_initial_visited_nodup`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.labels`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.layerCount`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.layer_count_uniform`
@@ -323,6 +348,7 @@ Exact source telescope, in the module declared generic contexts: theorem local_l
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.local_simple_cycle_decomposition`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.pattern`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positiveSupport`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_coefficient_forward`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_cycle_decomposition`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.positive_cycle_erasure`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/LayeredFlow.seam`

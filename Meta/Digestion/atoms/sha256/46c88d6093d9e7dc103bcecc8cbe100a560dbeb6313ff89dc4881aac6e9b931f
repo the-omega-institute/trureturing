@@ -1,0 +1,29 @@
+**定义 B-32.1（实际剖分、完整耳集及四见证）。** 固定一个顶点依循环次序标为 $v_0,\ldots,v_{n-1}$ 的严格凸 $n$ 边形，$n\ge9$；指标按模 $n$ 解释。记 $\mathcal T_n$ 为其全部三角剖分，每个剖分以内部对角线集合表示。长度二对角线及完整耳集分别为
+
+$$
+e_i=v_{i-1}v_{i+1},\qquad
+\operatorname{Ear}(T)=\{e_i:e_i\in T\}.
+$$
+
+这里的耳是对角线，不是带面积权重的局部响应。与定义B-5.1的凸删耳动作相接时，$e_i$ 切下三角形 $v_{i-1}v_iv_{i+1}$；全部操作仍在同一个实际多边形内。称 $\mathcal F\subseteq\mathcal T_n$ 耳相交，若其任意两个不同成员的完整耳集相交。
+
+给六条互不相同的实际耳 $f_{ab}=f_{ba}$，$1\le a<b\le4$，记
+
+$$
+D=\{f_{ab}:1\le a<b\le4\},\qquad
+S_a=\{f_{ab}:b\ne a\}.
+$$
+
+四见证条件是存在 $T_1,T_2,T_3,T_4\in\mathcal F$，使
+
+$$
+\operatorname{Ear}(T_a)=S_a\quad(1\le a\le4).
+$$
+
+等号指定完整耳集。$\mathcal F$ 的其他成员可以含有 $D$ 外的耳，两成员也可以仅在 $D$ 外耳相交；不假设 $\mathcal F$ 极大。令 $q$ 为 $D$ 中内部相交的无序耳对数，并定义实际容许族
+
+$$
+\mathcal H=\{T\in\mathcal T_n:
+\operatorname{Ear}(T)\cap S_a\ne\varnothing\text{ 对全部 }a\in\{1,2,3,4\}\}.
+$$
+

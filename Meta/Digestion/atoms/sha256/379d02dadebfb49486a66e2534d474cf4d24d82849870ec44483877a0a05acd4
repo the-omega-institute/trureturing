@@ -1,0 +1,26 @@
+**Proposition 13.3 (depth two: attainable at scale three, obstructed at scale four).** For the original prior $Q_2$ of Definition 10.1,
+
+$$
+\mathcal C_3=\mathcal G_3\cup\{1/2\},\qquad
+\mathcal C_4=\mathcal G_4\cup\{1/3\}.
+\tag{13.3}
+$$
+
+At $M=3$ the exact original word is acquirable with at most two reads and one action. At $M=4$ the two originals $L$ and $RL$ are forever indistinguishable, so no policy recovers the original word over $Q_2$.
+
+Proof. In (11.5), $M=3$ permits only the nongrid reduced pair $(a,b)=(1,2)$; $M=4$ permits only $(1,3)$. Both satisfy $a+b=M$ with $h=j=1$. All other positive coprime pairs with $a+b\le M$ have denominator dividing $M$. This gives (13.3).
+
+Here are all actual original candidates and their initial scale-three reports:
+
+| Original word | Original response | $q_3$ |
+| --- | --- | --- |
+| $\varepsilon$ | $1$ | $3$ |
+| $L$ | $1/2$ | $1$ |
+| $R$ | $2$ | $6$ |
+| $LL$ | $1/3$ | $1$ |
+| $LR$ | $3/2$ | $4$ |
+| $RL$ | $2/3$ | $2$ |
+| $RR$ | $3$ | $9$ |
+
+Read first. Every report except $1$ identifies its original word. On report $1$, execute $L$ on the same source and read again: the originals $1/2$ and $1/3$ become $1/3$ and $1/4$, with reports $1$ and $0$. This supplies the claimed actual policy. At scale four, $(1/2,2/3]$ contains neither a quarter-grid cut nor the extra cut $1/3$. Thus $1/2\equiv_4 2/3$ by (11.4). Congruence and identical transcript decisions preserve their equality of all future reports, proving the impossibility. $\square$
+

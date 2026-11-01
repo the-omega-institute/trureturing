@@ -1,0 +1,55 @@
+**Corollary 4.2 (The longer-marker cost is strict).** Let $r\ge3$ and $\ell\ge2$ be integers. Let $`\eta:A_{2r+1}^*\to B^*`$ belong to $P_{\mathrm{ret}}$ with chosen marker $p$ of length $\ell$, where $|B|=r+1$ and the letters occurring in $\eta(u_{2r+1})$ are exactly $B$. For $h_i=|\eta(i)|$, assume the explicit cancellation and lattice conditions of Definition 4.1. If $\eta(u_{2r+1})$ is rich and
+
+$$
+E\bigl(\eta(u_{2r+1})\bigr)\le E^*(u_{2r+1}),
+$$
+
+then
+
+$$
+T>(\ell+1)(2^{r+1}+r-1)-2^r.
+$$
+
+In particular, when $r=3$ these hypotheses imply $T\ge18\ell+12$, and thus $T\ge48$ for every chosen marker of length at least two.
+
+*Proof.* We use the total-length counting argument of [the quantitative spectral-defect theory, Theorem 8.2](RICH_WORD_QUANTITATIVE_SPECTRAL_DEFECT.md#8-length-restrictions-for-the-literal-prefix-class), deriving it here directly from the assumed lattice equations and the common-prefix and injectivity hypotheses. Summing the lattice equations gives
+
+$$
+\begin{aligned}
+T
+ &=\sum_{i=0}^{r}h_i+
+   \sum_{j=1}^{r}\left(h_r+\sum_{i=0}^{j-1}2^{j-1-i}h_i\right)\\
+ &=(r+1)h_r+
+   \sum_{i=0}^{r-1}\left(1+\sum_{j=i+1}^{r}2^{j-1-i}\right)h_i\\
+ &=(r+1)h_r+\sum_{i=0}^{r-1}2^{r-i}h_i.
+\end{aligned}
+$$
+
+Each independent length $h_0,\ldots,h_r$ is at least $\ell$, since every image begins with $p$. If $h_i=\ell$, then $\eta(i)=p$. Injectivity therefore permits at most one independent length equal to $\ell$; all the others are at least $\ell+1$. The coefficient sum in the displayed formula is
+
+$$
+(r+1)+\sum_{i=0}^{r-1}2^{r-i}=2^{r+1}+r-1.
+$$
+
+The unique largest coefficient is $2^r$, at $h_0$: the other powers of two are smaller, and $2^r>r+1$ for every $r\ge3$ (starting at $8>4$ and doubling). If all independent lengths are at least $\ell+1$, then $T\ge(\ell+1)(2^{r+1}+r-1)>C_r(\ell)$. Otherwise, exactly one length equals $\ell$, reducing this baseline by its coefficient, which is at most $2^r$; any increase in another length increases $T$ because all coefficients are positive. Hence
+
+$$
+T\ge(\ell+1)(2^{r+1}+r-1)-2^r=C_r(\ell),
+$$
+
+and equality forces the unique decrease to occur at $h_0$ and every other independent length to equal $\ell+1$, that is,
+
+$$
+h_0=\ell,\qquad h_1=\cdots=h_r=\ell+1.
+$$
+
+If equality held, all hypotheses of Theorem 3.1 would hold, including the lattice equations imposed here. That theorem would give $E(\eta(u_{2r+1}))>E^*(u_{2r+1})$, contradicting the assumed ordinary exponent bound. Therefore $T>C_r(\ell)$.
+
+For $r=3$, summing the imposed lattice equations gives
+
+$$
+T=8h_0+4h_1+2h_2+4h_3,
+$$
+
+so $T$ is even. Since $C_3(\ell)=18\ell+10$ is even, strictness gives $T\ge18\ell+12$. Finally $\ell\ge2$ gives $T\ge48$. $\square$
+

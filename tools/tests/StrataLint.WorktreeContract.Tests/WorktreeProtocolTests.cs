@@ -49,6 +49,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void AggregateCleanupWarnsAndSucceedsForOneRefusedTree()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-all", "directory",
+                "CleanupMakeTests.test_single_tree_refusal_keeps_aggregate_success_and_warning"],
+            root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData("self")]
     [InlineData("stable")]
@@ -253,8 +270,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
     [InlineData("pool_return_selected_eviction_refusal_fails_public_exit")]
-    [InlineData("pool_final_qualification_defers_later_candidates")]
-    [InlineData("pool_return_final_qualification_defers_later_candidates")]
+    [InlineData("pool_final_qualification_continues_later_candidates")]
+    [InlineData("pool_return_final_qualification_continues_later_candidates")]
     [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
     [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
@@ -372,6 +389,16 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_pressure_failure_after_eviction_preserves_receipt")]
     [InlineData("pool_confirmation_timeout_after_eviction_preserves_receipt")]
     [InlineData("pool_unexpected_removal_failure_preserves_recovery")]
+    [InlineData("pool_resumes_interrupted_eviction_without_cache")]
+    [InlineData("pool_resumes_interrupted_eviction_with_deleted_ignore")]
+    [InlineData("pool_retains_dirty_idle_without_removal_record")]
+    [InlineData("pool_retains_interrupted_eviction_with_modified_file")]
+    [InlineData("pool_retains_interrupted_eviction_with_untracked_file")]
+    [InlineData("pool_never_claims_pending_removal_even_when_clean")]
+    [InlineData("pool_retains_mismatched_removal_record_without_reconverging")]
+    [InlineData("pool_revalidates_interrupted_eviction_before_common_removal")]
+    [InlineData("pool_pending_removal_keeps_unfinished_operation_guard")]
+    [InlineData("pool_pending_removal_does_not_displace_healthy_capacity")]
     public void IdlePoolPreservesNativeGitState(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -427,6 +454,51 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_payload_process_death_retains_registration_and_resumes")]
     [InlineData("native_unregistration_failure_leaves_only_git_link")]
     [InlineData("removal_refuses_nested_repository_before_any_payload")]
+    [InlineData("removal_allows_declared_lake_dependency")]
+    [InlineData("removal_refuses_undeclared_lake_dependency")]
+    [InlineData("removal_refuses_lake_dependency_without_manifest")]
+    [InlineData("removal_refuses_malformed_lake_manifest")]
+    [InlineData("removal_refuses_nonpackage_lake_nested_repository")]
+    [InlineData("removal_refuses_nested_repository_outside_lake_packages")]
+    [InlineData("removal_allows_declared_nested_lake_project_dependency")]
+    [InlineData("lake_dependency_retains_modified_tracked_file")]
+    [InlineData("lake_dependency_retains_staged_file")]
+    [InlineData("lake_dependency_retains_untracked_file")]
+    [InlineData("lake_dependency_retains_detached_local_commit")]
+    [InlineData("lake_dependency_retains_local_branch_commit")]
+    [InlineData("lake_dependency_retains_stash")]
+    [InlineData("lake_dependency_retains_failed_status_check")]
+    [InlineData("lake_dependency_retains_failed_history_checks")]
+    [InlineData("lake_dependency_allows_unresolvable_manifest_revision_with_remote_head")]
+    [InlineData("lake_dependency_retains_local_head_with_unresolvable_manifest_revision")]
+    [InlineData("lake_dependency_retains_malformed_manifest_revision")]
+    [InlineData("lake_dependency_retains_declared_bare_repository")]
+    [InlineData("lake_dependency_retains_manifest_outside_target")]
+    [InlineData("lake_dependency_allows_ignored_build_and_acquired_tag")]
+    [InlineData("lake_dependency_retains_deinitialized_submodule")]
+    [InlineData("lake_dependency_retains_own_worktree")]
+    [InlineData("lake_dependency_retains_reflog_only_commit")]
+    [InlineData("lake_dependency_retains_assume_unchanged")]
+    [InlineData("lake_dependency_retains_skip_worktree")]
+    [InlineData("lake_dependency_retains_unknown_git_entry")]
+    [InlineData("lake_dependency_retains_nonempty_scope_lock")]
+    [InlineData("lake_dependency_retains_unknown_scope_entry")]
+    [InlineData("lake_dependency_retains_attached_head")]
+    [InlineData("lake_dependency_retains_unknown_reference")]
+    [InlineData("lake_dependency_retains_git_pointer")]
+    [InlineData("lake_dependency_retains_failed_allowlist_checks")]
+    [InlineData("lake_dependency_allows_tag_only_reflog_and_scope_locks")]
+    [InlineData("lake_dependency_retains_custom_hook")]
+    [InlineData("lake_dependency_retains_info_attributes")]
+    [InlineData("lake_dependency_retains_active_info_exclude")]
+    [InlineData("lake_dependency_retains_indented_exclude")]
+    [InlineData("lake_dependency_retains_unknown_config_key")]
+    [InlineData("lake_dependency_retains_object_alternates")]
+    [InlineData("lake_dependency_retains_changed_description")]
+    [InlineData("lake_dependency_retains_unknown_objects_entry")]
+    [InlineData("lake_dependency_retains_unknown_logs_entry")]
+    [InlineData("lake_dependency_allows_observed_partial_clone_metadata")]
+    [InlineData("lake_dependency_allows_linux_clone_metadata")]
     [InlineData("qualification_keeps_nonremoval_nested_cache_eligibility")]
     [InlineData("removal_refuses_gitlink_before_any_payload")]
     [InlineData("removal_refuses_submodule_before_any_payload")]

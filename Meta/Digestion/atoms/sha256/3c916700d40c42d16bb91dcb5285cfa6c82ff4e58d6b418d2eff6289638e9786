@@ -1,0 +1,80 @@
+**Proposition 5.3 (realizable randomization and two horizons).** If the original
+seed probability space is nonatomic, then $\mathsf P_\nu$ is the full set of
+probability vectors on $S$. For every finite $B$ its infimum in Theorem 5.2 is
+attained, and some optimum uses at most two horizons. The two horizons need not
+be neighbors. More generally any proposed two-horizon weight $\theta$ is
+lawful precisely when the original seed has a measurable event of mass
+$\theta$ (unless the two horizons coincide). For a purely atomic seed with
+atom masses $(c_i)$, its exact class is
+$$
+p_h=\sum_{i:f(i)=h}c_i
+$$
+for assignments $f$ of its atoms to horizons. A seed with atoms and a nonatomic
+remainder of mass $c$ realizes exactly such atomic assignments plus an arbitrary
+nonnegative vector of total mass $c$.
+
+**Proof.** We first justify the measure-splitting fact used here. In a finite
+nonatomic measure space every positive set has a positive subset of measure
+at most any prescribed $\epsilon>0$: repeatedly split it into two positive
+parts and follow the smaller part until its mass is small enough. To carve a
+subset of prescribed mass $t$, successively choose a subset of the remaining
+set with mass at most the current deficit and greater than half the supremum
+of the available masses with that bound; stop if the deficit is zero. The
+increasing union has mass at most $t$. If a positive deficit remained, the
+small-subset property applied to the residual of this union would give a fixed
+positive admissible mass at every earlier step, contradicting the increments
+tending to zero. Thus the union has mass $t$. Repeated carving gives every
+countable mass partition; the leftover is null. On an atom a countable-valued
+measurable map is almost surely constant, since its countable fibers partition
+the atom. These facts prove all the seed-feasibility statements, including
+the mixed case. They supply mathematical existence, not effective exact-real
+synthesis.
+
+For completeness, attainment follows directly by compactifying the horizon
+indices. Take a minimizing sequence of probability vectors with cost at most
+$B$. A diagonal subsequence has limits $p_h$ for every finite $h$; put
+$p_\infty=1-\sum_{h<\infty}p_h\ge0$. For each fixed $L$, the bounded
+truncated cost $\min(K_h,K_L)$ is constant for $h\ge L$, including infinity,
+so its expectation depends continuously on finitely many coordinates. Its
+limiting expectation is at most $B$. Monotone convergence as $L\to\infty$
+gives $C(p)\le B$, including the case $K_\infty=\infty$. Risk expectations
+converge too: retain finitely many coordinates and bound the remaining
+contribution by $R_L^*\to0$. Thus $p$ attains the infimum. The original
+nonatomic seed realizes this entire vector by the partition construction.
+This argument retains escaped mass at infinity and charges its actual cost.
+
+At budget zero only horizon zero is feasible. If $B\ge K_\infty<\infty$,
+the infinite horizon is optimal. In the remaining case $0<B<K_\infty$, write
+$F(B)$ for this unrestricted attained value. Mixtures make $F$ convex and it
+is nonincreasing. It is strictly decreasing below $K_\infty$: an optimizer
+has positive error by Theorem 5.2, and mixing in a sufficiently small mass at
+a finite horizon with smaller risk strictly improves it at any larger budget.
+In particular an optimizer at $B$ uses mean exactly $B$. A supporting slope
+$s<0$ exists at this interior budget: convexity orders all left secant slopes
+below all right secant slopes, and any slope between their one-sided limits
+supports the graph; local boundedness makes those limits finite. A zero slope
+would force a constant later segment,
+contradicting strict decrease. Put $\lambda=-s>0$. For every horizon of finite
+cost, the supporting inequality implies
+$$
+R_h^*+\lambda K_h\ge F(B)+\lambda B.
+$$
+The same holds at infinity when it has finite cost. Averaging over an optimal
+measure gives equality, so every horizon in its positive support lies on this
+line. If the support contains a horizon of cost $B$, that single horizon is
+optimal. Otherwise its mean $B$ supplies one supported cost below $B$ and one
+above $B$. Their unique Bernoulli mixture of mean $B$ lies on the same line
+and has risk $F(B)$. Its weight is realizable by the original nonatomic seed.
+For example, take $a=b=1/2$, $\mu=\delta_{1/2}$, and $B=2$. Then
+$$
+(K_2,K_3,K_4)=(7/4,9/4,21/8),\qquad
+(R_2^*,R_3^*,R_4^*)=(1/8,1/8,1/16).
+$$
+The original nonatomic seed can put weight $2/7$ at horizon $4$ and $5/7$ at
+horizon $2$, giving cost $2$ and risk $3/28<1/8$. Interpolation of the two
+adjacent horizons $2,3$ whose costs bracket $2$ has risk $1/8$ and is therefore
+suboptimal. For a
+restricted atomic seed these convex combinations cannot replace its own
+feasibility class, and only the infimum/attainment equivalence of Theorem 5.2
+is being asserted. $\square$
+

@@ -1,0 +1,58 @@
+## 27. 同一来源纤维的凸下界与凹上界
+
+**定义 B-27.1（固定目标的两个包络）。** 对 &#x1D45A;&#x3D;&#x28;&#x1D44B;&#x2C;&#x1D44C;&#x2C;&#x1D44D;&#x29;&#x2208;&#x1D4AB;，令
+
+```math
+\mathcal F_m=\{p\in\Delta_\Sigma:\sum_Ip_Iv_I=m\}.
+```
+
+这是命题A-2.2已完整描述的相容来源律集合。固定有限实值目标 &#x1D453;&#x3A;&#x3A3;&#x2192;&#x211D;，定义
+
+```math
+\underline f(m)=\min_{p\in\mathcal F_m}\sum_Ip_If_I,
+\qquad
+\overline f(m)=\max_{p\in\mathcal F_m}\sum_Ip_If_I.
+```
+
+相容律集合非空，且是有限维紧单纯形的闭子集，所以紧。线性目标连续，最小值和最大值均被实际相容律达到。&#x1D45A;&#x2209;&#x1D4AB; 时纤维为空，本节不把它当成一个具有有限目标区间的读数。
+
+**命题 B-27.2（同纤维包络及目标取反）。** $`\underline f`$ 在 &#x1D4AB; 上凸，$`\overline f`$ 在 &#x1D4AB; 上凹，并且
+
+```math
+\underline{(-f)}=-\overline f,\qquad
+\overline{(-f)}=-\underline f.
+```
+
+证明。取 &#x1D45A;<sub>&#x30;</sub>&#x2C;&#x1D45A;<sub>&#x31;</sub>&#x2208;&#x1D4AB;、&#x30;&#x2264;&#x1D461;&#x2264;&#x31;，分别取实现下界的律 &#x1D45D;<sup>&#x30;</sup>&#x2C;&#x1D45D;<sup>&#x31;</sup>。混合律 &#x1D45D;<sup>&#x1D461;</sup>&#x3D;&#x28;&#x31;&#x2212;&#x1D461;&#x29;&#x1D45D;<sup>&#x30;</sup>&#x2B;&#x1D461;&#x1D45D;<sup>&#x31;</sup> 的均值为 &#x1D45A;<sub>&#x1D461;</sub>&#x3D;&#x28;&#x31;&#x2212;&#x1D461;&#x29;&#x1D45A;<sub>&#x30;</sub>&#x2B;&#x1D461;&#x1D45A;<sub>&#x31;</sub>，所以
+
+```math
+\underline f(m_t)\le\mathbb E_{p^t}f
+=(1-t)\underline f(m_0)+t\underline f(m_1).
+```
+
+同样混合实现上界的律，因上界至少为每个相容律的目标值得
+
+```math
+\overline f(m_t)\ge(1-t)\overline f(m_0)+t\overline f(m_1).
+```
+
+目标取负把同一集合上的最小值换为最大值的负数，直接得到两个反号等式；两侧从始至终使用相同 &#x2131;<sub>&#x1D45A;</sub>。∎
+
+**推导 B-27.3（包络的经典意义与事件补）。** 在有限来源上，这是最大凸次函数和最小凹上函数的具体实现。若凸函数 &#x1D454; 满足 &#x1D454;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2264;&#x1D453;<sub>&#x1D43C;</sub>，有限 Jensen 不等式给
+
+```math
+g(m)\le\sum_Ip_Ig(v_I)\le\sum_Ip_If_I
+\quad\forall p\in\mathcal F_m,
+```
+
+故 $`g\le\underline f`$。而 $`\underline f`$ 自己凸，并在各极点 &#x1D463;<sub>&#x1D43C;</sub> 等于 &#x1D453;<sub>&#x1D43C;</sub>：极点只能由其单模式律表示。对于凹函数 &#x210E;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2265;&#x1D453;<sub>&#x1D43C;</sub>，反向 Jensen 给 $`h\ge\overline f`$；$`\overline f`$ 也在极点等于 &#x1D453;<sub>&#x1D43C;</sub>。Jensen 与凸包络的经典工具见 [B29-L1] §§3.1.1、3.1.8，本节只在同一有限来源任务上消费它们。
+
+若 &#x1D453;&#x3D;&#x1D7CF;<sub>&#x1D438;</sub>，则 &#x1D7CF;<sub>&#x1D438;<sup>&#x1D450;</sup></sub>&#x3D;&#x31;&#x2212;&#x1D7CF;<sub>&#x1D438;</sub>，所以
+
+```math
+\underline{\Pr}(E^c)=1-\overline{\Pr}(E),\qquad
+\overline{\Pr}(E^c)=1-\underline{\Pr}(E).
+```
+
+这把事件补与目标反号精确连接到同纤维的两张边界。上下界表示“每份相容律至少如此”和“某份相容律至多可达如此”的尖锐量词；它们不允许观察者选择隐藏律或强制抽样结果。
+

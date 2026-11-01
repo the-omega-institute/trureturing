@@ -1,0 +1,35 @@
+### 对原整数的直接推论
+
+由式 (29)—(30)，
+
+<a id="eq-33"></a>
+
+$$
+\boxed{
+-\log R(n)
+>
+I_\psi(T)+
+\frac{7\log2}{16T\log T}.
+}
+\tag{33}
+$$
+
+因此，对满足 $n>5040$、$T=\log n\ge8$ 的原整数，
+
+<a id="eq-34"></a>
+
+$$
+\boxed{
+I_\psi(T)\ge
+-\frac{7\log2}{16T\log T}
+\quad\Longrightarrow\quad
+R(n)<1.
+}
+\tag{34}
+$$
+
+这是一个明确的充分条件。我们没有把原整数换成优化整数，也没有删除其素数因子；优化只用于定义一个非负差额 $\mathcal D(n)$。
+
+---
+
+<a id="section-10"></a>

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:37eccd5ddd9ee7244727b1df7e2a1a023ac935660f41713ae09564cc4f7a8999
+  normalized_sha256: sha256:37eccd5ddd9ee7244727b1df7e2a1a023ac935660f41713ae09564cc4f7a8999
+cas_ref: sha256:37eccd5ddd9ee7244727b1df7e2a1a023ac935660f41713ae09564cc4f7a8999
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.cp_kFidelity_alternating_truncation_bound
+    target_statement_id: sha256:c3e06d9b99a88feb1d3fc95921a67de20d934c9fd4052d9ebb72f68687e53474
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+### 40.3. The arbitrary-family bridge to a weighted clique
+
+For each of the fifteen pair partitions construct a graph $G$. Its vertices are pairs $(i,S)$ with $S\in I$, $\omega(S)>0$ and $S\cap D_*=M_i$. Distinct vertices $(i,S)$ and $(j,R)$ are adjacent exactly when $S\cap R\ne\varnothing$. Give $(i,S)$ weight $\omega(S)$. Within one core all vertices are adjacent because they share $M_i$.
+
+From the original F take the support of its members in the three matching cores. This support is a clique in G: adjacency tests the full original ear sets, including all ears outside D. It meets all three parts because each a_i>0. Moreover
+
+$$
+A\le\sum_{(i,S)\text{ in its support}}\omega(S).
+\tag{40.2}
+$$
+
+This inequality only counts the available distinct actual triangulations with each full ear set. It adds no completion to F and makes no saturation assumption. Every clique in the finite graph extends to an inclusion-maximal clique. Since weights are positive, (40.2) is bounded by the weight of a maximal clique still meeting all three parts. It therefore suffices to enumerate such spanning maximal cliques.
+

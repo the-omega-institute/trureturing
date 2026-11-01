@@ -1,0 +1,19 @@
+相交的强制耳集计零。对 $R\subseteq J$ 再作容斥，得
+
+$$
+w_J^{pq}(R)=
+\sum_{V\subseteq J\setminus R}(-1)^{|V|}
+\begin{cases}
+D_{|R\cup V|}^{pq},&R\cup V\text{ 两两不交叉},\\
+0,&\text{否则},
+\end{cases}
+\quad(R\text{ 两两不交叉}).
+\tag{37.7}
+$$
+
+反侧的公式交换 $p,q$，不能将它们默认为同一权重。每个非零项满足
+$|K|+|R\cup V|\le\lfloor n/2\rfloor$，故(37.6)–(37.7)的全部下标合法，剩余多边形至少有 $\lceil n/2\rceil\ge7$ 个顶点。
+
+为核对第34节降交叉操作的适用性，在 $J$ 的一个连续块起点记
+$e_0\notin J$、$s=e_1,t=e_2\in J$，并记 $v=e_3$（只在 $e_3\in J$ 时作为迹元素）。这样的起点存在，因为 $J\subseteq E_K\ne\mathcal E_n$。局部五顶点记为 $v_0,\ldots,v_4$，于是 $s=v_0v_2,t=v_1v_3,v=v_2v_4$。$K$ 的中心均不在位置 $0,1,2,3$：这些位置或与 $s,t$ 冲突，或就是它们的中心。因此 $K$ 的任何耳均不以 $v_1,v_2$ 为端点。
+

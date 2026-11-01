@@ -1,0 +1,18 @@
+**推导 B-27.3（包络的经典意义与事件补）。** 在有限来源上，这是最大凸次函数和最小凹上函数的具体实现。若凸函数 &#x1D454; 满足 &#x1D454;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2264;&#x1D453;<sub>&#x1D43C;</sub>，有限 Jensen 不等式给
+
+```math
+g(m)\le\sum_Ip_Ig(v_I)\le\sum_Ip_If_I
+\quad\forall p\in\mathcal F_m,
+```
+
+故 $`g\le\underline f`$。而 $`\underline f`$ 自己凸，并在各极点 &#x1D463;<sub>&#x1D43C;</sub> 等于 &#x1D453;<sub>&#x1D43C;</sub>：极点只能由其单模式律表示。对于凹函数 &#x210E;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2265;&#x1D453;<sub>&#x1D43C;</sub>，反向 Jensen 给 $`h\ge\overline f`$；$`\overline f`$ 也在极点等于 &#x1D453;<sub>&#x1D43C;</sub>。Jensen 与凸包络的经典工具见 [B29-L1] §§3.1.1、3.1.8，本节只在同一有限来源任务上消费它们。
+
+若 &#x1D453;&#x3D;&#x1D7CF;<sub>&#x1D438;</sub>，则 &#x1D7CF;<sub>&#x1D438;<sup>&#x1D450;</sup></sub>&#x3D;&#x31;&#x2212;&#x1D7CF;<sub>&#x1D438;</sub>，所以
+
+```math
+\underline{\Pr}(E^c)=1-\overline{\Pr}(E),\qquad
+\overline{\Pr}(E^c)=1-\underline{\Pr}(E).
+```
+
+这把事件补与目标反号精确连接到同纤维的两张边界。上下界表示“每份相容律至少如此”和“某份相容律至多可达如此”的尖锐量词；它们不允许观察者选择隐藏律或强制抽样结果。
+

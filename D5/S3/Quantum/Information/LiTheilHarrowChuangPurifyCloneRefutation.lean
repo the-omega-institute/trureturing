@@ -479,7 +479,7 @@ private theorem target_density_and_marginal {d r : ℕ} (ρ : DensityState (Fin 
   exact ⟨(mem_densityMatrices_iff A).mp hden |>.1,
     (mem_densityMatrices_iff A).mp hden |>.2, hmarg⟩
 
-private theorem vecPure_rank_one {a : Type*} [Fintype a] [DecidableEq a]
+theorem vecPure_rank_one {a : Type*} [Fintype a] [DecidableEq a]
     (v : a → ℂ) (htr : (Matrix.vecMulVec v (star v)).trace = 1) :
     (Matrix.vecMulVec v (star v)).rank = 1 := by
   have hl := Matrix.rank_vecMulVec_le v (star v)

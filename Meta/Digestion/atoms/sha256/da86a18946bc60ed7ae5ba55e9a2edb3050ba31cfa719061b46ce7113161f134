@@ -1,0 +1,14 @@
+**Convention 2.2 (Replica multi-entropy).** Following the replica definition of Gadde, Krishna and Sharma in the form of Appendix A of Akella, Iizuka and Miyata, the replicas are labelled by $r\in(\mathbb Z/n)^{\mathtt q-1}$. Party $c<\mathtt q$ acts on the replica labels by the translation $r\mapsto r+\delta_c$, where $\delta_c$ is the $c$-th standard basis vector of $(\mathbb Z/n)^{\mathtt q-1}$, and the last party $\mathtt q$ acts by the identity, $\delta_{\mathtt q}=0$. In the computational basis,
+
+$$
+Z_n^{(\mathtt q)}=\sum_{x:(\mathbb Z/n)^{\mathtt q-1}\to\{0,1\}^N}\ \prod_{r}\overline{\psi(x_r)}\,\psi\big(u\mapsto x_{r+\delta_{\mathrm{col}(u)}}(u)\big),
+$$
+
+and
+
+$$
+S_n^{(\mathtt q)}=\frac{1}{1-n}\,\frac{1}{n^{\mathtt q-2}}\,\log\frac{Z_n^{(\mathtt q)}}{\big(Z_1^{(\mathtt q)}\big)^{n^{\mathtt q-1}}}.
+$$
+
+For a normalized state $Z_1^{(\mathtt q)}=1$. Throughout this volume $n=3$, and $S_3^{(\mathtt q)}$, or $S_3^{(\mathtt q)}(\psi,\mathrm{col})$, denotes this quantity.
+

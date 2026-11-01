@@ -1,0 +1,18 @@
+**Theorem 4.1 (Pauli-weight formula).** For every $n\ge1$, every $k\ge0$ and every linear map $\Lambda$ on $M_{2^n}(\mathbb C)$, with $Q_w$ as in Convention 2.1 and $\binom{m}{k}=0$ for $k>m$,
+
+$$
+F_k(\Lambda)=Q_0+(-1)^k\sum_{w=1}^{n}3^{-w}\binom{w-1}{k}Q_w .
+$$
+
+In particular $F_k(\Lambda)=Q_0=F(\Lambda)$ for every $k\ge n$, and $F_0(\Lambda)=\sum_\beta3^{-\lvert\beta\rvert}q_\beta$.
+
+**Proof.** Fix $\beta$ with $\lvert\beta\rvert=w$ and support $W=\lbrace i:\beta_i\ne0\rbrace$. In the formula of Lemma 3.1, a subset $T$ containing an index $i\notin W$ contributes $0$, since $\alpha(0,0)=0$. For $T\subseteq W$ every factor equals $\frac13$ at indices of $W$ and $1$ elsewhere, so the term equals $3^{-w}$. Hence the coefficient of $q_\beta$ is $3^{-w}\sum_{j=0}^{k}(-1)^j\binom{w}{j}$, which is $1$ for $w=0$. For $w\ge1$ and every integer $m\ge0$,
+
+$$
+\sum_{j=0}^{m}(-1)^j\binom{w}{j}=(-1)^m\binom{w-1}{m},
+$$
+
+by induction on $m$: both sides equal $1$ at $m=0$, and Pascal's rule $\binom{w}{m}=\binom{w-1}{m}+\binom{w-1}{m-1}$ gives $(-1)^{m-1}\binom{w-1}{m-1}+(-1)^m\binom{w}{m}=(-1)^m\binom{w-1}{m}$. Summing over $\beta$ by weight gives the formula. For $k\ge n$ and $1\le w\le n$ one has $\binom{w-1}{k}=0$; together with Convention 2.1 this gives $F_k=F$. For $k=0$, $\binom{w-1}{0}=1$. $\square$
+
+Stance: suspected-novel for $1\le k\le n-1$; the case $k=0$ is cited fact (d), and the equality $F_n=F$ is stated in cited fact (b). Section VI of the paper in cited fact (b) lists a relationship between the $k$-fidelities and Pauli channels as a route for further work; Theorem 4.1 gives one such relation, expressing every $F_k(\Lambda)$ through the Pauli-twirl weights of $\Lambda$, equivalently through the Pauli channel with the same weights (Lemma 3.1). No claim is made that this settles the question posed there.
+

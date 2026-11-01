@@ -253,7 +253,7 @@ public sealed partial class RemoveWorktreesCommandTests
         AssertResult(result, 0, 1, 0, 0);
         AssertItem(result, "linked", "/fixture/linked", "removed");
         var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
-        Assert.Equal("-c", request.Arguments[1]);
+        Assert.Equal(new[] { "-I", "-B" }, request.Arguments.Take(2));
         Assert.Equal("linked", request.Arguments[request.Arguments.ToList().IndexOf("--names") + 1]);
         Assert.DoesNotContain("--force", request.Arguments);
     }
@@ -405,7 +405,7 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var result = Run(new InventoryRunner(), "--help");
         Assert.True(result.Success, result.Error);
-        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
+        foreach (var text in new[] { "--names", "--force", "1800", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
             Assert.Contains(text, result.Output, StringComparison.Ordinal);
         Assert.Contains("StrataLint worktree remove --names", WorktreeCommand.Usage, StringComparison.Ordinal);
     }

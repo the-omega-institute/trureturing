@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ddaa0b5367b5c59dbac95ce55039c9541285cb3e75040823307f90ae74a191e2
+  normalized_sha256: sha256:ddaa0b5367b5c59dbac95ce55039c9541285cb3e75040823307f90ae74a191e2
+cas_ref: sha256:ddaa0b5367b5c59dbac95ce55039c9541285cb3e75040823307f90ae74a191e2
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/SectorChannels/FiniteFlatSectorOptimum.result
+    target_statement_id: sha256:56eb2f8bb98a377db4da6ef782c3d34b44b780bde64b53edffe97429d7028307
+receipts:
+  unresolved_subitems: []

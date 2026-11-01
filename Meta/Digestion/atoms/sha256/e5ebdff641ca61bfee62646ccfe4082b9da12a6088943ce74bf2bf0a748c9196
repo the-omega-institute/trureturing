@@ -1,0 +1,53 @@
+**定理 70.1（两端角和的严格长度界）。** 若
+
+$$\theta+a+b\le\sigma_1\le\pi/2,\qquad
+\theta+c+d\le\sigma_2\le\pi/2,$$
+
+令 $H(s)=\operatorname{arsinh}(\tan(s/2))$，则
+
+$$\boxed{\ell_{12}<H(\sigma_1)+H(\sigma_2).} \tag{70.2}$$
+
+特别地，当 $\sigma_1=\sigma_2=\sigma$ 时，
+
+$$\boxed{\cosh\ell_{12}<1+2\tan^2(\sigma/2)
+=\frac{3-\cos\sigma}{1+\cos\sigma}.} \tag{70.3}$$
+
+取 $\sigma=\pi/2$，得到 $\cosh\ell_{12}<3$。不限制与目标边相对的角 $g$，也不要求任意两角或两长度相等。
+
+**证明。** 有 $0<\theta<\min(\sigma_1,\sigma_2)\le\pi/2$。置 $s=\sin\theta$，定义正定矩阵与两个向量
+
+$$M=\begin{pmatrix}1&z\\z&1\end{pmatrix},\qquad
+f=\binom{\cos a}{\cos b},\qquad h=\binom{\cos d}{\cos c}.$$
+
+式 (70.1) 的分子为 $s^2\cos g+f^{\!T}Mh$，而
+
+$$f^{\!T}Mf=D_1+s^2,\qquad h^{\!T}Mh=D_2+s^2.$$
+
+因 $g>0$，有 $\cos g<1$；对 $M$ 内积使用 Cauchy–Schwarz 得
+
+$$\cosh\ell_{12}<
+\frac{s^2+\sqrt{(D_1+s^2)(D_2+s^2)}}{\sqrt{D_1D_2}}.$$
+
+记 $u_i=s/\sqrt{D_i}$，右端恰为
+
+$$u_1u_2+\sqrt{1+u_1^2}\sqrt{1+u_2^2}
+=\cosh(\operatorname{arsinh}u_1+\operatorname{arsinh}u_2).$$
+
+另一方面，直接三角恒等式给出
+
+$$D_1=(z+\cos(a+b))(z+\cos(a-b)).$$
+
+因 $a+b\le\sigma_1-\theta<\pi/2$，两个因子均正，且 $\cos(a-b)\ge\cos(a+b)$。于是
+
+$$\sqrt{D_1}\ge z+\cos(a+b)\ge z+\cos(\sigma_1-\theta),$$
+
+$$u_1\le\frac{\sin\theta}{\cos\theta+\cos(\sigma_1-\theta)}
+<\tan(\sigma_1/2).$$
+
+最后一个严格不等式来自
+
+$$2\sin(\sigma_1/2)\cos(\theta-\sigma_1/2)
+=\sin\theta+\sin(\sigma_1-\theta)>\sin\theta,$$
+
+分母的和差化积因子均正。对 $D_2$ 重复同一论证，再用双曲余弦和反双曲正弦在正轴严格递增，得到 (70.2)。等帽情形使用 $\cosh(2\operatorname{arsinh}t)=1+2t^2$，即得 (70.3)。
+

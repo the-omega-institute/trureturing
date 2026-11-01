@@ -1,0 +1,2 @@
+**Obligation 9.5 (quantum and nondeterministic realization).** No quantum instrument, channel, probability law, coherent branch realization or nondeterministic successor has been specified. The deterministic partial-function theorem does not automatically apply to their marginal response laws. Any such extension must specify a common joint realization, the retained classical or quantum information, and the admissible operations; equality of separately attainable marginals does not supply these data.
+

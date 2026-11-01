@@ -90,7 +90,43 @@ $$\forall j \in Nat,\; \operatorname{create}\left(j\right) = \operatorname{Finsu
 
 The signed insertion rule vanishes at an already occupied site and extends linearly.
 
-**Definition 1.8 (parity).**
+**Theorem 1.8 (annihilate ket).**
+
+$$\forall j \in Nat,\; \forall S \in \operatorname{Finset}\left(Nat\right),\; \operatorname{annihilate}\left(j, \operatorname{ket}\left(S\right)\right) = \operatorname{ite}\left(j \in S, \operatorname{smul}\left(\operatorname{phase}\left(j, S\right), \operatorname{ket}\left(\operatorname{Finset}.\operatorname{erase}\left(S, j\right)\right)\right), 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/CountableOccupationFock.annihilate_ket` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Annihilation acts on each occupation basis vector by signed deletion.
+
+**Theorem 1.9 (create ket).**
+
+$$\forall j \in Nat,\; \forall S \in \operatorname{Finset}\left(Nat\right),\; \operatorname{create}\left(j, \operatorname{ket}\left(S\right)\right) = \operatorname{ite}\left(j \in S, 0, \operatorname{smul}\left(\operatorname{phase}\left(j, S\right), \operatorname{ket}\left(\operatorname{insert}\left(j, S\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/CountableOccupationFock.create_ket` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Creation acts on each occupation basis vector by signed insertion.
+
+**Theorem 1.10 (end ext).**
+
+$$\forall T \in \operatorname{Module}.\operatorname{End}\left(Complex, Fock\right),\; \forall U \in \operatorname{Module}.\operatorname{End}\left(Complex, Fock\right),\; \left(\forall S \in \operatorname{Finset}\left(Nat\right),\; \operatorname{T}\left(\operatorname{ket}\left(S\right)\right) = \operatorname{U}\left(\operatorname{ket}\left(S\right)\right)\right) \Rightarrow T = U$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/CountableOccupationFock.end_ext` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Complex linear endomorphisms agreeing on every occupation basis vector are equal.
+
+**Definition 1.11 (parity).**
 
 $$parity = \operatorname{Finsupp}.\operatorname{lsum}\left(Complex, \lambda (S:\operatorname{Finset}\left(Nat\right)) \mapsto \operatorname{LinearMap}.\operatorname{smulRight}\left(\operatorname{LinearMap}.\operatorname{id}, \operatorname{smul}\left((-1:Complex)^{\operatorname{Finset}.\operatorname{card}\left(S\right)}, \operatorname{ket}\left(S\right)\right)\right)\right)$$
 
@@ -102,7 +138,7 @@ $$parity = \operatorname{Finsupp}.\operatorname{lsum}\left(Complex, \lambda (S:\
 
 Parity is the occupation-cardinality sign.
 
-**Definition 1.9 (prefixEmbed).**
+**Definition 1.12 (prefixEmbed).**
 
 $$\forall N \in Nat,\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{prefixEmbed}\left(N, v\right) = \sum_{t:\operatorname{Assignment}\left(N\right)} \operatorname{smul}\left(\operatorname{v}\left(t\right), \operatorname{ket}\left(\operatorname{occupationSet}\left(t\right)\right)\right)$$
 
@@ -114,7 +150,7 @@ $$\forall N \in Nat,\; \forall v \in \operatorname{Assignment}\left(N\right) \to
 
 The finite Boolean vector is embedded by its original occupation coordinates.
 
-**Theorem 1.10 (prefixEmbed injective).**
+**Theorem 1.13 (prefixEmbed injective).**
 
 $$\forall N \in Nat,\; \operatorname{Function}.\operatorname{Injective}\left(\operatorname{prefixEmbed}\left(N\right)\right)$$
 
@@ -126,7 +162,7 @@ $$\forall N \in Nat,\; \operatorname{Function}.\operatorname{Injective}\left(\op
 
 Reading the coefficient at an encoded occupation recovers the finite input coordinate.
 
-**Theorem 1.11 (jw annihilate intertwining).**
+**Theorem 1.14 (jw annihilate intertwining).**
 
 $$\forall N \in Nat,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{annihilate}\left(\operatorname{Fin}.\operatorname{val}\left(j\right), \operatorname{prefixEmbed}\left(N, v\right)\right) = \operatorname{prefixEmbed}\left(N, \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{fullC}\left(j\right), v\right)\right)$$
 
@@ -138,7 +174,7 @@ $$\forall N \in Nat,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall
 
 The existing signed matrix coefficient and occupation deletion identify the two actual actions.
 
-**Theorem 1.12 (jw create intertwining).**
+**Theorem 1.15 (jw create intertwining).**
 
 $$\forall N \in Nat,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{create}\left(\operatorname{Fin}.\operatorname{val}\left(j\right), \operatorname{prefixEmbed}\left(N, v\right)\right) = \operatorname{prefixEmbed}\left(N, \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{fullC}\left(j\right)\right), v\right)\right)$$
 
@@ -150,7 +186,7 @@ $$\forall N \in Nat,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall
 
 Conjugate transposition of the existing entry formula gives signed occupation insertion; the phase is real.
 
-**Definition 1.13 (prefixExtend).**
+**Definition 1.16 (prefixExtend).**
 
 $$\forall N \in Nat,\; \forall M \in Nat,\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{prefixExtend}\left(N, M, v\right) = \sum_{t:\operatorname{Assignment}\left(N\right)} \operatorname{smul}\left(\operatorname{v}\left(t\right), \operatorname{Pi}.\operatorname{single}\left(\operatorname{occupationOfSet}\left(M, \operatorname{occupationSet}\left(t\right)\right), 1\right)\right)$$
 
@@ -162,7 +198,7 @@ $$\forall N \in Nat,\; \forall M \in Nat,\; \forall v \in \operatorname{Assignme
 
 Assignments are extended by false at the additional sites. On basis assignments the displayed occupationOfSet formula is literal.
 
-**Theorem 1.14 (prefix coherence).**
+**Theorem 1.17 (prefix coherence).**
 
 $$\forall N \in Nat,\; \forall M \in Nat,\; N \le M \Rightarrow \left(\forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{prefixEmbed}\left(M, \operatorname{prefixExtend}\left(N, M, v\right)\right) = \operatorname{prefixEmbed}\left(N, v\right)\right)$$
 
@@ -174,7 +210,7 @@ $$\forall N \in Nat,\; \forall M \in Nat,\; N \le M \Rightarrow \left(\forall v 
 
 For N at most M, extending by empty sites preserves the countable state.
 
-**Theorem 1.15 (cutoff annihilate coherence).**
+**Theorem 1.18 (cutoff annihilate coherence).**
 
 $$\forall N \in Nat,\; \forall M \in Nat,\; \forall h \in N \le M,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{fullC}\left(\operatorname{Fin}.\operatorname{castLE}\left(h, j\right)\right), \operatorname{prefixExtend}\left(N, M, v\right)\right) = \operatorname{prefixExtend}\left(N, M, \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{fullC}\left(j\right), v\right)\right)$$
 
@@ -186,7 +222,7 @@ $$\forall N \in Nat,\; \forall M \in Nat,\; \forall h \in N \le M,\; \forall j \
 
 Injectivity of the larger embedding and the annihilator intertwining prove coherent matrix transport.
 
-**Theorem 1.16 (cutoff create coherence).**
+**Theorem 1.19 (cutoff create coherence).**
 
 $$\forall N \in Nat,\; \forall M \in Nat,\; \forall h \in N \le M,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{fullC}\left(\operatorname{Fin}.\operatorname{castLE}\left(h, j\right)\right)\right), \operatorname{prefixExtend}\left(N, M, v\right)\right) = \operatorname{prefixExtend}\left(N, M, \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{fullC}\left(j\right)\right), v\right)\right)$$
 
@@ -198,7 +234,7 @@ $$\forall N \in Nat,\; \forall M \in Nat,\; \forall h \in N \le M,\; \forall j \
 
 The creator matrices obey the same coherent extension law.
 
-**Theorem 1.17 (finite capture).**
+**Theorem 1.20 (finite capture).**
 
 $$\forall v \in Fock,\; \forall J \in \operatorname{Finset}\left(Nat\right),\; \exists N \in Nat,\; \left(\forall j \in Nat,\; j \in J \Rightarrow j < N\right) \land \left(\exists w \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{prefixEmbed}\left(N, w\right) = v\right)$$
 
@@ -210,7 +246,7 @@ $$\forall v \in Fock,\; \forall J \in \operatorname{Finset}\left(Nat\right),\; \
 
 One prefix contains every occupied site of the state and every site in the selected finite set J. Capture is exact, including the empty-state boundary.
 
-**Definition 1.18 (mode).**
+**Definition 1.21 (mode).**
 
 $$\forall j \in Nat,\; \forall b \in Bool,\; \operatorname{mode}\left(j, b\right) = \operatorname{ite}\left(b, \operatorname{create}\left(j\right), \operatorname{annihilate}\left(j\right)\right)$$
 
@@ -222,7 +258,7 @@ $$\forall j \in Nat,\; \forall b \in Bool,\; \operatorname{mode}\left(j, b\right
 
 True selects creation and false selects annihilation.
 
-**Definition 1.19 (finiteMode).**
+**Definition 1.22 (finiteMode).**
 
 $$\forall N \in Nat,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall b \in Bool,\; \operatorname{finiteMode}\left(j, b\right) = \operatorname{ite}\left(b, \operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{fullC}\left(j\right)\right), \operatorname{fullC}\left(j\right)\right)$$
 
@@ -234,7 +270,7 @@ $$\forall N \in Nat,\; \forall j \in \operatorname{Fin}\left(N\right),\; \forall
 
 The finite supplier follows the same Boolean convention.
 
-**Definition 1.20 (word).**
+**Definition 1.23 (word).**
 
 $$\operatorname{word}\left(\operatorname{List}.\operatorname{nil}\right) = (1:\operatorname{Module}.\operatorname{End}\left(Complex, Fock\right)) \land \left(\forall p \in \operatorname{Prod}\left(Nat, Bool\right),\; \forall w \in \operatorname{List}\left(\operatorname{Prod}\left(Nat, Bool\right)\right),\; \operatorname{word}\left(\operatorname{List}.\operatorname{cons}\left(p, w\right)\right) = \operatorname{mode}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right), \operatorname{Prod}.\operatorname{snd}\left(p\right)\right) \cdot \operatorname{word}\left(w\right)\right)$$
 
@@ -246,7 +282,7 @@ $$\operatorname{word}\left(\operatorname{List}.\operatorname{nil}\right) = (1:\o
 
 Products act on the rightmost state first.
 
-**Definition 1.21 (finiteWord).**
+**Definition 1.24 (finiteWord).**
 
 $$\forall N \in Nat,\; \operatorname{finiteWord}\left(\operatorname{List}.\operatorname{nil}\right) = \operatorname{Matrix}.\operatorname{one}\left(\operatorname{Assignment}\left(N\right)\right) \land \left(\forall p \in \operatorname{Prod}\left(\operatorname{Fin}\left(N\right), Bool\right),\; \forall w \in \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(N\right), Bool\right)\right),\; \operatorname{finiteWord}\left(\operatorname{List}.\operatorname{cons}\left(p, w\right)\right) = \operatorname{finiteMode}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right), \operatorname{Prod}.\operatorname{snd}\left(p\right)\right) \cdot \operatorname{finiteWord}\left(w\right)\right)$$
 
@@ -258,7 +294,7 @@ $$\forall N \in Nat,\; \operatorname{finiteWord}\left(\operatorname{List}.\opera
 
 Finite matrix words include the empty identity word.
 
-**Theorem 1.22 (word intertwining).**
+**Theorem 1.25 (word intertwining).**
 
 $$\forall N \in Nat,\; \forall w \in \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(N\right), Bool\right)\right),\; \forall v \in \operatorname{Assignment}\left(N\right) \to Complex,\; \operatorname{word}\left(\operatorname{List}.\operatorname{map}\left(\lambda (p:\operatorname{Prod}\left(\operatorname{Fin}\left(N\right), Bool\right)) \mapsto \operatorname{Prod}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right), \operatorname{Prod}.\operatorname{snd}\left(p\right)\right), w\right), \operatorname{prefixEmbed}\left(N, v\right)\right) = \operatorname{prefixEmbed}\left(N, \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{finiteWord}\left(w\right), v\right)\right)$$
 
@@ -270,7 +306,7 @@ $$\forall N \in Nat,\; \forall w \in \operatorname{List}\left(\operatorname{Prod
 
 Both single-operator intertwinings propagate through every finite word.
 
-**Theorem 1.23 (car).**
+**Theorem 1.26 (car).**
 
 $$\forall i \in Nat,\; \forall j \in Nat,\; \forall a \in Bool,\; \forall b \in Bool,\; \operatorname{mode}\left(i, a\right) \cdot \operatorname{mode}\left(j, b\right) + \operatorname{mode}\left(j, b\right) \cdot \operatorname{mode}\left(i, a\right) = \operatorname{ite}\left(i = j \land a \ne b, (1:\operatorname{Module}.\operatorname{End}\left(Complex, Fock\right)), 0\right)$$
 
@@ -282,7 +318,7 @@ $$\forall i \in Nat,\; \forall j \in Nat,\; \forall a \in Bool,\; \forall b \in 
 
 Every finite state and the two chosen indices fit in one prefix. Word transport consumes the finite CAR, including the equal-site nilpotence supplied by the Majorana relations.
 
-**Theorem 1.24 (annihilate vacuum).**
+**Theorem 1.27 (annihilate vacuum).**
 
 $$\forall j \in Nat,\; \operatorname{annihilate}\left(j, vacuum\right) = 0$$
 
@@ -294,7 +330,7 @@ $$\forall j \in Nat,\; \operatorname{annihilate}\left(j, vacuum\right) = 0$$
 
 No site is occupied in the vacuum.
 
-**Theorem 1.25 (create vacuum).**
+**Theorem 1.28 (create vacuum).**
 
 $$\forall j \in Nat,\; \operatorname{create}\left(j, vacuum\right) = \operatorname{ket}\left(\operatorname{Finset}.\operatorname{singleton}\left(j\right)\right)$$
 
@@ -306,7 +342,7 @@ $$\forall j \in Nat,\; \operatorname{create}\left(j, vacuum\right) = \operatorna
 
 Insertion into the vacuum has sign one.
 
-**Theorem 1.26 (parity involution).**
+**Theorem 1.29 (parity involution).**
 
 $$parity \cdot parity = (1:\operatorname{Module}.\operatorname{End}\left(Complex, Fock\right))$$
 
@@ -318,7 +354,7 @@ $$parity \cdot parity = (1:\operatorname{Module}.\operatorname{End}\left(Complex
 
 Squaring the occupation sign gives the identity on every basis state.
 
-**Theorem 1.27 (parity odd).**
+**Theorem 1.30 (parity odd).**
 
 $$\forall j \in Nat,\; \forall b \in Bool,\; parity \cdot \operatorname{mode}\left(j, b\right) + \operatorname{mode}\left(j, b\right) \cdot parity = 0$$
 
@@ -330,7 +366,7 @@ $$\forall j \in Nat,\; \forall b \in Bool,\; parity \cdot \operatorname{mode}\le
 
 Every nonzero insertion or deletion changes the cardinality by one.
 
-**Theorem 1.28 (creator spanning).**
+**Theorem 1.31 (creator spanning).**
 
 $$\operatorname{Submodule}.\operatorname{span}\left(Complex, \operatorname{Set}.\operatorname{range}\left(\lambda (w:\operatorname{List}\left(Nat\right)) \mapsto \operatorname{word}\left(\operatorname{List}.\operatorname{map}\left(\lambda (j:Nat) \mapsto \operatorname{Prod}.\operatorname{mk}\left(j, true\right), w\right), vacuum\right)\right)\right) = \operatorname{Submodule}.\operatorname{top}\left(Complex, Fock\right)$$
 
@@ -342,7 +378,7 @@ $$\operatorname{Submodule}.\operatorname{span}\left(Complex, \operatorname{Set}.
 
 Insertion induction produces each occupation basis vector as a nonzero scalar multiple of a creator word. Finite linear extension spans the entire carrier.
 
-**Theorem 1.29 (common annihilator kernel).**
+**Theorem 1.32 (common annihilator kernel).**
 
 $$\forall v \in Fock,\; \left(\forall j \in Nat,\; \operatorname{annihilate}\left(j, v\right) = 0\right) \Leftrightarrow \left(\exists alpha \in Complex,\; v = \operatorname{smul}\left(alpha, vacuum\right)\right)$$
 
@@ -354,7 +390,7 @@ $$\forall v \in Fock,\; \left(\forall j \in Nat,\; \operatorname{annihilate}\lef
 
 If a nonempty occupation S contains j, the coefficient of S with j deleted in annihilate j v is phase j S times the coefficient of S in v. Deletion is injective among occupations containing j, and the sign is nonzero. Thus every nonempty coefficient vanishes, while the empty coefficient supplies the unique scalar. Conversely all annihilators kill each scalar multiple of the actual vacuum.
 
-**Theorem 1.30 (eq scalar of creator commutation).**
+**Theorem 1.33 (eq scalar of creator commutation).**
 
 $$\forall A \in \operatorname{Module}.\operatorname{End}\left(Complex, Fock\right),\; \forall alpha \in Complex,\; A\left(vacuum\right) = \operatorname{smul}\left(alpha, vacuum\right) \Rightarrow \left(\left(\forall j \in Nat,\; A \cdot \operatorname{create}\left(j\right) = \operatorname{create}\left(j\right) \cdot A\right) \Rightarrow A = \operatorname{smul}\left(alpha, (1:\operatorname{Module}.\operatorname{End}\left(Complex, Fock\right))\right)\right)$$
 
@@ -372,14 +408,17 @@ This algebraic representation asserts CAR, exact cutoff transport and parity. St
 
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.Fock`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.annihilate`
+- Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.annihilate_ket`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.annihilate_vacuum`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.car`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.common_annihilator_kernel`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.create`
+- Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.create_ket`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.create_vacuum`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.creator_spanning`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.cutoff_annihilate_coherence`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.cutoff_create_coherence`
+- Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.end_ext`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.eq_scalar_of_creator_commutation`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.finiteMode`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.finiteWord`

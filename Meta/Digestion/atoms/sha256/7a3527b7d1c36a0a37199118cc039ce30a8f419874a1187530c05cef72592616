@@ -1,0 +1,65 @@
+**Theorem 40.2 (only the constant rational representation is compatible).**
+For every $v_0\in V$, every representation (40.3) has
+$u=w=\varepsilon$ and $\iota$ constant on $O(v_0)$. Conversely every
+positive rational constant and these empty words satisfy (40.3).
+On the whole domain $V$, the maps intertwining both actions with fixed
+rooted words are exactly the constant maps with both words empty.
+
+Proof. First use the evaluation freeness actually needed here. For any
+$x\in\mathbb Q_{>0}$, Theorem 6.2 gives a unique word $d_x$ from root
+$1$ to $x$. If $E(s,x)=E(t,x)$, then
+$E(d_xs,1)=E(d_xt,1)$, whence $d_xs=d_xt$ by that theorem, and $s=t$
+by cancellation of the identical prefix. This is freeness of evaluation
+at each rational anchor, not an inference from matrix generation.
+
+Let $\Phi$ replace every $\mathsf G$ by $u$ and every $\mathsf R$ by
+$w$, preserving concatenation. Induction on word length using (40.3)
+gives
+
+$$
+\iota(\operatorname{Run}(W,v))=E(\Phi(W),\iota(v))
+\quad(v\in O(v_0)).
+\tag{40.5}
+$$
+
+The pair actions have the following equality at every $(a,b)\in V$:
+
+$$
+\begin{aligned}
+\operatorname{Run}(\mathsf G\mathsf R\mathsf R,(a,b))
+ &= (a+b+1,a+2b+1)\\
+ &=\operatorname{Run}(\mathsf R\mathsf G\mathsf R\mathsf G,(a,b)).
+\end{aligned}
+\tag{40.6}
+$$
+
+Apply (40.5) at $v_0$. Rational-anchor freeness gives the literal word
+identity $uww=wuwu$. Taking lengths gives
+$|u|+2|w|=2|u|+2|w|$, so $u=\varepsilon$.
+For this same $v_0=(a,b)$ there is a second legal pair equality:
+
+$$
+\begin{aligned}
+\operatorname{Run}(\mathsf R^3,(a,b))
+ &=(a+2b,2a+3b)\\
+ &=\operatorname{Run}
+   (\mathsf R\mathsf G^{a+b}\mathsf R\mathsf G^b,(a,b)).
+\end{aligned}
+\tag{40.7}
+$$
+
+Indeed after the first replacement and $a+b$ graft-effects the pair is
+$(a+2b,a+b)$; replacement followed by $b$ graft-effects gives the
+displayed result. Every prefix is in $V$. With $u$ empty, (40.5) and
+freeness now give $www=ww$, so $3|w|=2|w|$ and $w=\varepsilon$.
+The state-dependent exponents in this equality are witnesses in the
+native process, not a state-dependent choice of compiled word.
+Equation (40.5) then makes $\iota$ constant on its entire orbit. The
+converse follows from the empty-word law.
+
+For a representation on all of $V$, restricting to any orbit first
+forces the two words empty. Graft invariance gives
+$\iota(a,b)=f(b)$ with $f(b)=\iota(0,b)$. Replacement invariance gives
+$f(a+b)=f(b)$ for all $a\ge0,b\ge1$. Taking $b=1$ proves that $f$,
+and hence $\iota$, is constant on $V$. $\square$
+

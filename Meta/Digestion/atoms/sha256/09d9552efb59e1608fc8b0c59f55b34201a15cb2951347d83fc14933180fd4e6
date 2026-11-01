@@ -1,0 +1,35 @@
+#### 定理 12.1（局部变分与完整能量耗散身份）
+
+对固定内部 $\kappa$，速度 $\dot\kappa$ 是
+
+$$
+\min_v\left\{\frac{v^2}{2M(\kappa)}+D'(\kappa)v\right\}
+$$
+
+的唯一解。对内部绝对连续路径、下式各项可积时，有
+
+$$
+D(\kappa_T)-D(\kappa_0)
++\frac{1}{2}\int_0^T\left[\frac{\dot\kappa^2}{M}
++M(D')^2\right]du
+$$
+
+<a id="equation-9"></a>
+
+$$
+=\frac{1}{2}\int_0^T\frac{(\dot\kappa+MD')^2}{M}\,du\ge0.
+\tag{9}
+$$
+
+等号当且仅当该路径几乎处处满足质量作用流。
+
+**证明。**
+
+局部二次式的导数为 $v/M+D'$，二阶导 $1/M>0$。全局式展开右侧平方，交叉项积分为 $\int\dot\kappa D' du=D(\kappa_T)-D(\kappa_0)$；非负平方和为零等价于流方程。
+
+∎
+
+这使“递归耗散 = 变分”有了明确含义：目标与 mobility 一起指定，零缺陷轨迹由耗散身份刻画。该结构属于 Onsager／广义梯度系统传统 （[6](#ref-mielke)）。它不证明每个确定性反应模型自动是原生量子仪器或物理热浴。
+
+<a id="statement-12-2"></a>
+

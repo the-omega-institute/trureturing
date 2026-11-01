@@ -1,0 +1,9 @@
+**Definition 2.1 (view kernel and recovery).** For $u:H\to U$, write
+
+$$
+\ker u=\{(h,k)\in H^2:u(h)=u(k)\},\qquad
+u^\#:H\to u(H),\quad u^\#(h)=u(h).
+$$
+
+Recovery of $v$ from $u$ means a function $\bar v:u(H)\to v(H)$ with $v^\#=\bar v\circ u^\#$. It refers only to realized values, including when $H$ is empty. It asserts neither an effective algorithm nor a total decoder on arbitrary ambient encodings.
+

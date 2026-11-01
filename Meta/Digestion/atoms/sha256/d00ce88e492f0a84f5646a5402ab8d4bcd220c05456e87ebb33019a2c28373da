@@ -1,0 +1,30 @@
+**假设 B-37.1（原实际族与完整完成）。** 固定假设B-35.1中的每一个标号严格凸 $n$ 边形、两两不交叉六耳 $D$ 及四个任意指定的实际剖分 $T_a$，本节取 $n\ge14$。始终要求
+
+$$
+\operatorname{Ear}(T_a)=S_a,\qquad
+\{T_1,T_2,T_3,T_4\}\subseteq\mathcal F\subseteq\mathcal T_n,
+\qquad \mathcal F\text{ 在完整耳集上两两相交}.
+$$
+
+沿用第33节的 $M_i,Q_i,\Gamma,\mathscr U_0,w_r,L$ 及第35节的 $\mathcal U=\Gamma[\mathscr U_0]$，置
+
+$$
+u_0=|\mathcal U|,\qquad
+ a_i=|\mathcal F\cap\Gamma(M_i)|,\quad
+ b_i=|\mathcal F\cap\Gamma(Q_i)|,\quad
+ u=|\mathcal F\cap\mathcal U|,\quad A=a_1+a_2+a_3.
+\tag{37.1}
+$$
+
+$a_i>0$ 称第 $i$ 个匹配核活跃。此定义只指定二元 $D$ 迹，核成员的完整耳数可以大于二；$\Gamma(M_i)$ 中每一种实际完成均保留。两个原成员是否相交，使用全部实际耳，包括 $D$ 外的耳。这里没有六耳内相交、纤维饱和、密度、包含极大或放置对称性的前提。
+
+式(33.10)–(33.15)及(35.3)供应
+
+$$
+w_2>w_4>0,\quad w_3>0,\qquad
+L=u_0+w_2+2w_4+6w_3.
+\tag{37.2}
+$$
+
+它们以及第33节证明中的全部覆盖迹分类、完整耳集实现构造，是下述推导的既有输入。第35节的指定匹配完整三耳条件与第36节的两个端点结论各保持原域；本节不将活跃性替换为那些指定完整耳集条件。
+

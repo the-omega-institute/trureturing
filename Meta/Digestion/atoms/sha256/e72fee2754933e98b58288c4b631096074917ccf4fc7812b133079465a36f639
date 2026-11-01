@@ -1,0 +1,104 @@
+**Theorem 4.2 (Entropy-compatible witness bound).** For every source
+and independent biases of Definition 1.1 and every witness $N$ of
+Definition 4.1, applying (4.6) to $P$ and $Q$ with
+$X_P=2E_P+\theta W_P$, $X_Q=2E_Q+\theta W_Q$ proves
+
+$$
+\boxed{I_P+I_Q\geq2v_0-\theta\mu
+ -\Lambda_{\pi_P}(X_P)-\Lambda_{\pi_Q}(X_Q)}
+\tag{4.9}
+$$
+
+for every $\theta\geq0$.
+
+In the proof, retain the support compression when references are
+singular. Define the strict remainder with the full Hilbert–Schmidt norm,
+
+$$
+\delta_\pi(X)=\frac14\|X\|_2^2-\Lambda_\pi(X).
+\tag{4.10}
+$$
+
+For every Hermitian $X$, this remainder is nonnegative, and it is
+strictly positive if $X\ne0$. To prove the claim, let $Y=\Pi X\Pi$,
+let $r_\Pi=\operatorname{rank}\Pi$, and choose the support trace-average
+
+$$
+ c=\frac{\operatorname{tr}_{\Pi}(Y)}{r_\Pi},\qquad Y_0=Y-c\Pi.
+$$
+
+This $c$ minimizes $\|Y-c\Pi\|_2$, since
+
+$$
+ \|Y-c'\Pi\|_2^2
+ =\|Y-c\Pi\|_2^2+r_\Pi(c'-c)^2.
+$$
+
+The functional $\Lambda_\pi$ is invariant under adding a scalar on the
+support. On that support, quantum Pinsker in trace-zero Hilbert–Schmidt
+form gives $D(A\Vert\pi)\geq\|A-\pi\|_2^2$. One can obtain this
+standard Pinsker consequence (see Watrous, *The Theory of Quantum
+Information*) by measuring the positive spectral projection of $A-\pi$,
+applying binary DPI, and using the binary second derivative
+$1/[p(1-p)]\geq4$, together with
+$\|A-\pi\|_1^2\geq2\|A-\pi\|_2^2$. When $A\ne\pi$, the binary
+curvature gives a strict inequality: equality of curvature can occur
+only at the isolated value $p=1/2$, not on a nonconstant segment.
+The Gibbs supremum is attained at the density matrix
+
+$$
+ A_X=\frac{\exp(\log(\pi|_\Pi)+Y)}{Z},\qquad
+ Z=\operatorname{tr}_{\Pi}\exp(\log(\pi|_\Pi)+Y).
+$$
+
+Consequently, writing $D_X=A_X-\pi$ on the support and completing the
+square at this actual optimizer gives
+
+$$
+ \begin{aligned}
+ \Lambda_\pi(X)
+ &=\operatorname{tr}(Y_0D_X)-D(A_X\Vert\pi)\\
+ &\leq\operatorname{tr}(Y_0D_X)-\|D_X\|_2^2\\
+ &=\frac14\|Y_0\|_2^2-\|D_X-Y_0/2\|_2^2
+ \leq\frac14\|Y_0\|_2^2
+ \leq\frac14\|X\|_2^2.
+ \end{aligned}
+$$
+
+If the support compression $Y$ is nonscalar, then $A_X\ne\pi$:
+otherwise taking the unique Hermitian logarithm would give
+$Y=(\log Z)\Pi$. The Pinsker step at the attained optimizer is then
+strict. If $Y$ is scalar, $\Lambda_\pi(X)=0$, so every nonzero $X$
+again has $\delta_\pi(X)>0$. Separately, if $X$ has a nonzero component
+outside its support compression, orthogonality gives
+$\|Y_0\|_2\leq\|Y\|_2<\|X\|_2$, making the final norm comparison
+strict as well. These cases include rank-one reference supports and
+nonzero scalar compressions; no full-rank ambient reference is required.
+
+Pauli orthogonality and (4.3) yield
+
+$$
+\frac14\bigl(\|X_P\|_2^2+\|X_Q\|_2^2\bigr)=v_0+\theta^2q_N,
+\tag{4.11}
+$$
+
+(the cross terms vanish).  If $q_N>0$, choose
+$\theta_0=[-\mu]_+/(2q_N)$; if $q_N=0$, take $\theta_0=0$.
+When $q_N=0$, $\mu=\operatorname{tr}(N\rho)\geq0$ because the witness has no
+correlation component and $\rho$ and $\rho_0$ have equal margins.
+Combining (4.9), (4.10), and (4.11) gives
+
+$$
+\boxed{
+ I_P+I_Q\geq \mathcal C_N:=v_0+\frac{[-\mu]_+^2}{4q_N}
+ +\delta_{\pi_P}(X_P)+\delta_{\pi_Q}(X_Q),}
+\tag{4.12}
+$$
+
+Here $X_P,X_Q$ in (4.12) are evaluated at $\theta=\theta_0$, and the
+quotient is omitted when $q_N=0$. This support-aware entropy witness
+retains the compression in
+(4.5), while the full norm in (4.10) is
+valid because compression is Hilbert–Schmidt contractive. This proves
+Theorem 4.2, including singular product references.
+

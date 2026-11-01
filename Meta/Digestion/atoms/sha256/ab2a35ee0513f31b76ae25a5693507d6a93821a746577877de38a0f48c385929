@@ -1,0 +1,61 @@
+**Theorem 16.1 (the same construction's separate resource coordinates).** Fix a completed finite request prefix of Theorem 14.1, its $J$ actual upgrades and any intervening finite original-action continuations. Write $E_j=E(b_j')$, and use $K_j,\gamma_j,L_{E_j}$ from Definitions 10.1 and (AQBRS.6) at that actual modulus. If $T_{j,0},T_{j,1}$ are its actual scalar-stage test counts and $g_{j,l}$ the graft count in its $l$th short test word, then its acquisition coordinates are exactly
+
+$$
+\begin{aligned}
+C_n&=\sum_{j=1}^J(T_{j,0}+T_{j,1}),\\
+N_R^{\rm acq}&=\sum_{j=1}^J L_{E_j}
+       \bigl(K_jT_{j,0}+(K_j+1)T_{j,1}\bigr),\\
+N_G^{\rm acq}&=\sum_{j=1}^J E_j\sum_{l=1}^{T_{j,0}+T_{j,1}}g_{j,l},
+\qquad T_{j,s}\le b_j',\quad g_{j,l}\le\gamma_j.
+\end{aligned}
+\tag{AQBRO.13}
+$$
+
+Add all actually requested continuation letters to their respective action counts. For total counts $N_R,N_G$, the exact endpoint and quantity bound are the affine-word formula and
+
+$$
+u_{\rm end}=M^{N_R}v_0+\sum_{l=1}^{N_G}M^{r_l}\alpha,
+\qquad qu\le qu_{\rm end}\le2^{N_R}(qv_0+2N_G),
+\tag{AQBRO.14}
+$$
+
+where $r_l$ counts replacements after that actual graft. The modulus and residue payload grow independently of the paid-read bound. In particular the following explicit finite bound holds, with $\mathsf h_b=\sum_{k=1}^b1/k$:
+
+$$
+\log_2E(b)
+\le b\log_2(b+1)\mathsf h_b
+\le b\log_2(b+1)(1+\log b)
+\quad(b\ge1),
+\tag{AQBRO.15}
+$$
+
+where the last logarithm is natural. No total-work, action, storage or source-retention ratio follows from (AQBRO.6).
+
+**Proof.** Apply Theorem 11.1 to every actual upgrade, using $B(E_j)=b_j'$. Each is executed at its actual input pair, so its test and closing counts sum exactly as in (AQBRO.13). The endpoint formula and monotonic quantity bound of Theorem 11.1 apply to the concatenated actual action word, including intervening continuations. Nonnegative coordinates persist. The source can grow even though each upgrade closes modulo its own envelope.
+
+For (AQBRO.15), take logarithms of (AQBRO.2), bound the floor by $b/(p-1)$ and $\log_2p$ by $\log_2(b+1)$, and bound the remaining sum over $p-1$ by the harmonic sum over $1,\ldots,b$. The elementary integral bound on that sum gives the last inequality, including $b=1$. This proves a finite bound on the public modulus representation, not a bound on the unknown actual source. Computing the product by enumeration and trial division and producing its binary representation are charged local work. There is no uniform constant bound on these parameter lengths as requests grow.
+
+For a concrete finite record representation let $A=N_R+N_G$ count all completed source letters, let $Q_j=T_{j,0}+T_{j,1}$, let $\ell_j=\lceil\log_2(E_j+1)\rceil$, and let $I$ be the total binary length of the delivered request moduli and retained non-action input/output data. If $F$ past-cut names are retained, with their integer positions, a sufficient local storage bound beyond installed code and service/binding/rights representations is
+
+$$
+O\!\left(A+I+\sum_{j=1}^J(Q_j+1)\ell_j
+       +F\log_2(A+2)+\max_j\ell_j^2+1\right)\text{ bits}.
+\tag{AQBRO.16}
+$$
+
+Take the maximum over an empty set to be zero. A binary action tag per actual letter retains the authentic source word; every paid reply is stored with its stage and position, using a sequential merged call tape. Stage delimiters and the public envelope schedule identify the read moduli. Each gcd field fits $\ell_j$ bits. Immutable original and upgrade endpoint labels and public moduli fit the $(Q_j+1)\ell_j$ allowances. The current label uses the latest envelope. Explicit cut positions need the displayed $F$ allowance. The squared workspace allowance covers the existing fixed-modulus preparation of Theorem 11.2 and ordinary modular replay; optional retained outputs are included in $I$.
+
+Theorem 11.2 supplies a finite local-work allowance for every upgrade at modulus $E_j$, and all its public preparation, word compilation and closing-loop control must be paid at that modulus. To transport a new label, replay the already retained $A_s$ at the new precision, reducing both the affine matrix and translation after each letter. Standard binary arithmetic gives a conservative additional $O((A_s+1)(\ell_j+\log_2(A_s+2))^3)$ bit-work bound, plus reading the word and writing the labels. Updating $M^{-k_s}$ letter by letter uses the fixed integer matrix $M^{-1}$, so no exact-real step or hidden original coordinate is involved. A past-cut evaluation replays its authentic prefix and then its supplied hypothetical word, paying for both lengths, modular arithmetic and requested output. Request factoring, envelope formation, future input/output and every tape write/retention are additional actual work. These bounds give finite procedures; they neither suppress repeated replay costs nor infer a computation ratio from the read ratio.
+
+Finally, for actual pre-call states $u_i$ and the actual chosen read modulus $H_i^{\rm call}$, source-service work is exactly
+
+$$
+W_{\rm svc}=
+ \sum_{i\in\mathcal I_{\rm read}}\rho_{H_i^{\rm call}}(u_i)
+ +\sum_{i\in\mathcal I_R}\tau(u_i)
+ +\sum_{i\in\mathcal I_G}\gamma_{\rm svc}(u_i).
+\tag{AQBRO.17}
+$$
+
+All closing letters and subsequent genuine continuations belong to these call sets. Add actual source/backing provision, source storage, binding, rights retention, installed services, local record allocation and their retention costs separately. Finite backing and completion for every chosen finite run remain premises. Keeping finite code and constant read factor supplies neither finite capacity for an unbounded future archive nor lawful service after rights are revoked. $\square$
+

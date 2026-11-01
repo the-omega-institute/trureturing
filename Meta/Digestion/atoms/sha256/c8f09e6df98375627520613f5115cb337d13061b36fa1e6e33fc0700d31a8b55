@@ -1,0 +1,35 @@
+### 引理 6.3（后验杂质是完整输出迹距离的 1-Lipschitz 泛函）
+
+对非归一正算子$\tau$，令
+
+$$
+g(\tau)=\operatorname{Tr}(P\tau)-\frac{\operatorname{Tr}(P\tau)^2}{\operatorname{Tr}\tau},\qquad g(0)=0.
+$$
+
+若两组$\{\tau_y\},\{\sigma_y\}$均有总迹一，则
+
+$$
+\left|\sum_yg(\tau_y)-\sum_yg(\sigma_y)\right|
+ \le\frac12\sum_y\|\tau_y-\sigma_y\|_1.
+ \tag{10}
+$$
+
+**证明。**
+
+写$a=\operatorname{Tr}(P\tau)$、$p=\operatorname{Tr}\tau$，则$0\le a\le p$，且
+
+$$
+g(\tau)=\min_{0\le z\le1}\operatorname{Tr}(E_z\tau),
+ \qquad E_z=(1-2z)P+z^2I.
+$$
+
+当$p>0$，二次式$a-2za+z^2p$在$z=a/p$取最小值；$p=0$时显然成立。$E_z$在$P$与$P_0$上的特征值分别为$(1-z)^2,z^2$，故$0\le E_z\le I$。
+把各结果作直和，$\Gamma=\bigoplus_y\tau_y$、$\Sigma=\bigoplus_y\sigma_y$都是态，
+且$\sum_yg(\tau_y)=\min_{(z_y)}\operatorname{Tr}[(\bigoplus_yE_{z_y})\Gamma]$。
+每个块对角算子都是效果，故对迹零的$\Gamma-\Sigma$，
+其期望差绝对值不超过$\frac12\|\Gamma-\Sigma\|_1$。
+同一族效果的下确界保留这个界，直和迹范数相加即得。
+
+∎
+
+<a id="thm:polarization"></a><a id="eq:collapse"></a><a id="eq:weightdefect"></a><a id="eq:occupancy"></a>

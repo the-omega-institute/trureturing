@@ -1,0 +1,26 @@
+**Theorem 5.2 (rooted boundary-history and record criterion).** Under Definition 5.1, let $T_{\mathrm{lit}}$ retain the root and complete ordered named-action/event word, so that $T_{\mathrm{lit}}$ is injective on $H$. Let $M$ be any specified deterministic function of the same history. The following are equivalent:
+
+1. ROOT, PREDECESSOR and RECORD.
+2. $B$ is injective on $H$, and $B$ is recoverable from $M$ on the actual images.
+3. $B$, $T_{\mathrm{lit}}$ and $M$ are pairwise mutually recoverable on the actual images.
+
+Under these conditions there is a unique history decoder $D_B:B(H)\to H$. It has the equations
+
+$$
+\begin{aligned}
+D_B(\rho(r))&=\varepsilon_r,\\
+D_B(U_a(z))&=D_B(z)\cdot a,\\
+D_B(B(h))&=h,\qquad B(D_B(z))=z.
+\end{aligned}
+$$
+
+Event labels in the second equation are the declared deterministic labels of the recovered predecessor and action. This theorem concerns finite legal history. It does not assume a preassigned numerical clock or a uniform bound on history length.
+
+Proof. First suppose ROOT and PREDECESSOR. If two histories have the same boundary and one is empty, ROOT forces the other to be empty, and root injectivity identifies the roots. If both are nonempty, write them $h'\cdot a$ and $k'\cdot b$. PREDECESSOR forces $a=b$ with all its typed parameters and $B(h')=B(k')$. Induction on the length of the first history, using the empty case to handle the other history's length, identifies both prefixes and hence the histories. Labels agree because the boundary machine retains their deterministic values. Thus $B$ is injective. RECORD supplies the second part of assertion 2.
+
+Conversely suppose $B$ is injective on $H$. Equality of two root values identifies their empty histories, so $\rho$ is injective. A root value in a successor image would identify an empty history with a nonempty one, since that predecessor has a finite reaching history. This proves ROOT. If $U_a(z)=U_b(z')$, choose finite histories reaching $z$ and $z'$. Their extensions have equal boundaries and hence are the same literal history. Its last named action and its prefix are unique, giving $a=b$ and $z=z'$. This proves PREDECESSOR. The other part of assertion 2 is RECORD.
+
+For assertion 3, $T_{\mathrm{lit}}$ already has diagonal kernel. Under assertion 2, $B$ does also; RECORD forces $M$ to have diagonal kernel. Theorem 2.2 gives all three inverse image transports. Conversely mutual recovery of $B$ and $T_{\mathrm{lit}}$ makes $B$ injective, and recovery of $B$ from $M$ is included in assertion 3.
+
+Finally each reachable boundary has a finite reaching history. ROOT recognizes mathematically which values are roots, and PREDECESSOR gives a unique incoming pair for every other reachable value. Backward peeling follows any one finite reaching history in reverse and therefore terminates. In particular no infinite predecessor chain can begin at a reachable value under these conditions. Reversing the peeled operations gives $D_B$, and the equations follow from uniqueness. Decidability of root membership and effective computation of the predecessor have not been assumed. $\square$
+
