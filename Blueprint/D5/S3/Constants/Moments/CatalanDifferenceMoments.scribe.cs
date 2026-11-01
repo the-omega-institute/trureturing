@@ -33,6 +33,28 @@ internal sealed class CatalanDifferenceMomentsDocument : IScribeDocumentDefiniti
                         + "coefficient difference (k+7)(L+k)-(k+1)(L+k+2)=6L+4k-2 "
                         + "is positive. This includes L=1, order zero, and both parities.")),
                 Paragraph(Text(
+                    "For every natural n at least 15, put m=floor(n/2)-4, "
+                        + "c_r=Catalan(n-r-2), V_r=c_(r+2)-2c_(r+3)+c_(r+4), and "
+                        + "G_d=sum_(r=0)^d (-1)^r choose(d,r) V_r-V_d. These are numerical "
+                        + "definitions. For every 1 <= d <= m, the original moment formula "
+                        + "gives V_r=A(n-r-6,2) for 0 <= r <= d. Reflecting the binomial "
+                        + "forward-difference expansion of the function x -> A(x,2), and "
+                        + "composing its d and two difference orders, gives "
+                        + "G_d=A(L,d+2)-A(L,2), where L=n-d-6 >= 6. The summation bound "
+                        + "r <= d and d+4 <= floor(n/2) justify every natural subtraction; "
+                        + "no parity or additional lower cutoff on n is required.")),
+                Paragraph(Text(
+                    "At L >= 6 the positive lower envelope makes A(L,k+1)>A(L,k) "
+                        + "for every natural k: the coefficient excess is 2(L+k)-2>0. "
+                        + "Strict monotonicity in the order therefore gives G_d>0 for "
+                        + "1 <= d <= m. If 1 <= d < m, set L'=n-d-7 >= 6. The shift "
+                        + "identity gives G_d-G_(d+1)=A(L',d+2)-A(L',3) >= 0. "
+                        + "Finally direct expansion gives G_1=G_2=V_0-2V_1="
+                        + "c_2-4c_3+5c_4-2c_5=h_n. This establishes the full numerical "
+                        + "positivity, monotonicity and endpoint equalities. It does not "
+                        + "identify any number with an actual trace fiber, establish a "
+                        + "partition or total-cardinality identity, or construct compatible ears.")),
+                Paragraph(Text(
                     "For n at least 34, 1 <= d <= floor(n/2)-4 and 0 <= r < d, define "
                         + "omega(n,d,r) as the sum from j=0 through d-r+2 of "
                         + "(-1)^j choose(d-r+2,j) Catalan(n-r-j-4). The binomial expansion "
