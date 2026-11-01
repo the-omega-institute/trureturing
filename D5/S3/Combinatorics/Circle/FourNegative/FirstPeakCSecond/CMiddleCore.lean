@@ -61,7 +61,9 @@ private theorem ceil_bounds (B M Mn D g : ℤ)
     nlinarith only [hi,hj,hMn]
   have hrd := mul_le_mul_of_nonneg_left hD (show 0≤r by omega)
   refine ⟨hr,hrg,hlow,hhigh,hrM,?_⟩
-  nlinarith only [hrM,hrd,hrel]
+  have hrM' : r*M≤B-1 := by omega
+  rw [hrel]
+  nlinarith only [hrM',hrd,hr]
 
 private theorem floor_bounds (L B M r z : ℤ)
     (hB : 0<B) (hr : 0≤r) (hM : 0≤M) (hnum : 0≤L-r*M)
@@ -79,7 +81,8 @@ private theorem floor_bounds (L B M r z : ℤ)
     by_contra hh
     have := mul_le_mul_of_nonneg_right (show z≤2*w by omega) hB.le
     nlinarith
-  exact ⟨hw,by omega,by omega,hwz⟩
+  have hrem : 0≤(L-r*M)%B ∧ (L-r*M)%B≤B-1 := by omega
+  exact ⟨hw,hrem.1,hrem.2,hwz⟩
 
 private def XGates (v : Row) (s r w : ℤ) : Prop :=
   (0≤v.t*v.A-2*s*v.M ∧ v.t*v.A-2*s*v.M≤v.A-1) ∧
@@ -600,7 +603,10 @@ private theorem terminal_nonpositive (a b c d : ℕ) (r : Fin 4)
     · simpa [nextNewBase] using (hn 1).2
     · simpa [nextNewBase] using (hn 2).2
     · simpa [nextNewBase] using (hn 3).2
-    · have := (hv.1 0).2; dsimp [nextNewBase]; omega
+    · have hh := hv.1 0
+      have hN : 0 < sourceMod a b c d := lt_of_lt_of_le (by omega) hh.2.le
+      change base a b c d 0 < 2 * sourceMod a b c d + 1
+      omega
   exact ⟨by omega,by omega⟩
 
 private theorem packet_positive (a b c d : ℕ)
@@ -613,14 +619,16 @@ private theorem packet_positive (a b c d : ℕ)
   constructor
   · intro P hP i hi
     simp only [xPackets,List.mem_cons,List.mem_singleton] at hP
-    rcases hP with rfl|rfl|rfl|rfl
+    rcases hP with rfl|rfl|rfl|hP
     all_goals simp only [List.mem_append] at hi
     all_goals aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    simp at hP
   · intro P hP i hi
     simp only [vPackets,List.mem_cons,List.mem_singleton] at hP
-    rcases hP with rfl|rfl|rfl|rfl
+    rcases hP with rfl|rfl|rfl|hP
     all_goals simp only [List.mem_append] at hi
     all_goals aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    simp at hP
 
 private theorem fresh_positive (a b c d : ℕ) (e : ℕ) (bs : List (List ℕ×ℕ))
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -661,6 +669,7 @@ private theorem fresh_total (a b c d : ℕ) (l : List ℕ) (j : ℕ)
       ((l.drop j).map (newValue a b c d)).sum=(l.map (newValue a b c d)).sum := by
     rw [←List.sum_append,←List.map_append,List.take_append_drop]
   simp only [insertAt,List.map_append,List.sum_append,List.map_cons]
+  simp only [List.sum_cons,List.sum_nil,zero_add,add_zero]
   rw [h.2.2]
   linarith [h.2.1]
 
