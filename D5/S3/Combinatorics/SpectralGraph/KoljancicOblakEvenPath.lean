@@ -194,4 +194,155 @@ theorem weighted_path_charpoly (b : ℕ → ℝ) (n : ℕ) :
       rw [h0, h1, continuant, map_pow]
       ring
 
+private lemma continuant_monic (q : ℕ → ℝ) (n : ℕ) :
+    (continuant q n).IsMonicOfDegree n := by
+  apply (isMonicOfDegree_iff _ _).2
+  exact ⟨natDegree_le_iff_coeff_eq_zero.2 (continuant_coeff q n).2,
+    (continuant_coeff q n).1⟩
+
+private lemma variation_degree (q dq : ℕ → ℝ) (n : ℕ) :
+    (variation q dq n).degree < (n - 1 : ℕ) := by
+  rw [degree_lt_iff_coeff_zero]
+  intro k hk
+  induction n using Nat.twoStepInduction generalizing k with
+  | zero => simp [variation]
+  | one => simp [variation]
+  | more n h0 h1 =>
+      obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (show k ≠ 0 by omega)
+      simp only [variation, coeff_sub, coeff_X_mul, coeff_C_mul]
+      rw [h1 k (by omega), (continuant_coeff q n).2 (k + 1) (by omega),
+        h0 (k + 1) (by omega)]
+      simp
+
+private lemma branch_parity (q dq : ℕ → ℝ) (n : ℕ) :
+    (continuant q n).comp (-X) = (-1 : ℝ[X]) ^ n * continuant q n ∧
+      (variation q dq n).comp (-X) = (-1 : ℝ[X]) ^ n * variation q dq n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [continuant, variation]
+  | one => simp [continuant, variation]
+  | more n h0 h1 =>
+      constructor <;>
+        simp [continuant, variation, h0.1, h0.2, h1.1, h1.2, pow_succ] <;> ring
+
+/-- The full variation of `(X-a)UV-FV-UG`, where
+`U=P_left(r)`, `V=P_right(s)`, `F=XU-P_left(r+1)` and
+`G=XV-P_right(s+1)`. These fluxes are zero for empty branches.
+All six product-rule contributions are retained. -/
+def joinedVariation (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) : ℝ[X] :=
+  -C da * continuant qL r * continuant qR s +
+    (X - C a) * (variation qL dqL r * continuant qR s +
+      continuant qL r * variation qR dqR s) -
+    (X * variation qL dqL r - variation qL dqL (r + 1)) * continuant qR s -
+    (X * continuant qL r - continuant qL (r + 1)) * variation qR dqR s -
+    variation qL dqL r * (X * continuant qR s - continuant qR (s + 1)) -
+    continuant qL r * (X * variation qR dqR s - variation qR dqR (s + 1))
+
+private lemma coprime_separation (U V dU dV : ℝ[X]) (hUV : IsCoprime U V)
+    (hdU : dU.degree < U.degree) (hdV : dV.degree < V.degree)
+    (h : dU * V + U * dV = 0) : dU = 0 ∧ dV = 0 := by
+  have hu : U ∣ dU * V := by
+    refine ⟨-dV, ?_⟩
+    linear_combination h
+  have hv : V ∣ U * dV := by
+    refine ⟨-dU, ?_⟩
+    linear_combination h
+  exact ⟨eq_zero_of_dvd_of_degree_lt (hUV.dvd_of_dvd_mul_right hu) hdU,
+    eq_zero_of_dvd_of_degree_lt (hUV.symm.dvd_of_dvd_mul_left hv) hdV⟩
+
+/-- At a nonzero central loop, coprime opposite-parity branches separate every
+central and edge variation. Either branch may be empty. Edge indices below its
+length include the edge attaching that branch to the central vertex. -/
+theorem joined_variation_injective (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ)
+    (ha : a ≠ 0) (hodd : Odd (r + s))
+    (hL : ∀ k < r, qL k ≠ 0) (hR : ∀ k < s, qR k ≠ 0)
+    (hcop : IsCoprime (continuant qL r) (continuant qR s))
+    (hz : joinedVariation qL qR dqL dqR a da r s = 0) :
+    da = 0 ∧ (∀ k < r, dqL k = 0) ∧ (∀ k < s, dqR k = 0) := by
+  let U := continuant qL r
+  let V := continuant qR s
+  let dU := variation qL dqL r
+  let dV := variation qR dqR s
+  let T := dU * V + U * dV
+  let W := variation qL dqL (r + 1) * V +
+    continuant qL (r + 1) * dV + dU * continuant qR (s + 1) +
+    U * variation qR dqR (s + 1) - X * T
+  have he : W - C a * T - C da * (U * V) = 0 := by
+    dsimp [W, T, U, V, dU, dV]
+    unfold joinedVariation at hz
+    linear_combination hz
+  have hsign : (-1 : ℝ[X]) ^ r * (-1 : ℝ[X]) ^ s = -1 := by
+    rw [← pow_add, hodd.neg_one_pow]
+  have hT : T.comp (-X) = -T := by
+    dsimp [T, U, V, dU, dV]
+    simp only [add_comp, mul_comp, (branch_parity qL dqL r).1,
+      (branch_parity qL dqL r).2, (branch_parity qR dqR s).1,
+      (branch_parity qR dqR s).2]
+    linear_combination hsign *
+      (variation qL dqL r * continuant qR s + continuant qL r * variation qR dqR s)
+  have hP : (U * V).comp (-X) = -(U * V) := by
+    dsimp [U, V]
+    simp only [mul_comp, (branch_parity qL dqL r).1, (branch_parity qR dqR s).1]
+    linear_combination hsign * (continuant qL r * continuant qR s)
+  have hW : W.comp (-X) = W := by
+    dsimp only [W]
+    simp only [add_comp, sub_comp, mul_comp, X_comp, hT]
+    dsimp only [U, V, dU, dV]
+    simp only [(branch_parity qL dqL r).1, (branch_parity qL dqL r).2,
+      (branch_parity qR dqR s).1, (branch_parity qR dqR s).2,
+      (branch_parity qL dqL (r + 1)).1, (branch_parity qL dqL (r + 1)).2,
+      (branch_parity qR dqR (s + 1)).1, (branch_parity qR dqR (s + 1)).2, pow_succ]
+    linear_combination -hsign *
+      (variation qL dqL (r + 1) * continuant qR s +
+        continuant qL (r + 1) * variation qR dqR s +
+        variation qL dqL r * continuant qR (s + 1) +
+        continuant qL r * variation qR dqR (s + 1))
+  have hc := congrArg (fun p : ℝ[X] => p.comp (-X)) he
+  simp only [sub_comp, mul_comp, C_comp, hW, hT, hP, zero_comp] at hc
+  have hoddpart : C a * T + C da * (U * V) = 0 := by
+    linear_combination (hc - he) / 2
+  have mU := continuant_monic qL r
+  have mV := continuant_monic qR s
+  have hdU : dU.degree < U.degree := by
+    change (variation qL dqL r).degree < (continuant qL r).degree
+    rw [mU.monic.degree_eq_natDegree, mU.natDegree_eq]
+    exact lt_of_lt_of_le (variation_degree qL dqL r) (by exact_mod_cast Nat.sub_le r 1)
+  have hdV : dV.degree < V.degree := by
+    change (variation qR dqR s).degree < (continuant qR s).degree
+    rw [mV.monic.degree_eq_natDegree, mV.natDegree_eq]
+    exact lt_of_lt_of_le (variation_degree qR dqR s) (by exact_mod_cast Nat.sub_le s 1)
+  have hTdeg : T.degree < (r + s : ℕ) := by
+    apply degree_add_lt
+    · exact lt_of_le_of_lt (degree_mul_le ..)
+        (by simpa [U, V, mU.monic.degree_eq_natDegree, mV.monic.degree_eq_natDegree,
+          mU.natDegree_eq, mV.natDegree_eq] using
+          add_lt_add_right hdU (continuant qR s).degree)
+    · exact lt_of_le_of_lt (degree_mul_le ..)
+        (by simpa [U, V, mU.monic.degree_eq_natDegree, mV.monic.degree_eq_natDegree,
+          mU.natDegree_eq, mV.natDegree_eq] using
+          add_lt_add_left hdV (continuant qL r).degree)
+  have hda : da = 0 := by
+    have ht := (degree_lt_iff_coeff_zero T (r + s)).1 hTdeg (r + s) le_rfl
+    have hp : (U * V).coeff (r + s) = 1 := by
+      simpa [U, V, mU.natDegree_eq, mV.natDegree_eq] using
+        (mU.mul mV).monic.coeff_natDegree
+    have hh := congrArg (fun p : ℝ[X] => p.coeff (r + s)) hoddpart
+    simpa [coeff_add, coeff_C_mul, ht, hp] using hh
+  have ht : T = 0 := by
+    rw [hda, C_0, zero_mul, add_zero] at hoddpart
+    exact (mul_eq_zero.mp hoddpart).resolve_left (C_ne_zero.mpr ha)
+  obtain ⟨hu, hv⟩ := coprime_separation U V dU dV hcop hdU hdV ht
+  have hw : variation qL dqL (r + 1) * V + U * variation qR dqR (s + 1) = 0 := by
+    dsimp [W] at he
+    rw [hu, hv, ht, hda, C_0] at he
+    simpa using he
+  have hdL : (variation qL dqL (r + 1)).degree < U.degree := by
+    simpa [U, mU.monic.degree_eq_natDegree, mU.natDegree_eq] using
+      variation_degree qL dqL (r + 1)
+  have hdR : (variation qR dqR (s + 1)).degree < V.degree := by
+    simpa [V, mV.monic.degree_eq_natDegree, mV.natDegree_eq] using
+      variation_degree qR dqR (s + 1)
+  obtain ⟨hu1, hv1⟩ := coprime_separation U V _ _ hcop hdL hdR hw
+  exact ⟨hda, branch_variation_injective qL dqL r hL hu hu1,
+    branch_variation_injective qR dqR s hR hv hv1⟩
+
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
