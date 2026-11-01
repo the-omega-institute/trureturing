@@ -1374,3 +1374,188 @@ $$
 **来源与适用边界 15.2。** 第 13 节将连续酉／正交单参数群生成元理论（Stone 1932）、量子跃迁概率与态空间仿射自同构的酉／反酉二分定理（Wigner 1931；Bargmann 1964；Kadison 1951 定理 7、定理 10 与推论 11；Kadison 1965 定理 2.6、定理 4.5 与推论 4.7）以及实空间反对称复结构算子 $J$ 在实量子力学超选择规则中的作用（对比 Stueckelberg 1960）推进到本卷第 2–3 节的内生覆盖锐三轴图册：引理 13.2 在不假设子空间非零交集（涵盖命题 2.4 第 3 项的斜交零交集窗口）的前提下建立 $\|\Pi_\alpha J_\beta\|_F^2=\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)$、无基定向比迹公式、$|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=2^c$ 以及非连通图册上 $\mathcal{O}_{\mathfrak{A}}(V)=\bigoplus_{r=1}^c\operatorname{Sym}_{J_{0,r}}(V_r)$ 的超选择坍缩判据；定理 13.3 同时给出厄米哈密顿生成元 $H_{\mathbb{R}}=JA$ 的唯一涌现、任意维数 $d\ge2$ 保参考纯度单系统正映射的 $\mathcal{U}_+(d)\sqcup\mathcal{U}_-(d)$ 二分，以及由连续谱不变量 $\lambda_{\min}(R_{\Lambda_t})\in\{0,-\frac{1}{d}\}$ 对整个非 CP 反酉转置分支（含 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 命题 7.1 的 $F/2$）的拓扑消去；命题 13.4 第 1 项补充证明了在锐投影效果下“单系统正 + 本征纯态不扰动”已自动蕴涵完全正 Lüders 形式。第 14 节将本卷第 2–13 节与既有卷 [`AURIC_SHARP_THREE_AXIS_READOUTS_ENDOGENOUS_COMPLEX_STRUCTURE_AND_COMMON_PHASE_COMPATIBILITY_V53.md`](AURIC_SHARP_THREE_AXIS_READOUTS_ENDOGENOUS_COMPLEX_STRUCTURE_AND_COMMON_PHASE_COMPATIBILITY_V53.md)、[`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)、[`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md)、[`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 及 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 的接口整合为同一八维实载体上无类型悬空的十一前件合成定理与 $11\times 11$ 单槽变异独立性反例矩阵。第 15 节命题 15.1 将本卷的条件化数学重构与自由参数标度、有限格距离散超锥尾项、动态弯曲时空引力场方程（对比模拟引力声学度规的非动力学背景边界 Barceló–Liberati–Visser 2005）及相互作用连续紫外量子场论严格划清边界。
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 单一有限 dyadic 效果表的局部关系证书
+
+**定义 16.1（同一网格上的完整二、三结果菜单表）。** Let $d,m\in\mathbb Z$ with $d\ge2$, $m\ge1$, $N=2^m$, $h=N^{-1}$, and
+$$
+K=\{E\in\operatorname{Herm}_d(h\mathbb Z[i]):0\le E\le I\}.
+$$
+Assume a single function $p:K\to[0,1]$ satisfies
+$$
+\left|\sum_{j=1}^r p(E_j)-1\right|\le\epsilon
+$$
+for every labelled tuple with $r\in\{2,3\}$, $\sum_jE_j=I$, including zeros and repetitions, where $0\le\epsilon\le1/10$.
+
+All hypotheses concern this one supplied table at this one $N$; no compatibility between different $m$ is assumed. The finite-menu setting of Definition 6.1 is used with all the stated labelled two- and three-result normalization relations.
+
+Let $D_i=|i\rangle\langle i|$. For $i<j$, let $S_{ij}$ have entries $1$ in positions $(i,j),(j,i)$, and let $T_{ij}$ have entries $i,-i$ in these positions. Define the rank-one projections
+$$
+R_{ij}=(D_i+D_j+S_{ij})/2,\qquad
+J_{ij}=(D_i+D_j+T_{ij})/2.
+$$
+All these projections belong to $K$, including when $m=1$. Together with the $D_i$, they form a real basis $\mathcal B$ of $\operatorname{Herm}_d$, of cardinality $n=d^2$. Define the unique Hermitian matrix $H$ by
+$$
+\operatorname{Tr}(HQ)=p(Q)\qquad(Q\in\mathcal B).
+\tag{16.1}
+$$
+Put
+$$
+B_d=4d^2-3d,\quad c_d=B_d^{-1},\quad
+K_d=6d^2+6,\quad T_d=2d+1,\quad M_d=2d.
+$$
+
+**定理 16.2（一致局部目标证书）。** Under Definition 16.1, for every $E\in K$ with $\|E\|_{\rm op}\le c_d$,
+$$
+|p(E)-\operatorname{Tr}(HE)|\le K_d\epsilon.
+\tag{16.2}
+$$
+Moreover,
+$$
+|\operatorname{Tr}H-1|\le T_d\epsilon,
+\qquad \|H\|_{\rm op}\le M_d.
+\tag{16.3}
+$$
+These estimates hold for all $m\ge1$; their constants do not grow with $m$.
+
+**证明。** The menu hypothesis gives $0\le p(0)\le2\epsilon$, $|p(I)-1|\le3\epsilon$, and
+$$
+|p(A)+p(B)-p(A+B)|\le2\epsilon
+\tag{16.4}
+$$
+whenever $A,B,A+B\in K$.
+
+Indeed, subtract the inequalities for $(I,0)$ and $(I,0,0)$ to bound $p(0)$; the pair inequality then bounds $p(I)$. For (16.4), compare $(A,B,I-A-B)$ with $(A+B,I-A-B)$. These are permitted labelled menus even when entries coincide or vanish.
+
+For use in this proof, suppose $Q\in K$, $L\ge1$ is an integer, and $kQ/L\in K$ for $0\le k\le L$. Then
+$$
+\left|p(kQ/L)-\frac{k}{L}p(Q)\right|\le4\epsilon
+\quad(0\le k\le L).
+\tag{16.5}
+$$
+
+To obtain this estimate, write $f(k)=p(kQ/L)$ and $\delta=2\epsilon$. Equation (16.4) gives $|f(k)+f(l)-f(k+l)|\le\delta$ for $k+l\le L$. Set $g(k)=f(k)-(k/L)f(L)$ on $0\le k<L$, viewed as the cyclic group $\mathbb Z/L\mathbb Z$. When $k+l<L$, its additive defect is at most $\delta$. When $k+l\ge L$, set $u=k+l-L$ and use
+$$
+|f(k)-f(L-l)-f(u)|\le\delta,\qquad
+|f(L)-f(L-l)-f(l)|\le\delta.
+$$
+Thus $|g(k)+g(l)-g(k+l\bmod L)|\le2\delta$ in both cases. Average this inequality over $l$; translation preserves the finite average, giving $|g(k)|\le2\delta$. The endpoint $k=L$ is exact. This also covers $L=1$.
+
+Write $E_{ij}=x_{ij}+iy_{ij}$, $i<j$, and expand
+$$
+E=\sum_i a_iD_i+\sum_{i<j}(2x_{ij}R_{ij}+2y_{ij}J_{ij}),
+\quad
+a_i=E_{ii}-\sum_{j<i}(x_{ji}+y_{ji})-\sum_{j>i}(x_{ij}+y_{ij}).
+\tag{16.6}
+$$
+If $t=\|E\|_{\rm op}$, then $|E_{ij}|\le t$, whence
+$$
+\sum_i|a_i|+\sum_{i<j}(2|x_{ij}|+2|y_{ij}|)
+\le (4d^2-3d)t\le1.
+\tag{16.7}
+$$
+Split (16.6) into its positive and negative coefficients, obtaining $E=P-Q$, with $P,Q\ge0$. Each summand is a coefficient in $[0,1]$ times a member of $\mathcal B$. By (16.7), all partial sums, $P$, and $Q$ are effects. They belong to the original grid: the coefficients of $D_i$ are multiples of $h$, while those of $R_{ij},J_{ij}$ are multiples of $2h$. Consequently (16.5) applies to each summand, with $L=N$ for $D_i$, and $L=N/2$ for $R_{ij},J_{ij}$.
+
+For a positive sum with $k$ nonzero summands, telescoping (16.4) and using (16.5) gives error at most $(6k+2)\epsilon$ between its table value and the corresponding linear combination of the basis values. This bound also holds for $k=0$, since $p(0)\le2\epsilon$. The total number of summands in $P,Q$ is at most $d^2$. Apply (16.4) to $E+Q=P$, and subtract the two linear combinations. The error is at most $(6d^2+6)\epsilon$, proving (16.2).
+
+Since $I=\sum_iD_i$, (16.4) and the menu bounds above yield
+$$
+|\operatorname{Tr}H-1|\le2(d-1)\epsilon+3\epsilon=T_d\epsilon.
+$$
+The diagonal entries of $H$ are $p(D_i)\in[0,1]$. Equation (16.1) implies that both real and imaginary parts of every off-diagonal entry lie in $[-1,1]$. Hence its maximum absolute row sum is at most $1+\sqrt2(d-1)\le2d$, which bounds its operator norm. $\square$
+
+## 17. 同一表格的正性探针与局部密度近似
+
+**定理 17.1（同表格秩一探针与一致负谱界）。** Under Definition 16.1, set
+$$
+A_d=16K_d/c_d,\qquad D_d=16M_dd/c_d,
+\quad a_d=A_d\epsilon+D_dh.
+$$
+
+The matrix in (16.1) satisfies
+$$
+\lambda_{\min}(H)\ge-a_d.
+\tag{17.1}
+$$
+**证明。** First suppose $N\ge8d/c_d$. Let $\psi$ be a unit eigenvector for $\lambda=\lambda_{\min}(H)$, and put $R=\sqrt{c_dN}/2$. Round each real and imaginary component of $R\psi$ to an integer, obtaining $v\in\mathbb Z[i]^d$ with
+$$
+\|v-R\psi\|\le b:=\sqrt{d/2},\qquad R\ge2b.
+$$
+In particular $v\ne0$. The actual grid effect
+$$
+F=vv^*/N=\gamma ww^*,\quad w=v/\|v\|,\quad\gamma=\|v\|^2/N
+$$
+satisfies $c_d/16\le\gamma\le c_d$; hence (16.2) applies. Since $p(F)\ge0$, it gives
+$$
+w^*Hw\ge-16K_d\epsilon/c_d.
+$$
+The squared component of $w$ perpendicular to $\psi$ is at most
+$$
+\eta\le b^2/\|v\|^2\le8d/(c_dN).
+$$
+The eigenvector property eliminates the cross terms, so
+$$
+w^*Hw\le\lambda+2M_d\eta
+\le\lambda+(16M_dd/c_d)h.
+$$
+Combining the last two inequalities proves (17.1). If $N<8d/c_d$, then $D_dh>2M_d$, and the already proved $\lambda_{\min}(H)\ge-M_d$ proves (17.1) directly. Thus coarse grids are included. $\square$
+
+**推论 17.2（一致局部密度近似）。** Under Definition 16.1, there is a finite constant depending only on $d$, for example
+$$
+C_d^{\rm loc}=2T_d+K_d+T_d+2dA_d+2dD_d,
+$$
+such that one matrix $\rho\succeq0$ with $\operatorname{Tr}\rho=1$ obeys
+$$
+\max_{E\in K:\,\|E\|_{\rm op}\le c_d}
+|p(E)-\operatorname{Tr}(\rho E)|
+\le C_d^{\rm loc}(\epsilon+h).
+\tag{17.2}
+$$
+
+**证明。** If $\epsilon\ge1/(2T_d)$, any density matrix works, because both compared numbers lie in $[0,1]$, and $1\le2T_d\epsilon$. Otherwise $s=\operatorname{Tr}H\ge1/2$. Write $H=H_+-H_-$, $t=\operatorname{Tr}H_-\le da_d$, $Z=\operatorname{Tr}H_+=s+t>0$, and $\rho=H_+/Z$. Then
+$$
+\|H-\rho\|_1=t+|Z-1|\le2da_d+T_d\epsilon.
+\tag{17.3}
+$$
+For every effect, its trace pairing with $H-\rho$ is bounded by this trace norm. Combine (16.2) and (17.3).
+
+The eigenvector coverage and positive-part normalization steps are intermediate mechanisms from [V59](AURIC_LOCAL_TOMOGRAPHY_COHERENT_READOUT_ORBITS_AND_QUANTUM_POSITIVITY_ORIGIN_V59.md), Theorem 5.2 and Proposition 5.3, and [V64](AURIC_APPROXIMATE_RELATIONS_RIGIDITY_SQUARE_CALIBRATION_AND_QUANTUM_READOUT_STABILITY_V64.md), Definition 5.1 and Theorem 5.2. In the present derivation, the local relation certificate, the actual same-grid probes, their positive gain and quadratic directional coverage follow from Definition 16.1; the cited conditional mechanisms do not supply that local certificate. These are mathematical statements about the supplied table, with no physical acquisition or priority assertion.
+
+$\square$
+
+## 18. 任意目标关系的未决问题
+
+**定义 18.1（任意目标关系问题及小效果分解条件）。** For the specific $H$ in (16.1), ask whether there is a finite dimension-only constant $L_d$ such that, for every $m\ge1$ and every table in Definition 16.1,
+$$
+\sup_{E\in K}|p(E)-\operatorname{Tr}(HE)|
+\le L_d(\epsilon+h)
+\tag{18.1}
+$$
+with $L_d$ independent of $m$. If (18.1) holds, (17.1)–(17.3) give a single density matrix approximating the table on all of $K$ at rate $C_d(\epsilon+h)$ with a dimension-only constant, treating the large-$\epsilon$ case as above. Theorem 16.2 establishes the corresponding relation only on $\|E\|\le c_d$. If $E=\sum_{j=1}^k E_j$, where $k\ge1$, $E_j\in K$ and $\|E_j\|_{\rm op}\le c_d$, then telescoping (16.4) and Theorem 16.2 gives the conditional bound
+$$
+|p(E)-\operatorname{Tr}(HE)|\le[kK_d+2(k-1)]\epsilon.
+$$
+No uniformly bounded such decomposition is asserted. In particular, dividing or rounding a boundary effect need not preserve its original grid or its positive face. The local estimate and this conditional bound neither prove the all-grid approximation assertion nor provide an admissible counterfamily. The arbitrary-target relation remains an open mathematical question.
+
+## 19. 固定四维的互补投影分解障碍
+
+**命题 19.1（任意 dyadic 精度下的小块分解障碍）。** In fixed dimension $d=4$, for every integer $m\ge1$ and $N=2^m$, there are complementary rank-two grid projections $P,Q\in K$ such that every nonzero grid effect below either projection has operator norm exactly one. In particular, neither projection is a sum of grid effects of norm at most $c_4<1$. This is an obstruction to the small-piece decomposition route; it is not a counterexample to all-grid stability.
+
+**证明。** By Lagrange's classical four-square theorem (every nonnegative integer is a sum of four integer squares) choose Gaussian integers $a,b$ with $|a|^2+|b|^2=N-1=:q$. Put
+$$
+U=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},\qquad
+V=\begin{pmatrix}I_2\\U\end{pmatrix},\qquad
+P=VV^*/N,\qquad Q=I_4-P.
+$$
+Then $`U^*U=UU^*=qI_2`$, $`V^*V=NI_2`$, and
+$$
+P=N^{-1}\begin{pmatrix}I_2&U^*\\U&qI_2\end{pmatrix},\qquad
+Q=N^{-1}\begin{pmatrix}qI_2&-U^*\\-U&I_2\end{pmatrix}.
+$$
+Thus these are complementary rank-two projections in the prescribed grid.
+
+If $0\le F\le P$, its range lies in $\operatorname{ran}P=\operatorname{ran}V$. Consequently $`F=VXV^*`$, where $X$ is its upper-left block. Set $B=NX$. The grid condition makes $B$ an integral Gaussian Hermitian matrix, and the upper-left principal-block inequality gives $0\le B\le I_2$. Its diagonal entries are therefore zero or one. Positivity of $B$ forces every off-diagonal entry incident to a zero diagonal entry to vanish; positivity of $I_2-B$ does the same for every diagonal entry equal to one. Hence $B$ is a diagonal coordinate projection. It follows that $`F=VBV^*/N`$ is itself an orthogonal projection and, when nonzero, has norm one. The same proof for $Q$, using its lower-right block, applies because $`Q=WW^*/N`$ for $`W=\begin{pmatrix}-U^*\\I_2\end{pmatrix}`$, with $`W^*W=NI_2`$. Finally, every positive summand in a decomposition of $P$ is below $P$, so no decomposition into nonzero effects of norm less than one is possible; likewise for $Q$.
+
+For instance, $N=8$ admits $a=2+i,b=1+i$. The four-square input establishes the construction for arbitrarily fine dyadic grids at fixed dimension. This construction supplies no admissible non-Born table. The question in Definition 18.1 still concerns all labelled menus, including relations involving proper subprojections and their complements. $\square$
+
+## 追加锚（本行以下为增补区）
