@@ -38,7 +38,7 @@ private theorem readTile_coordinate (W : Bool → List Bool) (s : TileState W)
   subst p
   rfl
 
-private theorem marked_block_occurs (W : Bool → List Bool) (x : MarkedTiling W)
+theorem marked_block_occurs (W : Bool → List Bool) (x : MarkedTiling W)
     (b : ℤ) (hb : (x.1 b).2.val = 0) :
     WordOccursAt (W (x.1 b).1) (readTiling W x) b := by
   intro j hj
@@ -46,7 +46,7 @@ private theorem marked_block_occurs (W : Bool → List Bool) (x : MarkedTiling W
   exact readTile_coordinate W (x.1 (b + (j : ℤ))) (x.1 b).1 j hj hp.1
     (by simpa only [hb, zero_add] using hp.2)
 
-private theorem occurs_of_infix {u v : List Bool} {y : ℤ → Bool} {t : ℤ}
+theorem occurs_of_infix {u v : List Bool} {y : ℤ → Bool} {t : ℤ}
     (huv : u <:+: v) (hv : WordOccursAt v y t) :
     ∃ k : ℕ, k + u.length ≤ v.length ∧ WordOccursAt u y (t + (k : ℤ)) := by
   obtain ⟨pre, post, rfl⟩ := huv
@@ -66,7 +66,7 @@ private theorem occurs_of_infix {u v : List Bool} {y : ℤ → Bool} {t : ℤ}
       simp only [Nat.add_sub_cancel_left]
     simpa only [Int.natCast_add, add_assoc] using hread.trans hletter
 
-private theorem infix_of_coordinates {u v : List Bool} {p : ℕ}
+theorem infix_of_coordinates {u v : List Bool} {p : ℕ}
     (hp : p + u.length ≤ v.length)
     (hletters : ∀ (j : ℕ) (hj : j < u.length),
       u[j] = v[p + j]'(by omega)) : u <:+: v := by

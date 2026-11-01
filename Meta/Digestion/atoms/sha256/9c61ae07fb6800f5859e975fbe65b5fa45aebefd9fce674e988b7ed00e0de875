@@ -1,0 +1,12 @@
+**推论 122.2（Cayley 与 Schreier 公式）。** 对正则右作用 $\Omega=\Gamma$，令 $a=\operatorname{ord}\ell,b=\operatorname{ord}h$。有 $|\Gamma|/a$ 条低边、$|\Gamma|/b$ 条高边、$[\Gamma:K]$ 个边界分量，每个的亏格为
+
+$$\boxed{1+|K|(1-1/a-1/b).} \tag{122.4}$$
+
+对陪集空间 $\Omega=C\backslash\Gamma=\{Cg:g\in\Gamma\}$ 的右作用，边界分量对应双陪集 $C\backslash\Gamma/K$；代表 $g$ 对应轨道大小
+
+$$m_g=[K:K\cap g^{-1}Cg].$$
+
+若 $C$ 与 $\langle\ell\rangle,\langle h\rangle$ 的每个共轭子群都平凡相交，则所有返回圈仍分别有长度 $a,b$，该边界亏格为 $1+m_g(1-1/a-1/b)$。一般情形必须使用 (122.3) 的逐圈计数。
+
+**证明。** 正则作用上各 $K$ 轨道是集合 $gK$，四个 $c_i$ 的阶分别为 $a,b,a,b$，圈数直接给出 (122.4)。陪集情形由 $Cgk=Cg$ 等价于 $k\in K\cap g^{-1}Cg$ 得轨道大小。所列平凡相交条件恰保证返回作用无较短周期。若 $a,b\ge2$ 且不同时为二，显示的各链接亏格至少二、边度至少六；均匀的端／中角色符合总卷第 37 节，故旧实现定理适用。这项几何存在性明确复用旧定理，新增的是非交换实际面配对、返回词及全部边界计数。
+
