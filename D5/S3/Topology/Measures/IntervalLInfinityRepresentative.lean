@@ -62,8 +62,8 @@ private theorem internal_ae_pair {f : ℝ → E} (hf : StronglyMeasurable f)
           simpa only [← ofReal_norm] using ht.trans hn.le)
       exact hb'.mono fun t ht _ _ _ => ht
     · exact ae_of_all _ fun t ht hd hT => False.elim (hh ⟨ht,hd,hT⟩)
-  have hs := (measurePreserving_prod_neg_add (volume : Measure ℝ) volume)
-    .quasiMeasurePreserving.ae hP
+  have hshear := (measurePreserving_prod_neg_add (volume : Measure ℝ) volume)
+  have hs := hshear.quasiMeasurePreserving.ae hP
   have hu : ∀ᵐ z ∂(volume.prod volume : Measure (ℝ × ℝ)),
       z.1 ∈ Ioc 0 T → z.2 ∈ Ioc 0 T → z.1 < z.2 → z.2-z.1 < δ →
         ‖f z.2-f z.1‖ ≤ ε := by
