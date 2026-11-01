@@ -165,18 +165,20 @@ private theorem phase_exponent (u v : point) :
 
 private theorem char_negative (a : ZMod 4) :
     AddChar.zmodChar 4 Complex.I_pow_four a = -1 ↔ a = 2 := by
-  fin_cases a
-  · change (Complex.I ^ 0 = -1 ↔ (0 : ZMod 4) = 2)
-    norm_num [Complex.ext_iff]
-    decide
-  · change (Complex.I ^ 1 = -1 ↔ (1 : ZMod 4) = 2)
-    norm_num [Complex.ext_iff]
-    decide
-  · change (Complex.I ^ 2 = -1 ↔ (2 : ZMod 4) = 2)
-    norm_num [Complex.I_sq]
-  · change (Complex.I ^ 3 = -1 ↔ (3 : ZMod 4) = 2)
-    norm_num [pow_succ, Complex.I_sq, Complex.ext_iff]
-    decide
+  rw [AddChar.zmodChar_apply]
+  constructor
+  · intro h
+    have hpow : Complex.I ^ a.val = Complex.I ^ 2 := by
+      rw [Complex.I_sq]
+      exact h
+    have hv : a.val = 2 :=
+      Complex.isPrimitiveRoot_I.pow_inj (ZMod.val_lt a) (by norm_num) hpow
+    apply ZMod.val_injective 4
+    convert hv using 1 <;> decide
+  · intro h
+    subst a
+    change Complex.I ^ 2 = -1
+    exact Complex.I_sq
 
 private theorem triple_negative (u v : point) (hu : u ≠ 0) (hv : v ≠ 0)
     (hne : u ≠ v) (hb : B u v = 0) :
