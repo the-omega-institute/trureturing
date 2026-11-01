@@ -10,14 +10,16 @@ import D5.S3.Geometry.FiniteConeUnionWedge
 import D5.S3.Topology.OpenCoverHomology
 import Mathlib.Topology.CompactOpen
 
+/-! Saturated open subwedges and based quotient contractions give open MV splittings. -/
+
 noncomputable section
 open Set Topology CategoryTheory Limits AlgebraicTopology
 open scoped ContinuousMap unitInterval
 
 namespace D5.S3.Topology.PointedWedgeHomology
 open D5.S3.Geometry.FiniteConeUnionWedge
-open private D5.S3.Geometry.FiniteConeUnionWedge.wedgeInverseHomotopy
-  D5.S3.Geometry.FiniteConeUnionWedge.wedgeMap
+open private wedgeInverseHomotopy
+  wedgeMap
   from
   D5.S3.Geometry.FiniteConeUnionWedge
 
@@ -91,8 +93,12 @@ def partHomeomorph {A : Set X} {B : Set Y} (hA : IsOpen A) (hB : IsOpen B)
     intro z w
     change (z = w ∨ (z ∈ wedgePoints _ _ ∧ w ∈ wedgePoints _ _)) ↔ f z = f w
     rw [Subtype.ext_iff, Quotient.eq]
-    cases z <;> cases w <;>
-      simp [f, wedgePoints, Subtype.ext_iff, subsetSetoid]
+    change (z = w ∨ (z ∈ wedgePoints (⟨a, ha⟩ : A) (⟨b, hb⟩ : B) ∧
+      w ∈ wedgePoints (⟨a, ha⟩ : A) (⟨b, hb⟩ : B))) ↔
+      (Sum.map Subtype.val Subtype.val z = Sum.map Subtype.val Subtype.val w ∨
+        (Sum.map Subtype.val Subtype.val z ∈ wedgePoints a b ∧
+          Sum.map Subtype.val Subtype.val w ∈ wedgePoints a b))
+    cases z <;> cases w <;> simp [wedgePoints, Subtype.ext_iff]
   exact (Homeomorph.Quotient.congrRight hker).trans
     (Topology.IsQuotientMap.homeomorph (f := ⟨f, hf.continuous⟩) hf)
 
@@ -137,7 +143,10 @@ def leftEquiv (H : (ContinuousMap.id Y).HomotopyRel
 private def swapHomeomorph : Wedge a b ≃ₜ Wedge b a :=
   Homeomorph.Quotient.congr (Homeomorph.sumComm X Y) (by
     intro z w
-    cases z <;> cases w <;> simp [subsetSetoid, wedgePoints, or_comm])
+    change (z = w ∨ (z ∈ wedgePoints a b ∧ w ∈ wedgePoints a b)) ↔
+      (Sum.swap z = Sum.swap w ∨
+        (Sum.swap z ∈ wedgePoints b a ∧ Sum.swap w ∈ wedgePoints b a))
+    cases z <;> cases w <;> simp [wedgePoints, or_comm])
 
 def rightEquiv (H : (ContinuousMap.id X).HomotopyRel
     (ContinuousMap.const X a) {a}) : Wedge a b ≃ₕ Y :=
@@ -186,6 +195,7 @@ private def openRightEquiv : V a b ha ≃ₕ Y :=
 /-- Positive singular homology of the actual quotient wedge is the binary
 biproduct of the summands. All openness, quotient identifications, both
 homotopy equivalences and the intersection contraction are constructed above. -/
+set_option maxHeartbeats 1000000 in
 def homologyIso {C : Type u} [Category.{v} C] [HasCoproducts.{w} C] [Abelian C]
     (R : C) (q : ℕ) (hq : 0 < q) :
     (((singularHomologyFunctor C q).obj R).obj (TopCat.of X) ⊞

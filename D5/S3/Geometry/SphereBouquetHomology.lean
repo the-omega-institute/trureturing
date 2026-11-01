@@ -12,6 +12,8 @@ import D5.S3.Topology.SphereHomologyAllDegrees
 import D5.S3.Topology.PointedWedgeHomology
 import Mathlib.Algebra.Module.Torsion.Prod
 
+/-! Actual finite sphere-bouquet homology and compact sourceSP torsion obstructions. -/
+
 noncomputable section
 open Set Topology CategoryTheory Limits AlgebraicTopology
 open scoped ContinuousMap
@@ -21,12 +23,12 @@ open CompactSphereNormalForm
 open FiniteComponentClosure
 open D5.S3.Topology
 
-open private FiniteComponentClosure.sphereSingletonBouquetHomeomorph from
+open private sphereSingletonBouquetHomeomorph from
   D5.S3.Geometry.FiniteComponentClosure.JoinModels
-open private FiniteComponentClosure.bouquetAppendHomeomorph from
+open private bouquetAppendHomeomorph from
   D5.S3.Geometry.FiniteComponentClosure.SelectedWedge
-open private FiniteComponentClosure.emptyBouquet_point
-  FiniteComponentClosure.bouquetVertex_face from
+open private emptyBouquet_point
+  bouquetVertex_face from
   D5.S3.Geometry.FiniteComponentClosure.Models
 
 universe v
