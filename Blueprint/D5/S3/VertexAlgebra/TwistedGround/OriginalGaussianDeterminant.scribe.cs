@@ -47,5 +47,40 @@ internal sealed class OriginalGaussianDeterminantDocument : IScribeDocumentDefin
                 DescribeId.Create("gaussian-det-differentiable-on"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianDet_differentiableOn"),
                 H("gaussianDet_differentiableOn"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complex differentiability of gaussianDet on the full open unit disk, by composition of the actual infinite signed-cycle logarithm with the complex exponential. No period identity or physical realization premise is used."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Complex differentiability of gaussianDet on the full open unit disk, by composition of the actual infinite signed-cycle logarithm with the complex exponential. No period identity or physical realization premise is used."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supplier-unit1geo"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo"),
+                H("unit1Geo"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The two-coordinate geometric majorant used by compact-uniform operator cutoffs."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("supplier-unit1geo-summable"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo_summable"),
+                H("unit1Geo_summable"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The geometric coordinate majorant is summable at every nonnegative radius below one."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supplier-unit1power-coordinate-bound"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Power_coordinate_bound"),
+                H("unit1Power_coordinate_bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each coordinate of an operator power applied to a unit basis vector is bounded by the corresponding power of the operator norm."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supplier-unit1section-power-coordinate"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Section_power_coordinate"),
+                H("unit1Section_power_coordinate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each finite matrix-power coordinate agrees with the corresponding embedded section-operator power coordinate, including power zero."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supplier-unit1majorant-summable"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Majorant_summable"),
+                H("unit1Majorant_summable"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cycle-length majorant is summable on each smaller disk."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supplier-finitelogterm-bound"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLogTerm_bound"),
+                H("finiteLogTerm_bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each literal finite logarithm term is bounded by the same cycle-length majorant independently of the section dimension."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supplier-finitelog-tendsto"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_tendsto"),
+                H("finiteLog_tendsto"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual finite logarithms converge pointwise to the infinite signed-cycle logarithm on the full unit disk."))), DescribeRole.Theorem))));
 }
