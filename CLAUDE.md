@@ -662,13 +662,17 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.3 worktree 与 Lean 缓存入口
 
-**PR 长缓存按当前提交先生产、后消费**：需要 `lean-cache-produce` 准备包时，按 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 执行以下顺序；这是调用者的操作纪律，现役 CI 不会等待在飞 producer。
+**先核对 dev 基线，再决定是否使用 `lean-cache-produce`。** 该标签用于为当前交付准备确有需要的独立长构建缓存。使用依据是本次改动的构建输入、兼容种子与实际判词；PR 落后 dev、缓存未命中或短 CI 预算耗尽本身都不是挂标签的理由。
 
-1. **先固定提交，再准备缓存。** 完成所需的 dev 同步、提交与推送，读取远端 PR 的当前 head `H` 和目标分支。准备期间持有 `AUTO_MERGE=0`；已有自动合并请求时用 `gh pr merge <PR> --disable-auto` 关闭。纯文档等不需要该准备包的交付不额外启动长构建。
-2. **核对当前 head 的生产任务。** 已有匹配 PR/head/target 的成功准备包就复用，已有匹配的在飞 producer 就等待。保留 `lean-cache-produce` 标签的 PR 在 `pull_request:opened/reopened/synchronize` 时自动 dispatch，添加该标签的 `pull_request:labeled` 也会 dispatch。仅在两者都没有时，才显式添加 `lean-cache-produce` 标签恢复准备；标签已存在时，先 `gh pr edit <PR> --remove-label lean-cache-produce`，成功后再 `gh pr edit <PR> --add-label lean-cache-produce`。旧 head 的成功准备包不能当作当前 head 的准备完成。
+首次添加或重新添加标签前，先 `git fetch origin dev`，以新鲜取得的 `origin/dev` 核对 PR head 的祖先关系。若 PR head 不包含该 dev 基线，先从该 `origin/dev` 切出新任务分支，只迁移仍有效的本次改动，重开 PR 并关闭旧 PR；保留旧分支，不在旧 PR 上挂标签、摘挂重试或靠长构建重热陈旧基线。新 PR 先复用 dev 的兼容缓存，只有仍确需独立长构建准备时才选择该标签；不以合并或 rebase dev 后继续救活旧 PR 替代重开。
+
+**PR 长缓存按当前提交先生产、后消费**：通过上述用途与基线核对、确需 `lean-cache-produce` 准备包时，按 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 执行以下顺序；这是调用者的操作纪律，现役 CI 不会等待在飞 producer，也不替调用者判定是否应挂标签。
+
+1. **先固定提交，再准备缓存。** 按上述基线要求完成本次交付的提交与推送，读取远端 PR 的当前 head `H` 和目标分支。准备期间持有 `AUTO_MERGE=0`；已有自动合并请求时用 `gh pr merge <PR> --disable-auto` 关闭。纯文档等不需要该准备包的交付不额外启动长构建。
+2. **核对当前 head 的生产任务。** 已有匹配 PR/head/target 的成功准备包就复用，已有匹配的在飞 producer 就等待。保留 `lean-cache-produce` 标签的 PR 在 `pull_request:opened/reopened/synchronize` 时自动 dispatch，添加该标签的 `pull_request:labeled` 也会 dispatch。仅在两者都没有、且重新核对上述用途与 dev 基线后，才显式添加 `lean-cache-produce` 标签恢复准备；标签已存在时，先 `gh pr edit <PR> --remove-label lean-cache-produce`，成功后再 `gh pr edit <PR> --add-label lean-cache-produce`。旧 head 的成功准备包不能当作当前 head 的准备完成。
 3. **等实际 producer 成功。** 从 dispatch 输出取得确切的 producer run ID，用 `gh run watch <PRODUCER_RUN> --exit-status --interval 60` 等它终止；核对成功 attempt、未过期 artifact 及其 PR/head/target 身份。dispatch 成功只表示派发完成，不能报告缓存已就绪。watch 的网络或鉴权失败也不是 producer 失败，须重新读取该 run 的实际状态。
-4. **准备完成后再重跑需要缓存的 CI。** `lean_pr_cache.py adopt` 只在消费步骤查找已成功的匹配准备包，不会等在飞任务，也不会在稍后上传后自动重试。若先启动的 required CI 因缓存缺失或计算预算耗尽失败，先确认匹配 producer 与 artifact 成功，再对当前 head 的失败 run 执行 `gh run rerun <CI_RUN> --failed`，从新 attempt 的 `LEAN_PR_CACHE` 收据确认 `adopted`。缺包、身份不符或其他失败先按实际判词处理，不盲重跑、不擅自抬预算；已经通过的 required 不为补一条缓存命中记录重复运行。
-5. **核对当前提交后合并。** producer 成功与当前 head 的 required 成功分别核验；合并前再次确认 head 未变化，按该 head 启用正常合并并核验首个 dev push。任何新提交，包括合并 dev 产生的新 head，都回到第一步重新核对准备身份；目标分支单独前移不等于 PR head 改变，不据此机械重建。缓存成功不替代 required checks，也不替代合入后的核验。
+4. **准备完成后再重跑需要缓存的 CI。** `lean_pr_cache.py adopt` 只在消费步骤查找已成功的匹配准备包，不会等在飞任务，也不会在稍后上传后自动重试。若先启动的 required CI 因缓存缺失或计算预算耗尽失败，先排除上述陈旧基线情形；确需长构建且已确认匹配 producer 与 artifact 成功后，再对当前 head 的失败 run 执行 `gh run rerun <CI_RUN> --failed`，从新 attempt 的 `LEAN_PR_CACHE` 收据确认 `adopted`。缺包、身份不符或其他失败先按实际判词处理，不盲重跑、不擅自抬预算；已经通过的 required 不为补一条缓存命中记录重复运行。
+5. **核对当前提交后合并。** producer 成功与当前 head 的 required 成功分别核验；合并前再次确认 head 未变化，按该 head 启用正常合并并核验首个 dev push。任何新提交都回到第一步重新核对准备身份；目标分支单独前移不等于 PR head 改变，不据此机械重建。缓存成功不替代 required checks，也不替代合入后的核验。
 
 **先热 dev，production Release 恢复只进主检出**：production Release 恢复（`make lean-cache-from-github-without-mathlib`）与 `fetch-or-fail` 报告恢复只在 dev 主检出运行；显式选择的 verification-mode fetch 不变。linked worktree 的生产缓存只由 `make lean-cache-ensure` 从热的主检出 clonefile 播种。报告恢复的补救前提是主检出为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和 `skipped` 收据返回，不代表 donor 已预热；主检出不干净时，按第 6.1 条「主检出不承载修改」丢弃其本地修改后再预热。补救全程用条件链：`make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure`；主检出也可在 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 后执行 `make lean-report`。无法判定检出类型时同样拒绝生产取回与报告恢复。linked worktree 的主检出候选取 Git worktree 列表首条，须核验其物理顶层路径及共同 Git 目录；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，并给出不含主检出路径的补救，不将 Git store 目录当作主检出。
 
