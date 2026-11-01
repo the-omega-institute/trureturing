@@ -46,3 +46,13 @@ The actual supplier is pinned Mathlib's Module.equiv_directSum_of_isTorsion,
 with Module.AEval.isTorsion_of_finiteDimensional. Coordinatewise multiplication
 on the resulting product of cyclic quotient rings embeds injectively in the
 original operator's centralizer. This argument works over the original field.
+
+## Verified locator
+
+- Journal: https://doi.org/10.13001/ela.2026.10523, Electronic Journal of
+  Linear Algebra 42, 755–779; Problem 1.8 on printed page 759 and
+  Theorem 5.5 on page 771.
+- Versioned preprint: https://arxiv.org/abs/2604.21552v1; Definitions 1.1
+  and 1.3, Problem 1.8, Theorem 5.5 and Remark 2.10(1).
+- HTML text and CC BY-SA 4.0 statement:
+  https://arxiv.org/html/2604.21552v1.
