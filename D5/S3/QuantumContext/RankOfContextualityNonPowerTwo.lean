@@ -902,7 +902,7 @@ private lemma context_get2 (x : Fin 36) (i : Fin 3) :
     (C x).get ⟨3+i, by rw [length_C]; omega⟩ = (Fin.natAdd 9) (Square.idx (((finProdFinEquiv : Fin 6 × Fin 6 ≃ Fin (6*6)).symm) x).2 i) := by
   fin_cases i <;> rfl
 
-private lemma pm_get_idx (s : Fin 6) (i : Fin 3) : (Square.C s).get i = Square.idx s i := by
+lemma pm_get_idx (s : Fin 6) (i : Fin 3) : (Square.C s).get i = Square.idx s i := by
   fin_cases i <;> rfl
 
 private lemma O_commute (x : Fin 36) (i j : Fin (C x).length) :
