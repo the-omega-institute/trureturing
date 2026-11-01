@@ -43,7 +43,8 @@ abbrev sequenceActual : Realization sequenceSignature.{u} :=
 abbrev sequenceRejected : Realization sequenceSignature.{u} :=
   realize sequenceSignature (fun _ _ a => fun _ => a 0) (fun e => nomatch e)
 
-private theorem sequence_dependence : ObservationalDependence sequenceSignature.{u} sequenceActual := by
+private theorem sequence_dependence :
+    ObservationalDependence sequenceSignature.{u} sequenceActual := by
   intro i
   refine ⟨ULift.{u} ℕ, (fun n => ⟨n⟩), (fun _ => ⟨0⟩), ?_⟩
   intro h
@@ -206,7 +207,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 0, 1, by decide⟩
+  refine ⟨(), 0, 1, ?_⟩
+  change (0 : ℕ) ≠ 1
+  decide
 
 def family : Registration arena (type_of% (@isKAutomatic_iff_isKAutomaticSequence)) where
   actual := actual
@@ -217,7 +220,8 @@ def family : Registration arena (type_of% (@isKAutomatic_iff_isKAutomaticSequenc
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@isKAutomatic_iff_isKAutomaticSequence) (Realization signature) Type Unit where
-  unitName := `D5.S0.Automata.FiniteKernelDFAO.isKAutomatic_iff_isKAutomaticSequence.__information_unit
+  unitName :=
+    `D5.S0.Automata.FiniteKernelDFAO.isKAutomatic_iff_isKAutomaticSequence.__information_unit
   realizationName := `Reg.D5.S0.Automata.FiniteKernelDFAO.Equivalence.family
   realizationSource := none
   generated := false

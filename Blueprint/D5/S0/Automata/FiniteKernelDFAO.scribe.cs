@@ -46,8 +46,8 @@ internal sealed class FiniteKernelDFAODocument : IScribeDocumentDefinition
             AssessedProvenance.FromLiterature(source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula NatType() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
-    private static Formula Type() => Call("Type");
-    private static Formula AnyType() => Seq(Call("Type"), Caret, Grp(Star));
+    private static Formula Type() => new Formula.NamedConstant(FormulaIdentifier.Create("Type"));
+    private static Formula AnyType() => Seq(Type(), Caret, Grp(Star));
     private static Formula FinType(Formula k) => Call("Fin", k);
     private static Formula WordType(Formula k) => Call("List", FinType(k));
     private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, To, Sp, b, Close);
