@@ -54,7 +54,7 @@ private theorem diskBoundary_continuous : Continuous diskBoundary :=
 private theorem hemisphere_boundary_neg (z : Circle) :
     hemisphere (diskBoundary (-z)) = -hemisphere (diskBoundary z) := by
   ext i
-  fin_cases i <;> simp [hemisphere, diskBoundary, Circle.norm_coe]
+  fin_cases i <;> simp [hemisphere.eq_1, diskBoundary.eq_1, Circle.norm_coe]
 
 /-- The planar Borsuk--Ulam theorem in the form used by the chiral-event argument. -/
 theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)

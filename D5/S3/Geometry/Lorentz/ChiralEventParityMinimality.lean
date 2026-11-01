@@ -118,7 +118,7 @@ private theorem family_mem_collision
     family v ∈ collisionEvents := by
   constructor
   · exact family_mem_all v hv
-  · norm_num [family, minkowski]
+  · norm_num [family.eq_1, minkowski.eq_1]
 
 private theorem family_continuous :
     ContinuousOn family
@@ -196,7 +196,7 @@ private theorem fixed_axes (h : Matrix (Fin 4) (Fin 4) ℝ)
   have h02 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 0 2) hhL
   have h31 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 3 1) hhL
   have h32 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 3 2) hhL
-  simp [Matrix.mul_apply, eta, Fin.sum_univ_four, h00, h03, h10, h13, h20, h23,
+  simp [Matrix.mul_apply, eta.eq_1, Fin.sum_univ_four, h00, h03, h10, h13, h20, h23,
     h30, h33] at h01 h02 h31 h32
   have h01 : h 0 1 = 0 := by nlinarith [h01]
   have h02 : h 0 2 = 0 := by nlinarith [h02]
@@ -209,7 +209,7 @@ private theorem lorentz_norm (h : Matrix (Fin 4) (Fin 4) ℝ)
     minkowski (h.mulVec x) (h.mulVec x) = minkowski x x := by
   have hq := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ =>
       ∑ i : Fin 4, ∑ j : Fin 4, x i * M i j * x j) hhL
-  simp [Matrix.mul_apply, Matrix.mulVec, minkowski, eta, dotProduct,
+  simp [Matrix.mul_apply, Matrix.mulVec, minkowski.eq_1, eta.eq_1, dotProduct,
     Fin.sum_univ_four] at hq ⊢
   nlinarith
 
@@ -268,7 +268,7 @@ private theorem swap_stabilizer_contra
   have hd : d = 0 := by linarith [ha3]
   have hnorm := lorentz_norm h hhL (![10 + s, A, 0, d] : fourVector)
   rw [ha] at hnorm
-  simp [minkowski] at hnorm
+  simp [minkowski.eq_1] at hnorm
   have hAB : A = B := by nlinarith [hnorm, hA, hB, hs, hd]
   nlinarith [hsq, hA2, hB2, hAB]
 
@@ -281,17 +281,17 @@ private theorem family_chiral
   rcases perm_two_cases sigma with hsigma | hsigma
   · subst sigma
     have hp : lam.mulVec ![30, 0, 0, 1] = parityVector ![30, 0, 0, 1] := by
-      simpa [act, parity, family] using congrFun hact 0
+      simpa [act.eq_1, parity.eq_1, family.eq_1] using congrFun hact 0
     have hq : lam.mulVec ![20, 0, 0, -1] = parityVector ![20, 0, 0, -1] := by
-      simpa [act, parity, family] using congrFun hact 1
+      simpa [act.eq_1, parity.eq_1, family.eq_1] using congrFun hact 1
     let h := eta * lam
     have heta : eta * eta = (1 : Matrix (Fin 4) (Fin 4) ℝ) := by
       ext i j
       fin_cases i <;> fin_cases j <;>
-        norm_num [eta, Matrix.mul_apply, Fin.sum_univ_four]
+        norm_num [eta.eq_1, Matrix.mul_apply, Fin.sum_univ_four]
     have hetaT : eta.transpose = eta := by
       ext i j
-      fin_cases i <;> fin_cases j <;> simp [eta]
+      fin_cases i <;> fin_cases j <;> simp [eta.eq_1]
     have hhL : h.transpose * eta * h = eta := by
       dsimp [h]
       have heta3 : eta * eta * eta = eta := by
@@ -309,18 +309,18 @@ private theorem family_chiral
       dsimp [h]
       rw [← Matrix.mulVec_mulVec, hp]
       ext i
-      fin_cases i <;> simp [eta, parityVector, Matrix.mulVec,
+      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
         dotProduct, Fin.sum_univ_four]
     have hq' : h.mulVec ![20, 0, 0, -1] = ![20, 0, 0, -1] := by
       dsimp [h]
       rw [← Matrix.mulVec_mulVec, hq]
       ext i
-      fin_cases i <;> simp [eta, parityVector, Matrix.mulVec,
+      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
         dotProduct, Fin.sum_univ_four]
     have hdet : h.det = -1 := by
       dsimp [h]
       rw [Matrix.det_mul]
-      simp [eta, Matrix.det_diagonal, Fin.prod_univ_four, hlam.2.1]
+      simp [eta.eq_1, Matrix.det_diagonal, Fin.prod_univ_four, hlam.2.1]
     have hvnorm : ‖v‖ = 1 := mem_sphere_zero_iff_norm.mp hv
     have hsq : v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = 1 := by
       simpa [hvnorm, Fin.sum_univ_three] using (EuclideanSpace.real_norm_sq_eq v).symm
@@ -333,7 +333,7 @@ private theorem family_chiral
       dsimp [h]
       rw [← Matrix.mulVec_mulVec, hx]
       ext i
-      fin_cases i <;> simp [eta, parityVector, Matrix.mulVec,
+      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
         dotProduct, Fin.sum_univ_four]
     have haxes := fixed_axes h hhL hp' hq'
     rcases perm_two_cases tau with htau | htau
@@ -342,10 +342,10 @@ private theorem family_chiral
         (Real.sqrt (4 - v 1)) h hdet haxes
       · apply hpar
         have hx := congrFun hact 2
-        simpa [act, family, parity, parityVector] using hx
+        simpa [act.eq_1, family.eq_1, parity.eq_1, parityVector.eq_1] using hx
       · apply hpar
         have hx := congrFun hact 3
-        simpa [act, family, parity, parityVector] using hx
+        simpa [act.eq_1, family.eq_1, parity.eq_1, parityVector.eq_1] using hx
       · exact hA
       · exact hB
     · subst tau
@@ -353,10 +353,10 @@ private theorem family_chiral
         (Real.sqrt (4 + v 1)) (Real.sqrt (4 - v 1)) h hhL haxes
       · apply hpar
         have hx := congrFun hact 3
-        simpa [act, family, parity, parityVector, Equiv.swap_apply_def] using hx
+        simpa [act.eq_1, family.eq_1, parity.eq_1, parityVector.eq_1, Equiv.swap_apply_def] using hx
       · apply hpar
         have hx := congrFun hact 2
-        simpa [act, family, parity, parityVector, Equiv.swap_apply_def] using hx
+        simpa [act.eq_1, family.eq_1, parity.eq_1, parityVector.eq_1, Equiv.swap_apply_def] using hx
       · exact hA
       · exact hB
       · exact hsq
@@ -364,10 +364,10 @@ private theorem family_chiral
       · exact Real.sq_sqrt (by linarith)
   · subst sigma
     have hpq : lam.mulVec ![20, 0, 0, -1] = parityVector ![30, 0, 0, 1] := by
-      simpa [act, parity, family, Equiv.swap_apply_def] using congrFun hact 0
+      simpa [act.eq_1, parity.eq_1, family.eq_1, Equiv.swap_apply_def] using congrFun hact 0
     have hn := lorentz_norm lam hlam.1 (![20, 0, 0, -1] : fourVector)
     rw [hpq] at hn
-    norm_num [minkowski, parityVector] at hn
+    norm_num [minkowski.eq_1, parityVector.eq_1] at hn
 
 private theorem family_neg
     (v : EuclideanSpace ℝ (Fin 3)) :
@@ -378,7 +378,7 @@ private theorem family_neg
   fin_cases i <;>
     funext j <;>
       fin_cases j <;>
-        simp [family, act, parity, parityVector, rotation, Matrix.mulVec,
+        simp [family.eq_1, act.eq_1, parity.eq_1, parityVector.eq_1, rotation.eq_1, Matrix.mulVec,
           dotProduct, Fin.sum_univ_three] <;> ring_nf
 
 private theorem family_admissible_zero
@@ -407,39 +407,39 @@ private theorem parity_all_iff (x : event) :
     intro i
     have hi := h i
     fin_cases i <;>
-      simpa [parity, parityVector, forwardCone] using hi
+      simpa [parity.eq_1, parityVector.eq_1, forwardCone.eq_1] using hi
   · change ∀ i, x i ∈ forwardCone at h
     change ∀ i, parity x i ∈ forwardCone
     intro i
     have hi := h i
     fin_cases i <;>
-      simpa [parity, parityVector, forwardCone] using hi
+      simpa [parity.eq_1, parityVector.eq_1, forwardCone.eq_1] using hi
 
 private theorem parity_collision_iff (x : event) :
     parity x ∈ collisionEvents ↔ x ∈ collisionEvents := by
   constructor <;> intro h
   · refine ⟨(parity_all_iff x).mp h.1, ?_⟩
-    simpa [parity, parityVector, minkowski] using h.2
+    simpa [parity.eq_1, parityVector.eq_1, minkowski.eq_1] using h.2
   · refine ⟨(parity_all_iff x).mpr h.1, ?_⟩
-    simpa [parity, parityVector, minkowski] using h.2
+    simpa [parity.eq_1, parityVector.eq_1, minkowski.eq_1] using h.2
 
 private theorem rotation_proper : rotation ∈ properOrthochronous := by
   refine ⟨?_, ?_, ?_⟩
   · ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [rotation, eta, Matrix.mul_apply, Fin.sum_univ_four]
+      norm_num [rotation.eq_1, eta.eq_1, Matrix.mul_apply, Fin.sum_univ_four]
   · let t : Equiv.Perm (Fin 4) := Equiv.swap 1 2
     have ht : t.permMatrix ℝ * eta = rotation := by
       ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [t, rotation, eta, Matrix.mul_apply, Fin.sum_univ_four,
+        simp [t, rotation.eq_1, eta.eq_1, Matrix.mul_apply, Fin.sum_univ_four,
           Equiv.swap_apply_def]
     rw [← ht, Matrix.det_mul, Matrix.det_permutation]
     have hsign : Equiv.Perm.sign t = -1 := by
       dsimp [t]
       exact Equiv.Perm.sign_swap (by decide)
-    norm_num [hsign, eta, Matrix.det_diagonal, Fin.prod_univ_four]
-  · norm_num [rotation]
+    norm_num [hsign, eta.eq_1, Matrix.det_diagonal, Fin.prod_univ_four]
+  · norm_num [rotation.eq_1]
 
 private theorem family_admissible_odd
     (om : Set event) (hom : collisionEvents ⊆ om) (f : event → ℝ)
