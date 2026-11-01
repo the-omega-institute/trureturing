@@ -103,6 +103,6 @@ internal sealed class MalkounJordanElementaryDocument : IScribeDocumentDefinitio
                 Seq(Sum, Underscore, Grp(Seq(I("S"), InMacro, Sp,
                         App("Finset.powersetCard", I("k"),
                             Par(Seq(Name("Finset.univ"), Colon, Sp, App("Finset", App("Fin", I("n")))))))),
-                    Prod, Underscore, Grp(Seq(I("i"), InMacro, Sp, I("S"))), App("t", I("i")))))))
+                    Prod, Underscore, Grp(Seq(I("i"), InMacro, Sp, I("S"))), App("t", I("i"))))))))
     };
 }

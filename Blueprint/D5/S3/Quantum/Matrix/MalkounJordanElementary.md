@@ -6,7 +6,7 @@ Elementary symmetric eigenvalue inequality for a Hermitian Jordan product.
 
 **Definition 1.1 (The elementary symmetric polynomial).**
 
-$$elementarySymmetric\left(t, k\right) = \sum_{S\in \operatorname{Finset.powersetCard}\left(k, \operatorname{Finset.univ}\right)}\prod_{i\in S}t\left(i\right)$$
+$$\forall (n: \mathbb{N}), \forall (t: Fin\left(n\right) \to \mathbb{R}), \forall (k: \mathbb{N}), elementarySymmetric\left(t, k\right) = \sum_{S\in \operatorname{Finset.powersetCard}\left(k, (\operatorname{Finset.univ}: Finset\left(Fin\left(n\right)\right))\right)}\prod_{i\in S}t\left(i\right)$$
 
 *Formalization.* `D5/S3/Quantum/Matrix/MalkounJordanElementary.elementarySymmetric` (`✓ std3`).
 
