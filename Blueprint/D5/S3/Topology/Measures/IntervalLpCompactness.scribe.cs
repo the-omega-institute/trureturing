@@ -38,9 +38,9 @@ internal sealed class IntervalLpCompactnessDocument : IScribeDocumentDefinition
         var interval = Call("Ioc", F.D(0), Call("mul", n, d));
         var err = Call("power", Call("enorm", Call("sub", Call("f", t), Call("meshAverage", d, n, f, t))), q);
         var inc = Call("power", Call("enorm", Call("sub", Call("f", Call("add", t, h)), Call("f", t))), q);
-        var increments = Call("LIntegralOn", Call("Ioc", F.D(0), d), h,
-            Call("LIntegralOn", Call("Ioc", F.D(0), Call("sub", Call("mul", n, d), h)), t, inc));
-        var bound = Le(Call("LIntegralOn", interval, t, err),
+        var increments = LInt(Call("Ioc", F.D(0), d), h,
+            LInt(Call("Ioc", F.D(0), Call("sub", Call("mul", n, d), h)), t, inc));
+        var bound = Le(LInt(interval, t, err),
             Call("mul", Call("inv", Call("ofReal", d)), Call("mul", F.D(2), increments)));
         var premises = And(Call("RealBanach", e), Lt(F.D(0), d), Call("StronglyMeasurable", f),
             Call("IntegrableOn", f, interval), Le(F.D(1), q));
@@ -67,6 +67,10 @@ internal sealed class IntervalLpCompactnessDocument : IScribeDocumentDefinition
         return All("E", Id("Types"), All("T", Id("Real"), All("p", Id("ENNReal"),
             All("S", Call("Set", lp), Implies(premises, Call("IsCompact", Call("closure", s)))))));
     }
+    private static Formula LInt(Formula domain, Formula variable, Formula body) =>
+        F.Seq(new Formula.Power(new Formula.Subscript(F.Int,
+            F.Seq(variable, F.Sp, F.InMacro, F.Sp, domain)), F.Minus),
+            F.Sp, body, F.Thin, Id("d"), variable);
     private static Formula Id(string s) => F.Id(s);
     private static Formula Call(string s, params Formula[] args) => new Formula.Apply(Id(s), [.. args]);
     private static Formula All(string s, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(s), type, body);
