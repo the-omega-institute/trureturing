@@ -78,42 +78,42 @@ theorem negative_rank_one_outer_insertion_zero
   exact negative_rank_one_outer_energy_mismatch d s q r t k hd hs hsq hr ht hk
 
 /-- The actual even rank-one datum; positivity of d is used only in the theorem. -/
-def datum (d : ℕ) : LatticeData where
+def datum (d : ℤ) : LatticeData where
   rank := 1
   G := fun _ _ => -2 * (d : ℤ)
   symmetric := by intros; rfl
   even_diagonal := by intro i; exact ⟨-(d : ℤ), by ring⟩
 
-def charge (d : ℕ) (s : ℤ) : Charge (datum d) := fun _ => s
+def charge (d : ℤ) (s : ℤ) : Charge (datum d) := fun _ => s
 
-@[simp] private theorem charge_add (d : ℕ) (s t : ℤ) :
+@[simp] private theorem charge_add (d : ℤ) (s t : ℤ) :
     charge d s + charge d t = charge d (s + t) := rfl
 
-@[simp] private theorem charge_zero (d : ℕ) : charge d 0 = 0 := rfl
+@[simp] private theorem charge_zero (d : ℤ) : charge d 0 = 0 := rfl
 
-private theorem charge_eq (d : ℕ) (a : Charge (datum d)) :
+private theorem charge_eq (d : ℤ) (a : Charge (datum d)) :
     a = charge d (a 0) := by
   funext i
   exact congrArg a (Subsingleton.elim i 0)
 
-@[simp] private theorem charge_inj (d : ℕ) (s t : ℤ) :
+@[simp] private theorem charge_inj (d : ℤ) (s t : ℤ) :
     charge d s = charge d t ↔ s = t := by
   constructor
   · intro h; exact congrFun h 0
   · rintro rfl; rfl
 
-private theorem bilinear_charge (d : ℕ) (s t : ℤ) :
+private theorem bilinear_charge (d : ℤ) (s t : ℤ) :
     bilinear (datum d) (charge d s) (charge d t) = -2 * (d : ℤ) * s * t := by
   simp [bilinear, datum, charge, Fin.sum_univ_one]
   ring
 
-private theorem charge_energy (d : ℕ) (s : ℤ) :
+private theorem charge_energy (d : ℤ) (s : ℤ) :
     chargeEnergy (datum d) (charge d s) = -(d : ℤ) * s ^ 2 := by
   have h := two_chargeEnergy (datum d) (charge d s)
   rw [bilinear_charge] at h
   nlinarith
 
-private theorem basis_energy (d : ℕ) (s : ℤ) (e : Exponent (datum d)) :
+private theorem basis_energy (d : ℤ) (s : ℤ) (e : Exponent (datum d)) :
     energy (datum d) (charge d s, e) =
       (oscillatorEnergy e : ℤ) - (d : ℤ) * s ^ 2 := by
   simp [energy, charge_energy]; ring
@@ -129,7 +129,7 @@ private def mode (D : LatticeData) (k : ℤ) :
   map_add' u v := by simp
   map_smul' c u := by simp
 
-private theorem basis_outer_zero (d : ℕ) (hd : 0 < d) (s q k : ℤ)
+private theorem basis_outer_zero (d : ℤ) (hd : 0 < d) (s q k : ℤ)
     (hs : 0 ≤ s) (hsq : s < q) (hk : k < 0)
     (e : Exponent (datum d)) (he : 0 < s ∨ e ≠ 0)
     (a : Label (datum d)) :
@@ -176,7 +176,7 @@ private theorem basis_outer_zero (d : ℕ) (hd : 0 < d) (s q k : ℤ)
       change β i = q - s
       omega
 
-private theorem outer_positive (d : ℕ) (hd : 0 < d) (s q k : ℤ)
+private theorem outer_positive (d : ℤ) (hd : 0 < d) (s q k : ℤ)
     (hs : 0 < s) (hsq : s < q) (hk : k < 0)
     (p : Oscillator (datum d)) (v : Carrier (datum d)) :
     groundCoefficient (datum d) (charge d q)
@@ -194,7 +194,7 @@ private theorem outer_positive (d : ℕ) (hd : 0 < d) (s q k : ℤ)
     exact basis_outer_zero d hd s q k hs.le hsq hk e (Or.inl hs) a
   exact congrArg (fun f => f p v) hL
 
-private theorem outer_zero (d : ℕ) (hd : 0 < d) (q k : ℤ)
+private theorem outer_zero (d : ℤ) (hd : 0 < d) (q k : ℤ)
     (hq : 0 < q) (hk : k < 0)
     (p : Oscillator (datum d)) (v : Carrier (datum d)) :
     groundCoefficient (datum d) (charge d q)
@@ -207,7 +207,7 @@ private theorem outer_zero (d : ℕ) (hd : 0 < d) (q k : ℤ)
       map_add' := by intros; ext; simp [mode]
       map_smul' := by intros; ext; simp [mode] }
   let R : Oscillator (datum d) →ₗ[ℂ] Carrier (datum d) →ₗ[ℂ] ℂ :=
-    (MvPolynomial.lcoeff 0).smulRight
+    (MvPolynomial.lcoeff ℂ 0).smulRight
       (if k = -1 then groundCoefficient (datum d) (charge d q) else 0)
   have hL : L = R := by
     apply (MvPolynomial.basisMonomials (Index (datum d)) ℂ).ext
@@ -229,35 +229,35 @@ private theorem outer_zero (d : ℕ) (hd : 0 < d) (q k : ℤ)
   simpa [L, R, MvPolynomial.lcoeff, apply_ite] using hh
 
 /-- A palette letter retains an arbitrary oscillator polynomial and integer mode. -/
-structure Letter (d : ℕ) where
+structure Letter (d : ℤ) where
   weight : ℤ
   polynomial : Oscillator (datum d)
   index : ℤ
 
-private def letterState {d : ℕ} (a : Letter d) : Carrier (datum d) :=
+private def letterState {d : ℤ} (a : Letter d) : Carrier (datum d) :=
   Finsupp.single (charge d a.weight) a.polynomial
 
-private def wordOperator {d : ℕ} : List (Letter d) → Module.End ℂ (Carrier (datum d))
+private def wordOperator {d : ℤ} : List (Letter d) → Module.End ℂ (Carrier (datum d))
   | [] => LinearMap.id
   | a :: w => mode (datum d) a.index (letterState a) * wordOperator w
 
-private def paletteWord {d : ℕ} (w : List (Letter d)) : Carrier (datum d) :=
+private def paletteWord {d : ℤ} (w : List (Letter d)) : Carrier (datum d) :=
   wordOperator w (vacuum (datum d))
 
-private def Good {d : ℕ} (M : ℤ) (w : List (Letter d)) : Prop :=
+private def Good {d : ℤ} (M : ℤ) (w : List (Letter d)) : Prop :=
   ∀ a ∈ w, -M ≤ a.weight ∧ a.weight ≤ M ∧ a.index < 0
 
-private theorem wordOperator_append {d : ℕ} (l r : List (Letter d)) :
+private theorem wordOperator_append {d : ℤ} (l r : List (Letter d)) :
     wordOperator (l ++ r) = wordOperator l * wordOperator r := by
   induction l with
   | nil => simp [wordOperator]
   | cons a l ih => simp [wordOperator, ih, mul_assoc]
 
-private def wordCharge {d : ℕ} : List (Letter d) → ℤ
+private def wordCharge {d : ℤ} : List (Letter d) → ℤ
   | [] => 0
   | a :: w => a.weight + wordCharge w
 
-private theorem word_charge {d : ℕ} (w : List (Letter d)) :
+private theorem word_charge {d : ℤ} (w : List (Letter d)) :
     ∃ p : Oscillator (datum d), paletteWord w = Finsupp.single (charge d (wordCharge w)) p := by
   induction w with
   | nil => exact ⟨1, rfl⟩
@@ -270,7 +270,7 @@ private theorem word_charge {d : ℕ} (w : List (Letter d)) :
     rw [hp]
     exact h
 
-private theorem all_negative_zero {d : ℕ} (q : ℤ) (hq : 0 < q)
+private theorem all_negative_zero {d : ℤ} (q : ℤ) (hq : 0 < q)
     (w : List (Letter d)) (hw : ∀ a ∈ w, a.weight < 0) :
     groundCoefficient (datum d) (charge d q) (paletteWord w) = 0 := by
   have hnonpos : ∀ w : List (Letter d), (∀ a ∈ w, a.weight < 0) → wordCharge w ≤ 0 := by
@@ -289,19 +289,19 @@ private theorem all_negative_zero {d : ℕ} (q : ℤ) (hq : 0 < q)
   · simp
   · simpa using (show wordCharge w ≠ q by omega)
 
-private def correction {d : ℕ} (b a : Letter d) (j : ℕ) : Letter d where
+private def correction {d : ℤ} (b a : Letter d) (j : ℕ) : Letter d where
   weight := b.weight + a.weight
   polynomial := (mode (datum d) (j : ℤ) (letterState b) (letterState a))
     (charge d (b.weight + a.weight))
   index := b.index + a.index - j
 
-private theorem correction_state {d : ℕ} (b a : Letter d) (j : ℕ) :
+private theorem correction_state {d : ℤ} (b a : Letter d) (j : ℕ) :
     letterState (correction b a j) =
       LatticeAllStateLocality.mu (datum d) (letterState b) j (letterState a) := by
   exact (LatticeSectorIntertwiner.charge_homogeneity (datum d)
     (charge d b.weight) (charge d a.weight) b.polynomial a.polynomial j).symm
 
-private theorem correction_good {d : ℕ} (M : ℤ) (b a : Letter d)
+private theorem correction_good {d : ℤ} (M : ℤ) (b a : Letter d)
     (hb : -M ≤ b.weight ∧ b.weight ≤ M ∧ b.index < 0)
     (ha : -M ≤ a.weight ∧ a.weight ≤ M ∧ a.index < 0)
     (hbn : b.weight < 0) (han : 0 ≤ a.weight) (j : ℕ) :
@@ -310,7 +310,7 @@ private theorem correction_good {d : ℕ} (M : ℤ) (b a : Letter d)
   dsimp [correction]
   omega
 
-private theorem move_nonnegative (d : ℕ) (hd : 0 < d) (M q : ℤ)
+private theorem move_nonnegative (d : ℤ) (hd : 0 < d) (M q : ℤ)
     (hM : 0 ≤ M) (hq : M < q) (N : ℕ)
     (short : ∀ w : List (Letter d), w.length < N → Good M w →
       groundCoefficient (datum d) (charge d q) (paletteWord w) = 0)
@@ -385,7 +385,7 @@ private theorem move_nonnegative (d : ℕ) (hd : 0 < d) (M q : ℤ)
     rw [hswapF, sub_zero] at comm
     simpa [F, paletteWord, wordOperator_append, wordOperator, mul_assoc] using comm
 
-private theorem split_nonnegative {d : ℕ} (w : List (Letter d))
+private theorem split_nonnegative {d : ℤ} (w : List (Letter d))
     (h : ¬ ∀ a ∈ w, a.weight < 0) :
     ∃ l a r, w = l ++ a :: r ∧ (∀ b ∈ l, b.weight < 0) ∧ 0 ≤ a.weight := by
   induction w with
@@ -405,7 +405,7 @@ private theorem split_nonnegative {d : ℕ} (w : List (Letter d))
       · omega
       · exact hl c hc
 
-private theorem palette_word_zero (d : ℕ) (hd : 0 < d) (M q : ℤ)
+private theorem palette_word_zero (d : ℤ) (hd : 0 < d) (M q : ℤ)
     (hM : 0 ≤ M) (hq : M < q) (w : List (Letter d)) (hw : Good M w) :
     groundCoefficient (datum d) (charge d q) (paletteWord w) = 0 := by
   suffices H : ∀ N : ℕ, ∀ w : List (Letter d), w.length = N → Good M w →
@@ -419,6 +419,106 @@ private theorem palette_word_zero (d : ℕ) (hd : 0 < d) (M q : ℤ)
     · obtain ⟨l, a, r, rfl, hl, ha⟩ := split_nonnegative w hneg
       exact move_nonnegative d hd M q hM hq N
         (fun w hw hg => ih w.length hw w rfl hg) l a r hn hg hl ha
+
+private def paletteSpan (d M : ℤ) : Submodule ℂ (Carrier (datum d)) :=
+  Submodule.span ℂ {v | ∃ w : List (Letter d), Good M w ∧ paletteWord w = v}
+
+private theorem paletteSpan_le_ker (d : ℤ) (hd : 0 < d) (M q : ℤ)
+    (hM : 0 ≤ M) (hq : M < q) :
+    paletteSpan d M ≤ LinearMap.ker (groundCoefficient (datum d) (charge d q)) := by
+  apply Submodule.span_le.mpr
+  rintro v ⟨w, hw, rfl⟩
+  exact palette_word_zero d hd M q hM hq w hw
+
+private theorem paletteSpan_closed (d M s k : ℤ)
+    (hs : -M ≤ s ∧ s ≤ M) (hk : k < 0)
+    (p : Oscillator (datum d)) (v : Carrier (datum d)) (hv : v ∈ paletteSpan d M) :
+    mode (datum d) k (Finsupp.single (charge d s) p) v ∈ paletteSpan d M := by
+  classical
+  induction hv using Submodule.span_induction with
+  | mem v hv =>
+    obtain ⟨w, hw, rfl⟩ := hv
+    apply Submodule.subset_span
+    refine ⟨⟨s,p,k⟩ :: w, ?_, rfl⟩
+    intro a ha
+    rcases List.mem_cons.mp ha with rfl | ha
+    · exact ⟨hs.1, hs.2, hk⟩
+    · exact hw a ha
+  | zero => simp
+  | add x y hx hy ihx ihy => simpa using (paletteSpan d M).add_mem ihx ihy
+  | smul c x hx ih => simpa using (paletteSpan d M).smul_mem c ih
+
+/-- Right-nested strictly negative normalized modes of arbitrary actual states. -/
+def negativeWord (D : LatticeData) (S : Finset (Carrier D)) :
+    List ({u : Carrier D // u ∈ S} × ℕ) → Carrier D
+  | [] => vacuum D
+  | (a,n) :: w => ((Y D a.1)[[-(n : ℤ)-1]]) (negativeWord D S w)
+
+/-- This is the precise negative-word convention used for strong generation here. -/
+def negativeWordSpan (D : LatticeData) (S : Finset (Carrier D)) :
+    Submodule ℂ (Carrier D) := Submodule.span ℂ (Set.range (negativeWord D S))
+
+def StronglyGenerates (D : LatticeData) (S : Finset (Carrier D)) : Prop :=
+  negativeWordSpan D S = ⊤
+
+private def familyBound (d : ℤ) (S : Finset (Carrier (datum d))) : ℕ :=
+  S.sup (fun u => u.support.sup (fun α => (α 0).natAbs))
+
+private theorem familyBound_spec (d : ℤ) (S : Finset (Carrier (datum d)))
+    (u : Carrier (datum d)) (hu : u ∈ S) (α : Charge (datum d)) (hα : α ∈ u.support) :
+    -(familyBound d S : ℤ) ≤ α 0 ∧ α 0 ≤ (familyBound d S : ℤ) := by
+  have h₁ := Finset.le_sup (f := fun α : Charge (datum d) => (α 0).natAbs) hα
+  have h₂ := Finset.le_sup (f := fun u : Carrier (datum d) =>
+    u.support.sup (fun α => (α 0).natAbs)) hu
+  have h : (α 0).natAbs ≤ familyBound d S := h₁.trans h₂
+  have hz : ((α 0).natAbs : ℤ) ≤ (familyBound d S : ℤ) := by exact_mod_cast h
+  rw [Int.natCast_natAbs] at hz
+  exact abs_le.mp hz
+
+private theorem family_mode_closed (d : ℤ) (S : Finset (Carrier (datum d)))
+    (u : Carrier (datum d)) (hu : u ∈ S) (k : ℤ) (hk : k < 0)
+    (v : Carrier (datum d)) (hv : v ∈ paletteSpan d (familyBound d S)) :
+    mode (datum d) k u v ∈ paletteSpan d (familyBound d S) := by
+  classical
+  have hsum : u = ∑ α ∈ u.support, Finsupp.single α (u α) := by
+    simpa only [Finsupp.sum] using u.sum_single.symm
+  rw [hsum, map_sum]
+  simp only [LinearMap.sum_apply]
+  apply Submodule.sum_mem
+  intro α hα
+  have hb := familyBound_spec d S u hu α hα
+  rw [charge_eq d α]
+  exact paletteSpan_closed d (familyBound d S) (α 0) k hb hk _ v hv
+
+private theorem negativeWord_mem_palette (d : ℤ) (S : Finset (Carrier (datum d)))
+    (w : List ({u : Carrier (datum d) // u ∈ S} × ℕ)) :
+    negativeWord (datum d) S w ∈ paletteSpan d (familyBound d S) := by
+  induction w with
+  | nil => exact Submodule.subset_span ⟨[], by simp [Good], rfl⟩
+  | cons a w ih => exact family_mode_closed d S a.1.1 a.1.2 (-(a.2 : ℤ)-1)
+      (by omega) _ ih
+
+/-- No finite family of arbitrary mixed-charge oscillator states strongly generates
+the actual negative rank-one lattice carrier by right-nested negative modes. -/
+theorem negative_rank_one_no_finite_strong_generation (d : ℤ) (hd : 0 < d)
+    (S : Finset (Carrier (datum d))) : negativeWordSpan (datum d) S ≠ ⊤ := by
+  classical
+  let M : ℤ := familyBound d S
+  let q : ℤ := M + 1
+  have hM : 0 ≤ M := by dsimp [M]; positivity
+  have hq : M < q := by dsimp [q]; omega
+  have hle : negativeWordSpan (datum d) S ≤ paletteSpan d M := by
+    apply Submodule.span_le.mpr
+    rintro v ⟨w, rfl⟩
+    exact negativeWord_mem_palette d S w
+  have hker := hle.trans (paletteSpan_le_ker d hd M q hM hq)
+  intro htop
+  have hg : Finsupp.single (charge d q) (1 : Oscillator (datum d)) ∈
+      negativeWordSpan (datum d) S := by rw [htop]; trivial
+  have hz := hker hg
+  change groundCoefficient (datum d) (charge d q)
+    (Finsupp.single (charge d q) (1 : Oscillator (datum d))) = 0 at hz
+  simpa using hz
 
 end
 end D5.S3.VertexAlgebra.Lattice.NegativeRankOneStrongGeneration
