@@ -96,7 +96,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.8 (IsIntervalTriangulation.bounds_of_mem_intervalSegments).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall i \in \mathbb{Z},\; \forall j \in \mathbb{Z},\; ((\operatorname{pair}\left(i, j\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((a \leq i) \land ((i < j) \land (j \leq b))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall i \in \mathbb{Z},\; \forall j \in \mathbb{Z},\; ((\operatorname{pair}\left(i, j\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((a \leq i) \land ((i < j) \land (j \leq b)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.bounds_of_mem_intervalSegments` (`✓ std3`). ∎
 
@@ -108,7 +108,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.9 (IsIntervalTriangulation.not_interleave).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall p \in \operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right),\; \forall q \in \operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right),\; ((p \in \operatorname{Seg}\left(a, b, S\right)) \implies ((q \in \operatorname{Seg}\left(a, b, S\right)) \implies \neg (\operatorname{Interleave}\left(p, q\right))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall p \in \operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right),\; \forall q \in \operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right),\; ((p \in \operatorname{Seg}\left(a, b, S\right)) \implies ((q \in \operatorname{Seg}\left(a, b, S\right)) \implies \neg (\operatorname{Interleave}\left(p, q\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.not_interleave` (`✓ std3`). ∎
 
@@ -120,7 +120,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.10 (IsIntervalTriangulation.exists_interleave).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall i \in \mathbb{Z},\; \forall j \in \mathbb{Z},\; ((a \leq i) \implies ((i < j) \implies ((j \leq b) \implies (\neg ((\operatorname{pair}\left(i, j\right) \in \operatorname{Seg}\left(a, b, S\right))) \implies \exists q \in \operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right),\; ((q \in S) \land \operatorname{Interleave}\left(\operatorname{pair}\left(i, j\right), q\right))))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall i \in \mathbb{Z},\; \forall j \in \mathbb{Z},\; ((a \leq i) \implies ((i < j) \implies ((j \leq b) \implies (\neg ((\operatorname{pair}\left(i, j\right) \in \operatorname{Seg}\left(a, b, S\right))) \implies (\exists q \in \operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right),\; ((q \in S) \land \operatorname{Interleave}\left(\operatorname{pair}\left(i, j\right), q\right))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.exists_interleave` (`✓ std3`). ∎
 
@@ -132,7 +132,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.11 (IsIntervalTriangulation.existsUnique_apex).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall i \in \mathbb{Z},\; \forall k \in \mathbb{Z},\; (((i + 2) \leq k) \implies ((\operatorname{pair}\left(i, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies \exists j \in \mathbb{Z},\; (((i < j) \land ((j < k) \land ((\operatorname{pair}\left(i, j\right) \in \operatorname{Seg}\left(a, b, S\right)) \land (\operatorname{pair}\left(j, k\right) \in \operatorname{Seg}\left(a, b, S\right))))) \land \forall z \in \mathbb{Z},\; (((i < z) \land ((z < k) \land ((\operatorname{pair}\left(i, z\right) \in \operatorname{Seg}\left(a, b, S\right)) \land (\operatorname{pair}\left(z, k\right) \in \operatorname{Seg}\left(a, b, S\right))))) \implies (z = j)))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall i \in \mathbb{Z},\; \forall k \in \mathbb{Z},\; (((i + 2) \leq k) \implies ((\operatorname{pair}\left(i, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies (\exists j \in \mathbb{Z},\; (((i < j) \land ((j < k) \land ((\operatorname{pair}\left(i, j\right) \in \operatorname{Seg}\left(a, b, S\right)) \land (\operatorname{pair}\left(j, k\right) \in \operatorname{Seg}\left(a, b, S\right))))) \land (\forall z \in \mathbb{Z},\; (((i < z) \land ((z < k) \land ((\operatorname{pair}\left(i, z\right) \in \operatorname{Seg}\left(a, b, S\right)) \land (\operatorname{pair}\left(z, k\right) \in \operatorname{Seg}\left(a, b, S\right))))) \implies (z = j))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.existsUnique_apex` (`✓ std3`). ∎
 
@@ -144,7 +144,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.12 (IsIntervalTriangulation.le_or_le_of_apex).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall k \in \mathbb{Z},\; ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies \forall i \in \mathbb{Z},\; \forall j \in \mathbb{Z},\; ((\operatorname{pair}\left(i, j\right) \in S) \implies ((j \leq k) \lor (k \leq i)))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall k \in \mathbb{Z},\; ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies (\forall i \in \mathbb{Z},\; \forall j \in \mathbb{Z},\; ((\operatorname{pair}\left(i, j\right) \in S) \implies ((j \leq k) \lor (k \leq i)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.le_or_le_of_apex` (`✓ std3`). ∎
 
@@ -156,7 +156,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.13 (IsIntervalTriangulation.eq_union_of_apex).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall k \in \mathbb{Z},\; ((a < k) \implies ((k < b) \implies ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies (S = \operatorname{union}\left(\operatorname{union}\left(\operatorname{inter}\left(S, \operatorname{D}\left(a, k\right)\right), \operatorname{inter}\left(S, \operatorname{D}\left(k, b\right)\right)\right), \operatorname{inter}\left(\operatorname{two}\left(\operatorname{pair}\left(a, k\right), \operatorname{pair}\left(k, b\right)\right), \operatorname{D}\left(a, b\right)\right)\right))))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall k \in \mathbb{Z},\; ((a < k) \implies ((k < b) \implies ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies (S = \operatorname{union}\left(\operatorname{union}\left(\operatorname{inter}\left(S, \operatorname{D}\left(a, k\right)\right), \operatorname{inter}\left(S, \operatorname{D}\left(k, b\right)\right)\right), \operatorname{inter}\left(\operatorname{two}\left(\operatorname{pair}\left(a, k\right), \operatorname{pair}\left(k, b\right)\right), \operatorname{D}\left(a, b\right)\right)\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.eq_union_of_apex` (`✓ std3`). ∎
 
@@ -168,7 +168,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.14 (IsIntervalTriangulation.inter_left_of_apex).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall k \in \mathbb{Z},\; ((k < b) \implies ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies \operatorname{I}\left(a, k, \operatorname{inter}\left(S, \operatorname{D}\left(a, k\right)\right)\right))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall k \in \mathbb{Z},\; ((k < b) \implies ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies \operatorname{I}\left(a, k, \operatorname{inter}\left(S, \operatorname{D}\left(a, k\right)\right)\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.inter_left_of_apex` (`✓ std3`). ∎
 
@@ -180,7 +180,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.15 (IsIntervalTriangulation.inter_right_of_apex).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies \forall k \in \mathbb{Z},\; ((a < k) \implies ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies \operatorname{I}\left(k, b, \operatorname{inter}\left(S, \operatorname{D}\left(k, b\right)\right)\right))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; \forall S \in \operatorname{Finset}\left(\operatorname{Prod}\left(\mathbb{Z}, \mathbb{Z}\right)\right),\; ((a < b) \implies (\operatorname{I}\left(a, b, S\right) \implies (\forall k \in \mathbb{Z},\; ((a < k) \implies ((\operatorname{pair}\left(a, k\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies ((\operatorname{pair}\left(k, b\right) \in \operatorname{Seg}\left(a, b, S\right)) \implies \operatorname{I}\left(k, b, \operatorname{inter}\left(S, \operatorname{D}\left(k, b\right)\right)\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.inter_right_of_apex` (`✓ std3`). ∎
 
@@ -252,7 +252,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.21 (exists_equiv_intervalTriangulation).**
 
-$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; (((a + 2) \leq b) \implies \exists e \in \operatorname{Equiv}\left(\operatorname{L}\left(a, b\right), \operatorname{W}\left(a, b\right)\right),\; \forall S \in \operatorname{L}\left(a, b\right),\; ((\operatorname{pair}\left(a, \operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right)\right) \in \operatorname{Seg}\left(a, b, \operatorname{val}\left(S\right)\right)) \land ((\operatorname{pair}\left(\operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right), b\right) \in \operatorname{Seg}\left(a, b, \operatorname{val}\left(S\right)\right)) \land ((\operatorname{val}\left(\operatorname{left}\left(\operatorname{app}\left(e, S\right)\right)\right) = \operatorname{inter}\left(\operatorname{val}\left(S\right), \operatorname{D}\left(a, \operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right)\right)\right)) \land (\operatorname{val}\left(\operatorname{right}\left(\operatorname{app}\left(e, S\right)\right)\right) = \operatorname{inter}\left(\operatorname{val}\left(S\right), \operatorname{D}\left(\operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right), b\right)\right))))))$$
+$$\forall a \in \mathbb{Z},\; \forall b \in \mathbb{Z},\; (((a + 2) \leq b) \implies (\exists e \in \operatorname{Equiv}\left(\operatorname{L}\left(a, b\right), \operatorname{W}\left(a, b\right)\right),\; \forall S \in \operatorname{L}\left(a, b\right),\; ((\operatorname{pair}\left(a, \operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right)\right) \in \operatorname{Seg}\left(a, b, \operatorname{val}\left(S\right)\right)) \land ((\operatorname{pair}\left(\operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right), b\right) \in \operatorname{Seg}\left(a, b, \operatorname{val}\left(S\right)\right)) \land ((\operatorname{val}\left(\operatorname{left}\left(\operatorname{app}\left(e, S\right)\right)\right) = \operatorname{inter}\left(\operatorname{val}\left(S\right), \operatorname{D}\left(a, \operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right)\right)\right)) \land (\operatorname{val}\left(\operatorname{right}\left(\operatorname{app}\left(e, S\right)\right)\right) = \operatorname{inter}\left(\operatorname{val}\left(S\right), \operatorname{D}\left(\operatorname{apex}\left(\operatorname{app}\left(e, S\right)\right), b\right)\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.exists_equiv_intervalTriangulation` (`✓ std3`). ∎
 
@@ -372,7 +372,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.31 (exists_basePos_eq).**
 
-$$\forall m \in Nat,\; \forall c \in \operatorname{ZMod}\left(m\right),\; \forall k \in \mathbb{Z},\; ((0 \leq k) \implies ((k < \operatorname{intCast}\left(m\right)) \implies \exists v \in \operatorname{ZMod}\left(m\right),\; (\operatorname{basePos}\left(c, v\right) = k)))$$
+$$\forall m \in Nat,\; \forall c \in \operatorname{ZMod}\left(m\right),\; \forall k \in \mathbb{Z},\; ((0 \leq k) \implies ((k < \operatorname{intCast}\left(m\right)) \implies (\exists v \in \operatorname{ZMod}\left(m\right),\; (\operatorname{basePos}\left(c, v\right) = k))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.exists_basePos_eq` (`✓ std3`). ∎
 
@@ -432,7 +432,7 @@ Exact licensed source support consumed by the complete polygon-count proof. Its 
 
 **Theorem 1.36 (IsSegment.exists_basePos_lt).**
 
-$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall c \in \operatorname{ZMod}\left(m\right),\; \forall s \in \operatorname{Symtwo}\left(\operatorname{ZMod}\left(m\right)\right),\; (\operatorname{IsSegment}\left(s\right) \implies \exists u \in \operatorname{ZMod}\left(m\right),\; \exists v \in \operatorname{ZMod}\left(m\right),\; ((s = \operatorname{symPair}\left(u, v\right)) \land (\operatorname{basePos}\left(c, u\right) < \operatorname{basePos}\left(c, v\right))))$$
+$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall c \in \operatorname{ZMod}\left(m\right),\; \forall s \in \operatorname{Symtwo}\left(\operatorname{ZMod}\left(m\right)\right),\; (\operatorname{IsSegment}\left(s\right) \implies (\exists u \in \operatorname{ZMod}\left(m\right),\; \exists v \in \operatorname{ZMod}\left(m\right),\; ((s = \operatorname{symPair}\left(u, v\right)) \land (\operatorname{basePos}\left(c, u\right) < \operatorname{basePos}\left(c, v\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/PolygonCatalanSupplier.exists_basePos_lt` (`✓ std3`). ∎
 
