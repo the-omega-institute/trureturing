@@ -1727,7 +1727,7 @@ private theorem threeMoment_eq_actual {I : Type*} [Fintype I] [DecidableEq I]
               finiteEntry D T label (r - Finsupp.single b 1) h l := by
         have hd := sub_single_degree r b (Finsupp.mem_support_iff.mp hb)
         exact ih _ (by omega) _ rfl h l
-      rw [Finset.mul_add, Finset.mul_add]
+      rw [mul_add, mul_add]
       simp only [Finset.mul_sum]
       have hs : (∑ b ∈ r.support, (r b : ℂ) * nativeSourceSourceKernel D T (label a) (label b) *
           nativeMoment (nativeThreeLegMatrix D T label)
@@ -1778,33 +1778,6 @@ private theorem actual_eq_threeGaussian {I : Type*} [Fintype I] [DecidableEq I]
   apply mul_left_cancel₀ hl
   linear_combination -he
 
-/-- Exact full neutral corrected-field coefficient in finite raw coordinates.
-The source and input factorials divide the coefficient; the output coefficient
-is ordinary. This holds on every ground vector, including rank zero. -/
-private theorem nativeNeutralCoefficient_three_leg_gaussian {I : Type*} [Fintype I] [DecidableEq I]
-    (D : LatticeData) (hu : IsUnit D.G.det) (T : ℂˣ) (label : I ↪ Index D)
-    (d h l : I →₀ ℕ) (g : ActualGround D hu) :
-    let E : ℤ := (LatticeHalfFockGradedTrace.oddWeight D (l.embDomain label) : ℤ) -
-      (LatticeHalfFockGradedTrace.oddWeight D (h.embDomain label) : ℤ) -
-      2 * nativeSourceEnergy D (d.embDomain label)
-    (((FactorialFockMetric.weight d : ℂ) * (FactorialFockMetric.weight h : ℂ))⁻¹) •
-      ((T : ℂ) ^ E • nativeOutputProjection D hu (l.embDomain label)
-        (nativeNeutralCoefficient D hu (d.embDomain label) E
-          (monomial (h.embDomain label) 1 ⊗ₜ[ℂ] g))) =
-      nativeThreeLegExponentialCoefficient D T label d h l • g := by
-  rw [nativeThreeLegExponentialCoefficient_eq]
-  dsimp only
-  rw [← nativeNeutralLaurentEntry_at_energy]
-  change _ • (finiteEntry D T label d h l • g) = _
-  rw [actual_eq_threeGaussian, smul_smul]
-  have hd : (FactorialFockMetric.weight d : ℂ) ≠ 0 := by
-    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos d))
-  have hh : (FactorialFockMetric.weight h : ℂ) ≠ 0 := by
-    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos h))
-  congr 1
-  field_simp
-
-
 /-- Restriction to a finite label set, with no change of colour or factorials. -/
 def nativeRestrictedOccupation (D : LatticeData) (K : Finset (Index D))
     (d : Index D →₀ ℕ) : K →₀ ℕ :=
@@ -1816,6 +1789,33 @@ def nativeFiniteRawGaussianCoefficient (D : LatticeData) (T : ℂˣ)
   nativeThreeLegExponentialCoefficient D T (Function.Embedding.subtype (fun a => a ∈ K))
     (nativeRestrictedOccupation D K d) (nativeRestrictedOccupation D K h)
     (nativeRestrictedOccupation D K l)
+
+private theorem nativeNeutralLaurentEntry_gaussian
+    (D : LatticeData) (T : ℂˣ) (d h l : Index D →₀ ℕ) (K : Finset (Index D))
+    (hd : d.support ⊆ K) (hh : h.support ⊆ K) (hl : l.support ⊆ K) :
+    nativeNeutralLaurentEntry D T d h l =
+      (FactorialFockMetric.weight d : ℂ) * (FactorialFockMetric.weight h : ℂ) *
+        nativeFiniteRawGaussianCoefficient D T K d h l := by
+  classical
+  let label : K ↪ Index D := Function.Embedding.subtype (fun a => a ∈ K)
+  have reconstruct (q : Index D →₀ ℕ) (hq : q.support ⊆ K) :
+      (nativeRestrictedOccupation D K q).embDomain label = q := by
+    apply Finsupp.embDomain_comapDomain
+    intro a ha
+    exact ⟨⟨a, hq ha⟩, rfl⟩
+  have weight_restrict (q : Index D →₀ ℕ) (hq : q.support ⊆ K) :
+      FactorialFockMetric.weight (nativeRestrictedOccupation D K q) =
+        FactorialFockMetric.weight q := by
+    calc
+      _ = FactorialFockMetric.weight
+          ((nativeRestrictedOccupation D K q).embDomain label) := by
+            simp only [FactorialFockMetric.weight, Finsupp.prod_embDomain]
+      _ = _ := congrArg FactorialFockMetric.weight (reconstruct q hq)
+  have he := actual_eq_threeGaussian D T label (nativeRestrictedOccupation D K d)
+    (nativeRestrictedOccupation D K h) (nativeRestrictedOccupation D K l)
+  rw [← nativeThreeLegExponentialCoefficient_eq] at he
+  simpa only [finiteEntry, reconstruct d hd, reconstruct h hh, reconstruct l hl,
+    weight_restrict d hd, weight_restrict h hh, nativeFiniteRawGaussianCoefficient] using he
 
 /-- The actual full neutral corrected field equals the finite raw coherent
 Gaussian coefficient on every ground vector. Any finite label set containing
@@ -1832,29 +1832,17 @@ theorem nativeNeutralCoefficient_full_raw_gaussian
       ((T : ℂ) ^ E • nativeOutputProjection D hu l
         (nativeNeutralCoefficient D hu d E (monomial h 1 ⊗ₜ[ℂ] g))) =
       nativeFiniteRawGaussianCoefficient D T K d h l • g := by
-  classical
-  let label : K ↪ Index D := Function.Embedding.subtype (fun a => a ∈ K)
-  have reconstruct (q : Index D →₀ ℕ) (hq : q.support ⊆ K) :
-      (nativeRestrictedOccupation D K q).embDomain label = q := by
-    apply Finsupp.embDomain_comapDomain
-    intro a ha
-    exact ⟨⟨a, hq ha⟩, rfl⟩
-  have weight_restrict (q : Index D →₀ ℕ) (hq : q.support ⊆ K) :
-      FactorialFockMetric.weight (nativeRestrictedOccupation D K q) =
-        FactorialFockMetric.weight q := by
-    calc
-      _ = FactorialFockMetric.weight
-          ((nativeRestrictedOccupation D K q).embDomain label) := by
-            simp only [FactorialFockMetric.weight, Finsupp.prod_embDomain]
-      _ = _ := congrArg FactorialFockMetric.weight (reconstruct q hq)
-  have he := nativeNeutralCoefficient_three_leg_gaussian D hu T label
-    (nativeRestrictedOccupation D K d) (nativeRestrictedOccupation D K h)
-    (nativeRestrictedOccupation D K l) g
-  simpa only [reconstruct d hd, reconstruct h hh, reconstruct l hl,
-    weight_restrict d hd, weight_restrict h hh, nativeFiniteRawGaussianCoefficient] using he
+  dsimp only
+  rw [← nativeNeutralLaurentEntry_at_energy,
+    nativeNeutralLaurentEntry_gaussian D T d h l K hd hh hl, smul_smul]
+  have hd0 : (FactorialFockMetric.weight d : ℂ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos d))
+  have hh0 : (FactorialFockMetric.weight h : ℂ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos h))
+  congr 1
+  field_simp
 
 #print axioms nativeNeutralCoefficient_full_raw_gaussian
-#print axioms nativeNeutralCoefficient_three_leg_gaussian
 #print axioms nativeNeutralLaurentEntry_zero
 #print axioms nativeNeutralLaurentEntry_unpaired
 #print axioms nativeNeutralLaurentEntry_recurrence
