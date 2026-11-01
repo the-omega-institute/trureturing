@@ -45,7 +45,7 @@ internal sealed class ProjectivePlaneRealSectorsDocument : IScribeDocumentDefini
             Thm("gramAction_nonnegative_iff", "Positivity tests every nonconstant sector", ScalarCriterionFormula(),
                 "The Gram form is nonnegative on every original coordinate pair exactly when beta, alpha and gamma are all nonnegative. Necessity uses the actual bipartition direction and actual nonzero point zero-sum vectors. Sufficiency uses the complete orthogonal formula, with all coordinate squares nonnegative."),
             Thm("gramAction_nonnegative_interval", "Exact positivity interval", IntervalFormula(false),
-                "Nonnegativity holds exactly for s/(1+s)<=delta<=(q+1)/q. The lower endpoint comes from the positive incidence sector and the upper endpoint from the bipartition sector. The negative incidence scalar is positive throughout this interval."),
+                "Nonnegativity holds exactly for s/(1+s)<=delta<=(q+1)/q. The lower endpoint comes from the positive incidence sector and the upper endpoint from the bipartition sector. The negative incidence scalar is nonnegative throughout this interval."),
             Def("vertexEquiv", "Original disjoint vertex coordinates", "A real function on P+L is identified with its restrictions to the original points and original lines."),
             Def("adjacencyMatrix", "Original block adjacency matrix", "The matrix has blocks (0,N;N^T,0)."),
             Def("distanceMatrix", "Original squared two-distance assignment", "D=delta*(J-I)+(1-delta)*A. Its diagonal is zero; original incident point-line pairs have squared distance value one, and every other distinct pair has value delta."),
