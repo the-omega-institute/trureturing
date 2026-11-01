@@ -273,9 +273,13 @@ private lemma reciprocal_exp_bounds {x : ℝ} (hx : 0 < x) :
   have hneg := Real.one_sub_le_exp_neg x
   have hprod := mul_le_mul_of_nonneg_left hneg (Real.exp_nonneg x)
   rw [← Real.exp_add, add_neg_cancel, Real.exp_zero] at hprod
-  constructor
-  · apply (le_div_iff₀ (mul_pos he hx)).mp ?_
+  have hid : 1 / (Real.exp x - 1) - 1 / x =
+      (x - (Real.exp x - 1)) / ((Real.exp x - 1) * x) := by
     field_simp [he.ne', hx.ne']
+    <;> ring
+  constructor
+  · rw [hid]
+    apply (le_div_iff₀ (mul_pos he hx)).mpr
     nlinarith
   · have h := one_div_le_one_div_of_le hx (by linarith : x ≤ Real.exp x - 1)
     linarith
