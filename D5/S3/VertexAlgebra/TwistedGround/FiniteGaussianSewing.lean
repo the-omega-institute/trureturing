@@ -144,7 +144,7 @@ theorem row_polynomial {X : Type v} [Fintype X] [DecidableEq X]
       have hre : r + Finsupp.single i 1 = e := Finsupp.sub_add_single_one_cancel hi
       have hrd : r.degree < m := by
         have h := congrArg Finsupp.degree hre
-        simp only [Finsupp.degree_add, Finsupp.degree_single] at h
+        simp only [map_add, Finsupp.degree_single] at h
         omega
       obtain ⟨p, hp⟩ := ih r.degree hrd r rfl
       have hj (j : X) : (r - Finsupp.single j 1).degree < m :=
@@ -199,7 +199,6 @@ theorem row_pair_norm_summable {X : Type v} {Y : Type w}
   simpa only [hp, hq, row] using polynomial_pair_norm_summable _ _
     (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j)) hA hB p q
 
-
 private theorem annihilate_created_monomial (i : H) (α : H →₀ ℕ)
     (f : (H →₀ ℕ) → ℂ) :
     annihilate i (created α f) = fun n =>
@@ -216,13 +215,7 @@ private theorem annihilate_created_monomial (i : H) (α : H →₀ ℕ)
       omega
     · simp [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_apply, Ne.symm hji]
   by_cases hz : α i = 0
-  · have hsub : α - Finsupp.single i 1 = α := by
-      ext j
-      by_cases hji : j = i
-      · subst j
-        simp [Finsupp.tsub_apply, hz]
-      · simp [Finsupp.tsub_apply, Finsupp.single_apply, Ne.symm hji]
-    have hiff : α ≤ n + Finsupp.single i 1 ↔ α ≤ n := by
+  · have hiff : α ≤ n + Finsupp.single i 1 ↔ α ≤ n := by
       constructor
       · intro h j
         by_cases hji : j = i
@@ -287,7 +280,6 @@ private theorem annihilate_created_monomial (i : H) (α : H →₀ ℕ)
           rw [← hα]
           exact add_le_add_right hh _
         simp [annihilate, created, h, hplus, hminus]
-
 private theorem pairing_add_right (f g k : (H →₀ ℕ) → ℂ)
     (hg : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * g n))
     (hk : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * k n)) :
@@ -295,12 +287,10 @@ private theorem pairing_add_right (f g k : (H →₀ ℕ) → ℂ)
   unfold pairing
   simp only [mul_add]
   exact hg.tsum_add hk
-
 /-- The actual two-sided creation moment, defined by the original bilinear
 factorial pairing and the original creation shifts. -/
 def bilinearMoment (A B : Matrix H H ℂ) (α β : H →₀ ℕ) : ℂ :=
   pairing (created α (gaussianCoefficient A)) (created β (gaussianCoefficient B))
-
 /-- True creation/annihilation recurrence with both insertion monomials.
 The coordinate multiplicity is β_i, with zero-coordinate boundary terms
 included. Every infinite finite-sum exchange uses native summability. -/
@@ -339,14 +329,10 @@ private theorem bilinearMoment_creation_step (A B : Matrix H H ℂ)
     pairing_sum_right _ _ ht]
   simp only [t, pairing_const_right]
   rfl
-
-
 private theorem bilinearMoment_swap (A B : Matrix H H ℂ) (α β : H →₀ ℕ) :
     bilinearMoment A B α β = bilinearMoment B A β α :=
   pairing_comm _ _
-
 open scoped Matrix.Norms.L2Operator
-
 /-- The ordered resolvent equation for the actual two-sided factorial
 moments. This solves the creation/annihilation system without dividing by
 the vacuum scalar, and without assuming that A and B commute. -/
@@ -387,16 +373,12 @@ theorem bilinearMoment_resolvent_step (A B : Matrix H H ℂ)
     U = Matrix.mulVec ((1 - B * A)⁻¹ʳ) ((1 - B * A).mulVec U) := by
       rw [Matrix.mulVec_mulVec, Ring.inverse_mul_cancel _ hu, Matrix.one_mulVec]
     _ = _ := by rw [heq]
-
-
-
 private theorem resolvent_unit (A B : Matrix H H ℂ)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) : IsUnit (1 - B * A) := by
   apply isUnit_one_sub_of_norm_lt_one
   exact (norm_mul_le B A).trans_lt
     ((mul_le_of_le_one_left (norm_nonneg A) hB.le).trans_lt hA)
-
 private theorem resolvent_push (A B : Matrix H H ℂ)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) :
@@ -412,7 +394,6 @@ private theorem resolvent_push (A B : Matrix H H ℂ)
       rw [← mul_assoc B, ← hp]
     _ = B * (1 - A * B)⁻¹ʳ := by
       rw [← mul_assoc, ← mul_assoc, Ring.inverse_mul_cancel _ hleft, one_mul]
-
 private theorem resolvent_transpose (A B : Matrix H H ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i) :
     ((1 - B * A)⁻¹ʳ).transpose = (1 - A * B)⁻¹ʳ := by
@@ -420,13 +401,11 @@ private theorem resolvent_transpose (A B : Matrix H H ℂ)
   have hBt : B.transpose = B := by ext i j; exact hBsym j i
   simp only [← Matrix.nonsing_inv_eq_ringInverse, Matrix.transpose_nonsing_inv,
     Matrix.transpose_sub, Matrix.transpose_one, Matrix.transpose_mul, hAt, hBt]
-
 /-- The ordered joint insertion covariance. The lower cross block is the
 transpose of the upper cross block for symmetric A and B. -/
 def covariance (A B : Matrix H H ℂ) : Matrix (H ⊕ H) (H ⊕ H) ℂ :=
   Matrix.fromBlocks ((1 - B * A)⁻¹ʳ * B) ((1 - B * A)⁻¹ʳ)
     ((1 - A * B)⁻¹ʳ) ((1 - A * B)⁻¹ʳ * A)
-
 private theorem covariance_symm (A B : Matrix H H ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
@@ -439,7 +418,6 @@ private theorem covariance_symm (A B : Matrix H H ℂ)
     hAt, hBt, resolvent_transpose A B hAsym hBsym,
     resolvent_transpose B A hBsym hAsym,
     ← resolvent_push A B hA hB, ← resolvent_push B A hB hA]
-
 /-- The complete ordered Wick recurrence for the actual insertion moments,
 with symmetric joint covariance and both coordinate families. This is a
 recurrence for the actual infinite pairing, not an assumed Wick evaluation. -/
@@ -472,7 +450,6 @@ theorem bilinearMoment_wick_recursion (A B : Matrix H H ℂ)
     rw [Matrix.mulVec_add, Matrix.mulVec_mulVec] at h
     simpa only [covariance, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
       Matrix.mulVec, dotProduct, Pi.add_apply, mul_assoc, add_comm] using h
-
 private theorem polynomialGaussian_expansion (A : Matrix H H ℂ)
     (p : MvPolynomial H ℂ) :
     polynomialGaussian A p = fun n =>
@@ -484,7 +461,6 @@ private theorem polynomialGaussian_expansion (A : Matrix H H ℂ)
     _ = _ := by
       simp only [map_sum, polynomialGaussian_monomial, Finset.sum_apply,
         Pi.smul_apply, smul_eq_mul]
-
 private theorem pairing_finset_right {T : Type*} (s : Finset T)
     (f : (H →₀ ℕ) → ℂ) (g : T → (H →₀ ℕ) → ℂ)
     (hs : ∀ i ∈ s, Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * g i n)) :
@@ -492,7 +468,6 @@ private theorem pairing_finset_right {T : Type*} (s : Finset T)
   unfold pairing
   simp only [Finset.mul_sum]
   exact Summable.tsum_finsetSum hs
-
 private theorem polynomial_pair_moments (A B : Matrix H H ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
@@ -524,7 +499,6 @@ private theorem polynomial_pair_moments (A B : Matrix H H ℂ)
   apply Finset.sum_congr rfl
   intro β hβ
   ring
-
 /-- The actual absolutely convergent external-row contraction is a finite
 sum of the true two-sided creation moments. Both polynomial witnesses are
 constructed from the original Gaussian coefficients; neither the vacuum
@@ -552,28 +526,22 @@ theorem row_pair_moments {X : Type v} {Y : Type w}
   refine ⟨p, q, hp, hq, row_pair_norm_summable K L hK hL hA hB d e, ?_⟩
   simpa only [hp, hq, pairing, row] using polynomial_pair_moments _ _
     (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j)) hA hB p q
-
-
 private theorem sumElim_add_left {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : X) :
     (d + Finsupp.single i 1).sumElim e = d.sumElim e + Finsupp.single (.inl i) 1 := by
   ext (j | j) <;> simp [Finsupp.sumElim_apply]
-
 private theorem sumElim_add_right {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : Y) :
     d.sumElim (e + Finsupp.single i 1) = d.sumElim e + Finsupp.single (.inr i) 1 := by
   ext (j | j) <;> simp [Finsupp.sumElim_apply]
-
 private theorem sumElim_sub_left {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : X) :
     (d - Finsupp.single i 1).sumElim e = d.sumElim e - Finsupp.single (.inl i) 1 := by
   ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply]
-
 private theorem sumElim_sub_right {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : Y) :
     d.sumElim (e - Finsupp.single i 1) = d.sumElim e - Finsupp.single (.inr i) 1 := by
   ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply]
-
 /-- Identification of the actual factorial pairing with native Gaussian
 moments. The normalization is the native trace-log exponential. No inverse
 or nonvanishing premise for that scalar is used. -/
@@ -613,7 +581,7 @@ theorem bilinearMoment_native (A B : Matrix H H ℂ)
           dsimp [r]; omega
         rw [← hr, hright, sumElim_add_right,
           NativeGaussianMoment.nativeMoment_step _ hC, Fintype.sum_sum_type,
-          Finset.mul_add, Finset.mul_sum, Finset.mul_sum]
+          mul_add, Finset.mul_sum, Finset.mul_sum]
         congr 1
         · apply Finset.sum_congr rfl
           intro j hj
@@ -632,7 +600,7 @@ theorem bilinearMoment_native (A B : Matrix H H ℂ)
           dsimp [r]; omega
         rw [← hr, hleft, sumElim_add_left,
           NativeGaussianMoment.nativeMoment_step _ hC, Fintype.sum_sum_type,
-          Finset.mul_add, Finset.mul_sum, Finset.mul_sum]
+          mul_add, Finset.mul_sum, Finset.mul_sum]
         congr 1
         · apply Finset.sum_congr rfl
           intro j hj
@@ -649,23 +617,17 @@ theorem bilinearMoment_native (A B : Matrix H H ℂ)
           simp only [Finsupp.sumElim_inr]
           ring
   exact go _ α β rfl
-
-
 section ExternalRecurrence
 variable {X : Type v} {Y : Type w}
   [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
-
 private def rowLower (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) (d : X →₀ ℕ) (i : X) :
     (H →₀ ℕ) → ℂ := if d i = 0 then 0 else row K (d - Finsupp.single i 1)
-
 private def rowPair (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
     (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ) (d : X →₀ ℕ) (e : Y →₀ ℕ) : ℂ :=
   pairing (row K d) (row L e)
-
 private theorem rowPair_swap (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
     (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ) (d : X →₀ ℕ) (e : Y →₀ ℕ) :
     rowPair K L d e = rowPair L K e d := pairing_comm _ _
-
 private theorem pairing_rowLower (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
     (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ) (d : X →₀ ℕ) (e : Y →₀ ℕ) (j : X) :
     pairing (row L e) (rowLower K d j) =
@@ -673,7 +635,6 @@ private theorem pairing_rowLower (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
   by_cases h : d j = 0
   · simp [rowLower, h, pairing]
   · simp only [rowLower, h, ite_false, rowPair, pairing_comm (row L e)]
-
 private theorem row_annihilate (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
     (hK : ∀ i j, K i j = K j i) (d : X →₀ ℕ) (i : H) :
     annihilate i (row K d) = fun n =>
@@ -685,12 +646,10 @@ private theorem row_annihilate (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
     Fintype.sum_sum_type, created_single, Finsupp.sumElim_inl,
     ← sumElim_sub_left, ← sumElim_sub_right, rowLower, Pi.zero_apply,
     apply_ite] using h
-
 variable (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ)
   (hK : ∀ i j, K i j = K j i) (hL : ∀ i j, L i j = L j i)
   (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => K (.inr i) (.inr j))‖ < 1)
   (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => L (.inr i) (.inr j))‖ < 1)
-
 private theorem row_pair_created_summable (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : H) :
     Summable (fun n : H →₀ ℕ => (weight n : ℂ) * row K d n *
       created (Finsupp.single i 1) (row L e) n) := by
@@ -700,7 +659,6 @@ private theorem row_pair_created_summable (d : X →₀ ℕ) (e : Y →₀ ℕ) 
     (polynomial_pair_norm_summable _ _
       (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j))
       hA hB p (MvPolynomial.X i * q)).of_norm
-
 private theorem pairing_row_combination (d : X →₀ ℕ) (e : Y →₀ ℕ)
     (a : X → ℂ) (b : H → ℂ) :
     pairing (row L e) (fun n =>
@@ -730,7 +688,6 @@ private theorem pairing_row_combination (d : X →₀ ℕ) (e : Y →₀ ℕ)
     pairing_finset_right _ _ _ (fun j _ => hs j),
     pairing_finset_right _ _ _ (fun j _ => ht j)]
   simp only [pairing_const_right]
-
 private theorem rowPair_external_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : X) :
     (d i + 1 : ℂ) * rowPair K L (d + Finsupp.single i 1) e =
       (∑ j, K (.inl i) (.inl j) *
@@ -748,7 +705,6 @@ private theorem rowPair_external_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i :
         (fun j => K (.inl i) (.inl j)) (fun j => K (.inl i) (.inr j))
       simpa only [rowLower, apply_ite, Pi.zero_apply, pairing_rowLower,
         pairing_comm (row L e)] using hh
-
 private theorem rowPair_internal_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : H) :
     pairing (created (Finsupp.single i 1) (row K d)) (row L e) =
       (∑ j, L (.inr i) (.inl j) *
@@ -759,8 +715,6 @@ private theorem rowPair_internal_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i :
   have hh := pairing_row_combination L K hL hK hB hA e d
     (fun j => L (.inr i) (.inl j)) (fun j => L (.inr i) (.inr j))
   simpa only [pairing_rowLower, ← rowPair_swap K L] using hh
-
-
 private theorem rowPair_resolved_step (d : X →₀ ℕ) (e : Y →₀ ℕ) :
     (fun i => (d i + 1 : ℂ) * rowPair K L (d + Finsupp.single i 1) e) =
       Matrix.mulVec
@@ -800,7 +754,7 @@ private theorem rowPair_resolved_step (d : X →₀ ℕ) (e : Y →₀ ℕ) :
   have heq : (1 - B * A).mulVec U = B.mulVec (Rt.mulVec l) + S.mulVec r := by
     rw [hV, Matrix.mulVec_add, Matrix.mulVec_mulVec] at hU
     rw [Matrix.sub_mulVec, Matrix.one_mulVec]
-    exact sub_eq_iff_eq_add.mpr (by simpa only [add_assoc, add_comm] using hU)
+    exact sub_eq_iff_eq_add.mpr (by simpa only [add_assoc, add_comm, add_left_comm] using hU)
   have hu : U = Matrix.mulVec ((1 - B * A)⁻¹ʳ)
       (B.mulVec (Rt.mulVec l) + S.mulVec r) := by
     have hunit := resolvent_unit A B hA hB
@@ -814,9 +768,7 @@ private theorem rowPair_resolved_step (d : X →₀ ℕ) (e : Y →₀ ℕ) :
   rw [hstep, hu]
   simp only [Matrix.add_mulVec, Matrix.mulVec_add, Matrix.mulVec_mulVec,
     Matrix.mul_assoc, add_assoc]
-
 end ExternalRecurrence
-
 /-- The effective complex bilinear Gaussian kernel, with ordered inverses.
 The lower cross block is written explicitly in its ordered form. -/
 def effectiveKernel {X : Type v} {Y : Type w}
@@ -829,7 +781,6 @@ def effectiveKernel {X : Type v} {Y : Type w}
     (R * (1 - B * A)⁻¹ʳ * S)
     (S.transpose * (1 - A * B)⁻¹ʳ * R.transpose)
     (Q + S.transpose * (1 - A * B)⁻¹ʳ * A * S)
-
 private theorem effectiveKernel_symm {X : Type v} {Y : Type w}
     [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
     (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
@@ -864,9 +815,6 @@ private theorem effectiveKernel_symm {X : Type v} {Y : Type w}
     rw [Matrix.transpose_add, Matrix.transpose_mul, Matrix.transpose_mul,
       Matrix.transpose_transpose, hQt, hVA]
     simp only [Matrix.mul_assoc]
-
-
-
 /-- Full finite complex Gaussian coefficient sewing. Only the shared blocks
 are strict contractions; the external and mixed blocks are arbitrary. The
 external coefficients are ordinary, and all finite types may be empty. -/
@@ -1024,9 +972,13 @@ theorem finite_sewing {X : Type v} {Y : Type w}
             rw [ih _ hjd _ _ rfl]
             ring
   constructor
-  · simpa only [hswap, row, K, K₂] using row_pair_norm_summable K L hK hL hA hB d e
-  · simpa only [rowPair, pairing, row, ← hswap, K, K₂, Z, g, E] using go _ d e rfl
-
+  · change Summable (fun n : H →₀ ℕ => ‖(weight n : ℂ) *
+      row K d n * gaussianCoefficient K₂ (n.sumElim e)‖)
+    simp_rw [hswap]
+    exact row_pair_norm_summable K L hK hL hA hB d e
+  · change (∑' n : H →₀ ℕ, (weight n : ℂ) *
+      row K d n * gaussianCoefficient K₂ (n.sumElim e)) = Z * g d e
+    simp_rw [hswap]
+    exact go _ d e rfl
 #print axioms finite_sewing
-
 end D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing

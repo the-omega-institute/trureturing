@@ -5,6 +5,7 @@ import Mathlib.Tactic
 
 noncomputable section
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 open scoped BigOperators
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -398,5 +399,142 @@ def wickAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Moment
+
+
+def nativeArena : Arena where
+  signature := signature.{u}
+  Law W := ∀ {H : Type u} [Fintype H] [DecidableEq H]
+    (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
+    (α β : H →₀ ℕ),
+    bilinearMoment A B α β = W.readout () ⟨H ⊕ H, α.sumElim β⟩
+      (fun r => Complex.exp ((1 / 2 : ℂ) *
+        ∑' n : ℕ, Matrix.trace ((A * B) ^ (n + 1)) / (n + 1 : ℂ)) *
+        _root_.D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.nativeMoment
+          (covariance A B) r)
+
+private theorem native_rejected_fails : ¬ nativeArena.{u}.Law rejectedZero := by
+  intro h
+  have hh := @h PUnit.{u+1} inferInstance inferInstance 0 0
+    (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
+  have hv := @bilinearMoment_native PUnit.{u+1} inferInstance inferInstance 0 0
+    (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
+  have h00 : bilinearMoment (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ) 0 0 0 = 1 := by
+    simpa [_root_.D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.nativeMoment,
+      _root_.D5.S3.VertexAlgebra.FactorialFockMetric.weight] using hv
+  simpa [rejectedZero, realize, h00] using hh
+
+def sewingArena : Arena where
+  signature := signature.{u}
+  Law W := ∀ {H : Type u} [Fintype H] [DecidableEq H]
+    {X : Type v} {Y : Type w}
+    [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
+    (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
+    (A B : Matrix H H ℂ) (R : Matrix X H ℂ) (S : Matrix H Y ℂ)
+    (hP : ∀ i j, P i j = P j i) (hQ : ∀ i j, Q i j = Q j i)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
+    (d : X →₀ ℕ) (e : Y →₀ ℕ),
+    Summable (fun n : H →₀ ℕ => ‖W.readout () ⟨H,n⟩ (fun m => (weight m : ℂ) *
+      gaussianCoefficient (Matrix.fromBlocks P R R.transpose A) (d.sumElim m) *
+      gaussianCoefficient (Matrix.fromBlocks B S S.transpose Q) (m.sumElim e))‖) ∧
+    (∑' n : H →₀ ℕ, W.readout () ⟨H,n⟩ (fun m => (weight m : ℂ) *
+      gaussianCoefficient (Matrix.fromBlocks P R R.transpose A) (d.sumElim m) *
+      gaussianCoefficient (Matrix.fromBlocks B S S.transpose Q) (m.sumElim e))) =
+      Complex.exp ((1 / 2 : ℂ) *
+        ∑' k : ℕ, Matrix.trace ((A * B) ^ (k + 1)) / (k + 1 : ℂ)) *
+      gaussianCoefficient (effectiveKernel P Q A B R S) (d.sumElim e)
+
+private theorem sewing_rejected_fails : ¬ sewingArena.{u,v,w}.Law rejectedOne := by
+  intro h
+  have hh := @h PUnit.{u+1} inferInstance inferInstance PUnit.{v+1} PUnit.{w+1}
+    inferInstance inferInstance inferInstance inferInstance 0 0 0 0 0 0
+    (fun _ _ => rfl) (fun _ _ => rfl) (fun _ _ => rfl) (fun _ _ => rfl)
+    (by simp) (by simp) 0 0
+  have hs : Summable (fun _ : PUnit.{u+1} →₀ ℕ => (1 : ℝ)) := by
+    simpa [rejectedOne, realize] using hh.1
+  simpa only [summable_const_iff, one_ne_zero, or_false] using hs
+
+
+def nativeEvidence : Registration nativeArena.{u}
+    (type_of% (@bilinearMoment_native.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@bilinearMoment_native.{u}, rejectedZero, native_rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejectedZero, ?_, rfl, native_rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
+  dependence := actual_dependence
+
+def nativeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@bilinearMoment_native.{u}) (Realization signature.{u}) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.nativeUnit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.nativeEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨nativeArena.{u}⟩
+  objectArena := .source ⟨nativeArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source nativeArena.{u} ⟨nativeEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def sewingEvidence : Registration sewingArena.{u,v,w}
+    (type_of% (@finite_sewing.{u,v,w})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@finite_sewing.{u,v,w}, rejectedOne, sewing_rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejectedOne, ?_, rfl, sewing_rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
+  dependence := actual_dependence
+
+def sewingAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@finite_sewing.{u,v,w}) (Realization signature.{u}) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.sewingUnit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.sewingEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sewingArena.{u,v,w}⟩
+  objectArena := .source ⟨sewingArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sewingArena.{u,v,w} ⟨sewingEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
