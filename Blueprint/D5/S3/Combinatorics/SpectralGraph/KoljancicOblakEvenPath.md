@@ -142,7 +142,63 @@ $$\forall b \in \operatorname{Nat} \to \operatorname{Real},\; \forall n \in \ope
 
 The actual characteristic polynomial of the weighted branch equals the continuant with squared edge parameters, in every order including zero and one. First-row expansion uses the existing det_sparse_front supplier in ForbiddenNeighbourDeterminant; both remaining principal submatrices have the same reversed-edge convention.
 
-The remaining whole-event bridges are the central-loop characteristic identity joining two weighted branches; a coprime choice for opposite-parity branches; separation of the complete central-vertex variation, retaining all product-rule cross terms; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.
+**Definition 1.11 (Complete central-loop variation).**
+
+$$\forall qL \in \operatorname{Nat} \to \operatorname{Real},\; \forall qR \in \operatorname{Nat} \to \operatorname{Real},\; \forall dqL \in \operatorname{Nat} \to \operatorname{Real},\; \forall dqR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall da \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \operatorname{joinedVariation}\left(qL, qR, dqL, dqR, a, da, r, s\right) = 0 - \operatorname{C}\left(da\right) \cdot \operatorname{continuant}\left(qL, r\right) \cdot \operatorname{continuant}\left(qR, s\right) + \left(X - \operatorname{C}\left(a\right)\right) \cdot \left(\operatorname{variation}\left(qL, dqL, r\right) \cdot \operatorname{continuant}\left(qR, s\right) + \operatorname{continuant}\left(qL, r\right) \cdot \operatorname{variation}\left(qR, dqR, s\right)\right) - \left(X \cdot \operatorname{variation}\left(qL, dqL, r\right) - \operatorname{variation}\left(qL, dqL, r + 1\right)\right) \cdot \operatorname{continuant}\left(qR, s\right) - \left(X \cdot \operatorname{continuant}\left(qL, r\right) - \operatorname{continuant}\left(qL, r + 1\right)\right) \cdot \operatorname{variation}\left(qR, dqR, s\right) - \operatorname{variation}\left(qL, dqL, r\right) \cdot \left(X \cdot \operatorname{continuant}\left(qR, s\right) - \operatorname{continuant}\left(qR, s + 1\right)\right) - \operatorname{continuant}\left(qL, r\right) \cdot \left(X \cdot \operatorname{variation}\left(qR, dqR, s\right) - \operatorname{variation}\left(qR, dqR, s + 1\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joinedVariation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. This is an algebraic carrier; the joined matrix characteristic correspondence is still required.
+
+**Definition 1.12 (Actual simultaneous algebraic perturbation).**
+
+$$\forall qL \in \operatorname{Nat} \to \operatorname{Real},\; \forall qR \in \operatorname{Nat} \to \operatorname{Real},\; \forall dqL \in \operatorname{Nat} \to \operatorname{Real},\; \forall dqR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall da \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \operatorname{deformedJoinedContinuant}\left(qL, qR, dqL, dqR, a, da, r, s\right) = \left(\operatorname{C}\left(X\right) - \left(\operatorname{C}\left(\operatorname{C}\left(a\right)\right) + \operatorname{C}\left(\operatorname{C}\left(da\right)\right) \cdot z\right)\right) \cdot \operatorname{deformedContinuant}\left(qL, dqL, r\right) \cdot \operatorname{deformedContinuant}\left(qR, dqR, s\right) - \left(\operatorname{C}\left(X\right) \cdot \operatorname{deformedContinuant}\left(qL, dqL, r\right) - \operatorname{deformedContinuant}\left(qL, dqL, r + 1\right)\right) \cdot \operatorname{deformedContinuant}\left(qR, dqR, s\right) - \operatorname{deformedContinuant}\left(qL, dqL, r\right) \cdot \left(\operatorname{C}\left(X\right) \cdot \operatorname{deformedContinuant}\left(qR, dqR, s\right) - \operatorname{deformedContinuant}\left(qR, dqR, s + 1\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.deformedJoinedContinuant` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+Replace the central loop by a plus z times da and each branch squared edge parameter by q plus z times dq in the joined expression. The outer polynomial variable is z and the inner variable X is spectral. In the formula C embeds into the applicable coefficient ring. The complete coefficient-one product rule identifies this perturbation coefficient with joinedVariation; that identity is consumed in the recovery theorem.
+
+**Theorem 1.13 (Separation of central and branch variations).**
+
+$$\forall qL \in \operatorname{Nat} \to \operatorname{Real},\; \forall qR \in \operatorname{Nat} \to \operatorname{Real},\; \forall dqL \in \operatorname{Nat} \to \operatorname{Real},\; \forall dqR \in \operatorname{Nat} \to \operatorname{Real},\; \forall a \in \operatorname{Real},\; \forall da \in \operatorname{Real},\; \forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; a \ne 0 \Rightarrow \left(\operatorname{Odd}\left(r + s\right) \Rightarrow \left(\left(\forall k \in \operatorname{Nat},\; k < r \Rightarrow qL\left(k\right) \ne 0\right) \Rightarrow \left(\left(\forall k \in \operatorname{Nat},\; k < s \Rightarrow qR\left(k\right) \ne 0\right) \Rightarrow \left(\operatorname{IsCoprime}\left(\operatorname{continuant}\left(qL, r\right), \operatorname{continuant}\left(qR, s\right)\right) \Rightarrow \left(\operatorname{coeff}\left(\operatorname{deformedJoinedContinuant}\left(qL, qR, dqL, dqR, a, da, r, s\right), 1\right) = 0 \Rightarrow \left(da = 0 \land \left(\left(\forall k \in \operatorname{Nat},\; k < r \Rightarrow dqL\left(k\right) = 0\right) \land \left(\forall k \in \operatorname{Nat},\; k < s \Rightarrow dqR\left(k\right) = 0\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_variation_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+For every pair of branch lengths with odd sum, nonzero central loop and nonzero branch edge parameters, coprime branch continuants make the coefficient of z in the actual algebraic joined perturbation injective. The recovered edge indices below each branch length include its attaching edge. No lower bound on either individual branch length is imposed. The complete product rule first identifies that coefficient with joinedVariation. Reflection X to -X then separates the odd part C(a) times the product variation plus C(da)UV. Its leading coefficient recovers da, after which coprimality and strict degree bounds separate both branch variations. Applying the same separation to the remaining adjacent continuants and using branch_variation_injective recovers all edge parameters. This theorem assumes coprimality; it does not construct the required branches or prove the complete nSSP claim.
+
+**Theorem 1.14 (Uniform positive coprime branch construction).**
+
+$$\forall r \in \operatorname{Nat},\; \forall s \in \operatorname{Nat},\; \operatorname{Odd}\left(r + s\right) \Rightarrow \left(\exists qL \in \operatorname{Nat} \to \operatorname{Real},\; \exists qR \in \operatorname{Nat} \to \operatorname{Real},\; \left(\forall k \in \operatorname{Nat},\; 0 < qL\left(k\right)\right) \land \left(\left(\forall k \in \operatorname{Nat},\; 0 < qR\left(k\right)\right) \land \operatorname{IsCoprime}\left(\operatorname{continuant}\left(qL, r\right), \operatorname{continuant}\left(qR, s\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.coprime_positive_branches` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Sara Koljančić and Polona Oblak (2026). *Combinatorial aspects of the non-symmetric Strong Spectral Property for graphs*. DOI: [10.48550/arXiv.2604.21552](https://doi.org/10.48550/arXiv.2604.21552). URL: <https://arxiv.org/abs/2604.21552v1>.
+
+*Commentary.*
+
+Every pair of lengths with odd sum admits two strictly positive squared-edge parameter sequences whose continuants are coprime. Put unit parameters on an even-length branch and a common positive parameter t on the other branch. The first branch has nonzero constant coefficient. The spectral resultant is a polynomial in t; at t=0 the other branch becomes X to its length, so the resultant is nonzero. A positive t outside its finite root set gives the required pair. Swapping the branches covers the other parity orientation. Zero and one lengths need no exceptions, and the final selected t is strictly positive; zero is used only to prove that the parameter polynomial is not identically zero.
+
+The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.
 
 Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.
 
@@ -153,7 +209,11 @@ Source attribution and license boundaries are recorded in Library/Eigenstructure
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.claim`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.continuant`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.continuant_linearization`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.coprime_positive_branches`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.deformedContinuant`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.deformedJoinedContinuant`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joinedVariation`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.joined_variation_injective`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.pathPattern`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.variation`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath.weightedPath`
