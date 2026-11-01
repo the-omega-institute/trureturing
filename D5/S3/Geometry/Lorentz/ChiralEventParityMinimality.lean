@@ -87,12 +87,6 @@ def family (v : EuclideanSpace ℝ (Fin 3)) : event :=
   ![![30, 0, 0, 1], ![20, 0, 0, -1],
     ![10 + s, aa, 0, d], ![10 - s, 0, bb, -d]]
 
-private theorem family_mem_collision
-    (v : EuclideanSpace ℝ (Fin 3))
-    (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
-    family v ∈ collisionEvents := by
-  sorry
-
 private theorem family_mem_all
     (v : EuclideanSpace ℝ (Fin 3))
     (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
@@ -126,6 +120,14 @@ private theorem family_mem_all
     · change 0 ^ 2 + (Real.sqrt (4 - v 1)) ^ 2 + (-v 2) ^ 2 ≤ (10 - v 0) ^ 2
       rw [hsb]
       nlinarith
+
+private theorem family_mem_collision
+    (v : EuclideanSpace ℝ (Fin 3))
+    (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
+    family v ∈ collisionEvents := by
+  constructor
+  · exact family_mem_all v hv
+  · norm_num [family, minkowski]
 
 private theorem family_continuous :
     ContinuousOn family
