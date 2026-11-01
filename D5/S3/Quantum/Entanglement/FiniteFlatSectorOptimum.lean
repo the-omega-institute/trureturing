@@ -82,12 +82,12 @@ private theorem flat_gram (J m n : ℕ) (hm : 0 < m) (hn : 0 < n)
   symm
   apply (Real.sqrt_eq_iff_eq_sq (by positivity) (by positivity)).mpr
   rcases le_total m n with h | h
-  · rw [min_eq_left h, max_eq_right h]
+  · rw [min_eq_left h, max_eq_right (show (m : ℝ) ≤ n by exact_mod_cast h)]
     have hs := Real.sq_sqrt (show 0 ≤ (m : ℝ)⁻¹ by positivity)
     have ht := Real.sq_sqrt (show 0 ≤ (n : ℝ)⁻¹ by positivity)
     rw [mul_pow, mul_pow, hs, ht]
     field_simp
-  · rw [min_eq_right h, max_eq_left h]
+  · rw [min_eq_right h, max_eq_left (show (n : ℝ) ≤ m by exact_mod_cast h)]
     have hs := Real.sq_sqrt (show 0 ≤ (m : ℝ)⁻¹ by positivity)
     have ht := Real.sq_sqrt (show 0 ≤ (n : ℝ)⁻¹ by positivity)
     rw [mul_pow, mul_pow, hs, ht]
@@ -103,13 +103,13 @@ private theorem flat_gram_log (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
   rcases le_total m n with h | h
   · have hlog : Real.log (m : ℝ) ≤ Real.log (n : ℝ) :=
       Real.log_le_log hm0 (by exact_mod_cast h)
-    rw [min_eq_left h, max_eq_right h, abs_of_nonpos (sub_nonpos.mpr hlog)]
+    rw [min_eq_left h, max_eq_right (show (m : ℝ) ≤ n by exact_mod_cast h), abs_of_nonpos (sub_nonpos.mpr hlog)]
     rw [show (2 : ℝ) * (-(-(Real.log (m : ℝ) - Real.log (n : ℝ))) / 2) =
       Real.log (m : ℝ) - Real.log (n : ℝ) by ring]
     rw [Real.exp_sub, Real.exp_log hm0, Real.exp_log hn0]
   · have hlog : Real.log (n : ℝ) ≤ Real.log (m : ℝ) :=
       Real.log_le_log hn0 (by exact_mod_cast h)
-    rw [min_eq_right h, max_eq_left h, abs_of_nonneg (sub_nonneg.mpr hlog)]
+    rw [min_eq_right h, max_eq_left (show (n : ℝ) ≤ m by exact_mod_cast h), abs_of_nonneg (sub_nonneg.mpr hlog)]
     rw [show (2 : ℝ) * (-(Real.log (m : ℝ) - Real.log (n : ℝ)) / 2) =
       Real.log (n : ℝ) - Real.log (m : ℝ) by ring]
     rw [Real.exp_sub, Real.exp_log hn0, Real.exp_log hm0]
@@ -224,15 +224,15 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
     exact hm s
   let loss : ℕ → ℝ := fun i => Real.log (a ⟨min i n, by omega⟩ : ℝ)
   have hloss (i : Fin (n + 1)) : loss i = Real.log (a i : ℝ) := by
-    congr 2
-    apply congrArg a
-    apply Fin.ext
-    exact min_eq_left (by omega)
+    change Real.log (a ⟨min i.val n, _⟩ : ℝ) = Real.log (a i : ℝ)
+    have he : (⟨min i.val n, by omega⟩ : Fin (n + 1)) = i :=
+      Fin.ext (min_eq_left (by omega))
+    rw [he]
   have hmono : Monotone loss := by
     intro i j hij
     apply Real.log_le_log (by exact_mod_cast ha0 ⟨min i n, by omega⟩)
     exact_mod_cast ha.monotone (show (⟨min i n, by omega⟩ : Fin (n + 1)) ≤
-      ⟨min j n, by omega⟩ from min_le_min_right n hij)
+      (⟨min j n, by omega⟩ : Fin (n + 1)) from min_le_min_right n hij)
   have hk (s t : Sector) :
       ExponentialSectorKernel.kernel loss (f s) (f t) =
         Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2) := by
@@ -242,14 +242,16 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
   let q : Fin (n + 1) → ℝ := fun i =>
     ExponentialSectorKernel.equilibriumWeight n loss i /
       ExponentialSectorKernel.normalizer n loss
-  choose g hg using hf
+  have hfcopy := hf
+  choose g hg using hfcopy
   let p := aggregate g q
   have hp : p ∈ stdSimplex ℝ Sector := aggregate_simplex g q hq
   have hpq : aggregate f p = q := aggregate_section f g hg q
   refine ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, hZ, ?_, ?_, htotal⟩
   · refine ⟨p, hp, ?_⟩
     rw [← henergy]
-    dsimp [ExponentialSectorKernel.energy]
+    change _ = ∑ i : Fin (n + 1), ∑ j : Fin (n + 1),
+      q i * q j * ExponentialSectorKernel.kernel loss i j
     rw [← hpq, aggregate_energy]
     simp_rw [hk]
   · intro p hp
@@ -258,18 +260,24 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
     rw [aggregate_energy] at h
     simpa only [hk] using h
 
-private def raw {A B : Type u} [Fintype A] [DecidableEq A]
+private abbrev raw {A B : Type u} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (C : QuantumChannel A B) :
     Matrix A A ℂ →ₗ[ℂ] Matrix B B ℂ :=
-  CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
-    (C.toCompletelyPositiveMap.toLinearMap.comp CStarMatrix.ofMatrixₗ.toLinearMap)
+  { CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+      (C.toCompletelyPositiveMap.toLinearMap.comp CStarMatrix.ofMatrixₗ.toLinearMap) with
+    toFun := fun X => CStarMatrix.ofMatrix.symm
+      (C.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) }
 
 private theorem raw_comp {A B C : Type u} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
     (D : QuantumChannel B C) (E : QuantumChannel A B) (X : Matrix A A ℂ) :
     raw (D.comp E) X = raw D (raw E X) := by
-  simp only [raw, LinearMap.comp_apply, QuantumChannel.comp_apply,
-    Equiv.apply_symm_apply]
+  change CStarMatrix.ofMatrix.symm
+    (D.toCompletelyPositiveMap (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))) =
+      CStarMatrix.ofMatrix.symm (D.toCompletelyPositiveMap
+        (CStarMatrix.ofMatrix (CStarMatrix.ofMatrix.symm
+          (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))))
+  rw [Equiv.apply_symm_apply]
 
 private theorem raw_expand {A B : Type u} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (C : QuantumChannel A B) (X : Matrix A A ℂ) :
@@ -291,7 +299,7 @@ private def tensorMap {A B C D : Type u}
   map_smul' c X := by
     ext p q
     simp only [tensorRawAction, Matrix.smul_apply, smul_eq_mul, mul_assoc,
-      Finset.mul_sum]
+      Finset.mul_sum, RingHom.id_apply]
 
 private theorem tensor_kronecker {A B C D : Type u}
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
@@ -302,7 +310,9 @@ private theorem tensor_kronecker {A B C D : Type u}
   rw [raw_expand L X, raw_expand R Y]
   ext p q
   simp only [tensorRawAction, Matrix.kroneckerMap_apply, Matrix.sum_apply,
-    Matrix.smul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
+    Matrix.smul_apply, smul_eq_mul]
+  simp_rw [Finset.sum_mul]
+  simp_rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro i _
   apply Finset.sum_congr rfl
@@ -344,7 +354,10 @@ private theorem isometry_channel {A B : Type u} [Fintype A] [DecidableEq A]
     ∃ E : QuantumChannel A B, ∀ X : Matrix A A ℂ, raw E X = U * X * Uᴴ := by
   obtain ⟨E, hE⟩ := finite_kraus_quantum_channel (fun _ : Unit => U)
     (by simpa only [Fintype.sum_unique] using hU)
-  exact ⟨E, fun X => by simpa only [Fintype.sum_unique] using hE X⟩
+  refine ⟨E, fun X => ?_⟩
+  change CStarMatrix.ofMatrix.symm
+    (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = _
+  simpa only [Fintype.sum_unique] using hE X
 
 private theorem isometry_retraction {A B : Type u} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Nonempty A]
@@ -432,7 +445,8 @@ private theorem placement_tensor {A B : Type u}
     [DecidableEq B] (f : A ↪ B) :
     placement f ⊗ₖ placement f = placement (f.prodMap f) := by
   ext b a
-  simp [placement, Matrix.kroneckerMap_apply, Prod.ext_iff, ite_and, ite_mul, mul_ite]
+  by_cases h₁ : f a.1 = b.1 <;> by_cases h₂ : f a.2 = b.2 <;>
+    simp [placement, Matrix.kroneckerMap_apply, Prod.ext_iff, h₁, h₂]
 
 private theorem placement_mul_image {A B C : Type u}
     [Fintype A] [DecidableEq B] (f : A ↪ B) (X : Matrix A C ℂ) (a : A) (c : C) :
@@ -488,7 +502,7 @@ private theorem compact_flat_encoding (r d m : Sector → ℕ) (J : ℕ)
       simp [sourceEncoding, flatSpectrum, hout]
     · simp [sourceEncoding, hdiag]
 
-private def flatModel (d m : Sector → ℕ) (J : ℕ) (hd : ∀ s, 0 < d s)
+private abbrev flatModel (d m : Sector → ℕ) (J : ℕ) (hd : ∀ s, 0 < d s)
     (hm : ∀ s, 0 < m s) (hmJ : ∀ s, m s ≤ J) : Model Sector J where
   d := d
   positiveRank := hd
@@ -503,10 +517,12 @@ private theorem channel_ext_raw {A B : Type u}
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (C D : QuantumChannel A B) (h : ∀ X, raw C X = raw D X) : C = D := by
   have hmap : C.toCompletelyPositiveMap = D.toCompletelyPositiveMap := by
-    ext rho
+    apply DFunLike.ext
+    intro rho
     apply CStarMatrix.ofMatrix.symm.injective
-    simpa only [raw, LinearMap.comp_apply, Equiv.apply_symm_apply] using
-      h (CStarMatrix.ofMatrix.symm rho)
+    change raw C (CStarMatrix.ofMatrix.symm rho) =
+      raw D (CStarMatrix.ofMatrix.symm rho)
+    exact h _
   cases C with
   | mk cf ct =>
     cases D with
@@ -613,6 +629,7 @@ private theorem compact_physical_transport [Nonempty Sector]
         (sourceEncoding d (fun s => flatSpectrum J (m s)))ᴴ from encoding.sourceAction X]
     rw [← compact_flat_encoding r d m J hr hmJ]
     simp only [U, Matrix.conjTranspose_mul, Matrix.mul_assoc]
+    rfl
   let source := R₂.comp encoding.source
   have hsource (X : Matrix Sector Sector ℂ) :
       raw source X = targetEncoding r * X * (targetEncoding r)ᴴ := by
@@ -800,7 +817,8 @@ private theorem compact_flat_optimality [Nonempty Sector]
     ring
   have hstrict : StrictMono (fun i : Fin (n + 1) => loss i) := by
     intro i j hij
-    rw [hloss, hloss]
+    change loss (i : ℕ) < loss (j : ℕ)
+    rw [hloss i, hloss j]
     have ha0 : 0 < a i := by
       obtain ⟨s, rfl⟩ := hf i
       rw [haf]
@@ -866,8 +884,7 @@ private theorem compact_flat_optimality [Nonempty Sector]
     simp_rw [hlog] at h
     exact h
   · intro hn
-    subst n
-    simpa [lossTotal] using hError
+    simpa only [lossTotal, hn, Fin.sum_univ_zero, mul_zero, zero_div] using hError
   · intro hconstant
     have hn : n = 0 := by
       by_contra hn
@@ -881,7 +898,6 @@ private theorem compact_flat_optimality [Nonempty Sector]
         rw [← hs, ← ht, haf, haf]
         exact hconstant s t
       exact (ne_of_lt hlt) heq
-    subst n
-    simpa [lossTotal] using hError
+    simpa only [lossTotal, hn, Fin.sum_univ_zero, mul_zero, zero_div] using hError
 
 end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
