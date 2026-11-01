@@ -172,21 +172,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_injective`
 
 For every natural n the map seed n from Fin 4 to Vertex n is injective.
 
-**Theorem 1.13 (Exact initial counts).**
-
-Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_counts_zero`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_counts_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Rad Sarar Anando (2026). *Second adjacency eigenvalue of Apollonian networks: is theta_2(G_m)/2^(m/2) -> sqrt(2)?*. URL: <https://mathoverflow.net/questions/516405>.
-
-*Commentary.*
-
-Every seed vertex has degreeCount 0 equal to three. Its initial incident inner-face count is three for the central vertex 3 and two for each outer vertex 0,1,2.
-
-**Theorem 1.14 (Degree increment of a retained vertex).**
+**Theorem 1.13 (Degree increment of a retained vertex).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_old`
 
@@ -200,7 +186,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_old`
 
 For every natural n and v in Vertex n, degreeCount (n+1) (inl v) = degreeCount n v + faceCount n v. The retained vertex acquires exactly one neighbour from each currently incident inner face.
 
-**Theorem 1.15 (Inner-face indices do not duplicate triangles).**
+**Theorem 1.14 (Inner-face indices do not duplicate triangles).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.inner_faces_distinct`
 
@@ -214,7 +200,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.inner_faces_dist
 
 For every n and f,g in Face n, if Incident n f v is equivalent to Incident n g v for every v in Vertex n, then f=g. At a successor stage the unique new corner determines the parent; injectivity of the parent corner triple then determines the omitted corner.
 
-**Definition 1.16 (Canonical stage inclusion).**
+**Definition 1.15 (Canonical stage inclusion).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.embed`
 
@@ -228,7 +214,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.embed`
 
 For n,t natural and v in Vertex n, embed n 0 v is v and embed n (t+1) v is inl (embed n t v), lying in Vertex (n+t+1). Thus the same persistent vertex is identified at all later stages.
 
-**Definition 1.17 (Actual insertion stage).**
+**Definition 1.16 (Actual insertion stage).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.birth`
 
@@ -242,7 +228,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.birth`
 
 The four seed vertices have birth zero. A retained vertex keeps its birth, and inr f at stage n+1 has birth n+1. Every vertex at stage n has birth at most n.
 
-**Theorem 1.18 (Adjacency persists exactly).**
+**Theorem 1.17 (Adjacency persists exactly).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.adjacent_embed`
 
@@ -256,7 +242,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.adjacent_embed`
 
 For all natural n,t and u,v in Vertex n, adjacency of embed n t u and embed n t v in stage n+t is equivalent to adjacency of u and v in stage n. There are no later edges between two old vertices.
 
-**Theorem 1.19 (The cutoff partition is the actual birth partition).**
+**Theorem 1.18 (The cutoff partition is the actual birth partition).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.old_vertices_iff`
 
@@ -270,7 +256,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.old_vertices_iff
 
 For all natural k,t and w in Vertex (k+t), birth (k+t) w ≤ k if and only if there exists u in Vertex k with embed k t u = w. The canonical inclusion is injective, so old vertices have unique representatives.
 
-**Theorem 1.20 (Exact degree of every inserted vertex).**
+**Theorem 1.19 (Exact degree of every inserted vertex).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_inner`
 
@@ -284,7 +270,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_inne
 
 For every n, v in Vertex n, and positive birth j=birth n v, degreeCount n v = 3·2^(n−j). The new vertex starts with three neighbours and three inner incident faces; each subsequent subdivision doubles its incident-face count and adds that many neighbours. Natural subtraction is used, with j≤n proved from the constructor.
 
-**Theorem 1.21 (Uniform degree bound after a cutoff).**
+**Theorem 1.20 (Uniform degree bound after a cutoff).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_late_le`
 
@@ -298,7 +284,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_late
 
 For all natural n,k and v in Vertex n satisfying k < birth n v, degreeCount n v ≤ 3·2^(n−k−1). This is derived from the exact birth-degree law and monotonicity of the natural power, without a degree assumption.
 
-**Definition 1.22 (The labelled seed vertices).**
+**Definition 1.21 (The labelled seed vertices).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed`
 
@@ -312,7 +298,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed`
 
 For every n, seed n includes Fin 4 in Vertex n by iterating inl. Indices 0,1,2 give the distinguished outer triangle, and index 3 is the original centre.
 
-**Theorem 1.23 (Exact seed degrees at every stage).**
+**Theorem 1.22 (Exact seed degrees at every stage).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_degrees`
 
@@ -324,9 +310,9 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_degrees`
 
 *Commentary.*
 
-For every natural n and v in Fin 4, degreeCount n (seed n v) is 3·2^n when v=3 and 2^(n+1)+1 otherwise. These are precisely the centre and the three outer vertices. The proof sums the constructor’s incident-face increments; the source’s displayed degrees are not premises.
+For every natural n and v in Fin 4, degreeCount n (seed n v) is 3·2^n when v=3 and 2^(n+1)+1 otherwise. These are precisely the centre and the three outer vertices. The arbitrary-stage induction includes the initial face and degree computations and sums the constructor’s incident-face increments; the source’s displayed degrees are not premises.
 
-**Theorem 1.24 (The count is the ordinary graph degree).**
+**Theorem 1.23 (The count is the ordinary graph degree).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_eq_degree`
 
@@ -340,7 +326,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.degreeCount_eq_d
 
 For every n and v in Vertex n, degreeCount n v equals (graph n).degree v. Thus all the stated degree counts refer to the same simple graph used for ordinary adjacency.
 
-**Theorem 1.25 (A second eigenvalue index is available).**
+**Theorem 1.24 (A second eigenvalue index is available).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.card_vertex_ge_four`
 
@@ -354,7 +340,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.card_vertex_ge_f
 
 For every natural n, 4 ≤ Fintype.card (Vertex n). The four seed vertices remain distinct. No closed formula for the total number of vertices is needed or asserted.
 
-**Definition 1.26 (Actual late common neighbours).**
+**Definition 1.25 (Actual late common neighbours).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.lateCommonCount`
 
@@ -368,7 +354,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.lateCommonCount`
 
 For k,t natural and u,v in Vertex k, lateCommonCount k t u v counts w in Vertex (k+t) satisfying k < birth (k+t) w and adjacency to both embed k t u and embed k t v. It counts vertices of the actual graph, including the diagonal case u=v.
 
-**Definition 1.27 (Orientation by birth).**
+**Definition 1.26 (Orientation by birth).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.Oriented`
 
@@ -382,7 +368,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.Oriented`
 
 Oriented n u v means actual adjacency together with birth n v < birth n u. The directed edge runs from the newer endpoint to the older endpoint.
 
-**Theorem 1.28 (At most three older neighbours).**
+**Theorem 1.27 (At most three older neighbours).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.oriented_outdegree_le_three`
 
@@ -396,7 +382,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.oriented_outdegr
 
 For every n and u in Vertex n, the number of v with Oriented n u v is at most three. Seed-to-seed edges have equal birth and receive no birth orientation. Inserted vertices have exactly their three parent corners as older neighbours; later subdivisions preserve those edges and add only younger neighbours.
 
-**Theorem 1.29 (Every edge of the late induced graph is oriented).**
+**Theorem 1.28 (Every edge of the late induced graph is oriented).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.late_edge_oriented`
 
@@ -410,7 +396,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.late_edge_orient
 
 For all natural n,k and u,v in Vertex n with both births greater than k and with u adjacent to v, Oriented n u v or Oriented n v u holds. Distinct inserted vertices in one generation are never adjacent. Hence an edge of the late induced graph has unequal endpoint births.
 
-**Theorem 1.30 (Indegree bound in the late graph).**
+**Theorem 1.29 (Indegree bound in the late graph).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.late_oriented_indegree_le`
 
@@ -424,7 +410,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.late_oriented_in
 
 For n,k and u in Vertex n with birth greater than k, the number of v with birth greater than k and Oriented n v u is at most 3·2^(n−k−1). The count is bounded by the actual graph degree and then by the proved birth-degree estimate.
 
-**Definition 1.31 (Ordinary adjacency over the reals).**
+**Definition 1.30 (Ordinary adjacency over the reals).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.adjacency`
 
@@ -438,7 +424,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.adjacency`
 
 adjacency n is exactly (graph n).adjMatrix over the real numbers. Its entries are one at edges and zero elsewhere; there is no weighting, normalization, Laplacian substitution or randomness.
 
-**Definition 1.32 (The actual later vertex type).**
+**Definition 1.31 (The actual later vertex type).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.LateVertex`
 
@@ -452,7 +438,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.LateVertex`
 
 LateVertex k t is the subtype of Vertex (k+t) consisting of vertices w with k < birth (k+t) w. The complementary old subtype is identified with Vertex k by the proved canonical-inclusion characterization.
 
-**Definition 1.33 (The exact old and late partition).**
+**Definition 1.32 (The exact old and late partition).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoffEquiv`
 
@@ -466,7 +452,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoffEquiv`
 
 For every fixed cutoff k and natural t, cutoffEquiv identifies Vertex k ⊕ LateVertex k t with Vertex (k+t). Its old branch is embed k t and its late branch is subtype inclusion. Injectivity uses preserved births; surjectivity uses the old-vertex characterization. Every actual graph vertex occurs exactly once.
 
-**Definition 1.34 (The old-to-late adjacency block).**
+**Definition 1.33 (The old-to-late adjacency block).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoffBlock`
 
@@ -480,7 +466,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoffBlock`
 
 For k,t natural, cutoffBlock k t is the rectangular real matrix with rows u in Vertex k and columns w in LateVertex k t. Its entry is adjacency (k+t) (embed k t u) w.val. The two index sets can have different cardinalities.
 
-**Definition 1.35 (The actual late induced adjacency).**
+**Definition 1.34 (The actual late induced adjacency).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.lateAdjacency`
 
@@ -494,7 +480,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.lateAdjacency`
 
 lateAdjacency k t restricts the ordinary real adjacency of stage k+t to LateVertex k t in both coordinates. It is the remainder block C in the fixed-cutoff proof.
 
-**Theorem 1.36 (Exact adjacency block decomposition).**
+**Theorem 1.35 (Exact adjacency block decomposition).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoff_adjacency`
 
@@ -508,7 +494,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoff_adjacency
 
 For all k,t and all vertices u,v of Vertex k ⊕ LateVertex k t, adjacency (k+t) evaluated at cutoffEquiv u and cutoffEquiv v equals the corresponding entry of the block matrix [[adjacency k, cutoffBlock k t], [transpose (cutoffBlock k t), lateAdjacency k t]]. Old-old equality is exact edge persistence, mixed equality is the definition of the incidence block and symmetry, and late-late equality is restriction. This is an exact change of vertex coordinates, with no spectral estimate assumed.
 
-**Theorem 1.37 (Exact Gram diagonal).**
+**Theorem 1.36 (Exact Gram diagonal).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoff_gram_diag`
 
@@ -522,7 +508,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoff_gram_diag
 
 For all k,t natural and u in Vertex k, the u,u entry of cutoffBlock k t times its transpose is the real cast of (graph (k+t)).degree (embed k t u) − (graph k).degree u, with subtraction in Nat. The decomposition of degree into old and late neighbours proves that this subtraction is the intended nonnegative degree increment.
 
-**Theorem 1.38 (Common-neighbour estimate for the actual Gram matrix).**
+**Theorem 1.37 (Common-neighbour estimate for the actual Gram matrix).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoff_gram_offdiag`
 
@@ -536,7 +522,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.cutoff_gram_offd
 
 For all k,t natural and distinct u,v in Vertex k, the u,v entry of B Bᵀ, where B=cutoffBlock k t, is nonnegative and at most 2t over the reals. If u,v are not adjacent at stage k, this entry is zero. Each new common neighbour is the centre of a face containing both old vertices; there are at most two such current inner faces, and no later old-old edge appears.
 
-**Definition 1.39 (The second spectral index).**
+**Definition 1.38 (The second spectral index).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.secondIndex`
 
@@ -550,7 +536,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.secondIndex`
 
 For every natural n, secondIndex n is index one in Fin (card (Vertex n)). The proved lower bound four supplies its strict bound. Indices are zero based.
 
-**Definition 1.40 (The ordinary ordered second eigenvalue).**
+**Definition 1.39 (The ordinary ordered second eigenvalue).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.secondEigenvalue`
 
@@ -564,7 +550,7 @@ Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.secondEigenvalue
 
 For every natural n, secondEigenvalue n is Mathlib’s decreasing real Hermitian eigenvalues₀ list for (graph n).adjMatrix over the reals, evaluated at secondIndex n. The imported ordered-spectrum API counts eigenvalues with their characteristic-polynomial multiplicities. It uses the actual simple graph and ordinary adjacency.
 
-**Definition 1.41 (The exact spectral target).**
+**Definition 1.40 (The exact spectral target).**
 
 Lean statement: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.limitClaim`
 
@@ -618,6 +604,5 @@ limitClaim is Tendsto, along all natural n tending to infinity, of secondEigenva
 - Truth anchor: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.secondEigenvalue`
 - Truth anchor: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.secondIndex`
 - Truth anchor: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed`
-- Truth anchor: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_counts_zero`
 - Truth anchor: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_degrees`
 - Truth anchor: `D5/S3/Combinatorics/Apollonian/InnerFaceStages.seed_injective`
