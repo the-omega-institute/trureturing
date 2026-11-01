@@ -113,8 +113,7 @@ private lemma expectation_rank_one (φ ψ : Word (Fin 3) 3 → ℂ) :
 
 private lemma expectation_add (a c : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
     (ψ : Word (Fin 3) 3 → ℂ) : readout (a + c) ψ = readout a ψ + readout c ψ := by
-  classical
-  simp [readout, add_mulVec, dotProduct_add]
+  exact RHLinalg.hermForm_add a c ψ
 
 private lemma expectation_smul (r : ℝ) (a : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
     (ψ : Word (Fin 3) 3 → ℂ) : readout (r • a) ψ = r * readout a ψ := by
