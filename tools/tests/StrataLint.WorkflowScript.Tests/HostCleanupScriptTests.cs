@@ -96,13 +96,13 @@ public sealed class HostCleanupScriptTests
     }
 
     [Fact]
-    public void MissingChildDuringReclamationFailsSummary()
+    public void MissingChildDuringReclamationWarnsAndContinues()
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_reclaim_tests.py"),
-                root, "HostReclaimTests.test_partial_removal_reports_failed_summary"],
+                root, "HostReclaimTests.test_partial_removal_warns_and_continues_with_successful_summary"],
             root, TimeSpan.FromSeconds(120), 1024 * 1024);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));

@@ -1,0 +1,89 @@
+**Theorem 10.3 (uniform quantitative square-root stability).** For every protocol of Definition 1.2 and every $\varepsilon\in[0,1]$ satisfying
+
+$$
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon,
+\tag{10.10}
+$$
+
+one has
+
+$$
+\boxed{\ \|\Phi-\Phi_*\|_\diamond
+ \le480\sqrt2\,\sqrt\varepsilon.\ }
+\tag{10.11}
+$$
+
+The constant is independent of the finite outcome count, all positive semidefinite effects, all actual feedback unitaries, and every finite untouched reference. The norm is the unhalved norm (1.6), and every original outcome remains in the actual channel.
+
+**Proof.** Let $A_\sigma$ be as in (10.5). By (6.11), $A_\sigma$ are the diagonal Kraus operators of $\Phi_*$ and
+
+$$
+A_+^\dagger A_++A_-^\dagger A_-=I_4.
+\tag{10.12}
+$$
+
+Append two zero operators to the actual list $K_j$. Append to the comparison list
+
+$$
+ C_\sigma=\sqrt{1-m_\sigma}\,A_\sigma,\qquad \sigma\in\{+,-\}.
+\tag{10.13}
+$$
+
+The $B_j$ terms implement $m_+A_+(\cdot)A_+^\dagger+m_-A_-(\cdot)A_-^\dagger$, so the completed comparison list $B_j,C_+,C_-$ implements exactly $\Phi_*$. The appended zeros and $C_\sigma$ are comparison padding only; they are not extra physical outcomes. Both padded lists are trace-preserving Kraus lists. Let $V$ and $W$ be their common-environment column isometries.
+
+Since $\|A_\sigma\|_{\mathrm{op}}\le1$, (10.7), (10.9), and (10.13) give
+
+$$
+\begin{aligned}
+\|V-W\|_{\mathrm{op}}^2
+ &\le \sum_j\|K_j-B_j\|_{\mathrm{HS}}^2
+       +\left\|\sum_\sigma C_\sigma^\dagger C_\sigma\right\|_{\mathrm{op}}\\
+ &\le4S_{\mathrm{tr}}+(2\|R_0\|_{\mathrm{op}}^2+1)M.
+\end{aligned}
+\tag{10.14}
+$$
+
+Here the first inequality uses the direct-sum form of the column isometries, and the second uses
+$\|\sum_\sigma C_\sigma^\dagger C_\sigma\|_{\mathrm{op}}\le(1-m_+)+(1-m_-)=M$.
+
+For completeness, the partial trace over a finite environment is trace-norm contractive for arbitrary operators: by trace duality,
+
+$$
+\|\operatorname{Tr}_{\mathrm{env}}Z\|_1
+ =\sup_{\|Y\|_{\mathrm{op}}\le1}
+   \left|\operatorname{Tr}\bigl[(I_{\mathrm{env}}\otimes Y)Z\bigr]\right|
+ \le\|Z\|_1.
+\tag{10.15}
+$$
+
+For every finite reference $M_n(\mathbb C)$ and every $X\in M_n(\mathbb C)\otimes M_4(\mathbb C)$, expand the difference of the two dilated maps into the two terms containing $V-W$. The trace-norm ideal inequality, (10.15), and $\|V\|_{\mathrm{op}}=\|W\|_{\mathrm{op}}=1$ yield
+
+$$
+\| (\operatorname{id}_{M_n}\otimes(\Phi-\Phi_*))(X)\|_1
+ \le2\|V-W\|_{\mathrm{op}}\|X\|_1.
+\tag{10.16}
+$$
+
+This is uniform in the reference dimension and does not assume positivity or Hermiticity of $X$.
+
+Now (8.6) gives $M\le1600S_{\mathrm{cert}}$ and the actual defect identity gives
+
+$$
+S_{\mathrm{cert}}+S_{\mathrm{tr}}\le8\varepsilon.
+\tag{10.17}
+$$
+
+Since $\|R_0\|_{\mathrm{op}}^2\le\|R_0\|_{\mathrm{HS}}^2=4$, (10.14)--(10.17) imply
+
+$$
+\begin{aligned}
+\|\Phi-\Phi_*\|_\diamond
+ &\le2\sqrt{4S_{\mathrm{tr}}+9M}\\
+ &\le2\sqrt{4S_{\mathrm{tr}}+14400S_{\mathrm{cert}}}\\
+ &\le2\sqrt{14400(S_{\mathrm{cert}}+S_{\mathrm{tr}})}\\
+ &\le480\sqrt2\,\sqrt\varepsilon.
+\end{aligned}
+$$
+
+All comparison phases $\lambda_j$ are Kraus gauges in the auxiliary representation of $\Phi_*$; they do not alter the actual shared feedback $U_y$, add a physical outcome, postselect, or change the record. $\square$
+

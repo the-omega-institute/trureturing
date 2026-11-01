@@ -1276,3 +1276,258 @@ Equivalently, a failure of stability would provide original finite protocols wit
 The source-specific conclusions of this section are exact optimizer-channel uniqueness and qualitative stability at positive error tolerance, using the equality characterization and actual defect identity of Section 8. Compactness, the continuous positive square root, and Caratheodory's theorem are general ingredients; no literature-priority assertion is made. No quantitative modulus is evaluated or proved, and no $K\sqrt\varepsilon$ rate is established. The square-root assertion at the end of Section 8 remains unresolved. The conclusions concern the original finite full-record protocols only: no extension to postselection, changed records, infinite outcomes, nonunitary feedback, or physical acquisition of outcome probabilities is claimed.
 
 ## 追加锚（本行以下为增补区）
+## 10. Quantitative square-root transport through actual feedback
+
+The preceding section used compactness to obtain a qualitative modulus. The next estimate keeps the same feedback-preserving refinement as Section 8 and supplies a direct quantitative bridge from its two defect budgets to the implemented channel. No outcome weight is bounded below, and no feedback is re-optimized after spectral refinement.
+
+**Lemma 10.1 (weighted equality remainder).** Let $v\in\mathbb C^4$, $U\in U(4)$, and put
+
+$$
+K=U\operatorname{diag}(v),\qquad
+ a_i=|v_i|,\qquad L=\sum_{i=1}^4a_i,\qquad
+ t=|\operatorname{Tr}K|,\qquad \tau=L^2-t^2.
+\tag{10.1}
+$$
+
+There is a phase $\lambda\in\mathbb C$ with $|\lambda|=1$ such that
+
+$$
+\boxed{\ \|K-\lambda\operatorname{diag}(a_1,a_2,a_3,a_4)\|_{\mathrm{HS}}^2\le2\tau.\ }
+\tag{10.2}
+$$
+
+**Proof.** Choose $\lambda$ so that $\overline\lambda\operatorname{Tr}K=t$; when $t=0$, choose any unit phase. Set
+
+$$
+ r_i=a_i-\operatorname{Re}\bigl(\overline\lambda\,U_{ii}v_i\bigr)\ge0.
+$$
+
+The inequalities $|U_{ii}|\le1$ give the nonnegativity, and $\sum_i r_i=L-t$. Direct expansion gives
+
+$$
+\begin{aligned}
+\|K-\lambda\operatorname{diag}(a_i)\|_{\mathrm{HS}}^2
+ &=2\sum_i a_i^2-2\sum_i a_i\operatorname{Re}\bigl(\overline\lambda\,U_{ii}v_i\bigr)\\
+ &=2\sum_i a_i r_i
+ \le2L(L-t)\le2(L+t)(L-t)=2\tau.
+\end{aligned}
+$$
+
+The same calculation covers $L=0$ and zero coordinates. $\square$
+
+**Lemma 10.2 (nearest-ray Kraus comparison).** Use the feedback-preserving refinement (3.2)--(3.4) and write
+
+$$
+ b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},\qquad
+ p_j=|\xi_j|^2,\quad q_j=|\eta_j|^2,\quad
+ d_j^2=\min\{p_j,q_j\}.
+\tag{10.3}
+$$
+
+Put
+
+$$
+ S_{\mathrm{cert}}=\sum_j\delta(b_j),\qquad
+ S_{\mathrm{tr}}=\sum_j\tau_j,\qquad
+ M=\sum_jd_j^2,
+\tag{10.4}
+$$
+
+where $\tau_j$ is the actual-feedback defect defined in the proof of Theorem 8.2. Assign $j$ to $\sigma_j=+$ when $p_j\ge q_j$ and to $\sigma_j=-$ otherwise, and let
+
+$$
+ z_j=\begin{cases}
+ \xi_j,&\sigma_j=+,\\
+ \eta_j,&\sigma_j=-,
+ \end{cases}\qquad
+ b_j^0=z_jb_{\sigma_j},\qquad
+ A_\sigma=\operatorname{diag}(|R_0b_\sigma|).
+\tag{10.5}
+$$
+
+For the phase supplied by Lemma 10.1 applied to $K_j=U_y\operatorname{diag}(R_0b_j)$, define
+
+$$
+ B_j=\lambda_j|z_j|A_{\sigma_j}.
+\tag{10.6}
+$$
+
+Then
+
+$$
+\boxed{\ \sum_j\|K_j-B_j\|_{\mathrm{HS}}^2
+ \le4S_{\mathrm{tr}}+2\|R_0\|_{\mathrm{op}}^2M.\ }
+\tag{10.7}
+$$
+
+Moreover, with
+
+$$
+ m_+=\sum_{\sigma_j=+}p_j,\qquad m_-=\sum_{\sigma_j=-}q_j,
+\tag{10.8}
+$$
+
+one has $0\le m_\sigma\le1$ and
+
+$$
+(1-m_+)+(1-m_-)=M.
+\tag{10.9}
+$$
+
+**Proof.** The coordinatewise modulus is $1$-Lipschitz, so
+
+$$
+\|\operatorname{diag}(|R_0b_j|)-|z_j|A_{\sigma_j}\|_{\mathrm{HS}}^2
+ \le\|R_0(b_j-b_j^0)\|_2^2
+ \le\|R_0\|_{\mathrm{op}}^2d_j^2.
+$$
+
+Combining this with (10.2) and $\|X+Y\|_{\mathrm{HS}}^2\le2\|X\|_{\mathrm{HS}}^2+2\|Y\|_{\mathrm{HS}}^2$ gives (10.7). Completeness in (3.6) gives $\sum_jp_j=\sum_jq_j=1$, hence
+
+$$
+1-m_+=\sum_{\sigma_j=-}p_j,\qquad
+1-m_-=\sum_{\sigma_j=+}q_j.
+$$
+
+Their sum is $\sum_j\min\{p_j,q_j\}=M$. $\square$
+
+**Theorem 10.3 (uniform quantitative square-root stability).** For every protocol of Definition 1.2 and every $\varepsilon\in[0,1]$ satisfying
+
+$$
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon,
+\tag{10.10}
+$$
+
+one has
+
+$$
+\boxed{\ \|\Phi-\Phi_*\|_\diamond
+ \le480\sqrt2\,\sqrt\varepsilon.\ }
+\tag{10.11}
+$$
+
+The constant is independent of the finite outcome count, all positive semidefinite effects, all actual feedback unitaries, and every finite untouched reference. The norm is the unhalved norm (1.6), and every original outcome remains in the actual channel.
+
+**Proof.** Let $A_\sigma$ be as in (10.5). By (6.11), $A_\sigma$ are the diagonal Kraus operators of $\Phi_*$ and
+
+$$
+A_+^\dagger A_++A_-^\dagger A_-=I_4.
+\tag{10.12}
+$$
+
+Append two zero operators to the actual list $K_j$. Append to the comparison list
+
+$$
+ C_\sigma=\sqrt{1-m_\sigma}\,A_\sigma,\qquad \sigma\in\{+,-\}.
+\tag{10.13}
+$$
+
+The $B_j$ terms implement $m_+A_+(\cdot)A_+^\dagger+m_-A_-(\cdot)A_-^\dagger$, so the completed comparison list $B_j,C_+,C_-$ implements exactly $\Phi_*$. The appended zeros and $C_\sigma$ are comparison padding only; they are not extra physical outcomes. Both padded lists are trace-preserving Kraus lists. Let $V$ and $W$ be their common-environment column isometries.
+
+Since $\|A_\sigma\|_{\mathrm{op}}\le1$, (10.7), (10.9), and (10.13) give
+
+$$
+\begin{aligned}
+\|V-W\|_{\mathrm{op}}^2
+ &\le \sum_j\|K_j-B_j\|_{\mathrm{HS}}^2
+       +\left\|\sum_\sigma C_\sigma^\dagger C_\sigma\right\|_{\mathrm{op}}\\
+ &\le4S_{\mathrm{tr}}+(2\|R_0\|_{\mathrm{op}}^2+1)M.
+\end{aligned}
+\tag{10.14}
+$$
+
+Here the first inequality uses the direct-sum form of the column isometries, and the second uses
+$\|\sum_\sigma C_\sigma^\dagger C_\sigma\|_{\mathrm{op}}\le(1-m_+)+(1-m_-)=M$.
+
+For completeness, the partial trace over a finite environment is trace-norm contractive for arbitrary operators: by trace duality,
+
+$$
+\|\operatorname{Tr}_{\mathrm{env}}Z\|_1
+ =\sup_{\|Y\|_{\mathrm{op}}\le1}
+   \left|\operatorname{Tr}\bigl[(I_{\mathrm{env}}\otimes Y)Z\bigr]\right|
+ \le\|Z\|_1.
+\tag{10.15}
+$$
+
+For every finite reference $M_n(\mathbb C)$ and every $X\in M_n(\mathbb C)\otimes M_4(\mathbb C)$, expand the difference of the two dilated maps into the two terms containing $V-W$. The trace-norm ideal inequality, (10.15), and $\|V\|_{\mathrm{op}}=\|W\|_{\mathrm{op}}=1$ yield
+
+$$
+\| (\operatorname{id}_{M_n}\otimes(\Phi-\Phi_*))(X)\|_1
+ \le2\|V-W\|_{\mathrm{op}}\|X\|_1.
+\tag{10.16}
+$$
+
+This is uniform in the reference dimension and does not assume positivity or Hermiticity of $X$.
+
+Now (8.6) gives $M\le1600S_{\mathrm{cert}}$ and the actual defect identity gives
+
+$$
+S_{\mathrm{cert}}+S_{\mathrm{tr}}\le8\varepsilon.
+\tag{10.17}
+$$
+
+Since $\|R_0\|_{\mathrm{op}}^2\le\|R_0\|_{\mathrm{HS}}^2=4$, (10.14)--(10.17) imply
+
+$$
+\begin{aligned}
+\|\Phi-\Phi_*\|_\diamond
+ &\le2\sqrt{4S_{\mathrm{tr}}+9M}\\
+ &\le2\sqrt{4S_{\mathrm{tr}}+14400S_{\mathrm{cert}}}\\
+ &\le2\sqrt{14400(S_{\mathrm{cert}}+S_{\mathrm{tr}})}\\
+ &\le480\sqrt2\,\sqrt\varepsilon.
+\end{aligned}
+$$
+
+All comparison phases $\lambda_j$ are Kraus gauges in the auxiliary representation of $\Phi_*$; they do not alter the actual shared feedback $U_y$, add a physical outcome, postselect, or change the record. $\square$
+
+**Proposition 10.4 (the square-root exponent is sharp for this protocol class).** Let $Z=P-Q$ and $W_t=e^{itZ}$. Keep the two effects of (6.2) and replace the actual feedbacks by
+
+$$
+U_\sigma(t)=W_tU_\sigma,\qquad \sigma\in\{+,-\}.
+\tag{10.18}
+$$
+
+The resulting two-outcome channel is $\Phi_t=\operatorname{Ad}(W_t)\circ\Phi_*$. Put
+
+$$
+q=1-c,\qquad
+\epsilon_t=\|\Phi_t-\operatorname{id}_{M_4}\|_\diamond-q,\qquad
+ d_t=\|\Phi_t-\Phi_*\|_\diamond.
+\tag{10.19}
+$$
+
+Then
+
+$$
+\boxed{\ \epsilon_t=\sqrt{q^2+4c\sin^2t}-q,\qquad
+ d_t=2c|\sin t|,\qquad
+ d_t^2=c(2q\epsilon_t+\epsilon_t^2).\ }
+$$
+
+Consequently $d_t/\sqrt{\epsilon_t}\to\sqrt{2cq}>0$ as $t\to0$, so no uniform bound $d_t\le K\epsilon_t^\beta$ can hold for any $\beta>1/2$.
+
+**Proof.** The channel $\Phi_*$ has cross-block coefficient $c$ in (6.14), while conjugation by $W_t$ changes it to $ce^{2it}$. For any $\lambda\in\mathbb C$, the cross-block map
+
+$$
+\Gamma_\lambda(X)=\lambda PXQ+\overline\lambda QXP
+$$
+
+has full unhalved diamond norm $|\lambda|$: the upper bound follows from
+$\Gamma_1=(\operatorname{id}-\operatorname{Ad}Z)/2$ and unitary phase conjugation, while $X=|1\rangle\langle3|$ gives the reverse bound. Therefore
+
+$$
+\|\Phi_t-\operatorname{id}\|_\diamond=|1-ce^{2it}|
+ =\sqrt{q^2+4c\sin^2t},
+$$
+
+and
+
+$$
+\|\Phi_t-\Phi_*\|_\diamond=|c(e^{2it}-1)|=2c|\sin t|.
+$$
+
+Eliminating $\sin^2t$ gives the final identity. The effects remain complete, each outcome retains one actual unitary, and all outcomes are included, so the family lies in the original protocol class. $\square$
+
+Theorem 10.3 closes the quantitative assertion left open after Section 9, while Proposition 10.4 records that its exponent cannot be improved using the same protocol class. The proof uses the degree-two homogeneous defect budget; the quartic statistics in Proposition 8.3 alone would be presentation-dependent under proportional refinement. The estimate is deliberately conservative and does not claim an optimal constant.
+
+## 追加锚（本行以下为增补区）

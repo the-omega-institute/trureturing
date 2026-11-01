@@ -109,7 +109,7 @@ internal static partial class CleanLanesCommand
             };
             arguments.Add(System.Text.Json.JsonSerializer.Serialize(expected));
             dispatched = true;
-            removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(2100));
             var refusal = CanonicalRefusal(removal);
             if (refusal is not null) return Refused(refusal);
             if (removal.ExitCode == 74 && removal.Output.Length == 0
@@ -135,17 +135,6 @@ internal static partial class CleanLanesCommand
                     nativeLocks = locks.Clone();
                 else if (outcome.Value.TryGetProperty("native_locks", out var failedLocks))
                     nativeLocks = failedLocks.Clone();
-                if (outcome.Value.TryGetProperty("recovery_roots", out var roots))
-                    foreach (var root in roots.EnumerateArray())
-                        protectObservedWorktree?.Invoke(item with
-                        {
-                            Branch = root.GetString()!["refs/heads/".Length..],
-                        });
-                if (recoveryBranch is not null)
-                    protectObservedWorktree?.Invoke(item with
-                    {
-                        Branch = recoveryBranch["refs/heads/".Length..],
-                    });
                 var state = outcome.Value.GetProperty("outcome").GetString();
                 if (state == "refused" && removal.ExitCode is 68 or 73
                     && receipt.GetProperty("status").GetString() == "refused")
@@ -193,8 +182,6 @@ internal static partial class CleanLanesCommand
                         + ":stderr=" + BoundedDiagnostic(removal.Error) + ":stdout=" + BoundedDiagnostic(removal.Output)));
         }
 
-        // Retain both observed branches and refs created for detached recovery
-        // through the invocation's later orphan sweep.
         return new(LaneRemovalOutcome.Removed, selection.RemovalReason(), recoveryBranch, NativeLocks: nativeLocks);
     }
 

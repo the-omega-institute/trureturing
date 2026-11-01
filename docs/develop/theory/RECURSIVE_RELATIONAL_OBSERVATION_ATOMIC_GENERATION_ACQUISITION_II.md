@@ -4876,3 +4876,98 @@ The finite coding suppliers are Shannon, *A Mathematical Theory of Communication
 The result is conditional on finite sufficiently backed returned executions from the known alpha. It does not recover an unknown erased prefix, survive Reset, crash or an unfinished write, provide a uniform fixed finite device for all sizes, deploy physical references, prove a total-resource or Pareto optimum, or establish a generic append-only lower bound from either counterexample. Mandatory reset/tape experiments and all earlier original-$Q$, fixed-$G_{\rm gc}$, parked-consumer, unchanged-initialization, terminal and final-no-Ready obligations retain their own contracts.
 
 ## 追加锚（本行以下为增补区）
+
+## 100. A native obstruction to exact-width immutable history records
+
+**Definition 100.1 (one history-indexed record on the full native domain).** Use the known-alpha LAB of AA Definition 17.1 and Assumption 20.1: ordered terms $t::=\alpha\mid\beta\mid\langle t,t\rangle$, logical addresses over $\{L,R\}$, and only the actual leaf edits
+
+$$
+P_p:\alpha\longmapsto\beta,\qquad S_p:\beta\longmapsto\langle\beta,\alpha\rangle.
+$$
+
+The beta child is on the left. Every finite legal addressed word from that same known alpha is admitted, with every legal prefix. Write $t(h)$ for its endpoint, $\mathcal H(t)$ for the complete successful-generation fibre, $F(t)=|\mathcal H(t)|$, and $G(t)=\lceil\log_2F(t)\rceil$. Reads, requests, refusals, waiting and output actions are not letters of $h$.
+
+A proposed record is a single function $J$ from all these finite histories to finite binary words, subject to
+
+$$
+|J(h)|=G(t(h)),\qquad
+J|_{\mathcal H(t)}\text{ is injective for every }t,\qquad
+J(h)\preceq J(he)\text{ for every legal next event }e,
+\tag{100.1}
+$$
+
+where $\preceq$ means literal word prefix, including equality. Thus each old DATA BIT keeps its position and value. History indexing means the same past $h$ has the same word before either of its legal futures; even an abstract, noncomputable choice of the whole family must respect this. No prefix-free condition between different source fibres is imposed, and different current sources may reuse words.
+
+The decoder has the complete current source and the fixed installation, actual root binding, returned phase and current rights of AA Definition 21.1. As in Definition 60.1, $J$ is the entire varying history-bearing supplement. History information in object names, references or aliases, backing/allocator chronology, occupancy or capacity, retained old control, work contents, archives or decoder advice must be included in that supplement or excluded from the semantic observation. Merely paying for an additional readable history channel does not make its information fixed context. The source itself is conditioned on; $G$ is not a count of physical material, reference widths or workspace. No reset, deletion, graft, changed source access or additional clock is supplied.
+
+**Proposition 100.2 (three full native fibres with a common continuation).** Define
+
+$$
+C_0=\beta,\quad C_{r+1}=\langle C_r,\alpha\rangle,\qquad
+D_0=\alpha,\quad D_n=C_{n-1}\ (n\ge1),\qquad
+t_{m,n}=\langle C_m,D_n\rangle\quad(m,n\ge0).
+$$
+
+Every history to $t_{m,n}$ has the forced prefix $\rho=P_\varepsilon S_\varepsilon$. After $\rho$ it is exactly a shuffle of the two chains
+
+$$
+A_i=S_{L^i}\ (1\le i\le m),\qquad
+B_1=P_R,\quad B_j=S_{RL^{j-2}}\ (2\le j\le n),
+\tag{100.2}
+$$
+
+with the $B$ chain empty when $n=0$. Consequently $N(t_{m,n})=m+n+2$ and $F(t_{m,n})=\binom{m+n}{m}$. In particular the following are full fibres, not selected schedules:
+
+| Source | Actual ordered term | Successful events $N$ | Full $F$ | Exact width $G$ |
+| --- | --- | --- | --- | --- |
+| $U=t_{3,4}$ | $\langle C_3,C_3\rangle$ | $9$ | $35$ | $6$ |
+| $V=t_{4,3}$ | $\langle C_4,C_2\rangle$ | $9$ | $35$ | $6$ |
+| $T=t_{4,5}$ | $\langle C_4,C_4\rangle$ | $11$ | $126$ | $7$ |
+
+For every $h\in\mathcal H(U)$ the two words $hA_4B_5$ and $hB_5A_4$ are legal histories to $T$. For every $k\in\mathcal H(V)$, $kB_4B_5$ is a legal history to $T$.
+
+Proof. A branch root must first be promoted and then split, so $\rho$ is forced. It creates the left beta at $L$ and the right alpha at $R$. Constructing $C_m$ on that left beta requires exactly the $A_i$ for $1\le i\le m$, in order, with no split when $m=0$. Constructing $D_n$ on the right alpha requires no event for $n=0$, and otherwise exactly $P_R$ followed by the splits $S_{RL^j}$ for $0\le j\le n-2$, with no split when $n=1$. Each listed split creates the beta operand of the next split in its chain; its other child stays alpha. There is no causal edge between the chains after $\rho$. AA Theorem 17.2 therefore makes every shuffle, and every prefix of it, legal.
+
+Conversely that same theorem reconstructs the event set from the final ordered term, including its born-type promotions. An extra promotion or split cannot disappear or be undone. Thus no additional native history ends at this term, and the shuffle bijection counts its entire fibre. Choosing the $m$ positions of the left chain gives the ordinary binomial count. The table uses $\binom73=\binom74=35$ and $\binom94=126$, with $32<35\le64$ and $64<126\le128$.
+
+At $U$, $A_4=S_{LLLL}$ and $B_5=S_{RLLL}$ act on two distinct current beta leaves, so either order is enabled and gives $T$. At $V$, $B_4=S_{RLL}$ creates the beta leaf on which $B_5=S_{RLLL}$ then acts, also giving $T$. These statements hold after every history in the respective full fibre.
+
+For completeness, every history to $T$, cut after nine total events, has source $t_{2,5}$, $U$, or $V$: after $\rho$, seven events have occurred, at most four from the left chain and five from the right. These three complete fibres have sizes $21,35,35$ and respectively $1,2,1$ completions per history to $T$. The remaining words are respectively $A_3A_4$, the two orders of $A_4,B_5$, and $B_4B_5$. Hence $21+2\cdot35+35=126$ accounts for the entire terminal fibre. $\square$
+
+**Theorem 100.3 (native exact-width immutable-prefix impossibility).** No family $J$ satisfies (100.1) on all finite native LAB histories. The failure already follows from the three sources $U,V,T$ and their actual continuations in Proposition 100.2.
+
+Proof. Suppose such a family exists. Injectivity and exact width at $U,V$ give two sets
+
+$$
+\mathcal C_U=\{J(h):h\in\mathcal H(U)\},\qquad
+\mathcal C_V=\{J(k):k\in\mathcal H(V)\}
+$$
+
+of $35$ distinct six-bit words each. There are only $64$ six-bit words, so $35+35>64$ forces a common word $x=J(h)=J(k)$ for some $h\in\mathcal H(U)$ and $k\in\mathcal H(V)$. This cross-source collision is permitted by the conditional contract; its obstruction appears at the common future source.
+
+Consider the three actual histories $hA_4B_5$, $hB_5A_4$ and $kB_4B_5$ in $\mathcal H(T)$. The first two differ at their tenth event. The third has a different nine-event prefix: if $k=h$, their deterministic endpoints would agree, whereas $U\ne V$. Thus all three histories are distinct.
+
+Repeated one-event prefix preservation makes all three final records extend the same six-bit word $x$. They must have exactly seven bits at $T$, leaving only the two words $x0,x1$. Three distinct members of $\mathcal H(T)$ cannot receive distinct records in these two slots. This contradicts injectivity. The proof uses ordinary binary-cylinder counting and an explicit finite native contradiction, with no search-failure premise. $\square$
+
+Separate endpoint capacity is insufficient because the old word $J(h)$ must serve both legal orders of $A_4,B_5$. For one six-bit word, the $U$ history needs two seven-bit descendants and the $V$ history needs one more. Their combined demand is three in a cylinder of size two. Choosing a new six-bit word for $h$ after learning its future would violate the history-indexed prefix contract. Unlimited computation or complete current-source context cannot change that count.
+
+**Corollary 100.4 (necessary surplus for source-fixed widths).** Let an injective append-only binary recorder on the full native domain have width $W(t)$ depending only on its current source. Then $W(t)\ge G(t)$ for every source, and
+
+$$
+W(U)\ge7\quad\text{or}\quad W(V)\ge7\quad\text{or}\quad W(T)\ge8.
+\tag{100.3}
+$$
+
+Proof. Fibre counting gives $2^{W(t)}\ge F(t)$. If none of the three inequalities holds, the widths at $U,V,T$ are exactly $6,6,7$. The proof of Theorem 100.3 uses only those three widths and the prefix law along the displayed legal continuations, so it gives the same contradiction regardless of widths elsewhere. This is a necessary finite surplus somewhere, with no sufficiency or uniform-overhead conclusion. $\square$
+
+**Correspondence 100.5 (the same atomic source, geometry and original service).** The witness uses precisely AA (AA.65), not a generic graph substituted for the native process. AA Definition 17.3 realizes each $t_{m,n}$ by its material oriented tree $C(t_{m,n})$, including every unary beta marker. Its source support $S_0$ and terminal antichain $B_0$ parse that same term and recover its labelled causal order; they do not select a shuffle. The histories of Proposition 100.2 are its actual successful-generation times. A supplement $J(h)$ would retain the missing serial distinction on that same source, with that same binding and rights.
+
+Under AA Assumption 20.1 and Theorem 20.3, supply the original complete addressed $P/S$ frames for each displayed history, with sufficient finite backing and the original output, End, local acknowledgement, root Return and cleanup. Every prefix is thereby an admitted returned cut. At a fixed witness source, two different histories differ at an index in the original FetchGrowth chronology, including its full kind and logical address. Thus full $Q_g$ service requires their separation. A purported nonanticipating installation with the binary-only contract would restrict to a family (100.1) on these completed growth schedules, contradicting Theorem 100.3. This abstract obstruction requires no new positive driver. It changes no Tag, guard, refusal, HasPromotion, HasSplit, FetchGrowth, or same-current-source Next semantics, no access/return premise, and no original reset/tape obligation.
+
+The installed global rank of §§75–83, especially Theorem 81.1, attains $G(t)$ with source-dependent reranking and rewriting. The ordinal append-only journal of §§93–98 retains old data with a different payload, and §99's weighted predecessor journal retains old data with its pathwise rounded payload. These remain distinct valid tradeoffs under their own contracts; none supplies the conjunction (100.1). The obstruction proof depends on none of the weighted constructor's claims and gives no optimum for its rounding loss.
+
+Attribution for Proposition 100.2 and the service correspondence is AA §§17–22 at the [fixed supplier revision](https://github.com/the-omega-institute/trureturing/blob/759ea620b15c60a4f0c74e6b55227446439a74cd/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md), together with this volume's Definitions 60.1, 75.1–75.2 and §83 at that same revision. Shuffle/binomial counts, pigeonhole counting and binary-cylinder capacities are mature background, used inside this native derivation. Cover, [*Enumerative Source Encoding*, §I Propositions 1–2 and inverse algorithm, §II Examples 2 and 4](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf), [DOI 10.1109/TIT.1973.1054929](https://doi.org/10.1109/TIT.1973.1054929), supplies finite ranking and inversion, not simultaneous immutable-prefix coherence across changing native source fibres. The inspected repository [ImmutableExtension](../../../D5/S0/Computability/Coding/ImmutableExtension.lean) and [LengthProfileSeparation](../../../D5/S0/Computability/Coding/LengthProfileSeparation.lean) instead keep new codewords prefix-incomparable with a frozen prefix-free code; they do not discharge this source-conditioned descendant-prefix contract. The native simultaneous obstruction is a repo-derived consequence of the stated suppliers; no worldwide priority or exhaustive literature-coverage claim is made.
+
+The theorem concerns exactly source-conditioned fixed-width binary words. It does not decide whether arbitrary history-dependent variable-length words of length at most $G(t)$ can satisfy a different coherence contract: shorter words and length variation change the available states. It establishes no sharp redundancy law, globally sufficient extra bit, minimum event horizon, physical/total/peak/runtime/energy optimum, erased-history recovery, busy-cut inverse or unrestricted space/time/boundary/memory equivalence. It is an ordinary mathematical proof in theory prose, with no fresh Lean or kernel-validation claim.
+
+## 追加锚（本行以下为增补区）

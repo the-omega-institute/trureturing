@@ -19,7 +19,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("git_directory", true)]
     [InlineData("initial_probe", false)]
     [InlineData("initial_probe", true)]
-    public void ProductionProbesOperationalFailureRetainsCauseAndFailsPublicExit(string stage, bool timeout)
+    public void ProductionProbesOperationalFailureRetainsCauseAndWarns(string stage, bool timeout)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/preflight-failure");
@@ -41,14 +41,14 @@ public sealed partial class CleanLanesCommandTests
             return GitFailure("native identity command failed");
         });
         var result = fixture.RunWithRaw(runner, "--force");
-        Assert.False(result.Success);
-        AssertQualificationPublicExit(result, true, 2);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, true, 0);
         var reason = ReasonFor(result.Output, lane);
         Assert.StartsWith("qualification_failed:", reason);
         Assert.Contains(timeout ? "native identity deadline" : "native identity command failed", reason);
         Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, lane, "failed", reason));
         Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(lane));
     }
 
@@ -282,8 +282,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
 
-        Assert.False(result.Success);
-        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
+        Assert.True(result.Success, result.Error);
+        Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.False(fixture.WorktreeRegistered(damaged));
         Assert.True(Directory.Exists(damaged));
         Assert.True(File.Exists(retainedTrackedFile));
@@ -307,18 +307,13 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void RecycledBranchesSurviveSamePassOrphanSweep()
+    public void RemovedLaneRetainsItsRecoverySnapshot()
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/recycle-recovery";
         var lane = fixture.AddLandedLane(branch);
         var head = fixture.Head(lane);
-        var runner = fixture.CreateRunner((file, args, _) =>
-        {
-            if (IsProtocol(args, "retire-branch") && ProtocolValue(args, "--branch") == branch)
-                throw new InvalidOperationException("recovery branch must not enter orphan retirement");
-            return null;
-        });
+        var runner = fixture.CreateRunner();
         var result = fixture.RunWithRaw(runner, "--force");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
@@ -365,8 +360,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
 
-        Assert.False(result.Success);
-        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=2\n", result.Error);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(2, ReadEvents(result.Error, "clean_lanes_warning").Count);
         Assert.All(partials, path => Assert.False(Directory.Exists(path)));
         Assert.All(partialBranches, branch => Assert.True(fixture.BranchExists(branch)));
         Assert.False(Directory.Exists(removed));
@@ -474,9 +469,9 @@ public sealed partial class CleanLanesCommandTests
         string retainedReason,
         bool failed = false)
     {
-        Assert.Equal(!failed, result.Success);
-        AssertQualificationPublicExit(result, true, failed ? 2 : 0);
-        if (!failed) Assert.Empty(result.Error);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, true, 0);
+        Assert.Contains(ReadEvents(result.Error, "clean_lanes_warning"), item => item.GetProperty("path").GetString() == retained);
         Assert.True(Directory.Exists(retained));
         Assert.False(Directory.Exists(removed));
         var items = ReadItems(result.Output);
@@ -488,7 +483,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
         Assert.Equal(failed ? 1 : 0, summary.GetProperty("failed_count").GetInt32());
-        if (failed) Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
+        if (failed) Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
     }
 
     private static void AssertPartialItem(

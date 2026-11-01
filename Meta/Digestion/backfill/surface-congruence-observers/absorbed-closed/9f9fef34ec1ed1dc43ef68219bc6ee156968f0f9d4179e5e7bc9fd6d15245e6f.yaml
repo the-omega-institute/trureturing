@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9f9fef34ec1ed1dc43ef68219bc6ee156968f0f9d4179e5e7bc9fd6d15245e6f
+  normalized_sha256: sha256:9f9fef34ec1ed1dc43ef68219bc6ee156968f0f9d4179e5e7bc9fd6d15245e6f
+cas_ref: sha256:9f9fef34ec1ed1dc43ef68219bc6ee156968f0f9d4179e5e7bc9fd6d15245e6f
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/NikolovSegal/SubdirectSimpleFactorization.subdirect_simple_factorization
+    target_statement_id: sha256:49b10b7d55ec146f284948af69a24fa35c2dc33fe13c5b128ab4ddbb5240ad89
+receipts:
+  unresolved_subitems: []

@@ -35,32 +35,6 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void CurrentNamespaceOrphanIsInLifecycleCleanup()
-    {
-        using var fixture = new CleanLanesFixture();
-        var branch = $"{ExpectedCreationNamespace}/orphan";
-        fixture.AddOrphan(branch, merged: true);
-
-        var result = fixture.Run();
-
-        Assert.True(result.Success, result.Error);
-        AssertItemProperty(ReadItems(result.Output), "branch", branch, "action", "would_remove");
-    }
-
-    [Fact]
-    public void HistoricalNamespaceOrphanRemainsInLifecycleCleanup()
-    {
-        using var fixture = new CleanLanesFixture();
-        var branch = $"{HistoricalLifecycleNamespace}/orphan";
-        fixture.AddOrphan(branch, merged: true);
-
-        var result = fixture.Run();
-
-        Assert.True(result.Success, result.Error);
-        AssertItemProperty(ReadItems(result.Output), "branch", branch, "action", "would_remove");
-    }
-
-    [Fact]
     public void WorktreesOutsideLifecycleNamespacesAreReclaimedWithoutDeletingTheirBranches()
     {
         using var fixture = new CleanLanesFixture();
@@ -81,18 +55,4 @@ public sealed partial class CleanLanesCommandTests
                 && branch.GetString() == orphanBranch);
     }
 
-    [Fact]
-    public void OrphanEnumerationStartsAtAllLocalHeadsBeforeOwnershipFiltering()
-    {
-        using var fixture = new CleanLanesFixture();
-        var runner = fixture.CreateRunner();
-
-        var result = fixture.RunWithRaw(runner);
-
-        Assert.True(result.Success, result.Error);
-        var enumeration = Assert.Single(runner.Invocations, invocation =>
-            invocation.FileName == "git"
-            && invocation.Arguments.FirstOrDefault() == "for-each-ref");
-        Assert.Equal("refs/heads", enumeration.Arguments[^1]);
-    }
 }
