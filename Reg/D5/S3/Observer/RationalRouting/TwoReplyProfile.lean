@@ -13,7 +13,7 @@ noncomputable section
 namespace Reg.D5.S3.Observer.RationalRouting.TwoReplyProfile
 
 abbrev signature : Signature where
-  Params := List Bool × ProfileCell × ℕ
+  Params := Σ _u : List Bool, Σ _I : ProfileCell, ℕ
   State _ := ℚ
   Role := Unit
   finiteRole := inferInstance
@@ -29,7 +29,7 @@ def rejected : Realization signature := realize signature (fun _ _ _ => ⟨0,1�
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
   let I : ProfileCell := ⟨0,3⟩
-  refine ⟨([],I,1),1,2,?_⟩
+  refine ⟨⟨[],I,1⟩,1,2,?_⟩
   have h₁ := (acquired_original_profile [] I 1 le_rfl (by norm_num [I])
     (x := 1) (by norm_num [I,ProfileCell.Contains])).1
   have h₂ := (acquired_original_profile [] I 1 le_rfl (by norm_num [I])
@@ -48,7 +48,7 @@ def arena : Arena where
     let A := wordMatrix u.reverse
     let z := attain u x
     let program := acquireProfile A I B
-    let C := R.readout () (u,I,B) x
+    let C := R.readout () ⟨u,I,B⟩ x
     let Q := profileScale A I B
     let J := firstInterval A (Q ^ 2) I (reply (Q ^ 2) z)
     let V := A.a * originalUpper I + A.b + 1
@@ -108,7 +108,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Observer.RationalRouting.TwoReplyProfile
     definition := none
-    coordinates := #[]
+    coordinates := #[0,1,2]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body","body","value"]
       stateBinder := 5

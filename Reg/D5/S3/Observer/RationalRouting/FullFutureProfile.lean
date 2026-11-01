@@ -13,45 +13,52 @@ noncomputable section
 namespace Reg.D5.S3.Observer.RationalRouting.FullFutureProfile
 
 abbrev signature : Signature where
-  Params := ℕ
-  State _ := ℚ × ℚ
+  Params := Σ _B : ℕ, ℚ
+  State _ := ℚ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature (fun _ B xy => SameFuture B xy.1 xy.2) Empty.elim
+def actual : Realization signature := realize signature (fun _ p y => @decide (SameFuture p.1 p.2 y) (Classical.propDecidable _)) Empty.elim
 
-def rejected : Realization signature := realize signature (fun _ _ _ => True) Empty.elim
+def rejected : Realization signature := realize signature (fun _ _ _ => true) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
-  refine ⟨1,(1,1),(1,2),?_⟩
+  refine ⟨⟨1,1⟩,1,2,?_⟩
   intro he
-  have ht : actual.readout () 1 (1,1) := fun _ _ _ _ => rfl
-  have hf : ¬ actual.readout () 1 (1,2) := by
+  have ht : actual.readout () ⟨1,1⟩ 1 = true := by
+    apply decide_eq_true
+    intro _ _ _ _
+    rfl
+  have hf : actual.readout () ⟨1,1⟩ 2 ≠ true := by
     intro h
-    have hh := h [] 1 le_rfl le_rfl
+    have hf : SameFuture 1 1 2 := of_decide_eq_true h
+    have hh := hf [] 1 le_rfl le_rfl
     norm_num [attain,reply] at hh
-  exact hf (Eq.mp he ht)
+  apply hf
+  rw [← he]
+  exact ht
 
 def arena : Arena where
   signature := signature
   Law R := ∀ {B : ℕ} {x y : ℚ}, 0 < x → 0 < y →
-    (SameInstant B x y ↔ R.readout () B (x,y))
+    (SameInstant B x y ↔ R.readout () ⟨B,x⟩ y = true)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h (B := 1) (x := 1) (y := 2) (by norm_num) (by norm_num)).mpr trivial
+  have hh := (h (B := 1) (x := 1) (y := 2) (by norm_num) (by norm_num)).mpr rfl
   have hb := hh 1 le_rfl le_rfl
   norm_num [reply] at hb
 
 def family : Registration arena (type_of% (@instantaneous_iff_full_future)) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@instantaneous_iff_full_future,rejected,rejected_law⟩
+  bridge := by simp only [arena,actual,realize,decide_eq_true_eq]
+  variation := ⟨by simpa only [arena,actual,realize,decide_eq_true_eq] using
+    @instantaneous_iff_full_future,rejected,rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -74,7 +81,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ B xy => SameFuture B xy.1 xy.2) Empty.elim)
+  readout := some (realize signature (fun _ p y => @decide (SameFuture p.1 p.2 y) (Classical.propDecidable _)) Empty.elim)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -82,13 +89,13 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
-    coordinates := #[]
+    coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","body","arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -98,44 +105,51 @@ end Reg.D5.S3.Observer.RationalRouting.FullFutureProfile
 namespace Reg.D5.S3.Observer.RationalRouting.ContainingCell
 
 abbrev signature : Signature where
-  Params := ℕ × ℚ
+  Params := Σ _B : ℕ, ℚ
   State _ := ℚ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature (fun _ By x => (containingCell By.1 By.2).Contains x) Empty.elim
+def actual : Realization signature := realize signature (fun _ By x => @decide ((containingCell By.1 By.2).Contains x)
+    (Classical.propDecidable _)) Empty.elim
 
-def rejected : Realization signature := realize signature (fun _ _ _ => True) Empty.elim
+def rejected : Realization signature := realize signature (fun _ _ _ => true) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
-  refine ⟨(1,1),1,0,?_⟩
+  refine ⟨⟨1,1⟩,1,0,?_⟩
   intro he
-  have ht : actual.readout () (1,1) 1 :=
-    (containing_cell_exact 1 le_rfl (by norm_num) 1).mpr ⟨by norm_num,fun _ _ _ => rfl⟩
-  have hf : ¬ actual.readout () (1,1) 0 := by
+  have ht : actual.readout () ⟨1,1⟩ 1 = true := by
+    apply decide_eq_true
+    exact (containing_cell_exact 1 le_rfl (by norm_num) 1).mpr
+      ⟨by norm_num,fun _ _ _ => rfl⟩
+  have hf : actual.readout () ⟨1,1⟩ 0 ≠ true := by
     intro h
-    exact (lt_irrefl 0) h.1
-  exact hf (Eq.mp he ht)
+    have hh : (containingCell 1 1).Contains 0 := of_decide_eq_true h
+    exact (lt_irrefl 0) hh.1
+  apply hf
+  rw [← he]
+  exact ht
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (B : ℕ), 1 ≤ B → ∀ {y : ℚ}, 0 < y → ∀ x : ℚ,
-    R.readout () (B,y) x ↔ 0 < x ∧ SameInstant B x y
+    R.readout () ⟨B,y⟩ x = true ↔ 0 < x ∧ SameInstant B x y
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h 1 le_rfl (y := 1) (by norm_num) 0).mp trivial
+  have hh := (h 1 le_rfl (y := 1) (by norm_num) 0).mp rfl
   norm_num at hh
 
 def family : Registration arena (type_of% (@containing_cell_exact)) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@containing_cell_exact,rejected,rejected_law⟩
+  bridge := by simp only [arena,actual,realize,decide_eq_true_eq]
+  variation := ⟨by simpa only [arena,actual,realize,decide_eq_true_eq] using
+    @containing_cell_exact,rejected,rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -158,7 +172,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ By x => (containingCell By.1 By.2).Contains x) Empty.elim)
+  readout := some (realize signature (fun _ By x => @decide ((containingCell By.1 By.2).Contains x)
+    (Classical.propDecidable _)) Empty.elim)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -166,13 +181,13 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
-    coordinates := #[]
+    coordinates := #[0,2]
     readouts := #[{
       path := #["body","body","body","body","body","fn","arg"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -182,8 +197,8 @@ end Reg.D5.S3.Observer.RationalRouting.ContainingCell
 namespace Reg.D5.S3.Observer.RationalRouting.CellEvaluator
 
 abbrev signature : Signature where
-  Params := ℕ × ℚ × ℕ
-  State _ := List Bool
+  Params := Σ _B : ℕ, Σ _y : ℚ, List Bool
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -191,13 +206,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature (fun _ Bym w => (containingCell Bym.1 Bym.2.1).evaluate w Bym.2.2) Empty.elim
+def actual : Realization signature := realize signature (fun _ Byw m => (containingCell Byw.1 Byw.2.1).evaluate Byw.2.2 m) Empty.elim
 
 def rejected : Realization signature := realize signature (fun _ _ _ => 0) Empty.elim
 
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
-  refine ⟨(1,1,1),[],[true],?_⟩
+  refine ⟨⟨1,1,[]⟩,1,2,?_⟩
   norm_num [actual,realize,ProfileCell.evaluate,containingCell,
     ProfileCell.representative,reply,attain,step]
 
@@ -207,7 +222,7 @@ def arena : Arena where
     (containingCell B y).Contains (containingCell B y).representative ∧
     ∀ x : ℚ, (containingCell B y).Contains x → ∀ w : List Bool,
       ∀ m : ℕ, 1 ≤ m → m ≤ B →
-        R.readout () (B,y,m) w = reply m (attain w x)
+        R.readout () ⟨B,y,w⟩ m = reply m (attain w x)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -242,7 +257,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ Bym w => (containingCell Bym.1 Bym.2.1).evaluate w Bym.2.2) Empty.elim)
+  readout := some (realize signature (fun _ Byw m => (containingCell Byw.1 Byw.2.1).evaluate Byw.2.2 m) Empty.elim)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -250,10 +265,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
-    coordinates := #[]
+    coordinates := #[0,2,6]
     readouts := #[{
       path := #["body","body","body","body","arg","body","body","body","body","body","body","fn","arg"]
-      stateBinder := 6
+      stateBinder := 7
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -331,7 +346,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Observer.RationalRouting.FullFutureProfile
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body","body","fn","arg"]
       stateBinder := 1

@@ -989,9 +989,9 @@ private theorem trace_payload {Q V : ℕ} (hQ : 1 ≤ Q) {z : ℚ}
     simp [BoundedReplies,hD,hs,hsQ.trans hQQ,first.1,first.2,second.1,second.2]
 
 private theorem endpoint_den_bound (e : GridEndpoint) : e.value.den ≤ e.denominator := by
-  have hd : (e.numerator /. (e.denominator : ℤ)).den ∣ e.denominator :=
+  have hd : (Rat.divInt e.numerator (e.denominator : ℤ)).den ∣ e.denominator :=
     Int.natCast_dvd_natCast.mp (Rat.den_dvd e.numerator (e.denominator : ℤ))
-  have he : e.value = e.numerator /. (e.denominator : ℤ) := by
+  have he : e.value = Rat.divInt e.numerator (e.denominator : ℤ) := by
     rw [Rat.divInt_eq_div]
     simp only [GridEndpoint.value,Int.cast_natCast]
   rw [he]
@@ -1009,7 +1009,7 @@ private theorem endpoint_scan_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
       split_ifs <;> exact ⟨le_rfl,le_rfl⟩
     · obtain ⟨hl,hu⟩ := ih (by omega)
       simp only [scanEndpoints,ite_eq_right hn,GridEndpoint.maximum,GridEndpoint.minimum]
-      split_ifs <;> constructor <;> omega
+      split_ifs <;> constructor <;> (try dsimp only) <;> omega
 
 private theorem containing_cell_denominators (B : ℕ) (hB : 1 ≤ B) (y : ℚ) :
     (containingCell B y).lower.den ≤ B ∧ (containingCell B y).upper.den ≤ B := by
