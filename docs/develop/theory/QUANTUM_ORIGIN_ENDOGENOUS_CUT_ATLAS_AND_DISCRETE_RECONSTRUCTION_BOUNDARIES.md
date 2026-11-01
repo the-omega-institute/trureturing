@@ -3496,3 +3496,368 @@ $$
 移除受控 $J$ 或复叠加前提后，(36.2) 的构造不再有同一合同；增加逆追加、重置或跨轨道源门后，(34.5) 的证明也不再适用。因而一组菜单内的反例不能给出撤去某项量子原则后所有模型都失败的全称结论，这正是 [V77 定义 1.1 的反向见证范围](AURIC_REVERSE_LOCATION_OF_QUANTUM_AXIOMS_BINARY_WITNESSES_AND_INTERNAL_COMPATIBILITY_V77.md)。其定理 10.1 的满锚覆盖不能由几个基概率替代；此处以完整源条目假设和分级证明承担该义务。完整系统保距与局部记录信息之别也与 [V78 定理 9.1 及 §9.1](AURIC_GATE_MANIFOLDS_INTEGRABLE_RELATIONS_TANGENT_KERNELS_AND_RECURSIVE_ERROR_V78.md) 相容；(36.5) 说明记录距离如何带着分支权重变化，并未产生 ready 记录或概率律的来源。故定义 38.1 的取得桥梁仍为待定问题。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 共同内部参照的有限轨道框架合同
+
+**定义 39.1（同一实载体上的根、框架与全局比较）。** 设 $(V,g)$ 为非零有限维实内积空间，$D=\dim_{\mathbb R}V$。所有伴随、正性与算子范数均相对于同一个 $g$；$\|\cdot\|_{\mathrm{HS}}$ 为 Hilbert–Schmidt 范数。取实线性生成元 $A$、单位根向量 $\Omega_0$ 及带宽常数 $M$，满足
+
+$$
+A^*=-A,\qquad \|A\|\le M,\qquad
+\|\Omega_0\|=1,\qquad \omega=\|A\Omega_0\|>0.
+\tag{39.1}
+$$
+
+选定同一实际载体上的有限个正交运输 $U_i$、权重 $\alpha_i>0$，$\sum_i\alpha_i=1$，并给定共同轨道框架的下界 $\mu>0$ 及全局交换子界 $\epsilon_i\ge0$：
+
+$$
+x_i=U_i\Omega_0,\qquad
+\mathsf F=\sum_i\alpha_i|x_i\rangle\langle x_i|
+\succeq\mu I_V,\qquad
+\|[A,U_i]\|\le\epsilon_i.
+\tag{39.2}
+$$
+
+其中 $|x\rangle\langle x|$ 表示实秩一算子 $y\mapsto xg(x,y)$，$[S,T]=ST-TS$。框架条件等价于对每个 $y\in V$ 都有 $\sum_i\alpha_i g(x_i,y)^2\ge\mu\|y\|^2$；它要求这些实际运输后的输入共同覆盖全部方向，并给出覆盖的定量条件数，不是仅列举状态名称或断言轨道张成。定义同根残差与其传播预算
+
+$$
+\begin{aligned}
+B&=A^2+\omega^2I_V,\qquad r=\|B\Omega_0\|,\\
+\Delta&=\left(\frac1\mu\sum_i\alpha_i
+                    (r+2M\epsilon_i)^2\right)^{1/2}.
+\end{aligned}
+\tag{39.3}
+$$
+
+这里 $\Omega_0$ 专指根向量。$\mu$ 约束同一组 $x_i$ 的全部实线性组合，$M$ 约束整个生成元，$\epsilon_i$ 约束整个载体上的两条路由 $AU_i$ 与 $U_iA$。单根速度、单根交换子或某个固定时刻的端点比较，均不替代这些不同量词的前件。
+
+**定义 39.2（同根精确供应结果及其稳定化目标）。** [V78 二元失败续稿 §4.4 定理 4.5](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-5) 在 $A^*=-A$、全部运输与 $A$ 精确对易、单位根轨道张成且 $\omega>0$ 时给出
+
+$$
+\|(A^2+\omega^2I)\Omega_0\|=0
+\quad\Longleftrightarrow\quad A^2=-\omega^2I_V.
+\tag{39.4}
+$$
+
+该传播使用精确对易与定性张成。下面的应用以 (39.2) 的实际有限框架将非零根残差传播为统一算子界，再构造同一载体上的共同参照与门的比较算子。它没有把定性张成直接当成稳定性前件。
+
+## 40. 从同根残差到复方向、实际参照流与有限门字的稳定比较
+
+**定理 40.1（共同参照的有限框架稳定应用）。** 在定义 39.1 下，首先有
+
+$$
+\|A^2+\omega^2I_V\|\le\Delta.
+\tag{40.1}
+$$
+
+若满足严格谱裕量
+
+$$
+\Delta<\omega^2,\qquad
+ a=\sqrt{\omega^2-\Delta}>0,\qquad
+\eta=\frac{\Delta}{\omega+\sqrt{\omega^2-\Delta}}
+     =\omega-\sqrt{\omega^2-\Delta},
+\tag{40.2}
+$$
+
+则同一实数据定义的
+
+$$
+P=(-A^2)^{1/2},\qquad \mathcal J=AP^{-1}
+\tag{40.3}
+$$
+
+满足
+
+$$
+\mathcal J^*=-\mathcal J,\qquad
+\mathcal J^2=-I_V,\qquad
+\mathcal J^*\mathcal J=I_V,\qquad
+\|A-\omega\mathcal J\|\le\eta.
+\tag{40.4}
+$$
+
+因此 $D$ 为偶数，以下标量作用及内积在 $V$ 上给出对第二变量复线性的复 Hilbert 结构：
+
+$$
+(u+iv)x=ux+v\mathcal Jx,\qquad
+h(x,y)=g(x,y)+i\,g(\mathcal Jx,y).
+\tag{40.5}
+$$
+
+对于实际已给定的正交参照流 $R_t=e^{tA}$，令 $R_t^0=e^{\omega t\mathcal J}$、$t_*=\pi/(2\omega)$，则
+
+$$
+\begin{aligned}
+\|R_t-R_t^0\|&\le\min\{2,|t|\eta\},\qquad t\in\mathbb R,\\
+\|R_{t_*}-\mathcal J\|&\le
+           \min\{2,\pi\eta/(2\omega)\}.
+\end{aligned}
+\tag{40.6}
+$$
+
+对任意同载体上的实线性算子 $U$，若 $\|[A,U]\|\le\epsilon$，则
+
+$$
+\|[\mathcal J,U]\|\le\epsilon/a.
+\tag{40.7}
+$$
+
+若该 $U$ 还正交且 $b=\epsilon/(2a)<1$，置
+
+$$
+\begin{aligned}
+U_c&=(U-\mathcal J U\mathcal J)/2,\qquad
+U_a=(U+\mathcal J U\mathcal J)/2,\\
+U^0&=U_c(U_c^*U_c)^{-1/2},\qquad
+\chi(b)=b+1-\sqrt{1-b^2}.
+\end{aligned}
+\tag{40.8}
+$$
+
+则 $U^0$ 对 $g$ 正交、与 $\mathcal J$ 对易，因而对 $h$ 酉，并且
+
+$$
+\|U-U^0\|\le\chi(b).
+\tag{40.9}
+$$
+
+对一条指定的有限门字，每次出现的正交门 $W_j$ 都有其全局界 $\|[A,W_j]\|\le\varepsilon_j$，$b_j=\varepsilon_j/(2a)<1$，则其相应比较门满足
+
+$$
+\|W_L\cdots W_1-W_L^0\cdots W_1^0\|
+\le\min\left\{2,\sum_{j=1}^L\chi(b_j)\right\}.
+\tag{40.10}
+$$
+
+所有比较均使用同一 $g,A,\Omega_0,\mathcal J$。式 (40.1) 是充分估计，不宣称必要或最优。
+
+证明。先将根残差沿实际运输传播：
+
+$$
+\begin{aligned}
+Bx_i&=U_iB\Omega_0+[A^2,U_i]\Omega_0,\\
+[A^2,U_i]&=A[A,U_i]+[A,U_i]A,\\
+\|Bx_i\|&\le r+2M\epsilon_i.
+\end{aligned}
+\tag{40.11}
+$$
+
+对于这些加权轨道向量，标准有限框架算子不等式给出
+
+$$
+\mu\|B\|_{\mathrm{HS}}^2
+\le\operatorname{Tr}(B\mathsf F B^*)
+=\sum_i\alpha_i\|Bx_i\|^2.
+\tag{40.12}
+$$
+
+具体地，$B(\mathsf F-\mu I)B^*\succeq0$，取迹即得第一步；第二步逐项取实秩一算子的迹。再用 $\|B\|\le\|B\|_{\mathrm{HS}}$ 即得 (40.1)。框架的分析／合成与正框架算子是成熟工具，参见 O. Christensen, [An Introduction to Frames and Riesz Bases, 2nd ed.](https://doi.org/10.1007/978-3-319-25613-9)，关于 Hilbert 空间框架与框架算子的章节；本处将其用于 (40.11) 的同根路由残差，不另立一般框架定理。
+
+若实际向量残差 $Bx_i$ 也已给定，令 $T:\mathbb R^n\to V$ 的第 $i$ 列为 $\sqrt{\alpha_i}x_i$，$Y=BT$。因为 $TT^*=\mathsf F\succeq\mu I$，$S=T^*\mathsf F^{-1}$ 满足 $TS=I$ 及 $S^*S=\mathsf F^{-1}$，故 $B=YS$ 给出更直接的
+
+$$
+\|B\|\le\|Y\|/\sqrt\mu.
+\tag{40.13}
+$$
+
+式 (39.3) 以 $\|Y\|\le\|Y\|_{\mathrm{HS}}$ 忽略了不同残差向量间的有利关系。同一个论证还说明如何从完整框架上的路由比较取得前件：若 $\rho_{ij}\ge\|[A,U_i]x_j\|$，则
+
+$$
+\|[A,U_i]\|\le
+\left(\frac1\mu\sum_j\alpha_j\rho_{ij}^2\right)^{1/2}.
+\tag{40.14}
+$$
+
+这里确实需要每个 $x_j$ 上的联合路由 $AU_ix_j$ 与 $U_iAx_j$，不能只给 $[A,U_i]\Omega_0$。
+
+由于 $-A^2=A^*A$ 为实对称正算子，(40.1) 与严格裕量给出
+
+$$
+a^2I\preceq-A^2\preceq(\omega^2+\Delta)I.
+\tag{40.15}
+$$
+
+有限维实谱演算使 $P$ 正定且与 $A$ 对易；$A$ 可逆。于是直接相乘得到 (40.4) 的三个恒等式。这是实反对称算子的标准极分解：一般极分解与正规算子的极因子对易可参见 N. J. Higham, [Computing the Polar Decomposition—with Applications](https://eprints.maths.manchester.ac.uk/694/1/high86p.pdf), SIAM J. Sci. Stat. Comput. 7 (1986), 1160–1174，定理 1.1、引理 2.1，[DOI](https://doi.org/10.1137/0907079)。这些结果作为本应用的中间工具。
+
+$P$ 的谱在 $[\sqrt{\omega^2-\Delta},\sqrt{\omega^2+\Delta}]$ 内。下端到 $\omega$ 的距离不少于上端到 $\omega$ 的距离，因为
+
+$$
+\sqrt{\omega^2-\Delta}+\sqrt{\omega^2+\Delta}\le2\omega.
+$$
+
+因此 $A=\mathcal JP$ 和 $\mathcal J$ 正交给 $\|A-\omega\mathcal J\|=\|P-\omega I\|\le\eta$。$\mathcal J^2=-I$ 使 $V$ 成为复向量空间，故 $D$ 偶数；$\mathcal J^*=-\mathcal J$ 给
+
+$$
+h(x,\mathcal Jy)=ih(x,y),\quad
+h(\mathcal Jx,y)=-ih(x,y),\quad
+h(y,x)=\overline{h(x,y)},\quad
+h(x,x)=g(x,x).
+$$
+
+这正是 [V78 二元失败续稿 §4.2 推论 4.3](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-3) 的实—复构造；成熟一般对应另见 J. C. Baez, [Division Algebras and Quantum Theory](https://arxiv.org/abs/1101.5690)，定理 7。这里精确复方向由实际 $A$ 的极因子给定，而 $A$ 本身只与单频率生成元相差至多 $\eta$。
+
+对 $t\ge0$，在同一实算子空间使用 Duhamel 恒等式：
+
+$$
+e^{tA}-e^{\omega t\mathcal J}
+=\int_0^t e^{(t-s)A}(A-\omega\mathcal J)
+                         e^{\omega s\mathcal J}\,ds.
+$$
+
+两侧的指数因子正交，故范数至多 $t\eta$；$t<0$ 对负生成元同理。两正交算子之差至多二。$e^{\pi\mathcal J/2}=\mathcal J$ 给 (40.6)。
+
+为证明运输相容界，记 $E=[A,U]$、$C=\mathcal JU-U\mathcal J$。由 $A=\mathcal JP$、$P\mathcal J=\mathcal JP$ 及 $\mathcal J^2=-I$ 逐项展开可得
+
+$$
+PC+CP=E+\mathcal JE\mathcal J.
+\tag{40.16}
+$$
+
+正定 Sylvester 方程的积分解在此为
+
+$$
+C=\int_0^\infty e^{-tP}(E+\mathcal JE\mathcal J)e^{-tP}\,dt.
+\tag{40.17}
+$$
+
+对被积式求导后积分即验证该式；$P\succeq aI$ 保证无穷端消失。唯一性也可在 $P$ 的实正交特征基上逐项验证：每个矩阵元乘上两个正特征值之和。标准供应是 R. Bhatia–P. Rosenthal, [How and Why to Solve the Operator Equation AX−XB=Y](https://doi.org/10.1112/S0024609396001828), Bull. London Math. Soc. 29 (1997), 1–21；正稳定情形的积分解亦见 [Higham 的 Sylvester 方程说明](https://nhigham.com/2020/09/01/what-is-the-sylvester-equation/)。这里对应其一般形式中的两个系数 $P,-P$，谱由至少 $2a$ 的间隔分开。因为 $\|E+\mathcal JE\mathcal J\|\le2\epsilon$，积分范数至多
+
+$$
+\int_0^\infty2\epsilon e^{-2at}\,dt=\epsilon/a,
+$$
+
+得到 (40.7)，全过程不预设物理复载体。
+
+最后，(40.8) 的 $U_c$ 与 $\mathcal J$ 对易，$U_a$ 与其反对易，并且
+
+$$
+\|U_a\|=\tfrac12\|[\mathcal J,U]\|\le b.
+$$
+
+将 $U^*U=I$ 的复线性部分取出；两个交叉项反复线性，得到
+
+$$
+U_c^*U_c+U_a^*U_a=I,\qquad
+(1-b^2)I\preceq U_c^*U_c\preceq I.
+\tag{40.18}
+$$
+
+因此 $U_c$ 可逆，其标准正交极因子 $U^0$ 与 $\mathcal J$ 对易，且对 $g$ 正交。由 (40.5) 它对 $h$ 酉。若 $Q=(U_c^*U_c)^{1/2}$，则 $U_c=U^0Q$，$\sqrt{1-b^2}I\preceq Q\preceq I$，所以
+
+$$
+\begin{aligned}
+\|U-U^0\|&\le\|U_a\|+\|U_c-U^0\|\\
+&=\|U_a\|+\|Q-I\|\le b+1-\sqrt{1-b^2}.
+\end{aligned}
+$$
+
+这给出的是上述谱区间直接导出的算子范数界，不将 Higham 的 Frobenius 范数最优逼近定理改称同一估计。对有限门字逐项相减并用每个前后缀的正交性，得 (40.10)；再用两个正交乘积之差至多二即可。逆元也可一致处理：$[A,W^{-1}]=-W^{-1}[A,W]W^{-1}$，且 $W^{-1}$ 的复线性部分为 $W_c^*$，其极因子为 $(W^0)^*$。$\square$
+
+## 41. 根残差、实际周期与比较门关系的三类边界
+
+**定理 41.1（循环根可隐藏零频率方向）。** 令
+
+$$
+V=\mathbb R^3,\qquad
+J_0=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+A=J_0\oplus0,
+$$
+
+$$
+G=SO(2)\times\{+1,-1\},\qquad
+\Omega_\tau=(\sqrt{1-\tau^2}e_1,\tau),\quad0<\tau<1.
+\tag{41.1}
+$$
+
+$G$ 与 $A$ 精确对易，根的 $G$ 轨道张成 $V$，但
+
+$$
+\omega^2=1-\tau^2,\qquad
+r^2=\tau^2(1-\tau^2)\longrightarrow0.
+\tag{41.2}
+$$
+
+当 $\tau<1/\sqrt2$ 时，$\|A^2+\omega^2I\|=\omega^2$；不存在正交复结构，任何有效统一上界都不能满足 (40.2)。取第一分量为 $\sqrt{1-\tau^2}e_1$ 或 $\sqrt{1-\tau^2}e_2$、最后分量为 $\pm\tau$ 的四个实际轨道点，等权框架算子为
+
+$$
+\mathsf F=\operatorname{diag}\bigl((1-\tau^2)/2,
+                  (1-\tau^2)/2,\tau^2\bigr).
+\tag{41.3}
+$$
+
+证明。四点的和差分别给出两个平面方向和第三轴，故根循环。$B=A^2+\omega^2I$ 在平面上为 $-\tau^2I$，在第三轴上为 $1-\tau^2$，代入根即得 (41.2) 及其算子范数。实奇维上 $\mathcal J^2=-I$ 不可能，因为取实行列式给 $\det(\mathcal J)^2=(-1)^3=-1$。四点的外积中混合项抵消，得到 (41.3)，其最小特征值趋于零。这是 (39.4) 的零残差传播与非零残差稳定传播的区别。$\square$
+
+**定理 41.2（共同复方向不强制实际共同频率或精确周期）。** 在 $\mathbb R^4$ 上取
+
+$$
+A=J_0\oplus\sqrt2J_0,\qquad G=SO(2)\times SO(2),\qquad
+\Omega_\tau=(\sqrt{1-\tau^2}e_1,\tau e_1).
+\tag{41.4}
+$$
+
+根循环，全部交换子为零，而
+
+$$
+\omega^2=1+\tau^2,\qquad
+r^2=\tau^2(1-\tau^2)\longrightarrow0,\qquad
+\|A^2+\omega^2I\|\longrightarrow1.
+\tag{41.5}
+$$
+
+它有极复结构 $J_0\oplus J_0$，但流 $e^{tA}$ 没有非零共同周期。即使保持良态框架及 (40.2)，仍可有任意小的 $\Delta>0$ 而没有非零共同周期。
+
+证明。两个非零根分量可由独立平面转动张成两个整块。$B$ 的两块为 $\tau^2I$ 和 $-(1-\tau^2)I$，即得 (41.5)。共同周期 $T\ne0$ 将要求 $T\in2\pi\mathbb Z$ 且 $\sqrt2T\in2\pi\mathbb Z$，与频率比无理矛盾。
+
+为验证严格裕量也不供应精确周期，另取 $q>1$ 无理且 $q\to1$，令 $A_q=J_0\oplus qJ_0$、$\Omega=(e_1,e_1)/\sqrt2$。在同一 $G$ 轨道中取八个点 $(s e_k,t e_k)/\sqrt2$，$k=1,2$，$s,t\in\{+1,-1\}$，等权得到 $\mathsf F=I_4/4$。此时 $M=q$、所有 $\epsilon_i=0$，并且
+
+$$
+\omega^2=(1+q^2)/2,\quad r=(q^2-1)/2,\quad
+\Delta=q^2-1\longrightarrow0.
+\tag{41.6}
+$$
+
+只要 $1<q<\sqrt3$ 就有 $\Delta<\omega^2$，但无理频率比仍排除非零共同周期。故 (40.6) 只保证指定时间范围的比较，不能把比较流的周期移给实际流。可见读出自身的周期另由 [V78 圆、周期与内生时钟续稿 §§5–7](AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md) 的可见频率及相应读出合同决定；共同标量相位圆也不等于改变纯态射线的 Bloch 球轨迹。$\square$
+
+**定理 41.3（逐门极修复可破坏原来精确成立的关系词）。** 即使 (39.2) 的参照框架有 $\Delta=0$，并且有限个实际门的交换子误差任意小，定理 40.1 的逐门比较也不保证保留原门之间的全部精确群关系。
+
+证明。在实 Euclidean 四元数空间 $V=\mathbb H$ 上，记 $L_qx=qx$、$R_qx=xq$。取 $A=L_{\mathbf i}$、$\Omega_0=1$，四个框架运输 $R_1,R_{\mathbf i},R_{\mathbf j},R_{\mathbf k}$ 等权。它们与 $A$ 精确对易，$\mathsf F=I_4/4$、$\omega=a=1$、$r=\Delta=0$，极复结构为 $\mathcal J=L_{\mathbf i}$。
+
+令 $K=L_{\mathbf j}$、$N=L_{\mathbf k}$，则 $K^2=N^2=-I$、$KN=\mathcal J$，且 $K,N$ 均与 $\mathcal J$ 反对易。对 $0<\theta<\pi/4$ 置 $c=\cos\theta$、$s=\sin\theta$，取实际正交门
+
+$$
+U=cI+sK,\qquad V_1=cI+sN,\qquad W=(UV_1)^{-1}.
+\tag{41.7}
+$$
+
+其关系 $WUV_1=I$ 精确成立。$U_c=(V_1)_c=cI$，故 $U^0=V_1^0=I$；但
+
+$$
+(UV_1)_c=c^2I+s^2\mathcal J,\qquad
+W_c=c^2I-s^2\mathcal J,
+$$
+
+$$
+W^0U^0V_1^0
+=\frac{c^2I-s^2\mathcal J}{\sqrt{c^4+s^4}}\ne I.
+\tag{41.8}
+$$
+
+其严格门裕量也全部成立：$U,V_1$ 的反复线性部分范数均为 $s<1$；$W$ 的为 $\sqrt2sc<1$，相应 $\epsilon=2\|U_a\|$ 等可随 $\theta\to0$ 趋零。这里用 $[\mathcal J,U]=2\mathcal JU_a$ 验证全局界。原来的精确关系词因而只得到 (40.10) 对修复后关系词到 $I$ 的距离界，不能得到距离零。四元数乘法只用于构造一个明确实四维反例，不改变 (40.5) 的标量选择。$\square$
+
+## 42. 有限框架应用的维数与操作取得边界
+
+**定理 42.1（归一化框架的维数界与非全群一致性）。** 在定义 39.1 下，$\mu\le1/D$。有限个轨道向量不能在无限维实 Hilbert 载体上满足 $\mathsf F\succeq\mu I$、$\mu>0$。若仅给定生成元门的交换子界，(40.10) 只控制指定的有限门字；它不提供所有字长上一致的小误差。
+
+证明。全部 $x_i$ 为单位向量，故 $\operatorname{Tr}\mathsf F=\sum_i\alpha_i=1$；取 (39.2) 的迹得 $D\mu\le1$。无限维上有限个 $x_i$ 的张成有非零正交补，$\mathsf F$ 在该补上为零，直接违反正下界。对正交门 $S,T$，$[A,ST]=[A,S]T+S[A,T]$，故其交换子界按门字长度累加；(40.10) 的和同样随实际出现次数累加。具体地，在定理 41.3 中取 $\theta=\pi/n$、$n>4$，则 $\|[A,U]\|=2\sin(\pi/n)\to0$、$U^0=I$，但 $U^n=-I$，故 $\|U^n-(U^0)^n\|=2$。没有额外全群假设时，只有通用上界二，没有从有限生成元误差到所有门字统一趋零的结论。故增加定性张成的历史数目不产生与维数无关的证书，也没有由这些有限界推出无限历史极限。$\square$
+
+**定义 42.2（比较算子与实际菜单）。** 实际可调用的操作菜单是另行指定的算子集合及其允许的组合、持续时间和读出。定理 40.1 的 $\mathcal J,U^0,R_t^0$ 是由 (39.1)–(39.3) 定义的比较结构，不因其存在就成为该菜单的成员。若实际菜单只给若干持续时间，$t_*=\pi/(2\omega)$ 的流值存在并不等于可调用该持续时间。框架输入的取得、共同内积比较、带宽和全局路由界仍各是明确前件。
+
+**定理 42.3（复结构、原门、反转与概率层的非同一性）。** 定理 40.1 不使原实门自动复线性；其前件也没有给出 Born 概率律、CPTP 仪器或原生恢复操作。$\mathcal J$ 不等于第 34–38 节的字反转，定理也不提供共同运输交换子代数中全部复结构的唯一性。
+
+证明。在定理 41.3 中，$0<\theta<\pi/4$ 时 $[\mathcal J,U]\ne0$，尽管该界可任意小，且参照本身已有精确 $\Delta=0$。因此原门不是 (40.5) 的复线性算子；它与酉比较门的距离小不自动把它变成复量子通道。前件仅包含实向量、线性映射和范数，没有概率赋值、效果读出或张量参考下的过程合法性，故这些另有合同的对象不由 (40.1)–(40.10) 指定。这里复结构的存在不充当 Born 或完全正性的证明。
+
+第 34–38 节的字反转 $J_{\mathrm{word}}$ 满足 $J_{\mathrm{word}}^2=I$，本处 $\mathcal J^2=-I$。非零实载体上的可逆识别保持算子平方，不能将二者识别；它们原本也作用于不同的已声明接口。因此本构造不取得受控字反转、相干前缀查询、失败码解码或重试恢复，定义 38.1 的取得桥梁不因此闭合。
+
+最后，$A$ 与 $\omega>0$ 固定后 (40.3) 的极因子已确定，但这不是对全部共同运输复结构的分类。例如 $\mathbb H$ 上的单位四元数左乘与不同的单位纯虚四元数右乘均对易，后者给出多种正交复结构。[V78 二元失败续稿 §4.3 定理 4.4](https://github.com/the-omega-institute/trureturing/blob/31fa401a7c17858fa323ddd0886ed580e0c57347/docs/develop/theory/AURIC_BINARY_FAILURE_WITNESSES_AND_GLOBAL_QUANTUM_RELATIONS_V78_CONTINUATION.md#statement-4-4) 另以不可约性及参考本身属于全部运输的中央参考前件得到唯一化；该额外工作没有由近似相容替代。上述稳定应用沿用框架、实谱演算、Sylvester 方程及正交极分解作为已归属的中间方法，其承重关系是同一实际轨道根残差与有限操作比较间的条件桥梁，不是这些通用方法的独立新分类或文献优先权主张。$\square$
+
+## 追加锚（本行以下为增补区）
