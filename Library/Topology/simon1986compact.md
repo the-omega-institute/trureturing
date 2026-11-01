@@ -28,7 +28,7 @@ the same Lebesgue almost-everywhere classes.
 
 The equal-mesh estimate bounds the whole-interval power error by
 2 divided by the cell width times the integral, over positive shifts
-below that width, of the internal translation power error. Its cells
+up to that width, of the internal translation power error. Its cells
 include the first and last portions of the original interval. This
 particular restricted-domain assembly is a derived proof route; the
 compactness criterion itself is literature-attested. No optimal-constant

@@ -147,9 +147,4 @@ theorem actual_positive : arena.{u}.Law actual.{u} :=
 
 end Compactness
 
-#print axioms Mesh.source_bridge
-#print axioms Mesh.actual_positive
-#print axioms Compactness.source_bridge
-#print axioms Compactness.actual_positive
-
 end Reg.D5.S3.Topology.Measures.IntervalLpCompactness

@@ -316,7 +316,7 @@ private lemma mesh_subset {d : ℝ} (hd : 0 ≤ d) {N : ℕ} (i : Fin N) :
   rw [← mesh_union hd N]
   exact subset_iUnion (fun j : Fin N => meshCell d j) i
 
-private lemma mesh_diameter {d : ℝ} (_hd : 0 ≤ d) (i : ℕ) :
+private lemma mesh_diameter (d : ℝ) (i : ℕ) :
     ∀ x ∈ meshCell d i, ∀ y ∈ meshCell d i, |y-x| ≤ d := by
   intro x hx y hy
   change (i:ℝ)*d < x ∧ x ≤ (i+1)*d at hx
@@ -382,7 +382,7 @@ theorem mesh_error_le {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
         ∫⁻ h in Ioc 0 d, ∫⁻ t in Ioc 0 (N*d-h), K (t,t+h)) := by
       gcongr
       exact cell_pair_integral_le (N*d) d (fun i : Fin N => meshCell d i) hs hdisj
-        (mesh_subset hd.le) (fun i => mesh_diameter hd.le i) K hK
+        (mesh_subset hd.le) (fun i => mesh_diameter d i) K hK
         (fun x y => by simp [K,enorm_sub_rev])
         (fun x => by simp [K,ENNReal.zero_rpow_of_pos (lt_of_lt_of_le zero_lt_one hq)])
     _ = _ := by
