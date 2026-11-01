@@ -60,12 +60,12 @@ private theorem quotient_identities (a b s : ℕ) (hs : 2≤s)
     conv_lhs => rw [show a=a-1+1 by omega,pow_succ]
     ring
   refine ⟨?_,?_,?_,?_,⟨_,h1⟩,⟨_,h2⟩,⟨_,h4⟩,?_,?_,⟨_,h5⟩,⟨_,h6⟩⟩
-  · rw [h1,Nat.mul_comm, Nat.mul_div_right _ (by positivity)]
-  · rw [h2,Nat.mul_comm, Nat.mul_div_right _ (by positivity)]
-  · rw [h3,Nat.mul_comm, Nat.mul_div_right _ (by positivity)]
-  · rw [h4,Nat.mul_comm, Nat.mul_div_right _ (by positivity)]
-  · rw [h5,Nat.mul_comm, Nat.mul_div_right _ (by decide)]
-  · rw [h6,Nat.mul_comm, Nat.mul_div_right _ (by decide)]
+  · rw [h1,Nat.mul_div_right _ (by positivity)]
+  · rw [h2,Nat.mul_div_right _ (by positivity)]
+  · rw [h3,Nat.mul_div_right _ (by positivity)]
+  · rw [h4,Nat.mul_div_right _ (by positivity)]
+  · rw [h5,Nat.mul_div_right _ (by decide)]
+  · rw [h6,Nat.mul_div_right _ (by decide)]
 
 private theorem p0_power (a b s : ℕ) (hs : 2≤s)
     (ha : s+1≤a) (hb : a+1≤b) (hbs : 2*s≤b) :

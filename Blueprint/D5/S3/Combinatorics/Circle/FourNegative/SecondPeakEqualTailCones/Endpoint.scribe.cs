@@ -122,15 +122,13 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                         "LowerSchedule consumes the gates through Checks, checks_strip and lift_order for " +
                         "both full actual source orders and all natural prefixes, including the fresh prefix.")),
                     Paragraph(Text(
-                        "The caller reports an actual ordinary Pro APPROVE for the previous b>=2s+2 scope. " +
-                        "For the strengthened b>=2s+1 boundary, the observed gpt_6/pro mathematical text says " +
-                        "APPROVE for the exact scope; its reply is truncated, so the strict complete receipt " +
-                        "remains pending caller recovery. This transport boundary does not change the supplied " +
-                        "mathematics. No full validated Pro envelope, elaboration, kernel or official acceptance " +
-                        "is claimed. The new independent complete integer identity check has degree caps (7,5,1) " +
+                        "Complete ordinary Pro reviews approve the threshold cone, its old-union extension, " +
+                        "and the lower-a construction for every 2<=a<s and b>=2s+1, including the boundary w=0. " +
+                        "These mathematical reviews do not certify Lean elaboration, kernel checking or official " +
+                        "acceptance. The independent complete integer identity check has degree caps (7,5,1) " +
                         "and difference coefficient l1 bound 82850052<2^128; all 13 constants are positive. " +
-                        "The supplied 2246 complete physical/full-prefix controls, including b=1000, remain " +
-                        "ordinary diagnostics. This worker makes no Pro call and reads no Pro output.")),
+                        "The supplied 2246 complete physical/full-prefix controls, including b=1000, are " +
+                        "ordinary diagnostics.")),
                     Paragraph(Text(
                         "The fourth seams vanish by the eight recurrences and total native capacities. Within " +
                         "each bank, both source rows have nonnegative increments, with the fresh new increment A " +
