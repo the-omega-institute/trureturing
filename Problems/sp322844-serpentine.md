@@ -70,7 +70,7 @@ A counterexample to the first binding claim would have $n>1$ and an integer seco
 
 Settlement: **Proved**, by `D5.S3.Quantum.Matrix.SpeziaSerpentineSecondExteriorTrace.result`. The companion settlement is the other module's `result`. Both modules have `generality: I` and `utility: none`: their assertions quantify unbounded orders and contain no fixed numerical certificate.
 
-The public theorem surface is the second-trace module's `charpoly_factor` and `result`, and the higher-trace module's `result`. Every other lemma is private. The escape audit of these three original theorem statements is unfinished and tracked in [issue #21995](https://github.com/the-omega-institute/trureturing/issues/21995). No validated four-slot registration is asserted.
+The public theorem surface includes the frozen owner's `alternating_sum`, the second-trace module's `charpoly_factor` and `result`, and the higher-trace module's `result`. Every other lemma is private. The escape audits of these four theorem statements are unfinished: `alternating_sum` is tracked in [issue #22464](https://github.com/the-omega-institute/trureturing/issues/22464), and the three serpentine declarations are tracked in [issue #21995](https://github.com/the-omega-institute/trureturing/issues/21995). No validated four-slot registration is asserted.
 
 ### Exact finite computation
 
