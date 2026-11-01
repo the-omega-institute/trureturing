@@ -63,12 +63,17 @@ private theorem dependence : ObservationalDependence signature.{u} actual.{u} :=
   intro _
   let E := EuclideanSpace ℝ (ULift.{u} Unit)
   let v : E := EuclideanSpace.single (ULift.up ()) 1
+  have hv : v ≠ 0 := by
+    intro hz
+    have hh := congrArg (fun z : E => z (ULift.up ())) hz
+    norm_num [v, EuclideanSpace.single] at hh
   refine ⟨⟨E, inferInstance, inferInstance, inferInstance⟩,
-    (fun _ => 0), (fun _ => v), ?_⟩
+    (fun _ => 0), (fun k => if k = 0 then 0 else v), ?_⟩
   intro he
-  have hh := congrFun he 0
-  change ‖(0 : E)‖ = ‖v‖ at hh
-  simp [v, EuclideanSpace.single, PiLp.norm_single] at hh
+  have hh := congrFun he 1
+  change ‖(0 : E)‖ = ‖(if (1 : ℕ) = 0 then 0 else v)‖ at hh
+  have hz : ‖v‖ = 0 := by simpa using hh.symm
+  exact hv (norm_eq_zero.mp hz)
 
 def family : Registration arena.{u} (type_of% (@exists_uniform_bound.{u})) where
   actual := actual
@@ -120,5 +125,7 @@ def registration :
 
 #print axioms family
 #print axioms registration
+
+end
 
 end Reg.D5.S0.FiniteGeometry.FiniteIncrementPathBound
