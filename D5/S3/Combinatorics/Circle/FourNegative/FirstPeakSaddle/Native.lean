@@ -22,7 +22,7 @@ set_option relaxedAutoImplicit false
 set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle
 
-open private gate JointChoice JointChoice.s JointChoice.r JointChoice.h JointChoice.v
+open private gate JointChoice JointChoice.mk JointChoice.s JointChoice.r JointChoice.h JointChoice.v
   JointChoice.bounds JointChoice.submask JointChoice.good from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Structure
 open private D A B L M Bn Ln Mn C gateMargin rectangleMargin from
@@ -74,11 +74,11 @@ private theorem diagonal_joint_choice (a b c d : ℕ)
   obtain ⟨ch⟩ := parameterChoice a b c d hc hcd hdb hba ha
   have hpow : (2:ℕ)^(b-c-1)≤2^(b-1) :=
     Nat.pow_le_pow_right (by decide) (by omega)
-  refine ⟨⟨(ParameterChoice.s ch), (ParameterChoice.r ch), (ParameterChoice.h ch),
-    (ParameterChoice.v ch),
+  refine ⟨JointChoice.mk (ParameterChoice.s ch) (ParameterChoice.r ch) (ParameterChoice.h ch)
+    (ParameterChoice.v ch)
     ⟨(ParameterChoice.r_pos ch),(ParameterChoice.r_le_s ch),(ParameterChoice.s_cap ch),(ParameterChoice.v_cap ch),
-      lt_of_lt_of_le (ParameterChoice.h_cap ch) hpow⟩,
-    (by intro e _ he; exact (ParameterChoice.submask ch) e he), ?_⟩⟩
+      lt_of_lt_of_le (ParameterChoice.h_cap ch) hpow⟩
+    (by intro e _ he; exact (ParameterChoice.submask ch) e he) ?_⟩
   intro i
   rw [gate_agrees]
   exact (ParameterChoice.gates ch) i
@@ -135,10 +135,10 @@ private def remaining_joint_choice (a b c d : ℕ)
     (by positivity) hcap hrect
   have hpow : (2:ℕ)^(b-c-1)≤2^(b-1) :=
     Nat.pow_le_pow_right (by decide) (by omega)
-  refine ⟨(NativeChoice.s ch), (NativeChoice.r ch), (NativeChoice.h ch), (NativeChoice.v ch),
+  refine JointChoice.mk (NativeChoice.s ch) (NativeChoice.r ch) (NativeChoice.h ch) (NativeChoice.v ch)
     ⟨(NativeChoice.bounds ch).1,(NativeChoice.bounds ch).2.1,(NativeChoice.bounds ch).2.2.1,
-      (NativeChoice.bounds ch).2.2.2.1,lt_of_lt_of_le (NativeChoice.bounds ch).2.2.2.2 hpow⟩,
-    (by intro e _ he; exact (NativeChoice.submask ch) e he), ?_⟩
+      (NativeChoice.bounds ch).2.2.2.1,lt_of_lt_of_le (NativeChoice.bounds ch).2.2.2.2 hpow⟩
+    (by intro e _ he; exact (NativeChoice.submask ch) e he) ?_
   intro i
   rw [gate_agrees]
   exact hgates i
@@ -147,8 +147,8 @@ private def remaining_joint_choice (a b c d : ℕ)
 -- In particular this conversion does not demand r<=g or s=q+r.
 private def small_c2_joint_choice (a b d : ℕ) (ch : Choice a b d) :
     JointChoice a b 2 d := by
-  refine ⟨(Choice.s ch), (Choice.r ch), (Choice.h ch), (Choice.v ch),
-    (Choice.bounds ch), (Choice.submask ch), ?_⟩
+  refine JointChoice.mk (Choice.s ch) (Choice.r ch) (Choice.h ch) (Choice.v ch)
+    (Choice.bounds ch) (Choice.submask ch) ?_
   intro i
   have hm := (Choice.good ch) (⟨i.val,by omega⟩ : Fin 19)
   have he : margin (2^d) (2^a) (2^b) (Choice.s ch) (Choice.r ch) (Choice.h ch) (Choice.v ch)

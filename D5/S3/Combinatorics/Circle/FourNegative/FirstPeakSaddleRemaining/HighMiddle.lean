@@ -16,7 +16,7 @@ set_option relaxedAutoImplicit false
 set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q high_margin scaled_to_rectangle
-  ArithmeticSelection NativeChoice native_of_selection dyadic_time_cases from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
+  ArithmeticSelection ArithmeticSelection.mk NativeChoice native_of_selection dyadic_time_cases from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 
 set_option linter.unusedVariables false in
@@ -283,7 +283,8 @@ private theorem high_arithmetic (W J z t : ℤ)
       intro i
       convert high_t_two_z (W-1) (J-1) (z-4) 0
         (by omega) (by omega) (by omega) (by omega) i using 1 <;> congr 1 <;> ring
-    refine ⟨⟨J,2*W,1,⟨hJ,?_⟩,⟨by positivity,?_⟩,⟨by norm_num,by omega⟩,?_⟩⟩
+    refine ⟨ArithmeticSelection.mk J (2*W) 1 ⟨hJ,?_⟩
+      ⟨by positivity,?_⟩ ⟨by norm_num,by omega⟩ ?_⟩
     · have hp := mul_nonneg (show 0≤4*z*W-1 by nlinarith) (show 0≤J by omega)
       nlinarith only [hp]
     · have hp := mul_pos (show 0<8*z*W by positivity) (show 0<z-1 by omega)
@@ -319,7 +320,8 @@ private theorem high_arithmetic (W J z t : ℤ)
     have hhc : 2*z*(2*W*k)<2*(z*W)*t := by
       have hp := mul_pos (show 0<2*z*W by positivity) (show 0<t-2*k by omega)
       nlinarith only [hp]
-    refine ⟨⟨J,2*W*k,v,⟨hJ,?_⟩,⟨by positivity,hhc⟩,⟨hv0,hv1⟩,?_⟩⟩
+    refine ⟨ArithmeticSelection.mk J (2*W*k) v ⟨hJ,?_⟩
+      ⟨by positivity,hhc⟩ ⟨hv0,hv1⟩ ?_⟩
     · have hp := mul_nonneg (show 0≤4*z*W-1 by nlinarith) (show 0≤J by omega)
       nlinarith only [hp]
     · have hscaled := high_interpolate W J z t (2*W*k) hW hJ hz ht

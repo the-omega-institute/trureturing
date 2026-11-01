@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Arbitrary-grain diagonal choice and general z>=4 rectangle-to-twelve proof. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.Certificates
 
 /-! SOURCE_ONLY_UNCOMPILED. All strict/equality diagonal selections are native.
@@ -40,7 +41,7 @@ private theorem euclidean_gap_hit (g m b : ℤ) (hg : 4≤g) (hm : 2≤m)
     let u := b%m
     have hu : 0≤u ∧ u<m :=
       ⟨Int.emod_nonneg _ (by omega),Int.emod_lt_of_pos _ (by omega)⟩
-    have he : b=u+m*i := Int.emod_add_mul_ediv b m
+    have he : b=u+m*i := (Int.emod_add_mul_ediv b m).symm
     have hi : 0≤ i := by
       by_contra hn
       have hp := mul_le_mul_of_nonneg_left (show i≤-1 by omega) (show 0≤m by omega)

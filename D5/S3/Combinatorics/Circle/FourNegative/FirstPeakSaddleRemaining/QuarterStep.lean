@@ -358,7 +358,7 @@ private theorem quarter_K2F1_t64 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
 end D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
-open private rectangle grain_q quarter_margin ArithmeticSelection NativeChoice
+open private rectangle grain_q quarter_margin ArithmeticSelection ArithmeticSelection.mk NativeChoice
   native_of_selection from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 private def quarter_of_margins (K F f t r h v : ℤ) (hh : 0≤h)
@@ -370,8 +370,8 @@ private def quarter_of_margins (K F f t r h v : ℤ) (hh : 0≤h)
   have hv1 := hm 7
   have hhc := hm 8
   dsimp [quarter_margin] at hr0 hr1 hv0 hv1 hhc
-  refine ⟨r,h,v,⟨by omega,by nlinarith only [hr1]⟩,
-    ⟨hh,by nlinarith only [hhc]⟩,⟨hv0,by omega⟩,?_⟩
+  refine ArithmeticSelection.mk r h v ⟨by omega,by nlinarith only [hr1]⟩
+    ⟨hh,by nlinarith only [hhc]⟩ ⟨hv0,by omega⟩ ?_
   intro i
   fin_cases i
   · exact hm 0

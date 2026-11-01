@@ -16,7 +16,7 @@ set_option relaxedAutoImplicit false
 set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q half_margin scaled_to_rectangle
-  ArithmeticSelection NativeChoice native_of_selection dyadic_time_cases from
+  ArithmeticSelection ArithmeticSelection.mk NativeChoice native_of_selection dyadic_time_cases from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 open private half_K4_negative half_K4_p11 half_K4_p1r half_K4_ph1 half_K4_phr
@@ -176,8 +176,8 @@ private theorem half_arithmetic (K F e t : ℤ)
   rcases ht with ht|ht
   · subst t
     have cert := half_corners K F e 0 hK hF he (by omega) hregion
-    refine ⟨⟨2*F*e-e,1,1,⟨?_,?_⟩,⟨by norm_num,?_⟩,
-      ⟨by norm_num,by nlinarith⟩,?_⟩⟩
+    refine ⟨ArithmeticSelection.mk (2*F*e-e) 1 1 ⟨?_,?_⟩ ⟨by norm_num,?_⟩
+      ⟨by norm_num,by nlinarith⟩ ?_⟩
     · have hp := mul_nonneg (show 0≤F-1 by omega) (show 0≤e by omega)
       nlinarith only [hp,he]
     · have hp := mul_nonneg (show 0≤4*K-2 by omega) (show 0≤F*e by positivity)
@@ -221,7 +221,7 @@ private theorem half_arithmetic (K F e t : ℤ)
         (hr : 1≤r ∧ r≤4*K*(F*e)) (hn : n=2*(F*e)*h-r)
         (hmarg : ∀ i, 0≤half_margin K F e t h r i) :
         Nonempty (ArithmeticSelection t (2*K*F) K (F*e)) := by
-      refine ⟨⟨r,h,v,hr,⟨hh.1,?_⟩,⟨hv0,hv1⟩,?_⟩⟩
+      refine ⟨ArithmeticSelection.mk r h v hr ⟨hh.1,?_⟩ ⟨hv0,hv1⟩ ?_⟩
       · have hp := mul_nonneg (show 0≤2*z by omega) (show 0≤2*K-h by omega)
         have hp' := mul_pos (show 0<2*K by omega) (show 0<t-2*z by omega)
         change 2*z*h<2*K*t
