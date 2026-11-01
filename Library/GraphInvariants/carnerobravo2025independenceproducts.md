@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Geometry/FiniteGraphVertexSubstitution
   - D5/S3/Geometry/HereditaryLexicographicProduct
   - D5/S3/Geometry/IndependenceComplexTorsionSeed
+  - D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
 license: citation-only
 triage: anchor
 ---
@@ -120,3 +121,29 @@ homology of the coordinate realization. Such a comparison, its transport
 through the proposed graph construction and the induced king-grid
 embedding, and the sphere-wedge torsion obstruction remain necessary
 for a complete Question 32 counterexample.
+
+## Prescribed king-grid routing interface
+
+`CarneroBravoKingRoutes` specifies the actual 141 natural-labelled vertices,
+178 original edges and 178 integer polylines with 1,283 corners. The prescribed
+subdivision inserts `3*k(e)` distinct fresh vertices on each edge, with
+`sum k(e) = 31286`, giving 93,999 vertices and 94,036 edges. Its intended
+induced embedding has target `P_9337` strong `P_9061`. The literal transform
+`T(x,y) = (x+y+25,x-y+1705)` has inclusive one-based bounds; the map into
+`Fin 9337` times `Fin 9061` subtracts one from both coordinates.
+
+The source defines a fresh occupancy checker, proves its generic soundness
+for injection and both adjacency directions, and applies it to the literal
+routes through a concrete kernel-reduction obligation. The candidate routing
+sources remain uncompiled; this entry records the exact intended interface,
+not a verified embedding. `PrescribedSubdivision`, `IntegerPolyline` and
+`LatticeRouting` supply the consumed tagged paths, corner-expansion semantics
+and strong-product conversion.
+
+The seed is Adamaszek's; the supplied graph-move route uses the Barmak/Lozin
+approach. The explicit coordinate construction is local proof content, not a
+theorem attributed to Carnero Bravo or an originality claim. The supplied
+40-move replay, prescribed-subdivision suspension transport, singular-homology
+comparison and sphere-wedge obstruction remain separate obligations. This
+interface alone does not settle Question 32 and makes no claim about Question
+35 or an additional solved original problem.

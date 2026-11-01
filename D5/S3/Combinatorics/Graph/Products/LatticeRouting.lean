@@ -1,6 +1,10 @@
-/- UNCOMPILED SOURCE CANDIDATE. No elaboration/build/kernel acceptance.
-   Only the finite-lattice lookup lemmas consumed by the actual routing are implemented.
-   Input programs and Python checks are not premises of any theorem below. -/
+/- GID: D5/S3/Combinatorics/Graph/Products/LatticeRouting
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Products/LatticeRouting
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Prod, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.exact_square_routing; instance=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.routing_check_success
+   digest: Fresh occupancy insertion and four-neighbor lookup certify induced square-lattice routing and finite strong-product embeddings. -/
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Combinatorics.SimpleGraph.Prod
@@ -306,11 +310,6 @@ theorem kingAdj_zeroBased (p q : Point) :
   have hx : (zeroBased p).1 - (zeroBased q).1 = p.1 - q.1 := by dsimp [zeroBased]; ring
   have hy : (zeroBased p).2 - (zeroBased q).2 = p.2 - q.2 := by dsimp [zeroBased]; ring
   simp only [kingAdj, hx, hy]
-
-theorem zeroBased_rotate (p : Point) :
-    zeroBased (rotate p) = (p.1 + p.2 + 24, p.1 - p.2 + 1704) := by
-  dsimp [zeroBased, rotate]
-  congr 1 <;> ring
 
 def oneBasedRectangleEmbedding {V : Type} (G : SimpleGraph V) (c : V → Point)
     (hinj : Function.Injective c)

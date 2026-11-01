@@ -1,12 +1,18 @@
-/- UNCOMPILED SOURCE CANDIDATE. No elaboration, build, or kernel acceptance.
-   Intended pins: Lean 4.35.0; Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-   This module specifies the actual fresh vertices and edges, not a homology bridge. -/
+/- GID: D5/S3/Combinatorics/Graph/Products/PrescribedSubdivision
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Products/PrescribedSubdivision
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   utility: none
+   digest: Fresh indexed subdivision paths have an exact edge inventory and finite cardinalities. -/
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fintype.Sigma
 import Mathlib.Tactic
 
 set_option autoImplicit false
+
+open scoped BigOperators
 
 namespace D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 

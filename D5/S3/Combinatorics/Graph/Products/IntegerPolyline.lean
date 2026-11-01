@@ -1,7 +1,10 @@
-/- UNCOMPILED SOURCE CANDIDATE. No elaboration/build/kernel acceptance.
-   Integer enumeration matches construct.py and verify.py: retain the initial
-   point, then steps 1,...,ManhattanLength on each segment. Zero segments add
-   no points; consecutive corners are represented once. -/
+/- GID: D5/S3/Combinatorics/Graph/Products/IntegerPolyline
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Products/IntegerPolyline
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Data.List.Range]
+   utility: none
+   digest: Integer polyline samples agree with the complete corner expansion and the right-closed verifier convention. -/
 import D5.S3.Combinatorics.Graph.Products.LatticeRouting
 
 set_option autoImplicit false

@@ -1,14 +1,18 @@
-/- UNCOMPILED SOURCE CANDIDATE. No elaboration/build/kernel acceptance.
-   Literal scientific data: king-coordinate-certificate.json and graph-construction.json.
-   Python verification is not a premise of any theorem. No homology claim is made.
-   Main source pin: 1c0bfc7c3def330e285978ef4c1b8fbfd993d538.
-   Lean 4.35.0; Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. -/
+/- GID: D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.inducedEmbedding; premises=D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.routing_check_success,D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes.boundary_check_success
+   digest: The prescribed 178-route subdivision maps as an induced subgraph into the 9337 by 9061 king grid. -/
 import D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 import D5.S3.Combinatorics.Graph.Products.IntegerPolyline
 
 set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option maxRecDepth 1000000
+
+open scoped BigOperators
 
 namespace D5.S3.Combinatorics.Graph.Products.CarneroBravoKingRoutes
 
@@ -652,7 +656,7 @@ theorem baseGraph_iff_endpoints (a b : Original) :
 /-- This is the actual large kernel-evaluable success obligation. Ordinary
 `decide` supplies a reducible proof term; no native evaluator, compiler result,
 Python output, assumed certificate, or new axiom supplies mathematical truth.
-THIS SOURCE HAS NOT BEEN ELABORATED OR RUN. Its successful reduction is unverified. -/
+The concrete reduction is required in addition to the generic soundness proof. -/
 theorem routing_check_success :
     routingCheck RoutedGraph subdivision.vertices subdivision.edgePairs coordinate = true := by
   decide
@@ -733,8 +737,12 @@ noncomputable def inducedIso : RoutedGraph ≃g rectangle.induce selected :=
 noncomputable instance : Fintype selected := Fintype.ofFinite selected
 
 theorem sum_subdivisions : (∑ e : Edge, subdivision.k e) = 31286 := by decide
-theorem sum_fresh_vertices : (∑ e : Edge, 3 * subdivision.k e) = 93858 := by decide
-theorem sum_route_lengths : (∑ e : Edge, (3 * subdivision.k e + 1)) = 94036 := by decide
+theorem sum_fresh_vertices : (∑ e : Edge, 3 * subdivision.k e) = 93858 := by
+  rw [subdivision.subdivision_count, sum_subdivisions]
+theorem sum_route_lengths : (∑ e : Edge, (3 * subdivision.k e + 1)) = 94036 := by
+  rw [Finset.sum_add_distrib, sum_fresh_vertices]
+  simp only [Finset.sum_const, Finset.card_univ, edge_card]
+  decide
 
 theorem actual_vertex_count : Fintype.card Vertex = 93999 := by
   rw [subdivision.card_vertices, original_card, sum_fresh_vertices]
@@ -749,9 +757,5 @@ theorem selected_edge_count : (rectangle.induce selected).edgeFinset.card = 9403
   classical
   rw [← inducedIso.card_edgeFinset_eq, actual_edge_count]
 
-/-- Actual finite induced-subgraph endpoint for the precise prescribed subdivision.
-All terms above are SOURCE-ONLY UNCOMPILED candidates. This theorem makes no
-claim about independence-complex homology or Question 32 completion. -/
-theorem result : Nonempty (RoutedGraph ≃g rectangle.induce selected) := ⟨inducedIso⟩
 
 end D5.S3.Combinatorics.Graph.Products.CarneroBravoKingRoutes
