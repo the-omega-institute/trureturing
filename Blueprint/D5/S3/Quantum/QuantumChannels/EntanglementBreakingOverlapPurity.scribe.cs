@@ -14,6 +14,14 @@ internal sealed class EntanglementBreakingOverlapPurityDocument : IScribeDocumen
         Blocks(
             Entry("projector", "projector", "Pure output projectors",
                 "For a vector v in complex Euclidean d-space, projector v is the actual complex matrix with entries v_i times the conjugate of v_j. A unit vector gives a positive semidefinite matrix of trace one.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("unit-ray-projectors"),
+                DeclarationHandle.Create(Prefix + "vecMulVec_eq_of_unit_ray"),
+                H("Unit vectors on one ray have the same projector"),
+                StatementSource.FromAuthor(UnitRayProjectorsFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Two unit complex vectors on the same ray have equal outer projectors because their scalar ratio has squared norm one."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("projector-trace"),
                 DeclarationHandle.Create(Prefix + "projector_trace"),
                 H("Unit-vector projectors have trace one"),
@@ -39,6 +47,25 @@ internal sealed class EntanglementBreakingOverlapPurityDocument : IScribeDocumen
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula UnitRayProjectorsFormula()
+    {
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula n = F.Id("n"), psi = F.Id("psi"), chi = F.Id("chi"), z = F.Id("z");
+        Formula vector = new Formula.TypeArrow(n, complex);
+        Formula unit(Formula v) => Seq(Call("dotProduct", Call("star", v), v), Sp, Eq, Sp, D(1));
+        Formula outer(Formula v) => Call("vecMulVec", v, Call("star", v));
+        return Disp(All("n", F.Id("Type"),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                All("psi", vector, All("chi", vector,
+                    Seq(unit(psi), Sp, Rightarrow, Sp, unit(chi), Sp, Rightarrow, Sp,
+                        All("z", complex,
+                            Seq(psi, Sp, Eq, Sp, z, Sp, Cdot, Sp, chi, Sp, Rightarrow, Sp,
+                                outer(psi), Sp, Eq, Sp, outer(chi)))))))));
+    }
 
     private static Formula ProjectorTraceFormula()
     {

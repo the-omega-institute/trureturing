@@ -35,6 +35,17 @@ open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 
 namespace D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
 
+/-- Two unit complex vectors on the same ray have equal outer projectors. -/
+theorem vecMulVec_eq_of_unit_ray {n : Type*} [Fintype n] {ψ χ : n → ℂ}
+    (hψ : star ψ ⬝ᵥ ψ = 1) (hχ : star χ ⬝ᵥ χ = 1)
+    (z : ℂ) (hz : ψ = z • χ) :
+    vecMulVec ψ (star ψ) = vecMulVec χ (star χ) := by
+  have hz1 : z * star z = 1 := by
+    simpa only [hz, star_smul, smul_dotProduct, dotProduct_smul,
+      hχ, smul_eq_mul, mul_one] using hψ
+  rw [hz, star_smul, smul_vecMulVec, vecMulVec_smul, smul_smul,
+    hz1, one_smul]
+
 /-- The actual complex matrix `|v⟩⟨v|`. -/
 def projector {d : ℕ} (v : EuclideanSpace ℂ (Fin d)) : Matrix (Fin d) (Fin d) ℂ :=
   vecMulVec (fun i => v i) (fun i => star (v i))
