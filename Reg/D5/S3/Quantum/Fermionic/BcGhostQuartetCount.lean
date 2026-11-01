@@ -42,7 +42,8 @@ private theorem coefficientNegative (i : Bool) :
     ¬ coefficientArena.Law (coefficientRejected i) := by
   intro h
   have hh := h (ket ∅) ∅
-  cases i <;> norm_num [coefficientRejected, coefficientActual, realize, M_coefficient, count, ket] at hh
+  cases i <;>
+    norm_num [coefficientRejected, coefficientActual, realize, M_coefficient, count, ket] at hh
 
 private theorem coefficientDependence :
     ObservationalDependence coefficientSignature coefficientActual := by
@@ -84,7 +85,7 @@ def coefficientAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fock
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fermionic.BcGhostQuartetCount
     definition := none
