@@ -28,7 +28,7 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
             Node("base-graph", "baseGraph_iff_endpoints", "Exact old-graph incidence",
                 "For all a,b in Original, baseGraph.Adj(a,b) iff some route has endpoints (a,b) in one of the two orders. No replacement graph or assumed graph isomorphism occurs in this interface.", DescribeRole.Theorem),
             Node("routing-reduction", "routing_check_success", "The actual occupancy check",
-                "routingCheck on RoutedGraph, its complete fresh-vertex and path-edge lists, and the actual coordinate function equals true. The obligation uses ordinary kernel reduction. It checks freshness and all four spatial neighbors of each occupied point; it does not enumerate every pair of the 93,999 vertices.", DescribeRole.Theorem),
+                "routingCheck on the natural tags of the actual old and fresh vertices equals true. An interior tag is its actual edge number and natural position; rawCoordinate uses the same corner sampler. The tag map is proved injective, its enumerated list is proved complete, and its edge inventory and graph adjacency are proved equivalent to those of RoutedGraph. The obligation uses ordinary kernel reduction. It checks freshness and all four spatial neighbors of each occupied point; it does not enumerate every pair of the 93,999 vertices.", DescribeRole.Theorem),
             Node("exact-routing", "exact_square_routing", "Injection and both adjacency implications",
                 "coordinate is injective and, for every pair of actual vertices, RoutedGraph adjacency is equivalent to Manhattan distance one between their coordinates. This is the soundness application consumed by the finite embedding.", DescribeRole.Theorem),
             Node("bounds", "actual_T_bounds", "The inclusive bounds of the literal transform",
@@ -61,9 +61,9 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
         var exactAdj = All("v", vertex, All("w", vertex,
             Bicond(C("Adj", C("RoutedGraph"), v, w),
                 C("squareAdj", C("coordinate", v), C("coordinate", w)))));
-        var routing = C("routingCheck", C("RoutedGraph"),
-            C("vertices", d, C("originalVertices"), C("edgeIndices")),
-            C("edgePairs", d, C("edgeIndices")), C("coordinate"));
+        var routing = C("routingCheck", C("rawGraph", d),
+            C("rawVertices", d, C("originalVertices"), C("edgeIndices")),
+            C("rawEdgePairs", d, C("edgeIndices")), C("rawCoordinate"));
         var rv = C("rotate", C("coordinate", v));
         return declaration switch
         {

@@ -186,42 +186,43 @@ def routingCheck : Bool :=
   | none => false
   | some t => edgeCheck es c && localCheck G vs c t
 
-/-- The finite reduction proves injection AND BOTH directions of adjacency.
-Every point is inserted once; only four spatial queries per vertex are used.
-`hes` is supplied by the explicit fresh-vertex subdivision, not by the Python input. -/
-theorem routingCheck_sound
-    (hvs : ∀ v, v ∈ vs)
-    (hes : ∀ v w, G.Adj v w ↔ (v, w) ∈ es ∨ (w, v) ∈ es)
+/-- The checked tags may encode a different vertex type. The encoding is proved
+injective, complete in the checked list, and exact for the original adjacency.
+The finite reduction still checks every occupied point and both adjacency directions. -/
+theorem routingCheck_sound {W : Type v} (H : SimpleGraph W) (f : W → V)
+    (hf : Function.Injective f)
+    (hvs : ∀ w, f w ∈ vs)
+    (hes : ∀ w z, H.Adj w z ↔ (f w, f z) ∈ es ∨ (f z, f w) ∈ es)
+    (hgraph : ∀ w z, G.Adj (f w) (f z) ↔ H.Adj w z)
     (h : routingCheck G vs es c = true) :
-    Function.Injective c ∧ ∀ v w, G.Adj v w ↔ squareAdj (c v) (c w) := by
+    Function.Injective (fun w => c (f w)) ∧
+      ∀ w z, H.Adj w z ↔ squareAdj (c (f w)) (c (f z)) := by
   cases ht : Occupancy.fill (fun v => pointKey (c v)) vs .empty with
   | none => simp [routingCheck, ht] at h
   | some t =>
     have hh : edgeCheck es c = true ∧ localCheck G vs c t = true := by
       simpa only [routingCheck, ht, Bool.and_eq_true] using h
     have hall := (Occupancy.fill_spec (fun v => pointKey (c v)) vs .empty t ht).2
-    have hread (v : V) : t.read (pointKey (c v)) = some v := hall v (hvs v)
+    have hread (w : W) : t.read (pointKey (c (f w))) = some (f w) := hall (f w) (hvs w)
     constructor
-    · intro v w heq
-      have hv := hread v
-      rw [heq, hread w] at hv
-      exact Option.some.inj hv.symm
-    · intro v w
+    · intro w z heq
+      have hw := hread w
+      rw [heq, hread z] at hw
+      exact hf (Option.some.inj hw.symm)
+    · intro w z
       constructor
-      · intro hvw
-        have he := (hes v w).mp hvw
-        rcases he with he | he
-        · have h' := (List.all_eq_true.mp hh.1) (v, w) he
-          exact of_decide_eq_true h'
-        · have h' := (List.all_eq_true.mp hh.1) (w, v) he
-          exact (squareAdj_symm _ _).mpr (of_decide_eq_true h')
+      · intro hwz
+        rcases (hes w z).mp hwz with he | he
+        · exact of_decide_eq_true ((List.all_eq_true.mp hh.1) (f w, f z) he)
+        · exact (squareAdj_symm _ _).mpr
+            (of_decide_eq_true ((List.all_eq_true.mp hh.1) (f z, f w) he))
       · intro hsq
-        have hq : c w ∈ neighbors (c v) := (squareAdj_iff_mem _ _).mp hsq
-        have hv := (List.all_eq_true.mp hh.2) v (hvs v)
-        have hw := (List.all_eq_true.mp hv) (c w) hq
-        rw [hread w] at hw
-        have hresult : c w ≠ c w ∨ G.Adj v w := of_decide_eq_true hw
-        exact hresult.resolve_left (fun hne => hne rfl)
+        have hq : c (f z) ∈ neighbors (c (f w)) := (squareAdj_iff_mem _ _).mp hsq
+        have hw := (List.all_eq_true.mp hh.2) (f w) (hvs w)
+        have hz := (List.all_eq_true.mp hw) (c (f z)) hq
+        rw [hread z] at hz
+        have hresult : c (f z) ≠ c (f z) ∨ G.Adj (f w) (f z) := of_decide_eq_true hz
+        exact (hgraph w z).mp (hresult.resolve_left (fun hne => hne rfl))
 
 end Checker
 

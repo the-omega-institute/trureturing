@@ -288,6 +288,144 @@ theorem adj_iff_edgePairs (hes : ∀ e, e ∈ es) (a b : D.Vertex) :
 
 end Enumeration
 
+/-- A proof-free computational tag for an actual indexed vertex. -/
+abbrev RawVertex := V ⊕ (E × ℕ)
+
+def code : D.Vertex → RawVertex (V := V) (E := E)
+  | .inl a => .inl a
+  | .inr ⟨e, i⟩ => .inr (e, i.val)
+
+theorem code_injective : Function.Injective D.code := by
+  intro a b h
+  cases a with
+  | inl a =>
+    cases b with
+    | inl b => exact congrArg Sum.inl (Sum.inl.inj h)
+    | inr b => cases h
+  | inr a =>
+    rcases a with ⟨e, i⟩
+    cases b with
+    | inl b => cases h
+    | inr b =>
+      rcases b with ⟨f, j⟩
+      apply (D.inner_eq_iff e f i j).mpr
+      exact ⟨congrArg Prod.fst (Sum.inr.inj h), congrArg Prod.snd (Sum.inr.inj h)⟩
+
+def RawArc : RawVertex (V := V) (E := E) → RawVertex (V := V) (E := E) → Prop
+  | .inl a, .inr (e, i) => a = D.left e ∧ i = 0
+  | .inr (e, i), .inl a => a = D.right e ∧ i + 1 = 3 * D.k e
+  | .inr (e, i), .inr (f, j) => e = f ∧ i + 1 = j
+  | .inl _, .inl _ => False
+
+theorem raw_arc_asymmetric (a b : RawVertex (V := V) (E := E)) :
+    D.RawArc a b → ¬ D.RawArc b a := by
+  cases a with
+  | inl a =>
+    cases b with
+    | inl b => simp [RawArc]
+    | inr b =>
+      rcases b with ⟨e, i⟩
+      have hp := D.positive e
+      simp only [RawArc]
+      omega
+  | inr a =>
+    rcases a with ⟨e, i⟩
+    cases b with
+    | inl b =>
+      have hp := D.positive e
+      simp only [RawArc]
+      omega
+    | inr b =>
+      rcases b with ⟨f, j⟩
+      simp only [RawArc]
+      omega
+
+def rawGraph : SimpleGraph (RawVertex (V := V) (E := E)) where
+  Adj a b := D.RawArc a b ∨ D.RawArc b a
+  symm.symm _ _ h := h.symm
+  loopless.irrefl a h := by
+    have h' : D.RawArc a a := h.elim id id
+    exact D.raw_arc_asymmetric a a h' h'
+
+instance [DecidableEq V] [DecidableEq E] : DecidableRel D.RawArc :=
+  fun a b => match a, b with
+  | .inl _, .inl _ => inferInstanceAs (Decidable False)
+  | .inl a, .inr (e, i) => inferInstanceAs (Decidable (a = D.left e ∧ i = 0))
+  | .inr (e, i), .inl a => inferInstanceAs (Decidable (a = D.right e ∧ i + 1 = 3 * D.k e))
+  | .inr (e, i), .inr (f, j) => inferInstanceAs (Decidable (e = f ∧ i + 1 = j))
+
+instance [DecidableEq V] [DecidableEq E] : DecidableRel D.rawGraph.Adj :=
+  fun a b => inferInstanceAs (Decidable (D.RawArc a b ∨ D.RawArc b a))
+
+theorem raw_graph_code_iff (a b : D.Vertex) :
+    D.rawGraph.Adj (D.code a) (D.code b) ↔ D.graph.Adj a b := by
+  cases a with
+  | inl a => cases b <;> rfl
+  | inr a => rcases a with ⟨e, i⟩; cases b <;> rfl
+
+def rawEdgePair (e : E) (i : ℕ) :
+    RawVertex (V := V) (E := E) × RawVertex (V := V) (E := E) :=
+  ((if i = 0 then .inl (D.left e) else .inr (e, i - 1)),
+   (if i = 3 * D.k e then .inl (D.right e) else .inr (e, i)))
+
+theorem raw_edge_pair (s : D.Slot) :
+    D.rawEdgePair s.1 s.2.val = (D.code (D.edgePair s).1, D.code (D.edgePair s).2) := by
+  rcases s with ⟨e, i⟩
+  unfold rawEdgePair edgePair
+  dsimp
+  split_ifs <;> rfl
+
+section RawEnumeration
+variable (vs : List V) (es : List E)
+
+def rawVertices : List (RawVertex (V := V) (E := E)) :=
+  vs.map Sum.inl ++ (es.flatMap fun e => (List.range (3 * D.k e)).map fun i => Sum.inr (e, i))
+
+theorem mem_raw_vertices (hvs : ∀ a, a ∈ vs) (hes : ∀ e, e ∈ es)
+    (a : D.Vertex) : D.code a ∈ D.rawVertices vs es := by
+  cases a with
+  | inl a => simp [rawVertices, code, hvs a]
+  | inr a =>
+    rcases a with ⟨e, i⟩
+    simp only [rawVertices, code, List.mem_append, List.mem_map, List.mem_flatMap]
+    exact Or.inr ⟨e, hes e, i.val, List.mem_range.mpr i.isLt, rfl⟩
+
+def rawEdgePairs : List (RawVertex (V := V) (E := E) × RawVertex (V := V) (E := E)) :=
+  es.flatMap fun e => (List.range (3 * D.k e + 1)).map (D.rawEdgePair e)
+
+theorem mem_raw_edge_pairs_iff (a b : D.Vertex) :
+    (D.code a, D.code b) ∈ D.rawEdgePairs es ↔ (a, b) ∈ D.edgePairs es := by
+  constructor
+  · intro h
+    obtain ⟨e, he, h⟩ := List.mem_flatMap.mp h
+    obtain ⟨i, hi, hp⟩ := List.mem_map.mp h
+    let s : D.Slot := ⟨e, ⟨i, List.mem_range.mp hi⟩⟩
+    have hs : s ∈ D.slots es :=
+      List.mem_flatMap.mpr ⟨e, he, List.mem_map.mpr ⟨s.2, List.mem_finRange _, rfl⟩⟩
+    apply List.mem_map.mpr
+    refine ⟨s, hs, ?_⟩
+    have heq : (D.code (D.edgePair s).1, D.code (D.edgePair s).2) = (D.code a, D.code b) :=
+      (D.raw_edge_pair s).symm.trans hp
+    exact Prod.ext (D.code_injective (congrArg Prod.fst heq))
+      (D.code_injective (congrArg Prod.snd heq))
+  · intro h
+    obtain ⟨s, hs, hp⟩ := List.mem_map.mp h
+    obtain ⟨e, he, hs⟩ := List.mem_flatMap.mp hs
+    obtain ⟨i, _, hs⟩ := List.mem_map.mp hs
+    subst s
+    apply List.mem_flatMap.mpr
+    refine ⟨e, he, List.mem_map.mpr ⟨i.val, List.mem_range.mpr i.isLt, ?_⟩⟩
+    exact (D.raw_edge_pair ⟨e, i⟩).trans
+      (congrArg (fun p : D.Vertex × D.Vertex => (D.code p.1, D.code p.2)) hp)
+
+theorem adj_iff_raw_edge_pairs (hes : ∀ e, e ∈ es) (a b : D.Vertex) :
+    D.graph.Adj a b ↔ (D.code a, D.code b) ∈ D.rawEdgePairs es ∨
+      (D.code b, D.code a) ∈ D.rawEdgePairs es := by
+  rw [D.mem_raw_edge_pairs_iff es, D.mem_raw_edge_pairs_iff es]
+  exact D.adj_iff_edgePairs es hes a b
+
+end RawEnumeration
+
 section Finite
 variable [Fintype V] [Fintype E]
 

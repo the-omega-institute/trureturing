@@ -16,7 +16,7 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
             Node("fill", "Occupancy.fill_spec", "Filling preserves occupancy and stores every listed vertex",
                 "Successful fill preserves all old lookups and stores every a in xs at key(a). No injective hash assumption is needed: successful fresh insertion proves the needed uniqueness on the actual occupied vertices.", DescribeRole.Theorem),
             Node("soundness", "routingCheck_sound", "Success proves an induced routing",
-                "For arbitrary decidable G and coordinate function c, assume vs contains every vertex and G.Adj(v,w) is equivalent to (v,w) or (w,v) occurring in es. If routingCheck is true, c is injective and, for every v,w, G.Adj(v,w) iff squareAdj(c(v),c(w)). Edge checking proves the forward implication. Four spatial queries per vertex and the fill invariant prove the reverse implication. A retrieved hash-collision value is checked against its actual coordinate.", DescribeRole.Theorem),
+                "Let f inject the vertices of H into the checked tag type of G. Every f(w) must occur in vs; H adjacency must be exactly the listed tag-pair inventory and must agree with G adjacency on the image of f. If routingCheck is true, c composed with f is injective and preserves and reflects H adjacency. Edge checking proves the forward implication. Four spatial queries per occupied tag and the fill invariant prove the reverse implication. A retrieved hash-collision value is checked against its actual coordinate. The concrete consumer proves its tag injection and graph correspondence; neither is an assumed certificate-correctness record.", DescribeRole.Theorem),
             Node("rotation", "rotation_adjacency", "The integral rotation preserves the required adjacency",
                 "rotate(x,y)=(x+y+25,x-y+1705). The identity max(abs(a+b),abs(a-b))=abs(a)+abs(b) gives the exact equivalence, including all coordinate signs. The rotation is injective.", DescribeRole.Theorem),
             Node("strong", "strongProduct", "The actual strong product",
@@ -46,6 +46,22 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
             And(LessEqual(D(1), C("snd", C("rotate", C("apply", c, a)))),
                 LessEqual(C("snd", C("rotate", C("apply", c, a))), m)))));
         var vs = I("vs"); var es = I("es");
+        var wt = I("W"); var h = I("H"); var f = I("f");
+        var fa = C("apply", f, a); var fb = C("apply", f, b);
+        var codedAdj = All("a", wt, All("b", wt,
+            Bicond(C("Adj", g, fa, fb), C("Adj", h, a, b))));
+        var codedInventory = All("a", wt, All("b", wt,
+            Bicond(C("Adj", h, a, b), Or(C("ListMem", C("Pair", fa, fb), es),
+                C("ListMem", C("Pair", fb, fa), es)))));
+        var codedResult = And(C("Injective", C("comp", c, f)),
+            All("a", wt, All("b", wt, Bicond(C("Adj", h, a, b),
+                C("squareAdj", C("apply", c, fa), C("apply", c, fb))))));
+        var codedPremises = Imp(C("Injective", f),
+            Imp(All("a", wt, C("ListMem", fa, vs)), Imp(codedInventory,
+            Imp(codedAdj, Imp(Equal(C("routingCheck", g, vs, es, c), C("true")), codedResult)))));
+        var soundness = Checker(All("vs", C("List", v), All("es", C("List", C("Prod", v, v)),
+            All("c", C("Function", v, point), All("W", C("Type"),
+            All("H", C("SimpleGraph", wt), All("f", C("Function", wt, v), codedPremises)))))));
         return declaration switch
         {
             "Occupancy.insert_spec" => All("V", C("Type"), All("key", C("List", C("Bool")),
@@ -57,12 +73,7 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
                     Imp(Equal(C("fill", key, xs, t), some(r)), And(preserve,
                         All("a", v, Imp(C("ListMem", a, xs),
                             Equal(C("read", r, C("apply", key, a)), some(a))))))))))),
-            "routingCheck_sound" => Checker(All("vs", C("List", v),
-                    All("es", C("List", C("Prod", v, v)), All("c", C("Function", v, point),
-                    Imp(All("a", v, C("ListMem", a, vs)),
-                    Imp(All("a", v, All("b", v, Bicond(C("Adj", g, a, b),
-                        Or(C("ListMem", C("Pair", a, b), es), C("ListMem", C("Pair", b, a), es))))),
-                    Imp(Equal(C("routingCheck", g, vs, es, c), C("true")), And(injection, hadj)))))))),
+            "routingCheck_sound" => soundness,
             "rotation_adjacency" => All("p", point, All("q", point,
                     Bicond(C("kingAdj", C("rotate", p), C("rotate", q)), C("squareAdj", p, q)))),
             "strongProduct" => All("V", C("Type"), All("W", C("Type"),

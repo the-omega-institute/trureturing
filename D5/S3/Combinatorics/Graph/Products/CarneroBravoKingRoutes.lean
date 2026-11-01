@@ -583,14 +583,14 @@ abbrev RoutedGraph := subdivision.graph
 def originalVertices : List Original :=
   (List.range 166).filterMap fun n => if h : n ∈ oldLabels then some ⟨n, h⟩ else none
 
-theorem mem_originalVertices (a : Original) : a ∈ originalVertices := by
+theorem mem_original_vertices (a : Original) : a ∈ originalVertices := by
   have hb : ∀ a : Original, a.val < 166 := by decide
   apply List.mem_filterMap.mpr
   exact ⟨a.val, List.mem_range.mpr (hb a), by simp [a.property]⟩
 
 abbrev edgeIndices : List Edge := List.finRange routeData.size
 
-theorem mem_edgeIndices (e : Edge) : e ∈ edgeIndices := by simp [edgeIndices]
+theorem mem_edge_indices (e : Edge) : e ∈ edgeIndices := by simp [edgeIndices]
 
 /-- The original Nat labels and original coordinate table are complete. -/
 theorem old_coordinate_table_complete :
@@ -602,6 +602,16 @@ def oldCoordinate (a : Original) : Point :=
 def coordinate : Vertex → Point
   | .inl a => oldCoordinate a
   | .inr ⟨e, i⟩ => Poly.sample (route e).corners (i.val + 1)
+
+abbrev RawVertex := Data.RawVertex (V := Original) (E := Edge)
+
+def rawCoordinate : RawVertex → Point
+  | .inl a => oldCoordinate a
+  | .inr (e, i) => Poly.sample (route e).corners (i + 1)
+
+theorem raw_coordinate_code (v : Vertex) :
+    rawCoordinate (subdivision.code v) = coordinate v := by
+  cases v <;> rfl
 
 /-- Endpoint matching and lengths are derived from the actual 178 polylines.
 Only 1,283 corners are literal; no expanded 93,999-point certificate is imported. -/
@@ -693,32 +703,38 @@ theorem baseGraph_iff_endpoints (a b : Original) :
 Python output, assumed certificate, or new axiom supplies mathematical truth.
 The concrete reduction is required in addition to the generic soundness proof. -/
 theorem routing_check_success :
-    routingCheck RoutedGraph (subdivision.vertices originalVertices edgeIndices)
-      (subdivision.edgePairs edgeIndices) coordinate = true := by
+    routingCheck subdivision.rawGraph (subdivision.rawVertices originalVertices edgeIndices)
+      (subdivision.rawEdgePairs edgeIndices) rawCoordinate = true := by
   decide +kernel
 
 theorem exact_square_routing :
     Function.Injective coordinate ∧
       ∀ v w : Vertex, RoutedGraph.Adj v w ↔ squareAdj (coordinate v) (coordinate w) :=
-  routingCheck_sound RoutedGraph (subdivision.vertices originalVertices edgeIndices)
-    (subdivision.edgePairs edgeIndices) coordinate
-    (subdivision.mem_vertices originalVertices edgeIndices mem_originalVertices mem_edgeIndices)
-    (subdivision.adj_iff_edgePairs edgeIndices mem_edgeIndices) routing_check_success
+  by
+    have h := routingCheck_sound subdivision.rawGraph
+      (subdivision.rawVertices originalVertices edgeIndices)
+      (subdivision.rawEdgePairs edgeIndices) rawCoordinate RoutedGraph subdivision.code
+      subdivision.code_injective
+      (subdivision.mem_raw_vertices originalVertices edgeIndices mem_original_vertices mem_edge_indices)
+      (subdivision.adj_iff_raw_edge_pairs edgeIndices mem_edge_indices)
+      subdivision.raw_graph_code_iff routing_check_success
+    simpa only [raw_coordinate_code] using h
 
 /-- Literal T is one-based. Its maximum coordinates equal the rectangle sizes;
 the strict Fin bounds apply after the explicit `zeroBased` conversion. -/
-def boundaryCheck : Bool := (subdivision.vertices originalVertices edgeIndices).all fun v =>
-  decide (1 ≤ (rotate (coordinate v)).1 ∧ (rotate (coordinate v)).1 ≤ 9337 ∧
-    1 ≤ (rotate (coordinate v)).2 ∧ (rotate (coordinate v)).2 ≤ 9061)
+def boundaryCheck : Bool := (subdivision.rawVertices originalVertices edgeIndices).all fun v =>
+  decide (1 ≤ (rotate (rawCoordinate v)).1 ∧ (rotate (rawCoordinate v)).1 ≤ 9337 ∧
+    1 ≤ (rotate (rawCoordinate v)).2 ∧ (rotate (rawCoordinate v)).2 ≤ 9061)
 
 theorem boundary_check_success : boundaryCheck = true := by decide +kernel
 
 theorem actual_T_bounds (v : Vertex) :
     1 ≤ (rotate (coordinate v)).1 ∧ (rotate (coordinate v)).1 ≤ 9337 ∧
     1 ≤ (rotate (coordinate v)).2 ∧ (rotate (coordinate v)).2 ≤ 9061 := by
-  exact of_decide_eq_true
-    ((List.all_eq_true.mp boundary_check_success) v
-      (subdivision.mem_vertices originalVertices edgeIndices mem_originalVertices mem_edgeIndices v))
+  have h := of_decide_eq_true
+    ((List.all_eq_true.mp boundary_check_success) (subdivision.code v)
+      (subdivision.mem_raw_vertices originalVertices edgeIndices mem_original_vertices mem_edge_indices v))
+  simpa only [raw_coordinate_code] using h
 
 def rectangle : SimpleGraph (Fin 9337 × Fin 9061) :=
   strongProduct (SimpleGraph.pathGraph 9337) (SimpleGraph.pathGraph 9061)
