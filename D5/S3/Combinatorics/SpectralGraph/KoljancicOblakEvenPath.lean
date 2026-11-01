@@ -385,10 +385,10 @@ private lemma parameter_map (t : ℝ) (n : ℕ) :
   | more n h0 h1 => simp [parameterContinuant, continuant, h0, h1]
 
 private lemma zero_continuant (n : ℕ) : continuant (fun _ => 0) n = X ^ n := by
-  induction n using Nat.twoStepInduction with
-  | zero => simp [continuant]
-  | one => simp [continuant]
-  | more n h0 h1 => simp [continuant, h1, pow_succ] <;> ring
+  have hm : weightedPath (fun _ => 0) n = 0 := by
+    ext i j
+    simp [weightedPath]
+  simpa [hm] using (weighted_path_charpoly (fun _ => 0) n).symm
 
 private lemma even_constant (k : ℕ) :
     (continuant (fun _ => 1) (2 * k)).coeff 0 = (-1 : ℝ) ^ k := by
