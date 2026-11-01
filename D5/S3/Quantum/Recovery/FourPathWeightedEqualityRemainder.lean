@@ -11,7 +11,7 @@ import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 import D5.S3.Quantum.GNSMatrix
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Data.Matrix.Trace
+import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic
 
 noncomputable section
