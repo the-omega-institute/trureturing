@@ -1,0 +1,35 @@
+**定义 37.1（七位载体与零分隔编码）。** 令
+
+$$
+\Sigma_F=\{x\in\{0,1\}^3:x_jx_{j+1}=0\},
+\qquad
+\Sigma_7=\{z\in\{0,1\}^7:z_jz_{j+1}=0\}.
+$$
+
+令 $K_3$ 与 $K_7$ 分别为这些合法字符串上的单比特翻转邻接矩阵，并令
+
+$$
+\mathcal C=\operatorname{span}\{|x\,0\,y\rangle:x,y\in\Sigma_F\},
+\qquad
+V|x,y\rangle=|x\,0\,y\rangle,
+$$
+
+其中 $P=VV^*$，$Q=I-P$。有限计数给出
+
+$$
+|\Sigma_F|=5,
+\qquad |\Sigma_7|=34,
+\qquad \dim\mathcal C=25,
+\qquad \dim Q\mathcal H=9.
+$$
+
+取自然的固定总耦合
+
+$$
+H_7=\sum_{j=1}^7T_j,
+\qquad
+U(t)=\exp(-itH_7),
+$$
+
+其中 $T_j$ 在翻转后仍合法时作用为该位翻转，否则作用为零。
+
