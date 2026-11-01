@@ -48,6 +48,10 @@ $$\forall n: \mathbb{N}, 9 \le n \implies \begin{aligned}(2 \cdot (-252307 \cdot
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a000159-recurrence` (proved) by `D5/S1/Recurrence/Invariants/MatharA000159Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a000159-recurrence","declaration_gid":"D5/S1/Recurrence/Invariants/MatharA000159Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar (2015). *OEIS A000159: six-step recurrence for three-hit ménage numbers*. URL: <https://oeis.org/A000159>.
