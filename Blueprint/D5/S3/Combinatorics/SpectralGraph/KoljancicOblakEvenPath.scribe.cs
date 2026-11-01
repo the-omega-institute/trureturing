@@ -35,7 +35,11 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
                 "The two orientations of each edge carry the same real weight. Vertex reversal aligns the first-row determinant expansion with the last edge in the recurrence. The constructor permits zero weights as well. Subtraction in its natural-number edge index is truncated subtraction."),
             Node("characteristic", "Weighted branch characteristic correspondence", "weighted_path_charpoly", DescribeRole.Theorem,
                 "The actual characteristic polynomial of the weighted branch equals the continuant with squared edge parameters, in every order including zero and one. First-row expansion uses the existing det_sparse_front supplier in ForbiddenNeighbourDeterminant; both remaining principal submatrices have the same reversed-edge convention.", formula: Characteristic()),
-            Paragraph(Text("The remaining whole-event bridges are the central-loop characteristic identity joining two weighted branches; a coprime choice for opposite-parity branches; separation of the complete central-vertex variation, retaining all product-rule cross terms; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
+            Node("joined-variation", "Complete central-loop variation", "joinedVariation", DescribeRole.Definition,
+                "Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. This is an algebraic carrier; the joined matrix characteristic correspondence is still required.", formula: JoinedDefinition()),
+            Node("joined-recovery", "Separation of central and branch variations", "joined_variation_injective", DescribeRole.Theorem,
+                "For every pair of branch lengths with odd sum, nonzero central loop and nonzero branch edge parameters, coprime branch continuants make the complete joined variation injective. The recovered edge indices below each branch length include its attaching edge. No lower bound on either individual branch length is imposed. Reflection X to -X separates the odd part C(a) times the product variation plus C(da)UV. Its leading coefficient recovers da, after which coprimality and strict degree bounds separate both branch variations. Applying the same separation to the remaining adjacent continuants and using branch_variation_injective recovers all edge parameters. This theorem assumes coprimality; it does not construct the required branches or prove the complete nSSP claim.", formula: JoinedRecovery()),
+            Paragraph(Text("The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; a uniform coprime choice for opposite-parity branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
             Paragraph(Text("Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.")))));
 
     private static DocumentBlock Node(string id, string title, string name, DescribeRole role, string prose,
@@ -123,6 +127,52 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
             new Formula.Power(App(b, k), D(2)));
         return All("b", Sequence(), All("n", Nat(),
             Eq(Call("charpoly", Call("weightedPath", b, n)), Call("continuant", squares, n))));
+    }
+
+    private static Formula JoinedDefinition()
+    {
+        Formula ql = V("qL"), qr = V("qR"), dl = V("dqL"), dr = V("dqR");
+        Formula a = V("a"), da = V("da"), r = V("r"), s = V("s"), x = V("X");
+        Formula P(Formula q, Formula n) => Call("continuant", q, n);
+        Formula Dp(Formula q, Formula d, Formula n) => Call("variation", q, d, n);
+        Formula u = P(ql, r), v = P(qr, s), du = Dp(ql, dl, r), dv = Dp(qr, dr, s);
+        Formula f = Sub(Mul(x, u), P(ql, Add(r, D(1))));
+        Formula g = Sub(Mul(x, v), P(qr, Add(s, D(1))));
+        Formula df = Sub(Mul(x, du), Dp(ql, dl, Add(r, D(1))));
+        Formula dg = Sub(Mul(x, dv), Dp(qr, dr, Add(s, D(1))));
+        Formula expr = Add(Sub(D(0), Mul(Mul(Call("C", da), u), v)),
+            Mul(Sub(x, Call("C", a)), Add(Mul(du, v), Mul(u, dv))));
+        expr = Sub(Sub(Sub(Sub(expr, Mul(df, v)), Mul(f, dv)), Mul(du, g)), Mul(u, dg));
+        return JoinedBinders(Eq(Call("joinedVariation", ql, qr, dl, dr, a, da, r, s), expr));
+    }
+
+    private static Formula JoinedRecovery()
+    {
+        Formula ql = V("qL"), qr = V("qR"), dl = V("dqL"), dr = V("dqR");
+        Formula a = V("a"), da = V("da"), r = V("r"), s = V("s"), k = V("k");
+        Formula Nonzero(Formula q, Formula n) =>
+            All("k", Nat(), Imp(Lt(k, n), Ne(App(q, k), D(0))));
+        Formula Zero(Formula d, Formula n) =>
+            All("k", Nat(), Imp(Lt(k, n), Eq(App(d, k), D(0))));
+        Formula result = And(Eq(da, D(0)), And(Zero(dl, r), Zero(dr, s)));
+        Formula body = Imp(Ne(a, D(0)), Imp(Call("Odd", Add(r, s)),
+            Imp(Nonzero(ql, r), Imp(Nonzero(qr, s),
+                Imp(Call("IsCoprime", Call("continuant", ql, r), Call("continuant", qr, s)),
+                    Imp(Eq(Call("joinedVariation", ql, qr, dl, dr, a, da, r, s), D(0)), result))))));
+        return JoinedBinders(body);
+    }
+
+    private static Formula JoinedBinders(Formula body)
+    {
+        Formula real = Seq(Operatorname, Grp(V("Real")));
+        body = All("s", Nat(), body);
+        body = All("r", Nat(), body);
+        body = All("da", real, body);
+        body = All("a", real, body);
+        body = All("dqR", Sequence(), body);
+        body = All("dqL", Sequence(), body);
+        body = All("qR", Sequence(), body);
+        return All("qL", Sequence(), body);
     }
 
     private static Formula V(string s) => F.Id(s);

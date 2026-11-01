@@ -299,32 +299,36 @@ theorem joined_variation_injective (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r
   have hc := congrArg (fun p : ℝ[X] => p.comp (-X)) he
   simp only [sub_comp, mul_comp, C_comp, hW, hT, hP, zero_comp] at hc
   have hoddpart : C a * T + C da * (U * V) = 0 := by
-    linear_combination (hc - he) / 2
+    have ht : (2 : ℝ[X]) * (C a * T + C da * (U * V)) = 0 := by
+      linear_combination hc - he
+    exact (mul_eq_zero.mp ht).resolve_left (by norm_num)
   have mU := continuant_monic qL r
   have mV := continuant_monic qR s
   have hdU : dU.degree < U.degree := by
     change (variation qL dqL r).degree < (continuant qL r).degree
-    rw [mU.monic.degree_eq_natDegree, mU.natDegree_eq]
+    rw [degree_eq_natDegree mU.monic.ne_zero, mU.natDegree_eq]
     exact lt_of_lt_of_le (variation_degree qL dqL r) (by exact_mod_cast Nat.sub_le r 1)
   have hdV : dV.degree < V.degree := by
     change (variation qR dqR s).degree < (continuant qR s).degree
-    rw [mV.monic.degree_eq_natDegree, mV.natDegree_eq]
+    rw [degree_eq_natDegree mV.monic.ne_zero, mV.natDegree_eq]
     exact lt_of_lt_of_le (variation_degree qR dqR s) (by exact_mod_cast Nat.sub_le s 1)
   have hTdeg : T.degree < (r + s : ℕ) := by
-    apply degree_add_lt
+    apply (degree_add_le _ _).trans_lt
+    apply max_lt
     · exact lt_of_le_of_lt (degree_mul_le ..)
-        (by simpa [U, V, mU.monic.degree_eq_natDegree, mV.monic.degree_eq_natDegree,
+        (by simpa [U, V, degree_eq_natDegree mU.monic.ne_zero, degree_eq_natDegree mV.monic.ne_zero,
           mU.natDegree_eq, mV.natDegree_eq] using
-          add_lt_add_right hdU (continuant qR s).degree)
+          WithBot.add_lt_add_right (degree_ne_bot.mpr mV.monic.ne_zero) hdU)
     · exact lt_of_le_of_lt (degree_mul_le ..)
-        (by simpa [U, V, mU.monic.degree_eq_natDegree, mV.monic.degree_eq_natDegree,
+        (by simpa [U, V, degree_eq_natDegree mU.monic.ne_zero, degree_eq_natDegree mV.monic.ne_zero,
           mU.natDegree_eq, mV.natDegree_eq] using
-          add_lt_add_left hdV (continuant qL r).degree)
+          WithBot.add_lt_add_left (degree_ne_bot.mpr mU.monic.ne_zero) hdV)
   have hda : da = 0 := by
     have ht := (degree_lt_iff_coeff_zero T (r + s)).1 hTdeg (r + s) le_rfl
     have hp : (U * V).coeff (r + s) = 1 := by
-      simpa [U, V, mU.natDegree_eq, mV.natDegree_eq] using
-        (mU.mul mV).monic.coeff_natDegree
+      change (continuant qL r * continuant qR s).coeff (r + s) = 1
+      rw [← (mU.mul mV).natDegree_eq]
+      exact (mU.mul mV).monic.coeff_natDegree
     have hh := congrArg (fun p : ℝ[X] => p.coeff (r + s)) hoddpart
     simpa [coeff_add, coeff_C_mul, ht, hp] using hh
   have ht : T = 0 := by
@@ -336,10 +340,10 @@ theorem joined_variation_injective (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r
     rw [hu, hv, ht, hda, C_0] at he
     simpa using he
   have hdL : (variation qL dqL (r + 1)).degree < U.degree := by
-    simpa [U, mU.monic.degree_eq_natDegree, mU.natDegree_eq] using
+    simpa [U, degree_eq_natDegree mU.monic.ne_zero, mU.natDegree_eq] using
       variation_degree qL dqL (r + 1)
   have hdR : (variation qR dqR (s + 1)).degree < V.degree := by
-    simpa [V, mV.monic.degree_eq_natDegree, mV.natDegree_eq] using
+    simpa [V, degree_eq_natDegree mV.monic.ne_zero, mV.natDegree_eq] using
       variation_degree qR dqR (s + 1)
   obtain ⟨hu1, hv1⟩ := coprime_separation U V _ _ hcop hdL hdR hw
   exact ⟨hda, branch_variation_injective qL dqL r hL hu hu1,

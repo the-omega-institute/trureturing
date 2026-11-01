@@ -350,4 +350,92 @@ def linearizationRegistration :
   familyRecord := none
   options := #[]
 
+/-- Both entire branch sequences, the central loop, and both lengths remain parameters. -/
+abbrev joinedSignature : DependentFamily.Signature where
+  Params := ((ℕ → ℝ) × (ℕ → ℝ)) × (ℝ × ℕ × ℕ)
+  State := fun _ => ℝ × (ℕ → ℝ) × (ℕ → ℝ)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ[X]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def joinedActual : DependentFamily.Realization joinedSignature :=
+  DependentFamily.realize joinedSignature
+    (fun _ p d => joinedVariation p.1.1 p.1.2 d.2.1 d.2.2 p.2.1 d.1 p.2.2.1 p.2.2.2)
+    (fun e => nomatch e)
+
+abbrev joinedArena : DependentFamily.Arena where
+  signature := joinedSignature
+  Law := fun R => ∀ (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ),
+    a ≠ 0 → Odd (r + s) → (∀ k < r, qL k ≠ 0) → (∀ k < s, qR k ≠ 0) →
+    IsCoprime (continuant qL r) (continuant qR s) →
+    R.readout () ((qL, qR), (a, r, s)) (da, dqL, dqR) = 0 →
+    da = 0 ∧ (∀ k < r, dqL k = 0) ∧ (∀ k < s, dqR k = 0)
+
+abbrev joinedSourceScope := type_of% (@joined_variation_injective)
+
+lemma joined_source_bridge : joinedSourceScope ↔ joinedArena.Law joinedActual := Iff.rfl
+
+lemma joined_actual_positive : joinedArena.Law joinedActual :=
+  joined_source_bridge.mp joined_variation_injective
+
+def joinedRejected : DependentFamily.Realization joinedSignature :=
+  DependentFamily.realize joinedSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+lemma joined_rejected_law : ¬ joinedArena.Law joinedRejected := by
+  intro h
+  have hc := h (fun _ => 1) (fun _ => 1) (fun _ => 0) (fun _ => 0) 1 1 0 1
+    (by norm_num) (by decide) (by intro k hk; omega)
+    (by intro k hk; norm_num) (by simp [continuant]) rfl
+  norm_num at hc
+
+lemma joined_dependence :
+    DependentFamily.ObservationalDependence joinedSignature joinedActual := by
+  intro role
+  cases role
+  refine ⟨(((fun _ => 1), (fun _ => 1)), (1, 0, 1)),
+    (1, (fun _ => 0), (fun _ => 0)), (0, (fun _ => 0), (fun _ => 0)), ?_⟩
+  simp [joinedActual, DependentFamily.realize, joinedVariation, continuant, variation]
+
+def joinedFamilyRegistration : DependentFamily.Registration joinedArena joinedSourceScope where
+  actual := joinedActual
+  bridge := joined_source_bridge
+  variation := ⟨joined_actual_positive, joinedRejected, joined_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨joinedRejected, ?_, rfl, joined_rejected_law⟩
+      intro index hne
+      exact (hne (Subsingleton.elim _ _)).elim
+    · intro e; exact nomatch e
+  dependence := joined_dependence
+
+def joinedRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@joined_variation_injective) (DependentFamily.Realization joinedSignature) Type Unit where
+  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.joined_variation_injective.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.joinedFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨joinedArena⟩
+  objectArena := .source ⟨joinedArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source joinedArena ⟨joinedFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize joinedSignature
+    (fun _ p d => joinedVariation p.1.1 p.1.2 d.2.1 d.2.2 p.2.1 d.1 p.2.2.1 p.2.2.2)
+    (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := some (ℝ × (ℕ → ℝ) × (ℕ → ℝ))
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
