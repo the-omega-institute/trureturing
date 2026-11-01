@@ -188,23 +188,25 @@ private theorem negative_cover (l : Finset point) (hl : l ∈ counterexample)
       (triple_negative u v hu hv hne hb).mp (he ▸ hn)⟩
 
 private theorem negative_certificate_exact :
-    (counterexample.filter fun l => lineProduct l = -1) = negativeCertificate := by
+    counterexample ∩ negativeLines w = negativeCertificate := by
   classical
   ext l
   constructor
   · intro hl
-    obtain ⟨hc, hn⟩ := Finset.mem_filter.mp hl
-    exact negative_cover l hc hn
+    obtain ⟨hc, hn⟩ := Finset.mem_inter.mp hl
+    exact negative_cover l hc (Finset.mem_filter.mp hn).2
   · intro hl
     obtain ⟨u, hu, hrest⟩ := Finset.mem_biUnion.mp hl
     obtain ⟨v, hv, rfl⟩ := Finset.mem_image.mp hrest
     obtain ⟨hvp, hne, hb, he⟩ := Finset.mem_filter.mp hv
     have hup := (Finset.mem_filter.mp hu).2
     have hvp := (Finset.mem_filter.mp hvp).2
-    refine Finset.mem_filter.mpr ⟨?_,
-      (triple_negative u v hup.1 hvp.1 hne hb).mpr he⟩
-    refine Finset.mem_filter.mpr ⟨triple_line u v hup.1 hvp.1 hne hb, ?_⟩
-    simp [triple, B_add_right, hup.2, hvp.2]
+    have hlw := triple_line u v hup.1 hvp.1 hne hb
+    have hcp : triple u v ∈ counterexample := by
+      refine Finset.mem_filter.mpr ⟨hlw, ?_⟩
+      simp [triple, B_add_right, hup.2, hvp.2]
+    exact Finset.mem_inter.mpr ⟨hcp, Finset.mem_filter.mpr
+      ⟨hlw, (triple_negative u v hup.1 hvp.1 hne hb).mpr he⟩⟩
 
 private theorem incidence_swap (h : Finset (Finset point)) (s : Finset point) :
     (∑ l ∈ h, (l ∩ s).card) = ∑ q ∈ s, (h.filter fun l => q ∈ l).card := by
@@ -347,12 +349,25 @@ private theorem counterexample_degree_le : contextualityDegree counterexample �
   have hmin : contextualityDegree counterexample ≤ violations counterexample (fun _ => 0) :=
     csInf_le (OrderBot.bddBelow _) ⟨_, rfl⟩
   have he : violations counterexample (fun _ => 0) =
-      (counterexample.filter fun l => lineProduct l = -1).card := by
+      (counterexample ∩ negativeLines w).card := by
     unfold violations
     congr 1
     ext l
-    delta lineSign
-    by_cases hn : lineProduct l = -1 <;> simp [hn]
+    constructor
+    · intro hl
+      obtain ⟨hc, hn⟩ := Finset.mem_filter.mp hl
+      refine Finset.mem_inter.mpr ⟨hc, Finset.mem_filter.mpr
+        ⟨counterexample_subset hc, ?_⟩⟩
+      by_contra hp
+      delta lineSign at hn
+      simp [hp] at hn
+    · intro hl
+      obtain ⟨hc, hneg⟩ := Finset.mem_inter.mp hl
+      have hn := (Finset.mem_filter.mp hneg).2
+      apply Finset.mem_filter.mpr
+      refine ⟨hc, ?_⟩
+      delta lineSign
+      simp [hn]
   rw [he, negative_certificate_exact, certificate_count] at hmin
   exact hmin
 
