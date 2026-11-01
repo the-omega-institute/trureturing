@@ -130,12 +130,14 @@ private theorem bank_positive (a b s : ℕ) (hs : 2≤s) (ha : s+1≤a)
   let B := if side then newHeads (2^a) (2^b) (2^s) else heads (2^a) (2^b) (2^s)
   have positive (r : Fin 4) (m : ℕ) :
       ∀ i∈chamberLabels (length a b s r-1) (start b s r) m, 0≤v i := by
-    apply chamberLabels_positive
+    apply chamberLabels_positive _ _ _ v (B r)
     · have h := row_bounds a b s (by omega) (by omega) hs
       cases side
       · have hh := (h.1 r).1
+        change 0≤heads (2^a) (2^b) (2^s) r
         omega
       · have hh := (h.2 r).1
+        change 0≤newHeads (2^a) (2^b) (2^s) r
         omega
     · intro e he
       exact positive_row a b s (by omega) (by omega) hs side r e he

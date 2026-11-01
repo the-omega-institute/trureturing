@@ -44,7 +44,8 @@ private theorem checks_four (cap p0 p1 p2 p3 n0 n1 n2 n3 : ℤ)
     (c3 : 0≤cap+n3) :
     Checks cap 0 [(p0,n0),(p1,n1),(p2,n2),(p3,n3)] := by
   dsimp [Checks]
-  repeat' constructor <;> linarith
+  repeat' constructor
+  all_goals linarith
 
 private theorem polynomial_checks (x y z u h v c wf xf : ℤ)
     (hu : 2*(u+1)=z) (hw : 2*(wf+1)=y) (hx : 2*(xf+1)=x)

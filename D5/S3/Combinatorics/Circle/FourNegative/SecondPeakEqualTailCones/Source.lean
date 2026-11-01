@@ -56,10 +56,9 @@ private theorem source_numeric (a b s : ℕ) :
     modulus (rank a b s)=N a b s ∧
     modulus (rank a b s+1)=2*N a b s+1 ∧
     (amplitude a b s:ℤ)=heads (2^a) (2^b) (2^s) 0 := by
-  dsimp [rank,N,sourceN,modulus,amplitude,heads,delta]
-  push_cast
-  simp only [pow_add,pow_succ]
-  exact ⟨by ring,by ring,by ring⟩
+  refine ⟨?_,?_,?_⟩ <;>
+    dsimp [rank,N,sourceN,modulus,amplitude,heads,delta] <;>
+    push_cast <;> simp only [pow_add,pow_succ] <;> ring
 
 private theorem eight_recurrences (x y z : ℤ) :
     z*heads x y z 0=sourceN x y z+heads x y z 1 ∧
@@ -70,8 +69,8 @@ private theorem eight_recurrences (x y z : ℤ) :
     z*newHeads x y z 1=2*sourceN x y z+1+newHeads x y z 2 ∧
     y*newHeads x y z 2=2*sourceN x y z+1+newHeads x y z 3 ∧
     x*newHeads x y z 3=2*sourceN x y z+1+heads x y z 0 := by
-  dsimp [heads,newHeads,sourceN,delta]
-  repeat' constructor <;> ring
+  refine ⟨?_,?_,?_,?_,?_,?_,?_,?_⟩ <;>
+    dsimp [heads,newHeads,sourceN,delta] <;> ring
 
 private theorem row_bounds (a b s : ℕ) (ha : 2≤a) (hb : 2≤b) (hs : 2≤s) :
     (∀ r, 1≤heads (2^a) (2^b) (2^s) r ∧ heads (2^a) (2^b) (2^s) r<N a b s) ∧
@@ -92,10 +91,10 @@ private theorem positive_row (a b s : ℕ) (ha : 2≤a) (hb : 2≤b) (hs : 2≤s
   have el := row_layout a b s
   cases side
   · change f a b s (start b s r+i)=(2:ℤ)^i*heads (2^a) (2^b) (2^s) r
-    simpa only [el.1,el.2,he.1,if_pos (by omega : i+1<length a b s r)]
+    simpa only [f,el.1,el.2,he.1,if_pos (by omega : i+1<length a b s r)]
       using ht.2.1 r i (by rw [el.1]; omega)
   · change g a b s (start b s r+i)=(2:ℤ)^i*newHeads (2^a) (2^b) (2^s) r
-    simpa only [el.1,el.2,he.2.1,if_pos (by omega : i+1<length a b s r)]
+    simpa only [g,el.1,el.2,he.2.1,if_pos (by omega : i+1<length a b s r)]
       using ht.2.2.1 r i (by rw [el.1]; omega)
 
 private theorem terminal_row (a b s : ℕ) (ha : 2≤a) (hb : 2≤b) (hs : 2≤s)
@@ -107,7 +106,7 @@ private theorem terminal_row (a b s : ℕ) (ha : 2≤a) (hb : 2≤b) (hs : 2≤s
   have h := native_masses a b s s ha hb hs hs r
   have he := row_heads a b s
   have el := row_layout a b s
-  simpa only [el.1,el.2,he.2.2.1,he.2.2.2] using h.2.2
+  simpa only [f,g,N,sourceN,sourceMod,el.1,el.2,he.2.2.1,he.2.2.2] using h.2.2
 
 private theorem terminal_nonpos (a b s : ℕ) (ha : 2≤a) (hb : 2≤b) (hs : 2≤s)
     (r : Fin 4) :
@@ -124,6 +123,6 @@ private theorem totals (a b s : ℕ) (ha : 2≤a) (hb : 2≤b) (hs : 2≤s) :
     ((List.range (rank a b s)).map (f a b s)).sum=0 ∧
     ((List.range (rank a b s)).map (g a b s)).sum= -heads (2^a) (2^b) (2^s) 0 ∧
     g a b s (rank a b s)=heads (2^a) (2^b) (2^s) 0 := by
-  simpa only [(row_heads a b s).1] using source_totals a b s s ha hb hs hs
+  simpa only [f,g,rank,size,(row_heads a b s).1] using source_totals a b s s ha hb hs hs
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones
