@@ -371,7 +371,7 @@ private lemma correlation_spectral_data {n : ℕ} (hn : 3 ≤ n)
   let v := ha.1.isHermitian.eigenvectorBasis
   let l := ha.1.isHermitian.eigenvalues
   have hne : (univ : Finset (Fin n)).Nonempty := by
-    exact univ_nonempty_iff.mpr ⟨⟨0, by omega⟩⟩
+    exact univ_nonempty_iff.mpr (Fin.pos_iff_nonempty.mp (by omega))
   obtain ⟨i, hi, htop⟩ := exists_max_image univ l hne
   have ht : ∀ j, l j ≤ l i := fun j => htop j (mem_univ j)
   have hv := ha.1.isHermitian.mulVec_eigenvectorBasis
@@ -552,8 +552,23 @@ private lemma lower_sign_moments {n : ℕ} (k : ℤ) (hk : 0 < k)
     (2 * ∑ i : Fin n, ∑ j with j < i, (1 : ℝ) = (n : ℝ) * ((n : ℝ) - 1)) ∧
       (2 * ∑ i, ∑ j with j < i, signVector n k i * signVector n k j =
         (2 * (k : ℝ) - (n : ℝ)) ^ 2 - (n : ℝ)) := by
-  have hone := symmetric_sum (fun _ _ : Fin n => (1 : ℝ)) (fun _ _ => rfl)
-  simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one] at hone
+  classical
+  have hone : 2 * ∑ i : Fin n, ∑ j with j < i, (1 : ℝ) =
+      (n : ℝ) * ((n : ℝ) - 1) := by
+    have h := Finset.card_product_filter_lt (s := (univ : Finset (Fin n)))
+    have hc : (∑ i : Fin n, ∑ j with j < i, (1 : ℝ)) = (n.choose 2 : ℝ) := by
+      calc
+        _ = ∑ p : Fin n × Fin n, if p.1 < p.2 then (1 : ℝ) else 0 := by
+          simp only [Fintype.sum_prod_type, sum_filter]
+          rw [sum_comm]
+        _ = ((univ.product univ).filter (fun p : Fin n × Fin n => p.1 < p.2)).card := by
+          rw [sum_boole]
+          simp
+        _ = (n.choose 2 : ℝ) := by
+          simpa only [product_eq_sprod, card_univ, Fintype.card_fin] using
+            congrArg (fun a : ℕ => (a : ℝ)) h
+    rw [hc, Nat.cast_choose_two]
+    ring
   have hs := symmetric_sum (fun i j => signVector n k i * signVector n k j)
     (fun i j => mul_comm _ _)
   have hdiag : (∑ i, signVector n k i * signVector n k i) = (n : ℝ) := by
@@ -564,8 +579,7 @@ private lemma lower_sign_moments {n : ℕ} (k : ℤ) (hk : 0 < k)
     simp only [← mul_sum, ← sum_mul, signVector_sum k hk hkn, sq]
   rw [hdiag, htotal] at hs
   constructor
-  · simp only [sum_const, nsmul_eq_mul, mul_one]
-    nlinarith only [hone]
+  · exact hone
   · nlinarith only [hs]
 
 private lemma rounded_ratio_tendsto (x : ℝ) :
