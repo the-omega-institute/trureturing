@@ -4504,9 +4504,9 @@ $$
 二项式分布在 $\widehat q$ 的第 $s$ 项概率至多为一，所以
 
 $$
-\frac{\widehat q^{,s}(1-\widehat q)^{n-s}}
+\frac{\widehat q^{s}(1-\widehat q)^{n-s}}
  {\mathrm B(s+1,n-s+1)}
-=(n+1)\binom ns\widehat q^{,s}(1-\widehat q)^{n-s}\le n+1.
+=(n+1)\binom ns\widehat q^{s}(1-\widehat q)^{n-s}\le n+1.
 \tag{34.5}
 $$
 
