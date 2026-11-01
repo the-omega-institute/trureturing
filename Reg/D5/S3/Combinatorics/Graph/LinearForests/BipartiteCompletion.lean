@@ -113,7 +113,7 @@ def registration :
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} actual.readout actual.anchor)
+  readout := some (realize signature.{u} (fun _ _ H => H) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
