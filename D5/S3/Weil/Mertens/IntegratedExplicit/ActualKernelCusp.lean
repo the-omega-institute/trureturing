@@ -91,12 +91,14 @@ private lemma r1_limit : Tendsto r1 (𝓝[>] 0) (𝓝 0) := by
     change 0 < t at ht
     dsimp
     field_simp [ht.ne']
+    <;> ring
   have hh := (((hk.div_const 2).sub hep).add
     ((he.mul_const (Real.log (2 * Real.pi))).add
       (((he.mul hl).add hx).div_const 2))).sub_const (1 / 2 + c)
   have hmass : firstLiMass / 2 - 1 +
       (Real.log (2 * Real.pi) + Real.log 2 / 2) - (1 / 2 + c) = 0 := by
-    rw [firstLiMass_split, c, Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) Real.pi_ne_zero]
+    simp only [firstLiMass_split, c,
+      Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) Real.pi_ne_zero]
     ring
   simp only [one_mul, add_zero] at hh
   rw [hmass] at hh
