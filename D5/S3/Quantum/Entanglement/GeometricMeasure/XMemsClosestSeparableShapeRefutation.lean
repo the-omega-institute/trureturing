@@ -7,6 +7,7 @@
    digest: A fully separable three-qubit state beats every state of the conjectured CSS shape. -/
 
 import D5.S3.Geometry.Hyperideal.GramDomainContraction
+import D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 
@@ -65,12 +66,12 @@ def claim : Prop := ∀ n : ℕ, 2 ≤ n → ∀ γ : ℂ,
 private theorem sum_words {α : Type*} [AddCommMonoid α] (f : (Fin 3 → Fin 2) → α) :
     ∑ x, f x = f ![0,0,0] + f ![0,0,1] + f ![0,1,0] + f ![0,1,1] +
       f ![1,0,0] + f ![1,0,1] + f ![1,1,0] + f ![1,1,1] := by
-  classical
-  have hu : (Finset.univ : Finset (Fin 3 → Fin 2)) =
-      {![0,0,0], ![0,0,1], ![0,1,0], ![0,1,1],
-        ![1,0,0], ![1,0,1], ![1,1,0], ![1,1,1]} := by decide
-  rw [hu]
-  simp [Finset.sum_insert, add_assoc]
+  let e : (Fin 3 → Bool) ≃ (Fin 3 → Fin 2) :=
+    Equiv.piCongrRight (fun _ => finTwoEquiv.symm)
+  rw [← e.sum_comp f]
+  have h := D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.sum_strings
+    (fun s => f (e s))
+  convert h using 1; congr 8 <;> funext i <;> fin_cases i <;> rfl
 
 private theorem hsSq_entries {n : ℕ}
     (ρ σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :

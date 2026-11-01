@@ -14,6 +14,14 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
         "The biased trine qubit family has triplewise joint-measurability threshold min(2/3, 1 - |b|).",
         H("The exact compatibility threshold for biased trine qubit measurements"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("sum-strings"),
+                DeclarationHandle.Create(Module + ".sum_strings"),
+                H("Summing over three binary choices"),
+                StatementSource.FromAuthor(Disp(SumStringsFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A sum over three Boolean coordinates is the sum of its eight values in lexicographic order."))),
+                DescribeRole.Theorem),
             Definition("trine-dir", "trineDir", "The three trine directions", TrineDirFormula(),
                 "The three unit vectors lie in the xz plane at angles 2π/3, 4π/3 and 2π. "
                     + "The index i in Fin 3 corresponds to the source's index i + 1. "
@@ -119,6 +127,21 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
             DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula SumStringsFormula()
+    {
+        Formula Word(bool a, bool b, bool c) => Vector(
+            Qualified(a ? "true" : "false"), Qualified(b ? "true" : "false"),
+            Qualified(c ? "true" : "false"));
+        Formula total = At(X("f"), Word(false, false, false));
+        for (var k = 1; k < 8; k++)
+            total = Add(total, At(X("f"), Word((k & 4) != 0, (k & 2) != 0, (k & 1) != 0)));
+        Formula sum = Seq(Sum, Underscore, Grp(X("s"), Colon,
+            Arrow(Fin(3), Qualified("Bool"))), Sp, At(X("f"), X("s")));
+        return All("A", Seq(Qualified("Type"), Star),
+            Arrow(At(Qualified("AddCommMonoid"), X("A")),
+                All("f", Arrow(Arrow(Fin(3), Qualified("Bool")), X("A")), Equal(sum, total))));
+    }
 
     private static Formula TrineDirFormula()
     {
