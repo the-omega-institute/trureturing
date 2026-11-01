@@ -190,4 +190,5 @@ theorem law_bridge : (type_of% (@history_law_of_positive_coordinate_laws)) ↔
   · intro h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
     exact @h V Ω Ω' G hG mΩ mΩ' P Q x y μ hx hy hix hiy hlx hly u N
 
+end
 end Reg.D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
