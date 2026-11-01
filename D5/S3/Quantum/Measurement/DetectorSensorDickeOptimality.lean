@@ -376,7 +376,7 @@ private theorem pair_count_product (n : ℕ) (a b : Fin n) (hab : a ≠ b) (k : 
   have hcard : S.card = n.choose k := weight_class_card n k
   rw [hcard] at htotal
   nlinarith [htotal]
-private theorem psd_cauchy_schwarz {h : Type*} [Fintype h] [DecidableEq h]     (H : Matrix h h ℂ) (hH : H.PosSemidef) (x y : h → ℂ) :     ‖star x ⬝ᵥ (H *ᵥ y)‖ ^ 2 ≤       (star x ⬝ᵥ (H *ᵥ x)).re * (star y ⬝ᵥ (H *ᵥ y)).re := by
+theorem psd_cauchy_schwarz {h : Type*} [Fintype h] [DecidableEq h]     (H : Matrix h h ℂ) (hH : H.PosSemidef) (x y : h → ℂ) :     ‖star x ⬝ᵥ (H *ᵥ y)‖ ^ 2 ≤       (star x ⬝ᵥ (H *ᵥ x)).re * (star y ⬝ᵥ (H *ᵥ y)).re := by
   let := Matrix.toSeminormedAddCommGroup H hH
   let := Matrix.toInnerProductSpace H hH
   have hc := @inner_mul_inner_self_le ℂ (h → ℂ) _ _ _ x y
