@@ -7,9 +7,8 @@
    digest: Physical binary supports, disjoint complete inventory, bank masses and literal-cut cardinality. -/
 /- SOURCE_ONLY_UNCOMPILED. Physical occurrence inventory; equal values stay distinct.
 Caller construction and proof. The terminal bits are never selected. -/
-module
-import all D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
-import all D5.S3.Combinatorics.Circle.ThreeBitSource
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
+import D5.S3.Combinatorics.Circle.ThreeBitSource
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

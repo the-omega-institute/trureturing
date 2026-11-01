@@ -9,11 +9,10 @@
 Repository API pin: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
 Caller construction and ordinary proof; no Pro or kernel validation.
 Full unrestricted physical J / Circle C3.1 remain OPEN. -/
-module
-import all D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Banks
-import all D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
-import all D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-import all D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Banks
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
+import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
+import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
