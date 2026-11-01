@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/FewerEffectsOrthogonalityRefutation.claim; result=D5/S3/Quantum/Measurements/FewerEffectsOrthogonalityRefutation.result; claim=D5/S3/Quantum/Measurements/FewerEffectsOrthogonalityRefutation.claim
    digest: Four projectors of ranks 2,2,3,3 refute the fewer-effects orthogonality conjecture. -/
 
+import D5.S3.Quantum.GeneralizedFidelity
 import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
 import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 
@@ -26,7 +27,7 @@ namespace D5.S3.Quantum.Measurements.FewerEffectsOrthogonalityRefutation
 /-- The Gram matrix of the positive square roots of the effects. -/
 def gram {n d : ℕ} (f : Fin n → Matrix (Fin d) (Fin d) ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
-  fun i j => Matrix.trace (CFC.sqrt (f i) * CFC.sqrt (f j))
+  fun i j => D5.S3.Quantum.GeneralizedFidelity.fidelity 1 (f i) (f j)
 
 /-- Squared Frobenius distance of the square-root Gram matrix from the identity. -/
 def orthogonality {n d : ℕ} (f : Fin n → Matrix (Fin d) (Fin d) ℂ) : ℝ :=
@@ -83,8 +84,8 @@ private theorem competitor_sqrt (i : Fin 4) :
 private theorem construction_gram :
     gram (construction 4 10) = Matrix.diagonal ![2, 2, 2, 4] := by
   ext i j
-  change Matrix.trace (CFC.sqrt (construction 4 10 i) *
-    CFC.sqrt (construction 4 10 j)) = _
+  simp only [gram, D5.S3.Quantum.GeneralizedFidelity.fidelity,
+    CFC.sqrt_one, one_mul, mul_one, inv_one]
   rw [construction_sqrt, construction_sqrt]
   dsimp only [construction]
   rw [Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
@@ -94,7 +95,8 @@ private theorem construction_gram :
 private theorem competitor_gram :
     gram competitor = Matrix.diagonal ![2, 2, 3, 3] := by
   ext i j
-  change Matrix.trace (CFC.sqrt (competitor i) * CFC.sqrt (competitor j)) = _
+  simp only [gram, D5.S3.Quantum.GeneralizedFidelity.fidelity,
+    CFC.sqrt_one, one_mul, mul_one, inv_one]
   rw [competitor_sqrt, competitor_sqrt]
   dsimp only [competitor]
   rw [Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
@@ -111,7 +113,8 @@ private theorem competitor_povm : IsPOVMWith 4 10 competitor := by
       split_ifs <;> simp <;> split_ifs <;> simp
     · intro hzero
       have hdiag := congrFun (congrFun competitor_gram i) i
-      change Matrix.trace (CFC.sqrt (competitor i) * CFC.sqrt (competitor i)) = _ at hdiag
+      simp only [gram, D5.S3.Quantum.GeneralizedFidelity.fidelity,
+        CFC.sqrt_one, one_mul, mul_one, inv_one] at hdiag
       rw [hzero, CFC.sqrt_zero, zero_mul, Matrix.trace_zero] at hdiag
       fin_cases i <;> norm_num [Matrix.diagonal_apply] at hdiag
   · ext k l
