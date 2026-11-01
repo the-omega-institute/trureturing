@@ -33,3 +33,4 @@ Each bank contains actual nonnegative source occurrences before its one actual n
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakLargeThirdGap/Endpoint.actualSource_second_peak_large_third_gap_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakLargeThirdGap/Schedule](Schedule.md)
