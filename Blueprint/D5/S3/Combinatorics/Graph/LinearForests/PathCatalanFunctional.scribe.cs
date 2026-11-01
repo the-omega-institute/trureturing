@@ -29,7 +29,7 @@ internal sealed class PathCatalanFunctionalDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "path_phi_nonnegative"),
                 H("Every legal parameter"),
                 StatementSource.FromAuthor(Disp(All("v", All("m", Imp(Le(F.Id("v"), F.Id("m")),
-                    Le(D(0), Call("phi", Call("hasse", Nat), Call("range", F.Id("v")), F.Id("m"))))))),
+                    Le(D(0), Call("phi", Call("hasse", Nat), Call("range", F.Id("v")), F.Id("m")))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every pair of natural numbers v and m with v at most m, phi(hasse(Nat),range(v),m) is nonnegative. The finite domain consists of exactly the vertices 0 through v-1 of the natural-number Hasse path; adjacency means consecutive integers. This includes the empty path, m=0, and m=v.")),
