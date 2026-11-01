@@ -223,7 +223,6 @@ private theorem swap_stabilizer_contra
       h 1 0 = 0 ∧ h 1 3 = 0 ∧ h 2 0 = 0 ∧ h 2 3 = 0 ∧
       h 3 0 = 0 ∧ h 3 1 = 0 ∧ h 3 2 = 0 ∧ h 3 3 = 1)
     (ha : h.mulVec ![10 + s, A, 0, d] = ![10 - s, 0, B, -d])
-    (hb : h.mulVec ![10 - s, 0, B, -d] = ![10 + s, A, 0, d])
     (hA : 0 < A) (hB : 0 < B)
     (hsq : s ^ 2 + t ^ 2 + d ^ 2 = 1)
     (hA2 : A ^ 2 = 4 + t) (hB2 : B ^ 2 = 4 - t) : False := by
@@ -323,9 +322,6 @@ private theorem family_chiral
         (Real.sqrt (4 + v 1)) (Real.sqrt (4 - v 1)) h hhL haxes
       · apply hpar
         have hx := congrFun hact 3
-        simpa [act.eq_1, family.eq_1, parity.eq_1, parityVector.eq_1, Equiv.swap_apply_def] using hx
-      · apply hpar
-        have hx := congrFun hact 2
         simpa [act.eq_1, family.eq_1, parity.eq_1, parityVector.eq_1, Equiv.swap_apply_def] using hx
       · exact hA
       · exact hB
