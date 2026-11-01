@@ -29,7 +29,6 @@ positive root (S+rI)/w and a strict Rayleigh quotient give the counterexample
 X=diag(1/10,4), Y=[[19/50,-24/25],[-24/25,93/25]], s=0, t=1/100.
 -/
 
-
 set_option maxRecDepth 8192
 
 noncomputable section
@@ -110,13 +109,13 @@ private lemma K_square : K * K = (T + 2 * r) • S := by
     norm_num [K, S, T, Matrix.mul_apply, dotProduct, Fin.sum_univ_two,
       Matrix.one_apply, RCLike.real_smul_eq_coe_mul, smul_eq_mul,
       Complex.ofReal_add, Complex.ofReal_mul]
-  all_goals linear_combination hr
+  all_goals first | ring1 | linear_combination hr
 
 private lemma Q_square : Q * Q = S := by
   have hw0 : w ≠ 0 := ne_of_gt w_pos
   have hscale : w⁻¹ * w⁻¹ * (T + 2 * r) = 1 := by
     rw [← w_square]
-    field_simp [hw0] <;> ring
+    field_simp [hw0]
   simp only [Q, smul_mul_assoc, mul_smul_comm, smul_smul]
   rw [K_square, smul_smul, hscale, one_smul]
 
@@ -200,7 +199,8 @@ private lemma rayleigh :
       star (![3 / 5, 4 / 5] : Fin 2 → ℂ) = _
   norm_num [Q, K, S, Y, a, Matrix.mulVec, dotProduct, Fin.sum_univ_two,
     Matrix.one_apply, RCLike.real_smul_eq_coe_mul, smul_eq_mul,
-    Complex.ofReal_sub, Complex.ofReal_div, Complex.ofReal_add, Complex.ofReal_inv] <;>
+    Complex.ofReal_sub, Complex.ofReal_div, Complex.ofReal_add, Complex.ofReal_inv,
+    map_ofNat] <;>
     ring
 
 private lemma strict_norm : 1 < ‖Y - mu2 Y X (1 / 100)‖ := by
