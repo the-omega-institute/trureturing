@@ -547,8 +547,8 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega)]
   have hcond : j+1 < chainLength a b c d r := by omega
   simp [hcond]
-  exact ⟨by have := (h.1 r).1; omega,
-    by have := hn.1; omega⟩
+  exact ⟨mul_nonneg (by positivity) (by have := (h.1 r).1; omega),
+    mul_nonneg (by positivity) (by have := hn.1; omega)⟩
 
 private theorem complement_mass (a b c d m : ℕ) (r : Fin 4)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
