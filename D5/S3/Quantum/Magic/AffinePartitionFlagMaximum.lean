@@ -90,12 +90,8 @@ private lemma radix_one {p : ℕ} (hp : 2 ≤ p) (s : ℕ) (hs : 1 ≤ s) :
     have hd := Nat.mod_add_div s p
     have hrlt := Nat.mod_lt s (show 0 < p by omega)
     by_cases hr : s % p = 0
-    · have hq : 1 ≤ s / p := by
-        by_contra hn
-        have hz : s / p = 0 := Nat.lt_one_iff.mp (lt_of_not_ge hn)
-        rw [hr, hz] at hd
-        simp at hd
-        omega
+    · have hq : 1 ≤ s / p :=
+        Nat.div_pos (Nat.le_of_dvd hs (Nat.dvd_of_mod_eq_zero hr)) (by omega)
       have hi := ih (s / p) (Nat.div_lt_self (by omega) (by omega)) hq
       have he : s - 1 = p * (s / p - 1) + (p - 1) := by
         have hqeq := Nat.sub_add_cancel hq
@@ -151,12 +147,10 @@ private lemma radix_value {p : ℕ} (hp : 2 ≤ p) (n : ℕ) :
   | zero => exact radix_zero p
   | succ n ih =>
     have he : p ^ (n + 1) - 1 = p * (p ^ n - 1) + (p - 1) := by
-      have hpow := Nat.one_le_pow n p (by omega)
-      have hn := Nat.sub_add_cancel hpow
-      have hh := Nat.sub_add_cancel (show 1 ≤ p by omega)
-      apply (Nat.sub_eq_iff_eq_add (Nat.one_le_pow (n + 1) p (by omega))).2
-      rw [pow_succ]
-      nlinarith
+      rw [pow_succ', Nat.mul_sub_left_distrib, Nat.mul_one]
+      exact (Nat.sub_add_sub_cancel (a := p * p ^ n) (b := p) (c := 1)
+        (by simpa only [Nat.mul_one] using
+          Nat.mul_le_mul_left p (Nat.one_le_pow n p (by omega))) (by omega)).symm
     rw [he, radix_affine hp _ _ (by omega), ih]
     change (p - 1) + p ^ 2 * (∑ k ∈ Finset.range n, (p - 1) * p ^ (2 * k)) =
       ∑ k ∈ Finset.range (n + 1), (p - 1) * p ^ (2 * k)
