@@ -50,7 +50,7 @@ private theorem finite_buffer_transfer_cover
     intro i
     split_ifs with hi
     · exact hi
-    · change x ∉ P i
+    · show x ∉ P i
       intro hxi
       exact hi ((hPQ i) hxi)
   obtain ⟨s, hs⟩ := (isCompact_univ : IsCompact (univ : Set X)).elim_finite_subcover
