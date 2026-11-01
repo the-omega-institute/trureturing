@@ -3591,3 +3591,531 @@ elapsed time, physical bytes, source authority or unknown prior history.
 This finite synthesis leaves the continuous RRO research objective open.
 
 ## 追加锚（本行以下为增补区）
+
+## 42. Recovering an unknown native entry and its completed macro history
+
+### 42.1 The entry event index and the geometry retained by the source
+
+**Definition 42.1 (same-source recovery inputs).** Retain Definition
+41.1's one actual LAB root/source/epoch, authentic binding, current
+exclusive rights, lawful traversals, all-event ancestral tapes and
+sufficient finite material for each finite run. The attained entry
+$t_0$ ranges over the entire tree domain $\mathcal D_+$, not one seed,
+one composition fibre or one prescribed shape. After attachment the
+only source-changing operations are completed native $F/G$ macros:
+$F$ is LAB Definition 9.3's sealed old-frontier replacement $\rho$;
+$G$ is its acquired current leftmost-beta split. There are no
+interleaved source-changing legacy edits. Every inner and outer call
+consumes its full serialized reply, acknowledgement and real return.
+A completed inner primitive alone need not be a completed outer macro.
+
+For a logical tree put
+
+$$
+\ell(t)=a(t)+b(t),\qquad n(t)=a(t)+2b(t)-1.
+\tag{42.1}
+$$
+
+Write $\operatorname{Run}(W,t)$ for the logical tree after the
+chronological completed word $W$; the pair-valued Run of §41 is its
+composition projection. The recovery inputs here are precisely an
+authenticated exact entry index $n_0=n(t_0)$ and the lawfully acquired
+final logical syntax $z=\operatorname{Run}(W,t_0)$. Neither the old
+syntax, its composition, its leftmost depth nor the macro length is an
+additional input. Recovery targets $(t_0,W)$ as logical syntax and a
+literal word. Pointer identity, allocated runtime bytes, authority,
+pre-attachment primitive order and elapsed time are different targets.
+The acquisition conditions are made explicit in Proposition 42.6.
+
+**Lemma 42.2 (exact event count and spine record).** The value $n(t)$ is
+the exact number of successful addressed $P/S$ events from the original
+allocated alpha to any attained $t$. On $\mathcal D_+$, $n(t)=1$ holds
+exactly at beta, and $n(t)>1$ exactly at multileaf entries. Each completed
+macro extends the logical leftmost spine by exactly one.
+
+More precisely let
+
+$$
+\operatorname{Sp}()=\beta,\qquad
+\operatorname{Sp}(r_1,\ldots,r_d)
+ =\langle\operatorname{Sp}(r_2,\ldots,r_d),r_1\rangle.
+\tag{42.2}
+$$
+
+Every $t\in\mathcal D_+$ has one such presentation, where $r_1$ is
+the root's right subtree and $r_d$ is the deepest right subtree.
+With $d$ its logical leftmost depth,
+
+$$
+\begin{aligned}
+F(t)&=\operatorname{Sp}(\rho r_1,\ldots,\rho r_d,\alpha),\\
+G(t)&=\operatorname{Sp}(r_1,\ldots,r_d,\alpha),\\
+n(F(t))-n(t)&=\ell(t),\qquad n(G(t))-n(t)=1.
+\end{aligned}
+\tag{42.3}
+$$
+
+For $W=X_1\cdots X_m$, let $K=|W|_F$ and
+$k_i=|X_{i+1}\cdots X_m|_F$. In the final spine, each entry position
+$j\le d$ has right subtree $\rho^K r_j$, and the position born at
+macro $i$ has right subtree
+
+$$
+\rho^{k_i}\alpha\quad(1\le i\le m).
+\tag{42.4}
+$$
+
+Proof. AA Definition 19.1, equation (AA.73), gives the alpha-origin
+split count $a+b-1$ and promotion count $b$, independently of their
+legal shuffle. Their sum is (42.1). Equivalently every $P$ and $S$
+increments $n$ by one, starting at zero. Since $b\ge1$ on
+$\mathcal D_+$, $a+2b-1=1$ forces $(a,b)=(0,1)$, hence the singleton
+beta tree. Every other entry has a branch. LAB Lemma 2.1 gives a beta
+at the end of its logical left descent; this proves the unique spine
+presentation, including the empty spine at beta.
+
+Global replacement preserves the old spine branches, replaces every
+old right subtree by its $\rho$ image and replaces its terminal beta
+by $\langle\beta,\alpha\rangle$. Native $G$ changes only that terminal
+beta. These are exactly the first two equations of (42.3). LAB Theorem
+9.4 gives their composition laws, whose substitution into (42.1)
+gives the last two equations. Induction on the chronological word now
+proves (42.4): a new spine position has right alpha; every later $F$
+replaces that whole subtree, and every later $G$ leaves it unchanged.
+$\square$
+
+The positions in (42.4) are proof coordinates, not acquired macro
+markers or a stored entry depth. They explain how this restricted
+chronology survives in geometry. The trees $\rho^k\alpha$ are pairwise
+distinct: for every nonempty ordered tree, replacement increases
+$a+2b$ by $a+b>0$. At two consecutive positions known to have been
+born after attachment, their exponents differ by one precisely when
+the later macro is $F$, and otherwise agree. The decoder below also
+locates the entry without being supplied those positions. Logical
+spine depth counts binary source branches. In AA Definition 17.3's
+material realization, a beta has a unary terminal marker; that extra
+material edge is excluded from this depth and from every macro frontier.
+
+### 42.2 The two possible predecessors and a terminating inverse
+
+**Lemma 42.3 (native overlap and its entry boundary).** Let
+$\mathcal O=G[\mathcal D_+]$. It is exactly the set of native trees
+with a nonempty leftmost spine whose deepest right subtree is alpha.
+Its inverse $\operatorname{pr}:\mathcal O\to\mathcal D_+$ collapses
+only the deepest $\langle\beta,\alpha\rangle$ to beta. Every
+nonempty completed macro word ends in $\mathcal O$.
+
+Reuse the actual-image inverse $\delta$ of $\rho$ from PG §37.2,
+(PG.3705), and Theorem 44.6. Thus its domain is the decidable grammar
+
+$$
+I=\rho[\mathcal T]::=\beta\mid\langle\beta,\alpha\rangle
+                              \mid\langle I,I\rangle.
+\tag{42.5}
+$$
+
+For $s=\operatorname{Sp}(r_1,\ldots,r_d)\in\mathcal D_+$ put
+$H(s)=\operatorname{Sp}(\rho r_1,\ldots,\rho r_d)$. Then
+
+$$
+\begin{aligned}
+F(s)&=G(H(s)),&\operatorname{pr}(F(s))&=H(s),\\
+n(H(s))&=n(s)+\ell(s)-1.&&
+\end{aligned}
+\tag{42.6}
+$$
+
+At beta, $H(\beta)=\beta$. At every multileaf $s$, $H(s)\notin
+\mathcal O$ and $n(H(s))>n(s)$. In particular, an overlap
+$F(s)=G(u)$ forces $u=H(s)$; for multileaf $s$, this $u$ cannot itself
+have arisen from a nonempty completed macro word.
+
+Proof. The spine presentation proves the characterization of
+$\mathcal O$, the collapse inverse and injectivity of $G$. Equation
+(42.3) puts both macro outputs in $\mathcal O$ and proves the first
+line of (42.6). The second follows by subtracting the one-event $G$
+increment from $n(F(s))=n(s)+\ell(s)$.
+
+The reused grammar (42.5) has disjoint alternatives because
+$\alpha\notin I$: the special pair has right alpha, whereas an internal
+pair of images has right child in $I$. Recursion on finite subtrees
+decides membership and computes $\delta$; it also supplies the reused
+global injectivity of $\rho$. For multileaf $s$, the deepest right
+subtree of $H(s)$ is $\rho r_d$, which cannot be alpha. Thus it is
+outside $\mathcal O$ and cannot be a nonempty macro output. Its strict
+$n$ inequality follows from $\ell(s)\ge2$. Applying the collapse to
+$F(s)=G(u)$ gives the asserted unique $u$. $\square$
+
+**Theorem 42.4 (unknown-entry recovery and the sole beta ambiguity).**
+For every fixed $n_0>1$, the map
+
+$$
+(t,W)\longmapsto\bigl(n_0,\operatorname{Run}(W,t)\bigr),\qquad
+ t\in\mathcal D_+,\quad n(t)=n_0,\quad
+ W\in\{F,G\}^{<\omega},
+\tag{42.7}
+$$
+
+is injective on its entire stated domain. It has a terminating inverse
+on its actual image, recovering both the unknown initial logical tree
+and the literal macro word, including the empty word. No entry
+composition or depth is supplied.
+
+For $n_0=1$, the entry is beta. The endpoint beta has just its empty
+history. Every nonempty reachable final logical tree has exactly the
+two preimages
+
+$$
+(\beta,FU),\qquad(\beta,GU)
+\tag{42.8}
+$$
+
+for one uniquely determined suffix $U$. Conditional on $n_0=1$, such
+a nonempty final tree and no other distinguishing channel, a supplement
+recovers the target exactly if and only if it separates these two
+preimages. One binary first-macro choice is necessary and sufficient.
+
+Proof. Here is a decoder for $n_0>1$. Reject a nonnative input or one
+with $n(z)<n_0$. If $n(z)=n_0$, return $(z,\varepsilon)$. Otherwise
+require $z\in\mathcal O$ and put $c=\operatorname{pr}(z)$. Select the
+last letter and its predecessor by
+
+$$
+(p,X)=
+\begin{cases}
+(c,G),&n(c)=n_0\ \text{or}\ c\in\mathcal O,\\
+(\delta z,F),&\text{otherwise, provided }z\in I
+                         \text{ and }\delta z\in\mathcal D_+.
+\end{cases}
+\tag{42.9}
+$$
+
+Reject when the second branch has no stated predecessor or when
+$n(p)<n_0$. Recursively decode $(n_0,p)$ as $(t,V)$ and return
+$(t,VX)$. All membership tests, collapse, counts and the actual-image
+inverse are finite syntax operations. In the $G$ branch $n$ decreases
+by one. In the $F$ branch it decreases by $\ell(p)\ge1$. Thus the
+recursion terminates in at most $n(z)-n_0$ predecessor steps, with
+rejection allowed off the image.
+
+To prove that this decoder selects the actual last letter, consider
+any nonempty actual word with input entry index $n_0>1$. Its current
+predecessor $s$ is multileaf, since event count never decreases. If
+its last letter is $G$, then $c=s$. Either the preceding word is empty,
+so $n(c)=n_0$, or it is nonempty, so $c\in\mathcal O$. The first
+branch therefore applies. If its last letter is $F$, Lemma 42.3 gives
+$c=H(s)\notin\mathcal O$ and $n(c)>n(s)\ge n_0$. Neither condition
+of the first branch holds. The second applies and $\delta z=s$.
+Induction on decreasing $n$ proves that the returned pair is exactly
+the actual $(t,W)$. Consequently two such pairs with the same input
+cannot differ, even if their entry trees, depths and word lengths
+were initially unknown.
+
+Conversely every accepted predecessor in (42.9) really satisfies
+$X(p)=z$. At the base the recovered tree is native and has index
+$n_0$. Induction back up the recursion shows that every accepted
+answer belongs to the actual image and replays to the supplied
+logical syntax. This proves both inverse laws on that image, rather
+than merely uniqueness of a promised word.
+
+When $n_0=1$, Lemma 42.2 forces beta and strict event growth separates
+the empty word. Both first letters send beta to
+$K=\langle\beta,\alpha\rangle$, whose index is two. Apply the already
+proved $n_0=2$ inverse to the final tree: it returns $(K,U)$ with a
+unique $U$. This proves exactly (42.8). A decoder receiving identical
+supplementary values on these two targets cannot distinguish them;
+two different values suffice by selecting their first letter. This
+is the ordinary conditional injection bound applied to this concrete
+two-point fibre. $\square$
+
+A retained request, script or controller record can already reveal that
+first choice; the theorem then requires no additional bit beyond those
+supplied inputs. It does not assert that two complete installations
+have identical observations. In particular their macro requests can
+differ even when the successful source edits agree. The inverse
+computes descriptions. It does not undo source edits, restore old
+pointers or grant a reset, deletion or inverse-growth capability.
+
+### 42.3 A sharp bounded INITIAL reference
+
+**Proposition 42.5 (least attachment-reference alphabet).** Fix an
+integer $N\ge2$. The entry is unknown in
+
+$$
+\mathcal E_N=\{t\in\mathcal D_+:2\le n(t)\le N\}.
+\tag{42.10}
+$$
+
+An encoder $E:\mathcal E_N\to A$ is fixed at attachment independently
+of all future macro choices. Supply only $E(t)$ and the final logical
+tree; the target is both $t$ and every finite completed macro word.
+The least possible attained reference alphabet has exactly $N-1$
+values. The exact index $E(t)=n(t)$ attains it, with conditional
+fixed-width binary width $\lceil\log_2(N-1)\rceil$.
+
+Proof. Theorem 42.4 supplies a decoder with the $N-1$ indices
+$2,\ldots,N$. For the reverse inequality, put
+$t_j=G^{j-1}(\beta)$ for $2\le j\le N$. These are actual native
+entries obtained after the original alpha promotion and successive
+leftmost-beta splits. Their indices are $j$, and all have the common
+final logical tree $t_N$, using the future word $G^{N-j}$, including
+the empty word at $j=N$. The targets $(t_j,G^{N-j})$ are distinct.
+Their attachment references must therefore be distinct when the
+final tree is fixed. Hence at least $N-1$ attained reference values
+are necessary. The generic pigeonhole and binary-width principles
+are reused; the native common-endpoint chain gives their lower-bound
+instance and Theorem 42.4 gives the matching upper bound. $\square$
+
+This is a side-information theorem for an attachment reference, not
+a minimum total physical-memory claim. It conditions on the complete
+final syntax and excludes all other history-dependent inputs. Adding
+beta to the entry domain makes this target impossible for an encoder
+of $t$ alone: $E(\beta)$ is the same for $F$ and $G$, which have the
+same final tree. A future first-choice distinction must then be supplied
+through some other channel.
+
+### 42.4 Acquired syntax, old ancestral tapes and macro parsing
+
+**Proposition 42.6 (paid inputs and the addressed-expansion consequence).**
+Under Definition 42.1, an exact entry index can be acquired by a
+stationary finite traversal of the actual bound source, counting its
+logical alpha and beta leaves with backed exact counters and computing
+(42.1). It can instead be supplied by a correctly maintained backed
+exact counter of all successful alpha-origin events. A final stationary
+finite traversal acquires the complete final logical syntax. Conditional
+on these acquired inputs and finite decoding workspace/output, Theorem
+42.4 needs no ancestral-tape contents as decoder input for its target.
+
+For each fixed multileaf entry, the map from completed native macro
+words to their full indexed addressed primitive expansions is injective.
+At beta, its only ambiguity is the first letter in (42.8). If the current
+source and its acquired all-event ancestral tapes are supplied, AA
+Theorem 19.2 recovers their full alpha-origin indexed addressed primitive
+history. An authenticated exact $n_0$ then locates the continuation
+suffix, and replay of the first $n_0$ acquired events on logical syntax
+recovers the entry if needed. These interfaces do not insert macro
+delimiters in the primitive records.
+
+Proof. The traversal uses AA Definitions 17.3 and 20.2's arity parsing
+and LAB's stationary logical-frontier acquisition. From the authentic
+root follow only existing logical child links, check current grants and
+the actual reached references, and exclude beta's unary material marker
+from the logical frontier. A finite traversal stack, acquired address
+backing and exact finite counter fields suffice to count each logical
+leaf once. The same finite traversal, retaining ordered constructors
+and leaf tags, obtains final syntax. Retain the source binding and epoch
+across both acquisitions and the intervening macros. Source stability
+through each traversal and serialization exclude mixing counts or
+subtrees from different cuts. All reference tests, reads, arithmetic,
+list operations, reply transport, workspace, clearing and output are
+charged uses of finite owned material. Counter width must suffice for
+the actual finite value; it is not an unbounded finite-control state.
+Attachment may discard its acquired old syntax after computing $n_0$;
+Theorem 42.4 does not secretly retain it as another decoder input.
+
+The default modular pair fields of LAB §11 give residues, not an exact
+$n_0$. They cannot replace this acquisition without an additional proven
+range/counter contract. Likewise the syntax is acquired data, not a
+free computation oracle, guessed reference or waiting-as-a-clock.
+Every finite syntax operation of the inverse terminates; backing all
+its integers, parsed trees, recursive work and materialized word gives
+a finite computation for each admitted finite input. This is neither
+a runtime bound for the native driver nor an assertion that one fixed
+finite arena handles all future inputs.
+
+For the expansion claim, the primitive list and fixed initial logical
+tree determine the final logical tree by the original addressed rules.
+Theorem 42.4 then recovers the unique word for a multileaf entry. At beta
+the two first macros both expand to the same single $S_\varepsilon$;
+the suffix starts at the same $K$ and has the same deterministic
+expansion. The theorem excludes any further ambiguity. This reuses
+AA19.2 for full-order recall from the current source and all-event tapes:
+its decoded events include both kinds and their logical addresses.
+By Lemma 42.2 the supplied $n_0$ is precisely the old-prefix length,
+so indices $n_0+1,\ldots,n(z)$ select the continuation. Replay of its
+old prefix from the known alpha computes $t_0$ as a description.
+Thereafter the source inverse, or primitive replay followed by it,
+recovers macro grouping with the stated beta qualification. No recall
+request is presumed callable outside the existing Ready contract.
+$\square$
+
+Dispensing with tape contents in this decoder does not remove tapes
+maintained by the installation. It establishes no smaller total storage
+or faster native implementation. Old tape acquisition, source growth,
+frontier acquisition, code, roots, rights, buffers and output retain
+their own costs. Nor does the source-only decoder recover an arbitrary
+pre-attachment primitive shuffle: that separate target still uses the
+appropriate records.
+
+### 42.5 Lawful partial cuts and the limits of content projections
+
+**Proposition 42.7 (equal content at unequal completion cuts).** Start
+from the same attained multileaf $t$, with any one coherent prior
+primitive history and its tapes. Let $p$ be its leftmost beta address.
+Compare these two legal alternative executions: a fully returned $G$,
+and an $F$ paused after its first successful primitive has completed
+maintenance, its literal reply, acknowledgement and inner return. Their
+logical source and all ancestral-tape contents are equal. Their complete
+outer controller/Busy/Ready/return states differ. Thus this content
+projection cannot certify outer completion or distinguish these two
+macro situations.
+
+There is also a stronger source-only collision at every multileaf entry:
+the fully completed word $GF$ and the execution of $F$ followed by
+exactly the first two successful primitives of a second $F$ have the
+same logical source. The latter second macro is genuinely incomplete.
+Their primitive chronologies and coherent tape contents differ.
+
+Proof. The first old-frontier row in $F$ is the acquired current
+leftmost beta. Hence both compared first executions perform exactly
+$S_p$ on the same source. The all-event appends are identical and
+complete at the chosen inner-return cut, giving the same logical
+source and tape words. There is at least one other old-frontier row
+because $t$ is multileaf. The $F$ caller retains those unprocessed rows
+and its continuation and has not returned; $G$ has returned. Even at
+beta the content equality holds if $F$ is paused before its outer
+return, though no further primitive row then remains. Such equality
+is a statement about a projection of legal joint states, not equality
+of full observers.
+
+For the stronger collision, let $E$ be the nonempty left-first sequence
+of edits at all old leaves other than $p$. Its addresses are
+prefix-incomparable with $p$. The successful primitive expansions are
+
+$$
+\begin{aligned}
+GF &: S_p\,S_{pL}\,P_{pR}\,E,\\
+F\text{ then two primitives of }F &: S_p\,E\,S_{pL}\,P_{pR}.
+\end{aligned}
+\tag{42.11}
+$$
+
+Indeed after $G$, the first two frontier leaves are the new beta at
+$pL$ and alpha at $pR$. After the first $F$, exactly these are again
+the first two leaves of the next sealed frontier. Both displayed
+executions replace the old subtree beta at $p$ by
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$ and replace every
+other old leaf once by its $\rho$ image. Edits in $E$ commute with
+those at $pL,pR$ because their target subtrees are disjoint; hence
+the logical endpoints agree. The second frontier also contains
+leaves outside $p$, so after its first two rows that macro still has
+unprocessed rows. The two primitive lists differ: immediately after
+$S_p$, one edits $pL$, the other edits an address outside $p$.
+AA19.2's source-relative tape bijection therefore makes their tape
+contents different at the common endpoint. $\square$
+
+The first comparison uses the source-and-tape-content projection;
+the second uses only logical source. Neither supplies an outer
+FetchGrowth call while busy or during unfinished maintenance. At an
+inner Ready cut the surrounding caller can still be Busy, and the
+outer request contract need not admit recall. Mathematical evaluation
+of a coherent tape word is separate from a lawful callable observation.
+These collisions do not refute the completed-word theorem: one side
+of each comparison is outside its completed-macro domain.
+
+### 42.6 Restricted macro orbits, endpoint archives and supplier scope
+
+**Corollary 42.8 (number of native final trees in a composition fibre).**
+Fix an attained multileaf entry $t$ of composition $v$. With $N_v(q)$
+as already computed in §41, the number of distinct $F/G$-reachable
+final logical trees of composition $q$ is exactly $N_v(q)$. For the
+beta entry and a nonempty reachable endpoint $q\ne(0,1)$ it is
+$N_{(0,1)}(q)/2$. At $q=(0,1)$ there is the one empty-history tree;
+unreachable endpoints give zero.
+
+Proof. LAB12.2 identifies each word's final composition with §41's
+pair Run. For a fixed multileaf entry, Theorem 42.4 makes the map from
+that complete endpoint dictionary to final logical trees injective;
+it is surjective by the definition of its restricted orbit. At beta,
+Theorem 42.4 gives exactly two words per nonempty final tree. Their
+compositions agree, so each nonempty dictionary has even size and
+halving counts its distinct trees. Strict growth excludes a nonempty
+word at the beta endpoint. $\square$
+
+For example §41.3's four words at beta's composition $(2,3)$ yield
+exactly two native trees, as its explicit trees already show. The
+corollary counts the restricted macro orbit. It does not count all
+primitive-reachable trees of that composition, and it does not
+rederive §41's affine-action, full-word counting or ranking theory.
+
+**Proposition 42.9 (every-returned-macro pair archives).** Suppose the
+exact composition at attachment and after every completed macro is
+supplied as an acquired chronological archive. It determines all
+macro choices except the initial choice at beta. A single final pair,
+primitive-kind-only records, unordered work totals or §40's sparse
+block archives are different projections and do not in general
+supply this information.
+
+Proof. At a current composition $(a,b)$ the two possible successors
+are $(b,a+b)$ and $(a+1,b)$. They agree exactly when $a=0,b=1$.
+In $\mathcal D_+$ that pair forces beta. After the first macro its
+index strictly exceeds one and it never returns to beta. Successive
+exact pairs therefore determine every subsequent choice; at beta
+the first pair transition leaves the two choices unresolved.
+
+For the contrasting projections, §41.3's $GFF$ and $FGFG$ have the
+same final pair but different trees, and each has exactly two $F$'s,
+two successful primitive promotions and four splits when started at
+beta; their macro lengths nevertheless differ. At the attained entry
+$\langle\beta,\beta\rangle$, the completed words $F$ and $GG$ expand
+to $S_LS_R$ and $S_LS_{LL}$ respectively. Both have primitive-kind
+word $SS$, zero promotions, two splits and final composition $(2,2)$,
+but their logical endpoints are respectively
+$\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$
+and $\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\beta\rangle$.
+Thus even within the completed menu these smaller projections lose
+macro choices. Separately, the arbitrary legal primitive lists
+$S_LS_R$ and $S_RS_L$ from that entry have the same logical endpoint
+and kind word but different addressed order; the latter list is not
+its completed $F$ expansion. The sparse pair-archive collision family
+is exactly §40.3's paid block interface, whose record omits the
+intermediate returned-macro cuts. $\square$
+
+The archive in Proposition 42.9 contains paid cut history; it is not a
+source-only input or a full physical record. A primitive-kind word
+supplies neither its addresses nor macro separators. Conversely
+arbitrary $P/S$ shuffles with the same final source, as in AA17–19,
+do not refute Theorem 42.4's restriction to the completed native menu.
+None of the event counts, macro words or archives is elapsed time.
+
+**Convention 42.10 (reused results and the new correspondence).** The
+substantive correspondence here is between the completed native
+macro history with its unknown entry and the final logical source
+with an exact entry event index, uniformly over all attained
+$\mathcal D_+$. Its proof uses the native leftmost-spine overlap in
+Lemma 42.3. LAB9.3–9.4 and 12.2 supply the actual macro/source bridge;
+AA17 and 19–23 supply attainment, alpha-origin event counting,
+all-event tapes and lawful Ready service. FARG supplies the ordered
+syntax and global substitution. PG37.2's (PG.3705) and PG44.6 supply
+the actual-image parser and global substitution injectivity. In
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+the proof of global substitution injectivity is the local
+`have substitution_injective` inside `result`, not a separately
+exported declaration of that name. These are reused mathematical
+suppliers, without a new compilation or kernel-certification claim.
+
+[Native Entry Reference and Graft Order, §3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md)
+reuses the same $\rho$ parser but has a different $G$, a root graft.
+Its disjoint-menu theorem does not apply to LAB's local leftmost
+split: here the images overlap as (42.6) states. The generic
+actual-image inverse, injection, pigeonhole and coding principles
+are existing suppliers; the bounded reference application is
+Proposition 42.5, not a new generic coding theorem.
+
+Engelfriet, *Tree Automata and Tree Grammars*,
+[arXiv:1510.02036v1, Definition 3.62](https://arxiv.org/html/1510.02036v1),
+defines ranked-tree homomorphisms by recursive substitution. It is a
+framework for $\rho$, not a proof of recognizability for this finite
+local-$G$ menu. Berthé, Steiner, Thuswaldner and Yassawi,
+*Recognizability for sequences of morphisms*,
+[arXiv:1705.00167v2, §2](https://arxiv.org/html/1705.00167v2),
+concerns morphism representations of bi-infinite sequences and their
+recognizability; its domain and hypotheses are not those of (42.7).
+Relative to these inspected frameworks and the cited repository
+suppliers, the native recovery correspondence is `repo-derived`.
+No worldwide originality or formal verification of this append is
+asserted. The results concern finite completed runs and explicitly
+projected partial cuts; they leave the broader RRO recovery questions
+and the continuing research objective open.
+
+## 追加锚（本行以下为增补区）
