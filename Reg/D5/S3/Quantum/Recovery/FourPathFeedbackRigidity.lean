@@ -74,7 +74,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.FourPathFeedbackRigidity
     definition := none
