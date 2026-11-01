@@ -1,7 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment
+
+/-! Dependent-family evidence for the full finite-mode Gaussian insertion equation. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -66,26 +67,41 @@ private def unitParameters : Parameters.{u} where
 private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h unitParameters 0
-  change nativeMoment _ (0 + Finsupp.single PUnit.unit 1) = 1 at hh
-  rw [zero_add, nativeMoment, gaussianCoefficient_odd _ _ (by simp), mul_zero] at hh
+  dsimp only [unitParameters] at hh
+  change nativeMoment (fun _ _ : PUnit.{u+1} => 1) (Finsupp.single PUnit.unit 1) = 1 at hh
+  rw [nativeMoment, gaussianCoefficient_odd _ _ (by simp), mul_zero] at hh
   exact zero_ne_one hh
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
   refine ⟨unitParameters, 0, Finsupp.single PUnit.unit 1, ?_⟩
   intro h
-  norm_num [actual, realize, unitParameters, nativeMoment, gaussianCoefficient_zero, weight] at h
+  change (∑ j : PUnit.{u+1}, ((0 : PUnit.{u+1} →₀ ℕ) j : ℂ) * 1 *
+      nativeMoment (fun _ _ : PUnit.{u+1} => 1) (0 - Finsupp.single j 1)) =
+    ∑ j : PUnit.{u+1}, ((Finsupp.single PUnit.unit 1 : PUnit.{u+1} →₀ ℕ) j : ℂ) * 1 *
+      nativeMoment (fun _ _ : PUnit.{u+1} => 1)
+        (Finsupp.single PUnit.unit 1 - Finsupp.single j 1) at h
+  norm_num [nativeMoment, gaussianCoefficient_zero, weight] at h
 
 def evidence : Registration arena.{u} (type_of% (@nativeMoment_step.{u})) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp nativeMoment_step, rejected, rejected_fails⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_fails
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
   dependence := dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@nativeMoment_step.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.nativeMoment_step.__information_unit
+  unitName :=
+    `D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.nativeMoment_step.__information_unit
   realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.evidence
   realizationSource := none
   generated := false
