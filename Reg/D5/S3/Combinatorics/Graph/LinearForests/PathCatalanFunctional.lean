@@ -2,6 +2,7 @@ import D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! The complete legal path-parameter family with its integer functional as observation. -/
 namespace Reg.D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 open _root_.D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -39,9 +40,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨0, 0, 2, ?_⟩
+  have hempty : (SimpleGraph.hasse ℕ).IsIndepSet
+      ((∅ : Finset ℕ) : Set ℕ) := by
+    intro x hx
+    exact False.elim (by simpa using hx)
   simp [actual, realize, phi,
     _root_.D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations,
-    SimpleGraph.IsIndepSet, Set.Pairwise, catalan_zero, catalan_two]
+    Finset.filter_singleton, hempty, catalan_zero, catalan_two]
+
 
 def family : Registration arena (type_of% @path_phi_nonnegative) where
   actual := actual
