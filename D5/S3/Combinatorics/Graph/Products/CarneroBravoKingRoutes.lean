@@ -580,16 +580,16 @@ def subdivision : Data Original Edge where
 abbrev Vertex := subdivision.Vertex
 abbrev RoutedGraph := subdivision.graph
 
+/-- The original Nat labels and original coordinate table are complete. -/
+theorem old_coordinate_table_complete :
+    ∀ a : Original, (oldCoordinates.lookup a.val).isSome = true := by decide
+
 def oldCoordinate (a : Original) : Point :=
-  (oldCoordinates.lookup a.val).getD (0, 0)
+  (oldCoordinates.lookup a.val).get (old_coordinate_table_complete a)
 
 def coordinate : Vertex → Point
   | .inl a => oldCoordinate a
   | .inr ⟨e, i⟩ => Poly.sample (route e).corners (i.val + 1)
-
-/-- The original Nat labels and original coordinate table are complete. -/
-theorem old_coordinate_table_complete :
-    ∀ a : Original, (oldCoordinates.lookup a.val).isSome = true := by decide
 
 /-- Endpoint matching and lengths are derived from the actual 178 polylines.
 Only 1,283 corners are literal; no expanded 93,999-point certificate is imported. -/
@@ -620,9 +620,14 @@ theorem path_coordinate (e : Edge) (i : Fin (3 * subdivision.k e + 2)) :
 including every detour, every corner, and the zero-length-segment convention. -/
 theorem path_coordinate_verifier (e : Edge) (i : Fin (3 * subdivision.k e + 2)) :
     coordinate (subdivision.pathVertex e i) =
-      (IntegerPolyline.verifierExpand (route e).corners)[i.val]?.getD (0, 0) := by
-  rw [path_coordinate, IntegerPolyline.sample_eq_getD,
-    IntegerPolyline.expand_eq_verifier _ (polyline_facts e).2.1]
+      (IntegerPolyline.verifierExpand (route e).corners)[i.val]'(by
+        rw [← IntegerPolyline.expand_eq_verifier _ (polyline_facts e).2.1,
+          expanded_route_length]
+        exact i.isLt) := by
+  rw [path_coordinate,
+    ← IntegerPolyline.expand_eq_verifier _ (polyline_facts e).2.1,
+    IntegerPolyline.sample_eq_getD,
+    List.getElem?_eq_getElem (by rw [expanded_route_length]; exact i.isLt)]
 
 /-- Equality of unordered endpoint inventories with the construction's literal
 178 edges, and no duplicate endpoint pair among distinct route indices. -/
@@ -646,9 +651,6 @@ def baseGraph : SimpleGraph Original where
 
 instance : DecidableRel baseGraph.Adj := fun a b =>
   inferInstanceAs (Decidable (s(a.val, b.val) ∈ constructionEdges))
-
-theorem baseGraph_subcubic : ∀ a : Original, baseGraph.degree a ≤ 3 := by decide
-theorem baseGraph_edge_count : baseGraph.edgeFinset.card = 178 := by decide
 
 /-- Exact relation between the simple original graph and the subdivision data.
 Together with `pathVertex_injective`, `arc_iff_slot`, and `endpoint_pair_injective`,

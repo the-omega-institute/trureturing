@@ -18,7 +18,7 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
             Node("polyline-data", "polyline_facts", "The complete finite route facts",
                 "For every actual route, the corner list is nonempty and axis-aligned, its Manhattan length is 3 k(e)+1, and its samples at positions zero and 3 k(e)+1 equal the old endpoint coordinates. This is a kernel-reduction obligation over the literal data.", DescribeRole.Theorem),
             Node("path-enumeration", "path_coordinate_verifier", "Every path position has the verifier's coordinate",
-                "For every e and every position i in Fin (3 k(e)+2), coordinate(pathVertex(e,i)) is exactly element i of verifierExpand(corners(e)), using the same optional-lookup default. The nonempty length and endpoint facts ensure the consumed path positions are valid. No Python output is a proof premise.", DescribeRole.Theorem),
+                "For every e and every position i in Fin (3 k(e)+2), coordinate(pathVertex(e,i)) is exactly element i of verifierExpand(corners(e)). The index is proved to lie within the expanded route, so this statement uses actual element access. Old coordinates likewise use a proved-present table entry. No Python output is a proof premise.", DescribeRole.Theorem),
             Node("endpoints", "endpoint_inventory", "Every original edge is represented",
                 "The image of all route indices under the unordered endpoint-pair function equals the literal 178-edge construction inventory.", DescribeRole.Theorem),
             Node("endpoint-unique", "endpoint_pair_injective", "Distinct route indices have distinct endpoint pairs",

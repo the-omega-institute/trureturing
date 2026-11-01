@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Graph.Products.LatticeRouting
+import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 

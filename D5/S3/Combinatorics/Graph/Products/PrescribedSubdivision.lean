@@ -8,7 +8,8 @@
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fintype.Sigma
-import Mathlib.Tactic
+import Mathlib.Tactic.SplitIfs
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 

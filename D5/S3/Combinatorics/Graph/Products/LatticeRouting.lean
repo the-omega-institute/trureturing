@@ -8,7 +8,10 @@
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Combinatorics.SimpleGraph.Prod
-import Mathlib.Tactic
+import Mathlib.Data.Int.NatAbs
+import Mathlib.Tactic.Ring.Basic
+import Mathlib.Tactic.SplitIfs
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 
