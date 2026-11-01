@@ -133,11 +133,11 @@ private theorem uniform_bounds (a b c d : ℕ)
         have hc4 : c=4 := by omega
         subst d; subst b; subst c
         have hh := chart_small_corner 0 0 (H-1) 0 (by omega) (by omega) (by omega) (by omega)
-        have hg : grain a 3 4 2=H := by simp [grain,grainExponent,corner,H]
-        have hs : reserve a 3 4 2=11*H := by simp [reserve,corner,hg]; ring
         have ha : a - 5 = a - 4 - 1 := by omega
+        have hg : grain a 3 4 2=H := by simp [grain,grainExponent,corner,H,ha]
+        have hs : reserve a 3 4 2=11*H := by simp [reserve,corner,hg]; ring
         convert hh using 1 <;>
-          simp [show (1:ℤ)+(H-1)=H by ring,hg,hs,ha] <;>
+          simp [show (1:ℤ)+(H-1)=H by ring,hg,hs] <;>
           first | simpa using hx | ring | exact ha | omega
 
 private theorem reserve_capacity (a b c d : ℕ)
@@ -236,7 +236,6 @@ private theorem later_gates (B L M D z H r : ℤ)
     have hrDz : z+1≤r*D := by
       nlinarith only [hr.1,hD,hz,mul_nonneg (show 0≤r-1 by omega) (show 0≤D by omega)]
     dsimp only
-    simp only [ite_false]
     refine ⟨hw,hwcap,g1,k1,?_,?_⟩
     · constructor <;> nlinarith
     · constructor <;> nlinarith
