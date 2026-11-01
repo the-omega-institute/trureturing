@@ -38,39 +38,39 @@ internal sealed class FullFutureProfileDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula App(string name, params Formula[] arguments) =>
-        F.Seq(F.Operatorname, F.Grp(F.Id(name)), F.Open, F.Seq(arguments), F.Close);
+        F.Seq(F.Operatorname, F.Sp, F.Grp(F.Id(name)), F.Open, F.Seq(arguments), F.Close);
 
     private static Formula InstantStatement() => F.Disp(F.Seq(
-        F.Forall, F.Id("B"), F.InMacro, F.Mathbb, F.Grp(F.Id("N")), F.Comma,
-        F.Id("x"), F.Comma, F.Id("y"), F.InMacro, F.Mathbb, F.Grp(F.Id("Q")), F.Comma,
-        F.D(0), F.Lt, F.Id("x"), F.Land, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow,
-        F.Open, App("SameInstant", F.Id("B"), F.Comma, F.Id("x"), F.Comma, F.Id("y")), F.Iff,
+        F.Forall, F.Sp, F.Id("B"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
+        F.Id("x"), F.Comma, F.Id("y"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
+        F.D(0), F.Lt, F.Id("x"), F.Land, F.Sp, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow, F.Sp,
+        F.Open, App("SameInstant", F.Id("B"), F.Comma, F.Id("x"), F.Comma, F.Id("y")), F.Iff, F.Sp,
         App("SameFuture", F.Id("B"), F.Comma, F.Id("x"), F.Comma, F.Id("y")), F.Close));
 
     private static Formula CellStatement() => F.Disp(F.Seq(
-        F.Forall, F.Id("B"), F.InMacro, F.Mathbb, F.Grp(F.Id("N")), F.Comma,
-        F.Id("x"), F.Comma, F.Id("y"), F.InMacro, F.Mathbb, F.Grp(F.Id("Q")), F.Comma,
-        F.D(1), F.Le, F.Id("B"), F.Land, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow,
+        F.Forall, F.Sp, F.Id("B"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
+        F.Id("x"), F.Comma, F.Id("y"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
+        F.D(1), F.Le, F.Sp, F.Id("B"), F.Land, F.Sp, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow, F.Sp,
         F.Open, App("Contains", App("containingCell", F.Id("B"), F.Comma, F.Id("y")), F.Comma, F.Id("x")),
-        F.Iff, F.D(0), F.Lt, F.Id("x"), F.Land,
+        F.Iff, F.Sp, F.D(0), F.Lt, F.Id("x"), F.Land, F.Sp,
         App("SameInstant", F.Id("B"), F.Comma, F.Id("x"), F.Comma, F.Id("y")), F.Close));
 
     private static Formula EvaluatorStatement() => F.Disp(F.Seq(
-        F.Forall, F.Id("B"), F.InMacro, F.Mathbb, F.Grp(F.Id("N")), F.Comma,
-        F.Id("y"), F.InMacro, F.Mathbb, F.Grp(F.Id("Q")), F.Comma,
-        F.D(1), F.Le, F.Id("B"), F.Land, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow,
-        F.Open, App("Contains", F.Id("C"), F.Comma, App("representative", F.Id("C"))), F.Land,
-        F.Open, F.Forall, F.Id("x"), F.InMacro, F.Mathbb, F.Grp(F.Id("Q")), F.Comma,
-        App("Contains", F.Id("C"), F.Comma, F.Id("x")), F.Longrightarrow,
-        F.Forall, F.Id("w"), F.InMacro, App("List", App("Bool")), F.Comma,
-        F.Id("m"), F.InMacro, F.Mathbb, F.Grp(F.Id("N")), F.Comma,
-        F.D(1), F.Le, F.Id("m"), F.Le, F.Id("B"), F.Longrightarrow,
+        F.Forall, F.Sp, F.Id("B"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
+        F.Id("y"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
+        F.D(1), F.Le, F.Sp, F.Id("B"), F.Land, F.Sp, F.D(0), F.Lt, F.Id("y"), F.Longrightarrow, F.Sp,
+        F.Open, App("Contains", F.Id("C"), F.Comma, App("representative", F.Id("C"))), F.Land, F.Sp,
+        F.Open, F.Forall, F.Sp, F.Id("x"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
+        App("Contains", F.Id("C"), F.Comma, F.Id("x")), F.Longrightarrow, F.Sp,
+        F.Forall, F.Sp, F.Id("w"), F.InMacro, F.Sp, App("List", App("Bool")), F.Comma,
+        F.Id("m"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
+        F.D(1), F.Le, F.Sp, F.Id("m"), F.Le, F.Sp, F.Id("B"), F.Longrightarrow, F.Sp,
         App("evaluate", F.Id("C"), F.Comma, F.Id("w"), F.Comma, F.Id("m")), F.Eq,
         App("reply", F.Id("m"), F.Comma, App("attain", F.Id("w"), F.Comma, F.Id("x"))), F.Close, F.Close));
 
     private static Formula FastStatement() => F.Disp(F.Seq(
-        F.Forall, F.Id("B"), F.InMacro, F.Mathbb, F.Grp(F.Id("N")), F.Comma,
-        F.Id("y"), F.InMacro, F.Mathbb, F.Grp(F.Id("Q")), F.Comma,
+        F.Forall, F.Sp, F.Id("B"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("N")), F.Comma,
+        F.Id("y"), F.InMacro, F.Sp, F.Mathbb, F.Sp, F.Grp(F.Id("Q")), F.Comma,
         App("fastContainingCell", F.Id("B"), F.Comma, F.Id("y")), F.Eq,
         App("containingCell", F.Id("B"), F.Comma, F.Id("y"))));
 }
