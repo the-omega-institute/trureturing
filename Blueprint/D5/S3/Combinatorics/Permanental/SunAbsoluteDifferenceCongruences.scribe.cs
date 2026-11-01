@@ -20,11 +20,12 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source), Blocks(
                     Paragraph(Text("Conjecture 4.2(i), p. 25: “(i) For any odd prime p, we have per[|j − k|]₁⩽ⱼ,ₖ⩽ₚ ≡ −½ (mod p) and per[|j − k + 1|]₁⩽ⱼ,ₖ⩽ₚ ≡ ½ (mod p).” The displays are (4.3) and (4.4), respectively.")),
                     Paragraph(Text("Nat.Prime and Odd express exactly an odd prime. Matrix.permanent uses the sum of column-indexed permutation products, equal to the source's row-indexed sum by inversion of the permutation. Since 2 is invertible modulo an odd prime, the two integer divisibilities are precisely (4.3) and (4.4). The same p serves both conjuncts.")))),
+            Node("alternating-sum", "alternating_sum", AlternatingSumBody(), DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every nonnegative m and integer shift s, the alternating affine sum through 2m is m+s. This telescoping identity supplies the two parity cases in the permanent evaluation.")))),
             Node("result", "result", ClaimBody(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source), Blocks(
-                    Paragraph(Text("Alternating row and column signs give circulants without changing their permanents. A prime-order fixed-point count on the permutation-weight fibers leaves only translations in characteristic p. Fermat's identity and a telescoping alternating sum then evaluate both permanents. The prime circulant ingredient is the Brualdi–Newman congruence; the two absolute-difference reductions yield the stated divisibilities."))),
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("sun210842"), ResolutionKind.Proved))), []));
+                    Paragraph(Text("Alternating row and column signs give circulants without changing their permanents. A prime-order fixed-point count on the permutation-weight fibers leaves only translations in characteristic p. Fermat's identity and a telescoping alternating sum then evaluate both permanents. The prime circulant ingredient is the Brualdi–Newman congruence; the two absolute-difference reductions yield the stated divisibilities."))))), []));
 
     private static Formula MatrixBody()
     {
@@ -51,6 +52,19 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
                     Call("A", p, D(1)))), D(1))))))));
     }
 
+    private static Formula AlternatingSumBody()
+    {
+        var m = F.Id("m");
+        var s = F.Id("s");
+        var r = F.Id("r");
+        var index = Seq(r, Sp, Lt, Sp, Add(Mul(D(2), m), D(1)));
+        var summand = Mul(new Formula.Power(NegOne(), r),
+            Parenthesized(Add(Cast(r, Integers()), s)));
+        return All("m", Naturals(), All("s", Integers(),
+            Equal(Seq(Sum, Underscore, Grp(index), Sp, summand),
+                Add(Cast(m, Integers()), s))));
+    }
+
     private static DocumentBlock Node(string id, string declaration, Formula formula,
         DescribeRole role, AssessedProvenance provenance, BlockSequence prose,
         OpenProblemResolutionClaim? resolution = null) =>
@@ -64,6 +78,7 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name)));
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Cast(Formula a, Formula t) => Parenthesized(Seq(a, Colon, t));
+    private static Formula NegOne() => Parenthesized(Seq(Minus, Sp, D(1)));
     private static Formula All(string n, Formula t, Formula b) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
     private static Formula Abs(Formula a) => Seq(Lvert, Sp, a, Rvert, Sp);
