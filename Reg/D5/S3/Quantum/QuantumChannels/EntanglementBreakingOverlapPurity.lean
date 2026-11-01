@@ -190,9 +190,9 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := @h (ULift.{u} Unit) inferInstance (fun _ => 1) (fun _ => 1)
     (by simp [dotProduct]) (by simp [dotProduct]) 1 (by simp)
-  have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) hh
-  simp [rejected, realize, vecMulVec_apply] at he
-  exact zero_ne_one he
+  have he : (0 : ℂ) = 1 * star (1 : ℂ) :=
+    congrArg (fun M => M (ULift.up ()) (ULift.up ())) hh
+  norm_num at he
 
 theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
@@ -229,8 +229,7 @@ def registration :
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some
-    (realize signature (fun _ _ ψ => vecMulVec ψ (star ψ)) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
