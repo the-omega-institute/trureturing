@@ -128,7 +128,8 @@ private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout ()
   intro h
   have he := congrArg (fun f : ℤ → Fock => f 2 {7}) h
   norm_num [actual, realize, squareTerm, c, annihilate_ket, create_vacuum, create_ket,
-    phase, lowerCount, ket] at he
+    phase, lowerCount] at he <;>
+    norm_num [ket, Finset.filter_insert, Finset.insert_comm, ← Finsupp.single_add] at he
 
 def family : Registration arena (type_of% @squareTerm_finite) where
   actual := actual

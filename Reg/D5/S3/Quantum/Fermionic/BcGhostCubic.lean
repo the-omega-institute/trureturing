@@ -44,7 +44,11 @@ private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout ()
   intro h
   have he := congrArg (fun f : ℤ × ℤ → Fock => f (0,2) {0,3}) h
   norm_num [actual, realize, cubicTerm, cubic, b, c, create_vacuum,
-    create_ket, annihilate_ket, phase, lowerCount, ket] at he
+    create_ket, annihilate_ket, phase, lowerCount] at he
+  simp only [ket] at he
+  have hs : ({3,0} : Finset ℕ) = {0,3} := by decide
+  rw [hs, Finsupp.single_eq_same] at he
+  norm_num at he
 
 def family : Registration arena (type_of% @cubic_finite) where
   actual := actual
@@ -124,7 +128,11 @@ private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout ()
   intro h
   have he := congrArg (fun f : ℤ × ℤ → Fock => f (0,2) {0,3}) h
   norm_num [actual, realize, cubicTerm, cubic, b, c, create_vacuum,
-    create_ket, annihilate_ket, phase, lowerCount, ket] at he
+    create_ket, annihilate_ket, phase, lowerCount] at he
+  simp only [ket] at he
+  have hs : ({3,0} : Finset ℕ) = {0,3} := by decide
+  rw [hs, Finsupp.single_eq_same] at he
+  norm_num at he
 
 def family : Registration arena (type_of% @cubicTerm_finite) where
   actual := actual
@@ -203,8 +211,14 @@ theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () (b (
   have he := congrArg (fun v : Fock => v {0,3}) h
   rw [L_vacuum] at he
   have hI : Finset.Icc (0 : ℤ) 1 = {0,1} := by decide
+  simp only [show (-2 : ℤ) + 2 = 0 by decide] at he
   rw [hI] at he
-  norm_num [b, c, create_vacuum, create_ket, phase, lowerCount, ket] at he
+  norm_num [b, c, create_vacuum, create_ket, phase, lowerCount] at he
+  simp only [ket] at he
+  have hz (z : ℂ) : (Finsupp.single ({2,1} : Finset ℕ) z) {0,3} = 0 :=
+    Finsupp.single_eq_of_ne (by decide)
+  rw [hz] at he
+  norm_num at he
 
 def family : Registration arena (type_of% @Qg_vacuum) where
   actual := actual
@@ -278,7 +292,8 @@ private theorem actual_dependence : actual.readout () (0,2) (-2) ≠ actual.read
   change cubic 0 2*b (-2)+b (-2)*cubic 0 2 = cubic 0 2*b (-3)+b (-3)*cubic 0 2 at h
   rw [cubic_b, cubic_b] at h
   have he := congrArg (fun A : Module.End ℂ Fock => A vacuum {0,3}) h
-  norm_num [normal, b, c, create_vacuum, create_ket, phase, lowerCount, ket] at he
+  norm_num [normal, b, c, create_vacuum, create_ket, phase, lowerCount] at he <;>
+    norm_num [ket, Finset.filter_insert, Finset.insert_comm, ← Finsupp.single_add] at he
 
 def family : Registration arena (type_of% @cubic_b) where
   actual := actual
@@ -351,7 +366,8 @@ private theorem actual_dependence : actual.readout () (0,2) 2 ≠ actual.readout
   change cubic 0 2*c 2+c 2*cubic 0 2 = cubic 0 2*c 3+c 3*cubic 0 2 at h
   rw [cubic_c, cubic_c] at h
   have he := congrArg (fun A : Module.End ℂ Fock => A (ket {0}) {3}) h
-  norm_num [c, annihilate_ket, create_vacuum, create_ket, phase, lowerCount, ket] at he
+  norm_num [c, annihilate_ket, create_vacuum, create_ket, phase, lowerCount] at he <;>
+    norm_num [ket, Finset.filter_insert, Finset.insert_comm, ← Finsupp.single_add] at he
 
 def family : Registration arena (type_of% @cubic_c) where
   actual := actual

@@ -188,7 +188,8 @@ def rejected : Realization signature := realize signature (fun _ _ v => v) (fun 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrArg (fun v : Fock => v ∅) (h vacuum)
-  norm_num [rejected, realize, vacuum, parity_ket, ket] at he
+  norm_num [rejected, realize, vacuum, parity_ket] at he <;>
+    norm_num [ket] at he
 private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () (b (-2) vacuum) := by
   change Qg 0 ≠ Qg (b (-2) vacuum)
   exact _root_.Reg.D5.S3.Quantum.Fermionic.BcGhostCubic.Vacuum.actual_dependence

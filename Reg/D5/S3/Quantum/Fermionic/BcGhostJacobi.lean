@@ -43,8 +43,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   rw [hw, L_vacuum] at hv
   have hc := congrArg (fun v : Fock => v {0,3}) hv
   have hI : Finset.Icc (0 : ℤ) 1 = {0,1} := by decide
+  simp only [show (-2 : ℤ) + 2 = 0 by decide] at hc
   rw [hI] at hc
-  norm_num [b, c, create_vacuum, create_ket, phase, lowerCount, ket] at hc
+  norm_num [b, c, create_vacuum, create_ket, phase, lowerCount] at hc
+  simp only [ket] at hc
+  have hz (z : ℂ) : (Finsupp.single ({2,1} : Finset ℕ) z) {0,3} = 0 :=
+    Finsupp.single_eq_of_ne (by decide)
+  rw [hz] at hc
+  norm_num at hc
 private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () 2 := by
   intro h
   change R 0 = R 2 at h
