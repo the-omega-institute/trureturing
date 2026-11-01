@@ -9,6 +9,8 @@
 import D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum
 import D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianFock
 import Mathlib.LinearAlgebra.Finsupp.LSum
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.Symmetric
 
 /-! Classical bilinear Gaussian/Fock coefficient calculus. External blocks
 are arbitrary. Only the shared blocks enter the analytic estimates. -/
@@ -385,6 +387,90 @@ theorem bilinearMoment_resolvent_step (A B : Matrix H H ℂ)
       rw [Matrix.mulVec_mulVec, Ring.inverse_mul_cancel _ hu, Matrix.one_mulVec]
     _ = _ := by rw [heq]
 
+
+
+private theorem resolvent_unit (A B : Matrix H H ℂ)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) : IsUnit (1 - B * A) := by
+  apply isUnit_one_sub_of_norm_lt_one
+  exact (norm_mul_le B A).trans_lt
+    ((mul_le_of_le_one_left (norm_nonneg A) hB.le).trans_lt hA)
+
+private theorem resolvent_push (A B : Matrix H H ℂ)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) :
+    (1 - B * A)⁻¹ʳ * B = B * (1 - A * B)⁻¹ʳ := by
+  have hleft := resolvent_unit A B hA hB
+  have hright := resolvent_unit B A hB hA
+  have hp : (1 - B * A) * B = B * (1 - A * B) := by noncomm_ring
+  calc
+    (1 - B * A)⁻¹ʳ * B =
+        (1 - B * A)⁻¹ʳ * (B * ((1 - A * B) * (1 - A * B)⁻¹ʳ)) := by
+      rw [Ring.mul_inverse_cancel _ hright, mul_one]
+    _ = (1 - B * A)⁻¹ʳ * (((1 - B * A) * B) * (1 - A * B)⁻¹ʳ) := by
+      rw [← mul_assoc B, ← hp]
+    _ = B * (1 - A * B)⁻¹ʳ := by
+      rw [← mul_assoc, ← mul_assoc, Ring.inverse_mul_cancel _ hleft, one_mul]
+
+private theorem resolvent_transpose (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i) :
+    ((1 - B * A)⁻¹ʳ).transpose = (1 - A * B)⁻¹ʳ := by
+  have hAt : A.transpose = A := by ext i j; exact hAsym j i
+  have hBt : B.transpose = B := by ext i j; exact hBsym j i
+  simp only [← Matrix.nonsing_inv_eq_ringInverse, Matrix.transpose_nonsing_inv,
+    Matrix.transpose_sub, Matrix.transpose_one, Matrix.transpose_mul, hAt, hBt]
+
+/-- The ordered joint insertion covariance. The lower cross block is the
+transpose of the upper cross block for symmetric A and B. -/
+def covariance (A B : Matrix H H ℂ) : Matrix (H ⊕ H) (H ⊕ H) ℂ :=
+  Matrix.fromBlocks ((1 - B * A)⁻¹ʳ * B) ((1 - B * A)⁻¹ʳ)
+    ((1 - A * B)⁻¹ʳ) ((1 - A * B)⁻¹ʳ * A)
+
+private theorem covariance_symm (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) :
+    (covariance A B).IsSymm := by
+  have hAt : A.transpose = A := by ext i j; exact hAsym j i
+  have hBt : B.transpose = B := by ext i j; exact hBsym j i
+  unfold covariance Matrix.IsSymm
+  rw [Matrix.fromBlocks_transpose, Matrix.transpose_mul, Matrix.transpose_mul,
+    hAt, hBt, resolvent_transpose A B hAsym hBsym,
+    resolvent_transpose B A hBsym hAsym,
+    ← resolvent_push A B hA hB, ← resolvent_push B A hB hA]
+
+/-- The complete ordered Wick recurrence for the actual insertion moments,
+with symmetric joint covariance and both coordinate families. This is a
+recurrence for the actual infinite pairing, not an assumed Wick evaluation. -/
+theorem bilinearMoment_wick_recursion (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) :
+    (∀ i j, covariance A B i j = covariance A B j i) ∧
+    (∀ (α β : H →₀ ℕ) (i : H),
+      bilinearMoment A B (α + Finsupp.single i 1) β =
+        (∑ j, covariance A B (.inl i) (.inl j) * (α j : ℂ) *
+          bilinearMoment A B (α - Finsupp.single j 1) β) +
+        ∑ j, covariance A B (.inl i) (.inr j) * (β j : ℂ) *
+          bilinearMoment A B α (β - Finsupp.single j 1)) ∧
+    (∀ (α β : H →₀ ℕ) (i : H),
+      bilinearMoment A B α (β + Finsupp.single i 1) =
+        (∑ j, covariance A B (.inr i) (.inl j) * (α j : ℂ) *
+          bilinearMoment A B (α - Finsupp.single j 1) β) +
+        ∑ j, covariance A B (.inr i) (.inr j) * (β j : ℂ) *
+          bilinearMoment A B α (β - Finsupp.single j 1)) := by
+  refine ⟨(fun i j => (covariance_symm A B hAsym hBsym hA hB).apply j i), ?_, ?_⟩
+  · intro α β i
+    have h := congrFun (bilinearMoment_resolvent_step A B hAsym hBsym hA hB α β) i
+    rw [Matrix.mulVec_add, Matrix.mulVec_mulVec] at h
+    simpa only [covariance, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
+      Matrix.mulVec, dotProduct, Pi.add_apply, mul_assoc] using h
+  · intro α β i
+    have h := congrFun (bilinearMoment_resolvent_step B A hBsym hAsym hB hA β α) i
+    simp_rw [← bilinearMoment_swap A B] at h
+    rw [Matrix.mulVec_add, Matrix.mulVec_mulVec] at h
+    simpa only [covariance, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
+      Matrix.mulVec, dotProduct, Pi.add_apply, mul_assoc, add_comm] using h
 
 private theorem polynomialGaussian_expansion (A : Matrix H H ℂ)
     (p : MvPolynomial H ℂ) :

@@ -321,6 +321,82 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+def wickArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {H : Type u} [Fintype H] [DecidableEq H]
+    (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1),
+    (∀ i j, covariance A B i j = covariance A B j i) ∧
+    (∀ (α β : H →₀ ℕ) (i : H),
+      R.readout () ⟨H,i⟩ (fun j => bilinearMoment A B (α + Finsupp.single j 1) β) =
+        (∑ j, covariance A B (.inl i) (.inl j) * (α j : ℂ) *
+          bilinearMoment A B (α - Finsupp.single j 1) β) +
+        ∑ j, covariance A B (.inl i) (.inr j) * (β j : ℂ) *
+          bilinearMoment A B α (β - Finsupp.single j 1)) ∧
+    (∀ (α β : H →₀ ℕ) (i : H),
+      R.readout () ⟨H,i⟩ (fun j => bilinearMoment A B α (β + Finsupp.single j 1)) =
+        (∑ j, covariance A B (.inr i) (.inl j) * (α j : ℂ) *
+          bilinearMoment A B (α - Finsupp.single j 1) β) +
+        ∑ j, covariance A B (.inr i) (.inr j) * (β j : ℂ) *
+          bilinearMoment A B α (β - Finsupp.single j 1))
+
+private theorem wick_rejected_fails : ¬ wickArena.{u}.Law rejected := by
+  intro h
+  let I := PUnit.{u+1}
+  let i : I := PUnit.unit
+  have hv := @_root_.D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum.vacuum_trace_log
+    I inferInstance inferInstance 0 0 (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp)
+  have h00 : bilinearMoment (0 : Matrix I I ℂ) 0 0 0 = 1 := by
+    simpa [bilinearMoment,
+      _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum.created_zero,
+      _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum.pairing] using hv.2.2
+  have hh := (@h I inferInstance inferInstance 0 0
+    (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp)).2.1
+      0 (Finsupp.single i 1) i
+  simpa [rejected, realize, covariance, Ring.inverse_one, h00] using hh
+
+def wickEvidence : Registration wickArena.{u}
+    (type_of% (@bilinearMoment_wick_recursion.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@bilinearMoment_wick_recursion.{u}, rejected, wick_rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, wick_rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
+  dependence := actual_dependence
+
+def wickAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@bilinearMoment_wick_recursion.{u}) (Realization signature.{u}) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.Moment.wickUnit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.Moment.wickEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨wickArena.{u}⟩
+  objectArena := .source ⟨wickArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source wickArena.{u} ⟨wickEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Moment
 
 end Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
