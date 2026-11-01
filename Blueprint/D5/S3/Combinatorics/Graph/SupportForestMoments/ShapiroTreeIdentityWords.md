@@ -34,6 +34,10 @@ $$\forall (n : \mathbb{N}), \forall (T : \operatorname{SimpleGraph}\left(\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SupportForestMoments/ShapiroTreeIdentityWords.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shap2610` (proved) by `D5/S3/Combinatorics/Graph/SupportForestMoments/ShapiroTreeIdentityWords.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shap2610","declaration_gid":"D5/S3/Combinatorics/Graph/SupportForestMoments/ShapiroTreeIdentityWords.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Boris Shapiro (2026). *Transposition Cayley Spectra and Subgraph Counts*. URL: <https://arxiv.org/abs/2610.14373v1>.
