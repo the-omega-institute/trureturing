@@ -126,19 +126,22 @@ private theorem cost_lcm {H K : ℕ} (hH : 0 < H) (hK : 0 < K) :
   apply le_antisymm
   · apply (cost_le _ _).mpr
     intro p
-    rw [Nat.factorization_lcm hH.ne' hK.ne', Finsupp.sup_apply]
-    simp only [sup_eq_max, max_mul_mul_right]
+    rw [Nat.factorization_lcm hH.ne' hK.ne']
+    change max (H.factorization p) (K.factorization p) * (p - 1) ≤ _
+    rw [← max_mul_mul_right]
     exact max_le_max ((cost_le H _).mp le_rfl p) ((cost_le K _).mp le_rfl p)
   · apply max_le
     · apply (cost_le _ _).mpr
       intro p
       have h := (cost_le (Nat.lcm H K) _).mp le_rfl p
-      rw [Nat.factorization_lcm hH.ne' hK.ne', Finsupp.sup_apply] at h
+      rw [Nat.factorization_lcm hH.ne' hK.ne'] at h
+      change max (H.factorization p) (K.factorization p) * (p - 1) ≤ _ at h
       exact (Nat.mul_le_mul_right (p - 1) (le_max_left _ _)).trans h
     · apply (cost_le _ _).mpr
       intro p
       have h := (cost_le (Nat.lcm H K) _).mp le_rfl p
-      rw [Nat.factorization_lcm hH.ne' hK.ne', Finsupp.sup_apply] at h
+      rw [Nat.factorization_lcm hH.ne' hK.ne'] at h
+      change max (H.factorization p) (K.factorization p) * (p - 1) ≤ _ at h
       exact (Nat.mul_le_mul_right (p - 1) (le_max_right _ _)).trans h
 
 /-- Local arithmetic inverse of a recorded original letter; never a source call. -/
@@ -463,6 +466,30 @@ private theorem request_exists {Handle World : Type} (B : SourceService Handle W
       B h (complete E (envelope_pos _)) p x hx
     exact ⟨_, y, .upgrade (by omega) hr⟩
 
+private theorem request_deterministic {Handle World : Type} (B : SourceService Handle World)
+    (h : Handle) (complete : VariableCompletion B h) (p : Tariffs)
+    (a : Memory) (H : ℕ) (x : World) (hx : B.lawful h x)
+    {b y c z} (first : RequestRun B h p a H x b y)
+    (second : RequestRun B h p a H x c z) :
+    b = c ∧ B.value h y = B.value h z := by
+  cases first with
+  | covered hc =>
+    cases second with
+    | covered => exact ⟨rfl, rfl⟩
+    | upgrade hm _ => omega
+  | @upgrade es t y d n hm actual =>
+    cases second with
+    | covered hc => omega
+    | @upgrade fs u z e k hm' actual' =>
+      let E := envelope (budget (costBound H))
+      obtain ⟨t₀, y₀, hr₀, hv₀, hl₀, count, h1, lower, continued, all⟩ :=
+        same_handle_return E (by have := envelope_pos (budget (costBound H)); omega)
+          B h (complete E (envelope_pos _)) p x hx
+      obtain ⟨hes, ht, hd, hv, rest⟩ := all es t y d n actual
+      obtain ⟨hfs, hu, he, hz, rest'⟩ := all fs u z e k actual'
+      refine ⟨?_, hv.trans hz.symm⟩
+      rw [hes, hfs, hd, he]
+
 /-- Recovery after any positive-modulus physical upgrade of an authentic
 prefix, independently of the online envelope policy. Old labels at a divisor
 are recovered by reduction from the same original pair and actual cuts. -/
@@ -723,13 +750,15 @@ def ArchiveService {Handle World : Type} (B : SourceService Handle World) (h : H
     (∃ k, a.precision = 2 ^ k) ∧ costBound a.joint ≤ a.precision ∧
     a.precision < 2 * costBound a.joint ∧
     (∀ k, costBound a.joint ≤ 2 ^ k → a.precision ≤ 2 ^ k) ∧
-    8 * costBound a.joint = 4 * (if a.joint = 1 then 0 else 2 * costBound a.joint))
+    8 * costBound a.joint = 4 * (if a.joint = 1 then 0 else 2 * costBound a.joint)) ∧
+  (∀ p H b y c z, RequestRun B h p a H x b y → RequestRun B h p a H x c z →
+    b = c ∧ B.value h y = B.value h z)
 
 private theorem archive_service {Handle World : Type} (B : SourceService Handle World)
     (h : Handle) (complete : VariableCompletion B h) (x₀ x : World)
     (a : Memory) (hx₀ : B.lawful h x₀) (s : Sound B h x₀ a x) :
     ArchiveService B h x₀ a x := by
-  refine ⟨?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_⟩
   · intro D hD div
     have ho : reduce D _ div a.original = residueSource D (B.value h x₀) := by
       rw [s.original_eq, reduce_source]
@@ -764,6 +793,8 @@ private theorem archive_service {Handle World : Type} (B : SourceService Handle 
     · rw [s.precision_eq]; exact hs.2.1
     · rw [s.precision_eq]; exact hs.2.2
     · simp [hj]; omega
+  · intro p H b y c z first second
+    exact request_deterministic B h complete p a H x s.lawful first second
 
 /-- One uniform online program runs on the same bound natural-pair source
 for every finite delivered input sequence. Every completed execution has the
@@ -797,4 +828,3 @@ theorem complete_online_archive {Handle World : Type} (B : SourceService Handle 
 #print axioms complete_online_archive
 
 end D5.S3.Arith.FibonacciAtomic.Acquisition.OnlineCommonOriginalArchive
-
