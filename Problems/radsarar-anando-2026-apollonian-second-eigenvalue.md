@@ -78,6 +78,8 @@ These combinatorial statements alone do not establish the spectral limit.
 The actual late adjacency norm interface belongs to
 [CutoffSpectralBounds](../D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds.lean).
 Its bound uses the proved birth orientation and the finite Schur operator bound.
+For every cutoff $k$ and later increment $t\ge1$, it gives
+$\|C\|/2^{(k+t)/2}\le3\sqrt2/2^{k/2}$ with real exponents, including odd stages.
 The [unfinished graph registrations](https://github.com/the-omega-institute/trureturing/issues/24989#issuecomment-6552933239)
 remain separate from mathematical compilation, under the linked-issue route.
 No frozen graph-specific spectral resolution is asserted here.
