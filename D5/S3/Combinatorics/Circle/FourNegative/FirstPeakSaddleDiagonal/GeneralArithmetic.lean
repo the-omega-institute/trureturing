@@ -387,8 +387,9 @@ private theorem scaled_to_rectangle (K J m t h r v j lo hi : ℤ)
       scaledMargin K J m t lo hi h r i+
         if i=0 ∨ i=2 then aa*(j-lo) else aa*(hi-j) := by
     have hp := congrArg (fun u : ℤ => aa*u) hv
+    dsimp [aa,z,g,pivot,grain] at hp
     fin_cases i <;>
-      simp [rectangleMargin,scaledMargin,E0,H0,pivot,z,g,aa,Mn,Ln,grain] at hp ⊢ <;>
+      simp [rectangleMargin,scaledMargin,E0,H0,pivot,z,g,aa,Mn,Ln,grain] <;>
       nlinarith only [hp]
   intro i
   apply positive_cancel (z+1) _ hβ
@@ -823,9 +824,21 @@ private theorem parameterChoice (a b c d : ℕ) (hc : 3≤c) (hcd : c<d)
       (by omega) ht2 hy2 hx2 hq (by rw [es,er]) hq0
       (by rw [er]; exact hr0) hss (by rw [eh]; exact hh0)
       (by rw [eh,hzm,hyt]; exact hcap) hrectN
-  refine ⟨{ s:=sN, r:=rN, v:=vN, h:=hN, r_pos:=hrN0,
-    r_le_s:=(by dsimp [sN]; omega), s_cap:=hsN, v_cap:=hvs, h_cap:=hhs,
-    submask:=hsub, reserve_eq:=?_, grain_cap:=?_, rectangle:=?_, gates:=hgateN }⟩
+  refine ⟨{
+    s := sN
+    r := rN
+    v := vN
+    h := hN
+    r_pos := hrN0
+    r_le_s := by dsimp [sN]; omega
+    s_cap := hsN
+    v_cap := hvs
+    h_cap := hhs
+    submask := hsub
+    reserve_eq := ?_
+    grain_cap := ?_
+    rectangle := ?_
+    gates := hgateN }⟩
   · rw [es,hqreal,er,hgpow]
   · rw [er,←hgpow]; exact hr1
   · rw [←hgpow,←hqreal]
