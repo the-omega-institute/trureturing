@@ -119,7 +119,10 @@ theorem lower_length (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
         s.length * (d + 1) := by
     induction s with
     | nil => simp
-    | cons x xs ih => simp [ih, he, Nat.succ_mul, Nat.add_comm]
+    | cons x xs ih =>
+        simp only [List.flatMap_cons, List.length_append, List.length_map,
+          List.length_cons, ih, he]
+        ring
   simpa using hlen (List.finRange (r - 1))
 
 theorem ear_after (k : ℕ) (xs ys : List (Fin k)) (cut : ℕ) :
@@ -158,7 +161,7 @@ theorem literal_ear (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
     have hh : List.finRange (s + 1) =
         (List.finRange s).map Fin.castSucc ++ [Fin.last s] :=
       List.finRange_succ_last
-    simpa [jt] using hh
+    simpa [jt, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.last] using hh
   unfold shortenedWord commonCut
   rw [← hl, ear_after, hte]
   unfold daughterWord
