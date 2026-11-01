@@ -51,7 +51,7 @@ internal sealed class FiniteGraphSubgraphSuspensionConstructionDocument : IScrib
             Node("coordinates-contractible-u", "contractible_U", "Contraction of the first open set",
                 "Erase all apex coordinates and normalize, then interpolate to the hub. Both stages remain in U and in the actual independence realization. This constructs contractibility of U for all finite G,H.", DescribeRole.Theorem),
             Node("coordinates-contractible-starb", "contractible_starB", "Contraction of the closed star cluster",
-                "Apply the fixed epsilon cutoff and normalize. Then interpolate to the compatible apex probability vector with unnormalized weights max(epsilon-b_M,0), and finally to a fixed apex. The fixed cutoff denominator exceeds three quarters. At least one apex weight is at least epsilon-delta, hence strictly positive in O. The support tests preserve actual independence and delta=0 throughout the contraction on B. This constructs contractibility of the actual finite apex star cluster.", DescribeRole.Theorem),
+                "Apply the fixed epsilon cutoff and normalize. Then interpolate to the compatible apex probability vector with unnormalized weights max(epsilon-b_M,0), and finally to a fixed apex. The fixed cutoff denominator exceeds three quarters. At least one apex weight is at least epsilon-delta, hence strictly positive in O. The support tests preserve actual independence and delta=0 throughout the contraction on B. This constructs contractibility of the actual finite apex star cluster.", DescribeRole.Theorem)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

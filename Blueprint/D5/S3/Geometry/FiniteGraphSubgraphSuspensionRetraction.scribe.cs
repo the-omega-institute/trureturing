@@ -19,7 +19,7 @@ internal sealed class FiniteGraphSubgraphSuspensionRetractionDocument : IScribeD
             Node("coordinates-contractible-o", "contractible_O", "Contractibility of the second open set",
                 "The constructed equivalence with the actual contractible apex star cluster makes O contractible. No homological vanishing assumption is supplied.", DescribeRole.Theorem),
             Node("coordinates-intersectionequiv", "intersectionEquiv", "The actual open intersection",
-                "For every H less than or equal to G, the old epsilon cutoff and normalization map U intersect O to the actual old independence realization. Its denominator exceeds one quarter. Edges of H are excluded by a maximal independent set; edges retained from G minus H are excluded by the original gadget support. Inclusion on old coordinates is the inverse up to the two displayed straight homotopies.", DescribeRole.Definition),
+                "For every H less than or equal to G, the old epsilon cutoff and normalization map U intersect O to the actual old independence realization. Its denominator exceeds one quarter. Edges of H are excluded by a maximal independent set; edges retained from G minus H are excluded by the original gadget support. Inclusion on old coordinates is the inverse up to the two displayed straight homotopies.", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

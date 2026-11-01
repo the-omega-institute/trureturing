@@ -25,8 +25,6 @@ internal sealed class FiniteGraphSubgraphSuspensionDocument : IScribeDocumentDef
             Node("localsubgraphreducedhomologyiso", "localSubgraphReducedHomologyIso", "The local gadget homology shift",
                 "For every nonempty finite G, every arbitrary possibly noninduced subgraph H, every finite instance on H.verts, and every natural q at least one, the actual local gadget independence realization in degree q+1 has reduced singular integral homology isomorphic to that of G in degree q. Transport uses the proved graph isomorphism and the existing coordinate homeomorphism. These results provide core machinery for Carnero Bravo Question 32. They do not settle its hereditary SW statement for all induced subgraphs and arbitrary m; Question 35 about the full rectangle is different. Seed comparison, complete gadget replay, king rotation and the sphere-bouquet torsion obstruction are further obligations. The graph suspension and star-cluster mechanisms belong to the work of Adamaszek, Barmak and Csorba; the explicit coordinate neighborhoods are the construction described here, without a priority claim.", DescribeRole.Definition))));
 
-        )));
-
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
