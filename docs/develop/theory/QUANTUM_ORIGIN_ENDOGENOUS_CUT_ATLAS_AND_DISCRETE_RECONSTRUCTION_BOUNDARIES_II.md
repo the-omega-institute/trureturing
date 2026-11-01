@@ -2869,3 +2869,362 @@ The qutrit witness tests a different, explicit joint-reference interface on the 
 Finite copies are supplied resources, without a cloning operation. Trace weights become operational success probabilities only under an additional instrument and Born contract. The results supply no source-independence law or general quantum-origin conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 118. Choosing the nonsymmetric block of a two-copy channel
+
+**定义 118.1（Symmetric and exterior-square input blocks）。** Let $H=\mathbb C^q$ with $q\ge3$. Let $F$ swap the two input copies, put $P_\pm=(I\pm F)/2$, and write $X_\pm=P_\pm XP_\pm$ for an arbitrary matrix on $H\otimes_{\mathbb C}H$. All transposes below use fixed coordinate bases. Define
+
+$$
+\begin{aligned}
+\mathcal S_q(Y)
+&=\frac{\operatorname{Tr}(Y)I_q+
+(\operatorname{Tr}_1Y)^{\mathsf T}
++(\operatorname{Tr}_2Y)^{\mathsf T}}{q+2},
+&&Y=P_+YP_+,\\
+\mathcal A_q(Y)
+&=\frac{\operatorname{Tr}(Y)I_q-
+(\operatorname{Tr}_1Y)^{\mathsf T}
+-(\operatorname{Tr}_2Y)^{\mathsf T}}{q-2},
+&&Y=P_-YP_-,\\
+\widehat C_{2,q}(X)&=\mathcal S_q(X_+)+\mathcal A_q(X_-).
+\end{aligned}
+\tag{118.1}
+$$
+
+The symmetric input block is $\operatorname{Sym}^2H$ and the antisymmetric block is $\bigwedge^2H$. Theorem 119.1 proves complex complete positivity and trace preservation on the two blocks and hence on the entire input tensor space. Discarding cross-block coherences is part of this linear channel.
+
+On a pure power the antisymmetric block vanishes, giving
+
+$$
+\widehat C_{2,q}(\rho_z^{\otimes2})
+=\frac{I_q+2\rho_z^{\mathsf T}}{q+2}.
+\tag{118.2}
+$$
+
+This is the established pure-power conjugation action of §104 at $t=2$. The new full-space formula has a different nonsymmetric action from $Q_{2,q}$ in §111. The reference obstruction to that particular $Q_{2,q}$ remains valid and does not apply to the different channel (118.1).
+
+## 119. Positive Choi projectors and finite antisymmetric Kraus operators
+
+**定理 119.1（The two-block map is a full complex channel）。** For $q\ge3$, $\mathcal S_q$ and $\mathcal A_q$ are complex completely positive and trace preserving on their respective input blocks. Thus $\widehat C_{2,q}$ is complex completely positive and trace preserving on all $H\otimes H$, including with untouched complex references.
+
+Proof. Let $\Pi_{{\rm sym},3}$ and $\Pi_{{\rm alt},3}$ project onto $\operatorname{Sym}^3H$ and $\bigwedge^3H$ in the two-input/output triple tensor product. In the input-first Choi convention,
+
+$$
+J_{\mathcal S_q}=\frac3{q+2}\Pi_{{\rm sym},3},
+\qquad
+J_{\mathcal A_q}=\frac3{q-2}\Pi_{{\rm alt},3}.
+\tag{119.1}
+$$
+
+The block embeddings and projectors are real in the coordinate bases. Thus their input transposes introduce no different embedding. To check the identities, let $F_{13},F_{23}$ swap each input with the output. The swap Choi identity gives the block compressions of $I+F_{13}+F_{23}$ and $I-F_{13}-F_{23}$. The six permutations of three tensor slots yield
+
+$$
+\begin{aligned}
+(P_+\otimes I)(I+F_{13}+F_{23})(P_+\otimes I)
+&=3\Pi_{{\rm sym},3},\\
+(P_-\otimes I)(I-F_{13}-F_{23})(P_-\otimes I)
+&=3\Pi_{{\rm alt},3}.
+\end{aligned}
+\tag{119.2}
+$$
+
+Indeed, $F_{13}+F_{23}$ commutes with the input swap $F_{12}$, so the two block projections can be combined. Expanding the first compression gives half the sum of the identity, the three transpositions and the two three-cycles. Expanding the second gives half their alternating sum. These are three times the corresponding permutation projectors, proving (119.1).
+
+Tracing over the output in (119.2), each swap has output trace $I$ and the identity has output trace $qI$. Consequently
+
+$$
+\operatorname{Tr}_o\Pi_{{\rm sym},3}
+=\frac{q+2}{3}P_+,
+\qquad
+\operatorname{Tr}_o\Pi_{{\rm alt},3}
+=\frac{q-2}{3}P_-.
+\tag{119.3}
+$$
+
+The positive Choi matrices in (119.1) therefore have output traces $P_+,P_-$, proving block trace preservation. Their sum has output trace $I$ on the full two-copy space. The compressed-input construction discards cross-block terms and is completely positive, so it defines the stated full channel. $\square$
+
+**命题 119.2（Explicit exterior-square Kraus family）。** Write $|i\wedge j\rangle=(|ij\rangle-|ji\rangle)/\sqrt2$ for $i<j$. For each $i<j<k$, define
+
+$$
+K_{ijk}=
+\frac{
+|i\rangle\langle j\wedge k|
+-|j\rangle\langle i\wedge k|
++|k\rangle\langle i\wedge j|
+}{\sqrt{q-2}}.
+\tag{119.4}
+$$
+
+Then
+
+$$
+\sum_{i<j<k}K_{ijk}^*K_{ijk}=I_{\wedge^2H},
+\qquad
+\mathcal A_q(Y)=\sum_{i<j<k}K_{ijk}YK_{ijk}^*.
+\tag{119.5}
+$$
+
+Proof. Within each triple the three output vectors in (119.4) are orthogonal, so its squared Kraus operator is the sum of the three input wedge-pair projectors divided by $q-2$. Each wedge pair occurs in exactly $q-2$ triples. Summing gives the first equality.
+
+For the second, the input-first Choi vector of $K_{ijk}$ is $\sqrt{3/(q-2)}$ times the normalized alternating three-slot vector on coordinates $i,j,k$. These alternating vectors are orthonormal as the triple varies, so the Kraus Choi matrix is $3\Pi_{{\rm alt},3}/(q-2)$, equal to (119.1). Thus it is the same channel. $\square$
+
+In particular, an input coordinate wedge pair is sent uniformly to the $q-2$ coordinate directions outside that pair. The complete positivity statement is on the whole block, rather than a positivity test restricted to repeated-state inputs.
+
+The symmetric block is the established optimal pure-copy transpose channel in Brzić–Grinko–Studziński–Quintino, [Theorem 1 and equations (1)–(7)](https://arxiv.org/pdf/2603.23628v3), at $N=2$, $d=q$, $K=1$, as credited in §104. Its Choi coefficient is $D_{q,2}/D_{q,3}=3/(q+2)$. The displayed permutation and Kraus calculations specify the additional antisymmetric block used here.
+
+## 120. The exact output on a repeated mixed density
+
+**命题 120.1（Quadratic repeated-state action）。** Let $\tau$ be any density on $\mathbb C^q$, $q\ge3$, with eigenvalues $\lambda_i$, and put $P=\operatorname{Tr}(\tau^2)$. Define
+
+$$
+s=\operatorname{Tr}(P_+\tau^{\otimes2})=\frac{1+P}{2},
+\qquad
+a=\operatorname{Tr}(P_-\tau^{\otimes2})=\frac{1-P}{2}.
+\tag{120.1}
+$$
+
+Then
+
+$$
+\widehat C_{2,q}(\tau^{\otimes2})
+=\frac{sI_q+(\tau+\tau^2)^{\mathsf T}}{q+2}
++\frac{aI_q-(\tau-\tau^2)^{\mathsf T}}{q-2}.
+\tag{120.2}
+$$
+
+It commutes with the target $\tau^{\mathsf T}$, and its eigenvalues in a common eigenbasis are
+
+$$
+y_i=\frac{q-2P-4\lambda_i+2q\lambda_i^2}{q^2-4}.
+\tag{120.3}
+$$
+
+Proof. The repeated input commutes with the swap. The swap trace identities give $\operatorname{Tr}(F\tau^{\otimes2})=\operatorname{Tr}(\tau^2)$ and, for either retained factor,
+$\operatorname{Tr}_{\widehat j}(F\tau^{\otimes2})=\tau^2$.
+Hence the block traces are (120.1), and both marginals of the symmetric and antisymmetric blocks are respectively $(\tau+\tau^2)/2$ and $(\tau-\tau^2)/2$. Substituting into (118.1) gives (120.2). Combining its scalar, linear and quadratic eigenvalue terms over the denominator $q^2-4$ gives (120.3).
+
+The eigenvalues sum to one by trace preservation. Positivity follows from Theorem 119.1; for the antisymmetric contribution it is also explicit:
+
+$$
+a-\lambda_i+\lambda_i^2
+=\sum_{\substack{j<k\\j,k\ne i}}\lambda_j\lambda_k\ge0.
+\tag{120.4}
+$$
+
+The symmetric contribution is nonnegative term by term. $\square$
+
+For a pure density (120.2) reduces to (118.2). For a mixed density it generally differs from $(I_q+2\tau^{\mathsf T})/(q+2)$. The quadratic terms are part of the repeated-state action of a channel linear in the full tensor input $X$. They do not postulate a nonlinear quantum channel.
+
+## 121. The all-mixed worst error and rank-two equality cases
+
+**定理 121.1（Two-copy mixed minimax value for $q\ge3$）。** For the channel (118.1),
+
+$$
+\sup_\tau D\bigl(\widehat C_{2,q}(\tau^{\otimes2}),\tau^{\mathsf T}\bigr)
+=\frac{q-1}{q+2},
+\qquad D(U,V)=\frac12\|U-V\|_1.
+\tag{121.1}
+$$
+
+This is also the minimum possible worst error among full-space complex completely positive trace-preserving channels with the same repeated-density target. Every pure density attains the displayed error. For $q\ge3$, every density uniform on a two-dimensional subspace also attains it.
+
+Proof. Since output and target commute, their trace distance is the maximum eigenvalue-mass deficit $\sum_{i\in S}(\lambda_i-y_i)$ over all subsets $S$. The empty and full subsets have zero deficit. For a nonempty proper subset, set
+
+$$
+r=|S|,\qquad w=\sum_{i\in S}\lambda_i,\qquad
+U=\sum_{i\in S}\lambda_i^2,\qquad
+V=\sum_{i\notin S}\lambda_i^2.
+\tag{121.2}
+$$
+
+Here $1\le r\le q-1$ and $0\le w\le1$. Summing (120.3), with $P=U+V$, gives
+
+$$
+\sum_{i\in S}(\lambda_i-y_i)
+=\frac{q^2w-rq-2(q-r)U+2rV}{q^2-4}.
+\tag{121.3}
+$$
+
+Cauchy–Schwarz gives $U\ge w^2/r$, while nonnegative eigenvalues give $V\le(1-w)^2$. The numerator is therefore bounded above by
+
+$$
+F_r(w)=q^2w-rq-\frac{2(q-r)}r w^2+2r(1-w)^2.
+\tag{121.4}
+$$
+
+Its derivative is affine in $w$, with endpoint values
+
+$$
+F_r'(0)=q^2-4r\ge(q-2)^2,
+\qquad
+F_r'(1)=q^2+4-\frac{4q}{r}\ge(q-2)^2.
+\tag{121.5}
+$$
+
+These use $r\le q-1$ and $r\ge1$, respectively. Thus $F_r$ is increasing on $[0,1]$. Consequently
+
+$$
+F_r(w)\le F_r(1)
+=(q-r)\left(q-\frac2r\right)
+\le(q-1)(q-2).
+\tag{121.6}
+$$
+
+The difference in the last inequality is $q(r-1)(r-2)/r\ge0$, because $r$ is an integer at least one. It vanishes at $r=1,2$. Dividing by $q^2-4$ and taking the maximum over subsets gives the upper bound in (121.1).
+
+The pure-state formula (118.2) attains the bound. If $\tau=(|i\rangle\langle i|+|j\rangle\langle j|)/2$ with $i\ne j$, then (120.3) gives
+
+$$
+y_i=y_j=\frac3{2(q+2)},\qquad
+y_h=\frac{q-1}{q^2-4}\quad(h\notin\{i,j\}).
+\tag{121.7}
+$$
+
+Since $q\ge3$, its two-element support is a proper subset. Its mass deficit is $1-3/(q+2)=(q-1)/(q+2)$, proving the claimed mixed equality cases. The argument depends only on eigenvalues, so it applies to every uniform rank-two density.
+
+For any competing complex completely positive trace-preserving channel, restriction to pure powers allows Theorem 104.1 at $t=2$. The mean target overlap is at most $3/(q+2)$. Half trace distance to a pure target is at least one minus that overlap, so the worst error on pure powers is at least $(q-1)/(q+2)$. Pure powers belong to the full mixed family. This proves the same lower bound for that family and establishes the minimax claim. $\square$
+
+Mixed inputs therefore need not have strictly smaller error than the pure worst case. The rank-two equality statement is for $q\ge3$; it is not a qubit mixed-state equality assertion.
+
+## 122. The qubit and one-copy cases
+
+**命题 122.1（Full channels for one or two copies in every dimension）。** For every $q\ge2$ and $t\in\{1,2\}$, there is a full-space complex completely positive trace-preserving channel with
+
+$$
+\sup_\tau D\bigl(\widehat C_{t,q}(\tau^{\otimes t}),\tau^{\mathsf T}\bigr)
+=\frac{q-1}{t+q}.
+\tag{122.1}
+$$
+
+Proof. For $t=2$ and $q\ge3$, use Theorem 121.1. For $q=2$, use the full-space channel of Theorem 112.1 at $t=2$,
+
+$$
+\widehat C_{2,2}(X)
+=\frac{\operatorname{Tr}(X)I_2+
+(\operatorname{Tr}_1X)^{\mathsf T}
++(\operatorname{Tr}_2X)^{\mathsf T}}4.
+\tag{122.2}
+$$
+
+Its action on repeated densities is $(I_2+2\tau^{\mathsf T})/4$.
+
+There is also a direct two-block construction for that repeated-input action: use the symmetric formula $\mathcal S_2$ from the first line of (118.1) at $q=2$ and replace the one-dimensional antisymmetric block by its trace times $I_2/2$. Both branches are complex completely positive and trace preserving on their blocks. For a trace-one qubit density, Cayley–Hamilton gives $\tau^2=\tau-\det(\tau)I_2$. The symmetric block has trace $s=1-\det(\tau)$ and the antisymmetric block has trace $a=\det(\tau)$. Its repeated output is
+
+$$
+\frac{sI_2+(\tau+\tau^2)^{\mathsf T}}4
++aI_2/2
+=\frac{I_2+2\tau^{\mathsf T}}4.
+\tag{122.3}
+$$
+
+Thus this block route supplies the same repeated-density guarantee. Its distance to $\tau^{\mathsf T}$ is $D(\tau,I_2/2)/2\le1/4$, with equality for pure $\tau$.
+
+For $t=1$ and any $q\ge2$, use the standard approximate-transpose channel
+
+$$
+\widehat C_{1,q}(X)
+=\frac{\operatorname{Tr}(X)I_q+X^{\mathsf T}}{q+1}.
+\tag{122.4}
+$$
+
+Its Choi matrix is $(I+F)/(q+1)\succeq0$, and its output trace is $\operatorname{Tr}X$. Its error on a density is $qD(\tau,I_q/q)/(q+1)$. Convexity and pure-state eigenvalues give $D(\tau,I_q/q)\le1-1/q$, with equality for pure densities. This proves (122.1) in the remaining case. $\square$
+
+The one-copy channel is the Buscemi–D’Ariano–Perinotti–Sacchi ingredient cited in §92, and the qubit repeated-state coefficient is the established mixed-transpose value cited in §116.
+
+## 123. A sharp all-mixed real decoder when each party supplies one or two copies
+
+**定理 123.1（Arbitrary local dimensions with $k,l\in\{1,2\}$）。** Let $d,e\ge2$ and let $k,l$ each be one or two. Supply either of the independent-copy or internally aligned preparation contracts of Definition 94.1 for arbitrary local densities $\rho,\sigma$. Put
+
+$$
+M_{\rm ind}=2^{k+l-1},\qquad M_{\rm grp}=2,\qquad
+p_0=1-\frac1M,\qquad
+\delta=\min\left\{\frac{d-1}{k+d},\frac{e-1}{l+e}\right\}.
+\tag{123.1}
+$$
+
+For $0<p\le1$, consider all fixed real completely positive trace-nonincreasing maps on the full real input cone with success weight at least $p$ on every supplied density pair. Their minimum worst conditional half trace-norm error, for the fixed-label output $\rho\otimes_{\mathbb C}\sigma$, is
+
+$$
+\epsilon^*_{\rm mixed}(p)
+=\delta\frac{\max\{0,p-p_0\}}p.
+\tag{123.2}
+$$
+
+The statement holds for compatible output error and for actual normalized real-output error. It is a worst-case optimum over the full stated real success-map class; it does not assert pointwise optimality for each mixed pair.
+
+Proof. Every good populated sector has an exact matching-and-routing output for mixed densities. In the unique bad sector the complex input is
+$\rho^{\otimes k}\otimes(\sigma^{\mathsf T})^{\otimes l}$.
+One may retain an Alice copy and apply $\widehat C_{l,e}$ to Bob's conjugated copies. Alternatively, apply full real coordinate conjugation of the entire sector, use $\widehat C_{k,d}$ on Alice's now conjugated copies and retain one Bob copy. Choose the side giving the smaller term in (123.1).
+
+The local maps in Proposition 122.1 are complex completely positive on their full tensor domains, so they act with the retained complex factor untouched. Their real lifts are real completely positive, and the optional full coordinate conjugation is real orthogonal. The bound on the selected transposed density is unchanged by transposing its label. Tensoring the output difference with the other positive trace-one density preserves its trace norm. Thus the bad conditional output has error at most $\delta$ for every mixed pair and exactly $\delta$ for every pure pair.
+
+For $0<p\le p_0$, reject the bad sector and scale the exact good-sector map by $p/p_0$. For $p_0\le p\le1$, keep every good sector and accept the bad channel with factor $c=M(p-p_0)\in[0,1]$. These direct sector maps have real success effects $(p/p_0)P_{\rm good}$ and $P_{\rm good}+cP_{\rm bad}$, respectively; unpopulated sectors can be rejected. Hence they are real completely positive and trace nonincreasing on the whole real cone. Their trace on every density pair is exactly $p$.
+
+In the upper-success interval the compatible subnormalized output is $p_0(\rho\otimes\sigma)+(c/M)Q_{\rho,\sigma}$, where $Q_{\rho,\sigma}$ is the normalized bad output. Consequently its normalized error is
+
+$$
+D_{\rm out}(\rho,\sigma;p)
+=\frac{\max\{0,p-p_0\}}p
+D(Q_{\rho,\sigma},\rho\otimes\sigma)
+\le\delta\frac{\max\{0,p-p_0\}}p.
+\tag{123.3}
+$$
+
+The lower-success interval has zero error. Pure pairs attain the displayed worst bound, proving attainment with uniform success.
+
+For necessity, a competing map with guaranteed success $p$ and worst error $\epsilon$ on all densities has the same guarantees on pure pairs. Its Haar mean pure-input success is at least $p$. Theorem 106.1, including both complex-linear and complex-antilinear real Kraus components, and monotonicity of $\max(0,u-p_0)/u$ give the lower bound in (123.2). This allows input-dependent success in every competing map. Twirl contraction gives the same lower bound for actual normalized real outputs, and the compatible attaining maps have identical real and complex distances. $\square$
+
+For $k=l=2$, deterministic independent-copy error is
+$\min\{(d-1)/(d+2),(e-1)/(e+2)\}/8$,
+and grouped error is the same minimum divided by two. At $d=e=3$ these values are $1/20$ and $1/5$. At $d=e=2$ they are $1/32$ and $1/8$, agreeing with §113.
+
+For larger copy counts, discarding surplus copies inside the branches after the orientation-sector step supplies an upper bound using $\min(k,2)$ and $\min(l,2)$ in the local loss terms while keeping the original sector count $M$. This does not in general match the larger-copy pure lower bound. Theorem 113.1 already treats all qubit copy counts; no sharp arbitrary-copy mixed frontier in nonqubit dimensions is inferred here.
+
+## 124. The qutrit antisymmetric reference block is transmitted exactly
+
+**命题 124.1（The changed qutrit block preserves its encoded reference）。** At $q=3$, take the same coordinate isometry as in (114.2), written in wedge notation:
+
+$$
+V|0\rangle=|1\wedge2\rangle,\qquad
+V|1\rangle=-|0\wedge2\rangle,\qquad
+V|2\rangle=|0\wedge1\rangle.
+\tag{124.1}
+$$
+
+Then, for every matrix $X$ on $\mathbb C^3$,
+
+$$
+\mathcal A_3(VXV^*)=X.
+\tag{124.2}
+$$
+
+Proof. The only triple in (119.4) is $0,1,2$, and $q-2=1$. Its Kraus matrix is exactly $K_{012}=V^*$. Since $V^*V=I_3$, equation (119.5) gives
+$\mathcal A_3(VXV^*)=V^*VXV^*V=X$. $\square$
+
+Tensoring this identity with the identity on an arbitrary complex reference transmits every state encoded in this antisymmetric block. In particular the maximally entangled reference input of Theorem 114.1 is transmitted exactly. The former map $Q_{2,3}$ had a negative output effect reading on that input. The present channel agrees with its symmetric action and changes the antisymmetric action, so those two conclusions concern different full-space maps.
+
+Complex complete positivity permits this local channel to act with untouched complex references. The entire orientation decoder additionally measures sectors, selects and discards copies, handles records and may use full real conjugation. It does not inherit an identity action on arbitrary external-reference extensions from this one block identity.
+
+## 125. Pure-copy reuse and the fixed-SPA distinction
+
+**定义 125.1（Which literature optimum is reused）。** The symmetric block and its pure-copy coefficient are the $N=2$, $d=q$, $K=1$ case of Brzić–Grinko–Studziński–Quintino, [Theorem 1 and equations (1)–(7)](https://arxiv.org/pdf/2603.23628v3). Their mixed-state result, Theorem 3 and Appendix D, optimizes the fixed affine repeated-density action
+$\tau^{\otimes t}\mapsto\eta\tau^{\mathsf T}+(1-\eta)I_q/q$
+described in §116.
+
+For $q\ge3$, (120.2) generally contains both $\tau^2$ and $\operatorname{Tr}(\tau^2)$ and does not have that fixed affine form on mixed states. It is still a linear completely positive map of the full input $X$. Thus its pure-copy coefficient $2/(q+2)$ and its mixed trace-distance guarantee do not contradict the fixed-SPA visibility maximum in (116.2). For example at $q=3$, a uniform rank-two input has output eigenvalues $(3/10,3/10,2/5)$, while the direct affine formula $(I_3+2\tau^{\mathsf T})/5$ gives $(2/5,2/5,1/5)$ in the same eigenbasis.
+
+The pure-copy overlap lower bound in §104 gives the local minimax necessity in Theorem 121.1. The real joint decoder necessity in Theorem 123.1 uses the stronger orientation-weighted pure-family argument of §§105–106, with its real-Kraus decomposition and actual success means. Neither conclusion follows solely from the literature's fixed-affine mixed-SPA optimum.
+
+The Choi criterion, exterior powers, permutation projectors and conjugate-representation channels are standard ingredients. Choi/Kraus and transpose/swap background is J. Watrous, [The Theory of Quantum Information, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The block and trace-distance calculations required here are displayed explicitly. No priority claim is made for the ingredients or for the conditional mixed-copy decoding application.
+
+## 126. The settled copy range and its implementation boundary
+
+**定义 126.1（Two-copy mixed decoding scope）。** The all-mixed sharp real-decoder statement of Theorem 123.1 has $k,l\in\{1,2\}$ and arbitrary $d,e\ge2$. The exterior-block construction and uniform rank-two equality cases in §§118–121 have $q\ge3$. The qubit route is the separate channel of §122, with the broader all-count qubit result in §113. Higher nonqubit copy counts are not settled by the two-copy construction.
+
+The preparation contracts, normalized real tensor charts and matching operations reuse §§94–99, ultimately V53 §7. Their equality of local observations concerns products with one real symmetric effect on each individual copy, without an equality assertion for collective effects within a party or general joint real effects. The relative-sector weights are joint-input assumptions and do not follow from local tomography.
+
+Implementation requires the stated copies, sector instruments, within-type routing, chart operations, any chosen real conjugation and the local channel dilations. The controlled-reference service cited in §101 grants only its specified interface. Unselected copies, environments and controller or syndrome records are retained or discarded according to the supplied operations; no clean ready return or free reset is inferred.
+
+The corrected complex channel acts with arbitrary untouched complex references on its own full tensor domain. The real decoder's stated task is its fixed-label output marginal on the supplied family, with no assertion that it preserves arbitrary source-reference relations. Unknown preparation weights, native source-control availability and reference-return costs remain separate questions. The results derive no cloning operation, Born rule, source-independence law or general quantum-origin conclusion.
+
+## 追加锚（本行以下为增补区）
