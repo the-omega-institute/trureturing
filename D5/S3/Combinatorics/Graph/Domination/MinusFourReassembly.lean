@@ -11,10 +11,14 @@ import Mathlib.Data.Finset.Sigma
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option maxRecDepth 10000
+set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
 
 open Finset DominatingSetAverage MinusFourReplication MinusFourFamily MinusFourBaseStates
+
+noncomputable section
 
 private abbrev Coordinate := Fin 4 ⊕ (Σ i : Fin 8, Fin (branchSize i))
 
@@ -35,16 +39,28 @@ private def assemble (Z : Finset (Fin 4)) (f : ∀ i : Fin 8, Finset (Fin (branc
 private theorem mem_assemble_core (Z : Finset (Fin 4))
     (f : ∀ i : Fin 8, Finset (Fin (branchSize i))) (c : Fin 4) :
     coreLabel c ∈ assemble Z f ↔ c ∈ Z := by
-  change labelEquiv (Sum.inl c) ∈ _ ↔ _
-  rw [assemble, mem_map']
-  simp
+  rw [assemble, mem_map]
+  constructor
+  · rintro ⟨a,ha,he⟩
+    have he' : label a = label (Sum.inl c) := he
+    have hh := label_bijective.1 he'
+    subst a
+    simpa using ha
+  · intro h
+    exact ⟨Sum.inl c, by simp [h], rfl⟩
 
 private theorem mem_assemble_branch (Z : Finset (Fin 4))
     (f : ∀ i : Fin 8, Finset (Fin (branchSize i))) (i : Fin 8) (v : Fin (branchSize i)) :
     branchLabel i v ∈ assemble Z f ↔ v ∈ f i := by
-  change labelEquiv (Sum.inr ⟨i,v⟩) ∈ _ ↔ _
-  rw [assemble, mem_map']
-  simp
+  rw [assemble, mem_map]
+  constructor
+  · rintro ⟨a,ha,he⟩
+    have he' : label a = label (Sum.inr ⟨i,v⟩) := he
+    have hh := label_bijective.1 he'
+    subst a
+    simpa using ha
+  · intro h
+    exact ⟨Sum.inr ⟨i,v⟩, by simp [h], rfl⟩
 
 private def coreSlice (S : Finset (Fin 33)) : Finset (Fin 4) :=
   univ.filter (fun c => coreLabel c ∈ S)
@@ -57,9 +73,12 @@ private theorem assemble_slices (S : Finset (Fin 33)) :
   ext v
   obtain ⟨a, rfl⟩ := labelEquiv.surjective v
   cases a with
-  | inl c => simpa [coreSlice] using mem_assemble_core (coreSlice S) (branchSlice S) c
-  | inr a => simpa [branchSlice] using
-      mem_assemble_branch (coreSlice S) (branchSlice S) a.1 a.2
+  | inl c =>
+    change coreLabel c ∈ assemble _ _ ↔ coreLabel c ∈ S
+    simpa [coreSlice] using mem_assemble_core (coreSlice S) (branchSlice S) c
+  | inr a =>
+    change branchLabel a.1 a.2 ∈ assemble _ _ ↔ branchLabel a.1 a.2 ∈ S
+    simpa [branchSlice] using mem_assemble_branch (coreSlice S) (branchSlice S) a.1 a.2
 
 private theorem coreSlice_assemble (Z : Finset (Fin 4))
     (f : ∀ i : Fin 8, Finset (Fin (branchSize i))) : coreSlice (assemble Z f) = Z := by
@@ -216,8 +235,14 @@ private def configEquiv : Valid ≃ ↥(domSets sourceGraph) :=
 private theorem choice_sum (i : Fin 8) (b : Bool) :
     (∑ S : Choice i b, (-4 : ℤ) ^ S.val.card) = message i b := by
   classical
-  have h := sum_attach (choices i b) (fun S => (-4 : ℤ) ^ S.card)
-  simpa only [Finset.univ_eq_attach, choices, message, sum_filter] using h
+  calc
+    (∑ S : Choice i b, (-4 : ℤ) ^ S.val.card) =
+        ∑ S ∈ choices i b, (-4 : ℤ) ^ S.card := by
+      simpa only [Finset.univ_eq_attach] using
+        sum_attach (choices i b) (fun S => (-4 : ℤ) ^ S.card)
+    _ = message i b := by
+      unfold choices message
+      rw [sum_filter]
 
 private theorem choice_product (Z : Finset (Fin 4)) (A : ↥(coreChoices Z)) :
     (∑ f : ∀ i : Fin 8, Choice i (decide (i ∈ A.val)),
@@ -225,8 +250,12 @@ private theorem choice_product (Z : Finset (Fin 4)) (A : ↥(coreChoices Z)) :
         ∏ i : Fin 8, message i (decide (i ∈ A.val)) := by
   classical
   simp_rw [← prod_pow_eq_pow_sum]
-  rw [← Fintype.prod_sum]
-  simp_rw [choice_sum]
+  calc
+    (∑ f : ∀ i : Fin 8, Choice i (decide (i ∈ A.val)), ∏ i, (-4 : ℤ) ^ (f i).val.card) =
+        ∏ i : Fin 8, ∑ S : Choice i (decide (i ∈ A.val)), (-4 : ℤ) ^ S.val.card :=
+      (Fintype.prod_sum (fun (i : Fin 8) (S : Choice i (decide (i ∈ A.val))) =>
+        (-4 : ℤ) ^ S.val.card)).symm
+    _ = _ := by simp_rw [choice_sum]
 
 /-- The exact graph sum is obtained by unique restriction to core and components,
 followed by the cardinality-preserving root-state partition. -/
