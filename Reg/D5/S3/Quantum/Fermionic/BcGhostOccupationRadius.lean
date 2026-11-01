@@ -52,7 +52,7 @@ def family : Registration arena (type_of% @exists_radius) where
     · intro e; exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@exists_radius) (Realization signature) Type Unit where
+    (@exists_radius) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Existence.unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Existence.family
   realizationSource := none
@@ -68,7 +68,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fock
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
@@ -133,7 +133,7 @@ def family : Registration arena (type_of% @high_modes) where
     · intro e; exact nomatch e
   dependence := Modes.dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@high_modes) (Realization Modes.signature) Type Unit where
+    (@high_modes) (Realization Modes.signature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.High.unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.High.family
   realizationSource := none
@@ -149,7 +149,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fock
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
@@ -193,7 +193,7 @@ def family : Registration arena (type_of% @mode_radius) where
     · intro e; exact nomatch e
   dependence := Modes.dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@mode_radius) (Realization Modes.signature) Type Unit where
+    (@mode_radius) (Realization Modes.signature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Mode.unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Mode.family
   realizationSource := none
@@ -209,7 +209,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fock
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
@@ -267,7 +267,7 @@ def family : Registration arena (type_of% @virasoro_radius) where
     · intro e; exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@virasoro_radius) (Realization signature) Type Unit where
+    (@virasoro_radius) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Virasoro.unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius.Virasoro.family
   realizationSource := none
@@ -283,7 +283,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fock
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
     definition := none
