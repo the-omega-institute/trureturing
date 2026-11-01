@@ -735,174 +735,172 @@ def normalizedMomentApproximation (B : V d →L[ℝ] V d) (C : V d →L[ℝ] V p
     ∫ s in (0 : ℝ)..1, (F0 s).adjoint.comp (F0 s)) =O[𝓝[>] 0] (fun T : ℝ => T)
 
 
+private theorem actualGaussianSquared {i : Type} [Fintype i] [DecidableEq i]
+    (S : Matrix i i ℝ) (hS : S.PosSemidef) (u z : EuclideanSpace ℝ i) :
+    (∫⁻ x, ENNReal.ofReal (‖x - z‖ ^ 2 / 2) ∂multivariateGaussian u S) =
+      ENNReal.ofReal (Matrix.trace S / 2 + ‖u - z‖ ^ 2 / 2) := by
+  let ν := multivariateGaussian u S
+  have hcoord (k : i) : MemLp (fun x : EuclideanSpace ℝ i => x k) 2 ν :=
+    ((IsGaussian.hasGaussianLaw_id (μ := ν)).map_fun (EuclideanSpace.proj k)).memLp_two
+  have hmean (k : i) : (∫ x : EuclideanSpace ℝ i, x k ∂ν) = u k := by
+    calc
+      (∫ x : EuclideanSpace ℝ i, x k ∂ν) =
+          (EuclideanSpace.proj k) (∫ x : EuclideanSpace ℝ i, x ∂ν) :=
+        (EuclideanSpace.proj k).integral_comp_comm
+          (φ := fun x : EuclideanSpace ℝ i => x) (μ := ν) IsGaussian.integrable_id
+      _ = u k := by rw [integral_id_multivariateGaussian]; rfl
+  have hsq (k : i) : (∫ x : EuclideanSpace ℝ i, (x k - z k) ^ 2 ∂ν) =
+      S k k + (u k - z k) ^ 2 := by
+    have hL2 : MemLp (fun x : EuclideanSpace ℝ i => x k - z k) 2 ν :=
+      (hcoord k).sub (memLp_const _)
+    have hv := variance_eq_sub hL2
+    rw [variance_sub_const (hcoord k).aestronglyMeasurable,
+      variance_eval_multivariateGaussian hS,
+      integral_sub ((hcoord k).integrable (by norm_num)) (integrable_const _), hmean] at hv
+    simpa [integral_const, Measure.real] using
+      (eq_add_of_sub_eq hv.symm)
+  have hInt : Integrable (fun x : EuclideanSpace ℝ i => ‖x - z‖ ^ 2 / 2) ν := by
+    simpa only [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply, Pi.sub_apply] using
+      (integrable_finsetSum Finset.univ (fun k _ =>
+        ((hcoord k).sub (memLp_const (z k))).integrable_sq)).div_const 2
+  rw [← ofReal_integral_eq_lintegral_ofReal hInt
+    (ae_of_all _ (fun x => div_nonneg (sq_nonneg _) (by norm_num)))]
+  congr 1
+  simp_rw [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply]
+  have hsqInt (k : i) : Integrable (fun x : EuclideanSpace ℝ i => (x k - z k) ^ 2) ν :=
+    ((hcoord k).sub (memLp_const (z k))).integrable_sq
+  rw [integral_div, integral_finsetSum _ (fun k _ => hsqInt k)]
+  simp_rw [hsq]
+  simp [Matrix.trace, Finset.sum_add_distrib, add_div]
+
+private theorem actualQuadraticLaw (n : ℕ) (β : ℝ) (hβ : 0 < β)
+    {i : Type} [Fintype i] [DecidableEq i]
+    (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
+  let S := GaussianObservationLaw.covariance M β v⁻¹
+  let A := GaussianObservationLaw.action (GaussianObservationLaw.gain M β v⁻¹)
+  have hS : S.PosDef := (GaussianObservationLaw.precision_posDef M β v⁻¹ hβ (inv_pos.mpr hv).le).inv
+  have htrace : 0 ≤ Matrix.trace S :=
+    Finset.sum_nonneg (fun k _ => hS.posSemidef.diag_nonneg (i := k))
+  have hdis : GaussianObservationLaw.jointLaw M β v⁻¹ =
+      GaussianObservationLaw.dataLaw M β v⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β v⁻¹ := by
+    have h := GaussianObservationLaw.gaussian_observation_law_complete
+      M β (Real.sqrt v) hβ (by rwa [Real.sq_sqrt hv.le])
+    simpa only [Real.sq_sqrt hv.le, GaussianObservationLaw.jointLaw,
+      GaussianObservationLaw.dataLaw] using h.1.2.2.2.2.2.2.1
+  have hcond (y : EuclideanSpace ℝ i) : GaussianObservationLaw.posteriorKernel M β v⁻¹ y =
+      multivariateGaussian (A y) S := by
+    rw [GaussianObservationLaw.posteriorKernel, GaussianObservationLaw.translatedKernel_apply, GaussianObservationLaw.translate_gaussian, add_zero]
+  have hdecomp (est : EuclideanSpace ℝ i → V (n + 1)) (hest : Measurable est) :
+      estimatorRisk M β v est = ENNReal.ofReal (Matrix.trace S / 2) +
+        ∫⁻ y, loss (A y) (est y) ∂GaussianObservationLaw.dataLaw M β v⁻¹ := by
+    unfold estimatorRisk
+    rw [hdis, Measure.lintegral_compProd (by unfold loss; fun_prop)]
+    simp_rw [hcond, loss, actualGaussianSquared S hS.posSemidef]
+    have hsplit (y : EuclideanSpace ℝ i) :
+        ENNReal.ofReal (Matrix.trace S / 2 + ‖A y - est y‖ ^ 2 / 2) =
+          ENNReal.ofReal (Matrix.trace S / 2) + ENNReal.ofReal (‖A y - est y‖ ^ 2 / 2) :=
+      ENNReal.ofReal_add (div_nonneg htrace (by norm_num))
+        (div_nonneg (sq_nonneg _) (by norm_num))
+    simp_rw [hsplit]
+    rw [lintegral_add_left measurable_const]
+    simp
+  have hattain : estimatorRisk M β v A = ENNReal.ofReal (Matrix.trace S / 2) := by
+    rw [hdecomp A (by fun_prop)]
+    simp [loss]
+  refine ⟨hdecomp, hattain, le_antisymm ?_ ?_⟩
+  · change (⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
+        estimatorRisk M β v est.1) ≤ _
+    exact (iInf_le (fun est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f} =>
+      estimatorRisk M β v est.1) ⟨A, A.measurable⟩).trans_eq hattain
+  · change _ ≤ ⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
+        estimatorRisk M β v est.1
+    apply le_iInf
+    intro est
+    rw [hdecomp est.1 est.2]
+    exact le_self_add
+
+private theorem actualIndependentRealization (n : ℕ) (β : ℝ) (hβ : 0 < β)
+    {i : Type} [Fintype i] [DecidableEq i]
+    (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) :
+    independentRealization.{u} M β σ := by
+  intro Ω _ P _ X xi hX hxi hind hXlaw hxilaw
+  let ν := P.map (fun ω => σ • xi ω)
+  have hind' : IndepFun X (fun ω => σ • xi ω) P :=
+    hind.comp measurable_id (by fun_prop)
+  have hproduct := hind'.map_prod_eq_prod_map_map hX.aemeasurable (by fun_prop)
+  have hcanon := GaussianObservationLaw.gaussian_observation_law_complete M β σ hβ hσ
+  have hindcanon := hcanon.1.2.2.2.2.2.2.2.2.2
+  have hcanonicalProduct := hindcanon.map_prod_eq_prod_map_map
+    (by fun_prop) (by fun_prop)
+  have hν : ν = multivariateGaussian 0 ((σ ^ 2) • (1 : Matrix i i ℝ)) := by
+    dsimp [ν]
+    rw [← Measure.map_map (by fun_prop) hxi, hxilaw]
+    have hmap := GaussianObservationLaw.map_gaussian (0 : EuclideanSpace ℝ i) (1 : Matrix i i ℝ)
+      Matrix.PosSemidef.one (σ • (1 : Matrix i i ℝ))
+    simpa [GaussianObservationLaw.action, Matrix.smul_mul, Matrix.mul_smul, pow_two] using hmap
+  have hinputProduct : (GaussianObservationLaw.inputLaw (n := Fin (n + 1)) (p := i) β (σ ^ 2)⁻¹).map
+      (fun z => (GaussianObservationLaw.action GaussianObservationLaw.signal z, GaussianObservationLaw.action GaussianObservationLaw.noise z)) =
+      (P.map X).prod ν := by
+    rw [hcanonicalProduct, hcanon.1.2.2.2.2.2.2.2.1,
+      hcanon.1.2.2.2.2.2.2.2.2.1, hXlaw, hν, inv_inv]
+  have hpush := congrArg
+    (fun μ : Measure (V (n + 1) × EuclideanSpace ℝ i) =>
+      μ.map (fun z => (GaussianObservationLaw.action M z.1 + z.2, z.1)))
+    (hproduct.trans hinputProduct.symm)
+  simp only [Measure.map_map (by fun_prop) (by fun_prop)] at hpush
+  simpa [GaussianObservationLaw.jointLaw, GaussianObservationLaw.action_apply, GaussianObservationLaw.observation, GaussianObservationLaw.signal, GaussianObservationLaw.noise,
+    Matrix.fromCols_mulVec, Matrix.one_mulVec, Matrix.zero_mulVec] using hpush
+
 private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
     {i : Type} [Fintype i] [DecidableEq i]
     (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) :
     finiteExperiment.{u} M β σ := by
   classical
-  have hgaussianSquared {i : Type} [Fintype i] [DecidableEq i]
-      (S : Matrix i i ℝ) (hS : S.PosSemidef) (u z : EuclideanSpace ℝ i) :
-      (∫⁻ x, ENNReal.ofReal (‖x - z‖ ^ 2 / 2) ∂multivariateGaussian u S) =
-        ENNReal.ofReal (Matrix.trace S / 2 + ‖u - z‖ ^ 2 / 2) := by
-    let ν := multivariateGaussian u S
-    have hcoord (k : i) : MemLp (fun x : EuclideanSpace ℝ i => x k) 2 ν :=
-      ((IsGaussian.hasGaussianLaw_id (μ := ν)).map_fun (EuclideanSpace.proj k)).memLp_two
-    have hmean (k : i) : (∫ x : EuclideanSpace ℝ i, x k ∂ν) = u k := by
+  have h := GaussianObservationLaw.gaussian_observation_law_complete M β σ hβ hσ
+  have hq := actualQuadraticLaw n β hβ M (σ ^ 2) hσ
+  refine ⟨actualIndependentRealization.{u} n β hβ M σ hσ, hq, h.1.1, ?_, ?_, ?_⟩
+  · simpa [information, mul_inv_rev, div_eq_mul_inv, mul_comm] using h.1.2.2.2.2.1
+  · exact h.1.2.2.2.2.2.2.1
+  · intro Ω _ P _ X xi hX hxi hind hXlaw hxilaw
+    let Y : Ω → EuclideanSpace ℝ i := fun ω =>
+      GaussianObservationLaw.action M (X ω) + σ • xi ω
+    let A := GaussianObservationLaw.action (GaussianObservationLaw.gain M β (σ ^ 2)⁻¹)
+    let S := GaussianObservationLaw.covariance M β (σ ^ 2)⁻¹
+    have hY : Measurable Y := by fun_prop
+    have hpair : Measurable (fun ω => (Y ω, X ω)) := hY.prodMk hX
+    have hj : P.map (fun ω => (Y ω, X ω)) =
+        GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹ :=
+      actualIndependentRealization.{u} n β hβ M σ hσ Ω P X xi hX hxi hind hXlaw hxilaw
+    have hy : P.map Y = GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹ := by
       calc
-        (∫ x : EuclideanSpace ℝ i, x k ∂ν) =
-            (EuclideanSpace.proj k) (∫ x : EuclideanSpace ℝ i, x ∂ν) :=
-          (EuclideanSpace.proj k).integral_comp_comm
-            (φ := fun x : EuclideanSpace ℝ i => x) (μ := ν) IsGaussian.integrable_id
-        _ = u k := by rw [integral_id_multivariateGaussian]; rfl
-    have hsq (k : i) : (∫ x : EuclideanSpace ℝ i, (x k - z k) ^ 2 ∂ν) =
-        S k k + (u k - z k) ^ 2 := by
-      have hL2 : MemLp (fun x : EuclideanSpace ℝ i => x k - z k) 2 ν :=
-        (hcoord k).sub (memLp_const _)
-      have hv := variance_eq_sub hL2
-      rw [variance_sub_const (hcoord k).aestronglyMeasurable,
-        variance_eval_multivariateGaussian hS,
-        integral_sub ((hcoord k).integrable (by norm_num)) (integrable_const _), hmean] at hv
-      simpa [integral_const, Measure.real] using
-        (eq_add_of_sub_eq hv.symm)
-    have hInt : Integrable (fun x : EuclideanSpace ℝ i => ‖x - z‖ ^ 2 / 2) ν := by
-      simpa only [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply, Pi.sub_apply] using
-        (integrable_finsetSum Finset.univ (fun k _ =>
-          ((hcoord k).sub (memLp_const (z k))).integrable_sq)).div_const 2
-    rw [← ofReal_integral_eq_lintegral_ofReal hInt
-      (ae_of_all _ (fun x => div_nonneg (sq_nonneg _) (by norm_num)))]
-    congr 1
-    simp_rw [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply]
-    have hsqInt (k : i) : Integrable (fun x : EuclideanSpace ℝ i => (x k - z k) ^ 2) ν :=
-      ((hcoord k).sub (memLp_const (z k))).integrable_sq
-    rw [integral_div, integral_finsetSum _ (fun k _ => hsqInt k)]
-    simp_rw [hsq]
-    simp [Matrix.trace, Finset.sum_add_distrib, add_div]
-
-  have hrisk {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
-    let S := GaussianObservationLaw.covariance M β v⁻¹
-    let A := GaussianObservationLaw.action (GaussianObservationLaw.gain M β v⁻¹)
-    have hS : S.PosDef := (GaussianObservationLaw.precision_posDef M β v⁻¹ hβ (inv_pos.mpr hv).le).inv
-    have htrace : 0 ≤ Matrix.trace S :=
-      Finset.sum_nonneg (fun k _ => hS.posSemidef.diag_nonneg (i := k))
-    have hdis : GaussianObservationLaw.jointLaw M β v⁻¹ =
-        GaussianObservationLaw.dataLaw M β v⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β v⁻¹ := by
-      have h := GaussianObservationLaw.gaussian_observation_law_complete
-        M β (Real.sqrt v) hβ (by rwa [Real.sq_sqrt hv.le])
-      simpa only [Real.sq_sqrt hv.le, GaussianObservationLaw.jointLaw,
-        GaussianObservationLaw.dataLaw] using h.1.2.2.2.2.2.2.1
-    have hcond (y : EuclideanSpace ℝ i) : GaussianObservationLaw.posteriorKernel M β v⁻¹ y =
-        multivariateGaussian (A y) S := by
-      rw [GaussianObservationLaw.posteriorKernel, GaussianObservationLaw.translatedKernel_apply, GaussianObservationLaw.translate_gaussian, add_zero]
-    have hdecomp (est : EuclideanSpace ℝ i → V (n + 1)) (hest : Measurable est) :
-        estimatorRisk M β v est = ENNReal.ofReal (Matrix.trace S / 2) +
-          ∫⁻ y, loss (A y) (est y) ∂GaussianObservationLaw.dataLaw M β v⁻¹ := by
-      unfold estimatorRisk
-      rw [hdis, Measure.lintegral_compProd (by unfold loss; fun_prop)]
-      simp_rw [hcond, loss, hgaussianSquared S hS.posSemidef]
-      have hsplit (y : EuclideanSpace ℝ i) :
-          ENNReal.ofReal (Matrix.trace S / 2 + ‖A y - est y‖ ^ 2 / 2) =
-            ENNReal.ofReal (Matrix.trace S / 2) + ENNReal.ofReal (‖A y - est y‖ ^ 2 / 2) :=
-        ENNReal.ofReal_add (div_nonneg htrace (by norm_num))
-          (div_nonneg (sq_nonneg _) (by norm_num))
-      simp_rw [hsplit]
-      rw [lintegral_add_left measurable_const]
-      simp
-    have hattain : estimatorRisk M β v A = ENNReal.ofReal (Matrix.trace S / 2) := by
-      rw [hdecomp A (by fun_prop)]
-      simp [loss]
-    refine ⟨hdecomp, hattain, le_antisymm ?_ ?_⟩
-    · change (⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
-          estimatorRisk M β v est.1) ≤ _
-      exact (iInf_le (fun est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f} =>
-        estimatorRisk M β v est.1) ⟨A, A.measurable⟩).trans_eq hattain
-    · change _ ≤ ⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
-          estimatorRisk M β v est.1
-      apply le_iInf
-      intro est
-      rw [hdecomp est.1 est.2]
-      exact le_self_add
-
-  have hrealization {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) :
-      independentRealization.{u} M β σ := by
-    intro Ω _ P _ X xi hX hxi hind hXlaw hxilaw
-    let ν := P.map (fun ω => σ • xi ω)
-    have hind' : IndepFun X (fun ω => σ • xi ω) P :=
-      hind.comp measurable_id (by fun_prop)
-    have hproduct := hind'.map_prod_eq_prod_map_map hX.aemeasurable (by fun_prop)
-    have hcanon := GaussianObservationLaw.gaussian_observation_law_complete M β σ hβ hσ
-    have hindcanon := hcanon.1.2.2.2.2.2.2.2.2.2
-    have hcanonicalProduct := hindcanon.map_prod_eq_prod_map_map
-      (by fun_prop) (by fun_prop)
-    have hν : ν = multivariateGaussian 0 ((σ ^ 2) • (1 : Matrix i i ℝ)) := by
-      dsimp [ν]
-      rw [← Measure.map_map (by fun_prop) hxi, hxilaw]
-      have hmap := GaussianObservationLaw.map_gaussian (0 : EuclideanSpace ℝ i) (1 : Matrix i i ℝ)
-        Matrix.PosSemidef.one (σ • (1 : Matrix i i ℝ))
-      simpa [GaussianObservationLaw.action, Matrix.smul_mul, Matrix.mul_smul, pow_two] using hmap
-    have hinputProduct : (GaussianObservationLaw.inputLaw (n := Fin (n + 1)) (p := i) β (σ ^ 2)⁻¹).map
-        (fun z => (GaussianObservationLaw.action GaussianObservationLaw.signal z, GaussianObservationLaw.action GaussianObservationLaw.noise z)) =
-        (P.map X).prod ν := by
-      rw [hcanonicalProduct, hcanon.1.2.2.2.2.2.2.2.1,
-        hcanon.1.2.2.2.2.2.2.2.2.1, hXlaw, hν, inv_inv]
-    have hpush := congrArg
-      (fun μ : Measure (V (n + 1) × EuclideanSpace ℝ i) =>
-        μ.map (fun z => (GaussianObservationLaw.action M z.1 + z.2, z.1)))
-      (hproduct.trans hinputProduct.symm)
-    simp only [Measure.map_map (by fun_prop) (by fun_prop)] at hpush
-    simpa [GaussianObservationLaw.jointLaw, GaussianObservationLaw.action_apply, GaussianObservationLaw.observation, GaussianObservationLaw.signal, GaussianObservationLaw.noise,
-      Matrix.fromCols_mulVec, Matrix.one_mulVec, Matrix.zero_mulVec] using hpush
-
-  have hexperiment {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ := by
-    have h := GaussianObservationLaw.gaussian_observation_law_complete M β σ hβ hσ
-    have hq := hrisk M (σ ^ 2) hσ
-    refine ⟨hrealization M σ hσ, hq, h.1.1, ?_, ?_, ?_⟩
-    · simpa [information, mul_inv_rev, div_eq_mul_inv, mul_comm] using h.1.2.2.2.2.1
-    · exact h.1.2.2.2.2.2.2.1
-    · intro Ω _ P _ X xi hX hxi hind hXlaw hxilaw
-      let Y : Ω → EuclideanSpace ℝ i := fun ω =>
-        GaussianObservationLaw.action M (X ω) + σ • xi ω
-      let A := GaussianObservationLaw.action (GaussianObservationLaw.gain M β (σ ^ 2)⁻¹)
-      let S := GaussianObservationLaw.covariance M β (σ ^ 2)⁻¹
-      have hY : Measurable Y := by fun_prop
-      have hpair : Measurable (fun ω => (Y ω, X ω)) := hY.prodMk hX
-      have hj : P.map (fun ω => (Y ω, X ω)) =
-          GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹ :=
-        hrealization M σ hσ Ω P X xi hX hxi hind hXlaw hxilaw
-      have hy : P.map Y = GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹ := by
-        calc
-          P.map Y = (P.map (fun ω => (Y ω, X ω))).map Prod.fst :=
-            (Measure.map_map measurable_fst hpair).symm
-          _ = (GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹).map Prod.fst := by rw [hj]
-          _ = GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹ := by
-            simp only [GaussianObservationLaw.jointLaw, GaussianObservationLaw.dataLaw,
-              Measure.map_map (by fun_prop) (by fun_prop)]
-            rfl
-      have hr (est : EuclideanSpace ℝ i → V (n + 1)) (he : Measurable est) :
-          (∫⁻ ω, loss (X ω) (est (Y ω)) ∂P) = estimatorRisk M β (σ ^ 2) est := by
-        change _ = ∫⁻ z, loss z.2 (est z.1) ∂GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹
-        rw [← hj, lintegral_map (by unfold loss; fun_prop) hpair]
-      have he (est : EuclideanSpace ℝ i → V (n + 1)) (he : Measurable est) :
-          (∫⁻ y, loss (A y) (est y) ∂GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹) =
-            ∫⁻ ω, loss (A (Y ω)) (est (Y ω)) ∂P := by
-        rw [← hy, lintegral_map (by unfold loss; fun_prop) hY]
-      refine ⟨?_, ?_, ?_⟩
-      · intro est hest
-        rw [hr est hest, hq.1 est hest, he est hest]
-      · rw [hr A (by fun_prop)]
-        exact hq.2.1
-      · calc
-          (⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
-              ∫⁻ ω, loss (X ω) (est.1 (Y ω)) ∂P) = bayesRisk M β (σ ^ 2) := by
-            unfold bayesRisk
-            congr 1
-            funext est
-            exact hr est.1 est.2
-          _ = ENNReal.ofReal (Matrix.trace S / 2) := hq.2.2
-
-  exact hexperiment M σ hσ
+        P.map Y = (P.map (fun ω => (Y ω, X ω))).map Prod.fst :=
+          (Measure.map_map measurable_fst hpair).symm
+        _ = (GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹).map Prod.fst := by rw [hj]
+        _ = GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹ := by
+          simp only [GaussianObservationLaw.jointLaw, GaussianObservationLaw.dataLaw,
+            Measure.map_map (by fun_prop) (by fun_prop)]
+          rfl
+    have hr (est : EuclideanSpace ℝ i → V (n + 1)) (he : Measurable est) :
+        (∫⁻ ω, loss (X ω) (est (Y ω)) ∂P) = estimatorRisk M β (σ ^ 2) est := by
+      change _ = ∫⁻ z, loss z.2 (est z.1) ∂GaussianObservationLaw.jointLaw M β (σ ^ 2)⁻¹
+      rw [← hj, lintegral_map (by unfold loss; fun_prop) hpair]
+    have he (est : EuclideanSpace ℝ i → V (n + 1)) (he : Measurable est) :
+        (∫⁻ y, loss (A y) (est y) ∂GaussianObservationLaw.dataLaw M β (σ ^ 2)⁻¹) =
+          ∫⁻ ω, loss (A (Y ω)) (est (Y ω)) ∂P := by
+      rw [← hy, lintegral_map (by unfold loss; fun_prop) hY]
+    refine ⟨?_, ?_, ?_⟩
+    · intro est hest
+      rw [hr est hest, hq.1 est hest, he est hest]
+    · rw [hr A (by fun_prop)]
+      exact hq.2.1
+    · calc
+        (⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
+            ∫⁻ ω, loss (X ω) (est.1 (Y ω)) ∂P) = bayesRisk M β (σ ^ 2) := by
+          unfold bayesRisk
+          congr 1
+          funext est
+          exact hr est.1 est.2
+        _ = ENNReal.ofReal (Matrix.trace S / 2) := hq.2.2
 
 private theorem actualFrame (n r m : ℕ)
     (B : V (n + 1) →L[ℝ] V (n + 1)) (C : V (n + 1) →L[ℝ] V (r + 1))
@@ -1370,7 +1368,7 @@ private theorem actualSpectrum (n r : ℕ)
     intro hT
     exact actualCanonicalSpectrum n b (M T) _ (hcongMP T hT) hct
   refine ⟨c, C', hc, hC, ?_, ?_⟩
-  · filter_upwards [self_mem_nhdsWithin, eventually_lt_nhdsWithin hδ, hcan] with T hT hsmall hSpectrum
+  · filter_upwards [self_mem_nhdsWithin, ((eventually_lt_nhds hδ).filter_mono nhdsWithin_le_nhds), hcan] with T hT hsmall hSpectrum
     intro i
     have hh := hb T i hT hsmall
     simpa only [← congrFun (hSpectrum hT) i] using hh
@@ -1464,7 +1462,6 @@ private theorem actualNoiseConclusion (n r m : ℕ)
     simp only [q, hg, Finset.mul_sum, mul_ite, mul_zero, mul_inv_rev]
     congr 1
     field_simp
-    ring
   · intro v hv
     have hs := hsT.2.1 v hv
     have heq : (fun T => (bayesRisk (MT T) β (v T)).toReal) =ᶠ[𝓝[>] 0]
@@ -1565,7 +1562,7 @@ private theorem actualTrajectory (n r m : ℕ)
     intro η hη
     rcases PhysicalFixedNoiseInformation.physical_fixed_noise_information B C β η hβ hη with ⟨K, δ, hK, hδ, hb⟩
     apply Asymptotics.IsBigO.of_bound K
-    filter_upwards [self_mem_nhdsWithin, eventually_lt_nhdsWithin hδ] with T hT hTδ
+    filter_upwards [self_mem_nhdsWithin, ((eventually_lt_nhds hδ).filter_mono nhdsWithin_le_nhds)] with T hT hTδ
     have hM := htrajectory T hT
     have hI := (hexperiment (MT T) (Real.sqrt η) (by rwa [Real.sq_sqrt hη.le])).2.2.2.1
     simpa [hI, Real.sq_sqrt hη.le, hM, physicalG, GaussianObservationLaw.action, LinearMap.trace_toMatrix,
@@ -1613,7 +1610,7 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
     have hli : LinearIndependent ℝ l := by
       rw [Fintype.linearIndependent_iff]
       intro c hc
-      funext k
+      intro k
       have heval (t : ℝ) : ∑ j : Fin (cutoff + 1), c j * (ell j).eval t = 0 := by
         simpa [l, Polynomial.eval_finset_sum, Polynomial.eval_smul, smul_eq_mul] using
           congrArg (fun z : P => (z : Polynomial ℝ).eval t) hc
@@ -2259,7 +2256,7 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
       rcases PhysicalFixedNoiseInformation.physical_fixed_noise_information
         (0 : V (n + 1) →L[ℝ] V (n + 1)) C β η hβ hη with ⟨K₀, δ, hK₀, hδ, hb₀⟩
       apply Asymptotics.IsBigO.of_bound K₀
-      filter_upwards [self_mem_nhdsWithin, eventually_lt_nhdsWithin hδ] with T hT hTδ
+      filter_upwards [self_mem_nhdsWithin, ((eventually_lt_nhds hδ).filter_mono nhdsWithin_le_nhds)] with T hT hTδ
       have hz : (∫ t in (0 : ℝ)..T,
           (C.comp (NormedSpace.exp (t • (0 : V (n + 1) →L[ℝ] V (n + 1))))).adjoint.comp
             (C.comp (NormedSpace.exp (t • (0 : V (n + 1) →L[ℝ] V (n + 1)))))) = T • H := by
@@ -3126,6 +3123,7 @@ end
 end Original8899FixedTransport
 
 namespace Original63SourceOnly
+open D5.S3.Observer.Linear
 
 -- This conclusion uses the same matrix, physical Gramian, joint law and
 -- posterior as the general experiment. It quantifies all measurable risks
@@ -3202,23 +3200,24 @@ namespace Original8899FixedTransport
 open Original63SourceOnly D5.S3.Observer.Linear
 
 private def oscillatorB : V 4 →L[ℝ] V 4 :=
-  (!![0,1,0,0; -1,0,0,0; 0,0,0,2; 0,0,-2,0] : Matrix (Fin 4) (Fin 4) ℝ).
-    toEuclideanLin.toContinuousLinearMap
+  (!![0,1,0,0; -1,0,0,0; 0,0,0,2; 0,0,-2,0] : Matrix (Fin 4) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap
 
 private def sensorC (split : Bool) : V 4 →L[ℝ] V (if split then 2 else 1) :=
-  (fun i j => if split then
+  ((fun i j => if split then
     (if ((i : ℕ) = 0 ∧ j = 0) ∨ ((i : ℕ) = 1 ∧ j = 2) then 1 else 0)
-    else (if j = 0 ∨ j = 2 then 1 else 0) :
+    else (if j = 0 ∨ j = 2 then 1 else 0)) :
       Matrix (Fin (if split then 2 else 1)) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap
 
 private theorem actualSensorSum : sensorC false =
     (!![1,0,1,0] : Matrix (Fin 1) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap := by
+  unfold sensorC
   apply congrArg (fun M : Matrix (Fin 1) (Fin 4) ℝ => M.toEuclideanLin.toContinuousLinearMap)
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num
 
 private theorem actualSensorSplit : sensorC true =
     (!![1,0,0,0; 0,0,1,0] : Matrix (Fin 2) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap := by
+  unfold sensorC
   apply congrArg (fun M : Matrix (Fin 2) (Fin 4) ℝ => M.toEuclideanLin.toContinuousLinearMap)
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num
