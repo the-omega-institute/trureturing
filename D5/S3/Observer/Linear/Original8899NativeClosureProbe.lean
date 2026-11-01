@@ -245,23 +245,24 @@ theorem native_to_ambient (B : V →L[ℝ] V) (C : V →L[ℝ] W)
   have hC : C.toLinearMap.toContinuousLinearMap = C := by ext x; rfl
   have hn := D5.S3.Observer.Linear.DerivativeLayerNativeGramian.derivative_layer_native_gramian
     B.toLinearMap C.toLinearMap
-  have hn' :
-      (∀ T : ℝ, 0 < T →
-        (dU B C T).comp (eU B C T) = .id ℝ (U B C) ∧
-        (eU B C T).comp (dU B C T) = .id ℝ (U B C) ∧
-        (eU B C T).comp ((GU B C T).comp (eU B C T)) =
-          ∫ s in (0 : ℝ)..1,
-            (Real.sqrt T • ((A B C (T*s)).comp (U B C).subtypeL).comp (eU B C T)).adjoint.comp
-              (Real.sqrt T • ((A B C (T*s)).comp (U B C).subtypeL).comp (eU B C T))) ∧
-      (∀ x : U B C, x ≠ 0 → 0 < ⟪x, HU B C x⟫_ℝ) ∧
-      ∃ R : ℝ, 0 ≤ R ∧ ∀ T : ℝ, 0 < T → T ≤ 1 → T * ‖B‖ < 1 →
+  have hnInv : ∀ T : ℝ, 0 < T →
+      (dU B C T).comp (eU B C T) = .id ℝ (U B C) ∧
+      (eU B C T).comp (dU B C T) = .id ℝ (U B C) := by
+    intro T hT
+    constructor
+    · simpa only [N, U, E, Q, dU, eU] using (hn.1 T hT).1
+    · simpa only [N, U, E, Q, dU, eU] using (hn.1 T hT).2.1
+  have hnPos : ∀ x : U B C, x ≠ 0 → 0 < ⟪x, HU B C x⟫_ℝ := by
+    simpa only [N, U, E, HU, PU, hB, hC, comp_assoc] using hn.2.1
+  have hnBound : ∃ R : ℝ, 0 ≤ R ∧ ∀ T : ℝ,
+      0 < T → T ≤ 1 → T * ‖B‖ < 1 →
         ‖(eU B C T).comp ((GU B C T).comp (eU B C T)) - HU B C‖ ≤ R * T := by
-    simpa only [N, U, E, Q, dU, eU, GU, HU, PU, A, hB, hC, comp_assoc, smul_comp] using hn
+    simpa only [N, U, E, Q, eU, GU, HU, PU, A, hB, hC, comp_assoc] using hn.2.2
   have hleft (T : ℝ) (hT : 0 < T) : (dV B C T).comp (eV B C T) = .id ℝ V := by
-    have hh := congrArg (transport u) (hn'.1 T hT).1
+    have hh := congrArg (transport u) (hnInv T hT).1
     simpa only [transport_comp, hd, he, transport_id] using hh
   have hright (T : ℝ) (hT : 0 < T) : (eV B C T).comp (dV B C T) = .id ℝ V := by
-    have hh := congrArg (transport u) (hn'.1 T hT).2.1
+    have hh := congrArg (transport u) (hnInv T hT).2
     simpa only [transport_comp, hd, he, transport_id] using hh
   have hrestore (T : ℝ) (hT : 0 < T) :
       (dV B C T).comp ((normalized B C T).comp (dV B C T)) = G B C T := by
@@ -274,10 +275,10 @@ theorem native_to_ambient (B : V →L[ℝ] V) (C : V →L[ℝ] W)
       intro hz
       apply hx
       simpa only [u.apply_symm_apply, map_zero] using congrArg u hz
-    have hp := hn'.2.1 (u.symm x) hux
+    have hp := hnPos (u.symm x) hux
     rw [← hH]
     simpa only [transport_apply, ← u.inner_map_map, u.apply_symm_apply] using hp
-  obtain ⟨R, hR, herr⟩ := hn'.2.2
+  obtain ⟨R, hR, herr⟩ := hnBound
   let Rv := ‖transport u‖ * R
   have hRv : 0 ≤ Rv := mul_nonneg (norm_nonneg _) hR
   have hb (T : ℝ) (hT : 0 < T) (hT1 : T ≤ 1) (hTB : T * ‖B‖ < 1) :
@@ -355,7 +356,11 @@ theorem matrix_limit_posDef (b : OrthonormalBasis ι ℝ V)
   · change (coordinates b (H B C)).conjTranspose = coordinates b (H B C)
     rw [H, matrix_integral_gram b (P B C) (continuous_P B C)]
     ext i j
-    simp only [Matrix.conjTranspose_apply, star_trivial, real_inner_comm]
+    change (∫ s in (0 : ℝ)..1, ⟪P B C s (b j), P B C s (b i)⟫_ℝ) =
+      ∫ s in (0 : ℝ)..1, ⟪P B C s (b i), P B C s (b j)⟫_ℝ
+    apply intervalIntegral.integral_congr
+    intro s hs
+    exact real_inner_comm _ _
   · intro x hx
     let v : V := b.repr.symm (WithLp.toLp 2 x)
     have hv : v ≠ 0 := by
@@ -370,8 +375,13 @@ theorem matrix_limit_posDef (b : OrthonormalBasis ι ℝ V)
       ext i
       simp [v, OrthonormalBasis.coe_toBasis_repr_apply]
     have hmul : (coordinates b (H B C)).mulVec x = fun i => b.repr (H B C v) i := by
-      simpa only [coordinates_apply, hrepr, OrthonormalBasis.coe_toBasis_repr_apply] using
-        LinearMap.toMatrix_mulVec_repr b.toBasis b.toBasis (H B C).toLinearMap v
+      have hh : (LinearMap.toMatrix b.toBasis b.toBasis (H B C).toLinearMap).mulVec x =
+          b.toBasis.repr (H B C v) := by
+        simpa only [hrepr] using
+          LinearMap.toMatrix_mulVec_repr b.toBasis b.toBasis (H B C).toLinearMap v
+      rw [coordinates_apply]
+      ext i
+      simpa only [OrthonormalBasis.coe_toBasis_repr_apply] using congrFun hh i
     have hq := b.repr.inner_map_map v (H B C v)
     have heq : x ⬝ᵥ (coordinates b (H B C)).mulVec x = ⟪v, H B C v⟫_ℝ := by
       rw [hmul]
@@ -394,7 +404,7 @@ theorem frame_transport (B : V →L[ℝ] V) (C : V →L[ℝ] W)
     OrthonormalBasis.coe_toBasis_repr_apply, OrthonormalBasis.coe_toBasis,
     OrthonormalBasis.map_apply, transport_apply]
   exact (u.inner_map_map (u.symm (b i)) (K (u.symm (b j)))).symm.trans
-    (by rw [u.apply_symm_apply])
+    (by rw [u.apply_symm_apply]; rfl)
 
 -- Exact physical determinant transport, with every native layer kept.
 -- The premise N(n)=0 is supplied by actual jet injectivity at both sensors.
@@ -779,7 +789,8 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
         GaussianObservationLaw.dataLaw M β v⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β v⁻¹ := by
       have h := GaussianObservationLaw.gaussian_observation_law_complete
         M β (Real.sqrt v) hβ (by rwa [Real.sq_sqrt hv.le])
-      simpa only [Real.sq_sqrt hv.le] using h.1.2.2.2.2.2.2.1
+      simpa only [Real.sq_sqrt hv.le, GaussianObservationLaw.jointLaw,
+        GaussianObservationLaw.dataLaw] using h.1.2.2.2.2.2.2.1
     have hcond (y : EuclideanSpace ℝ i) : GaussianObservationLaw.posteriorKernel M β v⁻¹ y =
         multivariateGaussian (A y) S := by
       rw [GaussianObservationLaw.posteriorKernel, GaussianObservationLaw.translatedKernel_apply, GaussianObservationLaw.translate_gaussian, add_zero]
@@ -801,8 +812,13 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       rw [hdecomp A (by fun_prop)]
       simp [loss]
     refine ⟨hdecomp, hattain, le_antisymm ?_ ?_⟩
-    · exact (iInf_le_of_le ⟨A, by fun_prop⟩ le_rfl).trans_eq hattain
-    · apply le_iInf
+    · change (⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
+          estimatorRisk M β v est.1) ≤ _
+      exact (iInf_le (fun est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f} =>
+        estimatorRisk M β v est.1) ⟨A, A.measurable⟩).trans_eq hattain
+    · change _ ≤ ⨅ est : {f : EuclideanSpace ℝ i → V (n + 1) // Measurable f},
+          estimatorRisk M β v est.1
+      apply le_iInf
       intro est
       rw [hdecomp est.1 est.2]
       exact le_self_add
@@ -900,14 +916,16 @@ private theorem actualFrame (n r m : ℕ)
   have hdim : finrank ℝ (V (n + 1)) = n + 1 := by simp [V]
   have hlayers := DerivativeLayerNormalizedObservation.derivative_layer_normalized_observation_facts B.toLinearMap C.toLinearMap
   dsimp only at hlayers
-  simp only [hdim] at hlayers
+  simp only [V, finrank_euclideanSpace, Fintype.card_fin] at hlayers
   have hN : kernels B C (n + 1) = ⊥ := by
     apply le_antisymm
     · intro x hx
       apply hobs x
       intro k
       have hk := (Submodule.mem_iInf _).mp hx k
-      simpa only [LinearMap.mem_ker, LinearMap.comp_apply, Module.End.pow_apply] using hk
+      change C ((B.toLinearMap ^ (k : ℕ)) x) = 0 at hk
+      rw [← ContinuousLinearMap.toLinearMap_pow] at hk
+      exact hk
     · exact bot_le
   have hnest {j k : ℕ} (hjk : j ≤ k) : kernels B C k ≤ kernels B C j := by
     intro x hx
@@ -992,7 +1010,7 @@ private theorem actualFrame (n r m : ℕ)
     hinternal.subordinateOrthonormalBasisIndex hdim (perm i) horth
   have hgrade (i : Fin (n + 1)) : (grade i : ℕ) = w i := rfl
   have hbmem (i : Fin (n + 1)) : b i ∈ layer B C (grade i) := by
-    simpa only [b, b0, OrthonormalBasis.coe_reindex, Equiv.symm_symm] using
+    simpa only [b, b0, grade, OrthonormalBasis.coe_reindex, Equiv.symm_symm, Function.comp_apply] using
       hinternal.subordinateOrthonormalBasis_subordinate hdim (perm i) horth
   have hproject (j i : Fin (n + 1)) :
       (layer B C j).starProjection (b i) = if j = grade i then b i else 0 := by
@@ -1021,7 +1039,7 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
       (bayesRisk M β v).toReal = (1 / 2 : ℝ) * ∑ j, v / (β * v + lam j) := by
   classical
   have hexperiment {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ :=
+      (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{0} M β σ :=
     actualExperiment n β hβ M σ hσ
   have hrisk {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
@@ -1038,11 +1056,20 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
       std.toMatrix_orthonormalBasis_self_mul_conjTranspose b
   have hcoord : G = P.transpose * (M.transpose * M) * P := by
     rw [hcoordinates]
-    ext j k
-    simp [LinearMap.toMatrix_apply, OrthonormalBasis.repr_apply_apply,
-      P, std, Basis.toMatrix_apply, GaussianObservationLaw.action_apply,
-      EuclideanSpace.inner_eq_star_dotProduct, Matrix.mul_apply, dotProduct,
-      Finset.mul_sum, Finset.sum_mul, mul_assoc]
+    have hflip : b.toBasis.toMatrix std = P.transpose := by
+      ext j k
+      simp only [P, Basis.toMatrix_apply, OrthonormalBasis.coe_toBasis_repr_apply,
+        OrthonormalBasis.repr_apply_apply, Matrix.transpose_apply]
+      exact real_inner_comm _ _
+    have hstd : LinearMap.toMatrix std.toBasis std.toBasis
+        (GaussianObservationLaw.action (M.transpose * M)).toLinearMap = M.transpose * M := by
+      change LinearMap.toMatrix std.toBasis std.toBasis (M.transpose * M).toEuclideanLin = _
+      rw [Matrix.toEuclideanLin_eq_toLin_orthonormal, LinearMap.toMatrix_toLin]
+    have hm := basis_toMatrix_mul_linearMap_toMatrix_mul_basis_toMatrix
+      b.toBasis std.toBasis b.toBasis std.toBasis
+      (GaussianObservationLaw.action (M.transpose * M)).toLinearMap
+    rw [hflip, hstd] at hm
+    exact hm.symm
   have hrestore : M.transpose * M = P * G * P.transpose := by
     rw [hcoord]
     symm
@@ -1054,7 +1081,7 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
   let R := P * U
   let ev := hG.isHermitian.eigenvalues
   have hUtU : U.transpose * U = 1 := by
-    simpa only [U, Matrix.conjTranspose_eq_transpose_of_trivial] using
+    simpa only [U, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial] using
       Unitary.coe_star_mul_self hG.isHermitian.eigenvectorUnitary
   have hUUt : U * U.transpose = 1 := mul_eq_one_comm.mp hUtU
   have hRtR : R.transpose * R = 1 := by
@@ -1082,8 +1109,7 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
       (Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (Fin (n + 1))))).symm.trans ec
     apply Fintype.sum_equiv ee
     intro j
-    simp only [ev, lam, Matrix.IsHermitian.eigenvalues, ee, ec,
-      Equiv.trans_apply, Equiv.apply_symm_apply]
+    simp [ev, lam, Matrix.IsHermitian.eigenvalues, ee, ec]
   have hepos (j : Fin (n + 1)) : 0 < ev j := hG.eigenvalues_pos j
   have hdetR : R.det * R.transpose.det = 1 := by
     simpa only [Matrix.det_mul, Matrix.det_one] using congrArg Matrix.det hRRt
@@ -1112,7 +1138,7 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
       ← Matrix.mul_assoc (Matrix.diagonal _), Matrix.diagonal_mul_diagonal]
     have hh : Matrix.diagonal (fun j => (β + v⁻¹ * ev j) * (β + v⁻¹ * ev j)⁻¹) = 1 := by
       ext j k
-      simp [Matrix.diagonal, hden]
+      simp [Matrix.diagonal, Matrix.one_apply, hden]
     rw [hh, Matrix.one_mul, hRRt]
   have htrace : Matrix.trace (GaussianObservationLaw.covariance M β v⁻¹) =
       ∑ j, v / (β * v + ev j) := by
@@ -1127,13 +1153,15 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
   · have hI := (hexperiment M (Real.sqrt v) (by rwa [Real.sq_sqrt hv.le])).2.2.2.1
     simp only [Real.sq_sqrt hv.le] at hI
     rw [hI, hdet, Real.log_prod (fun j _ =>
-      (by positivity : (1 + ev j / (β * v)) ≠ 0)), hsum]
+      (ne_of_gt (add_pos zero_lt_one (div_pos (hepos j) (mul_pos hβ hv))))),
+      hsum (fun x => Real.log (1 + x / (β * v))) ]
     ring
   · have hq := (hrisk M v hv).2.2
     have htr : 0 ≤ Matrix.trace (GaussianObservationLaw.covariance M β v⁻¹) := by
       rw [htrace]
-      exact Finset.sum_nonneg (fun j _ => by positivity)
-    rw [hq, ENNReal.toReal_ofReal (div_nonneg htr (by norm_num)), htrace, hsum]
+      exact Finset.sum_nonneg (fun j _ =>
+        (div_pos hv (add_pos (mul_pos hβ hv) (hepos j))).le)
+    rw [hq, ENNReal.toReal_ofReal (div_nonneg htr (by norm_num)), htrace, hsum (fun x => v / (β * v + x))]
     ring
 
 
@@ -1161,11 +1189,20 @@ private theorem actualCanonicalSpectrum (n : ℕ)
       std.toMatrix_orthonormalBasis_self_mul_conjTranspose b
   have hc : G = P.transpose * (M.transpose * M) * P := by
     rw [hcoord]
-    ext j k
-    simp [LinearMap.toMatrix_apply, OrthonormalBasis.repr_apply_apply,
-      P, std, Basis.toMatrix_apply, GaussianObservationLaw.action_apply,
-      EuclideanSpace.inner_eq_star_dotProduct, Matrix.mul_apply, dotProduct,
-      Finset.mul_sum, Finset.sum_mul, mul_assoc]
+    have hflip : b.toBasis.toMatrix std = P.transpose := by
+      ext j k
+      simp only [P, Basis.toMatrix_apply, OrthonormalBasis.coe_toBasis_repr_apply,
+        OrthonormalBasis.repr_apply_apply, Matrix.transpose_apply]
+      exact real_inner_comm _ _
+    have hstd : LinearMap.toMatrix std.toBasis std.toBasis
+        (GaussianObservationLaw.action (M.transpose * M)).toLinearMap = M.transpose * M := by
+      change LinearMap.toMatrix std.toBasis std.toBasis (M.transpose * M).toEuclideanLin = _
+      rw [Matrix.toEuclideanLin_eq_toLin_orthonormal, LinearMap.toMatrix_toLin]
+    have hm := basis_toMatrix_mul_linearMap_toMatrix_mul_basis_toMatrix
+      b.toBasis std.toBasis b.toBasis std.toBasis
+      (GaussianObservationLaw.action (M.transpose * M)).toLinearMap
+    rw [hflip, hstd] at hm
+    exact hm.symm
   have hchar : G.charpoly = (M.transpose * M).charpoly := by
     rw [hc, Matrix.charpoly_mul_comm, ← Matrix.mul_assoc, hPPt, Matrix.one_mul]
   have hK : (M.transpose * M).IsHermitian := by
@@ -1248,7 +1285,11 @@ private theorem actualSpectrum (n r : ℕ)
       ext i j
       have hn : Real.sqrt T * T ^ w i ≠ 0 :=
         mul_ne_zero (Real.sqrt_pos.mpr hT).ne' (pow_pos hT _).ne'
-      simp [Matrix.diagonal, mul_comm (T ^ w i), hn]
+      by_cases hij : i = j
+      · subst j
+        simp only [Matrix.diagonal_apply_eq, Matrix.one_apply_eq]
+        field_simp [(Real.sqrt_pos.mpr hT).ne', (pow_pos hT (w i)).ne']
+      · simp [Matrix.diagonal, Matrix.one_apply, hij]
     have hED : E * D T = 1 := mul_eq_one_comm.mp hDE
     simp only [ContinuousLinearMap.toLinearMap_comp, LinearMap.toMatrix_comp,
       heMatrix]
@@ -1640,7 +1681,9 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
       apply hobs x
       intro k
       have hk := (Submodule.mem_iInf _).mp hx k
-      simpa only [LinearMap.mem_ker, LinearMap.comp_apply, Module.End.pow_apply] using hk
+      change C ((B.toLinearMap ^ (k : ℕ)) x) = 0 at hk
+      rw [← ContinuousLinearMap.toLinearMap_pow] at hk
+      exact hk
     · exact bot_le
   have hnest {j k : ℕ} (hjk : j ≤ k) : kernels B C k ≤ kernels B C j := by
     intro x hx
