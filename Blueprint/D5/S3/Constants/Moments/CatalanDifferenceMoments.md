@@ -6,7 +6,7 @@ Unit forward differences of Catalan moments are positive and obey a uniform rati
 
 **Theorem 1.1 (A uniform envelope for every difference order).**
 
-Lean statement: `D5/S3/Constants/Moments/CatalanDifferenceMoments.catalan_difference_ratio_envelope`
+$$\forall (L: \mathbb{N}), (\forall (k: \mathbb{N}), ((1 \le L) \Rightarrow (0 < \operatorname{A}(L,k) \land \left((3\cdot(L+k)\cdot\operatorname{A}(L,k) \le (L+k+2)\cdot\operatorname{A}(L,k+1)) \land (\operatorname{A}(L,k+1) < 3\cdot\operatorname{A}(L,k))\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Constants/Moments/CatalanDifferenceMoments.catalan_difference_ratio_envelope` (`✓ std3`). ∎
 
