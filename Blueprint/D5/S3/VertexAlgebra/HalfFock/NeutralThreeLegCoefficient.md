@@ -1,20 +1,20 @@
-# Native finite neutral three-leg coefficient identity
+# Actual finite neutral-field coefficient bridge
 
 ## Abstract
 
-The actual corrected neutral field has a finite three-leg coefficient expansion with the literal Corr correction, repeated occupations, finite normal modes, and the native Gaussian correction readout.
+Actual output-projected finite neutral corrected-field coefficients and their raw normal-mode Laurent realization; the full Gaussian coefficient identity remains open.
 
-The source is the actual correctedField on the full ActualTensor carrier. For an arbitrary finite repeated oscillator occupation d, coefficient extraction first exposes the literal Corr support and then expands each actual polynomial into the actual charged zero normal word. The pointwise mode sum remains a finsum on the input tensor, so no endomorphism-valued infinite sum is introduced.
+This unit proves output-projected finite mode restriction and finite scalar Laurent realization for the actual neutral correctedField, on the original tensor carrier. Source, input and output occupations may have arbitrary repetitions. The Gram matrix is the original raw matrix, the only invertibility assumption is the native hu, and rank zero is included.
 
-The zero-charge seed is the existing identity field. Its flat coefficient is therefore the genuine creation-left, annihilation-right normal product with the integer exponent selector. The correction is the supplied finite Corr, whose repeated labelled occurrences retain all diagonal and off-diagonal matching multiplicities. The source-vacuum linear-form readout is the actual Corr evaluation and gives the factorial Gaussian coefficient for every finite family.
+The common finite mode set is {-k-1 : k is an output frequency} union {k : k is an input frequency}. Positive currents mix colours only at a fixed frequency. A negative mode outside the output frequency support can create a nonzero full vector, but its specified output coefficient vanishes. The support theorem therefore extracts that coefficient before restricting the sum.
 
-For a mode tuple, negative entries record output frequencies -k-1 and nonnegative entries record input frequencies k. The frequency projection is the finite set {-k-1 | k is in the output support} union {k | k is in the input support}; the Gram matrix only mixes colours at a fixed frequency. The native mode box theorem reduces the actual pointwise finsum to this finite product once the literal support condition is supplied.
+The flat normal recursion is factored into creation multiplication on the left and Gram-weighted annihilation on the right. The proof uses the existing same-sign Heisenberg commutation law, the native monomial derivative and actual pointwise finite-support theorem. Ground vectors are carried by identity; no scalar ground vacuum is chosen.
 
-The exponent theorem is proved before any scalar evaluation. Corr bidegree supplies shift plus residual source weight equals the original source weight, the flat selector supplies the normal displacement, and the signed mode balance gives e = 2(E_T(output)-E_T(input)-E_S(source)), expressed in Lean with doubled twisted energies. Only after this finite regrouping may a nonzero T be substituted in the resulting Laurent monomial.
+The existing energy covariance supplies e = 2(E_T(output)-E_T(input)-E_S(source)), in doubled integral twisted-energy coordinates. The actual coefficients are represented by a finitely supported scalar Laurent polynomial. Evaluation is allowed only at a complex unit T and is a finite sum.
 
-The matching argument is the labelled-position Wick/Isserlis expansion: each new insertion either leaves its position unmatched or pairs it with one earlier unmatched position, and the pair derivation vanishes on an already formed pair. This is the finite algebraic bridge for arbitrary repeated occupations; it makes no analytic completion, whitening, damping, unitarity, sewing, string-theory, or AdS/CFT claim.
+The raw source-output and source-input blocks are consumed in the actual finite evaluated normal-operator expansion. Source insertion in the actual entry separates the unpaired normal readout from a sum d(b) SS(a,b) times the entry with one b removed. The SS block is therefore also connected to the actual field, with repeated-source multiplicities and diagonal entry p rather than 2p. The remaining bridge identifies the unpaired branch and identity propagation with the factorial coefficient of exp(SS/2 + SO + SI + IO). The actual entry divided by source d! and input h!, with ordinary output coefficient, has not yet been identified with the full block GaussianCoefficient.
 
-After the finite projection and exponent regrouping, the raw three-leg generating kernel is the exponential of the four actual finite bilinear pieces: one half of the source-source covariance p_st G_ij T^(-2s-2t), the source-output creation symbol J_s(-k-1) T^(2k-2s+1), the source-input annihilation symbol omega_k G_ij J_s(k) T^(-2k-2s-1), and the identity propagation term eta_jk xi_jk. Source coefficients are divided by d!, input coefficients by h!, while output uses ordinary monomial coefficients; the diagonal source pair contributes p_ss G_ii with no extra factor two.
+The intended remaining combinatorics is classical labelled-position Wick/Isserlis and the exponential formula: equal labels are distinct positions, so diagonal pairing counts have factors 2^m m! and off-diagonal counts m!. Wick (1950, Physical Review 80, 268) and Isserlis (1918, Biometrika 12, 134-139) supply the classical provenance; OriginalCorrectionGaussian supplies the repository actual Corr source-vacuum theorem. No new global novelty, positivity, unitarity, analytic completion, sewing, string-theory completion or AdS/CFT result is asserted.
 
 **Definition 1.1 (Actual neutral source).**
 
@@ -26,21 +26,21 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.neutral
 
 *Commentary.*
 
-The source is the full carrier element with the requested arbitrary finite oscillator occupation.
+The charge-zero carrier element is Finsupp.single 0 (monomial d 1), with arbitrary finite multiplicities.
 
-**Theorem 1.2 (Coefficient exposes correctedPolynomial).**
+**Definition 1.2 (Actual full corrected coefficient).**
 
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_source`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_source` (`✓ std3`). ∎
+*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The actual corrected field reduces at charge zero to the literal correctedPolynomial.
+The field is correctedField on the existing ActualTensor carrier; no alternative Gaussian field is defined.
 
-**Theorem 1.3 (Finite actual Corr and normal-word expansion).**
+**Theorem 1.3 (Actual Corr and pointwise normal expansion).**
 
 Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_native_expansion`
 
@@ -50,57 +50,33 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeN
 
 *Commentary.*
 
-The equality keeps Corr support, polynomial support, actual chargedField normal words, repeated occurrences, and pointwise flatTerm mode sums.
+The finite Corr support and residual polynomial support precede the native pointwise flatTerm finsum.
 
-**Theorem 1.4 (Actual Corr Gaussian readout).**
+**Definition 1.4 (Full ground-valued output coefficient).**
 
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCorrection_gaussian`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeOutputProjection`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCorrection_gaussian` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The existing actual Corr source-vacuum readout is the factorial Gaussian coefficient for arbitrary finite linear forms.
-
-**Theorem 1.5 (Signed native mode energy balance).**
-
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.native_mode_energy_balance`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.native_mode_energy_balance` (`✓ std3`). ∎
+*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeOutputProjection` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The negative output and nonnegative input occupations of every actual mode tuple satisfy the signed doubled-frequency balance.
+The polynomial coefficient map is tensored with identity and composed with the canonical scalar tensor identification. Its result is the entire ground vector.
 
-**Theorem 1.6 (Native exponent regrouping).**
+**Theorem 1.5 (Proved projected frequency support).**
 
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_exponent_regrouping`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_projected_support`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_exponent_regrouping` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Corr bidegree, the actual flat selector, and the signed mode balance prove the common finite Laurent exponent before evaluation.
-
-**Theorem 1.7 (Finite projected actual mode sum).**
-
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_projected_mode_sum`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_projected_mode_sum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_projected_support` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The actual pointwise finsum equals the finite native mode box under the literal support condition.
+For every word, exponent, repeated input and output occupation, ground vector and mode tuple, a nonzero projected flatTerm implies membership of every mode in the common output-negative/input-positive frequency set. There is no vector-support hypothesis.
 
-**Theorem 1.8 (Output/input frequency projected mode sum).**
+**Theorem 1.6 (Common finite projected mode sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_frequency_projected_mode_sum`
 
@@ -110,69 +86,158 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeN
 
 *Commentary.*
 
-The projection is instantiated with the native frequency set {-k-1 from output} union {k from input}; no color support assumption is used.
+For each exponent and arbitrary ground vector, the output coefficient of the actual normal word equals the sum over the finite Cartesian mode box built from the output and input frequency supports.
 
-**Definition 1.9 (Explicit four-piece raw kernel).**
+**Theorem 1.7 (Actual corrected output exponent selection).**
 
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralRawKernel`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_output_energy_selection`
 
-*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralRawKernel` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The source-source, source-output, source-input, and identity-propagation terms are defined directly from pairScalar, jetScalar, frequency, G, and the Laurent powers of T.
-
-**Theorem 1.10 (Source-source kernel is the native covariance).**
-
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeSourceSourceKernel_eq_covariance`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeSourceSourceKernel_eq_covariance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_output_energy_selection` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-At T nonzero, the explicit source-source Laurent power is exactly the existing Corr covariance evaluated at T^-2.
+The full ground-valued corrected entry vanishes unless e equals oddWeight(output) minus oddWeight(input) minus twice the source weight. The proof consumes existing full-field energy covariance.
 
-**Theorem 1.11 (Raw kernel component equality).**
+**Theorem 1.8 (Finite actual corrected entry).**
 
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralRawKernel_components`
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_finite_projected_expansion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralRawKernel_components` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The four finite bilinear pieces are exposed as an equality, with the source-source diagonal carrying its one-half coefficient.
-
-**Theorem 1.12 (Finite repeated-occupation native Wick identity).**
-
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralFiniteWickIdentity`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralFiniteWickIdentity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_finite_projected_expansion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For every finite labelled family and arbitrary occupation, the actual sourceVacuum Corr readout equals the exact factorial Gaussian coefficient.
+The exact output projection is a finite Corr shift, residual monomial and normal-mode sum. Its integer selector is retained; normal creation and annihilation act on the original polynomial input and the ground identity.
+
+**Definition 1.9 (Finite scalar Laurent entries).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentCoefficients`
+
+*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentCoefficients` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A finitely supported integer coefficient function collects the actual Corr and normal-mode terms at their literal shifted exponents.
+
+**Theorem 1.10 (Actual full field equals finite scalar entries times ground identity).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_eq_laurent_coefficients`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_eq_laurent_coefficients` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At every integer exponent, source occupation, repeated input and output occupation, the actual projected correctedField coefficient is exactly the finite scalar Laurent coefficient multiplied by the arbitrary ground vector.
+
+**Definition 1.11 (Finite evaluation at a nonzero parameter).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry`
+
+*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The evaluation parameter is a complex unit. Only the finite scalar coefficient function is evaluated, never an arbitrary Hahn series.
+
+**Theorem 1.12 (Finite evaluation retains the ground identity).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_ground_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_ground_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite scalar evaluation times any ground vector equals the finite Laurent-weighted sum of the actual projected correctedField coefficients.
+
+**Theorem 1.13 (Evaluation of the unique actual energy coefficient).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_at_energy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_at_energy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every repeated occupation and arbitrary ground vector, the finite Laurent evaluation equals T to the forced exponent times the actual corrected coefficient at that exponent. All other entries vanish by the native energy covariance.
+
+**Definition 1.14 (Raw mixed blocks in normal order).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeRawNormalTerm`
+
+*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeRawNormalTerm` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each negative mode uses the raw source-output Laurent coefficient as multiplication; each nonnegative mode uses the raw source-input coefficients as Gram-weighted derivatives. Every annihilation acts before the creation multiplications.
+
+**Theorem 1.15 (Actual Laurent entry consumes both raw mixed blocks).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_raw_normal_expansion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_raw_normal_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The full actual finite Laurent entry equals the finite Corr shift and monomial expansion of these raw normal-mode operators. This is not yet the exponential coefficient of the full three-leg block matrix.
+
+**Definition 1.16 (Linear readout of the actual finite normal action).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNormalReadout`
+
+*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNormalReadout` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The monomial basis extends the finite raw normal-mode coefficient action linearly to source polynomials, using the proved input/output frequency box.
+
+**Theorem 1.17 (Actual corrected coefficient source insertion with SS contractions).**
+
+Lean statement: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_source_insertion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_source_insertion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary repeated occupations and any ground vector, T to the forced exponent times the actual corrected-field coefficient after inserting source a equals the unpaired normal readout times that vector plus the sum over b of d(b) SS(a,b) times the native entry with one b removed, acting by ground identity. The proof evaluates the actual correction lift at T to minus two and reuses its source-partial formula. The scalar recurrence is a consumed helper. No Gaussian coefficient equality is assumed. Identification of the unpaired readout with the full three-leg Gaussian recurrence remains open.
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_exponent_regrouping`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_eq_laurent_coefficients`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_finite_projected_expansion`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_frequency_projected_mode_sum`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_native_expansion`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_projected_mode_sum`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_source`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCorrection_gaussian`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralFiniteWickIdentity`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralRawKernel`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralRawKernel_components`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeSourceSourceKernel_eq_covariance`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.native_mode_energy_balance`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_output_energy_selection`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_projected_support`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralCoefficient_source_insertion`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentCoefficients`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_at_energy`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_ground_identity`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNeutralLaurentEntry_raw_normal_expansion`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeNormalReadout`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeOutputProjection`
+- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.nativeRawNormalTerm`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NeutralThreeLegCoefficient.neutralSource`
 - Dependency: [D5/S3/VertexAlgebra/HalfFock/ActualEnergyCovariance](ActualEnergyCovariance.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectedConformal](../LatticeHalfFockCorrectedConformal.md)
