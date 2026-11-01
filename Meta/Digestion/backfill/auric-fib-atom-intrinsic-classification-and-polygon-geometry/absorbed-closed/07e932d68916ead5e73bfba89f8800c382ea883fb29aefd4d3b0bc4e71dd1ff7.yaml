@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:07e932d68916ead5e73bfba89f8800c382ea883fb29aefd4d3b0bc4e71dd1ff7
   normalized_sha256: sha256:07e932d68916ead5e73bfba89f8800c382ea883fb29aefd4d3b0bc4e71dd1ff7
 cas_ref: sha256:07e932d68916ead5e73bfba89f8800c382ea883fb29aefd4d3b0bc4e71dd1ff7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonSimultaneousCompression.exists_original_terminal_compression
+    target_statement_id: sha256:0045c20e347d7917c0ac1ddde41487400945ca1769e4f3f9c8655a967a1deb46
 receipts:
   unresolved_subitems: []
