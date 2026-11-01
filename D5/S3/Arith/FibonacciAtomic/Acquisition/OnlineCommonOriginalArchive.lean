@@ -750,8 +750,9 @@ def ArchiveService {Handle World : Type} (B : SourceService Handle World) (h : H
     a.precision < 2 * costBound a.joint ∧
     (∀ k, costBound a.joint ≤ 2 ^ k → a.precision ≤ 2 ^ k) ∧
     8 * costBound a.joint = 4 * (if a.joint = 1 then 0 else 2 * costBound a.joint)) ∧
-  (∀ p H b y c z, RequestRun B h p a H x b y → RequestRun B h p a H x c z →
-    b = c ∧ B.value h y = B.value h z)
+  (∀ p H, (∃ b y, RequestRun B h p a H x b y) ∧
+    ∀ b y c z, RequestRun B h p a H x b y → RequestRun B h p a H x c z →
+      b = c ∧ B.value h y = B.value h z)
 
 private theorem archive_service {Handle World : Type} (B : SourceService Handle World)
     (h : Handle) (complete : VariableCompletion B h) (x₀ x : World)
@@ -792,7 +793,9 @@ private theorem archive_service {Handle World : Type} (B : SourceService Handle 
     · rw [s.precision_eq]; exact hs.2.1
     · rw [s.precision_eq]; exact hs.2.2
     · simp [hj]; omega
-  · intro p H b y c z first second
+  · intro p H
+    refine ⟨request_exists B h complete p a H x s.lawful, ?_⟩
+    intro b y c z first second
     exact request_deterministic B h complete p a H x s.lawful first second
 
 /-- One uniform online program runs on the same bound natural-pair source

@@ -109,7 +109,8 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
                 + "and an actual endpoint y with ContinueRun, unchanged paid-read count and original register, "
                 + "and synchronized current at y. LeastDyadicBenchmark gives precision=2^k for some k, "
                 + "m<=precision<2m, minimality among covering powers of two, and 8m=4Qret(joint), when m is nonzero. "
-                + "The final clause states that any two actual executions of the next request from this same "
+                + "The final clause gives completion of every next delivered request from this actual completed "
+                + "memory and world. Any two actual executions of that request from this same "
                 + "memory and world return identical accessible memory and the same actual arithmetic endpoint. "
                 + "The covered/miss guards are disjoint, and the supplier fixes the acquired tape and output."),
             new DocumentBlock.DisplayFormula(CoveredServices()),
@@ -192,6 +193,9 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
         deterministic=All("c",C("Memory"),deterministic);
         deterministic=All("y",V("World"),deterministic);
         deterministic=All("b",C("Memory"),deterministic);
+        var completion=Ex("b",C("Memory"),Ex("y",V("World"),
+            C("RequestRun",V("B"),V("h"),V("p0"),A,V("H"),X,V("b"),V("y"))));
+        deterministic=And(completion,deterministic);
         deterministic=All("H",N,deterministic);
         deterministic=All("p0",C("Tariffs"),deterministic);
         return Eq(Service,And(CoveredServices(),continuation,Imp(C("nonzero",M),benchmark),deterministic));
