@@ -148,7 +148,7 @@ private lemma trivialT_derivative {t : ℝ} (ht : 0 < t) :
 private def D1 (t : ℝ) : ℝ := K t / 2 - Real.exp (t / 2) +
   Real.exp (-t / 2) * (Real.log (2 * Real.pi) + Real.log (1 - Real.exp (-(2 * t))) / 2)
 
-private def D2 (t : ℝ) : ℝ := K t / 4 - Real.exp (t / 2) +
+def D2 (t : ℝ) : ℝ := K t / 4 - Real.exp (t / 2) +
   Real.exp (-t / 2) / (Real.exp (2 * t) - 1)
 
 private lemma hasDerivAt_K {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
@@ -272,7 +272,7 @@ private lemma weighted_D1_limit :
   · ext t; dsimp [D1]; ring
   · simp
 
-private lemma weighted_D2_limit :
+lemma weighted_D2_limit :
     Tendsto (fun t : ℝ => t * D2 t) (𝓝[>] 0) (𝓝 (1 / 2)) := by
   have hK : Tendsto K (𝓝[>] 0) (𝓝 (K 0)) :=
     (K_continuous.tendsto 0).mono_left nhdsWithin_le_nhds
@@ -418,7 +418,7 @@ private lemma triangle_integral {δ u : ℝ} (hδ : 0 < δ) (hδ2 : δ < Real.lo
   exact positive_endpoint_integral hu0 huδ hδ2
 
 /-- The positive mixing density is weighted by the triangle height at the singular endpoint. -/
-private lemma actual_positive_representer : ∃ δ r L : ℝ,
+lemma actual_positive_representer : ∃ δ r L : ℝ,
     0 < δ ∧ δ < Real.log 2 ∧ 0 < r ∧ δ < L ∧
     (∀ s ∈ Ioc 0 δ, 0 < D2 s) ∧
     IntegrableOn (fun s : ℝ => s * D2 s) (Ioc 0 δ) ∧
@@ -444,7 +444,7 @@ private lemma actual_positive_representer : ∃ δ r L : ℝ,
   field_simp [hD1ne]
   <;> ring
 
-private def intervalVector (s a u : ℝ) : ℂ := (Icc a (a + s)).indicator (fun _ => 1) u
+def intervalVector (s a u : ℝ) : ℂ := (Icc a (a + s)).indicator (fun _ => 1) u
 
 private lemma intervalVector_conj (s a u : ℝ) :
     star (intervalVector s a u) = intervalVector s a u := by
@@ -475,7 +475,7 @@ private lemma interval_overlap (s a b : ℝ) :
       abs_of_nonneg (sub_nonneg.mpr hba)]
     ring
 
-private lemma triangle_quadratic {n : ℕ} (s : ℝ) (x : Fin n → ℝ) (c : Fin n → ℂ) :
+lemma triangle_quadratic {n : ℕ} (s : ℝ) (x : Fin n → ℝ) (c : Fin n → ℂ) :
     Integrable (fun u : ℝ => Complex.normSq (∑ i, intervalVector s (x i) u * c i)) ∧
     (∫ u : ℝ, (Complex.normSq (∑ i, intervalVector s (x i) u * c i) : ℂ)) =
       star c ⬝ᵥ ((fun i j => ((max (s - |x i - x j|) 0 : ℝ) : ℂ)) *ᵥ c) := by
