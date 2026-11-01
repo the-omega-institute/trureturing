@@ -33,8 +33,8 @@ separation through the Gram matrix of the old-to-late adjacency block.
 
 ## Gap
 
-The graph-specific spectral limit remains to be linked to the finite
-constructor and its degree, common-neighbour and orientation laws.
+The all-stage spectral limit remains to be composed from the actual cutoff
+norm, Gram convergence and ordered-spectrum identities.
 The full target quantifies along every natural stage, including odd stages;
 a conditional estimate model or a finite computation does not settle it.
 The forward preregistration is [issue #24989](https://github.com/the-omega-institute/trureturing/issues/24989).
@@ -80,18 +80,32 @@ The actual late adjacency norm interface belongs to
 Its bound uses the proved birth orientation and the finite Schur operator bound.
 For every cutoff $k$ and later increment $t\ge1$, it gives
 $\|C\|/2^{(k+t)/2}\le3\sqrt2/2^{k/2}$ with real exponents, including odd stages.
+The fixed-cutoff matrix convergence belongs to
+[CutoffGramLimit](../D5/S3/Combinatorics/Apollonian/CutoffGramLimit.lean):
+$2^{-(k+t)}BB^\top$ tends to the diagonal with weights
+$\operatorname{faceCount}(k,u)/2^k$ on the fixed actual vertex set.
+The real unequal-block identity belongs to
+[CutoffOrderedSpectrum](../D5/S3/Combinatorics/Apollonian/CutoffOrderedSpectrum.lean).
+It identifies the second decreasing eigenvalue of $[[0,B],[B^\top,0]]$
+with the square root of the second Gram eigenvalue when the latter is positive.
+The positive prefix retains signs, zero padding and algebraic multiplicities;
+the old and late vertex sets need not have equal sizes.
 The [unfinished graph registrations](https://github.com/the-omega-institute/trureturing/issues/24989#issuecomment-6552933239)
 remain separate from mathematical compilation, under the linked-issue route.
+The additional spectral registration obligations are tracked under
+[the same issue](https://github.com/the-omega-institute/trureturing/issues/24989).
 No frozen graph-specific spectral resolution is asserted here.
 
 ## Triage
 
-The remaining spectral interfaces are the remainder operator-norm estimate
-from the actual orientation, ordered positive-spectrum transport for the
-unequal adjacency block with zero padding and multiplicity, the fixed-cutoff
-Gram limit, and the all-natural-stage limit composition. Existing generic
-perturbation, Gram multiplicity and scaling declarations are suppliers for
-those interfaces, rather than a certificate that they have been instantiated.
+The remaining mathematical steps are to identify the limiting diagonal's
+second decreasing eigenvalue as $2$, transfer the fixed-cutoff matrix limit
+to second-eigenvalue convergence and eventual positivity, apply the existing
+scaling and perturbation results to the actual full adjacency decomposition,
+and compose the limits in the order $t\to\infty$ followed by $k\to\infty$.
+The result must cover all natural stages with the original real-power
+normalization. Existing generic perturbation and scaling declarations remain
+suppliers for this composition.
 
 ## ASSUMED-UNVERIFIED
 

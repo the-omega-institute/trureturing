@@ -8,6 +8,10 @@ url: https://mathoverflow.net/questions/516405
 claim: "The second largest ordinary adjacency eigenvalue of the deterministic inner-face Apollonian stages, divided by 2^(m/2), converges to sqrt(2)."
 strata_touched:
   - D5/S3/Combinatorics/Apollonian/InnerFaceStages
+  - D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds
+  - D5/S3/Combinatorics/Apollonian/CutoffGramLimit
+  - D5/S3/Combinatorics/Apollonian/CutoffOrderedSpectrum
+  - D5/S3/SpectralTopology/RectangularDilation
 license: CC-BY-SA-4.0
 triage: anchor
 ---

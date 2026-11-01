@@ -70,7 +70,7 @@ private def normalizedBad : Realization scalarSignature :=
 private theorem normalizedBad_reject : ¬ late_adjacency_normalized_le_arena.Law normalizedBad := by
   intro h
   have hh : ‖lateAdjacency 0 1‖ ≤ -(3 * Real.sqrt 2) := by
-    simpa [normalizedBad, realize] using h 0 1 (by decide)
+    simpa [normalizedBad, realize, div_neg] using h 0 1 (by decide)
   have hp : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
   linarith [norm_nonneg (lateAdjacency 0 1)]
 def late_adjacency_normalized_le_family : Registration late_adjacency_normalized_le_arena
@@ -106,5 +106,7 @@ def registration_late_adjacency_normalized_le : Contract.Registration.{_,_,_,0,0
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+end
 
 end Reg.D5.S3.Combinatorics.Apollonian.CutoffSpectralBounds

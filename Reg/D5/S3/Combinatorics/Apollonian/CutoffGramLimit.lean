@@ -25,7 +25,16 @@ private theorem bad_reject : ¬ gramArena.Law bad := by
       atTop (nhds (limitingDiagonal 0)) := by simpa [bad, realize] using h 0
   have he := tendsto_nhds_unique tendsto_const_nhds hh
   have hv := congrArg (fun M : Matrix (Vertex 0) (Vertex 0) ℝ => M 0 0) he
-  norm_num [limitingDiagonal, faceCount, Incident, corner] at hv
+  have hz : (0 : ℝ) = (faceCount 0 (0 : Vertex 0) : ℝ) := by
+    simpa [limitingDiagonal] using hv
+  have hi : Incident 0 (0 : Face 0) (0 : Vertex 0) := ⟨1, rfl⟩
+  have hc : 1 ≤ faceCount 0 (0 : Vertex 0) := by
+    have hs := Finset.single_le_sum
+      (s := Finset.univ) (f := fun f : Face 0 => if Incident 0 f (0 : Vertex 0) then 1 else 0)
+      (fun f _ => Nat.zero_le _) (Finset.mem_univ (0 : Face 0))
+    simpa only [if_pos hi, faceCount] using hs
+  have hcR : (1 : ℝ) ≤ (faceCount 0 (0 : Vertex 0) : ℝ) := by exact_mod_cast hc
+  linarith
 
 def normalized_gram_tendsto_family : Registration gramArena
     (type_of% (@_root_.D5.S3.Combinatorics.Apollonian.CutoffGramLimit.normalized_gram_tendsto)) where
@@ -61,4 +70,6 @@ def registration_normalized_gram_tendsto : Contract.Registration.{_,_,_,0,0,0,_,
   continuation := .unknown
   familyRecord := none
   options := #[]
+end
+
 end Reg.D5.S3.Combinatorics.Apollonian.CutoffGramLimit
