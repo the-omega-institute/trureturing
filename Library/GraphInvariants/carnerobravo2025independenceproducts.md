@@ -212,13 +212,13 @@ induced embedding has target `P_9337` strong `P_9061`. The literal transform
 `T(x,y) = (x+y+25,x-y+1705)` has inclusive one-based bounds; the map into
 `Fin 9337` times `Fin 9061` subtracts one from both coordinates.
 
-The source defines a fresh occupancy checker, contains proposed generic
-soundness proofs for injection and both adjacency directions, and applies it
-to the literal routes through a concrete kernel-reduction obligation. The
-candidate routing sources remain uncompiled; this entry records the exact intended interface,
-not a verified embedding. `PrescribedSubdivision`, `IntegerPolyline` and
-`LatticeRouting` supply the consumed tagged paths, corner-expansion semantics
-and strong-product conversion.
+`PrescribedSubdivision`, `IntegerPolyline` and `LatticeRouting` provide
+Lean-verified tagged paths, corner-expansion semantics, occupancy-checker
+soundness and strong-product conversion. The computational tags retain the
+actual edge numbers and natural positions; their injection and exact graph
+correspondence with the dependent fresh vertices are proved. The concrete
+large routing reduction and finite embedding remain uncompiled, so this
+entry does not claim a verified embedding of the literal routes.
 
 The seed is Adamaszek's; the supplied graph-move route uses the Barmak/Lozin
 approach. The explicit coordinate construction is local proof content, not a
