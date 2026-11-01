@@ -1,4 +1,10 @@
-/- SOURCE CANDIDATE. UNCOMPILED. See source-provenance.json. -/
+/- GID: D5/S3/Topology/PointedWedgeHomology
+   generality: G
+   mirror-B: D5/B/S3/Topology/PointedWedgeHomology
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Open saturated subwedges yield actual positive-degree singular homology biproducts. -/
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.FiniteConeUnionWedge
 import D5.S3.Topology.OpenCoverHomology
@@ -87,7 +93,8 @@ def partHomeomorph {A : Set X} {B : Set Y} (hA : IsOpen A) (hB : IsOpen B)
     rw [Subtype.ext_iff, Quotient.eq]
     cases z <;> cases w <;>
       simp [f, wedgePoints, Subtype.ext_iff, subsetSetoid]
-  exact (Homeomorph.Quotient.congrRight hker).trans hf.homeomorph
+  exact (Homeomorph.Quotient.congrRight hker).trans
+    (Topology.IsQuotientMap.homeomorph (f := ⟨f, hf.continuous⟩) hf)
 
 private def leftProjection : C(Wedge a b, X) := by
   let f : X ⊕ Y → X := Sum.elim id (fun _ => a)

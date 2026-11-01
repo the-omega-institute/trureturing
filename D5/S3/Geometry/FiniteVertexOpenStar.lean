@@ -1,4 +1,10 @@
-/- SOURCE CANDIDATE. UNCOMPILED. See source-provenance.json. -/
+/- GID: D5/S3/Geometry/FiniteVertexOpenStar
+   generality: G
+   mirror-B: D5/B/S3/Geometry/FiniteVertexOpenStar
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Relative open vertex stars in finite coordinate realizations have based contractions. -/
 import D5.S3.Geometry.FiniteVertexCylinder
 import Mathlib.Topology.Homotopy.Basic
 

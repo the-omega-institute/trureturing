@@ -1,4 +1,10 @@
-/- SOURCE CANDIDATE. UNCOMPILED. See source-provenance.json. -/
+/- GID: D5/S3/Topology/OpenCoverHomology
+   generality: G
+   mirror-B: D5/B/S3/Topology/OpenCoverHomology
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Positive singular homology splits across open covers with reduced-acyclic intersections. -/
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.MayerVietoris.Reduced
 import Mathlib.Algebra.Category.ModuleCat.Biproducts
 

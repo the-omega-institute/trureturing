@@ -1,9 +1,10 @@
-/- SOURCE CANDIDATE. UNCOMPILED.
-Pinned repository: 1c0bfc7c3def330e285978ef4c1b8fbfd993d538.
-Pinned Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679; Lean 4.35.0.
-The existing TauCeti sphere suspension and matching-degree calculation are reused.
-The new induction supplies the genuinely absent off-dimensional calculation.
--/
+/- GID: D5/S3/Topology/SphereHomologyAllDegrees
+   generality: G
+   mirror-B: D5/B/S3/Topology/SphereHomologyAllDegrees
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual sphere singular homology in every positive degree over torsion-free coefficients. -/
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Sphere
 import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.Algebra.Module.Torsion.Free

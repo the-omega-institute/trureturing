@@ -1,8 +1,10 @@
-/- SOURCE CANDIDATE. UNCOMPILED. See source-provenance.json.
-This supplies an obstruction needed for the SAME original Carnero Bravo
-arXiv:2505.06457v2 Question 32 induced-king-grid counterexample. It is not
-an assertion that that original problem has been solved or another problem.
--/
+/- GID: D5/S3/Geometry/SphereBouquetHomology
+   generality: G
+   mirror-B: D5/B/S3/Geometry/SphereBouquetHomology
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Compact arbitrary sphere-wedge sources have torsion-free positive integral singular homology. -/
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.HereditaryLexicographicProduct
 import D5.S3.Geometry.FiniteVertexOpenStar
