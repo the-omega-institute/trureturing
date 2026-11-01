@@ -39,7 +39,7 @@ internal sealed class BcGhostBRSTDocument : IScribeDocumentDefinition
         H(name.Replace("_", " ")), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     public DocumentDefinition Create()
     {
-        var p=V("p"); var r=V("r"); var v=V("v"); 
+        var p=V("p"); var r=V("r"); var v=V("v");
         return DocumentDefinition.Create(ScribeNode.Create(
             "Both cubic ghost Ward anticommutators",H("Exact Ward identities of the cubic ghost charge"),Blocks(
             Paragraph(Text("The formulas are the classical bc ghost BRST construction, with vacuum cuts b at minus one and c at two. See Kato and Ogawa, Nuclear Physics B 212 (1983), 443–460, and Polchinski, String Theory, volume 1, chapter 4. No novelty of these formulas is claimed. The formal carrier is the original complex finitely supported occupation space.")),

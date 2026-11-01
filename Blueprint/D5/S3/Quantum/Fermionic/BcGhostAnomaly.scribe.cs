@@ -39,7 +39,7 @@ internal sealed class BcGhostAnomalyDocument : IScribeDocumentDefinition
         H(name.Replace("_", " ")), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     public DocumentDefinition Create()
     {
-        var r=V("r"); var m=V("m"); 
+        var r=V("r"); var m=V("m");
         return DocumentDefinition.Create(ScribeNode.Create(
             "Mixed Virasoro anomaly of the cubic ghost charge",H("The actual ghost BRST Virasoro anomaly"),Blocks(
             Paragraph(Text("The formulas are the classical bc ghost BRST construction, with vacuum cuts b at minus one and c at two. See Kato and Ogawa, Nuclear Physics B 212 (1983), 443–460, and Polchinski, String Theory, volume 1, chapter 4. No novelty of these formulas is claimed. The formal carrier is the original complex finitely supported occupation space.")),
