@@ -15,7 +15,7 @@ noncomputable section
 namespace D5.S3.HomologicalAlgebra.AbelianExtensionH1
 open groupCohomology
 
-variable {N Q S : Type*} [CommGroup N] [Group Q] [Group S]
+variable {N Q : Type*} {S : Type} [CommGroup N] [Group Q] [Group S]
 variable (E : GroupExtension N Q S)
 
 private theorem conj_kernel (x : Q) (hx : x ∈ E.rightHom.ker) : E.conjAct x = 1 := by
@@ -93,8 +93,8 @@ def defect (a : automorphisms E) : S → N := fun s => rawDefect E a (E.surjInvR
 
 private theorem defect_spec (a : automorphisms E) (y : Q) :
     E.inl (defect E a (E.rightHom y)) = a.val y * y⁻¹ := by
-  unfold defect
-  rw [raw_lift_independent E a _ y (E.surjInvRightHom.rightInverse_rightHom _), raw_spec]
+  have h := raw_lift_independent E a (E.surjInvRightHom (E.rightHom y)) y (by simp)
+  exact (congrArg E.inl h).trans (raw_spec E a y)
 
 private theorem defect_cocycle (a : automorphisms E) (s t : S) :
     defect E a (s * t) = action E s (defect E a t) * defect E a s := by
@@ -135,5 +135,110 @@ def twist (d : cocycles₁ (coefficients E)) : automorphisms E := by
   let e : E.Equiv E := GroupExtension.Equiv.ofMonoidHom f
     (by ext n; simp [f]) (by ext y; simp [f])
   exact ⟨e.toMulEquiv, e.map_inl, e.rightHom_map⟩
+
+private theorem twist_apply (d : cocycles₁ (coefficients E)) (y : Q) :
+    (twist E d).val y = E.inl (d (E.rightHom y)).toMul * y := rfl
+
+private theorem cocycle_twist (d : cocycles₁ (coefficients E)) : cocycle E (twist E d) = d := by
+  apply cocycles₁_ext
+  intro s
+  obtain ⟨y, rfl⟩ := E.rightHom_surjective s
+  change Additive.ofMul (defect E (twist E d) (E.rightHom y)) = d (E.rightHom y)
+  apply Additive.toMul.injective
+  apply E.inl_injective
+  rw [defect_spec, twist_apply]
+  group
+
+private theorem twist_cocycle (a : automorphisms E) : twist E (cocycle E a) = a := by
+  apply Subtype.ext
+  apply MulEquiv.ext
+  intro y
+  change E.inl (defect E a (E.rightHom y)) * y = a.val y
+  rw [defect_spec]
+  group
+
+private theorem cocycle_mul (a b : automorphisms E) : cocycle E (a * b) = cocycle E a + cocycle E b := by
+  apply cocycles₁_ext
+  intro s
+  obtain ⟨y, rfl⟩ := E.rightHom_surjective s
+  change Additive.ofMul (defect E (a * b) (E.rightHom y)) =
+    Additive.ofMul (defect E a (E.rightHom y) * defect E b (E.rightHom y))
+  congr 1
+  apply E.inl_injective
+  rw [map_mul, defect_spec, defect_spec, defect_spec]
+  have hb : b.val y = E.inl (defect E b (E.rightHom y)) * y := by
+    rw [defect_spec]; group
+  change a.val (b.val y) * y⁻¹ = _
+  rw [hb, map_mul, a.property.1]
+  have hc := congrArg E.inl (mul_comm (defect E a (E.rightHom y)) (defect E b (E.rightHom y)))
+  simp only [map_mul, defect_spec] at hc
+  calc
+    _ = E.inl (defect E b (E.rightHom y)) * (a.val y * y⁻¹) := by group
+    _ = _ := by rw [defect_spec] at hc; exact hc.symm
+
+/-- Automorphism composition is addition of actual general-action cocycles. -/
+def defectEquiv : Additive (automorphisms E) ≃+ cocycles₁ (coefficients E) where
+  toFun a := cocycle E a.toMul
+  invFun d := Additive.ofMul (twist E d)
+  left_inv a := twist_cocycle E a.toMul
+  right_inv := cocycle_twist E
+  map_add' a b := cocycle_mul E a.toMul b.toMul
+
+/-- The cohomology class of the actual automorphism defect. -/
+def classMap : Additive (automorphisms E) →+ H1 (coefficients E) :=
+  ((H1π (coefficients E)).hom.toAddMonoidHom).comp (defectEquiv E).toAddMonoidHom
+
+private theorem classMap_surjective : Function.Surjective (classMap E) := by
+  intro c
+  induction c using H1_induction_on with
+  | h d => exact ⟨(defectEquiv E).symm d, by simp [classMap]⟩
+
+private theorem classMap_zero_iff (a : Additive (automorphisms E)) :
+    classMap E a = 0 ↔ ∃ b : N, ∀ y : Q,
+      a.toMul.val y = E.inl b * y * (E.inl b)⁻¹ := by
+  rw [show classMap E a = H1π (coefficients E) (cocycle E a.toMul) from rfl,
+    H1π_eq_zero_iff]
+  change (Additive.ofMul ∘ defect E a.toMul) ∈ coboundaries₁ (coefficients E) ↔ _
+  constructor
+  · rintro ⟨b, hb⟩
+    refine ⟨b.toMul⁻¹, ?_⟩
+    intro y
+    have h := congrFun hb (E.rightHom y)
+    change Additive.ofMul (action E (E.rightHom y) b.toMul * b.toMul⁻¹) =
+      Additive.ofMul (defect E a.toMul (E.rightHom y)) at h
+    have hi := congrArg E.inl (Additive.ofMul.injective h)
+    rw [map_mul, map_inv, inl_action, defect_spec] at hi
+    rw [map_inv]
+    calc
+      _ = (a.toMul.val y * y⁻¹) * y := by group
+      _ = _ := by rw [← hi]; group
+  · rintro ⟨b, hb⟩
+    refine ⟨Additive.ofMul b⁻¹, ?_⟩
+    funext s
+    obtain ⟨y, rfl⟩ := E.rightHom_surjective s
+    change Additive.ofMul (action E (E.rightHom y) b⁻¹ * (b⁻¹)⁻¹) =
+      Additive.ofMul (defect E a.toMul (E.rightHom y))
+    congr 1
+    apply E.inl_injective
+    rw [map_mul, inl_action, map_inv, inv_inv, defect_spec, hb]
+    group
+
+/-- Actual inner-kernel automorphisms, identified by the vanishing defect class. -/
+def innerKernel : AddSubgroup (Additive (automorphisms E)) := (classMap E).ker
+
+/-- Classification for arbitrary abelian extensions, including nonsplit extensions,
+nontrivial quotient actions and the zero coefficient group. -/
+theorem classification :
+    (∀ (a : automorphisms E) (y : Q),
+      E.inl ((defectEquiv E (Additive.ofMul a)) (E.rightHom y)).toMul = a.val y * y⁻¹) ∧
+    (∀ (d : cocycles₁ (coefficients E)) (y : Q),
+      ((defectEquiv E).symm d).toMul.val y = E.inl (d (E.rightHom y)).toMul * y) ∧
+    (∀ a : Additive (automorphisms E), a ∈ innerKernel E ↔
+      ∃ b : N, ∀ y : Q, a.toMul.val y = E.inl b * y * (E.inl b)⁻¹) ∧
+    Nonempty ((Additive (automorphisms E) ⧸ innerKernel E) ≃+ H1 (coefficients E)) := by
+  refine ⟨defect_spec E, twist_apply E, ?_, ?_⟩
+  · intro a
+    exact classMap_zero_iff E a
+  · exact ⟨QuotientAddGroup.quotientKerEquivOfSurjective (classMap E) (classMap_surjective E)⟩
 
 end D5.S3.HomologicalAlgebra.AbelianExtensionH1
