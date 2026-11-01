@@ -480,14 +480,18 @@ theorem avoid_liftOld {z : V → ℝ} (hz : Avoid G z) :
 
 theorem delta_liftOld (hHG : H ≤ G) {z : V → ℝ} (hz : Probability z) (hi : Avoid G z) :
     delta H (liftOld H z) = 0 := by
-  obtain ⟨M, hM⟩ := maximal_extension H (support z) (by
-    intro a ha b hb hab hH
-    exact (independent_support_iff G z).mpr hi ha hb hab (hHG hH))
-  apply (delta_zero_iff H (probability_liftOld H hz).1).mpr
-  refine ⟨M, rfl, ?_⟩
-  intro a ha
-  by_contra hz
-  exact ha (hM ((mem_support z a).mpr hz))
+  let s := (support z).image (oldEmbedding H)
+  have hs : s ∈ starA G H ⊓ starB G H := by
+    rw [intersection_faces G H hHG]
+    exact ⟨support z, ⟨support_nonempty hz, (independent_support_iff G z).mpr hi⟩, rfl⟩
+  have hc : liftOld H z ∈ faceSimplex s := by
+    refine ⟨(probability_liftOld H hz).1, (probability_liftOld H hz).2, ?_⟩
+    rintro (a | a) ha
+    · by_contra hza
+      exact ha (Finset.mem_image.mpr ⟨a, (mem_support z a).mpr hza, rfl⟩)
+    · rfl
+  exact ((starB_realization_iff G H _).mp
+    ⟨s, hs.2, (faceSimplex_eq_convexHull s) ▸ hc⟩).2
 
 theorem mass_liftOld (z : V → ℝ) : mass H (liftOld H z) = 0 := by simp [mass, liftOld, apex]
 
