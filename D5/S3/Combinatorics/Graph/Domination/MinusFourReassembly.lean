@@ -11,8 +11,7 @@ import Mathlib.Data.Finset.Sigma
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxRecDepth 10000
-set_option maxHeartbeats 4000000
+set_option maxRecDepth 1000
 
 namespace D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
 
@@ -268,23 +267,36 @@ theorem source_reassembly : evaluation sourceGraph (-4) = stateEvaluation := by
       evaluation sourceGraph (-4) := by
     simpa only [Finset.univ_eq_attach, evaluation] using
       sum_attach (domSets sourceGraph) (fun S => (-4 : ℤ) ^ S.card)
+  have hterm (Z : Finset (Fin 4)) (A : ↥(coreChoices Z)) :
+      (∑ f : ∀ i : Fin 8, Choice i (decide (i ∈ A.val)),
+        (-4 : ℤ) ^ (assemble Z (fun i => (f i).val)).card) =
+      (-4 : ℤ) ^ Z.card * ∏ i : Fin 8, message i (decide (i ∈ A.val)) := by
+    simp_rw [assemble_card, pow_add]
+    rw [← mul_sum, choice_product]
+  have hcore (Z : Finset (Fin 4)) :
+      (∑ A : ↥(coreChoices Z), ∏ i : Fin 8, message i (decide (i ∈ A.val))) =
+      ∑ A ∈ (univ : Finset (Fin 8)).powerset,
+        if coreCovered Z A then ∏ i : Fin 8, message i (decide (i ∈ A)) else 0 := by
+    calc
+      (∑ A : ↥(coreChoices Z), ∏ i : Fin 8, message i (decide (i ∈ A.val))) =
+          ∑ A ∈ coreChoices Z, ∏ i : Fin 8, message i (decide (i ∈ A)) := by
+        simpa only [Finset.univ_eq_attach] using
+          sum_attach (coreChoices Z) (fun A => ∏ i : Fin 8, message i (decide (i ∈ A)))
+      _ = _ := by unfold coreChoices; rw [sum_filter]
   rw [hdom] at hs
   rw [← hs]
   unfold stateEvaluation
   simp only [Fintype.sum_sigma]
-  simp_rw [assemble_card, pow_add]
-  simp_rw [← mul_sum, choice_product]
   apply sum_congr rfl
   intro Z _
-  rw [powerset_univ]
-  congr 1
-  have h := sum_attach (coreChoices Z)
-    (fun A => ∏ i : Fin 8, message i (decide (i ∈ A)))
-  simpa only [Finset.univ_eq_attach, coreChoices, sum_filter] using h
+  simp_rw [hterm]
+  rw [← mul_sum, hcore]
 
 /-- The full connected unbounded-order ordinary-domination event. -/
 theorem result : ∀ N : ℕ, ∃ n : ℕ, N < n ∧ ∃ G : SimpleGraph (Fin n),
     G.Connected ∧ ∑ S ∈ domSets G, (-4 : ℤ) ^ S.card = 0 :=
   result_of_reassembly source_reassembly
+
+end
 
 end D5.S3.Combinatorics.Graph.Domination.MinusFourReassembly
