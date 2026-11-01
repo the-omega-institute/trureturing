@@ -447,12 +447,12 @@ private theorem initial_sound {Handle World : Type} (B : SourceService Handle Wo
   · simp [initial, costBound, budget]
   · change (0 : ZMod (envelope 0) × ZMod (envelope 0)) =
       residueSource (envelope 0) (B.value h x₀)
-    simpa only [envelope_zero] using
-      (Subsingleton.elim (0 : ZMod 1 × ZMod 1) (residueSource 1 (B.value h x₀)))
+    rw [envelope_zero]
+    exact Subsingleton.elim _ _
   · change (0 : ZMod (envelope 0) × ZMod (envelope 0)) =
       residueSource (envelope 0) (B.value h x₀)
-    simpa only [envelope_zero] using
-      (Subsingleton.elim (0 : ZMod 1 × ZMod 1) (residueSource 1 (B.value h x₀)))
+    rw [envelope_zero]
+    exact Subsingleton.elim _ _
   · simp [initial]
   · simp [initial, costBound, reads]
 
