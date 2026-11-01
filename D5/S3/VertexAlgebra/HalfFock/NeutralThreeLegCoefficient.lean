@@ -890,7 +890,9 @@ private theorem correctionEvaluation_option (D : LatticeData) (T : ℂˣ)
   | C c => simp [correctionEvaluation, algebraMap_eq]
   | add p q hp hq => simp only [map_add, Polynomial.eval_add, hp, hq]
   | mul_X p a hp =>
-      cases a <;> simp [map_mul, hp, correctionEvaluation, algebraMap_eq]
+      simp only [map_mul, Polynomial.eval_mul, hp]
+      congr 1
+      cases a <;> simp [correctionEvaluation, algebraMap_eq]
 
 private theorem correctionAt_shift_sum (D : LatticeData) (T : ℂˣ)
     (p : Oscillator D) :
@@ -979,6 +981,8 @@ private theorem nativeNeutralLaurentEntry_readout (D : LatticeData) (T : ℂˣ)
   simp only [Finset.mul_sum, nativeNormalReadout_monomial]
   apply Finset.sum_congr rfl
   intro mon hm
+  apply Finset.sum_congr rfl
+  intro m hmem
   ring
 
 /-- Source insertion in the actual full Laurent entry. The paired branch
