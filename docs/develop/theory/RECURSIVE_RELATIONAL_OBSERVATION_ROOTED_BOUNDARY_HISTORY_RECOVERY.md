@@ -2603,3 +2603,362 @@ The supporting Farey arithmetic corresponds to Glasby, [*Enumerating the rationa
 All results retain one actual source/epoch, authentic serialized acknowledgements, exact positive source laws, finite local programs and the declared unclipped finite-completing floor services at every scale actually requested. Finite profile, raw scale, binary payload, local work, actual source service, action rights and physical backing remain distinct. The finite-information and literal-history boundaries of §§5, 16–18 remain in force. This local increment supplies a finite-resolution relation boundary and its recovery conditions; it does not complete the long-horizon RRO objective.
 
 ## 追加锚（本行以下为增补区）
+
+## 40. Native pair actions cannot compile into fixed rooted rational words
+
+### 40.1 Two action systems and one actual source
+
+**Definition 40.1 (composition interface and fixed-word compatibility).**
+Let $V=\mathbb N\times\mathbb N_{>0}$ and distinguish the pair actions
+from the rooted actions by their typefaces:
+
+$$
+\mathsf R(a,b)=(b,a+b),\qquad \mathsf G(a,b)=(a+1,b),
+\qquad L(x)=\frac{x}{1+x},\quad R(x)=x+1.
+\tag{40.1}
+$$
+
+All words are finite and chronological. Write $\operatorname{Run}(W,v)$
+for the pair action and $E(w,x)$ for the rooted action, so
+$E(uv,x)=E(v,E(u,x))$ and the empty word acts identically. For a fixed
+$v_0\in V$, put
+
+$$
+O(v_0)=\{\operatorname{Run}(W,v_0):W\in\{\mathsf R,\mathsf G\}^*\}.
+\tag{40.2}
+$$
+
+A fixed-word compatible representation on this orbit consists of a map
+$\iota:O(v_0)\to\mathbb Q_{>0}$ and two words
+$u,w\in\{L,R\}^*$ satisfying, for every $v\in O(v_0)$,
+
+$$
+\iota(\mathsf Gv)=E(u,\iota(v)),\qquad
+\iota(\mathsf Rv)=E(w,\iota(v)).
+\tag{40.3}
+$$
+
+The words are fixed independently of the running composition, native
+tree, history, occurrence and response. They may even be selected
+separately for each fixed $v_0$; the obstruction below still applies.
+No injectivity, computability or acquisition premise is imposed on
+$\iota$. Empty compiled words are allowed.
+
+The native interpretation is [LAB Arithmetic Growth, Definitions 9.1,
+9.3 and Theorems 9.4, 12.2](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md):
+fix one actual attained source $t_0\in\mathcal D_+$, with composition
+$v_0=v(t_0)$, its authentic root binding, current exclusive rights,
+ancestral tapes and sufficient finite material. A logical promotion
+$P_p$ changes an alpha leaf to beta; a split $S_p$ changes beta to
+$\langle\beta,\alpha\rangle$. Whole-frontier $\mathsf R$ acquires the
+entry leaf list and promotes its alpha leaves and splits its beta
+leaves, without editing newly born leaves again. The macro $\mathsf G$
+splits the acquired current leftmost beta. It realizes the composition
+effect of alpha graft, without being a literal root graft. Both macros
+consume their actual replies and return before the next macro.
+
+For every chronological $W$, these same-source procedures give
+
+$$
+v(F_W(t_0))=\operatorname{Run}(W,v_0).
+\tag{40.4}
+$$
+
+Every prefix stays beta-positive. Thus the orbit in (40.2) is realized
+on this one source, without importing another initialization or granting
+an inverse, reset or new primitive. In particular $\mathsf R$ is neither
+a single-leaf promotion nor the rooted translation $R$. A representation
+in (40.3) depends only on composition; a representation of full native
+trees or histories is a different domain.
+
+### 40.2 The action obstruction on every attained orbit
+
+**Theorem 40.2 (only the constant rational representation is compatible).**
+For every $v_0\in V$, every representation (40.3) has
+$u=w=\varepsilon$ and $\iota$ constant on $O(v_0)$. Conversely every
+positive rational constant and these empty words satisfy (40.3).
+On the whole domain $V$, the maps intertwining both actions with fixed
+rooted words are exactly the constant maps with both words empty.
+
+Proof. First use the evaluation freeness actually needed here. For any
+$x\in\mathbb Q_{>0}$, Theorem 6.2 gives a unique word $d_x$ from root
+$1$ to $x$. If $E(s,x)=E(t,x)$, then
+$E(d_xs,1)=E(d_xt,1)$, whence $d_xs=d_xt$ by that theorem, and $s=t$
+by cancellation of the identical prefix. This is freeness of evaluation
+at each rational anchor, not an inference from matrix generation.
+
+Let $\Phi$ replace every $\mathsf G$ by $u$ and every $\mathsf R$ by
+$w$, preserving concatenation. Induction on word length using (40.3)
+gives
+
+$$
+\iota(\operatorname{Run}(W,v))=E(\Phi(W),\iota(v))
+\quad(v\in O(v_0)).
+\tag{40.5}
+$$
+
+The pair actions have the following equality at every $(a,b)\in V$:
+
+$$
+\begin{aligned}
+\operatorname{Run}(\mathsf G\mathsf R\mathsf R,(a,b))
+ &= (a+b+1,a+2b+1)\\
+ &=\operatorname{Run}(\mathsf R\mathsf G\mathsf R\mathsf G,(a,b)).
+\end{aligned}
+\tag{40.6}
+$$
+
+Apply (40.5) at $v_0$. Rational-anchor freeness gives the literal word
+identity $uww=wuwu$. Taking lengths gives
+$|u|+2|w|=2|u|+2|w|$, so $u=\varepsilon$.
+For this same $v_0=(a,b)$ there is a second legal pair equality:
+
+$$
+\begin{aligned}
+\operatorname{Run}(\mathsf R^3,(a,b))
+ &=(a+2b,2a+3b)\\
+ &=\operatorname{Run}
+   (\mathsf R\mathsf G^{a+b}\mathsf R\mathsf G^b,(a,b)).
+\end{aligned}
+\tag{40.7}
+$$
+
+Indeed after the first replacement and $a+b$ graft-effects the pair is
+$(a+2b,a+b)$; replacement followed by $b$ graft-effects gives the
+displayed result. Every prefix is in $V$. With $u$ empty, (40.5) and
+freeness now give $www=ww$, so $3|w|=2|w|$ and $w=\varepsilon$.
+The state-dependent exponents in this equality are witnesses in the
+native process, not a state-dependent choice of compiled word.
+Equation (40.5) then makes $\iota$ constant on its entire orbit. The
+converse follows from the empty-word law.
+
+For a representation on all of $V$, restricting to any orbit first
+forces the two words empty. Graft invariance gives
+$\iota(a,b)=f(b)$ with $f(b)=\iota(0,b)$. Replacement invariance gives
+$f(a+b)=f(b)$ for all $a\ge0,b\ge1$. Taking $b=1$ proves that $f$,
+and hence $\iota$, is constant on $V$. $\square$
+
+**Proposition 40.3 (exact-rational and static-coding boundaries).**
+The empty-word conclusion fails for a positive-real codomain. Also an
+injective coding of pair states into positive rationals need not satisfy
+(40.3), even when all codes are positive integers.
+
+Proof. Put $\varphi=(1+\sqrt5)/2$ and let $\iota$ be the constant
+$\varphi$. The nonempty chronological word $LR$ acts by
+$x\mapsto(1+2x)/(1+x)$ and fixes $\varphi$, since
+$\varphi^2=\varphi+1$. Thus $u=w=LR$ satisfies the real version of
+(40.3). This example refutes the claim that both words must be empty
+over all positive reals; it asserts no nonconstant real representation.
+For every real anchor whose evaluation map is free, the proof of
+Theorem 40.2 still works. Section 20 distinguishes such anchors from
+cyclic quadratic anchors.
+
+For a static injective code take $j(a,b)=2^a(2b-1)$. The power of two
+and odd factor uniquely recover $a,b$. If this code admitted fixed
+compiled words on $V$, the two successors of $(0,1)$ both have code
+$2$, while its code is $1$. The unique rooted word taking $1$ to $2$
+is $R$, forcing $u=w=R$. But $j(0,2)=3$ and
+$j(\mathsf R(0,2))=j(2,2)=12$, whereas $R(3)=4$.
+The code is injective and fails the action condition. The same logical
+distinction applies to the injective syntax code of
+[FARG §9](FIBONACCI_ATOMIC_RELATION_GENERATION.md): unique parsing
+does not establish (40.3). Neither construction acquires a code from an
+opaque source or supplies a right to act on it. $\square$
+
+### 40.3 A native family with an exact retention requirement
+
+**Definition 40.4 (literal block target and retained interface).** Fix
+the same actual $t_0$, a public integer $n\ge0$, and the two blocks
+
+$$
+A=\mathsf G\mathsf R\mathsf R,\qquad
+B=\mathsf R\mathsf G\mathsf R\mathsf G,\qquad
+F(a,b)=(a+b+1,a+2b+1).
+\tag{40.8}
+$$
+
+For $\sigma\in\{0,1\}^n$, let $W_\sigma$ concatenate $A$ for a zero
+and $B$ for a one. Execute each macro by Definition 40.1 on that very
+source. The recovery target is the literal ordered macro-name word
+$W_\sigma$, equivalently $\sigma$. It is not the full addressed
+primitive trace, tree, tape, allocation history or physical duration.
+
+At the completed block cuts expose only the exact composition archive
+$Q_n=(v_0,v_1,\ldots,v_n)$. A retained record $Z(\sigma)$ is allowed in
+addition. A decoder receives $n$, the fixed source contract, $Q_n$ and
+$Z$, and must recover the target for every $\sigma$. Every further
+history-dependent discriminator available to it belongs to $Z$:
+retained requests, within-block readings, tree/tape access, lengths,
+timers, reference identities, dictionaries and external records are not
+unaccounted side information. The actual source and its tapes still
+exist; this restriction specifies the recovery interface, without
+asserting that those objects have equal values or have been erased.
+The archive is a mathematical view, not a new LAB reading primitive.
+If $v_0$ is actually acquired by a lawful paid frontier traversal, its
+rows follow by $F^j$; acquisition, maintenance and materialization of
+these values are separately charged.
+
+**Theorem 40.5 (sharp retention on the equal-composition block family).**
+All $2^n$ histories of Definition 40.4 are legal on the fixed source,
+have pair $F^j(v_0)$ after block $j$, and give the same $Q_n$. Their
+literal macro words are pairwise distinct. Exact recovery through the
+declared interface holds precisely when $Z$ is injective on this family.
+Consequently at least $2^n$ record values are necessary, and an
+$n$-bit fixed-width payload is both necessary and sufficient, with
+$n$ public. This bound remains valid after adding the complete pair
+continuation profile, or a deterministic pair-only future experiment
+whose initial state and choices use only the declared retained inputs.
+
+Proof. Beta positivity and (40.4) make every finite choice legal. Equation
+(40.6) gives the same map $F$ for either block. Induction on $j$ proves
+the asserted archive equality. The block words are a prefix code:
+their first letters differ, and neither is empty. Reading that first
+letter determines the next block and its length; removing it and
+inducting recovers $\sigma$ uniquely. Thus the target has exactly
+$2^n$ values on a single common archive fiber.
+
+If two distinct choices have the same $Z$, the decoder has identical
+inputs and cannot return both targets. Conversely an injective $Z$
+has an inverse on its finite actual image and determines the target.
+A fixed-width $b$-bit payload has at most $2^b$ values, forcing $b\ge n$.
+Retaining the actual block-choice bit at each block supplies $n$ bits
+and decodes by the fixed two-block rule. This is an online record of
+known issued choices, not acquisition of an unknown earlier word.
+For $n=0$ the family is a singleton and the required payload is zero.
+
+At the last block every run has the same exact pair. Any common
+continuation therefore has the same subsequent pairs by induction on
+its letters. A deterministic adaptive pair experiment makes the same
+choices after the same replies, so it also cannot separate this fiber.
+This includes every pair residue, quantity and terminal gcd derived
+from those pairs. Native non-pair observations are outside this claim.
+
+For entry $v_0=(a_0,b_0)$ and final $(a_n,b_n)=F^n(v_0)$, LAB's exact
+count law further gives the same successful promotion and split totals
+on all these histories:
+
+$$
+p=b_n-b_0,\qquad s=a_n+b_n-a_0-b_0.
+\tag{40.9}
+$$
+
+Revealing just these two totals adds no distinction. The records may
+instead be carried by native source features, when accessible and
+counted in $Z$; the information bound does not demand a separately
+allocated auxiliary $n$-bit device. Code, framing when $n$ is not public,
+actual records, workspace and source backing remain additional costs.
+$\square$
+
+**Proposition 40.6 (sharp change when macro length is exposed).** If,
+in addition to public $n$ and $Q_n$, the decoder receives the actual
+number $\ell$ of macro calls, then $\ell=3n+r$, where $r$ is the number
+of $B$ blocks. For each fixed $0\le r\le n$, exact recovery requires
+and permits $\binom nr$ record values, equivalently a fixed-width
+payload of $\lceil\log_2\binom nr\rceil$ bits. A common width for all
+$r$ is sharply
+$\lceil\log_2\binom n{\lfloor n/2\rfloor}\rceil$.
+
+Proof. The two block lengths are three and four, so $\ell$ determines
+$r$. There are exactly $\binom nr$ binary choices of that weight, all
+with the same exposed archive and length, and their targets are
+distinct. The preceding injectivity argument gives the lower bound.
+For the upper bound index the weight-$r$ words in lexicographic order
+and retain the index. Fixed public $n,r$ supply a finite decoder. The
+ratio of consecutive binomial coefficients is $(n-r)/(r+1)$, placing
+the maximum at the central coefficient. This is an information
+capacity statement; it grants neither free ranking work nor free
+storage or acquisition of the exposed length. $\square$
+
+### 40.4 Separating the actual trees and the supplier scopes
+
+**Proposition 40.7 (a concrete native separation inside the common fiber).**
+Take the attained beta source $t_0=\beta$, obtained from the installed
+alpha root by its legal root promotion. The blocks $A,B$ give
+composition $(2,3)$ but different actual logical trees, primitive
+traces and addressed work:
+
+$$
+\begin{aligned}
+F_A(\beta)
+ &=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                  \langle\beta,\alpha\rangle\rangle,\\
+F_B(\beta)
+ &=\langle\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,
+                  \beta\rangle,\beta\rangle.
+\end{aligned}
+\tag{40.10}
+$$
+
+Proof. Apply whole-frontier replacement and the leftmost-beta split
+literally at each step. In the left-first entry order of LAB Definition
+9.3, their successful primitive words, with $\varepsilon$ the root
+address, are respectively
+
+$$
+\begin{aligned}
+A:&\quad S_\varepsilon\ S_L\ P_R\ S_{LL}\ P_{LR}\ S_R,\\
+B:&\quad S_\varepsilon\ S_L\ S_{LL}\ P_{LR}\ P_R\ S_{LLL}.
+\end{aligned}
+\tag{40.11}
+$$
+
+Each listed address is a leaf of the required type when edited, and
+the resulting trees are (40.10). Both have two alpha and three beta
+leaves, two promotions and four splits. The original legal read
+Tag at address $R$ returns branch in the first and beta in the second.
+The sums of successful-event address depths are respectively seven
+and nine, so even their addressed-work coordinate is different. The
+authentic root binding and current rights are retained through both
+runs; their replies and source records are not identified by pair
+equality. These are two alternative legal continuations of one fixed
+source, without a reset or a simultaneously available duplicate.
+$\square$
+
+**Definition 40.8 (mathematical suppliers and limits of the bridge).**
+The cross-interface obstruction of Theorem 40.2 and its same-source
+block-retention consequence are `repo-derived` deductions. The pair
+laws, the identity $M^2=M+I$, pair residue recovery and finite-profile
+sufficiency are reused suppliers, not new results of this section.
+[GraftAffineClosure](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean)
+supplies `step`, `run`, the alpha composition $(1,0)$ and the affine
+laws within `result`. Its false/true convention is replacement/graft;
+the named words here require no Boolean conversion. Its arithmetic
+graft is identified only with the composition effect of the LAB split,
+not with a native root-graft permission.
+
+[WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean)
+supplies `leftStep`, `rightStep`, `wordMatrix` and
+`unimodular_wordMatrix`. For chronological $w$ the column matrix is
+`wordMatrix(reverse w)`, as in §6.
+[UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean)
+supplies matrix generation; it supplies no substitute for rational
+evaluation freeness. That freeness is the explicitly applied rooted
+uniqueness of §6, also consistent with the free-anchor result of §20.
+
+The supporting rational enumeration is `literature-attested` in Calkin
+and Wilf, [*Recounting the Rationals*, pp. 360–363,
+DOI:10.1080/00029890.2000.12005205](https://doi.org/10.1080/00029890.2000.12005205):
+the root is $1/1$, and the children of $p/q$ are $p/(p+q)$ and
+$(p+q)/q$. These rules and unique enumeration are also stated in Glasby,
+[*Enumerating the rationals from left to right*, introduction, pp. 1–2,
+arXiv:1011.2823v1](https://arxiv.org/abs/1011.2823v1). They supply the
+positive-rational tree, not a LAB compiler. The retention proof uses
+elementary finite counting; its equiprobable interpretation is the
+classical logarithmic measure for $N$ equally likely messages in
+Shannon, [*A Mathematical Theory of Communication*, introduction,
+DOI:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x).
+No channel-coding, error, thermodynamic or worldwide originality claim
+follows from these deductions.
+
+Section 39's interval $K$ and full profiles refer to the declared
+rooted source and its authentic action/read sequence. They do not
+turn a composition code into (40.3), or recover the missing block
+choices in Definition 40.4. State-dependent words, signed or inverse
+actions, history-aware representations, other source domains and
+other codomains are outside Theorem 40.2. The retention bounds concern
+only the stated finite family and exposed channels, not all native
+history fibers or minimum whole-installation memory. Finite mathematical
+existence, actual paid acquisition, lawful references, completion,
+resource costs and physical realization remain separate obligations.
+
+## 追加锚（本行以下为增补区）
