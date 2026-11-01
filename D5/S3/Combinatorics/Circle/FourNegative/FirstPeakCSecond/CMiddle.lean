@@ -98,7 +98,7 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
   have nb1:=native_balance a b c d 1 ha hb hc hd
   have nb3:=native_balance a b c d 3 ha hb hc hd
   have ua:=congrArg (fun z : ℤ => z*v.A) uf
-  simp only [chainLength,←ht] at ua
+  simp [chainLength,←ht] at ua
   simp only [nextBase,nextNewBase] at nb0 nb1 nb3
   simp only [←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn,hm,hq,hwn]
     at u x p vv nb0 nb1 nb3
@@ -123,12 +123,12 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
     intro P hP i hi; exact (fpos.1 P hP i hi).2)
   have ng (P : List ℕ×ℕ) (hP : P∈bs) :
       oldValue a b c d P.2≤0 ∧ newValue a b c d P.2≤0 := by
-    simp only [bs,xPackets,List.mem_cons,List.mem_singleton] at hP
+    simp only [bs,xPackets,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hP
     rcases hP with rfl|rfl|rfl|rfl
     all_goals exact terminal_nonpositive a b c d _ ha hb hc hd
   have ng' (P : List ℕ×ℕ) (hP : P∈freshAfter (size a b c d) 1 bs) :
       newValue a b c d P.2≤0 := by
-    simp only [bs,xPackets,freshAfter,List.mem_cons,List.mem_singleton] at hP
+    simp only [bs,xPackets,freshAfter,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hP
     rcases hP with rfl|rfl|rfl|rfl
     all_goals exact (terminal_nonpositive a b c d _ ha hb hc hd).2
   have oldChecks : packetChecks (oldValue a b c d) (sourceMod a b c d/2) 0 bs := by
@@ -138,18 +138,18 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
     · simp only [bs,xPackets,List.map_append,List.sum_append]
       rw [x.1,u.1]
       dsimp [nextBase] at t0
-      simp only [chainLength] at uf xf
-      nlinarith [nb3.1,ua]
+      simp [chainLength] at uf xf
+      nlinarith only [nb3.1,ua]
     · simp only [bs,xPackets,List.map_append,List.sum_append]
       rw [x.1,u.1,p.1]
       dsimp [nextBase] at t0 t1
-      simp only [chainLength] at uf xf
-      nlinarith [nb3.1,nb0.1]
+      simp [chainLength] at uf xf
+      nlinarith only [nb3.1,nb0.1]
     · simp only [bs,xPackets,List.map_append,List.sum_append]
       rw [x.1,u.1,p.1,vv.1]
       dsimp [nextBase] at t0 t1 t2
-      simp only [chainLength] at uf xf vf
-      nlinarith [nb3.1,nb0.1,nb1.1]
+      simp [chainLength] at uf xf vf
+      nlinarith only [nb3.1,nb0.1,nb1.1]
     · exact hzero
     · dsimp [nextBase] at t0; omega
     · dsimp [nextBase] at t1; omega
@@ -167,18 +167,18 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
     · simp only [bs,xPackets,freshAfter,List.map_append,List.sum_append]
       rw [x.2,u.2]
       dsimp [nextNewBase] at t0
-      simp only [chainLength] at uf xf
-      nlinarith [nb3.2,ua]
+      simp [chainLength] at uf xf
+      nlinarith only [nb3.2,ua]
     · simp only [bs,xPackets,freshAfter,List.map_append,List.sum_append,List.map_cons,List.sum_cons]
       rw [x.2,u.2,p.2,(chain_values a b c d ha hb hc hd).2.2.2,←hA]
       dsimp [nextNewBase] at t0 t1
-      simp only [chainLength] at uf xf
-      nlinarith [nb3.2,nb0.2]
+      simp [chainLength] at uf xf
+      nlinarith only [nb3.2,nb0.2]
     · simp only [bs,xPackets,freshAfter,List.map_append,List.sum_append,List.map_cons,List.sum_cons]
       rw [x.2,u.2,p.2,vv.2,(chain_values a b c d ha hb hc hd).2.2.2,←hA]
       dsimp [nextNewBase] at t0 t1 t2
-      simp only [chainLength] at uf xf vf
-      nlinarith [nb3.2,nb0.2,nb1.2]
+      simp [chainLength] at uf xf vf
+      nlinarith only [nb3.2,nb0.2,nb1.2]
     · exact hzeron
     · dsimp [nextNewBase] at t0; omega
     · dsimp [nextNewBase] at t1; omega
@@ -275,9 +275,9 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
   have hj : j≤size a d c d := by
     have hsplit : l=blocksWord (bs.take 2)++blocksWord (bs.drop 2) := by
       simp [l,bs,vPackets,blocksWord]
-    have := hp.length_eq
+    have hlen : l.length=size a d c d := by simpa [l,bs] using hp.length_eq
     have := congrArg List.length hsplit
-    simp only [List.length_append,List.length_range] at *
+    simp only [List.length_append] at this
     omega
   have hzero : (l.map (oldValue a d c d)).sum=0 :=
     (hp.map _).sum_eq.trans (source_totals a d c d ha hd hc hd).1
@@ -289,21 +289,20 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
   have oldChecks : packetChecks (oldValue a d c d) (sourceMod a d c d/2) 0 bs := by
     apply four_checks _ _ _ _ _ _ _ _ _ _
       (2*(v.L-r*v.B)) (2*(v.M-C)) (2*(v.L-R*v.M)) v.L v.B v.A v.M
-    · simp only [bs,vPackets,List.map_append,List.sum_append]
-      rw [vv.1]
+    · rw [vv.1]
       dsimp [nextBase] at t0
-      simp only [chainLength] at vf
-      nlinarith [nb1.1]
+      simp [chainLength] at vf
+      nlinarith only [nb1.1]
     · simp only [bs,vPackets,List.map_append,List.sum_append]
       rw [vv.1,u.1,vq.1,x1.1]
       dsimp [nextBase] at t0 t1
-      simp only [chainLength] at uf vf
-      nlinarith [nb1.1,nb0.1,hrank.1]
+      simp [chainLength] at uf vf
+      nlinarith only [nb1.1,nb0.1,hrank.1]
     · simp only [bs,vPackets,List.map_append,List.sum_append]
       rw [vv.1,u.1,vq.1,x1.1,xx.1]
       dsimp [nextBase] at t0 t1 t2
-      simp only [chainLength] at uf vf xf
-      nlinarith [nb1.1,nb0.1,nb3.1,hrank.1]
+      simp [chainLength] at uf vf xf
+      nlinarith only [nb1.1,nb0.1,nb3.1,hrank.1]
     · exact hzero
     · dsimp [nextBase] at t0; omega
     · dsimp [nextBase] at t1; omega
@@ -318,29 +317,28 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
     apply four_checks _ _ _ _ _ _ _ _ _ _
       (2*(v.Ln-r*v.Bn)) (2*(v.Mn-2*C-v.z-1)) (2*(v.Ln-R*v.Mn))
       v.Ln v.Bn v.A v.Mn
-    · simp only [bs,vPackets,freshAfter,List.map_append,List.sum_append]
-      rw [vv.2]
+    · rw [vv.2]
       dsimp [nextNewBase] at t0
-      simp only [chainLength] at vf
-      nlinarith [nb1.2]
+      simp [chainLength] at vf
+      nlinarith only [nb1.2]
     · simp only [bs,vPackets,freshAfter,List.map_append,List.sum_append]
       rw [vv.2,u.2,vq.2,x1.2]
       dsimp [nextNewBase] at t0 t1
-      simp only [chainLength] at uf vf
+      simp [chainLength] at uf vf
       have hη : v.D=v.y*v.z+v.y+1 := rfl
       have hb' : v.Bn=2*v.B-1 := rfl
       have hl' : v.Ln=2*v.L-v.z-1 := rfl
       have hm' : v.Mn=2*v.M-v.D := rfl
-      nlinarith [nb1.2,nb0.2,hrank.1]
+      nlinarith only [nb1.2,nb0.2,hrank.1,hl']
     · simp only [bs,vPackets,freshAfter,List.map_append,List.sum_append,List.map_cons,List.sum_cons]
       rw [vv.2,u.2,vq.2,x1.2,xx.2,(chain_values a d c d ha hd hc hd).2.2.2,←hA]
       dsimp [nextNewBase] at t0 t1 t2
-      simp only [chainLength] at uf vf xf
+      simp [chainLength] at uf vf xf
       have hη : v.D=v.y*v.z+v.y+1 := rfl
       have hb' : v.Bn=2*v.B-1 := rfl
       have hl' : v.Ln=2*v.L-v.z-1 := rfl
       have hm' : v.Mn=2*v.M-v.D := rfl
-      nlinarith [nb1.2,nb0.2,nb3.2,hrank.1]
+      nlinarith only [nb1.2,nb0.2,nb3.2,hrank.1]
     · exact hzeron
     · dsimp [nextNewBase] at t0; omega
     · dsimp [nextNewBase] at t1; omega
@@ -355,12 +353,12 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
     intro P hP i hi; exact (fpos.2 P hP i hi).2)
   have ng (P : List ℕ×ℕ) (hP : P∈bs) :
       oldValue a d c d P.2≤0 ∧ newValue a d c d P.2≤0 := by
-    simp only [bs,vPackets,List.mem_cons,List.mem_singleton] at hP
+    simp only [bs,vPackets,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hP
     rcases hP with rfl|rfl|rfl|rfl
     all_goals exact terminal_nonpositive a d c d _ ha hd hc hd
   have ng' (P : List ℕ×ℕ) (hP : P∈freshAfter (size a d c d) 2 bs) :
       newValue a d c d P.2≤0 := by
-    simp only [bs,vPackets,freshAfter,List.mem_cons,List.mem_singleton] at hP
+    simp only [bs,vPackets,freshAfter,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hP
     rcases hP with rfl|rfl|rfl|rfl
     all_goals exact (terminal_nonpositive a d c d _ ha hd hc hd).2
   refine ⟨hp,hj,?_,?_⟩
@@ -382,6 +380,7 @@ private theorem mask_length (a b c d m : ℕ) (r : Fin 4)
   have hset : (mask a b c d r m).toFinset=m.bitIndices.toFinset.image (off+·) := by
     ext i
     simp only [List.mem_toFinset,Finset.mem_image,Nat.mem_bitIndices]
+    change i∈chamberLabels (chainLength a b c d r-1) off m ↔ _
     rw [chamberLabels_mem]
     constructor
     · rintro ⟨j,hj,hbit,he⟩
@@ -405,11 +404,11 @@ private theorem x_literal_cut (a b c d m q w : ℕ)
   have hu:=chamberLabels_full (d-1) 0
   have hxf:=chamberLabels_full (a-1) (d+c+b)
   have hpop:=mask_length a b c d m 3 hm
-  simp only [List.length_append,mask,full,chainLength,chainStart] at hl hpop
+  simp [mask,full,chainLength,chainStart] at hl hpop
   rw [hxf,List.length_range'] at hl
   simp only [xPackets,List.take_succ_cons,List.take_zero,blocksWord,
     List.length_append,List.length_cons,List.length_nil,add_zero]
-  simp only [mask,full,chainLength,chainStart]
+  simp [mask,full,chainLength,chainStart]
   rw [hu,List.length_range']
   omega
 
@@ -438,11 +437,11 @@ private theorem v_literal_cut (a c d q R : ℕ) (hd : 2≤d) (hdc : d<c) (hac : 
         simp [show 0<a-1 by omega,Nat.testBit_eq_decide_div_mod_eq]
     rw [hf]
     simp
-  simp only [List.length_append,mask,full,chainLength,chainStart] at hl
+  simp [mask,full,chainLength,chainStart] at hl
   rw [hvf,List.length_range'] at hl
   simp only [vPackets,List.take_succ_cons,List.take_zero,blocksWord,
     List.length_append,List.length_cons,List.length_nil,add_zero]
-  simp only [mask,full,chainLength,chainStart]
+  simp [mask,full,chainLength,chainStart]
   rw [hu,List.length_range',hbit]
   simp only [List.length_singleton]
   omega
@@ -533,7 +532,7 @@ private theorem floor_multiple_chart (a b c d ell u : ℕ)
     (by simpa [t] using pow_lower d 2 (by omega))
     (by simpa [e] using pow_lower (c-d) 1 (by omega))
     (by simpa [h] using pow_lower (a-c) 1 (by omega))
-    ⟨⟨f0,by omega⟩,⟨f2,by omega⟩⟩ F G W Z
+    ⟨⟨f0,sub_nonneg.mp f1⟩,⟨f2,sub_nonneg.mp f3⟩⟩ F G W Z
   change 1≤ceil v.B v.Mn ∧ ceil v.B v.Mn≤g ∧ ceil v.B v.Mn*v.M<v.B ∧
     0≤(v.L-ceil v.B v.Mn*v.M)/v.B ∧
     2*((v.L-ceil v.B v.Mn*v.M)/v.B)<v.z ∧
@@ -576,8 +575,8 @@ private theorem one_multiple_chart (a c d : ℕ)
     hd (by omega) (by omega) (by omega) (by have := Nat.pow_le_pow_right Nat.zero_lt_two hd; norm_num at this; omega)
     (by dsimp [s,h,t]; rw [Nat.cast_sub (Nat.one_le_two_pow)]; norm_num)
     gates.1 gates.2.1 (by norm_num) hsCap
-  · have hz:=(row_source a d c d (by omega) (by omega)).2.2.1
-    simpa only [hz] using gates.2.2.2.1
+  · have hz : v.z=(2:ℤ)^c := (row_source a d c d (by omega) (by omega)).2.2.1
+    simpa only [hz,mul_one] using gates.2.2.2.1
   · exact gates.2.2.2.2
 
 private theorem factor_four (j : ℕ) (hj : 2≤j) :
@@ -681,7 +680,7 @@ private theorem equal_x3 (a c d : ℕ)
   let ell:=c-d-2+(a-c)
   have ht : 8≤t := by simpa [t] using pow_lower d 3 hd
   have hh : 4≤h := by simpa [h] using pow_lower (a-c) 2 (by omega)
-  have hf : 1≤f := by exact_mod_cast (Nat.one_le_two_pow (n:=c-d-2))
+  have hf : 1≤f := by dsimp [f]; exact one_le_pow₀ (by norm_num)
   have cm:=margins_h4_e4_t8 0 (t-8) (h-4) (f-1)
     (by norm_num) (by omega) (by omega) (by omega)
   have hu : 3≤2*(2:ℕ)^d := by have := Nat.pow_le_pow_right Nat.zero_lt_two (show 2≤d by omega); norm_num at this; omega
@@ -699,7 +698,7 @@ private theorem equal_x4 (a c : ℕ)
   let f : ℤ:=2^(c-5)
   let ell:=c-4+(a-c)
   have hh : 4≤h := by simpa [h] using pow_lower (a-c) 2 (by omega)
-  have hf : 1≤f := by exact_mod_cast (Nat.one_le_two_pow (n:=c-5))
+  have hf : 1≤f := by dsimp [f]; exact one_le_pow₀ (by norm_num)
   have cm:=margins_h4_e8_t4 0 0 (h-4) (f-1)
     (by norm_num) (by norm_num) (by omega) (by omega)
   apply floor_multiple_chart a 2 c 2 ell 5 (by norm_num) (by norm_num) (by omega) (by omega)
@@ -738,7 +737,7 @@ private theorem equal_x5 (a : ℕ) (ha : 7≤a) : NatJoint a 2 4 2 := by
     2*((v.L-r*v.M)/v.B)<v.z ∧ XGates v s r ((v.L-r*v.M)/v.B) at gates
   have hv : actualRow a 2 4 2=v := by dsimp [actualRow,v,h]; norm_num
   have hx : (2:ℤ)^a=16*h := by
-    rw [power_split a 4 (by omega)]; norm_num [h]; ring
+    rw [power_split a 4 (by omega)]; norm_num [h] <;> ring
   have hq : r.toNat-1<2^(a-4) := by
     exact_mod_cast (show ((r.toNat-1:ℕ):ℤ)<2^(a-4) by dsimp [h] at gates; omega)
   have hsm : s.toNat-1=5*2^(a-4)+(r.toNat-1) := by
@@ -772,7 +771,7 @@ private theorem equal_v1 (a c d : ℕ)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;>
     dsimp [VGates,actualRow,model] <;> simp only [hc1,ha1,pow_one] <;>
-    dsimp [t] <;> ring_nf
+    dsimp [t] <;> ring_nf <;> simp only [iff_self,implies_true]
 
 /- Equality V2: h=2,e>=4,t>=8. R=6f+1 is odd before toNat. -/
 private theorem equal_v2 (a c d : ℕ)
@@ -780,7 +779,7 @@ private theorem equal_v2 (a c d : ℕ)
   let t : ℤ:=2^d
   let f : ℤ:=2^(c-d-2)
   have ht : 8≤t := by simpa [t] using pow_lower d 3 hd
-  have hf : 1≤f := by exact_mod_cast (Nat.one_le_two_pow (n:=c-d-2))
+  have hf : 1≤f := by dsimp [f]; exact one_le_pow₀ (by norm_num)
   have cm:=margins_h2_t8 0 (t-8) 0 (f-1)
     (by norm_num) (by omega) (by norm_num) (by omega)
   have he:=factor_four (c-d) (by omega)
@@ -790,24 +789,24 @@ private theorem equal_v2 (a c d : ℕ)
     (by omega) (by omega) (by omega) (by rw [hz]; nlinarith) (by rw [hx]; nlinarith)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;> dsimp [VGates,actualRow] <;> simp only [he] <;>
-    dsimp [model] <;> simp only [ha1,pow_one] <;> dsimp [t,f] <;> ring_nf
+    dsimp [model] <;> simp only [ha1,pow_one] <;> dsimp [t,f] <;> ring_nf <;> simp only [iff_self,implies_true]
 
 /- Equality V3: h=2,t=4,e>=16. The e=4,8 corners are literal finite words. -/
 private theorem equal_v3 (a c : ℕ) (hc : 6≤c) (hac : a=c+1) : NatJoint a 2 c 2 := by
   let f : ℤ:=2^(c-6)
-  have hf : 1≤f := by exact_mod_cast (Nat.one_le_two_pow (n:=c-6))
+  have hf : 1≤f := by dsimp [f]; exact one_le_pow₀ (by norm_num)
   have cm:=margins_h2_t4_e16 0 0 0 (f-1)
     (by norm_num) (by norm_num) (by norm_num) (by omega)
   have he : (2:ℤ)^(c-2)=16*f := by
     have h : c-2=4+(c-6) := by omega
     rw [h,pow_add]; norm_num [f]
-  have hz : (2:ℤ)^c=64*f := by rw [power_split c 2 (by omega),he]; norm_num; ring
+  have hz : (2:ℤ)^c=64*f := by rw [power_split c 2 (by omega),he]; norm_num <;> ring
   have hx : (2:ℤ)^a=128*f := by rw [hac,pow_succ,hz]; ring
   apply v_nat_joint a c 2 (8*f) (24*f+1) (by norm_num) (by omega) hac
     (by omega) (by omega) (by omega) (by rw [hz]; nlinarith) (by rw [hx]; nlinarith)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;> dsimp [VGates,actualRow] <;> simp only [he] <;>
-    dsimp [model] <;> simp only [ha1,pow_one] <;> norm_num <;> dsimp [f] <;> ring_nf
+    dsimp [model] <;> simp only [ha1,pow_one] <;> norm_num <;> dsimp [f] <;> ring_nf <;> simp only [iff_self,implies_true]
 
 /- Six isolated finite words. Only concrete list permutation and integer
 reduction are used here. The recursive strip proposition covers every natural
