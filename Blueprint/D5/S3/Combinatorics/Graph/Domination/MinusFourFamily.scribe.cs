@@ -36,8 +36,8 @@ internal sealed class MinusFourFamilyDocument : IScribeDocumentDefinition
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(Id(name))), [.. args]);
-    private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
-    private static Formula Integer => Seq(Mathbb, Grp(Id("Z")));
+    private static Formula Nat => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
+    private static Formula Integer => Seq(Mathbb, Grp(FormulaDsl.Id("Z")));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, P(Seq(Id(name), Colon, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>
@@ -49,15 +49,15 @@ internal sealed class MinusFourFamilyDocument : IScribeDocumentDefinition
     private static Formula ImpliesF(Formula left, Formula right) =>
         new Formula.Logic(P(left), FormulaLogicOperator.Implies, P(right));
     private static Formula MinusFour => P(Seq(Minus, D(4)));
-    private static Formula BaseValue => Call("evaluation", Id("sourceGraph"), MinusFour);
+    private static Formula BaseValue => Call("evaluation", FormulaDsl.Id("sourceGraph"), MinusFour);
     private static Formula FamilyEvent()
     {
-        var n = Id("n"); var graph = Id("G"); var set = Id("S");
+        var n = FormulaDsl.Id("n"); var graph = FormulaDsl.Id("G"); var set = FormulaDsl.Id("S");
         var weight = new Formula.Power(MinusFour, Call("card", set));
         var sum = Seq(new Formula.Subscript(Sum,
             Seq(set, InMacro, Call("domSets", graph))), Sp, weight);
         return All("N", Nat, Some("n", Nat,
-            And(new Formula.Relation(Id("N"), FormulaRelationOperator.LessThan, n),
+            And(new Formula.Relation(FormulaDsl.Id("N"), FormulaRelationOperator.LessThan, n),
                 Some("G", Call("SimpleGraph", Call("Fin", n)),
                     And(Call("Connected", graph), Eq(sum, D(0)))))));
     }

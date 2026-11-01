@@ -30,17 +30,17 @@ internal sealed class MinusFourReplicationDocument : IScribeDocumentDefinition
     private static StatementSource Statement(string declaration)
     {
         if (declaration == "evaluation") return StatementSource.WithoutFormula();
-        var h = Id("H"); var v = Id("v"); var w = Id("w"); var r = Id("r"); var x = Id("x");
+        var h = FormulaDsl.Id("H"); var v = FormulaDsl.Id("v"); var w = FormulaDsl.Id("w"); var r = FormulaDsl.Id("r"); var x = FormulaDsl.Id("x");
         Formula rhs; Formula body;
-        var lhs = Call("evaluation", Call("replicated", h, Id("U"), r), x);
+        var lhs = Call("evaluation", Call("replicated", h, FormulaDsl.Id("U"), r), x);
         if (declaration == "replicated_evaluation")
         {
             var sum = Seq(new Formula.Subscript(Sum,
-                Seq(Id("S"), InMacro, Call("partialSets", h, Id("U")))), Sp,
-                new Formula.Power(x, Call("card", Id("S"))));
+                Seq(FormulaDsl.Id("S"), InMacro, Call("partialSets", h, FormulaDsl.Id("U")))), Sp,
+                new Formula.Power(x, Call("card", FormulaDsl.Id("S"))));
             rhs = Add(Mul(Mul(x, P(Add(D(1), x))), new Formula.Power(P(sum), r)),
                 Mul(x, new Formula.Power(Call("evaluation", h, x), r)));
-            body = All("U", Call("Finset", Id("V")), All("r", Nat, All("x", Integer, Eq(lhs, rhs))));
+            body = All("U", Call("Finset", FormulaDsl.Id("V")), All("r", Nat, All("x", Integer, Eq(lhs, rhs))));
         }
         else
         {
@@ -48,17 +48,17 @@ internal sealed class MinusFourReplicationDocument : IScribeDocumentDefinition
                 new Formula.LatexMacro(FormulaLatexMacro.CloseBrace));
             var replicated = Call("replicated", h, singleton, r);
             if (declaration == "support_replication_connected")
-                body = All("v", Id("V"), All("r", Nat,
+                body = All("v", FormulaDsl.Id("V"), All("r", Nat,
                     ImpliesF(Call("Connected", h), Call("Connected", replicated))));
             else
             {
                 rhs = Mul(Mul(x, P(Add(x, D(2)))), new Formula.Power(Call("evaluation", h, x), r));
-                body = All("v", Id("V"), All("w", Id("V"),
+                body = All("v", FormulaDsl.Id("V"), All("w", FormulaDsl.Id("V"),
                     ImpliesF(And(Call("Leaf", h, w), Call("Adj", h, w, v)),
                         All("r", Nat, All("x", Integer, Eq(Call("evaluation", replicated, x), rhs))))));
             }
         }
-        return StatementSource.FromAuthor(Disp(All("H", Call("SimpleGraph", Id("V")), body)));
+        return StatementSource.FromAuthor(Disp(All("H", Call("SimpleGraph", FormulaDsl.Id("V")), body)));
     }
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
@@ -68,8 +68,8 @@ internal sealed class MinusFourReplicationDocument : IScribeDocumentDefinition
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(Id(name))), [.. args]);
-    private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
-    private static Formula Integer => Seq(Mathbb, Grp(Id("Z")));
+    private static Formula Nat => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
+    private static Formula Integer => Seq(Mathbb, Grp(FormulaDsl.Id("Z")));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, P(Seq(Id(name), Colon, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>
