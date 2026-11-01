@@ -1,0 +1,38 @@
+# Every natural s,t>=2; kernel-compiled source realization
+
+## Abstract
+
+An actual physical joint lift for equal first, second and last gaps
+
+**Theorem 1.1 (One physical permutation and one literal cut).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/EqualFirstTwoLast/Endpoint.actualSource_equal_first_two_last_joint_lift`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/EqualFirstTwoLast/Endpoint.actualSource_equal_first_two_last_joint_lift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Lean endpoint, this Scribe source and the matching Reg source compile in the scoped canonical checks. The endpoint is kernel-verified and the Reg source-equivalence record is declared_validated; this unit does not claim official delivery. The exact ordinary construction and polynomial certificates are caller-derived.
+
+For all natural s,t>=2, put k=3s+t and A=1+2^s+2^(2s)+2^(2s+t). The endpoint gives one permutation sigma of the original Fin(k) labels and one natural cut<=k with both OriginalOrder(k,A,sigma) and OriginalOrder(k+1,2A,earWord(k,sigma,cut)). Both predicates include the full zero sum and every natural take-prefix, including empty, full and overlong takes. Repeated values, nonprimitive seeds and all parameter sizes remain in scope.
+
+Set q=2^s, z=2^t and N=q^3*z-1. The old heads are A=q^2*z+q^2+q+1, B=(q+1)(q^2+1), L=(q^2+q+1)z+1 and M=(q+1)(qz+1). The new heads are 2A, Bn=2B-1, Ln=2L-1-z and Mn=2M-1-q-qz. SourceTable.source_table is consumed at (s,s,t,s). Its native U,V,W,X chains have lengths (s,t,s,s), starts (0,s,s+t,2s+t), and positive relative row i equal to 2^i times the relevant head. Terminal successors are (B,L,M,A) and (Bn,Ln,Mn,A). The last new successor is A. The fresh original label k has vector (0,A); no cyclic covariance with a different gap family is assumed.
+
+The Source module derives the eight exact recurrences qA=N+B, zB=N+L, qL=N+M, qM=N+A, q(2A)=2N+1+Bn, zBn=2N+1+Ln, qLn=2N+1+Mn and qMn=2N+1+A. Canonical centered rows supply the terminal values. Geometric ladder sums give native packet totals, and the existing source_zero theorem gives both complete totals. The frozen lift_order and marked_word transport statements retain physical labels and produce the literal ear.
+
+In the upper region t>=s+2, let h=t-s-2, m=2^h and v=3m, so z=4qm. Move exactly the native V relative mask [0,h) union {h+1} into U. Its weight is 3m-1. The remaining V positives are local h followed by [h+2,t-1). The negative order is V,X,W,U. All banks are in increasing physical index order. Insert fresh immediately after the V terminal, at the literal cut s+1. Exact list permutations prove that every original label occurs once. This chart includes s=2,t=4 without an exception.
+
+The upper old seams are (L-vB,L+A-M-vB,A-vB,0), with successors (L,A,M,B). The new seams are (Ln-vBn,Ln+2A-Mn-vBn,2A-vBn,0), with successors (Ln,A,Mn,Bn); the first is before fresh and the later ones include it. Every seam margin 2S and peak slack J-1-2S is given an explicit polynomial identity at q=4+Q,m=1+H, Q,H>=0, with nonnegative integer coefficients. Positive banks then control all intermediate prefixes, including fresh after the first terminal.
+
+In the lower region s>=t+2, let h=s-t-1>=1, m=2^h and p=m-1, so q=2zm. Move exactly the native U relative mask [0,h) into V; its binary weight is p and h<=s-3. The negative order is X,W,U,V, and fresh is first, at literal cut zero. The received low U labels precede the native V labels inside the final positive bank. The old seams are (A-M,A-L,B-L-pA,0), with successors (A,M,B,L). The new seams are (2A-Mn,2A-Ln,Bn-Ln-2pA,0), with successors (A,Mn,Bn,Ln). All sixteen seam and peak margins and the fresh margins A,N-A have explicit nonnegative coefficient identities at z=4+Z,m=2+H. The physical inventory and both all-prefix strips are reconstructed.
+
+When neither separated chart applies, t<=s+1 and s<=t+1. These inequalities imply max(max s s)(max t s)<=min(min s s)(min t s)+1. The proof directly applies BalancedGaps.actualSource_balanced_gaps_joint_lift at (s,s,t,s). Together these regions exhaust all s,t>=2.
+
+The Arithmetic module contains all 34 exact coefficient certificates. Finite controls from the caller are diagnostic only and are not hypotheses or replacements for these identities. The matching Reg source retains the full s,t,hs,ht telescope, the existential physical permutation and cut, and both old and new OriginalOrder readouts through DependentFamily. Its source-selection record has coordinates [0,1] and two actual readouts, and the scoped report records declared_validated. The unrestricted four-gap assertion J and C3.1 remain OPEN.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/EqualFirstTwoLast/Endpoint.actualSource_equal_first_two_last_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/BalancedGaps/Endpoint](../BalancedGaps/Endpoint.md)
