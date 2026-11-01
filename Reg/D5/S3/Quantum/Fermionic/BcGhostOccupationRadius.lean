@@ -9,7 +9,6 @@ open _root_.D5.S3.Quantum.Fermionic.CountableOccupationFock
 open _root_.D5.S3.Quantum.Fermionic.BcGhostFock
 open _root_.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
 open private L_vacuum from D5.S3.Quantum.Fermionic.BcGhostVirasoro
-open private create_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 
 noncomputable section
 namespace Reg.D5.S3.Quantum.Fermionic.BcGhostOccupationRadius
