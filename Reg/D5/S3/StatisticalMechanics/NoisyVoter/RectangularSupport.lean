@@ -77,7 +77,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨f, _, hf⟩ := hr.2.2.2.2.2
   have hs := (hf (FiniteCausalInputs.testAssignment true) ()).2 (0 : Fin 1)
   change Sum.inr ((⟨1, by decide⟩ : ℕ+), true) ∈ L (⊤ : SimpleGraph Bool) true 0 at hs
-  simpa [L, K] using hs
+  have he : (Sum.inr ((⟨1, by decide⟩ : ℕ+), true) : Label Bool) = Sum.inl true :=
+    Finset.mem_singleton.mp (by
+      simpa only [L, K, Finset.range_zero, Finset.biUnion_empty, Finset.union_empty,
+        Finset.image_singleton] using hs)
+  cases he
 
 def support_family : Registration arena (type_of% (@rectangular_history_support)) where
   actual := actual
