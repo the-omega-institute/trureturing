@@ -62,8 +62,9 @@ private theorem ceil_bounds (B M Mn D g : ℤ)
   have hrd := mul_le_mul_of_nonneg_left hD (show 0≤r by omega)
   refine ⟨hr,hrg,hlow,hhigh,hrM,?_⟩
   have hrM' : r*M≤B-1 := by omega
-  rw [hrel]
-  nlinarith only [hrM',hrd,hr]
+  calc
+    r*Mn = r*(2*M-D) := by rw [hrel]
+    _ ≤ 2*B-1 := by nlinarith only [hrM',hrd,hr]
 
 private theorem floor_bounds (L B M r z : ℤ)
     (hB : 0<B) (hr : 0≤r) (hM : 0≤M) (hnum : 0≤L-r*M)
@@ -82,7 +83,11 @@ private theorem floor_bounds (L B M r z : ℤ)
     have := mul_le_mul_of_nonneg_right (show z≤2*w by omega) hB.le
     nlinarith
   have hrem : 0≤(L-r*M)%B ∧ (L-r*M)%B≤B-1 := by omega
-  exact ⟨hw,hrem.1,hrem.2,hwz⟩
+  have hremEq : L-r*M-w*B=(L-r*M)%B := by
+    dsimp [w]
+    omega
+  exact ⟨hw,by rw [hremEq]; exact hrem.1,
+    by rw [hremEq]; exact hrem.2,hwz⟩
 
 private def XGates (v : Row) (s r w : ℤ) : Prop :=
   (0≤v.t*v.A-2*s*v.M ∧ v.t*v.A-2*s*v.M≤v.A-1) ∧
@@ -103,10 +108,11 @@ private theorem model_positive (y t e h : ℤ)
   obtain ⟨H,hH,rfl⟩ : ∃ H : ℤ, 0≤H ∧ h=2+H := ⟨h-2,by omega,by ring⟩
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-  all_goals first | ring | (apply sub_nonneg.mp; ring_nf; positivity)
+  all_goals first | ring | positivity | (apply sub_nonneg.mp; ring_nf; positivity)
 
 /- The six later gates share the same integer rounding proof. The first four
 polynomial margins are kept separate, including the actual pre-ear first seam. -/
+set_option maxHeartbeats 2000000 in
 private theorem x_floor_gates (y t e h s g : ℤ)
     (hy : 4≤y) (ht : 4≤t) (he : 2≤e) (hh : 2≤h)
     (hfirst : let v:=model y t e h
@@ -157,6 +163,7 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   · constructor <;> nlinarith [hf.2.1,hf.2.2.1,hL]
   · constructor <;> nlinarith [hf.2.1,hf.2.2.1,hf.2.2.2,hL]
 
+set_option maxHeartbeats 2000000 in
 private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
     (hmargins : let v:=model t t 2 h
       0≤v.t*v.A-2*s*v.M ∧ 0≤v.A-1-(v.t*v.A-2*s*v.M) ∧
@@ -200,6 +207,7 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
   · constructor <;> nlinarith [hs2,W]
 
 /- The dynamic first bank retains its actual ceil-dependent s=5h+r. -/
+set_option maxHeartbeats 2000000 in
 private theorem dynamic_first (h : ℤ) (hh : 8≤h)
     (hmargins : let v:=model 4 4 4 h
       0≤2*(2*v.A-5*h*v.M-v.B) ∧
@@ -620,15 +628,23 @@ private theorem packet_positive (a b c d : ℕ)
   · intro P hP i hi
     simp only [xPackets,List.mem_cons,List.mem_singleton] at hP
     rcases hP with rfl|rfl|rfl|hP
-    all_goals simp only [List.mem_append] at hi
-    all_goals aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
-    simp at hP
+    · simp only [List.mem_append] at hi
+      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    · simp only [List.mem_append] at hi
+      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    · simp only [List.mem_append] at hi
+      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    · simp at hP
   · intro P hP i hi
     simp only [vPackets,List.mem_cons,List.mem_singleton] at hP
     rcases hP with rfl|rfl|rfl|hP
-    all_goals simp only [List.mem_append] at hi
-    all_goals aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
-    simp at hP
+    · simp only [List.mem_append] at hi
+      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    · simp only [List.mem_append] at hi
+      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    · simp only [List.mem_append] at hi
+      aesop (add safe apply (mask_positive a b c d _ _ ha hb hc hd))
+    · simp at hP
 
 private theorem fresh_positive (a b c d : ℕ) (e : ℕ) (bs : List (List ℕ×ℕ))
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
