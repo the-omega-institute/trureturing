@@ -349,4 +349,83 @@ theorem joined_variation_injective (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r
   exact ⟨hda, branch_variation_injective qL dqL r hL hu hu1,
     branch_variation_injective qR dqR s hR hv hv1⟩
 
+private def parameterContinuant : ℕ → (ℝ[X])[X]
+  | 0 => 1
+  | 1 => X
+  | k + 2 => X * parameterContinuant (k + 1) - C X * parameterContinuant k
+
+private lemma parameter_map (t : ℝ) (n : ℕ) :
+    (parameterContinuant n).map (evalRingHom t) = continuant (fun _ => t) n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [parameterContinuant, continuant]
+  | one => simp [parameterContinuant, continuant]
+  | more n h0 h1 => simp [parameterContinuant, continuant, h0, h1]
+
+private lemma zero_continuant (n : ℕ) : continuant (fun _ => 0) n = X ^ n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [continuant]
+  | one => simp [continuant]
+  | more n h0 h1 => simp [continuant, h1, pow_succ] <;> ring
+
+private lemma even_constant (k : ℕ) :
+    (continuant (fun _ => 1) (2 * k)).coeff 0 = (-1 : ℝ) ^ k := by
+  induction k with
+  | zero => simp [continuant]
+  | succ k ih =>
+      rw [show 2 * (k + 1) = 2 * k + 2 by omega, continuant]
+      simp [ih, pow_succ]
+
+private lemma positive_coprime_right (r s : ℕ) (hr : Even r) :
+    ∃ t : ℝ, 0 < t ∧
+      IsCoprime (continuant (fun _ => 1) r) (continuant (fun _ => t) s) := by
+  let U := continuant (fun _ => 1) r
+  let B := U.map (C : ℝ →+* ℝ[X])
+  let R := resultant B (parameterContinuant s) r s
+  have hB (t : ℝ) : B.map (evalRingHom t) = U := by
+    simp [B, map_map]
+  have hR (t : ℝ) : R.eval t =
+      resultant U (continuant (fun _ => t) s) r s := by
+    have hm := resultant_map_map B (parameterContinuant s) r s (evalRingHom t)
+    rw [hB t, parameter_map] at hm
+    exact hm.symm
+  have hU : U.coeff 0 ≠ 0 := by
+    obtain ⟨k, hk⟩ := hr
+    have hrk : r = 2 * k := by omega
+    dsimp [U]
+    rw [hrk, even_constant]
+    exact pow_ne_zero _ (by norm_num)
+  have hR0 : R.eval 0 ≠ 0 := by
+    rw [hR 0, zero_continuant, resultant_X_pow_right U r s
+      (by simpa [U] using (continuant_monic (fun _ => 1) r).natDegree_eq.le)]
+    exact mul_ne_zero (pow_ne_zero _ (by norm_num)) (pow_ne_zero _ hU)
+  have hRn : R ≠ 0 := by
+    intro h
+    exact hR0 (by rw [h, eval_zero])
+  obtain ⟨t, ht, hnot⟩ := (Set.Ioi_infinite (0 : ℝ)).exists_notMem_finite
+    (finite_setOfPred_isRoot hRn)
+  refine ⟨t, ht, ?_⟩
+  apply (isUnit_resultant_iff_isCoprime (continuant_monic (fun _ => 1) r).monic).1
+  apply isUnit_iff_ne_zero.2
+  change resultant U (continuant (fun _ => t) s) U.natDegree
+    (continuant (fun _ => t) s).natDegree ≠ 0
+  rw [show U.natDegree = r from (continuant_monic (fun _ => 1) r).natDegree_eq,
+    (continuant_monic (fun _ => t) s).natDegree_eq, ← hR t]
+  exact hnot
+
+/-- Opposite-parity branch lengths admit strictly positive squared edge
+parameters with coprime continuants, including zero and one lengths. -/
+theorem coprime_positive_branches (r s : ℕ) (hodd : Odd (r + s)) :
+    ∃ qL qR : ℕ → ℝ, (∀ k, 0 < qL k) ∧ (∀ k, 0 < qR k) ∧
+      IsCoprime (continuant qL r) (continuant qR s) := by
+  rcases Nat.even_or_odd r with hr | hr
+  · obtain ⟨t, ht, hcop⟩ := positive_coprime_right r s hr
+    exact ⟨(fun _ => 1), (fun _ => t), (by intro k; norm_num), (fun _ => ht), hcop⟩
+  · have hs : Even s := by
+      rw [Nat.even_iff]
+      have hr' := Nat.odd_iff.mp hr
+      have ho' := Nat.odd_iff.mp hodd
+      omega
+    obtain ⟨t, ht, hcop⟩ := positive_coprime_right s r hs
+    exact ⟨(fun _ => t), (fun _ => 1), (fun _ => ht), (by intro k; norm_num), hcop.symm⟩
+
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath

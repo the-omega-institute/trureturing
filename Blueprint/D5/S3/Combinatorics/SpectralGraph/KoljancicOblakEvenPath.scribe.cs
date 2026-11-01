@@ -39,7 +39,9 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
                 "Write U=P_left(r), V=P_right(s), F=XU-P_left(r+1), and G=XV-P_right(s+1). The displayed expression retains all six contributions to the variation of (X-a)UV-FV-UG. Each flux is zero when its branch is empty; for a positive branch length its flux is the attaching squared edge weight times the preceding continuant. This is an algebraic carrier; the joined matrix characteristic correspondence is still required.", formula: JoinedDefinition()),
             Node("joined-recovery", "Separation of central and branch variations", "joined_variation_injective", DescribeRole.Theorem,
                 "For every pair of branch lengths with odd sum, nonzero central loop and nonzero branch edge parameters, coprime branch continuants make the complete joined variation injective. The recovered edge indices below each branch length include its attaching edge. No lower bound on either individual branch length is imposed. Reflection X to -X separates the odd part C(a) times the product variation plus C(da)UV. Its leading coefficient recovers da, after which coprimality and strict degree bounds separate both branch variations. Applying the same separation to the remaining adjacent continuants and using branch_variation_injective recovers all edge parameters. This theorem assumes coprimality; it does not construct the required branches or prove the complete nSSP claim.", formula: JoinedRecovery()),
-            Paragraph(Text("The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; a uniform coprime choice for opposite-parity branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
+            Node("coprime", "Uniform positive coprime branch construction", "coprime_positive_branches", DescribeRole.Theorem,
+                "Every pair of lengths with odd sum admits two strictly positive squared-edge parameter sequences whose continuants are coprime. Put unit parameters on an even-length branch and a common positive parameter t on the other branch. The first branch has nonzero constant coefficient. The spectral resultant is a polynomial in t; at t=0 the other branch becomes X to its length, so the resultant is nonzero. A positive t outside its finite root set gives the required pair. Swapping the branches covers the other parity orientation. Zero and one lengths need no exceptions, and the final selected t is strictly positive; zero is used only to prove that the parameter polynomial is not identically zero.", formula: CoprimeBranches()),
+            Paragraph(Text("The remaining whole-event bridges are the central-loop characteristic identity joining two actual weighted branches; the correspondence between the algebraic joined variation and actual matrix support tangents and characteristic coefficients; the coefficient/adjugate trace pairing and unrestricted real commutant argument; and exact support enlargement to every nonempty loop set. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.")),
             Paragraph(Text("Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.")))));
 
     private static DocumentBlock Node(string id, string title, string name, DescribeRole role, string prose,
@@ -173,6 +175,17 @@ internal sealed class KoljancicOblakEvenPathDocument : IScribeDocumentDefinition
         body = All("dqL", Sequence(), body);
         body = All("qR", Sequence(), body);
         return All("qL", Sequence(), body);
+    }
+
+    private static Formula CoprimeBranches()
+    {
+        Formula r = V("r"), s = V("s"), ql = V("qL"), qr = V("qR"), k = V("k");
+        Formula positive(Formula q) => All("k", Nat(), Lt(D(0), App(q, k)));
+        Formula body = And(positive(ql), And(positive(qr),
+            Call("IsCoprime", Call("continuant", ql, r), Call("continuant", qr, s))));
+        body = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("qR"), Sequence(), body);
+        body = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("qL"), Sequence(), body);
+        return All("r", Nat(), All("s", Nat(), Imp(Call("Odd", Add(r, s)), body)));
     }
 
     private static Formula V(string s) => F.Id(s);
