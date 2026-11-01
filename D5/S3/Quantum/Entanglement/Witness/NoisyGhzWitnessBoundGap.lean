@@ -466,7 +466,7 @@ private lemma pure_lower (ψ : Word (Fin 3) 3 → ℂ) (hψ : IsUnitState ψ) :
     readout b ψ - 1 / 9 ≤ geometricMeasurePure ψ := by
   classical
   have hd : 0 ≤ readout dmat ψ :=
-    Complex.nonneg_iff.mp (d_positive.posSemidef.dotProduct_mulVec_nonneg ψ) |>.1
+    RHLinalg.hermForm_nonneg_of_posSemidef d_positive.posSemidef ψ
   have hs : sSup {t : ℝ | ∃ φ, IsBiseparable φ ∧
       t = Complex.normSq (star φ ⬝ᵥ ψ)} ≤ readout dmat ψ := by
     apply csSup_le
