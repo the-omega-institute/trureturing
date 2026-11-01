@@ -58,9 +58,13 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
                 + "VariableCompletion(B,h) requires completion at every positive public modulus used by the program. "
                 + "This includes its envelopes, not just the requested moduli. Lawful rights, exclusive serialization, "
                 + "absence of side channels and adequate finite material for each chosen finite run remain supplied premises.")),
-            Definition("envelope", "One public integer covers a budget", All("b", N,
-                Eq(E(V("b")), C("primeProduct", C("primesAtMost", C("add", V("b"), D(1))),
-                    C("primePowerExponent", C("div", V("b"), C("primeMinusOne")))))),
+            Definition("envelope", "One public integer covers a budget", Seq(All("b", N,
+                Eq(E(V("b")), Seq(
+                    new Formula.Subscript(Prod, Seq(V("p"), Sp, InMacro, Sp, N, Comma, Sp,
+                        C("Prime", V("p")), Sp, Land, Sp, LeOf(V("p"), Seq(V("b"), Plus, D(1))))), Sp,
+                    new Formula.Power(V("p"), new Formula.Floor(
+                        new Formula.Fraction(V("b"), Seq(V("p"), Minus, D(1)))))))),
+                Comma, Sp, Eq(E(D(0)), D(1))),
                 "primes(b) is the prime filter of range(b+2), and envelope(b) is the product of p^(b/(p-1)) over it. "
                 + "Division is natural integer division. Thus envelope(0)=1. For every positive H, H divides envelope(b) "
                 + "exactly when costBound(H)<=b; costBound(envelope(b))=b. Increasing b increases the envelope by divisibility."),
