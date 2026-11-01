@@ -104,11 +104,13 @@ private theorem x_transport (a b c d : ℕ) (s r w : ℤ)
   have nb1:=native_balance a b c d 1 ha hb hc hd
   have nb3:=native_balance a b c d 3 ha hb hc hd
   have ua:=congrArg (fun z : ℤ => z*v.A) uf
-  simp [chainLength,←ht] at ua
-  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at nb0 nb1 nb3
+  simp only [chainLength,←ht] at ua
+  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+    Matrix.cons_val_succ,Matrix.cons_val_zero'] at nb0 nb1 nb3
   simp only [←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn,hm,hq,hwn]
     at u x p vv nb0 nb1 nb3
-  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+    Matrix.cons_val_succ,Matrix.cons_val_zero',
     ←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn] at t0 t1 t2 t3
   have odd:=source_odd a b c d (by omega)
   have hp:=x_inventory a b c d m q wn ha hb hc hd hmc hqc hsub
@@ -274,10 +276,12 @@ private theorem v_transport (a c d : ℕ) (r R : ℤ)
   have nb0:=native_balance a d c d 0 ha hd hc hd
   have nb1:=native_balance a d c d 1 ha hd hc hd
   have nb3:=native_balance a d c d 3 ha hd hc hd
-  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at nb0 nb1 nb3
-  simp only [←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn,hq,hRn]
+  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+    Matrix.cons_val_succ,Matrix.cons_val_zero'] at nb0 nb1 nb3
+  simp only [←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn,hq,hRn,Nat.cast_one,one_mul]
     at u vq x1 vv xx nb0 nb1 nb3
-  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+  simp only [nextBase,nextNewBase,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+    Matrix.cons_val_succ,Matrix.cons_val_zero',
     ←hA,←hB,←hL,←hM,←hBn,←hLn,←hMn,hAn] at t0 t1 t2 t3
   have odd:=source_odd a d c d (by omega)
   have hp:=v_inventory a d c d q Rn ha hd hc hd hoddn hRc h1c
@@ -743,7 +747,7 @@ private theorem equal_x5 (a : ℕ) (ha : 7≤a) : NatJoint a 2 4 2 := by
     (by omega) first F G W Z
   change 1≤r ∧ r≤h ∧ r*v.M<v.B ∧ 0≤(v.L-r*v.M)/v.B ∧
     2*((v.L-r*v.M)/v.B)<v.z ∧ XGates v s r ((v.L-r*v.M)/v.B) at gates
-  have hv : actualRow a 2 4 2=v := by dsimp [actualRow,v,h]; norm_num
+  have hv : actualRow a 2 4 2=v := by dsimp [actualRow,v,h] <;> norm_num
   have hx : (2:ℤ)^a=16*h := by
     rw [power_split a 4 (by omega)] <;> norm_num [h] <;> ring
   have hq : r.toNat-1<2^(a-4) := by
@@ -779,7 +783,7 @@ private theorem equal_v1 (a c d : ℕ)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;>
     dsimp [VGates,actualRow,model] <;> simp only [hc1,ha1,pow_one] <;>
-    dsimp [t] <;> ring_nf <;> first | rfl | trivial
+    dsimp [t] <;> ring_nf <;> simp only [iff_self,implies_true]
 
 /- Equality V2: h=2,e>=4,t>=8. R=6f+1 is odd before toNat. -/
 private theorem equal_v2 (a c d : ℕ)
@@ -797,7 +801,7 @@ private theorem equal_v2 (a c d : ℕ)
     (by omega) (by omega) (by omega) (by rw [hz]; nlinarith) (by rw [hx]; nlinarith)
   have ha1 : a-c=1 := by omega
   convert cm using 1 <;> dsimp [VGates,actualRow] <;> simp only [he] <;>
-    dsimp [model] <;> simp only [ha1,pow_one] <;> dsimp [t,f] <;> ring_nf <;> first | rfl | trivial
+    dsimp [model] <;> simp only [ha1,pow_one] <;> dsimp [t,f] <;> ring_nf <;> simp only [iff_self,implies_true]
 
 /- Equality V3: h=2,t=4,e>=16. The e=4,8 corners are literal finite words. -/
 private theorem equal_v3 (a c : ℕ) (hc : 6≤c) (hac : a=c+1) : NatJoint a 2 c 2 := by
