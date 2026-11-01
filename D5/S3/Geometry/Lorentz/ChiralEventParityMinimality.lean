@@ -211,7 +211,48 @@ private theorem route_claim
       admissible om f → ∀ v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere,
         ((f (family (-v)) : ℂ)) = -((f (family v) : ℂ))) :
     claim := by
-  sorry
+  intro om hom f₁ f₂ hf₁ hf₂
+  rcases (Set.mem_insert_iff.mp hom) with rfl | rfl
+  · have hsub : collisionEvents ⊆ allEvents := by
+      intro x hx
+      exact hx.1
+    have hz := D5.S3.Topology.BorsukUlam.PlanarOddMapZero.planar_odd_map_zero
+      (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
+      (hcomplex allEvents hsub f₁ f₂ hf₁ hf₂)
+      (by
+        intro v hv
+        have h₁ := hodd allEvents hsub f₁ hf₁ v hv
+        have h₂ := hodd allEvents hsub f₂ hf₂ v hv
+        rw [h₁, h₂]
+        push_cast
+        ring)
+    obtain ⟨v, hv, hz⟩ := hz
+    have hm : family v ∈ allEvents := hsub (hcollision v hv)
+    refine ⟨family v, hm, hchir v hv, ?_, ?_⟩
+    · have h := congrArg Complex.re hz
+      simpa using h
+    · have h := congrArg Complex.im hz
+      simpa using h
+  · have hsub : collisionEvents ⊆ collisionEvents := by
+      intro x hx
+      exact hx
+    have hz := D5.S3.Topology.BorsukUlam.PlanarOddMapZero.planar_odd_map_zero
+      (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
+      (hcomplex collisionEvents hsub f₁ f₂ hf₁ hf₂)
+      (by
+        intro v hv
+        have h₁ := hodd collisionEvents hsub f₁ hf₁ v hv
+        have h₂ := hodd collisionEvents hsub f₂ hf₂ v hv
+        rw [h₁, h₂]
+        push_cast
+        ring)
+    obtain ⟨v, hv, hz⟩ := hz
+    have hm : family v ∈ collisionEvents := hcollision v hv
+    refine ⟨family v, hm, hchir v hv, ?_, ?_⟩
+    · have h := congrArg Complex.re hz
+      simpa using h
+    · have h := congrArg Complex.im hz
+      simpa using h
 
 theorem result : claim := by
   apply route_claim family_mem_collision family_mem_all family_continuous family_chiral
