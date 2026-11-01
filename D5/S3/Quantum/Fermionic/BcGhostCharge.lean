@@ -178,7 +178,7 @@ private theorem siteMode_modeSite (n : ℤ) : siteMode (modeSite n) = n := by
     omega
 
 /-- The two normal-ordering branches are precisely the signed site projections. -/
-theorem normal_term_site (n : ℤ) : normalTerm n = siteTerm (modeSite n) := by
+private theorem normal_term_site (n : ℤ) : normalTerm n = siteTerm (modeSite n) := by
   by_cases hn : n ≤ 1
   · have hb : ¬ -n ≤ -2 := by omega
     have hi : -n+1 = 1-n := by omega
@@ -216,7 +216,7 @@ private theorem sum_on_ket (S : Finset ℕ) (K : Finset ℤ)
     _ = ∑ j ∈ S, (siteSign j : ℂ) • ket S := by
       apply Finset.sum_congr rfl
       intro j hj
-      rw [modeSite_siteMode, if_pos hj]
+      simp only [modeSite_siteMode, if_pos hj]
     _ = ghostNumber (ket S) := by
       rw [← Finset.sum_smul, ← Int.cast_sum, ← charge_sum, number_ket]
 
