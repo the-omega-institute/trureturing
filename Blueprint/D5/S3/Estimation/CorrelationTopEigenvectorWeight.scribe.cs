@@ -79,7 +79,8 @@ internal sealed class CorrelationTopEigenvectorWeightDocument : IScribeDocumentD
                             + "The integer inequalities use the natural dimension cast to the integers.")),
                     Paragraph(Text(
                         "Let s have k entries equal to one and the remaining entries equal to minus one, let u be the all-ones vector, and form the matrix dI+a ssᵀ+b uuᵀ. "
-                            + "There are n(n−1)/2 entries strictly below the diagonal, and the sum there of s i s j is ((2k−n)²−n)/2. "
+                            + "There are n(n−1)/2 entries strictly below the diagonal. Apply the pair representation in the first projection of SignPairUStatisticMoments.sign_pair_u_statistic_moments to the corresponding integer units, taking its product-law mean parameter to be zero. "
+                            + "The sign sum is 2k−n; swapping the triangular indices and clearing the nonzero denominator gives the lower-triangle sum of s i s j as ((2k−n)²−n)/2. "
                             + "Positive coefficients make the matrix positive semidefinite, and s i squared equal to one makes its diagonal equal to d+a+b = 1. "
                             + "The two lower-triangle identities give mean a z+b = c and second moment a²+b²+2abz. "
                             + "Subtracting c² leaves a²(1−z²) = σ², whose nonnegative square root is σ.")),

@@ -7,6 +7,7 @@
    digest: The remaining correlation domain admits the weight gap exactly above sigma=c. -/
 
 import D5.S3.Weil.ZetaLinear.PosIndex
+import D5.S3.Estimation.DecisionRisk.SignPairUStatisticMoments
 
 /-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
 
@@ -567,18 +568,29 @@ private lemma lower_sign_moments {n : ℕ} (k : ℤ) (hk : 0 < k)
             congrArg (fun a : ℕ => (a : ℝ)) h
     rw [hc, Nat.cast_choose_two]
     ring
-  have hs := symmetric_sum (fun i j => signVector n k i * signVector n k j)
-    (fun i j => mul_comm _ _)
-  have hdiag : (∑ i, signVector n k i * signVector n k i) = (n : ℝ) := by
-    simp only [← sq, signVector_sq, sum_const, card_univ, Fintype.card_fin,
-      nsmul_eq_mul, mul_one]
-  have htotal : (∑ i, ∑ j, signVector n k i * signVector n k j) =
-      (2 * (k : ℝ) - (n : ℝ)) ^ 2 := by
-    simp only [← mul_sum, ← sum_mul, signVector_sum k hk hkn, sq]
-  rw [hdiag, htotal] at hs
-  constructor
-  · exact hone
-  · nlinarith only [hs]
+  refine ⟨hone, ?_⟩
+  let η : Fin n → ℤˣ := fun i => if (i.val : ℤ) < k then 1 else -1
+  have hη (i : Fin n) : (((η i : ℤˣ) : ℤ) : ℝ) = signVector n k i := by
+    dsimp only [η, signVector]
+    split_ifs <;> norm_num
+  have hn : 2 ≤ n := by omega
+  have hpair :=
+    (DecisionRisk.SignPairUStatisticMoments.sign_pair_u_statistic_moments n 0 hn
+      (by norm_num) (by norm_num)).1 η
+  change ((∑ i, (((η i : ℤˣ) : ℤ) : ℝ)) ^ 2 - (n : ℝ)) /
+    ((n : ℝ) * ((n : ℝ) - 1)) = _ at hpair
+  simp only [hη, signVector_sum k hk hkn] at hpair
+  have hswap :
+      (∑ i : Fin n, ∑ j : Fin n,
+        if i < j then signVector n k i * signVector n k j else 0) =
+      ∑ i, ∑ j with j < i, signVector n k i * signVector n k j := by
+    rw [sum_comm]
+    simp only [sum_filter, mul_comm]
+  rw [hswap, Nat.cast_choose_two, div_div_eq_mul_div] at hpair
+  have hnreal : (1 : ℝ) < n := by exact_mod_cast hn
+  have hden : (n : ℝ) * ((n : ℝ) - 1) ≠ 0 :=
+    ne_of_gt (mul_pos (by linarith) (by linarith))
+  simpa only [mul_comm] using ((div_left_inj' hden).mp hpair).symm
 
 private lemma rounded_ratio_tendsto (x : ℝ) :
     Tendsto (fun n : ℕ => (roundedCount x n : ℝ) / (n : ℝ)) atTop
