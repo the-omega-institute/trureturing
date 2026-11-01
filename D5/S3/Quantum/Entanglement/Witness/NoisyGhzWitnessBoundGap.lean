@@ -290,13 +290,10 @@ private lemma zero_biseparable : IsBiseparable (Pi.single (fun _ : Fin 3 => (0 :
   have he : x = (fun _ => 0) ↔
       (∀ i : ↥({0} : Finset (Fin 3)), x i = 0) ∧
       (∀ i : ↥({0} : Finset (Fin 3))ᶜ, x i = 0) := by
-    constructor
-    · intro h; subst x; simp
-    · rintro ⟨h, g⟩
-      funext i
-      by_cases hi : i ∈ ({0} : Finset (Fin 3))
-      · exact h ⟨i, hi⟩
-      · exact g ⟨i, Finset.mem_compl.mpr hi⟩
+    rw [← Set.eqOn_univ x (fun _ => 0),
+      ← Set.union_compl_self (↑({0} : Finset (Fin 3)) : Set (Fin 3)), Set.eqOn_union]
+    simp only [Set.EqOn, Finset.mem_coe, Subtype.forall,
+      Finset.mem_compl, Set.mem_compl_iff]
   simp only [Pi.single_apply]
   by_cases h : ∀ i : ↥({0} : Finset (Fin 3)), x i = 0 <;>
     by_cases g : ∀ i : ↥({0} : Finset (Fin 3))ᶜ, x i = 0 <;>
