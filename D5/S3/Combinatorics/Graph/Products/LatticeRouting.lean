@@ -16,7 +16,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Products.LatticeRouting
 
-universe u v
+universe u v w
 
 abbrev Point := ℤ × ℤ
 
@@ -170,60 +170,113 @@ def pointKey (p : Point) : List Bool :=
   bits 27 ((p.1 + 4096).toNat + 16384 * (p.2 + 4096).toNat)
 
 section Checker
-variable {V : Type u} [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
-  (vs : List V) (es : List (V × V)) (c : V → Point)
+variable {V : Type u} {B : Type v} [DecidableEq B]
+  (bucket : Point → B) (bs : List B) (vs : List V) (es : List (V × V)) (c : V → Point)
+
+def bucketVertices (b : B) : List V := vs.filter fun v => decide (bucket (c v) = b)
+
+def bucketEdges (b : B) : List (V × V) :=
+  es.filter fun e => decide (bucket (c e.1) = b)
+
+def bucketFill (b : B) : Option (Occupancy V) :=
+  Occupancy.fill (fun v => pointKey (c v)) (bucketVertices bucket vs c b) .empty
+
+def bucketTree (b : B) : Occupancy V := (bucketFill bucket vs c b).getD .empty
+
+/-- Select a tree using a key from the supplied list. The returned tree therefore
+uses the list's key, independently of the expression computing the query key. -/
+def selectTree (b : B) : List B → Occupancy V
+  | [] => .empty
+  | a :: as => if b = a then bucketTree bucket vs c a else selectTree b as
+
+theorem selectTree_eq (b : B) (hb : b ∈ bs) :
+    selectTree bucket vs c b bs = bucketTree bucket vs c b := by
+  induction bs with
+  | nil => simp at hb
+  | cons a as ih =>
+    by_cases h : b = a
+    · subst b; simp only [selectTree, ↓reduceIte]
+    · have hm : b ∈ as := (List.mem_cons.mp hb).resolve_left h
+      simpa only [selectTree, h, ↓reduceIte] using ih hm
+
+def routingLookup (q : Point) : Option V :=
+  (selectTree bucket vs c (bucket q) bs).read (pointKey q)
 
 def edgeCheck : Bool := es.all fun e => decide (squareAdj (c e.1) (c e.2))
 
-def localCheck (t : Occupancy V) : Bool :=
-  vs.all fun v => (neighbors (c v)).all fun q =>
-    match t.read (pointKey q) with
+variable (G : SimpleGraph V) [DecidableRel G.Adj]
+
+def localCheck (xs : List V) : Bool :=
+  xs.all fun v => (neighbors (c v)).all fun q =>
+    match routingLookup bucket bs vs c q with
     | none => true
     | some w => decide (c w ≠ q ∨ G.Adj v w)
 
-def routingCheck : Bool :=
-  match Occupancy.fill (fun v => pointKey (c v)) vs .empty with
-  | none => false
-  | some t => edgeCheck es c && localCheck G vs c t
+/-- Each bucket checks fresh insertion, every outgoing listed edge, and all four
+spatial queries of each vertex in that bucket. Queries use the appropriate
+bucket of the queried coordinate, including queries across bucket boundaries. -/
+def bucketCheck (b : B) : Bool :=
+  (bucketFill bucket vs c b).isSome &&
+    (edgeCheck (bucketEdges bucket es c b) c &&
+      localCheck bucket bs vs c G (bucketVertices bucket vs c b))
 
-/-- The checked tags may encode a different vertex type. The encoding is proved
-injective, complete in the checked list, and exact for the original adjacency.
-The finite reduction still checks every occupied point and both adjacency directions. -/
-theorem routingCheck_sound {W : Type v} (H : SimpleGraph W) (f : W → V)
+def routingCheck : Bool := bs.all (bucketCheck bucket bs vs es c G)
+
+/-- The checked tags may encode a different vertex type. Every coordinate's
+bucket occurs in bs. The coding is injective, complete in vs, and exact for
+both the original adjacency and the listed edge inventory. -/
+theorem routingCheck_sound {W : Type w} (H : SimpleGraph W) (f : W → V)
+    (hb : ∀ q, bucket q ∈ bs)
     (hf : Function.Injective f)
     (hvs : ∀ w, f w ∈ vs)
     (hes : ∀ w z, H.Adj w z ↔ (f w, f z) ∈ es ∨ (f z, f w) ∈ es)
     (hgraph : ∀ w z, G.Adj (f w) (f z) ↔ H.Adj w z)
-    (h : routingCheck G vs es c = true) :
+    (h : routingCheck bucket bs vs es c G = true) :
     Function.Injective (fun w => c (f w)) ∧
       ∀ w z, H.Adj w z ↔ squareAdj (c (f w)) (c (f z)) := by
-  cases ht : Occupancy.fill (fun v => pointKey (c v)) vs .empty with
-  | none => simp [routingCheck, ht] at h
-  | some t =>
-    have hh : edgeCheck es c = true ∧ localCheck G vs c t = true := by
-      simpa only [routingCheck, ht, Bool.and_eq_true] using h
-    have hall := (Occupancy.fill_spec (fun v => pointKey (c v)) vs .empty t ht).2
-    have hread (w : W) : t.read (pointKey (c (f w))) = some (f w) := hall (f w) (hvs w)
+  have parts (b : B) (hmem : b ∈ bs) :
+      (bucketFill bucket vs c b).isSome = true ∧
+      edgeCheck (bucketEdges bucket es c b) c = true ∧
+      localCheck bucket bs vs c G (bucketVertices bucket vs c b) = true := by
+    simpa only [bucketCheck, Bool.and_eq_true] using
+      (List.all_eq_true.mp h b hmem)
+  have hread (w : W) : routingLookup bucket bs vs c (c (f w)) = some (f w) := by
+    have hfill := (parts (bucket (c (f w))) (hb _)).1
+    unfold routingLookup
+    rw [selectTree_eq bucket bs vs c _ (hb _)]
+    unfold bucketTree
+    cases ht : bucketFill bucket vs c (bucket (c (f w))) with
+    | none => simp only [ht, Option.isSome_none, Bool.false_eq_true] at hfill
+    | some t =>
+      simp only [Option.getD_some]
+      exact (Occupancy.fill_spec (fun v => pointKey (c v))
+        (bucketVertices bucket vs c (bucket (c (f w)))) .empty t ht).2
+        (f w) (by simp [bucketVertices, hvs w])
+  have hedge (a b : V) (he : (a, b) ∈ es) : squareAdj (c a) (c b) := by
+    have he' : (a, b) ∈ bucketEdges bucket es c (bucket (c a)) := by
+      simp [bucketEdges, he]
+    exact of_decide_eq_true
+      (List.all_eq_true.mp (parts _ (hb (c a))).2.1 (a, b) he')
+  constructor
+  · intro w z heq
+    change c (f w) = c (f z) at heq
+    have hw := hread w
+    rw [heq, hread z] at hw
+    exact hf (Option.some.inj hw.symm)
+  · intro w z
     constructor
-    · intro w z heq
-      change c (f w) = c (f z) at heq
-      have hw := hread w
-      rw [heq, hread z] at hw
-      exact hf (Option.some.inj hw.symm)
-    · intro w z
-      constructor
-      · intro hwz
-        rcases (hes w z).mp hwz with he | he
-        · exact of_decide_eq_true ((List.all_eq_true.mp hh.1) (f w, f z) he)
-        · exact (squareAdj_symm _ _).mpr
-            (of_decide_eq_true ((List.all_eq_true.mp hh.1) (f z, f w) he))
-      · intro hsq
-        have hq : c (f z) ∈ neighbors (c (f w)) := (squareAdj_iff_mem _ _).mp hsq
-        have hw := (List.all_eq_true.mp hh.2) (f w) (hvs w)
-        have hz := (List.all_eq_true.mp hw) (c (f z)) hq
-        rw [hread z] at hz
-        have hresult : c (f z) ≠ c (f z) ∨ G.Adj (f w) (f z) := of_decide_eq_true hz
-        exact (hgraph w z).mp (hresult.resolve_left (fun hne => hne rfl))
+    · intro hwz
+      rcases (hes w z).mp hwz with he | he
+      · exact hedge _ _ he
+      · exact (squareAdj_symm _ _).mpr (hedge _ _ he)
+    · intro hsq
+      have hq : c (f z) ∈ neighbors (c (f w)) := (squareAdj_iff_mem _ _).mp hsq
+      have hw := List.all_eq_true.mp (parts _ (hb (c (f w)))).2.2
+        (f w) (by simp [bucketVertices, hvs w])
+      have hz := List.all_eq_true.mp hw (c (f z)) hq
+      rw [hread z] at hz
+      have hresult : c (f z) ≠ c (f z) ∨ G.Adj (f w) (f z) := of_decide_eq_true hz
+      exact (hgraph w z).mp (hresult.resolve_left (fun hne => hne rfl))
 
 end Checker
 

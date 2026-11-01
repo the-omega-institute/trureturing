@@ -698,23 +698,87 @@ theorem baseGraph_iff_endpoints (a b : Original) :
   · rintro ⟨e, h⟩
     exact ⟨e, by simpa only [subdivision, eq_comm, and_comm] using h⟩
 
-/-- This is the actual large kernel-evaluable success obligation. Ordinary
-`decide` supplies a reducible proof term; no native evaluator, compiler result,
-Python output, assumed certificate, or new axiom supplies mathematical truth.
-The concrete reduction is required in addition to the generic soundness proof. -/
-theorem routing_check_success :
-    routingCheck subdivision.rawGraph (subdivision.rawVertices originalVertices edgeIndices)
-      (subdivision.rawEdgePairs edgeIndices) rawCoordinate = true := by
+/-- A deterministic coordinate partition; every spatial query selects its own
+bucket, including when the query crosses a partition boundary. -/
+def routingBucket (p : Point) : ℕ := (p.1 + p.2).toNat % 16
+
+def routingBuckets : List ℕ := List.range 16
+
+theorem routing_bucket_mem (q : Point) : routingBucket q ∈ routingBuckets :=
+  List.mem_range.mpr (Nat.mod_lt _ (by decide))
+
+def actualBucketCheck (b : ℕ) : Bool :=
+  bucketCheck routingBucket routingBuckets
+    (subdivision.rawVertices originalVertices edgeIndices)
+    (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph b
+
+/-- Each reduction checks the actual tags and routes with the same global
+query dispatch. The partition bounds the size of each kernel reduction. -/
+private theorem routing_bucket_0 : actualBucketCheck 0 = true := by
   decide +kernel
+private theorem routing_bucket_1 : actualBucketCheck 1 = true := by
+  decide +kernel
+private theorem routing_bucket_2 : actualBucketCheck 2 = true := by
+  decide +kernel
+private theorem routing_bucket_3 : actualBucketCheck 3 = true := by
+  decide +kernel
+private theorem routing_bucket_4 : actualBucketCheck 4 = true := by
+  decide +kernel
+private theorem routing_bucket_5 : actualBucketCheck 5 = true := by
+  decide +kernel
+private theorem routing_bucket_6 : actualBucketCheck 6 = true := by
+  decide +kernel
+private theorem routing_bucket_7 : actualBucketCheck 7 = true := by
+  decide +kernel
+private theorem routing_bucket_8 : actualBucketCheck 8 = true := by
+  decide +kernel
+private theorem routing_bucket_9 : actualBucketCheck 9 = true := by
+  decide +kernel
+private theorem routing_bucket_10 : actualBucketCheck 10 = true := by
+  decide +kernel
+private theorem routing_bucket_11 : actualBucketCheck 11 = true := by
+  decide +kernel
+private theorem routing_bucket_12 : actualBucketCheck 12 = true := by
+  decide +kernel
+private theorem routing_bucket_13 : actualBucketCheck 13 = true := by
+  decide +kernel
+private theorem routing_bucket_14 : actualBucketCheck 14 = true := by
+  decide +kernel
+private theorem routing_bucket_15 : actualBucketCheck 15 = true := by
+  decide +kernel
+
+/-- All buckets succeed by ordinary kernel reduction, with no native evaluator,
+external certificate-correctness premise, or additional axiom. -/
+theorem routing_check_success :
+    routingCheck routingBucket routingBuckets
+      (subdivision.rawVertices originalVertices edgeIndices)
+      (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph = true := by
+  change ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] : List ℕ).all actualBucketCheck = true
+  simp only [List.all_cons, List.all_nil, routing_bucket_0,
+    routing_bucket_1,
+    routing_bucket_2,
+    routing_bucket_3,
+    routing_bucket_4,
+    routing_bucket_5,
+    routing_bucket_6,
+    routing_bucket_7,
+    routing_bucket_8,
+    routing_bucket_9,
+    routing_bucket_10,
+    routing_bucket_11,
+    routing_bucket_12,
+    routing_bucket_13,
+    routing_bucket_14,
+    routing_bucket_15, Bool.true_and]
 
 theorem exact_square_routing :
     Function.Injective coordinate ∧
       ∀ v w : Vertex, RoutedGraph.Adj v w ↔ squareAdj (coordinate v) (coordinate w) :=
   by
-    have h := routingCheck_sound subdivision.rawGraph
+    have h := routingCheck_sound routingBucket routingBuckets
       (subdivision.rawVertices originalVertices edgeIndices)
-      (subdivision.rawEdgePairs edgeIndices) rawCoordinate RoutedGraph subdivision.code
-      subdivision.code_injective
+      (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph RoutedGraph subdivision.code
+      routing_bucket_mem subdivision.code_injective
       (subdivision.mem_raw_vertices originalVertices edgeIndices mem_original_vertices mem_edge_indices)
       (subdivision.adj_iff_raw_edge_pairs edgeIndices mem_edge_indices)
       subdivision.raw_graph_code_iff routing_check_success
@@ -722,18 +786,78 @@ theorem exact_square_routing :
 
 /-- Literal T is one-based. Its maximum coordinates equal the rectangle sizes;
 the strict Fin bounds apply after the explicit `zeroBased` conversion. -/
-def boundaryCheck : Bool := (subdivision.rawVertices originalVertices edgeIndices).all fun v =>
-  decide (1 ≤ (rotate (rawCoordinate v)).1 ∧ (rotate (rawCoordinate v)).1 ≤ 9337 ∧
-    1 ≤ (rotate (rawCoordinate v)).2 ∧ (rotate (rawCoordinate v)).2 ≤ 9061)
+def bucketBoundaryCheck (b : ℕ) : Bool :=
+  (bucketVertices routingBucket (subdivision.rawVertices originalVertices edgeIndices)
+    rawCoordinate b).all fun v =>
+      decide (1 ≤ (rotate (rawCoordinate v)).1 ∧ (rotate (rawCoordinate v)).1 ≤ 9337 ∧
+        1 ≤ (rotate (rawCoordinate v)).2 ∧ (rotate (rawCoordinate v)).2 ≤ 9061)
 
-theorem boundary_check_success : boundaryCheck = true := by decide +kernel
+def boundaryCheck : Bool := routingBuckets.all bucketBoundaryCheck
+
+private theorem boundary_bucket_0 : bucketBoundaryCheck 0 = true := by
+  decide +kernel
+private theorem boundary_bucket_1 : bucketBoundaryCheck 1 = true := by
+  decide +kernel
+private theorem boundary_bucket_2 : bucketBoundaryCheck 2 = true := by
+  decide +kernel
+private theorem boundary_bucket_3 : bucketBoundaryCheck 3 = true := by
+  decide +kernel
+private theorem boundary_bucket_4 : bucketBoundaryCheck 4 = true := by
+  decide +kernel
+private theorem boundary_bucket_5 : bucketBoundaryCheck 5 = true := by
+  decide +kernel
+private theorem boundary_bucket_6 : bucketBoundaryCheck 6 = true := by
+  decide +kernel
+private theorem boundary_bucket_7 : bucketBoundaryCheck 7 = true := by
+  decide +kernel
+private theorem boundary_bucket_8 : bucketBoundaryCheck 8 = true := by
+  decide +kernel
+private theorem boundary_bucket_9 : bucketBoundaryCheck 9 = true := by
+  decide +kernel
+private theorem boundary_bucket_10 : bucketBoundaryCheck 10 = true := by
+  decide +kernel
+private theorem boundary_bucket_11 : bucketBoundaryCheck 11 = true := by
+  decide +kernel
+private theorem boundary_bucket_12 : bucketBoundaryCheck 12 = true := by
+  decide +kernel
+private theorem boundary_bucket_13 : bucketBoundaryCheck 13 = true := by
+  decide +kernel
+private theorem boundary_bucket_14 : bucketBoundaryCheck 14 = true := by
+  decide +kernel
+private theorem boundary_bucket_15 : bucketBoundaryCheck 15 = true := by
+  decide +kernel
+
+theorem boundary_check_success : boundaryCheck = true := by
+  change ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] : List ℕ).all bucketBoundaryCheck = true
+  simp only [List.all_cons, List.all_nil, boundary_bucket_0,
+    boundary_bucket_1,
+    boundary_bucket_2,
+    boundary_bucket_3,
+    boundary_bucket_4,
+    boundary_bucket_5,
+    boundary_bucket_6,
+    boundary_bucket_7,
+    boundary_bucket_8,
+    boundary_bucket_9,
+    boundary_bucket_10,
+    boundary_bucket_11,
+    boundary_bucket_12,
+    boundary_bucket_13,
+    boundary_bucket_14,
+    boundary_bucket_15, Bool.true_and]
 
 theorem actual_T_bounds (v : Vertex) :
     1 ≤ (rotate (coordinate v)).1 ∧ (rotate (coordinate v)).1 ≤ 9337 ∧
     1 ≤ (rotate (coordinate v)).2 ∧ (rotate (coordinate v)).2 ≤ 9061 := by
-  have h := of_decide_eq_true
-    ((List.all_eq_true.mp boundary_check_success) (subdivision.code v)
-      (subdivision.mem_raw_vertices originalVertices edgeIndices mem_original_vertices mem_edge_indices v))
+  have hb := List.all_eq_true.mp boundary_check_success
+    (routingBucket (rawCoordinate (subdivision.code v))) (routing_bucket_mem _)
+  have hm : subdivision.code v ∈
+      bucketVertices routingBucket (subdivision.rawVertices originalVertices edgeIndices)
+        rawCoordinate (routingBucket (rawCoordinate (subdivision.code v))) := by
+    simp only [bucketVertices, List.mem_filter, decide_eq_true_eq]
+    exact ⟨subdivision.mem_raw_vertices originalVertices edgeIndices
+      mem_original_vertices mem_edge_indices v, rfl⟩
+  have h := of_decide_eq_true (List.all_eq_true.mp hb (subdivision.code v) hm)
   simpa only [raw_coordinate_code] using h
 
 def rectangle : SimpleGraph (Fin 9337 × Fin 9061) :=
