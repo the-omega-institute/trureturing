@@ -155,7 +155,7 @@ private theorem half_floor_split (K J e n : ℤ)
   have hrem0 : 0≤rem := Int.emod_nonneg _ (by omega)
   have hrem1 : rem<2*J := Int.emod_lt_of_pos _ (by omega)
   have hdiv : rem+2*J*u=n := by
-    simpa only [u,rem] using Int.emod_add_ediv n (2*J)
+    simpa only [u,rem] using Int.emod_add_mul_ediv n (2*J)
   have hu1 : u<2*K := by
     by_contra hh
     have hp := mul_nonneg (show 0≤2*J by omega) (show 0≤u-2*K by omega)
@@ -203,7 +203,7 @@ private theorem half_arithmetic (K F e t : ℤ)
       dsimp [k]
       omega
     have hv : (z+1)*v=m+k+1 := by
-      have hh := Int.emod_add_ediv (-m) (z+1)
+      have hh := Int.emod_add_mul_ediv (-m) (z+1)
       dsimp [k,v]
       nlinarith only [hh]
     have hv0 : 0≤v := by
@@ -232,15 +232,17 @@ private theorem half_arithmetic (K F e t : ℤ)
         · have hv' := congrArg (fun u : ℤ => 2*e*u) hv
           dsimp [n] at hn
           dsimp [z] at hv'
-          nlinarith only [hv',hn,hm]
+          rw [hm]
+          nlinarith only [hv',hn]
         · exact hmarg
     by_cases hk : k=-1
     · have hn : n= -e := by dsimp [n]; rw [hk]; ring
-      apply make 0 e ⟨by omega,by omega⟩ ⟨he,?_⟩ (by rw [hn]; ring)
-      · have hp := mul_nonneg (show 0≤4*K*F-1 by nlinarith) (show 0≤e by omega)
+      have hr : e≤4*K*(F*e) := by
+        have hp := mul_nonneg (show 0≤4*K*F-1 by nlinarith) (show 0≤e by omega)
         nlinarith only [hp]
-      · intro i
-        convert cert.negative i using 1 <;> congr 1 <;> ring
+      apply make 0 e ⟨by omega,by omega⟩ ⟨he,hr⟩ (by rw [hn]; ring)
+      intro i
+      convert cert.negative i using 1 <;> congr 1 <;> ring
     · have hk2 : 0≤k := by omega
       have hn0 : 1≤n := by
         have hp := mul_nonneg (show 0≤e-1 by omega) (show 0≤2*k+1 by omega)
@@ -252,12 +254,13 @@ private theorem half_arithmetic (K F e t : ℤ)
         dsimp [z] at hp
         nlinarith only [hp]
       obtain ⟨h,r,hh0,hh1,hr0,hr1,hn⟩ := half_floor_split K (F*e) e n hK hJ he ⟨hn0,hn1⟩
-      apply make h r ⟨by omega,hh1⟩ ⟨hr0,?_⟩ hn
-      · have hp := mul_nonneg (show 0≤4*K-2 by omega) (show 0≤F*e by positivity)
+      have hr : r≤4*K*(F*e) := by
+        have hp := mul_nonneg (show 0≤4*K-2 by omega) (show 0≤F*e by positivity)
         nlinarith only [hr1,hp]
-      · intro i
-        convert half_interpolate K F e (t-8*K*F) h r hK hF he
-          ⟨hh0,hh1⟩ ⟨hr0,by nlinarith only [hr1]⟩ cert i using 1 <;> congr 1 <;> ring
+      apply make h r ⟨by omega,hh1⟩ ⟨hr0,hr⟩ hn
+      intro i
+      convert half_interpolate K F e (t-8*K*F) h r hK hF he
+        ⟨hh0,hh1⟩ ⟨hr0,by nlinarith only [hr1]⟩ cert i using 1 <;> congr 1 <;> ring
 
 /-- Consuming interface for c>=3, a>c+d, b<=c+d, with no grain bound. -/
 private theorem half_step_choice_exists (a b c d : ℕ)

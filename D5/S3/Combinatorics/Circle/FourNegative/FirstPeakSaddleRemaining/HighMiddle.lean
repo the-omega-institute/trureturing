@@ -304,7 +304,7 @@ private theorem high_arithmetic (W J z t : ℤ)
       dsimp [k]
       omega
     have hv : (z+1)*v=m+k := by
-      have hh := Int.emod_add_ediv (-m) (z+1)
+      have hh := Int.emod_add_mul_ediv (-m) (z+1)
       dsimp [k,v]
       nlinarith only [hh]
     have hv0 : 0≤v := by
@@ -330,7 +330,8 @@ private theorem high_arithmetic (W J z t : ℤ)
         (2*W*(t+z-1)+2*(2*W*k)-1) (2*W*(z-1)-1) v
         (by positivity) (by omega)
       · have hp := congrArg (fun u : ℤ => 4*W*u) hv
-        nlinarith only [hp,hm]
+        rw [hm]
+        nlinarith only [hp]
       · simpa only [high_margin,mul_assoc] using hscaled
 
 /-- Consuming interface for ALL a>b>d>c>=2 with b>c+d. -/
