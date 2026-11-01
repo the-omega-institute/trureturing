@@ -89,13 +89,13 @@ private theorem blockBasis_apply {κ : Type*} (b : HilbertBasis κ ℂ H) (j : �
     blockBasis b j = insertion j.1 (b j.2) := by
   exact congrFun (HilbertBasis.coe_mkOfOrthogonalEqBot _ _) j
 
-private def setBasis {κ : Type*} (b : HilbertBasis κ ℂ H) :
+def setBasis {κ : Type*} (b : HilbertBasis κ ℂ H) :
     HilbertBasis (Set.range b) ℂ H :=
   HilbertBasis.mkOfOrthogonalEqBot b.orthonormal.toSubtypeRange (by
     rw [Subtype.range_val, ← Submodule.orthogonal_closure, b.dense_span,
       Submodule.top_orthogonal_eq_bot])
 
-private theorem setBasis_apply {κ : Type*} (b : HilbertBasis κ ℂ H)
+theorem setBasis_apply {κ : Type*} (b : HilbertBasis κ ℂ H)
     (u : Set.range b) : setBasis b u = u.1 := by
   exact congrFun (HilbertBasis.coe_mkOfOrthogonalEqBot _ _) u
 
@@ -115,7 +115,7 @@ private theorem positive_diagonal_summable {κ : Type*} (b : HilbertBasis κ ℂ
     e.injective
   simpa [setBasis_apply, e, Function.comp_def, CFC.abs_of_nonneg T hpos] using h
 
-private theorem trace_on_basis {κ : Type*} (b : HilbertBasis κ ℂ H)
+theorem trace_on_basis {κ : Type*} (b : HilbertBasis κ ℂ H)
     {T : H →L[ℂ] H} (hT : IsTraceClass T) :
     trace T hT = ∑' u, ⟪b u, T (b u)⟫_ℂ := by
   let e := Equiv.ofInjective b b.orthonormal.linearIndependent.injective
