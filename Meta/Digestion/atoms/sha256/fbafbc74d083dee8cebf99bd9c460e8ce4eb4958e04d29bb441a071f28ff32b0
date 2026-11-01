@@ -1,0 +1,17 @@
+**推论 7.5（三个资源的同时尖锐性）。** 分别令 $\mathfrak P_A,\mathfrak P_B$ 为定义 7.1 两种收费下的全域正确逐点有限协议类，则
+
+$$
+\begin{aligned}
+\min_{\Pi\in\mathfrak P_A}\sup_{c,\ell>0}P_\Pi
+&=\min_{\Pi\in\mathfrak P_B}\sup_{c,\ell>0}P_\Pi=k-1,\\
+\min_{\Pi\in\mathfrak P_A}\sup_{c,\ell>0}N_\Pi&=3k-3,\\
+\min_{\Pi\in\mathfrak P_B}\sup_{c,\ell>0}N_\Pi&=2k-1,\\
+\min_{\Pi\in\mathfrak P_A}\sup_{c,\ell>0}W_\Pi
+&=\min_{\Pi\in\mathfrak P_B}\sup_{c,\ell>0}W_\Pi=2k-2.
+\end{aligned}
+$$
+
+同一固定窗口顺序同时达到所有对应上界。读数与窗口的最坏下界不声称每个特殊正世界都必须使用这些数目。
+
+**证明。** 定理 7.2 给出逐点恒定的共同上界；定理 7.3 给出不依赖后续读数预算的制备下界；定理 7.4 给出不依赖制备预算的窗口及两种收费读数下界。它们在同一共同正则世界同时适用，故所有最小值均由所述固定协议取得。∎
+

@@ -1,0 +1,4 @@
+**来源与假设范围 7.7。** 定理 7.2–7.5 是上述明确取得与收费合同下的仓内综合推导，标为 repo-derived，不主张全球原创或优先权。定理 3.1、4.2 及所引 KBonacci 结果是复用前提，不另计为本节新结论；附录 K 的原子即读合同与本节合同不同。
+
+Breiding–Gesmundo–Michałek–Vannieuwenhoven，*Algebraic compressed sensing*，[arXiv:2108.13208v2](https://arxiv.org/abs/2108.13208v2)，Theorem 4.9，提供固定代数观察映射及一般位置纤维的背景，不供应此处受限历史的实际取得顺序。Király–Theran–Tomioka，*The Algebraic Combinatorial Approach for Low-Rank Matrix Completion*，[arXiv:1211.4116](https://arxiv.org/abs/1211.4116)，Theorem 34、Remark 35，讨论秩一条目补全的循环关系；本节取得的是前缀和乘积，动作和强制窗口读费不由条目补全定理给出。Krieg–Novak–Ullrich，*On the power of adaption and randomization*，[arXiv:2406.07108v2](https://arxiv.org/abs/2406.07108v2)，Proposition 10，允许 Banach 空间任意子集 $F$，其下界仍以前述文献中的线性目标及 Bernstein 球包含条件为前提；正秩一坐标图不能自动提供这些条件，本节不调用该数值下界。本节下界直接由所写线性零空间、非零多项式、常秩纤维及确定性历史回放证明。
+
