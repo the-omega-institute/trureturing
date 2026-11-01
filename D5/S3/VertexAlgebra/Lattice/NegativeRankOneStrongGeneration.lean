@@ -11,9 +11,23 @@ import D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
 import D5.S3.VertexAlgebra.LatticeActualStateFieldCalculus
 
+/-!
+Every finite family in the actual negative rank-one carrier has a bounded
+charge palette. The charge-q oscillator-constant functional, q beyond that
+palette, annihilates every right-nested word of negative modes.
+
+proof_shape: negative_rank_one_no_finite_strong_generation: content
+admission_basis: escape-witness
+escape_witness: palette_word_zero uses strong induction on unrestricted word
+length. Moving the first nonnegative-charge factor across a negative prefix
+uses the actual finite mode commutator; each correction has one fewer factor
+and remains in the same charge palette. The final proper-span proof consumes
+this induction through paletteSpan_le_ker and the arbitrary mixed-state
+decomposition, while the charge-q ground state has coefficient one.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2000000
 
 namespace D5.S3.VertexAlgebra.Lattice.NegativeRankOneStrongGeneration
 
@@ -175,6 +189,9 @@ private theorem outer_positive (d : ℤ) (hd : 0 < d) (s q k : ℤ)
     intro e
     apply (carrierBasis (datum d)).ext
     intro a
+    change groundCoefficient (datum d) (charge d q)
+      (mode (datum d) k (Finsupp.single (charge d s) (MvPolynomial.monomial e 1))
+        (carrierBasis (datum d) a)) = 0
     simpa only [carrierBasis_apply] using
       basis_outer_zero d hd s q k hs.le hsq hk e (Or.inl hs) a
   exact congrArg (fun f => f p v) hL
@@ -210,14 +227,16 @@ private theorem outer_zero (d : ℤ) (hd : 0 < d) (q k : ℤ)
       rw [hc]
       by_cases hk' : k = -1 <;>
         simp [mode, stateField_vacuum, identity_modes, hk', R,
-          MvPolynomial.lcoeff, MvPolynomial.coeff_monomial]
+          MvPolynomial.lcoeff]
     · have hz := basis_outer_zero d hd 0 q k (by omega) hq hk e (Or.inr he) a
       rw [carrierBasis_apply] at hz
-      change L (MvPolynomial.monomial e 1) (carrierBasis (datum d) a) = _
+      change groundCoefficient (datum d) (charge d q)
+        (mode (datum d) k (Finsupp.single (charge d 0) (MvPolynomial.monomial e 1))
+          (carrierBasis (datum d) a)) = _
       rw [hz]
-      simp [R, MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, he]
+      simp [R, MvPolynomial.lcoeff, MvPolynomial.coeff_monomial, he, Ne.symm he]
   have hh := congrArg (fun f => f p v) hL
-  simpa [L, R, MvPolynomial.lcoeff, apply_ite] using hh
+  by_cases hk' : k = -1 <;> simpa [L, R, MvPolynomial.lcoeff, hk'] using hh
 
 /-- A palette letter retains an arbitrary oscillator polynomial and integer mode. -/
 private structure Letter (d : ℤ) where
@@ -337,7 +356,7 @@ private theorem move_nonnegative (d : ℤ) (hd : 0 < d) (M q : ℤ)
       intro c hc
       apply hg c
       simpa only [List.mem_append, List.mem_cons, List.mem_singleton,
-        List.not_mem_nil, or_false, or_assoc, or_left_comm, or_comm] using hc
+        List.not_mem_nil, or_false, false_or, or_assoc, or_left_comm, or_comm] using hc
     have swapped := ih a (b :: r) (by simpa [List.length_append] using hn)
       hswap hln ha
     let F : Module.End ℂ (Carrier (datum d)) →ₗ[ℂ] ℂ :=
@@ -358,7 +377,7 @@ private theorem move_nonnegative (d : ℤ) (hd : 0 < d) (M q : ℤ)
           · subst c; exact correction_good M b a hb ha' hbn ha j
           · exact hg c (by simp [hc])
       have hz := short (l ++ correction b a j :: r)
-        (by simp only [List.length_append, List.length_cons, List.length_singleton] at hn ⊢
+        (by simp only [List.length_append, List.length_cons] at hn ⊢
             omega) hj
       unfold LatticeActualStateFieldCalculus.commutatorTerm
       rw [← correction_state]
@@ -492,8 +511,8 @@ private theorem negativeWord_mem_palette (d : ℤ) (S : Finset (Carrier (datum d
     negativeWord (datum d) S w ∈ paletteSpan d (familyBound d S) := by
   induction w with
   | nil => exact Submodule.subset_span ⟨[], by simp [Good], rfl⟩
-  | cons a w ih => exact family_mode_closed d S a.1.1 a.1.2 (-(a.2 : ℤ)-1)
-      (by omega) _ ih
+  | cons a w ih =>
+    exact family_mode_closed d S a.1.1 a.1.2 (-(a.2 : ℤ)-1) (by omega) _ ih
 
 /-- No finite family of arbitrary mixed-charge oscillator states strongly generates
 the actual negative rank-one lattice carrier by right-nested negative modes. -/
@@ -516,7 +535,9 @@ theorem negative_rank_one_no_finite_strong_generation (d : ℤ) (hd : 0 < d)
   have hz := hker hg
   change groundCoefficient (datum d) (charge d q)
     (Finsupp.single (charge d q) (1 : Oscillator (datum d))) = 0 at hz
-  simpa using hz
+  simp at hz
+
+#print axioms negative_rank_one_no_finite_strong_generation
 
 end
 end D5.S3.VertexAlgebra.Lattice.NegativeRankOneStrongGeneration
