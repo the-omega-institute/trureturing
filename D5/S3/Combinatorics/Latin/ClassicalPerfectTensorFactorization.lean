@@ -8,6 +8,7 @@
 
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
@@ -56,42 +57,320 @@ private theorem oa_injective {r : Type v} {x : Type u} [Fintype r] [Fintype x]
     (i j k : Fin n) (hc : Function.Injective ![i, j, k]) {s t : r}
     (hi : rows s i = rows t i) (hj : rows s j = rows t j)
     (hk : rows s k = rows t k) : s = t := by
-  sorry
+  apply (h ![i, j, k] hc).1
+  funext l
+  fin_cases l
+  · exact hi
+  · exact hj
+  · exact hk
 
 private theorem oa_surjective {r : Type v} {x : Type u} [Fintype r] [Fintype x]
     {n : ℕ} {rows : r → Fin n → x} (h : IsIndexOneOA rows 3)
     (i j k : Fin n) (hc : Function.Injective ![i, j, k]) (a b c : x) :
     ∃ t, rows t i = a ∧ rows t j = b ∧ rows t k = c := by
-  sorry
+  obtain ⟨t, ht⟩ := (h ![i, j, k] hc).2 ![a, b, c]
+  exact ⟨t, congrFun ht 0, congrFun ht 1, congrFun ht 2⟩
 
 private theorem gate_perfect {x : Type u} [Fintype x] (f : x × x → x × x)
     (hf : Function.Bijective f) (h₁ : IsLatin (fun t => (f t).1))
     (h₂ : IsLatin (fun t => (f t).2)) : IsIndexOneOA (gateGraph f) 2 := by
-  sorry
+  have hp (i j : Fin 4) (hne : i ≠ j) (s t : x × x)
+      (hi : gateGraph f s i = gateGraph f t i)
+      (hj : gateGraph f s j = gateGraph f t j) : s = t := by
+    fin_cases i <;> fin_cases j
+    · exact (hne rfl).elim
+    · change s.1 = t.1 at hi
+      change s.2 = t.2 at hj
+      exact Prod.ext hi hj
+    · change s.1 = t.1 at hi
+      change (f (s.1, s.2)).1 = (f (t.1, t.2)).1 at hj
+      apply Prod.ext hi
+      apply (h₁.2 t.1).1
+      simpa only [hi] using hj
+    · change s.1 = t.1 at hi
+      change (f (s.1, s.2)).2 = (f (t.1, t.2)).2 at hj
+      apply Prod.ext hi
+      apply (h₂.2 t.1).1
+      simpa only [hi] using hj
+    · change s.2 = t.2 at hi
+      change s.1 = t.1 at hj
+      exact Prod.ext hj hi
+    · exact (hne rfl).elim
+    · change s.2 = t.2 at hi
+      change (f (s.1, s.2)).1 = (f (t.1, t.2)).1 at hj
+      apply Prod.ext _ hi
+      apply (h₁.1 t.2).1
+      simpa only [hi] using hj
+    · change s.2 = t.2 at hi
+      change (f (s.1, s.2)).2 = (f (t.1, t.2)).2 at hj
+      apply Prod.ext _ hi
+      apply (h₂.1 t.2).1
+      simpa only [hi] using hj
+    · change (f (s.1, s.2)).1 = (f (t.1, t.2)).1 at hi
+      change s.1 = t.1 at hj
+      apply Prod.ext hj
+      apply (h₁.2 t.1).1
+      simpa only [hj] using hi
+    · change (f (s.1, s.2)).1 = (f (t.1, t.2)).1 at hi
+      change s.2 = t.2 at hj
+      apply Prod.ext _ hj
+      apply (h₁.1 t.2).1
+      simpa only [hj] using hi
+    · exact (hne rfl).elim
+    · change (f (s.1, s.2)).1 = (f (t.1, t.2)).1 at hi
+      change (f (s.1, s.2)).2 = (f (t.1, t.2)).2 at hj
+      exact hf.1 (Prod.ext hi hj)
+    · change (f (s.1, s.2)).2 = (f (t.1, t.2)).2 at hi
+      change s.1 = t.1 at hj
+      apply Prod.ext hj
+      apply (h₂.2 t.1).1
+      simpa only [hj] using hi
+    · change (f (s.1, s.2)).2 = (f (t.1, t.2)).2 at hi
+      change s.2 = t.2 at hj
+      apply Prod.ext _ hj
+      apply (h₂.1 t.2).1
+      simpa only [hj] using hi
+    · change (f (s.1, s.2)).2 = (f (t.1, t.2)).2 at hi
+      change (f (s.1, s.2)).1 = (f (t.1, t.2)).1 at hj
+      exact hf.1 (Prod.ext hj hi)
+    · exact (hne rfl).elim
+  intro cols hc
+  apply (Function.Bijective.of_comp_iff' (finTwoArrowEquiv x).bijective _).mp
+  apply Function.Injective.bijective_of_finite
+  intro s t he
+  apply hp (cols 0) (cols 1) (fun h => (by decide : (0 : Fin 2) ≠ 1) (hc h)) s t
+  · exact congrArg Prod.fst he
+  · exact congrArg Prod.snd he
 
 private theorem factors_bijective {x : Type u} [Fintype x] [Nonempty x]
     (a b c : x × x → x × x) (h : IsIndexOneOA (circuitGraph a b c) 3) :
     Function.Bijective a ∧ Function.Bijective b ∧ Function.Bijective c := by
-  sorry
+  classical
+  let d : x := Classical.choice inferInstance
+  let la : x × x × x → x × x × x :=
+    fun t => ((a (t.1, t.2.1)).1, (a (t.1, t.2.1)).2, t.2.2)
+  let lb : x × x × x → x × x × x :=
+    fun t => ((b (t.1, t.2.2)).1, t.2.1, (b (t.1, t.2.2)).2)
+  let lc : x × x × x → x × x × x :=
+    fun t => (t.1, (c t.2).1, (c t.2).2)
+  have hu : Function.Bijective (lc ∘ lb ∘ la) := by
+    apply Function.Injective.bijective_of_finite
+    intro s t he
+    exact oa_injective h 3 4 5 (by decide)
+      (congrArg Prod.fst he) (congrArg (fun t => t.2.1) he)
+      (congrArg (fun t => t.2.2) he)
+  have hla : Function.Bijective la :=
+    (show Function.Injective ((lc ∘ lb) ∘ la) from hu.1).of_comp.bijective_of_finite
+  have hclb : Function.Bijective (lc ∘ lb) :=
+    (Function.Bijective.of_comp_iff _ hla).mp hu
+  have hlb : Function.Bijective lb := hclb.1.of_comp.bijective_of_finite
+  have hlc : Function.Bijective lc := (Function.Bijective.of_comp_iff _ hlb).mp hclb
+  refine ⟨?_, ?_, ?_⟩
+  · apply Function.Injective.bijective_of_finite
+    intro s t he
+    have heq : la (s.1, s.2, d) = la (t.1, t.2, d) := by
+      dsimp only [la]
+      simpa only [Prod.mk.eta] using congrArg (fun v : x × x => (v.1, v.2, d)) he
+    exact congrArg (fun v : x × x × x => (v.1, v.2.1)) (hla.1 heq)
+  · apply Function.Injective.bijective_of_finite
+    intro s t he
+    have heq : lb (s.1, d, s.2) = lb (t.1, d, t.2) := by
+      dsimp only [lb]
+      simpa only [Prod.mk.eta] using congrArg (fun v : x × x => (v.1, d, v.2)) he
+    exact congrArg (fun v : x × x × x => (v.1, v.2.2)) (hlb.1 heq)
+  · apply Function.Injective.bijective_of_finite
+    intro s t he
+    have heq : lc (d, s) = lc (d, t) := by
+      dsimp only [lc]
+      simpa only [Prod.mk.eta] using congrArg (fun v : x × x => (d, v)) he
+    exact congrArg Prod.snd (hlc.1 heq)
 
 private theorem first_latin {x : Type u} [Fintype x] [Nonempty x]
     (a b c : x × x → x × x) (h : IsIndexOneOA (circuitGraph a b c) 3)
     (ha : Function.Bijective a) :
     IsLatin (fun t => (a t).1) ∧ IsLatin (fun t => (b t).1) := by
-  sorry
+  classical
+  let d : x := Classical.choice inferInstance
+  have hal : ∀ y, Function.Bijective (fun x => (a (x, y)).1) := by
+    intro y
+    apply Function.Injective.bijective_of_finite
+    intro s t he
+    have hp : (circuit a b c (s, y, d)).1 = (circuit a b c (t, y, d)).1 := by
+      change (b ((a (s, y)).1, d)).1 = (b ((a (t, y)).1, d)).1
+      rw [he]
+    exact congrArg Prod.fst (oa_injective h 1 2 3 (by decide) rfl rfl hp)
+  have har : ∀ x, Function.Bijective (fun y => (a (x, y)).1) := by
+    intro w
+    apply Function.Injective.bijective_of_finite
+    intro s t he
+    have hp : (circuit a b c (w, s, d)).1 = (circuit a b c (w, t, d)).1 := by
+      change (b ((a (w, s)).1, d)).1 = (b ((a (w, t)).1, d)).1
+      rw [he]
+    exact congrArg (fun v : x × x × x => v.2.1)
+      (oa_injective h 0 2 3 (by decide) rfl rfl hp)
+  refine ⟨⟨hal, har⟩, ?_, ?_⟩
+  · intro z
+    apply Function.Injective.bijective_of_finite
+    intro s t he
+    obtain ⟨u, hu⟩ := (hal d).2 s
+    obtain ⟨v, hv⟩ := (hal d).2 t
+    have hp : (circuit a b c (u, d, z)).1 = (circuit a b c (v, d, z)).1 := by
+      change (b ((a (u, d)).1, z)).1 = (b ((a (v, d)).1, z)).1
+      rw [hu, hv, he]
+    have huv := congrArg Prod.fst (oa_injective h 1 2 3 (by decide) rfl rfl hp)
+    exact hu.symm.trans ((congrArg (fun w => (a (w, d)).1) huv).trans hv)
+  · intro s
+    apply Function.Injective.bijective_of_finite
+    intro u v he
+    obtain ⟨t, ht⟩ := ha.2 (s, d)
+    have ht₁ := congrArg Prod.fst ht
+    have hp : (circuit a b c (t.1, t.2, u)).1 =
+        (circuit a b c (t.1, t.2, v)).1 := by
+      change (b ((a t).1, u)).1 = (b ((a t).1, v)).1
+      rw [ht₁, he]
+    exact congrArg (fun w : x × x × x => w.2.2)
+      (oa_injective h 0 1 3 (by decide) rfl rfl hp)
 
 private theorem second_latin {x : Type u} [Fintype x] [Nonempty x]
     (a b c : x × x → x × x) (h : IsIndexOneOA (circuitGraph a b c) 3)
     (ha : Function.Bijective a) (hc : Function.Bijective c)
     (h₁ : IsLatin (fun t => (a t).1)) :
     IsLatin (fun t => (a t).2) ∧ IsLatin (fun t => (b t).2) := by
-  sorry
+  classical
+  let d : x := Classical.choice inferInstance
+  have hal : ∀ y, Function.Bijective (fun x => (a (x, y)).2) := by
+    intro y
+    apply Function.Surjective.bijective_of_finite
+    intro v
+    obtain ⟨t, hy, hq, hr⟩ := oa_surjective h 1 4 5 (by decide)
+      y (c (v, d)).1 (c (v, d)).2
+    change t.2.1 = y at hy
+    have he : c ((a (t.1, t.2.1)).2, (b ((a (t.1, t.2.1)).1, t.2.2)).2) =
+        c (v, d) := Prod.ext hq hr
+    have hv := congrArg Prod.fst (hc.1 he)
+    exact ⟨t.1, by simpa only [hy] using hv⟩
+  have har : ∀ x, Function.Bijective (fun y => (a (x, y)).2) := by
+    intro x
+    apply Function.Surjective.bijective_of_finite
+    intro v
+    obtain ⟨t, hx, hq, hr⟩ := oa_surjective h 0 4 5 (by decide)
+      x (c (v, d)).1 (c (v, d)).2
+    change t.1 = x at hx
+    have he : c ((a (t.1, t.2.1)).2, (b ((a (t.1, t.2.1)).1, t.2.2)).2) =
+        c (v, d) := Prod.ext hq hr
+    have hv := congrArg Prod.fst (hc.1 he)
+    exact ⟨t.2.1, by simpa only [hx] using hv⟩
+  refine ⟨⟨hal, har⟩, ?_, ?_⟩
+  · intro z
+    apply Function.Injective.bijective_of_finite
+    intro u v he
+    obtain ⟨s, hs⟩ := ha.2 (u, d)
+    obtain ⟨t, ht⟩ := ha.2 (v, d)
+    have hqr : c ((a s).2, (b ((a s).1, z)).2) =
+        c ((a t).2, (b ((a t).1, z)).2) := by
+      rw [hs, ht]
+      change c (d, (b (u, z)).2) = c (d, (b (v, z)).2)
+      rw [he]
+    have hst : (s.1, s.2, z) = (t.1, t.2, z) :=
+      oa_injective h 2 4 5 (by decide) rfl
+        (congrArg Prod.fst hqr) (congrArg Prod.snd hqr)
+    have heq : s = t := congrArg (fun w : x × x × x => (w.1, w.2.1)) hst
+    exact (congrArg Prod.fst hs).symm.trans
+      ((congrArg (fun w => (a w).1) heq).trans (congrArg Prod.fst ht))
+  · intro v
+    apply Function.Injective.bijective_of_finite
+    intro s t he
+    obtain ⟨u, hu⟩ := (h₁.1 d).2 v
+    have hqr : c ((a (u, d)).2, (b ((a (u, d)).1, s)).2) =
+        c ((a (u, d)).2, (b ((a (u, d)).1, t)).2) := by
+      rw [hu, he]
+    exact congrArg (fun w : x × x × x => w.2.2)
+      (oa_injective h 1 4 5 (by decide) rfl
+        (congrArg Prod.fst hqr) (congrArg Prod.snd hqr))
 
 private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
     (a b c : x × x → x × x) (h : IsIndexOneOA (circuitGraph a b c) 3)
     (ha : Function.Bijective a) (h₂ : IsLatin (fun t => (b t).2)) :
     IsLatin (fun t => (c t).1) ∧ IsLatin (fun t => (c t).2) := by
-  sorry
+  classical
+  let d : x := Classical.choice inferInstance
+  constructor
+  · constructor
+    · intro v
+      apply Function.Injective.bijective_of_finite
+      intro s t he
+      obtain ⟨w, hw⟩ := (h₂.1 d).2 v
+      obtain ⟨u, hu⟩ := ha.2 (w, s)
+      obtain ⟨v, hv⟩ := ha.2 (w, t)
+      have hp : (circuit a b c (u.1, u.2, d)).1 =
+          (circuit a b c (v.1, v.2, d)).1 := by
+        change (b ((a u).1, d)).1 = (b ((a v).1, d)).1
+        rw [hu, hv]
+      have ho : (circuit a b c (u.1, u.2, d)).2.1 =
+          (circuit a b c (v.1, v.2, d)).2.1 := by
+        change (c ((a u).2, (b ((a u).1, d)).2)).1 =
+          (c ((a v).2, (b ((a v).1, d)).2)).1
+        rw [hu, hv]
+        change (c (s, (b (w, d)).2)).1 = (c (t, (b (w, d)).2)).1
+        rw [hw, he]
+      have huv : u = v := congrArg (fun w : x × x × x => (w.1, w.2.1))
+        (oa_injective h 2 3 4 (by decide) rfl hp ho)
+      exact (congrArg Prod.snd hu).symm.trans
+        ((congrArg (fun w => (a w).2) huv).trans (congrArg Prod.snd hv))
+    · intro v
+      apply Function.Injective.bijective_of_finite
+      intro s t he
+      obtain ⟨w, hw⟩ := ha.2 (d, v)
+      obtain ⟨u, hu⟩ := (h₂.2 d).2 s
+      obtain ⟨v, hv⟩ := (h₂.2 d).2 t
+      have ho : (circuit a b c (w.1, w.2, u)).2.1 =
+          (circuit a b c (w.1, w.2, v)).2.1 := by
+        change (c ((a w).2, (b ((a w).1, u)).2)).1 =
+          (c ((a w).2, (b ((a w).1, v)).2)).1
+        rw [hw]
+        change (c (_, (b (d, u)).2)).1 = (c (_, (b (d, v)).2)).1
+        rw [hu, hv, he]
+      have huv := congrArg (fun w : x × x × x => w.2.2)
+        (oa_injective h 0 1 4 (by decide) rfl rfl ho)
+      exact hu.symm.trans ((congrArg (fun w => (b (d, w)).2) huv).trans hv)
+  · constructor
+    · intro v
+      apply Function.Injective.bijective_of_finite
+      intro s t he
+      obtain ⟨w, hw⟩ := (h₂.1 d).2 v
+      obtain ⟨u, hu⟩ := ha.2 (w, s)
+      obtain ⟨v, hv⟩ := ha.2 (w, t)
+      have hp : (circuit a b c (u.1, u.2, d)).1 =
+          (circuit a b c (v.1, v.2, d)).1 := by
+        change (b ((a u).1, d)).1 = (b ((a v).1, d)).1
+        rw [hu, hv]
+      have ho : (circuit a b c (u.1, u.2, d)).2.2 =
+          (circuit a b c (v.1, v.2, d)).2.2 := by
+        change (c ((a u).2, (b ((a u).1, d)).2)).2 =
+          (c ((a v).2, (b ((a v).1, d)).2)).2
+        rw [hu, hv]
+        change (c (s, (b (w, d)).2)).2 = (c (t, (b (w, d)).2)).2
+        rw [hw, he]
+      have huv : u = v := congrArg (fun w : x × x × x => (w.1, w.2.1))
+        (oa_injective h 2 3 5 (by decide) rfl hp ho)
+      exact (congrArg Prod.snd hu).symm.trans
+        ((congrArg (fun w => (a w).2) huv).trans (congrArg Prod.snd hv))
+    · intro v
+      apply Function.Injective.bijective_of_finite
+      intro s t he
+      obtain ⟨w, hw⟩ := ha.2 (d, v)
+      obtain ⟨u, hu⟩ := (h₂.2 d).2 s
+      obtain ⟨v, hv⟩ := (h₂.2 d).2 t
+      have ho : (circuit a b c (w.1, w.2, u)).2.2 =
+          (circuit a b c (w.1, w.2, v)).2.2 := by
+        change (c ((a w).2, (b ((a w).1, u)).2)).2 =
+          (c ((a w).2, (b ((a w).1, v)).2)).2
+        rw [hw]
+        change (c (_, (b (d, u)).2)).2 = (c (_, (b (d, v)).2)).2
+        rw [hu, hv, he]
+      have huv := congrArg (fun w : x × x × x => w.2.2)
+        (oa_injective h 0 1 5 (by decide) rfl rfl ho)
+      exact hu.symm.trans ((congrArg (fun w => (b (d, w)).2) huv).trans hv)
 
 /-- All factors of an index-one strength-three classical circuit are perfect. -/
 theorem result : claim := by
