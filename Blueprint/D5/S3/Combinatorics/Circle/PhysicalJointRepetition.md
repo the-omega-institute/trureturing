@@ -27,6 +27,3 @@ The theorem consumes supplied base witnesses and does not construct them. It cov
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/PhysicalJointRepetition.physical_joint_repetition`
-- Dependency: [D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic](PeriodicShorteningArithmetic.md)
-- Dependency: [D5/S3/Combinatorics/Circle/RunFirstEarTransport](RunFirstEarTransport.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeRowSource](ThreeRowSource.md)
