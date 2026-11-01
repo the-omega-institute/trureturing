@@ -6,6 +6,7 @@ url: https://arxiv.org/abs/2502.05939v1
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation.result
+  - D5/S3/Combinatorics/Permutation/MultisetRookEulerianRealRootednessRefutation.result
 ---
 
 # Multiset rook-Eulerian interlacing on Ferrers boards
@@ -127,15 +128,14 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
   Ma–Pan, Theorem 1.11, as stated in the primary source, Section 3.3; the present
   nonrectangular witness does not contradict it. Simion's rectangular-board
   real-rootedness also survives.
-- **Open:** real-rootedness of $R$ for every Ferrers board; universal adjacent
-  interlacing; a structural classification of boards and contents admitting
+- **Open:** universal adjacent interlacing; a structural classification of boards and contents admitting
   all-pairs interlacing.
 - **Consequence proved by the counterexample:** the authors' all-pairs
   interlacing-sequence method for the distinct-letter case cannot extend
   verbatim to multisets. Theorem 12 for distinct letters is unaffected; using
   the multiset all-pairs conjecture as an intermediate step requires a different
-  hypothesis or a different method. This refutation does not negate the
-  separate real-rootedness conjecture.
+  hypothesis or a different method. The six-row refutation does not negate the
+  separate real-rootedness conjecture; the full-polynomial witness below does.
 
 ## ASSUMED-UNVERIFIED
 
@@ -153,12 +153,14 @@ positive row count, and the original zero-polynomial convention. Its event is
 failure of the original full `R` to split over the reals; no refinement,
 interlacing surrogate or distinct-letter restriction is substituted.
 
-The exact ordinary candidate has 120 rows with runs $(2,3),(3,4),(4,10),(5,2),
+The full-polynomial counterexample has 120 rows with runs $(2,3),(3,4),(4,10),(5,2),
 (6,101)$ and content $(6,1,4,8,1,100)$. Its polynomial and negative Laguerre
 value are recorded in the corresponding Library note and new Blueprint Scribe.
 `MultisetRookEulerianRealRootednessRefutation` implements a generic equality
 between the remaining-content recurrence and the original full word sum,
 followed by a shared recurrence certificate and the literal `result : ¬ claim`.
-The complete new unit is not yet kernel-verified or frozen. The original
-interlacing-only result and its scope remain unchanged; this implementation
-is not a claim of global priority.
+The certificate proves the 100-six tail formula by induction and evaluates
+664 prefix states, preserving every coefficient of the original full `R`.
+Its negative Laguerre value contradicts the original unrestricted
+`laguerre_splits` supplier. The interlacing-only result concerns the separate
+second clause. Neither counterexample asserts global priority.

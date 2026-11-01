@@ -51,9 +51,10 @@ arbitrary Ferrers boards.
 
 The six-row board $(3,3,3,3,4,4)$ with content $(2,2,1,1)$ refutes the
 interlacing conjunct: the required bottom comparison is
-$-7\leq-4-\sqrt{13}$. The universal real-rootedness conjunct remains open.
+$-7\leq-4-\sqrt{13}$. The full-polynomial counterexample below refutes the
+universal real-rootedness conjunct.
 
-## Original full-polynomial counterexample candidate
+## Original full-polynomial counterexample
 
 For the first clause, take board runs $(2,3),(3,4),(4,10),(5,2),(6,101)$,
 where each pair is a row bound and its multiplicity, and content
@@ -72,11 +73,14 @@ $$
 -\frac{2294232329562528073294509555513}{12500000000000000000000000000000000000}<0.
 $$
 
-The new real-rootedness-refutation module connects a remaining-content
-recurrence to the original `W`, `asc` and `R`, counting each distinct word once.
-Its complete certificate and final negation have not yet passed the current
-kernel check. This candidate therefore does not yet change the formal status
-of the first clause. The frozen six-row interlacing result is separate.
+The real-rootedness-refutation module connects a remaining-content recurrence
+to the original `W`, `asc` and `R`, counting each distinct word once. The first
+19 rows exclude sixes. The remaining 101 positions contain 100 sixes and one
+smaller letter, whose endpoint and internal placements give the exact tail
+polynomial. An induction for that tail and a 664-state prefix certificate
+establish the displayed full polynomial. The original `laguerre_splits`
+supplier turns its negative Laguerre value into `result : ¬ claim`.
+The six-row interlacing result is separate.
 
 The source version uses the arXiv.org non-exclusive license to distribute.
 This note provides a citation and short mathematical definitions; no author
