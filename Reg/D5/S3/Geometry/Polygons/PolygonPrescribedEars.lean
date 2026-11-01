@@ -81,7 +81,7 @@ def source_registration :
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration
+def registration : Contract.Registration.{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Geometry.Polygons.PolygonPrescribedEars.prescribed_complete_ears)
     (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Geometry.Polygons.PolygonPrescribedEars.unit

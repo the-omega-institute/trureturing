@@ -90,7 +90,7 @@ def source_registration : Registration arena (type_of% @reduced_centres_card) wh
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration (@reduced_centres_card)
+def registration : Contract.Registration.{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@reduced_centres_card)
     (Realization signature) Bool Unit := {
   unitName := `Reg.D5.S3.Geometry.Polygons.PolygonEarContraction.Count.unit
   realizationName := `Reg.D5.S3.Geometry.Polygons.PolygonEarContraction.Count.source_registration
@@ -194,7 +194,7 @@ def source_registration : Registration arena (type_of% @reduced_centres_compatib
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration (@reduced_centres_compatible)
+def registration : Contract.Registration.{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@reduced_centres_compatible)
     (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Geometry.Polygons.PolygonEarContraction.Compatibility.unit
   realizationName := `Reg.D5.S3.Geometry.Polygons.PolygonEarContraction.Compatibility.source_registration
