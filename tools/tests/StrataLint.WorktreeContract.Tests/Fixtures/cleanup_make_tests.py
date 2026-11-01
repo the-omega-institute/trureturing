@@ -238,6 +238,13 @@ class CleanupMakeTests(NativeFixture):
     def test_single_tree_refusal_keeps_aggregate_success_and_warning(self):
         nested = self.cache / ".lake/nested-repository"
         self.git("init", nested)
+        recent = self.add_lane("recent")
+        previous = self.environment["GIT_COMMITTER_DATE"]
+        self.environment["GIT_COMMITTER_DATE"] = str(int(time.time())) + " +0000"
+        try:
+            self.git("commit", "--allow-empty", "-m", "recent saved work", cwd=recent)
+        finally:
+            self.environment["GIT_COMMITTER_DATE"] = previous
         self.build_cli(self.repository)
         arguments = ["make", "--no-print-directory", "-C", self.repository / "tools", "clean-all",
                      "BASE=dev", "FORCE=1", "VERBOSE=1",
@@ -252,6 +259,14 @@ class CleanupMakeTests(NativeFixture):
         self.assertEqual("skipped", warning["action"])
         self.assertIn("nested_git_boundary:", warning["reason"])
         self.assertTrue(warning["diagnostic"])
+        self.assertEqual([str(self.cache)], [row["path"] for row in warnings
+                                           if row.get("event") == "clean_lanes_warning"])
+        rows = [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')]
+        items = {row.get("path"): row for row in rows
+                 if row.get("event") == "clean_lanes_item"}
+        self.assertEqual("recently_updated", items[str(recent)]["reason"])
+        self.assertEqual("locked_recent", items[str(self.current)]["reason"])
+        self.assertTrue(recent.exists())
         self.assertTrue(nested.exists())
         self.assertFalse(self.dirty.exists())
 
