@@ -1,15 +1,11 @@
-module
-
-public import LeanInformationAuditInterface.Contract.Registration
-public import D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization
-public import Reg.Support.DependentFamily
-public import Mathlib.Algebra.Field.ULift
-public import Mathlib.Algebra.Field.ZMod
-public import Mathlib.LinearAlgebra.Matrix.Nondegenerate
+import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization
+import Reg.Support.DependentFamily
+import Mathlib.Algebra.Field.ULift
+import Mathlib.Algebra.Field.ZMod
+import Mathlib.LinearAlgebra.Matrix.Nondegenerate
 
 /-! Source-bound audit of the first factor's four-column graph. -/
-
-public section
 
 namespace Reg.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization
 
@@ -66,9 +62,10 @@ private def coefficients : Matrix (Fin 6) (Fin 3) Field :=
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 2000000 in
+-- The finite certificate checks all 216 ordered column triples.
 private theorem minors : ∀ cols : Fin 3 → Fin 6, Function.Injective cols →
     Matrix.det (fun i j => coefficients (cols i) j) ≠ 0 := by
-  simp only [Matrix.det_fin_three]
+  simp only [coefficients]
   decide
 
 private def vector (t : Field × Field × Field) : Fin 3 → Field :=
@@ -83,13 +80,14 @@ private theorem vector_bijective : Function.Bijective vector.{u} := by
     funext i
     fin_cases i <;> rfl
 
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 2000000 in
+-- The finite certificate checks all 125 rows and six columns.
 private theorem witness_graph (t : Field × Field × Field) (i : Fin 6) :
     circuitGraph witnessA witnessB witnessC t i =
       (coefficients *ᵥ vector t) i := by
-  apply ULift.down_injective
-  fin_cases i <;>
-    simp [circuitGraph, circuit, witnessA, witnessB, witnessC, coefficients, vector,
-      Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
+  revert t i
+  decide
 
 private theorem witness_perfect :
     IsIndexOneOA (circuitGraph witnessA.{u} witnessB witnessC) 3 := by
