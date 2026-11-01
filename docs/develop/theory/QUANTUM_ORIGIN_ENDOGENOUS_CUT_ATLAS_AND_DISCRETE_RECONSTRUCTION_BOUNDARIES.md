@@ -1577,7 +1577,7 @@ b(\overline x,\overline y)=(x,y)\pmod2,
 \qquad q(\overline x)=\|x\|^2/2\pmod2.
 $$
 
-For the classical lattice description and root count, see [E8 lattice](https://en.wikipedia.org/wiki/E8_lattice). The lattice and finite quadratic-space facts needed here are proved below. The four-square theorem used in Section 21 is Lagrange's classical theorem.
+For the classical lattice description and root count, see [E8 lattice](https://en.wikipedia.org/wiki/E8_lattice). The lattice and finite quadratic-space facts needed here are proved below. The four-square theorem used in the construction is Lagrange's classical theorem.
 
 **定理 20.2（固定十六维的互补原子对）。** For every integer $m\ge2$, $N=2^m$, $h=N^{-1}$, there are real rank-eight orthogonal projections $P_N,Q_N\in K_{16,m}$ with $P_N+Q_N=I_{16}$ such that
 
@@ -1606,7 +1606,7 @@ have $q=0$ and pairwise $b=0$. Their classes are independent: the coordinate par
 
 The roots in $D$ are the $112$ vectors $\pm e_i\pm e_j$, $i<j$. The half-integral roots are the $128$ vectors with coordinates $\pm1/2$ and an even number of minus signs. There are no other roots. Two distinct roots in the same class modulo $2L$ differ by $2x$ for nonzero $x\in L$, whose squared norm is at least eight. The squared distance of two roots is at most eight, with equality only for opposite roots. The $240$ roots therefore give $120$ distinct opposite pairs and exhaust the $120$ classes with $q=1$.
 
-Choose a basis $v_1,\ldots,v_4$ of $V$ with $q(v_1)=1$ and $q(v_j)=0$ for $j>1$. A symplectic basis extension gives an isotropic complement with basis $w_1,\ldots,w_4$ and $b(v_i,w_j)=\delta_{ij}$. If $q$ vanishes on this complement, replace $w_2$ by $w_2+v_2$. The span remains isotropic and complementary to $V$, and $q(w_2+v_2)=1$.
+Let $V$ be any four-dimensional $b$-isotropic subspace of $\overline L$ with $q|_V\ne0$. Choose a basis $v_1,\ldots,v_4$ of $V$ with $q(v_1)=1$ and $q(v_j)=0$ for $j>1$. A symplectic basis extension gives an isotropic complement with basis $w_1,\ldots,w_4$ and $b(v_i,w_j)=\delta_{ij}$. If $q$ vanishes on this complement, replace $w_2$ by $w_2+v_2$. The span remains isotropic and complementary to $V$, and $q(w_2+v_2)=1$.
 
 On the resulting $W$, $q$ is a nonzero linear functional. Its eight classes with value one span $W$: for any fixed such class $z$, every class $w$ with value zero is $z+(z+w)$. Choose root representatives of these eight classes. Their pairwise inner products are even. Distinct classes exclude equal or opposite roots, so the Cauchy inequality forces these even inner products to be zero. They form the asserted orthogonal frame.
 
