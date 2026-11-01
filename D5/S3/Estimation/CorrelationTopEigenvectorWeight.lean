@@ -88,8 +88,121 @@ private lemma small_dimension_obstruction {n : ℕ} (hn : n ≤ 2)
     norm_num [stdCorr, meanCorr, sum_filter, Fin.sum_univ_two]
   linarith [h.2]
 
+private lemma symmetric_sum {n : ℕ} (f : Fin n → Fin n → ℝ)
+    (hf : ∀ i j, f i j = f j i) :
+    ∑ i, ∑ j, f i j = (∑ i, f i i) + 2 * ∑ i, ∑ j with j < i, f i j := by
+  classical
+  have hsplit : ∀ i j, f i j =
+      (if j < i then f i j else 0) + (if i < j then f i j else 0) +
+        (if i = j then f i j else 0) := by
+    intro i j
+    rcases lt_trichotomy i j with hij | hij | hij
+    · simp [hij, hij.ne, not_lt_of_ge hij.le]
+    · subst j; simp
+    · simp [hij, hij.ne.symm, not_lt_of_ge hij.le]
+  have hupper : (∑ i, ∑ j, if i < j then f i j else 0) =
+      ∑ i, ∑ j with j < i, f i j := by
+    rw [sum_comm]
+    simp_rw [sum_filter]
+    exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by rw [hf j i]
+  calc
+    ∑ i, ∑ j, f i j = ∑ i, ∑ j,
+        ((if j < i then f i j else 0) + (if i < j then f i j else 0) +
+          (if i = j then f i j else 0)) :=
+      sum_congr rfl fun i _ => sum_congr rfl fun j _ => hsplit i j
+    _ = (∑ i, ∑ j with j < i, f i j) +
+        (∑ i, ∑ j, if i < j then f i j else 0) + ∑ i, f i i := by
+      simp only [sum_add_distrib, sum_ite_eq, mem_univ, ite_true, sum_filter]
+    _ = _ := by rw [hupper]; ring
+
+private lemma delta_norm {n : ℕ} (hn : 0 < n) : ‖delta n‖ ^ 2 = 1 := by
+  have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hs : Real.sqrt (n : ℝ) ^ 2 = n := Real.sq_sqrt (Nat.cast_nonneg n)
+  rw [← real_inner_self_eq_norm_sq]
+  simp only [delta, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+    star_trivial, ← sq, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+  rw [inv_pow, hs, mul_inv_cancel₀ hn0]
+
+private lemma eigenbasis_rayleigh {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
+    (v : OrthonormalBasis (Fin n) ℝ (EuclideanSpace ℝ (Fin n))) (l : Fin n → ℝ)
+    (hv : ∀ j, a *ᵥ (v j : Fin n → ℝ) = l j • (v j : Fin n → ℝ))
+    (u : EuclideanSpace ℝ (Fin n)) :
+    ∑ j, l j * ⟪v j, u⟫ ^ 2 = ⟪u, a.toEuclideanLin u⟫ := by
+  have hvlin : ∀ j, a.toEuclideanLin (v j) = l j • v j := by
+    intro j
+    exact (WithLp.equiv 2 _).injective (hv j)
+  have hmap : a.toEuclideanLin u =
+      ∑ j, ⟪v j, u⟫ • (l j • v j) := by
+    calc
+      a.toEuclideanLin u = a.toEuclideanLin (∑ j, ⟪v j, u⟫ • v j) :=
+        congrArg a.toEuclideanLin (v.sum_repr' u).symm
+      _ = _ := by rw [map_sum]; simp_rw [map_smul, hvlin]
+  rw [hmap, inner_sum]
+  exact sum_congr rfl fun j _ => by
+    rw [inner_smul_right, inner_smul_right, real_inner_comm u (v j)]
+    ring
+
+private lemma correlation_rayleigh {n : ℕ} (hn : 3 ≤ n)
+    (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) :
+    ⟪delta n, a.toEuclideanLin (delta n)⟫ = 1 + ((n : ℝ) - 1) * meanCorr a := by
+  have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (n : ℝ) ≠ 0 := by linarith
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
+  have hsym : ∀ i j, a i j = a j i := fun i j => ha.1.isHermitian.isSymm.apply j i
+  have hsum := symmetric_sum (fun i j => a i j) hsym
+  simp only [ha.2, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one] at hsum
+  have hinner : ⟪delta n, a.toEuclideanLin (delta n)⟫ =
+      (Real.sqrt (n : ℝ))⁻¹ ^ 2 * ∑ i, ∑ j, a i j := by
+    change (a *ᵥ (fun _ => (Real.sqrt (n : ℝ))⁻¹)) ⬝ᵥ
+      (star (fun _ => (Real.sqrt (n : ℝ))⁻¹)) = _
+    simp only [dotProduct, mulVec, Pi.star_apply, star_trivial, mul_sum, sum_mul]
+    exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by ring
+  rw [hinner, inv_pow, Real.sq_sqrt (Nat.cast_nonneg n), hsum]
+  dsimp only [meanCorr]
+  field_simp
+  <;> ring
+
+private lemma correlation_centered_moments {n : ℕ} (hn : 3 ≤ n)
+    (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) (hs : 0 < stdCorr a) :
+    (∑ j, (ha.1.isHermitian.eigenvalues j - 1) = 0) ∧
+      (∑ j, (ha.1.isHermitian.eigenvalues j - 1) ^ 2 =
+        (n : ℝ) * ((n : ℝ) - 1) * (meanCorr a ^ 2 + stdCorr a ^ 2)) := by
+  have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (n : ℝ) ≠ 0 := by linarith
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
+  have ht : ∑ j, ha.1.isHermitian.eigenvalues j = (n : ℝ) := by
+    rw [← RHLinalg.rtrace_eq_sum_eigenvalues ha.1.isHermitian]
+    simp [RHLinalg.rtrace, Matrix.trace, ha.2]
+  have hf : ∑ j, ha.1.isHermitian.eigenvalues j ^ 2 =
+      (n : ℝ) + 2 * ∑ i, ∑ j with j < i, a i j ^ 2 := by
+    rw [← RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues ha.1.isHermitian]
+    have hsym : ∀ i j, a i j ^ 2 = a j i ^ 2 := fun i j =>
+      congrArg (fun t : ℝ => t ^ 2) (ha.1.isHermitian.isSymm.apply j i)
+    have hsum := symmetric_sum (fun i j => a i j ^ 2) hsym
+    simp only [ha.2, one_pow, sum_const, card_univ, Fintype.card_fin,
+      nsmul_eq_mul, mul_one] at hsum
+    convert hsum using 1
+    simp only [RHLinalg.frobSq, Matrix.trace, diag_apply, mul_apply,
+      conjTranspose_apply, star_trivial, RCLike.re_to_real, ← sq]
+    exact sum_comm
+  have hstd : stdCorr a ^ 2 = 2 / ((n : ℝ) * ((n : ℝ) - 1)) *
+      ∑ i, ∑ j with j < i, a i j ^ 2 - meanCorr a ^ 2 := by
+    exact Real.sq_sqrt ((Real.sqrt_pos.mp hs).le)
+  constructor
+  · simp only [sum_sub_distrib, ht, sum_const, card_univ, Fintype.card_fin,
+      nsmul_eq_mul, mul_one, sub_self]
+  · have he : ∑ j, (ha.1.isHermitian.eigenvalues j - 1) ^ 2 =
+        (∑ j, ha.1.isHermitian.eigenvalues j ^ 2) - 2 *
+          (∑ j, ha.1.isHermitian.eigenvalues j) + n := by
+      simp only [sub_sq, sum_add_distrib, sum_sub_distrib, one_pow, mul_one,
+        ← mul_sum, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+    rw [he, hf, ht, hstd]
+    field_simp
+    <;> ring
+
 private lemma correlation_spectral_data {n : ℕ} (hn : 3 ≤ n)
-    (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) (hgap : SatisfiesWGap a) :
+    (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) (hs : 0 < stdCorr a)
+    (hgap : SatisfiesWGap a) :
     ∃ (μ w : Fin n → ℝ) (i : Fin n),
       (∑ j, μ j = 0) ∧
       (∑ j, μ j ^ 2 = (n : ℝ) * ((n : ℝ) - 1) *
@@ -97,7 +210,29 @@ private lemma correlation_spectral_data {n : ℕ} (hn : 3 ≤ n)
       (∀ j, 0 ≤ w j) ∧ (∑ j, w j = 1) ∧
       (∑ j, μ j * w j = ((n : ℝ) - 1) * meanCorr a) ∧
       (∀ j, μ j ≤ μ i) ∧ w i < 1 / 2 := by
-  sorry
+  classical
+  let v := ha.1.isHermitian.eigenvectorBasis
+  let l := ha.1.isHermitian.eigenvalues
+  have hne : (univ : Finset (Fin n)).Nonempty := by
+    exact univ_nonempty_iff.mpr ⟨⟨0, by omega⟩⟩
+  obtain ⟨i, hi, htop⟩ := exists_max_image univ l hne
+  have ht : ∀ j, l j ≤ l i := fun j => htop j (mem_univ j)
+  have hv := ha.1.isHermitian.mulVec_eigenvectorBasis
+  obtain ⟨j, hji, hweight⟩ := hgap v l hv i ht
+  have hn0 : 0 < n := by omega
+  have hws : ∑ j, ⟪v j, delta n⟫ ^ 2 = 1 := by
+    rw [v.sum_sq_inner_right, delta_norm hn0]
+  have hpair : ⟪v i, delta n⟫ ^ 2 + ⟪v j, delta n⟫ ^ 2 ≤ 1 := by
+    have hle := sum_le_sum_of_subset_of_nonneg
+      (show ({i, j} : Finset (Fin n)) ⊆ univ from subset_univ _)
+      (fun k _ _ => sq_nonneg ⟪v k, delta n⟫)
+    simpa [sum_pair hji.symm, hws] using hle
+  obtain ⟨hm, he⟩ := correlation_centered_moments hn a ha hs
+  refine ⟨fun j => l j - 1, fun j => ⟪v j, delta n⟫ ^ 2, i, hm, he,
+    fun j => sq_nonneg _, hws, ?_, fun j => sub_le_sub_right (ht j) 1, by linarith⟩
+  simp only [sub_mul, sum_sub_distrib, one_mul, hws]
+  rw [eigenbasis_rayleigh a v l hv (delta n), correlation_rayleigh hn a ha]
+  ring
 
 private lemma segment_obstruction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
     (c : ℝ) (hc : 0 < c) (ha : IsCorrelation a) (hm : meanCorr a = c)
@@ -105,7 +240,7 @@ private lemma segment_obstruction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
   intro hgap
   by_cases hn : 3 ≤ n
   · obtain ⟨μ, w, i, hμ, he, hw, hws, hr, ht, hh⟩ :=
-      correlation_spectral_data hn a ha hgap
+      correlation_spectral_data hn a ha (hs ▸ hc) hgap
     have hb := CorrelationWeightSpectralBound.centered_energy_strict
       hn (meanCorr a) (stdCorr a) (hm ▸ hc) μ w hμ he hw hws hr i ht hh
     rw [hm, hs] at hb
