@@ -159,6 +159,6 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 H("Equal original occupancy fibers are connected on the all-n native carrier"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary multisets of native Adm n words with equal original mass and occupancyCount at every coordinate, the theorem constructs a genuine undirected NativePath, proves equality of their canonical endpoints after Phi, exposes a bounded forward normalization and its native pullback, and proves legality and original-fiber invariants at every reachable intermediate state. The n equals three exchange 100 plus 001 with 000 plus 101 is a checked instance, not the theorem scope."))),
+                Blocks(Paragraph(Text("For arbitrary multisets of native Adm n words with equal original mass and occupancyCount at every coordinate, the theorem constructs a genuine undirected NativePath, proves equality of their canonical endpoints after Phi, exposes a bounded forward normalization and its native pullback, and proves legality and original-fiber invariants at every reachable intermediate state. The n equals three exchange 100 plus 001 with 000 plus 101 is a concrete instance of the native move; it does not restrict the theorem scope."))),
                 DescribeRole.Theorem))));
 }
