@@ -22,25 +22,22 @@ namespace D5.S3.Quantum.Magic.AffinePartitionFlagMaximum
 
 open scoped BigOperators
 
-/-- The standard finite vector space. -/
-abbrev vector (p n : ℕ) := Fin n → ZMod p
-
 /-- Nonempty affine parts, disjoint from one another, covering exactly the nonzero vectors. -/
 def isAffinePartition (p n : ℕ) [Fact p.Prime]
-    (parts : Finset (AffineSubspace (ZMod p) (vector p n))) : Prop :=
-  (∀ k ∈ parts, (k : Set (vector p n)).Nonempty) ∧
+    (parts : Finset (AffineSubspace (ZMod p) (Fin n → ZMod p))) : Prop :=
+  (∀ k ∈ parts, (k : Set (Fin n → ZMod p)).Nonempty) ∧
   (∀ k ∈ parts, ∀ l ∈ parts, k ≠ l →
-    Disjoint (k : Set (vector p n)) (l : Set (vector p n))) ∧
-  ∀ v : vector p n, v ≠ 0 ↔ ∃ k ∈ parts, v ∈ k
+    Disjoint (k : Set (Fin n → ZMod p)) (l : Set (Fin n → ZMod p))) ∧
+  ∀ v : Fin n → ZMod p, v ≠ 0 ↔ ∃ k ∈ parts, v ∈ k
 
 /-- The objective in the affine partition problem. -/
 def sqSum {p n : ℕ} [Fact p.Prime]
-    (parts : Finset (AffineSubspace (ZMod p) (vector p n))) : ℕ :=
+    (parts : Finset (AffineSubspace (ZMod p) (Fin n → ZMod p))) : ℕ :=
   ∑ k ∈ parts, Nat.card k ^ 2
 
 /-- A coordinate cell with all earlier coordinates zero. -/
 def flagCell (p n : ℕ) [Fact p.Prime] (i : Fin n) (x : ZMod p) :
-    AffineSubspace (ZMod p) (vector p n) where
+    AffineSubspace (ZMod p) (Fin n → ZMod p) where
   carrier := {v | (∀ j < i, v j = 0) ∧ v i = x}
   smul_vsub_vadd_mem' c a b d ha hb hd := by
     constructor
@@ -54,7 +51,7 @@ def flagCell (p n : ℕ) [Fact p.Prime] (i : Fin n) (x : ZMod p) :
 
 /-- All flag cells with nonzero distinguished coordinate. -/
 def flagPartition (p n : ℕ) [Fact p.Prime] :
-    Finset (AffineSubspace (ZMod p) (vector p n)) := by
+    Finset (AffineSubspace (ZMod p) (Fin n → ZMod p)) := by
   classical
   exact Finset.univ.image
     (fun a : Fin n × {x : ZMod p // x ≠ 0} => flagCell p n a.1 a.2.1)
@@ -176,7 +173,7 @@ private lemma radix_value {p : ℕ} (hp : 2 ≤ p) (n : ℕ) :
     ring
 
 private lemma affine_card {p n : ℕ} [Fact p.Prime]
-    (k : AffineSubspace (ZMod p) (vector p n)) (hk : (k : Set (vector p n)).Nonempty) :
+    (k : AffineSubspace (ZMod p) (Fin n → ZMod p)) (hk : (k : Set (Fin n → ZMod p)).Nonempty) :
     Nat.card k = p ^ Module.finrank (ZMod p) k.direction := by
   have : Nonempty k := Set.nonempty_coe_sort.mpr hk
   obtain ⟨v, hv⟩ := hk
@@ -184,11 +181,11 @@ private lemma affine_card {p n : ℕ} [Fact p.Prime]
     Module.natCard_eq_pow_finrank (K := ZMod p), Nat.card_zmod]
 
 private lemma partition_card {p n : ℕ} [Fact p.Prime]
-    (parts : Finset (AffineSubspace (ZMod p) (vector p n)))
+    (parts : Finset (AffineSubspace (ZMod p) (Fin n → ZMod p)))
     (hparts : isAffinePartition p n parts) :
     ∑ k ∈ parts, Nat.card k = p ^ n - 1 := by
   classical
-  let f := fun k : AffineSubspace (ZMod p) (vector p n) => (k : Set (vector p n)).toFinset
+  let f := fun k : AffineSubspace (ZMod p) (Fin n → ZMod p) => (k : Set (Fin n → ZMod p)).toFinset
   have hd : (parts : Set _).PairwiseDisjoint f := by
     intro k hk l hl hkl
     exact Set.disjoint_toFinset.mpr (hparts.2.1 k hk l hl hkl)
@@ -238,14 +235,14 @@ private lemma flag_cell_card {p n : ℕ} [Fact p.Prime] (i : Fin n) (x : ZMod p)
   exact Fin.card_Ioi i
 
 private lemma flag_center {p n : ℕ} [Fact p.Prime] (i : Fin n) (x : ZMod p) :
-    (Pi.single i x : vector p n) ∈ flagCell p n i x := by
+    (Pi.single i x : Fin n → ZMod p) ∈ flagCell p n i x := by
   constructor
   · intro j hj
     simp [Pi.single_eq_of_ne (ne_of_lt hj)]
   · simp
 
 private lemma flag_indices_of_mem {p n : ℕ} [Fact p.Prime]
-    (a b : Fin n × {x : ZMod p // x ≠ 0}) (v : vector p n)
+    (a b : Fin n × {x : ZMod p // x ≠ 0}) (v : Fin n → ZMod p)
     (ha : v ∈ flagCell p n a.1 a.2.1) (hb : v ∈ flagCell p n b.1 b.2.1) : a = b := by
   have hi : a.1 = b.1 := by
     apply le_antisymm
@@ -318,7 +315,7 @@ private lemma flag_sum {p n : ℕ} [Fact p.Prime] :
   exact Finset.sum_range_reflect (fun k => (p - 1) * p ^ (2 * k)) n
 
 private lemma partition_bound {p n : ℕ} [Fact p.Prime]
-    (parts : Finset (AffineSubspace (ZMod p) (vector p n)))
+    (parts : Finset (AffineSubspace (ZMod p) (Fin n → ZMod p)))
     (hparts : isAffinePartition p n parts) : sqSum parts ≤ flagValue p n := by
   have hp : 2 ≤ p := (Fact.out : p.Prime).two_le
   have h := power_family_bound hp parts (fun k => Nat.card k)

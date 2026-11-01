@@ -14,8 +14,6 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
         "The flag partition maximizes the squared sizes of affine parts outside the origin.",
         H("The affine partition flag maximum"),
         Blocks(
-            Node("vector", "The finite vector space", "vector", VectorFormula(),
-                "For natural p and n, vector p n is the function space Fin n → ZMod p. This is the residue-field model of the finite vector space used in the source (arXiv TeX lines 131–133)."),
             Node("is-affine-partition", "Affine partitions of the punctured vector space", "isAffinePartition", IsAffinePartitionFormula(),
                 "A finite family of affine subspaces is an affine partition when every part is nonempty, distinct parts are disjoint, and a vector is nonzero exactly when it belongs to one of the parts. This is the partition condition in the source's stabiliser-operation lemma (lines 986–994)."),
             Node("sq-sum", "The squared-cardinality objective", "sqSum", SqSumFormula(),
@@ -137,7 +135,7 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
 
     private static Formula Fin(Formula n) => App(Qualified("Fin"), n);
 
-    private static Formula Vector(Formula p, Formula n) => LocalCall("vector", p, n);
+    private static Formula Vector(Formula p, Formula n) => Arrow(Fin(n), ZMod(p));
 
     private static Formula Affine(Formula field, Formula carrier) =>
         App(Qualified("AffineSubspace"), field, carrier);
@@ -168,12 +166,6 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
 
     private static Formula Subtype(Formula type, Formula variable, Formula predicate) =>
         App(Qualified("Subtype"), LambdaOf(variable, type, predicate));
-
-    private static Formula VectorFormula() =>
-        All(X("p"), Nats,
-            All(X("n"), Nats,
-                Equal(LocalCall("vector", X("p"), X("n")),
-                    Arrow(Fin(X("n")), ZMod(X("p"))))));
 
     private static Formula IsAffinePartitionFormula()
     {
