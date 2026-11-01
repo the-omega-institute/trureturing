@@ -53,7 +53,9 @@ private theorem identity_ne_zero : (1 : jointEnd scalarMatter) ≠ 0 := by
   intro h
   have hz := LinearMap.congr_fun h ((1 : ℂ) ⊗ₜ[ℂ] vacuum)
   have hv := congrArg (TensorProduct.lid ℂ Fock) hz
-  simpa [vacuum, ket] using hv
+  simp only [Module.End.one_apply, LinearMap.zero_apply, TensorProduct.lid_tmul,
+    one_smul, map_zero] at hv
+  exact (by simp [vacuum, ket] : vacuum ≠ 0) hv
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -125,23 +127,28 @@ private def chargedState : joint scalarMatter := (1 : ℂ) ⊗ₜ[ℂ] ket {1}
 private theorem vacuumState_ne_zero : vacuumState ≠ 0 := by
   intro h
   have hv := congrArg (TensorProduct.lid ℂ Fock) h
-  simpa [vacuumState, vacuum, ket] using hv
+  simp only [vacuumState, TensorProduct.lid_tmul, one_smul, map_zero] at hv
+  exact (by simp [vacuum, ket] : vacuum ≠ 0) hv
 
 private theorem chargedState_ne_zero : chargedState ≠ 0 := by
   intro h
   have hv := congrArg (TensorProduct.lid ℂ Fock) h
-  simpa [chargedState, ket] using hv
+  simp only [chargedState, TensorProduct.lid_tmul, one_smul, map_zero] at hv
+  exact (by simp [ket] : ket {1} ≠ 0) hv
 
 private theorem number_vacuumState : number vacuumState = 0 := by
-  simp [number, liftGhost, vacuumState,
-    _root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghost_number_relations.1]
+  simp only [number, liftGhost, vacuumState, TensorProduct.map_tmul, LinearMap.id_apply,
+    _root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghost_number_relations.1,
+    TensorProduct.tmul_zero]
 
 private theorem number_chargedState : number chargedState = chargedState := by
   have h : _root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghostNumber (ket {1}) = ket {1} := by
+    have hcharge : _root_.D5.S3.Quantum.Fermionic.BcGhostCharge.charge ({1} : Finset ℕ) = 1 := by
+      norm_num [_root_.D5.S3.Quantum.Fermionic.BcGhostCharge.charge, Finset.filter_singleton]
     simp only [_root_.D5.S3.Quantum.Fermionic.BcGhostCharge.ghostNumber,
-      ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
-    norm_num [_root_.D5.S3.Quantum.Fermionic.BcGhostCharge.charge]
-  simp [number, liftGhost, chargedState, h]
+      ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul,
+      hcharge, Int.cast_one]
+  simp only [number, liftGhost, chargedState, TensorProduct.map_tmul, LinearMap.id_apply, h]
 
 namespace Capture
 
@@ -237,7 +244,8 @@ end Capture
 
 private theorem tensor_c_degree :
     (number : jointEnd scalarMatter) * C 1 - C 1 * number = C 1 := by
-  ext m v
+  apply TensorProduct.ext'
+  intro m v
   simp only [number, C, liftGhost, LinearMap.sub_apply, Module.End.mul_apply,
     TensorProduct.map_tmul, LinearMap.id_apply]
   rw [← TensorProduct.tmul_sub]
@@ -249,8 +257,10 @@ private theorem tensor_c_ne_zero : (C 1 : jointEnd scalarMatter) ≠ 0 := by
   intro h
   have hv := LinearMap.congr_fun h vacuumState
   have hz := congrArg (TensorProduct.lid ℂ Fock) hv
-  simpa [C, liftGhost, vacuumState,
-    _root_.D5.S3.Quantum.Fermionic.BcGhostFock.ghost_vacuum.2.2.1] using hz
+  simp only [C, liftGhost, vacuumState, TensorProduct.map_tmul, LinearMap.id_apply,
+    _root_.D5.S3.Quantum.Fermionic.BcGhostFock.ghost_vacuum.2.2.1,
+    LinearMap.zero_apply, TensorProduct.lid_tmul, one_smul, map_zero] at hz
+  exact (by simp [ket] : ket {1} ≠ 0) hz
 
 namespace SignedModes
 

@@ -35,16 +35,17 @@ def rejected : Realization signature := realize signature (fun _ _ _ => 0)
   (fun e => nomatch e)
 
 private theorem number_singleton : ghostNumber (ket {1}) = ket {1} := by
+  have hcharge : charge ({1} : Finset ℕ) = 1 := by
+    norm_num [charge, Finset.filter_singleton]
   simp only [ghostNumber, ket, Finsupp.lsum_single, LinearMap.smulRight_apply,
-    LinearMap.id_apply, one_smul]
-  norm_num [charge]
+    LinearMap.id_apply, one_smul, hcharge, Int.cast_one]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hz := h (ket {1})
   change (0 : Fock) = ∑ᶠ n : ℤ, normalTerm n (ket {1}) at hz
   rw [← ghost_number_normal_sum, number_singleton] at hz
-  simpa [ket] using hz
+  exact (by simp [ket] : ket {1} ≠ 0) hz.symm
 
 def family : Registration arena (type_of% @ghost_number_normal_sum) where
   actual := actual
@@ -63,7 +64,7 @@ def family : Registration arena (type_of% @ghost_number_normal_sum) where
     refine ⟨(), 0, ket {1}, ?_⟩
     change ghostNumber 0 ≠ ghostNumber (ket {1})
     rw [map_zero, number_singleton]
-    simp [ket]
+    exact Ne.symm (by simp [ket] : ket {1} ≠ 0)
 
 def normal_sum_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ghost_number_normal_sum) (Realization signature) Type Unit where
@@ -140,7 +141,7 @@ def family : Registration arena (type_of% @ghost_number_relations) where
     refine ⟨(), 0, ket {1}, ?_⟩
     change ghostNumber 0 ≠ ghostNumber (ket {1})
     rw [map_zero, number_singleton]
-    simp [ket]
+    exact Ne.symm (by simp [ket] : ket {1} ≠ 0)
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ghost_number_relations) (Realization signature) Type Unit where
@@ -224,7 +225,7 @@ def family : Registration arena (type_of% @finite_normal_capture) where
     change (∑ n ∈ activeModes (ket {1}), normalTerm n) 0 ≠
       (∑ n ∈ activeModes (ket {1}), normalTerm n) (ket {1})
     rw [map_zero, finite_normal_capture _ _ (fun _ h => h), number_singleton]
-    simp [ket]
+    exact Ne.symm (by simp [ket] : ket {1} ≠ 0)
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@finite_normal_capture) (Realization signature) Type Unit where

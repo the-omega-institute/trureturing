@@ -39,8 +39,10 @@ private theorem lift_mul (T U : Module.End ℂ Fock) :
 
 private theorem lift_neg (T : Module.End ℂ Fock) :
     liftGhost (M := M) (-T) = -liftGhost T := by
-  ext m v
-  simp [liftGhost]
+  apply TensorProduct.ext'
+  intro m v
+  simp only [liftGhost, TensorProduct.map_tmul, LinearMap.id_apply, LinearMap.neg_apply]
+  exact TensorProduct.tmul_neg m (T v)
 
 private theorem partial_tmul (K : Finset ℤ) (m : M) (v : Fock) :
     partialNumber K (m ⊗ₜ[ℂ] v) = m ⊗ₜ[ℂ] ((∑ n ∈ K, normalTerm n) v) := by
