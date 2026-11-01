@@ -25,7 +25,7 @@ open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private UniformBounds from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
+open private UniformBounds UniformBounds.mk from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 open private corner grainExponent grain reserve half_power gap_power uniform_bounds reserve_capacity tight_ceiling later_gates
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
 open private positives support banks positive_mem support_bound reserve_bits banks_inventory bank_masses first_length

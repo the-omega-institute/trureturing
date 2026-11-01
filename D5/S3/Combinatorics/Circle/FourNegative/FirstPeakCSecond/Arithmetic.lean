@@ -15,7 +15,7 @@ import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
-open private UniformBounds chart_adjacent_t8 chart_adjacent_y4
+open private UniformBounds UniformBounds.mk chart_adjacent_t8 chart_adjacent_y4
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 open private chart_separated
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.PolynomialsSeparated

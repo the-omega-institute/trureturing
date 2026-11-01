@@ -14,7 +14,7 @@ import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
-open private UniformBounds
+open private UniformBounds UniformBounds.mk
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 
 set_option maxHeartbeats 1600000 in
