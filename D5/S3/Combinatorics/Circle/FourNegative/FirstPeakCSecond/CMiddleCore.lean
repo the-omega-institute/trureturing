@@ -101,13 +101,31 @@ private theorem model_positive (y t e h : ℤ)
     let v := model y t e h
     1≤v.A ∧ 1≤v.B ∧ 1≤v.L ∧ 1≤v.M ∧ 1≤v.Mn ∧
       v.z+1≤v.D ∧ v.Mn-v.M=v.t*v.y*v.z ∧ 1≤v.Bn ∧ 1≤v.Ln := by
-  obtain ⟨Y,hY,rfl⟩ : ∃ Y : ℤ, 0≤Y ∧ y=4+Y := ⟨y-4,by omega,by ring⟩
-  obtain ⟨T,hT,rfl⟩ : ∃ T : ℤ, 0≤T ∧ t=4+T := ⟨t-4,by omega,by ring⟩
-  obtain ⟨E,hE,rfl⟩ : ∃ E : ℤ, 0≤E ∧ e=2+E := ⟨e-2,by omega,by ring⟩
-  obtain ⟨H,hH,rfl⟩ : ∃ H : ℤ, 0≤H ∧ h=2+H := ⟨h-2,by omega,by ring⟩
+  have hy0 : 0≤y := by omega
+  have ht0 : 0≤t := by omega
+  have he0 : 0≤e := by omega
+  have hh0 : 0≤h := by omega
+  have hy1 : 1≤y := by omega
+  have ht1 : 1≤t := by omega
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
-  all_goals first | ring | (apply sub_nonneg.mp <;> norm_num <;> positivity)
+  · have hp : (0 : ℤ) ≤ e*h*t*(y*e*t+y+1) := by positivity
+    omega
+  · have hp : (0 : ℤ) ≤ e*h*t*t*(y+1) := by positivity
+    omega
+  · have hp : (0 : ℤ) ≤ e*h*t*(e*t)*t + (e*t)*t + e*t := by positivity
+    omega
+  · have hp : (0 : ℤ) ≤ t*y*(e*t) + (y*(e*t)+y+1) := by positivity
+    omega
+  · have hp : (0 : ℤ) ≤ y*(e*t)+y+1 + 2*(t*y*(e*t)) := by positivity
+    omega
+  · have hp : (0 : ℤ) ≤ (y-1)*(e*t)+y := by positivity
+    omega
+  · ring
+  · have hp : (0 : ℤ) ≤ 2*(e*h*t*t*(y+1)+t+1)-1 := by positivity
+    omega
+  · have hp : (0 : ℤ) ≤ 2*(e*h*t*(e*t)*t+(e*t)*t+e*t+1)-(e*t)-1 := by positivity
+    omega
 
 /- The six later gates share the same integer rounding proof. The first four
 polynomial margins are kept separate, including the actual pre-ear first seam. -/
@@ -403,7 +421,8 @@ private theorem x_inventory (a b c d m q w : ℕ)
       ↑(V (full a b c d 1 ^^^ w) ++ V w) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
-        simp [xPackets,←hnum,blocksWord,←Multiset.coe_add, List.append_assoc]
+        simp [xPackets,←hnum,blocksWord,←Multiset.coe_add, List.singleton_append,
+          List.append_assoc] <;> ac_rfl
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
@@ -438,7 +457,8 @@ private theorem v_inventory (a b c d q R : ℕ)
       ↑(V (full a b c d 1 ^^^ q) ++ V q) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
-        simp [vPackets,←hnum,blocksWord,←Multiset.coe_add, List.append_assoc]
+        simp [vPackets,←hnum,blocksWord,←Multiset.coe_add, List.singleton_append,
+          List.append_assoc] <;> ac_rfl
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
@@ -476,7 +496,7 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega),if_pos (by omega)]
   have hp : (0 : ℤ) ≤ (2 : ℤ)^j := by positivity
   exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
-    mul_nonneg hp (by have := (hn r).1; omega)⟩
+    mul_nonneg hp (by have := hn.1; omega)⟩
 
 private theorem complement_mass (a b c d m : ℕ) (r : Fin 4)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -532,14 +552,14 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
   simp only [hx,←he]
-  repeat' constructor <;> try trivial <;> ring
+  repeat' constructor <;> try trivial <;> ring_nf
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
-  rw [show j=(j-1)+1 by omega,pow_succ]
-  have he : 1 + (j - 1) - 1 = j - 1 := by omega
-  rw [he]
-  ring
+  calc
+    (2 : ℤ)^j = (2 : ℤ)^(j - 1 + 1) := by rw [Nat.sub_add_cancel (by omega)]
+    _ = (2 : ℤ)^(j - 1) * 2 := by rw [pow_succ]
+    _ = 2 * (2 : ℤ)^(j - 1) := by ring
 
 private theorem terminal_double (a b c d : ℕ) (r : Fin 4)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) :
@@ -625,23 +645,26 @@ private theorem packet_positive (a b c d : ℕ)
   constructor
   · intro P hP i hi
     simp only [xPackets,List.mem_cons,List.mem_singleton] at hP
-    rcases hP with rfl|rfl|rfl|rfl
+    rcases hP with rfl|rfl|rfl|hP
     · simp only [List.mem_append] at hi
       rcases hi with hi|hi
       · exact mask_positive a b c d (full a b c d 3 ^^^ m) 3 ha hb hc hd i hi
       · exact mask_positive a b c d (full a b c d 0) 0 ha hb hc hd i hi
     · exact mask_positive a b c d (m-q) 3 ha hb hc hd i hi
     · exact mask_positive a b c d (full a b c d 1 ^^^ w) 1 ha hb hc hd i hi
-    · simp only [List.mem_append] at hi
-      rcases hi with hi|hi
-      · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
-      · simp only [List.mem_append] at hi
+    · rcases hP with hP|hP
+      · subst P
+        simp only [List.mem_append] at hi
         rcases hi with hi|hi
-        · exact mask_positive a b c d q 3 ha hb hc hd i hi
-        · exact mask_positive a b c d w 1 ha hb hc hd i hi
+        · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
+        · simp only [List.mem_append] at hi
+          rcases hi with hi|hi
+          · exact mask_positive a b c d q 3 ha hb hc hd i hi
+          · exact mask_positive a b c d w 1 ha hb hc hd i hi
+      · simp at hP
   · intro P hP i hi
     simp only [vPackets,List.mem_cons,List.mem_singleton] at hP
-    rcases hP with rfl|rfl|rfl|rfl
+    rcases hP with rfl|rfl|rfl|hP
     · exact mask_positive a b c d (full a b c d 1 ^^^ q) 1 ha hb hc hd i hi
     · simp only [List.mem_append] at hi
       rcases hi with hi|hi
@@ -651,10 +674,13 @@ private theorem packet_positive (a b c d : ℕ)
         · exact mask_positive a b c d q 1 ha hb hc hd i hi
         · exact mask_positive a b c d 1 3 ha hb hc hd i hi
     · exact mask_positive a b c d (full a b c d 3 ^^^ R) 3 ha hb hc hd i hi
-    · simp only [List.mem_append] at hi
-      rcases hi with hi|hi
-      · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
-      · exact mask_positive a b c d (R-1) 3 ha hb hc hd i hi
+    · rcases hP with hP|hP
+      · subst P
+        simp only [List.mem_append] at hi
+        rcases hi with hi|hi
+        · exact mask_positive a b c d (full a b c d 2) 2 ha hb hc hd i hi
+        · exact mask_positive a b c d (R-1) 3 ha hb hc hd i hi
+      · simp at hP
 
 private theorem fresh_positive (a b c d : ℕ) (e : ℕ) (bs : List (List ℕ×ℕ))
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
