@@ -135,9 +135,8 @@ private theorem uniform_bounds (a b c d : ℕ)
         have hh := chart_small_corner 0 0 (H-1) 0 (by omega) (by omega) (by omega) (by omega)
         have hg : grain a 3 4 2=H := by simp [grain,grainExponent,corner,H]
         have hs : reserve a 3 4 2=11*H := by simp [reserve,corner,hg]; ring
-        have hsub : a - 5 = a - 4 - 1 := by omega
-        convert hh using 1 <;> simp [show (1:ℤ)+(H-1)=H by ring,hg,hs,hsub]
-        all_goals first | exact hsub | simpa using hx | ring
+        convert hh using 1 <;> simp [show (1:ℤ)+(H-1)=H by ring,hg,hs] <;> try omega
+        all_goals first | simpa using hx | ring
 
 private theorem reserve_capacity (a b c d : ℕ)
     (hd : 2≤d) (hdb : d<b) (hbc : b<c) (hca : c<a) :
@@ -152,9 +151,9 @@ private theorem reserve_capacity (a b c d : ℕ)
     have hx : (2:ℤ)^a=32*grain a 3 4 2 := by
       simp only [grain,grainExponent,corner,if_pos (by decide : 2=2 ∧ 3=3 ∧ 4=4)]
       rw [power_split a 5 (by omega)]; norm_num
-    have hs : reserve a 3 4 2 = 11 * grain a 3 4 2 := by simp [reserve, corner]
+    have hs : reserve a 3 4 2 = 11 * grain a 3 4 2 := by simp [reserve, corner, mul_comm]
     rw [hs]
-    refine ⟨hg,by nlinarith,by nlinarith [hx],dvd_mul_right _ _⟩
+    refine ⟨hg,by nlinarith,by nlinarith [hx],by simpa [mul_comm] using dvd_mul_right (grain a 3 4 2) 11⟩
   · have hx : (2:ℤ)^a=4*2^d*grain a b c d := by
       dsimp [grain,grainExponent]; rw [if_neg hc]
       simpa using gap_power a d 2 (by omega)
@@ -210,12 +209,12 @@ private theorem later_gates (B L M D z H r : ℤ)
   | true =>
     change 0≤L-B-H*M ∧ 0≤2*B-L-1 at hthird
     dsimp only
-    simp only [Bool.true_eq_true, if_pos]
+    simp only [if_pos rfl]
     have hrDz : z≤r*D := by
       nlinarith only [hr.1,hD,hz,mul_nonneg (show 0≤r-1 by omega) (show 0≤D by omega)]
     refine ⟨by omega,by omega,g1,k1,?_,?_⟩
-    · constructor <;> nlinarith only [hthird.1,hthird.2,hrM,hrM0,hr.2.2.2.2,hB]
-    · constructor <;> nlinarith only [hthird.1,hthird.2,hrM,hrDz,hr.2.2.1,hB]
+    · constructor <;> nlinarith
+    · constructor <;> nlinarith
   | false =>
     change 0≤L-2*B-H*D ∧ 0≤z*B-2*L-1 at hthird
     have hsep := hthird
@@ -234,10 +233,9 @@ private theorem later_gates (B L M D z H r : ℤ)
     have hrDz : z+1≤r*D := by
       nlinarith only [hr.1,hD,hz,mul_nonneg (show 0≤r-1 by omega) (show 0≤D by omega)]
     dsimp only
-    simp only [Bool.false_eq_true, if_neg]
+    simp only [if_neg (by decide)]
     refine ⟨hw,hwcap,g1,k1,?_,?_⟩
-    · constructor <;> nlinarith only [hS.1,hS.2,hsep.1,hD,hH,hz,mul_nonneg (show 0≤H by omega) (show 0≤D by omega)]
-    · constructor <;> nlinarith only [hS.1,hS.2,hrDz,hrDcap,hw,hwcap,hsep.1,
-        hzdiv]
+    · constructor <;> nlinarith
+    · constructor <;> nlinarith
 
 end D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
