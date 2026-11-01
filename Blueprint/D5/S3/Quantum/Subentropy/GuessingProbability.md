@@ -6,7 +6,7 @@ Finite positive operator-valued measurements define an honest supremum guessing 
 
 **Theorem 1.1 (Identity-summing measurements preserve total trace pairing).**
 
-$$\forall X \in FiniteType, B \in FiniteType, R \in Matrix\left(B, B, \mathbb{C}\right), M \in X \to Matrix\left(B, B, \mathbb{C}\right),\; trace\left(R\right) = 1 \land sum\left(M\right) = 1 \Rightarrow \sum_{x \in X} Re\left(trace\left(M\left(x\right) R\right)\right) = 1$$
+$$\forall (X B: Type) [Fintype\left(X\right)] [Fintype\left(B\right)] [DecidableEq\left(B\right)], \forall R \in Matrix\left(B, B, \mathbb{C}\right), M \in X \to Matrix\left(B, B, \mathbb{C}\right),\; trace\left(R\right) = 1 \land sum\left(M\right) = 1 \Rightarrow \sum_{x \in X} Re\left(trace\left(M\left(x\right) R\right)\right) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/GuessingProbability.measurement_trace_sum` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ For finite label and matrix index types, a trace-one complex matrix has total re
 
 **Theorem 1.2 (Every POVM success probability lies between zero and one).**
 
-$$\forall X \in FiniteType, B \in FiniteType, p \in X \to \mathbb{R}, rho \in X \to DensityState\left(B\right), M \in X \to Matrix\left(B, B, \mathbb{C}\right),\; \forall x \in X,\; 0 \le p\left(x\right) \land sum\left(p\right) = 1 \land \forall x \in X,\; PosSemidef\left(M\left(x\right)\right) \land sum\left(M\right) = 1 \Rightarrow 0 \le successProbability\left(p, rho, M\right) \land successProbability\left(p, rho, M\right) \le 1$$
+$$\forall (X B: Type) [Fintype\left(X\right)] [Fintype\left(B\right)] [DecidableEq\left(B\right)], \forall p \in X \to \mathbb{R}, rho \in X \to DensityState\left(B\right), M \in X \to Matrix\left(B, B, \mathbb{C}\right),\; ((\forall x \in X,\; 0 \le p\left(x\right)) \land sum\left(p\right) = 1 \land (\forall x \in X,\; PosSemidef\left(M\left(x\right)\right)) \land sum\left(M\right) = 1) \Rightarrow (0 \le successProbability\left(p, rho, M\right) \land successProbability\left(p, rho, M\right) \le 1)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/GuessingProbability.success_bounds` (`✓ std3`). ∎
 
