@@ -112,3 +112,93 @@ noncomputable def registration_attempt : Contract.Registration.{_,_,_,0,0,0,_,_,
 
 end
 end Reg.D5.S3.Geometry.Hyperideal.GramDomainContraction
+
+namespace Reg.D5.S3.Geometry.Hyperideal.GramDomainContraction.TwiceSqrtProduct
+noncomputable section
+
+set_option autoImplicit false
+
+/-- Observe the square root of the product occurring in the inequality. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (u v : ℝ), 0 ≤ u → 0 ≤ v → 2 * R.readout () () (u * v) ≤ u + v
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hbad := h 0 0 le_rfl le_rfl
+  norm_num [rejected, realize] at hbad
+
+def source_registration : Registration arena
+    (∀ (u v : ℝ), 0 ≤ u → 0 ≤ v → 2 * Real.sqrt (u * v) ≤ u + v) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨twice_sqrt_product_le_add, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change Real.sqrt (0 : ℝ) ≠ Real.sqrt 1
+    norm_num
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@_root_.D5.S3.Geometry.Hyperideal.GramDomainContraction.twice_sqrt_product_le_add)
+    (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Geometry.Hyperideal.GramDomainContraction.twice_sqrt_product_le_add.sqrt
+  realizationName :=
+    `Reg.D5.S3.Geometry.Hyperideal.GramDomainContraction.TwiceSqrtProduct.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.Hyperideal.GramDomainContraction
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print _root_.D5.S3.Geometry.Hyperideal.GramDomainContraction.twice_sqrt_product_le_add
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Geometry.Hyperideal.GramDomainContraction.TwiceSqrtProduct
