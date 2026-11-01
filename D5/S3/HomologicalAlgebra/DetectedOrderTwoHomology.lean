@@ -24,6 +24,9 @@ namespace D5.S3.HomologicalAlgebra.DetectedOrderTwoHomology
 
 open CategoryTheory
 
+-- Keep the kernel module structure carried by Mathlib's quotient map.
+attribute [local instance 2000] Submodule.module
+
 universe u
 
 /-- The actual homology class map on the concrete kernel of the outgoing map. -/
