@@ -13,6 +13,12 @@ license: CC-BY-SA-4.0
 triage: anchor
 ---
 
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2604.21552
+
+Source: https://arxiv.org/abs/2604.21552v1
+
 ## Source correspondence
 
 The primary source is arXiv:2604.21552v1. Definition 1.1 says that a real matrix A has nSSP if the only real X satisfying entrywise A times X equal to zero and the commutator of A with the transpose of X equal to zero is X equal to zero. There is no additional diagonal annihilation condition, symmetry condition or restriction on X.
