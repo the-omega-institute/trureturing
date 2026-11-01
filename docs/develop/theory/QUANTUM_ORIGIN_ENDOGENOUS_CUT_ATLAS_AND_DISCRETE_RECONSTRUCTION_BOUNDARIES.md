@@ -1560,7 +1560,7 @@ For instance, $N=8$ admits $a=2+i,b=1+i$. The four-square input establishes the 
 
 ## 追加锚（本行以下为增补区）
 
-## 20. 偶幺模格与 Gaussian 整数正锥中的不可分区间
+## 20. 偶幺模格给出的固定十六维互补原子对
 
 **定义 20.1（格与模二二次空间）。** In Euclidean $\mathbb R^8$, put
 
@@ -1577,9 +1577,17 @@ b(\overline x,\overline y)=(x,y)\pmod2,
 \qquad q(\overline x)=\|x\|^2/2\pmod2.
 $$
 
-The lattice and finite quadratic-space facts needed here are proved below. The four-square theorem used in Section 21 is Lagrange's classical theorem.
+For the classical lattice description and root count, see [E8 lattice](https://en.wikipedia.org/wiki/E8_lattice). The lattice and finite quadratic-space facts needed here are proved below. The four-square theorem used in Section 21 is Lagrange's classical theorem.
 
-**引理 20.2（根、模二空间与正交根标架）。** The lattice $L$ is even, integral and unimodular. The alternating form $b$ on $\overline L$ is nondegenerate, and precisely $120$ of its $256$ vectors satisfy $q=1$. Each such vector is represented by exactly one pair of opposite roots. If $V\subset\overline L$ is a four-dimensional $b$-isotropic subspace with $q|_V\ne0$, there is a four-dimensional $b$-isotropic complement $W$ to $V$ with $q|_W\ne0$. The eight classes in $W$ with $q=1$ have representatives forming an orthogonal root frame $S$, so $SS^{\mathsf T}=2I_8$, and these root classes span $W$.
+**定理 20.2（固定十六维的互补原子对）。** For every integer $m\ge2$, $N=2^m$, $h=N^{-1}$, there are real rank-eight orthogonal projections $P_N,Q_N\in K_{16,m}$ with $P_N+Q_N=I_{16}$ such that
+
+$$
+\{F\in K_{16,m}:F\le P_N\}=\{0,P_N\},\qquad
+\{F\in K_{16,m}:F\le Q_N\}=\{0,Q_N\}.
+\tag{20.1}
+$$
+
+The sets include all complex Gaussian Hermitian effects on the original grid.
 
 **证明。** Let $D=\{x\in\mathbb Z^8:\sum_i x_i\in2\mathbb Z\}$ and $u=(1/2,\ldots,1/2)$. Then $L=D\cup(u+D)$, with $2u\in D$, $(u,D)\subset\mathbb Z$ and $\|u\|^2=2$. Every vector of $D$ has even squared norm, so $L$ is even and integral. The covolume of $D$ is two and $[L:D]=2$, giving covolume one for $L$. Thus any integral basis Gram matrix has determinant one. This also proves nondegeneracy of $b$; evenness makes $b$ alternating and $q$ well defined.
 
@@ -1600,19 +1608,17 @@ The roots in $D$ are the $112$ vectors $\pm e_i\pm e_j$, $i<j$. The half-integra
 
 Choose a basis $v_1,\ldots,v_4$ of $V$ with $q(v_1)=1$ and $q(v_j)=0$ for $j>1$. A symplectic basis extension gives an isotropic complement with basis $w_1,\ldots,w_4$ and $b(v_i,w_j)=\delta_{ij}$. If $q$ vanishes on this complement, replace $w_2$ by $w_2+v_2$. The span remains isotropic and complementary to $V$, and $q(w_2+v_2)=1$.
 
-On the resulting $W$, $q$ is a nonzero linear functional. Its eight classes with value one span $W$: for any fixed such class $z$, every class $w$ with value zero is $z+(z+w)$. Choose root representatives of these eight classes. Their pairwise inner products are even. Distinct classes exclude equal or opposite roots, so the Cauchy inequality forces these even inner products to be zero. They form the asserted orthogonal frame. $\square$
+On the resulting $W$, $q$ is a nonzero linear functional. Its eight classes with value one span $W$: for any fixed such class $z$, every class $w$ with value zero is $z+(z+w)$. Choose root representatives of these eight classes. Their pairwise inner products are even. Distinct classes exclude equal or opposite roots, so the Cauchy inequality forces these even inner products to be zero. They form the asserted orthogonal frame.
 
-**引理 20.3（Gaussian 整数区间的不可分性）。** Let $B$ be a real matrix of a $\mathbb Z$-basis of $L$ and $C=B^{\mathsf T}B$. If $X\in\operatorname{Herm}_8(\mathbb Z[i])$ and $0\le X\le C$, then $X=0$ or $X=C$.
+The required integral-interval property is as follows. Let $B$ be a real matrix of a $\mathbb Z$-basis of $L$ and $C=B^{\mathsf T}B$. If $X\in\operatorname{Herm}_8(\mathbb Z[i])$ and $0\le X\le C$, then $X=0$ or $X=C$.
 
-**证明。** First let $Y$ be real integral symmetric with $0\le Y\le C$. Unimodularity makes $C^{-1}Y$ integral. It is self-adjoint for the inner product with Gram matrix $C$, with eigenvalues in $[0,1]$. Each eigenvalue is an algebraic integer and all its algebraic conjugates are eigenvalues of this integral matrix. A nontrivial eigenvalue would have all conjugates strictly between zero and one, whose product cannot be a nonzero integer. Hence all eigenvalues are zero or one, and $C^{-1}Y$ is an integral orthogonal projection splitting $L$ into orthogonal sublattices.
+First let $Y$ be real integral symmetric with $0\le Y\le C$. Unimodularity makes $C^{-1}Y$ integral. It is self-adjoint for the inner product with Gram matrix $C$, with eigenvalues in $[0,1]$. Each eigenvalue is an algebraic integer and all its algebraic conjugates are eigenvalues of this integral matrix. A nontrivial eigenvalue would have all conjugates strictly between zero and one, whose product cannot be a nonzero integer. Hence all eigenvalues are zero or one, and $C^{-1}Y$ is an integral orthogonal projection splitting $L$ into orthogonal sublattices.
 
 This splitting is trivial. Nonzero vectors of $L$ have squared norm at least two, so every root lies wholly in one summand. The integer roots $\pm e_i\pm e_j$ have a connected graph under nonzero inner product and span $\mathbb R^8$. They all lie in one summand, and the other vanishes. Thus $Y=0$ or $Y=C$.
 
-For general Hermitian $X$, its entrywise real part $Y$ is integral symmetric and satisfies $0\le Y\le C$ on real vectors. If $Y=0$, positivity and zero diagonal force $X=0$. If $Y=C$, apply that argument to $C-X$. This covers all Gaussian Hermitian subeffects. $\square$
+For general Hermitian $X$, its entrywise real part $Y$ is integral symmetric and satisfies $0\le Y\le C$ on real vectors. If $Y=0$, positivity and zero diagonal force $X=0$. If $Y=C$, apply that argument to $C-X$. This covers all Gaussian Hermitian subeffects.
 
-## 21. 任意细 dyadic 网格上的互补不可分投影
-
-**引理 21.1（奇范数四元数的格作用）。** For integers $a,b,c,e$ with odd $t=a^2+b^2+c^2+e^2$, put
+The quaternion endomorphisms used in the construction have the following form. For integers $a,b,c,e$ with odd $t=a^2+b^2+c^2+e^2$, put
 
 $$
 A=\begin{pmatrix}
@@ -1625,31 +1631,21 @@ $$
 
 Then $T^{\mathsf T}T=TT^{\mathsf T}=tI_8$, both $T$ and $T^{\mathsf T}$ preserve $L$, and $\overline T$ is an isometry of $q$ on $L/2L$ with inverse $\overline{T^{\mathsf T}}$.
 
-**证明。** The displayed matrix is the standard integral matrix of left quaternion multiplication; multiplication gives $A^{\mathsf T}A=AA^{\mathsf T}=tI_4$. All row and column sums are odd, with common parity $a+b+c+e\equiv t\pmod2$. The sum of the row sums is $4a$. Thus $T$ preserves integral vectors of even coordinate sum. For half-integral $x=n+u\in L$, $\sum_i n_i$ is even. All coordinates of $Tx$ are half-integral and
+The displayed matrix is the standard integral matrix of left quaternion multiplication; multiplication gives $A^{\mathsf T}A=AA^{\mathsf T}=tI_4$. All row and column sums are odd, with common parity $a+b+c+e\equiv t\pmod2$. The sum of the row sums is $4a$. Thus $T$ preserves integral vectors of even coordinate sum. For half-integral $x=n+u\in L$, $\sum_i n_i$ is even. All coordinates of $Tx$ are half-integral and
 
 $$
 \sum_i(Tx)_i=\sum_j\Bigl(\sum_iT_{ij}\Bigr)n_j+4a\in2\mathbb Z.
 $$
 
-Hence $T$ preserves $L$. Transposition replaces $b,c,e$ by their negatives, so the same holds for $T^{\mathsf T}$. Since $t$ is odd, their compositions are the identity modulo $2L$. Also $q(\overline{Tx})=tq(\overline x)=q(\overline x)$. $\square$
+Hence $T$ preserves $L$. Transposition replaces $b,c,e$ by their negatives, so the same holds for $T^{\mathsf T}$. Since $t$ is odd, their compositions are the identity modulo $2L$. Also $q(\overline{Tx})=tq(\overline x)=q(\overline x)$.
 
-**定理 21.2（固定十六维的互补原子对）。** For every integer $m\ge2$, $N=2^m$, $h=N^{-1}$, there are real rank-eight orthogonal projections $P_N,Q_N\in K_{16,m}$ with $P_N+Q_N=I_{16}$ such that
-
-$$
-\{F\in K_{16,m}:F\le P_N\}=\{0,P_N\},\qquad
-\{F\in K_{16,m}:F\le Q_N\}=\{0,Q_N\}.
-\tag{21.1}
-$$
-
-The sets include all complex Gaussian Hermitian effects on the original grid.
-
-**证明。** Put $t=N/2-1$, which is positive and odd. Lagrange's four-square theorem supplies integers $a,b,c,e$ with squared sum $t$; take $T$ from Lemma 21.1. Let $R$ have columns $e_1+e_2,e_1-e_2,\ldots,e_7+e_8,e_7-e_8$. Then $RR^{\mathsf T}=2I_8$. Its column group contains $2L$, since
+Put $t=N/2-1$, which is positive and odd. Lagrange's four-square theorem supplies integers $a,b,c,e$ with squared sum $t$; take $T$ from the quaternion construction above. Let $R$ have columns $e_1+e_2,e_1-e_2,\ldots,e_7+e_8,e_7-e_8$. Then $RR^{\mathsf T}=2I_8$. Its column group contains $2L$, since
 
 $$
 2x=\sum_{j=1}^8(x,r_j)r_j\qquad(x\in L).
 $$
 
-This group has covolume $16$, so its image $U$ in $L/2L$ has dimension four. It is $b$-isotropic with $q|_U\ne0$. Apply Lemma 20.2 to $\overline T^{-1}U$, obtaining an isotropic complement $W$ and an orthogonal root frame $S$ whose classes span $W$.
+This group has covolume $16$, so its image $U$ in $L/2L$ has dimension four. It is $b$-isotropic with $q|_U\ne0$. Apply the isotropic-complement argument above to $\overline T^{-1}U$, obtaining an isotropic complement $W$ and an orthogonal root frame $S$ whose classes span $W$.
 
 Define real $8$-by-$16$ matrices
 
@@ -1687,11 +1683,11 @@ X=J^{\mathsf T}ZJ=B^{\mathsf T}A_0B
 0\le X\le B^{\mathsf T}B.
 $$
 
-Lemma 20.3 gives $X=0$ or $B^{\mathsf T}B$, hence $A_0=0$ or $I_8$ and $F=0$ or $V^{\mathsf T}V/N$. This proves both interval assertions for every complex grid subeffect. $\square$
+the integral-interval argument above gives $X=0$ or $B^{\mathsf T}B$, hence $A_0=0$ or $I_8$ and $F=0$ or $V^{\mathsf T}V/N$. This proves both interval assertions for every complex grid subeffect. $\square$
 
-## 22. 完整有限菜单表的统一取消估计反例族
+## 21. 完整有限菜单表的统一取消估计反例族
 
-**定理 22.1（固定维数的全表反例）。** Fix complex dimension $d=16$. For every integer $m\ge7$, put $N=2^m$, $h=N^{-1}$, and choose $P_N,Q_N$ from Theorem 21.2. On the whole original effect set $K=K_{16,m}$ define one table
+**定理 21.1（固定维数的全表反例）。** Fix complex dimension $d=16$. For every integer $m\ge7$, put $N=2^m$, $h=N^{-1}$, and choose $P_N,Q_N$ from Theorem 20.2. On the whole original effect set $K=K_{16,m}$ define one table
 
 $$
 p_N(E)=\begin{cases}
@@ -1699,7 +1695,7 @@ p_N(E)=\begin{cases}
 1/4,&E=Q_N,\\
 \operatorname{Tr}(E)/16,&E\notin\{P_N,Q_N\}.
 \end{cases}
-\tag{22.1}
+\tag{21.1}
 $$
 
 It takes values in $[0,1]$ and satisfies exactly
@@ -1707,7 +1703,7 @@ It takes values in $[0,1]$ and satisfies exactly
 $$
 \sum_{j=1}^r p_N(E_j)=1
 \quad\left(r\in\{2,3\},\ E_j\in K,\ \sum_jE_j=I_{16}\right)
-\tag{22.2}
+\tag{21.2}
 $$
 
 for all labelled tuples, including zeros and repetitions. With the registered nearest-coordinate rounding $R_h$, ties toward zero, set at $E=P_N$
@@ -1720,19 +1716,19 @@ These are original-grid effects and
 
 $$
 p_N(P_N)+p_N(D)-2p_N(F)=\frac14.
-\tag{22.3}
+\tag{21.3}
 $$
 
 For $\epsilon=0$, the residual divided by $\epsilon+h$ equals $2^m/4$ and is unbounded. Thus no finite dimension-only constants $C_{16},C'_{16}$ satisfy the registered cancellation estimate. The matrix $H$ of (16.1) is $I_{16}/16$, and
 
 $$
 |p_N(P_N)-\operatorname{Tr}(HP_N)|=\frac14,
-\tag{22.4}
+\tag{21.4}
 $$
 
 which also refutes the uniform assertion (18.1).
 
-**证明。** The trace table and both exceptional values lie in $[0,1]$. If a tuple summing to $I_{16}$ contains $P_N$, its other entries lie below $Q_N$. By (21.1), they are zero or $Q_N$, and exactly one is $Q_N$. The same argument applies to a tuple containing $Q_N$. Its table values therefore sum to $3/4+1/4=1$, with any extra zero contributing zero. If neither exceptional projection occurs, the sum is the trace sum $\operatorname{Tr}(I_{16})/16=1$. This covers every labelled two- and three-entry menu and every allowed repetition.
+**证明。** The trace table and both exceptional values lie in $[0,1]$. If a tuple summing to $I_{16}$ contains $P_N$, its other entries lie below $Q_N$. By (20.1), they are zero or $Q_N$, and exactly one is $Q_N$. The same argument applies to a tuple containing $Q_N$. Its table values therefore sum to $3/4+1/4=1$, with any extra zero contributing zero. If neither exceptional projection occurs, the sum is the trace sum $\operatorname{Tr}(I_{16})/16=1$. This covers every labelled two- and three-entry menu and every allowed repetition.
 
 For $\delta=R_h(P_N/2)-P_N/2$, coordinate rounding and the maximum absolute row sum give
 
@@ -1762,6 +1758,6 @@ $$
 
 All table arguments lie in the original $K$. The matrices $P_N/2$ and $\delta$ occur only in arithmetic. Every grid in the family obeys $N\ge128\ge4d$, and $\epsilon=0\in[0,1/10]$. Given finite $C_{16},C'_{16}\ge0$, choose $m\ge7$ with $2^m>4C'_{16}$ to contradict the proposed bound.
 
-Every member of the tomography basis $\mathcal B$ of Definition 16.1 has rank one; the exceptional projections have rank eight. Thus (22.1) agrees with the trace table on $\mathcal B$, which proves $H=I_{16}/16$ and (22.4). The family uses a single complete table on each finite grid and no cross-grid hypothesis. $\square$
+Every member of the tomography basis $\mathcal B$ of Definition 16.1 has rank one; the exceptional projections have rank eight. Thus (21.1) agrees with the trace table on $\mathcal B$, which proves $H=I_{16}/16$ and (21.4). The family uses a single complete table on each finite grid and no cross-grid hypothesis. $\square$
 
 ## 追加锚（本行以下为增补区）
