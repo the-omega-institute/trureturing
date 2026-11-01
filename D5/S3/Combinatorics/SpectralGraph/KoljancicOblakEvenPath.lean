@@ -717,4 +717,119 @@ theorem joined_path_charpoly_derivative (bL bR dbL dbR : ℕ → ℝ)
       simp only [joined_path_charpoly, eval_add, eval_sub, eval_mul, eval_X, eval_C,
         Pi.sub_apply, Pi.add_apply, Pi.mul_apply])
 
+
+private def spectralTangent {n : ℕ} (U : Matrix (Fin n) (Fin n) ℝ)
+    (T : (Fin n → ℝ) →ₗ[ℝ] Matrix (Fin n) (Fin n) ℝ) :
+    (Fin n → ℝ) →ₗ[ℝ] (Fin n → ℝ) where
+  toFun v := fun i => (Uᵀ * T v * U) i i
+  map_add' v w := by ext i; simp [mul_add, add_mul]
+  map_smul' c v := by ext i; simp [Matrix.mul_smul, Matrix.smul_mul]
+
+private lemma diagonal_commutant {n : ℕ} (lam : Fin n → ℝ)
+    (hlam : Function.Injective lam) (Y : Matrix (Fin n) (Fin n) ℝ)
+    (h : diagonal lam * Y = Y * diagonal lam) :
+    Y = diagonal (fun i => Y i i) := by
+  ext i j
+  by_cases hij : i = j
+  · subst j; simp
+  · have he := congrArg (fun M : Matrix (Fin n) (Fin n) ℝ => M i j) h
+    simp only [diagonal_mul, mul_diagonal] at he
+    have hn : lam i - lam j ≠ 0 := sub_ne_zero.mpr (fun he => hij (hlam he))
+    have hz : (lam i - lam j) * Y i j = 0 := by nlinarith [he]
+    simpa [diagonal_apply_ne _ hij] using (mul_eq_zero.mp hz).resolve_left hn
+
+private lemma spectral_tangent_nssp {n : ℕ}
+    (A U : Matrix (Fin n) (Fin n) ℝ) (lam : Fin n → ℝ)
+    (T : (Fin n → ℝ) →ₗ[ℝ] Matrix (Fin n) (Fin n) ℝ)
+    (hU : Uᵀ * U = 1) (hU' : U * Uᵀ = 1)
+    (hA : Uᵀ * A * U = diagonal lam) (hlam : Function.Injective lam)
+    (hT : ∀ v i j, A i j = 0 → T v i j = 0)
+    (hinj : Function.Injective (spectralTangent U T)) : HasNSSP A := by
+  classical
+  intro X hentry hcomm
+  have hc : A * Xᵀ = Xᵀ * A := sub_eq_zero.mp hcomm
+  let Y := Uᵀ * Xᵀ * U
+  have hdiag : diagonal lam * Y = Y * diagonal lam := by
+    rw [← hA]
+    dsimp [Y]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc U Uᵀ, hU', one_mul]
+    rw [← Matrix.mul_assoc A Xᵀ, hc]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc U Uᵀ, hU', one_mul]
+  have hY := diagonal_commutant lam hlam Y hdiag
+  obtain ⟨v, hv⟩ := (LinearMap.injective_iff_surjective.mp hinj) (fun i => Y i i)
+  have hz (v : Fin n → ℝ) : trace (Xᵀ * T v) = 0 := by
+    apply Finset.sum_eq_zero
+    intro i _
+    change ∑ j, X j i * T v j i = 0
+    apply Finset.sum_eq_zero
+    intro j _
+    by_cases ha : A j i = 0
+    · rw [hT v j i ha, mul_zero]
+    · rw [(mul_eq_zero.mp (hentry j i)).resolve_left ha, zero_mul]
+  have hp : trace (Y * (Uᵀ * T v * U)) = 0 := by
+    dsimp [Y]
+    calc
+      trace (Uᵀ * Xᵀ * U * (Uᵀ * T v * U)) =
+          trace (Uᵀ * (Xᵀ * T v) * U) := by
+        congr 1
+        simp only [Matrix.mul_assoc]
+        rw [← Matrix.mul_assoc U Uᵀ, hU', one_mul]
+      _ = trace (U * Uᵀ * (Xᵀ * T v)) := trace_mul_cycle _ _ _
+      _ = 0 := by rw [hU', one_mul]; exact hz v
+  have hs : ∑ i, Y i i * Y i i = 0 := by
+    rw [hY] at hp
+    simpa only [trace, diag_apply, diagonal_mul, ← hv, spectralTangent,
+      LinearMap.coe_mk, AddHom.coe_mk] using hp
+  have hy0 : Y = 0 := by
+    rw [hY]
+    have hd : ∀ i, Y i i = 0 := by
+      simpa using (Finset.sum_mul_self_eq_zero_iff.mp hs)
+    simp [hd]
+  have hx : Xᵀ = 0 := by
+    have he := congrArg (fun M => U * M * Uᵀ) hy0
+    dsimp [Y] at he
+    simpa only [Matrix.mul_assoc, ← Matrix.mul_assoc U Uᵀ, hU', one_mul,
+      Matrix.mul_zero, Matrix.zero_mul, mul_one] using he
+  exact transpose_injective (by simpa using hx)
+
+private lemma det_diagonal_derivative_zero {n : ℕ} (d : Fin n → ℝ)
+    (B : Matrix (Fin n) (Fin n) ℝ) (hB : ∀ i, B i i = 0) :
+    HasDerivAt (fun t : ℝ => (diagonal d + t • B).det) 0 0 := by
+  classical
+  let f : ContinuousMultilinearMap ℝ (fun _ : Fin n => Fin n → ℝ) ℝ :=
+    ⟨detRowAlternating.toMultilinearMap, continuous_id.matrix_det⟩
+  have hf := (f.hasFDerivAt (diagonal d)).comp_hasDerivAt 0
+    (((hasDerivAt_id (0 : ℝ)).smul_const B).const_add (diagonal d))
+  have hz : f.linearDeriv (diagonal d) B = 0 := by
+    rw [ContinuousMultilinearMap.linearDeriv_apply]
+    apply Finset.sum_eq_zero
+    intro i _
+    change (updateRow (diagonal d) i (B i)).det = 0
+    apply det_eq_zero_of_column_eq_zero i
+    intro j
+    by_cases hji : j = i
+    · subst j; simpa using hB i
+    · simp [updateRow, Function.update_of_ne hji, diagonal_apply_ne _ hji]
+  simpa only [zero_smul, add_zero, one_smul, hz] using hf
+
+private lemma charpoly_derivative_zero_of_spectral_diagonal_zero {n : ℕ}
+    (A U B : Matrix (Fin n) (Fin n) ℝ) (lam : Fin n → ℝ)
+    (hU : U * Uᵀ = 1) (hA : Uᵀ * A * U = diagonal lam)
+    (hB : ∀ i, (Uᵀ * B * U) i i = 0) (x : ℝ) :
+    HasDerivAt (fun t : ℝ => ((A + t • B).charpoly).eval x) 0 0 := by
+  have H := det_diagonal_derivative_zero (fun i => x - lam i)
+    (-(Uᵀ * B * U)) (by intro i; simp [hB i])
+  refine H.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_)
+  have he : (Uᵀ * (A + t • B) * U).charpoly = (A + t • B).charpoly := by
+    rw [charpoly_mul_comm, Matrix.mul_assoc, ← Matrix.mul_assoc U Uᵀ, hU, one_mul]
+  rw [← he, eval_charpoly]
+  congr 1
+  rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, hA]
+  ext i j
+  by_cases hij : i = j
+  · subst j; simp [Matrix.scalar, diagonal_apply]; ring
+  · simp [Matrix.scalar, diagonal_apply_ne _ hij, hij]
+
 end D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
