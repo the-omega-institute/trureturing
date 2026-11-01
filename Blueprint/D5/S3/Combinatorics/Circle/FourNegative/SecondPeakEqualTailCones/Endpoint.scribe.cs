@@ -12,7 +12,7 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "This source replaces the earlier region at the same canonical declaration. It has " +
+                        "The theorem has " +
                         "exactly five original binders: natural a,b,s, hs:2<=s, and hcone:((2s+2<=a and a+1<=b) or " +
                         "(s+1<=a and max(a+1,3s+1)<=b)) or (2<=a and a+1<=s and 2s+1<=b). " +
                         "Let k=a+b+s+s and A=1+2^a+2^(a+b)+2^(a+b+s). One physical " +
@@ -76,10 +76,8 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
                         "They group all 6145 positive shifted coefficients into exact Horner expressions after " +
                         "u=1+U,v=1+V,w=1+W. Ring equates each expression with its actual defining seam gate; " +
                         "positivity uses U,V,W>=0. This avoids duplicated original expansions and imports no " +
-                        "Python truth as an axiom. The old three-chart source was preserved before replacement. " +
-                        "The caller reports actual ordinary Pro APPROVE receipts for these two OLD clauses; " +
-                        "they do not cover the new lower-a ceiling branch. The supplied 60+36 exact identities and 633+916 " +
-                        "physical controls remain ordinary diagnostics.")),
+                        "Python truth as an axiom. These 96 seam gates are distinct from the 13 positive " +
+                        "polynomials used for the lower-a ceiling construction.")),
                     Paragraph(Text(
                         "The third clause is the unbounded region 2<=a<s, b>=2s+1. Here x>=4, z>=2x, y>=2z^2. " +
                         "The natural differences u=2^a-4, v=2^s-2*2^a and w=2^b-2*2^s*2^s are nonnegative; " +
