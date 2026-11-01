@@ -10,6 +10,8 @@ import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.Tactic
 
+/-! Branch-polynomial algebra for the complete positive-even double-path nSSP event. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -54,11 +56,13 @@ private lemma continuant_coeff (q : ℕ → ℝ) (n : ℕ) :
   | zero =>
       constructor
       · simp [continuant]
-      · intro k hk; simp [continuant, show k ≠ 0 by omega]
+      · intro k hk
+        exact coeff_eq_zero_of_natDegree_lt (by simpa [continuant] using hk)
   | one =>
       constructor
       · simp [continuant]
-      · intro k hk; simp [continuant, show k ≠ 1 by omega]
+      · intro k hk
+        exact coeff_eq_zero_of_natDegree_lt (by simpa [continuant] using hk)
   | more n h0 h1 =>
       constructor
       · simp only [continuant, coeff_sub, coeff_X_mul, coeff_C_mul]
