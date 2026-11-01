@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.HomologicalAlgebra;
 
@@ -10,10 +12,6 @@ internal sealed class DetectedOrderTwoHomologyDocument : IScribeDocumentDefiniti
         "A mod-two functional detects a nonzero order-two class in integral ModuleCat homology.",
         H("Detecting an integral homology class of order two"),
         Blocks(
-            Paragraph(Text(
-                "Source artifact against project 47c4bf60b02ba7c24acba82e8451ef78dca9ac60 and Mathlib "
-                + "56a005855ea17e0b0958f73ec801ae140b0a1679. No elaboration, kernel check, Scribe build, "
-                + "registration, or publication has run at this source-only stage.")),
             Node("cycle-class-map", "cycleClassMap", "The class map into actual categorical homology",
                 "For every short complex S of integer modules, cycleClassMap S is the integer-linear map "
                 + "from the concrete kernel of S.g to S.homology. It first takes the quotient by the range "
@@ -37,6 +35,38 @@ internal sealed class DetectedOrderTwoHomologyDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Statement(declaration)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+
+    private static Formula Statement(string declaration)
+    {
+        Formula s = F.Id("S"), z = F.Id("z"), c = F.Id("c"), phi = F.Id("phi"), b = F.Id("b");
+        Formula ker = Call("ker", Call("g", s));
+        Formula x = Call("middleModule", s), y = Call("sourceModule", s);
+        Formula cls = Call("cycleClassMap", s, z);
+        Formula bounds = Seq(Exists, Sp, c, Colon, Sp, y, Comma, Sp, Call("f", s, c), Eq, z);
+        Formula body = declaration switch
+        {
+            "cycleClassMap" => Seq(Call("cycleClassMap", s), Colon, Sp,
+                Call("integerLinearMap", ker, Call("homology", s))),
+            "cycleClassMap_eq_zero_iff" => All("z", ker,
+                Seq(cls, Eq, D(0), Sp, Iff, Sp, bounds)),
+            "detected_order_two" => All("z", ker, All("c", y,
+                All("phi", Call("integerLinearMap", x, Call("ZMod", D(2))),
+                Seq(Call("f", s, c), Eq, D(2), Cdot, z, Sp, Rightarrow, Sp,
+                    Open, All("b", y, Seq(Call("apply", phi, Call("f", s, b)), Eq, D(0))), Close,
+                    Sp, Rightarrow, Sp, Call("apply", phi, z), Sp, Neq, Sp, D(0),
+                    Sp, Rightarrow, Sp, cls, Sp, Neq, Sp, D(0), Sp, Land, Sp,
+                    D(2), Cdot, cls, Eq, D(0))))),
+            _ => throw new System.InvalidOperationException(declaration)
+        };
+        return Disp(All("S", Call("ShortComplex", Call("ModuleCat", Seq(Mathbb, Grp(F.Id("Z"))))), body));
+    }
+
 }

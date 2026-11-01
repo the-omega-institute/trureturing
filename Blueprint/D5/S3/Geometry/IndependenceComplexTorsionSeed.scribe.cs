@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
@@ -15,13 +17,10 @@ internal sealed class IndependenceComplexTorsionSeedDocument : IScribeDocumentDe
             Paragraph(Text(
                 "This is a consumed necessary component in the counterexample route for Carnero Bravo, "
                 + "arXiv:2505.06457v2 Question 32, not Question 35 and not another solved original problem. "
-                + "No elaboration, kernel check, Scribe build, registration, or publication has run at this "
-                + "source-only stage. Project source is pinned at 47c4bf60b02ba7c24acba82e8451ef78dca9ac60; "
-                + "Mathlib is pinned at 56a005855ea17e0b0958f73ec801ae140b0a1679.")),
+                + "The mathematical statement is integral finite-chain torsion.")),
             Paragraph(Text(
-                "The exact integers were transcribed from the completed seed-homology.json and "
-                + "seed-order-two-certificate.json ordinary mathematical certificates identified in the Lean "
-                + "module. They are not trusted Lean assertions. The Lean source supplies finite proofs by "
+                "The graph, oriented simplices, integral chain and detecting cocycle are displayed in the "
+                + "Lean module. The source supplies finite proofs by "
                 + "decide and algebraic proofs, without native_decide, proof placeholders or custom axioms.")),
             Node("actual-seed", "seedComplex", "The project's actual independence complex",
                 "H is the graph on Fin 11 decoded from the graph6 payload of JEhbtj{rve?, and G0 is its "
@@ -90,6 +89,43 @@ internal sealed class IndependenceComplexTorsionSeedDocument : IScribeDocumentDe
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            StatementSource.FromAuthor(Statement(declaration)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+
+    private static Formula Boundary(byte n) => Seq(F.Id("d"), Underscore, D(n));
+    private static Formula Apply(Formula f, Formula x) => Seq(f, Open, x, Close);
+
+    private static Formula Statement(string declaration)
+    {
+        Formula z = F.Id("z"), c = F.Id("c"), cls = F.Id("seedClass");
+        Formula body = declaration switch
+        {
+            "seedComplex" => Seq(F.Id("seedComplex"), Eq, Call("independenceComplex", Seq(F.Id("G"), Underscore, D(0)))),
+            "edgeSimplexEquiv" => Seq(F.Id("edgeSimplexEquiv"), Colon, Sp,
+                Call("Fin", D(3,2)), Sp, Equiv, Sp, F.Id("EdgeSimplex")),
+            "triangleSimplexEquiv" => Seq(F.Id("triangleSimplexEquiv"), Colon, Sp,
+                Call("Fin", D(2,4)), Sp, Equiv, Sp, F.Id("TriangleSimplex")),
+            "d1_comp_d2" => Seq(Boundary(1), Sp, Circ, Sp, Boundary(2), Eq, D(0)),
+            "seedChainComplex" => Seq(F.Id("seedChainComplex"), Eq,
+                Call("moduleCatMk", Boundary(2), Boundary(1))),
+            "d1_z" => Seq(Apply(Boundary(1), z), Eq, D(0)),
+            "d2_boundingChain" => Seq(Apply(Boundary(2), F.Id("boundingChain")), Eq, D(2), Cdot, z),
+            "detector_d2" => Seq(Forall, Sp, c, Colon, Sp,
+                Seq(Call("Fin", D(2,4)), Sp, To, Sp, Mathbb, Grp(F.Id("Z"))), Comma, Sp,
+                Call("detector", Apply(Boundary(2), c)), Eq, D(0)),
+            "detector_z" => Seq(Call("detector", z), Eq, D(1)),
+            "z_not_boundary" => Seq(Neg, Sp, Open, z, Sp, InMacro, Sp,
+                Call("range", Boundary(2)), Close),
+            "seedClass" => Seq(cls, Eq, Call("cycleClassMap", F.Id("seedChainComplex"), z)),
+            "seedClass_nonzero_killed_by_two" => Seq(cls, Sp, Neq, Sp, D(0), Sp, Land, Sp,
+                D(2), Cdot, cls, Eq, D(0)),
+            "seedClass_addOrderOf" => Seq(Call("addOrderOf", cls), Eq, D(2)),
+            _ => throw new System.InvalidOperationException(declaration)
+        };
+        return Disp(body);
+    }
+
 }

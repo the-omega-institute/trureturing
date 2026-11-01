@@ -13,10 +13,6 @@ The quotient used here is Mathlib's explicit left homology data, transported
 through `ShortComplex.moduleCatHomologyIso` to `ShortComplex.homology` itself.
 The finite independence-complex seed consumes this construction.
 
-Source artifact against project 47c4bf60b02ba7c24acba82e8451ef78dca9ac60
-and Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. No elaboration or
-kernel check has been run in the source-only stage.
-
 The declarations are general module-homology constructions, not finite
 enumerations or numerical certificates; computational utility kind is none.
 -/

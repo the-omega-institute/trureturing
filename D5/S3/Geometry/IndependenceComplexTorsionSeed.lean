@@ -22,17 +22,9 @@ actual increasing independent faces. In those bases the differentials are the
 usual alternating simplicial boundaries. The class lives in Mathlib's actual
 `ShortComplex.homology` in `ModuleCat ℤ`.
 
-Integer input provenance (data, not trusted assertions):
-* /Users/macstudio/.sshx/6ae6c6e71fc8c99512f2f8f5/attempt-1/seed-homology.json
-* /Users/macstudio/omega/research/open-target-01a124c6-20261101/king-grid-proof-review/seed-order-two-certificate.json
-The retained z, triangle coefficients and non-tree mod-two cocycle come from
-these independently reviewed ordinary certificates. Every required finite
-identity below has a proof by kernel reduction (`decide`), with no external
-certificate assertion, `native_decide`, private axiom or proof placeholder.
-
-Pinned project: 47c4bf60b02ba7c24acba82e8451ef78dca9ac60.
-Pinned Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679.
-SOURCE ONLY: the proof terms have not been elaborated or kernel checked.
+The graph and coefficient data are explicit below. The integer chain and
+mod-two cocycle supply kernel-checkable finite identities; the detector's
+linearity extends the column identities to all integral boundaries.
 
 The comparison with singular homology of the actual coordinate realization is
 still a separate obligation. This module asserts neither that comparison nor
@@ -41,8 +33,8 @@ the full topological counterexample, exact H1 = Z/2, or a novelty claim.
 The finite numerical premises feed `seedClass_nonzero_killed_by_two`; its
 nonzero assertion also consumes the direct `z_not_boundary` proof. The intended
 external consumer is the full Question 32 torsion obstruction, which is not yet
-implemented here. This is source-stage utility information, not a report of
-admission, registration, freezing, or successful validation.
+implemented here. The finite numerical premises are consumed in this module; this is not a
+claim to resolve a separate published open problem.
 -/
 
 set_option autoImplicit false
@@ -262,21 +254,20 @@ theorem z_not_boundary : z ∉ LinearMap.range d2 := by
 noncomputable def seedClass : seedChainComplex.homology :=
   cycleClassMap seedChainComplex ⟨z, d1_z⟩
 
+/-- Exact additive order two; no assertion about the other homology classes. -/
+theorem seedClass_addOrderOf : addOrderOf seedClass = 2 := by
+  have h := detected_order_two seedChainComplex ⟨z, d1_z⟩ boundingChain
+    d2_boundingChain detector detector_d2 (by rw [detector_z]; exact one_ne_zero)
+  exact addOrderOf_eq_prime h.2 h.1
+
 /-- The displayed class is nonzero and killed by two in the degree-one
 finite ordered simplicial homology object of the actual seed complex. -/
 theorem seedClass_nonzero_killed_by_two :
     seedClass ≠ 0 ∧ (2 : ℕ) • seedClass = 0 := by
-  have h := detected_order_two seedChainComplex ⟨z, d1_z⟩ boundingChain
-    d2_boundingChain detector detector_d2 (by rw [detector_z]; exact one_ne_zero)
-  refine ⟨?_, h.2⟩
+  refine ⟨?_, (addOrderOf_eq_prime_iff.mp seedClass_addOrderOf).1⟩
   intro hzero
   obtain ⟨c, hc⟩ :=
     (cycleClassMap_eq_zero_iff seedChainComplex ⟨z, d1_z⟩).mp hzero
   exact z_not_boundary ⟨c, hc⟩
-
-/-- Exact additive order two; no assertion about the other homology classes. -/
-theorem seedClass_addOrderOf : addOrderOf seedClass = 2 := by
-  exact addOrderOf_eq_prime seedClass_nonzero_killed_by_two.2
-    seedClass_nonzero_killed_by_two.1
 
 end D5.S3.Geometry.IndependenceComplexTorsionSeed
