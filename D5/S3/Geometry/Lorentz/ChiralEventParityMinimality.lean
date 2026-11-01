@@ -16,6 +16,7 @@ import Mathlib.Topology.MetricSpace.IsometricSMul
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FunProp
 import D5.S3.Topology.BorsukUlam.PlanarOddMapZero
 
 /-! The preregistered two-variable lower bound for chiral four-particle events. -/
@@ -132,7 +133,18 @@ private theorem family_mem_collision
 private theorem family_continuous :
     ContinuousOn family
       D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere := by
-  sorry
+  apply Continuous.continuousOn
+  change Continuous (fun v : EuclideanSpace ℝ (Fin 3) =>
+    ![![30, 0, 0, 1], ![20, 0, 0, -1],
+      ![10 + v 0, Real.sqrt (4 + v 1), 0, v 2],
+      ![10 - v 0, 0, Real.sqrt (4 - v 1), -v 2]])
+  apply continuous_pi
+  intro i
+  fin_cases i <;>
+    apply continuous_pi <;>
+    intro j <;>
+    fin_cases j <;>
+    fun_prop
 
 private theorem family_chiral
     (v : EuclideanSpace ℝ (Fin 3))
