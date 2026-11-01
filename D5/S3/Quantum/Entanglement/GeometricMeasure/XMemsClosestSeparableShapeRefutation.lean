@@ -267,8 +267,10 @@ private theorem localState_entry (t : ℝ) (c : ZMod 3) (i j : Fin 2) :
   simp only [Matrix.vecMulVec_apply, Pi.star_apply]
   have hv (i : Fin 2) : localVector t c i =
       (magnitude t i : ℂ) * ZMod.stdAddChar (c * (i.val : ZMod 3)) := by
-    fin_cases i <;> norm_num [localVector, magnitude,
-      D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude]
+    fin_cases i <;>
+      dsimp only [localVector, magnitude,
+        D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude] <;>
+      norm_num
   simp only [hv]
   simp only [star_mul', star_character, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
   rw [mul_sub, sub_eq_add_neg, AddChar.map_add_eq_mul]
@@ -395,11 +397,11 @@ private theorem tau_mixture : tau =
   rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, phase_average_entry]
   rcases word_cases x with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     rcases word_cases y with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
-    dsimp only [tau, wordIndex, Matrix.piProd] <;>
+    dsimp only [tau, wordIndex, Matrix.piProd, finFunctionFinEquiv] <;>
     simp only [Fin.prod_univ_succ, Fin.prod_univ_zero, localState_entry] <;>
     dsimp only [magnitude] <;>
     norm_num [wordMagnitude_sq, ← pow_two, corner_magnitude, hc,
-      Complex.real_smul, finFunctionFinEquiv, Fin.sum_univ_succ, Fin.rev]
+      Complex.real_smul, Fin.sum_univ_succ, Fin.rev]
 
 private theorem tau_separable : tau ∈ FullySeparable 3 := by
   have hp (a b : ZMod 3) : phaseProduct a b ∈ FullySeparable 3 := by
@@ -435,8 +437,8 @@ private theorem tau_distance : hsSq (xmems 3 (11 / 112)) tau =
     (417965512477 / 90316800000000 : ℝ) := by
   rw [hsSq_entries]
   simp only [sum_words]
-  dsimp only [xmems, tau, wordIndex]
-  norm_num [Complex.normSq_apply, finFunctionFinEquiv, Fin.sum_univ_succ, Fin.rev,
+  dsimp only [xmems, tau, wordIndex, finFunctionFinEquiv]
+  norm_num [Complex.normSq_apply, Fin.sum_univ_succ, Fin.rev,
     show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
     show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]]
 
