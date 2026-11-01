@@ -58,7 +58,7 @@ private theorem late_directed_col (k t : ℕ) (v : LateVertex k t) :
   exact_mod_cast hs ▸ h
 
 /-- Exact decomposition of the late ordinary adjacency into its two birth directions. -/
-theorem late_adjacency_eq_directed_add_transpose (k t : ℕ) :
+private theorem late_adjacency_eq_directed_add_transpose (k t : ℕ) :
     lateAdjacency k t = lateDirected k t + (lateDirected k t).transpose := by
   ext u v
   change (if adjacent (k+t) u.val v.val then (1:ℝ) else 0) = _
@@ -84,5 +84,35 @@ theorem late_adjacency_norm_le (k t : ℕ) :
   calc
     _ ≤ ‖lateDirected k t‖ + ‖(lateDirected k t).transpose‖ := norm_add_le _ _
     _ ≤ _ := by rw [ht]; linarith
+
+/-- The original real-power normalization, uniformly over every later stage t≥1. -/
+theorem late_adjacency_normalized_le (k t : ℕ) (ht : 1 ≤ t) :
+    ‖lateAdjacency k t‖ / (2 : ℝ) ^ (((k+t : ℕ) : ℝ) / 2) ≤
+      3 * Real.sqrt 2 / (2 : ℝ) ^ ((k : ℝ) / 2) := by
+  have hn := late_adjacency_norm_le k t
+  have hb (n : ℕ) : ((2 : ℝ) ^ ((n : ℝ) / 2)) ^ 2 = (2 : ℝ) ^ n := by
+    rw [← Real.rpow_natCast, ← Real.rpow_mul (by norm_num : (0:ℝ) ≤ 2)]
+    congr 1
+    norm_num
+  have hden : 0 < (2 : ℝ) ^ (((k+t : ℕ) : ℝ) / 2) := Real.rpow_pos_of_pos (by norm_num) _
+  have hk : 0 < (2 : ℝ) ^ ((k : ℝ) / 2) := Real.rpow_pos_of_pos (by norm_num) _
+  have hpow : (2 : ℝ) ^ (k+t) = 2 * (2:ℝ)^k * (2:ℝ)^(k+t-k-1) := by
+    have he : k+t = k+1+(k+t-k-1) := by omega
+    conv_lhs => rw [he, pow_add, pow_succ]
+    ring
+  have hrad : 0 ≤ (3 : ℝ) * (3 * 2 ^ (k+t-k-1) : ℕ) := by positivity
+  have hs : (2 * Real.sqrt (3 * (3 * 2 ^ (k+t-k-1) : ℕ))) ^ 2 =
+      36 * (2 : ℝ) ^ (k+t-k-1) := by
+    rw [mul_pow, Real.sq_sqrt hrad]
+    push_cast
+    ring
+  have hn2 := sq_le_sq₀ (norm_nonneg (lateAdjacency k t))
+    (by positivity : 0 ≤ 2 * Real.sqrt (3 * (3 * 2 ^ (k+t-k-1) : ℕ))) |>.mpr hn
+  rw [hs] at hn2
+  apply (div_le_div_iff₀ hden hk).mpr
+  apply (sq_le_sq₀ (by positivity) (by positivity)).mp
+  rw [mul_pow, mul_pow, mul_pow, hb k, hb (k+t), Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]
+  rw [hpow]
+  nlinarith [mul_le_mul_of_nonneg_right hn2 (show (0:ℝ) ≤ 2^k by positivity)]
 
 end D5.S3.Combinatorics.Apollonian.CutoffSpectralBounds
