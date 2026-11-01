@@ -9,6 +9,7 @@
 import D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance
 import D5.S3.Entropy.TwoDeletionRunEntropyBounds
 import D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
+import D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
 
 /-! The full-support stabilizer standard form in Section V.C of Tarabunga et al.,
 arXiv:2411.05766v1, specialized to k = N and R = I. The conjecture following (69)
@@ -65,10 +66,20 @@ private lemma sum_bits {α : Type*} [AddCommMonoid α] (f : (Fin 3 → ZMod 2) �
     (∑ x, f x) = f ![0, 0, 0] + f ![0, 0, 1] + f ![0, 1, 0] + f ![0, 1, 1] +
       f ![1, 0, 0] + f ![1, 0, 1] + f ![1, 1, 0] + f ![1, 1, 1] := by
   classical
-  have hu : (Finset.univ : Finset (Fin 3 → ZMod 2)) =
-      {![0, 0, 0], ![0, 0, 1], ![0, 1, 0], ![0, 1, 1],
-        ![1, 0, 0], ![1, 0, 1], ![1, 1, 0], ![1, 1, 1]} := by decide
-  simp [hu, add_assoc]
+  let e : (Fin 3 → ZMod 2) ≃ (Fin 3 → Bool) :=
+    Equiv.arrowCongr (Equiv.refl _) finTwoEquiv
+  have hs (s : Fin 3 → Bool) :
+      e.symm s = ![finTwoEquiv.symm (s 0), finTwoEquiv.symm (s 1), finTwoEquiv.symm (s 2)] := by
+    ext i
+    fin_cases i <;> rfl
+  rw [← e.symm.sum_comp f,
+    D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.sum_strings]
+  simp only [hs]
+  repeat' apply congrArg₂ (· + ·)
+  all_goals
+    apply congrArg f
+    ext i
+    fin_cases i <;> decide
 
 private lemma witness_unit : (∑ x, Complex.normSq (witness x)) = 1 := by
   rw [sum_bits]
