@@ -44,8 +44,7 @@ internal sealed class MinusFourReplicationDocument : IScribeDocumentDefinition
         }
         else
         {
-            var singleton = Seq(new Formula.LatexMacro(FormulaLatexMacro.OpenBrace), v,
-                new Formula.LatexMacro(FormulaLatexMacro.CloseBrace));
+            var singleton = new Formula.SetLiteral([v]);
             var replicated = Call("replicated", h, singleton, r);
             if (declaration == "support_replication_connected")
                 body = All("v", FormulaDsl.Id("V"), All("r", Nat,
