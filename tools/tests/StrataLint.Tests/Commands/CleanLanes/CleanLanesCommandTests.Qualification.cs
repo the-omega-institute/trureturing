@@ -72,7 +72,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(0, result.ExitCode);
+        AssertQualificationPublicExit(result, force, 0);
         var reason = ReasonFor(result.Output, lane);
         Assert.StartsWith("qualification_failed:", reason);
         Assert.Contains(failure switch

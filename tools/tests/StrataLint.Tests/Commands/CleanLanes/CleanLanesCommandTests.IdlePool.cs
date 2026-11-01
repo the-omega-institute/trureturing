@@ -40,7 +40,8 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(path));
-        Assert.True(fixture.BranchExists(orphan));
+        Assert.True(fixture.BranchExists(branch));
+        Assert.Equal(!force, fixture.BranchExists(orphan));
     }
 
     [Theory]
