@@ -1,5 +1,5 @@
 ---
-bibkey: cfsg-frattini-kernel
+bibkey: cfsg2026frattinikernel
 authors: Qiuzhen-CFSG contributors
 year: 2026
 title: CFSG Frattini automorphism kernel

@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
 internal sealed class FrattiniAutomorphismKernelDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/FiniteGroups/cfsg-frattini-kernel");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/cfsg2026frattinikernel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Automorphisms of a finite prime-power group acting trivially on its Frattini quotient form a prime-power group.",
