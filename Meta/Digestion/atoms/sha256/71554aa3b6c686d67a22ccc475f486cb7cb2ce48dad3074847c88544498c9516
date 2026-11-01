@@ -1,0 +1,35 @@
+
+Proof. Suppose the error is $q$ and take $(E,U)\in\operatorname{supp}\mu$. Lemma 9.3 makes every individual nonnegative summand in (9.12) zero. The equality characterization of Theorem 8.2 therefore puts every nonzero column $b_\ell(E)$ on one of the two complex $T$-coordinate rays. Such a column has the form $z b_\sigma$ for some $z\ne0$ and $\sigma\in\{+,-\}$. By (6.9),
+
+$$
+R_0b_+=\begin{pmatrix}
+h\\\alpha h\\e^{-i\theta}c\\e^{i\theta}c
+\end{pmatrix},\qquad
+R_0b_-=\begin{pmatrix}
+h\\-\alpha h\\i e^{-i\theta}s\\-i e^{i\theta}s
+\end{pmatrix},
+\qquad h,c,s>0.
+\tag{9.21}
+$$
+
+Every coordinate of both vectors is nonzero. Thus $v=R_0b_\ell(E)$ also has no zero coordinate. The zero trace defect for this column forces equality throughout
+
+$$
+\left|\operatorname{Tr}(U\operatorname{diag}(v))\right|
+ =\left|\sum_{i=1}^4U_{ii}v_i\right|
+ \le\sum_{i=1}^4|U_{ii}|\,|v_i|
+ \le\sum_{i=1}^4|v_i|.
+\tag{9.22}
+$$
+
+In the last inequality every $|v_i|$ is strictly positive and every $|U_{ii}|\le1$, so equality gives $|U_{ii}|=1$ for every $i$. The norm-one condition on each column of the unitary $U$ then makes every off-diagonal entry zero. Equality in the triangle inequality in (9.22) says that the four nonzero numbers $U_{ii}v_i$ have a common phase. Hence
+
+$$
+U=e^{i\psi}\operatorname{diag}
+ \left(\frac{\overline{v_i}}{|v_i|}\right)_{i=1}^4
+   =e^{i\varphi}U_\sigma
+\tag{9.23}
+$$
+
+for some phases $\psi,\varphi$; the phase of the scalar $z$ is absorbed into $e^{i\varphi}$. The last equality uses the polar corrections already displayed in (6.3) and (6.9).
+

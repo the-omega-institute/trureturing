@@ -11,11 +11,15 @@ import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic
 
-/-! The finite-dimensional core of Section 9, Theorem 9.4, equations (9.22)--(9.23).
-Canonical source atom: 9f4e8ab8a85221187bed0676209bd5de7796bcad65dacfa00d3b7b0bfa8f7df5.
+/-! The finite core of Section 9, Theorem 9.4, from (9.22) through the first
+equality of (9.23).
+Canonical proof atom: 71554aa3b6c686d67a22ccc475f486cb7cb2ce48dad3074847c88544498c9516.
+Parent source atom: 9f4e8ab8a85221187bed0676209bd5de7796bcad65dacfa00d3b7b0bfa8f7df5.
 The theorem `trace_saturation_forces_polar_feedback` treats arbitrary positive finite
-dimension; the four-path case is n = 3. It does not assert the support or channel
-equivalences of the complete atom.
+dimension; the four-path case is n = 3. Its full-support and trace-saturation
+hypotheses are assumed, not derived from the child's full premises or ray/context.
+Coverage is limited to this finite core: neither the fixed U_sigma equality in
+(9.23), the complete child claim, nor the complete parent theorem is established.
 -/
 
 noncomputable section
@@ -49,22 +53,15 @@ theorem trace_saturation_forces_polar_feedback (n : ℕ)
     nlinarith [norm_nonneg (U i j)]
   let L : ℝ := ∑ i, ‖v i‖
   let S : ℂ := Matrix.trace (U * Matrix.diagonal v)
-  have Lpos : 0 < L := by
-    exact Finset.sum_pos (fun i _ => norm_pos_iff.mpr (hv i)) Finset.univ_nonempty
-  have Lne : L ≠ 0 := ne_of_gt Lpos
-  have Lcne : (L : ℂ) ≠ 0 := by exact_mod_cast Lne
   have Snorm : ‖S‖ = L := hs
   have Ssum : S = ∑ i, U i i * v i := by
     simp [S, Matrix.trace, Matrix.diag_apply]
-  let z : ℂ := S / (L : ℂ)
+  obtain ⟨alpha, halpha, hphase⟩ := Complex.exists_norm_eq_mul_self S
+  let z : ℂ := star alpha
   have znorm : ‖z‖ = 1 := by
-    simp [z, Complex.norm_real, Real.norm_eq_abs, abs_of_pos Lpos, Snorm, Lne]
+    simpa only [z, norm_star] using halpha
   have zS : star z * S = (L : ℂ) := by
-    rw [show z = S / (L : ℂ) from rfl, star_div₀, Complex.star_def,
-      Complex.conj_ofReal, div_mul_eq_mul_div,
-      ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, Snorm]
-    push_cast
-    field_simp
+    simpa only [z, star_star, Snorm] using hphase.symm
   have bound (i : Fin (n + 1)) : ‖star z * (U i i * v i)‖ ≤ ‖v i‖ := by
     simp only [norm_mul, norm_star, znorm, one_mul]
     exact mul_le_of_le_one_left (norm_nonneg _) (entry i i)

@@ -2,8 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FourPathFeedbackRigidity
 import Reg.Support.SingleDependentReadout
 
-/-! Source-bound equality readout for the finite core of canonical atom
-9f4e8ab8a85221187bed0676209bd5de7796bcad65dacfa00d3b7b0bfa8f7df5,
+/-! Source-bound equality readout for the finite core of canonical proof atom
+71554aa3b6c686d67a22ccc475f486cb7cb2ce48dad3074847c88544498c9516,
 theorem `trace_saturation_forces_polar_feedback`. -/
 
 open _root_.D5.S3.Quantum.Recovery.FourPathFeedbackRigidity
@@ -59,7 +59,7 @@ def registration : Registration arena (type_of% trace_saturation_forces_polar_fe
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     trace_saturation_forces_polar_feedback (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Quantum.Recovery.FourPathFeedbackRigidity.audit
+  unitName := `D5.S3.Quantum.Recovery.FourPathFeedbackRigidity.trace_saturation_forces_polar_feedback.audit
   realizationName := `Reg.D5.S3.Quantum.Recovery.FourPathFeedbackRigidity.registration
   realizationSource := none
   generated := false

@@ -1,0 +1,19 @@
+**Theorem 9.4 (exact support rigidity and unique optimizer channel).** Put
+
+$$
+E_\sigma=\bar b_\sigma\bar b_\sigma^\dagger=D_\sigma,
+\qquad E_\sigma^{\mathsf T}=b_\sigma b_\sigma^\dagger,
+\qquad \sigma\in\{+,-\},
+\tag{9.19}
+$$
+
+using exactly $b_\sigma,D_\sigma,U_\sigma$ from (6.7), (6.2), and (6.3). Define the two disjoint compact sets
+
+$$
+\mathcal S_\sigma
+ =\{(E_\sigma,e^{i\varphi}U_\sigma):\varphi\in\mathbb R\},
+\qquad \mathcal S=\mathcal S_+\cup\mathcal S_-.
+\tag{9.20}
+$$
+
+For $\mu\in\mathcal M$, the following are equivalent: its error is $q$; its support is contained in $\mathcal S$; and its channel is $\Phi_*$. In the optimizing case $\mu(\mathcal S_+)=\mu(\mathcal S_-)=1$. Consequently the exact optimizer channel is unique in the original finite protocol class, although its implementing measures and instruments need not be unique.
