@@ -27,19 +27,22 @@ private theorem weight_old (k : ℕ) (v : Vertex k) :
 
 private theorem weight_seed (k : ℕ) (v : Fin 4) :
     weight k (seed k v) = if v = 3 then 3 else 2 := by
-  induction k with
-  | zero => simpa [weight, seed] using
-      congrArg (fun n : ℕ => (n : ℝ)) (seed_counts_zero v).2
-  | succ k ih => simpa only [seed, weight_old] using ih
+  have hd := degreeCount_old k (seed k v)
+  change degreeCount (k+1) (seed (k+1) v) =
+    degreeCount k (seed k v) + faceCount k (seed k v) at hd
+  rw [seed_degrees, seed_degrees] at hd
+  have hf : faceCount k (seed k v) = 2^k * (if v = 3 then 3 else 2) := by
+    split_ifs at hd ⊢ <;> simp only [pow_succ] at hd <;> omega
+  simp only [weight, hf, Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat]
+  split_ifs <;> push_cast <;> field_simp
 
 private theorem weight_other_le (k : ℕ) (v : Vertex k) (hv : v ≠ seed k 3) :
     weight k v ≤ 2 := by
   induction k with
   | zero =>
-    have h := (seed_counts_zero v).2
+    have h := weight_seed 0 v
     have hv' : v ≠ 3 := hv
-    simp [hv'] at h
-    simp [weight, h]
+    simpa only [seed, if_neg hv'] using le_of_eq h
   | succ k ih =>
     cases v with
     | inl v =>

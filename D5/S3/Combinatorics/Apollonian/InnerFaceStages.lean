@@ -415,25 +415,21 @@ theorem seed_injective (n : ℕ) : Function.Injective (seed n) := by
   | zero => exact Function.injective_id
   | succ n ih => exact Sum.inl_injective.comp ih
 
-theorem seed_counts_zero (v : Fin 4) :
-    degreeCount 0 v = 3 ∧ faceCount 0 v = if v = 3 then 3 else 2 := by
-  revert v; decide
-
 /-- The seed centre has degree 3*2^n and each outer corner degree 2^(n+1)+1. -/
 theorem seed_degrees (n : ℕ) (v : Fin 4) :
     degreeCount n (seed n v) = if v = 3 then 3 * 2 ^ n else 2 ^ (n + 1) + 1 := by
-  have h (n : ℕ) : faceCount n (seed n v) = 2 ^ n * faceCount 0 v := by
+  have h (n : ℕ) : faceCount n (seed n v) = 2 ^ n * (if v = 3 then 3 else 2) := by
     induction n with
-    | zero => simp [seed]
+    | zero => revert v; decide
     | succ n ih =>
       change faceCount (n + 1) (Sum.inl (seed n v)) = _
       rw [faceCount_old, ih, pow_succ]
       ring
   induction n with
-  | zero => simpa [seed] using (seed_counts_zero v).1
+  | zero => revert v; decide
   | succ n ih =>
     change degreeCount (n + 1) (Sum.inl (seed n v)) = _
-    rw [degreeCount_old, ih, h, (seed_counts_zero v).2]
+    rw [degreeCount_old, ih, h]
     split_ifs <;> simp only [pow_succ] <;> ring
 
 /-- The actual ordinary graph degree agrees with its row count. -/

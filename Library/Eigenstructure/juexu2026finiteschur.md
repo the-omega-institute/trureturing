@@ -7,7 +7,7 @@ doi: null
 url: https://github.com/LeanPool/lean-pool/blob/bbc67ff1e3ac4fc6a969daf42985a0d8f988d0b8/LeanPool/LowWeightPauliDynamics/SchurCore.lean
 claim: Absolute row and column sums bounded by R and C bound the Euclidean operator norm by sqrt(R*C), including empty index types.
 strata_touched:
-  - D5/S3/SpectralTopology/SchurOperatorBound
+  - D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds
 license: Apache-2.0
 triage: anchor
 ---

@@ -7,6 +7,11 @@ internal sealed class CutoffSpectralBoundsDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Euclidean spectral remainder bounds for the actual finite inner-face Apollonian graphs.",
         H("Actual cutoff spectral bounds"), Blocks(
+            Describe.Lean(DescribeId.Create("finite-schur-operator-bound"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds.l2_opNorm_le_schur"),
+            H("Row and column bounds control the Euclidean operator"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Eigenstructure/juexu2026finiteschur")),
+            Blocks(Paragraph(Text("For every RCLike field K, finite row type I and finite column type J, with decidable equality on J, let A be an I by J matrix over K. If real R,C are nonnegative, every sum over j in J of the norm of A(i,j) is at most R, and every sum over i in I is at most C, then the Euclidean operator norm of A is at most sqrt(R*C). Empty row or column types are included. The norm is explicitly Matrix.Norms.L2Operator. Weighted Cauchy–Schwarz first bounds the squared action of each row, and summation uses the column bounds. The theorem is a minimal licensed port of Jue Xu's proof and is consumed by the actual Apollonian late adjacency estimate."))), DescribeRole.Theorem),
             Node("lateDirected", "The actual directed late matrix",
                 "For all natural k,t, lateDirected k t is a real matrix on the actual LateVertex k t type. Its u,v entry is one exactly when the constructed graph has the edge u→v oriented from strictly younger to strictly older birth, and zero otherwise. The actual late ordinary adjacency is the sum of this matrix and its transpose.", DescribeRole.Definition),
             Node("late_adjacency_norm_le", "The actual late adjacency operator bound",
