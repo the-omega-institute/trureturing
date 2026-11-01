@@ -1573,6 +1573,75 @@ private theorem actualTrajectory (n r m : ℕ)
   exact ⟨(fun T hT => ⟨htrajectory T hT, fun σ hσ => hexperiment (MT T) σ hσ⟩),
     hn, w, c, C', hw, hwm, hlast, hcard, hc, hC, hb, hstat⟩
 
+-- The supplied integral moments are the dual coordinates of the same
+-- degree-bounded polynomial space; no degree ordering of ell is required.
+private theorem actualPolynomialReconstruction (cutoff : ℕ)
+    (ell : Fin (cutoff + 1) → Polynomial ℝ) (hell : polynomialON cutoff ell)
+    (q : Polynomial ℝ) (hq : q.degree ≤ (cutoff : WithBot ℕ)) (s : ℝ) :
+    q.eval s = ∑ k : Fin (cutoff + 1),
+      (∫ t in (0 : ℝ)..1, (ell k).eval t * q.eval t) * (ell k).eval s := by
+  classical
+  let P := Polynomial.degreeLT ℝ (cutoff + 1)
+  let l : Fin (cutoff + 1) → P := fun k =>
+    ⟨ell k, Polynomial.mem_degreeLT.mpr
+      (lt_of_le_of_lt (hell.1 k) (by exact_mod_cast Nat.lt_succ_self cutoff))⟩
+  let moment (k : Fin (cutoff + 1)) : P →ₗ[ℝ] ℝ :=
+    { toFun := fun p => ∫ t in (0 : ℝ)..1,
+        (ell k).eval t * (p : Polynomial ℝ).eval t
+      map_add' := by
+        intro p q
+        change (∫ t in (0 : ℝ)..1,
+          (ell k).eval t * ((p : Polynomial ℝ) + (q : Polynomial ℝ)).eval t) = _
+        simp only [Polynomial.eval_add, mul_add]
+        exact intervalIntegral.integral_add
+          ((by fun_prop : Continuous (fun t : ℝ =>
+            (ell k).eval t * (p : Polynomial ℝ).eval t)).intervalIntegrable 0 1)
+          ((by fun_prop : Continuous (fun t : ℝ =>
+            (ell k).eval t * (q : Polynomial ℝ).eval t)).intervalIntegrable 0 1)
+      map_smul' := by
+        intro c p
+        change (∫ t in (0 : ℝ)..1,
+          (ell k).eval t * (c • (p : Polynomial ℝ)).eval t) =
+            c * ∫ t in (0 : ℝ)..1, (ell k).eval t * (p : Polynomial ℝ).eval t
+        simp only [Polynomial.eval_smul, smul_eq_mul]
+        calc
+          (∫ t in (0 : ℝ)..1, (ell k).eval t * (c * (p : Polynomial ℝ).eval t)) =
+              ∫ t in (0 : ℝ)..1, c * ((ell k).eval t * (p : Polynomial ℝ).eval t) := by
+            congr 1
+            funext t
+            ring
+          _ = _ := intervalIntegral.integral_const_mul c _ }
+  have hdual (k j : Fin (cutoff + 1)) :
+      moment k (l j) = if k = j then 1 else 0 := hell.2 k j
+  have hli : LinearIndependent ℝ l := by
+    rw [Fintype.linearIndependent_iff]
+    intro c hc k
+    simpa [hdual] using congrArg (moment k) hc
+  let equiv : P ≃ₗ[ℝ] (Fin (cutoff + 1) → ℝ) :=
+    Polynomial.degreeLTEquiv ℝ (cutoff + 1)
+  letI : FiniteDimensional ℝ P := equiv.symm.finiteDimensional
+  have hdimP : finrank ℝ P = cutoff + 1 := by simpa using equiv.finrank_eq
+  let lb : Basis (Fin (cutoff + 1)) ℝ P := Basis.mk hli
+    (hli.span_eq_top_of_card_eq_finrank' (by simpa using hdimP.symm)).ge
+  let qp : P := ⟨q, Polynomial.mem_degreeLT.mpr
+    (lt_of_le_of_lt hq (by exact_mod_cast Nat.lt_succ_self cutoff))⟩
+  have hdualBasis (k j : Fin (cutoff + 1)) :
+      moment k (lb j) = if k = j then 1 else 0 := by
+    change moment k (l j) = _
+    exact hdual k j
+  have hcoeff (k : Fin (cutoff + 1)) : moment k qp = lb.repr qp k := by
+    have hh := congrArg (moment k) (lb.sum_repr qp)
+    simpa [hdualBasis] using hh.symm
+  let ev : P →ₗ[ℝ] ℝ := (Polynomial.leval s).comp P.subtype
+  have heval (k : Fin (cutoff + 1)) : ev (lb k) = (ell k).eval s := by rfl
+  have hsum := congrArg ev (lb.sum_repr qp)
+  change ev qp = _
+  calc
+    ev qp = ∑ k : Fin (cutoff + 1), lb.repr qp k * (ell k).eval s := by
+      simpa only [map_sum, map_smul, smul_eq_mul, heval] using hsum.symm
+    _ = ∑ k : Fin (cutoff + 1), moment k qp * (ell k).eval s := by
+      simp only [hcoeff]
+
 private theorem actualOriginal63 (n r m cutoff : ℕ)
     (B : V (n + 1) →L[ℝ] V (n + 1))
     (C : V (n + 1) →L[ℝ] V (r + 1))
@@ -1595,53 +1664,11 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
   have hexperiment {i : Type} [Fintype i] [DecidableEq i]
       (M : Matrix i (Fin (n + 1)) ℝ) (σ : ℝ) (hσ : 0 < σ ^ 2) : finiteExperiment.{u} M β σ :=
     actualExperiment n β hβ M σ hσ
-  have hrisk {i : Type} [Fintype i] [DecidableEq i]
-      (M : Matrix i (Fin (n + 1)) ℝ) (v : ℝ) (hv : 0 < v) : quadraticLaw M β v := by
-    have hh := (hexperiment M (Real.sqrt v) (by rwa [Real.sq_sqrt hv.le])).2.1
-    simpa only [Real.sq_sqrt hv.le] using hh
-  -- A supplied (cutoff+1)-element ON family spans EVERY polynomial of degree ≤cutoff.
-  -- This proves the reproduction premise; it is not assumed from the word ON.
-  have hpolyReconstruct (q : Polynomial ℝ) (hq : q.degree ≤ (cutoff : WithBot ℕ)) (s : ℝ) :
+  have hpolyReconstruct (q : Polynomial ℝ)
+      (hq : q.degree ≤ (cutoff : WithBot ℕ)) (s : ℝ) :
       q.eval s = ∑ k : Fin (cutoff + 1),
-        (∫ t in (0 : ℝ)..1, (ell k).eval t * q.eval t) * (ell k).eval s := by
-    let P := Polynomial.degreeLT ℝ (cutoff + 1)
-    let l : Fin (cutoff + 1) → P := fun k =>
-      ⟨ell k, Polynomial.mem_degreeLT.mpr (lt_of_le_of_lt (hell.1 k) (by exact_mod_cast Nat.lt_succ_self cutoff))⟩
-    have hli : LinearIndependent ℝ l := by
-      rw [Fintype.linearIndependent_iff]
-      intro c hc
-      intro k
-      have heval (t : ℝ) : ∑ j : Fin (cutoff + 1), c j * (ell j).eval t = 0 := by
-        simpa [l, Polynomial.eval_finset_sum, Polynomial.eval_smul, smul_eq_mul] using
-          congrArg (fun z : P => (z : Polynomial ℝ).eval t) hc
-      have hInt : (∫ t in (0 : ℝ)..1,
-          (ell k).eval t * ∑ j : Fin (cutoff + 1), c j * (ell j).eval t) = c k := by
-        simp_rw [Finset.mul_sum, ← mul_assoc, mul_comm ((ell k).eval _) (c _), mul_assoc]
-        rw [intervalIntegral.integral_finsetSum (fun j _ =>
-          (by fun_prop : Continuous (fun t : ℝ => c j * ((ell k).eval t * (ell j).eval t))).intervalIntegrable _ _)]
-        simp_rw [intervalIntegral.integral_const_mul, hell.2]
-        simp
-      simpa only [heval, mul_zero, intervalIntegral.integral_zero] using hInt.symm
-    let equiv := Polynomial.degreeLTEquiv ℝ (cutoff + 1)
-    letI : FiniteDimensional ℝ P := equiv.finiteDimensional
-    have hdimP : finrank ℝ P = cutoff + 1 := by simpa using equiv.finrank_eq
-    let lb : Basis (Fin (cutoff + 1)) ℝ P := Basis.mk hli
-      (hli.span_eq_top_of_card_eq_finrank' (by simpa using hdimP.symm)).ge
-    let qp : P := ⟨q, Polynomial.mem_degreeLT.mpr
-      (lt_of_le_of_lt hq (by exact_mod_cast Nat.lt_succ_self cutoff))⟩
-    have hexpand (t : ℝ) : q.eval t = ∑ k : Fin (cutoff + 1),
-        lb.repr qp k * (ell k).eval t := by
-      have h := congrArg (fun z : P => (z : Polynomial ℝ).eval t) (lb.sum_repr qp)
-      simpa [lb, l, qp, Polynomial.eval_finset_sum, Polynomial.eval_smul, smul_eq_mul] using h.symm
-    have hcoeff (k : Fin (cutoff + 1)) :
-        (∫ t in (0 : ℝ)..1, (ell k).eval t * q.eval t) = lb.repr qp k := by
-      simp_rw [hexpand, Finset.mul_sum]
-      rw [intervalIntegral.integral_finsetSum (fun j _ =>
-        (by fun_prop : Continuous (fun t : ℝ => (ell k).eval t *
-          (lb.repr qp j * (ell j).eval t))).intervalIntegrable _ _)]
-      simp_rw [mul_left_comm, intervalIntegral.integral_const_mul, hell.2]
-      simp
-    simpa only [hcoeff] using hexpand s
+        (∫ t in (0 : ℝ)..1, (ell k).eval t * q.eval t) * (ell k).eval s :=
+    actualPolynomialReconstruction cutoff ell hell q hq s
 
   -- B: actual rectangular moment rows; this is pointwise operator transport.
   have hmomentAction (T : ℝ) (x : V (n + 1)) :
