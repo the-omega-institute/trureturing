@@ -38,17 +38,10 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                 + "These are exactly the restrictions following equation (A11), PRA_v2.tex, line 474. "
                 + "Full separability is a separate requirement.",
                 AssessedProvenance.FromLiterature(Source)),
-            Node("fully-separable", "FullySeparable", "Fully separable states", FullySeparableFormula(),
-                "Take the real convex hull of all products of one-qubit density matrices. "
-                + "IsDensity means positive semidefinite with trace one. The entry at x,y of a product "
-                + "is the product, over k in Fin n, of the local entries p k (x k) (y k). "
-                + "Thus the convex hull consists of finite real convex combinations of these matrices. "
-                + "This expresses full separability as described in PRA_v2.tex, lines 85-93, "
-                + "using one-qubit density matrices as the local factors.",
-                AssessedProvenance.FromLiterature(Source)),
             Node("hs-sq", "hsSq", "Squared Hilbert-Schmidt distance", HsSqFormula(),
-                "For any two complex matrices, take the real part of the trace of their difference "
-                + "conjugate-transpose multiplied by that difference. For density matrices this is "
+                "Apply the frozen D5.S3.Quantum.Tomography.RankOneContextCommutator.hilbertSchmidtSquare "
+                + "to the matrix difference. Unfolding it gives the real part of the trace of that "
+                + "difference conjugate-transpose multiplied by the difference. For density matrices this is "
                 + "the squared Hilbert-Schmidt distance called D_HS in PRA_v2.tex, lines 70-84. "
                 + "The formula also applies to arbitrary matrices, without a Hermitian hypothesis.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -56,6 +49,11 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                 "For every n at least two and every complex gamma of norm at most 1/(2^(n-1)+1), "
                 + "some fully separable matrix has the proposed shape and minimizes the squared "
                 + "Hilbert-Schmidt distance to xmems n gamma among all fully separable matrices. "
+                + "Full separability uses the frozen finite-mixture predicate "
+                + "D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction.IsFullySeparableLocal, "
+                + "applied to each matrix: it admits a finite mixture of products of local density "
+                + "states with nonnegative real weights summing to one. Each local density state is "
+                + "positive semidefinite with trace one. "
                 + "This is the low-branch reading of the conjecture in PRA_v2.tex, lines 459-474, "
                 + "using the closest-state definition at lines 80-93. It asserts attainment as well "
                 + "as comparison with every fully separable matrix, and it places no further "
@@ -79,7 +77,9 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                         + "11 entry. These numbers are nonnegative, and positivity bounds the squared "
                         + "modulus of each local 01 entry by A_k B_k. Consequently Re(P_07) is at "
                         + "most sqrt(product of A_k B_k). For nonnegative u,v, the arithmetic-geometric "
-                        + "mean inequality gives sqrt(uv) at most (u+v)/2; applying it to u/3 and 3v "
+                        + "mean inequality is supplied by the frozen "
+                        + "D5.S3.Geometry.Hyperideal.GramDomainContraction.twice_sqrt_product_le_add. "
+                        + "It gives sqrt(uv) at most (u+v)/2; applying it to u/3 and 3v "
                         + "also gives sqrt(uv) at most u/6+3v/2.")),
                     Paragraph(Text(
                         "Group the product under the square root as "
@@ -95,7 +95,9 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                         "Combine the first bound with weight 1/5 and the second with weight 4/5. "
                         + "The resulting inequality defines a convex half-space because real parts "
                         + "of matrix entries are real-linear. It contains every product of density "
-                        + "matrices and therefore their real convex hull. For a fully separable "
+                        + "matrices and therefore their real convex hull. The proof identifies this "
+                        + "convex hull with the frozen finite-mixture full-separability predicate. "
+                        + "For a fully separable "
                         + "matrix cssShape 3 a b d, write s=a/2, B=b/3, C=(1-a-b)/3, r=Re(d) "
                         + "and t=Im(d). Substitution gives r at most s/15+B/10+3C/2.")),
                     Paragraph(Text(
@@ -108,9 +110,12 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                         + "therefore at least 109/23520.")),
                     Paragraph(Text(
                         "To construct a closer state, use the standard additive character chi "
-                        + "of ZMod 3. For 0 at most u at most 1 and c in ZMod 3, the local vector "
-                        + "has coordinates sqrt(u) and sqrt(1-u) chi(c). Its outer product with "
-                        + "its conjugate is positive semidefinite and has trace one. For a,b in "
+                        + "of ZMod 3. For 0 at most u at most 1 and c in ZMod 3, use the frozen "
+                        + "D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude.latitude "
+                        + "at parameters 1-u and chi(c). Its coordinates are sqrt(u) and "
+                        + "sqrt(1-u) chi(c). Its outer product with its conjugate is positive "
+                        + "semidefinite; the frozen latitude_dot identity and "
+                        + "star(chi(c)) chi(c)=1 give trace one. For a,b in "
                         + "ZMod 3, form the tensor product of these local densities at parameters "
                         + "(9/10,a), (199/400,b), and (199/400,-a-b).")),
                     Paragraph(Text(
@@ -203,29 +208,11 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
                 Parenthesized(Some("a", Reals, Some("b", Reals, Some("d", Complexes, restrictions)))))));
     }
 
-    private static Formula FullySeparableFormula()
-    {
-        var p = F.Id("p");
-        var k = F.Id("k");
-        var x = F.Id("x");
-        var y = F.Id("y");
-        var factor = At(p, k, At(x, k), At(y, k));
-        var entries = LambdaOf("x", Words, LambdaOf("y", Words,
-            At(Qualified("Finset", "prod"), Typed(Qualified("Finset", "univ"),
-                At(Qualified("Finset"), FinOf(F.Id("n")))), LambdaOf("k", FinOf(F.Id("n")), factor))));
-        var products = At(Qualified("Set", "ofPred"), LambdaOf("σ", MatrixType,
-            Some("p", Arrow(FinOf(F.Id("n")), QubitMatrix),
-                And(All("k", FinOf(F.Id("n")), At(Qualified("D5", "S3", "Quantum", "Information",
-                    "SLDSpectralEnergy", "IsDensity"), At(p, k))), Equal(SigmaLower, entries)))));
-        return All("n", Naturals, Equal(Typed(LocalCall("FullySeparable", F.Id("n")),
-            At(Qualified("Set"), MatrixType)), At(Qualified("convexHull"), Reals, products)));
-    }
-
     private static Formula HsSqFormula()
     {
         var difference = Subtract(Rho, SigmaLower);
-        var value = At(Qualified("Complex", "re"), At(Qualified("Matrix", "trace"),
-            Multiply(At(Qualified("Matrix", "conjTranspose"), difference), difference)));
+        var value = At(Qualified("D5", "S3", "Quantum", "Tomography",
+            "RankOneContextCommutator", "hilbertSchmidtSquare"), difference);
         return All("n", Naturals, All("ρ", MatrixType, All("σ", MatrixType,
             Equal(Typed(LocalCall("hsSq", Rho, SigmaLower), Reals), value))));
     }
@@ -233,9 +220,9 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
     private static Formula ClaimFormula()
     {
         var rho = LocalCall("xmems", F.Id("n"), GammaLower);
-        var minimum = All("τ", MatrixType, Arrow(Member(Tau, LocalCall("FullySeparable", F.Id("n"))),
+        var minimum = All("τ", MatrixType, Arrow(FullySeparableAt(Tau),
             LE(LocalCall("hsSq", rho, SigmaLower), LocalCall("hsSq", rho, Tau))));
-        var attained = Some("σ", MatrixType, And(Member(SigmaLower, LocalCall("FullySeparable", F.Id("n"))),
+        var attained = Some("σ", MatrixType, And(FullySeparableAt(SigmaLower),
             And(LocalCall("IsCssShape", SigmaLower), minimum)));
         var bound = LE(new Formula.Norm(GammaLower), Divide(Typed(D(1), Reals),
             Add(Pow(Typed(D(2), Reals), Exponent), Typed(D(1), Reals))));
@@ -243,6 +230,8 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
             Arrow(LE(Typed(D(2), Naturals), F.Id("n")), All("γ", Complexes, Arrow(bound, attained))))));
     }
 
+    private static Formula FullySeparableAt(Formula matrix) => At(Qualified("D5", "S3", "Quantum",
+        "Entanglement", "FullySeparableExchangeObstruction", "IsFullySeparableLocal"), matrix);
     private static Formula FirstBitZero(Formula x) => Some("k", FinOf(F.Id("n")),
         And(Equal(At(Qualified("Fin", "val"), F.Id("k")), Typed(D(0), Naturals)),
             Equal(At(x, F.Id("k")), Typed(D(0), FinOf(D(2))))));
@@ -251,7 +240,6 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
     private static Formula Exponent => Subtract(F.Id("n"), Typed(D(1), Naturals));
     private static Formula Words => Arrow(FinOf(F.Id("n")), FinOf(D(2)));
     private static Formula MatrixType => At(Qualified("Matrix"), Words, Words, Complexes);
-    private static Formula QubitMatrix => At(Qualified("Matrix"), FinOf(D(2)), FinOf(D(2)), Complexes);
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Complexes => Seq(Mathbb, Grp(F.Id("C")));
@@ -263,8 +251,6 @@ internal sealed class XMemsClosestSeparableShapeRefutationDocument : IScribeDocu
         At(Qualified("ite"), condition, yes, no);
     private static Formula LE(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Member(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Or(Formula a, Formula b) =>
