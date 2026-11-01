@@ -658,7 +658,6 @@ def remove(options):
                 else "refused" if any(item["outcome"] == "refused" for item in outcomes) else "succeeded")
 
 
-
 def protect_recorded_recovery(source, reference):
     """Keep recovery roots while their tree's Git registration still exists."""
     metadata_root = common(source) / "worktrees"

@@ -109,16 +109,21 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("failed", true)]
     [InlineData("refused", false)]
     [InlineData("failed", false)]
+    [InlineData("deferred", false)]
+    [InlineData("deferred", true)]
     public void SingleTreeProblemsWarnAndContinueAllSweeps(string failure, bool force)
     {
         using var fixture = new CleanLanesFixture();
         const string retainedBranch = "harness/a-retained";
         var retained = fixture.AddLandedLane(retainedBranch);
         var control = fixture.AddLandedLane("harness/z-control");
+        if (failure == "deferred") fixture.LockLane(retained, "worktree-init:malformed");
         fixture.AddOrphan("harness/orphan-control", merged: true);
         var judge = fixture.AddGitlessJudgeSnapshot("trureturing-judge-control");
         var runner = fixture.CreateRunner((file, args, _) =>
         {
+            if (failure == "deferred" && file == "python3" && IsProtocol(args, "qualify"))
+                throw new TimeoutException("fixture qualification deadline");
             if (file != "python3" || !IsProtocol(args, "remove") || !args.Contains(retained)) return null;
             if (failure == "timeout") throw new TimeoutException("fixture removal deadline");
             return new ProcessOutput(failure == "refused" ? 73 : 74, [], Encoding.UTF8.GetBytes(
