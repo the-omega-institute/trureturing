@@ -1,0 +1,45 @@
+#### 定理 2.2（任务所需的最小关系维数）
+
+设 $\mathcal B$ 为有限维复 $C^{\ast}$ 代数，使用忠实迹配对。
+已有读口的实线性子空间为 $V_0\subseteq\operatorname{Herm}(\mathcal B)$，且 $I\in V_0$；
+目标效果的实张成为 $\mathcal T$。在全部密度态上，
+若可另外选择 Hermitian 线性读出 $R_1,\ldots,R_k$，
+则所有目标可识别，当且仅当
+
+$$
+\mathcal T\subseteq V_0+\operatorname{span}_{\mathbb R}\{R_1,\ldots,R_k\}.
+$$
+
+允许解码函数非线性也不改变此条件。最少附加实读数为
+
+$$
+\boxed{\ k_{\min}=\dim(V_0+\mathcal T)-\dim V_0.\ }
+$$
+
+**证明。**
+
+包含成立时，每个目标是已知读出的线性组合，因此可恢复。
+反之令 $W=V_0+\operatorname{span}_{\mathbb R}\{R_j\}$，取 $F\in\mathcal T\setminus W$，
+以迹内积将其正交分解为 $F=F_W+H$，其中 $H\ne0$、$H\perp W$。
+因为 $I\in W$，$\operatorname{Tr} H=0$。记 $d=\operatorname{Tr} I$，足够小的 $\varepsilon>0$ 使
+
+$$
+\rho_\pm=I/d\pm\varepsilon H
+$$
+
+均正定且迹一。两态对 $W$ 的全部期望相同，而
+
+$$
+\operatorname{Tr}(F\rho_+)-\operatorname{Tr}(F\rho_-)=2\varepsilon\operatorname{Tr}(H^2)>0.
+$$
+
+故任何解码都失败。维数下界随包含关系得到；选商空间
+$(V_0+\mathcal T)/V_0$ 的一组代表基即可达到。
+
+∎
+
+这是一项代数上的最少读数定理。指定原生菜单能否提供这些读数、所需调用和统计精度，
+仍由菜单及实际来源决定。若态族预先受到更强非线性限制，最小数目也可改变。
+
+<a id="section-3"></a>
+

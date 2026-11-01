@@ -1,0 +1,21 @@
+**命题 4.5（Sign and endpoint symmetry）。** The obstruction conditions
+are invariant under
+
+$$
+(a,d,j)\longmapsto(a+(m-1)d,-d,m-r-j).
+$$
+
+They allow both endpoints $j=0,m-r$ and every interior integer.
+Applying any injective group homomorphism to all elements preserves
+the sum exclusions and the obstruction, with the matroids transported
+by the resulting ground-set bijections.
+
+Proof. Reversing the indices leaves $A$ and $S$ unchanged. Substituting
+$t\mapsto-t$ in $[-j,m-r-j]_{\mathbb Z}d$ leaves $U$ unchanged
+under the displayed transformation. For a homomorphism $\phi$,
+$\phi(s+b)=\phi(s)+\phi(b)$, and injectivity makes
+$s+b\in A$ equivalent to $\phi(s)+\phi(b)\in\phi(A)$.
+Transport preserves every independent set and therefore every basis,
+circuit and hyperplane. The negative identity map handles simultaneous
+sign reversal; no positivity premise enters either theorem.
+

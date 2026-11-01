@@ -1,0 +1,23 @@
+**定理 4.1（等距递归的静态直接极限，项目 v21 的重述）。**
+
+<a id="thm-direct"></a>
+
+对 Hilbert 空间链和等距 $T_n:\mathcal H_n\to\mathcal H_{n+1}$，
+存在 $\mathcal H_\infty$ 和等距 $\iota_n$，满足
+
+$$
+\iota_{n+1}T_n=\iota_n,\qquad
+\overline{\bigcup_n\iota_n\mathcal H_n}=\mathcal H_\infty.
+$$
+
+若 $\psi_{n+1}=T_n\psi_n$，则所有 $\iota_n\psi_n$ 是同一向量 $\Omega$。
+
+**证明。**
+
+将各层向量推到共同后继后相同的代表等同。
+在共同后继定义线性运算和内积，等距性保证不依赖代表。
+完成所得内积空间即得结论；嵌入恒等式证明最后一项。
+同样的稠密等距延拓给保持嵌入的酉唯一性。
+
+□
+

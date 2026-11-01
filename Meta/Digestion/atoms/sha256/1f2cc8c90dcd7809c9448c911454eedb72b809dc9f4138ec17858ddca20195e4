@@ -1,0 +1,48 @@
+**定义 10.1（固定编码、标量回答与概率回答）。** 本节始终采用假设1.1的同一个源和等待策略，先验 $\mu$ 已知。沿用定义2.2的 $z_r,\nu_r$，不把参数分数解释成原生吸收接口的新回答。记
+
+$$
+\Omega=(0,1),\qquad
+\mathcal F=\{f:\Omega\to[0,1]:f\text{ 为 Borel 函数}\},\qquad
+v_r(f)=\int f\,d\nu_r.
+\tag{TEE.35}
+$$
+
+有限摘要是一个固定可测映射 $E:\mathcal A_\pi\to Z$，其中 $Z$ 非空且有限。编码可以依赖已知先验、要求的精度和固定策略，但不能依赖随后选择的 $f$。解码器只接收摘要状态与被请求的分数，不再次接收 $U,X_0,R,T$ 或旧档案。为明确所有秩的量词，置
+
+$$
+e(u,x,r)=E(G_\pi(u,x,r)).
+$$
+
+标量合同允许对每个 $z,f$ 独立指定一个 $A_z(f)\in[0,1]$，不要求这些数共同构成一个测度；其一致误差为
+
+$$
+\mathcal E_{\rm sc}(E,A)=
+\sup_{u\in\mathcal U,\,x\in\{0,1\},\,r\ge0}
+\ \sup_{f\in\mathcal F}
+\left|v_r(f)-A_{e(u,x,r)}(f)\right|.
+\tag{TEE.36}
+$$
+
+概率合同则对每个状态指定同一个 $\Omega$ 上的可数可加 Borel 概率测度 $\kappa_z$，要求 $A_z(f)=\int f\,d\kappa_z$。采用半范数归一化
+
+$$
+d_{\rm TV}(P,P')=
+\sup_{C\in\mathcal B(\Omega)}|P(C)-P'(C)|
+=\sup_{f\in\mathcal F}|Pf-P'f|\in[0,1],
+\tag{TEE.37}
+$$
+
+相应误差为 $\mathcal E_{\rm pr}(E,\kappa)=\sup_{u,x,r}d_{\rm TV}(\nu_r,\kappa_{e(u,x,r)})$。式（TEE.37）的函数等式由 $f(q)=\int_0^1\mathbf1_{\{f(q)>t\}}dt$ 和指标函数得到。$\varepsilon$ 近似的完整量词是：存在有限 $Z$、一个与分数无关的 $E$ 及一组上述回答，使对每个 $u,x,r,f$ 都有误差不超过 $\varepsilon$。不能交换成每个 $f$ 各选一个编码。所有 $r$ 都是本源的实际秩，因为定理1.3给出 $\Pr(R=r)=z_r>0$；$u$ 单点无须有正质量，式（TEE.36）采用的是合法档案上的逐点合同。
+
+概率回答还可要求**自身条件律校准**：对每个有正实际质量的状态，$\kappa_z=\mathcal L(Q\mid E(H_\pi)=z)$。这比只给一个概率测度严格；它不等于把 $\kappa_z$ 作为生成未来输入的源。下面的存在性结论由不依赖 $u,x$ 的秩摘要实现，因而也满足较弱的实际几乎处处合同。
+
+定义本质上端点及其质量
+
+$$
+s=\operatorname*{ess\,sup}_{\mu}Q\in(0,1],\qquad
+\alpha=\begin{cases}\mu(\{s\}),&s<1,\\0,&s=1.\end{cases}
+\tag{TEE.38}
+$$
+
+这里 $s=1$ 时没有 $q=1$ 这个源状态。本节的源内近似、校准及取得对应为 `repo-derived`；指数倾斜、概率距离和条件混合只作下列证明中的经典中间步骤，不主张它们的一般理论为新结果。
+

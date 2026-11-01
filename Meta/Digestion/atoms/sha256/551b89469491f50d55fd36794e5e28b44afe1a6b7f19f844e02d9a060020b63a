@@ -1,0 +1,30 @@
+#### 定理 9.2：普遍未知态共轭的 Bell 障碍
+
+当  $d\ge2$  时，转置正且保迹，但不完全正。
+因此不存在确定性量子信道在每个未知纯态上实现其共轭纯态。
+
+
+**证明。**
+
+令  $\lvert \Omega\rangle=d^{-1/2}\sum_ i\lvert ii\rangle$ ， $F$  为两份  $\mathbb C^d$  的交换算子。
+直接展开有
+
+```math
+(\operatorname{id}\otimes\mathcal T)(\lvert \Omega\rangle\langle \Omega\rvert)
+ =\frac1d\sum_{ij}\lvert i\rangle\langle j\rvert\otimes\lvert j\rangle\langle i\rvert=\frac Fd.
+```
+
+对  $i\ne j$  的反对称向量  $(\lvert ij\rangle-\lvert ji\rangle)/\sqrt2$ ，本征值为  $-1/d$ ，
+故结果不是正算子。
+若某信道在全部纯态投影上等于转置，谱分解使它在全部厄米算子上等于转置；
+复线性再使它在全部算子上相等，与上述反例矛盾。
+
+**证毕。**
+
+
+该论证不排除反酉作为数学上的射线对称，也不排除第 6 节对已知程序做镜像编译。
+它排除的是：对任意未知输入，包括与任意外部参考纠缠的输入，执行同一个局部共轭信道。
+
+
+<a id="stmt-9-3"></a>
+

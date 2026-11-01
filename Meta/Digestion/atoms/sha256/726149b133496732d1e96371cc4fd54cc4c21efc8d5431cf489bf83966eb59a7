@@ -1,0 +1,112 @@
+**Lemma 9.2 (A real boundary kernel for the imaginary-axis slope).** Let $0<b\le1$, let $d\mu(\theta)=d\theta/(2\pi)$ on $[0,2\pi]$, and define
+
+$$
+B_b(\theta)=2\sum_{j=0}^\infty
+\frac{(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)}\cos((2j+1)\theta).
+$$
+
+This is a continuous real function of $\theta$ and $b\in(0,1]$, has mean zero, and satisfies
+
+$$
+B_b(\pi-\theta)=-B_b(\theta),\qquad
+\cos\theta\,B_b(\theta)\le0,\qquad
+|B_b(\theta)|\le C<\frac{19}{50}<\frac{31}{81},
+$$
+
+where arguments are interpreted modulo $2\pi$ and
+
+$$
+C=\log\frac53+2\arctan\frac13-\frac79.
+$$
+
+If $h$ is entire and $H$ is its entire primitive with $H(0)=0$, then
+
+$$
+\frac1{2b}\int_{-b}^b H(it)\,dt
+=\int_0^{2\pi}h(e^{i\theta})B_b(\theta)\,d\mu(\theta).
+$$
+
+Stance: repo-derived.
+
+**Proof.** The absolute values of the summands are bounded by $2/[(2j+2)(2j+3)]$, a summable sequence independent of $b\le1$ and $\theta$. Thus the series converges absolutely and uniformly, including at $b=1$. The mean and the reflection identity follow term by term.
+
+For the integral identity first take $h(z)=z^m$, $m\ge0$, so $H(z)=z^{m+1}/(m+1)$. Symmetric integration gives
+
+$$
+\frac1{2b}\int_{-b}^b H(it)\,dt
+=\begin{cases}
+0,&m\text{ even},\\
+\displaystyle\frac{(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)},&m=2j+1.
+\end{cases}
+$$
+
+These are precisely the moments $\int e^{im\theta}B_b(\theta)\,d\mu(\theta)$: for positive integers $m,r$, the integral of $e^{im\theta}\cos(r\theta)$ is $1/2$ when $m=r$ and zero otherwise. The zeroth moment vanishes. For an arbitrary entire $h(z)=\sum_{m\ge0}c_mz^m$, its Taylor series converges absolutely and uniformly on the closed disk, as does the integrated series for $H$. For example, Cauchy's coefficient estimate on any circle of radius $R>1$ bounds $|c_m|$ by $\max_{|z|=R}|h(z)|R^{-m}$. Consequently both integrals pass through the series, proving the identity for all complex coefficients.
+
+To control the kernel, the geometric series and $\int_0^1t^{2j+1}(1-t)\,dt=1/[(2j+2)(2j+3)]$ give
+
+$$
+B_b(\theta)=-2b^2\int_0^1t(1-t)
+\operatorname{Re}\frac{e^{-i\theta}}{1+b^2t^2e^{-2i\theta}}\,dt
+$$
+
+$$
+=-2b^2\cos\theta\int_0^1
+\frac{t(1-t)(1+b^2t^2)}{(1-b^2t^2)^2+4b^2t^2\cos^2\theta}\,dt.
+$$
+
+The sum of the integrals of the absolute values of the expanded geometric terms is at most $2\sum_{j\ge0}1/[(2j+2)(2j+3)]<\infty$. This justifies the interchange even for $b=1$; the geometric identity is needed only for $t<1$. If $b=1$ and $\cos\theta=0$, the integrand is zero for $t<1$ and its endpoint value can be set to zero. In particular $B_b=0$ when $\cos\theta=0$, and otherwise its sign is opposite to that of $\cos\theta$.
+
+Put $c=|\cos\theta|$. For $c>0$, substituting $y=bt$ gives
+
+$$
+|B_b(\theta)|=2c\int_0^b
+\frac{y(1-y/b)(1+y^2)}{(1-y^2)^2+4c^2y^2}\,dy
+\le\int_0^1(1-t)q(t,c)\,dt,
+$$
+
+where
+
+$$
+q(t,c)=\frac{2ct(1+t^2)}{(1-t^2)^2+4c^2t^2}.
+$$
+
+Indeed $1-y/b\le1-y$ on $0\le y\le b\le1$, and the integrands are nonnegative. For $0\le t\le1/3$, differentiation with respect to $c$ shows that $q(t,c)$ is nondecreasing on $0\le c\le1$: the sign of this derivative is the sign of $(1-t^2)^2-4c^2t^2$, which is nonnegative because $1-t^2\ge2t$. Therefore
+
+$$
+q(t,c)\le q(t,1)=\frac{2t}{1+t^2}\quad(0\le t\le1/3).
+$$
+
+For $1/3\le t<1$, the inequality $(1-t^2)^2+4c^2t^2\ge4ct(1-t^2)$ instead gives
+
+$$
+(1-t)q(t,c)\le\frac{1+t^2}{2(1+t)}.
+$$
+
+The preceding bounds also apply at $c=0$ by the already established value $B_b=0$. Integration yields
+
+$$
+\begin{aligned}
+|B_b(\theta)|
+&\le\int_0^{1/3}\frac{2t(1-t)}{1+t^2}\,dt
++\int_{1/3}^1\frac{1+t^2}{2(1+t)}\,dt\\
+&=\log\frac{10}{9}-\frac23+2\arctan\frac13
++\log\frac32-\frac19=C.
+\end{aligned}
+$$
+
+For completeness, the convergent series $\log[(1+s)/(1-s)]=2\sum_{r\ge0}s^{2r+1}/(2r+1)$ at $s=1/4$ gives
+
+$$
+\log\frac53\le\frac12+\frac1{96}
++\frac{2}{5}\frac{(1/4)^5}{1-1/16}=\frac{613}{1200}.
+$$
+
+The alternating series for $\arctan(1/3)$ gives $\arctan(1/3)\le1/3-1/81+1/1215=391/1215$. Hence
+
+$$
+C\le\frac{613}{1200}-\frac{163}{1215}
+=\frac{36613}{97200}<\frac{19}{50}<\frac{31}{81}.
+$$
+
+Both series follow by integrating their geometric series on compact subintervals of $(-1,1)$; the alternating remainder has the sign of its first omitted term. Thus these bounds involve no approximation of $C$. $\square$
+

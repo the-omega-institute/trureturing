@@ -1,0 +1,65 @@
+**Proposition 35.3 (invisible newest bits and a common disagreement).**
+Let $W_2=\{\varepsilon,a,aa,ab,b,ba,bb\}$ and, for a consumed
+four-bit prefix $r$, write $S_r$ for its cut-four support. Then for every
+choice of the four bits,
+
+$$
+S_r=W_2\cup\{c(r_1)c(r_2)a,\ c(r_1)c(r_2)b\}.
+$$
+
+Thus all four sources with a fixed first two bits have identical complete
+support, independently of $z_3,z_4$. For example, the eleven-cycles whose
+first four bits are $01uv$, $u,v\in\{0,1\}$, and whose other seven bits
+are zero all have exact period eleven and identical complete cut-four
+replies. Both newest bits can independently vary in this fibre. The
+mature bits at this cut are exactly $z_1,z_2$.
+
+For the comparison with reference $0000$, however, there is a common
+word distinguishing it from each of $0100,1000,1100$. The full differences
+are, in the order of those three alternatives,
+
+$$
+\begin{aligned}
+S_{0000}\triangle S_{0100}&=\{bba,bbb,baa,bab\},\\
+S_{0000}\triangle S_{1000}&=\{bba,bbb,aba,abb\},\\
+S_{0000}\triangle S_{1100}&=\{bba,bbb,aaa,aab\}.
+\end{aligned}
+$$
+
+In particular,
+
+$$
+\bigcap_{r\in\{0100,1000,1100\}}
+   (S_{0000}\triangle S_r)=\{bba,bbb\}.
+$$
+
+The assertion that this fibre has no single reference-versus-every-alternative
+disagreement is false. Either displayed common word is present in the
+reference and absent in all three alternatives. Pairwise disjoint additions
+alone do not settle that assertion: the removals are common.
+
+Proof. The chronology in Theorem 35.2 gives the formula for every prefix.
+If $z_1=0$, the update-four beta parents are $a$ first and $bc(z_2)$
+second; if $z_1=1$, they are $ac(z_2)$ first and $b$ second. Thus $z_3$
+and $z_4$ select labels at these actual ordered births. Their newborn
+beta children can first split at update five, so neither orientation has
+a support effect at cut four. This proves the full-support fibre and its
+visibility boundary.
+
+For first two bits $00,01,10,11$, the depth-three pairs are respectively
+$\{bba,bbb\},\{baa,bab\},\{aba,abb\},\{aaa,aab\}$. They are mutually
+disjoint, so every full symmetric difference between two of the four
+representatives is the union of the corresponding two pairs. This proves
+the three displayed differences, all other pair differences, and their
+intersection. Each nonzero eleven-cycle used here is nonconstant; since
+eleven is prime, its least period is eleven. The all-zero reference is
+an eleven-periodic zero all-index law with least period one. All are legal
+members of $\mathscr R_{11}$.
+
+At any common mature cut $n\ge9$, all these sources still have the same
+transcript restricted to $W_2$, since every word of length at most two is
+present at every cut $n\ge4$. This statement does not assert equal mature
+extremal heights, equal full mature supports, or a mature full-law ambiguity.
+The common-disagreement calculation above concerns the original cut-four
+reference comparison, not those later supports. $\square$
+

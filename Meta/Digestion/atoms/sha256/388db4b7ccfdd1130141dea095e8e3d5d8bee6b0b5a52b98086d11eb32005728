@@ -1,0 +1,31 @@
+**Proposition 14.1 (one fixed native source, equal-dimensional supports, different feasibility).** Fix once and for all the actual source of Definition 10.2 and the native law
+
+$$
+A=(1,1),\qquad B=\sqrt2(1,1),\qquad C=E=(1,1).
+\tag{14.1}
+$$
+
+Consider the two separately declared joint acquisition supports
+
+$$
+K_{\parallel}=\{(t,t):|t|\le1\},\qquad
+K_{\perp}=\{(t,-t):|t|\le1\}.
+\tag{14.2}
+$$
+
+They are compact convex origin-symmetric supports with $0$ in their relative interiors, both of dimension one, and both have the identical coordinatewise ranges $[-1,1]$ and $[-1,1]$. For every $\epsilon>0$, the $K_{\parallel}$ contract admits no finite static or complete finite online supplement, whereas the $K_{\perp}$ contract recovers every legal history with one state. At $\epsilon=0$ both recover every history with one state.
+
+Proof. The loop ratio is positive irrational and the native vectors and all operations stay fixed in the comparison. Its line is contained in $\operatorname{span}K_{\parallel}$ and is transverse to $\operatorname{span}K_{\perp}$. Theorem 12.2 gives respectively all-history impossibility and recovery at every positive tolerance. More explicitly, the first contract has the arbitrarily large common-observation families (12.12), at $s$ and after appending $e$ at $t$. In the second contract the acquired value
+
+$$
+\frac{y_1+y_2}{2}
+ =\begin{cases}
+m,&z=p,\\
+1+m+\sqrt2 n,&z=s,\\
+2+m+\sqrt2 n,&z=t
+\end{cases}
+\tag{14.3}
+$$
+
+is exact for every permitted error. In each row it determines the nonnegative exponents uniquely: equality in either two-exponent row would give an integer relation with $\sqrt2$. The $c$ and optional $e$ then give the unique ordered word, not merely its name counts. At $p$ this includes $m=0$ and the empty word; at $s,t$ it includes either or both zero exponents and every stopping or terminal history. Theorem 13.1 supplies the zero-error boundary for both supports. Thus matching coordinate ranges and matching support dimension do not determine feasibility on this fixed actual native source. $\square$
+

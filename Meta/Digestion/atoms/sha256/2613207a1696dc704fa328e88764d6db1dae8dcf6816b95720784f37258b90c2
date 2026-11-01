@@ -1,0 +1,34 @@
+**定义 99.1（只锚定一个记录的响应问题）。** 固定 77.1 的整个十三维 $H$、十三个 $e_\beta$、唯一初态 $v$、七个原门及全部有限正向字 $\mathsf W$。令 $X=\mathbb P(H)$，并沿用 91.1–91.2 的
+
+$$
+ \begin{gathered}
+ x=\varphi^{-1},\quad \zeta=e^{3\pi i/5},\quad
+ \Pi=\mathcal P_0|_H,\quad D=I+(\zeta-1)\Pi=\zeta^{-1}K_0|_H,\\
+ N=1+x^2,\quad a=N^{-1},\quad b=x^2N^{-1},\quad
+ (r_0,r_1)=(a,b),\quad
+ (t_{00},t_{01})=(3,1),\quad(t_{10},t_{11})=(0,2).
+ \end{gathered}
+ \tag{99.1}
+$$
+
+给定两个连续、相位不变的完整归一响应
+
+$$
+ P^{(i)}:S(H)\longrightarrow\Delta(\Omega_{10}),\qquad
+ i=0,1,\quad\Omega_{10}=\{0,1\}^{10}.
+ \tag{99.2}
+$$
+
+两者分别非负且对全部 $1024$ 标签求和为一；暂不要求 $P^{(0)}=P^{(1)}$。原旧响应仅锚定为 $P=P^{(0)}$。定义两响应的原生耦合关系为
+
+$$
+ \begin{aligned}
+ &aP^{(0)}_w(K_fD^3K_pv)+bP^{(1)}_w(K_fDK_pv)\\
+ &\hspace{10mm}=aP^{(0)}_w(K_fK_pv)+bP^{(1)}_w(K_fD^2K_pv)
+ \qquad(p,f\in\mathsf W,\ w\in\Omega_{10}).
+ \end{aligned}
+ \tag{99.3}
+$$
+
+这里 $i$ 指读取后留下的同一个计算记录态，而不是设置；每个设置都可留下 $i=0$ 或 $i=1$。把两个响应在前提中合并会退回 92.2，故本问题保留第二响应未知。
+

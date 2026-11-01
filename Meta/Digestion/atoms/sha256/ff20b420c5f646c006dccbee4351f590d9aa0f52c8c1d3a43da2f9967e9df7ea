@@ -1,0 +1,36 @@
+**Proposition 9.2 (Exact pinching accounting).** Let
+$T_X(B)=(B+XBX)/2$, $\Pi=T_{X,C}T_{X,D}$, put
+$k(A)=S(\Pi A)-S(A)$, and write
+$c_E(A)=S(T_{X}A_E)-S(A_E)$ and
+$d_A=I_A-I_{\Pi A}=k(A)-c_C(A)-c_D(A)$.  The chain rule and CPTP
+data processing give the exact identity
+
+$$
+ \Delta=J_Q+J_R+A_L+2d_P+C_U-f_C-f_D,
+$$
+
+where $J_A=I_{\Pi A}$, $A_L=k(Q)-k(R)\geq0$,
+$C_U=I(U:D\mid C)+I(U:C\mid D)\geq0$ is the classical $K$-record
+conditional-information sum,
+and $f_E=c_E(Q)-c_E(R)\geq0$. Here the record $U$ is the actual
+state $\Omega_{UCD}$ defined in the
+proof of Proposition 7.1, with the current source and bias $a$.
+To verify the identity, $\Pi P=\Pi R$ and its marginal versions imply
+
+$$
+ J_P=J_R,\qquad k(P)-k(R)=g,\qquad
+ \sum_E[c_E(P)-c_E(R)]=h,\qquad d_P-d_R=g-h.
+$$
+
+Also $C_U=2g-h$ by the record chain rule, while
+$A_L-f_C-f_D=d_Q-d_R$. Substitute $I_P=J_R+d_P$ and
+$I_Q=J_Q+d_Q$ into (1.4) to obtain exactly the displayed pinching
+identity. Local data processing gives $d_P\geq0$, and $J_Q,J_R\geq0$.
+For the remaining signs, $k(A)=D(A\Vert\Pi A)$ and
+$c_E(A)=D(A_E\Vert T_XA_E)$. The map $\Phi$ and its marginal channels
+commute with the respective pinchings and send $Q$ to $R$; relative-entropy
+data processing gives $A_L\geq0$ and $f_E\geq0$, with singular cases
+interpreted on their supports. Thus the identity leaves precisely the
+local penalty $f_C+f_D$ to be funded. The signed BKM overlap integral
+provides the alternative unresolved funding expression in Assertion 9.1.
+

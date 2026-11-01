@@ -1,0 +1,42 @@
+**定理 2.4（全部酉作用下的共同纯态来源）。**
+
+<a id="thm-transitivity"></a>
+
+若 $\mathcal A=B(\mathcal H)$ 且允许全部内部酉，则对每个单位向量 $\psi\in\mathcal H$，
+存在 $U\in\mathcal A$ 使 $U\Omega=\psi$，无限维时同样成立。
+
+**证明。**
+
+在至多二维的 $\operatorname{span}\{\Omega,\psi\}$ 中，
+分别选以 $\Omega$ 和 $\psi$ 开始的正交规范基。
+两组基之间的映射为酉，在其正交补上取恒等即可。
+线性相关时直接给相应一维相位。
+
+□
+
+因此用户的全酉版本具有准确的数学存在表述。
+指定有限原生门菜单时，有限字集合可数，
+而 $\dim\mathcal H\ge2$ 的纯态射线集合不可数；
+有限字精确可达全部射线并不由上述存在定理得到。
+稠密逼近、无限极限和精确有限取得是不同量词。
+GNS 循环性也只断言 $\mathcal A\Omega$ 稠密；
+例如对角代数 $\mathbb C\oplus\mathbb C$ 及 $\Omega=(1,1)/\sqrt2$ 是循环的，
+其内部酉轨道却不能到达 $(1,0)$。
+这些限制不反驳定理 [2.4](#thm-transitivity) 的完整操作域。
+
+若 $\psi=A\lvert 0 \rangle$、基底 $b_i=B\lvert i \rangle$，则
+
+$$
+|\langle b_i,\psi\rangle|^2
+=|\langle i,B^*A\,0\rangle|^2.
+$$
+
+共同左乘内部酉 $W$ 后 $(WB)^*(WA)=B^*A$，
+相对读出不变。这消去的是共同参考作用。
+混态的内部限制、程序关联与纠缠也都由同一个 $\omega$ 表达，
+不被称为本体外的剩余物。
+量子参考框架中不使用外部绝对参照的研究可作背景，
+但本文的代数定义和证明不依赖该文的全部动力学构造。 [[14]](#ref-qrf)
+
+<a id="section-3"></a>
+

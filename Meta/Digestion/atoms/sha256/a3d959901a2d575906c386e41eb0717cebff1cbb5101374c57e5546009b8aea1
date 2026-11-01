@@ -1,0 +1,47 @@
+**引理 11.4（每个固定行的唯一合法峰）。** 对 $m\ge5$、$i\in\{1,2,3,4\}$，置
+
+$$
+T_{i,m}=\frac{i}{y_m^2}+\frac12+\frac{y_m^2}{16i},
+\qquad K_{i,m}=\min\{m,\lfloor T_{i,m}\rfloor\}.
+\tag{11.10}
+$$
+
+则 $T_{i,m}\notin\{1,\ldots,m\}$，且 $1\le K_{i,m}\le m$。行 $j\mapsto d_m(i,j)$ 在整数 $0,\ldots,m$ 上唯一于 $K_{i,m}$ 取得最大值。对每个 $1\le r\le m-1$，
+
+$$
+K_{i,m}=r\quad\Longleftrightarrow\quad
+q_i(r+1)<y_m<q_i(r),
+\tag{11.11}
+$$
+
+而合法右端点的充要条件为
+
+$$
+K_{i,m}=m\quad\Longleftrightarrow\quad
+y_m<q_i(m)\quad\Longleftrightarrow\quad T_{i,m}>m.
+\tag{11.12}
+$$
+
+$i=0$ 行的唯一峰为 $j=0$；$i=4$ 行的唯一峰为 $j=m$。当 $m=4$ 时，每个 $i\in\{0,\ldots,4\}$ 行的唯一峰为 $j=i$。
+
+**证明。** 对 $m\ge5$，由 (11.3)，$0<y_m<1<2\sqrt i$。直接求解给出
+
+$$
+\sqrt{T_{i,m}}=\frac{\sqrt i}{y_m}+\frac{y_m}{4\sqrt i},
+\qquad
+\sqrt{T_{i,m}-1}=\frac{\sqrt i}{y_m}-\frac{y_m}{4\sqrt i}>0,
+\qquad q_i(T_{i,m})=y_m.
+$$
+
+$q_i$ 在 $[1,\infty)$ 上严格递减，且 $T_{i,m}>1$。每个合法相邻差分为
+
+$$
+d_m(i,j)-d_m(i,j-1)=q_i(j)-y_m
+\quad(1\le j\le m).
+\tag{11.13}
+$$
+
+引理 11.3 排除 $T_{i,m}$ 等于任何可行整数；因而当 $T_{i,m}<m$ 时，整数差分在 $j\le\lfloor T_{i,m}\rfloor$ 为正，之后为负；当 $T_{i,m}>m$ 时，全部可行差分为正。这证明唯一峰及 (11.11)–(11.12)，只使用可行区间内的无等号结论。
+
+$i=0$ 时 $d_m(0,j)=-jy_m$，唯一峰为零。$i=4$ 时，$q_4(m)>2/\sqrt m>y_m$，故全部差分为正，唯一峰为 $m$。$m=4$ 时直接复用 (6.2)，$d_4(i,j)=-(\sqrt i-\sqrt j)^2$，固定 $i$ 后等号仅在 $j=i$，故结论也包括这五行。∎
+

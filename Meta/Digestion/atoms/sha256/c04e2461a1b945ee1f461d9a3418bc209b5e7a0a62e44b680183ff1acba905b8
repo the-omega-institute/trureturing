@@ -1,0 +1,27 @@
+**Proposition 10.5 (the same marginal radii can have different joint acquisition power).** For any rational $\epsilon\ge0$, consider instead a joint channel that supplies two exact rational report strings with one common unknown rational bias $e$, $|e|\le\epsilon$:
+
+$$
+y_0=x+e,\qquad
+y_1=\frac{x}{1+x}+e,\qquad x\in\mathbb Q_{>0}.
+\tag{10.9}
+$$
+
+The first read is before probing and the second is after the single chronological action $L$. Every report separately satisfies the same closed absolute-radius guarantee as in Definition 10.1. Nevertheless these two reports determine the exact unbounded original response $x$, and hence its original word.
+
+Proof. Subtraction eliminates the shared bias:
+
+$$
+D=y_0-y_1=\frac{x^2}{1+x}>0,\qquad
+x^2-Dx-D=0.
+$$
+
+The quadratic has exactly one positive root,
+
+$$
+x=\frac{D+\sqrt{D^2+4D}}2.
+$$
+
+It is rational for every report pair allowed by (10.9), since the actual $x$ is rational; indeed $D^2+4D=(2x-D)^2$. Exact rational arithmetic and rational-square-root extraction recover it from the finite strings. For a concrete allowed pair, $x=2/3$ and $e=\epsilon=1/10$ give $y_0=23/30$, $y_1=1/2$ and $D=4/15$, which determine $x=2/3$ uniquely. Theorem 6.2 then decodes the original word.
+
+For $\epsilon>0$, this channel is not rectangular: after a first report from a specified source, its bias is fixed, so the second report is constrained by that same bias. Its allowed two-report set is a proper subset of the Cartesian product of the two marginal error intervals: the corner $(x+\epsilon,x/(1+x)-\epsilon)$ would require $e=\epsilon$ and $e=-\epsilon$ simultaneously. At $\epsilon=0$, both sets are the singleton $\{(x,x/(1+x))\}$, so the channel is rectangular; the exact recovery identity remains valid. For $\epsilon>0$, therefore, the freely chosen successive midpoint reports in Theorem 10.2, and the replayed truthful reports for alternative sources in Theorem 10.4, need not be allowed by (10.9). There is no contradiction. Per-read error bounds alone do not specify joint acquisition power. $\square$
+

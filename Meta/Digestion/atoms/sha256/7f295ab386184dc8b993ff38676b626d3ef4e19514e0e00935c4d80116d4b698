@@ -1,0 +1,145 @@
+**定理 74.2（同码、可恢复借位的确定性实部读取字）。** 在假设 74.1 下，
+对 $\epsilon\in\{+1,-1\}$ 存在仅依赖 $D,\epsilon$ 的确定性相位零原生字
+$\widehat V_\epsilon$，在整个 $L$ 位逻辑空间满足精确算子等式
+
+$$
+\begin{aligned}
+ \widehat V_\epsilon J_L&=J_L\widehat U_\epsilon,\\
+ \widehat U_\epsilon
+ &=R_{x,c}(-\pi/4)\,\operatorname C_c(T^\epsilon)\,R_{x,c}(\pi/4)
+   =S_c^\dagger U_{\epsilon,0}S_c,
+ \qquad S_c=\operatorname{diag}(1,i)_c,\\
+ \widehat U_\epsilon
+ &=\frac12
+ \begin{pmatrix}
+ I+T^\epsilon&i(T^\epsilon-I)\\
+ i(I-T^\epsilon)&I+T^\epsilon
+ \end{pmatrix}_c.
+\end{aligned}
+\tag{74.1}
+$$
+
+这里的 $S_c$ 只表达矩阵关系，不是被调用的门或输入相位资源。
+等式涵盖任意比较位、全部源块字及任意未触动的纠缠参考。
+每个三位受控交换可以暂借一个原输入位，其完整作用为
+$\operatorname{Fredkin}\otimes I$，故该位及其与其余输入的纠缠均恢复。
+最后所有原分隔位为零；码外作用由实际脉冲决定。
+令
+
+$$
+ K_L=42(L-2)+7=126m-35,
+ \qquad C_L=42(L-1)+5=126m+5.
+$$
+
+可取以下有限资源界：
+
+$$
+\begin{aligned}
+ N_x&\le96m+2,&N_{CY}&\le116m,\\
+ N_{\rm pulse}^{(0)}&\le96m+116mK_L+2
+                       \le212mC_L+2,&
+ N_{\rm site}&=6m+1.
+\end{aligned}
+\tag{74.2}
+$$
+
+其中 $N_x,N_{CY}$ 是读取字中的逻辑 $R_x$ 和受控 $Y$ 数，
+第二正交调用数及第二正交寻址数均为零。
+
+证明。先复用
+[Single Reference，定理 2.1、3.1](FIB_LEGAL_GATES_SINGLE_REFERENCE_AND_CERTIFIED_READOUT.md)
+的七脉冲 $CY$、二十一脉冲 SWAP 与五脉冲相邻 $CZ$ 全码交织。
+相距 $d\ge1$ 个数据间隔的 $CY$ 可先路由一个端点至相邻位置，执行相邻 $CY$，
+再逆路由，成本至多 $42(d-1)+7\le K_L$。
+路由恢复所有其他原数据，不要求它们为空白或与参考解纠缠。
+$R_x(t)$ 直接是一处相位零脉冲。
+
+为取得本源读者需要的受控交换，在证明内部使用如下标准实矩阵提升。
+对三个活动数据位上的复矩阵 $M=A+iB$，以及与它们不同的原输入位 $d$，定义
+
+$$
+ J=\begin{pmatrix}0&-1\\1&0\end{pmatrix}=-iY,
+ \qquad \mathcal R_d(M)=A\otimes I_d+B\otimes J_d.
+\tag{74.3}
+$$
+
+$J^2=-I$ 直接给
+$\mathcal R_d(MN)=\mathcal R_d(M)\mathcal R_d(N)$、
+$\mathcal R_d(M^\dagger)=\mathcal R_d(M)^T$。
+故酉矩阵提升为实正交矩阵，而实矩阵 $F$ 满足
+$\mathcal R_d(F)=F\otimes I_d$。
+这些是生成门字的代数运算，不把输入改编码，也不假定 $d$ 是 $J$ 的本征态。
+最终矩阵等式作为复线性等式作用于原来的全部复输入。
+
+具体把已知一位门写成
+$U=e^{i\delta}R_z(\alpha)R_y(\beta)R_z(\gamma)$，
+所有旋转继续采用本卷 $R_a(t)=e^{-it\sigma_a}$ 的角度约定。
+在数据位 $q$ 和借位 $d$ 上有
+
+$$
+\begin{aligned}
+ \mathcal R_d(e^{i\delta}I_q)&=R_{y,d}(\delta),\\
+ \mathcal R_d(R_{z,q}(t))
+ &=\operatorname{CNOT}_{q\to d}R_{y,d}(-t)
+                         \operatorname{CNOT}_{q\to d},\\
+ \mathcal R_d(R_{y,q}(t))&=R_{y,q}(t)\otimes I_d.
+\end{aligned}
+\tag{74.4}
+$$
+
+第二式在 $q=0,1$ 两支分别为 $R_y(-t),R_y(t)$，
+因为 $XR_y(-t)X=R_y(t)$。
+因此一个 $U$ 的提升至多用四个 $R_y$ 和四个 CNOT；
+原三个活动位之间的 CNOT 为实矩阵，提升后仍为该 CNOT 张量 $I_d$。
+一位门的标量 $e^{i\delta}$ 必须保留为借位上的旋转，不能在提升前删去。
+
+取 (64.6)–(64.7) 的精确 Fredkin 分解：十二个一位 $U(2)$ 门及十个 CNOT，
+完整矩阵恰为实的 $F=\operatorname{Fredkin}$。
+这复用 [Barenco 等，quant-ph/9503016v1，引理 4.3、5.1–5.2、6.1，
+推论 5.3](https://arxiv.org/html/quant-ph/9503016v1) 的标准中间供应。
+其角度可完全固定：在 (62.6) 中令
+$V_s=e^{si\pi/4}R_x(s\pi/4)$，三个调用的符号为 $+,-,+$。
+每个单控制 $V_s$ 的 (62.5) 目标矩阵可取
+
+$$
+ C=R_z(\pi/4),\qquad
+ B=R_y(-s\pi/8),\qquad
+ A=R_z(-\pi/4)R_y(s\pi/8),
+\tag{74.5}
+$$
+
+控制矩阵为
+$P_s=\operatorname{diag}(1,e^{si\pi/4})
+=e^{si\pi/8}R_z(s\pi/8)$。
+将这些已知矩阵逐个代入 (74.4)，给至多四十八个 $R_y$、五十八个 CNOT，
+且由乘法性整字严格等于 $F\otimes I_d$。
+这里保留的是原精确分解，未使用只对经典输入可忽略的相对相位 Toffoli。
+特别地，若先删去控制相位，提升后的终点会残留借位旋转，不能得到上述恒等。
+
+最后令 $S=\operatorname{diag}(1,i)$、$\mathscr S=S^{\otimes L}$。
+仅在生成的每个逻辑门上使用矩阵恒等式
+
+$$
+ S R_y(t)S^\dagger=R_x(-t),\qquad
+ \mathscr S\operatorname{CNOT}_{a\to b}\mathscr S^\dagger=CY_{a\to b}.
+\tag{74.6}
+$$
+
+因此逐门把实提升字中的 $R_y(t)$ 换成 $R_x(-t)$、CNOT 换成 $CY$，
+无需执行 $\mathscr S$。
+Fredkin 只是交换两个数据位，保持完整字的 Hamming 重量，
+故与 $\mathscr S$ 交换；替换字的最终作用仍严格为 $F\otimes I_d$。
+这同时证明未知借位的恢复和参考保持，未从空白输入制备一个相位参考。
+标准实提升和受控门分解在此仅是这条实际读取字的中间计算，不单立一般综合定理。
+
+按 §64 的次序，交换块 $0,1$ 再交换块 $1,2$，共 $2m$ 个 Fredkin，给 $T$；
+倒序给 $T^{-1}$。
+每门可选不参与该门的第三块第一数据位为 $d$，并在该门结束时恢复它。
+$m\ge3$，该选择始终存在，且完全由公开布局决定。
+两个阶段可以借不同原位，不增加寄存器或量子初始化。
+于是全码受控循环至多使用 $96m$ 个 $R_x$ 和 $116m$ 个 $CY$。
+加上比较位首尾两次 $R_x$，结合上述全码路由即得 (74.2) 与第一条交织。
+$S^\dagger R_y(t)S=R_x(t)$，且 $S_c$ 与受控循环交换，给 (74.1) 的第二式；
+直接作比较位的二乘二块矩阵乘法给最后一式。
+每一步均为全码算子等式，故张量任意参考恒等后仍成立。∎
+

@@ -1,0 +1,28 @@
+#### 命题 3.3：只有配置置换与相位不能供应一般干涉
+
+固定正交配置基上的置换与对角相位只生成单项酉矩阵。
+若目标门把  $\lvert 0\rangle$  送到  $\lvert +\rangle=(\lvert 0\rangle+\lvert 1\rangle)/\sqrt2$ ，则任一该类门  $M$  满足
+
+<a id="eq-eq:monomialgap"></a>
+
+```math
+\inf_{|c|=1}\|M\lvert 0\rangle-c\lvert +\rangle\|\ge\sqrt{2-\sqrt2}.\tag{5}
+```
+
+
+**证明。**
+
+单项矩阵的乘积仍为单项矩阵，所以  $M\lvert 0\rangle$  是某个基矢乘相位。
+其与  $\lvert +\rangle$  的重叠模不超过  $1/\sqrt2$ 。
+两个单位向量在允许整体相位后的最小距离平方为  $2-2|\langle u,v\rangle|$ ，得到结论。
+
+**证毕。**
+
+
+非周期性可以使配置集合丰富，仍不能代替相干混合矩阵。
+AURIC 的非对角投影和复相位正是在这一步提供额外内容。
+更一般的非正交编码需要第 [8](#sec:gram) 节的完整 Gram 判据。
+
+
+<a id="section-4"></a>
+

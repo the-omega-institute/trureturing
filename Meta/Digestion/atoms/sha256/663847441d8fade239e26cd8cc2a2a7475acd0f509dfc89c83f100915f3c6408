@@ -1,0 +1,82 @@
+**Theorem 24.4 (failure of every faithful two-fibre mechanism).** For the source of Definition 24.2 under the unchanged full acquisition (22.2),
+
+$$
+C_{\rm stat}=2,
+\qquad C_{\rm on}\le3,
+\tag{24.7}
+$$
+
+but no successful source-refining realization satisfies $|\pi^{-1}(x)|\le2$ at every actual quotient vertex. The obstruction quantifies over every finite complete carrier, every fixed initialization, every total names-only update and every projection satisfying (24.1), including arbitrary noninjective updates. The unrestricted upper bound uses exactly three full states, all reachable on legal histories, and its decoder succeeds for every legal history and every permitted final error.
+
+Proof. Proposition 16.2 with $T(u)=|u|$ and $2\epsilon=1/2$ says that two full observation supports intersect precisely when the endpoints and integer lengths agree. Proposition 24.3 supplies their fibres, including an attained two-word fibre. A one-value static label therefore fails at its common permitted clock value $y=8$.
+
+For an attaining binary label, set $h(u)=0$ outside the cycles. In the unique cycle-history form in Proposition 24.3, set
+
+$$
+h\bigl(p_i\rho_mW_m^kW_m[0:j]\bigr)
+ =\begin{cases}
+ 1,&(m,i)\in\{(3,1),(7,2),(4,2)\},\\
+ 0,&\text{otherwise}.
+ \end{cases}
+\tag{24.8}
+$$
+
+Each two-word fibre in (24.5) has one label of each value. Define the decoder to return the unique legal word with the acquired endpoint and label and with $|y-|u||\le1/4$, rejecting if none exists. Two integer lengths compatible with the same $y$ must agree, since their difference is at most $1/2$. The fibre separation therefore gives uniqueness, while the actual word is a candidate at every allowed error. This proves success on the entire closed support and gives $C_{\rm stat}=2$.
+
+For the complete unrestricted machine take
+
+$$
+M=\mathbb Z/3\mathbb Z,\qquad m_0=0,\qquad
+U(q,a)=q,\qquad U(q,b)=q+1.
+\tag{24.9}
+$$
+
+Induction gives $\mu(u)=\#_b(u)\pmod3$ for every binary word. This one residue is the entire persistent value: no current vertex, route, cycle phase, parser or event index is supplied or stored elsewhere. Both updates are total. All three states occur on the legal words $\varepsilon,b,bb$.
+
+Only the two-word fibres need checking. Put $\theta_i=\#_b(p_i)$, so $(\theta_0,\theta_1,\theta_2)=(0,1,2)$. At a common cycle phase, the route and proper-cycle-prefix contributions to $\#_b$ cancel between the two histories. By (24.5) the shorter entry has two extra laps, so their residue difference, shorter entry minus longer entry, is
+
+$$
+\theta_i-\theta_\ell+2B_m
+ =\begin{cases}
+ 1,&m=3,\ (i,\ell)=(0,1),\\
+ 2,&m=7,\ (i,\ell)=(0,2),\\
+ 1,&m=4,\ (i,\ell)=(1,2).
+ \end{cases}
+\tag{24.10}
+$$
+
+Every difference is nonzero modulo three. Thus $\mu$ separates all $F$-fibres. The same decoder definition, with $\mu$ replacing $h$, proves recovery from precisely the final endpoint, complete residue and final $y$. It includes every transient cut, every proper cycle arc, every number of laps and the empty word with its full interval $[-1/4,1/4]$. This establishes the finite fully charged unrestricted success in (24.7).
+
+Suppose now that a successful realization satisfies (24.1) and all its fibre bounds. The three reached states $\mu(p_0),\mu(p_1),\mu(p_2)$ belong to $\pi^{-1}(v)$. Some pair $i<\ell$ must coincide. Choose its cycle $m$ from (24.5), so $n_\ell-n_i=2m$, and put
+
+$$
+x=U_{\rho_m}(\mu(p_i))
+  =U_{\rho_m}(\mu(p_\ell)).
+\tag{24.11}
+$$
+
+Here $U_c$ denotes iteration of the same total update along the fixed word $c$. Both extended histories are legal and end at $c_{m,0}$. Let
+
+$$
+R_m=\{\mu(u):u\in\mathcal P_o,\ z(u)=c_{m,0}\}.
+\tag{24.12}
+$$
+
+This nonempty set contains $x$ and has at most two elements by (24.1). Appending the actual lap word $W_m$ is legal from every such history and returns to $c_{m,0}$. Consequently $F_m=U_{W_m}$ restricts to a self-map of $R_m$. This uses only reached states; no equivariance on unreachable states or on illegal transitions is assumed.
+
+Every self-map $F$ of a nonempty set of size at most two satisfies $F^2=F^4$. On a singleton this is immediate. On two elements, an injective map is the identity or the transposition, whose square is the identity; a noninjective map is constant, and every positive power is that same constant map. Applying this elementary finite-map fact on $R_m$ gives
+
+$$
+\begin{aligned}
+\mu(p_i\rho_mW_m^4)&=F_m^4(x)=F_m^2(x)
+                      =\mu(p_\ell\rho_mW_m^2),\\
+z(p_i\rho_mW_m^4)&=c_{m,0}=z(p_\ell\rho_mW_m^2),\\
+|p_i\rho_mW_m^4|&=n_i+r_m+4m
+                 =n_\ell+r_m+2m
+                 =|p_\ell\rho_mW_m^2|.
+\end{aligned}
+\tag{24.13}
+$$
+
+The words are distinct because $p_0,p_1,p_2$ are prefix free, with respective beginnings $a,ba,bb$. Their common integer length is an allowed final clock value for each whole support. Thus endpoint, complete final state and final clock coincide for two distinct legal histories, contradicting success. This contradiction covers every encoding and initialization allowed in Definition 24.1 and uses no chosen colour rule or factorization of $M$. $\square$
+

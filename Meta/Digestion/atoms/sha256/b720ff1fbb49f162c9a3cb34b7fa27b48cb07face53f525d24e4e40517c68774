@@ -1,0 +1,188 @@
+### 定理 20.2（整个连续族的显式双边线性界）
+
+对定义 20.1 的每一对有限 $\varepsilon,\delta>0$，有
+
+$$
+ \frac1{1024}\left(1+\frac{\varepsilon}{\delta}\right)
+ \le\nu_{3,\varepsilon}(K_\gamma)
+ \le\left\lceil\frac52\left(1+\frac{\varepsilon}{\delta}\right)\right\rceil
+ \le\frac72\left(1+\frac{\varepsilon}{\delta}\right).
+\tag{20.3}
+$$
+
+上界可用 III 命题 17.3 的原有五报告协议组成的预选族达到；每个成员还在
+完整 $\mathcal M_3$ 上 $\gamma$-可靠，并在每个来源的每条允许
+$\varepsilon$ 误差历史上恰以五次报告停止。
+下界比较全部允许的确定性完整历史协议，不限制其预算或正则性。
+
+**证明。** 先由 III 引理 17.2 得到每个 $\gamma R_s$ 的严格正两项实现
+和普通初始秩二：只须将 (17.5) 的两个行因子同乘 $\gamma>0$。
+III 命题 17.3 给出其全域 $\gamma$-可靠、全 $\gamma$ 误差成功的协议
+$\Pi_{\gamma,s}$。限制为闭 $\varepsilon$ 误差历史后，同一协议仍可靠且成功。
+故 $K_\gamma\subseteq\mathcal I_3(\gamma)\subseteq\mathcal I_3(\varepsilon)$，
+且 $K_\gamma$ 非空；这也使定义 20.1 的覆盖数有意义。
+
+先计算 III 定义 18.1 的操作距离在这个具体族上的值。
+III (17.4) 给出 $a_0=15,a_1=18$ 恒定，且
+
+$$
+ \begin{aligned}
+ b^{(0)}(R_s)
+ &=\left(23+\frac52s-s^2-\frac{125}{44+s},
+           \frac{53}{2}+10s,\ \frac{19}{2}+s\right),\\
+ b^{(1)}(R_s)
+ &=\left(\frac{43}{2}-\frac{125}{44+s},\ \frac{43}{2},\ 9\right),\\
+ b^{(2)}(R_s)&=(3-s,10,1).
+ \end{aligned}
+\tag{20.4}
+$$
+
+对任意 $s,t\in[0,1/2]$，第一行首坐标之差为
+
+$$
+ (s-t)\left(\frac52-s-t+\frac{125}{(44+s)(44+t)}\right).
+\tag{20.5}
+$$
+
+括号内严格介于 $3/2$ 与 $3$ 之间，因为 $0\le s+t\le1$ 且
+$0<125/((44+s)(44+t))\le125/44^2<1/2$。
+第二行首坐标之差为 $125(s-t)/((44+s)(44+t))$。
+因此 (20.4) 的所有坐标差绝对值均至多 $10|s-t|$，而
+$b_1^{(0)}$ 的差恰为 $10|s-t|$。按 III (18.1)--(18.2)，包括
+$a_2=b_2^{(2)}$ 的同一重复真值坐标，有
+
+$$
+ d_{\mathrm{op}}(\gamma R_s,\gamma R_t)
+       =10\gamma|s-t|.
+\tag{20.6}
+$$
+
+III 引理 18.2 同时保证此距离控制每个实际原子字的读数差；
+使用这些坐标比较来源不表示在一次运行中取得不同切口的数据。
+
+令
+
+$$
+ n=\left\lceil\frac{5\gamma}{2\delta}\right\rceil,
+ \qquad t_j=\frac{2j+1}{4n}\quad(0\le j<n),\qquad
+ F=\{\Pi_{\gamma,t_j}:0\le j<n\}.
+\tag{20.7}
+$$
+
+这是只依赖 $\varepsilon,\delta$ 的有限预选族。对所有
+$s\in[j/(2n),(j+1)/(2n)]$，都有
+
+$$
+ |s-t_j|\le\frac1{4n},\qquad
+ d_{\mathrm{op}}(\gamma R_s,\gamma R_{t_j})
+       \le\frac{5\gamma}{2n}\le\delta.
+\tag{20.8}
+$$
+
+这些闭小区间覆盖整个 $[0,1/2]$，包括两个端点和全部交界点。
+它们给出通常闭半径有限网的显式中点构造；有限网及覆盖数的约定见
+Vershynin，[*High-Dimensional Probability*，第一版，§4.2，
+Definitions 4.2.1--4.2.2](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)。
+这里对网的计数只是一维区间计数。
+
+对每个 $j$，保持 $\Pi_{\gamma,t_j}$ 的所有规则不变。
+具体地，取得 $u_0$ 后执行 $N$ 并取得 $u_1$，
+当 $u_1\le\gamma\tau_{t_j}$ 时执行 $L_0,N,N$，否则执行 $N,L_0,N$，
+其中 $\tau_t=17+t/4$。每个原子后立即必读；两分支均为四原子加初读，
+恰有五报告。在后一分支，$a_2=b_2^{(2)}$ 始终共用原先取得的同一报告，
+不增加报告或误差变量。末端仍使用容限 $\gamma$ 的 III (13.5)
+严格正共同来源系统，只在无解时输出 $2$。
+这正是 III 命题 17.3 的协议，故其完整环境域 $\gamma$-可靠性保留，
+从而也在完整环境域上 $\varepsilon$-可靠。
+
+将 III 定理 18.3 直接用于中心 $C_j=\gamma R_{t_j}$、实际来源
+$S=\gamma R_s$ 及 (20.8)，得到
+
+$$
+ \{\gamma R_s:s\in[j/(2n),(j+1)/(2n)]\}
+       \subseteq\operatorname{Succ}_\varepsilon(\Pi_{\gamma,t_j}).
+\tag{20.9}
+$$
+
+该定理的实际历史对应在这里取如下精确参数：对这个固定 $S$ 的任意
+允许报告历史 $y_i$，以其实际累计矩阵 $A_i$ 定义中心误差
+
+$$
+ \eta_i^{C_j}
+   =\eta_i^S+\operatorname{tr}(A_i(S-C_j)),\qquad
+ |\eta_i^{C_j}|\le\varepsilon+\delta=\gamma.
+\tag{20.10}
+$$
+
+初读也包含在内。相同的完整父历史使同一个确定性成员执行同一下一原子，
+所以 III (18.5) 的归纳给出中心上的同一完整合法历史；
+并非只比较未执行分支的数值。中心在全部闭 $\gamma$ 误差历史上成功，
+故同一成员在 $S$ 的原始历史上以同一末端判定输出 $2$。
+这里固定 $j$ 后才量化 $S$ 的全部历史，误差可任意相关并依赖历史，
+等号 $d_{\mathrm{op}}=\delta$ 和全部闭误差端点均被包含。
+于是 (20.9) 对每个小区间成立，给出 (20.2) 和
+$\nu_{3,\varepsilon}(K_\gamma)\le|F|\le n$。
+由 $X>1$，还有 $n\le5X/2+1\le7X/2$，证明上界。
+
+下界先取 $h\le1/1024$。置
+
+$$
+ m=\left\lfloor\frac1{512h}\right\rfloor,\qquad
+ s_j=256hj\quad(0\le j\le m),\qquad
+ P_h=\{\gamma R_{s_j}:0\le j\le m\}\subseteq K_\gamma.
+\tag{20.11}
+$$
+
+因为 $256hm\le1/2$，全部参数合法；
+$|s_i-s_j|\ge256h$ 对 $i\ne j$ 成立。
+条目 $(\gamma R_s)_{00}=\gamma(3-s)$ 区分参数，故 $|P_h|=m+1$。
+
+若一个全域 $\varepsilon$-可靠协议同时全误差覆盖其中两个来源，
+在单位尺度来源的每份实际报告上同乘 $\gamma$ 再交给该协议，
+并执行其同一动作、停止和输出，便得到一个全域
+$\alpha$-可靠协议，其中 $\alpha=\varepsilon/\gamma=1-h$。
+确切地，对每个固定 $T\in\mathcal M_3$ 和每个实际累计字 $A_i$，
+$\operatorname{tr}(A_i\gamma T)=\gamma\operatorname{tr}(A_iT)$，
+而 $[-\alpha,\alpha]$ 恰同乘 $\gamma$ 成为 $[-\varepsilon,\varepsilon]$。
+确定性完整历史规则使此对应逐动作成立，包括初读、每次必读、停止和无限历史。
+$T\mapsto\gamma T$ 是完整 $\mathcal M_3$ 上的保秩双射，
+所以环境域可靠性没有缩小，严格正因子和同一个固定来源也保留。
+因此所得协议将同时在两个单位来源 $R_{s_i},R_{s_j}$ 上
+全 $\alpha$ 误差成功。
+
+这正违反 III 引理 21.2：其条件为
+$0<h\le1/1024$、$\alpha=1-h$ 及参数间距至少 $256h$，
+全部由 (20.11) 满足。该引理已比较任意确定性完整历史协议，
+包括任意长尾及无共同预算者，其共同伴随是实际严格正秩一来源。
+这里仅作正比例缩放，不更换来源族、切口或闭端点的语义。
+故每个全域 $\varepsilon$-可靠成员至多全误差覆盖 $P_h$ 的一个元素。
+覆盖整个 $K_\gamma$ 的任何有限族也须覆盖 $P_h$，从而
+
+$$
+ \nu_{3,\varepsilon}(K_\gamma)
+   \ge m+1
+   =\left\lfloor\frac X{512}\right\rfloor+1
+   >\frac X{512}\ge\frac X{1024}
+       \qquad(h\le1/1024).
+\tag{20.12}
+$$
+
+若 $h>1/1024$，则 $X<1024$，而 $K_\gamma$ 非空使空菜单不能覆盖，
+故 $\nu_{3,\varepsilon}(K_\gamma)\ge1>X/1024$。
+这补齐全部 $h\in(0,1)$，连同上界得到 (20.3)。∎
+
+本定理复用的数学供应是 III 引理 17.2、命题 17.3、引理 18.2、
+定理 18.3 及引理 21.2；有限网只作为上述中间步骤。
+具体族的操作距离 (20.6)、连续参数菜单 (20.7)--(20.9) 与
+全参数打包桥 (20.11)--(20.12) 给出这里的双边数量结论，属于本模型内推导
+（repo-derived）。有限状态区分的相关文献为 van den Bos--Vaandrager，
+[*State Identification for Labeled Transition Systems with Inputs and Outputs*，
+Definitions 11、16 及 Theorem 6.1](https://arxiv.org/html/1907.11034v2)；
+其有限状态模型和 Theorem 6.1 的两两不相容前提不供应本定理的连续族速率。
+
+式 (20.3) 只对给定的 $K_\gamma$ 成立，完整环境域上未附加来源幅度界。
+其量词仍为 (20.2)，不构造未知来源上的在线成员选择器；
+不同时执行或拼接不同成员的轨迹。常数仅为充分的绝对常数。
+本定理不对整个 $\mathcal I_3(\gamma)$ 给出线性界，
+也不涉及最优常数、有效实数可行性判定或位复杂度。
+

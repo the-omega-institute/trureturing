@@ -1,0 +1,64 @@
+**Corollary 3.1 (Exact initial thresholds and limiting ranges).**
+For the moments in Definition 1.2,
+
+$$
+\theta_0=-1,\qquad
+\theta_1=-\frac34,\qquad
+\theta_2=-\frac{13}{23},\qquad
+\theta_3=-\frac{25}{58}.
+$$
+
+The sequence $(\theta_j)_{j\ge0}$ strictly increases to $0$.
+For every real $a$,
+
+$$
+\begin{aligned}
+\bigl[\ \forall n\ge2,\ F_{n,a}\text{ is CM}\ \bigr]
+ &\Longleftrightarrow a\le-1,\\
+\bigl[\ \forall n\ge2,\ -F_{n,a}\text{ is CM}\ \bigr]
+ &\Longleftrightarrow a\ge0.
+\end{aligned}
+$$
+
+*Proof.* Polynomial integration gives
+
+$$
+\begin{array}{c|cccc}
+j&0&1&2&3\\ \hline
+I_j&1&4/3&28/15&96/35\\
+B_j&1/3&8/15&92/105&464/315
+\end{array}
+$$
+
+and substitution gives the four displayed values.
+To prove strict increase, let $\mathbb E_j$ denote expectation with
+density $A(v)^j/I_j$ on $[0,1]$, and set
+$\mu_j=\mathbb E_j[v^2]=B_j/I_j$. Then
+
+$$
+\mu_{j+1}-\mu_j
+ =\frac{\mathbb E_j[v^4]-\mu_j^2}{1+\mu_j}>0.
+$$
+
+The numerator is the variance of a nonconstant continuous function
+under a strictly positive density. Since $0<\mu_j<1$,
+$\theta_j=(1-\mu_j^{-1})/2<0$, and $\theta_j$ strictly increases.
+
+For $0<c<d<1$, let $\mathbb P_j$ be the same probability measure.
+Its mass on $v^2\le c$ satisfies
+
+$$
+\mathbb P_j(v^2\le c)
+ \le \frac1{1-\sqrt d}
+          \left(\frac{1+c}{1+d}\right)^j\longrightarrow0.
+$$
+
+Indeed the numerator defining this probability is at most $(1+c)^j$,
+while the normalizing integral is at least
+$(1-\sqrt d)(1+d)^j$. Hence
+$\liminf_j\mu_j\ge c$ for every $c<1$, whereas $\mu_j<1$.
+Thus $\mu_j\to1$ and $\theta_j\to0$.
+Theorem 2.1 now gives the simultaneous ranges by taking,
+respectively, $\inf_{j\ge0}\theta_j=-1$ and
+$\sup_{j\ge1}\theta_j=0$. $\square$
+

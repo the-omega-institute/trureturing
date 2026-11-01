@@ -1,0 +1,20 @@
+**Theorem 117.3 (exact erased-event capacity on the whole source).** With Definition 117.1's entire original source, selector and total receiver,
+
+$$
+D_{\rm blind}^{-e}(\pi^-)=2.
+$$
+
+Definition 117.2 is causal and total on every original finite raw-event prefix. At every actual first freeze of every accepted history in either original $E_0$ or $E_1$, its frozen value is exactly that history's original canonical colex rank in $\mathcal S_b$. Consequently the same $\mathscr D_{\pi^-}$ recovers the actual selected past from its original inputs. The lower bound applies to every legal one-value implementation, allowing arbitrary permitted recoding and use of the bare fields.
+
+Proof. First consider all-path definition and persistence. Initially and throughout an unfinished acquisition, $z=0$. Once a seed is acquired, it is merely an original input; neither seed changes this initial supplementary value. At each finite raw prefix, either the register was already latched, there is no completed marker, or the displayed marker function applies. These alternatives are exhaustive. Each returns an element of $\{0,1\}$, even on rejected paths, extra-one identity blocks, payload return circles and unfinished payloads. The supplement never tests whether the actual history will accept. The old/new synchronization and original generic phases suffice to recognize its transaction, with no current decision argument. Induction on raw-event length therefore gives a unique legal supplementary value at every finite original prefix. Infinite noncompletion has all these finite values; no termination or bookmark acquisition is asserted for such a path. The unchanged selector supplies its original unique first freeze on every complete marker word, at most at marker 57. The triggering write precedes that latch, and all later raw events hold its value.
+
+For canonical output, the following classification is on accepted words only; it does not restrict the preceding total program or the original source. Reuse the selected-cell and disjoint-target classification of §115.4. A first zero among the initial 27 markers selects the unique past $1^{c-1}0$ at its address. The update writes its singleton rank 0. Otherwise the prefix is $1^{27}$, leaving exactly two ones among the remaining 31 markers. Let $q$ be the number of ones in the identity block at positions 28–30.
+
+If $q=0$, the all-zero identity block selects at marker 30. No identity one was seen, so $z=0$, its singleton rank. If $q=2$, the second identity one clears the register. All later accepted tail markers are zero and have old $\beta=29$, so the register remains 0 up to the two-one target $j=6+t$. Each pair has its own target, and the selected past is a singleton. A third identity one is outside the accepted domain but was already covered by the total function.
+
+Suppose $q=1$, with identity position $i$, and let $k$ be the unique tail-one position. Identity acquisition leaves $z=\gamma(i)$. Before any tail one, zeros at $j=1,2,3$ preserve this value. The only accepted selected pairs are the retained early pairs, and their triggering writes are
+
+| Tail trigger | Identities in the seed-1 selected pair, in colex order | Values written |
+| --- | --- | --- |
+| $j=1,\ a=1$ | $i=1,2$ | $\gamma(1),\gamma(2)=0,1$ |
+| $j=3,\ a=1$ | $i=2,3$ | $1-\gamma(2),1-\gamma(3)=0,1$ |

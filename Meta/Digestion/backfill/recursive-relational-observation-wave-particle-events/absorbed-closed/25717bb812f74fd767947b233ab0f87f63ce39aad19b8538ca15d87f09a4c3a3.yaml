@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:25717bb812f74fd767947b233ab0f87f63ce39aad19b8538ca15d87f09a4c3a3
+  normalized_sha256: sha256:25717bb812f74fd767947b233ab0f87f63ce39aad19b8538ca15d87f09a4c3a3
+cas_ref: sha256:25717bb812f74fd767947b233ab0f87f63ce39aad19b8538ca15d87f09a4c3a3
+coverage_gids:
+  - gid: D5/S3/Geometry/ProbabilityTransport/CostCoupling.finite_kr_attained
+    target_statement_id: sha256:2c4fdbe125051ba377ede2fa0d8bb39433a3aa5ff1e35553b6f0f3732382fd4f
+receipts:
+  unresolved_subitems: []

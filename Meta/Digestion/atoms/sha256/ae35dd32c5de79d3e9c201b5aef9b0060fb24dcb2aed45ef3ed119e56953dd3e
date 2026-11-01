@@ -1,0 +1,10 @@
+**Definition 9.1 (Unresolved equality and exclusion).** For the past-visible class of Definition 4.1, exact attainment implies (4.11), the finite spatial absolute-continuity quotient, within-phase synchronization, (6.5), and all the necessary guarded original-loss identities (7.2). A remaining question is whether any actual finite phase-type deterministic predictive family can satisfy all those identities with risk $c_\star$, or whether every such family is excluded. In particular, under exact attainment the equality
+
+$$
+F_{\tau_{l+r}(c)}=F_{\tau_r\tau_l(c)}
+\quad(c\in C_+,\ l,r\ge2)
+\tag{9.1}
+$$
+
+is still unproved here. Mutual absolute continuity and a common merging word permit unequal first-gap rows within one phase; Proposition 8.2 rules out deducing (9.1) from the posterior band alone. Proposition 7.2 excludes only the singleton-class branch. The reductions do not establish nonattainment for the general past-visible class, root summability for arbitrary finite-hidden laws, uniform rates or risk gaps, or finite visible order.
+

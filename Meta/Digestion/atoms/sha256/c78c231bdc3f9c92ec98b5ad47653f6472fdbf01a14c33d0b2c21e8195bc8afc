@@ -1,0 +1,185 @@
+**Theorem 14.5 (Exact value and every actual equality law through the
+second transition).** For every fixed $2\sqrt2<R<2\sqrt6$ there is an
+integer $A_R$ such that every integer pair $a\ge A_R$,
+$1\le h\le R\sqrt a$ satisfies
+
+$$
+M(a,h)=\min\{m_1(a,h),m_2(a,h)\}.
+\tag{14.35}
+$$
+
+The infimum on the full domain of Definition 1.1 is attained.
+Up to arbitrary permutations of the labels, every minimizing law is
+(13.19) at $p_1$ when $m_1$ attains this minimum, or, when $h\ge2$,
+
+$$
+\begin{gathered}
+|C|=a+2=m,\quad |D|=h-1=n,\qquad
+x_{\{k\}}=p_2/n\quad(k\in D),\\
+x_C=ap_2-1,\qquad
+x_{C\setminus\{i\}}=\frac{2-(a+1)p_2}{m}\quad(i\in C),\\
+x_T=0\quad\hbox{for every other nonempty }T,
+\end{gathered}
+\tag{14.36}
+$$
+
+when $m_2$ attains the minimum. These conditions are necessary and
+sufficient. At an exact tie the two classes are both included and
+there are no further minimizing laws. A nontrivial convex combination
+of distinct minimizing laws is not a minimizing law.
+The scalar parameters are unique within each branch.
+All actual marginals in these laws are positive, including the
+endpoint degeneracies.
+
+**Proof.** The existing comparisons (14.3) are actual mean-$a$ laws.
+For completeness their total tail mass is $u$, their full-core mass
+is $z=1-j+(m-2)u$, and their total missing-one mass is $w=j-ru$.
+The scalar intervals in Definition 14.1 give $z,w\ge0$, and
+
+$$
+u+z+w=1,\qquad u+mz+rw=a.
+\tag{14.37}
+$$
+
+Every tail marginal is $u/n>0$, and every core marginal is
+$1-u-w/m=(a-u)/m>0$. The energy is
+
+$$
+\frac{n^2}{u}+\frac{m^3z+r^3w}{((a-u)/m)^2}=F_j(u).
+\tag{14.38}
+$$
+
+The scalar minima exist, by Proposition 5.2 for $j=1$ and by the
+closed interval in (14.1) for $j=2$; uniqueness also follows from
+(14.30). Thus these laws prove the upper bound in (14.35) with
+actual attainment of each scalar branch.
+
+For $1\le h\le(5/2)\sqrt a$, use Theorem 13.5 with its fixed upper
+ratio $5/2<2\sqrt2$. It proves $M=m_1$ and every equality law there.
+When $h\ge2$, an attaining second-family law cannot be one of those
+first-family laws: for sufficiently large $a$, exactly $a+2$ of
+its marginals exceed $1/2$, whereas exactly $a+1$ first-family
+marginals do. Therefore $m_2>m_1$ in this portion. When $h=1$ its
+defined value is $+\infty$. This proves all claims on this portion
+by direct reuse of the published theorem, uniformly also for bounded
+$h$ and for $h/\sqrt a\to0$.
+
+Now take $5/2\le q\le R$. If $H(x)>U$, it already exceeds the
+minimum in (14.35), since $m_j\le S_j$ for each $j$.
+Otherwise Lemmas 14.2--14.4 apply to this same actual law, with
+$j=1$ or $j=2$, and give
+
+$$
+H(x)\ge m_j(a,h)+a^3e
+\ge\min\{m_1(a,h),m_2(a,h)\}.
+\tag{14.39}
+$$
+
+This proves the lower bound for every law on every nonempty subset;
+no existence of a global optimizer was assumed in deriving it.
+Together with (14.38) it proves (14.35) and attainment.
+
+Suppose equality holds. Then (14.39) forces $m_j$ to attain the
+minimum and $e=0$. Every positive-mass type meeting $D$ is a tail
+singleton; $u=p_j$. Equality in the Cauchy and strict Jensen steps
+of (14.29) forces
+
+$$
+t_k=p_j/n\quad(k\in D),\qquad y_i=(a-p_j)/m\quad(i\in C).
+\tag{14.40}
+$$
+
+With only tail singletons, $\Delta_i=0$ and the part of $R_i$ on
+$A$ is exactly $c_mp_j$. Consequently the exact identity (14.27)
+reduces to the expression before Jensen in (14.29) plus
+
+$$
+\mathbb E\left[\sum_{i\in C}\frac{\rho_i}{y_i^2};A^c\right]\ge0.
+\tag{14.41}
+$$
+
+Equality makes this term zero. On a nonempty core-only type, the
+only integer zeros of $\sum_i\rho_i=Q(L)$ are $L=r$ and $L=m$.
+Thus the only remaining possible types are $C$ and the
+$C\setminus\{i\}$. If their masses are $z,b_i$, normalization and
+the original mean force
+
+$$
+z=1-j+(m-2)p_j,\qquad \sum_i b_i=j-rp_j.
+$$
+
+Their equal marginals (14.40) give
+$1-p_j-b_i=(a-p_j)/m$, hence $b_i=(j-rp_j)/m$ individually.
+This is precisely (13.19) or (14.36), including every asserted zero.
+Conversely (14.38) proves sufficiency whenever the branch attains
+the smaller value. The partition is recovered from the large and
+small actual marginals, so no additional equality partition or law
+is lost by relabeling.
+
+For the endpoint assertions in the second family, at $p=1/a$ the
+full-core mass vanishes and the missing-one masses are
+$(a-1)/(am)>0$; at $p=2/(a+1)$ the missing-one masses vanish and the
+full-core mass is $(a-1)/(a+1)>0$. The tail and core marginals just
+computed remain positive at both endpoints. The first family's cap
+and its positive marginals are already described in (13.19)--(13.20).
+The second scalar minimum is at its lower endpoint if
+$G_2'(1/a)\ge0$, at its upper endpoint if
+$G_2'(2/(a+1))\le0$, and otherwise at the unique zero of $G_2'$ in
+between. Strict convexity (14.30) includes the cases of zero endpoint
+derivative, so these degeneracies introduce no extra scalar minima.
+
+Finally, every winning second-family law is in the compact-ratio
+portion, and Lemma 14.2 applied to it gives $ap_2\ge3/2$.
+In particular it has a positive full-core mass of cardinality $a+2$.
+A mixture that is a first-family minimizing law cannot contain such
+a component, because the first-family support has no type of that
+cardinality. A mixture that is a second-family minimizing law cannot
+contain a first-family component: that component has positive
+singleton masses at $h$ distinct labels, whereas the second-family
+law has singleton masses only at $h-1$ labels. Among components in
+the same family, positivity of every tail singleton forces their
+tail sets to be contained in the resulting law's tail set; equality
+of their cardinalities forces the tail sets to agree. The scalar
+parameter is unique, so all such components are the identical law.
+This proves the assertion excluding nontrivial mixtures, also at a tie.
+
+The new lower bound, mean-aware residual and equality reconstruction
+are repo-derived consequences of the common-law model. The reused
+suppliers are Lemma 7.1 and the scalar phase evaluation in Theorem
+7.2, the actual comparison families in Section 3 and (13.19), and
+Theorem 13.5 on the lower portion. The adjacent-incidence polynomial
+in (14.15)--(14.17) extends the identity of Incidence Lemma 13.4 to
+a core whose lower adjacent size need not equal the original mean.
+The finite graph reductions and realizations in the universal-vertex,
+sink-incidence and higher-capacity volumes, and the moving-mean
+phases in *CDSO capacity crossovers and rare phases*, have different
+parameter domains and do not supply this growing-surplus equality
+classification. The elementary weak-duality and convexity principles
+are literature-attested only in the intermediate roles cited in
+Lemmas 14.3--14.4.
+
+The normalization is the maximum-degree denominator without
+$1/\sqrt2$ in Albalahi--Das--Ali--Barman--Hamza, *On the hyperbolic
+Sombor index and its counterpart*, DOI
+[10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+§1, p.109. Its Conjecture 4.1 supplies historical graph motivation.
+Albalahi, *On Two Conjectures Concerning the Hyperbolic Sombor Index
+and Its Counterpart*, DOI
+[10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217),
+Proposition 2.1, treats connected graphs of order $5\ell+7$ and
+cyclomatic number $\ell$; its Theorem 2.2 is a graph maximum theorem.
+Smirnov, *Bicyclic Graphs with Maximum Complementary Diminished
+Sombor Index*, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164),
+Theorem 2.1, is also a finite connected-graph maximum theorem.
+Neither is a premise for (14.35). The full text of Zhao--Zhao,
+DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+is not an input; its possible overlap remains unassessed. No worldwide
+priority assertion is made.
+
+The range stops strictly below $2\sqrt6$; no assertion includes
+that third boundary, growing core index, a least threshold, a
+small-parameter classification, or an extremal connected finite
+graph with prescribed budgets. The finite-value and equality parts
+of Open problem 7.3 are resolved here only on the stated range. ∎
+

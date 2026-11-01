@@ -1,0 +1,40 @@
+**Proposition 22.1 (The supplied twenty-letter comparator at its actual scope).** The whole weighted construction of Theorem 4.4 at $r=4$ gives an actual rich image on twenty letters, with original-source morphism $\pi_4$, row
+
+$$
+k=(1,1,1,1,1,2,4,8,16),\qquad H(k)=35,
+$$
+
+and ordinary exponent $e_4$. Its literal representative $\widehat\eta=\pi_4\circ\varphi$, acting on that same $u_9$, has the same infinite image, the marker $p=a=\pi_4(0)$, and
+
+$$
+\widehat h=(2,2,2,2,3,5,9,17,33),\qquad
+H(\widehat h)=75,\qquad
+(C_i)_{i=0}^7=(1,1,1,1,1,1,1,33).
+\tag{107}
+$$
+
+Its original budgets and margins are
+
+$$
+\begin{aligned}
+(J_i)_{i=0}^7
+ &=\tfrac1{80}(163,169,187,241,403,729,1387,2721),\\
+(J_i-C_i)_{i=0}^7
+ &=\tfrac1{80}(83,89,107,161,323,649,1307,81).
+\end{aligned}
+\tag{108}
+$$
+
+In particular this comparator satisfies all eight strict budgets, at total literal length $75$ on twenty actual letters.
+
+*Proof.* We reuse the weighted construction, its richness and its complete ordinary-exponent theorem as a whole from Dvořáková–Pelantová, [arXiv:2509.06104v1, Definition 11, Proposition 13, Theorem 2 and Appendix Lemma 21](https://arxiv.org/pdf/2509.06104v1), equivalently journal Definition 12, Proposition 14, Theorem 2 and Appendix Lemma 22 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600). The parameter is their spectral $d=4$. Definition 12 gives palindromic images of the displayed lengths, with disjoint alphabets and the maximum possible number of distinct letters in each image, and states actual alphabet size $d+2^d=20$. The row sum is $4+(1+2+4+8+16)=35$. None of these supplied word or ordinary-exponent conclusions is replaced by a length-only argument.
+
+Since $\varphi(u_9)=u_9$, the composition has exactly the same output word. The letter $a=\pi_4(0)$ occurs in no other block. Thus
+
+$$
+\widehat\eta(i)=a\pi_4(i+1)\quad(i<8),\qquad
+\widehat\eta(8)=a\pi_4(8)\pi_4(8).
+$$
+
+The following words after $a$ are palindromes free of $a$, and the resulting morphism is injective by the disjoint-block argument of Theorem 8.2. This proves literal membership. Taking lengths gives (107), with sum $75$. For $i<7$ the terminal letters of $\pi_4(i+1)$ and $\pi_4(8)$ lie in disjoint alphabets, so $s_i=\varepsilon$. For $i=7$ the exact common suffix is $\pi_4(8)$, of length $16$: it cannot extend leftward, where the marker $a$ meets a nonmarker. This gives the values of $C_i$. The row satisfies (85) with $(h_0,h_1,h_2,h_3,t)=(2,2,2,2,3)$. Applying the exact original budgets (86) gives (108), all strictly positive. These compatibility values concern the supplied twenty-letter word and its two displayed rows; they give no five-letter construction. $\square$
+

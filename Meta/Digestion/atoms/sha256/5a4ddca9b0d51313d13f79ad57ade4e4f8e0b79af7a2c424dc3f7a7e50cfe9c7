@@ -1,0 +1,185 @@
+**Theorem 13.5 (The full first phase: finite value and every equality law).**
+For every fixed $0<R<2\sqrt2$ there is an integer $A_R\ge14$ such that
+all integers $a\ge A_R$ and $1\le h\le R\sqrt a$ satisfy
+
+$$
+M(a,h)=m_{a,h}
+=\min_{0<u\le1/a}\left\{
+\frac{h^2}{u}+\frac{a^2r^2}{a-u}
++\frac{(a-1)(2a+1)r^3u}{(a-u)^2}\right\}
+=\Phi_{a,h}(u_{a,h}).
+\tag{13.18}
+$$
+
+The infimum over the original full actual-law domain is attained.
+Up to arbitrary permutations of all $s=a+1+h$ labels, every minimizing
+law, and only a minimizing law, has the following masses:
+
+$$
+\begin{gathered}
+|C|=r,\qquad D=[s]\setminus C,\qquad |D|=h,\\
+x_{\{j\}}=\frac{u_{a,h}}h\ (j\in D),\qquad
+x_C=(a-1)u_{a,h},\qquad
+x_{C\setminus\{i\}}=\frac{1-au_{a,h}}r\ (i\in C),\\
+x_T=0\quad\hbox{for every other nonempty }T.
+\end{gathered}
+\tag{13.19}
+$$
+
+The parameter is the unique constrained scalar minimizer. Its exact
+integer split and capped value are
+
+$$
+\begin{cases}
+0<u_{a,h}<1/a,&h^2-2a\le6,\\
+u_{a,h}=1/a,&h^2-2a\ge7,
+\end{cases}
+\qquad
+m_{a,h}=\frac{a(a+1)^3}{a-1}+ah^2
+\quad\hbox{in the second case}.
+\tag{13.20}
+$$
+
+In particular all missing-one masses vanish at the cap, without losing
+positivity of any actual marginal.
+
+**Proof.** First consider $1\le h\le\sqrt a$. Incidence Theorem 14.4
+applies with its fixed upper ratio $1<\sqrt2$: its domain has the same
+$s=a+1+h$, $\mathbb E K=a$, actual positive $y_i$ and $H$, and its
+scalar expression is exactly the one in (13.18). It proves (13.18),
+attainment and (13.19) uniformly on this entire portion, including
+bounded $h$ and $h/\sqrt a\to0$. Its fixed threshold is independent of
+$h$. This is direct reuse, not a fixed-$h$ extrapolation.
+
+For the remaining $\sqrt a\le h\le R\sqrt a$, use Lemmas 13.2--13.4
+with $R_*$. A law with $H>U_{a,h}$ already has $H>m_{a,h}$, because
+$U_{a,h}$ is one actual member of the scalar family. Any other law
+has the separated partition and satisfies the finite hypothesis
+$\Lambda>(r/a)P_{a,h}$ of Lemma 12.4 by (13.15). That lemma is a finite
+statement for arbitrary integers $a\ge4$, $h\ge1$ and any partition of
+sizes $r,h$; its proof has no fixed-width premise. With
+$e=\mathbb E[(K-1);A]\ge0$, it gives
+
+$$
+H\ge m_{a,h}+\left(\Lambda-\frac raP_{a,h}\right)e
+\ge m_{a,h}+a^3e.
+\tag{13.21}
+$$
+
+Thus the lower bound holds for every original law, with arbitrary
+cardinalities and zero type masses. Definition 5.1 at $u=u_{a,h}$
+supplies an actual attaining law, proving the value and attainment.
+There is no need to infer attainment from compactness of the
+positive-marginal domain.
+
+For completeness the equality argument from Theorem 12.5 is finite
+once strict payment holds, and applies here with precisely these
+parameters. If $H=m_{a,h}$, (13.21) forces $e=0$. Since $K-1$ is a
+nonnegative integer on $A$, every positive-mass type meeting $D$ is a
+tail singleton. The mean cap relation (13.12) then gives $u\le1/a$.
+The retained identity (12.19) and its Cauchy and strict Jensen steps
+in (12.21) give, with $b_a=(a-1)(2a+1)$,
+
+$$
+H\ge\sum_{j\in D}t_j^{-1}
++\sum_{i\in C}\left(\frac{a^2}{y_i}+\frac{b_au}{y_i^2}\right)
+\ge\Phi_{a,h}(u)\ge m_{a,h}.
+\tag{13.22}
+$$
+
+All inequalities must be equalities. Uniqueness of the constrained
+scalar minimum, tail Cauchy and strict convexity of
+$g_u(y)=a^2/y+b_au/y^2$ imply
+
+$$
+u=u_{a,h},\qquad t_j=u_{a,h}/h,\qquad
+y_i=(a-u_{a,h})/r\quad(i\in C).
+\tag{13.23}
+$$
+
+With only tail singletons, the exact residual (12.28) is a sum of
+$\mathbb E[\rho_i;A^c]/y_i^2$, where
+
+$$
+\rho_i=(1-I_i)(2a+1)(a-L)+I_i(r-L)(r-L-1)\ge0,
+\qquad \sum_{i\in C}\rho_i=Q(L).
+$$
+
+The sum vanishes only when every positive-mass core-only type has
+$Q(L)=0$. On such a type $1\le L\le r$; its only integer zeros are
+$a$ and $r$. Consequently the only remaining masses are $z=x_C$ and
+$b_i=x_{C\setminus\{i\}}$. Normalization and the same mean constraint
+force
+
+$$
+z+\sum_i b_i=1-u,\qquad rz+a\sum_i b_i=a-u,
+\qquad z=(a-1)u,\quad \sum_i b_i=1-au.
+$$
+
+Equation (13.23) then gives
+$1-u-b_i=(a-u)/r$, so $b_i=(1-au)/r$ for each $i$. This proves
+necessity of every mass and zero in (13.19). Conversely, for every
+$0<u\le1/a$ these masses are nonnegative, sum to one and have mean
+$u+r(a-1)u+a(1-au)=a$. They induce precisely the positive marginals
+$u/h$ and $(a-u)/r$, and their energy is $\Phi_{a,h}(u)$ by (5.4).
+Taking $u=u_{a,h}$ proves sufficiency, including the boundary where
+some type masses vanish.
+
+Take $A_R$ to be at least $14$ and the maximum of the finitely many
+thresholds above and the one from Incidence Theorem 14.4 at upper
+ratio $1$. Every one depends only on $R$. For $a\ge14$,
+
+$$
+2a+6<\Gamma_a
+=2a+6+\frac{12a-5}{(a-1)^2}<2a+7.
+$$
+
+Proposition 5.2 and integrality of $h^2-2a$ now give exactly (13.20);
+no zero cap derivative occurs. At the cap, (13.19) has
+$x_C=(a-1)/a$, $x_{\{j\}}=1/(ah)$, all missing-one masses zero,
+and actual marginals $(a-1)/a$ on $C$ and $1/(ah)>0$ on $D$.
+Thus neither a strict-support premise nor a nondegeneracy premise
+has been inserted.
+
+This is a repo-derived extension of the finite all-law comparison,
+not a literature minimum theorem. The scalar identities and actual
+family are those of Section 5 and Incidence Definition 13.2; the
+uniform compact-ratio core certificate is Lemma 7.1; the finite
+common-law and cap-payment identities are Incidence Lemma 13.4 and
+Lemma 12.4. The new bridge is the uniform separation gap (13.6) and
+the cap-adjusted certificate (13.8)--(13.17). The bounded strip of
+Theorem 12.5 and the fixed subcritical ranges of Incidence Theorem
+14.4 do not themselves supply this bridge. The other CDSO volumes
+on universal vertices, sink incidences, higher-capacity profiles and
+moving-mean crossovers address different graph budgets or numbers
+of extra labels and are not used as this growing-$h$ theorem.
+
+The CDSO normalization is the maximum-endpoint-degree denominator
+without a factor $1/\sqrt2$ in A. M. Albalahi, S. Das, A. Ali,
+J. Barman and A. E. Hamza, *On the hyperbolic Sombor index and its
+counterpart*, Discrete Math. Lett. 16 (2025), 108--115, p.109,
+DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176),
+[original](https://www.dmlett.com/archive/v16/DML25_v16_pp108-115.pdf).
+The finite Jensen inequality and supporting-line principle used in
+the cited certificates are the classical convexity statements in
+S. Boyd and L. Vandenberghe, *Convex Optimization*, Cambridge University
+Press, §§3.1.3, 3.1.8, pp.69, 77--78,
+[author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Strong Jensen above follows by applying that inequality to
+$f_u-a^2y^2/2$, with its second derivative checked explicitly; no
+additional external stability theorem is a premise.
+N. Smirnov, *Bicyclic Graphs with Maximum Complementary Diminished
+Sombor Index*, Discrete Math. Lett. 18 (2026), 100--106,
+DOI [10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164),
+[original](https://www.dmlett.com/archive/v18/DML26_v18_pp100-106.pdf),
+Theorem 2.1 concerns finite connected bicyclic maximization and is
+not a premise of (13.18). The relation to the full text of K. Zhao
+and X. Zhao, *Extremal values with respect to vertex-degree-based
+topological indices in unicyclic and bicyclic graphs*,
+DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed; it supplies no premise. No literature-priority
+or Lean-kernel-verification assertion accompanies this prose theorem.
+Its threshold is existential, with no assertion of the least one,
+small exceptional parameters, subsequent phases or prescribed finite
+connected-graph extrema. ∎
+

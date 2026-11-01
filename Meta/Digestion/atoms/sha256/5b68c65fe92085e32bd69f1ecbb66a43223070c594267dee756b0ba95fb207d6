@@ -1,0 +1,42 @@
+**Proposition 4.1 (Complete-history and terminal-coordinate formulas; source facts).** A chronological word with $m$ ticks has a unique decomposition
+
+$$
+w=0^{a_1}1\cdots0^{a_m}1\,0^t,
+\qquad
+K_wx_\theta=\left(\prod_{j=1}^m c_{a_j}\right)S^t x_\theta.
+\tag{4.1}
+$$
+
+The empty product includes the no-tick history. A completed gap outside $K$ or a tail beyond $H$ gives zero amplitude. For two nonzero length-$n$ histories of the same count $m$, let $a,b\in\mathbb N_0^K$ be their completed-gap multiplicities and let their tails be $t,u$. Then
+
+$$
+\begin{aligned}
+\sum_k a_k&=\sum_k b_k=m,\\
+n&=m+\sum_kka_k+t=m+\sum_kkb_k+u,\\
+\langle w|T_n(\theta)|v\rangle
+&=c^a\overline{c^b}
+\sum_{\substack{k,l\in K\\ k\ge t,\ l\ge u\\ k-t=l-u}}
+c_k\overline{c_l},
+\qquad c^a=\prod_k c_k^{a_k}.
+\end{aligned}
+\tag{4.2}
+$$
+
+Every summand has a positive coefficient depending only on $p$ and exponent
+
+$$
+z=a+\mathbf e_k-b-\mathbf e_l\in L_K.
+\tag{4.3}
+$$
+
+This formula covers every unfinished tail and every common terminal memory coordinate. Entries between different count sectors are zero.
+
+**Proof.** Since $e_H^\dagger S^j x_\theta=c_j$, each actual completed block obeys $J_\theta S^j x_\theta=c_jx_\theta$. Iteration proves (4.1), including invalid completed gaps. Also
+
+$$
+S^t x_\theta=\sum_{k\in K,\ k\ge t}c_ke_{H-(k-t)}.
+\tag{4.4}
+$$
+
+The partial-trace entry is $\langle K_vx_\theta,K_wx_\theta\rangle$. Equality of the terminal basis coordinates is exactly $k-t=l-u$, giving (4.2). Equal count yields $\sum_jz_j=0$. Equal duration yields $\sum_jj(a_j-b_j)=u-t$, whereas coordinate equality gives $k-l=t-u$. Their sum yields $\sum_jjz_j=0$. Each coefficient is a product of strictly positive square roots of the fixed probabilities. The count twirl deletes unequal-count entries. In the no-tick case there is a single word, $t=u=n$ and $k=l$, so its exponents are zero. These are source (25.13)–(25.16), retained with the same chronology and actual start. $\square$
+

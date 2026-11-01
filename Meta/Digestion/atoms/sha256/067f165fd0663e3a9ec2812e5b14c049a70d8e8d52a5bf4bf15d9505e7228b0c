@@ -1,0 +1,64 @@
+**Corollary 10.1 (Classical norm specialization and near-attainment size).** Let $r\ge3$, let $`\eta:A_r^*\to B^*`$ be any nonerasing morphism into any nonempty finite alphabet, and suppose $hv_\beta\ne0$. With exactly $v_\beta$, $\kappa_r$ and $c_r$ of Definitions 1.3 and Theorem 2.1,
+
+$$
+E(\eta(u))\ge e_r+
+ c_r3^{-(r-1)\kappa_r}H^{-r\kappa_r}
+\ge e_r+\frac{c_r}{27^{r-1}}H^{-3r}.
+\tag{39}
+$$
+
+Consequently, for every $\varepsilon>0$, a noncancelling image satisfying $E(\eta(u))\le e_r+\varepsilon$ must satisfy both
+
+$$
+H\ge3^{-(r-1)/r}\left(\frac{c_r}{\varepsilon}\right)^{1/(r\kappa_r)},
+\qquad
+H\ge\left(\frac{c_r}{27^{r-1}\varepsilon}\right)^{1/(3r)}.
+\tag{40}
+$$
+
+The norm step is classical; (39) is its arithmetic corollary combined with the repo-derived ordinary-factor Theorem 2.1, rather than a new algebraic-norm theorem.
+
+*Proof.* The supplied polynomial $g_r(X)=X^r-\sum_{j=0}^{r-1}X^j$ is the monic minimal polynomial of $\beta$, of degree $r$, as specified in Definition 4.1. Its other complex roots $\zeta_2,\ldots,\zeta_r$ have modulus strictly less than one. The latter fact is supplied both by Appendix P1 of Dvořáková–Pelantová and by the existing $q=r$ statement `dbonacci_complex_root_location` in [DBonacci irreducibility](../../../D5/S0/Tower/DBonacci/Irreducibility.lean); that source also contains its proof-local root-equation argument and the monic integer factor argument used by `dbonacci_irreducible`. The root is the same one fixed by `eq_dbonacciPerronRoot_iff` in [DBonacci Perron root](../../../D5/S0/Tower/DBonacci/PerronRoot.lean). No rescaling of the eigenvector or replacement of the degree is made here.
+
+Define the integer polynomial
+
+$$
+P_h(X)=(X-2)\sum_{i=0}^{2r-1}h_iX^{2r-1-i}+h_{2r},
+$$
+
+so that $\alpha=P_h(\beta)=hv_\beta$. Because $\beta$ is an algebraic integer, $\alpha$ is an algebraic integer in $K=\mathbb Q(\beta)$. The classical norm formulas give
+
+$$
+N_{K/\mathbb Q}(\alpha)
+=P_h(\beta)\prod_{j=2}^{r}P_h(\zeta_j)\in\mathbb Z\setminus\{0\}.
+\tag{41}
+$$
+
+Here the product is over all $r$ embeddings of $K$, even if $\alpha$ generates a proper subfield. These are the standard integrality and conjugate-product norm statements; see J. S. Milne, [*Algebraic Number Theory*, version 3.08, Theorem 2.1, Corollaries 2.20–2.21 and Aside 2.22](https://www.jmilne.org/math/CourseNotes/ANT.pdf).
+
+For $j\ge2$, $|\zeta_j|<1$ and $|\zeta_j-2|<3$, whence
+
+$$
+|P_h(\zeta_j)|
+\le |\zeta_j-2|\sum_{i=0}^{2r-1}h_i|\zeta_j|^{2r-1-i}+h_{2r}
+\le3H.
+$$
+
+Taking absolute values in (41), using its nonzero integer value, gives
+
+$$
+1\le|\alpha|(3H)^{r-1},\qquad
+\rho=\frac{|\alpha|}{H}\ge3^{-(r-1)}H^{-r}.
+\tag{42}
+$$
+
+The last lower bound lies in $(0,1]$, since $H\ge1$. Thus
+
+$$
+\min(1,\rho)\ge3^{-(r-1)}H^{-r}.
+$$
+
+Applying Theorem 2.1 proves the first inequality in (39). Its proof already supplies $0<\kappa_r<3$. Since $3^{r-1}H^r\ge1$, raising its reciprocal to $\kappa_r$ gives a value at least its third power, proving the second inequality. Combining each of these positive excess bounds with $E(\eta(u))-e_r\le\varepsilon$ and taking the respective positive roots proves (40).
+
+If $hv_\beta=0$, the integer norm in (41) is zero and the lower bound (42) does not follow. Thus this corollary gives no positive gap on cancellation and no existence of approaching images. $\square$
+

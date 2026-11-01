@@ -1,0 +1,20 @@
+**Theorem 5.3 (actual staged refinements with intervening use).** Fix any finite chain
+
+$$
+d_0\mid H,\qquad d_{j+1}\mid d_j\quad(0\le j<q),
+\tag{AQBR.22}
+$$
+
+with actual finite addition lists $\mathcal A_j$ of gcd parameter $d_j$ and all positive scalar multiplications. At stage $j$ only its declared current list is used; divisibility of parameters alone does not grant a primitive from another list. Assume the stage-zero current $\eta_{H,d_0}$ is genuinely acquired. At each next upgrade, let $E_j$ be the exact current alternative domain determined by the shared acquired archive, so that $\eta_{H,d_j}$ is constant on $E_j$ and its residue support is effectively presented. If (AQBR.8) holds for the pair $(d_j,d_{j+1})$ on this $E_j$, a fresh sweep using $\mathcal A_{j+1}$ acquires the finer entry label, returns modulo $H$ at that stage, and installs its current updater. This can be repeated through every such successful stage, with ordinary intervening legal operations on the same source.
+
+**Proof.** Apply Theorems 2.1, 3.1 and 5.1 at the actual current entry of the next stage. Its final alternative residue support is $K_L$, because the final translation is zero modulo $H$. If a common recorded intervening word $w$ is then executed, the next current support is exactly
+
+$$
+\{w(x)\bmod H:x\in K_L\}.
+\tag{AQBR.23}
+$$
+
+Every member is realized by a surviving actual entry, and every surviving entry maps into it. The installed updater computes the same next current coarse label from the acquired fine label and the known word, so that label is constant on (AQBR.23). Future adaptive choices cause no difficulty when their inputs are the shared installed state, supplied public inputs and acquired records: these are the same on every surviving alternative. If further paid replies are acquired, intersect with their actual reply constraints before taking the next image. These finite-support operations are effective and charged. Induction proves the assertion for any finite number of stages.
+
+An old tape certifies its own entry and the operations actually performed since it; it is not a new read of the later source. A historical $\eta_{H,d_j}$ is not generally the later current label, and it does not alone justify a finer future upgrade. Each upgrade uses its new current support and the exact new criterion. If an unreported operation or a selector with additional private source input intervenes, this archive/update proof does not apply. The result supplies neither independent optimal supplements nor an optimal acquisition schedule. $\square$
+

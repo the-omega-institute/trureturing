@@ -1,0 +1,43 @@
+**命题 5.3（The two sides of the pentagon threshold）。** Let $H=C_5$, with vertices $j\in\mathbb Z/5\mathbb Z$. Put $\phi=(1+\sqrt5)/2$. Then
+
+$$
+m=5,\qquad \lambda=-\phi,\qquad
+z_j=e^{4\pi i j/5},\qquad C(C_5)=4,
+\tag{5.5}
+$$
+
+and (3.1) holds. For every admissible sequence in Theorem 5.2,
+
+$$
+\Delta_{C_5}(\rho)=-2+5\phi\rho(1-\rho),\qquad
+\begin{cases}
+\Delta_{C_5}(\rho)<0,&0\leq\rho<1/\sqrt5,\\
+\Delta_{C_5}(\rho)=0,&\rho=1/\sqrt5,\\
+\Delta_{C_5}(\rho)>0,&1/\sqrt5<\rho\leq1/2.
+\end{cases}
+\tag{5.6}
+$$
+
+Thus the first interval gives eventual validity of (5.1), and the last gives eventual failure. In particular,
+
+$$
+\Delta_{C_5}(2/5)=\frac{3\sqrt5-7}{5}<0,\qquad
+\Delta_{C_5}(1/2)=\frac{5\sqrt5-11}{8}>0.
+\tag{5.7}
+$$
+
+Proof. The five Fourier vectors $j\mapsto e^{2\pi itj/5}$ form an eigenbasis of cycle adjacency with eigenvalues $2\cos(2\pi t/5)$. To evaluate them, put $u=2\cos(2\pi/5)>0$. The sum of the fifth roots of unity gives $1+u+(u^2-2)=0$, so $u=(\sqrt5-1)/2$ and $u^2-2=-\phi$. The least eigenvalue is therefore $-\phi$, and the displayed $z$ is a modulus-one vector in that eigenspace. Any cut crosses an even number of edges of a cycle, so it crosses at most four edges of $C_5$; alternating around four edges attains four. This proves (5.5).
+
+On $[0,1/2]$, the function $\rho(1-\rho)$ is strictly increasing. The equation $5\phi\rho(1-\rho)=2$ has its smaller root at $\rho=1/\sqrt5$, since
+
+$$
+\frac1{\sqrt5}\left(1-\frac1{\sqrt5}\right)
+=\frac{\sqrt5-1}{5}=\frac2{5\phi}.
+$$
+
+This proves (5.6). Substitution proves (5.7); their strict signs follow respectively from $45<49$ and $125>121$. Theorem 5.2 supplies the assertions for every converging admissible sequence. Particle–hole symmetry gives the complementary sign intervals on the upper half of the full occupancy range, if the signed expression (5.2) is considered there; (5.1) itself has the stated half-range domain.
+
+The half-filled counterexample is an attributed supplied result: [CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean), `phi40_quotient` and `result`, supplies the phase quotient $-646912/199<-3250$ at $s=40,k=100$, and [the corresponding family derivation](../../../Problems/apte-parekh-sud-2025-token-graph-cut-bound.md) supplies refutations for every even $s\geq40$. [Apte–Parekh–Sud v3, Appendix D.2](https://arxiv.org/html/2506.03441v3), attributes a refutation to Wenlin Zhang and Haobo Ma. These half-filled refutations, the classical phase trial and the cut rounding are supplied inputs. The repo-derived inference here is the full-state defect certificate together with its uniform density limit, common near-minimal-state budget and the signed-violation limit; it carries no priority assertion or new settlement claim for Conjecture 7.
+
+At the critical density $1/\sqrt5$, the quadratic coefficient vanishes. The sign then depends on lower-order energies, matching terms and the approach of $k_s/(5s)$ to that density; (3.2)–(3.3) do not determine it. The results give bounds rather than a general formula for exact finite-$s$ energies or optimal remainder constants. All statements use equal block sizes, unit weights and empty intrablock graphs; weighted, unequal-block and intrablock-interaction extensions require additional arguments. $\square$
+

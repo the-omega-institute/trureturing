@@ -1,0 +1,8 @@
+#### 定义 5.2（零交互族）
+
+令 $\mathcal E$ 为 $\eta=0$ 的满支撑三参数族。每个成员在底面是两个 Bernoulli 变量的乘积。记 $d(a\Vert b)$ 为二元 KL，$I_0(p)$ 为条件表 $p(x,y\mid z=0)$ 的互信息，$D\!\left(p\middle\Vert q\right) =\sum_sp_s\log(p_s/q_s)$。
+
+<a id="statement-5-3"></a>
+
+<a id="thm-kl"></a>
+

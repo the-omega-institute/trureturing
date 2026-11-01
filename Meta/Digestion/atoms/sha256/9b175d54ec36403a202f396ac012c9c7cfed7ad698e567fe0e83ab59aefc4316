@@ -1,0 +1,32 @@
+**Theorem 23.3 (zero error and the limit of uncapped retries).** Retry
+a failed attempt with fresh coins until it succeeds, through the cut
+and the $2d$ birth phases. Under Definition 23.1, no execution returns
+an incorrect $(n,P)$, termination is almost sure, and the expected
+attempt count is at most $4L/3$. Expected acquisition work, cumulative
+writes, Reads, literal traffic and coin consumption are polynomial in
+$d+H+2$; reusable backing is polynomial on every execution. This
+uncapped protocol has no every-execution termination guarantee.
+
+Proof. Conditioned on any failed attempts of a pending certified
+phase, its next failure probability is at most $1/4$. Its tail after
+$u$ attempts is therefore at most $4^{-u}$, and summing tails gives
+mean at most $4/3$. There are $L$ phases. The bounds in (ACR.98)
+apply to every failed as well as successful attempt, so multiplying
+them by $4L/3$ proves the expected bounds. A finite-state retry flag
+and overwritable buffers suffice; no ever-growing attempt counter or
+retry archive is needed. Every finite return is exact by the
+certificate induction.
+
+For a concrete nontermination tape, take the admitted zero stream
+with public bound $d=1$ and cut $n=6$. The physical $a$-spine has
+$h=3$, hence $H=7$. On an all-zero controller tape every walk follows
+physical $a$, the smaller child at each zero-law birth, and each root
+walk has depth three. Every root estimate is three, so the proposed
+cut is the rounded value of $31/6$, namely five. It cannot pass a
+rank certificate on the actual rank-six root. Hence every root
+attempt fails on that tape. Arbitrarily many such failures are also
+forced by sufficiently long finite zero prefixes, each of positive
+probability. This is a counterexample to a uniform bound for this
+uncapped procedure, not to deterministic acquisition in general.
+$\square$
+

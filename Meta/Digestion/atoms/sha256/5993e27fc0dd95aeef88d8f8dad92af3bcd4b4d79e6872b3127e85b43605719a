@@ -1,0 +1,15 @@
+### 4.2 最优单份概率的完整公式
+
+从每个 $\mathfrak g_j$ 选单位向量 $e_j$，令
+
+$$
+w_j\ge0,\quad \sum_jw_j=1,\qquad
+\psi=\sum_j\sqrt{w_j}e_j,\qquad
+\psi_a=Z^a\psi.
+$$
+
+假定这些探针可制备，未知 $a$ 均匀分布，并允许所需的五结果 POVM。
+这些是本节的新增操作条件，不能由局部五模式或 E8 控制自动推出。
+
+<a id="statement-4-3"></a>
+

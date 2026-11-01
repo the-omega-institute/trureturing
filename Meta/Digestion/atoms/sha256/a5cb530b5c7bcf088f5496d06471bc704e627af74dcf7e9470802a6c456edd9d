@@ -1,0 +1,34 @@
+**Definition 5.2 (Capacity and tolerances).** For an integer $n\ge0$, let
+$\mathfrak F_{\le n}(Z)$ be all models of Definition 5.1 of dimensions
+$0\le d\le n$, for an arbitrary fixed preparation. Define
+
+$$
+\operatorname{err}(A)=
+\sup_{x\in\mathcal M}\|q_A(x)-y(x)\|_2\in[0,+\infty],
+\qquad
+e_n^{\mathrm{aff}}(Z)=
+\inf_{A\in\mathfrak F_{\le n}(Z)}\operatorname{err}(A),
+\tag{5.4}
+$$
+
+$$
+\mathcal A_{\le n,Z}
+=\{\epsilon\in[0,\infty):
+\exists A\in\mathfrak F_{\le n}(Z),\
+\operatorname{err}(A)\le\epsilon\}.
+\tag{5.5}
+$$
+
+The convention for an empty class is $\inf\varnothing=+\infty$.
+The literal class is nonempty for every $n$: the unique
+zero-dimensional encoder, its unique updates, and the zero decoder have
+finite error. Changing preparation rotates the output by a fixed
+orthogonal map and leaves the increment-coordinate commands unchanged.
+Rotating the decoder gives a bijection of the corresponding model
+classes preserving errors and dimensions. Changing preparation height
+changes producing histories but not (4.5). The capacity notation
+therefore suppresses preparation.
+
+Every encoder, every matrix, every row, and every offset may vary from
+one model in this infimum to another.
+

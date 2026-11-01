@@ -1,0 +1,19 @@
+### 证明
+
+等距保持内积。对 $x,y$，输入内积为
+
+$$
+\langle r_x|r_y\rangle\langle e_0|e_0\rangle
+=\delta_{xy}.
+$$
+
+输出内积为
+
+$$
+\langle r_\varnothing|r_\varnothing\rangle
+\langle e_x|e_y\rangle
+=\langle e_x|e_y\rangle.
+$$
+
+两者相等即得结论。证毕。
+

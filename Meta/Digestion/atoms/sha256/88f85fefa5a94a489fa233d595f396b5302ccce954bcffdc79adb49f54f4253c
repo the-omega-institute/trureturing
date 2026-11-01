@@ -1,0 +1,4 @@
+<a id="ref-todorov"></a>
+
+2. E. Todorov. *Linearly-solvable Markov decision problems*. NIPS 2006. [原论文](https://papers.nips.cc/paper_files/paper/2006/file/d806ca13ca3449af72a1ea5aedbed26a-Paper.pdf)。KL 控制成本与指数变换的背景；本文不迁移其特定效率结论。
+

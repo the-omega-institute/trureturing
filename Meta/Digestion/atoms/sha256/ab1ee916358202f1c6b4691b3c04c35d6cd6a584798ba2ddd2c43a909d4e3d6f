@@ -1,0 +1,74 @@
+**Corollary 12.3 (Control-entropy, endpoint, and fixed-margin regions).**
+On the full domain of Definition 1.1,
+
+$$
+\begin{aligned}
+ \Delta&\geq2I_P-H_2\!\left(\frac{1-b}{2}\right),\\
+ \Delta&\geq2I_P-
+ \min\left\{H_2\!\left(\frac{1-b}{2}\right),
+             \log2-\max_{E=C,D}S(Q_E)\right\}.
+\end{aligned}
+\tag{12.7}
+$$
+
+In particular either of the two conditions
+
+$$
+ I_P\geq\frac12H_2\!\left(\frac{1-b}{2}\right),
+ \qquad
+ 2I_P+\max_{E=C,D}S(Q_E)\geq\log2
+\tag{12.8}
+$$
+
+implies $\Delta\geq0$. The condition $I_P\geq\tfrac12\log2$
+is sufficient uniformly in both biases, including when
+$\lambda_{\max}(P)>7/20$.
+If $[Q_E,Z]=0$ for at least one $E$, then
+
+$$
+ \Delta\geq2I_P.
+\tag{12.9}
+$$
+
+This conclusion holds whenever a source marginal commutes with $Z$,
+without any joint-state commutation condition. At each such point with
+$I_P>0$, the strict sign $\Delta>0$ holds on a neighborhood relative
+to the original physical state and bias domain.
+
+Proof.
+The standard classical-control entropy bound gives
+
+$$
+ 0\leq\ell_E=I(V:E)_\Omega\leq H(V)
+ =H_2\!\left(\frac{1-b}{2}\right).
+$$
+
+Here the upper bound is the entropy-of-mixture inequality
+$S(\sum_jp_jA_j)\leq H(p)+\sum_jp_jS(A_j)$, equivalently the
+classical-quantum Holevo bound (Watrous, *The Theory of Quantum
+Information*). Also each $R_E$ is a qubit density matrix, whence
+
+$$
+ \ell_E=S(R_E)-S(Q_E)\leq\log2-S(Q_E).
+$$
+
+Therefore
+
+$$
+ \min_E\ell_E\leq
+ \min\left\{H(V),\log2-\max_E S(Q_E)\right\}.
+$$
+
+Combine this with (12.4) to obtain (12.7)--(12.8), and use
+$H_2(t)\leq\log2$ for the bias-uniform sufficient condition.
+
+If $[Q_E,Z]=0$, the local $Z$-mixture fixes $Q_E$, so $R_E=Q_E$ and
+$\ell_E=0$. Equation (12.3) proves (12.9). If instead the source
+margin commutes with $Z$, its local $X$ conjugate still commutes with
+$Z$, since $XZX=-Z$; consequently their mixture $Q_E$ also commutes
+with $Z$. Finally the function $2I_P-\ell_E$ is continuous in the
+state and biases. At a fixed-margin point with $I_P>0$ it equals
+$2I_P>0$, and hence stays positive on a relative open neighborhood.
+Theorem 12.2 gives the asserted strict sign there, even if the base
+point is singular or lies at a bias endpoint.
+

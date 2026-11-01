@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f35eaf8795877d7cc20a9c2fafd07bddd41eeb4090efce2457450dc6cdea79c
+  normalized_sha256: sha256:8f35eaf8795877d7cc20a9c2fafd07bddd41eeb4090efce2457450dc6cdea79c
+cas_ref: sha256:8f35eaf8795877d7cc20a9c2fafd07bddd41eeb4090efce2457450dc6cdea79c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic pointer to the existing dimension-four witness source and its norm convention; it introduces no additional mathematical proposition.
+    previous_atom_id: bdbc75c38f898982c3d2d0358fce723d2cd3e6d96931764ad2d42db45f120c0b
+    next_atom_id: 3b8cd0a01f8f603f9ace40c490ded5accad88ff3f292ded72267fe9e46fa6e71

@@ -1,0 +1,7 @@
+## Counting and existence
+For t not in {0,+1,-1}, the four bilinear exclusions are precisely
+
+    s not in {+a,-a,+a^(-1),-a^(-1)}, a=(t-1)/(t+1).
+
+None is 0 or +/-1. Normally the four values are distinct. They coincide in opposite pairs exactly when a^2=-1, equivalently t^2=-1, in which case there are only two exclusions. (The alternative a^2=1 would imply t=0 or characteristic 2 and is already excluded.) There are q-3 choices of t; each normally leaves q-7 choices of s, and each of the two square roots of -1, when they exist, adds two choices. This proves the count formula and the existence assertion. Over F9 the four bilinear values at (i,1+i) are -1,1+i,i-1,-i, all nonzero.
+

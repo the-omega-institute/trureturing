@@ -1,0 +1,94 @@
+### 定义 21.1（四维合同、共同来源系统与参数族）
+
+本节采用 [续卷 III](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md)
+定义 9.1、13.1、14.1 及推论 14.6 在 $k=4$ 的原合同。
+来源域恰为
+
+$$
+ \mathcal M_4=
+ \left\{\sum_{a=1}^{m}c_a\ell_a:
+ m\in\{1,2\},\quad c_a\in\mathbb R_{>0}^{4},\quad
+ \ell_a\in\mathbb R_{>0}^{1\times4}\right\}.
+\tag{21.1}
+$$
+
+各因子在运行前固定，目标为初始矩阵的普通实秩。
+原子满足 $Ne_j=e_{j+1}$（$j<3$）、$Ne_3=0$、
+$L_0=e_0\mathbf1^{\mathsf T}$。只有一条不可复制、不可复位的轨迹；
+$A_0=I$，初读与每个原子 $E_i\in\{N,L_0\}$ 后的报告均必须取得并计费：
+
+$$
+ A_i=E_iA_{i-1},\qquad
+ y_i=\operatorname{tr}(A_iR)+\eta_i,\qquad
+ |\eta_i|\le\varepsilon.
+\tag{21.2}
+$$
+
+这里 $\varepsilon>0$ 为事先给定的有限实数，误差可任意相关并依赖全部历史，
+包括闭区间的所有端点。动作、停止和输出是完整动作—报告历史的任意确定性函数，
+不要求连续、可测、可计算或共同停止预算。
+$\varepsilon$-可靠性在完整 $\mathcal M_4$ 上量化：对每个固定来源
+$S\in\mathcal M_4$ 的每条允许历史，有限输出 $2$ 都蕴含
+$\operatorname{rank}(S)=2$。记成功集合和逐来源成功域为
+$\operatorname{Succ}_{\varepsilon}(\Pi)$、$\mathcal I_4(\varepsilon)$，
+含义分别为该协议在同一来源的每条允许历史上有限输出 $2$，以及存在这样的可靠协议。
+若 $\mathscr H_\varepsilon(R,\Pi)$ 为同一固定来源的全部允许历史，
+一个预选族 $F$ 覆盖 $D\subseteq\mathcal I_4(\varepsilon)$ 的量词为
+
+$$
+ \forall R\in D\quad\exists\Pi_R\in F\quad
+ \forall H\in\mathscr H_\varepsilon(R,\Pi_R)\quad
+ \Pi_R\text{ 在 }H\text{ 上有限输出 }2,
+\tag{21.3}
+$$
+
+其中 $F$ 在来源未知前固定，且每个成员在完整环境域上可靠。
+$\nu_{4,\varepsilon}(D)$ 是此类有限族的最小基数，无有限族时记为 $\infty$。
+同一个 $\Pi_R$ 须负责 $R$ 的全部误差历史。
+
+为写出单位容限的证明，按 III 定义 12.1、14.3 置
+
+$$
+ \begin{aligned}
+ a_i(R)&=\operatorname{tr}(N^iR),&
+ b_j^{(q)}(R)&=\sum_{h=0}^{3-q}R_{hj},\\
+ A_i(x,v)&=\sum_{h=0}^{3-i}x_hv_{h+i},&
+ B_q&=\begin{cases}\{0,1,2,3\},&0\le q\le2,\\
+                       \{0,1,2\},&q=3.
+       \end{cases}
+ \end{aligned}
+\tag{21.4}
+$$
+
+下文 $\mathsf C_q(R,u)$ 恰为 III (14.4) 的 $k=4,\varepsilon=1$ 实例：
+
+$$
+ \exists x,v\in\mathbb R_{>0}^{4}\quad
+ \sum_{h=0}^{3-q}x_h=1,\qquad
+ |A_i(x,v)-u_i|\le1\ (0\le i\le q),\qquad
+ |v_j-b_j^{(q)}(R)|\le2\ (j\in B_q).
+\tag{21.5}
+$$
+
+其见证给出一个实际严格正秩一来源 $S=xv^{\mathsf T}$。
+$q=3$ 时 $x_0=1$，$A_3=v_3$，$a_3=b_3^{(3)}$ 共享原先取得的同一个报告；
+没有第二份 $b_3$ 报告或第二个误差变量。
+
+对 $0\le s\le1/2$，定义
+
+$$
+ \begin{aligned}
+ d_s&=\frac{37}{2}+s-\frac{125}{44+s},&
+ \lambda_s&=\frac12+s,& c_s&=94-d_s-10s,\\
+ r_s&=(c_s,3-s,10,1),&
+ w_s&=(1,d_s,23/2,8),&
+ Q_s&=\begin{pmatrix}r_s\\w_s\\\lambda_sr_s\\r_s\end{pmatrix},\\
+ \tau_s&=17+s/4,&
+ L_s&=\frac{39}{2}-\frac{125}{44+s},& M&=\frac{39}{2},\\
+ \rho_s&=\frac{44+s}{50},&
+ D_s&=M-L_s=\frac{125}{44+s},&
+ Q_{\varepsilon,s}&=\varepsilon Q_s.
+ \end{aligned}
+\tag{21.6}
+$$
+

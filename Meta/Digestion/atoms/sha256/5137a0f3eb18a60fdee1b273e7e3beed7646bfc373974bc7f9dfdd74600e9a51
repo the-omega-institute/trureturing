@@ -1,0 +1,77 @@
+**Theorem 18.1 (arbitrary-graph joint-support criterion and static-to-online bridge).** Under Definition 16.1, for every prescribed finite $\epsilon>0$, the following conditions are equivalent:
+
+1. Finite static supplementation recovers every finite legal root history from (16.2).
+2. Complete fixed-initial finite names-only online supplementation does so.
+3. Every cyclic SCC is a single directed named cycle, and for every actual reduced path schema $P\in\mathcal S$,
+
+$$
+\ker(A_P)\cap
+\operatorname{span}_{\mathbb R}
+ \{j\in\mathbb Z^{k(P)}:A_Pj\in W\}
+ =\{0\}.
+\tag{18.1}
+$$
+
+It is equivalent to check all complete co-visited families on root condensation routes, with their actual crossing choices. No independence condition is imposed on mutually incompatible routes. If condition 3 fails, for every positive $\epsilon$ and every positive integer $Q$ there are more than $Q$ distinct actual root histories, with one common typed endpoint, whose entire joint observation sets have a common point.
+
+Here is one attained bound when condition 3 holds. Choose $\kappa_P$ from (17.2) for $A_P|_{V_P}$, using zero when $V_P=\{0\}$, and put
+
+$$
+\begin{aligned}
+R&=\max_{a\in K}\|a\|_\infty,&
+\kappa&=\max_{P\in\mathcal S}\kappa_P,\\
+q&=\lfloor2\epsilon R\kappa\rfloor+1,&
+k_*&=\max_{P\in\mathcal S}k(P).
+\end{aligned}
+\tag{18.2}
+$$
+
+A complete fixed-initial update has exactly
+
+$$
+|M|=\sum_{P\in\mathcal S}q^{k(P)}
+       \ \le |\mathcal S|q^{k_*}
+\tag{18.3}
+$$
+
+reachable full states and succeeds. These are construction cardinalities, not general minimum formulas or an equality of the static and online minima. In contrast to the full-dimensional case, (18.1) does not imply $k_*\le r$.
+
+Proof. An online register supplies a static label, proving $2\Rightarrow1$. For the first necessity in $1\Rightarrow3$, reuse the support-independent exact-collision construction (11.8). A cyclic SCC with two internal outgoing named choices yields two prefix-free actual return blocks. Arbitrarily many different permutations with the same block multiplicities have the same additive vector and endpoint. Their common exact center belongs to every observation set because $0\in K$. This rules out every finite static label, with no restriction on support dimension or tolerance. Thus each cyclic SCC must be one directed named cycle.
+
+The actual normal form (11.9), now (16.3), then applies without a noise assumption. If (18.1) fails at some $P$, apply Lemma 17.1 with $A=A_P$ and common translation $T(P)$. All its nonnegative vectors are valid lap counts in this single schema. The inserted words are distinct, legal from the same actual root representative and have the same endpoint $z(P)$. Its common vector is therefore one allowed acquisition for more than $Q$ such words, for every $Q$. Pigeonhole identifies two labels, contradicting (16.6). This also proves the stated whole-domain ambiguity assertion. Both obstructions preserve the stipulated graph and native law.
+
+For sufficiency, (17.4) gives, on every schema,
+
+$$
+S_{\epsilon,P}=\{j\in\mathbb Z^{k(P)}:A_Pj\in\epsilon\Delta K\}
+\ \subseteq\{j:\|j\|_\infty<q\}.
+\tag{18.4}
+$$
+
+Indeed $q>2\epsilon R\kappa$. Give the word $(P,t)$ the label
+
+$$
+h(u)=\bigl(P,(t_C\bmod q)_{C\in\mathcal C(P)}\bigr).
+\tag{18.5}
+$$
+
+Distinct histories with equal labels have the same $P$ and a nonzero count difference $j\in q\mathbb Z^{k(P)}$. Such a vector cannot satisfy (18.4). Hence their supports do not overlap, proving (16.6). Different schemas receive different labels even when their endpoints agree. No separation between offsets $T(P)$ on different routes is required.
+
+It remains to realize this label under the exact feed restrictions, rather than assume that a static coloring has an online update. Reuse the complete state representation (11.15), with the present value of $q$:
+
+$$
+M=\coprod_{P\in\mathcal S}
+       \{P\}\times(\mathbb Z/q\mathbb Z)^{\mathcal C(P)}.
+\tag{18.6}
+$$
+
+The root and graph are fixed program data. In a state $(P,\bar t)$, $P$ includes its current last vertex, each cycle entry, the proper current cycle arc, all crossing choices and the visited component order. For the empty path its vertex is $o$. These are stored finite control, charged in the disjoint union, not extra inputs. The unique initialization is the empty reduced path with zero residues, including the root-cycle residue if present.
+
+For clarity, the previously proved update has exactly these cases. From the stored vertex and incoming name, compute its unique edge in the known deterministic graph. An illegal name leaves the value unchanged, making $U$ total without adding a reachable state. A legal internal cycle edge that does not return to the stored entry extends the proper arc of $P$. A legal internal edge returning to that entry removes that proper arc from $P$ and increments this component's residue modulo $q$; this also covers a self-loop with empty proper arc. An edge leaving the SCC appends the crossing edge, preserves the earlier residues and creates a zero residue if the new component is cyclic. A loopless singleton has only this last case. Condensation acyclicity ensures that an exited component is not visited again. All resulting reduced paths remain in $\mathcal S$.
+
+The induction verifying (11.15) uses only lap extraction and modular addition, so it applies to this $q$ unchanged: after every actual word $(P,t)$ the complete value is exactly (18.5). On a proper arc the state advances its stored phase; on a completed lap it increments its residue; on an exit it retains the completed past and initializes the next entry. The empty word starts the induction. No step reads an endpoint, edgeID, output/failure tag, clock, archive or source reply. A shared name is handled by this one function on its different stored states, not renamed according to an external vertex. Every stopping prefix, including a cut midway around a cycle, is already covered. Continuing failure edges use the same graph transition rule. Terminal success or failure is simply a legal final vertex; no terminal or stopping token is synthesized.
+
+Every pair in (18.6) is reached: insert into its $P$ the nonnegative representatives $0,\ldots,q-1$ of all prescribed residues using (16.3). This proves the exact complete-state count (18.3), including all route, entry, phase and control memory. The register realizes the separating label (18.5), proving $3\Rightarrow2$ and closing the existence bridge. It does not turn an arbitrary static labeling into an online machine of the same size.
+
+Every condensation route can be realized by a simple root path with its actual crossing edges and proper arcs, as established for (11.9). Its $A_P$ depends on the complete visited cycle family and its order, not on the crossing offsets. This proves the equivalent route formulation without introducing non-co-realizable vectors. Finally, Proposition 16.2 gives a decoder on the actual observation union. For a mathematical finite candidate search, if $E\ne\varnothing$ put $c=\min_e d_1(e)>0$. Since $|y_1-T_1(u)|\le\epsilon R$, every compatible word has length at most $(y_1+\epsilon R)/c$. Enumerate legal words up to its integer floor and test the final endpoint, full state and membership $y-T(u)\in\epsilon K$. There is exactly one on an allowed input; reject if there is none or the bound is negative. If $E=\varnothing$, check the empty word directly. This is a finite search with the stipulated real data, not a claim of effective membership tests for arbitrary real descriptions. $\square$
+

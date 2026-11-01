@@ -1,0 +1,19 @@
+**Proposition 35.2 (the next-power all-left bound can be strictly nonoptimal).** At $b=9$, the exact value is $m(9)=4$, whereas (33.10) gives the convenient upper bound $16-9=7$.
+
+Proof. The actually executable chronological word $LRLL$ has
+
+$$
+A_{LRLL}=G_LG_LG_RG_L
+ =\begin{pmatrix}2&1\\5&3\end{pmatrix},\qquad
+f_{LRLL}(1/9)=11/32.
+\tag{35.5}
+$$
+
+Its denominator is dyadic. For completeness, the endpoint denominators for all shorter chronological words, with multiplicity removed separately at each length, are
+
+| Length | Values of $c+9d$ |
+| --- | --- |
+| $0$ | $9$ |
+| $1$ | $9,10$ |
+| $2$ | $9,10,11,19$ |
+| $3$ | $9,10,11,12,19,21,28,29$ |

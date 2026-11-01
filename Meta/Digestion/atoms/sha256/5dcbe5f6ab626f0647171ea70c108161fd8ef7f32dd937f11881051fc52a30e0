@@ -1,0 +1,40 @@
+## 25. Comparison with the typed residual-cocycle route
+
+TRC11, specifically Definition 11.1 and Theorem 11.2 of
+[TRC](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md),
+requires a fixed finite actual root-reachable complete residual graph,
+named legal edges, exact endpoint acquisition, fixed positive native
+vectors descending to that residual, and the complete joint box of
+endpoint-plus-native observations. Its online update receives only the
+executed name; all persistent control is charged. TRC12--15 keep the
+successive-loop source and its joint-support/native-acquisition contract.
+
+Here the literal address tree is infinite and acyclic. Its residue image
+is finite, and the mathematical normalization delays do descend to its
+named edges, since $y_{A-1}$ is determined by the residue. Their sums are
+exactly (PCR.47). This fact does not make the residue image the complete
+physical response quotient or give a native instrument. The predictive
+boundary retains age and literal information, and its Read responses are
+presence-only. Neither exact residual endpoint acquisition nor a native
+positive-vector readout with the stipulated uncertainty support has been
+supplied. Even zero mathematical observation error would not instantiate
+TRC11's prescribed positive-error full-box theorem.
+
+A physical transfer would need a proved rooted named-operation map
+preserving every legal operation, complete response, endpoint, positive
+native vector, same-source legality, physical order and binding, together
+with the required joint acquisition. None is constructed here. Declaring
+normalization increments to be a native elapsed-time response would add
+an unavailable clock service. Therefore no TRC11 route-rank criterion or
+TRC12--15 support classification is transferred to this source. The
+endpoint-conditioned result (PCR.62) is instead proved directly for the
+actual exact-normalization-time domain; no leaf-layer shift or noisy
+native-duration premise enters its proof.
+
+The loss measured here is the erasure of a rooted suffix by $\pi_{c,t}$.
+A retained literal $v=cw$ already specifies that address. This does not
+refute the full predictive descriptor (PCR.24), the original
+transient-inclusive $(P,n)$ recovery, or PSA's paid full-root acquisition.
+The chronological physical execution target and an online history
+supplement require their own input and update contracts.
+

@@ -1,0 +1,68 @@
+**Lemma 5.4 (Original-metric scalar residual).** Let $A$ have finite
+error $\epsilon$, and put
+
+$$
+\Delta=\epsilon^2-4ZH.
+$$
+
+Then $\Delta\ge0$. With the homogeneous encoder
+$F=(1,E)^{\mathsf T}$, there is a single real row $\lambda$ such that
+$g(k)=\lambda F(k,0,0)$ and
+
+$$
+\left|g(H-x)-2\sqrt{(H-x)x}\right|
+\le\sqrt{Zx+\Delta/4}
+\quad(0<x<H).
+\tag{5.6}
+$$
+
+**Proof 5.4.** As in [F], Proposition 4.1, use the fixed orthogonal
+decomposition
+
+$$
+\binom{a(k,\alpha)}{b(k,\alpha)}
+=(D^{\mathsf T}D)^{-1}D^{\mathsf T}q_A(k,\alpha,\beta),
+\qquad
+w=q_A-D(a,b).
+\tag{5.7}
+$$
+
+Here $w\perp\operatorname{im}D$. All components are fixed affine
+observables, and Theorem 5.3 makes them independent of $\beta$.
+Orthogonality and (4.9) give the exact maximum over $\beta$:
+
+$$
+\max_{\beta\in\mathbb T}\|q_A-y\|_2^2
+=\|w\|_2^2+
+4\|a-A(k)U(\alpha)\|_2^2+
+\bigl(\|b\|_2+B_{\mathrm{nat}}(k)\bigr)^2.
+\tag{5.8}
+$$
+
+If $b\ne0$, take $U(\beta)=-b/\|b\|_2$; if $b=0$, every
+$\beta$ has the same last term. All such phases are actual reachable
+states by (4.5). In particular
+
+$$
+\epsilon^2\ge4\|a-A(k)U(\alpha)\|_2^2+4Zk.
+\tag{5.9}
+$$
+
+Taking the supremum over interior heights gives
+$\epsilon^2\ge4ZH$. This uses no value of $E$ at $k=H$.
+
+Let $g(k)$ be the first component of $a(k,0)$. The fixed projection
+in (5.7) followed by the fixed affine decoder makes it one row of
+$(1,E)$, including the decoder offset. At $\alpha=0$, keep its
+scalar squared error from (5.9) and set $k=H-x$. Then
+
+$$
+4\left|g(H-x)-2\sqrt{(H-x)x}\right|^2
+\le\epsilon^2-4Z(H-x)=\Delta+4Zx,
+$$
+
+which is (5.6). The output component outside $\operatorname{im}D$
+and the unused components have only been removed as nonnegative terms.
+The coefficient $\Delta/4$ is forced by the original Gram factor
+four. $\square$
+

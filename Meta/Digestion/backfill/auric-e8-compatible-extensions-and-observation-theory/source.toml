@@ -1,0 +1,5 @@
+source_id = "auric-e8-compatible-extensions-and-observation-theory"
+path = "docs/develop/theory/AURIC_E8_COMPATIBLE_EXTENSIONS_AND_OBSERVATION_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

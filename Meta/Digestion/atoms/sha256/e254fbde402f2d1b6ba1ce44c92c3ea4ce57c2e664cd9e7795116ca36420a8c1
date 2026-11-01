@@ -1,0 +1,32 @@
+**Theorem 10.3 (exact existential/universal upper bound).** SOME-PREPARER-UNARY-N is in $\Sigma_2^P$.
+
+Proof. Choose a fixed polynomial padding bound for every candidate of Lemma 10.2 and its certificates from Corollary 5.4. Let existential string $x$ contain a $B$-bit candidate and genuine bounded actual-origin certificates for its bit-zero and bit-one runs within $P$. The joint cap-twelve verifier may check their distinctness explicitly. Let universal string $y$ range over all one-origin certificate strings padded to the fixed polynomial bound. A header includes every shorter active certificate; malformed padding is rejected by the certificate parser.
+
+Define the deterministic polynomial predicate
+
+$$
+\begin{aligned}
+R(I,x,y)={}&\operatorname{ValidCandidate}(I,x)
+\land\operatorname{GenuineBothWitnesses}(I,x)\\
+&\land\bigl(\neg\operatorname{ValidActualSource}(I,x,y)
+\lor\operatorname{CorrectSelectedTwoStageRun}(I,x,y)\bigr).
+\end{aligned}
+\tag{POC.26}
+$$
+
+Here valid actual-source certificates undergo all semantic checks of §6, including full current and target rows and indexed replies; their paths may succeed or fail. Invalid candidate or bit witnesses make $R$ false for every $y$. Invalid source strings impose no condition. Polynomiality follows from Theorem 6.3 and the binary-cap lemma, with the combined explicit size bounded by Lemma 10.2.
+
+If $\forall y\,R(I,x,y)$ holds, the existential witnesses establish BOTH. Any real counterexample to the candidate's universal property has a short actual-origin certificate preserving its full joint failure by Theorem 5.3. That valid $y$ would falsify $R$. There is consequently no such counterexample, and the installed candidate meets the full original contract. Conversely if the candidate is universally valid, every valid $y$ denotes an actual source and its selected two-stage run succeeds; all invalid $y$ are harmless. Theorem 5.3 supplies the two existential bit witnesses whenever BOTH holds.
+
+Finally any arbitrary-literal successful preparer normalizes by Lemma 9.1 at the SAME $N,P,L$ to a candidate of Lemma 10.2, retaining both original bits and the immutable serving table. Hence
+
+$$
+I\in\text{SOME-PREPARER-UNARY-N}
+\quad\Longleftrightarrow\quad
+\exists x\in\{0,1\}^{\operatorname{poly}(s_0)}\
+\forall y\in\{0,1\}^{\operatorname{poly}(s_0)}\ R(I,x,y).
+\tag{POC.27}
+$$
+
+This is the defining upper bound for $\Sigma_2^P$. It decides the original existence question, not an assumed finite-menu relaxation. Universal coverage and existential BOTH remain separate requirements inside the displayed predicate. $\square$
+

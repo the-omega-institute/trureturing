@@ -1,0 +1,30 @@
+**Assumption 1.1 (The synchronous noisy voter law).** Let $G=(V,E)$ be a connected, locally finite, undirected simple graph, finite or infinite, with
+
+$$
+1\leq \deg(v)=|N(v)|<\infty\qquad(v\in V).
+$$
+
+Fix $u\in V$, $0<\varepsilon<1$ and $q=1-\varepsilon$. On an arbitrary probability space $(\Omega,\mathcal F,\mathbb P)$, let the following entire family of measurable random variables be mutually independent:
+
+- initial opinions $I_v\sim\operatorname{Bernoulli}(1/2)$, for $v\in V$;
+- fresh opinions $F_{n,v}\sim\operatorname{Bernoulli}(1/2)$, for $n\geq1$ and $v\in V$;
+- refresh controls $R_{n,v}\sim\operatorname{Bernoulli}(\varepsilon)$, for $n\geq1$ and $v\in V$;
+- neighbour choices $J_{n,v}$, uniform on the actual finite set $N(v)$, for $n\geq1$ and $v\in V$.
+
+Thus the joint law is the product of these marginal laws: prescribing finitely many distinct opinion coordinates contributes a factor $2^{-1}$ per coordinate, prescribing a control value $r\in\{0,1\}$ contributes $\varepsilon^r q^{1-r}$, and prescribing $J_{n,v}=w\in N(v)$ contributes $1/\deg(v)$. The probability of every such simultaneous prescription is the product of its factors. Different kinds of coordinates have disjoint indices, even at the same vertex and time.
+
+Define the opinions by the actual synchronous recursion
+
+$$
+X_0(v)=I_v,\qquad
+X_n(v)=
+\begin{cases}
+F_{n,v},&R_{n,v}=1,\\
+X_{n-1}(J_{n,v}),&R_{n,v}=0
+\end{cases}
+\quad(n\geq1).
+\tag{1.1}
+$$
+
+All vertices use the preceding time layer when copying. This is the law of Benjamini, Helman Tov and Zhukovskii [1, Section 1, p. 2], with their $\xi_n(v),Y_n(v),\eta_n(v)$ corresponding respectively to $R_{n,v},F_{n,v},J_{n,v}$. No stationary initial law is substituted for the independent initial opinions.
+

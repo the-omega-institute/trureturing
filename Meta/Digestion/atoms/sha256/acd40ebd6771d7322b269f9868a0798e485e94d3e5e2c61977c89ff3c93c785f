@@ -1,0 +1,14 @@
+**Definition 12.1 (the charged coordinates).** Write
+$b_t=\lceil\log_2(t+2)\rceil$. Let $\Gamma$ be the material size of
+supplied code, binding/grant records and any required finite origin and
+transfer metadata; count its actual representation, not a unit-cost
+capability. Count $Q$ actual presence Reads, $U$ actual original-source
+updates, $M$ maximum full-root literal length, $J$ their summed lengths,
+$C$ sequential bit work including head motion, $W$ *all cumulative*
+scratch and retained bit writes, and $V$ peak owned visited backing.
+Overwrite, initialization, temporary powers, failed trials, copied
+addresses and released records all count in $W$. Reusable backing may
+reduce $V$ without reducing $W$. A transcript retained for audit counts
+its entire payload separately. External service prices and durations are
+not assigned unit tariffs by a binary-operation count.
+

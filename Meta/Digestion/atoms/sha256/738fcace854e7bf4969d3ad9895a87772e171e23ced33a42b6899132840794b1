@@ -1,0 +1,20 @@
+**Corollary 3.1 (Orders through eight).** For every real $\nu$ with
+$-1<\nu\le8$ and every real $x$ with $|x|<j_{\nu,1}$,
+
+$$
+\left(\frac{j_{\nu,1}^2}{j_{\nu,1}^2-x^2}\right)^
+ {j_{\nu,1}^2/[4(\nu+1)(\nu+2)]}
+ \le \frac{F_{\nu+1}(x)}{F_\nu(x)},
+\tag{3.1}
+$$
+
+with equality if and only if $x=0$.
+
+Proof. This entire real interval is $0<b\le9$. Equations (2.9)–(2.11)
+give $J>T_b$ there by a single polynomial inequality, and Theorem 2.1
+applies. ∎
+
+The classical Rayleigh comparison is an intermediate in this deduction;
+the substantive conclusion combines its continuous parameter estimate
+with the global converse of Theorem 2.1.
+

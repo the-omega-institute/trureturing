@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:8231c22d8ef1aaeaae596c019fab078b741532b35dd69fb78a3b37bee43e1b15
+  normalized_sha256: sha256:8231c22d8ef1aaeaae596c019fab078b741532b35dd69fb78a3b37bee43e1b15
+cas_ref: sha256:8231c22d8ef1aaeaae596c019fab078b741532b35dd69fb78a3b37bee43e1b15
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.complexPauliTwirl
+    target_statement_id: sha256:18c8127827e096158012ea095cee3a977847954156b3c5a38cb3c3141abde66a
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.qubit_sic_matrices_and_per_qubit_traces
+    target_statement_id: sha256:d9d9d91a25a25759ce99c81c33e08334acd89377cae9b65998f4e5db262dca79
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicAlpha
+    target_statement_id: sha256:c82bcde771d35930565c9c08c84c580fa524f4a742e804ba842c78d0edb5b41a
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicE
+    target_statement_id: sha256:b47a3d736f15d77fdd7e3084b634b771e62c03d38aed00cf757b42785e4da234
+receipts:
+  unresolved_subitems: []

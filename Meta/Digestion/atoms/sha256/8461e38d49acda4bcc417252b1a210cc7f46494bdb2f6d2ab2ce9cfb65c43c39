@@ -1,0 +1,42 @@
+**Proposition 5.3 (A common finite word merges each phase).** For a finite normalized deterministic predictive automaton with distinct future laws and strictly positive rows on the countable gap alphabet, there is a nonempty finite word $w$ that merges every pair in each mutual-absolute-continuity class:
+
+$$
+\tau_w(s)=\tau_w(t)\quad\text{whenever }F_s\sim F_t.
+\tag{5.5}
+$$
+
+Here $\tau_v=\tau_{g_k}\cdots\tau_{g_1}$ and
+
+$$
+L_s(v)=\prod_{j=1}^k f_{\tau_{g_{j-1}}\cdots\tau_{g_1}s}(g_j)
+\quad(v=(g_1,\ldots,g_k)),\qquad L_s(\varnothing)=1.
+\tag{5.6}
+$$
+
+The conditional probability of $w$ from any state is at least $\varepsilon=\min_s L_s(w)>0$. For disjoint trials of its $k$ gaps, failure in the first $n$ trials has probability at most $(1-\varepsilon)^n$ after any actual event history.
+
+Proof. On the finite ordered unequal-pair set define the substochastic matrix
+
+$$
+W_{(s,t),(u,v)}=
+\sum_{\substack{g\ge2:\tau_gs=u,\ \tau_gt=v\\u\ne v}}
+\sqrt{f_s(g)f_t(g)}.
+\tag{5.7}
+$$
+
+Cauchy–Schwarz bounds every row sum by $1$. If $\rho(W)=1$, a finite substochastic matrix has a nonempty closed stochastic irreducible class: otherwise every final communicating class loses mass, and every state reaches such a loss, forcing a power to have row sums below $1$. At a row of a closed stochastic class equality in Cauchy–Schwarz gives $f_s(g)=f_t(g)$ for all $g$. Positivity and closure ensure that every positive-symbol successor pair remains unequal in that class. Induction gives $L_s(v)=L_t(v)$ for every finite word $v$, hence $F_s=F_t$, contrary to predictive minimality. Therefore $\rho(W)<1$.
+
+If a pair has no merging word, every word from it stays unequal, and the Hellinger affinity of its length-$n$ prefix laws is exactly $(W^n\mathbf1)_{(s,t)}$, tending to zero. To identify the full-measure limit, dominate both laws by $\eta=(F_s+F_t)/2$. The densities of their restrictions to the prefix fields are the conditional expectations $p_n=\mathbb E_\eta[dF_s/d\eta\mid\mathcal F_n]$, $q_n=\mathbb E_\eta[dF_t/d\eta\mid\mathcal F_n]$. They are bounded by $2$ and converge almost surely to the full densities because the prefix fields generate the gap space. Dominated convergence gives
+
+$$
+\lim_n\int\sqrt{p_nq_n}\,d\eta
+=\int\sqrt{(dF_s/d\eta)(dF_t/d\eta)}\,d\eta.
+\tag{5.8}
+$$
+
+Zero affinity means singularity. Consequently an equivalent pair must have a merging word.
+
+Start with an empty common word. Whenever an original same-class pair still has unequal images, those images still have equivalent future laws; append one of their merging words. Equal images cannot separate under later symbols, so each step eliminates at least one of finitely many original pairs. This terminates with (5.5). If all classes were already singletons, any one-symbol word suffices. Countable alphabet size causes no zero-word problem: every selected finite word has a finite product of positive probabilities, and there are only finitely many initial states. The conditional failure bound follows by iterating the uniform lower bound $\varepsilon$ on successive trials.
+
+The pair-graph synchronization method is related to Travers–Crutchfield, *Exact Synchronization for Finite-State Sources*, [§II.4, Definition 5; §III.1, Theorem 1; §IV.1, Definitions 11–12 and Theorem 3](https://arxiv.org/html/1008.4182). Their stated alphabet is finite. The argument (5.7)–(5.8) supplies the countable-gap, within-phase version needed here, without invoking a finite-alphabet theorem outside its hypotheses. $\square$
+

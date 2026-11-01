@@ -1,0 +1,42 @@
+**定理 6.3（内部参数的几何递归实现）。**
+
+<a id="thm-parameter"></a>
+
+取 $0<r<1$，同一代数中彼此对易的投影 $B_k$，
+以及与每个 $B_k$ 对易的有界自伴 $A$。
+置
+
+$$
+c_k=(1-r)r^{k-1},\quad
+\Theta_n=\sum_{k=1}^n c_kB_k,\quad
+U_n=\prod_{k=1}^n\exp(-ic_kB_kA).
+$$
+
+则存在正收缩 $\Theta$，使
+
+<a id="eq-parameter"></a>
+
+$$
+\|\Theta-\Theta_n\|\le r^n,\qquad
+U_n=e^{-i\Theta_nA}\longrightarrow U=e^{-i\Theta A},
+\qquad
+\boxed{\|U-U_n\|\le\|A\|r^n.}
+\tag{3}
+$$
+
+**证明。**
+
+几何尾和为 $r^n$，而 $\|B_k\|\le1$，所以 $\Theta_n$ 范数收敛且满足所列界。
+系数非负、总和为一给 $0\le\Theta\le I$。
+所有指数中的自伴元对易，因此有限乘积等于指数之和。
+共同连续函数演算及 $|e^{-ix}-e^{-iy}|\le|x-y|$
+给 $\|U-U_n\|\le\|(\Theta-\Theta_n)A\|$。
+极限指数本身酉。
+
+□
+
+这个构造使“参数由门递归实现”成为一个明确的正面定理。
+其前件包括对易程序位、几何权重和允许的受控指数门；
+不能自动将这些门列入原生黄金七门的精确菜单。
+原生可实现性的最新约束在第 [12](#sec-native) 节接入。
+

@@ -1,0 +1,4 @@
+## 3. Partition structure at replica three
+
+Throughout this section $\psi$ is a normalized pure qubit stabilizer state on $N$ qubits, $\Gamma$ is a graph form of $\psi$, and $\mathrm{col}:[N]\to[\mathtt q]$ is a colouring.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d326d421ea0d8f2daa834f4b544b2c19e1e013628d8e6c409e6f5af11f545868
+  normalized_sha256: sha256:d326d421ea0d8f2daa834f4b544b2c19e1e013628d8e6c409e6f5af11f545868
+cas_ref: sha256:d326d421ea0d8f2daa834f4b544b2c19e1e013628d8e6c409e6f5af11f545868
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'The entire atom is provenance and proof-method commentary about the preceding regional-rank result: the same D and R, anchor elimination and padded native V_R correspondence is described as repo-derived, and the standard finite-dimensional linear-algebra, characteristic-p and rank-nullity ingredients are identified. It states no separate quantified mathematical relation and makes no external-open-problem or originality claim for those ingredients. This nonpropositional disposition certifies no new correspondence, proof, coverage, external problem resolution, or novelty; the existing mathematical records and all scope exclusions are preserved.'
+    previous_atom_id: dcdda3c94ae3d5ed1383952fe83cffe184b2269192070309010906e5b32bff96
+    next_atom_id: null

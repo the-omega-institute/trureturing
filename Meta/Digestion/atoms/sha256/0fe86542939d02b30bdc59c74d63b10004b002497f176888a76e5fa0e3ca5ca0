@@ -1,0 +1,42 @@
+**Theorem 5.1 (Achievable region).** Fix $n\ge1$ and $k\ge0$, and let $R_k\subseteq\mathbb R^2$ be the set of pairs $(F_k(\Lambda),F(\Lambda))$ with $\Lambda$ ranging over the completely positive trace-preserving maps on $M_{2^n}(\mathbb C)$.
+
+(i) $k=0$. For $n\ge2$, $R_0$ is the closed triangle with vertices $(1,1)$, $(3^{-n},0)$ and $(\frac13,0)$; equivalently $(F_0,F)\in R_0$ if and only if
+
+$$
+F\ge0,\qquad 1-\tfrac32(1-F_0)\ \le\ F\ \le\ \frac{F_0-3^{-n}}{1-3^{-n}} .
+$$
+
+For $n=1$, $R_0$ is the segment $F=1-\frac32(1-F_0)$, $\frac13\le F_0\le1$. The upper bound is attained by $X\mapsto pX+(1-p)Z^{\otimes n}XZ^{\otimes n}$, $0\le p\le1$, and the lower bound by $X\mapsto pX+(1-p)P_\beta XP_\beta$ with $\lvert\beta\rvert=1$.
+
+(ii) $1\le k\le n-1$. Let $g(w)=3^{-w}\binom{w-1}{k}$, put $w^*=\min\big(n,\lfloor3k/2\rfloor+1\big)$ and $x_k=(-1)^kg(w^*)$. Then $g(w^*)=\max_{1\le w\le n}g(w)>0$, and $R_k$ is the closed triangle with vertices $(1,1)$, $(0,0)$ and $(x_k,0)$; equivalently, for odd $k$ (where $x_k<0$),
+
+$$
+(F_k,F)\in R_k\iff F\ge0,\qquad F_k\ \le\ F\ \le\ \frac{F_k-x_k}{1-x_k},
+$$
+
+and for even $k$ (where $x_k>0$),
+
+$$
+(F_k,F)\in R_k\iff F\ge0,\qquad \frac{F_k-x_k}{1-x_k}\ \le\ F\ \le\ F_k .
+$$
+
+In both cases these inequalities imply $0\le F\le1$. The maximiser of $g$ on $\lbrace1,\dots,n\rbrace$ is unique and equal to $w^*$, except when $k$ is even and $3k/2+1\le n$, in which case $g$ attains its maximum exactly at $w=3k/2$ and $w=3k/2+1=w^*$. The vertex $(x_k,0)$ is attained by $X\mapsto P_\beta XP_\beta$ with $\lvert\beta\rvert=w^*$, the vertex $(0,0)$ by the same map with $\lvert\beta\rvert=1$, and $(1,1)$ by the identity map.
+
+(iii) $k\ge n$. $R_k$ is the segment from $(0,0)$ to $(1,1)$ on the diagonal $F_k=F$.
+
+**Proof.** By Convention 2.1 the vector $(Q_0,\dots,Q_n)$ of a CPTP map is a probability vector, and every probability vector arises, for instance from a Pauli channel that puts weight $Q_w$ on one label of weight $w$. By Theorem 4.1 and Convention 2.1 the pair $(F_k,F)$ is a linear function of $(Q_0,\dots,Q_n)$, so $R_k$ is the convex hull of the images of the vertices of the simplex: $(1,1)$ for $w=0$ and $\big((-1)^kg(w),0\big)$ for $1\le w\le n$.
+
+For $k=0$, $g(w)=3^{-w}$, so the points on the axis $F=0$ fill the interval $[3^{-n},\frac13]$, which is a single point when $n=1$. The convex hull of $(1,1)$ and this interval is the stated triangle (a segment for $n=1$). Its two upper edges are the lines through $(1,1)$ and $(\frac13,0)$, namely $F=\frac{3F_0-1}{2}=1-\frac32(1-F_0)$, and through $(1,1)$ and $(3^{-n},0)$, namely $F=(F_0-3^{-n})/(1-3^{-n})$. The given mixtures have $(Q_0,Q_n)=(p,1-p)$, respectively $(Q_0,Q_1)=(p,1-p)$, and run along these two edges.
+
+For $k\ge1$, $g(w)=0$ for $1\le w\le k$, and $g(k+1)=3^{-k-1}>0$ since $k+1\le n$. For $w\ge k+1$,
+
+$$
+\frac{g(w+1)}{g(w)}=\frac{1}{3}\cdot\frac{\binom{w}{k}}{\binom{w-1}{k}}=\frac{w}{3(w-k)},
+$$
+
+which exceeds $1$ for $w<3k/2$, equals $1$ for $w=3k/2$ and is less than $1$ for $w>3k/2$. Hence $g$ strictly increases from $w=k+1$ up to $w=\lfloor3k/2\rfloor+1$ when $k$ is odd, and up to $w=3k/2$ when $k$ is even, with $g(3k/2)=g(3k/2+1)$ in the even case, and strictly decreases afterwards. Restricting to $w\le n$ yields the stated maximiser and its uniqueness pattern. All the points $\big((-1)^kg(w),0\big)$ lie on the same side of the origin, so they fill the segment between $(0,0)$ and $(x_k,0)$, and the convex hull with $(1,1)$ is the stated triangle; its edges through $(1,1)$ are $F=F_k$ and $F=(F_k-x_k)/(1-x_k)$, and its third edge lies on $F=0$. Since $g(w)\le3^{-w}\sum_{j=0}^{w-1}\binom{w-1}{j}=2^{w-1}3^{-w}<1$ for $w\ge1$, one has $0<\lvert x_k\rvert<1$, so $1-x_k>0$. The closed triangle is the intersection of the three closed half-planes bounded by its edge lines and containing the opposite vertex. The opposite vertex of the edge $F=F_k$ is $(x_k,0)$, where $F-F_k=-x_k$; the opposite vertex of the edge $F=(F_k-x_k)/(1-x_k)$ is $(0,0)$, where $F-(F_k-x_k)/(1-x_k)=x_k/(1-x_k)$; the opposite vertex of the edge $F=0$ is $(1,1)$. For odd $k$, $x_k<0$, which gives $F\ge F_k$, $F\le(F_k-x_k)/(1-x_k)$ and $F\ge0$; for even $k$, $x_k>0$, which reverses the first two inequalities. Finally, $F\le1$ on the triangle because all three vertices have $F\le1$.
+
+For $k\ge n$, Theorem 4.1 gives $F_k=F=Q_0\in[0,1]$, and both endpoints are attained by the identity map and by $X\mapsto P_\beta XP_\beta$ with $\beta\ne0$. $\square$
+
+Stance: suspected-novel, except the lower bound $F\ge1-\frac32(1-F_0)$ in (i), which is literature-attested (cited fact (c)), and its attainment for $n\ge2$, which is cited fact (d) (repo-derived; used as a cited step).
+

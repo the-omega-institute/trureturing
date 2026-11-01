@@ -54,14 +54,14 @@ public sealed partial class CleanLanesCommandTests
                 preservation.qualify = injected_qualification
                 sys.exit(p.main())
                 """;
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", program, StringComparison.Ordinal);
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", program, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
         Assert.True(injected);
         var failed = outcome is not ("eligible" or "refused");
-        Assert.Equal(!failed, result.Success);
-        AssertQualificationPublicExit(result, force, failed ? 2 : 0);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, force, 0);
         Assert.Equal(failed ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         if (outcome == "eligible")
         {
@@ -77,10 +77,12 @@ public sealed partial class CleanLanesCommandTests
             Assert.StartsWith("qualification_failed:", reason);
             Assert.Contains(outcome switch { "git" => "native qualification broke", "os" => "filesystem broke",
                 _ => "inner qualification deadline" }, reason);
-            Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+            Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         }
         else Assert.Equal("initialization_in_progress", reason);
         Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, lane, failed ? "failed" : "skipped", reason));
+        Assert.Equal(outcome == "refused" && stage == "batch" ? 0 : 1,
+            ReadEvents(result.Error, "clean_lanes_warning").Count);
     }
 
     public static IEnumerable<object[]> QualificationBoundaries()
@@ -120,8 +122,8 @@ public sealed partial class CleanLanesCommandTests
                     ? "{\"event\":\"worktree_qualification\",\"status\":\"succeeded\",\"items\":[]}" : "{bad receipt"), []);
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
-        Assert.False(result.Success);
-        AssertQualificationPublicExit(result, force, 2);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, force, 0);
         Assert.True(Directory.Exists(lane));
         var reason = ReasonFor(result.Output, lane);
         var indeterminate = stage == "remove" && failure is not ("unavailable" or "start_refused");
@@ -133,7 +135,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(indeterminate ? "partially_removed" : "failed", item.GetProperty("action").GetString());
         Assert.Equal(indeterminate ? 0 : 1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.Equal(indeterminate ? 1 : 0, ReadSummary(result.Output).GetProperty("partial_count").GetInt32());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
     }
     private static void AssertQualificationPublicExit(CommandResult result, bool force, int expected)
     {

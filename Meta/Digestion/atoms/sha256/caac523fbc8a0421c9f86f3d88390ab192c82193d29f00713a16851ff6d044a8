@@ -1,0 +1,133 @@
+**Proposition 8.4 (All two-read attaining starts and their forced labels).**
+Fix any installed table and deterministic initial state $r$ with
+$q_2(r)=1$. Its correct mass is $S_2$ if and only if its execution
+from $r$ has the following form. It reads $t=2\ell+\alpha$ first,
+then reads $t_0$ or $t_1$ according to the first reply, and then halts.
+Writing $\beta=1-\alpha$ and $e=\{\ell,\ell+1\}$, the exact
+geometric conditions are:
+
+1. $v_\alpha\in e$.
+2. $t_0$ has parity $\alpha$ and its active edge $f$ is
+   vertex-disjoint from $e$.
+3. $t_1$ has parity $\alpha$ and its active edge $g$ shares exactly
+   one vertex with $e$.
+
+The required terminal labels, with replies in acquisition order, are
+
+$$
+\begin{array}{c|c}
+\text{reply pair}&\text{unique maximizing label}\\ \hline
+00&h_\beta(\sigma)\\
+01&h_\alpha(\sigma)\\
+10&h_\alpha(s_0)\\
+11&h_\alpha(s_1)
+\end{array}
+\qquad
+(s_0,s_1)=
+\begin{cases}
+(\sigma,1-\sigma),&v_\alpha\in e\cap g,\\
+(1-\sigma,\sigma),&v_\alpha\in e\setminus g.
+\end{cases}
+\tag{8.5}
+$$
+
+Every leaf has positive source probability. The three read states
+have distinct actual addresses, and the terminal labels include the
+three distinct states $h_\beta(\sigma)$, $h_\alpha(\sigma)$ and
+$h_\alpha(1-\sigma)$. Thus every attaining start visits at least
+three read states and three halt states with positive source probability.
+
+Proof. We analyze the actual instructions from $r$, without replacing
+them by padded or risk-dominating representatives. An initial halt has
+correct mass at most $a/2<S_2$. The first instruction must therefore
+read some actual integer $t$. Both first-reply sections have positive
+mass. On either section, a successor is either a halt or a second
+read. After a second read, every positive-mass leaf must have a halt
+successor, since any third read there violates $q_2(r)=1$.
+
+Let $D_x$ be the actual correct mass on first reply $x$, including
+all its subsequent returning leaves. For a second read after reply
+one, Lemma 4.1 gives $D_1\le a\eta$; if it instead halts,
+Lemma 3.1 gives the same bound. If the zero successor halts then
+$D_0\le a/2$, by the zero-section calculation in Proposition 8.3.
+It would follow that $D_0+D_1\le S_1<S_2$. Hence the zero
+successor must read $t_0$.
+
+For this actual zero subtree, Lemmas 4.2--4.3 give
+
+$$
+D_0\le B_0\le \frac a2+a^2\eta,
+\qquad D_1\le a\eta.
+\tag{8.6}
+$$
+
+Equality of the total at $S_2$ forces equality in both bounds and
+in every intervening leaf maximum. Opposite parity for $t_0$ loses
+at least $\eta c/2>0$, by (4.9). At the same parity the $00$
+maximum is $a/2$, and the possibilities for the $01$ maximum in
+Lemma 4.2 are exhaustive. A repeat gives zero; an adjacent edge
+gives $a\eta/2<a^2\eta$. For disjoint edges with the target in
+$f$, the maximum is $c\eta/2<a^2\eta$, since $c<2a^2$.
+If the target is in neither edge it is $ac\eta<a^2\eta$,
+since $c<a$. Therefore $D_0=a/2+a^2\eta$ forces precisely
+conditions 1 and 2, using the strict inequalities of (3.1).
+
+Now the first edge contains $v_\alpha$. Halting on first reply
+one gives at most $\eta/2<a\eta$, so that successor must read
+$t_1$. The exhaustive table in Lemma 4.1 shows that a separator,
+a repeated first edge, or a vertex-disjoint edge gives only
+$\eta/2$ on this subtree. Thus $D_1=a\eta$ forces exactly
+condition 3. This argument allows every integer address and either
+first parity. The fuller tables in
+[FixedSeed, Lemmas 2.4--2.5 and Theorems 3.2--3.3](FIB_TWO_PAID_READ_FIXED_SEED_FRONTIER_AND_SUPPORT_INVISIBILITY.md)
+give the same source geometry; their representative policies are not
+being used as state-preserving transformations.
+
+It remains to identify the outputs and check sufficiency on that same
+source. Under conditions 1--3 the leaf source masses and best correct
+masses are
+
+$$
+\begin{array}{c|c|c}
+\text{reply pair}&J_p(C_{xy})&m(C_{xy})\\ \hline
+00&(1+c^2)/2&a/2\\
+01&\eta c&a^2\eta\\
+10&\eta/2&a\eta/2\\
+11&\eta/2&a\eta/2
+\end{array}
+\tag{8.7}
+$$
+
+Indeed $00$ contains all of phase $\beta$ and, in phase $\alpha$,
+two disjoint zero edges. The phase-$\alpha$ largest target-state
+mass there is $a^2c/2<a/2$, whereas the phase-$\beta$ majority
+state has mass $a/2>b/2$. Thus its unique maximizer is
+$h_\beta(\sigma)$. The $01$ leaf certifies phase $\alpha$;
+its two target-state masses are $a^2\eta$ and $b^2\eta$, so
+its unique maximizer is $h_\alpha(\sigma)$. These statements use
+the actual target $S_{v_\alpha}$, not a target transported from the
+other phase.
+
+For $10$ and $11$, the two adjacent edge constraints leave the
+complementary three-spin assignments of (3.2), whose masses are
+$a^2b$ and $ab^2$. Their majority assignments give exactly
+$(s_0,s_1)$ in (8.5), whether $g$ is left or right of $e$.
+To see the distinction directly, on $10$ the two spins of the
+zero edge $g$ are the majority spin and the remaining vertex is
+the minority spin. On $11$ the shared vertex is the minority spin
+and the two outer vertices are the majority spin. Since the target
+belongs to $e$, its two maximizing values are opposite. The phase
+factor $1/2$ proves the last two rows of (8.7); $a>b$ makes each
+maximizer unique. All four source masses are positive.
+
+Consequently (8.5) is necessary for equality. Conversely, conditions
+1--3 with those labels give correct mass equal to the sum of the
+last column of (8.7), namely $S_2$, and return after exactly two
+reads. Finally $e,f,g$ are pairwise different: $f$ is disjoint from
+$e$, while $g$ is adjacent to $e$. Thus $t,t_0,t_1$ are three
+distinct address literals. A fixed instruction state cannot carry
+two of these literals. The three distinct output labels require
+three distinct halt states, disjoint from the read states by (8.1).
+Each required state is reached on a positive source section.
+$\square$
+

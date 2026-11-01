@@ -1,0 +1,29 @@
+#### 定义 2.1（带类型的预测树）
+
+有序二叉树的叶带类型，根类型固定为 $c$。
+每个内部节点的父类型必须是其两子类型融合允许的结果。
+所有合法内部标签构成有限集合 $\mathsf{Lab}(T,c)$，
+定义 $H_T^c=\mathbb{C}^{\mathsf{Lab}(T,c)}$，合法标签向量取为正交归一基。
+一次局部重括号
+$((ab)_e c)_z\longrightarrow(a(bc)_h)_z$
+由矩阵 $\mathsf F^{abc}_z(e,h)$ 表示。
+
+这里“选择对角线”对应选择一种括号树；对角线上还要保留类型及相干振幅。
+这比只保留三角形的边长丰富。换一种括号树可以只是同一态的坐标变换，并不自动构成测量塌缩。
+项目已有的树基构造、完整有限五边形及路径投影提供了这一接口。（[2](#ref-repofusion)）
+
+规定所有合法一维 $\mathsf F$ 块等于 $1$，非法系数为 $0$；
+唯一二维块采用正实对称规范
+
+<a id="eq-Fgeneric"></a>
+
+$$
+\mathsf F=\mathsf F^{\tau\tau\tau}_\tau
+=\begin{pmatrix}r&s\\s&-r\end{pmatrix},\qquad r,s>0,
+\tag{2}
+$$
+
+标签顺序为 $(\mathbf{1},\tau)$。
+
+<a id="statement-2-2"></a>
+

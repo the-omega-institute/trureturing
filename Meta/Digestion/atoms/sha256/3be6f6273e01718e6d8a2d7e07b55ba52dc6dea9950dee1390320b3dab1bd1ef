@@ -1,0 +1,14 @@
+**Proposition 22.3 (faithful quotient and the whole root language).** The source of Definition 22.2 is finite, deterministic, root reachable and closed under every legal successor. Its complete-response quotient is exactly $X_N$. Put
+
+$$
+p_i=a^i b^{L-i}\qquad(0\le i<N).
+\tag{22.8}
+$$
+
+The complete legal root language, grouped by endpoint, is
+
+| Endpoint | All root histories ending there | Length |
+| --- | --- | --- |
+| $v_{i,j}$, $i+j\le L$ | $a^i b^j$ | $i+j$ |
+| $w_{i,t}$, $1\le t\le B_i$ | $p_i b^t$ | $L+t$ |
+| $z_q$, $q=\rho(i,j)$ with $i<j$ | $p_i b^q a$ and $p_j b^q a$ | $N+q$ for both |

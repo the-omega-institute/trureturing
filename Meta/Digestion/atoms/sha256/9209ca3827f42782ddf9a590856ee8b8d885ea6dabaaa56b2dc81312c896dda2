@@ -1,0 +1,22 @@
+**Citation convention 5.1 (Adjacent inequalities).** The correspondence of the sources is as follows; each article locator denotes the stated arXiv author version.
+
+Bourin–Lee, [arXiv:2006.09692v1](https://arxiv.org/abs/2006.09692v1), Theorem 2.2, proves the positive-map estimate
+
+$$
+|\Phi(N)|\leq\beta\Phi(|N|)+\frac1{4\beta}V\Phi(|N|)V^*,\qquad \beta>0,
+$$
+
+for normal $N$ and a positive map $\Phi$. Taking $N=A\oplus B$ and $\Phi\bigl(\begin{smallmatrix}X&Y\\Z&R\end{smallmatrix}\bigr)=X+R$, with $\beta=1$, supplies the upper bound (1.2); this is precisely the specialization stated in [arXiv:2602.19607v1](https://arxiv.org/abs/2602.19607v1), §4. The angle example following (2.4) of the older positive-map article supplies $\lambda_{\min}(P+Q)=1-r$ and $|P-Q|=\sqrt{1-r^2}I_2$ on the support. These are attributed intermediates, not separate new results of this source.
+
+Bourin–Lee, [arXiv:2307.02034v3](https://arxiv.org/abs/2307.02034v3), §4, Propositions 4.1–4.2, concerns Schur products; Corollary 4.3 concerns Hermitian $S,T$ with $\pm S\leq T$ and a unitary-orbit correction by $T/4$. Its Corollary 4.4 and Remark 4.5 instead concern the scalar correction $(k/4)I$ for sums of $k$ contractions. These targets have different quantifiers and corrections from the least coefficient of one specified pair in (1.1).
+
+Aouichaoui–Lee, *Solutions to some open problems in matrix analysis*, [arXiv:2609.20094v2](https://arxiv.org/abs/2609.20094v2), Introduction and §2, Theorem 2.2, also treats the scalar correction $(k/4)I$ for contractions. Its Introduction states the standard unitary-orbit order criterion: for Hermitian $H,J$, there is a unitary $U$ with $H\leq UJU^*$ exactly when their decreasing eigenvalues obey the corresponding coordinatewise inequalities. The eigenvector argument (2.13)–(2.14) is the needed instance of this standard spectral principle, with the ambient quantifier retained.
+
+The mathematical argument in Colbrook, [*MI-03: Resolution*, `solution.tex`](https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/matrix-inequalities-and-norms/MI-03/solution.tex), proves sharpness of the scalar correction $(k/4)I$ for $k\geq2$ contractions, using complex rank-one contractions $e_1v_j^*$ in dimension two and Hermitian contractions in dimension three. Those dimension-two summands are not the normal rank-one domain (1.4), and the scalar-$I$ correction is not $cUDU^*$. Only that mathematical argument is relevant to this comparison.
+
+Zhang, *Operator symmetric moduli and sharp triangle inequalities*, [arXiv:2603.01046v1](https://arxiv.org/abs/2603.01046v1), Introduction and §2, studies arithmetic and quadratic symmetric moduli and inequalities for unitarily invariant norms. Its Lemma 2.4 records standard rank-one modulus calculations; Theorem 2.5 exhibits norm sharpness in dimension three. Zhang, *An operator triangle inequality for the quadratic symmetric modulus*, [arXiv:2602.01463v3](https://arxiv.org/abs/2602.01463v3), §1.2 and §4, treats the quadratic symmetric modulus and its equality conditions. In the latter article’s quadratic-modulus theorems the modulus is $[(X^*X+XX^*)/2]^{1/2}$, whereas (2.6)–(2.8) use the genuine right modulus even when $A+B$ is not normal.
+
+Bourin–Lee, *Matrix inequalities from a two variables functional*, [arXiv:1511.06977v3](https://arxiv.org/abs/1511.06977v3), (1.3), Proposition 1.1, Theorem 2.9 and Corollary 2.10, concerns weak log-majorization for normal matrices and positive maps. A log-majorization conclusion is distinct from the fixed-pair Loewner inequality with the unitary-orbit correction in (1.1).
+
+The attribution of the mathematical additions in Convention 1.2 is relative to the pinned repository sources cited there and the specified primary-source versions and sections in this convention. This bounded correspondence makes no assertion of worldwide priority, exhaustive absence from the literature, identity of author and journal texts, or present unresolved status of an external problem. Theorems 2.1–4.3 concern nonzero rank-one normal pairs only; they provide an attaining unitary, not a classification of all attaining unitaries, and classify extremality of $c_*$ in that domain, not equality cases for all normal or higher-rank matrices.
+

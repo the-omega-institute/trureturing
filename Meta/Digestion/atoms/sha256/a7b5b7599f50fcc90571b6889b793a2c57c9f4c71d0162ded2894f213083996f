@@ -1,0 +1,19 @@
+#### 命题 7.4（两个非平行读口已足够）
+
+法向 $u,v$ 非平行时，两 trine 的合并读出单射，且
+
+$$
+\frac{1-|u\cdot v|}{6}|r-s|^2
+\le \left\lVert Q(r)-Q(s)\right\rVert^2
+\le\frac13|r-s|^2.
+$$
+
+**证明。**
+
+左边的精确二次型为
+$\frac16(r-s)^{\mathsf T}(2I-uu^{\mathsf T}-vv^{\mathsf T})(r-s)$。
+括号矩阵的特征值为 $2,1+|u\cdot v|,1-|u\cdot v|$。
+非平行保证最小值严格正，结论成立。 ∎
+
+<a id="sec-phase"></a>
+

@@ -1,0 +1,52 @@
+**Theorem 28.4 (uniform deterministic acquisition of the full class).**
+For every original input of Definition 9.1, Definition 28.3 terminates
+by stage $R=r$ and returns exactly $P=z_1\cdots z_{2d}$ and the
+actual cut $n$. Every earlier acceptance is also exact. The controller
+is one deterministic source-blind program taking only the original
+entrance and public $d$; it uses zero source updates and no coins.
+Arbitrary admitted singular transients and nonminimal source laws
+are included, and neither $r$, $a$, a law, a cut nor a hidden
+chronology is supplied to the controller.
+
+Proof. All enumerations and paths have finite explicit bounds. A
+passing Hankel row generates all of the proposed prefix: its first
+$d$ values are the chosen seed; for each next value, the appropriate
+Hankel equation gives that value from the preceding $d$, so induction
+proves agreement on $2d$ values. It is therefore a genuinely
+constructed all-index candidate, even when $A$ was only provisional.
+For $d=0$, the promise itself makes the zero candidate proper.
+
+Corollary 22.3 applies to every such presented candidate of order
+at most $d$. Its passing actual tests force the actual cut and the
+same infinite behavior as the actual source, by authenticated
+first-$2d$ agreement and monic finite separation. Hence every
+return, including any at $R<r$, is sound. Gaussian consistency
+alone supplies no such authentication. Similarly the soundness of
+individual local certificates does not turn an insufficient-stage
+prefix into an authentic one without this final verifier.
+
+At stage $r$, the root height is exact by Theorem 28.2, giving
+$\nu=n$. Suppose inductively that bits before $j$ are authentic.
+The constructed old tree then is the actual old tree at
+$\tau_j-1$, so $p_j(A)$ is the actual birth parent, by GPO
+Proposition 39.2 and Theorem 22.2. It has at most $2j-1$ old nodes.
+Maturity gives $\tau_j\le n_0-1\le n-1$. Both children are present,
+and their depths are at most
+$\tau_j-1\le N(2d)-2=h_0$. Their height calls are therefore exact.
+With $t_j=n-\tau_j\ge1$, their ranks are $t_j+1,t_j$ in the actual
+orientation. Their heights are respectively $t_j,t_j-1$, including
+$t_j=1$, where ranks two and one have heights one and zero. Their
+strict difference recovers exactly $z_j$ and continues the induction.
+All actual-parent literals satisfy the guards by Theorem 28.2.
+
+Thus the stage proposes the actual prefix. Its Hankel system is
+consistent by the all-index source promise. The chosen solution
+agrees with the source on $2d$ values and hence everywhere; its
+proper-candidate verification succeeds. When $d=0$ the birth loop
+is empty, but the rank certificate still finds every admitted
+$n\ge2$, including $n=2$. The empty descriptor then passes. No
+terminal-rank sensor or preknown zero-source cut is required.
+Since $r\le d$, these facts prove termination on every admitted
+input. No claim about termination on nonconforming services or
+sources is inferred from the guards. $\square$
+

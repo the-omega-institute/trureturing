@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7db1c98c442e7b2ce3489ba4914e601287789fd0093547c8a98d450ffceb0528
+  normalized_sha256: sha256:7db1c98c442e7b2ce3489ba4914e601287789fd0093547c8a98d450ffceb0528
+cas_ref: sha256:7db1c98c442e7b2ce3489ba4914e601287789fd0093547c8a98d450ffceb0528
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Boundary 10.3 is solely a dependency-separation notice: analytic root concavity does not account for physical sampling identities or probability and expected-time comparisons. The receipt records this scope notice only and supplies no proof or coverage of those separate propositions.'
+    previous_atom_id: ee7ba1aadbb473ed28906f8f22ecb79d4690b1a41a5f2b49e9015ddde01860ad
+    next_atom_id: 1a4a7f2d2eb216553fa4d0e003cd33a25d9981b81a3a30a5b2834d8de303942a

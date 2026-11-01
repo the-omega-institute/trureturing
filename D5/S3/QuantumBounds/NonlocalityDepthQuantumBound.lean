@@ -811,7 +811,7 @@ private lemma eta_norm : ((-1 + Complex.I) / (Real.sqrt 2 : ℂ)) * star ((-1 + 
         ((Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹) := by ring
     _ = 1 := by rw [hinv]; norm_num; ring_nf; norm_num
 
-private lemma zero_ne_one (n : ℕ) (hn : 0 < n) : (fun _ : Fin n => (0 : Fin 2)) ≠ (fun _ : Fin n => (1 : Fin 2)) := by
+lemma zero_ne_one (n : ℕ) (hn : 0 < n) : (fun _ : Fin n => (0 : Fin 2)) ≠ (fun _ : Fin n => (1 : Fin 2)) := by
   letI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
   exact Function.const_injective.ne (by decide : (0 : Fin 2) ≠ 1)
 

@@ -1,0 +1,10 @@
+## 4. Infinite endpoint and arbitrary original-seed selectors
+
+Assume for this section
+$$
+I_\mu=\int\frac{\mu(dq)}{1-q}=\sum_{m\ge0}M_m\in(0,\infty].
+$$
+Let $N_*\in\mathbb N_{\ge1}\cup\{\infty\}$ be the first index with
+$v_{N_*}<0$, with $N_*=\infty$ if there is no such index, and put
+$w_j=bM_{j-1}-aM_j$ and $w_\infty=0$.
+

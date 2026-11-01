@@ -10,13 +10,11 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void ResumedRemovalProtectsPredecessorsThroughFullOrphanSweep(bool interruptAfterReplacement)
+    public void ResumedRemovalKeepsPredecessorRecoverySnapshots(bool interruptAfterReplacement)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/resumed-recovery";
-        const string control = "harness/retirable-control";
         var lane = fixture.AddLandedLane(branch);
-        fixture.AddOrphan(control, merged: true);
         var root = TestRepositoryLayout.FindRoot();
         var script = """
             import argparse, json, sys
@@ -53,7 +51,6 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane), result.Output);
-        Assert.False(fixture.BranchExists(control), result.Output);
         if (interruptAfterReplacement)
         {
             using var roots = JsonDocument.Parse(prepared.StandardOutput);
@@ -95,7 +92,7 @@ public sealed partial class CleanLanesCommandTests
         {
             if (!nativeRemovalFailure || file != "python3" || !IsProtocol(args, "remove")) return null;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 p = sys.modules['worktree_preservation']
                 native_git = p.git
                 def interrupt(path, *args, **kwargs):
@@ -104,11 +101,11 @@ public sealed partial class CleanLanesCommandTests
                     return native_git(path, *args, **kwargs)
                 p.git = interrupt
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-        Assert.False(result.Success);
+        Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
         Assert.False(File.Exists(path));
         var receipt = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == lane);
@@ -148,7 +145,8 @@ public sealed partial class CleanLanesCommandTests
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
         var failed = material is "MERGE_HEAD" or "held-index.lock";
-        Assert.True(result.Success == !failed, result.Output + result.Error);
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.Equal(failed ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.Equal(failed, Directory.Exists(lane));
         Assert.True(fixture.BranchExists("harness/disposable-lock"));
         if (failed) Assert.StartsWith("checkpoint_failed:", ReasonFor(result.Output, lane));

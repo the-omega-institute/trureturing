@@ -1,0 +1,65 @@
+#### 定理 7.5（射影门像及其精确分形维数）
+
+<a id="thm:projectivefractal"></a>
+
+令
+
+$$
+d_{\rm p}(U,V)=\inf_{|\lambda|=1}\left\lVert U-\lambda V\right\rVert,\quad
+ q_*=2\sin\frac{1-r}{2}+r<1,
+$$
+
+$$
+a_*=\min\{(5-11r)/3,\ 2-2q_*\}>0.
+$$
+
+则
+
+$$
+a_*d_r(b,b')\le d_{\rm p}(U(b),U(b'))\le2d_r(b,b').
+$$
+
+普通门像与射影门像的 Hausdorff 维数均为
+
+$$
+\boxed{
+ s_*=\frac{\log2}{\log(1/r)}
+ =\frac{\log2}{2\log\varphi}.
+ }                                                        \tag{30}
+$$
+
+**证明。**
+
+第一步误差精确为 $2\sin[(1-r)/2]$，剩余尾至多 $r$，
+故 $\left\lVert U(b)-I\right\rVert\le q_*<1$。
+若 $U^*V$ 的特征值为 $e^{\pm i\theta}$，
+对整体相位最优化等价于最大化
+$\cos t\cos\theta-|\sin t\sin\theta|$，其最大值为 $|\cos\theta|$。
+因此在 $\operatorname{SU}(2)$ 中
+
+$$
+d_{\rm p}(U,V)=\min\{\left\lVert U-V\right\rVert,\left\lVert U+V\right\rVert\}.
+$$
+
+第二项至少 $2-2q_*$，而 $d_r\le1$，
+结合式 (29) 即得射影双边界。
+
+为直接证明维数，$2^n$ 个前缀柱集的直径为 $r^n$，
+给上界 $s_*$。给每个柱集质量 $2^{-n}$。
+若一个集合直径 $\delta$ 满足
+$r^n\le\delta<r^{n-1}$，其中各点必共有前 $n$ 位，
+故其质量至多 $2^{-n}=(r^n)^{s_*}\le\delta^{s_*}$；
+单点质量为零。对任意可数细覆盖求和，给正的 $s_*$ 维 Hausdorff 测度下界。
+双 Lipschitz 不等式逐覆盖传递维数，得到式 (30)。
+
+∎
+
+普通参数具有 Cantor 结构，并不能自动推出门像具有相同维数。
+例如取交替轴 $H_j=X,Z$，令
+$A_{2j-1}(b)=r b_jH_j$、$A_{2j}(b)=-b_jH_j$。
+因 $c_{2j}=rc_{2j-1}$，每对门恰好相消，极限恒为 $I$；
+不同对子中的轴仍可不对易。
+定理 [7.4](#thm:goldencantor) 中首差位的分离条件因此不可删除。
+
+<a id="statement-7-6"></a>
+

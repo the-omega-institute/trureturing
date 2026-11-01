@@ -1,0 +1,22 @@
+**Proposition 6.2 (a constant core does not erase an early singular birth).**
+The fixed-core $p=1$ conclusion requires the core-only premise. At the
+alpha root, the streams $000\cdots$ and $100\cdots$ have the same zero
+core and the same exterior clocks $(I_1,I_2)=(1,2)$ after normalization
+at $e=1$, yet their relative supports at $T=2$ differ. Similarly,
+$111\cdots$ and $011\cdots$ have the same all-one core and these same
+clocks, but different supports at $T=2$.
+
+Proof. The impulse $100\cdots$ is annihilated by $E$, so the first pair
+lies in $\mathscr R_1$ and has zero periodic component. The second pair
+lies in $\mathscr R_2$, since $E(E+1)$ annihilates the all-one stream
+plus that impulse. At the alpha root the preceding forest is empty and
+$e=1$, so (PCR.1) gives the asserted common clocks. In either pair the
+first birth has opposite orientation. After two normalized updates, the
+beta child created in the first update has branched; relative $aa$ is
+present exactly when that first bit was one. Thus a paid full-root
+presence test at $aa$ separates each pair. Here the first index is inside
+the transient, so these are deliberately outside Definition 1.2's
+core-only domain. They do not assert an admissible erased full-entry
+comparison at the original mature horizon: actual cut $n=3$ is less
+than $N(2)=4$ for $d=1$, and less than $N(4)=5$ for $d=2$. $\square$
+

@@ -1,0 +1,24 @@
+#### 命题 7.4（细分权重的尺度律）
+
+将一条边替成 $m$ 段酉输运 $U_m\cdots U_1=U$，各段权为 $w_j>0$，消去中间振幅后得到
+
+$$
+\mathcal E_{\mathrm{eff}}(a,b)
+ =w_{\mathrm{eff}}\left\lVert b-Ua\right\rVert ^2,\qquad
+ w_{\mathrm{eff}}=\left(\sum_{j=1}^m w_j^{-1}\right)^{-1}.
+$$
+
+**证明。**
+
+沿路径把每个变量输运回起点坐标，问题变成端点差固定的增量 $d_j$，且 $\sum_jd_j=U^\dagger b-a$。
+加权 Cauchy–Schwarz 给
+$\left\lVert \sum_jd_j\right\rVert ^2\le(\sum_j w_j^{-1})\sum_jw_j\left\lVert d_j\right\rVert ^2$。
+取 $d_j=(U^\dagger b-a)/(w_j\sum_\ell w_\ell^{-1})$ 达到等号。
+
+∎
+
+因此每段照搬原权 $w$ 会把有效权降为 $w/m$；要保留原边的能量，应给每段权 $mw$。
+项目 v20 的链残差最小值 $\left\lVert V-U_w\right\rVert _F^2/(L+1)$ 正体现这项效应：增加恒等步骤可以降低未重标定的残差，却没有改善端点门近似。（[14](#ref-v20)）
+
+<a id="statement-7-5"></a>
+

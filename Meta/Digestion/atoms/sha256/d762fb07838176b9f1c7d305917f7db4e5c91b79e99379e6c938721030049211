@@ -1,0 +1,12 @@
+**推论 16.4（反周期坏势当且仅当具有实际顶点反射）。** 对每个奇素数 $p\ge3$ 与每个满足式 (16.1) 的二值势，
+
+$$
+\operatorname{Bad}(v)
+\iff\exists j\ \forall i,\ v_{2j-i}=v_i.
+\tag{16.7}
+$$
+
+特别地，这整个类满足 $\operatorname{Bad}(v)\Rightarrow\operatorname{Shared}(v)$；若坏势的持续站点为 $j$，则实际反射就是 $\rho_j$。
+
+**证明。** 母卷推论 3.3 把坏势等价为某个站点持续；定理 16.3 分别给出两个方向及实际正交矩阵。∎
+

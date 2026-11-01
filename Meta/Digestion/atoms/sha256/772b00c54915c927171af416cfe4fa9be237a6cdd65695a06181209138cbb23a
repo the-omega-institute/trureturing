@@ -1,0 +1,12 @@
+## 140. 来源对应与数学范围
+
+原始对象始终是定义 121.1–121.3 的固定 $r,\beta$、整数取整、两个完整实验、均匀固定 $q$ 先验、完整分数组、整个 powered 元组质量、共同校准 $p_i$、实际后验中心及确定正噪声。式 (137.8) 复用[谱边界 §68.2](PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 的 (68.9)，但只需要 $t=0$ 的均匀后验值，不使用该节只在 $H_M$ 上成立的全格注入结论。原取整给 $q/M\to0$，结合 $r$ 的超越性排除每个 $\mu_j=C_j/2$；全盒的唯一最大顶点与不拆开其他 tied shells 的共零投影是本处的数学组合。
+
+超越性所用原始文献为 A. Baker and G. Wüstholz, *Logarithmic forms and group varieties*, Journal für die reine und angewandte Mathematik 442 (1993), 19–62，[主定理原文 pp.19–20](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0442/LOG_0005.pdf)，[DOI 10.1515/crll.1993.442.19](https://doi.org/10.1515/crll.1993.442.19)。对应参数是反设代数的固定 $1+r,1-r$、固定实对数支、固定数域次数和高度、整数系数 $Q_n,P_n$。原正尾使 $Q_n\log(1+r)+P_n\log(1-r)\ne0$，系数高度 $O(\log Q_n)$ 的下界与十进制尾的 $e^{-(\log10)Q_n^5}$ 上界矛盾。这里只复用所得固定 $r$ 超越性；该文不提供实际复零点或对数响应结论。
+
+仓内完整供应者 [FiniteSupportSelectionBayes](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteSupportSelectionBayes.lean) 的 `finite_support_bayes`，包括其证明局部的 `actual_laws` 和 `likelihood_posterior`，使用参数 $s=\mathsf T$、`Experiment.pair/path`、`compensation` $=rq/(M-q)=\epsilon_c$、正类顶点 `Sum.inl`、负类顶点 `Sum.inr`。其 `count` 就是 $k_i,l_i$，`score` 就是 $W_i$，`weight` 就是 $e^{W_i}$，`partition` 就是 $e_q$；两种完整似然的支持无关因子被后验归一化消去。第 139 节的确定 pair 排列和从负类顶点出发的路径拼接直接满足这些完整定义，补集权重精确为 $1$，无需路径独立性或 Poisson 近似。校准唯一性、三质量比值及实际中心由有限式 (139.2)–(139.3) 直接推得；没有调用仅在大方差条件下适用的赔率近似或把条件化前的矩界当作输出后的独立性。
+
+[ExponentialBlockIndependence](../../../D5/S3/Analytic/Entire/ExponentialBlockIndependence.lean) 的 `independent_exponential_polynomial_blocks` 是不同复指数块独立性的通用供应者；本处 (137.11) 只有常系数块，Vandermonde 导数系统直接给出所需特例，非零系数则由模型特异引理 137.2 提供。局部零点阶数分解、单连通无零函数的对数及 Rouché 带重数稳定性是经典复分析步骤；[SimpleZeroLogResidue](../../../D5/S3/Zeros/SimpleZeroLogResidue.lean) 的 `simple_zero_has_unit_logarithmic_residue` 对应简单零点的局部留数，[RoucheZeroCount](../../../D5/S3/Weil/ZetaAnalytic/RoucheZeroCount.lean) 的 `rectangle_zero_count_eq_of_norm_sub_lt` 及其直线同伦证明对应严格边界估计下的零点计数原则。这里在具体小圆周上验证 (139.12) 的严格不等式，并用固定紧管排除其他更近根，不把矩形供应者的几何条件直接替换成圆盘条件。
+
+全盒共零排除对每个固定正噪声序列成立；两行定量根结论另以原严格条件 (122.1) 保证 $\varepsilon_n\to0$。任意有限纤维及每个实输出的精确零因子准则无需 generic 输出假设，允许匹配重数的共同零点穿过响应域；个别 MGF 对数仍受其自己的零点限制。两行结论只属于所构造的确定记录，既不扩大原好类，也不提供好类的最近零点、最优尺度、例外集间距、靠近例外时的一致下界、记录族概率或典型数据结论。每个输出的原定量好类目标保持原范围。
+

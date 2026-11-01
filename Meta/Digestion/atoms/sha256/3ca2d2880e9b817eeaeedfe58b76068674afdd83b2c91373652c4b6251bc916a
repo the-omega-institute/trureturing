@@ -1,0 +1,21 @@
+**Definition 22.3 (the operator query and inverse code interface).** At
+$r>0$, an operator query consists of two canonical $r$-bit coefficient
+strings $(Q_1,Q_2)$ in $R_g$. First enumerate
+$1,x,\ldots,x^{p-1}$, comparing the supplied strings at each step. Reject
+unless each has a match; otherwise take the unique matching exponents
+$(u,v)\in Q_p$. Then accept exactly when
+$\mathsf{InImage}_s(u,v)$ holds, and return its residue rank as the code.
+This explicitly computes the numerical phase conversion. Being a unit,
+or merely being a pair of well-formed ring elements, is insufficient.
+Even pairs in $\langle x\rangle^2$ are rejected when their residues are
+outside the seeded image. Noncanonical coefficient lengths or symbols
+are invalid. No discrete logarithm, period or phase is supplied for free.
+
+Conversely, given $(d,P)$ and a valid $b_s$-bit code $j$, recompute the
+image count and unrank $j$ to $(u,v)$, then return $(x^u,x^v)$ in canonical
+coefficient form. This returns the source-relative operator class. It does
+not return a particular literal address, age or integer clock lift. At
+$r=0$ the operator interface has just the zero-core tag with both operator
+fields omitted; any extra pair is rejected. Its sole code is empty.
+The two constant sources remain distinguished by their core descriptors.
+

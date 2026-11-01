@@ -1,0 +1,109 @@
+**Theorem 2.1 (the terminal-spine selection dichotomy).** For $d\ge1$
+define, from $d$ alone,
+
+$$
+\ell=\min\{j\ge0:F_{j+2}>d\},\qquad
+s_*=\min\{j\ge1:F_j\ge2d\},\qquad L=s_*+3.
+$$
+
+After earning $h$, exactly one of the following procedures applies.
+
+1. If $h<\ell+L$, a complete paid scan at the original root has
+   $O((d+1)^4)$ present nodes and directly acquires $(P,n)$.
+2. If $h\ge\ell+L$, the present physical address
+   $v=a^{h-L}$ has depth at least $\ell$. Its actual rank $q$ and
+   normalized cut $T=q-1$ satisfy
+
+$$
+L+1\le q\le2L+1,\qquad L\le T\le2L.
+$$
+
+   A complete paid scan of this existing cone has $O((d+1)^2)$ present
+   nodes. It acquires $T$ and the first $2d$ bits of each of its actual
+   chronological batches $W_{s_*},W_{s_*+1},W_{s_*+2}$. Every birth in
+   the cone uses the original aligned core $y$.
+
+Both scans use only complete root operands of length at most $H$; neither
+needs a supplied rank, cut, support, transient length or clock seed.
+
+**Proof.** The paid spine endpoint $a^h$ has no $a$ child. Full binarity
+implies that it is terminal, of rank zero or one. In the second case its
+$L$ ancestors along the suffix lie below $v$. Along these edges rank drops
+by one or two. If the endpoint rank is one, the initial rank is at least
+$L+1$. If it is zero, the last edge must have dropped two, since a rank-one
+node cannot branch; again the initial rank is at least $L+1$. In both
+cases the initial rank is at most $2L+1$. This proves the displayed
+bounds without observing a rank. In particular the cone is nonterminal.
+
+Induction on rank gives a rank-$q$ cone $F_{q+1}$ terminal leaves and
+$2F_{q+1}-1$ present nodes. The base ranks zero and one each have one
+leaf. At rank at least two the two child counts add by the Fibonacci
+recurrence. Its maximum suffix depth is $q-1$ for $q\ge1$ and zero at
+rank zero. Thus the selected cone has exactly
+
+$$
+N_v=2F_{T+2}-1\le2F_{2L+2}-1.
+$$
+
+Start with $v$, whose presence follows from the acquired spine (or pay
+one additional confirmation). At every confirmed node $vw$, pay both
+$\operatorname{Read}(vwa)$ and $\operatorname{Read}(vwb)$. Schedule the
+two positive children, or close the node after both negatives. The actual
+source has no one-child case. Prefix closure and induction prove that
+this finite scan acquires the entire cone, including its terminal
+absences, with at most $2N_v+1$ Reads. It never treats an unqueried
+fringe as absent. Since each ancestor edge decreases rank at least one,
+$q\le n-|v|$. Each positive word and each terminal child test therefore
+has length at most $|v|+q\le n\le H$. All submissions remain at the
+original root, even though their suffixes are processed locally.
+
+For the polynomial size estimate, minimality of $s_*$ gives
+$F_{s_*-1}<2d$ and $F_{s_*}<4d$ (also at $d=1$). Adding any fixed
+number of Fibonacci indices changes these bounds by an absolute factor.
+The addition identity then gives $F_{2s_*+c}=O((d+1)^2)$ for each fixed
+$c$. Hence $N_v=O((d+1)^2)$. Minimality of $\ell$ similarly gives
+$F_{\ell+1}\le d$, $F_{\ell+2}\le2d$, and
+$F_{2\ell+c}=O((d+1)^2)$. If the first case applies, then
+$n\le2h+1\le2(\ell+L)-1$, so the root has at most
+
+$$
+2F_{2(\ell+L)}-1=O((d+1)^4)
+$$
+
+nodes. This proves the first scan bound, including all small $d$.
+
+The depth of $v$ in the second case is $h-L\ge\ell$. Every branch at
+physical depth $m$ occurs at update at least $m+2$, and its first
+possible global birth index is at least $F_{m+2}$, by GPO Proposition
+39.2. Consequently every birth in this cone has index greater than $d$.
+The coprime decomposition in Definition 1.2 therefore makes it genuinely
+core-only, including for singular original laws. Apparent periodicity
+of observed words is not used to certify this condition.
+
+The acquired cone's leaf count is $F_{T+2}$. These numbers are strictly
+increasing for $T\ge0$, so counting the acquired leaves determines $T$.
+A branch descendant of rank $r\ge2$ has height $r-1$ and normalized
+birth update $k=T+2-r$. For $r\ge3$ its two child heights are $r-2,r-3$;
+the larger child's physical position reveals its orientation. At $r=2$
+both children are terminal, and its orientation is invisible. Therefore
+the acquired support determines the orientations and updates of all
+parents in batches $1\le k\le T-1$, without inferring the last batch.
+Sort those parents by update and actual physical address. Equivalently,
+start with a beta roster at normalized zero and update only old leaves;
+the decoded orientations reproduce the actual roster inductively. In
+update $k$ it contains $F_k$ beta parents. Their global addresses form
+one consecutive interval of the actuator's actual ordered beta list,
+so the decoded word is exactly $W_k$, not an independently sorted
+semantic word. This re-establishes the needed implication of PCR
+Theorem 2.1 and NRW Lemmas 1.4 and 2.1--2.3 on the acquired input.
+Since $T\ge s_*+3$, all three stated batches lie at most $T-1$ and
+have length at least $F_{s_*}\ge2d$.
+
+For the small-root case, its leaf count $F_{n+1}$ determines $n\ge2$.
+A branch of rank $r\ge3$ has actual birth update $n+2-r$ and observable
+orientation by the same height argument. Sorting by update and physical
+address recovers the first $B_{n-1}=F_n-1$ original births, precisely
+GPO Theorem 28.2's correspondence. Maturity makes this at least $2d$.
+The first $2d$ entries are the requested $P$, including its transient;
+no assumption about the core is needed in this branch. $\square$
+

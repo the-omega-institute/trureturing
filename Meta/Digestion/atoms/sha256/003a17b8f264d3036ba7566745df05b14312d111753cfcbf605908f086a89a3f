@@ -1,0 +1,31 @@
+**引理 3.1（Only a full-basis rank obstruction can survive）。** Assume
+Definition 1.3 and $|A|=|B|=m$. For any specified basis $S$,
+
+$$
+S\text{ fails to match }N
+\quad\Longleftrightarrow\quad
+C_S\text{ is a circuit-hyperplane of }N\text{ of size }r.
+$$
+
+In a failure, $r\ge2$, $m\ge r+1$, $|U_S|=m-r$ and
+$S+(U_S\cup\{0\})=A$.
+
+Proof. The target-union bound (U) gives $|C_X|\ge |X|$ for every nonempty $X\subseteq S$.
+For $|X|\le r-1$, paving then gives $\rho_N(C_X)\ge |X|$.
+By criterion (R) the only possible failure is
+$\rho_N(C_S)<r$. Since $|C_S|\ge r$, the sparse paving rank alternatives derived in
+Theorem 2.1 identify $C_S$ as a circuit-hyperplane of size $r$. Conversely that hyperplane has
+rank $r-1$, violating criterion (R) for $X=S$.
+
+For $r=1$, looplessness makes every nonempty $C_S$ have rank one;
+thus failure requires $r\ge2$. If $m=r$, $N$ has an independent
+set of size $m$, necessarily $B$, so it is free and cannot have a
+nonspanning $r$-subset. Thus $m\ge r+1$ in a failure.
+Finally $|U_S|=m-r$ and
+
+$$
+m\ge |S+(U_S\cup\{0\})|\ge r+(m-r+1)-1=m.
+$$
+
+The containment in $A$ from Definition 1.4 is therefore equality.
+

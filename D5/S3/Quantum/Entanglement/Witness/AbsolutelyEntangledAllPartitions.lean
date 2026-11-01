@@ -280,7 +280,7 @@ private lemma productState_column_minor {d : ℕ} (p : Partition d)
       exact mul_comm _ _
     · simp only [h0, h1, ↓reduceIte]
 
-private lemma summand_kernel {d : ℕ} {ι : Type} [Fintype ι]
+lemma summand_kernel {d : ℕ} {ι : Type} [Fintype ι]
     (w : ι → ℝ) (a : ι → Matrix (Fin d) (Fin d) ℂ)
     (hw : ∀ i, 0 ≤ w i) (ha : ∀ i, (a i).PosSemidef)
     (v : Fin d → ℂ) (t : ℝ) (hs : ∑ i, w i • a i = t • rankOneDensity v)
@@ -300,7 +300,7 @@ private lemma summand_kernel {d : ℕ} {ι : Type} [Fintype ι]
   apply (ha j).dotProduct_mulVec_zero_iff.mp
   exact (mul_eq_zero.mp hjzero).resolve_left (by exact_mod_cast hj.ne')
 
-private lemma supported_column {d : ℕ} (v : Fin d → ℂ) (hv : v ≠ 0)
+lemma supported_column {d : ℕ} (v : Fin d → ℂ) (hv : v ≠ 0)
     (a : Matrix (Fin d) (Fin d) ℂ) (ha : a.IsHermitian)
     (hker : ∀ x, star v ⬝ᵥ x = 0 → a *ᵥ x = 0) (j : Fin d) :
     ∃ z : ℂ, (fun k => a k j) = z • v := by

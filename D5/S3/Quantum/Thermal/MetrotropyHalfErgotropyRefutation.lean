@@ -54,7 +54,7 @@ private def h4 : Matrix (Fin 4) (Fin 4) ℂ :=
 
 private def psi4 : Fin 4 → ℂ := ![0, 0, (3 / 5 : ℂ) * Complex.I, 4 / 5]
 
-private def u4 : Matrix (Fin 4) (Fin 4) ℂ :=
+def u4 : Matrix (Fin 4) (Fin 4) ℂ :=
   (1 / 2 : ℂ) • !![1, 1, 1, 1; 1, -1, 1, -1; 1, 1, -1, -1; 1, -1, -1, 1]
 
 private lemma rho4_trace : (rankOneDensity psi4).trace = 1 := by
@@ -90,7 +90,7 @@ private lemma h4_commutator : h4 * rankOneDensity psi4 ≠ rankOneDensity psi4 *
   have hi := congrArg Complex.im hz
   norm_num at hi
 
-private lemma u4_unitary : u4 ∈ Matrix.unitaryGroup (Fin 4) ℂ := by
+lemma u4_unitary : u4 ∈ Matrix.unitaryGroup (Fin 4) ℂ := by
   apply Matrix.mem_unitaryGroup_iff.mpr
   change ((1 / 2 : ℂ) • !![1, 1, 1, 1; 1, -1, 1, -1;
     1, 1, -1, -1; 1, -1, -1, 1]) * star ((1 / 2 : ℂ) •

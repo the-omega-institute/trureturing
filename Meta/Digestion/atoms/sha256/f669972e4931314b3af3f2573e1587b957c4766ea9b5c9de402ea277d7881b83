@@ -1,0 +1,78 @@
+## 文献与固定项目来源
+
+<a id="ref-snapshot"></a>
+
+**[快照]** the-omega-institute/trureturing，
+[固定项目快照](https://github.com/the-omega-institute/trureturing/tree/88a98cb974735eba23c7ece731a40ba9b48c19f5)，
+2026-10-30 14:08:36 Asia/Singapore。相关新增 PR \#24073；本轮 HEAD 合并 PR \#24077。
+
+<a id="ref-pyramid"></a>
+
+**[金字塔基础]** [AURIC FIB ATOM 金字塔基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，
+固定快照，尤其 §§2–4。五模式均值、概率纤维与合法凸体的原始来源。
+
+<a id="ref-axes"></a>
+
+**[三轴几何]** [观察者内生的三轴几何与预测接口](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)，
+固定快照，尤其 §§3、7、9.1。平方剩余、手性与未知响应的区别及局部 Bloch 接口。
+
+<a id="ref-continuation"></a>
+
+**[续卷 II]** [量子基本原则与相干重建续卷 II](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)，
+固定快照，§§77–89。原生来源、连续终端接口、独立基底标定、四次反例与新增全上下文四时刻画。
+
+<a id="ref-preskill"></a>
+
+**[Preskill]** J. Preskill,
+[Lecture Notes for Ph219/CS219: Quantum Information, Chapter 2](https://www.preskill.caltech.edu/ph219/chap2_15.pdf),
+July 2015，§§2.2–2.3。作者讲义；Bloch 球体、纯态与约化态背景。
+
+<a id="ref-busch"></a>
+
+**[Busch]** P. Busch, Quantum states and generalized observables: a simple proof of Gleason's theorem.
+Physical Review Letters 91, 120403 (2003).
+[arXiv:quant-ph/9909073v3](https://arxiv.org/pdf/quant-ph/9909073);
+[doi:10.1103/PhysRevLett.91.120403](https://doi.org/10.1103/PhysRevLett.91.120403).
+全部效果上的非负归一可加赋值，包括二维情形。
+
+<a id="ref-caves"></a>
+
+**[Caves 等]** C. M. Caves, C. A. Fuchs, K. Manne, J. M. Renes,
+Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements.
+[arXiv:quant-ph/0306179v1](https://arxiv.org/pdf/quant-ph/0306179) (2003)，尤其 §IV.A–IV.B.1。
+连续 trine frame functions 的全旋转刻画。
+
+<a id="ref-zhao"></a>
+
+**[Zhao 等]** Y.-y. Zhao et al.,
+Experimental realisation of generalised qubit measurements based on quantum walks.
+[arXiv:1501.05096](https://arxiv.org/pdf/1501.05096)。
+仅用于标准 trine 与扩展模式测量背景；本文 Fourier 编码及面积公式另给直接证明。
+
+<a id="ref-galley"></a>
+
+**[Galley–Masanes]** T. D. Galley, L. Masanes,
+Classification of all alternatives to the Born rule in terms of informational properties.
+[arXiv:1610.04859v3](https://arxiv.org/html/1610.04859v3)，§2.3、Appendix A.12。
+复射影函数的表示论分量作为项目响应刻画的外部中间供应。
+
+<a id="ref-masanes"></a>
+
+**[Masanes 等]** L. Masanes, T. D. Galley, M. P. Müller,
+The measurement postulates of quantum mechanics are operationally redundant.
+[arXiv:1811.11060v2](https://arxiv.org/html/1811.11060v2)，Appendix A，Lemma 7。
+本文不据其摘要省略组合、有限状态估计或仪器前件；只使用明确注明的中间表示论背景。
+
+<a id="ref-flw"></a>
+
+**[Freedman–Larsen–Wang]** M. H. Freedman, M. J. Larsen, Z. Wang,
+The two-eigenvalue problem and density of Jones representation of braid groups.
+[arXiv:math/0103200v1](https://arxiv.org/html/math/0103200v1)，Theorem 0.1 与 §2；
+[doi:10.1007/s002200200636](https://doi.org/10.1007/s002200200636)。
+项目 §77.2 给出同源十三维扇区对应后调用；本稿将该来源特定密度作为继承前件。
+
+<a id="ref-v23"></a>
+
+**[v23]** [相对门历史、观察商与递归闭合 v22](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_RELATIVE_GATE_HISTORIES_OBSERVATION_QUOTIENTS_AND_RECURSIVE_CLOSURE_V22.md)；
+以及本对话 v23《非周期单原型瓦片与 AURIC：高维酉投影、三角心及递归变分》。
+前稿的自由振幅 Schur 消元在本稿补上全局单位约束与有效边界度量，不把两种问题混同。

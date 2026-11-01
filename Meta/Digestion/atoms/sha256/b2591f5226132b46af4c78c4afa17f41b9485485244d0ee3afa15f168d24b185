@@ -1,0 +1,33 @@
+**Theorem 9.4 (sharp names-only cycle minima).** Consider a single typed \(m\)-vertex directed cycle rooted at \(v_0\). Every edge carries the same parameterized operation name \(a\), so the feed supplies no edge identifier or endpoint. Let the positive native edge durations have total lap duration
+\[
+D=\sum_{j=0}^{m-1}d(e_j)>0.
+\]
+For a final static supplement, the exact minimum number of labels is
+\[
+s_{\min}=\left\lfloor\frac{2\epsilon}{D}\right\rfloor+1.
+\tag{9.3}
+\]
+For a complete names-only online register, the exact minimum number of reachable states is
+\[
+o_{\min}
+=\min\left\{p\ge1:\frac{p}{\gcd(p,m)}D>2\epsilon\right\}.
+\tag{9.4}
+\]
+
+Proof. Write every word uniquely as the first \(n=km+j\) edges of the repeated cycle, with \(0\le j<m\). The endpoint fixes \(j\), and the native time is \(kD+S_j\), where \(S_j\) is the fixed partial-lap time.
+
+For the static lower bound, inspect the \(q+1\) words completing \(k=0,\ldots,q\) full laps at \(v_0\). If \(qD\le2\epsilon\), two of them have the same label, and their time intervals overlap. Thus every admissible \(q\)-label supplement has \(qD>2\epsilon\), giving \(q\ge s_{\min}\). Conversely, label the word \(km+j\) by \(k\bmod s_{\min}\). Equal endpoint and equal label force a lap-count difference at least \(s_{\min}\), whose time gap is \(s_{\min}D>2\epsilon\). Lemma 9.2 proves (9.3).
+
+For the online lower bound, because every input symbol is \(a\), the register follows one function \(f:M\to M\). Its trajectory from \(m_0\) is eventually periodic; let the eventual cycle have length \(\ell\). Necessarily \(\ell\le|M|\). Two equal states on that cycle separated by
+\[
+\operatorname{lcm}(\ell,m)
+\]
+input events have the same endpoint and time separation
+\[
+\frac{\operatorname{lcm}(\ell,m)}{m}D
+=\frac{\ell}{\gcd(\ell,m)}D.
+\]
+This must exceed \(2\epsilon\) by Lemma 9.2. Hence some \(\ell\le|M|\) satisfies the inequality in (9.4), so \(|M|\ge o_{\min}\). Conversely, take \(p=o_{\min}\) states in one directed \(p\)-cycle and update by \(a\) to the next state. Equal register state and endpoint then require an event difference divisible by \(\operatorname{lcm}(p,m)\), whose time gap is \(pD/\gcd(p,m)>2\epsilon\). Lemma 9.2 gives a decoder. \(\square\)
+
+The two minima can differ strictly because a static label may use the completed word's lap number, while a names-only update sees only one repeated symbol. For \(m=2\), edge durations \(d(e_0)=d(e_1)=1/2\), \(D=1\), and \(\epsilon=1/2\), the static minimum is \(2\). The online condition rejects \(p=1\) and \(p=2\), since \(p/\gcd(p,2)=1\) in both cases, and accepts \(p=3\). Thus \(s_{\min}=2<3=o_{\min}\). The static parity label separates equal-endpoint words by two laps; a two-state names-only register repeats after one lap and the closed error intervals meet at their midpoint. This is an actual strict gap, caused solely by the acquisition boundary and same-name feed.
+

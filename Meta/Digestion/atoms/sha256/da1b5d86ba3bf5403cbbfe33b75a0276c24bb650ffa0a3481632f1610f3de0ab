@@ -1,0 +1,17 @@
+**Definition 11.1 (synchronized use of a retained boundary).** At a
+completed source cut retain $\mathcal B_v(T)$, its actual root binding,
+and the original origin association. A real original-source update is
+serialized with Reads and local commits. After its completed
+acknowledgement and before exposing the new boundary, replace the
+represented age by $T+1$, committing the changed counter and any
+required writer record. Keep $v,g,y,Q_1,Q_2$ unchanged. If the source
+can complete several acknowledged updates atomically relative to this
+consumer, replace $T$ by $T+u$ with their authentic count $u$.
+
+An arithmetic addition by a hypothetical $u$ without those completed
+source operations prepares a forecast. It does not advance the source,
+prove a duration has elapsed, restore a revoked grant or install a
+callable observer. The interface makes no assertion at an interrupted
+or concurrently modified intermediate cut. Resuming there needs the
+same original completion/reconciliation premises as GPO Theorem 34.3.
+

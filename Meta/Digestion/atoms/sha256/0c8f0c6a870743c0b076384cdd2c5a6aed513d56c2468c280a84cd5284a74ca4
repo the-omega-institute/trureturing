@@ -1,0 +1,110 @@
+**Theorem 4.2 (Exact first occurrence of each integer relation).** Under Definitions 2.1–2.2, every $0\ne z\in L_K$ has exact first character occurrence at
+
+$$
+\boxed{\tau(z)=\ell_z-1-\min(P_z,M_z).}
+\tag{4.5}
+$$
+
+No actual terminal overlap summand carries $z$ at any smaller horizon. An occurrence with a nonzero common factor between its two nonnegative exponent vectors is strictly later than $\tau(z)$. At $\tau(z)$, an explicit pair of distinct actual histories of the same count has a coefficient at $z$ of at least
+
+$$
+A_z=\prod_{k\in K}p_k^{|z_k|/2}>0.
+\tag{4.6}
+$$
+
+A fixed permitted three-outcome projective measurement at that horizon has a nonconstant probability law. The assertion does not require that the chosen entry contain only one character.
+
+**Proof.** First consider any summand of any actual overlap (4.2) having exponent $z\ne0$. Write its common terminal residual label as
+
+$$
+\rho=k-t=l-u\ge0,
+\qquad A=a+\mathbf e_k,\quad B=b+\mathbf e_l.
+\tag{4.7}
+$$
+
+Define their coordinatewise common factor $f_j=\min(A_j,B_j)$. Then
+
+$$
+A=z^++f,\qquad B=z^-+f,\qquad
+W(f)=\sum_j(j+1)f_j.
+\tag{4.8}
+$$
+
+Counting degrees gives $m+1=m_z+\sum_j f_j$. Counting weighted labels in $A$ gives $\sum_jja_j+k=s_z+\sum_jjf_j$. Substituting into $n=m+\sum_jja_j+t$ and using $t=k-\rho$ gives the exact identity
+
+$$
+\boxed{n=\ell_z-1+W(f)-\rho.}
+\tag{4.9}
+$$
+
+If $f=0$, the selected label $k$ belongs to the positive support and $l$ to the negative support. Thus $\rho\le\min(k,l)\le B_z$, and $n\ge\tau(z)$.
+
+If $f\ne0$, put $J=\max\operatorname{supp}f$. The largest labels available on the two sides are $\max(P_z,J)$ and $\max(M_z,J)$. Hence
+
+$$
+\rho\le\min\{\max(P_z,J),\max(M_z,J)\}=\max(B_z,J),
+\qquad W(f)\ge J+1.
+\tag{4.10}
+$$
+
+When $J\le B_z$, (4.9) gives $n-\tau(z)\ge W(f)>0$. When $J>B_z$, it gives
+
+$$
+n-\tau(z)\ge W(f)+B_z-J\ge B_z+1>0.
+\tag{4.11}
+$$
+
+This proves the universal lower bound and the strict common-factor delay. It has used every term of the complete overlap formula, including arbitrary multiplicities, unfinished tails and shared terminal coordinates.
+
+For attainment, choose
+
+$$
+k=P_z,\quad l=M_z,\quad \rho=B_z,\qquad
+a=z^+-\mathbf e_k,\quad b=z^--\mathbf e_l,\qquad
+t=k-\rho,\quad u=l-\rho.
+\tag{4.12}
+$$
+
+The vectors $a,b$ are nonnegative and each has degree $m_z-1$. Concatenate exactly $a_j$ blocks $0^j1$, for example in increasing label order, and append $0^t$ to form $w$. Do the same with $b$ and $u$ to form $v$. Both words have count $m_z-1$ and length
+
+$$
+(m_z-1)+(s_z-k)+(k-\rho)
+=\ell_z-1-\rho=\tau(z),
+\tag{4.13}
+$$
+
+with the analogous equality on the negative side. Their tails satisfy $0\le t\le k\le H$ and $0\le u\le l\le H$. Each actual terminal vector is nonzero, because (4.4) includes its selected label. The two vectors share coordinate $e_{H-\rho}$, contributing
+
+$$
+c^{a+\mathbf e_k}\overline{c^{b+\mathbf e_l}}
+=c^{z^+}\overline{c^{z^-}}
+=A_z e^{iz\cdot\theta}.
+\tag{4.14}
+$$
+
+The sign supports are disjoint, so $k\ne l$. Thus the tails differ, one is zero, and the histories are distinct. No memory projection has been applied: (4.14) is an ordinary contribution of the partial trace.
+
+It remains to establish an observable variation, rather than merely exhibit a formal monomial. Put $C(\theta)=\langle w|T_{\tau(z)}(\theta)|v\rangle$. Formula (4.2), after grouping equal exponents, has the form
+
+$$
+C(\theta)=\sum_\gamma D_\gamma e^{i\gamma\cdot\theta},
+\qquad D_\gamma\ge0,\qquad D_z\ge A_z>0.
+\tag{4.15}
+$$
+
+There is no cancellation of its $z$ coefficient. Choose a coordinate $j$ with $z_j\ne0$ and take $\theta_j=\pi/z_j$ modulo $2\pi$, with all other phases zero. Each term has real part at most its value at zero phase, and the $z$ term changes from $D_z$ to $-D_z$. Therefore
+
+$$
+\operatorname{Re}C(0)-\operatorname{Re}C(\theta)\ge2D_z\ge2A_z>0.
+\tag{4.16}
+$$
+
+Use the fixed projectors onto $(|w\rangle+|v\rangle)/\sqrt2$, $(|w\rangle-|v\rangle)/\sqrt2$, and their orthogonal complement. They sum to $I$ and commute with $Q_{\tau(z)}$, since $w,v$ have equal count. Their probability difference is
+
+$$
+\Pr(+\mid\theta)-\Pr(-\mid\theta)=2\operatorname{Re}C(\theta),
+\tag{4.17}
+$$
+
+which varies by (4.16). This uses only one allowed terminal flag measurement, with no intermediate action or final memory readout. It is the real-quadrature construction of source (25.24)–(25.26), applied to the new actual histories. $\square$
+

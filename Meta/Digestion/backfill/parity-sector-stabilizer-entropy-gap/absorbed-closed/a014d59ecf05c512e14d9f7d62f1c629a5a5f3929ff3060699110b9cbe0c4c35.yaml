@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:a014d59ecf05c512e14d9f7d62f1c629a5a5f3929ff3060699110b9cbe0c4c35
+  normalized_sha256: sha256:a014d59ecf05c512e14d9f7d62f1c629a5a5f3929ff3060699110b9cbe0c4c35
+cas_ref: sha256:a014d59ecf05c512e14d9f7d62f1c629a5a5f3929ff3060699110b9cbe0c4c35
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.A4
+    target_statement_id: sha256:cf4f043bdb81937660ce49cb58fad7e01f7d42b9e7367c663287dd7ccc6534a4
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.Q
+    target_statement_id: sha256:dc279cafa20c9fc84708b5ceefed768f3a3b30b7027a1e20faf454409fd26f17
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.aseGap
+    target_statement_id: sha256:8d7e848411bb781b8861608f8ccf49456081b3d25d114b8e6d4726bb2b14da56
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.extrinsicScore
+    target_statement_id: sha256:ac3c7365f55b04b21f9ff42464d63b2bf5d2ef8bfbfcea1daac22b7523ca8946
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.fourth_moment_cycle_and_hermitian_formula
+    target_statement_id: sha256:0d405ee167874dec5646a21d2e1b95101e825deca35e99120562a5330fe1cb0b
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.intrinsicTerm
+    target_statement_id: sha256:f465521b948a7d7c035a5442ad81f0dff4accec1a9121969d57510210636e3a2
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.intrinsic_term_and_rank_one_entropy
+    target_statement_id: sha256:87f2007102786c22d9c35c25c880cc9bd936de8ffaa9dcaf98871fea278415ea
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.linearStabilizerEntropy
+    target_statement_id: sha256:a6478c3e505fb86d873bb8af94aeaf9198035ec97620321e07d7b823a3b270c6
+  - gid: D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.paperDisplacement
+    target_statement_id: sha256:87bb467b3182280e6a9f47d696a60d3dddaf45542a1a29ec251bacc2f00e1dc8
+receipts:
+  unresolved_subitems: []

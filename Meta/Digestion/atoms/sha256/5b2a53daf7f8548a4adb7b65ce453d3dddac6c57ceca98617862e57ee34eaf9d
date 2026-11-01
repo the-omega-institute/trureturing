@@ -1,0 +1,16 @@
+**Definition 1.1 (The coefficient of an ordered pair).** Let $n\geq2$ and let $A,B\in M_n(\mathbb C)$ be nonzero normal matrices of rank one. The adjoint is denoted by $X^*$, the genuine right modulus is
+
+$$
+|X|=(X^*X)^{1/2},
+$$
+
+and $H\leq K$ for Hermitian matrices means that $K-H$ is positive semidefinite. Put
+
+$$
+D=|A|+|B|,\qquad
+c_*(A,B)=\inf\{c\geq0:\ \exists U\in\mathcal U(n),\ |A+B|\leq D+cUDU^*\}.
+\tag{1.1}
+$$
+
+Here $\mathcal U(n)$ is the full ambient unitary group. In particular, the infimum does not restrict $U$ to preserve the ranges of $A$ and $B$. The notation $c_*$ always refers to this same ordered pair.
+

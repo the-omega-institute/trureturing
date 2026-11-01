@@ -1,0 +1,28 @@
+#### 定理 6.5（Fisher 正交与平方根几何）
+
+定义 $g_F(a,b)=\sum_sa_sb_s/p_s$，其中概率切向满足质量和为零。则
+
+$$
+d\eta(a)=g_F(h,a),\qquad \partial_\kappa\eta=g_F(h,h)>0.
+$$
+
+在 $\delta=0$ 的点处，用坐标 $(Z,u,v,\delta)$ 表示的完整四维 Fisher 度量为
+
+$$
+\boxed{ds^2=\frac{dZ^2}{ZR}+R\frac{du^2}{u(1-u)}
+ +R\frac{dv^2}{v(1-v)}+
+\frac{d\delta^2}{Ru(1-u)v(1-v)}.}
+$$
+
+映射 $p\mapsto2(\sqrt{p_s})_s$ 把正单纯形等距嵌入半径二球面的正象限。
+
+<a id="proof-6-5"></a>
+
+**证明。** 
+对 $\eta=\log p_0+\log p_{13}-\log p_1-\log p_3$ 求导得第一式。对 $p^*$ 的 $Z,u,v$ 参数求对数导数，分别得到上述三个归一函数的标量倍数；交叉期望为零。$\delta$ 切向为 $h$，其分数方向沿 $t_h$，长度平方为 $1/[Ru(1-u)v(1-v)]$。最后 $\sum_s(2\sqrt{p_s})^2=4$ 且 $d(2\sqrt{p_s})=dp_s/\sqrt{p_s}$，直接给度量拉回。
+ ∎
+
+前三个可见方向加一个隐藏关系方向，确实在这个明确参考下有勾股结构。上式在 $\delta=0$ 处的分块表达不能任意外推到全部关联律；概率运输卷已有 $d\eta=g_F(h,\cdot)$ 的全域形式。概率平方根的实球面实现本身也没有给出全部复相位。
+
+<a id="sec-7"></a>
+

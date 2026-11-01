@@ -1,0 +1,23 @@
+**推论 16.4（固定总电阻的唯一原始等号向量）。** For every $R_0>0$,
+
+$$
+\max_{\substack{c_i>0\text{ finite}\\R(c)=R_0}}
+\lambda_2(L(c))=\frac{25-5\sqrt5}{R_0},
+\tag{16.13}
+$$
+
+and the unique labelled maximizer is
+
+$$
+c_0=c_1=c_2=c_3=c_4=\frac{10}{R_0}.
+\tag{16.14}
+$$
+
+At this vector the attained Fiedler value is $(25-5\sqrt5)/R_0$.
+
+**证明。** The scaling laws $R(\alpha c)=R(c)/\alpha$ and
+$\lambda_2(L(\alpha c))=\alpha\lambda_2(L(c))$ give from (16.11)
+$\lambda_2\le(25-5\sqrt5)/R_0$ on the level set $R=R_0$. Formula
+$R(\gamma\mathbf1)=10/\gamma$ gives (16.14), which attains that bound. The
+equality clause of Theorem 16.3 proves uniqueness. ∎
+

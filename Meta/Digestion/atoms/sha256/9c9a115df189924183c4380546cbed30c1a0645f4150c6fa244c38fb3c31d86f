@@ -1,0 +1,38 @@
+**定理 7.4（闭噪声与开噪声的尖锐端点）。**
+
+<a id="thm-noise"></a>
+
+在 $D_H$ 上，若观测为 $P_+v+\eta$、$\left\lVert \eta\right\rVert_\infty\le\varepsilon$，
+则存在对所有允许来源和噪声均正确的解码器，当且仅当
+
+$$
+2\varepsilon<\delta_H.
+$$
+
+若噪声合同改为 $\left\lVert \eta\right\rVert_\infty<\varepsilon$，则充要条件为
+$2\varepsilon\le\delta_H$。
+
+**证明。**
+
+来源可完全恢复恰当且仅当不同来源的允许记录集互不相交。
+这些记录集为相应的闭球或开球。
+两个闭最大范数球在中心距离等于 $2\varepsilon$ 时共享中点，
+所以必须严格大于；开球允许等号。
+$D_H$ 有限，最小间隔实际达到，故必要性没有下确界不取到的问题。证毕。
+ □
+
+特别地，
+
+$$
+\varepsilon<\frac1{4\varphi H}\ \Longrightarrow\ \text{保证可恢复},
+\qquad
+\varepsilon\ge\frac{\varphi}{4H}\ \Longrightarrow\ \text{不可能统一恢复}.
+$$
+
+这说明绝对精度需为 $H^{-1}$ 阶；
+以单位尺度的小数位计，需要 $\log_2H+O(1)$ 位。
+若计算包括整数部分在内的总位数，读出范围也随 $H$ 增长，仍需另行计入。
+该信息论阈值不提供数据获取或解码搜索的时间上界。
+
+<a id="subsection-7-3"></a>
+

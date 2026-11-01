@@ -1,0 +1,25 @@
+#### 定理 2.3（第三线性读出的全态重构判据）
+
+设 $A_1,A_2,A_3$ 为有限维 Hilbert 空间上的 Hermitian 算符。在全部密度态上，$\operatorname{Tr}(\rho A_3)$ 由 $\operatorname{Tr}(\rho A_1),\operatorname{Tr}(\rho A_2)$ 与 $\operatorname{Tr}\rho=1$ 唯一决定，当且仅当
+
+$$
+
+A_3\in\operatorname{span}_{\mathbb{R}}\{I,A_1,A_2\}.
+
+$$
+
+这里不预先要求重构函数线性。
+
+
+**证明。**
+
+充分性直接代入。若不在该实线性包络中，取 $A_3$ 对该包络的 Hilbert–Schmidt 正交余量 $\Delta\ne0$。则
+$\operatorname{Tr}\Delta=\operatorname{Tr}(\Delta A_1)=\operatorname{Tr}(\Delta A_2)=0$，且
+$\operatorname{Tr}(\Delta A_3)=\operatorname{Tr}(\Delta^2)>0$。令维数为 $d$，取足够小的 $\varepsilon>0$，则
+$\rho_\pm=I/d\pm\varepsilon\Delta$ 都正定、迹为一。二者前两读出相同，第三读出不同，矛盾。
+
+**证明完。** ∎
+
+原 AURIC 的 $I,\widehat X,\widehat Y,\widehat Z$ 线性独立：在空模式及三个单占位模式依次取值即可。因此任取两个都不满足这个全态补全判据。纯态球面是受限非线性域，不与本定理冲突。
+
+

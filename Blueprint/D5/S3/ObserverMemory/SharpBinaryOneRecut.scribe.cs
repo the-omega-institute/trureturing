@@ -73,7 +73,42 @@ internal sealed class SharpBinaryOneRecutDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The sharp local cost of one binary recut depends on the actual forward residual width.",
         H("Sharp Binary One Recut"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("optional-word-length"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/SharpBinaryOneRecut.word_length"),
+                H("Length of the optional-index encoding"),
+                StatementSource.FromAuthor(Disp(All("N", V("Nat"),
+                    All("i", Call("Option", Call("Fin", V("N"))),
+                        Equal(Call("length", Call("word", V("i"))), V("N")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural N and every optional index i in Option(Fin N), word(i) has length N. The word lists the Boolean tests i=some t in the order t in Fin N; this includes N=0 and the none input. Equal lengths allow cancellation of consecutive encoding blocks."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("optional-word-injectivity"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/SharpBinaryOneRecut.word_injective"),
+                H("Recovery of the optional index"),
+                StatementSource.FromAuthor(Disp(All("N", V("Nat"),
+                    All("i", Call("Option", Call("Fin", V("N"))),
+                        All("j", Call("Option", Call("Fin", V("N"))),
+                            Imp(Equal(Call("word", V("i")), Call("word", V("j"))),
+                                Equal(V("i"), V("j")))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural N the complete encoding function on Option(Fin N) is injective. Every some s is detected at coordinate s; none is the all-false word. Consequently an injective two-letter alphabet transport preserves optional-index recovery, and concatenated fixed-length blocks recover a finite derivative table coordinate by coordinate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("optional-coordinate-cardinality"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/SharpBinaryOneRecut.spare_card"),
+                H("Cardinality of a free derivative coordinate"),
+                StatementSource.FromAuthor(Disp(All("N", V("Nat"), All("full", V("Bool"), And(
+                    Imp(Equal(V("full"), V("false")),
+                        Equal(Card(Call("Spare", V("N"), V("full"))), Add(V("N"), Num(1)))),
+                    Imp(Equal(V("full"), V("true")),
+                        Equal(Card(Call("Spare", V("N"), V("full"))), V("N")))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural N and Boolean full, Spare(N,full) consists of i in Option(Fin N) such that full=true implies i is not none. Its cardinality is N plus zero when full=true and N plus one when full=false. This includes N=0 in both regimes and gives the number of choices for each free derivative coordinate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("sharp-binary-one-recut"),
             DeclarationHandle.Create("D5/S3/ObserverMemory/SharpBinaryOneRecut.sharp_binary_one_recut"),
             H("Sharp bounds and simultaneous attainment"),

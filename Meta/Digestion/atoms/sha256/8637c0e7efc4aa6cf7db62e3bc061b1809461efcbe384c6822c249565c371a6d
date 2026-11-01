@@ -1,0 +1,117 @@
+**Lemma 18.2 (A full-cardinality certificate and a grouped lower bound).** Sort the actual marginals of any law in Definition 18.1 as $y_1\ge\cdots\ge y_s$, and choose $P=\{1,\ldots,k\}$ and $h=k+1$. Set
+
+$$
+\alpha_i=y_i^{-2},\quad \omega=\alpha_h,\quad
+W=\sum_i\alpha_i,\quad W_T=\sum_{i\in T}\alpha_i,\quad
+b_i=c(\omega-\alpha_i)_+.
+\tag{18.4}
+$$
+
+Here $(z)_+=\max\{z,0\}$. For every allowed nonempty $T$, let $j=|T|$ and define
+
+$$
+R_y(T)=(r-j)\{c(W-2\omega)-(r+j)W_T\}
+       +\sum_{i\notin T}b_i.
+\tag{18.5}
+$$
+
+Then $R_y(T)\ge0$, with its entire zero set given by
+
+$$
+R_y(T)=0\quad\Longleftrightarrow\quad
+\begin{cases}
+J=\{i\},\quad y_i\le y_h,\quad\text{or}\\
+J=\{i,l\},\quad y_i,y_l\ge y_h.
+\end{cases}
+\tag{18.6}
+$$
+
+Ties are included in these conditions. There is the exact same-law identity
+
+$$
+H(x)=\mathcal G_{P,h}(y)+\mathbb E_xR_y(T).
+\tag{18.7}
+$$
+
+If $u=k^{-1}\sum_{i\in P}y_i$, $w=y_h$ and $v=n^{-1}\sum_{j\in N}y_j$, then
+
+$$
+H(x)\ge F_k(u,w),\qquad
+\tau\le v\le w\le u\le1,\qquad
+ku+w+nv=q,\qquad v\ge1-\frac3a>\frac9{10}.
+\tag{18.8}
+$$
+
+Equality in the first inequality holds exactly when $R_y(T)=0$ on every positive-mass atom, all $k$ top marginals equal $u$, and all $n$ lower marginals equal $v$.
+
+**Proof.** The threshold in (18.1) implies
+
+$$
+a\ge1024L^2,\quad n\ge a/2,\quad
+0<\delta\le\frac{L}{2a}<\frac12,\quad
+\tau\le\frac{9L}{2a^2}<\frac9{10}.
+\tag{18.9}
+$$
+
+The mean and ordering give $q\le k+(s-k)y_h$, hence
+
+$$
+y_h\ge1-\frac{1+\delta}{s-k}\ge1-\frac3a
+       \ge\ell:=1-\frac4a,\qquad
+1\le\omega\le\ell^{-2}<\frac{16}{15}.
+\tag{18.10}
+$$
+
+The last strict bound follows already for $a\ge128$. All $\alpha_i\ge1$. At $j=r$, (18.5) is $b_i$ for the sole omitted label; it vanishes exactly when $y_i\le y_h$. At $j=a$ it is
+
+$$
+c\left(\sum_{i\in J}\alpha_i-2\omega\right)
+ +c\sum_{i\in J}(\omega-\alpha_i)_+
+ =c\sum_{i\in J}(\alpha_i-\omega)_+.
+\tag{18.11}
+$$
+
+This proves precisely the pair case in (18.6). At $j=s$, the residual is $2W+2c\omega>0$.
+
+For every remaining nonempty cardinality $j<a$, put $e=|J|=s-j$, so $3\le e\le s-1$ and $r-j=e-1>0$. Writing $A_J=\sum_{i\in J}\alpha_i$, the bracket in (18.5) equals
+
+$$
+\begin{aligned}
+(e-2)W+(2s-1-e)A_J-2c\omega
+&\ge 3se-2s-e-e^2-2c\omega\\
+&>7s-12-\frac{32c}{15}
+ =\frac{41a-2}{15}>0.
+\end{aligned}
+\tag{18.12}
+$$
+
+Indeed the quadratic $3se-2s-e-e^2$ is concave in $e$; at the two endpoints it is $7s-12$ and $2s(s-2)$, and the latter is no smaller for $s\ge5$. Also $2s-1-e>0$ throughout this interval, justifying both substitutions $W\ge s$ and $A_J\ge e$. The omitted $b_i$ are nonnegative. This proves positivity for every other cardinality and exhausts the zero set.
+
+Taking expectation of (18.5) under the actual $x$, use $\mathbb E(r-|T|)=\delta$, $\mathbb EW_T=\sum_i y_i^{-1}$, and $\mathbb E\mathbf1_{\{i\notin T\}}=1-y_i$. It follows that
+
+$$
+H(x)=r^2\sum_i\frac1{y_i}-c\delta(W-2\omega)
+      -\sum_i(1-y_i)b_i+\mathbb E R_y(T).
+\tag{18.13}
+$$
+
+Only indices in $P$ can have $b_i\ne0$. Expanding their terms and using $r^2-c=a^2$ turns the non-residual part exactly into $\mathcal G_{P,h}(y)$, proving (18.7). This is the pointwise-to-expectation weak-duality argument of Bertsimas and Popescu, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1, p.785, with the present residual established directly. No strong-duality or independent moment-attainment assertion is needed.
+
+On the entire original dense interval $[\tau,1]$,
+
+$$
+f''(z)=\frac{2a^2}{z^3}+\frac{6c\theta}{z^4}>0,\qquad
+g''(z)=\frac{2(r^2z-3\gamma)}{z^4}>0,
+\qquad r^2\tau-3\gamma=6\delta>0.
+\tag{18.14}
+$$
+
+Finite Jensen applied separately on $P$ and $N$ gives (18.8), with equality precisely as stated, since the remaining dependence on the top coordinates in (18.3) is linear. The finite convex-combination inequality used here is Boyd and Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf); its strictness follows from (18.14). Finally $ku+w\le k+1$ implies
+
+$$
+v\ge\frac{q-k-1}{n}=1-\frac{1+\delta}{n}\ge1-\frac3a.
+\tag{18.15}
+$$
+
+Thus the grouped vector belongs to $\mathcal B_q$ even when some individual lower marginals of the original law do not belong to $\mathcal B$. No energy sublevel or stronger density condition was imposed. ∎
+

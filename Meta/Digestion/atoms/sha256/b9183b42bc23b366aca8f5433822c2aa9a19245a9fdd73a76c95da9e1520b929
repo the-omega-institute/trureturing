@@ -1,0 +1,25 @@
+**Definition 6.1 (Nonconstant palindromic middle words).** For a finite word
+$b=(b_1,\ldots,b_s)$ of positive integers, define
+
+$$
+T_b=C_{(5,b_1,\ldots,b_s,4,3)},\qquad
+U_b=C_{(4,b_1,\ldots,b_s,5,3)}.
+$$
+
+Call $b$ palindromic when $b_i=b_{s+1-i}$ for every $i$, and nonconstant
+when at least two of its entries differ. The comparison problem is to
+determine exactly which nonconstant palindromic words satisfy
+
+$$
+P_3(T_b)=P_3(U_b)\quad\text{and}\quad P_2(T_b)\ne P_2(U_b).
+$$
+
+For such a word the matrix product in (2.2) becomes
+$(D_{b_1}K)\cdots(D_{b_s}K)$, where
+$D_t=\operatorname{diag}(B_t(0),B_t(1),B_t(2))$.
+The recurrence proof in Theorem 2.1 treats the equality
+$D_{b_1}=\cdots=D_{b_s}=D_j$, that is, the constant-word case.
+Theorems 2.1--5.2 classify the constant words with the fixed
+outside blocks $5,4,3$; no criterion for these nonconstant palindromic
+products is asserted here.
+

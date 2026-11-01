@@ -1,0 +1,11 @@
+**Definition 3.1 (Joint defect variables).** In the domain (1.6), set
+
+$$
+C_0=\frac{x_0+y-1}{1+x_0},\qquad
+d^2=\left(x_0-\frac35\right)^2+\left(y-\frac45\right)^2,
+\qquad \epsilon=\frac14-c_*.
+\tag{3.1}
+$$
+
+The extremal parameter locus means $a=b$, $\omega=-1$, $r=3/5$. Extremality here means that the **least feasible coefficient** $c_*$ equals $1/4$. It does not mean equality of the entire matrices in (1.1).
+

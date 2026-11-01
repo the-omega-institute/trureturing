@@ -38,6 +38,12 @@ internal sealed class AlternativeMeanLinearizationDocument : IScribeDocumentDefi
                 + "A and B commute and the real spectrum of A⁻¹♯B has at most two values. "
                 + "The quantifier includes dimension zero; its spectrum is empty and its matrices are unique.",
                 DescribeRole.Definition, true),
+            Entry("half-power-square-root", "half_eq_sqrt", "The positive half-power is the square root", HalfEqSqrt(),
+                "For every positive definite complex matrix, the real functional calculus of x to the power one half equals its positive square root.",
+                DescribeRole.Lemma, false),
+            Entry("half-power-inverses", "half_inverse", "The two half-powers are mutual inverses", HalfInverse(),
+                "For every positive definite complex matrix, its real functional calculus powers one half and minus one half multiply to the identity in both orders.",
+                DescribeRole.Lemma, false),
             Entry("characterization", "result", "Necessary and sufficient scalar conditions", Result(),
                 "Let g(s)=f(√s)². Rigidity is equivalent to injectivity of f and x↦f(x)/x on (0,∞), "
                 + "together with strict convexity or strict concavity of g there. To prove sufficiency, "
@@ -132,6 +138,18 @@ internal sealed class AlternativeMeanLinearizationDocument : IScribeDocumentDefi
 
     private static Formula AlternativeMean() => Disp(All("f", Function, Parameters(
         Eq(Call("altMean", V("f"), V("A"), V("B")), Mul(Mul(FY, V("A")), FY)))));
+
+    private static Formula RealPowerCalculus(Formula exponent) => Call("cfc",
+        Parenthesized(Seq(LambdaLower, Sp, V("x"), Colon, Sp, Real, Comma, Sp,
+            Pow(V("x"), exponent))), V("A"));
+
+    private static Formula HalfEqSqrt() => Disp(All("n", Nat, All("A", Mat,
+        Imp(Call("PosDef", V("A")), Eq(RealPowerCalculus(Half), Call("sqrt", V("A")))))));
+
+    private static Formula HalfInverse() => Disp(All("n", Nat, All("A", Mat,
+        Imp(Call("PosDef", V("A")), And(
+            Eq(Mul(RealPowerCalculus(Half), RealPowerCalculus(NegativeHalf)), D(1)),
+            Eq(Mul(RealPowerCalculus(NegativeHalf), RealPowerCalculus(Half)), D(1)))))));
 
     private static Formula Linearizable() => Disp(All("f", Function, Parameters(
         Iff(Call("Linearizable", V("f"), V("A"), V("B")), Ex("a", Real, Ex("b", Real,

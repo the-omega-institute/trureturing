@@ -1,0 +1,59 @@
+**Definition 1.1 (Original stationary biased XOR source).** Fix a real
+parameter $0<p<1$, $p\ne1/2$. The alphabet
+$\mathcal A=\{a_0,a_1,b_0,b_1\}$ has four distinct states. Let
+$\varphi$ be uniform on $\{0,1\}$ and independent of the iid
+Bernoulli$(p)$ spins $(S_\ell)_{\ell\in\mathbb Z}$. Define, on the
+original integer clock,
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=Y_\ell:=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+Write $J_p$ for this joint hidden-visible law. This is the realization
+in Original, Proposition 2.1 and (2.2). With
+$\pi_0=1-p$ and $\pi_1=p$, its active transition takes $a_s$ to $b_t$
+with probability $\pi_t$ and emits $s\oplus t$; its next transition
+takes $b_t$ to $a_t$ and emits zero. The stationary masses of
+$(a_0,a_1,b_0,b_1)$ are $(1-p,p,1-p,p)/2$: incoming mass at $b_t$ is
+$\sum_s(\pi_s/2)\pi_t=\pi_t/2$, and the copying transition supplies
+the same mass at $a_t$. Thus (1.1) retains the stationary emitted-bit
+clock and its separator positions. It also gives $X_tX_{t+1}=0$ at
+every integer $t$.
+
+Fix one endpoint index $j\in\{0,1\}$. The target is the actual $H_j$
+of (1.1), with the phase-specific identification
+
+$$
+\begin{array}{c|cc}
+ &j=0&j=1\\ \hline
+\varphi=0&a_{S_0}&b_{S_1}\\
+\varphi=1&b_{S_0}&a_{S_0}
+\end{array}
+\tag{1.2}
+$$
+
+as in Original, (9.4). For this fixed $j$, define state labels and target
+spin indices by
+
+$$
+\begin{aligned}
+h_0(s)&=\begin{cases}a_s&j=0,\\b_s&j=1,\end{cases}&
+v_0&=j,\\
+h_1(s)&=\begin{cases}b_s&j=0,\\a_s&j=1,\end{cases}&
+v_1&=0.
+\end{aligned}
+\qquad H_j=h_\varphi(S_{v_\varphi}).
+\tag{1.3}
+$$
+
+The two sets $\{h_0(0),h_0(1)\}$ and
+$\{h_1(0),h_1(1)\}$ are disjoint. An observation compatible with both
+phases does not merge these states into a single correct answer.
+Representation (1.1) supplies no access to an unobserved spin or phase.
+

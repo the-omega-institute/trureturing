@@ -1,0 +1,35 @@
+**Proposition 5.1 (one common-source existence criterion).** For arbitrary real data $z_0,\ldots,z_{L-1}$ on Definition 3.1's path and clock, the following sequential criterion is necessary and sufficient for a realization in Definition 1.1.
+
+1. Interpolate $P$ and $K$ by Theorem 4.1's formulas. Require $K\not\equiv0$.
+2. Choose the two smallest terminal local indices $u<v$ for which $K(T+j)\ne0$. Compute $W_u,W_v$ and $p$ by the stated inverse. Require $p>0$, then compute $s$ using $p+k+1>0$ and require $s>0$.
+3. Set $q=ps$, $S=(\begin{smallmatrix}p&q\\1&s\end{smallmatrix})$, $a=p+s$, $R_0=S/a$, $H=aK$, and $D=P-aK$. Require $\deg D\le d$, meaning that every coefficient above degree $d$ vanishes.
+4. Require every original observation equation, at all recorded indices:
+
+$$
+z_i=K(i)\operatorname{tr}(A_iS)+D(i)
+=H(i)\operatorname{tr}(A_iR_0)+D(i)
+\qquad(0\le i<L).
+$$
+
+At any zero of $K$ this is precisely $z_i=D(i)$. It includes all baseline and calibration positions, all unused terminal survivors, and every zero-gain position.
+
+Proof. Interpolation is always defined, even for arbitrary data. Once $K\not\equiv0$, its degree is at most $k$ by construction, so at least two terminal positions survive. Hence the two gain quotients and $v-u$ division are defined. Requiring $p>0$ before the $s$ formula ensures its positive denominator, and requiring $s>0$ ensures $a>0$. Thus the criterion does not use an undefined later construction at an earlier rejected input.
+
+For actual data Theorem 4.1 returns the true $S,K,P$ and hence the true positive $p,s$, complete drift $D$, and normalized target. All degree conditions and every recorded equation are then necessary, including the equations at gain roots.
+
+Conversely suppose all conditions hold. The constructed $S$ has strictly positive entries and determinant $ps-q=0$. Therefore $R_0=S/a$ is strictly positive, rank one, and of trace one. The polynomial $H=aK$ is nonzero and of degree at most $k$; the explicitly checked $D$ has degree at most $d$. Choose the original realization
+
+$$
+R=R_0,\qquad G=H,\qquad
+c=\begin{pmatrix}p\\1\end{pmatrix},\qquad
+\ell=(1/a,s/a).
+$$
+
+These positive factors satisfy
+
+$$
+c\ell=\frac1a\begin{pmatrix}p&ps\\1&s\end{pmatrix}=R_0.
+$$
+
+Execute the chronological word list of Definition 3.1 on this one column with this fixed row and these single polynomials. Lemma 3.2 gives every cumulative endpoint, and condition 4 gives every proposed reading at its actual clock index. This is one common-source realization of the full finite data. Its target is unique by Theorem 4.1. The degree test in condition 3 is essential when $d<k$; otherwise the construction could supply an impermissible drift. ∎
+

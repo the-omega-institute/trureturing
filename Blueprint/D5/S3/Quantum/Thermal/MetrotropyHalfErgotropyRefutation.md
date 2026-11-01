@@ -54,7 +54,35 @@ $$(\operatorname{D5.S3.Quantum.Thermal.MetrotropyHalfErgotropyRefutation.claim})
 
 For every natural dimension d, Hermitian matrix h, and density matrix ρ that does not commute with h, the proposed inequality bounds the metrotropy by one half of the ergotropy. A density matrix here is positive semidefinite with complex trace one. Metrotropy02.tex, line 308, asks whether this inequality holds when the initial state is not stationary. The universal proposition displayed here gives that question precise matrix domains and quantifiers; measurements have rank-one projectors.
 
-**Theorem 1.5 (A four-dimensional counterexample).**
+**Definition 1.5 (The normalized four-dimensional Walsh matrix).**
+
+$$(\operatorname{D5.S3.Quantum.Thermal.MetrotropyHalfErgotropyRefutation.u4}: \operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right)) = (\frac{(1: \mathbb{C})}{(2: \mathbb{C})}) \cdot (\begin{bmatrix}(1: \mathbb{C})&(1: \mathbb{C})&(1: \mathbb{C})&(1: \mathbb{C})\\(1: \mathbb{C})&-(1: \mathbb{C})&(1: \mathbb{C})&-(1: \mathbb{C})\\(1: \mathbb{C})&(1: \mathbb{C})&-(1: \mathbb{C})&-(1: \mathbb{C})\\(1: \mathbb{C})&-(1: \mathbb{C})&-(1: \mathbb{C})&(1: \mathbb{C})\end{bmatrix})$$
+
+*Formalization.* `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.u4` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Andrea Solfanelli; Lorenzo Buffoni; Alessandro Cuccoli; Michele Campisi (2019). *Maximal energy extraction via quantum measurement*. DOI: [10.1088/1742-5468/ab3721](https://doi.org/10.1088/1742-5468/ab3721). URL: <https://arxiv.org/abs/1905.10262v2>.
+
+*Commentary.*
+
+The four rows are the real Walsh vectors, each scaled by one half. This matrix supplies the measurement basis of the four-dimensional counterexample.
+
+**Theorem 1.6 (The Walsh matrix is unitary).**
+
+$$\operatorname{D5.S3.Quantum.Thermal.MetrotropyHalfErgotropyRefutation.u4} \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(4\right), \mathbb{C}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.u4_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Andrea Solfanelli; Lorenzo Buffoni; Alessandro Cuccoli; Michele Campisi (2019). *Maximal energy extraction via quantum measurement*. DOI: [10.1088/1742-5468/ab3721](https://doi.org/10.1088/1742-5468/ab3721). URL: <https://arxiv.org/abs/1905.10262v2>.
+
+*Commentary.*
+
+The product of this matrix with its conjugate transpose is the identity. Its rows and columns therefore form orthonormal bases of complex four-space.
+
+**Theorem 1.7 (A four-dimensional counterexample).**
 
 $$\neg (\operatorname{D5.S3.Quantum.Thermal.MetrotropyHalfErgotropyRefutation.claim})$$
 
@@ -85,5 +113,7 @@ The set of unitary output energies is nonempty because it contains the output of
 - Truth anchor: `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.measured`
 - Truth anchor: `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.metrotropy`
 - Truth anchor: `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.u4`
+- Truth anchor: `D5/S3/Quantum/Thermal/MetrotropyHalfErgotropyRefutation.u4_unitary`
 - Dependency: [D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation](../Measurement/ErrorDisturbanceEndpointRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation](../QuantumChannels/OutputMaximalCoherenceTensorizationRefutation.md)

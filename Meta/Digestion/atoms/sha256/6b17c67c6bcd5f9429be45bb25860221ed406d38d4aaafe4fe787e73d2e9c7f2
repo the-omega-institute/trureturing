@@ -1,0 +1,80 @@
+**Theorem 5.3 (explicit charged scope of this inverse).** Let
+$N=2F_{T+2}-1$, $m=|v|$, and $K=N+m+T+D+2$. If the complete support is
+supplied by the scan in Theorem 5.2, its exact and upper Read coordinates
+are
+
+$$
+ Q=N,\qquad M=m+T+1,\qquad
+ J=\sum_{w\in S_T}(m+|w|+1)\le N(m+T+1).
+ \tag{PCR.16}
+$$
+
+Here $M$ is the longest complete root literal and $J$ is total literal
+traffic. The optional initial Read$(v)$ adds one call and $m$ symbols.
+There is an implementation with elementary sequential bit work and
+cumulative bit writes at most $CK^{10}$ and peak owned working and
+retained backing at most $CK^3$, for an absolute machine-model constant
+$C$. Add any cost of supplying pre-earned support, binding, authentic
+promises, code delivery, allocation, physical writes and retention,
+service tariffs and durations, and completed handoff. If support is
+already supplied, the post-acquisition inverse makes zero new Reads.
+These are conditional finite bounds, not a polynomial-TOTAL acquisition
+bound in $(d,\log T)$ or a physical latency bound.
+
+Proof. The scan pays one full literal per present node. Maximum local
+depth is $T$, attained by always following the initial-beta child, so
+some terminal test has length $m+T+1$, and none exceeds it. This proves
+(PCR.16), including the negative terminal replies. It is the existing
+complete scan, not a selective acquisition improvement.
+
+For explicit local accounting, store the expanded support with physical
+relative addresses, child markers, heights, leaf counts and branch
+updates; use at most $O(N(m+T+1))$ bits, since $\log(N+1)=O(T+1)$.
+Counters, a depth-first stack, the acquired prefix, batches, current
+phase candidates, aligned word and modular Fibonacci scratch fit
+$O(K^3)$ bits. Full-root operands are copied into owned query buffers.
+A scan node creates at most two address records, and their materializing,
+copying and counter work are paid. Compute leaf counts and heights by
+bottom-up finite scans, then extract batches by their recovered branch
+updates in lexicographic order, or use the explicit beta-roster induction.
+Neither requires an uncharged indexed structure. Keeping explicit full
+addresses and comparing them lexicographically costs at most $O(K)$
+bit operations per comparison.
+
+Trial values $q\le D$ in (PCR.12) each compare at most $2D$ bits.
+Matching each of the next two batches against $p$ shifts uses at most
+$2p^2$ bit comparisons; copying the aligned word uses $p$ entries.
+Recovering $T$ by Fibonacci iteration takes $O(T)$ additions on
+$O(T+1)$ bits. Reversing the modular clock uses $O(s_D)$ operations
+on $O(\log(D+1))$-bit residues. With generous slack, all traversal,
+sorting, batching, copying and arithmetic require at most $CK^5$
+indexed bit operations. An implementation that locates every indexed
+cell by a full scan of the $O(K^3)$ layout, with $O(K)$ counter and
+head-return work per scanned cell, uses at most $CK^9$ work and writes.
+The stated $CK^{10}$ envelope includes initialization, discarded
+candidates, buffer construction, retained output copies and ready-control
+writes. This supplies a concrete finite sequential upper bound without
+a unit-cost random-access assumption; it makes no optimized-exponent
+claim. Allocation and physical write tariffs still attach to the actual
+bits so written.
+
+For a later literal of relative length $h$, (PCR.15) needs at most $h$
+orientations and at most $h$ skipped-sibling terms at one edge. Branch
+times on proper prefixes are at most $2h-1$. A modular Fibonacci table
+and the two modular clocks through $2h+1$, stored period word, and
+$O(h)$ descriptors consequently suffice; binary cut comparisons use
+$O(\log(T+2))$ bits. Explicit finite scans give work, writes and backing
+polynomial in $(D,h,\log(T+2),m)$ per requested answer. An actual Read
+still submits and pays its complete root literal $vw$. Expanding the
+entire boundary or support pays its full output, and later actual updates
+and synchronized memory writes retain their own costs.
+
+All computations are stationary and make no source update. A numerical
+increment of $T$ is justified only after a completed actual update on the
+same binding; retaining the acquired phase does not itself perform that
+update. Every handoff requires the supplied stationary interval through
+its real completion. An arbitrary old cone has exponentially many nodes
+in $T$, and in the unrestricted order-$d$ domain a necessary period bound
+can be exponential in $d$. Neither expense is suppressed by the finite
+conditional bounds. $\square$
+

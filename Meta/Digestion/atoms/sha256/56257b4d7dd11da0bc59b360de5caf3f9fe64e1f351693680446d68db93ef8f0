@@ -1,0 +1,31 @@
+**定义 16.1（五阶 Fourier 数据）。** 令 $p=(p_0,\ldots,p_4)\in\Delta^\circ$，令
+
+$$
+z=e^{2\pi\mathrm i/5},qquad q_k=\sum_{j=0}^4p_jz^{kj}\quad(k\in\mathbb Z/5\mathbb Z),qquad
+a=|q_1|^2,\quad b=|q_2|^2.
+$$
+
+置
+
+$$
+\rho_1=\frac{5+\sqrt5}{50},\qquad
+\rho_2=\frac{5-\sqrt5}{50},\qquad
+\tau=\frac25,qquad
+\kappa=\frac{5+\sqrt5}{20},qquad
+r=\frac{\rho_2}{\rho_1}=\frac{3-\sqrt5}{2},qquad
+h=1-2\kappa=\frac{5-\sqrt5}{10}.
+\tag{16.1}
+$$
+
+For the covariance operator $M(p)$ of Definition 4.1, write
+
+$$
+T=\operatorname{tr}_H M(p)=\tau-2\rho_1a-2\rho_2b,
+\qquad \rho=\lambda_{\max}(M(p)|_H).
+\tag{16.2}
+$$
+
+The relation between this operator and a positive conductance vector is exactly (5.4)–(5.5): if
+$r_i=c_i^{-1}$, $s=\sum_i r_i$, and $p_i=r_i/s$, then
+$\lambda_2(L(c))R(c)=5T/\rho$.
+

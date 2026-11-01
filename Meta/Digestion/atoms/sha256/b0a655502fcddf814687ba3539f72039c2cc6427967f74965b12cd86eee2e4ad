@@ -1,0 +1,19 @@
+**定理 B-37.2（两种条件完成律的归一化严格和界）。** 在同一个 $n\ge14$ 多边形中，取互不相交的实际耳集 $P,Q$，其并 $K=P\cup Q$ 两两不交叉，且
+
+$$
+(p,q)=(|P|,|Q|)\in\{(2,2),(3,3),(2,4),(4,2)\}.
+$$
+
+这里 $p,q$ 是两集合的大小，不是六耳配置的交叉数。定义全部条件完成及共同耳载体为
+
+$$
+\begin{aligned}
+\mathcal X(P\mid Q)&=\{T\in\mathcal T_n:P\subseteq\operatorname{Ear}(T),
+\ Q\cap\operatorname{Ear}(T)=\varnothing\},\\
+E_K&=\{e\in\mathcal E_n\setminus K:e\text{ 兼容 }K\text{ 的每条耳}\},\\
+N_{pq}&=\sum_{j=0}^q(-1)^j\binom qj c_{p+j},
+\qquad c_h=C_{n-h-2}\quad(0\le h\le\lfloor n/2\rfloor).
+\end{aligned}
+\tag{37.3}
+$$
+

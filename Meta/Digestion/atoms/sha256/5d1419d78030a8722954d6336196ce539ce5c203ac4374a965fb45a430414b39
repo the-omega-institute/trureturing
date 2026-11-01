@@ -1,0 +1,81 @@
+## 文献与固定项目来源
+
+<a id="ref-cs"></a>
+
+**[1]** I. Csiszár and P. C. Shields.
+*Information Theory and Statistics: A Tutorial*.
+Foundations and Trends in Communications and Information Theory 1(4), 2004,
+尤其 §3 的信息投影与勾股恒等式。
+[作者机构全文](https://www.renyi.hu/~csiszar/Publications/Information_Theory_and_Statistics:_A_Tutorial.pdf)。
+
+<a id="ref-wj"></a>
+
+**[2]** M. J. Wainwright and M. I. Jordan.
+*Graphical Models, Exponential Families, and Variational Inference*.
+Berkeley Technical Report 649, 2003。
+[机构报告页面](https://statistics.berkeley.edu/tech-reports/649)。
+
+<a id="ref-bcp"></a>
+
+**[3]** T. Baumgratz, M. Cramer and M. B. Plenio.
+*Quantifying Coherence*.
+Physical Review Letters 113, 140401 (2014)，尤其式 (8)。
+[arXiv:1311.0275](https://arxiv.org/abs/1311.0275)。
+
+<a id="ref-wootters"></a>
+
+**[4]** W. K. Wootters.
+*Entanglement of Formation of an Arbitrary State of Two Qubits*.
+Physical Review Letters 80, 2245--2248 (1998)。
+[作者预印本](https://arxiv.org/abs/quant-ph/9709029)。
+
+<a id="ref-hg"></a>
+
+**[5]** L. Hadjiivanov and L. S. Georgiev.
+*Braiding Fibonacci Anyons* (2024)，尤其 §3、式 (3.10)。
+[arXiv:2404.01778](https://arxiv.org/abs/2404.01778)。
+
+<a id="ref-found"></a>
+
+**[6]** trureturing，固定提交 `d3c5bc77…`。
+[AURIC 金字塔基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，§§2--6、9、命题 15.3。
+
+<a id="ref-record"></a>
+
+**[7]** 同提交。
+[读口完整分类与记录三角形](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md)，尤其 §§2--9。
+该文为用户稿转录，其普通证明与旧实验自述的证据身份分开。
+
+<a id="ref-moment"></a>
+
+**[8]** 同提交。
+[关系三角形与反演精度](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md)，§§3--4 及金字塔联系。
+
+<a id="ref-phase"></a>
+
+**[9]** 同提交。
+[概率、相位运输与完整回路](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)，§§2.1--2.2。
+
+<a id="ref-v14"></a>
+
+**[10]** 同提交。
+[存在量词、电路半环与量子记录 v14](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_EXISTENTIAL_QUANTIFIERS_CIRCUIT_SEMIRINGS_AND_QUANTUM_RECORDS_V14.md)。
+前稿转录，作为研究连续性使用。
+
+<a id="ref-v15"></a>
+
+**[11]** 同提交。
+[黄金门的 NAND 式普适性与精确算术边界 v15](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)，§§3--6、9。
+前稿转录，保留编码、门菜单与近似／精确之区分。
+
+<a id="ref-latest"></a>
+
+**[12]** 同提交。
+[真实切面恢复](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md)，本轮新增 §§18--20；
+[统一联合律桥](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)，本轮新增 §2。
+
+<a id="ref-quantum"></a>
+
+**[13]** 同提交。
+[量子原则与相干重构续卷](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)，§§64--67。
+本轮未变更；§67.3 的起源桥仍开放。

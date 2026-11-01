@@ -1,0 +1,52 @@
+**Theorem 8.2 (the missing supplier restriction can be removed at the
+algebraic interface).** The three-prefix inverse of [PSA, Theorem
+3.1][PCR-PSA] applies to every record in Definition 8.1, not only to the
+terminal-spine cone chosen by PSA Theorem 2.1. It returns the original
+aligned least monic core polynomial $g$ and seed $(y_0,\ldots,y_{r-1})$,
+$r=\deg g\le d$, with $g(0)=1$ at $r>0$. At $r=0$ it returns zero.
+The additional source-specific bridge needed for this use is exactly
+the following hypothesis correspondence; it supplies neither unqueried
+data nor a new acquisition theorem.
+
+Proof. The original entrance, order promise, one-based index $z_j=y_{j-1}$
+on core births, physical order and old-leaf rule are identical in PSA
+Definition 1.1 and here. By genuine core-only evolution the three words
+are shifts of a *single periodic aligned core* of order at most $d$.
+The authentic provenance and Theorem 2.1 supply their exact ordered
+entries. ACR Theorem 27.2, or (PCR.1), supplies, for
+$A=I_s-1,B=I_{s+1}-1$, the identities
+
+$$
+ u=E^Ay,\qquad v'=E^By,\qquad w'=E^{A+B+1}y.
+ \tag{PCR.22}
+$$
+
+Here $w'$ denotes a stream, not a physical suffix. Its first $2d$
+entries are the third acquired prefix. Both actual starts are positive,
+so $A,B\ge0$. The $+1$ is forced by one-based birth indexing. PSA
+Theorem 2.2's conclusion therefore holds on this cone without requiring
+its terminal-spine selection, a bounded cone size, $H$, $h$, shallow
+clock bounds, a known exterior forest or a numerical value of $A,B$.
+All three prefixes are visible because $s+2\le T-1$.
+
+To check the dependency rather than assume a broader theorem, PSA
+Theorem 3.1 computes $r$ as the rank of $H_d(w')$, obtains $g$ and a
+polynomial $f$ by its two nonsingular leading-Hankel solves, and uses
+$f(E)w'=Ev'$. Substitution of (PCR.22) gives
+$E^{B+1}(f(E)u-y)=0$. The constant term of the *core* polynomial makes
+shift injective on its solution space, so $f(E)u=y$. These are precisely
+its proof's data and cancellation hypotheses. Its leading-Hankel
+nonsingularity argument uses the least order and forward propagation,
+not a short period or square-free factorization. Zero is handled before
+inversion. No cancellation involves the singular factor of the original
+stream. The acquired entries cover every index used in those solves.
+Thus no step of that inverse uses the terminal-spine method of obtaining
+the words. Reusing it after this hypothesis map is legitimate.
+
+This establishes the algebraic bridge, rather than silently extending
+PSA's complete physical entrance theorem. PSA Theorem 5.1's original
+$(P,n)$ acquisition, PSA's early-parent heights and ACR's original
+$K_d,\rho_d$ firstness remain distinct consumers and are not premises
+silently supplied by this local record. The reused source is an ordinary
+mathematical proof, not a compiled application. $\square$
+

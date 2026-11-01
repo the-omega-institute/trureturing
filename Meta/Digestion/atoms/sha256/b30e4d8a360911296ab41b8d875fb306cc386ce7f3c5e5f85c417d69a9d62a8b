@@ -1,0 +1,18 @@
+**Credit.** Under the same actual post-tick preparation, stable coherent isometry, count-preserving terminal access, and fixed strictly positive probabilities, supplied DEV26.2 proves the least complete single post-tick horizon for every three-support family as
+
+$$
+N=(d-1)(b+1),\qquad d=\frac{c-a}{\gcd(b-a,c-a)}.
+$$
+
+Its first-sensitivity specialization is exactly (7.1). This corollary is retained as that general-theorem specialization and credited overlap; it is not current-source new mathematical content. The arbitrary-support first-sensitivity theorem and its proof remain the content of Theorems 4.2 and 5.1.
+
+The value six for $K=\{1,2,4\}$ is covered both by source Theorem 25.3 and by the supplied DEV26.2 three-support theorem. The source already proves more for that support: its six-step entry
+
+$$
+\langle010100|T_6(\theta)|001001\rangle
+=p_1p_2^{3/2}\sqrt{p_4}\,e^{i(2\theta_1-3\theta_2+\theta_4)}
+\tag{7.2}
+$$
+
+is a pure primitive lattice character and identifies the full orbit through its two quadratures. The supplied DEV26.2 result gives the corresponding general three-support complete-identification horizon. These full-identification and six-step results are credited antecedents rather than current-source newness; the arbitrary-support statement retained here is about first sensitivity.
+

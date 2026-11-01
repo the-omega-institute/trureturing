@@ -1,0 +1,17 @@
+#### 定义 8.1：读出关系矩阵与闭环
+
+对于归一化向量族  $v_ 1,\ldots,v_ N$ ，定义  $G_ {ij}=\langle v_ i,v_ j\rangle$ 。
+非零重叠图在  $G_ {ij}\ne0$  时连接  $i,j$ 。
+对其有向闭环  $C=(i_ 0,\ldots,i_ k=i_ 0)$ ，定义
+
+<a id="eq-eq:bargmann"></a>
+
+```math
+B_C(v)=\prod_{a=0}^{k-1}G_{i_a i_{a+1}}.\tag{24}
+```
+
+它不随各向量代表的独立相位而变，是相位规范不变量。
+
+
+<a id="stmt-8-2"></a>
+

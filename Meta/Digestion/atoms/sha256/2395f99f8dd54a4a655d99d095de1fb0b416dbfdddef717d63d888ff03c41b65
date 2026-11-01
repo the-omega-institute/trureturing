@@ -1,0 +1,35 @@
+#### 定理 8.2（三点闭环保存边概率缺失的手性）
+
+设单位振幅代表的 Bloch 向量为 $a,b,c\in S^2$。
+则循环边积
+
+<a id="eq-Bargmann"></a>
+
+$$
+\mathcal B=
+\langle a|b\rangle\langle b|c\rangle\langle c|a\rangle
+=
+\frac{1+a\cdot b+b\cdot c+c\cdot a
++i\,a\cdot(b\times c)}4
+\tag{17}
+$$
+
+不受三个顶点各自的相位选择影响。
+两两转移概率不能一般确定 $\mathcal B$。
+
+**证明。**
+
+相位重标定的六个相位因子在循环中抵消。
+又有 $\mathcal B=\operatorname{Tr}(\rho_a\rho_b\rho_c)$，
+利用 $(a\cdot\sigma)(b\cdot\sigma)=(a\cdot b)I+i(a\times b)\cdot\sigma$、
+$\operatorname{Tr} I=2$、$\operatorname{Tr}\sigma_j=0$，逐项展开即得 [(17)](#eq-Bargmann)。
+两两概率是 $(1+a\cdot b)/2$。
+空间反射保持三个点积却反转三重积，所以将 $\mathcal B$ 变为其复共轭。
+例如 $a=e_x,b=e_y,c=e_z$ 给 $(1+i)/4$；
+镜像给 $(1-i)/4$，两者三条边概率均为 $1/2$。 ∎
+
+这为“隐藏信息位于连线关系中”给出可检验的形式：
+单边长度读数不够，最小有向闭环已经携带额外相位信息。
+
+<a id="statement-8-3"></a>
+

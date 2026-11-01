@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:1a923286d5ac4a1416c934c31c6dd6cde781461b29f1a95febabf4ace91318e5
+  normalized_sha256: sha256:1a923286d5ac4a1416c934c31c6dd6cde781461b29f1a95febabf4ace91318e5
+cas_ref: sha256:1a923286d5ac4a1416c934c31c6dd6cde781461b29f1a95febabf4ace91318e5
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg
+    target_statement_id: sha256:4e1e2463b054d4f1a17a47dfa173be720d81b8370e9189ac369460319c5840c1
+  - gid: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.pure_trace
+    target_statement_id: sha256:10a7dafe6e7a6b1cf2bcce71b142fca1562280cfd40a3330284db5fc95180878
+  - gid: D5/S3/Quantum/Foundation/FiniteDiamondDistance.IsPure
+    target_statement_id: sha256:a63a666bd7499611a842159a7fd6bc7f9f1b3adeb7f8ae0dd22d8d1868e8a07b
+  - gid: D5/S3/Quantum/Foundation/FiniteDiamondDistance.pureState
+    target_statement_id: sha256:3237a5a6ccf8258da0e2f20363a3121f14afd969522657655a219fa198eef027
+  - gid: D5/S3/Quantum/Foundation/FiniteStateChannel.DensityState
+    target_statement_id: sha256:4607242f5ca0464588fa7eea47cf23ce7ba387f9018664f7796740270945b0f5
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance
+    target_statement_id: sha256:a951383b42658bc45458c21e07d0f1306eb2d0af3f5709cef4338a96b4a21c20
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_le_one
+    target_statement_id: sha256:e39763e0eaa049a1552c3521e69a0c41d255ca2c7d54cf73a839fdb6299cc4b5
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,14 @@
+**Proposition 8.4 (All two-read attaining starts and their forced labels).**
+Fix any installed table and deterministic initial state $r$ with
+$q_2(r)=1$. Its correct mass is $S_2$ if and only if its execution
+from $r$ has the following form. It reads $t=2\ell+\alpha$ first,
+then reads $t_0$ or $t_1$ according to the first reply, and then halts.
+Writing $\beta=1-\alpha$ and $e=\{\ell,\ell+1\}$, the exact
+geometric conditions are:
+
+1. $v_\alpha\in e$.
+2. $t_0$ has parity $\alpha$ and its active edge $f$ is
+   vertex-disjoint from $e$.
+3. $t_1$ has parity $\alpha$ and its active edge $g$ shares exactly
+   one vertex with $e$.
+

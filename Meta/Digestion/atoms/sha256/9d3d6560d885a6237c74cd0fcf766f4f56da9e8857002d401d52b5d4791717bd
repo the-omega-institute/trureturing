@@ -1,0 +1,81 @@
+## 2. 项目新增：第三读者关闭既有响应残余族
+
+令
+
+$$
+x=\frac{\sqrt5-1}{2},\quad y=\sqrt x,\quad
+ \varphi=x^{-1},\quad \zeta=e^{3\pi i/5},\quad x+x^2=1.
+$$
+
+项目的原来源为 $H=V_8^{\mathbf1}$，维数十三。
+扩大载体 $\mathcal K=V_{12}^{\mathbf1}$ 维数八十九，
+含 $J(H\otimes\mathbb{C}^2)$ 的二十六维代码及六十三维补空间。
+令 $P=\Pi$ 为秩五投影，$E=I-P$，$D=E+\zeta P$。
+源的共同理想相干准备是
+
+<a id="eq:source-V"></a>
+
+$$
+V\psi=y\psi\otimes\lvert 0\rangle+xD\psi\otimes\lvert 1\rangle.
+ \tag{1}
+$$
+
+三个读者为 $I,K_9^2,K_9$。
+新第三读者只调用一次已有地址九，不另加任意旋转。
+源 §111 给整个代码上的恒等式
+
+<a id="eq:native-port"></a>
+
+$$
+(I\otimes B_R)V\psi
+ =\zeta^2\left[yE\psi\otimes\lvert 0\rangle
+ +(xE\psi+\zeta^{-3}P\psi)\otimes\lvert 1\rangle\right],
+ \tag{2}
+$$
+
+其中
+
+$$
+B_R=\begin{pmatrix}-x&y\zeta^{-1}\\y\zeta^{-1}&-x\zeta^3\end{pmatrix}.
+$$
+
+相对分支相位 $\zeta^{-3}$ 被保留。 [[2]](#ref-quantum)
+
+源 §104 的全部旧合同已经给出
+
+<a id="eq:family"></a>
+
+$$
+F=q,\quad G=cq+d,\quad
+ a=\frac{c}{x+c},\quad0<c\le1,\quad
+ d_w\ge0,\quad\sum_wd_w=1-c.
+ \tag{3}
+$$
+
+$q$ 是十三个合法基坐标的 Born 律，完整输出仍含全部 1024 个旧标签。
+对指定原制备 $p_*=1$，源 §111--112 固定一次且共用
+
+<a id="eq:five"></a>
+
+$$
+\mathcal F=(\epsilon,3,13,013,0013),\qquad w_*=1000000010.
+ \tag{4}
+$$
+
+新设置记录零的质量只假设 $b\in[0,1]$。
+继承旧全域合同后，再要求新设置与设置零在事件 $w_*$、五个原生后续上相等，
+源定理 112.1 得到
+
+<a id="eq:source-closure"></a>
+
+$$
+\boxed{F=G=q,\quad c=1,\quad d=0,\quad a=x,\quad b=x^3.}
+ \tag{5}
+$$
+
+函数结论遍历旧球面与全部旧标签；数值记录结论只针对该制备和三个指定设置。
+源 §114 证明旧 $c<1$ 模型至少违反一个新增等式。
+所以矩阵局部性和原门菜单并不自动提供新增实际概率隔离。
+
+<a id="section-3"></a>
+

@@ -1,0 +1,14 @@
+#### 定义 5.3（原生黄金门）
+
+令 $\varphi=(1+\sqrt5)/2$、$\omega=e^{3\pi i/5}$，
+
+$$
+g=\varphi^{-1/2}\lvert 0\rangle +\varphi^{-1}\lvert 2\rangle ,\qquad
+ P=\lvert g\rangle \langle g\rvert +\lvert 13\rangle \langle 13\rvert ,\qquad
+ K=\omega[I+(\omega-1)P].
+$$
+
+$\varphi^{-1}+\varphi^{-2}=1$，故 $P$ 为秩二正交投影；这是项目三位置原生门在五种合法配置上的限制。（[14](#ref-v20)）
+
+<a id="statement-5-4"></a>
+

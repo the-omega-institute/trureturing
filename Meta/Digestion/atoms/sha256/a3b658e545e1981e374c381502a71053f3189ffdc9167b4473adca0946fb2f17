@@ -1,0 +1,34 @@
+**Proposition 22.3 (faithful quotient and the whole root language).** The source of Definition 22.2 is finite, deterministic, root reachable and closed under every legal successor. Its complete-response quotient is exactly $X_N$. Put
+
+$$
+p_i=a^i b^{L-i}\qquad(0\le i<N).
+\tag{22.8}
+$$
+
+The complete legal root language, grouped by endpoint, is
+
+| Endpoint | All root histories ending there | Length |
+| --- | --- | --- |
+| $v_{i,j}$, $i+j\le L$ | $a^i b^j$ | $i+j$ |
+| $w_{i,t}$, $1\le t\le B_i$ | $p_i b^t$ | $L+t$ |
+| $z_q$, $q=\rho(i,j)$ with $i<j$ | $p_i b^q a$ and $p_j b^q a$ | $N+q$ for both |
+
+In particular, every nonterminal endpoint has exactly one root history, and every terminal endpoint has exactly two, of equal length. The graph is acyclic and has
+
+$$
+|X_N|=\frac{N(N+1)}2+\sum_{i=0}^{N-1}B_i+P,
+\qquad
+|\mathcal P_o|=|X_N|+P,
+\qquad
+\max_{u\in\mathcal P_o}|u|=L+P.
+\tag{22.9}
+$$
+
+Proof. The $a$-edges in the base first advance the initial run of $a$'s. Once a $b$ has occurred there, only $b$ is legal until a vertex $v_{i,L-i}$ is reached. Thus every base vertex has exactly the history in the first row. This includes $v_{0,0}$ with the empty word and all $N$ vertices reached by the words $p_i$.
+
+After $p_i$, successive $b$'s run through precisely $w_{i,0},\ldots,w_{i,B_i}$. At a cut $t$ an $a$-exit exists exactly when $t\in J_i$, and it ends at $z_t$. No edge leaves a $z_t$. The definition of $J_i$ says that a given $q=\rho(i,j)$ belongs to exactly $J_i$ and $J_j$. Hence $z_q$ has exactly the two displayed histories, which differ because $p_i\ne p_j$. This proves every entry of the table and excludes all additional histories by following the exhaustive legal table (22.7). It also proves that every vertex is actually reached and that every listed successor stays in $X_N$. All stopping cuts along the base, the selector chains and the exits occur in this classification; no proper subset of an already specified source language has been substituted.
+
+Distinct actual vertices have different empty responses because $q_X$ is injective. Equal vertices have identical responses to every word by determinism and the declared legal table. Therefore the complete-response equivalence of Definition 1.2 is equality. Its graph is exactly (22.7), and the source lifting and actual-image closure requirements hold for the fixed representative $x_0$.
+
+The base contains $N(N+1)/2$ vertices, the chains add $\sum_i B_i$, and there are $P$ terminals. Counting the unique nonterminal histories and the two histories at each terminal gives the second equality in (22.9). Base and chain edges strictly advance their displayed progress coordinate, and exits end at a terminal, so no directed cycle exists. Since $B_i\le P-1$, all history lengths are at most $L+P$. The last pair index $P-1$ occurs, and its terminal histories have length $L+P$, proving the maximum. The bound is a property of this complete actual source, rather than an external restriction of its histories. Finally, (22.1) supplies positive representative-independent durations and the cocycle $T(u)=|u|$ on this quotient. $\square$
+

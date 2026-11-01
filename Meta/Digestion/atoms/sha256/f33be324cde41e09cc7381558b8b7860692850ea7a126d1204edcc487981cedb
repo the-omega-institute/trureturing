@@ -1,0 +1,45 @@
+#### 命题 8.5：三态已能锁定两两概率遗漏的手性
+
+取
+
+```math
+v_1=\lvert 0\rangle,\qquad v_2=\frac{\lvert 0\rangle+\lvert 1\rangle}{\sqrt2},\qquad
+ v_3=\frac{\lvert 0\rangle+i\lvert 1\rangle}{\sqrt2},\qquad w_i=\overline{v_i}.
+```
+
+两组的每对不同射线转移概率均为  $1/2$ ，
+但不存在同一个酉算子在允许逐态相位后实现全部  $v_ i\mapsto w_ i$ 。
+
+
+**证明。**
+
+直接相乘得
+
+```math
+B_{123}(v)=\langle v_1,v_2\rangle
+ \langle v_2,v_3\rangle\langle v_3,v_1\rangle=\frac{1+i}{4},
+ \qquad B_{123}(w)=\frac{1-i}{4}.
+```
+
+它们不同，违背式 [(25)](#eq-eq:gram-cycle)；各边重叠模平方仍为  $1/2$ 。
+
+**证毕。**
+
+
+对纯量子比特投影  $\rho_ a=(I+\mathbf a\cdot\sigma)/2$ ，同一现象可写为
+
+<a id="eq-eq:triple-bloch"></a>
+
+```math
+\operatorname{Tr}(\rho_a\rho_b\rho_c)
+ =\frac{1+\mathbf a\cdot\mathbf b+\mathbf b\cdot\mathbf c
+ +\mathbf c\cdot\mathbf a+i\,\mathbf a\cdot(\mathbf b\times\mathbf c)}4.\tag{26}
+```
+
+展开 Pauli 乘法即证明此式。两两概率只见点积，虚部见有向三重积。
+但若只是把图中同一闭环的遍历方向反过来， $B_ C$  也会共轭；
+这属于标签顺序改变，不能因此断言物理态遭到了反酉操作。
+
+
+<a id="stmt-8-6"></a>
+

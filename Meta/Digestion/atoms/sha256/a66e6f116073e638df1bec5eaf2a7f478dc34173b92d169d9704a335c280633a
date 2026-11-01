@@ -1,0 +1,40 @@
+**Corollary 8.4 (Dimension limit and undecided fixed-dimension endpoint).**
+For each of the four contracts, its nonempty finite-dimensional classes
+are nested with dimension bound. Their capacities tend to $e_*$ as
+$n\to\infty$. Allowing arbitrary finite dimension gives tolerance set
+
+$$
+\begin{cases}
+(e_*,\infty),&0<Z<2/3,\\
+[e_*,\infty),&2/3\le Z<1.
+\end{cases}
+\tag{8.17}
+$$
+
+For general positive fixed $n$ below $Z=2/3$, the exact capacity
+and whether it is attained at its own value are not determined here.
+
+**Proof 8.4.** Nesting gives nonincreasing capacities. The floor from
+Lemma 5.4 and the upper estimate (8.6), with $b$ tending to infinity,
+give their limit $e_*$. For guard recovery only $n=0$ is empty;
+the height model supplies finite error at all $n\ge1$.
+The degree choice (8.12) attains every strict tolerance above $e_*$
+within each contract. Below the transition Theorem 7.2 excludes
+equality for every finite dimension. At and above the transition
+Proposition 8.3 supplies a finite attainer.
+
+For any fixed nonempty class, its tolerance set is upward closed and
+contains every number strictly above its infimum by the definition of
+infimum. The lower endpoint belongs to that set exactly when some
+model attains the infimum. The explicit lower bound and the witnesses
+do not decide that endpoint for general positive fixed $n$ below the
+transition. $\square$
+
+For additional comparison below the transition, the constant zero
+model gives $e_n^{\mathrm{aff}}\le1-Z/2$ for every $n$. The
+prescribed-path class without guard recovery has the same upper
+witness. The height model gives this upper bound in both
+guard-recoverable classes for $n\ge1$. No equality of the different
+capacities at general positive fixed dimension follows from these
+common estimates.
+

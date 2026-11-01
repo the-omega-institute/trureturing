@@ -1,0 +1,50 @@
+### 引理 6.2（一次理想读出的信息增益）
+
+令$q=\operatorname{Tr}(P\rho)$。
+理想结果概率与后验指针权重为
+
+$$
+p_y(q)=(1-q)\ell_0(y)+q\ell_1(y),\qquad
+ q_y^0=\frac{q\ell_1(y)}{p_y(q)}.
+$$
+
+只对$p_y>0$使用比值，零质量项取零。
+则
+
+$$
+\sum_yp_yq_y^0=q,
+$$
+
+$$
+v(q):=\sum_yp_y(q_y^0-q)^2
+ =q^2(1-q)^2\sum_{y:p_y>0}
+ \frac{(\ell_1(y)-\ell_0(y))^2}{p_y(q)}.
+ \tag{8}
+$$
+
+因此
+
+$$
+\sum_yp_yV(q_y^0)=V(q)-v(q),\qquad
+ v(q)\ge c_*V(q)^2,
+ \quad c_*:=\sum_y(\ell_1(y)-\ell_0(y))^2>0.
+ \tag{9}
+$$
+
+**证明。**
+
+$M_y^*M_y=\ell_0(y)P_0+\ell_1(y)P$，
+且$M_y^*PM_y=\ell_1(y)P$，给概率与后验式。
+平均式由$\sum\ell_1=1$。
+对$0<q<1$，
+
+$$
+q_y^0-q=\frac{q(1-q)(\ell_1(y)-\ell_0(y))}{p_y(q)}.
+$$
+
+平方求和给式 [式 eq:gain](#eq:gain)；端点两侧均为零。
+用$p_y\le1$得下界。展开$q_y^0-(q_y^0)^2$给杂质式。
+
+∎
+
+<a id="lem:impurity"></a><a id="eq:impurity-lip"></a>

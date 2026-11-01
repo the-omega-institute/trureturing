@@ -1,0 +1,32 @@
+### 定义 16.1（同一来源上的最小统一报告预算）
+
+固定 $k\ge2$ 和有限实数 $\varepsilon>0$，沿用定义 9.1、13.1、14.1
+的完整 $\mathcal M_k$、一项或两项严格正外积分解、普通初始实秩、原子 $N,L_0$，
+以及单条不可复制、不可复位轨迹。初读和每个原子后的必读报告均计费，误差满足
+闭约束 $|\eta_i|\le\varepsilon$，允许任意相关与历史依赖；协议是完整
+动作—报告历史的任意确定性函数，不附加正则性。
+
+对 $R\in\mathcal M_k$，令
+
+$$
+ \begin{aligned}
+ c_{k,\varepsilon}(R)=\min\{B\in\mathbb N_{\ge1}:\;&
+   \exists\Pi\quad \Pi\text{ 在完整 }\mathcal M_k
+       \text{ 上为 }\varepsilon\text{-可靠部分秩二认证器},\\
+ &\forall\text{ 在 }R\text{ 上允许的误差历史，}\quad
+       \Pi\text{ 在至多 }B\text{ 次报告内有限输出 }2\}.
+ \end{aligned}
+\tag{16.1}
+$$
+
+空集的最小值约定为 $\infty$。这里 $B$ 对同一个 $R$ 的全部允许误差历史
+统一，协议可按 $R$ 存在选择，但其可靠性始终比较完整 $\mathcal M_k$；
+不要求它在其他来源上停止或输出 $2$。集合 $\mathcal I_k(\varepsilon)$
+仍按 (14.1) 定义，不预先要求统一预算。定理 14.2 给出
+
+$$
+ R\in\mathcal I_k(\varepsilon)
+ \quad\Longrightarrow\quad c_{k,\varepsilon}(R)\le2k-1.
+\tag{16.2}
+$$
+

@@ -1,0 +1,7 @@
+The complete chronological acquisition is as follows.
+
+1. Read at $I$ with index zero, then repeat $B-1$ times: execute the empty word and read again at $I$.
+2. For $\ell=1,\ldots,k+1$, execute $M$ then $J$, with no intermediate read, and read the endpoint at index $c_\ell$.
+3. Execute one $M$ and read at index $T$.
+4. For $j=1,\ldots,k+1$, execute $M$ then $J$, with no intermediate read, and read at index $T+j$; stop at index $L-1$.
+

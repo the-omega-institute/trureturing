@@ -4,7 +4,43 @@
 
 The sharp local cost of one binary recut depends on the actual forward residual width.
 
-**Theorem 1.1 (Sharp bounds and simultaneous attainment).**
+**Theorem 1.1 (Length of the optional-index encoding).**
+
+$$\forall N \in \mathit{Nat},\; \forall i \in \operatorname{Option}\left(\operatorname{Fin}\left(N\right)\right),\; \operatorname{length}\left(\operatorname{word}\left(i\right)\right) = N$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/SharpBinaryOneRecut.word_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N and every optional index i in Option(Fin N), word(i) has length N. The word lists the Boolean tests i=some t in the order t in Fin N; this includes N=0 and the none input. Equal lengths allow cancellation of consecutive encoding blocks.
+
+**Theorem 1.2 (Recovery of the optional index).**
+
+$$\forall N \in \mathit{Nat},\; \forall i \in \operatorname{Option}\left(\operatorname{Fin}\left(N\right)\right),\; \forall j \in \operatorname{Option}\left(\operatorname{Fin}\left(N\right)\right),\; \operatorname{word}\left(i\right) = \operatorname{word}\left(j\right) \Rightarrow i = j$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/SharpBinaryOneRecut.word_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N the complete encoding function on Option(Fin N) is injective. Every some s is detected at coordinate s; none is the all-false word. Consequently an injective two-letter alphabet transport preserves optional-index recovery, and concatenated fixed-length blocks recover a finite derivative table coordinate by coordinate.
+
+**Theorem 1.3 (Cardinality of a free derivative coordinate).**
+
+$$\forall N \in \mathit{Nat},\; \forall full \in \mathit{Bool},\; \left(\mathit{full} = \mathit{false} \Rightarrow \operatorname{card}\left(\operatorname{Spare}\left(N, \mathit{full}\right)\right) = N + 1\right) \land \left(\mathit{full} = \mathit{true} \Rightarrow \operatorname{card}\left(\operatorname{Spare}\left(N, \mathit{full}\right)\right) = N\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/SharpBinaryOneRecut.spare_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N and Boolean full, Spare(N,full) consists of i in Option(Fin N) such that full=true implies i is not none. Its cardinality is N plus zero when full=true and N plus one when full=false. This includes N=0 in both regimes and gives the number of choices for each free derivative coordinate.
+
+**Theorem 1.4 (Sharp bounds and simultaneous attainment).**
 
 $$\left(\forall n \in \mathit{Nat},\; \forall C \in \operatorname{Set}\left(\operatorname{List}\left(\mathit{Bool}\right)\right),\; \forall k \in \mathit{Nat},\; \left(\left(\left(\left(\forall w \in \operatorname{List}\left(\mathit{Bool}\right),\; \operatorname{Member}\left(w, C\right) \Rightarrow \operatorname{length}\left(w\right) = n\right) \land \operatorname{Nonempty}\left(C\right)\right) \land 1 \le k\right) \land k \le n\right) \Rightarrow \left(\left(\left(\left(\operatorname{Finite}\left(\operatorname{residualSet}\left(C, k\right)\right) \land 0 < \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right)\right) \land \left(\forall z \in \operatorname{Set}\left(\operatorname{List}\left(\mathit{Bool}\right)\right) \times \operatorname{List}\left(\mathit{Bool}\right),\; \operatorname{Member}\left(z, \operatorname{image}\left(C, k, 1\right)\right) \Rightarrow \operatorname{Member}\left(\operatorname{recut}\left(z\right), \operatorname{residualSet}\left(C, k\right)\right)\right)\right) \land \left(\left(\forall E \in \operatorname{Set}\left(\operatorname{List}\left(\mathit{Bool}\right)\right),\; \operatorname{Member}\left(E, \operatorname{residualSet}\left(C, k\right)\right) \Rightarrow \left(\operatorname{card}\left(\operatorname{currentFiber}\left(C, k, E\right)\right) \le 2 \cdot \left(\operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right) + 1\right) \land \left(\forall b \in \mathit{Bool},\; \operatorname{card}\left(\operatorname{fixedBitFiber}\left(C, k, E, b\right)\right) \le \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right) + 1\right)\right)\right) \land \operatorname{card}\left(\operatorname{image}\left(C, k, 1\right)\right) \le 2 \cdot \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right) \cdot \left(\operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right) + 1\right)\right)\right) \land \left(\operatorname{FullBranching}\left(C, k\right) \Rightarrow \left(\left(\forall E \in \operatorname{Set}\left(\operatorname{List}\left(\mathit{Bool}\right)\right),\; \operatorname{Member}\left(E, \operatorname{residualSet}\left(C, k\right)\right) \Rightarrow \left(\operatorname{card}\left(\operatorname{currentFiber}\left(C, k, E\right)\right) \le 2 \cdot \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right) \land \left(\forall b \in \mathit{Bool},\; \operatorname{card}\left(\operatorname{fixedBitFiber}\left(C, k, E, b\right)\right) \le \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right)\right)\right)\right) \land \operatorname{card}\left(\operatorname{image}\left(C, k, 1\right)\right) \le 2 \cdot \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right) \cdot \operatorname{card}\left(\operatorname{residualSet}\left(C, k\right)\right)\right)\right)\right)\right) \land \left(\forall N \in \mathit{Nat},\; 1 \le N \Rightarrow \left(\left(\left(\left(\left(\left(\left(\left(\operatorname{Nonempty}\left(\operatorname{relation}\left(N, \mathit{false}\right)\right) \land \left(\forall w \in \operatorname{List}\left(\mathit{Bool}\right),\; \operatorname{Member}\left(w, \operatorname{relation}\left(N, \mathit{false}\right)\right) \Rightarrow \operatorname{length}\left(w\right) = 3 \cdot N + 1\right)\right) \land 1 \le 2 \cdot N + 1\right) \land 2 \cdot N + 1 \le 3 \cdot N + 1\right) \land \left(\mathit{false} = \mathit{true} \Rightarrow \operatorname{FullBranching}\left(\operatorname{relation}\left(N, \mathit{false}\right), 2 \cdot N + 1\right)\right)\right) \land \operatorname{card}\left(\operatorname{residualSet}\left(\operatorname{relation}\left(N, \mathit{false}\right), 2 \cdot N + 1\right)\right) = N\right) \land \operatorname{card}\left(\operatorname{image}\left(\operatorname{relation}\left(N, \mathit{false}\right), 2 \cdot N + 1, 1\right)\right) = 2 \cdot N \cdot \left(N + 1\right)\right) \land \left(\forall E \in \operatorname{Set}\left(\operatorname{List}\left(\mathit{Bool}\right)\right),\; \operatorname{Member}\left(E, \operatorname{residualSet}\left(\operatorname{relation}\left(N, \mathit{false}\right), 2 \cdot N + 1\right)\right) \Rightarrow \left(\operatorname{card}\left(\operatorname{currentFiber}\left(\operatorname{relation}\left(N, \mathit{false}\right), 2 \cdot N + 1, E\right)\right) = 2 \cdot \left(N + 1\right) \land \left(\forall b \in \mathit{Bool},\; \operatorname{card}\left(\operatorname{fixedBitFiber}\left(\operatorname{relation}\left(N, \mathit{false}\right), 2 \cdot N + 1, E, b\right)\right) = N + 1\right)\right)\right)\right) \land \left(\left(\left(\left(\left(\left(\left(\operatorname{Nonempty}\left(\operatorname{relation}\left(N, \mathit{true}\right)\right) \land \left(\forall w \in \operatorname{List}\left(\mathit{Bool}\right),\; \operatorname{Member}\left(w, \operatorname{relation}\left(N, \mathit{true}\right)\right) \Rightarrow \operatorname{length}\left(w\right) = 3 \cdot N + 1\right)\right) \land 1 \le 2 \cdot N + 1\right) \land 2 \cdot N + 1 \le 3 \cdot N + 1\right) \land \left(\mathit{true} = \mathit{true} \Rightarrow \operatorname{FullBranching}\left(\operatorname{relation}\left(N, \mathit{true}\right), 2 \cdot N + 1\right)\right)\right) \land \operatorname{card}\left(\operatorname{residualSet}\left(\operatorname{relation}\left(N, \mathit{true}\right), 2 \cdot N + 1\right)\right) = N\right) \land \operatorname{card}\left(\operatorname{image}\left(\operatorname{relation}\left(N, \mathit{true}\right), 2 \cdot N + 1, 1\right)\right) = 2 \cdot N \cdot N\right) \land \left(\forall E \in \operatorname{Set}\left(\operatorname{List}\left(\mathit{Bool}\right)\right),\; \operatorname{Member}\left(E, \operatorname{residualSet}\left(\operatorname{relation}\left(N, \mathit{true}\right), 2 \cdot N + 1\right)\right) \Rightarrow \left(\operatorname{card}\left(\operatorname{currentFiber}\left(\operatorname{relation}\left(N, \mathit{true}\right), 2 \cdot N + 1, E\right)\right) = 2 \cdot N \land \left(\forall b \in \mathit{Bool},\; \operatorname{card}\left(\operatorname{fixedBitFiber}\left(\operatorname{relation}\left(N, \mathit{true}\right), 2 \cdot N + 1, E, b\right)\right) = N\right)\right)\right)\right)\right)\right)$$
 
@@ -33,4 +69,7 @@ The universal quantifiers include k=1 and k=n. In the sharpness clauses, lengths
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/SharpBinaryOneRecut.sharp_binary_one_recut`
+- Truth anchor: `D5/S3/ObserverMemory/SharpBinaryOneRecut.spare_card`
+- Truth anchor: `D5/S3/ObserverMemory/SharpBinaryOneRecut.word_injective`
+- Truth anchor: `D5/S3/ObserverMemory/SharpBinaryOneRecut.word_length`
 - Dependency: [D5/S3/ObserverMemory/StrictAnchoredBoundary](StrictAnchoredBoundary.md)

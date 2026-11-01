@@ -1,0 +1,18 @@
+**定义 5.1（完整内部仪器与平均通道）。**
+
+在共同有限维接口上取 Kraus 算符 $K_{y\alpha}$，满足
+
+$$
+\mathcal I_y(\rho)=\sum_\alpha K_{y\alpha}\rho K_{y\alpha}^*,
+ \quad \sum_{y,\alpha}K_{y\alpha}^*K_{y\alpha}=I,
+ \quad\Phi=\sum_y\mathcal I_y.
+$$
+
+全部失败与保留后继均在这个接口与结果域中。
+令内部等距扩张为
+
+$$
+V\psi=\sum_{y,\alpha}K_{y\alpha}\psi\otimes\lvert y,\alpha\rangle,
+ \qquad Q=P\otimes I.
+$$
+

@@ -37,30 +37,6 @@ def walsh {d : ℕ} (a : Fin d → ZMod 2) : ℝ :=
 theorem qFree_polar {d : ℕ} (x y : Fin d → ZMod 2) :
     qFree (x+y) + qFree x + qFree y =
       (∑ i, x i*y i) + (∑ i, x i)*(∑ i, y i) := by
-  have bit_cases (z : ZMod 2) : z = 0 ∨ z = 1 := by
-    have hv : z.val < 2 := ZMod.val_lt z
-    have hz : z.val = 0 ∨ z.val = 1 := by omega
-    rcases hz with hz | hz
-    · left
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-    · right
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-  have boolBit_bitBool (z : ZMod 2) : (fun b : Bool => (b.toNat : ZMod 2)) ((fun z : ZMod 2 => decide (z = 1)) z) = z :=
-    by rcases bit_cases z with rfl | rfl <;> simp []
-  have settingWeight_eq_sum {n : ℕ} (x : Fin n → Bool) :
-      (fun x => hammingDist x (fun _ => false)) x = ∑ i, (x i).toNat := by
-    classical
-    dsimp only
-    unfold hammingDist
-    rw [Finset.card_filter]
-    apply Finset.sum_congr rfl
-    intro i hi
-    cases x i <;> simp
-  have parity_sum {n : ℕ} (x : Fin n → Bool) :
-      ∑ i, (fun b : Bool => (b.toNat : ZMod 2)) (x i) = ((fun x => hammingDist x (fun _ => false)) x : ZMod 2) := by
-    rw [settingWeight_eq_sum, Nat.cast_sum]
   have qFree_snoc {d : ℕ} (x : Fin d → ZMod 2) (b : ZMod 2) :
       qFree (Fin.snoc x b) = qFree x + b * ((∑ i, x i) + 1) := by
     have hw : (fun x => hammingDist x (fun _ => false)) (fun i : Fin (d+1) => (fun z : ZMod 2 => decide (z = 1)) ((Fin.snoc x b : Fin (d+1) → ZMod 2) i)) =
@@ -101,19 +77,6 @@ def character {d : ℕ} (a x : Fin d → ZMod 2) : ℝ := bitSign (∑ i, a i*x 
 
 theorem qFree_walsh_square (k : ℕ) (a : Fin (2*k) → ZMod 2) :
     walsh a ^ 2 = (2 : ℝ)^(2*k) := by
-  have bit_cases (z : ZMod 2) : z = 0 ∨ z = 1 := by
-    have hv : z.val < 2 := ZMod.val_lt z
-    have hz : z.val = 0 ∨ z.val = 1 := by omega
-    rcases hz with hz | hz
-    · left
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-    · right
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-  have bitSign_add (a b : ZMod 2) : bitSign (a + b) = bitSign a * bitSign b := by
-    rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
-      simp [bitSign,boolSign,show (1 : ZMod 2) + 1 = 0 from by decide]
   have bitSign_injective : Function.Injective bitSign := by
     intro a b h
     rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
@@ -207,19 +170,6 @@ theorem affine_agreement_bound (k : ℕ) (b : ZMod 2) (a : Fin (2*k) → ZMod 2)
     ((Finset.univ.filter fun x : Fin (2*k) → ZMod 2 =>
       qFree x = b + ∑ i, a i*x i).card : ℝ) ≤
       ((2 : ℝ)^(2*k)+(2 : ℝ)^k)/2 := by
-  have bit_cases (z : ZMod 2) : z = 0 ∨ z = 1 := by
-    have hv : z.val < 2 := ZMod.val_lt z
-    have hz : z.val = 0 ∨ z.val = 1 := by omega
-    rcases hz with hz | hz
-    · left
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-    · right
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-  have bitSign_add (a b : ZMod 2) : bitSign (a + b) = bitSign a * bitSign b := by
-    rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
-      simp [bitSign,boolSign,show (1 : ZMod 2) + 1 = 0 from by decide]
   have boolSign_cases (b : Bool) : boolSign b = 1 ∨ boolSign b = -1 := by
     cases b <;> simp [boolSign]
   have walsh_factor (k : ℕ) (a : Fin (2*k) → ZMod 2) :

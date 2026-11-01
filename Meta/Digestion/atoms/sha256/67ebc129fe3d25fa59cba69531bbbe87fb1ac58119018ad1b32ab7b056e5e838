@@ -1,0 +1,38 @@
+**Definition 10.1 (path descriptors and operator evaluation).** Give
+the normalized root immutable descriptor $(b_\varepsilon,\sigma_\varepsilon)
+=(0,\beta)$. For a relative node $q$ put
+$\theta_q=b_q+2-\mathbf1_{\sigma_q=\beta}$. Define $Q_k$ by
+(PCR.27), for $k\ge1$. For a proposed branch $q$ at $k=\theta_q$ form
+
+$$
+ D_q=\sum_{tb\preceq q}
+       \lambda_{\sigma_{ta}}(k-1-\theta_t),\qquad
+ \lambda_\alpha(h)=F_h,\quad\lambda_\beta(h)=F_{h+1},
+ \tag{PCR.29}
+$$
+
+using precisely the skipped physical $a$ siblings at proper ancestors.
+Their creation times are $\theta_t$, so all these ages are nonnegative.
+For nonzero core set
+
+$$
+ \omega(q)=\lambda\bigl(x^{-1}Q_k x^{D_q}\bigr).
+ \tag{PCR.30}
+$$
+
+Here the outer $\lambda$ is the linear functional (PCR.23), not a
+sibling mass. For the zero core set $\omega(q)=0$. At this branch the
+children have birth time $k$ and initial labels $(\beta,\alpha)$ at
+$(a,b)$ if $\omega(q)=1$, and $(\alpha,\beta)$ otherwise.
+
+For a full-root request $vw$, check the literal prefix and follow its
+suffix from this root. At any descriptor $(b,\sigma)$, use the exact
+label predicate (GPO.98), now at normalized age $T+u$: absent if
+$T+u<b$, initial label if equal, beta one cut after an initial alpha,
+and branch from $b+1$ for initial beta or $b+2$ for initial alpha.
+Descend only through a branch. A nonempty remaining suffix below a
+terminal or absent node returns absence. Return one exactly when the
+final descriptor exists. The auxiliary label is an internal prediction;
+it does not enlarge the physical presence-Read reply. The same predicate
+also supplies a requested single-word terminal-boundary indicator.
+

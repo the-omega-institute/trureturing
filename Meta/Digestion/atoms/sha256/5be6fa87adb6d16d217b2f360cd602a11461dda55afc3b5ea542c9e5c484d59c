@@ -1,0 +1,39 @@
+**Corollary 3.2 (Intermediate range and first-index boundary).**
+For every integer $n\ge2$ and every real
+$\theta_{n-2}<a<\theta_{n-1}$, there exist
+$0<\varepsilon<X<\infty$ such that
+
+$$
+F_{n,a}(x)<0\quad(0<x<\varepsilon),\qquad
+F_{n,a}(x)>0\quad(x>X).
+$$
+
+In particular $F_{n,a}$ has at least one zero in $(0,\infty)$.
+For the finite definition extended to $n=1$, the inherited index boundary
+at $a=-1$ is $F_{1,-1}(x)<0$ for every $x>0$, so $F_{1,-1}$ is not CM.
+
+*Proof.* Equation (2.2) gives $u_n>0$ and $u_{n+1}<0$.
+The strictly negative limit in (2.11) and the strictly positive limit
+in (2.12) give the two asserted open intervals. Shrinking the first
+and enlarging the second ensures $\varepsilon<X$.
+Continuity follows from (2.5), so the intermediate value theorem
+supplies a zero between points in these two intervals.
+This argument asserts neither uniqueness of that zero nor any
+classification of the zeros of derivatives. The comparison (2.9)
+also makes no monotonicity assertion in $x$ for a threshold obtained
+after integrating a signed weight.
+
+For the stated first-index boundary, the original coefficients give
+$u_1(-1,-3)=u_2(-1,-3)=0$, so $D_1(x,-1)=D_2(x,-1)$.
+The inherited positive representation [R] is
+
+$$
+D_2(x,-1)=\int_0^\infty e^{-xt}\frac{t^5}{8}
+       \int_0^1 v^2(1-v^2)e^{-(1+v^2)t^2/4}\,dv\,dt>0 .
+$$
+
+Strict positivity follows on $t>0$ and $0<v<1$.
+Thus $F_{1,-1}=-D_2(\,\cdot\,,-1)<0$.
+This is the necessary index boundary for [XY, Conjecture 7.1];
+its $n\ge2$, $a=-1$ assertion is the supplied result [R]. $\square$
+

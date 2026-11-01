@@ -1,0 +1,7 @@
+Exactly the same edge-link proof gives:
+
+- Q distinct central edges, each of degree six.
+- For each of twelve pole-edge labels, Q/4 global edges of degree eight; in total 3Q such edges.
+- For each equatorial label i, Q/(2m_i) edges of degree 2m_i.
+- A total of 6Q genuine tetrahedra, whose geometries are inherited simultaneously from the single actual bipyramid.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:affe19fc81593e97f9297cf2511e5083542561271087f173aecf5eebc0c542ce
+  normalized_sha256: sha256:affe19fc81593e97f9297cf2511e5083542561271087f173aecf5eebc0c542ce
+cas_ref: sha256:affe19fc81593e97f9297cf2511e5083542561271087f173aecf5eebc0c542ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Interpretive scope and applicability commentary for Definition 4.1: the global trace and comparison clock do not specify a spatial metric, pointwise heat-kernel dimension, state dimension or physical realization. Physical-space, physical-clock and native-operation correspondences remain separate assumptions. The exclusions of a precise counting coefficient, bounded additive remainder and derivative-log limit delimit what the stated bounds assert; they supply none of those bridges and assert no impossibility theorem. The definition and numeric doubling corollary are retained in sibling 9f2ab4b9bcb4f95764c71a8a037c305f3ca5ccd33cca665762c836e669901248 and are not settled by this receipt.'
+    previous_atom_id: 9f2ab4b9bcb4f95764c71a8a037c305f3ca5ccd33cca665762c836e669901248
+    next_atom_id: b91ee559acdcf66a966228943568ad8b29f91876975eb3eaa8d81e2d5238cdef

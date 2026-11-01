@@ -1,0 +1,54 @@
+#### 定理 7.4（真正非交换的黄金 Cantor 门嵌入）
+
+<a id="thm:goldencantor"></a>
+
+取 $r=\varphi^{-2}$，每个长度 $k-1$ 的前缀 $s$ 选择
+
+$$
+H_{k,s}=H_{k,s}^*,\qquad H_{k,s}^2=I,\qquad
+ \operatorname{Tr}H_{k,s}=0,\qquad H_{k,s}\in M_2(\mathbb{C}).
+$$
+
+定义
+
+$$
+V_k(b)=
+ \exp[-ic_k(2b_k-1)H_{k,b|_{k-1}}],\qquad
+ U(b)=\lim_nV_n(b)\cdots V_1(b).
+ \tag{28}
+$$
+
+若两程序共有 $n$ 个初始位，令 $d_r(b,b')=r^n$，相同程序距离为零。
+则 $U(b)\in\operatorname{SU}(2)$，且
+
+$$
+\boxed{
+ \frac{5-11r}{3}\,d_r(b,b')
+ \le\left\lVert U(b)-U(b')\right\rVert\le2d_r(b,b').
+ }                                                        \tag{29}
+$$
+
+可取奇数层轴 $X$、偶数层轴 $Z$，获得相邻层不对易的实例；
+轴也可以依赖全部此前程序。
+
+**证明。**
+
+各指数无迹，故有限乘积及其极限都在 $\operatorname{SU}(2)$。
+设首差位为 $k=n+1$。此前两分支同轴同乘积，
+当前位采用相反号，局部门距为 $2\sin c_k$。
+后续两尾各至多 $r^k$，所以
+
+$$
+\left\lVert U(b)-U(b')\right\rVert\ge2\sin c_k-2r^k.
+$$
+
+因 $0<c_k<1$，$\sin t\ge t-t^3/6\ge5t/6$，得到下界
+$[(5-11r)/3]r^{k-1}$。
+$\varphi>3/2$ 给 $\varphi^2=\varphi+1>5/2$，
+所以 $r<2/5<5/11$，常数严格正。
+上界来自定理 [7.2](#thm:noncommuting)。
+
+∎
+
+<a id="statement-7-5"></a>
+

@@ -1,0 +1,24 @@
+**Definition 9.1 (the normalized operator descriptor).** At $r>0$ let
+
+$$
+ R_g=\mathbb F_2[X]/(g),\qquad x=X\bmod g,\qquad
+ \lambda\left(\sum_{i<r}a_i x^i\right)=\sum_{i<r}a_i y_i.
+ \tag{PCR.23}
+$$
+
+Use degree-less-than-$r$ coefficient strings for ring elements. The
+proposed retained mathematical boundary is
+
+$$
+ \mathcal B_v(T)=(v,T;g,(y_i)_{i<r},Q_1,Q_2),\qquad
+ Q_i=x^{I_i}.
+ \tag{PCR.24}
+$$
+
+The last identities specify the mathematical meaning, not numerical
+clock inputs. The acquisition algorithm below computes $Q_1,Q_2$
+from the paid words. At $r=0$ use a zero tag and omit ring operations,
+seed and clocks. Fixed public evaluation instructions and the actual
+binding/permissions accompany this data with their separate supply and
+retention bills.
+

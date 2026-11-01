@@ -1,0 +1,24 @@
+**Proposition 15.3 (strict gain against the specified suppliers).** Use the supplier hull $\mathcal H_d$ and coordinates $(\lambda,p)$ of Definition 11.1. Every positive boundary point
+
+$$
+(\lambda,p)=(r,r^2),\qquad 0<r\le1/d,
+$$
+
+and every negative boundary point $(-r,r^2)$ with $0<r<1/d$ supplied by Theorem 13.2 lies outside $\mathcal H_d$ and the pair-compression sufficient region of Theorem 9.1. The positive points are also outside every $k$-positive region with $k\ge2$. In dimension three, every open-arc point of Theorem 14.1 lies outside $\mathcal H_3$, the pair-compression sufficient region and every $k$-positive region with $k\ge2$. These comparisons concern precisely the declared suppliers, without a worldwide absence or priority assertion. Stance: repo-derived.
+
+**Proof.** All generators of $\mathcal H_d$ satisfy $\lambda\le dp/m$ as proved in Proposition 11.2, and also $\lambda\ge-dp$. For the latter, the CP triangle has $\lambda\ge-p/m\ge-dp$; the depolarizing segment has $t+dp=1+dt\ge0$; and $G_d$ has positive coordinates. Both inequalities survive convex combinations. At $(r,r^2)$ the first requires $r\ge m/d$, which fails on the stated interval. At $(-r,r^2)$ the second requires $r\ge1/d$. Theorem 9.1 requires $m^2r^2\le r^2$, which fails for $r>0$ and $m\ge2$. The positive points violate $\lambda\le p$, required by every declared $k$-positive quadrilateral.
+
+For $d=3$, every generator of $\mathcal H_3$ satisfies $3p+16\lambda+5\ge0$: it holds at the CP vertices $(0,0),(-1/2,1),(1,1)$, at the endpoints $(-1/3,1/9),(1,1)$ of the depolarizing segment, and at $G_3=(1/6,1/9)$. On the arc $p=4r^2+2r-1$, this affine expression is
+
+$$
+3p-16r+5=2(3r-1)(2r-1)<0.
+$$
+
+The pair-compression condition would require $4r^2\le p$, whereas $p-4r^2=2r-1<0$. Finally the $k=2$ quadrilateral requires $\lambda\ge-(1+3p)/8$, but
+
+$$
+1+3p-8r=2(3r+1)(2r-1)<0.
+$$
+
+Failure of $2$-positivity excludes every $k$-positive supplier with $k\ge2$. The arc endpoints are the already supplied negative depolarizing endpoint and $q=0$ CP endpoint, respectively. ∎
+

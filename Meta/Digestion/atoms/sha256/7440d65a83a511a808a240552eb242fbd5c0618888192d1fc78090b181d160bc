@@ -1,0 +1,35 @@
+**Definition 116.6 (the selector $\pi_k$).** Initialize a deterministic passive selector before seed acquisition, with no selected bookmark and empty marker-prefix control. It holds during seed extraction and parser non-marker events. Once the actual seed has been acquired, use the following rules.
+
+1. If $\rho\ne\theta$, select the empty payload prefix at the root. The payload still runs to its original Stop.
+2. At seed $\theta$, select nothing before $c=d=2H$. At that position continue exactly for prefixes
+
+$$
+t\,0^{H-a}\,t\,0^{H-a},\qquad t\in\{0,1\}^a,
+$$
+
+and select every other length-$d$ prefix there, independently of any future completion or acceptance.
+3. Surviving paths continue through the next $a$ first-half markers. Their midpoint prefixes are
+
+$$
+u(t,r)=t\,0^{H-a}\,t\,0^{H-a}\,r,\qquad t,r\in\{0,1\}^a.
+$$
+
+Partition these prefixes into the nonempty sets
+
+$$
+G_{s,\beta_0}=\{u(t,r):t\mathbin\oplus r=s,\ 2|t|+|r|=\beta_0\}.
+$$
+
+Here $\oplus$ is bitwise addition modulo 2. For fixed $s$, $t$ determines $r$, so $|G_{s,\beta_0}|\le2^a$. The distinguished group is $G_{0,3a/2}=\mathcal A$.
+4. Continue through the first $a$ actual second-half markers and call their length-$a$ word $q$. In group $\mathcal A$, use matching $J(q)$ from Lemma 116.5. Assign each midpoint prefix its matching edge index $g\in\{1,\ldots,W/2\}$. In every other group, order its members by colex and partition them into adjacent pairs and, if necessary, a final singleton; let $g$ be the resulting block index. In either case select at the absolute marker position
+
+$$
+c=\ell+a+g.
+$$
+
+All later markers leave this schedule unchanged, regardless of their values.
+
+Implement $\pi_k$ with a fixed initialized finite control that retains the actual marker prefix until its first selection and then holds it. From the empty initial prefix it appends each actually completed marker while unselected, using the resulting prefix to compute the gate, group, key and scheduled index by the rules above. Finite public tables implement these functions, including the matching and rank dictionaries. This specifies a real initialized control, rather than a leaf family lacking an acquisition program. Its state, tables and initialization are separately paid. It is not a small-control claim. None of its prefix, group, key, edge or schedule addresses is exposed to the blind register as a phase or reference. Only the original completed continue/first-freeze event is supplied. Once selected, the bookmark and frozen register are latched while the original source and parser continue.
+
+The rules concern actually completed markers. At any finite seed/retry/return/parser prefix they give the corresponding holding behavior; infinite noncompletion is allowed without a bookmark. The original generic stages distinguish those cases and previous freezing. Formal malformed control addresses may use fixed holding/default transitions; they do not add an actual source event or permit a second bookmark.
+

@@ -1,0 +1,12 @@
+#### 定义 4.1（三角心）
+
+对非退化三角形 $A,B,C$，置 $a=\left\lVert B-C\right\rVert$、$b=\left\lVert C-A\right\rVert$、$c=\left\lVert A-B\right\rVert$、面积 $\Delta$。所有优化变量限制在三角形的仿射平面中。定义
+
+$$
+G=\frac{A+B+C}{3},\qquad I=\frac{aA+bB+cC}{a+b+c},
+$$
+
+外心 $O$ 为平面内等距于三顶点的点，垂心 $H=A+B+C-2O$，九点心 $N=(O+H)/2$。以下 $d(x,AB)$ 表示到边 $AB$ 所在直线的垂距。
+
+<a id="statement-4-2"></a>
+

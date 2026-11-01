@@ -1,0 +1,22 @@
+**Proposition 16.2 (exact same-endpoint confusability on the whole language).** For any two legal root words and any $\epsilon\ge0$,
+
+$$
+\mathcal O_{\epsilon,K}(u)\cap\mathcal O_{\epsilon,K}(v)\ne\varnothing
+\quad\Longleftrightarrow\quad
+z(u)=z(v)\ \text{ and }\ T(u)-T(v)\in\epsilon\Delta K.
+\tag{16.5}
+$$
+
+Consequently an arbitrary static label $h$ succeeds precisely when
+
+$$
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+T(u)-T(v)\notin\epsilon\Delta K.
+\tag{16.6}
+$$
+
+These statements include comparisons between different schemas ending at the same vertex. Within a single schema the native difference is exactly $A_P(t-t')$. There is no transitivity assumption on overlap.
+
+Proof. Equation (12.5)'s translated-support intersection calculation is independent of the two-loop source: an intersection gives $T(u)+\epsilon a=T(v)+\epsilon b$ for $a,b\in K$, and the same equality constructs an intersection from a difference in $\epsilon\Delta K$. Exact endpoint equality is separately necessary and sufficient for the first fields to agree. At zero tolerance the difference set is $\{0\}$. If (16.6) fails, one identical permitted decoder input explains two distinct actual words. If it holds, every permitted input has a unique compatible word; return it and reject outside the observation union. This reuses the established overlap principle with the actual whole language substituted, rather than identifying overlap with a quotient equivalence. An online register induces a static label by $h=\mu$, but this fact alone supplies no online update for a general successful static label. $\square$
+

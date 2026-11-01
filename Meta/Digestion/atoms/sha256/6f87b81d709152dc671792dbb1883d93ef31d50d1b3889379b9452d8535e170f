@@ -1,0 +1,141 @@
+**Lemma 14.4 (Strict payment to the correct constrained branch).** On
+the same sublevel, put
+
+$$
+e=\mathbb E[K-1;A],\qquad
+\Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2},\qquad
+P_j=\bigl(-F_j'(u_c)\bigr)_+.
+\tag{14.25}
+$$
+
+For sufficiently large $a$, uniformly,
+
+$$
+\Lambda-\frac mrP_j\ge a^3,\qquad
+H(x)\ge m_j(a,h)+\left(\Lambda-\frac mrP_j\right)e
+       \ge m_j(a,h)+a^3e.
+\tag{14.26}
+$$
+
+Equality with $m_j(a,h)$ forces every positive-mass tail-containing
+type to be a singleton and forces $u=p_j$.
+
+**Proof.** Retain the nonnegative terms in (14.16), and put
+
+$$
+\Delta_i=\mathbb E[(K^2-L^2)I_i],\quad c_m=rd,\quad
+Z=\mathbb E\left[(K^2-1)\sum_{k\in T\cap D}t_k^{-2}\right].
+$$
+
+The exact identity is
+
+$$
+H=\sum_{k\in D}t_k^{-1}+Z+
+\sum_{i\in C}\left\{\frac{r^2}{y_i}
+ -\frac{d(j-1+u)}{y_i^2}+\frac{R_i+\Delta_i}{y_i^2}\right\}.
+\tag{14.27}
+$$
+
+On $A$ every deficit $c_mB-\rho_i$ is nonnegative.
+For $I_i=0$ it is $d\{r(B-1)+L\}$; for $I_i=1$ it is
+$c_m(B-1)+r^2+dL-L^2\ge0$, since $L\le m\le d$.
+Their sum is
+
+$$
+\alpha(B-1)+\beta L-L^3
+\le\max\{\alpha,\beta\}(K-1).
+\tag{14.28}
+$$
+
+Off $A$, the $\rho_i$ are nonnegative. Weighting these signed
+inequalities only after establishing the signs yields
+
+$$
+\sum_{i\in C}\frac{R_i-c_mu}{y_i^2}
+\ge-\frac{\max\{\alpha,\beta\}}{c^2}e.
+$$
+
+The tail integrand in $Z$ is at least
+$B(K^2-1)/\delta^2\ge3(K-1)/\delta^2$ on $A$ and is zero off $A$.
+Discarding only the nonnegative $\Delta_i$ in (14.27) gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}+
+\sum_{i\in C}\left\{\frac{r^2}{y_i}+\frac{b_j(u)}{y_i^2}\right\}
++\Lambda e\ge F_j(u)+\Lambda e.
+\tag{14.29}
+$$
+
+For $j=1$, $b_j(u)>0$. For $j=2$, Lemma 14.2 gives
+$au\ge3/2$, so $b_2(u)=d(au-1)>0$. Thus the last step is Cauchy
+on the actual tail marginals and strict Jensen on the actual core
+marginals, whose sum is $a-u$. No convexity of $H$ in $x$ is assumed.
+
+On $[\ell_j,a)$, with zero excluded when $j=1$, one has $b_j(u)\ge0$
+and
+
+$$
+F_j''(u)=\frac{2n^2}{u^3}+\frac{2r^2m^2}{(a-u)^3}
+ +\frac{4m^3d(m-2)}{(a-u)^3}
+ +\frac{6m^3b_j(u)}{(a-u)^4}>0.
+\tag{14.30}
+$$
+
+This proves uniqueness of each constrained scalar minimizer;
+existence follows from compactness for $j=2$ and the divergence at
+zero for $j=1$. Our actual $u$ is in this interval: $0<u<a$ by the
+common marginal budget, and $u>\ell_2=1/a$ when $j=2$.
+The mean inequality (14.19) gives
+
+$$
+(u-u_c)_+\le\frac mr e.
+\tag{14.31}
+$$
+
+Convexity and the supporting tangent at $u_c$ give, for every such $u$,
+
+$$
+F_j(u)\ge m_j(a,h)-P_j(u-u_c)_+.
+\tag{14.32}
+$$
+
+Indeed, if $F_j'(u_c)\ge0$, the minimum on the extended interval is
+already on its constrained part. If $F_j'(u_c)<0$, the constrained
+minimum is $F_j(u_c)$ and its supporting tangent has slope $-P_j$.
+This is the first-order convexity inequality of Boyd--Vandenberghe,
+§3.1.3, p.69; its hypotheses here are (14.30).
+
+To check strict payment with the entire cap derivative retained,
+write $z=n^2/(j^2a)$. Exact differentiation gives
+
+$$
+\begin{gathered}
+F_j'(u_c)=-\frac{n^2r^2}{j^2}+D_j,\\
+D_1=\frac{a^2(2a^3+2a^2+2a+1)}{(a-1)^2},\qquad
+D_2=\frac{(a+1)^2(2a^3+8a^2+12a+7)}{(a-1)^2}.
+\end{gathered}
+\tag{14.33}
+$$
+
+Hence $P_j/a^3=(z-2)_++O_R(a^{-1})$.
+By (14.13), $\max\{\alpha,\beta\}/a^3=2+O(a^{-1})$ and
+
+$$
+\frac\Lambda{a^3}\ge3\max\{2,z\}-2-O_R(a^{-1/4}).
+$$
+
+Since $m/r=1+O(a^{-1})$ and $z$ is bounded uniformly,
+
+$$
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge3\max\{2,z\}-2-(z-2)_+-O_R(a^{-1/4})
+\ge4-O_R(a^{-1/4}).
+\tag{14.34}
+$$
+
+Increase the threshold to obtain the first assertion of (14.26).
+Combining (14.29), (14.31) and (14.32) proves its lower bound.
+Equality forces $e=0$. The nonnegative integer $K-1$ then vanishes
+on every positive-mass type meeting $D$, and (14.31) gives $u\le u_c$.
+Equation (14.29) and uniqueness of the scalar minimum give $u=p_j$. ∎
+

@@ -1,0 +1,34 @@
+**Theorem 11.2 (response/update correspondence).** Let acquisition and
+installation finish at one stationary completed cut satisfying
+Definition 8.1. For every finite serial continuation of local literal
+Reads and completed original-source updates, including adaptive choices
+based on actually returned replies, the retained descriptor answers
+exactly the actual presence family at every completed boundary. The
+map from actual normalized source histories to (PCR.24) commutes with
+completed updates. No new source-learning Read is needed after
+installation while the authentic autonomous-source promise continues.
+
+Proof. At installation, Theorem 10.2 establishes the invariant that the
+retained age is the actual $n-e$, and every predicted immutable
+descendant descriptor is the actual one. The clock seeds refer to this
+fixed origin; the exterior forest continues its Fibonacci count rule,
+so its $I_k$ and the operators continue to describe the same original
+indices. One original update increments $n-e$ by one. It changes none
+of the immutable descriptors, the original aligned core, the origin or
+the seed operators. Definition 11.1 therefore restores the invariant at
+the next completed cut. In particular it would be wrong to reinterpret
+$(Q_2,Q_1Q_2)$ as a new beta root after an arbitrary physical update:
+the root is already a branch, and there has been no physical recut.
+
+At an actual Read the evaluator agrees by Theorem 10.2, while the real
+call is still executed and charged. Induction on the finite serial call
+word proves all replies, including adaptive continuations since equal
+actual previous replies give the same next supplied choice. This is
+GPO's completed-continuation semantics, with a compact local consumer;
+it does not simulate completion of a source call by local prediction.
+The invariant also proves that compressing the mature updated acquired
+support returns this same immutable descriptor with its updated age,
+by Theorem 9.3. The correspondence is at completed boundaries and
+requires the stated binding, serialization, allocation, commit and
+synchronization services. $\square$
+

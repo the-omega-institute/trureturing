@@ -1,0 +1,32 @@
+**Proposition 12.4 (Endpoints and the residual domain).** Theorem 12.2
+and Corollary 12.3 include every singular source and all independent
+$a,b\in[0,1]$. At $b=1$, one has $\Delta\geq2I_P$ for every source.
+At $a=1$, one has $\Delta=I_P+I_Q\geq0$.
+Every negative original deficit, if one exists, must satisfy
+simultaneously
+
+$$
+\begin{gathered}
+ \lambda_{\max}(P)>\frac7{20},\qquad a<1,\quad b<1,\\
+ 2I_P<\ell_C,\qquad 2I_P<\ell_D,\\
+ 2I_P<\min\left\{
+ H_2\!\left(\frac{1-b}{2}\right),
+ \log2-\max_{E=C,D}S(Q_E)\right\}.
+\end{gathered}
+\tag{12.10}
+$$
+
+Proof.
+The state (12.2), its block entropy formula, the entropy balances and
+strong subadditivity use no inverse or logarithm of a positive definite
+matrix. The zero-eigenvalue convention and omission of zero-probability
+branches apply directly, so no support regularization or rank assumption
+is required. If $b=1$, $V$ is constant and $\ell_C=\ell_D=k=0$;
+(12.3) proves the first endpoint assertion. If $a=1$, $R=P$ and
+$g=h=0$, so the original exact budget gives the second.
+For a negative $\Delta$, Theorem 11.2 excludes
+$\lambda_{\max}(P)\leq7/20$, the endpoint assertions exclude $a=1$
+and $b=1$, and (12.4) implies both strict inequalities involving
+$\ell_E$. The upper bounds for $\min_E\ell_E$ in Corollary 12.3 give
+the last line of (12.10).
+

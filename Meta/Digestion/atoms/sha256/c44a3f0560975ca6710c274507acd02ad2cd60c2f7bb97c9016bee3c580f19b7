@@ -1,0 +1,28 @@
+**Theorem 24.5 (reversibility and a gap for this exact target).** The two
+maps in Definition 24.4 are mutually inverse on $H_c(t)$ and all valid
+codes. Relative to the optimal endpoint-conditioned fixed-length
+supplement their length obeys
+
+$$
+ 0\le B_t-b^{\rm cond}_{c,t}
+ \le\lceil\log_2|J_{c,t}|\rceil
+ \le\lceil\log_2K_s\rceil\le2r.
+\tag{PCR.66}
+$$
+
+Thus $b^{\rm cond}_{c,t}\ge\max(0,B_t-2r)$. For either constant,
+$K_s=1$ and the gap is zero for every $t$. The gap statement compares a
+period-free full-address code with a supplement after this particular
+endpoint is known, not a substitute recovery output.
+
+Proof. Theorem 24.2 applied at each actual child gives precisely
+(PCR.65). All words in the $a$ block precede every word in the $b$ block;
+positive delays guarantee termination in at most $t$ edges. The exact
+integer transport proves that every selected child is in the original
+source, with the updated normalization time. Induction on the remaining
+time therefore proves both rank/unrank identities and the stated invalid
+domains, including empty codes. For the gap, $M_{c,t}\le F_{t+1}$ and
+$F_{t+1}\le |J_{c,t}|M_{c,t}$. Taking ceilings of logarithms gives
+$B_t\le\lceil\log_2|J_{c,t}|\rceil+b^{\rm cond}_{c,t}$. Finally
+$|J_{c,t}|\le K_s\le p^2\le2^{2r}$, also at $r=0$. $\square$
+

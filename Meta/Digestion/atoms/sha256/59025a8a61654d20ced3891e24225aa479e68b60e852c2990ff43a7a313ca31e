@@ -1,0 +1,41 @@
+**Corollary 16.6 (The exact endpoint and the uniform continuous terminal layer).** For every integer $a\ge4096$, set
+
+$$
+\kappa_j=a-a^2\delta_j\quad(j=1,2).
+\tag{16.52}
+$$
+
+Then $2<\kappa_2<\kappa_1<4$. Throughout the entire continuous interval
+
+$$
+\delta=\frac{1-\kappa/a}{a},\qquad 0\le\kappa\le8,
+\tag{16.53}
+$$
+
+the complete dense optimizer classification is (16.36) when $\kappa>\kappa_1$, (16.38) when $\kappa_2\le\kappa\le\kappa_1$, and (16.42) when $\kappa<\kappa_2$, with the exact energies and unique legal roots of Theorem 16.5. These are genuine support changes: two positive singleton-omission masses disappear at $\kappa_1$, and two additional pair-omission masses become positive below $\kappa_2$.
+
+At the endpoint $\delta=1/a$, substitute
+
+$$
+\theta=\frac{a-1}{a},\qquad q=a+1-\frac1a,
+\qquad \gamma=\frac{2a+1}{a}
+\tag{16.54}
+$$
+
+in (16.39)–(16.41). This specifies the exact dense minimum by a unique real algebraic triple in the displayed legal region. All attaining laws are exactly (16.42), with strictly positive displayed masses and
+
+$$
+\eta>\frac1{a(a+2)}.
+\tag{16.55}
+$$
+
+There are exactly $a\binom{a+2}{2}$ labeled endpoint minimizers, forming one class up to relabeling. These assertions make no claim for smaller $a$, for the least sufficient threshold, for $\delta>1/a$, or for realization by a finite graph with prescribed budgets.
+
+**Proof.** The threshold bounds and all terminal branches follow directly from (16.29) and Theorem 16.5, including both threshold equality classes. The endpoint is strictly in the third branch because $\delta_2<1/r<1/a$. Its mean and strict marginal ordering imply $u>\mu$, and
+
+$$
+\mu+\frac1a-1=\frac1{a(a+2)},
+$$
+
+which proves (16.55). All masses, moments and the energy are those of the one law already verified in (16.49)–(16.51). In contrast, the parameter $m=(1-r\delta)/s$ in (14.13) equals $-1/[a(a+2)]$ at this endpoint, so its masses $m-\varepsilon$ cannot define a law for $\varepsilon\ge0$. The three-pair branch supplies the actual endpoint law. ∎
+

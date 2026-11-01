@@ -1,0 +1,28 @@
+**Definition 31.1 (a fixed verifier and auxiliary row convention).**
+Fix one total Boolean verifier $V_t(x,y)$ for $t\ge1$,
+$x\in\{0,1\}^t$, $y\in\{0,1\}^{t-1}$, implemented by one
+uniform finite program. All polynomials below are in $\mathbb F_2[E]$.
+For $d=3t>0$, split a $d$-bit ordinal, most significant bit first, as
+$b\Vert x\Vert w\Vert z$, with block lengths $1,t,t,t-1$. Put
+
+$$
+\begin{aligned}
+f_x&=\sum_{j<t}x_jE^j,&m_x&=E^{2t}+f_x,&
+q_w&=E^t+\sum_{j<t}w_jE^j,\\
+A_t(x,w)&=w_0V_t(x,(w_1,\ldots,w_{t-1})),&
+r_{b,x,w,z}&=(b\oplus1\oplus A_t(x,w))+
+                  \sum_{j=1}^{t-1}z_jE^j.
+\end{aligned}
+$$
+
+Define $\widehat\rho^V_{3t}([b\Vert x\Vert w\Vert z]_2)$ to be
+the lower $3t$ coefficients, in increasing exponent order, of
+$p=m_xq_w+r_{b,x,w,z}$. Thus $p=p_c$ in (ACR.78) for the returned
+row $c$. When $w_0=0$, compute $A_t=0$ without calling $V$.
+At positive dimensions not divisible by three, map the ordinal word
+directly to the coefficient word in that same left-to-right order.
+At $d=0$ map the unique empty word to the empty row.
+This is an auxiliary convention; $\rho_d$ in Definitions 9.1 and
+21.1 retains its original meaning. Neither an authentic prefix nor
+source-specific advice is an input to $\widehat\rho^V$.
+

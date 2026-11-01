@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d537cb88792db01bf347bc2b76f2cc242bf20c84efa0a0917a407a91a67cc54
+  normalized_sha256: sha256:3d537cb88792db01bf347bc2b76f2cc242bf20c84efa0a0917a407a91a67cc54
+cas_ref: sha256:3d537cb88792db01bf347bc2b76f2cc242bf20c84efa0a0917a407a91a67cc54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅为定理 1.2 的标题和定位文本。其重心公式、反向似然和五模式说明由各自子项承担；本标题的结算不代替这些子项的覆盖或结算。
+    previous_atom_id: 748e88054ea5cc91b0cd8626557a793a641f5a5e6c7866fdf4f4f8f48b8785e3
+    next_atom_id: daf9509e68e32c88e50351c1c58a227f81c4db30bc2c923cc4ea61c253f8864d

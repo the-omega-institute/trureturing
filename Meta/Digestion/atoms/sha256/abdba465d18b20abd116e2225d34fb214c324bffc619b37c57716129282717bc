@@ -1,0 +1,13 @@
+**Definition 21.1 (unmarked maximal records).** Starting from $z_0=z$, repeatedly set $z_{n+1}=Pz_n$ while defined. The full state record retains this ordered sequence, including $z_0$, with a halt marker $!$ if the last state is $1^-$. The full name record is
+
+$$
+\mathcal N(z)=
+\begin{cases}
+(\lambda(z_0),\ldots,\lambda(z_{m-1}),!),&P^m z=1^-,\\
+(\lambda(z_n))_{n\ge0},&\text{the predecessor sequence is infinite}.
+\end{cases}
+\tag{21.1}
+$$
+
+These names are read backwards from the endpoint; they are not the chronological word from an anchor. A full record has its endpoint index zero but no selected earlier occurrence as the start of a history. On $\mathcal H$ compare the unmarked views $(a,\mathcal N(U_w(a)))$ and $(a,\text{full state record of }U_w(a))$. The anchor value is supplied in both, while its occurrence index is not.
+

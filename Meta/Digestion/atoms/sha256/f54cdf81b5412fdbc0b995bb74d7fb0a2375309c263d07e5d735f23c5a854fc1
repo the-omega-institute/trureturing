@@ -1,0 +1,33 @@
+**定义 9.1（有限计数赤字与标号实现）。** 对所有整数 $2\le a\le b$，取任意不交的有限标号集 $A,B$，$|A|=a$、$|B|=b$，令 $G=K_{a,b}$。采用定义 1.1–1.3 的普通邻接能量和原始阶乘分配，即
+
+$$
+\begin{aligned}
+w(C)&=\mathcal E(G[C]),\\
+\phi_v&=\sum_{S\subseteq(A\sqcup B)\setminus\{v\}}
+\frac{|S|!(a+b-|S|-1)!}{(a+b)!}
+\bigl(w(S\cup\{v\})-w(S)\bigr),\\
+d_{a,b}(i,j)&=2\sqrt{ij}-ix_{a,b}-jy_{a,b},\\
+D_{a,b}&=\max_{C\subseteq A\sqcup B}
+\left(w(C)-\sum_{v\in C}\phi_v\right)
+=\max_{\substack{0\le i\le a,\ 0\le j\le b\\i,j\in\mathbb Z}}d_{a,b}(i,j).
+\end{aligned}
+\tag{9.1}
+$$
+
+最后一个等式复用 (2.1)–(2.3)，是同一个有符号最大值。计数 $(i,j)$ 的全部标号实现恰为
+
+$$
+\{I\sqcup J:I\subseteq A,\ |I|=i,\ J\subseteq B,\ |J|=j\},
+\qquad\text{数量为 }\binom ai\binom bj.
+\tag{9.2}
+$$
+
+这些定义对应 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1；这里的玩家数为 $a+b$，价值是普通邻接能量，不是该文 Proposition 4.13 的 $2$-energy。对 $a=2,b=m\ge2$，沿用 (2.7) 的实际有限分配 $x_m,y_m$，并记
+
+$$
+U_m=\frac{x_m}{\sqrt{2m}},\qquad
+\Gamma_m(j)=d_{2,m}(1,j)=2\sqrt j-x_m-jy_m
+\quad(j=0,\ldots,m).
+\tag{9.3}
+$$
+

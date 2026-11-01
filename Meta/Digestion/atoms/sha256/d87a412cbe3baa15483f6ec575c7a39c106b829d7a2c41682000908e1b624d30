@@ -1,0 +1,26 @@
+## 3. 新定理：五个有限残差的显式稳定界
+
+为得到可核查的定量消费者，保留源的完整旧分类 [(3)](#eq:family)。
+令 $e_L=e_{00100}$、$e_R=e_{10100}$、$e_*=e_{00000}$，
+$L=\operatorname{span}\{e_L,e_R\}$，并定义单位向量
+
+$$
+\eta=-xe_L+y\zeta^{-1}e_R,\quad
+ \theta_0=-e_L,\quad
+ \theta_1=\frac{-x^2e_L+y\zeta^{-4}e_R}{\sqrt2\,x}.
+$$
+
+写 $P_z=\lvert z\rangle\langle z\rvert$，这是普通矩阵记号。
+置
+
+<a id="eq:A"></a>
+
+$$
+A=bP_{\theta_0}+c(1-b)P_{\theta_1}
+       -aP_\eta-c(1-a)P_{D\eta},\qquad
+ \delta=(a-b)d_{w_*}.
+ \tag{6}
+$$
+
+$A$ 支撑于 $L$。
+

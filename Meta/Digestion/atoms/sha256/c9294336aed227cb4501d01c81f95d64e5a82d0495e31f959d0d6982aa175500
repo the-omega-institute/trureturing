@@ -1,0 +1,9 @@
+**Definition 2.2 (the reconstruction readout).** Define
+
+$$
+F:\mathcal P_r\longrightarrow V\times\mathbb R_{\ge0},
+\qquad F(u)=(r\cdot u,\tau_r(u)).
+$$
+
+Only its actual image $F(\mathcal P_r)$ is a possible readout. Recovering the executed ordered path means inverting $F$ on that image. Edge names, their types and their order belong to the recovered word. This is not a requirement to reconstruct an unspecified source state, to predict a future response law, or to recover unmodeled waiting and continuous motion.
+

@@ -1,0 +1,148 @@
+**Theorem 15.1 (Closed level optimizers and all positive level sequences).**
+For every exterior triple and every real $R_0>0$, let
+
+$$
+\overline{\mathcal F}_{R_0}
+ =\{g\in[0,\infty)^E:\text{the positive support is connected},
+                         R(g)=R_0\},\qquad
+ K_{R_0}=\frac M{R_0}K.
+\tag{15.1}
+$$
+
+The scaling maps (5.1) extend to mutually inverse continuous maps
+between $\mathcal C$ and $\overline{\mathcal F}_{R_0}$.
+The entire closed level optimizer set is the nonempty compact set
+$K_{R_0}$, and
+
+$$
+ \max_{g\in\overline{\mathcal F}_{R_0}}\lambda_2(g)
+ =\sup_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+ =\frac M{R_0},\qquad
+ \frac{B_{\rm bip}}{R_0}\le\frac M{R_0}
+ <\frac{U_{\rm ext}}{R_0}
+ <\frac n{R_0}\left(n-2+\frac1{d+2}\right).
+\tag{15.2}
+$$
+
+For every $\alpha>B_\infty$, the closed level superlevel
+
+$$
+ \{g\in\overline{\mathcal F}_{R_0}:\lambda_2(g)\ge\alpha/R_0\}
+\tag{15.3}
+$$
+
+is compact. For every sequence $(g_j)$ in the closed level with
+$\max_e(g_j)_e\to\infty$,
+
+$$
+ \limsup_j\lambda_2(g_j)\le B_\infty/R_0.
+\tag{15.3a}
+$$
+
+If any fixed $AB$ coordinate tends to infinity, this improves to
+$\limsup_j\lambda_2(g_j)\le(n(n-3)+m)/R_0$.
+For every sequence $(g_j)$ of strictly positive assignments
+with $R(g_j)=R_0$ exactly,
+
+$$
+ \lambda_2(g_j)\longrightarrow M/R_0
+ \quad\Longleftrightarrow\quad
+ \operatorname{dist}(g_j,K_{R_0})\longrightarrow0.
+\tag{15.4}
+$$
+
+Every point of $K_{R_0}$ is the limit of strictly positive assignments
+of resistance exactly $R_0$ whose Fiedler values tend to $M/R_0$.
+Their terms are maximizing approximants; no assertion that an individual
+positive term attains the supremum is included.
+The three whole-face level maxima are respectively
+$X/R_0,Y/R_0,Z/R_0$, with every comparison and tie in Theorem 12.3
+unchanged. The normalized rank-one suppliers in Theorem 13.1 give
+exact-level assignments with $\operatorname{rank}(L(g)-\lambda_2(g)P)=1$
+by multiplication by $T_n/R_0$; these exhaust such assignments at that
+level.
+
+*Proof.* The scaling proof of Theorem 5.1 uses only connectedness,
+positivity of $\lambda_2$, and (1.6), so it applies verbatim to
+nonnegative connected assignments. In explicit terms,
+
+$$
+ \Psi_{R_0}(h)=\frac{R(h)}{R_0}h,\qquad
+ \Theta(g)=\frac g{\lambda_2(g)},\qquad
+ \lambda_2(\Psi_{R_0}(h))=\frac{R(h)}{R_0}.
+\tag{15.5}
+$$
+
+Continuity holds throughout the two domains. The closed level set
+in (15.1) is also closed in $\mathbb R^E$: at any connected level
+point the spectral identity gives
+$R_0\ge n/\lambda_2(g)$, so $\lambda_2(g)\ge n/R_0$.
+A convergent sequence in that level therefore has a nonnegative limit
+with positive $\lambda_2$, hence connected support and, by continuity,
+resistance $R_0$. No disconnected assignment is added by taking limits.
+
+Theorem 11.1 and (15.5) identify all closed level maximizers as
+$\Psi_{R_0}(K)=(M/R_0)K$. This set is nonempty and compact.
+The positive level supremum and the bounds are Theorem 5.1 and
+Theorems 11.1, 14.1. Equation (15.5) identifies (15.3) exactly with
+$\Psi_{R_0}(\mathcal S_\alpha)$, a continuous image of the compact
+set in Theorem 11.1, proving its compactness.
+The bounds $n/R_0\le\lambda_2(g)\le M/R_0$ on this closed level
+show that $\max_e(g_j)_e\to\infty$ implies
+$\max_e(\Theta(g_j))_e\to\infty$. A fixed diverging $AB$
+coordinate has the same property after this normalization. Applying
+Theorem 10.2 to $\Theta(g_j)$ and using
+$R(\Theta(g_j))=R_0\lambda_2(g_j)$ proves (15.3a) and its
+stronger $AB$ version.
+
+If a positive exact-level sequence is maximizing, then
+$F(g_j)=R_0\lambda_2(g_j)\to M$.
+By Theorem 11.2 its normalizations $h_j=\Theta(g_j)$ are bounded
+and have distance to $K$ tending to zero. Choose nearest $k_j\in K$.
+Since $\lambda_2(g_j)\to M/R_0$, boundedness of $h_j,k_j$ gives
+
+$$
+ \left\|g_j-\frac M{R_0}k_j\right\|_2
+ \le \lambda_2(g_j)\|h_j-k_j\|_2
+       +\left|\lambda_2(g_j)-\frac M{R_0}\right|\|k_j\|_2
+ \longrightarrow0.
+$$
+
+This proves necessity in (15.4). Conversely, if the distances in
+(15.4) tend to zero, choose nearest points in the compact $K_{R_0}$.
+Any subsequence on which the Fiedler values fail to tend to $M/R_0$
+has a further subsequence converging in original coordinates to a
+point of $K_{R_0}$. Eigenvalue continuity contradicts that failure.
+This proves sufficiency for every positive exact-level sequence.
+
+For an arbitrary $k\in K$, take
+
+$$
+ h^{(\epsilon)}=
+ \frac{k+\epsilon\mathbf1_E}{\lambda_2(k+\epsilon\mathbf1_E)},\qquad
+ G^{(\epsilon)}=
+ \frac{R(h^{(\epsilon)})}{R_0}h^{(\epsilon)}.
+\tag{15.6}
+$$
+
+Every original coordinate of $G^{(\epsilon)}$ is finite and strictly
+positive, and its resistance is exactly $R_0$ by (1.6).
+Moreover $h^{(\epsilon)}\to k$ and
+$R(h^{(\epsilon)})\to M$, so
+$G^{(\epsilon)}\to(M/R_0)k$ and
+$\lambda_2(G^{(\epsilon)})\to M/R_0$.
+This proves positive exact-level approximation of every closed
+optimizer. Applying the same scaling to the whole face suppliers
+and to the exhaustive rank-one classification gives the final claims.
+
+In particular positive attainment is equivalent to
+$K\cap(0,\infty)^E\ne\varnothing$, or equivalently
+$K_{R_0}\cap(0,\infty)^E\ne\varnothing$. The results above determine
+neither that intersection nor the exact value of $M$ nor the explicit
+coordinates of all members of $K$. Thus the full exterior optimization
+in Definitions 6.2 and 9.4 is not solved by these bounds, face comparisons
+or the rank-one classification. Unbounded normalization is excluded
+for every maximizing sequence by Theorems 10.2–11.2; the remaining
+sequence description is the implicit distance to the entire compact
+optimizer set, whose coordinates are still undetermined. ∎
+

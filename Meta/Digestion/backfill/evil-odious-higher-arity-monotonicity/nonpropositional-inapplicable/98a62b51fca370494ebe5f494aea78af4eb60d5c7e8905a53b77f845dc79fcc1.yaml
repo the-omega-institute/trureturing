@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98a62b51fca370494ebe5f494aea78af4eb60d5c7e8905a53b77f845dc79fcc1
+  normalized_sha256: sha256:98a62b51fca370494ebe5f494aea78af4eb60d5c7e8905a53b77f845dc79fcc1
+cas_ref: sha256:98a62b51fca370494ebe5f494aea78af4eb60d5c7e8905a53b77f845dc79fcc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 3.1 introduces the recursive higher-arity evil and odious threshold sequences implemented in D5/S1/Words/EvilOdious/HigherArityMonotonicity.{evilBound, odiousBound} with base values 37 and 5 at arity 6, stating no standalone propositional theorem claim.
+    previous_atom_id: a5abf7c834091a70ac1f666ff8ac481170dc839c9a13038104237c1b0abb8f8e
+    next_atom_id: 0797229a3ebeb987d4afb694eb3ee3a8938d4599016febfcb752b44bb443ce07

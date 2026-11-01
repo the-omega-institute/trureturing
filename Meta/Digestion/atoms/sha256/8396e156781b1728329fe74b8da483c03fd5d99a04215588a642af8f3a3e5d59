@@ -1,0 +1,27 @@
+### 62.11. 整个 INERT 全局共同实现合同
+
+以下合同保持 INERT、UNEXECUTED、UNFULFILLED；原 atomic-relation-generation-family 内容不参与本卷证明。
+
+保留 ALL 256 终叶槽 $\sigma=(w,\varepsilon)$，$w\in\{J,M\}^7,\varepsilon\in\{0,1\}$；ALL 254 非空实际前缀 $v$，其原长度 $i=1,\ldots,7$、实际即时左乘积 $A_v$ 及 EVERY 后代。置
+
+$$
+t_v(P)=\operatorname{tr}(A_vP),\qquad
+\ell_v(P)=(t_v(P)-1,\ it_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+$$
+
+对 EACH 前缀及 EACH 规定的非代表后代 $\sigma$，与 SAME 前缀代表 $\varrho$ 保留整行
+
+$$
+\ell_v(P_\sigma)x_\sigma-\ell_v(P_\varrho)x_\varrho=0.
+$$
+
+ALL 行属于 ONE SAME ENTIRE $1538\times1024$ 关系，继承层规格为 $254,252,248,240,224,192,128$。ONE 共同堆叠向量包含 ALL 256 WHOLE 四系数增益块；每个整个块非零，每个适用的 SAME 源终叶 WHOLE 四分量差 $x_{(w,0)}-x_{(w,1)}$ 非零。ALL 严格源、ALL 祖先关系、BOTH 动作 duty 和 ALL 停止守卫必须在 SAME 向量及 SAME 世界同时成立。
+
+每槽自始固定
+
+$$
+g_\sigma(x)=\sum_{h=0}^3x_{\sigma,h}x^h,\qquad d_\sigma=a_0-x_{\sigma,0}
+$$
+
+跨其全部原行。仅合并整个 $P,g,d$ 相同者。二次限制 $x_{\sigma,3}=0$ 同时作用于 ALL 块。尺寸是保留的符号规格，不是执行枚举或计算的读数。局部高坐标族、精确对关系、终端碰撞、条件六世界支持、较小关系、选定支持、分别路径或分别动作臂解、遗漏后代、逐行 refit 或分别守卫向量，均不履行这个共同实现。这里没有生成实例、求秩、求核、区间或证书计算。
+

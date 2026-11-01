@@ -1,0 +1,27 @@
+**Lemma 9.1 (canonical literal-only normalization, reused).** Let $q_T=|Q_T|$, let $b$ be (POC.20), and let $A$ be any explicit preparer with at most $N$ total installed states. BPS Theorems 8.3 and 9.1 supply a preparer $A'$ with exactly the old installed states, Read/Halt partition, common start, four successors and original Halt bits, replacing only literals, such that
+
+$$
+\begin{gathered}
+\mathcal J(A',T)=\mathcal J(A,T),\qquad
+|a_{A'}(q)|\le|a_A(q)|,\\
+|a_{A'}(q)|\le D_0:=3+b+6(q_T+N)\quad(q\in Q_A).
+\end{gathered}
+\tag{POC.23}
+$$
+
+Every serving record and both original entries remain literally identical. Full success, including BOTH, transfers at the same $N,P,L$. The conclusion preserves attained sets and does not assert pointwise equality of the generated bit on an identical source.
+
+Justification of the reused parameters and bridge. BPS uses the common trie of Definition 4.1 with a separate index for every installed long Read and cap six over all requested vectors. Its exact recurrence is (POC.14), including the leaf conditions. For an unmarked unary node with observed-child counts $(a,h,i,o)$, let $e$ indicate the all-absent requested vector, $S$ indicate $a+h+i+o>0$, and $G$ indicate $h+i>0$. Its two oriented actions are
+
+$$
+U_L=(e,e,6\mathbf1_G,6\mathbf1_S),\qquad
+U_R=(e,e,\min(6,a+6\mathbf1_G),6\mathbf1_S).
+\tag{POC.24}
+$$
+
+The right action retains the singleton-$E$ contribution $a$. Root leaves give $e,e$ even for an unrealizable child vector. With $e=0$, after the bottom two unary nodes both leaf counts vanish and the branch counts are fixed under either further action; the image count is six exactly when $G$ held initially or the bottom node was right-oriented with $a>0$. The nonimage count is six exactly when $S$ held. With $e=1$, the first node gives both leaves and the second gives $(1,1,6,6)$, also fixed. These are BPS Lemmas 6.1–6.3, not new normalization results here.
+
+BPS pins every explicit trie node at depth at most $b$, keeping all serving words fixed, and contracts every longer below-pin unary run to its bottom two nodes with incoming and retained orientations unchanged. With $m$ indices there are at most $m$ marked nodes and $m-1$ binary nodes, because every trie leaf is marked and binary nodes equal leaves minus one. An endpoint tail has at most $2m-1$ essential nodes and at most twice as many unary nodes, giving depth at most $b+6m$. Here $m\le q_T+|Q_A|\le q_T+N$, including unused and duplicate records. Short preparer words may become $\varepsilon$ with the same branch reply and one paid call. This gives exactly $D_0$.
+
+Equal capped full-cell capacities select six different whole values simultaneously, with one actual inverse origin for the entire joint triple, in either direction. Consequently on any new actual source one old actual joint witness has the same preparer path, bit, selected serving path, whole target and call counts. The reverse inclusion transfers witnesses for each original bit. State counts are unchanged. These are the actual-source and SAME-budget arguments of BPS Lemma 8.2 and Theorem 9.1; no new runtime operation or independently prescribed program is preserved by assertion. The $m=0$ case consists only of constant branch observations and is included. $\square$
+

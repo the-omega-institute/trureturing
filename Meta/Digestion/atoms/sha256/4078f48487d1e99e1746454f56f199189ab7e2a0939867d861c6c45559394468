@@ -1,0 +1,61 @@
+#### 定理 2.4（整个记录质量序列的定量收敛）
+
+<a id="thm:mass"></a>
+
+满足上述完整渐近合同后，令分类中固定的 $c$ 给
+$a=c/(x+c)$。则整个序列均有
+
+$$
+\max_{s=0,1}|a_{ns}-a|
+ \le
+ \frac{(1+c)\epsilon_n}
+ {xy\sin(3\pi/5)[1+x(2c-c^2)]}
+ \le\frac{2\epsilon_n}{xy\sin(3\pi/5)}.                  \tag{5}
+$$
+
+因此无需依接续或子序列改变极限质量。
+此结论是在整套渐近合同已确定 $F=q,G=cq+d$ 后的质量稳定性，
+不是有限数据对任意未知响应的全域 Born 认证。
+
+**证明。**
+
+记 $A=a_{n0}-a$、$B=a_{n1}-a$、
+$\rho_t=\lvert D^t\eta\rangle\langle D^t\eta\rvert$。固定一个合法标签 $w$。
+以精确关系减去有限残差，并用连续性延拓全部接续，有
+
+$$
+|\operatorname{Tr}(E_wUR_nU^*)|\le\epsilon_n,\qquad
+ R_n=A(\rho_0-c\rho_1)-B(\rho_4-c\rho_3)+(B-A)d_wI.
+$$
+
+全部酉将 $E_w$ 遍历秩一投影，$R_n$ 自伴，故 $\left\lVert R_n\right\rVert\le\epsilon_n$。
+在 $\eta$ 的两个谱方向中，非对角元等于一个模为 $xy$ 的系数乘
+
+$$
+A\alpha_c-B\beta_c,\qquad
+ \alpha_c=1-c\bar\zeta,\quad
+ \beta_c=\bar\zeta^4-c\bar\zeta^3.
+$$
+
+常数标量项未消失，但不影响该非对角元。于是
+$|A\alpha_c-B\beta_c|\le\epsilon_n/(xy)$。
+用
+$\cos(3\pi/5)=-x/2$、
+$\cos(\pi/5)=1/(2x)$、
+$\sin(\pi/5)=x\sin(3\pi/5)$，
+直接展开得到
+
+$$
+|\operatorname{Im}(\bar\alpha_c\beta_c)|
+ =\sin(3\pi/5)[1+x(2c-c^2)].
+$$
+
+这是两个复系数作为实二维向量的非零行列式。
+对实未知量 $A,B$ 解二元线性方程，使用
+$|\alpha_c|,|\beta_c|\le1+c$，即得第一界。
+$0<c\le1$ 给第二界及整列收敛。
+
+∎
+
+<a id="sec-3"></a>
+

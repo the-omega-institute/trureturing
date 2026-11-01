@@ -1,0 +1,16 @@
+**定义 10.1（内部关系图上的酉运输）。**
+
+给有限连通图，顶点 $v$ 是内部情境，
+边 $e:u\to v$ 附酉 $U_e:\mathcal H_u\to\mathcal H_v$，
+逆边为 $U_e^*$。
+相容截面是一组 $\psi_v$ 满足 $\psi_v=U_e\psi_u$。
+定义残差
+
+$$
+(D_e\psi)=\psi_v-U_e\psi_u,\qquad
+H_G=\sum_eD_e^*D_e
+$$
+
+于 $\bigoplus_v\mathcal H_v$。
+图是内部关系的分析表示，不是独立于本体的背景。
+

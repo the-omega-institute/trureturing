@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-polynomial-source-acquisition"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_POLYNOMIAL_SOURCE_ACQUISITION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

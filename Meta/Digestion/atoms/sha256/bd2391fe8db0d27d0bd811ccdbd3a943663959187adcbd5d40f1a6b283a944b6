@@ -1,0 +1,64 @@
+### 2.8 The integer and half-integer exponents
+
+For a small root, $|\alpha|\le t_\ell/2$, at either endpoint
+$t/2\le|t-\alpha|\le3t/2$. Hence its endpoint ratio lies between
+$q_*/3$ and $3q_*$. For a large root, $|\alpha|\ge2t_h$, the
+corresponding inequalities are
+$|\alpha|/2\le|t-\alpha|\le3|\alpha|/2$, and its endpoint ratio
+lies between $1/3$ and $3$.
+
+Let $k_*$ be the number of small numerator roots minus the number of
+small denominator roots, with multiplicity. Then $k_*\in\mathbb Z$.
+The leading constants cancel within each polynomial's endpoint ratio.
+Both values of $R$ are positive by (2.21), so the modulus estimate is
+an estimate of the actual ratio:
+
+$$
+3^{-D_{\mathrm{deg}}}q_*^{k_*}
+\le\frac{R(t_h)}{R(t_\ell)}
+\le3^{D_{\mathrm{deg}}}q_*^{k_*}.
+\tag{2.26}
+$$
+
+On the other hand, (2.21) gives, since $(2b)/(a/64)=C$,
+
+$$
+C^{-1}q_*^{-3/2}
+\le\frac{R(t_h)}{R(t_\ell)}
+\le Cq_*^{-3/2}.
+\tag{2.27}
+$$
+
+Comparison in both directions yields
+
+$$
+(C3^{D_{\mathrm{deg}}})^{-1}
+\le q_*^{k_*+3/2}\le C3^{D_{\mathrm{deg}}}.
+\tag{2.28}
+$$
+
+Every integer $k_*$ satisfies $|k_*+3/2|\ge1/2$. If the exponent
+is positive use the upper bound in (2.28); if it is negative take
+reciprocals and use the lower bound. Since $q_*>1$, either case implies
+
+$$
+q_*^{1/2}\le C3^{D_{\mathrm{deg}}}.
+\tag{2.29}
+$$
+
+But
+
+$$
+\begin{aligned}
+C3^{D_{\mathrm{deg}}}
+&\le2^{\lceil\log_2C\rceil+2D_{\mathrm{deg}}}\\
+&\le2^{\lceil\log_2C\rceil+4N-2}
+=2^{K-12}<2^K,
+\end{aligned}
+\tag{2.30}
+$$
+
+whereas (2.24) gives $q_*^{1/2}>2^K$. This contradiction excludes
+(1.4). Lemma 1.2 supplies a minimizer, so its objective cannot be less
+than or equal to $\rho$. Thus $d_{N,B(N,\rho)}>\rho$. $\square$
+

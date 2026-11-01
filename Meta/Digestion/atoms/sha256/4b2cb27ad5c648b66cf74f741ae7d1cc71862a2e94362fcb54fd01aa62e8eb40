@@ -1,0 +1,93 @@
+**Proposition 7.1 (supplier domains and unclosed bridges).** The new
+source-specific conclusions above are the exact finite-batch support
+relation, the necessity of both least-period clock residues, the
+three-batch recovery of original core alignment under the original order
+bound, and the conditional spatial inverse. Their derivations use
+ACR §§2, 8--9, 21, 27--29 and 33; NRW §§1--3; and GPO §§27--29 and 39
+with the following correspondence and limits.
+
+Proof. ACR Theorem 27.2 supplies the actual exterior clock (PCR.1) and
+skipped-sibling index (PCR.15); Theorem 27.3 supplies the aligned
+core-only frontier. NRW's rank $q$ is local age $T=q-1$, so a normalized
+update $k$ has final rank $T+2-k$ and is visible exactly when $k\le T-1$.
+This accounts for every maturity offset used here. The chronological
+actuator proof is needed to turn each roster into consecutive global
+outputs. GPO Theorem 28.2 is the alpha-root version of the same finite
+support argument; its original class, including singular transients,
+is kept rather than replaced by a short-period class.
+
+Massey's *Shift-Register Synthesis and BCH Decoding*, §§II--IV [MAS],
+supplies finite-prefix recurrence synthesis and its distinction between
+register length, a zero final tap and transient rational numerators.
+The product-annihilator proof of GPO Lemma 29.2 supplies the comparison
+argument used here; the backwards step is licensed only on the periodic
+cores with constant-term-one annihilators. A finite singular source is
+not run backwards, and its transient is not normalized away in the
+original all-index task. Rankin [RAN] explicitly states the infinite
+periodic extension version of Fine--Wilf in its introduction; Karhumaki
+[KAR] and Shallit [SHA] give accessible word-period formulations. The
+$2D$ argument in Theorem 5.2 has a complete elementary proof above and
+uses their periodicity result only as a classical supplier with slack.
+The cited original Fine--Wilf paper is an attribution through these
+accessible accounts, not a claim of access to its original AMS PDF.
+None of these literature suppliers supplies the actual-port clock
+correspondence or free acquisition.
+
+The existing D5 and Blueprint declarations retain their exact domains.
+`NativeRankedNavigationCompiler.rank_only_refinement_compilation`
+quantifies over native residual-free ranked expressions, fixed epochs
+and fixed semantic binary addresses, with four-valued literal replies
+and positive whole-subtree equality links. Its native substitution fixes
+beta on the semantic left. It is not a physical orientation sensor for
+the arbitrary actual birth wiring here.
+`NativeBirthVectorDecoder.decodeBirth_patternVector` decodes complete
+recursive code vectors in the image of `patternVector`;
+`birthVector_decompose` identifies that code with the decomposed native
+pattern. Acceptance is not a general image test, and these types do not
+identify the code with actual physical first-presence epochs on the full
+source/address domain. `ActualFibonacciSupportChain.actual_fibonacci_support_chain`
+provides strict native support inclusions together with bounded-address
+presence agreement, not complete support equality or a paid inverse.
+`NativeFullSourceProducer.native_source_producer` runs a source-blind
+native stack with epoch-zero richer replies and exact finite native
+output, preserving the register and listing its node reads. The
+presence-only actual scan used here is the separate ACR §8 supplier;
+the richer native reply must not be imported for free.
+`FiniteFutureCongruence.finite_future_maximal_congruence` concerns an
+arbitrary finite carrier, update and observation and its maximal invariant
+future congruence. It gives neither (PCR.2)'s physical birth blocks nor
+the source-specific two-clock converse. Those are the additional
+mathematical bridges proved here. Source-level proofs make no new
+Lean-verification claim.
+
+ACR's existing guarded acquisition and sparse-list suppliers remain
+available with their original bills. No new generic minimizer, candidate
+controller, polynomial decoder under an order promise alone, or
+improved physical acquisition bound follows. At an arbitrary hidden cut,
+the remaining selective-acquisition obligation is to earn enough local
+chronology, maturity and alignment through paid full-root literals and
+bounded local work and backing, while retaining an authentic comparison
+domain and the original output convention. Semantic uniqueness after a
+complete-support comparison does not solve that acquisition problem.
+The constructive period-bound inverse does not fill it by a free scan
+or a free recut.
+
+The unrestricted polynomial-TOTAL original acquisition problem, efficient
+original deficient-rank $K_d$ normalization, and all unsupplied service,
+installation and synchronization assumptions retain their unresolved
+boundaries. Nor is this a recovery of full space, time, boundary and
+memory: it recovers an ordered local cone, its future local birth
+chronology and its aligned periodic descriptor under the stated inputs.
+Integer age outside the normalized cone, exterior geometry, early
+transient memory, capabilities and physical duration are separate.
+These conclusions are `repo-derived` compositions with the cited
+classical suppliers, without a worldwide-priority claim. $\square$
+
+[ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md
+[NRW]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RESIDUAL_WIDTH.md
+[GPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
+[MAS]: https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf
+[RAN]: https://arxiv.org/pdf/0906.1780v1
+[KAR]: https://www.math.utu.fi/en/home/karhumak/pdf/combwo.pdf
+[SHA]: https://cs.uwaterloo.ca/~shallit/Talks/vu3.pdf
+

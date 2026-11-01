@@ -1,0 +1,27 @@
+**定理 5.1（共同内部变换保持全部代数约束）。**
+
+<a id="thm-relations"></a>
+
+若 $\theta$ 是含单位的 $*$ 自同构，$p$ 是非交换 $*$ 多项式，则
+
+$$
+p(A_1,\ldots,A_k,A_1^*,\ldots,A_k^*)=0
+\ \Longrightarrow\
+p(\theta A_1,\ldots,\theta A_k,(\theta A_1)^*,\ldots)=0.
+$$
+
+然而 $\omega(\theta A)$ 可以不同于 $\omega(A)$。
+
+**证明。**
+
+自同构保持和、积、伴随、标量及单位，直接作用于等式。
+对最后一项，取固定 $\Omega=\lvert 0 \rangle$，
+$A_\vartheta=\cos\vartheta\,Z+\sin\vartheta\,X$。
+有 $A_\vartheta^2=I$，而 $\omega(A_\vartheta)=\cos\vartheta$。
+
+□
+
+这严格表达“关系约束不变，内部读出可以改变”。
+若一起搬运状态和全部参考，则概率协变保持；
+只在固定 $\omega$ 下改变相对读口，则响应可以改变，两种比较不能混用。
+

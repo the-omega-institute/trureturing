@@ -1,0 +1,30 @@
+#### 定理 8.1（两条酉路径产生黄金投影）
+
+令 $R_P=K^5=2P-I$。两条等权路径 $I,R_P$ 的相容能量为
+
+$$
+\left\lVert b-a\right\rVert ^2+\left\lVert b-R_Pa\right\rVert ^2
+ =2\left\lVert b-Pa\right\rVert ^2+2\left\lVert (I-P)a\right\rVert ^2.
+$$
+
+对自由输出振幅 $b$，唯一极小元为 $b^\ast=Pa$。
+对 $a=\lvert 2\rangle$，有 $\left\lVert Pa\right\rVert ^2=\varphi^{-2}$，最小能量为 $2\varphi^{-1}$。
+
+**证明。**
+
+在定理 [7.5](#statement-7-5) 中取 $M=(I+R_P)/2=P$。由于 $P$ 是正交投影，缺陷为 $I-P$，得到恒等式和极小元。
+$\langle 2\rvert P\lvert 2\rangle =\varphi^{-2}$，且 $1-\varphi^{-2}=\varphi^{-1}$。
+
+∎
+
+在相干控制与 Hadamard 操作另被提供时，辅助比特上的干涉可以实现保留完整记录的映射
+
+$$
+\lvert 0\rangle  a\longmapsto \lvert 0\rangle  Pa+\lvert 1\rangle (I-P)a .
+$$
+
+其两支总范数仍为 $\left\lVert a\right\rVert ^2$；选择第一支才得到次归一化的 $Pa$。
+原生 $K$ 的存在不自动提供受控 $K^5$、辅助位和相位参考，故这是明确接口下的实现式。
+
+<a id="statement-8-2"></a>
+

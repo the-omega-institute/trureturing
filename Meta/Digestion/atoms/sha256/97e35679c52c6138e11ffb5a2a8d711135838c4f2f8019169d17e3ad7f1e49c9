@@ -1,0 +1,8 @@
+**Definition 2.3 (Process fidelity and $k$-fidelities).** Let $\Lambda$ be a linear map on $M_d(\mathbb C)$, $d=2^n$. Its process fidelity is $F(\Lambda)=\langle\Phi\rvert(\mathrm{id}\otimes\Lambda)(\lvert\Phi\rangle\langle\Phi\rvert)\lvert\Phi\rangle$ with $\lvert\Phi\rangle=d^{-1/2}\sum_{x=1}^{d}\lvert x\rangle\otimes\lvert x\rangle$. For each qubit $i\in\lbrace1,\dots,n\rbrace$ fix a qubit SIC $\lbrace\rho^{(i)}_a\rbrace_{a=1}^4$, and for $a=(a_1,\dots,a_n)\in\lbrace1,2,3,4\rbrace^n$ put $\rho_a=\rho^{(1)}_{a_1}\otimes\cdots\otimes\rho^{(n)}_{a_n}$. For $T\subseteq\lbrace1,\dots,n\rbrace$ let $M_T=M_1\otimes\cdots\otimes M_n$ with $M_i=A$ for $i\in T$ and $M_i=I_4$ for $i\notin T$, so that $(I_4-A)^{\otimes n}=\sum_T(-1)^{\lvert T\rvert}M_T$. For an integer $k\ge0$ the $k$-fidelity of $\Lambda$ is
+
+$$
+F_k(\Lambda)=\frac{1}{4^n}\sum_{\lvert T\rvert\le k}(-1)^{\lvert T\rvert}\sum_{a,b}(M_T)_{ab}\operatorname{Tr}\big(\rho_b\,\Lambda(\rho_a)\big),
+$$
+
+that is, the truncation of $4^{-n}\sum_{a,b}\big[(I_4-A)^{\otimes n}\big]_{ab}\operatorname{Tr}(\rho_b\Lambda(\rho_a))$ to the terms carrying at most $k$ factors of $A$. In particular $F_0(\Lambda)=4^{-n}\sum_a\operatorname{Tr}(\rho_a\Lambda(\rho_a))$, and $F_k=F_n$ for $k\ge n$. Stance: literature-attested for $F$ and $F_0$ (cited facts (b), (c)) and for the truncation scheme (cited fact (b)); repo-derived for this precise normalisation of $F_k$, $1\le k\le n-1$ (Remark 2.4 records the differences from the printed text of (b)).
+

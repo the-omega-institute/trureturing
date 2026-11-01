@@ -1,0 +1,56 @@
+**定理 4.3（带权五分级探针的最优辨别）。**
+
+<a id="thm-phaseopt"></a>
+
+$$
+P_{\rm opt}(w)=
+\sup_{\substack{M_a\ge0\\\sum_aM_a=I}}
+\frac15\sum_a\left\langle \psi_a,M_a\psi_a\right\rangle
+=\frac15\left(\sum_{j=0}^4\sqrt{w_j}\right)^2.
+$$
+
+完美单份辨别恰在所有 $w_j=1/5$ 时成立。
+若仅 $r$ 个权重非零，则 $P_{\rm opt}\le r/5$，
+等号恰在这些非零权重均为 $1/r$ 时成立。
+
+**证明。**
+
+记 $m^{(a)}_{jk}=\left\langle e_j,M_ae_k\right\rangle$。
+正半定性给
+$|m^{(a)}_{jk}|\le\sqrt{m^{(a)}_{jj}m^{(a)}_{kk}}$。
+因此
+
+$$
+\begin{aligned}
+P_{\rm succ}
+&\le\frac15\sum_{j,k}\sqrt{w_jw_k}
+\sum_a\sqrt{m^{(a)}_{jj}m^{(a)}_{kk}}\\
+&\le\frac15\sum_{j,k}\sqrt{w_jw_k}
+\sqrt{\left(\sum_am^{(a)}_{jj}\right)
+\left(\sum_am^{(a)}_{kk}\right)}
+=\frac15\left(\sum_j\sqrt{w_j}\right)^2.
+\end{aligned}
+$$
+
+第二个不等式为 Cauchy–Schwarz；最后使用 $\sum_aM_a=I$。
+
+为达到上界，令 $S=\operatorname{span}\{e_0,\ldots,e_4\}$，
+取 Fourier 正交基及全空间 POVM
+
+$$
+f_a=\frac1{\sqrt5}\sum_j\zeta^{aj}e_j,\qquad
+M_a=\lvert f_a\rangle\langle f_a\rvert+\frac15(I-P_S).
+$$
+
+于是 $\left\langle f_a,\psi_a\right\rangle=5^{-1/2}\sum_j\sqrt{w_j}$，
+恰达到上界。最后两项结论分别由
+$(\sum_j\sqrt{w_j})^2\le5$ 和在 $r$ 项上的 Cauchy–Schwarz
+及其等号条件得到。证毕。
+ □
+
+该公式是几何均匀纯态最优判别在此五分级中的专门化；
+一般平方根测量背景见 Eldar–Forney [[5](#ref-eldar)]。
+本节给出直接证明，以免把“可区分”替换成未经量化的成功保证。
+
+<a id="statement-4-4"></a>
+

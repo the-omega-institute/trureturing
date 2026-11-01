@@ -1,0 +1,36 @@
+**Definition 12.1 (The actual two-control extension).** Keep the whole
+source and independent bias domain of Definition 1.1. For $E=C,D$, write
+$\bar E$ for the other qubit, and put
+
+$$
+ k=S(R)-S(Q),\qquad
+ \ell_E=S(R_E)-S(Q_E),\qquad \ell=\ell_C+\ell_D.
+\tag{12.1}
+$$
+
+Let $U,V$ be independent classical bits with probabilities
+
+$$
+ \pi_u=\frac{1+(-1)^u a}{2},\qquad
+ \eta_v=\frac{1+(-1)^v b}{2},\qquad u,v\in\{0,1\}.
+$$
+
+Their controlled-Pauli state is the density matrix
+
+$$
+ \Omega_{UVCD}=\sum_{u,v}\pi_u\eta_v
+ |u,v\rangle\langle u,v|\otimes K^uL^v\rho L^vK^u.
+\tag{12.2}
+$$
+
+Zero-probability summands are omitted. For subsystems of this state,
+use $I(A:B)=S(A)+S(B)-S(AB)$ and
+
+$$
+ I(A:B\mid F)=S(AF)+S(BF)-S(F)-S(ABF).
+$$
+
+All entropies use natural logarithms and the convention of Definition
+1.1. In particular they are finite for singular states. Define
+$H_2(t)=-t\log t-(1-t)\log(1-t)$ with its continuous endpoint values.
+

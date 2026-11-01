@@ -1,0 +1,4 @@
+**Convention 12.3 (exact claim scope).** All class claims are upper bounds. No optimal constant, NP/coNP/DP/$\Sigma_2^P$ hardness or completeness, sharp Boolean-hierarchy classification, polynomial-hierarchy collapse, binary-$N$ polynomial-hierarchy ceiling or polynomial-size arbitrary acquired-code program is established. The oracle ceiling is not polynomial unrelativized runtime. These are neither executed verifier/synthesis results nor empirical machine-learning, physical implementation or broader-programme-completion claims. The supplied acquisition, authentication, installation, isolation, handoff and service premises remain conditions of every operational consequence.
+
+[BPS]: FIB_BOUNDED_NATIVE_PREPARER_SYNTHESIS.md
+

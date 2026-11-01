@@ -60,6 +60,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         foreach (var path in new[] { foreign, reports, parent, nested, registered, alias, pointer, fixture.RepositoryRoot })
             Assert.True(Directory.Exists(path), path);
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.Equal("foreign_git_directory", ReasonFor(result.Output, foreign));
         Assert.Equal("foreign_git_directory", ReasonFor(result.Output, pointer));
         Assert.Equal("not_judge_tree", ReasonFor(result.Output, reports));
@@ -83,14 +84,20 @@ public sealed partial class CleanLanesCommandTests
         try
         {
             var result = fixture.RunWithProductionProbes(new ProductionWorktreeProcessRunner(), "--force");
-            Assert.False(result.Success);
-            Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
+            Assert.True(result.Success, result.Error);
+            var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
+            Assert.Equal(denied, warning.GetProperty("path").GetString());
+            Assert.Equal("partially_removed", warning.GetProperty("action").GetString());
+            Assert.Equal("temporary_directory_partial_or_indeterminate", warning.GetProperty("reason").GetString());
+            Assert.Contains("Exception:", warning.GetProperty("diagnostic").GetString());
             Assert.True(Directory.Exists(denied));
             Assert.False(Directory.Exists(healthy));
             Assert.Equal("temporary_directory_partial_or_indeterminate", ReasonFor(result.Output, denied));
             Assert.Equal("unregistered_same_repository", ReasonFor(result.Output, healthy));
             Assert.Equal(1, ReadSummary(result.Output).GetProperty("partial_count").GetInt32());
             Assert.Equal(1, ReadSummary(result.Output).GetProperty("removed_count").GetInt32());
+            Assert.Equal("succeeded", ReadSummary(result.Output).GetProperty("status").GetString());
+            Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         }
         finally
         {

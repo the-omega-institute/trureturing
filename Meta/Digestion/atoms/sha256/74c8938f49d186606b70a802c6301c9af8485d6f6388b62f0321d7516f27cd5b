@@ -1,0 +1,32 @@
+**命题 12.4（公共因子的全实特化与有限升阶集合）。** 固定整数 $r,m\ge3$。对每个实数 $t_0$，$G(\lambda,t_0)$ 都是 $p(\lambda,t_0),Q(\lambda,t_0)$ 的次数为 $rh$ 的首一公共因子。令 $P_1,Q_1\in\mathbb R[t][\lambda]$ 为首一商
+
+$$
+p=GP_1,\qquad Q=GQ_1,
+$$
+
+并定义
+
+$$
+\mathcal R_{r,m}(t)=\operatorname{Res}_\lambda(P_1,Q_1).
+$$
+
+则 $\mathcal R_{r,m}\in\mathbb R[t]\setminus\{0\}$，且对每个实数 $t_0$ 有
+
+$$
+\operatorname{monic\_gcd}_{\mathbb R[\lambda]}
+ \bigl(p(\lambda,t_0),Q(\lambda,t_0)\bigr)=G(\lambda,t_0)
+\quad\Longleftrightarrow\quad \mathcal R_{r,m}(t_0)\ne0.
+$$
+
+因此，重新求得的特化 gcd 次数超过 $rh$ 的实耦合集合，恰为 $\mathcal R_{r,m}$ 的实零点集，且为有限集。
+
+**证明。** 定理 12.3 给出原系数环中的首一整除；由于 $p,Q,G$ 都关于 $\lambda$ 首一，商 $P_1,Q_1$ 也首一。定理 11.1 的 $G=g$ 说明 $P_1,Q_1$ 在 $K[\lambda]$ 中互素，故其结式非零。首一性使 $G,P_1,Q_1$ 在每个实特化下保持次数，并使结式与特化交换。于是于 $\mathbb R[\lambda]$ 有
+
+$$
+\operatorname{monic\_gcd}\bigl(p(\lambda,t_0),Q(\lambda,t_0)\bigr)
+ =G(\lambda,t_0)\,
+  \operatorname{monic\_gcd}\bigl(P_1(\lambda,t_0),Q_1(\lambda,t_0)\bigr).
+$$
+
+最后一个 gcd 为 $1$，当且仅当 $\mathcal R_{r,m}(t_0)\ne0$；若不为 $1$，其次数为正。非零一元多项式只有有限个实零点，遂得全部结论。这里的结式与特化性质是标准工具，见 Lang 同书第 IV 章 §8，亦即母卷定理 3.2 与本卷引理 7.1 所用的性质。∎
+

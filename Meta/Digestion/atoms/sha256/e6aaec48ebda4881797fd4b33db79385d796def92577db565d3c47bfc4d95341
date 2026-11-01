@@ -1,0 +1,27 @@
+## 2. Complete finite proof of Theorem 1.3
+
+**Proof 1.3.** Write
+
+$$
+a=1-\rho,\quad b=1+\rho,\quad
+J=8NK,\quad m=2^{2J+4}=B(N,\rho),\quad L=2m+1,
+$$
+
+$$
+t_-=m^{-1/2}=2^{-J-2},\qquad t_+=\frac14.
+\tag{2.1}
+$$
+
+Here $a>0$, $C=128b/a>128$, and $K$ is a positive integer greater
+than one. In particular
+
+$$
+J\ge8N\ge4,\qquad K\le J,\qquad N+\tfrac12\le J.
+\tag{2.2}
+$$
+
+The elementary inequality $2^J\ge J$ for positive integers $J$
+gives $m\ge N$. The interval $[t_-,1/4]$ is nonempty. Under
+$x=-\log_2t$ it is exactly $[2,J+2]$, of length $J$.
+Suppose (1.4) holds. All steps below concern this one finite vector.
+

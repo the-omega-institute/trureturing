@@ -1,0 +1,33 @@
+#### 命题 2.8（少振幅编码的确定性窗口障碍）
+
+若 $0\le E\le I$、$\psi,\phi$ 为单位态且
+$\langle\psi,E\psi\rangle=1$、$\langle\phi,E\phi\rangle=0$，则 $\langle\psi,\phi\rangle=0$。
+因此对跨窗口边界的非正交编码态，不能用同一个效果确定性地读出接受／拒绝。
+
+**证明。**
+
+由正性，$(I-E)^{1/2}\psi=0$、$E^{1/2}\phi=0$，故 $E\psi=\psi$、$E\phi=0$，内积为
+$\langle E\psi,\phi\rangle=\langle\psi,E\phi\rangle=0$。
+对有限补丁编码还能直接量化：置 $M=\max_{q\in Q}\left\lVert q\right\rVert$，若 $R>\sqrt2M$，则任意 $q,r\in Q$ 满足
+
+$$
+\langle\Psi_R(q),\Psi_R(r)\rangle
+ \ge-\frac{M^2}{R^2}+1-\frac{M^2}{R^2}>0.
+$$
+
+因此只要补丁同时包含接受点与拒绝点，就无法确定性二分。此论证不假设四维格点可以任意接近。
+
+∎
+
+若改用正交位置基 $\{\lvert q\rangle \}$，窗口投影可以定义成
+$\Pi_W=\sum_{q:q^\star\in W}\lvert q\rangle \langle q\rvert$，完整记录等距映射为
+
+$$
+\psi\longmapsto\lvert \mathrm{in}\rangle \Pi_W\psi+
+ \lvert \mathrm{out}\rangle (I-\Pi_W)\psi.
+$$
+
+这在另一个位置 Hilbert 空间中确实保范数，但不是前述四／五振幅编码上免费的额外能力。文献给出的是几何表示；本文添加并注明了量子编码与读出接口。
+
+<a id="sec-3"></a>
+

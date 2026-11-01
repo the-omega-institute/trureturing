@@ -1,0 +1,41 @@
+#### 命题 7.6（固定内部参考保留门的分形几何）
+
+<a id="prop:bell"></a>
+
+在同一整体内取
+$\Phi=(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$，
+$\Psi_U=(U\otimes I)\Phi$。
+对 $U,V\in\operatorname{SU}(2)$，
+
+$$
+\frac1{\sqrt2}d_{\rm p}(U,V)
+ \le D_{\mathrm{tr}}(\Psi_U,\Psi_V)
+ \le d_{\rm p}(U,V).
+ \tag{31}
+$$
+
+所以这些相对纯态读出的像也具有式 (30) 的精确维数。
+
+**证明。**
+
+$\langle\Psi_U,\Psi_V\rangle=\operatorname{Tr}(U^*V)/2=\cos\theta$。
+两纯态投影差在其二维跨度中的特征值为
+$\pm\sqrt{1-|\langle\Psi_U,\Psi_V\rangle|^2}$，
+故迹距为 $|\sin\theta|$。
+而
+
+$$
+|\sin\theta|
+ =\sqrt{2-2|\cos\theta|}
+  \sqrt{\frac{1+|\cos\theta|}{2}},
+$$
+
+第一因子为 $d_{\rm p}$，第二因子在 $[1/\sqrt2,1]$ 内。
+
+∎
+
+这是成对可辨识几何；不声明单次就能完美解码所有非正交读出。
+第二矩阵坐标是内部参考角色，不是本体外辅助物。
+
+<a id="statement-7-7"></a>
+

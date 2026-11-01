@@ -1,0 +1,42 @@
+**图 1 原始 caption：** 固定同一复平面方向与边标记，两份态的三边长平方同为 $(1/3,1/3,1/3)$，但实际有向面积相反。选定坐标手性本身不能判定未知态属于哪一分支。图按解析坐标绘制。
+
+编辑说明：可见图采用 Mermaid 的共享顶点与有向边绘制两个闭合三角形，顶点圆圈和布局比例为示意，不是按解析坐标等比例绘制；黑白线条替代原图的蓝色、橙色边线及浅色填充。箭头和边标签附在对应边上，精确坐标、状态与有向面积在图旁明示；下列原始 TikZ 保留精确绘图定义。
+
+<details><summary>原始 TikZ 源码（逐字保留）</summary>
+
+```tex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=2.6,>=Stealth,line width=.7pt]
+ \begin{scope}[xshift=-1.2cm]
+ \coordinate (O) at (0,0); \coordinate (B) at ({1/sqrt(3)},0);
+ \coordinate (C) at ({1/(2*sqrt(3))},-.5);
+ \fill[blue!7] (O)--(B)--(C)--cycle;
+ \draw[->,blue!60!black] (O)--(B) node[midway,above] {$t_0$};
+ \draw[->,blue!60!black] (B)--(C) node[midway,right] {$t_1$};
+ \draw[->,blue!60!black] (C)--(O) node[midway,left] {$t_2$};
+ \node[below] at ({1/(2*sqrt(3))},-.63) {$\psi=(1,0),\quad r_3=+1$};
+ \node[above] at ({1/(2*sqrt(3))},.18) {$\mathcal A=-1/(4\sqrt3)$};
+ \end{scope}
+ \begin{scope}[xshift=1.2cm]
+ \coordinate (O) at (0,0); \coordinate (B) at ({1/sqrt(3)},0);
+ \coordinate (C) at ({1/(2*sqrt(3))},.5);
+ \fill[orange!12] (O)--(B)--(C)--cycle;
+ \draw[->,orange!75!black] (O)--(B) node[midway,below] {$t_0$};
+ \draw[->,orange!75!black] (B)--(C) node[midway,right] {$t_1$};
+ \draw[->,orange!75!black] (C)--(O) node[midway,left] {$t_2$};
+ \node[below] at ({1/(2*sqrt(3))},-.63) {$\psi=(0,1),\quad r_3=-1$};
+ \node[above] at ({1/(2*sqrt(3))},.58) {$\mathcal A=+1/(4\sqrt3)$};
+ \end{scope}
+\end{tikzpicture}
+\caption{固定同一复平面方向与边标记，两份态的三边长平方同为 $(1/3,1/3,1/3)$，但实际有向面积相反。选定坐标手性本身不能判定未知态属于哪一分支。图按解析坐标绘制。}
+\end{figure}
+```
+
+</details>
+
+
+这一构造精确实现“两个读出决定平面内关系，法向藏在关系的手性中”。但 $q_j=|a_j|^2$ 在本节采用通常量子读出；不能再把本节几何恒等式倒过来当作平方律已从无前提推出。平方律的独立相容条件见下节。
+
+
+<a id="prop:threepovm"></a>

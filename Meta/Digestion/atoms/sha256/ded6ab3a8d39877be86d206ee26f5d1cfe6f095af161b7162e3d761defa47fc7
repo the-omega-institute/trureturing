@@ -1,0 +1,4 @@
+# FIB-ATOM：二十边形同奇偶耳配置的联合亏额
+
+本卷接续[《内在分类与多边形几何》](AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY.md)第 B-43 节，条目号 B-32 至 B-43 均指该卷。这里的耳始终是原多边形的实际耳，完整耳集不截断到六条选中耳。
+

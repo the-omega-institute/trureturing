@@ -1,0 +1,17 @@
+**Lemma 9.4 (Horizontal displacement of a conjugate-pair slope).** For every admissible $a,b$ of Definition 9.1 and every entire $g$,
+
+$$
+|S_{a,b}(g)-S_{0,b}(g)|\le|a|\,\|g''\|_{\mathbb D}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** For real $s$ between $0$ and $a$, set $F(s)=[g(s+ib)-g(s-ib)]/(2ib)$. Since $g$ is entire, differentiation in $s$ and then integration on the vertical segment give
+
+$$
+F'(s)=\frac{g'(s+ib)-g'(s-ib)}{2ib}
+=\frac1{2b}\int_{-b}^b g''(s+it)\,dt.
+$$
+
+Every point of this segment lies in the closed disk: $s^2+t^2\le a^2+b^2\le1$. Thus $|F'(s)|\le\|g''\|_{\mathbb D}$. Integrating on the segment from $0$ to $a$, with its orientation when $a<0$, proves the bound. All segment endpoints are included by continuity. $\square$
+

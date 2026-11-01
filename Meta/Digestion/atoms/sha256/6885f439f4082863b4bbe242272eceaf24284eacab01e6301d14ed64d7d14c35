@@ -1,0 +1,52 @@
+#### 命题 8.8（三轴门参数的完全内部联合读出）
+
+<a id="prop:bellthree"></a>
+
+若供应同一整体内的 Bell 参考
+$\Phi=(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$，令
+
+$$
+\psi_{\boldsymbol\theta}
+ =\left[
+ e^{-i(\theta_xX+\theta_yY+\theta_zZ)/2}\otimes I
+ \right]\Phi .
+$$
+
+在 $\boldsymbol\theta=0$，
+$\chi_{ij}=\delta_{ij}/4$、$\mathscr F_{ij}=0$。
+存在同一个四结果联合投影读口，在此点同时达到
+$\mathcal I_{ij}=\delta_{ij}=4g_{ij}$，
+并在一个原点邻域保持 $\mathcal I_{ij}=4g_{ij}$。
+
+**证明。**
+
+令 $e_0=\Phi$、$e_j=-i(\sigma_j\otimes I)\Phi$。
+由 $\langle\Phi,(A\otimes I)\Phi\rangle=\operatorname{Tr}A/2$，
+这四个向量为正交单位基，且
+$\partial_j\psi=e_j/2$、$\langle e_0,\partial_j\psi\rangle=0$，
+得到 $\chi$。
+取四个符号三元组
+$(+++),(+--),(-+-),(--+)$，
+定义 $h_a=(e_0+\sum_js_{aj}e_j)/2$。
+符号正交性使 $h_a$ 成为正交基。
+在所讨论点 $p_a=1/4$、$\partial_jp_a=s_{aj}/4$，
+故 $\mathcal I_{ij}=\sum_as_{ai}s_{aj}/4=\delta_{ij}$。
+令 $t=|\boldsymbol\theta|$，则完整状态为
+$\cos(t/2)e_0+[\sin(t/2)/t]\sum_j\theta_je_j$，
+在这组固定基中系数为实，原点取连续延拓。
+Hadamard 读出的四振幅在原点均为 $1/2$，
+故在一个邻域内均非零。
+若这些实振幅为 $z_a$，则
+$\mathcal I_{ij}=4\sum_a(\partial_i z_a)(\partial_j z_a)$；
+正规化给 $\langle\psi,\partial_i\psi\rangle=0$，
+所以该式等于 $4g_{ij}$。
+
+∎
+
+这是一个三轴可稳定组织信息的正面模型：参考、门参数和联合读口都在内部。
+所估计的是三个局部门参数，不是三个 Pauli 本征值的同时尖锐赋值；
+同一读口的局部信息达到也不意味着一次样本精确确定三个参数。
+Bell 参考与联合测量是明列的内部资源。
+
+<a id="statement-8-9"></a>
+

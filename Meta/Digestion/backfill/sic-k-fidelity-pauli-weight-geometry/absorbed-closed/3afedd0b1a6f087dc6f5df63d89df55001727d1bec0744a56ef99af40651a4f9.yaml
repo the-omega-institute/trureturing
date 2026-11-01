@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:3afedd0b1a6f087dc6f5df63d89df55001727d1bec0744a56ef99af40651a4f9
+  normalized_sha256: sha256:3afedd0b1a6f087dc6f5df63d89df55001727d1bec0744a56ef99af40651a4f9
+cas_ref: sha256:3afedd0b1a6f087dc6f5df63d89df55001727d1bec0744a56ef99af40651a4f9
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.achievableRegion_intermediate_and_high_characterization
+    target_statement_id: sha256:aaeec0f56bf73540c91e0cd8432298fa4c647c2b1a1368cd37da472d25bc676f
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.achievableRegion_zero_characterization
+    target_statement_id: sha256:0c74d451cf50fdc0ca7e610e8d5c06b8a5c08d7384e56ef933ab685c18be6c1f
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.kFidelity_non_identifiability_of_processFidelity
+    target_statement_id: sha256:ce41953a425f8cac18dacf33157820b25cb166802ca93865defafdf71ae9d2eb
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.tp_exact_fidelity_reconstruction
+    target_statement_id: sha256:1efb7cbcb9f4299629e2248b28c244e75a0ceab109e80d6e037f2236beec74e0
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.cp_kFidelity_alternating_truncation_bound
+    target_statement_id: sha256:c3e06d9b99a88feb1d3fc95921a67de20d934c9fd4052d9ebb72f68687e53474
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity_eq_pauliWeight_alternating_sum
+    target_statement_id: sha256:d1f2e2e494fb347692ece53b17d205d987ab2fc849654ee66ff8666f050db290
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.qubit_sic_matrices_and_per_qubit_traces
+    target_statement_id: sha256:d9d9d91a25a25759ce99c81c33e08334acd89377cae9b65998f4e5db262dca79
+receipts:
+  unresolved_subitems: []

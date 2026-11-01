@@ -1,0 +1,82 @@
+**命题 2.2 (A row formula including equal endpoints).** Suppose
+
+$$
+S=\bigcup_{i=1}^3\{i\}\times[A_i,B_i],\qquad
+1\le A_i\le B_i\le n,\qquad
+A_1\ge A_2\ge A_3,\quad B_1\ge B_2\ge B_3.
+$$
+
+All indices in the following index sets range over $\{1,2,3\}$,
+and a predecessor comparison is used only for $i>1$. Set
+
+$$
+\begin{aligned}
+M&=\{i:i=1\text{ or }A_i<A_{i-1}\},\\
+K&=\{i:B_i<n,\ i=1\text{ or }B_i<B_{i-1}\},\\
+d_r&=\max\bigl(\{B_i+1:i\in K,\ i\ge r\}\cup\{0\}\bigr),\\
+c_r&=\min\bigl(\{B_i+1:i\in K,\ i\le r\}\cup\{n+1\}\bigr),\\
+Q&=\{i\in M:A_i\le d_i\},\\
+h_r&=\max\bigl(\{A_i:i\in Q,\ i\ge r\}\cup\{0\}\bigr).
+\end{aligned}
+$$
+
+Then $S$ is interval-closed, $R_e$ is independent of $e$, and its image in
+row $r$ is exactly
+
+$$
+(R_eS)_r=[h_r+1,d_r]\ \cup\
+\bigl([d_r+1,c_r-1]\setminus[A_r,B_r]\bigr). \tag{2.2}
+$$
+
+In particular, if both endpoint sequences are strictly decreasing and
+$B_1<n$, then $(R_eS)_r=[A_r+1,B_r+1]$ for all three rows.
+
+*Proof.* If $(i,p),(j,q)\in S$, $i\le j$, and $p\le q$, then for
+$i\le r\le j$ one has $A_r\le A_i\le p$ and $B_r\ge B_j\ge q$.
+Thus every point between these two points belongs to $S$.
+
+Incomparable interval-closed toggles commute, by Lemma 1.8 of
+Lafrenière--Lewis--McNicholas--Striker--Welch,
+*Interval-closed set rowmotion and homomesy on products of two chains*,
+[arXiv:2505.04000v1](https://arxiv.org/html/2505.04000v1).
+Any two reverse linear extensions are connected by adjacent swaps of
+incomparable points: move the first point of the desired extension to the
+front of the other extension, crossing only incomparable points, and proceed
+inductively on the remaining poset. Hence all $R_e$ agree; write their common
+value as $R$. Each toggle is an involution, since a permitted flip is undone
+by the next application and a forbidden flip is the identity. Consequently
+$R$ is a permutation of the whole finite set $\mathcal C_n$.
+
+For $C=\operatorname{Min}(\uparrow S\setminus S)$, Theorem 1.1 and its proof
+in the same paper identify this literal permutation as
+
+$$
+R(S)=(\operatorname{Inc}(C)\setminus S)
+\cup\bigl(\downarrow C\setminus
+\downarrow(\operatorname{Min}(S)\cap\downarrow C)\bigr), \tag{2.3}
+$$
+
+where $\operatorname{Inc}(C)$ contains the points incomparable with every
+member of $C$. Here
+
+$$
+\operatorname{Min}(S)=\{(i,A_i):i\in M\},\qquad
+C=\{(i,B_i+1):i\in K\}. \tag{2.4}
+$$
+
+Indeed, the upward closure in row $i$ is $[A_i,n]$, so its difference
+from $S$ is $[B_i+1,n]$. The first point of this difference is globally
+minimal exactly when $B_i<n$ and the preceding row has no hole at that
+column, namely when $i=1$ or $B_i<B_{i-1}$. The description of
+$\operatorname{Min}(S)$ follows in the same way from the left endpoints.
+
+The rows of $\downarrow C$ are $[1,d_r]$. A minimum $(i,A_i)$ belongs
+to this downset exactly when $i\in Q$, and the rows of its generated
+downset are $[1,h_r]$. Finally $(r,j)$ is incomparable with every ceiling
+point exactly when $d_r<j<c_r$: ceiling points in rows at least $r$
+require $j>d_r$, and those in rows at most $r$ require $j<c_r$.
+Substitution in (2.3) proves (2.2), including the conventions for empty
+index sets. If the endpoints are strict and $B_1<n$, then
+$M=K=Q=\{1,2,3\}$, $d_r=c_r=B_r+1$, and $h_r=A_r$.
+This gives the final assertion. $\square$
+

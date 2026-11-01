@@ -1,0 +1,25 @@
+**Proposition 4.3 (Comparison of entire future measures).** Fix one component $D$ of Proposition 4.2 and use its conditional law. Let $F_c$ be the law on $\{2,3,\ldots\}^{\mathbb N_0}$ of the entire future gap sequence starting at a context-$c$ anchor. For $c\in D$ and $l,r\ge2$, put
+
+$$
+M=f_c(l+r),\quad B=f_c(l)f_{\tau_l(c)}(r),\quad
+ a=\tau_{l+r}(c),\quad b=\tau_r(\tau_l(c)).
+$$
+
+As measures on the entire future after the right exterior anchor,
+
+$$
+\frac M3F_a\ \le\ B F_b\ \le\ M F_a.
+\tag{4.11}
+$$
+
+Proof. Specify the nearest exterior anchors at $-l,r$, the strict-left context $c$ at $-l$, and a measurable future-gap event $E$ after $r$. Conditional independence of the full future from the full past given $c$ follows by iterating (4.7) and a monotone-class argument. The center-zero and center-one external subprobability measures, including any full-left-past test, factor respectively as
+
+$$
+\iota_D\nu^D_c M\,\kappa_c^-\otimes F_a,
+\qquad
+\iota_D\nu^D_c B\,\kappa_c^-\otimes F_b.
+\tag{4.12}
+$$
+
+Here $\kappa_c^-$ is the actual conditional left-past channel and $\iota_D,\nu^D$ are the actual conditional intensity and Palm row. Apply the exterior mass comparison (1.5) to these external tests and cancel the positive common scalar and left channel. This proves (4.11) for every measurable $E$. It gives mutual absolute continuity, not equality, of $F_a,F_b$. $\square$
+

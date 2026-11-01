@@ -1,0 +1,36 @@
+#### 定义 7.1（固定原生终端来源）
+
+沿用续卷 II §77，十站点依次为 $b_{-1},b_0,\ldots,b_8$。记占位投影为 $n=\lvert 1\rangle\langle 1\rvert$。定义
+
+$$
+
+\begin{gathered}
+ H=\operatorname{span}_\mathbb{C}\{\lvert 10\beta010\rangle:
+ \beta\in\{0,1\}^5,\ \beta_i\beta_{i+1}=0\ (1\le i<5)\},\\
+ \dim H=13, v=\lvert 1000100010\rangle.
+ \end{gathered}
+
+$$
+
+七个地址为 $0,\ldots,6$，原门 $K_j$ 由命题 [命题 6.1](#prop:goldblock) 的三站点式定义，作用于 $(b_{j-1},b_j,b_{j+1})$，中心为 $b_j$，其余站点取恒等。字
+$p=j_1\cdots j_\ell$ 按调用先后书写，$K_p=K_{j_\ell}\cdots K_{j_1}$。空字允许，全部字均为有限正向字。
+
+继承项目 §77.2 的同源表示与射影密度结论
+$\overline{\{[K_p]\}}=PU(13)$；它以明确 Jones–Wenzl 扇区对应与 Freedman–Larsen–Wang 密度定理为供应。本稿不把理想闭包酉当成新增可执行菜单，也不重复认证其整个上游表示证明。[续卷 II](#ref-continuation) [Freedman–Larsen–Wang](#ref-flw)
+
+终端接口采用 §78.1：对全部 $1024$ 个标签 $w$，$P_w$ 是单位球上连续、共同相位不变、非负且总和一的函数；当前射线对这个条件终端任务充分。原程序档案仍保留。此时尚未假设 Born、混态仿射性或测后态仪器。
+
+
+原地址零在 $H$ 上满足
+
+$$
+
+K_0=\zeta[(I-\Pi)+\zeta\Pi],
+ \operatorname{rank}\Pi=5,\dim\ker\Pi=8, K_0^{10}=I.
+
+$$
+
+投影 $\Pi$ 检查 $\beta_1=1$；若该位为一，下一位必须为零，剩三位有五条合法路径；若为零，剩四位有八条。计数由无相邻占据的递推 $a_n=a_{n-1}+a_{n-2}$、$a_0=1,a_1=2$ 得到。这与单个五模式空间是不同层级的载体。
+
+
+<a id="lem:fourtime"></a>

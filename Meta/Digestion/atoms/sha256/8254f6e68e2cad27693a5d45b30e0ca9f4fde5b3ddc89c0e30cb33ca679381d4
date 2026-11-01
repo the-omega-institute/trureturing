@@ -1,0 +1,74 @@
+**Theorem 2.1 (all words and the higher interval).**  The quadruple (2.1)
+has equal individual spectra, satisfies the all-ordered-word hypotheses of
+$U(p)$, and its sum power traces obey
+
+$$
+\operatorname{tr}(A_0+A_1)^\ell
+=\operatorname{tr}(B_0+B_1)^\ell
+\qquad(\ell=1,\ldots,q),
+\tag{2.5}
+$$
+
+while, simultaneously for every real $p\in(q-1,q)=(k,k+1)$,
+
+$$
+\lVert A_0+A_1\rVert_p<\lVert B_0+B_1\rVert_p.
+\tag{2.6}
+$$
+
+*Proof.*  The equality $A_0=B_0$ gives the first individual spectral
+identity.  The entries of $A_1$ are $c$ and $c+1$ with equal multiplicity:
+the two multiplicities are $\sum_{j\in E_r}\binom qj$ and
+$\sum_{j\in E_r}\binom q{j-1}$, both $2^{q-1}$.  The matrix $B_1$ interchanges
+these two values, so $\lambda(A_1)=\lambda(B_1)$.
+
+For a word with $m$ zeroes and $n$ ones, diagonality makes its trace depend
+only on $(m,n)$.  If $n=0$, the two traces are equal because $A_0=B_0$.
+If $n>0$, the entries carrying the value $c$ in the $A_1$ trace and the
+value $c+1$ in the $B_1$ trace cancel in the difference, and (2.3) yields
+
+$$
+\operatorname{tr}\Pi_s(A)-\operatorname{tr}\Pi_s(B)
+=\big((c+1)^n-c^n\big)\Delta^q(x\mapsto x^m)(u)\geq0.
+\tag{2.7}
+$$
+
+Both traces are nonnegative real numbers.  Thus every finite ordered word,
+including the empty word, satisfies the required inequality.
+
+The $A$-sum has value $\tau+j$ on the $\binom rj$ labels with index $j$.
+For the $B$-sum, the $\varepsilon=0$ labels have value $\tau+j+1$ and the
+$\varepsilon=1$ labels have value $\tau+j-1$.  Reindexing by $a=j+1$ and
+$a=j-1$ and applying Pascal's identity gives the opposite parity class:
+
+$$
+\begin{aligned}
+P_A(p)&:=\operatorname{tr}(A_0+A_1)^p
+=\sum_{j\in E_r}\binom rj(\tau+j)^p,\\
+P_B(p)&:=\operatorname{tr}(B_0+B_1)^p
+=\sum_{j\notin E_r}\binom rj(\tau+j)^p.
+\end{aligned}
+\tag{2.8}
+$$
+
+Consequently
+
+$$
+P_A(p)-P_B(p)=\Delta^r(x\mapsto x^p)(\tau).
+\tag{2.9}
+$$
+
+For an integer $\ell=1,\ldots,q=r-1$, the right side is the $r$th
+difference of a polynomial of degree $\ell$, hence is zero, proving (2.5).
+For $p\in(q-1,q)$ and $x>0$,
+
+$$
+\frac{d^r}{dx^r}x^p=p(p-1)\cdots(p-r+1)x^{p-r}<0,
+$$
+
+because exactly the last factor $p-(r-1)$ is negative.  The repeated-integral
+identity therefore makes the right side of (2.9) strictly negative.  The
+diagonal positive-matrix norm identity
+$\lVert\operatorname{diag}(d_i)\rVert_p=(\sum_i d_i^p)^{1/p}$ and the
+strict increase of $x\mapsto x^{1/p}$ prove (2.6). $\square$
+

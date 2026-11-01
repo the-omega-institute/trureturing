@@ -1,0 +1,4 @@
+**Proposition 2.3 (inherited whole-target calculation).** On $\Pi_j$, $F(u)=R_j$; on all seven zero cases, $F(u)=R_0$. The five rows are distinct and attained.
+
+Proof. This is FCS Proposition 2.2 and BPS Proposition 2.3. In a zero case all four depth-two blocks are pairs of images; their inverses retain their old pairs and all eight cut holes. On $\Pi_j$ precisely block $q_j$ is $E$ and inverses to the concrete beta leaf, so precisely its two children were absent before the update. The partner's other occurrence remains an old hole. The other three blocks retain their pairs and holes. Injectivity of $\rho$ preserves equality and disequality of all surviving whole values. Restricting the occurrence partition and recomputing first-hole names gives exactly (POC.8) and the table. The beta at $q_j$ is the guard for both blocked cuts. Different reached supports distinguish all five rows, and Proposition 1.4 supplies each one. $\square$
+

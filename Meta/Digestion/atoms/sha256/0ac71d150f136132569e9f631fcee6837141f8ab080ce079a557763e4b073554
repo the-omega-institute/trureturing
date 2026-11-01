@@ -1,0 +1,6 @@
+**定义 95.1（一般工具的归属和本源增量）。** 一般 Kraus 混合及纯化记录基变换为 `literature-attested` 工具：Watrous，[*The Theory of Quantum Information*, §2.2、Corollaries 2.23–2.24](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf) 对同一矩阵域上两个等长 Kraus 族的共同 CP 映射给记录酉关系。这里两族具体是 $\sqrt a(D^3,xD)$ 和 $\sqrt a(I,xD^2)$，输入输出均为本 $H$，记录大小均为二；91.2 给同一个 $T$ 的显式谱子空间验证，不以每个输入单独存在一个纯化代替统一算子对应。
+
+Simon–Bužek–Gisin，[*The no-signaling condition and quantum dynamics*, quant-ph/0102125v1，摘要、正文的三项前提及 (6)–(8)](https://arxiv.org/html/quant-ph/0102125v1) 给纯化、远端准备不同分解和无信号论证的已知背景。该文明确假设通常的 trace rule；其远端准备及概率混合推导消费这个规则，结论针对动力学的线性 CP 性。因此不能把该文当成仅凭 $\mathrm S$ 推导旧未知 Born 响应的独立供应。本处把所需记录质量 $\mathrm R$、旧响应转移 $\mathrm B$ 与隔离 $\mathrm S$ 分别列出。
+
+正块的支撑／收缩工具仍归属原卷 27.1 所引 Watrous，[1207.5726v2，Lemma 2](https://arxiv.org/html/1207.5726v2)，对应正对角块 $A,B$ 和交叉块 $C=A^{1/2}TB^{1/2}$；这个通用 $T$ 与 (91.3) 的指定二阶记录酉不是同一参数。一般有限协议整性复用 v15 定义 8.1、定理 8.2。新增落点为 `repo-derived` 的同十三维源统一记录算子、92.1 的完整接口对应、两个特定无理权重的有限事件排除及实际档案使第二读口质量改变的精确值；不将这些一般工具作为新增独立定理，不主张文献优先权。
+

@@ -1,0 +1,45 @@
+**引理 9.2（实际单顶点行的无并列性）。** 对每个整数 $m\ge5$ 及任意整数 $0\le k<j\le m$，有
+
+$$
+\Gamma_m(j)\ne\Gamma_m(k).
+\tag{9.4}
+$$
+
+**证明。** 所用算术输入是经典的 Bertrand–Chebyshev 素数定理及实根式的线性无关性。前者按 Erdős，[*Beweis eines Satzes von Tschebyschef*](https://users.renyi.hu/~p_erdos/1932-01.pdf)，§5，第 197–198 页的原假设使用：对每个整数 $n>1$，存在素数 $p$ 满足 $n<p<2n$。令 $n=\lfloor m/2\rfloor\ge2$，得到一个奇素数 $p$，且
+
+$$
+\frac m2<p<m<2p.
+\tag{9.5}
+$$
+
+当 $m=2n+1$ 时，第一步用 $p\ge n+1>m/2$；当 $m=2n$ 时它直接来自 $p>n$。两种情形的 $p<m$ 都来自 $p<2n\le m$。
+
+根式输入采用 Carr–O’Sullivan，[*On the Linear Independence of Roots*, arXiv:math/0703522v2](https://arxiv.org/pdf/math/0703522v2)，Theorem 1.1，第 2 页：在实域 $K\subseteq L\subseteq\mathbb R$ 中，一组至少含两元素、各有正整数次幂落入 $K$、且在 $K$ 上两两线性无关的根式，在 $K$ 上线性无关。这里取 $K=\mathbb Q$、$L=\mathbb R$，取有限组不同正无平方因子整数 $d$ 的正平方根，包括需要时的 $\sqrt1=1$。它们的平方属于 $\mathbb Q$；不同 $d,e$ 的比 $d/e$ 不是有理数的平方，因为约分后的素因子指数至少有一个为奇数，所以 $\sqrt d/\sqrt e\notin\mathbb Q$。故该定理的两两线性无关假设满足，特征为零也没有正特征限制。因而把各个正整数平方根写成正整数乘以无平方因子整数的平方根后，其有理线性展开的每个系数唯一。
+
+令 $H_m=(m+1)(m+2)$。直接展开已给出的有限分配 (2.7)，得到
+
+$$
+y_m=\frac{2\sqrt{2m}}m-
+\frac4{mH_m}\sum_{r=1}^m
+\left((m-2r)\sqrt r+(r+1)\sqrt{2r}\right).
+\tag{9.6}
+$$
+
+因为 $p$ 为奇素数，$2p$ 是无平方因子整数。在 (9.6) 的上述唯一展开中，$\sqrt{2p}$ 的系数恰为
+
+$$
+-\frac{4(p+1)}{mH_m}\ne0.
+\tag{9.7}
+$$
+
+逐项核对如下。$r\le m<2p$，所以任何 $\sqrt r$ 都不可能有无平方因子部分 $2p$。$\sqrt{2r}$ 的无平方因子部分为 $2p$ 当且仅当 $r=pq^2$，其中 $q$ 为正整数；由 $r\le m<2p$，只能 $q=1,r=p$。最后，$\sqrt{2m}$ 的无平方因子部分若为 $2p$，就有 $m=pq^2$；$p<m<2p$ 同时排除 $q=1$ 与 $q\ge2$。因此没有其它项抵消 (9.7)。
+
+若 (9.4) 失败，由 (9.3) 及 $j-k>0$ 得
+
+$$
+y_m=\frac{2(\sqrt j-\sqrt k)}{j-k}.
+\tag{9.8}
+$$
+
+右边只含 $0\le k<j\le m<2p$ 的平方根，零根式可删去，其余根式的无平方因子部分均不可能为 $2p$。因此右边的 $\sqrt{2p}$ 系数为零，与 (9.7) 及所引线性无关定理矛盾。这里的素数存在和根式线性无关均为所引经典输入；所得结论是它们对实际有限分配 (9.6) 的应用。∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47c7ea696a5955146753a5cab7c168b8293684b11f1cc52613b03a4ce9cff667
+  normalized_sha256: sha256:47c7ea696a5955146753a5cab7c168b8293684b11f1cc52613b03a4ce9cff667
+cas_ref: sha256:47c7ea696a5955146753a5cab7c168b8293684b11f1cc52613b03a4ce9cff667
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项是定理 5.1 已结算完整子句的证明说明与二、三变量的子集阶数解释。沿用完整数学子句 26190160be2c293a974e14d29511295e8e74d5c080623e7218feff2de8e77a22 的既有纯上游结算。钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的 Fintype.prod_sum、Finset.prod_insert、Finset.prod_eq_zero、Finset.prod_eq_one、Finset.sum_sub_distrib、Finset.prod_pos、Finset.prod_nonneg、div_self 供应全部子集矩与精确布尔配置质量的转换及有限 Bayes 实现；本完整关系仓内无可用冻结 GID。 二变量的所有非空子集仅有一、二阶，三变量还包含三阶；本段不另设独立形式化靶。适用范围是定义 1.1 与第 3 节的严格正乘积先验，任意有限 d（含 d=0）、全部子集（含空集）、同一先验及同一联合实现、任意归一的正实际结果权重（含单结果），后验坐标允许零和端点。该范围不包含先验端点扩展，也不授予原生 FIB 查询权限、资源或风险转移。
+    previous_atom_id: 26190160be2c293a974e14d29511295e8e74d5c080623e7218feff2de8e77a22
+    next_atom_id: 03f3813bc31c264b12c8e7890217d75d97d2fcacb41372c9e856084023c2824b

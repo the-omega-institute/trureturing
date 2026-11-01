@@ -1,0 +1,19 @@
+### 2.1 局部根格及其判别配对
+
+令
+
+$$
+V_0=\{x\in\mathbb R^5:\sum_i x_i=0\},\qquad
+Q=V_0\cap\mathbb Z^5,\qquad
+L_0=Q\oplus Q\subset E=V_0\oplus V_0.
+$$
+
+内积为两份标准欧氏内积的正交直和。$Q$ 是根长平方为 $2$ 的 $A_4$ 根格。
+记
+
+$$
+\omega_k=e_1+\cdots+e_k-\frac{k}{5}\mathbf1,\qquad 1\le k\le4.
+$$
+
+<a id="statement-2-1"></a>
+

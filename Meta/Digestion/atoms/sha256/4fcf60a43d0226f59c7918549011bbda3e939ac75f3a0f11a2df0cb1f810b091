@@ -1,0 +1,84 @@
+### 证明
+
+记
+
+$$
+d(h)=S-\mathscr K(h),
+\qquad
+\mathbf b(h)=He_j+\mathbf u(h).
+$$
+
+由于第 $j$ 个分量满足
+
+$$
+u_j(h)=-d(h),
+$$
+
+展开二次型得到精确恒等式
+
+<a id="eq-25"></a>
+
+$$
+\boxed{
+\mathcal E(h)
+=
+2d(h)-\mathbf u(h)^*H^{-1}\mathbf u(h).
+}
+\tag{25}
+$$
+
+由引理 1，
+
+$$
+d(h)
+=
+\frac{|h|}{2}\log\frac1{|h|}+O(|h|).
+$$
+
+对 $i\ne j$，$\mathscr K$ 在非零点 $t_i-t_j$ 附近局部 Lipschitz，因此
+
+$$
+u_i(h)=O(|h|).
+$$
+
+即使该差值恰为某个素数幂的对数，也只出现有限的导数跳跃，不影响这一估计。
+
+于是，对固定的 $H$，
+
+$$
+\mathbf u(h)^*H^{-1}\mathbf u(h)
+=
+O\!\left(h^2\log^2\frac1{|h|}\right).
+$$
+
+代入式 (25)：
+
+$$
+\mathcal E(h)
+=
+|h|\log\frac1{|h|}+O(|h|)>0
+$$
+
+对足够小的非零 $h$ 成立。证毕。
+
+这给出了另一条真正的递归接纳规则。
+
+同时，新增矩阵的最小特征值满足
+
+<a id="eq-26"></a>
+
+$$
+\boxed{
+\lambda_{\min}(H_+(h))
+\le S-\mathscr K(h)=d(h)\longrightarrow0.
+}
+\tag{26}
+$$
+
+证明只需取“旧点减新点”的单位向量计算 Rayleigh 商。
+
+因此，近点插入虽然总能继续，但所需步长和误差精度依赖已有配置；它没有自动提供向任意远处推进的统一步长。
+
+---
+
+<a id="section-8"></a>

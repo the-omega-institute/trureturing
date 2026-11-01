@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-boundary-dynamics-continuation"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

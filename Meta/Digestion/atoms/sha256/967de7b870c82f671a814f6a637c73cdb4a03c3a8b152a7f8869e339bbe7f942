@@ -1,0 +1,34 @@
+### 62.7. N9：固定 κ≤8m 的完整原世界对 iff
+
+所有参数固定 SAME 已达到的 $a_0,\tau,m,n$（其中 $n<0$）和 SAME 取得 $\kappa\le8m$，保留 (62.4)。局部 $r$ 是第二个 $q$ 坐标，不是源元 $r_0$；$t$ 是第二端的 $\theta$，不是原时钟。
+
+取
+
+$$
+0<q<r,\quad q,r\ne a,\quad \ell=r-q>0,\quad s\ge4,\quad \rho>0,\quad t>0.
+$$
+
+设
+
+$$
+\begin{aligned}
+u&=2q+2a+1>0,&U&=2r+2a+1=u+2\ell>0,\\
+K_p&=15+(s+1)\rho>0,&L_p&=s-1+\rho>0,\\
+D_p&=uK_p>0,&R_p&=2\rho/D_p>0,\quad V_p=s^2-16\ge0,\\
+S&=s+\ell R_pV_p,&\alpha&=R_pL_p,\quad \beta=R_pK_p=2\rho/u,\\
+M_p&=S+1-\rho.
+\end{aligned}
+\tag{62.30}
+$$
+
+$V_p$ 不是父乘积 $V$。定义两端
+
+$$
+(q_1,s_1,\theta_1,\eta_1)=
+(q,s,t(1+\ell\alpha),-\rho tU/u),\qquad
+(q_2,s_2,\theta_2,\eta_2)=(r,S,t,-\rho t).
+\tag{62.31}
+$$
+
+两端 $\theta_i>0,\eta_i<0$ 在除法前已明。
+

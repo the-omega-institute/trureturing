@@ -1,0 +1,39 @@
+### 定义 17.1（同一容限下的参数族）
+
+固定有限实数 $\varepsilon>0$，完全沿用定义 9.1、13.1、14.1 的完整
+$\mathcal M_3$、普通初始实秩、原子 $N,L_0$、单条不可复制不可复位轨迹，
+以及初读和每个原子后必读的收费合同。误差满足闭约束
+$|\eta_i|\le\varepsilon$，可任意相关并依赖历史；协议为完整动作—报告历史
+的任意确定性函数，不附加正则性或共同停止预算。置
+
+$$
+ \nu_3(\varepsilon)=\nu_{3,\varepsilon}(\mathcal I_3(\varepsilon)),
+\tag{17.1}
+$$
+
+其中右侧恰为推论 14.6 的有限覆盖数，无有限族时记为 $\infty$。
+每个覆盖成员的可靠性仍比较完整 $\mathcal M_3$。
+
+对 $0\le s\le1/2$，定义行向量和矩阵
+
+$$
+ \begin{aligned}
+ d_s&=\frac{37}{2}+s-\frac{125}{44+s},&
+ \lambda_s&=\frac12+s,\\
+ r_s&=(3-s,10,1),&w_s&=(d_s,23/2,8),\\
+ R_s&=\begin{pmatrix}r_s\\w_s\\\lambda_s r_s\end{pmatrix},&
+ R_{\varepsilon,s}&=\varepsilon R_s.
+ \end{aligned}
+\tag{17.2}
+$$
+
+以下单位容限计算使用
+
+$$
+ \begin{aligned}
+ \tau_s&=17+s/4,&L_s&=\frac{39}{2}-\frac{125}{44+s},\\
+ M&=\frac{39}{2},&\rho_s&=\frac{44+s}{50}.
+ \end{aligned}
+\tag{17.3}
+$$
+

@@ -1,0 +1,12 @@
+**Definition 2.1 (Sparse shift/reset family and actual post-tick start).** Let $H\ge2$ be an integer and let $K$ be a finite nonempty subset of $\{1,\ldots,H\}$ containing $H$. Fix known probabilities $p_k>0$ for every $k\in K$, with $\sum_{k\in K}p_k=1$. There is no equal-probability or genericity assumption. Write $\mathbb T=\mathbb R/(2\pi\mathbb Z)$, and allow every $\theta\in\mathbb T^K$. On the orthonormal basis $e_0,\ldots,e_H$ of $\mathbb C^{H+1}$ put
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x_\theta=\sum_{k\in K}c_ke_{H-k},\qquad
+Se_j=e_{j+1}\ (j<H),\quad Se_H=0,\qquad
+J_\theta=x_\theta e_H^\dagger.
+\tag{2.1}
+$$
+
+For nonnegative integers outside $K$, including zero, set $c_k=0$. The classical CP branches are $A\mapsto SAS^\dagger$ and $A\mapsto J_\theta A J_\theta^\dagger$. An actual observed outcome $1$ is a tick. The coherent run starts immediately after such an actual tick, in its normalized posterior $x_\theta x_\theta^\dagger$. An independently posited preparation with different phase dependence is not substituted for this posterior.
+

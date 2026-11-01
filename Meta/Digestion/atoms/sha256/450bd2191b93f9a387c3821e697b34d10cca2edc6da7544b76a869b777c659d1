@@ -1,0 +1,12 @@
+**Definition 1.2 (Polynomial moments and thresholds).** For every integer
+$j\ge0$, put
+
+$$
+A(v)=1+v^2,\qquad
+I_j=\int_0^1 A(v)^j\,dv,\qquad
+B_j=\int_0^1v^2A(v)^j\,dv,\qquad
+\theta_j=\frac{1-I_j/B_j}{2}.
+$$
+
+All these integrals are finite, and $0<B_j<I_j$.
+

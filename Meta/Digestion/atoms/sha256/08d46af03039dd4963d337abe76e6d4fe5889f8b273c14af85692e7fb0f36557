@@ -1,0 +1,12 @@
+**定理 138.2（任意有限纤维的充要零因子准则）。** 对每个非空实际有限纤维、每个实数 $y$ 及每个包含 $[1,2]$ 的单连通开集 $U\subset\mathbb C$，以下三项等价：
+
+1. $\mathcal R_{x,y}$ 的 germ 延拓为 $U$ 上处处非零的全纯函数，并有唯一满足 $L(1)=0$ 的全纯对数；
+2. 对每个 $\zeta\in U$，
+
+   $$
+   \operatorname{ord}_\zeta G_{x,y}=\operatorname{ord}_\zeta G_{x,0};
+   \tag{138.3}
+   $$
+
+3. $L_{x,y}$ 的 germ 有 $U$ 上的全纯延拓。
+

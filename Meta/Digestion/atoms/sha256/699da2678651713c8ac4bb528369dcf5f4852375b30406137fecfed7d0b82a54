@@ -1,0 +1,38 @@
+#### 命题 6.1（原生黄金块的明确 Bloch 向量）
+
+取 $x=\varphi^{-1}$、$y=\sqrt x$，故 $x+x^2=1$。项目原生门在两邻居为空的中心二维块使用
+
+$$
+
+Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}.
+
+$$
+
+它恰为单位向量 $g=(\sqrt x,x)^T$ 的投影，并有
+
+$$
+
+\boxed{Q=\frac12(I+n\cdot\sigma),
+ n=(2x\sqrt x,0,x-x^2), |n|=1.}
+
+$$
+
+
+
+**证明。**
+
+$gg^\dagger=Q$，$\|g\|^2=x+x^2=1$。代入定理 [定理 3.1](#thm:hopf)，并用
+$4x^3+(x-x^2)^2=(x+x^2)^2=1$。
+
+**证明完。** ∎
+
+这个 $Q$ 来自同一个原生三站点门
+$K=\zeta[I+(\zeta-1)\mathcal P]$，
+$\mathcal P=n_Ln_R+(1-n_L)(1-n_R)Q_C$，
+$\zeta=e^{3\pi i/5}$。[续卷 II](#ref-continuation)
+因此“两复振幅产生三实二次关系”已经有同源黄金实例。但 $n_2=0$ 来自所选实相位；用
+$g_\theta=(\sqrt x,e^{i\theta}x)$ 会得到
+$(2x\sqrt x\cos\theta,2x\sqrt x\sin\theta,x-x^2)$。归一化本身没有选定这个相位。
+
+
+<a id="thm:bornrefine"></a>

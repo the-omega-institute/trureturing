@@ -1,0 +1,11 @@
+#### 定义 9.1：信道与未知态共轭任务
+
+确定性量子信道  $\Phi$  是算子空间上的复线性、保迹、完全正映射。
+完全正要求  $\operatorname{id}_ R\otimes\Phi$  对任意参考系统仍保持正算子。
+向量共轭  $C\psi=\overline\psi$  在纯态投影上的目标作用是
+ $\rho\mapsto\rho^{\mathsf T}$ 。向量上的  $C$  反线性，
+算子上的转置映射  $\mathcal T(X)=X^{\mathsf T}$  则复线性；问题是后者不完全正。
+
+
+<a id="stmt-9-2"></a>
+

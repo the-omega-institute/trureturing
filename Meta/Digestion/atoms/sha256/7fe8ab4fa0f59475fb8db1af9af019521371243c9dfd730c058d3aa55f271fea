@@ -1,0 +1,32 @@
+**Theorem 30.1 (joint divisibility is the stationary invariant).** For any two effective supplied menus $S,T$ of Assumption 28.1,
+
+$$
+\operatorname{Stat}(S)\subseteq\operatorname{Stat}(T)
+\quad\Longleftrightarrow\quad
+\operatorname{Div}(S)\subseteq\operatorname{Div}(T).
+\tag{30.1}
+$$
+
+The forward implication is a necessary comparison of task classes. The reverse implication has a finite-code transformation from a correct $S$-controller and the enumerator of $T$, under the displayed inclusion promise.
+
+Proof. Suppose the divisor inclusion holds. When the simulated $S$-controller requests $q_D(x)$, search stages of $T$ for an $F$ with $D\mid F$. Such an $F$ exists since $D\in S$ implies $D\in\operatorname{Div}(S)$. Write $F=hD$, read its installed port with result $k$, and return $\lfloor k/h\rfloor$. For $y=Dx$ the identity $\lfloor\lfloor hy\rfloor/h\rfloor=\lfloor y\rfloor$ proves exactness. This uses one actual available port, not a port at the LCM of several separately read scales. Finite searches and finite integer division preserve every promised terminating run. The actual source is stationary throughout.
+
+For necessity take $b\in\operatorname{Div}(S)\setminus\operatorname{Div}(T)$, set $c=1/b$, and use the following public prior and binary original target:
+
+$$
+P_b=\{c\}\cup\{x_n=c-1/n:n\in\mathbb Z,\ n>b\},\qquad
+\sigma_b(c)=1,\quad \sigma_b(x_n)=0.
+\tag{30.2}
+$$
+
+The rational membership procedure accepts $c$, or accepts $y$ exactly when $0<y<c$ and $1/(c-y)$ is an integer greater than $b$. It terminates on every rational input. Thus the prior is decidable and has a source-independent finite presentation, including $b=1$. Choose $D\in S$ divisible by $b$. Then $q_D(y)\ge D/b$ if and only if $y\ge c$, so one stationary read acquires $\sigma_b$ on this prior. Such a $D$ is also found effectively by the enumerator of $S$.
+
+Suppose a stationary $T$-controller terminates correctly at $c$. It queries finitely many scales, forming a finite set $F_0$. If this set is nonempty, $b\nmid D$ for each $D\in F_0$ gives $\{D/b\}>0$. Choose an integer $n>b$ so large that
+
+$$
+1/n<\min_{D\in F_0}\frac{\{D/b\}}{D}.
+\tag{30.3}
+$$
+
+It follows that $q_D(x_n)=q_D(c)$ at every queried scale. If $F_0$ is empty choose any $n>b$. All enumeration and ordinary computations are source-independent, and induction replays exactly the same finite adaptive branch, stopping and output at $x_n$. This contradicts their different target values. When $b=1$, absence from $\operatorname{Div}(T)$ means $T$ is empty, so only the empty-query case is needed. Therefore $(P_b,\sigma_b)$ belongs to $\operatorname{Stat}(S)$ and not to $\operatorname{Stat}(T)$, proving necessity. $\square$
+

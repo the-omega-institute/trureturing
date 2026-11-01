@@ -1,0 +1,145 @@
+**Theorem 26.1 (undiscounted normalization and completed handoff).**
+Use Theorem 24.1, or Theorem 25.3 when its hypothesis is established,
+only through its authentic $P,n$. At every rank, normalize that actual
+prefix exactly as in Definitions 9.1 and 21.1 and Corollary 21.3.
+For $d>0$ form the actual Hankel system and retain
+
+$$
+\begin{aligned}
+i_P&=\min\{i<2^d:H(P)\rho_d(i)=y(P)\},\\
+K_d(P)&=\operatorname{EN}_d(P)
+ =\bigl(\rho_d(i_P),(\zeta_0,\ldots,\zeta_{d-1})\bigr),
+\qquad \zeta_i=z_{i+1}.
+\end{aligned}
+\tag{ACR.106}
+$$
+
+On full rank solve the unique system; on deficient rank run the
+original first-passing $\rho_d$ enumeration. For $d=0$ use the
+original empty row/seed zero descriptor. Compute and install the
+exact original tuple
+
+$$
+\boxed{\bigl(P,K_d(P),n,B_n\bigr),\qquad
+P=z_1\cdots z_{2d},\quad B_n=F_{n+1}-1.}
+\tag{ACR.107}
+$$
+
+This is an all-input output obligation after either acquisition route,
+including every fast success and every fallback success. In
+particular the normalizer is never multiplied by a fallback
+probability.
+
+Proof. The acquisition theorems return the actual prefix and cut,
+not a constructed normalization input. Theorem 21.2 identifies the
+exact passing fibre, and Corollary 21.3 returns precisely the original
+first row and authentic first-$d$ seed. A deficient zero-stream fibre
+at positive $d$ still returns $(\rho_d(0),0^d)$, which need not have
+zero coefficient row. No equivalent minimal descriptor replaces it.
+Definition 21.5's affine-prefix property for the unspecified original
+enumeration remains an unproved additional condition; Theorem 21.6
+may be used only when that condition is actually supplied.
+
+Write $C_{\rm norm}(P),W_{\rm norm}(P),V_{\rm norm}(P)$ for the
+full original normalization bill. On full rank these are exactly
+bounded as in (ACR.89); on deficient rank retain all terms in
+(ACR.90), including original $e_d,\omega_d,v_d$, every tested-row
+transfer and every row-test write. Its initial rank computation is
+part of that bill on both branches. At $d=0$ normalization is
+constant. The bound chosen for a fixed actual $P$ is incurred on
+every coin tape, regardless of which acquisition branch earned it.
+
+The acquisition result is exported explicitly when needed using the
+already charged transfer of §24; in the wholly sequential fast route
+its output tapes are already the input tapes here. Now perform the
+binary Fibonacci construction and final retained copy of §21.7.
+With $\ell_n=\lceil\log_2(64(n+2)^4)\rceil$, its actual arithmetic
+has
+
+$$
+C_B,W_B=O((n+2)^2\ell_n^2),\qquad
+V_B=O(n+1+\ell_n).
+\tag{ACR.108}
+$$
+
+These are tape operations on the explicit binary integer $B_n$,
+including all growing-buffer, carry and counter writes; the output
+has $\Theta(n)$ bits as $n$ grows. With $L_{d,n}$ as in §21.7,
+the final payload and ready-control copy costs
+$O((d+n+1)L_{d,n}^2)$ work and cumulative writes and
+$O(d+n+1+L_{d,n})$ backing. Set ready only when every data field is
+installed in granted readable backing. If an explicit forward phase
+is requested, add exactly the $C_\phi,W_\phi,V_\phi$ terms of
+§21.7, once; its forward powering uses the selected original row
+and seed and never recovers a private state.
+
+Thus for either acquisition supplier, after all its needed output
+transfers are included in its acquisition terms, the disjoint bills are
+
+$$
+\begin{aligned}
+C_{\rm total}&\le C_{\rm acq}+C_{\rm norm}(P)+C_B+C_\phi
+                    +O((d+n+1)L_{d,n}^2),\\
+W_{\rm total}&\le W_{\rm acq}+W_{\rm norm}(P)+W_B+W_\phi
+                    +O((d+n+1)L_{d,n}^2),\\
+V_{\rm total}&\le V_{\rm acq}+V_{\rm norm}(P)+V_B+V_\phi
+                    +O(d+n+1+L_{d,n}).
+\end{aligned}
+\tag{ACR.109}
+$$
+
+For Theorem 24.1, taking expectations changes only the acquisition
+terms and any actually randomized acquisition service charge; the
+fixed authentic-prefix normalization and output terms remain in full.
+Physical service and initialization, coin grant, binding, code,
+allocation, intermediate and retained physical writes, retention and
+completed handoff keep their actual tariffs and durations on every
+execution. No displayed bit-work bound infers a duration or grants a
+right. Stationarity and sufficient backing extend through the actual
+last write and completed handoff, including the deterministic
+fallback and normalization when present.
+
+Once the tuple is installed with its separately surviving actual
+binding and grants, GPO Theorems 34.2--34.3 and 39.4 give the same
+spatial incidence, boundary, actual birth chronology and synchronized
+memory views and their finite same-source continuation. GPO
+Proposition 39.5 retains request-sized literal evaluation; whole-tree,
+whole-boundary or full chronological output pays its own potentially
+exponential output length. No arbitrary observer journal, erased
+private register, source-origin receipt, capability or physical
+duration is reconstructed. These consumers are reused on the earned
+same source, not on a merely compatible hypothetical realization.
+
+The new repository-derived implications are the paid certificate
+relation, its bounded fair-coin witness search, total rare-fallback
+composition and native accepting-transcript sufficient condition.
+The depth mean, authentic early-parent construction, source law,
+finite monic separation, deterministic catalogue supplier, exact
+canonical fibres and recovery consumers are the cited ACR/GPO
+suppliers. Chebyshev, median amplification, finite union bounds and
+bounded-computation circuit unrolling are established intermediate
+methods, not novelty claims. Massey's [MAS] supplies finite-prefix
+recurrence synthesis after authentic bits; it does not acquire these
+bits or choose $\rho_d$'s first passing row. Zuckerman's bounded
+function sampling setup [RRO-ZUC] uses an independent random seed;
+it supplies neither a deterministic seed for this adaptive native
+class nor a physical sample oracle. The present proof derives its
+sampling bounds directly from the actual paid depth-walk law.
+The existing declaration `atomic_navigation` concerns fixed semantic
+orientation,
+`NativeBirthVectorDecoder` a recursive complete-level code,
+`actual_fibonacci_support_chain` bounded native support agreement,
+and `native_source_producer` full acquisition from richer replies.
+These distinct mathematical domains do not supply the new
+certificate/acquisition composition.
+
+Uniform polynomial-total deterministic acquisition for general $d$
+on the original entrance remains open. Theorem 24.1 adds fair coins
+and retains exponential worst-case local computation; Theorem 25.3
+has an unestablished uniform hitting premise. Independent of those
+acquisition gaps, the original deficient-rank enumeration and the
+unspecified enumeration's affine-prefix property remain their stated
+normalization boundary. The full original every-execution polynomial
+TOTAL task, with its exact $K_d$ and physical charges, is therefore
+not settled. $\square$
+

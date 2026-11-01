@@ -1,0 +1,13 @@
+**命题 4.3（Corank one and a coloop obstruction）。** A corank-one
+target with a coloop can have an endpoint obstruction.
+
+Proof. Take
+$A=\{1,2,3\}$ with uniform rank-two source,
+$B=\{1,4,5\}$, and target bases $\{1,4\},\{1,5\}$.
+Here $1$ is a coloop, $H=\{4,5\}$ is a circuit-hyperplane,
+$S=\{1,2\}$ and $U=\{1\}$. The supplied construction in Section 4, or the direct description
+in Proposition 4.1, verifies sparse paving. This is the $j=0$
+corank-one obstruction. Reversing the progression gives the equivalent
+$j=1$ description with step $-1$. No assumption of corank at least
+two is part of Theorem 3.3.
+

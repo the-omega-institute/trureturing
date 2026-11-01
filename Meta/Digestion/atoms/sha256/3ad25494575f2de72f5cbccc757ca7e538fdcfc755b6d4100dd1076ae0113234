@@ -1,0 +1,56 @@
+### 定理 21.7（每个正容限的四维无限覆盖数）
+
+对每个事先给定的有限实数 $\varepsilon>0$ 和每个有限集合
+$T\subseteq[0,1/2]$，有
+
+$$
+ \begin{aligned}
+ &Q_{\varepsilon,s}\in\mathcal I_4(\varepsilon)
+       \quad(0\le s\le1/2),\\
+ &\nu_{4,\varepsilon}
+       (\{Q_{\varepsilon,s}:s\in T\})=|T|,\\
+ &\nu_{4,\varepsilon}(\mathcal I_4(\varepsilon))=\infty.
+ \end{aligned}
+\tag{21.27}
+$$
+
+逐来源成功可由恰七报告的全域可靠协议达到；下界比较任意确定性完整历史协议，
+不附加共同预算或正则性条件。
+
+**证明。** 固定上述 $\varepsilon$。
+把单位构造的来源 $Q_s$、伴随 $xv^{\mathsf T}$、每份旧新报告和阈值
+分别同乘 $\varepsilon$：伴随参数取 $x$ 不变、$v$ 换为 $\varepsilon v$，
+阈值成为 $\varepsilon\tau_s$。
+因任意实际累计字 $A_i$ 都满足
+
+$$
+ \operatorname{tr}(A_i\varepsilon S)
+       =\varepsilon\operatorname{tr}(A_iS),
+\tag{21.28}
+$$
+
+所有旧报告差由 $1$ 缩放为 $\varepsilon$，
+新真值差由 $2$ 缩放为 $2\varepsilon$，中点和共享旧报告也准确缩放。
+闭区间 $[-1,1]$ 恰变为 $[-\varepsilon,\varepsilon]$，正性和普通秩保留。
+式 (21.11) 的协议对每份实际报告除以 $\varepsilon$ 后执行同一规则，
+末端改用容限 $\varepsilon$ 的严格正相容系统。
+由命题 21.3，它在 $Q_{\varepsilon,s}$ 的全部允许历史上恰以七报告成功。
+$S\mapsto\varepsilon S$ 是完整 $\mathcal M_4$ 上的保秩双射，
+所以可靠性仍量化完整环境域，得到第一式。
+
+反之，若某个全域 $\varepsilon$-可靠协议同时成功于两个不同的
+$Q_{\varepsilon,s},Q_{\varepsilon,t}$，就在单位尺度实际运行中，
+将每份报告同乘 $\varepsilon$ 后交给它，并照做它指定的动作、停止及输出。
+式 (21.28) 和确定性逐前缀归纳给出整个历史的对应，包括初读、每步必读和无限历史。
+所得协议全域单位容限可靠且同时成功于 $Q_s,Q_t$，违反定理 21.6。
+故任一允许的覆盖成员至多覆盖缩放族中的一个参数。
+
+条目 $(Q_{\varepsilon,s})_{01}=\varepsilon(3-s)$ 区分参数，
+所以有限来源集恰有 $|T|$ 个元素。每个元素各取上述一个七报告成员，
+得到覆盖数至多 $|T|$；两两不相容给出反向界。
+$T=\varnothing$ 时空族达到零。
+若有 $n\ge1$ 个成员覆盖全部 $\mathcal I_4(\varepsilon)$，
+取参数 $s_j=j/(2n)$（$0\le j\le n$），便有 $n+1$ 个属于该域的来源，
+而每个成员至多覆盖其中一个，矛盾。空族也遗漏 $Q_{\varepsilon,0}$。
+因此无有限族满足 (21.3)，证明最后一式。∎
+

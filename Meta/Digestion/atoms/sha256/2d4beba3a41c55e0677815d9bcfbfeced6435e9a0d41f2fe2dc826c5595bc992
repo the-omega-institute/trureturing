@@ -1,0 +1,18 @@
+**定理 315.2（访问单调性）。** 若 $A\subseteq B$ 且 $B$ 细化 $A$，则
+
+$$
+\boxed{
+\operatorname{Rec}_{\mathcal T}(A)
+\subseteq
+\operatorname{Rec}_{\mathcal T}(B).
+}
+$$
+
+若对某个任务族 $\mathcal T_0$，每个 $\phi\in\mathcal T_0$ 还可由 $r_A$ 计算，即存在 $h_{\phi,A}$ 使
+
+$$
+\overline O_{\phi,B}=h_{\phi,A}\circ g_{A,B}
+$$
+
+在 $r_B(S)$ 上成立，则两访问层在 $\mathcal T_0$ 上等价。
+

@@ -7,7 +7,7 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/CompleteMertensPeak.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite complete Mertens cumulative peak locates a strict Robin violation.",
+        "Complete cumulative and literal arithmetic-kernel peaks locate strict finite Robin violations.",
         H("Complete Mertens peaks and finite Robin witnesses"),
         Blocks(
             Describe.Lean(
@@ -33,8 +33,9 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
                         + "arXiv:1505.03589v1, the unnumbered identity in the proof of Lemma 4. "
                         + "The finite witness conclusion is derived here.")),
                     Paragraph(Text(
-                        "The Johnston–Yang majorant is integrable after a logarithmic change of "
-                        + "variables. Fubini on the triangle A<s<u gives "
+                        "The unconditional WeightedPrimeLimit.chebyshev_error_kernel_integrable "
+                        + "supplies absolute integrability of the actual complete error kernel. "
+                        + "Fubini on the triangle A<s<u gives "
                         + "integral Q(s)/(s*log(s)^2)=Q(A)/log(A)-integral f(u)/log(u), "
                         + "where f(u)=(psi(u)-u)/u^2. Substituting Lay's identity into the complete "
                         + "Mertens formula cancels the Euler constant and proves "
@@ -57,5 +58,49 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
                         + "Q(A)>-(4/r(A)+17/2)/sqrt(A), contradicting U(A)=-A*Q(A) and the peak. "
                         + "The existing common_robin_response supplies the actual integer witness "
                         + "and its size bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-kernel-peak-robin-violation"),
+                DeclarationHandle.Create(Prefix + "actual_kernel_peak_robin_violation"),
+                H("A literal complete arithmetic-kernel peak gives a finite Robin violation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real y>=log(10000), assume "
+                        + "exp(-y/2)*(U(exp(y))-log(2*pi)+trivialT(y))>4*y+9. "
+                        + "Then there exists a finite real t>=exp(y) such that the actual integer "
+                        + "N=Nat.lcmUpto(floorNat(t)) satisfies N>5040 and "
+                        + "divisorRatio(N)>exp(gamma)*log(log(N)). The cumulative U is the complete "
+                        + "Mangoldt expression above, trivialT is the full correction from "
+                        + "IntegratedExplicit.TrivialZeroLaplace, pi is Real.pi and gamma is "
+                        + "Real.eulerMascheroniConstant. The statement has no Johnston–Yang, "
+                        + "Lay-identity or tail-integrability premise and gives no explicit upper time bound.")),
+                    Paragraph(Text(
+                        "Set A=exp(y). The existing full-series bound trivialT_le_mass gives "
+                        + "trivialT(y)<=1-log(2)<log(2*pi). Multiplication by exp(y/2), together "
+                        + "with sqrt(exp(y))=exp(y/2) and 4*y^2/(1+y)<=4*y for y>=0, therefore "
+                        + "turns the literal premise into U(A)>sqrt(A)*(4*log(A)^2/(1+log(A))+9). "
+                        + "This uses the literal expression directly and requires no identification "
+                        + "with an independently defined zero-sum kernel.")),
+                    Paragraph(Text(
+                        "WeightedPrimeLimit.chebyshev_error_kernel_integrable supplies absolute "
+                        + "integrability on (1,infinity). CompleteChebyshevTailIdentity."
+                        + "complete_chebyshev_tail_identity supplies the exact normalized Q identity "
+                        + "for every real endpoint at least two. Mathlib's tendsto_integral_Ioi_zero "
+                        + "then selects a finite B>=A with twice the absolute Chebyshev tail "
+                        + "below 1/(2*sqrt(A)). The private finite_mertens_peak is the shared original "
+                        + "finite-window contradiction: it consumes this B in finite_kernel_change, "
+                        + "finite_lower_bound and tail_difference_bound, and finishes with the same "
+                        + "common_robin_response at the actual prefix-lcm integer. The private "
+                        + "qualitative_mertens_peak is consumed here; no standalone criterion alias "
+                        + "or duplicate finite proof is introduced.")),
+                    Paragraph(Text(
+                        "The quantitative theorem above retains both its exact hypotheses and its "
+                        + "explicit real and integer upper bounds. Its Johnston–Yang majorant and "
+                        + "far_tail_small still pay the specified B=exp(4*(log(A)+20)^2). "
+                        + "The new conclusion is conditional on the displayed literal arithmetic "
+                        + "peak. Existence of that peak, any implication from failure of RH to such "
+                        + "a peak, and an unconditional Robin counterexample remain open."))),
                 DescribeRole.Theorem))));
 }

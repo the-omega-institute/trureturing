@@ -1,0 +1,10 @@
+**Definition 4.1 (Invariant error).** For the rank-one pairs of Definition 1.1 define
+
+$$
+\Delta=\sqrt{W+d^2},\qquad
+ d^2=\left(x_0-\frac35\right)^2+\left(y-\frac45\right)^2.
+\tag{4.1}
+$$
+
+This expression is defined also on the boundary by (1.5); no division is used in (4.1). It measures error in the normalized magnitudes, overlap and relative phase from Definition 3.1's locus. It is not defined as a metric on the space of matrix pairs or as an absolute distance between unnormalized matrices.
+

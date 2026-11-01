@@ -1,0 +1,27 @@
+**定义 111.1（第三设置及其完整来源）。** 沿用 77.1、79.1、100.1、104.1 的全部对象：整个 $H=V_8^{\mathbf1}$、$\dim H=13$，整个 $\mathcal K=V_{12}^{\mathbf1}$、$\dim\mathcal K=89$，字面等距 $J$、$26$ 维代码 $\mathcal C$ 及全部 $63$ 维正交补，原七门、全部有限正向制备／接续和全部 $1024$ 个原终端标签。固定同一个连续相位不变响应 $\mathfrak P$，其限制仍为 $F=\mathfrak P\circ J_0=P$、$G=\mathfrak P\circ J_1$。旧校准精确取 79.1 的全部十三个基射线和全部标签，不以可精确制备射线的校准代替它。
+
+记 $E=I-\Pi$，并将 105.4 的共同相干准备写为十三列等距
+
+$$
+ V\psi=y\psi\otimes|0\rangle+xD\psi\otimes|1\rangle,
+ \qquad D=E+\zeta\Pi.
+ \tag{111.1}
+$$
+
+三个设置 $s=0,1,2$ 的读者依次为 $I,K_9^2,K_9$；设置 $2$ 是在同一准备之后调用一次已允许的地址 $9$，不是任意可选的连续旋转。原设置 $1$ 的代码作用与 105.2 的 $T$ 只差对整个代码共同的相位 $\zeta^{-6}$。
+
+为指定唯一使用的旧制备和探测事件，置
+
+$$
+ \begin{gathered}
+ p_*=1,\quad e_L=e_{00100},\quad e_R=e_{10100},\quad
+ e_*=e_{00000},\quad w_*=w_{00000}=1000000010,\\
+ L=\operatorname{span}\{e_L,e_R\},\quad
+ \eta=K_1v,\quad \alpha=-x,\quad\lambda=y\zeta^{-1},\quad
+ r=\sqrt{1-x^3}=\sqrt2\,x.
+ \end{gathered}
+ \tag{111.2}
+$$
+
+所有 $P_z=|z\rangle\langle z|$ 以下均指普通矩阵；单位向量的 $P_z$ 不被自动解释为实际测量或实际混合。
+

@@ -1,0 +1,15 @@
+**Definition 117.1 (erasure on the original instance).** Fix the entire instance of §§115.1–115.2: $r=3,m=2,d=1$, field $\mathbb F_2$, $Q=3,L=28,\ell=29,n=58,B=27,c_0=30$, both actually acquired seeds, one common hidden depth or one fixed common prior, and the complete initialized selector $\pi^-$. Keep every original raw execution, parser phase, Read, return, retry, incomplete prefix, rejected branch, actual Stop and suffix. Keep the entire total integer-domain receiver $\mathscr D_{\pi^-}$, its interface checks, empty-word default, all zero-completion dictionary entries and its actual-Stop convention. Write $D_{\rm blind}^{-e}$ for the least supplementary persistent alphabet when just the encoder's readable coordinate naming this transaction's completed continue/first-freeze decision is removed.
+
+More explicitly, before the original automatic latch, the retained arguments of a completed-marker update are
+
+$$
+I^-=(P,\rho,b,a,b',\phi,z),\qquad
+b=(c,\beta,h),\quad b'=(c+1,\beta+a,h+v_{c+1}a).
+$$
+
+Here $P$ is the original public data, including the fixed selector's program, $\rho$ is the already acquired seed, $a$ is the marker actually just completed, and $\phi$ comprises the original paid generic phases. The old fields are read before being overwritten. The generic parser/root/unselected/previously-frozen/final-marker/Stop phases remain available at their original times. There is no $\kappa$, control copy, selector address, identity-bearing custom phase, old prefix, acquisition transcript, old-label stream, future marker or future decision in $I^-$. The erasure is precisely the projection $(I^-,e)\mapsto I^-$, where $e$ names the current completed decision; it is not an erasure of the physical decision or its automatic latch.
+
+The distinction between a path frozen on entry and a first freeze caused by the current marker is the one in Boundary Dynamics §§110.1, 111.7 and 114.1: an earlier freeze holds the register, whereas a triggering transaction first writes its new value and then latches it. Thus the earlier-frozen guard is not a second readable name for the current decision. A frozen phase observed after the latch reveals the new latch state at that later time; it is not an additional before-latch input to the triggering write. The generic parser phase does not encode the identity or the selector's schedule. In particular, the encoder may use the original §108.1 option of writing before the selector decides. The construction below uses that option and hence needs no post-decision dispatch, write-enable signal carrying $e$, or inference of $e$.
+
+All acquisition, control and output values of the supplement belong to one fixed alphabet, initialized to 0 before seed acquisition. Current/frozen bare fields, the seed, parser, selector, generic phases, latch, ROM, transaction workspace and receiver output remain the original separately charged resources. Any new distinction retained across transactions would instead have to join this alphabet.
+

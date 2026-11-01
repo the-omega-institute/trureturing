@@ -1,0 +1,77 @@
+**Proposition 24.6 (represented widths and charged address computation).**
+Use the bit model of Proposition 22.5. Let $I$ be the actual input length,
+including the raw source, seed literal/triple, binary time and supplied
+word/code. Let $\beta$ be one plus the sum of the bit lengths of
+$A_c,B_c,e_c$, and put
+
+$$
+ W=\beta+t+\lceil\log_2(t+2)\rceil+1.
+\tag{PCR.67}
+$$
+
+The canonical seed has the bounds of Theorem 18.2, but no exact integer
+at later time is treated as an $O(d)$-bit quantity. After at most $t$
+child steps all coordinates have $O(W)$ bits: (PCR.39) gives
+$B_{vx}+1\le3(B_v+1)$ and (PCR.38) gives $e_{vx}\le e_v+2$.
+All Fibonacci counts and ranks have $O(t+1)$ bits, by $F_j\le2^j$.
+The time field and source/seed literals remain represented input even
+when a code has zero bits.
+
+A declared implementation needs no retained ancestor stack. First compute
+$(F_t,F_{t+1})$ by $t$ successive additions, using $O((t+1)^2)$ work and
+writes and $O(t+1)$ peak bits. During descent retain only the current
+integer descriptor, remaining time, rank and two Fibonacci values. From
+$(F_u,F_{u+1})$, subtraction gives $F_{u-1}=F_{u+1}-F_u$ when needed;
+a delay-one step keeps $(F_{u-1},F_u)$, and a delay-two step also computes
+$F_{u-2}=F_u-F_{u-1}$. Treat the $u=1$ zero slow block directly and stop
+at zero. Thus block counts and the next pair cost $O(t+1)$ bits of
+arithmetic per step without a Fibonacci table. Each chosen-child
+coordinate update costs $O(W)$; evaluating its parent bit by schoolbook
+quotient powering costs $O(D^2(W+1))$, using $O(D+W)$ temporary bits.
+
+Including raw synthesis and the polynomial seed verification scan, for
+either valid direction, or rejection of an invalid supplied word/code,
+a uniform upper bound is
+
+$$
+\begin{aligned}
+ T_{\rm addr}&=O\!\left(T_{\rm src}+D^8+I+
+                     (t+1)D^2W+(t+1)^2+L_{\rm out}\right),\\
+ S_{\rm addr}&=O(I+D^2+W+L_{\rm out}),\qquad
+ W_{\rm addr}=O(T_{\rm addr}).
+\end{aligned}
+\tag{PCR.68}
+$$
+
+Scanning malformed extra input costs its actual length $I$. The suffix
+output has at most $t$ letters and a code has $B_t=O(t+1)$ bits; returning
+$cw$ additionally pays the seed literal length. Peak space here includes
+retained input and output. At $t=0$ the empty suffix still pays raw-source
+and seed validation; at $d=0$ only core evaluation simplifies. Arithmetic
+and writes have not been measured in fixed machine words.
+
+If an implementation instead retains a descriptor at every descent depth,
+its stack upper bound is $O((t+1)W+D^2)$ bits, in addition to input/output;
+it can require quadratic space. For the authentic $d=1$ all-one source
+and its root seed, the members $a^t\in H_c(t)$ satisfy
+$(A_{a^j},B_{a^j},e_{a^j})=(F_{j+2},F_{j+3},1+j)$. The members
+$b^h\in H_c(2h)$ satisfy
+$(A_{b^j},B_{b^j},e_{b^j})=(F_{2j+3}-1,F_{2j+4}-1,1+2j)$.
+Both formulas follow by induction in (PCR.39). Since the logarithm of
+these Fibonacci integers grows linearly in $j$ (use
+$F_{2k+2}\ge2^k$ and $F_k\le2^k$), separately retained
+frames require $\Theta(t^2)$ coordinate bits and at least that many
+writes on these families. Even the iterative exact-coordinate algorithm
+writes $\Theta(t^2)$ boundary bits along these paths; it saves peak space,
+not these writes. Its upper bound at fixed $d,\beta$ is quadratic work
+and linear peak space, consistent with this obstruction.
+
+The codec's work is polynomial in the numeric $t$ and represented seed
+sizes after source synthesis; it is not polynomial in $\log(t+2)$.
+Indeed $B_t=\Theta(t)$ for growing $t$, so even one general code output
+can be that large. Enumerating all exact-layer addresses has its full
+exponential enumeration and literal-output cost. This is mathematical
+address recovery with supplied source data, not a physical clock or an
+execution journal. No native acquisition, source advancement, recentering
+or installation operation is introduced.
+

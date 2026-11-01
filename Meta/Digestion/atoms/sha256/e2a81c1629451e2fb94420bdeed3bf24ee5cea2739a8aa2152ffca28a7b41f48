@@ -1,0 +1,33 @@
+**Proposition 17.2 (Finite exact likelihood types for the actual split pairs).** Every directed labelled cycle of $\mathcal P_\Gamma$ has likelihood multiplier $1$. Each $R_p$ has finite range on $\Gamma^*$, as does the joint vector $\mathbf R$. They satisfy
+
+$$
+R_{(s,t)}(gv)=\frac{f_t(g)}{f_s(g)}
+R_{(\tau_g(s),\tau_g(t))}(v),\qquad
+\mathbf R(\varnothing)=\mathbf1.
+\tag{17.3}
+$$
+
+After a common guard has merged a reachable pair, further suffix extension cannot change that word's ratio.
+
+Proof. For each seed $(a,b)$, (4.11) applied to a finite positive cylinder gives
+
+$$
+\frac{M}{3B}\le\frac{L_b(v)}{L_a(v)}\le\frac MB
+\tag{17.4}
+$$
+
+for every finite gap word, with that seed's $M,B$. If a word $u$ reaches $p=(s,t)$ from this seed and $k=L_b(u)/L_a(u)>0$, factorization gives
+
+$$
+\frac{M}{3Bk}\le R_p(v)\le\frac{M}{Bk}.
+\tag{17.5}
+$$
+
+These rescaled bounds apply to all suffixes $v$. In particular, if a word $z$ is a cycle at $p$, then $R_p(z^n)=R_p(z)^n$ for all $n$. The positive finite upper and lower bounds in (17.5) force $R_p(z)=1$.
+
+Use the usual finite-graph loop-erasure argument: remove a segment between repeated ordered-pair states. It is a cycle with multiplier $1$, so removing it preserves both the endpoint pair and the likelihood product of the remaining path. Repeating this operation leaves a simple labelled path of length at most $|\mathcal P_\Gamma|-1$. Because both the state set and the label alphabet are finite, only finitely many such paths exist. Their products include every value of $R_p$. The joint range lies in the finite product of these coordinate ranges, proving its finiteness. Factorization gives (17.3). Merged predictive states have identical suffix likelihoods, proving the last assertion.
+
+The reused loop-erasure principle is also the finite-path argument in [Action graph communication bound, Theorem 1.5](../../../Blueprint/D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.md). Its stated costs are natural-valued additive costs. Here logarithmic likelihood increments may have either sign, so that theorem is not directly applied to them; the two-sided actual bounds (17.5) supply the multiplicative cycle conclusion needed for the same path deletion argument. This is not a separate general graph theorem. The use of predictive synchronization is within Proposition 5.3's countable-gap scope and its stated Travers--Crutchfield comparison, not an extension of their finite-alphabet theorem by citation alone.
+
+Finiteness here requires a fixed finite $\Gamma$. Over all gap sizes there can be infinitely many labelled simple paths even with a fixed finite pair set. No finite representation on the entire countable alphabet, effective period, decision procedure or uniform resource bound follows. $\square$
+

@@ -1,0 +1,45 @@
+**定理 4.1（Joint stability on the actual state）。** Assume (3.1). Let $\delta\geq0$ and let the same arbitrary unit state $\varphi\in\mathcal H_k$ satisfy $Q\leq E(s,k)+\delta$. Let $\Pi$ be the orthogonal projector onto the entire eigenspace $\ker(a-\lambda I)$ and let
+
+$$
+\begin{aligned}
+\gamma&=\min\{\theta-\lambda:\theta\in\operatorname{spec}(a),\ \theta>\lambda\}>0,\\
+h_{s,k}&=r-\frac b{N-1},\qquad
+B_{s,k,\delta}=|\lambda|h_{s,k}+\delta,\\
+\ell_\psi&=\|((I-\Pi)\otimes I)F\|^2.
+\end{aligned}
+\tag{4.1}
+$$
+
+The gap exists because $a$ has an edge, negative least eigenvalue and trace zero. Then
+
+$$
+\boxed{\quad\gamma\ell_\psi+|\lambda|T_\psi
+\leq B_{s,k,\delta}.\quad}
+\tag{4.2}
+$$
+
+In particular,
+
+$$
+\begin{aligned}
+0\leq\left\langle V+\sum_iD_i\right\rangle_\psi
+&\leq r-\frac b{N-1}+\frac\delta{|\lambda|},\\
+\|((I-\Pi)\otimes I)F\|^2
+&\leq\frac{|\lambda|(r-b/(N-1))+\delta}{\gamma}.
+\end{aligned}
+\tag{4.3}
+$$
+
+Proof. On the full least eigenspace $a-\lambda I$ is zero; on its orthogonal complement each eigenvalue is at least $\gamma$. Formula (2.9) therefore bounds the first term of (2.1) below by $\gamma\ell_\psi$. On the other hand the trial bound in (3.2) gives
+
+$$
+\begin{aligned}
+Q-\lambda(b+r)
+&\leq E(s,k)+\delta-\lambda(b+r)\\
+&\leq\lambda b\frac N{N-1}-\lambda(b+r)+\delta\\
+&=|\lambda|\left(r-\frac b{N-1}\right)+\delta.
+\end{aligned}
+$$
+
+This proves (4.2). Positivity of both summands gives (4.3). The budget is nonnegative: for $r>0$, $b/(N-1)=r(N-r)/(m(N-1))\leq r$, and for $r=0$ it is zero. Nothing here replaces $\Pi$ by the rank-one projection onto the particular trial vector $z$; degeneracy of $\lambda$ is allowed. $\square$
+

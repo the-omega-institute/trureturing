@@ -1,0 +1,10 @@
+**Definition 15.1 (scale comparisons on the original cut).** Retain exactly Assumption 11.1's positive rational source, chronological actions, deterministic unclipped floor convention and source identity. For positive integers $M,D$, saying that a current $q_D$ report determines the full scale-$M$ predictive class means
+
+$$
+q_D(x)=q_D(y)\ \Longrightarrow\ x\equiv_M y
+\qquad(x,y\in\mathbb Q_{>0}).
+\tag{15.1}
+$$
+
+This compares partitions of the same original source, with no preceding probe. It is equivalent to a factor from the actual report image to $\kappa_M(\mathbb Q_{>0})$, or to the entire scale-$M$ future-response profile. Put $\Lambda_M=\operatorname{lcm}(1,2,\ldots,M)$, with $\Lambda_1=1$. The scale $D$ is an available read only when its nondisturbing port is supplied; a partition factor does not install a port or execute any counterfactual continuation.
+

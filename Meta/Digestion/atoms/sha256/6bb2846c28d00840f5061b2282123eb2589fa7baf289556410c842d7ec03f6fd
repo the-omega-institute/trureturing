@@ -1,0 +1,20 @@
+**Theorem 5.2 (what the actual successive read cuts certify).** Use Theorem 3.1 and retain the read tape. Just after the $j$th read, $1\le j\le L$, and before the following macro, the exact compatible entry residue set is
+
+$$
+K_j=\{x\in R_E:F_H(x+t d)=a_t\text{ for all }0\le t<j\}.
+\tag{AQBR.20}
+$$
+
+It contains $C_0\bmod H$ and satisfies $K_{j+1}\subseteq K_j$. With only the retained initial data and these actual records, entry $\eta_n$ is identifiable at this cut exactly when $\eta_n(K_j)$ is a singleton. The exact possible current labels are
+
+$$
+\{\eta_n(x+(j-1)d):x\in K_j\}.
+\tag{AQBR.21}
+$$
+
+At $j=L$, the projection $\pi$ is constant on $K_L$. Under (AQBR.8), the entry label is consequently a singleton; after the final macro the current label equals it. Earlier cuts need not have earned the final label or behavior return.
+
+**Proof.** Each acquired answer is exactly the test displayed in (AQBR.20), since $S\equiv d\pmod H$. An entry in $E$ survives precisely when all its deterministic actual read replies match this prefix. Every residue in (AQBR.20) has an entry representative in $E$ and that representative realizes the entire observed prefix under the predetermined scan. Thus this set is exact, not merely an overapproximation. Appending the next equality gives inclusion. A singleton target image defines one output on this record; if two target values remain, two actual entries give identical records and different required outputs, ruling out a decoder on those inputs. The actual source after $j-1$ macro executions has precisely the residues in (AQBR.21).
+
+For any $p\in G$ with $e<h$, the full tape contains a saturated index. Every surviving residue has to share that saturation, so its $p$-residue is $-t_p d$. Axes with $e=h$ are already fixed at zero. This proves constancy of $\pi$ on $K_L$, and (AQBR.8) gives the final assertion. No unqueried depth or resetting test has been used. $\square$
+

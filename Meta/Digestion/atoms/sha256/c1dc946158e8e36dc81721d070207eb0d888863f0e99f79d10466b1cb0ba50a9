@@ -1,0 +1,16 @@
+**Proposition 3.10 (A sufficient vanishing criterion).** Let $\mathtt q\ge2$ and let $c:\{\rho\in\Pi(\mathtt q):|\rho|\ge2\}\to\mathbb R$. For a normalized pure qubit stabilizer state with colouring $\mathrm{col}$ put
+
+$$
+L=\sum_{|\rho|\ge2}c_\rho\,S_3^{(|\rho|)}(\rho),\qquad w_\sigma=\sum_{\substack{\rho\le\sigma\\ |\rho|\ge2}}3^{2-|\rho|}c_\rho\quad(\sigma\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)).
+$$
+
+Then, for every graph form $\Gamma$ of the state,
+
+$$
+L=\frac{\log2}{2}\sum_{\sigma\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)}w_\sigma\,r(\sigma).
+$$
+
+In particular, if $w_\sigma=0$ for every $\sigma\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)$, then $L=0$ for every normalized pure qubit stabilizer state, every number of qubits and every colouring. Stance: suspected-novel (§6).
+
+**Proof.** By Corollary 3.5, $c_\rho S_3^{(|\rho|)}(\rho)=\tfrac{\log2}{2}\,3^{2-|\rho|}c_\rho\sum_{\sigma\ge\rho}r(\sigma)$, the sum running over $\sigma\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)$. Summing over $\rho$ and exchanging the order of summation collects, for each $\sigma$, the coefficient $\sum_{\rho\le\sigma,\,|\rho|\ge2}3^{2-|\rho|}c_\rho=w_\sigma$. The vanishing statement follows. ∎
+

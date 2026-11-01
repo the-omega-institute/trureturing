@@ -175,9 +175,8 @@ def extract(archive, path, *args, **kwargs):
     resident = sum(member.stat().st_size for member in stage.rglob("lean-build.tgz*") if member.is_file())
     unpacked = sum(member.size for member in archive.getmembers() if member.isfile())
     archive_bytes = manifest["archive_bytes"]
-    # The empty target has room for the incoming transport and unpacked build,
-    # including multipart reassembly, but not the uploader's obsolete copies.
-    budget = unpacked + archive_bytes * (2 if len(manifest["parts"]) > 1 else 1)
+    # Extraction needs only the assembled archive and one unpacked build.
+    budget = unpacked + archive_bytes
     reading = dict(resident=resident, unpacked=unpacked, budget=budget, archive_bytes=archive_bytes,
                    parts=len(manifest["parts"]))
     pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))

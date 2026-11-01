@@ -1,0 +1,20 @@
+**Theorem 6.2 (Every proper conformal subrelation is cheaper).** If $z=w+v$ is a conformal decomposition into nonzero relations, then
+
+$$
+\tau(w)<\tau(z),\qquad \tau(v)<\tau(z).
+\tag{6.1}
+$$
+
+Consequently every minimizing relation in Theorems 5.1–5.2 is conformally indecomposable. The exact finite minimum (5.4) may be restricted to the conformally indecomposable members of $\mathcal F_K$.
+
+**Proof.** Absence of sign cancellation gives $\ell_z=\ell_w+\ell_v$. Therefore
+
+$$
+\tau(z)-\tau(w)=\ell_v+B_w-B_z.
+\tag{6.2}
+$$
+
+If $B_z\le B_w$, the right side is positive because $\ell_v>0$. If $B_z>B_w$, choose a sign side of $w$ whose largest label is $B_w$. The same sign side of $z$ has largest label at least $B_z$. Since $w$ has no label that large on this side and there is no cancellation, $v$ contains a label $j\ge B_z$ there. Its sign-side duration gives $\ell_v\ge j+1\ge B_z+1$. Substitution into (6.2) yields $\tau(z)-\tau(w)\ge B_w+1>0$. Interchanging $w,v$ proves the other inequality.
+
+A minimizing relation therefore cannot decompose. A proper conformal subrelation has strictly smaller $\ell$, so if $z\in\mathcal F_K$ then both subrelations remain inside the cutoff. The finite set has a minimizing relation by Theorem 5.2, and that relation is indecomposable; hence the restricted minimum exists and is unchanged. No general finiteness or generation theorem for conformal relations is needed. $\square$
+

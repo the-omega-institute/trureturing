@@ -1,0 +1,28 @@
+The following boundaries remain part of the conclusions.
+
+- The exact capacity and attainment for general positive fixed $n$
+  below the transition remain open. Modelwise strictness in (7.6)
+  does not decide either question.
+- Only bounded affine observables are known here to lose $\beta$.
+  Unbounded encoder coordinates, all affine factors, and arbitrary
+  encoder fibers are not classified.
+- The source has $0<Z<1$ and $0<k<H$. Neither height endpoint nor
+  the support-changing cases $Z=0,1$ are included. Approaching an
+  endpoint in a scalar supremum does not add an endpoint state.
+- The results concern actual current rays, one fixed affine readout,
+  and all real native commands on their full domains. Retained
+  history encoders, external state selectors, altered metrics,
+  restricted command menus, injectivity requirements, physical-output
+  restrictions, and finite-horizon variants are different problems.
+- Guard recovery remains distinct from applying identities on literal
+  source domains. The zero-dimensional emptiness result concerns only
+  the former. General path guards remain all-times conditions.
+- The homogeneous rank $N=n+1$ in this argument has no established
+  identification with the hidden parameter in the original unrelated
+  finite-hidden-$N$ attainment alternative. That alternative remains
+  unresolved.
+- Exact-real mathematical witnesses provide no finite-precision,
+  robustness, physical-realization, training, or empirical
+  machine-learning guarantee. No formal-kernel or model-diversity
+  verification is asserted.
+

@@ -1,0 +1,9 @@
+## 一、固定真实算术对象
+
+项目已经有两项与这里直接相关的基础：
+
+- [有限零点 Gram 层级](https://github.com/the-omega-institute/trureturing/blob/1a5020ef545f364fd70cf83f8829c38302284b1b/Blueprint/D5/S3/Weil/FiniteZeroGramHierarchy.md)：给定非负权重的实际 Gram 分解，可以推出矩阵正性；该文件也明确保留了无限收敛和实际零点定位所需的额外条件。
+- [AURIC 三轴误差几何与酉相容](https://github.com/the-omega-institute/trureturing/blob/08e8767227de53351c42cb35028e01de5e88287d/docs/develop/theory/AURIC_THREE_AXIS_ERROR_GEOMETRY_UNITARY_COMPATIBILITY_AND_ENDOGENOUS_STABILITY_V35.md)：二元正关系归一后可以用三轴表达，同时必须保存尺度、符号及后续关系所需的信息。
+
+下面的新增结论是纸面推导，不把它们表述为已经完成的项目形式化定理。
+

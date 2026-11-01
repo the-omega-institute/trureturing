@@ -1,0 +1,25 @@
+**Proposition 11.1 (inherited promised-program obstruction).** The preceding bounds do not decide compatibility of an independently supplied acquired-term program. FCS Theorem 10.2 gives undecidability even when that program is promised total, BOTH-attained and finitely natively preparable, with one fixed eight-state serving table and $L=2$.
+
+Proof of the reused separation. Install Reads $D_1,D_2,D_3$ and whole-row Halts $H_0,\ldots,H_4$, with $o(H_j)=R_j$, and use $e_0=D_1,e_1=D_3$:
+
+| Read | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D_1$ | $LLR$ | $H_1$ | $H_0$ | $D_2$ | $H_0$ |
+| $D_2$ | $LRR$ | $H_2$ | $H_0$ | $H_0$ | $H_0$ |
+| $D_3$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+The baseline bit is one on $\Pi_3\cup\Pi_4$ and zero elsewhere. The table returns the required five entire rows within two calls for those selections. Given a finite deterministic machine description $e$, modify only $\Pi_1$: output one exactly if $e$ halts within $h(x_c)$ stages. Stage one includes the initial-Halt check, so any first halt stage $\tau$ is at least one. Height recursion on acquired finite terms and bounded simulation terminate. The program is total, with a fallback for malformed acquired input. Fixed $\Pi_2$ and $\Pi_3$ points supply bits zero and one for every $e$.
+
+If $e$ never halts, this is the compatible baseline. If it first halts at $\tau$, take
+
+$$
+x_a=\beta,\quad x_{b_1}=\alpha,\quad
+x_c=B_\tau,\quad x_{b_2}=B_{\tau+1},\quad
+x_{b_3}=B_{\tau+2},\quad x_{b_4}=B_{\tau+3}.
+\tag{POC.28}
+$$
+
+This injective $\Pi_1$ filling has its actual finite inverse. The code outputs one, but $e_1$ sees branch at $b_3$ and returns whole $R_4$ instead of $R_1$. Compatibility is therefore equivalent to nonhalting of $e$.
+
+Every program in the family also has a finite native determining menu, by cases. The six class roots suffice in the nonhalting case. In the halting case add all $p_cw$ with $|w|=\tau$: a finite tree has height at least $\tau$ exactly if some node at that depth is nonabsent. A finite fixed-literal prefix/latch graph generates any function determined by a finite menu: each attained reply prefix is a counted state querying the next literal, each complete attained prefix enters its determined original bit latch, and unattained transitions enter a fixed existing latch. All four successors are installed; calls, prefix states, latch and paid handoff are counted or separately supplied. This proves existence of a finite preparer without uniformly choosing between the two cases or extracting $\tau$, its menu or its preparer from $e$. A promised-program compatibility decider would decide halting by complementing its answer. This is the FCS obstruction, not a new hardness result for the finite-table languages. $\square$
+

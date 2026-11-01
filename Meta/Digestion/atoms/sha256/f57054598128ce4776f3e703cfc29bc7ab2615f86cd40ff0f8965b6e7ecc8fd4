@@ -1,0 +1,67 @@
+**Theorem 10.2 (the sharp read budget on the original continuous apparatus).** For every integer $H\ge1$, the continuous return task of Definition 10.1 is attained by a single uniform finite algorithm on all $v_0\in\mathbb N^2$, and
+
+$$
+\boxed{\quad Q_{\rm ret}(1)=0,\qquad
+Q_{\rm ret}(H)=2B(H)\quad(H>1).\quad}
+\tag{AQBRS.4}
+$$
+
+The lower bound holds for the entire deterministic source-blind terminating competitor class of Definition 10.1, including policies that use arbitrary finite adaptive $R/G$ words between reads and arbitrary charged local computation. The attained run returns the same actual handle to its entry full original-$R/G$ arithmetic behavior and installs $e=c=\bar v_0$ there. It uses no reset, clone, saved entry source, source inverse, scalar multiplication, extra observation or free initial gcd. The optimized coordinate is paid reads only.
+
+**Proof (public preparation and positive closing).** Reuse the modular invertibility in FARG130: $\det M=-1$, and $G$ is translation by $\alpha$ on $A_H^2$. Thus on residues $C_H(R)$ is the inverse permutation of $R$ and $C_H(G)$ is the inverse permutation of $G$. Reading (AQBRS.3) in its stated chronological order cancels the last letter first, and gives
+
+$$
+\overline{W^{\rm cl}(W(u))}=\bar u
+\quad\text{for every actual }u\in\mathbb N^2.
+\tag{AQBRS.5}
+$$
+
+This is a local equality of residue actions. Every letter in its actual realization still maps $\mathbb N^2$ into itself. No coordinate of the source is subtracted. If $r(W)$ and $g(W)$ count the two letters in $W$, the actual word $WW^{\rm cl}$ contains exactly $L_Hr(W)$ replacements and $Hg(W)$ grafts. This includes the letters executed before its observation.
+
+All preparation uses finite integer input representations. Factor $H$ by trial division, compute the needed prime powers and CRT coefficients, and compute $L_H$ by multiplying the $2$-by-$2$ residue matrix until it first reaches $I$. These are computations on public binary integers. For an explicit termination bound, among the $H^4+1$ matrices $I,M,\ldots,M^{H^4}$ two coincide. Multiplying their equality locally by an inverse matrix yields a positive return exponent at most $H^4$. Consequently $1\le L_H\le H^4$, and the stated search terminates. The existing factorial period supplies another finite bound; no factorial-size word is required by this order search. Matrix inversion here is public local arithmetic, not a source operation.
+
+**Proof (one actual run attaining the bound).** Reuse the complete reset policy and positive short words of [Fibonacci Canonical Window Compiler Geometry, Theorems 1.4–1.6](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md), with its own definitions
+
+$$
+K=\min\{k\ge1:F_{k+4}\ge H\},\qquad
+\gamma=1+\left\lceil\frac{K+1}{2}\right\rceil,
+\qquad F_0=0,\ F_1=1.
+\tag{AQBRS.6}
+$$
+
+This supplier recovers $y_0=qM^Kv_0$ and $y_1=qM^{K+1}v_0$ modulo $H$. In each stage the prime-power digit policies share that stage's one direction; CRT combines their shifts into one $d\in A_H$. Its finite compiler gives an actual word $W(k,d)$, with exactly $k\in\{K,K+1\}$ replacements and at most $\gamma$ grafts, satisfying
+
+$$
+\gcd(qW(k,d)(u),H)=\gcd(qM^ku+d,H)
+\quad\text{for every }u\in\mathbb N^2.
+\tag{AQBRS.7}
+$$
+
+Use that supplier's choices and updates, without adding a new initial observation. Whenever it requests a word $W$, execute $W$ on the current actual source, make one paid current read there, retain the actual reply, and then execute all of $W^{\rm cl}$ before beginning another test or exposing the returned cut. The fixed acknowledgements are consumed throughout. Supply the retained gcd to the local reset-policy computation. Its next shift and word depend only on public inputs and preceding paid replies. In particular, the closing word depends on the known word and public $H,L_H$, not on an unknown source coordinate or a separately acquired entry code.
+
+Initially the current residue is $\bar v_0$. If it has this residue before a test, congruence and (AQBRS.7) make the one acquired reply exactly the reply of that reset test on $v_0$. Equation (AQBRS.5) then restores the current residue to $\bar v_0$. Induction over the actual tests proves both assertions at every completed test. There is only one integer source trajectory: the input to the next word can be a much larger integer pair than $v_0$. Periodicity of gcd makes its residue sufficient for the next acquired answer.
+
+The supplied policy completes each scalar stage in at most $B(H)$ paid tests. Its decoder is the existing inverse of $D_K=CM^K$, with $C$ from (AQBRP.12):
+
+$$
+e=D_K^{-1}\binom{y_0}{y_1}=\bar v_0.
+\tag{AQBRS.8}
+$$
+
+Thus the same continuous run has at most $2B(H)$ reads. Finish the last closing word, really store this earned $e$, and store a separate mutable $c=e$. This is a returned current label by (AQBRS.5). FARG130.5 gives (AQBRS.1), and Theorem 10.3 supplies the retained callable interface. Every loop and word is finite; the per-run completion and backing premises in Definition 9.1 suffice for termination. This constructs one program, uniform in $H$, rather than selecting a program by the hidden entry. The supplier's attaining source $D_K\bar v_0=(-1,-1)$ also follows this same reply history and uses all $2B(H)$ reads; alternatively the universal lower bound below forces the constructed policy's worst budget to be attained.
+
+**Proof (lower bound for arbitrary continuous policies).** Let a successful continuous policy have finite worst read budget $J$. Compare it with the exact reset-query class of FARG133.1, solely to obtain a lower bound. A local simulator keeps that policy's program state, its acquired replies and the cumulative chronological source-action word $A$, initially empty. It simulates local computations and fixed acknowledgements and appends each requested actual $R$ or $G$ to $A$. When the policy requests a paid current read, the simulator makes one reset-model terminal query with the entire word $A$, starting at the reset model's same unknown entry $v_0$. Previous reads were nondestructive, so its answer is exactly
+
+$$
+\gcd(qA(v_0),H),
+\tag{AQBRS.9}
+$$
+
+the answer of this continuous run at this cut. Feed it to the simulated policy and continue. The word $A$ omits read events but includes every source letter previously executed, including any policy-specific restoration or other adaptive action. It is one finite positive word selected by accessible history. An empty $A$ is an allowed charged query. Reusing $A$ for a repeated read still costs another query.
+
+Induction on acquired replies gives precisely the policy's actual local choices and replies for every $v_0$. There is no need to simulate unknown integer coordinates: neither the original controller nor its simulator can inspect them. All source services complete with fixed acknowledgements, and source-dependent time, capacity, cost or failure discrimination is excluded by Definition 9.1. Termination on each entry therefore gives a terminating reset-query policy with the identical earned entry output and exactly the same number of paid replies. Any operations after its final read are simulated before accepting that output; their acknowledgement contains no new information. The reset policy recovers $\bar v_0$ on all $\mathbb N^2$ and has worst budget at most $J$.
+
+Apply [FARG133.5](FIBONACCI_ATOMIC_RELATION_GENERATION.md) or, with $H$ the same positive modulus, [`terminal_gcd_acquisition_cost`](../../../D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.lean). Its `acquisitionBudgets` are exactly terminating deterministic history policies, with a finite worst number of charged terminal tests; its source, target, words and full gcd answers are those just constructed. Its least-budget conclusion gives $J\ge2B(H)$. This reuses that supplier's complete prime-axis lower bound, including arbitrary adaptive choices and full-depth replies. No new affine-valuation lower-bound proof or independent-axis worst-case assumption is needed. The comparison does not give the continuous source a reset service. It proves that even entry identification alone in the continuous competitor class cannot beat this bound, hence neither can identification with return and retained use.
+
+For $H=1$ the residue carrier is a singleton and every gcd is $1$. Leave the source unchanged and install its unique label and continuation, using no source call. Nonnegativity of budgets proves minimality. All preceding arguments admit zero coordinates and the exact zero source. At $H=2$, the reused short-word policy uses $R$ and $RR$, and $L_H=3$; their positive closing blocks give nine actual replacements, zero grafts and two paid reads on this construction. The zero source stays zero in that case, but an observed saturated gcd still identifies only a residue, not the literal zero pair. $\square$
+

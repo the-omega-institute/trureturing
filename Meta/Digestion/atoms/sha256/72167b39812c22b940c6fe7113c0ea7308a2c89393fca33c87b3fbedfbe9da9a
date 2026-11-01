@@ -1,0 +1,98 @@
+### 定理 15.2（幸存块秩一时的共同伴随与切口量词坍缩）
+
+对每个 $R\in\mathcal M_k$，有
+
+$$
+ \operatorname{rank}H(R)=1
+ \quad\Longleftrightarrow\quad
+ \exists c,v\in\mathbb R_{>0}^k:\quad
+ N(cv^{\mathsf T})=NR,\quad
+ \operatorname{tr}(cv^{\mathsf T})=\operatorname{tr}R.
+\tag{15.2}
+$$
+
+在此条件下，只要实际首原子是 $N$，任何 $\varepsilon$-可靠完整历史协议
+在该分支的任何允许后继历史上都不能有限输出 $2$。并且
+
+$$
+ \forall p\in P_\varepsilon(R)\quad
+ \forall q\in\{1,\ldots,k-1\}\quad
+       \mathsf C_q(R,p_{\le q}),
+\tag{15.3}
+$$
+
+从而在同一实际来源和同一 $\varepsilon$ 上，
+
+$$
+ \begin{aligned}
+ &\forall p\in P_\varepsilon(R)\ \exists q<k\quad
+         \neg\mathsf C_q(R,p_{\le q})\\
+ &\quad\Longleftrightarrow\quad
+   \forall p\in P_\varepsilon(R)\quad\neg\mathsf C_0(R,p_0)\\
+ &\quad\Longleftrightarrow\quad
+   \exists q<k\ \forall p\in P_\varepsilon(R)\quad
+         \neg\mathsf C_q(R,p_{\le q}).
+ \end{aligned}
+\tag{15.4}
+$$
+
+因此固定切口 $q=0$ 的同一个相容性认证器覆盖这类来源中的全部
+$\mathcal I_k(\varepsilon)$，收费为初读计入 $k+1$ 次，且可靠性比较域仍为
+完整 $\mathcal M_k$。
+
+**证明。** $R$ 的每个条目严格为正。若 $\operatorname{rank}H(R)=1$，取
+$v_j=R_{0j}$ 和 $u_i=R_{i0}/R_{00}$（$0\le i<k-1$），则 $u,v>0$ 且
+$H(R)=uv^{\mathsf T}$。置
+
+$$
+ c_i=u_i\quad(i<k-1),\qquad
+ c_{k-1}=\frac{R_{k-1,k-1}}{v_{k-1}}>0,\qquad
+ S=cv^{\mathsf T}.
+\tag{15.5}
+$$
+
+这个固定严格正秩一来源属于 $\mathcal M_k$，与 $R$ 的前 $k-1$ 行及最后
+一个对角条目相同。故 $NS=NR$ 且 $\operatorname{tr}S=\operatorname{tr}R$。
+任意允许初读报告都同时兼容两来源；若协议首选 $N$，执行后两者真状态相同。
+对每个后继前缀使用相同报告，仍在两来源上合法，且确定性迫使相同动作、停止
+和输出。因此该分支上的任意有限秩二断言都会在固定秩一来源 $S$ 上违反可靠性。
+反过来，若 (15.2) 右侧成立，置 $S=cv^{\mathsf T}$，则 $NS=NR$ 强制
+$S,R$ 的前 $k-1$ 行相同；
+这个非零严格正块是秩一矩阵的行子块，故其秩为一。这证明 (15.2)。
+
+固定 (15.5) 的同一个 $S$。它满足
+$a_i(S)=a_i(R)$（$0\le i<k$），以及
+$b_j^{(q)}(S)=b_j^{(q)}(R)$（$1\le q<k$，$0\le j<k$）。
+前一等式在 $i=0$ 使用迹相等，在 $i\ge1$ 使用 $NS=NR$；后一等式的行和
+均不含最后一行。对每个 $q\ge1$ 令
+
+$$
+ \sigma_q=\sum_{h=0}^{k-1-q}c_h>0,\qquad
+ x^{(q)}=c/\sigma_q,\qquad v^{(q)}=\sigma_qv.
+\tag{15.6}
+$$
+
+这是同一个 $S=x^{(q)}(v^{(q)})^{\mathsf T}$ 的不同归一化，且
+$\sum_{h=0}^{k-1-q}x_h^{(q)}=1$。对每个允许的 $p$，同一组正参数满足
+
+$$
+ \begin{aligned}
+ A_i(x^{(q)},v^{(q)})&=a_i(R),
+       &|a_i(R)-p_i|&\le\varepsilon\quad(0\le i\le q),\\
+ v_j^{(q)}&=b_j^{(q)}(R),
+       &|v_j^{(q)}-b_j^{(q)}(R)|&=0\quad(j\in B_q).
+ \end{aligned}
+\tag{15.7}
+$$
+
+于是 (14.4) 有实际严格正解，得到 (15.3)。当 $q=k-1$ 时，
+$x_0^{(q)}=1$ 且 $v_{k-1}^{(q)}=A_{k-1}=a_{k-1}(R)$；只使用原有
+$p_{k-1}$，没有第二次报告。
+
+由 (15.3)，(15.4) 第一行中可提供否定的切口只有 $q=0$，故它等价于
+第二行。第二行直接蕴含第三行，第三行蕴含第一行，证明全部等价。
+再直接使用定理 14.5 和引理 14.4，便得到固定扫描的覆盖性。
+扫描末端仍按 (13.5) 排除严格正秩一来源；任何实际秩一来源都提供该系统
+的共同正解，所以可靠性始终比较完整 $\mathcal M_k$，没有把比较域限制为
+$\operatorname{rank}H=1$。费用复用定义 12.1 的 $q=0$ 计费。∎
+

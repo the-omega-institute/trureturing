@@ -1,0 +1,86 @@
+**定理 10.3（自身条件律校准的有限摘要及两种误差）。** 对任意整数 $k\ge0$，取
+
+$$
+S_k(H)=\min\{R(H),k\},\qquad
+M_k=\int q^k\mu(dq)>0,
+\tag{TEE.44}
+$$
+
+其中标签 $k$ 表示整个尾部 $R\ge k$；$k=0$ 时只有这个标签。给出概率回答
+
+$$
+\kappa_j=\nu_j\quad(0\le j<k),\qquad
+\kappa_k=\eta_k,\qquad
+\eta_k(dq)=\frac{q^k}{M_k}\mu(dq).
+\tag{TEE.45}
+$$
+
+则这些回答恰为 $\mathcal L(Q\mid S_k)$。定义实际平均误差为每份档案上的全分数误差再按实际档案律积分，即
+
+$$
+\overline{\mathcal E}_k
+=\mathbb E\bigl[d_{\rm TV}(\nu_R,\kappa_{S_k})\bigr]
+=\sum_{r\ge k}z_r d_{\rm TV}(\nu_r,\eta_k).
+\tag{TEE.46}
+$$
+
+对所有允许的原子、可数原子、混合和非原子先验，
+
+$$
+0\le\overline{\mathcal E}_k\le M_k\longrightarrow0.
+\tag{TEE.47}
+$$
+
+若 $\alpha>0$，沿用定理10.2的 $d_k$，则还对所有实际秩一致有
+
+$$
+\mathcal E_{\rm pr}(S_k,\kappa)\le d_k\longrightarrow0,
+\qquad
+\overline{\mathcal E}_k\le
+\min\{M_kd_k,\ 2(M_k-\alpha s^k)\}.
+\tag{TEE.48}
+$$
+
+在原标量合同下，同一个固定编码 $S_k$ 还允许尾部逐分数中点答案，其一致误差至多 $d_k/2$；这些中点答案不附带自身条件律校准。若 $\alpha=0$，式（TEE.47）仍成立，而这个及任何其他有限概率方案的一致误差为一。
+
+证明。复用已发表的实际秩尾式（TEE.15）而不新设几何抽样：对每个 Borel 集 $C$，
+
+$$
+\Pr(Q\in C,R\ge k)=\int_C q^k\mu(dq),\qquad
+\Pr(R\ge k)=M_k.
+\tag{TEE.49}
+$$
+
+单秩叶的条件律为已发表的 $\nu_j$，尾叶除以 $M_k$ 即得（TEE.45），也即
+
+$$
+\eta_k=\sum_{r\ge k}\frac{z_r}{M_k}\nu_r.
+\tag{TEE.50}
+$$
+
+这是实际摘要的条件律，不是人为选取的邻近代表。每项距离至多一，得（TEE.47）的界；$q^k\to0$ 在整个源域处处成立，支配收敛给 $M_k\to0$，不要求任何等待时间的均值有限。
+
+当 $\alpha>0$ 时，令 $b_k=\eta_k(\{s\})=\alpha s^k/M_k$。由 $z_k\ge(1-s)M_k$ 得 $b_k\ge w_k$，且对所有 $r\ge k$，$\nu_r(\{s\})=w_r\ge w_k$。两个概率测度若共享一个质量至少 $w_k$ 的原子，则扣除共同的 $w_k\delta_s$ 后剩余总质量均为 $d_k$，所以距离不超过 $d_k$。这同时给 $d_{\rm TV}(\nu_r,\eta_k)\le d_k$ 和（TEE.48）的第一项平均界。
+
+另由三角不等式，$d_{\rm TV}(\nu_r,\eta_k)\le d_r+(1-b_k)$。实际尾部求和满足
+
+$$
+\sum_{r\ge k}z_rd_r=M_k-\alpha s^k,
+\qquad M_k(1-b_k)=M_k-\alpha s^k,
+\tag{TEE.51}
+$$
+
+其中端点原子的标记质量按同一个 $s$ 求几何级数。由此得到第二项平均界，没有把不同实现的最优值拼在一起。
+
+标量中点取
+
+$$
+A_j(f)=v_j(f)\ (j<k),\qquad
+A_k(f)=\tfrac12\left(\sup_{r\ge k}v_r(f)+\inf_{r\ge k}v_r(f)\right).
+\tag{TEE.52}
+$$
+
+尾部任意两个后验也共享至少 $w_k$ 的同一原子，故其 TV 距离至多 $d_k$；（TEE.52）的误差不超过其分数值域长度的一半，即 $d_k/2$。一般地，在本源固定编码的每个状态上，对该状态所容纳的秩集取逐分数中点，最佳标量误差恰为该后验集 TV 直径的一半：下界来自任意两秩经过同一个答案，上界来自值域中点及（TEE.37）。这解释数值因子，不能据此把一个共同概率解码器的误差也除以二。
+
+（TEE.46）平均的是所有分数的逐档案上确界，因而也控制每个固定分数的实际平均绝对误差；它没有将平均界提升成对罕见大秩的保证。概率距离的归一化及强弱差别参见 Gibbs–Su, *On choosing and bounding probability metrics*, [arXiv:math/0209021v1](https://arxiv.org/abs/math/0209021v1), §2中 total variation 与 Wasserstein 条目及§3。相邻 $\nu_{r+1}=q\nu_r/\nu_r(q)$ 是经典 size bias，参见 Arratia–Goldstein–Kochman, *Size bias for one and all*, [arXiv:1308.2729v3](https://arxiv.org/abs/1308.2729v3), §2.1–2.2；这里的几何尾部混合权重来自原源（TEE.49），不是由 size bias 引入新样本。证毕。
+

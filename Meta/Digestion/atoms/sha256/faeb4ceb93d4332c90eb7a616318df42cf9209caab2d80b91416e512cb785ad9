@@ -1,0 +1,108 @@
+**引理 10.3（可行区间内的取整点不相等）。** 对每个整数 $m\ge4$，定义
+
+$$
+\theta_m=\frac2{Y_m^2}+\frac12+\frac{Y_m^2}{32}.
+\tag{10.6}
+$$
+
+则 $\theta_m\notin\{1,\ldots,m\}$。
+
+**证明。** 先记
+
+$$
+q(s)=2\sqrt2(\sqrt s-\sqrt{s-1})
+\qquad(s\ge1).
+$$
+
+由引理 10.2 及 (10.2) 有 $0<Y_m<1$；直接由 (10.6) 计算得
+
+$$
+\sqrt{\theta_m}=\frac{\sqrt2}{Y_m}+\frac{Y_m}{4\sqrt2},
+\qquad q(\theta_m)=Y_m.
+$$
+
+由
+
+$$
+d_m(2,j)-d_m(2,j-1)=q(j)-Y_m
+\tag{10.7}
+$$
+
+以及定理 5.1 的严格见证
+$d_m(2,\lfloor2m/3\rfloor+1)>0$，而
+$d_m(2,\lfloor2m/3\rfloor)\le0$，可知 $q(\lfloor2m/3\rfloor+1)>Y_m$。因为 $q$ 严格递减，解 $q(\theta_m)=Y_m$ 的数满足
+
+$$
+\theta_m>\left\lfloor\frac{2m}{3}\right\rfloor+1.
+\tag{10.8}
+$$
+
+当 $m=4,5$ 时，(10.1) 直接化简为
+
+$$
+Y_4=-\frac37-\frac{2\sqrt6}{35}+\frac{9\sqrt2}{35}+\frac{3\sqrt3}{5},
+$$
+
+以及
+
+$$
+Y_5=-\frac{27\sqrt3}{140}-\frac{33}{140}-\frac{2\sqrt6}{35}
+ +\frac{\sqrt2}{28}+\frac{\sqrt5}{28}+\frac{3\sqrt{10}}{28}+\frac{\sqrt{15}}4.
+$$
+
+使用 $\sqrt2>7/5$、$\sqrt3>17/10$、$\sqrt6<5/2$ 得
+$Y_4>283/350>4/5$。又 $q(4)<4/5$，因为
+
+$$
+q(4)^2=56-32\sqrt3<\frac{16}{25}
+$$
+
+等价于 $\sqrt3>173/100$。所以 $\theta_4<4$，结合 (10.8) 得 $3<\theta_4<4$。
+
+同样，使用
+
+$$
+\sqrt3<\frac74,\quad \sqrt6<\frac{49}{20},\quad
+\sqrt2>\frac75,\quad \sqrt5>\frac{11}{5},\quad
+\sqrt{10}>\frac{79}{25},\quad \sqrt{15}>\frac{387}{100}
+$$
+
+得到 $Y_5>101/140>7/10$。另一方面
+
+$$
+q(5)=2\sqrt{10}-4\sqrt2<\frac7{10}
+$$
+
+由 $\sqrt{10}<317/100$、$\sqrt2>141/100$，故 $\theta_5<5$；结合 (10.8) 得 $4<\theta_5<5$。
+
+现设 $m\ge6$。取 Bertrand–Chebyshev 定理给出的素数
+
+$$
+\frac m2<p<m<2p,
+$$
+
+其中 $p\ge5$。将 (10.1) 和 (10.2) 展开为平方根的有理线性组合，并按无平方因子部分分组。$\sqrt{3p}$ 的系数只来自 $r=p$ 时的
+$(\sqrt3-\sqrt2)(r+1)(r+2)$ 项，因而恰为
+
+$$
+Y_m=\frac{2\sqrt{3m}}m-\frac6{mH_m}
+\sum_{r=1}^m\sqrt r\,P_m(r).
+$$
+
+在这个展开中，
+
+$$
+-\frac{6(p+1)(p+2)}{mH_m}\ne0.
+\tag{10.9}
+$$
+
+确实，$\sqrt r$ 的无平方因子部分不可能为 $3p$，$\sqrt{2r}$ 需 $r=6ps^2>m$，$\sqrt{3r}$ 只有 $r=p$，而首项 $\sqrt{3m}$ 需 $m=ps^2$，均被 $p<m<2p$ 排除。Carr–O’Sullivan 的根式线性无关性（其假设和在引理 9.2 中已核对）保证该系数是唯一的。
+
+若 $\theta_m=j\in\{1,\ldots,m\}$，则由 (10.6) 的求解等式有
+
+$$
+Y_m=q(j)=2\sqrt{2j}-2\sqrt{2(j-1)}.
+$$
+
+但 $j\le m<2p$ 时，右端的两个根式都不含无平方因子部分 $3p$：$2j=3ps^2$ 或 $2(j-1)=3ps^2$ 将迫使 $j$ 或 $j-1$ 至少为 $6p$。这与 (10.9) 及根式线性无关性矛盾。∎
+

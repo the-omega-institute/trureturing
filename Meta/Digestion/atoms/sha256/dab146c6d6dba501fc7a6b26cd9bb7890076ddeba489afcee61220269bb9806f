@@ -1,0 +1,31 @@
+**Proposition 8.2 (Actual herald and sufficient first-sensitive trial resources; source preparation).** If $N=n_{\rm sens}<\infty$, a first-sensitive trial can be prepared from any initial density using at most $H+1+N$ device uses almost surely, with $N$ coherent post-tick uses. This counts logical uses of the supplied device and additional registers; it is not an optimum for hardware, elapsed time, energy or control complexity.
+
+**Proof.** From an arbitrary density $\sigma$, the probability that the first tick follows $a$ observed zeros is
+
+$$
+\Pr_\sigma(0^a1)
+=\operatorname{Tr}(J_\theta S^a\sigma(S^\dagger)^aJ_\theta^\dagger)
+=\sigma_{H-a,H-a}\quad(0\le a\le H),\qquad
+\Pr_\sigma(0^{H+1})=0.
+\tag{8.1}
+$$
+
+The $H+1$ mutually exclusive first-tick probabilities sum to one. The final equality also follows from $S^{H+1}=0$. By (2.5), the actual tick resets to $x_\theta x_\theta^\dagger$ irrespective of the conditional input. Thus monitoring until that tick takes at most $H+1$ uses almost surely, including the tick itself. Stop monitoring at that instant and perform the $N$ coherent applications; the measurement of Theorem 4.2 is made only at their terminal time. Reherald before each trial, including after a previous terminal measurement has changed the conditional memory. No stationary initialization is needed.
+
+A sufficient logical apparatus has source memory $\mathbb C^{H+1}$, $N$ retained two-dimensional flags of joint dimension $2^N$, a reusable two-level herald detector and a three-level terminal outcome pointer. Only one fixed projective setting is needed for sensitivity. The source's $N+3$-state controller, with states $\mathrm{wait},\mathrm{captured}_0,\ldots,\mathrm{captured}_N,\mathrm{done}$, is sufficient. Keeping the waiting time adds a record with $H+1$ possible values. Repetitions require separately stored or processed outcome records; these registers are not absorbed for free into the source memory dimension.
+
+For the three terminal projectors $P_+,P_-,P_0$, a pointer coupling can be chosen as
+
+$$
+W=\sum_{o\in\{+,-,0\}}P_o\otimes R_o,\qquad
+R_o|\mathrm{ready}\rangle=|o\rangle,\qquad
+[W,Q_N\otimes I]=0,
+\tag{8.2}
+$$
+
+where each $R_o$ is a unitary on the pointer. Orthogonal complete projectors make $W$ unitary; their count commutators imply the displayed conservation. This is the source (25.28) logical terminal realization, applied to the first-sensitive witness. No memory measurement or intermediate observation is added. $\square$
+
+The source full separator with $M$ relations instead uses $2M$ projective settings, a $2M$-valued setting register, a three-level pointer and $6M$ labeled setting/outcome values. Its generator choices and identification objective do not become resources for free in a sensitivity comparison. Conversely, the single sensitivity setting here is not claimed to replace those settings for full identification.
+
+For a continuous affine quotient, a fixed finite number of records from a finite terminal alphabet cannot uniquely identify every quotient point with zero error. Exact probability-law variation is not a finite-sample probability oracle. Repetition can supply statistical estimates, but this volume gives no sample-complexity or generally perfect-discrimination theorem. The presence of a real phase choice with the same classical renewal law also persists from source Theorem 23.2; coherent phase discrimination gives no complex-over-real advantage for generating that classical law and no native physical or field implementation.
+

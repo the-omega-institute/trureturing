@@ -20,12 +20,12 @@ public sealed partial class CleanLanesCommandTests
             if (file != "python3" || !IsQualification(args)) return null;
             qualified++;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 def refuse(*args, **kwargs):
                     raise sys.modules['worktree_protocol'].Refused('initialization_in_progress')
                 sys.modules['worktree_preservation'].qualify = refuse
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
 
@@ -33,6 +33,7 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal("initialization_in_progress", ReasonFor(result.Output, lane));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.Equal(1, qualified);
         Assert.True(Directory.Exists(lane));
     }
@@ -52,10 +53,10 @@ public sealed partial class CleanLanesCommandTests
             if (file != "python3" || !IsQualification(args)) return null;
             qualified++;
             var modified = args.ToArray();
-            modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
+            File.WriteAllText(modified[2], File.ReadAllText(modified[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
                 sys.modules['worktree_preservation'].tree_scope = lambda *args, **kwargs: None
                 sys.exit(sys.modules['worktree_protocol'].main())
-                """, StringComparison.Ordinal);
+                """, StringComparison.Ordinal));
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
 
@@ -123,17 +124,20 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(lane), result.Output);
     }
 
-    [Fact]
-    public void CurrentLockIsRetainedByAutomaticSelection()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentLockIsRetainedByAutomaticSelection(bool force)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/current-lock");
         fixture.LockLane(lane);
         File.SetLastWriteTimeUtc(Path.Combine(fixture.WorktreeGitDirectory(lane), "locked"),
             new DateTime(2030, 1, 2, 0, 0, 0, DateTimeKind.Utc));
-        var result = fixture.Run("--force", "--lanes-only");
+        var result = fixture.Run(force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
         Assert.True(result.Success, result.Error);
         Assert.Equal("locked_recent", ReasonFor(result.Output, lane));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.True(Directory.Exists(lane));
     }
 }

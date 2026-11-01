@@ -1,0 +1,54 @@
+#### 定理 3.1（双复振幅的三实二次坐标与 Hopf 商）
+
+对单位向量 $\psi=(\alpha,\beta)^T$，令
+
+$$
+
+r_1=2\operatorname{Re}(\bar\alpha\beta),
+ r_2=2\operatorname{Im}(\bar\alpha\beta),
+ r_3=|\alpha|^2-|\beta|^2.
+
+$$
+
+则 $r_1^2+r_2^2+r_3^2=1$，且
+
+$$
+
+\lvert \psi\rangle\langle \psi\rvert
+ =\frac12\begin{pmatrix}1+r_3&r_1-ir_2\\r_1+ir_2&1-r_3\end{pmatrix}
+ =\frac12(I+r\cdot\sigma).
+
+$$
+
+此映射诱导双射 $S^3/U(1)\simeq\mathbb{CP}^1\simeq S^2$。
+
+
+**证明。**
+
+平方恒等式为
+
+$$
+
+r_1^2+r_2^2+r_3^2
+ =4|\alpha|^2|\beta|^2+(|\alpha|^2-|\beta|^2)^2
+ =(|\alpha|^2+|\beta|^2)^2=1.
+
+$$
+
+矩阵式直接展开。相同三个坐标给相同秩一投影，所以两单位向量只差共同相位；反向共同相位显然消去。对球面上 $r_3\ne-1$ 的点，取
+
+$$
+
+\alpha=\sqrt{\frac{1+r_3}{2}},
+ \beta=\frac{r_1+ir_2}{\sqrt{2(1+r_3)}},
+
+$$
+
+直接代入得到归一化与原坐标。南极取 $(0,1)$。故满射且纤维恰为 $U(1)$。
+
+**证明完。** ∎
+
+这里的 Hopf 纤维是一整个圆，不是二重覆盖。二重覆盖是另一个映射 $SU(2)\to SO(3)$，其核为 $\{\pm I\}$。两个复振幅提供四个实参数，单位范数扣去一个，共同相位再扣去一个；剩下两个实自由度，但并不意味着任意两个固定读出能全球单值重构。
+
+
+<a id="thm:ball"></a>

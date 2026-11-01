@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f58fddfbebcdaaae01246cc554210a72bf50fd7a47cc16acf1706bf9ca32d15
+  normalized_sha256: sha256:0f58fddfbebcdaaae01246cc554210a72bf50fd7a47cc16acf1706bf9ca32d15
+cas_ref: sha256:0f58fddfbebcdaaae01246cc554210a72bf50fd7a47cc16acf1706bf9ca32d15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Volume title heading and reference-input append-only disclaimer; pure editorial framing with no standalone mathematical proposition to formalize.
+    previous_atom_id: null
+    next_atom_id: 6a19a920d8001a8d03f539f949f7797f4ec2ca4d66ab33034d2720166044ada4

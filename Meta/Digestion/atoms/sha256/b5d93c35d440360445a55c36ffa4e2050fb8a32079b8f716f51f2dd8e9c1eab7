@@ -1,0 +1,11 @@
+**Proposition 2.2 (Ordinary trees and the insertion normal form).** Every deleted component is a tree attached once to $K(D)$.
+
+**Proof.** Two attachment
+points would give a surviving path; a cycle would survive. Viewed from
+the attachment it is a rooted binary tree with only ordinary leaves.
+
+On a path directed from $A$ to $B$, a positive insertion has cycle
+
+<a id="eq-positive"></a>
+<a id="eq:positive"></a>
+

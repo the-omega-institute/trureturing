@@ -1,0 +1,47 @@
+**命题 11.3（几何动力学需要的明确额外输入）。**
+
+若另行从内部关系取得四维光滑 Lorentz 度量、
+物质泛函，固定 $\kappa\ne0$ 与 $\Lambda$，
+并假定下式的一阶局部度量变分良定义：
+
+$$
+S[g,\chi]
+=\frac1{2\kappa}\int \sqrt{-g}\,(R-2\Lambda)
++S_m[g,\chi],
+\qquad
+T_{\mu\nu}=-\frac2{\sqrt{-g}}\frac{\delta S_m}{\delta g^{\mu\nu}},
+$$
+
+在非紧整体上可将它解释为紧支撑扰动的局部或相对作用变分，
+不要求绝对积分有限。
+则对所有支撑于流形内部的紧支撑度量变分的驻点满足
+
+$$
+G_{\mu\nu}+\Lambda g_{\mu\nu}=\kappa T_{\mu\nu}.
+$$
+
+**证明。**
+
+使用
+$\delta\sqrt{-g}=-\frac12\sqrt{-g}\,g_{\mu\nu}\delta g^{\mu\nu}$
+及 $\delta R=R_{\mu\nu}\delta g^{\mu\nu}+\nabla_\mu V^\mu$，
+紧支撑变分的散度项积分为零。
+剩余为
+
+$$
+\delta S=\frac1{2\kappa}\int\sqrt{-g}
+(G_{\mu\nu}+\Lambda g_{\mu\nu}-\kappa T_{\mu\nu})\,\delta g^{\mu\nu}.
+$$
+
+对任意紧支撑对称变分为零，给出方程。
+
+□
+
+这是一条条件性变分结论：作用量、度量和物质对应已经作为前件。
+它没有从一个量子门计数公式推导上述作用量。
+任意酉连接也不自动是时空的切向或自旋连接；
+还需 Lorentz 结构、局域因果和普适时钟耦合的对应。
+这些都可以是内部关系，毋须重新引入本体外的几何。
+
+<a id="section-12"></a>
+

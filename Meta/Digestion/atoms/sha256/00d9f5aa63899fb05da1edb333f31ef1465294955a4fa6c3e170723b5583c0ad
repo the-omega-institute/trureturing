@@ -1,0 +1,18 @@
+**Proposition 22.6 (raw zero-prefix inspection obstruction).** For every
+$d\ge2$, an exact deterministic bit algorithm returning $K_s$ from raw
+$(d,P)$ must inspect at least $d$ of the $2d$ prefix positions on the
+zero input. Thus constant postprocessing on a verified tag cannot be a
+constant-work raw-input algorithm.
+
+Proof. For $j=0,\ldots,d-1$, compare zero with
+$s^{(j)}_i=\mathbf1_{i\equiv j\pmod d}$. These are authentic members of
+$\mathscr R_d$, with disjoint differing prefix-position pairs
+$\{j,j+d\}$ in zero-based indexing. Each has least period $d$, no
+transient, and the root is safe. The root residue's first coordinate is
+$1$; its initially beta child's first coordinate is $2$, by (PCR.39),
+so the image has at least two distinct residues modulo $d$. Zero has
+$K_s=1$. On the zero execution, leaving any pair wholly uninspected
+makes that valid alternative indistinguishable. The $d$ pairs are
+disjoint, proving the inspection bound. This is an input lower bound,
+not a hardness or physical-Read lower bound. $\square$
+

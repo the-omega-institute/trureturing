@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d34ab28ca5d050e6520164c3436e01cbb531fe6321bdfc1cc226abf35c83eba8
+  normalized_sha256: sha256:d34ab28ca5d050e6520164c3436e01cbb531fe6321bdfc1cc226abf35c83eba8
+cas_ref: sha256:d34ab28ca5d050e6520164c3436e01cbb531fe6321bdfc1cc226abf35c83eba8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definitions only: this section introduces R_i=b_i-u_i, alpha_i=-u_(i+1)/(1-u_i), E_1=R_1, and E_(i+1)=R_(i+1)-alpha_i R_i. It asserts no independent proposition. This disposition does not close Theorem 6.1, its full-past conditional regression, pairwise orthogonality, square-moment claims, or any determinant claim.'
+    previous_atom_id: df7d7b9284d7307d4609e32bf6a4b0506dbba36c87074f667f79ce33878f226f
+    next_atom_id: c235385a833cda159d64bd72c24e31cf7cbfac3f87e9c0ab69639988dfc88172

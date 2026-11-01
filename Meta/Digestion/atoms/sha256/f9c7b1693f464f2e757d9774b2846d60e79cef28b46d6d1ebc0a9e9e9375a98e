@@ -1,0 +1,27 @@
+**Definition 6.4 (literal Stern–Brocot chart).** For a chronological path word $w$, let
+
+$$
+W(w)=\begin{pmatrix}a&b\\c&d\end{pmatrix},\qquad
+r_{\mathrm{SB}}(w)=\frac{a+b}{c+d}.
+$$
+
+The bounding fractions are $b/d$ and $a/c$, with $1/0$ allowed as the upper bound at the root. Their mediant is the displayed response. Right multiplication by $G_L$ replaces the upper bounding column by the column sum, so it selects the left mediant child; right multiplication by $G_R$ replaces the lower bounding column by the sum, selecting the right child. Thus this is the usual Stern–Brocot path order. It satisfies
+
+$$
+r_{\mathrm{SB}}(w)=r(\operatorname{enc}(\operatorname{reverse}w)),
+\qquad
+D_{\mathrm{SB}}(r)=\operatorname{reverse}(\operatorname{dec}(r)).
+$$
+
+Here $\operatorname{dec}(r)$ means decoding its reduced pair. The equations follow from the product convention and Theorem 6.2. Word reversal is bijective on all finite words, so this chart also recovers the literal word and all its prefixes. Reversal is a correspondence of encodings; it is not a prefix-preserving reversal of the actually executed process. To update the Stern–Brocot rational using this chart, recover its path or bounding matrix and append the chosen operation. Its child rule is not automatically the pair rule $r\mapsto r/(1+r)$ or $r+1$ at that same rational.
+
+For the pair process choose $T(w)=w$, $B(w)=r(\operatorname{enc}(w))$, $M(w)$ the indexed table of prefix pairs, and $S(w)$ its root-oriented named-incidence path. For the Stern–Brocot chart replace each prefix pair by its mediant and bounding incidence. The above decoders give, in either convention, functions $D_V:V(H)\to H$ and transports
+
+$$
+\mathcal R_{VW}=W^\#\circ D_V,
+\qquad
+\mathcal R_{WV}\mathcal R_{VW}=\operatorname{id}_{V(H)}.
+$$
+
+All inverses are on the corresponding actual images. The repository's `unimodular_wordMatrix`, `word_node_is_reduced` and `unimodular_iff_wordMatrix` supply matrix facts with their stated scopes. In particular, the first module's reduced lower row is a different readout from the positive column-sum response here; the matrix-generation theorem alone does not assert the present four-view recovery or uniqueness of the positive-rational decoder.
+

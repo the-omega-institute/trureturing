@@ -1,0 +1,18 @@
+**Definition 17.1 (Forward-closed predictive pairs on fixed letters).** Fix a finite gap alphabet $\Gamma\subset\{2,3,\ldots\}$ and a finite nonempty set of actual split seeds in the component $D$. A seed is the ordered predictive pair $(a,b)$ in (15.1) for a specified $c,l,r$. Let $\mathcal P_\Gamma$ be their forward closure under
+
+$$
+T_g(s,t)=(\tau_g(s),\tau_g(t))\quad(g\in\Gamma).
+\tag{17.1}
+$$
+
+It is a finite subset of $S_D\times S_D$, including any diagonal descendants. For $p=(s,t)\in\mathcal P_\Gamma$ define
+
+$$
+R_p(v)=\frac{L_t(v)}{L_s(v)},\qquad
+\rho_p(g)=\frac{f_t(g)}{f_s(g)},\qquad
+\mathbf R(v)=(R_p(v))_{p\in\mathcal P_\Gamma}\quad(v\in\Gamma^*).
+\tag{17.2}
+$$
+
+The vector is always formed from one common word $v$; its coordinates are not independently selectable.
+

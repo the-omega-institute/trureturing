@@ -1,0 +1,28 @@
+**Definition 8.1 (the earned input and finite clock family).** Retain
+exactly Definition 1.1 and the resource coordinates of Definition 1.3.
+For positive $d$, use Theorem 2.1 unchanged: its small-root branch
+already returns $(P,n)$; in its deep branch Theorems 2.2 and 3.1 earn
+an explicit recurrence and index-zero aligned seed for the authentic
+core $y$. For $d=0$ use the promised zero core. No original transient
+bit is replaced by a core bit.
+
+For an exact-height call at a present start $x$ of depth at most $h_0$
+from Definition 4.1, pay its presence and explore at most $\ell$ further
+levels, paying both children at every visited node and stopping at
+terminals. Use $\ell=0$ at $d=0$. At a surviving nonterminal frontier
+$p$ of depth $m$, consider the entire rectangle
+
+$$
+\mathcal A_m=\{(A,B):1\le A,B<F_{2m+4}\},\qquad K=H-m.
+\tag{PSA.8.1}
+$$
+
+This is a locally generated family of integer hypotheses, including
+pairs with no global source realization. ACR Theorems 27.2--27.3,
+with the hypotheses already checked in Theorem 4.2, give
+$m\le h_0+\ell=O(\log(d+2))$, $|\mathcal A_m|=O((d+1)^{16})$,
+and inclusion of the two actual first-batch indices. Every birth in
+this frontier uses $y$ at its original global index. Neither integer
+coordinate is supplied or observed. The acquired deep cone is used
+only to earn $y$; its potentially large clocks are not enumerated.
+

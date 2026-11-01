@@ -1,0 +1,54 @@
+**定理 62.5。** 对上述每个实际对，
+
+$$
+x_2-x_1=\frac{2\ell tP_J}{D_p},\qquad
+y_2-y_1=\frac{\ell tP_M}{D_p^2}.
+\tag{62.38}
+$$
+
+证明完整有限消元。第二端的整个增益给
+
+$$
+w_2:=\omega_2/t=17+(S-U-2)\rho
+=\frac{W_p^{\rm pol}}{D_p},
+$$
+
+因为 $S=s+2\ell\rho V_p/D_p$。两端 SAME 子片的
+$\omega=32\theta+n+\eta+5m-\kappa$ 给
+
+$$
+\omega_1/t=w_2+\ell(32\alpha-\beta).
+$$
+
+在 $x_i=48q_i\theta_i-2q_i\omega_i$ 中相减、按 $\ell$ 收集，得
+
+$$
+\frac{x_2-x_1}{2\ell t}=24-w_2+q(8\alpha-\beta).
+$$
+
+而 $8\alpha-\beta=2\rho B_p/D_p$。代入 $w_2$ 后分子为
+$24D_p-D_p[17+(s-U-2)\rho]-2\ell\rho^2V_p+2q\rho B_p$，恰为 $P_J$，得到第一式。
+
+令 $A_1=A_p,A_2=A_p+\ell(k_s-4),k_s=R_pV_p$。在
+$y_i=48q_i\theta_i+A_i\omega_i$ 中相减得
+
+$$
+\frac{y_2-y_1}{\ell t}
+=48-48q\alpha+(k_s-4)w_2-A_p(32\alpha-\beta).
+$$
+
+逐项代入
+
+$$
+\alpha=\frac{2\rho L_p}{D_p},\quad k_s=\frac{2\rho V_p}{D_p},\quad
+32\alpha-\beta=\frac{2\rho C_p}{D_p},\quad w_2=\frac{W_p^{\rm pol}}{D_p},
+$$
+
+乘 $D_p^2$，恰得 $P_M$ 的全部四项，得到第二式。$B_p,C_p$ 的每个系数直接由 $L_p,K_p$ 收集；没有引入可行中间世界。∎
+
+$\ell,t,u,K_p,D_p$ 均严格正，故归一化 $J,M$ 差的符号分别恰为 $P_J,P_M$ 的符号。实际响应差再乘 SAME $\tau\ne0$：负 $\tau$ 反转大小，不改变相等或不等。
+
+WITH 全部固定父、固定 $\kappa$、BOTH 严格源、BOTH $Q$ 和 BOTH 原 $C$ 过滤，$P_J=0$ iff 此实际普通对在 $J$ 碰撞，$P_M=0$ iff 在 $M$ 碰撞。脱离这些过滤，多项式零点不是实际碰撞。没有证明任一多项式在整个过滤关系上有普遍符号，也没有给出可行碰撞元组。
+
+同一子片两动作均失败，可以由 TWO DIFFERENT 普通对给两零式，或涉及实际匹配例外。它不要求一个普通对同时满足 $P_J=P_M=0$。精确关系消元是新的约束进展，不是已经完成的选择器。
+

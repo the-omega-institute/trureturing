@@ -53,20 +53,44 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Balanced Dicke states maximize the success of equal-prior detector-sensor identification.",
         H("DetectorSensorDickeOptimality"), Blocks(
+            Node("psd_cauchy_schwarz", PsdCauchySchwarzFormula(),
+                "A positive semidefinite complex matrix satisfies Cauchy–Schwarz for its sesquilinear form: the squared absolute mixed value is bounded by the product of the two real diagonal values. The form may be degenerate.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("fire", FireFormula(), "Section 2, pages 2–3: “Let |𝜙ᵢ⟩ = (𝐼^{⊗𝑖} ⊗ 𝑈 ⊗ 𝐼^{⊗(𝑛−𝑖−1)})|𝜓⟩.” A Boolean word labels the tensor eigenbasis; true is u₊ and false is u₋. Angles are in radians.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("isoSuccess", SuccessFormula(), "Section 2, page 3: “these final states have an equal prior probability”. The success is the mean of the Born probabilities for the correct outcomes. LocalPOVM is the existing finite family of positive semidefinite effects summing to the identity.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("rCount", CountFormula("rCount", Eq), "Section 4, page 7: “For each 0 ≤ 𝑘 ≤ 𝑛, let 𝑅𝑘 be the number of coefficient-squares from 𝑆𝑘 in the RHS of a Real equation”. Observation 1 places a word on this side exactly when its two selected bits agree. The inner cardinality counts the true bits.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("lCount", CountFormula("lCount", Neq), "Section 4, page 7: “𝐿𝑘 be the number of coefficient-squares from 𝑆𝑙 in the LHS of Real equation.” Observation 1 places a word on this side exactly when its two selected bits differ. The source’s Sl in this sentence denotes the selected weight partition.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("T", ThresholdFormula(), "Theorem 2, pages 6–7, defines T = ½ arccos(−(⌈n/2⌉ − 1)/⌈n/2⌉). Nat.div is integer division, so Nat.div (n + 1) 2 is the ceiling of n/2. The outer division is in ℝ.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("claim", Eqn(V("claim"), ClaimBody), "Section 5, Conjecture 1, page 10: “Consider the ISO problem, with the unitary operator 𝑈, initial state |𝜓⟩, and final states {|𝜙ᵢ⟩} as defined therein. Recall that the eigenvalues of 𝑈 are {𝑒^{+𝑖𝜃}, 𝑒^{−𝑖𝜃}}. Let 𝑛 ≥ 3 be the number of sensors. For a given 𝜃 ∈ (0,𝑇] ∪ [180 − 𝑇, 180), degrees, where 𝑇 is from Theorem 2, the optimal initial state |𝜓⟩ for the ISO problem is as follows. Let 𝑆ₗ be the partition that minimizes (𝑅ₗ + cos(2𝜃)𝐿ₗ)/(𝑅ₗ + 𝐿ₗ), where 𝑅ₗ and 𝐿ₗ are as defined in the previous section. The coefficients of the optimal solution are such that their coefficient-squares are given by: |𝜓ⱼ|² = 1/|𝑆ₗ| ∀ |𝜓ⱼ|² ∈ 𝑆ₗ  |𝜓ⱼ|² = 0 ∀ |𝜓ⱼ|² ∉ 𝑆ₗ” The formula uses radians, φ for the proposed state and ψ for a competitor. Each minimizing l and every assignment of coefficient phases are allowed. The words of weight l number Nat.choose n l. The two Fin n indices have values 0 and 1; their proof fields are omitted.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
+            Node("weight_class_card", All("n", Nat, All("k", Nat,
+                Eqn(Call(Q("Finset", "card"), Call(Q("Finset", "filter"),
+                    LambdaOf("x", Word, Eqn(Weight(V("x")), V("k"))),
+                    Cast(Q("Finset", "univ"), Call("Finset", Word)))),
+                    Call(Q("Nat", "choose"), N, V("k"))))),
+                "The Boolean words with exactly k true coordinates form a class of cardinality Nat.choose n k.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Paper)),
             Node("result", V("claim"), "Averaging a feasible Gram decomposition over sensor permutations preserves its objective and produces a real constant overlap. A positive semidefinite trace certificate bounds the objective by the squared diagonal of the Gram square root. This diagonal decreases with the overlap on the stated angle range. Every minimizing weight class reaches the smallest overlap, and a complete square-root measurement attains the bound. The argument allows arbitrary phases and every global POVM; it does not require the source’s stronger strict-averaging Conjecture 2.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Paper)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Owner + "." + name), H(name),
+        Describe.Lean(DescribeId.Create(name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Owner + "." + name), H(name),
             StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
             name == "result" ? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("zhan-gupta-hillery-2024-detector-sensor-dicke-optimality"),
                 ResolutionKind.Proved) : null);
+
+    private static Formula PsdCauchySchwarzFormula()
+    {
+        var h = V("h"); var matrix = V("H"); var x = V("x"); var y = V("y");
+        Formula Form(Formula a, Formula b) => Call("dotProduct", Call("star", a), Call(Q("Matrix", "mulVec"), matrix, b));
+        var inequality = Leqn(new Formula.Power(new Formula.Norm(Form(x, y)), D(2)),
+            Mul(Call(Q("Complex", "re"), Form(x, x)), Call(Q("Complex", "re"), Form(y, y))));
+        var vectors = All("x", Fn(h, Complex), All("y", Fn(h, Complex), inequality));
+        var hypothesis = Impl(Call(Q("Matrix", "PosSemidef"), matrix), vectors);
+        var parameters = All("H", Call("Matrix", h, h, Complex), hypothesis);
+        var instances = Seq(OpenBracket, Call("Fintype", h), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", h), CloseBracket, Comma, Sp, Parenthesized(parameters));
+        return All("h", V("Type"), instances);
+    }
 
     private static Formula FireFormula() => All("n", Nat, All("theta", Real, All("i", FinN, All("psi", State,
         Eqn(Call("fire", V("theta"), V("i"), V("psi")), LambdaOf("x", Word,

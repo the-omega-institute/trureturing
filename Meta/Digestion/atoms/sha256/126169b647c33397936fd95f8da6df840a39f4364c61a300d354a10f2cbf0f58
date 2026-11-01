@@ -1,0 +1,56 @@
+**Definition 1.1 (the original entrance).** Fix an integer $d\ge0$.
+Use the actual source of [GPO, Definition 27.1][GPO] and the complete
+entrance of [ACR, Definition 9.1][ACR]. The initial root is alpha at cut
+zero. Physical links persist, have names $a<b$, and keep that order.
+Each update changes each old alpha leaf to beta and replaces each old
+beta leaf by one alpha child and one beta child. Newborn leaves are not
+updated again in that update. The old beta parents are processed in
+physical lexicographic order. At the $j$th birth since initialization,
+the actuator consumes $z_j$, putting beta at $a$ exactly when $z_j=1$.
+The autonomous generator advances once per birth and receives no other
+input. Reads and local calculations neither update the source nor advance
+its generator.
+
+Write $s_i=z_{i+1}$ for $i\ge0$. The authentic public promise is precisely
+$s\in\mathscr R_d$: there is a monic polynomial of degree at most $d$
+annihilating $s$ under forward shift $E$ at every nonnegative index.
+Equivalently, some $0\le u\le d$ and binary coefficients satisfy
+
+$$
+s_{i+u}=\sum_{j<u}c_j s_{i+j}\qquad(i\ge0).
+$$
+
+Order zero means the zero sequence. Coefficients may vanish, the original
+presentation may be nonminimal, and the transition may be singular. No
+bound on the least positive period is imposed. This is not an eventual
+recurrence promise with an unbounded onset.
+
+Put $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$ and $B_t=F_{t+1}-1$. The unknown
+completed cut $n$ is any finite integer at least
+
+$$
+n_0=\begin{cases}
+\min\{t\ge3:F_t-1\ge2d\},&d>0,\\
+2,&d=0.
+\end{cases}
+$$
+
+The only numerical source input is $d$. Accessible law, seed, age,
+phase, support, labels, chronological records, archives and age-bearing
+allocation or duration information are erased. The actual source and
+its authentic surviving root binding remain. A total paid presence
+service accepts any fully materialized finite physical word $w$ at that
+root and returns $\operatorname{Read}(w)=\mathbf1_{w\in S_n}$. There is
+no relative-root call, label, rank, clock, law, period, equivalence or
+chronology reply. No reset, clone or physical recutting operation is
+used.
+
+The service premises include genuine binding, grants, reliable completed
+Reads, common finite source-blind instructions, finite local progress,
+and sufficient growing owned readable backing. A completed-cut stationary
+interval covers the realized acquisition, calculations, allocations and
+intermediate and retained writes. If acquisition is composed with
+installation, the interval and backing must additionally cover the entire
+normalization and completed handoff of ACR Theorems 26.1 and 29.2.
+These premises do not follow from a transcript or from an operation count.
+

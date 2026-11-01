@@ -1,0 +1,82 @@
+#### 定理 7.2：反手性酉共轭轨道的精确间隙
+
+对式 [(21)](#eq-eq:58) 的原生边界门，
+
+<a id="eq-eq:chiral-gap"></a>
+
+```math
+\boxed{\inf_{U\in U(13),\,|c|=1}
+ \|UKU^\dagger-cK^{-1}\|_{\rm op}=2\sin\frac{3\pi}{20}.}\tag{22}
+```
+
+
+**证明。**
+
+记  $D_ P=I+(e^{i\theta}-1)P$ ， $K=e^{i\theta}D_ P$ 。
+去掉自由整体相位、左乘酉矩阵，可把问题写成
+
+```math
+\inf_{\operatorname{rank} Q=5,\,|d|=1}\|D_PD_Q-dI\|_{\rm op},
+ \qquad Q=UPU^\dagger.
+```
+
+两个等秩投影的主角分解把  $H$  写成五个二维块与一个三维余块。
+在每个二维块中，
+
+```math
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+ Q=\begin{pmatrix}\cos^2\beta&\cos\beta\sin\beta\\  \cos\beta\sin\beta&\sin^2\beta\end{pmatrix},
+ \quad0\le\beta\le\frac\pi2;
+```
+
+三维余块上两投影都为零。
+该分解可由  $PQP$  在  $\operatorname{ran}P$  上对角化取得；
+对  $0\lt \cos^2\beta\lt 1$ ，把  $Q$  作用到相应本征向量后正交化给配对的补向量。
+对本征值零或一使用相交／正交子空间；
+因  $13\ge2\cdot5$ ，共同零空间足以补齐所有端点块。
+
+因此  $D_ PD_ Q$  必含本征值  $1$ 。
+在任一二维块，其行列式为  $e^{2i\theta}$ ，迹为
+ $2e^{i\theta}[1-(1-\cos\theta)\cos^2\beta]$ ，所以另两本征值为
+
+```math
+e^{i(\theta-\omega)},\quad e^{i(\theta+\omega)},\qquad
+ \cos\omega=1-(1-\cos\theta)\cos^2\beta,\quad0\le\omega\le\theta.
+```
+
+取三点的圆周角  $0,\theta-\omega,\theta+\omega$ 。
+相邻圆周间隙为
+ $\theta-\omega,\thinspace 2\omega,\thinspace 2\pi-\theta-\omega$ 。
+在  $\theta=3\pi/5$  时，每个间隙都不超过  $2\pi-\theta$ ，
+因为  $\theta\le2\pi-\theta$ 、 $2\theta\le2\pi-\theta$ 。
+故包含这三点的最短闭弧长至少为  $\theta$ 。
+任一中心相位到至少一个谱点的圆周距离不小于  $\theta/2$ ，
+弦长至少  $2\sin(\theta/4)$ 。酉矩阵是正规矩阵，算子范数就是最大谱距离，得到下界。
+
+取  $Q$  与  $P$  正交是可能的，因为  $5+5\le13$ 。
+此时  $D_ PD_ Q$  在两者像空间的和上等于  $e^{i\theta}$ ，在三维余块上等于一。
+选  $d=e^{i\theta/2}$  时两个谱距离均为  $2\sin(\theta/4)$ ，达到下界。
+换回原  $K$  的相位为  $c=e^{5i\theta/2}=-i$ 。
+
+**证毕。**
+
+
+这一结论只针对所列谱和任务，不能推广成“所有门都不能酉换框到逆门”。
+在二维实秩一模型中，令  
+
+```math
+Y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)
+```
+
+ ，
+对任一实秩一投影都有  $YPY=I-P$ ，从而
+
+```math
+YK_PY=\zeta^3K_P^{-1}.
+```
+
+二维的  $1+1$  重数平衡允许这一换框；十三维的  $5+8$  分裂不允许。
+
+
+<a id="stmt-7-3"></a>
+

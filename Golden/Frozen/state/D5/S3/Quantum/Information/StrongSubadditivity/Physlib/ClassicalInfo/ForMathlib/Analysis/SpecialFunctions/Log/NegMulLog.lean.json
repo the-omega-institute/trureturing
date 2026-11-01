@@ -1,0 +1,1 @@
+{"statement_id":"sha256:db5c45f10422f7e8fa58bfe192756a32df011e2600777ae1fff465b420eb886c","declarations":[{"declaration_name_key":"ns(ns(n0,4:Real),22:negMulLog_strictAntiOn)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,4:Real),22:negMulLog_strictMonoOn)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,4:Real),25:negMulLog_le_rexp_neg_one)","kind":"theorem"}]}

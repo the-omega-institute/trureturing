@@ -1,0 +1,5 @@
+source_id = "bessel-redheffer-global-threshold"
+path = "docs/develop/theory/BESSEL_REDHEFFER_GLOBAL_THRESHOLD.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

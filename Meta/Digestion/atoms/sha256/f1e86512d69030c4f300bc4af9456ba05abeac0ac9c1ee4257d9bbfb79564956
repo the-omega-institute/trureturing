@@ -1,0 +1,34 @@
+**Lemma 3.2 (Two adjacent active edges with a one).** Suppose two
+distinct active edges share a vertex and at least one of their labels
+is one. For either orientation of the edges, the constraints leave two
+complementary three-spin assignments. Their masses conditional on the
+phase are $a^2b$ and $ab^2$. For every target position, the maximal
+joint endpoint-state mass on this constrained phase section is
+$a\eta/2$ under the full law.
+
+Proof. Write the ordered triple on the union as $(s_0,s_1,s_2)$.
+Its two successive XOR labels determine the triple once $s_0$ is
+given, leaving exactly the triple and its complement. A label one
+excludes constant triples. For clarity, the three possible label pairs
+on the left and right edges have these majority-mass assignments:
+
+$$
+\begin{array}{c|c|c}
+\text{left label}&\text{right label}&(s_0,s_1,s_2)\\ \hline
+0&1&(\sigma,\sigma,1-\sigma)\\
+1&0&(1-\sigma,\sigma,\sigma)\\
+1&1&(\sigma,1-\sigma,\sigma)
+\end{array}
+\tag{3.2}
+$$
+
+Each displayed assignment has mass $a^2b$, and its complement has
+mass $ab^2<a^2b$. Reversing which edge was read first only changes
+which row applies. For a target in the triple, these complementary
+assignments give opposite target spins, so the maximal full-law state
+mass is $a^2b/2=a\eta/2$. For a target outside the triple, the
+constraint has phase-conditional probability
+$a^2b+ab^2=ab=\eta$. Multiplication by the independent majority
+target factor $a$ and the phase factor $1/2$ gives the same answer.
+$\square$
+

@@ -1,0 +1,58 @@
+**定理 4.3（有限仪器树的全部内部实现）。**
+
+<a id="thm-internal-tree"></a>
+
+给定有限维逻辑系统、初始密度矩阵 $\rho_0$，
+以及有限深度、有限输出的自适应 CP 仪器树。
+若同一整体代数包含足够的内部矩阵容量、相应准备关联和控制，
+则整个树可由一个固定整体向量、持久内部记录投影及各历史切面的搬运可观察量表示。
+不需要从本体外部输入探针。
+
+**证明。**
+
+提前终止的分支用恒等停止记录补齐到共同有限深度。
+令 $\tau_\varnothing=\rho_0$、$\tau_{ho}=\mathcal I_{o|h}(\tau_h)$。
+在每个历史 $h$ 选 Kraus 表示
+$\mathcal I_{o|h}(\rho)=\sum_\alpha M_{o\alpha|h}\rho M_{o\alpha|h}^*$。
+在尚未耦合的内部记录坐标上定义
+
+$$
+V_h\psi=\sum_{o,\alpha}M_{o\alpha|h}\psi\otimes\lvert o \rangle\otimes\lvert \alpha \rangle .
+$$
+
+$\sum_{o,\alpha}M_{o\alpha|h}^*M_{o\alpha|h}=I$ 给等距性。
+补全正交基，将它扩为同一整体矩阵代数中的酉；
+以旧记录控制，并保留全部旧记录与隐藏指标。
+初始混态的纯化坐标也在内部。
+在统一末端切面得到固定向量
+
+$$
+\Psi_N=\sum_{h,\lambda}(K_{h,\lambda}\otimes I)\psi_0
+\otimes\lvert h \rangle\otimes\lvert \lambda \rangle .
+$$
+
+若 $P_h$ 选取全部以 $h$ 开始的末端记录，
+则 $\omega(P_h)=\operatorname{Tr}\tau_h$。
+令从历史层到末端的完整酉为 $U_{N:t}$，
+定义 $X_h(a)=U_{N:t}(a\otimes I)U_{N:t}^*$。
+后继控制保留前缀，故与 $P_h$ 交换，得到
+
+$$
+\frac{\omega(P_hX_h(a)P_h)}{\omega(P_h)}
+=\frac{\operatorname{Tr}(\tau_h a)}{\operatorname{Tr}\tau_h}.
+$$
+
+> 编者定义域澄清：上式的条件态分式只对正质量历史定义。零质量历史仍保留在完整仪器树与无条件记录律中，但不赋予条件态；原式保留。
+
+这是该历史切面的条件状态。
+在允许全部内部酉的表示中，还可按定理 [2.4](#thm-transitivity)
+将固定 $\Psi_N$ 与选定参考 $\Omega$ 同时变换。
+
+□
+
+“新记录槽”是内部尚未耦合的关系条件。
+容量、可控性和所需准备关联仍然要在整体模型中成立；
+没有外部并不使这些内部条件自动成立。
+只条件化旧记录、却不搬运过去的可观察量，
+一般得到的是未来演化后的状态，不能冒充过去切面。
+

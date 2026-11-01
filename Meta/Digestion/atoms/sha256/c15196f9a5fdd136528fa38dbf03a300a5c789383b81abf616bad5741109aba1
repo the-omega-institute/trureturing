@@ -1,0 +1,59 @@
+**Proposition 4.2 (Original output identity, from [F]).** Let
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)).
+$$
+
+For each edge take the expectation pair of
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|.
+$$
+
+Their concatenation is $y:\mathcal M\to\mathbb R^{10}$. Set
+
+$$
+U(a)=\binom{\cos a}{\sin a},\qquad
+R_a=\begin{pmatrix}\cos a&-\sin a\\ \sin a&\cos a\end{pmatrix},
+\qquad J_{\mathrm{ref}}=\operatorname{diag}(1,-1),
+$$
+
+$$
+A(k)=2\sqrt{k(H-k)},\qquad B_{\mathrm{nat}}(k)=2\sqrt{Zk},
+$$
+
+$$
+D_0(a,b)=(a,b,a,J_{\mathrm{ref}}a,J_{\mathrm{ref}}a),\qquad
+O=\bigoplus_{(i,j)\in\mathcal E}R_{\theta_i^{\mathrm{in}}-\theta_j^{\mathrm{in}}},
+\qquad D=OD_0.
+\tag{4.8}
+$$
+
+Then
+
+$$
+y(k,\alpha,\beta)=D\bigl(A(k)U(\alpha),B_{\mathrm{nat}}(k)U(\beta)\bigr),
+\qquad D^{\mathsf T}D=4I_2\oplus I_2,
+\tag{4.9}
+$$
+
+and $\|D(a,b)\|_2^2=4\|a\|_2^2+\|b\|_2^2$.
+
+**Proof 4.2.** Under the stated sign convention, each expectation pair
+is twice the real and imaginary parts of
+$\overline\psi_i\psi_j$, whose phase is $\theta_i-\theta_j$.
+The five increment differences are
+$\alpha,\beta,\alpha,-\alpha,-\alpha$ in the displayed order.
+Thus $D_0$ arranges the pairs and $O$ applies the preparation rotations.
+Each of the four first-pair copies contributes $I_2$ to its Gram block,
+the other pair contributes one $I_2$, and all blocks occupy disjoint
+output entries. Orthogonality of $O$ and $J_{\mathrm{ref}}$ gives
+(4.9). This is the identity of [F], Lemma 1.3. $\square$
+
+All errors below use these ten entries and their ordinary Euclidean
+norm, with the original factors of two. In particular (4.9) is not
+a replacement of the metric by an unweighted four-output norm.
+Since $A(k)\le H$ and $B_{\mathrm{nat}}(k)<e_*$, $y$ is uniformly
+bounded.
+

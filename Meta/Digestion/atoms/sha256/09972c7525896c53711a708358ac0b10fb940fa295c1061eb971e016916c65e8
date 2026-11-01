@@ -1,0 +1,25 @@
+**Convention 8.2 (Supplied DEV26 identification credits).** The entire supplied DEV26 append at revision `87b17201b5fbcbf41101aaf5541c8f990829b021` uses the same actual post-tick preparation, stable accessible isometry, retained chronological flags, no inaccessible distinguishing record, no intermediate intervention, no terminal memory measurement, count-commuting terminal effects, and fixed strictly positive support probabilities as Definitions 2.1–2.2. Its results are credited supplied results, not re-proved here.
+
+For $K=\{a,b,c\}$, supplied DEV26.2 proves the exact complete-identification horizon $N=(d-1)(b+1)$ with $d=(c-a)/\gcd(b-a,c-a)$, and its theorem includes the first-sensitivity formula retained in Corollary 7.1. It therefore supplies a complete three-support case while the arbitrary-support first full-identification question remains open.
+
+For $H=4$, $K=\{1,2,3,4\}$, supplied DEV26.3 gives the exact equality-fiber obstruction. With
+
+$$
+z_1=(1,-2,1,0),\qquad z_2=(1,-1,-1,1),
+$$
+
+these vectors form an integral basis of $L_K$. Both characters occur with positive coefficients in the observed whole-density coefficient
+
+$$
+C_3=p_1p_2+p_2\sqrt{p_1p_3}\,e^{i(\theta_1-2\theta_2+\theta_3)}
+ +\sqrt{p_1p_2p_3p_4}\,e^{i(\theta_1-\theta_2-\theta_3+\theta_4)}.
+$$
+
+The terms are aggregated in this single measured coefficient of the full $T_3$; no individually measured monomial is assumed. Supplied DEV26.3 identifies this coefficient and its conjugate as the only phase-dependent entries of the full $T_3$, and provides distinct affine (and corresponding channel/instrument) orbits with the same $C_3$, hence the same full $T_3$, for every fixed positive probability vector. At horizon four the additional whole-density coefficient
+
+$$
+C_4=p_1p_3+\sqrt{p_1p_2p_3p_4}\,e^{i(\theta_1-\theta_2-\theta_3+\theta_4)}
+$$
+
+isolates the second character after subtracting its known offset and dividing by its known positive coefficient; combining it with $C_3$ isolates the first character. The integral basis then gives exact full identification at horizon four, while all shorter horizons retain the supplied collision. This is a credited DEV26 result and does not alter the arbitrary-support first-sensitivity claims above.
+

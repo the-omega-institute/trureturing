@@ -1,0 +1,34 @@
+### 推论 8.1（黄金递归精度的可求和调度）
+
+另假设一个已验证的完整仪器编译器，以内部精细度$m$保证
+
+$$
+\epsilon(m)\le C\varphi^{-2m},\qquad C>0,
+ \qquad\varphi=(1+\sqrt5)/2.
+$$
+
+对总误差预算$\delta>0$，取
+
+$$
+m_n=\max\left\{0,
+ \left\lceil\frac{\log(Cn(n+1)/\delta)}{2\log\varphi}\right\rceil\right\},
+ \qquad n\ge1.
+$$
+
+则$\epsilon_n\le\delta/[n(n+1)]$，故$\sum_n\epsilon_n\le\delta$，
+定理 [thm:polarization](#thm:polarization) 全部结论成立。
+
+**证明。**
+
+若对数为正，向上取整给所需指数界；若为非正，$m_n=0$已满足。
+用$1/[n(n+1)]=1/n-1/(n+1)$望远镜求和。
+
+∎
+
+这给精细度$m_n=O(\log n+\log(1/\delta))$，
+尚不给原生门字长的同阶界。v30 的单参数指数逼近不自动成为
+完整自适应仪器的编译定理；项目 §105 的射影密度也只给每个精度的有限存在性。
+若另外证明每层字长$L(m)=O(m)$，才可把前$N$层门调用估成
+$O(N\log N+N\log(1/\delta))$。
+内部辅助容量、可重复 ready 关联和全部失败界也都须实际供应。[v30](#ref-v30) [quantum](#ref-quantum)
+

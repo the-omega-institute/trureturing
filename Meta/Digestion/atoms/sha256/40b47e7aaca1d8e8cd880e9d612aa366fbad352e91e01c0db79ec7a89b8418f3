@@ -1,0 +1,128 @@
+**Proposition 10.1 (Correction to the sufficient assertion in 9.1).**
+The existential PSD-witness and product-observable funding assertion in
+Assertion 9.1 is false. The statements calling that sufficient assertion
+unresolved in §1, Assertion 9.1, and the last sentence of Proposition 9.2
+are superseded by this proposition. The original question
+$\Delta(\rho)\geq0$ on the domain of Definition 1.1 remains open;
+Theorems 3.3, 4.2, and 5.1 remain valid lower bounds.
+
+More precisely, let $|\pm\rangle_Y$ be the two $Y$ eigenvectors and take
+
+$$
+\rho=\frac34|++\rangle_Y\langle++|
+ +\frac14|--\rangle_Y\langle--|
+ =\frac14[I+\tfrac12(YI+IY)+YY],\qquad
+ a=\frac12,\quad b=\frac14.
+\tag{10.1}
+$$
+
+At this complex, nonreal rank-two state, both combined right sides in
+Theorem 5.1 are at most $-87/16384$ for every allowed $N$ and every
+product observable $W$. Adding any family of joint score observables,
+or allowing any $\theta\geq0$ in the endpoint bound (4.9), does not
+remove this obstruction. At the same state,
+
+$$
+\Delta=2\mathsf h(1/8)+\mathsf h(1/4)-\mathsf h(1/16)
+ \geq\frac32\log2>0,
+\quad
+\mathsf h(x)=-\frac{1+x}{2}\log\frac{1+x}{2}
+            -\frac{1-x}{2}\log\frac{1-x}{2}.
+\tag{10.2}
+$$
+
+Proof.
+Put $A(s)=[I+s(YI+IY)+YY]/4$. Both channels preserve
+$\mathcal S=\operatorname{span}\{|++\rangle_Y,|--\rangle_Y\}$, and
+
+$$
+P=A(1/8),\qquad Q=A(1/4),\qquad R=A(1/16).
+$$
+
+The nonzero eigenvalues of $A(s)$, and the eigenvalues of each of its
+margins, are $(1\pm s)/2$. In particular the source spectrum is
+$(3/4,1/4,0,0)$, and $S(A(s))=I_{A(s)}=\mathsf h(s)$.
+
+Write $m=1/8$. The supported path is $A_t=A(mt)$, and $H$ has
+entries $(m/2,-m/2)$ on $\mathcal S$. The compressions of $XI,ZI,IX,IZ$
+vanish, while $YI$ and $IY$ both compress to
+$\operatorname{diag}(1,-1)$. With $c_t=1-m^2t^2$, the active local
+Gram block and derivative vector are
+
+$$
+V_{YY,t}=c_t\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+ d_{YY}=(m,m)^{\mathsf T},\qquad
+ B_t=\operatorname{diag}(0,c_t,0).
+$$
+
+Each marginal BKM matrix has longitudinal entry $c_t$, so the full
+normalized cross operator (3.9) has just one nonzero singular value,
+equal to $1$. Thus $\kappa_t=1$. Direct differentiation on $\mathcal S$
+gives
+
+$$
+\begin{aligned}
+\mathrm D\log_{A_t}[H]
+ &=\frac m{c_t}(YI-mt I_{\mathcal S}),\\
+G_{A_t}(H)&=\frac{m^2}{c_t}=d_t^{\mathsf T}V_t^+d_t,
+& s_t&=\frac{2m^2}{c_t}.
+\end{aligned}
+\tag{10.3}
+$$
+
+The full optimal score already lies in the centered local span.
+Consequently the score pairing of every orthogonal additional observable
+is zero. Every Schur score residual is zero, even after adding any family
+of observables. Both covariance integrands in Theorem 5.1 are therefore
+$-G_{A_t}(H)$.
+
+For the source margins $u_y=v_y=1/2$, (4.2) gives
+
+$$
+T^0_{yy}=\frac{a^2+b^2}{2}\left(\frac12\right)^2=\frac5{128},\qquad
+\rho_0=\frac14[I+\tfrac12(YI+IY)+\tfrac5{128}YY].
+$$
+
+The four eigenvalues of this reference are
+$(261,123,123,5)/512$. Hence $\rho_0>0$, and
+$\mu=\operatorname{tr}(N\rho_0)\geq0$ for every allowed PSD witness.
+The prescribed $\theta_0$ is zero for all of them. Moreover,
+
+$$
+E_P=\frac3{512}YY,\qquad E_Q=-\frac3{512}YY,\qquad
+ v_0=\frac9{32768}.
+$$
+
+For the supported Gibbs state
+$\omega_\pi(X)=\exp(\log(\pi|_\Pi)+\Pi X\Pi)/Z_\pi(X)$,
+direct subtraction of logarithms yields
+$\Lambda_\pi(X)=D(\pi\Vert\omega_\pi(X))\geq0$.
+Thus (4.9) is at most $2v_0$ for every $\theta\geq0$, and in particular
+
+$$
+\mathcal C_N=2v_0-\Lambda_{\pi_P}(2E_P)
+                    -\Lambda_{\pi_Q}(2E_Q)\leq2v_0.
+$$
+
+The path identity (3.12) and
+$\mathsf h'(x)=-\operatorname{atanh}x$ give
+
+$$
+g=\mathsf h(1/16)-\mathsf h(1/8)
+ =\int_{1/16}^{1/8}\operatorname{atanh}x\,dx
+ \geq\int_{1/16}^{1/8}x\,dx=\frac3{512}.
+$$
+
+Both combined right sides are consequently at most
+
+$$
+2v_0-g\leq\frac9{16384}-\frac3{512}=-\frac{87}{16384}<0.
+\tag{10.4}
+$$
+
+This disproves the universal sufficient funding assertion in 9.1,
+with its witness and observable choices quantified before the bound.
+Since the two marginal entropy gains both equal $g$, (1.4) gives
+(10.2). Concavity gives $\mathsf h(x)\geq(1-x)\log2$ for
+$0\leq x\leq1$, and $\mathsf h(x)\leq\log2$, proving its strict sign.
+

@@ -1,0 +1,37 @@
+### 定理 10.1（有限钟段到点态二次型的误差）
+
+另假设内部事件图已给局部坐标及 Lipschitz 度规场，$\|g_y-g_x\|_{\rm op}\le L\|y-x\|$。
+沿全部类时的短直段$x+sv$、$0\le s\le h$，$\|v\|\le V$，令
+
+$$
+\tau_h(v)=\int_0^h\sqrt{-g_{x+sv}(v,v)}\,ds.
+$$
+
+若实际门钟读数有$|\widetilde\tau_h-\tau_h|\le\zeta$，
+且$\tau_h/h\le B$，则
+
+$$
+\boxed{\left|\left(\frac{\widetilde\tau_h}{h}\right)^2+g_x(v,v)\right|
+ \le LV^3h+\frac{2B\zeta}{h}+\left(\frac\zeta h\right)^2.}
+ \tag{17}
+$$
+
+**证明。**
+
+记$a(s)=-g_{x+sv}(v,v)>0$，则$|a(s)-a(0)|\le Ls\|v\|^3\le LV^3h$。$\tau_h/h$是$\sqrt{a(s)}$的平均值，其平方位于$a$的最大和最小值之间，
+所以与$a(0)$相差至多$LV^3h$。
+再用$|\widetilde\tau_h^2-\tau_h^2|\le2\tau_h\zeta+\zeta^2$并除以$h^2$。
+
+∎
+
+固定方向分离$\varepsilon$时，保证式 [式 eq:metricerror](#eq:metricerror) 的恢复误差趋零，
+一个充分的有效极限条件是$h\to0$且$\zeta/h\to0$。
+若同时令$\varepsilon\to0$，则一个充分条件是所列总平方钟误差为$o(\varepsilon^2)$。
+在只有这项有界误差保证而 tick 分辨率固定时，不能保证任意短尺度的精确恢复。
+这不是断言所有带固定 tick 的特殊精确模型都不能有连续表示；
+它指出现有误差合同不足以统一保证该极限。
+
+这里的$s,h$是由内部事件坐标提供的比较参数。
+它们之所以可以积分、微分，来自本节的有效连续模型前件，
+没有被重新解释为本体外的绝对时间。
+

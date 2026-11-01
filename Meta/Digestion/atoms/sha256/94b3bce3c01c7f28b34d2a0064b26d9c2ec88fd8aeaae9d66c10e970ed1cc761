@@ -1,0 +1,20 @@
+**Definition 4.1 (Extremal quantities beyond the star comparison).** For $n\ge4$, let $\mathcal B_n$ be the connected simple undirected unweighted bipartite nonstar graphs of order $n$, and define
+
+$$
+\beta_n=\max_{G\in\mathcal B_n}T_A(G).
+\tag{4.1}
+$$
+
+The set is finite up to isomorphism and nonempty, since it contains $P_n$. Theorem 3.1 gives $\beta_4=3/2$, uniquely at $C_4$, and $\beta_n<n-5/2$ for each $n\ge5$. The latter strict bound does not specify the value of $\beta_n$.
+
+For $n\ge4$, let $\mathcal N_n$ be the connected nonbipartite noncomplete graphs of order $n$. The additional adjacency comparison required outside the bipartite subdomain of [Mohan–Tamon–Xu–Zhan, §8(v)](https://arxiv.org/html/2608.20739v1#S8) is
+
+$$
+T_A(G)\le T_A(K_{1,n-1})\quad(G\in\mathcal N_n).
+\tag{4.2}
+$$
+
+The complete-graph maximum is a separate supplied comparison, $T_A(G)\le T_A(K_n)=n-2+2/n$, as in [the repository's complete-graph result](../../../D5/S3/Quantum/Dynamics/AverageMixingTraceMaximum.lean) and its [mathematical exposition](../../../Blueprint/D5/S3/Quantum/Dynamics/AverageMixingTraceMaximum.md). Its spectral and complete-graph inputs are attributed in that exposition to Godsil–Guo–Sobchuk; the same maximum and its equality analysis are discussed by Kang, *On Entries of Spectral Decompositions and Applications*, [arXiv:2610.27498v1, §3](https://arxiv.org/html/2610.27498v1#S3). Neither that supplied comparison nor (3.1) is a bound for all of $\mathcal N_n$ by the star value.
+
+The results here establish the star comparison for the entire bipartite adjacency subdomain. Determining $\beta_n$ for $n\ge5$, establishing (4.2), and obtaining the corresponding extremal comparisons for the two different Laplacian Hamiltonians in Definition 1.4 are distinct additional mathematical problems.
+

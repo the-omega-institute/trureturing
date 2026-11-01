@@ -1,0 +1,66 @@
+**定理 3.2（Uniform density estimate from the certificate）。** Under Assumption 3.1, simultaneously for every integer $s\geq1$ and every $0\leq k\leq N=ms$,
+
+$$
+\lambda(b+r)\leq E(s,k)\leq\lambda b\frac N{N-1}.
+\tag{3.2}
+$$
+
+Writing $\rho=k/N$, one has the uniform finite-scale estimate
+
+$$
+0\leq\lambda m\rho(1-\rho)-\frac{E(s,k)}{s^2}
+\leq\frac{|\lambda|r}{s^2}
+\leq\frac{|\lambda|m}{2s}.
+\tag{3.3}
+$$
+
+For every sequence of integers $0\leq k_s\leq ms$ such that $k_s/(ms)\to\rho\in[0,1]$,
+
+$$
+\lim_{s\to\infty}\frac{E(s,k_s)}{s^2}
+=\lambda m\rho(1-\rho).
+\tag{3.4}
+$$
+
+Proof. The lower bound is Theorem 2.1. For the upper bound use the phase-product trial, an attributed intermediate: the same subset-counting mechanism is supplied by `counting_identity`, `W_move` and `phi40_energy` in [CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean). Phase-twisted fixed-magnetization trials also occur in Bärwinkel–Schmidt–Schnack, §§2.2–2.3, Eqs. (14)–(21), for their cyclic coupling assumptions. Here the required count for arbitrary $H$ satisfying (3.1) is as follows.
+
+For $u\in B_i$ put $\zeta_u=z_i$, and for a $k$-subset set
+
+$$
+w(S)=\prod_{u\in S}\zeta_u,\qquad
+\Phi(S)=\binom Nk^{-1/2}w(S).
+\tag{3.5}
+$$
+
+The modulus-one condition gives
+
+$$
+\langle w,w\rangle=\binom Nk>0,\qquad\|\Phi\|=1.
+\tag{3.6}
+$$
+
+If $u\in S$, $v\notin S$ and $T=S\setminus\{u\}\cup\{v\}$, then $\overline{w(S)}w(T)=\overline{\zeta_u}\zeta_v$. For any ordered distinct $u,v$, precisely $\binom{N-2}{k-1}$ of the $k$-subsets contain $u$ and omit $v$. Thus for $1\leq k\leq N-1$,
+
+$$
+\begin{aligned}
+\langle\Phi,K_k\Phi\rangle
+&=\frac{\binom{N-2}{k-1}}{\binom Nk}
+\sum_{u,v\in\Omega} A(G_s)_{uv}\overline{\zeta_u}\zeta_v\\
+&=\frac{k(N-k)}{N(N-1)}\,s^2 z^*az\\
+&=\frac{k(N-k)}{N(N-1)}\,s^2\lambda m
+=\lambda b\frac N{N-1}.
+\end{aligned}
+\tag{3.7}
+$$
+
+Both orientations are included in the sum over $u,v$, just as in adjacency's quadratic form. For a real symmetric matrix $K$ and $w=x+iy\ne0$, symmetry cancels the imaginary cross terms and gives
+
+$$
+w^*Kw=x^{\mathsf T}Kx+y^{\mathsf T}Ky,\qquad
+w^*w=\|x\|^2+\|y\|^2>0.
+$$
+
+Each real quadratic form is at least $\lambda_{\min}(K)$ times its squared norm, so the complex quotient is subject to the same Rayleigh minimum. A real least eigenvector attains that minimum. This proves the upper bound with its complex normalization. At $k=0,N$, both sides of the upper bound are zero; no binomial coefficient with lower index $-1$ is used.
+
+Since $N\geq2$, the factor $N/(N-1)$ is defined. Since $\lambda b\leq0$, (3.2) implies $E(s,k)\leq\lambda b$. Also $b/s^2=m\rho(1-\rho)$, and the lower bound gives $\lambda b-E(s,k)\leq|\lambda|r$. Dividing by $s^2$ and using $r\leq ms/2$ proves (3.3), including $s=1$ and both endpoints. Continuity of $\rho(1-\rho)$ and the uniform remainder in (3.3) prove (3.4) for every stated sequence, with no fixed-density rounding restriction. $\square$
+

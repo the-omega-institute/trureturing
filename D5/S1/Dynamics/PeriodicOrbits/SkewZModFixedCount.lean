@@ -6,13 +6,11 @@
    utility: none
    digest: Zero holonomy exactly controls fixed points of a finite cyclic skew product. -/
 
-import D5.S1.Dynamics.PeriodicOrbits.SkewAdditiveReturn
+import D5.S1.Dynamics.PeriodicOrbits.SkewZModOrder
 import D5.S1.Dynamics.PeriodicOrbits.OrbitCounting
 import Mathlib.Data.ZMod.Basic
 
 set_option autoImplicit false
-
-/-! Fixed-point counts for cyclic additive skew products. -/
 
 namespace D5.S1.Dynamics.PeriodicOrbits.SkewZModFixedCount
 
@@ -22,10 +20,9 @@ open D5.S1.Dynamics.PeriodicOrbits.SkewAdditiveReturn
 
 variable {X : Type*} {q : ℕ}
 
-noncomputable instance fixedSubtypeFintype (f : X → X) (c : X → ZMod q) (n : ℕ)
-    [Fintype X] : Fintype {x : X // f^[n] x = x ∧ birkhoffSum f c n x = 0} :=
-  Fintype.ofFinite _
+/-! Fixed-point counts for cyclic additive skew products. -/
 
+open scoped Classical in
 /-- A cyclic additive fiber contributes all `q` phases exactly when its Birkhoff
 holonomy vanishes. Thus the fixed-point table of the skew product is a weighted
 zero-holonomy return table on the base. -/

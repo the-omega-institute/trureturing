@@ -1,0 +1,55 @@
+**Definition 28.1 (local models and paid frontier heights).** First earn
+$h$ by Proposition 9.2 and put $H=2h+1$, $S=d+H+2$. A stage has
+an integer $R\in\{0,\ldots,d\}$. Enumerate all presented core
+orders $u\le R$: order zero denotes the zero stream; at $u>0$
+enumerate every binary coefficient row with constant coefficient one
+and every $u$-bit seed. Each denotes a homogeneous all-index stream
+$y'$ aligned to global index zero. Nonminimal and zero presentations
+are allowed. These are computed hypotheses, never source observations.
+
+At a present frontier address $p$ of depth $m$, enumerate these core
+presentations, both integers
+
+$$
+ 1\le A_1,A_2<F_{2m+4},
+ \qquad 2\le q\le H-m.
+ \tag{ACR.119}
+$$
+
+Fix increasing binary order for all these finite loops. A trial
+extends $A_1,A_2$ by the integer Fibonacci recurrence, normalizes the
+root to $(0,\beta)$, and uses (ACR.115) with orientation
+$y'_{J-1}$. At proposed cut $q-1$, construct just the longest and
+shortest paths needed for (ACR.94). A longest path repeatedly takes
+a rank-one-decrement child, with a fixed physical tie rule at rank
+two. For $q=2k+1$, the shortest path takes $k$ rank-two-decrement
+children; for $q=2k$, it takes $k-1$ such children. The endpoint
+ranks are respectively one and two. Relative descriptors are retained
+along the path; no whole model tree is constructed.
+
+Execute the actual rank certificate at $p$ with these literal paths.
+On the first pass return height $q-1$. If no trial passes, return
+provisional height zero. This search does not decide whether the
+clock pair has a global realization. It needs only the hypothetical
+local substitution to generate paths and actual paid replies to
+authenticate any passing rank.
+
+For a requested present start $v$, a height call explores at most
+$\ell$ levels below $v$. At every visited nonfrontier node, query
+both full child literals; stop with height zero if both are absent,
+and descend into both if both are present. A present frontier may
+likewise first be tested for termination; a branch uses (ACR.119).
+Recombine explored branches by $1+\max$ of their child heights.
+No initial labels or branch times are inferred from this exploration.
+
+Every requested start is presence-tested. Every Read operand is
+fully materialized at the original root, with total length at most
+$H$; there is no relative physical call. A length overflow, absent
+start, failed required descent or malformed numerical datum aborts
+the provisional stage. In a shallow branch test, unequal child
+presence aborts as well. All loops, path lengths and counters are
+bounded by $d,H,R,\ell$ and the current explicitly enumerated
+coordinates. No provisional height can enlarge these bounds.
+A local certificate failure continues the finite frontier search;
+it makes no claim about a first wrong bit or the candidate's law.
+

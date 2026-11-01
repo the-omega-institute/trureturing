@@ -1,0 +1,48 @@
+**Definition 16.1 (Capacity-sensitive marginal functions).** Retain Definition 1.1 and the dense domain (11.1). Throughout this section assume
+
+$$
+a\ge4096,\qquad a\in\mathbb Z,\qquad 0<\delta\le\frac1a,
+\qquad r=a+1,\quad s=a+2,\quad n=a-1,
+\tag{16.1}
+$$
+
+and write
+
+$$
+q=r-\delta,\quad \mu=\frac qs,\quad \theta=1-\delta,
+\quad c=2a+1,\quad \gamma=c\delta,
+\quad \tau=\frac{3(2a+3)\delta}{r^2}.
+\tag{16.2}
+$$
+
+In particular $\mathscr D_a(\delta)$ continues to mean the infimum over all laws on nonempty subsets of $[s]$ with this mean and with every actual marginal at least $\tau$. No restriction on cardinalities, symmetry or zero masses is imposed. For an omitted set $J\subsetneq[s]$ put $\bar x_J=x_{[s]\setminus J}$. Define
+
+$$
+g_0(z)=\frac{r^2}{z},\qquad
+g_1(z)=\frac{r^2}{z}-\frac{\gamma}{z^2},\qquad
+f(z)=\frac{a^2}{z}+\frac{c\theta}{z^2}.
+\tag{16.3}
+$$
+
+For real variables $u,w$ set
+
+$$
+v=\frac{q-2u-w}{n},\qquad
+\Omega=\{(u,w):\tau\le v\le w\le u\le1\},
+\tag{16.4}
+$$
+
+and, on $\Omega$, define
+
+$$
+\begin{aligned}
+F_0(u,w)&=2g_0(u)+g_1(w)+n g_1(v),\\
+F_1(u,w)&=2f(u)+\frac{r^2}{w}
+ +\frac{c(2u+\delta-2)}{w^2}+n g_1(v),\\
+F(u,w)&=\max\{F_0(u,w),F_1(u,w)\}.
+\end{aligned}
+\tag{16.5}
+$$
+
+These are functions of grouped marginals, with $v$ determined by the same mean constraint. The graph normalization remains precisely the one in Definition 1.1 and its citation to Albalahi et al., DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109.
+

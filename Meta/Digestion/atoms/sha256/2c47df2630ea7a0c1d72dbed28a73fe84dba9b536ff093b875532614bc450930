@@ -1,0 +1,14 @@
+**约定 1.1（Ambient group and finite sets）。** Throughout Sections 1–4,
+$G$ is an arbitrary torsion-free abelian group, written additively, with
+identity $0$. For finite subsets $X,Y\subseteq G$, write
+
+$$
+X+Y=\{x+y:x\in X,\ y\in Y\}.
+$$
+
+For integers $u\le v$, write
+$[u,v]_{\mathbb Z}d=\{td:t\in\mathbb Z,\ u\le t\le v\}$.
+If $d\ne0$, torsion-freeness makes these $v-u+1$ elements distinct.
+No order, sign, cyclicity or positivity condition on the ground sets is
+assumed.
+

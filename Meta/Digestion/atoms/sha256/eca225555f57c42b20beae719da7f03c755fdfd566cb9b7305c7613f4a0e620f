@@ -1,0 +1,41 @@
+**命题 111.2（原生 $K_9$ 的相位和纯分支目标）。** 在定义 111.1 的字面局部矩阵模型内，整个代码上有
+
+$$
+ \begin{gathered}
+ K_9J=J(I_H\otimes B_R),\qquad
+ B_R=\begin{pmatrix}-x&y\zeta^{-1}\\y\zeta^{-1}&-x\zeta^3\end{pmatrix},\\
+ (I_H\otimes B_R)V\psi
+ =\zeta^2\left[yE\psi\otimes|0\rangle+
+       (xE\psi+\zeta^{-3}\Pi\psi)\otimes|1\rangle\right]
+ \quad(\psi\in H).
+ \end{gathered}
+ \tag{111.3}
+$$
+
+特别地，在 $p_*$ 上
+
+$$
+ \begin{gathered}
+ \eta=-xe_L+y\zeta^{-1}e_R,\qquad
+ \theta_0=-e_L,\qquad
+ \theta_1=\frac{-x^2e_L+y\zeta^{-4}e_R}{r},\\
+ K_9JV\eta=\zeta^2J\left[xy\theta_0\otimes|0\rangle+
+                              r\theta_1\otimes|1\rangle\right].
+ \end{gathered}
+ \tag{111.4}
+$$
+
+$\theta_0,\theta_1$ 为单位向量，两条未归一分支的范数分别是 $xy,r$，均非零。若实际保留仪器在每个正质量分支使用该计算投影的归一纯后继，则原接续 $f$ 后实际射线分别为 $[J(K_f\theta_i,i)]$。这是带有明确更新前提的分支对应；分支范数平方本身没有规定实际记录质量。
+
+证明。由 100.2 的字面编码，代码中 $b_8=b_{10}=0$，所以中心 $b_9$ 上的门确为 77.1 的 $\zeta[I+(\zeta-1)Q]$，对全部十三个系统坐标使用同一个块。用 $\zeta+\zeta^{-1}=-x$、$\zeta^5=-1$、$x+x^2=1$ 化简，该块三个不同矩阵元分别为 $-x,y\zeta^{-1},-x\zeta^3$，得到 (111.3) 的第一式。同一块也给 $K_1v=\alpha e_L+\lambda e_R$，与 (104.5) 完全对应。
+
+令 $u=(y,x)^{\mathsf T}$。$Q=uu^*$ 且 $\|u\|=1$，故 $B_Ru=\zeta^2u$。对 $v_R=(y,x\zeta)^{\mathsf T}$，第一分量为 $-xy+xy=0$，第二分量为
+
+$$
+ y^2\zeta^{-1}-x^2\zeta^4
+ =(x+x^2)\zeta^{-1}=\zeta^{-1}.
+ \tag{111.5}
+$$
+
+将 $\psi$ 分为 $E\psi$、$\Pi\psi$，其记录列分别是 $u,v_R$，即得整个代码上的 (111.3)，包括两支之间的相对相位 $\zeta^{-3}$。对 $\eta$ 有 $E\eta=-xe_L$、$\Pi\eta=y\zeta^{-1}e_R$，于是 (111.4) 直接成立；第二支范数平方是 $x^4+x=1-x^3=2x^2$。末尾旧门在代码上是 $K_f\otimes I$，得到所述射线。$K_9$ 是整个 $89$ 维空间的原门，保留代码，也由酉性保留其正交补；没有将其补空间作用改成恒等，也没有删去任何补空间路径。∎
+

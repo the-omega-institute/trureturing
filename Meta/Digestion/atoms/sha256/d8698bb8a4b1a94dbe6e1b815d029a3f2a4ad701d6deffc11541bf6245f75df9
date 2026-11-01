@@ -1,0 +1,24 @@
+**Proposition 13.3 (equality in the strip).** Use the normalized, phase-removed, traceless variables of Lemma 13.1. At $q=q_b$, equality holds if and only if every term on the right of (13.1) with positive coefficient vanishes. Explicitly these conditions are
+
+$$
+\begin{gathered}
+\delta t_a>0\ \Longrightarrow\ z_i=z_j\quad(i,j\ne a),\\
+\sqrt{t_i}y_{ij}+k\sqrt{t_j}z_i=0\quad(i\ne j),\\
+(1+h)>0\ \Longrightarrow\ \sqrt{t_\ell}y_{ij}+\sqrt{t_j}y_{i\ell}=0,\\
+(1-h)>0\ \Longrightarrow\ \sqrt{t_\ell}y_{ij}-\sqrt{t_j}y_{i\ell}=0
+\quad(j<\ell,\ j,\ell\ne i).
+\end{gathered}
+$$
+
+Zero coefficients impose no condition. At $q=0$, equality holds exactly when $y_{ij}s_j=0$ for all $i\ne j$. For $0<q<q_b$ and a nonzero probe, equality holds exactly when the original input is a scalar matrix. In particular all equality assertions concern the original defect, not a quotient by a singular block. Stance: repo-derived.
+
+**Proof.** The first assertion is the equality criterion for a finite sum of nonnegative squared complex moduli. On $q=0$, Proposition 4.2 gives
+
+$$
+s^TS_0(X)s=(1-\lambda)\left(\lambda\|Ys\|^2+\sum_{i\ne j}|y_{ij}s_j|^2\right).
+$$
+
+For $\lambda\ge0$ its equality criterion is immediate. For $\lambda<0$, $\|Ys\|^2\le m\sum_{i\ne j}|y_{ij}s_j|^2$ and $1+m\lambda\ge1/d>0$ give the same criterion. If $0<\theta<1$, equality in (13.2) implies both this criterion and $z_is_i=0$ for every $i$. In Lemma 3.1 all terms other than $q_b\|X\|^2I$ then vanish after evaluation on $s$: $Ds=Ys=0$ and $\sum_{i\ne j}t_j|y_{ij}|^2=0$. Thus $s^TS_b(X)s=q_b\|X\|^2$, so the traceless input is zero. Scalar inputs do have zero defect.
+
+At $\lambda=-1/d$, $q_b=(d+1)/d^2$, the row matrix in (13.1), ordered as $(z_i,(y_{ij})_{j\ne i})$, is $q_b(I-ss^T)$ with the corresponding coordinate order. If $t_i>0$, its lower block $q_b(I-\sigma\sigma^T)$ is positive definite; if $t_i=0$, its kernel is $\operatorname{span}\{\sigma\}$ and $b_i=0$. At $d=3$, $t=(1/3,1/3,1/3)$, minimizing a row gives $y_{ij}=z_i$ and $\kappa_i=0$, so the restricted diagonal form is exactly zero, as is (13.1) at those minimizing rows. For any $d$ the same projection description gives the equivalent endpoint equality condition $X=cI+a v^\ast$ with $v^\ast a=0$ for a nonzero original probe $v$. This also includes every zero coordinate of $v$. ∎
+

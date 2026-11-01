@@ -1,0 +1,59 @@
+**Lemma 33.2 (attained endpoint denominator and finite-branch obstruction).** For a chronological probe word $u$, put
+
+$$
+A_u=\operatorname{wordMatrix}(\operatorname{reverse}u)
+ =\begin{pmatrix}a&e\\c&d\end{pmatrix},\qquad
+f_u(x)=\frac{ax+e}{cx+d}.
+\tag{33.3}
+$$
+
+The numerator and denominator in
+
+$$
+f_u(c_b)=\frac{a+be}{c+bd}
+\tag{33.4}
+$$
+
+are positive and relatively prime. Hence this attained endpoint is on some dyadic floor grid if and only if $c+bd$ is a power of two, including $1$.
+
+Every correct controller for $\sigma_b$ that stops finitely at $c_b$ must actually make a read at a chronological prefix $u$ for which this condition holds. The same necessity holds for each exact original view and for their joint output. It remains necessary if any fixed finite initial segment of the lower sequence $x_{b,n}$ is omitted from the prior.
+
+Proof. The actual supplier `unimodular_wordMatrix` gives $ad-ec=1$, and `wordMatrix_lower_right_pos` gives $d\ge1$. The entries are nonnegative and $a\ge1$. Thus $P=a+be>0$, $Q=c+bd>0$, and
+
+$$
+dP-eQ=ad-ec=1.
+\tag{33.5}
+$$
+
+Any common divisor of $P,Q$ divides $1$. This proves reducedness of the attained column-action fraction, rather than substituting the supplier's coprime lower-row fraction for it. Since $P,Q$ are coprime, $2^sf_u(c_b)$ is an integer for some $s\ge0$ exactly when $Q\mid2^s$, equivalently $Q$ is a power of two.
+
+Fix the entire finite terminating run at $c_b$. List its reads as $(u_i,s_i)$, where $u_i$ is the actual chronological prefix already executed and $s_i$ is its chosen dyadic exponent. Suppose none of these reads is on an endpoint grid. Then the known rational numbers
+
+$$
+\theta_i=\{2^{s_i}f_{u_i}(c_b)\}
+\tag{33.6}
+$$
+
+are all strictly positive. Here braces mean fractional part. A nonnegative determinant-one matrix with $d\ge1$ satisfies, for $0<y<x$,
+
+$$
+0<f_u(x)-f_u(y)
+ =\frac{x-y}{(cx+d)(cy+d)}\le x-y.
+\tag{33.7}
+$$
+
+Choose an integer $n>b$ larger than every $2^{s_i}/\theta_i$ and larger than any omitted finite initial indices. If there are no reads, any such $n$ suffices. This is an effective choice from the completed endpoint branch and $b$: all its matrices, exponents and fractional parts are finite known arithmetic. Then
+
+$$
+0<2^{s_i}\bigl(f_{u_i}(c_b)-f_{u_i}(x_{b,n})\bigr)
+ \le 2^{s_i}/n<\theta_i,
+\qquad
+q_{2^{s_i}}(f_{u_i}(x_{b,n}))
+ =q_{2^{s_i}}(f_{u_i}(c_b)).
+\tag{33.8}
+$$
+
+Replay the program from $x_{b,n}$. Before any different report, deterministic local computations, requested scales and actions agree. At each listed read the prefix therefore really is $u_i$, and (33.8) gives the same report. Induction reproduces the whole finite branch, including its stopping choice and output. Name-only action labels give no additional distinction, and service timing is not an input. The endpoint bit differs, a contradiction. Thus some actual read must be on the endpoint grid. This argument uses a finite maximum only on the completed branch; no bound on the controller's other branches, read count, scales or arithmetic was assumed.
+
+Each exact original view determines the original rational, which decides $\sigma_b$ by comparison with the known $c_b$. Composing this finite calculation after a hypothetical view acquisition adds no source action, so the same obstruction applies. The proof's choice of arbitrarily large $n$ also proves the finite-omission assertion. $\square$
+

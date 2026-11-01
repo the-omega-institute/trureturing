@@ -1,0 +1,45 @@
+**Definition 16.1 (source, acquisition and the routewise integer subgroup).** Retain the entire actual-source telescope of Definition 11.1: Definitions 1.1–1.2's typed deterministic complete-response quotient, its finite root-reachable named graph, fixed root representative and root vertex $o$, every finite legal root history $\mathcal P_o$, and the fixed native law $d:E\to\mathbb R_{>0}^r$ for any $r\ge1$. The graph may have no edges. Names include their actual parameters and types; distinct parallel names remain distinct edges. The empty word, stopping at any prefix, legal continuing failures, exits and terminal success or failure remain in the language. Illegal attempts are not executed edges. Complete-response congruence and actual-image closure give the legal-word lifting of Definition 1.2, so these are executions from that one actual root, not a collection of separately possible transitions. Native vectors are representative independent and use the same fixed origins, units and calibrations on that execution.
+
+Fix a compact convex centrally symmetric $K\subseteq\mathbb R^r$, with $0$ in its relative interior, and write
+
+$$
+W=\operatorname{span}_{\mathbb R}K,\qquad \Delta K=K-K.
+\tag{16.1}
+$$
+
+All dimensions $0\le\dim W\le r$ are admitted, including $K=\{0\}$. As in Definition 12.1, relative interior is in $W$. Origin symmetry gives $\Delta K=2K$; the arguments below also work under the alternative convention of a nonzero symmetry center, provided $0$ remains in the relative interior. The stipulated final observation of a word is exactly
+
+$$
+\mathcal O_{\epsilon,K}(u)
+ =\{z(u)\}\times\bigl(T(u)+\epsilon K\bigr),\qquad
+z(u)=o\cdot u,\quad T(u)=\sum_{e\text{ occurring in }u}d(e).
+\tag{16.2}
+$$
+
+For now $\epsilon>0$ is prescribed. Every error in this full joint support is adversarially allowed for every word. There is only one final noisy cut. No per-edge errors, finite horizon, probability law, coordinate independence, separate executions or additional source query enter this contract. The typed final endpoint is exact.
+
+A static label and a complete online register have exactly Definition 11.1's distinct contracts. In the online case there is one fixed $m_0\in M$ and one total $U:M\times\mathcal A\to M$, with $\mu(ua)=U(\mu(u),a)$. Its only live inputs are the complete current persistent value and the next actually executed typed parameterized name. A name shared across vertices stays the same token. Every persistent route, vertex, phase, selector and control value is charged in $M$. No intermediate endpoint, edgeID, response field, native increment, clock, archive, step index, stopping signal or future input is available. The final decoder receives precisely $(z(u),h(u),y)$ or $(z(u),\mu(u),y)$, with the exact final label or register and $y\in T(u)+\epsilon K$. Exact acquisition of those discrete final fields is an assumption.
+
+Whenever every cyclic SCC is a single directed named cycle in Definition 11.1's sense, reuse the complete actual normal form (11.9). Let $\mathcal S$ be all simple named root paths, including the empty path. For $P\in\mathcal S$, list all its visited cyclic SCCs in order, let $k(P)$ be their number, and let $A_P:\mathbb R^{k(P)}\to\mathbb R^r$ have their complete positive lap vectors as columns. Every word has a unique pair
+
+$$
+(P,t),\qquad t\in\mathbb N_0^{k(P)},\qquad
+T(u)=T(P)+A_Pt.
+\tag{16.3}
+$$
+
+These are the supplied ordered word schemas, including crossings and proper final cycle arcs, not a replacement of words by a Parikh image. For a cyclic root, the empty reduced path already has that cycle coordinate. A route with no cycles has $k(P)=0$ and represents one word. Define, with integer vectors regarded as real vectors,
+
+$$
+\begin{aligned}
+\Gamma_P&=\{j\in\mathbb Z^{k(P)}:A_Pj\in W\},\\
+V_P&=\operatorname{span}_{\mathbb R}\Gamma_P
+       \ \subseteq\mathbb R^{k(P)}.
+\end{aligned}
+\tag{16.4}
+$$
+
+The set $\Gamma_P$ is an additive subgroup. Each of its vectors is an actual same-schema, same-endpoint count difference: use $j_+$ and $j_-$ in (16.3), with coordinates $\max(j_i,0)$ and $\max(-j_i,0)$. Conversely every difference within that schema is an integer vector. Only those differences whose native image is in $W$ can be confused under (16.2). Because $V_P$ is spanned by these integer vectors, $A_PV_P\subseteq W$. It is not generally the whole inverse image $A_P^{-1}(W)$. Complete families are kept on their own actual condensation routes; vectors from incompatible routes are never pooled.
+
+The supplied source for §§12–15 is the delivered owner at commit `39446dccd2d1c1d83b9926e41d4b7b6e55a03223`, [RRO16 PR 24168](https://github.com/the-omega-institute/trureturing/pull/24168). Those sections give arbitrary joint supports on Definition 10.2's entire successive-loop source. The general full-box supplier is Theorem 11.2, delivered through [RRO14 PR 24137](https://github.com/the-omega-institute/trureturing/pull/24137). The uncovered relation treated here is (16.4) on arbitrary finite actual graphs and its complete online realization. The narrower suppliers and their exact minima are retained with their stated scopes.
+

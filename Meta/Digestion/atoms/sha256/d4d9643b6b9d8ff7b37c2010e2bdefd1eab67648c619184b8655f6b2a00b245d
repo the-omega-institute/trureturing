@@ -1,0 +1,6 @@
+Construction of the upper bound. Initialize $z=0$ in $\{0,1\}$. Previously frozen and non-marker events hold with priority. On an unfrozen marker transaction, let $c'=c+1$ be the new position and $a$ the marker. Apply the original phase/address consistency checks, including synchronized new fields; malformed addresses take default 0. On a valid address:
+
+1. If $c'\le27$, write 0.
+2. If $28\le c'\le30$, a first identity one (old $\beta=27$) writes $\operatorname{color}(c'-27)$, where $\operatorname{color}(1)=\operatorname{color}(3)=0$, $\operatorname{color}(2)=1$. A second or later identity one clears to 0; zeros hold.
+3. In the tail put $j=c'-30$. Old $\beta\ne28$ clears to 0. With old $\beta=28$ and $a=1$, an actual first freeze at $j=1$ keeps $z$, an actual first freeze at $j=3$ writes $1-z$, and all other cases write 0. With old $\beta=28$ and $a=0$, an actual first freeze writes 0 and continue holds.
+

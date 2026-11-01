@@ -1,0 +1,30 @@
+### 7.1 额外选定的几何读出
+
+本节先对任意 $d\ge1$ 建立一般整数系数理论，最后取 $d=4$。
+令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\sigma=1-\varphi=-\varphi^{-1},\qquad
+\Gamma_d=\mathbb Z^d\oplus\mathbb Z^d,
+$$
+
+$$
+P_+(a,b)=a+\varphi b,\qquad P_-(a,b)=a+\sigma b,\qquad
+S(a,b)=(P_+(a,b),P_-(a,b)).
+$$
+
+所有 $\ell^\infty$ 范数均是这些**系数坐标**中的最大范数。
+应用于 E8 时，额外选定简单根基、$H_4$ 投影及共轭坐标的标号识别。
+在 Dechant 等 [[8](#ref-dechant)] 式 (3) 的约定下，可以取
+
+$$
+a=(n_1,n_2,n_3,n_8),\qquad b=(n_7,n_6,n_5,n_4).
+$$
+
+于是一个读口具有 $a+\varphi b$ 形式，其代数共轭为 $a+\sigma b$。
+这些结构不由前面的 $A_4^2$ 胶合自动指定。
+若改用实际 E8 或 $H_4$ 欧氏范数，应加入由固定基决定的范数等价常数。
+
+<a id="statement-7-1"></a>
+

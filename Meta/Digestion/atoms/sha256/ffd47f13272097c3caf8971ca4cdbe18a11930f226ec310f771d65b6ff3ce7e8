@@ -1,0 +1,28 @@
+**Definition 10.1 (the continuous return task and its read budget).** Keep precisely Definitions 9.1–9.2. In particular, the entry is any $v_0\in\mathbb N^2$, including zero, the public input is the integer $H\ge1$, the only actual updates are $R(u)=Mu$ and $G(u)=u+\alpha$, and every source reply other than a paid current gcd is a fixed acknowledgement. There is no initially acquired source label. A successful return policy terminates on every entry with an earned immutable $e=\bar v_0$, an installed mutable $c=\bar u_*$ at the same retained handle, and
+
+$$
+\mathcal B_H(u_*)(W)=\mathcal B_H(v_0)(W)
+\quad\text{for every }W\in\{R,G\}^{<\omega}.
+\tag{AQBRS.1}
+$$
+
+It must also retain the lawful, synchronized callable continuation of Definition 9.2. By the supplied full original-alpha quotient, FARG130.5, condition (AQBRS.1) is equivalent to $\bar u_*=\bar v_0$; it is stronger than merely knowing the entry label while leaving the handle at another behavior. A policy is one deterministic source-blind program using only the initial public inputs and its actual acquired replies. Its action counts and local work may depend on those replies. Termination is per entry; a finite worst read budget $J$ means $N_{\rm read}(v_0)\le J$ for every entry, without imposing a uniform bound on source size. Let $Q_{\rm ret}(H)$ be the least such $J$ when attainable. All other resource coordinates remain those of Definition 9.2 and are not minimized by this notation.
+
+For $H>1$ define the public integers
+
+$$
+B(H)=\max_{p^h\parallel H}h(p-1),\qquad
+L_H=\min\{l\ge1:M^l=I\text{ over }A_H\}.
+\tag{AQBRS.2}
+$$
+
+For a finite chronological word $W=A_1\cdots A_m$, define its closing word by reversing the order of its letters and replacing each letter with the indicated positive repetition:
+
+$$
+W^{\rm cl}=C_H(A_m)\cdots C_H(A_1),\qquad
+C_H(R)=R^{L_H-1},\qquad C_H(G)=G^{H-1}.
+\tag{AQBRS.3}
+$$
+
+An exponent zero denotes an empty block. This notation specifies actual positive source letters, each separately executed and charged. It supplies no inverse-action handle. FARG130.2 and `GraftAffineClosure.result` supply the finite modular period, so $L_H$ exists. The closing notation concerns the residue action alone; its integer source trajectory is still forward.
+

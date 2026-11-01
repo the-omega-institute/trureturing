@@ -1,0 +1,112 @@
+**定理 9.5（等待地板的任务阈值与同均值有限帽近似）。** 令
+
+$$
+B_{\mathrm{wait}}^L(\nu)=\min\left\{C(p):p\in\mathsf P_\nu,\ \sum_{s\in\mathsf S}p_s\Gamma_L(c(s))=0\right\},
+\tag{RRO.43}
+$$
+
+若集合没有有限费用元素，约定该值为 $+\infty$。则
+
+$$
+F_L^\nu(B)=w_L\quad\Longleftrightarrow\quad B\ge B_{\mathrm{wait}}^L(\nu).
+\tag{RRO.44}
+$$
+
+当阈值有限时，最小值在原始选择器类中达到。
+
+令 $h(s)=c_0(s)+c_1(s)$，其中 $h(\infty)=\infty$，并记
+$\mathsf S_n=\{s\in\mathsf S:h(s)\le n\}$。在同一个原种子及实际均值上限 $B$ 下，再施加实际付费查询硬帽 $n$，其风险下确界记为 $F_{L,n}^\nu(B)$。精确地，
+
+$$
+\begin{aligned}
+F_{L,n}^\nu(B)
+&=\inf_{\substack{(\rho,\delta)\text{ 合法},\ T_\rho\le n\ {\rm a.s.}\\
+                  \mathbb E T_\rho\le B}}
+       \mathbb E L(Q,X_0,\delta(H_\rho))\\
+&=\inf\{V_L(p):p\in\mathsf P_\nu,\ p(\mathsf S_n)=1,\ C(p)\le B\}.
+\end{aligned}
+\tag{RRO.44a}
+$$
+
+第一行也允许动作决策核。对任意原子、混合或非原子原种子、每个整数 $n\ge0$ 及有限 $B\ge0$，有
+
+$$
+\boxed{0\le F_{L,n}^\nu(B)-F_L^\nu(B)
+\le\Delta_L\min\left\{1,\frac{B}{n+1}\right\}.}
+\tag{RRO.44b}
+$$
+
+因此 $F_{L,n}^\nu(B)\downarrow F_L^\nu(B)$，预算上限始终为同一个 $B$。此收敛不要求某个有限帽已经达到全类值，也不要求叶动作下确界达到。
+
+对任意有限预算，定义
+
+$$
+\kappa_\nu(B)=\inf\left\{\sum_sp_s\kappa(c(s)):
+ p\in\mathsf P_\nu,\ C(p)\le B\right\}.
+$$
+
+则有定量夹逼
+
+$$
+0\le F_L^\nu(B)-w_L\le\Delta_L\,\kappa_\nu(B).
+\tag{RRO.45}
+$$
+
+特别地，只要一个有限选择 $s$ 满足 $k(s)\le B$，使用同一原始种子的常值选择器有实际均值 $k(s)$，并满足
+
+$$
+F_L^\nu(B)-w_L\le\Delta_L\kappa(c(s)).
+\tag{RRO.46}
+$$
+
+各容量的删失概率为
+
+$$
+\begin{aligned}
+\kappa(c(2N+1))&=aM_{N+1}+bM_N,\\
+\kappa(c(2N,\mathsf A))&=M_N,\\
+\kappa(c(2N,\mathsf B))&=aM_{N+1}+bM_{N-1},\\
+\kappa(c(0))&=1,
+\end{aligned}
+\tag{RRO.47}
+$$
+
+且 $\kappa(c(\infty))=0$。若原种子非原子，且两个端点费用均有限，即 $0\le k(s_0)\le B\le k(s_1)<\infty$，则可取质量 $\theta\in[0,1]$ 使
+$\theta k(s_0)+(1-\theta)k(s_1)=B$，从而实际均值正好为 $B$，并有
+
+$$
+F_L^\nu(B)-w_L
+\le\Delta_L\bigl[\theta\kappa(c(s_0))+(1-\theta)\kappa(c(s_1))\bigr].
+\tag{RRO.48}
+$$
+
+若两端费用相等，夹逼条件迫使它们等于 $B$，任意质量都满足费用等式；费用不等时取
+$\theta=(k(s_1)-B)/(k(s_1)-k(s_0))$。原子或混合种子只有 (RRO.42) 允许的质量时才可使用同一结论，不得把 $\theta$ 当成免费硬币。有限费用端点可以是 $\infty$ 类型；端点类型与其均值是否有限须分别判断。
+
+证明。$\Gamma_L\ge0$ 且 (RRO.39) 在 $h\to\infty$ 时给出 $\Gamma_L\to0$，所以选择器的零遗憾集合在上述紧化中闭。费用在该集合上仍下半连续，故 (RRO.43) 的有限值达到。若 $B\ge B_{\mathrm{wait}}^L$，取该选择器并用定理 9.4 的动作条件（若只谈下确界则取近似动作）得到地板；反向若 $F_L^\nu(B)=w_L$，推论 9.3 的选择器最小值必须有零积分遗憾，故费用至少为 (RRO.43)。
+
+再证明有限帽的值公式与比较。引理 5.2 把 $T\le n$ 的几乎必然帽改成共同种子零集之外的逐点帽；推论 6.2 保持回放长度、容量、全部决策风险并不增实际均值。因此有限帽优化恰限制到 $\mathsf S_n$，得到 (RRO.44a)。其可行类包含零查询策略，且是全类的子类，所以两值均为有限实数并有 $F_{L,n}^\nu(B)\ge F_L^\nu(B)$。
+
+固定任意 $\varepsilon>0$，取 (RRO.41) 的一个预算可行选择器，使其 $V_L$ 不超过 $F_L^\nu(B)+\varepsilon$。对每个正质量类型及其每个正质量叶，选取一个使归一化条件损失距下确界不超过 $\varepsilon$ 的确定动作。类型与叶总数可数，故逐个选择后给出按类型及叶分片的可测规则；所有叶的总概率为一，累计风险误差不超过 $\varepsilon$。定理 9.2 的同原种子代表于是给出实际控制器及确定规则 $(\rho,\delta)$，满足
+$\mathbb E T_\rho\le B$ 且风险至多 $F_L^\nu(B)+2\varepsilon$。这一选择没有假设动作最小值存在，也未使用额外动作随机化。
+
+在同一个原种子和同一预生成源上构造 $\rho_n$：逐步照做 $\rho$，若它在第 $n$ 次查询之前或恰在该次查询后停止，保留全部原档案、终端标签和原决策；若它在支付了 $n$ 条边后还要查询，就立即截断并采用一个预先固定的 $d_0\in D$。是否继续由当前已获历史及原种子可测决定。第 $n$ 次查询恰见标记时仍自动停止并保留标记决策；$n=0$ 时同样先判断原策略是否已经停止。计数只取已获记录长度。因而这是合法的同源前缀截断，逐路径有
+$T_{\rho_n}=\min(T_\rho,n)$，特别地 $\mathbb E T_{\rho_n}\le B$。在 $\{T_\rho\le n\}$ 上动作相同；在其补集上，两动作损失差不超过 $\Delta_L$。故
+
+$$
+\begin{aligned}
+\mathbb E L(Q,X_0,\delta_n(H_{\rho_n}))
+&\le \mathbb E L(Q,X_0,\delta(H_\rho))
+       +\Delta_L\Pr(T_\rho>n),\\
+(n+1)\Pr(T_\rho>n)&\le\mathbb E T_\rho\le B.
+\end{aligned}
+$$
+
+第二行由整数值非负支付数的逐点不等式
+$(n+1)\mathbf1_{\{T_\rho>n\}}\le T_\rho$ 积分得到；结合概率不超过一，截断规则的风险至多
+$F_L^\nu(B)+2\varepsilon+\Delta_L\min\{1,B/(n+1)\}$。按 (RRO.44a) 取下确界，再令 $\varepsilon\downarrow0$，即得 (RRO.44b)。帽内可行类随 $n$ 增大而包含，故同时得到单调收敛。
+
+该构造逐路径保留原来的 $U$，不切分原种子原子，也不以 $\{T_\rho>n\}$ 的源依赖性制造新的选择硬币。若可行选择器给 $\infty$ 类型正质量且 $K_\infty<\infty$，该片上的实际标记时间仍几乎必然有限；全体实际费用 $C(p)\le B$ 使上述积分界原样成立。若 $K_\infty=+\infty$，正无限片质量会使 $C(p)=+\infty$，因而根本不属于有限预算可行类；有限类型的无界混合也仍必须满足 $\sum_{s\ne\infty}p_sk(s)<\infty$。证明没有对扩展费用相减或向无限费用端点配置一个正的有限预算权重。
+
+对 (RRO.45)，对任意预算可行 $p$ 使用 (RRO.39) 并取下确界；(RRO.46) 是常值选择器，(RRO.47) 直接由 $M_j=\int q^j\,d\mu$ 和容量表得到；(RRO.48) 则由非原子切分和有限费用的通常加权等式得到。若去掉有限端点条件，此费用插值并不成立：取 $a=b=1/2$、$(0,1)$ 上均匀先验、非原子原种子、根 $0$–$1$ 损失、$s_0=0,s_1=\infty$ 和 $B=1$。Mean 定理 4.1 给 $k(s_0)=0,k(s_1)=+\infty$。上端权重为零时实际均值是零，任一正上端权重的实际均值都是 $+\infty$，没有均值恰为一的这两个端点的混合。证毕。
+

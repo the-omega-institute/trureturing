@@ -1,0 +1,58 @@
+**定理 100.2（固定取得字对全部原生上下文的统一逼近）。** 对每个 $\varepsilon_A,\varepsilon_T>0$，有两个不依赖原 $p,f$ 的有限正向同族字 $A_\varepsilon,R_\varepsilon$，使下列协议成立：先准备 $J(v,0)$，执行任意原 $p$，再执行 $A_\varepsilon$；之后独立选择 $s=0,1$，分别执行空字或 $R_\varepsilon$，最后计算读取 $b_9=i$，保留该计算记录，执行原 $f$ 并调用字面的 $\mathcal L_{10}$。其固定数学目标分别为 91.3 的 $V$ 及 $T$；读取仪器是先施 $T_s$ 再投影到计算态 $|i\rangle$，其中 $T_0=I,T_1=T$。
+
+若比较模型对记录采用计算投影概率和纯态投影更新，则在适当共同整体相位下，令 $M_i$ 为 $b_9=i$ 在完整 $\mathcal K$ 上的投影，$R_{\varepsilon,0}=I,R_{\varepsilon,1}=R_\varepsilon$，有
+
+$$
+ \begin{aligned}
+ \chi_{\varepsilon,si}(p,f)
+  &=K_fM_iR_{\varepsilon,s}A_\varepsilon J(K_pv,0),\\
+ y_{si}(p,f)
+  &=\sqrt{r_i}\,J(K_fD^{t_{si}}K_pv,i),\\
+ \|\chi_{\varepsilon,si}(p,f)-y_{si}(p,f)\|
+  &\le\delta,\qquad \delta=\varepsilon_A+\varepsilon_T,
+ \end{aligned}
+ \tag{100.3}
+$$
+
+同时对全部 $p,f,s,i$ 成立。$\varepsilon_T$ 在 $s=0$ 可取零。若 $\delta<\sqrt b$，每个比较记录分支都正质量，其质量 $q_{\varepsilon,si}=\|\chi_{\varepsilon,si}\|^2$ 与归一条件态满足
+
+$$
+ \begin{gathered}
+ \operatorname{TV}((q_{\varepsilon,s0},q_{\varepsilon,s1}),(a,b))\le\delta,
+ \qquad\sum_iq_{\varepsilon,si}=1,\\
+ d\left([\chi_{\varepsilon,si}],
+ [J(K_fD^{t_{si}}K_pv,i)]\right)
+ \le\frac{2\delta}{\sqrt{r_i}}\le\frac{2\delta}{\sqrt b},
+ \end{gathered}
+ \tag{100.4}
+$$
+
+其中 $d([u],[z])=\min_\theta\|u-e^{i\theta}z\|$，$u,z$ 取单位代表。
+
+在对全部终端也采用 Born 的比较模型中，包含记录和全部原终端标签的完整律与 (91.5) 的 $Q_s$ 的总变差至多 $\delta$。所有记录接口泄漏的总质量至多 $\delta^2$，终端非法旧标签也在这项质量内；这个概率界仅属于比较模型。它们不是对未知旧 $P$ 的界。
+
+证明。真空端点串接给 (100.1) 的等距，原十三条路径全部保留，维数为 $13\cdot2=26$。整个 $V_{12}^{\mathbf1}$ 的合法路径数为 Fibonacci 数 $F_{11}=89$。v15 6.1 的逐路径邻接和局部门对应适用于十二载体；这里先保留前八载体的全部十三条路径，不将它替换成两个逻辑比特的四维子码。原 $K_0,\ldots,K_6$ 只编织前八载体，故在真空接口码 $\mathcal C$ 上正是原系统作用，完整基对应给 (100.2)。
+
+令 $A$ 为 91.2 证明给出的固定酉完成，满足 $A(\eta,0)=V\eta$。在完整 $\mathcal K$ 上取
+
+$$
+ \widetilde A=JAJ^*+(I-JJ^*),\qquad
+ \widetilde T=J(I_H\otimes T)J^*+(I-JJ^*).
+ \tag{100.5}
+$$
+
+这只是指定待逼近目标，没有把它们列为新原语。直接消费 v15 6.2 证明所用的整个 $V_{4n}^{\mathbf1}$ 射影密度，取 $4n=12$ 及目标 $\widetilde A$，得到误差 $\varepsilon_A$ 的有限字。此处所用是该证明的全扇区闭包，不是仅有八维三逻辑比特码上的逼近结论。原 77.2 和 v15 6.1 已供应同一规范的路径／局部门对应；无须重证普适性。
+
+$T$ 的取得还可只用附接记录块的中心 $8,9$：真空接口 $b_7=1$、$b_8=b_{10}=0$ 使它们在记录二维域上分别为 v15 §4 的对角相位门与黄金 $Q$ 门，精确保留 $\mathcal C$。消费该单比特射影密度，得 $R_\varepsilon$ 在 $\mathcal C$ 上对 $J(I\otimes T)J^*$ 的误差 $\varepsilon_T$。记录逻辑整体相位是对整个 $\mathcal C$ 的共同相位，不是依赖系统或分支的隐藏参考。也可用全扇区逼近 $\widetilde T$，得到同一估计。
+
+两项逼近的复合误差由酉性至多为 $\delta$；实际准备的泄漏向量经过 $R_\varepsilon$ 时范数不增加。投影 $M_i$ 收缩，随后原 $K_f$ 酉，不增加误差。91.4 的两个固定分支算子给理想 $y_{si}$，从而得 (100.3)。$K_pv$ 任意时仍受算符范数界控制，故所有 $p,f$ 同时包括在内，字长未进入误差。对 $\|y_{si}\|=\sqrt{r_i}$，若 $\delta<\sqrt b$ 则 $\chi_{\varepsilon,si}\ne0$；三角不等式给
+
+$$
+ \left\|\frac\chi{\|\chi\|}-\frac y{\|y\|}\right\|
+ \le\frac{\|\chi-y\|+|\|\chi\|-\|y\||}{\|y\|}
+ \le\frac{2\delta}{\sqrt{r_i}}.
+ \tag{100.6}
+$$
+
+质量和完整输出律的界直接复用 v15 6.3 的等距误差到半 diamond／迹距离界及测量收缩；在这里输入是任意原 $K_pv$，输出是完整记录—系统，之后的投影、原 $K_f$ 和计算终端都是共同的比较仪器。理想输出无 $\mathcal C^\perp$ 分量，故实际输出投到该补空间的范数至多 $\delta$，Born 质量至多 $\delta^2$。$M_i$ 与码投影交换，原 $K_f$ 保持码及其正交补，所以记录读取和任意原接续不增添这个泄漏质量。完整 $\mathcal K$ 的基底按 $(w,i,010)$ 标记，$w$ 仍遍历全部 $1024$ 个旧标签；其中不在十三旧标签的合法路径恰对应 $\mathcal C^\perp$。全部其它位型在比较模型质量为零，未作删除归一化。∎
+

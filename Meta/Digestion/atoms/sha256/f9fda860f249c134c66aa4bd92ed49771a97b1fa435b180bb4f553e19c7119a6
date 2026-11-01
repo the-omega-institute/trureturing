@@ -1,0 +1,97 @@
+**引理 16.2（全域二模态证书）。** For every $p\in\Delta^\circ$,
+
+$$
+\rho\ge \kappa T.
+\tag{16.3}
+$$
+
+Equality in (16.3) is possible only when $q_1=q_2=0$, and hence only at
+$p_0=\cdots=p_4=1/5$.
+
+**证明。** The $k=1,2$ principal block of the Fourier matrix in (9.2) is the Hermitian matrix
+
+$$
+A=
+\begin{pmatrix}
+\rho_1(1-a)&\displaystyle\frac{q_1-\overline q_1q_2}{5\,\overline d_1d_2}\\[6pt]
+\displaystyle\frac{\overline q_1-q_1\overline q_2}{5\,d_1\overline d_2}&\rho_2(1-b)
+\end{pmatrix},
+\qquad d_k=1-z^{-k}.
+\tag{16.4}
+$$
+
+Indeed, this is (9.2) with $(k,m)=(1,2)$, and
+$|d_k|^{-2}=5\rho_k$. Therefore, with
+$\chi=|q_1-\overline q_1q_2|^2$,
+
+$$
+\det(\kappa T I_2-A)
+=\rho_1^2\bigl[h(a-b)L-r\chi\bigr],
+\qquad
+L=1-r-2\kappa a+rh\,b.
+\tag{16.5}
+$$
+
+The identities used here are
+$\tau=2\rho_1(1+r)$, $1=2\kappa(1+r)$, and $h=2\kappa r$.
+If $a\le b$, then
+
+$$
+L\ge 1-r-2\kappa a+rh\,a=(1-r)(1-a)\ge0,
+\tag{16.6}
+$$
+
+so the right side of (16.5) is nonpositive. Suppose next that $a>b$ and put
+$x=\sqrt a$, $y=\sqrt b$. If $L\le0$, (16.5) is again nonpositive. If $L>0$, the reverse triangle inequality gives
+
+$$
+\chi\ge x^2(1-y)^2.
+\tag{16.7}
+$$
+
+The remaining scalar comparison is valid on the entire square-triangle
+$0\le y\le x\le1$:
+
+$$
+r x^2(1-y)^2-h(x^2-y^2)\bigl(1-r-2\kappa x^2+rh\,y^2\bigr)\ge0.
+\tag{16.8}
+$$
+
+For completeness, its exact factorization is as follows. Put $y=tx$ with
+$0\le t\le1$. The left side of (16.8) equals
+
+$$
+\frac{7-3\sqrt5}{10}\,x^2G_t(x),
+$$
+
+where
+
+$$
+\begin{aligned}
+G_t(x)&=A_t x^2-5(3+\sqrt5)tx+C_t,\\
+A_t&=t^4+(3+\sqrt5)t^2+\frac{7+3\sqrt5}{2},\\
+C_t&=\frac{5+3\sqrt5}{2}t^2+5+\sqrt5.
+\end{aligned}
+\tag{16.9}
+$$
+
+Here $A_t>0$, and the discriminant of this quadratic in $x$ is
+
+$$
+\bigl[-10-6\sqrt5\bigr](1-t)^2(1+t)^2(t^2+4+2\sqrt5)\le0.
+\tag{16.10}
+$$
+
+Thus (16.8) holds. It is strict when $x>y$: in that case $t<1$, so (16.10) is strict. Combining (16.5), (16.7), and (16.8) proves
+$\det(\kappa T I_2-A)\le0$ for every $p\in\Delta^\circ$.
+
+The two eigenvalues of $A$ are real. A nonpositive determinant in (16.5) implies
+$\lambda_{\max}(A)\ge\kappa T$, and Cauchy interlacing then gives (16.3).
+For equality, the case $a>b$ is excluded by the strictness just proved. If
+$a<b$, (16.6) makes (16.5) strictly negative. Hence $a=b$ and $\chi=0$.
+If $a=b>0$, then
+$q_1=\overline q_1q_2$ forces $|q_2|=1$, impossible for a strictly positive
+probability on the five distinct points $z^{2j}$. Therefore $a=b=0$.
+Fourier inversion gives $p_j=1/5$ for every $j$. Conversely, the uniform vector has
+$q_1=q_2=0$ and equality in (16.3). ∎
+

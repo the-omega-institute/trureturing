@@ -1,0 +1,6 @@
+For each prescribed $\epsilon>0$, the following are equivalent:
+
+1. $\ker A\cap V=\{0\}$.
+2. $S_{\epsilon}$ is finite.
+3. For the centers $At$, $t\in\mathbb N_0^k$, the translates $At+\epsilon K$ have a finite upper bound on the number containing any one point, counting distinct $t$ separately.
+

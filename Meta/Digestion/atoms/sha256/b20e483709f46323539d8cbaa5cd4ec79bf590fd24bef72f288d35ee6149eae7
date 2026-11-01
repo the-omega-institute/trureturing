@@ -1,0 +1,43 @@
+**Corollary 3.1 (absence of a forcing-independent finite bound).**
+For each fixed $1<\alpha<2$, the number of downward strict transitions
+of the weak solution (1.1), as $p$ ranges over rational polynomials
+with $p(0)=p(1)=0$ and $p>0$ on $(0,1)$, has no finite upper bound.
+More strongly, for every nonempty compact band $[a,b]\subset(1,2)$
+and every integer $N\geq1$, one such polynomial has at least $N$
+downward strict transitions at every order in the band, in $N$
+common rational intervals.
+
+**Proof.** The stronger assertion is Theorem 2.1. A finite
+forcing-independent bound for a band is contradicted by taking $N$
+larger than that bound. The fixed-order assertion follows by taking
+$a=b=\alpha$. The forcings satisfy (1.3), so the same failure of a
+finite upper bound holds in the larger forcing class of [LMS,
+Theorem 5.2].
+
+The assertions concern at least $N$ downward strict transitions.
+They specify neither the exact total number of zeros nor simplicity,
+continuous dependence of selected roots on the order, or a minimal
+degree. The polynomial may depend on both $N$ and the band. For a
+fixed polynomial positive on $(0,1)$, the monomial formula used in
+(2.22) shows directly that
+
+$$
+F_{\alpha,p}''\longrightarrow p\quad\text{uniformly on every compact
+subinterval of }(0,1)\quad\text{as }\alpha\uparrow2.
+$$
+
+Indeed each of the finitely many monomial coefficients and powers
+converges uniformly there, while the boundary-curvature term tends
+to zero. The positive minimum of $p$ on such a subinterval then makes
+$F_{\alpha,p}''$ positive there for all sufficiently large $\alpha<2$.
+Thus a fixed polynomial and fixed interior intervals cannot give the
+same downward-transition conclusion for orders arbitrarily close
+to $2$. The strict upper-band condition in Theorem 2.1 is consistent
+with this direct limit.
+
+The forcing equation here is $D_{0+}^{\alpha}F=p$ with independently
+chosen nonnegative forcing. No identification of $p$ with an
+eigenfunction is imposed. Consequently this argument gives no
+inflection or Mittag–Leffler zero count for the constrained spectral
+equations in [LMS, §6] or [EL]. $\square$
+

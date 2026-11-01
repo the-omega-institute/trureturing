@@ -1,0 +1,18 @@
+**Definition 1.1 (Normalized Bessel function).** For a real number $\nu>-1$,
+put $b=\nu+1>0$ and define
+
+$$
+F_\nu(x)=\sum_{k=0}^{\infty}
+ \frac{(-x^2/4)^k}{k!(b)_k},\qquad
+(b)_0=1,\qquad (b)_k=\prod_{\ell=0}^{k-1}(b+\ell)\quad(k\ge1).
+\tag{1.1}
+$$
+
+The ratio of successive absolute terms tends to zero on every bounded
+complex $x$-set, so this series defines an even entire function. For $x>0$
+it is the classical normalization
+$F_\nu(x)=2^\nu\Gamma(\nu+1)x^{-\nu}J_\nu(x)$.
+The series and this correspondence are those of Baricz–Mehrez,
+[arXiv:1701.08446v1](https://arxiv.org/pdf/1701.08446v1), and of
+[Defs and Series](https://github.com/the-omega-institute/trureturing/tree/0acdf52ecf2d680cff8b44345188dbb02034280d/D5/S3/Analytic/BesselRedheffer).
+

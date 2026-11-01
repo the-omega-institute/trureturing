@@ -1,0 +1,13 @@
+**推论 2.4（一条新关系已经足够）。**
+
+若 $x\in E\setminus L_0$ 满足
+$\left\langle x,L_0\right\rangle\subset\mathbb Z$ 且 $x^2\in\mathbb Z$，则 $L_0+\mathbb Z x$ 已是 E8 根格。
+
+**证明。**
+
+任意两元素 $l+mx,l'+nx$ 的内积都是整数，故构成严格积分扩张。
+应用定理 [2.3](#thm-selection)。不需要再要求 $x^2=2$。证毕。
+ □
+
+<a id="statement-2-5"></a>
+

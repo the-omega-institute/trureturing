@@ -1,0 +1,34 @@
+**Proposition 34.3 (extremal-spine formula and its precise domain).**
+In GPO's fixed global-port supplier, take an arbitrary nonempty ordered
+alpha/beta tree $u$, one persistent bijection of physical ports with semantic
+$L,R$ at every branch, $k\ge1$, and $x=\rho^{2k+1}u$. If $d_L,d_R$
+are the original extreme-path lengths and $\eta_L,\eta_R$ indicate beta
+terminal leaves, then
+
+$$
+h_L(x)=d_L+2k+\eta_L,\qquad
+h_R(x)=d_R+k+\eta_R.
+\tag{ACRC.5}
+$$
+
+For physical $a=L$ the pair $(h_a,h_b)$ is $(h_L,h_R)$; for $a=R$ it
+is reversed. These are exactly GPO (GPO.25)'s fixed-port values. They
+support its orientation probe, not a law-independent identity for arbitrary
+autonomous orientations $z_j$.
+
+Proof. Substitution preserves original branches. The terminal replacement
+is $T_{2k+1}$ for alpha and $T_{2k+2}$ for beta, where $T_m=\rho^m\alpha$.
+Its left height is $m-1$ for $m\ge1$ and its right height is
+$\lfloor m/2\rfloor$. Adding the original path lengths gives (ACRC.5),
+including both terminal labels and both global port bijections.
+
+For $u=\alpha$ these two spines supply longest and shortest root-rank
+paths. For arbitrary $u$ they need not do so: take
+$u=\langle\alpha,\langle\alpha,\beta\rangle\rangle$ and $k=1$.
+The two heights are $3,4$, but the maximum root-to-leaf depth is five and
+the minimum is two, by adding the original leaf depths $1,2,2$ to those
+of their $T_3,T_3,T_4$ replacements. Thus the claim that these spines
+always supply globally longest and shortest rank witnesses is false in
+the stated arbitrary-$u$ supplier domain. Autonomous birth-bit sources
+instead use the actual-parent rank witnesses of Theorem 33.3. $\square$
+

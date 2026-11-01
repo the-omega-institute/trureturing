@@ -1,0 +1,70 @@
+**Proposition 11.1 (Quantified split-information deficit).** In the actual-law setting of Proposition 4.3, let
+
+$$
+M=f_c(l+r),\qquad B=f_c(l)f_{\tau_l(c)}(r),
+$$
+
+and let $F_a,F_b$ be the two entire future gap measures there. For $M,B>0$ put $\rho=F_a+F_b$, choose densities $u=dF_a/d\rho$ and $v=dF_b/d\rho$, and define
+
+$$
+\Delta_{c,l,r}
+=\frac{MB}{M+B}
+-\int\frac{MBuv}{Mu+Bv}\,d\rho,
+\tag{11.1}
+$$
+
+where the integrand is set to zero on $\{Mu+Bv=0\}$. Let
+
+$$
+\eta=\frac{MF_a+BF_b}{M+B},\qquad
+p=\frac{Bv}{Mu+Bv},\qquad
+\alpha=\frac{B}{M+B}.
+\tag{11.2}
+$$
+
+Then $\eta$ is a probability measure, $\mathbb E_\eta p=\alpha$, and
+
+$$
+\begin{aligned}
+\Delta_{c,l,r}
+&=(M+B)\operatorname{Var}_\eta(p)\\
+&=\frac{M^2B^2}{(M+B)^2}
+\int\frac{(u-v)^2}{Mu+Bv}\,d\rho\ \ge0.
+\end{aligned}
+\tag{11.3}
+$$
+
+Proof. Since $d\eta=(Mu+Bv)d\rho/(M+B)$, direct substitution gives the integral term in (11.1) as $(M+B)\mathbb E_\eta[p(1-p)]$, while $(M+B)\alpha(1-\alpha)=MB/(M+B)$. Their difference is the variance in (11.3). This is the actual-measure form of the conditional Brier variance calculation in Dawid--Lauritzen--Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, §4.2, Example 4.4 and equation (14); the displayed derivation supplies the needed no11-domain identity directly. Equality holds exactly when $F_a=F_b$. The algebra in (11.1)--(11.4), including this equality case, applies to any two positive actual completion channels under Definition 4.1; it does not require the attained comparison (4.11).
+
+Since $\int|u-v|\,d\rho=2\operatorname{TV}(F_a,F_b)$, weighted Cauchy--Schwarz gives
+
+$$
+\Delta_{c,l,r}
+\ge\frac{4M^2B^2}{(M+B)^3}\operatorname{TV}(F_a,F_b)^2.
+\tag{11.4}
+$$
+
+Under attainment, Proposition 4.3 gives $M/3\le B\le M$, and hence
+
+$$
+\frac{\Delta_{c,l,r}}{M+B}
+\ge\frac9{64}\operatorname{TV}(F_a,F_b)^2.
+\tag{11.5}
+$$
+
+If a binary word $t$ of length at most $N-1$ has
+
+$$
+\varepsilon_t=(r_a-r_b)M_t\mathbf1,
+\tag{11.6}
+$$
+
+then its future cylinder gives $\operatorname{TV}(F_a,F_b)\ge|\varepsilon_t|$. Under the same attainment hypothesis as in (11.5), this yields
+
+$$
+\Delta_{c,l,r}\ge\frac9{64}(M+B)\varepsilon_t^2.
+\tag{11.7}
+$$
+
+The optional gap-only finite domain is exactly the one in (10.15); its positive gap-word cylinders give the analogous bound. These are quantitative actual-law consequences and do not infer an upper bound on any auxiliary risk.
+

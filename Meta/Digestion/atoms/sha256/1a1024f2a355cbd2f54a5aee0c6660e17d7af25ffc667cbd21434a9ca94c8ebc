@@ -1,0 +1,18 @@
+**Proposition 5.1 (Predictive quotient and labelled-graph phase).** In a fixed component of Proposition 4.2, first identify contexts having equal entire future laws. The resulting finite state set $S$ has distinct laws $F_s$, well-defined rows $f_s$ and maps $\tau_g$. Next identify states when $F_s$ and $F_t$ are mutually absolutely continuous. On this second quotient the labelled maps are
+
+$$
+\bar\tau_g=U^g\quad(g\ge2)
+\tag{5.1}
+$$
+
+for one cyclic permutation $U$. Thus its classes can be labelled $\mathbb Z/m\mathbb Z$ so that an edge with gap $g$ adds $g$. This quotient is a strongly connected labelled graph; it need not carry a common probability row within a phase. No lumpability of the original $K$ is asserted.
+
+Proof. Equality of future laws implies equality of their first-gap probabilities. Conditioning on any first gap $g$, whose mass is positive, then gives equality of the successor future laws. This constructs the first quotient and its rows. The same conditioning argument shows that mutual absolute continuity passes to successors, so it defines the second quotient's maps. Equation (4.11) gives
+
+$$
+\bar\tau_{l+r}=\bar\tau_r\bar\tau_l\quad(l,r\ge2).
+\tag{5.2}
+$$
+
+The quotient labelled graph is strongly connected because the original component is irreducible and every label has positive probability at every state. Relation (5.2) makes its maps commute. For each $g$, the nonempty image of $\bar\tau_g$ is invariant under all labelled maps. Strong connectivity forces this image to be the whole quotient, so every map is a permutation. Set $A_2=\bar\tau_2$, $A_3=\bar\tau_3$. Then $A_3^2=A_2^3$ and $U=A_3A_2^{-1}$ has $U^2=A_2$, $U^3=A_3$. Relation (5.2), starting with $2,3$, gives (5.1) for every $g\ge2$. Strong connectivity now makes $U$ a single cycle. This is the finite-map algebra of [V, Theorem 57.1][V], applied to labelled maps rather than to representative phase rows. $\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0486a539de26bed1bfa62d6f46a3a91b305e6165e04d4654d3cbbbb2eeba3bf4
+  normalized_sha256: sha256:0486a539de26bed1bfa62d6f46a3a91b305e6165e04d4654d3cbbbb2eeba3bf4
+cas_ref: sha256:0486a539de26bed1bfa62d6f46a3a91b305e6165e04d4654d3cbbbb2eeba3bf4
+coverage_gids:
+  - gid: D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBoundSharpness.literal_standard_closed_star_coordinate_bound_sharp
+    target_statement_id: sha256:96c050ce9319e3355dc12b66f3160a947e519977643797b2af856db4f5d58fd1
+receipts:
+  unresolved_subitems: []

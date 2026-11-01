@@ -1,0 +1,55 @@
+**Proposition 20.1 (the same aligned core with two different images).**
+Let $y=(10)^\infty$ with its displayed index-zero alignment. The purely
+periodic original source $s=y$ belongs to $\mathscr R_2$ and has
+
+$$
+ p=2,\qquad R_y=\{(1,0),(0,1)\},\qquad |R_y|=2<4.
+ \tag{PCR.49}
+$$
+
+For the original source $s'=y+(1,0,0,\ldots)=(001010\ldots)$,
+the same aligned core has $a=1$, $s'\in\mathscr R_3$, and
+
+$$
+ C_{s'}=\{a,b\},\quad q_a=(1,1),\quad q_b=(0,0),
+ \qquad R_{s'}=(\mathbb Z/2\mathbb Z)^2.
+ \tag{PCR.50}
+$$
+
+The full square is therefore neither universally attained nor universally
+excluded, even with the aligned core fixed and with authentic singular
+sources retained.
+
+Proof. The least core annihilator is $g(E)=E^2+1$ over $\mathbb F_2$:
+$y$ has period two and is nonconstant, so neither order zero nor the
+constant-term-one degree-one polynomial annihilates it. The first
+source is purely periodic, and its root state is $(1,0)$. For this
+aligned core, the entire residue table is
+
+$$
+\begin{array}{c|c|c|c}
+ q&c_y(A)&f_a(q)&f_b(q)\\ \hline
+ (0,0)&0&(0,0)&(0,1)\\
+ (0,1)&0&(1,0)&(1,0)\\
+ (1,0)&1&(0,1)&(0,1)\\
+ (1,1)&1&(1,0)&(1,1).
+\end{array}
+ \tag{PCR.51}
+$$
+
+The two off-diagonal states form a closed set, both occur from the root,
+and the other two cannot be reached, proving (PCR.49) by Theorem 19.2.
+This is also the sharp $p=2$ instance of Proposition 19.3.
+
+The transient of $s'$ is killed by $E$; $E(E^2+1)$ annihilates $s'$
+at every nonnegative index, so the source is in the original class with
+$d=3$. Coprime decomposition gives exactly the displayed aligned core
+and transient. Its only defect is birth one at the root. That actual
+birth uses zero, so the integer child boundaries are $(3,5)$ at $a$
+and $(2,4)$ at $b$, with origins $e_a=3,e_b=2$. Both children are
+core-only and are the minimal safe seeds. Their residues are the two
+diagonal states. By (PCR.51), $a$ followed by $a$ reaches $(1,0)$,
+and $b$ followed by $b$ reaches $(0,1)$; thus all four states have
+actual address witnesses. This uses the original transient to initialize
+the image, not hypothetical seed states. $\square$
+

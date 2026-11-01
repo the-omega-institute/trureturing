@@ -1,0 +1,32 @@
+**定理 5.2（与根格同源的障碍相消式）。**
+
+<a id="thm-cancel"></a>
+
+写 $\rho=(\rho_1,\rho_2)$，令两因子各自提升到 $\operatorname{SU}(5)$ 的障碍为
+$o_1,o_2\in H^2(\Pi;\mathbb F_5)$。则
+
+$$
+\boxed{\ o_H(\rho)=o_1+2o_2,\qquad
+\rho\text{ 可提升到 }H\ \Longleftrightarrow\ o_2=2o_1.\ }
+$$
+
+**证明。**
+
+选两因子的集合提升，其乘法缺陷分别为
+$\zeta^{c_1(\gamma,\delta)}I$ 和 $\zeta^{c_2(\gamma,\delta)}I$。
+定理 [3.2](#thm-center) 的商映射满足
+
+$$
+[(\zeta^aI,\zeta^bI)]=[(\zeta^{a+2b}I,I)]=z^{a+2b}.
+$$
+
+因此联合缺陷就是 $c_1+2c_2$，取上同调类得第一式。
+于 $\mathbb F_5$ 中，$o_1+2o_2=0$ 等价于 $o_2=2o_1$。证毕。
+ □
+
+根格胶合线与障碍相消式中的同一个斜率来自同一个中心商 $C$。
+这是一条具体构造链：格判别类给出分级权，分级权给出中心核，
+中心核再给出提升缺陷的线性组合。
+
+<a id="statement-5-3"></a>
+

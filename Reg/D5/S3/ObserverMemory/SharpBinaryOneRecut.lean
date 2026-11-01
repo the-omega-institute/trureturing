@@ -115,5 +115,213 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0
   options := #[] }
 
 #print axioms sourceRegistration
+
+namespace Encoding
+abbrev signature : Signature where
+  Params := Nat
+  State N := Option (Fin N)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actualReadout : Realization signature :=
+  realize signature (fun _ _ i => word i) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => []) (fun e => nomatch e)
+abbrev lengthArena : Arena where
+  signature := signature
+  Law R := ∀ {N : Nat} (i : Option (Fin N)), (R.readout () N i).length = N
+abbrev injectiveArena : Arena where
+  signature := signature
+  Law R := ∀ N : Nat, Function.Injective (R.readout () N)
+private theorem rejected_length : ¬ lengthArena.Law rejected := by
+  intro h
+  have hh := @h 1 none
+  simp [rejected,realize] at hh
+private theorem rejected_injective : ¬ injectiveArena.Law rejected := by
+  intro h
+  have hh := h 1 (a₁ := none) (a₂ := some ⟨0,by omega⟩) rfl
+  cases hh
+private theorem dependence : ObservationalDependence signature actualReadout := by
+  intro i
+  refine ⟨1,none,some ⟨0,by omega⟩,?_⟩
+  intro he
+  have hh := word_injective 1 he
+  cases hh
+
+def lengthSource : Registration lengthArena (type_of% @word_length) where
+  actual := actualReadout
+  bridge := Iff.rfl
+  variation := ⟨@word_length,rejected,rejected_length⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,rejected_length⟩
+      intro j hj; exact (hj (Subsingleton.elim _ _)).elim
+    · intro e; exact nomatch e
+  dependence := dependence
+
+def injectiveSource : Registration injectiveArena (type_of% word_injective) where
+  actual := actualReadout
+  bridge := Iff.rfl
+  variation := ⟨word_injective,rejected,rejected_injective⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,rejected_injective⟩
+      intro j hj; exact (hj (Subsingleton.elim _ _)).elim
+    · intro e; exact nomatch e
+  dependence := dependence
+
+def lengthRegistration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_length)
+    (type_of% (realize signature (fun _ _ i => word i) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_length.__information_unit
+  realizationName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.Encoding.lengthSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨lengthArena⟩
+  objectArena := .source ⟨lengthArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source lengthArena ⟨lengthSource⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ i => word i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.SharpBinaryOneRecut
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","fn","arg","arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def injectiveRegistration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_injective)
+    (type_of% (realize signature (fun _ _ i => word i) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_injective.__information_unit
+  realizationName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.Encoding.injectiveSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨injectiveArena⟩
+  objectArena := .source ⟨injectiveArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source injectiveArena ⟨injectiveSource⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ i => word i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.SharpBinaryOneRecut
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms lengthSource
+#print axioms injectiveSource
+end Encoding
+
+namespace CoordinateCardinality
+abbrev signature : Signature where
+  Params := Nat
+  State _ := Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actualReadout : Realization signature :=
+  realize signature (fun _ N full => Nat.card (Spare N full)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (N : Nat) (full : Bool), R.readout () N full = N + if full then 0 else 1
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 1 true
+  simp [rejected,realize] at hh
+private theorem dependence : ObservationalDependence signature actualReadout := by
+  intro i
+  refine ⟨0,true,false,?_⟩
+  change Nat.card (Spare 0 true) ≠ Nat.card (Spare 0 false)
+  rw [spare_card,spare_card]
+  decide
+
+def source : Registration arena (type_of% spare_card) where
+  actual := actualReadout
+  bridge := Iff.rfl
+  variation := ⟨spare_card,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,rejected_law⟩
+      intro j hj; exact (hj (Subsingleton.elim _ _)).elim
+    · intro e; exact nomatch e
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.spare_card)
+    (type_of% (realize signature (fun _ N full => Nat.card (Spare N full))
+      (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.spare_card.__information_unit
+  realizationName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.CoordinateCardinality.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ N full => Nat.card (Spare N full)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.SharpBinaryOneRecut
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","fn","arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source
+end CoordinateCardinality
 end
 end Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut

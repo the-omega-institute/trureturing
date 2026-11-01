@@ -1,0 +1,31 @@
+**Corollary 15.7 (Scope of the uniform conclusion).** The finite-value
+and exact-equality parts of Open problem 7.3 are resolved on every
+fixed range $1\le h\le R\sqrt a$ for sufficiently large $a$ depending
+on that fixed $R$. The result does not assert uniformity for a
+growing $R$, a least sufficient threshold, a classification of small
+$a$, a near-equality rate, or an exact connected finite-graph optimum.
+
+**Proof.** These are precisely the quantifiers of Theorem 15.5.
+Its proof uses the original common law, all nonempty cardinalities,
+zero type masses, arbitrary positive marginals and arbitrary
+incidence support throughout. Its new lower-bound input is the
+uniform active-index margin (15.3), which makes the bounded-index
+residual (15.8) and strict payment (15.19) simultaneous over every
+fixed number of higher phases. Theorem 7.2 supplies the scalar
+localization, and Theorem 14.5 supplies the overlapping lower window;
+the cap evaluations alone would not yield this conclusion.
+
+The theorem and residual estimates here are repo-derived. Finite
+Jensen and its supporting-tangent inequality are used only after
+the explicit second derivatives (15.22) and $f_u''$ establish their
+hypotheses; see S. Boyd and L. Vandenberghe, *Convex Optimization*,
+§§3.1.3 and 3.1.8,
+[author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The expectation certificate in (15.15) is proved directly and uses
+no strong duality or convexity of $H$ in the law. The graph sources
+and normalization cited in Section 14 remain as stated there;
+none supplies the unrestricted growing-surplus equality theorem.
+The possible full-text overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed. No worldwide priority assertion is made. ∎
+

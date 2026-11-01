@@ -36,6 +36,18 @@ internal sealed class LeanCachePublisher : ILeanCachePublisher
 
     public void Publish(string staged, string target, LeanPinSet pins)
     {
+        // Release extraction and rollback directories are not reusable cache. Strip them
+        // only from this private clone; directory links are deleted without following them.
+        const string releasePrefix = ".release-";
+        foreach (var directory in Directory.EnumerateDirectories(staged))
+        {
+            var name = Path.GetFileName(directory);
+            if (name.StartsWith(releasePrefix, StringComparison.Ordinal)
+                && name.Length > releasePrefix.Length
+                && name[releasePrefix.Length..].All(static character =>
+                    char.IsAsciiLetterOrDigit(character) || character is '_' or '-'))
+                Directory.Delete(directory, recursive: true);
+        }
         Directory.Move(staged, target);
         postRenamePreStamp?.Invoke(target);
         LeanCacheStamp.Write(target, pins);

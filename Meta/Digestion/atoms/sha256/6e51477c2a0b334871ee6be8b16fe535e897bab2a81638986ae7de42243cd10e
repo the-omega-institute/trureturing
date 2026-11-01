@@ -1,0 +1,39 @@
+## 1. The quantified assertion
+
+For a finite dimension $d$, let $\mathcal H_d=\mathbb C^d$.  If
+$A_0,A_1,B_0,B_1$ are positive semidefinite operators on $\mathcal H_d$,
+write
+
+$$
+\Pi_s(A)=A_{s_1}A_{s_2}\cdots A_{s_\ell},
+\qquad
+\Pi_s(B)=B_{s_1}B_{s_2}\cdots B_{s_\ell}
+$$
+
+for an ordered binary word $s=(s_1,\ldots,s_\ell)$, and put
+$\Pi_\varnothing=I_d$.  Eigenvalue multisets always include multiplicity.
+For a real $p\geq1$, define $U(p)$ to be the following statement, with all
+the displayed quantifiers retained:
+
+> for every finite $d$ and every positive semidefinite quadruple
+> $A_0,A_1,B_0,B_1$ on $\mathcal H_d$ satisfying
+> $\lambda(A_i)=\lambda(B_i)$ for $i=0,1$, if, for every finite ordered
+> binary word $s$, the number $\operatorname{tr}\Pi_s(A)$ is real and
+> nonnegative and
+> $$
+> \operatorname{tr}\Pi_s(A)\geq\left|\operatorname{tr}\Pi_s(B)\right|,
+> $$
+> imply
+> $$
+> \lVert B_0+B_1\rVert_p\leq\lVert A_0+A_1\rVert_p,
+> $$
+> where $\lVert R\rVert_p=(\operatorname{tr}|R|^p)^{1/p}$ and
+> $|R|=(R^*R)^{1/2}$.
+
+The convention and the question are those of Alhejji--Knill, *Towards a
+Resolution of the Spin Alignment Problem*, Section VI, concluding item 1:
+their $\lambda$ is the eigenvalue list with multiplicity and their Schatten
+norm is the unnormalised finite-dimensional norm just displayed.  Thus the
+empty word, arbitrary finite dimension, and the full all-word quantifier are
+part of $U(p)$.
+

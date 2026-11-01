@@ -462,3 +462,134 @@ The four-expression advance is relative to this original continued-recovery task
 It does not recover an unknown source, hidden depth, the seed-acquisition transcript, full return-circle/raw history, rejected past, physical metric, absolute clock or elapsed duration. Original source service is assumed exactly as in the cited experiment; no physical implementation of it is constructed. Nor are four independently sufficient views of the whole process, full route agreement and dynamic compatibility for all operations, a universal alpha/beta reduction, or total-resource minimality proved. These remain separate obligations of the full four-expression programme. The bounded source-specific counterfamily does not complete that programme.
 
 ## 116.99 追加锚
+
+## 117. Two supplementary values after erasing the completed decision port
+
+### 117.1 The retained write-time interface
+
+**Definition 117.1 (erasure on the original instance).** Fix the entire instance of §§115.1–115.2: $r=3,m=2,d=1$, field $\mathbb F_2$, $Q=3,L=28,\ell=29,n=58,B=27,c_0=30$, both actually acquired seeds, one common hidden depth or one fixed common prior, and the complete initialized selector $\pi^-$. Keep every original raw execution, parser phase, Read, return, retry, incomplete prefix, rejected branch, actual Stop and suffix. Keep the entire total integer-domain receiver $\mathscr D_{\pi^-}$, its interface checks, empty-word default, all zero-completion dictionary entries and its actual-Stop convention. Write $D_{\rm blind}^{-e}$ for the least supplementary persistent alphabet when just the encoder's readable coordinate naming this transaction's completed continue/first-freeze decision is removed.
+
+More explicitly, before the original automatic latch, the retained arguments of a completed-marker update are
+
+$$
+I^-=(P,\rho,b,a,b',\phi,z),\qquad
+b=(c,\beta,h),\quad b'=(c+1,\beta+a,h+v_{c+1}a).
+$$
+
+Here $P$ is the original public data, including the fixed selector's program, $\rho$ is the already acquired seed, $a$ is the marker actually just completed, and $\phi$ comprises the original paid generic phases. The old fields are read before being overwritten. The generic parser/root/unselected/previously-frozen/final-marker/Stop phases remain available at their original times. There is no $\kappa$, control copy, selector address, identity-bearing custom phase, old prefix, acquisition transcript, old-label stream, future marker or future decision in $I^-$. The erasure is precisely the projection $(I^-,e)\mapsto I^-$, where $e$ names the current completed decision; it is not an erasure of the physical decision or its automatic latch.
+
+The distinction between a path frozen on entry and a first freeze caused by the current marker is the one in Boundary Dynamics §§110.1, 111.7 and 114.1: an earlier freeze holds the register, whereas a triggering transaction first writes its new value and then latches it. Thus the earlier-frozen guard is not a second readable name for the current decision. A frozen phase observed after the latch reveals the new latch state at that later time; it is not an additional before-latch input to the triggering write. The generic parser phase does not encode the identity or the selector's schedule. In particular, the encoder may use the original §108.1 option of writing before the selector decides. The construction below uses that option and hence needs no post-decision dispatch, write-enable signal carrying $e$, or inference of $e$.
+
+All acquisition, control and output values of the supplement belong to one fixed alphabet, initialized to 0 before seed acquisition. Current/frozen bare fields, the seed, parser, selector, generic phases, latch, ROM, transaction workspace and receiver output remain the original separately charged resources. Any new distinction retained across transactions would instead have to join this alphabet.
+
+### 117.2 A total update with no decision argument
+
+**Definition 117.2 (the two-value update).** Take $\mathcal Z=\{0,1\}$ and the fixed initial value $z=0$. An earlier-frozen path holds $z$ with priority. Every non-marker event holds $z$, including seed acquisition, discarded seed pairs, acquisition completion, the root, parser incompletion, payload returns and Stop delivery. At an unfrozen completed marker, check the original field domains and synchronization $b'=b[a]$, including $c'=c+1\le58$. A malformed formal marker address has supplementary default 0; this does not reject, stop or modify an original source execution. No acceptance or positive-completion test is made.
+
+For a valid unfrozen marker transaction, set
+
+$$
+\gamma(1)=\gamma(3)=0,\qquad \gamma(2)=1.
+$$
+
+If $c'\le27$, put $z'=0$. If $28\le c'\le30$, put
+
+$$
+z'=\begin{cases}
+z,&a=0,\\
+\gamma(c'-27),&a=1\text{ and old }\beta=27,\\
+0,&a=1\text{ and old }\beta\ne27.
+\end{cases}
+$$
+
+For $31\le c'\le58$, let $j=c'-30$ and put
+
+$$
+z'=\begin{cases}
+0,&\beta\ne28,\\
+z,&\beta=28,\ a=1,\ j=1,\\
+1-z,&\beta=28,\ a=1,\ j=3,\\
+z,&\beta=28,\ a=0,\ 1\le j\le3,\\
+0,&\text{otherwise}.
+\end{cases}
+$$
+
+Write $z'$ on every such unfrozen marker transaction, whether the selector continues or first freezes. The original selector then latches this same register if it selects that prefix. In particular the zero rule at $j\ge4$ applies equally to continuing and selecting paths. The quantities $c'-27,j,\gamma(c'-27)$ and the consistency tests are functions of current permitted arguments, not additional persistent variables or modes. No identity, deadline, schedule, reconstructed control or prefix is stored. The old and new bare fields and generic phases are used only as already supplied; the formula happens not to need the acquired seed or field syndrome beyond consistency checks.
+
+**Theorem 117.3 (exact erased-event capacity on the whole source).** With Definition 117.1's entire original source, selector and total receiver,
+
+$$
+D_{\rm blind}^{-e}(\pi^-)=2.
+$$
+
+Definition 117.2 is causal and total on every original finite raw-event prefix. At every actual first freeze of every accepted history in either original $E_0$ or $E_1$, its frozen value is exactly that history's original canonical colex rank in $\mathcal S_b$. Consequently the same $\mathscr D_{\pi^-}$ recovers the actual selected past from its original inputs. The lower bound applies to every legal one-value implementation, allowing arbitrary permitted recoding and use of the bare fields.
+
+Proof. First consider all-path definition and persistence. Initially and throughout an unfinished acquisition, $z=0$. Once a seed is acquired, it is merely an original input; neither seed changes this initial supplementary value. At each finite raw prefix, either the register was already latched, there is no completed marker, or the displayed marker function applies. These alternatives are exhaustive. Each returns an element of $\{0,1\}$, even on rejected paths, extra-one identity blocks, payload return circles and unfinished payloads. The supplement never tests whether the actual history will accept. The old/new synchronization and original generic phases suffice to recognize its transaction, with no current decision argument. Induction on raw-event length therefore gives a unique legal supplementary value at every finite original prefix. Infinite noncompletion has all these finite values; no termination or bookmark acquisition is asserted for such a path. The unchanged selector supplies its original unique first freeze on every complete marker word, at most at marker 57. The triggering write precedes that latch, and all later raw events hold its value.
+
+For canonical output, the following classification is on accepted words only; it does not restrict the preceding total program or the original source. Reuse the selected-cell and disjoint-target classification of §115.4. A first zero among the initial 27 markers selects the unique past $1^{c-1}0$ at its address. The update writes its singleton rank 0. Otherwise the prefix is $1^{27}$, leaving exactly two ones among the remaining 31 markers. Let $q$ be the number of ones in the identity block at positions 28–30.
+
+If $q=0$, the all-zero identity block selects at marker 30. No identity one was seen, so $z=0$, its singleton rank. If $q=2$, the second identity one clears the register. All later accepted tail markers are zero and have old $\beta=29$, so the register remains 0 up to the two-one target $j=6+t$. Each pair has its own target, and the selected past is a singleton. A third identity one is outside the accepted domain but was already covered by the total function.
+
+Suppose $q=1$, with identity position $i$, and let $k$ be the unique tail-one position. Identity acquisition leaves $z=\gamma(i)$. Before any tail one, zeros at $j=1,2,3$ preserve this value. The only accepted selected pairs are the retained early pairs, and their triggering writes are
+
+| Tail trigger | Identities in the seed-1 selected pair, in colex order | Values written |
+| --- | --- | --- |
+| $j=1,\ a=1$ | $i=1,2$ | $\gamma(1),\gamma(2)=0,1$ |
+| $j=3,\ a=1$ | $i=2,3$ | $1-\gamma(2),1-\gamma(3)=0,1$ |
+
+These are the ranks in the entire selected dictionary, not ranks in a newly pruned decoder. Earlier first-deviation and all-zero identity branches have already selected, two-one targets are at $j=7,8,9$, zero deadlines at $j=4,5,6$, and delayed targets at $j\ge10$. Thus none adds a selected member to either displayed address. In the $j=3$ row the preceding tail markers are zero, so the claimed input colors have not changed.
+
+Every other accepted one-hot branch has singleton output. If $k>3+i$, the original selector freezes on the zero at deadline $j=3+i\in\{4,5,6\}$. The update writes 0 there without asking whether it is a deadline; $c'$ itself determines this part of the formula. The common selected past has that identity and no tail one, regardless of where the actual later one occurs. If instead $k\le3+i$ and the one does not cause an early pair freeze, it sets the original delayed target $f(i,k)=9+6(i-1)+k>k$. Immediately after the tail one the old weight at every later transaction is 29; the next transaction and the eventual target therefore write 0. This includes the nonselecting $i=1,k=3$ transaction: it deliberately writes 1, then clears at $j=4$, before its singleton freeze at $f(1,3)=12$. The continuing $i=3,k=1$ transaction writes 0 and later selects at 22. All $k=2$ branches write 0, and the remaining non-early ones at $k\ge4$ also write 0. The injectivity of $f$ and separation of target intervals give singleton selected dictionaries for all these accepted freezes. Hence their original rank is 0. No prediction of the delayed target is used by the encoder.
+
+This proves canonical output for seed 1. For seed 0 the only nonzero coefficients are at positions 1 and 30, and $C_0=1$. After $1^{27}$ the final field condition is exactly $b_{30}=0$. Thus among the accepted one-hot branches only $i=1,2$ remain: the $j=1$ selected pair still has ranks 0,1, and the $j=3$ selected dictionary is the singleton $i=2$, whose written value $1-\gamma(2)=0$ is its rank. The other cases are singleton dictionaries or their seed-0 refinements, and retain output 0. Early-deviation pasts are unique for either seed. This uses the acquired seed's original address fibers, not a new seed-conditioned source. It covers all of both $E_0$ and $E_1$.
+
+Every accepted freeze is nonterminal, with its actual remaining suffix in the original $\mathcal F_b$. The emitted canonical rank therefore makes the unchanged receiver return the actual selected past. Its behavior at all other integer inputs, including legal ranks of zero-completion dictionaries and its actual-Stop terminal branches, has not been replaced or restricted. Rejected histories have total updates but no new recovery guarantee. This establishes the upper bound 2 with exactly one acquisition/output register.
+
+For the lower bound let $u_i$ be the three-bit one-hot word and $p_i=1^{27}u_i$. At the actual seed 1, both original words
+
+$$
+w_1=p_1\,1\,0^{27},\qquad w_2=p_2\,1\,0^{27}
+$$
+
+are balanced zero-return accepted words. Each has its seed's positive joint mass from §115.1 under the same hidden depth or common prior. Both first freeze at marker 31, have the same frozen $(\rho,\ell,c,\beta,h)=(1,29,31,29,0)$, remaining suffix $0^{27}$ and actual Stop 0, but have different selected pasts $p_1 1$ and $p_2 1$. A one-value supplementary alphabet necessarily supplies the same frozen value on both, whatever its name, update scheme or use of permitted inputs. All receiver arguments would coincide. The same total receiver cannot return both different pasts. This contradiction excludes every legal one-value encoder, including recodings unrelated to Definition 117.2. Together with the upper bound it proves the theorem. $\square$
+
+### 117.3 Recovering the event is a different task
+
+**Proposition 117.4 (two values cannot determine every write-time decision).** On the same original source and pre-latch interface, no deterministic blind supplementary register with at most two values can make the current completed continue/first-freeze decision a function of its retained write-time arguments on every original path. This holds even when those paths are restricted to prefixes of actual accepted seed-1 histories. Nevertheless two values suffice for Theorem 117.3's receiver task.
+
+Proof. At marker 30 the three active histories $p_1,p_2,p_3$ have identical seed-1 bare fields $(30,28,1)$ and generic phases. For an arbitrary two-value register, some pair has equal supplementary values there. If the pair includes $p_3$ and one of $p_1,p_2$, append the common tail $1\,0^{27}$. At its first marker the latter history first freezes, whereas $p_3$ continues with delayed target 22. Before that transaction's latch, their old/new fields, current marker, original parser phase, prior unselected status and supplementary values coincide. Any decision reconstruction from those arguments gives the same answer and fails on one history.
+
+The other possible equal pair is $p_1,p_2$. Append the common tail $0^4 1 0^{23}$. They both continue through its first three zeros, so equal supplementary values remain equal under the same retained inputs. At the fourth zero $p_1$ first freezes at its deadline, while $p_2$ continues. Once again the complete retained write-time arguments coincide. These words also have weight 29 and satisfy the seed-1 field equation, with positive joint mass in the original source. This exhausts all possible merged pairs. It is a distinguishability lower bound of three values for this event-reconstruction task, not a claim of an optimal event-reconstructing machine or of a three-value lower bound for selected-past recovery. $\square$
+
+For Definition 117.2 itself, the first witness is especially explicit: $p_1,p_3$ both carry $z=0$ into the $j=1$ transaction, have old boundary $(30,28,1)$ and new boundary $(31,29,0)$, and both write 0. The current physical decisions differ. After the latch, the original frozen phase and frozen address differ; the register on the frozen path holds while the other path remains live. Thus neither the current bare boundary nor this bit secretly reconstructs the erased event before the triggering write. The external selector still realizes that event and the latch still acts on it. Observing the new latch state later is a different observation at a different time.
+
+In particular, §115's event-aware $D_{\rm read}=D_{\rm blind}=2$ and $H_{\rm resp}=3$ retain their original meanings. Theorem 117.3 adds $D_{\rm blind}^{-e}=2$; it does not change the response functions. The three responses at $(30,28,1)$ still differ, although the register merges $p_1,p_3$. Under the common tail with its one at position 1, their first freezes occur at tail positions 1 and 22; under the common tail with its one at position 3, they occur at 12 and 3. The receiver sees the actual frozen position and appropriate dictionary in each case. At a continuing transaction there is no receiver obligation to interpret the speculative register value as a selected-past rank. This is precisely why the nonselecting $i=1,k=3$ value 1 may be cleared before its own rank-0 freeze. A register that had to emit or reconstruct every completed decision would face Proposition 117.4 instead.
+
+### 117.4 Supplier correspondence and the relation recovered
+
+The mathematical supplier for rank inversion remains Cover, [*Enumerative Source Encoding*, §I Proposition 1 and its inverse algorithm](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf), IEEE Transactions on Information Theory 19(1), 73–77. Reversing the coordinate order gives the present colex convention, with ranks starting at 0. Here it is applied to the already fixed complete $\mathcal S_b$, as in §§105–106 and 115; the finite set and integer-domain receiver are not new constructions. The positive common-source rectangles, original two-seed law, complete selector and selected-cell classification are the suppliers in Boundary Dynamics §§104–108, 113–114 and this volume §115.
+
+The incomplete-machine correspondence concerns partial output obligations, rather than equality of every future response function. For a live marker history $u$ and its actually completed marker $a$, assign the required-output set
+
+$$
+A(u,a)=\begin{cases}
+\{\operatorname{rk}_{\mathcal S_{b'}}(ua)\},
+ &ua\in\mathcal S_{b'},\ N_{b'}>0,\\
+\{0,1\},&\text{otherwise},
+\end{cases}
+\qquad b'=b_\rho(ua).
+$$
+
+Here $N_{b'}>0$ is solely a mathematical description of which selected marker prefixes have an accepted completion; it is not an input or test of the implementation or receiver. Because $\pi^-$ always selects before marker 58, there is no terminal selected block to add to this particular obligation. All raw paths and all dictionary entries still exist. An earlier-frozen path separately has its original hold obligation. A register value groups histories at a supplied bare address; histories with the same retained transaction arguments must share the same new value. That value must satisfy every applicable $A(u,a)$ and leave admissible successor groups at the next actual phase and address. The original latch determines which successors are frozen. Definition 117.2 exhibits this closure directly, including the unrestricted continuing transaction whose value 1 is later cleared. It neither adds the current decision to the input alphabet nor requires that decision as an output.
+
+[Abel–Reineke, *MEMIN: SAT-based exact minimization of incompletely specified Mealy machines*, §II](https://embedded.cs.uni-saarland.de/publications/iccad15.pdf), DOI [10.1109/ICCAD.2015.7372555](https://doi.org/10.1109/ICCAD.2015.7372555), supplies the compatible-state and successor-closure method for incompletely specified behavior. [Larrauri–Bloem, arXiv:2105.10292v2, §5 Theorem 4 and Appendix B](https://arxiv.org/html/2105.10292v2) supplies the implementation/closed-compatible-cover correspondence for initialized observation machines: compatibility concerns common defined inputs, and the cover must contain the initial state and contain each common-input successor set in a successor member. In the present telescope the visible inputs include the separately supplied bare fields and phases, the counted memory is only $z$, and the actual external latch changes future phases without supplying the current $e$ to the write. A literal whole-machine state count would also include the original control and bare fields. Equating all complete response vectors would instead impose extra output obligations on continuing paths. Neither supplier's general minimization theorem alone gives this instance's number 2 or its displayed completion; the new content is the fixed-source event-erased realization and its sharp receiver lower bound, together with the different decision-reconstruction obstruction.
+
+The repository's `FiniteIdentificationCapacityBound.finite_identification_capacity_bound` and `FiniteIdentificationOutputCapacity.finite_identification_output_capacity` provide the finite injective-readout principle behind the two-past lower bound: restrict to those two selected histories, keep the common receiver side information fixed, and use the frozen supplementary value as the separating readout. `ForwardMergePersistence.forward_merge_persistence` supplies persistence of equal states under the same deterministic evolution. In Proposition 117.4, equal bare fields, common markers and equal prior latch status give the same successive update functions up to the first differing event; equality propagates through their composition. After one path latches and the other continues the supplied phases differ, so this premise no longer holds. The autonomous finite carrier in `FiniteFutureCongruence.finite_future_maximal_congruence` similarly concerns a whole state and specified observation, not an unconditionally closed quotient on this supplementary bit alone. These declarations and their corresponding Blueprint statements are supplier interfaces, not a compiled verification of the present specialization.
+
+`DistinguishingFamilyCardinalityBound` requires rigid continuations for its output-alphabet bound; the original domains here contain many different suffixes and do not satisfy that hypothesis. The shared receiver-input pair above suffices without importing that stronger claim. `CapacitySensitiveSupport.dependsOn_iff_sensitive_subset` concerns the support of a fixed function on a finite product of coordinates. Its telescope does not permit replacing an entire encoder by deleting an argument from the old encoder's formula: sensitivity of the old update to $e$ would not exclude a different update such as Definition 117.2. At mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, `Language.isRegular_iff_finite_range_leftQuotient` in `Mathlib/Computability/MyhillNerode.lean` concerns full language acceptance under all suffixes. Such a full-behavior quotient and Moore's [*Gedanken-Experiments on Sequential Machines*](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf) supply classical distinguishability background; neither counts this bit alongside supplied fields and an external latch. Nerode's [*Linear Automaton Transformations*](https://doi.org/10.1090/S0002-9939-1958-0135681-9) is background to that quotient, not an additional theorem hypothesis here.
+
+The result is a repository-derived consequence for this exact relation among history, boundary, update and latch; it makes no external priority claim. In the common-history language of Transport Memory §§64–72 and Context Geometry §§82–90, the causal order tells the register when its color is useful and when it can clear; the realized boundary tells the receiver which selected dictionary interprets the frozen bit. The bit and that boundary, together with the actual suffix and Stop, recover the selected marker past on $E_\rho$. The bare boundary alone does not, by the two-past lower-bound witness. The bit does not recover the current selection event, by Proposition 117.4. If time means just the selected marker position, that coordinate $c$ is supplied in the frozen boundary and is recovered again as the selected word's length. None of these correspondences recovers a complete history from an independently sufficient notion of space, time, boundary or memory.
+
+All quantities continue to refer to one actual source history, not separately optimized or independently mixed histories. Recovery of the selected marker past does not recover the seed-acquisition transcript, return history, hidden depth, elapsed physical time or a metric. The fixed initial value and total causal update establish acquisition in the stipulated supplementary-register contract. They provide no total-memory, original-control, ROM, workspace, output-storage, Read/return/retry, runtime, energy or physical optimum. The broad mutual-recovery programme and arbitrary-selector erased-event capacities are not settled by this fixed finite result.
+
+## 117.99 追加锚

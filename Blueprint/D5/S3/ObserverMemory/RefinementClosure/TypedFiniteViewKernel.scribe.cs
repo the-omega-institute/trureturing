@@ -31,6 +31,56 @@ internal sealed class TypedFiniteViewKernelDocument : IScribeDocumentDefinition
                     + "equal type tags and roots; the next depth additionally requires "
                     + "simultaneous legality for every named outgoing edge and, when legal, "
                     + "equal labels and successors related at the preceding depth.")),
+            Paragraph(Text(
+                "For a complete response contract, an alternative trace retains the readout at "
+                    + "every cut. Its empty trace is the current readout. At a nonempty word it "
+                    + "pairs that readout with an absent tag if the first operation is illegal, "
+                    + "or with the actual first record and the recursively obtained suffix "
+                    + "trace when the operation is legal. Thus an illegal suffix keeps the "
+                    + "earlier readouts and records and stops at the first missing transition. "
+                    + "A continuing failure remains a legal transition with its failure and "
+                    + "reason in the record. Terminal outcomes are represented by declared "
+                    + "terminal types on which all operations are absent. Operation parameters "
+                    + "remain part of the named edge. Readouts and records retain every source, "
+                    + "permission, archive and calibration field required by the fixed "
+                    + "contract. Omitting a field in a later projection does not erase a "
+                    + "record already retained by that contract.")),
+            Paragraph(Text(
+                "Equality of these complete traces for all finite words is exactly equality "
+                    + "of complete behavior here. In one direction, erase the earlier cut "
+                    + "readouts from each trace to obtain the successful label tuple and "
+                    + "terminal readout, or absence. In the other direction, use the finite "
+                    + "refinement relation at the word's length: its root equality gives the "
+                    + "first cut, its one-step clause gives simultaneous legality and the "
+                    + "same record, and its successor clause gives the remaining trace. The "
+                    + "outer type tag is retained in both presentations. No bound on state "
+                    + "fibers, word length or branching is needed.")),
+            Paragraph(Text(
+                "Take the quotient separately in each actual state fiber by this complete "
+                    + "response equality, and then take the disjoint typed union. A partial "
+                    + "named operation descends by mapping a legal successor to its quotient "
+                    + "class and retaining its actual record. The refinement clause proves "
+                    + "that this partial map is independent of the representative, including "
+                    + "whether it is absent. A graph arrow consists of a legal name at the "
+                    + "source residual and its determined target residual. Different names "
+                    + "remain different arrows, even when their endpoints coincide.")),
+            Paragraph(Text(
+                "Every such arrow lifts from every actual representative of its source "
+                    + "residual, with the same record and the stipulated successor class. "
+                    + "Induction on a composable graph word therefore lifts the whole word "
+                    + "from one fixed initial representative, keeping an actual intermediate "
+                    + "state at every prefix. The state images are the original fibers; "
+                    + "the trace tuples are outputs of these states, with no assumption "
+                    + "that independently possible record fields can be jointly realized. "
+                    + "Empty fibers are allowed, and the chosen initial state supplies the "
+                    + "inhabited starting fiber.")),
+            Paragraph(Text(
+                "This response correspondence supplies a representative-independent legal "
+                    + "graph. It places no finiteness or recurrence condition on that graph "
+                    + "and gives no cycle criterion for reconstructing the chronological "
+                    + "word from a final residual and an additive duration. Duration must "
+                    + "itself descend, either because it is a declared record field or "
+                    + "by a separate hypothesis with one common unit and calibration.")),
             Describe.Lean(
                 DescribeId.Create("typed-finite-view-kernel"),
                 DeclarationHandle.Create(Prefix + "typed_finite_view_kernel"),

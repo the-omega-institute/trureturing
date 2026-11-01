@@ -1,0 +1,33 @@
+#### 定理 4.1（两个反对易读口的第三算符）
+
+设 $A,B$ 为复 Hilbert 空间上的 Hermitian 算符，满足
+$A^2=B^2=I$、$AB=-BA$。则
+
+$$
+
+C=-iAB
+
+$$
+
+为 Hermitian involution，且
+
+$$
+
+AB=iC, BC=iA, CA=iB.
+
+$$
+
+有限维时 $\dim_\mathbb{C} H=2m$，三者酉等价于一组 Pauli 算符张量 $I_m$。
+
+
+**证明。**
+
+$C^\dagger=iBA=-iAB$，$C^2=-ABAB=I$，其余乘积直接用反对易式化简。$B$ 等距交换 $A$ 的 $\pm1$ 本征空间，故二者同维。在正本征空间选正交基 $e_k$，用 $Be_k$ 作为负本征空间基，便有
+$A=\sigma_z\otimes I_m,B=\sigma_x\otimes I_m,C=\sigma_y\otimes I_m$。
+
+**证明完。** ∎
+
+所以两个算符连同乘法关系确定第三算符；两个*均值*没有自动保留这个乘法关系的读出。
+
+
+<a id="thm:gram"></a>

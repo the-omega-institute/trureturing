@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e114ed097c222a6011451464e78025956c3a96ece84e96ddb4172efdffb7f26
+  normalized_sha256: sha256:6e114ed097c222a6011451464e78025956c3a96ece84e96ddb4172efdffb7f26
+cas_ref: sha256:6e114ed097c222a6011451464e78025956c3a96ece84e96ddb4172efdffb7f26
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure, with no available project frozen GID for this complete finite-rho attainment clause. Under the enclosing definition, finite rho means existence of a natural word length with a word w and g in the original G such that d M_w g is nonzero. Nat.find_spec supplies a witness at the least such length. Nat.find_min supplies the shorter-length exclusion; neither uses project D5. For the same source affine family p(k)=p(0)+k*d, add_dotProduct, smul_dotProduct and scalar normalization identify this nonzero coefficient as the likelihood slope and give separation for any two distinct feasible parameters. This is conditional finite-rho coefficient sensitivity, not an assertion of attainment at infinity or of an actual separating pair on an empty or singleton feasible fiber. Real terminal tests remain weighted expectations; event probabilities retain the source positivity, normalization, test-range, legality and summability conditions. No native instrument realization or resource conclusion is inferred.
+    previous_atom_id: b89d3d07b4f8002ae08a1aa1e82f436963155bac0c413d3b42152dd975146823
+    next_atom_id: bf3add9445fb3ea2b998e3c1dbe53b6dd39ace39a4b64fb47f4454967b6e8f24

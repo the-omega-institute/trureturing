@@ -1,0 +1,73 @@
+**Theorem 8.2 (Marker and total-length relaxations).** For every $r\ge3$ and every attaining pair $(\eta,p)\in\mathcal L_r$,
+
+$$
+h_{2r}\ge m(\Lambda^r-1),\qquad
+H\ge(m+1)S_r-2^r.
+\tag{30}
+$$
+
+Equality in the second bound can occur only with the independent parameters
+
+$$
+h_0=m,\qquad h_1=\cdots=h_{r-1}=t=m+1.
+\tag{31}
+$$
+
+For $r=3$ this gives $H\ge28$. Equality $H=28$ forces $m=1$ and the full row
+
+$$
+(h_0,\ldots,h_6)=(1,2,2,2,3,6,12).
+\tag{32}
+$$
+
+These are necessary length conditions; (31) and (32) do not assert the existence of an attaining dictionary.
+
+*Proof.* Write $c=2r$. The letter $c$ occurs in $u$, and $u=\varphi(u)$ contains $cc0$: use the suffix $cc$ of $\varphi(c)=0cc$ and the initial $0$ of the following letter image. Since $\eta(0)$ begins with $p$, the word
+
+$$
+z=\eta(c)\eta(c)p
+$$
+
+is an actual factor of $\eta(u)$. The word $p$ is a prefix of $\eta(c)$, so $|\eta(c)|=h_c$ is a period of $z$. Consequently
+
+$$
+E(\eta(u))\ge2+\frac{m}{h_c}.
+$$
+
+For an attaining pair, (27) now gives the first bound in (30).
+
+Every length $h_i$ is at least $m$. A length equal to $m$ forces $q_i=\varepsilon$ and $\eta(i)=p$. Injectivity permits at most one such $i$. In particular, among the independent parameters $h_0,\ldots,h_{r-1},t$ at most one can equal $m$, and all others are at least $m+1$. Cancellation follows from Corollary 3.2. The exact supplied formula (23) is
+
+$$
+H=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i.
+\tag{33}
+$$
+
+Its coefficient sum is $S_r$. Its unique largest coefficient is $2^r$, at $h_0$, because $2^r>r+1$ for $r\ge3$. Starting with every independent parameter equal to $m+1$, at most one parameter can decrease by one; the greatest possible decrease in (33) is $2^r$. This proves the second inequality in (30). Equality requires the decrease to occur at $h_0$ and requires every other parameter to remain $m+1$, giving (31).
+
+When $r=3$, $S_3=18$, so $H\ge18(m+1)-8$. As $m\ge1$, equality $H=28$ forces $m=1$, $h_0=1$ and $h_1=h_2=t=2$. Formula (19) then gives $h_4=3$, $h_5=6$, $h_6=12$, proving (32).
+
+For comparison, the larger-alphabet attaining supplier in Theorem 4.4 already supplies members of this literal class. Reuse its weighted morphism $\pi_r$ and put $\widehat\eta=\pi_r\circ\varphi$. Its output is the very same supplied word, since $\varphi(u)=u$:
+
+$$
+\widehat\eta(u)=\pi_r(u),\qquad
+E(\widehat\eta(u))=e_r,\qquad
+\#\operatorname{Alph}(\widehat\eta(u))=r+2^r.
+$$
+
+Indeed $\pi_r(0)$ is a single letter $a$ occurring in no other letter image. With $p=a$, the palindromes in the literal representation are
+
+$$
+q_i=\pi_r(i+1)\quad(i<2r),\qquad
+q_{2r}=\pi_r(2r)\pi_r(2r).
+$$
+
+Each $aq_i a$ has exactly two occurrences of $a$. The substitution $\varphi$ is injective, and so is $\pi_r$: its disjoint nonempty image alphabets identify each maximal run of source letters, with the run length determined by the length of its image. Thus $\widehat\eta$ is injective. The richness and exact ordinary exponent are the complete reused conclusions of journal Proposition 14 and Theorem 2, rather than another proof of that construction. Its row is
+
+$$
+\widehat h_i=1+h^*_{i+1}\quad(i<2r),\qquad
+\widehat h_{2r}=1+2h^*_{2r}.
+$$
+
+For $r=3$ it is $(2,2,2,3,5,9,17)$, of total length $40$, on $11$ actual letters. In particular, the length relaxation does not leave all larger-alphabet literal-prefix attainment without a supplied example. $\square$
+

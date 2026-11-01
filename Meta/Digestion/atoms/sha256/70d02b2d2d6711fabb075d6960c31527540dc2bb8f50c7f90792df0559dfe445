@@ -1,0 +1,27 @@
+### 推论 15.3（幸存块类的精确阈值与首个可能分离维数）
+
+沿用 (13.20) 的 $t=\operatorname{tr}R$、$s_j=\sum_iR_{ij}$ 和 $g(R)$。
+在 $\operatorname{rank}H(R)=1$ 的来源类中，
+
+$$
+ \begin{aligned}
+ R\in\mathcal I_k(\varepsilon)
+ &\quad\Longleftrightarrow\quad R\in\mathcal F_k(\varepsilon)\\
+ &\quad\Longleftrightarrow\quad
+ g(R)>4\varepsilon\quad\text{或}\quad
+ \bigl[g(R)=4\varepsilon>0\ \text{且 }s_j\text{ 不全相等}\bigr].
+ \end{aligned}
+\tag{15.8}
+$$
+
+特别地，$\mathcal I_2(\varepsilon)=\mathcal F_2(\varepsilon)$ 恰由右端条件
+刻画，同一个固定 $L_0,N$ 扫描以三次初始计入报告覆盖它。
+任何满足 $R\in\mathcal I_k(\varepsilon)\setminus\mathcal F_k(\varepsilon)$
+的实际来源必有 $k\ge3$ 和 $\operatorname{rank}H(R)=2$。
+
+**证明。** 定理 15.2 把这类来源的任意协议成功性归为固定 $q=0$ 扫描成功性；
+其充要条件直接复用定理 13.6，包含该定理已经处理的闭误差端点，不重证
+扫描距离和下确界达到性。$k=2$ 时 $H(R)$ 是一行非零正向量，恒有秩一。
+一般地，$1\le\operatorname{rank}H(R)\le\operatorname{rank}R\le2$；排除
+秩一幸存块后只能为二。∎
+

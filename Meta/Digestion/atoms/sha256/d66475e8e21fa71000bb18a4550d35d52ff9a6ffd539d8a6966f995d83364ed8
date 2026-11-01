@@ -1,0 +1,10 @@
+**数学来源与新增推断。** 母卷定理 3.2、推论 3.3 与注 3.4 提供持续节点准则、好坏二分的结式形式及有理系数下降；这些结果在这里直接使用。本卷事实 3.2、定理 3.6 提供 continuant、单值及节点归一化；定理 6.2 (1) 提供推论 14.3 的共享交换子结论。分圆域的有理轨道、实对称矩阵的谱定理与 Rayleigh 商、单根的隐函数定理、Gauss 引理和结式的实特化是经典中间工具。定理 13.3 的两轨道饱和推断，定理 14.2 的配对和障碍及其无穷族应用，定理 15.3 的有向闭合与二值和约束，以及定理 16.3 的反周期分类是这里给出的数学推导；它们不作为所引文献的结论陈述。
+
+| 引用 | 数学内容与实际使用范围 |
+| --- | --- |
+| [LG] O. Lindblad, E. Guerrero, *Simple Eigenvalues and Non-vanishing Eigenvectors of the Anderson Model*, [arXiv:2512.00278v1](https://arxiv.org/html/2512.00278v1)，定义 1.1、命题 2.3、引理 3.2、命题 4.1 及其式 (4)–(7) | 实际算子 $\Delta+tV$、好坏势、共同正交对称机制；命题 4.1 处理素数圈，证明中的分圆及一阶 Fourier 关系是定理 13.3、14.2 所用经典方法的对应。这里的 $C_{2p}$ 结论不由该素数圈命题直接推出；定理 14.2 使用全部饱和节点根，未假设一阶劈裂非零。 |
+| [J] G. Teschl, *Jacobi Operators and Completely Integrable Nonlinear Lattices*, AMS，Mathematical Surveys and Monographs 72，2000，[作者全文](https://www.mat.univie.ac.at/~gerald/ftp/book-jac/jacop.pdf)，§7.1 | 周期 Jacobi 传递矩阵及 Floquet 半迹；对应 Jacobi 系数 $a(k)=-1,b(k)=2+tv_k$，谱参数 $\lambda$。本章实际行列式与端部约定直接采用本卷事实 3.2，不以一个自由端路 Laplace 矩阵替代实际主子矩阵。 |
+| [A] S. Lang, *Algebra*, 修订第三版，Springer，2002，第 IV 章 §2、§8 | Gauss 引理、首一 gcd、结式及特化；用于定理 13.3、15.3 与引理 16.2 的系数域及多项式整除。 |
+| [M] R. A. Horn, C. R. Johnson, *Matrix Analysis*, 第二版，Cambridge，2013，§4.2–4.3 | 实对称谱、Rayleigh 商与实际主子矩阵的谱关系；定理 16.3 中的二维压缩保持同一实际矩阵，比较方向为压缩的最大 Rayleigh 商不超过全矩阵最大本征值。 |
+| [F] `D5/S3/Combinatorics/Graph/Walks/AndersonDefectFamily.lean` 的 `defect_family`，及其输入 `AndersonDefectSeed.lean` 的 `defect_diagonal_seed` | 既有缺陷族代数：$r\ge3,m\ge2$ 的共享交换子结论；同一族的节点与坏势结论另要求 $m\ge3$。这里只消费前者的参数范围，不重复推导这些代数结论。 |
+

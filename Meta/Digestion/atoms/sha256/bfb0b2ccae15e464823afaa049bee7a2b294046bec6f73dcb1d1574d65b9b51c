@@ -1,0 +1,18 @@
+**Proposition 10.5 (each native scalar coordinate fails on this same source).** Keep exactly the source, root, vectors and $C,E$ of Theorem 10.4. For either coordinate projection $\operatorname{pr}_j$, $j=1,2$, and every $\epsilon>0$, no finite static supplement and no complete finite online register can recover all finite legal histories from the exact endpoint, supplement and one scalar observation in the full closed interval of radius $\epsilon$ about $\operatorname{pr}_jT(u)$. Nevertheless joint acquisition obeys (10.11).
+
+Proof. This is the scalar obstruction of Theorem 9.3 on a root path meeting two cyclic components. Here it has an infinite exact-collision witness, so does not depend on the size of the positive tolerance. For coordinate 1, fix any nonnegative integer $N$. The $N+1$ words
+
+$$
+a^mca^{N-m},\quad 0\le m\le N,
+$$
+
+all end at $s$ and all have native scalar total $C_1+hN$. For coordinate 2, the $N+1$ words
+
+$$
+a^{\,2(N-n)}ca^n,\quad 0\le n\le N,
+$$
+
+all end at $s$ and all have scalar total $C_2+2hN$. For a proposed finite alphabet of size $Q$, take $N=Q$. Pigeonhole supplies two different histories with the same label and scalar total, violating Lemma 9.2 even at error zero. An online register induces just such a label. Appending $e$ gives terminal witnesses with the same additional scalar offset $E_j$.
+
+These two families use projections of the one fixed pair, rather than different graphs or separately tuned instruments. A scalar register with access to its scalar clock during execution, a source-state-qualified version of $a$, or a hidden archive is not the register in this proposition. Joint acquisition can cut distinctions that every individual coordinate leaves with unbounded multiplicity; it still requires the finite supplement of (10.11) once $2\epsilon\ge h$. $\square$
+

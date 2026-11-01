@@ -1,0 +1,13 @@
+**Corollary 18.2 (what depends on support shape, and what is supplied by rank).** For the fixed graph and native law, positive-tolerance finite static or online existence depends on $K$ only through $W=\operatorname{span}K$. Existence at one positive tolerance is equivalent to existence separately at every prescribed finite positive tolerance. The separating difference sets, attained bounds and least possible cardinalities can still depend on support shape and on $\epsilon$.
+
+Proof. Condition (18.1) contains $W$ but neither shape nor positive tolerance. Compactness gives the upper estimate and relative interior the obstruction at every positive tolerance. Shape remains present in the exact overlap relation (16.5). The conservative modulus (18.2) uses $R$; an alternative attained modulus is
+
+$$
+q'=1+\max_{P\in\mathcal S}\ \max_{j\in S_{\epsilon,P}}\|j\|_\infty,
+\tag{18.7}
+$$
+
+where $0\in S_{\epsilon,P}$ and all these finite sets are supplied by Lemma 17.1. The same state update with $q'$ succeeds. Neither modulus is asserted optimal. Actual shape-dependent minima are already supplied by Theorem 10.4 and Proposition 10.6, and need no new example or reproof.
+
+For $W=\mathbb R^r$, $\Gamma_P=\mathbb Z^{k(P)}$ and $V_P=\mathbb R^{k(P)}$, so (18.1) is full real column independence. This is exactly the supplied general full-box theorem, now applicable to every full-dimensional compact support under the stated relative-interior hypothesis. If $A_P$ is already real-injective, (18.1) holds for every support. With singular $W$, a nonzero real kernel may miss $V_P$, so real dependence alone is no obstruction. On Definition 10.2's source, the dependent irrational case transverse to $W$ has $\Gamma_P=0$; the noisy collinear case fails (18.1). These are precisely Theorem 12.2's delivered alternatives, not new narrow-source results. Proposition 11.3 already shows why integer injectivity alone does not suffice for a full-dimensional positive-error contract, even with pairwise independence and no more cycles than channels. Proposition 14.1 supplies the same-native, same-source, identical-marginal and equal-dimensional support falsifier. Proposition 14.2 supplies its normalized positive-thickness discontinuity. In the latter, the loss of existence occurs when thickening changes $W$; it does not contradict shape-invariance of existence for fixed $W$. None of these suppliers is promoted to a new physical or general minimum claim. $\square$
+

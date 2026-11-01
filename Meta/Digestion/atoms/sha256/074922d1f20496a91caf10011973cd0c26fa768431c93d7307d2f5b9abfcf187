@@ -1,0 +1,71 @@
+**Theorem 4.2 (all required heights are exact).** On every source in
+Definition 1.1 the singleton-core procedure completes and returns the
+actual height for every required present start of depth at most $h_0$.
+It obtains the original $(P,n)$ by the early-parent procedure of ACR
+Definitions 28.3 and 22.1, including arbitrary permitted transients.
+
+**Proof.** ACR Theorem 27.3's depth cutoff, proved by the same
+$j\ge F_{m+2}>d$ argument in Theorem 2.1, makes every surviving
+frontier genuinely core-only. It exposes at most $2^{\ell+1}-1$
+nodes per height call. ACR Theorem 27.2 includes the true two integer
+clock seeds among the enumerated seeds and proves that the local-index
+formula reproduces the actual cone. Its bound applies because these
+frontiers have depth
+
+$$
+m\le h_0+\ell\le4\lceil\log_2(2d+2)\rceil,\qquad
+F_{2m+4}=O((d+1)^8).
+$$
+
+The proof of that seed bound uses the actual branch-time inequality
+$m+2\le\tau_p\le2m+2$; the first two local batches occur by update
+$2m+3$, so their starts are at most $B_{2m+3}<F_{2m+4}$. This bound
+is used only at these shallow frontiers. The cone acquired in Theorem
+2.1 can have depth proportional to $H$; its clock seeds are not searched.
+
+At the actual seed pair and rank $q$, the paths in Definition 4.1 are
+actual longest and shortest paths. They pass the paid tests. An earlier
+passing trial is equally sound: a present suffix of length $q-1$ forces
+actual rank at least $q$. At an actual rank at least $q+1$, the required
+short-word absences are impossible. In the odd case every word of length
+$k+1$ would be present; in the even case the length-$(k-1)$ prefix has
+rank at least three, so one of its two children branches and one of the
+two tested grandchildren is present. This is the full soundness argument
+of ACR Theorem 22.2, with its parity-dependent length constraint intact.
+A failed trial supplies no bit value or first-disagreement location.
+Terminal ranks zero and one both have height zero and need not be
+separated. Exact frontier values recombine to the exact start height.
+All tests fit the guard because $m+q\le H$.
+
+Obtain $n=1+\operatorname{height}(\varepsilon)$. For birth
+$j=1,\ldots,2d$, calculate
+
+$$
+\tau(j)=\min\{t\ge2:j\le B_t\}.
+$$
+
+Using already recovered bits from earlier updates, construct the old
+labelled tree at $\tau(j)-1$, containing at most $2j-1$ nodes. Its
+$(j-B_{\tau(j)-1})$th beta leaf in physical order is the actual
+parent $p_j$, by induction and GPO Proposition 39.2. Bits earlier in
+the same batch do not alter that old tree. Maturity implies
+$\tau(j)\le n-1$ and $|p_jc|\le\tau(j)-1\le h_0$ for each child
+$c$. Both children are present. Their ranks are $t_j+1,t_j$ with
+$t_j=n-\tau(j)\ge1$; their exact heights are $t_j,t_j-1$. The larger
+height is at $a$ exactly when $z_j=1$. Thus two exact-height calls
+recover the authentic next bit and continue the induction. This uses
+actual shallow-source replies beyond the acquired mature core. It does
+not replace early bits by core bits or infer $n$ from a local age.
+
+As in ACR Definition 28.3, solve the order-$d$ Hankel system for the
+now authentic $P$, select any deterministic Gaussian solution as an
+auxiliary verification descriptor, and run ACR Corollary 22.3's final
+paid proper-candidate verifier. A solution exists by the all-index
+promise. GPO Lemma 29.2's monic product-annihilator argument makes its
+infinite behavior equal to the source. The final verifier therefore
+passes; its row is not asserted to be $K_d(P)$. Keeping this verifier
+also keeps its literal guards and at most $2d+3$ paid tests. At $d=0$
+the early-bit loop and prefix are empty; the known zero descriptor still
+constructs the paid root rank witnesses for every $n\ge2$, including
+$n=2$. No cut is provided by the order-zero promise. $\square$
+

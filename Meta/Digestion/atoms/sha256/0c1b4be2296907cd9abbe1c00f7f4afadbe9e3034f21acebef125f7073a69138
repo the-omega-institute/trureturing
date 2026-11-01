@@ -1,0 +1,29 @@
+**Definition 4.1 (four types, indexed trie and caps).** Partition all finite terms into
+
+$$
+\mathsf A=\{\alpha\},\quad \mathsf H=\{\beta\},\quad
+\mathsf I=\mathcal B,\quad
+\mathsf O=\mathcal T\setminus(\mathsf A\cup\mathsf H\cup\mathsf I).
+\tag{POC.10}
+$$
+
+A pair has type $\mathsf I$ exactly for child-type pairs
+
+$$
+\mathcal C_I=\{(\mathsf H,\mathsf A),
+(\mathsf H,\mathsf H),(\mathsf H,\mathsf I),
+(\mathsf I,\mathsf H),(\mathsf I,\mathsf I)\}.
+\tag{POC.11}
+$$
+
+Every other ordered child-type pair gives $\mathsf O$; a pair is never a leaf type. In particular $(\mathsf A,\mathsf H)$ is not an image case. For threshold $K$ let $[X]_K=\min(K,|X|)$, taking $K$ for infinite sets.
+
+Give each installed Read of absolute length at least three its own index $i$. Decompose its word uniquely as $p_iw_i$, $|p_i|=3$, retaining apparatus/state identity, occurrence $p_i$ and role $d_i=[p_i]$. Form one prefix trie of all suffixes $w_i$ across all roles. A node carries every ending index; an unobserved child is $\#$. Duplicate words remain separate indices even at one marker. Let $m$ be the number of indices and $V$ the number of explicit trie nodes, with $V=0$ for an empty menu. If nonempty,
+
+$$
+V\le1+\sum_i|w_i|\le s+1.
+\tag{POC.12}
+$$
+
+All shorter absolute words have the common exterior branch reply. A $\#$ child means unrestricted finite child trees, not an absent child of a branch.
+

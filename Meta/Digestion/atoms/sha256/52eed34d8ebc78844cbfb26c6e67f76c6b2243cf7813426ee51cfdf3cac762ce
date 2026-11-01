@@ -1,0 +1,14 @@
+**Theorem 5.3 (Inherited bounded-observable reduction).** In each model
+of Definition 5.1, any fixed affine scalar functional of $E$ that is
+bounded on every phase torus at fixed height is independent of $\beta$.
+In particular a decoder of finite uniform error is independent of
+$\beta$.
+
+This is [F], Theorem 3.3, with its original unrestricted hypotheses.
+That theorem uses finite-dimensional spaces of pointwise functions and
+abstract unitary characters, without imposing regularity on them.
+Its boundedness hypothesis concerns the scalar observable, not the
+encoder. Here a finite-error decoder is bounded because $y$ is bounded,
+so each decoded component satisfies that hypothesis. No assertion
+about unbounded encoder coordinates or all encoder fibers is imported.
+

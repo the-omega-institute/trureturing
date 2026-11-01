@@ -1,0 +1,16 @@
+**Definition 35.1 (source laws and observation domains).**
+Let $s^A,s^B$ be the repeating words
+
+$$
+s^A[0{:}11]=10000000000,\qquad
+s^B[0{:}11]=01000000000,\qquad z_j=s[j-1].
+$$
+
+Both satisfy $s_{i+11}=s_i$ at every $i\ge0$ and have exact period
+eleven. Use the actual alpha origin and chronological updates. The
+following cut-four supports have $B_4=4$ consumed births and $v_4=2$
+mature bits. They are early-cut statements: for the public recurrence
+bound $d=11$, ACR's full-law maturity threshold is $n_0=9$, since
+$F_8-1=20<22\le F_9-1=33$. They do not satisfy that full-law maturity
+premise at cut four.
+

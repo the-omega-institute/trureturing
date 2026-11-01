@@ -1,0 +1,42 @@
+**Theorem 16.2 (classification and the source-realization criterion).** Every thread in $\mathscr L_{\mathbf s}$ has a unique finite real endpoint limit
+
+$$
+t=\sup_n\ell_n=\inf_n r_n\in[0,\infty).
+\tag{16.3}
+$$
+
+There is exactly one thread over $0$, denoted $0^+$; exactly one over each positive irrational $t$; and exactly two over each positive rational $t$, denoted $t^-$ and $t^+$. Here $t^+$ always selects the cell containing $t$, and $t^-$ selects the cell immediately to the left whenever $t$ is a cut, and the cell containing $t$ otherwise. Consequently the same explicit carrier represents every such predictive limit:
+
+$$
+\widehat X
+ =\{0^+\}\ \sqcup\ (\mathbb R_{>0}\setminus\mathbb Q)
+ \ \sqcup\ \{t^-,t^+:t\in\mathbb Q_{>0}\}.
+\tag{16.4}
+$$
+
+The map $\iota$ is injective and has exactly the image
+
+$$
+\iota(\mathbb Q_{>0})
+ =\{t^+:t\in\mathbb Q_{>0}\}
+ =\{(I_n):\ell_n\text{ is eventually a constant }c>0\}.
+\tag{16.5}
+$$
+
+For a thread in this image $\bigcap_n I_n=\{c\}$; for every other thread that intersection in the actual rational carrier is empty. In particular compatibility and separation hold without surjectivity of the original-source map.
+
+Proof. Theorem 15.2 gives $a/b\in\mathcal C_{s_n}$ as soon as $s_n>ab$. Together with nestedness this proves
+
+$$
+\bigcup_n\mathcal C_{s_n}=\mathbb Q_{>0}.
+\tag{16.6}
+$$
+
+Inclusion of rational cells implies inclusion of their real closures, so $\ell_n$ is nondecreasing, $r_n$ is nonincreasing and $\ell_n\le r_m$ for all $n,m$. Both sequences are bounded by the first cell's endpoints. Their limits agree by (16.2), proving (16.3), finiteness and uniqueness. No thread at infinity is possible, since its first coordinate already has a finite upper endpoint.
+
+If $t=0$, every $\ell_n=0$, so each coordinate is the unique initial cell; conversely these initial cells form a thread with limit zero. If $t>0$ is irrational, rationality of every cell endpoint forces $\ell_n<t<r_n$ at every stage. Thus the only possible coordinate is the cell whose associated real interval contains $t$. Those cells are nested and nonempty in the rational carrier and have limit $t$, giving existence and uniqueness.
+
+For rational $t>0$, (16.6) supplies a stage $N$ at which $t$ is a cut and hence a cut at every later stage. At such a stage the only cell closures containing $t$ are the two adjacent ones, $[t,r_n)$ on the right and the left cell with upper endpoint $t$. Once either side is selected, nestedness forbids switching sides at a later stage. Before $t$ is a cut there is only one cell closure containing it. Selecting the same side at every stage with that cut therefore constructs exactly two threads. The cell immediately to the left exists even when $t$ is the smallest positive cut: it is then the initial open cell. This verifies all endpoint cases in (16.4).
+
+The thread $\iota(x)$ is exactly $x^+$ for rational $x>0$, and once $x$ is a cut its lower endpoint is $x$ at every later stage. Conversely suppose $\ell_n=c>0$ for all $n\ge N$. The number $c$ is rational because it is a cell endpoint, and every one of those cells contains $c$. Nestedness puts $c$ in the earlier cells as well. Their widths tend to zero, so their common rational intersection is precisely $\{c\}$ and the thread is $\iota(c)$. If any other thread had a rational realization $x$, it would equal $\iota(x)$ and would satisfy this eventual positive stabilization. This proves (16.5) and emptiness for all the remaining threads. Finally, different rational $x<y$ are separated by a rational cut in $(x,y]$ occurring at some stage by (16.6); hence $\iota$ is injective. The interval-nesting argument is classical; its cut union and exact original-source image here are consequences of the fixed rational process. $\square$
+

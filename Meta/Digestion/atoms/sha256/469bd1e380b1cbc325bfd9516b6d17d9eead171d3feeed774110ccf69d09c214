@@ -1,0 +1,40 @@
+### 定理 18.3（保留同一协议及末端规则的闭余量转移）
+
+设 $\Pi$ 在完整 $\mathcal M_k$ 上 $\gamma$-可靠，且
+$R\in\operatorname{Succ}_{\gamma}(\Pi)$。则同一个协议 $\Pi$，包括
+其全部动作、停止及末端输出规则，在完整 $\mathcal M_k$ 上也
+$\varepsilon$-可靠，并满足
+
+$$
+ \{S\in\mathcal M_k:d_{\mathrm{op}}(R,S)\le\delta\}
+       \subseteq\operatorname{Succ}_{\varepsilon}(\Pi).
+\tag{18.4}
+$$
+
+这里没有更换末端认证容限或增强输出规则，也不要求 $\Pi$ 有共同停止预算。
+
+**证明。** 全域 $\varepsilon$-可靠性直接来自每条
+$\varepsilon$-误差历史也是同一来源上的 $\gamma$-误差历史。
+固定满足距离条件的一个实际来源 $S$，取 $\Pi$ 在 $S$ 上的任意一条完整
+$\varepsilon$-误差运行，报告为 $y_i$，累计矩阵为 $A_i$。
+在同一个固定来源 $R$ 上逐前缀使用完全相同的报告，并令误差为
+
+$$
+ \eta_i^R=y_i-\operatorname{tr}(A_iR)
+      =\eta_i^S+\operatorname{tr}(A_i(S-R)).
+\tag{18.5}
+$$
+
+初读包括在内。由引理 18.2，每个已执行字均满足
+$|\operatorname{tr}(A_i(S-R))|\le\delta$，故
+$|\eta_i^R|\le\varepsilon+\delta=\gamma$。
+相同完整父历史强迫相同下一动作、停止及输出，归纳保证两运行始终使用同一个
+$A_i$。因此 (18.5) 给出在 $R$ 上合法的同一完整报告历史；若原运行无限，
+这个构造对每个前缀同时成立，也给出合法的无限运行。
+任意相关、依赖历史的误差合同允许这样的误差选择，不需要两来源有相同误差值。
+
+由于 $R\in\operatorname{Succ}_{\gamma}(\Pi)$，该运行必在有限处输出 $2$。
+$S$ 上的同一运行遂在同一处输出 $2$。$S$ 的允许误差运行任意，得到 (18.4)。
+三角不等式允许 $d_{\mathrm{op}}=\delta$ 及所有误差端点。
+证明沿一条实际报告历史始终固定 $R,S$，不以不同分支或逐次更换的来源补足相容性。∎
+

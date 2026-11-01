@@ -1,0 +1,25 @@
+## 五、把这一步精确放回 AURIC 三轴
+
+现在可以落实你提出的“结果、剩余、总量守恒”。
+
+选定一个旧节点 $t_j$，定义
+
+$$
+a_0=\frac{\mathscr K(x-t_j)}S,
+\qquad
+p=\frac{\mathbf b^*H^{-1}\mathbf b}{S}.
+$$
+
+令
+
+<a id="eq-15"></a>
+
+$$
+\boxed{
+X=a_0^2,\qquad
+Y=p-a_0^2,\qquad
+Z=1-p=\frac{\mathcal E}{S}.
+}
+\tag{15}
+$$
+

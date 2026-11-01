@@ -1,0 +1,6 @@
+**Proposition 4.3 (compatible finite views need not have a source realization).** Take as actual states the eventually-zero infinite binary streams, with current readout the first bit and one total action that deletes it. For every $n$, the stream consisting of $n+1$ ones followed by zeros has an all-one depth-$n$ profile. These profiles form a compatible tower with no actual source realizing the entire tower. Also no fixed finite depth recovers the entire actual stream.
+
+Proof. Any finite truncation of the all-one tower is realized by the stated eventually-zero stream. A realization of the entire tower would have a one in every coordinate, contradicting eventual zero. For any fixed $n$, the streams with respectively $n+1$ and $n+2$ initial ones have equal depth-$n$ profiles and different full streams. $\square$
+
+Thus finite-stage consistency does not establish realization inside the declared source image, and the ability to separate each pair at some depth does not establish a uniform separating depth. The tower is a semantic family of possible tests; acquiring all its branches on one unknown source additionally needs the relevant continuation, copying, reset and permission contracts. [Context Geometry §§1–2 and 7](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) separates those operations and finite-budget acquisition from the full test family.
+

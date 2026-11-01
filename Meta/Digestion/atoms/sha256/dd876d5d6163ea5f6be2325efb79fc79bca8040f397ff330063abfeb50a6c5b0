@@ -1,0 +1,34 @@
+**Permanent reference input.** This volume contains ordinary handwritten
+mathematics. Its statements and proofs are not Lean-verified results.
+
+For an arbitrary finite real prefix, a bound on the rank of its one square
+Hankel matrix prevents uniformly small relative error to the square-root
+sequence once the prefix is sufficiently long. An explicit sufficient
+Hankel index is
+
+$$
+B(N,\rho)=2^{16NK+4},\qquad
+K=4N+10+\left\lceil\log_2\frac{128(1+\rho)}{1-\rho}\right\rceil,
+\qquad N\ge1,\quad 0<\rho<1.
+$$
+
+The corresponding prefix has $2B(N,\rho)+1$ entries. The proof keeps the
+entire boundary of a finite generating polynomial. It neither extends a
+given prefix nor assumes a nonsingular Hankel block.
+
+For the native affine contract of *Native FIB on the full open domain:
+affine approximation and finite attainment*, including its §11
+*Fixed-dimension uniform gaps and finite Hankel certificates*, this index
+gives an explicit positive squared-error excess
+$\Gamma_{\mathrm{exp}}(n,Z)$ at every fixed dimension bound $n$ when
+$0<Z<2/3$. The norm remains the original Euclidean norm on all ten
+outputs. The native application uses the companion's bounded-observable
+theorem, with arbitrary preparation, arbitrary encoders, both affine
+offsets, and all real native commands.
+
+The finite theorem is self-contained in §§1–3. Sections 4–7 specify the
+native dependencies and prove the quantitative application. Section 8
+records the exact scope of the existing upper witnesses and boundary
+regimes. Sources, classical ingredients, and remaining questions are in
+§9.
+

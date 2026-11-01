@@ -1,0 +1,15 @@
+**Proposition 1.4 (all eleven actual root profiles).** The following cases are disjoint, nonempty and exhaustive. Remaining values range over every permitted finite branch image, with all whole-class disequalities retained.
+
+| Case | Forced coordinates | All remaining coordinates | Whole target |
+| --- | --- | --- | --- |
+| $\Pi_1$ | $x_a=\beta,\ x_{b_1}=\alpha$ | Four distinct members of $\mathcal B$ | $R_1$ |
+| $\Pi_2$ | $x_a=\beta,\ x_{b_2}=\alpha$ | Four distinct members of $\mathcal B$ | $R_2$ |
+| $\Pi_3$ | $x_c=\beta,\ x_{b_3}=\alpha$ | Four distinct members of $\mathcal B$ | $R_3$ |
+| $\Pi_4$ | $x_c=\beta,\ x_{b_4}=\alpha$ | Four distinct members of $\mathcal B$ | $R_4$ |
+| $Z_a$ | $x_a=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_c$ | $x_c=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_1}$ | $x_{b_1}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_2}$ | $x_{b_2}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_3}$ | $x_{b_3}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_{b_4}$ | $x_{b_4}=\beta$ | Five distinct members of $\mathcal B$ | $R_0$ |
+| $Z_*$ | None | Six distinct members of $\mathcal B$ | $R_0$ |

@@ -1,0 +1,16 @@
+**Lemma 3.1 (Parity-commuting label reduction).** Let $V\in\{E_d,O_d\}$. Then $F_V(\mathbf 0)=1$, and for every nonzero $\mathbf a\in\mathbb Z_d^2$ there is an integer $h$ with $\gcd(h,d)=\gcd(a_1,a_2,d)$ and $F_V(\mathbf a)=F_V((0,h))$. Stance: repo-derived.
+
+**Proof.** $F_V(\mathbf 0)=1$ because $D_{\mathbf 0}=I$ and $\psi$ is a unit vector.
+
+Step 1 (two unitaries commuting with $P$). Let $\mathcal F|j\rangle=d^{-1/2}\sum_{l\in\mathbb Z_d}\omega^{jl}|l\rangle$ and $S|j\rangle=\tau^{j^2}|j\rangle$. Since $d$ is odd, $\tau=e^{i\pi(d+1)/d}=\omega^{(d+1)/2}$ has $\tau^d=1$, so $S$ is well defined on $\mathbb Z_d$ and unitary; $\mathcal F$ is unitary by orthogonality of characters. Both commute with $P$: $\mathcal FP|j\rangle=d^{-1/2}\sum_l\omega^{-jl}|l\rangle=P\mathcal F|j\rangle$ after substituting $l\mapsto -l$, and $\tau^{(-j)^2}=\tau^{j^2}$. Direct evaluation on basis vectors gives $\mathcal FX\mathcal F^\dagger=Z$, $\mathcal FZ\mathcal F^\dagger=X^{-1}$, $SXS^\dagger=\tau XZ$ (as $\tau^{(j+1)^2-j^2}=\tau\,\omega^{j}$) and $SZS^\dagger=Z$. These conjugation relations are standard facts about the single-qudit Clifford group; they are proved here by the direct computation just given, and no literature precedent is cited for them because none was verified for this volume. From $ZX=\omega XZ$, every product of powers of $X$ and $Z$ equals a unimodular scalar times $X^uZ^v$, and $X^uZ^v$ is a unimodular scalar times $D_{(u,v)}$ with $(u,v)$ read modulo $d$ (as $X^d=Z^d=I$). Hence, for integer labels,
+
+$$
+\mathcal FD_{(x,y)}\mathcal F^\dagger\in\mathbb T\cdot D_{(-y,x)},\qquad SD_{(x,y)}S^\dagger\in\mathbb T\cdot D_{(x,x+y)},
+$$
+
+with $\mathbb T$ the unit circle, and correspondingly $\mathcal F^\dagger,S^\dagger$ (which also commute with $P$) realize the inverse label maps.
+
+Step 2 (invariance). Let $U$ be unitary with $UP=PU$ and $UD_{\mathbf a}U^\dagger=cD_{\mathbf b}$, $|c|=1$. Then $U$ maps $V$ onto $V$, so $\psi\mapsto U\psi$ preserves the unitarily invariant measure on unit vectors of $V$, and $|\langle\psi|D_{\mathbf a}|\psi\rangle|=|\langle U\psi|D_{\mathbf b}|U\psi\rangle|$. Hence $F_V(\mathbf a)=F_V(\mathbf b)$.
+
+Step 3 (Euclid on integer lifts). On $\mathbb Z^2$ let $\rho(x,y)=(-y,x)$ and $\sigma(x,y)=(x,x+y)$. By Steps 1–2, $F_V$ of the residue of $(x,y)$ is unchanged by $\rho^{\pm1}$ and $\sigma^{\pm1}$. The composite $\rho\circ\sigma^{-t}\circ\rho^{-1}$ sends $(x,y)$ to $(x+ty,y)$ for every $t\in\mathbb Z$, and $\sigma^t$ sends $(x,y)$ to $(x,y+tx)$. Lift a nonzero $\mathbf a$ to $(x,y)\in\{0,\dots,d-1\}^2\setminus\{(0,0)\}$. Subtracting integer multiples of one coordinate from the other as in the Euclidean algorithm keeps both entries nonnegative and ends at $(g,0)$ or $(0,g)$ with $g=\gcd(x,y)\ge1$; one application of $\rho$ turns $(g,0)$ into $(0,g)$. Thus the reduction ends at the label $(0,\gcd(x,y))$. All maps used are given by integer matrices of determinant $1$, so the entries of the image are integer combinations of $x,y$ and conversely; hence $\gcd(x,y,d)$ is invariant and the final label $(0,h)$ satisfies $\gcd(h,d)=\gcd(a_1,a_2,d)$. ∎
+

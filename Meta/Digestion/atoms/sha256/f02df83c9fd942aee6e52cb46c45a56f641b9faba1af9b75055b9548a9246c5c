@@ -1,0 +1,45 @@
+**命题 399.7（Hellinger 二阶展开的加法更正）。** 本条替代 §371.3 的陈述与证明，并替代 §371.4 零方向推论及 §374.2 第 1 项对旧二阶展开的调用；这两处消费者均以本命题为有效依据。旧 §371.3 首个框内公式在小 $o$ 项之前漏写加号，平方根 Taylor 式在常数项、线性项与余项之间漏写加号；这些旧式不再用作推导前提。
+
+设 $X$ 为固定的非空有限集合，$U\subset\mathbb R^d$ 为开集，$p:U\to(0,\infty)^X$ 为 $C^2$ 映射，且对每个 $\vartheta\in U$ 有 $\sum_{x\in X}p_\vartheta(x)=1$。固定 $\theta\in U$，记 $p_x=p_\theta(x)$、$\nabla p_x=\nabla_\theta p_\theta(x)$，并取欧氏范数。定义
+
+$$
+I(\theta)=\sum_{x\in X}\frac{\nabla p_x\,\nabla p_x^{\mathsf T}}{p_x},
+\qquad
+\mathsf A(p,q)=\sum_{x\in X}\sqrt{p(x)q(x)},
+$$
+
+$$
+\mathsf H^2(p,q)
+=\frac12\sum_{x\in X}\bigl(\sqrt{p(x)}-\sqrt{q(x)}\bigr)^2
+=1-\mathsf A(p,q),
+\qquad \mathsf H(p,q)=\sqrt{\mathsf H^2(p,q)}.
+$$
+
+则当 $h\to0$ 且 $\theta+h\in U$ 时，正确的两式为
+
+$$
+\boxed{\sqrt{p_{\theta+h}(x)}
+=\sqrt{p_x}+\frac{(\nabla p_x)^{\mathsf T}h}{2\sqrt{p_x}}
++O(\|h\|^2),}
+$$
+
+$$
+\boxed{\mathsf H^2(p_\theta,p_{\theta+h})
+=\frac18 h^{\mathsf T}I(\theta)h+o(\|h\|^2).}
+$$
+
+**证明。** 两个分布均归一化，故展开平方即得 $\mathsf H^2=1-\mathsf A$。在 $U$ 内取以 $\theta$ 为中心的充分小闭球；由有限性、正性与连续性，各 $p_\vartheta(x)$ 在该球上具有共同正下界。每个 $\sqrt{p_\vartheta(x)}$ 在此为 $C^2$，其 Hessian 有界，故 Taylor 定理给出第一式，余项可对有限个 $x$ 一致写成 $r_x(h)=O(\|h\|^2)$。代入定义可得
+
+$$
+\begin{aligned}
+\mathsf H^2(p_\theta,p_{\theta+h})
+&=\frac12\sum_{x\in X}
+\left(\frac{(\nabla p_x)^{\mathsf T}h}{2\sqrt{p_x}}+r_x(h)\right)^2\\
+&=\frac18\sum_{x\in X}\frac{((\nabla p_x)^{\mathsf T}h)^2}{p_x}
++O(\|h\|^3)\\
+&=\frac18 h^{\mathsf T}I(\theta)h+o(\|h\|^2).
+\end{aligned}
+$$
+
+这里交叉项为 $O(\|h\|^3)$，余项平方为 $O(\|h\|^4)$，有限求和保持这些估计。证毕。
+

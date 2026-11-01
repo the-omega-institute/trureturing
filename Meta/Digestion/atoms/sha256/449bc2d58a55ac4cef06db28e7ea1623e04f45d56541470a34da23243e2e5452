@@ -1,0 +1,22 @@
+**Definition 5.3 (coherent earlier records).** Under Theorem 5.2 put
+
+$$
+D_M=D_B\circ d:M(H)\to H,
+\qquad \rho_k(M(h))=M(h|_k)\quad(k\le |h|),
+$$
+
+where $h|_k$ is the length-$k$ prefix. These are well-defined partial restriction maps on the actual memory image. They obey
+
+$$
+\rho_{|h|}(M(h))=M(h),\qquad
+\rho_j(\rho_k(M(h)))=\rho_j(M(h))\quad(j\le k\le |h|).
+$$
+
+Indeed $D_M(M(h))=h$, so an actual memory value determines its unique length and all prefixes. Restricting a prefix twice gives the shorter prefix. The canonical prefix-table record
+
+$$
+M_*(h)=\bigl((0,B(h|_0)),\ldots,(|h|,B(h))\bigr)
+$$
+
+is an explicit persistent record satisfying RECORD by its last row, with restrictions given by table truncation. More compressed records satisfying RECORD have the same semantic recall through decoding; actual callable recall still needs an allowed reading and computation interface. No physical storage, access or retention guarantee follows from a set-theoretic restriction map.
+

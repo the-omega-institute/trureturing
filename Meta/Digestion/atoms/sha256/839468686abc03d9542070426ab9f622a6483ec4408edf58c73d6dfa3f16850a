@@ -1,0 +1,22 @@
+**Definition 1.3 (resource coordinates).** Let
+
+$$
+h=\max\{k\ge1:a^k\in S_n\},\qquad H=2h+1,\qquad S=d+H+2.
+$$
+
+The procedure of ACR Proposition 9.2 earns $h$ by paid doubling and
+bisection. It makes $2\lceil\log_2(h+1)\rceil$ Reads, has maximum
+literal length at most $2h<H$, and proves $h+1\le n\le H$. Thus $H$
+is earned, rather than a supplied upper cut or a bound inferred from
+allocated space.
+
+Count $Q$ source Reads, $M$ maximum full root-literal length, $J$ the sum
+of those lengths, $C$ sequential local bit work including head motion,
+$W$ every cumulative local bit write, and $V$ peak owned visited backing.
+$W$ includes scratch initialization, overwritten counters and operands,
+unsuccessful trials and retained output copies. Binary integers and
+addresses are represented strings, not unit-cost unbounded registers.
+The acquisition uses zero source updates and no coins. Physical weighted
+tariffs, service durations, binding, grants, code supply, allocation,
+retention and completed installation have their original separate bills.
+

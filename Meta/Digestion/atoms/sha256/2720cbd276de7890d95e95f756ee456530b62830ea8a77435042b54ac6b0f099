@@ -1,0 +1,14 @@
+**定义 4.1（单侧黄金仪器）。**
+
+在内部接口 $\mathcal{H}$ 上固定非平凡投影 $P$，令 $E=I-P$，定义
+
+<a id="eq:goldinstrument"></a>
+
+$$
+M_0=\sqrt x E,\qquad M_1=xE+\zeta^{-3}P,
+ \qquad \mathcal I_i(\rho)=M_i\rho M_i^*.
+ \tag{11}
+$$
+
+每个内部结果被保留，并按该 CP 仪器更新。
+

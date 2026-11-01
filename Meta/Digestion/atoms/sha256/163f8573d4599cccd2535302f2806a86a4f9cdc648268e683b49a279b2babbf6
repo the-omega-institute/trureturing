@@ -1,0 +1,47 @@
+#### 定理 6.2：已知电路的精确镜像编译
+
+在合法计算基中，有
+
+<a id="eq-eq:addressword"></a>
+
+```math
+\begin{aligned}K_{s(p)}&=SK_pS^\dagger,\end{aligned}\tag{17}
+```
+
+<a id="eq-eq:mirrorword"></a>
+
+```math
+\begin{aligned}K_{m(p)}&=\overline{K_p}
+ =K_{j_\ell}^{-1}\cdots K_{j_1}^{-1},\end{aligned}\tag{18}
+```
+
+<a id="eq-eq:inverseword"></a>
+
+```math
+\begin{aligned}K_p^{-1}&=K_{j_1}^{-1}\cdots K_{j_\ell}^{-1}.\end{aligned}\tag{19}
+```
+
+ $m(p)$  的调用数为  $9\ell$ ，且对于实初态  $v$ ，
+ $K_ {m(p)}v=\overline{K_ pv}$ 。
+
+
+**证明。**
+
+第一式逐因子使用式 [(13)](#eq-eq:mirror-covariance)，中间的  $S^\dagger S$  消去。
+因为每个  $\mathcal P_ j$  实，
+ $\overline{K_ j}=\zeta^{-1}[(I-\mathcal P_ j)+\zeta^{-1}\mathcal P_ j]=K_ j^{-1}=K_ j^9$ 。
+逐项共轭保持矩阵乘法次序，给第二式。
+一般乘积取逆反转次序，给第三式。
+最后  $\overline v=v$ ，所以  $\overline{K_ p}v=\overline{K_ pv}$ 。
+
+**证毕。**
+
+
+这项构造使用已知的程序描述和指定的实初态。
+它没有构造一个与未知输入无关的装置，使所有  $\psi$  都被送到  $\overline\psi$ 。
+在抽象编织群中， $\sigma_ i\mapsto\sigma_ i^{-1}$  是保持乘法次序的镜像自同构；
+ $g\mapsto g^{-1}$  则反转乘法次序。静态图仍须保留有向组合，不能因没有外部时间就交换这些操作。
+
+
+<a id="stmt-6-3"></a>
+

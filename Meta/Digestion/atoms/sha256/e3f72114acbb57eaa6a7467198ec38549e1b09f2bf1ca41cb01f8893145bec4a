@@ -1,0 +1,79 @@
+**Theorem 11.1 (Existence above the escape ceiling).** For every exterior
+triple (10.1),
+
+$$
+M\ge B_{\rm bip}>B_\infty.
+\tag{11.1}
+$$
+
+For every real $\alpha>B_\infty$ the set
+
+$$
+\mathcal S_\alpha=\{h\in\mathcal C_{a,b,c}:R(h)\ge\alpha\}
+\tag{11.2}
+$$
+
+is compact, with the empty set allowed. There is a nonempty compact set
+
+$$
+K=\{h\in\mathcal C_{a,b,c}:R(h)=M\},\qquad
+M=\max_{h\in\mathcal C_{a,b,c}}R(h).
+\tag{11.3}
+$$
+
+Here $K$ denotes the entire optimizer set, not a selected collection of
+face suppliers. Its definition is implicit.
+
+*Proof.* Use the whole general bipartite Theorem 4.1 with smaller class
+of size $m=a+b\ge4$, larger class of size $c>m$, and its original
+vertices mapped bijectively onto $(A\sqcup B,C)$. Its retained edges
+are precisely $E_{AC}\sqcup E_{BC}$; set every $AB$ coordinate to zero.
+For any chosen label $x_*\in A\sqcup B$, its normalized supplier is
+
+$$
+ h_{x_*w}=\frac{d+1}{c},\qquad
+ h_{xw}=\frac1c\quad(x\in(A\sqcup B)\setminus\{x_*\},\ w\in C),
+ \qquad h|_{E_{AB}}=0.
+\tag{11.4}
+$$
+
+The supplier proves $\lambda_2(h)=1$, connectedness and
+$R(h)=B_{\rm bip}$ on all $n$ original vertices. Its complete spectrum
+is $0$, $1$ with multiplicity $n-3$, and $\mu_-,\mu_+$, where
+
+$$
+\mu_-+\mu_+=d+3,\qquad
+\mu_-\mu_+=\frac{n(d+1)}c,\qquad 1<\mu_-\le\mu_+.
+$$
+
+Thus the map preserves the Laplacian, counting measure and every
+unordered pair, including original $AB$ pairs which are now nonedges.
+It is a whole optimizer on that bipartite face, not an upper comparison
+for the tripartite domain. The positive approximants (8.3) on all
+original edges give $M\ge B_{\rm bip}$. Direct subtraction gives
+
+$$
+B_{\rm bip}-B_\infty
+ =d-1+\frac{2c}{d+1}>0.
+\tag{11.5}
+$$
+
+The domain $\mathcal C$ is closed in $\mathbb R^E$: limits preserve
+nonnegativity and $\lambda_2=1$. Such limits have connected support,
+and $R$ is continuous there, by Convention 1.2. Hence
+$\mathcal S_\alpha$ is closed. If it were unbounded, one could choose
+$h_j\in\mathcal S_\alpha$ with $\max_e(h_j)_e\to\infty$.
+Theorem 10.2 would give
+$\alpha\le\limsup_jR(h_j)\le B_\infty$, a contradiction.
+Finite-dimensional closedness and boundedness prove compactness.
+
+A positive maximizing sequence exists by the definition of the finite
+supremum $M$. Normalize each term by its own $\lambda_2$.
+Choose $\alpha$ strictly between $B_\infty$ and $B_{\rm bip}$.
+The normalized tail belongs to $\mathcal S_\alpha$, so it has a limit
+point $h\in\mathcal C$ with $R(h)=M$. For every $h\in\mathcal C$,
+the explicit positive approximation (8.3) gives $R(h)\le M$.
+This proves the maximum assertion and nonemptiness of $K$.
+Finally $K$ is a closed subset of the compact $\mathcal S_\alpha$,
+so it is compact. ∎
+

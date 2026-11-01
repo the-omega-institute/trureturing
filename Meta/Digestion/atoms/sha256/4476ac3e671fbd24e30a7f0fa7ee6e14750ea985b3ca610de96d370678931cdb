@@ -1,0 +1,56 @@
+**Theorem 29.1 (a repeatable comparison on one source).** Under Assumption 28.1, suppose $S$ is numerically unbounded. From $E$, any known already executed chronological probe prefix $u$, and a known positive rational threshold $r$, there is a finite effective continuation which reports exactly whether the original $x$ satisfies $x\ge r$. It executes only further forward actions and one supplied floor read. Its retained data permit another such comparison from the newly attained cut. More precisely, the controller can maintain the invariant
+
+$$
+A_u=\begin{pmatrix}\alpha&\beta\\c&d\end{pmatrix}\in\mathbb N^{2\times2},\qquad
+\alpha d-\beta c=1,\quad d\ge1,\qquad
+z=f_u(x)=\frac{\alpha x+\beta}{cx+d}.
+\tag{29.1}
+$$
+
+Initially $A_u$ is the identity. The construction transforms finite descriptions into a finite ordinary program under the unboundedness promise; it does not recognize that promise.
+
+Proof. Reduce the given threshold to $r=a/b>0$. From the known matrix, compute
+
+$$
+t=f_u(r)=p/q,\qquad p=\alpha a+\beta b,\quad q=ca+db.
+$$
+
+Both integers are positive and coprime. Indeed the integer inverse matrix carries $(p,q)$ back to $(a,b)$, so a common divisor of $p,q$ divides both $a,b$. Positivity also follows directly from the positive-domain action formulas. In particular the denominator is not zero. The derivative sign, or the determinant identity after cross multiplication, shows that every $f_u$ is strictly increasing on positive inputs.
+
+Run $E$ through successive stages until a listed $D>pq$ occurs. Unboundedness ensures a finite successful stage, including when earlier stages are empty. Equation (15.3), applied to the current rational threshold $t$, says it is a predictive cut at scale $D$. For actual repeatable acquisition we need a computable continuation attaining a grid threshold, not just its counterfactual existence. The constructive arithmetic in that equation gives it as follows. Search $j=1,\ldots,p$ for $qj\equiv D\pmod p$; when $p=1$ take $j=1$. Coprimality guarantees success, and $qj\le pq<D$. Thus
+
+$$
+h=(D-qj)/p>0,\quad ph+qj=D,\quad
+g=\gcd(h,j),\quad C=h/g,\quad F=j/g.
+$$
+
+Here $C,F\ge1$ and $\gcd(C,F)=1$. Search $A=1,\ldots,C$ for $AF\equiv1\pmod C$, taking $A=1$ when $C=1$, and put $B=(AF-1)/C$. This is an effective finite search, $B\ge0$, and the matrix
+
+$$
+H=\begin{pmatrix}A&B\\C&F\end{pmatrix},\qquad AF-BC=1
+$$
+
+has nonnegative integer entries. Neither $p=1$ nor $q=1$ has been excluded; the strict inequality $D>pq$ ensures the positive coefficients in all these cases. This is the positive-coefficient construction already used in (15.3), rather than an application of a two-generator Frobenius formula with extra nonunit assumptions.
+
+To obtain an executable chronological word for $H$, use the finite row descent underlying `unimodular_iff_wordMatrix`. Its arithmetic realization can be described without extracting executable code from an existential Lean proof. At a nonidentity nonnegative determinant-one matrix, its two rows are componentwise comparable. If its upper first entry exceeds the lower first entry while its lower second entry exceeds the upper second entry, the determinant is at least the sum of the two smaller entries plus one; determinant one forces those smaller entries to be zero and gives precisely the identity. The other strictly crossed order has negative determinant. Equal coordinates cause no additional incomparable case. Subtract the smaller row from the larger, recording $L$ when the lower row was reduced and $R$ when the upper row was reduced. Each row is nonzero, the new entries stay nonnegative, the determinant stays one, and the sum of the four entries strictly decreases. The procedure therefore terminates at the identity. If the recorded labels are $e_1,\ldots,e_\ell$ in peeling order, then $H=G_{e_1}\cdots G_{e_\ell}$; execute their reverse order to obtain a chronological word $v$ with matrix $H$. These are finite comparisons, subtractions and list operations on known integers. They supply an ordinary terminating procedure, not an additional source inverse. Descent is performed on the known matrix before any of the new actions are executed.
+
+The current threshold is now sent to an exact scale-$D$ grid point:
+
+$$
+D f_v(t)
+ =D\frac{Ap+Bq}{Cp+Fq}
+ =g(Ap+Bq)=:k\in\mathbb Z_{>0},
+\tag{29.2}
+$$
+
+because $Cp+Fq=D/g$. Actually execute $v$ on the attained source, obtain $Q=q_D(f_v(z))$, and return the bit $[Q\ge k]$. Strict monotonicity and the exact upper value of floor at an integer give
+
+$$
+Q\ge k
+\ \Longleftrightarrow\ f_v(f_u(x))\ge f_v(f_u(r))
+\ \Longleftrightarrow\ x\ge r.
+\tag{29.3}
+$$
+
+Equality belongs to the yes branch. This convention is essential for original rational endpoints. Update the retained matrix to $H A_u$ while recording the actions as executed; the actual state is $f_{uv}(x)$ and (29.1) holds with $uv$. The update only uses known actions and integer arithmetic, never an unknown original value. Thus any finite adaptive sequence of these comparisons is one actual experiment: the next comparison begins with this updated matrix and uses the image of its new original threshold. It does not restart from the original cut. All searches and the read finish finitely, so an induction over completed comparisons proves the assertion. $\square$
+

@@ -1,0 +1,86 @@
+**定理 3.2（内部记录稳定化判据）。**
+
+<a id="thm-stabilization"></a>
+
+在定义 [3.1](#def-record) 下，$q_n$ 是同一个内部联合律上的有界鞅，
+且几乎处处并在 $L^2(\omega)$ 中收敛到
+
+$$
+q_\infty=\mathbb E_\omega[Z\mid\mathcal D_\infty].
+$$
+
+以下四项等价：
+
+1.  $q_\infty$ 几乎处处只取 $0,1$；
+
+1.  存在 $Q\in\operatorname{Proj}\mathcal D_\infty$，使 $\omega((Z-Q)^2)=0$；
+
+1.  完整内部记录可以确定目标 $Z$，忽略概率零事件；
+
+1.  $\omega((Z-q_n)^2)\to0$。
+
+而且每层及极限都有
+
+<a id="eq-variance"></a>
+
+$$
+\boxed{\omega((Z-q_n)^2)=\omega(q_n(1-q_n)).}
+\tag{2}
+$$
+
+**证明。**
+
+$\mathcal B=W^*(Z,\mathcal D_\infty)$ 交换。
+令 $Z_1=Z,Z_0=I-Z$，其内部联合柱集质量为
+$\mu(j,[h])=\omega(Z_jP_h)$。
+对易性给正性；分割及细化给归一和相容，
+从而产生二元目标与无限记录路径的概率表示。
+这是内部交换代数的谱表示，不是增加一个物理外部。
+记二元坐标为 $z$、记录前缀生成的 $\sigma$ 代数为 $\mathcal F_n$。
+式 [(1)](#eq-qn) 正是 $\mathbb E[z\mid\mathcal F_n]$，并且
+
+$$
+\mathbb E[q_{n+1}\mid h]
+=\sum_{o:\,\omega(P_{ho})>0}
+\frac{\omega(P_{ho})}{\omega(P_h)}
+\frac{\omega(P_{ho}Z)}{\omega(P_{ho})}
+=q_n(h).
+$$
+
+对 $m\ge n$，塔式性质给
+$\mathbb E(q_m-q_n)^2=\mathbb E q_m^2-\mathbb E q_n^2$。
+右侧由一个有界递增序列的差控制，故 $q_n$ 在 $L^2$ 中 Cauchy。
+
+为同时说明几乎处处收敛，对有限鞅差用
+
+$$
+\mathbb E\max_{n\le k\le m}|q_k-q_n|^2
+\le4\mathbb E|q_m-q_n|^2.
+$$
+
+此最大不等式可由停止时刻界
+$\lambda\mathbb P(M^*\ge\lambda) \le\mathbb E[|M_m|\,1_{\{M^*\ge\lambda\}}]$
+积分并用 Cauchy--Schwarz 得到。
+选 $n_r$ 使所有 $m\ge n_r$ 的右侧去掉系数 $4$ 后不超过 $2^{-4r}$，
+则
+$\mathbb P(\sup_{k\ge n_r}|q_k-q_{n_r}|>2^{-r})\le4\,2^{-2r}$。
+Borel--Cantelli 给整列几乎处处 Cauchy。
+极限在 $[0,1]$，与 $L^2$ 极限一致。
+对所有有限前缀事件保留条件期望积分等式，再用单调类定理延拓，
+得到 $q_\infty=\mathbb E[z\mid\mathcal F_\infty]$。
+有界 Borel 极限在 $\mathcal D_\infty$ 中给一个代表，零质量部分不影响结论。
+
+因 $z^2=z$、$\mathbb E(zq_n)=\mathbb E q_n^2$ 及 $\mathbb E z=\mathbb E q_n$，
+展开平方得式 [(2)](#eq-variance)，极限同理。
+若 $q_\infty$ 二值，右侧为零，所以 $z=q_\infty$ 几乎处处，
+取 $Q=1_{[1/2,1]}(q_\infty)$ 即得第 2 项。
+反之，若 $Z$ 与记录投影 $Q$ 在 $\omega$ 的平方范数中相同，
+它在联合概率模型中是记录可测的，故其条件期望就是自身。
+最后，$L^2$ 收敛与式 [(2)](#eq-variance) 给第 4 项的等价。
+
+□
+
+这个定理把条件经典化刻画为一个内部可辨认性命题：
+本体和 $Z$ 均不变，变化的是所用记录条件。
+它没有为所有不相容量同时指定一个预存标量。
+

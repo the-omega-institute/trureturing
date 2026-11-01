@@ -1,0 +1,27 @@
+**例 5.3（各自不可提升而联合可提升的环面数据）。**
+
+在 $\mathbb C^5$ 的基 $e_0,\ldots,e_4$ 上令
+$De_j=\zeta^je_j$、$Se_j=e_{j+1\bmod5}$。
+两者行列式为 $1$，且 $DS=\zeta SD$。
+对 $\Pi=\mathbb Z^2=\langle u,v:[u,v]=1\rangle$，定义
+
+$$
+\rho_1(u)=[D],\quad\rho_1(v)=[S],\qquad
+\rho_2(u)=[D^2],\quad\rho_2(v)=[S].
+$$
+
+两份射影数据都满足交换关系，但任何 $\operatorname{SU}(5)$ 生成元提升仅相差中心标量，
+不能改变交换子 $\zeta I$ 或 $\zeta^2 I$，所以各自都不能提升。
+在 $H$ 中却有
+
+$$
+\widetilde\rho(u)=[(D,D^2)],\qquad
+\widetilde\rho(v)=[(S,S)],
+$$
+
+因为其交换子 $[(\zeta I,\zeta^2I)]=1$。
+若第二因子改成平凡表示，联合交换子为 $z\ne1$，提升便不存在。
+此结论只针对通过指定 $H$ 归约实现该份投影数据。
+
+<a id="subsection-5-2"></a>
+

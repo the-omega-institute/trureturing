@@ -1,0 +1,100 @@
+**Theorem 3.1 (the acquired three-batch Hankel inverse).** The three
+paid prefixes in Theorem 2.2 determine an explicit least recurrence
+and original aligned seed for $y$ with polynomial local work and writes
+in $d$. In particular they do not require a period word, a phase
+exponent, a factorization or a search over the deep cone's integer
+clocks. All divisions below are over $\mathbb F_2$ or by proved units.
+
+**Proof.** The recurrence algebra used here is classical. In Shoup,
+*A Computational Introduction to Number Theory and Algebra*, second
+edition, Theorem 18.1 and Exercises 18.2--18.5 give the forward-shift
+annihilator ideal, minimal Hankel system and polynomial-module action;
+§18.2 gives synthesis from $2d$ acquired entries. Massey's
+*Shift-Register Synthesis and BCH Decoding*, §§II--IV, Theorems 3 and
+4 and their corollaries, gives the corresponding finite synthesis and
+rational-series description. The argument below supplies the specific
+parameter correspondence and source-alignment cancellation; it does
+not claim a new generic recurrence theorem.
+
+Every shift of the periodic $y$ has the same least monic annihilator
+$g$, of degree $r_0\le d$ and constant coefficient one when $r_0>0$.
+Indeed, shifts preserve annihilators, and shift is injective on
+periodic streams, giving the reverse inclusion of their annihilator
+ideals. Form, entirely from acquired entries,
+
+$$
+H_d(w)=(w_{i+j})_{0\le i,j<d},\qquad r=\operatorname{rank}H_d(w).
+$$
+
+To justify that the computed rank is the least degree, an order-$r_0$
+recurrence bounds the rank above by $r_0$. If the leading $r_0$ by $r_0$
+block had a nonzero column relation, the resulting nonzero polynomial
+$f$ of degree less than $r_0$ would make $f(E)w$ zero at its first $r_0$
+positions. It satisfies the same order-$r_0$ recurrence, so forward
+induction makes it zero everywhere, contradicting minimality. This
+proves $r=r_0$, exactly the intermediate Hankel argument in
+ACR Theorem 21.2 and Shoup Exercise 18.3. It does not assume that the
+observer already knew $r$.
+
+At computed rank zero the core is zero. For example, the first $d$
+zero entries of $w$ and an actual recurrence of degree at most $d$
+force all of $w$ to be zero by forward induction; periodic shift then
+forces $y=0$. Return the zero descriptor and perform no inversion.
+
+Otherwise set $K=H_r(w)$, which is nonsingular by the preceding
+argument. Compute binary vectors $b,c$ from
+
+$$
+K b=(w_r,\ldots,w_{2r-1})^{\mathsf T},\qquad
+K c=(v'_1,\ldots,v'_r)^{\mathsf T}.
+$$
+
+The first solution gives the actual least polynomial
+
+$$
+g(X)=X^r+\sum_{j<r}b_jX^j.
+$$
+
+Its actual recurrence is one solution, hence the unique solution. The
+second gives $f(X)=\sum_{j<r}c_jX^j$ with $f(E)w=Ev'$ at the first
+$r$ positions. Both sides satisfy $g$, so this equality holds at every
+nonnegative position. By Theorem 2.2,
+
+$$
+w=E^{B+1}u,\qquad Ev'=E^{B+1}y.
+$$
+
+Hence $E^{B+1}(f(E)u-y)=0$. The difference lies in $\ker g(E)$, where
+shift is injective: the constant coefficient $g(0)=1$ makes any value
+recoverable from its next $r$ values. Applying that fact $B+1$ times
+is a proof of injectivity, not an algorithm iterating an unknown or
+large $B$. It follows that
+
+$$
+f(E)u=y.
+$$
+
+Return $g$ and the seed
+
+$$
+y_i=\sum_{j<r}c_j u_{i+j}\qquad(0\le i<r).
+$$
+
+All operands occur in the paid prefixes: the largest index used is
+$2r-1\le2d-1$. Exact binary rank and the two solves take polynomially
+many field operations and $O((d+1)^2)$ data bits; sequential scanning
+only adds polynomial work and writes. The algorithm computes no $A,B$
+and never repeats $B$ backward steps.
+
+For the conventions, this $g$ is the monic forward-shift polynomial.
+Massey's connection polynomial is $C(D)=D^rg(D^{-1})$; conversely
+$g(X)=X^rC(X^{-1})$. For the purely periodic core $C$ has degree $r$.
+The singular factor $E^a$ belongs to the original all-index stream and
+is never inverted. In an ordinary power series the denominator is
+$C$, whereas in the reversed Laurent series
+$\sum_{i\ge0}y_iX^{-i-1}$ the reduced denominator is $g$, as in Shoup
+Theorem 18.2. These reciprocal conventions are not interchangeable.
+The zero core has degree zero and the all-one core has $g=X+1$; the
+latter gives $K=(1)$ and $f=1$. Repeated factors of $g$ have not been
+removed or assumed absent. $\square$
+

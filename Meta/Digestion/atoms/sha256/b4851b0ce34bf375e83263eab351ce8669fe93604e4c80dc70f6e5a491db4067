@@ -1,0 +1,32 @@
+**Definition 1.3 (two clocks and the actual batch words).** Let $I_k$ be
+the first global birth index in the cone in normalized update $k\ge1$.
+ACR Theorem 27.2 gives the exact integer equations
+
+$$
+ I_k=F_{e+k}+L_v(e+k-1),\qquad
+ I_{k+2}=I_{k+1}+I_k,\qquad A_1=I_1,\quad A_2=I_2,
+ \tag{PCR.1}
+$$
+
+where $L_v$ counts beta leaves in the preceding exterior forest. There
+are $F_k$ births in this batch. Define its **ordered chronological word**
+
+$$
+ W_k=(z_{I_k},\ldots,z_{I_k+F_k-1})
+     =(y_{I_k-1},\ldots,y_{I_k+F_k-2})
+ \tag{PCR.2}
+$$
+
+on a core-only cone. The word lists actual simultaneous births from left
+to right, not births along a semantic traversal. In particular the first
+and second batch each have length one. Consecutive batches need not be
+adjacent intervals of the global stream: exterior births occur between
+them. No index or word in this definition is an extra Read reply.
+
+For hypothetical local trials, any pair in $(\mathbb Z/u\mathbb Z)^2$
+may be used as $A_1,A_2$. Extend it by the Fibonacci recurrence, form
+(PCR.2) by periodic indexing, and feed the batch words to the same local
+beta-origin replacement rule. These trials are finite local mathematical
+models. Their definition asserts no realization by an exterior forest,
+actual alpha-origin source, or chosen physical prefix.
+

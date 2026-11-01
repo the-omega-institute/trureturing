@@ -1,0 +1,23 @@
+**命题 5.4（Torsion and the exclusion of zero）。** The strict-gap
+conclusion fails in general finite abelian groups. Even over
+$\mathbb Z$, allowing zero in the target ground can invalidate the
+strict one-element-gap conclusion, and at equality failure can already
+occur in rank one on singleton grounds.
+
+Proof. In $G=\mathbb Z/8\mathbb Z$, let
+$A=\{0,2,4,6\}$, take the uniform rank-two source, and put
+$B=\{1,2,3,4,6\}$. Let $N$ have all two-element bases except
+$H=\{1,3\}$. The supplied construction in Section 4 verifies looplessness and sparse paving.
+For $S=\{0,2\}$, every even target keeps both sums in $A$, while
+every odd target leaves $A$; thus $C_S=H$ has rank one.
+Here $0\notin B$ and $|B|=|A|+1$, but $S$ fails to match.
+This counterexample does not concern prime-order groups specifically.
+
+The zero exclusion is also a real condition. Even over $\mathbb Z$,
+let $A=\{1,2,3\}$, take a uniform rank-two source, and put
+$B=\{0,1,3,4\}$ with the one-deleted-base target whose
+circuit-hyperplane is $\{3,4\}$. For $S=\{1,2\}$ the targets
+$0,1$ are blocked and $C_S=\{3,4\}$ has rank one. Thus a strict
+one-element gap does not suffice if $0\in B$ is allowed.
+At equality already $r=m=1$, $A=\{1\}$, $B=\{0\}$ fails.
+

@@ -1,0 +1,21 @@
+**Definition 8.1 (one final observation and its recovery target).** Use the finite root-reachable typed complete response graph of Definition 7.1, with the actual source, named-edge lifting and fixed actual root $x_0$ of Definitions 1.1–1.2. The weighting in this definition is the source's fixed native $d:E\to\mathbb R_{>0}$ satisfying Assumption 2.1. Write $z(u)=r\cdot u$ and $\tau(u)=\tau_r^d(u)$ for every $u\in\mathcal P_r$, including $\varepsilon_r$. Fix $\epsilon>0$ in the declared clock unit, independently of the word, its duration and its length. The possible observations of $u$ are exactly
+
+$$
+\mathcal O_\epsilon(u)
+ =\{z(u)\}\times[\tau(u)-\epsilon,\tau(u)+\epsilon].
+$$
+
+The endpoint, including its type, is exact. There is one final real-valued clock observation $y$; its error is a bound on the total, not an independently repeated error on each edge. Negative reported values near the empty word are allowed by this contract. Uniform recovery means that there is a function
+
+$$
+D:V\times\mathbb R\longrightarrow\mathcal P_r\cup\{\bot\}
+\quad\text{such that}\quad
+D(z(u),y)=u
+\quad\text{for every }u\in\mathcal P_r
+\text{ and every }|y-\tau(u)|\le\epsilon.
+$$
+
+The symbol $\bot$ denotes rejection of an observation outside the possible observation image. The target is the entire finite ordered named root word, with its types. No policy restriction or maximum word length is imposed. A chronological memory target $m:\mathcal P_r\to M$ is lossless for this purpose when it is injective on this actual word image. This target differs from a complete residual for future prediction, as in Remark 4.1 and [Joint Kernel Minimal Predictive Core Bridge §§4–6,22–23](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md).
+
+The observation model assumes availability of the exact residual endpoint, a known graph and native duration law, and the stated common-unit, origin and final calibration/error contract over all words. The source definitions alone do not supply those acquisitions. In particular, an unknown offset, drift proportional to elapsed time, saturation, endpoint confusion, or merely approximate knowledge of each native duration is not this contract. An application must establish the stated total bound rather than infer it by summing an unspecified collection of local errors. Neither a bounded clock range nor bounded storage is assumed.
+

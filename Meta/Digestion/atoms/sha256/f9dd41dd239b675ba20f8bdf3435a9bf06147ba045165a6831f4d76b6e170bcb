@@ -1,0 +1,186 @@
+**Lemma 15.3 (Uniform residual bootstrap for all surviving indices).**
+On the sublevel in Lemma 15.2, write
+
+$$
+\begin{gathered}
+t_k=y_k\ (k\in D),\quad \delta=\max_{k\in D}t_k,\quad
+c=\min_{i\in C}y_i,\quad \bar y=(a-u)/m,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\alpha=mr(2m-1),\quad \beta=3m^2-3m+1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\alpha-\beta l+l^3,\\
+f_u(y)=r^2/y-d(j-1+u)/y^2,\quad
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B_j(w)=\frac{r^2m^2}{a-w}
+                    -\frac{dm^3(j-1+w)}{(a-w)^2},\qquad
+\mathcal A_j(u)=\frac{\mathcal B_j(0)-\mathcal B_j(u)}u,\\
+\eta=rn/j,\qquad \gamma=\eta^2-\alpha+\mathcal A_j(u).
+\end{gathered}
+\tag{15.7}
+$$
+
+For sufficiently large $a$, $\gamma\ge0$, and there are positive
+constants $\kappa_R,K_R$ for which the following hold. On $A$ put
+
+$$
+\begin{gathered}
+V_T=\sum_{k\in T\cap D}t_k^{-1},\quad
+Z_T=K^2\sum_{k\in T\cap D}t_k^{-2},\\
+\mathcal G_T=Z_T+Q(L)-\mathcal A_j(u)B-2\eta V_T+\gamma B
+           -\frac\gamma r\{m(B-1)+L\}.
+\end{gathered}
+\tag{15.8}
+$$
+
+Then
+
+$$
+\begin{gathered}
+\mathcal G_{\{k\}}=(t_k^{-1}-\eta)^2,\qquad
+\mathcal G_T\ge\kappa_Ra^3\quad(B>0,K\ge2),\\
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2,\\
+0\le\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f
+\le K_Ra,\\
+\mathbb P(A,K\ge2)=O_R(a^{-2}),\quad
+c\ge1-O_R(a^{-1/2}),\quad
+\delta\le\frac{1+O_R(a^{-1/4})}{\eta}.
+\end{gathered}
+\tag{15.9}
+$$
+
+**Proof.** The incidence identity and cap correction in Section 14
+can be retained with arbitrary bounded $j$; their uniform signs are
+proved here. Throughout, $2\le j\le J$, $n=O_R(\sqrt a)$,
+$c\ge c_0$, $t_k<b/a$ and $0<u=O_R(a^{-1/2})$. Differentiation gives
+
+$$
+\mathcal B_j'(w)=\frac{r^2m^2}{(a-w)^2}
+ -\frac{dm^3(a+w+2j-2)}{(a-w)^3}
+=-a^2+O_R(a)\quad(0\le w\le u).
+\tag{15.10}
+$$
+
+Thus $\mathcal A_j(u)=a^2+O_R(a)$. Set $z=n^2/(j^2a)$.
+Lemma 15.2 gives $z=q^2/j^2+O_R(a^{-1/2})>5/2-O_R(a^{-1/2})$.
+Consequently
+
+$$
+\eta^2/a^3=z+O_R(a^{-1}),\quad
+(\alpha-\mathcal A_j(u))/a^3=2+O_R(a^{-1}),\quad
+\gamma\ge a^3/4,\quad \eta=O_R(a^{3/2}),\quad\gamma=O_R(a^3).
+\tag{15.11}
+$$
+
+For a core label put $I_i=\mathbf1_{\{i\in T\}}$ and
+
+$$
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1),\qquad R_i=\mathbb E\rho_i.
+$$
+
+Each $\rho_i$ is nonnegative at every actual type, including $L=m$:
+when $I_i=0$, $L\le r$, and otherwise the last factors are consecutive
+integers. Expansion and the original mean give
+
+$$
+\sum_{i\in C}\rho_i=Q(L)\ge0,\qquad
+R_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u).
+\tag{15.12}
+$$
+
+Since $K^2\ge L^2$ and $0<y_i\le1$, the core contribution implies
+
+$$
+H\ge H_D+\mathcal B_j(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad H_D=\mathbb E[Z_T;A].
+\tag{15.13}
+$$
+
+On $c_0\le y\le1$,
+$f_u''(y)=2\{r^2y-3d(j-1+u)\}/y^4\ge a^2$ eventually,
+uniformly in $j\le J$. Jensen applied after subtracting $a^2y^2/2$
+gives the asserted strong bound for $\mathcal S_f$.
+
+The same law's mean and actual marginal identities give
+
+$$
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A],\qquad
+\mathbb E[V_T;A]=n.
+\tag{15.14}
+$$
+
+Indeed $a\le m\mathbb P(A^c)+\mathbb E[L+B;A]$ proves the first
+inequality. Substituting (15.8) into (15.13), using
+$\mathcal B_j(u)=\mathcal B_j(0)-u\mathcal A_j(u)$ and (15.14), yields
+
+$$
+H\ge E_j+\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f,
+\qquad E_j=\mathcal B_j(0)+2\eta n-j\gamma/r.
+\tag{15.15}
+$$
+
+For $B=K=1,L=0$, (15.8) is exactly the singleton square in (15.9).
+For other types on $A$, completing each reciprocal square gives
+
+$$
+\mathcal G_T\ge\eta^2(1-B/K^2)-\mathcal A_j(u)(B-1)
+ -\beta L+L^3-\frac\gamma r(K-1).
+\tag{15.16}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$, and all negative
+terms other than $-\eta^2 B/K^2$ are $O_R(a^{5/2})$.
+By (15.11), this bounds (15.16) below by $a^3/4$ eventually.
+If $K>\sqrt a$, every $t_k^{-1}>a/b$ and
+$K^2t_k^{-1}>4\eta$ eventually. Using $Q(L)\ge0$ gives
+
+$$
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A_j(u)B
+                  +\gamma\left(1-\frac{K-1}{r}\right).
+\tag{15.17}
+$$
+
+For $K\le m$ the last term is nonnegative, so this is at least
+$Ba^3/(4b^2)$. For $K>m$, its negative part is at most
+$\gamma n/r=O_R(a^{5/2})$, while $K^2a^2\ge m^2a^2$ has order
+$a^4$. The same lower bound $a^3/(4b^2)$ follows after increasing
+the threshold. This covers every cardinality up to $s=m+n$.
+
+Uniformly for bounded $j$, (15.10) and elementary expansion give
+
+$$
+\mathcal B_j(0)=a^3+2ja^2+O_R(a),\qquad
+\frac{j(\alpha-\mathcal A_j(u))}{r}=2ja^2+O_R(a),\qquad
+\frac{m^3r}{a-1}=a^3+4ja^2+O_R(a).
+$$
+
+Since $\eta=rn/j$, equation (15.15) has
+
+$$
+E_j=\mathcal B_j(0)+\frac{rn^2}{j}
+                +\frac{j(\alpha-\mathcal A_j(u))}{r}
+=S_j+O_R(a).
+\tag{15.18}
+$$
+
+Now $H\le U\le S_j$. All three residuals in (15.15) are
+nonnegative by the signs just proved, so their sum is $O_R(a)$.
+The nonsingleton bound gives $p_2:=\mathbb P(A,K\ge2)=O_R(a^{-2})$,
+and strong Jensen gives
+$\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1})$.
+Since $\bar y=1-O_R(a^{-1})$, this proves the bound for $c$.
+
+For each tail label let $x_k=x_{\{k\}}$. Actual marginals satisfy
+$0\le t_k-x_k\le p_2$ and $\eta p_2=O_R(a^{-1/2})$.
+If $t_k\ge1/\eta$, then $x_k\ge t_k/2$ eventually. Put
+$w=\eta t_k\ge1$. Its singleton square in (15.15) implies
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_k(t_k^{-1}-\eta)^2\le K_Ra,
+\qquad \frac{(w-1)^2}{w}=O_R(a^{-1/2}).
+$$
+
+It follows that $w-1=O_R(a^{-1/4})$. Labels with $t_k<1/\eta$
+already obey the desired upper bound, proving (15.9) for their
+maximum as well. No positive marginal was assumed bounded below
+on the tail. ∎
+

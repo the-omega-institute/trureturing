@@ -1,0 +1,33 @@
+**假设 113.1（同一响应的完整质量合同）。** 保留 106.1 的全部前提和同一个固定 $\mathfrak P$，采用 105.1 的有限 ready 零初始化／共同耦合序列。对同一个 $n,p_*$ 和共同控制字增加第三读者 $K_9$。令 $J_{n,2}(\cdot\mid p_*,f)$ 是其完整实际执行律，包括记录、细档案、失败、拒绝、停止和泄漏告警；后续 $f$ 仍在记录之后外生选择。新增前提仅在固定 $f\in\mathcal F$ 上要求。
+
+将成功记录质量记为 $m'_{ni}(f)$，全部失败质量记为 $\phi'_n(f)=1-\sum_i m'_{ni}(f)$，并给出
+
+$$
+ \begin{gathered}
+ 0\le\phi'_n(f)\le\beta'_n\longrightarrow0,\qquad
+ \sum_i|m'_{ni}(f)-m'_{ni}(\epsilon)|\le\gamma'_n\longrightarrow0,\\
+ b_n=m'_{n0}(\epsilon)\in[0,1],\qquad r'_n=(b_n,1-b_n).
+ \end{gathered}
+ \tag{113.1}
+$$
+
+不要求任一新成功质量具有正下界。在每个正质量成功细档案 $h$ 上，实际保留后继是纯态 $\xi'_{nih}(f)$，条件终端律为同一个 $\mathfrak P(\xi'_{nih}(f))$，且
+
+$$
+ d\bigl([\xi'_{nih}(f)],[J(K_f\theta_i,i)]\bigr)
+       \le\kappa'_n\longrightarrow0.
+ \tag{113.2}
+$$
+
+和 106.1 一样，将成功映到原 $w$、失败映到 $\bot$ 只形成一个边缘 $\bar J$，并不删除完整档案。附加设置隔离只假设这一个事件的实际误差
+
+$$
+ \max_{f\in\mathcal F}
+ \left|\bar J_{n,2}(w_*\mid p_*,f)
+             -\bar J_{n,0}(w_*\mid p_*,f)\right|
+       \le\tau_n\longrightarrow0.
+ \tag{113.3}
+$$
+
+$\beta'_n,\gamma'_n,\tau_n$ 都是实际概率律的条件，不由矩阵逼近自动供应。若只有早期记录因果性而后续可能失败，应像 (106.4) 那样计入实际删失；不能直接宣告 $\gamma'_n=0$。所有原上下文的旧合同仍由 106.1 承担，五个新条件没有替换它。
+

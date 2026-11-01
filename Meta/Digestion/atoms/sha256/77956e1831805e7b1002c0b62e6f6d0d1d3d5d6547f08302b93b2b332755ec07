@@ -1,0 +1,35 @@
+**Lemma 9.2 (The common-law quadratic bridge).** Let $G\in\mathfrak G_N(a,h)$,
+write $k_u=d_G(u)$ for $u\in S$, $d_i=d_G(i)$ for $i\in T$, and let $x_T$ be
+the law which assigns mass $1/N$ to the neighborhood of each source. Put
+$y_i=d_i/N$. Then $x$ belongs to $\mathcal X(a,h)$, its mean is $a$, and
+
+$$
+H(x)=N\sum_{ui\in E}\left(\frac{k_u}{d_i}\right)^2.
+\tag{9.3}
+$$
+
+For $0\le t<1$,
+
+$$
+ t^2-\frac{t^4}{4}\le2(\sqrt{1+t^2}-1)\le t^2.
+\tag{9.4}
+$$
+
+Consequently, with $Q(G)=H(x)$,
+
+$$
+Q(G)-\frac N4\sum_{ui\in E}\left(\frac{k_u}{d_i}\right)^4
+ \le 2NE(G)\le Q(G).
+\tag{9.5}
+$$
+
+**Proof.** The neighborhood of a source is a nonempty subset of $[s]$,
+$\sum_Tx_T=1$, and
+$\mathbb E_xK=N^{-1}\sum_{u\in S}d_G(u)=m/N=a$. Its actual marginal at
+sink $i$ is $y_i=d_i/N>0$. Substitution into Definition 1.1 gives (9.3).
+The orientation condition gives $t=k_u/d_i<1$. The function
+$\sqrt{1+z}$ has the alternating Taylor bounds
+$1+z/2-z^2/8\le\sqrt{1+z}\le1+z/2$ for $0\le z\le1$;
+putting $z=t^2$ and multiplying by $2$ proves (9.4), and summing proves
+(9.5). Every quantity in (9.3) uses the degrees of this same graph. ∎
+

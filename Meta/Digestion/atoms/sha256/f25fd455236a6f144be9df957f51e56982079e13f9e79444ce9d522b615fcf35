@@ -1,0 +1,22 @@
+**Definition 9.1 (a distinct two-coordinate current-port apparatus).** Fix a public integer $H\ge1$. There is one opaque, exclusively controlled actual source $u\in\mathbb N^2$, initially $v_0=(a,b)$, with zero coordinates and $(0,0)$ admitted. Vectors are columns. The only source updates are the original Fibonacci replacement and alpha graft
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\alpha=\binom10,\qquad q=(2,3),\qquad
+R(u)=Mu,\qquad G(u)=u+\alpha.
+\tag{AQBRP.1}
+$$
+
+Every occurrence acts forward on this very integer pair. It returns a fixed acknowledgement, with no numeric source field. An explicitly supplied, paid, nondestructive port returns the complete current value
+
+$$
+\operatorname{Read}_H(u)=\gcd(qu,H),\qquad \gcd(0,H)=H.
+\tag{AQBRP.2}
+$$
+
+Calls are serial and complete before the next call; reads occur at the current operation boundary. The source binding remains the same, and there is no unreported writer. No reset, clone, saved entry source, physical inverse, subtraction, direct coordinate reader, arbitrary scalar multiplier or additional source observation is available. Timing, source size, backing capacity, service prices and failure channels are not accessible discriminators. In particular, a cost account below is not a further read port.
+
+The installed controller initially has only public $H$, finite source-independent code and constants, bound handles for (AQBRP.1)–(AQBRP.2), lawful current rights, and writable backing. The opaque binding and rights convey no quantity or source-dependent selector advice. There is no acquired old scalar code, initial gcd, entry quantity, response table, history or clock. Local choices depend only on public inputs and replies already obtained on this run. Exact local binary arithmetic and record operations are permitted, with their installed code, storage and actual work charged. For each asserted finite run, sufficient finite backing for its actual source and controller is supplied, and every admitted primitive service and finite local computation completes. This is a per-run service/material premise, not a fixed finite capacity covering all unbounded entries or all future lengths. Rights retention, binding, service installation and backing provision are also charged. Declaring (AQBRP.2) is a conditional mathematical premise; its realization on a narrower Native, LAB or physical backend is not supplied by this declaration.
+
+For a nonempty ordered tree with leaves $\alpha,\beta$, its composition fold counts the two leaf types. The original simultaneous substitution $\rho(\alpha)=\beta$, $\rho(\beta)=\langle\beta,\alpha\rangle$ and, for example, the fixed right graft $t\mapsto\langle t,\alpha\rangle$ induce (AQBRP.1), by [FARG, Sections 2–5 and 130.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md). This fold is a source projection, not a syntax reader. The zero pair belongs to the arithmetic extension and is not the composition of a nonempty tree. All proofs below concern this pair interface, including its separate current gcd premise. They do not identify it with the positive scalar apparatus of Definition 1.1: the equal scalar quantities $q(3,0)=q(0,2)=6$ have replacement successors of quantities $9$ and $10$ respectively, as already observed in FARG5.1.
+

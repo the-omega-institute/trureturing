@@ -1,0 +1,31 @@
+### 命题 7.1（任意小的固定仪器误差可以阻止极化）
+
+设$\dim\mathcal{H}=d$、$\operatorname{rank}P=r\in\{1,\ldots,d-1\}$。
+对任意$0<\lambda<1$，定义实际仪器
+
+$$
+\widetilde{\mathcal I}_y(\rho)
+ =(1-\lambda)M_y\rho M_y^*
+   +\lambda\operatorname{Tr}(M_y\rho M_y^*)I/d.
+$$
+
+它与理想完整仪器的半迹距离逐步至多$\lambda$，
+但每次正质量更新后
+
+$$
+\lambda r/d\le q_n\le1-\lambda(1-r/d).
+$$
+
+因而不可能趋于$\{0,1\}$。
+
+**证明。**
+
+第二项是先取理想结果再作固定替换的 CP 仪器，全部结果和保持迹。
+每个结果的概率不变，归一后继为$(1-\lambda)\rho_y^0+\lambda I/d$，给所列范围。
+逐块半迹距离不超过$\lambda p_y$，求和得$\lambda$。
+
+∎
+
+该混合可以来自同一本体内未被当前观察者读出的辅助记录和酉扩张，
+不需要物理上的外部噪声源。
+

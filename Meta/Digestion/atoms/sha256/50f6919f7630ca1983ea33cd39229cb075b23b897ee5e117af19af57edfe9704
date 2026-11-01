@@ -1,0 +1,205 @@
+**定理 90.2（完整校准响应的来源特定统一稳定界）。** 存在一个有限常数 $C_0>0$，只依赖上述固定十三维来源及 $K_0$ 的射影共轭类，使下述全称命题成立。对每个 $0<\varepsilon\le1$，对每个
+$P:S(H)\to\Delta(\Omega_{10})$，若每个坐标连续、相位不变，在整个 $S(H)$ 上非负且全部 $1024$ 个坐标之和为一，满足 78.1 的同射线终端充分性和 79.1 在全部十三个基底射线、全部原始标签上的精确标定，并且 $\mathcal R(P)\le\varepsilon$，则
+
+$$
+ \mathcal D(P)\le\omega(\varepsilon),\qquad
+ \omega(\varepsilon)=\min\left\{1,\ 2C_0\varepsilon+
+                  12\sqrt{6C_0\varepsilon}\right\},\qquad
+ \lim_{\varepsilon\downarrow0}\omega(\varepsilon)=0.
+ \tag{90.2}
+$$
+
+这里的终端充分性具体指：条件于原始制备／控制记录后，接续 $f$ 的终端概率为 $P_w(K_fK_pv)$，不再依赖产生同一当前射线的其它历史。精确标定是
+
+$$
+ P_w(e_\beta)=\mathbf1_{\{w=10\beta010\}}
+ \qquad(\beta\in\mathcal B,\ w\in\Omega_{10}).
+$$
+
+此标定量化到十三个数学基底射线，不要求以有限字精确制备它们。常数在所有这些 $P$、$\varepsilon$、射线和原始标签之间统一。没有共同连续模、Lipschitz 常数、有限预测秩、调和次数或字长界的前提。一个可取的常数描述为
+
+$$
+ L=2+2x^2,\qquad C_0=2DL,
+ \tag{90.3}
+$$
+
+其中 $D>0$ 是下面 (90.15) 对固定数学算子 $B$ 的上确界范数商估计常数；这里不给 $D$ 或 $C_0$ 的数值，也不主张此模的指数最优。
+
+证明。令 $X=\mathbb P(H)\simeq\mathbb{CP}^{12}$，$\mu$ 为其酉不变、全支撑的概率测度。相位不变性把每个 $P_w$ 视为 $C(X,\mathbb R)$ 中的函数，其范数记为 $\|\cdot\|_\infty$。由 (85.3)，可用
+
+$$
+ J=I+(\zeta-1)\Pi,\qquad \operatorname{rank}\Pi=5,
+ \qquad \dim\ker\Pi=8
+ \tag{90.4}
+$$
+
+代表 $K_0$ 的射影作用。取 $G=PU(H)$ 的归一 Haar 测度，定义等距拉回及多项式
+
+$$
+ Cg=g\circ J,\qquad
+ C_Ug([\psi])=g([UJU^{-1}\psi]),\qquad
+ R(z)=z^3-x^2z^2+x^2z-1.
+ \tag{90.5}
+$$
+
+整体相位不影响这些定义。以下 Haar 平均、共轭酉及投影都是数学证明工具。
+
+先把原生残差延拓到所有数学共轭。固定实际接续字 $f$ 和标签 $w$，置 $g=P_w\circ K_f$。由 (90.1)，$|R(C)g|\le\varepsilon$ 在所有制备射线 $[K_pv]$ 上成立。77.2 的稠密制备轨道及连续性给 $\|R(C)g\|_\infty\le\varepsilon$。再对每个 $U\in G$，用 77.2 的射影算符范数密度选择实际有限字 $f_n$，使 $[K_{f_n}]\to U$。对当前这个固定的连续函数 $P_w$，紧空间上的一致连续性给
+$P_w\circ K_{f_n}\to P_w\circ U$ 一致收敛。$R(C)$ 是有限个等距算子的线性组合，所以可取极限，再以 $[U^{-1}\psi]$ 代入，得到
+
+$$
+ \|R(C_U)P_w\|_\infty\le\varepsilon
+ \qquad(U\in G,\ w\in\Omega_{10}).
+ \tag{90.6}
+$$
+
+这两个延拓逐一针对给定 $P_w$，没有用跨响应族的共同连续模，也没有把极限酉加入原生操作。
+
+在实 Banach 空间 $C(X,\mathbb R)$ 上定义
+
+$$
+ Bg=\int_G R(C_U^{-1})R(C_U)g\,dU,\qquad
+ T_tg=\int_G C_U^t g\,dU.
+ \tag{90.7}
+$$
+
+积分是对每个 $g$ 的 $C(X)$ 值强积分。联合连续性与紧性保证 $U\mapsto C_U^t g$ 在一致范数下连续，因而积分存在并定义有界算子；这里不假定 $U\mapsto C_U$ 在算子范数下连续。每个拉回是等距，故 (90.6) 给
+
+$$
+ \|BP_w\|_\infty\le L\varepsilon.
+ \tag{90.8}
+$$
+
+写 $s=x^2$。直接展开 $R(C_U^{-1})R(C_U)$，各差幂的系数给
+
+$$
+ \begin{aligned}
+ B&=aI+K,\qquad a=2+2s^2=2+2x^4>0,\\
+ K&=-(2s+s^2)(T_1+T_{-1})
+       +2s(T_2+T_{-2})-(T_3+T_{-3}).
+ \end{aligned}
+ \tag{90.9}
+$$
+
+因为 $\zeta$ 的阶为十，$\pm1,\pm2,\pm3$ 模十互异且均非零，所列非恒等幂不会再贡献恒等项。
+
+下面证明六个 $T_t$ 在一致范数下紧。固定单位向量 $\psi$，令 $Q=U\Pi U^*$ 是 Haar 随机的秩五正交投影。标准 Haar 球面几何给
+
+$$
+ q=\langle\psi,Q\psi\rangle\sim\operatorname{Beta}(5,8),
+ \qquad b(q)=\frac{q^4(1-q)^7}{\mathrm B(5,8)}\quad(0<q<1).
+ \tag{90.10}
+$$
+
+这里的已知 Beta 供应可直接由归一复 Gaussian 向量得到：在 Haar 基底中，$\psi$ 的十三个模平方是十三个独立单位指数变量除以它们的和；前五个与后八个指数变量之和分别是独立的形状参数 $5,8$ 的 Gamma 变量，前者占二者总和的比例给 (90.10)。它没有端点原子。
+
+取 $t\in\{\pm1,\pm2,\pm3\}$，记 $\alpha=\zeta^t\ne1$、$c_t=2(1-\operatorname{Re}\alpha)>0$。$C_U^t$ 对应 $I+(\alpha-1)Q$，其输出射线相对输入的径向坐标是
+
+$$
+ r=\left|\langle\psi,(I+(\alpha-1)Q)\psi\rangle\right|^2
+   =1-c_tq(1-q),\qquad r_t=1-c_t/4.
+ \tag{90.11}
+$$
+
+$q\mapsto r$ 在 $(0,1/2)$ 和 $(1/2,1)$ 上分别单调。换元给径向密度：在 $r_t<r<1$，令
+$q_\pm(r)=(1\pm\sqrt{1-4(1-r)/c_t})/2$，则
+
+$$
+ \rho_t(r)=\frac{b(q_+(r))+b(q_-(r))}
+                   {c_t\sqrt{1-4(1-r)/c_t}},
+ \qquad \rho_t(r)=0\quad(0<r<r_t).
+ \tag{90.12}
+$$
+
+临界值 $r_t$ 处至多有可积的逆平方根奇性；输入端点和临界点均无原子，所以此密度的积分为一。这一推前绝对连续性的结论不要求密度本身有界。
+
+还需确定径向坐标以外的分布。固定 $[\psi]$ 的稳定子在每个固定 $r$ 的射线轨道上传递；Haar 投影分布在该稳定子下不变。因此条件于 $r$ 的输出是在相应轨道上的唯一不变概率。等价地，给定 $q$ 时可写
+$Q\psi=q\psi+\sqrt{q(1-q)}e$，其中 $e$ 在 $\psi^\perp$ 的单位球面上均匀。输出在每个径向层上的条件分布遂与 $\mu$ 的相应条件分布一致。相同的 Haar 球面计算表明，$z\sim\mu$ 时 $|\langle\psi,z\rangle|^2$ 的密度为 $m(r)=12(1-r)^{11}$。因此
+
+$$
+ \begin{aligned}
+ (T_tg)([\psi])
+   &=\int_X k_t(|\langle\psi,z\rangle|^2)g([z])\,d\mu([z]),\\
+ k_t(r)&=\frac{\rho_t(r)}{12(1-r)^{11}}\quad(0<r<1),\qquad
+ \int_0^1|k_t(r)|m(r)\,dr=1.
+ \end{aligned}
+ \tag{90.13}
+$$
+
+单位代表向量的选择不影响核。端点的取值可任意指定。这里用到的是加权 $L^1$ 核，不是连续或有界核。
+
+连续函数在有限测度 $m(r)\,dr$ 的 $L^1$ 中稠密。取连续 $h_n$，使 $\int|k_t-h_n|m\,dr\to0$，并以 $h_n(|\langle\psi,z\rangle|^2)$ 定义算子 $T_{h_n}$。这是紧空间 $X\times X$ 上的连续核，故其单位球像一致有界且等度连续；标准 Arzelà–Ascoli 定理给 $T_{h_n}$ 紧。酉不变性给统一算子范数估计
+
+$$
+ \|T_t-T_{h_n}\|_{C(X)\to C(X)}
+ \le\int_0^1|k_t(r)-h_n(r)|m(r)\,dr\longrightarrow0.
+ \tag{90.14}
+$$
+
+紧算子的算子范数极限仍紧，所以每个 $T_t$ 紧，(90.9) 的 $K$ 紧。此处仅复用连续核紧性、加权 $L^1$ 逼近和紧算子闭性这些标准分析工具；(90.10)–(90.13) 核对的是本源秩 $5/8$ 与六个指定相位的适用条件。
+
+再求 $B$ 的精确核。令 $\mathcal Q=\{[\psi]\mapsto\langle\psi,E\psi\rangle:E=E^*\}$，是维数 $13^2=169$ 的实空间。85.2 及 (86.6) 给 $R(C_U)g=0$ 对所有 $g\in\mathcal Q$ 和 $U$ 成立，故 $\mathcal Q\subset\ker B$。反向，因为 $C_U$ 在 $L^2(X,\mu)$ 中酉，实系数多项式的伴随为 $R(C_U^{-1})$，所以对任意实连续 $g$ 有
+
+$$
+ \langle g,Bg\rangle_{L^2}
+       =\int_G\|R(C_U)g\|_{L^2}^2\,dU.
+$$
+
+若 $Bg=0$，被积非负函数关于 $U$ 连续，Haar 测度有全支撑，故对每个 $U$ 都有 $R(C_U)g=0$ 于 $L^2$；连续性和 $\mu$ 的全支撑把它升级为逐点恒等式。于是 $R(C)(g\circ U)=0$ 对每个 $U$ 成立。
+
+此时应用 86.1 在使用概率正性和标定之前的标量共同核论证，而不是把任意实函数当作已校准概率。具体地，(86.3)–(86.4) 给完整、无重数的 $L^2$ 调和分解，其有界正交投影 $Q_j$ 与酉拉回交换。若某个 $j\ge2$ 的 $Q_jg\ne0$，其酉轨道因不可约性张成整个 $\mathcal H_j^{\mathbb C}$，共同核关系会使 $R(C)$ 在该分量上恒零。85.2 却给非零
+$Y_j=z_a^2z_b^{j-2}\overline{z_c}^{\,j}\in\mathcal H_j^{\mathbb C}$，其中 $a\in\operatorname{ran}\Pi$，$b,c\in\ker\Pi$ 且 $b\ne c$，满足 $CY_j=\zeta^2Y_j$ 和 $R(\zeta^2)\ne0$，矛盾。于是所有高次分量均零，$g$ 在 $L^2$ 中属于 $\mathcal H_0^{\mathbb C}\oplus\mathcal H_1^{\mathbb C}$。连续性与全支撑给逐点二次型，实值性给 Hermitian 系数，故 $\ker B=\mathcal Q$。这里的有限多项式不可约分解复用 78.8、86.3 所引 Galley–Masanes [1610.04859v3 Result 2、A.12](https://arxiv.org/html/1610.04859v3) 和 Masanes–Galley–Müller [1811.11060v2 Appendix A Lemma 7](https://arxiv.org/html/1811.11060v2)；无界完备性复用 86.4 的 Stone–Weierstrass 论证。没有对未知响应增加有限展开前提。
+
+由 $B=aI+K$、$a>0$、$K$ 紧及上述核，存在有限 $D>0$ 使
+
+$$
+ \operatorname{dist}_\infty(g,\mathcal Q)
+       \le D\|Bg\|_\infty\qquad(g\in C(X,\mathbb R)).
+ \tag{90.15}
+$$
+
+这是紧扰动的标准闭值域估计；此处给出所需的直接证明。若不存在 $D$，按到 $\mathcal Q$ 的距离归一化，并减去一个 $\mathcal Q$ 元素，可取 $g_n$ 满足
+$\operatorname{dist}_\infty(g_n,\mathcal Q)=1$、$\|g_n\|_\infty\le2$、$\|Bg_n\|_\infty\to0$。紧性给 $Kg_n$ 的一致收敛子列，而 $ag_n=Bg_n-Kg_n$ 使相应 $g_n$ 一致收敛到 $g$。连续性给 $Bg=0$，故 $g\in\mathcal Q$；距离函数是 $1$-Lipschitz，却给 $\operatorname{dist}_\infty(g,\mathcal Q)=1$，矛盾。此证明不需要 $g_n$ 等度连续，也没有把 $L^2$ 误差估计冒充一致误差估计。
+
+由 (90.8)、(90.15)，逐标签选择 $E_w=E_w^*$，使
+
+$$
+ g_w([\psi])=\langle\psi,E_w\psi\rangle,\qquad
+ \|P_w-g_w\|_\infty\le\eta,\qquad
+ \eta=C_0\varepsilon=2DL\varepsilon.
+ \tag{90.16}
+$$
+
+因 $DL\varepsilon>0$，距离上界的一倍余量足够作此选择，无需假设最佳逼近已选定。这些近似二次型不被假定组成 POVM。
+
+最后把原始概率正性和精确基底标定转为统一矩阵界。用 $a,b$ 表示十三个基地址，定义 $A_w=|e_\beta\rangle\langle e_\beta|$ 当 $w=10\beta010$，其余标签取 $A_w=0$。记 $\delta_{w,a}$ 为 $A_w$ 的第 $a$ 个对角元。由整个球面上的 $P_w\ge0$ 及 (90.16)，$E_w\succeq-\eta I$，所以
+
+$$
+ F_w=E_w+\eta I\succeq0,\qquad
+ |(E_w)_{aa}-\delta_{w,a}|\le\eta.
+ \tag{90.17}
+$$
+
+第二个不等式使用 79.1 在每个基底和每个原始标签上的精确标定，包括非法标签。先设 $\eta\le1$。合法标签有且仅有一个目标对角，其 $F_w$ 对角元至多 $1+2\eta\le3$；每个非目标对角至多 $2\eta$。非法标签的全部对角都是非目标。对 $a\ne b$，正半定性的二阶主子式给
+
+$$
+ |(F_w)_{ab}|^2\le(F_w)_{aa}(F_w)_{bb}\le6\eta.
+ \tag{90.18}
+$$
+
+确实，两个不同地址不能同时为目标；若两者均非目标，乘积至多 $4\eta^2\le6\eta$。$E_w-A_w$ 的每个对角元绝对值至多 $\eta$，非对角元与 $F_w$ 相同，绝对值至多 $\sqrt{6\eta}$。Hermitian 矩阵的算子范数由最大绝对行和控制，每行恰有十二个非对角位置，故
+
+$$
+ \begin{aligned}
+ \|E_w-A_w\|_{\mathrm{op}}&\le\eta+12\sqrt{6\eta},\\
+ |P_w(\psi)-|\psi_w|^2|
+    &\le2\eta+12\sqrt{6\eta}
+       \qquad(\psi\in S(H),\ w\in\Omega_{10}).
+ \end{aligned}
+ \tag{90.19}
+$$
+
+这逐标签使用同一个界，没有对 $1024$ 个标签求和。由全域概率归一和非负性，$P_w$ 与 $|\psi_w|^2$ 都在 $[0,1]$，还始终有误差至多一。若 $\eta>1$，(90.2) 右侧的最小值正是一；若 $\eta\le1$，合并此平凡界与 (90.19)。这证明 (90.2) 对整个 $0<\varepsilon\le1$ 成立。
+
+本定理的来源特定推导为 `repo-derived`；Haar/Beta 几何、Arzelà–Ascoli、连续核的紧性及紧扰动估计只作已知中间供应，射影密度直接复用 77.2 对 Freedman–Larsen–Wang [math/0103200v1 Theorem 0.1](https://arxiv.org/html/math/0103200v1) 的原生对应。这里不提出新颖性或优先权结论。结果是具有全部原前提的普通条件数学命题，不是 Lean 内核结论、数值常数认证或有限字测试认证。全上下文残差是假设，不由有限通过取得；Haar 平均不增加随机准备、闭包酉、辅助系统或中间操作的执行权限。连续射线接口、正性、归一和十三基底精确标定仍为独立前提。本结论不取得混态仿射律、仪器后继、物理校准的实现或四时原则的物理来源，亦不解决 89.1 所列的量子起源接口。∎
+

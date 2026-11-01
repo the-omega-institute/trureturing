@@ -1,0 +1,8 @@
+### 2.1. 已有文献提供什么
+
+Smith、Myers、Kaplan 与 Goodman-Strauss 的 Hat 和 Spectre 给出了单原型强制非周期铺砌的具体对象。（[2](#ref-hat)、[3](#ref-spectre)）
+后续研究将 Hat/Spectre 的长程结构联系到四维格点、二维内部窗口和重投影；2026 年综述 Theorem 3.1 对 Hat 写出了下述精确矩阵。（[5](#ref-diffraction)、[6](#ref-survey)）
+Spectre 最新 arXiv v3（2026-10-07）的 Theorem 9 与 Corollary 11 则谨慎使用五色模型集的全密度子集及其重投影。原模型与重投影之间一般是拓扑共轭，不能一概说成由有限局部完全互相恢复。（[8](#ref-spectreorder)）
+
+<a id="statement-2-1"></a>
+

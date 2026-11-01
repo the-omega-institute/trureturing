@@ -1,0 +1,40 @@
+**Proposition 9.1 (strict read improvement and separate atom accounting).** Section 39 of [FIB self-calibrating relation mathematics](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md) gives $3k+d+5$ reads for the same complete target and full polynomial-gain domain. The present fixed history saves exactly $\min(k,d)+1>0$ reads. Its literal atom count minus that source history's literal atom count is $k+1-d$.
+
+Proof. In Section 39 put $N=2k+d+3$. Its history has cumulative matrices $M^i$ for $0\le i<N$, then $M^jJM^{N-1}$ for $0\le j\le k+1$. It has $N+k+2=3k+d+5$ reads. The $N-1$ initial moves use one $M$ each, the switch uses one $J$, and the remaining $k+1$ moves use one $M$ each, so it has $N-1+1+(k+1)=3k+d+4$ atoms. Lemma 3.2 gives the present counts. Subtraction gives
+
+$$
+\begin{aligned}
+(3k+d+5)-(\max(k,d)+2k+4)
+&=k+d+1-\max(k,d)\\
+&=\min(k,d)+1>0,
+\end{aligned}
+$$
+
+and
+
+$$
+(4k+5)-(3k+d+4)=k+1-d.
+$$
+
+Thus the present literal construction uses fewer atoms when $d>k+1$, the same number when $d=k+1$, and more when $d<k+1$. A read improvement alone supplies no atom improvement. The comparison is of sufficient constructions, not a minimal-atom assertion. ∎
+
+The common positive rank-one model, trace convention, counted initial read, finite-composite-word and empty-word contract are those of Definitions 10.1–10.3 of the self-calibration source. Its Definition 39.1 supplies exactly the normalized target used here, without initial-gain or root restrictions. Its Section 39 supplies the older full-model upper bound and the common-source compatibility and positive-scale perspective. Its four-trace inverse, Fibonacci closure, and polynomial-drift and lifted-gain tools are background results; no independent lifted matrices or confluent evaluation inverse are needed by the present proof.
+
+The repeated-initial-baseline and shear-calibration ideas are from the companion *Shared affine gain and zero-crossing recovery*, particularly its Theorem 2.1. Its Theorem 4.1 supplies the affine single-endpoint collision mechanism: keep the trace and lower-left entry fixed, use the quadratic endpoint signal, and erase another read with a gain root. Both volumes use $U=JM$, with chronological atoms $M$ then $J$.
+
+The additional full-model upper construction interpolates the one polynomial $K=rG$ from $k+1$ shear samples after $B=\max(k,d)+1$ baseline reads. Its terminal family $U^jMU^{k+1}$ has the all-pairs identity $W_j=(j-1)p+s(p+k+1)$, giving a global positive inverse from any two surviving gain positions. This supplies the strictly smaller bound for the entire original model. The continuation theorem extends the credited affine collision mechanism by a degree-at-most-$k$ gain that erases all but at most one read, then collides at the arbitrary surviving cumulative endpoint. These statements make no claim of literature priority.
+
+The fixed-prefix optimum does not settle the minimum over different prefixes or all predetermined histories, the original all-fixed-path sharp affine question, a global polynomial-gain optimum, or adaptive acquisition. For the positive-initial-intercept affine submodel, the target correspondence is
+
+$$
+S_{\mathrm{aff}}=\alpha R,\quad \kappa=\beta/\alpha,\quad
+R_0=\frac{S_{\mathrm{aff}}}{\operatorname{tr}S_{\mathrm{aff}}},\quad
+H(t)=(\operatorname{tr}S_{\mathrm{aff}})(1+\kappa t),\qquad \alpha>0.
+$$
+
+Conversely $H(0)>0$ gives $S_{\mathrm{aff}}=H(0)R_0$ and $\kappa=H'(0)/H(0)$. At $k=1$ the present full-model bound is $\max(d+6,7)$; its validity also at $G(0)=0$ does not supply a global sharpness theorem for that affine programme.
+
+The optimized resource is the number of exact scalar reads after the specified prefix. The $4k+5$ atom count is a construction upper count. The finite-composite-word and empty-word contract is essential to the stated history; it differs from a requirement to read after every atom. Strict positivity, rank one, the known $M,J$, one common nonzero bounded-degree gain, one common bounded-degree drift, exact real arithmetic, and the recorded-reading clock remain assumptions. The recovered relation does not separately determine an absolute object and instrument or an original ordered tree.
+
+Zero relation and zero-trace sources are outside this domain, where trace normalization would fail. Identically zero gain is excluded: with $G\equiv0$ every relation gives only $D(i)$, so the relation is unidentifiable. Finite compatibility proves existence within the declared degree-bounded model. It does not establish an undeclared functional bound: adding a nonzero multiple of $\prod_{i=0}^{L-1}(t-i)$ to an otherwise unrestricted drift leaves these finite data unchanged and changes later values. Nor does it identify an external time origin in a translation-closed polynomial family: replacing an origin $\tau$ by $\tau+h$ and functions $G(t),D(t)$ by $G(t-h),D(t-h)$ preserves their values at $i+\tau$. These are algebraic limits of the recovery target and assumptions.
+

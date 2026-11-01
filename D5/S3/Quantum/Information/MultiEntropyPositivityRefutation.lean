@@ -213,7 +213,7 @@ private def psi (x : Fin 3 → Fin 3) : ℂ := (eps x : ℂ) / (Real.sqrt 6 : �
 private theorem eps_square_sum : (∑ x : Fin 3 → Fin 3, eps x ^ 2) = 6 := by
   exact Eq.symm ((fun {a b} => Int.neg_inj.mp) rfl)
 
-private theorem unit_norm_iff {ι : Type*} [Fintype ι] (φ : ι → ℂ) :
+theorem unit_norm_iff {ι : Type*} [Fintype ι] (φ : ι → ℂ) :
     unitVector φ ↔ ∑ x, Complex.normSq (φ x) = 1 := by
   have he : star φ ⬝ᵥ φ = ((∑ x, Complex.normSq (φ x) : ℝ) : ℂ) := by
     simpa only [Complex.normSq_eq_norm_sq] using

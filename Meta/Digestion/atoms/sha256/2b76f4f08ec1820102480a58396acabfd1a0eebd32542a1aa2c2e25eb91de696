@@ -1,0 +1,123 @@
+**Theorem 17.5 (Exact dense infimum and every actual labeled minimizing law).** For every parameter in (17.1), let $(u,v,w)$ be the unique triple of Lemma 17.4 and put $h=1-u$, $\zeta=2\delta-3h$. Then
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+=3\varphi(u)+g(v)+\frac{C\zeta}{v^2}+n g(w)
+<H_d.
+\quad}
+\tag{17.27}
+$$
+
+Equivalently the middle two terms are $r^2/v+C(\delta-3+3u)/v^2$. The dense infimum of $d(x)$ from Definition 1.1 is (17.27) minus $B$.
+
+A finite polynomial specification of this value consists of (17.17), the sum constraint, and
+
+$$
+\begin{aligned}
+[a^2u+2C(1-\delta)]v^3
+ &=[(r^2+C)v+2C(\zeta-\delta)]u^3,\\
+[r^2v+2C(\zeta-\delta)]w^3
+ &=[r^2w-2C\delta]v^3,\qquad
+\zeta=2\delta-3+3u.
+\end{aligned}
+\tag{17.28}
+$$
+
+There exists exactly one legal root. All denominators in (17.18) are strictly positive in (17.17), so (17.28) is equivalent there; roots outside that region are not part of the specification.
+
+All labeled minimizing laws, and only those laws, are the following. Choose an unordered triple $P\subseteq[s]$, a label $j\notin P$, and real parameters
+
+$$
+b_i\ge0\quad(i\in P),\qquad \sum_{i\in P}b_i=\zeta.
+\tag{17.29}
+$$
+
+Their masses are
+
+$$
+\begin{aligned}
+\bar x_{\{i,j\}}&=b_i &&(i\in P),\\
+\bar x_{\{i,k\}}&=\frac{h-\zeta}{2}+b_l
+ &&(\{i,k,l\}=P),\\
+\bar x_{\{j\}}&=1-v-\zeta,\\
+\bar x_{\{k\}}&=1-w &&(k\notin P\cup\{j\}),\\
+\bar x_J&=0 &&\text{for every other proper subset }J.
+\end{aligned}
+\tag{17.30}
+$$
+
+The actual marginals are $u,u,u,v,w,\ldots,w$, with the strict ordering in (17.17). The three pair masses inside $P$ and all displayed singleton masses are strictly positive. Each of the three masses $b_i$ may be zero, including two simultaneously.
+
+For each of exactly $\binom{s}{3}(s-3)$ distinct labeled marginal patterns, (17.30) is an affine bijection from the nondegenerate closed two-dimensional simplex (17.29) onto the entire actual minimizing-law fibre over that pattern. Its inverse is $b_i=\bar x_{\{i,j\}}$. Thus uniqueness of the marginal pattern up to labels coexists with a continuum of actual minimizing laws.
+
+**Proof.** First construct each law in (17.30) and verify every condition using its own masses. Since $0<\zeta<h$, all pair masses are nonnegative and the three pairs inside $P$ have positive masses. Moreover
+
+$$
+1-v-\zeta>h-\zeta>0,\qquad 1-w>0.
+\tag{17.31}
+$$
+
+The pair-omission degrees at the four labels $P\cup\{j\}$ are $(h,h,h,\zeta)$. Indeed, at $i\in P$ the two internal pairs have total $h-\zeta+\sum_{k\in P\setminus\{i\}}b_k=h-b_i$, and the pair $\{i,j\}$ adds $b_i$. The degree at $j$ is $\sum_i b_i=\zeta$. The total pair mass is therefore
+
+$$
+\frac{3h+\zeta}{2}=\delta.
+\tag{17.32}
+$$
+
+The sum constraint gives
+
+$$
+3h+(1-v)+n(1-w)=s-q=1+\delta.
+$$
+
+Consequently the singleton-omission masses sum to
+
+$$
+1-v-\zeta+n(1-w)=1-\delta.
+\tag{17.33}
+$$
+
+Total mass is one and all atoms are nonempty, since omissions have size one or two and $s>2$. The mean is $a\delta+r(1-\delta)=q$. The omission probabilities are $h$ on $P$, $\zeta+(1-v-\zeta)=1-v$ at $j$, and $1-w$ elsewhere. Thus these same masses induce precisely the claimed marginals. They are dense, since $w>9/10>\tau$.
+
+For a direct energy computation, the incidence second moments of this law are
+
+$$
+\begin{aligned}
+\mathbb E[K^2 I_i]&=r^2u-C(\delta-h)
+ =a^2u+C(1-\delta) &&(i\in P),\\
+\mathbb E[K^2 I_j]&=r^2v-C(\delta-\zeta),\\
+\mathbb E[K^2 I_k]&=r^2w-C\delta
+ &&(k\notin P\cup\{j\}).
+\end{aligned}
+\tag{17.34}
+$$
+
+Dividing by the squares of the actual marginals gives exactly (17.27). Equivalently every supported atom has residual zero in Lemma 17.3, and its energy is $\min_{\mathcal B_q}F_{P,j}$.
+
+Now take any dense law from the full original domain. If $H>H_d$, it is strictly worse than (17.27) by Lemma 17.4. Otherwise Lemma 17.2 places its marginals in $\mathcal B$. Choose its top triple and fourth label and apply Lemma 17.3. The same-law identity gives
+
+$$
+H(x)\ge F_{P,j}(y)\ge\min_{\mathcal B_q}F_{P,j}.
+\tag{17.35}
+$$
+
+Relabeling coordinates does not change this last minimum. Lemma 17.4 therefore identifies it with (17.27), already attained by the constructed actual laws. This proves the minimum over all cardinalities, including nonsymmetric and disconnected incidence laws.
+
+Conversely, any law attaining this value has $H<H_d$, is localized, and has equality in both inequalities (17.35). Strict convexity forces its marginal vector to be exactly the unique minimizer of $F_{P,j}$. Its strict three-level pattern recovers $P$ as the three largest coordinates and $j$ as the sole intermediate coordinate. Equality in (17.12) forces all positive-mass atoms into (17.11). At these strict marginals, the allowed omissions are exactly singleton omissions outside $P$ and pair omissions within $P\cup\{j\}$. Every other atom has strictly positive residual, whatever its cardinality.
+
+The mean now forces pair mass $\delta$. Since no singleton omission at a label of $P$ is allowed, each such label has pair degree $h$. The remaining pair degree at $j$ is $2\delta-3h=\zeta$. Set $b_i=\bar x_{\{i,j\}}$. Its degree equation gives $\sum_i b_i=\zeta$. For $\{i,k,l\}=P$, the remaining three degree equations have the unique solution
+
+$$
+\bar x_{\{i,k\}}
+=\frac{(h-b_i)+(h-b_k)-(h-b_l)}2
+=\frac{h-\zeta}{2}+b_l.
+\tag{17.36}
+$$
+
+The actual marginals then force all singleton masses to be those in (17.30). This proves necessity as well as sufficiency, with no positivity assumption on $b_i$ and no omitted boundary laws.
+
+Because the marginal groups are strict, different choices of $P,j$ give different recoverable labeled patterns. There are $\binom{s}{3}(s-3)$ choices. The displayed affine inverse and $\zeta>0$ prove that every fibre is exactly the stated closed two-dimensional simplex.
+
+The pair-degree part is the classical fractional perfect $b$-matching polytope $\mathcal P(K_4,(h,h,h,\zeta))$ in the notation of Roger E. Behrend, *Fractional Perfect b-Matching Polytopes. I: General Theory*, [arXiv:1301.7356v1](https://arxiv.org/abs/1301.7356v1), (2), DOI [10.1016/j.laa.2013.10.001](https://doi.org/10.1016/j.laa.2013.10.001). Taking all $b_i=\zeta/3$ makes all six pair masses strictly positive. Thus its Corollary 19 applies: $K_4$ is connected and nonbipartite, so the dimension is $6-4=2$. This dimension formula is a classical intermediate fact. Equations (17.32)–(17.36) supply the particular simplex shape and the exhaustive bridge to the actual nonlinear energy minimizers. Finally clearing the positive denominators in (17.18) gives exactly (17.28), and Lemma 17.4 proves existence and uniqueness in the specified region. ∎
+

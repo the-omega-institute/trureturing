@@ -1,0 +1,226 @@
+**Theorem 14.1 (closed negative cap arc).** For every $1/3\le r\le1/2$, the original map on $M_3(\mathbb C)$ with
+
+$$
+\lambda=-r,\qquad q=(1+r)(1-2r)
+$$
+
+is Schwarz for every complex input and every complex probe. Stance: repo-derived.
+
+**Proof.** Set $L=1+r$, $u=1-2r$, $v=3r-1$. The endpoints $r=1/3$ and $r=1/2$ are respectively Theorem 13.2 and Proposition 4.2. Assume for now $1/3<r<1/2$, so $u,v>0$ and $r-v=u$. The parameter lies in the original $K_3$ because
+
+$$
+\begin{gathered}
+0<q\le4/9<1/2,\qquad p-r^2=L v>0,\qquad 1-q-r-2r^2=0,\\
+(5-9q)(1-q)-5r^2=4r(r+1)(3r-1)(3r+1)>0.
+\end{gathered}
+\tag{14.1}
+$$
+
+Here $4/9-q=(r-1/3)(2r+5/3)$. Theorem 8.1 supplies the whole probe-simplex boundary, with its singular-block range conditions. It remains to prove the original row criterion at every full-support $t=(x,y,z)$.
+
+For row $i$, denote its weight by $x$ and the other two weights by $y,z$. In this paragraph the notation is cyclically permuted for the other rows. With $a=1-3q$, the original quantities are
+
+$$
+\begin{aligned}
+P_i&=L\begin{pmatrix}u+(5r-2)y&-r\sqrt{yz}\\-r\sqrt{yz}&u+(5r-2)z\end{pmatrix},\\
+b_i&=-3rLu\sqrt{x}\,(\sqrt y,\sqrt z)^T,\qquad
+A_i=q(1+3ax).
+\end{aligned}
+$$
+
+Both diagonal entries of $P_i/L$ are positive: the affine function $u+(5r-2)y$ has the positive endpoint values $u$ and $v$. Define
+
+$$
+D_i=x(r-vx)+v(y-z)^2.
+$$
+
+Its first summand is positive since $x>0$ and $r-vx\ge r-v=u>0$. Multiplying the two diagonal entries and subtracting $r^2yz$, using $y+z=1-x$ and $r=u+v$, gives the exact determinant
+
+$$
+\det P_i=L^2uD_i>0.
+\tag{14.2}
+$$
+
+Thus every row block is positive definite and its inverse is legitimate. Its adjugate has
+
+$$
+(\sqrt y,\sqrt z)\operatorname{adj}(P_i/L)(\sqrt y,\sqrt z)^T
+=u(1-x)+4v yz.
+$$
+
+Consequently
+
+$$
+\begin{aligned}
+\frac{\kappa_i}{q}
+&=1+3ax-\frac{9r^2x\bigl(u(1-x)+4v yz\bigr)}{D_i}
+=v\frac{N_i}{D_i},\\
+N_i&=\bigl((9r+6)x-(3r+1)\bigr)D_i+9r^2(y-z)^2.
+\end{aligned}
+\tag{14.3}
+$$
+
+For example, this last identity follows by writing $4yz=(1-x)^2-(y-z)^2$ and $a=6r^2+3r-2$: the coefficients of $(y-z)^2$ on the two sides after multiplication by $D_i$ are both $v\bigl(1+(27r^2+9r-6)x\bigr)$; the remaining part on both sides is $v x(r-vx)\bigl((9r+6)x-(3r+1)\bigr)$.
+
+Here is a complete polynomial certificate for the determinant of the trace-zero form. Write
+
+$$
+E=xy+xz+yz,\qquad T=xyz,\qquad C=3r^2+r,
+$$
+
+and define
+
+$$
+\begin{aligned}
+f&=f_0+f_1E+f_2T,\\
+f_0&=(1-2r)(4r^2+2r-1),\qquad
+f_1=4(9r^3-4r+1),\qquad f_2=-4v^2(3r+2),\\
+g&=(4E-1)\bigl(1+4(C-1)E\bigr)
+ +4T\bigl((8-12C)E+C-2\bigr).
+\end{aligned}
+$$
+
+Then
+
+$$
+N_1N_2D_3+N_1N_3D_2+N_2N_3D_1=-9fg.
+\tag{14.4}
+$$
+
+To verify the certificate without an unspecified elimination, use $x^3=x^2-Ex+T$ and its two cyclic counterparts. The three $D_i$ and $N_i$ are respectively the values, at $x,y,z$, of the following two quadratic polynomials:
+
+$$
+\begin{array}{c|ccc}
+ &1&\xi&\xi^2\\ \hline
+D(\xi)&d_0=v(1-4E)&d_1=7r-2&d_2=-4v\\
+N(\xi)&n_0=1-4E-12v(3r+2)T&n_1=4(6r^2+2r-1)&n_2=-4v(3r+2).
+\end{array}
+\tag{14.5}
+$$
+
+Indeed $(y-z)^2=1-4E+2x-3x^2$ gives the $D$ row; inserting it in (14.3) and replacing the cubic term by $x^2-Ex+T$ gives the $N$ row. For any three coefficients $A,B,H$, multiplying one term from each of the three factors gives
+
+$$
+\begin{aligned}
+\mathcal N(A,B,H)
+:=\prod_{\xi\in\{x,y,z\}}(A+B\xi+H\xi^2)
+={}&A^3+A^2B+A^2H(1-2E)+AB^2E+ABH(E-3T)\\
+&+AH^2(E^2-2T)+B^3T+B^2HT+BH^2ET+H^3T^2.
+\end{aligned}
+\tag{14.6}
+$$
+
+The mixed sums used here are $\sum x^2=1-2E$, $\sum_{i\ne j}x_i^2x_j=E-3T$, and $\sum_{i<j}x_i^2x_j^2=E^2-2T$; the other terms use $x+y+z=1$ and $xyz=T$. Thus the left side of (14.4) is precisely the coefficient of $\tau^2$ in $\mathcal N(d_0+\tau n_0,d_1+\tau n_1,d_2+\tau n_2)$. Explicitly that coefficient is
+
+$$
+\begin{aligned}
+&3d_0n_0^2+(d_1n_0^2+2d_0n_0n_1)
+ +(d_2n_0^2+2d_0n_0n_2)(1-2E)\\
+&+(d_0n_1^2+2n_0d_1n_1)E
+ +(n_0n_1d_2+n_0d_1n_2+d_0n_1n_2)(E-3T)\\
+&+(d_0n_2^2+2n_0d_2n_2)(E^2-2T)
+ +3d_1n_1^2T+(d_2n_1^2+2d_1n_1n_2)T\\
+&+(d_1n_2^2+2n_1d_2n_2)ET+3d_2n_2^2T^2.
+\end{aligned}
+\tag{14.7}
+$$
+
+For clarity, all coefficients after substituting (14.5) into (14.7) and dividing by $-9$ are given below. Put $g_1=8-4C$, $g_2=16(C-1)$, $g_3=4(C-2)$, $g_4=32-48C$, so $g=-1+g_1E+g_2E^2+g_3T+g_4ET$.
+
+| Monomial | Coefficient of (14.7) divided by $-9$ |
+| --- | --- |
+| $1$ | $-f_0$ |
+| $E$ | $f_0g_1-f_1$ |
+| $E^2$ | $f_0g_2+f_1g_1$ |
+| $E^3$ | $f_1g_2$ |
+| $T$ | $f_0g_3-f_2$ |
+| $ET$ | $f_0g_4+f_1g_3+f_2g_1$ |
+| $E^2T$ | $f_1g_4+f_2g_2$ |
+| $T^2$ | $f_2g_3$ |
+| $ET^2$ | $f_2g_4$ |
+
+All other coefficients are zero. This is the coefficient list of $(f_0+f_1E+f_2T)(-1+g_1E+g_2E^2+g_3T+g_4ET)$, proving (14.4). In particular its multiplier and all variables are specified; no pivot or clearing factor is implicit.
+
+We next prove the signs of the two factors for every full-support simplex point. Since $0<E\le1/3$ and
+
+$$
+\frac E T=\frac1x+\frac1y+\frac1z\ge9,
+$$
+
+one has $T\le E/9$. Here $f_2<0$, and
+
+$$
+f\ge f_0+(f_1+f_2/9)E
+\ge\min\left\{f_0,\ f_0+\frac{f_1+f_2/9}{3}\right\}
+=\min\{f_0,1/27\}>0.
+\tag{14.8}
+$$
+
+The last strict sign follows from $u>0$ and $4r^2+2r-1\ge1/9$ for $r\ge1/3$.
+
+For $g$, $2/3<C<5/4$, and its coefficient of $T$ is strictly negative:
+
+$$
+4\bigl((8-12C)E+C-2\bigr)<0.
+$$
+
+If $E\le1/4$, the factor $1+4(C-1)E$ is positive (it is at least $1-4E/3$), while $4E-1\le0$ and $T>0$. Hence $g<0$.
+
+If $1/4<E\le1/3$, the minimum of $T$ at fixed $E$ is attained at $(1-2b,b,b)$ up to permutation, where
+
+$$
+b=\frac{1+\sqrt{1-3E}}3\in[1/3,1/2).
+$$
+
+Here is the justification of this minimization. The fixed-$E$ subset of the closed simplex is compact and has no boundary point when $E>1/4$, since a boundary point has $E=x(1-x)\le1/4$. For $E<1/3$ its two constraint gradients are independent. The Lagrange equations for $xyz$ give $yz=A+B(y+z)$ and its cyclic versions. Subtraction gives $(y-x)(z-B)=0$ and its cyclic versions; three distinct weights are impossible, so two weights are equal. The two possible equal weights are $(1\pm s)/3$, $s=\sqrt{1-3E}$. Their products are $(1-3s^2\mp2s^3)/27$, respectively, so the plus choice minimizes the product. At $E=1/3$ the only triple is uniform, giving the same formula.
+
+Because $g$ decreases in $T$, it is bounded above by its value on this minimizing triple. Direct substitution into the displayed formula defining $g$ gives
+
+$$
+\begin{aligned}
+g&\le-(2b-1)^2 H_C(b),\\
+H_C(b)&=72Cb^3-48Cb^2+8Cb-48b^3+44b^2-12b+1.
+\end{aligned}
+\tag{14.9}
+$$
+
+The polynomial $H_C$ is affine in $C$. Its values at the two endpoints of the larger closed interval $[2/3,5/4]$ are strictly positive for $b\in[1/3,1/2]$:
+
+$$
+\begin{aligned}
+H_{2/3}(b)&=\frac{36b^2-20b+3}{3}
+=12(b-5/18)^2+2/27>0,\\
+H_{5/4}(b)&=42b^3-16b^2-2b+1\\
+&=42(b-1/3)^3+26(b-1/3)^2+\frac43(b-1/3)+\frac19>0.
+\end{aligned}
+$$
+
+Thus $H_C(b)>0$. Since $b<1/2$, (14.9) proves $g<0$ also in this case.
+
+Finally restrict the diagonal form to $z_1+z_2+z_3=0$. Its matrix on $(z_1,z_2)$ is
+
+$$
+H(t)=\begin{pmatrix}\kappa_1+\kappa_3&\kappa_3\\
+\kappa_3&\kappa_2+\kappa_3\end{pmatrix}.
+$$
+
+Equations (14.2)–(14.4), (14.8) and (14.9) give
+
+$$
+\det H(t)=\kappa_1\kappa_2+\kappa_1\kappa_3+\kappa_2\kappa_3
+=\frac{-9q^2v^2 f g}{D_1D_2D_3}>0.
+\tag{14.10}
+$$
+
+At the uniform triple (14.3) gives $\kappa_i=qv>0$, so $H_{11}>0$. Along the segment from that triple to any full-support $t$, the denominators $D_i$ stay positive and (14.10) stays strictly positive. The real continuous entry $H_{11}$ cannot pass through zero, since at such a point $\det H=-\kappa_3^2\le0$. Hence $H_{11}>0$ and $H>0$ throughout the full-support simplex. This is a sign argument on nonvanishing denominators, not an extension across a singular face.
+
+With $\beta_i=P_i^{-1}b_i$, the exact completed-square identity is
+
+$$
+s^TS(X)s=\sum_i(\eta_i+z_i\beta_i)^\ast P_i(\eta_i+z_i\beta_i)
+ +(z_1,z_2)^\ast H(t)(z_1,z_2),
+\qquad \eta_i=(y_{ij})_{j\ne i}.
+$$
+
+It is nonnegative for arbitrary complex row variables. The already supplied boundary theorem and the two separately supplied parameter endpoints finish every case. Undoing the scalar shift and diagonal-unitary conjugation proves the assertion on the original complex map. ∎
+

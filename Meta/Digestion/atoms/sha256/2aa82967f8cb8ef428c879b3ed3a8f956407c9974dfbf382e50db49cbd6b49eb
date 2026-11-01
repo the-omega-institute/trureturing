@@ -1,0 +1,68 @@
+**编者定位注（仅校正文献定位）。** 本条保留原稿“§80.2”的写法；在所引固定快照中，对应条目是第 61 节“FIB 实际菜单的精确脉冲维数界”下的**定理 80.2（精确可达与几乎处处的长字）**，见[第 61 节](https://github.com/the-omega-institute/trureturing/blob/66259f03d60716f143cd59c7644dadcb67cc1b73/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#61-fib-实际菜单的精确脉冲维数界)。该固定文件第 4624 行为节标题，第 4635 行为定理标题。
+
+<a id="ref-repoFib"></a>
+
+**[2]**
+The Omega Institute.
+*FIB-ATOM 金字塔：基础公式、原子关系与同源接续总表*.
+同一固定提交，文件
+`AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md`。
+[固定快照原文](https://github.com/the-omega-institute/trureturing/blob/66259f03d60716f143cd59c7644dadcb67cc1b73/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+项目文献中的既有内部引用保持各自原有归属。
+
+<a id="ref-yokota"></a>
+
+**[3]**
+Ichiro Yokota.
+*Exceptional Lie groups*. 2009.
+[arXiv:0902.0431](https://arxiv.org/abs/0902.0431)。
+尤其 §5.12、定理 5.12.1 与 5.12.5，给出 E8 的五分级及
+$(\operatorname{SU}(5)\times\operatorname{SU}(5))/\mathbb Z_5$ 子群的具体构造。
+
+<a id="ref-sage"></a>
+
+**[4]**
+SageMath 官方文档.
+*Integral lattices*.
+[参考页面](https://doc.sagemath.org/html/en/reference/modules/sage/modules/free_quadratic_module_integer_symmetric.html)。
+包含从 $A_4^2$ 用 $(1,2)$ 胶合得到 E8 的例子；
+本文定理 [2.3](#thm-selection) 另给直接证明和全部带标记扩张的分类。
+
+<a id="ref-eldar"></a>
+
+**[5]**
+Yonina C. Eldar and G. David Forney Jr.
+*On Quantum Detection and the Square-Root Measurement*.
+IEEE Transactions on Information Theory 47 (2001), 858–872.
+[arXiv:quant-ph/0005132](https://arxiv.org/abs/quant-ph/0005132)。
+本文的五重相位公式是几何均匀纯态最优判别的专门化。
+
+<a id="ref-neeb"></a>
+
+**[6]**
+Karl-Hermann Neeb, Friedrich Wagemann and Christoph Wockel.
+*Making Lifting Obstructions Explicit*.
+Proceedings of the London Mathematical Society (3) 106 (2013), 589–620.
+[arXiv:1108.5853](https://arxiv.org/abs/1108.5853)。
+用于说明中心扩张提升障碍的经典背景；
+本文自行证明的是固定平坦表示与有限二维边数据版本。
+
+<a id="ref-dalessandro"></a>
+
+**[7]**
+Domenico D'Alessandro.
+*Uniform Finite Generation of Compact Lie Groups and universal quantum gates*.
+2001.
+[arXiv:quant-ph/0111133](https://arxiv.org/abs/quant-ph/0111133)。
+本文给出该经典统一有限生成结论适用于当前菜单的完整存在性证明。
+
+<a id="ref-dechant"></a>
+
+**[8]**
+Pierre-Philippe Dechant, Celine Boehm and Reidun Twarock.
+*Affine extensions of non-crystallographic Coxeter groups induced by projection*.
+Journal of Mathematical Physics 54 (2013), 093508.
+[arXiv:1110.5228](https://arxiv.org/abs/1110.5228)。
+§II.2、式 (3) 提供 E8 到 $H_4$ 的投影约定。
+本文的稳定性常数针对该约定下的系数坐标，
+而非未经转换的欧氏长度。

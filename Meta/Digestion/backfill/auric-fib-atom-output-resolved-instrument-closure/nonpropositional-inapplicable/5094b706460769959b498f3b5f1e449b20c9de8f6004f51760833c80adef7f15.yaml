@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5094b706460769959b498f3b5f1e449b20c9de8f6004f51760833c80adef7f15
+  normalized_sha256: sha256:5094b706460769959b498f3b5f1e449b20c9de8f6004f51760833c80adef7f15
+cas_ref: sha256:5094b706460769959b498f3b5f1e449b20c9de8f6004f51760833c80adef7f15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only finite function-space application of pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679, with no available frozen project GID for this complete source clause. Preserve the actual five independent sets of P3 and their endpoint, endpoint and middle indicators x,y,z. Their displayed five-entry tables give the pointwise idempotence and exclusion identities and make xy precisely the joint-state indicator. Fintype.linearIndependent_iff, Module.Basis.mk and Submodule.mem_span_range_iff_exists_fun reduce the asserted basis {1,x,y,z,xy} of all real functions to finite coordinate normalization; finrank_span_eq_card gives dimension four for B=span{1,x,y,z}. The same span-membership characterization gives xy outside B while x and y belong to B, so B is not closed under pointwise multiplication. This is an upstream-only disposition of the stated context, not a new project theorem or GID coverage.
+    previous_atom_id: 07ebdd607f81ae9a65179b0b8b782f7ebd03e1fbce77d3438719e0091e85c516
+    next_atom_id: 8ca3f4fa2a2760edcb08d4400a2a208049d657d182aa545d9b2398d67ec8b25d

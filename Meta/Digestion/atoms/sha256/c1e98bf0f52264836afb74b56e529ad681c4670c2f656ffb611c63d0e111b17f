@@ -1,0 +1,28 @@
+**Definition 9.1 (The finite graph class).** Fix integers $a\ge4$, $h\ge1$ and
+put $s=a+1+h$. For $N\ge1$, let $\mathfrak G_N(a,h)$ be the class of finite
+simple connected graphs $G=(S\mathbin{\dot\cup}T,E)$ with
+
+$$
+|S|=N,\qquad |T|=s,\qquad |E|=m=aN,\qquad |V(G)|=N+s,\qquad
+\ell=m-|V(G)|+1=(a-1)N-s+1,
+$$
+
+such that both sides are independent, every edge joins $S$ to $T$, and
+
+$$
+ d_G(u)<d_G(v)\qquad(uv\in E,\ u\in S,\ v\in T).
+\tag{9.1}
+$$
+
+Thus the vertices in $S$ and $T$ are the actual degree-oriented sources and
+sinks. Define
+
+$$
+V_N(a,h)=\inf_{G\in\mathfrak G_N(a,h)}2N E(G),\qquad
+E(G)=\sum_{uv\in E}\left(\sqrt{1+\left(\frac{d_G(u)}{d_G(v)}\right)^2}-1\right).
+\tag{9.2}
+$$
+
+The infimum is a minimum whenever the class is nonempty, since the class has
+only finitely many labelled simple graphs.
+

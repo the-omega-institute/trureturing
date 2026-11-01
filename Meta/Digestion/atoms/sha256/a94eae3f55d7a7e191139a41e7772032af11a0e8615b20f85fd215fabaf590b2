@@ -1,0 +1,34 @@
+#### 定义 5.1（五模式与占位凸体）
+
+取 $H_A=\mathbb{C}^5$，带正交基 $\lvert 0\rangle ,\lvert 1\rangle ,\lvert 2\rangle ,\lvert 3\rangle ,\lvert 13\rangle$。几何占位点为
+
+$$
+f_0=(0,0,0),\ f_1=(1,0,0),\ f_2=(0,0,1),\  f_3=(0,1,0),\ f_{13}=(1,1,0).
+$$
+
+这对应项目旧标签 $(0,2,3,5,25)$ 的重标记 $(0,1,2,3,13)$。几何点 $f_s$ 与 Hilbert 基 $\lvert s\rangle$ 是不同对象。
+
+项目的三均值体为
+
+$$
+\mathcal P_A=\operatorname{conv}\{f_s\}
+ =\{X,Y,Z\ge0:X+Z\le1,\ Y+Z\le1\}.
+$$
+
+给定 $(X,Y,Z)$，完整五模式律仍有一个纤维参数 $\kappa$：
+
+$$
+\begin{aligned}
+
+ p_0&=1-Z-X-Y+\kappa,&p_1&=X-\kappa,&p_2&=Z,\\
+ p_3&=Y-\kappa,&p_{13}&=\kappa,&
+ \max(0,X+Y+Z-1)&\le\kappa\le\min(X,Y).
+
+\end{aligned}
+$$
+
+这些式子只是 $X=p_1+p_{13}$、$Y=p_3+p_{13}$、$Z=p_2$ 和概率归一化的线性解；非负性给上下界。它们不会自动补足相位。
+均匀体积重心 $(3/8,3/8,1/4)$ 与均匀五点均值 $(2/5,2/5,1/5)$ 也不同：前者由截面面积 $(1-Z)^2$ 积分，后者直接平均顶点。（[12](#ref-pyramid)）
+
+<a id="statement-5-2"></a>
+

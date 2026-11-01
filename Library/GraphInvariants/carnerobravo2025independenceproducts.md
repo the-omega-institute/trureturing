@@ -5,10 +5,15 @@ year: 2025
 title: On independence complexes of graph products
 doi: null
 url: https://arxiv.org/abs/2505.06457v2
-claim: "Theorem 21 gives a suspended independence-complex conclusion for induced subgraphs of lexicographic products; Question 22 asks for unsuspended membership in the hereditary class W."
+claim: "Theorem 21 gives a suspended independence-complex conclusion for induced subgraphs of lexicographic products; Question 22 asks for unsuspended membership in the hereditary class W; Question 32 asks whether the hereditary sphere-wedge statement of Theorem 31 extends to every king-grid width."
 strata_touched:
   - D5/S3/Geometry/FiniteGraphVertexSubstitution
   - D5/S3/Geometry/HereditaryLexicographicProduct
+  - D5/S3/Geometry/FiniteGraphSubgraphSuspension
+  - D5/S3/Geometry/IndependenceComplexTorsionSeed
+  - D5/S3/Geometry/FiniteSimplicialSingularHomology
+  - D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
+  - D5/S3/Geometry/SphereBouquetHomology
 license: citation-only
 triage: anchor
 ---
@@ -52,6 +57,7 @@ that conclusion.
   $\mathcal P$, $\mathcal{SP}$, $\mathcal W$, $\mathcal{SW}$), and the
   paragraph immediately preceding Proposition 7.
 - Theorem 21 and Question 22.
+- Theorems 31 and 33 and Questions 32 and 35.
 
 ## Local realization refinement
 
@@ -93,3 +99,147 @@ records the exact target, proof route and bounded literature standing.
 This is a local formal proof, not a theorem attributed to the source author,
 a global novelty certificate or official problem acceptance. The attempted
 source-readout registration remains unfinished under issue #22742.
+
+## Strong products and arbitrary subgraph suspension
+
+Theorem 31 states that $P_n\boxtimes P_m$ belongs to $\mathcal{SW}$ for
+all $n$ and $1\le m\le4$. Question 32 asks whether this extends to every
+$m$. The class $\mathcal{SW}$ quantifies over all induced subgraphs; this
+is stronger than Question 35, which asks only whether the independence
+complex of each full rectangle $P_n\boxtimes P_m$ is a wedge of spheres.
+These locators refer to the same version v2 at the verified URL above.
+
+`FiniteGraphSubgraphSuspension` constructs the maximal-independent-set star
+gadget for an arbitrary, possibly noninduced subgraph $H$ of a finite graph
+$G$. It retains all old edges of $G$ absent from $H$. A hub and independent
+apices indexed by the maximal independent sets of $H$ give a literal face
+cover whose intersection is $I(G)$. The local and spanning conventions
+are identified by adjoining the isolated vertices outside $V(H)$ to each
+maximal independent set.
+
+The coordinate neighborhoods use total apex mass, the finite minimum of
+hub mass plus old mass outside a maximal independent set, continuous
+cutoffs and normalization. Their actual intersection is homotopy equivalent
+to the coordinate realization of $I(G)$; the existing open-cover reduced
+Mayer--Vietoris theorem and homotopy invariance then give the integral
+singular homology shift in degrees $q+1$ and $q$, for $q\geq1$.
+This is supporting machinery for Question 32. It does not settle that
+question: the seed singular comparison, complete gadget replay, king-grid
+rotation and sphere-bouquet torsion obstruction remain further obligations.
+
+The general mechanisms of graph suspension, independence-complex splitting
+and star clusters have classical sources, including:
+
+- Michal Adamaszek, *Splittings of independence complexes and the powers of
+  cycles*, Journal of Combinatorial Theory, Series A 119 (2012), 1031--1047,
+  https://doi.org/10.1016/j.jcta.2012.01.009.
+- Jonathan Ariel Barmak, *Star clusters in independence complexes of graphs*,
+  Advances in Mathematics 241 (2013), 33--57,
+  https://doi.org/10.1016/j.aim.2013.03.016.
+- Péter Csorba, *Subdivision yields Alexander duality on independence
+  complexes*, Electronic Journal of Combinatorics 16 (2009), Research Paper 11,
+  https://doi.org/10.37236/77.
+
+These are references [3], [5] and [11] of Carnero Bravo's v2 paper. The
+explicit coordinate neighborhood construction here does not claim that the
+general suspension or star-cluster mechanism is new, and these supporting
+modules carry no claim of original-problem acceptance or priority.
+
+The unfinished source-readout registrations for the public lemmas in these
+four supporting modules are tracked in [issue #25180](https://github.com/the-omega-institute/trureturing/issues/25180).
+The three homology-isomorphism endpoints are definitions; they do not exhaust
+the public theorem audit targets. The issue is neither a proof nor a validated
+registration.
+
+## King-grid question and the finite-chain seed
+
+Theorem 31 states that $P_n\boxtimes P_m\in\mathcal{SW}$ for every $n$
+and $1\le m\le4$. Question 32 asks, “Can Theorem 31 be extended to any
+$m$?” This is the hereditary statement about all induced subgraphs.
+Question 35 instead asks whether the independence complex of the full
+$P_n\boxtimes P_m$ is always a wedge of spheres. A counterexample among
+induced subgraphs targets Question 32 and need not answer Question 35.
+
+Theorem 33 has a different scope: if a positive width $m$ has the
+hereditary property for every $n$, then the independence complex of the
+full graph $P_n\boxtimes P_{m+k}$ has the homotopy type of a wedge of
+spheres for $1\leq k\leq4$. Its conclusion does not itself assert the
+hereditary property at those larger widths.
+
+`IndependenceComplexTorsionSeed` constructs an order-two class in the
+integer finite ordered chain homology of the independence complex of the
+complement of the graph with graph6 encoding `JEhbtj{rve?`. This exact
+classical graph6 seed appears in Adamaszek, *Small flag complexes with
+torsion* (2012), [arXiv:1208.3892v1](https://arxiv.org/abs/1208.3892v1).
+The local explicit Lean proof supplies all 32 increasing edges, all 24
+increasing triangles, the cycle, a chain bounding its double and a mod-two
+detecting functional. The classical seed and its local formal proof do not
+constitute a separate solved original problem or a novelty claim.
+
+`FiniteSimplicialSingularHomology.orderedH1IsoSingular` identifies the
+homology of the ordered triangle-to-edge-to-vertex integer short complex
+of any finite linearly ordered pre-abstract simplicial complex with
+Mathlib singular H1 of its actual finite-coordinate realization. The
+coefficient object is `ModuleCat.of ℤ ℤ`. Its positive-coordinate open
+stars have contractible face intersections; the ordered Cech and small
+singular chain augmentations give the comparison without an assumed
+good-cover or homology-isomorphism premise. Empty realizations and
+ghost vertices remain within the statement.
+
+`IndependenceComplexTorsionSeedSingular.seedH1IsoSingular` applies that
+comparison to the original 11/32/24 finite integer boundary model. Three
+basis bijections and both differential squares identify its actual short
+complex with the ordered one. The transported `singularSeedClass` is
+nonzero and killed by two in singular H1 of the original coordinate
+realization, with the same integer coefficient object. No abstract
+comparison is assumed.
+
+Transport through the proposed graph construction, the remaining suspension
+steps and induced king-grid embedding, and assembly with the sphere-source
+obstruction below remain necessary for a complete Question 32 counterexample. The singular seed itself does
+not settle the question. The new comparison audit is unfinished under
+issue #25205; the original finite-chain seed audit remains unfinished
+under issue #25149.
+
+## Actual singular homology obstruction for sphere sources
+
+`SphereBouquetHomology.compact_sourceSP_smul_eq_zero` states the obstruction
+on Mathlib's actual integral singular homology: for a compact topological
+space X with `HereditaryLexicographicProduct.sourceSP.{0,v} X`, every positive
+degree q, every nonzero integer n and every class z, `n • z = 0` implies
+`z = 0`. The original wedge index J ranges over arbitrary `Type v`, the
+dimensions are heterogeneous natural numbers including zero, and the original
+sphere basepoints are unrestricted. Compactness is used by the existing
+`CompactSphereNormalForm.compactWedgeModel`, not replaced by an assumption
+that the original family is finite.
+
+The proof constructs actual relatively open vertex stars and their based
+contractions, identifies saturated open subwedges by homeomorphisms, reuses
+`FiniteConeUnionWedge.wedgeInverseHomotopy` for continuous quotient cylinders,
+and applies open Mayer–Vietoris. At q=1 the intersection term is reduced H0;
+ordinary H0 of a nonempty contractible intersection does not vanish. Sphere
+dimension induction supplies all off-dimensional vanishing degrees, while
+`TauCeti.reducedSingularHomologySphereIso` supplies the diagonal. Finite
+bouquet append homeomorphisms and `nativeBouquetHomeomorph` connect these
+calculations to the existing compact normal form. An empty inner bouquet is
+a point; an empty outer model is empty.
+
+These are classical sphere-homology and Mayer–Vietoris arguments; see
+[Hatcher, Algebraic Topology](../Geometry/hatcher2002algebraic.md), Chapter 2.
+The implementation reuses the existing TauCeti sphere and reduced
+Mayer–Vietoris source port, whose source revision and license remain in those
+supplier modules. No literature novelty claim is made. The generic ring
+statements use Mathlib's regular-scalar meaning of module torsion-freeness;
+the nonzero-integer injectivity statement uses the integral-domain endpoint.
+
+This obstruction batch contributes zero original-problem resolution credit
+for Question 32. Its intended use takes n=2. Applying it to the comparison
+above, the remaining suspension and graph construction steps, the
+induced-coordinate embedding and the final refutation are still required.
+
+The new source modules' readout registration remains unfinished under
+[issue #25194](https://github.com/the-omega-institute/trureturing/issues/25194).
+The dependent-family interface is available, but an actual homology/quotient
+source arena, complete source reconstruction and equivalence bridge, and
+whole-family variation, sensitivity and observational-dependence proofs
+have not been delivered. No `declared_validated` status is claimed.

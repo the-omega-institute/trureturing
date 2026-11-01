@@ -1,0 +1,10 @@
+**约定 12.1（系数域与辅助多项式）。** 沿用定理 11.1 的整数 $r,m\ge3$、$L=rm$、指定站点 $q=(m-1)r+1$、实际圈矩阵 $H$、主子矩阵 $H^{(q)}$、特征多项式 $p,Q$ 与 $K=\mathbb R(t)$。$a,b,\sigma_r$ 及 $S_n,\Psi_m$ 沿用该定理与约定 2.4。记
+
+$$
+X=S_{r-1}(a),\qquad Y=S_{r-2}(a),\qquad Z=S_{r-3}(a),\qquad
+h=\left\lfloor\frac{m-1}{2}\right\rfloor,\qquad
+G=(-1)^{rh}\Psi_m(\sigma_r)\in\mathbb R[t][\lambda].
+$$
+
+因而 $\sigma_r=bX-2Y$；定理 11.1 给出 $G=g$ 于 $K[\lambda]$。
+

@@ -1,0 +1,106 @@
+**Theorem 23.2 (uniform guarded-attempt success and its charges).**
+For each fixed actual source and cut, condition on any past controller
+history whose retained cut and prefix are certified. A fresh cut or
+next-birth attempt in Definition 23.1 has success probability at least
+$3/4$. Every accepted answer is exact on every coin tape, including
+tapes on which estimates are inaccurate. Every attempt terminates,
+including wrong-cut and incomplete-path branches. With absolute
+constants, a single attempt has bounds
+
+$$
+\begin{aligned}
+Q_A&\le C(H+2)^3R,&
+J_A&\le C(H+2)^4R,& M_A&\le H,\\
+\mathsf{coins}_A&\le C(H+2)^3R,&
+C_A,W_A&\le CS^{12},&V_A&\le CS^3.
+\end{aligned}
+\tag{ACR.98}
+$$
+
+Here $Q$ counts actual Reads, $J$ counts literal traffic, $C$ counts
+local bit work, $W$ counts every cumulative local bit write and $V$
+counts peak visited backing, including coin buffers. These are
+acquisition-control bounds in §21's sequential tape model; actual
+coin service, physical Read, allocation and retention tariffs remain
+separate charges.
+
+Proof. Reuse the exact means (ACR.45). The variance $v_q$ of a fair
+depth walk satisfies
+
+$$
+v_0=v_1=0,\qquad
+v_q=\frac{v_{q-1}+v_{q-2}}2+
+       \frac{(\mu_{q-1}-\mu_{q-2})^2}{4}\le\frac q6.
+\tag{ACR.99}
+$$
+
+Indeed adjacent mean differences lie in $[0,1]$, including the
+terminal pair; induction bounds the right side by
+$(2q-3)/12+1/4=q/6$. At every queried present cone $q\le H$.
+Chebyshev's inequality for the mean of $m=256H$ independent walks
+gives probability at most $1/24$ for an error exceeding $1/8$.
+If the odd median has error exceeding $1/8$, at least $R/2$ blocks
+do. Independence of the blocks and a union bound over subsets give
+
+$$
+\Pr\{|\widehat\mu-\mu_q|>1/8\}
+\le 2^R(1/24)^{R/2}\le2^{-R}
+\le\frac1{64(H+2)}.
+\tag{ACR.100}
+$$
+
+This uses the non-strict good event $|\widehat\mu-\mu_q|\le1/8$.
+It does not replace a presence reply by a probabilistic assertion.
+
+There are fewer than $4(H+2)$ estimates in one attempt. The cut
+attempt uses one root estimate and at most two per edge of its long
+and short searches; a birth attempt uses two initial estimates and
+at most two per suffix edge. Condition on the history before the
+first inaccurate estimate. Its cone is present and fixed by that
+history, and its fresh block directions have the law just analysed.
+Summing these conditional first-error probabilities shows that all
+estimates are accurate with probability at least $15/16$. This
+adaptive argument needs no independence between the chosen cones.
+
+On that event root rounding is correct, since the non-strict version
+of (ACR.47) still gives
+$|3\widehat\mu/2+2/3-n|\le17/48<1/2$. At a branch of rank
+at least three, the child ranks are distinct by at least one above
+the terminal pair, and their mean gap is at least $1/2$. Two errors
+of at most $1/8$ leave the correct sign. At rank two the child
+means coincide, but either child completes a longest path's final
+edge. A shortest path used here only selects children at ranks at
+least three: its odd endpoint is rank one and its even endpoint is
+rank two. Thus the correct cut supplies exactly the witnesses in
+Theorem 22.2. For a birth attempt the initial ranks $t_j+1,t_j$ have
+a mean gap at least $1/2$, even when $t_j=1$. The correct larger
+child and a longest suffix pass (ACR.95). All relevant full words
+have length at most $n$ and the guards never abort a good search.
+Consequently success probability is at least $15/16$, hence at least
+$3/4$. Off that event the guards still terminate the attempt, and
+Theorem 22.2 makes every acceptance sound.
+
+Each estimate has $mR$ walks, each at most $H$ Reads and $H$ coin
+bits. There are $O(H+2)$ estimates. Child-start and search-edge
+tests and final certificate tests add only $O(H+2)$ Reads; the
+literal bound gives (ACR.98)'s traffic bound. Fair bits may be
+generated one walk at a time and their buffer overwritten; no history
+of the random walks is retained. Even an inaccurate estimate at an
+arbitrary reached cone obeys these same limits.
+
+For explicit local accounting, store the early tree using at most
+$O((d+1)^2)$ bits, two $H$-letter search buffers, walk/literal
+buffers, $R$ integer block sums, counters, the certified prefix and
+the binary cut. Their total data is $O(S^2)$; $O(\log(S+2))$-bit
+counters suffice for every polynomially bounded loop. An elementary
+description uses at most $O(S^6)$ binary array operations: this
+includes all $O(H^3R)$ walk tests and coin generations, full-literal
+copying, child comparisons, sorting the $R$ block sums by explicit
+integer comparisons, rounding, and rebuilding early trees. Replace
+each array operation by an actual scan of at most $O(S^2)$ cells
+with the paid counters of §21. Initialization, head returns, all
+scratch, buffer, counter, marker and output writes then fit
+$CS^{12}$ work and cumulative writes and $CS^3$ visited cells.
+The loose exponents absorb $R=O(\log(H+2))$ and every counter scan.
+No source history or unbounded address register is stored. $\square$
+

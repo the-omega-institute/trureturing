@@ -1,0 +1,67 @@
+**命题 105.1（短种子、读者和必须支付的初始化）。** 沿用 100.1 的四个附加 $\tau$ 载体、十四个编码位置、十一处合法门地址，以及唯一供应的 ready 输入 $J(v,0)$。在 $\mathcal C$ 上，记录地址的作用为
+
+$$
+ K_8=I_H\otimes p_R,\quad p_R=\operatorname{diag}(\zeta,\zeta^2),
+ \qquad K_9=I_H\otimes B_R,\quad B_R=\zeta[I+(\zeta-1)Q].
+ \tag{105.1}
+$$
+
+取 $u=(y,x)^{\mathsf T}$，则有精确矩阵恒等式
+
+$$
+ \begin{gathered}
+ p_RB_R|1\rangle=u,\qquad T=\zeta^6 B_R^2=Q+\zeta^8(I-Q),\qquad Tu=u,\\
+ T\operatorname{diag}(1,\zeta)u=(y\zeta^4,x\zeta^3)^{\mathsf T}.
+ \end{gathered}
+ \tag{105.2}
+$$
+
+定义全码耦合目标
+
+$$
+ U_c=I_H\otimes|0\rangle\langle0|+D\otimes|1\rangle\langle1|,
+ \qquad
+ \widetilde U_c=JU_cJ^*+(I-JJ^*).
+ \tag{105.3}
+$$
+
+于是对全部 $\psi\in S(H)$，
+
+$$
+ \begin{aligned}
+ U_c(\psi\otimes u)&=y\psi\otimes|0\rangle+xD\psi\otimes|1\rangle,\\
+ (I_H\otimes T)U_c(\psi\otimes u)
+    &=yD^4\psi\otimes|0\rangle+xD^3\psi\otimes|1\rangle.
+ \end{aligned}
+ \tag{105.4}
+$$
+
+这些恒等式的精确输入是记录 $1$；100.1 并未供应这个初始化。v15 定理 9.2 的相反奇偶限制排除从该计算基 ready 输入到 $J(v,1)$ 的免费有限精确翻转。若另供精确记录 $1$ 准备，须将它列为额外初始化资源，不能称为原生免费操作。
+
+仅使用已供 ready $0$ 时，对任意 $\varepsilon_I,\varepsilon_C>0$，可分别取有限记录字 $B_I$ 和完整载体字 $C_C$，在各自一个共同相位下满足
+
+$$
+ \begin{gathered}
+ \|B_IJ-J(I_H\otimes X_R)\|_{\rm op}\le\varepsilon_I,
+ \quad X_R|0\rangle=|1\rangle,\quad X_R|1\rangle=|0\rangle,\\
+ \|C_C-\widetilde U_c\|_{\rm op}\le\varepsilon_C.
+ \end{gathered}
+ \tag{105.5}
+$$
+
+第一式仅用记录地址 $8,9$ 并精确保留整个 $\mathcal C$；第二式保留全部 $89$ 维合法路径，控制目标是同一完整 $26$ 维代码。协议依执行顺序为：准备 $J(v,0)$、原 $p$、$B_I$、先 $K_9$ 后 $K_8$ 的两调用种子、$C_C$、选择 $s$ 并施 $K_9^{2s}$、计算读取并保留 $b_9=i$、外生选择原 $f$、字面旧十位读者。若两逼近字的有符号长度为 $L_I,L_C$，则新增正向调用数和总数满足
+
+$$
+ N_{\rm new}\le9L_I+9L_C+2+2s,
+ \qquad N_{\rm total}\le |p|+|f|+9L_I+9L_C+2+2s.
+ \tag{105.6}
+$$
+
+读取是一个另行供应的保留计算记录仪器，不包含在这些酉调用数内。每个精度的长度有限；没有数值长度、最短字、精确耦合、统一耗时或编译复杂度结论。
+
+证明。记录地址的字面对应直接消费 100.1–100.2 和 v15 6.1。由 $x+x^2=1$、$y^2=x$、$\Phi_{10}(\zeta)=0$ 逐项相乘得到 $p_RB_R|1\rangle=(y,x)^{\mathsf T}$。$Qu=u$，而 $B_R$ 在 $Q$ 与 $I-Q$ 上的特征值分别为 $\zeta^2,\zeta$，故 $\zeta^6B_R^2=Q+\zeta^8(I-Q)$。将 $\operatorname{diag}(1,\zeta)u$ 代入，给 (105.2) 最后一式。在 $\ker\Pi$ 上 $D=I$，(105.4) 第二式由 $Tu=u$ 得到；在 $\operatorname{ran}\Pi$ 上 $D=\zeta I$，则由 (105.2) 最后一式得到。因此它对全部十三个系统坐标同时成立。
+
+记录 $1$ 与 ready $0$ 的两个计算基词恰差一个占据位，v15 定理 9.2 排除所述有限精确转移。相反，v15 定理 4.3 的记录二维射影密度及 100.2 的记录块对应，直接供应 (105.5) 第一式的有限逼近，且其记录整体相位对整个 $H$ 共同。第二式直接消费 100.2 所用的全 $V_{12}^{\mathbf1}$ 射影密度，目标明确取 (105.3)，不以三逻辑比特码密度替代它。两次逼近均不依赖 $p,f$。
+
+定理 103.2 已排除 $U_c$ 在完整代码上的有限精确取得，却没有给正的复范数逼近下界，故与 (105.5) 相容。$K_9^2$ 在代码上等于 $\zeta^{-6}T$，这是对整个代码共同的相位；不能将受控 $D$ 偷换成受控 $K_0$ 后丢掉记录相对相位。最后逐个逆字用 v15 6.2 的 $K_j^{-1}=K_j^9$ 替换，得 (105.6)。这里只消费已知密度与逆字规则，不新增精确翻转或极限酉调用。∎
+

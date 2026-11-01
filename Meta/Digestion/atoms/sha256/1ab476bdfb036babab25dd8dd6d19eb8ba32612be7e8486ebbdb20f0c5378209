@@ -1,0 +1,39 @@
+**Corollary 4.1 (tracial classification).** For each integer $n\ge2$,
+each faithful density operator $\rho$ on $H=\mathbb C^n$, and each finite
+$c\ge0$, the function $d_c$ on the full subspace lattice satisfies the
+triangle inequality for every ordered triple if and only if $\rho=I_H/n$.
+In that case $d_c$ is a metric. In fact separation holds for every faithful
+$\rho$, whether or not its $d_c$ satisfies the triangle inequality.
+
+*Proof.* If $\rho$ is not scalar, choose two orthonormal eigenvectors
+with unequal eigenvalues, set $T$ to their span and $R=0$, and use
+Theorem 2.1 with $r=1/2$. It gives a positive defect for every finite $c$.
+Thus the triangle inequality fails. Trace one makes every scalar density
+operator equal to $I_H/n$.
+
+Conversely, for $\rho=I_H/n$ the weight is
+$\mu(X)=\dim(X)/n$. The dimension identity
+
+$$
+\dim X+\dim Z=\dim(X+Z)+\dim(X\cap Z)
+\tag{4.1}
+$$
+
+makes $f_c$ monotone and modular. For $c>0$, [B1, Theorem 1] supplies
+the triangle inequality. For $c=0$, apply that result with offsets
+$c=\varepsilon>0$ and let $\varepsilon\downarrow0$ for each fixed triple.
+For every pair with nonzero join the quotient converges to $d_0$;
+for the pair $(0,0)$ it is identically zero. The inequalities therefore
+pass to the limit, including triples containing zero.
+
+For arbitrary faithful $\rho$, if $d_c(X,Z)=0$ and $X+Z\ne0$, equality
+of numerator and denominator gives
+$\mu(X+Z)-\mu(X\cap Z)=0$. The projection onto
+$(X+Z)\cap(X\cap Z)^\perp$ has that trace weight. Faithfulness forces
+it to be zero, so $X+Z=X\cap Z$ and $X=Z$.
+If $X+Z=0$, both are zero. Symmetry, nonnegativity and the zero diagonal
+were established in Definition 1.1. This proves the metric assertion.
+The sufficiency and the scalar/non-scalar obstruction are applications of
+existing valuation and spectral inputs; the sharp all-triple interval value
+and its nonattainment are Theorem 3.1's additional conclusions. $\square$
+

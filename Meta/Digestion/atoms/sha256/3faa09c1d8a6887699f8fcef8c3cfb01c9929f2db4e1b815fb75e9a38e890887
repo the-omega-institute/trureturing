@@ -1,0 +1,102 @@
+**Theorem 4.2 (Joint stability with exponent one half).** For every $n\geq2$ and pair in Definition 1.1, if $\epsilon=1/4-c_*\leq1/16$, then the pair lies in (1.6) and
+
+$$
+W+d^2\leq\frac{2608}{15}\epsilon,
+\qquad
+\Delta\leq\sqrt{\frac{2608}{15}}\sqrt\epsilon.
+\tag{4.2}
+$$
+
+More precisely, in that range,
+
+$$
+\begin{aligned}
+\frac{|a-b|}{a+b}&\leq\Delta,&
+\left|\frac{a}{a+b}-\frac12\right|
+=\left|\frac{b}{a+b}-\frac12\right|&\leq\frac\Delta2,\\
+\left|r-\frac35\right|&\leq\sqrt2\,\Delta,&
+|1+\omega|&\leq\frac{32}{3}\Delta.
+\end{aligned}
+\tag{4.3}
+$$
+
+For arbitrary pairs in Definition 1.1, $\Delta=0$ exactly on the extremal parameter locus. For any sequence of such pairs, $\Delta\to0$ if and only if
+
+$$
+\frac{a-b}{a+b}\longrightarrow0,\qquad
+r\longrightarrow\frac35,\qquad
+\omega\longrightarrow-1.
+\tag{4.4}
+$$
+
+The quantities $c_*,\Delta,z,r,\omega$ are invariant under simultaneous unitary conjugation and multiplication of both matrices by a common nonzero complex scalar. No optimality of the numerical constant in (4.2) is asserted.
+
+*Proof.* By Theorems 2.1 and 3.2, $0\leq\epsilon\leq1/4$, and any boundary pair has $\epsilon=1/4$. The assumed range therefore lies in (1.6). Equation (3.3) first gives
+
+$$
+d^2\leq\frac{8(1+x_0)}5\epsilon\leq\frac{16}{5}\epsilon.
+\tag{4.5}
+$$
+
+Also $C_0\geq c_*=1/4-\epsilon\geq3/16$, whereas
+
+$$
+C_0=\frac{x_0+y-1}{1+x_0}\leq\frac{x_0}{1+x_0}\leq x_0.
+$$
+
+It follows that $x_0\geq3/16$ and
+
+$$
+\frac{C_0^2}{2}+\frac{1-y}{y}
+\geq1-y=\frac{x_0^2}{1+y}\geq\frac9{512}.
+\tag{4.6}
+$$
+
+On the other hand $x,x_0\leq1$ and $0<c_*\leq C_0\leq1/4$, so
+
+$$
+(x+x_0)\left[\frac{(1+x)(C_0+c_*)}{2}+1-y\right]
+\leq2\left(\frac12+1\right)=3.
+\tag{4.7}
+$$
+
+Using the positive denominator in (3.3), equations (4.6)–(4.7) imply
+
+$$
+\epsilon\geq\frac3{512}W,\qquad
+W\leq\frac{512}{3}\epsilon.
+\tag{4.8}
+$$
+
+Adding (4.5) and (4.8) proves (4.2), since $512/3+16/5=2608/15$.
+
+For the meaning of $\Delta$, the identity $W=z^2+qr^2(1-\eta)$ gives $|z|\leq\sqrt W\leq\Delta$, and $a/s=(1+z)/2$, $b/s=(1-z)/2$. Furthermore,
+
+$$
+0\leq r^2-x_0^2=r^2z^2+qr^2(1-\eta)\leq W.
+\tag{4.9}
+$$
+
+Since $r\geq x_0\geq0$, this entails $(r-x_0)^2\leq W$. Thus
+
+$$
+\left|r-\frac35\right|
+\leq\sqrt W+\left|x_0-\frac35\right|
+\leq\sqrt2\sqrt{W+d^2}=\sqrt2\,\Delta.
+\tag{4.10}
+$$
+
+Finally $|1+\omega|^2=4(1-\eta)$, and $qr^2\geq x_0^2\geq9/256$ in the stated range. Hence
+
+$$
+|1+\omega|\leq\frac{2\sqrt W}{\sqrt q\,r}
+\leq\frac{32}{3}\sqrt W\leq\frac{32}{3}\Delta.
+\tag{4.11}
+$$
+
+This proves (4.3).
+
+Without assuming near extremality, $\Delta=0$ implies $z=0$, $x_0=3/5$, $y=4/5$ and $qr^2(1-\eta)=0$. Then $q=1$, $r>0$, $\eta=1$, and $r=x_0=3/5$. The converse follows by substitution. If $\Delta\to0$ along any sequence, then $z\to0$ and (4.10), whose proof did not use the near-extremal range, gives $r\to3/5$. Consequently $qr^2\to9/25>0$, and $qr^2(1-\eta)\leq W\to0$ gives $\eta\to1$ and $\omega\to-1$. Conversely the three convergences in (4.4) imply $q\to1$, $\eta\to1$, $x_0\to3/5$, $y\to4/5$ and $W\to0$ by (1.5), proving $\Delta\to0$.
+
+Simultaneous unitary conjugation preserves the nonzero eigenvalues and $\operatorname{tr}(PQ)$. Multiplication by a common nonzero complex scalar multiplies $a,b$ by the same positive number and leaves their relative phase unchanged. It therefore leaves all the normalized invariants and $\Delta$ unchanged; it multiplies the two sides of the feasibility inequality by the same positive number, so it also leaves $c_*$ unchanged. This proves the asserted invariance, with no conclusion about absolute unnormalized matrix distances. $\square$
+

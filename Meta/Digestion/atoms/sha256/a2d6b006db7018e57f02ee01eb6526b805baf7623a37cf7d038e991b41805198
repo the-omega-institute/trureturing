@@ -1,0 +1,21 @@
+**定理 9.2（全停止策略的源内最小代表与等待信息地板）。** 对任意合法、几乎必然作出决定的控制器 $\rho$，沿全零回答回放得到一个可测容量选择器 $\sigma_\rho$。若回放在有限步主动停止，选择器记录相应的 $\mathsf A/\mathsf B$ 类型；若它永不主动停止，则取 $\sigma_\rho=\infty$。存在同一原种子、同一 $Q,X_0$ 和同一两臂来源上的合法替换 $\rho^\star$，满足：
+
+1. 每个可测 $\sigma:U\to\mathsf S$ 都能由这样的替换实现；
+2. $\rho^\star$ 与 $\rho$ 的完整联合状态实验由与参数无关的可测双射相连，且
+   $$
+   \mathbb E T_{\rho^\star}=\int k(\sigma_\rho(u))\,\nu(du)\le \mathbb E T_\rho;
+   \tag{RRO.36}
+   $$
+3. 在允许任意可测确定或随机决策核时，给定选择器的最小先验风险恰为
+   $$
+   \inf_\delta\mathbb E L(Q,X_0,\delta(H_{\rho^\star}))
+   =\int\mathcal R_L(c(\sigma(u)))\,\nu(du)\\
+   =w_L+\int\Gamma_L(c(\sigma(u)))\,\nu(du),
+   \tag{RRO.37}
+   $$
+   其中
+   $$
+   \Gamma_L(c)=t_L(c)-\sum_{x=0}^1\sum_{j\ge c_x}r_{xj}.
+   \tag{RRO.38}
+   $$
+

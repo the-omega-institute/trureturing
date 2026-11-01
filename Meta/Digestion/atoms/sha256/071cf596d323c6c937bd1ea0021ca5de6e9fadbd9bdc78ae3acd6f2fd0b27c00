@@ -1,0 +1,94 @@
+**Lemma 13.4 (Uniform marginal control and strict cap payment).** On the
+sublevel (13.3), with the notation above, uniformly
+
+$$
+\begin{aligned}
+\mathbb P(A,K\ge2)&=O_R(a^{-2}),\\
+c&\ge1-O_R(a^{-1/2}),\\
+\delta&\le\frac{1+O_R(a^{-1/4})}{\eta},\qquad
+\frac{\eta^2}{a^3}=\max\{2,q^2\}+O_R(a^{-1}),\\
+\Lambda-\frac raP_{a,h}&\ge a^3>0,
+\qquad \Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2},
+\end{aligned}
+\tag{13.15}
+$$
+
+for sufficiently large $a$.
+
+**Proof.** Put $t=\eta/a^{3/2}$ and
+$w=(\alpha-\mathcal A)/a^3=2+O_R(a^{-1})$. Then
+$t=\max\{\sqrt w,q\}$ and the baseline in (13.9) is exactly
+
+$$
+\frac{2\eta h-\gamma/a}{a^2}=2qt-t^2+w.
+\tag{13.16}
+$$
+
+The right side is $2q\sqrt w$ if $q\le\sqrt w$, and $q^2+w$ otherwise.
+The functions $\sqrt w$ and $\max\{\sqrt w,q\}$ are uniformly Lipschitz
+in $w$ near $2$ for $1\le q\le R_*$. Consequently (13.16) equals
+$\psi(q)+O_R(a^{-1})$, including when $q$ crosses $\sqrt2$. Comparing
+(13.9) with (13.2)--(13.3) gives a constant $C_R$ such that
+
+$$
+0\le\mathbb E[G_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f\le C_Ra.
+\tag{13.17}
+$$
+
+All summands are nonnegative by Lemma 13.3. Its nonsingleton lower
+bound proves the first line of (13.15), and strong Jensen gives
+
+$$
+\sum_{i\in C}(y_i-\bar y)^2\le\frac{2C_R}{a}.
+$$
+
+Since $\bar y=(a-u)/r=1-O_R(a^{-1})$, this proves the asserted core
+floor tending to one.
+
+For each $j\in D$ write $x_j=x_{\{j\}}$ and
+$p_2=\mathbb P(A,K\ge2)$. Actual inclusion probabilities give
+$0\le t_j-x_j\le p_2$ and $\eta p_2=O_R(a^{-1/2})$. If
+$t_j\ge1/\eta$, it follows that $x_j\ge t_j/2$ eventually. Setting
+$z=\eta t_j\ge1$ and using its singleton square in (13.17) yields
+
+$$
+\frac\eta2\frac{(z-1)^2}{z}
+\le x_j(t_j^{-1}-\eta)^2\le C_Ra,
+\qquad \frac{(z-1)^2}{z}=O_R(a^{-1/2}).
+$$
+
+For $z\ge1$, the inequality $(z-1)^2/z\le\epsilon$ implies
+$z-1\le\epsilon+\sqrt\epsilon$. Thus
+$t_j\le(1+O_R(a^{-1/4}))/\eta$. The same bound is automatic when
+$t_j<1/\eta$. Taking the maximum proves the bound on $\delta$;
+(13.10) gives the stated uniform formula for $\eta^2/a^3$.
+
+Finally $\max\{\alpha,\beta\}=(2+O(a^{-1}))a^3$. The core and tail
+bounds imply
+
+$$
+\frac\Lambda{a^3}\ge3\max\{2,q^2\}-2-O_R(a^{-1/4}).
+$$
+
+The exact identity
+$\Gamma_a=2a+6+(12a-5)/(a-1)^2>2a$ gives
+
+$$
+0\le\frac{P_{a,h}}{a^3}
+=\left(q^2-\frac{\Gamma_a}{a}\right)_+
+\le(q^2-2)_+.
+$$
+
+Since $r/a=1+1/a$ and $q\le R_*$,
+
+$$
+\frac{\Lambda-(r/a)P_{a,h}}{a^3}
+\ge3\max\{2,q^2\}-2-(q^2-2)_+-O_R(a^{-1/4})
+\ge4-O_R(a^{-1/4}).
+$$
+
+The middle expression before its error is $4$ for $q^2\le2$, and
+$2q^2\ge4$ for $q^2\ge2$. Increasing one threshold proves the last
+line of (13.15). In particular this estimate does not treat
+$P_{a,h}$ as $O(a^2)$ in the capped phase. ∎
+

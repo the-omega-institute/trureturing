@@ -1,0 +1,8 @@
+## 9. Finite actual two-layer graphs at square-root surplus
+
+The preceding sections optimize the common incidence law. This section keeps the
+same law on the same finite graph and records the finite-budget interface. The
+only new issue is that a law with a core and singleton tail must be rounded to
+integer source counts while the graph remains simple, connected, and strictly
+degree-oriented.
+

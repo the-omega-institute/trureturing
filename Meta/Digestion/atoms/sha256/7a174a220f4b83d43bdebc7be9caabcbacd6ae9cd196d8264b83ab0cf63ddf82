@@ -1,0 +1,11 @@
+## 2. The source-specific quadratic majorant
+
+Set
+
+$$
+c=\cos(\pi/8),\qquad s=\sin(\pi/8).
+\tag{2.1}
+$$
+
+In particular, $0<s<c$, $c^2+s^2=1$, $cs=1/(2\sqrt2)$, $c+s=\sqrt2c$, and $(c-s)^2=2s^2=1-1/\sqrt2$.
+

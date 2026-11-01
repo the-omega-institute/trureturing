@@ -1,0 +1,11 @@
+**Proposition 5.4 (Entire-exterior posterior from a finite future prefix).** Under the attainment hypothesis of Proposition 4.2, consider a free exterior cell $F_0=\{X_{-1}=X_1=0\}$ with nearest anchors $-l,r$ and left context $c$. With $M,B,a,b$ as in Proposition 4.3, any finite observed future gap prefix $v$ after $r$ containing an intact copy of $w$ gives the original posterior
+
+$$
+q_0=\frac{B L_b(v)}{M L_a(v)+B L_b(v)}.
+\tag{5.9}
+$$
+
+On the forced complement $F_0^c$, $q_0=0$.
+
+Proof. The competing states $a,b$ have the same absolute-continuity phase by (4.11). Before the copy of $w$ their successors remain in the same phase, and after it their minimal predictive states coincide, say at $u$. On the prefix cylinder the full future laws factor as $L_a(v)F_u$ and $L_b(v)F_u$. In (4.12) both the common full-left-past channel and this common entire-future tail cancel, proving (5.9) by disintegration on the entire exterior field. This is not a quotient of point masses at infinite configurations. The geometric trial bound makes these prefix cylinders cover almost every future. Countably many prefixes, contexts, distances and spatial shifts admit a common conull formula domain. No right decoder for $c$, $a$ or $b$ is used. $\square$
+

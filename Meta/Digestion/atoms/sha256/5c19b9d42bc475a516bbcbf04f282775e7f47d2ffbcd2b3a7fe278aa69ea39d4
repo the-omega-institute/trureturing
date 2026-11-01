@@ -1,0 +1,33 @@
+## 17. 适用范围、路径参数与未决阶数
+
+The comparison in Lemma 16.2 is over the complete Fourier moment domain
+$0\le|q_1|,|q_2|\le1$, including all three scalar cases $a<b$, $a=b$, and
+$a>b$ and the possible sign change of $L$; strict positivity is used only for
+the equality assertion $|q_1|,|q_2|<1$. The bridge from conductances to this domain
+is the all-pairs cycle identity (5.4)–(5.5), with the same ordinary unit vertex
+masses and the same ten unordered original vertex pairs as in Definition 1.1.
+The classical Fourier diagonalization and pseudoinverse trace identity are the
+only external intermediate inputs; the determinant comparison (16.5)–(16.10) is
+the additional five-cycle derivation.
+
+For boundary directions of the resistance simplex, Theorem 5.1 already supplies
+the complete path comparison. Its parameter map is the one in Convention 4.2:
+for $P_5$, $s=(2,\sqrt6,\sqrt6,2)$,
+$d=(4-\sqrt6,2\sqrt6-4,2\sqrt6-4,4-\sqrt6)$, and the path constant is
+
+$$
+A_5=\sum_{i=1}^4s_id_i=40-12\sqrt6.
+$$
+
+The cited path theorem applies to all positive path conductances and extends to
+closed directions by the continuity argument in Theorem 5.1; it retains the five
+original unit vertex masses and never replaces a deleted edge by a vertex
+contraction. Since $25-5\sqrt5>40-12\sqrt6$, these boundary values lie strictly
+below the five-cycle value. Indeed, this is equivalent to $12\sqrt6>15+5\sqrt5$; squaring gives $514>150\sqrt5$, and squaring once more gives $264196>112500$. No separately optimized path is assigned to more than
+one deletion of the same labelled cycle.
+
+The result above settles only the unrestricted labelled $C_5$. For every $n\ge6$,
+the exact value of $B_n$ and the complete equality set remain unresolved; none of
+the statements here supplies a general-$n$ bound, a kernel result, or a resolution
+of the original all-$n$ problem.
+

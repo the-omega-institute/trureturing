@@ -16,7 +16,7 @@ internal static class RemoveWorktreesCommand
         + "The main checkout is protected; intentional Git locks require at least 24 hours since lock-file modification. "
         + "Initialization markers require exclusive tree entry; live initializers remain protected.\n"
         + "Removal checks target identity and lock age. Eligible trees commit ordinary outstanding changes before removal; checkpoint failure retains the tree. "
-        + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
+        + "The optional CLI --force disables the default 1800-second removal timeout; inventory remains bounded. "
         + "It may appear before or after --names and does not override main checkout or lock protection. "
         + "Branch refs are retained; detached trees create a recovery branch. Execution failures are reported and remaining resolved trees are attempted; no rollback.\n"
         + "CLI exits: 0 success; 64 usage; 65 not_found; 66 ambiguous; 67 main_worktree; 68 locked; "

@@ -35,6 +35,9 @@ internal sealed class TwirlingPhaseRetrievabilityCounterexampleDocument : IScrib
         "Three characters of C3 with multiplicity two contradict the proposed twirling phase index formula.",
         H("Overlapping pairs refute the twirling phase index formula"),
         Blocks(
+            Node("chi-unit", "Unit modulus of the three characters", "chi_unit", ChiUnitFormula(),
+                "For every character index and group element, the character's conjugate product is one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("scale-norm-sq", "The squared two-coordinate scale", "scale_normSq",
                 Disp(Eqn(App(Q("Complex", "normSq"),
                     new Formula.Power(Seq(Sqrt, Grp(D(2))), new Formula.Negate(D(1)))),
@@ -183,6 +186,15 @@ internal sealed class TwirlingPhaseRetrievabilityCounterexampleDocument : IScrib
         Seq(F.Id("fun"), Sp, Parenthesized(Seq(F.Id(name), Sp, Colon, Sp, domain)), Sp, Mapsto, Sp, body);
     private static Formula SetOf(string name, Formula domain, Formula condition) =>
         Seq(Esc, OpenBrace, F.Id(name), Sp, Colon, Sp, domain, Sp, Mid, Sp, condition, Esc, CloseBrace);
+
+    private static Formula ChiUnitFormula()
+    {
+        var i = F.Id("i"); var g = F.Id("g");
+        var phase = App(Q("ZMod", "stdAddChar"),
+            Mul(App(Q("ZMod", "finEquiv"), D(3), i), App(Q("Multiplicative", "toAdd"), g)));
+        return Disp(All("i", FinType(D(3)), All("g", Call("Multiplicative", Call("ZMod", D(3))),
+            Eqn(Mul(StarOf(phase), phase), D(1)))));
+    }
 
     private static Formula TwirlFormula()
     {

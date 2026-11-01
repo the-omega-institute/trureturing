@@ -8,6 +8,9 @@ url: https://arxiv.org/abs/2512.23013v1
 claim: "Numerically, when the single-qudit dimension d_B is a power of 2, a three-dimensional subspace with zero average stabilizer entropy gap is always achievable; the authors state that it is unclear why."
 strata_touched:
   - D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap
+  - D5/S3/Quantum/Magic/ParitySectorEntropyGap
+  - D5/S3/Quantum/Magic/ParitySectorMoments
+  - D5/S3/Quantum/Magic/SubspaceStabilizerEntropy
 license: citation-only
 triage: anchor
 ---
@@ -38,7 +41,12 @@ on one qudit (§III) "$Q_S = \frac{1}{d_S^2}\sum_\textbf{a}(D^S_{\textbf{a}}\oti
 Average stabilizer entropy gap (§III): "$\Delta M(\mathcal{E}) \equiv \mathbb{E}_{\psi}\big[\Delta M(\psi)\big] = d_S\trace\left(Q_S \mathcal{A}^S_4\right)-d_B\trace\left(Q_B \mathcal{E}^{\otimes 4}(\mathcal{A}^S_4)\right)$",
 with "$\mathcal{A}_4^S =\mathbb{E}_U\big[(U\psi U^\dagger)^{\otimes 4}\big]= \binom{d_S+3}{4}^{-1}\Pi^S_{\text{sym}^4}$" and
 "$\Pi^S_{\text{sym}^4} = \frac{1}{24}\sum_{\sigma\in S_4} T_{\sigma}$", and the intrinsic average
-"$1-\frac3{d_S+2}$" for odd $d_S$.
+"$\mathbb{E}_U[M_S(U\psi U^\dagger)] = 1 - d_S \binom{d_S+3}{4}^{-1}\trace\left( Q_S \Pi_{\text{sym}^4}^S\right)$" equal to
+"$1-\frac3{d_S+2}$" for "$d_S \text{ odd (multiqudit)}$" and "$1-\frac{3(d_S+2)}{(d_S+1)(d_S+3)}$" for "$d_S \text{ even (multiqudit)}$".
+
+Random-subspace average (§IV, Theorem 1): "The ASE gap for a subspace of fixed dimension $d_S$ is on average the difference between the ASE of the larger space $\mathcal{H}_{d_B}$ and the ASE of the small space $\mathcal{H}_{d_S}$", "$\mathbb{E}_\mathcal{E}\big[\triangle M(\mathcal{E})\big] = \mathbb{E}_U[M_B(U\psi U^\dagger)]  - \mathbb{E}_U[M_S(U\psi U^\dagger)]$".
+
+Cycle-trace identity (App. D): "$\trace\Big((X_1\ot \ldots \ot X_n) T_{\pi}\Big)=\prod_{c\in \chi(\pi)}\trace\left(\prod_{i \in c}X_i\right)$", "where $\chi(\pi)$ denotes the set of cycles of the permutation $\pi$, and $c$ a particular cycle."
 
 §V.A: "But this is not the only case: evidently, when $d_B$ is a power of 2, a zero ASE subspace
 of dimension three is always achievable."

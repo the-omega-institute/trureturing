@@ -1,0 +1,36 @@
+**Corollary 22.3 (proper-candidate verification).** With $h,H$ already
+earned as in Definition 22.1, let a candidate stream be explicitly
+supplied by any homogeneous all-index recurrence
+of presented order $r\le d$, with its seed, and a proposed mature
+cut $\nu\in[n_0,H]$. There is a deterministic verifier using at most
+$d+r+3$ paid Reads. Its witnesses can be constructed from this
+candidate with polynomial local work, writes and backing in
+$d+\nu+2$, without discovery Reads. It accepts exactly when the
+candidate behavior and cut are the actual behavior and cut.
+
+Proof. Construct the root witnesses in the candidate and check them
+on the actual root. Then construct and check (ACR.95) for only the
+first $d+r$ candidate bits. Length and maturity are valid because
+$d+r\le2d$. A successful root test proves the actual cut; successful
+birth tests authenticate these candidate bits by Theorem 22.2's
+induction. The product of an actual monic annihilator of degree at
+most $d$ and the candidate's monic degree-$r$ annihilator annihilates
+their difference. Agreement on $d+r$ initial positions forces the
+difference to vanish by forward induction, exactly as in GPO Lemma
+29.2. Degree zero is allowed, and no shift is inverted.
+
+For construction, candidate descriptors, chronological indices and
+orientation bits along each longest or shortest witness are computed
+by GPO (GPO.93)--(GPO.98) and forward companion powers. There are
+$O((d+1)(\nu+1))$ edges to construct, indices have $O(\nu+1)$
+bits, and Proposition 39.5 bounds their local evaluation polynomially.
+Only the early old trees are expanded, never the whole cut-$\nu$
+tree. A correct candidate supplies all the required witnesses.
+An incorrect candidate cannot pass the authenticated-prefix argument.
+Witness construction and the final certificate checks are separate
+bills. This is a verifier for a supplied proper candidate, not an
+equivalence oracle or a polynomial way to find that candidate. In the
+general certificate relation a missing witness may also accompany a
+correct answer: a failed test alone certifies neither a wrong bit nor
+the position of a first disagreement. $\square$
+

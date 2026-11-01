@@ -1,0 +1,53 @@
+## 4. Mathematical citations
+
+**[LMS]** Yulong Li, Rachel Morgan and Michael Siegrist,
+*Concavity structure of fractional differential equations and zeros of
+Mittag–Leffler functions*, [DOI 10.1007/s41478-026-01192-9](https://doi.org/10.1007/s41478-026-01192-9).
+Definition 1.1 specifies the operators; §3, equations (6)–(7), specifies
+the weak formulation and its bidirectional integral representation;
+Theorem 5.2 supplies (1.3); Conjecture 6.1 is the uniqueness assertion
+addressed by the fixed-order example [R].
+
+**[R]** [Li–Morgan–Siegrist inflection-point refutation](../../../Problems/li-morgan-siegrist-2026-inflection-points-conjecture-6-1.md),
+with the fixed-order polynomial example and the separated-pulse idea
+in its Triage section. The associated declaration is
+[LiMorganSiegristInflectionRefutation.result](../../../D5/S0/Certificates/LiMorganSiegristInflectionRefutation.lean).
+The mathematical addition of Theorem 2.1 relative to this source is the
+simultaneous compact-band interaction bound, rational positive
+polynomial approximation with a specified degree, and strict
+transition conclusion in the original weak solution class.
+
+**[VV]** Alexander Veretennikov and Evguenia Veretennikova,
+*On convergence of partial derivatives of multivariate Bernstein
+polynomials*, [arXiv:1507.05235v2](https://arxiv.org/abs/1507.05235v2),
+§2, Theorem 2 and equations (1)–(3). The first-difference derivative
+identity and derivative approximation are classical inputs to the
+proof, not additional multiplicity results.
+
+**[HNP]** Olga Holtz, Fedor Nazarov and Yuval Peres,
+*New coins from old, smoothly*,
+[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3), Lemmas 17 and
+19–22; [DOI 10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5).
+These supply Bernstein derivative and Lorentz approximation estimates.
+
+**[LW]** [LorentzWeightedHolderControl](../../../D5/S3/Analytic/SeriesInequalities/LorentzWeightedHolderControl.lean),
+including its weighted derivative kernels, Lorentz jet estimates,
+Taylor-remainder bounds, derivative control, Hölder seminorm control,
+and weighted stability. These approximation conclusions, including
+the proof-local estimates, are credited intermediate theory. The proof
+of Theorem 2.1 uses the ordinary positive Bernstein operator and the
+explicit first-difference bound (2.19).
+
+**[KST]** Anatoly A. Kilbas, Hari M. Srivastava and Juan J. Trujillo,
+*Theory and Applications of Fractional Differential Equations*,
+North-Holland Mathematics Studies 204, fractional integrals and the
+beta-integral semigroup. The monomial and semigroup identities used
+inside Theorem 2.1 are classical fractional calculus.
+
+**[EL]** Paul W. Eloe and Yulong Li,
+*Existence, comparison, and monotonicity of principal eigenvalues of
+fractional Sturm-Liouville problems involving Riemann-Liouville
+derivatives*, [DOI 10.1007/s13540-026-00481-1](https://doi.org/10.1007/s13540-026-00481-1).
+Its principal-eigenvalue equations constrain forcing through the
+unknown eigenfunction, unlike the free-forcing construction of §2.
+

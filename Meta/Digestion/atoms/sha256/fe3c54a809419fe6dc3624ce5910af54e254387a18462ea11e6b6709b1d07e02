@@ -1,0 +1,21 @@
+**Definition 33.1 (the action coordinate and the unchanged tasks).** Retain exactly the positive-rational source, root, chronological actions and finite original-view encodings of §§6 and 17. The installed menu in this section is precisely
+
+$$
+S_2=\{2^s:s\in\mathbb N\},\qquad q_{2^s}(z)=\lfloor2^s z\rfloor.
+\tag{33.1}
+$$
+
+The services are the conditionally supplied exact, noiseless, unclipped, nondisturbing services of Assumption 28.1. There is one actually mutated source. A controller is an ordinary deterministic finite program; its only source-dependent input is its finite acquired transcript. Every promised run must finish its actions, reads, finite arithmetic and finite output. No uniform bound is imposed on read count, exponent or scale magnitude, encodings, computation, retained state or output length. These remain paid coordinates. In particular the unbounded menu supplies neither an acquired infinite thread nor a source-dependent timing observation. There is no reset, copy, inverse source action, unknown original archive, unknown exact rational supplied as input, source-dependent advice or auxiliary oracle.
+
+For public $b\ge1$, write the already defined prior (30.2) as
+
+$$
+c_b=1/b,\qquad x_{b,n}=1/b-1/n\quad(n>b),\qquad
+P_b=\{c_b\}\cup\{x_{b,n}:n>b\}.
+\tag{33.2}
+$$
+
+The binary target is the original endpoint bit $\sigma_b(c_b)=1$, $\sigma_b(x_{b,n})=0$. The other targets are separately the exact original rational boundary $B$, original chronological word $T$, original rooted named-incidence path $S$, original indexed prefix table $M$, and their joint tuple $(B,T,S,M)$. They are evaluated at the original cut, before any acquisition action. The mutual finite decoders of Theorems 6.2 and 17.3 are retained, including names, incidence orientation and prefix indices; none of these targets is replaced by a duration or a post-probe view.
+
+For any one of these targets, its uniform action minimum is the least $h\in\mathbb N$ for which a correct pointwise-finite controller on all of $P_b$ uses at most $h$ actual new source actions on every original. Its endpoint action minimum imposes that bound only on the run starting at $c_b$, while retaining correctness and finite stopping on every member of $P_b$. Other runs in this second definition may use arbitrarily many actions. Local calculations with known words or rational candidates are not source actions.
+

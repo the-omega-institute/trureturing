@@ -1,0 +1,17 @@
+**定义 18.1（六阶 Fourier 坐标）。** 令 $p=(p_0,\ldots,p_5)\in\Delta^\circ$，令
+$z=\exp(\pi\mathrm i/3)$，并置
+
+$$
+q_k=\sum_{j=0}^{5}p_jz^{kj}\quad(k\in\mathbb Z/6\mathbb Z),\qquad
+a=|q_1|^2,\quad b=|q_2|^2,\quad c=q_3^2 .
+$$
+
+这里 $q_3\in\mathbb R$。由式 (5.5) 及式 (9.2)，若 $M(p)$ 是定义 4.1 的
+协方差算子，则
+
+$$
+T(p)=\frac{35}{72}-\frac a3-\frac b9-\frac c{24},\qquad
+\Phi(p)=\frac{6T(p)}{\lambda_{\max}(M(p)|_H)} .
+\tag{18.1}
+$$
+

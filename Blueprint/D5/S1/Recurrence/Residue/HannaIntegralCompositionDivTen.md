@@ -53,4 +53,5 @@ The coefficient equation is triangular with leading coefficient one. It construc
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaIntegralCompositionDivTen.IsSolution`
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaIntegralCompositionDivTen.claim`
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaIntegralCompositionDivTen.result`
+- Dependency: [D5/S1/Recurrence/Residue/IntegralEGFComposition](IntegralEGFComposition.md)
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](QuarticEGFFixedPoint.md)

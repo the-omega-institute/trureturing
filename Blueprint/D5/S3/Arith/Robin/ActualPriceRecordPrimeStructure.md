@@ -6,7 +6,19 @@ Same-integer prime structure, higher-layer confinement and qualitative localizat
 
 Write X=log(m), L=log(X), lambda0=1/(40*X*L), and Q(m)=sum over prime factors p of Nat(v_p(m)-1)*log(p). The largest prime P is OriginalEndpointPrimeTail.largestPrime(m). A predecessor record at price lambda compares the literal goldenResourceObjective(lambda,n) with goldenResourceObjective(lambda,m) for every natural n with 0<n<m. In particular, one and two remain rivals.
 
-**Theorem 1.1 (Antitone valuations and initial prime support at every positive price).**
+**Theorem 1.1 (Finite prime-square tail from two-sided theta control).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.finite_theta_abel_upper`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.finite_theta_abel_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all real y,z,rho with 1<y, y<=z and 0<=rho, if (1-rho)*t<=theta(t)<= (1+rho)*t for every real t in [y,z], the sum of 1/p^2 over the prime filter of Finset.Ioc(floorNat(y),floorNat(z)) is at most (1+3*rho)/(y*log(y)). The lower cutoff is strict. Abel summation controls the log-weighted sum, and log(y)<=log(p) removes the weight. This is the original finite supplier also used by the actual-record Euler-tail bound.
+
+**Theorem 1.2 (Antitone valuations and initial prime support at every positive price).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_prime_structure`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_
 
 For every m>=2 and every lambda>0, the full strict predecessor record forces v_q(m)<=v_p(m) for all primes p<q, including zero valuations, and primeFactors(m)=primesLE(largestPrime(m)). The antitone companion must equal m because a smaller companion would improve the positive-price score even when its normalized divisor sum only ties. Nonempty support and its existing supremum then close every missing-prime position.
 
-**Theorem 1.2 (Occupied layers embed into the canonical strict integer).**
+**Theorem 1.3 (Occupied layers embed into the canonical strict integer).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_divides_strictInteger`
 
@@ -32,7 +44,7 @@ For every positive natural m and every real lambda>0, a strict predecessor recor
 
 At any t>=2 with q_t=1/(t*log(t))<=lambda, canonical price divisibility gives m divides strictInteger(q_t). Only this full integer has the literal strictInteger_counts law. The full-inventory higher-layer estimate and active-power cutoff apply there; valuation and higher-mass monotonicity transfer them to m.
 
-**Theorem 1.3 (An absolute square-root envelope for the same record integer).**
+**Theorem 1.4 (An absolute square-root envelope for the same record integer).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_prime_confinement`
 
@@ -48,7 +60,7 @@ The strongest antitone normal-form theorem supplies a companion a<=m with at lea
 
 Take t=40*X. Since log(3)>1, its price is positive and strictly less than lambda0. Apply the complete higher-layer theorem to the full canonical inventory at this price, then use m dividing it to compare Q. If psi(t)-theta(t)<=c*sqrt(t), put C=abs(c). The bounds theta(y)<=log(4)*y and sqrt(2*t)<=2*sqrt(t) give K=sqrt(40)*(4*log(4)+2*C)>0. This argument imposes no full-count or global optimality condition on m, and does not identify m with its containing inventory.
 
-**Theorem 1.4 (One log-size cutoff for each prime-localization tolerance).**
+**Theorem 1.5 (One log-size cutoff for each prime-localization tolerance).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_largest_prime_localization`
 
@@ -64,7 +76,7 @@ For X>=4*K^2 the finite mass envelope gives theta(P)>=X/2. Chebyshev's global up
 
 These are log-size statements conditional on actual price records. Converting a uniform least-crossing height into the required record and log-size hypotheses is a separate arithmetic-analytic bridge. No crossing existence, unbounded crossing family, Robin sign or Riemann hypothesis follows from this dependency alone.
 
-**Theorem 1.5 (A uniform sharp Euler-tail upper bound for the same record integer).**
+**Theorem 1.6 (A uniform sharp Euler-tail upper bound for the same record integer).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.actual_record_tail_upper`
 
@@ -87,6 +99,7 @@ Choose kappa=min(1/160,epsilon/32) and rho=min(1/4,epsilon/96) before alpha and 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.actual_record_tail_upper`
+- Truth anchor: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.finite_theta_abel_upper`
 - Truth anchor: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_divides_strictInteger`
 - Truth anchor: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_largest_prime_localization`
 - Truth anchor: `D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure.price_record_prime_confinement`

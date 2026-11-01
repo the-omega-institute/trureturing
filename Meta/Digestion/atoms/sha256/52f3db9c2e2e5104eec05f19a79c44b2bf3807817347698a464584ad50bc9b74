@@ -1,0 +1,8 @@
+若 $I\subseteq E_K$ 两两不交叉且 $r=|I|$，容斥给
+
+$$
+D_r^{pq}:=|\{T\in\mathcal X(P\mid Q):I\subseteq\operatorname{Ear}(T)\}|
+=\sum_{j=0}^q(-1)^j\binom qj c_{p+r+j}.
+\tag{37.6}
+$$
+

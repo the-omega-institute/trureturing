@@ -1,0 +1,33 @@
+**Theorem 9.5 (Complete simple-conjugate-pair classification).** For every real $a,b$ with $b>0$ and $a^2+b^2\le1$, every $g\in\mathscr E_2(\mathbb D)$ and every real $x\in[-1,1]$,
+
+$$
+|g'(x)-(I_{a,b}g)'(x)|\le1+|a|.
+$$
+
+The exact original entire-function uniform supremum is
+
+$$
+E(a,b)=1+|a|=\frac12\|p_{a,b}'\|_{[-1,1]}.
+$$
+
+Consequently the equality region for equation (36) of Ostrovskii–Shcherbakov in the simple two-node case $(n,k)=(2,1)$ is the whole admissible upper closed half-disk $\{(a,b):b>0,\ a^2+b^2\le1\}$. In particular every nonreal unit-circle conjugate pair is included. Stance: repo-derived.
+
+**Proof.** Admissibility implies $0<b\le1$, so Lemmas 9.3 and 9.4 yield
+
+$$
+\begin{aligned}
+|g'(x)-S_{a,b}(g)|
+&\le|g'(x)-S_{0,b}(g)|+|S_{0,b}(g)-S_{a,b}(g)|\\
+&\le(1+|a|)\|g''\|_{\mathbb D}\le1+|a|.
+\end{aligned}
+$$
+
+This holds for each actual entire $g$ and each $x$, hence bounds the two suprema in Definition 9.1 without exchanging a limit with either supremum. For the reverse inequality take the actual entire quadratic $g_0(z)=z^2/2$. It has $g_0''=1$, and
+
+$$
+S_{a,b}(g_0)=\frac{(a+ib)^2-(a-ib)^2}{4ib}=a,\qquad
+T_{a,b,x}(g_0)=x-a.
+$$
+
+Its maximum absolute error is $1+|a|$, attained at $x=-1$ when $a\ge0$ and at $x=1$ when $a\le0$. At $a=0$ both endpoints attain it. Finally $p_{a,b}(z)=z^2-2az+a^2+b^2$, so $p_{a,b}'(x)/2=x-a$ and its half-norm has exactly that value. The proof used only $a^2+b^2\le1$ throughout, including equality, and never identified the two distinct nodes. $\square$
+

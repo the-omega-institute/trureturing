@@ -1,0 +1,19 @@
+**Definition 33.3 (a computable endpoint action number).** Define
+
+$$
+m(b)=\min\bigl\{|u|:u\in\{L,R\}^*,\quad
+ c_u+b d_u\text{ is a power of two}\bigr\},
+\tag{33.9}
+$$
+
+where $c_u,d_u$ are the lower entries of (33.3). This is a condition on an actually executable prefix for this same source, not on a combination of incompatible hypothetical continuations. A finite program computes both $m(b)$ and an attaining prefix as follows.
+
+Start at $N=1$ and double $N$ until $N\ge b$; put $U=N-b$. The chronological word $L^U$ has matrix $\left(\begin{smallmatrix}1&0\\U&1\end{smallmatrix}\right)$, hence endpoint denominator $b+U=N$. Therefore the set in (33.9) is nonempty and
+
+$$
+0\le m(b)\le U=2^{\lceil\log_2 b\rceil}-b,
+\tag{33.10}
+$$
+
+with $U=0$ at $b=1$. Enumerate chronological words in increasing length, breaking ties by a fixed $L<R$ order. Compute their matrices from the identity by left multiplication by the next generator. Test a positive integer $Q=c+bd$ for being a power of two by repeated division by $2$ until odd, accepting exactly when the remainder is $1$. The first accepted word has length $m(b)$, and the search finishes by length $U$. Given $b$ and a proposed cap $h\ge0$, enumerate only through $K=\min(h,U)$ to decide $m(b)\le h$, returning a shortest word on yes and no on exhaustion. This tests at most $2^{K+1}-1$ words, all by finite integer arithmetic. It is a genuinely finite decision, also on no instances; no unbounded existential matrix search is being used as the decision procedure.
+

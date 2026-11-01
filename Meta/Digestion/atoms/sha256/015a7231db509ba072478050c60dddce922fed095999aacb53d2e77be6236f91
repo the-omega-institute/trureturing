@@ -1,0 +1,33 @@
+**Definition 1.3 (complete rows and repeated partners).** For a finite prefix-free cut $C$, replace each reached cut subtree of $t$ by its addressed occurrence hole. Retain every other exterior bracket and concrete leaf and the complete equality partition of reached whole subtrees. Different blocks assert disequality. An unreached cut has its concrete strict-prefix blocking leaf in the exterior. Sort reached holes lexicographically; name each block by the zero-based position of its first member. Names are recomputed upon restriction and need not be consecutive. This defines the whole canonical row $R_C(t)$.
+
+Fix $C=\{L,R\}^{3}$ and the perfect depth-three exterior $C_*$. The complete current row $R_*=(C_*,\pi_*)$ has six classes:
+
+| Class | All occurrence holes | Representative $p_d$ |
+| --- | --- | --- |
+| $a$ | $LLL,LRL$ | $LLL$ |
+| $c$ | $RLL,RRL$ | $RLL$ |
+| $b_1$ | $LLR$ | $LLR$ |
+| $b_2$ | $LRR$ | $LRR$ |
+| $b_3$ | $RLR$ | $RLR$ |
+| $b_4$ | $RRR$ | $RRR$ |
+
+Put $D=(a,c,b_1,b_2,b_3,b_4)$ and
+
+$$
+\mathscr S(x)=\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,\langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,\langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{POC.5}
+$$
+
+The domain, current tree and target are exactly
+
+$$
+\mathcal U_*:=\{u\in\mathcal T:R_C(\rho u)=R_*\},\qquad
+t_u=\rho u,\qquad F(u)=R_C(u).
+\tag{POC.6}
+$$
+
+Equivalently, all six whole values $x_d$ are pairwise different, $\mathscr S(x)\in\mathcal I$, and $u=\delta(\mathscr S(x))$. Extraction at the representatives is the inverse correspondence. Both occurrences of each partner use its one whole value. All fifteen unordered whole-class disequalities are required. There is no bound or additional promise on source size, height, rank or history.
+

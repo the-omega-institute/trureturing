@@ -1,0 +1,4 @@
+**Proposition 7.2 (root exclusion is independent of unique predecessor).** On $\mathbb N$ let $U_L(n)=2n$ and $U_R(n)=2n+1$, with root $0$ and current readout $n$. The disjoint-union predecessor map is injective, but the empty word and $L$ have the same endpoint.
+
+Proof. Parity determines the last action and integer division determines its predecessor, so PREDECESSOR holds. However $U_L(0)=0$, placing the root in a successor image and violating ROOT. Its repeated root returns identify arbitrarily many different lengths. $\square$
+

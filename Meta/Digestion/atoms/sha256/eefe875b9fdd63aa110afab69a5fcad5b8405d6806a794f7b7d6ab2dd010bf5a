@@ -1,0 +1,41 @@
+**Theorem 2.2 (the exact three-batch index relation).** In the second
+case of Theorem 2.1, let $I_k$ be the one-based first global birth index
+of $W_k$. These are mathematical indices, not acquired replies. Then
+
+$$
+I_{k+2}=I_{k+1}+I_k\quad(k\ge1),\qquad
+W_k(i)=y_{I_k-1+i}\quad(0\le i<F_k).
+$$
+
+Thus, for $A=I_{s_*}-1$ and $B=I_{s_*+1}-1$, the three paid prefixes
+are the first $2d$ entries of
+
+$$
+u=E^Ay,\qquad v'=E^By,\qquad w=E^{A+B+1}y.
+$$
+
+The exponent $A+B+1$, rather than $A+B$, retains the original one-based
+birth alignment.
+
+**Proof.** Put $e=\tau_v-1$. The preceding exterior forest consists of
+the physical $a$ siblings skipped when the root-to-$v$ path takes a
+$b$ edge. Those sibling cones are prefix-incomparable and all exist at
+cut $e$. Write $D(t)$ for their number of beta leaves at cut $t\ge e$.
+For any old-leaf forest its alpha/beta counts change as
+$(C,D)\mapsto(D,C+D)$, independently of orientations. Thus
+$D(t+2)=D(t+1)+D(t)$. Before actual update $e+k$ there have been
+$B_{e+k-1}=F_{e+k}-1$ births, and exactly $D(e+k-1)$ beta parents
+precede the cone. It follows that
+
+$$
+I_k=F_{e+k}+D(e+k-1).
+$$
+
+Both summands obey the integer Fibonacci recurrence. Within the cone
+the actuator consumes consecutive bits in the actual physical order;
+Theorem 2.1 decoded exactly that order. Its core-only condition gives
+the second assertion. Subtracting one from the three starting indices
+gives $I_{s_*+2}-1=A+B+1$. This is the actual exterior-clock identity
+of ACR Theorem 27.2, justified on this same cone. No numerical value of
+$e,D,A,B$ is required by the inverse below. $\square$
+

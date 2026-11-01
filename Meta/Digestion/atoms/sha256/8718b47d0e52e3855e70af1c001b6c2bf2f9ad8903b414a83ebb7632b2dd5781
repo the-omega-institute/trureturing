@@ -1,0 +1,52 @@
+**Corollary 36.1 (native support-refutation is exact but paid).**
+Under Theorem 33.3's authenticated cut, prefix and maturity hypotheses,
+the complete finite service over $\{a,b\}^{t_j}$ authenticates the actual
+$z_j$ with at most $2^{t_j}$ literal presence replies. A positive reply
+certifies the trial orientation; a complete zero certificate certifies its
+complement. Neither a single arbitrary negative reply nor a predicted
+witness has that force.
+
+Proof. Apply (ACRC.1), with the parent computed from the authenticated
+prefix, and Proposition 33.4's actual enumeration. For $m=2d$, ACR's
+maturity promise supplies every requested index, including the empty
+prefix at $d=0$. The authentic prefix determines the full behavior by
+GPO Lemma 29.2, but selecting and installing the exact $K_d(P)$ still uses
+its original fixed enumeration and its paid work. $\square$
+
+The cut-four period-eleven pair separates extremal observations from full
+support at that early cut. The same-first-two-bit fibre concerns newest
+bits, while Proposition 35.3 refutes the proposed no-common-disagreement
+strengthening in its reference comparison. None of these finite observations
+is an impossibility theorem for mature polynomial acquisition. Equally,
+the finite witness constructions do not prove that acquisition polynomial.
+
+The supplier correspondence is as follows. GPO §§27--29 supply the alpha
+origin, actual beta order, $B_t$, the all-index class and its finite-separation
+convention, including singular laws and zero order. GPO §39 supplies the
+actual chronological-parent relation. ACR Definition 22.1 and Theorem 22.2
+supply exactly the parity lengths, rank tests, universal certificate
+soundness and existential completeness used here. ACR §§25 and 31--32
+retain the original local normalizer and $\rho_d$. GPO Lemma 7.2 supplies
+the fixed-global-port extremal formulas in their separate source domain.
+
+Massey's [*Shift-Register Synthesis and BCH Decoding*][MAS] supplies classical
+finite-prefix synthesis, and Rueppel's [*Linear Complexity and Random
+Sequences*][RUEPPEL] supplies the classical linear-complexity setting. Neither
+supplies physical chronology, a paid native witness or the exact original
+normalizer's bill. The shift algebra is a reused ingredient; the source
+applications, support fibres and comparison refutations above are derived
+within the stated repository models. No literature-priority claim is made.
+
+The unresolved target remains deterministic polynomial TOTAL acquisition
+for the unrestricted unknown all-index source and unknown mature cut,
+with the exact original $(P,K_d(P),n,B_n)$ output and original $\rho_d$.
+Exponential native enumeration, a different recurrence presentation or a
+changed normalizer does not settle it. Source binding, grants, stationary
+visibility, actual backing, retained writes and handoff remain separate
+paid prerequisites throughout.
+
+[ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md
+[GPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
+[MAS]: https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf
+[RUEPPEL]: https://link.springer.com/content/pdf/10.1007/3-540-39805-8_21.pdf
+

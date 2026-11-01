@@ -1,0 +1,60 @@
+**Theorem 7.2 (Four-step optimum and failure of triple-only minimization).** Let $H=6$, $K=\{1,3,4,6\}$ and fix any $p_1,p_3,p_4,p_6>0$ summing to one. Then
+
+$$
+\boxed{n_{\rm sens}(K,p)=4,}
+\tag{7.3}
+$$
+
+with actual one-tick coherence
+
+$$
+\boxed{
+\langle0001|T_4(\theta)|0100\rangle
+=p_1p_3+\sqrt{p_1p_3p_4p_6}\,
+e^{i(-\theta_1+\theta_3+\theta_4-\theta_6)}.}
+\tag{7.4}
+$$
+
+Every nonzero relation supported on a triple within this $K$ has cost at least eight. Restricting the exact minimization to triple-supported relations therefore misses the true first horizon.
+
+**Proof.** In coordinate order $(1,3,4,6)$ the relation
+
+$$
+z=(-1,1,1,-1)
+\tag{7.5}
+$$
+
+is source (25.34), and its length-nine complete-tick realization is already source (25.35). Here $m_z=2$, $s_z=7$, $\ell_z=9$, $P_z=4$, $M_z=6$, so the new endpoint cost is $\tau(z)=9-1-4=4$.
+
+The actual amplitudes of the shorter words are $K_{0001}x=c_3x$ and $K_{0100}x=c_1S^2x$. Explicitly,
+
+$$
+x=c_6e_0+c_4e_2+c_3e_3+c_1e_5,\qquad
+S^2x=c_6e_2+c_4e_4+c_3e_5.
+\tag{7.6}
+$$
+
+Their common coordinates are $e_2,e_5$, and the partial trace gives
+
+$$
+\begin{aligned}
+\langle c_1S^2x,c_3x\rangle
+&=c_3\overline{c_1}(c_4\overline{c_6}+c_1\overline{c_3})\\
+&=\sqrt{p_1p_3p_4p_6}\,e^{iz\cdot\theta}+p_1p_3.
+\end{aligned}
+\tag{7.7}
+$$
+
+This proves (7.4) without measuring the memory. Both words have count one. Their fixed real-quadrature projective measurement is allowed, and its probability difference changes when $\theta_3$ goes from zero to $\pi$ while the other phases remain zero.
+
+For the complete shorter-horizon lower bound, two ticks require at least two completed blocks of length two, hence at least four uses. At $n\le3$ there is at most one tick, and the only completed allowed gap that fits is label $1$: label $3$ already needs four uses. A one-tick word is therefore necessarily $01\,0^{n-2}$, when it fits. The no-tick sector also has only its single word. Every count sector consequently has at most one nonzero history. Its diagonal entry is a product of completed-gap probabilities times
+
+$$
+\|S^t x\|^2=\sum_{k\in K,\ k\ge t}p_k,
+\tag{7.8}
+$$
+
+which is phase independent. Invalid histories are zero and the twirl removes cross-count entries. Thus the whole $T_n$ is constant for $0\le n\le3$, proving the exact optimum four.
+
+For the method counterexample, every triple $a<b<c$ here has $b\ge3$. Its $q_{abc}$ is at least two. Equality $q_{abc}=2$ would force $b-a=g_{abc}$ and $c-a=2g_{abc}$, a three-term arithmetic progression. None exists in this support: an interior midpoint is either $3$ or $4$, and neither has two distinct support partners summing to twice its value. Hence $q_{abc}\ge3$ and its primitive cost is $(b+1)(q_{abc}-1)\ge8$. The full integer-kernel statement of supplied DEV26.2, equation (26.7), applies to the restriction of the two defining equations of $L_K$ to each candidate triple $\{a,b,c\}$, with that triple as the source support; nonzero multiples only increase $\ell$ while leaving $B$ fixed. Relations on at most two labels are zero. Thus every triple-supported candidate costs at least eight, while the four-label relation attains four. This obstruction concerns horizon minimization. It is distinct from source Proposition 25.4's index-five defect for its particular endpoint-anchored triple list, which concerns integer lattice generation. $\square$
+

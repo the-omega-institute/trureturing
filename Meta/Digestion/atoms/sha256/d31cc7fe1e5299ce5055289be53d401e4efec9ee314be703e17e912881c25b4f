@@ -1,0 +1,76 @@
+### 2.6. Kernel rotation, unique slack, and the eight-parameter open set
+
+Choose the analytic unit kernel vector $v_\varepsilon$ with positive
+overlap with $v_0$. This is possible by normalizing
+$\Pi_\varepsilon v_0$, which is nonzero near zero; the transpose
+symmetry also allows it to be real in the displayed basis.
+Differentiating its kernel equation gives exactly
+
+$$
+v'_0=-5(1-t_*)(|+-\rangle+|-+\rangle).
+\tag{2.28}
+$$
+
+By differentiating the single-qubit marginal eigenvalue equation, its
+negative eigenvector has derivative $-|+\rangle/(2r)=-5|+\rangle/9$.
+Thus the double-negative product eigenvector has derivative
+$-5(|+-\rangle+|-+\rangle)/9$. Equations (2.23) and
+(2.28) show that these rotations differ. To verify the stronger
+assertion for each marginal separately, rather than merely their joint
+eigenbasis, put $e_2=|+-\rangle$, $e_3=|-+\rangle$, $e_4=|--\rangle$.
+Direct differentiation of the commutators gives
+
+$$
+\begin{aligned}
+\langle e_2,[\Pi_\varepsilon,\sigma_\varepsilon I]e_4\rangle
+    &=\tfrac12(8-9t_*)\varepsilon+O(\varepsilon^2),\\
+ \langle e_2,[\omega_\varepsilon,\sigma_\varepsilon I]e_4\rangle
+    &=\tfrac1{40}(9t_*-8)\varepsilon+O(\varepsilon^2).
+\end{aligned}
+\tag{2.29}
+$$
+
+For the other local marginal replace $e_2$ by $e_3$; swap gives the
+same coefficients. Since $8-9t_*=9D/(B+10m)>0$, these entries are
+nonzero for all sufficiently small nonzero signed $\varepsilon$.
+The same holds for $N_\varepsilon=\lambda_\varepsilon\Pi_\varepsilon$
+because $\lambda_\varepsilon>0$.
+
+It remains to justify that another saturated PSD slack cannot avoid
+this conclusion. At any rank-three optimizer every PSD matrix $N$
+with $N\omega=0$ is a nonnegative multiple of its kernel projection.
+If two such matrices satisfy (2.2), their difference is
+local and is a scalar multiple of that rank-one projection. A nonzero
+local Hermitian operator $A I+I B$ cannot have rank one: its four
+eigenvalues are $a_i+b_j$, and any three zero entries in this
+$2\times2$ additive array force the fourth zero. Hence the difference
+vanishes and the slack is unique. The individual fields still have the
+irrelevant scalar gauge $H_C\mapsto H_C+cI$, $H_D\mapsto H_D-cI$.
+
+For clarity we also verify persistence of the diagonal comparison,
+not just persistence of noncommutation. In the full parameter
+neighborhood of the IFT, let $U_0=\|u\|$, $V_0=\|v\|$ and
+$n_u=u\cdot\boldsymbol\sigma/U_0$, $n_v=v\cdot\boldsymbol\sigma/V_0$.
+These are analytic because the radii stay positive and less than one.
+All marginal-diagonal sources have correlation $c n_u n_v$, with
+
+$$
+ U_0+V_0-1\leq c\leq1-|U_0-V_0|.
+$$
+
+At the lower endpoint their probabilities are
+$((U_0+V_0)/2,(1-V_0)/2,(1-U_0)/2,0)$.
+This endpoint source $C(p)$ is analytic and positive-output near the
+base; the derivative of $F$ with respect to $c$ is positive there
+by continuity from $m>0$. Global convexity again makes it the unique
+diagonal optimum for every nearby parameter, independently of $a,b$.
+At any fixed sufficiently small $\varepsilon_1\ne0$, the analytic
+gap $F(C(p))-F(\omega(p))$ is strictly positive by (2.3),
+and the four commutators in (2.29) are nonzero.
+Positivity of the gap, positive outputs, positive $\lambda$, and these
+nonzero commutators all persist on an open neighborhood of that point
+in all eight parameters. The construction already maintains exact
+rank three throughout this neighborhood. Taking it inside
+$0<a,b<1$ proves the stated independent-bias open set, including points
+with $a\ne b$, and allows all six marginal coordinates to vary.
+

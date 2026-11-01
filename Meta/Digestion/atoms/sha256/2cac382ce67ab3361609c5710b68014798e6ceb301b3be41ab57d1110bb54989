@@ -1,0 +1,21 @@
+**Lemma 4.3 (complete recurrence for a selected vector).** Fix $r\in\{1,2\}$ actual origins and put $K=6r$. For each of their $K$ whole class values record its type and replies at all $m$ suffix indices, including indices assigned to other roles. There are at most $K$ selected full response vectors. For an explicit subtrie $v$ with descendant index set $J_v$, and each restriction $z$ of a selected vector to $J_v$, lists of exactly
+
+$$
+\min\bigl(K,\,|\{y\in\mathsf t:(r_y(w))_{\text{indices below }v}=z\}|\bigr)
+\tag{POC.13}
+$$
+
+different actual finite terms can be retained for every type $\mathsf t$. Relative words in this formula start at $v$. At most $4K$ lists and $4K^2$ retained witnesses are needed at a node.
+
+Proof. At $\#$ the constraint vector is empty and use the unrestricted lists of Lemma 4.2. At an explicit node let $J_0$ be the ending indices and $J_L,J_R$ the two child index sets. The alpha leaf contributes exactly one witness if all $J_0$ requests are alpha and all strict-descendant requests are absent, and otherwise none. Beta has the identical rule with beta. A branch is possible only when all ending indices request branch. Under that condition, for each ordered child-type pair combine its two child lists for the restrictions $z|_{J_L},z|_{J_R}$. Assign the parent type by (POC.11) and retain up to $K$ different parents of each required type. Equivalently its $\mathsf I$ count is
+
+$$
+\min\left(K,\sum_{(\mathsf t,\mathsf u)\in\mathcal C_I}
+f_L(\mathsf t,z|_{J_L})f_R(\mathsf u,z|_{J_R})\right),
+\tag{POC.14}
+$$
+
+using capped child counts, and the $\mathsf O$ count sums over the complementary ordered pairs. Failed branch conditions give zero. Ordered-pair decomposition is unique, the child-type cases are disjoint, and Lemma 4.2 proves exact capped cardinality. Induction up the finite trie proves the list invariant and realization. Each child restriction is again the restriction of an original selected vector, so no unlisted vector is needed. Equal restrictions may share a list. There are at most $K$ restrictions per node, four types and at most $K$ witnesses per list, proving the count.
+
+This recurrence includes empty suffixes, root markers, inconsistent duplicate requests, impossible absent replies at a root, early leaves and every absent continuation. For an all-absent strict-descendant vector a leaf is retained even if the corresponding branch-child vector has no realization. The image whose right root is alpha is only $E$, so that image cell has capacity one and remains one. Fully exposed finite pieces and every finite nonsingleton capacity below $K$ remain exact. The recorded extra-role replies are mathematical selection data, with no additional runtime observations. $\square$
+

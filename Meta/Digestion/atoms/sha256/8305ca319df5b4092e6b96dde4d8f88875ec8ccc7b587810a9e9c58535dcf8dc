@@ -1,0 +1,28 @@
+**Proposition 20.2 (a core-only seed inside the transient bound).**
+Let $y=(01)^\infty$ and $s=y+(0,0,1,0,\ldots)$. This original
+source lies in $\mathscr R_5$, has transient exponent $a=3$, and has
+
+$$
+ Z_s=\{a\},\qquad U_s=\{\varepsilon,a\},\qquad
+ C_s=\{b,aa,ab\}.
+ \tag{PCR.52}
+$$
+
+In particular $b$ is genuinely core-only although its first birth index
+is $A_b=2\le a$. Its normalization origin is two, whereas those of
+$aa,ab$ are four and five. A depth or first-index cutoff alone would
+not list all minimal safe cones.
+
+Proof. Here $E^3(E^2+1)$ annihilates $s$, and the displayed finite
+transient has least nilpotent exponent three. The root consumes zero,
+so $a$ has boundary $(3,5)$ and origin three, while $b$ has boundary
+$(2,4)$ and origin two. The only defect is at index three, hence its
+actual parent is $a$. That parent consumes $s_2=1$, producing
+$aa$ with boundary $(5,8)$ and origin four, and $ab$ with boundary
+$(9,15)$ and origin five. The first indices of both exceed three.
+For $b$, every proper descendant has first index at least $B_b=4$
+by (PCR.39), while its own index two is not a defect. This proves
+core-only evolution directly, including the shallow birth inside the
+transient bound. There are no other defect parents, so (PCR.41)--(PCR.43)
+give exactly the displayed sets. $\square$
+

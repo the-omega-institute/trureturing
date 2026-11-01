@@ -1,0 +1,42 @@
+**Theorem 6.1 (Attained two-paid-read endpoint optimum).** For every
+$0<p<1$, $p\ne1/2$, either fixed endpoint $j\in\{0,1\}$, and every
+arbitrary unchanged independent auxiliary probability space, the
+minimum over all protocols of Definition 1.2 satisfying $q_2=1$ is
+
+$$
+\begin{aligned}
+\min L_2
+&=1-S_2\\
+&=1-\frac a2-a^2b(1+a).
+\end{aligned}
+\tag{6.1}
+$$
+
+The minimum is attained by Definition 5.1, with exactly two paid calls
+and finite return on every path. The lower bound holds in the larger
+almost-sure class (1.6), including its null exceptional paths.
+
+Proof. Fix an arbitrary competitor satisfying (1.6). Lemma 2.2 gives,
+for almost every seed, a depth-two source-section tree with unchanged
+correct probability. Proposition 4.4 bounds that probability by $S_2$
+uniformly over its addresses and outputs. Integrate this inequality
+against the original $\nu$. Tonelli's theorem on the measurable
+original correctness event gives
+
+$$
+\mathbb P_p(A=H_j,T)\le S_2.
+\tag{6.2}
+$$
+
+Source-null sections and the null exceptional seed set do not change
+the integral. No regular conditional probability on the auxiliary
+space, measurable selection of optimizing trees, all-input stopping
+assumption or restriction on the possible integer addresses was used.
+Since $E_2$ has mass one, correct and incorrect classification masses
+sum to one, giving $L_2\ge1-S_2$.
+
+Definition 5.1 is a competitor for every auxiliary law, and
+Proposition 5.2 gives correct probability $S_2$. Hence equality is
+attained. Finally $a\eta+a^2\eta=a^2b+a^3b=a^2b(1+a)$, proving
+the displayed form. $\square$
+

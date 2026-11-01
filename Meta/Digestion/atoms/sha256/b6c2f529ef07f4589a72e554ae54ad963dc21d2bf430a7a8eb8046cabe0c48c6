@@ -1,0 +1,46 @@
+**Proposition 14.2 (equality and singular faces of the cap).** For $1/3<r<1/2$ and a nonzero probe, equality in Theorem 14.1 is possible for a nonscalar input exactly when the probe has precisely two nonzero coordinates of equal modulus. If $i$ is its missing coordinate, those inputs are
+
+$$
+X=cI+\tau e_i v^\ast,\qquad c,\tau\in\mathbb C.
+$$
+
+At $r=1/3$ the equality criterion is Proposition 13.3 at its negative endpoint. At $r=1/2$, write $Y=X-\operatorname{diag}(X)$; equality is exactly
+
+$$
+y_{ij}v_j=y_{i\ell}v_\ell\quad\text{for each row }i,
+\qquad\{j,\ell\}=\{1,2,3\}\setminus\{i\}.
+$$
+
+The zero probe always gives equality. Stance: repo-derived.
+
+**Proof.** On full support and the open arc all $P_i$ and $H$ in the proof of Theorem 14.1 are positive definite. The completed-square identity therefore forces every traceless row variable to be zero.
+
+For a two-coordinate normalized probe $s=(\sqrt w,\sqrt{1-w},0)$, $0<w<1$, use the exact boundary squares and $H(w)$ of Theorem 8.1. Its two determinant factors have strictly positive endpoints as affine functions of $w(1-w)\in[0,1/4]$: at zero they are $qp>0$, $p-r^2>0$, and at $1/4$ they are $((1-q)^2-r^2)/4>0$ and the strict third residual in (14.1) divided by four. The first strict sign follows from $(1-q)^2-r^2\ge q^2>0$. Thus $H(w)>0$ by the sign argument already proved there, forcing $z=0$. The positive scalar squares force $y_{12}=y_{21}=y_{13}=y_{23}=0$. For the remaining row the determinant is, by (14.2) with its row weight zero,
+
+$$
+L^2uv(2w-1)^2.
+$$
+
+It is positive unless $w=1/2$. At that exceptional point the row block is
+
+$$
+\frac{Lr}{2}\begin{pmatrix}1&-1\\-1&1\end{pmatrix},
+$$
+
+with kernel $\operatorname{span}\{(1,1)^T\}$ and $b_i=0$. Thus precisely $y_{31}=y_{32}$ is free in these coordinates. Undoing phases and normalization gives the stated $\tau e_i v^\ast$ and verifies it by the same squares. In particular the only singular row block on the open arc has an explicitly orthogonal coupling vector, so its Moore–Penrose contribution is zero.
+
+For a singleton probe $t=(1,0,0)$, all off-diagonal coefficients are $q>0$ or $p-r^2>0$ and all $b_i=0$. The diagonal coefficients are $q(1+3a),q,q$, with
+
+$$
+1+3a=18r^2+9r-5=(3r-1)(6r+5)>0.
+$$
+
+Thus equality forces every traceless variable to vanish. At $r=1/2$, Proposition 4.2 evaluated without an estimate gives the exact scalar identity
+
+$$
+v^\ast S(X)v=\frac34\sum_i|y_{ij}v_j-y_{i\ell}v_\ell|^2,
+\qquad\{j,\ell\}=\{1,2,3\}\setminus\{i\},
+$$
+
+which proves its equality statement on all supports. ∎
+

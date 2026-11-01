@@ -1,0 +1,7 @@
+任意 $W=W^\dagger\succ0$ 下，记 $B=I-A$。下列四项等价：
+
+1. $x$ 满足全部局部递归；
+2. $x=x_*=(I+A+\cdots+A^{m-1})b$；
+3. $x$ 是 $E_W(x)=\frac12\langle Bx-b,W(Bx-b)\rangle$ 的全局最小元；
+4. 对所有实变分方向（包括复向量的实、虚分量）都有 $\delta E_W=0$。
+

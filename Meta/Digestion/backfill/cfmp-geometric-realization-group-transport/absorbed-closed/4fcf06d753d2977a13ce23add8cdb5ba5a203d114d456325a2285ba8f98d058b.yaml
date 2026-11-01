@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4fcf06d753d2977a13ce23add8cdb5ba5a203d114d456325a2285ba8f98d058b
+  normalized_sha256: sha256:4fcf06d753d2977a13ce23add8cdb5ba5a203d114d456325a2285ba8f98d058b
+cas_ref: sha256:4fcf06d753d2977a13ce23add8cdb5ba5a203d114d456325a2285ba8f98d058b
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/SixIndependentLengthRemainder.determinant_remainder_identity
+    target_statement_id: sha256:c29a5b452e8f7d1cccb18991a7b528b70357735db139283cd53dd6f5ad730fcf
+receipts:
+  unresolved_subitems: []
