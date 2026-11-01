@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Geometry/HereditaryLexicographicProduct
   - D5/S3/Geometry/IndependenceComplexTorsionSeed
   - D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
+  - D5/S3/Geometry/SphereBouquetHomology
 license: citation-only
 triage: anchor
 ---
@@ -134,8 +135,8 @@ induced embedding has target `P_9337` strong `P_9061`. The literal transform
 
 The source defines a fresh occupancy checker, contains proposed generic
 soundness proofs for injection and both adjacency directions, and applies it
-to the literal routes through a concrete kernel-reduction obligation. The candidate routing
-sources remain uncompiled; this entry records the exact intended interface,
+to the literal routes through a concrete kernel-reduction obligation. The
+candidate routing sources remain uncompiled; this entry records the exact intended interface,
 not a verified embedding. `PrescribedSubdivision`, `IntegerPolyline` and
 `LatticeRouting` supply the consumed tagged paths, corner-expansion semantics
 and strong-product conversion.
@@ -144,8 +145,52 @@ The seed is Adamaszek's; the supplied graph-move route uses the Barmak/Lozin
 approach. The explicit coordinate construction is local proof content, not a
 theorem attributed to Carnero Bravo or an originality claim. The supplied
 40-move replay, prescribed-subdivision suspension transport, singular-homology
-comparison and sphere-wedge obstruction remain separate obligations. This
+comparison and application of the sphere-wedge obstruction remain separate
+obligations. This
 interface alone does not settle Question 32 and makes no claim about Question
 35 or an additional solved original problem.
 The source-readout registrations remain unfinished under
 [issue #25256](https://github.com/the-omega-institute/trureturing/issues/25256).
+
+## Actual singular homology obstruction for sphere sources
+
+`SphereBouquetHomology.compact_sourceSP_smul_eq_zero` states the obstruction
+on Mathlib's actual integral singular homology: for a compact topological
+space X with `HereditaryLexicographicProduct.sourceSP.{0,v} X`, every positive
+degree q, every nonzero integer n and every class z, `n • z = 0` implies
+`z = 0`. The original wedge index J ranges over arbitrary `Type v`, the
+dimensions are heterogeneous natural numbers including zero, and the original
+sphere basepoints are unrestricted. Compactness is used by the existing
+`CompactSphereNormalForm.compactWedgeModel`, not replaced by an assumption
+that the original family is finite.
+
+The proof constructs actual relatively open vertex stars and their based
+contractions, identifies saturated open subwedges by homeomorphisms, reuses
+`FiniteConeUnionWedge.wedgeInverseHomotopy` for continuous quotient cylinders,
+and applies open Mayer–Vietoris. At q=1 the intersection term is reduced H0;
+ordinary H0 of a nonempty contractible intersection does not vanish. Sphere
+dimension induction supplies all off-dimensional vanishing degrees, while
+`TauCeti.reducedSingularHomologySphereIso` supplies the diagonal. Finite
+bouquet append homeomorphisms and `nativeBouquetHomeomorph` connect these
+calculations to the existing compact normal form. An empty inner bouquet is
+a point; an empty outer model is empty.
+
+These are classical sphere-homology and Mayer–Vietoris arguments; see
+[Hatcher, Algebraic Topology](../Geometry/hatcher2002algebraic.md), Chapter 2.
+The implementation reuses the existing TauCeti sphere and reduced
+Mayer–Vietoris source port, whose source revision and license remain in those
+supplier modules. No literature novelty claim is made. The generic ring
+statements use Mathlib's regular-scalar meaning of module torsion-freeness;
+the nonzero-integer injectivity statement uses the integral-domain endpoint.
+
+This obstruction batch contributes zero original-problem resolution credit
+for Question 32. Its intended use takes n=2, but the seed-to-singular homology
+comparison, the remaining suspension and graph construction steps, the
+induced-coordinate embedding and the final refutation are still required.
+
+The new source modules' readout registration remains unfinished under
+[issue #25194](https://github.com/the-omega-institute/trureturing/issues/25194).
+The dependent-family interface is available, but an actual homology/quotient
+source arena, complete source reconstruction and equivalence bridge, and
+whole-family variation, sensitivity and observational-dependence proofs
+have not been delivered. No `declared_validated` status is claimed.
