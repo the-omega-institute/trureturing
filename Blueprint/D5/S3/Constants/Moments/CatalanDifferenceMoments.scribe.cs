@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Constants.Moments;
 
@@ -11,7 +13,7 @@ internal sealed class CatalanDifferenceMomentsDocument : IScribeDocumentDefiniti
             DescribeId.Create("catalan-difference-ratio-envelope"),
             DeclarationHandle.Create("D5/S3/Constants/Moments/CatalanDifferenceMoments.catalan_difference_ratio_envelope"),
             H("A uniform envelope for every difference order"),
-            StatementSource.WithoutFormula(),
+            StatementSource.FromAuthor(Disp(EnvelopeFormula())),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -50,4 +52,30 @@ internal sealed class CatalanDifferenceMomentsDocument : IScribeDocumentDefiniti
                         + "an actual polygon completion fiber and deriving a bound for a "
                         + "common intersecting family require their own combinatorial hypotheses."))),
             DescribeRole.Theorem))));
+
+    private static Formula EnvelopeFormula()
+    {
+        Formula l = F.Id("L");
+        Formula k = F.Id("k");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula value = A(l, k);
+        Formula next = A(l, Seq(k, Plus, D(1)));
+        Formula total = Seq(l, Plus, k);
+        Formula positive = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, value);
+        Formula lower = new Formula.Relation(
+            Seq(D(3), Cdot, Par(total), Cdot, value),
+            FormulaRelationOperator.LessThanOrEqual,
+            Seq(Par(Seq(total, Plus, D(2))), Cdot, next));
+        Formula upper = new Formula.Relation(next, FormulaRelationOperator.LessThan,
+            Seq(D(3), Cdot, value));
+        Formula conclusion = new Formula.Logic(positive, FormulaLogicOperator.And,
+            new Formula.Logic(Par(lower), FormulaLogicOperator.And, Par(upper)));
+        Formula hypothesis = new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, l);
+        return Quantify("L", naturals, Quantify("k", naturals, Implication(hypothesis, conclusion)));
+    }
+
+    private static Formula A(Formula l, Formula k) =>
+        Seq(Operatorname, Grp(F.Id("A")), Open, l, Comma, k, Close);
+
+    private static Formula Par(Formula formula) => Seq(Open, formula, Close);
 }
