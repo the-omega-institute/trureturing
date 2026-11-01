@@ -122,8 +122,9 @@ private lemma expectation_smul (r : ℝ) (a : Matrix (Word (Fin 3) 3) (Word (Fin
 
 private lemma expectation_one (ψ : Word (Fin 3) 3 → ℂ) :
     readout 1 ψ = ∑ x, Complex.normSq (ψ x) := by
-  simpa only [readout, one_mulVec, Complex.ofReal_re, Complex.normSq_eq_norm_sq] using
-    congrArg Complex.re (D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self ψ)
+  simpa only [RHLinalg.hermForm, readout, RCLike.re_to_complex,
+    Complex.normSq_eq_norm_sq] using
+    RHLinalg.hermForm_one ψ
 
 private lemma expectation_sub (a c : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)
     (ψ : Word (Fin 3) 3 → ℂ) : readout (a - c) ψ = readout a ψ - readout c ψ := by
