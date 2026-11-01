@@ -1,0 +1,116 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonConditionedFanFormula;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons;
+
+internal sealed class PolygonConditionedFanDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Geometry/Polygons/PolygonConditionedFan.";
+    private static Formula Fan => C("fan", X("P"), X("h"));
+    private static Formula Card(string s) => C("card", X(s));
+    private static Formula Ear(Formula i) => C("ear", i);
+    private static Formula Or(Formula a, Formula b) => R(a, Lor, b);
+    private static Formula Less(Formula a, Formula b) => R(a, Lt, b);
+    private static Formula Ne(Formula a, Formula b) => Not(EqF(a,b));
+    private static Formula Pairset(Formula a, Formula b) => Insert(a, Insert(b, Emptyset));
+    private static Formula Noncrossing(Formula s) => All("i", Vertex, All("j", Vertex,
+        Imp(InF(X("i"), s), Imp(InF(X("j"), s), Imp(Ne(X("i"), X("j")),
+            Not(C("Cross", Ear(X("i")), Ear(X("j")))))))));
+    private static Formula Two(Formula t) => ExistsF("e", Chord, AndF(InF(X("e"), t),
+        ExistsF("f", Chord, AndF(InF(X("f"), t), AndF(Ne(X("e"),X("f")),
+            AndF(C("IsDiagonal",X("e")),AndF(C("IsDiagonal",X("f")),
+                AndF(C("Cross",X("e"),Ear(X("h"))),C("Cross",X("f"),Ear(X("h")))))))))));
+    private static Formula Cases() => Or(AndF(EqF(Card("P"),N(2)),EqF(Card("Q"),N(2))),
+        Or(AndF(EqF(Card("P"),N(3)),EqF(Card("Q"),N(3))),
+            Or(AndF(EqF(Card("P"),N(2)),EqF(Card("Q"),N(4))),
+                AndF(EqF(Card("P"),N(4)),EqF(Card("Q"),N(2))))));
+    private static Formula SourceResult() => AndF(C("Nonempty", Fibre(Emptyset,Emptyset)),
+        AndF(Less(N(0),C("Natcard",Fibre(Emptyset,Emptyset))),
+            AndF(ExistsF("h",Vertex,AndF(Not(InF(X("h"),X("P"))),
+                ExistsF("T",Fibre(Emptyset,Emptyset),EqF(C("val",X("T")),Fan)))),
+                All("H",Sets,Imp(SubF(X("H"),C("EK",Union(X("P"),X("Q")))),
+                    Imp(Noncrossing(X("H")),All("h",Vertex,Imp(InF(X("h"),X("H")),
+                        ExistsF("T",Fibre(X("H"),Emptyset),
+                            AndF(EqF(C("val",X("T")),Fan),Two(C("val",X("T")))))))))))));
+
+    private static DocumentBlock Node(string name, string title, Formula f, string prose,
+        DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
+        DescribeId.Create("polygon-conditioned-fan-" + name.Replace("_","-").ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + name), H(title),
+        StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), role);
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Literal forced-ear fans and original conditioned polygon completions",
+        H("Original cyclic vertices and internal diagonals"), Blocks(
+            Node("Independent","Cyclic independence",Scope(All("P",Sets,
+                IffF(C("Independent",X("P")),All("i",Vertex,Imp(InF(X("i"),X("P")),
+                    Not(InF(AddF(X("i"),N(1)),X("P")))))))),
+                "Independence forbids consecutive centres in ZMod n, including across the cyclic seam.",
+                DescribeRole.Definition),
+            Node("fan","Literal forced-ear fan",Scope(All("P",Sets,All("h",Vertex,All("e",Chord,
+                IffF(InF(X("e"),Fan),Or(
+                    ExistsF("i",Vertex,AndF(InF(X("i"),X("P")),EqF(Ear(X("i")),X("e")))),
+                    ExistsF("j",Vertex,AndF(Not(InF(X("j"),X("P"))),
+                        AndF(C("IsDiagonal",Pair(X("h"),X("j"))),
+                            EqF(Pair(X("h"),X("j")),X("e"))))))))))),
+                "The fan is the union of every forced original ear and every original internal root spoke whose other endpoint is outside P. Both parts are finite sets: coincident forced ears and spokes occur once. Vertices retain their original labels.",
+                DescribeRole.Definition),
+            Node("fan_triangulation","A complete actual triangulation and its ears",
+                Scope(All("P",Sets,All("h",Vertex,Imp(Lower(6),
+                    Imp(C("Independent",X("P")),Imp(Not(InF(X("h"),X("P"))),
+                        AndF(Tri(Fan),AndF(SubF(X("P"),Ears(Fan)),
+                            SubF(Ears(Fan),Union(X("P"),
+                                Pairset(Sub(X("h"),N(1)),AddF(X("h"),N(1))))))))))))),
+                "For every n at least 6, an independent P and a root outside P give an actual triangulation of the full original polygon. No restriction excludes empty P or forces the root neighbours to survive outside P. Internalness and strict cyclic noncrossing hold for every member. For maximality, an omitted internal chord with a forced endpoint crosses that forced ear. Otherwise, in coordinates relative to the root, let its endpoints be a<b. A surviving centre a+1 supplies a crossing spoke. If a+1 is forced, independence makes a+2 survive; the sole exceptional gap b=a+2 is already the forced ear at a+1. The ear bounds follow from injectivity of original ears and the endpoints of root spokes."),
+            Node("fan_two_crossings","Two distinct original diagonals cross the root ear",
+                Scope(All("P",Sets,All("h",Vertex,Imp(Lower(6),
+                    Imp(Less(AddF(Card("P"),N(4)),X("n")),Two(Fan)))))),
+                "This stronger statement needs only n at least 6 and |P|+4<n. The complement of P union {h,h-1,h+1} has more than one vertex. Two distinct targets give distinct symmetric-square spokes, each an original internal diagonal crossing ear(h). No count of all triangulation diagonals is used."),
+            Node("source_conditioned_witnesses","Positive complete fibres and terminal empty traces",
+                Scope(All("P",Sets,All("Q",Sets,Imp(Lower(14),
+                    Imp(C("Disjoint",X("P"),X("Q")),Imp(Noncrossing(Union(X("P"),X("Q"))),
+                        Imp(Cases(),SourceResult()))))))),
+                "P,Q are disjoint and their union consists of pairwise noncrossing original ears. All four cases (2,2),(3,3),(2,4),(4,2) are included. Independence of P is derived from these geometric conditions. To obtain an actual conditioned completion, choose h outside P union (Q-1) union (Q+1), a set of size at most |P|+2|Q|<n. The root may belong to Q. The literal fan forces P and avoids Q, giving a member of the full ConditionFiber P Q empty empty and positive Nat.card. For every terminal pairwise noncrossing H contained in EK(P union Q) and every h in H, that same fan at h avoids Q union H and has two distinct original internal diagonals crossing ear(h). Thus its exact H trace is empty. ConditionFiber retains every original actual triangulation satisfying its conditions. Exchanging P,Q supplies the opposite direction separately. These are the geometric existence inputs for B-37.2 and the fan paragraph following (37.10), also used in B-34.4. Neither a Catalan count, a flip-image theorem, nor a normalized strict comparison is asserted. EK denotes E_K, Natcard denotes Nat.card, and val is the underlying original chord set.")
+        ), []));
+}
+
+
+internal static class PolygonConditionedFanFormula
+{
+    internal static Formula X(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
+    internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
+    internal static Formula C(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(X(name))), [.. args]);
+    internal static Formula Vertex => C("ZMod", X("n"));
+    internal static Formula Chord =>
+        new Formula.Apply(Seq(Operatorname, Grp(X("Sym"), D(2))), [Vertex]);
+    internal static Formula Sets => C("Finset", Vertex);
+    internal static Formula All(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula ExistsF(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula Scope(Formula body) => All("n",X("Nat"),
+        Seq(OpenBracket,C("NeZero",X("n")),CloseBracket,Comma,Sp,body));
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open,f,Close) : f;
+    internal static Formula R(Formula a, Formula op, Formula b) =>
+        Seq(Open,Operand(a),Sp,op,Sp,Operand(b),Close);
+    internal static Formula EqF(Formula a, Formula b) => R(a,Eq,b);
+    internal static Formula IffF(Formula a, Formula b) => R(a,Iff,b);
+    internal static Formula AndF(Formula a, Formula b) => R(a,Land,b);
+    internal static Formula Imp(Formula a, Formula b) => R(a,Implies,b);
+    internal static Formula Not(Formula a) => Seq(Neg,Sp,Open,a,Close);
+    internal static Formula InF(Formula a, Formula b) => R(a,InMacro,b);
+    internal static Formula SubF(Formula a, Formula b) => R(a,Subseteq,b);
+    internal static Formula AddF(Formula a, Formula b) => R(a,Plus,b);
+    internal static Formula Sub(Formula a, Formula b) => R(a,Minus,b);
+    internal static Formula Union(Formula a, Formula b) => R(a,Cup,b);
+    internal static Formula Insert(Formula a, Formula b) => C("insert",a,b);
+    internal static Formula Pair(Formula a, Formula b) => C("symPair",a,b);
+    internal static Formula Ears(Formula t) => C("EarCenters",t);
+    internal static Formula Tri(Formula t) => C("IsTriangulation",t);
+    internal static Formula Fibre(Formula j, Formula r) =>
+        C("ConditionFiber",X("P"),X("Q"),j,r);
+    internal static Formula Lower(int n) => R(N(n),Leq,X("n"));
+}
