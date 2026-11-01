@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2502.05939v1
 claim: "Conjecture 28: Ferrers-board multiset rook-Eulerian real-rootedness and pairwise interlacing of the decreasing first-letter refinements."
 strata_touched:
   - D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation
+  - D5/S3/Combinatorics/Permutation/MultisetRookEulerianRealRootednessRefutation
 license: citation-only
 triage: anchor
 ---
@@ -51,6 +52,35 @@ arbitrary Ferrers boards.
 The six-row board $(3,3,3,3,4,4)$ with content $(2,2,1,1)$ refutes the
 interlacing conjunct: the required bottom comparison is
 $-7\leq-4-\sqrt{13}$. The universal real-rootedness conjunct remains open.
+
+## Original full-polynomial counterexample candidate
+
+For the first clause, take board runs $(2,3),(3,4),(4,10),(5,2),(6,101)$,
+where each pair is a row bound and its multiplicity, and content
+$(6,1,4,8,1,100)$. The total row count and total content are both $120$.
+The exact ordinary calculation gives
+
+$$
+R(t)=t^2+261t^3+21704t^4+591814t^5+5372605t^6+18550680t^7
++27147806t^8+17137014t^9+4318325t^{10}+352440t^{11}.
+$$
+
+At $x=-1/100$ its Laguerre expression is
+
+$$
+(R'(x))^2-R(x)R''(x)=
+-\frac{2294232329562528073294509555513}{12500000000000000000000000000000000000}<0.
+$$
+
+The new real-rootedness-refutation module connects a remaining-content
+recurrence to the original `W`, `asc` and `R`, counting each distinct word once.
+Its complete certificate and final negation have not yet passed the current
+kernel check. This candidate therefore does not yet change the formal status
+of the first clause. The frozen six-row interlacing result is separate.
+
+The source version uses the arXiv.org non-exclusive license to distribute.
+This note provides a citation and short mathematical definitions; no author
+code or substantial source archive is included.
 
 ## Verified locator
 

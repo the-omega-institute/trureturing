@@ -143,3 +143,22 @@ The literature search excludes a settlement only within the stated sources and
 queries. The finite survey is independently computed, not kernel-verified;
 its results beyond the specific witness do not enlarge the public theorem.
 The open questions in Triage are not settled by finite agreement.
+
+
+## Original full-R first clause
+
+Issue #25214 concerns the first clause itself, with positive weakly increasing
+Ferrers bounds, repeated columns and letters, natural content summing to the
+positive row count, and the original zero-polynomial convention. Its event is
+failure of the original full `R` to split over the reals; no refinement,
+interlacing surrogate or distinct-letter restriction is substituted.
+
+The exact ordinary candidate has 120 rows with runs $(2,3),(3,4),(4,10),(5,2),
+(6,101)$ and content $(6,1,4,8,1,100)$. Its polynomial and negative Laguerre
+value are recorded in the corresponding Library note and new Blueprint Scribe.
+`MultisetRookEulerianRealRootednessRefutation` implements a generic equality
+between the remaining-content recurrence and the original full word sum,
+followed by a shared recurrence certificate and the literal `result : ¬ claim`.
+The complete new unit is not yet kernel-verified or frozen. The original
+interlacing-only result and its scope remain unchanged; this implementation
+is not a claim of global priority.
