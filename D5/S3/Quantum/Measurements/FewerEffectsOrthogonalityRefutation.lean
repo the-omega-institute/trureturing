@@ -119,7 +119,6 @@ private theorem competitor_povm : IsPOVMWith 4 10 competitor := by
       rw [hzero, CFC.sqrt_zero, zero_mul, Matrix.trace_zero] at hdiag
       fin_cases i <;> norm_num [Matrix.diagonal_apply] at hdiag
   · ext k l
-    change (∑ i, competitor i) k l = (1 : Matrix (Fin 10) (Fin 10) ℂ) k l
     simp only [Matrix.sum_apply, Fin.sum_univ_succ]
     dsimp only [competitor]
     fin_cases k <;> fin_cases l <;> norm_num [Matrix.diagonal_apply, Matrix.one_apply]
