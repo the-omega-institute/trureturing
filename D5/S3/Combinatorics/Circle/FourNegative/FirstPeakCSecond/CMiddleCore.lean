@@ -151,10 +151,11 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   let r:=ceil v.B v.Mn
   let w:=(v.L-r*v.M)/v.B
   obtain ⟨hA,hB,hLL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive y t e h hy ht he hh
+  have hDsmall : v.z+1≤v.D := by simpa [v] using hD
   have hB' : 1≤v.B := by simpa [v] using hB
   have hM' : 1≤v.M := by simpa [v] using hM
   have hMn' : 1≤v.Mn := by simpa [v] using hMn
-  have hD' : 1≤v.D := by simpa [v] using hD
+  have hD' : 1≤v.D := by have := hDsmall; have hz : 0≤v.z := by dsimp [v,model]; positivity; omega
   have hvB : 0<v.B := by omega
   have hvM : 0<v.M := by omega
   have hvMn : 0<v.Mn := by omega
@@ -165,8 +166,14 @@ private theorem x_floor_gates (y t e h s g : ℤ)
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hg0 : 0≤g := by omega
   have hgd := mul_nonneg hg0 (show 0≤v.D by omega)
+  have hnum : 0≤v.L-r*v.M := by
+    have hgd' : 0≤g*v.D := hgd
+    nlinarith [hc.2.2.2.2.1,hL]
+  have hwidth : 2*v.L < v.z*v.B := by
+    have hz' : 0≤v.z*v.B-2*v.L-1 := by simpa [v] using hz
+    omega
   have hf := floor_bounds v.L v.B v.M r v.z (by omega) (by omega) (by omega)
-    (by nlinarith [hc.2.2.2.2.1,hL]) (by omega)
+    hnum hwidth
   change 0≤w ∧ 0≤v.L-r*v.M-w*v.B ∧ v.L-r*v.M-w*v.B≤v.B-1 ∧ 2*w<v.z at hf
   have hrD : 1≤r*v.D := by
     have := mul_le_mul_of_nonneg_left (show 1≤v.D by omega) (show 0≤r by omega)
@@ -174,7 +181,7 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   have hrDg := mul_le_mul_of_nonneg_right hc.2.1 (show 0≤v.D by omega)
   have hrDz : v.z+1≤r*v.D := by
     have := mul_le_mul_of_nonneg_right hc.1 (show 0≤v.D by omega)
-    omega
+    nlinarith [hDsmall]
   have hbrel : v.Bn=2*v.B-1 := by rfl
   have hlrel : v.Ln=2*v.L-v.z-1 := by rfl
   have hmrel : v.Mn=2*v.M-v.D := by rfl
@@ -203,10 +210,11 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
   let r:=ceil v.B v.Mn
   obtain ⟨hA,hB,hL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive t t 2 h ht ht (by omega) (by omega)
   rcases hmargins with ⟨f0,f1,f2,f3,F,G,P,W⟩
+  have hDsmall : v.z+1≤v.D := by simpa [v] using hD
   have hB' : 1≤v.B := by simpa [v] using hB
   have hM' : 1≤v.M := by simpa [v] using hM
   have hMn' : 1≤v.Mn := by simpa [v] using hMn
-  have hD' : 1≤v.D := by simpa [v] using hD
+  have hD' : 1≤v.D := by have hz : 0≤v.z := by dsimp [v,model]; positivity; omega
   have hvB : 0<v.B := by omega
   have hvM : 0<v.M := by omega
   have hvMn : 0<v.Mn := by omega
@@ -220,7 +228,7 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
   have hrD : v.z+1≤r*v.D := by
     have := mul_le_mul_of_nonneg_right hc.1 (show 0≤v.D by omega)
-    omega
+    nlinarith [hDsmall]
   have hs2 : 0≤v.L-v.B-r*v.M := by
     have hi := mul_lt_mul_of_pos_right hc.2.2.2.1 (show 0<v.M by omega)
     have hj : v.B*v.M+v.Mn*v.M≤(v.L-v.B)*v.Mn := by nlinarith only [P]
@@ -258,10 +266,11 @@ private theorem dynamic_first (h : ℤ) (hh : 8≤h)
   let r:=ceil v.B v.Mn
   rcases hmargins with ⟨f0,f1,f2,f3,F,G⟩
   obtain ⟨hA,hB,hL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive 4 4 4 h (by norm_num) (by norm_num) (by norm_num) (by omega)
+  have hDsmall : v.z+1≤v.D := by simpa [v] using hD
   have hB' : 1≤v.B := by simpa [v] using hB
   have hM' : 1≤v.M := by simpa [v] using hM
   have hMn' : 1≤v.Mn := by simpa [v] using hMn
-  have hD' : 1≤v.D := by simpa [v] using hD
+  have hD' : 1≤v.D := by have hz : 0≤v.z := by dsimp [v,model]; positivity; omega
   have hvB : 0<v.B := by omega
   have hvM : 0<v.M := by omega
   have hvMn : 0<v.Mn := by omega
@@ -273,6 +282,9 @@ private theorem dynamic_first (h : ℤ) (hh : 8≤h)
   have hrLo := mul_le_mul_of_nonneg_right hc.2.2.1 (show 0≤v.M by omega)
   have hrHi := mul_lt_mul_of_pos_right hc.2.2.2.1 (show 0<v.M by omega)
   have ht : v.t=4 := rfl
+  change (0≤v.t*v.A-2*(5*h+r)*v.M ∧ v.t*v.A-2*(5*h+r)*v.M≤v.A-1) ∧
+    (0≤2*((v.t-1)*v.A-(5*h+r)*v.Mn) ∧
+      2*((v.t-1)*v.A-(5*h+r)*v.Mn)≤v.A-1)
   rw [ht]
   constructor
   · constructor
@@ -522,8 +534,9 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   have hcond : j+1 < chainLength a b c d r := by omega
   simp [hcond]
   have hp : (0 : ℤ) ≤ (2 : ℤ)^j := by positivity
+  have hnew : (0 : ℤ) ≤ newBase a b c d r := by have := hn.1; omega
   exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
-    mul_nonneg hp (by have := hn.1; omega)⟩
+    mul_nonneg hp hnew⟩
 
 private theorem complement_mass (a b c d m : ℕ) (r : Fin 4)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -578,8 +591,8 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hh:=power_split a c hac
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
-  simp [hx,he,hh]
-  repeat' constructor <;> try trivial <;> ring
+  simp only [hx,←he]
+  repeat' constructor <;> try trivial <;> ring_nf
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
