@@ -45,7 +45,7 @@ def circuitGraph {x : Type u} (a b c : x × x → x × x)
 
 /-- The nonlinear six-leg classical factorization assertion. -/
 def claim : Prop :=
-  ∀ (x : Type u) [Fintype x] [DecidableEq x] (a b c : x × x → x × x),
+  ∀ (x : Type u) [Fintype x] (a b c : x × x → x × x),
     IsIndexOneOA (circuitGraph a b c) 3 →
       IsIndexOneOA (gateGraph a) 2 ∧ IsIndexOneOA (gateGraph b) 2 ∧
         IsIndexOneOA (gateGraph c) 2
@@ -397,7 +397,7 @@ private theorem last_latin {x : Type u} [Fintype x] [Nonempty x]
 
 /-- All factors of an index-one strength-three classical circuit are perfect. -/
 theorem result : claim := by
-  intro x _ _ a b c h
+  intro x _ a b c h
   by_cases hn : Nonempty x
   · have := hn
     obtain ⟨ha, hb, hc⟩ := factors_bijective a b c h

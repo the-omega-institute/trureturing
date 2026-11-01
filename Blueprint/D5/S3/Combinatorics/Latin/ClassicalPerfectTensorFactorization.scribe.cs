@@ -76,7 +76,7 @@ internal sealed class ClassicalPerfectTensorFactorizationDocument : IScribeDocum
                 StatementSource.FromAuthor(Disp(Equal(Local("claim"), Parenthesized(FactorizationStatement())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "For every finite alphabet x with decidable equality and arbitrary gates a, b and c, "
+                    "For every finite alphabet x and arbitrary gates a, b and c, "
                     + "strength three of the circuit graph implies strength two of each gate graph. "
                     + "This formulates the nonlinear classical question in factoringtriunit.tex, lines 1196–1200, "
                     + "using the composition of equation (4.2). No linearity, field structure, initial "
@@ -205,7 +205,7 @@ internal sealed class ClassicalPerfectTensorFactorizationDocument : IScribeDocum
             And(LocalCall("IsIndexOneOA", LocalCall("gateGraph", X("b")), D(2)),
                 LocalCall("IsIndexOneOA", LocalCall("gateGraph", X("c")), D(2))));
         return All("x", TypeAt("u"),
-            Instances([At(Qualified("Fintype"), X("x")), At(Qualified("DecidableEq"), X("x"))],
+            Instances([At(Qualified("Fintype"), X("x"))],
                 All("a", GateType(), All("b", GateType(), All("c", GateType(), Imp(hypothesis, conclusion))))));
     }
 

@@ -38,7 +38,7 @@ def rejected : Realization signature.{u_1} :=
 /-- Keep all finite carriers, hypotheses and three factor conclusions. -/
 abbrev arena : Arena where
   signature := signature.{u_1}
-  Law R := ∀ (x : Type u_1) [Fintype x] [DecidableEq x] (a b c : x × x → x × x),
+  Law R := ∀ (x : Type u_1) [Fintype x] (a b c : x × x → x × x),
     IsIndexOneOA (circuitGraph a b c) 3 →
       IsIndexOneOA (R.readout () x a) 2 ∧ IsIndexOneOA (gateGraph b) 2 ∧
         IsIndexOneOA (gateGraph c) 2
@@ -161,20 +161,15 @@ def registration :
       path := #[] }
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body",
         "fn", "arg", "fn", "arg"]
-      stateBinder := 3
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
-
-#print _root_.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization.result
-#print _root_.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization.claim
-#print axioms source_registration
-#print axioms registration
 
 end
 end Reg.D5.S3.Combinatorics.Latin.ClassicalPerfectTensorFactorization
