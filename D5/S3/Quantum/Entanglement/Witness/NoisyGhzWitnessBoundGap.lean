@@ -10,6 +10,7 @@ import D5.S3.Quantum.Information.MultiEntropyPositivityRefutation
 import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 import D5.S3.Zeros.CriticalPoints.RankOneTraceBound
 import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+import D5.S3.Quantum.Divergence.CanonicalRelativeModularModel
 
 /-! The geometric GME measure and optimized witness bound of Xu et al.,
 arXiv:2211.05563v1, Section "Estimating entanglement measures" and Appendix
@@ -139,12 +140,27 @@ private lemma support_expectation (ψ : Word (Fin 3) 3 → ℂ) :
         Complex.normSq (ψ x) := by
   classical
   rw [readout, supportProjector]
-  simp only [mulVec_diagonal, dotProduct,
-    Pi.star_apply, Finset.sum_filter]
-  rw [Complex.re_sum]
-  apply Finset.sum_congr rfl
-  intro x hx
-  split_ifs <;> simp [← Complex.normSq_eq_conj_mul_self]
+  have hdiag :
+      (fun x : Word (Fin 3) 3 =>
+        if (Finset.univ.image x).card ≤ 2 then (1 : ℂ) else 0) =
+        (fun x : Word (Fin 3) 3 =>
+          ((if (Finset.univ.image x).card ≤ 2 then (1 : ℝ) else 0) : ℂ)) := by
+    funext x
+    split_ifs <;> rfl
+  rw [hdiag]
+  have hquad :=
+    D5.S3.Quantum.Divergence.CanonicalChannelDPI.diagonal_quadratic_form
+      (d := fun x : Word (Fin 3) 3 =>
+        if (Finset.univ.image x).card ≤ 2 then (1 : ℝ) else 0) ψ
+  convert hquad using 1
+  · congr 2
+    funext x
+    simp only [mulVec_diagonal]
+    split_ifs <;> rfl
+  · rw [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro i hi
+    split_ifs <;> simp [Complex.normSq_eq_norm_sq]
 
 private lemma support_bounds (ψ : Word (Fin 3) 3 → ℂ) :
     0 ≤ readout (supportProjector 3 3) ψ ∧
