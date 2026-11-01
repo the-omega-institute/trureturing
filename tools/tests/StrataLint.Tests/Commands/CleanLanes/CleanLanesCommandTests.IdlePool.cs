@@ -11,7 +11,7 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData(false, "revalidate", "idle_identity_changed")]
     [InlineData(true, "remove", "locked_recent")]
-    public void IdlePoolSelectedRefusalPreservesCauseAndFailsPublicExit(bool force, string stage, string reason)
+    public void IdlePoolSelectedRefusalPreservesCauseAndContinues(bool force, string stage, string reason)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "lane/governance/idle-selected";
@@ -29,16 +29,16 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
 
-        Assert.False(result.Success);
-        AssertQualificationPublicExit(result, force, 2);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, force, 0);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
         Assert.Equal("skipped", item.GetProperty("action").GetString());
         Assert.Equal(reason, item.GetProperty("reason").GetString());
         Assert.Contains(stage, item.GetProperty("diagnostic").GetString());
         Assert.Contains(reason, item.GetProperty("diagnostic").GetString());
         Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("reason").GetString() == "idle_pool_failed:");
-        Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal(0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(path));
         Assert.True(fixture.BranchExists(orphan));
     }
@@ -77,8 +77,8 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--force");
 
         Assert.True(poolObserved);
-        Assert.True(result.Success == !inject, result.Output + result.Error);
-        AssertQualificationPublicExit(result, force: true, inject ? 2 : 0);
+        Assert.True(result.Success, result.Output + result.Error);
+        AssertQualificationPublicExit(result, force: true, 0);
         Assert.Equal(inject, Directory.Exists(path));
         if (inject)
         {
@@ -87,7 +87,7 @@ public sealed partial class CleanLanesCommandTests
                 && row.GetProperty("reason").GetString()!.Contains("initial task identity cause", StringComparison.Ordinal));
             Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
                 && row.GetProperty("action").GetString() == "removed");
-            Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+            Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         }
     }
 
@@ -122,10 +122,10 @@ public sealed partial class CleanLanesCommandTests
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
         Assert.True(poolObserved);
-        Assert.Equal(!inject, result.Success);
-        AssertQualificationPublicExit(result, force, inject ? 2 : 0);
+        Assert.Equal(!poolTimeout, result.Success);
+        AssertQualificationPublicExit(result, force, poolTimeout ? 2 : 0);
         Assert.Equal(inject ? poolTimeout ? 2 : 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
-        Assert.Equal(inject ? "deferred" : "completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal(poolTimeout ? "deferred" : "completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         if (inject) Assert.Contains(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
             && row.GetProperty("action").GetString() == "failed"
             && row.GetProperty("reason").GetString()!.Contains("initial idle native identity cause", StringComparison.Ordinal));
@@ -170,7 +170,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void IdlePoolSweepFailureKeepsCompletedEvictionsAndDefersExtraSweeps()
+    public void IdlePoolTreeFailureKeepsCompletedEvictionsAndContinuesSweeps()
     {
         using var fixture = new CleanLanesFixture();
         const string removedBranch = "lane/governance/idle-removed";
@@ -196,7 +196,7 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        Assert.False(result.Success);
+        Assert.True(result.Success, result.Error);
         var items = ReadItems(result.Output);
         var removed = Assert.Single(items, row => row.GetProperty("path").GetString() == removedPath);
         Assert.Equal("removed", removed.GetProperty("action").GetString());
@@ -206,10 +206,10 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains("revalidate", failed.GetProperty("reason").GetString(), StringComparison.Ordinal);
         Assert.Contains("git fetch timed out", failed.GetProperty("reason").GetString(), StringComparison.Ordinal);
         var summary = ReadSummary(result.Output);
-        Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
+        Assert.Equal(2, summary.GetProperty("removed_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("failed_count").GetInt32());
-        Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
-        Assert.True(fixture.BranchExists("harness/retained-after-sweep-failure"));
+        Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
+        Assert.False(fixture.BranchExists("harness/retained-after-sweep-failure"));
     }
 
     [Theory]
@@ -241,7 +241,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("qualification_failed", "failed")]
     [InlineData("checkpoint_failed", "failed")]
     [InlineData("partial_or_indeterminate", "partially_removed")]
-    public void IdlePoolFailurePreservesRecoveryAndDefersExtraSweeps(string outcome, string action)
+    public void IdlePoolFailurePreservesRecoveryAndContinuesSweeps(string outcome, string action)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "lane/governance/idle-fixture";
@@ -261,7 +261,7 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        Assert.False(result.Success);
+        Assert.True(result.Success, result.Error);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
         Assert.Equal(action, item.GetProperty("action").GetString());
         Assert.Contains(outcome, item.GetProperty("reason").GetString(), StringComparison.Ordinal);
@@ -269,9 +269,9 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(recovery, item.GetProperty("recovery_branch").GetString());
         Assert.Equal(candidate, item.GetProperty("recovery_branch_candidate").GetString());
         var summary = ReadSummary(result.Output);
-        Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", summary.GetProperty("extra_sweeps").GetString());
         Assert.Equal(1, summary.GetProperty(action == "failed" ? "failed_count" : "partial_count").GetInt32());
-        Assert.True(fixture.BranchExists("harness/retained-after-idle-failure"));
+        Assert.False(fixture.BranchExists("harness/retained-after-idle-failure"));
     }
 
     [Fact]
@@ -298,11 +298,11 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        Assert.False(result.Success);
+        Assert.True(result.Success, result.Error);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == returnedPath);
         Assert.Equal("failed", item.GetProperty("action").GetString());
         Assert.Equal("checkpoint_failed:checkpoint blocker", item.GetProperty("reason").GetString());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
     }
 
     [Theory]
@@ -334,13 +334,13 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force");
 
-        Assert.Equal(!checkpointFailed, result.Success);
+        Assert.True(result.Success, result.Error);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
         var evidence = Assert.Single(item.GetProperty("native_locks").EnumerateArray());
         Assert.Equal(path + "/index.lock", evidence.GetProperty("path").GetString());
         Assert.Equal(9, evidence.GetProperty("size").GetInt32());
         Assert.True(fixture.BranchExists(predecessor));
-        Assert.Equal(checkpointFailed, fixture.BranchExists(control));
+        Assert.False(fixture.BranchExists(control));
     }
 
     [Fact]

@@ -67,6 +67,9 @@ internal static partial class CleanLanesCommand
             // child's working directory is explicit. Inputs are resolved above.
             anchorProcess?.Invoke(root);
             var events = new List<CleanLaneEvent>();
+            // Snapshot candidates before any removal can create recovery refs.
+            // A missing receipt must not expose a newly created recovery branch.
+            var orphanCandidates = options.LanesOnly ? [] : ReadManagedBranches(root, runner);
             var activeBranches = inventory
                 .Where(static item => item.Branch is not null)
                 .Select(static item => item.Branch!)
@@ -99,6 +102,7 @@ internal static partial class CleanLanesCommand
                     devCommit,
                     options.Force,
                     activeBranches,
+                    orphanCandidates,
                     events,
                     runner);
                 InspectTempJudges(
@@ -112,6 +116,21 @@ internal static partial class CleanLanesCommand
 
             var failedCount = events.Count(static item => item.Action == "failed");
             var partialCount = events.Count(static item => item.Action == "partially_removed");
+            var globalFailures = events.Count(static item =>
+                item.Action is "failed" or "partially_removed" && !IsSingleWorktreeResult(item));
+            var warnings = new StringBuilder();
+            foreach (var item in events.Where(static item => IsSingleWorktreeResult(item)
+                && item.Action is "skipped" or "failed" or "partially_removed" or "deferred"
+                && item.Reason is not ("main_worktree" or "idle_pool"))
+                .GroupBy(static item => item.Path, StringComparer.Ordinal).Select(static group => group.First()))
+            {
+                warnings.Append(JsonSerializer.Serialize(new
+                {
+                    @event = "clean_lanes_warning", path = item.Path, action = item.Action,
+                    reason = item.Reason, diagnostic = item.Diagnostic ?? item.SelectionDetail ?? item.Reason,
+                }));
+                warnings.Append('\n');
+            }
             var output = new StringBuilder();
             foreach (var item in events
                 .OrderBy(static item => item.Kind, StringComparer.Ordinal)
@@ -140,12 +159,13 @@ internal static partial class CleanLanesCommand
             output.Append(JsonSerializer.Serialize(new
             {
                 @event = "clean_lanes_summary",
+                status = globalFailures == 0 ? "succeeded" : "failed",
                 mode = options.Force ? "force" : "dry_run",
                 scope = options.LanesOnly ? "lanes_only" : "full",
                 extra_sweeps = options.LanesOnly ? "not_requested"
                     : extraSweepsAllowed ? "completed" : "deferred",
                 extra_sweeps_reason = !options.LanesOnly && !extraSweepsAllowed
-                    ? "lane_removal_unresolved" : null,
+                    ? "global_failure" : null,
                 base_revision = options.Base,
                 base_commit = baseCommit,
                 dev_revision = "refs/remotes/origin/dev",
@@ -160,11 +180,10 @@ internal static partial class CleanLanesCommand
             }));
             output.Append('\n');
             return new CommandResult(
-                partialCount + failedCount == 0,
+                globalFailures == 0,
                 output.ToString(),
-                partialCount + failedCount == 0
-                    ? string.Empty
-                    : $"CLEAN_LANES_PARTIAL_FAILURE count={partialCount + failedCount}\n");
+                warnings.ToString() + (globalFailures == 0 ? string.Empty
+                    : $"CLEAN_LANES_PARTIAL_FAILURE count={globalFailures}\n"));
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -233,13 +252,9 @@ internal static partial class CleanLanesCommand
         Action<RegisteredWorktree> protectObservedWorktree)
     {
         var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
-        var retainedLocks = inventory.Where(static item => item.Locked)
-            .Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
-        var incomplete = false;
         void Observe(RegisteredWorktree observed)
         {
             protectObservedWorktree(observed);
-            if (observed.Locked) retainedLocks.Add(observed.Path);
         }
 
         void CompleteRemoval(RegisteredWorktree item, LaneRemovalResult removal)
@@ -247,9 +262,7 @@ internal static partial class CleanLanesCommand
             if (removal.Outcome == LaneRemovalOutcome.Removed)
             {
                 remainingPaths.Remove(item.Path);
-                retainedLocks.Remove(item.Path);
             }
-            else incomplete = true;
         }
 
         // Initial observations belong to the invocation, including idle paths.
@@ -258,7 +271,6 @@ internal static partial class CleanLanesCommand
         var failedPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var item in inventory.Where(item => item.IdentityFailure is not null))
         {
-            incomplete = true;
             failedPaths.Add(item.Path);
             events.Add(QualificationEvent(item, new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
         }
@@ -271,7 +283,6 @@ internal static partial class CleanLanesCommand
             && Directory.Exists(item.Path) && HasGitMarker(item.Path)).ToArray(), runner);
         if (qualifications.TryGetValue(string.Empty, out var batchFailure))
         {
-            incomplete = true;
             events.Add(new CleanLaneEvent("worktree_qualification", null, null, null, "failed", batchFailure.Reason!));
         }
         // Account for every obtained failure before any later eligibility guard.
@@ -279,7 +290,6 @@ internal static partial class CleanLanesCommand
         {
             var failure = qualifications.GetValueOrDefault(item.Path);
             if (failure?.Failed != true) continue;
-            incomplete = true;
             failedPaths.Add(item.Path);
             events.Add(QualificationEvent(item, failure));
         }
@@ -295,21 +305,18 @@ internal static partial class CleanLanesCommand
 
             if (!Directory.Exists(item.Path))
             {
-                incomplete = true;
                 events.Add(BlockedWorktree(item, "missing"));
                 continue;
             }
 
             if (!HasGitMarker(item.Path))
             {
-                incomplete = true;
                 events.Add(BlockedWorktree(item, "unreadable"));
                 continue;
             }
 
             if (item.GitDirectory is null)
             {
-                incomplete = true;
                 events.Add(BlockedWorktree(item, "unreadable"));
                 continue;
             }
@@ -347,7 +354,6 @@ internal static partial class CleanLanesCommand
             if (preview.Reason is not null)
             {
                 events.Add(QualificationEvent(item, preview));
-                incomplete = true;
                 continue;
             }
             events.Add(WithSelection(new CleanLaneEvent(
@@ -360,33 +366,32 @@ internal static partial class CleanLanesCommand
             remainingPaths.Remove(item.Path);
         }
 
-        // Preview does not discharge a lock. Only that path's complete native removal
-        // can do so; an unrelated success cannot clear incomplete attachment evidence.
-        return !incomplete && retainedLocks.Count == 0;
+        // Per-tree refusals and failures retain their own paths and refs. Only
+        // failures without a tree identity defer the independent extra sweeps.
+        return !events.Any(static item => item.Path is null
+            && item.Action is "failed" or "partially_removed");
     }
+
+    private static bool IsSingleWorktreeResult(CleanLaneEvent item) => item.Path is not null
+        && item.Kind is "stale_worktree" or "lane_worktree" or "idle_worktree";
+
+    private static string[] ReadManagedBranches(string repositoryRoot, IWorktreeProcessRunner runner) =>
+        Decode(RunGit(repositoryRoot,
+            ["for-each-ref", "--format=%(refname:short)", "refs/heads"], runner,
+            "could not enumerate managed branches").StandardOutput)
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(WorktreeCommand.IsManagedBranch).Order(StringComparer.Ordinal).ToArray();
 
     private static void InspectOrphanBranches(
         string repositoryRoot,
         string? devCommit,
         bool force,
         IReadOnlySet<string> activeBranches,
+        IReadOnlyList<string> candidates,
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner)
     {
-        var branchOutput = RunGit(
-            repositoryRoot,
-            [
-                "for-each-ref",
-                "--format=%(refname:short)",
-                "refs/heads",
-            ],
-            runner,
-            "could not enumerate managed branches");
-        var branches = Decode(branchOutput.StandardOutput)
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Where(WorktreeCommand.IsManagedBranch)
-            .Where(branch => !activeBranches.Contains(branch))
-            .Order(StringComparer.Ordinal);
+        var branches = candidates.Where(branch => !activeBranches.Contains(branch));
         foreach (var branch in branches)
         {
             // 枚举与解析之间,别的会话可能合并后删掉了该分支;缺 ref 只跳过这一项。

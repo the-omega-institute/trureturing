@@ -109,7 +109,7 @@ internal static partial class CleanLanesCommand
             };
             arguments.Add(System.Text.Json.JsonSerializer.Serialize(expected));
             dispatched = true;
-            removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(2100));
             var refusal = CanonicalRefusal(removal);
             if (refusal is not null) return Refused(refusal);
             if (removal.ExitCode == 74 && removal.Output.Length == 0
@@ -141,11 +141,12 @@ internal static partial class CleanLanesCommand
                         {
                             Branch = root.GetString()!["refs/heads/".Length..],
                         });
-                if (recoveryBranch is not null)
-                    protectObservedWorktree?.Invoke(item with
-                    {
-                        Branch = recoveryBranch["refs/heads/".Length..],
-                    });
+                foreach (var reference in new[] { recoveryBranch, recoveryBranchCandidate })
+                    if (reference is not null)
+                        protectObservedWorktree?.Invoke(item with
+                        {
+                            Branch = reference["refs/heads/".Length..],
+                        });
                 var state = outcome.Value.GetProperty("outcome").GetString();
                 if (state == "refused" && removal.ExitCode is 68 or 73
                     && receipt.GetProperty("status").GetString() == "refused")

@@ -288,12 +288,12 @@ def payload_removal_budget(force):
     if force:
         yield None
         return
-    deadline = time.monotonic() + 300
+    deadline = time.monotonic() + 1800
     def expired(signum, frame):
-        raise subprocess.TimeoutExpired(["worktree", "remove"], 300,
+        raise subprocess.TimeoutExpired(["worktree", "remove"], 1800,
                                         stderr=b"payload removal deadline expired")
     handler = signal.signal(signal.SIGALRM, expired)
-    previous = signal.setitimer(signal.ITIMER_REAL, 300)
+    previous = signal.setitimer(signal.ITIMER_REAL, 1800)
     try:
         yield deadline
     finally:
@@ -633,7 +633,7 @@ def remove(options):
                     _PAYLOAD_PLAN.reset(payload_token)
                 remaining = None if deadline is None else deadline - time.monotonic()
                 if remaining is not None and remaining <= 0:
-                    raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
+                    raise subprocess.TimeoutExpired(["worktree", "remove"], 1800)
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=remaining)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
@@ -658,6 +658,28 @@ def remove(options):
                 else "refused" if any(item["outcome"] == "refused" for item in outcomes) else "succeeded")
 
 
+
+def protect_recorded_recovery(source, reference):
+    """Keep recovery roots while their tree's Git registration still exists."""
+    metadata_root = common(source) / "worktrees"
+    if not metadata_root.exists():
+        return
+    for metadata in metadata_root.iterdir():
+        record = metadata / REMOVAL_RECORD
+        if not record.exists():
+            continue
+        try:
+            removal = json.loads(record.read_text())
+            roots = [removal["recovery_branch"]] + [
+                root["recovery_branch"] for root in removal.get("predecessors", [])]
+            if any(not isinstance(root, str) or not root.startswith("refs/heads/") for root in roots):
+                raise ValueError("invalid recovery root")
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            raise Refused("worktree_recovery_unverifiable:" + metadata.name) from error
+        if reference in roots:
+            raise Refused("worktree_recovery_in_use:" + metadata.name)
+
+
 def retire_branch(options):
     reference = "refs/heads/" + options.branch
     git(options.source, "check-ref-format", reference)
@@ -665,6 +687,7 @@ def retire_branch(options):
         acquire(stack, options.source, "ref:" + reference, True)
         if any(row.get("branch") == reference for row in inventory(options.source)):
             raise Refused("branch_in_use")
+        protect_recorded_recovery(options.source, reference)
         current = value(options.source, "rev-parse", "--verify", reference)
         if current != options.commit:
             raise Refused("branch_identity_changed")

@@ -108,7 +108,7 @@ public sealed partial class CleanLanesCommandTests
             return production.Run(file, modified, directory, TimeSpan.FromSeconds(60));
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-        Assert.False(result.Success);
+        Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
         Assert.False(File.Exists(path));
         var receipt = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == lane);
