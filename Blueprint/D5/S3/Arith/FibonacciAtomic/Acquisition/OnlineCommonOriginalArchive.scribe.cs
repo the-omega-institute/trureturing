@@ -46,6 +46,16 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
     private static Formula Online(Formula inputs, Formula a, Formula x) =>
         C("OnlineRun", V("B"), V("h"), V("p"), C("initial"), V("x0"), inputs, a, x);
     private static Formula Reduce(Formula d, Formula c) => C("reduce", d, Modulus, V("div"), c);
+    private static Formula SourceScope(Formula body)
+    {
+        body=All("x0",V("World"),body);
+        body=All("h",V("Handle"),body);
+        body=All("B",C("SourceService",V("Handle"),V("World")),body);
+        body=All("World",C("Type"),body);
+        return All("Handle",C("Type"),body);
+    }
+    private static Formula ArchiveScope(Formula body) =>
+        SourceScope(All("a",C("Memory"),All("x",V("World"),body)));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Successively acquired precisions label one original source and every authentic retained cut, with a cumulative bound on actual paid reads.",
@@ -117,7 +127,7 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
                 + "memory and world. Any two actual executions of that request from this same "
                 + "memory and world return identical accessible memory and the same actual arithmetic endpoint. "
                 + "The covered/miss guards are disjoint, and the supplier fixes the acquired tape and output."),
-            new DocumentBlock.DisplayFormula(CoveredServices()),
+            new DocumentBlock.DisplayFormula(ArchiveScope(CoveredServices())),
             Paragraph(Text("In CoveredServices, z is the semantic actual world at the named past cut; no handle to it "
                 + "is returned. Its spatial label is past(a,D,div,t). For every word W, the installed predictor "
                 + "evaluates the complete arithmetic boundary there without reading the source. For every j, "
@@ -154,7 +164,7 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
                 + "unbounded coordinates, elapsed time, rights or the rest of the memory installation."))
         )));
 
-    private static Formula SoundFormula() => Eq(Sound, And(
+    private static Formula SoundFormula() => ArchiveScope(Eq(Sound, And(
         C("TapeRun", V("B"), V("h"), V("x0"), Tape, X), C("lawful", V("B"), V("h"), X),
         LtOf(D(0), Joint), Eq(Joint, C("joint", C("requests", A))),
         Eq(M, C("maximum", C("requests", A))), Eq(Precision, C("budget", M)),
@@ -163,7 +173,7 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
             And(LtOf(D(0), V("H")), C("dvd", V("H"), Modulus)))),
         C("ite", Eq(M, D(0)), Eq(C("reads", Tape), D(0)),
             And(LeOf(C("reads", Tape), C("sub", C("mul", D(4), Precision), D(2))),
-                LtOf(C("sub", C("mul", D(4), Precision), D(2)), C("mul", D(8), M))))));
+                LtOf(C("sub", C("mul", D(4), Precision), D(2)), C("mul", D(8), M)))))));
 
     private static Formula Compatibility()
     {
@@ -203,7 +213,7 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
         deterministic=And(completion,deterministic);
         deterministic=All("H",N,deterministic);
         deterministic=All("p0",C("Tariffs"),deterministic);
-        return Eq(Service,And(CoveredServices(),continuation,Imp(C("nonzero",M),benchmark),deterministic));
+        return ArchiveScope(Eq(Service,And(CoveredServices(),continuation,Imp(C("nonzero",M),benchmark),deterministic)));
     }
 
     private static Formula CoveredServices()
@@ -239,11 +249,17 @@ internal sealed class OnlineCommonOriginalArchiveDocument : IScribeDocumentDefin
             Eq(C("reduce",V("D"),e,V("div"),orig),Res(V("D"),Val(V("x0")))),
             Eq(C("reduce",V("D"),e,V("div"),d),Res(V("D"),Val(X))),
             All("t",N,Imp(LeOf(V("t"),C("length",C("letters",tape))),Ex("z",V("World"),past)))))));
-        return Eq(C("UpgradeRecovery",V("B"),V("h"),V("x0"),old,X,e,V("es"),d,V("y")),And(
+        var body=Eq(C("UpgradeRecovery",V("B"),V("h"),V("x0"),old,X,e,V("es"),d,V("y")),And(
             C("TapeRun",V("B"),V("h"),V("x0"),tape,V("y")),Eq(orig,Res(e,Val(V("x0")))),
             Eq(d,Res(e,Val(X))),Eq(d,Res(e,Val(V("y")))),
             Eq(C("paidReads",V("es")),C("ite",Eq(e,D(1)),D(0),C("mul",D(2),C("costBound",e)))),
             C("Continued",V("B"),V("h"),e,Val(X),d,V("y")),divisors));
+        body=All("y",V("World"),body);
+        body=All("d",C("ResiduePair",e),body);
+        body=All("es",C("ListEvent"),body);
+        body=All("E",N,body);
+        body=All("x",V("World"),body);
+        return SourceScope(All("old",C("ListTapeEvent"),body));
     }
 
     private static Formula UpgradeClaim()
