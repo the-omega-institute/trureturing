@@ -110,7 +110,11 @@ theorem cutoff_sewing (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
       (Matrix.fromBlocks (B.block F) s s.transpose Q) Sum.swap
       (fun _ _ h => by simpa only [Sum.swap_swap] using congrArg Sum.swap h) (e.sumElim n)
     rw [Finsupp.mapDomain_swap_sumElim] at h
-    exact h
+    have hmat : (fun i j : Y ⊕ F =>
+        (Matrix.fromBlocks (B.block F) s s.transpose Q) (Sum.swap i) (Sum.swap j)) =
+        Matrix.fromBlocks Q s.transpose s (B.block F) := by
+      ext (i | i) (j | j) <;> rfl
+    simpa only [hmat] using h
   rw [finite_log] at hf
   rw [← hf.2]
   let g (n : Occupation F) := (weight n : ℂ) *
@@ -121,10 +125,11 @@ theorem cutoff_sewing (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
   apply tsum_congr
   intro n
   have hn := extend_restrict F n.val n.property
+  have hp := row_finite P A R d F (restrictOccupation F n.val)
+  have hq := row_finite Q B S e F (restrictOccupation F n.val)
+  rw [hn] at hp hq
   dsimp only [cutoff, g, occupationEquiv]
-  rw [← hn, row_finite, row_finite, hswap]
-  congr 2
-  exact_mod_cast (weight_restrict F n.val n.property).symm
+  rw [hp, hq, hswap, weight_restrict F n.val n.property]
 
 open GaussianSewingLimit
 
@@ -276,7 +281,10 @@ theorem sewing (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
     have h := coefficient_rename (rightKernel Q B S) Sum.swap
       (fun _ _ h => by simpa only [Sum.swap_swap] using congrArg Sum.swap h) (e.sumElim n)
     rw [Finsupp.mapDomain_swap_sumElim] at h
-    exact h
+    have hmat : (fun i j : Y ⊕ I =>
+        rightKernel Q B S (Sum.swap i) (Sum.swap j)) = kernel Q B S := by
+      ext (i | i) (j | j) <;> rfl
+    simpa only [hmat, row] using h
   have hfinite : coefficient (effectiveKernel P Q A B R S) (d.sumElim e) =
       gaussianCoefficient (effectiveKernel P Q A B R S) (d.sumElim e) := by
     simpa using coefficient_finite_inclusion (effectiveKernel P Q A B R S)

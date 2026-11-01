@@ -155,7 +155,8 @@ theorem operator_entry (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I, ℂ
     Finset.sum_apply, rank_entry]
   cases i <;> cases j <;>
     simp [kernel, Matrix.fromBlocks, lp.single_apply, Pi.single_apply, hout, hin,
-      Finset.mul_sum, Finset.sum_mul, pow_two, mul_assoc, mul_comm, mul_left_comm]
+      mul_ite, ite_mul, Finset.mul_sum, Finset.sum_mul,
+      pow_two, mul_assoc, mul_comm, mul_left_comm]
 
 /-- The external scale is chosen from continuity of an actual operator
 polynomial at zero, where only the given strict contraction remains. -/
