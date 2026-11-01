@@ -10,6 +10,7 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
 open _root_.D5.S3.VertexAlgebra.FactorialFockMetric (weight)
+open _root_.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate (gaussianCoefficient)
 
 universe u v w
 namespace Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
@@ -158,6 +159,77 @@ def convergenceAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+
+def expansionArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {H : Type u} [Fintype H] [DecidableEq H]
+    {X : Type v} {Y : Type w}
+    [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
+    (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ)
+    (hK : ∀ i j, K i j = K j i) (hL : ∀ i j, L i j = L j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => K (.inr i) (.inr j))‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => L (.inr i) (.inr j))‖ < 1)
+    (d : X →₀ ℕ) (e : Y →₀ ℕ),
+    ∃ p q : MvPolynomial H ℂ,
+      (fun n => R.readout () ⟨H,n⟩
+        (polynomialGaussian (fun i j => K (.inr i) (.inr j)) p)) = row K d ∧
+      (fun n => R.readout () ⟨H,n⟩
+        (polynomialGaussian (fun i j => L (.inr i) (.inr j)) q)) = row L e ∧
+      Summable (fun n : H →₀ ℕ => ‖(weight n : ℂ) *
+        gaussianCoefficient K (d.sumElim n) * gaussianCoefficient L (e.sumElim n)‖) ∧
+      (∑' n : H →₀ ℕ, (weight n : ℂ) * gaussianCoefficient K (d.sumElim n) *
+        gaussianCoefficient L (e.sumElim n)) =
+        ∑ α ∈ p.support, ∑ β ∈ q.support, p.coeff α * q.coeff β *
+          bilinearMoment (fun i j => K (.inr i) (.inr j))
+            (fun i j => L (.inr i) (.inr j)) α β
+
+private theorem expansion_rejected_fails : ¬ expansionArena.{u,v,w}.Law rejectedZero := by
+  intro h
+  obtain ⟨p, q, hp, hq, hs, heq⟩ := @h PUnit.{u+1} inferInstance inferInstance
+    PUnit.{v+1} PUnit.{w+1} inferInstance inferInstance inferInstance inferInstance
+    0 0 (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
+  have hh := congrFun hp 0
+  simpa [rejectedZero, realize, row] using hh
+
+def expansionEvidence : Registration expansionArena.{u,v,w}
+    (type_of% (@row_pair_moments.{u,v,w})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@row_pair_moments.{u,v,w}, rejectedZero, expansion_rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejectedZero, ?_, rfl, expansion_rejected_fails⟩
+      intro j hj
+      change Unit at i j
+      exact (hj (@Subsingleton.elim Unit inferInstance j i)).elim
+    · intro e
+      cases e
+  dependence := actual_dependence
+
+def expansionAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@row_pair_moments.{u,v,w}) (Realization signature.{u}) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.expansionUnit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing.expansionEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨expansionArena.{u,v,w}⟩
+  objectArena := .source ⟨expansionArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source expansionArena.{u,v,w} ⟨expansionEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 namespace Moment
 

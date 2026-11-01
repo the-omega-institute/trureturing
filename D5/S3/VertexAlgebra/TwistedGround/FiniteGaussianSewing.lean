@@ -385,4 +385,85 @@ theorem bilinearMoment_resolvent_step (A B : Matrix H H ℂ)
       rw [Matrix.mulVec_mulVec, Ring.inverse_mul_cancel _ hu, Matrix.one_mulVec]
     _ = _ := by rw [heq]
 
+
+private theorem polynomialGaussian_expansion (A : Matrix H H ℂ)
+    (p : MvPolynomial H ℂ) :
+    polynomialGaussian A p = fun n =>
+      ∑ α ∈ p.support, p.coeff α * created α (gaussianCoefficient A) n := by
+  calc
+    polynomialGaussian A p =
+        polynomialGaussian A (∑ α ∈ p.support, monomial α (p.coeff α)) :=
+      congrArg (polynomialGaussian A) p.as_sum
+    _ = _ := by
+      simp only [map_sum, polynomialGaussian_monomial, Finset.sum_apply,
+        Pi.smul_apply, smul_eq_mul]
+
+private theorem pairing_finset_right {T : Type*} (s : Finset T)
+    (f : (H →₀ ℕ) → ℂ) (g : T → (H →₀ ℕ) → ℂ)
+    (hs : ∀ i ∈ s, Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * g i n)) :
+    pairing f (fun n => ∑ i ∈ s, g i n) = ∑ i ∈ s, pairing f (g i) := by
+  unfold pairing
+  simp only [Finset.mul_sum]
+  exact Summable.tsum_finsetSum hs
+
+private theorem polynomial_pair_moments (A B : Matrix H H ℂ)
+    (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1)
+    (p q : MvPolynomial H ℂ) :
+    pairing (polynomialGaussian A p) (polynomialGaussian B q) =
+      ∑ α ∈ p.support, ∑ β ∈ q.support,
+        p.coeff α * q.coeff β * bilinearMoment A B α β := by
+  have hp (α : H →₀ ℕ) : Summable (fun n : H →₀ ℕ =>
+      (weight n : ℂ) * polynomialGaussian B q n *
+        (p.coeff α * created α (gaussianCoefficient A) n)) := by
+    simpa only [polynomialGaussian_monomial, Pi.smul_apply, smul_eq_mul] using
+      (polynomial_pair_norm_summable B A hBsym hAsym hB hA q
+        (monomial α (p.coeff α))).of_norm
+  have hq (α β : H →₀ ℕ) : Summable (fun n : H →₀ ℕ =>
+      (weight n : ℂ) * created α (gaussianCoefficient A) n *
+        (q.coeff β * created β (gaussianCoefficient B) n)) := by
+    convert (created_pair_summable A B hAsym hBsym hA hB α β).mul_left
+      (q.coeff β) using 1
+    funext n
+    ring
+  rw [pairing_comm, polynomialGaussian_expansion A p,
+    pairing_finset_right _ _ _ (fun α _ => hp α)]
+  apply Finset.sum_congr rfl
+  intro α hα
+  rw [pairing_const_right, pairing_comm, polynomialGaussian_expansion B q,
+    pairing_finset_right _ _ _ (fun β _ => hq α β)]
+  simp only [pairing_const_right, Finset.mul_sum, bilinearMoment]
+  apply Finset.sum_congr rfl
+  intro β hβ
+  ring
+
+/-- The actual absolutely convergent external-row contraction is a finite
+sum of the true two-sided creation moments. Both polynomial witnesses are
+constructed from the original Gaussian coefficients; neither the vacuum
+normalization nor an effective-kernel identity is assumed. All coefficients
+are ordinary external coefficients and the shared weight is ∏ i, n_i!. -/
+theorem row_pair_moments {X : Type v} {Y : Type w}
+    [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
+    (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ)
+    (hK : ∀ i j, K i j = K j i) (hL : ∀ i j, L i j = L j i)
+    (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => K (.inr i) (.inr j))‖ < 1)
+    (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => L (.inr i) (.inr j))‖ < 1)
+    (d : X →₀ ℕ) (e : Y →₀ ℕ) :
+    ∃ p q : MvPolynomial H ℂ,
+      polynomialGaussian (fun i j => K (.inr i) (.inr j)) p = row K d ∧
+      polynomialGaussian (fun i j => L (.inr i) (.inr j)) q = row L e ∧
+      Summable (fun n : H →₀ ℕ => ‖(weight n : ℂ) *
+        gaussianCoefficient K (d.sumElim n) * gaussianCoefficient L (e.sumElim n)‖) ∧
+      (∑' n : H →₀ ℕ, (weight n : ℂ) * gaussianCoefficient K (d.sumElim n) *
+        gaussianCoefficient L (e.sumElim n)) =
+        ∑ α ∈ p.support, ∑ β ∈ q.support, p.coeff α * q.coeff β *
+          bilinearMoment (fun i j => K (.inr i) (.inr j))
+            (fun i j => L (.inr i) (.inr j)) α β := by
+  obtain ⟨p, hp⟩ := row_polynomial K hK d
+  obtain ⟨q, hq⟩ := row_polynomial L hL e
+  refine ⟨p, q, hp, hq, row_pair_norm_summable K L hK hL hA hB d e, ?_⟩
+  simpa only [hp, hq, pairing, row] using polynomial_pair_moments _ _
+    (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j)) hA hB p q
+
 end D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
