@@ -2470,7 +2470,7 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 21. rank-one 局部方向的相位极值
+## 21. rank-one 共享反馈族的相位与全尺度极值
 
 第 20 节的下界路径选取了相对证书坐标的纯虚方向。这个选择可以在同一个共享反馈族内直接检验，而不需要把它提升为全局最优性的主张。令
 
@@ -2592,11 +2592,11 @@ $$
 而效果距离为 $2\sin^2t$。这证明了 $\rho$ 的第一式。最后，$A>0$ 且 $x>0$ 时，分母关于 $\sin\psi$ 严格递减，故唯一最大方向为 $\sin\psi=1$；$x<0$ 同理。代入 $\psi=\pi/2$ 即得 $R(x)$。$\square$
 
 **备注 21.2（纯虚方向的有限尺度约化）。** 在 $\psi=\pi/2$ 且 $0<t<\pi/8$ 时，令
-$u=(x-1)t$、$L_+=\sqrt2+2c$、$L_-=\sqrt2+2s$。同一共享反馈族的两个量可精确写成
+$u=(x-1)t$、$y=xt=u+t$、$L_+=\sqrt2+2c$、$L_-=\sqrt2+2s$。同一共享反馈族的缺陷可精确写成
 
 $$
-\rho(E(t,\pi/2),U(t,x))
-=2\sin^2t+8\sin^2\!\left(\frac{u+t}{2}\right),
+\rho_+(t,y)
+=2\sin^2t+8\sin^2\!\left(\frac y2\right),
 $$
 
 $$
@@ -2605,10 +2605,232 @@ g(E(t,\pi/2),U(t,x))
 -\bigl(2c\cos t+\sqrt2\cos u\bigr)^2.
 $$
 
-第一式来自效果距离与反馈相位商距离。第二式中，$\tau$ 的两项与
-$\|R_0b\|_{\ell^1}^2$ 抵消，迹化为
-$2c\cos t+\sqrt2\cos((x-1)t)$。因此该扰动族的有限尺度商可以直接作为 $(t,u)$
-上的二维三角函数比值研究；令 $t\to0$、$u=(x-1)t$ 即恢复命题 21.1 的
-$R(x)$。这个约化没有给出该族的有限尺度最大值，也没有改变全局常数的 open 状态。
+第一式是到正号优化类 $\mathcal S_+$ 的候选距离。到另一优化类的候选距离为
 
-该命题只解决给定 rank-one、共享反馈扰动族的二阶方向优化。它没有证明全局 $C_{\mathrm{prod}}$ 的最优性，也没有排除有限 $t$ 或非 rank-one 效果给出更大的商；当前全局下界仍为 $29.3209568043\ldots$，而全局最佳常数保持 open。
+$$
+\rho_-(t,y)=2\cos^2t+8-4|\sin y|,
+\qquad
+\rho(E(t,\pi/2),U(t,x))=\min\{\rho_+(t,y),\rho_-(t,y)\}.
+$$
+
+故正号分支成立的精确条件是
+
+$$
+\frac12\cos(2t)+1+\cos y-|\sin y|\ge0.
+$$
+
+局部极值路径 $y=x_*t$ 在充分小的 $t$ 上满足该条件；有限尺度的全局商必须保留上述分支最小值。第二式中，$\tau$ 的两项与
+$\|R_0b\|_{\ell^1}^2$ 抵消，迹化为
+$2c\cos t+\sqrt2\cos u$。因此该扰动族的有限尺度商可以直接作为 $(t,u)$
+上的带分支二维三角函数比值研究；令 $t\to0$、$u=(x-1)t$ 即恢复命题 21.1 的
+$R(x)$。下一定理在这个共享反馈族内给出对所有相位和有限尺度统一的上界。
+
+**定理 21.3（rank-one 共享反馈族的全尺度上确界）。** 令
+
+$$
+d=L_+=\sqrt2+2c,\qquad e=L_-=\sqrt2+2s,
+$$
+
+并定义二次多项式
+
+$$
+f(z)=4z^2-2(\sqrt2d+e^2)z+\sqrt2de^2-2d^2.
+$$
+
+设 $\kappa$ 是 $f$ 的较小正根，即
+
+$$
+\kappa=
+\frac{\sqrt2d+e^2-\sqrt{(\sqrt2d-e^2)^2+8d^2}}4,
+\qquad
+R_*=\frac1\kappa=29.3209568043\ldots .
+$$
+
+对于本节定义的同一个原始对 $\bigl(E(t,\psi),U(t,x)\bigr)$，有
+
+$$
+0<\frac{\rho(E(t,\psi),U(t,x))}{g(E(t,\psi),U(t,x))}<R_*,
+\qquad 0<t<\frac\pi8,\quad x,\psi\in\mathbb R,
+$$
+
+且
+
+$$
+\boxed{\qquad
+\sup_{\substack{0<t<\pi/8\\x,\psi\in\mathbb R}}
+\frac{\rho(E(t,\psi),U(t,x))}{g(E(t,\psi),U(t,x))}
+=R_*.
+\qquad}
+$$
+
+**证明。** 置
+
+$$
+y=xt,\quad q=1-\cos y\in[0,2],\quad
+r=|\sin y|=\sqrt{2q-q^2},\quad
+C=\cos t,\quad S=\sin t,\quad
+P=d-\sqrt2q=2c+\sqrt2\cos y.
+$$
+
+这里 $C,S>0$，且 $P\ge2c-\sqrt2>0$。由于 $a(E)$ 与 $\tau(E,U)$ 中的
+$\|R_0b\|_{\ell^1}^2$ 抵消，命题 21.1 的精确迹式给出
+
+$$
+\begin{aligned}
+g(E(t,\psi),U(t,x))
+&=d^2C^2+e^2S^2
+-\left|CP-i\sqrt2e^{i\psi}S\sin y\right|^2\\
+&\ge d^2C^2+e^2S^2-(CP+\sqrt2Sr)^2\\
+&=:g_0.
+\end{aligned}
+$$
+
+这个下界正是对 $\psi$ 取最小值：当 $\sin y\ne0$ 时，取
+$\sin\psi=\operatorname{sgn}(\sin y)$ 即等号成立。展开得到
+
+$$
+g_0=C^2(2\sqrt2dq-2q^2)
++S^2(e^2-4q+2q^2)
+-2\sqrt2CSr(d-\sqrt2q).
+$$
+
+对任意 $\psi$，到正号优化类的效果距离都是 $2S^2$，反馈距离与 $\psi$ 无关，故
+
+$$
+\rho(E(t,\psi),U(t,x))\le\rho_+(t,y)=2S^2+4q.
+$$
+
+为比较这两个量，定义
+
+$$
+\begin{aligned}
+A_q&=q(2\sqrt2d-2q-4\kappa),\\
+B_q&=e^2-2\kappa-4(1+\kappa)q+2q^2,\\
+H_q&=\sqrt2r(d-\sqrt2q).
+\end{aligned}
+$$
+
+利用 $C^2+S^2=1$，有精确恒等式
+
+$$
+g_0-\kappa\rho_+
+=C^2A_q+S^2B_q-2CSH_q.
+$$
+
+又由 $r^2=2q-q^2$，直接展开得到
+
+$$
+\begin{aligned}
+A_qB_q-H_q^2
+&=2qf(\kappa)+Jq^2=Jq^2,\\
+J&=2\bigl(d^2-e^2-4\sqrt2d\kappa+8\kappa^2+10\kappa\bigr).
+\end{aligned}
+$$
+
+以下有理夹逼足以核对所需正性：
+
+$$
+\frac{141}{100}<\sqrt2<\frac{142}{100},\qquad
+\frac{326}{100}<d<\frac{327}{100},\qquad
+\frac{217}{100}<e<\frac{219}{100}.
+$$
+
+这些夹逼可用整数平方直接核对。具体地，
+
+$$
+1413^2<2\cdot1000^2<1415^2,
+$$
+
+以及
+
+$$
+\begin{aligned}
+1847^2&<3413\cdot1000,&1849^2&>3415\cdot1000,\\
+764^2&<585\cdot1000,&767^2&>587\cdot1000.
+\end{aligned}
+$$
+
+代入 $d=\sqrt2+\sqrt{2+\sqrt2}$、$e=\sqrt2+\sqrt{2-\sqrt2}$，得到
+$3260/1000<d<3264/1000$ 和 $2177/1000<e<2182/1000$，从而蕴含上列夹逼。因此
+
+$$
+\sqrt2e^2-2d
+>\frac{141}{100}\left(\frac{217}{100}\right)^2
+-2\cdot\frac{327}{100}
+=\frac{99549}{10^6}>0,
+$$
+
+而
+
+$$
+\begin{aligned}
+f(1/10)
+&<\frac1{25}
+-\frac15\left(\frac{141}{100}\frac{326}{100}
++\left(\frac{217}{100}\right)^2\right)\\
+&\qquad
++\frac{142}{100}\frac{327}{100}\left(\frac{219}{100}\right)^2
+-2\left(\frac{326}{100}\right)^2\\
+&=-\frac{40304463}{50000000}<0.
+\end{aligned}
+$$
+
+因此 $f(0)=d(\sqrt2e^2-2d)>0$，其较小根满足 $0<\kappa<1/10$。特别地，在 $q>0$ 时，
+
+$$
+\frac{A_q}{q}
+\ge2\sqrt2d-4-4\kappa
+>2\cdot\frac75\cdot\frac{16}5-4-\frac25
+=\frac{114}{25}>0,
+$$
+
+而
+
+$$
+\frac J2
+>\left(\frac{16}5\right)^2
+-\left(\frac{23}{10}\right)^2
+-4\cdot\frac32\cdot\frac{17}5\cdot\frac1{10}
+=\frac{291}{100}>0.
+$$
+
+故 $q>0$ 时，实对称矩阵
+$\begin{pmatrix}A_q&-H_q\\-H_q&B_q\end{pmatrix}$ 的首个主子式与行列式均为正，从而正定。
+当 $q=0$ 时，$A_q=H_q=0$，而 $B_q=e^2-2\kappa>0$；由于 $S>0$，仍有
+$C^2A_q+S^2B_q-2CSH_q>0$。综上，所有有限尺度都满足
+
+$$
+g(E(t,\psi),U(t,x))\ge g_0>\kappa\rho_+
+\ge\kappa\rho(E(t,\psi),U(t,x)).
+$$
+
+此外，$0<t<\pi/8$ 时效果不等于 $E_+$ 或 $E_-$，故 $\rho>0$，上述商有定义且严格小于 $R_*$。
+
+最后，由 $\kappa_0=e^2-\sqrt2d$ 和 $f(\kappa)=0$，令
+
+$$
+x_*=
+\frac{\sqrt2d}{\sqrt2d-2\kappa}>0.
+$$
+
+则
+
+$$
+\kappa_0+A(x-1)^2-2\kappa(1+x^2)
+=(\sqrt2d-2\kappa)(x-x_*)^2.
+$$
+
+命题 21.1 因而给出合法的同一共享反馈路径
+
+$$
+\lim_{t\downarrow0}
+\frac{\rho(E(t,\pi/2),U(t,x_*))}
+{g(E(t,\pi/2),U(t,x_*))}
+=\frac1\kappa=R_*.
+$$
+
+结合严格上界即得所述上确界。$\square$
+
+定理 21.3 只覆盖本节指定的 rank-one 效果与对角共享反馈族；它不覆盖任意 $U\in U(4)$，也不把一般非 rank-one 效果的全局最优常数判为已定。当前全局下界为 $R_*=29.3209568043\ldots$，一般生产者对的最佳 $C_{\mathrm{prod}}$ 仍为 open。
+
+## 追加锚（本行以下为增补区）
