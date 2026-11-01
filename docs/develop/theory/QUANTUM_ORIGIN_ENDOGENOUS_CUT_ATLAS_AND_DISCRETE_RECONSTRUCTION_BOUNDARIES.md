@@ -1559,3 +1559,239 @@ If $0\le F\le P$, its range lies in $\operatorname{ran}P=\operatorname{ran}V$. C
 For instance, $N=8$ admits $a=2+i,b=1+i$. The four-square input establishes the construction for arbitrarily fine dyadic grids at fixed dimension. This construction supplies no admissible non-Born table. The question in Definition 18.1 still concerns all labelled menus, including relations involving proper subprojections and their complements. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 四维完整 dyadic 效果表的算术原子反例族
+
+**定义 20.1（Gaussian 整厄米形式与序原子）。** Write $R=\mathbb Z[i]$, and write $X^*$ for conjugate transpose. A positive definite Hermitian matrix $G\in M_r(R)$ is **even** if all its diagonal entries are even integers, and **unimodular** if $\det G=1$. Evenness is equivalent to
+
+$$
+x^*Gx\in2\mathbb Z\qquad(x\in R^r):
+$$
+
+the diagonal contributions are even integers and each paired off-diagonal contribution is twice the integer real part of a Gaussian integer; conversely, take coordinate vectors. A positive definite $A\in\operatorname{Herm}_4(R)$ is an **integral PSD atom** if every $C\in\operatorname{Herm}_4(R)$ satisfying $0\le C\le A$ is either $0$ or $A$. The order here is the full complex Hermitian positive-semidefinite order, and the quantifier includes every Gaussian integral Hermitian subform.
+
+**定理 20.2（精确二、三结果菜单下的一致整网格反例）。** For every integer $m\ge2$, put $N=2^m$, $h=N^{-1}$, and retain exactly the domain of Definition 16.1 in dimension four,
+
+$$
+K_{4,m}=\{G\in\operatorname{Herm}_4(h\mathbb Z[i]):0\le G\le I_4\}.
+$$
+
+There is a complete function $p_m:K_{4,m}\to[0,1]$ such that
+
+$$
+\sum_{j=1}^r p_m(G_j)=1
+\quad\text{for every labelled tuple }(G_1,\ldots,G_r)\in K_{4,m}^r,
+\quad r\in\{2,3\},\quad \sum_{j=1}^rG_j=I_4,
+\tag{20.1}
+$$
+
+including every allowed zero and repetition, whereas
+
+$$
+\inf_{\substack{\rho\succeq0\\\operatorname{Tr}\rho=1}}
+\sup_{G\in K_{4,m}}|p_m(G)-\operatorname{Tr}(\rho G)|
+\ge\frac1{212}.
+\tag{20.2}
+$$
+
+The matrix $H$ fitted by (16.1) is exactly $I_4/4$. The table differs from its Born table only at two distinct complementary full-rank effects $E_m,F_m$, both strictly between $0$ and $I_4$, and
+
+$$
+\sup_{G\in K_{4,m}}|p_m(G)-\operatorname{Tr}(HG)|=\frac14.
+\tag{20.3}
+$$
+
+Their common margin from both spectral boundaries is $\gamma_m$ with
+
+$$
+N^{-2}<\gamma_m<2N^{-2}.
+\tag{20.4}
+$$
+
+In particular (18.1) has a negative answer for $d=4$, and the whole-grid assertion with a finite dimension-only constant $C_d(\epsilon+2^{-m})$ for every $d\ge2$ is false already at $d=4$ and $\epsilon=0$. The local conclusions of §§16–17 and the conditional decomposition estimate in Definition 18.1 retain their stated hypotheses and conclusions.
+
+**证明。** First establish the lattice restriction needed for the construction. A positive definite even unimodular Gaussian Hermitian form cannot have rank $1$, $2$, or $3$. Indeed, reduction modulo $\pi=1+i$ takes $R$ to $\mathbb F_2$ and makes conjugation the identity. An even Hermitian matrix therefore reduces to a symmetric matrix with zero diagonal, hence to an alternating bilinear form. Its determinant is $1$, so the reduced form is nondegenerate. A nondegenerate alternating form has even dimension: a pair with pairing $1$ spans a nondegenerate plane; splitting off its orthogonal complement proves the assertion by induction. This rules out ranks $1$ and $3$. In rank $2$, write
+
+$$
+G=\begin{pmatrix}2u&z\\\overline z&2v\end{pmatrix},
+\qquad z=x+iy,\quad u,v,x,y\in\mathbb Z.
+$$
+
+Then $\det G=1$ implies $x^2+y^2=4uv-1\equiv3\pmod4$, impossible because an integer square is $0$ or $1$ modulo $4$.
+
+Now let $A$ be any positive definite even unimodular Gaussian Hermitian matrix of size four, and let $C\in\operatorname{Herm}_4(R)$ satisfy $0\le C\le A$. The adjugate formula and $\det A=1$ give $A^{-1}\in M_4(R)$. Set
+
+$$
+T=A^{-1}C\in M_4(R),\qquad K=A^{-1/2}CA^{-1/2}.
+$$
+
+Classical positive-definite spectral calculus gives
+
+$$
+0\le K\le I_4,\qquad
+A^{1/2}TA^{-1/2}=A^{-1/2}CA^{-1/2}=K.
+\tag{20.5}
+$$
+
+Thus $T$ is similar to a Hermitian contraction. If its four eigenvalues are $\lambda_1,\ldots,\lambda_4\in[0,1]$, then
+
+$$
+\tau:=\operatorname{Tr}(T-T^2)
+=\sum_{j=1}^4\lambda_j(1-\lambda_j)\in\mathbb Z,
+\qquad 0\le\tau\le1.
+\tag{20.6}
+$$
+
+The integrality follows because the trace is a Gaussian integer and the displayed sum is real. If $\tau=1$, each summand must be $1/4$, so every $\lambda_j=1/2$. Since $K$ is Hermitian, this gives $K=I_4/2$, and similarity in (20.5) gives $T=I_4/2$, contradicting $T\in M_4(R)$. Consequently $\tau=0$, every $\lambda_j$ is $0$ or $1$, and the spectral theorem and (20.5) give $T^2=T$. Moreover,
+
+$$
+T^*A=CA^{-1}A=C=AT.
+\tag{20.7}
+$$
+
+The Gaussian module $L=R^4$ therefore splits directly as
+
+$$
+L=\operatorname{im}T\oplus\ker T.
+$$
+
+For every $x\in L$, the decomposition is $x=Tx+(x-Tx)$; the intersection is zero because $T$ acts as the identity on its image. It is orthogonal for the $A$ pairing: if $u=Tx$ and $Tv=0$, then $u^*Av=x^*T^*Av=x^*ATv=0$ by (20.7). The classical Euclidean structure of $\mathbb Z[i]$ makes it a PID, so these submodules have Gaussian bases. Their combined basis is a basis of $L$, with matrix $P\in\operatorname{GL}_4(R)$. If both summands are nonzero, this basis gives
+
+$$
+P^*AP=\operatorname{diag}(G_1,G_2),\qquad
+\operatorname{rank}G_1=r,\quad\operatorname{rank}G_2=4-r,
+\quad 1\le r\le3.
+$$
+
+Each block is positive definite and Gaussian Hermitian. Evenness survives this integral basis change because each new diagonal entry is $x^*Ax\in2\mathbb Z$ for a column $x\in R^4$ of $P$. A Gaussian Hermitian determinant is real and Gaussian integral, hence an integer; positive definiteness makes each block determinant a positive integer. Since $\det P$ is a Gaussian unit,
+
+$$
+\det G_1\det G_2=\det A\,|\det P|^2=1.
+$$
+
+Both block determinants must therefore equal $1$, contradicting the rank restriction just proved. One summand is zero, so $T=0$ or $T=I_4$, and $C=AT$ is $0$ or $A$. This proves atomicity against all Gaussian integral Hermitian subforms, without a restriction to real entries or to projections. The Euclidean/PID, spectral-calculus and Hermitian-form ingredients in this argument are classical intermediate suppliers.
+
+Fix $m\ge2$, and set $t=N/2=2^{m-1}$, an even integer. By Lagrange's classical four-square theorem, as used in §19, choose $a,b\in R$ satisfying
+
+$$
+|a|^2+|b|^2=t^2-1=:q.
+$$
+
+Define
+
+$$
+U=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},\qquad
+A=\begin{pmatrix}tI_2&U\\U^*&tI_2\end{pmatrix},\qquad
+B=\begin{pmatrix}tI_2&-U\\-U^*&tI_2\end{pmatrix}.
+\tag{20.8}
+$$
+
+Multiplication gives $`UU^*=U^*U=qI_2`$ and
+
+$$
+A+B=2tI_4=NI_4,\qquad AB=BA=(t^2-q)I_4=I_4.
+$$
+
+For completeness, the off-diagonal-block Hermitian matrix $A-tI_4$ has square $qI_4$ and trace zero. As $q>0$, its eigenvalues are $\sqrt q$ and $-\sqrt q$, each with multiplicity two. The eigenvalues of each of $A,B$ are therefore
+
+$$
+t+\sqrt{t^2-1},\qquad t-\sqrt{t^2-1},
+$$
+
+each twice. They are positive, each determinant is $(t^2-q)^2=1$, and every diagonal entry is the even integer $t$. The atomicity argument applies to both $A$ and $B$. Their traces are $4t=2N$. Since $q>0$, $U\ne0$ and $A\ne B$.
+
+Put $E_m=A/N$ and $F_m=B/N$. These are distinct complementary effects in exactly $K_{4,m}$, and both are positive definite. Their largest eigenvalue is less than $1$ because their complements are positive definite. Their common smallest eigenvalue, also the smallest eigenvalue of either complement, is
+
+$$
+\gamma_m=\frac{t-\sqrt{t^2-1}}{2t}
+=\frac1{2t(t+\sqrt{t^2-1})}.
+$$
+
+The inequalities $0<\sqrt{t^2-1}<t$ imply
+
+$$
+\frac1{4t^2}<\gamma_m<\frac1{2t^2},
+$$
+
+which is (20.4), since $N=2t$. The largest eigenvalue of either effect is $1-\gamma_m>1/2$.
+
+Define the table on every member of the original domain by
+
+$$
+p_m(G)=
+\begin{cases}
+3/4,&G=E_m,\\
+1/4,&G=F_m,\\
+\operatorname{Tr}(G)/4,&G\in K_{4,m}\setminus\{E_m,F_m\}.
+\end{cases}
+\tag{20.9}
+$$
+
+This is a single function on the whole finite grid. Since $0\le G\le I_4$ implies $0\le\operatorname{Tr}(G)/4\le1$, all values are in $[0,1]$. Also $p_m(0)=0$, $p_m(I_4)=1$, and the unmodified values at $E_m,F_m$ would both be $1/2$.
+
+Consider any labelled menu in (20.1). If it contains neither exceptional effect, linearity of trace gives its table sum as $\operatorname{Tr}(I_4)/4=1$, regardless of zeros or repetitions. If one entry is $E_m$, the remaining one or two entries sum to $F_m$. Multiplication by $N$ expresses $B$ as a sum of one or two Gaussian integral PSD matrices. Each summand lies between $0$ and $B$, so atomicity says each is $0$ or $B$. Since their sum is the nonzero matrix $B$, exactly one is $B$ and the others are zero. Thus the menu is a permutation of $(E_m,F_m)$ or $(E_m,F_m,0)$. Starting instead with an entry $F_m$ gives the same conclusion by atomicity of $A$. Their table sums are $3/4+1/4=1$. This also excludes any repeated exceptional entry in an allowed menu, because $E_m\ne F_m$ and neither is zero; every other repetition was already included in the trace case. Equation (20.1) follows for every labelled tuple required by Definition 16.1, with $\epsilon=0$.
+
+It remains to separate this complete table from every density, rather than only from its fitted matrix. Use precisely the rank-one real basis $\mathcal B=\{D_i,R_{ij},J_{ij}\}$ of Definition 16.1 for $d=4$. Every basis element is in $K_{4,m}$ and has rank one, whereas $E_m,F_m$ have rank four. Hence $p_m(Q)=1/4$ for every $Q\in\mathcal B$. The uniqueness in (16.1) now gives $H=I_4/4$.
+
+Fix any $\rho\succeq0$ with $\operatorname{Tr}\rho=1$, and put
+
+$$
+\eta=\sup_{G\in K_{4,m}}|p_m(G)-\operatorname{Tr}(\rho G)|,
+\qquad \Delta=\rho-I_4/4.
+$$
+
+Then $|\operatorname{Tr}(\Delta Q)|\le\eta$ for every $Q\in\mathcal B$. To use (16.6) at an arbitrary effect, write $G_{ij}=x_{ij}+iy_{ij}$ for $i<j$. With the sign convention $T_{ij}(i,j)=i$, $T_{ij}(j,i)=-i$ from Definition 16.1, the exact basis expansion is
+
+$$
+G=\sum_{i=1}^4\alpha_iD_i+
+\sum_{i<j}(2x_{ij}R_{ij}+2y_{ij}J_{ij}),
+\qquad
+\alpha_i=G_{ii}-\sum_{j<i}(x_{ji}+y_{ji})-\sum_{j>i}(x_{ij}+y_{ij}).
+\tag{20.10}
+$$
+
+For any effect $G$, each entry has absolute value at most $\|G\|_{\rm op}\le1$. There are six pairs $i<j$, and thus
+
+$$
+\begin{aligned}
+\sum_i|\alpha_i|
+&\le\sum_i|G_{ii}|+2\sum_{i<j}(|x_{ij}|+|y_{ij}|)
+\le4+24=28,\\
+\sum_{i<j}(2|x_{ij}|+2|y_{ij}|)&\le24.
+\end{aligned}
+$$
+
+The total absolute coefficient sum in (20.10) is at most $52$, the unrestricted coefficient inequality underlying (16.6)–(16.7). No small-norm assumption on $G$ is used here. Applying linearity and the basis bounds gives, in particular,
+
+$$
+|\operatorname{Tr}(\Delta E_m)|\le52\eta.
+$$
+
+Since $\operatorname{Tr}(E_m)=2$ and $p_m(E_m)=3/4$, it follows that
+
+$$
+\begin{aligned}
+\frac14
+&=|p_m(E_m)-\operatorname{Tr}((I_4/4)E_m)|\\
+&\le|p_m(E_m)-\operatorname{Tr}(\rho E_m)|
++|\operatorname{Tr}(\Delta E_m)|
+\le53\eta.
+\end{aligned}
+$$
+
+This proves (20.2) for every density. Equation (20.9) and the two traces give (20.3) exactly. Consequently
+
+$$
+\frac{\inf_{\rho\succeq0,\,\operatorname{Tr}\rho=1}
+\sup_{G\in K_{4,m}}|p_m(G)-\operatorname{Tr}(\rho G)|}
+{0+2^{-m}}
+\ge\frac{N}{212}\longrightarrow\infty.
+$$
+
+A proposed finite $C_4\ge0$ is contradicted by any dyadic $N>212C_4$. Likewise (20.3) contradicts (18.1) for any proposed finite $L_4$, by choosing $N>4L_4$. Thus the question posed in Definition 18.1 is resolved negatively in dimension four, as is the assertion quantified over every $d\ge2$.
+
+There is no conflict with the local estimates: $c_4=(4\cdot4^2-3\cdot4)^{-1}=1/52$, whereas both exceptional effects have norm greater than $1/2$. Therefore $p_m(G)=\operatorname{Tr}((I_4/4)G)$ exactly on $\|G\|_{\rm op}\le c_4$, and the fitted $H$ is already a density. The conditional decomposition estimate of Definition 18.1 also remains valid. Neither exceptional effect has a nonzero proper original-grid subeffect, by atomicity of $A$ and $B$; in particular neither can be a sum of original-grid effects of norm at most $c_4$. This is stronger than the projection route obstruction in §19: the exceptional pair here consists of full-rank strict interior lattice atoms, and (20.9) supplies a complete admissible table.
+
+The relevant domain distinction from the full-effect representation theorem is exact. Caves–Fuchs–Manne–Renes, [*Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements*, quant-ph/0306179v1](https://arxiv.org/html/quant-ph/0306179v1), §III.1, equation (5), obtain rational homogeneity by dividing effects into rational subeffects; §III.4 also discusses the rational-domain conclusion. A fixed-denominator $K_{4,m}$ has no such division closure: for example $E_m/2$ is a nonzero proper PSD subeffect of $E_m$, and atomicity proves that it is absent from $K_{4,m}$. The continuum and unrestricted rational domains therefore do not supply the missing inference on this finite domain. The construction is separate for each $m$ and assumes no compatibility between tables at different precisions. It establishes no conclusion about the separate dimensions $d=2,3$, the coarse case $m=1$, or physical acquisition of these tables. $\square$
+
+## 追加锚（本行以下为增补区）
