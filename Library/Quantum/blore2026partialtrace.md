@@ -4,7 +4,7 @@ authors: Zayn Blore
 year: 2026
 title: Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4
 doi: null
-url: https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib
+url: https://github.com/zblore/csd-lean4
 claim: Partial traces preserve positivity and trace; spectral entropy is additive on product density operators; the general real Banach-algebra Lie-Trotter formula follows from exponential-series and growth-controlled telescoping estimates.
 strata_touched:
   - D5/S3/Quantum/Information/PartialTraceMutualInformation
