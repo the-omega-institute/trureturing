@@ -140,3 +140,9 @@ These are references [3], [5] and [11] of Carnero Bravo's v2 paper. The
 explicit coordinate neighborhood construction here does not claim that the
 general suspension or star-cluster mechanism is new, and these supporting
 modules carry no claim of original-problem acceptance or priority.
+
+The unfinished source-readout registrations for the public lemmas in these
+two supporting modules are tracked in [issue #25180](https://github.com/the-omega-institute/trureturing/issues/25180).
+The three homology-isomorphism endpoints are definitions; they do not exhaust
+the public theorem audit targets. The issue is neither a proof nor a validated
+registration.
