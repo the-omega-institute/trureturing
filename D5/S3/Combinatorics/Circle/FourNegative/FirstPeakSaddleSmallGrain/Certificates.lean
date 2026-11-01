@@ -4,7 +4,7 @@
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
    anchors: [mathlib/module/Mathlib.Tactic.Ring]
    utility: none
-   digest: Fifteen direct c2 charts and all 285 native polynomial margin proofs. -/
+   digest: Twelve parameterized c2 charts and their 228 native polynomial margin proofs. -/
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 
