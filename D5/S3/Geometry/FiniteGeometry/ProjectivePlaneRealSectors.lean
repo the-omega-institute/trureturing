@@ -9,15 +9,20 @@
 import D5.S3.Geometry.FiniteGeometry.ProjectivePlaneIntegerLattice
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Data.Matrix.Block
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Tactic.Module
 import Mathlib.LinearAlgebra.Matrix.ToLin
 
+/-! Real incidence equivalence, complete orthogonal sectors, and centered-Gram positivity
+for the original finite point and line labels of a nondegenerate projective plane. -/
+
 set_option autoImplicit false
 noncomputable section
-open scoped BigOperators
+open scoped BigOperators Matrix
 open Finset Configuration
+attribute [local instance] Classical.propDecidable
 
 namespace D5.S3.Geometry.FiniteGeometry.ProjectivePlaneRealSectors
 
@@ -36,25 +41,35 @@ def toPoints : (L → ℝ) →ₗ[ℝ] (P → ℝ) :=
 
 /-- Its transpose, from original points to original lines. -/
 def toLines : (P → ℝ) →ₗ[ℝ] (L → ℝ) :=
-  (incidenceMatrix (P := P) (L := L))ᵀ.mulVecLin
+  ((incidenceMatrix (P := P) (L := L))ᵀ).mulVecLin
 
 private lemma row_sum (l : L) :
     ∑ x : P, incidenceMatrix x l = orderR (P := P) (L := L) + 1 := by
+  change (∑ x : P, (ProjectivePlaneIntegerLattice.row l x : ℝ)) =
+    (ProjectivePlaneIntegerLattice.q (P := P) (L := L) : ℝ) + 1
   exact_mod_cast ProjectivePlaneIntegerLattice.row_total (P := P) l
 
 private lemma col_sum (x : P) :
     ∑ l : L, incidenceMatrix x l = orderR (P := P) (L := L) + 1 := by
+  change (∑ l : L, (ProjectivePlaneIntegerLattice.row l x : ℝ)) =
+    (ProjectivePlaneIntegerLattice.q (P := P) (L := L) : ℝ) + 1
   exact_mod_cast ProjectivePlaneIntegerLattice.column_total (L := L) x
 
 private lemma points_gram (x y : P) :
     ∑ l : L, incidenceMatrix x l * incidenceMatrix y l =
       if x = y then orderR (P := P) (L := L) + 1 else 1 := by
-  exact_mod_cast ProjectivePlaneIntegerLattice.column_gram (L := L) x y
+  have h := congrArg (fun z : ℤ => (z : ℝ))
+    (ProjectivePlaneIntegerLattice.column_gram (L := L) x y)
+  push_cast at h
+  exact h
 
 private lemma lines_gram (l k : L) :
     ∑ x : P, incidenceMatrix x l * incidenceMatrix x k =
       if l = k then orderR (P := P) (L := L) + 1 else 1 := by
-  exact_mod_cast ProjectivePlaneIntegerLattice.row_gram (P := P) l k
+  have h := congrArg (fun z : ℤ => (z : ℝ))
+    (ProjectivePlaneIntegerLattice.row_gram (P := P) l k)
+  push_cast at h
+  exact h
 
 private lemma sum_toPoints (y : L → ℝ) :
     ∑ x, toPoints y x = (orderR (P := P) (L := L) + 1) * ∑ l, y l := by
@@ -64,7 +79,7 @@ private lemma sum_toPoints (y : L → ℝ) :
   rw [Finset.mul_sum]
 
 private lemma sum_toLines (x : P → ℝ) :
-    ∑ l, toLines x l = (orderR (P := P) (L := L) + 1) * ∑ p, x p := by
+    ∑ l : L, toLines (L := L) x l = (orderR (P := P) (L := L) + 1) * ∑ p, x p := by
   simp only [toLines, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct,
     Matrix.transpose_apply]
   rw [Finset.sum_comm]
@@ -108,11 +123,21 @@ def zeroSum (I : Type*) [Fintype I] : Submodule ℝ (I → ℝ) where
   carrier := {x | ∑ i, x i = 0}
   zero_mem' := by simp
   add_mem' := by intro x y hx hy; simp_all [Finset.sum_add_distrib]
-  smul_mem' := by intro a x hx; simp_all [← Finset.smul_sum]
+  smul_mem' := by
+    intro a x hx
+    change (∑ i, a * x i) = 0
+    rw [← Finset.mul_sum, hx, mul_zero]
+
+local instance zeroSumCoeFun (I : Type*) [Fintype I] :
+    CoeFun (zeroSum I) (fun _ => I → ℝ) := ⟨fun x => x.val⟩
+
+@[simp] private lemma zeroSum_total {I : Type*} [Fintype I] (x : zeroSum I) :
+    ∑ i, x i = 0 := x.property
 
 private lemma orderR_pos : 0 < orderR (P := P) (L := L) := by
-  have h := ProjectivePlaneIntegerLattice.q_ge_two (P := P) (L := L)
-  exact_mod_cast (lt_of_lt_of_le (by norm_num : (0 : ℤ) < 2) h)
+  have hq : (2 : ℝ) ≤ orderR (P := P) (L := L) := by
+    exact Int.cast_le.mpr (ProjectivePlaneIntegerLattice.q_ge_two (P := P) (L := L))
+  linarith
 
 /-- The positive singular value on the nonconstant incidence sectors. -/
 def rootOrder : ℝ := Real.sqrt (orderR (P := P) (L := L))
@@ -127,7 +152,7 @@ private lemma rootOrder_sq : rootOrder (P := P) (L := L) ^ 2 = orderR (P := P) (
 def normalizedToLines : zeroSum P →ₗ[ℝ] zeroSum L where
   toFun x := ⟨(rootOrder (P := P) (L := L))⁻¹ • toLines x, by
     change ∑ l, (rootOrder (P := P) (L := L))⁻¹ * toLines x l = 0
-    rw [← Finset.mul_sum, sum_toLines, x.property, mul_zero, mul_zero]⟩
+    rw [← Finset.mul_sum, sum_toLines, zeroSum_total x, mul_zero, mul_zero]⟩
   map_add' x y := by apply Subtype.ext; simp [map_add, smul_add]
   map_smul' a x := by apply Subtype.ext; simp [map_smul, smul_smul, mul_comm]
 
@@ -135,7 +160,7 @@ def normalizedToLines : zeroSum P →ₗ[ℝ] zeroSum L where
 def normalizedToPoints : zeroSum L →ₗ[ℝ] zeroSum P where
   toFun y := ⟨(rootOrder (P := P) (L := L))⁻¹ • toPoints y, by
     change ∑ p, (rootOrder (P := P) (L := L))⁻¹ * toPoints y p = 0
-    rw [← Finset.mul_sum, sum_toPoints, y.property, mul_zero, mul_zero]⟩
+    rw [← Finset.mul_sum, sum_toPoints, zeroSum_total y, mul_zero, mul_zero]⟩
   map_add' x y := by apply Subtype.ext; simp [map_add, smul_add]
   map_smul' a x := by apply Subtype.ext; simp [map_smul, smul_smul, mul_comm]
 
@@ -151,7 +176,7 @@ def balancedEquiv : zeroSum P ≃ₗ[ℝ] zeroSum L where
       toPoints ((rootOrder (P := P) (L := L))⁻¹ • toLines x) p = x p
     rw [map_smul]
     simp only [Pi.smul_apply, smul_eq_mul]
-    rw [toPoints_toLines, x.property, add_zero, ← rootOrder_sq]
+    rw [toPoints_toLines, zeroSum_total x, add_zero, ← rootOrder_sq]
     have hs := ne_of_gt (rootOrder_pos (P := P) (L := L))
     field_simp [hs] <;> ring
   right_inv y := by
@@ -161,7 +186,7 @@ def balancedEquiv : zeroSum P ≃ₗ[ℝ] zeroSum L where
       toLines ((rootOrder (P := P) (L := L))⁻¹ • toPoints y) l = y l
     rw [map_smul]
     simp only [Pi.smul_apply, smul_eq_mul]
-    rw [toLines_toPoints, y.property, add_zero, ← rootOrder_sq]
+    rw [toLines_toPoints, zeroSum_total y, add_zero, ← rootOrder_sq]
     have hs := ne_of_gt (rootOrder_pos (P := P) (L := L))
     field_simp [hs] <;> ring
 
@@ -182,7 +207,7 @@ private lemma mean_const {I : Type*} [Fintype I] (hn : Fintype.card I ≠ 0) (a 
   simp [mean, Nat.cast_ne_zero.mpr hn, ← mul_assoc]
 
 private lemma mean_zeroSum {I : Type*} [Fintype I] (x : zeroSum I) : mean (x : I → ℝ) = 0 := by
-  rw [mean, x.property, mul_zero]
+  rw [mean, zeroSum_total x, mul_zero]
 
 /-- Separating the constant coordinate from a vector on a nonempty finite set. -/
 def splitConstant (I : Type*) [Fintype I] (hn : Fintype.card I ≠ 0) :
@@ -192,7 +217,7 @@ def splitConstant (I : Type*) [Fintype I] (hn : Fintype.card I ≠ 0) :
     rw [Finset.sum_sub_distrib]
     simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
     simp [mean, Nat.cast_ne_zero.mpr hn]⟩)
-  invFun z := (fun _ => z.1) + z.2
+  invFun z := (fun _ : I => z.1) + (z.2 : I → ℝ)
   left_inv x := by ext i; change mean x + (x i - mean x) = x i; ring
   right_inv z := by
     have hm : mean ((fun _ : I => z.1) + (z.2 : I → ℝ)) = z.1 := by
@@ -209,10 +234,12 @@ def splitConstant (I : Type*) [Fintype I] (hn : Fintype.card I ≠ 0) :
     · exact mean_smul a x
     · apply Subtype.ext; funext i; simp [mean_smul]; ring
 
+include L in
 private lemma card_points_ne_zero : Fintype.card P ≠ 0 := by
   rw [ProjectivePlane.card_points P L]
   omega
 
+include P in
 private lemma card_lines_ne_zero : Fintype.card L ≠ 0 := by
   rw [ProjectivePlane.card_lines P L]
   omega
@@ -234,8 +261,8 @@ def sectorEquiv : ((ℝ × ℝ) × (zeroSum P × zeroSum P)) ≃ₗ[ℝ]
     (LinearEquiv.prodProdProdComm ℝ ℝ ℝ (zeroSum P) (zeroSum P)) |>.trans
     ((LinearEquiv.refl ℝ (ℝ × zeroSum P)).prodCongr
       ((LinearEquiv.refl ℝ ℝ).prodCongr (balancedEquiv (P := P) (L := L)))) |>.trans
-    ((splitConstant P card_points_ne_zero).symm.prodCongr
-      (splitConstant L card_lines_ne_zero).symm)
+    ((splitConstant P (card_points_ne_zero (P := P) (L := L))).symm.prodCongr
+      (splitConstant L (card_lines_ne_zero (P := P) (L := L))).symm)
 
 private lemma sectorEquiv_apply (z : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
     sectorEquiv (L := L) z =
@@ -245,29 +272,25 @@ private lemma sectorEquiv_apply (z : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
 
 /-- Original-label constant and bipartition directions, followed by the two
 nonconstant incidence sectors. -/
-def sectorConstant : ℝ →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) :=
-  (sectorEquiv (P := P) (L := L)).toLinearMap.comp
-    { toFun := fun a => ((a, 0), (0, 0))
-      map_add' := by intros; rfl
-      map_smul' := by intros; rfl }
+def sectorConstant : ℝ →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) where
+  toFun a := (fun _ => a, fun _ => a)
+  map_add' a b := rfl
+  map_smul' a b := rfl
 
-def sectorBipartition : ℝ →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) :=
-  (sectorEquiv (P := P) (L := L)).toLinearMap.comp
-    { toFun := fun b => ((0, b), (0, 0))
-      map_add' := by intros; rfl
-      map_smul' := by intros; rfl }
+def sectorBipartition : ℝ →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) where
+  toFun b := (fun _ => b, fun _ => -b)
+  map_add' a b := by ext <;> simp <;> ring
+  map_smul' a b := by ext <;> simp
 
-def sectorPlus : zeroSum P →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) :=
-  (sectorEquiv (P := P) (L := L)).toLinearMap.comp
-    { toFun := fun x => ((0, 0), (x, 0))
-      map_add' := by intros; rfl
-      map_smul' := by intros; rfl }
+def sectorPlus : zeroSum P →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) where
+  toFun x := ((x : P → ℝ), (balancedEquiv (P := P) (L := L) x : L → ℝ))
+  map_add' a b := by ext <;> simp <;> ring
+  map_smul' a b := by ext <;> simp
 
-def sectorMinus : zeroSum P →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) :=
-  (sectorEquiv (P := P) (L := L)).toLinearMap.comp
-    { toFun := fun x => ((0, 0), (0, x))
-      map_add' := by intros; rfl
-      map_smul' := by intros; rfl }
+def sectorMinus : zeroSum P →ₗ[ℝ] ((P → ℝ) × (L → ℝ)) where
+  toFun x := ((x : P → ℝ), -(balancedEquiv (P := P) (L := L) x : L → ℝ))
+  map_add' a b := by ext <;> simp <;> ring
+  map_smul' a b := by ext <;> simp
 
 /-- Every original point/line vector has unique coordinates in the four sectors. -/
 theorem existsUnique_sector_coordinates (z : (P → ℝ) × (L → ℝ)) :
@@ -288,21 +311,24 @@ theorem sector_finranks :
     Module.finrank ℝ (LinearMap.range (sectorBipartition (P := P) (L := L))) = 1 ∧
     Module.finrank ℝ (LinearMap.range (sectorPlus (P := P) (L := L))) = Fintype.card P - 1 ∧
     Module.finrank ℝ (LinearMap.range (sectorMinus (P := P) (L := L))) = Fintype.card P - 1 := by
+  let p : P := Classical.choice (Fintype.card_pos_iff.mp
+    (Nat.pos_of_ne_zero (card_points_ne_zero (P := P) (L := L))))
   have hc : Function.Injective (sectorConstant (P := P) (L := L)) := by
     intro a b h
-    exact congrArg (fun z => z.1.1) ((sectorEquiv (P := P) (L := L)).injective h)
+    exact congrArg (fun z : (P → ℝ) × (L → ℝ) => z.1 p) h
   have hb : Function.Injective (sectorBipartition (P := P) (L := L)) := by
     intro a b h
-    exact congrArg (fun z => z.1.2) ((sectorEquiv (P := P) (L := L)).injective h)
+    exact congrArg (fun z : (P → ℝ) × (L → ℝ) => z.1 p) h
   have hp : Function.Injective (sectorPlus (P := P) (L := L)) := by
     intro a b h
-    exact congrArg (fun z => z.2.1) ((sectorEquiv (P := P) (L := L)).injective h)
+    exact Subtype.ext (congrArg Prod.fst h)
   have hm : Function.Injective (sectorMinus (P := P) (L := L)) := by
     intro a b h
-    exact congrArg (fun z => z.2.2) ((sectorEquiv (P := P) (L := L)).injective h)
+    exact Subtype.ext (congrArg Prod.fst h)
   simp only [LinearMap.finrank_range_of_inj hc, LinearMap.finrank_range_of_inj hb,
     LinearMap.finrank_range_of_inj hp, LinearMap.finrank_range_of_inj hm,
-    Module.finrank_self, finrank_zeroSum P card_points_ne_zero, and_self]
+    Module.finrank_self, finrank_zeroSum P (card_points_ne_zero (P := P) (L := L))]
+  simp
 
 private lemma transpose_pairing (x : P → ℝ) (y : L → ℝ) :
     ∑ l, toLines x l * y l = ∑ p, x p * toPoints y p := by
@@ -330,7 +356,7 @@ private lemma balancedEquiv_dot (x y : zeroSum P) :
     _ = (rootOrder (P := P) (L := L))⁻¹ ^ 2 *
         (orderR (P := P) (L := L) * ∑ p : P, x p * y p) := by
       rw [transpose_pairing]
-      simp_rw [toPoints_toLines, y.property, add_zero]
+      simp_rw [toPoints_toLines, zeroSum_total y, add_zero]
       congr 1
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
@@ -345,6 +371,19 @@ private lemma balancedEquiv_dot (x y : zeroSum P) :
 def vertexDot (z w : (P → ℝ) × (L → ℝ)) : ℝ :=
   (∑ p, z.1 p * w.1 p) + ∑ l, z.2 l * w.2 l
 
+private lemma dot_add_constant (I : Type*) [Fintype I] (a b : ℝ) (x y : zeroSum I) :
+    (∑ i, (a + x i) * (b + y i)) =
+      (Fintype.card I : ℝ) * a * b + ∑ i, x i * y i := by
+  calc
+    _ = ∑ i, (a*b + a*y i + b*x i + x i*y i) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      ring
+    _ = _ := by
+      simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+        nsmul_eq_mul, ← Finset.mul_sum, zeroSum_total, mul_zero, add_zero]
+      ring
+
 /-- The four-sector coordinates are orthogonal, with constant-sector weight
 2v and nonconstant-sector weight 2. -/
 theorem sectorEquiv_dot (z w : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
@@ -352,21 +391,11 @@ theorem sectorEquiv_dot (z w : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
       2 * (Fintype.card P : ℝ) * (z.1.1 * w.1.1 + z.1.2 * w.1.2) +
       2 * ((∑ p : P, z.2.1 p * w.2.1 p) + ∑ p : P, z.2.2 p * w.2.2 p) := by
   rw [vertexDot, sectorEquiv_apply, sectorEquiv_apply]
-  have expand (I : Type*) [Fintype I] (a b : ℝ) (x y : zeroSum I) :
-      (∑ i, (a + x i) * (b + y i)) =
-        (Fintype.card I : ℝ) * a * b + ∑ i, x i * y i := by
-    calc
-      _ = ∑ i, (a*b + a*y i + b*x i + x i*y i) := by
-        apply Finset.sum_congr rfl
-        intro i _
-        ring
-      _ = _ := by
-        simp [Finset.sum_add_distrib, ← Finset.mul_sum, x.property, y.property]
   change (∑ p : P, (z.1.1 + z.1.2 + (z.2.1 + z.2.2) p) *
       (w.1.1 + w.1.2 + (w.2.1 + w.2.2) p)) +
       (∑ l : L, (z.1.1 - z.1.2 + balancedEquiv (L := L) (z.2.1 - z.2.2) l) *
       (w.1.1 - w.1.2 + balancedEquiv (L := L) (w.2.1 - w.2.2) l)) = _
-  rw [expand P, expand L, balancedEquiv_dot,
+  rw [dot_add_constant P, dot_add_constant L, balancedEquiv_dot,
     ← ProjectivePlane.card_points_eq_card_lines P L]
   simp only [Submodule.coe_add, Submodule.coe_sub, Pi.add_apply, Pi.sub_apply]
   simp_rw [add_mul, sub_mul, mul_add, mul_sub, Finset.sum_add_distrib,
@@ -391,7 +420,7 @@ private lemma toPoints_balanced (x : zeroSum P) :
   funext p
   change toPoints ((rootOrder (P := P) (L := L))⁻¹ • toLines x) p = _
   rw [map_smul]
-  simp only [Pi.smul_apply, smul_eq_mul, toPoints_toLines, x.property, add_zero]
+  simp only [Pi.smul_apply, smul_eq_mul, toPoints_toLines, zeroSum_total x, add_zero]
   rw [← rootOrder_sq]
   have hs := ne_of_gt (rootOrder_pos (P := P) (L := L))
   field_simp
@@ -433,13 +462,27 @@ private lemma center_sector (z : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
   have hP : mean (fun p : P => z.1.1 + z.1.2 + (z.2.1 p + z.2.2 p)) =
       z.1.1 + z.1.2 := by
     change mean ((fun _ : P => z.1.1 + z.1.2) + ((z.2.1 + z.2.2 : zeroSum P) : P → ℝ)) = _
-    rw [mean_add, mean_const card_points_ne_zero, mean_zeroSum, add_zero]
+    rw [mean_add, mean_const (card_points_ne_zero (P := P) (L := L)), mean_zeroSum, add_zero]
   have hL : mean (fun l : L => z.1.1 - z.1.2 +
       balancedEquiv (P := P) (L := L) (z.2.1 - z.2.2) l) = z.1.1 - z.1.2 := by
     change mean ((fun _ : L => z.1.1 - z.1.2) +
       ((balancedEquiv (L := L) (z.2.1 - z.2.2) : zeroSum L) : L → ℝ)) = _
-    rw [mean_add, mean_const card_lines_ne_zero, mean_zeroSum, add_zero]
-  ext i <;> simp [center, hP, hL] <;> ring
+    rw [mean_add, mean_const (card_lines_ne_zero (P := P) (L := L)), mean_zeroSum, add_zero]
+  apply Prod.ext
+  · funext p
+    change (z.1.1 + z.1.2 + (z.2.1 p + z.2.2 p)) -
+      ((mean (fun p : P => z.1.1 + z.1.2 + (z.2.1 p + z.2.2 p))) +
+       mean (fun l : L => z.1.1 - z.1.2 + balancedEquiv (L := L) (z.2.1 - z.2.2) l)) / 2 = _
+    rw [hP, hL]
+    simp only [zero_add]
+    ring
+  · funext l
+    change (z.1.1 - z.1.2 + balancedEquiv (L := L) (z.2.1 - z.2.2) l) -
+      ((mean (fun p : P => z.1.1 + z.1.2 + (z.2.1 p + z.2.2 p))) +
+       mean (fun l : L => z.1.1 - z.1.2 + balancedEquiv (L := L) (z.2.1 - z.2.2) l)) / 2 = _
+    rw [hP, hL]
+    simp only [zero_sub]
+    ring
 
 private lemma adjacency_sector (z : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
     adjacency (sectorEquiv (L := L) z) = sectorEquiv (L := L)
@@ -450,7 +493,7 @@ private lemma adjacency_sector (z : (ℝ × ℝ) × (zeroSum P × zeroSum P)) :
   rw [sectorEquiv_apply, sectorEquiv_apply]
   change (toPoints ((fun _ : L => z.1.1 - z.1.2) +
     (balancedEquiv (L := L) (z.2.1 - z.2.2) : L → ℝ)),
-    toLines ((fun _ : P => z.1.1 + z.1.2) + (z.2.1 + z.2.2 : zeroSum P))) = _
+    toLines ((fun _ : P => z.1.1 + z.1.2) + ((z.2.1 + z.2.2 : zeroSum P) : P → ℝ))) = _
   rw [map_add, map_add, toPoints_const, toPoints_balanced, toLines_const]
   simp only [Submodule.coe_add, map_add, toLines_balanced, Submodule.coe_smul,
     map_sub, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Pi.sub_apply]
@@ -499,6 +542,7 @@ private lemma gramAction_quadratic (delta : ℝ)
   dsimp [bipartitionScalar, plusScalar, minusScalar]
   ring
 
+include L in
 private lemma exists_nonzero_balanced : ∃ x : zeroSum P, x ≠ 0 := by
   have hv : 1 < Fintype.card P := by
     rw [ProjectivePlane.card_points P L]
@@ -523,7 +567,7 @@ theorem gramAction_nonnegative_iff (delta : ℝ) :
       0 ≤ bipartitionScalar (P := P) (L := L) delta ∧
       0 ≤ plusScalar (P := P) (L := L) delta ∧
       0 ≤ minusScalar (P := P) (L := L) delta := by
-  have hv : (0 : ℝ) < Fintype.card P := by exact_mod_cast Nat.pos_of_ne_zero card_points_ne_zero
+  have hv : (0 : ℝ) < Fintype.card P := by exact_mod_cast Nat.pos_of_ne_zero (card_points_ne_zero (P := P) (L := L))
   constructor
   · intro h
     have hb := h (sectorEquiv (L := L) ((0, 1), (0, 0)))
@@ -561,7 +605,7 @@ theorem gramAction_nonnegative_interval (delta : ℝ) :
   have hs2 := rootOrder_sq (P := P) (L := L)
   have hs1 : 1 < rootOrder (P := P) (L := L) := by
     have hq2 : 2 ≤ orderR (P := P) (L := L) := by
-      exact_mod_cast ProjectivePlaneIntegerLattice.q_ge_two (P := P) (L := L)
+      exact Int.cast_le.mpr (ProjectivePlaneIntegerLattice.q_ge_two (P := P) (L := L))
     nlinarith
   have hden : 0 < 1 + rootOrder (P := P) (L := L) := by linarith
   simp only [bipartitionScalar, plusScalar, minusScalar]
@@ -590,6 +634,9 @@ def vertexEquiv : ((P ⊕ L) → ℝ) ≃ₗ[ℝ] ((P → ℝ) × (L → ℝ)) w
   map_add' f g := rfl
   map_smul' a f := rfl
 
+@[simp] private lemma vertexEquiv_apply (f : (P ⊕ L) → ℝ) :
+    vertexEquiv f = (f ∘ Sum.inl, f ∘ Sum.inr) := rfl
+
 private def allOnes : Matrix (P ⊕ L) (P ⊕ L) ℝ := fun _ _ => 1
 
 /-- The adjacency matrix of the original incidence graph. -/
@@ -614,7 +661,8 @@ def centeredGram (delta : ℝ) : Matrix (P ⊕ L) (P ⊕ L) ℝ :=
 private lemma adjacencyMatrix_action (f : (P ⊕ L) → ℝ) :
     vertexEquiv (adjacencyMatrix *ᵥ f) = adjacency (vertexEquiv f) := by
   rw [adjacencyMatrix, Matrix.fromBlocks_mulVec]
-  simp [vertexEquiv, adjacency, toPoints, toLines]
+  simp only [Matrix.zero_mulVec, zero_add, add_zero, vertexEquiv_apply]
+  rfl
 
 private lemma allOnes_action (f : (P ⊕ L) → ℝ) :
     allOnes *ᵥ f = fun _ => ∑ i, f i := by
@@ -626,8 +674,8 @@ private lemma centeringMatrix_action (f : (P ⊕ L) → ℝ) :
   classical
   rw [centeringMatrix, Matrix.sub_mulVec, Matrix.one_mulVec, Matrix.smul_mulVec, allOnes_action]
   have hc := ProjectivePlane.card_points_eq_card_lines P L
-  have hv : (Fintype.card P : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr card_points_ne_zero
-  ext i <;> simp [vertexEquiv, center, mean, Fintype.sum_sum_type,
+  have hv : (Fintype.card P : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (card_points_ne_zero (P := P) (L := L))
+  ext i <;> simp [vertexEquiv_apply, center, mean, Fintype.sum_sum_type,
     Fintype.card_sum, ← hc] <;> field_simp <;> ring
 
 private lemma center_idempotent (z : (P → ℝ) × (L → ℝ)) : center (center z) = center z := by
@@ -637,8 +685,8 @@ private lemma center_idempotent (z : (P → ℝ) × (L → ℝ)) : center (cente
 private lemma center_allOnes (f : (P ⊕ L) → ℝ) :
     center (vertexEquiv (allOnes *ᵥ f)) = 0 := by
   rw [allOnes_action]
-  ext i <;> simp [vertexEquiv, center, mean_const card_points_ne_zero,
-    mean_const card_lines_ne_zero]
+  ext i <;> simp [vertexEquiv_apply, Function.comp_def, center, mean_const (card_points_ne_zero (P := P) (L := L)),
+    mean_const (card_lines_ne_zero (P := P) (L := L))]
 
 /-- The four-sector operator is exactly the actual centered distance matrix,
 under the original-label coordinate identification. -/
@@ -673,7 +721,9 @@ private lemma centeredGram_hermitian (delta : ℝ) :
 
 private lemma dot_vertex (f g : (P ⊕ L) → ℝ) :
     dotProduct f g = vertexDot (vertexEquiv f) (vertexEquiv g) := by
-  simp [dotProduct, Fintype.sum_sum_type, vertexDot, vertexEquiv]
+  change (∑ i, f i * g i) =
+    (∑ p, f (Sum.inl p) * g (Sum.inl p)) + ∑ l, f (Sum.inr l) * g (Sum.inr l)
+  exact Fintype.sum_sum_type _
 
 /-- Exact PSD interval for the doubly centered matrix of the original
 projective-plane incidence distance assignment. -/
