@@ -24,7 +24,7 @@ open Matrix
 open scoped BigOperators InnerProductSpace ComplexOrder
 open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
-  (projector trace_projectors)
+  (projector projector_trace trace_projectors)
 
 namespace D5.S3.Quantum.Contextuality.PureStateHTMBBound
 
@@ -214,10 +214,8 @@ private theorem discrimination_bound {d : ℕ}
       apply Finset.sum_congr rfl
       intro k _
       have ht := D5.S3.Quantum.Subentropy.GuessingProbability.measurement_trace_sum
-          (projector ((stdOrthonormalBasis ℂ s) k : EuclideanSpace ℂ (Fin d))) (by
-            rw [projector, trace_vecMulVec]
-            exact inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ)
-              ((stdOrthonormalBasis ℂ s).orthonormal.1 k)) m hm.2
+          (projector ((stdOrthonormalBasis ℂ s) k : EuclideanSpace ℂ (Fin d)))
+          (projector_trace _ ((stdOrthonormalBasis ℂ s).orthonormal.1 k)) m hm.2
       simp_rw [trace_mul_comm (m _)] at ht
       exact ht
     _ = Module.finrank ℂ s := by simp
@@ -250,9 +248,7 @@ private theorem constant_discrimination {d : ℕ}
     ∑ b, (projector (v b) * m b).trace.re = 1 := by
   simp_rw [h]
   have ht := D5.S3.Quantum.Subentropy.GuessingProbability.measurement_trace_sum
-      (projector (v 0)) (by
-        rw [projector, trace_vecMulVec]
-        exact inner_self_eq_one_of_norm_eq_one hv) m hm
+      (projector (v 0)) (projector_trace _ hv) m hm
   simp_rw [trace_mul_comm (m _)] at ht
   exact ht
 

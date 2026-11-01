@@ -44,7 +44,7 @@ def meanOutput {d : ℕ} {ι : Type*} [Fintype ι] (α : ι → ℝ)
     (ψ : ι → EuclideanSpace ℂ (Fin d)) : Matrix (Fin d) (Fin d) ℂ :=
   ∑ k, ((α k / d : ℝ) : ℂ) • projector (ψ k)
 
-private theorem projector_trace {d : ℕ} (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
+theorem projector_trace {d : ℕ} (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
     (projector v).trace = 1 := by
   rw [projector, trace_vecMulVec]
   exact inner_self_eq_one_of_norm_eq_one hv

@@ -14,6 +14,14 @@ internal sealed class EntanglementBreakingOverlapPurityDocument : IScribeDocumen
         Blocks(
             Entry("projector", "projector", "Pure output projectors",
                 "For a vector v in complex Euclidean d-space, projector v is the actual complex matrix with entries v_i times the conjugate of v_j. A unit vector gives a positive semidefinite matrix of trace one.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("projector-trace"),
+                DeclarationHandle.Create(Prefix + "projector_trace"),
+                H("Unit-vector projectors have trace one"),
+                StatementSource.FromAuthor(ProjectorTraceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural dimension and every unit complex Euclidean vector, its outer projector has complex trace one."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("trace-projectors"),
                 DeclarationHandle.Create(Prefix + "trace_projectors"),
                 H("Projector trace products are squared overlaps"),
@@ -31,6 +39,21 @@ internal sealed class EntanglementBreakingOverlapPurityDocument : IScribeDocumen
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula ProjectorTraceFormula()
+    {
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula space = Call("EuclideanSpace", complex, Call("Fin", F.Id("d")));
+        Formula v = F.Id("v");
+        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("d"),
+                    Seq(Mathbb, Grp(F.Id("N")))),
+                new Formula.BoundVariable(FormulaIdentifier.Create("v"), space),
+            ],
+            Seq(new Formula.Norm(v), Sp, Eq, Sp, D(1), Sp, Rightarrow, Sp,
+                Call("trace", Call("projector", v)), Sp, Eq, Sp, D(1))));
+    }
 
     private static Formula TraceProjectorsFormula()
     {
