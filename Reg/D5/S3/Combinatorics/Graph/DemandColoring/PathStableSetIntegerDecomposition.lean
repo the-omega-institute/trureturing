@@ -45,7 +45,7 @@ def registration : Registration arena (type_of% (@exists_admissible_layers)) := 
   decide
 
 noncomputable def registration_1 :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@exists_admissible_layers)
       (type_of% (realize signature (fun (_ : Unit) (p : signature.Params) (i : Fin p.1) => p.2.2 i)
         (fun e => nomatch e))) Unit Unit := {
@@ -118,7 +118,7 @@ def registration : Registration arena (type_of% (@lattice_mem_nat_smul_polytope_
   norm_num
 
 noncomputable def registration_1 :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@lattice_mem_nat_smul_polytope_iff)
       (type_of% (realize signature
         (fun (_ : Unit) (p : signature.Params) (i : Fin p.1) => (p.2.2 i : ℝ))

@@ -63,7 +63,7 @@ def registration : Registration arena.{u} (type_of% (@exists_independent_layers.
     decide
 
 noncomputable def registration_1 :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@exists_independent_layers.{u})
       (type_of% (realize signature.{u}
         (fun (_ : Unit) (p : signature.Params) (v : p.1) => p.2.2.2.2 v)
