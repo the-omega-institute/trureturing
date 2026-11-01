@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Positive duration reconstructs recurrent named paths exactly when there is no branching. -/
+   digest: Positive clocks reconstruct recurrent named paths iff there is no branching. -/
 
 import Mathlib.Combinatorics.Quiver.Path
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
+
+/-! Endpoint-duration reconstruction for actual named paths on a recurrent quiver. -/
 
 set_option autoImplicit false
 
@@ -100,7 +102,7 @@ private theorem deterministic_duration_unique
         simpa only [duration_comp, Quiver.Hom.toPath, duration, zero_add,
           add_right_inj] using heq
       have hsmall : p'.length < n := by
-        simp only [Quiver.Path.length_comp, Quiver.length_toPath] at hlen
+        simp only [Quiver.Path.length_comp, Quiver.Path.length_toPath] at hlen
         omega
       have hrec := ih p'.length hsmall p' q' rfl htail
       cases hrec
@@ -135,7 +137,7 @@ theorem readout_injective_iff_no_branching
     have hloops := p.comp_injective_right hpath
     have hw := congrArg edgeWord hloops
     simp only [U, W, edgeWord_comp, Quiver.Hom.toPath, edgeWord,
-      List.nil_append, List.singleton_append, List.cons_append] at hw
+      List.nil_append, List.cons_append] at hw
     have he : (⟨z, a, e⟩ : NamedEdge V) = ⟨z, b, f⟩ := (List.cons.inj hw).1
     exact eq_of_heq (Sigma.mk.inj he).2
   · intro unique x y hxy
