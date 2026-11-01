@@ -608,13 +608,23 @@ theorem expanded_route_length (e : Edge) :
 theorem path_coordinate (e : Edge) (i : Fin (3 * subdivision.k e + 2)) :
     coordinate (subdivision.pathVertex e i) = Poly.sample (route e).corners i.val := by
   have hf := polyline_facts e
-  unfold PrescribedSubdivision.pathVertex
-  split_ifs with h0 hL
-  · simpa only [coordinate, h0] using hf.2.2.2.1.symm
-  · simpa only [coordinate, hL] using hf.2.2.2.2.symm
-  · change Poly.sample (route e).corners (i.val - 1 + 1) = _
-    congr 1
-    omega
+  by_cases h0 : i.val = 0
+  · have hi : i = ⟨0, by omega⟩ := Fin.ext h0
+    subst i
+    rw [subdivision.pathVertex_zero]
+    exact hf.2.2.2.1.symm
+  · by_cases hL : i.val = 3 * subdivision.k e + 1
+    · have hi : i = ⟨3 * subdivision.k e + 1, by omega⟩ := Fin.ext hL
+      subst i
+      rw [subdivision.pathVertex_last]
+      exact hf.2.2.2.2.symm
+    · let j : Fin (3 * subdivision.k e) := ⟨i.val - 1, by have := i.isLt; omega⟩
+      have hi : i = ⟨j.val + 1, by have := j.isLt; omega⟩ := by
+        apply Fin.ext
+        dsimp [j]
+        omega
+      rw [hi, subdivision.pathVertex_inner]
+      rfl
 
 /-- The source-defined finite path really is the verifier's lattice enumeration,
 including every detour, every corner, and the zero-length-segment convention. -/

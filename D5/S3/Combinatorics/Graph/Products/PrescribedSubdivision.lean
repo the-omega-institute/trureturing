@@ -146,9 +146,11 @@ theorem edgePair_path (s : D.Slot) :
     inner_eq_iff, Sum.inl_ne_inr, Sum.inr_ne_inl] <;> omega
 
 theorem arc_edgePair (s : D.Slot) : D.Arc (D.edgePair s).1 (D.edgePair s).2 := by
+  simp only [D.edgePair_path]
   rcases s with ⟨e, i⟩
   have hi := i.isLt
-  unfold edgePair
+  have hp := D.positive e
+  unfold pathVertex
   dsimp
   split_ifs <;> simp_all [Arc] <;> omega
 
@@ -218,11 +220,18 @@ theorem edgePair_injective : Function.Injective D.edgePair := by
   · by_cases hj0 : j.val = 0
     · simp only [edgePair, hi0, hj0, ↓reduceDIte] at hf
       cases hf
-    · have hh : e = f ∧ i.val - 1 = j.val - 1 := by
-        simpa only [edgePair, hi0, hj0, ↓reduceDIte, inner_eq_iff] using hf
-      obtain ⟨rfl, hij⟩ := hh
+    · have hef : e = f := by
+        have hh : e = f ∧ i.val - 1 = j.val - 1 := by
+          simpa only [edgePair, hi0, hj0, ↓reduceDIte, inner_eq_iff] using hf
+        exact hh.1
+      subst f
+      have hpath :
+          D.pathVertex e ⟨i.val, by omega⟩ =
+            D.pathVertex e ⟨j.val, by omega⟩ := by
+        simpa only [D.edgePair_path] using hf
+      have hpos := D.pathVertex_injective e hpath
       congr 1
-      exact Fin.ext (by omega)
+      exact Fin.ext (congrArg Fin.val hpos)
 
 def edge (s : D.Slot) : Sym2 D.Vertex := s((D.edgePair s).1, (D.edgePair s).2)
 
