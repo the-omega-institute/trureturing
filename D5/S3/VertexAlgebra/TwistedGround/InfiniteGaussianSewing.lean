@@ -55,7 +55,8 @@ private theorem row_finite (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I,
       gaussianCoefficient (Matrix.fromBlocks P (fun x (i : F) => R x i.val)
         (fun i : F => fun x => R x i.val) (A.block F)) (d.sumElim n) := by
   let e : X ⊕ F → X ⊕ I := Sum.map id Subtype.val
-  have he : Function.Injective e := Sum.map_injective Function.injective_id Subtype.val_injective
+  have he : Function.Injective e :=
+    Sum.map_injective.mpr ⟨Function.injective_id, Subtype.val_injective⟩
   have hd : (d.sumElim n).mapDomain e = d.sumElim (n.mapDomain Subtype.val) := by
     rw [Finsupp.sumElim_eq_add, Finsupp.mapDomain_add, ← Finsupp.mapDomain_comp,
       ← Finsupp.mapDomain_comp, Finsupp.sumElim_eq_add, ← Finsupp.mapDomain_comp]

@@ -103,11 +103,14 @@ theorem ordered_entries_tendsto (A B : Data I) (r s : ℓ²(I, ℂ)) :
     Tendsto (fun F => bilinear r ((1 - compressed B F * compressed A F)⁻¹ʳ s) -
       bilinear r ((1 - coordinateProjection F) s)) atTop
       (𝓝 (bilinear r ((1 - B.oneParticle * A.oneParticle)⁻¹ʳ s))) := by
+  have hev : Continuous (fun T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ) => T s) :=
+    continuous_id.clm_apply continuous_const
   constructor
   · exact ((bilinear r).continuous.tendsto _).comp
-      (((resolvent_tendsto A B).mul (compressed_tendsto B)).clm_apply tendsto_const_nhds)
+      (hev.tendsto _ |>.comp
+        ((resolvent_tendsto A B).mul (compressed_tendsto B)))
   · simpa using (((bilinear r).continuous.tendsto _).comp
-      ((resolvent_tendsto A B).clm_apply tendsto_const_nhds)).sub
+      (hev.tendsto _ |>.comp (resolvent_tendsto A B))).sub
         (mixed_complement_tendsto r s)
 
 private theorem embedded_one (F : Finset I) :
