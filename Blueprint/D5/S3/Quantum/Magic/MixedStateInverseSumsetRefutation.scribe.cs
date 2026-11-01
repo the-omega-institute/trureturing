@@ -142,7 +142,7 @@ internal sealed class MixedStateInverseSumsetRefutationDocument : IScribeDocumen
             And(NotEqual(LocalCall("charFun", X("ρ"), X("x")), Typed(D(0), Complexes())),
                 NotEqual(Norm(LocalCall("charFun", X("ρ"), X("x"))), Typed(D(1), Reals())))),
             Typed(Qualified("Finset", "univ"), FinsetOf(PhaseSpace())));
-        Formula maximum = Seq(Max, Underscore, Grp(Member(X("x"), X("a"))), Sp,
+        Formula maximum = Seq(new Formula.Subscript(Max, Member(X("x"), X("a"))), Sp,
             Norm(LocalCall("charFun", X("ρ"), X("x"))));
         return Operators(Let("a", FinsetOf(PhaseSpace()), selected,
             Equal(Typed(LocalCall("magicGap", X("ρ")), Reals()),
@@ -197,8 +197,10 @@ internal sealed class MixedStateInverseSumsetRefutationDocument : IScribeDocumen
     }
 
     private static Formula Operators(Formula body) => Dimension(All("ρ", Mat(), body));
-    private static Formula Dimension(Formula body) => All("d", Naturals(),
-        Imp(At(Qualified("NeZero"), X("d")), body));
+    private static Formula Dimension(Formula body) =>
+        Seq(Forall, Sp, Typed(X("d"), Naturals()), Sp,
+            OpenBracket, At(Qualified("NeZero"), X("d")), CloseBracket, Comma, Sp,
+            Parenthesized(body));
     private static Formula Mat() => At(Qualified("Matrix"), Residues(), Residues(), Complexes());
     private static Formula Residues() => At(Qualified("ZMod"), X("d"));
     private static Formula PhaseSpace() => Seq(Residues(), Sp, Times, Sp, Residues());
