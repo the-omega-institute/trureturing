@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: A finite-family squared-error comparison aggregates a two-term Hilbert--Schmidt decomposition.
-   source: Lemma 10.2 of the four-path full-record recovery theory.
  -/
 
 import D5.S3.Quantum.Recovery.FourPathWeightedEqualityRemainder

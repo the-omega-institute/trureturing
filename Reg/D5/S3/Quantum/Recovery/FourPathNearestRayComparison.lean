@@ -24,7 +24,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ _ => true) (fun e _ => nomatch e)
+  realize signature (fun _ _ b => b) (fun e _ => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e _ => nomatch e)
@@ -33,12 +33,12 @@ abbrev arena : Arena where
   signature := signature
   Law obs := ∀ {J : Type*} [Fintype J]
     (K B E F : J → Matrix Index Index ℂ) (τ dSq : J → ℝ) (c : ℝ),
-    (∀ j, K j - B j = E j + F j) →
-    (∀ j, ‖E j‖ ^ 2 ≤ 2 * τ j) →
-    (∀ j, ‖F j‖ ^ 2 ≤ c * dSq j) →
-    obs.readout () () true = true ∧
-      finite_family_error_aggregation K B E F τ dSq c
-        (by assumption) (by assumption) (by assumption)
+    (hdecomp : ∀ j, K j - B j = E j + F j) →
+    (hE : ∀ j, ‖E j‖ ^ 2 ≤ 2 * τ j) →
+    (hF : ∀ j, ‖F j‖ ^ 2 ≤ c * dSq j) →
+    (obs.readout () () true = true) ∧
+      (∑ j, ‖K j - B j‖ ^ 2 ≤
+        4 * (∑ j, τ j) + 2 * c * (∑ j, dSq j))
 
 abbrev claim : Prop := ∀ {J : Type*} [Fintype J]
     (K B E F : J → Matrix Index Index ℂ) (τ dSq : J → ℝ) (c : ℝ),
@@ -53,17 +53,18 @@ theorem actual_law : arena.Law actual := by
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  let K : Fin 0 → Matrix Index Index ℂ := fun j => j.elim0
-  let B : Fin 0 → Matrix Index Index ℂ := fun j => j.elim0
-  let E : Fin 0 → Matrix Index Index ℂ := fun j => j.elim0
-  let F : Fin 0 → Matrix Index Index ℂ := fun j => j.elim0
-  let τ : Fin 0 → ℝ := fun j => j.elim0
-  let dSq : Fin 0 → ℝ := fun j => j.elim0
-  have hh := h (J := Fin 0) K B E F τ dSq 0
-    (by intro j; exact j.elim0)
-    (by intro j; exact j.elim0)
-    (by intro j; exact j.elim0)
-  exact Bool.noConfusion (by simpa [rejected, realize] using hh.1)
+  let J := ULift Unit
+  let K : J → Matrix Index Index ℂ := fun _ => 0
+  let B : J → Matrix Index Index ℂ := fun _ => 0
+  let E : J → Matrix Index Index ℂ := fun _ => 0
+  let F : J → Matrix Index Index ℂ := fun _ => 0
+  let τ : J → ℝ := fun _ => 0
+  let dSq : J → ℝ := fun _ => 0
+  have hh := h (J := J) K B E F τ dSq 0
+    (by intro j; simp [K, B, E, F])
+    (by intro j; simp [E, τ])
+    (by intro j; simp [F, dSq])
+  exact Bool.false_ne_true (by simpa [rejected, realize] using hh.1)
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -102,7 +103,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ _ => true) (fun e _ => nomatch e))
+  readout := some (realize signature (fun _ _ b => b) (fun e _ => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -123,7 +124,7 @@ abbrev mass_signature : Signature where
   finiteAnchor := inferInstance
 
 def mass_actual : Realization mass_signature :=
-  realize mass_signature (fun _ _ _ => true) (fun e _ => nomatch e)
+  realize mass_signature (fun _ _ b => b) (fun e _ => nomatch e)
 
 def mass_rejected : Realization mass_signature :=
   realize mass_signature (fun _ _ _ => false) (fun e _ => nomatch e)
@@ -131,12 +132,17 @@ def mass_rejected : Realization mass_signature :=
 abbrev mass_arena : Arena where
   signature := mass_signature
   Law obs := ∀ {J : Type*} [Fintype J] (p q : J → ℝ) (σ : J → Bool),
-    (∀ j, 0 ≤ p j) → (∀ j, 0 ≤ q j) →
-    (∑ j, p j = 1) → (∑ j, q j = 1) →
-    (∀ j, (σ j = true ∧ q j ≤ p j) ∨ (σ j = false ∧ p j < q j)) →
-    obs.readout () () true = true ∧
-      selected_mass_bounds_and_defect p q σ
-        (by assumption) (by assumption) (by assumption) (by assumption) (by assumption)
+    (hp : ∀ j, 0 ≤ p j) → (hq : ∀ j, 0 ≤ q j) →
+    (hsumP : ∑ j, p j = 1) → (hsumQ : ∑ j, q j = 1) →
+    (hsel : ∀ j, (σ j = true ∧ q j ≤ p j) ∨ (σ j = false ∧ p j < q j)) →
+    (obs.readout () () true = true) ∧
+      (0 ≤ ∑ j, if σ j = true then p j else 0) ∧
+        (∑ j, if σ j = true then p j else 0) ≤ 1 ∧
+        (0 ≤ ∑ j, if σ j = true then 0 else q j) ∧
+        (∑ j, if σ j = true then 0 else q j) ≤ 1 ∧
+        (1 - ∑ j, if σ j = true then p j else 0) +
+            (1 - ∑ j, if σ j = true then 0 else q j) =
+          ∑ j, min (p j) (q j)
 
 abbrev mass_claim : Prop := ∀ {J : Type*} [Fintype J] (p q : J → ℝ) (σ : J → Bool),
     (∀ j, 0 ≤ p j) → (∀ j, 0 ≤ q j) →
@@ -156,10 +162,11 @@ theorem mass_actual_law : mass_arena.Law mass_actual := by
 
 theorem mass_rejected_law : ¬ mass_arena.Law mass_rejected := by
   intro h
-  have hh := h (J := Fin 0) (fun j => j.elim0) (fun j => j.elim0) (fun j => j.elim0)
-    (by intro j; exact j.elim0) (by intro j; exact j.elim0)
-    (by simp) (by simp) (by intro j; exact j.elim0)
-  exact Bool.noConfusion (by simpa [mass_rejected, realize] using hh.1)
+  let J := ULift Unit
+  have hh := h (J := J) (fun _ => 1) (fun _ => 1) (fun _ => true)
+    (by intro j; simp) (by intro j; simp)
+    (by simp) (by simp) (by intro j; simp)
+  exact Bool.false_ne_true (by simpa [mass_rejected, realize] using hh.1)
 
 def mass_source_registration : Registration mass_arena mass_claim where
   actual := mass_actual
@@ -198,7 +205,7 @@ def mass_registration :
   realization := .source mass_arena ⟨mass_source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize mass_signature (fun _ _ _ => true) (fun e _ => nomatch e))
+  readout := some (realize mass_signature (fun _ _ b => b) (fun e _ => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
