@@ -6,15 +6,13 @@
    utility: none
    digest: Weighted path continuants and their edge-parameter variations for Question 5.11. -/
 
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.Tactic
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
 /-! Branch-polynomial algebra for the complete positive-even double-path nSSP event. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
@@ -49,6 +47,26 @@ def variation (q dq : ℕ → ℝ) : ℕ → ℝ[X]
   | 1 => 0
   | k + 2 => X * variation q dq (k + 1) -
       C (dq k) * continuant q k - C (q k) * variation q dq k
+
+/-- A simultaneous polynomial perturbation `q k + z * dq k`.
+The outer variable is the perturbation parameter; the inner variable is spectral. -/
+def deformedContinuant (q dq : ℕ → ℝ) : ℕ → (ℝ[X])[X]
+  | 0 => 1
+  | 1 => C X
+  | k + 2 => C X * deformedContinuant q dq (k + 1) -
+      (C (C (q k)) + C (C (dq k)) * X) * deformedContinuant q dq k
+
+/-- The formal recurrence is exactly the constant and linear coefficient of the deformation. -/
+theorem continuant_linearization (q dq : ℕ → ℝ) (n : ℕ) :
+    (deformedContinuant q dq n).coeff 0 = continuant q n ∧
+      (deformedContinuant q dq n).coeff 1 = variation q dq n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [deformedContinuant, continuant, variation]
+  | one => simp [deformedContinuant, continuant, variation]
+  | more n h0 h1 =>
+      constructor <;>
+        simp [deformedContinuant, continuant, variation, mul_coeff_one,
+          h0.1, h0.2, h1.1, h1.2] <;> ring
 
 private lemma continuant_coeff (q : ℕ → ℝ) (n : ℕ) :
     (continuant q n).coeff n = 1 ∧

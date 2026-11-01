@@ -120,12 +120,112 @@ def registration :
     coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "domain", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "domain", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def matrixSignature : DependentFamily.Signature where
+  Params := ℕ
+  State := fun _ => ℕ → ℝ
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ[X]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def matrixActual : DependentFamily.Realization matrixSignature :=
+  DependentFamily.realize matrixSignature
+    (fun role n b => if role then continuant b n else (weightedPath b n).charpoly)
+    (fun e => nomatch e)
+
+def matrixArena : DependentFamily.Arena where
+  signature := matrixSignature
+  Law := fun R => ∀ (b : ℕ → ℝ) (n : ℕ),
+    R.readout false n b = R.readout true n (fun k => b k ^ 2)
+
+abbrev matrixSourceScope := type_of% (@weighted_path_charpoly)
+
+lemma matrix_source_bridge : matrixSourceScope ↔ matrixArena.Law matrixActual := Iff.rfl
+
+lemma matrix_actual_positive : matrixArena.Law matrixActual :=
+  matrix_source_bridge.mp weighted_path_charpoly
+
+def matrixRejected (role : Bool) : DependentFamily.Realization matrixSignature :=
+  DependentFamily.realize matrixSignature
+    (fun index n b => matrixActual.readout index n b + if index = role then 1 else 0)
+    (fun e => nomatch e)
+
+lemma matrix_rejected_law (role : Bool) : ¬ matrixArena.Law (matrixRejected role) := by
+  intro h
+  have he := h (fun _ => 0) 0
+  cases role <;>
+    norm_num [matrixRejected, matrixActual, DependentFamily.realize, continuant,
+      Matrix.charpoly_isEmpty] at he
+
+lemma matrix_dependence :
+    DependentFamily.ObservationalDependence matrixSignature matrixActual := by
+  intro role
+  refine ⟨2, (fun _ => 1), (fun _ => 0), ?_⟩
+  cases role <;>
+    simp [matrixActual, DependentFamily.realize, weighted_path_charpoly, continuant]
+
+def matrixFamilyRegistration : DependentFamily.Registration matrixArena matrixSourceScope where
+  actual := matrixActual
+  bridge := matrix_source_bridge
+  variation := ⟨matrix_actual_positive, matrixRejected false, matrix_rejected_law false⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨matrixRejected role, ?_, rfl, matrix_rejected_law role⟩
+      intro index hne
+      funext n b
+      simp [matrixRejected, DependentFamily.realize, hne]
+    · intro e; exact nomatch e
+  dependence := matrix_dependence
+
+def matrixRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@weighted_path_charpoly) (DependentFamily.Realization matrixSignature) Type Unit where
+  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.weighted_path_charpoly.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.matrixFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨matrixArena⟩
+  objectArena := .source ⟨matrixArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source matrixArena ⟨matrixFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize matrixSignature
+    (fun role n b => if role then continuant b n else (weightedPath b n).charpoly)
+    (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := some (ℕ → ℝ)
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "fn", "arg"]
+      booleanPredicate := false }, {
+      path := #["body", "body", "arg"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
