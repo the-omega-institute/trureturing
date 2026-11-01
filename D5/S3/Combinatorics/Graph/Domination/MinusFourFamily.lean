@@ -66,8 +66,9 @@ instance : DecidableRel sourceGraph.Adj := fun _ _ => inferInstanceAs
   (Decidable (_ ∈ sourceEdges ∨ _ ∈ sourceEdges))
 
 private theorem source_leaf : Leaf sourceGraph (5 : Fin 33) := by
-  apply SimpleGraph.degree_eq_one_iff_existsUnique_adj.mpr
-  exact ⟨4, by decide, by decide⟩
+  have hu : ∃! w, sourceGraph.Adj (5 : Fin 33) w := by decide
+  classical
+  exact SimpleGraph.degree_eq_one_iff_existsUnique_adj.mpr hu
 
 private theorem source_leaf_edge : sourceGraph.Adj (5 : Fin 33) 4 := by decide
 
@@ -99,7 +100,10 @@ private theorem evaluation_iso {V W : Type*} [Fintype V] [DecidableEq V]
   classical
   unfold evaluation
   rw [← domSets_map e, Finset.sum_map]
-  simp [setEmbedding]
+  apply sum_congr rfl
+  intro S _
+  change x ^ S.card = x ^ (S.map e.toEquiv.toEmbedding).card
+  rw [card_map]
 
 /-- The complete unbounded-order event follows from the single exact base evaluation.
 No base root is assumed elsewhere in this construction. -/
