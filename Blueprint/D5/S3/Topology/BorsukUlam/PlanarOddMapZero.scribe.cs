@@ -14,10 +14,10 @@ internal sealed class PlanarOddMapZeroDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Topology/BorsukUlam/PlanarOddMapZero.planar_odd_map_zero"),
             H("A zero of an odd map on the two-sphere"),
             StatementSource.FromAuthor(Disp(Statement())),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/borsuk1933spheres")),
             Blocks(
                 Paragraph(Text(
-                    "This is the two-dimensional case of the classical Borsuk–Ulam theorem, identifying the target plane with the complex numbers. "
+                    "This is Borsuk's Satz II (1933) for n=2 applied to an odd map, identifying the target plane with the complex numbers, proved here from the covering-space lift. "
                         + "The function f is defined on the whole ambient Euclidean space, but continuity and oddness are required only on its unit sphere. "
                         + "No restriction on f away from the sphere is used.")),
                 Paragraph(Text(
