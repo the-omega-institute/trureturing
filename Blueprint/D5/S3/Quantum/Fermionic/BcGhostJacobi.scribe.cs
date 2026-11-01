@@ -18,32 +18,20 @@ internal sealed class BcGhostJacobiDocument : IScribeDocumentDefinition
         return args.Length == 0 ? fn : new Formula.Apply(fn, [.. args]);
     }
     private static Formula A(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula Smul(Formula x, Formula y) => C("smul", x, y);
     private static Formula E(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
-    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
-    private static Formula Neg(Formula x) => new Formula.Negate(x);
-    private static Formula Cast(Formula x) => C("Int.cast", x);
-    private static Formula Cube(Formula x) => Seq(x, Caret, Grp(D(3)));
     private static Formula Int => V("Int");
     private static Formula Zero => D(0);
-    private static Formula B(Formula r) => C("b", r);
-    private static Formula G(Formula r) => C("c", r);
     private static Formula Q => C("Qg");
     private static Formula R(Formula r) => C("R", r);
-    private static Formula L(Formula r) => C("L", r);
-    private static Formula Anti(Formula x, Formula y) => Add(Mul(x,y),Mul(y,x));
     private static Formula Comm(Formula x, Formula y) => Sub(Mul(x,y),Mul(y,x));
-    private static Formula Lam(Formula x, Formula body) => Seq(Open,x,Mapsto,body,Close);
-    private static Formula Sum(Formula x, Formula type, Formula body) => Seq(FormulaDslSum,Underscore,Grp(x,InMacro,Sp,type),Caret,Grp(V("fin")),body);
-    private static Formula FormulaDslSum => F.Sum;
     private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
         DescribeId.Create("bc-ghost-jacobi-" + name.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(name.Replace("_", " ")), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     public DocumentDefinition Create()
     {
-        var p=V("p"); var q=V("q"); var r=V("r"); var m=V("m"); var n=V("n"); var v=V("v"); var pq=V("pq");
+        var r=V("r"); 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Actual finite triple-c Witt cancellation",H("Finite Witt Jacobi cancellation"),Blocks(
             Paragraph(Text("The formulas are the classical bc ghost BRST construction, with vacuum cuts b at minus one and c at two. See Kato and Ogawa, Nuclear Physics B 212 (1983), 443–460, and Polchinski, String Theory, volume 1, chapter 4. No novelty of these formulas is claimed. The formal carrier is the original complex finitely supported occupation space.")),

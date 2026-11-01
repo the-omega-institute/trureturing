@@ -93,11 +93,16 @@ private theorem squareAnomaly_b (r : ℤ) :
       have h := LinearMap.congr_fun (cc_b (-n) n r) v
       simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
       simp only [squareTerm, LinearMap.smul_apply, map_smul, ← smul_sub, h]
-      by_cases hn : n = -r <;> by_cases hp : n = r
-      all_goals simp only [show n+r = 0 ↔ n = -r by omega,
-        show -n+r = 0 ↔ n = r by omega, hn, hp, ite_true, ite_false,
-        LinearMap.zero_apply, smul_sub, smul_zero, f, g]
-      all_goals subst_vars <;> simp
+      rw [smul_sub]
+      congr 1
+      · by_cases hn : n = -r
+        · subst n
+          simp [f]
+        · simp [f, hn, show n+r ≠ 0 by omega]
+      · by_cases hn : n = r
+        · subst n
+          simp [g]
+        · simp [g, hn, show -n+r ≠ 0 by omega]
     _ = (∑ᶠ n : ℤ, f n)-(∑ᶠ n : ℤ, g n) := finsum_sub_distrib hf hg
     _ = (anomalyCoefficient r • c r) v := by
       rw [finsum_eq_single f (-r) (fun n hn => by simp [f, hn]),
