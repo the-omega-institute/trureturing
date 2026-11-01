@@ -97,8 +97,12 @@ internal sealed class MalkounJordanElementaryDocument : IScribeDocumentDefinitio
     {
         "claim" => Disp(Equal(I("claim"), Par(Body()))),
         "result" => Disp(I("claim")),
-        _ => Disp(Equal(App("elementarySymmetric", I("t"), I("k")),
-            Seq(Sum, Underscore, Grp(Seq(I("S"), InMacro, Sp, App("Finset.powersetCard", I("k"), Name("Finset.univ")))),
-                Prod, Underscore, Grp(Seq(I("i"), InMacro, Sp, I("S"))), App("t", I("i")))))
+        _ => Disp(All("n", Nat,
+            All("t", new Formula.TypeArrow(App("Fin", I("n")), Seq(Mathbb, Grp(I("R")))),
+            All("k", Nat, Equal(App("elementarySymmetric", I("t"), I("k")),
+                Seq(Sum, Underscore, Grp(Seq(I("S"), InMacro, Sp,
+                        App("Finset.powersetCard", I("k"),
+                            Par(Seq(Name("Finset.univ"), Colon, Sp, App("Finset", App("Fin", I("n")))))))),
+                    Prod, Underscore, Grp(Seq(I("i"), InMacro, Sp, I("S"))), App("t", I("i")))))))
     };
 }
