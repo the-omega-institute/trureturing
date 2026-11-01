@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a5c7b836bd429d89b122309a757a1fbcbb38add7265472efd0e7536a38a3353
+  normalized_sha256: sha256:5a5c7b836bd429d89b122309a757a1fbcbb38add7265472efd0e7536a38a3353
+cas_ref: sha256:5a5c7b836bd429d89b122309a757a1fbcbb38add7265472efd0e7536a38a3353
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This editorial paragraph states the scope of paper checks and distinguishes them from compiled formal results. It is not an additional mathematical proposition.
+    previous_atom_id: e2ab5674ea115a4f9780e3e83105dda091449d81d0ac721dd99222275b8fa934
+    next_atom_id: bd24a6cda6b2d488b9cd37b658cac6c4f310d360f86a9397372a74d2ef7f1767
