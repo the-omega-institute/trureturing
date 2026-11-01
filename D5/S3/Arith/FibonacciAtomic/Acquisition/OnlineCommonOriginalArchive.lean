@@ -221,14 +221,17 @@ private theorem tape_endpoint {Handle World : Type} {B : SourceService Handle Wo
     {h : Handle} {x y : World} {es : List TapeEvent}
     (hr : TapeRun B h x es y) (hx : B.lawful h x) :
     B.value h y = runWord (letters es) (B.value h x) ∧ B.lawful h y := by
+  revert hx
   induction hr with
-  | nil => exact ⟨rfl, hx⟩
-  | compute _ ih => exact ih hx
+  | nil => intro hx; exact ⟨rfl, hx⟩
+  | compute _ ih => intro hx; exact ih hx
   | action ha _ ih =>
+    intro hx
     have he := B.action_effect _ _ _ _ hx ha
     have ht := ih he.2
     exact ⟨by simpa only [letters, runWord, he.1] using ht.1, ht.2⟩
   | read ha _ ih =>
+    intro hx
     have he := B.read_effect _ _ _ _ _ hx ha
     have ht := ih he.2.2
     exact ⟨by simpa only [letters, he.1] using ht.1, ht.2⟩
@@ -238,11 +241,12 @@ private theorem tape_cuts {Handle World : Type} {B : SourceService Handle World}
     (hr : TapeRun B h x es y) (hx : B.lawful h x) :
     ∀ t, t ≤ (letters es).length → ∃ z, B.lawful h z ∧
       B.value h z = runWord (cutWord es t) (B.value h x) := by
+  revert hx
   induction hr with
-  | nil => intro t ht; have : t = 0 := by simpa [letters] using ht; subst t; exact ⟨_, hx, rfl⟩
-  | compute _ ih => exact ih hx
+  | nil => intro hx t ht; have : t = 0 := by simpa [letters] using ht; subst t; exact ⟨_, hx, rfl⟩
+  | compute _ ih => intro hx; exact ih hx
   | @action x z es y b ha hr ih =>
-    intro t ht
+    intro hx t ht
     cases t with
     | zero => exact ⟨x, hx, rfl⟩
     | succ t =>
@@ -250,6 +254,7 @@ private theorem tape_cuts {Handle World : Type} {B : SourceService Handle World}
       obtain ⟨z', hl, hv⟩ := ih he.2 t (by simpa [letters] using ht)
       exact ⟨z', hl, by simpa [cutWord, letters, runWord, he.1] using hv⟩
   | read ha _ ih =>
+    intro hx
     have he := B.read_effect _ _ _ _ _ hx ha
     intro t ht
     obtain ⟨z, hl, hv⟩ := ih he.2.2 t ht
@@ -289,12 +294,6 @@ private theorem protocol_tape {Handle World : Type} {B : SourceService Handle Wo
               have hs : scratch H c (b :: w) = scratch H (update H b c) w := by cases b <;> rfl
               rw [hs] at tail
               exact .action ha (ih _ _ tail)
-
-private theorem letters_append (es fs : List TapeEvent) :
-    letters (es ++ fs) = letters es ++ letters fs := by
-  induction es with
-  | nil => rfl
-  | cons e es ih => cases e <;> simp [letters, ih]
 
 private theorem reads_append (es fs : List TapeEvent) : reads (es ++ fs) = reads es + reads fs := by
   induction es with
@@ -464,6 +463,68 @@ private theorem request_exists {Handle World : Type} (B : SourceService Handle W
       B h (complete E (envelope_pos _)) p x hx
     exact ⟨_, y, .upgrade (by omega) hr⟩
 
+/-- Recovery after any positive-modulus physical upgrade of an authentic
+prefix, independently of the online envelope policy. Old labels at a divisor
+are recovered by reduction from the same original pair and actual cuts. -/
+def UpgradeRecovery {Handle World : Type} (B : SourceService Handle World) (h : Handle)
+    (x₀ : World) (old : List TapeEvent) (x : World) (E : ℕ) (es : List Event)
+    (d : ZMod E × ZMod E) (y : World) : Prop :=
+  let tape := old ++ es.map (stamp E)
+  let original := rewind E (letters old) d
+  TapeRun B h x₀ tape y ∧
+  original = residueSource E (B.value h x₀) ∧
+  d = residueSource E (B.value h x) ∧
+  d = residueSource E (B.value h y) ∧
+  paidReads es = (if E = 1 then 0 else 2 * costBound E) ∧
+  Continued B h E (B.value h x) d y ∧
+  ∀ D, 0 < D → ∀ div : D ∣ E,
+    reduce D E div original = residueSource D (B.value h x₀) ∧
+    reduce D E div d = residueSource D (B.value h x) ∧
+    ∀ t, t ≤ (letters tape).length → ∃ z,
+      B.lawful h z ∧ B.value h z = runWord (cutWord tape t) (B.value h x₀) ∧
+      scratch D (reduce D E div original) (cutWord tape t) = residueSource D (B.value h z) ∧
+      (∀ W, predict D (scratch D (reduce D E div original) (cutWord tape t)) W =
+        terminalGcd D W (B.value h z)) ∧
+      ∀ j, GraftAffineClosure.quantity
+          (scratch D (scratch D (reduce D E div original) (cutWord tape t)) (List.replicate j true)) =
+        (quantity (runWord (List.replicate j true) (B.value h z)) : ZMod D)
+
+private theorem upgrade_transport {Handle World : Type} (B : SourceService Handle World)
+    (h : Handle) (complete : VariableCompletion B h) (p : Tariffs)
+    (x₀ x : World) (hx₀ : B.lawful h x₀) (old : List TapeEvent)
+    (oldrun : TapeRun B h x₀ old x) (E : ℕ) (hE : 0 < E)
+    {es t y d n} (hr : ServiceRun B h p (PositiveClosingExecution.controller E) E
+      (PositiveClosingExecution.controller E).initial x es t y d n) :
+    UpgradeRecovery B h x₀ old x E es d y := by
+  have old_endpoint := tape_endpoint oldrun hx₀
+  obtain ⟨t₀, y₀, hr₀, hv₀, hl₀, count, h1, lower, continued, all⟩ :=
+    same_handle_return E (by omega) B h (complete E hE) p x old_endpoint.2
+  obtain ⟨hes, ht, hd, hv, hl, hn, h1, hc⟩ := all es t y d n hr
+  have horig : rewind E (letters old) d = residueSource E (B.value h x₀) := by
+    rw [hd, old_endpoint.1, ← scratch_sound, rewind_scratch]
+  have actual := tape_append oldrun (service_tape hr)
+  have he : d = residueSource E (B.value h y) := by
+    rw [hd]
+    exact hc.1.2
+  refine ⟨actual, horig, hd, he, hes ▸ count, ?_, ?_⟩
+  · simpa only [hd] using hc
+  · intro D hD div
+    have ho : reduce D E div (rewind E (letters old) d) = residueSource D (B.value h x₀) := by
+      rw [horig, reduce_source]
+    refine ⟨ho, by rw [hd, reduce_source], ?_⟩
+    intro t ht
+    obtain ⟨z, hlz, hvz⟩ := tape_cuts actual hx₀ t ht
+    have hp : scratch D (reduce D E div (rewind E (letters old) d))
+        (cutWord (old ++ es.map (stamp E)) t) = residueSource D (B.value h z) := by
+      rw [ho, scratch_sound, hvz]
+    refine ⟨z, hlz, hvz, hp, ?_, ?_⟩
+    · intro W
+      rw [hp]
+      exact predict_sound D (by omega) W _
+    · intro j
+      rw [hp, scratch_sound]
+      simp [GraftAffineClosure.quantity, residueSource, quantity]
+
 private theorem request_sound {Handle World : Type} (B : SourceService Handle World)
     (h : Handle) (complete : VariableCompletion B h) (p : Tariffs)
     (x₀ x : World) (a : Memory) (H : ℕ) (hH : 0 < H)
@@ -517,7 +578,7 @@ private theorem request_sound {Handle World : Type} (B : SourceService Handle Wo
       exact (budget_ge _).trans (s.precision_eq ▸ (le_of_lt miss))
     have pq : a.precision ≤ q := by
       rw [s.precision_eq]
-      exact budget_mono (by have := budget_ge (costBound a.joint); omega)
+      exact budget_mono ((budget_ge _).trans (s.precision_eq ▸ (le_of_lt miss)))
     have old_endpoint := (tape_endpoint s.tape hx₀).1
     have horig : rewind E (letters a.tape) d = residueSource E (B.value h x₀) := by
       rw [hd, old_endpoint, ← scratch_sound, rewind_scratch]
@@ -571,10 +632,11 @@ private theorem run_sound {Handle World : Type} (B : SourceService Handle World)
     (h : Handle) (complete : VariableCompletion B h) (p : Tariffs)
     (x₀ : World) (hx₀ : B.lawful h x₀) {a x is b y}
     (hr : OnlineRun B h p a x is b y) (s : Sound B h x₀ a x) : Sound B h x₀ b y := by
+  revert s
   induction hr with
-  | nil => exact s
-  | request hs tail ih => exact ih (request_sound B h complete p x₀ _ _ _ _ s hx₀ hs)
-  | continuation hs tail ih => exact ih (continue_sound B h x₀ _ _ _ s hs)
+  | nil => intro s; exact s
+  | request hs tail ih => intro s; exact ih (request_sound B h complete p x₀ _ _ _ (by assumption) s hx₀ hs)
+  | continuation hs tail ih => intro s; exact ih (continue_sound B h x₀ _ _ _ s hs)
 
 private theorem run_exists {Handle World : Type} (B : SourceService Handle World)
     (h : Handle) (complete : VariableCompletion B h) (p : Tariffs)
@@ -715,15 +777,22 @@ theorem complete_online_archive {Handle World : Type} (B : SourceService Handle 
     (∀ is a x, OnlineRun B h p initial x₀ is a x →
       Sound B h x₀ a x ∧ ArchiveService B h x₀ a x) ∧
     (∀ is a x H, 0 < H → OnlineRun B h p initial x₀ is a x →
-      ∀ b y, RequestRun B h p a H x b y → Compatible a b) := by
+      ∀ b y, RequestRun B h p a H x b y → Compatible a b) ∧
+    (∀ old x E, 1 < E → TapeRun B h x₀ old x →
+      ∀ es t y d n, ServiceRun B h p (PositiveClosingExecution.controller E) E
+        (PositiveClosingExecution.controller E).initial x es t y d n →
+      UpgradeRecovery B h x₀ old x E es d y) := by
   have start := initial_sound B h x₀ hx₀
-  refine ⟨fun is => run_exists B h complete p x₀ hx₀ is initial x₀ start, ?_, ?_⟩
+  refine ⟨fun is => run_exists B h complete p x₀ hx₀ is initial x₀ start, ?_, ?_, ?_⟩
   · intro is a x hr
     have s := run_sound B h complete p x₀ hx₀ hr start
     exact ⟨s, archive_service B h complete x₀ x a hx₀ s⟩
   · intro is a x H hH hr b y request
     exact request_compatible B h complete p x₀ x a H hH
       (run_sound B h complete p x₀ hx₀ hr start) hx₀ request
+
+  · intro old x E hE oldrun es t y d n actual
+    exact upgrade_transport B h complete p x₀ x hx₀ old oldrun E (by omega) actual
 
 #print axioms complete_online_archive
 
