@@ -68,10 +68,10 @@ internal sealed class FiniteIncrementPathBoundDocument : IScribeDocumentDefiniti
             Paren(Seq(increment, Sp, InMacro, Sp, v, Sp, Land, Sp,
                 Langle, wk, Comma, increment, Rangle, Sp, Leq, Sp, D(0))));
         return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, e, Colon, Sp, Call("Type"), Comma, Sp,
-                Call("NormedAddCommGroup", e), Comma, Sp,
-                Call("InnerProductSpace", Reals, e), Comma, Sp,
-                Call("FiniteDimensional", Reals, e), Comma),
+            Seq(Forall, Sp, e, Colon, Sp, Seq(Operatorname, Grp(F.Id("Type"))), Comma, Sp,
+                Seq(OpenBracket, Call("NormedAddCommGroup", e), CloseBracket), Comma, Sp,
+                Seq(OpenBracket, Call("InnerProductSpace", Reals, e), CloseBracket), Comma, Sp,
+                Seq(OpenBracket, Call("FiniteDimensional", Reals, e), CloseBracket), Comma),
             Seq(Forall, Sp, v, Colon, Sp, Call("Finset", e), Comma, Sp,
                 Exists, Sp, c, Colon, Sp, Reals, Comma, Sp,
                 D(0), Sp, Leq, Sp, c, Sp, Land),
