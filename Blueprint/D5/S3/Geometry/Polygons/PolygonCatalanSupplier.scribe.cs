@@ -112,7 +112,8 @@ internal sealed class PolygonCatalanSupplierDocument : IScribeDocumentDefinition
     private static Formula All(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(n),t,b);
     private static Formula Ex(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(n),t,b);
     private static Formula Inst(Formula t, Formula b) => Seq(OpenBracket,t,CloseBracket,Comma,Sp,b);
-    private static Formula R(Formula a, Formula op, Formula b) => Seq(Open,a,Sp,op,Sp,b,Close);
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open,f,Close) : f;
+    private static Formula R(Formula a, Formula op, Formula b) => Seq(Open,Operand(a),Sp,op,Sp,Operand(b),Close);
     private static Formula EqF(Formula a, Formula b) => R(a,F.Eq,b);
     private static Formula IffF(Formula a, Formula b) => R(a,F.Iff,b);
     private static Formula Imp(Formula a, Formula b) => R(a,Implies,b);

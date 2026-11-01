@@ -45,7 +45,8 @@ internal static class PolygonConditionalCountsFormula
     internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
     internal static Formula C(string n, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(X(n))), [.. args]);
     internal static Formula All(string n, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), type, body);
-    internal static Formula R(Formula a, Formula op, Formula b) => Seq(Open, a, Sp, op, Sp, b, Close);
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open,f,Close) : f;
+    internal static Formula R(Formula a, Formula op, Formula b) => Seq(Open, Operand(a), Sp, op, Sp, Operand(b), Close);
     internal static Formula Eq(Formula a, Formula b) => R(a, F.Eq, b);
     internal static Formula Imp(Formula a, Formula b) => R(a, Implies, b);
     internal static Formula AddF(Formula a, Formula b) => R(a, Plus, b);

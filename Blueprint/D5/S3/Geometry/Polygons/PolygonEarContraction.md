@@ -4,7 +4,7 @@
 
 Deletion and insertion of actual polygon ears
 
-V(k)=ZMod(k), C(k)=Sym2(V(k)), F(k)=Finset(C(k)). A(k) is the subtype of every U in F(k) satisfying Carrier.IsTriangulation U: internal-diagonal validity, pairwise noncrossing, and a crossing member for every missing internal diagonal. B(k,i) is the subtype of every T in F(k) satisfying IsTriangulation T and ear(i) in T. H(k,P) adds P subset EarCenters(T). Equiv means an actual bijection of these full subtypes. ne denotes inequality, notCross negates Carrier.Cross, and natSub is natural subtraction. All natural casts in the vertex maps have the displayed modulus.
+V(k)=ZMod(k), C(k)=Sym2(V(k)), F(k)=Finset(C(k)). A(k) is the subtype of every U in F(k) satisfying Carrier.IsTriangulation U: internal-diagonal validity, pairwise noncrossing, and a crossing member for every missing internal diagonal. B(k,i) is the subtype of every T in F(k) satisfying IsTriangulation T and ear(i) in T. H(k,P) is the subtype of every T in F(k) satisfying IsTriangulation T and P subset EarCenters(T). Equiv means an actual bijection of these full subtypes. ne denotes inequality, notCross negates Carrier.Cross, and natSub is natural subtraction. Symtwo denotes Sym2. hasType(e,Equiv(A,B)) means e is the displayed equivalence from A to B; app, symm and val give application, inverse and the underlying full chord set. sub denotes subtraction in the cyclic vertex group. image(S,f) is the image of S under f, and map(e,f) maps both endpoints. choice is Classical.choice, and forcedequivexists denotes the private constructed Nonempty equivalence proof forced_equiv_exists. All natural casts in the vertex maps have the displayed modulus.
 
 **Definition 1.1 (Insert vertex 1).**
 
@@ -140,7 +140,7 @@ Every internal reduced diagonal lifts to an original diagonal distinct from the 
 
 **Definition 1.12 (Every completion at centre 1).**
 
-$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], ((5 \leq m) \implies \operatorname{Equiv}\left(\operatorname{B}\left((m + 1), 1\right), \operatorname{A}\left(m\right)\right))$$
+$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall h \in (5 \leq m),\; (\operatorname{hasType}\left(\operatorname{earOneEquiv}\left(h\right), \operatorname{Equiv}\left(\operatorname{B}\left((m + 1), 1\right), \operatorname{A}\left(m\right)\right)\right) \land (\forall T \in \operatorname{B}\left((m + 1), 1\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{earOneEquiv}\left(h\right), T\right)\right) = \operatorname{reduce}\left(\operatorname{val}\left(T\right)\right)) \land \forall U \in \operatorname{A}\left(m\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{symm}\left(\operatorname{earOneEquiv}\left(h\right)\right), U\right)\right) = \operatorname{expand}\left(\operatorname{val}\left(U\right)\right))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarContraction.earOneEquiv` (`✓ std3`).
 
@@ -152,7 +152,7 @@ Deletion and insertion are inverse on the full carriers. The smaller polygon may
 
 **Definition 1.13 (Arbitrary original ear centre).**
 
-$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall i \in \operatorname{ZMod}\left((m + 1)\right),\; ((5 \leq m) \implies \operatorname{Equiv}\left(\operatorname{B}\left((m + 1), i\right), \operatorname{A}\left(m\right)\right))$$
+$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall i \in \operatorname{ZMod}\left((m + 1)\right),\; \forall h \in (5 \leq m),\; (\operatorname{hasType}\left(\operatorname{earEquiv}\left(h, i\right), \operatorname{Equiv}\left(\operatorname{B}\left((m + 1), i\right), \operatorname{A}\left(m\right)\right)\right) \land (\forall T \in \operatorname{B}\left((m + 1), i\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{earEquiv}\left(h, i\right), T\right)\right) = \operatorname{reduce}\left(\operatorname{shiftChords}\left(\operatorname{val}\left(T\right), \operatorname{sub}\left(1, i\right)\right)\right)) \land \forall U \in \operatorname{A}\left(m\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{symm}\left(\operatorname{earEquiv}\left(h, i\right)\right), U\right)\right) = \operatorname{shiftChords}\left(\operatorname{expand}\left(\operatorname{val}\left(U\right)\right), \operatorname{sub}\left(i, 1\right)\right))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarContraction.earEquiv` (`✓ std3`).
 
@@ -188,7 +188,7 @@ Erase the selected centre and relabel every other forced centre.
 
 **Definition 1.16 (All other forced ears survive).**
 
-$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left((m + 1)\right)\right),\; ((6 \leq m) \implies (\operatorname{Compatible}\left(P\right) \implies ((1 \in P) \implies \operatorname{Equiv}\left(\operatorname{H}\left((m + 1), P\right), \operatorname{H}\left(m, \operatorname{reducedCenters}\left(P\right)\right)\right))))$$
+$$\forall m \in Nat,\; [\operatorname{NeZero}\left(m\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left((m + 1)\right)\right),\; \forall h \in (6 \leq m),\; \forall g \in \operatorname{Compatible}\left(P\right),\; \forall b \in (1 \in P),\; (\operatorname{hasType}\left(\operatorname{forcedOneEquiv}\left(h, P, g, b\right), \operatorname{Equiv}\left(\operatorname{H}\left((m + 1), P\right), \operatorname{H}\left(m, \operatorname{reducedCenters}\left(P\right)\right)\right)\right) \land (\forall T \in \operatorname{H}\left((m + 1), P\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{forcedOneEquiv}\left(h, P, g, b\right), T\right)\right) = \operatorname{reduce}\left(\operatorname{val}\left(T\right)\right)) \land \forall U \in \operatorname{H}\left(m, \operatorname{reducedCenters}\left(P\right)\right),\; (\operatorname{val}\left(\operatorname{app}\left(\operatorname{symm}\left(\operatorname{forcedOneEquiv}\left(h, P, g, b\right)\right), U\right)\right) = \operatorname{expand}\left(\operatorname{val}\left(U\right)\right))))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarContraction.forcedOneEquiv` (`✓ std3`).
 
@@ -200,7 +200,7 @@ Compatibility with ear(1) excludes neighbouring centres 0 and 2. For every other
 
 **Definition 1.17 (Iterated actual deletion).**
 
-$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; ((6 \leq \operatorname{natSub}\left(n, \operatorname{card}\left(P\right)\right)) \implies (\operatorname{Compatible}\left(P\right) \implies \operatorname{Equiv}\left(\operatorname{H}\left(n, P\right), \operatorname{A}\left(\operatorname{natSub}\left(n, \operatorname{card}\left(P\right)\right)\right)\right)))$$
+$$\forall n \in Nat,\; [\operatorname{NeZero}\left(n\right)], \forall P \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; \forall h \in (6 \leq \operatorname{natSub}\left(n, \operatorname{card}\left(P\right)\right)),\; \forall g \in \operatorname{Compatible}\left(P\right),\; (\operatorname{hasType}\left(\operatorname{forcedEquiv}\left(P, h, g\right), \operatorname{Equiv}\left(\operatorname{H}\left(n, P\right), \operatorname{A}\left(\operatorname{natSub}\left(n, \operatorname{card}\left(P\right)\right)\right)\right)\right) \land (\operatorname{forcedEquiv}\left(P, h, g\right) = \operatorname{choice}\left(\operatorname{forcedequivexists}\left(n, P, h, g\right)\right)))$$
 
 *Formalization.* `D5/S3/Geometry/Polygons/PolygonEarContraction.forcedEquiv` (`✓ std3`).
 
