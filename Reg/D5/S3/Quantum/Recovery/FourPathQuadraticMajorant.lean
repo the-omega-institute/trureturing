@@ -51,17 +51,18 @@ def registration : Registration arena (type_of% four_path_quadratic_majorant) wh
   dependence := by
     intro i
     refine ⟨0,0,1,?_⟩
-    change ((‖(0:ℂ)+0‖+‖(0:ℂ)-0‖)/Real.sqrt 2 +
-      ‖(Real.cos (Real.pi/8):ℂ)*0+Complex.I*(Real.sin (Real.pi/8):ℂ)*0‖+
-      ‖(Real.cos (Real.pi/8):ℂ)*0-Complex.I*(Real.sin (Real.pi/8):ℂ)*0‖)^2 ≠ _
-    simp only [mul_zero,add_zero,sub_zero,norm_zero,zero_div,zero_pow (by omega : 2≠0)]
-    have h : 0 < (‖(0:ℂ)+1‖+‖(0:ℂ)-1‖)/Real.sqrt 2 +
-      ‖(Real.cos (Real.pi/8):ℂ)*0+Complex.I*(Real.sin (Real.pi/8):ℂ)*1‖+
-      ‖(Real.cos (Real.pi/8):ℂ)*0-Complex.I*(Real.sin (Real.pi/8):ℂ)*1‖ := by
+    have hz : actual.readout () (0:ℂ) (0:ℂ)=0 := by simp [actual,realize]
+    have ho : 0 < actual.readout () (0:ℂ) (1:ℂ) := by
+      change 0 < ((‖(0:ℂ)+1‖+‖(0:ℂ)-1‖)/Real.sqrt 2 +
+        ‖(Real.cos (Real.pi/8):ℂ)*0+Complex.I*(Real.sin (Real.pi/8):ℂ)*1‖+
+        ‖(Real.cos (Real.pi/8):ℂ)*0-Complex.I*(Real.sin (Real.pi/8):ℂ)*1‖)^2
+      apply sq_pos_of_pos
       have first : 0 < (‖(0:ℂ)+1‖+‖(0:ℂ)-1‖)/Real.sqrt 2 := by norm_num; positivity
       linarith [norm_nonneg ((Real.cos (Real.pi/8):ℂ)*0+Complex.I*(Real.sin (Real.pi/8):ℂ)*1),
         norm_nonneg ((Real.cos (Real.pi/8):ℂ)*0-Complex.I*(Real.sin (Real.pi/8):ℂ)*1)]
-    exact ne_of_lt (sq_pos_of_pos h)
+    change actual.readout () (0:ℂ) (0:ℂ) ≠ actual.readout () (0:ℂ) (1:ℂ)
+    rw [hz]
+    exact ne_of_lt ho
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     four_path_quadratic_majorant

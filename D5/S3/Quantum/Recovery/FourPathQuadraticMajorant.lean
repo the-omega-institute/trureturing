@@ -136,7 +136,7 @@ private lemma radius_gap (p q a m L : ℝ)
     have hg : 0 < c*s-(81/400)*(c+s)^2 := by nlinarith only [cs1,cs,rl]
     have hsquare := sq_nonneg (a-(9/20)*(c+s))
     have hpos : 0 ≤ (c+s)*(m-9/10*a) := by nlinarith only [mid,hsquare,hg]
-    exact nonneg_of_mul_nonneg_right hpos (by positivity : 0 < c+s)
+    exact sub_nonneg.mp (nonneg_of_mul_nonneg_right hpos (by positivity : 0 < c+s))
   have Ln : 0 ≤ L := hL ▸ Real.sqrt_nonneg _
   have Lsq : L^2=2+4*a^2+4*r*m := by
     rw [hL, Real.sq_sqrt (by positivity)]
@@ -169,6 +169,7 @@ private lemma radius_gap (p q a m L : ℝ)
     dsimp [N]
     nlinarith only [h1,h2]
   have F : 0 ≤ 19/5*r+361/50*a-32*(r-1)*a^2 := by
+    have r1 : 0 ≤ r-1 := by linarith only [rl]
     have hchord := mul_nonneg (show 0 ≤ (r-1)*a by positivity)
       (show 0 ≤ 15/16-a by linarith)
     have hend : 0 ≤ (5583-3892*r)/160 := by linarith
@@ -195,12 +196,12 @@ private lemma radius_gap (p q a m L : ℝ)
     rw [idr] at hh
     have hh' : ((r+2*a-L)*r)*(8*(c-s)^2) ≤ (p*q)*(8*(c-s)^2) := by
       nlinarith only [hh]
-    exact (mul_le_mul_iff_right₀ (show 0 < 8*(c-s)^2 by positivity)).mp hh'
+    exact (mul_le_mul_iff_left₀ (show 0 < 8*(c-s)^2 by positivity)).mp hh'
   · apply (le_div_iff₀ (show 0 < 8*a^3 by positivity)).mpr
     have h := mul_le_mul_of_nonneg_left N2 (show 0 ≤ r+2*a-L by linarith only [Lu])
     have hh : ((r+2*a-L)*(8*a^3))*(4*r*(c-s)^2) ≤ (p*q)*(4*r*(c-s)^2) := by
       nlinarith only [identity,h]
-    exact (mul_le_mul_iff_right₀ (show 0 < 4*r*(c-s)^2 by positivity)).mp hh
+    exact (mul_le_mul_iff_left₀ (show 0 < 4*r*(c-s)^2 by positivity)).mp hh
 
 
 
@@ -296,7 +297,7 @@ private lemma normalized_majorant (xi eta : ℂ) (hn : ‖xi‖^2+‖eta‖^2=1)
     have sq : L^2=2+4*a^2+4*r*m := Real.sq_sqrt (by positivity)
     change p+q=1 at hn
     calc
-      _ = 2*(p+q)+4*(c^2*p+s^2*q)+4*r*(c*p+s*q) := by rw [hn,← asq]; exact sq
+      _ = 2*(p+q)+4*(c^2*p+s^2*q)+4*r*(c*p+s*q) := by rw [hn,← asq]; simpa only [mul_one] using sq
       _ = (r^2+4*r*c+4*c^2)*p+(r^2+4*r*s+4*s^2)*q := by rw [r2]; ring
       _ = _ := by ring
   have nonneg : 0 ≤ (‖xi+eta‖+‖xi-eta‖)/r+u+v := by dsimp [u,v]; positivity
@@ -339,7 +340,7 @@ theorem four_path_quadratic_majorant (xi eta : ℂ) :
           ‖(Real.cos (Real.pi/8):ℂ)*xi-Complex.I*(Real.sin (Real.pi/8):ℂ)*eta‖)^2)/t^2 ≤
         ((Real.sqrt 2+2*Real.cos (Real.pi/8))^2*‖xi‖^2+
           (Real.sqrt 2+2*Real.sin (Real.pi/8))^2*‖eta‖^2)/t^2 := by
-      convert h using 1 <;> field_simp [ht] <;> ring
+      convert h using 1 <;> field_simp [ht]
     exact (div_le_div_iff_of_pos_right (sq_pos_of_pos tp)).mp h'
 
 end D5.S3.Quantum.Recovery.FourPathQuadraticMajorant
