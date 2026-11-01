@@ -172,8 +172,8 @@ private lemma radix_value {p : ℕ} (hp : 2 ≤ p) (n : ℕ) :
 private lemma affine_card {p n : ℕ} [Fact p.Prime]
     (k : AffineSubspace (ZMod p) (vector p n)) (hk : (k : Set (vector p n)).Nonempty) :
     Nat.card k = p ^ Module.finrank (ZMod p) k.direction := by
+  have : Nonempty k := Set.nonempty_coe_sort.mpr hk
   obtain ⟨v, hv⟩ := hk
-  have : Nonempty k := ⟨⟨v, hv⟩⟩
   rw [← Nat.card_congr (Equiv.vaddConst (⟨v, hv⟩ : k)),
     Module.natCard_eq_pow_finrank (K := ZMod p), Nat.card_zmod]
 
@@ -185,10 +185,7 @@ private lemma partition_card {p n : ℕ} [Fact p.Prime]
   let f := fun k : AffineSubspace (ZMod p) (vector p n) => (k : Set (vector p n)).toFinset
   have hd : (parts : Set _).PairwiseDisjoint f := by
     intro k hk l hl hkl
-    apply Finset.disjoint_left.mpr
-    intro v hvk hvl
-    exact Set.disjoint_left.mp (hparts.2.1 k hk l hl hkl)
-      (by simpa [f] using hvk) (by simpa [f] using hvl)
+    exact Set.disjoint_toFinset.mpr (hparts.2.1 k hk l hl hkl)
   have hu : parts.biUnion f = Finset.univ.erase 0 := by
     ext v
     simp only [Finset.mem_biUnion, Finset.mem_erase, Finset.mem_univ, and_true]
