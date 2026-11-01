@@ -7,6 +7,7 @@
    digest: Exhaustive dyadic chart substitution and tight integer allocation gates for the strict branch. -/
 /- SOURCE_ONLY_UNCOMPILED. Caller ordinary construction and tight H bound.
 No build is authorized in this attempt. All tactic scripts remain unelaborated. -/
+module
 import all D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
 import all D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.PolynomialsSeparated
 import all D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.PolynomialsCorner
