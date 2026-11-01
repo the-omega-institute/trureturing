@@ -575,7 +575,7 @@ lemma joinedMatrix_rejected_law : ¬ joinedMatrixArena.Law joinedMatrixRejected 
   have he := h (fun _ => 0) (fun _ => 0) 0 0 0
   have hc := congrArg (fun p : ℝ[X] => p.coeff 0) he
   norm_num [joinedMatrixRejected, joinedMatrixActual, DependentFamily.realize,
-    joined_path_charpoly, continuant] at hc
+    joined_path_charpoly, continuant, coeff_add] at hc
 
 lemma joinedMatrix_dependence :
     DependentFamily.ObservationalDependence joinedMatrixSignature joinedMatrixActual := by
@@ -584,7 +584,7 @@ lemma joinedMatrix_dependence :
     ((fun _ => 0), (fun _ => 0), 1), ?_⟩
   intro he
   have hc := congrArg (fun p : ℝ[X] => p.coeff 0) he
-  norm_num [joinedMatrixActual, DependentFamily.realize, joined_path_charpoly, continuant] at hc
+  norm_num [joinedMatrixActual, DependentFamily.realize, joined_path_charpoly, continuant, coeff_add] at hc
 
 def joinedMatrixFamilyRegistration :
     DependentFamily.Registration joinedMatrixArena joinedMatrixSourceScope where
