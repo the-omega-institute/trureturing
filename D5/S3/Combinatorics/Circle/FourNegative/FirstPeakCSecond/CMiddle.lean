@@ -708,7 +708,7 @@ private theorem equal_x4 (a c : ℕ)
     rw [hex,pow_add]; norm_num [f]
   have hg : (2:ℤ)^ell=2*f*h := by
     have hex : ell=1+(c-5)+(a-c) := by dsimp [ell]; omega
-    rw [hex,pow_add,pow_add]; dsimp [f,h]; ring
+    rw [hex,pow_add,pow_add] <;> dsimp [f,h] <;> ring
   convert cm using 1 <;> dsimp [FloorMargins,actualRow] <;> simp only [he,hg] <;>
     dsimp [model] <;> norm_num <;> dsimp [h,f] <;> ring_nf
 
@@ -783,7 +783,7 @@ private theorem equal_v2 (a c d : ℕ)
   have cm:=margins_h2_t8 0 (t-8) 0 (f-1)
     (by norm_num) (by omega) (by norm_num) (by omega)
   have he:=factor_four (c-d) (by omega)
-  have hz : (2:ℤ)^c=4*f*t := by rw [power_split c d (by omega),he]; dsimp [f,t]; ring
+  have hz : (2:ℤ)^c=4*f*t := by rw [power_split c d (by omega),he] <;> dsimp [f,t] <;> ring
   have hx : (2:ℤ)^a=8*f*t := by rw [hac,pow_succ,hz]; ring
   apply v_nat_joint a c d (2*f) (6*f+1) (by omega) (by omega) hac
     (by omega) (by omega) (by omega) (by rw [hz]; nlinarith) (by rw [hx]; nlinarith)
