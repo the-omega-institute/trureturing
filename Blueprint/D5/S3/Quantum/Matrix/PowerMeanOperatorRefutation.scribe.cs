@@ -19,10 +19,17 @@ internal sealed class PowerMeanOperatorRefutationDocument : IScribeDocumentDefin
             Paragraph(Text("Raluca Dumitru and Jose Franco, On the monotonicity of weighted power means of "
                 + "matrices, arXiv:1701.07023v1, Conjecture 9, asks for decreasing distance for "
                 + "every unitarily invariant norm and every 0<p≤2. Version 2 withdraws the "
-                + "preprint because Proposition 4 is false. The published 2017 successor "
-                + "does not state this exact all-norm assertion. The result here concerns that v1 "
-                + "assertion through its p=2 operator-norm specialization; it asserts no novelty, "
-                + "priority, or conclusive later-resolution status.")),
+                + "preprint because Proposition 4 is false; withdrawal alone does not refute Conjecture 9. "
+                + "The public three-author manuscript of the 2017 successor does not state this exact "
+                + "all-norm assertion. Its p=2 Frobenius and p=1/2 all-unitarily-invariant-norm results "
+                + "are compatible with this counterexample. Publisher full text was not obtained, so "
+                + "no complete version-of-record comparison is claimed. The result here concerns the v1 "
+                + "assertion through its p=2 operator-norm specialization. No exact prior refutation "
+                + "was found in the bounded later primary literature inspected through 2026-11-01; "
+                + "the relevant 2018 The matrix power means and interpolations "
+                + "(DOI 10.15352/aot.1801-1288) remained text-inaccessible, and other candidates were "
+                + "metadata-only. Current-open status, novelty, priority, and uniqueness remain "
+                + "unverified; this component earns zero verified-original or unique credit.")),
             Entry("p2-mean", "mu2", "The p=2 spectral power mean",
                 "For complex finite square matrices, mu2 A B t is "
                 + "mpow (t • mpow A 2 + (1−t) • mpow B 2) (1/2), using SpectralPower.mpow. "

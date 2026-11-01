@@ -33,7 +33,8 @@ Conjecture 9 reads:
 
 Here $\mu_p(A,B,t)=(tA^p+(1-t)B^p)^{1/p}$, with positive spectral powers.
 Version 2, dated 30 January 2017, withdraws the preprint because Proposition 4
-is false and major revisions are necessary. The counterexample below is
+is false and major revisions are necessary. Withdrawal alone does not prove
+Conjecture 9 false. The counterexample below is
 attributed only to the displayed assertion of version 1.
 
 The published successor is Trung Hoa Dinh, Raluca Dumitru, and Jose A. Franco,
@@ -43,8 +44,17 @@ https://doi.org/10.1016/j.laa.2017.04.003. Its author manuscript is
 https://trunghoamath.wordpress.com/wp-content/uploads/2017/03/main-v-31.pdf.
 It proves the $p=2$ Frobenius branch and the $p=1/2$ branch for every unitarily
 invariant norm; those conclusions are compatible with this counterexample.
-No comprehensive later-resolution, originality, priority, or uniqueness claim
-is made here.
+This comparison uses the public three-author author manuscript. Publisher full
+version-of-record text was not obtained, so no complete comparison with it is
+claimed.
+
+No exact prior refutation was found in the bounded later primary literature
+inspected through 2026-11-01. The directly relevant *The matrix power means and
+interpolations* (2018), https://doi.org/10.15352/aot.1801-1288, remained
+text-inaccessible; other candidates were metadata-only. Current-open status,
+novelty, priority, and uniqueness remain unverified. No comprehensive
+later-resolution claim is made, and this component earns zero
+verified-original or unique credit.
 
 ## Exact formal scope
 
