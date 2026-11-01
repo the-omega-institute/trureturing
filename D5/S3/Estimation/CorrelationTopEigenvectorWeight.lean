@@ -4,11 +4,13 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Correlation matrices in the remaining domain admit the weight gap exactly above sigma=c. -/
+   digest: The remaining correlation domain admits the weight gap exactly above sigma=c. -/
 
 import D5.S3.Estimation.CorrelationWeightSpectralBound
 import D5.S3.Weil.ZetaLinear.PosIndex
 import Mathlib.Algebra.Order.Round
+
+/-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
 
 set_option autoImplicit false
 
@@ -39,10 +41,10 @@ def delta (n : ℕ) : EuclideanSpace ℝ (Fin n) :=
 /-- Every top eigenvector has less weight than another vector in each eigenbasis. -/
 def SatisfiesWGap {n : ℕ} (c : Matrix (Fin n) (Fin n) ℝ) : Prop :=
   ∀ (v : OrthonormalBasis (Fin n) ℝ (EuclideanSpace ℝ (Fin n)))
-    (λ : Fin n → ℝ),
-    (∀ j, c *ᵥ (v j : Fin n → ℝ) = λ j • (v j : Fin n → ℝ)) →
-    ∀ i, (∀ j, λ j ≤ λ i) →
-      ∃ j, j ≠ i ∧ ⟪v i, delta n⟫_ℝ ^ 2 < ⟪v j, delta n⟫_ℝ ^ 2
+    (l : Fin n → ℝ),
+    (∀ j, c *ᵥ (v j : Fin n → ℝ) = l j • (v j : Fin n → ℝ)) →
+    ∀ i, (∀ j, l j ≤ l i) →
+      ∃ j, j ≠ i ∧ ⟪v i, delta n⟫ ^ 2 < ⟪v j, delta n⟫ ^ 2
 
 /-- The source domain A minus the union of A₁ and A₂. -/
 def domainD (c σ : ℝ) : Prop :=
@@ -59,12 +61,32 @@ def claim : Prop :=
 private lemma domain_decomposition {c σ : ℝ} (h : domainD c σ) :
     0 < c ∧ c < 1 / 2 ∧ c ≤ σ ∧
       (σ = c ∨ (1 - c ≤ σ ∧ σ ≤ Real.sqrt 3 * c)) := by
-  sorry
+  have hc : c < 1 / 2 := lt_of_not_ge fun hc => h.2.1 (Or.inl hc)
+  have hcs : c ≤ σ := le_of_not_gt fun hcs => h.2.1 (Or.inr hcs)
+  refine ⟨h.1.1, hc, hcs, ?_⟩
+  by_cases heq : σ = c
+  · exact Or.inl heq
+  · right
+    have hlt : c < σ := lt_of_le_of_ne hcs (Ne.symm heq)
+    exact ⟨le_of_not_gt (fun hs => h.2.2 (Or.inr ⟨hlt, hs⟩)),
+      le_of_not_gt (fun hs => h.2.2 (Or.inl hs))⟩
 
 private lemma small_dimension_obstruction {n : ℕ} (hn : n ≤ 2)
     (a : Matrix (Fin n) (Fin n) ℝ) (c : ℝ) (hc : 0 < c) :
     ¬ (meanCorr a = c ∧ stdCorr a = c) := by
-  sorry
+  intro h
+  rcases n with _ | n
+  · have hm : meanCorr a = 0 := by simp [meanCorr]
+    linarith [h.1]
+  rcases n with _ | n
+  · have hm : meanCorr a = 0 := by simp [meanCorr]
+    linarith [h.1]
+  have hn0 : n = 0 := by omega
+  subst n
+  have hs : stdCorr a = 0 := by
+    change stdCorr (n := 2) a = 0
+    norm_num [stdCorr, meanCorr, sum_filter, Fin.sum_univ_two]
+  linarith [h.2]
 
 private lemma correlation_spectral_data {n : ℕ} (hn : 3 ≤ n)
     (a : Matrix (Fin n) (Fin n) ℝ) (ha : IsCorrelation a) (hgap : SatisfiesWGap a) :
