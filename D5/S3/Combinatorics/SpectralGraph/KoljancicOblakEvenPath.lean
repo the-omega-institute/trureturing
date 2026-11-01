@@ -248,7 +248,7 @@ def deformedJoinedContinuant (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : �
     deformedContinuant qL dqL r *
       (C X * deformedContinuant qR dqR s - deformedContinuant qR dqR (s + 1))
 
-private lemma joined_linearization (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) :
+lemma joined_linearization (qL qR dqL dqR : ℕ → ℝ) (a da : ℝ) (r s : ℕ) :
     (deformedJoinedContinuant qL qR dqL dqR a da r s).coeff 1 =
       joinedVariation qL qR dqL dqR a da r s := by
   simp [deformedJoinedContinuant, joinedVariation, mul_coeff_one,
