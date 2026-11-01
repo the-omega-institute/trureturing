@@ -651,12 +651,13 @@ theorem joined_path_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ) :
       have hone : (1 : Fin (s + 1 + (r + 2))).val = 1 := by
         change 1 % (s + 1 + (r + 2)) = 1
         exact Nat.mod_eq_of_lt (by omega)
+      have hmod : 1 % (s + 1 + (r + 2)) = 1 := Nat.mod_eq_of_lt (by omega)
       have diag : (joinedPath bL bR a (r + 2) s).charmatrix 0 0 = X := by
         simp [Matrix.charmatrix_apply_eq, joinedPath]
       have upper : (joinedPath bL bR a (r + 2) s).charmatrix 0 1 = -C (bL 0) := by
-        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath, hone]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath, hone, hmod]
       have lower : (joinedPath bL bR a (r + 2) s).charmatrix 1 0 = -C (bL 0) := by
-        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath, hone]
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath, hone, hmod]
       unfold Matrix.charpoly
       rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
         _ row col, minor1, minor2, diag, upper, lower]
@@ -677,7 +678,11 @@ private lemma continuant_derivative (b db : ℕ → ℝ) (n : ℕ) (x : ℝ) :
       have he : HasDerivAt (fun t : ℝ => (b n + t * db n) ^ 2) (2 * b n * db n) 0 := by
         have hf : HasDerivAt (fun t : ℝ => b n + t * db n) (db n) 0 := by
           simpa using ((hasDerivAt_id (0 : ℝ)).mul_const (db n)).const_add (b n)
-        simpa using hf.pow 2
+        have ht := hf.mul hf
+        refine (ht.congr_deriv ?_).congr_of_eventuallyEq ?_
+        · simp only [zero_mul, add_zero]
+          ring
+        · exact Filter.Eventually.of_forall (fun t => by simp only [Pi.mul_apply, pow_two])
       have H := (h1.const_mul x).sub (he.mul h0)
       refine (H.congr_deriv ?_).congr_of_eventuallyEq ?_
       · simp only [variation, eval_sub, eval_mul, eval_X, eval_C,
