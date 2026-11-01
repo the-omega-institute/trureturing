@@ -2342,3 +2342,1279 @@ cannot make $h=3$ feasible on this whole fibre. $\square$
 [KBCHORIZON]: KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_X.md#2113-a-fixed-menu-of-actual-joint-measures
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Writing an old-cohort distinction into the source before a logical reset
+
+**Definition 18.1 (one source, one reset and two continuation contracts).**
+Fix the acquired $y\in\mathcal D_+$ and exact $k$ of Definition 16.1,
+with $0\le k\le M$. Retain its typed basis $A=C\sqcup P$, disjoint
+nonempty original-leaf blocks $B_p$, and uncovered leaves $Z=Z_y$.
+Write $L=\Lambda(y)$ and
+
+$$
+\mathcal J=\{J\subseteq A:|J|=k\},\qquad
+U_J=Z\sqcup\bigsqcup_{p\in A\setminus J}B_p.
+\tag{LAGR.1}
+$$
+
+The hidden alternative is the actually acquired support $J$, with
+attained original entry $x_J(y)$ and remaining original-row menu $U_J$
+from Theorems 15.2–15.3. Thus ORIGINAL below refers to that entry's
+cohort, not every current logical leaf of $y$. Chronology before $y$
+is not a target. Choose an integer $r\ge0$. Before a declared reset,
+the selector may use its acquired $J$ to execute exactly $r$ distinct
+rows of $U_J$, each by its current-tag original $P/S$ call through full
+inner return. These calls write a set $Q\subseteq U_J$, $|Q|=r$.
+There are no other source edits.
+
+The reset removes ALL supplementary pre-reset private control and ordered
+transcripts, including the acquired $J$, old cohort/list/cursor, prefix
+order, labels, saved selections, and their readable scratch or archives.
+It preserves the current source, fixed public $y,k,r$, one finite
+$J$-independent program/codebook, and the declared authentic fixed root
+binding, grants and common protocol obligations. A prefix-dependent saved
+continuation is not one of these fixed inputs. This is a LOGICAL input
+restriction. It neither deletes the physical ancestral tapes nor supplies
+a native reverse edit, thermodynamic erasure, or a reset opcode.
+
+After reset both selectors must exhaust exactly every row of
+$U_J\setminus Q$ once and then choose Stop, with the declared full outer
+reply, acknowledgement, root return and cleanup. Newly born children
+remain ineligible. Stop is correct exactly at original-cohort exhaustion;
+$r$ calls or native-guard exhaustion is not this condition. A geometry
+selector $G$ chooses each next original-row call or Stop solely from the
+CURRENT source geometry and the fixed inputs. Its decision scratch must
+be derived from that current source and fixed inputs; it cannot preserve
+an earlier decision's supplementary state. A transcript selector $T$
+starts with the same reset private state, but may retain all observations
+and traffic it actually acquires AFTER reset, including its newly read
+initial $Q$. It cannot retain the erased prefix order. Selectors here
+are deterministic and must succeed for every $J\in\mathcal J$.
+
+The observation/call premise is explicit. At each complete-inner-return
+cut, the task admits owned traversal of the stationary current source,
+authenticated internal dispatch on that same bound root, and the full
+original primitive guard, reservation, edit, tape/arithmetic maintenance,
+literal reply, End, acknowledgement and inner return. All backing and
+traffic are paid. AA17.3 supplies the material arity parser; AA20.1 supplies
+actual references, current rights, finite material and field operations.
+LAB9.3–9.4 supply frontier acquisition and the authentic addressed-operand
+argument; LAB10.2–10.3 supply the serialized INTERNAL connection and its
+complete receiver; LAB11.1–11.2 supply the accepted-event commit and finite
+return obligations. Their installed macros retain their own old lists;
+these suppliers do not install a resettable arbitrary selector.
+
+In particular AA21.1–21.2 factor the $Q_c$ replies and settled SOURCE
+successor through current syntax only on their stated READY domain,
+with fixed rights and raw fresh names disregarded. LAB15's cuts follow
+a full INNER return; LAB10.2 and LAB11.1 still allow the outer supervisor
+to be BUSY with external ingress locked. No external Ready-only Tag or
+recall service is admitted at an arbitrary Busy cut. The present task
+requires its own lawful owned source traversal and internal-call access
+at these selection cuts, with a common reset/resumption state and a lawful
+finite return tail. For the installed outer supervisor, the phase-correct
+reset/reacquisition/selection continuation bridge remains unverified.
+The statements below are conditional on these admitted accesses and reset
+contract; mathematical source views alone do not supply that installation.
+
+All selector-visible source observations and successful-call replies at
+these cuts must depend only on current syntax, fixed rights and the chosen
+call, as the scoped AA21 $Q_c$ semantics does at Ready. Original-row
+eligibility is a TASK constraint, not a hidden-membership or refusal oracle.
+Exclude tape reads, FetchGrowth/Next, old lists/cursors, pointer age/name,
+authority/timing/capacity channels, and refreshed hidden-state readouts.
+Tapes and other physical records may remain attached but are not selector
+inputs. Reference acquisition and equality used to authenticate a currently
+traversed operand do not expose a history-bearing identity. Finite codebook
+storage, its construction/search, public-data backing, traversal scratch,
+operand acquisition, every source call and every protocol operation are
+separate charges. A codebook contains descriptions, never a free
+address-to-reference or description-to-authority cast.
+
+**Theorem 18.2 (the observable source image of a legal prefix).**
+The menus $(U_J)_{J\in\mathcal J}$ are distinct and form an antichain
+under inclusion, even when their cardinalities differ. For $Q\subseteq L$
+let $E_y(Q)$ replace each ORIGINAL $y$-alpha at an address in $Q$ by beta,
+and each ORIGINAL $y$-beta there by $\langle\beta,\alpha\rangle$, leaving
+all other original leaves and branches unchanged. On Definition 18.1's
+legal image, $Q\subseteq U_J$, and $E_y(Q)$ is exactly the current source
+after those additional calls. The map $Q\mapsto E_y(Q)$ is injective,
+its inverse is obtainable by the admitted actual source traversal relative
+to fixed $y$, and no order of these disjoint edits is encoded by this
+source observation. Every intermediate subset of $U_J$ is attainable by
+legal original-row calls on the same source, through complete inner returns.
+
+Proof. If $J_1\ne J_2$, their equal cardinalities give both
+$p\in J_1\setminus J_2$ and $q\in J_2\setminus J_1$. The nonempty block
+$B_p$ lies in $U_{J_2}\setminus U_{J_1}$ and $B_q$ in the reverse
+difference. Disjointness of all blocks and $Z$ prevents cancellation.
+This proves the asserted injective antichain; when $\mathcal J$ is a
+singleton the assertion includes an empty terminal menu.
+
+The original $y$-leaf addresses are prefix-incomparable. At an untouched
+one its original constructor, reference and enabled primitive guard
+persist; an edit elsewhere does not change them. LAB9.4 and LAB15.2's
+same-row argument therefore applies to every ordering of any
+$Q\subseteq U_J$. A selected alpha is promoted once; a selected beta
+is split once, with neither new child becoming a scheduled target.
+Consequently the endpoint is precisely $E_y(Q)\in\mathcal D_+$,
+independent of that order. The source at a prefix $R$ is $E_y(R)$ and
+the remaining original rows are $U_J\setminus R$. This is also the
+fixed-$y$ description of LAB16.2's typed candidate transport; it does not
+keep a stale index into the changing candidate basis of the successor.
+
+To recover $Q$, traverse the actual source from the surviving genuine
+root, using AA17.3's terminal/unary/binary parser and excluding tape
+edges and beta's marker from the logical frontier. Relative to each
+leaf position $a$ in fixed $y$, an original alpha is either still alpha
+or now beta; an original beta is either still beta or now the exact
+cherry $\langle\beta,\alpha\rangle$. The second case in each pair marks
+$a\in Q$. These distinguishable local constructors recover every bit
+of $Q$, proving injectivity and giving a finite traversal algorithm.
+The root and original branch skeleton persist. This algorithm acquires
+actual target references when needed; the mathematical list of addresses
+does not create them. Different edit orders can leave different tapes,
+but tapes are excluded and the current source is identical. $\square$
+
+**Theorem 18.3 (reset geometry, complete continuation and reassigned
+saturated paths).** Under Definition 18.1, set
+
+$$
+F_J=\{Q\subseteq U_J:|Q|=r\}.
+\tag{LAGR.2}
+$$
+
+There is a successful prefix encoder and transcript selector $T$ if and
+only if $(F_J)_{J\in\mathcal J}$ has a system of distinct representatives,
+equivalently
+
+$$
+\left|\bigcup_{J\in H}F_J\right|\ge |H|
+\quad\text{for every }H\subseteq\mathcal J.
+\tag{LAGR.3}
+$$
+
+There is a successful prefix encoder and geometry selector $G$ if and
+only if the distinct terminal menus $U_J$ admit mutually vertex-disjoint
+saturated increasing paths in $2^L$, one from a rank-$r$ start to each
+terminal. A saturated step adds exactly one address; a singleton
+start-equals-terminal path is allowed. With the encoder FREELY CHOSEN
+or reassigned, these two existential feasibility conditions coincide.
+This does not promise preservation of a specified encoder/pairing or of
+an individual $T$ policy.
+
+Proof. A prefix encoder selects some $Q_J\in F_J$; every such choice
+is realizable by Theorem 18.2. Suppose $Q_{J_1}=Q_{J_2}=Q$ for distinct
+supports. Immediately after reset the source is the same $E_y(Q)$ and
+all other permitted INITIAL state and inputs are the same. By the declared
+observation/call factorization, determinism gives the same future choices,
+replies and source successors as long as both runs remain legal. An
+ineligible call already violates the task; it cannot be used as a probe.
+A common finite successful suffix would enumerate both
+$U_{J_1}\setminus Q$ and $U_{J_2}\setminus Q$ and then Stop. Those sets
+differ by Theorem 18.2, so this is impossible. Thus the initial $Q_J$
+must be distinct. This argument uses the SAME INITIAL reset geometry
+and state, not equality of two later $T$ geometries with different new
+transcripts.
+
+Conversely an SDR gives one fixed finite table $Q_J\mapsto J$, shared
+by all alternatives. After reset $T$ actually reads $Q_J$ from the current
+source, decodes $J$ using that backed table, and retains this NEWLY acquired
+information. It can then enumerate $U_J\setminus Q_J$, acquire each
+real operand by traversal and execute its original full call once, before
+the finite return tail. This terminates because the residual set loses
+one row each time. The equivalence of the SDR with (LAGR.3) is the
+existing finite Hall theorem, in the form
+`Finset.all_card_le_biUnion_card_iff_existsInjective'` in the pinned
+mathlib `Mathlib/Combinatorics/Hall/Finite.lean`, with index type
+$\mathcal J$, representative type $2^L$, and family $J\mapsto F_J$.
+The generic Hall result is reused, not re-proved here.
+
+For $G$, the successful run from $Q_J$ successively adds one address
+of $U_J$ until its terminal $U_J$, so it is a saturated increasing path.
+If runs for different terminal menus share a vertex $R$, Theorem 18.2
+identifies their current source as $E_y(R)$. A geometry selector has the
+same next decision there and at each subsequent common vertex. Its two
+successful tails must therefore have the same terminal; an earlier Stop
+cannot be correct for a different nonempty residual set. The menus are
+distinct, so paths for different $J$ are vertex-disjoint. In the reverse
+direction, store the disjoint paths as a single fixed finite codebook.
+From the currently traversed $R$, $G$ finds its unique path vertex,
+chooses the next added address, or Stop at its endpoint. Scratch for
+this lookup is current-source-derived. Every vertex on the path to $U_J$
+is a subset of $U_J$; hence every added row is still an eligible original
+row by Theorem 18.2. Reacquire its actual reference and use the admitted
+complete call and return obligations. This proves the $G$ equivalence.
+
+It remains to connect Hall to these paths, rather than infer paths from
+total rank capacity. Start with any SDR $(Q_J)$. The rank-$r$ starts
+are an antichain; Theorem 18.2 gives the terminal antichain, with all
+$|U_J|\ge r$. The endpoint family
+
+$$
+\mathcal E=\{Q_J:J\in\mathcal J\}\cup\{U_J:J\in\mathcal J\}
+\tag{LAGR.4}
+$$
+
+has a decomposition into $N=|\mathcal J|$ disjoint chains
+$\{Q_J,U_J\}$, using a singleton if they are equal. Indeed equality
+$Q_i=U_j$ implies $U_j\subseteq U_i$, so terminal antichainness forces
+$i=j$; SDR injectivity excludes every other overlap.
+Apply Bastide–Groenland–Jacob–Johnston,
+[*Exact antichain saturation numbers via a generalisation of a result of
+Lehman-Ron*, arXiv:2207.07391v2, Theorem 2][SATRESET]. Its ground-set
+parameter is $n=|L|$ after an arbitrary fixed bijection $L\simeq[n]$,
+its number of chains is $m=N$, and its family $\mathcal F$ is exactly
+$\mathcal E$. The hypothesis is the just constructed chain decomposition;
+its conclusion is $N$ pairwise disjoint skipless chains COVERING
+$\mathcal E$, not paths preserving the input pairs.
+
+Each output chain contains at most one rank-$r$ start and at most one
+terminal, by the two antichains. There are $N$ of each and exactly $N$
+chains, so each chain contains one of each. The terminal has rank at
+least $r$, hence is above its chain's start. Trim the chain to that closed
+interval. The resulting paths remain saturated and disjoint, including
+singletons when ranks coincide. Their start-to-terminal pairing may differ
+from the SDR pairing. Assign to the history $J$ the start of the path
+whose terminal is $U_J$ and rewrite the prefix using that start. This is
+a permitted RE-ENCODING: the new start has rank $r$ and is contained in
+$U_J$, and all its subsequent intermediate subsets are likewise native
+legal. The disjoint-path selector above now supplies $G$. Conversely
+$G$ is a particular $T$, or its disjoint starts themselves form an SDR.
+This proves existential coincidence without a prescribed-pairs claim.
+For $r=0$, Hall forces $N=1$; for an empty menu the sole feasible start
+is the singleton path at $\varnothing$. Thus these cases require no
+strict-rank version of the published theorem. $\square$
+
+**Corollary 18.4 (sharp beta-comb threshold, including the uncovered row).**
+Let $y_0=\beta$ and $y_{m+1}=\langle y_m,\beta\rangle$, $m\ge0$.
+Label its $m$ right-ending candidate leaves by $[m]$ and its uncovered
+leftmost leaf $z=L^m$. For $0\le k\le m$ put
+
+$$
+N=\binom mk,\qquad t=m-k,\qquad
+U_J=([m]\setminus J)\cup\{z\}.
+\tag{LAGR.5}
+$$
+
+For each integer $0\le r\le t+1$, both reset contracts are feasible
+exactly when
+
+$$
+\binom{m+1}{r}\ge N.
+\tag{LAGR.6}
+$$
+
+Outside this range exactly $r$ distinct original-row calls are impossible.
+The minimum feasible prefix length is
+
+$$
+r_*(m,k)=\min\{r\in\{0,\ldots,t+1\}:\binom{m+1}{r}\ge\binom mk\}.
+\tag{LAGR.7}
+$$
+
+In particular $r_*(6,3)=2$: there are $20$ supports, while ranks one
+and two on the SEVEN addresses, including $z$, have sizes $7$ and $21$.
+
+Proof. LAB16.5 supplies precisely these candidates and the uncovered
+row on this attained LAB source. Theorem 18.2 realizes their prefixes
+as actual once-only splits at the corresponding beta leaves. Necessity
+of (LAGR.6) follows from the SDR in Theorem 18.3, since its starts are
+distinct rank-$r$ subsets of $[m]\cup\{z\}$. Sufficiency needs every
+Hall subfamily, not just this total capacity.
+
+Identify a support with $W=[m]\setminus J$, a $t$-subset of $[m]$.
+First take $1\le r\le t$. Allowed starts have two disjoint types:
+$r$-subsets of $W$ without $z$, and $\{z\}\cup R$ with
+$R\subseteq W$, $|R|=r-1$. The numbers of starts of these types in the
+whole ground set, their degrees from any fixed $W$, and the numbers
+of $t$-sets containing any fixed start are respectively
+
+$$
+\begin{aligned}
+v_0&=\binom mr,& d_0&=\binom tr,&
+e_0&=\binom{m-r}{t-r},\\
+v_1&=\binom m{r-1},& d_1&=\binom t{r-1},&
+e_1&=\binom{m-r+1}{t-r+1}.
+\end{aligned}
+\tag{LAGR.8}
+$$
+
+Both types are nonempty in this interior range, and $e_0,e_1>0$.
+Counting their incidences gives $Nd_i=v_ie_i$. For ANY family $H$
+of $t$-sets, let $\Gamma_i(H)$ be its allowed starts of type $i$.
+Counting incidences from $H$ to those starts gives
+$|H|d_i\le|\Gamma_i(H)|e_i$, so
+
+$$
+\begin{aligned}
+|\Gamma_0(H)|+|\Gamma_1(H)|
+&\ge |H|\frac{v_0+v_1}{N}\\
+&=|H|\frac{\binom{m+1}r}{N}\ge |H|.
+\end{aligned}
+\tag{LAGR.9}
+$$
+
+This is (LAGR.3) for every $H$, including the empty family, and proves
+Hall sufficiency throughout the interior range.
+
+At $r=0$ every $F_J$ is $\{\varnothing\}$, so feasibility is exactly
+$N=1$, just (LAGR.6). At $r=t+1$, each $F_J$ consists solely of the
+full menu $W\cup\{z\}$. These menus are distinct, giving an SDR and
+singleton continuation paths directly. Also
+$\binom{m+1}{t+1}=\frac{m+1}{t+1}\binom mt\ge N$.
+Here starts of size $t+1$ WITHOUT $z$ have no incident menu; they must
+not be included in an orbit-degree division. No division by that zero
+degree, or by an empty orbit, is used. For $k=0$ or $k=m$, $N=1$ and
+$r_*=0$; all lengths in $[0,t+1]$ work for this single menu. For $m=0$
+this says $k=0$, $U=\{z\}$, and exactly $r=0,1$ are admitted. The
+interior proof is unnecessary when $t=0$. A menu always has $t+1$
+rows, excluding longer or negative lengths. Finally for $(m,k)=(6,3)$,
+rank zero has size $1$, ranks one and two have the stated sizes, and
+$r=2\le t+1=4$. Theorems 18.2–18.3 turn Hall sufficiency into the
+claimed same-source feasibility and sharp minimum. $\square$
+
+**Proposition 18.5 (erased prefix order and newly retained observations
+have different roles).** At $(m,k,r)=(7,3,2)$, the prefixes $(4,3)$
+and $(3,4)$ cannot distinguish $J_1=\{1,2,5\}$ and
+$J_2=\{1,2,7\}$ after Definition 18.1's reset: both leave $Q=\{3,4\}$.
+Nevertheless later equal geometries may carry different NEW $T$
+transcripts. This distinguishes individual policies, not existential
+feasibility of the two reset contracts.
+
+Proof. Both prefixes are legal for both supports, and Theorem 18.2 gives
+the same source $E_y(\{3,4\})$. The complete pre-reset order and private
+control are erased. The remaining menus are respectively
+$\{z,6,7\}$ and $\{z,5,6\}$. The initial-state argument of Theorem 18.3
+therefore prevents one successful $T$ continuation for this collided
+encoding. A primitive guard does not supply the missing cohort bit:
+calling a previously used original row can be native-enabled and still
+violate the task.
+
+For a later meeting instead use $(m,k,r)=(3,1,1)$ and index the three
+supports by their omitted candidate $i$. Their menus are
+$U_1=\{z,2,3\}$, $U_2=\{z,1,3\}$, $U_3=\{z,1,2\}$.
+Choose the respective starts $\{z\},\{3\},\{1\}$. Two possible $T$
+paths are
+
+$$
+\{z\}\subset\{z,3\}\subset U_1,\qquad
+\{3\}\subset\{z,3\}\subset U_2;
+\tag{LAGR.10}
+$$
+
+the third can be $\{1\}\subset\{1,2\}\subset U_3$.
+At the meeting vertex $\{z,3\}$, the first two runs have retained
+different initial observations acquired AFTER reset and different new
+calls. They can choose $2$ and $1$ respectively. A geometry selector
+cannot implement those particular two tails at that shared vertex.
+It can instead use the disjoint paths
+
+$$
+\{z\}\subset\{z,2\}\subset U_1,\qquad
+\{3\}\subset\{1,3\}\subset U_2,\qquad
+\{1\}\subset\{1,2\}\subset U_3.
+\tag{LAGR.11}
+$$
+
+All paths are native legal by Theorem 18.2. Thus the policy distinction
+uses only new observations and gives no existential $G/T$ gap.
+The memoryless/prefix-dependent distinction itself is already explicit
+in Boundary Dynamics §80; the new claim here is this reset and
+original-row correspondence on the LAB source. $\square$
+
+**Proposition 18.6 (same-source transport and the recovery boundary).**
+The preceding criteria and prefix-length threshold are unchanged when
+the current source syntax is presented by its acquired oriented material
+support, its terminal boundary, or its labelled causal membership order,
+on the same actual source and with Definition 18.1's access/reset premises.
+They concern recovery sufficient for COMPLETE original-cohort continuation;
+they do not recover an erased serial order or minimize total resources.
+
+Proof. AA17.2–17.3 and LAB16.6 give the existing round trips among these
+source views, retaining beta's unary material marker and excluding tape
+edges. Applying those inverses at the current source gives precisely
+$E_y(Q)$; Theorem 18.2 then recovers $Q$. At the INITIAL reset cut,
+the SDR codebook decodes this newly acquired $Q$ to $J$, hence the entry
+$x_J(y)$ and remaining original cohort, but not the erased prefix order.
+At later $T$ cuts, its newly retained transcript is still an additional
+input: a later geometry alone need not decode $J$, as Proposition 18.5
+shows. Changing source view transports that same transcript unchanged.
+For $G$, each current set locates its unique disjoint codebook path.
+Conversely the current edited-address set computes the same syntax and
+hence each source view. Every route describes the SAME source, so these
+compositions agree and a one-address path step is the same actual $P/S$
+event in every view.
+Acquiring a causal description or boundary does not by itself grant
+traversal, bindings or calls; their current lawful access remains a
+separate premise, including the unresolved Busy reset/continuation bridge.
+
+The mature Hall criterion and the disjoint skipless-chain covering theorem
+are intermediate results in Theorem 18.3, with their parameter maps given
+there; neither is a new matching theorem here. ABT12's broader geometric
+encoding, Boundary Dynamics §80's selector distinction, the symmetric-chain
+argument (CL.22) in Common Live Cones, and the Hall applications of
+Acquired Relation History are existing results. The source image after
+a declared reset, its native complete-continuation correspondence and the
+sharp comb application above are `repo-derived` ordinary mathematical
+deductions from the stated suppliers. They add neither a worldwide-novelty
+claim nor a fresh Lean-certification claim. In particular §17's fixed-length
+prefix task is different: its retained initial supplement and bounded
+success condition are not the post-reset full-exhaustion task here.
+All public/codebook storage, source construction and traversal, reference
+acquisition, scratch, inaccessible tapes, maintenance, full traffic and
+returns remain separate paid resources under Definition 18.1. The logical
+reset restriction gives no physical-erasure or new-controller existence
+conclusion. $\square$
+
+[SATRESET]: https://arxiv.org/html/2207.07391v2#Thmtheorem2
+
+## 追加锚（本行以下为增补区）
+
+## 19. Transient source encoding of an attained order and mandatory terminal recall
+
+**Definition 19.1 (old serial content and the added terminal task).**
+Keep exactly Definition 18.1's source, access, reset and full-return
+premises, with the acquired fixed $y,k$, candidate basis $A$, supports
+$\mathcal J$ and remaining ORIGINAL-row menus $U_J$ of (LAGR.1).
+For each $J$ let $\Sigma_J$ be a declared nonempty family of ACTUALLY
+attained length-$k$ ordered lists of successful typed original events
+on that support, and put
+
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\},
+\qquad d_J=|\Sigma_J|.
+\tag{LAGS.1}
+$$
+
+Theorem 15.2 supplies $\Sigma_J=\operatorname{Perm}(\{e_p:p\in J\})$
+and $d_J=k!$ for Definition 15.1's supplied arbitrary-order schedule
+family. Its original-row guard argument, with LAB9.3–9.4's acquired
+authentic addresses, tags and references, realizes every such order:
+an edit at one old leaf changes neither another old leaf's constructor
+nor its root reference. Each event is taken through its complete inner
+return. These are alternative actual supplied schedules, not multiple
+executions of one choice-free deterministic preparer. The word $\sigma$
+contains only these addressed typed successful events, not full controller
+traffic, raw identities, elapsed time or an annotation on an unchanged run.
+
+An encoder that has actually acquired $h=(J,\sigma)$ may perform exactly
+$r$ further distinct eligible ORIGINAL-row writes $Q\subseteq U_J$,
+each through full inner return. The logical reset erases ALL supplementary
+pre-reset private control and ordered records, including $h$, write order,
+old lists, cursors, scratch and readable private archives. Only current
+source geometry, fixed public $y,k,r$, one finite $h$-independent
+program/codebook, authentic fixed access bindings and common protocol
+obligations remain. As in §18, attached physical tapes are inaccessible
+selector inputs. The codebook is backed public data, not another source
+edit or a surviving run-dependent control state.
+
+After reset every run must complete exactly $U_J\setminus Q$, with
+no new-row or decorative write, and only at the completed cut output the
+exact old word $\sigma$, then discharge the full declared reply,
+acknowledgement, return and cleanup. No earlier output archive is allowed.
+Both $G$'s choices AND its final recall value depend only on current source
+geometry and fixed inputs. A last reply, saved selection, phase tag or
+history-dependent final control cannot supplement that final value.
+$T$ may retain only observations it actually acquires AFTER reset.
+There is no tape/Next/FetchGrowth access, pointer age, hidden-state readout
+or cohort-refusal probing. Every permitted observation and source reply
+has Definition 18.1's current-source factorization.
+
+**Corollary 19.2 (exact constrained transient encoding and terminal
+survival).** Under Definition 19.1, put
+$F_J=\{Q\subseteq U_J:|Q|=r\}$. A prefix encoder and $T$ can satisfy
+this complete success-and-recall task if and only if
+
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+\ \ge\ \sum_{J\in\mathcal S}d_J
+\qquad\text{for every }\mathcal S\subseteq\mathcal J.
+\tag{LAGS.2}
+$$
+
+If any $d_J\ge2$, no prefix encoder and $G$ can satisfy the task,
+regardless of whether (LAGS.2) holds. When every $d_J=1$, the unique
+publicly specified order for each support adds no distinction, and
+Theorem 18.3's exhaustion-only feasibility criterion also suffices for $G$.
+
+For the attained beta comb of Corollary 18.4, with all supplied orders,
+write $N=\binom mk$, $t=m-k$, $d=k!$, $0\le k\le m$. The exact $T$
+capacity is
+
+$$
+\begin{array}{c|c}
+\text{prefix length}&\text{feasibility of completion and exact old-order recall}\\ \hline
+r=0&dN=1\\
+1\le r\le t&dN\le\binom{m+1}{r}\\
+r=t+1&d=1
+\end{array}
+\tag{LAGS.3}
+$$
+
+Outside $0\le r\le t+1$ there is no such prefix. In particular the
+attained case $(m,k,r)=(5,2,3)$ has twenty admissibly encoded ordered
+histories, one remaining original call per run, and ten terminal sources
+with two orders each. Here $T$ succeeds at $r=3$ and fails at $r=4$;
+$G$ fails for the added recall task at either length.
+
+Proof of the history criterion. By Theorem 18.2, every allowed code
+$Q\in F_J$ is realized by genuine original calls and its initial reset
+geometry is exactly $E_y(Q)$, with an injective acquired inverse to $Q$.
+Suppose distinct histories receive the same $Q$. Their INITIAL reset
+sources and all other permitted initial inputs then agree. Determinism
+and the current-source observation/reply premise force identical future
+choices, replies and successors for as long as both runs remain legal.
+An ineligible original-row call already fails the task; its refusal is
+not an extra observation. If the supports differ, their distinct menus
+$U_J$ cannot both be exhausted by the same suffix from this common $Q$,
+as in Theorem 18.3. If the supports agree but their orders differ, a
+common successful suffix cannot produce both required final words.
+Thus distinct histories require distinct INITIAL reset geometries even
+for $T$. This does not prohibit later equal $T$ geometries with different
+newly acquired transcripts.
+
+Conversely, distinct admissible codes give one fixed inverse table
+$Q\mapsto(J,\sigma)$. After reset, $T$ actually traverses its current
+source, recovers $Q$, decodes this table and retains that NEW observation's
+information. It completes $U_J\setminus Q$ once in a public order and
+recalls the decoded $\sigma$ only at exhaustion. A logical address in the
+table grants no call right: traversal from the surviving authentic bound
+root must acquire the CURRENT target reference, check its correspondence
+to the backed address and current tag, and use authenticated dispatch
+with current authority. Disjoint original rows preserve these references
+until called. Sufficient backing, complete source/arithmetic/tape
+maintenance, literal replies, acknowledgements and inner returns are
+required throughout. Codebook construction, acquisition, navigation,
+computation, retention and all traffic are paid separately.
+
+The matching step is the existing finite Hall theorem already used in
+§18 and [Acquired Relation History §9][ARHSERIAL], specifically pinned
+mathlib's `Finset.all_card_le_biUnion_card_iff_existsInjective'` in
+`Mathlib/Combinatorics/Hall/Finite.lean`. Its indices here are histories
+$h\in\mathcal H$, its representatives are subsets of $\Lambda(y)$,
+and the allowed set for $(J,\sigma)$ is $F_J$. Applying Hall to all
+histories over a support subfamily gives necessity of (LAGS.2).
+Conversely, any history subfamily $K\subseteq\mathcal H$ has support
+projection $\mathcal S$, neighborhood $\bigcup_{J\in\mathcal S}F_J$
+and size at most $\sum_{J\in\mathcal S}d_J$. Hence (LAGS.2) supplies
+Hall for EVERY history subfamily, proving sufficiency. Repetition of a
+menu is therefore counted by its actual attained order multiplicity,
+not by inventing additional geometric codes.
+
+Proof of the terminal obstruction. For a fixed $J$, two encoders of
+different orders may select different $Q$ and have different residual
+sets $U_J\setminus Q$. Nevertheless every successful complete run has
+TOTAL completed set $U_J$, hence terminal source $E_y(U_J)$ by
+Theorem 18.2. This source depends on $J$ and not $\sigma$. A final
+recall value derived only from that geometry and fixed inputs must agree
+for two orders on this support, contradicting exact recall. Changing the
+intermediate pairing or path cannot change this terminal equality.
+When $d_J=1$ for all $J$, Theorem 18.3 instead provides disjoint source
+paths whenever support Hall holds. Their terminal $U_J$ identifies $J$
+and its unique fixed order, so $G$ can also supply the final value.
+This is the existing task-kernel obstruction applied to the ADDED recall
+task. It leaves §18's exhaustion-only existential $G/T$ equivalence intact.
+
+Proof of the comb capacity, including all Hall subfamilies. Write
+$W=[m]\setminus J$, so $|W|=t$ and $U_J=W\cup\{z\}$.
+For $1\le r\le t$, the two disjoint allowed-code types are the
+$r$-subsets of $W$ without $z$ and $\{z\}\cup R$ with
+$R\subseteq W$, $|R|=r-1$. Use exactly the incidence counts
+$(v_i,d_i,e_i)$ of (LAGR.8): $v_0=\binom mr$,
+$v_1=\binom m{r-1}$, and $Nd_i=v_ie_i$ with $e_i>0$.
+For any support subfamily $\mathcal S$, its type-$i$ neighborhood
+$\Gamma_i(\mathcal S)$ satisfies
+$|\mathcal S|d_i\le|\Gamma_i(\mathcal S)|e_i$. Therefore
+
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+=|\Gamma_0(\mathcal S)|+|\Gamma_1(\mathcal S)|
+\ge |\mathcal S|\frac{\binom{m+1}r}{N}
+\ge d|\mathcal S|
+\tag{LAGS.4}
+$$
+
+whenever the interior inequality in (LAGS.3) holds. This proves every
+weighted Hall inequality, not merely total counting. Conversely the
+whole family reaches exactly these two orbits, of total size
+$\binom{m+1}r$, so (LAGS.2) forces that inequality.
+
+At $r=0$ the only code is $\varnothing$, requiring $dN=1$.
+At $r=t+1$ each history over $J$ has ONLY code $U_J$. The reachable
+code set has size exactly $N$, with one distinct code per support;
+(LAGS.2) holds exactly when $d=1$. The nominal rank count
+$\binom{m+1}{t+1}$ is not the reachable code count. In particular
+size-$(t+1)$ sets without $z$ have zero incidence and cannot enter a
+positive-degree orbit argument; empty orbits are omitted as well.
+Each menu has $t+1$ rows, excluding all outside lengths. For $k=0$,
+$d=N=1$ and all lengths $0,\ldots,m+1$ work. For $k=1$, $d=1$,
+$N=m$: every $r=1,\ldots,m$ works, and $r=0$ works only at $m=1$.
+For $k=m\ge2$, $t=0$, $N=1$, $d=m!>1$, so neither $r=0$ nor
+$r=1$ works. At $m=0$, necessarily $k=0$ and $U=\{z\}$; precisely
+$r=0,1$ work. These cases also cover the overlaps at $m=1$ without
+using an interior orbit when $t=0$.
+
+Proof by an explicit attained comb codebook. For $m=5$ label candidate
+$i$ by the authentic logical address $p_i=L^{i-1}R$, and put $z=L^5$.
+For $i<j$ the two old words on $J=\{i,j\}$ are
+$(P_{p_i},P_{p_j})$ and $(P_{p_j},P_{p_i})$. The following is one fixed
+codebook; entries list the three ORIGINAL $y$-rows to split before reset.
+
+| $J$ | $Q$ for $(i,j)$ | $Q$ for $(j,i)$ |
+| --- | --- | --- |
+| $\{1,2\}$ | $\{3,4,5\}$ | $\{z,3,5\}$ |
+| $\{1,3\}$ | $\{2,4,5\}$ | $\{z,2,4\}$ |
+| $\{1,4\}$ | $\{2,3,5\}$ | $\{z,2,3\}$ |
+| $\{1,5\}$ | $\{2,3,4\}$ | $\{z,3,4\}$ |
+| $\{2,3\}$ | $\{1,4,5\}$ | $\{z,4,5\}$ |
+| $\{2,4\}$ | $\{1,3,5\}$ | $\{z,1,5\}$ |
+| $\{2,5\}$ | $\{1,3,4\}$ | $\{z,1,3\}$ |
+| $\{3,4\}$ | $\{1,2,5\}$ | $\{z,2,5\}$ |
+| $\{3,5\}$ | $\{1,2,4\}$ | $\{z,1,4\}$ |
+| $\{4,5\}$ | $\{1,2,3\}$ | $\{z,1,2\}$ |
+
+Each entry is contained in $U_J=([5]\setminus J)\cup\{z\}$.
+The first column of codes contains all ten triples without $z$; the
+second contains $z$ with each of the ten pairs exactly once. Thus all
+twenty codes are distinct. Every menu has four rows, leaving exactly
+one original call after this length-three prefix. Both orders on a
+support finish at the same $E_y(U_J)$, and different supports give
+different terminal sources by injectivity in Theorem 18.2. There are
+therefore exactly ten terminal sources with two old orders each.
+
+These histories have actual source preparations. From the known alpha
+root, promote the root; split successively at
+$\varepsilon,L,\ldots,L^4$, and promote the born right alpha at $p_i$
+exactly when $i\notin J$. This attains $x_J(y_5)$, whose original
+frontier is then lawfully acquired and sealed. Execute the two remaining
+promotions at $p_i,p_j$ in the specified supplied order, acquiring their
+successful events and completing each inner return. This attains $y_5$
+with the stated KNOWN old history. The three code writes are now splits
+at disjoint eligible old beta rows, in any fixed code-dependent public
+order. None targets a new child. These different actual schedules supply
+the information used by the encoder before reset; no order is freely
+attached to a source description. At $r=4$, by contrast, every prefix
+has already written its full four-row menu, leaving just ten reachable
+codes for twenty histories. $T$ cannot recover the erased order from
+such an initial reset source. Availability is thus not monotone in the
+number of prescribed writes.
+
+Finally, AA17.2–17.3 and Proposition 18.6 transport this same current
+source among syntax, oriented material support, terminal boundary and
+labelled causal membership order. At the reset cut a successful codebook
+therefore makes the old serial word recoverable from ANY of these
+actually acquired views. Mandatory completion identifies the two orders
+on a support in ALL these source views; $T$'s newly acquired retained
+information can survive that identification. This is a constrained
+transient encoding versus terminal survival correspondence on the
+original atomic $P/S$ source. Generic chronological nonrecovery and
+factorial supplements are already supplied by [Native Cutoff Completion
+Frontiers §§8–9][CCFSERIAL]; [AAII Definition 67.2][AAIISERIAL] retains the
+erased-order boundary of earned current syntax. The finite matching step
+is reused, not a new matching theorem. The present conditional corollary
+and sharp original-row application are `repo-derived`.
+
+All recovery is conditional on the admitted lawful owned traversal,
+authenticated dispatch, sufficient backing and complete maintenance and
+INNER-return cuts of Definition 18.1. AA21 is READY-scoped; the outer
+LAB supervisor may still be BUSY at these cuts. No Ready-only external
+service is imported. The resettable outer installation/phase bridge is
+UNVERIFIED. The reset is a declared logical controller operation, not a
+native inverse or thermodynamic deletion. There is no assertion of a
+total-resource optimum, fresh Lean certification, worldwide novelty or
+completion of the broader space–time–boundary–memory programme. $\square$
+
+[ARHSERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md#9-mathematical-scope-suppliers-and-remaining-obligations
+[CCFSERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CUTOFF_COMPLETION_FRONTIERS.md#8-exact-joint-price-of-discarded-labels-and-sweep-order
+[AAIISERIAL]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#67-supplier-correspondence-and-exact-applicability-boundary
+
+## 追加锚（本行以下为增补区）
+
+## 20. A paid private scrub and source-only resumption in a separate session
+
+**Definition 20.1 (fixed public data and actual hidden alternatives).**
+Fix the actually backed public syntax $y$, exact integers $k,r$, root
+binding and current grants of Definition 18.1. Let $\mathcal H$ be either
+its finite support family, or Definition 19.1's finite, effectively
+enumerated family of attained ordered histories. Write $J(h)$ for the
+support of $h\in\mathcal H$. The alternatives are actual schedules in
+that SAME acquired LAB fibre, with the authentic frontier acquisition,
+successful events and complete inner returns of §§9–11 and 15. A
+history description supplied without those events is not an alternative.
+
+Fix one effective program and publicly backed finite codebook $K$,
+independent of which $h$ is attained. It computes
+
+$$
+Q_h=K(h)\subseteq U_{J(h)},\qquad |Q_h|=r.
+\tag{LAGI.1}
+$$
+
+Its prefix procedure lists these distinct ORIGINAL $y$-leaf addresses
+in a fixed public order and executes their current-tag calls. The
+program may compute the codebook by terminating finite enumeration on
+public parameters, or interpret a supplied finite table. It is not an
+uncomputed infinite table of source responses. Public backing contains
+syntax, parameters and fixed codebook data, not a saved acquired
+address/reference correspondence or a hidden-history-dependent choice
+of program. Denote these fixed public data collectively by $\mathsf P$.
+
+A continuation policy, when supplied, is an effective $G$ or $T$ of
+Definition 18.1, with its declared output function. Correct complete
+continuation, and any injectivity of $h\mapsto Q_h$ needed for recovery
+of $J$ or order, are separate premises supplied by §§18–19. Neither
+follows merely from (LAGI.1). The fixed twenty-code table in §19.2, for
+example, supplies a finite codebook and a post-cut $T$ policy without
+requiring a new matching or capacity theorem.
+
+**Assumption 20.2 (owner-installed session and its access boundary).**
+Before the selected hidden schedule, the owner installs one NEW session
+request/reply connection and finite session control in the actual LAB
+supervisor. Its ingress is serialized by the existing arbiter. It enters
+only at genuine returned outer idle, with the inherited tape/arithmetic
+invariants and empty old transient fields; no scalar or pair macro is
+active. It holds that actual lock throughout the session. The session
+may acquire its old frontier and receive the selected finite schedule,
+thereby attaining and acquiring $h$ at $y$, before its $r$ code writes.
+All such input, including its consumed-position state, is supplementary
+private state. No hidden schedule suffix remains available after the cut.
+
+Its fixed outer control follows
+
+$$
+\mathsf{Prefix}\longrightarrow\mathsf{Scrub}
+\longrightarrow\mathsf{Reacquire}\longrightarrow\mathsf{Continue}
+\longrightarrow\mathsf{Print}\longrightarrow\mathsf{End}
+\longrightarrow\mathsf{ACK}\longrightarrow\mathsf{Return}.
+\tag{LAGI.2}
+$$
+
+Prefix and Continue have finite loops through the original internal
+source connection. The actual supervisor's dispatch and maintenance
+owner accepts these session-origin calls and returns to the designated
+session continuation after the inner driver's REAL root return. An
+internal return leaves the session lock held. Scrub is a new internal
+cut, not PairReady, and grants no external ingress. The eventual session
+report is a function only of $\mathsf P$ and permitted newly acquired
+continuation state. Its contract owes no old scalar/pair result, old
+frontier tail or unconsumed pre-cut reply. Its final full output,
+acknowledgement, root return and cleanup must restore the old returned idle.
+
+Every accepted event still uses Definition 11.1's SAME hook: original
+navigation and guard, reservation, actual source edit, all proper-ancestor
+tape appends, arithmetic successors computed from pre-edit banks, and
+discharge of pending work before the complete Growth reply is released.
+The bound internal receiver backs and consumes every literal kind/address
+bit and End, acknowledges, and waits for real inner return. Its session
+copies belong to the scratch below. Protected source headers/tapes,
+immutable attachment $e$, scalar/pair synchronization, original receivers
+and every literal legacy reply retain their meanings. No dispatch owner
+is bypassed and no produced traffic is suppressed. After session return
+the seven original public calls and scalar/pair connections remain usable.
+
+The post-cut session observer may traverse CURRENT logical source fields
+through the authentic root/grants and use its new scratch. It cannot read
+the auxiliary header/tapes, $e$, protected service banks or old receivers;
+call FetchGrowth/Next; inspect old paths or last-call state; enumerate
+resource/ownership metadata; or observe allocation names/age, representation
+width, elapsed work, capacity or exhaustion. Reference equality is used
+only to authenticate current traversed operands and bindings, with no raw
+name channel. Root, program, public backing and the fixed workspace layout
+are common on the fibre. There is no other alias, callback, request archive
+or later hidden input into this observer. This wiring and authority
+separation is an INSTALLATION premise: common ownership alone does not
+imply it. Protected legacy recall can still distinguish old histories for
+its own authorized users. Erasure below is relative to this session access
+boundary, conditional on the retained current source.
+
+All finite runs have sufficient finite material, exclusive current rights,
+complete supplied inputs and acknowledgements, and no interruption,
+revocation or competing writer. These are AA20.1's ideal finite-execution
+conditions, not a claim about an existing fixed-capacity device.
+
+**Definition 20.3 (public-shaped private backing).** Reserve before the
+hidden schedule a finite padded arena with a fixed public slot layout and
+authentic field references. Each writable slot has a fixed type and neutral
+value. Its immutable public navigation spine and slot schema contain no
+history-dependent data; they remain usable while data fields are cleared.
+Variable lists use occupancy fields within this SAME backing, rather than
+history-dependent allocated chains that could survive as a length channel.
+
+The data slots and a fixed register bank cover ALL supplementary pre-cut
+copies: received input and its cursor; $h,J$, order, selected code and
+labels; OLD/frontier rows, address bits and reference lists; parser and
+output buffers; counters and loop cursors; arithmetic operands and banks;
+saved continuations and call results; latches, phase flags and source
+cursors; allocator descriptors, occupancy/free-list fields and every
+mutable alias. Any supplementary supervisor/receiver copy is included.
+Original inner-service scratch must already be empty at its returned
+Ready, as required by AA20.2; a pending inner operation cannot enter Scrub.
+No supplementary pre-cut object is left outside this coverage. Source
+objects, committed tape backing and public data are separate retained
+components, not cells falsely counted as erased scratch.
+
+For fixed public parameters such backing is sufficient: the admitted
+$\mathcal H$ is finite, the codebook computations terminate, and each
+prefix is a finite sequence of finite traversals and complete calls.
+Execute their description-level procedures on every member of the finite
+enumeration to obtain a finite maximum workspace requirement, and pad
+all alternatives to any sufficient common size. The same argument applies
+to a supplied terminating finite continuation policy if a common arena
+for the whole session is desired. This is an effective finite computation,
+not access to the run's hidden choice. Source/tape reservations retain
+their own AA20.1 material requirements. Actual reference fields must have
+sufficient finite backing under the installation's representation; the
+argument bounds logical slots, not a uniform number of reference bits.
+It asserts neither a uniform arena bound over arbitrary source sizes nor
+free reference widths. Hidden-dependent arena length, optional spare
+objects or readable allocation descriptors would violate this definition.
+
+**Theorem 20.4 (conditional paid scrub, fresh difference acquisition and
+completed-cut simulation).** Under Definitions 20.1 and 20.3 and
+Assumption 20.2, a single fixed finite-control procedure using owned field
+operations implements the prefix, scrub and fresh acquisition phases of
+(LAGI.2). At its completed Scrub cut it has current
+source $z=E_y(Q_h)$, unchanged committed protected fields, one common
+private normal form $w_0$, and the common Reacquire program counter with
+the session lock held. All supplementary pre-cut distinctions have been
+removed from its private backing by actual writes. Fresh current-source
+traversal with public $y$ then recovers EXACTLY $Q_h$ on this actual image.
+
+At the declared complete-inner-return decision cuts, equal $\mathsf P$,
+current source and allowed new memory give equal selected observations,
+replies and next actions, modulo opaque fresh-name renaming. Each completed
+lawful session call has its actual $P/S$ source successor, complete
+tape/arithmetic successor and full literal reply. A supplied successful
+continuation policy therefore gives the session's full stipulated result
+and real outer return. The source relation transports through AA17's
+syntax, oriented support, terminal boundary and labelled causal membership
+maps on their actual images, commuting with each completed source call.
+These conclusions install neither a reset command in the unchanged legacy
+controller nor a successful codebook/policy where one has not been supplied.
+
+Proof. During Prefix, really acquire the actual frontier/history and
+evaluate $K$ in the padded backing. For each listed address, traverse
+from the bound root, acquire the CURRENT reference, check its correspondence
+with the address/tag, and submit the original addressed frame. Since its
+addresses are distinct eligible original leaves, LAB9.4 and Theorem 18.2
+give every guard and the endpoint $E_y(Q_h)$. After every call the actual
+supervisor completes the accepted-event hook, its bound receiver consumes
+the full reply, and the inner driver returns to Ready before session
+control advances. Thus the last prefix call leaves no pending edit,
+append, arithmetic commit or reply. The outer session is still busy.
+
+Now enumerate the $N$ arena data slots in their fixed PUBLIC order. Write
+each slot's neutral value, including unused padding. After $i$ writes the
+first $i$ slots are neutral, all remaining supplementary data are confined
+to the remaining slots and the designated register bank, and source,
+public spine and protected committed fields are unchanged. This invariant
+holds at zero by coverage. One owned write to slot $i+1$ establishes the
+next case without reading any old value. The fixed public spine prevents
+clearing a data link from losing the rest of the traversal. At $N$ no
+arena data remain. The scrub traversal's own index, target reference and
+latches reside in the designated bank, so the invariant has not silently
+discarded the scrubbing machine.
+
+Finish by explicit writes normalizing every register in that bank: source
+cursor to the common root, other private references to null, counters,
+flags and latches to their fixed neutral values. Set the phase to
+Reacquire and jump to its one common code location. The final straight-line
+tail uses only fixed public bindings; it needs no saved return address or
+old register value. Its control counter has that same final value in every
+run. The arbiter remains in its fixed session-held state. Thus, writing
+$\operatorname{view}_{\rm sess}$ for this observer's declared post-cut view,
+
+$$
+\operatorname{view}_{\rm sess}(C_h^{\rm scrub})
+  =(\mathsf P,E_y(Q_h),w_0,\mathsf{Reacquire},\mathsf{held}).
+\tag{LAGI.3}
+$$
+
+Here $w_0$ is independent even of $Q_h$; the retained SOURCE may deliberately
+encode $h$. Protected histories are not asserted equal. Every one of the
+$N$ data writes, each final register/cursor normalization, traversal step
+and control operation is charged. A hidden-dependent scrub length or final
+bank-direction/phase bit would falsify (LAGI.3), so padding and final
+normalization are essential. This constructs the private reset from owned
+writes, rather than defining a Reset operation to forget its arguments.
+
+Reacquire traverses the actual finite source using only parent/left/right
+source fields and authentic bindings. Its logical-arity parser treats a
+unary marker as part of beta, never as a logical child or OLD row. Compare
+with the backed public syntax at each original leaf $p$ of $y$:
+
+$$
+\begin{array}{c|c|c}
+y_p&z_p&\text{recovered membership}\\ \hline
+\alpha&\alpha&p\notin Q_h\\
+\alpha&\beta&p\in Q_h\\
+\beta&\beta&p\notin Q_h\\
+\beta&\langle\beta,\alpha\rangle&p\in Q_h
+\end{array}
+\tag{LAGI.4}
+$$
+
+Original leaves are prefix-incomparable and each was written at most once;
+no new child was targeted. These exhaust the actual image and distinguish
+all its membership bits, as in Theorem 18.2. In particular an original
+alpha becoming a branch is OUTSIDE this domain, not an additional decoding
+case. Original branch positions persist, so paid simultaneous traversal
+of $y$ and $z$ locates every comparison and binds actual current references.
+No inverse source edit, old pointer, numeral-to-reference cast, source
+inverse primitive or refusal probe is used. This proves recovery of $Q_h$
+for every allowed codebook, including a noninjective one. Only if the
+supplied codebook is injective on supports or ordered histories can its
+finite inverse additionally recover that old content. Such decoding is a
+NEW observation after the cut, not a surviving old private copy.
+
+For simulation retain as a proof invariant the actual successful word $w$,
+its complete ancestral tapes, $c=\overline{v(t)}$, the correct scalar fields
+$(B,r_s)=E(q(t))$, and unchanged $e$. At the cut domain, projection selects
+the current source $t$ and permitted new session memory. Scrub and source
+navigation stutter on the source and committed protected fields. When the
+session selects a call, its OWN traversal scratch is in the arena and the
+inner driver is genuinely at AA20.2 Ready: the preceding call has returned,
+and local session work has created no pending source operation. The installed
+dispatch edge submits its authenticated frame from that Ready, then holds
+the session continuation while the original driver is busy. AA20.3 and
+LAB11.1–11.2 give its guard/reservation/edit/maintenance/pre-edit commits,
+complete reply, End, acknowledgement and real root return. The source-call
+cut reached on return has
+
+$$
+(t,w)\longmapsto(g(t),wg),\qquad
+\mathcal W\longmapsto\mathcal W(wg),\qquad
+c\longmapsto\overline{v(g(t))},\qquad
+(B,r_s)\longmapsto E(q(g(t))),
+\tag{LAGI.5}
+$$
+
+for its actual accepted $g=P_p$ or $S_p$, with the full original Growth
+reply. Here $\mathcal W(wg)$ denotes literal ancestral tapes for that very
+word, not merely some compatible tapes. No intermediate pending state is
+treated as a completed successor. This proves how the new outer session
+reaches the actual inner cuts; an arbitrary outer Busy state supplies no
+such dispatch edge.
+
+AA21.1–21.2 is now used ONLY for this Ready-to-Ready $Q_c$ source-response
+projection. Tapes may differ between two equal sources, but are not selector
+inputs and do not change these guards, literal replies or source successors.
+Current logical field traversal likewise gives the same observations on
+isomorphic oriented trees. With no name/age channel, freshly bound references
+can be matched by the same structural correspondence, preserving the equality
+tests needed for authentication. Equal public data, current source and new
+memory therefore give equal next choices and replies. Induction over completed
+calls establishes the asserted source-only simulation; it does not equate
+the two runs' protected tape contents or their complete controller traffic.
+
+For $G$, clear all decision/call scratch after each complete inner return
+and enter one common Decision location; recompute its next call or Stop
+solely from the newly traversed geometry and $\mathsf P$. A retained old
+decision, call count, last address or terminal branch flag is not allowed.
+Temporary operands during one such decision are current-source-derived.
+For $T$, start with empty old memory at (LAGI.3), then retain only observations
+and choices actually acquired subsequently. Equal later geometry alone need
+not imply equal $T$ memory, as Proposition 18.5 already shows. Correctness
+and termination of a SUPPLIED successful policy, authentic operand acquisition
+and (LAGI.5) now give precisely its finite legal continuation. Its report is
+built from the declared public/new inputs, printed completely, followed by
+End and supplied ACK, then real outer root return and paid cleanup. The lock
+is released only at that old returned idle. The original tape/arithmetic
+invariants and all old public connections remain available there.
+
+Finally define the exact source-image domain
+
+$$
+\mathcal I_y=\{E_y(R): h\in\mathcal H,\ Q_h\subseteq R\subseteq U_{J(h)}\},
+\tag{LAGI.6}
+$$
+
+restricted to the cuts actually reached by the supplied continuation when
+one is fixed. These terms lie in $\mathcal D_+$. AA17.3 sends each term to
+its oriented MATERIAL support, including beta's unary marker, and to the
+terminal antichain of that support. Prefix closure and maximal-element
+extraction are its inverse support/boundary maps; arity parses the term.
+AA17.2 sends it to its labelled causal membership order with the specified
+birth types. Applying these existing inverse maps, then (LAGI.4), recovers
+the same $R$; applying them before a decision computes the same source input.
+For a lawful next original row $p$, the source step is
+$E_y(R)\mapsto E_y(R\cup\{p\})$. Taking ANY of the three views after that
+actual completed call equals decoding its actual-image view, making this
+same step, and taking the view again. This is the commuting correspondence,
+with $T$'s new memory transported unchanged as an additional component.
+It supplies no chosen ancestral serial extension, all-phase inverse, reverse
+source actuator or access right from a mathematical description.
+
+Interactive erasure and step/stutter simulation are mature methods:
+Hunt–Sands, [*Just Forget It*, extended ESOP08 version, §§2–3, especially
+Definitions 4–6][HSSESSION], includes state and input-cursor residue in an
+interactive erasure condition; Abadi–Lamport, [*The Existence of Refinement
+Mappings*, SRC Research Report 29, §2.4, conditions R1–R4][ALSESSION], supplies
+the state/step/stutter refinement method. Here the preserved geometry is an
+explicit allowed observation, so the claim is private normalization and
+conditional future congruence, not erasure of all information about $h$.
+These originals do not install LAB rights, wiring or reset. The source-specific
+composition above is `repo-derived`, reusing AA17/20/21, LAB4/10/11/15–19 and
+their declared guards and returns. NativeSelectedRA's local cleanup and
+PhysicalDivider's clean-round/return results concern separate installations;
+no mapping of their ports, backing or control to LAB is asserted. There is
+no fresh Lean certification, physical spacetime conclusion, thermodynamic
+deletion, unit-cost assertion or total-memory optimum. $\square$
+
+**Proposition 20.5 (unchanged-controller and whole-installation obstructions).**
+The new session theorem does not furnish a scrub/resume transition for the
+unchanged installed left-first $\mathsf R$. Nor does preserving the original
+legacy recall/Next semantics permit erasure of the whole installation's old
+history distinctions.
+
+Proof. Take the attained entry $\langle\beta,\alpha\rangle$, whose OLD list
+in Definition 9.3 is $(L:\beta,R:\alpha)$. After its first call $S_L$ and
+complete inner return, the source is
+$\langle\langle\beta,\alpha\rangle,\alpha\rangle$. The inner driver is Ready,
+but the outer $\mathsf R$ still owes its right-row $P_R$, list advancement
+and full return tail. Definitions 10.2 and 11.1 retain that actual continuation
+and lock; they do not enable Scrub. Erasing its OLD list/cursor/continuation
+cannot implement that unchanged control. Waiting for ordinary macro cleanup
+instead performs $P_R$ and yields
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, missing the requested
+$r=1$ source cut. This is the concrete old-macro obstruction supplied by
+LAB9–11, rather than another generic hidden-phase theorem. The general
+requirement to normalize or exclude accessible routing residue, including
+phase/direction, is already [Concurrent Native Cut Workspace §11][CWSSESSION].
+
+Separately reuse AA20.5's words
+$P_\varepsilon S_\varepsilon S_LP_R$ and
+$P_\varepsilon S_\varepsilon P_RS_L$. They have the same source
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, but FetchGrowth$(3)$
+returns $S_L$ versus $P_R$, and Next$(3)$ actually selects $S_{LL}$ versus
+$S_R$, with different complete replies and source successors. Keeping these
+literal semantics keeps a distinction accessible to authorized legacy users.
+Assumption 20.2 excludes those channels only from the new observer; it does
+not delete the records. Consequently an owner-installed session connection,
+common resumable control and explicit authority separation are additional
+installation obligations. Owned field writes suffice for the private scrub
+UNDER those obligations; the protected legacy installation by itself has
+acquired neither that command nor universal history erasure. $\square$
+
+[HSSESSION]: https://www.cse.chalmers.se/~dave/papers/Hunt-Sands-ESOP08-extended.pdf
+[ALSESSION]: https://lamport.azurewebsites.net/pubs/abadi-existence.pdf
+[CWSSESSION]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_WORKSPACE.md#11-routing-residue-and-the-row-only-handoff
+
+## 追加锚（本行以下为增补区）
+
+## 21. Exact post-reset label attainment at complete-call cuts
+
+**Definition 21.1 (finite histories and the label contract).** Fix the
+finite nonempty actually attained history set
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\},
+\qquad d_J=|\Sigma_J|\ge1,\qquad D=\max_{J\in\mathcal J}d_J .
+$$
+The finite order lists $\Sigma_J$ are supplied data of the experiment.
+Keep Definition 19.1's fixed public parameters, program, bindings and
+common reset label. A history $h=(J,\sigma)$ has exactly $r$
+distinct ORIGINAL-row writes before reset, and its reset source is
+$E_y(Q_h)$, where $Q_h\in F_J=\{Q\subseteq U_J:|Q|=r\}$. At every
+standardized completed-inner-call cut, the supplementary persistent
+component is one label from a finite alphabet; traversal references,
+temporary lookup, decoded history, codebook access, output material,
+inner protocol phases and all backing are charged in their existing
+coordinates and are not counted as this label. The final recall cut is
+after the last required original call and before the declared literal
+recall/return tail.
+
+The label contract permits free re-encoding of the admissible starts. It
+does not preserve the particular SDR or pairing chosen by an individual
+policy. The label is the only state that survives a completed-call cut
+besides the current source and the fixed public data. In particular, a
+policy that is allowed to retain a newly acquired copy of $h$ after
+reset is a different, unrestricted contract.
+
+**Proposition 21.2 (what LAB19 already settles).** An admissible
+history SDR exists exactly when
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+   \ge \sum_{J\in\mathcal S}d_J
+\qquad(\mathcal S\subseteq\mathcal J).
+\tag{LAGL.1}
+$$
+If two histories use the same initial $Q$, their permitted initial inputs
+are identical, whether the supports differ or the orders differ. The
+current-source factorization then forces the same legal continuation; the
+former cannot exhaust two distinct menus and the latter cannot return two
+different old words. Thus no later newly generated memory repairs an
+initial collision. Conversely an SDR gives the post-reset transcript
+selector of Corollary 19.2. An unrestricted T may traverse that source,
+newly reacquire h, and retain it, giving the valid finite upper bound
+$|\mathcal H|$; reset does not forbid this new acquisition.
+
+Proof. This is precisely the weighted-history Hall criterion and its
+collision argument in Corollary 19.2, including its distinction between
+different supports and equal supports with different orders. The
+$|\mathcal H|$-label policy is the finite lookup table from the distinct
+reset sources to their histories, followed by actual traversal and
+retention after reset. It makes no claim that the old pre-reset copy
+survives. $\square$
+
+**Theorem 21.3 (exact supplementary alphabet for the geometry-label
+contract).** Assume (LAGL.1). Among geometry-controlled continuations
+whose only persistent post-reset supplement is the label of
+Definition 21.1, the minimum alphabet size at the standardized
+complete-call and final recall cuts is exactly
+$$
+D=\max_{J\in\mathcal J}d_J .
+\tag{LAGL.2}
+$$
+If (LAGL.1) fails, no such continuation exists. The value in (LAGL.2)
+is conditional on free re-encoding and does not minimize an
+unrestricted T that retains arbitrary newly acquired history.
+
+Proof. Fix $J$. Every successful completion reaches the same terminal
+source $E_y(U_J)$, independently of the order $\sigma\in\Sigma_J$.
+At the final recall cut the fixed public data and this geometry are
+therefore equal for all $d_J$ orders. The label must distinguish those
+orders, so every alphabet has at least $d_J$ values; taking the maximum
+gives the lower bound $D$. This is the source-specific terminal
+instance of the static max-fibre principle in Transport Memory
+Completion §16.1, whose finite equality-fibre supplier is
+DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity.
+That supplier is reused only for the lower-bound pattern; no new generic
+max-fibre theorem is asserted here.
+
+It remains to attain the bound causally. Choose any history SDR
+$Q_{J,\sigma}$ supplied by Proposition 21.2 and partition it by the
+fixed local order rank $i$: layer $i$ contains the starts
+$Q_{J,\sigma_i}$ for supports with $d_J\ge i$, together with the
+terminals $U_J$ of those supports. The starts in a layer are distinct
+rank-$r$ subsets. The terminals are distinct antichain menus by
+Theorem 18.2. Pair each start with the terminal bearing the same support.
+The paired endpoint sets form disjoint chains (singletons are allowed):
+if a start $Q_{J,\sigma_i}$ equalled a terminal $U_K$, then
+$U_K\subseteq U_J$, so terminal antichainness gives $K=J$, and SDR
+injectivity excludes every other equality.
+
+Apply Bastide--Groenland--Jacob--Johnston, arXiv:2207.07391v2,
+Theorem 2, to this layer. Here $n=|\Lambda(y)|$, $m$ is the number
+of histories in the layer, and the endpoint family is exactly the
+distinct starts and terminals just described. Its disjoint skipless
+cover can be trimmed to the intervals between rank-$r$ starts and
+their terminals. Each trimmed interval is a saturated path in
+$2^{\Lambda(y)}$. Re-pair only within this layer: assign the history
+with support $J$ to the start of the path whose terminal is $U_J$.
+This is the permitted free re-encoding. The global set of starts remains
+distinct because the layers partition the original SDR, and every
+intermediate set remains a subset of its own $U_J$. No path is paired
+across layers, and the target order lists $\Sigma_J$ are unchanged.
+
+Use labels $1,\ldots,D$, with common default $1$ at the reset cut.
+At rank $r$, actual traversal of the current source recovers the
+actual $R=Q_{J,\sigma_i}$, identifies its global start and its layer
+$i$, and selects the first native edge of that layer's path. After
+that edge has completed its original guard, reservation, source edit,
+ancestral-tape and arithmetic maintenance, literal reply, End/ACK and
+real INNER return, commit label $i$. The first selection uses the
+current $R$ and needs no stored initialization flag. After any call
+the rank is greater than $r$, so every later choice uses the retained
+$i$ at one common selection program counter. A temporary table lookup
+or decoded history is current-input-derived and is erased at the
+standardized cut.
+
+The invariant is: the current recovered set $R$ lies on the true
+history's path in layer $i$, and $(R,i)$ uniquely determines the next
+untouched member of $U_J$, Stop, or the final $\sigma_i$. Each edge
+adds one original member of $U_J$; it never targets a newborn or
+decorative row. Before every edge the supervisor traverses the bound
+source, acquires the CURRENT target reference and current rights, and
+then discharges the original guard/reserve/source edit/ancestral tape and
+arithmetic hook, literal reply, End, acknowledgement and real INNER
+return. Thus the path is a legal native continuation, rather than a
+mathematical address list. After $|U_J|-r$ calls the geometry identifies
+$J$, the label identifies $\sigma_i$, and the policy emits the word
+only at the declared final recall cut before the lawful tail. No old
+tape, refusal, name, timing, capacity or output archive is used.
+
+The construction uses only finite search over the actually attained
+finite carrier and the existing Hall and disjoint-path suppliers. It
+produces a backed finite table for this effective input; it is neither
+free nor an efficient procedure and is not a uniform finite ROM for
+unbounded inputs. Source-derived dynamics are the current LAB parser,
+original guards, references, edits, replies and returns. Label-derived
+content is only the layer index $i$, together with the finite path
+table used to choose among already legal original rows. The causal
+first-edge commit and the $(R,i)$ invariant are the native addition
+beyond the static max-fibre lower bound and the stopped-prefix
+feasibility theorem. $\square$
+
+**Corollary 21.4 (edge cases).** If $r=0$, Hall forces
+$|\mathcal J|=1$ and $D=1$; the common start is $\varnothing$, so
+the default label is already correct. If $U_J=\varnothing$, then
+$F_J=\{\varnothing\}$, and Hall forces $d_J=1$; this is the singleton
+no-call path in layer $1$. If $D=1$, one label suffices and
+Theorem 21.3 reduces to the geometry-selector equivalence of
+Theorem 18.3. These statements include the case of an empty menu and
+the overlapping $r=0$ and singleton cases without a hidden
+initialization phase.
+
+**Corollary 21.5 (the delivered $m5k2r3$ attainment).** Reuse exactly
+the twenty-start, ten-terminal table already displayed in Corollary
+19.2 for $(m,k,r)=(5,2,3)$, preserving its coordinates and entries.
+Its first column consists of the ten distinct $z$-free triples and
+its second column of the ten distinct triples containing $z=L^5$.
+Index the two supplied orders on each $J$ so that the first column is
+layer $1$ and the second layer $2$. Both layers use the common
+default label $1$ at rank $3$; the single remaining original call
+commits the observed layer, leaving label $1$ for a $z$-free reset
+triple and label $2$ for a $z$-containing reset triple. At the
+terminal all ten supports have the same two-order fibre, so one label is
+impossible. Theorem 21.3 gives the matching two-label construction.
+Hence the exact alphabet is $2$, with no alternative table introduced.
+
+**Proposition 21.6 (conditional realization and transport boundary).**
+The preceding construction can be installed only under the current
+accepted LAB20 owner-installed session: finite public-shaped backing,
+authority separation, the session lock, authenticated current-reference
+acquisition, sufficient material and full Ready-to-Ready/INNER return
+conditions. Under those premises, transport the same source and label
+through AA17's syntax/material support, terminal-boundary and labelled
+causal-membership maps, and use the existing unary marker and literal
+source identity. The maps preserve the current $E_y(R)\to
+E_y(R\cup\{p\})$ edge and the final $(U_J,\sigma_i)$ readout.
+
+Proof. This is the scoped source-response and completed-call construction
+of Theorem 20.4, with its paid backing and authority premises retained.
+The current source is traversed afresh at each decision, the target
+reference is authenticated against the current tag, and all original
+maintenance and complete replies occur before the label commit. AA17's
+already supplied maps preserve the oriented material support, its
+terminal antichain and the causal membership order, including beta's
+unary marker; carrying the same finite label adds no new source edge.
+This establishes a representation correspondence for the admitted
+session. It does not install a resettable legacy Busy controller, prove
+a deployed device, recover full controller chronology, assert a
+thermodynamic deletion, or complete a universal spacetime construction.
+No fresh Lean application is claimed by reading the existing code. $\square$
+
+## 22. Sources, overlap and verification scope
+
+The weighted Hall and stopped-prefix results are reused from LAB19,
+Theorems 18.2--18.3 and Corollary 19.2; the terminal static max-fibre
+pattern is attributed to Transport Memory Completion §16.1 and its named
+DefectGraphMinimumColoring supplier. The disjoint saturated path step is
+the primary Bastide--Groenland--Jacob--Johnston theorem cited above and is
+literature-attested at that scope. LAB20 supplies the conditional paid
+installation and complete-return interface. Boundary Dynamics 106 and Joint Moment Fibers 65.5 remain
+separate suppliers for their own interfaces. This appendix adds the
+causal acquisition of the layer label, the rank-derived path generation,
+and the exact $D$-label attainment; it does not add a matching, WOM,
+colouring, or Lean theorem.
+
+All finite-search, backing, authority, current-reference, lawful-edge,
+full-return and free-re-encoding conditions are part of the statements
+above. No total or peak-memory bound, runtime bound, universal finite
+ROM, fixed encoder/pairing claim, deployed-device claim, full chronology
+recovery, thermodynamic claim, or universal spacetime completion is
+made. The long-term RRO objective remains open beyond this finite
+appendix.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,12 @@
+**Definition 6.1 (the separate resource coordinates).** Count a call to ReadF, an indexed original addition and a positive scalar multiplication separately. Also charge public setup computation, installed code/data, local bit computation, record writes, local workspace, operation-parameter input, source arithmetic/service work and source storage. For a source implementation with declared service prices $\rho_H(C)$ for the paid read and $\tau_i(C)$ for $\operatorname{Add}_i$, the sweep's exact source-service account is
+
+$$
+\sum_{t=0}^{L-1}\rho_H(C_0+tS)
++\sum_{t=0}^{L-1}\sum_{k=1}^{\ell}
+\tau_{i_k}\!\left(C_0+tS+\sum_{v<k}c_{i_v}\right),
+\qquad W_d=(i_1,\ldots,i_\ell).
+\tag{AQBR.24}
+$$
+
+The call and primitive counts are not a claim that these services cost one bit operation. The port's implementation and price remain declared inputs. Production and installation of actual operation blocks, references and port hardware or service are separately supplied and charged; a list of their numeric values does not construct them. Indexed-call emission uses their installed handles. Service prices include the backend's actual parameter lookup/delivery and source arithmetic. In a binary integer implementation, source additions also pay for the actual operand lengths. No uniform bit bound independent of the unknown $C_0$ is asserted.
+

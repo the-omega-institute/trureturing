@@ -1,0 +1,42 @@
+**Theorem 13.3 (earned common-original transport across an upgrade).** Suppose the current actual cut is $s$, with recorded prefix $A_s$. Apply Theorem 10.2 at any newly chosen $E>1$ to the current actual pair $x=A_s(v_0)$, using the variable-modulus port of Assumption 13.1. Let $s'$ be the actual cut after its final closing word. This one acquisition has the following simultaneous consequences.
+
+It earns a stage-entry label $d_E=x\bmod E$ and returns the actual source to $d_E$ modulo $E$, at cost at most $2B(E)$ paid reads. From the same earned label and the recorded prefix it computes $e_E=v_0\bmod E$. For every authentically recorded cut $t\le s'$, including cuts inside this acquisition, it computes $a_{E,t}=A_t(v_0)\bmod E$, and hence the entire arithmetic boundary and prospective replacement-time field at that actual past cut. It installs current $c_E=a_{E,s'}=d_E$ and synchronized continued use on this handle.
+
+If an earlier archive used $D\mid E$, the new original and every common past-cut label reduce to their old values modulo $D$. At the completed upgrade, the current label modulo $D$ equals its value at the upgrade's start. None of these claims says that $c_E=e_E$ when earlier actions have intervened, or that a handle to a past integer source has been recovered.
+
+**Proof.** Reuse the authentic affine-word supplier FARG130.2, equivalently the first word-law component of [`GraftAffineClosure.result`](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean), at graft $w=\alpha$. For a known chronological prefix, its coefficients can be computed without observing the source:
+
+$$
+A_t(v)=M^{k_t}v+z_t,\qquad
+(k_0,z_0)=(0,0),\qquad
+\begin{cases}
+(k,z)\longmapsto(k+1,Mz)&\text{on }R,\\
+(k,z)\longmapsto(k,z+\alpha)&\text{on }G.
+\end{cases}
+\tag{AQBRO.3}
+$$
+
+Here $z_t\in\mathbb N^2$ is a mathematical integer coefficient. An actual decoder may replay the stored word with $z_t$ reduced modulo the newly supplied $E$ at every step; it need not have stored an exact large $z_t$ beforehand. Since $\det M=-1$, the following are finite computations on acquired residues and public recorded letters:
+
+$$
+e_E=M^{-k_s}(d_E-z_s)\pmod E,
+\qquad
+a_{E,t}=M^{k_t}e_E+z_t\pmod E.
+\tag{AQBRO.4}
+$$
+
+Theorem 10.2 applies to $x\in\mathbb N^2$ with precisely its original access contract. Its entry variable is now $x$, rather than $v_0$. It gives $d_E=\bar x$, actual modular return at $s'$, and no uncharged initial read. Substitution of $x=M^{k_s}v_0+z_s$ proves the first formula of (AQBRO.4) is $v_0\bmod E$. The second consequently labels every recorded prefix, including the actual letters subsequently written by this acquisition. Its value at $s'$ agrees with $d_E$ because this acquisition returns modulo $E$. Theorem 10.3 installs the callable current reader and updater there, using $c_E=d_E$. Local inverse matrix arithmetic in (AQBRO.4) never invokes a source inverse.
+
+For each cut $t$ and each finite hypothetical continuation $V$, the installed past-cut procedure evaluates
+
+$$
+\mathcal S_E(A_t(v_0))=a_{E,t},\qquad
+\mathcal T_E(A_t(v_0))(j)=qM^ja_{E,t},\qquad
+\mathcal B_E(A_t(v_0))(V)=\gcd(qV(a_{E,t}),E).
+\tag{AQBRO.5}
+$$
+
+In the last expression $V$ acts on residues; the gcd uses any integer representative. These are the existing Section 9 recovery maps applied to earned data. They are computations of a boundary indexed by an authentic past cut, not newly observed replies or actual execution from that cut. A hypothetical word appended to $A_t$ stays a prediction unless it really occurred.
+
+Reduction modulo $D\mid E$ commutes with all integer affine operations. Both earned original labels are reductions of the same $v_0$, and both labels of a common past cut are reductions of $A_t(v_0)$. This proves archive compatibility without combining marginal observations from different source states. The completed acquisition acts as the identity modulo $E$ on its own entry, hence modulo $D$ too. During its private execution the physical source may leave that residue; those intermediate actual cuts are recorded and are not exposed as completed upgrade calls. All steps have finite exact binary realizations using replay, modular arithmetic and the already supplied fixed-modulus acquisition. $\square$
+

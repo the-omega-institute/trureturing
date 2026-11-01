@@ -436,7 +436,7 @@ set_option linter.unusedTactic false
 private theorem cutRank_le_d {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) :
     cutRank k ψ ≤ d := by
   fin_cases k <;> exact (Matrix.rank_le_card_height _).trans (by simp)
-private theorem density_ensemble {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem density_ensemble {ι : Type*} [Fintype ι] [DecidableEq ι]
     (ρ : DensityState ι) :
     ∃ (m : ℕ) (p : Fin m → ℝ) (ψ : Fin m → ι → ℂ),
       (∀ i, 0 ≤ p i) ∧ ∑ i, p i = 1 ∧ (∀ i, star (ψ i) ⬝ᵥ ψ i = 1) ∧
@@ -523,7 +523,7 @@ private theorem quadratic_energy {ι : Type*} [Fintype ι] (g : ι → ℂ) :
   classical
   simpa only [RHLinalg.hermForm, Matrix.one_mulVec, RCLike.re_to_complex,
     Complex.normSq_eq_norm_sq] using RHLinalg.hermForm_one g
-private theorem ghz_overlap_normSq {d : ℕ} (v : Fin d × Fin d × Fin d → ℂ) :
+theorem ghz_overlap_normSq {d : ℕ} (v : Fin d × Fin d × Fin d → ℂ) :
     Complex.normSq (star (ghz d) ⬝ᵥ v) = (1/(d : ℝ))*Complex.normSq (∑ i, v (i,i,i)) := by
   rw [ghz_overlap, Complex.normSq_mul]
   have hn : Complex.normSq (1 / Real.sqrt d : ℂ) = 1 / (d : ℝ) := by
@@ -731,7 +731,7 @@ private theorem blockOp_entry {d : ℕ} [NeZero d] (x y t u : ZMod d) :
   simp only [blockOp, Matrix.add_apply, Matrix.smul_apply, Matrix.sum_apply,
     Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul, Matrix.one_apply, fourier_product]
   simp
-private theorem quadratic_smul {ι : Type*} [Fintype ι] (g : ι → ℂ) (r : ℝ) (A : Matrix ι ι ℂ) :
+theorem quadratic_smul {ι : Type*} [Fintype ι] (g : ι → ℂ) (r : ℝ) (A : Matrix ι ι ℂ) :
     (star g ⬝ᵥ (((r : ℂ) • A) *ᵥ g)).re = r * (star g ⬝ᵥ (A *ᵥ g)).re := by
   simpa only [Fintype.sum_unique] using
     quadratic_sum (κ := Unit) g (fun _ => r) (fun _ => A)
@@ -739,7 +739,7 @@ private theorem fourierVec_overlap {d : ℕ} [NeZero d] (f : ZMod d → ℂ) (s 
     star ((fun s t => ZMod.stdAddChar (t*s)) s) ⬝ᵥ f = ZMod.dft f s := by
   simpa only [dotProduct, Pi.star_apply, RCLike.star_def,
     ← AddChar.map_neg_eq_conj, smul_eq_mul] using (ZMod.dft_apply f s).symm
-private theorem normSq_overlap_comm {ι : Type*} [Fintype ι] (f g : ι → ℂ) :
+theorem normSq_overlap_comm {ι : Type*} [Fintype ι] (f g : ι → ℂ) :
     Complex.normSq (star f ⬝ᵥ g) = Complex.normSq (star g ⬝ᵥ f) := by
   rw [star_dotProduct f g, RCLike.star_def, Complex.normSq_conj]
 private theorem blockOp_quadratic {d : ℕ} [NeZero d] (x y : ZMod d) (f : ZMod d → ℂ) :

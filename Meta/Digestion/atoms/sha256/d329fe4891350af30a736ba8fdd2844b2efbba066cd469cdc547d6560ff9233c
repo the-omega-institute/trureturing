@@ -1,0 +1,24 @@
+**Theorem 4.1 (exact complete-fiber test).** Retain Theorem 2.1 but take the complete fiber $E=E_{s_o}$. For $p^h\parallel H$ set
+
+$$
+m_p=\frac{\varphi(p^{h-e})}{\varphi(p^{h-e_o})},\qquad\varphi(1)=1.
+\tag{AQBR.12}
+$$
+
+Then acquisition-and-behavior-return on this old fiber exists exactly when
+
+$$
+\boxed{\quad\text{for every }p\mid H\text{ with }r_p<e,\quad m_p=1.\quad}
+\tag{AQBR.13}
+$$
+
+In particular, this is a criterion for an entry $C_0$ under its complete initial information fiber, not an assertion that a program chosen specifically for the unknown integer may hard-code its answer.
+
+**Proof.** The local refinements and counts are supplied by [FARG, Sections 102.2–102.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md). Here the relevant local fiber is the one with $r_p<e\le e_o$. Its old label is a low label at depth $r_p$.
+
+If $e_o<h$, an old unit modulo $p^{h-e_o}$ has exactly $p^{e_o-e}$ unit lifts modulo $p^{h-e}$; this equals (AQBR.12). If $e_o=h$, the old unit modulus is one, and the number of possible new units is $\varphi(p^{h-e})$, again (AQBR.12). Every lift has a representative of exact depth $r_p$ and gives a distinct new low label. These arguments include $e=e_o$ and the singleton modulus-one unit class.
+
+If all the indicated $m_p$ equal one, the old label determines the new label on every axis in $B$. The projection fixes full residues on $G$, so it fixes their new labels as well. This proves (AQBR.8).
+
+Conversely, if $m_p>1$ for some $p\in B$, choose two of those local unit lifts with distinct new labels. Hold every other axis at one fixed representative of its old label, including all the full residues in $G$. CRT gives two residues modulo $H$ satisfying these simultaneous choices. Each has a positive integer representative, using $H$ for a zero residue if necessary. They lie in the same complete old fiber, have identical $\pi$, and have different $\eta_n$. Thus (AQBR.8) fails. This proves the exact equivalence rather than replacing it by the stronger sufficient condition $B=\varnothing$. $\square$
+
