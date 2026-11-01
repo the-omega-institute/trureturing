@@ -31,7 +31,7 @@ internal sealed class PolygonEarSlideMapsDocument : IScribeDocumentDefinition
             Node("psi_phi", "Left inverse on complete chord sets", Inverse(true),
                 "The inverse law requires only diagonal membership and the stated included and excluded ears."),
             Node("phi_psi", "Right inverse on complete chord sets", Inverse(false),
-                "This equality holds for the entire finite chord set.")), [])));
+                "This equality holds for the entire finite chord set.")), []));
 
     private static Formula MapFormula(bool forward) => Scope(All("T", Chords,
         EqF(C(forward ? "phi" : "psi", X("T")), Insert(Ear(forward ? 1 : 2),

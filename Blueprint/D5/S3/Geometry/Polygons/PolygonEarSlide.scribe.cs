@@ -39,7 +39,7 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
             Node("condition_fibre_equiv", "Normalized complete conditioned fibre equivalence", Equivalence(false),
                 "J lies in E_K(P union Q), omits 0 and contains 1,2; R lies in J with 1,2,3 erased. All forced and forbidden conditions are preserved. No cardinality, P/Q disjointness or compatibility premise is needed for this local equivalence."),
             Node("condition_fibre_equiv_at", "Complete fibre equivalence at every cyclic origin", Equivalence(true),
-                "Conjugation by cyclic translation includes every origin a, the cyclic seam, and empty fibres. The cardinality theorem in PolygonEarSlideCardinality uses this equivalence to count the complete fibres.")), [])));
+                "Conjugation by cyclic translation includes every origin a, the cyclic seam, and empty fibres. The cardinality theorem in PolygonEarSlideCardinality uses this equivalence to count the complete fibres.")), []));
 
     private static Formula Trace(bool forward) => Scope(All("T", Chords, SetsAll(
         Imp(Lower(14), Imp(Tri(X("T")), Imp(InF(Ear(forward ? 2 : 1), X("T")),

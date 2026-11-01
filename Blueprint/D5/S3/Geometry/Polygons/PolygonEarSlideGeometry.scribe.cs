@@ -49,7 +49,7 @@ internal sealed class PolygonEarSlideGeometryDocument : IScribeDocumentDefinitio
             Node("cross_chordSwap_of_avoidTwo", "Crossing transport away from centre 2", Scope(All("e", Chord, All("f", Chord,
                 Imp(Lower(6), Imp(C("AvoidTwo", X("e")), Imp(C("AvoidTwo", X("f")),
                     IffF(C("Cross", C("chordSwap", X("e")), C("chordSwap", X("f"))), C("Cross", X("e"), X("f"))))))))),
-                "Crossing is transported in both directions, including across the cyclic seam.")), [])));
+                "Crossing is transported in both directions, including across the cyclic seam.")), []));
 
 }
 
