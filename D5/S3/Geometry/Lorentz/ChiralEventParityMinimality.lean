@@ -13,6 +13,7 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Topology.MetricSpace.IsometricSMul
+import Mathlib.Tactic.Ring
 import D5.S3.Topology.BorsukUlam.PlanarOddMapZero
 
 /-! The preregistered two-variable lower bound for chiral four-particle events. -/
@@ -29,6 +30,9 @@ abbrev fourVector := Fin 4 → ℝ
 abbrev event := Fin 4 → fourVector
 
 def eta : Matrix (Fin 4) (Fin 4) ℝ := Matrix.diagonal ![1, -1, -1, -1]
+
+def rotation : Matrix (Fin 4) (Fin 4) ℝ :=
+  !![1, 0, 0, 0; 0, 0, -1, 0; 0, -1, 0, 0; 0, 0, 0, -1]
 
 def minkowski (x y : fourVector) : ℝ :=
   x 0 * y 0 - x 1 * y 1 - x 2 * y 2 - x 3 * y 3
@@ -107,9 +111,14 @@ private theorem family_chiral
 private theorem family_neg
     (v : EuclideanSpace ℝ (Fin 3)) :
     family (-v) =
-      act (Matrix.diagonal ![1, -1, -1, -1]) 1 (Equiv.swap 0 1)
+      act rotation 1 (Equiv.swap 0 1)
         (parity (family v)) := by
-  sorry
+  funext i
+  fin_cases i <;>
+    funext j <;>
+      fin_cases j <;>
+        simp [family, act, parity, parityVector, rotation, Matrix.mulVec,
+          dotProduct, Fin.sum_univ_three] <;> ring_nf
 
 private theorem family_admissible_zero
     (om : Set event) (hom : collisionEvents ⊆ om) (f₁ f₂ : event → ℝ)
@@ -137,7 +146,7 @@ private theorem route_claim
     (hchir : ∀ v,
       v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere → chiral (family v))
     (hneg : ∀ v, family (-v) =
-      act (Matrix.diagonal ![1, -1, -1, -1]) 1 (Equiv.swap 0 1)
+      act rotation 1 (Equiv.swap 0 1)
         (parity (family v)))
     (hcomplex : ∀ om, collisionEvents ⊆ om → ∀ f₁ f₂,
       admissible om f₁ → admissible om f₂ →
