@@ -12,7 +12,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.LinearAlgebra.Span.Defs
 
 /-!
-Proposed source, UNCOMPILED. The carrier and the modes below are the original
+The carrier and the modes below are the original
 CountableOccupationFock.Fock and BcGhostFock.b/c. No tensor decomposition,
 spectral hypothesis, dimension bound, or positivity hypothesis is used.
 The uncounted site 3 is retained throughout the full-Fock statements.
@@ -44,7 +44,7 @@ theorem U_pos (k : ℕ) (hk : 0 < k) :
   have h : (S.erase j).filter (· < j) = S.filter (· < j) := by
     ext i
     simp only [Finset.mem_filter, Finset.mem_erase]
-    omega
+    exact ⟨fun h => ⟨h.1.2, h.2⟩, fun h => ⟨⟨ne_of_lt h.2, h.1⟩, h.2⟩⟩
   simp only [phase, lowerCount, h]
 
 @[simp] theorem phase_square (j : ℕ) (S : Finset ℕ) :
@@ -73,13 +73,13 @@ theorem b_positive (k : ℕ) : b (k : ℤ) = annihilate (2 * k + 3) := by
   calc
     b (k : ℤ) = b (((k + 1 : ℕ) : ℤ) - 1) := congrArg b (by omega)
     _ = annihilate (2 * (k + 1) + 1) := (mode_correspondence (k + 1)).2.2.2
-    _ = annihilate (2 * k + 3) := by congr 1 <;> omega
+    _ = annihilate (2 * k + 3) := by congr 1
 
 theorem c_negative (k : ℕ) : c (-(k : ℤ)) = create (2 * k + 3) := by
   calc
     c (-(k : ℤ)) = c (1 - ((k + 1 : ℕ) : ℤ)) := congrArg c (by omega)
     _ = create (2 * (k + 1) + 1) := (mode_correspondence (k + 1)).2.2.1
-    _ = create (2 * k + 3) := by congr 1 <;> omega
+    _ = create (2 * k + 3) := by congr 1
 
 @[simp] theorem b_negative_one : b (-1) = annihilate 1 := by norm_num [b]
 @[simp] theorem c_positive_one : c 1 = create 1 := by norm_num [c]
@@ -111,7 +111,7 @@ theorem b_negative_c_positive_ket (k : ℕ) (hk : 0 < k) (S : Finset ℕ) :
     simpa using annihilate_create_ket 1 S
   · have hk2 : 2 ≤ k := by omega
     rw [b_negative_ge_two k hk2, c_positive_ge_two k hk2,
-      create_annihilate_ket, if_neg hk1]
+      create_annihilate_ket, ite_eq_right hk1]
 
 /-- Three elementary natural indicator counts, including the exceptional site-1 hole. -/
 def localCount (k : ℕ) (S : Finset ℕ) : ℕ :=
@@ -232,7 +232,8 @@ theorem sum_localCount (S : Finset ℕ) (N : ℕ) (hN : 3 ≤ N)
   simp only [localCount, Finset.sum_add_distrib]
   rw [hos, hh, hes]
   change _ = T.card + _
-  omega
+  simpa only [ne_eq, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
+    congrArg (fun n : ℕ => n + if 1 ∈ S then 0 else 1) hp
 
 theorem localCount_zero_of_capture (S : Finset ℕ) (k : ℕ) (hk : 3 ≤ k)
     (hS : ∀ j ∈ S, j + 3 ≤ k) : localCount k S = 0 := by
@@ -255,7 +256,7 @@ def capture (v : Fock) : ℕ := (occupied v).sup id + 3
 theorem site_capture (v : Fock) (S : Finset ℕ) (hS : S ∈ v.support)
     (j : ℕ) (hj : j ∈ S) : j + 3 ≤ capture v := by
   have hm : j ∈ occupied v := Finset.mem_biUnion.mpr ⟨S, hS, hj⟩
-  have hs := Finset.le_sup (f := id) hm
+  have hs : j ≤ (occupied v).sup id := Finset.le_sup (f := id) hm
   change j + 3 ≤ (occupied v).sup id + 3
   omega
 
@@ -331,7 +332,7 @@ theorem M_ket (S : Finset ℕ) : M (ket S) = (count S : ℂ) • ket S := by
   have hN : 3 ≤ N := by dsimp [N]; omega
   have hS : ∀ j ∈ S, j + 3 ≤ N := by
     intro j hj
-    have hs := Finset.le_sup (f := id) hj
+    have hs : j ≤ S.sup id := Finset.le_sup (f := id) hj
     dsimp [N]
     omega
   rw [M_eq_sum (ket S) N (le_max_left _ _)]
@@ -401,7 +402,7 @@ theorem nonzero_eigenvalue_is_natural (v : Fock) (z : ℂ)
   classical
   have hs : ∃ S : Finset ℕ, v S ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     apply hv
     ext S
     exact h S
@@ -421,7 +422,7 @@ theorem count_surjective_relative (q : ℕ) :
     have hj3 : j ≠ 3 := by dsimp [j]; omega
     have hj : j ∉ S := by
       intro hm
-      have hs := Finset.le_sup (f := id) hm
+      have hs : j ≤ (occupied v).sup id := Finset.le_sup (f := id) hm
       dsimp [j] at hs
       omega
     refine ⟨insert j S, by simp [Ne.symm hj3, h3], ?_⟩
@@ -537,11 +538,15 @@ theorem P_apply (v : Fock) :
   rw [P_coefficient]
   by_cases h1 : S = {1}
   · subst S
-    simp [count, ket]
+    simp [count, ket, show ({1} : Finset ℕ) ≠ {1, 3} by decide]
   · by_cases h13 : S = {1, 3}
     · subst S
-      simp [count, ket]
-    · have hc : count S ≠ 0 := by simpa only [count_zero_iff, not_or] using And.intro h1 h13
+      simp [count, ket, show ({1, 3} : Finset ℕ) ≠ {1} by decide]
+    · have hc : count S ≠ 0 := by
+        intro hz
+        rcases (count_zero_iff S).mp hz with he | he
+        · exact h1 he
+        · exact h13 he
       simp [hc, ket, h1, h13, Ne.symm h1, Ne.symm h13]
 
 theorem M_eq_zero_iff_P_eq_self (v : Fock) : M v = 0 ↔ P v = v := by
@@ -575,7 +580,9 @@ theorem full_kernel : LinearMap.ker M =
   simp [annihilate_ket]
 
 @[simp] theorem b0_other_ground : b 0 (ket {1, 3}) = -ket {1} := by
-  norm_num [annihilate_ket, phase, lowerCount]
+  have hf : ({1, 3} : Finset ℕ).filter (· < 3) = {1} := by decide
+  have he : ({1, 3} : Finset ℕ).erase 3 = {1} := by decide
+  simp [annihilate_ket, phase, lowerCount, hf, he]
 
 /-- Literal relative condition: every coefficient occupying site 3 vanishes. -/
 theorem b0_eq_zero_iff_coefficients (v : Fock) :
@@ -596,7 +603,7 @@ theorem b0_eq_zero_iff_coefficients (v : Fock) :
   constructor
   · intro hv S hS
     have he := hocc v S
-    rw [← b_zero, hv, map_zero, if_pos hS] at he
+    rw [← b_zero, hv, map_zero, ite_eq_left hS] at he
     exact he.symm
   · intro hv
     calc
@@ -617,7 +624,7 @@ theorem relative_kernel_iff (v : Fock) :
     have hd : d = 0 := by
       have hcoeff := (b0_eq_zero_iff_coefficients v).mp hb {1, 3} (by simp)
       rw [hv] at hcoeff
-      simpa [ket] using hcoeff
+      simpa [ket, show ({1, 3} : Finset ℕ) ≠ {1} by decide] using hcoeff
     exact ⟨a, by simpa [hd] using hv⟩
   · rintro ⟨a, rfl⟩
     constructor
@@ -671,7 +678,7 @@ theorem M_create_regular (j : ℕ) (hj1 : j ≠ 1) (hj3 : j ≠ 3) :
   by_cases hj : j ∈ S
   · simp [Module.End.mul_apply, M_ket, hj]
   · have hq := count_insert_regular j S hj1 hj3 hj
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, create_ket, if_neg hj,
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, create_ket, ite_eq_right hj,
       map_smul, M_ket, smul_smul]
     rw [hq, Nat.cast_add, Nat.cast_one]
     module
@@ -684,7 +691,7 @@ theorem M_annihilate_regular (j : ℕ) (hj1 : j ≠ 1) (hj3 : j ≠ 3) :
   · have hq : (count S : ℂ) = (count (S.erase j) : ℂ) + 1 := by
       exact_mod_cast count_erase_regular j S hj1 hj3 hj
     simp only [LinearMap.sub_apply, LinearMap.neg_apply, Module.End.mul_apply,
-      annihilate_ket, if_pos hj, map_smul, M_ket, smul_smul]
+      annihilate_ket, ite_eq_left hj, map_smul, M_ket, smul_smul]
     rw [hq]
     module
   · simp [Module.End.mul_apply, M_ket, hj]
@@ -695,7 +702,7 @@ theorem M_annihilate_one : M * annihilate 1 - annihilate 1 * M = annihilate 1 :=
   intro S
   by_cases h1 : 1 ∈ S
   · have hq := count_erase_one S h1
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, annihilate_ket, if_pos h1,
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, annihilate_ket, ite_eq_left h1,
       map_smul, M_ket, smul_smul]
     rw [hq, Nat.cast_add, Nat.cast_one]
     module
@@ -710,7 +717,7 @@ theorem M_create_one : M * create 1 - create 1 * M = -create 1 := by
   · have hq : (count S : ℂ) = (count (insert 1 S) : ℂ) + 1 := by
       exact_mod_cast (count_insert_one S h1).symm
     simp only [LinearMap.sub_apply, LinearMap.neg_apply, Module.End.mul_apply,
-      create_ket, if_neg h1, map_smul, M_ket, smul_smul]
+      create_ket, ite_eq_right h1, map_smul, M_ket, smul_smul]
     rw [hq]
     module
 
