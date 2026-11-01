@@ -7,6 +7,7 @@
    digest: Two continuous invariant parity-odd variables vanish on a chiral event. -/
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
+import D5.S3.Geometry.Hyperideal.LinearNonposOnHull
 import D5.S3.Topology.BorsukUlam.PlanarOddMapZero
 
 /-! The preregistered two-variable lower bound for chiral four-particle events. -/
@@ -19,24 +20,25 @@ noncomputable section
 
 namespace D5.S3.Geometry.Lorentz.ChiralEventParityMinimality
 
-abbrev fourVector := Fin 4 → ℝ
-abbrev event := Fin 4 → fourVector
+open D5.S3.Geometry.Hyperideal.LinearNonposOnHull
+
+abbrev event := Fin 4 → V
 
 def eta : Matrix (Fin 4) (Fin 4) ℝ := Matrix.diagonal ![1, -1, -1, -1]
 
 def rotation : Matrix (Fin 4) (Fin 4) ℝ :=
   !![1, 0, 0, 0; 0, 0, -1, 0; 0, -1, 0, 0; 0, 0, 0, -1]
 
-def minkowski (x y : fourVector) : ℝ :=
+def minkowski (x y : V) : ℝ :=
   x 0 * y 0 - x 1 * y 1 - x 2 * y 2 - x 3 * y 3
 
-def forwardCone : Set fourVector := {x |
+def forwardCone : Set V := {x |
   0 ≤ x 0 ∧ x 1 ^ 2 + x 2 ^ 2 + x 3 ^ 2 ≤ x 0 ^ 2}
 
 def properOrthochronous : Set (Matrix (Fin 4) (Fin 4) ℝ) := {lam |
   lam.transpose * eta * lam = eta ∧ Matrix.det lam = 1 ∧ 0 < lam 0 0}
 
-def parityVector (x : fourVector) : fourVector := ![x 0, -x 1, -x 2, -x 3]
+def parityVector (x : V) : V := ![x 0, -x 1, -x 2, -x 3]
 
 def parity (x : event) : event := ![parityVector (x 0), parityVector (x 1),
   parityVector (x 2), parityVector (x 3)]
@@ -205,7 +207,7 @@ private theorem fixed_axes (h : Matrix (Fin 4) (Fin 4) ℝ)
   exact ⟨h00, h01, h02, h03, h10, h13, h20, h23, h30, h31, h32, h33⟩
 
 private theorem lorentz_norm (h : Matrix (Fin 4) (Fin 4) ℝ)
-    (hhL : h.transpose * eta * h = eta) (x : fourVector) :
+    (hhL : h.transpose * eta * h = eta) (x : V) :
     minkowski (h.mulVec x) (h.mulVec x) = minkowski x x := by
   have hq := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ =>
       ∑ i : Fin 4, ∑ j : Fin 4, x i * M i j * x j) hhL
@@ -266,7 +268,7 @@ private theorem swap_stabilizer_contra
     h23, h30, h33, h01, h02, h31, h32] at ha0 ha3
   have hs : s = 0 := by linarith [ha0]
   have hd : d = 0 := by linarith [ha3]
-  have hnorm := lorentz_norm h hhL (![10 + s, A, 0, d] : fourVector)
+  have hnorm := lorentz_norm h hhL (![10 + s, A, 0, d] : V)
   rw [ha] at hnorm
   simp [minkowski.eq_1] at hnorm
   have hAB : A = B := by nlinarith [hnorm, hA, hB, hs, hd]
@@ -328,7 +330,7 @@ private theorem family_chiral
     have htn : v 1 ≤ 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2), hsq]
     have hA : 0 < Real.sqrt (4 + v 1) := Real.sqrt_pos.2 (by linarith)
     have hB : 0 < Real.sqrt (4 - v 1) := Real.sqrt_pos.2 (by linarith)
-    have hpar (x y : fourVector) (hx : lam.mulVec x = parityVector y) :
+    have hpar (x y : V) (hx : lam.mulVec x = parityVector y) :
         h.mulVec x = y := by
       dsimp [h]
       rw [← Matrix.mulVec_mulVec, hx]
@@ -365,7 +367,7 @@ private theorem family_chiral
   · subst sigma
     have hpq : lam.mulVec ![20, 0, 0, -1] = parityVector ![30, 0, 0, 1] := by
       simpa [act.eq_1, parity.eq_1, family.eq_1, Equiv.swap_apply_def] using congrFun hact 0
-    have hn := lorentz_norm lam hlam.1 (![20, 0, 0, -1] : fourVector)
+    have hn := lorentz_norm lam hlam.1 (![20, 0, 0, -1] : V)
     rw [hpq] at hn
     norm_num [minkowski.eq_1, parityVector.eq_1] at hn
 

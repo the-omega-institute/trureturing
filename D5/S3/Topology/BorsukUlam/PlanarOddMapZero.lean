@@ -65,9 +65,8 @@ theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)
   have hne : ∀ v ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1, f v ≠ 0 := by
     simpa only [not_exists, not_and] using hn
   let D := Metric.closedBall (0 : ℂ) 1
-  have hconv : Convex ℝ D := convex_closedBall 0 1
-  let : ContractibleSpace D := hconv.contractibleSpace ⟨0, by simp [D]⟩
-  let : LocallyPathConnectedSpace D := hconv.locallyPathConnectedSpace
+  let : ContractibleSpace D := (convex_closedBall 0 1).contractibleSpace ⟨0, by simp [D]⟩
+  let : LocallyPathConnectedSpace D := (convex_closedBall 0 1).locallyPathConnectedSpace
   let q : D → ℂ := fun z => f (hemisphere z)
   have hq : Continuous q := hf.comp_continuous
     (hemisphere_continuous.comp continuous_subtype_val) (fun z => hemisphere_mem z z.property)
