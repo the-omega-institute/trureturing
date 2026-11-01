@@ -9,6 +9,8 @@
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Multiset.Sum
+import Mathlib.Data.Fintype.Fin
+import Mathlib.Logic.Relation
 import Mathlib.Tactic
 
 /-! Quantitative meet-join sorting on finite Boolean row fibers. -/
@@ -370,8 +372,8 @@ theorem comparable_of_no_forward_step (M : Multiset (Finset V))
   exact ⟨S, A, B, hn.1, hn.2, hshape, rfl⟩
 
 theorem exists_forward_route_to_comparable (M : Multiset (Finset V)) :
-    ∃ k N, k ≤ M.card * (Fintype.card V) ^ 2 / 2 ∧
-      ForwardRoute M N k ∧ Comparable N := by
+    ∃ k N, 2 * k + energy M ≤ M.card * (Fintype.card V) ^ 2 ∧
+      k ≤ M.card * (Fintype.card V) ^ 2 / 2 ∧ ForwardRoute M N k ∧ Comparable N := by
   classical
   let bound := M.card * (Fintype.card V) ^ 2
   have hMbound : energy M ≤ bound := energy_le_card_mul_fintype_card_sq M
@@ -412,9 +414,12 @@ theorem exists_forward_route_to_comparable (M : Multiset (Finset V)) :
         apply (Nat.le_div_iff_mul_le Nat.zero_lt_two).mpr
         omega
   obtain ⟨k, N, hk, hr, hc⟩ := hP (bound - energy M) M rfl rfl
-  refine ⟨k, N, ?_, hr, hc⟩
-  have hnonneg : 0 ≤ energy M := Nat.zero_le _
-  omega
+  have hk2 := (Nat.le_div_iff_mul_le Nat.zero_lt_two).mp hk
+  refine ⟨k, N, ?_, ?_, hr, hc⟩
+  · dsimp [bound] at *
+    omega
+  · dsimp [bound] at *
+    omega
 
 theorem same_margin_common_comparable {M N : Multiset (Finset V)}
     (hcard : M.card = N.card) (hmarg : ∀ v, margin M v = margin N v) :
@@ -422,8 +427,8 @@ theorem same_margin_common_comparable {M N : Multiset (Finset V)}
       k ≤ M.card * (Fintype.card V) ^ 2 / 2 ∧
         l ≤ N.card * (Fintype.card V) ^ 2 / 2 ∧
           ForwardRoute M P k ∧ ForwardRoute N P l ∧ Comparable P := by
-  obtain ⟨k, P, hk, hr, hcP⟩ := exists_forward_route_to_comparable M
-  obtain ⟨l, Q, hl, hs, hcQ⟩ := exists_forward_route_to_comparable N
+  obtain ⟨k, P, _, hk, hr, hcP⟩ := exists_forward_route_to_comparable M
+  obtain ⟨l, Q, _, hl, hs, hcQ⟩ := exists_forward_route_to_comparable N
   have hPQcard : P.card = Q.card :=
     (forwardRoute_card hr).symm.trans (hcard.trans (forwardRoute_card hs))
   have hPQmarg : ∀ v, margin P v = margin Q v := by
@@ -432,6 +437,112 @@ theorem same_margin_common_comparable {M N : Multiset (Finset V)}
   have hPQ : P = Q := comparable_margin_unique hcP hcQ hPQcard hPQmarg
   refine ⟨k, l, P, hk, hl, hr, ?_, hcP⟩
   simpa [hPQ] using hs
+
+/-- The zero-based forced row, formed from an actual multiset's mass and margins. -/
+def thresholdRow (M : Multiset (Finset V)) (j : Fin M.card) : Finset V :=
+  Finset.univ.filter (fun v => M.card - margin M v ≤ j.val)
+
+/-- Indexing by `Fin M.card` retains repeated and empty threshold rows. -/
+def thresholdRows (M : Multiset (Finset V)) : Multiset (Finset V) :=
+  Finset.univ.val.map (thresholdRow M)
+
+private theorem mem_thresholdRow (M : Multiset (Finset V)) (j : Fin M.card) (v : V) :
+    v ∈ thresholdRow M j ↔ M.card - margin M v ≤ j.val := by
+  simp [thresholdRow]
+
+private theorem thresholdRows_card (M : Multiset (Finset V)) :
+    (thresholdRows M).card = M.card := by
+  simp [thresholdRows]
+
+private theorem thresholdRows_comparable (M : Multiset (Finset V)) :
+    Comparable (thresholdRows M) := by
+  intro A hA B hB
+  obtain ⟨i, _, rfl⟩ := Multiset.mem_map.mp hA
+  obtain ⟨j, _, rfl⟩ := Multiset.mem_map.mp hB
+  rcases le_total i.val j.val with hij | hji
+  · exact Or.inl (fun v hv => (mem_thresholdRow M j v).mpr
+      (le_trans ((mem_thresholdRow M i v).mp hv) hij))
+  · exact Or.inr (fun v hv => (mem_thresholdRow M i v).mpr
+      (le_trans ((mem_thresholdRow M j v).mp hv) hji))
+
+private theorem thresholdRows_margin (M : Multiset (Finset V)) (v : V) :
+    margin (thresholdRows M) v = margin M v := by
+  simp only [margin, thresholdRows, Multiset.map_map, Function.comp_def]
+  change (∑ j : Fin M.card, if v ∈ thresholdRow M j then 1 else 0) = margin M v
+  simp only [mem_thresholdRow, Finset.sum_boole, Nat.cast_id]
+  have h := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (Fin M.card))) (fun j => j.val < M.card - margin M v)
+  rw [Fin.card_filter_val_lt] at h
+  simp only [not_lt, Finset.card_univ, Fintype.card_fin] at h
+  have hc := margin_le_card M v
+  omega
+
+/-- The constructed sorting route reaches the explicit threshold multiset, with its
+initial energy charged to the same budget as the number of exchanges. -/
+theorem sort_to_threshold (M : Multiset (Finset V)) :
+    ∃ k, 2 * k + energy M ≤ M.card * (Fintype.card V) ^ 2 ∧
+      k ≤ M.card * (Fintype.card V) ^ 2 / 2 ∧ ForwardRoute M (thresholdRows M) k := by
+  obtain ⟨k, N, he, hk, hr, hc⟩ := exists_forward_route_to_comparable M
+  have hn : N = thresholdRows M := comparable_margin_unique hc
+    (thresholdRows_comparable M) ((forwardRoute_card hr).symm.trans (thresholdRows_card M).symm)
+    (fun v => (forwardRoute_margin hr v).symm.trans (thresholdRows_margin M v).symm)
+  exact ⟨k, he, hk, hn ▸ hr⟩
+
+/-- Threshold rows belong to the closed family because an actual sorting route produces
+that endpoint. No feasibility of independently prescribed margins is assumed. -/
+theorem thresholdRows_family {L : Finset (Finset V)} (hL : ClosedFamily L)
+    {M : Multiset (Finset V)} (hM : FamilyRows L M) :
+    FamilyRows L (thresholdRows M) ∧ ∀ j : Fin M.card, thresholdRow M j ∈ L := by
+  obtain ⟨k, _, _, hr⟩ := sort_to_threshold M
+  have hf := forwardRoute_family hL hM hr
+  exact ⟨hf, fun j => hf (Multiset.mem_map.mpr ⟨j, by simp, rfl⟩)⟩
+
+/-- An undirected residual exchange in a fixed family, with legal endpoints. -/
+def ExchangeStep (L : Finset (Finset V)) (M N : Multiset (Finset V)) : Prop :=
+  (ForwardStep M N ∨ ForwardStep N M) ∧ FamilyRows L M ∧ FamilyRows L N
+
+/-- A genuine finite path, using Mathlib's reflexive transitive closure. -/
+def ExchangePath (L : Finset (Finset V)) (M N : Multiset (Finset V)) : Prop :=
+  Relation.ReflTransGen (ExchangeStep L) M N
+
+private theorem forwardRoute_exchangePath {L : Finset (Finset V)} (hL : ClosedFamily L)
+    {M N : Multiset (Finset V)} {k : Nat} (hM : FamilyRows L M)
+    (h : ForwardRoute M N k) : ExchangePath L M N := by
+  induction h with
+  | zero => exact .refl
+  | @succ M N P k hs hr ih =>
+    have hN := forwardStep_family hL hM hs
+    exact Relation.ReflTransGen.head ⟨Or.inl hs, hM, hN⟩ (ih hN)
+
+private theorem exchangePath_reverse {L : Finset (Finset V)}
+    {M N : Multiset (Finset V)} (h : ExchangePath L M N) : ExchangePath L N M := by
+  induction h with
+  | refl => exact .refl
+  | tail hr hs ih =>
+    exact Relation.ReflTransGen.head ⟨hs.1.symm, hs.2.2, hs.2.1⟩ ih
+
+/-- Every reachable intermediate state remains in the same family, mass and coordinate fiber. -/
+theorem exchangePath_invariants {L : Finset (Finset V)}
+    {M N : Multiset (Finset V)} (hM : FamilyRows L M) (h : ExchangePath L M N) :
+    FamilyRows L N ∧ N.card = M.card ∧ ∀ v, margin N v = margin M v := by
+  induction h with
+  | refl => exact ⟨hM, rfl, fun _ => rfl⟩
+  | @tail N P hr hs ih =>
+    rcases hs.1 with hs' | hs'
+    · exact ⟨hs.2.2, (forwardStep_card hs').symm.trans ih.2.1,
+        fun v => (forwardStep_margin hs' v).symm.trans (ih.2.2 v)⟩
+    · exact ⟨hs.2.2, (forwardStep_card hs').trans ih.2.1,
+        fun v => (forwardStep_margin hs' v).trans (ih.2.2 v)⟩
+
+/-- Reverse one constructed normalization route and concatenate it with the other.
+The closure records actual residual exchanges, including all intermediate states. -/
+theorem same_margin_connected {L : Finset (Finset V)} (hL : ClosedFamily L)
+    {M N : Multiset (Finset V)} (hM : FamilyRows L M) (hN : FamilyRows L N)
+    (hc : M.card = N.card) (hm : ∀ v, margin M v = margin N v) :
+    ExchangePath L M N := by
+  obtain ⟨k, l, P, _, _, hr, hs, _⟩ := same_margin_common_comparable hc hm
+  exact Relation.ReflTransGen.trans (forwardRoute_exchangePath hL hM hr)
+    (exchangePath_reverse (forwardRoute_exchangePath hL hN hs))
 
 def fence (n : Nat) (A : Finset (Fin n)) : Prop :=
   ∀ (i j : Fin n), i.val + 1 = j.val →
@@ -534,6 +645,76 @@ theorem phi_support_fence {n : Nat} {w : Fin n → Bool} (hw : Adm n w) :
       exact ⟨hi', hj'⟩
     exact (adm_adjacent w hw i j hij) hfalse
 
+private theorem adm_of_adjacent {n : Nat} (w : Fin n → Bool)
+    (h : ∀ i j : Fin n, i.val + 1 = j.val → ¬ (w i = true ∧ w j = true)) : Adm n w := by
+  induction n with
+  | zero => trivial
+  | succ n ih =>
+    cases n with
+    | zero => trivial
+    | succ n =>
+      refine ⟨h 0 1 rfl, ih (Fin.tail w) ?_⟩
+      intro i j hij
+      exact h i.succ j.succ (by simpa using congrArg Nat.succ hij)
+
+/-- Alternating complement identifies exactly the native admissibility predicate. -/
+theorem phi_support_fence_iff {n : Nat} (w : Fin n → Bool) :
+    fence n (support (phi w)) ↔ Adm n w := by
+  refine ⟨?_, phi_support_fence⟩
+  intro h
+  apply adm_of_adjacent w
+  intro i j hij ⟨hi, hj⟩
+  by_cases he : Even i.val
+  · have hje : ¬ Even j.val := by
+      rw [← hij]
+      exact Nat.even_add_one.not_left.mpr he
+    have hi' : i ∈ support (phi w) := by simp [support, phi, he, hi]
+    have hj' := (h i j hij).1 he hi'
+    simpa [support, phi, hje, hj] using hj'
+  · have hje : Even j.val := by
+      rw [← hij]
+      exact Nat.even_add_one.mpr he
+    have hj' : j ∈ support (phi w) := by simp [support, phi, hje, hj]
+    have hi' := (h i j hij).2 he hj'
+    simpa [support, phi, he, hi] using hi'
+
+def wordOfSupport {n : Nat} (A : Finset (Fin n)) : Fin n → Bool :=
+  fun i => decide (i ∈ A)
+
+private theorem support_wordOfSupport {n : Nat} (A : Finset (Fin n)) :
+    support (wordOfSupport A) = A := by
+  ext i
+  simp [support, wordOfSupport]
+
+private theorem wordOfSupport_support {n : Nat} (w : Fin n → Bool) :
+    wordOfSupport (support w) = w := by
+  funext i
+  cases hw : w i <;> simp [wordOfSupport, support, hw]
+
+/-- Inverse to the Phi support map on every row, including arbitrary intermediate fence rows. -/
+def unphi {n : Nat} (A : Finset (Fin n)) : Fin n → Bool := phi (wordOfSupport A)
+
+private theorem support_phi_unphi {n : Nat} (A : Finset (Fin n)) :
+    support (phi (unphi A)) = A := by
+  rw [unphi, phi_involutive, support_wordOfSupport]
+
+private theorem unphi_support_phi {n : Nat} (w : Fin n → Bool) :
+    unphi (support (phi w)) = w := by
+  rw [unphi, wordOfSupport_support, phi_involutive]
+
+private theorem unphi_adm {n : Nat} {A : Finset (Fin n)} (hA : fence n A) :
+    Adm n (unphi A) := by
+  apply (phi_support_fence_iff _).mp
+  simpa only [support_phi_unphi] using hA
+
+/-- An involutive Boolean change of coordinates yields a bijection to fence upper sets. -/
+def admFenceEquiv (n : Nat) :
+    {w : Fin n → Bool // Adm n w} ≃ {A : Finset (Fin n) // fence n A} where
+  toFun w := ⟨support (phi w.val), phi_support_fence w.property⟩
+  invFun A := ⟨unphi A.val, unphi_adm A.property⟩
+  left_inv w := Subtype.ext (unphi_support_phi w.val)
+  right_inv A := Subtype.ext (support_phi_unphi A.val)
+
 noncomputable def fenceFamily (n : Nat) : Finset (Finset (Fin n)) := by
   classical
   exact Finset.univ.filter (fence n)
@@ -549,79 +730,191 @@ theorem fenceFamily_closed (n : Nat) : ClosedFamily (fenceFamily n) := by
   have h := fence_inter_union hAf hBf
   exact ⟨mem_fenceFamily.mpr h.1, mem_fenceFamily.mpr h.2⟩
 
-theorem adm_phi_route_bound {n : Nat} (M : Multiset (Fin n → Bool))
-    (hM : ∀ ⦃w⦄, w ∈ M → Adm n w) :
-    ∃ k N, k ≤ M.card * (Fintype.card (Fin n)) ^ 2 / 2 ∧
-      ForwardRoute (M.map (fun w => support (phi w))) N k ∧ Comparable N ∧
-      FamilyRows (fenceFamily n) N ∧
-      ∀ i, margin (M.map (fun w => support (phi w))) i = margin N i := by
-  let rows : Multiset (Finset (Fin n)) := M.map (fun w => support (phi w))
-  have hrows : FamilyRows (fenceFamily n) rows := by
-    intro A hA
-    obtain ⟨w, hw, hAw⟩ := Multiset.mem_map.mp hA
-    subst A
-    exact mem_fenceFamily.mpr (phi_support_fence (hM hw))
-  obtain ⟨k, N, hk, hr, hc⟩ := exists_forward_route_to_comparable rows
-  have hfamily := forwardRoute_family (fenceFamily_closed n) hrows hr
-  refine ⟨k, N, ?_, hr, hc, hfamily, forwardRoute_margin hr⟩
-  simpa [rows] using hk
+/-- Original occupied-row counts, before alternating complement. -/
+def occupancyCount {n : Nat} (M : Multiset (Fin n → Bool)) (i : Fin n) : Nat :=
+  (M.map (fun w => if w i = true then 1 else 0)).sum
 
-theorem adm_phi_canonical_endpoint_unique {n : Nat} (M : Multiset (Fin n → Bool))
-    (hM : ∀ ⦃w⦄, w ∈ M → Adm n w) :
-    ∃ k N, k ≤ M.card * (Fintype.card (Fin n)) ^ 2 / 2 ∧
-      ForwardRoute (M.map (fun w => support (phi w))) N k ∧ Comparable N ∧
-      FamilyRows (fenceFamily n) N ∧
-      (∀ i, margin (M.map (fun w => support (phi w))) i = margin N i) ∧
-      (∀ k' N', ForwardRoute (M.map (fun w => support (phi w))) N' k' →
-        Comparable N' → N' = N) := by
-  obtain ⟨k, N, hk, hr, hc, hfamily, hmarg⟩ := adm_phi_route_bound M hM
-  refine ⟨k, N, hk, hr, hc, hfamily, hmarg, ?_⟩
-  intro k' N' hr' hc'
-  apply comparable_margin_unique hc' hc
-  · exact (forwardRoute_card hr').symm.trans (forwardRoute_card hr)
-  · intro i
-    exact (forwardRoute_margin hr' i).symm.trans (forwardRoute_margin hr i)
+def phiRows {n : Nat} (M : Multiset (Fin n → Bool)) : Multiset (Finset (Fin n)) :=
+  M.map (fun w => support (phi w))
 
-theorem adm_phi_fiber_common_endpoint {n : Nat}
-    {M N : Multiset (Fin n → Bool)}
-    (hM : ∀ ⦃w⦄, w ∈ M → Adm n w)
-    (hN : ∀ ⦃w⦄, w ∈ N → Adm n w)
-    (hcard : M.card = N.card)
-    (hmarg : ∀ i,
-      margin (M.map (fun w => support (phi w))) i =
-        margin (N.map (fun w => support (phi w))) i) :
-    ∃ k l P,
-      k ≤ M.card * (Fintype.card (Fin n)) ^ 2 / 2 ∧
-        l ≤ N.card * (Fintype.card (Fin n)) ^ 2 / 2 ∧
-          ForwardRoute (M.map (fun w => support (phi w))) P k ∧
-            ForwardRoute (N.map (fun w => support (phi w))) P l ∧
-              Comparable P ∧ FamilyRows (fenceFamily n) P := by
-  have hrowsM : FamilyRows (fenceFamily n)
-      (M.map (fun w => support (phi w))) := by
-    intro A hA
-    obtain ⟨w, hw, hAw⟩ := Multiset.mem_map.mp hA
-    subst A
-    exact mem_fenceFamily.mpr (phi_support_fence (hM hw))
-  obtain ⟨k, l, P, hk, hl, hr, hs, hc⟩ :=
-    same_margin_common_comparable
-      (M := M.map (fun w => support (phi w)))
-      (N := N.map (fun w => support (phi w)))
-      (by simpa using hcard) hmarg
-  have hfamily : FamilyRows (fenceFamily n) P :=
-    forwardRoute_family (fenceFamily_closed n) hrowsM hr
-  refine ⟨k, l, P, ?_, ?_, hr, hs, hc, hfamily⟩
-  · simpa using hk
-  · simpa using hl
+def unphiRows {n : Nat} (M : Multiset (Finset (Fin n))) : Multiset (Fin n → Bool) :=
+  M.map unphi
 
-theorem adm_phi_forward_consumer {n : Nat} (w₁ w₂ : Fin n → Bool)
-    (h₁ : Adm n w₁) (h₂ : Adm n w₂)
-    (h₁₂ : ¬ support (phi w₁) ⊆ support (phi w₂))
-    (h₂₁ : ¬ support (phi w₂) ⊆ support (phi w₁)) :
-    ForwardStep ({support (phi w₁), support (phi w₂)} : Multiset (Finset (Fin n)))
-      ({support (phi w₁) ∩ support (phi w₂),
-        support (phi w₁) ∪ support (phi w₂)} : Multiset (Finset (Fin n))) ∧
-      fence n (support (phi w₁)) ∧ fence n (support (phi w₂)) := by
-  refine ⟨⟨0, support (phi w₁), support (phi w₂), h₁₂, h₂₁, by simp, by simp⟩,
-    phi_support_fence h₁, phi_support_fence h₂⟩
+def NativeRows {n : Nat} (M : Multiset (Fin n → Bool)) : Prop :=
+  ∀ ⦃w⦄, w ∈ M → Adm n w
+
+private theorem unphiRows_phiRows {n : Nat} (M : Multiset (Fin n → Bool)) :
+    unphiRows (phiRows M) = M := by
+  simp [unphiRows, phiRows, Multiset.map_map, Function.comp_def, unphi_support_phi]
+
+private theorem phiRows_unphiRows {n : Nat} (M : Multiset (Finset (Fin n))) :
+    phiRows (unphiRows M) = M := by
+  simp [unphiRows, phiRows, Multiset.map_map, Function.comp_def, support_phi_unphi]
+
+private theorem nativeRows_phiRows {n : Nat} {M : Multiset (Fin n → Bool)}
+    (hM : NativeRows M) : FamilyRows (fenceFamily n) (phiRows M) := by
+  intro A hA
+  obtain ⟨w, hw, rfl⟩ := Multiset.mem_map.mp hA
+  exact mem_fenceFamily.mpr (phi_support_fence (hM hw))
+
+private theorem nativeRows_unphiRows {n : Nat} {M : Multiset (Finset (Fin n))}
+    (hM : FamilyRows (fenceFamily n) M) : NativeRows (unphiRows M) := by
+  intro w hw
+  obtain ⟨A, hA, rfl⟩ := Multiset.mem_map.mp hw
+  exact ((admFenceEquiv n).symm ⟨A, mem_fenceFamily.mp (hM hA)⟩).property
+
+private theorem occupancyCount_le_card {n : Nat} (M : Multiset (Fin n → Bool)) (i : Fin n) :
+    occupancyCount M i ≤ M.card := by
+  simpa [margin, occupancyCount, support, Multiset.map_map, Function.comp_def] using
+    margin_le_card (M.map support) i
+
+/-- Multiplicities are counted by multiset sums: odd coordinates have complementary counts. -/
+theorem phiRows_margin {n : Nat} (M : Multiset (Fin n → Bool)) (i : Fin n) :
+    margin (phiRows M) i =
+      if Even i.val then occupancyCount M i else M.card - occupancyCount M i := by
+  induction M using Multiset.induction_on with
+  | empty => simp [phiRows, margin, occupancyCount]
+  | cons w M ih =>
+    have hle := occupancyCount_le_card M i
+    by_cases he : Even i.val <;> cases hw : w i <;>
+      simp [phiRows, margin, support, phi, occupancyCount, he, hw] at ih ⊢ <;>
+      simp only [occupancyCount] at hle <;> omega
+
+/-- A native residual exchange replaces the two actual word occurrences by the inverse
+images of the transformed meet and join; original supports need not be union-closed. -/
+def NativeForwardStep {n : Nat} (M N : Multiset (Fin n → Bool)) : Prop :=
+  NativeRows M ∧ ∃ (R : Multiset (Fin n → Bool)) (a b : Fin n → Bool),
+    (¬ support (phi a) ⊆ support (phi b)) ∧
+    (¬ support (phi b) ⊆ support (phi a)) ∧
+    M = a ::ₘ b ::ₘ R ∧
+    N = unphi (support (phi a) ∩ support (phi b)) ::ₘ
+      unphi (support (phi a) ∪ support (phi b)) ::ₘ R
+
+/-- Finite undirected paths on the actual all-n native word configurations. -/
+def NativePath {n : Nat} (M N : Multiset (Fin n → Bool)) : Prop :=
+  Relation.ReflTransGen (Relation.SymmGen NativeForwardStep) M N
+
+private theorem nativeForwardStep_legal {n : Nat} {M N : Multiset (Fin n → Bool)}
+    (h : NativeForwardStep M N) : NativeRows N := by
+  rcases h with ⟨hM, R, a, b, _, _, rfl, rfl⟩
+  have ha := phi_support_fence (hM (by simp : a ∈ a ::ₘ b ::ₘ R))
+  have hb := phi_support_fence (hM (by simp : b ∈ a ::ₘ b ::ₘ R))
+  intro w hw
+  rcases Multiset.mem_cons.mp hw with rfl | hw
+  · exact unphi_adm (fence_inter_union ha hb).1
+  rcases Multiset.mem_cons.mp hw with rfl | hw
+  · exact unphi_adm (fence_inter_union ha hb).2
+  · exact hM (by simp [hw])
+
+private theorem nativeForwardStep_encode {n : Nat} {M N : Multiset (Fin n → Bool)}
+    (h : NativeForwardStep M N) : ForwardStep (phiRows M) (phiRows N) := by
+  rcases h with ⟨_, R, a, b, hab, hba, rfl, rfl⟩
+  refine ⟨phiRows R, support (phi a), support (phi b), hab, hba, ?_, ?_⟩
+  · simp [phiRows]
+  · simp [phiRows, support_phi_unphi]
+
+/-- Pull every actual residual lattice exchange back to legal admissible words. -/
+theorem adm_phi_forward_consumer {n : Nat} {M N : Multiset (Finset (Fin n))}
+    (hM : FamilyRows (fenceFamily n) M) (h : ForwardStep M N) :
+    NativeForwardStep (unphiRows M) (unphiRows N) := by
+  refine ⟨nativeRows_unphiRows hM, ?_⟩
+  rcases h with ⟨R, A, B, hab, hba, rfl, rfl⟩
+  refine ⟨unphiRows R, unphi A, unphi B, ?_, ?_, ?_, ?_⟩
+  · simpa only [support_phi_unphi] using hab
+  · simpa only [support_phi_unphi] using hba
+  · simp [unphiRows]
+  · simp [unphiRows, support_phi_unphi]
+
+private theorem nativePath_encode {n : Nat} {M N : Multiset (Fin n → Bool)}
+    (h : NativePath M N) : ExchangePath (fenceFamily n) (phiRows M) (phiRows N) := by
+  apply Relation.ReflTransGen.lift phiRows (b := N) (a := M) (r := Relation.SymmGen NativeForwardStep) _ h
+  intro X Y hXY
+  rcases hXY with hs | hs
+  · exact ⟨Or.inl (nativeForwardStep_encode hs), nativeRows_phiRows hs.1,
+      nativeRows_phiRows (nativeForwardStep_legal hs)⟩
+  · exact ⟨Or.inr (nativeForwardStep_encode hs), nativeRows_phiRows (nativeForwardStep_legal hs),
+      nativeRows_phiRows hs.1⟩
+
+private theorem exchangePath_decode {n : Nat} {M N : Multiset (Finset (Fin n))}
+    (h : ExchangePath (fenceFamily n) M N) : NativePath (unphiRows M) (unphiRows N) := by
+  apply Relation.ReflTransGen.lift unphiRows (b := N) (a := M) (r := ExchangeStep (fenceFamily n)) _ h
+  intro X Y hXY
+  rcases hXY.1 with hs | hs
+  · exact Or.inl (adm_phi_forward_consumer hXY.2.1 hs)
+  · exact Or.inr (adm_phi_forward_consumer hXY.2.2 hs)
+
+/-- Every native intermediate state is admissible and preserves the ORIGINAL occupancy
+fiber. This applies to every prefix of the constructed path, in either direction. -/
+theorem nativePath_invariants {n : Nat} {M N : Multiset (Fin n → Bool)}
+    (hM : NativeRows M) (h : NativePath M N) :
+    NativeRows N ∧ N.card = M.card ∧ ∀ i, occupancyCount N i = occupancyCount M i := by
+  have hi := exchangePath_invariants (nativeRows_phiRows hM) (nativePath_encode h)
+  have hn := nativeRows_unphiRows hi.1
+  rw [unphiRows_phiRows] at hn
+  have hc : N.card = M.card := by simpa [phiRows] using hi.2.1
+  refine ⟨hn, hc, ?_⟩
+  intro i
+  have hm := hi.2.2 i
+  rw [phiRows_margin, phiRows_margin] at hm
+  have hleM := occupancyCount_le_card M i
+  have hleN := occupancyCount_le_card N i
+  by_cases he : Even i.val <;> simp only [he, if_true, if_false] at hm <;> omega
+
+/-- The canonical native endpoint is defined AFTER Phi; its transformed rows are thresholds. -/
+def nativeCanonical {n : Nat} (M : Multiset (Fin n → Bool)) : Multiset (Fin n → Bool) :=
+  unphiRows (thresholdRows (phiRows M))
+
+/-- A complete bounded sorting route, its legal native pullback, and the explicit canonical
+endpoint. The initial-energy budget is retained, as well as the weaker floor bound. -/
+theorem adm_phi_route_bound {n : Nat} (M : Multiset (Fin n → Bool)) (hM : NativeRows M) :
+    ∃ k, 2 * k + energy (phiRows M) ≤ M.card * n ^ 2 ∧ k ≤ M.card * n ^ 2 / 2 ∧
+      ForwardRoute (phiRows M) (thresholdRows (phiRows M)) k ∧
+      NativePath M (nativeCanonical M) ∧ NativeRows (nativeCanonical M) ∧
+      phiRows (nativeCanonical M) = thresholdRows (phiRows M) ∧
+      (∀ j : Fin (phiRows M).card, Adm n (unphi (thresholdRow (phiRows M) j))) ∧
+      (∀ k' P, ForwardRoute (phiRows M) P k' → Comparable P →
+        P = thresholdRows (phiRows M)) := by
+  obtain ⟨k, he, hk, hr⟩ := sort_to_threshold (phiRows M)
+  have hrows := nativeRows_phiRows hM
+  have hf := thresholdRows_family (fenceFamily_closed n) hrows
+  have hp := exchangePath_decode (forwardRoute_exchangePath (fenceFamily_closed n) hrows hr)
+  rw [unphiRows_phiRows] at hp
+  refine ⟨k, ?_, ?_, hr, hp, nativeRows_unphiRows hf.1,
+    phiRows_unphiRows _, ?_, ?_⟩
+  · simpa [phiRows] using he
+  · simpa [phiRows] using hk
+  · intro j
+    exact unphi_adm (mem_fenceFamily.mp (hf.2 j))
+  · intro k' P hP hcP
+    exact comparable_margin_unique hcP (thresholdRows_comparable _)
+      ((forwardRoute_card hP).symm.trans (thresholdRows_card _).symm)
+      (fun i => (forwardRoute_margin hP i).symm.trans (thresholdRows_margin _ i).symm)
+
+/-- Equal ORIGINAL mass and occupancies give an actual undirected path through native
+admissible multisets and the same threshold endpoint after Phi. -/
+theorem adm_phi_fiber_common_endpoint {n : Nat} {M N : Multiset (Fin n → Bool)}
+    (hM : NativeRows M) (hN : NativeRows N) (hc : M.card = N.card)
+    (hm : ∀ i, occupancyCount M i = occupancyCount N i) :
+    NativePath M N ∧ nativeCanonical M = nativeCanonical N ∧
+      (∃ k, 2 * k + energy (phiRows M) ≤ M.card * n ^ 2 ∧ k ≤ M.card * n ^ 2 / 2 ∧
+        ForwardRoute (phiRows M) (phiRows (nativeCanonical M)) k ∧
+        NativePath M (nativeCanonical M)) ∧
+      (∀ X, NativePath M X → NativeRows X ∧ X.card = M.card ∧
+        ∀ i, occupancyCount X i = occupancyCount M i) := by
+  have hpc : (phiRows M).card = (phiRows N).card := by simpa [phiRows] using hc
+  have hpm : ∀ i, margin (phiRows M) i = margin (phiRows N) i := by
+    intro i
+    rw [phiRows_margin, phiRows_margin, hc, hm i]
+  have hp := exchangePath_decode (same_margin_connected (fenceFamily_closed n)
+    (nativeRows_phiRows hM) (nativeRows_phiRows hN) hpc hpm)
+  rw [unphiRows_phiRows, unphiRows_phiRows] at hp
+  have ht : thresholdRows (phiRows M) = thresholdRows (phiRows N) :=
+    comparable_margin_unique (thresholdRows_comparable _) (thresholdRows_comparable _)
+      ((thresholdRows_card _).trans (hpc.trans (thresholdRows_card _).symm))
+      (fun i => (thresholdRows_margin _ i).trans ((hpm i).trans (thresholdRows_margin _ i).symm))
+  obtain ⟨k, he, hk, hr, hnative, _, hencode, _, _⟩ := adm_phi_route_bound M hM
+  refine ⟨hp, congrArg unphiRows ht, ⟨k, he, hk, ?_, hnative⟩,
+    fun X hX => nativePath_invariants hM hX⟩
+  simpa only [hencode] using hr
 
 end D5.S1.Words.AdmissibleWords.UncrossingFiber
