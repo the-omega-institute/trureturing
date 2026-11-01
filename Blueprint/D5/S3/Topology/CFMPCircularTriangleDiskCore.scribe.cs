@@ -51,7 +51,7 @@ internal sealed class CFMPCircularTriangleDiskCoreDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The radial coordinate of each origin representative is exactly zero. Together with origin "
-                    + "connectivity and radial invariance, this identifies the distinguished zero-radius class."))))));
+                    + "connectivity and radial invariance, this identifies the distinguished zero-radius class.")))))));
 
     private static Formula RadialInvariant()
     {
