@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
 
+/-! Source-owner families for branch characteristic and variation observations. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -15,8 +17,10 @@ open _root_.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 open Polynomial
 
+attribute [local simp] Polynomial.coeff_one
+
 /-- Parameters retain the whole edge sequence and every branch length. -/
-def signature : DependentFamily.Signature where
+abbrev signature : DependentFamily.Signature where
   Params := (ℕ → ℝ) × ℕ
   State := fun _ => ℕ → ℝ
   Role := Bool
@@ -31,7 +35,7 @@ def actual : DependentFamily.Realization signature :=
     (fun role p dq => variation p.1 dq (p.2 + if role then 1 else 0))
     (fun e => nomatch e)
 
-def arena : DependentFamily.Arena where
+abbrev arena : DependentFamily.Arena where
   signature := signature
   Law := fun R => ∀ (q dq : ℕ → ℝ) (n : ℕ),
     (∀ k < n, q k ≠ 0) →
@@ -134,7 +138,7 @@ def registration :
   familyRecord := none
   options := #[]
 
-def matrixSignature : DependentFamily.Signature where
+abbrev matrixSignature : DependentFamily.Signature where
   Params := ℕ
   State := fun _ => ℕ → ℝ
   Role := Bool
@@ -149,7 +153,7 @@ def matrixActual : DependentFamily.Realization matrixSignature :=
     (fun role n b => if role then continuant b n else (weightedPath b n).charpoly)
     (fun e => nomatch e)
 
-def matrixArena : DependentFamily.Arena where
+abbrev matrixArena : DependentFamily.Arena where
   signature := matrixSignature
   Law := fun R => ∀ (b : ℕ → ℝ) (n : ℕ),
     R.readout false n b = R.readout true n (fun k => b k ^ 2)
@@ -234,7 +238,7 @@ def matrixRegistration :
   familyRecord := none
   options := #[]
 
-def linearizationSignature : DependentFamily.Signature where
+abbrev linearizationSignature : DependentFamily.Signature where
   Params := (ℕ → ℝ) × (ℕ → ℝ)
   State := fun _ => ℕ
   Role := Bool
@@ -249,7 +253,7 @@ def linearizationActual : DependentFamily.Realization linearizationSignature :=
     (fun role p n => (deformedContinuant p.1 p.2 n).coeff (if role then 1 else 0))
     (fun e => nomatch e)
 
-def linearizationArena : DependentFamily.Arena where
+abbrev linearizationArena : DependentFamily.Arena where
   signature := linearizationSignature
   Law := fun R => ∀ (q dq : ℕ → ℝ) (n : ℕ),
     R.readout false (q, dq) n = continuant q n ∧

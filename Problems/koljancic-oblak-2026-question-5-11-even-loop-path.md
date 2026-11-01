@@ -18,7 +18,19 @@ The exact Lean proposition is `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakE
 
 Choose a single loop in L, construct a symmetric weighted path with that loop, and enlarge the exact support after establishing nSSP. The sufficient one-loop construction uses coprime branch characteristic polynomials and an injective coefficient variation. The branch recurrence recovery theorem handles the last step of recovering internal edge variations from two consecutive zero branch variations, including empty and length-one branches.
 
-The actual weighted-path characteristic correspondence, uniform coprime branch construction, full central product-rule separation, support-tangent correspondence, coefficient/adjugate trace pairing, unrestricted real commutant connection and exact support enlargement remain separate proof obligations. A conditional theorem assuming any of these missing relations does not settle the event.
+The zero-diagonal branch characteristic correspondence and the algebraic constant/linear perturbation coefficients are supplied by `weighted_path_charpoly` and `continuant_linearization`. The central-loop determinant identity, uniform coprime branch construction, full central product-rule separation, support-tangent correspondence, coefficient/adjugate trace pairing, unrestricted real commutant connection and exact support enlargement remain separate proof obligations. A conditional theorem assuming any of these missing relations does not settle the event.
+
+## Declaration scope
+
+| Declaration | Proof shape | Mathematical role |
+| --- | --- | --- |
+| `continuant_linearization` | content | Simultaneous polynomial perturbation, proved by induction with the complete coefficient-one product rule. |
+| `branch_variation_injective` | content | Reverse recurrence recovers every edge variation from two consecutive zero observations. |
+| `weighted_path_charpoly` | content | Actual weighted-branch characteristic polynomial, using the frozen `ForbiddenNeighbourDeterminant.det_sparse_front` and induction. |
+| private `continuant_coeff` | content | Fixed leading coefficient and upper support bound; consumed by variation recovery. |
+| private `variation_coeff` | content | Strict upper support bound for variations; consumed by variation recovery. |
+
+The definitions introduce the exact event, recurrence, perturbation and matrix carriers. Their consumers are the proposition `claim`, the three mathematical declarations and their source-owner audit families. The module's proposed admission basis is the substantive recurrence and matrix bridges (`escape-witness`), subject to independent full-unit assessment. It does not claim an `open-problem-resolution` settlement of #25129. The results are uniform algebraic statements, not certified finite instances, enumeration, numerical reductions or checkers.
 
 ## Falsifier and acceptance boundary
 

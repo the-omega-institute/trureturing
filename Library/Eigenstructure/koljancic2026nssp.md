@@ -30,4 +30,6 @@ The arXiv source is licensed CC BY-SA 4.0. The publisher-specific license is unv
 
 ## Formal boundary
 
-The branch variation recovery theorem concerns the polynomial recurrence and nonzero edge parameters. It does not by itself identify those polynomials with a weighted matrix characteristic polynomial, prove a differential isomorphism or construct an nSSP matrix. The full event remains the separate proposition `KoljancicOblakEvenPath.claim`.
+The declaration `weighted_path_charpoly` identifies every zero-diagonal weighted branch characteristic polynomial with its squared-weight continuant. The declaration `continuant_linearization` identifies the constant and first-order coefficients of the simultaneous polynomial perturbation with the original continuant and its formal variation. The declaration `branch_variation_injective` recovers all internal edge variations from two consecutive zero variations at nonzero edge parameters.
+
+These relations do not yet prove the central-loop characteristic identity, a uniform coprime branch choice, complete coefficient injectivity, the commutant/trace pairing or exact support enlargement. They therefore do not construct an nSSP witness for Question 5.11. The full event remains the separate proposition `KoljancicOblakEvenPath.claim`.
