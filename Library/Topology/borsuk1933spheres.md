@@ -4,7 +4,7 @@ authors: Karol Borsuk
 year: 1933
 title: "Drei Sätze über die n-dimensionale euklidische Sphäre"
 doi: 10.4064/fm-20-1-177-190
-url: "http://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf"
+url: "https://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf"
 claim: "The paper proves three theorems on the n-dimensional sphere; the second states that every continuous map of the n-sphere into n-dimensional Euclidean space sends some pair of antipodal points to the same point."
 strata_touched:
   - D5/S3/Topology/BorsukUlam/PlanarOddMapZero
@@ -24,6 +24,6 @@ A footnote records that the theorem was conjectured by S. Ulam. For an odd map, 
 
 ## Verified locator
 
-Source: http://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf
+Source: https://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf
 - DOI: https://doi.org/10.4064/fm-20-1-177-190 (title, author, journal, volume and pages from Crossref).
-- URL: http://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf (the scanned article in the ICM digital library). Locations: the definitions of $S_n$ and $p^*$, p. 177; Satz II and footnote 7, p. 178.
+- URL: https://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf (the scanned article in the ICM digital library). Locations: the definitions of $S_n$ and $p^*$, p. 177; Satz II and footnote 7, p. 178.
