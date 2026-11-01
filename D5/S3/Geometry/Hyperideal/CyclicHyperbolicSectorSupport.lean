@@ -1,10 +1,10 @@
-/- GID: D5/S3/Geometry/Hyperideal/CyclicHyperbolicSectorMetric
+/- GID: D5/S3/Geometry/Hyperideal/CyclicHyperbolicSectorSupport
    generality: G
-   mirror-B: D5/B/S3/Geometry/Hyperideal/CyclicHyperbolicSectorMetric
+   mirror-B: D5/B/S3/Geometry/Hyperideal/CyclicHyperbolicSectorSupport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Normed.Group.AddCircle, mathlib/module/Mathlib.Analysis.Complex.Isometry]
    utility: none
-   digest: Original finite chains attain the capped angular metric in numbered actual hyperbolic sectors. -/
+   digest: Coordinate and seam support for cyclic hyperbolic sector metrics. -/
 
 import D5.S3.Geometry.Hyperideal.LengthGramMetricSegments
 import D5.S3.Geometry.HyperbolicSupportBoundary
