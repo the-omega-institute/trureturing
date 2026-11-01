@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Information.BargmannImaginaryMaximizers
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the latitude inner-product identity. -/
+
 namespace Reg.D5.S3.Quantum.Information.BargmannImaginaryMaximizers.LatitudeDot
 
 open _root_.D5.S3.Quantum.Information.BargmannImaginaryMaximizers.Latitude

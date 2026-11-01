@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Geometry.Hyperideal.GramDomainContraction
 import Reg.Support.DependentFamily
 
+/-! Source-bound audits of the Gram-domain contraction and square-root product estimate. -/
+
 open scoped Matrix
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.Hyperideal.GramDomainContraction
@@ -11,7 +13,6 @@ namespace Reg.D5.S3.Geometry.Hyperideal.GramDomainContraction
 noncomputable section
 
 set_option autoImplicit false
-set_option maxHeartbeats 1000000
 
 abbrev signature : Signature where
   Params := Unit
@@ -43,6 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hx := x.property.2
   norm_num at hx
 
+set_option maxHeartbeats 1000000 in
 def family : _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration
     arena (ContractibleSpace X) where
   actual := actual
@@ -80,7 +82,8 @@ def family : _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Regi
 noncomputable def registration_attempt : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.Hyperideal.GramDomainContraction.full_domain_contractible)
     (type_of% (realize signature (fun _ _ x => Delta x) (fun e => nomatch e))) Type Unit := {
-  unitName := `D5.S3.Geometry.Hyperideal.GramDomainContraction.full_domain_contractible.determinantDomain
+  unitName :=
+    `D5.S3.Geometry.Hyperideal.GramDomainContraction.full_domain_contractible.determinantDomain
   realizationName := `Reg.D5.S3.Geometry.Hyperideal.GramDomainContraction.family
   realizationSource := none
   generated := false
