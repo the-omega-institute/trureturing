@@ -182,7 +182,7 @@ theorem unequal_dilation_second
     (by simp only [Fintype.card_sum]; omega) hr (hdval.symm ▸ Real.sqrt_pos.mpr hp)
   exact hout.trans hdval
 
-private theorem eigenvalues_ofReal
+theorem eigenvalues_ofReal
     {ι : Type*} [Fintype ι] [DecidableEq ι]
     (A : Matrix ι ι ℝ) (hA : A.IsHermitian)
     (hC : (A.map Complex.ofReal).IsHermitian) :

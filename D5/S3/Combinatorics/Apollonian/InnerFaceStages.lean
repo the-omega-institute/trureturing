@@ -204,7 +204,7 @@ theorem faceCount_old (n : ℕ) (v : Vertex n) :
   intro f _; split_ifs <;> simp
 
 /-- A newly inserted vertex belongs to exactly its three child faces. -/
-private theorem faceCount_new (n : ℕ) (f : Face n) :
+theorem faceCount_new (n : ℕ) (f : Face n) :
     faceCount (n + 1) (Sum.inr f) = 3 := by
   classical
   unfold faceCount
@@ -410,7 +410,7 @@ def seed : (n : ℕ) → Fin 4 → Vertex n
   | 0, v => v
   | n + 1, v => Sum.inl (seed n v)
 
-private theorem seed_injective (n : ℕ) : Function.Injective (seed n) := by
+theorem seed_injective (n : ℕ) : Function.Injective (seed n) := by
   induction n with
   | zero => exact Function.injective_id
   | succ n ih => exact Sum.inl_injective.comp ih
