@@ -110,6 +110,7 @@ private theorem model_positive (y t e h : ℤ)
   have hD1 : (1 : ℤ) ≤ y*(e*t)+y+1 := by
     have hz0 : (0 : ℤ) ≤ y*(e*t) := by positivity
     nlinarith
+  have hterm : (0 : ℤ) ≤ t*y*(e*t) := by positivity
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
   · have hp : (0 : ℤ) ≤ e*h*t*(y*e*t+y+1) := by positivity
@@ -119,9 +120,9 @@ private theorem model_positive (y t e h : ℤ)
   · have hp : (0 : ℤ) ≤ e*h*t*(e*t)*t + (e*t)*t + e*t := by positivity
     nlinarith [hp]
   · have hp : (0 : ℤ) ≤ t*y*(e*t) + (y*(e*t)+y+1) := by positivity
-    nlinarith [hp,hD1]
+    nlinarith [hp,hD1,hterm]
   · have hp : (0 : ℤ) ≤ y*(e*t)+y+1 + 2*(t*y*(e*t)) := by positivity
-    nlinarith [hp,hD1]
+    nlinarith [hp,hD1,hterm]
   · have hp : (0 : ℤ) ≤ (y-1)*(e*t)+y := by positivity
     nlinarith [hp]
   · ring
@@ -150,10 +151,14 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   let r:=ceil v.B v.Mn
   let w:=(v.L-r*v.M)/v.B
   obtain ⟨hA,hB,hLL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive y t e h hy ht he hh
-  have hvB : 0<v.B := by have := hB; omega
-  have hvM : 0<v.M := by have := hM; omega
-  have hvMn : 0<v.Mn := by have := hMn; omega
-  have hvD : 1≤v.D := by have := hD; omega
+  have hB' : 1≤v.B := by simpa [v] using hB
+  have hM' : 1≤v.M := by simpa [v] using hM
+  have hMn' : 1≤v.Mn := by simpa [v] using hMn
+  have hD' : 1≤v.D := by simpa [v] using hD
+  have hvB : 0<v.B := by omega
+  have hvM : 0<v.M := by omega
+  have hvMn : 0<v.Mn := by omega
+  have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D g hvB hvM hvMn hvD
     (by dsimp [v,model]; ring) (by nlinarith [hrel]) (by linarith only [hg])
   change 1≤r ∧ r≤g ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
@@ -198,10 +203,14 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
   let r:=ceil v.B v.Mn
   obtain ⟨hA,hB,hL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive t t 2 h ht ht (by omega) (by omega)
   rcases hmargins with ⟨f0,f1,f2,f3,F,G,P,W⟩
-  have hvB : 0<v.B := by have := hB; omega
-  have hvM : 0<v.M := by have := hM; omega
-  have hvMn : 0<v.Mn := by have := hMn; omega
-  have hvD : 1≤v.D := by have := hD; omega
+  have hB' : 1≤v.B := by simpa [v] using hB
+  have hM' : 1≤v.M := by simpa [v] using hM
+  have hMn' : 1≤v.Mn := by simpa [v] using hMn
+  have hD' : 1≤v.D := by simpa [v] using hD
+  have hvB : 0<v.B := by omega
+  have hvM : 0<v.M := by omega
+  have hvMn : 0<v.Mn := by omega
+  have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D h hvB hvM hvMn
     (by
       have hz : 4≤v.z := by dsimp [v,model]; omega
@@ -249,10 +258,14 @@ private theorem dynamic_first (h : ℤ) (hh : 8≤h)
   let r:=ceil v.B v.Mn
   rcases hmargins with ⟨f0,f1,f2,f3,F,G⟩
   obtain ⟨hA,hB,hL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive 4 4 4 h (by norm_num) (by norm_num) (by norm_num) (by omega)
-  have hvB : 0<v.B := by have := hB; omega
-  have hvM : 0<v.M := by have := hM; omega
-  have hvMn : 0<v.Mn := by have := hMn; omega
-  have hvD : 1≤v.D := by have := hD; omega
+  have hB' : 1≤v.B := by simpa [v] using hB
+  have hM' : 1≤v.M := by simpa [v] using hM
+  have hMn' : 1≤v.Mn := by simpa [v] using hMn
+  have hD' : 1≤v.D := by simpa [v] using hD
+  have hvB : 0<v.B := by omega
+  have hvM : 0<v.M := by omega
+  have hvMn : 0<v.Mn := by omega
+  have hvD : 1≤v.D := hD'
   have hc := ceil_bounds v.B v.M v.Mn v.D h hvB hvM hvMn
     (by norm_num [v,model]) (by rfl) (by nlinarith [hrel]) (by linarith)
   change 1≤r ∧ r≤h ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
@@ -506,7 +519,8 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   intro i hi
   obtain ⟨j,hj,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
   rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega)]
-  try simp only [if_pos (by omega)]
+  have hcond : j+1 < chainLength a b c d r := by omega
+  simp [hcond]
   have hp : (0 : ℤ) ≤ (2 : ℤ)^j := by positivity
   exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
     mul_nonneg hp (by have := hn.1; omega)⟩
@@ -564,8 +578,8 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hh:=power_split a c hac
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
-  simp only [hx,←he]
-  repeat' constructor <;> try trivial <;> ring_nf <;> nlinarith
+  simp [hx,he,hh]
+  repeat' constructor <;> try trivial <;> ring
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
