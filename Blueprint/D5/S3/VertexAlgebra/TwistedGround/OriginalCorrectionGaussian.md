@@ -64,63 +64,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.co
 
 For a finite family c_i, A_ij is the finite sum of c_i(a)c_j(b) times the evaluated pair covariance. The symmetry of pairScalar and the Gram matrix makes A symmetric. No positivity or nondegeneracy is required.
 
-**Theorem 1.5 (Degree after removing an occupied occurrence).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sub_single_degree`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sub_single_degree` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-If d(j) is nonzero, degree(d-e_j)+1 equals degree(d). The native moment recurrence and elementary contraction support induction consume this existing helper.
-
-**Theorem 1.6 (An occupied mode in a nonzero occupation).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.occupation_nonzero`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.occupation_nonzero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-Every nonzero occupation has an index with nonzero multiplicity. The existing Corr induction and the elementary contraction support and uniqueness inductions consume this helper.
-
-**Definition 1.7 (Native factorial Gaussian moment).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.nativeMoment`
-
-*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.nativeMoment` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For any finite complex matrix A and occupation d, the native moment is weight(d) times gaussianCoefficient(A,d). This is the original native supplier used by the Corr comparison and elementary finite Gaussian contraction.
-
-**Theorem 1.8 (Exact native Gaussian insertion).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.nativeMoment_step`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.nativeMoment_step` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For symmetric A, nativeMoment(A,r+e_i) equals the sum over j of r_j A_ij nativeMoment(A,r-e_j). This is the existing factorial recurrence, shared without changing its proof by the actual Corr identification and the elementary contraction consumer.
-
-**Theorem 1.9 (Finite reconstruction of the actual Corr readout).**
+**Theorem 1.5 (Finite reconstruction of the actual Corr readout).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_eq_evaluation`
 
@@ -134,7 +78,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.so
 
 The finite shift sum equals evaluation of correctionLift(D,0,p), with its none variable assigned z and every some oscillator variable assigned zero. The proof passes through optionEquivLeft and reconstructs the finite polynomial from its coefficients.
 
-**Theorem 1.10 (All occupations with their exact factorials).**
+**Theorem 1.6 (All occupations with their exact factorials).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_linearForms`
 
@@ -148,7 +92,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.so
 
 For every occupation d on the finite family, sourceVacuum(product_i v_i^(d_i)) equals weight(d) times gaussianCoefficient(A,d). Here weight(d) is the product of the occupation factorials, and gaussianCoefficient is the coefficient of Q_A^(degree(d)/2)/(degree(d)/2)!, with Q_A one half of sum_ij A_ij X_i X_j. The Gaussian expression is the existing native polynomial coefficient, rather than a definition of the source functional.
 
-Actual insertion and its source partial derivative identity yield the Stein recurrence. Finite derivation reconstruction and the substitution chain rule retain all repeated and mixed occurrences. The native recurrence follows from gaussianPiece_coefficient_step. Multiplying it by the factorial weight uses weight(r+e_i)=(r_i+1)weight(r) and weight(r)=r_j weight(r-e_j) when r_j is positive. Zero multiplicities contribute zero. Both sides are one at the empty occupation and vanish at odd total degree; strong induction compares predecessors of degree two less. Recurrence multiplicities belong to r after extracting the first occurrence.
+Actual insertion and its source partial derivative identity yield the Stein recurrence. Finite derivation reconstruction and the substitution chain rule retain all repeated and mixed occurrences. The native recurrence is supplied by NativeGaussianMoment.nativeMoment_step, which is also consumed by ElementaryGaussianContraction. It follows from gaussianPiece_coefficient_step. Multiplying it by the factorial weight uses weight(r+e_i)=(r_i+1)weight(r) and weight(r)=r_j weight(r-e_j) when r_j is positive. Zero multiplicities contribute zero. Both sides are one at the empty occupation and vanish at odd total degree; strong induction compares predecessors of degree two less. Recurrence multiplicities belong to r after extracting the first occurrence.
 
 This is a finite algebraic identity for arbitrary complex z. It assumes no Wick identity, summability, Hilbert norm bound, convergence radius, representer, independence or injectivity. It makes no assertion of a full vertex operator algebra, conformal field theory, an entire corrected field, string dynamics, AdS/CFT or a physical realization.
 
@@ -157,12 +101,8 @@ This is a finite algebraic identity for arbitrary complex z. It assumes no Wick 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covarianceMatrix`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.linearForm`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.nativeMoment`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.nativeMoment_step`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.occupation_nonzero`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_eq_evaluation`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_linearForms`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sub_single_degree`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCurrentCorrection](../LatticeHalfFockCurrentCorrection.md)
-- Dependency: [D5/S3/VertexAlgebra/TwistedGround/FactorialFockQuadraticEstimate](FactorialFockQuadraticEstimate.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment](NativeGaussianMoment.md)
