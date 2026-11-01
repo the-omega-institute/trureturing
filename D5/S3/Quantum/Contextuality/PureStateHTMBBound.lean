@@ -105,7 +105,7 @@ private theorem additive_form {d : ℕ}
 
 private theorem projector_difference_span {d : ℕ}
     (a b c e : EuclideanSpace ℂ (Fin d))
-    (ha : ‖a‖ = 1) (hb : ‖b‖ = 1) (_hc : ‖c‖ = 1) (_he : ‖e‖ = 1)
+    (ha : ‖a‖ = 1) (hb : ‖b‖ = 1)
     (h : projector a - projector b = projector c - projector e)
     (hne : projector c - projector e ≠ 0) :
     a ∈ Submodule.span ℂ ({c, e} : Set (EuclideanSpace ℂ (Fin d))) ∧
@@ -297,7 +297,7 @@ private theorem cross_in_plane {d : ℕ}
     intro k
     have heq : projector (ψ (k, j)) - projector (ψ (k, 0)) =
         projector (ψ (0, j)) - projector (ψ (0, 0)) := by rw [hadd]; abel
-    exact (projector_difference_span _ _ _ _ (hψ _) (hψ _) (hψ _) (hψ _)
+    exact (projector_difference_span _ _ _ _ (hψ _) (hψ _)
       heq (sub_ne_zero.mpr hj)).2
   refine ⟨s, ?_, hcs, ?_⟩
   · change Module.finrank ℂ (Submodule.span ℂ
@@ -308,7 +308,7 @@ private theorem cross_in_plane {d : ℕ}
   · intro k
     have heq : projector (ψ (i, k)) - projector (ψ (0, k)) =
         projector (ψ (i, 0)) - projector (ψ (0, 0)) := by rw [hadd]; abel
-    have hk := (projector_difference_span _ _ _ _ (hψ _) (hψ _) (hψ _) (hψ _)
+    have hk := (projector_difference_span _ _ _ _ (hψ _) (hψ _)
       heq (sub_ne_zero.mpr hi)).2
     exact (Submodule.span_le.mpr (by
       intro v hv
