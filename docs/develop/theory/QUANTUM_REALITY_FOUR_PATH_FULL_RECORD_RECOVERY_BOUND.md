@@ -2090,4 +2090,62 @@ $$
 
 这里的反馈仍对该原始结果的全部谱列共同作用；可将该归一化效果作为任意正权重的一个原始协议结果，因此没有使用独立拆分反馈或后选择。
 
+## 15. 进一步的交叉项控制
+
+还可以直接控制两列估计中的交叉项。取
+
+$$
+\eta=\frac1{10},
+\qquad \mathcal N_\sigma=\{E:t_\sigma(E)<\eta\}\times U(4).
+$$
+
+此时 $\sqrt{\eta(1-\eta)}=3/10$，正平方根公式给出每列主坐标平方至少为
+
+$$
+\frac12\frac{(3/5)^2}{8/5}=\frac9{80}>\eta.
+$$
+
+所以两列仍可相对于同一个 $b_\sigma$ 分解。沿用上一节的记号，对每列的估计先不使用平方和不等式，得到
+
+$$
+m_\sigma^2(1-t)d_U^2
+\le2\tau+4\kappa_Rt+4\sqrt{2\kappa_R\tau t}.
+$$
+
+用 $2\sqrt{AB}\le32A+B/32$，其中 $A=\tau$、$B=8\kappa_Rt$，得到
+
+$$
+d_U^2\le
+\frac{34}{m_\sigma^2(1-\eta)}\tau
++\frac{17\kappa_R}{4m_\sigma^2(1-\eta)}t.
+$$
+
+结合 $t\le1600a(E)$ 和 $\|E-E_\sigma\|_{\mathrm F}^2\le3200a(E)$，在 $\mathcal N_\sigma$ 内有
+
+$$
+\rho(E,U)\le
+\left(3200+\frac{6800\kappa_R}{m_\sigma^2(1-\eta)}\right)a(E)
++\frac{34}{m_\sigma^2(1-\eta)}\tau(E,U).
+$$
+
+负分支给出最大的局部系数：
+
+$$
+C_{-,\mathrm{loc}}
+=\frac{708800+408000\sqrt2}{9}
+=142866.570\ldots .
+$$
+
+补集上仍有 $a(E)\ge\eta/1600=1/16000$ 及 $\rho\le9$，故其系数至多为 $144000$。因此得到更简洁的全局界
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}\le144000,
+\qquad
+\int\rho\,d\mu\le1{,}152{,}000\,\varepsilon.
+\qquad}
+$$
+
+该常数只使用固定记录、共享反馈和完整两列缺陷预算；最佳全局常数仍未确定。前述显式上界均由本界严格改进。
+
 ## 追加锚（本行以下为增补区）
