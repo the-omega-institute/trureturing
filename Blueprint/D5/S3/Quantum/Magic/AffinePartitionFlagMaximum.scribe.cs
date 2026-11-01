@@ -195,8 +195,7 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
         Formula vector = Vector(p, n);
         Formula affine = Affine(ZMod(p), vector);
         Formula body = SumIn(k, parts, new Formula.Power(NatCard(k, vector), D(2)));
-        return Seq(Forall, Sp, Typed(p, Nats), Comma, Sp, Typed(n, Nats), Comma, Sp,
-            PrimeInstance(p), Sp,
+        return PrimeScope(p, n,
             All(parts, Parts(p, n), Equal(LocalCall("sqSum", p, n, parts), body)));
     }
 
