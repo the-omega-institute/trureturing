@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
 
@@ -15,7 +17,7 @@ internal sealed class FrattiniAutomorphismKernelDocument : IScribeDocumentDefini
                 DescribeId.Create("characteristic-quotient-action"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/FrattiniAutomorphismKernel.quotientAut"),
                 H("The action on a characteristic quotient"),
-                StatementSource.FromLean(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.FromAuthor(QuotientAction()), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For a characteristic subgroup C of a group G, quotientAut C sends an "
                     + "automorphism a to the induced automorphism of G/C. On a coset represented "
@@ -26,7 +28,7 @@ internal sealed class FrattiniAutomorphismKernelDocument : IScribeDocumentDefini
                 DescribeId.Create("ordinary-frattini-kernel"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/FrattiniAutomorphismKernel.isPGroup_quotientAut_frattini_kernel"),
                 H("The kernel is a prime-power group"),
-                StatementSource.FromLean(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.FromAuthor(KernelTheorem()), AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
                         "Let G be any finite group and let p be a natural number. If every element "
@@ -56,4 +58,29 @@ internal sealed class FrattiniAutomorphismKernelDocument : IScribeDocumentDefini
                         + "relative or outer-automorphism kernel theorem for a normal subgroup "
                         + "of a larger finite group."))),
                 DescribeRole.Theorem))));
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula All(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+    private static Formula BaseGroup(Formula body) =>
+        All("G", F.Id("Type"), All("group", Call("Group", F.Id("G")), body));
+    private static Formula QuotientAction()
+    {
+        var g = F.Id("g"); var a = F.Id("a"); var c = F.Id("C");
+        return Disp(BaseGroup(All("C", Call("Subgroup", F.Id("G")),
+            All("characteristic", Call("Characteristic", c),
+            All("a", Call("MulAut", F.Id("G")), All("g", F.Id("G"),
+                new Formula.Relation(
+                    Call("quotientAut", c, a, Call("coset", g, c)),
+                    FormulaRelationOperator.Equal, Call("coset", Call("apply", a, g), c))))))));
+    }
+    private static Formula KernelTheorem()
+    {
+        var g = F.Id("G"); var p = F.Id("p");
+        return Disp(BaseGroup(All("finite", Call("Finite", g),
+            All("p", Seq(Mathbb, Grp(F.Id("N"))), new Formula.Logic(
+                Call("IsPGroup", p, g), FormulaLogicOperator.Implies,
+                Call("IsPGroup", p, Call("ker", Call("quotientAut", Call("frattini", g))))))));
+    }
+
 }
