@@ -3402,3 +3402,219 @@ acquired neither that command nor universal history erasure. $\square$
 [CWSSESSION]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_WORKSPACE.md#11-routing-residue-and-the-row-only-handoff
 
 ## 追加锚（本行以下为增补区）
+
+## 21. Exact post-reset label attainment at complete-call cuts
+
+**Definition 21.1 (finite histories and the label contract).** Fix the
+finite nonempty actually attained history set
+$$
+\mathcal H=\{(J,\sigma):J\in\mathcal J,\ \sigma\in\Sigma_J\},
+\qquad d_J=|\Sigma_J|\ge1,\qquad D=\max_{J\in\mathcal J}d_J .
+$$
+The finite order lists $\Sigma_J$ are supplied data of the experiment.
+Keep Definition 19.1's fixed public parameters, program, bindings and
+common reset label. A history $h=(J,\sigma)$ has exactly $r$
+distinct ORIGINAL-row writes before reset, and its reset source is
+$E_y(Q_h)$, where $Q_h\in F_J=\{Q\subseteq U_J:|Q|=r\}$. At every
+standardized completed-inner-call cut, the supplementary persistent
+component is one label from a finite alphabet; traversal references,
+temporary lookup, decoded history, codebook access, output material,
+inner protocol phases and all backing are charged in their existing
+coordinates and are not counted as this label. The final recall cut is
+after the last required original call and before the declared literal
+recall/return tail.
+
+The label contract permits free re-encoding of the admissible starts. It
+does not preserve the particular SDR or pairing chosen by an individual
+policy. The label is the only state that survives a completed-call cut
+besides the current source and the fixed public data. In particular, a
+policy that is allowed to retain a newly acquired copy of $h$ after
+reset is a different, unrestricted contract.
+
+**Proposition 21.2 (what LAB19 already settles).** An admissible
+history SDR exists exactly when
+$$
+\left|\bigcup_{J\in\mathcal S}F_J\right|
+   \ge \sum_{J\in\mathcal S}d_J
+\qquad(\mathcal S\subseteq\mathcal J).
+\tag{LAGL.1}
+$$
+If two histories use the same initial $Q$, their permitted initial inputs
+are identical, whether the supports differ or the orders differ. The
+current-source factorization then forces the same legal continuation; the
+former cannot exhaust two distinct menus and the latter cannot return two
+different old words. Thus no later newly generated memory repairs an
+initial collision. Conversely an SDR gives the post-reset transcript
+selector of Corollary 19.2. An unrestricted T may traverse that source,
+newly reacquire h, and retain it, giving the valid finite upper bound
+$|\mathcal H|$; reset does not forbid this new acquisition.
+
+Proof. This is precisely the weighted-history Hall criterion and its
+collision argument in Corollary 19.2, including its distinction between
+different supports and equal supports with different orders. The
+$|\mathcal H|$-label policy is the finite lookup table from the distinct
+reset sources to their histories, followed by actual traversal and
+retention after reset. It makes no claim that the old pre-reset copy
+survives. $\square$
+
+**Theorem 21.3 (exact supplementary alphabet for the geometry-label
+contract).** Assume (LAGL.1). Among geometry-controlled continuations
+whose only persistent post-reset supplement is the label of
+Definition 21.1, the minimum alphabet size at the standardized
+complete-call and final recall cuts is exactly
+$$
+D=\max_{J\in\mathcal J}d_J .
+\tag{LAGL.2}
+$$
+If (LAGL.1) fails, no such continuation exists. The value in (LAGL.2)
+is conditional on free re-encoding and does not minimize an
+unrestricted T that retains arbitrary newly acquired history.
+
+Proof. Fix $J$. Every successful completion reaches the same terminal
+source $E_y(U_J)$, independently of the order $\sigma\in\Sigma_J$.
+At the final recall cut the fixed public data and this geometry are
+therefore equal for all $d_J$ orders. The label must distinguish those
+orders, so every alphabet has at least $d_J$ values; taking the maximum
+gives the lower bound $D$. This is the source-specific terminal
+instance of the static max-fibre principle in Transport Memory
+Completion §16.1, whose finite equality-fibre supplier is
+DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity.
+That supplier is reused only for the lower-bound pattern; no new generic
+max-fibre theorem is asserted here.
+
+It remains to attain the bound causally. Choose any history SDR
+$Q_{J,\sigma}$ supplied by Proposition 21.2 and partition it by the
+fixed local order rank $i$: layer $i$ contains the starts
+$Q_{J,\sigma_i}$ for supports with $d_J\ge i$, together with the
+terminals $U_J$ of those supports. The starts in a layer are distinct
+rank-$r$ subsets. The terminals are distinct antichain menus by
+Theorem 18.2. Pair each start with the terminal bearing the same support.
+The paired endpoint sets form disjoint chains (singletons are allowed):
+if a start $Q_{J,\sigma_i}$ equalled a terminal $U_K$, then
+$U_K\subseteq U_J$, so terminal antichainness gives $K=J$, and SDR
+injectivity excludes every other equality.
+
+Apply Bastide--Groenland--Jacob--Johnston, arXiv:2207.07391v2,
+Theorem 2, to this layer. Here $n=|\Lambda(y)|$, $m$ is the number
+of histories in the layer, and the endpoint family is exactly the
+distinct starts and terminals just described. Its disjoint skipless
+cover can be trimmed to the intervals between rank-$r$ starts and
+their terminals. Each trimmed interval is a saturated path in
+$2^{\Lambda(y)}$. Re-pair only within this layer: assign the history
+with support $J$ to the start of the path whose terminal is $U_J$.
+This is the permitted free re-encoding. The global set of starts remains
+distinct because the layers partition the original SDR, and every
+intermediate set remains a subset of its own $U_J$. No path is paired
+across layers, and the target order lists $\Sigma_J$ are unchanged.
+
+Use labels $1,\ldots,D$, with common default $1$ at the reset cut.
+At rank $r$, actual traversal of the current source recovers the
+actual $R=Q_{J,\sigma_i}$, identifies its global start and its layer
+$i$, and selects the first native edge of that layer's path. After
+that edge has completed its original guard, reservation, source edit,
+ancestral-tape and arithmetic maintenance, literal reply, End/ACK and
+real INNER return, commit label $i$. The first selection uses the
+current $R$ and needs no stored initialization flag. After any call
+the rank is greater than $r$, so every later choice uses the retained
+$i$ at one common selection program counter. A temporary table lookup
+or decoded history is current-input-derived and is erased at the
+standardized cut.
+
+The invariant is: the current recovered set $R$ lies on the true
+history's path in layer $i$, and $(R,i)$ uniquely determines the next
+untouched member of $U_J$, Stop, or the final $\sigma_i$. Each edge
+adds one original member of $U_J$; it never targets a newborn or
+decorative row. Before every edge the supervisor traverses the bound
+source, acquires the CURRENT target reference and current rights, and
+then discharges the original guard/reserve/source edit/ancestral tape and
+arithmetic hook, literal reply, End, acknowledgement and real INNER
+return. Thus the path is a legal native continuation, rather than a
+mathematical address list. After $|U_J|-r$ calls the geometry identifies
+$J$, the label identifies $\sigma_i$, and the policy emits the word
+only at the declared final recall cut before the lawful tail. No old
+tape, refusal, name, timing, capacity or output archive is used.
+
+The construction uses only finite search over the actually attained
+finite carrier and the existing Hall and disjoint-path suppliers. It
+produces a backed finite table for this effective input; it is neither
+free nor an efficient procedure and is not a uniform finite ROM for
+unbounded inputs. Source-derived dynamics are the current LAB parser,
+original guards, references, edits, replies and returns. Label-derived
+content is only the layer index $i$, together with the finite path
+table used to choose among already legal original rows. The causal
+first-edge commit and the $(R,i)$ invariant are the native addition
+beyond the static max-fibre lower bound and the stopped-prefix
+feasibility theorem. $\square$
+
+**Corollary 21.4 (edge cases).** If $r=0$, Hall forces
+$|\mathcal J|=1$ and $D=1$; the common start is $\varnothing$, so
+the default label is already correct. If $U_J=\varnothing$, then
+$F_J=\{\varnothing\}$, and Hall forces $d_J=1$; this is the singleton
+no-call path in layer $1$. If $D=1$, one label suffices and
+Theorem 21.3 reduces to the geometry-selector equivalence of
+Theorem 18.3. These statements include the case of an empty menu and
+the overlapping $r=0$ and singleton cases without a hidden
+initialization phase.
+
+**Corollary 21.5 (the delivered $m5k2r3$ attainment).** Reuse exactly
+the twenty-start, ten-terminal table already displayed in Corollary
+19.2 for $(m,k,r)=(5,2,3)$, preserving its coordinates and entries.
+Its first column consists of the ten distinct $z$-free triples and
+its second column of the ten distinct triples containing $z=L^5$.
+Index the two supplied orders on each $J$ so that the first column is
+layer $1$ and the second layer $2$. Both layers use the common
+default label $1$ at rank $3$; the single remaining original call
+commits the observed layer, leaving label $1$ for a $z$-free reset
+triple and label $2$ for a $z$-containing reset triple. At the
+terminal all ten supports have the same two-order fibre, so one label is
+impossible. Theorem 21.3 gives the matching two-label construction.
+Hence the exact alphabet is $2$, with no alternative table introduced.
+
+**Proposition 21.6 (conditional realization and transport boundary).**
+The preceding construction can be installed only under the current
+accepted LAB20 owner-installed session: finite public-shaped backing,
+authority separation, the session lock, authenticated current-reference
+acquisition, sufficient material and full Ready-to-Ready/INNER return
+conditions. Under those premises, transport the same source and label
+through AA17's syntax/material support, terminal-boundary and labelled
+causal-membership maps, and use the existing unary marker and literal
+source identity. The maps preserve the current $E_y(R)\to
+E_y(R\cup\{p\})$ edge and the final $(U_J,\sigma_i)$ readout.
+
+Proof. This is the scoped source-response and completed-call construction
+of Theorem 20.4, with its paid backing and authority premises retained.
+The current source is traversed afresh at each decision, the target
+reference is authenticated against the current tag, and all original
+maintenance and complete replies occur before the label commit. AA17's
+already supplied maps preserve the oriented material support, its
+terminal antichain and the causal membership order, including beta's
+unary marker; carrying the same finite label adds no new source edge.
+This establishes a representation correspondence for the admitted
+session. It does not install a resettable legacy Busy controller, prove
+a deployed device, recover full controller chronology, assert a
+thermodynamic deletion, or complete a universal spacetime construction.
+No fresh Lean application is claimed by reading the existing code. $\square$
+
+## 22. Sources, overlap and verification scope
+
+The weighted Hall and stopped-prefix results are reused from LAB19,
+Theorems 18.2--18.3 and Corollary 19.2; the terminal static max-fibre
+pattern is attributed to Transport Memory Completion §16.1 and its named
+DefectGraphMinimumColoring supplier. The disjoint saturated path step is
+the primary Bastide--Groenland--Jacob--Johnston theorem cited above and is
+literature-attested at that scope. LAB20 supplies the conditional paid
+installation and complete-return interface. Boundary Dynamics 106 and Joint Moment Fibers 65.5 remain
+separate suppliers for their own interfaces. This appendix adds the
+causal acquisition of the layer label, the rank-derived path generation,
+and the exact $D$-label attainment; it does not add a matching, WOM,
+colouring, or Lean theorem.
+
+All finite-search, backing, authority, current-reference, lawful-edge,
+full-return and free-re-encoding conditions are part of the statements
+above. No total or peak-memory bound, runtime bound, universal finite
+ROM, fixed encoder/pairing claim, deployed-device claim, full chronology
+recovery, thermodynamic claim, or universal spacetime completion is
+made. The long-term RRO objective remains open beyond this finite
+appendix.
+
+## 追加锚（本行以下为增补区）
