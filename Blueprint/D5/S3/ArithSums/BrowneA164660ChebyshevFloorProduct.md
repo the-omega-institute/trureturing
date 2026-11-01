@@ -60,6 +60,10 @@ $$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left((a\left(n + 1\right) = flo
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/BrowneA164660ChebyshevFloorProduct.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/b164660-chebfloor` (proved) by `D5/S3/ArithSums/BrowneA164660ChebyshevFloorProduct.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"b164660-chebfloor","declaration_gid":"D5/S3/ArithSums/BrowneA164660ChebyshevFloorProduct.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anthony Browne; Wolfdieter Lang (2016). *OEIS A164660: Chebyshev row numerators and Browne's floor product*. URL: <https://oeis.org/search?q=id:A164660&fmt=text>.

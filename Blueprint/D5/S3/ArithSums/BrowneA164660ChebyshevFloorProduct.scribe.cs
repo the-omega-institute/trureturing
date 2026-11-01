@@ -47,13 +47,16 @@ internal sealed class BrowneA164660ChebyshevFloorProductDocument : IScribeDocume
                 + "The polynomial T(n+2)/(2(n+2))-T(n)/(2n) has derivative T(n+1); its values at zero "
                 + "and one evaluate the rational row sum. Its reduced numerator is one when four divides n "
                 + "and minus one otherwise, giving the same sign for every positive n.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("b164660-chebfloor"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("b164660-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula RowSum()
     {
