@@ -2490,3 +2490,417 @@ For explicit comparison data showing this distinction, take ordinary complex qub
 The repo-derived statements are the least-effect linearization with the simultaneous norm separations, the exact $\ell^p$ reciprocity defect and endpoint relation obstructions, the compression-response polynomial with its coefficient boundary and uniform second-order witness, the quantitative self-composite exclusions, and the distinction between statistical coherence and dimension equality. Self-duality, the Jordan classification, Jordan compression calculus, and absence of higher-order Jordan interference have the attributed antecedents specified inside those arguments. These statements are conditional mathematical derivations and quantitative repackagings, not claims of literature priority. All conclusions depend on the displayed principles and operation classes. No empirical claim is made, and no derivation of arbitrary state-update rules, general dynamics, or the physical validity of those principles is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 31. 原复 Gaussian dyadic 网格中低于八维的互补原子投影尾部排除
+
+**定理 31.1（复维数二至七的互补端点区间在充分细网格上不存在）。** 沿用定义 16.1 的完整复效果网格，记
+
+$$
+K_{d,m}=\{E\in\operatorname{Herm}_d(2^{-m}\mathbb Z[i]):0\le E\le I_d\}.
+$$
+
+对每个固定的 $d\in\{2,3,4,5,6,7\}$ 以及每个整数 $m\ge22$，不存在非平凡厄米投影 $P\in K_{d,m}$（即 $P^2=P$ 且 $P\ne0,I_d$），使两个原网格区间同时只有端点：
+
+$$
+\{F\in K_{d,m}:0\le F\le P\}=\{0,P\},\qquad
+\{F\in K_{d,m}:0\le F\le I_d-P\}=\{0,I_d-P\}.
+\tag{31.1}
+$$
+
+这里的序关系始终是通常的复厄米半正定序，子效果遍历原 $2^{-m}\mathbb Z[i]$ 网格上的全部复厄米效果。因此，在这些固定维数中，“对任意整数 $L\ge1$，总能在某个 $m\ge L$ 找到满足 (31.1) 的投影”的事件为假，统一取 $L=22$ 即可排除。数字 $22$ 只是充分截断，不声称最优，也不分类较粗的网格。
+
+**证明。** 置 $R=\mathbb Z[i]$、$\pi=1+i$、$N=2^m$。本证明中的局部记号 $H$ 和 $K$ 专指正定积分厄米 Gram 矩阵；$H$ 不是式 (16.1) 的层析矩阵，$K$ 也不是定义 16.1 的效果集。对秩 $r\ge1$ 的此类矩阵 $H$，在本证明内称它为原子，恰指
+
+$$
+\{Y\in\operatorname{Herm}_r(R):0\le Y\le H\}=\{0,H\}.
+\tag{31.2}
+$$
+
+这只是所需的积分区间性质，不附加其他原子性约定。反设存在 (31.1) 中的投影。
+
+（一）先把原网格区间转成积分正定区间。令 $A=NP$、$B=N(I_d-P)$，其秩分别为 $r$ 和 $s=d-r$，均非零。$A$ 在 $R^d$ 中的核是饱和子模：若 $a\ne0$ 且 $A(az)=0$，则 $Az=0$。Gaussian 整数环是主理想整环，故这个核是直和因子。取 Gaussian 幺模矩阵 $C$，使其最后 $s$ 列构成该核的一组基。于是
+
+$$
+C^*AC=\begin{pmatrix}H&0\\0&0\end{pmatrix},\qquad H\succ0,\quad H\in\operatorname{Herm}_r(R).
+$$
+
+令 $T$ 为 $C^{-1}$ 的前 $r$ 行，$J$ 为 $C$ 的前 $r$ 列，则
+
+$$
+TJ=I_r,\qquad A=T^*HT,\qquad H=J^*AJ.
+\tag{31.3}
+$$
+
+若 $0\le X\le A$，则 $X$ 在 $\ker A$ 上为零：对该核中的 $z$，有 $0\le z^*Xz\le z^*Az=0$，正性遂给出 $Xz=0$。所以在 $C$ 坐标中，$X$ 也只有左上块可能非零。由此
+
+$$
+Y\longmapsto T^*YT,\qquad X\longmapsto J^*XJ
+$$
+
+互为积分厄米区间 $[0,H]$ 与 $[0,A]$ 的逆双射。另一方面，$F\mapsto NF$ 把原复网格中的 $[0,P]$ 双射到积分区间 $[0,A]$；反向所得 $F$ 自动满足 $F\le P\le I_d$，确属原效果网格。因此 $P$ 的端点性质恰等价于 $H$ 的原子性。对 $B$ 作同样构造，得到秩 $s$ 的正定积分厄米原子 $K$。
+
+由 $A^2=NA$，代入 (31.3) 并在两侧分别乘 $J^*$ 和 $J$，得到 $H(TT^*)H=NH$，故
+
+$$
+TT^*=NH^{-1}.
+\tag{31.4}
+$$
+
+右侧因左侧而积分。$\det H$ 是正整数，且 $N^r/\det H=\det(TT^*)$ 也是整数，所以 $\det H\mid N^r$，从而 $\det H$ 是二的幂。同理 $\det K$ 是二的幂。
+
+（二）原子性给出只依赖秩的行列式上界。设 $r\ge2$，$\delta=\det H$。对 Hermitian 格 $(R^r,H)$ 使用实内积 $\operatorname{Re}(z^*Hw)$。原格的实 Gram 行列式为 $\delta^2$，欧氏余体积为 $\delta$；其 Hermitian 对偶格 $H^{-1}R^r$ 的实维数为 $2r$，欧氏余体积为 $1/\delta$。
+
+若 $\delta>(2r)^r$，可选
+
+$$
+\delta^{-1/(2r)}<t<\frac1{\sqrt{2r}}.
+$$
+
+在该实欧氏空间的正交坐标中，取边长为 $t$ 的开立方体。其体积 $t^{2r}$ 大于对偶格的余体积。经典基本平行多面体鸽巢论证给出立方体内两个不同的点，其差是非零对偶格向量：把立方体的各格平移片移入一个基本平行多面体，对重数积分；若没有这样的两点，重数处处至多一，立方体体积就不能大于该基本域体积。所得差向量 $x$ 满足
+
+$$
+0<\|x\|_H^2<2rt^2<1.
+$$
+
+写 $x=H^{-1}q$，其中 $0\ne q\in R^r$，便有 $q^*H^{-1}q<1$。$H$ 内积的 Cauchy 不等式给出，对任意 $z\in\mathbb C^r$，
+
+$$
+z^*qq^*z=|q^*z|^2
+\le(q^*H^{-1}q)(z^*Hz)\le z^*Hz.
+$$
+
+因此 $0<qq^*\le H$，而 $qq^*$ 是秩一积分厄米矩阵，在 $r\ge2$ 时不是 $H$，与原子性矛盾。故 $\det H\le(2r)^r$。秩一时，正积分标量的区间只有端点当且仅当该标量为 $1$；任何大于 $1$ 的标量都含真子标量 $1$。于是秩 $1\le r\le6$ 的原子统一满足
+
+$$
+1\le\det H\le12^6=2\,985\,984.
+\tag{31.5}
+$$
+
+（三）互补性把两边的行列式关联起来。记
+
+$$
+L_P=\operatorname{ran}(P)\cap R^d,\qquad
+L_Q=\operatorname{ran}(I_d-P)\cap R^d,
+$$
+
+其在环境标准 Hermitian 内积下的 Gram 行列式分别为 $\Delta_P,\Delta_Q$。$T^*$ 的列构成 $L_P$ 的一组基：它们张成 $\operatorname{ran}(P)$，而积分左逆 $J^*T^*=I_r$ 保证该复线性空间中的任意积分向量均有 Gaussian 整数坐标。因此 (31.4) 给出
+
+$$
+\Delta_P=\det(TT^*)=\frac{N^r}{\det H},\qquad
+\Delta_Q=\frac{N^s}{\det K}.
+\tag{31.6}
+$$
+
+为说明 $\Delta_P=\Delta_Q$，取 $L_P$ 的基矩阵 $U$，利用其本原性将它扩充成 $R^d$ 的 Gaussian 幺模基 $[U,V]$，并令 $Q=I_d-P$。$QV$ 的列构成 $QR^d$ 的基，且
+
+$$
+QR^d=L_Q^\#,
+$$
+
+其中右侧是在 $\operatorname{ran}(Q)$ 内、按标准 Hermitian 配对取的对偶格。包含关系 $QR^d\subseteq L_Q^\#$ 来自环境格的整数配对。反向地，$L_Q$ 也是饱和子模，因而是直和因子；其任一取值于 $R$ 的 Hermitian 配对泛函可延拓到 $R^d$。环境格的自对偶性将延拓泛函表示为某个 $R^d$ 中向量的配对，再作 $Q$ 投影即可表示原泛函。这证明反向包含。
+
+幺模基 $[U,V]$ 的 Gram 行列式为 $1$。沿 $U$ 块作经典 Schur 补，余块恰为 $QV$ 的 Gram 矩阵，其行列式为对偶格行列式 $1/\Delta_Q$。因此 $1=\Delta_P/\Delta_Q$。结合 (31.6)，得
+
+$$
+\frac{\det H}{\det K}=N^{r-s}.
+\tag{31.7}
+$$
+
+这里 $1\le r,s\le6$。若 $r\ne s$，两行列式中较大者至少为 $N$，因为较小者是至少为 $1$ 的正整数，而比值的绝对幂次至少为一。但 $m\ge22$ 给出 $N\ge2^{22}>12^6$，与 (31.5) 矛盾。所以只能 $r=s$，即 $d\in\{2,4,6\}$，且 $r=s\le3$。
+
+（四）对二幂行列式建立积分幺模上格。设积分正定 Hermitian $R$-格 $L$ 的 Gram 矩阵为 $H$，其 Hermitian 配对记为 $h$，且 $\det H=2^k$，$k>0$。模 $\pi$ 约化后，$H$ 在 $R/(\pi)=\mathbb F_2$ 上奇异。选取 $y\in R^r$，使其非零剩余类 $\bar y$ 位于该约化矩阵的根基，即 $(H\bmod\pi)\bar y=0$，并在环境 Hermitian 空间置 $x=y/\pi$。
+
+$Hy$ 的各坐标被 $\pi$ 整除，而 $\bar\pi=1-i$ 与 $\pi$ 相伴，所以 $x$ 与 $L$ 的配对均为 Gaussian 整数。再看范数的奇偶性。$h(y,y)$ 的每对非对角项之和是两倍整数；对任一 Gaussian 整数 $z$，$|z|^2\bmod2$ 等于其模 $\pi$ 剩余类。因此
+
+$$
+h(y,y)\bmod2
+=\sum_j(H_{jj}\bmod2)\bar y_j
+=\bar y^{\mathsf T}(H\bmod\pi)\bar y=0.
+$$
+
+第二个等号使用模 $\pi$ 后共轭为恒等、特征二中交叉项抵消及 $\bar y_j^2=\bar y_j$。于是 $h(x,x)=h(y,y)/2$ 是整数，$L'=L+Rx$ 是积分格。$\bar y\ne0$ 保证 $x\notin L$，而 $\pi x=y\in L$，所以 $L'/L$ 有恰好两个元素。实余体积因此减半；Hermitian Gram 行列式等于该实余体积，故
+
+$$
+\det L'=\frac{\det L}{2}.
+$$
+
+重复此过程，得到同秩的积分幺模 Gaussian 上格 $M\supseteq L$。若原行列式已经是 $1$，直接取 $M=L$。这一构造不使用非幺模形式的分类。
+
+（五）秩至多三时，这个上格是标准 Gaussian 格。此处只复用经典普通实 Hermite 常数
+
+$$
+\gamma_2=\frac2{\sqrt3},\qquad
+\gamma_4=\sqrt2,\qquad
+\gamma_6=\frac2{3^{1/6}},
+\qquad \gamma_2,\gamma_4,\gamma_6<2.
+\tag{31.8}
+$$
+
+这些数值见 Stephanie Vance，[A Mordell Inequality for Lattices over Maximal Orders，arXiv:0810.2336v5，§4.2、表 3](https://arxiv.org/html/0810.2336v5)。表中列出 $A_2,D_4,E_6$ 的 Hermite 不变量，紧邻正文明确说明这些维数的所列格在普通实格中最优；所以这里用的是全部普通实格的界，不是仅限 Eisenstein 格或 Gaussian 格的界。按归一化，实维数 $n$、欧氏余体积 $v$ 的格具有非零向量，平方范数至多为 $\gamma_n v^{2/n}$。
+
+Gaussian 积分幺模格 $M$ 的实化具有积分实 Gram 矩阵，其行列式为 $|\det H_M|^2=1$，欧氏余体积为 $1$。应用 (31.8) 于实维数 $2\operatorname{rank}_R M\in\{2,4,6\}$，得到平方范数小于 $2$ 的非零向量。整数正性迫使其平方范数为 $1$。若此向量为 $e$，则对每个 $z\in M$，$z-e\,h(e,z)$ 属于 $M$ 且与 $e$ 正交；因而正交分裂出标准 Gaussian 直和因子 $Re$。正交补仍是积分幺模格。逐秩重复，得到 $M$ 等距于标准格 $R^r$。
+
+在这个标准基下，原格 $L$ 的基向量组成一个满秩方阵 $D\in M_r(R)$，其 Gram 矩阵为
+
+$$
+H=D^*D=\sum_{j=1}^r d_j^*d_j,
+$$
+
+其中 $d_j$ 是 $D$ 的第 $j$ 行。满秩性保证各行非零；当 $r\ge2$ 时，每个 $d_j^*d_j$ 都是非零秩一积分厄米子形式，满足 $0<d_j^*d_j\le H$ 且不等于秩为 $r$ 的 $H$。所以秩二或三、行列式为二幂的正定积分 Hermitian 格不可能是原子。这排除了（三）中的 $d=4,6$。
+
+（六）剩余的平衡秩一情形给出奇偶矛盾。此时 $d=2$，且原子性迫使 $H=[1]$，故由 (31.3) 有
+
+$$
+A=vv^*,\qquad v=T^*=(a,b)^{\mathsf T}\in R^2,
+\qquad |a|^2+|b|^2=N.
+$$
+
+最后一个等式由 $A^2=NA$ 及 $v\ne0$ 得到。$TJ=1$ 的共轭式 $J^*v=1$ 表明 $v$ 本原，即 $a,b$ 没有共同的 Gaussian 非单位因子。把 $a,b$ 写成四个实整数坐标，其平方和为 $N$。当 $4\mid N$ 时，模四计算表明奇数坐标的个数只能为零或四。在两种情形中，每个 Gaussian 坐标的实部和虚部都有相同奇偶性，故 $a,b$ 都被 $1+i$ 整除，与本原性矛盾。这里 $m\ge22$ 当然保证 $4\mid N$。
+
+至此，每个 $d\in\{2,\ldots,7\}$ 的所有非平凡秩以及每个 $m\ge22$ 都已覆盖。全过程的积分子形式与序比较均允许复厄米矩阵，没有把子效果限制为实矩阵。定理得证。$\square$
+
+**数学来源与适用边界。** Gaussian 主理想整环上的饱和子模分裂、基本域鸽巢论证、格对偶、Schur 补和 Cauchy 不等式都是上述新网格推论中的经典中间工具；普通实 Hermite 常数仅按 (31.8) 的明确来源和归一化复用，不将这些工具另作新增结果。这里的承重结论是原复 dyadic 网格上 $d=2,\ldots,7$ 的互补端点投影对在充分细尺度中的统一排除，不作全局优先权或穷尽文献检索主张。
+
+结合定理 22.1 在 $d=8$、每个 $m\ge2$ 的构造，维数八恰是任意细原 dyadic 网格上存在这种非平凡互补端点投影对的最小复维数。这个阈值只针对该投影对机制。命题 19.1 要求的只是非零子效果范数为一，其区间仍可含多个非零元素；本节的排除不否定那个较弱的小块分解障碍。充分界限 $22$ 不给出最优截断或粗网格分类。原问题 (18.1) 在 $2\le d\le7$ 的全表格稳定性仍未解决；本节不推出低维 Born 稳定性，不排除其他全表格障碍，也不对物理实现作经验性断言。
+
+## 追加锚（本行以下为增补区）
+
+## 32. 非投影互补原子给出的四维全表反例与二维全表稳定性
+
+沿用定义 16.1 的原复 Gaussian dyadic 网格、全部带标签二元和三元菜单及式 (16.1) 的唯一层析矩阵。以下两个维数分支都只涉及同一尺度上的一张完整表；不同尺度之间没有相容性假设。
+
+**定理 32.1（四维非投影互补原子与主块拉回反例）。** 对每个整数 $d\ge4$ 和 $m\ge2$，存在一张完整表 $p_{d,m}:K_{d,m}\to[0,1]$，使定义 16.1 的全部菜单关系在 $\epsilon=0$ 时精确成立，其层析矩阵为
+
+$$
+H_d=(I_4/4)\oplus0_{d-4},
+\qquad
+\max_{X\in K_{d,m}}|p_{d,m}(X)-\operatorname{Tr}(H_dX)|=\frac14.
+\tag{32.1}
+$$
+
+最大误差在一个形如 $E_m\oplus0_{d-4}$ 的效果处取得，其中 $E_m$ 与 $I_4-E_m$ 都是满秩非投影，且它们各自的原四维网格区间只有两个端点。因此，定义 18.1 的估计在每个固定的 $d\ge4$ 都不存在有限常数 $L_d$；特别地，同时要求 $d=2,\ldots,7$ 全部成立的断言为假。
+
+**证明。** 记 $R=\mathbb Z[i]$、$N=2^m$、$M=N/2$。此时 $M$ 为偶整数且 $M\ge2$。Lagrange 四平方定理给出 $a,b\in R$，使
+
+$$
+|a|^2+|b|^2=M^2-1=:t.
+$$
+
+这里仅复用经典四平方存在性；例如 [Mathlib 的固定版本源码，`Nat.sum_four_squares`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/NumberTheory/SumFourSquares.lean) 明确给出每个非负整数的四平方表示。把四个整数按实部、虚部分成两对即得所需 $a,b$。
+
+置
+
+$$
+Q=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},
+\qquad
+A=\begin{pmatrix}MI_2&Q\\Q^*&MI_2\end{pmatrix},
+\qquad
+B=\begin{pmatrix}MI_2&-Q\\-Q^*&MI_2\end{pmatrix}.
+\tag{32.2}
+$$
+
+直接相乘得到
+
+$$
+Q^*Q=QQ^*=tI_2,\qquad
+A+B=NI_4,\qquad AB=BA=I_4.
+\tag{32.3}
+$$
+
+矩阵 $A-MI_4$ 的平方为 $tI_4$、迹为零，故 $A$ 的两个特征值为 $M\pm\sqrt{M^2-1}$，各重数二；$B$ 有相同的谱。两特征值都严格介于 $0$ 与 $N$ 之间，且
+
+$$
+\det A=\det B=(M^2-t)^2=1.
+\tag{32.4}
+$$
+
+此外，$A,B$ 的对角元均为偶整数。对任意 $z\in R^4$，对角项给出偶整数，非对角项成对给出两倍整数实部，所以 $z^*Az$ 与 $z^*Bz$ 均为偶整数。
+
+现在验证全部复积分子形式的区间性质。所用机制是 §§20、22 的积分收缩与正交分裂机制；这里用 Gaussian 奇偶性排除分裂，不要求固定根基的连通图。设 $G\in\operatorname{Herm}_4(R)$ 正定、$\det G=1$，且每个 $z^*Gz$ 都为偶整数。若 $X\in\operatorname{Herm}_4(R)$ 满足 $0\le X\le G$，则 $C=G^{-1}X$ 为 Gaussian 整数矩阵，并满足
+
+$$
+C^*G=GC=X,\qquad
+G^{1/2}CG^{-1/2}=G^{-1/2}XG^{-1/2}.
+\tag{32.5}
+$$
+
+右侧为谱在 $[0,1]$ 内的厄米矩阵。因此 $C$ 可对角化且所有特征值都在 $[0,1]$。其特征多项式的系数属于 $R$，又因根全实而属于 $\mathbb R$，所以实际上属于 $\mathbb Z$。若某个特征值 $\alpha$ 严格介于零与一之间，它在 $\mathbb Q$ 上的首一不可约多项式属于 $\mathbb Z[x]$ 并整除该特征多项式。其全部共轭根都在 $[0,1]$，而不可约性排除端点零和一。因此这些共轭根的乘积是绝对值严格介于零与一之间的非零整数，矛盾。故 $C^2=C$。
+
+于是 $R^4=\operatorname{im}C\oplus\ker C$，且两项关于 $G$ 正交。Gaussian 整数环为主理想整环，故两项都有自由基，其合并为 $R^4$ 的幺模基。在该基中，两个限制 Gram 矩阵均正定、积分且偶；两者的正整数行列式之积为一，所以各为一。若分裂非平凡，较小的一个非零直和因子的 Gaussian 秩为一或二。秩一的偶 Gram 矩阵不可能有行列式一。秩二时写成
+
+$$
+\begin{pmatrix}2u&x+iy\\x-iy&2v\end{pmatrix},
+\qquad u,v,x,y\in\mathbb Z.
+$$
+
+行列式一要求 $x^2+y^2=4uv-1\equiv3\pmod4$，与整数平方模四只能为零或一矛盾。因此分裂只能平凡，$C=0$ 或 $I_4$，从而 $X=0$ 或 $G$。
+
+将此结论分别应用于 $A,B$。令
+
+$$
+E_m=A/N,\qquad F_m=B/N.
+$$
+
+它们属于原 $K_{4,m}$，互补、满秩且互异，因为 $t>0$ 保证 $Q\ne0$。乘以 $N$ 给出原网格区间与积分区间的双射，因而
+
+$$
+\{X\in K_{4,m}:0\le X\le E_m\}=\{0,E_m\},
+\qquad
+\{X\in K_{4,m}:0\le X\le F_m\}=\{0,F_m\}.
+\tag{32.6}
+$$
+
+又有 $E_mF_m=N^{-2}I_4\succ0$，所以它们不是投影。两者的迹均为二。
+
+在整个 $K_{4,m}$ 上定义一张表
+
+$$
+p_{4,m}(X)=
+\begin{cases}
+3/4,&X=E_m,\\
+1/4,&X=F_m,\\
+\operatorname{Tr}(X)/4,&X\notin\{E_m,F_m\}.
+\end{cases}
+\tag{32.7}
+$$
+
+这些值都在 $[0,1]$。取任一原带标签二元或三元菜单 $X_1+\cdots+X_r=I_4$。若其中有 $E_m$，则每个其他项均在 $[0,F_m]$ 内，故由 (32.6) 只能为零或 $F_m$。它们的和是非零的 $F_m$，所以恰有一项为 $F_m$，其余均为零。菜单值之和为 $3/4+1/4=1$。含 $F_m$ 的情形完全相同。若两者都不出现，则所有项采用迹值，菜单和为 $\operatorname{Tr}(I_4)/4=1$。这一论证覆盖全部允许的零项、重复项和标签，没有删去任何菜单。
+
+定义 16.1 的每个层析基元素 $D_i,R_{ij},J_{ij}$ 都为秩一，而两个特殊效果都为秩四。故该基上全部表值为 $1/4$，唯一的原层析矩阵恰为 $H_4=I_4/4$。表值在两个特殊效果处与迹值相差 $1/4$，其余处相等，证明四维的 (32.1)。
+
+对任意 $d>4$，令 $C_d(X)$ 为 $X$ 的前四阶主块，并定义
+
+$$
+p_{d,m}(X)=p_{4,m}(C_d(X)),\qquad X\in K_{d,m}.
+\tag{32.8}
+$$
+
+主块映射把原 $K_{d,m}$ 映入原 $K_{4,m}$，保加法、半正定序并把 $I_d$ 映为 $I_4$。故每个原二元或三元菜单都被映成已验证的四维菜单，(32.8) 精确满足全部归一化关系。在原层析基上，$C_d$ 的像分别是四维层析基元素、零，或者跨越主块内外的 $R_{ij},J_{ij}$ 所给出的 $D_i/2$。这些像均秩至多一，因而都采用迹值。这正好是 $H_d=(I_4/4)\oplus0_{d-4}$ 的基读数，故式 (16.1) 唯一钉住此 $H_d$。对所有 $X$，其迹预测为 $\operatorname{Tr}(C_d(X))/4$，所以误差至多 $1/4$；在 $E_m\oplus0_{d-4}$ 处取得等号。
+
+最后，在任一固定 $d\ge4$ 中令 $m\to\infty$，本构造始终有 $\epsilon=0$，而
+
+$$
+\frac{\max_X|p_{d,m}(X)-\operatorname{Tr}(H_dX)|}{\epsilon+2^{-m}}
+=\frac N4\longrightarrow\infty.
+\tag{32.9}
+$$
+
+对任意有限 $L_d\ge0$，选择 $2^m>4L_d$ 即违反 (18.1)。没有改变其原尺度或误差量词。
+
+为明确与既有谱余量结论的关系，四维特殊效果的特征值为 $\delta_N,1-\delta_N$，各重数二，其中
+
+$$
+\delta_N=\frac{1-\sqrt{1-4/N^2}}2
+=\frac{2/N^2}{1+\sqrt{1-4/N^2}},
+\qquad N^{-2}\le\delta_N\le2N^{-2}.
+\tag{32.10}
+$$
+
+因此它们处于定理 24.1 排除的双侧边界带中，且在每个有限尺度都没有端点特征值。它们不属于定理 31.1 排除的投影对。$N=4$、$a=1+i,b=1$ 时，(32.2) 的 $A$ 正好是 (22.2) 的既有 Gram 矩阵；这里新增的关系是每个 dyadic $N$ 上直接在四维中同时实现 $A+B=NI_4$ 与 $AB=I_4$，并由此构成完整表，而非再次构造八维投影。$\square$
+
+**定理 32.2（原网格二维完整表的一致稳定性）。** 在定义 16.1 中取 $d=2$。对每个 $m\ge1$、$0\le\epsilon\le1/10$ 及满足全部原菜单条件的同一完整表，其原层析矩阵 $H$ 满足
+
+$$
+\max_{E\in K_{2,m}}|p(E)-\operatorname{Tr}(HE)|
+\le12190(\epsilon+2^{-m}).
+\tag{32.11}
+$$
+
+当 $N=2^m\ge160$ 时，更强的上界为 $12190\epsilon$。本结论不增加仿射性、跨尺度相容性或任意有理细分假设。
+
+**证明。** 写 $e(E)=p(E)-\operatorname{Tr}(HE)$。复用定理 16.2 和 24.1 的常数及其精细网格估计：
+
+$$
+c_2=1/10,\quad K_2=30,\quad M_2=4,\quad q_2=32,
+\qquad U_2=63\cdot30+4\cdot31=2014.
+\tag{32.12}
+$$
+
+先设 $N\ge160=8\cdot2/c_2$。于是范数至多 $c_2$ 的效果有 $|e|\le30\epsilon$，范数至多 $1-8/N$ 的效果有 $|e|\le2014\epsilon$。每次同网格合法加法的误差至多为式 (16.4) 的 $2\epsilon$。
+
+先控制任意非零秩一效果 $E$。积分秩一矩阵 $NE$ 可写成
+
+$$
+NE=t vv^*,\qquad t\in\mathbb Z_{>0},\quad v\in R^2\text{ 本原}.
+\tag{32.13}
+$$
+
+这里的本原是两个坐标生成单位理想。具体地，$NE$ 的复值域与 $R^2$ 的交是饱和秩一子模，Gaussian 主理想整环性质给出其本原生成元 $v$。每个积分列都是 $v$ 的 Gaussian 整数倍；厄米性及正性遂给出 $NE=t vv^*$，其中初始标量 $t$ 为正实数。取积分行 $\ell$ 满足 $\ell v=1$，则 $t=\ell(NE)\ell^*$ 为正整数，证明 (32.13)。记 $s=\|v\|^2$，有 $ts\le N$。
+
+若 $t\ge2$，把 $t$ 拆成 $\lfloor t/2\rfloor+\lceil t/2\rceil$。所得两个原网格正子效果之和为 $E$，各范数至多 $2/3\le1-8/N$，故一次合法加法给出
+
+$$
+|e(E)|\le(2U_2+2)\epsilon\le4062\epsilon.
+\tag{32.14}
+$$
+
+余下设 $t=1$。此时不可能有 $s=N$：因为 $4\mid N$，$v$ 的四个实整数坐标的平方和模四为零，奇数坐标数只能为零或四。在两种情形中，每个 Gaussian 坐标的实部、虚部奇偶性相同，两个坐标都被 $\pi=1+i$ 整除，与本原性矛盾。这正是定理 31.1 最后一步的既有二维奇偶观察。
+
+所以 $k=N-s\ge1$。对每个坐标取 $w_j\in\{0,1\}$ 表示 $v_j$ 模 $\pi$ 的剩余类，并置 $r=\|w\|^2$。本原性保证 $r\in\{1,2\}$，而 Gaussian 整数的范数模二等于其模 $\pi$ 剩余类，故 $r\equiv s\pmod2$。若 $k=1$，则 $s$ 为奇数，迫使 $r=1$；若 $k\ge2$，则直接有 $r\le2\le k$。因此
+
+$$
+vv^*+ww^*\le(s+r)I_2\le NI_2.
+\tag{32.15}
+$$
+
+这是二维原效果区间内的正性证书。又因为 $v\equiv w\pmod\pi$，两个向量
+
+$$
+u=(v+w)/\pi,\qquad z=(v-w)/\pi
+$$
+
+都属于 $R^2$。平行四边形恒等式给出
+
+$$
+vv^*+ww^*=uu^*+zz^*.
+\tag{32.16}
+$$
+
+定义 $W=ww^*/N$、$F=uu^*/N$、$G=zz^*/N$。由 (32.15)–(32.16)，$E,W,F,G$ 及共同和 $E+W=F+G$ 均为原同一 $K_{2,m}$ 中的效果。其范数满足
+
+$$
+\|W\|\le2/N\le c_2,\qquad
+\max(\|F\|,\|G\|)
+\le\frac{(\sqrt N+\sqrt2)^2}{2N}
+\le\frac{81}{128}<\frac34\le1-\frac8N.
+\tag{32.17}
+$$
+
+中间的数值界来自 $N\ge160\ge128$，从而 $\sqrt{2/N}\le1/8$。分别对 $E+W$ 与 $F+G$ 应用 (16.4)，再相减；共同和的表值与 (32.16) 的线性迹配对都消去。因此
+
+$$
+|e(E)+e(W)-e(F)-e(G)|\le4\epsilon,
+\qquad
+|e(E)|\le(30+2\cdot2014+4)\epsilon=4062\epsilon.
+\tag{32.18}
+$$
+
+即使辅助效果为零或彼此重复，相应菜单仍是原定义允许的菜单。合并 (32.14)、(32.18)，每个非零秩一原效果都有相同上界。
+
+对于秩二的 $E$，只在此处复用一个精确的二元形式表示结果：Myung-Hwan Kim 与 Poo-Sung Park，[2-universal Hermitian lattices over imaginary quadratic fields，arXiv:0810.1342v1，定理 2](https://arxiv.org/html/0810.1342v1#ThmThm2) 证明 $\mathbb Q(i)$ 上的三元格 $\langle1,1,1\rangle$ 表示每个正定二元积分 Hermitian 格。其 §2 的表示约定是 $M_\ell=XM_LX^*$，§3 定义 3 中的二元格为正定格。因此对正定的 $NE\in\operatorname{Herm}_2(R)$，该结果恰给出
+
+$$
+NE=XX^*,\qquad X\in M_{2\times3}(R).
+\tag{32.19}
+$$
+
+这里没有把二元供应推广到更高秩。将 $X$ 的三个列向量记为 $v_1,v_2,v_3$，便有
+
+$$
+E=\sum_{j=1}^3\frac{v_jv_j^*}{N}.
+$$
+
+每个非零项为已控制的秩一效果，全部部分和都为原网格效果：其条目积分除以同一个 $N$，且因所有项半正定而在序上不超过 $E\le I_2$。略去零列后，至多两次 (16.4) 给出
+
+$$
+|e(E)|\le\bigl(3\cdot4062+4\bigr)\epsilon=12190\epsilon.
+\tag{32.20}
+$$
+
+秩一情形已有更强界，零效果则由 $p(0)\le2\epsilon$ 控制。因此精细网格上覆盖了整个效果表，关系数不随 $m$ 增长。
+
+若 $N<160$，定理 16.2 的 $\|H\|\le4$ 和 $0\le E\le I_2$ 给出 $|e(E)|\le1+2\cdot4=9<1440/N\le12190/N$，证明 (32.11) 的全部粗尺度情形。$\square$
+
+定理 32.1 在每个固定 $d\ge4$ 中否定 (18.1)，定理 32.2 则肯定其中的 $d=2$ 分支。二者均保持定义 16.1 的原网格、同一完整表、原层析基及原菜单量词；定理 16.2、17.1–17.2、24.1 与投影专属的定理 31.1 继续按各自假设适用。这里没有解决 $d=3$ 的 (18.1)，也没有断言四维是任意效果完整表反例的最小维数。二维的额外步骤是 (32.15)–(32.18) 的同网格奇偶补全及其与二元表示供应的组合；Gaussian 主理想整环、四平方定理、积分收缩的代数整数论证和 Kim–Park 表示定理均为有明确作用的经典中间工具。以上推导不作全球文献优先权或物理实现断言。
+
+## 追加锚（本行以下为增补区）

@@ -18,6 +18,8 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(preview.Success, preview.Error);
         Assert.True(force.Success, force.Error);
+        Assert.Empty(ReadEvents(preview.Error, "clean_lanes_warning"));
+        Assert.Empty(ReadEvents(force.Error, "clean_lanes_warning"));
         Assert.Equal(reclaim ? "merged_to_dev" : "recently_updated", ReasonFor(preview.Output, lane));
         Assert.Equal(reclaim ? "merged_to_dev" : "recently_updated", ReasonFor(force.Output, lane));
         Assert.Equal(!reclaim, Directory.Exists(lane));

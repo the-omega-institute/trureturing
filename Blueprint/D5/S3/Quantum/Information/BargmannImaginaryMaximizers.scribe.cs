@@ -14,6 +14,27 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
         "For every n at least three, the unit qubit tuples with imaginary Bargmann invariant tau n form one unitary orbit of a latitude polygon, allowing an independent phase at each vertex.",
         H("All qubit maximizers of the imaginary Bargmann invariant"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("qubit-latitude"),
+                DeclarationHandle.Create(Module + "latitude"),
+                H("A qubit latitude vector"),
+                StatementSource.FromAuthor(Disp(All(X("t"), Reals(), All(X("z"), Complexes(),
+                    Equal(Call("Latitude.latitude", X("t"), X("z")),
+                        Seq(Bang, OpenBracket,
+                            Typed(Call("Real.sqrt", Subtract(D(1), X("t"))), Complexes()),
+                            Comma, Sp, Multiply(Typed(Call("Real.sqrt", X("t")), Complexes()), X("z")),
+                            CloseBracket)))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The two coordinates have square-root amplitudes, with a complex factor on the second coordinate."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("qubit-latitude-inner-product"),
+                DeclarationHandle.Create(Module + "latitude_dot"),
+                H("Inner products of latitude vectors"),
+                StatementSource.FromAuthor(LatitudeDotFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a latitude parameter between zero and one, the inner product is the sum of the two coordinate contributions."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Vectors have type Fin 2 → ℂ. For a unit vector v, Matrix.vecMulVec v (star v) is its rank-one projector. Indices have type Fin n and start at zero. List.ofFn lists the outer products in increasing index order and List.prod takes their ordered matrix product. Real division, the real square root and natural powers have Lean's total meanings; the exponent n − 1 is natural subtraction, whereas the denominator 2 · (n − 1) uses real subtraction after coercing n to ℝ.")),
             Node("bargmann", "Ordered trace of pure states", BargmannFormula(),
                 "Zhang and Xie, Definition 3.1, p. 9: “The so-called nth-order Bargmann invariant for such n-tuple Ψ = (ρ₁, …, ρₙ) is defined as Δₙ(Ψ) := Tr(ρ₁ ⋯ ρₙ).” Section 2, p. 4: “Unit vector |ψ⟩ in ℂ^d will be called wave functions and its ranked-one projector ψ ≡ |ψ⟩⟨ψ| will be called pure state.” Here d = 2 and each ρ is the displayed outer product of its amplitude vector with its conjugate.",
@@ -40,6 +61,19 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
             DescribeId.Create("bargmannmax-" + name), DeclarationHandle.Create(Module + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+
+    private static Formula LatitudeDotFormula()
+    {
+        Formula t = X("t"), z = X("z"), w = X("w");
+        Formula lhs = Call("dotProduct", Call("star", Call("Latitude.latitude", t, z)),
+            Call("Latitude.latitude", t, w));
+        Formula rhs = Add(Typed(Subtract(D(1), t), Complexes()),
+            Multiply(Multiply(Typed(t, Complexes()), Call("star", z)), w));
+        Formula body = All(z, Complexes(), All(w, Complexes(), Equal(lhs, rhs)));
+        body = Imp(new Formula.Relation(t, FormulaRelationOperator.LessThanOrEqual, D(1)), body);
+        body = Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, t), body);
+        return Disp(All(t, Reals(), body));
+    }
 
     private static Formula BargmannFormula()
     {

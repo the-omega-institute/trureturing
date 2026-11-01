@@ -33,6 +33,7 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal("initialization_in_progress", ReasonFor(result.Output, lane));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.Equal(1, qualified);
         Assert.True(Directory.Exists(lane));
     }
@@ -123,17 +124,20 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(lane), result.Output);
     }
 
-    [Fact]
-    public void CurrentLockIsRetainedByAutomaticSelection()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentLockIsRetainedByAutomaticSelection(bool force)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/current-lock");
         fixture.LockLane(lane);
         File.SetLastWriteTimeUtc(Path.Combine(fixture.WorktreeGitDirectory(lane), "locked"),
             new DateTime(2030, 1, 2, 0, 0, 0, DateTimeKind.Utc));
-        var result = fixture.Run("--force", "--lanes-only");
+        var result = fixture.Run(force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
         Assert.True(result.Success, result.Error);
         Assert.Equal("locked_recent", ReasonFor(result.Output, lane));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.True(Directory.Exists(lane));
     }
 }

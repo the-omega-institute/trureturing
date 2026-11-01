@@ -318,7 +318,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void DetachedWorkedHeadUsesShortcutAndRetainsRecoveryBranchThroughOrphanSweep()
+    public void DetachedWorkedHeadUsesShortcutAndRetainsRecoveryBranch()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddDetachedJudge("trureturing-detached-work");

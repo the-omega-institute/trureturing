@@ -94,6 +94,13 @@ def sweep_failure(receipt, observed, stage, error):
     receipt["status"] = "failed"
 
 
+def pool_failure(receipt, stage, error):
+    receipt["failure"] = dict(scope="operation:idle-pool", stage=stage,
+                              outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
+                              error=str(error), error_type=type(error).__name__)
+    receipt["status"] = "failed"
+
+
 def sweep_locked(source, dev, force=False):
     """The caller holds the clone's pool operation scope; effects survive every failure."""
     receipt = pool_receipt()
@@ -114,11 +121,12 @@ def sweep_locked(source, dev, force=False):
                     tree_scope(stack, source, path, True)
                     git_scope(stack, source, path)
                     candidates.append(idle_state(source, path, dev, stack))
-            except GitFailure:
-                raise
-            except Refused as error:
-                outcomes.append(dict(observed, outcome="not_idle" if str(error) == "not_idle" else "retained",
-                                     reason=str(error)))
+            except Exception as error:
+                if isinstance(error, Refused) and not isinstance(error, GitFailure):
+                    outcomes.append(dict(observed, outcome="not_idle" if str(error) == "not_idle" else "retained",
+                                         reason=str(error)))
+                else:
+                    sweep_failure(receipt, observed, stage, error)
         candidates.sort(key=lambda row: (row["created"], row["path"]))
         remaining = sum(not row["removal_pending"] for row in candidates)
         for observed in candidates:
@@ -130,45 +138,45 @@ def sweep_locked(source, dev, force=False):
                 outcomes.append(dict(observed, outcome="retained", reason=reason))
                 continue
             path = Path(observed["path"])
-            stage = "revalidate"
-            with ExitStack() as stack:
-                tree_scope(stack, source, path, True)
-                with ExitStack() as inspection:
-                    git_scope(inspection, source, path)
-                    current = idle_state(source, path, dev, inspection)
-                if current != observed:
-                    raise Refused("idle_identity_changed")
-                # Common removal owns the index/ref scopes and snapshot rules.
-                stage = "remove"
-                result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
-                    preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
-                                                               branch=observed["branch"]))]))
-                for removal in result["items"]:
-                    row = dict(observed, **dict(removal,
-                        outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
-                        reason=removal.get("reason", reason)))
-                    if removal["outcome"] not in ("removed", "would_remove"):
-                        row.setdefault("stage", stage)
-                    if removal["outcome"] == "refused":
-                        row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
+            try:
+                stage = "revalidate"
+                with ExitStack() as stack:
+                    tree_scope(stack, source, path, True)
+                    with ExitStack() as inspection:
+                        git_scope(inspection, source, path)
+                        current = idle_state(source, path, dev, inspection)
+                    if current != observed:
+                        raise Refused("idle_identity_changed")
+                    # Common removal owns the index/ref scopes and snapshot rules.
+                    stage = "remove"
+                    result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
+                        preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
+                                                                   branch=observed["branch"]))]))
+                    for removal in result["items"]:
+                        row = dict(observed, **dict(removal,
+                            outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
+                            reason=removal.get("reason", reason)))
+                        if removal["outcome"] not in ("removed", "would_remove"):
+                            row.setdefault("stage", stage)
+                        if removal["outcome"] == "refused":
+                            row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
+                            receipt["status"] = "failed"
+                        outcomes.append(row)
+                        if removal["outcome"] in ("removed", "would_remove"):
+                            remaining -= not observed["removal_pending"]
+                    if result["status"] in ("failed", "refused"):
                         receipt["status"] = "failed"
-                    outcomes.append(row)
-                    if removal["outcome"] in ("removed", "would_remove"):
-                        remaining -= not observed["removal_pending"]
-                if result["status"] in ("failed", "refused"):
+                    stage = "release"
+            except Exception as error:
+                if isinstance(error, Refused) and not isinstance(error, GitFailure):
+                    outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
+                                         error=str(error), error_type=type(error).__name__))
                     receipt["status"] = "failed"
-                    break
-                stage = "release"
+                else:
+                    sweep_failure(receipt, observed, stage, error)
     except Exception as error:
-        # This is the batch receipt boundary, including pressure reads and scope
-        # release. The common remover retains its own checkpoint/recovery fields.
-        if stage in ("revalidate", "remove") and isinstance(error, Refused) and not isinstance(error, GitFailure):
-            outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
-                                 error=str(error), error_type=type(error).__name__))
-            receipt["status"] = "failed"
-        else:
-            sweep_failure(receipt, observed, stage, error)
-    if receipt["status"] == "failed":
+        pool_failure(receipt, stage, error)
+    if "failure" in receipt:
         reported = {row["path"] for row in outcomes}
         outcomes.extend(dict(row, outcome="retained", reason="idle_sweep_deferred")
                         for row in rows if row["path"] not in reported)
@@ -182,10 +190,7 @@ def sweep(source, dev, force=False):
             acquire(stack, source, "operation:idle-pool", True)
             receipt = sweep_locked(source, dev, force)
     except Exception as error:
-        receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
-                                  outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
-                                  error=str(error), error_type=type(error).__name__)
-        receipt["status"] = "failed"
+        pool_failure(receipt, "pool_scope", error)
     return receipt
 
 
