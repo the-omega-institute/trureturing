@@ -481,7 +481,7 @@ private theorem current_cut_compare {A : PositiveMatrix} (hA : Unimodular A) {j 
     rw [transport_value hA hm hj, div_le_iff₀ hd, reply, Int.le_floor]; simp only [mul_comm]
   rw [he]
   constructor
-  · intro h by_contra hn; exact (not_lt_of_ge h) (mobius_strict hA hx ht (lt_of_not_ge hn))
+  · intro h; by_contra hn; exact (not_lt_of_ge h) (mobius_strict hA hx ht (lt_of_not_ge hn))
   · intro h
     rcases lt_or_eq_of_le h with hh | hh
     · exact (mobius_strict hA ht hx hh).le
