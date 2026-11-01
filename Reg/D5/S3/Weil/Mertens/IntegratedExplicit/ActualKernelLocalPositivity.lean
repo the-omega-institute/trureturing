@@ -8,7 +8,9 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-open Matrix
+open Matrix Filter
+open D5.S3.Weil.Mertens.IntegratedExplicit
+open scoped Topology
 open scoped BigOperators ComplexOrder
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
@@ -42,7 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hz := hp.diag_pos (i := (0 : Fin 1))
   simpa only [Matrix.zero_apply, lt_self_iff_false] using hz
 
-private theorem actual_dependence : ObservationalDependence signature actual := by
+theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
   obtain ⟨δ, hδ, _, h⟩ := exists_window_posDef
   let x : Fin 2 → ℝ := ![0, δ / 2]
@@ -111,4 +113,163 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 #print axioms evidence
 #print axioms registration
+
+
+namespace LocalFormula
+
+abbrev scalarSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actualKernel : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ t => K t) (fun e => nomatch e)
+
+private theorem kernel_dependence : ObservationalDependence scalarSignature actualKernel := by
+  intro role
+  obtain ⟨n, x, y, hxy⟩ := actual_dependence ()
+  by_contra hh
+  push_neg at hh
+  apply hxy
+  ext i j
+  change (K (x i - x j) : ℂ) = (K (y i - y j) : ℂ)
+  exact congrArg Complex.ofReal (hh () (x i - x j) (y i - y j))
+
+def arena : Arena where
+  signature := scalarSignature
+  Law A := ∀ {t : ℝ}, 0 ≤ t → t < Real.log 2 →
+    A.readout () () t = Real.exp (-t / 2) *
+      (Real.exp t * (1 + Real.eulerMascheroniConstant - t) -
+        Real.log (2 * Real.pi) + trivialT t)
+
+def rejected : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ t => K t + 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (t := 0) le_rfl (Real.log_pos (by norm_num))
+  have hk := K_eq_local (t := 0) le_rfl (Real.log_pos (by norm_num))
+  change K 0 + 1 = _ at hh
+  linarith
+
+def evidence : Registration arena (type_of% @K_eq_local) where
+  actual := actualKernel
+  bridge := Iff.rfl
+  variation := ⟨@K_eq_local, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actualKernel rejected rejected_law
+  dependence := kernel_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@K_eq_local) (Realization scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.K_eq_local.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.LocalFormula.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ _ t => K t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end LocalFormula
+
+namespace LogRatio
+
+abbrev scalarSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actualRatio : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ t => t / (1 - Real.exp (-(2 * t))))
+    (fun e => nomatch e)
+
+def arena : Arena where
+  signature := scalarSignature
+  Law A := Filter.Tendsto (fun t : ℝ => A.readout () () t)
+    (nhdsWithin 0 (Set.Ioi 0)) (nhds (1 / 2))
+
+def rejected : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he : (1 : ℝ) = 1 / 2 := Filter.tendsto_nhds_unique Filter.tendsto_const_nhds h
+  norm_num at he
+
+def evidence : Registration arena (type_of% @log_argument_ratio_limit) where
+  actual := actualRatio
+  bridge := Iff.rfl
+  variation := ⟨log_argument_ratio_limit, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actualRatio rejected rejected_law
+  dependence := by
+    intro role
+    by_contra hh
+    push_neg at hh
+    have hz (t : ℝ) : t / (1 - Real.exp (-(2 * t))) = 0 := by
+      have hh' := hh () 0 t
+      simpa [actualRatio, realize] using hh'.symm
+    have hl := log_argument_ratio_limit
+    simp only [hz] at hl
+    have he : (0 : ℝ) = 1 / 2 :=
+      Filter.tendsto_nhds_unique Filter.tendsto_const_nhds hl
+    norm_num at he
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@log_argument_ratio_limit) (Realization scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.log_argument_ratio_limit.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.LogRatio.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature
+    (fun _ _ t => t / (1 - Real.exp (-(2 * t)))) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "fn", "arg", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end LogRatio
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
