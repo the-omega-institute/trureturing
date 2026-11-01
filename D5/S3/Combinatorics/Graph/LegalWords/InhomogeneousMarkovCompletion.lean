@@ -6,16 +6,16 @@
    utility: none
    digest: Strictly interior site means determine a unique first-order legal binary chain. -/
 
-import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 namespace D5.S3.Combinatorics.Graph.LegalWords.InhomogeneousMarkovCompletion
 
 open scoped BigOperators
 open D5.S1.Words.AdmissibleWords.AdmissibleCount
-open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (adm_iff_no_adjacent_true)
 
 noncomputable section
 

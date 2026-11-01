@@ -49,7 +49,7 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
                     + "indexed by Fin k. Repeated words and empty layers are allowed. "
                     + "This is a derived application of the coordinate inequalities, "
                     + "convexHull_vertices, the public no-adjacent-true characterization "
-                    + "ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true, and finite "
+                    + "AdmissibleCount.adm_iff_no_adjacent_true, and finite "
                     + "prefix and complement counting.")),
             Paragraph(Text(
                 "For positive k, scalar-image membership is equivalent to the integer "

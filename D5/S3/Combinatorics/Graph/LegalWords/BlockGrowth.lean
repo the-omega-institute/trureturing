@@ -6,6 +6,7 @@
    utility: none
    digest: Native legal-word loads are nearly additive with a finite growth constant. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Combinatorics.Graph.QuadraticLoad.NativeTransport
 import D5.S3.Combinatorics.Graph.LegalWords.ConstrainedHarmonicOptimizer
 import Mathlib.Analysis.Subadditive

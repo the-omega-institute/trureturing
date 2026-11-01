@@ -22,11 +22,6 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
                 H("A Hermitian determinant factors over its spectrum"), StatementSource.FromAuthor(HermitianDeterminantFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every real scalar v, the determinant is the product of one plus v times each real Hermitian eigenvalue. This includes zero and negative v."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("adm-iff-no-adjacent-true"), Handle("adm_iff_no_adjacent_true"),
-                H("Admissibility as exclusion"), StatementSource.FromAuthor(AdmissibilityFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("AdmissibleCount.Adm owns the configuration predicate, with its existing decAdm instance. Coordinates are zero-based; a true Boolean means occupied. This characterization gives the adjacency reading used by reversal and quantum normalization."))),
-                DescribeRole.Theorem),
             Def("occupationCount", "occupation-count", "Occupation number", CountFormula(),
                 "Bool.toNat maps false to zero and true to one."),
             Def("forbiddenPartition", "forbidden-partition", "The configuration polynomial", PartitionFormula(),
@@ -175,15 +170,6 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
             All("hA", Call("Matrix.IsHermitian", a), All("v", Real(), equation)))));
     }
 
-    private static Formula AdmissibilityFormula()
-    {
-        Formula n = F.Id("n"), b = F.Id("b"), i = F.Id("i"), j = F.Id("j");
-        Formula exclusion = All("i", Fin(n), All("j", Fin(n),
-            ImpliesOf(Equal(Add(Val(i), D(1)), Val(j)),
-                Or(Equal(At(b, i), Call("false")), Equal(At(b, j), Call("false"))))));
-        return Disp(All("n", Nat(), All("b", BoolVector(n),
-            new Formula.Logic(Call("AdmissibleCount.Adm", n, b), FormulaLogicOperator.Iff, exclusion))));
-    }
     private static Formula CountFormula() => Disp(All("n", Nat(), All("b", BoolVector(F.Id("n")),
         Equal(Count(F.Id("b")), SumOver("i", Fin(F.Id("n")), Bit(F.Id("b"), F.Id("i")))))));
     private static Formula PartitionFormula()

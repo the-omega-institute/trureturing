@@ -577,20 +577,8 @@ theorem support_phi_injective {n : Nat} :
 
 private theorem adm_adjacent {n : Nat} (w : Fin n → Bool) (hw : Adm n w)
     (i j : Fin n) (hij : i.val + 1 = j.val) : ¬ (w i = true ∧ w j = true) := by
-  induction n with
-  | zero => exact Fin.elim0 i
-  | succ n ih =>
-    cases n with
-    | zero => have hi := i.isLt; have hj := j.isLt; omega
-    | succ n =>
-      revert hij
-      refine Fin.cases (fun hij => ?_) (fun k hij => ?_) i
-      · have hj : j = 1 := Fin.ext (by simpa using hij.symm)
-        simpa [hj] using hw.1
-      · revert hij
-        refine Fin.cases (fun hij => ?_) (fun l hij => ?_) j
-        · simp only [Fin.val_zero, Fin.val_succ] at hij; omega
-        · exact ih (Fin.tail w) hw.2 k l (by simpa using hij)
+  have h := (adm_iff_no_adjacent_true n w).mp hw i j hij
+  simpa only [Bool.eq_false_iff, not_and_or] using h
 
 theorem phi_support_fence {n : Nat} {w : Fin n → Bool} (hw : Adm n w) :
     fence n (support (phi w)) := by
@@ -621,15 +609,9 @@ theorem phi_support_fence {n : Nat} {w : Fin n → Bool} (hw : Adm n w) :
 
 private theorem adm_of_adjacent {n : Nat} (w : Fin n → Bool)
     (h : ∀ i j : Fin n, i.val + 1 = j.val → ¬ (w i = true ∧ w j = true)) : Adm n w := by
-  induction n with
-  | zero => trivial
-  | succ n ih =>
-    cases n with
-    | zero => trivial
-    | succ n =>
-      refine ⟨h 0 1 rfl, ih (Fin.tail w) ?_⟩
-      intro i j hij
-      exact h i.succ j.succ (by simpa using congrArg Nat.succ hij)
+  apply (adm_iff_no_adjacent_true n w).mpr
+  intro i j hij
+  simpa only [Bool.eq_false_iff, not_and_or] using h i j hij
 
 /-- Alternating complement identifies exactly the native admissibility predicate. -/
 theorem phi_support_fence_iff {n : Nat} (w : Fin n → Bool) :

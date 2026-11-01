@@ -6,6 +6,7 @@
    utility: none
    digest: Native legal-word edges equal total occupation and its actual size-fiber sum. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Combinatorics.Graph.LegalWordDegree
 
 set_option autoImplicit false
