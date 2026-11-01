@@ -11,6 +11,8 @@ strata_touched:
   - D5/S3/Geometry/HereditaryLexicographicProduct
   - D5/S3/Geometry/IndependenceComplexTorsionSeed
   - D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
+  - D5/S3/Geometry/FiniteSimplicialSingularHomology
+  - D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
   - D5/S3/Geometry/SphereBouquetHomology
 license: citation-only
 triage: anchor
@@ -55,7 +57,7 @@ that conclusion.
   $\mathcal P$, $\mathcal{SP}$, $\mathcal W$, $\mathcal{SW}$), and the
   paragraph immediately preceding Proposition 7.
 - Theorem 21 and Question 22.
-- Theorem 31 and Questions 32 and 35.
+- Theorems 31 and 33 and Questions 32 and 35.
 
 ## Local realization refinement
 
@@ -107,6 +109,12 @@ Question 35 instead asks whether the independence complex of the full
 $P_n\boxtimes P_m$ is always a wedge of spheres. A counterexample among
 induced subgraphs targets Question 32 and need not answer Question 35.
 
+Theorem 33 has a different scope: if a positive width $m$ has the
+hereditary property for every $n$, then the independence complex of the
+full graph $P_n\boxtimes P_{m+k}$ has the homotopy type of a wedge of
+spheres for $1\leq k\leq4$. Its conclusion does not itself assert the
+hereditary property at those larger widths.
+
 `IndependenceComplexTorsionSeed` constructs an order-two class in the
 integer finite ordered chain homology of the independence complex of the
 complement of the graph with graph6 encoding `JEhbtj{rve?`. This exact
@@ -117,11 +125,30 @@ increasing triangles, the cycle, a chain bounding its double and a mod-two
 detecting functional. The classical seed and its local formal proof do not
 constitute a separate solved original problem or a novelty claim.
 
-The finite-chain class alone supplies no comparison with singular
-homology of the coordinate realization. Such a comparison, its transport
-through the proposed graph construction and the induced king-grid
-embedding, and the sphere-wedge torsion obstruction remain necessary
-for a complete Question 32 counterexample.
+`FiniteSimplicialSingularHomology.orderedH1IsoSingular` identifies the
+homology of the ordered triangle-to-edge-to-vertex integer short complex
+of any finite linearly ordered pre-abstract simplicial complex with
+Mathlib singular H1 of its actual finite-coordinate realization. The
+coefficient object is `ModuleCat.of ℤ ℤ`. Its positive-coordinate open
+stars have contractible face intersections; the ordered Cech and small
+singular chain augmentations give the comparison without an assumed
+good-cover or homology-isomorphism premise. Empty realizations and
+ghost vertices remain within the statement.
+
+`IndependenceComplexTorsionSeedSingular.seedH1IsoSingular` applies that
+comparison to the original 11/32/24 finite integer boundary model. Three
+basis bijections and both differential squares identify its actual short
+complex with the ordered one. The transported `singularSeedClass` is
+nonzero and killed by two in singular H1 of the original coordinate
+realization, with the same integer coefficient object. No abstract
+comparison is assumed.
+
+Transport through the proposed graph construction, the remaining suspension
+steps and induced king-grid embedding, and assembly with the sphere-source
+obstruction below remain necessary for a complete Question 32 counterexample. The singular seed itself does
+not settle the question. The new comparison audit is unfinished under
+issue #25205; the original finite-chain seed audit remains unfinished
+under issue #25149.
 
 ## Prescribed king-grid routing interface
 
@@ -144,8 +171,8 @@ and strong-product conversion.
 The seed is Adamaszek's; the supplied graph-move route uses the Barmak/Lozin
 approach. The explicit coordinate construction is local proof content, not a
 theorem attributed to Carnero Bravo or an originality claim. The supplied
-40-move replay, prescribed-subdivision suspension transport, singular-homology
-comparison and application of the sphere-wedge obstruction remain separate
+40-move replay, prescribed-subdivision suspension transport, and application
+of the singular-homology comparison and sphere-wedge obstruction remain separate
 obligations. This
 interface alone does not settle Question 32 and makes no claim about Question
 35 or an additional solved original problem.
@@ -184,8 +211,8 @@ statements use Mathlib's regular-scalar meaning of module torsion-freeness;
 the nonzero-integer injectivity statement uses the integral-domain endpoint.
 
 This obstruction batch contributes zero original-problem resolution credit
-for Question 32. Its intended use takes n=2, but the seed-to-singular homology
-comparison, the remaining suspension and graph construction steps, the
+for Question 32. Its intended use takes n=2. Applying it to the comparison
+above, the remaining suspension and graph construction steps, the
 induced-coordinate embedding and the final refutation are still required.
 
 The new source modules' readout registration remains unfinished under

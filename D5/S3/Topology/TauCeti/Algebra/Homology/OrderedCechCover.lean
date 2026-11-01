@@ -442,4 +442,109 @@ theorem augmentation_homotopy_equiv (hP : ⋃ i, P i = Set.univ) :
         (Homotopy.nullHomotopy' _))).symm
     homotopyInvHomId := Homotopy.ofEq (section_augmentation R P hP) }, rfl⟩
 
+/-! ### Functoriality in the covered basis
+
+These maps use the same coefficient object `R` on every basis element.
+In particular, using them for singular simplices does not replace `R` by
+the free object on the simplices.
+-/
+
+variable {B D : Type w} {P : ι → Set A} {Q : ι → Set B} {T : ι → Set D}
+
+/-- The actual inclusion of a covered basis element in a degree of the complex. -/
+def basisι {p : ℕ} (s : Finset ι) (hs : #s = p + 1)
+    (a : A) (ha : ∀ i ∈ s, a ∈ P i) : R ⟶ (complex R P).X p :=
+  single R P p s a ha
+
+lemma basisι_eq {p : ℕ} (s : Finset ι) (hs : #s = p + 1)
+    (a : A) (ha : ∀ i ∈ s, a ∈ P i) :
+    basisι R s hs a ha =
+      Sigma.ι (fun _ : {a : A // ∀ i ∈ s, a ∈ P i} => R) ⟨a, ha⟩ ≫
+        Sigma.ι (fun t : {t : Finset ι // #t = p + 1} =>
+          (freeFunctor R P).obj (op t.val)) ⟨s, hs⟩ := by
+  simp only [basisι, single, dite_eq_left hs, pointι]
+
+@[reassoc]
+lemma basisι_d {p : ℕ} (s : Finset ι) (hs : #s = p + 2)
+    (a : A) (ha : ∀ i ∈ s, a ∈ P i) :
+    basisι R s hs a ha ≫ (complex R P).d (p + 1) p =
+      ∑ i : s, ((-1 : ℤ) ^ #{j ∈ s | j < i.1}) •
+        basisι R (s.erase i.1) (by rw [card_erase_of_mem i.2, hs]; omega)
+          a (fun j hj ↦ ha j (mem_of_mem_erase hj)) := by
+  change single R P (p + 1) s a ha ≫
+    ChainComplex.of.d (X R P) (d R P) (p + 1) p = _
+  rw [ChainComplex.of_d, single_d R P hs, ← sum_coe_sort]
+  rfl
+
+@[ext]
+lemma basis_hom_ext {p : ℕ} {Y : C} {f g : (complex R P).X p ⟶ Y}
+    (h : ∀ (s : Finset ι) (hs : #s = p + 1) (a : A)
+      (ha : ∀ i ∈ s, a ∈ P i), basisι R s hs a ha ≫ f = basisι R s hs a ha ≫ g) :
+    f = g :=
+  hom_ext R P h
+
+private def mapX (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) (p : ℕ) :
+    (complex R P).X p ⟶ (complex R Q).X p :=
+  Sigma.desc fun s ↦ Sigma.desc fun a ↦
+    pointι R Q (f a.1) (fun i hi ↦ hf i a.1 (a.2 i hi)) ≫
+      Sigma.ι (fun t : {t : Finset ι // #t = p + 1} ↦ (freeFunctor R Q).obj (op t.1)) s
+
+@[reassoc]
+private lemma single_mapX (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i)
+    {p : ℕ} {s : Finset ι} (hs : #s = p + 1) (a : A)
+    (ha : ∀ i ∈ s, a ∈ P i) :
+    single R P p s a ha ≫ mapX R f hf p =
+      single R Q p s (f a) (fun i hi ↦ hf i a (ha i hi)) := by
+  simp only [single, dite_eq_left hs, mapX, pointι, Category.assoc,
+    Sigma.ι_comp_desc]
+
+private lemma mapX_comm (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) (p : ℕ) :
+    mapX R f hf (p + 1) ≫ d R Q p = d R P p ≫ mapX R f hf p := by
+  apply hom_ext R P
+  intro s hs a ha
+  rw [← Category.assoc, single_mapX R f hf hs, single_d R Q hs,
+    ← Category.assoc, single_d R P hs, Preadditive.sum_comp]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Preadditive.zsmul_comp,
+    single_mapX R f hf (by rw [card_erase_of_mem hi, hs]; omega)]
+
+/-- A function of covered bases induces the actual ordered chain map. -/
+def map (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i) :
+    complex R P ⟶ complex R Q :=
+  ChainComplex.ofHom (mapX R f hf) (fun p => by
+    simpa only [complex, ChainComplex.of_d] using mapX_comm R f hf p)
+
+@[reassoc (attr := simp)]
+lemma basisι_map (f : A → B) (hf : ∀ i a, a ∈ P i → f a ∈ Q i)
+    {p : ℕ} (s : Finset ι) (hs : #s = p + 1) (a : A)
+    (ha : ∀ i ∈ s, a ∈ P i) :
+    basisι R s hs a ha ≫ (map R f hf).f p =
+      basisι R s hs (f a) (fun i hi ↦ hf i a (ha i hi)) :=
+  single_mapX R f hf hs a ha
+
+@[simp]
+lemma map_id : map R (id : A → A) (P := P) (Q := P) (fun _ _ h ↦ h) = 𝟙 _ := by
+  ext p : 1
+  apply basis_hom_ext R
+  intro s hs a ha
+  simp
+
+@[simp]
+lemma map_comp (f : A → B) (g : B → D)
+    (hf : ∀ i a, a ∈ P i → f a ∈ Q i) (hg : ∀ i b, b ∈ Q i → g b ∈ T i) :
+    map R (g ∘ f) (fun i a ha ↦ hg i (f a) (hf i a ha)) =
+      map R f hf ≫ map R g hg := by
+  ext p : 1
+  apply basis_hom_ext R
+  intro s hs a ha
+  simp
+
+@[reassoc (attr := simp)]
+lemma basisι_augmentation (s : Finset ι) (hs : #s = 1) (a : A)
+    (ha : ∀ i ∈ s, a ∈ P i) :
+    basisι R s hs a ha ≫ (augmentation R P).f 0 = Sigma.ι (fun _ : A ↦ R) a := by
+  exact (congrArg (fun f ↦ single R P 0 s a ha ≫ f)
+    (augmentation_f_zero R P)).trans (single_epsilon0 R P hs a ha)
+
 end TauCeti.OrderedCover
