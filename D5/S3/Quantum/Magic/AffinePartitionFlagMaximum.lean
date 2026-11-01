@@ -104,7 +104,7 @@ private lemma radix_one {p : ℕ} (hp : 2 ≤ p) (s : ℕ) (hs : 1 ≤ s) :
         nlinarith
       rw [he, radix_affine hp _ _ (by omega), radix_step hp s, hr, zero_add]
       have hm := Nat.mul_le_mul_left (p ^ 2) hi
-      have hpp : p ≤ p ^ 2 := by nlinarith
+      have hpp : p ≤ p ^ 2 := Nat.le_self_pow (by decide) p
       have hpeq := Nat.sub_add_cancel (show 1 ≤ p by omega)
       nlinarith
     · have he : s - 1 = p * (s / p) + (s % p - 1) := by omega
@@ -126,7 +126,7 @@ private lemma radix_power {p : ℕ} (hp : 2 ≤ p) (k s : ℕ) (hs : p ^ k ≤ s
       omega
     rw [he, radix_affine hp _ _ (Nat.mod_lt _ (by omega)), radix_step hp s]
     have hi := Nat.mul_le_mul_left (p ^ 2) (ih (s / p) hq)
-    rw [show 2 * (k + 1) = 2 + 2 * k by omega, pow_add]
+    rw [Nat.mul_add, Nat.mul_one, pow_add]
     nlinarith
 
 private lemma power_family_bound {p : ℕ} (hp : 2 ≤ p) {a : Type*}
@@ -166,7 +166,7 @@ private lemma radix_value {p : ℕ} (hp : 2 ≤ p) (n : ℕ) :
     congr 1
     apply Finset.sum_congr rfl
     intro k hk
-    rw [show 2 * (k + 1) = 2 + 2 * k by omega, pow_add]
+    rw [Nat.mul_add, Nat.mul_one, pow_add]
     ring
 
 private lemma affine_card {p n : ℕ} [Fact p.Prime]
@@ -283,8 +283,7 @@ private lemma flag_partition {p n : ℕ} [Fact p.Prime] :
       have hex : ∃ j : Fin n, v j ≠ 0 := Function.ne_iff.mp hv
       let nz := Finset.univ.filter (fun j : Fin n => v j ≠ 0)
       have hnz : nz.Nonempty := by
-        obtain ⟨j, hj⟩ := hex
-        exact ⟨j, by simp [nz, hj]⟩
+        simpa only [nz, Finset.filter_nonempty_iff, Finset.mem_univ, true_and] using hex
       let i := nz.min' hnz
       have hi : v i ≠ 0 := (Finset.mem_filter.mp (Finset.min'_mem nz hnz)).2
       refine ⟨flagCell p n i (v i), ?_, ?_⟩
