@@ -1,0 +1,134 @@
+**Theorem 9.5 (A common-growth first-connection theorem in the
+original graph class).** There are absolute integers
+
+$$
+p=24,\qquad q=17
+\tag{9.43}
+$$
+
+with $q\ge1$ and $p>q+2$ such that the following holds. For each
+fixed finite $R\ge4$ there are positive finite $R$-only constants
+$A_R,C_R,D_R$ such that every integer $a\ge A_R$,
+$(7/2)\sqrt a\le h\le R\sqrt a$, and
+$N\ge\lceil D_Ra^p\rceil$ has a nonempty original class and
+
+$$
+\left|V_N-M-\frac{\chi_N}{N}\right|
+\le\frac{C_Ra^q}{N^2}.
+\tag{9.44}
+$$
+
+Every exact minimizer has exactly the source types of Theorem 1.3
+for a law-winning $j\in J_*$ with $\chi_{j,N}=\chi_N$.
+All law ties, price ties and integer residues are included.
+
+**Proof.** Choose one threshold for Lemmas 9.1--9.4. By Growing
+Proposition 15.6, there are at most two winning indices, adjacent
+when distinct. Each price in (2.1), and each $b_j,c_j$, has denominator
+dividing $j^2(a-1)^2$. This follows by substituting
+$\eta=rn/j$ and $\alpha^{-1}=r/(a-1)$ in (1.8) and (2.1);
+the division by $r$ in $\lambda_j$ and $c_j$ cancels one numerator
+factor $r$. Thus a common positive integer denominator for every
+winning price, $\chi_{j,N}$ and $\chi_N$ can be chosen as
+
+$$
+D_*=(a-1)^2\prod_{j\in J_*}j^2\le J^4a^2.
+\tag{9.45}
+$$
+
+Take $L_R$ from (9.33), $U_R,E_R,T_R$ from Lemma 9.4, and put
+
+$$
+\begin{gathered}
+F_R=T_R+256L_RE_R^2,\qquad
+C_R=1+U_R+F_R,\\
+D_R=1+2J^2E_R+2J^4C_R.
+\end{gathered}
+\tag{9.46}
+$$
+
+These are explicit choices in terms of the proved $R$-only estimates;
+none depends on a fixed pair $a,h$ or on $N$.
+
+Consider any graph whose value is at most the upper comparison
+(9.38). Its actual excess $\tau$ is at most $E_Ra^{7/2}/N$ by
+(9.39), and the threshold makes this at most $1/(2J^2a)$.
+Theorem 9.2 therefore supplies a genuinely winning cap partition,
+with $\varepsilon\le16E_Ra^{3/2}/N$ and the tail neighborhood
+in (9.32). Its core neighborhood follows from (9.29).
+After the fixed threshold increase $\varepsilon\le1/16$ as well.
+Equations (9.33) and (9.39) give
+
+$$
+\begin{aligned}
+W(G)
+&\ge M+\frac{\mathcal P_j(G)}N
+        -\frac{256L_RE_R^2a^{14}+T_Ra^{17}}{N^2}\\
+&\ge M+\frac{\mathcal P_j(G)}N-\frac{F_Ra^{17}}{N^2}\\
+&\ge M+\frac{\chi_N}N-\frac{F_Ra^{17}}{N^2}.
+\end{aligned}
+\tag{9.47}
+$$
+
+The last line is Lemma 4.1, which applies to every connected
+source neighborhood type once this winning partition is supplied.
+A graph above (9.38) already exceeds the last line of (9.47).
+Consequently this is a lower bound over the entire original class.
+Combining it with its one actual upper graph proves (9.44).
+
+The finite labelled graph class has an exact minimizer. For any
+such minimizer, (9.38) and (9.47) imply
+
+$$
+0\le\mathcal P_j(G)-\chi_N
+\le\frac{U_Ra^{10}+F_Ra^{17}}N
+\le\frac{C_Ra^{17}}N
+<\frac1{J^4a^2}\le\frac1{D_*}.
+\tag{9.48}
+$$
+
+Both prices have denominator dividing $D_*$. Hence their difference
+is zero. The inequalities
+$\mathcal P_j(G)\ge\chi_{j,N}\ge\chi_N$ are both equalities.
+Lemma 4.1's equality characterization now gives one two-element
+core--tail connector per tail, exactly $d_{j,N}$ missing-one core
+sources, and only full cores and singleton tails for the rest.
+It also gives $\chi_{j,N}=\chi_N$. No source restriction was
+assumed to obtain this conclusion. ∎
+
+The stability and graph deductions in this section are repo-derived.
+They reuse Growing Lemma 7.1's coarse sublevel certificate, Theorem
+7.2's scalar phase evaluation, Theorem 15.5's exact law value and
+Proposition 15.6's finite branch competition. Equations (9.8)--(9.17)
+retain the incidence residuals of Growing (15.7)--(15.18) on the stated
+positive-excess sublevel. The price and exact-budget consumers are
+Lemmas 2.3, 4.1 and 4.2 of this volume. The later allocation, secondary
+energy and refined-periodic selection of Sections 6--8 retain their
+fixed-parameter quantifiers. [*CDSO uniform dilution limit*, Corollary
+40.3](CDSO_UNIFORM_DILUTION_LIMIT.md) treats the finite positive limit
+$N/a^{3/2}\to D$ and its dilution variational value. The window here
+has $N/a^{3/2}\to\infty$ and controls the finer $\chi_N/N$ term
+and exact source exclusion; it makes no new finite-positive-$D$ claim.
+
+The scalar supporting-tangent principle is the intermediate
+literature-attested input of Boyd--Vandenberghe,
+[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+§3.1.3, printed p.69; the second derivatives above verify its hypotheses.
+The original CDSO definition is Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§1, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176):
+maximum endpoint degree in the denominator, with the factor
+$1/\sqrt2$ dropped. Its general connected-graph conjecture is not
+a premise of this prescribed bipartite-budget theorem. Full-text
+technical overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+is not determined here; no worldwide-priority claim is made.
+
+Theorem 9.5 supplies a sufficient deep polynomial window for the
+common-growth part of Open problem 8.3. It does not determine least
+thresholds or least refined periods, uniform later template selection,
+the scale $N\asymp a^2$, varying $R$, or the extremum when the sink
+number is allowed to vary. The sink budget throughout is exactly
+$s=a+1+h$, with the original nonlinear objective and all the graph
+conditions of Definition 1.1.
+

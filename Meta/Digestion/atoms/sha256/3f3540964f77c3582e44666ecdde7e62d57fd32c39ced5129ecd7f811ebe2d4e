@@ -1,0 +1,29 @@
+**Definition 1.2 (Connection and repair prices).** For each winning
+$j$, with notation (1.6), define
+
+$$
+\begin{aligned}
+\lambda_j&=\frac{\eta^2-m^3/\alpha^2}{r},\\
+b_j&=\frac{4-2m^2}{\alpha^2}+3\eta^2-\lambda_j,\\
+c_j&=\frac{\eta^2-(r^3+r^2m+m^2)/\alpha^2}{r},\\
+d_{j,N}&=\bigl[n-(a-1)N\bigr]_r,\\
+\chi_{j,N}&=nb_j+d_{j,N}c_j,\qquad
+\chi_N=\min_{j\in J_*}\chi_{j,N}.
+\end{aligned}
+\tag{1.8}
+$$
+
+Here $[z]_r$ is the unique integer in $\{0,\ldots,r-1\}$ congruent
+to $z$ modulo $r$. The symbols $b_j,c_j$ are respectively the
+connection and repair prices; they are unrelated to the function
+called $b_j(p)$ in Growing Definition 15.1. In its notation,
+
+$$
+c_j=-\frac{F_j'(j/r)}r>0.
+\tag{1.9}
+$$
+
+The equality in (1.9) follows from Growing (15.23) and
+$r^3+r^2m+m^2=2mr^2+2m-1$; its positivity also follows in Lemma
+2.2 below.
+

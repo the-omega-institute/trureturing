@@ -1,0 +1,40 @@
+**Proposition 10.2 (Least period of the complete allocation state).**
+For fixed $a,h,j$, the integer state $(d_{j,N},t_{j,N})$ in (6.1),
+viewed as a sequence for integer $N$, has least positive period
+
+$$
+P_j=\frac{r_jn_j}{\gcd(j,r_jn_j)}.
+\qquad
+P_{\rm data}=\operatorname{lcm}_{j\in J_*}P_j
+\tag{10.2}
+$$
+
+is the least period of the full vector of these states and a sufficient
+period for the graph selection data. This asserts no leastness for the
+optimizer sequence.
+
+**Proof.** Since $a-1=r-j$, direct substitution gives
+
+$$
+d_N=[n+jN]_r,\qquad Q_N=\frac{jN+n-d_N}{r}.
+\tag{10.3}
+$$
+
+A shift $T>0$ preserves $d$ if and only if $r\mid jT$.
+Under that condition $Q_{N+T}-Q_N=jT/r$, so it also preserves
+$t=[Q]_n$ if and only if $n\mid jT/r$. Both conditions together
+are exactly $rn\mid jT$, with least positive solution (10.2).
+The argument is independent of $N$, and also proves leastness on any
+cofinal sequence of consecutive integer budgets. Taking all branches
+gives the least common multiple. For such a shift,
+$\alpha T=T-jT/r$ and $\beta T=jT/(rn)$ are integers;
+$F$ and $b$ increase by these amounts, while $d,t,\varphi,\sigma$
+and $v_\pm$ stay fixed. The prices depend on $d$ alone.
+Consequently the germs (8.4) can equally be defined on residues modulo
+$P_{\rm data}$, using the same formulas and the common state of that
+residue. This does not evaluate a graph at a possibly small residue
+representative. Since $P_{\rm data}\mid P$, the original period $P$
+is retained below without any change of notation. Distinct states can
+have coincident selected values or templates; their period need not
+be the least optimizer period. ∎
+

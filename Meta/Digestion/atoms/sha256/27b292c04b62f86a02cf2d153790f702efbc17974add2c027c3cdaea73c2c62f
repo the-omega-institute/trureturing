@@ -1,0 +1,87 @@
+**Proposition 7.3 (Reachable nonconvex core allocation).** Suppose
+$r\ge8$, $n\ge2$, and put $g_0=\gcd(a-1,r)=\gcd(a-1,j)$.
+Choose the largest $d<r$ congruent to $n$ modulo $g_0$ and suppose
+$d\ge4$. There are infinitely many integer budgets with
+$d_{j,N}=d$. At every sufficiently large such budget there are
+three actual graphs $G_-,G_0,G_+$ in the original class, with
+this same cap, balanced tails and source types, whose endpoint
+and omission arrays have the midpoint relation
+
+$$
+(e^{(0)},o^{(0)})=
+ \tfrac12\bigl((e^{(-)},o^{(-)})+(e^{(+)},o^{(+)})\bigr)
+\tag{7.10}
+$$
+
+but whose original objectives satisfy
+
+$$
+W(G_-)+W(G_+)-2W(G_0)
+ =\frac{4(-r^2+6r+11)}{\alpha^3N^2}
+                                      +O_{a,h}(N^{-3})<0.
+\tag{7.11}
+$$
+
+Thus joint convexity in endpoint and omission allocations fails
+even on reachable original graph budgets. The stated conditions
+hold for every winning cap after a sufficient choice of the
+threshold $A_R$ permitted in Definition 1.1. No assertion that
+these three graphs are minimizers is needed.
+
+**Proof.** The congruence
+$(a-1)N\equiv n-d\pmod r$ is solvable because $g_0$ divides
+$n-d$; its solutions form a cofinal residue class modulo $r/g_0$.
+On that class take three distinct core labels $1,2,3$ and set
+
+$$
+\begin{gathered}
+e^{(0)}_1=e^{(0)}_2=1,\quad e^{(0)}_3=n-2,\qquad
+o^{(0)}_1=o^{(0)}_2=2,\quad o^{(0)}_3=d-4,\\
+e^{(\pm)}=e^{(0)}\pm(1,-1,0,\ldots,0),\qquad
+o^{(\pm)}=o^{(0)}\pm(2,-2,0,\ldots,0),
+\end{gathered}
+\tag{7.12}
+$$
+
+with all other entries zero. These are nonnegative integer arrays
+of sums $n,d$. Realize each by the construction in Lemma 6.2,
+with the same balanced tails. This preserves $N,aN,s$, simplicity,
+connectedness and the strict orientation for all sufficiently
+large $N$ in that residue.
+
+The calculation (7.4)--(7.9) applies before imposing core
+optimality. The part of its second coefficient homogeneous
+quadratic in $e_i,o_i$ is
+
+$$
+\frac1{\alpha^3}\sum_i
+ \left[(3m^2-8)e_i^2
+ -2(3m^2-r^2-4)e_io_i+(3m^2-2r^2)o_i^2\right].
+\tag{7.13}
+$$
+
+For the two changing coordinates in (7.12), evaluating the
+midpoint second difference cancels every constant and linear
+term. It leaves $4/\alpha^3$ times
+
+$$
+(3m^2-8)-4(3m^2-r^2-4)+4(3m^2-2r^2)
+ =3m^2-4r^2+8=-r^2+6r+11<0.
+\tag{7.14}
+$$
+
+All three have the same first coefficient and fourth-power
+correction. The uniform remainder therefore proves (7.11).
+Equivalently the matrix of the bracketed quadratic in (7.13) has
+negative determinant $-(r^2-4)^2$, but (7.12) additionally
+verifies an admissible integer direction and an actual-graph
+realization; the determinant alone would not establish those.
+
+Finally $g_0\le j$, so this largest reachable $d$ satisfies
+$d\ge r-g_0\ge a-1$. The bounds on winning indices used in
+Lemma 2.2 give $j=O_R(1)$, whereas $h\ge(7/2)\sqrt a$.
+Thus $r\ge8$, $n=h+1-j\ge2$, and $d\ge4$ all hold after a
+sufficient inherited threshold. The obstruction concerns the
+coupled allocation problem; it neither invalidates the scalar
+tail convexity nor presupposes global convexity of $H$. ∎
+
