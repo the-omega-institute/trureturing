@@ -10,6 +10,7 @@ import Mathlib.LinearAlgebra.AffineSpace.AffineSubspace.Basic
 import Mathlib.FieldTheory.Finiteness
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Data.Nat.Digits.Defs
+import D5.S0.Diagonal.RecordExtensionCount
 
 /-! Affine partitions of the punctured vector space in the conjecture of Heimendahl,
 Heinrich and Gross, arXiv:2011.11651v3. -/
@@ -204,35 +205,24 @@ private lemma partition_card {p n : ℕ} [Fact p.Prime]
 private lemma flag_cell_card {p n : ℕ} [Fact p.Prime] (i : Fin n) (x : ZMod p) :
     Nat.card (flagCell p n i x) = p ^ (n - 1 - i.val) := by
   classical
-  let e : flagCell p n i x ≃ ({j : Fin n // i < j} → ZMod p) :=
-    { toFun := fun v j => v.1 j.1
-      invFun := fun w => ⟨fun j => if h : i < j then w ⟨j, h⟩ else
-          if j = i then x else 0, by
+  let e : flagCell p n i x ≃
+      D5.S0.Diagonal.RecordExtensionCount.RecordExtensions (Finset.Iic i) (Pi.single i x) :=
+    Equiv.subtypeEquivRight fun v => by
+      constructor
+      · intro hv j hj
+        obtain hj | rfl := lt_or_eq_of_le (Finset.mem_Iic.mp hj)
+        · simpa [Pi.single_eq_of_ne (ne_of_lt hj)] using hv.1 j hj
+        · simpa using hv.2
+      · intro hv
         constructor
         · intro j hj
-          simp [not_lt_of_ge (le_of_lt hj), ne_of_lt hj]
-        · simp⟩
-      left_inv := by
-        intro v
-        apply Subtype.ext
-        funext j
-        change (if h : i < j then v.1 j else if j = i then x else 0) = v.1 j
-        by_cases h : i < j
-        · simp [h]
-        · by_cases he : j = i
-          · subst j
-            simpa using v.2.2.symm
-          · simp only [h, he, dite_false, ite_false]
-            exact (v.2.1 j (lt_of_le_of_ne (le_of_not_gt h) he)).symm
-      right_inv := by
-        intro w
-        funext j
-        simp [j.2] }
-  rw [Nat.card_congr e, Nat.card_fun, Nat.card_zmod]
+          simpa [Pi.single_eq_of_ne (ne_of_lt hj)] using
+            hv j (Finset.mem_Iic.mpr (le_of_lt hj))
+        · simpa using hv i (Finset.mem_Iic.mpr le_rfl)
+  rw [Nat.card_congr e, D5.S0.Diagonal.RecordExtensionCount.record_extension_card]
+  simp only [ZMod.card, Fintype.card_fin, Fin.card_Iic]
   congr 1
-  rw [Nat.card_eq_fintype_card,
-    Fintype.card_of_subtype (Finset.Ioi i) (fun j => Finset.mem_Ioi)]
-  exact Fin.card_Ioi i
+  omega
 
 private lemma flag_center {p n : ℕ} [Fact p.Prime] (i : Fin n) (x : ZMod p) :
     (Pi.single i x : Fin n → ZMod p) ∈ flagCell p n i x := by

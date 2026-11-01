@@ -45,8 +45,9 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "The flag-cell center Pi.single i x proves nonemptiness; the least nonzero coordinate "
                         + "of a vector gives the unique flag index, proving disjointness and covering exactly "
-                        + "the nonzero vectors. An explicit finite equivalence identifies each cell with the "
-                        + "free coordinates after i, so its cardinality is p^(n−1−i). Summing over i and over "
+                        + "the nonzero vectors. Each cell is the space of extensions of Pi.single i x on "
+                        + "the record Finset.Iic i. The general record_extension_card theorem gives its "
+                        + "cardinality p^(n−1−i). Summing over i and over "
                         + "the p−1 nonzero coordinate values gives flagValue. Combining these facts with the "
                         + "digit-potential bound proves claim (arXiv TeX lines 1219–1245)."))),
                 DescribeRole.Theorem)),
