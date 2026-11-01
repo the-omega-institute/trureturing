@@ -1,0 +1,20 @@
+**Theorem 7.1 (entry identification without return is always attainable).** For every old label and every entry in its complete fiber, the entry label $\eta_n(C_0)$ can be acquired from the same source without reset if (AQBR.5) is dropped. Moreover an accurate reached-state current label can be installed. One construction uses at most one positive multiplication, $L$ paid reads and $L\ell$ original additions, with the same finite setup and additional local arithmetic charged.
+
+**Proof.** Compute from the acquired old depths the public positive multiplier
+
+$$
+M_0=\prod_{p\in B}p^{e_p-r_p}.
+\tag{AQBR.29}
+$$
+
+Execute it once, omitting the operation if $M_0=1$. The actual new source is $Y=M_0C_0$. Its old code is obtained by the supplied scalar update from the genuinely acquired entry code. Every axis now has depth at least its new $e_p$, so Theorem 3.1 applied to $Y$ acquires the full residue $Y\bmod H$ and ends at $Y+LS$. For $p\in G$, $M_0$ is a unit modulo $p^h$, so this acquired residue gives $C_0\bmod p^h$ by multiplying by its public inverse.
+
+For $p\in B$, write $M_0=p^{e-r_p}v$ with $p\nmid v$. Since $C_0=p^{r_p}u$, the acquired quotient residue satisfies
+
+$$
+(Y/p^e)\bmod p^{h-e}=vu\bmod p^{h-e}.
+\tag{AQBR.30}
+$$
+
+Its public unit inverse gives exactly the old entry's new unit coordinate $u\bmod p^{h-e}$. At modulus one there is only the unique coordinate and no inverse computation is needed. Together with the genuinely known depths this recovers every entry label. The full acquired reached-state residue independently installs its current code and updater. When $B\ne\varnothing$, the multiplied source has raised depths on those axes; the procedure does not satisfy behavior return there. The impossibility in Theorem 4.1 therefore excludes neither this identification procedure nor reached-state homing. $\square$
+

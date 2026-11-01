@@ -1,0 +1,68 @@
+**Theorem 2.1 (Finite-time variance and its nonnegative remainder).** Under Assumption 1.1, for every observation vertex $u$, every integer lag $d\geq1$, every integer $t\geq0$, and every probability-space realization of the specified joint law, the objects in Definitions 1.2–1.3 are measurable and satisfy
+
+$$
+\boxed{
+\operatorname{Var}(W_t)
+=\frac14\operatorname{Var}(C_t)
+ +\frac14\mathbb E\!\left[\sum_{e\in\mathcal E}m_e^2\right].
+}
+\tag{2.1}
+$$
+
+More precisely,
+
+$$
+\begin{aligned}
+\operatorname{Var}(W_t)
+-\frac14\sum_{i=1}^t\mathbb P(a_i\ne b_i)
+&=\frac14\operatorname{Var}(C_t)
+ +\frac14\mathbb E\!\left[\sum_{e\in\mathcal E}m_e(m_e-1)\right]\\
+&=\frac14\operatorname{Var}(C_t)
+ +\frac12\sum_{1\leq i<j\leq t}
+ \mathbb P\bigl(a_i\ne b_i,\ a_j\ne b_j,
+       \{a_i,b_i\}=\{a_j,b_j\}\bigr)
+\ \geq\ 0.
+\end{aligned}
+\tag{2.2}
+$$
+
+Consequently,
+
+$$
+\boxed{
+\operatorname{Var}(W_t)
+\ \geq\ \frac14\sum_{i=1}^t\mathbb P(a_i\ne b_i)
+\ \geq\ \frac t4(1-q^d).
+}
+\tag{2.3}
+$$
+
+Equality in the **first** inequality of (2.3) holds if and only if both of the following hold: $C_t$ is almost surely constant, and almost surely $m_e\leq1$ for every $e\in\mathcal E$. This characterizes that first inequality only, not equality in the final universal bound.
+
+The graphical histories and the treatment of four histories by their shared fair colours are inherited from [1, Sections 2 and 2.4, pp. 3–4 and 12–13]. Fair-sign character orthogonality and total variance are classical inputs; see [4, Chapter 1] for the former. The assertions proved here combine the actual finite-time source partition with its unordered-pair multiplicities, retaining both terms in (2.1) and the exact remainder in (2.2).
+
+*Proof.* We first justify the finite-time constructions on an infinite graph. For $N\geq0$, let
+
+$$
+K_N=\{v\in V:\operatorname{dist}_G(u,v)\leq N\}.
+$$
+
+The set $K_0=\{u\}$ is finite. If $K_N$ is finite, then
+
+$$
+K_{N+1}=K_N\cup\bigcup_{v\in K_N}N(v)
+$$
+
+is a finite union of finite sets. Hence every $K_N$ is finite. Connectivity gives $V=\bigcup_{N\geq0}K_N$, so $V$ is at most countable.
+
+Fix $t,d$ and put $N=t+d$. Every history starting at $(u,s)$ with $0\leq s\leq N$ remains inside $K_N$ and uses at most $N$ backward steps. All its possible sources belong to the deterministic finite set
+
+$$
+\mathcal L_N=
+\{(\mathrm{initial},v):v\in K_N\}
+\sqcup
+\{(\mathrm{fresh},n,v):1\leq n\leq N,\ v\in K_N\}.
+$$
+
+It is enough to reveal the finitely many controls and choices with $1\leq n\leq N$ and $v\in K_N$, and the finitely many opinion coins in $\mathcal L_N$. The recursion only consults choices along paths that have not yet reached time zero; at the $k$th backward step their distance from $u$ is at most $k$. Thus this finite set of coordinates determines all observations in (1.3). Each choice has a finite range, so induction on time expresses each relevant source and opinion as a finite measurable case distinction. This proves their measurability, as well as that of $C_t$ and all relevant multiplicities. The same argument with any vertex as root defines every $S_n(v)$ and $X_n(v)$. All sums over $\mathcal E$ below may therefore be taken over the fixed finite set of two-element subsets of $\mathcal L_N$; all other summands vanish.
+
