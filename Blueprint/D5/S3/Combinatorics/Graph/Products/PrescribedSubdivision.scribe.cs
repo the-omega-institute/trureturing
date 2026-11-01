@@ -44,14 +44,17 @@ internal sealed class PrescribedSubdivisionDocument : IScribeDocumentDefinition
             "card_vertices" => Finite(Equal(C("FintypeCard", vertex),
                 Add(C("FintypeCard", I("V")), SumOver("e", I("E"), fresh)))),
             "card_edges" => Finite(Equal(C("card", C("edgeFinset", C("graph", d))),
-                SumOver("e", I("E"), Add(fresh, D(1))))),
+                SumOver("e", I("E"), Add(fresh, D(1)))), decidable: true),
             _ => throw new System.ArgumentException(declaration)
         };
         return All("V", C("Type"), All("E", C("Type"), All("D", C("Data", I("V"), I("E")), body)));
     }
 
-    private static Formula Finite(Formula b) => Inst("Fintype", I("V"), Inst("Fintype", I("E"),
-        Inst("DecidableEq", I("V"), Inst("DecidableEq", I("E"), b))));
+    private static Formula Finite(Formula b, bool decidable = false)
+    {
+        if (decidable) b = Inst("DecidableEq", I("V"), Inst("DecidableEq", I("E"), b));
+        return Inst("Fintype", I("V"), Inst("Fintype", I("E"), b));
+    }
     private static Formula SumOver(string n, Formula t, Formula b) =>
         Seq(new Formula.Subscript(Sum, Seq(I(n), Sp, InMacro, Sp, t)), Sp, b);
     private static Formula I(string n) => F.Id(n);
