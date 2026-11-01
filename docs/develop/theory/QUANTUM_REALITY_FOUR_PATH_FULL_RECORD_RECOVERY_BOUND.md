@@ -628,3 +628,651 @@ The rank-two correlation example in Buscemi–Chiribella–D’Ariano, [*Inverti
 The derivation is therefore a source-specific application of the existing basis, polar correction, and elementary norm inequalities, with the lower bound supplied by Theorem 3.1; it does not assert a new general norm theorem or global literature priority. Every premise used for the exact value is displayed above or in the cited existing lower theorem, and no inaccessible manuscript or unpublished protocol claim is a premise. The construction fixes the record, effects, and feedback exactly and proves a channel identity on arbitrary operators; it supplies no additional premise about uncertain physical implementations or access to measured probabilities. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A homogeneous equality gap for complete refinements
+
+**Definition 8.1 (certificate coordinates and ray distance).** Let $T$ be the unitary in (3.5). For a finite family $b_j\in\mathbb C^2$, write
+
+$$
+b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},
+\qquad p_j=|\xi_j|^2,\qquad q_j=|\eta_j|^2,
+\qquad w_j=p_j+q_j=\|b_j\|^2.
+\tag{8.1}
+$$
+
+Let
+
+$$
+\mathcal E=T(\mathbb C\times\{0\})\ \cup\ T(\{0\}\times\mathbb C)
+\tag{8.2}
+$$
+
+be the union of the two extremal complex rays. Since $T$ is unitary, the squared Euclidean distance from $b_j$ to $\mathcal E$ is
+
+$$
+d_j^2=\operatorname{dist}(b_j,\mathcal E)^2=\min\{p_j,q_j\}.
+\tag{8.3}
+$$
+
+For the pointwise certificate of (3.9), put
+
+$$
+\delta(b)=b^\dagger H b-\|R_0b\|_{\ell^1}^2.
+\tag{8.4}
+$$
+
+Whenever $w_j=0$, interpret $p_jq_j/w_j$ as zero. The same convention applies to an individual vector with coordinates $p,q,w$.
+
+**Theorem 8.2 (homogeneous gap and ordinary aggregate distance).** For every nonzero $b=T(\xi,\eta)^{\mathsf T}\in\mathbb C^2$, put $p=|\xi|^2$, $q=|\eta|^2$, and $w=p+q=\|b\|^2$. Then
+
+$$
+\delta(b)\ge \frac{pq}{800w}
+\ge\frac{\operatorname{dist}(b,\mathcal E)^2}{1600}.
+\tag{8.5}
+$$
+
+At $b=0$ all three quantities are zero under the stated convention. Equality in the certificate $\delta(b)=0$ holds exactly for $b\in\mathcal E$. For every finite family the first two bounds below hold; if it is a complete resolution $\sum_j b_jb_j^\dagger=I_2$, the third holds as well:
+
+$$
+\begin{aligned}
+\sum_j\frac{p_jq_j}{w_j}&\le800\sum_j\delta(b_j),\\
+\sum_j d_j^2&\le1600\sum_j\delta(b_j),\\
+\sum_j p_jq_j&\le800\sum_j\delta(b_j)
+\quad\text{if }\sum_jb_jb_j^\dagger=I_2.
+\end{aligned}
+\tag{8.6}
+$$
+
+For a protocol of Definition 1.2, use exactly the refinement (3.2)--(3.4), with the same original $U_y$ on every spectral piece of outcome $y$. If $\varepsilon\in[0,1]$ and
+$\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon$, then
+
+$$
+\begin{aligned}
+\sum_j d_j^2&\le12800\varepsilon,\\
+\sum_j p_jq_j&\le6400\varepsilon,\\
+\sum_j d_j^4&\le6400\varepsilon.
+\end{aligned}
+\tag{8.7}
+$$
+
+In particular, the ordinary aggregate squared distance has a constant independent of the finite outcome count. These are estimates for certificate vectors of the actual protocol, rather than estimates in a channel norm.
+
+Proof. The homogeneity of (8.4) allows us to assume $p+q=1$ when $b\ne0$, where $p=|\xi|^2$, $q=|\eta|^2$. Use the notation $x,y,a,m,I,L,A,B$ from (2.3) and (2.8). Equations (2.6) and (2.7) give
+
+$$
+A+B\le I-d,
+\qquad
+d=\frac{x^2}{\sqrt2}+\frac{y^2}{8a^3}
+\ge pq\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}.
+\tag{8.8}
+$$
+
+The exact identity (2.10) can be written
+
+$$
+I-L=\gamma(a,p,q)\,pq,
+\qquad
+\gamma(a,p,q)=\frac{4\sqrt2(c-s)^2}{(a+m)(I+L)}.
+\tag{8.9}
+$$
+
+We first obtain a uniform lower gap between the two coefficients in (8.8) and (8.9). Put $e=(c-s)^2=2s^2$. Since $a,m\ge s$ and $L\ge\sqrt2+2m$, the denominator in (8.9) obeys
+
+$$
+(a+m)(I+L)\ge4\sqrt2s+8s^2.
+\tag{8.10}
+$$
+
+The elementary radical inequality
+
+$$
+4\sqrt2s+8s^2\ge8\sqrt2e
+\tag{8.11}
+$$
+
+follows from $e=2s^2$ and $\sqrt2+2s\ge4\sqrt2s$; after squaring the latter positive inequality it is $17\sqrt2\ge24$, which follows from $2>(24/17)^2$. Hence $\gamma(a,p,q)\le1/2$.
+
+If $a\le3/5$, then $1/(8a^3)\ge125/216$, and $1/\sqrt2\ge125/216$. Therefore
+
+$$
+\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
+\ge\frac{125}{216}-\frac12>\frac1{800}.
+\tag{8.12}
+$$
+
+For $a\ge3/5$, the second denominator estimate in the proof of Lemma 2.1 gives
+
+$$
+(a+m)(I+L)\ge\frac{19}{5}\sqrt2\,a+\frac{361}{50}a^2.
+\tag{8.13}
+$$
+
+Let
+
+$$
+F(t)=\frac{19}{5}\sqrt2+\frac{361}{50}t
+      -\frac{3200}{99}\sqrt2 e\,t^2.
+\tag{8.14}
+$$
+
+This is concave. On $[3/5,c]$ its endpoint values are positive. To check this without approximation, use
+
+$$
+\frac75<\sqrt2<\frac{99}{70},
+\qquad \frac9{10}<c<1,
+\qquad c^2=\frac{2+\sqrt2}{4}<\frac{239}{280},
+\tag{8.15}
+$$
+
+which give
+
+$$
+F(3/5)>\frac{2413}{250}-\frac{83520}{17325}>0,
+\qquad
+F(c)>\frac{5909}{500}-\frac{55448}{4851}>0.
+\tag{8.16}
+$$
+
+Concavity then gives $F(t)>0$ throughout the interval. Combining (8.13)--(8.14) yields
+
+$$
+(a+m)(I+L)\ge\frac{3200}{99}\sqrt2 e\,a^3,
+\qquad
+\gamma(a,p,q)\le\frac{99}{800a^3}.
+\tag{8.17}
+$$
+
+On this range $8a^3\ge216/125>\sqrt2$, so the minimum below is its second entry. Since $a\le c<1$, (8.17) implies
+
+$$
+\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
+\ge\frac1{8a^3}-\frac{99}{800a^3}
+=\frac1{800a^3}\ge\frac1{800}.
+\tag{8.18}
+$$
+
+Equations (8.8), (8.9), (8.12), and (8.18) therefore give
+
+$$
+L-(A+B)\ge\frac{pq}{800}.
+\tag{8.19}
+$$
+
+Because $L^2\ge2$, $L+A+B\ge1$, and the defect is
+
+$$
+\delta(b)=L^2-(A+B)^2=(L-(A+B))(L+A+B),
+$$
+
+we obtain $\delta(b)\ge pq/800$ in the normalized case. For an arbitrary nonzero vector let $\widehat b=b/\sqrt w$. Its squared coordinate magnitudes are $p/w$ and $q/w$, while $\delta(\widehat b)=\delta(b)/w$. Hence
+
+$$
+\frac{\delta(b)}w
+\ge\frac{pq}{800w^2},
+\qquad
+\delta(b)\ge\frac{pq}{800w}.
+$$
+
+If $p\le q$, then $pq/(p+q)\ge p/2$; the reverse ordering gives $pq/(p+q)\ge q/2$. Together with (8.3), this proves the second inequality in (8.5). On a normalized coordinate axis, the explicit expressions (3.7) give $A=\sqrt2$ and $B=2a$, while (2.10) gives $I=L$. Thus $\delta=0$ on both axes, and degree-two homogeneity gives equality on both entire complex rays and at zero. If $pq>0$, the first lower bound in (8.5) is positive. These are therefore exactly the certificate equality cases.
+
+Summing the two bounds in (8.5) proves the first two lines of (8.6). For a complete resolution, positivity of the other summands gives $b_jb_j^\dagger\preceq I_2$, whence $w_j=\|b_j\|^2\le1$. Consequently $p_jq_j\le p_jq_j/w_j$ whenever $w_j>0$; zero vectors contribute zero to both quantities. This proves the third line of (8.6).
+
+For the asserted protocol consequence, keep the actual $K_j=U_y\operatorname{diag}(R_0b_j)$ of (3.3). Write $f$ for its overlap (3.11), and put
+
+$$
+\tau_j=\|R_0b_j\|_{\ell^1}^2-|\operatorname{Tr}K_j|^2\ge0,
+\qquad \Delta=\frac{1+c}{2}-f\ge0.
+$$
+
+The nonnegativity is (3.12)--(3.13), applied to these same feedback unitaries. Completeness, (3.9), and (3.11) give the identity
+
+$$
+\sum_j\delta(b_j)+\sum_j\tau_j
+=\operatorname{Tr}H-16f=16\Delta.
+$$
+
+The existing lower witness (3.15) and the near-optimality premise imply
+$2(1-f)\le1-c+\varepsilon$, hence $\Delta\le\varepsilon/2$. Thus $\sum_j\delta(b_j)\le8\varepsilon$, with no replacement or optimization of the feedback. Equations (8.6) and $d_j^4=\min(p_j,q_j)^2\le p_jq_j$ now prove (8.7). $\square$
+
+**Proposition 8.3 (proportional refinement and the actual defect).** Replace any vector $b$ in a finite family by proportional pieces $t_1b,\ldots,t_rb$, where $r\ge1$, $t_\ell\in\mathbb C$, and $\sum_\ell|t_\ell|^2=1$. This preserves its contribution to completeness and to each of
+
+$$
+\sum_j\delta(b_j),\qquad
+\sum_j d_j^2,\qquad
+\sum_j\frac{p_jq_j}{w_j}.
+$$
+
+When this is a refinement of (3.3)--(3.4) retaining the same original outcome and feedback $U_y$ on every piece, it preserves the actual channel and $\sum_j\tau_j$ as well. The contributions to the quartic sums $\sum_jp_jq_j$ and $\sum_jd_j^4$ are instead multiplied by $\sum_\ell|t_\ell|^4\le1$.
+
+Proof. For the pieces, $p_\ell=|t_\ell|^2p$, $q_\ell=|t_\ell|^2q$, and $w_\ell=|t_\ell|^2w$. Degree-two homogeneity of (8.4) gives $\delta(t_\ell b)=|t_\ell|^2\delta(b)$; (8.3) gives the same scaling for squared ray distance. For $t_\ell\ne0$ and $w>0$,
+
+$$
+\frac{p_\ell q_\ell}{w_\ell}
+=|t_\ell|^2\frac{pq}{w}.
+$$
+
+Zero pieces and the zero vector satisfy the same identity under the convention of Definition 8.1. Summation proves the three aggregate conservation statements, while
+$\sum_\ell(t_\ell b)(t_\ell b)^\dagger=bb^\dagger$ proves completeness conservation. The corresponding actual Kraus operators are $t_\ell K$, since the original $U_y$ remains common. Hence
+
+$$
+\sum_\ell(t_\ell K)X(t_\ell K)^\dagger=KXK^\dagger
+$$
+
+for every $X$, and both terms defining $\tau$ scale by $|t_\ell|^2$. This proves the channel and trace-defect assertions. Finally, each quartic contribution scales by $|t_\ell|^4$. The inequality $\sum_\ell|t_\ell|^4\le(\sum_\ell|t_\ell|^2)^2=1$ proves the stated decrease. In particular, $r$ equal pieces $b/\sqrt r$ preserve the actual total defect and the ordinary aggregate squared distance, while dividing the quartic contributions by $r$. The ordinary aggregate bound (8.6) is therefore compatible with arbitrary proportional refinement. $\square$
+
+The coefficient separation (8.12) and (8.18) strengthens the source-specific certificate of Lemma 2.1. Its protocol application uses the actual-feedback trace estimate (3.12), the fixed-decomposition estimate cited there from Gregoratti--Werner, Proposition 8, rather than a new fidelity-to-diamond upper bound. Theorem 3.1 supplies the existing lower witness, and the attaining channel remains the one in Theorem 6.2. No global literature-priority claim is made for this equality-gap argument.
+
+Theorem 8.2 controls the certificate vectors in the actual feedback-preserving refinement, including an ordinary aggregate squared-distance bound. At exact optimality every nonzero refined vector lies on one of the two certificate rays. What remains unproved is the control of the actual corrected Kraus operators, with their common feedback across spectral pieces, that would turn the two defect budgets into a bound on $\|\Phi-\Phi_*\|_\diamond$, uniform over every finite outcome count, arbitrary $U(4)$ feedback, and every finite untouched reference. This section establishes neither implemented-channel uniqueness at $\varepsilon=0$, qualitative channel stability, nor the quantitative square-root rate.
+
+The unresolved assertion is that there exists a finite $K>0$ such that, for every protocol of Definition 1.2 and every $\varepsilon\in[0,1]$,
+
+$$
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon
+\quad\Longrightarrow\quad
+\|\Phi-\Phi_*\|_\diamond\le K\sqrt\varepsilon.
+$$
+
+Here $\Phi_*$ is exactly (6.14), $K$ is independent of all effects, feedback and finite outcome counts, and both norms are the unhalved norm (1.6), including every finite untouched reference. The record (1.1) and retention of every original outcome remain fixed.
+
+## 追加锚（本行以下为增补区）
+
+## 9. Optimizer-channel uniqueness and qualitative stability
+
+Keep the exact record $R_0,C_0$ of (1.1), the branch convention (1.4), and the unhalved, reference-inclusive diamond norm (1.6). Throughout this section, put
+
+$$
+c=\cos(\pi/8),\qquad q=1-c,
+\qquad
+\Phi_* (X)=PXP+QXQ+c(PXQ+QXP),
+\tag{9.1}
+$$
+
+where $P,Q$ are the fixed projections (6.13). Thus $\Phi_*$ is exactly the channel of Theorem 6.2, with no optimization over its choice. Theorems 3.1 and 6.2 supply the lower bound $q$ and its finite attainment. The equality characterization of Theorem 8.2 will supply the additional rigidity needed here; its proof is not repeated.
+
+**Definition 9.1 (normalized effect measures).** Write
+
+$$
+\operatorname{Dens}_2
+ =\{E\in M_2(\mathbb C):E=E^\dagger,\ E\succeq0,\ \operatorname{Tr}E=1\},
+\qquad
+\mathcal K=\operatorname{Dens}_2\times U(4).
+\tag{9.2}
+$$
+
+For an original protocol of Definition 1.2, omit its zero effects and set, for every remaining outcome,
+
+$$
+t_y=\operatorname{Tr}D_y>0,\qquad E_y=D_y/t_y,
+\qquad
+\mu=\sum_{y:D_y\ne0}t_y\,\delta_{(E_y,U_y)}.
+\tag{9.3}
+$$
+
+Here $\delta_{(E,U)}$ denotes a point mass, distinct from the certificate defect $\delta(b)$ of (8.4). A positive semidefinite effect of trace zero is zero, and its summand in (1.4) is zero for every feedback unitary. Omitting it changes neither the channel nor the completeness relation and imposes no condition on its feedback. All outcomes with nonzero contribution remain present.
+
+Let $\mathcal M$ be the following set of positive finite Borel measures on $\mathcal K$:
+
+$$
+\mathcal M
+ =\left\{\mu\ge0:\ \mu(\mathcal K)=2,
+                    \quad\int_{\mathcal K}E\,d\mu(E,U)=I_2\right\}.
+\tag{9.4}
+$$
+
+The measure (9.3) belongs to $\mathcal M$, since $\sum_y t_y=\operatorname{Tr}I_2=2$ and $\sum_y t_yE_y=I_2$. The unitary in each atom is the actual original $U_y$, shared by all pieces of that outcome; it is not replaced by feedback optimized after a refinement.
+
+For an atom and a measure define the linear maps
+
+$$
+\begin{aligned}
+G_{(E,U)}(X)
+ &=U\bigl((R_0E^{\mathsf T}R_0^\dagger)\circ X\bigr)U^\dagger,\\
+\Phi_\mu(X)
+ &=\int_{\mathcal K}G_{(E,U)}(X)\,d\mu(E,U),
+ \qquad X\in M_4(\mathbb C).
+\end{aligned}
+\tag{9.5}
+$$
+
+The integrals are entrywise finite-dimensional integrals. For (9.3), homogeneity in the effect gives $\Phi_\mu=\Phi$ exactly.
+
+**Lemma 9.2 (compact parameters and continuity in the full diamond norm).** The space $\mathcal K$ is compact metrizable. The set $\mathcal M$ is weak-* compact, metrizable, and sequentially compact. Every $\Phi_\mu$ for $\mu\in\mathcal M$ is completely positive and trace preserving. Moreover,
+
+$$
+\mu_m\longrightarrow\mu\ \text{weak-*}
+\quad\Longrightarrow\quad
+\|\Phi_{\mu_m}-\Phi_\mu\|_\diamond\longrightarrow0.
+\tag{9.6}
+$$
+
+Proof. The density matrices form a closed bounded subset of the finite-dimensional real space of Hermitian $2$-by-$2$ matrices. The group $U(4)$ is a closed bounded subset of the finite-dimensional space of complex $4$-by-$4$ matrices. Their product is therefore compact metrizable. Positive measures of mass two form a weak-* compact subset of the dual of $C(\mathcal K)$, by the Riesz representation theorem and weak-* compactness of a bounded dual ball. Positivity and mass are closed conditions. The entries of $E$ are continuous test functions, so the moment condition in (9.4) is also closed. Thus $\mathcal M$ is compact. Since $C(\mathcal K)$ is separable, the weak-* topology on this bounded set is metrizable, and compactness consequently gives sequential compactness. Nonemptiness also follows from the two-outcome protocol (6.2)--(6.3).
+
+For each fixed $X$, the entries of $G_{(E,U)}(X)$ are continuous functions of $E,U$. The matrix $R_0E^{\mathsf T}R_0^\dagger$ is positive semidefinite. The factorization and diagonal-Kraus identity (3.4) therefore show that $G_{(E,U)}$ is completely positive. At every finite reference size, integration of its positive amplified outputs preserves positivity, proving complete positivity of $\Phi_\mu$. Unitary conjugation preserves trace, and the moment condition gives
+
+$$
+\begin{aligned}
+\operatorname{Tr}\Phi_\mu(X)
+ &=\sum_{i=1}^4 X_{ii}
+       \left(R_0\left(\int_{\mathcal K}E^{\mathsf T}\,d\mu\right)
+                         R_0^\dagger\right)_{ii}\\
+ &=\sum_{i=1}^4 X_{ii}(C_0)_{ii}
+ =\operatorname{Tr}X.
+\end{aligned}
+\tag{9.7}
+$$
+
+Here $\int E^{\mathsf T}\,d\mu=I_2$ and every diagonal entry of $C_0$ is one. This proves trace preservation without requiring an individual atom map to be trace preserving.
+
+Let $E_{ij}=|i\rangle\langle j|$, $1\le i,j\le4$, denote the sixteen system matrix units. Weak-* convergence and the integrand continuity just proved imply entrywise, hence trace-norm, convergence
+
+$$
+\Phi_{\mu_m}(E_{ij})\longrightarrow\Phi_\mu(E_{ij}).
+\tag{9.8}
+$$
+
+For any linear map $L:M_4(\mathbb C)\to M_4(\mathbb C)$, one has the reference-independent bound
+
+$$
+\|L\|_\diamond
+ \le\sum_{i,j=1}^4\|L(E_{ij})\|_1
+ \le16\max_{1\le i,j\le4}\|L(E_{ij})\|_1.
+\tag{9.9}
+$$
+
+Indeed, fix any finite $n\ge1$ and any $X\in M_n(\mathbb C)\otimes M_4(\mathbb C)$. Its system blocks satisfy
+
+$$
+X=\sum_{i,j=1}^4X_{ij}\otimes E_{ij},\qquad
+X_{ij}=(I_n\otimes\langle i|)X(I_n\otimes|j\rangle),
+\qquad \|X_{ij}\|_1\le\|X\|_1.
+\tag{9.10}
+$$
+
+The last inequality is the trace-norm ideal inequality for left and right multiplication by contractions; both block-compression maps have operator norm one. Multiplicativity of the trace norm on tensor products and its triangle inequality now give
+
+$$
+\begin{aligned}
+\|(\operatorname{id}_{M_n}\otimes L)(X)\|_1
+ &\le\sum_{i,j=1}^4\|X_{ij}\|_1\,\|L(E_{ij})\|_1\\
+ &\le\|X\|_1\sum_{i,j=1}^4\|L(E_{ij})\|_1.
+\end{aligned}
+\tag{9.11}
+$$
+
+This holds for every finite untouched reference and every operator $X$, without a positivity or Hermiticity restriction. Taking exactly the suprema in (1.6) proves (9.9), with no factor $1/2$. Applying (9.9) to $L=\Phi_{\mu_m}-\Phi_\mu$ and using (9.8) proves (9.6). In particular, both $\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond$ and $\|\Phi_\mu-\Phi_*\|_\diamond$ are continuous functions on $\mathcal M$. $\square$
+
+**Lemma 9.3 (continuous actual-feedback defect).** Let $e_1,e_2$ be the standard record basis and use the unique positive square root to define
+
+$$
+\begin{aligned}
+b_\ell(E)&=(E^{\mathsf T})^{1/2}e_\ell,
+ &\quad v_\ell(E)&=R_0b_\ell(E),\\
+K_\ell(E,U)&=U\operatorname{diag}(v_\ell(E)),
+ &\quad \ell&=1,2,\\
+a(E)&=\sum_{\ell=1}^2\delta(b_\ell(E)),\\
+\tau(E,U)&=\sum_{\ell=1}^2
+ \left(\|v_\ell(E)\|_{\ell^1}^2
+                   -|\operatorname{Tr}K_\ell(E,U)|^2\right).
+\end{aligned}
+\tag{9.12}
+$$
+
+These are continuous nonnegative defects on $\mathcal K$. For the normalized Choi state and overlap
+
+$$
+J_{\Phi_\mu}=(\operatorname{id}_{M_4}\otimes\Phi_\mu)(\Pi),
+\qquad f_\mu=\langle\omega|J_{\Phi_\mu}|\omega\rangle,
+\qquad \Delta_\mu=\frac{1+c}{2}-f_\mu,
+\tag{9.13}
+$$
+
+one has
+
+$$
+\int_{\mathcal K}(a(E)+\tau(E,U))\,d\mu
+ =\operatorname{Tr}H-16f_\mu=16\Delta_\mu\ge0.
+\tag{9.14}
+$$
+
+The lower witness (3.15) applies to $\Phi_\mu$ and gives
+
+$$
+\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond
+ \ge2(1-f_\mu)\ge q.
+\tag{9.15}
+$$
+
+For every $\varepsilon\ge0$, the premise
+$\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon$ implies the actual defect budget
+
+$$
+0\le\int_{\mathcal K}(a+\tau)\,d\mu\le8\varepsilon.
+\tag{9.16}
+$$
+
+At exact optimum, $a(E)=\tau(E,U)=0$ at every point of $\operatorname{supp}\mu$.
+
+Proof. The positive square-root map is continuous on positive semidefinite matrices, including at singular matrices. Thus the columns in (9.12) are continuous and require no continuous choice of eigenvectors. They satisfy
+
+$$
+\sum_{\ell=1}^2b_\ell(E)b_\ell(E)^\dagger=E^{\mathsf T},
+\qquad
+G_{(E,U)}(X)=\sum_{\ell=1}^2K_\ell(E,U)XK_\ell(E,U)^\dagger.
+\tag{9.17}
+$$
+
+Theorem 8.2 gives $\delta(b)\ge0$, with equality exactly on its two rays. Each summand of $\tau$ is nonnegative by (3.12), using the actual same $U$ in both column terms. All expressions in (9.12) are continuous.
+
+The Choi trace formula (3.11), applied to (9.17) and integrated, reads
+
+$$
+16f_\mu=\int_{\mathcal K}\sum_{\ell=1}^2
+                   |\operatorname{Tr}K_\ell(E,U)|^2\,d\mu.
+\tag{9.18}
+$$
+
+Also, $\sum_\ell b_\ell^\dagger H b_\ell=\operatorname{Tr}(HE^{\mathsf T})$, whose integral is $\operatorname{Tr}H$ by (9.4). Subtracting (9.18) proves (9.14). This is the actual defect identity of Section 8 with the finite sum replaced by an integral; the feedback has not been changed. Since $\operatorname{Tr}H=8+8c$, (9.14) gives $f_\mu\le(1+c)/2$. Lemma 9.2 allows the existing Choi lower witness (3.15) to be applied, giving (9.15). For finite protocols its lower comparison is exactly Theorem 3.1. The near-optimal premise gives $2(1-f_\mu)\le1-c+\varepsilon$, hence $\Delta_\mu\le\varepsilon/2$, proving (9.16).
+
+At error $q$, (9.16) makes the integral of the continuous nonnegative function $a+\tau$ zero. If that function were positive at a support point, it would have a positive lower bound on a neighborhood with positive measure, a contradiction. Thus it is zero on the support, and nonnegativity gives the two separate equalities there. $\square$
+
+**Theorem 9.4 (exact support rigidity and unique optimizer channel).** Put
+
+$$
+E_\sigma=\bar b_\sigma\bar b_\sigma^\dagger=D_\sigma,
+\qquad E_\sigma^{\mathsf T}=b_\sigma b_\sigma^\dagger,
+\qquad \sigma\in\{+,-\},
+\tag{9.19}
+$$
+
+using exactly $b_\sigma,D_\sigma,U_\sigma$ from (6.7), (6.2), and (6.3). Define the two disjoint compact sets
+
+$$
+\mathcal S_\sigma
+ =\{(E_\sigma,e^{i\varphi}U_\sigma):\varphi\in\mathbb R\},
+\qquad \mathcal S=\mathcal S_+\cup\mathcal S_-.
+\tag{9.20}
+$$
+
+For $\mu\in\mathcal M$, the following are equivalent: its error is $q$; its support is contained in $\mathcal S$; and its channel is $\Phi_*$. In the optimizing case $\mu(\mathcal S_+)=\mu(\mathcal S_-)=1$. Consequently the exact optimizer channel is unique in the original finite protocol class, although its implementing measures and instruments need not be unique.
+
+Proof. Suppose the error is $q$ and take $(E,U)\in\operatorname{supp}\mu$. Lemma 9.3 makes every individual nonnegative summand in (9.12) zero. The equality characterization of Theorem 8.2 therefore puts every nonzero column $b_\ell(E)$ on one of the two complex $T$-coordinate rays. Such a column has the form $z b_\sigma$ for some $z\ne0$ and $\sigma\in\{+,-\}$. By (6.9),
+
+$$
+R_0b_+=\begin{pmatrix}
+h\\\alpha h\\e^{-i\theta}c\\e^{i\theta}c
+\end{pmatrix},\qquad
+R_0b_-=\begin{pmatrix}
+h\\-\alpha h\\i e^{-i\theta}s\\-i e^{i\theta}s
+\end{pmatrix},
+\qquad h,c,s>0.
+\tag{9.21}
+$$
+
+Every coordinate of both vectors is nonzero. Thus $v=R_0b_\ell(E)$ also has no zero coordinate. The zero trace defect for this column forces equality throughout
+
+$$
+\left|\operatorname{Tr}(U\operatorname{diag}(v))\right|
+ =\left|\sum_{i=1}^4U_{ii}v_i\right|
+ \le\sum_{i=1}^4|U_{ii}|\,|v_i|
+ \le\sum_{i=1}^4|v_i|.
+\tag{9.22}
+$$
+
+In the last inequality every $|v_i|$ is strictly positive and every $|U_{ii}|\le1$, so equality gives $|U_{ii}|=1$ for every $i$. The norm-one condition on each column of the unitary $U$ then makes every off-diagonal entry zero. Equality in the triangle inequality in (9.22) says that the four nonzero numbers $U_{ii}v_i$ have a common phase. Hence
+
+$$
+U=e^{i\psi}\operatorname{diag}
+ \left(\frac{\overline{v_i}}{|v_i|}\right)_{i=1}^4
+   =e^{i\varphi}U_\sigma
+\tag{9.23}
+$$
+
+for some phases $\psi,\varphi$; the phase of the scalar $z$ is absorbed into $e^{i\varphi}$. The last equality uses the polar corrections already displayed in (6.3) and (6.9).
+
+One original $U$ cannot satisfy (9.23) for nonzero columns on both rays, because
+
+$$
+U_+^\dagger U_-
+ =\operatorname{diag}(1,-1,-i,i)
+\tag{9.24}
+$$
+
+is not scalar. At least one column is nonzero since $\operatorname{Tr}E=1$. All nonzero columns must therefore belong to the same ray. Equation (9.17) and the trace-one normalization imply
+
+$$
+E^{\mathsf T}
+ =\left(\sum_\ell|z_\ell|^2\right)b_\sigma b_\sigma^\dagger
+ =b_\sigma b_\sigma^\dagger,
+\qquad E=\bar b_\sigma\bar b_\sigma^\dagger=E_\sigma.
+\tag{9.25}
+$$
+
+Together with (9.23), this proves $\operatorname{supp}\mu\subseteq\mathcal S$. In particular it keeps the transpose explicit: the normalized measured effect is the projection onto $\bar b_\sigma$, while the vectors acted on by $R_0$ lie on the $b_\sigma$ ray.
+
+Conversely, suppose a feasible measure is supported in $\mathcal S$. Write $m_\sigma=\mu(\mathcal S_\sigma)$. Its moment is
+
+$$
+m_+E_++m_-E_-=I_2.
+\tag{9.26}
+$$
+
+The two $E_\sigma$ are orthogonal rank-one projections summing to $I_2$. Multiplying (9.26) by either projection and taking trace yields $m_+=m_-=1$. Scalar feedback phases cancel from $G_{(E,U)}$, so (6.4) gives
+
+$$
+\Phi_\mu
+ =m_+G_{(E_+,U_+)}+m_-G_{(E_-,U_-)}
+ =\Phi_*.
+\tag{9.27}
+$$
+
+Theorem 6.2 gives its error $q$, completing all implications. The displayed atoms themselves have zero certificate and trace defects by Theorem 8.2 and (6.11), so $\mathcal S$ is precisely the set of atoms eligible for optimizing support, subject to the moment masses in (9.26).
+
+For a finite original optimizer, every nonzero effect consequently has the form $D_y=t_yE_{\sigma(y)}$, its actual feedback is $e^{i\varphi_y}U_{\sigma(y)}$, and the total $t_y$ for each sign is one. Zero effects remain harmless. Outcomes may be split or relabelled, and scalar phases may vary, giving different measures and instruments with the same channel. The uniqueness assertion concerns the implemented channel, not these presentations or measurement realizations. $\square$
+
+**Proposition 9.5 (finite realization of every compactified channel).** Every $\mu\in\mathcal M$, including every weak-* limiting measure, has the same moment and channel as an original finite protocol with at most $261$ nonzero outcomes and genuine feedback unitaries in $U(4)$.
+
+Proof. For each atom retain the same normalized Choi convention as in Definition 1.3, even though an atom need not preserve trace:
+
+$$
+J_{G_{(E,U)}}=(\operatorname{id}_{M_4}\otimes G_{(E,U)})(\Pi).
+\tag{9.28}
+$$
+
+This is a Hermitian $16$-by-$16$ matrix. The continuous map
+
+$$
+F:\mathcal K\longrightarrow
+ \operatorname{Herm}_2\oplus\operatorname{Herm}_{16},
+\qquad F(E,U)=(E,J_{G_{(E,U)}})
+\tag{9.29}
+$$
+
+has compact image in a real vector space of dimension at most $4+256=260$. The probability measure $\nu=\mu/2$ has barycenter
+
+$$
+\int_{\mathcal K}F\,d\nu
+ =\left(\frac{I_2}{2},\frac{J_{\Phi_\mu}}{2}\right).
+\tag{9.30}
+$$
+
+This barycenter belongs to the convex hull of $F(\mathcal K)$. Indeed, finite weighted samples approximate its integral by compactness and continuity, and the convex hull of a compact set in finite dimensions is closed. Caratheodory's theorem represents each point of that convex hull using at most $261$ points; it also gives its compactness, since the representations are images of a compact product with the closed probability simplex.
+
+Thus there are $1\le r\le261$, atoms $(E_i,U_i)\in\mathcal K$, and positive weights $p_i$ summing to one, after removal of any zero weights, such that
+
+$$
+\sum_{i=1}^rp_iE_i=\frac{I_2}{2},\qquad
+\sum_{i=1}^rp_iJ_{G_{(E_i,U_i)}}=\frac{J_{\Phi_\mu}}{2}.
+\tag{9.31}
+$$
+
+Set $D_i=2p_iE_i$ and keep these same $U_i$. These effects are Hermitian positive semidefinite and sum to $I_2$. Linearity in the effect and injectivity of the Choi correspondence yield
+
+$$
+\sum_{i=1}^rU_i\bigl((R_0D_i^{\mathsf T}R_0^\dagger)\circ X\bigr)U_i^\dagger
+ =2\sum_{i=1}^rp_iG_{(E_i,U_i)}(X)=\Phi_\mu(X)
+\tag{9.32}
+$$
+
+for every $X$. This is a protocol in exactly Definition 1.2, retaining every outcome. Thus the compact measure description introduces no additional channel obtainable only from diffuse measures. In particular a diffuse optimizing limit cannot evade finite realization. Measures here are an auxiliary compact parameter space, not a claim about physically implementing an infinite-outcome measurement. $\square$
+
+**Theorem 9.6 (qualitative optimizer-channel stability for the original protocol class).** For every $\delta>0$ there exists $\varepsilon_\delta>0$ such that the following holds simultaneously for every finite integer $k\ge1$, every Hermitian positive semidefinite family $D_1,\ldots,D_k\in M_2(\mathbb C)$ with $\sum_{y=1}^kD_y=I_2$, and every family of actual feedback unitaries $U_1,\ldots,U_k\in U(4)$. For the fixed original record and its all-outcome channel
+
+$$
+\Phi(X)=\sum_{y=1}^k
+ U_y\bigl((R_0D_y^{\mathsf T}R_0^\dagger)\circ X\bigr)U_y^\dagger,
+\tag{9.33}
+$$
+
+one has
+
+$$
+\boxed{
+\|\Phi-\operatorname{id}_{M_4}\|_\diamond
+ \le1-\cos(\pi/8)+\varepsilon_\delta
+\quad\Longrightarrow\quad
+\|\Phi-\Phi_*\|_\diamond<\delta.
+}
+\tag{9.34}
+$$
+
+Both norms are exactly the unhalved norm (1.6), with suprema over every finite untouched reference and every nonzero operator on reference and system. In particular the conclusion supplies one number $d=\|\Phi-\Phi_*\|_\diamond<\delta$ such that, for every finite $n\ge1$ and every $X\in M_n(\mathbb C)\otimes M_4(\mathbb C)$,
+
+$$
+\|(\operatorname{id}_{M_n}\otimes(\Phi-\Phi_*))(X)\|_1
+ \le d\,\|X\|_1.
+\tag{9.35}
+$$
+
+The tolerance $\varepsilon_\delta$ is independent of the finite outcome count, the effects, and the feedback.
+
+Proof. Fix $\delta>0$ and consider the closed subset of the compact set $\mathcal M$
+
+$$
+\mathcal A_\delta
+ =\{\mu\in\mathcal M:\|\Phi_\mu-\Phi_*\|_\diamond\ge\delta\}.
+\tag{9.36}
+$$
+
+Its compactness follows from Lemma 9.2. If it is empty, choose any positive $\varepsilon_\delta$, for example one. Otherwise the continuous nonnegative error excess has a minimum there:
+
+$$
+\eta_\delta
+ =\min_{\mu\in\mathcal A_\delta}
+       \left(\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond-q\right).
+\tag{9.37}
+$$
+
+It is strictly positive. If it were zero, a minimizing measure would have error $q$, so Theorem 9.4 would force its channel to be $\Phi_*$, contradicting membership in $\mathcal A_\delta$. The lower comparison is (9.15), consistent with Theorem 3.1 and the finite realization of Proposition 9.5; Theorem 6.2 supplies the attaining channel. Set
+
+$$
+\varepsilon_\delta=\eta_\delta/2>0.
+\tag{9.38}
+$$
+
+An original protocol satisfying the premise of (9.34) gives a measure (9.3) whose error excess is at most $\eta_\delta/2$. It cannot belong to $\mathcal A_\delta$, on which that excess is at least $\eta_\delta$. Hence its distance to the fixed $\Phi_*$ is strictly less than $\delta$.
+
+Equivalently, a failure of stability would provide original finite protocols with errors tending to $q$ but distances at least a fixed $\delta$. Sequential compactness of their normalized effect measures and (9.6) would give an exact optimizing limit still at distance at least $\delta$, contradicting Theorem 9.4. Proposition 9.5 also gives that limit a finite original realization. Every continuity assertion used here is in the full norm (1.6), so no restriction on the reference or on amplified operators enters either argument. $\square$
+
+The source-specific conclusions of this section are exact optimizer-channel uniqueness and qualitative stability at positive error tolerance, using the equality characterization and actual defect identity of Section 8. Compactness, the continuous positive square root, and Caratheodory's theorem are general ingredients; no literature-priority assertion is made. No quantitative modulus is evaluated or proved, and no $K\sqrt\varepsilon$ rate is established. The square-root assertion at the end of Section 8 remains unresolved. The conclusions concern the original finite full-record protocols only: no extension to postselection, changed records, infinite outcomes, nonunitary feedback, or physical acquisition of outcome probabilities is claimed.
+
+## 追加锚（本行以下为增补区）
