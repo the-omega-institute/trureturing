@@ -21,8 +21,8 @@ internal sealed class FinitePermutationInvariantsDocument : IScribeDocumentDefin
         Call("AddCommGroup", V), Sp, Land, Sp, Call("Module", K, V), Sp, Rightarrow, Sp,
         Forall, Sp, Rho, InMacro, Sp, Call("MonoidHom", G, Call("LinearAut", K, V)), Comma, Sp,
         Forall, Sp, F.Id("b"), InMacro, Sp, Call("Basis", X, K, V), Comma, Sp,
-        Open, Forall, Sp, F.Id("g"), InMacro, G, Comma, Sp,
-        Forall, Sp, F.Id("x"), InMacro, X, Comma, Sp,
+        Open, Forall, Sp, F.Id("g"), InMacro, Sp, G, Comma, Sp,
+        Forall, Sp, F.Id("x"), InMacro, Sp, X, Comma, Sp,
         Call("rho", F.Id("g"), Call("b", F.Id("x"))), Eq,
         Call("b", Call("smul", F.Id("g"), F.Id("x"))), Close, Sp,
         Rightarrow, Sp, conclusion));
