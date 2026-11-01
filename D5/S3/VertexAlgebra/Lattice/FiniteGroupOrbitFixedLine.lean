@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/VertexAlgebra/Lattice/FiniteGroupOrbitFixedLine
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/representationtheory/finite-group-invariants]
+   anchors: []
    utility: none
    digest: A free finite-group orbit has a one-dimensional fixed line, without a quotient-dimension claim. -/
 
