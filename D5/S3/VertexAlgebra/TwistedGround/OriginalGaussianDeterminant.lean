@@ -34,7 +34,7 @@ open OriginalGaussianResolvent
 private def unit1Entry (z : ℂ) (i j : ℕ) : ℂ :=
   matrixEntry z (i + 1) (j + 1)
 
-private def unit1Geo (ρ : ℝ) (a : ℕ × ℕ) : ℝ :=
+def unit1Geo (ρ : ℝ) (a : ℕ × ℕ) : ℝ :=
   ρ ^ (a.1 + 1) * ρ ^ (a.2 + 1)
 
 private def unit1GeoMass (ρ : ℝ) : ℝ := ∑' a : ℕ × ℕ, unit1Geo ρ a
@@ -43,7 +43,7 @@ private lemma unit1Geo_nonneg {ρ : ℝ} (hρ : 0 ≤ ρ) (a : ℕ × ℕ) :
     0 ≤ unit1Geo ρ a := by
   exact mul_nonneg (pow_nonneg hρ _) (pow_nonneg hρ _)
 
-private lemma unit1Geo_summable {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
+lemma unit1Geo_summable {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
     Summable (unit1Geo ρ) := by
   have h : Summable (fun n : ℕ => ρ ^ (n + 1)) :=
     (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one hρ hρ1)
@@ -68,7 +68,7 @@ private instance : Nontrivial H := by
   have he := congrArg (fun x : H => x 0) h
   simpa [basis, lp.single_apply] using he
 
-private lemma unit1Power_coordinate_bound (T : H →L[ℂ] H) (p i j : ℕ) :
+lemma unit1Power_coordinate_bound (T : H →L[ℂ] H) (p i j : ℕ) :
     ‖(T ^ p) (basis i) j‖ ≤ ‖T‖ ^ p := by
   calc
     _ ≤ ‖(T ^ p) (basis i)‖ :=
@@ -175,7 +175,7 @@ private lemma cycleTrace_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
 private def unit1Majorant (ρ : ℝ) (k : ℕ) : ℝ :=
   unit1GeoMass ρ * (ρ ^ 2) ^ (2 * k + 1)
 
-private lemma unit1Majorant_summable {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
+lemma unit1Majorant_summable {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
     Summable (unit1Majorant ρ) := by
   have hq : ρ ^ 4 < 1 := pow_lt_one₀ hρ hρ1 (by norm_num : (4 : ℕ) ≠ 0)
   convert (summable_geometric_of_lt_one (by positivity : 0 ≤ ρ ^ 4) hq).mul_left
@@ -353,7 +353,7 @@ private lemma unit1Section_apply_fin (N : ℕ) (z : ℂ) (x : H) (i : Fin N) :
   rw [zeroExtend_apply, dif_pos i.isLt]
   rfl
 
-private lemma unit1Section_power_coordinate (N : ℕ) (z : ℂ)
+lemma unit1Section_power_coordinate (N : ℕ) (z : ℂ)
     (p : ℕ) (i j : Fin N) :
     (sectionOp N z ^ p) (basis i.val) j.val = (finiteSection N z ^ p) j i := by
   induction p generalizing j with
@@ -404,7 +404,7 @@ private lemma unit1FiniteTrace_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
       ((unit1Geo_summable hρ hρ1).mul_right ((ρ ^ 2) ^ (2 * k + 1))).hasSum)
     (unit1ContractN_bound hρ hρ1 hzρ N _)
 
-private lemma finiteLogTerm_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
+lemma finiteLogTerm_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
     {z : ℂ} (hzρ : ‖z‖ ≤ ρ) (N k : ℕ) :
     ‖Matrix.trace (finiteSection N z ^ (2 * (k + 1))) / (k + 1 : ℂ)‖ ≤
       unit1Majorant ρ k := by
@@ -440,7 +440,7 @@ private lemma unit1FiniteTrace_tendsto {z : ℂ} (hz : ‖z‖ < 1) (k : ℕ) :
     (Filter.Eventually.of_forall (fun N a =>
       unit1ContractN_bound (norm_nonneg z) hz le_rfl N _ a))
 
-private lemma finiteLog_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
+lemma finiteLog_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
     Tendsto (fun N : ℕ => finiteLog N z) atTop (𝓝 (gaussianLogDet z)) := by
   exact (tendsto_tsum_of_dominated_convergence
     (unit1Majorant_summable (norm_nonneg z) hz)
