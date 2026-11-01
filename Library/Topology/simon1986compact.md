@@ -48,6 +48,19 @@ these selected leaves are ports rather than a direct package dependency.
 Each port is replaced by a direct application when this repository's
 adopted Mathlib revision contains an equivalent declaration.
 
+The total-boundedness transfer proof is reused from
+uda-lab/leray-hopf revision `e704400f2fb2f26b2ee7f4372c3e1ecbbc82f3dc`,
+`LerayHopf/Bochner/StepFunctionCompactness.lean`, SHA256
+`6dcaf556f129c58d31f9ff6ba442da592723c6cbbfe6de54513951f21916f26f`.
+The selected theorem is general over pseudometric spaces; its original
+p = 2 mesh-compactness neighbors are not used as an all-p result.
+The original Apache-2.0 license is retained at
+`docs/reports/licenses/leray-hopf-interval-LICENSE.txt`.
+The source pins Lean 4.31.0-rc2 and Mathlib
+`15a89b2468bc01f1a6230d6e49ef5efc5286e502`; the selected proof is a port,
+not a package dependency. Replace the port when this repository's adopted
+Mathlib revision supplies the equivalent transfer theorem.
+
 ## Verified locator
 
 DOI: https://doi.org/10.1007/BF01762360.
@@ -62,3 +75,7 @@ Selected Lean sources:
 https://github.com/TauCetiProject/TauCeti/blob/ef2b35da80dbe9f123fd200fcf160a036fe69813/TauCeti/MeasureTheory/Integral/Average.lean
 and
 https://github.com/TauCetiProject/TauCeti/blob/ef2b35da80dbe9f123fd200fcf160a036fe69813/TauCeti/MeasureTheory/Function/Lp/LIntegralRpow.lean.
+
+Uniform-approximation transfer source:
+https://github.com/uda-lab/leray-hopf/blob/e704400f2fb2f26b2ee7f4372c3e1ecbbc82f3dc/LerayHopf/Bochner/StepFunctionCompactness.lean,
+`LerayHopf.totallyBounded_of_uniform_approx'`.

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Whole-interval equal-mesh averages are controlled by internal positive translations. -/
+   digest: Internal positive translations and compact interval integrals give compact closure in Banach-valued Lp. -/
 
 import Mathlib.MeasureTheory.Function.LpSpace.Indicator
 import Mathlib.MeasureTheory.Function.LpSpace.Complete
@@ -23,7 +23,7 @@ import Mathlib.Tactic.Positivity
 
 set_option autoImplicit false
 open Set MeasureTheory
-open scoped ENNReal
+open scoped ENNReal NNReal
 
 namespace D5.S3.Topology.Measures.IntervalLpCompactness
 
@@ -387,5 +387,218 @@ theorem mesh_error_le {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
         (fun x => by simp [K,ENNReal.zero_rpow_of_pos (lt_of_lt_of_le zero_lt_one hq)])
     _ = _ := by
       simp only [K,enorm_sub_rev]
+
+
+section LpCompactness
+
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+variable {p : ℝ≥0∞} [Fact (1 ≤ p)]
+
+private noncomputable def assemble (T d : ℝ) (N : ℕ) (y : Fin N → E) :
+    Lp E p (volume.restrict (Ioc 0 T)) :=
+  ∑ i : Fin N, indicatorConstLp p (μ := volume.restrict (Ioc 0 T))
+    (s := meshCell d i) measurableSet_Ioc (measure_ne_top _ _) (y i)
+
+omit [NormedSpace ℝ E] [CompleteSpace E] [Fact (1 ≤ p)] in
+private lemma assemble_coe (T d : ℝ) (N : ℕ) (y : Fin N → E) :
+    ⇑(assemble (p := p) T d N y) =ᵐ[volume.restrict (Ioc 0 T)]
+      fun t => ∑ i : Fin N, (meshCell d i).indicator (fun _ => y i) t := by
+  classical
+  unfold assemble
+  refine (Lp.coeFn_fun_finsetSum _ _).trans ?_
+  have hc : ∀ᵐ t ∂(volume.restrict (Ioc 0 T)), ∀ i : Fin N,
+      indicatorConstLp p (μ := volume.restrict (Ioc 0 T))
+        (s := meshCell d i) measurableSet_Ioc (measure_ne_top _ _) (y i) t =
+          (meshCell d i).indicator (fun _ => y i) t :=
+    ae_all_iff.mpr fun i => indicatorConstLp_coeFn
+  filter_upwards [hc] with t ht
+  exact Finset.sum_congr rfl (fun i _ => ht i)
+
+omit [NormedSpace ℝ E] [CompleteSpace E] in
+private lemma continuous_indicator_const {μ : Measure ℝ} {s : Set ℝ}
+    (hs : MeasurableSet s) (hμs : μ s ≠ ∞) (hp : p ≠ ∞) :
+    Continuous (fun c : E => indicatorConstLp p hs hμs c) := by
+  let C : ℝ≥0 := ⟨μ.real s ^ (1 / p.toReal), Real.rpow_nonneg (measureReal_nonneg : 0 ≤ μ.real s) _⟩
+  have hL : LipschitzWith C (fun c : E => indicatorConstLp p hs hμs c) := by
+    apply LipschitzWith.of_dist_le_mul
+    intro c c'
+    rw [dist_eq_norm, indicatorConstLp_sub,
+      norm_indicatorConstLp (ne_of_gt (lt_of_lt_of_le zero_lt_one (Fact.out : 1 ≤ p))) hp]
+    change ‖c-c'‖ * μ.real s ^ (1 / p.toReal) ≤ μ.real s ^ (1 / p.toReal) * dist c c'
+    rw [dist_eq_norm, mul_comm]
+  exact hL.continuous
+
+private lemma compact_assemble (T d : ℝ) (N : ℕ) (hp : p ≠ ∞)
+    (K : Fin N → Set E) (hK : ∀ i, IsCompact (K i)) :
+    IsCompact (assemble (p := p) T d N '' (Set.pi univ K)) := by
+  apply (isCompact_univ_pi hK).image
+  classical
+  unfold assemble
+  apply continuous_finsetSum
+  intro i _
+  exact (continuous_indicator_const measurableSet_Ioc (measure_ne_top _ _) hp).comp
+    (continuous_apply i)
+
+omit [NormedSpace ℝ E] [CompleteSpace E] [Fact (1 ≤ p)] in
+private lemma internal_measurable {T h : ℝ} (f : Lp E p (volume.restrict (Ioc 0 T))) :
+    AEStronglyMeasurable (fun t => f (t+h) - f t) (volume.restrict (Ioc 0 (T-h))) :=
+  (((Lp.stronglyMeasurable f).comp_measurable (measurable_id.add_const h)).sub
+    (Lp.stronglyMeasurable f)).aestronglyMeasurable
+
+omit [NormedSpace ℝ E] [CompleteSpace E] in
+private lemma rpow_eLpNorm {μ : Measure ℝ} {f : ℝ → E} (hm : AEStronglyMeasurable f μ)
+    (hp : p ≠ ∞) :
+    eLpNorm f p μ ^ p.toReal = ∫⁻ t, ‖f t‖ₑ ^ p.toReal ∂μ := by
+  have hp0 : p ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one (Fact.out : 1 ≤ p))
+  rw [eLpNorm_eq_eLpNorm' hp0 hp hm,
+    ← lintegral_rpow_enorm_eq_rpow_eLpNorm' (ENNReal.toReal_pos hp0 hp)]
+
+private lemma mesh_eLpNorm_le {T d : ℝ} (hd : 0 < d) (N : ℕ) (hT : (N:ℝ)*d = T)
+    (hp : p ≠ ∞) (f : Lp E p (volume.restrict (Ioc 0 T))) {c : ℝ≥0∞}
+    (hmod : ∀ h ∈ Ioc 0 d,
+      eLpNorm (fun t => f (t+h)-f t) p (volume.restrict (Ioc 0 (T-h))) ≤ c) :
+    eLpNorm (fun t => f t - meshAverage d N f t) p (volume.restrict (Ioc 0 T)) ≤ 2*c := by
+  have hq : 1 ≤ p.toReal := by
+    simpa using ENNReal.toReal_mono hp (Fact.out : 1 ≤ p)
+  have hq0 : 0 < p.toReal := lt_of_lt_of_le zero_lt_one hq
+  have hm : StronglyMeasurable (meshAverage d N (⇑f)) := by
+    classical
+    apply Finset.stronglyMeasurable_fun_sum
+    intro i _
+    exact stronglyMeasurable_const.indicator measurableSet_Ioc
+  have he := mesh_error_le hd N (f := ⇑f) (by
+    rw [hT]; exact (Lp.memLp f).integrable (Fact.out : 1 ≤ p)) (Lp.stronglyMeasurable f) hq
+  rw [hT] at he
+  have hb : (∫⁻ h in Ioc 0 d, ∫⁻ t in Ioc 0 (T-h), ‖f (t+h)-f t‖ₑ ^ p.toReal) ≤
+      ENNReal.ofReal d * c ^ p.toReal := by
+    calc
+      _ ≤ ∫⁻ h in Ioc 0 d, c ^ p.toReal := by
+        apply lintegral_mono_ae
+        filter_upwards [ae_restrict_mem measurableSet_Ioc] with h hh
+        rw [← rpow_eLpNorm (internal_measurable f) hp]
+        exact ENNReal.rpow_le_rpow (hmod h hh) hq0.le
+      _ = _ := by rw [setLIntegral_const, Real.volume_Ioc, sub_zero]; exact mul_comm _ _
+  have hpow : eLpNorm (fun t => f t - meshAverage d N f t) p
+      (volume.restrict (Ioc 0 T)) ^ p.toReal ≤ (2*c) ^ p.toReal := by
+    rw [rpow_eLpNorm (μ := volume.restrict (Ioc 0 T))
+      (f := fun t => f t - meshAverage d N f t)
+      ((Lp.stronglyMeasurable f).sub hm).aestronglyMeasurable hp]
+    calc
+      _ ≤ (ENNReal.ofReal d)⁻¹ * (2 * (ENNReal.ofReal d * c ^ p.toReal)) :=
+        he.trans (mul_le_mul' le_rfl (mul_le_mul' le_rfl hb))
+      _ = 2 * c ^ p.toReal := by
+        calc
+          _ = ((ENNReal.ofReal d)⁻¹ * ENNReal.ofReal d) * (2 * c ^ p.toReal) := by ac_rfl
+          _ = _ := by rw [ENNReal.inv_mul_cancel (ENNReal.ofReal_pos.mpr hd).ne'
+            ENNReal.ofReal_ne_top, one_mul]
+      _ ≤ (2:ℝ≥0∞) ^ p.toReal * c ^ p.toReal := by
+        gcongr
+        simpa only [ENNReal.rpow_one] using
+          ENNReal.rpow_le_rpow_of_exponent_le (by norm_num : (1:ℝ≥0∞) ≤ 2) hq
+      _ = _ := (ENNReal.mul_rpow_of_nonneg _ _ hq0.le).symm
+  exact (ENNReal.rpow_le_rpow_iff hq0).mp hpow
+
+/-
+Selected source port: uda-lab/leray-hopf revision
+`e704400f2fb2f26b2ee7f4372c3e1ecbbc82f3dc`,
+`LerayHopf/Bochner/StepFunctionCompactness.lean`, SHA256
+`6dcaf556f129c58d31f9ff6ba442da592723c6cbbfe6de54513951f21916f26f`.
+Original proof: LerayHopf contributors. Apache-2.0 license retained in
+`docs/reports/licenses/leray-hopf-interval-LICENSE.txt`.
+Adaptation: private visibility and removal of implementation commentary.
+Replace this port by the equivalent declaration when it is present in this
+repository's adopted Mathlib revision.
+-/
+private theorem totallyBounded_of_uniform_approx' {α : Type*} [PseudoMetricSpace α] (S : Set α)
+    (happrox : ∀ ε > 0, ∃ A : Set α, TotallyBounded A ∧
+      ∀ s ∈ S, ∃ a ∈ A, dist s a < ε) :
+    TotallyBounded S := by
+  rw [Metric.totallyBounded_iff]
+  intro ε hε
+  obtain ⟨A, hA, hAapprox⟩ := happrox (ε / 2) (by linarith)
+  obtain ⟨t, ht_fin, ht_cover⟩ := (Metric.totallyBounded_iff.mp hA) (ε / 2) (by linarith)
+  refine ⟨t, ht_fin, fun s hs => ?_⟩
+  obtain ⟨a, haA, hsa⟩ := hAapprox s hs
+  have ha_mem : a ∈ ⋃ y ∈ t, Metric.ball y (ε / 2) := ht_cover haA
+  simp only [Set.mem_iUnion, Metric.mem_ball, exists_prop] at ha_mem ⊢
+  obtain ⟨y, hyt, hay⟩ := ha_mem
+  refine ⟨y, hyt, ?_⟩
+  calc dist s y ≤ dist s a + dist a y := dist_triangle s a y
+    _ < ε / 2 + ε / 2 := by linarith
+    _ = ε := by ring
+
+/-- Simon's finite-exponent sufficiency criterion, with interval-integral
+observations allowed to meet either endpoint. -/
+theorem isCompact_closure_of_integrals_translations
+    {T : ℝ} (hT : 0 < T) (hp : p ≠ ∞)
+    (S : Set (Lp E p (volume.restrict (Ioc 0 T))))
+    (hint : ∀ a b : ℝ, 0 ≤ a → a < b → b ≤ T →
+      IsCompact (closure ((fun f : Lp E p (volume.restrict (Ioc 0 T)) =>
+        ∫ t in Ioc a b, f t) '' S)))
+    (htrans : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧
+      ∀ h : ℝ, 0 < h → h < δ → h < T →
+        ∀ f ∈ S, eLpNorm (fun t => f (t+h) - f t) p
+          (volume.restrict (Ioc 0 (T-h))) < ENNReal.ofReal ε) :
+    IsCompact (closure S) := by
+  apply isCompact_iff_totallyBounded_isComplete.mpr
+  refine ⟨TotallyBounded.closure ?_, isClosed_closure.isComplete⟩
+  apply totallyBounded_of_uniform_approx' S
+  intro ε hε
+  obtain ⟨δ,hδ,hmod⟩ := htrans (ε/4) (by linarith)
+  have hr : 0 < min δ T := lt_min hδ hT
+  obtain ⟨N,hN⟩ := exists_nat_gt (T / min δ T)
+  have hN0 : (0:ℝ) < N := lt_trans (div_pos hT hr) hN
+  let d := T / (N:ℝ)
+  have hd : 0 < d := div_pos hT hN0
+  have hNd : (N:ℝ)*d = T := by dsimp [d]; field_simp
+  have hdmin : d < min δ T := by
+    dsimp [d]
+    apply (div_lt_iff₀ hN0).mpr
+    have hh := (div_lt_iff₀ hr).mp hN
+    nlinarith
+  let K : Fin N → Set E := fun i =>
+    (fun c : E => (volume.real (meshCell d i))⁻¹ • c) ''
+      closure ((fun f : Lp E p (volume.restrict (Ioc 0 T)) => ∫ t in meshCell d i, f t) '' S)
+  have hK : ∀ i, IsCompact (K i) := by
+    intro i
+    have ha : 0 ≤ (i:ℝ)*d := mul_nonneg (by positivity) hd.le
+    have hab : (i:ℝ)*d < (i+1)*d := by nlinarith
+    have hb : ((i:ℝ)+1)*d ≤ T := by
+      rw [← hNd]
+      apply mul_le_mul_of_nonneg_right _ hd.le
+      exact_mod_cast i.isLt
+    exact (hint ((i:ℝ)*d) ((i+1)*d) ha hab hb).image
+      (continuous_const.smul continuous_id)
+  refine ⟨assemble (p := p) T d N '' Set.pi univ K,
+    (compact_assemble T d N hp K hK).totallyBounded, ?_⟩
+  intro f hf
+  let y : Fin N → E := fun i => ⨍ t in meshCell d i, f t
+  have hy : y ∈ Set.pi univ K := by
+    intro i _
+    refine ⟨∫ t in meshCell d i, f t, subset_closure ⟨f,hf,rfl⟩, ?_⟩
+    exact (setAverage_eq _ _ _).symm
+  refine ⟨assemble (p := p) T d N y, ⟨y,hy,rfl⟩, ?_⟩
+  have hbound := mesh_eLpNorm_le hd N hNd hp f (c := ENNReal.ofReal (ε/4))
+    (fun h hh => (hmod h hh.1 (lt_of_le_of_lt hh.2 (lt_of_lt_of_le hdmin (min_le_left _ _)))
+      (lt_of_le_of_lt hh.2 (lt_of_lt_of_le hdmin (min_le_right _ _))) f hf).le)
+  have hcoe := assemble_coe (p := p) T d N y
+  have hdist : dist f (assemble (p := p) T d N y) =
+      (eLpNorm (fun t => f t - meshAverage d N f t) p (volume.restrict (Ioc 0 T))).toReal := by
+    rw [dist_eq_norm, Lp.norm_def]
+    congr 1
+    apply eLpNorm_congr_ae
+    filter_upwards [Lp.coeFn_sub f (assemble (p := p) T d N y), hcoe] with t hsub hy
+    rw [hsub, Pi.sub_apply, hy]
+    rfl
+  rw [hdist]
+  calc
+    _ ≤ (2 * ENNReal.ofReal (ε/4)).toReal :=
+      ENNReal.toReal_mono (ENNReal.mul_ne_top (by norm_num) ENNReal.ofReal_ne_top) hbound
+    _ < ε := by
+      rw [ENNReal.toReal_mul, ENNReal.toReal_ofReal (by linarith : 0 ≤ ε/4)]
+      norm_num
+      linarith
+
+end LpCompactness
 
 end D5.S3.Topology.Measures.IntervalLpCompactness
