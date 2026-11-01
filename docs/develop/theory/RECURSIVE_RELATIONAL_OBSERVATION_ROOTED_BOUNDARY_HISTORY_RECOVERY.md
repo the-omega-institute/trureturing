@@ -2261,3 +2261,345 @@ Proof. Remove duplicate entries from a finite list. If it has at least two membe
 These source correspondences are readings of the actual declarations and primary literature, not a new Lean compilation or kernel verification of §38. The theorem is conditional on the exact supplied service and all exclusions of Definition 38.1; it asserts no physical realization, noise tolerance, physical spacetime identification, full-rational finite acquisition, total-memory optimum or worldwide priority. The full-carrier and presentation obstructions already stated in §§18 and 25 remain. This bounded original-recovery consequence does not complete the continuing RRO programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 39. Acquired full future profiles and recovery after actual motion
+
+### 39.1 All future words, all scales in the requested range
+
+**Definition 39.1 (one source, full profile and actual evidence).** Retain the positive rational source, chronological $L/R$ actions and unclipped, nondisturbing floor services of Assumptions 11.1 and 18.2. Every requested positive integer scale must be supplied, lawful to use, and return its complete binary integer in finite time. Each finite action, local computation and response must complete. There is one source and epoch, with serialized acknowledgements; no reset, copy, source inverse, saved original source or unknown-source advice is supplied. Positivity is a source premise, not a fact bought by an extra unit read.
+
+For $B\ge1$, define the common full future profile, its instantaneous part and its candidate cut set by
+
+$$
+\begin{aligned}
+\mathsf P_B(y)&=\bigl(q_m(f_v(y))\bigr)_{1\le m\le B,\ v\in\{L,R\}^{<\omega}},\\
+\mathsf F_B(y)&=(q_m(y))_{1\le m\le B},\\
+\mathcal H_B&=\{p/q>0:\gcd(p,q)=1,\ 1\le q\le B\}.
+\end{aligned}
+\tag{39.1}
+$$
+
+The words include $\varepsilon$. There is no finite catalogue or word-length restriction in $\mathsf P_B$. It is a semantic family, represented below by a finite cell and a finite evaluation procedure, not by an infinite stored tuple. A prediction indexed by $v$ is not an observation of an executed $v$. The single-scale all-future class $\equiv_m$ remains that of (11.2); it must not be confused with their common refinement over every $m\le B$.
+
+**Theorem 39.2 (complete full-profile cell and continued prediction).** Equality of $\mathsf P_B$, equality of $\mathsf F_B$ and the following no-cut condition are equivalent:
+
+$$
+0<x<y,\qquad \mathcal H_B\cap(x,y]=\varnothing.
+\tag{39.2}
+$$
+
+The cells are $(0,1/B)\cap\mathbb Q$ and $[\ell,r)\cap\mathbb Q$ between successive positive cuts of $\mathcal H_B$. Every cell has finite rational endpoints with reduced denominators at most $B$. There are infinitely many cells on the whole carrier. One cell, together with $B$, suffices to evaluate every coordinate of $\mathsf P_B$ by finite exact arithmetic and to update this profile through any actual finite forward continuation.
+
+Proof. The cut theorem 11.2 gives the cuts $\mathcal C_m$ of the entire single-scale future family. Every reduced denominator there is at most $m$, so $\bigcup_{m\le B}\mathcal C_m\subseteq\mathcal H_B$. Conversely a reduced $p/q$ with $q\le B$ is already a cut of the instantaneous $q_q$, hence belongs to $\mathcal C_q$. Thus this union equals $\mathcal H_B$. The instantaneous grids have the same union, proving both equivalences, with the right endpoint included exactly as in (11.4). Local finiteness follows by counting finitely many numerators at each of the finitely many denominators on a bounded interval. Integer cuts ensure finite upper endpoints. Distinct cuts $p/q,p'/q'$ differ by at least $1/(qq')\ge1/B^2$; this is supporting Farey arithmetic, not a new enumeration theorem.
+
+For evaluation choose $y_0=\ell$ when $\ell>0$, and $y_0=r/2$ in the first cell. Evaluate $q_m(f_v(y_0))$ using the actual matrix convention of §6. The equivalence proves this equals the value for every possible source in the cell, for every finite $v$, not just for words in a stored list. For a new action $a$, equal profiles before it give equal profiles after it by replacing $v$ with the chronological concatenation $av$. Consequently the cell containing $f_a(y_0)$ is the updated full-profile cell. This proves continued use and finite evaluation, without executing a prediction or acquiring a literal original history. $\square$
+
+### 39.2 Two genuine reads at polynomial raw scales
+
+**Theorem 39.3 (acquired full profile at an unchanged attained cut).** For every $B\ge1$, a finite deterministic program acquires the full $\mathsf P_B(z)$ of an unrestricted positive rational current source $z$ with at most two actual replies, zero actions, first scale $D=B^2$ and, if needed, second scale at most $B$. No original-denominator bound is assumed. If existing actual evidence already determines one of these replies, the program derives it and omits that read.
+
+Proof. Obtain the actual reply $r=q_D(z)$, or derive that same integer from retained evidence. Its exact raw cell is
+
+$$
+J_D(r)=\begin{cases}(0,1/D),&r=0,\\\left[r/D,(r+1)/D\right),&r>0.\end{cases}
+\tag{39.3}
+$$
+
+There is at most one distinct $\mathcal H_B$ cut strictly inside this interval: two interior cuts would be separated by less than $1/D=1/B^2$. For each denominator $s=1,\ldots,B$, compute the least numerator $j$ with $j/s>r/D$ and test $j/s<(r+1)/D$. This is one integer division and comparison per denominator; repetitions name the same cut. A cut at the lower endpoint is already owned by the cell, and the upper endpoint is excluded.
+
+If there is no interior cut, no further read is necessary. Otherwise write that cut as $t=p/s$ with $s\le B$ (reduction is optional), obtain the genuine reply $h=q_s(z)$ and decide $z\ge t$ by $h\ge p$. Intersect (39.3) with $[t,\infty)$ or $(0,t)$ accordingly. This is a genuine comparison at the unchanged cut, not a hypothetical continuation. If prior evidence already settles its side, omit it. Select the included positive lower endpoint of the resulting interval, or an interior rational when its lower endpoint is zero. At most one cut was crossed, so this representative has exactly the actual full profile by Theorem 39.2.
+
+For completeness, the exact containing cell is computed with $B$ further local divisions. At representative $y_0$, put $j_s=\lfloor sy_0\rfloor$. Its lower endpoint is the maximum of $0$ and $j_s/s$ over $s\le B$, and its upper endpoint is the minimum of $(j_s+1)/s$. Reduce only these selected endpoints if desired. This produces the entire finite representation, including all future words. In particular
+
+$$
+q_1(z)=\lfloor r/D\rfloor
+\tag{39.4}
+$$
+
+is derived from the first reply. For $B=1$, $D=1$, there is no interior integer cut and exactly this one read suffices unless already earned. The zero report means $(0,1)$, whose upper endpoint is finite and excluded. The construction uses only finitely many binary arithmetic operations and the supplied finite-completing services. $\square$
+
+The two-read result does not contradict the one-read divisibility condition of Theorem 15.2. Its second scale is chosen after an actual first reply; it uses the single unresolved local cut rather than a global LCM. The numerical raw scale $B^2$, as well as its binary name, is polynomially bounded.
+
+### 39.3 The actual original/current recovery square
+
+**Definition 39.4 (earned unit slice and authentic prefix).** An actual original reply $q_1(x)=k$, or a derived value from an actually acquired original archive, earns
+
+$$
+I_k=\begin{cases}(0,1),&k=0,\\\left[k,k+1\right),&k\ge1.\end{cases}
+\qquad k=\lfloor x\rfloor\ge0.
+\tag{39.5}
+$$
+
+Let $u$ be the authentic actually executed chronological prefix, with
+
+$$
+A_u=\begin{pmatrix}a&b\\c&d\end{pmatrix},\quad
+ad-bc=1,\quad a,d\ge1,\quad b,c\ge0,\qquad
+z=f_u(x)=\frac{ax+b}{cx+d}.
+\tag{39.6}
+$$
+
+The square compares the original full profile $\mathsf P_B(x)$ and the current full profile $\mathsf P_C(z)$ on this same slice and actual prefix. The current profile must come from actual current replies, for example Theorem 39.3, or be derived from already acquired evidence. The square's upper map is the real action $u$; mathematical inverse arithmetic below is not a source operation.
+
+**Theorem 39.5 (both factor directions and sharp slice threshold, including zero).** For every $k\ge0$ and $B\ge2$, the current full profile at resolution $C\ge1$ determines the original full profile at resolution $B$ on $I_k$ if and only if
+
+$$
+f_u\bigl(\mathcal H_B\cap(k,k+1)\bigr)\subseteq\mathcal H_C
+\quad\Longleftrightarrow\quad
+C\ge C_*:=B\bigl(c(k+1)+d\bigr)-c.
+\tag{39.7}
+$$
+
+The reverse factor holds if and only if
+
+$$
+f_u^{-1}\bigl(\mathcal H_C\cap f_u((k,k+1))\bigr)
+ \subseteq\mathcal H_B.
+\tag{39.8}
+$$
+
+Mutual recovery holds precisely when the two interior cut sets agree after transport. A current profile with extra cuts can recover the original profile without being recoverable from it. For $B=1$, the original full profile is already known from $k$, with no current read; the reverse factor still requires (39.8).
+
+Proof. By Theorem 39.2 these are exactly the respective half-open interval partitions. A factor from current to original exists precisely when every original interior cut survives in the current partition. Necessity follows by choosing two rational points on opposite sides of a missing cut within one current cell; sufficiency follows because each current cell then lies in one original cell. The same argument with roles reversed gives (39.8). It proves both directions, with cuts at the slice's endpoints irrelevant because the domain is already restricted to that slice.
+
+For the sharp value, any original cut can be written reduced as $j/m$ with $m\le B$ and $mk<j<m(k+1)$. Its image is
+
+$$
+f_u(j/m)=\frac{aj+bm}{cj+dm},\qquad
+cj+dm\le m\bigl(c(k+1)+d\bigr)-c\le C_*.
+\tag{39.9}
+$$
+
+This image is reduced: a common divisor of its two displayed entries divides $j,m$ after applying the integer inverse matrix. This is transformed-column reducedness, not merely lower-row coprimality. Thus $C\ge C_*$ suffices. The last $B$-grid cut
+
+$$
+t_*=k+1-1/B=\frac{B(k+1)-1}{B}
+\tag{39.10}
+$$
+
+is positive even for $k=0$, belongs strictly to the slice, and is reduced. Its image has reduced denominator exactly $C_*$. If $C<C_*$ that image is not in $\mathcal H_C$. Local finiteness gives rationals $x^-<t_*<x^+$ in the same $I_k$ with no current cut between their images. They have identical current full profiles and different original full profiles. This is a strict-below-threshold witness on the declared slice. For $c=0$, determinant one forces $a=d=1$, so $C_*=B$ and the same witness works. For $B=1$ there are no interior integer cuts in $I_k$, proving its separate statement. $\square$
+
+This is a sharp factor condition given only the declared slice and prefix. It is not an acquisition-cost optimum when additional old evidence is retained. The lower endpoint $0$ is always excluded; it causes no missing case in (39.7).
+
+### 39.4 Acquired original-profile upgrades from the actual moving cut
+
+**Definition 39.6 (earned localization and exact preimages).** A bounded original interval $I$ is earned when actual replies at authentic cuts, or an actually acquired earlier archive, imply $x\in I$. Write its finite endpoints as $0\le\alpha<\beta<\infty$, with lower endpoint included when positive and upper endpoint excluded. Put $U=\lceil\beta\rceil\ge1$. A unit slice or a previously acquired full-profile cell already supplies this localization; no new bootstrap read is charged in that case.
+
+For clarity, solving a current threshold $f_u(t)=j/m$ gives
+
+$$
+t=\frac{dj-bm}{am-cj}
+\quad\text{when this lies in }(0,\infty).
+\tag{39.11}
+$$
+
+Its displayed denominator is $am-cj$, not $cj+dm$. The latter is the forward denominator in (39.9). For reduced $j/m$ and a positive preimage both entries in (39.11) are positive and coprime, by the inverse determinant-one argument. Endpoint preimages of raw cells are clipped to the actual image $f_u((0,\infty))$ before inversion; an endpoint outside that image is replaced by the corresponding original endpoint $0$ or $\infty$.
+
+**Theorem 39.7 (two-reply upgrades, polynomial raw scale and attained linear scan).** At any authentic attained prefix $u$, from an earned bounded $I$ and requested $B\ge1$, the controller acquires the original full $\mathsf P_B(x)$ with zero additional actions and at most two genuine current replies. A sufficient explicit raw-scale budget is
+
+$$
+T=cU+d,\qquad Q=BT,\qquad D=Q^2;
+\tag{39.12}
+$$
+
+the optional second scale is at most $Q$. The decoder uses $O(B)$ rational divisions/comparisons and a constant number of gcd computations, with bit costs specified in Proposition 39.10. Its loop runs over original denominators $1,\ldots,B$, not every current denominator up to $Q$. Existing earned evidence is used before either paid read.
+
+Proof. Every original target cut $j/m$ strictly inside $I$ has $m\le B$, $0<j<mU$ and transported reduced denominator
+
+$$
+s=cj+dm\le B(cU+d)=Q.
+\tag{39.13}
+$$
+
+Their distinct images are separated by at least $1/Q^2$. Obtain $r=q_D(z)$ at the actual current cut, unless retained evidence already determines that exact value. Intersect $I$ with the preimage of its actual half-open cell to obtain $J$, which contains the actual $x$. This computation uses (39.11) and image clipping. The interior of $f_u(J)$ lies in one raw interval of width $1/Q^2$, so $J$ contains at most one distinct original target cut strictly in its interior.
+
+To find it, for each $m\le B$ compute the least integer $j$ with $j/m>\inf J$, and test $j/m<\sup J$. If it passes, it is positive and there cannot be a second numerator at that denominator: that would give two distinct target images inside the raw cell. Repeated fractions across denominators identify the same cut. If no cut is found, the first reply already decides the full target. If a cut $t=j/m$ is found, compute
+
+$$
+f_u(t)=p/s,\qquad p=aj+bm,\quad s=cj+dm\le Q.
+\tag{39.14}
+$$
+
+One actual current reply $h=q_s(z)$ decides $x\ge t$ exactly by $h\ge p$. Reduction can only lower the second scale; alternatively use the displayed unreduced $s$, which also works. Restrict $J$ to that side and compute the original full-profile cell by the $B$-division procedure in Theorem 39.3. This proves the promised finite acquisition and endpoint ownership.
+
+Before either read, intersect with all retained actual constraints. If this already makes the target constant, answer without reading. If it makes the proposed current reply constant, derive that reply; its value is not relabelled as a new observation. There is no separate $q_1(z)$ request. Previously earned original $k$ is retained or derived from the original interval; no assertion that an unperformed current unit read took place is needed. All comparisons use current $z$, while all retained constraints refer to the same original $x$ through authentic matrices. Repeated, skipped and noncoprime requested scales cause no divisibility restriction, because the target range is every $m\le B$. $\square$
+
+**Proposition 39.8 (pointwise entrance after contraction without an old source record).** If initialization occurs after an authentic prefix $u$ with no earlier source-dependent record, it need not have a bounded original interval yet. There is nevertheless a pointwise finite zero-action entrance procedure. For $c=0$ the translation formula gives a bounded original interval from one actual $q_1(z)$. For $c>0$, request $q_{2^h}(z)$ for $h=0,1,\ldots$ until the acquired raw upper endpoint is strictly below $a/c$. Clip its lower endpoint to $b/d$, invert, and obtain a bounded earned $I$. Then Theorem 39.7 applies. With
+
+$$
+\delta=a/c-z=\frac1{c(cx+d)},\qquad
+h_* =\max\bigl(0,\lceil\log_2(2/\delta)\rceil\bigr),
+\tag{39.15}
+$$
+
+at most $h_*+1$ entrance replies suffice. This is analysis of the actual run, not $x$ or $\delta$ supplied to the program.
+
+Proof. At scale $D$, the raw upper endpoint is at most $z+1/D$. When $D\ge2/\delta$, it is strictly below $a/c$, so the inverse upper endpoint is finite. The attained $z$ is strictly inside $(b/d,a/c)$ and positive; the clipped lower preimage is either $0$ or a finite nonnegative rational. This earns the interval from actual replies. The dyadic test is an exact rational comparison using known $a,c$; it does not require knowing $\delta$. Translation has no finite upper asymptote, so its inverse of a finite current raw cell is bounded after positivity clipping. If an earlier archive already supplied $I$, this entire entrance phase is omitted. No uniform entrance cap follows. $\square$
+
+### 39.5 Sufficient retained relations and one continuing controller
+
+**Definition 39.9 (joint evidence interval and authentic cut indices).** Retain the source/epoch binding, the serialized actual action/acknowledgement sequence and the actual read records $(t_i,D_i,r_i)$, where $t_i$ is an authentic position in that sequence and $r_i=q_{D_i}(f_{u_{t_i}}(x))$. Authenticity assumes faithful recording and exclusive serialization, not cryptographic protection against a malicious recorder. The semantic source-dependent state can be retained as just
+
+$$
+K=(0,\infty)\cap\bigcap_i f_{u_{t_i}}^{-1}(J_{D_i}(r_i)).
+\tag{39.16}
+$$
+
+This is one interval with rational endpoints, possibly unbounded before entrance. A derived full-profile cell, original band and floor tuple are computed from $K$ when needed. They need not be separately retained as stage archives. A known current matrix is updated by left multiplication on each acknowledged letter; matrices at older authentic cuts can be recomputed from the recorded sequence. Source-blind requests or choices are allowed to depend on earlier exposed data; extra source-dependent request parameters would be additional evidence and must be declared as such.
+
+**Theorem 39.10 (sufficiency, continued use and exact prediction boundary).** The state (39.16), the authentic cut indices and the installed finite arithmetic suffice for original, current and authentically recorded-cut predictions. At a cut $t$, the full resolution-$C$ profile is determined exactly when
+
+$$
+f_{u_t}^{-1}(\mathcal H_C)\cap\operatorname{int}K=\varnothing.
+\tag{39.17}
+$$
+
+For a single prediction $q_m(f_v(f_{u_t}(x)))$, replace that cut set by the preimages of its instantaneous $m$-grid. If $K$ lies in an original $\mathsf P_B$ cell, every original/current/recorded-cut prediction at $m\le B$ and every finite future word is determined, and remains so through further genuine forward actions. Unknown later original resolutions can be acquired by Theorem 39.7 using this same state.
+
+Proof. Each actual read contributes exactly its interval constraint, because every matrix map is strictly increasing. Their intersection is nonempty on the actual run, with positive lower endpoint included and finite upper endpoint excluded. The source-dependent reports, together with source-independent choices and acknowledged actions, impose precisely (39.16); replay on another $y\in K$ gives the same deterministic branch. Thus the target can be computed from these data if and only if it is constant on $K$. A target cut strictly inside $K$ gives two rational realizations with different values; absence of such cuts gives constancy with correct endpoint ownership. Theorem 39.2 proves (39.17) for all continuations simultaneously. The same threshold argument proves the single-coordinate version.
+
+A representative in $K$ therefore computes every permitted prediction. If $K$ lies in one original $\mathsf P_B$ cell, its forward images, including those at each authentic past cut and any continuation from it, have equal $\mathsf P_B$ by forward congruence. On an actual new action update the authentic word/matrix; on an actual new reply intersect its preimage into $K$. Neither update loses a previously established prediction. At an original-precision upgrade, the new $K$ lies in a cell of the finer requested common profile; old covered ranges restrict consistently by the same actual $x$.
+
+Keeping $K$ preserves the entire joint kernel of the numerical evidence in two endpoints. This is a sufficient semantic compression, with no claim of globally minimal binary coding. Authentic provenance still needs the actual action/read record: an interval does not say which observations occurred. Conversely that record permits recomputing $K$, so its endpoints can be a working cache rather than a second source of truth. Predicted values at authentic old cuts remain predictions attached to those cuts; they are actual past observations only where a corresponding read record exists. A fabricated continuation cannot become an authentic cut merely because its matrix can be evaluated. $\square$
+
+**Theorem 39.11 (bounded-overshoot frontiers for unknown original requests).** There is one nonanticipating controller for successive requested original precisions $M_1,M_2,\ldots\ge1$, with arbitrary finite genuine forward continuations between completed requests. It serializes each upgrade and uses Definition 39.9's single boundary. Use the public frontiers
+
+$$
+b_0=1,\quad b_1=2,\quad b_{j+1}=b_j^2\ (j\ge1),\qquad
+b_j=2^{2^{j-1}}\ (j\ge1).
+\tag{39.18}
+$$
+
+On a miss choose the least frontier $b_j\ge M_i$, skip unneeded intervening frontiers, and run Theorem 39.3 at an unchanged original start or Theorem 39.7 at the attained moving cut. A hit is answered from the retained boundary with no paid read. Let $M=\max_{i\le n}M_i$, and let $J$ count frontier acquisitions through that completed finite request prefix. Including a possible acquisition at $b_0$,
+
+$$
+\begin{aligned}
+J&\le 2+\left\lceil\log_2\log_2(\max(2,M))\right\rceil,\\
+b_{\rm final}&\le\max(2,M^2),\\
+R_{\rm paid}&\le R_{\rm start}+E+2J.
+\end{aligned}
+\tag{39.19}
+$$
+
+Here $E$ is the genuine entrance cost only when Proposition 39.8 is needed. The count includes all earlier frontier acquisitions by this same controller in $J$. If accounting begins with an already acquired archive, $R_{\rm start}$ charges its actual paid evidence since binding; it is zero when starting at the original cut or using the separate post-prefix entrance. This starting evidence is reused without paying to acquire it again. No intermediate frontier is paid merely to reach a later one. All upgrades use zero extra source actions. The controller additionally retains whatever genuine continuations the user actually performs.
+
+Proof. At each miss the chosen frontier exceeds the already installed one. For $M>1$ the least covering frontier is strictly below $M^2$ unless $M$ itself is a frontier, in which case it equals $M$; $M=1$ is separate. The indices in (39.18) give the first bound. Acquisition gives the whole original common profile, so every smaller request is answered regardless of repetition, gaps or common factors, and further actions do not invalidate it by Theorem 39.10. If extra earlier evidence already determines the selected frontier, compute it without reading. This can only reduce paid replies. No later request or continuation was used to choose an earlier scale. The two acquisition theorems and the separately charged entrance prove the last inequality. The original denominator remains unrestricted. $\square$
+
+### 39.6 Binary payload, attained work and retention
+
+**Proposition 39.12 (finite-prefix resource vector for that same controller).** Use $\lambda(n)=1+\lceil\log_2(n+1)\rceil$ for nonnegative integer widths, fixed binary delimiters, and schoolbook exact arithmetic. After entrance choose its earned interval as a fixed enclosing $I$ with $U=\lceil\sup I\rceil$, even as the working $K$ shrinks. For a unit slice, $U=k+1$, so source magnitude is explicitly charged. At acquisition $i$ let $B_i$ be its chosen frontier, let $a_i,b_i,c_i,d_i$ be the actual attained matrix entries, and put
+
+$$
+\begin{aligned}
+T_i&=c_iU+d_i,& V_i&=a_iU+b_i+1,\\
+Q_i&=B_iT_i,& \mu_i&=\lambda(\max(a_i,b_i,c_i,d_i)),\\
+W_i&=16\bigl(e_i+\lambda(B_i)+\lambda(U)+\mu_i+1\bigr).
+\end{aligned}
+\tag{39.20}
+$$
+
+Here $e_i$ bounds the binary widths of the endpoints of the working earned $K$ before that acquisition (use $1$ at a fresh unchanged original start). At that fresh start use $Q_i=B_i$, first obtain the band from its actual reply, and use $U=\lfloor x\rfloor+1$ in the ensuing analysis. The constants in $W_i$ cover the finite products, divisions, representative and endpoint computations below. In particular they are independent of the unknown reduced source denominator.
+
+The raw scales and acquired payloads obey
+
+$$
+D_i\le Q_i^2,\quad s_i\le Q_i,\qquad
+0\le r_i<D_iV_i,\quad 0\le h_i<s_iV_i.
+\tag{39.21}
+$$
+
+The total binary lengths of the two scale names and two actual integer replies at this upgrade, omitting any unneeded reads, are at most
+
+$$
+12\bigl(1+\log_2(B_i+1)+\log_2(T_i+1)+\log_2(V_i+1)\bigr).
+\tag{39.22}
+$$
+
+Let $\mu_{\max}$ be the maximum actual matrix width through the finite prefix. If $P_{\rm start}$ is the actual binary payload of starting evidence charged by $R_{\rm start}$ and $P_{\rm ent}$ is the actual sum of entrance scale-name and reply lengths, the cumulative paid binary payload is
+
+$$
+P_{\rm paid}=O\!\left(P_{\rm start}+P_{\rm ent}+\log(M+2)
+       +J\bigl(\mu_{\max}+\log(U+1)+1\bigr)\right).
+\tag{39.23}
+$$
+
+An explicit attained local bit-work bound for the acquisitions is
+
+$$
+O\!\left(\sum_{i=1}^{J}\bigl(B_iW_i^2+W_i^3\bigr)\right).
+\tag{39.24}
+$$
+
+Add entrance processing, all received request-name bits, actual matrix-update work, output work and provenance handling as described in the proof. These are different coordinates from paid reply count, full-profile resolution, raw scale, source-service costs and rights/backing.
+
+Proof. Since $0<x<U$ or $x\le U$ suffices for the bound and $cx+d\ge1$, the actual current value satisfies $0<z<V_i$. This proves (39.21) from the actual floor replies; original magnitude has not disappeared when the source moves. The two scales have logarithms at most $2\log Q_i$ and $\log Q_i$; the two replies have logarithms at most these plus $\log V_i$. The width convention then proves the conservative constant (39.22). On the sparse subsequence of acquired frontiers, the positive numbers $\log_2 B_i$ grow by at least a factor two, apart from the initial $1$ frontier. Their sum is at most $2\log_2 b_{\rm final}$. Also $T_i+1,V_i+1\le 3\cdot2^{\mu_i}(U+1)$. Combining these bounds with (39.19) proves (39.23). Entrance has its actual extra payload; at dyadic exponent $h$ it is $O(h+\lambda(a+b+c+d)+1)$ bits per reply, using $z<a/c\le a$ when $c>0$. Its local scan and arithmetic are charged through the attained final exponent, not hidden in $J$.
+
+For (39.24), compute (39.12), the two inverse endpoints of the first raw cell, their intersection with $K$, the possible transported cut, and the final representative. Each has only a fixed number of products and rational operations on input integers of the widths included in $W_i$. For example an inverse raw endpoint is $(d_ir_i-b_iD_i)/(a_iD_i-c_ir_i)$ before clipping. This also shows why the endpoint formula (39.11) and the forward denominator (39.14) cannot be interchanged. Cross-multiplication compares endpoints without enumerating intervening numerators. The scan for the unique interior cut takes one division and a constant number of comparisons per original denominator. The containing original-cell scan takes another such pass. Arithmetic on $W_i$-bit integers costs $O(W_i^2)$ per division/product. Only a constant number of selected fractions need reduction; Euclid uses $O(W_i)$ such steps, giving the conservative $O(W_i^3)$ term. No loop over all $1,\ldots,Q_i$ or over an LCM is present. The stated $O(B_i)$ scan is therefore attained by this decoder.
+
+Let $H$ be the number of actual post-binding action letters, $R$ the total actual reads including entrance, and $A_{\rm ack}$ the actual acknowledgement/binding encoding size. Updating the current matrix by a generator costs $O(\mu)$ bit work per letter and four integers of $O(\mu)$ space. Each entry is at most $2^H$, but using the measured actual $\mu$ avoids identifying action count with matrix width. Complete provenance can be retained in
+
+$$
+O\bigl(H+P_{\rm paid}+R\lambda(H+1)+A_{\rm ack}\bigr)
+\tag{39.25}
+$$
+
+bits, plus retained request names when they have a consumer. Store the original interval endpoints and current matrix as working state with $O(e+\mu+\lambda(B)+\lambda(U))$ bits, plus arithmetic workspace $O(W)$ and counters; selected endpoints are reduced to keep these widths literal. The next acquisition's $e_i$ charges their actual size. No separate full stage archives or $B_i$-entry tuples are required. Reports kept for provenance remain actual rows; derived floor values have no second paid-evidence status. Processing/encoding these rows costs at least their lengths and is added to (39.24).
+
+If a consumer asks for all instantaneous values through precision $m$, emit them by $m$ exact divisions at a representative, costing $O(mW^2)$ plus their output length. A word prediction at an authentic cut $t$ and continuation $v$ uses the recorded $u_t$ or its computed matrix. Replaying its $|u_t|+|v|$ letters and evaluating at a representative costs $O((|u_t|+|v|+m)\widehat W^2)$ when all $m$ coordinates are emitted, where $\widehat W$ includes that composed matrix, representative and output operand widths. Matrix entries grow by at most doubling per letter. A full-profile answer can instead emit only $B$ and the two cell endpoints; the infinitely many coordinates are available on demand, not emitted in finite time. Charge each received request's entire binary encoding, each chosen finite prediction word, all emitted bits and any replay used to reconstruct an old matrix. Even a hit has request and output work. Entrance rational inversion takes $O(W_{\rm ent}^3)$ per read as a conservative bound, and all its actual payload and acknowledgements enter (39.25).
+
+The installed source must complete every requested service, but no law for its internal time, storage, price or physical backing has been assumed. Those resources and lawful scale access remain separate premises/costs. Equations (39.21)–(39.24) assert neither movement-independent stationary cost nor a worldwide optimum, tariff law, competitive ratio or dominance over a construction with a different resource vector. $\square$
+
+### 39.7 Exact obstructions without earlier original information
+
+**Proposition 39.13 (a fixed finite current profile loses unbounded original unit information).** For every authentic prefix with $c>0$ and finite $C$, the current full $\mathsf P_C(f_u(x))$ fails to recover even the original $q_1(x)$ on the unrestricted positive carrier. In particular it cannot recover the original rational or word. Pure translations have the different exact law
+
+$$
+c=0\ \Longrightarrow\ u=R^b,\ a=d=1,\qquad
+q_m(f_u(x))=q_m(x)+mb,
+\tag{39.26}
+$$
+
+so every original profile through $C$ is recoverable from the corresponding current one and conversely.
+
+Proof. If $c>0$, then
+
+$$
+f_u(x)=a/c-\frac1{c(cx+d)}.
+\tag{39.27}
+$$
+
+Whenever $cx+d>C$, every $m\le C$ has
+
+$$
+q_m(f_u(x))=\lceil ma/c\rceil-1.
+\tag{39.28}
+$$
+
+If $ma/c$ is an integer the subtracted positive amount is less than $1$; otherwise its fractional part is at least $1/c$ while the subtracted amount is less than $1/c$. This proves (39.28) in both cases. Choose an integer $K>C+d+1$, and the two actual originals $x=K+1/3$, $y=K+4/3$. Both satisfy that tail condition, have identical instantaneous and hence full current profiles, but have original unit indices $K$ and $K+1$. This supplies the missing $q_1$ obstruction directly. For the explicit real action $u=L$, their current reports are $m-1$ for every $m\le C$. Both originals are actual reachable rational sources by Theorem 6.2. For $c=0$, the determinant forces $a=d=1$ and the source law is $x\mapsto x+b$; a word containing $L$ has positive lower-left entry, so its authentic word consists only of $R$. The integer floor identity proves both profile factors in (39.26). Earned localization or old retained information changes this global question exactly through (39.7) and (39.17). $\square$
+
+**Theorem 39.14 (no uniform finite read cap, even with further forward actions).** Fix any authentic starting prefix $u$ with $c>0$. A deterministic controller has no source-dependent record from before that cut. Allow arbitrary finite further forward actions, adaptive current scales and local finite computation on the same source. If it terminates correctly for every positive rational original, no uniform finite bound on its number of current replies can recover unbounded original $q_1$. Pointwise finite recovery remains possible by Proposition 39.8 and Theorem 39.7 with $B=1$.
+
+Proof. Assume a cap $N$. For every possible further finite action prefix $v$, the composite matrix $A_vA_u$ still has lower-left entry $c'>0$: its lower row is a nonnegative row with positive lower-right entry, so $c'=\gamma a+\delta c\ge c$. Its attained response approaches $a'/c'$ strictly from below as the original $x\to\infty$. At a requested scale $D$, feed the tail response
+
+$$
+\rho(D,A_vA_u)=\lceil Da'/c'\rceil-1.
+\tag{39.29}
+$$
+
+Every finite sequence of these responses is realized by all sufficiently large rational originals, since the finitely many maps/scales on that deterministic branch each stabilize to this response. Source-independent action acknowledgements also agree.
+
+Each phase between replies on this tail branch must finish its local computation and finite actions, and either stop or issue another read. If a phase instead continued forever without a new reply, the finite earlier tail prefix would be realized by every sufficiently large actual original, giving a nonterminating actual run and contradicting the pointwise completion premise. After at most $N$ replies the branch must stop: a further read would be realized by a sufficiently large actual source and violate the uniform cap. The completed tail branch is finite and therefore realized by every rational original beyond some finite $X$. Choose two such originals with different unit indices. Their entire actual transcripts, decisions, further actions and output coincide, so that output cannot recover both unit indices. This contradicts correctness. The argument covers every $c>0$ and any finite forward action scope; it does not infer $q_1$ failure merely from rational noninjectivity. Earlier source-dependent records or earned bounded localization remove the tail premise; pure translations satisfy (39.26). $\square$
+
+### 39.8 The four expressions, suppliers and finite scope
+
+**Proposition 39.15 (finite relational recovery of the four expressions).** Let the original unknown chronological word be $w$, with rational boundary $x=B(w)$, rooted named-incidence path $S(w)$ and indexed prefix-memory table $M(w)$ as in §§6 and 17. Quotient each of these four expressions by equality of the original $\mathsf P_B(x)$. On their actual images the four quotients recover each other, and their common finite description is the acquired $\mathcal H_B$ cell. Its boundary is the full prediction rule; chronological continuations act on its cells; authentic cut indices relate those predictions to the recorded chronology and memory.
+
+Proof. The exact correspondences of Theorems 6.2 and 17.3 send each exact expression to the same original $x$. Pulling back equality of its cell therefore gives the same quotient on all four actual images. Each quotient label gives the cell and conversely, proving finite-resolution mutual recovery. Theorem 39.2 supplies the complete future evaluator; Theorem 39.10 supplies authentic-cut prediction and synchronized actual continuation, and Theorem 39.7 supplies later finer original cells. This connects space as the rooted named path, time as its ordered actions, boundary as the response rule, and memory as the indexed record only at this declared observational quotient. It does not recover the literal unknown path, original action count or every original prefix row. Each finite cell still contains infinitely many rationals and arbitrarily deep unknown words, by Corollary 11.3 or directly by Theorem 6.2 and finiteness of bounded-length word sets. Actual post-binding events are known because recorded, not because the finite profile reconstructs unknown earlier events. No ambient physical spacetime identification is implied. $\square$
+
+**Definition 39.16 (source correspondence and exact limits).** The source-specific synthesis here is the acquired common all-future profile, the adaptive polynomial-raw-scale construction, its moving-cut earned-interval decoder, the sharp two-direction slice factors, the continuing sufficient boundary and the same-controller resource and obstruction statements. The cut/congruence and one-read LCM results in §§11–12 and 15 are reused, not counted as new proofs. [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean) supplies `leftStep`, `rightStep`, `wordMatrix`, `unimodular_wordMatrix` and `wordMatrix_lower_right_pos`; [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean) supplies `unimodular_iff_wordMatrix`. Chronological $u$ uses `wordMatrix(reverse u)`. The transformed-column coprimality argument is given explicitly in (39.9), without attributing it to lower-row coprimality. [RationalRouting/Acquisition](../../../D5/S3/Observer/RationalRouting/Acquisition.lean) has its distinct two-band actual-completion contract; it does not supply this unrestricted full-profile archive. The authentic original/current/past-cut architecture in [Arithmetic Acquisition Return, §§13–16](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md) is an analogue; neither its gcd/CRT ports nor its payment rule is used.
+
+The supporting Farey arithmetic corresponds to Glasby, [*Enumerating the rationals from left to right*, arXiv:1011.2823v1](https://arxiv.org/abs/1011.2823v1), introduction and Theorem 3. Actual adaptive experiment terminology corresponds to van den Bos and Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2), §4, Definitions 10–11; a semantic test family alone is not an executed adaptive experiment. Chrobak, Kenyon, Noga and Young, [*Incremental Medians via Online Bidding*, arXiv:cs/0504103v3](https://arxiv.org/abs/cs/0504103v3), Theorems 1–2, concerns bidding with sum-of-bids payment and its deterministic/randomized competitive ratios. Only the need to declare the payment coordinate is compared here; no bidding tariff, ratio or optimality conclusion transfers to (39.19)–(39.24). These are primary-source correspondences and repository-derived prose proofs, with no claim of worldwide priority or new Lean verification.
+
+All results retain one actual source/epoch, authentic serialized acknowledgements, exact positive source laws, finite local programs and the declared unclipped finite-completing floor services at every scale actually requested. Finite profile, raw scale, binary payload, local work, actual source service, action rights and physical backing remain distinct. The finite-information and literal-history boundaries of §§5, 16–18 remain in force. This local increment supplies a finite-resolution relation boundary and its recovery conditions; it does not complete the long-horizon RRO objective.
+
+## 追加锚（本行以下为增补区）

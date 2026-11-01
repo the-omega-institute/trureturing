@@ -1142,9 +1142,242 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 13. 单一有限 dyadic 效果表的局部关系证书
+## 13. 斜交零交集图册的定向锁定、超选择扇区分裂与连续实动力学的 Schrödinger–von Neumann 生成元
 
-**定义 13.1（同一网格上的完整二、三结果菜单表）。** Let $d,m\in\mathbb Z$ with $d\ge2$, $m\ge1$, $N=2^m$, $h=N^{-1}$, and
+**定义 13.1（无预设轴定向图册的非正交图、容许全局复结构集与图册不变实可观测量空间）。** 设 $\mathfrak{A}=\{(\Pi_\alpha,A_\alpha)\}_{\alpha\in\mathcal{I}}$ 是有限维非零实内积空间 $(V,g)$ 上的覆盖锐三轴实切分图册（定义 2.1，$M_{\mathfrak{A}}=\sum_{\alpha\in\mathcal{I}}\Pi_\alpha\succ0$，$J_\alpha=A_{\alpha,1}A_{\alpha,2}A_{\alpha,3}$）。
+
+1. **窗口非正交图**：定义无向简单图 $\Gamma_{\mathfrak{A}}=(\mathcal{I},E_{\mathrm{no}})$，其中不同指标对 $\{\alpha,\beta\}\in E_{\mathrm{no}}$（$\alpha\ne\beta$）当且仅当 $\Pi_\alpha\Pi_\beta\ne0$（注意 $\operatorname{Ran}\Pi_\alpha\cap\operatorname{Ran}\Pi_\beta\ne\{0\}\Rightarrow\Pi_\alpha\Pi_\beta\ne0$，但命题 2.4 第 3 项给出 $\operatorname{Ran}\Pi_1\cap\operatorname{Ran}\Pi_2=\{0\}$ 而 $\Pi_1\Pi_2\ne0$ 的斜交情形）；
+2. **无预设轴定向容许全局复结构集**：因局部三轴正交重标号 $R_\alpha\in O(3)$ 允许局部手征变号 $J_\alpha\mapsto(\det R_\alpha)J_\alpha$（引理 2.2），定义图册容许全局正交复结构集为
+
+$$
+\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\Bigl\{J\in\operatorname{End}_{\mathbb{R}}(V):J^{\mathsf T}=-J,\ J^2=-I_V,\ \exists\{s_\alpha\}_{\alpha\in\mathcal{I}}\in\{\pm1\}^{\mathcal{I}},\ \forall\alpha\in\mathcal{I},\ \Pi_\alpha J=J\Pi_\alpha=s_\alpha J_\alpha\Bigr\};
+$$
+
+3. **图册不变实可观测量空间**：定义与全部容许全局复结构对易的实对称算子空间为
+
+$$
+\mathcal{O}_{\mathfrak{A}}(V)=\bigl\{X\in\operatorname{Sym}(V,g):\forall J\in\mathcal{J}_{\mathrm{glob}}(\mathfrak{A}),\ [X,J]=0\bigr\}.
+$$
+
+**引理 13.2（斜交零交集窗口的跨投影手征非退化性、定向比公式与连通分量超选择分裂定理）。** 设 $\mathfrak{A}=\{(\Pi_\alpha,A_\alpha)\}_{\alpha\in\mathcal{I}}$ 为 $(V,g)$ 上的覆盖锐三轴图册。
+
+1. **斜交跨投影手征范数恒等式**：对任意 $\alpha,\beta\in\mathcal{I}$，记实 Frobenius 范数平方为 $\|T\|_F^2=\operatorname{Tr}_{\mathbb{R}}(T^{\mathsf T}T)$，恒有
+
+$$
+(\Pi_\alpha J_\beta)J_\beta=-\Pi_\alpha\Pi_\beta,\qquad
+\|\Pi_\alpha J_\beta\|_F^2=\|J_\alpha\Pi_\beta\|_F^2=\|\Pi_\alpha\Pi_\beta\|_F^2=\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta).
+$$
+
+特别地，$\Pi_\alpha\Pi_\beta\ne0\iff\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)>0\iff\Pi_\alpha J_\beta\ne0\iff J_\alpha\Pi_\beta\ne0$（无需 $\operatorname{Ran}\Pi_\alpha\cap\operatorname{Ran}\Pi_\beta\ne\{0\}$）；
+
+2. **边定向比显式公式与 $2^c$ 计数定理**：设 $\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})\ne\varnothing$，记 $\Gamma_{\mathfrak{A}}$ 的连通分支分解为 $\mathcal{I}=\bigsqcup_{r=1}^c\mathcal{I}_r$（$c\ge1$），并令 $V_r=\sum_{\alpha\in\mathcal{I}_r}\operatorname{Ran}\Pi_\alpha$。则对每个 $J\in\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})$，符号族 $\{s_\alpha(J)\}_{\alpha\in\mathcal{I}}\in\{\pm1\}^{\mathcal{I}}$ 唯一确定，且在每条非正交边 $\{\alpha,\beta\}\in E_{\mathrm{no}}$ 上相对定向乘积由无基迹比唯一锁定：
+
+$$
+s_\alpha(J)s_\beta(J)=-\frac{\operatorname{Tr}_{\mathbb{R}}(J_\beta\Pi_\alpha J_\alpha\Pi_\beta)}{\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)}\in\{+1,-1\}.
+$$
+
+全空间正交直和分解为 $V=\bigoplus_{r=1}^cV_r$（每个 $\dim_{\mathbb{R}}V_r=2d_r\ge4$ 为偶数，$\sum_{r=1}^cd_r=d=\frac{1}{2}\dim_{\mathbb{R}}V$），容许全局复结构集基数精确为 $|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=2^c$：任取一个 $J_0=\bigoplus_{r=1}^cJ_{0,r}\in\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})$，有
+
+$$
+\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\left\{\bigoplus_{r=1}^{c}\epsilon_rJ_{0,r}:(\epsilon_1,\ldots,\epsilon_c)\in\{+1,-1\}^c\right\};
+$$
+
+3. **连通性与超选择扇区分裂的充要判据**：在 $\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})\ne\varnothing$ 下，图册不变实可观测量空间精确分解为各连通分支上的分块对角直和
+
+$$
+\mathcal{O}_{\mathfrak{A}}(V)=\bigoplus_{r=1}^{c}\operatorname{Sym}_{J_{0,r}}(V_r),\qquad
+\dim_{\mathbb{R}}\mathcal{O}_{\mathfrak{A}}(V)=\sum_{r=1}^{c}d_r^2.
+$$
+
+因此，容许复结构在整体复共轭下唯一（$|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=2$）当且仅当 $\Gamma_{\mathfrak{A}}$ 连通（$c=1$），亦当且仅当 $\mathcal{O}_{\mathfrak{A}}(V)$ 不发生跨扇区超选择坍缩而具有满复厄米维数 $\dim_{\mathbb{R}}\mathcal{O}_{\mathfrak{A}}(V)=d^2$。
+
+**证明。** 对第 1 项，由引理 2.2 的 $J_\beta^2=-\Pi_\beta$、$J_\beta^{\mathsf T}=-J_\beta$ 与 $\Pi_\alpha^2=\Pi_\alpha=\Pi_\alpha^{\mathsf T}$，直接计算得 $(\Pi_\alpha J_\beta)J_\beta=\Pi_\alpha J_\beta^2=-\Pi_\alpha\Pi_\beta$，以及
+
+$$
+\|\Pi_\alpha J_\beta\|_F^2=\operatorname{Tr}_{\mathbb{R}}\bigl((\Pi_\alpha J_\beta)^{\mathsf T}(\Pi_\alpha J_\beta)\bigr)=\operatorname{Tr}_{\mathbb{R}}(-J_\beta\Pi_\alpha^2J_\beta)=-\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha J_\beta^2)=\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)=\|\Pi_\alpha\Pi_\beta\|_F^2.
+$$
+
+由 $(J_\alpha\Pi_\beta)^{\mathsf T}=-\Pi_\beta J_\alpha$ 同理得 $\|J_\alpha\Pi_\beta\|_F^2=\operatorname{Tr}_{\mathbb{R}}(\Pi_\beta\Pi_\alpha)=\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)$。因非零矩阵的 Frobenius 范数严格为正，四个非零条件等价。
+
+对第 2 项，因每个窗口 $\Pi_\alpha\ne0$ 满足 $\|J_\alpha\|_F^2=\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha)\ge4>0$（引理 2.2），由 $\Pi_\alpha J=s_\alpha(J)J_\alpha$ 唯一确定 $s_\alpha(J)\in\{\pm1\}$。对任意边 $\{\alpha,\beta\}\in E_{\mathrm{no}}$，定理 2.3 应用于重标号图册 $\{(\Pi_\gamma,s_\gamma(J)A_\gamma)\}$ 给出 $s_\beta(J)\Pi_\alpha J_\beta=s_\alpha(J)J_\alpha\Pi_\beta$，即 $\Pi_\alpha J_\beta=s_\alpha(J)s_\beta(J)J_\alpha\Pi_\beta$。两边与 $\Pi_\alpha J_\beta$ 作实 Frobenius 内积：左端为 $\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)>0$，右端为 $s_\alpha(J)s_\beta(J)\operatorname{Tr}_{\mathbb{R}}(-J_\beta\Pi_\alpha J_\alpha\Pi_\beta)$，相除并乘 $(s_\alpha(J)s_\beta(J))^2=1$ 即得迹比公式。
+
+若 $r\ne r'$，则对一切 $\alpha\in\mathcal{I}_r$ 与 $\beta\in\mathcal{I}_{r'}$ 有 $\{\alpha,\beta\}\notin E_{\mathrm{no}}$，故 $\Pi_\alpha\Pi_\beta=0$，即 $\operatorname{Ran}\Pi_\alpha\perp\operatorname{Ran}\Pi_\beta$，从而 $V_r\perp V_{r'}$；结合覆盖性 $\sum_{\alpha\in\mathcal{I}}\operatorname{Ran}\Pi_\alpha=V$ 与 $V_r\ne\{0\}$，得正交直和 $V=\bigoplus_{r=1}^cV_r$。任取 $J_0\in\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})$，对 $\alpha\in\mathcal{I}_r$ 有 $J_0(\operatorname{Ran}\Pi_\alpha)=\operatorname{Ran}(J_0\Pi_\alpha)=\operatorname{Ran}(s_\alpha(J_0)J_\alpha)\subseteq\operatorname{Ran}\Pi_\alpha\subseteq V_r$，故 $J_0(V_r)\subseteq V_r$，$J_0=\bigoplus_{r=1}^cJ_{0,r}$；由 $J_{0,r}^2=-I_{V_r}$ 与 $\dim_{\mathbb{R}}V_r\ge\dim_{\mathbb{R}}\operatorname{Ran}\Pi_{\alpha_r}\ge4$ 知 $\dim_{\mathbb{R}}V_r=2d_r$（$d_r\ge2$）。在每个连通分支 $\mathcal{I}_r$ 内任取根 $\alpha_r\in\mathcal{I}_r$，沿 $\mathcal{I}_r$ 的生成树由固定的边比 $s_\alpha(J)s_\beta(J)=s_\alpha(J_0)s_\beta(J_0)$ 归纳可知，存在唯一 $\epsilon_r\in\{\pm1\}$ 使对一切 $\alpha\in\mathcal{I}_r$ 有 $s_\alpha(J)=\epsilon_rs_\alpha(J_0)$，从而在 $V_r$ 上 $(\sum_{\alpha\in\mathcal{I}_r}\Pi_\alpha|_{V_r})J|_{V_r}=\epsilon_r(\sum_{\alpha\in\mathcal{I}_r}\Pi_\alpha|_{V_r})J_{0,r}$；因 $\sum_{\alpha\in\mathcal{I}_r}\Pi_\alpha|_{V_r}\succ0$，必有 $J|_{V_r}=\epsilon_rJ_{0,r}$。反之，对任意 $(\epsilon_1,\ldots,\epsilon_c)\in\{\pm1\}^c$，算子 $J_{(\epsilon)}=\bigoplus_{r=1}^c\epsilon_rJ_{0,r}$ 满足 $J_{(\epsilon)}^{\mathsf T}=-J_{(\epsilon)}$、$J_{(\epsilon)}^2=-I_V$，且对 $\alpha\in\mathcal{I}_r$ 有 $\Pi_\alpha J_{(\epsilon)}=(\epsilon_rs_\alpha(J_0))J_\alpha=J_{(\epsilon)}\Pi_\alpha$。因每个 $V_r\ne\{0\}$ 上 $J_{0,r}\ne-J_{0,r}$，这 $2^c$ 个算子两两不同，故 $|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=2^c$。
+
+对第 3 项，将 $X\in\operatorname{Sym}(V,g)$ 按 $V=\bigoplus_{r=1}^cV_r$ 写成分块矩阵 $(X_{rr'})_{1\le r,r'\le c}$（$X_{rr'}:V_{r'}\to V_r$）。条件 $[X,J_{(\epsilon)}]=0$ 等价于对一切 $1\le r,r'\le c$ 有 $\epsilon_{r'}X_{rr'}J_{0,r'}=\epsilon_rJ_{0,r}X_{rr'}$。当 $r=r'$ 时该式化为 $[X_{rr},J_{0,r}]=0$，即 $X_{rr}\in\operatorname{Sym}_{J_{0,r}}(V_r)$（实维数 $d_r^2$）；当 $r\ne r'$ 时，分别取 $\epsilon_r=\epsilon_{r'}=+1$ 与 $\epsilon_r=+1,\epsilon_{r'}=-1$ 得 $X_{rr'}J_{0,r'}=J_{0,r}X_{rr'}$ 与 $-X_{rr'}J_{0,r'}=J_{0,r}X_{rr'}$，两式相加得 $2J_{0,r}X_{rr'}=0$，左乘 $-J_{0,r}$ 即 $X_{rr'}=0$。故 $\mathcal{O}_{\mathfrak{A}}(V)=\bigoplus_{r=1}^c\operatorname{Sym}_{J_{0,r}}(V_r)$，维数为 $\sum_{r=1}^cd_r^2$；因 $d_r\ge2$，$\sum_{r=1}^cd_r^2=(\sum_{r=1}^cd_r)^2=d^2$ 当且仅当 $c=1$。∎
+
+**定理 13.3（连续可逆实载体动力学的 Schrödinger–von Neumann 生成元涌现与任意维反酉转置分支拓扑消去定理）。** 设 $(V,g)$ 为 $\dim_{\mathbb{R}}V=2d$（$d\ge2$）的实内积空间，配备一对互为相反数的正交复结构 $\mathcal{J}_{\mathrm{glob}}=\{+J,-J\}$（$J^{\mathsf T}=-J$，$J^2=-I_V$，例如由满足 $\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})\ne\varnothing$ 且非正交图连通的覆盖锐三轴图册唯一生成）。选定定向 $+J$，赋予 $V$ 复标量乘法 $(a+ib)v=av+bJv$（$a,b\in\mathbb{R}$）与第二变元复线性厄米内积
+
+$$
+\langle u,v\rangle_J=g(u,v)+i\,g(Ju,v)\qquad(u,v\in V),
+$$
+
+构成 $d$ 维复 Hilbert 空间 $\mathcal{H}_J=(V,J,\langle\cdot,\cdot\rangle_J)$。对任意保持厄米性且保迹的映射 $\Lambda:M_d(\mathbb{C})\to M_d(\mathbb{C})$，定义其在定义 7.1 单本体最大纠缠参考切分 $P_{\Phi_d^+}$ 上的 $d$ 维算子纯度亏格为 $D^{(d)}(R_\Lambda)=d\,\operatorname{Tr}_{\mathrm{ref}}(R_\Lambda-R_\Lambda^2)\in\operatorname{Herm}(\mathcal{H}_J)$（$d=2$ 时即 $D_1(R_\Lambda)$）。则：
+
+1. **反酉共轭分支的连通性拓扑消去**：设 $I\subseteq\mathbb{R}$ 为含 $0$ 的连通区间，$t\mapsto O(t)\in O(V,g)$（$t\in I$）为满足 $O(0)=I_V$ 的连续正交演化路径，且保持 $\{+J,-J\}$ 不变：$O(t)\{+J,-J\}O(t)^{\mathsf T}=\{+J,-J\}$（$\forall t\in I$）。则对一切 $t\in I$ 必有
+
+$$
+O(t)JO(t)^{\mathsf T}=+J\quad\text{（即 }[O(t),J]=0\text{）},
+$$
+
+反酉反对易分支 $OJO^{\mathsf T}=-J$ 被连通性恒等排除，且每个 $O(t)$ 精确为 $\mathcal{H}_J$ 上的复酉算子（$\langle O(t)u,O(t)v\rangle_J=\langle u,v\rangle_J$）；
+
+2. **厄米哈密顿生成元唯一分解与 Schrödinger–von Neumann 方程（文献先例桥接步骤：Stone 1932；Stueckelberg 1960）**：若 $\{O(t)\}_{t\in\mathbb{R}}\subseteq O(V,g)$ 为保持 $\{+J,-J\}$ 不变的可微单参数正交群（$O(t+s)=O(t)O(s)$，$O(0)=I_V$），记实生成元为 $A=\left.\frac{d}{dt}\right|_{t=0}O(t)\in\operatorname{End}_{\mathbb{R}}(V)$，则 $A^{\mathsf T}=-A$ 且 $[A,J]=0$。定义实对称算子 $H_{\mathbb{R}}=JA\in\operatorname{End}_{\mathbb{R}}(V)$，则 $H_{\mathbb{R}}\in\operatorname{Sym}_J(V)$ 唯一确定、在 $\mathcal{H}_J$ 上为复线性厄米自伴算子（$\langle H_{\mathbb{R}}u,v\rangle_J=\langle u,H_{\mathbb{R}}v\rangle_J$），且 $A=-JH_{\mathbb{R}}$（在全局复共轭规范 $+J\mapsto-J$ 下 $H_{\mathbb{R}}\mapsto-H_{\mathbb{R}}$ 而物理生成元 $A=-JH_{\mathbb{R}}$ 严格不变）。对任意纯态轨迹 $\psi(t)=O(t)\psi_0\in V$ 与实 $J$-不变密度轨迹 $R_{\mathbb{R}}(t)=O(t)R_{\mathbb{R}}(0)O(t)^{\mathsf T}\in\operatorname{Sym}_J(V)$，演化方程精确化为无量纲 Schrödinger 方程与 von Neumann 换位子方程（引入正作用量尺度常数 $\hbar>0$ 并置 $\widehat{H}=\hbar H_{\mathbb{R}}$ 即还原带 $\hbar$ 形式）：
+
+$$
+J\frac{d}{dt}\psi(t)=H_{\mathbb{R}}\psi(t)\quad\left(\text{即 }i\frac{d}{dt}\psi(t)=H_{\mathbb{R}}\psi(t)\right),\qquad
+\frac{d}{dt}R_{\mathbb{R}}(t)=[A,R_{\mathbb{R}}(t)]=-J\bigl[H_{\mathbb{R}},R_{\mathbb{R}}(t)\bigr];
+$$
+
+3. **任意维数 $d\ge2$ 保参考纯度正映射的酉／反酉二分与非 CP 转置分支的拓扑消去**：对任意 $d\ge2$ 及保持厄米性、保迹且**单系统正**（$\rho\succeq0\Rightarrow\Lambda(\rho)\succeq0$，不预设完全正性或保单位性）的映射 $\Lambda:M_d(\mathbb{C})\to M_d(\mathbb{C})$，有 $D^{(d)}(R_\Lambda)=0\iff\operatorname{Tr}(R_\Lambda^2)=1\iff\Lambda$ 属于两个拓扑不连通紧流形分支之一：
+
+$$
+\mathcal{U}_+(d)=\bigl\{\rho\mapsto U\rho U^\dagger:U\in U(d)\bigr\}\quad\text{或}\quad\mathcal{U}_-(d)=\bigl\{\rho\mapsto U\rho^{\mathsf T}U^\dagger:U\in U(d)\bigr\},
+$$
+
+其中酉完全正分支 $\mathcal{U}_+(d)$ 满足 $R_\Lambda\succeq0$ 与 $\lambda_{\min}(R_\Lambda)=0$，而非 CP 反酉转置分支 $\mathcal{U}_-(d)$ 恒满足 $R_\Lambda=(I_d\otimes U)(\frac{1}{d}F_d)(I_d\otimes U^\dagger)$、$D^{(d)}(R_\Lambda)=0$ 及负最小特征值 $\lambda_{\min}(R_\Lambda)=-\frac{1}{d}<0$（重数 $\frac{d(d-1)}{2}$；$d=2,U=I_2$ 时即 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 命题 7.1 的 $F/2$；注意当 $d\equiv0,1\pmod4$ 如 $d=4$ 时转置映射在无迹厄米空间上的行列式为 $(-1)^{d(d-1)/2}=+1$，而 $\lambda_{\min}(R_\Lambda)\in\{0,-\frac{1}{d}\}$ 对一切 $d\ge2$ 普适分离两分支）。因此，任何满足 $\Lambda_0=\mathrm{id}_{M_d(\mathbb{C})}$ 且处处保持 $D^{(d)}(R_{\Lambda_t})=0$ 的连续单参数保迹单系统正映射族 $\{\Lambda_t\}_{t\in I}$（$0\in I$ 为连通区间）必恒有 $\lambda_{\min}(R_{\Lambda_t})\equiv0$，从而拓扑排除整个非 CP 转置分支 $\mathcal{U}_-(d)$，迫使每个 $\Lambda_t(\rho)=U(t)\rho U(t)^\dagger$ 为酉完全正演化。
+
+**证明。** 先验核对 $\langle\cdot,\cdot\rangle_J$：由 $J^{\mathsf T}=-J$ 与 $J^2=-I_V$，对任意 $u,v\in V$ 有 $\langle u,Jv\rangle_J=g(u,Jv)+ig(Ju,Jv)=-g(Ju,v)+ig(u,v)=i\langle u,v\rangle_J$，$\overline{\langle v,u\rangle_J}=g(v,u)-ig(Jv,u)=g(u,v)+ig(Ju,v)=\langle u,v\rangle_J$，且 $\langle u,u\rangle_J=\|u\|^2+ig(Ju,u)=\|u\|^2\ge0$，确为复内积。
+
+对第 1 项，映射 $t\mapsto O(t)JO(t)^{\mathsf T}$ 从连通集 $I$ 连续映入二点离散子集 $\{+J,-J\}$（$\|(+J)-(-J)\|_F=2\sqrt{2d}>0$），故必为常值映射；在 $t=0$ 处取值为 $+J$，故对一切 $t\in I$ 有 $O(t)JO(t)^{\mathsf T}=+J$。右乘 $O(t)$ 得 $O(t)J=JO(t)$，即 $O(t)$ 在 $\mathcal{H}_J$ 上复线性，且 $\langle O(t)u,O(t)v\rangle_J=g(O(t)u,O(t)v)+ig(O(t)Ju,O(t)v)=\langle u,v\rangle_J$。
+
+对第 2 项，在 $t=0$ 处对 $O(t)^{\mathsf T}O(t)=I_V$ 与 $O(t)J=JO(t)$ 求导，立得 $A^{\mathsf T}+A=0$ 与 $AJ=JA$。令 $H_{\mathbb{R}}=JA$，则
+
+$$
+H_{\mathbb{R}}^{\mathsf T}=(JA)^{\mathsf T}=A^{\mathsf T}J^{\mathsf T}=(-A)(-J)=AJ=JA=H_{\mathbb{R}},\qquad [H_{\mathbb{R}},J]=J[A,J]=0,
+$$
+
+故 $H_{\mathbb{R}}\in\operatorname{Sym}_J(V)$；左乘 $J$ 得 $JH_{\mathbb{R}}=J^2A=-A$，即 $A=-JH_{\mathbb{R}}$（反之任意 $H_{\mathbb{R}}\in\operatorname{Sym}_J(V)$ 定义的 $A=-JH_{\mathbb{R}}$ 满足 $A^{\mathsf T}=-A$ 与 $[A,J]=0$）。对任意 $u,v\in V$，$\langle H_{\mathbb{R}}u,v\rangle_J=g(H_{\mathbb{R}}u,v)+ig(JH_{\mathbb{R}}u,v)=g(u,H_{\mathbb{R}}v)+ig(Ju,H_{\mathbb{R}}v)=\langle u,H_{\mathbb{R}}v\rangle_J$。由 $\frac{d}{dt}O(t)=AO(t)=-JH_{\mathbb{R}}O(t)$ 左乘 $J$ 得 $J\frac{d}{dt}\psi(t)=-J^2H_{\mathbb{R}}\psi(t)=H_{\mathbb{R}}\psi(t)$；对 $R_{\mathbb{R}}(t)=O(t)R_{\mathbb{R}}(0)O(t)^{\mathsf T}$ 求导，利用 $A^{\mathsf T}=-A$ 与 $[R_{\mathbb{R}}(t),J]=0$ 得 $\frac{d}{dt}R_{\mathbb{R}}(t)=AR_{\mathbb{R}}(t)+R_{\mathbb{R}}(t)A^{\mathsf T}=[A,R_{\mathbb{R}}(t)]=-J[H_{\mathbb{R}},R_{\mathbb{R}}(t)]$。
+
+对第 3 项，固定无迹厄米空间 $\operatorname{Herm}_0(\mathcal{H}_J)$ 的满足 $\operatorname{Tr}(G_aG_b)=d\,\delta_{ab}$ 的实基 $\{G_a\}_{a=1}^{d^2-1}$。由正交展开 $P_{\Phi_d^+}=\frac{1}{d^2}(I_d\otimes I_d+\sum_{a=1}^{d^2-1}G_a^{\mathsf T}\otimes G_a)$ 与交换算子 $F_d=\sum_{j,k=0}^{d-1}|j\rangle\langle k|\otimes|k\rangle\langle j|=\frac{1}{d}(I_d\otimes I_d+\sum_{a=1}^{d^2-1}G_a\otimes G_a)$，保厄米保迹映射 $\Lambda$ 唯一表为 $\Lambda(I_d)=I_d+\sum_{a=1}^{d^2-1}t_aG_a$、$\Lambda(G_b)=\sum_{a=1}^{d^2-1}M_{ab}G_a$（$t\in\mathbb{R}^{d^2-1}$，$M\in M_{d^2-1}(\mathbb{R})$），且直接计算得 $\operatorname{Tr}(R_\Lambda^2)=\frac{1}{d^2}(1+\|t\|^2+\|M\|_F^2)$ 与 $\operatorname{Tr}(F_d(\Lambda\otimes\Lambda)(F_d))=1+\|t\|^2+\|M\|_F^2=d^2\operatorname{Tr}(R_\Lambda^2)$。若 $D^{(d)}(R_\Lambda)=0$，取迹得 $0=\operatorname{Tr}D^{(d)}(R_\Lambda)=d(1-\operatorname{Tr}(R_\Lambda^2))$，故 $\operatorname{Tr}(R_\Lambda^2)=1$。此时对单位球面 $S^{2d-1}\subset\mathcal{H}_J$ 上的任一纯态 $P_\psi=|\psi\rangle\langle\psi|$，单系统正性与保迹性给出 $\Lambda(P_\psi)\succeq0$、$\operatorname{Tr}\Lambda(P_\psi)=1$，故 $\operatorname{Tr}(\Lambda(P_\psi)^2)\le1$（取等当且仅当 $\Lambda(P_\psi)$ 为秩一投影）。对 $S^{2d-1}$ 上归一 Haar 测度 $d\psi$ 利用对称二阶矩恒等式 $\int_{S^{2d-1}}(P_\psi\otimes P_\psi)\,d\psi=\frac{1}{d(d+1)}(I_d\otimes I_d+F_d)$ 与 $\operatorname{Tr}(X^2)=\operatorname{Tr}(F_d(X\otimes X))$，得
+
+$$
+1\ge\int_{S^{2d-1}}\operatorname{Tr}\bigl(\Lambda(P_\psi)^2\bigr)\,d\psi=\frac{\operatorname{Tr}(\Lambda(I_d)^2)+\operatorname{Tr}(F_d(\Lambda\otimes\Lambda)(F_d))}{d(d+1)}=\frac{d(1+\|t\|^2)+d^2\operatorname{Tr}(R_\Lambda^2)}{d(d+1)}=1+\frac{\|t\|^2}{d+1}\ge1,
+$$
+
+同时迫使 $t=0$（即 $\Lambda(I_d)=I_d$ 自动保单位）及连续非负函数 $1-\operatorname{Tr}(\Lambda(P_\psi)^2)\equiv0$（即 $\Lambda$ 将一切纯态映为纯态）。任取标准正交基 $\{|\psi_j\rangle\}_{j=1}^d$，$\sum_{j=1}^d\Lambda(P_{\psi_j})=I_d$ 迫使各秩一投影 $\Lambda(P_{\psi_j})$ 两两正交，从而对一切谱分解 $X=\sum_{j=1}^d\lambda_jP_{\psi_j}$ 有 $\operatorname{Tr}(\Lambda(X)^2)=\sum_{j=1}^d\lambda_j^2=\operatorname{Tr}(X^2)$；极化得 $\Lambda$ 是 $\operatorname{Herm}(\mathcal{H}_J)$ 上的实正交线性双射且保持全部纯态间跃迁概率 $\operatorname{Tr}(\Lambda(P_\psi)\Lambda(P_\phi))=\operatorname{Tr}(P_\psi P_\phi)=|\langle\psi,\phi\rangle|^2$，其伴随逆 $\Lambda^{-1}=\Lambda^\dagger$ 对任意秩一投影 $P_\chi$ 满足 $\langle\psi,\Lambda^\dagger(P_\chi)\psi\rangle=\operatorname{Tr}(P_\chi\Lambda(P_\psi))\ge0$、$\operatorname{Tr}\Lambda^\dagger(P_\chi)=1$ 与 $\operatorname{Tr}(\Lambda^\dagger(P_\chi)^2)=1$，故 $\Lambda$ 给出秩一纯态投影集到自身的满双射及态空间仿射自同构。由 Wigner 射影跃迁概率定理（Wigner 1931；Bargmann 1964；等价地由态空间仿射自同构与因子 Jordan $*$-同构分类定理，Kadison 1951 定理 7、定理 10 与推论 11 及 Kadison 1965 定理 2.6、定理 4.5 与推论 4.7），存在 $U\in U(d)$ 使 $\Lambda\in\mathcal{U}_+(d)$ 或 $\Lambda\in\mathcal{U}_-(d)$。反之，$\Lambda\in\mathcal{U}_+(d)$ 给出秩一投影 $R_\Lambda=P_{(I_d\otimes U)|\Phi_d^+\rangle}$（$D^{(d)}(R_\Lambda)=0,\lambda_{\min}(R_\Lambda)=0$）；$\Lambda\in\mathcal{U}_-(d)$ 给出 $R_\Lambda=(I_d\otimes U)(\frac{1}{d}F_d)(I_d\otimes U^\dagger)$，其平方为 $\frac{1}{d^2}I_{d^2}$，偏迹满足 $\operatorname{Tr}_{\mathrm{ref}}(R_\Lambda)=\frac{1}{d}I_d=\operatorname{Tr}_{\mathrm{ref}}(R_\Lambda^2)$（$D^{(d)}(R_\Lambda)=0$），而在酉旋转反对称子空间 $(I_d\otimes U)\Lambda^2(\mathbb{C}^d)$（维数 $\frac{d(d-1)}{2}\ge1$）上特征值为 $-\frac{1}{d}<0$。最后由 Weyl 特征值微扰界 $|\lambda_{\min}(R_{\Lambda_t})-\lambda_{\min}(R_{\Lambda_s})|\le\|R_{\Lambda_t}-R_{\Lambda_s}\|_{\mathrm{op}}$，连续映射 $t\mapsto\lambda_{\min}(R_{\Lambda_t})\in\{0,-\frac{1}{d}\}$ 在连通集 $I$ 上取初值 $\lambda_{\min}(P_{\Phi_d^+})=0$，故恒等于 $0$，即 $\Lambda_t\in\mathcal{U}_+(d)$。∎
+
+**命题 13.4（单系统正性对本征不扰动锐投影仪器的自动完全正化引理与离散时间反酉反射反例）。**
+
+1. **锐投影效果下“单系统正 + 本征纯态不扰动”自动蕴涵 Lüders 完全正形式（省去定理 7.2 第 3 项 Busch–Lahti–Mittelstaedt 1991／Busch 2008 定理 5 中的预先完全正性假设）**：设 $\Lambda_b:M_d(\mathbb{C})\to M_d(\mathbb{C})$ 为保持厄米性的**单系统正映射**（对一切 $\rho\succeq0$ 有 $\Lambda_b(\rho)\succeq0$，尚未预先假定完全正性 $R_{\Lambda_b}\succeq0$），满足 $\Lambda_b^\dagger(I_d)=P_b$（$P_b^2=P_b=P_b^\dagger$）且对一切单位向量 $|\psi\rangle\in\operatorname{Ran}P_b$ 有 $\Lambda_b(|\psi\rangle\langle\psi|)=|\psi\rangle\langle\psi|$。则对一切 $X\in M_d(\mathbb{C})$ 必有 $\Lambda_b(X)=P_bXP_b$（从而自动完全正）；这表明定理 7.2 第 1 项与第 3 项的逻辑分离精确发生在允许仪器族中的非投影效果单系统正仪器（命题 7.3 第 1 项）与退化子空间内有酉旋转的完全正锐投影仪器（命题 7.3 第 2 项）之间；
+2. **删去时间连续性后的离散反酉保图册反射反例**：在 $V=\mathbb{R}^{2d}$（$d\ge2$，例如 $V=\mathbb{R}^8=(\mathbb{R}^2)^{\otimes3}$，$J_\star=I_2\otimes I_2\otimes\omega_2$）及满足 $\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\{+J_\star,-J_\star\}$ 的连通覆盖锐三轴图册上，离散可逆正交反射群 $\{R_0^n\}_{n\in\mathbb{Z}}\subseteq O(2d)$（其中 $V=\mathbb{R}^8$ 时取 $R_0=I_2\otimes I_2\otimes\sigma_z\in O(8)$）严格保实内积、保图册容许复结构集 $R_0\{+J_\star,-J_\star\}R_0^{\mathsf T}=\{-J_\star,+J_\star\}$，在 $\mathcal{H}_{J_\star}\cong\mathbb{C}^d$ 上诱导复转置自同构 $\rho\mapsto\rho^{\mathsf T}$（单系统正、保迹且 $D^{(d)}(R_T)=0$），但 $R_0J_\star=-J_\star R_0$（$\lambda_{\min}(R_T)=-\frac{1}{d}<0$），不能嵌入任何保持 $\{+J_\star,-J_\star\}$ 的连续单参数正交群，也不存在任何复线性厄米生成元 $H_{\mathbb{R}}\in\operatorname{Sym}_{J_\star}(V)$ 使 $R_0=e^{-J_\star H_{\mathbb{R}}}$。
+
+**证明。** 对第 1 项，因 $\operatorname{Herm}(\operatorname{Ran}P_b)$ 由 $\operatorname{Ran}P_b$ 内的秩一投影线性张成，本征纯态不扰动性通过线性扩张给出 $\Lambda_b(P_bXP_b)=P_bXP_b$（$\forall X\in M_d(\mathbb{C})$）。对任意单位向量 $|\phi\rangle\in\operatorname{Ran}(I_d-P_b)$，有 $\operatorname{Tr}(\Lambda_b(|\phi\rangle\langle\phi|))=\langle\phi,\Lambda_b^\dagger(I_d)\phi\rangle=\langle\phi,P_b\phi\rangle=0$；由单系统正性 $\Lambda_b(|\phi\rangle\langle\phi|)\succeq0$ 知 $\Lambda_b(|\phi\rangle\langle\phi|)=0$，线性扩张得 $\Lambda_b((I_d-P_b)X(I_d-P_b))=0$。现任取单位向量 $|u\rangle\in\operatorname{Ran}P_b$、$|v\rangle\in\operatorname{Ran}(I_d-P_b)$、相位 $\theta\in\mathbb{R}$ 及 $\epsilon>0$，将单系统半正定秩一算子 $|\chi_\epsilon\rangle\langle\chi_\epsilon|$（其中 $|\chi_\epsilon\rangle=\sqrt{\epsilon}|u\rangle+e^{i\theta}|v\rangle$）代入 $\Lambda_b$：
+
+$$
+0\preceq\Lambda_b(|\chi_\epsilon\rangle\langle\chi_\epsilon|)=\epsilon|u\rangle\langle u|+\sqrt{\epsilon}\,\Lambda_b\bigl(e^{-i\theta}|u\rangle\langle v|+e^{i\theta}|v\rangle\langle u|\bigr)+0.
+$$
+
+两边除以 $\sqrt{\epsilon}>0$ 并令 $\epsilon\downarrow0$，由半正定锥闭性得 $\Lambda_b(e^{-i\theta}|u\rangle\langle v|+e^{i\theta}|v\rangle\langle u|)\succeq0$；将 $\theta$ 换为 $\theta+\pi$ 同理得其负算子亦半正定，故 $\Lambda_b(e^{-i\theta}|u\rangle\langle v|+e^{i\theta}|v\rangle\langle u|)=0$ 对一切 $\theta$ 成立。分别取 $\theta=0$ 与 $\theta=\frac{\pi}{2}$ 作复线性组合，得 $\Lambda_b(|u\rangle\langle v|)=\Lambda_b(|v\rangle\langle u|)=0$，从而 $\Lambda_b(P_bX(I_d-P_b))=\Lambda_b((I_d-P_b)XP_b)=0$，合并四块即 $\Lambda_b(X)=P_bXP_b$。
+
+对第 2 项，$R_0^{\mathsf T}=R_0$、$R_0^2=I_8$，且 $\sigma_z\omega_2\sigma_z=-\omega_2$ 给出 $R_0J_\star R_0^{\mathsf T}=-J_\star$。任何形如 $e^{-J_\star H_{\mathbb{R}}}$（$H_{\mathbb{R}}\in\operatorname{Sym}_{J_\star}(V)$）的算子均与 $J_\star$ 对易，而 $[R_0,J_\star]=2R_0J_\star\ne0$，故 $R_0$ 不具有该形式；由定理 13.3 第 1 项亦知 $R_0$ 不可能位于保持 $\{+J_\star,-J_\star\}$ 的连续路径连通分支中。∎
+
+## 14. 量子起源与离散红外有效光锥的十一前件合成主定理及逻辑独立性反例矩阵
+
+**定义 14.1（无类型悬空候选系统元组与十一项无冗余结构前件）。** 为使每一项前件在其余前件任意真假组合下均严格良定义（无前序结论缺失造成的类型悬空），定义候选系统元组为
+
+$$
+\mathfrak{S}=\bigl((V,g),\,J_\star,\,\mathfrak{A},\,\{O_t\}_{t\in\mathbb{T}},\,\mathscr{M},\,(P_0,P_1),\,\mathcal{I}_{\mathrm{adm}},\,\{\Lambda_0^{\mathrm{sharp}},\Lambda_1^{\mathrm{sharp}}\},\,Q,\,\mathcal{L}_{\mathrm{lat}}\bigr),
+$$
+
+其中各分量具有如下互不依赖前序定理结论的基础类型：
+
+- **实内积载体与候选正交复结构槽位** $((V,g),J_\star)$：$\dim_{\mathbb{R}}V=2d$（$d\ge2$）的实内积空间 $(V,g)$ 及满足 $J_\star^{\mathsf T}=-J_\star,J_\star^2=-I_V$ 的实算子 $J_\star\in\operatorname{End}_{\mathbb{R}}(V)$，诱导复 Hilbert 空间记为 $\mathcal{H}_\star=(V,J_\star,\langle\cdot,\cdot\rangle_{J_\star})$（$\dim_{\mathbb{C}}\mathcal{H}_\star=d$）；
+- **局部初等锐切分窗口族** $\mathfrak{A}=\{(\Pi_\alpha,A_\alpha,J_\alpha)\}_{\alpha\in\mathcal{I}}$：非空有限覆盖窗口族（$M_{\mathfrak{A}}=\sum_{\alpha\in\mathcal{I}}\Pi_\alpha\succ0$），每个 $\Pi_\alpha\in\operatorname{Sym}(V,g)$ 为非零正交投影（$W_\alpha=\operatorname{Ran}\Pi_\alpha$），$A_\alpha|_{W_\alpha}:\mathbb{R}^{k_\alpha}\to\operatorname{Sym}(W_\alpha,g|_{W_\alpha})$（$k_\alpha\ge2$，$\Pi_\alpha A_\alpha(u)=A_\alpha(u)\Pi_\alpha=A_\alpha(u)$）满足定义 5.1 条件 1–3（初等锐 $k_\alpha$ 轴实二元切分，生成不可约代数 $\mathcal{A}_\alpha\subseteq\operatorname{End}_{\mathbb{R}}(W_\alpha)$），$J_\alpha\in\operatorname{End}_{\mathbb{R}}(V)$ 满足 $\Pi_\alpha J_\alpha=J_\alpha\Pi_\alpha=J_\alpha$、$J_\alpha^{\mathsf T}=-J_\alpha$、$J_\alpha^2=-\Pi_\alpha$ 且 $[J_\alpha,A_\alpha(u)]=0$；
+- **可逆实正交演化族** $\{O_t\}_{t\in\mathbb{T}}\subseteq O(V,g)$：群参数集 $\mathbb{T}=\mathbb{R}$ 或 $\mathbb{Z}$，$O_0=I_V$，$O_{t+s}=O_tO_s$，且保持候选共轭对 $O_t\{+J_\star,-J_\star\}O_t^{\mathsf T}=\{+J_\star,-J_\star\}$；
+- **切分概率菜单族** $\mathscr{M}=\{\mathfrak{M}_\gamma\}_{\gamma\in\Upsilon}$：$\mathcal{H}_\star$ 上由有限切分菜单组成的非空菜单族（定义 6.1，指标集 $\Upsilon$ 非空，每个子菜单 $\mathfrak{M}_\gamma$ 含有限个效果，并集效果集记为 $\mathcal{E}(\mathscr{M})=\bigcup_{\gamma\in\Upsilon}\{E_{\gamma,j}:0\le j\le N_\gamma\}$）；相容菜单族概率赋值指满足 $v(I_{\mathcal{H}_\star})=1$ 且在每个 $\mathfrak{M}_\gamma$ 上满足已声明框架关系 $k_{v,\gamma}\perp L_{\mathfrak{M}_\gamma}$ 的单值映射 $v:\mathcal{E}(\mathscr{M})\to[0,1]$；
+- **允许单系统正二元仪器族与指定锐投影读出** $((P_0,P_1),\mathcal{I}_{\mathrm{adm}},\{\Lambda_0^{\mathrm{sharp}},\Lambda_1^{\mathrm{sharp}}\})$：$(P_0,P_1)$ 为 $\mathcal{H}_\star$ 上一对非零互补正交投影（$P_0+P_1=I_{\mathcal{H}_\star}$），$\mathcal{I}_{\mathrm{adm}}$ 为 $M_d(\mathbb{C})$ 上由保持厄米性、单系统正且和映射保迹的二元仪器组成的非空允许族，其中指定锐投影读出 $\{\Lambda_0^{\mathrm{sharp}},\Lambda_1^{\mathrm{sharp}}\}\in\mathcal{I}_{\mathrm{adm}}$ 满足 $(\Lambda_b^{\mathrm{sharp}})^\dagger(I_d)=P_b$（$b\in\{0,1\}$）；
+- **有限精度守卫读器量化函数** $Q:[0,1]\to[0,1]$：作用于定义 8.1 固定十五门守卫轨迹（正守卫阈值 $\vartheta=\frac{m_*}{16}\in(0,\frac{1}{16}]$，一致误差 $\delta_Q=\sup_{x\in[0,1]}|Q(x)-x|$）的值域有限静态量化函数；
+- **离散空间周期晶格层** $\mathcal{L}_{\mathrm{lat}}=(d_{\mathrm{sp}},a,L,M,M_h,T,V_0,V_1)$（$d_{\mathrm{sp}}\ge1,a>0,L\ge3,M\ge2,M_h\ge1$）：满足定义 10.1 基础稳定性、隐藏库有隙 $H_0\succ0$、可见零模平衡 $A_0-C_0H_0^{-1}C_0^{\mathsf T}=0$ 与非零模有效刚度严格正定 $K_{\mathrm{eff}}=N_0^{\mathsf T}V_1N_0\succ0$ 的离散周期晶格二次正则量子系统。
+
+在 $\mathfrak{S}$ 上定义十一项无耦合结构前件 $\mathsf{Q}_1,\ldots,\mathsf{Q}_{11}$：
+
+- **$\mathsf{Q}_1$（局部可观测量中心内生相位生成）**：对一切 $\alpha\in\mathcal{I}$，$J_\alpha|_{W_\alpha}\in Z(\mathcal{A}_\alpha)$（等价地 $Z(\mathcal{A}_\alpha)\supsetneq\mathbb{R}I_{W_\alpha}$，由定理 5.3 唯一迫使 $k_\alpha=3$ 且 $J_\alpha\in\{\pm A_{\alpha,1}A_{\alpha,2}A_{\alpha,3}\}$）；
+- **$\mathsf{Q}_2$（跨投影度量手征相容与载体对齐）**：存在局部定向符号族 $\{s_\alpha\}_{\alpha\in\mathcal{I}}\in\{\pm1\}^{\mathcal{I}}$ 使一切 $\alpha,\beta\in\mathcal{I}$ 满足 $\Pi_\alpha(s_\beta J_\beta)=(s_\alpha J_\alpha)\Pi_\beta$ 且 $\Pi_\alpha J_\star=s_\alpha J_\alpha$；
+- **$\mathsf{Q}_3$（非正交切分重叠图连通）**：窗口非正交图 $\Gamma_{\mathfrak{A}}=(\mathcal{I},\{\{\alpha,\beta\}:\alpha\ne\beta,\ \Pi_\alpha\Pi_\beta\ne0\})$ 连通；
+- **$\mathsf{Q}_4$（连续可微单参数时间演化）**：时间群为 $\mathbb{T}=\mathbb{R}$，且 $t\mapsto O_t\in O(V,g)$ 关于 $t\in\mathbb{R}$ 可微；
+- **$\mathsf{Q}_5$（有限菜单框架关系核完备与公共基完备层析）**：对一切 $\gamma\in\Upsilon$ 有 $L_{\mathfrak{M}_\gamma}=\ker\mathsf{E}_{\mathfrak{M}_\gamma}$，且存在公共基菜单 $\gamma_0\in\Upsilon$ 使 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}_{\gamma_0}}=d^2$ 且对一切 $\gamma\in\Upsilon$ 有 $\{E_{\gamma_0,j}\}_{j=0}^{N_{\gamma_0}}\subseteq\{E_{\gamma,j}\}_{j=0}^{N_\gamma}$；
+- **$\mathsf{Q}_6$（全正锥秩一投影方向闭合）**：全体秩一正交投影含于菜单效果并集闭包 $\mathcal{P}_1(\mathcal{H}_\star)\subseteq\overline{\mathcal{E}(\mathscr{M})}$；
+- **$\mathsf{Q}_7$（单本体纠缠参考切分联合正性）**：对一切 $\{\Lambda_0,\Lambda_1\}\in\mathcal{I}_{\mathrm{adm}}$ 及 $b\in\{0,1\}$，联合参考输出满足 $R_{\Lambda_b}=(I_d\otimes\Lambda_b)(P_{\Phi_d^+})\succeq0$；
+- **$\mathsf{Q}_8$（指定锐投影切分的本征纯态不扰动性）**：对每个 $b\in\{0,1\}$ 及一切单位向量 $|\psi\rangle\in\operatorname{Ran}P_b$，有 $\Lambda_b^{\mathrm{sharp}}(|\psi\rangle\langle\psi|)=|\psi\rangle\langle\psi|$；
+- **$\mathsf{Q}_9$（闭触发下水平集与 $\frac{3}{4}\vartheta$ 量化误差界）**：量化器触发集 $S_{Q,\vartheta}=Q^{-1}([0,\vartheta])$ 为 $[0,1]$ 的闭子集，且 $\delta_Q<\frac{3}{4}\vartheta=\frac{3m_*}{64}$；
+- **$\mathsf{Q}_{10}$（可见不可约正交门户等变性）**：存在群 $G$ 在可见探针空间 $\mathbb{R}^M$ 上的实不可约正交表示 $R_g\in O(M)$ 与隐藏空间上的正交表示 $\widetilde{R}_g\in O(M_h)$，使 $D_g=\operatorname{diag}(R_g,\widetilde{R}_g)$ 对一切 $g\in G$ 保持 $(T,V_0,V_1)$ 共轭不变；
+- **$\mathsf{Q}_{11}$（空间红外收敛维数门限）**：对零温量子基态涨落取空间维数 $d_{\mathrm{sp}}\ge2$（对有限正温 $0<\beta<\infty$ 的 KMS 热态涨落取 $d_{\mathrm{sp}}\ge3$）。
+
+**定理 14.2（条件化量子起源与离散晶格红外有效光锥合成主定理）。** 若定义 14.1 中的系统 $\mathfrak{S}$ 同时满足前件 $\mathsf{Q}_1\wedge\mathsf{Q}_2\wedge\cdots\wedge\mathsf{Q}_{11}$，则以下五项结论全部内生闭合：
+
+1. **三轴唯一选型、内生复 Hilbert 载体唯一重构与纯态秩二球面（由 $\mathsf{Q}_1,\mathsf{Q}_2,\mathsf{Q}_3$ 导出）**：局部轴数恒为 $k_\alpha=3$，图册容许全局正交复结构集精确为二元共轭对 $\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\{+J_\star,-J_\star\}$，其中 $J_\star=M_{\mathfrak{A}}^{-1}\sum_{\alpha\in\mathcal{I}}s_\alpha J_\alpha$ 完全由实二元切分轴积内生重构，图册不变可观测量空间不发生超选择坍缩（$\mathcal{O}_{\mathfrak{A}}(V)=\operatorname{Sym}_{J_\star}(V)\cong_{\mathbb{R}}\operatorname{Herm}(\mathcal{H}_\star)$，实维数 $d^2$），双局部窗口切分实张量复合局部层析完备；在每个四维局部窗口 $W_\alpha$（经引理 3.2 正交同构于定义 4.1 的 $\mathbb{R}^2\otimes_{\mathbb{R}}B_{\alpha,+}$，其中 $B_{\alpha,+}$ 为对齐重标号第三轴的正本征二维实子空间）及全局二分支扩展实载体 $\mathbb{R}^2\otimes_{\mathbb{R}}V$（在定义 4.1 中取 $(V_0,g_0,J_0)=(V,g,J_\star)$，对任意奇偶 $d\ge2$ 均良定义）上，内生算子三轴纯度球面极值态分别精确对应支撑于 $W_\alpha$ 内的秩二 $J_\star$-不变纯态平面与 $\mathbb{R}^2\otimes_{\mathbb{R}}V$ 中的秩二 $(I_2\otimes J_\star)$-不变纯态平面（其单分支扇区 $e_1e_1^{\mathsf T}\otimes\rho_{\mathbb{R}}$ 双射覆盖全空间 $V$ 的全体秩二 $J_\star$-不变纯态平面；定理 2.3、引理 3.2、定理 4.2、定理 5.3、引理 13.2）；
+2. **反酉分支拓扑消去与厄米 Schrödinger–von Neumann 生成元（结合 $\mathsf{Q}_4$ 导出）**：演化群 $\{O_t\}_{t\in\mathbb{R}}$ 拓扑排除反酉分支，全由 $\mathcal{H}_\star$ 上的复酉算子组成，且存在唯一复厄米自伴生成元 $H_{\mathbb{R}}=J_\star\dot{O}_0\in\operatorname{Sym}_{J_\star}(V)$ 使 $J_\star\dot{\psi}(t)=H_{\mathbb{R}}\psi(t)$ 与 $\dot{R}_{\mathbb{R}}(t)=-J_\star[H_{\mathbb{R}},R_{\mathbb{R}}(t)]$ 成立（定理 13.3）；
+3. **唯一半正定密度算子 Born 迹法则（结合 $\mathsf{Q}_5,\mathsf{Q}_6$ 导出）**：$\mathscr{M}$ 上的每一个相容菜单族概率赋值 $v$ 均自动满足全局 RC，并由唯一的半正定迹一密度算子 $\rho_v\in\operatorname{Herm}_+(\mathcal{H}_\star)$（$\rho_v\succeq0,\operatorname{Tr}\rho_v=1$）给出 $v(E)=\operatorname{Tr}(\rho_vE)$（$\forall E\in\mathcal{E}(\mathscr{M})$，定理 6.2 及 [`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md) 定理 11.2）；
+4. **单本体 Kraus 等距记录实现与唯一 Lüders 投影更新（结合 $\mathsf{Q}_7,\mathsf{Q}_8$ 导出）**：$\mathcal{I}_{\mathrm{adm}}$ 中每个仪器均具有完全正 Kraus 分解与单本体内部记录等距实现 $\Lambda_b(\rho)=\sum_{\alpha}K_{b\alpha}\rho K_{b\alpha}^\dagger$，且指定锐互补正交投影读出唯一锁定为 Lüders 投影更新 $\Lambda_b^{\mathrm{sharp}}(\rho)=P_b\rho P_b$（定理 7.2）；
+5. **有限比特读器全历史测度同构与离散晶格多探针共同红外声速及一致有界局域涨落（结合 $\mathsf{Q}_9,\mathsf{Q}_{10},\mathsf{Q}_{11}$ 导出）**：有限比特量化正守卫读器在 $|\lambda-\alpha|<\eta$ 内首点闭集可达、跳数一致有界、零差错输出 $J^Q=L$ 并保持十一地址前缀与七地址未来的全历史测度同构（定理 8.2）；同时离散晶格全部 $M$ 条无隙可见探针严格共享单一红外声速 $c_{\mathrm{eff}}>0$（$K_{\mathrm{eff}}=c_{\mathrm{eff}}^2Z_{\mathrm{eff}}$），在 $\mu_kc_{\mathrm{eff}}^2<\Omega_{\mathrm{opt},0}^2$ 内满足紧双侧非微扰色散界 $0\le\mu_kc_{\mathrm{eff}}^2-\omega_j(k)^2\le\frac{\mu_k^2\|\widehat{W}_{12}\|_{\mathrm{op}}^2}{\Omega_{\mathrm{opt},0}^2-\mu_kc_{\mathrm{eff}}^2}$，且实空间格点零均值局域涨落协方差在 $L\to\infty$ 下一致有界（定理 10.2、定理 11.1、定理 11.3）。
+
+**证明。** 由 $\mathsf{Q}_1$ 与定理 5.3，每个窗口必有 $k_\alpha=3$、$\dim_{\mathbb{R}}W_\alpha=4$、双窗口切分实张量复合局部层析完备且 $J_\alpha=\epsilon_\alpha A_{\alpha,1}A_{\alpha,2}A_{\alpha,3}$（$\epsilon_\alpha\in\{\pm1\}$）；结合 $\mathsf{Q}_2$ 与定理 2.3（作用于重标号图册 $\{(\Pi_\alpha,s_\alpha\epsilon_\alpha A_\alpha)\}$）知 $J_\star\in\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})\ne\varnothing$ 且 $J_\star=M_{\mathfrak{A}}^{-1}\sum_{\alpha\in\mathcal{I}}s_\alpha J_\alpha$；再由 $\mathsf{Q}_3$（$c=1$）与引理 13.2 第 2–3 项得 $\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\{+J_\star,-J_\star\}$ 与 $\mathcal{O}_{\mathfrak{A}}(V)=\operatorname{Sym}_{J_\star}(V)$。对每个四维局部窗口 $W_\alpha$，将 $s_\alpha\epsilon_\alpha A_{\alpha,3}|_{W_\alpha}$ 的 $\pm1$ 二维本征子空间记为 $B_{\alpha,+}\oplus B_{\alpha,-}$，引理 3.2 给出等距 $U_\alpha:B_{\alpha,-}\xrightarrow{\sim}B_{\alpha,+}$ 将 $(W_\alpha,s_\alpha\epsilon_\alpha A_\alpha|_{W_\alpha},J_\star|_{W_\alpha})$ 正交同构为定义 4.1 的 $(\mathbb{R}^2\otimes_{\mathbb{R}}B_{\alpha,+},(\sigma_x\otimes I,-\varepsilon\otimes J_\star|_{B_{\alpha,+}},\sigma_z\otimes I),I_2\otimes J_\star|_{B_{\alpha,+}})$，同时对全空间 $(V_0,g_0,J_0)=(V,g,J_\star)$（任意 $d\ge2$）直接构造定义 4.1 的二分支扩展实载体 $\mathbb{R}^2\otimes_{\mathbb{R}}V$；在两者上分别应用定理 4.2 第 3 项（并注意到单分支扇区 $R_{\mathbb{R}}=e_1e_1^{\mathsf T}\otimes\rho_{\mathbb{R}}$ 满足 $D_{m,\mathbb{R}}(R_{\mathbb{R}})=0\iff\rho_{\mathbb{R}}^2=\frac{m}{2}\rho_{\mathbb{R}}$，使 $V$ 中秩二 $J_\star$-不变纯态平面 $\operatorname{span}_{\mathbb{R}}\{x,J_\star x\}$——即单位向量 $x\in V,\|x\|=1$ 模去平面内正交旋转 $x\mapsto(\cos\theta)x+(\sin\theta)J_\star x$——与单分支极值态 $e_1e_1^{\mathsf T}\otimes\frac{m}{2}(xx^{\mathsf T}+(J_\star x)(J_\star x)^{\mathsf T})$ 一一对应），即得结论 1。在 $\{+J_\star,-J_\star\}$ 上应用 $\mathsf{Q}_4$ 与定理 13.3 第 1–2 项得结论 2。在 $\operatorname{Herm}(\mathcal{H}_\star)$ 上，由 $\mathsf{Q}_5$ 与定理 6.2 知公共基菜单 $\mathfrak{M}_{\gamma_0}$ 唯一确定迹一厄米算子 $\rho_v\in\operatorname{Herm}(\mathcal{H}_\star)$ 使 $v(E_{\gamma_0,j})=\operatorname{Tr}(\rho_vE_{\gamma_0,j})$，而任意子菜单 $\mathfrak{M}_\gamma$ 包含 $\{E_{\gamma_0,j}\}$ 且满足 $L_{\mathfrak{M}_\gamma}=\ker\mathsf{E}_{\mathfrak{M}_\gamma}$，故其唯一厄米代表必与 $\rho_v$ 在满秩基 $\{E_{\gamma_0,j}\}$ 上取值相同从而恒等于 $\rho_v$；再由 $\mathsf{Q}_6$ 的秩一投影闭包与线性泛函连续性得对一切单位向量 $|\psi\rangle\in\mathcal{H}_\star$ 有 $\langle\psi,\rho_v\psi\rangle\ge0$，即 $\rho_v\succeq0$，得结论 3。在 $\mathcal{H}_\star$ 上分别将 $\mathsf{Q}_7$ 代入定理 7.2 第 1 项、将 $\mathsf{Q}_7\wedge\mathsf{Q}_8$ 代入定理 7.2 第 3 项，得结论 4。最后将 $\mathsf{Q}_9$ 代入定理 8.2、将 $\mathsf{Q}_{10}$ 代入定理 10.2 第 3 项与定理 11.1、将 $\mathsf{Q}_{11}$ 代入定理 11.3 第 3 项，证毕结论 5。∎
+
+**定理 14.3（同一固定八维实载体上的十一前件逻辑独立性定理与 $11\times 11$ 单槽变异反例矩阵）。** 在**同一个固定八维实内积载体** $V=\mathbb{R}^8=(\mathbb{R}^2)^{\otimes3}$（$d=4$，固定 $J_\star=Q_1=I_2\otimes I_2\otimes\omega_2$，$\mathcal{H}_\star=(V,J_\star,\langle\cdot,\cdot\rangle_{J_\star})\cong\mathbb{C}^4$）上，存在单一基准系统 $\mathfrak{S}_*$ 同时满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$，且对每一个指标 $j\in\{1,\ldots,11\}$，仅替换 $\mathfrak{S}_*$ 的单个对应组件（其余组件完全保持 $\mathfrak{S}_*$ 不变）即得良类型反例系统 $\mathfrak{K}_j$，满足 $\bigwedge_{i\ne j}\mathsf{Q}_i\wedge\neg\mathsf{Q}_j$ 并使定理 14.2 中由 $\mathsf{Q}_j$ 支撑的目标性质精确失效（表中“✓”表示前件成立，“✗”表示仅该项前件不成立）：
+
+| 单槽变异反例（固定 $V=\mathbb{R}^8,\mathcal{H}_\star\cong\mathbb{C}^4$） | $\mathsf{Q}_1$ | $\mathsf{Q}_2$ | $\mathsf{Q}_3$ | $\mathsf{Q}_4$ | $\mathsf{Q}_5$ | $\mathsf{Q}_6$ | $\mathsf{Q}_7$ | $\mathsf{Q}_8$ | $\mathsf{Q}_9$ | $\mathsf{Q}_{10}$ | $\mathsf{Q}_{11}$ | 精确失效的目标结论与定量读数 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| $\mathfrak{K}_1$（单窗口五轴四元数切分） | **✗** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | $k_1=5$，$Z(\mathcal{A}_5)=\mathbb{R}I_8$（$J_\star\notin\mathcal{A}_5$），双切分复合层析维数 $136\ne36$（定理 5.3、命题 5.4(1)） |
+| $\mathfrak{K}_2$（八维勾股斜交失配双窗口） | ✓ | **✗** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | $(s_2\Pi_1J_2-s_1J_1\Pi_2)_{1,2}\in\{\pm\frac{3}{25},\pm\frac{21}{25}\}$ 非零，$\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\varnothing$（命题 2.4(2)） |
+| $\mathfrak{K}_3$（八维双正交块不连通图册） | ✓ | ✓ | **✗** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | $|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=4>2$，$\mathcal{O}_{\mathfrak{A}}(\mathbb{R}^8)$ 超选择分裂，$\dim_{\mathbb{R}}\mathcal{O}_{\mathfrak{A}}=8<16$（引理 13.2） |
+| $\mathfrak{K}_4$（离散反酉反射群 $\{R_0^n\}_{n\in\mathbb{Z}}$） | ✓ | ✓ | ✓ | **✗** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | $R_0J_\star R_0^{\mathsf T}=-J_\star$ 反酉，$\lambda_{\min}(R_T)=-\frac{1}{4}<0$，无厄米生成元 $H_{\mathbb{R}}$（命题 13.4(2)） |
+| $\mathfrak{K}_5$（$\mathbb{C}^4$ 仅声明二元互补核菜单族） | ✓ | ✓ | ✓ | ✓ | **✗** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | 三次扰动赋值取值 $[\frac{1}{4},\frac{3}{4}]$ 满足二元归一但违反共面 RC，残差 $-\frac{18}{125}\ne0$（命题 6.3(1)） |
+| $\mathfrak{K}_6$（$\mathbb{C}^4$ 完备稀疏有限菜单 $\mathfrak{M}_{38}$） | ✓ | ✓ | ✓ | ✓ | ✓ | **✗** | ✓ | ✓ | ✓ | ✓ | ✓ | 完备 RC（秩 $16$）且全菜单严格正 $\in[\frac{1}{16},\frac{15}{16}]$，但 $\lambda_{\min}(\widehat{H}_*)=-\frac{1}{16}<0$（命题 6.3(2)） |
+| $\mathfrak{K}_7$（并入混噪转置正非投影仪器） | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **✗** | ✓ | ✓ | ✓ | ✓ | 单系统正且指定锐读出为 Lüders，但非投影分支 $\lambda_{\min}(R_{\Lambda_0^{\mathrm{tr}}})=-\frac{3}{64}<0$，无 Kraus 实现 |
+| $\mathfrak{K}_8$（$\mathbb{C}^4$ 秩二投影内翻转 CP 仪器） | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **✗** | ✓ | ✓ | ✓ | 完全正、锐投影且结果可重复，但 $\Lambda_0(\lvert 0\rangle\langle 0\rvert)=\lvert 1\rangle\langle 1\rvert\ne P_0\lvert 0\rangle\langle 0\rvert P_0$（命题 7.3(2)） |
+| $\mathfrak{K}_9$（右连续向下取整或粗步长 $2^{-b}>\vartheta$） | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **✗** | ✓ | ✓ | $Q_{\downarrow,b}$ 首事件时刻不取得；$Q_{\uparrow,b}$（$2^{-b}>\vartheta$）坍缩为 $J_\lambda\equiv0$，总变差失配 $\varphi^{-1}>0$（命题 8.3） |
+| $\mathfrak{K}_{10}$（三维晶格单共享隐藏标量门户） | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **✗** | ✓ | $d_{\mathrm{sp}}=3$ 涨落一致有界，但两探针红外声速分裂为 $c_\perp^2=1\ne3=c_\parallel^2$（命题 10.3(1)） |
+| $\mathfrak{K}_{11}$（一维基态／二维热态 $O(2)$ 矢量门户） | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **✗** | 两探针严格共享红外声速 $c_{\mathrm{eff}}^2=\frac{5}{2}$，但实空间零均值涨落按 $\Theta(\ln L)$ 发散（定理 11.3(3)） |
+
+**证明。** 在固定实载体 $V=\mathbb{R}^8=(\mathbb{R}^2)^{\otimes3}$（标准内积 $g$）与 $J_\star=Q_1=I_2\otimes I_2\otimes\omega_2=\omega_2^{\oplus4}$（赋予 $\mathcal{H}_\star\cong\mathbb{C}^4$ 标准正交基 $|0\rangle,|1\rangle,|2\rangle,|3\rangle$）上，定义满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$ 的单一基准实例 $\mathfrak{S}_*$：
+- $\mathfrak{A}_*$：命题 2.4 第 3 项（在同一标准正交基下 $J_0\oplus J_0=I_2\otimes I_2\otimes\omega_2=\omega_2^{\oplus4}=J_\star$）的双窗口成对倾角斜交覆盖初等锐三轴图册 $\{(\Pi_1,A_1,J_1),(\Pi_2,A_2,J_2)\}$（$k_\alpha=3$，$J_\alpha=A_{\alpha,1}A_{\alpha,2}A_{\alpha,3}\in Z(\mathcal{A}_\alpha)$，$\Pi_1J_2=J_1\Pi_2$，$\Pi_\alpha J_\star=J_\alpha$，$\operatorname{Tr}_{\mathbb{R}}(\Pi_1\Pi_2)=2>0$ 故 $\Gamma_{\mathfrak{A}_*}=K_2$ 连通）；
+- $\{O_t^*\}_{t\in\mathbb{R}}$：$O_t^*=I_8$（$t\in\mathbb{R}$，平凡 $C^\infty$ 单参数群）；
+- $\mathscr{M}_*$：以第 6 项构造的满秩有限菜单 $\mathfrak{M}_0=\mathfrak{M}_{38}$（满足 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}_0}=16=4^2$ 且声明完整核基 $L_{\mathfrak{M}_0}=\ker\mathsf{E}_{\mathfrak{M}_0}$）为公共基菜单，对每个单位射线 $[\psi]\in\mathbb{CP}^3$ 取并入 $\{P_\psi,I_4-P_\psi\}\setminus\{E_{0,j}\}_{j=0}^{38}$ 并声明完整核基 $L_{\mathfrak{M}_\psi}=\ker\mathsf{E}_{\mathfrak{M}_\psi}$ 的有限扩展菜单 $\mathfrak{M}_\psi$，组成指标集 $\Upsilon=\{0\}\sqcup\mathbb{CP}^3$ 上的菜单族 $\mathscr{M}_*=\{\mathfrak{M}_0\}\cup\{\mathfrak{M}_\psi\}_{[\psi]\in\mathbb{CP}^3}$（满足 $\gamma_0=0\in\Upsilon$ 及 $\mathcal{P}_1(\mathbb{C}^4)\subseteq\mathcal{E}(\mathscr{M}_*)$）；
+- 仪器层：$P_0=|0\rangle\langle0|+|1\rangle\langle1|$，$P_1=|2\rangle\langle2|+|3\rangle\langle3|$，$\mathcal{I}_{\mathrm{adm}}^*=\{\{\Lambda_0^{\mathrm{L\ddot{u}d}},\Lambda_1^{\mathrm{L\ddot{u}d}}\}\}$（$\Lambda_b^{\mathrm{L\ddot{u}d}}(\rho)=P_b\rho P_b$），指定锐读出即 $\{\Lambda_0^{\mathrm{L\ddot{u}d}},\Lambda_1^{\mathrm{L\ddot{u}d}}\}$；
+- 读器量化器：$Q^*=Q_{\uparrow,b_*}$，$b_*=\lceil\log_2(\frac{128}{3m_*})\rceil$（$S_{Q^*,\vartheta}$ 闭且 $\delta_{Q^*}=2^{-b_*}\le\frac{3m_*}{128}<\frac{3}{4}\vartheta$）；
+- 晶格层 $\mathcal{L}_{\mathrm{lat}}^*$：$d_{\mathrm{sp}}=3,a=1,L=4,M=M_h=2$，定理 10.2 第 3 项的 $O(2)$ 等变矢量门户（$T=I_4,c_0=1,v_h=2,\alpha=1,\Omega=3$，$c_{\mathrm{eff}}^2=\frac{5}{2}$）。
+
+在 $\mathfrak{S}_*$ 上每次仅替换对应单一槽位（其余全部槽位保持 $\mathfrak{S}_*$ 不变）：
+
+1. **$\mathfrak{K}_1$**：仅将 $\mathfrak{A}_*$ 替换为命题 5.4 第 1 项的单窗口初等五轴四元数切分 $\{(I_8,(B_1,\ldots,B_5),Q_1)\}$。因 $[Q_1,B_r]=0$、$M_{\mathfrak{A}}=I_8\succ0$、单顶点图连通且 $\Pi_1J_\star=Q_1=J_1$，$\mathsf{Q}_2,\mathsf{Q}_3$ 及 $\mathsf{Q}_4$–$\mathsf{Q}_{11}$ 全真；唯 $\mathsf{Q}_1$ 假（$k_1=5$，$Z(\mathcal{A}_5)=\mathbb{R}I_8$，$Q_1\notin\mathcal{A}_5$），换位子 $\mathcal{D}_5\cong\mathbb{H}$ 含整个二维球面族的正交复结构，且双切分实张量复合违背局部层析（$136\ne36$）；
+2. **$\mathfrak{K}_2$**：仅将 $\mathfrak{A}_*$ 替换为命题 2.4 第 2 项在 $\mathbb{R}^8$ 上的双窗口勾股斜交初等锐三轴图册。此时 $k_\alpha=3$（$\mathsf{Q}_1$ 真），$M_{\mathfrak{A}}\succ0$ 且 $\Pi_1\Pi_2\ne0$ 故 $\Gamma_{\mathfrak{A}}=K_2$ 连通（$\mathsf{Q}_3$ 真），$\mathsf{Q}_4$–$\mathsf{Q}_{11}$ 全真；唯 $\mathsf{Q}_2$ 假，命题 2.4 第 2 项证明对一切 $(s_1,s_2)\in\{\pm1\}^2$ 均有 $s_2\Pi_1J_2\ne s_1J_1\Pi_2$，$\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})=\varnothing$（若改用四分支圈图 $C_4$ 上含一条扭转边的共享二维分支网络，同样在 $\mathbb{R}^8$ 上给出 $\mathcal{H}(C_4)=-1$ 与 $\mathcal{J}_{\mathrm{glob}}=\varnothing$）；
+3. **$\mathfrak{K}_3$**：仅将 $\mathfrak{A}_*$ 替换为双正交块初等锐三轴图册 $\{(\Pi_1,A_1,J_\star\Pi_1),(\Pi_2,A_2,J_\star\Pi_2)\}$（$\Pi_1=I_4\oplus0_4,\Pi_2=0_4\oplus I_4$）。此时 $k_\alpha=3$（$\mathsf{Q}_1$ 真），$s_\alpha=+1$ 满足 $\Pi_\alpha J_\beta=0=J_\alpha\Pi_\beta$（$\alpha\ne\beta$）与 $\Pi_\alpha J_\star=J_\alpha$（$\mathsf{Q}_2$ 真），$\mathsf{Q}_4$–$\mathsf{Q}_{11}$ 全真；因 $\Pi_1\Pi_2=0$，$\Gamma_{\mathfrak{A}}$ 有 $c=2$ 个连通分支（唯 $\mathsf{Q}_3$ 假），引理 13.2 给出 $|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=4>2$ 与超选择坍缩 $\dim_{\mathbb{R}}\mathcal{O}_{\mathfrak{A}}(\mathbb{R}^8)=2^2+2^2=8<16$；
+4. **$\mathfrak{K}_4$**：仅将 $\{O_t^*\}_{t\in\mathbb{R}}$ 替换为命题 13.4 第 2 项在 $\mathbb{R}^8$ 上的离散正交反射群 $\{R_0^n\}_{n\in\mathbb{Z}}$（$R_0=I_2\otimes I_2\otimes\sigma_z\in O(8)$，$R_0J_\star R_0^{\mathsf T}=-J_\star$）。唯 $\mathsf{Q}_4$ 为假，其余十项全真，$R_0$ 在 $\mathcal{H}_\star\cong\mathbb{C}^4$ 上诱导非 CP 反酉转置映射（$\lambda_{\min}(R_T)=-\frac{1}{4}<0$），无复线性厄米生成元；
+5. **$\mathfrak{K}_5$**：仅将 $\mathscr{M}_*$ 替换为仅含单切口二元互补菜单的菜单族 $\mathscr{M}^{(5)}=\{\tilde{\mathfrak{M}}_\psi\}_{[\psi]\in\mathbb{CP}^3}$，其中 $\tilde{\mathfrak{M}}_\psi=(\{I_4,P_\psi,I_4-P_\psi\},\{e_0-e_1-e_2\})$。此时 $\mathcal{P}_1(\mathbb{C}^4)\subseteq\mathcal{E}(\mathscr{M}^{(5)})$（$\mathsf{Q}_6$ 真）且 $\mathsf{Q}_1$–$\mathsf{Q}_4,\mathsf{Q}_7$–$\mathsf{Q}_{11}$ 全真，每个单切口虽有 $L_{\tilde{\mathfrak{M}}_\psi}=\ker\mathsf{E}_{\tilde{\mathfrak{M}}_\psi}$，但 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\tilde{\mathfrak{M}}_\psi}=2<16$ 故不存在秩 $16$ 的公共基菜单（唯 $\mathsf{Q}_5$ 假）；因 $\mathbb{C}^4$ 上秩一投影 $P_\psi$ 与秩三投影 $I_4-P_\phi$ 集合不交，光滑单调三次赋值 $v(P_\psi)=\frac{1}{2}+\frac{1}{4}(2|\langle0,\psi\rangle|^2-1)^3\in[\frac{1}{4},\frac{3}{4}]$、$v(I_4-P_\psi)=1-v(P_\psi)\in[\frac{1}{4},\frac{3}{4}]$ 满足全部已声明二元归一关系，但在二维子空间 $\operatorname{span}_{\mathbb{C}}\{|0\rangle,|1\rangle\}$ 的四个共面勾股秩一方向 $|\psi_1\rangle=|0\rangle,|\psi_2\rangle=|1\rangle,|\psi_{3,4}\rangle=\frac{3|0\rangle\pm|1\rangle}{\sqrt{10}}$（满足 $P_{\psi_3}+P_{\psi_4}=\frac{9}{5}P_{\psi_1}+\frac{1}{5}P_{\psi_2}$）上违反跨切口 RC，残差精确为 $-\frac{18}{125}\ne0$（命题 6.3 第 1 项，$\eta=\frac{1}{2}$），不存在任何厄米迹表示；
+6. **$\mathfrak{K}_6$**：仅将 $\mathscr{M}_*$ 替换为单元素有限稀疏完备菜单族 $\{\mathfrak{M}_{38}\}$：在 $\mathbb{C}^4=\mathbb{C}^3\oplus\mathbb{C}|3\rangle$ 上取命题 6.3 第 2 项的四组相互无偏基共 $12$ 个秩一投影 $P_{b,k}\oplus0$、$|3\rangle\langle3|$、$6$ 个跨块耦合秩一投影 $|\psi_{j,\phi}\rangle\langle\psi_{j,\phi}|$（$|\psi_{j,\phi}\rangle=\frac{1}{\sqrt{2}}(|j\rangle+e^{i\phi}|3\rangle)$，$j\in\{0,1,2\},\phi\in\{0,\frac{\pi}{2}\}$）共 $19$ 个秩一投影及其 $19$ 个秩三互补投影 $I_4-E$（共 $38$ 个非平凡效果，连同 $E_0=I_4$），并声明 $\ker\mathsf{E}_{\mathfrak{M}_{38}}$ 的一组完整基。此时 $L_{\mathfrak{M}_{38}}=\ker\mathsf{E}_{\mathfrak{M}_{38}}$ 且 $\operatorname{rank}_{\mathbb{R}}\mathsf{E}_{\mathfrak{M}_{38}}=9+1+6=16=4^2$（$\mathsf{Q}_5$ 真），唯 $\mathsf{Q}_6$ 假；迹一厄米算子 $\widehat{H}_*=\frac{15}{16}H_*\oplus\frac{1}{16}|3\rangle\langle3|$（$H_*=\frac{8}{15}I_3-\frac{3}{5}uu^\dagger$，$u=\frac{1}{\sqrt{21}}(1,2,4)^{\mathsf T}$）诱导的相容赋值 $v_*(E)=\operatorname{Tr}(\widehat{H}_*E)$ 满足全部 RC 且在全部 $38$ 个非平凡菜单效果上严格取值于 $[\frac{1}{16},\frac{15}{16}]\subset(0,1)$，但唯一重构算子具有负特征值 $\lambda_{\min}(\widehat{H}_*)=\frac{15}{16}\cdot(-\frac{1}{15})=-\frac{1}{16}<0$（$\widehat{H}_*\not\succeq0$）；
+7. **$\mathfrak{K}_7$**：仅向允许仪器族 $\mathcal{I}_{\mathrm{adm}}^*$ 并入 $\mathbb{C}^4$ 上的非投影单系统正混噪转置二元仪器 $\{\Lambda_0^{\mathrm{tr}},\Lambda_1^{\mathrm{tr}}\}$（$\Lambda_0^{\mathrm{tr}}(X)=\Lambda_1^{\mathrm{tr}}(X)=\frac{1}{2}(\frac{1}{2}X^{\mathsf T}+\frac{1}{8}(\operatorname{Tr}X)I_4)$，效果为 $E_0=E_1=\frac{1}{2}I_4$，对一切单系统态 $X\succeq0$ 保持半正定且和保迹），同时保留指定锐读出 $\{\Lambda_0^{\mathrm{L\ddot{u}d}},\Lambda_1^{\mathrm{L\ddot{u}d}}\}$ 不变。此时 $\mathsf{Q}_8$ 及 $\mathsf{Q}_1$–$\mathsf{Q}_6,\mathsf{Q}_9$–$\mathsf{Q}_{11}$ 全真，唯 $\mathsf{Q}_7$ 假：$R_{\Lambda_0^{\mathrm{tr}}}=\frac{1}{16}F_4+\frac{1}{64}I_{16}$ 在 $\Lambda^2(\mathbb{C}^4)$ 上取负特征值 $-\frac{1}{16}+\frac{1}{64}=-\frac{3}{64}<0$，不存在 Kraus 等距记录实现；
+8. **$\mathfrak{K}_8$**：仅将 $\mathcal{I}_{\mathrm{adm}}^*$ 与指定锐读出替换为命题 7.3 第 2 项在 $\mathbb{C}^4$ 上的单元素锐投影可重复 CP 仪器族 $\{\{\Lambda_0,\Lambda_1\}\}$（$\Lambda_0(\rho)=U_0P_0\rho P_0U_0^\dagger,\Lambda_1(\rho)=P_1\rho P_1$，$U_0=|0\rangle\langle1|+|1\rangle\langle0|+P_1$）。此时 $R_{\Lambda_b}\succeq0$（$\mathsf{Q}_7$ 真），唯 $\mathsf{Q}_8$ 假，且 $\Lambda_0(|0\rangle\langle0|)=|1\rangle\langle1|\ne P_0|0\rangle\langle0|P_0$；
+9. **$\mathfrak{K}_9$**：仅将 $Q^*$ 替换为命题 8.3 第 1 项的右连续向下取整量化器 $Q_{\downarrow,b_*}$（违背闭下水平集，首事件时刻不取得）或命题 8.3 第 2 项的粗步长向上量化器 $Q_{\uparrow,1}$（$\delta=\frac{1}{2}>\vartheta$，触发集坍缩为 $\{0\}$，产生恒定正总变差偏差 $\varphi^{-1}=\frac{\sqrt{5}-1}{2}>0$），唯 $\mathsf{Q}_9$ 假；
+10. **$\mathfrak{K}_{10}$**：仅将 $\mathcal{L}_{\mathrm{lat}}^*$ 替换为命题 10.3 第 1 项在 $d_{\mathrm{sp}}=3$ 上的单共享隐藏标量门户晶格（$M=2,M_h=1,c_0=1,v_h=2,\Omega=3,b=(1,1)^{\mathsf T}$）。此时 $K_{\mathrm{eff}}=\begin{pmatrix}5&4\\ 4&5\end{pmatrix}\succ0$ 且 $d_{\mathrm{sp}}=3$（$\mathsf{Q}_{11}$ 真），唯 $\mathsf{Q}_{10}$ 假（可见置换群 $\mathbb{Z}_2$ 在 $\mathbb{R}^2$ 上可约），两探针红外声速分裂为 $c_\perp^2=1\ne3=c_\parallel^2$；
+11. **$\mathfrak{K}_{11}$**：仅将 $\mathcal{L}_{\mathrm{lat}}^*$ 的空间维数由 $d_{\mathrm{sp}}=3$ 改为零温基态下的 $d_{\mathrm{sp}}=1$（或有限正温 $0<\beta<\infty$ 下的 $d_{\mathrm{sp}}=2$），保留 $O(2)$ 不可约等变矢量门户（$\mathsf{Q}_{10}$ 真，两探针严格共享红外声速 $c_{\mathrm{eff}}^2=\frac{5}{2}$），唯 $\mathsf{Q}_{11}$ 假；由定理 11.3 第 3 项，实空间格点零均值局域涨落方差按 $\Theta(\ln L)$ 随 $L\to\infty$ 发散。∎
+
+## 15. 不可由运动学切分原理导出的物理输入边界与第 13–15 节文献归属
+
+**命题 15.1（十一前件公理类的内部不变变形族与四类不可单独导出的物理输入边界）。** 定义 14.1 的前件合取 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$ 在以下显式结构变形下保持封闭，因此单凭上述内生切分运动学与二次谐振晶格原理**不能**唯一确定或导出以下四类物理内容：
+
+1. **具体动力学哈密顿量谱与有量纲物理常数的标度自由度**：在满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$ 的任意系统 $\mathfrak{S}$ 中，将连续演化生成元替换为**任意**复厄米算子 $H_{\mathbb{R}}\in\operatorname{Sym}_{J_\star}(V)$（$O_t=e^{-tJ_\star H_{\mathbb{R}}}$），并对晶格与作用量参数同时实施任意正标度变换
+
+$$
+(\hbar,\,a,\,T,\,V_0,\,V_1)\longmapsto(\lambda_\hbar\hbar,\,\lambda_aa,\,\lambda_TT,\,\lambda_0V_0,\,\lambda_1V_1)\qquad(\lambda_\hbar,\lambda_a,\lambda_T,\lambda_0,\lambda_1\in\mathbb{R}_{>0}),
+$$
+
+所得系统仍严格满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$，而有效声速与光学间隙分别任意缩放为 $c_{\mathrm{eff}}'=\sqrt{\frac{\lambda_1}{\lambda_T}}\,c_{\mathrm{eff}}$ 与 $\Omega_{\mathrm{opt},0}'=\sqrt{\frac{\lambda_0}{\lambda_T}}\,\Omega_{\mathrm{opt},0}$；故普朗克常数 $\hbar$、极限光速数值、晶格紫外尺度 $a$、耦合谱及具体物质规范群须由独立动力学或经验读数输入；
+
+2. **有限晶格间距 $a>0$ 下的严格零支撑微因果光锥与精确全频洛伦兹对称性**：在满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$ 且 $a>0$ 固定的离散周期晶格实例（例如取解耦有隙隐藏库的等速超立方晶格 $d_{\mathrm{sp}}\ge2,T=I_{M+M_h},V_0=\operatorname{diag}(0_M,\Omega^2I_{M_h}),V_1=c_0^2I_{M+M_h}$，$\Omega>0,c_0>0$）上，红外领先共同声速 $c_{\mathrm{eff}}=c_0>0$ 与隐藏库有隙 $H_0=\Omega^2I_{M_h}\succ0$ 已完全成立，但其横向零模平板正则算子对 $\bar{q}_1(x_1)=L^{-(d_{\mathrm{sp}}-1)/2}\sum_{x_\perp}\hat{q}_1(x_1,x_\perp)$、$\bar{p}_1(x_1)=L^{-(d_{\mathrm{sp}}-1)/2}\sum_{x_\perp}\hat{p}_1(x_1,x_\perp)$ 严格约化为命题 11.2 第 1 项的一维链：在空间平板距离 $ra$（$L\ge2r+1$）的超锥窗口内，对易子在 $L\to\infty$ 下于 $0<c_0t<\min(ra,a\sqrt{2r+1})$ 内精确等于严格正的 $J_{2r}(\frac{2c_0t}{a})>0$（有限 $L$ 下于 $0<c_0t\le\min(ra,a)$ 内镜像和同样严格为正，迫使该超锥距离上存在严格非零的格点间对易子），且 $d_{\mathrm{sp}}\ge2$ 维超立方布里渊区色散符号存在非零四阶方向差 $\frac{a^2(d_{\mathrm{sp}}-1)}{12d_{\mathrm{sp}}}\kappa^4+O(a^4\kappa^6)>0$；严格零支撑光锥仅在连续标度极限 $a\to0$（配合固定物理波长 $|k|=\text{const}$）下渐近恢复；
+
+3. **动态弯曲时空度规与 Einstein 张量引力场方程**：在 $\mathsf{Q}_{10}\wedge\mathsf{Q}_{11}$ 中，折合对 $(Z_{\mathrm{eff}},K_{\mathrm{eff}}=c_{\mathrm{eff}}^2Z_{\mathrm{eff}})$ 给出的是冻结平移不变背景上的平坦有效声学锥度规 $\eta_{\mathrm{eff}}=\operatorname{diag}(-c_{\mathrm{eff}}^2,1,\ldots,1)$，背景矩阵 $(T,V_0,V_1)$ 无自身动力学自由度亦无应力—能量反作用方程，因而满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$ 的平坦谐振晶格实例恒有零曲率，不蕴涵弯曲流形微分同胚不变作用量或 Einstein 场方程 $G_{\mu\nu}=8\pi G_{\mathrm{N}}T_{\mu\nu}$；
+
+4. **非高斯强相互作用连续场紫外重整化不动点**：$\mathsf{Q}_{10}\wedge\mathsf{Q}_{11}$ 刻画二次正则自由／线性门户耦合谐振晶格的精确高斯扇区；非二次自相互作用项在 $a\to0$ 连续紫外极限下的重整化群流、反常抵消与非微扰渐近自由／非平凡不动点存在性不属于二次 Schur 消去定理的推论范围。
+
+**证明。** 第 1 项直接由定理 13.3 第 2 项中 $H_{\mathbb{R}}\in\operatorname{Sym}_{J_\star}(V)$ 的任意性及定义 10.1、定理 10.2 中正标量缩放保持 $H_0\succ0$、$A_0-C_0H_0^{-1}C_0^{\mathsf T}=0$、$K_{\mathrm{eff}}\succ0$ 与 $D_g$ 等变性验证：在新参数下 $N_0'=\binom{I_M}{-(\lambda_0H_0)^{-1}(\lambda_0C_0^{\mathsf T})}=N_0$，$Z_{\mathrm{eff}}'=\lambda_TZ_{\mathrm{eff}}$，$K_{\mathrm{eff}}'=\lambda_1K_{\mathrm{eff}}$，$\widetilde{H}_0'=\frac{\lambda_0}{\lambda_T}\widetilde{H}_0$，故两标度比独立任意变化。第 2 项直接由命题 11.2 第 1–2 项在满足 $\mathsf{Q}_1\wedge\cdots\wedge\mathsf{Q}_{11}$ 的等速超立方晶格上给出显式正读数验证。第 3 项由基准实例 $\mathfrak{S}_*$ 的晶格哈密顿量系数 $(T,V_0,V_1)$ 为与量子态无关的常数矩阵、其有效声学度规恒为常系数闵氏对角阵故黎曼曲率恒为零且无引力反作用验证。第 4 项由定义 10.1 的哈密顿量严格为坐标与动量的二次齐次型（Wick 收缩闭合的高斯理论）这一模型定义域边界直接给出。∎
+
+**来源与适用边界 15.2。** 第 13 节将连续酉／正交单参数群生成元理论（Stone 1932）、量子跃迁概率与态空间仿射自同构的酉／反酉二分定理（Wigner 1931；Bargmann 1964；Kadison 1951 定理 7、定理 10 与推论 11；Kadison 1965 定理 2.6、定理 4.5 与推论 4.7）以及实空间反对称复结构算子 $J$ 在实量子力学超选择规则中的作用（对比 Stueckelberg 1960）推进到本卷第 2–3 节的内生覆盖锐三轴图册：引理 13.2 在不假设子空间非零交集（涵盖命题 2.4 第 3 项的斜交零交集窗口）的前提下建立 $\|\Pi_\alpha J_\beta\|_F^2=\operatorname{Tr}_{\mathbb{R}}(\Pi_\alpha\Pi_\beta)$、无基定向比迹公式、$|\mathcal{J}_{\mathrm{glob}}(\mathfrak{A})|=2^c$ 以及非连通图册上 $\mathcal{O}_{\mathfrak{A}}(V)=\bigoplus_{r=1}^c\operatorname{Sym}_{J_{0,r}}(V_r)$ 的超选择坍缩判据；定理 13.3 同时给出厄米哈密顿生成元 $H_{\mathbb{R}}=JA$ 的唯一涌现、任意维数 $d\ge2$ 保参考纯度单系统正映射的 $\mathcal{U}_+(d)\sqcup\mathcal{U}_-(d)$ 二分，以及由连续谱不变量 $\lambda_{\min}(R_{\Lambda_t})\in\{0,-\frac{1}{d}\}$ 对整个非 CP 反酉转置分支（含 [`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md) 命题 7.1 的 $F/2$）的拓扑消去；命题 13.4 第 1 项补充证明了在锐投影效果下“单系统正 + 本征纯态不扰动”已自动蕴涵完全正 Lüders 形式。第 14 节将本卷第 2–13 节与既有卷 [`AURIC_SHARP_THREE_AXIS_READOUTS_ENDOGENOUS_COMPLEX_STRUCTURE_AND_COMMON_PHASE_COMPATIBILITY_V53.md`](AURIC_SHARP_THREE_AXIS_READOUTS_ENDOGENOUS_COMPLEX_STRUCTURE_AND_COMMON_PHASE_COMPATIBILITY_V53.md)、[`AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md`](AURIC_EXTERIOR_CLOSURE_OF_BINARY_RELATIONS_THREE_AXIS_ERRORS_AND_CONDITIONAL_QUANTUM_ORIGIN_V55.md)、[`AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md`](AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md)、[`AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md`](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 及 [`QUANTUM-REALITY.md`](QUANTUM-REALITY.md) 的接口整合为同一八维实载体上无类型悬空的十一前件合成定理与 $11\times 11$ 单槽变异独立性反例矩阵。第 15 节命题 15.1 将本卷的条件化数学重构与自由参数标度、有限格距离散超锥尾项、动态弯曲时空引力场方程（对比模拟引力声学度规的非动力学背景边界 Barceló–Liberati–Visser 2005）及相互作用连续紫外量子场论严格划清边界。
+
+## 追加锚（本行以下为增补区）
+
+## 16. 单一有限 dyadic 效果表的局部关系证书
+
+**定义 16.1（同一网格上的完整二、三结果菜单表）。** Let $d,m\in\mathbb Z$ with $d\ge2$, $m\ge1$, $N=2^m$, $h=N^{-1}$, and
 $$
 K=\{E\in\operatorname{Herm}_d(h\mathbb Z[i]):0\le E\le I\}.
 $$
@@ -1164,7 +1397,7 @@ $$
 All these projections belong to $K$, including when $m=1$. Together with the $D_i$, they form a real basis $\mathcal B$ of $\operatorname{Herm}_d$, of cardinality $n=d^2$. Define the unique Hermitian matrix $H$ by
 $$
 \operatorname{Tr}(HQ)=p(Q)\qquad(Q\in\mathcal B).
-\tag{13.1}
+\tag{16.1}
 $$
 Put
 $$
@@ -1172,36 +1405,36 @@ B_d=4d^2-3d,\quad c_d=B_d^{-1},\quad
 K_d=6d^2+6,\quad T_d=2d+1,\quad M_d=2d.
 $$
 
-**定理 13.2（一致局部目标证书）。** Under Definition 13.1, for every $E\in K$ with $\|E\|_{\rm op}\le c_d$,
+**定理 16.2（一致局部目标证书）。** Under Definition 16.1, for every $E\in K$ with $\|E\|_{\rm op}\le c_d$,
 $$
 |p(E)-\operatorname{Tr}(HE)|\le K_d\epsilon.
-\tag{13.2}
+\tag{16.2}
 $$
 Moreover,
 $$
 |\operatorname{Tr}H-1|\le T_d\epsilon,
 \qquad \|H\|_{\rm op}\le M_d.
-\tag{13.3}
+\tag{16.3}
 $$
 These estimates hold for all $m\ge1$; their constants do not grow with $m$.
 
 **证明。** The menu hypothesis gives $0\le p(0)\le2\epsilon$, $|p(I)-1|\le3\epsilon$, and
 $$
 |p(A)+p(B)-p(A+B)|\le2\epsilon
-\tag{13.4}
+\tag{16.4}
 $$
 whenever $A,B,A+B\in K$.
 
-Indeed, subtract the inequalities for $(I,0)$ and $(I,0,0)$ to bound $p(0)$; the pair inequality then bounds $p(I)$. For (13.4), compare $(A,B,I-A-B)$ with $(A+B,I-A-B)$. These are permitted labelled menus even when entries coincide or vanish.
+Indeed, subtract the inequalities for $(I,0)$ and $(I,0,0)$ to bound $p(0)$; the pair inequality then bounds $p(I)$. For (16.4), compare $(A,B,I-A-B)$ with $(A+B,I-A-B)$. These are permitted labelled menus even when entries coincide or vanish.
 
 For use in this proof, suppose $Q\in K$, $L\ge1$ is an integer, and $kQ/L\in K$ for $0\le k\le L$. Then
 $$
 \left|p(kQ/L)-\frac{k}{L}p(Q)\right|\le4\epsilon
 \quad(0\le k\le L).
-\tag{13.5}
+\tag{16.5}
 $$
 
-To obtain this estimate, write $f(k)=p(kQ/L)$ and $\delta=2\epsilon$. Equation (13.4) gives $|f(k)+f(l)-f(k+l)|\le\delta$ for $k+l\le L$. Set $g(k)=f(k)-(k/L)f(L)$ on $0\le k<L$, viewed as the cyclic group $\mathbb Z/L\mathbb Z$. When $k+l<L$, its additive defect is at most $\delta$. When $k+l\ge L$, set $u=k+l-L$ and use
+To obtain this estimate, write $f(k)=p(kQ/L)$ and $\delta=2\epsilon$. Equation (16.4) gives $|f(k)+f(l)-f(k+l)|\le\delta$ for $k+l\le L$. Set $g(k)=f(k)-(k/L)f(L)$ on $0\le k<L$, viewed as the cyclic group $\mathbb Z/L\mathbb Z$. When $k+l<L$, its additive defect is at most $\delta$. When $k+l\ge L$, set $u=k+l-L$ and use
 $$
 |f(k)-f(L-l)-f(u)|\le\delta,\qquad
 |f(L)-f(L-l)-f(l)|\le\delta.
@@ -1213,36 +1446,36 @@ $$
 E=\sum_i a_iD_i+\sum_{i<j}(2x_{ij}R_{ij}+2y_{ij}J_{ij}),
 \quad
 a_i=E_{ii}-\sum_{j<i}(x_{ji}+y_{ji})-\sum_{j>i}(x_{ij}+y_{ij}).
-\tag{13.6}
+\tag{16.6}
 $$
 If $t=\|E\|_{\rm op}$, then $|E_{ij}|\le t$, whence
 $$
 \sum_i|a_i|+\sum_{i<j}(2|x_{ij}|+2|y_{ij}|)
 \le (4d^2-3d)t\le1.
-\tag{13.7}
+\tag{16.7}
 $$
-Split (13.6) into its positive and negative coefficients, obtaining $E=P-Q$, with $P,Q\ge0$. Each summand is a coefficient in $[0,1]$ times a member of $\mathcal B$. By (13.7), all partial sums, $P$, and $Q$ are effects. They belong to the original grid: the coefficients of $D_i$ are multiples of $h$, while those of $R_{ij},J_{ij}$ are multiples of $2h$. Consequently (13.5) applies to each summand, with $L=N$ for $D_i$, and $L=N/2$ for $R_{ij},J_{ij}$.
+Split (16.6) into its positive and negative coefficients, obtaining $E=P-Q$, with $P,Q\ge0$. Each summand is a coefficient in $[0,1]$ times a member of $\mathcal B$. By (16.7), all partial sums, $P$, and $Q$ are effects. They belong to the original grid: the coefficients of $D_i$ are multiples of $h$, while those of $R_{ij},J_{ij}$ are multiples of $2h$. Consequently (16.5) applies to each summand, with $L=N$ for $D_i$, and $L=N/2$ for $R_{ij},J_{ij}$.
 
-For a positive sum with $k$ nonzero summands, telescoping (13.4) and using (13.5) gives error at most $(6k+2)\epsilon$ between its table value and the corresponding linear combination of the basis values. This bound also holds for $k=0$, since $p(0)\le2\epsilon$. The total number of summands in $P,Q$ is at most $d^2$. Apply (13.4) to $E+Q=P$, and subtract the two linear combinations. The error is at most $(6d^2+6)\epsilon$, proving (13.2).
+For a positive sum with $k$ nonzero summands, telescoping (16.4) and using (16.5) gives error at most $(6k+2)\epsilon$ between its table value and the corresponding linear combination of the basis values. This bound also holds for $k=0$, since $p(0)\le2\epsilon$. The total number of summands in $P,Q$ is at most $d^2$. Apply (16.4) to $E+Q=P$, and subtract the two linear combinations. The error is at most $(6d^2+6)\epsilon$, proving (16.2).
 
-Since $I=\sum_iD_i$, (13.4) and the menu bounds above yield
+Since $I=\sum_iD_i$, (16.4) and the menu bounds above yield
 $$
 |\operatorname{Tr}H-1|\le2(d-1)\epsilon+3\epsilon=T_d\epsilon.
 $$
-The diagonal entries of $H$ are $p(D_i)\in[0,1]$. Equation (13.1) implies that both real and imaginary parts of every off-diagonal entry lie in $[-1,1]$. Hence its maximum absolute row sum is at most $1+\sqrt2(d-1)\le2d$, which bounds its operator norm. $\square$
+The diagonal entries of $H$ are $p(D_i)\in[0,1]$. Equation (16.1) implies that both real and imaginary parts of every off-diagonal entry lie in $[-1,1]$. Hence its maximum absolute row sum is at most $1+\sqrt2(d-1)\le2d$, which bounds its operator norm. $\square$
 
-## 14. 同一表格的正性探针与局部密度近似
+## 17. 同一表格的正性探针与局部密度近似
 
-**定理 14.1（同表格秩一探针与一致负谱界）。** Under Definition 13.1, set
+**定理 17.1（同表格秩一探针与一致负谱界）。** Under Definition 16.1, set
 $$
 A_d=16K_d/c_d,\qquad D_d=16M_dd/c_d,
 \quad a_d=A_d\epsilon+D_dh.
 $$
 
-The matrix in (13.1) satisfies
+The matrix in (16.1) satisfies
 $$
 \lambda_{\min}(H)\ge-a_d.
-\tag{14.1}
+\tag{17.1}
 $$
 **证明。** First suppose $N\ge8d/c_d$. Let $\psi$ be a unit eigenvector for $\lambda=\lambda_{\min}(H)$, and put $R=\sqrt{c_dN}/2$. Round each real and imaginary component of $R\psi$ to an integer, obtaining $v\in\mathbb Z[i]^d$ with
 $$
@@ -1252,7 +1485,7 @@ In particular $v\ne0$. The actual grid effect
 $$
 F=vv^*/N=\gamma ww^*,\quad w=v/\|v\|,\quad\gamma=\|v\|^2/N
 $$
-satisfies $c_d/16\le\gamma\le c_d$; hence (13.2) applies. Since $p(F)\ge0$, it gives
+satisfies $c_d/16\le\gamma\le c_d$; hence (16.2) applies. Since $p(F)\ge0$, it gives
 $$
 w^*Hw\ge-16K_d\epsilon/c_d.
 $$
@@ -1265,9 +1498,9 @@ $$
 w^*Hw\le\lambda+2M_d\eta
 \le\lambda+(16M_dd/c_d)h.
 $$
-Combining the last two inequalities proves (14.1). If $N<8d/c_d$, then $D_dh>2M_d$, and the already proved $\lambda_{\min}(H)\ge-M_d$ proves (14.1) directly. Thus coarse grids are included. $\square$
+Combining the last two inequalities proves (17.1). If $N<8d/c_d$, then $D_dh>2M_d$, and the already proved $\lambda_{\min}(H)\ge-M_d$ proves (17.1) directly. Thus coarse grids are included. $\square$
 
-**推论 14.2（一致局部密度近似）。** Under Definition 13.1, there is a finite constant depending only on $d$, for example
+**推论 17.2（一致局部密度近似）。** Under Definition 16.1, there is a finite constant depending only on $d$, for example
 $$
 C_d^{\rm loc}=2T_d+K_d+T_d+2dA_d+2dD_d,
 $$
@@ -1276,37 +1509,37 @@ $$
 \max_{E\in K:\,\|E\|_{\rm op}\le c_d}
 |p(E)-\operatorname{Tr}(\rho E)|
 \le C_d^{\rm loc}(\epsilon+h).
-\tag{14.2}
+\tag{17.2}
 $$
 
 **证明。** If $\epsilon\ge1/(2T_d)$, any density matrix works, because both compared numbers lie in $[0,1]$, and $1\le2T_d\epsilon$. Otherwise $s=\operatorname{Tr}H\ge1/2$. Write $H=H_+-H_-$, $t=\operatorname{Tr}H_-\le da_d$, $Z=\operatorname{Tr}H_+=s+t>0$, and $\rho=H_+/Z$. Then
 $$
 \|H-\rho\|_1=t+|Z-1|\le2da_d+T_d\epsilon.
-\tag{14.3}
+\tag{17.3}
 $$
-For every effect, its trace pairing with $H-\rho$ is bounded by this trace norm. Combine (13.2) and (14.3).
+For every effect, its trace pairing with $H-\rho$ is bounded by this trace norm. Combine (16.2) and (17.3).
 
-The eigenvector coverage and positive-part normalization steps are intermediate mechanisms from [V59](AURIC_LOCAL_TOMOGRAPHY_COHERENT_READOUT_ORBITS_AND_QUANTUM_POSITIVITY_ORIGIN_V59.md), Theorem 5.2 and Proposition 5.3, and [V64](AURIC_APPROXIMATE_RELATIONS_RIGIDITY_SQUARE_CALIBRATION_AND_QUANTUM_READOUT_STABILITY_V64.md), Definition 5.1 and Theorem 5.2. In the present derivation, the local relation certificate, the actual same-grid probes, their positive gain and quadratic directional coverage follow from Definition 13.1; the cited conditional mechanisms do not supply that local certificate. These are mathematical statements about the supplied table, with no physical acquisition or priority assertion.
+The eigenvector coverage and positive-part normalization steps are intermediate mechanisms from [V59](AURIC_LOCAL_TOMOGRAPHY_COHERENT_READOUT_ORBITS_AND_QUANTUM_POSITIVITY_ORIGIN_V59.md), Theorem 5.2 and Proposition 5.3, and [V64](AURIC_APPROXIMATE_RELATIONS_RIGIDITY_SQUARE_CALIBRATION_AND_QUANTUM_READOUT_STABILITY_V64.md), Definition 5.1 and Theorem 5.2. In the present derivation, the local relation certificate, the actual same-grid probes, their positive gain and quadratic directional coverage follow from Definition 16.1; the cited conditional mechanisms do not supply that local certificate. These are mathematical statements about the supplied table, with no physical acquisition or priority assertion.
 
 $\square$
 
-## 15. 任意目标关系的未决问题
+## 18. 任意目标关系的未决问题
 
-**定义 15.1（任意目标关系问题及小效果分解条件）。** For the specific $H$ in (13.1), ask whether there is a finite dimension-only constant $L_d$ such that, for every $m\ge1$ and every table in Definition 13.1,
+**定义 18.1（任意目标关系问题及小效果分解条件）。** For the specific $H$ in (16.1), ask whether there is a finite dimension-only constant $L_d$ such that, for every $m\ge1$ and every table in Definition 16.1,
 $$
 \sup_{E\in K}|p(E)-\operatorname{Tr}(HE)|
 \le L_d(\epsilon+h)
-\tag{15.1}
+\tag{18.1}
 $$
-with $L_d$ independent of $m$. If (15.1) holds, (14.1)–(14.3) give a single density matrix approximating the table on all of $K$ at rate $C_d(\epsilon+h)$ with a dimension-only constant, treating the large-$\epsilon$ case as above. Theorem 13.2 establishes the corresponding relation only on $\|E\|\le c_d$. If $E=\sum_{j=1}^k E_j$, where $k\ge1$, $E_j\in K$ and $\|E_j\|_{\rm op}\le c_d$, then telescoping (13.4) and Theorem 13.2 gives the conditional bound
+with $L_d$ independent of $m$. If (18.1) holds, (17.1)–(17.3) give a single density matrix approximating the table on all of $K$ at rate $C_d(\epsilon+h)$ with a dimension-only constant, treating the large-$\epsilon$ case as above. Theorem 16.2 establishes the corresponding relation only on $\|E\|\le c_d$. If $E=\sum_{j=1}^k E_j$, where $k\ge1$, $E_j\in K$ and $\|E_j\|_{\rm op}\le c_d$, then telescoping (16.4) and Theorem 16.2 gives the conditional bound
 $$
 |p(E)-\operatorname{Tr}(HE)|\le[kK_d+2(k-1)]\epsilon.
 $$
 No uniformly bounded such decomposition is asserted. In particular, dividing or rounding a boundary effect need not preserve its original grid or its positive face. The local estimate and this conditional bound neither prove the all-grid approximation assertion nor provide an admissible counterfamily. The arbitrary-target relation remains an open mathematical question.
 
-## 16. 固定四维的互补投影分解障碍
+## 19. 固定四维的互补投影分解障碍
 
-**命题 16.1（任意 dyadic 精度下的小块分解障碍）。** In fixed dimension $d=4$, for every integer $m\ge1$ and $N=2^m$, there are complementary rank-two grid projections $P,Q\in K$ such that every nonzero grid effect below either projection has operator norm exactly one. In particular, neither projection is a sum of grid effects of norm at most $c_4<1$. This is an obstruction to the small-piece decomposition route; it is not a counterexample to all-grid stability.
+**命题 19.1（任意 dyadic 精度下的小块分解障碍）。** In fixed dimension $d=4$, for every integer $m\ge1$ and $N=2^m$, there are complementary rank-two grid projections $P,Q\in K$ such that every nonzero grid effect below either projection has operator norm exactly one. In particular, neither projection is a sum of grid effects of norm at most $c_4<1$. This is an obstruction to the small-piece decomposition route; it is not a counterexample to all-grid stability.
 
 **证明。** By Lagrange's classical four-square theorem (every nonnegative integer is a sum of four integer squares) choose Gaussian integers $a,b$ with $|a|^2+|b|^2=N-1=:q$. Put
 $$
@@ -1323,6 +1556,6 @@ Thus these are complementary rank-two projections in the prescribed grid.
 
 If $0\le F\le P$, its range lies in $\operatorname{ran}P=\operatorname{ran}V$. Consequently $`F=VXV^*`$, where $X$ is its upper-left block. Set $B=NX$. The grid condition makes $B$ an integral Gaussian Hermitian matrix, and the upper-left principal-block inequality gives $0\le B\le I_2$. Its diagonal entries are therefore zero or one. Positivity of $B$ forces every off-diagonal entry incident to a zero diagonal entry to vanish; positivity of $I_2-B$ does the same for every diagonal entry equal to one. Hence $B$ is a diagonal coordinate projection. It follows that $`F=VBV^*/N`$ is itself an orthogonal projection and, when nonzero, has norm one. The same proof for $Q$, using its lower-right block, applies because $`Q=WW^*/N`$ for $`W=\begin{pmatrix}-U^*\\I_2\end{pmatrix}`$, with $`W^*W=NI_2`$. Finally, every positive summand in a decomposition of $P$ is below $P$, so no decomposition into nonzero effects of norm less than one is possible; likewise for $Q$.
 
-For instance, $N=8$ admits $a=2+i,b=1+i$. The four-square input establishes the construction for arbitrarily fine dyadic grids at fixed dimension. This construction supplies no admissible non-Born table. The question in Definition 15.1 still concerns all labelled menus, including relations involving proper subprojections and their complements. $\square$
+For instance, $N=8$ admits $a=2+i,b=1+i$. The four-square input establishes the construction for arbitrarily fine dyadic grids at fixed dimension. This construction supplies no admissible non-Born table. The question in Definition 18.1 still concerns all labelled menus, including relations involving proper subprojections and their complements. $\square$
 
 ## 追加锚（本行以下为增补区）
