@@ -71,7 +71,7 @@ private theorem master (d h t e k j : S)
     calc
       (1+t*h)*(t*k) = t*((1+h*t)*k) := by noncomm_ring
       _ = t := by rw [hk', mul_one]
-  have hc' : h*d+d*h+e = 1 := by linear_combination hc
+  have hc' : h*d+d*h+e = 1 := by linear_combination (norm := noncomm_ring) hc
   have sand : (1+t*h)*(d*T+T*d+T*e*T)*(1+h*t) = 0 := by
     calc
       _ = (1+t*h)*d*(T*(1+h*t))+((1+t*h)*T)*d*(1+h*t)+
@@ -81,7 +81,7 @@ private theorem master (d h t e k j : S)
       _ = d*t+t*d+t*t := by rw [hc', mul_one]
       _ = 0 := by linear_combination (norm := noncomm_ring) hD - hd
   have cancel := congrArg (fun z => j*z*k) sand
-  simpa only [mul_assoc, ← mul_assoc j (1+t*h), hj, one_mul,
+  simpa only [T, mul_assoc, ← mul_assoc j (1+t*h), hj, one_mul,
     hk', mul_one, mul_zero, zero_mul] using cancel
 
 private theorem core (d h t e k j : S)
@@ -107,7 +107,7 @@ private theorem core (d h t e k j : S)
     linear_combination (norm := noncomm_ring) hj + ht*h
   have tr : T*(1+h*t) = t := by dsimp [T]; rw [mul_assoc, hk, mul_one]
   have lt : (1+t*h)*T = t := by rw [ht, ← mul_assoc, hj', one_mul]
-  have hc' : 1-d*h-h*d-e = 0 := by linear_combination hc
+  have hc' : 1-d*h-h*d-e = 0 := by linear_combination (norm := noncomm_ring) hc
   have dk : (d+t)*k = k*d+k*e*T := by
     rw [hkt]
     linear_combination (norm := noncomm_ring) h*hm + hc'*T - lt
@@ -118,7 +118,7 @@ private theorem core (d h t e k j : S)
   calc
     (d+t)*(k*h)+(k*h)*(d+t) =
         (k*d+k*e*T)*h+h*(d*j+T*e*j) := by
-      rw [← mul_assoc, dk, hp.1, mul_assoc, jd]
+      rw [← mul_assoc, dk, hp.1, mul_assoc h j (d+t), jd]
     _ = 1-k*e*j := by
       rw [hkt, hjt]
       linear_combination (norm := noncomm_ring) hc - h*hm*h
@@ -146,6 +146,8 @@ structure Input where
   ph : p.comp h = 0
   perturbed_sq : (d0+delta)*(d0+delta) = 0
 
+namespace Input
+
 variable (c : Input (R := R) (U := U) (V := V))
 
 /-- Left inverse polynomial: N terms for h delta. -/
@@ -159,7 +161,7 @@ def H (n : ℕ) : Module.End R V := c.K n*c.h
 def transferred (n : ℕ) : Module.End R U := c.p.comp (c.delta.comp (c.I n))
 
 /-- All assertions are conclusions of the perturbation inference, never input fields. -/
-structure Conclusion (n : ℕ) : Prop where
+structure Retraction (n : ℕ) : Prop where
   opposite_nilpotent : (c.delta*c.h)^(n+1) = 0
   K_left : c.K n*(1+c.h*c.delta) = 1
   K_right : (1+c.h*c.delta)*c.K n = 1
@@ -177,8 +179,8 @@ structure Conclusion (n : ℕ) : Prop where
   projection_homotopy : (c.P n).comp (c.H n) = 0
 
 /-- The finite basic perturbation lemma, including the asymmetric opposite bound. -/
-theorem finite_perturbation (n : ℕ) (hn : 1 ≤ n)
-    (nilpotent : (c.h*c.delta)^n = 0) : c.Conclusion n := by
+private theorem finite_retraction (n : ℕ) (hn : 1 ≤ n)
+    (nilpotent : (c.h*c.delta)^n = 0) : c.Retraction n := by
   have nb : (c.delta*c.h)^(n+1) = 0 := by
     rw [opposite_power, nilpotent, mul_zero, zero_mul]
   obtain ⟨kl, kr⟩ := series_inverse (c.h*c.delta) n nilpotent
@@ -243,12 +245,12 @@ theorem finite_perturbation (n : ℕ) (hn : 1 ≤ n)
 
 /-- With zero transferred differential, every cycle has an explicit lift and primitive.
 The last equivalence detects boundaries by the original projection. -/
-theorem zero_transfer_representatives (n : ℕ) (hn : 1 ≤ n)
+private theorem zero_transfer_representatives (n : ℕ) (hn : 1 ≤ n)
     (nilpotent : (c.h*c.delta)^n = 0) (zero_transfer : c.transferred n = 0) :
     (∀ u : U, c.D (c.I n u) = 0 ∧ c.P n (c.I n u) = u) ∧
     (∀ x : V, c.D x = 0 → x-c.I n (c.P n x) = c.D (c.H n x)) ∧
     (∀ x : V, c.D x = 0 → ((∃ y : V, c.D y = x) ↔ c.P n x = 0)) := by
-  have out := finite_perturbation c n hn nilpotent
+  have out := finite_retraction c n hn nilpotent
   have ci (u : U) : c.D (c.I n u) = 0 := by
     have eq := DFunLike.congr_fun out.inclusion_chain u
     simpa [zero_transfer] using eq
@@ -267,6 +269,20 @@ theorem zero_transfer_representatives (n : ℕ) (hn : 1 ≤ n)
   · intro hp
     refine ⟨c.H n x, ?_⟩
     simpa [hp] using (primitive x hx).symm
+
+/-- The full retraction and its explicit zero-transfer cohomology interface. -/
+structure Conclusion (n : ℕ) extends c.Retraction n : Prop where
+  representatives : c.transferred n = 0 →
+    (∀ u : U, c.D (c.I n u) = 0 ∧ c.P n (c.I n u) = u) ∧
+    (∀ x : V, c.D x = 0 → x-c.I n (c.P n x) = c.D (c.H n x)) ∧
+    (∀ x : V, c.D x = 0 → ((∃ y : V, c.D y = x) ↔ c.P n x = 0))
+
+/-- Finite polynomial basic perturbation, with one-sided nilpotence and explicit primitives. -/
+theorem finite_perturbation (n : ℕ) (hn : 1 ≤ n)
+    (nilpotent : (c.h*c.delta)^n = 0) : c.Conclusion n :=
+  ⟨finite_retraction c n hn nilpotent, zero_transfer_representatives c n hn nilpotent⟩
+
+end Input
 
 end Modules
 end D5.S3.HomologicalAlgebra.FinitePerturbation

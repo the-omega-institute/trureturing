@@ -13,7 +13,7 @@ internal sealed class FinitePerturbationDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("finite-basic-perturbation"),
-                DeclarationHandle.Create(Prefix + "finite_perturbation"),
+                DeclarationHandle.Create(Prefix + "Input.finite_perturbation"),
                 H("The full finite perturbation inference"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -43,7 +43,7 @@ internal sealed class FinitePerturbationDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zero-transfer-explicit-representatives"),
-                DeclarationHandle.Create(Prefix + "zero_transfer_representatives"),
+                DeclarationHandle.Create(Prefix + "Input.Conclusion"),
                 H("Explicit lifts, primitives and boundary detection"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -53,5 +53,5 @@ internal sealed class FinitePerturbationDocument : IScribeDocumentDefinition
                 + "the reverse implication uses the explicit primitive Hx. Thus the maps "
                 + "identify cohomology representatives without assuming a cohomology result. "
                 + "The physical claim that dU vanishes remains an application obligation."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Definition))));
 }

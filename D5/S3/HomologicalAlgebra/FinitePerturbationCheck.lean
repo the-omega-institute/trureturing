@@ -4,6 +4,7 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
 open D5.S3.HomologicalAlgebra.FinitePerturbation
+open D5.S3.HomologicalAlgebra.FinitePerturbation.Input
 namespace FinitePerturbationCheck
 abbrev U := ℂ × ℂ
 abbrev V := U × U
