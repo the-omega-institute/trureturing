@@ -171,8 +171,8 @@ private lemma ghz_expectation (ψ : Word (Fin 3) 3 → ℂ) :
   norm_num [Complex.normSq_inv, Complex.normSq_ofReal, Real.sq_sqrt, Real.mul_self_sqrt]
   ring
 
-private def join (a : Finset (Fin 3)) (i j : Fin 3) : Word (Fin 3) 3 :=
-  fun k => if k ∈ a then i else j
+private def join (a : Finset (Fin 3)) (i j : Fin 3) : Word (Fin 3) 3 := by
+  exact fun k => if k ∈ a then i else j
 
 private lemma join_support (a : Finset (Fin 3)) (i j : Fin 3) :
     (Finset.univ.image (join a i j)).card ≤ 2 := by
