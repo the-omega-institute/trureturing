@@ -32,11 +32,6 @@ private theorem denominator_positive {A : PositiveMatrix} (hA : Unimodular A)
   have hd : (0 : ℚ) < A.d := by exact_mod_cast (diagonal_positive hA).2
   positivity
 
-private theorem mobius_positive {A : PositiveMatrix} (hA : Unimodular A)
-    {x : ℚ} (hx : 0 < x) : 0 < mobius A x := by
-  have ha : (0 : ℚ) < A.a := by exact_mod_cast (diagonal_positive hA).1
-  exact div_pos (by positivity) (denominator_positive hA hx)
-
 private theorem mobius_strict {A : PositiveMatrix} (hA : Unimodular A)
     {x y : ℚ} (hx : 0 < x) (hy : 0 < y) (hxy : x < y) :
     mobius A x < mobius A y := by
@@ -610,7 +605,9 @@ private theorem current_cut_compare {A : PositiveMatrix} (hA : Unimodular A)
     transportNumerator A j m ≤ reply (transportDenominator A j m) (mobius A x) ↔
       (j : ℚ) / m ≤ x := by
   have ht : (0 : ℚ) < (j : ℚ) / m := by
-    apply div_pos <;> exact_mod_cast (by omega : 0 < _)
+    apply div_pos
+    · exact_mod_cast hj
+    · exact_mod_cast (show 0 < m by omega)
   have hd : (0 : ℚ) < transportDenominator A j m := by
     have ha : 0 < A.d := (diagonal_positive hA).2
     dsimp [transportDenominator]
@@ -672,6 +669,8 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
     have hJl : 0 ≤ J.lower := first_interval_lower_nonneg A (Q ^ 2) I r
     cases hcut : findCut B J with
     | none =>
+      dsimp only
+      rw [hcut]
       change (ProfileProgram.done (fastContainingCell B J.representative)).execute _ = _ ∧
         TwoReplyTrace Q (mobius A x)
           ((if determinedReply A I (Q ^ 2) = none then [(Q ^ 2, r)] else []) ++ [])
@@ -681,6 +680,8 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
         split_ifs <;> simp [r]
     | some cut =>
       obtain ⟨j, m⟩ := cut
+      dsimp only
+      rw [hcut]
       obtain ⟨hm, hmB, hjl, hju⟩ := (find_cut_spec B J).1 j m hcut
       have hjI : I.lower < (j : ℚ) / m ∧ (j : ℚ) / m < I.upper := by
         have hp : 0 < (j : ℚ) / m := hJl.trans_lt hjl
