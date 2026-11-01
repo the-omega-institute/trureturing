@@ -4,6 +4,10 @@ import Reg.Support.SingleDependentReadout
 
 /-! Source-bound observation of the frequency in rotating-phase injectivity. -/
 
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
+set_option linter.unusedSimpArgs false
+
 namespace Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.Rotating
 
 open _root_.D5.S3.Zeros.CriticalPoints.ThreeLinesSchurMoment
@@ -337,6 +341,8 @@ end Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.Phase
 
 namespace Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.TraceIdentity
 set_option linter.style.longLine false
+set_option linter.unusedVariables true
+set_option linter.unusedSimpArgs true
 open _root_.D5.S3.Zeros.CriticalPoints.RankOneTraceBound
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Matrix
