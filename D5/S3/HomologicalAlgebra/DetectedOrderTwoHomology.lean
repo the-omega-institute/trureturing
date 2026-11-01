@@ -42,7 +42,7 @@ theorem cycleClassMap_eq_zero_iff (S : ShortComplex (ModuleCat.{u} ℤ))
   change S.moduleCatHomologyIso.symm.toLinearEquiv
     ((LinearMap.range S.moduleCatToCycles).mkQ z) = 0 ↔ _
   erw [S.moduleCatHomologyIso.symm.toLinearEquiv.map_eq_zero_iff]
-  rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+  erw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
   constructor
   · rintro ⟨c, hc⟩
     exact ⟨c, congrArg Subtype.val hc⟩
