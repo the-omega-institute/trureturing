@@ -69,7 +69,7 @@ structure Parameters where
   E : Type u
   group : NormedAddCommGroup E
   space : @NormedSpace ℝ E _ group.toSeminormedAddCommGroup
-  finite : @FiniteDimensional ℝ E _ space.toModule
+  finite : @FiniteDimensional ℝ E _ group.toAddCommGroup space.toModule
 attribute [instance] Parameters.group Parameters.space Parameters.finite
 abbrev signature : Signature where
   Params := Parameters.{u}
