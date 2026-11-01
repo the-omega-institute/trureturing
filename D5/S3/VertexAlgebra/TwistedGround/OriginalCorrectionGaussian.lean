@@ -260,10 +260,10 @@ private theorem weight_sub_single (d : I →₀ ℕ) (j : I) (hj : d j ≠ 0) :
   simpa only [Finsupp.tsub_apply, Finsupp.single_eq_same,
     Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hj)] using h
 
-private def nativeMoment (A : Matrix I I ℂ) (d : I →₀ ℕ) : ℂ :=
+def nativeMoment (A : Matrix I I ℂ) (d : I →₀ ℕ) : ℂ :=
   (FactorialFockMetric.weight d : ℂ) * gaussianCoefficient A d
 
-private theorem nativeMoment_step (A : Matrix I I ℂ)
+theorem nativeMoment_step (A : Matrix I I ℂ)
     (hsym : ∀ i j, A i j = A j i) (r : I →₀ ℕ) (i : I) :
     nativeMoment A (r + Finsupp.single i 1) =
       ∑ j, (r j : ℂ) * A i j * nativeMoment A (r - Finsupp.single j 1) := by
