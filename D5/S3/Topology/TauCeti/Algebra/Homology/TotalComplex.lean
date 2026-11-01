@@ -158,7 +158,7 @@ private abbrev rowsSucc : HomologicalComplex₂ C (ComplexShape.down ℕ) (Compl
     ext q; exact HomologicalComplex.congr_hom (K.d_comp_d p p' p'') (q + 1)
 
 /-- The inclusion of row `0` into the total complex. -/
-private noncomputable def rowZeroι :
+noncomputable def rowZeroι :
     ((eval C (ComplexShape.down ℕ) 0).mapHomologicalComplex (ComplexShape.down ℕ)).obj K ⟶
       K.total (ComplexShape.down ℕ) where
   f n := K.ιTotal (ComplexShape.down ℕ) n 0 n (by simp)
@@ -171,7 +171,7 @@ private noncomputable def rowZeroι :
 /-- The inclusion of row `0` sends the summand `(K.X n).X 0` into the total complex in degree
 `n`. -/
 @[simp]
-private lemma rowZeroι_f (n : ℕ) :
+lemma rowZeroι_f (n : ℕ) :
     (rowZeroι K).f n = K.ιTotal (ComplexShape.down ℕ) n 0 n (by simp) :=
   (rfl)
 

@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:df719ec0c68339a37f9b6ba0dcd7af7af817d560533ba70744a68c6ee194d749
+  normalized_sha256: sha256:df719ec0c68339a37f9b6ba0dcd7af7af817d560533ba70744a68c6ee194d749
+cas_ref: sha256:df719ec0c68339a37f9b6ba0dcd7af7af817d560533ba70744a68c6ee194d749
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.coarse_upper_sum_reduction_and_triangular_inversion
+    target_statement_id: sha256:71b8016a6c23f977393f419c8a8d3c6db9ffba7f256c11f28c1a5534bdf8fb8d
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/StabilizerMultiEntropyReplicaThree.coarse_linear_combination_and_vanishing_criterion
+    target_statement_id: sha256:b2714af3bcea07b50433a5e26e3b5b3d8727aab6f7c02e7aa1f6acc100cecee7
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 2be6bdefd29dcda550929268d9092e08d90f55a1e0d171a44dd67bde8d12d100
+    - 70760e64cba13a53eb0474d85266dc24dcf8351347150698c882fb5d15419436

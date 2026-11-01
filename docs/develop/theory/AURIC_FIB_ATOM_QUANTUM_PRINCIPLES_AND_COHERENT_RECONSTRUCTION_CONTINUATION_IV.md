@@ -1608,3 +1608,327 @@ $$
 [FLW214]: https://arxiv.org/abs/math/0103200
 
 ## 追加锚（本行以下为增补区）
+
+## 215. 原完整四时响应类的严格首项内界
+
+**定义 215.1（原合同、二坐标剪裁与有符号扰动）。** 本节的 $H,\mathcal B,e_d,v,K_0,\ldots,K_6$ 精确沿用 II77.1，$H=\mathbb C^{13}$，$v=e_{00100}$，$w_d=10d010$，$\Omega_{10}=\{0,1\}^{10}$。$\mathsf W$ 仍为七个原地址生成的全部有限正向字，含空字。$\mathcal C$ 是 II78.1、II79.1、II109.1 的完整类：每个 $P:S(H)\to\Delta(\Omega_{10})$ 的全部 $1024$ 个坐标连续、相位不变，在整个球面上非负、总和为一，且
+
+$$
+P_w(e_d)=\mathbf1_{\{w=w_d\}}\quad(d\in\mathcal B,\ w\in\Omega_{10}).
+\tag{215.1}
+$$
+
+当前射线条件终端充分性也保持 II78.1 的原含义。置 $A_d=|e_d\rangle\langle e_d|$，$A_{w_d}=A_d$，非法标签的 $A_w=0$，并令 $q_B(\psi)=\langle\psi,B\psi\rangle$、$q_w=q_{A_w}$；内积对第二变量线性。对全部原字和标签，定义
+
+$$
+\begin{aligned}
+a_j(P;p,f,w)&=P_w(K_fK_0^jK_pv),\\
+\mathcal R(P)&=\sup_{p,f\in\mathsf W,\,w\in\Omega_{10}}
+ \left|\sum_{j=0}^3c_ja_j(P;p,f,w)\right|,\\
+\mathcal D(P)&=\max_{w\in\Omega_{10}}\sup_{\psi\in S(H)}|P_w(\psi)-q_w(\psi)|,\\
+M(\varepsilon)&=\sup\{\mathcal D(P):P\in\mathcal C,\ \mathcal R(P)\le\varepsilon\},\\
+\varphi&=(1+\sqrt5)/2,\quad x=\varphi^{-1},\quad s=x^2,\quad
+\zeta=e^{3\pi i/5},\quad(c_0,c_1,c_2,c_3)=(-1,s,-s,1),\quad\ell=2+2s.
+\end{aligned}
+\tag{215.2}
+$$
+
+这些正是 II90.1、II109.1 的残差、最大坐标误差及最优值。以下下标 $d$ 表示原合法标签 $w_d$，并非删除其余标签。
+
+取 II96.1 的两个合法地址 $a=00000$、$b=00100$，令 $A=A_a+A_b$，固定 $c_*=1/4$。对充分小实数 $t>0$，旋转基向量为
+
+$$
+u_a(t)=\cos t\,e_a+\sin t\,e_b,\qquad
+u_b(t)=-\sin t\,e_a+\cos t\,e_b,
+\tag{215.3}
+$$
+
+其余十一个不变；$Q^t$ 表示相应十三个秩一投影的概率响应，非法坐标为零。定义
+
+$$
+\begin{aligned}
+E_t&=|u_a(t)\rangle\langle u_a(t)|+c_*t^2(A_a-A_b),\\
+r(\psi)&=\langle\psi,A\psi\rangle,\qquad e_t(\psi)=\langle\psi,E_t\psi\rangle,\\
+S^t_a(\psi)&=\min\{r(\psi),\max\{0,e_t(\psi)\}\},\\
+S^t_b(\psi)&=r(\psi)-S^t_a(\psi),\qquad
+S^t_d(\psi)=|\psi_d|^2\quad(d\ne a,b).
+\end{aligned}
+\tag{215.4}
+$$
+
+所有非法坐标仍为零。$E_t$ 在 $\operatorname{span}(e_a,e_b)$ 上的特征值记为 $1+\delta_t,-\delta_t$，其中 $\delta_t>0$。对 $d=a,b$ 使用 II (109.3) 的同一个对数截断：
+
+$$
+\begin{aligned}
+r_d(\psi)&=\sqrt{1-|\psi_d|^2},\\
+\chi_{d,t}(\psi)&=
+\begin{cases}
+1,&r_d(\psi)\le t^4,\\
+\log(t^3/r_d(\psi))/\log(1/t),&t^4<r_d(\psi)<t^3,\\
+0,&r_d(\psi)\ge t^3,
+\end{cases}\\
+P^{0,t}&=(1-\chi_{a,t}-\chi_{b,t})S^t+\chi_{a,t}\delta_a+\chi_{b,t}\delta_b,
+\end{aligned}
+\tag{215.5}
+$$
+
+这里 $\delta_d$ 是原标签 $w_d$ 上的点概率向量。
+
+为定义扰动，置
+
+$$
+\begin{aligned}
+\alpha&=\frac{\zeta-1}{\zeta^3-1}=\frac{\zeta^{-1}}s,\qquad
+\beta=\frac{\zeta^2-1}{\zeta^3-1}=\alpha+\frac1s,\\
+A_0&=\{\alpha,\overline\alpha\},\qquad B_0=\{0,1,\beta,\overline\beta\},\\
+d_0&=\min\left\{\operatorname{dist}(A_0,B_0),\ \min_{z\in A_0}(|z-1|-\sqrt2)\right\},\qquad \rho_0=d_0/4,\\
+H(z)&=\max\{0,\min\{1,2-\operatorname{dist}(z,A_0)/\rho_0\}\},\\
+k(u)&=\max\{0,\min\{1,12u-8\}\}\quad(0\le u\le1).
+\end{aligned}
+\tag{215.6}
+$$
+
+$A_0$ 与 $B_0$ 不交，且 $|\alpha-1|^2=1/s^2+1+x/s>2$，故 $d_0>0$。于是 $H:\mathbb C\to[0,1]$ 连续、紧支撑，在 $\alpha,\overline\alpha$ 的邻域恒为一，在 $0,1,\beta,\overline\beta$ 的邻域恒为零，且其支撑包含于 $\{|z-1|^2>2\}$。令
+
+$$
+\begin{aligned}
+h_{a,t}(\psi)&=k(|\psi_a|^2)H\!\left(\frac{\psi_b}{t\psi_a}\right),\\
+h_{b,t}(\psi)&=k(|\psi_b|^2)H\!\left(-\frac{\psi_a}{t\psi_b}\right),\qquad
+b_t=h_{a,t}-h_{b,t},\\
+P^t&=P^{0,t}+\lambda t^2b_t(\delta_a-\delta_b).
+\end{aligned}
+\tag{215.7}
+$$
+
+当相应 $k$ 因子为零时将整个乘积定义为零；在分母为零的邻域该因子恒为零。这给出全球面连续、相位不变的函数。两个 $h$ 的支撑不交，因为各自非零要求不同坐标的模平方大于 $2/3$。常数 $\lambda>0$ 将在定理 215.5 中固定，与 $t,p,f,w,\psi$ 无关。
+
+**引理 215.2（四时剪裁界及谱参数）。** 若 $y_j\in\mathbb R$、$\sum_jc_jy_j=0$、$y_j\le d$，其中 $d\ge0$，则
+
+$$
+\left|\sum_{j=0}^3c_j(y_j)_+\right|\le d.
+\tag{215.8}
+$$
+
+此外，$\delta_t/t^2\to c_*$；取 $E_t$ 的顶特征向量 $v_{+,t}$，其 $b/a$ 坐标比为 $t+O(t^3)$。
+
+证明。写正系数组为 $\{1,3\}$，负系数组为 $\{0,2\}$。若正部的加权差 $D>0$，则 $y_1,y_3$ 不能同时严格正：否则正组的原和已等于其正部和，原加权等式使它不大于负组的正部和，矛盾。因此正组至多一个正项，其权重不超过一、值不超过 $d$，故 $D\le d$。交换两组证明 $-D\le d$。零项无需另加条件。
+
+$E_t$ 的二维迹为一，而行列式为 $-c_*t^2\cos(2t)-c_*^2t^4$，所以
+
+$$
+\delta_t(1+\delta_t)=c_*t^2\cos(2t)+c_*^2t^4.
+\tag{215.9}
+$$
+
+这证明 $\delta_t/t^2\to c_*$。二维矩阵的非对角元是 $\sin t\cos t$，对角差是 $\cos(2t)+2c_*t^2$；顶特征向量的比值为 $t+O(t^3)$。在二维空间上 $E_t-A$ 的特征值为 $\delta_t,-1-\delta_t$，其顶特征向量也是 $v_{+,t}$；在其余十一维上为零。∎
+
+**引理 215.3（校准修复的统一初步界）。** 令
+
+$$
+\mathscr T=\{(\psi_0,\ldots,\psi_3):\psi_j=u+\zeta^jv,\ u\perp v,\ \|u\|^2+\|v\|^2=1\}.
+\tag{215.10}
+$$
+
+$P^{0,t}\in\mathcal C$，且对全部 $\Psi\in\mathscr T$ 和全部原标签一致有
+
+$$
+\left|\sum_jc_jP^{0,t}_w(\psi_j)\right|\le (1+o(1))t^2.
+\tag{215.11}
+$$
+
+若四态中没有正截断，则左端至多 $2\delta_t$。非 $a,b$ 的坐标残差为 $O(t^3)$；$a,b$ 两个残差之和也是 $O(t^3)$。
+
+证明。II (96.8) 的消去恒等式适用于 $\mathscr T$ 的每个 Hermitian 二次型；它只使用序列 $1,\zeta^j,\zeta^{-j}$ 及 $\sum_jc_j\zeta^{\pm j}=\sum_jc_j=0$。在一个四态组上写
+
+$$
+e_j=e_t(\psi_j),\quad r_j=r(\psi_j),\quad
+L_j=(-e_j)_+,\quad U_j=(e_j-r_j)_+.
+\tag{215.12}
+$$
+
+二次序列 $-e_j,e_j-r_j$ 的各项均不超过 $\delta_t$，故引理 215.2 分别给出 $|\sum c_jL_j|,|\sum c_jU_j|\le\delta_t$。由 $S^t_a=e+L-U$，其残差至多 $2\delta_t$；$S^t_b=r-S^t_a$ 的残差相反。其余坐标的残差为零。
+
+$S^t$ 的定义直接保证全状态非负和归一。在 $e_a,e_b$ 处剪裁不活跃，漏到另一个标签的量同为
+
+$$
+B_t=\sin^2t-c_*t^2=(1-c_*)t^2+O(t^4)>0.
+\tag{215.13}
+$$
+
+其余基底点已经精确标定。截断支撑不交，故 (215.5) 是概率向量的凸组合，且补全所有基底标定。连续性、相位不变性以及 II (96.6) 的条件终端赋值遂给 $P^{0,t}\in\mathcal C$。
+
+有限个二次型的算子范数一致有界，取最小／最大值保持一致 Lipschitz 界。在 $d$ 的截断支撑内，选择相位可使 $\|\psi-e_d\|\le\sqrt2t^3$。因此全状态、全标签一致地有
+
+$$
+P^{0,t}-S^t=B_t(\chi_{a,t}-\chi_{b,t})(\delta_a-\delta_b)+O(t^3).
+\tag{215.14}
+$$
+
+直接复用 II (109.8)–(109.10)：$\mathscr T$ 中不同两态的内积模至少为固定
+$\gamma=\min_{1\le d\le3}|1+\zeta^d|/2>0$，所以一个四态组不能同时遇到 $a,b$ 两个修复地址；且每个地址满足
+$|\sum_jc_j\chi_{d,t}(\psi_j)|\le1+\ell\log K/\log(1/t)$，$K=4/\min_{i<j}|\zeta^i-\zeta^j|$。这些证明量化于整个 (215.10)，不只量化于有限字的稠密子集。
+
+若遇到 $a$ 的截断，某态趋近 $e_a$ 射线，内积下界给每个态 $|\psi_{j,a}|\ge\gamma-o(1)$；由 $E_t\to A_a$，全部 $e_j>0$，故 $L_j=0$。此时 $S_a^t$ 的残差至多 $\delta_t$。若遇到 $b$ 的截断，同理全部 $e_j-r_j<0$，故 $U_j=0$，仍至多 $\delta_t$。结合 (215.14)，有截断时的界为
+$\delta_t+B_t(1+o(1))+O(t^3)=t^2(1+o(1))$；无截断时的界为 $2\delta_t$，其系数趋于 $2c_*=1/2<1$。这证明 (215.11)。其他坐标及两坐标残差和的断言由 (215.14) 和 $S_a^t+S_b^t=r$ 立即得到，误差均一致。∎
+
+**引理 215.4（全部渐近饱和组的有符号分类）。** 对任意 $t_n\downarrow0$、$\Psi_n\in\mathscr T$、$w_n\in\Omega_{10}$，令
+
+$$
+a_n=t_n^{-2}\sum_jc_jP^{0,t_n}_{w_n}(\psi_{j,n}),\qquad
+d_n=(\delta_a(w_n)-\delta_b(w_n))\sum_jc_jb_{t_n}(\psi_{j,n}).
+\tag{215.15}
+$$
+
+若 $|a_n|\to1$，则 $\operatorname{sign}(a_n)d_n\to-s$。
+
+证明。标签只有有限个，可取子列固定；由引理 215.3，只有 $a,b$ 能饱和，且必须有截断。再取子列使修复地址固定。先设标签为 $a$、地址也为 $a$。此时
+
+$$
+a_n=-t_n^{-2}\sum_jc_jU_j+(B_{t_n}/t_n^2)\sum_jc_j\chi_{a,t_n}(\psi_{j,n})+o(1).
+\tag{215.16}
+$$
+
+两项的模上界分别趋于 $c_*$、$1-c_*$。若其和的模趋于一，两项必须各饱和且同号。
+
+II (109.9)–(109.10) 的有序半径证明还给其等号情形所需的信息：除最小半径的一个指标 $i$ 外，另外三个截断与共同参考值相差 $o(1)$；最小半径的截断比参考值高一个 $[0,1]$ 中的数。故截断残差模趋于一迫使 $|c_i|=1$，即 $i=0$ 或 $3$，并且 $\chi_i\to1$、其他三个 $\chi_j\to0$。特别地 $r_a(\psi_{i,n})<t_n^3=o(t_n)$。
+
+若 $i=0$，截断残差趋于 $-1$，从而 $a_n\to-1$ 且 $t_n^{-2}\sum_jc_jU_j\to c_*$。在第零态，$U_0=0$ 对充分大 $n$ 成立，因为
+
+$$
+t_n^{-2}(e_0-r_0)\longrightarrow-(1-c_*).
+\tag{215.17}
+$$
+
+在引理 215.2 的证明中，正组的权重分别为 $s<1$ 和一。正部残差趋于最大值 $\delta_{t_n}$ 的缩放值 $c_*$，故只能由权重一的第 $3$ 项饱和：
+
+$$
+U_3/t_n^2\to c_*,\qquad U_1/t_n^2,U_2/t_n^2\to0.
+\tag{215.18}
+$$
+
+具体地，正残差时两个正组项不能同时正；若只有第 $1$ 项为正，残差至多 $s\delta_{t_n}$，与饱和矛盾。其余负组项必须趋于零。于是 $\langle\psi_{3,n},(E_{t_n}-A)\psi_{3,n}\rangle/t_n^2\to c_*$。
+
+将 $\psi_{3,n}$ 分为二维顶特征向量 $v_{+,t_n}$、底特征向量 $v_{-,t_n}$ 和其余十一维部分，系数记为 $z_{+,n},z_{-,n},z_{\perp,n}$。精确谱亏损等式是
+
+$$
+\frac{\delta_{t_n}-\langle\psi_{3,n},(E_{t_n}-A)\psi_{3,n}\rangle}{t_n^2}
+=\frac{\delta_{t_n}}{t_n^2}(1-|z_{+,n}|^2)
+ +\frac{1+\delta_{t_n}}{t_n^2}|z_{-,n}|^2\longrightarrow0.
+\tag{215.19}
+$$
+
+故 $|z_{+,n}|\to1$、$z_{-,n}=o(t_n)$、$\|z_{\perp,n}\|\to0$；对最后一项没有 $o(t_n)$ 的要求。结合引理 215.2 的特征向量比值，得到
+
+$$
+\frac{\psi_{0,n,b}}{t_n\psi_{0,n,a}}\to0,\qquad
+\frac{\psi_{3,n,b}}{t_n\psi_{3,n,a}}\to1,
+\qquad[\psi_{0,n}],[\psi_{3,n}]\to[e_a].
+\tag{215.20}
+$$
+
+这是允许横向分量比 $t_n$ 更慢消失的结论。
+
+投影到 $e_a^\perp$，用第 $0,3$ 态的两条线性方程解出 $u'_n,v'_n\to0$，所以四条射线均趋于 $e_a$。正交性给
+$\overline{u_{n,a}}v_{n,a}=-\langle u'_n,v'_n\rangle\to0$；归一化再给在子列上或者 $|u_{n,a}|\to1,v_{n,a}\to0$，或者 $u_{n,a}\to0,|v_{n,a}|\to1$。因此 $a$ 坐标的相位比或者趋于共同相位，或者趋于 $\zeta^j$ 的相位比。精确插值为
+
+$$
+\frac{\psi_{j,b}}{t\psi_{j,a}}
+=\frac{\zeta^3-\zeta^j}{\zeta^3-1}\frac{\psi_{0,a}}{\psi_{j,a}}
+ \frac{\psi_{0,b}}{t\psi_{0,a}}
++\frac{\zeta^j-1}{\zeta^3-1}\frac{\psi_{3,a}}{\psi_{j,a}}
+ \frac{\psi_{3,b}}{t\psi_{3,a}}.
+\tag{215.21}
+$$
+
+其四个极限相应为 $(0,\alpha,\beta,1)$ 或 $(0,\overline\alpha,\overline\beta,1)$；第二种使用
+$\zeta^{3-j}(\zeta^j-1)/(\zeta^3-1)=\overline{(\zeta^j-1)/(\zeta^3-1)}$。此推导不要求 $u'_n,v'_n=o(t_n)$。
+
+于是 $k(|\psi_{j,a}|^2)\to1$，$h_{b,t_n}=0$ 对充分大 $n$ 成立，而四个 $H$ 值趋于 $(0,1,0,0)$。所以 $\sum c_jb_{t_n}(\psi_{j,n})\to s$，与 $a_n\to-1$ 的符号相反。若 $i=3$，将指标反序，$\zeta$ 换为 $\zeta^{-1}$，系数变为 $-c_j$；$H$ 同时包含共轭点，故其四值趋于 $(0,0,1,0)$，扰动残差趋于 $-s$，初步残差趋于 $+1$。两种情形均给所需乘积 $-s$。
+
+若地址为 $b$，用有序正交坐标对 $(e_b,-e_a)$ 代替 $(e_a,e_b)$。其目标二次型为 $A-E_t=|u_b(t)\rangle\langle u_b(t)|+c_*t^2(A_b-A_a)$，所以所有前述剪裁及饱和推导逐式适用；缩放比值正是 $-\psi_a/(t\psi_b)$。在此交换下目标残差与 $b_t$ 各反号，乘积仍为 $-s$。若标签为 $b$，引理 215.3 使其初步残差与 $a$ 标签的相反，误差 $o(t^2)$，扰动残差则精确相反，结论仍保持。上述有限种子列情形覆盖任何原序列；每个子列都有给相同极限的进一步子列，故全序列结论成立。∎
+
+**定理 215.5（严格大于一的全类、全实尺度下界）。** 存在固定 $\lambda>0$、$0<\eta<1$、$t_0>0$，使定义 215.1 的同一响应族对每个实数 $0<t<t_0$ 满足
+
+$$
+P^t\in\mathcal C,\qquad
+\mathcal R(P^t)\le(1-\eta)t^2,\qquad
+\frac{\mathcal D(P^t)}t\longrightarrow1.
+\tag{215.22}
+$$
+
+因此原完整类满足
+
+$$
+1<(1-\eta)^{-1/2}
+\le\liminf_{\varepsilon\downarrow0}\frac{M(\varepsilon)}{\sqrt\varepsilon}
+\le\limsup_{\varepsilon\downarrow0}\frac{M(\varepsilon)}{\sqrt\varepsilon}
+\le\sqrt\varphi.
+\tag{215.23}
+$$
+
+$\eta$ 是存在性常数，不给数值，也不表示最优系数。
+
+证明。先在 (215.10) 的全部四态及全部标签上记
+$a_t=t^{-2}\sum_jc_jP^{0,t}_w(\psi_j)$，
+$d_t=(\delta_a(w)-\delta_b(w))\sum_jc_jb_t(\psi_j)$，故 $|d_t|\le\ell$。引理 215.4 推出存在 $0<\gamma_0<1/4$、$t_1>0$，使所有 $t<t_1$、四态和标签均满足
+
+$$
+|a_t|\ge1-\gamma_0\quad\Longrightarrow\quad
+\operatorname{sign}(a_t)d_t\le-s/2.
+\tag{215.24}
+$$
+
+否则对每个整数 $n$ 可取 $t_n<1/n$ 及反例 $|a_{t_n}|\ge1-1/n$；引理 215.3 给其模趋于一，与引理 215.4 矛盾。取更小子列可令 $t_n\downarrow0$。这个反证得到的是统一邻域，不是逐点的邻域。
+
+固定
+
+$$
+0<\lambda<\min\{1/4,\ \gamma_0/(4\ell),\ 1/(4\ell)\},\qquad
+\eta=\min\{\lambda s/4,\gamma_0/2\}>0.
+\tag{215.25}
+$$
+
+引理 215.3 给 $\sup|a_t|\le1+e(t)$，$e(t)\to0$。在 (215.24) 的区域，由 $|a_t|\ge3/4$、$\lambda\ell<1/4$，扰动不能翻转符号，故对全部充分小 $t$，
+$|a_t+\lambda d_t|\le1+e(t)-\lambda s/2\le1-\lambda s/4$。区域外则
+$|a_t+\lambda d_t|\le1-\gamma_0+\lambda\ell\le1-3\gamma_0/4$。
+由 (215.25)，全部四态的残差至多 $(1-\eta)t^2$。每个实际 $p,f$ 的四射线由 II (96.7) 属于 (215.10)，所以原 $\mathcal R$ 也满足同一界；无须上确界取到。
+
+还须验证这个固定扰动在全状态保持概率性。在 $h_{a,t}\ne0$ 的支撑中，$|\psi_a|^2>2/3$，$z=\psi_b/(t\psi_a)$ 位于固定紧集 $\operatorname{supp}H$。此集离 $0$ 有正距离，且 $|z-1|^2$ 有严格大于二的统一下界。直接展开得
+
+$$
+\frac{r(\psi)-e_t(\psi)}{t^2}
+=|\psi_a|^2\bigl(|z-1|^2-c_*+o(1)\bigr)>1
+\tag{215.26}
+$$
+
+对该支撑一致成立；同时 $e_t(\psi)>0$。故上下剪裁都不活跃，$S_b^t=r-e_t>t^2$。由 $|\psi_b|\ge Ct$、$|\psi_a|^2>2/3$，$a,b$ 的校准截断均为零，因而 $P^{0,t}=S^t$。从 $b$ 坐标减去至多 $\lambda t^2<t^2/4$ 保持非负，$a$ 坐标只增加。在 $h_{b,t}$ 的支撑上，对 $(e_b,-e_a)$ 使用同一式，保证 $a$ 坐标可减去相应量。两支撑不交，其他点和其他标签未受扰动。归一化因两个增量相反而精确保持。连续性与相位不变性由定义给出，$H$ 在零附近恒零又使扰动在所有十三个基底射线消失，故全部原标定保持。
+
+对每个原记录指定终端条件概率为 $P^t_w(K_fK_pv)$，插入原地址调用时为 $P^t_w(K_fK_0^jK_pv)$。共同酉将同射线送到同射线，故相位不变性精确给 II78.1 的当前射线终端充分性。这证明 $P^t\in\mathcal C$，没有增加响应类的前件。
+
+剪裁相对 $e_t$ 的改变量至多 $\delta_t=O(t^2)$，$E_t-|u_a(t)\rangle\langle u_a(t)|=O(t^2)$，(215.14) 的修复量及最终扰动也是 $O(t^2)$。所以
+
+$$
+\|P^t-Q^t\|_\infty=O(t^2).
+\tag{215.27}
+$$
+
+固定二坐标旋转有 $\mathcal D(Q^t)=\sin t$：投影差 $|u_a(t)\rangle\langle u_a(t)|-A_a$ 的非零特征值为 $\pm\sin t$，$b$ 坐标相反，其他坐标不变。这也正是 II (98.12)–(98.13) 在 $Te_a=e_b,Te_b=-e_a$、其他列为零、$N(T)=1$ 时的范数公式。由一致范数的 Lipschitz 性，$\mathcal D(P^t)/t\to1$。
+
+对每个充分小实数 $\varepsilon>0$，取 $t=\sqrt{\varepsilon/(1-\eta)}$，则 (215.22) 给一个真正的原类竞争响应，故
+$M(\varepsilon)\ge\mathcal D(P^t)$，得到 (215.23) 的严格下界。上界直接复用 II116.1 的原完整类上界 $\sqrt\varphi$。此论证使用所有充分小实数尺度，既不要求极值取到，也不将子列极限当作最优值的极限。∎
+
+**推论 215.6（单位残差预算的可达切向量）。** 令 $T$ 如定理 215.5 证明末段。存在全小实尺度族 $\widetilde P^\tau\in\mathcal C$，满足 $\mathcal R(\widetilde P^\tau)\le\tau^2$，且一致一阶切向量为 $T/\sqrt{1-\eta}$，其 $N$ 范数严格大于一。
+
+证明。取 $\widetilde P^\tau=P^{\tau/\sqrt{1-\eta}}$。由 (215.27) 及固定旋转的算子展开，
+$(\widetilde P^\tau-q)/\tau\to(q_{[T,A_w]}/\sqrt{1-\eta})_w$ 一致成立，非法标签极限为零；残差预算由 (215.22) 得到，范数由 II (98.13) 得到。∎
+
+**注记 215.7（供应、增量与未决范围）。** 对数局部修复、其有序半径插值及单一修复地址性质分别直接来自 II (109.3)、(109.8)–(109.11)；原四时二次型消去来自 II (96.7)–(96.8)，切向量范数来自 II (98.12)–(98.13)，上界来自 II116.1。II109.2 只计算其指定未剪裁修复族的代价 $N(T)^2$，并未把它提升为原完整类的必要代价；本节的严格内界与该定理相容。有限维谱分解、正部剪裁和用反例序列取得统一邻域都是标准工具。本节源特定的推导是二坐标剪裁后的全部饱和组分类 (215.16)–(215.21)、同一有符号扰动对它们的统一下降，以及保持全状态非负性的 (215.26)；没有将标准工具或已有二次型分类另作新结论。
+
+[Galley–Masanes][GM215] Result 2 供应的是有限维射影态表示的分类，不给本节无限制响应类的锐残差代价。[Bouikhalene–Elqorachi][BE215] Theorem 2.1 处理可均半群上 $f(xy)+f(x\sigma(y))-2f(x)$ 的 Jensen 缺陷，既不等同于 (215.2) 的有符号四时合同，也不供应上述剪裁／变形桥梁。本节不从这些文献推断锐系数，也不主张全球文献优先权。V49 的幂律选择、归一化升维和平方标定不是本节的命题或推理前件。
+
+原类仍量化于整个十三维球面、全部 $1024$ 标签、全部有限正向 $p,f$，并保留原七门、初态、标定和残差系数；构造中只让非法坐标为零，并未将这一性质加为任意竞争响应的前件。没有加入秩、次数、字长、共同连续模、Lipschitz、混态或测后规则限制。$\lambda,c_*$ 和 $H$ 仅定义类内响应，不增加原控制。原完整 $M(\varepsilon)/\sqrt\varepsilon$ 的有限正极限是否存在及其精确值仍未解决；严格内界与显式外界并不构成匹配，推论 215.6 只否定“所有单位预算可达切向量都满足 $N\le1$”这一充分路线。上述条件数学不提供物理起源、仪器、取得算法、字长或资源界、有限全域认证，也不推出该最优值不收敛。
+
+[GM215]: https://arxiv.org/html/1610.04859v3
+[BE215]: https://arxiv.org/html/1406.3623v1
+
+## 追加锚（本行以下为增补区）

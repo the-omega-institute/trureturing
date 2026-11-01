@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:21b07767d8924013088c23e65704806a648f0adf8cbc6804b50f29f7bf5e3db3
+  normalized_sha256: sha256:21b07767d8924013088c23e65704806a648f0adf8cbc6804b50f29f7bf5e3db3
+cas_ref: sha256:21b07767d8924013088c23e65704806a648f0adf8cbc6804b50f29f7bf5e3db3
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.coarseCol
+    target_statement_id: sha256:61823fe211455fd4e675aea46fab181e11b21a25542e660041de3b90afa7f2fb
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.coarseMultiEntropy
+    target_statement_id: sha256:e0f88fc04e7a5306bf6bbd49fdd34a93b953eb4a52f37630a4f4000047f21c55
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.graph_form_existence_and_replica_rank_formula
+    target_statement_id: sha256:c0249bb6798d820208d8451c40065cf6469a0a5b054eecb61f9fe90e60d2f5c0
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.party_symmetry_coarse_graining_and_bipartite_entropy
+    target_statement_id: sha256:245457b90f9be1f0455a415eff77847954be23d4ac356cc04593ade9dec1ac2c
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.Z_local_scalar
+    target_statement_id: sha256:905df68badde933e122688e6769ad9e55dc1cb8fca9fa921bc7bd305ffc23709
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.entropy_formula
+    target_statement_id: sha256:84f413d0aa435d02164ad59a29aa5de4754f42184f8142f2ed143d8b40521ed5
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.graph_count
+    target_statement_id: sha256:0cae2d8ec6070f0674784f2155a01808fdc928a3d35bdbd930e6b074b966d5a2
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - da0d5dfff44ccd0c8bccd90516a7a8609d4c8f970d3d4bead167d74c4a4ed7a6
+    - 315e7d229c2f901a5d533a7a8643201b711799e494339818ecade76dbb7aadd3

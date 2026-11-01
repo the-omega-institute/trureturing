@@ -1,0 +1,2 @@
+**Definition 3.2 (Partition of a character).** For $t\in(\mathbb Z/3)^{\mathtt q-1}$ let $f_t:[\mathtt q]\to\mathbb Z/3$, $f_t(c)=t\cdot\delta_c$, so $f_t(c)=t_c$ for $c<\mathtt q$ and $f_t(\mathtt q)=0$. Let $\pi_t\in\Pi(\mathtt q)$ be the partition of $[\mathtt q]$ into the nonempty fibres of $f_t$. Stance: repo-derived.
+

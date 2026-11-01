@@ -322,11 +322,31 @@ def ignored_by_snapshot(target, metadata, commit, paths):
         return set(result.stdout.split(b"\0")) >= set(paths)
 
 
+def finished_operations(metadata):
+    for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
+        if (metadata / marker).exists():
+            raise Refused("unfinished_operation:" + marker)
+
+
+def removal_pending(options):
+    """Observe resumability without checkpointing or changing the removal record."""
+    target = options.path
+    with ExitStack() as stack:
+        qualify(options.source, target, stack)
+        branch = git_scope(stack, options.source, target)
+        _, metadata = identity(options.source, target)
+        removal = interrupted_removal(target, metadata, stack, options.source, branch,
+                                      reconverge=False)
+        return dict(event="worktree_removal_pending", path=str(target),
+                    commit=removal["commit"] if removal else None, pending=removal is not None)
+
+
 def interrupted_removal(target, metadata, stack, source, branch, *, reconverge=True):
     """Return the record of an earlier removal whose deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
         return None
+    finished_operations(metadata)
     removal = json.loads(record.read_text())
     commit = removal["commit"]
     predecessors = removal.get("predecessors", [])
