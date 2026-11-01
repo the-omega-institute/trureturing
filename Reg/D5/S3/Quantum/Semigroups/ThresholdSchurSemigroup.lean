@@ -24,14 +24,14 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => -x / 2) (fun e => nomatch e)
+  realize signature (fun _ _ x => -(x / 2)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
-  Law observation := ∀ (S : Type u) [Fintype S] [DecidableEq S] (a : S → ℝ),
+  Law observation := ∀ {S : Type u} [Fintype S] [DecidableEq S] (a : S → ℝ),
     ∃ channels : {u : ℝ // 0 ≤ u} → QuantumChannel S S,
       (∀ u X, CStarMatrix.ofMatrix.symm
         ((channels u).toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
@@ -51,13 +51,14 @@ def arena : Arena where
       (∀ u X, HasDerivAt (fun v : ℝ => evolution a v X)
         (generator a (evolution a u X)) u)
 
-theorem actual_law : arena.Law actual := by
+theorem actual_law : arena.{u}.Law actual := by
   intro S instF instD a
-  exact _root_.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result a
+  simpa only [arena, actual, realize] using
+    _root_.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result a
 
-theorem rejected_law : ¬ arena.Law rejected := by
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  obtain ⟨channels, hh⟩ := h (ULift.{u} (Fin 2)) (fun i => (i.down.val : ℝ) * 2)
+  obtain ⟨channels, hh⟩ := h (S := ULift.{u} (Fin 2)) (fun i => (i.down.val : ℝ) * 2)
   have hz := congrArg (fun M : Matrix (ULift.{u} (Fin 2)) (ULift.{u} (Fin 2)) ℂ => M ⟨0⟩ ⟨1⟩)
     (hh.2.2.2.2.2.2.1 (Matrix.single ⟨0⟩ ⟨1⟩ 1))
   have he := congrArg (fun M : Matrix (ULift.{u} (Fin 2)) (ULift.{u} (Fin 2)) ℂ => M ⟨0⟩ ⟨1⟩)
@@ -72,7 +73,7 @@ theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), 1, 2, ?_⟩
   norm_num [actual, realize]
 
-def registration : Registration arena (type_of% (@_root_.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result.{u})) where
+def registration : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -86,32 +87,33 @@ def registration : Registration arena (type_of% (@_root_.D5.S3.Quantum.Semigroup
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result.{u})
-    (type_of% (realize signature (fun _ _ x => -x / 2) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result.threshold_information_unit,
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.registration,
-  realizationSource := none,
-  generated := false,
-  arena := .source ⟨arena⟩,
-  objectArena := .source ⟨arena⟩,
-  catalog := Lean.Name.anonymous,
-  localNames := false,
-  realization := .source arena ⟨registration⟩,
-  correspondence := { stage := .evidence, objectStage := .evidence },
-  bundleNonempty := .absent,
-  readout := some (realize signature (fun _ _ x => -x / 2) (fun e => nomatch e)),
-  variation := .absent,
-  sensitivity := .absent,
-  partialSensitivity := none,
-  escapeFrom := none,
-  sourceSelection := some { owner := `D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup,
+    (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.result.threshold_information_unit
+  realizationName := `Reg.D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => -(x / 2)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Semigroups.ThresholdSchurSemigroup
     definition := none, coordinates := #[], readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "arg", "body", "body", "fn", "arg"],
-      stateBinder := 0, functionOperand := false,
-      stateOperand := some #["arg", "fn", "arg"], booleanPredicate := false }] },
-  continuation := .unknown,
-  familyRecord := none,
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0, functionOperand := false
+      stateOperand := some #["arg", "fn", "arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
   options := #[] }
 
 #print axioms registration

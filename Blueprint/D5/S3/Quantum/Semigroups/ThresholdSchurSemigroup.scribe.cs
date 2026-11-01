@@ -65,7 +65,8 @@ internal sealed class ThresholdSchurSemigroupDocument : IScribeDocumentDefinitio
                 H("Finite threshold generator"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Sum gap(i) times P(i) X P(i) minus one half of P(i) X + X P(i). "
+                    "For each cut, multiply the whole expression P(i) X P(i) - "
+                    + "(P(i) X + X P(i))/2 by gap(i), and sum these terms. "
                     + "The generator superoperator matrix is diagonal in the matrix-unit basis "
                     + "indexed by ordered logical-label pairs."))),
                 DescribeRole.Definition),
