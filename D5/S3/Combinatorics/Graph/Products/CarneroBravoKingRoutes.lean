@@ -580,6 +580,18 @@ def subdivision : Data Original Edge where
 abbrev Vertex := subdivision.Vertex
 abbrev RoutedGraph := subdivision.graph
 
+def originalVertices : List Original :=
+  (List.range 166).filterMap fun n => if h : n ∈ oldLabels then some ⟨n, h⟩ else none
+
+theorem mem_originalVertices (a : Original) : a ∈ originalVertices := by
+  have hb : ∀ a : Original, a.val < 166 := by decide
+  apply List.mem_filterMap.mpr
+  exact ⟨a.val, List.mem_range.mpr (hb a), by simp [a.property]⟩
+
+abbrev edgeIndices : List Edge := List.finRange routeData.size
+
+theorem mem_edgeIndices (e : Edge) : e ∈ edgeIndices := by simp [edgeIndices]
+
 /-- The original Nat labels and original coordinate table are complete. -/
 theorem old_coordinate_table_complete :
     ∀ a : Original, (oldCoordinates.lookup a.val).isSome = true := by decide
@@ -609,15 +621,10 @@ theorem path_coordinate (e : Edge) (i : Fin (3 * subdivision.k e + 2)) :
     coordinate (subdivision.pathVertex e i) = Poly.sample (route e).corners i.val := by
   have hf := polyline_facts e
   by_cases h0 : i.val = 0
-  · have hi : i = ⟨0, by omega⟩ := Fin.ext h0
-    subst i
-    rw [subdivision.pathVertex_zero]
-    exact hf.2.2.2.1.symm
+  · simpa only [Data.pathVertex, h0, ↓reduceDIte, coordinate] using hf.2.2.2.1.symm
   · by_cases hL : i.val = 3 * subdivision.k e + 1
-    · have hi : i = ⟨3 * subdivision.k e + 1, by omega⟩ := Fin.ext hL
-      subst i
-      rw [subdivision.pathVertex_last]
-      exact hf.2.2.2.2.symm
+    · have hn : 3 * subdivision.k e + 1 ≠ 0 := by omega
+      simpa only [Data.pathVertex, hL, hn, ↓reduceDIte, coordinate] using hf.2.2.2.2.symm
     · let j : Fin (3 * subdivision.k e) := ⟨i.val - 1, by have := i.isLt; omega⟩
       have hi : i = ⟨j.val + 1, by have := j.isLt; omega⟩ := by
         apply Fin.ext
@@ -634,10 +641,12 @@ theorem path_coordinate_verifier (e : Edge) (i : Fin (3 * subdivision.k e + 2)) 
         rw [← IntegerPolyline.expand_eq_verifier _ (polyline_facts e).2.1,
           expanded_route_length]
         exact i.isLt) := by
-  rw [path_coordinate,
-    ← IntegerPolyline.expand_eq_verifier _ (polyline_facts e).2.1,
-    IntegerPolyline.sample_eq_getD,
-    List.getElem?_eq_getElem (by rw [expanded_route_length]; exact i.isLt)]
+  rw [path_coordinate, IntegerPolyline.sample_eq_getD]
+  have hex := IntegerPolyline.expand_eq_verifier _ (polyline_facts e).2.1
+  have hi : i.val < (IntegerPolyline.verifierExpand (route e).corners).length := by
+    rw [← hex, expanded_route_length]
+    exact i.isLt
+  simp only [hex, List.getElem?_eq_getElem hi, Option.getD_some]
 
 /-- Equality of unordered endpoint inventories with the construction's literal
 178 edges, and no duplicate endpoint pair among distinct route indices. -/
@@ -675,37 +684,41 @@ theorem baseGraph_iff_endpoints (a b : Original) :
   simp only [Finset.mem_univ, true_and, Sym2.eq_iff, Subtype.ext_iff]
   constructor
   · rintro ⟨e, h⟩
-    exact ⟨e, by simpa only [subdivision, eq_comm] using h⟩
+    exact ⟨e, by simpa only [subdivision, eq_comm, and_comm] using h⟩
   · rintro ⟨e, h⟩
-    exact ⟨e, by simpa only [subdivision, eq_comm] using h⟩
+    exact ⟨e, by simpa only [subdivision, eq_comm, and_comm] using h⟩
 
 /-- This is the actual large kernel-evaluable success obligation. Ordinary
 `decide` supplies a reducible proof term; no native evaluator, compiler result,
 Python output, assumed certificate, or new axiom supplies mathematical truth.
 The concrete reduction is required in addition to the generic soundness proof. -/
 theorem routing_check_success :
-    routingCheck RoutedGraph subdivision.vertices subdivision.edgePairs coordinate = true := by
-  decide
+    routingCheck RoutedGraph (subdivision.vertices originalVertices edgeIndices)
+      (subdivision.edgePairs edgeIndices) coordinate = true := by
+  decide +kernel
 
 theorem exact_square_routing :
     Function.Injective coordinate ∧
       ∀ v w : Vertex, RoutedGraph.Adj v w ↔ squareAdj (coordinate v) (coordinate w) :=
-  routingCheck_sound RoutedGraph subdivision.vertices subdivision.edgePairs coordinate
-    subdivision.mem_vertices subdivision.adj_iff_edgePairs routing_check_success
+  routingCheck_sound RoutedGraph (subdivision.vertices originalVertices edgeIndices)
+    (subdivision.edgePairs edgeIndices) coordinate
+    (subdivision.mem_vertices originalVertices edgeIndices mem_originalVertices mem_edgeIndices)
+    (subdivision.adj_iff_edgePairs edgeIndices mem_edgeIndices) routing_check_success
 
 /-- Literal T is one-based. Its maximum coordinates equal the rectangle sizes;
 the strict Fin bounds apply after the explicit `zeroBased` conversion. -/
-def boundaryCheck : Bool := subdivision.vertices.all fun v =>
+def boundaryCheck : Bool := (subdivision.vertices originalVertices edgeIndices).all fun v =>
   decide (1 ≤ (rotate (coordinate v)).1 ∧ (rotate (coordinate v)).1 ≤ 9337 ∧
     1 ≤ (rotate (coordinate v)).2 ∧ (rotate (coordinate v)).2 ≤ 9061)
 
-theorem boundary_check_success : boundaryCheck = true := by decide
+theorem boundary_check_success : boundaryCheck = true := by decide +kernel
 
 theorem actual_T_bounds (v : Vertex) :
     1 ≤ (rotate (coordinate v)).1 ∧ (rotate (coordinate v)).1 ≤ 9337 ∧
     1 ≤ (rotate (coordinate v)).2 ∧ (rotate (coordinate v)).2 ≤ 9061 := by
   exact of_decide_eq_true
-    ((List.all_eq_true.mp boundary_check_success) v (subdivision.mem_vertices v))
+    ((List.all_eq_true.mp boundary_check_success) v
+      (subdivision.mem_vertices originalVertices edgeIndices mem_originalVertices mem_edgeIndices v))
 
 def rectangle : SimpleGraph (Fin 9337 × Fin 9061) :=
   strongProduct (SimpleGraph.pathGraph 9337) (SimpleGraph.pathGraph 9061)
@@ -723,6 +736,10 @@ noncomputable def inducedIso : RoutedGraph ≃g rectangle.induce selected :=
   inducedEmbedding.isoInduceRange
 
 noncomputable instance : Fintype selected := Fintype.ofFinite selected
+
+noncomputable instance : Fintype (rectangle.induce selected).edgeSet := by
+  classical
+  infer_instance
 
 theorem sum_subdivisions : (∑ e : Edge, subdivision.k e) = 31286 := by decide
 theorem sum_fresh_vertices : (∑ e : Edge, 3 * subdivision.k e) = 93858 := by

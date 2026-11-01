@@ -61,7 +61,9 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
         var exactAdj = All("v", vertex, All("w", vertex,
             Bicond(C("Adj", C("RoutedGraph"), v, w),
                 C("squareAdj", C("coordinate", v), C("coordinate", w)))));
-        var routing = C("routingCheck", C("RoutedGraph"), C("vertices", d), C("edgePairs", d), C("coordinate"));
+        var routing = C("routingCheck", C("RoutedGraph"),
+            C("vertices", d, C("originalVertices"), C("edgeIndices")),
+            C("edgePairs", d, C("edgeIndices")), C("coordinate"));
         var rv = C("rotate", C("coordinate", v));
         return declaration switch
         {

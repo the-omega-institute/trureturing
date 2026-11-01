@@ -8,7 +8,6 @@
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Finset.Sort
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic.SplitIfs
 import Lean.Elab.Tactic.Omega
@@ -246,46 +245,51 @@ theorem edge_injective : Function.Injective D.edge := by
       simpa only [h.1, h.2] using ht
     exact D.arc_asymmetric _ _ hs hts
 
-section Finite
-variable [Fintype V] [Fintype E]
-
 section Enumeration
-variable [LinearOrder V] [LinearOrder E]
+variable (vs : List V) (es : List E)
 
 def vertices : List D.Vertex :=
-  ((Finset.univ : Finset V).sort (· ≤ ·)).map Sum.inl ++
-    (((Finset.univ : Finset E).sort (· ≤ ·)).flatMap fun e =>
+  vs.map Sum.inl ++
+    (es.flatMap fun e =>
       (List.finRange (3 * D.k e)).map fun i => Sum.inr ⟨e, i⟩)
 
-theorem mem_vertices (a : D.Vertex) : a ∈ D.vertices := by
+theorem mem_vertices (hvs : ∀ a, a ∈ vs) (hes : ∀ e, e ∈ es)
+    (a : D.Vertex) : a ∈ D.vertices vs es := by
   cases a with
-  | inl a => simp [vertices]
-  | inr a => rcases a with ⟨e, i⟩; simp [vertices]
+  | inl a => simp [vertices, hvs a]
+  | inr a =>
+    rcases a with ⟨e, i⟩
+    simp only [vertices, List.mem_append, List.mem_map, List.mem_flatMap]
+    exact Or.inr ⟨e, hes e, i, by simp, rfl⟩
 
 def slots : List D.Slot :=
-  ((Finset.univ : Finset E).sort (· ≤ ·)).flatMap fun e =>
+  es.flatMap fun e =>
     (List.finRange (3 * D.k e + 1)).map fun i => ⟨e, i⟩
 
-theorem mem_slots (s : D.Slot) : s ∈ D.slots := by
+theorem mem_slots (hes : ∀ e, e ∈ es) (s : D.Slot) : s ∈ D.slots es := by
   rcases s with ⟨e, i⟩
-  simp [slots]
+  simp only [slots, List.mem_flatMap, List.mem_map]
+  exact ⟨e, hes e, i, by simp, rfl⟩
 
-def edgePairs : List (D.Vertex × D.Vertex) := D.slots.map D.edgePair
+def edgePairs : List (D.Vertex × D.Vertex) := (D.slots es).map D.edgePair
 
-theorem adj_iff_edgePairs (a b : D.Vertex) :
-    D.graph.Adj a b ↔ (a, b) ∈ D.edgePairs ∨ (b, a) ∈ D.edgePairs := by
+theorem adj_iff_edgePairs (hes : ∀ e, e ∈ es) (a b : D.Vertex) :
+    D.graph.Adj a b ↔ (a, b) ∈ D.edgePairs es ∨ (b, a) ∈ D.edgePairs es := by
   simp only [graph, edgePairs, List.mem_map]
   constructor
   · rintro (h | h)
     · obtain ⟨s, hs⟩ := (D.arc_iff_slot a b).mp h
-      exact Or.inl ⟨s, D.mem_slots s, hs⟩
+      exact Or.inl ⟨s, D.mem_slots es hes s, hs⟩
     · obtain ⟨s, hs⟩ := (D.arc_iff_slot b a).mp h
-      exact Or.inr ⟨s, D.mem_slots s, hs⟩
+      exact Or.inr ⟨s, D.mem_slots es hes s, hs⟩
   · rintro (⟨s, _, hs⟩ | ⟨s, _, hs⟩)
     · exact Or.inl ((D.arc_iff_slot a b).mpr ⟨s, hs⟩)
     · exact Or.inr ((D.arc_iff_slot b a).mpr ⟨s, hs⟩)
 
 end Enumeration
+
+section Finite
+variable [Fintype V] [Fintype E]
 
 theorem card_vertices : Fintype.card D.Vertex = Fintype.card V + ∑ e, 3 * D.k e := by
   simp [Vertex, Fintype.card_sum, Fintype.card_sigma]
