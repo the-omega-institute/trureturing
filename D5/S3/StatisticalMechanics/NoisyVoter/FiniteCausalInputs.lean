@@ -156,10 +156,10 @@ private theorem history_map_eq_of_input_map_eq [MeasurableSpace Ω] [MeasurableS
   have he' (ω : Ω') := (finite_history_factorization base u N).2 y ω
   have hm : Measurable (restrictInputs x u N) :=
     measurable_pi_iff.mpr (fun c => hx c.val
-      ((finite_history_factorization base u N).1 c.val c.property))
+      ((finite_history_factorization (Ω := Ω) base u N).1 c.val c.property))
   have hm' : Measurable (restrictInputs y u N) :=
     measurable_pi_iff.mpr (fun c => hy c.val
-      ((finite_history_factorization base u N).1 c.val c.property))
+      ((finite_history_factorization (Ω := Ω) base u N).1 c.val c.property))
   rw [show history x u N = decode base u N ∘ restrictInputs x u N from funext he,
     show history y u N = decode base u N ∘ restrictInputs y u N from funext he',
     ← Measure.map_map (decode_measurable base u N) hm,
@@ -194,7 +194,7 @@ theorem history_law_of_positive_coordinate_laws [MeasurableSpace Ω] [Measurable
     exact zero_ne_one he
   let base (c : Coord V) : Value G c := x c (Classical.choice hΩ)
   let inclusion (c : {c // c ∈ historyInputs (G := G) u N}) : {c : Coord V // positive c} :=
-    ⟨c.val, (finite_history_factorization base u N).1 c.val c.property⟩
+    ⟨c.val, (finite_history_factorization (Ω := Ω) base u N).1 c.val c.property⟩
   have hinj : Function.Injective inclusion := by
     intro a b h
     exact Subtype.ext (congrArg Subtype.val h)

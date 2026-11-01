@@ -19,13 +19,10 @@ structure Query where
   V : Type
   Ω : Type
   G : SimpleGraph V
-  locallyFinite : G.LocallyFinite
   base : (c : Coord V) → Value G c
   u : V
   N : ℕ
   ω : Ω
-
-attribute [instance] Query.locallyFinite
 
 abbrev assignment (p : Query) := (c : Coord p.V) → p.Ω → Value p.G c
 
@@ -48,11 +45,11 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ (V Ω : Type) (G : SimpleGraph V) [hG : G.LocallyFinite]
+  Law R := ∀ {V Ω : Type} {G : SimpleGraph V} [hG : G.LocallyFinite]
     (base : (c : Coord V) → Value G c) (u : V) (N : ℕ),
     (∀ c ∈ historyInputs (G := G) u N, positive c) ∧
       ∀ (x : (c : Coord V) → Ω → Value G c) (ω : Ω),
-        R.readout () ⟨V, Ω, G, hG, base, u, N, ω⟩ x =
+        R.readout () ⟨V, Ω, G, base, u, N, ω⟩ x =
           decode base u N (restrictInputs x u N ω)
 
 def testAssignment (b : Bool) : (c : Coord Bool) → Unit → Value (⊤ : SimpleGraph Bool) c
@@ -64,7 +61,7 @@ def testBase : (c : Coord Bool) → Value (⊤ : SimpleGraph Bool) c :=
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := (h Bool Unit ⊤ testBase true 0).2 (testAssignment true) ()
+  have hb := (h (V := Bool) (Ω := Unit) (G := ⊤) testBase true 0).2 (testAssignment true) ()
   have hg := (finite_history_factorization testBase true 0).2 (testAssignment true) ()
   have he := congrArg (fun f => (f 0).1) (hb.trans hg.symm)
   change false = true at he
@@ -90,7 +87,7 @@ def factorization_family : Registration arena (type_of% (@finite_history_factori
   dependence := by
     intro i
     cases i
-    refine ⟨⟨Bool, Unit, ⊤, inferInstance, testBase, true, 0, ()⟩,
+    refine ⟨⟨Bool, Unit, ⊤, testBase, true, 0, ()⟩,
       testAssignment true, testAssignment false, ?_⟩
     intro h
     have he := congrArg (fun f => (f 0).1) h
@@ -118,7 +115,7 @@ def factorization_registration : Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6, 8]
+    coordinates := #[0, 1, 2, 4, 5, 6, 8]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg",
         "body", "body", "fn", "arg"]
@@ -133,15 +130,7 @@ def factorization_registration : Contract.Registration
 structure LawQuery where
   V : Type
   Ω : Type
-  Ω' : Type
   G : SimpleGraph V
-  locallyFinite : G.LocallyFinite
-  measurableΩ : MeasurableSpace Ω
-  measurableΩ' : MeasurableSpace Ω'
-  P : @MeasureTheory.Measure Ω measurableΩ
-  Q : @MeasureTheory.Measure Ω' measurableΩ'
-  y : (c : Coord V) → Ω' → Value G c
-  μ : (c : {c : Coord V // positive c}) → MeasureTheory.Measure (Value G c.val)
   u : V
   N : ℕ
 
@@ -153,22 +142,21 @@ def lawSignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := MeasureTheory.Measure (Fin (p.N+1) → Bool × Label p.V)
+  Output _ p := p.Ω → Fin (p.N+1) → Bool × Label p.V
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def lawActual : Realization lawSignature :=
-  realize lawSignature (fun _ p x => by
-    letI := p.locallyFinite
-    letI := p.measurableΩ
-    exact p.P.map (history x p.u p.N)) (fun e => nomatch e)
+  realize lawSignature (fun _ p x => history x p.u p.N) (fun e => nomatch e)
 
 def lawRejected : Realization lawSignature :=
-  realize lawSignature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize lawSignature
+    (fun _ p x ω n => (!(nvm x n.val p.u ω), source x n.val p.u ω))
+    (fun e => nomatch e)
 
 def lawArena : Arena where
   signature := lawSignature
-  Law R := ∀ (V Ω Ω' : Type) (G : SimpleGraph V) [hG : G.LocallyFinite]
+  Law R := ∀ {V Ω Ω' : Type} {G : SimpleGraph V} [hG : G.LocallyFinite]
     [mΩ : MeasurableSpace Ω] [mΩ' : MeasurableSpace Ω']
     (P : MeasureTheory.Measure Ω) (Q : MeasureTheory.Measure Ω')
     (x : (c : Coord V) → Ω → Value G c) (y : (c : Coord V) → Ω' → Value G c)
@@ -180,8 +168,7 @@ def lawArena : Arena where
     (hlx : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (x c.val) (μ c) P)
     (hly : ∀ c : {c : Coord V // positive c}, ProbabilityTheory.HasLaw (y c.val) (μ c) Q)
     (u : V) (N : ℕ),
-      R.readout () ⟨V, Ω, Ω', G, hG, mΩ, mΩ', P, Q, y, μ, u, N⟩ x =
-        Q.map (history y u N)
+      P.map (R.readout () ⟨V, Ω, G, u, N⟩ x) = Q.map (history y u N)
 
 theorem law_bridge : (type_of% (@history_law_of_positive_coordinate_laws)) ↔
     lawArena.Law lawActual := by
@@ -231,17 +218,17 @@ private theorem test_laws (c : {c : Coord Bool // positive c}) :
 
 private theorem law_rejected_law : ¬ lawArena.Law lawRejected := by
   intro h
-  have he := h Bool Unit Unit ⊤
+  have he := h (V := Bool) (Ω := Unit) (Ω' := Unit) (G := ⊤)
     (MeasureTheory.Measure.dirac ()) (MeasureTheory.Measure.dirac ())
     (testAssignment true) (testAssignment true)
     (fun c => MeasureTheory.Measure.dirac (testAssignment true c.val ()))
     (fun _ _ => measurable_of_finite _) (fun _ _ => measurable_of_finite _)
     test_independent test_independent test_laws test_laws true 0
-  change (0 : MeasureTheory.Measure (Fin 1 → Bool × Label Bool)) =
-    (MeasureTheory.Measure.dirac ()).map (history (testAssignment true) true 0) at he
-  rw [MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()] at he
-  have hu := congrArg (fun μ => μ Set.univ) he
-  simpa using hu
+  rw [MeasureTheory.Measure.map_dirac' (measurable_of_finite _) (),
+    MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()] at he
+  have hb := congrArg (fun f => (f 0).1) (MeasureTheory.injective_dirac he)
+  change false = true at hb
+  exact Bool.false_ne_true hb
 
 def law_family : Registration lawArena (type_of% (@history_law_of_positive_coordinate_laws)) where
   actual := lawActual
@@ -259,16 +246,9 @@ def law_family : Registration lawArena (type_of% (@history_law_of_positive_coord
   dependence := by
     intro i
     cases i
-    refine ⟨⟨Bool, Unit, Unit, ⊤, inferInstance, inferInstance, inferInstance,
-      MeasureTheory.Measure.dirac (), MeasureTheory.Measure.dirac (), testAssignment true,
-      (fun c => MeasureTheory.Measure.dirac (testAssignment true c.val ())), true, 0⟩,
-      testAssignment true, testAssignment false, ?_⟩
+    refine ⟨⟨Bool, Unit, ⊤, true, 0⟩, testAssignment true, testAssignment false, ?_⟩
     intro h
-    change (MeasureTheory.Measure.dirac ()).map (history (testAssignment true) true 0) =
-      (MeasureTheory.Measure.dirac ()).map (history (testAssignment false) true 0) at h
-    rw [MeasureTheory.Measure.map_dirac' (measurable_of_finite _) (),
-      MeasureTheory.Measure.map_dirac' (measurable_of_finite _) ()] at h
-    have he := congrArg (fun f => (f 0).1) (MeasureTheory.injective_dirac h)
+    have he := congrArg (fun f => (f () 0).1) h
     change true = false at he
     exact Bool.true_ne_false he
 
@@ -286,10 +266,8 @@ def law_registration : Contract.Registration
   realization := .source lawArena ⟨law_family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize lawSignature (fun _ p x => by
-    letI := p.locallyFinite
-    letI := p.measurableΩ
-    exact p.P.map (history x p.u p.N)) (fun e => nomatch e))
+  readout := some (realize lawSignature (fun _ p x => history x p.u p.N)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -297,13 +275,13 @@ def law_registration : Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.NoisyVoter.FiniteCausalInputs
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 18, 19]
+    coordinates := #[0, 1, 3, 18, 19]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg", "fn", "fn", "arg"]
+      stateOperand := some #["fn", "fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
