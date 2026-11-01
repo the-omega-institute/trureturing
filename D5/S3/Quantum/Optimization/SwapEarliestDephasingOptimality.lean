@@ -32,10 +32,13 @@ def IsGreedyStep (x : List ℕ) (i : ℕ) : Prop :=
     max (x[i]?.getD 0) (x[i + 1]?.getD 0) ≤
       max (x[j]?.getD 0) (x[j + 1]?.getD 0)
 
-private def bellman (v : List ℕ → ℕ) (x : List ℕ) : ℕ :=
+/-- One Bellman step of the source's recurrence (39): the minimum over valid first
+swaps of the swap cost plus the given value of the merged list, and `0` on lists
+of length at most one. -/
+def bellman (v : List ℕ → ℕ) (x : List ℕ) : ℕ :=
   if h : 1 < x.length then
     (Finset.range (x.length - 1)).inf'
-      ⟨0, Finset.mem_range.mpr (by omega)⟩ (fun i => swapCost x i + v (merge x i))
+      (Finset.nonempty_range_iff.mpr (by omega)) (fun i => swapCost x i + v (merge x i))
   else 0
 
 /-- The source's optimal dephasing recurrence (39). Length-many Bellman steps suffice
@@ -187,12 +190,12 @@ private theorem potential_step_eq (x : List ℕ) (i : ℕ) (h : IsGreedyStep x i
   cases j with
   | zero =>
     have hv := h.1
-    have hi : i < x.length := by omega
-    have ha := List.le_max_of_le (List.getElem_mem (by omega : i < x.length))
+    have hi : i < x.length := Nat.lt_of_succ_lt h.1
+    have ha := List.le_max_of_le (List.getElem_mem hi)
       (le_rfl : x[i] ≤ x[i])
     have hb := List.le_max_of_le (List.getElem_mem h.1)
       (le_rfl : x[i + 1] ≤ x[i + 1])
-    simp only [List.getElem?_eq_getElem (by omega : i < x.length),
+    simp only [List.getElem?_eq_getElem hi,
       List.getElem?_eq_getElem h.1, Option.getD_some, List.getElem?_cons_zero,
       List.getElem?_cons_succ] at *
     exact (max_le ha hb).trans (le_max_left _ _)
@@ -202,7 +205,7 @@ private theorem potential_step_eq (x : List ℕ) (i : ℕ) (h : IsGreedyStep x i
 private theorem greedy_exists (x : List ℕ) (h : 1 < x.length) :
     ∃ i, IsGreedyStep x i := by
   have hn : (Finset.range (x.length - 1)).Nonempty :=
-    ⟨0, Finset.mem_range.mpr (by omega)⟩
+    Finset.nonempty_range_iff.mpr (by omega)
   obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_inf' hn
     (fun j => max (x[j]?.getD 0) (x[j + 1]?.getD 0))
   refine ⟨i, ?_, ?_⟩
@@ -239,7 +242,7 @@ private theorem bellman_potential (n : ℕ) (x : List ℕ) (h : x.length ≤ n) 
     · dsimp only [bellman]
       simp only [dite_eq_left hx]
       have hn : (Finset.range (x.length - 1)).Nonempty :=
-        ⟨0, Finset.mem_range.mpr (by omega)⟩
+        Finset.nonempty_range_iff.mpr (by omega)
       apply le_antisymm
       · obtain ⟨i, hi⟩ := greedy_exists x hx
         have him : i ∈ Finset.range (x.length - 1) :=
