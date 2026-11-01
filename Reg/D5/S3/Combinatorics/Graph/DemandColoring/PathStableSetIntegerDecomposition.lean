@@ -114,7 +114,8 @@ def registration : Registration arena (type_of% (@lattice_mem_nat_smul_polytope_
     dependence := ?_ }
   intro i
   refine ⟨⟨2, 1, fun v => (v.val : ℤ)⟩, (0 : Fin 2), (1 : Fin 2), ?_⟩
-  norm_num [actual, realize, signature]
+  change ((0 : ℤ) : ℝ) ≠ ((1 : ℤ) : ℝ)
+  norm_num
 
 noncomputable def registration_1 :
     LeanInformationAudit.Contract.Registration
