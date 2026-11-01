@@ -7,11 +7,7 @@
    digest: A fully separable three-qubit state beats every state of the conjectured CSS shape. -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
-import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Tactic
 
 /-! The low-branch reading of Consiglio–Apollaro–Wieśniak, arXiv:2209.01430v2,
 Appendix A, equation (A11). Qubit zero is the most significant bit. -/
@@ -83,7 +79,7 @@ private theorem hsSq_entries {n : ℕ}
   change _ = hsSq ρ σ at h
   rw [← h, ← D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability.entryNormSq_eq_hs_sq]
   simp only [D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq,
-    Matrix.sub_apply, Complex.normSq_eq_norm_sq]
+    Matrix.sub_apply, Complex.normSq_eq_norm_sq, Complex.ofReal_re]
 
 private def product (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ :=
@@ -199,9 +195,14 @@ private theorem separable_bounds (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2
     have hyv : (y ![0,0,0] ![1,1,1]).re ≤ ((y ![0,0,1] ![0,0,1]).re / 6 + 3 * (y ![1,1,0] ![1,1,0]).re / 2) / 5 +
       4 / 5 * ((y ![0,0,0] ![0,0,0]).re / 12 + (y ![0,1,1] ![0,1,1]).re / 12 +
         3 * (y ![1,0,1] ![1,0,1]).re / 4 + 3 * (y ![1,1,0] ![1,1,0]).re / 4) := hy
-    change (u * (x ![0,0,0] ![1,1,1]).re + v * (y ![0,0,0] ![1,1,1]).re) ≤ ((u * (x ![0,0,1] ![0,0,1]).re + v * (y ![0,0,1] ![0,0,1]).re) / 6 + 3 * (u * (x ![1,1,0] ![1,1,0]).re + v * (y ![1,1,0] ![1,1,0]).re) / 2) / 5 +
-      4 / 5 * ((u * (x ![0,0,0] ![0,0,0]).re + v * (y ![0,0,0] ![0,0,0]).re) / 12 + (u * (x ![0,1,1] ![0,1,1]).re + v * (y ![0,1,1] ![0,1,1]).re) / 12 +
-        3 * (u * (x ![1,0,1] ![1,0,1]).re + v * (y ![1,0,1] ![1,0,1]).re) / 4 + 3 * (u * (x ![1,1,0] ![1,1,0]).re + v * (y ![1,1,0] ![1,1,0]).re) / 4)
+    have he (i j : Fin 3 → Fin 2) : ((u • x + v • y) i j).re =
+        u * (x i j).re + v * (y i j).re := by
+      simp only [Matrix.add_apply, Matrix.smul_apply, Complex.add_re, Complex.smul_re,
+        smul_eq_mul]
+    change ((u • x + v • y) ![0,0,0] ![1,1,1]).re ≤ (((u • x + v • y) ![0,0,1] ![0,0,1]).re / 6 + 3 * ((u • x + v • y) ![1,1,0] ![1,1,0]).re / 2) / 5 +
+      4 / 5 * (((u • x + v • y) ![0,0,0] ![0,0,0]).re / 12 + ((u • x + v • y) ![0,1,1] ![0,1,1]).re / 12 +
+        3 * ((u • x + v • y) ![1,0,1] ![1,0,1]).re / 4 + 3 * ((u • x + v • y) ![1,1,0] ![1,1,0]).re / 4)
+    simp only [he]
     nlinarith only [mul_le_mul_of_nonneg_left hxv hu, mul_le_mul_of_nonneg_left hyv hv]
   apply (convexHull_min (t := s) ?_ hc) hσ
   rintro _ ⟨p, hp, rfl⟩
