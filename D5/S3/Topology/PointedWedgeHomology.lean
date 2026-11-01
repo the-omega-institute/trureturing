@@ -118,8 +118,8 @@ equivalence to the left summand. Cylinder continuity is consumed from the
 existing wedgeInverseHomotopy, which uses continuous_lift_prod_right. -/
 def leftEquiv (H : (ContinuousMap.id Y).HomotopyRel
     (ContinuousMap.const Y b) {b}) : Wedge a b ≃ₕ X := by
-  let c : C(Y, PUnit) := ContinuousMap.const _ PUnit.unit
-  let s : C(PUnit, Y) := ContinuousMap.const _ b
+  let c : C(Y, PUnit.{w + 1}) := ContinuousMap.const _ PUnit.unit
+  let s : C(PUnit.{w + 1}, Y) := ContinuousMap.const _ b
   let T := wedgeInverseHomotopy (ContinuousMap.id X) c (ContinuousMap.id X) s
     rfl rfl rfl rfl (ContinuousMap.HomotopyRel.refl (ContinuousMap.id X) {a}) H
   have he : (wedgeMap (ContinuousMap.id X) s rfl rfl).comp
@@ -211,11 +211,17 @@ def homologyIso {C : Type u} [Category.{v} C] [HasCoproducts.{w} C] [Abelian C]
         exact (partHomeomorph a b hA hB ha hb).symm.contractibleSpace
       have hI : ContractibleSpace ↥(U a b hb ∩ V a b ha) :=
         (Homeomorph.setCongr (inter a b ha hb)).contractibleSpace
-      exact biprod.mapIso
-          ((openLeftEquiv a b hB hb K).symm.reducedSingularHomologyIso R (r + 1))
-          ((openRightEquiv a b hA ha H).symm.reducedSingularHomologyIso R (r + 1)) ≪≫
-        OpenCoverHomology.inclusionIso R hU hV (cover a b ha hb) (Or.inr hI) (r + 1)
-          (Nat.succ_pos r)
+      let F : TopCat.{w} ⥤ C := (singularHomologyFunctor C (r + 1)).obj R
+      let eL : F.obj (TopCat.of X) ≅ F.obj (TopCat.of (U a b hb)) :=
+        (openLeftEquiv a b hB hb K).symm.reducedSingularHomologyIso R (r + 1)
+      let eR : F.obj (TopCat.of Y) ≅ F.obj (TopCat.of (V a b ha)) :=
+        (openRightEquiv a b hA ha H).symm.reducedSingularHomologyIso R (r + 1)
+      let eMV : (F.obj (TopCat.of (U a b hb)) ⊞ F.obj (TopCat.of (V a b ha))) ≅
+          F.obj (TopCat.of (Wedge a b)) :=
+        OpenCoverHomology.inclusionIso R (X := TopCat.of (Wedge a b))
+          (U := U a b hb) (V := V a b ha) hU hV (cover a b ha hb)
+          (Or.inr hI) (r + 1) (Nat.succ_pos r)
+      exact biprod.mapIso eL eR ≪≫ eMV
 
 end Cover
 end D5.S3.Topology.PointedWedgeHomology
