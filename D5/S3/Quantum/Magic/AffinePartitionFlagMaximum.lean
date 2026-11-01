@@ -94,16 +94,26 @@ private lemma radix_one {p : ℕ} (hp : 2 ≤ p) (s : ℕ) (hs : 1 ≤ s) :
         Nat.div_pos (Nat.le_of_dvd hs (Nat.dvd_of_mod_eq_zero hr)) (by omega)
       have hi := ih (s / p) (Nat.div_lt_self (by omega) (by omega)) hq
       have he : s - 1 = p * (s / p - 1) + (p - 1) := by
-        have hqeq := Nat.sub_add_cancel hq
-        have hpeq := Nat.sub_add_cancel (show 1 ≤ p by omega)
-        have hseq := Nat.sub_add_cancel hs
-        nlinarith
+        calc
+          s - 1 = p * (s / p) - 1 :=
+            congrArg (fun z : ℕ => z - 1) (by
+              simpa only [hr, zero_add] using hd.symm)
+          _ = p * (s / p - 1) + (p - 1) := by
+            rw [Nat.mul_sub_left_distrib, Nat.mul_one]
+            exact (Nat.sub_add_sub_cancel
+              (by simpa only [Nat.mul_one] using Nat.mul_le_mul_left p hq)
+              (by omega : 1 ≤ p)).symm
       rw [he, radix_affine hp _ _ (by omega), radix_step hp s, hr, zero_add]
       have hm := Nat.mul_le_mul_left (p ^ 2) hi
       have hpp : p ≤ p ^ 2 := Nat.le_self_pow (by decide) p
       have hpeq := Nat.sub_add_cancel (show 1 ≤ p by omega)
       nlinarith
-    · have he : s - 1 = p * (s / p) + (s % p - 1) := by omega
+    · have he : s - 1 = p * (s / p) + (s % p - 1) := by
+        calc
+          s - 1 = (p * (s / p) + s % p) - 1 :=
+            congrArg (fun z : ℕ => z - 1) (Nat.div_add_mod s p).symm
+          _ = p * (s / p) + (s % p - 1) :=
+            Nat.add_sub_assoc (Nat.one_le_iff_ne_zero.mpr hr) _
       rw [he, radix_affine hp _ _ (by omega), radix_step hp s]
       omega
 
@@ -115,11 +125,13 @@ private lemma radix_power {p : ℕ} (hp : 2 ≤ p) (k s : ℕ) (hs : p ^ k ≤ s
     have hq : p ^ k ≤ s / p :=
       (Nat.le_div_iff_mul_le (show 0 < p by omega)).2 (by simpa [pow_succ] using hs)
     have he : s - p ^ (k + 1) = p * (s / p - p ^ k) + s % p := by
-      have hd := Nat.mod_add_div s p
-      have hm := Nat.mul_sub_left_distrib p (s / p) (p ^ k)
-      have hle := Nat.mul_le_mul_left p hq
-      rw [pow_succ, Nat.mul_comm (p ^ k) p]
-      omega
+      calc
+        s - p ^ (k + 1) = (s % p + p * (s / p)) - p * p ^ k := by
+          rw [pow_succ', Nat.mod_add_div]
+        _ = s % p + (p * (s / p) - p * p ^ k) :=
+          Nat.add_sub_assoc (Nat.mul_le_mul_left p hq) _
+        _ = p * (s / p - p ^ k) + s % p := by
+          rw [← Nat.mul_sub_left_distrib, Nat.add_comm]
     rw [he, radix_affine hp _ _ (Nat.mod_lt _ (by omega)), radix_step hp s]
     have hi := Nat.mul_le_mul_left (p ^ 2) (ih (s / p) hq)
     rw [Nat.mul_add, Nat.mul_one, pow_add]
