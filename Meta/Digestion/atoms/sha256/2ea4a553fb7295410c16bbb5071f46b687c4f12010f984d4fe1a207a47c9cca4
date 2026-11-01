@@ -1,0 +1,35 @@
+**Lemma 10.1 (weighted equality remainder).** Let $v\in\mathbb C^4$, $U\in U(4)$, and put
+
+$$
+K=U\operatorname{diag}(v),\qquad
+ a_i=|v_i|,\qquad L=\sum_{i=1}^4a_i,\qquad
+ t=|\operatorname{Tr}K|,\qquad \tau=L^2-t^2.
+\tag{10.1}
+$$
+
+There is a phase $\lambda\in\mathbb C$ with $|\lambda|=1$ such that
+
+$$
+\boxed{\ \|K-\lambda\operatorname{diag}(a_1,a_2,a_3,a_4)\|_{\mathrm{HS}}^2\le2\tau.\ }
+\tag{10.2}
+$$
+
+**Proof.** Choose $\lambda$ so that $\overline\lambda\operatorname{Tr}K=t$; when $t=0$, choose any unit phase. Set
+
+$$
+ r_i=a_i-\operatorname{Re}\bigl(\overline\lambda\,U_{ii}v_i\bigr)\ge0.
+$$
+
+The inequalities $|U_{ii}|\le1$ give the nonnegativity, and $\sum_i r_i=L-t$. Direct expansion gives
+
+$$
+\begin{aligned}
+\|K-\lambda\operatorname{diag}(a_i)\|_{\mathrm{HS}}^2
+ &=2\sum_i a_i^2-2\sum_i a_i\operatorname{Re}\bigl(\overline\lambda\,U_{ii}v_i\bigr)\\
+ &=2\sum_i a_i r_i
+ \le2L(L-t)\le2(L+t)(L-t)=2\tau.
+\end{aligned}
+$$
+
+The same calculation covers $L=0$ and zero coordinates. $\square$
+

@@ -1,0 +1,171 @@
+**Theorem 8.2 (homogeneous gap and ordinary aggregate distance).** For every nonzero $b=T(\xi,\eta)^{\mathsf T}\in\mathbb C^2$, put $p=|\xi|^2$, $q=|\eta|^2$, and $w=p+q=\|b\|^2$. Then
+
+$$
+\delta(b)\ge \frac{pq}{800w}
+\ge\frac{\operatorname{dist}(b,\mathcal E)^2}{1600}.
+\tag{8.5}
+$$
+
+At $b=0$ all three quantities are zero under the stated convention. Equality in the certificate $\delta(b)=0$ holds exactly for $b\in\mathcal E$. For every finite family the first two bounds below hold; if it is a complete resolution $\sum_j b_jb_j^\dagger=I_2$, the third holds as well:
+
+$$
+\begin{aligned}
+\sum_j\frac{p_jq_j}{w_j}&\le800\sum_j\delta(b_j),\\
+\sum_j d_j^2&\le1600\sum_j\delta(b_j),\\
+\sum_j p_jq_j&\le800\sum_j\delta(b_j)
+\quad\text{if }\sum_jb_jb_j^\dagger=I_2.
+\end{aligned}
+\tag{8.6}
+$$
+
+For a protocol of Definition 1.2, use exactly the refinement (3.2)--(3.4), with the same original $U_y$ on every spectral piece of outcome $y$. If $\varepsilon\in[0,1]$ and
+$\|\Phi-\operatorname{id}_{M_4}\|_\diamond\le1-c+\varepsilon$, then
+
+$$
+\begin{aligned}
+\sum_j d_j^2&\le12800\varepsilon,\\
+\sum_j p_jq_j&\le6400\varepsilon,\\
+\sum_j d_j^4&\le6400\varepsilon.
+\end{aligned}
+\tag{8.7}
+$$
+
+In particular, the ordinary aggregate squared distance has a constant independent of the finite outcome count. These are estimates for certificate vectors of the actual protocol, rather than estimates in a channel norm.
+
+Proof. The homogeneity of (8.4) allows us to assume $p+q=1$ when $b\ne0$, where $p=|\xi|^2$, $q=|\eta|^2$. Use the notation $x,y,a,m,I,L,A,B$ from (2.3) and (2.8). Equations (2.6) and (2.7) give
+
+$$
+A+B\le I-d,
+\qquad
+d=\frac{x^2}{\sqrt2}+\frac{y^2}{8a^3}
+\ge pq\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}.
+\tag{8.8}
+$$
+
+The exact identity (2.10) can be written
+
+$$
+I-L=\gamma(a,p,q)\,pq,
+\qquad
+\gamma(a,p,q)=\frac{4\sqrt2(c-s)^2}{(a+m)(I+L)}.
+\tag{8.9}
+$$
+
+We first obtain a uniform lower gap between the two coefficients in (8.8) and (8.9). Put $e=(c-s)^2=2s^2$. Since $a,m\ge s$ and $L\ge\sqrt2+2m$, the denominator in (8.9) obeys
+
+$$
+(a+m)(I+L)\ge4\sqrt2s+8s^2.
+\tag{8.10}
+$$
+
+The elementary radical inequality
+
+$$
+4\sqrt2s+8s^2\ge8\sqrt2e
+\tag{8.11}
+$$
+
+follows from $e=2s^2$ and $\sqrt2+2s\ge4\sqrt2s$; after squaring the latter positive inequality it is $17\sqrt2\ge24$, which follows from $2>(24/17)^2$. Hence $\gamma(a,p,q)\le1/2$.
+
+If $a\le3/5$, then $1/(8a^3)\ge125/216$, and $1/\sqrt2\ge125/216$. Therefore
+
+$$
+\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
+\ge\frac{125}{216}-\frac12>\frac1{800}.
+\tag{8.12}
+$$
+
+For $a\ge3/5$, the second denominator estimate in the proof of Lemma 2.1 gives
+
+$$
+(a+m)(I+L)\ge\frac{19}{5}\sqrt2\,a+\frac{361}{50}a^2.
+\tag{8.13}
+$$
+
+Let
+
+$$
+F(t)=\frac{19}{5}\sqrt2+\frac{361}{50}t
+      -\frac{3200}{99}\sqrt2 e\,t^2.
+\tag{8.14}
+$$
+
+This is concave. On $[3/5,c]$ its endpoint values are positive. To check this without approximation, use
+
+$$
+\frac75<\sqrt2<\frac{99}{70},
+\qquad \frac9{10}<c<1,
+\qquad c^2=\frac{2+\sqrt2}{4}<\frac{239}{280},
+\tag{8.15}
+$$
+
+which give
+
+$$
+F(3/5)>\frac{2413}{250}-\frac{83520}{17325}>0,
+\qquad
+F(c)>\frac{5909}{500}-\frac{55448}{4851}>0.
+\tag{8.16}
+$$
+
+Concavity then gives $F(t)>0$ throughout the interval. Combining (8.13)--(8.14) yields
+
+$$
+(a+m)(I+L)\ge\frac{3200}{99}\sqrt2 e\,a^3,
+\qquad
+\gamma(a,p,q)\le\frac{99}{800a^3}.
+\tag{8.17}
+$$
+
+On this range $8a^3\ge216/125>\sqrt2$, so the minimum below is its second entry. Since $a\le c<1$, (8.17) implies
+
+$$
+\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}-\gamma(a,p,q)
+\ge\frac1{8a^3}-\frac{99}{800a^3}
+=\frac1{800a^3}\ge\frac1{800}.
+\tag{8.18}
+$$
+
+Equations (8.8), (8.9), (8.12), and (8.18) therefore give
+
+$$
+L-(A+B)\ge\frac{pq}{800}.
+\tag{8.19}
+$$
+
+Because $L^2\ge2$, $L+A+B\ge1$, and the defect is
+
+$$
+\delta(b)=L^2-(A+B)^2=(L-(A+B))(L+A+B),
+$$
+
+we obtain $\delta(b)\ge pq/800$ in the normalized case. For an arbitrary nonzero vector let $\widehat b=b/\sqrt w$. Its squared coordinate magnitudes are $p/w$ and $q/w$, while $\delta(\widehat b)=\delta(b)/w$. Hence
+
+$$
+\frac{\delta(b)}w
+\ge\frac{pq}{800w^2},
+\qquad
+\delta(b)\ge\frac{pq}{800w}.
+$$
+
+If $p\le q$, then $pq/(p+q)\ge p/2$; the reverse ordering gives $pq/(p+q)\ge q/2$. Together with (8.3), this proves the second inequality in (8.5). On a normalized coordinate axis, the explicit expressions (3.7) give $A=\sqrt2$ and $B=2a$, while (2.10) gives $I=L$. Thus $\delta=0$ on both axes, and degree-two homogeneity gives equality on both entire complex rays and at zero. If $pq>0$, the first lower bound in (8.5) is positive. These are therefore exactly the certificate equality cases.
+
+Summing the two bounds in (8.5) proves the first two lines of (8.6). For a complete resolution, positivity of the other summands gives $b_jb_j^\dagger\preceq I_2$, whence $w_j=\|b_j\|^2\le1$. Consequently $p_jq_j\le p_jq_j/w_j$ whenever $w_j>0$; zero vectors contribute zero to both quantities. This proves the third line of (8.6).
+
+For the asserted protocol consequence, keep the actual $K_j=U_y\operatorname{diag}(R_0b_j)$ of (3.3). Write $f$ for its overlap (3.11), and put
+
+$$
+\tau_j=\|R_0b_j\|_{\ell^1}^2-|\operatorname{Tr}K_j|^2\ge0,
+\qquad \Delta=\frac{1+c}{2}-f\ge0.
+$$
+
+The nonnegativity is (3.12)--(3.13), applied to these same feedback unitaries. Completeness, (3.9), and (3.11) give the identity
+
+$$
+\sum_j\delta(b_j)+\sum_j\tau_j
+=\operatorname{Tr}H-16f=16\Delta.
+$$
+
+The existing lower witness (3.15) and the near-optimality premise imply
+$2(1-f)\le1-c+\varepsilon$, hence $\Delta\le\varepsilon/2$. Thus $\sum_j\delta(b_j)\le8\varepsilon$, with no replacement or optimization of the feedback. Equations (8.6) and $d_j^4=\min(p_j,q_j)^2\le p_jq_j$ now prove (8.7). $\square$
+
