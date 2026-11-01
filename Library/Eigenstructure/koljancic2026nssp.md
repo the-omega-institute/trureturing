@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2604.21552v1
 claim: Question 5.11 asks whether every even double path with a nonempty loop set allows the nSSP.
 strata_touched:
   - D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPath
+  - D5/S3/Combinatorics/SpectralGraph/KoljancicOblakEvenPathNSSP
 license: CC-BY-SA-4.0
 triage: anchor
 ---
@@ -38,4 +39,8 @@ The declaration `joined_path_charpoly` identifies the actual one-loop weighted-p
 
 The declaration `joined_path_charpoly_derivative` gives the actual derivative at perturbation parameter zero of every real spectral evaluation of the characteristic polynomial, along arbitrary real edge variations and the central-loop variation. It identifies the squared-edge variations with twice the edge weight times its variation and the derivative with the evaluated complete `joinedVariation`.
 
-The owning Blueprint derives a conditional unrestricted-commutant application of these relations: nonzero edge and loop weights, odd total branch length, coprime squared-weight continuants, and a real orthogonal diagonalization with distinct spectral entries suffice for nSSP of the actual joined path. The argument uses evaluated derivatives directly, a bijective spectral-diagonal support readout and the trace sum of squares. It assumes no symmetry of the test matrix. It does not supply the required diagonalization, uniform singleton-loop exact-support witnesses, or enlargement to every nonempty loop set. The full event remains the separate proposition `KoljancicOblakEvenPath.claim`; no retained named theorem proves it.
+The companion `KoljancicOblakEvenPathNSSP.result` has the exact type `KoljancicOblakEvenPath.claim`. Positive square roots supply real edge weights with the required squared parameters. The original `GibbsStochasticSimpleSpectrum.jacobi_simple` supplier, whose statement and proof are unchanged, supplies simple spectrum for this actual nonzero weighted Jacobi matrix. The Hermitian spectral theorem and the roots/eigenvalues correspondence give the required real orthogonal diagonalization with distinct spectral entries.
+
+The support-tangent spectral readout is injective by the evaluated characteristic derivative and complete joined recovery, hence surjective in equal finite dimensions. An arbitrary real commuting test matrix becomes diagonal in this basis. Entrywise annihilation makes it trace-orthogonal to all support tangents, and pairing with its own diagonal readout gives a sum of squares, forcing the test matrix to vanish. No symmetry of the test matrix is assumed.
+
+For every nonempty loop set, the proof chooses one of its vertices for this singleton construction. The nSSP condition is injectivity of the finite-dimensional linear test map sending X to its entrywise product with A and its transpose commutator with A. This family is continuous in A, and injectivity is open. A sufficiently small positive addition at exactly the other specified diagonal entries gives exact support for the entire loop set and preserves nSSP. This proves the existential event without using the stronger similarity conclusion in the published Superpattern Lemma. The algebraic source and the final synthesis are unfrozen pending independent whole-unit assessment; no global priority claim is made.

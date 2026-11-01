@@ -53,7 +53,8 @@ theorem dependence : ObservationalDependence signature actual := by
   change {A : Matrix (Fin 2) (Fin 2) ℝ | ∀ i j, A i j ≠ 0 ↔ pathPattern {0} i j} ≠
     {A : Matrix (Fin 2) (Fin 2) ℝ | ∀ i j, A i j ≠ 0 ↔ pathPattern {1} i j}
   intro heq
-  exact hnot (heq ▸ hs)
+  have hm := congrArg (fun S : Set (Matrix (Fin 2) (Fin 2) ℝ) => A ∈ S) heq
+  exact hnot (hm.mp hs)
 
 def source_registration : Registration arena
     _root_.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.claim where
