@@ -7,6 +7,7 @@
    digest: Four projectors of ranks 2,2,3,3 refute the fewer-effects orthogonality conjecture. -/
 
 import Mathlib.Analysis.Matrix.Order
+import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
 
 /-! Conjecture 2 in Liu and DeBrota, arXiv:2105.02074v2, Appendix C. The positive
 square root and squared Frobenius distance are those of Section IV. The construction
@@ -58,31 +59,26 @@ private def competitor : Fin 4 → Matrix (Fin 10) (Fin 10) ℂ :=
 
 private theorem construction_sqrt (i : Fin 4) :
     CFC.sqrt (construction 4 10 i) = construction 4 10 i := by
-  apply CFC.sqrt_unique
-  · dsimp only [construction]
-    rw [Matrix.diagonal_mul_diagonal]
-    congr 1
-    funext k
-    split_ifs <;> simp
-  · apply Matrix.PosSemidef.nonneg
-    dsimp only [construction]
-    apply Matrix.PosSemidef.diagonal
-    intro k
-    split_ifs <;> simp <;> split_ifs <;> simp
+  unfold construction
+  simpa only [apply_ite, Real.sqrt_one, Real.sqrt_zero,
+    Complex.ofReal_one, Complex.ofReal_zero] using
+    D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation.sqrt_diagonal
+      (fun k : Fin 10 => if i.val * (10 / 4) ≤ k.val ∧
+        k.val < (if i.val < 4 - 1 then (i.val + 1) * (10 / 4) else 10)
+        then (1 : ℝ) else 0)
+      (fun k => by split_ifs <;> norm_num)
 
 private theorem competitor_sqrt (i : Fin 4) :
     CFC.sqrt (competitor i) = competitor i := by
-  apply CFC.sqrt_unique
-  · dsimp only [competitor]
-    rw [Matrix.diagonal_mul_diagonal]
-    congr 1
-    funext k
-    split_ifs <;> simp
-  · apply Matrix.PosSemidef.nonneg
-    dsimp only [competitor]
-    apply Matrix.PosSemidef.diagonal
-    intro k
-    split_ifs <;> simp <;> split_ifs <;> simp
+  unfold competitor
+  simpa only [apply_ite, Real.sqrt_one, Real.sqrt_zero,
+    Complex.ofReal_one, Complex.ofReal_zero] using
+    D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation.sqrt_diagonal
+      (fun k : Fin 10 =>
+        if (if i.val < 2 then i.val * 2 else i.val * 3 - 2) ≤ k.val ∧
+          k.val < (if i.val < 2 then (i.val + 1) * 2 else (i.val + 1) * 3 - 2)
+        then (1 : ℝ) else 0)
+      (fun k => by split_ifs <;> norm_num)
 
 private theorem construction_gram :
     gram (construction 4 10) = Matrix.diagonal ![2, 2, 2, 4] := by
