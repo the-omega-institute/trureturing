@@ -150,7 +150,8 @@ theorem dependence : ObservationalDependence signature.{u} actual := by
   exact Nat.zero_ne_one hd
 
 def source : Registration arena.{u} (type_of% @sum_strings.{u}) where
-  actual := actual
+  actual := realize signature.{u}
+    (fun _ _ f => f ![false, false, false]) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨sum_strings, rejected, rejected_law⟩
   sensitivity := by
