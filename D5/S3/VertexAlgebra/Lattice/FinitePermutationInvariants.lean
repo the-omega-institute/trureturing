@@ -51,7 +51,8 @@ private theorem coefficient_translate
   have hmap : (b.coord (g • x)).comp (rho g).toLinearMap = b.coord x := by
     apply b.ext
     intro y
-    simp [LinearMap.comp_apply, hperm, Basis.coord_apply, hinj.eq_iff]
+    simp [LinearMap.comp_apply, hperm, Basis.coord_apply,
+      Finsupp.single_apply, hinj.eq_iff]
   exact congrArg (fun f : V →ₗ[K] K => f v) hmap
 
 /-- Fixed vectors correspond to arbitrary coefficients on the actual basis orbits. -/
@@ -81,7 +82,8 @@ noncomputable def fixedBasisEquivOrbitFunctions
     funext q
     refine Quotient.inductionOn q ?_
     intro x
-    simp
+    exact congrFun (b.equivFun.apply_symm_apply
+      (fun y => c (Quotient.mk _ y))) x
   map_add' v w := by
     funext q
     refine Quotient.inductionOn q ?_
@@ -102,6 +104,6 @@ theorem fixed_finrank_eq_orbit_card
   classical
   letI := Fintype.ofFinite (MulAction.orbitRel.Quotient G X)
   rw [(fixedBasisEquivOrbitFunctions rho b hperm).finrank_eq, Nat.card_eq_fintype_card]
-  exact Module.finrank_fintype_fun_eq_card
+  exact Module.finrank_fintype_fun_eq_card K
 
 end D5.S3.VertexAlgebra.Lattice.FinitePermutationInvariants
