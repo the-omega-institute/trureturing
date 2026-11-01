@@ -13,6 +13,8 @@ import Mathlib.Analysis.Convex.Topology
 import Mathlib.Analysis.LocallyConvex.Separation
 import Mathlib.Analysis.Normed.Affine.AddTorsorBases
 
+/-! Actual cyclic boundary coverage determines the full interior-diagonal universe. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open Set Module
@@ -29,7 +31,7 @@ structure BoundaryModel (poly : Polygon E n) : Prop where
   extreme_vertices : ∀ i, poly i ∈ (convexHull ℝ (range poly.vertices)).extremePoints ℝ
   boundary_eq : poly.boundary ℝ = frontier (convexHull ℝ (range poly.vertices))
 
-/-- Relabelling by the existing ring equivalence preserves the native cyclic successor. -/
+/-- Relabelling by the canonical equivalence preserves the native cyclic successor. -/
 def vertex (poly : Polygon E n) (i : ZMod n) : E :=
   poly ((ZMod.finEquiv n).symm i)
 
@@ -61,6 +63,7 @@ private theorem triple_spans [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2
     (extreme_not_collinear ha hb hc hab hac hbc)).affineSpan_eq_top_iff_card_eq_finrank_add_one.mpr
   simp [hdim]
 
+omit [NeZero n] in
 private theorem interior_nonempty [FiniteDimensional ℝ E] (hdim : finrank ℝ E = 2)
     (hn : 3 ≤ n) {poly : Polygon E n} (hB : BoundaryModel poly) :
     (interior (convexHull ℝ (range poly.vertices))).Nonempty := by
@@ -108,8 +111,20 @@ private theorem maximal_endpoints {K : Set E} {a b z : E}
   simp only [map_add,map_smul,smul_eq_mul] at heq
   have hfa := hmax a ha
   have hfb := hmax b hb
-  constructor <;> nlinarith
+  have heq' := congrArg (fun r : ℝ => r * f z) hst
+  constructor
+  · apply le_antisymm hfa
+    by_contra! h
+    have := mul_pos hs (sub_pos.mpr h)
+    have := mul_nonneg ht.le (sub_nonneg.mpr hfb)
+    nlinarith
+  · apply le_antisymm hfb
+    by_contra! h
+    have := mul_pos ht (sub_pos.mpr h)
+    have := mul_nonneg hs.le (sub_nonneg.mpr hfa)
+    nlinarith
 
+omit [NeZero n] in
 private theorem supporting_pair_is_side [FiniteDimensional ℝ E]
     (hdim : finrank ℝ E = 2) {poly : Polygon E n} (hB : BoundaryModel poly)
     {a b : Fin n} (hab : a ≠ b) (f : E →L[ℝ] ℝ) (hf : f ≠ 0)
@@ -132,10 +147,10 @@ private theorem supporting_pair_is_side [FiniteDimensional ℝ E]
     have hsub : f '' interior K ⊆ Iic (f (poly a)) := by
       rintro _ ⟨x,hx,rfl⟩
       exact hmax x (interior_subset hx)
-    have hopen := f.isOpenMap_of_ne_zero hf _ isOpen_interior
+    have hopen := f.isOpenMap_of_ne_zero hf (interior K) isOpen_interior
     have hi := interior_maximal hsub hopen (mem_image_of_mem f hz)
     rw [interior_Iic] at hi
-    exact (lt_irrefl _) (hfz ▸ hi)
+    exact (lt_irrefl (f (poly a))) (by simpa only [mem_Iio,hfz] using hi)
   have hzfront : z ∈ frontier K := (mem_frontier_iff_notMem_interior hzK).mpr hznot
   have hzbd : z ∈ poly.boundary ℝ := hB.boundary_eq.symm ▸ hzfront
   obtain ⟨k,hk⟩ := mem_iUnion.mp hzbd
@@ -156,17 +171,79 @@ private theorem supporting_pair_is_side [FiniteDimensional ℝ E]
     hab' f hf hfb (hfk'.trans hfz)
   have hkinj := hB.injective_vertices
   rcases hkpair with hk | hk <;> rcases hkpair' with hk' | hk'
-  · have : k = finRotate n k := hkinj (hk.trans hk'.symm)
-    have hne : finRotate n k ≠ k := by
-      rw [finRotate_apply]
-      intro he
-      have hone : (1 : Fin n) = 0 := add_left_cancel (show k + 1 = k + 0 by simpa using he)
-      have := congrArg Fin.val hone
-      simp at this
-    exact False.elim (hne this.symm)
+  · have he : z = poly a := by
+      rw [hk,hk'] at hkseg
+      simpa using hkseg
+    exact False.elim (hzne a he.symm)
   · exact Or.inl ((hkinj hk').symm.trans (congrArg (finRotate n) (hkinj hk)))
   · exact Or.inr ((hkinj hk').symm.trans (congrArg (finRotate n) (hkinj hk)))
-  · have : poly a = poly b := hk'.symm.trans hk
-    exact False.elim (hab' this)
+  · have he : z = poly b := by
+      rw [hk,hk'] at hkseg
+      simpa using hkseg
+    exact False.elim (hzne b he.symm)
+
+omit [NormedAddCommGroup E] [NormedSpace ℝ E] in
+private theorem vertex_succ (poly : Polygon E n) (i : ZMod n) :
+    vertex poly (i+1) = poly (finRotate n ((ZMod.finEquiv n).symm i)) := by
+  simp [vertex,finRotate_apply]
+
+/-- Every native diagonal has its whole open segment in the hull interior, and conversely. -/
+theorem isDiagonal_iff_openSegment_subset_interior
+    (hdim : finrank ℝ E = 2) (hn : 3 ≤ n) (poly : Polygon E n)
+    (hB : BoundaryModel poly) (i j : ZMod n) :
+    Carrier.IsDiagonal s(i,j) ↔ vertex poly i ≠ vertex poly j ∧
+      openSegment ℝ (vertex poly i) (vertex poly j) ⊆
+        interior (convexHull ℝ (range poly.vertices)) := by
+  haveI : FiniteDimensional ℝ E := FiniteDimensional.of_finrank_pos (by omega)
+  let a := (ZMod.finEquiv n).symm i
+  let b := (ZMod.finEquiv n).symm j
+  have hv : Function.Injective (vertex poly) := hB.injective_vertices.comp (ZMod.finEquiv n).symm.injective
+  have hseg : Carrier.IsSegment s(i,j) ↔ i ≠ j := by
+    simp [Carrier.IsSegment,Sym2.mk_isDiag_iff]
+  constructor
+  · rintro ⟨hij,hside⟩
+    have hij' : i ≠ j := hseg.mp hij
+    refine ⟨hv.ne hij',?_⟩
+    intro z hz
+    by_contra hznot
+    have ha := hB.extreme_vertices a
+    have hb := hB.extreme_vertices b
+    obtain ⟨f,hf,hmax⟩ := geometric_hahn_banach_of_nonempty_interior_point
+      (convex_convexHull ℝ (range poly.vertices)) hznot (interior_nonempty hdim hn hB)
+    have hends := maximal_endpoints ha.1 hb.1 hz f hmax
+    have hadj := supporting_pair_is_side hdim hB ((ZMod.finEquiv n).symm.injective.ne hij')
+      f hf (fun x hx => (hmax x hx).trans_eq hends.1.symm)
+      (hends.2.trans hends.1.symm)
+    apply hside
+    rcases hadj with hadj | hadj
+    · have hji : j = i+1 := by
+        have := congrArg (ZMod.finEquiv n) hadj
+        simpa [a,b,finRotate_apply] using this
+      exact ⟨i, by rw [hji]⟩
+    · have hij : i = j+1 := by
+        have := congrArg (ZMod.finEquiv n) hadj
+        simpa [a,b,finRotate_apply] using this
+      exact ⟨j, by rw [hij]; exact Sym2.eq_swap⟩
+  · rintro ⟨hij,hint⟩
+    refine ⟨hseg.mpr (fun h => hij (congrArg (vertex poly) h)),?_⟩
+    rintro ⟨k,hk⟩
+    have hedge : ∀ k : ZMod n,
+        ¬ openSegment ℝ (vertex poly k) (vertex poly (k+1)) ⊆
+          interior (convexHull ℝ (range poly.vertices)) := by
+      intro k h
+      let z := midpoint ℝ (vertex poly k) (vertex poly (k+1))
+      have hzint := h (midpoint_mem_openSegment _ _)
+      have hzedge : z ∈ poly.edgeSet ℝ ((ZMod.finEquiv n).symm k) := by
+        rw [Polygon.edgeSet,affineSegment_eq_segment]
+        change z ∈ segment ℝ (vertex poly k) (poly (finRotate n ((ZMod.finEquiv n).symm k)))
+        rw [← vertex_succ]
+        exact midpoint_mem_segment _ _
+      have hzfront : z ∈ frontier (convexHull ℝ (range poly.vertices)) := by
+        rw [← hB.boundary_eq]
+        exact mem_iUnion.mpr ⟨_,hzedge⟩
+      exact (disjoint_left.mp disjoint_interior_frontier) hzint hzfront
+    rcases Sym2.eq_iff.mp hk with ⟨hi,hj⟩ | ⟨hi,hj⟩
+    · exact hedge k (by simpa only [hi,hj] using hint)
+    · exact hedge k (by simpa only [hi,hj,openSegment_symm] using hint)
 
 end D5.S3.Geometry.Polygons.PolygonInteriorDiagonals
