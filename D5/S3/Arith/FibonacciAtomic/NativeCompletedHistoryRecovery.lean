@@ -57,23 +57,28 @@ def previous (n0 : Nat) (z : Source) : Option (Source × Letter) := do
     let p ← rhoPredecessor z
     if Native p then some (p,.F) else none
 
-/-- Fuel is obtained only from the two acquired inputs, never from the old
-tree, its depth, its composition or the unknown word. -/
-def recoverFuel : Nat → Nat → Source → Option (Source × List Letter)
+/-- One recursive computation returns its accepted predecessor count and answer.
+The count includes accepted descents even when a later check rejects. -/
+def recoverFuel : Nat → Nat → Source → Nat × Option (Source × List Letter)
   | fuel, n0, z =>
-    if n0 ≤ 1 ∨ ¬ Native z ∨ eventIndex z < n0 then none
-    else if eventIndex z = n0 then some (z,[])
+    if n0 ≤ 1 ∨ ¬ Native z ∨ eventIndex z < n0 then (0,none)
+    else if eventIndex z = n0 then (0,some (z,[]))
     else match fuel with
-      | 0 => none
-      | k+1 => do
-        let (p,X) ← previous n0 z
-        if n0 ≤ eventIndex p ∧ eventIndex p < eventIndex z then
-          let (t,W) ← recoverFuel k n0 p
-          some (t,W ++ [X])
-        else none
+      | 0 => (0,none)
+      | k+1 => match previous n0 z with
+        | none => (0,none)
+        | some (p,X) =>
+          if n0 ≤ eventIndex p ∧ eventIndex p < eventIndex z then
+            let d := recoverFuel k n0 p
+            (d.1+1,d.2.map (fun a => (a.1,a.2 ++ [X])))
+          else (0,none)
 
 def recover (n0 : Nat) (z : Source) : Option (Source × List Letter) :=
-  recoverFuel (eventIndex z - n0) n0 z
+  (recoverFuel (eventIndex z - n0) n0 z).2
+
+/-- This is the first projection of the same execution used by recover. -/
+def recoverySteps (n0 : Nat) (z : Source) : Nat :=
+  (recoverFuel (eventIndex z - n0) n0 z).1
 
 private theorem act_native (X : Letter) (t : Source) (h : Native t) : Native (act X t) := by
   cases X with
@@ -269,7 +274,7 @@ private theorem previous_sound (n0 : Nat) (z p : Source) (X : Letter)
 private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
     (hn : Native t) (ht : eventIndex t = n0) (W : List Letter) :
     ∀ fuel : Nat, eventIndex (run t W) - n0 ≤ fuel →
-      recoverFuel fuel n0 (run t W) = some (t,W) := by
+      (recoverFuel fuel n0 (run t W)).2 = some (t,W) := by
   induction W using List.reverseRecOn with
   | nil =>
     intro fuel hf
@@ -289,45 +294,80 @@ private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
     have above : n0 < eventIndex (act X (run t W)) := by omega
     rw [run_append] at hf ⊢
     change eventIndex (act X (run t W)) - n0 ≤ fuel at hf
-    change recoverFuel fuel n0 (act X (run t W)) = some (t,W ++ [X])
+    change (recoverFuel fuel n0 (act X (run t W))).2 = some (t,W ++ [X])
     cases fuel with
     | zero => omega
     | succ k =>
       rw [recoverFuel]
       rw [if_neg (by simp only [not_or]; exact ⟨by omega,not_not.mpr nr,by omega⟩),
         if_neg (by omega),previous_last n0 h0 t hn ht W X]
-      simp only [Option.bind_some]
-      rw [if_pos ⟨base,strict⟩,ih k (by omega)]
+      simp only []
+      rw [if_pos ⟨base,strict⟩]
+      change ((recoverFuel k n0 (run t W)).2.map
+        (fun a => (a.1,a.2 ++ [X]))) = some (t,W ++ [X])
+      rw [ih k (by omega)]
       rfl
 
 private theorem recover_fuel_sound (fuel n0 : Nat) (z t : Source) (W : List Letter)
-    (h : recoverFuel fuel n0 z = some (t,W)) :
+    (h : (recoverFuel fuel n0 z).2 = some (t,W)) :
     1 < n0 ∧ Native t ∧ eventIndex t = n0 ∧ run t W = z ∧
-      W.length ≤ eventIndex z - n0 := by
+      W.length ≤ eventIndex z - n0 ∧ (recoverFuel fuel n0 z).1 = W.length := by
   induction fuel generalizing z t W with
   | zero =>
     rw [recoverFuel] at h
     split_ifs at h with bad base
     cases h
-    exact ⟨by omega,by tauto,base,rfl,by simp⟩
+    refine ⟨by omega,by tauto,base,rfl,by simp,?_⟩
+    rw [recoverFuel,if_neg bad,if_pos base]
+    rfl
   | succ k ih =>
     rw [recoverFuel] at h
     split_ifs at h with bad base
     · cases h
-      exact ⟨by omega,by tauto,base,rfl,by simp⟩
-    · obtain ⟨⟨p,X⟩,hp,h⟩ := Option.bind_eq_some_iff.mp h
-      dsimp only at h
-      split_ifs at h with bound
-      obtain ⟨⟨s,V⟩,hv,h⟩ := Option.bind_eq_some_iff.mp h
-      cases h
-      obtain ⟨h0,nt,et,eq,len⟩ := ih p s V hv
-      have nz : Native z := by tauto
-      obtain ⟨np,step,dec⟩ := previous_sound n0 z p X nz hp
-      refine ⟨h0,nt,et,?_,?_⟩
-      · rw [run_append,eq]
-        exact step
-      · simp only [List.length_append,List.length_singleton]
-        omega
+      refine ⟨by omega,by tauto,base,rfl,by simp,?_⟩
+      rw [recoverFuel,if_neg bad,if_pos base]
+      rfl
+    · cases hp : previous n0 z with
+      | none => simp only [hp] at h; cases h
+      | some pair =>
+        rcases pair with ⟨p,X⟩
+        simp only [hp] at h
+        split_ifs at h with bound
+        obtain ⟨⟨s,V⟩,hv,h⟩ := Option.map_eq_some_iff.mp h
+        cases h
+        obtain ⟨h0,nt,et,eq,len,count⟩ := ih p s V hv
+        have nz : Native z := by tauto
+        obtain ⟨np,step,dec⟩ := previous_sound n0 z p X nz hp
+        refine ⟨h0,nt,et,?_,?_,?_⟩
+        · rw [run_append,eq]
+          exact step
+        · simp only [List.length_append,List.length_singleton]
+          omega
+        · rw [recoverFuel,if_neg bad,if_neg base,hp]
+          simp only []
+          rw [if_pos bound]
+          change (recoverFuel k n0 p).1+1 = (V ++ [X]).length
+          rw [count]
+          simp
+
+private theorem recover_fuel_bound (fuel n0 : Nat) (z : Source) :
+    (recoverFuel fuel n0 z).1 ≤ fuel := by
+  induction fuel generalizing n0 z with
+  | zero =>
+    rw [recoverFuel]
+    split_ifs <;> exact Nat.le_refl 0
+  | succ k ih =>
+    rw [recoverFuel]
+    split_ifs with bad base
+    · exact Nat.zero_le _
+    · exact Nat.zero_le _
+    · cases hp : previous n0 z with
+      | none => exact Nat.zero_le _
+      | some pair =>
+        rcases pair with ⟨p,X⟩
+        split_ifs with bound
+        · exact Nat.succ_le_succ (ih n0 p)
+        · exact Nat.zero_le _
 
 private theorem recover_iff (n0 : Nat) (z t : Source) (W : List Letter) :
     recover n0 z = some (t,W) ↔
@@ -556,12 +596,6 @@ private theorem primitive_length (t : Source) (W : List Letter) (hn : Native t) 
   simp only [List.length_map] at h
   omega
 
-private theorem native_material (t : Source) (hn : Native t) :
-    Geometry.NativeMaterialRootRecognition.D t := by
-  obtain ⟨cs,h⟩ := ((guarded_attained t).mp hn).1
-  exact Geometry.NativeGuardedLeafRepair.run_preserves_D
-    Geometry.NativeGuardedLeafRepair.alphaRHistory.domain h
-
 private theorem native_run (t : Source) (W : List Letter) (hn : Native t)
     (labels : Geometry.NativeGuardedLeafRepair.RawMap) (next : ℤ)
     (x : Geometry.NativeGuardedLeafRepair.Value) :
@@ -578,7 +612,10 @@ private theorem native_run (t : Source) (W : List Letter) (hn : Native t)
     final := run t W
     calls := primitiveWord t W
     trace := primitive_word t W hn
-    domain := native_material (run t W) (run_native t hn W) }
+    domain := by
+      obtain ⟨cs,trace⟩ := ((guarded_attained (run t W)).mp (run_native t hn W)).1
+      exact Geometry.NativeGuardedLeafRepair.run_preserves_D
+        Geometry.NativeGuardedLeafRepair.alphaRHistory.domain trace }
   exact Geometry.NativeGuardedLeafRepair.history_preserves_values h labels next x
 
 /-- A concrete supplementary bit records the first completed macro. -/
@@ -642,7 +679,8 @@ theorem completed_history_recovery :
           Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
         eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
-      recover n0 z = some (t,W) → W.length ≤ eventIndex z - n0) ∧
+      recover n0 z = some (t,W) →
+        W.length ≤ eventIndex z - n0 ∧ recoverySteps n0 z = W.length) ∧
     (∀ (n0 : Nat) (z p : Source) (X : Letter), Native z →
       previous n0 z = some (p,X) →
         Native p ∧ act X p = z ∧ eventIndex p < eventIndex z) ∧
@@ -684,11 +722,12 @@ theorem completed_history_recovery :
           p ∉ Geometry.NativeMaterialRootRecognition.material t → y p = 0)) ∧
     (∀ U : List Letter,
       ∃ D : Bool → List Letter, ∀ W : List Letter,
-        run (.of false) W = run K U → D (firstChoice W) = W) := by
+        run (.of false) W = run K U → D (firstChoice W) = W) ∧
+    (∀ (n0 : Nat) (z : Source), recoverySteps n0 z ≤ eventIndex z - n0) := by
   refine ⟨recover_canonical,?_,?_,previous_sound,run_injective_canonical,beta_empty,beta_fibre_decoded,
     fun _ E U => supplement_separation E U,replay_guarded,guarded_attained,
     fun t W hn => ⟨primitive_word t W hn,primitive_length t W hn⟩,
-    native_run,first_choice_sufficient⟩
+    native_run,first_choice_sufficient,fun n0 z => recover_fuel_bound _ n0 z⟩
   · intro n0 z
     constructor
     · intro h ⟨t,W,good⟩

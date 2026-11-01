@@ -44,7 +44,8 @@ abbrev arena : Arena where
           Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
         eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
-      recover n0 z = some (t,W) → W.length ≤ eventIndex z - n0) ∧
+      recover n0 z = some (t,W) →
+        W.length ≤ eventIndex z - n0 ∧ recoverySteps n0 z = W.length) ∧
     (∀ (n0 : Nat) (z p : Source) (X : Letter), Native z →
       previous n0 z = some (p,X) →
         Native p ∧ act X p = z ∧ eventIndex p < eventIndex z) ∧
@@ -86,7 +87,8 @@ abbrev arena : Arena where
           p ∉ Geometry.NativeMaterialRootRecognition.material t → y p = 0)) ∧
     (∀ U : List Letter,
       ∃ D : Bool → List Letter, ∀ W : List Letter,
-        run (.of false) W = run K U → D (firstChoice W) = W)
+        run (.of false) W = run K U → D (firstChoice W) = W) ∧
+    (∀ (n0 : Nat) (z : Source), recoverySteps n0 z ≤ eventIndex z - n0)
 
 private theorem actual_law : arena.Law actual := by exact completed_history_recovery
 
