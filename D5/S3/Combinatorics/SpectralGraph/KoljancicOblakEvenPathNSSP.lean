@@ -277,10 +277,16 @@ private lemma joined_simple (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
         · simp [h, hu, hl]
         · simp [h, hu, hl]
   rw [hj] at H
-  unfold HasSimpleEigenvalues at H ⊢
-  unfold joinedPath
-  have hn : s + 1 + r = s + r + 1 := by omega
-  simpa only [hn, e] using H
+  have transport (N : ℕ) (hN : N = s + r + 1) :
+      HasSimpleEigenvalues (fun i j : Fin N =>
+        if i = j then (if i.val = r then a else 0)
+        else if i.val + 1 = j.val then
+          (if i.val < r then bL i.val else bR (s + r - 1 - i.val))
+        else if j.val + 1 = i.val then
+          (if j.val < r then bL j.val else bR (s + r - 1 - j.val)) else 0) := by
+    subst N
+    exact H
+  exact transport (s + 1 + r) (by omega)
 
 private lemma joined_diagonalization (bL bR : ℕ → ℝ) (a : ℝ) (r s : ℕ)
     (hL : ∀ k < r, bL k ≠ 0) (hR : ∀ k < s, bR k ≠ 0) :
@@ -486,8 +492,13 @@ private lemma singleton_at {n : ℕ} (hn : 0 < n) (heven : Even n) (l : Fin n) :
     apply Nat.odd_iff.mpr
     have he := Nat.even_iff.mp heven
     omega
-  have H := singleton_witness r s hodd
-  simpa only [hnum] using H
+  have transport (N : ℕ) (hN : N = s + 1 + r) (k : Fin N) (hk : k.val = r) :
+      ∃ A : Matrix (Fin N) (Fin N) ℝ,
+        (∀ i j, A i j ≠ 0 ↔ pathPattern {k} i j) ∧ HasNSSP A := by
+    subst N
+    have hloop : (⟨r, by omega⟩ : Fin (s + 1 + r)) = k := Fin.ext hk.symm
+    simpa only [hloop] using singleton_witness r s hodd
+  exact transport n hnum.symm l rfl
 
 /-- The full existential event, with unrestricted real test matrices. -/
 theorem result : D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.claim := by
