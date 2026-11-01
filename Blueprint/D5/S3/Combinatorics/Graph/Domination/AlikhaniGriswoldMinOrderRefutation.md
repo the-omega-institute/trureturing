@@ -24,6 +24,10 @@ $$\neg ((\exists (G: \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(33\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alikhani-griswold-2026-minus-four-minimum-order` (refuted) by `D5/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alikhani-griswold-2026-minus-four-minimum-order","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/AlikhaniGriswoldMinOrderRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Saeid Alikhani; Max Griswold (2026). *On the Integer Domination Root Conjecture*. DOI: [10.48550/arXiv.2608.00109](https://doi.org/10.48550/arXiv.2608.00109). URL: <https://arxiv.org/abs/2608.00109v1>.
