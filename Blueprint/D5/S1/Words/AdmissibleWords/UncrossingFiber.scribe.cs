@@ -26,6 +26,24 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                         + "B preserves each coordinate's number of occupied rows."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("margin-card-characterization"),
+                DeclarationHandle.Create(Prefix + "margin_eq_card_iff"),
+                H("A coordinate has full margin exactly when every row contains it"),
+                StatementSource.WithoutFormula(),
+                Blocks(Paragraph(Text(
+                    "The characterization is valid for empty rows, repeated rows, and the empty "
+                        + "multiset; it is the coordinate-level description of the minimum row."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("comparable-margin-unique"),
+                DeclarationHandle.Create(Prefix + "comparable_margin_unique"),
+                H("Comparable row multisets are uniquely determined by mass and margins"),
+                StatementSource.WithoutFormula(),
+                Blocks(Paragraph(Text(
+                    "Strong induction removes a minimum row, identified by the full-margin "
+                        + "coordinates, and reconstructs the multiset from its residual."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("forward-step-energy-strict"),
                 DeclarationHandle.Create(Prefix + "forwardStep_energy_strict"),
                 H("An incomparable exchange raises rank-square energy"),
@@ -36,6 +54,15 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                         + "potential used for the forward route bound."))),
                 DescribeRole.Theorem,
                 provenance: AssessedProvenance.FromLiterature(Hibi)),
+            Describe.Lean(
+                DescribeId.Create("forward-step-energy-gap"),
+                DeclarationHandle.Create(Prefix + "forwardStep_energy_gap"),
+                H("An incomparable exchange raises energy by at least two"),
+                StatementSource.WithoutFormula(),
+                Blocks(Paragraph(Text(
+                    "Both exclusive parts are nonempty, so the exact rank-square increment is at "
+                        + "least two. This is the quantitative induction step."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("route-to-comparable"),
                 DeclarationHandle.Create(Prefix + "exists_forward_route_to_comparable"),
@@ -57,6 +84,24 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                         + "fence inequalities, and intersections and unions remain legal."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("phi-involutive"),
+                DeclarationHandle.Create(Prefix + "phi_involutive"),
+                H("Alternating complement is an involution"),
+                StatementSource.WithoutFormula(),
+                Blocks(Paragraph(Text(
+                    "Applying the parity-dependent complement twice restores every Boolean word, "
+                        + "so the transformed support carrier has no information loss."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("support-phi-injective"),
+                DeclarationHandle.Create(Prefix + "support_phi_injective"),
+                H("Phi supports faithfully distinguish words"),
+                StatementSource.WithoutFormula(),
+                Blocks(Paragraph(Text(
+                    "The support of the alternating complement determines the transformed word, "
+                        + "and involutivity then recovers the original admissible-word input."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("admissible-route-bound"),
                 DeclarationHandle.Create(Prefix + "adm_phi_route_bound"),
                 H("The admissible carrier inherits the bounded route"),
@@ -66,6 +111,16 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                         + "in the finite fence family throughout the constructed route. The same "
                         + "explicit bound and comparable endpoint therefore hold on the native "
                         + "carrier."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("admissible-canonical-endpoint"),
+                DeclarationHandle.Create(Prefix + "adm_phi_canonical_endpoint_unique"),
+                H("The comparable endpoint is canonical inside the actual Phi fiber"),
+                StatementSource.WithoutFormula(),
+                Blocks(Paragraph(Text(
+                    "Any two comparable endpoints reached by forward routes from the same "
+                        + "admissible-word multiset have the same mass and coordinate margins, "
+                        + "so the generic uniqueness theorem identifies them."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("admissible-phi-consumer"),
