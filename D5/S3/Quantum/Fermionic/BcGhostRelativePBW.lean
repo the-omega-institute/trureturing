@@ -34,6 +34,8 @@ def cneg (r : ℕ) : Module.End ℂ Fock := c (-(r : ℤ))
 
 def positiveSet (S : Finset ℕ) : Prop := ∀ r ∈ S, 1 ≤ r
 
+def allowed : Set (Finset ℕ) := {S | 3 ∉ S}
+
 @[simp] private theorem bneg_one : bneg 1 = annihilate 1 := by
   simp [bneg, b]
 
@@ -44,6 +46,22 @@ private theorem bneg_succ (r : ℕ) (hr : 2 ≤ r) :
 
 @[simp] private theorem cneg_eq (r : ℕ) : cneg r = create (2 * r + 3) := by
   simp [cneg, c]
+  congr 1
+  omega
+
+private theorem cpos_one : c (1 : ℤ) = create 1 := by
+  simp [c]
+
+private theorem cpos_succ (r : ℕ) (hr : 2 ≤ r) :
+    c (r : ℤ) = annihilate (2 * (r - 2)) := by
+  have h := (mode_correspondence (r - 2)).2.1
+  rw [show (r : ℤ) = ((r - 2 : ℕ) : ℤ) + 2 by omega, h]
+
+private theorem bpos_eq (r : ℕ) : b (r : ℤ) = annihilate (2 * r + 3) := by
+  have hr : ¬(r : ℤ) ≤ -2 := by omega
+  simp [b, hr]
+  congr 1
+  omega
 
 def asc (S : Finset ℕ) : List ℕ := S.sort (· ≤ ·)
 
@@ -86,15 +104,16 @@ private theorem cword_sorted : ∀ (xs : List ℕ), xs.Pairwise (· < ·) → xs
     gword (xs.map cneg) down = (-1 : ℂ) ^ xs.length • ket (cOcc xs)
   | [], _, _ => by simp [gword, cOcc, down_eq]
   | x :: xs, hsort, hnodup => by
-      have htail := cword_sorted xs hsort.pairwise hnodup.tail
+      have htail := cword_sorted xs hsort.tail hnodup.tail
       have hxnot : x ∉ xs := (List.nodup_cons.mp hnodup).1
-      rw [gword, List.map_cons, htail, cneg_eq, create_ket]
+      change cneg x (gword (xs.map cneg) down) = _
+      rw [htail, cneg_eq, map_smul, create_ket]
       have hx : 2 * x + 3 ∉ cOcc xs := by
         intro hx
         simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hx
         rcases hx with hx | ⟨y, hy, he⟩
         · omega
-        · have hxy : x < y := hsort.head y hy
+        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
           omega
       rw [if_neg hx]
       have hcount : lowerCount (2 * x + 3) (cOcc xs) = 1 := by
@@ -109,21 +128,19 @@ private theorem cword_sorted : ∀ (xs : List ℕ), xs.Pairwise (· < ·) → xs
           · rintro ⟨hj, hlt⟩
             rcases hj with rfl | ⟨y, hy, rfl⟩
             · simp
-            · have hxy : x < y := hsort.head y hy
+            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
               exact False.elim (by omega)
           · intro hj
+            have hj0 : j = 1 := by simpa using hj
             subst j
-            constructor
-            · exact Or.inl rfl
-            · omega
+            exact ⟨Or.inl rfl, by omega⟩
         rw [heq]
         simp
       rw [show phase (2 * x + 3) (cOcc xs) = (-1 : ℂ) by
         simp [phase, hcount]]
       have hset : insert (2 * x + 3) (cOcc xs) = cOcc (x :: xs) := by
         simp [cOcc, hxnot]
-      rw [hset, smul_smul, pow_succ]
-      ring
+      rw [hset, smul_smul, List.length_cons, pow_succ]
 
 private theorem cword_asc (C : Finset ℕ) :
     gword ((asc C).map cneg) down = (-1 : ℂ) ^ C.card • ket (cOcc (asc C)) := by
@@ -153,7 +170,29 @@ private theorem sum_crossing (B C : Finset ℕ) :
   | empty => simp
   | @insert r B hr ih =>
       rw [Finset.sum_insert hr, ih]
-      simp [Finset.product_insert, hr]
+      have hdecomp :
+          ((insert r B).product C).filter (fun p => p.2 + 4 ≤ p.1) =
+            (Finset.map (Function.Embedding.sectR r ℕ)
+                (C.filter (fun s => s + 4 ≤ r))) ∪
+              ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)) := by
+        ext p
+        rcases p with ⟨p, q⟩
+        simp only [Finset.mem_filter, Finset.mem_union, Finset.mem_map,
+          Finset.mem_product, Function.Embedding.sectR_apply]
+        constructor
+        · rintro ⟨hq, hp | hp, hlt⟩
+          · exact Or.inl ⟨rfl, hq, by simpa [hp] using hlt⟩
+          · exact Or.inr ⟨hq, hp, hlt⟩
+        · rintro (⟨rfl, hq, hlt⟩ | ⟨hq, hp, hlt⟩)
+          · exact ⟨hq, Or.inl rfl, hlt⟩
+          · exact ⟨hq, Or.inr hp, hlt⟩
+      rw [hdecomp]
+      rw [Finset.card_union_of_disjoint]
+      · simp
+      · rw [Finset.disjoint_left]
+        intro p hp hq
+        have hq' := Finset.mem_filter.mp hq |>.1
+        exact hr (Finset.mem_product.mp hq').1
 
 private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
     xs.Pairwise (· < ·) → xs.Nodup → (∀ r ∈ xs, 2 ≤ r) →
@@ -162,11 +201,12 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
         ket (bOcc C xs)
   | [], C, _, _, _ => by simp [gword, bOcc]
   | x :: xs, C, hsort, hnodup, htwo => by
-      have htail := bword_sorted xs C hsort.pairwise hnodup.tail
+      have htail := bword_sorted xs C hsort.tail hnodup.tail
         (fun r hr => htwo r (by simp [hr]))
       have hxnot : x ∉ xs := (List.nodup_cons.mp hnodup).1
       have hx2 : 2 ≤ x := htwo x (by simp)
-      rw [gword, List.map_cons, htail, bneg_succ x hx2, create_ket]
+      change bneg x (gword (xs.map bneg) (ket (cOcc (asc C)))) = _
+      rw [htail, bneg_succ x hx2, map_smul, create_ket]
       have heven : bSite x ∉ bOcc C xs := by
         intro hx
         simp only [bOcc, Finset.mem_union, Finset.mem_image] at hx
@@ -174,11 +214,15 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
         · simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hx
           rcases hx with hx | ⟨s, hs, hse⟩
           · simp [bSite] at hx
-          · simp [bSite] at hse
-        · have hxy : x < y := hsort.head y hy
+          · have hsC : s ∈ C := by simpa [asc] using hs
+            simp [bSite] at hse
+            omega
+        · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
           simp [bSite] at he
+          have hy2 : 2 ≤ y := htwo y (by simpa using hy)
           omega
-      rw [if_neg heven]
+      have heven' : 2 * (x - 2) ∉ bOcc C xs := by simpa [bSite] using heven
+      rw [if_neg heven']
       have hcount : lowerCount (bSite x) (bOcc C xs) = bStepExponent x C := by
         unfold lowerCount bOcc bStepExponent bSite
         have heq :
@@ -195,27 +239,25 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
             · simp only [cOcc, Finset.mem_union, Finset.mem_singleton, Finset.mem_image] at hj
               rcases hj with hj | ⟨s, hs, rfl⟩
               · by_cases hx3 : 3 ≤ x
-                · simp [hx3]
-                · simp [hx3] at hlt
+                · exact Or.inl (by simp [hx3] at *; omega)
+                · omega
               · by_cases hs4 : s + 4 ≤ x
-                · simp [hs4]
-                · simp [hs4] at hlt
-            · have hxy : x < y := hsort.head y hy
+                · exact Or.inr ⟨s, (by simpa [asc] using hs), hs4, rfl⟩
+                · have hsC : s ∈ C := by simpa [asc] using hs
+                  omega
+            · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
+              have hy2 : 2 ≤ y := htwo y (by simpa using hy)
               simp [bSite] at hlt
               omega
           · intro hj
             rcases hj with hj | ⟨s, hs, rfl⟩
             · have hx3 : 3 ≤ x := by simpa using hj
-              constructor
-              · exact Or.inl (Or.inl rfl)
-              · omega
+              exact ⟨Or.inl (Or.inl rfl), by omega⟩
             · have hs4 : s + 4 ≤ x := by simpa using hs
-              constructor
-              · exact Or.inl (Or.inr ⟨s, (Finset.mem_filter.mp hs).1, rfl⟩)
-              · omega
+              exact ⟨Or.inl (Or.inr ⟨s, (Finset.mem_filter.mp hs).1, rfl⟩), by omega⟩
         rw [heq]
         simp [Finset.card_union_of_disjoint]
-      rw [show phase (bSite x) (bOcc C xs) = (-1 : ℂ) ^ bStepExponent x C by
+      rw [show phase (2 * (x - 2)) (bOcc C xs) = (-1 : ℂ) ^ bStepExponent x C by
         simp [phase, hcount]]
       have hset : insert (bSite x) (bOcc C xs) = bOcc C (x :: xs) := by
         simp [bOcc, bSite, hxnot]
@@ -246,11 +288,12 @@ private theorem bword_asc (B C : Finset ℕ)
     rw [sum_ge_three, sum_crossing]
   · simp [bOcc, asc]
 
-private theorem asc_insert_one (B : Finset ℕ) (hB : 1 ∉ B) :
+private theorem asc_insert_one (B : Finset ℕ) (hB : 1 ∉ B) (hPos : positiveSet B) :
     asc (insert 1 B) = 1 :: asc B := by
   unfold asc
   apply Finset.sort_insert
   · intro r hr
+    have hrpos := hPos r hr
     omega
   · exact hB
 
@@ -259,19 +302,23 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
   classical
   have hzeroB : 0 ∉ B := by
     intro h
-    exact Nat.not_succ_le_zero 1 (hBpos 0 h)
+    exact Nat.not_succ_le_zero 0 (hBpos 0 h)
   have hzeroC : 0 ∉ C := by
     intro h
-    exact Nat.not_succ_le_zero 1 (hCpos 0 h)
+    exact Nat.not_succ_le_zero 0 (hCpos 0 h)
   rw [W_eq_bword_cword, cword_asc]
   by_cases hB : 1 ∈ B
   · rw [show B = insert 1 (B.erase 1) by exact (Finset.insert_erase hB).symm,
-      asc_insert_one (B.erase 1) (Finset.notMem_erase 1 B)]
-    rw [gword, bneg_one, map_smul, annihilate_ket]
+      asc_insert_one (B.erase 1) (Finset.notMem_erase 1 B) (by
+        intro r hr
+        exact hBpos r (Finset.mem_of_mem_erase hr))]
     have hErasePos : positiveSet (B.erase 1) := by
       intro r hr
       exact hBpos r (Finset.mem_of_mem_erase hr)
-    rw [bword_asc (B.erase 1) C hErasePos (Finset.notMem_erase 1 B)]
+    change bneg 1 (gword ((asc (B.erase 1)).map bneg)
+      ((-1 : ℂ) ^ C.card • ket (cOcc (asc C)))) = _
+    rw [map_smul, bword_asc (B.erase 1) C hErasePos (Finset.notMem_erase 1 B)]
+    rw [map_smul, bneg_one, map_smul, annihilate_ket]
     have hstate : 1 ∈ cOcc (asc C) ∪ (B.erase 1).image bSite := by
       simp [cOcc]
     rw [if_pos hstate]
@@ -299,41 +346,86 @@ private theorem W_is_Wcoord (B C : Finset ℕ)
             simp [hrB]
         · intro hj
           by_cases h2 : 2 ∈ B
-          · simp only [h2, Finset.mem_singleton] at hj
+          · have hj0 : j = 0 := by simpa [h2] using hj
             subst j
             constructor
             · exact ⟨Or.inr ⟨2, Finset.mem_erase.mpr ⟨by omega, h2⟩, by simp [bSite]⟩⟩
             · omega
           · simp [h2] at hj
-      simp [phase, lowerCount, hfilter]
+      unfold phase lowerCount
+      rw [hfilter]
+      by_cases h2 : 2 ∈ B <;> simp [h2]
     rw [hphase, smul_smul]
     have hset : (cOcc (asc C) ∪ (B.erase 1).image bSite).erase 1 = occ B C := by
       ext j
-      simp only [occ, cOcc, Finset.mem_erase, Finset.mem_union, Finset.mem_singleton,
-        Finset.mem_image, Finset.mem_filter]
-      constructor
-      · rintro ⟨hne, hj | ⟨r, hr, rfl⟩⟩
-        · rcases hj with hj | ⟨s, hs, rfl⟩
-          · omega
-          · exact Or.inr (Or.inr ⟨s, by simpa [asc] using hs, rfl⟩)
-        · right
-          left
-          refine ⟨r, ?_, rfl⟩
-          exact ⟨by omega, hr⟩
-      · intro hj
-        rcases hj with hj | ⟨r, hr, rfl⟩
-        · simp at hj
-        · rcases hj with hr2 | ⟨s, hs, rfl⟩
-          · exact ⟨by omega, Or.inr ⟨r, Finset.mem_erase.mpr ⟨by omega, hr⟩, by simp [bSite]⟩⟩
-          · exact ⟨by omega, Or.inl (Or.inr ⟨s, by simpa [asc] using hs, rfl⟩)⟩
+      simp [occ, cOcc, Finset.mem_erase, bSite, asc]
+      omega
     rw [hset]
     unfold Wcoord sign signExponent
     simp [hB]
-  · have hErase : B.erase 1 = B := Finset.erase_eq_of_not_mem hB
-    rw [hErase]
-    rw [bword_asc B C hBpos hB]
-    unfold Wcoord sign signExponent occ bOcc
-    simp [hB, hzeroB, hzeroC, cOcc, asc]
+  · change gword ((asc B).map bneg)
+      ((-1 : ℂ) ^ C.card • ket (cOcc (asc C))) = _
+    rw [map_smul, bword_asc B C hBpos hB]
+    have hset : cOcc (asc C) ∪ B.image bSite =
+        insert 1 ((B.filter (fun r => 2 ≤ r)).image bSite ∪ C.image (fun s => 2 * s + 3)) := by
+      ext j
+      simp [cOcc, asc, bSite, hB]
+      omega
+    rw [hset]
+    unfold Wcoord sign signExponent occ
+    simp [hB, hzeroB, hzeroC, pow_add, add_assoc, add_left_comm, add_comm]
+
+private theorem occ_bSite_mem (r : ℕ) (B C : Finset ℕ) (hr : 2 ≤ r) :
+    bSite r ∈ occ B C ↔ r ∈ B := by
+  classical
+  unfold occ bSite
+  split <;> rename_i h1
+  · simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_image]
+    constructor
+    · rintro (h | h)
+      · rcases h with ⟨s, hs, he⟩
+        have hs2 := hs.2
+        omega
+      · rcases h with ⟨s, hs, he⟩
+        omega
+    · intro h
+      exact Or.inl ⟨r, ⟨h, hr⟩, by simp [bSite]⟩
+  · simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_filter, Finset.mem_image]
+    constructor
+    · rintro (h | h | h)
+      · omega
+      · rcases h with ⟨s, hs, he⟩
+        have hs2 := hs.2
+        omega
+      · rcases h with ⟨s, hs, he⟩
+        omega
+    · intro h
+      exact Or.inr (Or.inl ⟨r, ⟨h, hr⟩, by simp [bSite]⟩)
+
+private theorem occ_cSite_mem (r : ℕ) (B C : Finset ℕ) :
+    2 * r + 3 ∈ occ B C ↔ r ∈ C := by
+  classical
+  unfold occ
+  split <;> rename_i h1
+  · simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_image]
+    constructor
+    · rintro (h | h)
+      · rcases h with ⟨s, hs, he⟩
+        omega
+      · rcases h with ⟨s, hs, he⟩
+        omega
+    · intro h
+      exact Or.inr ⟨r, h, by simp⟩
+  · simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_filter, Finset.mem_image]
+    constructor
+    · rintro (h | h | h)
+      · omega
+      · rcases h with ⟨s, hs, he⟩
+        omega
+      · rcases h with ⟨s, hs, he⟩
+        omega
+    · intro h
+      exact Or.inr (Or.inr ⟨r, h, by simp⟩)
 
 def invB (S : Finset ℕ) : Finset ℕ :=
   (if 1 ∉ S then {1} else ∅) ∪
@@ -345,43 +437,60 @@ def invC (S : Finset ℕ) : Finset ℕ :=
 def pairCarrier :=
   {p : Finset ℕ × Finset ℕ // positiveSet p.1 ∧ positiveSet p.2}
 
-def pairToOcc (p : pairCarrier) : Finset ℕ := occ p.1 p.2
+def pairToOcc (p : pairCarrier) : Finset ℕ := occ p.1.1 p.1.2
 
-def occupationCarrier := {S : Finset ℕ // 3 ∉ S}
+abbrev occupationCarrier := allowed
 
 def pairToOccupation (p : pairCarrier) : occupationCarrier :=
-  ⟨pairToOcc p, by simp [pairToOcc, occ]⟩
+  ⟨pairToOcc p, by
+    change 3 ∉ occ p.1.1 p.1.2
+    simp [occ]
+    omega⟩
 
 def occToPair (S : Finset ℕ) : pairCarrier :=
   ⟨(invB S, invC S), by
     constructor
     · intro r hr
-      simp [invB] at hr
-      rcases hr with hr | ⟨j, hj, rfl⟩
-      · omega
-      · omega
+      simp only [invB, Finset.mem_union] at hr
+      rcases hr with hr | hr
+      · by_cases hS : 1 ∉ S
+        · simp [hS] at hr
+          omega
+        · simp [hS] at hr
+      · rcases Finset.mem_image.mp hr with ⟨j, hj, rfl⟩
+        have hjcond := (Finset.mem_filter.mp hj).2
+        omega
     · intro r hr
-      simp [invC] at hr
+      simp only [invC, Finset.mem_image] at hr
       rcases hr with ⟨j, hj, rfl⟩
+      have hjcond := (Finset.mem_filter.mp hj).2
       omega⟩
 
 private theorem invB_occ (B C : Finset ℕ) (hB : positiveSet B) :
     invB (occ B C) = B := by
-  have hzero : 0 ∉ B := by
-    intro h
-    exact Nat.not_succ_le_zero 1 (hB 0 h)
   ext r
-  simp [invB, occ]
-  omega
+  by_cases hr1 : r = 1
+  · subst r
+    simp [invB, occ]
+  · have hr2 : 2 ≤ r := by omega
+    by_cases hrB : r ∈ B
+    · have hsite : bSite r ∈ occ B C := by
+        unfold bSite
+        exact (occ_bSite_mem r B C hr2).2 hrB
+      simp [invB, occ, hr1, hrB, hr2, hsite, bSite]
+    · have hsite : bSite r ∉ occ B C := by
+        unfold bSite
+        exact (occ_bSite_mem r B C hr2).not.mpr hrB
+      simp [invB, occ, hr1, hrB, hr2, hsite, bSite]
 
 private theorem invC_occ (B C : Finset ℕ) (hC : positiveSet C) :
     invC (occ B C) = C := by
-  have hzero : 0 ∉ C := by
-    intro h
-    exact Nat.not_succ_le_zero 1 (hC 0 h)
   ext s
-  simp [invC, occ]
-  omega
+  by_cases hs : s ∈ C
+  · have hsite : 2 * s + 3 ∈ occ B C := (occ_cSite_mem s B C).2 hs
+    simp [invC, occ, hs, hsite]
+  · have hsite : 2 * s + 3 ∉ occ B C := (occ_cSite_mem s B C).not.mpr hs
+    simp [invC, occ, hs, hsite]
 
 private theorem occ_inv (S : Finset ℕ) (h3 : 3 ∉ S) : occ (invB S) (invC S) = S := by
   ext j
@@ -394,22 +503,24 @@ def pairOccupationEquiv : pairCarrier ≃ occupationCarrier where
   left_inv := by
     intro p
     apply Subtype.ext
-    simp only [occToPair, pairToOccupation, Subtype.mk.injEq]
+    change (invB (occ p.1.1 p.1.2), invC (occ p.1.1 p.1.2)) = p.1
     rw [invB_occ p.1.1 p.1.2 (Subtype.prop p).1,
       invC_occ p.1.1 p.1.2 (Subtype.prop p).2]
-    rfl
   right_inv := by
     intro S
     apply Subtype.ext
+    change occ (invB S.1) (invC S.1) = S.1
     exact occ_inv S.1 S.2
 
 private theorem W_mem_relative (B C : Finset ℕ)
     (hB : positiveSet B) (hC : positiveSet C) : W B C ∈ relative := by
-  rw [W_is_Wcoord B C hB hC, down_eq]
-  simp [relative, occ, Wcoord, b, c, sign]
+  change b 0 (W B C) = 0
+  rw [W_is_Wcoord B C hB hC]
+  simp [b, Wcoord, occ, sign]
 
 def Wrel (p : pairCarrier) : relative :=
-  ⟨W p.1 p.2, W_mem_relative p.1 p.2 (Subtype.prop p).1 (Subtype.prop p).2⟩
+  ⟨W p.1.1 p.1.2,
+    W_mem_relative p.1.1 p.1.2 (Subtype.prop p).1 (Subtype.prop p).2⟩
 
 private theorem relative_coeff_three (v : relative) {S : Finset ℕ} (hS : 3 ∈ S) :
     v.1 S = 0 := by
@@ -425,19 +536,18 @@ private theorem relative_support_no_three (v : relative) :
   intro S hS h3
   exact (Finsupp.mem_support_iff.mp hS) (relative_coeff_three v h3)
 
-def allowed : Set (Finset ℕ) := {S | 3 ∉ S}
-
 def supportedAllowed : Submodule ℂ Fock := Finsupp.supported ℂ ℂ allowed
 
 private theorem no_three_annihilate (v : Fock)
     (h : ∀ S ∈ v.support, 3 ∉ S) : annihilate 3 v = 0 := by
-  induction v using Finsupp.induction_linear with
-  | zero => simp
-  | add f g hf hg => simp [map_add, hf, hg]
-  | single S a =>
-      by_cases hS : 3 ∈ S
-      · exact False.elim (h S (by simp [hS]) hS)
-      · simp [map_smul, annihilate_ket, hS]
+  classical
+  rw [annihilate, Finsupp.lsum_apply]
+  simp only [Finsupp.sum, LinearMap.smulRight_apply, LinearMap.id_apply]
+  apply Finset.sum_eq_zero
+  intro S hS
+  by_cases h3 : 3 ∈ S
+  · exact False.elim (h S hS h3)
+  · simp [annihilate_ket, h3]
 
 private theorem relative_eq_supportedAllowed : relative = supportedAllowed := by
   apply Submodule.ext
@@ -464,23 +574,33 @@ def ketEquiv : (allowed →₀ ℂ) ≃ₗ[ℂ] relative :=
 
 def signMap : (pairCarrier →₀ ℂ) →ₗ[ℂ] (pairCarrier →₀ ℂ) :=
   Finsupp.lsum ℂ (fun p => (LinearMap.id : ℂ →ₗ[ℂ] ℂ).smulRight
-    (sign p.1 p.2 • Finsupp.single p 1))
+    (sign p.1.1 p.1.2 • Finsupp.single p 1))
+
+private theorem signMap_single (p : pairCarrier) (a : ℂ) :
+    signMap (Finsupp.single p a) = sign p.1.1 p.1.2 • Finsupp.single p a := by
+  simp [signMap, mul_comm]
 
 private theorem signMap_involution : signMap.comp signMap = LinearMap.id := by
-  apply LinearMap.ext
-  intro v
-  induction v using Finsupp.induction_linear with
-  | zero => simp [signMap]
-  | add f g hf hg => simp [map_add, hf, hg]
-  | single p a =>
-      simp [signMap, sign, ← pow_add]
+  apply Finsupp.lhom_ext
+  intro p a
+  change signMap (signMap (Finsupp.single p a)) = Finsupp.single p a
+  rw [signMap_single, map_smul, signMap_single]
+  simp [sign, pow_add]
 
 def signEquiv : (pairCarrier →₀ ℂ) ≃ₗ[ℂ] (pairCarrier →₀ ℂ) :=
   LinearEquiv.ofBijective signMap ⟨
     (fun x y h => by
-      have := congrArg signMap h
-      simpa [signMap_involution] using this),
-    (fun y => ⟨signMap y, by simpa [signMap_involution]⟩)⟩
+      calc
+        x = signMap (signMap x) := by
+          rw [← LinearMap.comp_apply, signMap_involution]
+          rfl
+        _ = signMap (signMap y) := congrArg signMap h
+        _ = y := by
+          rw [← LinearMap.comp_apply, signMap_involution]
+          rfl),
+    (fun y => ⟨signMap y, by
+      rw [← LinearMap.comp_apply, signMap_involution]
+      rfl⟩)⟩
 
 def basisEquiv : (pairCarrier →₀ ℂ) ≃ₗ[ℂ] relative :=
   signEquiv ≪≫ₗ Finsupp.mapDomain.linearEquiv ℂ ℂ pairOccupationEquiv ≪≫ₗ ketEquiv
@@ -490,11 +610,16 @@ private theorem basisEquiv_single (p : pairCarrier) :
   apply Subtype.ext
   rw [basisEquiv, LinearEquiv.trans_apply, LinearEquiv.trans_apply]
   simp [signEquiv, signMap, ketEquiv, Wrel,
-    W_is_Wcoord p.1 p.2 (Subtype.prop p).1 (Subtype.prop p).2]
+    W_is_Wcoord p.1.1 p.1.2 (Subtype.prop p).1 (Subtype.prop p).2]
 
 def bPrefix (r : ℕ) (B : Finset ℕ) : ℕ := (B.filter (fun t => t < r)).card
 
 def cPrefix (r : ℕ) (C : Finset ℕ) : ℕ := (C.filter (fun t => t < r)).card
+
+private theorem occ_one_mem (B C : Finset ℕ) (hB : 1 ∉ B) :
+    1 ∉ occ B C := by
+  unfold occ
+  split <;> simp [hB]
 
 private theorem bneg_W (r : ℕ) (B C : Finset ℕ)
     (hrpos : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
@@ -502,11 +627,23 @@ private theorem bneg_W (r : ℕ) (B C : Finset ℕ)
       if r ∈ B then 0 else (-1 : ℂ) ^ bPrefix r B • W (insert r B) C := by
   classical
   rw [W_is_Wcoord B C hB hC]
+  unfold Wcoord
   by_cases hmem : r ∈ B
-  · simp [Wcoord, bneg, b, occ, hmem]
+  · have hsign : sign B C ≠ 0 := pow_ne_zero _ (by norm_num)
+    by_cases h1 : r = 1
+    · subst r
+      rw [bneg_one, map_smul, annihilate_ket]
+      simp [Wcoord, occ, hmem, hsign]
+    · have h2 : 2 ≤ r := by omega
+      have hocc : bSite r ∈ occ B C := (occ_bSite_mem r B C h2).2 hmem
+      have hocc' : 2 * (r - 2) ∈ occ B C := by simpa [bSite] using hocc
+      rw [bneg_succ r h2, map_smul, create_ket, if_pos hocc']
+      simp [Wcoord, occ, hmem, hsign]
   · by_cases h1 : r = 1
     · subst r
-      simp [Wcoord, bneg, b, occ, sign, signExponent, bPrefix, hmem]
+      have hocc : 1 ∉ occ B C := occ_one_mem B C hmem
+      rw [bneg_one, map_smul, annihilate_ket, if_neg hocc]
+      simp [Wcoord, occ, sign, signExponent, bPrefix, hmem]
     · have h2 : 2 ≤ r := by omega
       have hBins : positiveSet (insert r B) := by
         intro t ht
@@ -515,8 +652,12 @@ private theorem bneg_W (r : ℕ) (B C : Finset ℕ)
         · exact hrpos
         · exact hB t ht
       rw [W_is_Wcoord (insert r B) C hBins hC]
-      simp [Wcoord, bneg, b, occ, sign, signExponent, bPrefix, hmem, h1, h2,
-        bSite]
+      have hocc' : 2 * (r - 2) ∉ occ B C := by
+        intro h
+        apply hmem
+        exact (occ_bSite_mem r B C h2).1 (by simpa [bSite] using h)
+      rw [bneg_succ r h2, map_smul, create_ket, if_neg hocc']
+      simp [Wcoord, occ, sign, signExponent, bPrefix, hmem, h1, h2, bSite, hocc']
 
 private theorem cpos_W (r : ℕ) (B C : Finset ℕ)
     (hrpos : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
@@ -524,18 +665,33 @@ private theorem cpos_W (r : ℕ) (B C : Finset ℕ)
       if r ∈ B then (-1 : ℂ) ^ bPrefix r B • W (B.erase r) C else 0 := by
   classical
   rw [W_is_Wcoord B C hB hC]
+  unfold Wcoord
   by_cases hmem : r ∈ B
   · have hBerase : positiveSet (B.erase r) := by
       intro t ht
       exact hB t (Finset.mem_of_mem_erase ht)
     rw [W_is_Wcoord (B.erase r) C hBerase hC]
-    simp [Wcoord, c, occ, sign, signExponent, bPrefix, hmem]
+    by_cases h1 : r = 1
+    · subst r
+      rw [show (1 : ℤ) = 1 by norm_num, cpos_one, map_smul, create_ket]
+      simp [Wcoord, occ, sign, signExponent, bPrefix, hmem]
+    · have h2 : 2 ≤ r := by omega
+      have hocc : bSite r ∈ occ B C := (occ_bSite_mem r B C h2).2 hmem
+      have hocc' : 2 * (r - 2) ∈ occ B C := by simpa [bSite] using hocc
+      rw [cpos_succ r h2, map_smul, annihilate_ket, if_pos hocc']
+      simp [Wcoord, occ, sign, signExponent, bPrefix, hmem]
   · by_cases h1 : r = 1
     · subst r
-      simp [Wcoord, c, occ, sign, signExponent, bPrefix, hmem]
+      have hocc : 1 ∉ occ B C := occ_one_mem B C hmem
+      rw [show (1 : ℤ) = 1 by norm_num, cpos_one, map_smul, create_ket, if_neg hocc]
+      simp [Wcoord, occ, sign, signExponent, bPrefix, hmem]
     · have h2 : 2 ≤ r := by omega
-      simp [Wcoord, c, occ, sign, signExponent, bPrefix, hmem, h1, h2,
-        bSite]
+      have hocc' : 2 * (r - 2) ∉ occ B C := by
+        intro h
+        apply hmem
+        exact (occ_bSite_mem r B C h2).1 (by simpa [bSite] using h)
+      rw [cpos_succ r h2, map_smul, annihilate_ket, if_neg hocc']
+      simp [Wcoord, occ, sign, signExponent, bPrefix, hmem, h1, h2, bSite, hocc']
 
 private theorem cneg_W (r : ℕ) (B C : Finset ℕ)
     (hrpos : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
@@ -543,8 +699,11 @@ private theorem cneg_W (r : ℕ) (B C : Finset ℕ)
       if r ∈ C then 0 else (-1 : ℂ) ^ (B.card + cPrefix r C) • W B (insert r C) := by
   classical
   rw [W_is_Wcoord B C hB hC]
+  unfold Wcoord
   by_cases hmem : r ∈ C
-  · simp [Wcoord, cneg, c, occ, hmem]
+  · have hocc : 2 * r + 3 ∈ occ B C := (occ_cSite_mem r B C).2 hmem
+    rw [cneg_eq, map_smul, create_ket, if_pos hocc]
+    simp [Wcoord, occ, hmem]
   · have hCins : positiveSet (insert r C) := by
       intro t ht
       simp only [Finset.mem_insert] at ht
@@ -552,7 +711,9 @@ private theorem cneg_W (r : ℕ) (B C : Finset ℕ)
       · exact hrpos
       · exact hC t ht
     rw [W_is_Wcoord B (insert r C) hB hCins]
-    simp [Wcoord, cneg, c, occ, sign, signExponent, cPrefix, hmem]
+    have hocc' : 2 * r + 3 ∉ occ B C := (occ_cSite_mem r B C).not.mpr hmem
+    rw [cneg_eq, map_smul, create_ket, if_neg hocc']
+    simp [Wcoord, occ, sign, signExponent, cPrefix, hmem]
 
 private theorem bpos_W (r : ℕ) (B C : Finset ℕ)
     (hrpos : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
@@ -560,13 +721,18 @@ private theorem bpos_W (r : ℕ) (B C : Finset ℕ)
       if r ∈ C then (-1 : ℂ) ^ (B.card + cPrefix r C) • W B (C.erase r) else 0 := by
   classical
   rw [W_is_Wcoord B C hB hC]
+  unfold Wcoord
   by_cases hmem : r ∈ C
   · have hCerase : positiveSet (C.erase r) := by
       intro t ht
       exact hC t (Finset.mem_of_mem_erase ht)
     rw [W_is_Wcoord B (C.erase r) hB hCerase]
-    simp [Wcoord, b, occ, sign, signExponent, cPrefix, hmem]
-  · simp [Wcoord, b, occ, sign, signExponent, cPrefix, hmem]
+    have hocc : 2 * r + 3 ∈ occ B C := (occ_cSite_mem r B C).2 hmem
+    rw [bpos_eq, map_smul, annihilate_ket, if_pos hocc]
+    simp [Wcoord, occ, sign, signExponent, cPrefix, hmem]
+  · have hocc' : 2 * r + 3 ∉ occ B C := (occ_cSite_mem r B C).not.mpr hmem
+    rw [bpos_eq, map_smul, annihilate_ket, if_neg hocc']
+    simp [Wcoord, occ, sign, signExponent, cPrefix, hmem]
 
 private theorem native_occupation_projections (r : ℕ) (B C : Finset ℕ)
     (hr : 1 ≤ r) (hB : positiveSet B) (hC : positiveSet C) :
@@ -635,21 +801,5 @@ theorem relative_pbw_complete :
   rcases relative_pbw_mode_intertwining with
     ⟨hbneg, hcpos, hcneg, hbpos, hprojB, hprojC⟩
   exact ⟨W_is_Wcoord, hunit, hbij, hbneg, hcpos, hcneg, hbpos, hprojB, hprojC⟩
-
-private example : W ∅ ∅ = ket {1} := by
-  rw [W_is_Wcoord _ _ (by simp [positiveSet]) (by simp [positiveSet])]
-  simp [Wcoord, sign, occ]
-
-private example : W {1} {2} = -ket {7} := by
-  rw [W_is_Wcoord _ _ (by simp [positiveSet]) (by simp [positiveSet])]
-  norm_num [Wcoord, sign, signExponent, occ]
-
-private example : W {1, 2} ∅ = -ket ∅ := by
-  rw [W_is_Wcoord _ _ (by simp [positiveSet]) (by simp [positiveSet])]
-  norm_num [Wcoord, sign, signExponent, occ]
-
-private example : W {5} {1} = -ket {1, 5, 6} := by
-  rw [W_is_Wcoord _ _ (by simp [positiveSet]) (by simp [positiveSet])]
-  norm_num [Wcoord, sign, signExponent, occ]
 
 end D5.S3.Quantum.Fermionic.BcGhostRelativePBW
