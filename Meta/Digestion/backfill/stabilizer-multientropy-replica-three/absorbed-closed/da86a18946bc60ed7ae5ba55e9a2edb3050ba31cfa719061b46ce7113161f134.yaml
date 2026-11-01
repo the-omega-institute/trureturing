@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:da86a18946bc60ed7ae5ba55e9a2edb3050ba31cfa719061b46ce7113161f134
+  normalized_sha256: sha256:da86a18946bc60ed7ae5ba55e9a2edb3050ba31cfa719061b46ce7113161f134
+cas_ref: sha256:da86a18946bc60ed7ae5ba55e9a2edb3050ba31cfa719061b46ce7113161f134
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.partyDelta
+    target_statement_id: sha256:68a3cc8a3a7fbe4e5db25b90762355e76a35d103f9b524f25955d3a207116992
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.S
+    target_statement_id: sha256:a170d3bf1d4cff5a92558175af6995322928cbbffe3463b570112a5f2d8522db
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.Z
+    target_statement_id: sha256:05c630c6ac7b71b5f75a775d837f1e71f82bb3187a52d3c588a25762f14ddf40
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.Z_one
+    target_statement_id: sha256:41f7719458c3bfe91ec976084ec9c1d5dbe1890066ba66e6f62adde253e9f445
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.delta
+    target_statement_id: sha256:796488f9df35695a86d28e2ad414903d892741e324850d9283d2b5d6f77d185d
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.shift
+    target_statement_id: sha256:f2abbcac1649fa4bb5059d9285404640d1c1ad864102ba749d3e3cff9c1b46d7
+receipts:
+  unresolved_subitems: []
