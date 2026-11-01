@@ -32,7 +32,7 @@ noncomputable def actual : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law O := ∀ (n : ℕ) [NeZero n] (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
-    (hP : Independent P) (hh : h ∉ P) →
+    (hP : Independent P) (hh : h ∉ P),
     O.readout () ⟨n, hn⟩ (fan P h) ∧ P ⊆ EarCenters (fan P h) ∧
       EarCenters (fan P h) ⊆ P ∪ {h - 1, h + 1}
 
@@ -67,7 +67,7 @@ noncomputable def actual : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law O := ∀ (n : ℕ) [NeZero n] (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
-    (hsize : P.card + 4 < n) →
+    (hsize : P.card + 4 < n),
     O.readout () ⟨n, hn⟩ (fan P h, h)
 
 theorem actual_law : arena.Law actual := by
@@ -105,7 +105,7 @@ abbrev arena : Arena where
     (hcompat : (↑(P ∪ Q) : Set (ZMod n)).Pairwise
       (fun i j => ¬Cross (ear i) (ear j)))
     (hcases : (P.card = 2 ∧ Q.card = 2) ∨ (P.card = 3 ∧ Q.card = 3) ∨
-      (P.card = 2 ∧ Q.card = 4) ∨ (P.card = 4 ∧ Q.card = 2)) →
+      (P.card = 2 ∧ Q.card = 4) ∨ (P.card = 4 ∧ Q.card = 2)),
     Nonempty (ConditionFiber P Q ∅ ∅) ∧
       0 < O.readout () ⟨n, hn⟩ (P, Q, ∅, ∅) ∧
       (∃ h : ZMod n, h ∉ P ∧

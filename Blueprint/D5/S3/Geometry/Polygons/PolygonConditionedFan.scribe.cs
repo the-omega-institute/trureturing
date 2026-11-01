@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonEarSlideGeometryFormula;
+using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonConditionedFanFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons;
 
@@ -36,7 +36,7 @@ internal sealed class PolygonConditionedFanDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula f, string prose,
         DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
-        DescribeId.Create("polygon-conditioned-fan-" + name.Replace("_","-")),
+        DescribeId.Create("polygon-conditioned-fan-" + name.Replace("_","-").ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), role);
@@ -74,4 +74,43 @@ internal sealed class PolygonConditionedFanDocument : IScribeDocumentDefinition
                         Imp(Cases(),SourceResult()))))))),
                 "P,Q are disjoint and their union consists of pairwise noncrossing original ears. All four cases (2,2),(3,3),(2,4),(4,2) are included. Independence of P is derived from these geometric conditions. To obtain an actual conditioned completion, choose h outside P union (Q-1) union (Q+1), a set of size at most |P|+2|Q|<n. The root may belong to Q. The literal fan forces P and avoids Q, giving a member of the full ConditionFiber P Q empty empty and positive Nat.card. For every terminal pairwise noncrossing H contained in EK(P union Q) and every h in H, that same fan at h avoids Q union H and has two distinct original internal diagonals crossing ear(h). Thus its exact H trace is empty. ConditionFiber retains every original actual triangulation satisfying its conditions. Exchanging P,Q supplies the opposite direction separately. These are the geometric existence inputs for B-37.2 and the fan paragraph following (37.10), also used in B-34.4. Neither a Catalan count, a flip-image theorem, nor a normalized strict comparison is asserted. EK denotes E_K, Natcard denotes Nat.card, and val is the underlying original chord set.")
         ), []));
+}
+
+
+internal static class PolygonConditionedFanFormula
+{
+    internal static Formula X(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
+    internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
+    internal static Formula C(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(X(name))), [.. args]);
+    internal static Formula Vertex => C("ZMod", X("n"));
+    internal static Formula Chord =>
+        new Formula.Apply(Seq(Operatorname, Grp(X("Sym"), D(2))), [Vertex]);
+    internal static Formula Sets => C("Finset", Vertex);
+    internal static Formula All(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula ExistsF(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula Scope(Formula body) => All("n",X("Nat"),
+        Seq(OpenBracket,C("NeZero",X("n")),CloseBracket,Comma,Sp,body));
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open,f,Close) : f;
+    internal static Formula R(Formula a, Formula op, Formula b) =>
+        Seq(Open,Operand(a),Sp,op,Sp,Operand(b),Close);
+    internal static Formula EqF(Formula a, Formula b) => R(a,Eq,b);
+    internal static Formula IffF(Formula a, Formula b) => R(a,Iff,b);
+    internal static Formula AndF(Formula a, Formula b) => R(a,Land,b);
+    internal static Formula Imp(Formula a, Formula b) => R(a,Implies,b);
+    internal static Formula Not(Formula a) => Seq(Neg,Sp,Open,a,Close);
+    internal static Formula InF(Formula a, Formula b) => R(a,InMacro,b);
+    internal static Formula SubF(Formula a, Formula b) => R(a,Subseteq,b);
+    internal static Formula AddF(Formula a, Formula b) => R(a,Plus,b);
+    internal static Formula Sub(Formula a, Formula b) => R(a,Minus,b);
+    internal static Formula Union(Formula a, Formula b) => R(a,Cup,b);
+    internal static Formula Insert(Formula a, Formula b) => C("insert",a,b);
+    internal static Formula Pair(Formula a, Formula b) => C("symPair",a,b);
+    internal static Formula Ears(Formula t) => C("EarCenters",t);
+    internal static Formula Tri(Formula t) => C("IsTriangulation",t);
+    internal static Formula Fibre(Formula j, Formula r) =>
+        C("ConditionFiber",X("P"),X("Q"),j,r);
+    internal static Formula Lower(int n) => R(N(n),Leq,X("n"));
 }

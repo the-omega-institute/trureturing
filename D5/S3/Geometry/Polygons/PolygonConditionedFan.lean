@@ -191,8 +191,10 @@ private lemma gap_maximal (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
       exact forced_mem hcP
     have hcnext : ((a + 2 : ℕ) : ZMod n) + h ∉ P := by
       have hnext := hP _ hcP
-      simpa only [Nat.cast_add, Nat.cast_one, add_assoc,
-        show (2 : ZMod n) = 1 + 1 by ring, add_right_comm] using hnext
+      have heq : ((a + 2 : ℕ) : ZMod n) + h =
+          (((a + 1 : ℕ) : ZMod n) + h) + 1 := by push_cast; ring
+      rw [heq]
+      exact hnext
     exact gap_spoke hn P h a b (a + 2) ha (by omega) (by omega) hb hcnext
 
 private theorem fan_geometry (hn : 6 ≤ n) (P : Finset (ZMod n)) (h : ZMod n)
