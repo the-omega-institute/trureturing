@@ -4669,3 +4669,210 @@ The repository-derived mathematical addition is the elementary all-$N$ actual-pr
 The append-only journal and the supplied global code have different update contracts and the same worst-case leading binary-payload order. The left-comb counterexample prevents a pointwise-optimality or dominance claim for the journal. The separate reset/tape experiments and all earlier fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, history, terminal and final-no-Ready obligations retain their original scopes. A full common realization across LAB, rational-path/field and quantum models, universal generator minimality, unconditional physical conformance, total-resource optimality and the long-term recovery programme remain unresolved by this appendix.
 
 ## 追加锚（本行以下为增补区）
+## 99. A weighted predecessor journal with immutable data bits
+
+**Definition 99.1 (the actual source-conditioned domain).** Keep the known-alpha LAB of AA Definitions 17.1, 17.2 and 20.1–20.5 and the installed current-source service of §§75–83 and 93–98. Its only successful source edits are
+
+$$
+P_p:\alpha\longmapsto\beta,
+\qquad
+S_p:\beta\longmapsto\langle\beta,\alpha\rangle,
+$$
+
+with the beta child on the left. Let $\mathcal H(t)$ be the finite successful addressed-event words from the known alpha to $t$, let $F(t)=|\mathcal H(t)|$, and let $N(t)=a(t)+2c(t)-1$ be the source-derived number of successful events. Requests, replies, maintenance and waiting are not events in $\mathcal H(t)$. The installation has the actual root binding, exclusive source and record rights, genuine references, finite backing, complete finite input/output progress and the supplied local acknowledgement. No reset, deletion, crash, second writer, exposed allocation chronology, free old archive or hidden history channel is added.
+
+For a noninitial endpoint $u$, define its labelled predecessor edges as follows.
+
+* A current beta leaf at $p$ is a promotion predecessor when $p$ is the root or ends in $R$; replace that beta by alpha and label the edge $P_p$.
+* An exact current subtree $\langle\beta,\alpha\rangle$ at $p$ is a split predecessor; replace it by beta and label the edge $S_p$.
+
+Call the resulting finite set $\operatorname{Pred}(u)$. Full logical addresses and event kinds are part of an edge label. An $L$-born beta is never a promotion predecessor. The set is empty at alpha.
+
+**Proposition 99.2 (last-event partition and positive weights).** Every nonempty actual history ending at $u$ has exactly one last edge in $\operatorname{Pred}(u)$. Conversely, appending that edge to every history of its predecessor gives an actual history ending at $u$, and these images are disjoint. Hence
+
+$$
+\mathcal H(u)=\bigsqcup_{e:v\to u}\{h e:h\in\mathcal H(v)\},
+\qquad
+F(u)=\sum_{e:v\to u}F(v),
+\qquad
+N(v)=N(u)-1.
+\tag{99.1}
+$$
+
+Proof. If the last event is $P_p$, no later split can have consumed $p$, so its final value is a beta leaf and its birth type is alpha, which is exactly root or right-born. If the last event is $S_p$, neither child can have been changed after that split, so the final subtree is exactly $\langle\beta,\alpha\rangle$. These cases exhaust the two native edits. Each listed replacement preserves the no-alpha-at-an-$L$-ending address condition, so AA Theorem 17.2 supplies a reachable predecessor and the labelled forward edit is enabled. Deleting and appending the unique last label are inverse operations. A promotion changes $(a,c)$ by $(1,-1)$ and a split by $(-1,0)$, so both lower $a+2c-1$ by one. $\square$
+
+**Definition 99.3 (weighted local code and raw append stream).** For an edge $e:v\to u$ put
+
+$$
+ d_u(e)=\min\{d\ge0:2^dF(v)\ge F(u)\}
+ =\left\lceil\log_2\frac{F(u)}{F(v)}\right\rceil .
+\tag{99.2}
+$$
+
+By (99.1), $F(v)/F(u)>0$ and $\sum_eF(v)/F(u)=1$, so
+
+$$
+\sum_{e\in\operatorname{Pred}(u)}2^{-d_u(e)}
+\le \sum_e\frac{F(v)}{F(u)}=1.
+\tag{99.3}
+$$
+
+Choose one fixed lexicographic order on $(d_u(e),p,\mathrm{kind})$. Sort the finite predecessor list by this order. If its sorted lengths are $d_1\le\cdots\le d_r$, define
+
+$$
+ A_j=\sum_{i<j}2^{d_j-d_i},
+ \qquad
+ C_u(e_j)=\operatorname{bin}_{d_j}(A_j),
+\tag{99.4}
+$$
+
+where $\operatorname{bin}_0(0)$ is the empty word. The Kraft inequality gives $A_j+1\le2^{d_j}$, so (99.4) is a finite exact integer construction. Its dyadic cylinders are disjoint, hence the words $C_u(e)$ are prefix-free and have exactly the displayed lengths. A zero length occurs exactly when $u$ has one predecessor, and then its unique codeword is empty. The values $F$ are the existing AA Theorem 19.2 local-shuffle products evaluated on the acquired finite term; no count oracle is introduced.
+
+Let $J(\varepsilon)$ be the empty raw bitword. When an actual successful edge $e:t\to u$ is completed, append
+
+$$
+\operatorname{rev}(C_u(e))
+$$
+
+to the tail of $J(w)$. Thus the journal is one binary stream with no event header, delimiter, counter, kind bit, chunk descriptor or zero-width event cell. Existing DATA BIT values are never changed. A linked implementation may update the old tail's next reference and the header tail reference; those are charged link maintenance, not changes to old data bits. A single root-bound header with head and tail is initialized only when the first nonempty stream is created.
+
+The construction has the following explicit falsifiers: a failure of (99.1), a Kraft sum above one or a prefix collision in (99.4), a generated history that leaves an unread or missing bit under reverse decoding, a zero-width decoding loop, a path violating the length bounds below, mutation of an old data bit, or any mismatch in the original refusal, FetchGrowth or Next successor. The comb and parked-promotion counts in Proposition 99.8 are additional arithmetic falsifiers.
+
+**Theorem 99.4 (source-conditioned exact inverse without framing).** At a returned Ready cut with actual source $u$ and acquired journal $J(w)$, a finite decoder recovers exactly $w$ and consumes every journal bit. It does not read a hidden event counter, allocation chronology, erased entry or second source.
+
+Proof. Acquire the actual current source by the licensed field traversal and make a paid syntax copy $U:=u$. Compute $N(U)=a(U)+2c(U)-1$. While $N(U)>0$, enumerate $\operatorname{Pred}(U)$ and construct its code table (99.4). Read the raw journal from right to left. The newly appended raw suffix is encountered as $C_U(e)$, so prefix freedom selects exactly one edge; if the predecessor list is a singleton, select its sole edge without reading a bit. Replace only the scratch term by that predecessor, retain its full kind and address in ordinary work backing, and continue. The actual journal image guarantees that a complete codeword is encountered before the residual stream ends.
+
+Inductively, after $i$ iterations the scratch term is the endpoint before the last $i$ actual events and the unread raw suffix is exactly the raw journal of that prefix. Proposition 99.2 gives a unique predecessor and lowers $N(U)$ by one, including when the selected codeword is empty. Therefore the loop terminates at alpha after exactly $N(u)$ iterations, with no bits left. Reversing the retained list gives the chronological word. The live source and its journal are never collapsed or consumed. $\square$
+
+**Theorem 99.5 (exact pathwise length and non-dyadic rounding).** For $w$ with endpoint $t$ write
+
+$$
+\alpha=t_0\to t_1\to\cdots\to t_N=t,
+\qquad
+\delta_i=\left\lceil\log_2\frac{F(t_i)}{F(t_{i-1})}\right\rceil-\log_2\frac{F(t_i)}{F(t_{i-1})}.
+$$
+
+Then the raw payload length $L(w)=|J(w)|$ satisfies the exact law
+
+$$
+L(w)=\sum_{i=1}^{N}d_{t_i}(t_{i-1}\to t_i)
+=\log_2F(t)+\sum_{i=1}^{N}\delta_i,
+\qquad 0\le\delta_i<1.
+\tag{99.5}
+$$
+
+Consequently, with $G(t)=\lceil\log_2F(t)\rceil$,
+
+$$
+G(t)\le L(w)<\log_2F(t)+N,
+\qquad
+G(t)\le L(w)\le\log_2F(t)+N.
+\tag{99.6}
+$$
+
+If $r(w)$ is the number of steps for which $F(t_i)/F(t_{i-1})$ is not an integral power of two, then $r(w)=0$ gives $L(w)=\log_2F(t)$, while $r(w)>0$ gives
+
+$$
+L(w)<\log_2F(t)+r(w),
+\qquad
+L(w)\le G(t)+r(w)-1.
+\tag{99.7}
+$$
+
+Proof. Proposition 99.2 makes every ratio at least one and makes the logarithms telescope from $F(\alpha)=1$. Each $d$ is the exact ceiling in (99.2), proving (99.5). The first inequality in (99.6) is $\sum_i\lceil x_i\rceil\ge\lceil\sum_i x_i\rceil$; the remaining bounds follow from $\delta_i<1$ and integrality of $L(w)$. A ratio contributes zero rounding exactly when it is an integral power of two. If $F(t)=1$, monotonicity from (99.1) forces every prefix count to be one, so the journal is empty at every cut. $\square$
+
+**Proposition 99.6 (conditional Kraft converse and the installed optimum).** For each fixed endpoint $u$, the family of complete raw journals $\{J(h):h\in\mathcal H(u)\}$ is prefix-free when read from the tail toward the head. Hence
+
+$$
+\sum_{h\in\mathcal H(u)}2^{-|J(h)|}\le1,
+\qquad
+\max_{h\in\mathcal H(u)}|J(h)|\ge\lceil\log_2F(u)\rceil=G(u).
+\tag{99.8}
+$$
+
+Proof. Induct on $N(u)$. Distinct last edges have prefix-free $C_u$ words. Within one common last edge, the remaining raw streams are separated by the induction hypothesis at its predecessor. A singleton empty code simply passes to that predecessor and still lowers $N$. Thus distinct fixed-endpoint journals cannot be proper prefixes of one another. The finite binary prefix bound gives (99.8). This is an endpoint-conditioned statement; code tables vary with the source, and no standalone global prefix code over all endpoints is claimed. The pointwise lower bound also follows directly from (99.5). $\square$
+
+**Theorem 99.7 (actual acquisition, pending-state invariant and unchanged service).** There is one fixed finite driver, initialized at the genuine known-alpha root, that maintains the invariant
+
+$$
+\textsf{Ready}(w)=(t(w),J(w),\text{current rights and bindings}).
+\tag{99.9}
+$$
+
+for every finite legal successful schedule. It appends the weighted code on the actual source and preserves the complete original seven-request service.
+
+Proof. Before an enabled growth, Navigate and Guard acquire the actual target, kind and full address. A finite paid traversal of the current source forms the deterministic prospective endpoint, enumerates its finite predecessor list, computes the integer counts and code, and reserves the exact $d_u(e)$ cells together with source, arithmetic, scratch and reply backing. Exclusive serialization makes this prospective endpoint the result of the guarded native edit. The driver then performs the real $P$ or $S$ edit with its genuine references and rights. Pending state retains the actual event identity, the prospective code, the append cursor and the remaining count. New cells are initialized and linked before the head/tail fields are advanced. No query is admitted while source editing or appending is incomplete. At $d=0$ no data cell or event marker is allocated. After the complete reply is sealed, Print, End, the supplied local ACK, root Return and scratch cleanup restore (99.9). This proves the append invariant by induction. Busy cuts may have a finite source/journal discrepancy; the pending fields account for it and no busy state is exposed as Ready.
+
+Use exactly AA Definition 20.2 and §96.1's three-bit disjoint request grammar: Tag, $P$, $S$, HasPromotion and HasSplit carry $A(p)=1^{|p|}0p$, while one-based FetchGrowth and Next carry $U(k)=1^k0$; the unused tag returns BadFrame. Current-source arity and birth tests supply Tag, HasPromotion and HasSplit. Addressed growth keeps the absent, branch and wrong-type refusals and leaves source and journal unchanged on refusal. FetchGrowth first acquires $N(t)$; $k=0$ and $k>N(t)$ return OutOfRange, while every $1\le k\le N(t)$ is decoded by Theorem 99.4 to its literal kind and full logical address, including $k=N(t)$. No external reply is generated by this internal decoding.
+
+For Next, retain the acquired old pair $(e,p)$, navigate $p$ on the same live current source, follow actual logical left children through branches to a current leaf, read its current tag, and execute the genuinely enabled $P$ or $S$ there. Append the code for that actual new edge, then build the one original Next reply containing both old and new kind/address pairs. Print, End, local ACK, root Return and clearing complete the same request. Historical logical positions persist because no source vertex is deleted. Induction first on acquired input bits and then on completed adaptive requests gives every original reply, refusal and semantic successor, all finite legal generation words, and the partial-frame rule: an incomplete frame retains exactly its acquired prefix and pending state until a finite completion. $\square$
+
+**Proposition 99.8 (native families and the tradeoff).** The weighted journal has the following attained comparisons.
+
+1. **Forced left comb.** Let
+   $$
+   w_m=P_\varepsilon S_\varepsilon S_LS_{LL}\cdots S_{L^m}.
+   $$
+   Its successful events form one causal chain, so every reached endpoint has $F=1$ and the weighted journal is empty. The queued ordinal journal of §94 writes
+   $$
+   \sum_{j=1}^{m}\lceil\log_2j\rceil
+   $$
+   bits on the same run. This is an unbounded retained-payload separation in favor of the weighted construction under immutability, not a total-resource or global-optimum claim; the installed global rank is also empty on this family.
+
+2. **One parked right promotion.** Fix $m\ge1$ and the endpoint $u_m$ whose word contains the forced $P_\varepsilon S_\varepsilon$, the $m$ ordered spine splits $S_L,S_{LL},\ldots,S_{L^m}$, and the independent $P_R$. There are exactly $m+1$ histories to $u_m$, obtained by inserting $P_R$ in one of the $m+1$ gaps of the spine. If $P_R$ is inserted after $k$ spine splits, the weighted length of that word is
+   $$
+   L_{m,k}=\begin{cases}m,&k=0,\\
+   \lceil\log_2(k+1)\rceil+(m-k),&1\le k\le m.
+   \end{cases}
+   \tag{99.10}
+   $$
+   In particular $N=m+3$, $F(u_m)=m+1$, $G(u_m)=\lceil\log_2(m+1)\rceil$, the maximum attained length is $m$, and the endpoint-specific excess $m-G(u_m)$ is linear up to the logarithm. This is a constructor-specific rounding family, not a lower bound for every append-only code.
+
+3. **Two parked promotions and unequal predecessor weights.** Let $v_m$ be the left-comb endpoint with $m$ total splits, whose first two right leaves $R$ and $LR$ are promoted, for $m\ge2$. After the forced root $P/S$, interleave the $m-1$ ordered spine splits with $P_R$ and $P_{LR}$, requiring $P_{LR}$ after $S_L$. There are $m(m+1)$ unconstrained interleavings and exactly $m+1$ violating that requirement, so
+   $$
+   N(v_m)=m+3,\qquad F(v_m)=m^2-1.
+   \tag{99.11}
+   $$
+   Choose both promotions immediately after $S_L$ and then the remaining spine splits. The weighted lengths are $1,1,2$ for the first two promotions and the third split. For each subsequent split (when $m\ge4$),
+   $$
+   1<\frac{m^2-1}{(m-1)^2-1}<2,
+   $$
+   and therefore it costs one bit. Thus $L=m+1$ for $m\ge3$. At every later cut there are three labelled predecessors, so replacing the unequal predecessor weights by an equal-width predecessor ordinal spends $2m-2$ bits on this path. At $m=16$, the exact values are $F=255$, $N=19$, weighted $L=17$, and equal-width $30$, with
+   $$
+   30>19+\log_2(255).
+   $$
+   This refutes the proposed equal-width substitution while making no generic lower-bound claim for other constructors.
+
+Proof. The left comb has one enabled next event at each cut. In the one-parked family, the only choice is the insertion position of $P_R$; before it the endpoint count is one, its insertion after $k$ splits changes the count to $k+1$, and the first such ratio is $2$ and every later adjacent ratio is $(j+1)/j\in(1,2)$, giving (99.10). For the two-parked family, the two promotions are distinct labels and $P_{LR}$ is enabled only after $S_L$; the stated subtraction counts exactly the forbidden interleavings. Direct predecessor enumeration gives two predecessors at each promotion cut and three at each later spine cut, yielding the equal-width total. The displayed weighted ratios and event counts follow from (99.1). $\square$
+
+**Theorem 99.9 (four expressions, same-source separation and paid resources).** At a returned actual cut, use the same supplement and rights to define
+
+$$
+\text{space}=(S_0,J),\qquad
+\text{boundary}=(B_0,J),\qquad
+\text{time}=w,\qquad
+\text{memory}=M_J,
+$$
+
+where $S_0,B_0$ are AA's material support and terminal antichain, $w$ is successful-generation order, and $M_J$ is the callable actual source, journal backing, driver and current authority. The arity parser recovers $t$ from $S_0$ or $B_0$, Theorem 99.4 recovers $w$, and replay plus the code tables reconstructs $J$. The original driver and rights make the recovered state callable, so all four routes agree and commute with the complete $Q_g$ service. Bare $S_0$ or $B_0$ still does not recover a serial extension.
+
+The same-source witness from AA Theorem 20.5 is
+
+$$
+ w_1=P_\varepsilon S_\varepsilon S_LP_R,
+ \qquad
+ w_2=P_\varepsilon S_\varepsilon P_RS_L.
+\tag{99.12}
+$$
+
+Both end at $\langle\langle\beta,\alpha\rangle,\beta\rangle$, but their acquired weighted journals differ by Theorem 99.4. FetchGrowth$(3)$ returns $S_L$ for $w_1$ and $P_R$ for $w_2$. Actual Next$(3)$ then executes $S_{LL}$ for $w_1$ and $S_R$ for $w_2$, with the corresponding real source successors. A numerical codeword or address never grants source access; the witness uses the same retained root, rights and current source.
+
+All charges remain simultaneous and explicit: source vertices and parent/child/auxiliary fields; root/header/cell references and mutable links; exact $F$ products, predecessor enumeration, integer doubling, sorting and canonical-code arithmetic; source syntax copies, reverse scans, cursors and counters; reservation, genuine edit and pending append work; allocation and authority operations; request input, parser marks, full reply construction, Print, End, ACK, Return and clearing; FetchGrowth source traversal and decoder work; Next's retained old pair, current-source navigation, left descent, actual new edit and second pair; and retained cleared capacity. A singly linked journal may require repeated paid head-to-tail scans for reverse reads. These are selected coordinate charges, not a total/peak/runtime/energy tariff or an optimum theorem.
+
+**Correspondence 99.10 (supplier subtraction and boundary).** AA §§17–23 supply the native grammar, history fibres, actual source references, request grammar, continuation and same-run rights. AAII §§75–83 supply the installed rewriting global rank, its exact $G(t)$ conditional payload and complete service; §§93–98 supply the elementary all-$N$ context, ordinal append comparison, actual continuation and resource accounting. Those results are reused, not reproved. The weighted journal is a third alternative: it buys immutable old data bits and source-derived stopping with event-wise rounding, while paying predecessor counts, code formation and reverse scans. It neither improves $G(t)$ nor dominates the queued ordinal journal on total resources.
+
+The finite coding suppliers are Shannon, *A Mathematical Theory of Communication* (1948), §9 second construction and its integer length inequality (the inspected text at [the Harvard entropy PDF](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf)), and Cover, *Enumerative Source Encoding* (1973), §I Propositions 1–2 and inverse construction (the inspected [Stanford author PDF](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf)). Their finite prefix/enumerative mathematics supplies no LAB source authority or continued service. The repository sources [KraftConverse.lean](../../../D5/S0/Computability/Coding/KraftConverse.lean), [PrefixFreeCode.lean](../../../D5/S0/Computability/Coding/PrefixFreeCode.lean), [SourceTreeEncoding.lean](../../../D5/S0/History/Spacetime/SourceTreeEncoding.lean) and EnabledPathSwapConnectivity.result supply reusable coding, syntax, and finite-order background under their stated interfaces. MINIMAL_RECORD_DILATIONS §6.2 and SPATIAL_RECORDS_CHRONOLOGY §§19–20 supply related backward records and counted updates, not this changing native codebook. No fresh Lean compilation or kernel-validation claim is made.
+
+The result is conditional on finite sufficiently backed returned executions from the known alpha. It does not recover an unknown erased prefix, survive Reset, crash or an unfinished write, provide a uniform fixed finite device for all sizes, deploy physical references, prove a total-resource or Pareto optimum, or establish a generic append-only lower bound from either counterexample. Mandatory reset/tape experiments and all earlier original-$Q$, fixed-$G_{\rm gc}$, parked-consumer, unchanged-initialization, terminal and final-no-Ready obligations retain their own contracts. The persistent RRO programme through 2027 remains active; this appendix settles only this finite weighted-journal increment.
+
+## 追加锚（本行以下为增补区）
