@@ -251,13 +251,101 @@ private def wedgeX (c σ : ℝ) : ℝ :=
   ((σ ^ 2 - (1 - c) ^ 2) / (σ ^ 2 + (1 - c) ^ 2) +
     min c ((σ ^ 2 - c ^ 2) / (c ^ 2 + σ ^ 2))) / 2
 
+private lemma wedge_interval {c σ : ℝ} (h : domainD c σ) (hcs : c < σ) :
+    0 ≤ (σ ^ 2 - (1 - c) ^ 2) / (σ ^ 2 + (1 - c) ^ 2) ∧
+      (σ ^ 2 - (1 - c) ^ 2) / (σ ^ 2 + (1 - c) ^ 2) < wedgeX c σ ∧
+      wedgeX c σ < min c ((σ ^ 2 - c ^ 2) / (c ^ 2 + σ ^ 2)) ∧
+      min c ((σ ^ 2 - c ^ 2) / (c ^ 2 + σ ^ 2)) < 1 / 2 := by
+  obtain ⟨hc, hc2, _, hd⟩ := domain_decomposition h
+  have hσ : 0 < σ := h.1.2.1
+  have hf : c ^ 2 + σ ^ 2 < 1 := h.1.2.2
+  have hw : 1 - c ≤ σ := by
+    rcases hd with hd | hd
+    · linarith
+    · exact hd.1
+  have hc1 : 0 < 1 - c := by linarith
+  have hden : 0 < σ ^ 2 + (1 - c) ^ 2 := by positivity
+  have hf0 : 0 < c ^ 2 + σ ^ 2 := by positivity
+  have hL : 0 ≤ (σ ^ 2 - (1 - c) ^ 2) / (σ ^ 2 + (1 - c) ^ 2) := by
+    apply div_nonneg _ hden.le
+    nlinarith
+  have hLc : (σ ^ 2 - (1 - c) ^ 2) / (σ ^ 2 + (1 - c) ^ 2) < c := by
+    apply (div_lt_iff₀ hden).mpr
+    nlinarith [mul_pos hc1 (sub_pos.mpr hf)]
+  have hLU : (σ ^ 2 - (1 - c) ^ 2) / (σ ^ 2 + (1 - c) ^ 2) <
+      (σ ^ 2 - c ^ 2) / (c ^ 2 + σ ^ 2) := by
+    apply (div_lt_div_iff₀ hden hf0).mpr
+    nlinarith [mul_pos (sq_pos_of_pos hσ) (show 0 < 1 - 2 * c by linarith)]
+  have hmin := lt_min hLc hLU
+  refine ⟨hL, ?_, ?_, lt_of_le_of_lt (min_le_left _ _) hc2⟩
+  · dsimp only [wedgeX]; linarith
+  · dsimp only [wedgeX]; linarith
+
 private lemma wedge_parameters {c σ : ℝ} (h : domainD c σ) (hcs : c < σ) :
     let x := wedgeX c σ
     let a := σ / Real.sqrt (1 - x ^ 2)
     let b := c - a * x
     0 < x ∧ x < 1 / 2 ∧ x < c ∧
       0 < a ∧ 0 < b ∧ 0 < 1 - a - b ∧ 2 * c < a + b := by
-  sorry
+  obtain ⟨hL, hLx, hxmin, hmhalf⟩ := wedge_interval h hcs
+  let x := wedgeX c σ
+  have hx0 : 0 < x := lt_of_le_of_lt hL hLx
+  have hxhalf : x < 1 / 2 := hxmin.trans hmhalf
+  have hxc : x < c := hxmin.trans_le (min_le_left _ _)
+  have hxU : x < (σ ^ 2 - c ^ 2) / (c ^ 2 + σ ^ 2) :=
+    hxmin.trans_le (min_le_right _ _)
+  have hc : 0 < c := h.1.1
+  have hσ : 0 < σ := h.1.2.1
+  have hf : c ^ 2 + σ ^ 2 < 1 := h.1.2.2
+  have hc2 : c < 1 / 2 := (domain_decomposition h).2.1
+  have hq : 0 < Real.sqrt (1 - x ^ 2) := by
+    apply Real.sqrt_pos.mpr
+    nlinarith
+  have hq2 : Real.sqrt (1 - x ^ 2) ^ 2 = 1 - x ^ 2 :=
+    Real.sq_sqrt (by nlinarith)
+  have hb : σ * x < c * Real.sqrt (1 - x ^ 2) := by
+    have hx2 : x ^ 2 < c ^ 2 := (sq_lt_sq₀ hx0.le hc.le).mpr hxc
+    have hxf := mul_nonneg (sq_nonneg x) (sub_nonneg.mpr hf.le)
+    apply (sq_lt_sq₀ (mul_nonneg hσ.le hx0.le) (mul_nonneg hc.le hq.le)).mp
+    rw [mul_pow, mul_pow, hq2]
+    nlinarith only [hx2, hxf]
+  have hd : σ * (1 - x) < (1 - c) * Real.sqrt (1 - x ^ 2) := by
+    have hden : 0 < σ ^ 2 + (1 - c) ^ 2 := by positivity
+    have hineq := (div_lt_iff₀ hden).mp hLx
+    have hmul := mul_pos (show 0 < 1 - x by linarith)
+      (show 0 < (1 - c) ^ 2 * (1 + x) - σ ^ 2 * (1 - x) by nlinarith only [hineq])
+    apply (sq_lt_sq₀ (mul_nonneg hσ.le (by linarith))
+      (mul_nonneg (by linarith) hq.le)).mp
+    rw [mul_pow, mul_pow, hq2]
+    nlinarith only [hmul]
+  have hg : c * Real.sqrt (1 - x ^ 2) < σ * (1 - x) := by
+    have hf0 : 0 < c ^ 2 + σ ^ 2 := by positivity
+    have hineq := (lt_div_iff₀ hf0).mp hxU
+    have hmul := mul_pos (show 0 < 1 - x by linarith)
+      (show 0 < σ ^ 2 * (1 - x) - c ^ 2 * (1 + x) by nlinarith only [hineq])
+    apply (sq_lt_sq₀ (mul_nonneg hc.le hq.le)
+      (mul_nonneg hσ.le (by linarith))).mp
+    rw [mul_pow, hq2, mul_pow]
+    nlinarith only [hmul]
+  dsimp only
+  refine ⟨hx0, hxhalf, hxc, div_pos hσ hq, ?_, ?_, ?_⟩
+  · apply sub_pos.mpr
+    rw [div_mul_eq_mul_div, div_lt_iff₀ hq]
+    exact hb
+  · apply (mul_pos_iff_of_pos_right hq).mp
+    change 0 < (1 - σ / Real.sqrt (1 - x ^ 2) -
+      (c - σ / Real.sqrt (1 - x ^ 2) * x)) * Real.sqrt (1 - x ^ 2)
+    convert sub_pos.mpr hd using 1 <;> field_simp <;> ring
+  · apply (mul_lt_mul_iff_left₀ hq).mp
+    change 2 * c * Real.sqrt (1 - x ^ 2) <
+      (σ / Real.sqrt (1 - x ^ 2) + (c - σ / Real.sqrt (1 - x ^ 2) * x)) *
+        Real.sqrt (1 - x ^ 2)
+    have heq : (σ / Real.sqrt (1 - x ^ 2) + (c - σ / Real.sqrt (1 - x ^ 2) * x)) *
+        Real.sqrt (1 - x ^ 2) = σ * (1 - x) + c * Real.sqrt (1 - x ^ 2) := by
+      field_simp
+      <;> ring
+    rw [heq]
+    linarith only [hg]
 
 private def roundedCount (x : ℝ) (n : ℕ) : ℤ :=
   round ((n : ℝ) * (1 + Real.sqrt x) / 2)
