@@ -58,20 +58,23 @@ theorem R_covariance (m r : ℤ) :
       (∑ᶠ p : ℤ, rTerm r p (L m v)) = _
   rw [map_finsum (L m) hv, ← finsum_sub_distrib hmap hw]
   calc
-    _ = ∑ᶠ p : ℤ, f (m+p) + g p := by
+    _ = ∑ᶠ p : ℤ, (f (m+p) + g p) := by
       apply finsum_congr
       intro p
       have h := LinearMap.congr_fun (L_cc m p (r-p)) v
       simp only [LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply,
         Module.End.mul_apply] at h
-      simp only [rTerm, LinearMap.smul_apply, map_smul, ← smul_sub, h,
-        smul_add, smul_smul]
+      simp only [rTerm, LinearMap.smul_apply, map_smul, Module.End.mul_apply]
+      rw [← smul_sub, h, smul_add]
+      simp only [smul_smul]
       dsimp only [f, g]
       rw [show m+r-(m+p) = r-p by omega, show m+r-p = m+(r-p) by omega]
+      simp only [Module.End.mul_apply]
       congr 2 <;> (push_cast; ring)
     _ = (∑ᶠ p : ℤ, f (m+p)) + (∑ᶠ p : ℤ, g p) := finsum_add_distrib hfs hg
     _ = (∑ᶠ p : ℤ, f p) + (∑ᶠ p : ℤ, g p) := by
-      rw [finsum_comp_equiv (Equiv.addLeft m)]
+      congr 1
+      exact finsum_comp_equiv (Equiv.addLeft m) (f := f)
     _ = ∑ᶠ p : ℤ, ((-2*m-r : ℤ) : ℂ) • rTerm (m+r) p v := by
       rw [← finsum_add_distrib hf hg]
       apply finsum_congr

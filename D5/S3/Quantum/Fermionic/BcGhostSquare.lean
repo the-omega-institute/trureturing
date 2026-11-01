@@ -80,20 +80,22 @@ private theorem squareAnomaly_b (r : ℤ) :
     apply (Set.finite_singleton (-r)).subset
     intro n hn
     by_contra he
+    simp only [Set.mem_singleton_iff] at he
     exact hn (by simp [f, he])
   have hg : Function.HasFiniteSupport g := by
     apply (Set.finite_singleton r).subset
     intro n hn
     by_contra he
+    simp only [Set.mem_singleton_iff] at he
     exact hn (by simp [g, he])
   calc
-    _ = ∑ᶠ n : ℤ, f n-g n := by
+    _ = ∑ᶠ n : ℤ, (f n-g n) := by
       apply finsum_congr
       intro n
       have h := LinearMap.congr_fun (cc_b (-n) n r) v
       simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
-      simp only [squareTerm, LinearMap.smul_apply, map_smul, ← smul_sub, h]
-      rw [smul_sub]
+      simp only [squareTerm, LinearMap.smul_apply, map_smul, Module.End.mul_apply]
+      rw [← smul_sub, h, smul_sub]
       congr 1
       · by_cases hn : n = -r
         · subst n
@@ -125,7 +127,8 @@ private theorem squareAnomaly_c (r : ℤ) : squareAnomaly*c r-c r*squareAnomaly 
   intro n
   have h := LinearMap.congr_fun (cc_c (-n) n r) v
   simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.zero_apply] at h
-  simp only [squareTerm, LinearMap.smul_apply, map_smul, ← smul_sub, h, smul_zero]
+  simp only [squareTerm, LinearMap.smul_apply, map_smul, Module.End.mul_apply]
+  rw [← smul_sub, h, smul_zero]
 
 private theorem squareAnomaly_vacuum : squareAnomaly vacuum = 0 := by
   change (∑ᶠ n : ℤ, squareTerm n vacuum) = 0
@@ -162,10 +165,15 @@ theorem square_anomaly : Qg*Qg = squareAnomaly := by
   obtain ⟨α, hα⟩ := scalar_commutant D hb hc
   have hv : D vacuum = 0 := by
     simp [D, Module.End.mul_apply, Qg_vacuum, squareAnomaly_vacuum]
-  have hz := congrArg (fun T : Module.End ℂ Fock => (T vacuum) ∅) hα
-  simp only [hv, Finsupp.zero_apply, LinearMap.smul_apply, Module.End.one_apply,
-    Finsupp.smul_apply, vacuum, ket, Finsupp.single_eq_same, smul_eq_mul, mul_one] at hz
-  have hzero : D = 0 := by rw [hα, ← hz, zero_smul]
+  have hscalar : α = 0 := by
+    have he : (α • (1 : Module.End ℂ Fock)) vacuum = 0 := by
+      rw [← hα]
+      exact hv
+    have he0 := congrArg (fun v : Fock => v ∅) he
+    simpa only [LinearMap.smul_apply, Module.End.one_apply, Finsupp.smul_apply,
+      vacuum, ket, Finsupp.single_eq_same, smul_eq_mul, mul_one,
+      Finsupp.zero_apply] using he0
+  have hzero : D = 0 := by rw [hα, hscalar, zero_smul]
   exact sub_eq_zero.mp hzero
 
 end D5.S3.Quantum.Fermionic.BcGhostBRST

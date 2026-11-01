@@ -28,6 +28,7 @@ private theorem ccc_ket_finite (r : ℤ) (S : Finset ℕ) :
   let A : ℤ := (S.sup id + 3 : ℕ)
   apply ((Set.finite_Icc (r-2*A) A).prod (Set.finite_Icc (r-2*A) A)).subset
   intro ab hab
+  change (c ab.1*c ab.2*c (r-ab.1-ab.2)) (ket S) ≠ 0 at hab
   have ha : ab.1 ≤ A := by
     by_contra hn
     have hz : c ab.1 (ket S) = 0 := c_ket_tail _ S (by dsimp [A] at hn; omega)
@@ -110,7 +111,7 @@ private theorem jacobi_sum_zero (r : ℤ) (v : Fock) :
   have hg : Function.HasFiniteSupport (fun ab => f (cycle r ab)) :=
     hf.fun_comp_of_injective (cycle r).injective
   have hh : Function.HasFiniteSupport (fun ab => f (cycle r (cycle r ab))) :=
-    hg.fun_comp_of_injective (cycle r).injective
+    hf.fun_comp_of_injective ((cycle r).injective.comp (cycle r).injective)
   have hc₁ : (∑ᶠ ab, f (cycle r ab)) = ∑ᶠ ab, f ab := finsum_comp_equiv (cycle r)
   have hc₂ : (∑ᶠ ab, f (cycle r (cycle r ab))) = ∑ᶠ ab, f ab :=
     (finsum_comp_equiv (cycle r)).trans hc₁
@@ -118,8 +119,10 @@ private theorem jacobi_sum_zero (r : ℤ) (v : Fock) :
     calc
       _ = ((∑ᶠ ab, f ab) + (∑ᶠ ab, f (cycle r ab))) +
           (∑ᶠ ab, f (cycle r (cycle r ab))) := by rw [hc₁, hc₂]
-      _ = ∑ᶠ ab, f ab + f (cycle r ab) + f (cycle r (cycle r ab)) := by
-        rw [← finsum_add_distrib hf hg, ← finsum_add_distrib (hf.add hg) hh]
+      _ = ∑ᶠ ab, (f ab + f (cycle r ab) + f (cycle r (cycle r ab))) := by
+        rw [← finsum_add_distrib hf hg]
+        have hfg : Function.HasFiniteSupport (fun ab => f ab + f (cycle r ab)) := hf.add hg
+        exact (finsum_add_distrib hfg hh).symm
       _ = 0 := by
         apply finsum_eq_zero_of_forall_eq_zero
         intro ab
@@ -174,14 +177,13 @@ theorem Qg_R (r : ℤ) : Qg*R r-R r*Qg = 0 := by
   change Qg (∑ᶠ p : ℤ, rTerm r p v) - (∑ᶠ p : ℤ, rTerm r p (Qg v)) = 0
   rw [map_finsum Qg hv, ← finsum_sub_distrib hmap hw]
   calc
-    _ = ∑ᶠ p : ℤ, ∑ᶠ a : ℤ, h₁ (p,a)+h₂ (p,a) := by
+    _ = ∑ᶠ p : ℤ, ∑ᶠ a : ℤ, (h₁ (p,a)+h₂ (p,a)) := by
       apply finsum_congr
       intro p
       have h := LinearMap.congr_fun (Qg_cc p (r-p)) v
       simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
-      simp only [rTerm, LinearMap.smul_apply, map_smul, ← smul_sub, h,
-        smul_sub]
-      change _ = _
+      simp only [rTerm, LinearMap.smul_apply, map_smul, Module.End.mul_apply]
+      rw [← smul_sub, h, smul_sub]
       have hp₁ := rTerm_finite p (c (r-p) v)
       have hp₂ := rTerm_finite (r-p) v
       rw [show R p (c (r-p) v) = ∑ᶠ a : ℤ, rTerm p a (c (r-p) v) from rfl,
@@ -193,11 +195,12 @@ theorem Qg_R (r : ℤ) : Qg*R r-R r*Qg = 0 := by
       apply finsum_congr
       intro a
       rw [sub_eq_add_neg, jacobi_first, jacobi_second]
-    _ = ∑ᶠ pa : ℤ × ℤ, h₁ pa+h₂ pa := (finsum_curry _ (hh₁.add hh₂)).symm
+    _ = ∑ᶠ pa : ℤ × ℤ, (h₁ pa+h₂ pa) := (finsum_curry _ (hh₁.add hh₂)).symm
     _ = (∑ᶠ pa : ℤ × ℤ, h₁ pa)+(∑ᶠ pa : ℤ × ℤ, h₂ pa) := finsum_add_distrib hh₁ hh₂
     _ = (∑ᶠ ab : ℤ × ℤ, f ab)+(∑ᶠ ab : ℤ × ℤ, f ab) := by
-      rw [show (∑ᶠ pa, h₁ pa) = ∑ᶠ ab, f ab from finsum_comp_equiv splitPair,
-        show (∑ᶠ pa, h₂ pa) = ∑ᶠ ab, f ab from finsum_comp_equiv (cycle r)]
+      change (∑ᶠ pa : ℤ × ℤ, f (splitPair pa)) +
+        (∑ᶠ pa : ℤ × ℤ, f (cycle r pa)) = _
+      rw [finsum_comp_equiv splitPair (f := f), finsum_comp_equiv (cycle r) (f := f)]
     _ = 0 := by rw [show (∑ᶠ ab, f ab) = 0 from jacobi_sum_zero r v]; simp
 
 end D5.S3.Quantum.Fermionic.BcGhostBRST

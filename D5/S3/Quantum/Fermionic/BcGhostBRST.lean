@@ -26,7 +26,8 @@ private theorem graph_finite (f : ℤ → Fock) (hf : Function.HasFiniteSupport 
   intro pq hpq
   by_cases hq : pq.2 = g pq.1
   · refine ⟨pq.1, ?_, ?_⟩
-    · simpa only [if_pos hq] using hpq
+    · intro hz
+      exact hpq (by simp [hq, hz])
     · exact Prod.ext rfl hq.symm
   · exact False.elim (hpq (by simp [hq]))
 
@@ -45,7 +46,9 @@ private theorem column_finite (f : ℤ → Fock) (hf : Function.HasFiniteSupport
   apply ((Set.finite_singleton a).prod hf).subset
   intro pq hpq
   by_cases hp : pq.1 = a
-  · exact ⟨hp, by simpa only [if_pos hp] using hpq⟩
+  · refine ⟨hp, ?_⟩
+    intro hz
+    exact hpq (by simp [hp, hz])
   · exact False.elim (hpq (by simp [hp]))
 
 private theorem column_sum (f : ℤ → Fock) (hf : Function.HasFiniteSupport f)
@@ -68,22 +71,20 @@ private theorem weighted_cubic_b (p q r : ℤ) (v : Fock) :
   have h := LinearMap.congr_fun (cubic_b p q r) v
   simp only [LinearMap.add_apply, LinearMap.sub_apply, Module.End.mul_apply] at h
   simp only [cubicTerm, LinearMap.smul_apply, map_smul, ← smul_add, h]
-  by_cases hp : p = -r <;> by_cases hq : q = -r
-  all_goals simp only [show p+r = 0 ↔ p = -r by omega,
-    show q+r = 0 ↔ q = -r by omega, hp, hq, ite_true, ite_false,
-    LinearMap.zero_apply, smul_zero, zero_add, add_zero, sub_zero, zero_sub]
-  · subst p; subst q
-    simp [summand]
+  by_cases hp : p = -r
   · subst p
-    simp only [summand, LinearMap.smul_apply, smul_smul, smul_neg, ← neg_smul]
-    have he : -((1/2 : ℂ) * ((-r-q : ℤ) : ℂ)) = (1/2 : ℂ) * ((r+q : ℤ) : ℂ) := by
-      push_cast; ring
-    rw [he]
-    congr 2 <;> omega
-  · subst q
-    simp only [summand, LinearMap.smul_apply, smul_smul]
-    congr 2 <;> first | omega | (push_cast; ring)
-  · rfl
+    by_cases hq : q = -r
+    · subst q
+      simp [summand]
+    · rw [show - -r-q = r-q by omega]
+      simp [hq, show q+r ≠ 0 by omega, summand, smul_smul,
+        Int.cast_sub, Int.cast_add, Int.cast_neg] <;> module
+  · by_cases hq : q = -r
+    · subst q
+      rw [show -p- -r = r-p by omega]
+      simp [hp, show p+r ≠ 0 by omega, summand, smul_smul,
+        Int.cast_sub, Int.cast_add, Int.cast_neg] <;> module
+    · simp [hp, hq, show p+r ≠ 0 by omega, show q+r ≠ 0 by omega]
 
 /-- The full cubic anticommutator equals the actual supplier L, at every integer mode. -/
 theorem ward_b (r : ℤ) : Qg * b r + b r * Qg = L r := by
@@ -100,8 +101,8 @@ theorem ward_b (r : ℤ) : Qg * b r + b r * Qg = L r := by
   rw [map_finsum (b r) hv, ← finsum_add_distrib hw hmap]
   calc
     _ = ∑ᶠ pq : ℤ × ℤ,
-        (if pq.2 = -r then f pq.1 else 0) +
-        (if pq.1 = -r then f pq.2 else 0) := by
+        ((if pq.2 = -r then f pq.1 else 0) +
+        (if pq.1 = -r then f pq.2 else 0)) := by
       apply finsum_congr
       intro pq
       exact weighted_cubic_b pq.1 pq.2 r v
