@@ -1,0 +1,25 @@
+**Theorem 10.3 (earned entry memory and synchronized continuation at the returned cut).** Under Theorem 10.2, retain the actual source binding and rights, the acquired action/reply tape and public decoding data, the immutable $e$, and the separate mutable $c=e$ after the last completed closing word. There are installed finite procedures for current output, hypothetical finite-word prediction, and actual original-$R/G$ execution. For every finite actual continuation $V$, at each completed call boundary they satisfy
+
+$$
+c_V=\overline{V(u_*)},\qquad
+\operatorname{Out}_H(c_V)=\mathcal B_H(u_*)(V)
+=\mathcal B_H(v_0)(V).
+\tag{AQBRS.10}
+$$
+
+They require no further paid source read. This conclusion is conditional on the same exclusive serialization, retained rights and sufficient per-run service/backing premises as Definition 9.1, including for the chosen continuation.
+
+**Proof.** Install the already supplied residue reader and updates of FARG130.1, FARG133.6 and (AQBRP.22):
+
+$$
+\operatorname{Out}_H(c)=\gcd(2c_1+3c_2,H),\qquad
+\delta_R(c)=Mc,\qquad \delta_G(c)=c+\alpha.
+\tag{AQBRS.11}
+$$
+
+Stored residue representatives are finite accessible integers, so these are terminating exact local computations. Current output evaluates this formula on the retained $c$. For prediction, read the actual supplied finite word, copy $c$ to a scratch pair, apply its letters there and evaluate the same output at every requested prefix, including the empty prefix. The source is unchanged by prediction. Its results are computed predictions from an earned label, not newly acquired source replies.
+
+For an actual single-letter execution, call that original action on the retained source handle, consume its completion acknowledgement, and then replace $c$ by the corresponding $\delta_R(c)$ or $\delta_G(c)$. Expose the next callable cut only after both steps have finished. Actual word execution repeats this interface; all its source calls and local updates are charged. The immutable entry register is not overwritten. The acquired cut has $c=\bar u_*=\bar v_0$. Each supplied local update commutes with its actual action, so induction on every finite $V$ proves the first equality in (AQBRS.10). The reader and behavior-return equality prove the other two. Applying the same induction to scratch evaluation proves its agreement with every possible actual continuation. There is no unreported intermediate observation between an actual source update and the local commit under exclusive serial control.
+
+In particular these registers implement the recovery routes of Definition 9.2 on this actual returned cut. The first two replacement-time quantities are $C c$, the spatial field is $c$, and the complete arithmetic boundary is the reader (AQBRS.11) evaluated after words. Their existing inverse correspondences from FARG5.4 and FARG130.5 agree with these computations because all use this same $c$. Actual replacement shifts the prospective progression, and an actual graft adds $qM^k\alpha$ to its $k$th term; the same local updates realize both transformations. The acquired memory now computes those fields at an actual source of the entry behavior, rather than only storing an entry answer while the callable source remains elsewhere. At $H=1$ the identical procedures use the singleton pair and constant output $1$. An unreported source action, revoked right or interrupted commit is outside the stated synchronization premise. $\square$
+

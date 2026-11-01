@@ -130,7 +130,7 @@ private lemma list_sum_add_const (F : ℕ → ℝ) (a : ℝ) (rs : List ℕ) :
 
 noncomputable def f (x : ℝ) : ℝ := x * Real.logb 2 x
 
-private lemma logb_three_bounds : (3:ℝ)/2 < Real.logb 2 3 ∧ Real.logb 2 3 < 5/3 := by
+lemma logb_three_bounds : (3:ℝ)/2 < Real.logb 2 3 ∧ Real.logb 2 3 < 5/3 := by
   have hlow := Real.logb_lt_logb (b:=2) (x:=8) (y:=9) (by norm_num) (by norm_num) (by norm_num)
   have hupp := Real.logb_lt_logb (b:=2) (x:=27) (y:=32) (by norm_num) (by norm_num) (by norm_num)
   have h8 : Real.logb 2 8 = 3 := by
