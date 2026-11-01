@@ -9,6 +9,8 @@
 import D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianFock
 import Mathlib.Algebra.MvPolynomial.CommRing
 
+/-! Diagonal coordinate substitution gives the exact scaling of ordinary Gaussian coefficients. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
@@ -34,8 +36,8 @@ private theorem diagonalSubstitution_monomial {J : Type u} (w : J → ℂ)
 
 private theorem coeff_diagonalSubstitution {J : Type u} (w : J → ℂ)
     (p : MvPolynomial J ℂ) (d : Occupation J) :
-    coeff d (diagonalSubstitution w p) =
-      d.prod (fun i n => w i ^ n) * coeff d p := by
+    (diagonalSubstitution w p).coeff d =
+      d.prod (fun i n => w i ^ n) * p.coeff d := by
   classical
   induction p using MvPolynomial.induction_on' with
   | monomial a c =>
@@ -43,7 +45,7 @@ private theorem coeff_diagonalSubstitution {J : Type u} (w : J → ℂ)
     by_cases h : a = d
     · subst a; simp
     · simp [coeff_monomial, h, Ne.symm h]
-  | add p q hp hq => simp [map_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 private theorem diagonalSubstitution_quadratic {J : Type u} [Fintype J]
     (w : J → ℂ) (K : Matrix J J ℂ) :
@@ -92,11 +94,12 @@ theorem external_scaling {X : Type u} {I : Type v}
     coefficient (fun i j => (Sum.elim (fun _ : X => t) (fun _ : I => 1) i) *
       K i j * (Sum.elim (fun _ : X => t) (fun _ : I => 1) j)) (d.sumElim n) =
         t ^ d.degree * coefficient K (d.sumElim n) := by
+  have hp : d.prod (fun _ k => t ^ k) = t ^ d.degree := by
+    change (∏ i ∈ d.support, t ^ d i) = t ^ d.degree
+    rw [Finset.prod_pow_eq_pow_sum, Finsupp.degree_apply]
   rw [diagonal_congruence, Finsupp.prod_sumElim]
-  simp only [Function.comp_apply, Sum.elim_inl, Sum.elim_inr, one_pow,
-    Finsupp.prod_fun_one, mul_one]
-  congr 1
-  change (∏ i ∈ d.support, t ^ d i) = t ^ d.degree
-  rw [Finset.prod_pow_eq_pow_sum, Finsupp.degree_apply]
+  change (d.prod (fun _ k => t ^ k) * n.prod (fun _ k => (1 : ℂ) ^ k)) *
+    coefficient K (d.sumElim n) = _
+  rw [show n.prod (fun _ k => (1 : ℂ) ^ k) = 1 by simp, mul_one, hp]
 
 end D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientScaling

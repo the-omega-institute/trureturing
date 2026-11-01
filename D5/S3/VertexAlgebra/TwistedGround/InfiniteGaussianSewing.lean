@@ -12,6 +12,8 @@ import D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianVacuum
 import D5.S3.VertexAlgebra.TwistedGround.GaussianSewingLimit
 import D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientContinuity
 
+/-! Finite sewing and the support-net limits identify the complete countable Gaussian contraction. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section

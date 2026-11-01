@@ -8,6 +8,8 @@
 
 import D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate
 
+/-! Fixed Gaussian occupations depend continuously on the finite kernel entries. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
@@ -17,12 +19,12 @@ universe u
 variable {J : Type u} [Fintype J] [DecidableEq J]
 
 private theorem quadratic_coeff_continuous (d : J →₀ ℕ) :
-    Continuous (fun K : Matrix J J ℂ => coeff d (quadratic K)) := by
+    Continuous (fun K : Matrix J J ℂ => (quadratic K).coeff d) := by
   simp only [quadratic, coeff_smul, coeff_sum, smul_eq_mul]
   fun_prop
 
 private theorem power_coeff_continuous (n : ℕ) (d : J →₀ ℕ) :
-    Continuous (fun K : Matrix J J ℂ => coeff d (quadratic K ^ n)) := by
+    Continuous (fun K : Matrix J J ℂ => (quadratic K ^ n).coeff d) := by
   induction n generalizing d with
   | zero => simp
   | succ n ih =>

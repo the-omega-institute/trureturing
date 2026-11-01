@@ -10,6 +10,8 @@ import D5.S3.VertexAlgebra.TwistedGround.GaussianExternalBlock
 import D5.S3.VertexAlgebra.TwistedGround.GaussianCoefficientScaling
 import Mathlib.Analysis.Normed.Group.Tannery
 
+/-! Positive external scaling transfers the joint Gaussian norm estimate to each occupation slice. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section

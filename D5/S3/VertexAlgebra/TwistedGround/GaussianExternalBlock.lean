@@ -9,10 +9,12 @@
 import D5.S3.VertexAlgebra.TwistedGround.InfiniteGaussianFock
 import Mathlib.Analysis.InnerProductSpace.Dual
 
+/-! Finite families of square-summable rows define the actual scaled external Gaussian operator. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
-open scoped BigOperators InnerProductSpace lp
+open scoped BigOperators InnerProductSpace lp ENNReal
 open Filter Topology
 
 namespace D5.S3.VertexAlgebra.TwistedGround.GaussianExternalBlock
@@ -51,7 +53,7 @@ theorem inclusion_adjoint_apply {J : Type u} {K : Type v}
   have h := ContinuousLinearMap.adjoint_inner_right
     (coordinateInclusion e he).toContinuousLinearMap (lp.single 2 j (1 : ℂ)) z
   simpa only [LinearIsometry.coe_toContinuousLinearMap, coordinateInclusion_single,
-    lp.inner_single_left, RCLike.inner_apply, map_one, one_mul] using h
+    lp.inner_single_left, RCLike.inner_apply, map_one, mul_one, one_mul] using h
 
 @[simp] theorem inclusion_apply_image {J : Type u} {K : Type v}
     [DecidableEq J] [DecidableEq K] (e : J → K) (he : Function.Injective e)
@@ -59,7 +61,7 @@ theorem inclusion_adjoint_apply {J : Type u} {K : Type v}
     coordinateInclusion e he z (e j) = z j := by
   have h := (coordinateInclusion e he).inner_map_map (lp.single 2 j (1 : ℂ)) z
   simpa only [coordinateInclusion_single, lp.inner_single_left,
-    RCLike.inner_apply, map_one, one_mul] using h
+    RCLike.inner_apply, map_one, mul_one, one_mul] using h
 
 @[simp] theorem inclusion_apply_outside {J : Type u} {K : Type v}
     [DecidableEq J] [DecidableEq K] (e : J → K) (he : Function.Injective e)
@@ -130,8 +132,8 @@ private def external (P : Matrix X X ℂ) :
 
 private def mixed (R : X → ℓ²(I, ℂ)) :
     ℓ²(X ⊕ I, ℂ) →L[ℂ] ℓ²(X ⊕ I, ℂ) :=
-  ∑ x, rank (lp.single 2 (.inl x) 1) (inclusion (R x)) +
-    rank (inclusion (R x)) (lp.single 2 (.inl x) 1)
+  ∑ x, (rank (lp.single 2 (.inl x) 1) (inclusion (R x)) +
+    rank (inclusion (R x)) (lp.single 2 (.inl x) 1))
 
 /-- A bounded joint operator, before imposing a small external scale. -/
 def operator (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I, ℂ)) (t : ℂ) :
@@ -147,7 +149,7 @@ theorem operator_entry (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I, ℂ
       (Sum.elim (fun _ : X => t) (fun _ : I => 1) j) := by
   have hout (x : X) (r : ℓ²(I, ℂ)) : inclusion r (.inl x) = 0 :=
     inclusion_apply_outside Sum.inr Sum.inr_injective _ _ (by simp)
-  have hin (k : I) (r : ℓ²(I, ℂ)) : inclusion r (.inr k) = r k :=
+  have hin (k : I) (r : ℓ²(I, ℂ)) : inclusion (X := X) r (.inr k) = r k :=
     inclusion_apply_image Sum.inr Sum.inr_injective _ _
   simp only [operator, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
     lp.coeFn_add, lp.coeFn_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
@@ -172,7 +174,8 @@ theorem exists_positive_scale (P : Matrix X X ℂ) (A : Data I)
     hc.continuousAt.preimage_mem_nhds (isOpen_Iio.mem_nhds hzero)
   obtain ⟨ε,hε,hball⟩ := Metric.mem_nhds_iff.mp he
   refine ⟨ε / 2, by positivity, hball ?_⟩
-  simpa [Real.dist_eq, abs_of_pos (half_pos hε)] using half_lt_self hε
+  simpa only [Metric.mem_ball, Real.dist_eq, sub_zero, abs_of_pos (half_pos hε)] using
+    half_lt_self hε
 
 /-- The row norm series is obtained directly from the supplied l2 vector. -/
 theorem row_square_summable (r : ℓ²(I, ℂ)) : Summable (fun i => ‖r i‖ ^ 2) := by
@@ -188,20 +191,20 @@ theorem operator_square_summable (P : Matrix X X ℂ) (A : Data I)
   let f (ij : (X ⊕ I) × (X ⊕ I)) :=
     ‖operator P A R t (lp.single 2 ij.2 1) ij.1‖ ^ 2
   have hxx : Summable (fun ij : X × X => f (.inl ij.1, .inl ij.2)) :=
-    summable_fintype _
+    Summable.of_finite
   have hxi : Summable (fun ij : X × I => f (.inl ij.1, .inr ij.2)) := by
     apply (summable_prod_of_nonneg (fun _ => sq_nonneg _)).mpr
     constructor
     · intro x
       simpa [f, operator_entry, kernel, Matrix.fromBlocks, norm_mul, mul_pow] using
         (row_square_summable (R x)).mul_left (‖t‖ ^ 2)
-    · exact summable_fintype _
+    · exact Summable.of_finite
   have hix : Summable (fun ij : I × X => f (.inr ij.1, .inl ij.2)) := by
     have hh := hxi.prod_symm
     simpa [f, operator_entry, kernel, Matrix.fromBlocks, norm_mul, mul_pow,
       mul_comm] using hh
   have hii : Summable (fun ij : I × I => f (.inr ij.1, .inr ij.2)) := by
-    simpa [f, operator_entry, kernel, Matrix.fromBlocks] using A.square_summable
+    simpa [f, operator_entry, kernel, Matrix.fromBlocks, Data.kernel] using A.square_summable
   have hleft : Summable (fun ij : X × (X ⊕ I) => f (.inl ij.1, ij.2)) := by
     apply (Equiv.prodSumDistrib X X I).symm.summable_iff.mp
     exact Summable.sum _ hxx hxi
@@ -227,7 +230,7 @@ def data (P : Matrix X X ℂ) (A : Data I) (R : X → ℓ²(I, ℂ))
     intro i j
     simp only [operator_entry]
     have hsym : kernel P A R i j = kernel P A R j i := by
-      cases i <;> cases j <;> simp [kernel, Matrix.fromBlocks, hP, A.symmetric]
+      cases i <;> cases j <;> simp [kernel, Matrix.fromBlocks, Data.kernel, hP, A.symmetric]
     rw [hsym]
     ring
   square_summable := operator_square_summable P A R t

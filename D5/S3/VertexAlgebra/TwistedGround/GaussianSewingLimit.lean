@@ -11,10 +11,12 @@ import D5.S3.VertexAlgebra.TwistedGround.GaussianExternalBlock
 import D5.S3.Quantum.Analysis.TraceClass.ColumnSynthesis
 import Mathlib.Analysis.Normed.Ring.Units
 
+/-! Actual Hilbert-Schmidt compressions give ordered inverse and mixed-coordinate limits. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
-open scoped BigOperators InnerProductSpace lp Matrix.Norms.L2Operator
+open scoped BigOperators InnerProductSpace lp ENNReal Matrix.Norms.L2Operator
 open Filter Topology
 namespace D5.S3.VertexAlgebra.TwistedGround.GaussianSewingLimit
 open InfiniteGaussianFock CountableGaussianCutoff GaussianExternalBlock
