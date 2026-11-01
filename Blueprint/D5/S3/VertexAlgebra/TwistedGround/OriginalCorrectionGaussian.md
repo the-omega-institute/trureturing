@@ -36,21 +36,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.co
 
 For indices a and b, the covariance is pairScalar(a.2+1,b.2+1) times D.G(a.1,b.1) times z^((a.2+1)+(b.2+1)). It is complex bilinear, without conjugation.
 
-**Theorem 1.3 (Symmetry of the actual covariance).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covariance_symm`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covariance_symm` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For every lattice data D, complex shift z and oscillator indices a,b, covariance(D,z,a,b) equals covariance(D,z,b,a). The original correction and the full neutral three-leg source-source kernel both use this bilinear symmetry.
-
-**Definition 1.4 (Arbitrary finite linear form).**
+**Definition 1.3 (Arbitrary finite linear form).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.linearForm`
 
@@ -64,7 +50,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.li
 
 A finitely supported coefficient family c gives the actual oscillator polynomial sum_a c(a) X_a.
 
-**Definition 1.5 (Covariance under finite linear substitution).**
+**Definition 1.4 (Covariance under finite linear substitution).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covarianceMatrix`
 
@@ -78,7 +64,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.co
 
 For a finite family c_i, A_ij is the finite sum of c_i(a)c_j(b) times the evaluated pair covariance. The symmetry of pairScalar and the Gram matrix makes A symmetric. No positivity or nondegeneracy is required.
 
-**Theorem 1.6 (Finite reconstruction of the actual Corr readout).**
+**Theorem 1.5 (Finite reconstruction of the actual Corr readout).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_eq_evaluation`
 
@@ -92,7 +78,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.so
 
 The finite shift sum equals evaluation of correctionLift(D,0,p), with its none variable assigned z and every some oscillator variable assigned zero. The proof passes through optionEquivLeft and reconstructs the finite polynomial from its coefficients.
 
-**Theorem 1.7 (All occupations with their exact factorials).**
+**Theorem 1.6 (All occupations with their exact factorials).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_linearForms`
 
@@ -114,7 +100,6 @@ This is a finite algebraic identity for arbitrary complex z. It assumes no Wick 
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covarianceMatrix`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.covariance_symm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.linearForm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalCorrectionGaussian.sourceVacuum_eq_evaluation`

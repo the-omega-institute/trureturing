@@ -26,7 +26,7 @@ theorem sub_single_degree (d : I →₀ ℕ) (j : I) (hj : d j ≠ 0) :
   have h := congrArg Finsupp.degree (Finsupp.sub_add_single_one_cancel hj)
   simpa only [map_add, Finsupp.degree_single] using h
 
-theorem weight_sub_single (d : I →₀ ℕ) (j : I) (hj : d j ≠ 0) :
+private theorem weight_sub_single (d : I →₀ ℕ) (j : I) (hj : d j ≠ 0) :
     FactorialFockMetric.weight d =
       d j * FactorialFockMetric.weight (d - Finsupp.single j 1) := by
   have h := FactorialFockMetric.weight_add_single (d - Finsupp.single j 1) j
