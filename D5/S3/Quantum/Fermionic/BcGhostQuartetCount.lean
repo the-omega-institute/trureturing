@@ -161,7 +161,7 @@ theorem count_erase_regular (j : ℕ) (S : Finset ℕ)
 
 theorem count_insert_one (S : Finset ℕ) (h1 : 1 ∉ S) :
     count (insert 1 S) + 1 = count S := by
-  simp [count, h1, Finset.erase_insert h1, Finset.erase_eq_of_notMem h1]
+  simp [count, h1, Finset.erase_insert h1]
 
 theorem count_erase_one (S : Finset ℕ) (h1 : 1 ∈ S) :
     count (S.erase 1) = count S + 1 := by
@@ -359,8 +359,8 @@ theorem diagonal_coefficient (f : Finset ℕ → ℂ) (v : Fock) (S : Finset ℕ
     rw [hs, map_smul, diagonal_ket]
     by_cases h : S = T
     · subst S
-      simp [ket, smul_smul, mul_comm]
-    · simp [ket, h, Ne.symm h]
+      simp [ket, mul_comm]
+    · simp [ket, h]
 
 theorem M_eq_diagonal : M = diagonal (fun S => (count S : ℂ)) := by
   apply end_ext
@@ -422,7 +422,7 @@ theorem count_surjective_relative (q : ℕ) :
     have hj3 : j ≠ 3 := by dsimp [j]; omega
     have hj : j ∉ S := by
       intro hm
-      have hs : j ≤ (occupied v).sup id := Finset.le_sup (f := id) hm
+      have hs : j ≤ S.sup id := Finset.le_sup (f := id) hm
       dsimp [j] at hs
       omega
     refine ⟨insert j S, by simp [Ne.symm hj3, h3], ?_⟩
@@ -547,7 +547,7 @@ theorem P_apply (v : Fock) :
         rcases (count_zero_iff S).mp hz with he | he
         · exact h1 he
         · exact h13 he
-      simp [hc, ket, h1, h13, Ne.symm h1, Ne.symm h13]
+      simp [hc, ket, h1, h13]
 
 theorem M_eq_zero_iff_P_eq_self (v : Fock) : M v = 0 ↔ P v = v := by
   constructor
