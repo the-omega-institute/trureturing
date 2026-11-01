@@ -308,8 +308,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hbc1 : b (-3) (c 1 vacuum) = -ket {1,2} := by
     change create 2 (create 1 vacuum) = -ket {1,2}
     rw [create_vacuum, create_ket]
-    norm_num [phase, lowerCount, Finset.pair_comm]
-  norm_num [hbc0, hbc1, ket] at he
+    have hc : lowerCount 2 {1} = 1 := by decide
+    have hs : insert 2 ({1} : Finset ℕ) = {1,2} := by decide
+    norm_num [phase, hc, hs]
+  have hsets : ({1,2} : Finset ℕ) ≠ {0,3} := by decide
+  norm_num [hbc0, hbc1, ket, hsets, Ne.symm hsets] at he
 def family : Registration arena (type_of% @virasoro_radius) where
   actual := actual
   bridge := Iff.rfl
