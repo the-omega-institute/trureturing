@@ -1,8 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
+import D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum
 import Reg.Support.DependentFamily
 
-open _root_.D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
+open _root_.D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum
 open _root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality
 open _root_.D5.S3.Quantum.Entanglement.SectorSchmidtEncoding
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -12,7 +12,7 @@ open LeanInformationAudit Matrix
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Matrix Kronecker
 
 noncomputable section
-namespace Reg.D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
+namespace Reg.D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum
 universe u
 
 abbrev signature : Signature where
@@ -79,7 +79,7 @@ def arena : Arena where
 
 theorem actual_law : arena.{u}.Law actual := by
   intro Sector _ _ _ r d m hr hd hm
-  exact _root_.D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum.result r d m hr hd hm
+  exact _root_.D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum.result r d m hr hd hm
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -112,10 +112,10 @@ def registration : Registration arena.{u} (arena.Law actual) where
   dependence := dependence
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum.result.{u})
+    (@_root_.D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum.result.{u})
     (type_of% (realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum.result.__information_unit,
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum.registration,
+  unitName := `D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum.result.__information_unit,
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum.registration,
   realizationSource := none,
   generated := false,
   arena := .source ⟨arena.{u}⟩,
@@ -131,7 +131,7 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum,
+    owner := `D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum,
     definition := none,
     coordinates := #[],
     readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
@@ -140,4 +140,4 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   options := #[] }
 
 #print axioms registration
-end Reg.D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
+end Reg.D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum

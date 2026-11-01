@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.SectorChannels;
 
 internal sealed class FiniteFlatSectorOptimumDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class FiniteFlatSectorOptimumDocument : IScribeDocumentDefinitio
         Blocks(Describe.Lean(
             DescribeId.Create("compact-flat-sector-optimum"),
             DeclarationHandle.Create(
-                "D5/S3/Quantum/Entanglement/FiniteFlatSectorOptimum.result"),
+                "D5/S3/Quantum/Entanglement/SectorChannels/FiniteFlatSectorOptimum.result"),
             H("The exact optimum on the compact physical carriers"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

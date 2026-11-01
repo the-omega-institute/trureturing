@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/FiniteFlatSectorOptimum
+/- GID: D5/S3/Quantum/Entanglement/SectorChannels/FiniteFlatSectorOptimum
    generality: G
-   mirror-B: D5/B/S3/Quantum/Entanglement/FiniteFlatSectorOptimum
+   mirror-B: D5/B/S3/Quantum/Entanglement/SectorChannels/FiniteFlatSectorOptimum
    mirror-E: none(waiver:finite-physical-channel-construction)
    anchors: []
    utility: none
@@ -17,7 +17,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 universe u
 
-namespace D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
+namespace D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum
 
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -926,4 +926,4 @@ theorem result [Nonempty Sector]
 
 #print axioms result
 
-end D5.S3.Quantum.Entanglement.FiniteFlatSectorOptimum
+end D5.S3.Quantum.Entanglement.SectorChannels.FiniteFlatSectorOptimum
