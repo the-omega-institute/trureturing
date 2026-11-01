@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Apollonian;
 internal sealed class CutoffGramLimitDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Apollonian/CutoffGramLimit.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/radsararanando2026apollonian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/radsararanando2026apollonian");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual fixed-cutoff Gram matrices converge to their diagonal face weights.", H("Fixed-cutoff Gram limit"), Blocks(
             Node("normalizedGram", "The normalized actual Gram matrix",

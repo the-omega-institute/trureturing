@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.SpectralTopology;
 internal sealed class RectangularDilationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/SpectralTopology/RectangularDilation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/radsararanando2026apollonian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/radsararanando2026apollonian");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive second eigenvalues of unequal Hermitian block dilations.", H("Unequal block dilation spectra"), Blocks(
             Node("unequal_dilation_second", "The complex unequal-block identity",

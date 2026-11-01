@@ -22,7 +22,7 @@ $$\lim_{m\to\infty}\theta_2(G_m)/2^{m/2}=\sqrt2.$$
 Here $G_0$ is plane $K_4$ with outer triangle $abc$ and centre $o$.
 Every step inserts one vertex in each inner triangular face and joins it
 exactly to the three corners; the outer triangle is never subdivided.
-The [source note](../Library/GraphInvariants/radsararanando2026apollonian.md)
+The [source note](../Library/Eigenstructure/radsararanando2026apollonian.md)
 attributes the quotation and adapted exposition to the author under CC BY-SA 4.0.
 
 ## Motivation

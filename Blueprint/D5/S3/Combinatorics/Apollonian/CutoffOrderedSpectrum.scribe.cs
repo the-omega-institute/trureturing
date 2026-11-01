@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Apollonian;
 internal sealed class CutoffOrderedSpectrumDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Apollonian/CutoffOrderedSpectrum.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/radsararanando2026apollonian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/radsararanando2026apollonian");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordered spectra of the actual old-to-late graph block.", H("Actual cutoff dilation spectrum"), Blocks(
             Node("cutoffDilation", "The actual cutoff dilation", "For natural k,t, the real matrix cutoffDilation k t acts on Vertex k plus LateVertex k t and has blocks [[0,B],[transpose B,0]], where B is the actual zero-one cutoff adjacency block. The two diagonal blocks are zero and the vertex types may have unequal cardinalities.", DescribeRole.Definition),

@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Apollonian;
 internal sealed class InnerFaceStagesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Apollonian/InnerFaceStages.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/radsararanando2026apollonian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/radsararanando2026apollonian");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The deterministic finite inner-face Apollonian stages and their source-derived combinatorial laws.",

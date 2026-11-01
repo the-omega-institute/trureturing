@@ -3,7 +3,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Apollonian;
 internal sealed class SecondEigenvalueLimitDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/radsararanando2026apollonian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/radsararanando2026apollonian");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact all-natural-stage second ordinary-adjacency eigenvalue limit.", H("Second eigenvalue of the inner-face Apollonian stages"), Blocks(
             Describe.Lean(DescribeId.Create("apollonian-second-eigenvalue-limit-result"),

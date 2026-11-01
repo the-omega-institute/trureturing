@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Apollonian;
 internal sealed class CutoffSpectralBoundsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Apollonian/CutoffSpectralBounds.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/radsararanando2026apollonian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/radsararanando2026apollonian");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Euclidean spectral remainder bounds for the actual finite inner-face Apollonian graphs.",
         H("Actual cutoff spectral bounds"), Blocks(
