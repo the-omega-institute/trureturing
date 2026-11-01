@@ -1,0 +1,44 @@
+**Lemma 3.1 (Per-qubit functionals act diagonally on Pauli labels).** Let $\lbrace\rho_a\rbrace_{a=1}^4$ be any qubit SIC, $A$ as in Definition 2.2, and for $\beta,\gamma\in\lbrace0,1,2,3\rbrace$ put
+
+$$
+e(\beta,\gamma)=\frac14\sum_{a}\operatorname{Tr}\big(\rho_aP_\beta\rho_aP_\gamma\big),\qquad \alpha(\beta,\gamma)=\frac14\sum_{a,b}A_{ab}\operatorname{Tr}\big(\rho_bP_\beta\rho_aP_\gamma\big).
+$$
+
+Then $e(\beta,\gamma)=\alpha(\beta,\gamma)=0$ for $\beta\ne\gamma$, and on the diagonal
+
+$$
+e(0,0)=1,\quad e(\beta,\beta)=\tfrac13,\quad \alpha(0,0)=0,\quad \alpha(\beta,\beta)=\tfrac13\qquad(\beta\ne0).
+$$
+
+Consequently, for every $n\ge1$, every $k\ge0$, every choice of the qubit SICs in Definition 2.3 and every linear map $\Lambda$ on $M_{2^n}(\mathbb C)$,
+
+$$
+F_k(\Lambda)=\sum_{\beta}q_\beta\sum_{\lvert T\rvert\le k}(-1)^{\lvert T\rvert}\prod_{i\in T}\alpha(\beta_i,\beta_i)\prod_{i\notin T}e(\beta_i,\beta_i).
+$$
+
+In particular $F_k(\Lambda)$ depends only on the Pauli-twirl weights $q_\beta$ of $\Lambda$, coincides with $F_k$ of the Pauli channel $X\mapsto\sum_\beta q_\beta P_\beta XP_\beta$, and does not depend on the choice of the qubit SICs.
+
+**Proof.** For operators $X,Y$ on $\mathbb C^2$ one has $\operatorname{Tr}((X\otimes Y)S)=\operatorname{Tr}(XY)$, hence $\operatorname{Tr}(\rho P\rho Q)=\operatorname{Tr}((\rho P\otimes\rho Q)S)=\operatorname{Tr}((\rho\otimes\rho)(P\otimes Q)S)$. By cited fact (a), and since $S(P\otimes Q)S=Q\otimes P$,
+
+$$
+\sum_a\operatorname{Tr}(\rho_aP_\beta\rho_aP_\gamma)=\frac23\big(\operatorname{Tr}(P_\beta P_\gamma)+\operatorname{Tr}P_\beta\operatorname{Tr}P_\gamma\big)=\frac23\big(2\delta_{\beta\gamma}+4\delta_{\beta0}\delta_{\gamma0}\big),
+$$
+
+which gives the stated values of $e$. Using $\sum_a\rho_a=2I$ (cited fact (a)),
+
+$$
+\frac14\sum_{a,b}\frac14\operatorname{Tr}(\rho_bP_\beta\rho_aP_\gamma)=\frac1{16}\operatorname{Tr}\big(2P_\beta\,2P_\gamma\big)=\frac12\delta_{\beta\gamma},
+$$
+
+so $\alpha(\beta,\gamma)=\frac12\delta_{\beta\gamma}-\frac12e(\beta,\gamma)$, which is $0$ off the diagonal, $0$ at $\beta=\gamma=0$ and $\frac12-\frac16=\frac13$ at $\beta=\gamma\ne0$.
+
+For $n$ qubits and the product states of Definition 2.3, the map $X\mapsto P_\beta XP_\gamma$ is the tensor product of the single-qubit maps $X_i\mapsto P_{\beta_i}X_iP_{\gamma_i}$, the trace of a tensor product is the product of the traces, and $(M_T)_{ab}=\prod_i(M_i)_{a_ib_i}$. Hence
+
+$$
+\frac1{4^n}\sum_{a,b}(M_T)_{ab}\operatorname{Tr}\big(\rho_bP_\beta\rho_aP_\gamma\big)=\prod_{i\in T}\alpha_i(\beta_i,\gamma_i)\prod_{i\notin T}e_i(\beta_i,\gamma_i),
+$$
+
+where $e_i,\alpha_i$ are formed with the SIC on qubit $i$. By the single-qubit statement this product vanishes unless $\beta=\gamma$ and takes on the diagonal values that do not depend on the SICs. Inserting the expansion of Convention 2.1 into Definition 2.3 and using linearity gives the displayed formula. $\square$
+
+Stance: literature-attested for the values of $e$ (a direct evaluation of the 2-design identity of cited fact (a)) and for the independence of $F_0$, the case $k=0$, from the choice of the qubit SICs (cited fact (c), Section I); suspected-novel for the values of $\alpha$ and for the formula and the SIC-independence for $k\ge1$.
+

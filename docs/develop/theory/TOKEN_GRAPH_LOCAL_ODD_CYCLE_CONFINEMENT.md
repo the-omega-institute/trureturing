@@ -3003,3 +3003,1280 @@ no extension to other signs, weights, fibres or fillings.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 31. Joint equality spaces and the actual crossing incidence
+
+**定义 31.1（One deficient fibre and the original minimum）。**
+Let $H$ be any finite connected simple unit-weight graph of even
+order $m\geq2$, let $S\geq1$ be an integer and put $s=2S$.
+Retain exactly the complex carrier, coefficient-one adjacency,
+fibre projection and entire-carrier minimum
+$\mathcal H_{mS},K_s,P_s,E_s$ of (19.1)–(19.2).
+Write $V_J^{(a)}$ for an actual spin-$J$ copy in an original
+$2S$-coordinate fibre. Its multiplicity is
+
+$$
+r_{2S}(S-J)=\binom{2S}{S-J}-\binom{2S}{S-J-1},
+\qquad J=0,1,\ldots,S.
+\tag{31.1}
+$$
+
+For a vertex $p$, let $K^{p,J}$ be the restriction to the
+zero-total-weight space with spin $J$ at $p$ and spin $S$
+at every other vertex. Its matrix is the same on each actual
+multiplicity copy. Put
+
+$$
+\begin{aligned}
+j&=S-1,&
+\mu_p(J)&=\min\operatorname{spec}K^{p,J},&
+\Delta_p&=\mu_p(j)-E_s,\\
+g_s&=\min\operatorname{spec}(K_s|_{\ker P_s})-E_s.
+\end{aligned}
+\tag{31.2}
+$$
+
+These are minima on nonzero finite spaces. The exact gap
+reduction is $g_s=\min_p\Delta_p$, with $\Delta_p\geq0$;
+the reduction follows from the supplied nonstrict local-spin
+comparison and is justified below. Thus $\Delta_p=0$ means
+attainment of the actual $E_s$ by this original deficient
+sector, including the endpoint $j=0$.
+
+**定义 31.2（Regional ground spaces and real ladder relations）。**
+Fix $p$ and set
+
+$$
+A=N_H(p),\qquad R=V(H)\setminus(\{p\}\cup A).
+\tag{31.3}
+$$
+
+All factors in $A$ and $R$ are the actual maximal-spin-$S$
+factors. For $X\subseteq A\cup R$ use the operators $K_X,Z_X$
+and $B_X^\pm$ of (19.3). For every integer $q$ with
+$\mathcal V_R(q):=\ker(Z_R-qI)\ne0$, define
+
+$$
+\begin{aligned}
+e_A&=\min\operatorname{spec}(K_A|_{\ker Z_A}),&
+U&=\mathcal G_A(0),\\
+e_R(q)&=\min\operatorname{spec}(K_R|_{\mathcal V_R(q)}),&
+W_q&=\ker(K_R-e_R(q)I)\cap\mathcal V_R(q),\\
+\mathcal Q_t&=\{q\in\mathbb Z:\mathcal V_R(q)\ne0,\ |q|\leq t\},&
+\eta&=\min_{q\in\mathcal Q_{S-1}}e_R(q),\\
+M_{ir}&=\mathbf1_{\{i,r\}\in E(H)}\quad(i\in A,r\in R),&
+V_{AR}&=\sum_{i\in A,r\in R}M_{ir}
+ (J_i^+J_r^-+J_i^-J_r^+).
+\end{aligned}
+\tag{31.4}
+$$
+
+Here $U$ and each $W_q$ are their entire complex eigenspaces.
+The set $\mathcal Q_{S-1}$ is nonempty since it contains zero.
+For $R=\varnothing$ there is only $q=0$, with
+$\mathcal V_R(0)=W_0=\mathbb C$, $K_R=Z_R=0$ and
+$e_R(0)=\eta=0$; $M$ then has no columns and $V_{AR}=0$.
+A regional weight slice reduces its own regional operator,
+because $[K_X,Z_X]=0$. No invariance of a regional weight
+slice under the coupled operator $K_s$ is part of this definition.
+
+For any finite set $X$ of positive-spin-$S$ factors and any
+nonzero complex subspace $W\subseteq V_S^{\otimes X}$, put
+
+$$
+\begin{aligned}
+T_X^\pm(c)&=\sum_{x\in X}c_xJ_x^\pm,\\
+L(W)&=\{c\in\mathbb R^X:T_X^+(c)W=T_X^-(c)W=0\}.
+\end{aligned}
+\tag{31.5}
+$$
+
+The equality to zero means annihilation of every vector of $W$.
+A coordinate is active if some element of $L(W)$ is nonzero
+there; otherwise it is inactive. A signed indicator on a set
+$B\subseteq X$ is a vector $\sigma\in\mathbb R^X$ with
+$\sigma_x\in\{1,-1\}$ on $B$ and zero outside $B$.
+For $X=\varnothing$ use $\mathbb R^X=\{0\}$ and the same
+empty-tensor convention as above.
+
+**定理 31.3（Joint necessary equality and incidence theorem）。**
+With Definitions 31.1–31.2, suppose $\Delta_p=0$.
+Then the following conclusions hold simultaneously.
+
+(a) The regional minima satisfy
+
+$$
+E_s=e_A+\eta,\qquad
+\min_{q\in\mathcal Q_S}e_R(q)=\eta.
+\tag{31.6}
+$$
+
+In particular at least one minimizing exterior weight belongs
+to $\mathcal Q_{S-1}$. For every $q\in\mathcal Q_S$ with
+$e_R(q)=\eta$, every integer $J$ with $|q|\leq J\leq S$,
+and every actual spin-$J$ multiplicity copy $a$ at $p$,
+
+$$
+\begin{aligned}
+|J,-q\rangle_p^{(a)}\otimes U\otimes W_q
+ &\subseteq\ker(K_s-E_sI),\\
+V_{AR}(U\otimes W_q)&=0.
+\end{aligned}
+\tag{31.7}
+$$
+
+The first line is an inclusion of entire complex subspaces in
+the original carrier, and includes their superpositions across
+weights, spins and copies whenever those summands occur.
+
+(b) The real relation space used here has the following
+finite-spin description, also for every general $W$ in (31.5).
+There are pairwise disjoint active blocks $B_b$, each of size
+at least two, and signed indicators $\sigma_b$ on them such that
+
+$$
+L(W)=\bigoplus_b\mathbb R\sigma_b.
+\tag{31.8}
+$$
+
+All coordinates outside their union are inactive.
+For every block, $Z_{B_b}W=0$. Simultaneously rotating the
+negative-sign sites of all $\sigma_b$ by $\pi$ about the
+$z$ axis makes $W$ separately singlet on every $B_b$.
+The empty block family and $L(W)=0$ are included. This is the
+collective-singlet and finite-dimensional algebra description
+used in the joint theorem; it asserts no tensor factorization
+of $W$.
+
+For the actual $U$ there is a partition of all of $A$ into
+blocks $A_b$ of size at least two, refining the actual connected
+components of $H[A]$, such that
+
+$$
+L(U)=\bigoplus_b\mathbb R\mathbf1_{A_b}.
+\tag{31.9}
+$$
+
+No factorization of $U$ across the $A_b$ is asserted.
+
+(c) For every minimizing $q$ in (a), with the same actual
+matrix $M$ and the same partition (31.9), one has the equivalence
+
+$$
+V_{AR}(U\otimes W_q)=0
+\quad\Longleftrightarrow\quad
+M_{i,\bullet}-M_{i',\bullet}\in L(W_q)
+\quad\text{whenever }i,i'\in A_b.
+\tag{31.10}
+$$
+
+In fact the equivalence uses only the indicated weight of
+$W_q$ and (31.9), not a converse ground-state assumption.
+Under $\Delta_p=0$ its left side holds for every such $q$,
+so all the row conditions hold simultaneously.
+
+(d) Apply (31.8) to each such $W_q$, allowing its blocks and
+signs to depend on $q$. Every row difference in (31.10) has
+its unique expression
+
+$$
+M_{i,\bullet}-M_{i',\bullet}
+   =\sum_d\varepsilon_d\sigma_d,
+\qquad \varepsilon_d\in\{-1,0,1\}.
+\tag{31.11}
+$$
+
+It is zero on inactive coordinates. Its nonzero support is a
+union of whole active blocks and cannot be a singleton.
+If all exterior coordinates are active for $W_q$, then $q=0$.
+This includes the empty exterior. Failure of a required row
+condition excludes $\Delta_p=0$ at this $p$.
+
+These are necessary consequences of equality at the actual
+entire-carrier minimum. The equivalence (31.10) concerns boundary
+annihilation only. It supplies neither universal strictness
+nor a sufficient condition for a product space to attain $E_s$.
+The arbitrary-$H$ confinement question outside (30.2), and the
+requirement that a nonsymmetric counterexample attain the actual
+original $E_s$, remain as in Theorem 30.2.
+
+Proof. First recall the precise representation and minimum
+comparison being consumed. The full orthogonal decomposition
+(19.5), or the [owning volume's (6.6)–(6.12)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md),
+is
+
+$$
+\mathcal H_{mS}\cong
+\bigoplus_{\substack{J_i\in\{0,\ldots,S\}\\
+             1\leq a_i\leq r_{2S}(S-J_i)}}
+ \left(\bigotimes_i V_{J_i}^{(a_i)}\right)_{\sum_i Z_i=0}.
+\tag{31.12}
+$$
+
+Each summand reduces $K_s$, whose restriction is
+$\sum_{\{i,k\}\in E(H)}(J_i^+J_k^-+J_i^-J_k^+)$ with
+exactly the ladders in (19.5). Its weight $x_i$ has original
+occupancy $S+x_i$, including both endpoints.
+For Srinivasan, [Theorem 1.2 and the representation construction](https://arxiv.org/pdf/1001.0280v2),
+the parameters are Boolean rank $2S$, starting rank $S-J_i$
+and layer $u=S+x_i$. His up operator is $L_i^\ast$ and its
+coefficient is
+$\sqrt{(u+1-(S-J_i))(2S-(S-J_i)-u)}$.
+For Feinsilver, [§§3–4, Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+the principal number is $2J_i$, the chain index is $J_i+x_i$,
+$T=L_i^\ast$, $T^\ast=L_i$ and the grading is $-2Z_i$.
+Thus (31.12) retains the spin-zero chains and every multiplicity.
+
+The normalized maximal-spin weights are the actual two-letter
+occupation vectors with counts $(2S-n_i,n_i)$ and length $2S$.
+The cardinality and Gram formulas are
+`sector_words_card_multinomial` and `sector_gram` in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs);
+the head-removal and factorial recurrences give the same formulas
+when either count is zero. Equivalently, (O.2), (O.8)–(O.9) of
+the [collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md)
+have parameters $d=m$, $N=2S$, $g=0$, $e=1$ and
+$a_i=L_i/\sqrt{2S}$. With its matrix $B=A(H)$ its finite
+operator is $H_{2S}=\hbar K_s/(2S)$ on the two-state code.
+Only these exact finite identities are used, not a fixed-excitation
+approximation at the growing excitation $mS$.
+
+The singleton differences in `tokenGraph` in
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+give one removed and one inserted original coordinate for every
+allowed move. The full `Test.move`, `Test.adj_mem`,
+`Test.move_injective`, `Test.toNbr_bij` and `Test.token_energy`
+arguments in [CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+identify that move sum with coefficient-one adjacency.
+In particular, summing $L_i^\ast L_k$ over ordered adjacent
+fibre indices gives the two ladder terms for each unordered edge,
+with no extra factor or diagonal shift. The primary convention
+is [Apte–Parekh–Sud v3, Definition 1 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+with $N=2mS$, $k=mS$ and all edge weights one.
+Their shifted operator $W(G_s)I/2-K_s$ is different from $K_s$.
+The real/complex Rayleigh identities in the same complete
+CutBoundRefutation source justify the identical complex Rayleigh
+minimum. None of its cut, phase-trial or Laplacian refutations
+is a premise about the present ground space.
+
+The nonstrict fixed-zero-weight comparison in (19.6) and the
+owning volume's (7.4)–(7.5) is the result of Ghassemi
+Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+The source's maximal spins are $s_i=S$, its variable spins
+are $t_i=J_i$, its magnetization is $M=0$, and
+$D_{ik}=\operatorname{diag}(2A(H)_{ik},2A(H)_{ik},0)$.
+It gives nonincrease of the minimum when one local spin is
+increased by one. The weight-zero triplet used there preserves
+total weight, and its upper-spin projection has squared norm
+$((J+1)^2-x^2)/((J+1)(2J+1))>0$ for every $|x|\leq J$,
+including $J=0$ and both endpoints. Orthogonality of different
+weights preserves nonvanishing for entangled inputs. Only this
+nonstrict comparison, not an every-vector exclusion, is used.
+
+To verify the reduction in (31.2), take any deficient summand of
+(31.12). At some $p$ its spin is at most $S-1$. Increase that
+spin to $S-1$ and every other spin to $S$. The comparison shows
+that its minimum is at least $\mu_p(S-1)$. Conversely each
+sector defining $\mu_p(S-1)$ is an actual deficient summand in
+$\ker P_s$. Taking both minima proves
+$g_s=\min_p(\mu_p(S-1)-E_s)$.
+All original sector energies are at least $E_s$, so
+$\Delta_p\geq0$. This proves the claimed exact reduction.
+
+Now $\Delta_p=0$ supplies an original ground vector in the
+sector with spin $j=S-1$ at $p$ and spin $S$ elsewhere.
+Apply the complete necessary-ground-space result of Theorem
+19.2, including (19.12)–(19.16). It gives
+
+$$
+\begin{aligned}
+U&\subseteq\mathcal S_A,&
+B_C^\pm U&=0,& Z_CU&=0
+   \quad(C\text{ an actual component of }H[A]),\\
+e_A&=\sum_Ce_C(0),&
+0\ne\Psi&\in V_j\otimes U\otimes V_S^{\otimes R},&
+(Z_p+Z_R)\Psi&=0,qquad K_s\Psi=E_s\Psi.
+\end{aligned}
+\tag{31.13}
+$$
+
+Here $\Psi$ can be normalized. To spell out the use of its
+component conclusion, the support of each component marginal
+lies in $\mathcal G_C(0)$. For its orthogonal projection $Q_C$
+this says $\|(I-Q_C)\Psi\|^2=0$.
+The commuting component projections therefore put $\Psi$ in
+the tensor product of those component ground spaces. The sum
+$K_A=\sum_CK_C$ acts there by $\sum_Ce_C(0)=e_A$, proving
+the asserted $U$ support without claiming a product vector.
+The universal inclusion of the *whole* $U$ in the singlet space
+is (19.13), not an inference from just that marginal support.
+It is obtained there by replacing the neighborhood with any
+zero-weight local ground vector and releasing an original
+singlet pair at $p$; the two orthogonal triplet outputs force
+both neighborhood ladders to vanish. Thus the hypothesis is
+attainment of the same actual $E_s$, as required here.
+
+Let $\Pi_A$ be the projector onto the full $A$ singlet space.
+Simultaneous rotations fix each of its vectors and reverse a
+specified one-site Cartesian component under a $\pi$ rotation
+about an orthogonal axis. Hence
+$\Pi_AJ_i^\pm\Pi_A=0$ for $i\in A$, as in (19.9).
+The $p$–$A$ terms also annihilate $V_J\otimes U$, since
+they are $J_p^+B_A^-+J_p^-B_A^+$.
+There are no $p$–$R$ edges. Consequently, on the vector in
+(31.13), all crossing expectations vanish and
+
+$$
+E_s=e_A+\langle\Psi,K_R\Psi\rangle.
+\tag{31.14}
+$$
+
+This compression identity also holds with arbitrary operators
+on the spectator tensor factors; it does not require an
+unentangled $\Psi$.
+
+Decompose only by the $p$ weight and the exterior weight:
+
+$$
+\Psi=\sum_{q\in\mathcal Q_j}|j,-q\rangle_p\otimes f_q,
+\qquad f_q\in U\otimes\mathcal V_R(q),\qquad
+\sum_q\|f_q\|^2=1.
+\tag{31.15}
+$$
+
+Since $K_R$ preserves its own weight spaces, (31.14) gives
+
+$$
+E_s\geq e_A+\sum_{q\in\mathcal Q_j}e_R(q)\|f_q\|^2
+\geq e_A+\eta.
+\tag{31.16}
+$$
+
+Choose a minimizing $q_0\in\mathcal Q_j$, any unit $u\in U$
+and any unit $w\in W_{q_0}$. The actual original vector
+$|j,-q_0\rangle_p\otimes u\otimes w$ has total weight zero
+and Rayleigh quotient $e_A+\eta$: the $p$–$A$ term is zero,
+and the $A$–$R$ expectation is zero by the preceding singlet
+compression. The variational principle on the whole original
+carrier gives the reverse of (31.16), so $E_s=e_A+\eta$.
+No regional slice was assumed to reduce $K_s$ in this argument.
+
+For any $q\in\mathcal Q_S$ the same trial using spin $S$
+at $p$ gives $E_s\leq e_A+e_R(q)$. Thus $e_R(q)\geq\eta$
+for every such $q$, while $q_0$ attains $\eta$ and belongs to
+$\mathcal Q_{S-1}\subseteq\mathcal Q_S$. This proves all of
+(31.6), also when $S=1$ and $\mathcal Q_j=\{0\}$.
+
+Fix any $q\in\mathcal Q_S$ with $e_R(q)=\eta$ and any
+$|q|\leq J\leq S$. Every actual copy of $V_J$ occurs with
+the multiplicity (31.1). For unit $u\in U,w\in W_q$, the
+same calculation on that copy gives Rayleigh quotient $E_s$
+to $|J,-q\rangle_p^{(a)}\otimes u\otimes w$.
+For a finite Hermitian operator whose entire-carrier minimum
+is $E_s$, zero expectation of $K_s-E_sI\succeq0$ implies
+membership in its kernel: in an orthonormal eigenbasis the
+expectation is a sum of nonnegative numbers
+$(\theta-E_s)|c_\theta|^2$, each of which must vanish.
+Thus every such product is an original ground vector.
+Its internal terms already act by $e_A+\eta=E_s$, and its
+$p$–$A$ term is zero. Subtracting those terms from the ground
+equation leaves
+
+$$
+|J,-q\rangle_p^{(a)}\otimes V_{AR}(u\otimes w)=0.
+\tag{31.17}
+$$
+
+The nonzero first factor proves the boundary annihilation for
+all $u,w$. Product vectors span $U\otimes W_q$ over
+$\mathbb C$; linearity proves (31.7) on the whole space and
+on all stated superpositions, including entanglement within
+and between its regions. No choice of one minimizing weight,
+one local ground vector or one multiplicity copy is retained.
+
+We next establish the finite-spin algebra needed to interpret
+this boundary equation. The collective singlet condition is
+annihilation by the three total spin components, equivalently
+by both total ladders. This is the trivial spin summand in
+angular-momentum addition; see [DLMF §§34.1–34.3](https://dlmf.nist.gov/34.1).
+Diagonal collective stabilizers and their disjoint spin blocks
+are classical representation-theoretic structures; for the
+spin-$\tfrac12$ setting see Lyons–Walck,
+[*Multiparty quantum states stabilized by the diagonal subgroup
+of the local unitary group*, introduction (1)–(2)](https://arxiv.org/pdf/0808.2989v2),
+and Lyons–Skelton–Walck,
+[*Werner State Structure and Entanglement Classification*, §3](https://arxiv.org/pdf/1109.6063v2).
+Only the collective-singlet and elementary finite-dimensional
+algebra facts are used here. The following argument gives their
+needed real-coefficient, common-subspace form directly, without
+assuming a classification of positive-integer-spin graph ground
+spaces from those qubit results.
+
+For the arbitrary nonzero $W$ of (31.5), abbreviate
+$T_X^\pm(c)$ to $T^\pm(c)$ and put
+$D(c)=\sum_xc_xZ_x$. Products of coefficient vectors in this
+paragraph are coordinatewise. The spin commutation relations give
+
+$$
+[T^+(c),T^-(d)]=2D(cd),\qquad
+[D(cd),T^\pm(e)]=\pm T^\pm(cde).
+\tag{31.18}
+$$
+
+If two operators annihilate $W$ pointwise, their commutator
+does too. Therefore, for $c,d,e\in L(W)$,
+$D(cd)W=0$ and $cde\in L(W)$.
+In particular every odd coordinatewise power $a^{2k+1}$ of
+an $a\in L(W)$ belongs to $L(W)$, by induction using the
+ternary product with $a,a$.
+
+For an active coordinate $x$, let $\lambda_x$ be the nonzero
+real linear functional $c\mapsto c_x$ on $L(W)$.
+Partition the active coordinates by
+$x\sim y$ if $\lambda_x=\lambda_y$ or
+$\lambda_x=-\lambda_y$. This is an equivalence relation.
+Choose a representative $x_b$ of each class $B_b$ and signs
+$\sigma_b(x)$ so that
+$\lambda_x=\sigma_b(x)\lambda_{x_b}$ on $B_b$.
+Every $c\in L(W)$ is then constant up to those signs on a
+class and is zero at inactive coordinates.
+
+There exists $a\in L(W)$ for which all $a_{x_b}$ are nonzero
+and their squares are pairwise distinct. Indeed the excluded
+conditions are the kernels of finitely many nonzero real
+linear forms $\lambda_{x_b}$ and
+$\lambda_{x_b}\pm\lambda_{x_d}$ for distinct classes.
+Their product is a nonzero polynomial on the finite-dimensional
+real vector space $L(W)$, so it cannot vanish everywhere.
+Write $v_b=a_{x_b}$ and extend each $\sigma_b$ by zero outside
+its class. If there are $h$ classes, the $h$ vectors
+$a,a^3,\ldots,a^{2h-1}$ have the expansions
+
+$$
+a^{2k+1}=\sum_{b=1}^h v_b^{2k+1}\sigma_b,
+\qquad 0\leq k<h.
+\tag{31.19}
+$$
+
+The coefficient matrix is invertible: its determinant, up to
+ordering, is
+$\prod_bv_b\prod_{b<d}(v_d^2-v_b^2)\ne0$.
+Thus every $\sigma_b$ is in $L(W)$. Conversely the functional
+relations defining the classes already put every element of
+$L(W)$ in their span. Disjoint nonempty supports make the sum
+direct, proving (31.8). If there are no active coordinates,
+$L(W)=0$ and the assertion holds with no blocks; this also
+covers $X=\varnothing$.
+
+Apply (31.18) with $c=d=\sigma_b$ to get
+$Z_{B_b}W=0$. Let
+
+$$
+\mathcal R_\sigma=
+ \prod_{\substack{b,\ x\in B_b\\\sigma_b(x)=-1}}
+ e^{-\mathrm i\pi Z_x}.
+\tag{31.20}
+$$
+
+Conjugating a local ladder by this rotation changes its sign
+exactly at the negative-sign sites and leaves each $Z_x$
+unchanged. Hence both unweighted ladders on $B_b$ annihilate
+$\mathcal R_\sigma W$, as does $Z_{B_b}$.
+Their three Cartesian generators consequently fix this entire
+space under every simultaneous block rotation: every vector
+is a singlet on that block. If $B_b=\{x\}$, the same equations
+would give $Z_xW=J_x^+W=J_x^-W=0$. For $0\ne w\in W$
+the Casimir identity instead gives
+
+$$
+\|J_x^+w\|^2
+ =\langle w,(S(S+1)I-Z_x(Z_x+I))w\rangle
+ =S(S+1)\|w\|^2>0,
+\tag{31.21}
+$$
+
+a contradiction. Every block therefore has size at least two.
+These arguments apply to all vectors of $W$ simultaneously;
+they do not select a basis vector or assume that $W$ factors.
+
+For the actual $U$, (31.13) puts $\mathbf1_A$ in $L(U)$ and
+also puts $\mathbf1_C$ in $L(U)$ for every actual component
+$C$ of $H[A]$. Thus every coordinate of $A$ is active.
+On any signed block of (31.8), an element of $L(U)$ is a
+scalar multiple of its sign pattern. Since $\mathbf1_A$ has
+value one everywhere, that pattern must be constant on the
+block. Reversing an overall sign makes it $\mathbf1_{A_b}$.
+Moreover $\mathbf1_C$ must be constant on each $A_b$;
+therefore $A_b$ cannot meet both $C$ and its complement.
+This proves (31.9) with refinement of actual components and
+with the already proved exclusion of singleton blocks.
+It proves only a relation-space partition, not factorization
+of the complex space $U$.
+
+For the boundary equivalence we need the full space of complex
+relations among just one sign of the ladders on $U$.
+Let $\alpha_i^\pm=J_i^\pm|_U$ be the corresponding linear maps.
+Then
+
+$$
+\left\{c\in\mathbb C^A:\sum_i c_i\alpha_i^+=0\right\}
+ =L(U)\otimes_{\mathbb R}\mathbb C
+ =\left\{c\in\mathbb C^A:\sum_i c_i\alpha_i^-=0\right\}.
+\tag{31.22}
+$$
+
+To prove this, a simultaneous rotation of $A$ by $\pi$ about
+$x$ fixes every vector of $U\subseteq\mathcal S_A$ and
+interchanges $J_i^+$ with $J_i^-$. Thus either one-sign
+relation implies the other, with the same complex coefficients.
+Write $c=a+\mathrm i b$ with $a,b\in\mathbb R^A$.
+Both relations imply $X(a)+\mathrm iX(b)=0$ and
+$Y(a)+\mathrm iY(b)=0$ on $U$, where
+$X(a)=\sum_i a_iX_i$ and similarly for the other sums.
+The self-adjoint operators $X(a),X(b)$ commute, since all
+same-axis site operators commute. Thus for every $u\in U$,
+
+$$
+0=\|(X(a)+\mathrm iX(b))u\|^2
+  =\|X(a)u\|^2+\|X(b)u\|^2.
+\tag{31.22a}
+$$
+
+The cross term is zero because
+$\langle X(a)u,X(b)u\rangle=\langle u,X(a)X(b)u\rangle$
+is real. The same argument with $Y$ shows that all four real
+sums annihilate $U$. Therefore $a,b\in L(U)$.
+Conversely the complexification of $L(U)$ supplies both
+relations by linearity. This proves (31.22) on the entire
+complex subspace, without a reality assumption on its vectors.
+
+For each block choose one representative $i_b\in A_b$.
+By (31.9) and (31.22), for either fixed sign the only relations
+among the $\alpha_i^\pm$ are the complex spans of
+$\sum_{i\in A_b}\alpha_i^\pm=0$. It follows that
+$\{\alpha_i^\pm:i\in A_b\setminus\{i_b\},\ b\}$ is linearly
+independent: a relation among these maps would extend by zero
+at each $i_b$ to an element constant on every block, hence to
+zero everywhere. The same family spans all the maps since
+$\alpha_{i_b}^\pm=-\sum_{i\in A_b\setminus\{i_b\}}\alpha_i^\pm$.
+
+Fix a minimizing $q$ and write
+
+$$
+\beta_i^\pm=\left.\sum_{r\in R}M_{ir}J_r^\pm\right|_{W_q}.
+\tag{31.23}
+$$
+
+These are maps from the whole $W_q$ into its exterior weight
+$q\pm1$ space, with the zero space allowed at an endpoint.
+On $U\otimes W_q$, the two signs of the boundary term have
+$A$ weights $+1$ and $-1$, respectively. Their images are
+orthogonal, so their sum vanishes if and only if
+
+$$
+\sum_i\alpha_i^+\otimes\beta_i^-=0,
+\qquad
+\sum_i\alpha_i^-\otimes\beta_i^+=0.
+\tag{31.24}
+$$
+
+These are identities of maps on the entire tensor product.
+The identification of tensor products of linear maps with maps
+on tensor products is injective in these finite-dimensional
+spaces, as is seen by using bases in their domain and range.
+For either sign, eliminate the representative in each block
+using the displayed relation among the $\alpha_i^\pm$.
+For example the first identity becomes
+
+$$
+\sum_b\sum_{i\in A_b\setminus\{i_b\}}
+ \alpha_i^+\otimes(\beta_i^--\beta_{i_b}^-)=0.
+\tag{31.25}
+$$
+
+Linear independence, or application of the dual basis of the
+span of the $\alpha_i^+$, says precisely that each map
+$\beta_i^--\beta_{i_b}^-$ is zero. The second identity says
+the same for the plus maps. Thus (31.24) is equivalent to
+both exterior ladders with coefficients
+$M_{i,\bullet}-M_{i',\bullet}$ annihilating $W_q$, for every
+pair in a common $A_b$. Those coefficients are real, so this
+is exactly membership in (31.5), proving (31.10).
+The reasoning also proves the reverse implication without a
+Rayleigh argument: constancy of both $\beta_i^\pm$ on a block
+makes its contribution the zero map
+$\sum_{i\in A_b}\alpha_i^\mp\otimes\beta_{i_b}^\pm$.
+The partition belongs to $U$ alone and $M$ belongs to the
+original graph alone. Neither can change when a different
+minimizing exterior weight is chosen.
+
+Finally let $d=M_{i,\bullet}-M_{i',\bullet}\in L(W_q)$.
+Since $M$ is zero-one, every coordinate of $d$ belongs to
+$\{-1,0,1\}$. On a block $B_h$ in (31.8), $d_r$ equals a single
+coefficient times $\sigma_h(r)$; evaluating at any coordinate
+of that block puts the coefficient itself in $\{-1,0,1\}$.
+Disjoint supports give uniqueness and give zero outside the
+active union. Every nonzero coefficient occupies the whole
+block, whose size is at least two. This proves (31.11) and
+the singleton exclusion. If all exterior coordinates are
+active, their block weight identities add to $Z_RW_q=0$.
+But $Z_RW_q=qW_q$ and $W_q\ne0$, whence $q=0$.
+For $R=\varnothing$ both identities are zero and the only
+feasible weight was already zero. The row-failure statement
+is the contrapositive of (31.7) and (31.10), not a sufficiency
+test for a ground state.
+
+The energy step used the actual $E_s$ before any annihilation
+or row equivalence was deduced. Conversely, a boundary equation
+alone compares no other original spin sector or exterior weight
+with a proposed energy. Thus it gives no global ground
+certificate and no universal strictness outside the hypotheses
+already supplying strictness in §§17–30. In particular all
+component conditions (19.4) remain necessary only, and the
+whole-fibre cone condition (20.2) is still used only at $S=1$.
+The sufficient domains of (26.3), (29.1) and (30.2) retain their
+original graph and scale hypotheses, including both alternatives
+in (30.1) and the separate $\mathcal L_1=\varnothing$ endpoint.
+No new sufficient class or nonsymmetric original-ground
+counterexample follows from the present necessary theorem.
+All conclusions use the original positive coefficient-one
+operator, equal even fibres and global half filling. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 32. A dominating vertex in one actual neighborhood component
+
+**定义 32.1（The class $\mathcal D$ on the original carrier）。**
+Let $H$ be a finite connected simple unit-weight graph of even
+order $m\geq2$. A vertex $p$ satisfies the dominating-component
+condition if an actual connected component $C$ of $H[N_H(p)]$
+contains a vertex $v$ adjacent to every vertex of $C\setminus\{v\}$.
+The component may be a singleton. Let $\mathcal D$ consist of
+exactly the graphs satisfying this condition at every vertex.
+There is no condition on the other neighborhood components or
+on edges from the chosen component to the exterior.
+
+For every integer $S\geq1$, put $s=2S$ and retain
+
+$$
+\begin{aligned}
+\Omega_s&=V(H)\times[2S],&
+\mathcal H_{mS}&=\operatorname{span}_{\mathbb C}
+ \{|T\rangle:T\subseteq\Omega_s,\ |T|=mS\},\\
+K_s&=A(F_{mS}(H[\overline{K_{2S}}])),&
+P_s&=\prod_iP_i,&
+E_s&=\min\operatorname{spec}(K_s|_{\mathcal H_{mS}}).
+\end{aligned}
+\tag{32.1}
+$$
+
+Here $P_i$ is the original fibre-permutation projection.
+The entries for allowed token moves in $K_s$ are positive one.
+Use the actual sector minima $\mu_p(J)$ and
+$\Delta_p=\mu_p(S-1)-E_s$ of Definition 31.1. All of these
+minima refer to the same entire-carrier $E_s$ in (32.1).
+
+**定理 32.2（Strict local separation at every even scale）。**
+If $p$ satisfies Definition 32.1, then, for every integer $S\geq1$,
+
+$$
+\mu_p(S-1)>E_s,\qquad\Delta_p>0.
+\tag{32.2}
+$$
+
+This includes the spin-zero deficiency at $S=1$, all actual
+multiplicity copies and all feasible weights in the defining sector.
+
+Proof. The representation, normalization and comparison inputs
+are those of Theorems 19.2 and 31.3. Their source correspondence
+is retained explicitly. The full Boolean decomposition is
+
+$$
+\mathcal H_{mS}\cong
+\bigoplus_{\substack{0\leq t_i\leq S\\
+ 1\leq a_i\leq\binom{2S}{t_i}-\binom{2S}{t_i-1}}}
+ \left(\bigotimes_i V_{S-t_i}^{(a_i)}\right)_{\sum_iZ_i=0},
+\qquad \binom{2S}{-1}=0.
+\tag{32.3}
+$$
+
+In each summand $J_i=S-t_i$, the original occupancy is $S+x_i$,
+and
+
+$$
+\begin{aligned}
+J_i^\pm|J_i,x_i\rangle
+ &=\sqrt{(J_i\mp x_i)(J_i\pm x_i+1)}
+       |J_i,x_i\pm1\rangle,\qquad |x_i|\leq J_i,\\
+K_{\boldsymbol J}
+ &=\sum_{\{i,h\}\in E(H)}
+       (J_i^+J_h^-+J_i^-J_h^+).
+\end{aligned}
+\tag{32.4}
+$$
+
+The multiplicity count and normalized ladders are the classical
+Boolean-chain facts in Srinivasan,
+[Theorem 1.2 and its representation derivation](https://arxiv.org/html/1001.0280v2),
+and Feinsilver,
+[§3.1, (10), Proposition 4.3 and §4.2.2](https://arxiv.org/html/1102.0368v2),
+consumed through the [owning volume, (6.6)–(6.12)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+Srinivasan's parameters are Boolean rank $2S$, starting rank
+$t_i$, layer $u=S+x_i$ and up operator $L_i^\ast$; his
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$ is exactly the raising coefficient.
+Feinsilver's $T,T^\ast$ are $L_i^\ast,L_i$, his principal
+number is $2J_i$, his chain index is $J_i+x_i$, and his grading
+operator is $-2Z_i$. The length-one spin-zero chains and the
+endpoint zero ladder coefficients remain in (32.3)–(32.4).
+
+The full head-removal and factorial bodies and
+`sector_words_card_multinomial`, `sector_gram` of
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+give the unit symmetric vectors with two-letter counts
+$(2S-n_i,n_i)$, including zero counts. The exact finite identities
+(O.2), (O.8)–(O.9) of the
+[collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md)
+have $d=m$, $N=2S$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt{2S}$ and $H_{2S}=\hbar K_s/(2S)$ on the
+two-letter code. No oscillator approximation is used at occupancy
+$mS$, and that code calculation does not replace (32.3).
+
+The singleton differences in
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs),
+and the full `Test.move`, `Test.adj_mem`, `Test.move_injective`,
+`Test.toNbr_bij`, `Test.token_energy` bodies in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+identify exactly one removed and one inserted coordinate in each
+move. Thus the two terms in (32.4) have coefficient one per
+unordered edge. Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+have $N=2mS$, $k=mS$ and unit edge weights here; their shifted
+operator $W(G_s)I/2-K_s$ is a different operator.
+The complete `lambdaMin_quad`, `complex_real_energy`,
+`complex_real_norm`, `complex_norm_pos` and
+`real_complex_rayleigh` bodies give the same minimum for real
+and arbitrary complex coordinates. Their fixed cut-bound
+refutation and phase-product trials are not confinement premises.
+These are the supplied sources at Git
+`3ec6f28ef087bcfadf0336a5ca88253bd18ad8ec`.
+
+The nonstrict local-spin comparison is the result of
+Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and the final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Its maximal spins are $s_i=S$, variable spins $t_i=J_i$,
+magnetization $M=0$ and coupling matrices
+$D_{ih}=\operatorname{diag}(2A(H)_{ih},2A(H)_{ih},0)$.
+As in (19.6), the upper-spin projection has squared norm
+$((J+1)^2-x^2)/((J+1)(2J+1))>0$ for every $|x|\leq J$.
+Only nonincrease of the fixed-weight minimum is consumed;
+strictness in (32.2) is not supplied by that comparison.
+
+All sectors in (32.3) are actual subspaces of (32.1), so
+$\Delta_p\geq0$. Suppose for contradiction that $\Delta_p=0$.
+Write $j=S-1$, $A=N_H(p)$ and
+$R=V(H)\setminus(\{p\}\cup A)$. Theorem 19.2 gives, for
+every actual component $D$ of $H[A]$,
+
+$$
+\mathcal G_D(0)\subseteq\mathcal S_D,\qquad
+ e_A(0)=\sum_D e_D(0).
+\tag{32.5}
+$$
+
+In particular, every vector in each indicated ground space is
+a singlet. For a singleton component this is already impossible:
+its zero-weight ground space is $\mathbb C|S,0\rangle$, while
+$\|J^+|S,0\rangle\|^2=S(S+1)>0$.
+This handles a selected singleton, also when $m=2$.
+We may therefore use a selected component $C$ with at least two
+vertices and its dominating vertex $v$.
+
+Use the exterior notation of Definition 31.2. By (31.6) there
+exists an integer $q$ and a unit vector $w\in W_q$ such that
+
+$$
+|q|\leq S-1,\qquad e_R(q)=\eta,\qquad
+E_s=e_A(0)+\eta.
+\tag{32.6}
+$$
+
+No simplicity of any regional minimum is used. Choose any unit
+$u\in\mathcal G_C(0)$ and any unit
+$u_D\in\mathcal G_D(0)$ for every other component $D$.
+Put $u_{\mathrm{other}}=\bigotimes_{D\ne C}u_D$ and
+$e_{\mathrm{other}}=\sum_{D\ne C}e_D(0)$.
+The empty product is one with energy zero. By (32.5), all these
+vectors are singlets and
+$e_A(0)=e_C(0)+e_{\mathrm{other}}$. Set $e=e_C(0)$.
+Thus
+
+$$
+K_Cu=eu,\qquad B_C^\pm u=Z_Cu=0.
+\tag{32.7}
+$$
+
+The singlet and rotation facts used next are classical
+angular-momentum intermediates; the coupling and phase conventions
+are those of [DLMF §§34.1–34.3](https://dlmf.nist.gov/34.1),
+including [the singlet coefficient (34.3.1)](https://dlmf.nist.gov/34.3.E1).
+Their needed normalization and operator consequences follow directly
+as well. Since $B_C^\pm u=Z_Cu=0$, all simultaneous spin rotations
+of $C$ fix $u$. Its reduced density $\rho_v$ consequently
+commutes with every spin rotation at $v$. Commutation with $Z_v$
+makes $\rho_v$ diagonal in the simple weight basis of $V_S$;
+commutation with $J_v^+$ makes consecutive diagonal entries equal,
+since all its interior raising coefficients are positive.
+Its trace is one, so
+
+$$
+\rho_v=\frac{I_{V_S}}{2S+1},\qquad
+c:=\langle u,Z_v^2u\rangle=\frac{S(S+1)}3>0,
+\qquad
+\langle Z_v\rangle_u=\langle Z_v^3\rangle_u=0.
+\tag{32.8}
+$$
+
+For the second identity the three Cartesian second moments are
+equal by rotations and their sum is the local Casimir $S(S+1)$.
+The odd moments vanish by symmetry of the weights. This argument
+allows arbitrary singlet multiplicity and complex coefficients.
+
+Define two vectors in the actual maximal-spin tensor space on $C$:
+
+$$
+t_0=\frac{Z_vu}{\sqrt c},\qquad
+ t_1=-\frac{J_v^+u}{\sqrt{2c}}.
+\tag{32.9}
+$$
+
+The identity $J_v^-J_v^+=S(S+1)I-Z_v^2-Z_v$ and (32.8)
+give $\|J_v^+u\|^2=2c$. Hence both vectors are unit, with
+$C$ weights zero and one respectively, and are orthogonal.
+Because $v$ is adjacent to every other vertex in $C$, writing
+$D_0=C\setminus\{v\}$ gives the exact operator decomposition
+
+$$
+K_C=K_{D_0}+J_v^+B_{D_0}^-+J_v^-B_{D_0}^+,
+\qquad B_{D_0}^\pm u=-J_v^\pm u.
+\tag{32.10}
+$$
+
+There are no omitted incident edges or weights in this equality.
+The spin commutation relations now give
+
+$$
+\begin{aligned}
+[K_C,Z_v]u
+ &=(-J_v^+B_{D_0}^-+J_v^-B_{D_0}^+)u
+   =2Z_vu,\\
+[K_C,J_v^+]u
+ &=-2Z_vB_{D_0}^+u=2Z_vJ_v^+u.
+\end{aligned}
+\tag{32.11}
+$$
+
+It follows that $K_Ct_0=(e+2)t_0$.
+For the other vector, the scalar marginal (32.8) and cyclicity
+of finite trace give
+
+$$
+\begin{aligned}
+\langle J_v^+u,Z_vJ_v^+u\rangle
+ &=\frac{\operatorname{tr}(J_v^-Z_vJ_v^+)}{2S+1}
+ =\frac{\operatorname{tr}(Z_vJ_v^+J_v^-)}{2S+1}\\
+ &=\frac{\operatorname{tr}
+   (Z_v(S(S+1)I-Z_v^2+Z_v))}{2S+1}=c.
+\end{aligned}
+\tag{32.12}
+$$
+
+Using (32.11) and $\|J_v^+u\|^2=2c$, this proves
+
+$$
+\langle t_0,K_Ct_0\rangle=e+2,\qquad
+ \langle t_1,K_Ct_1\rangle=e+1.
+\tag{32.13}
+$$
+
+Only the second expectation is needed; no eigenvector assertion
+for $t_1$ is being made. The collective ladder relations are
+
+$$
+B_C^+t_0=\sqrt2\,t_1,\qquad
+ B_C^-t_1=\sqrt2\,t_0.
+\tag{32.14}
+$$
+
+Indeed $[B_C^+,Z_v]=-J_v^+$ and
+$[B_C^-,J_v^+]=-2Z_v$, and $B_C^\pm u=0$.
+These are the usual spin-one matrix elements obtained by applying
+a local vector operator to a singlet; (32.8)–(32.14) derive
+exactly the pieces needed here, without a new representation
+assumption or a restriction on the remaining spin copies.
+
+Choose the actual spin-$S$ fibre at $p$ and set
+
+$$
+\begin{aligned}
+f_0&=|S,-q\rangle_p\otimes t_0
+             \otimes u_{\mathrm{other}}\otimes w,\\
+f_1&=|S,-q-1\rangle_p\otimes t_1
+             \otimes u_{\mathrm{other}}\otimes w,\\
+a&=\sqrt{2(S-q)(S+q+1)}.
+\end{aligned}
+\tag{32.15}
+$$
+
+Both magnetic weights at $p$ are feasible because
+$-S+1\leq q\leq S-1$. The vectors are orthonormal and have
+total weight zero. Thus they are actual vectors of (32.1),
+with occupancies $S+x_i$ throughout, including any occurring
+endpoint. In particular the second vector is legal at $S=1$,
+$q=0$: its $p$ weight is $-1$ and its $C$ weight is $1$.
+
+We compute the compression of the whole $K_s$ to their span.
+On the $p,C$ factors the only added interaction is
+$J_p^+B_C^-+J_p^-B_C^+$. Equations (32.4) and (32.14)
+give its off-diagonal entry $a$, with positive sign and no
+factor suppressed. Its diagonal entries vanish by weight.
+The internal $C$ entries are (32.13); the other components
+and $R$ contribute the common scalar
+$e_{\mathrm{other}}+\eta$.
+
+For completeness, all other edges have zero compressed matrix
+elements. No edge joins $C$ to another component of $H[A]$,
+and there are no $p$–$R$ edges. For every $r\in R$,
+$\langle w,J_r^\pm w\rangle=0$ because $w$ has definite
+$R$ weight $q$. Every $A$–$R$ edge therefore has zero
+matrix element between either pair $f_i,f_h$: its exterior
+factor is this same zero expectation, irrespective of the
+matrix element on $C$. Edges from $p$ to the other components
+annihilate their singlets by the summed ladders; their
+individual one-site ladder expectations also vanish.
+This lists every edge of $H$, and uses product vectors only
+as legal variational trials, not as an assumption about an
+original minimizing vector. Consequently
+
+$$
+\left(\langle f_i,K_sf_h\rangle\right)_{i,h=0,1}
+ =E_sI_2+\begin{pmatrix}2&a\\a&1\end{pmatrix}.
+\tag{32.16}
+$$
+
+No regional slice is claimed to reduce the coupled operator.
+In particular leakage of $K_Ct_1$ out of this trial span is
+irrelevant to its Rayleigh quotient.
+
+Since $S-q\geq1$ and $S+q+1\geq2$, one has $a^2\geq4>2$.
+The actual normalized whole-carrier vector
+
+$$
+\Phi=\frac{f_0-af_1}{\sqrt{1+a^2}}
+\tag{32.17}
+$$
+
+therefore satisfies
+
+$$
+\langle\Phi,K_s\Phi\rangle
+ =E_s+\frac{2-a^2}{1+a^2}<E_s.
+\tag{32.18}
+$$
+
+This contradicts the definition of the entire-carrier minimum.
+Thus equality $\Delta_p=0$ is impossible and (32.2) follows.
+If $R=\varnothing$, the only exterior weight in (32.6) is zero,
+$w=1$ and $\eta=0$; the same computation applies. Disconnected
+neighborhoods enter only through their actual component factors.
+Degenerate minima require no chosen basis or real-vector
+restriction. The new inference is the dominating-vertex
+commutator calculation and its insertion at the actual $E_s$
+into the two-vector comparison (32.16)–(32.18); the Boolean
+representation, singlet algebra, nonstrict spin comparison and
+finite-dimensional variational principle are attributed
+intermediates. Neither (19.4) nor (31.7) has been used conversely.
+$\square$
+
+**推论 32.3（Every-ground confinement on $\mathcal D$）。**
+For every $H\in\mathcal D$ and integer $S\geq1$,
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{32.19}
+$$
+
+With $\mathcal N_s=\ker P_s\subseteq\mathcal H_{mS}$, put
+$g_s=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s$.
+Then $g_s>0$ and
+
+$$
+K_s-E_sI\succeq g_s(I-P_s),\qquad
+\|(I-P_s)\phi\|^2\leq\frac{\delta}{g_s}
+\tag{32.20}
+$$
+
+for every unit complex $\phi$ with
+$\langle\phi,K_s\phi\rangle\leq E_s+\delta$, $\delta\geq0$.
+No value or scale-uniform estimate of $g_s$ is asserted.
+
+Proof. By the exact reduction in Definition 31.1 and its proof,
+$g_s=\min_p\Delta_p$. Explicitly, any deficient summand in
+(32.3) has some $J_p\leq S-1$. Increase this spin to $S-1$
+and all other spins to $S$ using the supplied nonstrict
+fixed-zero-weight comparison. Its minimum is at least
+$\mu_p(S-1)$. Conversely each of the latter sectors is an
+actual deficient summand, so the two minima agree.
+Theorem 32.2 makes each of the finitely many $\Delta_p$
+strictly positive.
+
+The space $\mathcal N_s$ is nonzero: take a nonconstant
+one-particle vector in one original fibre, an occupancy-$(2S-1)$
+vector in a second fibre and occupancy-$S$ vectors in the other
+fibres. Their tensor has occupancy $mS$ and is killed by $P_s$.
+This construction includes $m=2,S=1$.
+The operator $K_s$ commutes with each fibre permutation,
+hence with $P_s$; both projection ranges reduce it.
+Its form is at least $E_s$ on the symmetric range and at
+least $E_s+g_s$ on $\mathcal N_s$. Adding these reducing
+forms gives the operator inequality and then its expectation
+bound. A ground vector has zero expectation on the left and
+therefore no nonsymmetric component. Equivalently, decomposing
+any complex ground vector into (32.3) cannot leave a nonzero
+deficient component. Orthogonal sums across weights, sectors
+and multiplicities, and all entanglement within them, are
+included in this argument. $\square$
+
+## 33. An infinite family outside the entire multipartite union
+
+**定义 33.1（The graphs $Y_n$）。** For each integer $n\geq1$,
+let $Q$ have $r=2n+1$ vertices and take five further distinct
+vertices $u,v,z,\ell_1,\ell_2$. Make $Q\sqcup\{u,v\}$
+a clique. Add exactly the four edges
+$uz,vz,u\ell_1,u\ell_2$, and no other edges. All edge weights
+are one. In particular $z$ has precisely the two neighbors
+$u,v$, and each $\ell_i$ is a leaf at $u$.
+
+**命题 33.2（All-scale confinement and exclusion of every old class）。**
+The graphs $Y_n$ form an infinite family of connected interacting
+simple graphs of even order $m=2n+6$. For every $n\geq1$,
+
+$$
+Y_n\in\mathcal D,\qquad
+Y_n\notin\mathcal U_s^{\rm mp}quad\text{for every }s=2S\geq2.
+\tag{33.1}
+$$
+
+All conclusions (32.19)–(32.20) consequently hold on their
+original entire complex occupancy-$(2n+6)S$ carriers.
+
+Proof. The clique has $r+2$ vertices and all its vertices
+interact in the same connected component. The vertex $z$ is
+attached to two clique vertices and the leaves to one.
+Thus the graph is simple and connected, has $r+5=2n+6$
+vertices and $\binom{r+2}{2}+4$ edges, and has no disconnected
+spectator factors. The orders increase strictly with $n$.
+Its complete induced open neighborhoods are
+
+$$
+\begin{aligned}
+Y_n[N(u)]
+ &=\bigl(K_{r+1}[Q\sqcup\{v\}]\text{ with a leaf }z
+                      \text{ at }v\bigr)
+               \sqcup\{\ell_1\}\sqcup\{\ell_2\},\\
+Y_n[N(v)]
+ &=K_{r+1}[Q\sqcup\{u\}]\text{ with a leaf }z
+                      \text{ at }u,\\
+Y_n[N(x)]&=K_{r+1}[(Q\setminus\{x\})\sqcup\{u,v\}]
+                                      &&(x\in Q),\\
+Y_n[N(z)]&=K_2[\{u,v\}],&
+Y_n[N(\ell_i)]&=\{u\}\quad(i=1,2).
+\end{aligned}
+\tag{33.2}
+$$
+
+Every vertex and edge of every neighborhood is listed. The
+nontrivial component at $u$ has dominating vertex $v$; the
+component at $v$ has dominating vertex $u$. The clique
+neighborhoods and $K_2$ have dominating vertices, and the
+singleton neighborhoods qualify as well. This proves membership
+in $\mathcal D$ using actual components.
+
+Write $T=Y_n[N(v)]$. This neighborhood is connected, so it
+has no alternative component for any component-based condition.
+It contains a triangle in its clique, and therefore is not
+bipartite. Its vertex $u$ has degree $r+1\geq4$, so $T$ is
+not a simple odd cycle. Its order is $r+2\geq5$, so it is
+not a diamond or singleton. Finally choose distinct
+$x,y\in Q$. In $T$, the vertex $z$ is nonadjacent to both
+$x,y$ while $xy$ is an edge. In a complete multipartite graph,
+nonadjacency of distinct vertices means membership in a common
+independent part. The indicated three relations are impossible.
+Thus $T$ is not complete multipartite. Its sole component
+excludes $Y_n$ from each of
+$\mathcal C$, $\mathcal C_\diamond$ and $\mathcal C_{\rm mp}$.
+
+This same $T$ excludes the entire-neighborhood class
+$\mathcal L$. Its vertices $z,u,x$, for any $x\in Q$,
+induce the path $z-u-x$. The vector equal to $1,-1,1$
+on these three vertices and zero elsewhere has squared norm
+$3$ and adjacency quadratic form $-4$. Hence
+
+$$
+\lambda_{\min}(A(T))\leq-\frac43<-1.
+\tag{33.3}
+$$
+
+If a complex least eigenvector $b$ of $T$ had $|b_i|=1$
+at every coordinate, its equation at the leaf $z$ would be
+$\lambda_{\min}(A(T))b_z=b_u$. Absolute values would imply
+$|\lambda_{\min}(A(T))|=1$, contrary to (33.3).
+The nonbipartite $T$ therefore has no flat complex least mode.
+This excludes $\mathcal L_S$ for every $S\geq2$;
+$\mathcal L_1=\varnothing$ is already empty.
+
+The global flatness hypothesis fails separately. The vertices
+$\ell_1,u,z$ induce a path, so the same vector with entries
+$1,-1,1$ gives
+
+$$
+\lambda_{\min}(A(Y_n))\leq-\frac43<-1.
+\tag{33.4}
+$$
+
+At the global leaf $\ell_1$, any modulus-one complex
+eigenvector for this least eigenvalue would force its absolute
+value to be one. This contradicts (33.4). Thus $Y_n$ fails
+the actual global complex-flat least-mode requirement of
+$\mathcal F_s$ independently of scale. It is excluded before
+either of the two positive-gap alternatives in Definition
+30.1 is considered, so neither alternative restores membership.
+
+The whole graph is not complete multipartite either: the leaf
+$\ell_1$ is nonadjacent to $v$ and to $x\in Q$, whereas
+$vx$ is an edge. The same independent-part argument excludes
+all of $\mathcal M$, including every balanced or dominant-part
+regime and every allowed number of parts.
+
+To exclude $\mathcal B$, let $B=Q\sqcup\{u,v,z\}$.
+The induced graph on $B$ is two-connected: deleting $u$ leaves
+$z$ attached to $v$ and a connected clique; deleting $v$ is
+the symmetric assertion; deleting $z$ leaves the clique;
+deleting a vertex of $Q$ leaves that clique connected and
+$z$ attached to both $u,v$. These exhaust all possible deletions,
+and $|B|\geq5$. A leaf cannot lie in any two-connected
+enlargement of $B$, so this is a maximal two-connected block
+of $Y_n$. It is not a clique because $zx$ is absent for
+$x\in Q$. Hence $Y_n$ is not a block graph.
+
+These arguments exclude every term of (30.2), with their exact
+graph and scale hypotheses, and prove (33.1). Theorem 32.2
+and Corollary 32.3 now give the original-model conclusions
+at every integer $S\geq1$. The use of zero-extended adjacency
+vectors in (33.3)–(33.4) is a direct finite-dimensional Rayleigh
+comparison; it makes no claim that the path is an actual
+neighborhood component or that a regional energy is $E_s$.
+$\square$
+
+## 34. The extended union at each exact scale
+
+**定义 34.1（The preserved union with dominating components）。**
+In the common domain of Definition 32.1, retain every set in
+Definition 30.1 unchanged and put
+
+$$
+\begin{aligned}
+\mathcal V_s
+ &=\mathcal U_s^{\rm mp}\cup\mathcal D\\
+ &=\mathcal M\cup\mathcal B\cup\mathcal C\cup\mathcal L_S
+   \cup\mathcal F_s\cup\mathcal C_\diamond
+   \cup\mathcal C_{\rm mp}\cup\mathcal D,
+\qquad s=2S,\ S\geq1.
+\end{aligned}
+\tag{34.1}
+$$
+
+In particular $\mathcal M$ still contains all complete
+multipartite graphs with at least two nonempty parts, including
+all part-size regimes. The endpoint is still
+$\mathcal L_1=\varnothing$ and $\mathcal L_S=\mathcal L$
+for $S\geq2$. The set $\mathcal F_s$ still requires a global
+least adjacency eigenvector with every complex coordinate
+of modulus one. With
+$\ell=-\lambda_{\min}(A(H))$, $\Delta=\max_i\deg_H(i)$,
+$T=m+2$ and
+$s_H=2\lceil2^{18}(\Delta/\ell)^2T^3\rceil$,
+its scale requirement is still either $s\geq s_H$, or both
+
+$$
+s\geq4T,\qquad
+\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2>0.
+\tag{34.2}
+$$
+
+None of these sets is intersected with $\mathcal D$.
+
+**定理 34.2（Strict extension of the entire prior union）。**
+For every integer $S\geq1$, every graph $H\in\mathcal V_s$
+has every original $E_s$-ground vector in $\operatorname{ran}P_s$,
+and has the qualitative same-minimum inequalities (32.20).
+At each such scale,
+
+$$
+\mathcal U_s^{\rm mp}\subsetneq\mathcal V_s,
+\qquad
+\{Y_n:n\geq1\}\subseteq
+       \mathcal V_s\setminus\mathcal U_s^{\rm mp}.
+\tag{34.3}
+$$
+
+Proof. Theorem 30.2 gives the conclusions on the entire
+$\mathcal U_s^{\rm mp}$ with exactly its hypotheses and
+endpoints. Corollary 32.3 gives them on $\mathcal D$ at
+the same original minimum, so they hold on their union.
+Proposition 33.2 supplies infinitely many connected interacting
+graphs in the difference for every scale and proves strictness.
+In particular, no previous sufficient theorem, example,
+counterexample, exceptional local minimum or scale alternative
+is removed or strengthened by (34.1).
+
+The additional mathematical inference is (32.11)–(32.18):
+the dominating vertex turns a component singlet ground vector
+into normalized weight-zero and weight-one trials with energy
+increments two and one, whose coupling to the actual spin-$S$
+fibre at $p$ has a negative direction at every exterior weight
+$|q|\leq S-1$. Equation (32.6), supplied by actual deficient
+attainment, places that direction strictly below the same
+whole-carrier $E_s$. The family (33.2) then separates this
+sufficient condition from every part of (30.2).
+The representation, singlet rotations, nonstrict comparison and
+finite spectral principles remain their classical or supplied
+intermediate results. This is an inference from those stated
+inputs, with no assertion of literature priority.
+
+For a connected even-order $H\notin\mathcal V_s$,
+every-ground confinement at that scale remains unresolved here.
+The all-even question retains (34.1) separately for every
+$S\geq1$; a scale-dependent old hypothesis is not promoted
+to an all-scale graph hypothesis. The joint equality and
+incidence conditions of Theorem 31.3 and the component and
+spin-one cone conditions of §§19–20 remain necessary conditions,
+not converses. The strict local result provides neither an
+actual nonsymmetric original-ground counterexample outside
+(34.1) nor a general solution for arbitrary $H$.
+All statements use simple unit-weight graphs, equal even fibres,
+positive coefficient-one adjacency and only global half filling
+on the entire complex carrier. They impose no product-state
+restriction on ground vectors and supply no numerical or
+scale-uniform global gap, other-weight or other-filling
+extension, or physical-realization conclusion. $\square$
+
+## 追加锚（本行以下为增补区）
