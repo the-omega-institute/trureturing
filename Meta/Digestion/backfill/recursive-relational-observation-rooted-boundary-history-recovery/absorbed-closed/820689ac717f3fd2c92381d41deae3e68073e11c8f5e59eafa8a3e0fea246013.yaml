@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:820689ac717f3fd2c92381d41deae3e68073e11c8f5e59eafa8a3e0fea246013
+  normalized_sha256: sha256:820689ac717f3fd2c92381d41deae3e68073e11c8f5e59eafa8a3e0fea246013
+cas_ref: sha256:820689ac717f3fd2c92381d41deae3e68073e11c8f5e59eafa8a3e0fea246013
+coverage_gids:
+  - gid: D5/S3/Observer/RationalRouting/TwoReplyProfile.acquired_original_profile
+    target_statement_id: sha256:0ac04fbe6a1d47abc05b0dee86e4d65d3ae745b15efd19fa3f019895ccca6069
+receipts:
+  unresolved_subitems: []

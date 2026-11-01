@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:525ba5f149e5392afdbc0bbf5a0ff9a93864c4d90b73e2142dd7c68e22d4bc9f
+  normalized_sha256: sha256:525ba5f149e5392afdbc0bbf5a0ff9a93864c4d90b73e2142dd7c68e22d4bc9f
+cas_ref: sha256:525ba5f149e5392afdbc0bbf5a0ff9a93864c4d90b73e2142dd7c68e22d4bc9f
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Acquisition/OnlineCommonOriginalArchive.complete_online_archive
+    target_statement_id: sha256:dd85a8e31b7699cc48a3a4d4002e55f19aabd3dd7d52a852ff4d18626a7a0996
+receipts:
+  unresolved_subitems: []

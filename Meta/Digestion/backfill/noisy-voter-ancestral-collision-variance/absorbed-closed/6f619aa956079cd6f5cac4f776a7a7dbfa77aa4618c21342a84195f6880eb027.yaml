@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6f619aa956079cd6f5cac4f776a7a7dbfa77aa4618c21342a84195f6880eb027
+  normalized_sha256: sha256:6f619aa956079cd6f5cac4f776a7a7dbfa77aa4618c21342a84195f6880eb027
+cas_ref: sha256:6f619aa956079cd6f5cac4f776a7a7dbfa77aa4618c21342a84195f6880eb027
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/AncestralSources.native_source
+    target_statement_id: sha256:742c4e91685c3ea424cdc4eb0831d4c9374a5002c1e7ab80e3a1dbc30114fe11
+receipts:
+  unresolved_subitems: []

@@ -455,3 +455,361 @@ $$
 双侧阈值引出的层差 B-46.2、三核大小分情形及原最大族应用为 `repo-derived` 的组合推导，不主张文献优先权。这里没有把三对各自可达的边缘最优值当作共同可达，也未把完整完成纤维包含于任意条件子族。结论不判断 $A>W$ 剩余域是否有实际成员，不宣称 (46.9) 尖锐或可达。$n\ge23$ 的原剩余判据以及更高维阈值能否闭合该判据，仍未由本节确定。
 
 ## 追加锚（本行以下为增补区）
+
+## 47. 二十三边形的完整条件纤维与三活跃核严格界
+
+**假设与定义 B-47.1（任意放置与任意完整星见证）。** 固定任意标号严格凸二十三边形，顶点为 $v_j$，指标属于 $\mathbb Z/23\mathbb Z$，全部原耳为 $\mathcal E_{23}=\{e_j=v_{j-1}v_{j+1}:j\in\mathbb Z/23\mathbb Z\}$。取任意六条不同、两两兼容的原耳 $D=\{f_{ab}:1\le a<b\le4\}$，约定 $f_{ab}=f_{ba}$；兼容允许共端点，只禁止内部交叉。这里的 $K_4$ 标号是抽象标号，不规定六耳在多边形上的循环次序。令 $\mathcal T_{23}$ 为全部实际三角剖分，$\operatorname{Ear}(T)\subseteq\mathcal E_{23}$ 为剖分 $T$ 的完整原耳集。任意预先指定四个实际剖分 $T_a$，要求
+
+$$
+\operatorname{Ear}(T_a)=S_a:=\{f_{ab}:b\ne a\}\qquad(1\le a\le4).
+$$
+
+令 $\mathcal F\subseteq\mathcal T_{23}$ 包含这四个指定见证，并满足
+
+$$
+\operatorname{Ear}(T)\cap\operatorname{Ear}(T')\ne\varnothing
+\qquad(T,T'\in\mathcal F,\ T\ne T').
+$$
+
+共同耳可以在 $D$ 外。四个见证各自的对角线完成任意固定。对每个 $H\subseteq D$，定义整个精确迹完成纤维
+
+$$
+\Gamma(H)=\{T\in\mathcal T_{23}:\operatorname{Ear}(T)\cap D=H\}.
+\tag{47.1}
+$$
+
+其中所有 $D$ 外耳、其他对角线及不同实际完成逐一保留。置
+
+$$
+\begin{gathered}
+M_1=\{f_{12},f_{34}\},\quad M_2=\{f_{13},f_{24}\},\quad
+M_3=\{f_{14},f_{23}\},\quad Q_i=D\setminus M_i,\\
+\mathcal A_i=\mathcal F\cap\Gamma(M_i),\qquad a_i=|\mathcal A_i|,
+\qquad A=a_1+a_2+a_3.
+\end{gathered}
+$$
+
+$a_i>0$ 称第 $i$ 个核活跃；核成员的完整原耳数可以超过二。不要求核取满、族饱和、包含极大、放置奇偶、对称性、共同保护耳或共同保护子载体。以下数值均取
+
+$$
+\begin{gathered}
+C_t=\frac1{t+1}\binom{2t}{t},\qquad c_r=C_{21-r}\quad(0\le r\le11),\\
+w_2=c_2-4c_3+6c_4-4c_5+c_6=W=502841295,\\
+w_3=c_3-3c_4+3c_5-c_6=185082495,\qquad
+w_4=c_4-2c_5+c_6=68624295,\\
+s=c_2-2c_3+c_4=941630580,\qquad
+h_{23}=w_2-w_4=434217000,\\
+L=c_2+6c_3-10c_4+4c_5=3478078170.
+\end{gathered}
+\tag{47.2}
+$$
+
+**引理 B-47.2（同一原族的分区与亏额）。** 记 $\binom Dr=\{H\subseteq D:|H|=r\}$，定义
+
+$$
+\begin{gathered}
+\mathscr U_0=\{S_1,S_2,S_3,S_4\}
+ \cup\left(\binom D4\setminus\{Q_1,Q_2,Q_3\}\right)
+ \cup\binom D5\cup\{D\},\\
+\mathcal U=\bigcup_{H\in\mathscr U_0}\Gamma(H),\qquad
+u_0=|\mathcal U|=1727493315,\qquad u=|\mathcal F\cap\mathcal U|,\\
+b_i=|\mathcal F\cap\Gamma(Q_i)|.
+\end{gathered}
+$$
+
+对 $\{i,j,k\}=\{1,2,3\}$ 且 $i<j$，定义四个路径迹及其原族计数
+
+$$
+\begin{gathered}
+P_{k,x}=M_i\cup\{x\},\qquad
+\bar P_{k,x}=M_j\cup(M_k\setminus\{x\})\quad(x\in M_k),\\
+t_k=\sum_{x\in M_k}\bigl(|\mathcal F\cap\Gamma(P_{k,x})|
+ +|\mathcal F\cap\Gamma(\bar P_{k,x})|\bigr),\\
+z_{ij}=a_i+a_j+b_i+b_j+t_k,\qquad
+\eta=u_0-u,\quad r_i=w_4-b_i,\quad
+\ell_i=2w_3-t_i,\quad d_{ij}=s-z_{ij}.
+\end{gathered}
+\tag{47.3}
+$$
+
+准确有
+
+$$
+\begin{gathered}
+|\mathcal F|=u+\sum_i a_i+\sum_i b_i+\sum_i t_i,\\
+L=u_0+w_2+2w_4+6w_3,\qquad s=w_2+2w_3+w_4,\\
+|\mathcal F|-L=a_k-(\eta+r_k+\ell_i+\ell_j+d_{ij}),\\
+2(|\mathcal F|-L)=h_{23}-2\eta-\sum_i\ell_i-\sum_{i<j}d_{ij}.
+\end{gathered}
+\tag{47.4}
+$$
+
+若三个核均活跃，则 $\eta\ge0$、$r_i\ge1$、$\ell_i\ge2$。
+
+证明。第 B-37.4 节的覆盖迹分类适用于 B-47.1 的四个完整星见证，其分区恰为 $\mathcal U$、三个匹配迹纤维、三个 $Q_i$ 迹纤维及上述十二个路径迹纤维。各精确迹纤维互不相交，得到第一式。通用迹类的完整纤维数为
+
+$$
+u_0=4w_3+12w_4+6(c_5-c_6)+c_6=1727493315,
+$$
+
+并有 (47.4) 中的 $L,s$ 两个数值恒等式。将 $z_{ij}=s-d_{ij}$ 代入同一分区，得到
+
+$$
+\begin{aligned}
+|\mathcal F|
+&=u+z_{ij}+a_k+b_k+t_i+t_j\\
+&=(u_0-\eta)+(s-d_{ij})+a_k+(w_4-r_k)
+ +(2w_3-\ell_i)+(2w_3-\ell_j),
+\end{aligned}
+$$
+
+即第一个亏额恒等式。再用
+
+$$
+\sum_{i<j}z_{ij}=2\sum_i(a_i+b_i)+\sum_i t_i
+$$
+
+和同一分区得到第二个亏额恒等式。这正是 B-37.7 的两个恒等式在 $n=23$ 的对应。三个核均活跃时，B-37.7 同时给 $\eta\ge0,r_i\ge1,\ell_i\ge2$；其条件仅是活跃性及原完整耳相交性，不需 $A>W$。这里的每个 $d_{ij}$ 都属于预先固定的这个 $\mathcal F$。∎
+
+**引理 B-47.3（实际共同载体与双大核的配对亏额）。** 在 B-47.1 中，若 $a_i,a_j>0$，则
+
+$$
+d_{ij}\ge105574290.
+\tag{47.5}
+$$
+
+置 $T=385662$。若进一步有 $a_i,a_j>T$，则
+
+$$
+d_{ij}\ge182143566.
+\tag{47.6}
+$$
+
+证明。固定此配对及余下的 $k$。对实际耳集 $P,Q$，写
+
+$$
+\mathcal X(P\mid Q)=\{T'\in\mathcal T_{23}:
+ P\subseteq\operatorname{Ear}(T'),\quad Q\cap\operatorname{Ear}(T')=\varnothing\},
+$$
+
+并取原族的两个条件侧
+
+$$
+\mathcal C_{ij}=\mathcal F\cap\mathcal X(M_i\mid M_j),\qquad
+\mathcal D_{ij}=\mathcal F\cap\mathcal X(M_j\mid M_i).
+$$
+
+它们分别包含 $\mathcal A_i,\mathcal A_j$。第一侧的 $D$ 迹恰为 $M_i$、$M_i\cup\{x\}$（$x\in M_k$）及 $Q_j$，第二侧为交换 $i,j$ 后的迹，所以
+
+$$
+|\mathcal C_{ij}|+|\mathcal D_{ij}|=z_{ij}.
+$$
+
+两侧的强制／禁止条件相反，故其实际成员互异。令 $K=M_i\cup M_j$，并令 $E_K$ 为 $K$ 外兼容 $K$ 中每条耳的全部原耳。任一跨侧共同耳不能属于 $K$，又必须兼容两侧各自强制的两耳；因此对跨侧实际成员 $V,W$ 准确有
+
+$$
+\operatorname{Ear}(V)\cap\operatorname{Ear}(W)
+=(\operatorname{Ear}(V)\cap E_K)\cap(\operatorname{Ear}(W)\cap E_K).
+\tag{47.7}
+$$
+
+$E_K$ 包含第三匹配的两耳以及所有兼容的 $D$ 外耳。由 B-37.2、B-41.3 保留各侧条件的双族压缩，得到同一个两两兼容载体 $J\subseteq E_K$ 上的非空交叉相交向上族 $\mathscr C,\mathscr D\subseteq2^J$，其两侧完整条件权重分别至少为 $|\mathcal C_{ij}|,|\mathcal D_{ij}|$。这不要求原条件子族包含整个完成纤维，也不要求压缩后保留某个原核迹。
+
+令 $d=|J|$。$J\cup K$ 的 $d+4$ 条原耳兼容，其中心构成循环图 $C_{23}$ 的独立集，故 $d+4\le\lfloor23/2\rfloor=11$。两非空交叉相交族不能落在空载体上，因而
+
+$$
+1\le d\le7.
+\tag{47.8}
+$$
+
+在这里使用 B-37、B-41 的参数准确为 $n=23$、$p=q=2$、$P=M_i$、$Q=M_j$、$K=P\cup Q$。强制 $M_i$ 的两耳和任意指定的 $r$ 条载体耳，再禁止 $M_j$ 的两耳，删耳与容斥给实际完成数
+
+$$
+V_r=c_{r+2}-2c_{r+3}+c_{r+4},\qquad
+\omega_r^{(d)}=\sum_{j=0}^{d-r}(-1)^j\binom{d-r}{j}V_{r+j}
+\quad(0\le r\le d).
+\tag{47.9}
+$$
+
+第二式再禁止其余被观察的载体耳，因此是每个 $r$ 元精确 $J$ 迹的完整条件权重；未观察耳自由，每一种不同剖分均计入。反侧交换两个匹配，因两者大小均为二，得到同一组权重。最大下标为 $d+4\le11$，每个强制耳收缩后的多边形至少有 $23-11=12$ 个顶点，所有计数均在 B-41 的合法范围内。
+
+所用 Catalan 系数及条件含有数为
+
+| $r$ | $c_r=C_{21-r}$ |
+| ---: | ---: |
+| $2$ | $1767263190$ |
+| $3$ | $477638700$ |
+| $4$ | $129644790$ |
+| $5$ | $35357670$ |
+| $6$ | $9694845$ |
+| $7$ | $2674440$ |
+| $8$ | $742900$ |
+| $9$ | $208012$ |
+| $10$ | $58786$ |
+| $11$ | $16796$ |
+
+$$
+(V_0,\ldots,V_7)=(941630580,253706790,68624295,18642420,
+5088865,1396652,385662,107236).
+$$
+
+B-41.2 的保条件翻转与略去观察坐标的纤维分拆分别给
+
+$$
+\begin{gathered}
+\omega_0^{(d)}\ge\omega_1^{(d)}\ge\cdots\ge\omega_d^{(d)}\ge0,
+\qquad \sum_{r=0}^d\binom dr\omega_r^{(d)}=s,\\
+G_d:=\omega_0^{(d)}-\omega_d^{(d)},\qquad G_{d+1}\le G_d.
+\end{gathered}
+$$
+
+将 (47.9) 的各项展开得
+
+| $d$ | $(\omega_0^{(d)},\ldots,\omega_d^{(d)})$ | $G_d$ |
+| --- | --- | ---: |
+| $1$ | $(687923790,253706790)$ | $434217000$ |
+| $2$ | $(502841295,185082495,68624295)$ | $434217000$ |
+| $3$ | $(367740675,135100620,49981875,18642420)$ | $349098255$ |
+| $4$ | $(269068375,98672300,36428320,13553555,5088865)$ | $263979510$ |
+| $5$ | $(196963053,72105322,26566978,9861342,3692213,1396652)$ | $195566401$ |
+| $6$ | $(144244590,52718463,19386859,7180119,2681223,1010990,385662)$ | $143858928$ |
+| $7$ | $(105681526,38563064,14155399,5231460,1948659,732564,278426,107236)$ | $105574290$ |
+
+对 $\mathscr V\subseteq2^J$，令 $\mu(\mathscr V)=\sum_{R\in\mathscr V}\omega_{|R|}^{(d)}$。再置
+
+$$
+q_r=\left|\mathscr C\cap\binom Jr\right|,\qquad
+\alpha_r=\frac{q_r}{\binom dr},\qquad
+\overline{\mathscr C}=\{J\setminus R:R\in\mathscr C\}.
+$$
+
+向上包含边双计数给 $q_r(d-r)\le q_{r+1}(r+1)$，即 $\alpha_r\le\alpha_{r+1}$。两族非空且交叉相交，故 $\alpha_0=0,\alpha_d=1$，且 $\overline{\mathscr C}\cap\mathscr D=\varnothing$。于是 B-41.3 的补层估计在本参数下为
+
+$$
+\begin{aligned}
+d_{ij}=s-z_{ij}
+&\ge s-\mu(\mathscr C)-\mu(\mathscr D)\\
+&\ge\mu(\overline{\mathscr C})-\mu(\mathscr C)\\
+&=\sum_{0\le r<d/2}\binom dr
+ (\omega_r^{(d)}-\omega_{d-r}^{(d)})(\alpha_{d-r}-\alpha_r).
+\end{aligned}
+\tag{47.10}
+$$
+
+每项非负，$r=0$ 项恰为 $G_d$。由 $d\le7$ 及 $G_d$ 的单调性，即得 (47.5)。这个基本界只使用两核活跃。
+
+现在假设 $a_i,a_j>T$，其中阈值准确为
+
+$$
+T=385662=\omega_6^{(6)}
+ =\omega_6^{(7)}+\omega_7^{(7)}=278426+107236.
+\tag{47.11}
+$$
+
+两原条件侧分别包含自己的实际核，压缩又分别保质量下界，所以 $\mu(\mathscr C),\mu(\mathscr D)>T$。按同一次配对所得到的实际 $d$ 分三种情形。
+
+若 $d\le5$，(47.10) 直接给
+
+$$
+d_{ij}\ge G_d\ge G_5=195566401>182143566.
+\tag{47.12}
+$$
+
+若 $d=6$，两族的质量均大于 $\omega_6^{(6)}$，故均不是 $\{J\}$。$\mathscr C$ 也不是全部非空子集族：否则它含所有单点，交叉相交性会迫使 $\mathscr D=\{J\}$，违反质量下界。$\mathscr C$ 不含空集，故直接复用 B-44.4 的六元非端点层差，得到 $q_5-q_1\ge1$。在 (47.10) 只保留 $r=0,1$ 两项，由 $\binom61=\binom65$ 得
+
+$$
+\begin{aligned}
+d_{ij}
+&\ge G_6+(\omega_1^{(6)}-\omega_5^{(6)})(q_5-q_1)\\
+&\ge143858928+52718463-1010990\\
+&=195566401>182143566.
+\end{aligned}
+\tag{47.13}
+$$
+
+若 $d=7$，(47.11) 正是 B-46.2 的双侧质量阈值。取其有限载体为当前 $J$、维数为七、非负层权重为当前 $\omega_r^{(7)}$，两族为当前 $\mathscr C,\mathscr D$；非空性、向上性、交叉相交性及两个严格质量条件已逐项满足。因此直接得到 $q_6-q_1\ge2$。由 $\binom71=\binom76$，同样两项给
+
+$$
+\begin{aligned}
+d_{ij}
+&\ge G_7+(\omega_1^{(7)}-\omega_6^{(7)})(q_6-q_1)\\
+&\ge105574290+2(38563064-278426)\\
+&=182143566.
+\end{aligned}
+\tag{47.14}
+$$
+
+三个维数范围穷尽 (47.8)，证明 (47.6)。阈值加强只用于两个核都大于 $T$ 的配对；涉及小核时保留 (47.5)。每一配对可使用各自的压缩载体与向上族，因为所得结论始终是同一原 $\mathcal F$ 的原计数 $d_{ij}$ 的不等式，不要求三对压缩同时实现。∎
+
+**定理 B-47.4（二十三边形全部三活跃核族的严格界）。** B-47.1 的每个满足 $a_1,a_2,a_3>0$ 的实际族均有
+
+$$
+|\mathcal F|\le3421971318=L-56106852<L=3478078170.
+\tag{47.15}
+$$
+
+此结论不附加 $A>W$ 条件。
+
+证明。取 B-47.3 的阈值 $T=385662$。若某个 $a_k\le T$，令 $i,j$ 是另两个指标。由 (47.4)、$\eta\ge0,r_k\ge1,\ell_i,\ell_j\ge2$ 及 (47.5)，
+
+$$
+\begin{aligned}
+|\mathcal F|-L
+&\le385662-1-2-2-105574290=-105188633,\\
+|\mathcal F|&\le3372889537.
+\end{aligned}
+\tag{47.16}
+$$
+
+否则 $a_1,a_2,a_3>T$，三个原配对亏额均满足 (47.6)。在同一原族的第二个恒等式 (47.4) 中代入这些界及 $\sum_i\ell_i\ge6$，得到
+
+$$
+\begin{aligned}
+2(|\mathcal F|-L)
+&\le434217000-6-3\cdot182143566=-112213704,\\
+|\mathcal F|-L&\le-56106852,\qquad
+|\mathcal F|\le3421971318.
+\end{aligned}
+\tag{47.17}
+$$
+
+存在小核与三个核都超过阈值的两种情形穷尽全部三活跃核族。两界中较大者为 (47.15)，且均严格小于 $L$。整个推导没有使用 $A>W$。∎
+
+**推论 B-47.5（原最大值、空剩余域与十二个完整纤维族）。** 对 B-47.1 的每个固定配置及任意四个预先指定的完整星见证，令 $K_0$ 为全部允许实际族的最大大小，令 $\mathfrak R$ 为其中满足 $a_1,a_2,a_3>0$ 且 $A>W$ 的族域。按 B-37.9，非空时取 $K_{\rm res}=\max_{\mathcal F\in\mathfrak R}|\mathcal F|$，空时取 $K_{\rm res}=0$。则
+
+$$
+K_{\rm res}<L,\qquad K_0=L=3478078170.
+\tag{47.18}
+$$
+
+全部达到 $K_0$ 的族准确如下：固定 $i\in\{1,2,3\}$，将其余两个指标按 $j<k$ 排列；对两个 $x\in M_i$ 各自独立选取
+
+$$
+E_x\in\{M_j\cup\{x\},\ M_k\cup(M_i\setminus\{x\})\}.
+$$
+
+用 B-47.2 的 $\mathscr U_0$ 定义
+
+$$
+\begin{aligned}
+\mathscr B_{i,E}={}&\mathscr U_0\cup\{M_i,Q_j,Q_k\}\\
+&\cup\{M_i\cup\{z\}:z\in D\setminus M_i\}
+ \cup\{E_x:x\in M_i\},\\
+\mathcal F_{i,E}={}&\bigcup_{H\in\mathscr B_{i,E}}\Gamma(H).
+\end{aligned}
+\tag{47.19}
+$$
+
+这是恰好 $3\cdot2^2=12$ 个不同的标号实际族，每个都取尽所列迹的整个实际完成纤维。
+
+证明。若 $\mathfrak R\ne\varnothing$，B-47.4 对其中每个族给统一界 $3421971318<L$，故其有限最大值也严格小于 $L$。若 $\mathfrak R=\varnothing$，定义直接给 $K_{\rm res}=0<L$。B-37.9 的准确判据遂给 $K_0=\max(L,K_{\rm res})=L$，并将全部等号族转移为 B-33.3、B-37.3 的既有列表，即 (47.19)。具体地，剩余域以外恰为至多两核活跃或 $A\le W$ 的族，B-37.5 已给该域的上界及完整等号分类；剩余域内的族则由严格界排除等号。
+
+B-33.3 已证明 (47.19) 各族的实际完成纤维非空、十二族字面不同、每族完整耳相交且大小为 $L$。它们全都包含每个星迹的全部完成，故包含当前任意指定的四个 $T_a$，不限制这些见证的其他对角线。其区分依据是非空实际纤维和原标号，不取对称商，也不另行限制完成。因而列出的十二族全部达到原最大值，且没有其他原等号族。∎
+
+**数学引文与适用范围 B-47.6（既有机制的二十三边形参数应用）。** 第 B-37、B-41 节及第 B-33.3 节位于[原始分类与多边形几何卷](AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY.md)。本节对它们的参数对应为 $n=23$、$c_r=C_{21-r}$、$p=q=2$、$P=M_i$、$Q=M_j$、$m=\lfloor23/2\rfloor-4=7$。同族分区、保条件双族压缩、层权单调性及补层估计分别使用 B-37.4、B-37.2、B-41.2、B-41.3；同族亏额恒等式与原等号转移分别使用 B-37.7、B-37.9。双大核时的六元层差和七元层差直接使用本卷 B-44.4、B-46.2，本节不另立层差机制；B-46 节的核阈值与三核分情形在这里使用 (47.2)、(47.9) 的二十三边形系数。
+
+删耳和精确迹容斥的外部中间来源为 Leader–Tan，*Some results on intersecting families of triangulations*，[arXiv:2610.39116v1](https://arxiv.org/html/2610.39116v1)，§2、§3 Lemma 6；其 $T_m=C_{m-2}$，所以 $T_{23-r}=c_r$。先强制两匹配耳及 $r$ 条载体耳，再容斥禁止另两匹配耳，得到 $V_r$；继续容斥其余 $d-r$ 条被观察耳，得到 (47.9)。其 Lemma 4 的翻转单调性在 B-37.2 中保留每侧强制／禁止条件。该文 Theorem 2 的指定 $n-1$ 耳相交条件不替代这里的完整原耳相交条件，Lemma 8 的交叉相交乘积界也不供应这里的同族和亏额及固定四见证等号分类。
+
+结论的范围为全部 B-47.1 放置及完整实际完成，(47.15) 只要求三个核活跃，(47.18) 仍用原剩余域定义。这里不判定该剩余域是否非空，不断言 (47.15) 尖锐或可达，也不对 $n\ge24$ 的原最大值、等号分类或阈值闭合性作结论。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,16 @@
+**Assumption 13.1 (variable-modulus access and authentic cuts).** Retain the pair source, original $R/G$ actions, opaque binding, exclusive serialization, fixed acknowledgements, absent side channels and charged finite-run material premises of Definitions 9.1–9.2. Enlarge only the public read parameter: at a current cut the supplied port accepts any actually delivered positive binary integer $H$ and returns the paid value $\gcd(qu,H)$. This requires installation and lawful access for every modulus actually used, including moduli chosen by the controller. Access merely to the requested moduli does not imply this stronger menu. There is still one actual $v_0\in\mathbb N^2$ and one continuously updated source; no later request selects another original pair.
+
+Requests $H_1,H_2,\ldots$ are revealed successively at completed callable cuts. A controller must finish the current acquisition before admitting another request or external action. Between requests, every chosen finite continuation is executed through the synchronized original-action interface of Theorem 10.3. There is no promised bound or advance description of later moduli or continuations. A request generator may depend on all already exposed requests, replies, outputs and actions. A source-dependent supplied parameter is additional information when comparing identification tasks; the benchmark below retains its source-blind fixed-modulus meaning.
+
+The controller records each actual completed action and acknowledgement on this binding, including acquisition and closing letters, from entry onward. It also records every paid read with its modulus and its position in that action sequence. Let $A_t$ be the actual chronological action prefix through cut $t$, where $t$ counts completed source letters and $A_0$ is empty. Reads do not advance this index. A retained past-cut name consists of its genuine prefix position and binding association; a fabricated or counterfactual word is not an authentic past cut. Calling the record authentic assumes faithful recording under this exclusive service contract, not a cryptographic proof against a malicious recorder.
+
+At request prefix $n$, set
+
+$$
+H^{[n]}=\operatorname{lcm}(H_1,\ldots,H_n),\qquad
+m_n=\max_{1\le i\le n}B(H_i)=B(H^{[n]}),\qquad B(1)=0.
+\tag{AQBRO.1}
+$$
+
+The last equality follows from prime exponents in an lcm. The comparison quantity is the existing one-shot fixed-modulus worst budget $Q_{\rm ret}(H^{[n]})=2m_n$. It is a benchmark for obtaining that joint residue from an initially unlabelled pair. It is not defined as the offline optimum among variable-modulus policies, and it does not include prices, payload lengths or actions.
+
