@@ -62,6 +62,18 @@ abbrev arena : Arena where
     (∀ (t : Source) (W : List Letter), Native t →
       Geometry.NativeGuardedLeafRepair.run t (primitiveWord t W) = some (run t W) ∧
       (primitiveWord t W).length = eventIndex (run t W) - eventIndex t) ∧
+    (∀ (t : Source) (W : List Letter), Native t →
+      ∀ (labels : Geometry.NativeGuardedLeafRepair.RawMap) (next : ℤ)
+        (x : Geometry.NativeGuardedLeafRepair.Value),
+      ∃ (labels' : Geometry.NativeGuardedLeafRepair.RawMap) (next' : ℤ)
+        (y : Geometry.NativeGuardedLeafRepair.Value),
+        Geometry.NativeGuardedLeafRepair.nativeRun t labels next x (primitiveWord t W) =
+          some (run t W,labels',next',y) ∧
+        (∀ p : NativeLocalSourceExecution.Address,
+        p ∈ Geometry.NativeMaterialRootRecognition.material t → y p = x p) ∧
+        (∀ p : NativeLocalSourceExecution.Address,
+          p ∈ Geometry.NativeMaterialRootRecognition.material (run t W) →
+          p ∉ Geometry.NativeMaterialRootRecognition.material t → y p = 0)) ∧
     (∀ U : List Letter,
       ∃ D : Bool → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (firstChoice W) = W)

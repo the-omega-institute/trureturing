@@ -178,9 +178,8 @@ private theorem rho_predecessor_sound (z p : Source) (h : rhoPredecessor z = som
   obtain ⟨D,hD,h⟩ := Option.bind_eq_some_iff.mp h
   dsimp only at h
   split_ifs at h with eq
-  · cases h
-    exact eq
-  · cases h
+  cases h
+  exact eq
 
 private theorem rho_predecessor_complete (t : Source) : rhoPredecessor (substitution t) = some t := by
   have image : Observer.NativeImageSaturationInterface.NativeImage 1
@@ -258,15 +257,14 @@ private theorem previous_sound (n0 : Nat) (z p : Source) (X : Letter)
     omega
   · obtain ⟨q,hq,hp⟩ := Option.bind_eq_some_iff.mp hp
     split_ifs at hp with nq
-    · cases hp
-      have eq := rho_predecessor_sound z q hq
-      refine ⟨nq,eq,?_⟩
-      have hi := act_index .F q nq
-      change eventIndex (substitution q) = _ at hi
-      rw [eq] at hi
-      have := q.length_pos
-      omega
-    · cases hp
+    cases hp
+    have eq := rho_predecessor_sound z q hq
+    refine ⟨nq,eq,?_⟩
+    have hi := act_index .F q nq
+    change eventIndex (substitution q) = _ at hi
+    rw [eq] at hi
+    have := q.length_pos
+    omega
 
 private theorem recover_fuel_complete (n0 : Nat) (h0 : 1 < n0) (t : Source)
     (hn : Native t) (ht : eventIndex t = n0) (W : List Letter) :
@@ -310,30 +308,26 @@ private theorem recover_fuel_sound (fuel n0 : Nat) (z t : Source) (W : List Lett
   | zero =>
     rw [recoverFuel] at h
     split_ifs at h with bad base
-    · cases h
-    · cases h
-      exact ⟨by omega,by tauto,base,rfl,by simp⟩
-    · cases h
+    cases h
+    exact ⟨by omega,by tauto,base,rfl,by simp⟩
   | succ k ih =>
     rw [recoverFuel] at h
     split_ifs at h with bad base
-    · cases h
     · cases h
       exact ⟨by omega,by tauto,base,rfl,by simp⟩
     · obtain ⟨⟨p,X⟩,hp,h⟩ := Option.bind_eq_some_iff.mp h
       dsimp only at h
       split_ifs at h with bound
-      · obtain ⟨⟨s,V⟩,hv,h⟩ := Option.bind_eq_some_iff.mp h
-        cases h
-        obtain ⟨h0,nt,et,eq,len⟩ := ih p s V hv
-        have nz : Native z := by tauto
-        obtain ⟨np,step,dec⟩ := previous_sound n0 z p X nz hp
-        refine ⟨h0,nt,et,?_,?_⟩
-        · rw [run_append,eq]
-          exact step
-        · simp only [List.length_append,List.length_singleton]
-          omega
-      · cases h
+      obtain ⟨⟨s,V⟩,hv,h⟩ := Option.bind_eq_some_iff.mp h
+      cases h
+      obtain ⟨h0,nt,et,eq,len⟩ := ih p s V hv
+      have nz : Native z := by tauto
+      obtain ⟨np,step,dec⟩ := previous_sound n0 z p X nz hp
+      refine ⟨h0,nt,et,?_,?_⟩
+      · rw [run_append,eq]
+        exact step
+      · simp only [List.length_append,List.length_singleton]
+        omega
 
 private theorem recover_iff (n0 : Nat) (z t : Source) (W : List Letter) :
     recover n0 z = some (t,W) ↔
@@ -550,6 +544,31 @@ private theorem primitive_length (t : Source) (W : List Letter) (hn : Native t) 
   simp only [List.length_map] at h
   omega
 
+private theorem native_material (t : Source) (hn : Native t) :
+    Geometry.NativeMaterialRootRecognition.D t := by
+  obtain ⟨cs,h⟩ := ((guarded_attained t).mp hn).1
+  exact Geometry.NativeGuardedLeafRepair.run_preserves_D
+    Geometry.NativeGuardedLeafRepair.alphaRHistory.domain h
+
+private theorem native_run (t : Source) (W : List Letter) (hn : Native t)
+    (labels : Geometry.NativeGuardedLeafRepair.RawMap) (next : ℤ)
+    (x : Geometry.NativeGuardedLeafRepair.Value) :
+    ∃ (labels' : Geometry.NativeGuardedLeafRepair.RawMap) (next' : ℤ)
+      (y : Geometry.NativeGuardedLeafRepair.Value),
+      Geometry.NativeGuardedLeafRepair.nativeRun t labels next x (primitiveWord t W) =
+        some (run t W,labels',next',y) ∧
+      (∀ p : NativeLocalSourceExecution.Address,
+        p ∈ Geometry.NativeMaterialRootRecognition.material t → y p = x p) ∧
+      (∀ p : NativeLocalSourceExecution.Address,
+        p ∈ Geometry.NativeMaterialRootRecognition.material (run t W) →
+        p ∉ Geometry.NativeMaterialRootRecognition.material t → y p = 0) := by
+  let h : Geometry.NativeGuardedLeafRepair.History t := {
+    final := run t W
+    calls := primitiveWord t W
+    trace := primitive_word t W hn
+    domain := native_material (run t W) (run_native t hn W) }
+  exact Geometry.NativeGuardedLeafRepair.history_preserves_values h labels next x
+
 /-- A concrete supplementary bit records the first completed macro. -/
 def firstChoice : List Letter → Bool
   | .F :: _ => true
@@ -595,13 +614,25 @@ theorem completed_history_recovery :
     (∀ (t : Source) (W : List Letter), Native t →
       Geometry.NativeGuardedLeafRepair.run t (primitiveWord t W) = some (run t W) ∧
       (primitiveWord t W).length = eventIndex (run t W) - eventIndex t) ∧
+    (∀ (t : Source) (W : List Letter), Native t →
+      ∀ (labels : Geometry.NativeGuardedLeafRepair.RawMap) (next : ℤ)
+        (x : Geometry.NativeGuardedLeafRepair.Value),
+      ∃ (labels' : Geometry.NativeGuardedLeafRepair.RawMap) (next' : ℤ)
+        (y : Geometry.NativeGuardedLeafRepair.Value),
+        Geometry.NativeGuardedLeafRepair.nativeRun t labels next x (primitiveWord t W) =
+          some (run t W,labels',next',y) ∧
+        (∀ p : NativeLocalSourceExecution.Address,
+        p ∈ Geometry.NativeMaterialRootRecognition.material t → y p = x p) ∧
+        (∀ p : NativeLocalSourceExecution.Address,
+          p ∈ Geometry.NativeMaterialRootRecognition.material (run t W) →
+          p ∉ Geometry.NativeMaterialRootRecognition.material t → y p = 0)) ∧
     (∀ U : List Letter,
       ∃ D : Bool → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (firstChoice W) = W) := by
   refine ⟨recover_iff,?_,?_,previous_sound,run_injective,beta_empty,beta_fibre,
     fun _ E U => supplement_separation E U,replay_guarded,guarded_attained,
     fun t W hn => ⟨primitive_word t W hn,primitive_length t W hn⟩,
-    first_choice_sufficient⟩
+    native_run,first_choice_sufficient⟩
   · intro n0 z
     constructor
     · intro h ⟨t,W,good⟩
