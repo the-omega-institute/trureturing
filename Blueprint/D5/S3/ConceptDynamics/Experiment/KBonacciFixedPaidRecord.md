@@ -100,7 +100,7 @@ $$\forall k: \mathbb{N}, 2 \leq k \implies \forall u: \operatorname{List}(\opera
 
 *Commentary.*
 
-When the actual cumulative word operator is a nonzero endpoint E(p,t), its label is (k - 1 - p,t), representing source prefix length j = k - p. Otherwise the label is none. Only nonempty window prefixes are used; their operator is either zero or such an endpoint by the actual endpoint theorem.
+The endpoint E(p,t) has entry one precisely when its row i equals t and its source column s satisfies s + p < k; all other entries are zero. When the actual cumulative word operator is this nonzero endpoint, its label is (k - 1 - p,t), representing source prefix length j = k - p. Otherwise the label is none. Only nonempty window prefixes are used; their operator is either zero or such an endpoint by the actual endpoint theorem.
 
 **Definition 1.9 (surviving).**
 

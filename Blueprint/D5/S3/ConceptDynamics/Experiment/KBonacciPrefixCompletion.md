@@ -6,7 +6,7 @@ Exact recovery and classification of cumulative products with an unknown nonnega
 
 **Definition 1.1 (World).**
 
-$$\forall k: \mathbb{N}, \operatorname{World}(k) = \{(c,l): \operatorname{Fin}(k) \to \mathbb{R} \times \operatorname{Fin}(k) \to \mathbb{R} \Vert (\forall i: \operatorname{Fin}(k), 0 < c_{i}) \land (\forall i: \operatorname{Fin}(k), 0 \leq l_{i}) \land l \neq 0\}$$
+$$\forall k: \mathbb{N}, \operatorname{World}(k) = \{(c,l): (\operatorname{Fin}(k) \to \mathbb{R}) \times (\operatorname{Fin}(k) \to \mathbb{R}) \Vert (\forall i: \operatorname{Fin}(k), 0 < c_{i}) \land (\forall i: \operatorname{Fin}(k), 0 \leq l_{i}) \land l \neq 0\}$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Experiment/KBonacciPrefixCompletion.World` (`✓ std3`).
 
