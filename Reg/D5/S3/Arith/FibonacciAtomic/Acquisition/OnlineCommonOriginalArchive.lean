@@ -116,8 +116,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have one_zero := congrArg Prod.fst ho
   have hom := ZMod.castHom hd (ZMod 2)
   have absurd := congrArg hom one_zero
-  have : (1 : ZMod 2) = 0 := by simpa only [residueSource, map_natCast, Nat.cast_one,
-    Nat.cast_zero] using absurd
+  have : (1 : ZMod 2) = 0 := by simpa [residueSource] using absurd
   exact one_ne_zero this
 
 private theorem dependence : ObservationalDependence signature actual := by
