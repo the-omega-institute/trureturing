@@ -79,6 +79,17 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                         + "steps and ends at pairwise comparable support."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("same-margin-common-comparable"),
+                DeclarationHandle.Create(Prefix + "same_margin_common_comparable"),
+                H("Equal-margin fibers share a comparable endpoint"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Two row multisets with the same mass and every coordinate margin admit "
+                        + "forward normalization routes to one common comparable multiset. "
+                        + "Reversing either route gives the undirected fiber connection."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("phi-support-fence"),
                 DeclarationHandle.Create(Prefix + "phi_support_fence"),
                 H("Alternating complement sends admissible words to fence rows"),
@@ -131,6 +142,18 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                     "Any two comparable endpoints reached by forward routes from the same "
                         + "admissible-word multiset have the same mass and coordinate margins, "
                         + "so the generic uniqueness theorem identifies them."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("admissible-fiber-common-endpoint"),
+                DeclarationHandle.Create(Prefix + "adm_phi_fiber_common_endpoint"),
+                H("The actual admissible Phi fiber shares a comparable endpoint"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For two actual admissible-word multisets with equal transformed "
+                        + "occupancy margins, the native carrier routes both fibers to one "
+                        + "fence-family endpoint; reversing the routes supplies the "
+                        + "same-margin undirected connectivity witness."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("admissible-phi-consumer"),

@@ -76,7 +76,19 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.exists_forward_rout
 
 The route is built by strong induction on the remaining rank-square energy. It has at most floor(m times |V| squared divided by two) forward steps and ends at pairwise comparable support.
 
-**Theorem 1.7 (Alternating complement sends admissible words to fence rows).**
+**Theorem 1.7 (Equal-margin fibers share a comparable endpoint).**
+
+Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.same_margin_common_comparable`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/UncrossingFiber.same_margin_common_comparable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two row multisets with the same mass and every coordinate margin admit forward normalization routes to one common comparable multiset. Reversing either route gives the undirected fiber connection.
+
+**Theorem 1.8 (Alternating complement sends admissible words to fence rows).**
 
 Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_support_fence`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_support_fence`
 
 The zero-based alternating complement leaves even coordinates and complements odd coordinates. The no-adjacent-one condition becomes the alternating fence inequalities, and intersections and unions remain legal.
 
-**Theorem 1.8 (Alternating complement is an involution).**
+**Theorem 1.9 (Alternating complement is an involution).**
 
 Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_involutive`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_involutive`
 
 Applying the parity-dependent complement twice restores every Boolean word, so the transformed support carrier has no information loss.
 
-**Theorem 1.9 (Phi supports faithfully distinguish words).**
+**Theorem 1.10 (Phi supports faithfully distinguish words).**
 
 Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.support_phi_injective`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.support_phi_injecti
 
 The support of the alternating complement determines the transformed word, and involutivity then recovers the original admissible-word input.
 
-**Theorem 1.10 (The admissible carrier inherits the bounded route).**
+**Theorem 1.11 (The admissible carrier inherits the bounded route).**
 
 Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_route_bound`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_route_bound
 
 For an actual multiset of admissible words, the transformed supports remain in the finite fence family throughout the constructed route. The same explicit bound and comparable endpoint therefore hold on the native carrier.
 
-**Theorem 1.11 (The comparable endpoint is canonical inside the actual Phi fiber).**
+**Theorem 1.12 (The comparable endpoint is canonical inside the actual Phi fiber).**
 
 Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_canonical_endpoint_unique`
 
@@ -136,7 +148,19 @@ Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_canonical_e
 
 Any two comparable endpoints reached by forward routes from the same admissible-word multiset have the same mass and coordinate margins, so the generic uniqueness theorem identifies them.
 
-**Theorem 1.12 (The native admissible-word consumer realizes a four-corner exchange).**
+**Theorem 1.13 (The actual admissible Phi fiber shares a comparable endpoint).**
+
+Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_fiber_common_endpoint`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_fiber_common_endpoint` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For two actual admissible-word multisets with equal transformed occupancy margins, the native carrier routes both fibers to one fence-family endpoint; reversing the routes supplies the same-margin undirected connectivity witness.
+
+**Theorem 1.14 (The native admissible-word consumer realizes a four-corner exchange).**
 
 Lean statement: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_forward_consumer`
 
@@ -151,6 +175,7 @@ Two actual admissible words with incomparable transformed supports instantiate t
 ## References
 
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_canonical_endpoint_unique`
+- Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_fiber_common_endpoint`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_forward_consumer`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_route_bound`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.comparable_margin_unique`
@@ -161,5 +186,6 @@ Two actual admissible words with incomparable transformed supports instantiate t
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.margin_eq_card_iff`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_involutive`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.phi_support_fence`
+- Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.same_margin_common_comparable`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/UncrossingFiber.support_phi_injective`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](AdmissibleCount.md)

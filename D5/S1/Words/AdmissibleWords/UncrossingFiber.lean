@@ -416,6 +416,23 @@ theorem exists_forward_route_to_comparable (M : Multiset (Finset V)) :
   have hnonneg : 0 ≤ energy M := Nat.zero_le _
   omega
 
+theorem same_margin_common_comparable {M N : Multiset (Finset V)}
+    (hcard : M.card = N.card) (hmarg : ∀ v, margin M v = margin N v) :
+    ∃ k l P,
+      k ≤ M.card * (Fintype.card V) ^ 2 / 2 ∧
+        l ≤ N.card * (Fintype.card V) ^ 2 / 2 ∧
+          ForwardRoute M P k ∧ ForwardRoute N P l ∧ Comparable P := by
+  obtain ⟨k, P, hk, hr, hcP⟩ := exists_forward_route_to_comparable M
+  obtain ⟨l, Q, hl, hs, hcQ⟩ := exists_forward_route_to_comparable N
+  have hPQcard : P.card = Q.card :=
+    (forwardRoute_card hr).symm.trans (hcard.trans (forwardRoute_card hs))
+  have hPQmarg : ∀ v, margin P v = margin Q v := by
+    intro v
+    exact (forwardRoute_margin hr v).symm.trans ((hmarg v).trans (forwardRoute_margin hs v))
+  have hPQ : P = Q := comparable_margin_unique hcP hcQ hPQcard hPQmarg
+  refine ⟨k, l, P, hk, hl, hr, ?_, hcP⟩
+  simpa [hPQ] using hs
+
 def fence (n : Nat) (A : Finset (Fin n)) : Prop :=
   ∀ (i j : Fin n), i.val + 1 = j.val →
     ((Even i.val → (i ∈ A → j ∈ A)) ∧
@@ -564,6 +581,37 @@ theorem adm_phi_canonical_endpoint_unique {n : Nat} (M : Multiset (Fin n → Boo
   · exact (forwardRoute_card hr').symm.trans (forwardRoute_card hr)
   · intro i
     exact (forwardRoute_margin hr' i).symm.trans (forwardRoute_margin hr i)
+
+theorem adm_phi_fiber_common_endpoint {n : Nat}
+    {M N : Multiset (Fin n → Bool)}
+    (hM : ∀ ⦃w⦄, w ∈ M → Adm n w)
+    (hN : ∀ ⦃w⦄, w ∈ N → Adm n w)
+    (hcard : M.card = N.card)
+    (hmarg : ∀ i,
+      margin (M.map (fun w => support (phi w))) i =
+        margin (N.map (fun w => support (phi w))) i) :
+    ∃ k l P,
+      k ≤ M.card * (Fintype.card (Fin n)) ^ 2 / 2 ∧
+        l ≤ N.card * (Fintype.card (Fin n)) ^ 2 / 2 ∧
+          ForwardRoute (M.map (fun w => support (phi w))) P k ∧
+            ForwardRoute (N.map (fun w => support (phi w))) P l ∧
+              Comparable P ∧ FamilyRows (fenceFamily n) P := by
+  have hrowsM : FamilyRows (fenceFamily n)
+      (M.map (fun w => support (phi w))) := by
+    intro A hA
+    obtain ⟨w, hw, hAw⟩ := Multiset.mem_map.mp hA
+    subst A
+    exact mem_fenceFamily.mpr (phi_support_fence (hM hw))
+  obtain ⟨k, l, P, hk, hl, hr, hs, hc⟩ :=
+    same_margin_common_comparable
+      (M := M.map (fun w => support (phi w)))
+      (N := N.map (fun w => support (phi w)))
+      (by simpa using hcard) hmarg
+  have hfamily : FamilyRows (fenceFamily n) P :=
+    forwardRoute_family (fenceFamily_closed n) hrowsM hr
+  refine ⟨k, l, P, ?_, ?_, hr, hs, hc, hfamily⟩
+  · simpa using hk
+  · simpa using hl
 
 theorem adm_phi_forward_consumer {n : Nat} (w₁ w₂ : Fin n → Bool)
     (h₁ : Adm n w₁) (h₂ : Adm n w₂)
