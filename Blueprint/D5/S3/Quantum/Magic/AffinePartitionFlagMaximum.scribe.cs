@@ -30,7 +30,7 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
                 DescribeId.Create("affine-partition-flag-maximum-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The affine partition flag maximum is proved"),
-                StatementSource.FromAuthor(Disp(Owner("claim"))),
+                StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
