@@ -6,9 +6,17 @@ This repository adapts the consumed `IsSegment`, `IsSide`, `IsDiagonal`, `Cross`
 copyright Axiom Math. It also adapts the cyclic-order translation lemmas from
 `ClusterAlgebras/TypeA/Polygon.lean` (Alexey Sorokin) and
 `ClusterAlgebras/Plabic/CornerTriangulation.lean` (Colin Defant) at that revision.
-The consumed adaptations are in `D5/S3/Geometry/Polygons/PolygonEarSlide.lean`;
-the ear-slide declarations are new and the adapted source has been modified for
-this repository's carrier and pinned Mathlib.
+The consumed carrier definitions and crossing endpoint lemma are owned by
+`D5/S3/Geometry/Polygons/PolygonEarSlideGeometry.lean`; the cyclic-order
+translation adaptations are owned by
+`D5/S3/Geometry/Polygons/PolygonEarSlide.lean`. The ear-slide declarations are
+new and the adapted source has been modified for this repository's carrier and
+pinned Mathlib.
+
+For each adapted declaration, when an equivalent declaration exists in the
+Mathlib revision selected by this repository's `lake-manifest.json`, delete that
+adapted declaration and replace its uses with direct references to the selected
+Mathlib declaration.
 
 The adapted source is distributed under the Apache License, Version 2.0 below.
 

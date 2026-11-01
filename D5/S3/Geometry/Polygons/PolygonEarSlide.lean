@@ -11,15 +11,12 @@ Copyright (c) 2026 Axiom Math. All rights reserved.
 Released under Apache 2.0 license as described in docs/reports/licenses/cluster-algebras-polygon-third-party.md.
 Authors: Ashvin A. Swaminathan.
 
-The polygon carrier below is a minimal adaptation of the definitions and the
-crossing endpoint lemma from AxiomMath/ClusterAlgebras, revision
-a9174706bce3bcb0fa342b4614f98ef2acb7f91c.  The ear-slide declarations are new
-and use the carrier directly.  This repository's pinned Mathlib supplies the
-finite-set and symmetric-square operations used by the adaptation.
-
-The cyclic translation lemmas are adapted from the rotation proof in
+The cyclic translation lemmas below are adapted from the rotation proof in
 `ClusterAlgebras/TypeA/Polygon.lean` and
-`ClusterAlgebras/Plabic/CornerTriangulation.lean` at the same revision.
+`ClusterAlgebras/Plabic/CornerTriangulation.lean` from AxiomMath/ClusterAlgebras,
+revision a9174706bce3bcb0fa342b4614f98ef2acb7f91c.  The adapted polygon carrier
+is owned by `PolygonEarSlideGeometry.lean`.  The ear-slide declarations are new
+and use that carrier directly with this repository's pinned Mathlib.
 -/
 
 import D5.S3.Geometry.Polygons.PolygonEarSlideMaps

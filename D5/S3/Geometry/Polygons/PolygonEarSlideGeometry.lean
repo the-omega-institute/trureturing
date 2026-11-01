@@ -13,13 +13,9 @@ Authors: Ashvin A. Swaminathan.
 
 The polygon carrier below is a minimal adaptation of the definitions and the
 crossing endpoint lemma from AxiomMath/ClusterAlgebras, revision
-a9174706bce3bcb0fa342b4614f98ef2acb7f91c.  The ear-slide declarations are new
-and use the carrier directly.  This repository's pinned Mathlib supplies the
-finite-set and symmetric-square operations used by the adaptation.
-
-The cyclic translation lemmas are adapted from the rotation proof in
-`ClusterAlgebras/TypeA/Polygon.lean` and
-`ClusterAlgebras/Plabic/CornerTriangulation.lean` at the same revision.
+a9174706bce3bcb0fa342b4614f98ef2acb7f91c.  This repository's pinned Mathlib
+supplies the finite-set and symmetric-square operations used by the adaptation.
+The cyclic translation adaptations are owned by `PolygonEarSlide.lean`.
 -/
 
 import Mathlib.Data.Finset.Basic
