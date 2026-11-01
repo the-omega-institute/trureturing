@@ -184,28 +184,6 @@ theorem cover_faces :
     · exact ⟨hs.1, hs.2.1⟩
     · exact ⟨hs.1, hs.2.1⟩
 
-theorem apex_intersections_are_cones (T : Finset (MaxIndependent H))
-    (hT : T.Nonempty) (s : Finset (Vertex H))
-    (hs : ∀ M ∈ T, s ∈ closedStar G H (apex M)) (N : MaxIndependent H)
-    (hN : N ∈ T) : ∀ M ∈ T, insert (apex N) s ∈ closedStar G H (apex M) := by
-  intro M hM
-  have hsm := hs M hM
-  have hsn := hs N hN
-  refine ⟨Finset.insert_nonempty _ _, ?_, ?_⟩
-  · intro a ha b hb hab hadj
-    simp only [Finset.mem_coe, Finset.mem_insert] at ha hb
-    rcases ha with rfl | ha
-    · rcases hb with rfl | hb
-      · exact (suspensionGraph G H).irrefl hadj
-      · exact hsn.2.2 b hb hadj
-    · rcases hb with rfl | hb
-      · exact hsn.2.2 a ha ((suspensionGraph G H).adj_symm hadj)
-      · exact hsm.2.1 ha hb hab hadj
-  · intro b hb
-    rcases Finset.mem_insert.mp hb with rfl | hb
-    · exact adj_apex_apex G H M N
-    · exact hsm.2.2 b hb
-
 def oldEmbedding : V ↪ Vertex H := ⟨old, Sum.inl_injective⟩
 
 /-- Exact intersection, including all retained G-edges on V(H). -/
@@ -470,11 +448,6 @@ theorem card_epsilon : (Fintype.card (Vertex H) : ℝ) * epsilon H < 1 / 4 := by
   apply (div_lt_iff₀ (by positivity : 0 < 4 * ((Fintype.card (Vertex H) : ℝ) + 1))).mpr
   nlinarith [Nat.cast_nonneg (α := ℝ) (Fintype.card (Vertex H))]
 
-theorem epsilon_small : epsilon H ≤ 1 / 4 := by
-  unfold epsilon
-  apply (div_le_iff₀ (by positivity : 0 < 4 * ((Fintype.card (Vertex H) : ℝ) + 1))).mpr
-  nlinarith [Nat.cast_nonneg (α := ℝ) (Fintype.card (Vertex H))]
-
 /-- Both are genuinely open subsets of the actual realization. -/
 abbrev U : Set (X G H) := {x | mass H x.val < 1 / 2}
 abbrev O : Set (X G H) := {x | delta H x.val < epsilon H}
@@ -668,8 +641,10 @@ theorem no_apex_avoid_hub_mix {x : Vertex H → ℝ}
     simp [mix, hx.2.2 b hbs, Pi.single_apply, hbh, Ne.symm hbh]
   have hreal : mix t x (Pi.single (hub H) 1) ∈ realization
       (independenceComplex (suspensionGraph G H)).toPreAbstractSimplicialComplex := by
-    refine ⟨insert (hub H) s, (starACone G H).inclusion hc, ?_⟩
-    rwa [← faceSimplex_eq_convexHull]
+    refine ⟨insert (hub H) s, ?_, ?_⟩
+    · rw [cover_faces G H]
+      exact Or.inl hc
+    · rwa [← faceSimplex_eq_convexHull]
   exact ((realization_iff (suspensionGraph G H) _).mp hreal).2
 
 def aSecond : (aMap G H).Homotopy (ContinuousMap.const _ (hubPoint G H)) :=
@@ -687,10 +662,14 @@ theorem contractible_U : ContractibleSpace ↥(U G H) :=
 
 def cutCoords (x : Vertex H → ℝ) : Vertex H → ℝ := FiniteCoordinateTruncation.normalize (cut (epsilon H) x)
 
-theorem cut_sum_pos (x : X G H) : 0 < ∑ a, cut (epsilon H) x.val a := by
+private theorem cut_sum_lower (x : X G H) :
+    (3 / 4 : ℝ) < ∑ a, cut (epsilon H) x.val a := by
   have hb := cut_sum_bound (probability _ x) (epsilon H)
   have he := card_epsilon H
   linarith
+
+theorem cut_sum_pos (x : X G H) : 0 < ∑ a, cut (epsilon H) x.val a :=
+  lt_trans (by norm_num : (0 : ℝ) < 3 / 4) (cut_sum_lower G H x)
 
 theorem cut_probability (x : X G H) : Probability (cutCoords H x.val) :=
   probability_normalize (cut_nonneg _ _) (cut_sum_pos G H x)
@@ -734,15 +713,17 @@ theorem apexRaw_nonneg (x : Vertex H → ℝ) : ∀ a, 0 ≤ apexRaw H x a := by
     · exact le_rfl
     · exact le_max_right _ _
 
-theorem apexRaw_sum_pos (x : O G H) : 0 < ∑ a, apexRaw H x.val.val a := by
-  have hx : delta H x.val.val < epsilon H := x.property
+private theorem apexRaw_sum_lower (x : O G H) :
+    epsilon H - delta H x.val.val ≤ ∑ a, apexRaw H x.val.val a := by
   obtain ⟨M, hM⟩ := delta_witness H x.val.val
-  have hw : 0 < apexRaw H x.val.val (apex M) := by
-    change 0 < max (epsilon H - bad H M x.val.val) 0
-    apply lt_of_lt_of_le _ (le_max_left _ _)
-    linarith [hx]
-  exact hw.trans_le (Finset.single_le_sum
-    (fun a _ => apexRaw_nonneg H x.val.val a) (Finset.mem_univ _))
+  calc
+    epsilon H - delta H x.val.val = epsilon H - bad H M x.val.val := by rw [hM]
+    _ ≤ max (epsilon H - bad H M x.val.val) 0 := le_max_left _ _
+    _ ≤ ∑ a, apexRaw H x.val.val a :=
+      Finset.single_le_sum (fun a _ => apexRaw_nonneg H x.val.val a) (Finset.mem_univ (apex M))
+
+theorem apexRaw_sum_pos (x : O G H) : 0 < ∑ a, apexRaw H x.val.val a :=
+  (sub_pos.mpr x.property).trans_le (apexRaw_sum_lower G H x)
 
 theorem continuous_apexRaw : Continuous (apexRaw H) := by
   apply continuous_pi
@@ -932,14 +913,18 @@ cutoff vanishes on B. Thus it gives an actual neighborhood retraction. -/
 def retractRaw (x : Vertex H → ℝ) := cut (delta H x) x
 def retractCoords (x : Vertex H → ℝ) := FiniteCoordinateTruncation.normalize (retractRaw H x)
 
-theorem retract_sum_pos (x : O G H) : 0 < ∑ a, retractRaw H x.val.val a := by
+private theorem retract_sum_lower (x : O G H) :
+    (3 / 4 : ℝ) < ∑ a, retractRaw H x.val.val a := by
   have hb := cut_sum_bound (probability _ x.val) (delta H x.val.val)
   have he := card_epsilon H
   have hle : (Fintype.card (Vertex H) : ℝ) * delta H x.val.val ≤
       (Fintype.card (Vertex H) : ℝ) * epsilon H :=
     mul_le_mul_of_nonneg_left x.property.le (by positivity)
-  change 0 < ∑ a, cut (delta H x.val.val) x.val.val a
+  change (3 / 4 : ℝ) < ∑ a, cut (delta H x.val.val) x.val.val a
   linarith
+
+theorem retract_sum_pos (x : O G H) : 0 < ∑ a, retractRaw H x.val.val a :=
+  lt_trans (by norm_num : (0 : ℝ) < 3 / 4) (retract_sum_lower G H x)
 
 theorem retract_probability (x : O G H) : Probability (retractCoords H x.val.val) :=
   probability_normalize (cut_nonneg _ _) (retract_sum_pos G H x)
@@ -1012,7 +997,8 @@ theorem contractible_O : ContractibleSpace ↥(O G H) := by
 def oldRaw (x : Vertex H → ℝ) (a : V) : ℝ := cut (epsilon H) x (old a)
 def oldCoords (x : Vertex H → ℝ) : V → ℝ := FiniteCoordinateTruncation.normalize (oldRaw H x)
 
-theorem oldRaw_sum_pos (x : ↥(U G H ∩ O G H)) : 0 < ∑ a, oldRaw H x.val.val a := by
+private theorem oldRaw_sum_lower (x : ↥(U G H ∩ O G H)) :
+    (1 / 4 : ℝ) < ∑ a, oldRaw H x.val.val a := by
   obtain ⟨M, hM⟩ := delta_witness H x.val.val
   have hhub : x.val.val (hub H) < epsilon H :=
     (hub_le_bad H (probability _ x.val).1 M).trans_lt (hM ▸ x.property.2)
@@ -1031,6 +1017,9 @@ theorem oldRaw_sum_pos (x : ↥(U G H ∩ O G H)) : 0 < ∑ a, oldRaw H x.val.va
   have hu := x.property.1
   dsimp [U] at hu
   nlinarith
+
+theorem oldRaw_sum_pos (x : ↥(U G H ∩ O G H)) : 0 < ∑ a, oldRaw H x.val.val a :=
+  lt_trans (by norm_num : (0 : ℝ) < 1 / 4) (oldRaw_sum_lower G H x)
 
 theorem old_probability (x : ↥(U G H ∩ O G H)) : Probability (oldCoords H x.val.val) :=
   probability_normalize (fun a => cut_nonneg _ _ _) (oldRaw_sum_pos G H x)
