@@ -29,9 +29,8 @@ private theorem diagonalSubstitution_monomial {J : Type u} (w : J → ℂ)
   classical
   simp only [diagonalSubstitution, coe_eval₂AlgHom, algebraMap_eq,
     eval₂_monomial, smul_pow, Finsupp.prod, Finset.prod_smul,
-    prod_X_pow_eq_monomial, C_mul_monomial, smul_monomial]
-  congr 1
-  ring
+    prod_X_pow_eq_monomial]
+  rw [mul_smul_comm, C_mul_monomial, mul_one]
 
 private theorem coeff_diagonalSubstitution {J : Type u} (w : J → ℂ)
     (p : MvPolynomial J ℂ) (d : Occupation J) :
@@ -95,7 +94,7 @@ theorem external_scaling {X : Type u} {I : Type v}
         t ^ d.degree * coefficient K (d.sumElim n) := by
   rw [diagonal_congruence, Finsupp.prod_sumElim]
   simp only [Function.comp_apply, Sum.elim_inl, Sum.elim_inr, one_pow,
-    Finsupp.prod_const_one, mul_one]
+    Finsupp.prod_fun_one, mul_one]
   congr 1
   change (∏ i ∈ d.support, t ^ d i) = t ^ d.degree
   rw [Finset.prod_pow_eq_pow_sum, Finsupp.degree_apply]
