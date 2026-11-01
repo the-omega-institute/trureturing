@@ -10,6 +10,8 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Fermionic.BcGhostVirasoro
 import D5.S3.Quantum.Fermionic.BcGhostCharge
+import Mathlib.LinearAlgebra.Finsupp.VectorSpace
+import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 
 open scoped BigOperators
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
@@ -114,11 +116,11 @@ theorem siteEnergy_pos_of_ne_one_three {j : ℕ} (h1 : j ≠ 1) (h3 : j ≠ 3) :
     have hk0 : j / 2 ≠ 0 := by
       intro hk
       apply h1
-      simp [hjo, hk]
+      omega
     have hk1 : j / 2 ≠ 1 := by
       intro hk
       apply h3
-      simp [hjo, hk]
+      omega
     omega
 
 theorem b_zero : b 0 = annihilate 3 := by simp [b]
@@ -139,7 +141,7 @@ private theorem annihilate_output_mem_zero (v : Fock) (T : Finset ℕ)
       rw [hsingle, map_smul, annihilate_ket]
       by_cases hS : 3 ∈ S
       · simp only [if_pos hS]
-        have hnot : 3 ∉ S.erase 3 := Finset.not_mem_erase 3 S
+        have hnot : 3 ∉ S.erase 3 := Finset.notMem_erase 3 S
         have hne : S.erase 3 ≠ T := by
           intro heq
           exact hnot (heq.symm ▸ hT)
@@ -184,7 +186,7 @@ private theorem siteEnergy_nonneg_of_ne_one {j : ℕ} (h1 : j ≠ 1) :
   · have hj : j = 2 * (j / 2) + 1 := by omega
     rw [hj, siteEnergy_odd]
     by_cases hk : j / 2 = 0
-    · have : j = 1 := by simp [hj, hk]
+    · have : j = 1 := by omega
       exact (h1 this).elim
     · omega
 
@@ -282,14 +284,14 @@ theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) :
     refine ⟨(b_zero_kernel_iff v).mp hb, ?_⟩
     intro S hS
     have hc := congrArg (fun w : Fock => w S) he
-    rw [relativeOperator_coefficient, smul_eq_mul] at hc
+    simp only [relativeOperator_coefficient, Finsupp.smul_apply, smul_eq_mul] at hc
     have hc' : (relativeEnergy S : ℂ) * v S = (ell : ℂ) * v S := hc
     have hcast : (relativeEnergy S : ℂ) = (ell : ℂ) := mul_right_cancel₀ hS hc'
     exact_mod_cast hcast
   · rintro ⟨hb, he⟩
     refine ⟨(b_zero_kernel_iff v).mpr hb, ?_⟩
     ext S
-    rw [relativeOperator_coefficient, smul_eq_mul]
+    simp only [relativeOperator_coefficient, Finsupp.smul_apply, smul_eq_mul]
     by_cases hS : v S = 0
     · simp [hS]
     · rw [he S hS]
@@ -404,11 +406,12 @@ theorem relative_level_support (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v)
     · have hjo : j = 2 * (j / 2) + 1 := by omega
       rw [hjo, siteEnergy_odd] at hle
       by_cases hk0 : j / 2 = 0
-      · simp [hjo, hk0]
+      · omega
       · by_cases hk1 : j / 2 = 1
         · exfalso
           apply h3S
-          simp [hjo, hk1]
+          have hj3 : j = 3 := by omega
+          simpa only [hj3] using hj
         · omega
   exact Finset.mem_range.mpr (by omega)
 
