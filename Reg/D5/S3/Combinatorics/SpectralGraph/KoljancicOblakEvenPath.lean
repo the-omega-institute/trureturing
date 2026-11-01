@@ -4,6 +4,7 @@ import D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 
@@ -228,6 +229,118 @@ def matrixRegistration :
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def linearizationSignature : DependentFamily.Signature where
+  Params := (ℕ → ℝ) × (ℕ → ℝ)
+  State := fun _ => ℕ
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ[X]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def linearizationActual : DependentFamily.Realization linearizationSignature :=
+  DependentFamily.realize linearizationSignature
+    (fun role p n => (deformedContinuant p.1 p.2 n).coeff (if role then 1 else 0))
+    (fun e => nomatch e)
+
+def linearizationArena : DependentFamily.Arena where
+  signature := linearizationSignature
+  Law := fun R => ∀ (q dq : ℕ → ℝ) (n : ℕ),
+    R.readout false (q, dq) n = continuant q n ∧
+    R.readout true (q, dq) n = variation q dq n
+
+abbrev linearizationSourceScope := type_of% (@continuant_linearization)
+
+lemma linearization_source_bridge :
+    linearizationSourceScope ↔ linearizationArena.Law linearizationActual := Iff.rfl
+
+lemma linearization_actual_positive : linearizationArena.Law linearizationActual :=
+  linearization_source_bridge.mp continuant_linearization
+
+def linearizationRejected (role : Bool) : DependentFamily.Realization linearizationSignature :=
+  DependentFamily.realize linearizationSignature
+    (fun index p n => linearizationActual.readout index p n + if index = role then 1 else 0)
+    (fun e => nomatch e)
+
+lemma linearization_rejected_law (role : Bool) :
+    ¬ linearizationArena.Law (linearizationRejected role) := by
+  intro h
+  have he := h (fun _ => 0) (fun _ => 0) 0
+  cases role <;>
+    norm_num [linearizationRejected, linearizationActual, DependentFamily.realize,
+      deformedContinuant, continuant, variation] at he
+
+lemma linearization_dependence :
+    DependentFamily.ObservationalDependence linearizationSignature linearizationActual := by
+  intro role
+  cases role with
+  | false =>
+      refine ⟨((fun _ => 1), (fun _ => 1)), 0, 1, ?_⟩
+      intro he
+      have hc := congrArg (fun p : ℝ[X] => p.coeff 0) he
+      norm_num [linearizationActual, DependentFamily.realize, deformedContinuant] at hc
+  | true =>
+      refine ⟨((fun _ => 1), (fun _ => 1)), 0, 2, ?_⟩
+      norm_num [linearizationActual, DependentFamily.realize, deformedContinuant,
+        mul_coeff_one]
+
+def linearizationFamilyRegistration :
+    DependentFamily.Registration linearizationArena linearizationSourceScope where
+  actual := linearizationActual
+  bridge := linearization_source_bridge
+  variation := ⟨linearization_actual_positive, linearizationRejected false,
+    linearization_rejected_law false⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨linearizationRejected role, ?_, rfl, linearization_rejected_law role⟩
+      intro index hne
+      funext p n
+      simp [linearizationRejected, DependentFamily.realize, hne]
+    · intro e; exact nomatch e
+  dependence := linearization_dependence
+
+def linearizationRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@continuant_linearization) (DependentFamily.Realization linearizationSignature) Type Unit where
+  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.continuant_linearization.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath.linearizationFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨linearizationArena⟩
+  objectArena := .source ⟨linearizationArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source linearizationArena ⟨linearizationFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize linearizationSignature
+    (fun role p n => (deformedContinuant p.1 p.2 n).coeff (if role then 1 else 0))
+    (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakEvenPath
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg", "arg"]
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
