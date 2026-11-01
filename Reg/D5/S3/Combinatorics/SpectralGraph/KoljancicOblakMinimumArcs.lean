@@ -1,8 +1,14 @@
 import D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Source-bound audits of the actual arc-cardinality observations. -/
+/-! Typed source-family evidence for arc-cardinality and support observations.
+
+The eight `family` values retain exact telescope bridges, variation, sensitivity,
+and observational dependence. They are partial audit evidence, not validated
+`Contract.Registration` bindings. Contract decoding and current source-selection
+binding evidence for all eight targets remain unfinished under
+https://github.com/the-omega-institute/trureturing/issues/25108#issuecomment-6555443606.
+-/
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 namespace Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
@@ -78,37 +84,6 @@ def family : Registration arena (type_of% @nssp_centralizer_cycle_bound) where
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration
-    (@nssp_centralizer_cycle_bound) (Realization signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.nssp_centralizer_cycle_bound.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.Cycle.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization signature) from ⟨actual⟩)⟩ trivial
-  readout := some (realize signature (fun _ _ E => E.card) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Cycle
 
 namespace Connected
@@ -138,37 +113,6 @@ def family : Registration arena (type_of% @nssp_arc_bound_of_connected) where
       exact nomatch e
   dependence := dependence
 
-def registration : Contract.Registration
-    (@nssp_arc_bound_of_connected) (Realization signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.nssp_arc_bound_of_connected.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.Connected.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization signature) from ⟨actual⟩)⟩ trivial
-  readout := some (realize signature (fun _ _ E => E.card) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Connected
 
 namespace SupportObservation
@@ -225,37 +169,6 @@ def family : Registration arena (type_of% @endpoint_requires) where
     · intro e
       exact nomatch e
   dependence := SupportObservation.dependence
-def registration : Contract.Registration
-    (@endpoint_requires) (Realization SupportObservation.signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.endpoint_requires.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.SupportObservation.Upper.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization SupportObservation.signature) from ⟨SupportObservation.actual⟩)⟩ trivial
-  readout := some (realize SupportObservation.signature (fun _ _ E => E) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Upper
 
 namespace Attainment
@@ -280,37 +193,6 @@ def family : Registration arena (type_of% @endpoint_attainment) where
     · intro e
       exact nomatch e
   dependence := _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.dependence
-def registration : Contract.Registration
-    (@endpoint_attainment) (Realization _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.endpoint_attainment.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.SupportObservation.Attainment.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.signature) from ⟨_root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.actual⟩)⟩ trivial
-  readout := some (realize _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.signature (fun _ _ E => E.card) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Attainment
 
 namespace Level
@@ -334,37 +216,6 @@ def family : Registration arena (type_of% @requires_level_has_loop) where
     · intro e
       exact nomatch e
   dependence := SupportObservation.dependence
-def registration : Contract.Registration
-    (@requires_level_has_loop) (Realization SupportObservation.signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.requires_level_has_loop.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.SupportObservation.Level.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization SupportObservation.signature) from ⟨SupportObservation.actual⟩)⟩ trivial
-  readout := some (realize SupportObservation.signature (fun _ _ E => E) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Level
 
 namespace Plant
@@ -393,37 +244,6 @@ def family : Registration arena (type_of% @loop_support_eigenvalue_one) where
     · intro e
       exact nomatch e
   dependence := SupportObservation.dependence
-def registration : Contract.Registration
-    (@loop_support_eigenvalue_one) (Realization SupportObservation.signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.loop_support_eigenvalue_one.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.SupportObservation.Plant.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization SupportObservation.signature) from ⟨SupportObservation.actual⟩)⟩ trivial
-  readout := some (realize SupportObservation.signature (fun _ _ E => E) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Plant
 
 namespace Connectivity
@@ -448,37 +268,6 @@ def family : Registration arena (type_of% @requires_connected) where
     · intro e
       exact nomatch e
   dependence := SupportObservation.dependence
-def registration : Contract.Registration
-    (@requires_connected) (Realization SupportObservation.signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.requires_connected.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.SupportObservation.Connectivity.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization SupportObservation.signature) from ⟨SupportObservation.actual⟩)⟩ trivial
-  readout := some (realize SupportObservation.signature (fun _ _ E => E) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Connectivity
 
 namespace Complete
@@ -503,40 +292,6 @@ def family : Registration arena (type_of% @result) where
     · intro e
       exact nomatch e
   dependence := _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.dependence
-def registration : Contract.Registration
-    (@result) (Realization _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.signature) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.result.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.SupportObservation.Complete.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show Nonempty (Realization _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.signature) from ⟨_root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.actual⟩)⟩ trivial
-  readout := some (realize _root_.Reg.D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.signature (fun _ _ E => E.card) (fun e => nomatch e))
-  variation := .evidence ⟨family.variation⟩ trivial
-  sensitivity := .evidence ⟨family.sensitivity⟩ trivial
-  partialSensitivity := none
-  escapeFrom := some (@Finset.{0})
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-    definition := some {
-      owner := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs
-      name := `D5.S3.Combinatorics.SpectralGraph.KoljancicOblakMinimumArcs.MinimumArcs
-      path := #[] }
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "fn", "arg", "body", "body", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 end Complete
 
 end SupportObservation
