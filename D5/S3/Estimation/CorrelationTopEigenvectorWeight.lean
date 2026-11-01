@@ -9,13 +9,14 @@
 import D5.S3.Estimation.CorrelationWeightSpectralBound
 import D5.S3.Weil.ZetaLinear.PosIndex
 import Mathlib.Algebra.Order.Round
+import Mathlib.Order.Interval.Finset.Fin
 
 /-! The eventual-existence reading of Stepanov--Herrmann--Guhr, Question III.5. -/
 
 set_option autoImplicit false
 
 open Matrix Finset
-open scoped BigOperators RealInnerProductSpace
+open scoped BigOperators RealInnerProductSpace ComplexOrder
 
 namespace D5.S3.Estimation.CorrelationTopEigenvectorWeight
 
@@ -361,6 +362,54 @@ private def signMatrix (n : ℕ) (k : ℤ) (a b d : ℝ) : Matrix (Fin n) (Fin n
     a • Matrix.vecMulVec (signVector n k) (signVector n k) +
     b • Matrix.vecMulVec (fun _ => 1) (fun _ => 1)
 
+private lemma signVector_sq (n : ℕ) (k : ℤ) (i : Fin n) :
+    signVector n k i ^ 2 = 1 := by
+  dsimp only [signVector]
+  split_ifs <;> norm_num
+
+private lemma signVector_sum {n : ℕ} (k : ℤ) (hk : 0 < k) (hkn : k < (n : ℤ)) :
+    ∑ i, signVector n k i = 2 * (k : ℝ) - (n : ℝ) := by
+  classical
+  let t : Fin n := ⟨k.toNat, by omega⟩
+  have htest : ∀ i : Fin n, ((i.val : ℤ) < k) ↔ i < t := by
+    intro i
+    change (i.val : ℤ) < k ↔ i.val < k.toNat
+    omega
+  have hsign : ∀ i : Fin n, signVector n k i = 2 * (if i < t then 1 else 0) - 1 := by
+    intro i
+    dsimp only [signVector]
+    simp only [htest]
+    split_ifs <;> norm_num
+  have hcount : (∑ i : Fin n, if i < t then (1 : ℝ) else 0) = (k.toNat : ℝ) := by
+    rw [← sum_filter]
+    simp only [filter_gt_eq_Iio, sum_const, nsmul_eq_mul, mul_one, Fin.card_Iio, t]
+  have hkcast : (k.toNat : ℝ) = (k : ℝ) := by
+    exact_mod_cast Int.toNat_of_nonneg hk.le
+  simp_rw [hsign]
+  rw [sum_sub_distrib, ← mul_sum, hcount, hkcast]
+  simp
+
+private lemma lower_sign_moments {n : ℕ} (k : ℤ) (hk : 0 < k)
+    (hkn : k < (n : ℤ)) :
+    (2 * ∑ i : Fin n, ∑ j with j < i, (1 : ℝ) = (n : ℝ) * ((n : ℝ) - 1)) ∧
+      (2 * ∑ i, ∑ j with j < i, signVector n k i * signVector n k j =
+        (2 * (k : ℝ) - (n : ℝ)) ^ 2 - (n : ℝ)) := by
+  have hone := symmetric_sum (fun _ _ : Fin n => (1 : ℝ)) (fun _ _ => rfl)
+  simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one] at hone
+  have hs := symmetric_sum (fun i j => signVector n k i * signVector n k j)
+    (fun i j => mul_comm _ _)
+  have hdiag : (∑ i, signVector n k i * signVector n k i) = (n : ℝ) := by
+    simp only [← sq, signVector_sq, sum_const, card_univ, Fintype.card_fin,
+      nsmul_eq_mul, mul_one]
+  have htotal : (∑ i, ∑ j, signVector n k i * signVector n k j) =
+      (2 * (k : ℝ) - (n : ℝ)) ^ 2 := by
+    simp only [← mul_sum, ← sum_mul, signVector_sum k hk hkn, sq]
+  rw [hdiag, htotal] at hs
+  constructor
+  · simp only [sum_const, nsmul_eq_mul, mul_one]
+    nlinarith only [hone]
+  · nlinarith only [hs]
+
 private lemma rounded_eventually {c σ : ℝ} (h : domainD c σ) (hcs : c < σ)
     (hp : let x := wedgeX c σ
       let a := σ / Real.sqrt (1 - x ^ 2)
@@ -386,7 +435,83 @@ private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     IsCorrelation (signMatrix n k a b (1 - a - b)) ∧
       meanCorr (signMatrix n k a b (1 - a - b)) = c ∧
       stdCorr (signMatrix n k a b (1 - a - b)) = σ := by
-  sorry
+  have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
+  have hn0 : (n : ℝ) ≠ 0 := by linarith
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
+  have hq : 0 < Real.sqrt (1 - roundedZ n k ^ 2) :=
+    Real.sqrt_pos.mpr (by nlinarith [hz.1, hz.2])
+  have hq2 : Real.sqrt (1 - roundedZ n k ^ 2) ^ 2 = 1 - roundedZ n k ^ 2 :=
+    Real.sq_sqrt (by nlinarith [hz.1, hz.2])
+  have hcorr : IsCorrelation (signMatrix n k a b (1 - a - b)) := by
+    constructor
+    · have hs : (vecMulVec (signVector n k) (signVector n k)).PosSemidef := by
+        simpa only [star_trivial] using posSemidef_vecMulVec_self_star (signVector n k)
+      have he : (vecMulVec (fun _ : Fin n => (1 : ℝ)) (fun _ => 1)).PosSemidef := by
+        simpa only [star_trivial] using
+          posSemidef_vecMulVec_self_star (fun _ : Fin n => (1 : ℝ))
+      exact ((PosSemidef.one.smul hd0.le).add (hs.smul ha0.le)).add (he.smul hb0.le)
+    · intro i
+      simp only [signMatrix, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply_eq,
+        vecMulVec_apply, mul_one, ← sq, signVector_sq]
+      ring
+  obtain ⟨hcount, hsign⟩ := lower_sign_moments k hk hkn
+  have hcountEq : (∑ i : Fin n, ∑ j with j < i, (1 : ℝ)) =
+      (n : ℝ) * ((n : ℝ) - 1) / 2 := by linarith only [hcount]
+  have hsignEq : (∑ i, ∑ j with j < i, signVector n k i * signVector n k j) =
+      ((2 * (k : ℝ) - (n : ℝ)) ^ 2 - (n : ℝ)) / 2 := by linarith only [hsign]
+  have hentry : ∀ i j : Fin n, j < i →
+      signMatrix n k a b (1 - a - b) i j = a * (signVector n k i * signVector n k j) + b := by
+    intro i j hij
+    simp only [signMatrix, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, one_apply,
+      if_neg hij.ne.symm, vecMulVec_apply, mul_one, mul_zero, zero_add]
+  have hmean : meanCorr (signMatrix n k a b (1 - a - b)) = c := by
+    have hsum : (∑ i, ∑ j with j < i, signMatrix n k a b (1 - a - b) i j) =
+        a * (∑ i, ∑ j with j < i, signVector n k i * signVector n k j) +
+          b * (∑ i : Fin n, ∑ j with j < i, (1 : ℝ)) := by
+      calc
+        _ = ∑ i, ∑ j with j < i, (a * (signVector n k i * signVector n k j) + b) :=
+          sum_congr rfl fun i _ => sum_congr rfl fun j hj => hentry i j (mem_filter.mp hj).2
+        _ = _ := by simp only [mul_sum, mul_one, ← sum_add_distrib]
+    rw [meanCorr, hsum, hcountEq, hsignEq, hb]
+    dsimp only [roundedZ]
+    field_simp
+    <;> ring
+  refine ⟨hcorr, hmean, ?_⟩
+  have hsecond : (∑ i, ∑ j with j < i,
+      signMatrix n k a b (1 - a - b) i j ^ 2) =
+      (a ^ 2 + b ^ 2) * (∑ i : Fin n, ∑ j with j < i, (1 : ℝ)) +
+        2 * a * b * (∑ i, ∑ j with j < i, signVector n k i * signVector n k j) := by
+    calc
+      _ = ∑ i, ∑ j with j < i, ((a ^ 2 + b ^ 2) +
+          2 * a * b * (signVector n k i * signVector n k j)) := by
+        apply sum_congr rfl
+        intro i _
+        apply sum_congr rfl
+        intro j hj
+        rw [hentry i j (mem_filter.mp hj).2]
+        have hs : (signVector n k i * signVector n k j) ^ 2 = 1 := by
+          rw [mul_pow, signVector_sq, signVector_sq, one_mul]
+        calc
+          _ = a ^ 2 * (signVector n k i * signVector n k j) ^ 2 + b ^ 2 +
+              2 * a * b * (signVector n k i * signVector n k j) := by ring
+          _ = _ := by rw [hs, mul_one]
+      _ = _ := by simp only [mul_sum, mul_one, ← sum_add_distrib]
+  have hvar : 2 / ((n : ℝ) * ((n : ℝ) - 1)) *
+      (∑ i, ∑ j with j < i, signMatrix n k a b (1 - a - b) i j ^ 2) - c ^ 2 = σ ^ 2 := by
+    have hamean : c = a * roundedZ n k + b := by rw [hb]; ring
+    have hasq : a ^ 2 * (1 - roundedZ n k ^ 2) = σ ^ 2 := by
+      rw [ha, div_pow, hq2]
+      exact div_mul_cancel₀ _ (by nlinarith [hz.1, hz.2])
+    have hsecondEq : 2 / ((n : ℝ) * ((n : ℝ) - 1)) *
+        (∑ i, ∑ j with j < i, signMatrix n k a b (1 - a - b) i j ^ 2) =
+        a ^ 2 + b ^ 2 + 2 * a * b * roundedZ n k := by
+      rw [hsecond, hcountEq, hsignEq]
+      dsimp only [roundedZ]
+      field_simp
+      <;> ring
+    rw [hsecondEq, hamean]
+    nlinarith only [hasq]
+  rw [stdCorr, hmean, hvar, Real.sqrt_sq hσ.le]
 
 private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     (hk : 0 < k) (hkn : k < (n : ℤ)) (hbalance : 2 * k ≠ (n : ℤ))
