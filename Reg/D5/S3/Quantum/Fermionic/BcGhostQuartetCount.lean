@@ -41,8 +41,8 @@ private theorem coefficientPositive : coefficientArena.Law coefficientActual := 
 private theorem coefficientNegative (i : Bool) :
     ¬ coefficientArena.Law (coefficientRejected i) := by
   intro h
-  have hh := h 0 ∅
-  cases i <;> norm_num [coefficientRejected, coefficientActual, realize, Finsupp.zero_apply] at hh
+  have hh := h (ket ∅) ∅
+  cases i <;> norm_num [coefficientRejected, coefficientActual, realize, M_coefficient, count, ket] at hh
 
 private theorem coefficientDependence :
     ObservationalDependence coefficientSignature coefficientActual := by
