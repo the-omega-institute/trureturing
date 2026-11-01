@@ -152,6 +152,10 @@ $$(\exists (a : \mathbb{N} \to \mathbb{N}), \operatorname{IsSourceSequence}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/irwin-a138099` (proved) by `D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"irwin-a138099","declaration_gid":"D5/S3/Combinatorics/Polyomino/IrwinA138099HookSum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Curtz and Benedict W. J. Irwin (2016). *OEIS A138099: irregular triangle and Irwin's hook-sum conjecture*. URL: <https://oeis.org/A138099>.

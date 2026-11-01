@@ -27,14 +27,14 @@ internal sealed class IrwinA138099HookSumDocument : IScribeDocumentDefinition
             Node("hookLength", "Ordinary hooks in occupied cells", HookLength(), ConjectureQuote + " The ordinary hook contains its own cell, the occupied cells strictly to its right in its row, and the occupied cells strictly below it in its column. The formula is used for c in D when summing hooks; holes are allowed.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("hookSum", "The sum of all hooks", HookSum(), ConjectureQuote + " This finite sum uses the occupied cells themselves, including the empty sum zero.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The source assertion with existence", IffTo(F.Id("claim"), ClaimBody()), ConjectureQuote + " This is the complete sentence in Irwin's unpaginated FORMULA block. The arithmetic and spiral sequences both exist, and the identity holds for every pair of such sequences and every positive index. The first two conjuncts assert existence rather than assume it.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("result", "The hook-sum identity at every positive index", ClaimBody(), "Inserting a fresh cell increases the total hook sum by one plus the old row and column sizes. After m squared cells the walk fills an m by m square. Its next m cells form one boundary strip and its next m+1 cells form the other. Their increments are m+j, exactly the entries of source rows 2m and 2m+1. The first singleton is handled separately. Row addresses also construct a source arithmetic sequence, and the insertion recursion constructs and uniquely determines the source spiral.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+            Node("result", "The hook-sum identity at every positive index", ClaimBody(), "Inserting a fresh cell increases the total hook sum by one plus the old row and column sizes. After m squared cells the walk fills an m by m square. Its next m cells form one boundary strip and its next m+1 cells form the other. Their increments are m+j, exactly the entries of source rows 2m and 2m+1. The first singleton is handled separately. Row addresses also construct a source arithmetic sequence, and the insertion recursion constructs and uniquely determines the source spiral.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("irwin-a138099"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("irwin-a138099-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args) => App(Seq(Operatorname, Grp(F.Id(name))), args);
