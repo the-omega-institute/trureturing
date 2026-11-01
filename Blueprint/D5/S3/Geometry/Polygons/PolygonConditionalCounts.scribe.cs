@@ -7,7 +7,7 @@ internal sealed class PolygonConditionalCountsDocument : IScribeDocumentDefiniti
 {
     private static DocumentBlock Node(string name, string title, Formula statement, string prose,
         DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
-        DescribeId.Create("polygon-conditional-counts-" + name.Replace("_", "-")),
+        DescribeId.Create("polygon-conditional-counts-" + name.Replace("_", "-").ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Geometry/Polygons/PolygonConditionalCounts." + name),
         H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), role);
@@ -30,7 +30,7 @@ internal sealed class PolygonConditionalCountsDocument : IScribeDocumentDefiniti
             Cat(Sub(Sub(X("n"), Card(X("P"))), N(2))))))));
     private static Formula Definition() => All("n", X("Nat"), All("p", X("Nat"), All("q", X("Nat"),
         Eq(C("Npq", X("n"), X("p"), X("q")),
-            SumOver("j", C("range", Add(X("q"), N(1))),
+            SumOver("j", C("range", AddF(X("q"), N(1))),
                 Mul(Mul(Pow(Sub(N(0), N(1)), X("j")), AsInt(C("choose", X("q"), X("j")))),
                     AsInt(Cat(Sub(Sub(Sub(X("n"), X("p")), X("j")), N(2))))))))));
     private static Formula Conditional() => Scope(All("P", Sets, All("Q", Sets,
@@ -48,7 +48,7 @@ internal static class PolygonConditionalCountsFormula
     internal static Formula R(Formula a, Formula op, Formula b) => Seq(Open, a, Sp, op, Sp, b, Close);
     internal static Formula Eq(Formula a, Formula b) => R(a, F.Eq, b);
     internal static Formula Imp(Formula a, Formula b) => R(a, Implies, b);
-    internal static Formula Add(Formula a, Formula b) => R(a, Plus, b);
+    internal static Formula AddF(Formula a, Formula b) => R(a, Plus, b);
     internal static Formula Sub(Formula a, Formula b) => R(a, Minus, b);
     internal static Formula Mul(Formula a, Formula b) => R(a, Cdot, b);
     internal static Formula Pow(Formula a, Formula b) => new Formula.Power(a,b);
