@@ -160,5 +160,101 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 #print axioms source_registration
 #print axioms registration
+
+namespace TwoForms
+
+/-- Observe the identity alternative as the two-point permutation varies. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Perm (Fin 2)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ c => decide (c = 1)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+/-- Retain both alternatives and the complete original permutation domain. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ c : Perm (Fin 2), R.readout () () c = true ∨ c = swap 0 1
+
+private theorem identity_ne_swap : (1 : Perm (Fin 2)) ≠ swap 0 1 := by
+  intro h
+  have hz := congrArg (fun c : Perm (Fin 2) => c 0) h
+  simpa using hz
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  rcases h 1 with hfalse | hswap
+  · change false = true at hfalse
+    cases hfalse
+  · exact identity_ne_swap hswap
+
+def source_registration : Registration arena (type_of% @two_forms) where
+  actual := actual
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by
+    intro c
+    simpa only [actual, realize, decide_eq_true_eq] using two_forms c,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 1, swap 0 1, ?_⟩
+    simp [actual, realize, Ne.symm identity_ne_swap]
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@two_forms) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.TwoForms.unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.TwoForms.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.two_forms
+#print axioms source_registration
+#print axioms registration
+
+end TwoForms
 end
 end Reg.D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
