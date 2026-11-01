@@ -165,8 +165,9 @@ private theorem sum_crossing (B C : Finset ℕ) :
     B.sum (fun r => (C.filter (fun s => s + 4 ≤ r)).card) =
       ((B.product C).filter (fun p => p.2 + 4 ≤ p.1)).card := by
   classical
-  simp only [Finset.card_filter, Finset.sum_product]
-  rfl
+  rw [Finset.card_filter]
+  rw [← Finset.sum_product]
+  simp [Finset.card_filter]
 
 private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
     xs.Pairwise (· < ·) → xs.Nodup → (∀ r ∈ xs, 2 ≤ r) →
@@ -193,7 +194,7 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
             omega
         · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
           simp [bSite] at he
-          have hy2 : 2 ≤ y := htwo y (by simpa using hy)
+          have hy2 : 2 ≤ y := htwo y (by simp [hy])
           omega
       have heven' : 2 * (x - 2) ∉ bOcc C xs := by simpa [bSite] using heven
       rw [if_neg heven']
@@ -215,20 +216,22 @@ private theorem bword_sorted : ∀ (xs : List ℕ) (C : Finset ℕ),
               · by_cases hx3 : 3 ≤ x
                 · have hj1 : j = 1 := by simpa [hx3] using hj
                   subst j
-                  exact ⟨Or.inl (by simp [hx3]), by omega⟩
+                  exact Or.inl (by simp [hx3])
                 · simp [hx3] at hj
               · have hsC : s ∈ C := by simpa [asc] using hs
                 have hs4 : s + 4 ≤ x := by omega
-                exact ⟨Or.inr ⟨s, ⟨hsC, hs4⟩, rfl⟩, by omega⟩
+                exact Or.inr ⟨s, ⟨hsC, hs4⟩, rfl⟩
             · have hxy : x < y := (List.pairwise_cons.mp hsort).1 y (by simpa using hy)
-              have hy2 : 2 ≤ y := htwo y (by simpa using hy)
+              have hy2 : 2 ≤ y := htwo y (by simp [hy])
               simp [bSite] at hlt
               omega
           · intro hj
             rcases hj with hj | ⟨s, hs, rfl⟩
-            · have hj1 : j = 1 := by simpa using hj
-              subst j
-              exact ⟨Or.inl (by simp), by omega⟩
+            · by_cases hx3 : 3 ≤ x
+              · have hj1 : j = 1 := by simpa [hx3] using hj
+                subst j
+                exact ⟨Or.inl (Or.inl rfl), by omega⟩
+              · simp [hx3] at hj
             · have hs4 := hs.2
               exact ⟨Or.inl (Or.inr ⟨s, hs.1, rfl⟩), by omega⟩
         rw [heq]
@@ -361,10 +364,10 @@ private theorem occ_bSite_mem (r : ℕ) (B C : Finset ℕ) (hr : 2 ≤ r) :
     constructor
     · intro h
       rcases h with h | h
-      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+      · rcases h with ⟨s, hs, he⟩
         have hs2 := (Finset.mem_filter.mp hs).2
         omega
-      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+      · rcases h with ⟨s, hs, he⟩
         omega
     · intro h
       exact Or.inl ⟨r, ⟨h, hr⟩, by simp [bSite]⟩
@@ -374,10 +377,10 @@ private theorem occ_bSite_mem (r : ℕ) (B C : Finset ℕ) (hr : 2 ≤ r) :
       rcases h with h | h
       · omega
       · rcases h with h | h
-        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+        · rcases h with ⟨s, hs, he⟩
           have hs2 := (Finset.mem_filter.mp hs).2
           omega
-        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+        · rcases h with ⟨s, hs, he⟩
           omega
     · intro h
       exact Or.inl (Or.inr ⟨r, ⟨h, hr⟩, by simp [bSite]⟩)
@@ -391,10 +394,10 @@ private theorem occ_cSite_mem (r : ℕ) (B C : Finset ℕ) :
     constructor
     · intro h
       rcases h with h | h
-      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+      · rcases h with ⟨s, hs, he⟩
         have hs2 := (Finset.mem_filter.mp hs).2
         omega
-      · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+      · rcases h with ⟨s, hs, he⟩
         omega
     · intro h
       exact Or.inr ⟨r, h, by simp⟩
@@ -404,10 +407,10 @@ private theorem occ_cSite_mem (r : ℕ) (B C : Finset ℕ) :
       rcases h with h | h
       · omega
       · rcases h with h | h
-        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+        · rcases h with ⟨s, hs, he⟩
           have hs2 := (Finset.mem_filter.mp hs).2
           omega
-        · rcases Finset.mem_image.mp h with ⟨s, hs, he⟩
+        · rcases h with ⟨s, hs, he⟩
           omega
     · intro h
       exact Or.inr (Or.inr ⟨r, h, by simp⟩)
