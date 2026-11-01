@@ -152,13 +152,19 @@ private theorem capture_interval (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (v : Carrier D) (w : Fock)
     (A : ℕ) (hA : 2 ≤ A) (hw : BcGhostOccupationRadius.Radius A w)
     (lo hi : ℤ) (hlo : lo ≤ -(A : ℤ)) (hhi : upper D H v ≤ hi) :
-    Function.support (fun m : ℤ => summand D H m (v ⊗ₜ[ℂ] w)) ⊆
-      (Finset.Icc lo hi : Set ℤ) := by
-  intro m hm
-  by_contra hn
-  have ht : m < lo ∨ hi < m := by
-    simpa only [Finset.mem_coe, Finset.mem_Icc, not_and_or, not_le] using hn
-  exact hm (tensor_tail D H v w A hA hw m (by omega))
+    T D H (v ⊗ₜ[ℂ] w) = ∑ m ∈ Finset.Icc lo hi,
+      summand D H m (v ⊗ₜ[ℂ] w) := by
+  classical
+  rw [T_tmul D H v w A hA hw]
+  change (∑ m ∈ Finset.Icc (-(A : ℤ)) (upper D H v),
+    summand D H m (v ⊗ₜ[ℂ] w)) = _
+  apply Finset.sum_subset
+  · intro m hm
+    obtain ⟨hmlo, hmhi⟩ := Finset.mem_Icc.mp hm
+    exact Finset.mem_Icc.mpr ⟨hlo.trans hmlo, hmhi.trans hhi⟩
+  · intro m hm hn
+    exact tensor_tail D H v w A hA hw m (by
+      simpa only [Finset.mem_Icc, not_and_or, not_le] using hn)
 
 /-- Original-operator covariance, with precisely the negative rank anomaly. -/
 theorem covariance (D : LatticeData)
@@ -181,28 +187,20 @@ theorem covariance (D : LatticeData)
   let J := Finset.Icc (r-(A : ℤ)) U
   have hU : 0 ≤ U := le_max_left _ _
   have hd : 0 ≤ (d : ℤ) := Int.natCast_nonneg _
-  have hcap : Function.support (fun m : ℤ => summand D H m x) ⊆ (I : Set ℤ) :=
+  have hTx : T D H x = ∑ m ∈ I, summand D H m x :=
     capture_interval D H v w A hA hwA lo hi (by dsimp [lo]; omega)
       (by dsimp [hi]; omega)
-  have hcapM : Function.support (fun m : ℤ => summand D H m (matterMode D H r x)) ⊆
-      (I : Set ℤ) := by
+  have hTM : T D H (matterMode D H r x) =
+      ∑ m ∈ I, summand D H m (matterMode D H r x) := by
     simpa only [x, matterMode, TensorProduct.map_tmul, LinearMap.id_apply] using
       capture_interval D H (sugawaraMode D H r v) w A hA hwA lo hi
         (by dsimp [lo]; omega) (le_max_left _ _)
-  have hcapG : Function.support (fun m : ℤ => summand D H m (ghostVirasoro D r x)) ⊆
-      (I : Set ℤ) := by
+  have hTG : T D H (ghostVirasoro D r x) =
+      ∑ m ∈ I, summand D H m (ghostVirasoro D r x) := by
     simpa only [x, ghostVirasoro, TensorProduct.map_tmul, LinearMap.id_apply] using
       capture_interval D H v (BcGhostVirasoro.L r w) (A+d) (by omega)
         (BcGhostOccupationRadius.virasoro_radius hA hwA r) lo hi
         (min_le_left _ _) (by dsimp [hi]; omega)
-  have hx : Function.HasFiniteSupport (fun m : ℤ => summand D H m x) :=
-    I.finite_toSet.subset hcap
-  have hM : Function.HasFiniteSupport (fun m : ℤ => summand D H m (matterMode D H r x)) :=
-    I.finite_toSet.subset hcapM
-  have hG : Function.HasFiniteSupport (fun m : ℤ => summand D H m (ghostVirasoro D r x)) :=
-    I.finite_toSet.subset hcapG
-  have hMx := hx.fun_comp (map_zero (matterMode D H r))
-  have hGx := hx.fun_comp (map_zero (ghostVirasoro D r))
   have hdr : -r ≤ (d : ℤ) := by dsimp [d]; omega
   have hJI : J ⊆ I := by
     intro k hk
@@ -231,27 +229,28 @@ theorem covariance (D : LatticeData)
     · rw [(BcGhostOccupationRadius.high_modes hA hwA (r-k) (by omega)).2,
         TensorProduct.tmul_zero]
     · rw [above_upper D H v k ht, TensorProduct.zero_tmul]
-  have hc : Function.HasFiniteSupport (fun m : ℤ =>
-      (if m+r = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) • ghostC D (-m) x) := by
-    apply I.finite_toSet.subset
+  have hc : Function.support (fun m : ℤ =>
+      (if m+r = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) • ghostC D (-m) x) ⊆
+      (I : Set ℤ) := by
     intro m hm
     have he : m = -r := by
       by_contra hn
       exact hm (by simp [show m+r ≠ 0 by omega])
     simpa only [he, Finset.mem_coe] using hcentral
-  have hw : Function.HasFiniteSupport (fun k : ℤ =>
-      ((k-2*r : ℤ) : ℂ) • paired D H r k x) := by
-    apply I.finite_toSet.subset
+  have hweighted (a : ℤ → ℂ) :
+      Function.support (fun k : ℤ => a k • paired D H r k x) ⊆ (I : Set ℤ) := by
     intro k hk
     apply hJI (hpairedJ ?_)
     intro hz
     change paired D H r k x = 0 at hz
     apply hk
-    change ((k-2*r : ℤ) : ℂ) • paired D H r k x = 0
+    change a k • paired D H r k x = 0
     rw [hz, smul_zero]
-  have hshift : Function.HasFiniteSupport (fun m : ℤ =>
-      ((m-r : ℤ) : ℂ) • paired D H r (m+r) x) := by
-    apply I.finite_toSet.subset
+  have hw : Function.HasFiniteSupport (fun k : ℤ =>
+      ((k-2*r : ℤ) : ℂ) • paired D H r k x) :=
+    I.finite_toSet.subset (hweighted (fun k => ((k-2*r : ℤ) : ℂ)))
+  have hshift : Function.support (fun m : ℤ =>
+      ((m-r : ℤ) : ℂ) • paired D H r (m+r) x) ⊆ (I : Set ℤ) := by
     intro m hm
     have hk : m+r ∈ J := hpairedJ (by
       intro hz
@@ -266,18 +265,18 @@ theorem covariance (D : LatticeData)
   have hmatter : T D H (matterMode D H r x) - matterMode D H r (T D H x) =
       (∑ᶠ k : ℤ, ((k-2*r : ℤ) : ℂ) • paired D H r k x) +
         (-((D.rank : ℂ)/12*((r : ℂ)^3-r))) • ghostC D r x := by
-    change (∑ᶠ m : ℤ, summand D H m (matterMode D H r x)) -
-      matterMode D H r (∑ᶠ m : ℤ, summand D H m x) = _
-    rw [map_finsum (matterMode D H r) hx, ← finsum_sub_distrib hM hMx]
+    rw [hTM, hTx, map_sum, ← Finset.sum_sub_distrib]
     calc
-      _ = ∑ᶠ m : ℤ, (((m-r : ℤ) : ℂ) • paired D H r (m+r) x +
+      _ = ∑ m ∈ I, (((m-r : ℤ) : ℂ) • paired D H r (m+r) x +
           (if m+r = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) •
             ghostC D (-m) x) := by
-        apply finsum_congr
-        intro m
+        apply Finset.sum_congr rfl
+        intro m hm
         exact LinearMap.congr_fun (matter_commutator D H hHG hGH m r) x
       _ = _ := by
-        rw [finsum_add_distrib hshift hc, central_sum D r x]
+        rw [Finset.sum_add_distrib,
+          ← finsum_eq_sum_of_support_subset _ hshift,
+          ← finsum_eq_sum_of_support_subset _ hc, central_sum D r x]
         congr 1
         calc
           _ = ∑ᶠ m : ℤ, ((m+r-2*r : ℤ) : ℂ) • paired D H r (m+r) x := by
@@ -287,11 +286,10 @@ theorem covariance (D : LatticeData)
           _ = _ := finite_shift _ hw r
   have hghost : T D H (ghostVirasoro D r x) - ghostVirasoro D r (T D H x) =
       ∑ᶠ k : ℤ, ((2*r-k : ℤ) : ℂ) • paired D H r k x := by
-    change (∑ᶠ m : ℤ, summand D H m (ghostVirasoro D r x)) -
-      ghostVirasoro D r (∑ᶠ m : ℤ, summand D H m x) = _
-    rw [map_finsum (ghostVirasoro D r) hx, ← finsum_sub_distrib hG hGx]
-    apply finsum_congr
-    intro m
+    rw [hTG, hTx, map_sum, ← Finset.sum_sub_distrib,
+      finsum_eq_sum_of_support_subset _ (hweighted (fun k => ((2*r-k : ℤ) : ℂ)))]
+    apply Finset.sum_congr rfl
+    intro m hm
     exact LinearMap.congr_fun (ghost_commutator D H m r) x
   have hcancel : (∑ᶠ k : ℤ, ((k-2*r : ℤ) : ℂ) • paired D H r k x) +
       (∑ᶠ k : ℤ, ((2*r-k : ℤ) : ℂ) • paired D H r k x) = 0 := by
