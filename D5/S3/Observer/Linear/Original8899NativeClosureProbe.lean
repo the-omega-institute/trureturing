@@ -31,7 +31,7 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open ContinuousLinearMap MeasureTheory Module Filter Set
-open scoped BigOperators Topology InnerProductSpace RealInnerProductSpace
+open scoped BigOperators Topology InnerProductSpace RealInnerProductSpace Matrix.Norms.L2Operator
 
 namespace Original8899NativeAmbient
 
@@ -130,7 +130,8 @@ theorem transport_gram {X Y Z : Type*}
       (f.comp (u : X →L[ℝ] Y))) = f.adjoint.comp f := by
   simp only [adjoint_comp, LinearIsometryEquiv.adjoint_eq_symm]
   ext x
-  simp only [transport_apply, comp_apply, LinearIsometryEquiv.apply_symm_apply]
+  change u (u.symm (f.adjoint (f (u (u.symm x)))) ) = f.adjoint (f x)
+  rw [u.apply_symm_apply, u.apply_symm_apply]
 
 theorem transport_integral_gram {X Y Z : Type*}
     [NormedAddCommGroup X] [InnerProductSpace ℝ X] [CompleteSpace X]
@@ -169,6 +170,7 @@ theorem right_limit_of_bound {X : Type*} [NormedAddCommGroup X] (K : ℝ → X) 
   have hsmall : ∀ᶠ T : ℝ in 𝓝[>] (0 : ℝ), T < δ :=
     mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hδ)
   filter_upwards [self_mem_nhdsWithin, hsmall] with T hT hTδ
+  change 0 < T at hT
   have hT1 : T ≤ 1 := le_of_lt (hTδ.trans_le (min_le_left _ _))
   have hTb : T < 1 / (1 + ‖B‖) :=
     hTδ.trans_le ((min_le_right _ _).trans (min_le_left _ _))
@@ -187,7 +189,7 @@ theorem right_limit_of_bound {X : Type*} [NormedAddCommGroup X] (K : ℝ → X) 
 -- It is not a premise asserting any of the desired transport identities.
 def inclusionIsometry (B : V →L[ℝ] V) (C : V →L[ℝ] W)
     (hN : N B C (finrank ℝ V) = ⊥) : U B C ≃ₗᵢ[ℝ] V :=
-  LinearIsometryEquiv.ofTop (U B C) (by simp only [U, hN, Submodule.bot_orthogonal])
+  LinearIsometryEquiv.ofTop V (U B C) (by simp only [U, hN, Submodule.bot_orthogonal_eq_top])
 
 structure TransportFacts (B : V →L[ℝ] V) (C : V →L[ℝ] W)
     (hN : N B C (finrank ℝ V) = ⊥) : Prop where
@@ -213,7 +215,7 @@ theorem native_to_ambient (B : V →L[ℝ] V) (C : V →L[ℝ] W)
   classical
   let u := inclusionIsometry B C hN
   have hu : (u : U B C →L[ℝ] V) = (U B C).subtypeL := rfl
-  have hU : U B C = ⊤ := by simp only [U, hN, Submodule.bot_orthogonal]
+  have hU : U B C = ⊤ := by simp only [U, hN, Submodule.bot_orthogonal_eq_top]
   have hproj (x : V) : u ((U B C).orthogonalProjectionOnto x) = x := by
     change (U B C).starProjection x = x
     exact (U B C).starProjection_eq_self_iff.mpr (by rw [hU]; trivial)
@@ -328,7 +330,7 @@ theorem matrix_integral_gram (b : OrthonormalBasis ι ℝ V)
   intro t ht
   exact ContinuousLinearMap.adjoint_inner_right (f t) (b i) (f t (b j))
 
-theorem action_gram {a c : Type*} [Fintype a] [DecidableEq a]
+theorem action_gram {a c : Type} [Fintype a] [DecidableEq a]
     [Fintype c] [DecidableEq c] (M : Matrix a c ℝ) :
     D5.S3.Observer.Linear.GaussianObservationLaw.action (M.transpose * M) =
       (D5.S3.Observer.Linear.GaussianObservationLaw.action M).adjoint.comp
@@ -353,7 +355,7 @@ theorem matrix_limit_posDef (b : OrthonormalBasis ι ℝ V)
       have hh := congrArg b.repr hz
       have hxx : x = 0 := by
         ext i
-        simpa only [v, b.repr.apply_symm_apply, map_zero, WithLp.toLp_apply, Pi.zero_apply] using
+        simpa only [v, b.repr.apply_symm_apply, map_zero, PiLp.toLp_apply, WithLp.ofLp_zero, Pi.zero_apply] using
           congrArg (fun y : EuclideanSpace ℝ ι => y i) hh
       exact hx hxx
     have hrepr : (fun i => b.toBasis.repr v i) = x := by
@@ -408,8 +410,7 @@ theorem physical_determinant_limit (B : V →L[ℝ] V) (C : V →L[ℝ] W)
   classical
   intro q
   have ht := native_to_ambient B C hN
-  have hf := D5.S3.Observer.Linear.DerivativeLayerNormalizedObservation.
-    derivative_layer_normalized_observation_facts B.toLinearMap C.toLinearMap
+  have hf := D5.S3.Observer.Linear.DerivativeLayerNormalizedObservation.derivative_layer_normalized_observation_facts B.toLinearMap C.toLinearMap
   have horth : OrthogonalFamily ℝ (fun j : Fin (finrank ℝ V) => E B C j)
       (fun j => (E B C j).subtypeₗᵢ) := by simpa only [E, N] using hf.2.2.1
   have hspan : (⨆ j : Fin (finrank ℝ V), E B C j) = ⊤ := by
@@ -598,7 +599,7 @@ def momentG (B : V d →L[ℝ] V d) (C : V d →L[ℝ] V p)
     (m : ℕ) (ell : Fin (m + 1) → Polynomial ℝ) (T : ℝ) :
     Matrix (Fin d) (Fin d) ℝ := (momentM B C m ell T).transpose * momentM B C m ell T
 
-variable {a : Type*} [Fintype a] [DecidableEq a]
+variable {a : Type} [Fintype a] [DecidableEq a]
 
 def loss (x z : V d) : ℝ≥0∞ := ENNReal.ofReal (‖x - z‖ ^ 2 / 2)
 
@@ -735,11 +736,11 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
       have hv := variance_eq_sub hL2
       rw [variance_sub_const (hcoord k).aestronglyMeasurable,
         variance_eval_multivariateGaussian hS,
-        integral_sub (hcoord k).integrable (integrable_const _), hmean] at hv
+        integral_sub ((hcoord k).integrable (by norm_num)) (integrable_const _), hmean] at hv
       simpa only [integral_const, measureReal_univ_eq_one, one_smul] using
         (eq_add_of_sub_eq hv.symm)
     have hInt : Integrable (fun x : EuclideanSpace ℝ i => ‖x - z‖ ^ 2 / 2) ν := by
-      simpa only [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply] using
+      simpa only [EuclideanSpace.real_norm_sq_eq, PiLp.sub_apply, Pi.sub_apply] using
         (integrable_finsetSum Finset.univ (fun k _ =>
           ((hcoord k).sub (memLp_const (z k))).integrable_sq)).div_const 2
     rw [← ofReal_integral_eq_lintegral_ofReal hInt
@@ -761,7 +762,7 @@ private theorem actualExperiment (n : ℕ) (β : ℝ) (hβ : 0 < β)
     let A := GaussianObservationLaw.action (GaussianObservationLaw.gain M β v⁻¹)
     have hS : S.PosDef := (GaussianObservationLaw.precision_posDef M β v⁻¹ hβ (inv_pos.mpr hv).le).inv
     have htrace : 0 ≤ Matrix.trace S :=
-      Finset.sum_nonneg (fun k _ => hS.posSemidef.diag_nonneg k)
+      Finset.sum_nonneg (fun k _ => hS.posSemidef.diag_nonneg (i := k))
     have hdis : GaussianObservationLaw.jointLaw M β v⁻¹ =
         GaussianObservationLaw.dataLaw M β v⁻¹ ⊗ₘ GaussianObservationLaw.posteriorKernel M β v⁻¹ := hL.1.2.2.2.2.2.2.1
     have hcond (y : EuclideanSpace ℝ i) : GaussianObservationLaw.posteriorKernel M β v⁻¹ y =
@@ -889,7 +890,7 @@ private theorem actualFrame (n r m : ℕ)
     · exact bot_le
   have hnest {j k : ℕ} (hjk : j ≤ k) : kernels B C k ≤ kernels B C j := by
     intro x hx
-    apply Submodule.mem_iInf.mpr
+    apply (Submodule.mem_iInf _).mpr
     intro i
     exact (Submodule.mem_iInf _).mp hx ⟨i, lt_of_lt_of_le i.isLt hjk⟩
   have horth : OrthogonalFamily ℝ (fun j : Fin (n + 1) => layer B C j)
@@ -1034,11 +1035,11 @@ private theorem actualScalarStatistics (n : ℕ) (β : ℝ) (hβ : 0 < β)
   have hUtU : U.transpose * U = 1 := by
     simpa only [U, Matrix.conjTranspose_eq_transpose_of_trivial] using
       Unitary.coe_star_mul_self hG.isHermitian.eigenvectorUnitary
-  have hUUt : U * U.transpose = 1 := Matrix.mul_eq_one_comm.mp hUtU
+  have hUUt : U * U.transpose = 1 := mul_eq_one_comm.mp hUtU
   have hRtR : R.transpose * R = 1 := by
     simp only [R, Matrix.transpose_mul, Matrix.mul_assoc]
     rw [← Matrix.mul_assoc P.transpose, hPtP, Matrix.one_mul, hUtU]
-  have hRRt : R * R.transpose = 1 := Matrix.mul_eq_one_comm.mp hRtR
+  have hRRt : R * R.transpose = 1 := mul_eq_one_comm.mp hRtR
   have hdiag : M.transpose * M = R * Matrix.diagonal ev * R.transpose := by
     rw [hrestore, hG.isHermitian.spectral_theorem]
     simp [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose,
@@ -1223,7 +1224,7 @@ private theorem actualSpectrum (n r : ℕ)
       have hn : Real.sqrt T * T ^ w i ≠ 0 :=
         mul_ne_zero (Real.sqrt_pos.mpr hT).ne' (pow_pos hT _).ne'
       simp [Matrix.diagonal, mul_comm (T ^ w i), hn]
-    have hED : E * D T = 1 := Matrix.mul_eq_one_comm.mp hDE
+    have hED : E * D T = 1 := mul_eq_one_comm.mp hDE
     simp only [ContinuousLinearMap.toLinearMap_comp, LinearMap.toMatrix_comp,
       heMatrix]
     change D T * (E * _ * E) * D T = _
@@ -1303,14 +1304,14 @@ private theorem actualSpectrum (n r : ℕ)
     intro hT
     exact actualCanonicalSpectrum n b (M T) _ (hcongMP T hT) hct
   refine ⟨c, C', hc, hC, ?_, ?_⟩
-  · filter_upwards [self_mem_nhdsWithin, eventually_lt_nhdsWithin hδ, hcan] with T hT hsmall hλ
+  · filter_upwards [self_mem_nhdsWithin, eventually_lt_nhdsWithin hδ, hcan] with T hT hsmall hSpectrum
     intro i
     have hh := hb T i hT hsmall
-    simpa only [← congrFun (hλ hT) i] using hh
-  · filter_upwards [self_mem_nhdsWithin, hcoord, hcan] with T hT hct hλ
+    simpa only [← congrFun (hSpectrum hT) i] using hh
+  · filter_upwards [self_mem_nhdsWithin, hcoord, hcan] with T hT hct hSpectrum
     intro v hv
     have hh := actualScalarStatistics n β hβ b (M T) _ (hcongMP T hT) hct v hv
-    simpa only [hλ hT] using hh
+    simpa only [hSpectrum hT] using hh
 
 
 private theorem actualNoiseConclusion (n r m : ℕ)
@@ -1618,7 +1619,7 @@ private theorem actualOriginal63 (n r m cutoff : ℕ)
     · exact bot_le
   have hnest {j k : ℕ} (hjk : j ≤ k) : kernels B C k ≤ kernels B C j := by
     intro x hx
-    apply Submodule.mem_iInf.mpr
+    apply (Submodule.mem_iInf _).mpr
     intro i
     exact (Submodule.mem_iInf _).mp hx ⟨i, lt_of_lt_of_le i.isLt hjk⟩
   obtain ⟨b, w, hmn, hw, hwm, hlast, hcard, hproject⟩ := actualFrame n r m B C hobs hm
@@ -2306,8 +2307,7 @@ private theorem actualGeometry :
       (!![1+3*t^2/4,t+2*t^3/5,1-3*t^2/4,2*t-t^3/5] :
         Matrix (Fin 1) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap) ∧
     (∀ t : ℝ, Pp t =
-      (!![1,t,0,0; 0,0,1,2*t] : Matrix (Fin 2) (Fin 4) ℝ).
-        toEuclideanLin.toContinuousLinearMap) ∧
+      (!![1,t,0,0; 0,0,1,2*t] : Matrix (Fin 2) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap) ∧
     Hs = !![129/80,67/80,71/80,13/10;
       67/80,271/525,29/80,407/525;
       71/80,29/80,49/80,3/5; 13/10,407/525,3/5,619/525] ∧
@@ -2327,7 +2327,7 @@ private theorem actualGeometry :
     induction k with
     | zero => ext x i; simp [b, Matrix.toEuclideanLin]
     | succ k hk =>
-      rw [pow_succ, pow_succ, LinearMap.mul_eq_comp, hk, actcomp]
+      rw [pow_succ, pow_succ, Module.End.mul_eq_comp, hk, actcomp]
   let J (j : ℕ) : Matrix (Fin j) (Fin 4) ℝ :=
     fun k i => (Cs * Bm ^ (k : ℕ)) 0 i
   have hNs (j : ℕ) : Ns j = LinearMap.ker (J j).toEuclideanLin := by
@@ -2335,13 +2335,13 @@ private theorem actualGeometry :
     simp only [Ns, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.comp_apply]
     constructor
     · intro h
-      apply WithLp.ext
+      apply (WithLp.ofLp_injective 2)
       funext k
       have hk := congrArg (fun y : EuclideanSpace ℝ (Fin 1) => y 0) (h k)
       simpa [cs, actpow, ← LinearMap.comp_apply, actcomp, J,
         Matrix.toEuclideanLin, Matrix.mulVec, dotProduct] using hk
     · intro h k
-      apply WithLp.ext
+      apply (WithLp.ofLp_injective 2)
       funext i
       have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
       subst i
@@ -2360,7 +2360,7 @@ private theorem actualGeometry :
       simpa [hMD, Matrix.toEuclideanLin] using hh
     have hr := M.toEuclideanLin.finrank_range_add_finrank_ker
     rw [LinearMap.range_eq_top.mpr hsurj] at hr
-    simp only [Submodule.finrank_top, finrank_euclideanSpace, Fintype.card_fin] at hr
+    simp only [Module.finrank_top, finrank_euclideanSpace, Fintype.card_fin] at hr
     omega
   have hsdim : ∀ j : Fin 5, finrank ℝ (Ns j) = 4-(j : ℕ) := by
     intro j
@@ -2418,7 +2418,7 @@ private theorem actualGeometry :
     simp [cp, b, Cp, Bm, Matrix.toEuclideanLin, Matrix.mulVec, dotProduct,
       Fin.sum_univ_succ] at h00 h01 h10 h11
     change x = 0
-    apply WithLp.ext
+    apply (WithLp.ofLp_injective 2)
     funext i
     fin_cases i <;> simp only [Pi.zero_apply, WithLp.ofLp_zero] <;> linarith
   have hpbotge {j : ℕ} (hj : 2 ≤ j) : Np j = ⊥ :=
@@ -2482,7 +2482,7 @@ private theorem actualGeometry :
     · apply (Submodule.mem_iInf _).mpr
       intro k
       fin_cases j <;> fin_cases k <;>
-        apply WithLp.ext <;> funext i <;> fin_cases i <;>
+        apply (WithLp.ofLp_injective 2) <;> funext i <;> fin_cases i <;>
         norm_num [vs,cs,b,Cs,Bm,pow_succ,LinearMap.comp_apply,
           LinearMap.mul_apply,Matrix.toEuclideanLin,Matrix.mulVec,dotProduct,
           Fin.sum_univ_succ]
@@ -2551,7 +2551,7 @@ private theorem actualGeometry :
   have hprojN (x : V) : (Np 1).starProjection x = toLp 2 ![0,x 1,0,x 3] := by
     apply Submodule.eq_starProjection_of_mem_of_inner_eq_zero
     · rw [hpker]
-      apply WithLp.ext
+      apply (WithLp.ofLp_injective 2)
       funext i
       fin_cases i <;>
         simp [Cp,Matrix.toEuclideanLin,Matrix.mulVec,dotProduct,Fin.sum_univ_succ]
@@ -2572,7 +2572,7 @@ private theorem actualGeometry :
     have he3 : Ep 3 = ⊥ := by simp [Ep,hpbotge (by omega : 2 ≤ 3)]
     refine ⟨?_,?_,?_,?_⟩
     · rw [he0,Submodule.starProjection_orthogonal_val,hprojN]
-      apply WithLp.ext
+      apply (WithLp.ofLp_injective 2)
       funext i
       fin_cases i <;> simp [PiLp.sub_apply]
     · simpa only [he1] using hprojN x
@@ -2590,8 +2590,7 @@ private theorem actualGeometry :
       Fin.sum_univ_succ]
     ring
   have hPp (t : ℝ) : Pp t =
-      (!![1,t,0,0; 0,0,1,2*t] : Matrix (Fin 2) (Fin 4) ℝ).
-        toEuclideanLin.toContinuousLinearMap := by
+      (!![1,t,0,0; 0,0,1,2*t] : Matrix (Fin 2) (Fin 4) ℝ).toEuclideanLin.toContinuousLinearMap := by
     ext x i
     have h0 := (hprojP x).1
     have h1 := (hprojP x).2.1
@@ -2761,7 +2760,7 @@ private theorem actualNative (split : Bool) :
       simp [c, b, Cm, Bm, p, pow_succ, ContinuousLinearMap.mul_apply,
         Matrix.toEuclideanLin, Matrix.mulVec, dotProduct,
         Fin.sum_univ_succ] at h00 h10 h20 h30
-      apply WithLp.ext
+      apply (WithLp.ofLp_injective 2)
       funext i
       fin_cases i <;> simp only [WithLp.ofLp_zero, Pi.zero_apply] <;> linarith
     · have h00 := congrArg (fun y : EuclideanSpace ℝ (Fin 2) => y 0) h0
@@ -2771,7 +2770,7 @@ private theorem actualNative (split : Bool) :
       simp [c, b, Cm, Bm, p, pow_succ, ContinuousLinearMap.mul_apply,
         Matrix.toEuclideanLin, Matrix.mulVec, dotProduct,
         Fin.sum_univ_succ] at h00 h01 h10 h11
-      apply WithLp.ext
+      apply (WithLp.ofLp_injective 2)
       funext i
       fin_cases i <;> simp only [WithLp.ofLp_zero, Pi.zero_apply] <;> linarith
   have hN : N n = ⊥ := by
@@ -2782,7 +2781,7 @@ private theorem actualNative (split : Bool) :
     intro k
     have kk : (k : ℕ) < n := by simpa only [hn] using k.isLt
     exact ((Submodule.mem_iInf _).mp hx) ⟨k,kk⟩
-  have hU : U = ⊤ := by simp only [U,hN,Submodule.bot_orthogonal]
+  have hU : U = ⊤ := by simp only [U,hN,Submodule.bot_orthogonal_eq_top]
   have hnative :=
     D5.S3.Observer.Linear.DerivativeLayerNativeGramian.derivative_layer_native_gramian B C
   obtain ⟨hinverse,hpositive,R,hR,herror⟩ := hnative
