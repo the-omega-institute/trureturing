@@ -72,8 +72,10 @@ internal sealed class SwapEarliestDephasingOptimalityDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "For a list x, let M(x) be its maximum, taking M of the empty list to be zero. "
-                            + "Use the following integer-valued functions. Every Int.ofNat explicitly includes a natural number in the integers.")),
+                        "The three anonymous expressions below give the list maximum (zero on the empty list), "
+                            + "the integer-valued potential, and the integer-valued boundary function, respectively. "
+                            + "In the prose, denote their values by M(x), φ(x), and B(p,x). "
+                            + "Every Int.ofNat explicitly includes a natural number in the integers.")),
                     new DocumentBlock.DisplayFormula(FunctionalDefinitions()),
                     Paragraph(Text(
                         "The auxiliary function B separates the first entry: B(p,a :: x) is "
@@ -175,15 +177,12 @@ internal sealed class SwapEarliestDephasingOptimalityDocument : IScribeDocumentD
             Equal(Local("runCost", X("x"), X("hs")), Local("dstar", X("x"))))));
 
     private static Formula FunctionalDefinitions() => new Formula.Aligned([
-        All("x", Lists(), Equal(At(X("M"), X("x")), Maximum(X("x")))),
-        All("x", Lists(), Equal(PhiAt(X("x")), Subtract(
-            Add(AsInt(Maximum(X("x"))), AsInt(At(Qualified("List", "sum"),
-                At(Qualified("List", "zipWith"), Qualified("max"), X("x"), At(Qualified("List", "tail"), X("x")))))),
-            AsInt(At(Qualified("List", "sum"), X("x")))))),
-        All("p", Naturals(), All("x", Lists(), Equal(At(X("B"), X("p"), X("x")), Subtract(
+        LambdaOf("x", Lists(), Maximum(X("x"))),
+        LambdaOf("x", Lists(), PhiAt(X("x"))),
+        LambdaOf("p", Naturals(), LambdaOf("x", Lists(), Subtract(
             AsInt(At(Qualified("List", "sum"), At(Qualified("List", "zipWith"), Qualified("max"),
                 At(Qualified("List", "cons"), X("p"), X("x")), X("x")))),
-            AsInt(At(Qualified("List", "sum"), X("x")))))))
+            AsInt(At(Qualified("List", "sum"), X("x"))))))
     ]);
 
     private static Formula StepComparisons() => new Formula.Aligned([
@@ -200,7 +199,10 @@ internal sealed class SwapEarliestDephasingOptimalityDocument : IScribeDocumentD
         At(Qualified("Function", "iterate"), Local("bellman"), n), ZeroFunction(), x);
     private static Formula ZeroFunction() => At(Qualified("Function", "const"), Lists(), Typed(D(0), Naturals()));
     private static Formula Maximum(Formula x) => At(Qualified("List", "foldr"), Qualified("max"), D(0), x);
-    private static Formula PhiAt(Formula x) => At(Phi, x);
+    private static Formula PhiAt(Formula x) => Subtract(
+        Add(AsInt(Maximum(x)), AsInt(At(Qualified("List", "sum"),
+            At(Qualified("List", "zipWith"), Qualified("max"), x, At(Qualified("List", "tail"), x))))),
+        AsInt(At(Qualified("List", "sum"), x)));
     private static Formula AsInt(Formula value) => Typed(At(Qualified("Int", "ofNat"), value), Integers());
     private static Formula Entry(Formula x, Formula i) => At(Qualified("List", "getD"), x, i, D(0));
     private static Formula PairMax(Formula x, Formula i) => At(Qualified("max"), Entry(x, i), Entry(x, Add(i, D(1))));
