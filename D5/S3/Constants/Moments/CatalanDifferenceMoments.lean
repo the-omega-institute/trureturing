@@ -9,6 +9,8 @@
 import D5.S3.Constants.Moments.CatalanSquareHankelGrowth
 import Mathlib.Algebra.Group.ForwardDiff
 
+/-! # Uniform ratio bounds for unit Catalan moment differences -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -64,7 +66,6 @@ private lemma difference_recurrence (s L : Nat) :
       rw [difference_shift L (s + 2), difference_shift L (s + 1),
         difference_shift L s] at ht
       push_cast at ht ⊢
-      simp only [Nat.succ_eq_add_one, Nat.cast_add, Nat.cast_one] at *
       convert (show ((L : Real) + s + 4) * Δ^[s + 2 + 1] M L =
           (3 * L + 2 * s + 4) * Δ^[s + 2] M L +
             3 * (s + 2) * Δ^[s + 1] M L by nlinarith [h, ht]) using 1 <;>
@@ -121,7 +122,10 @@ theorem catalan_difference_ratio_envelope (L k : Nat) (hL : 1 ≤ L) :
           positivity
         have := (mul_pos_iff_of_pos_left hcoeff).mp hprod
         linarith
-      simpa only [Nat.succ_eq_add_one, Nat.cast_add, Nat.cast_one, add_assoc] using
-        And.intro hp' (And.intro hlo' hupper)
+      simp only [Nat.succ_eq_add_one, Nat.cast_add, Nat.cast_one]
+      rw [show k + 1 + 1 = k + 2 by omega,
+        show (L : Real) + ((k : Real) + 1) = (L : Real) + k + 1 by ring,
+        show (L : Real) + k + 1 + 2 = (L : Real) + k + 3 by ring]
+      exact ⟨hp', hlo', hupper⟩
 
 end D5.S3.Constants.Moments.CatalanDifferenceMoments
