@@ -7,6 +7,7 @@
    digest: Guarded addressed growth realizes sealed old frontiers and native leftmost splits. -/
 
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
+import D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
 import Mathlib.Data.List.Induction
 
 set_option autoImplicit false
@@ -59,17 +60,9 @@ def splitLeft : Source → Source
 /-- Exact alpha-origin successful-event count. -/
 def eventIndex (t : Source) : Nat := (composition t).1 + 2 * (composition t).2 - 1
 
-private theorem composition_length (t : Source) :
-    (composition t).1 + (composition t).2 = t.length := by
-  induction t with
-  | of b => cases b <;> rfl
-  | mul l r ihl ihr =>
-    simp only [composition, Prod.fst_add, Prod.snd_add, FreeMagma.length]
-    omega
-
 private theorem weight_pos (t : Source) :
     0 < (composition t).1 + 2 * (composition t).2 := by
-  have := composition_length t
+  have := Observer.ActualObserverAbsorbingNormalization.composition_total t
   have := t.length_pos
   omega
 
@@ -298,7 +291,7 @@ theorem native_execution :
     native_split, replay_event_index, ?_,attained_iff,positive_attained_iff⟩
   intro t hn
   have beta := native_beta_count t hn
-  have len := composition_length t
+  have len := Observer.ActualObserverAbsorbingNormalization.composition_total t
   have pos := weight_pos t
   have compF := substitution_composition t
   have compG := (native_split t hn).2.2
