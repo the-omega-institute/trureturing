@@ -237,7 +237,7 @@ private theorem shape_lower (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ
     sq_nonneg ((1 - a - b) / 3 - 1 / 48), sq_nonneg (d.re - 1 / 16), sq_nonneg d.im]
 
 private def wordIndex (x : Fin 3 → Fin 2) : Fin 8 :=
-  ⟨4 * (x 0).val + 2 * (x 1).val + (x 2).val, by omega⟩
+  finFunctionFinEquiv (x ∘ Fin.rev)
 
 private def tau : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ :=
   fun x y => if x = y then
@@ -399,7 +399,7 @@ private theorem tau_mixture : tau =
     simp only [Fin.prod_univ_succ, Fin.prod_univ_zero, localState_entry] <;>
     dsimp only [magnitude] <;>
     norm_num [wordMagnitude_sq, ← pow_two, corner_magnitude, hc,
-      Complex.real_smul]
+      Complex.real_smul, finFunctionFinEquiv, Fin.sum_univ_succ, Fin.rev]
 
 private theorem tau_separable : tau ∈ FullySeparable 3 := by
   have hp (a b : ZMod 3) : phaseProduct a b ∈ FullySeparable 3 := by
@@ -436,7 +436,7 @@ private theorem tau_distance : hsSq (xmems 3 (11 / 112)) tau =
   rw [hsSq_entries]
   simp only [sum_words]
   dsimp only [xmems, tau, wordIndex]
-  norm_num [Complex.normSq_apply,
+  norm_num [Complex.normSq_apply, finFunctionFinEquiv, Fin.sum_univ_succ, Fin.rev,
     show (fun _ : Fin 3 => (0 : Fin 2)) = ![0,0,0] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const],
     show (fun _ : Fin 3 => (1 : Fin 2)) = ![1,1,1] from by simp only [Matrix.vec_single_eq_const, Matrix.vecCons_const]]
 
