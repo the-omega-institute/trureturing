@@ -12,6 +12,8 @@ import D5.S3.Observer.RationalRouting.Source
 
 set_option autoImplicit false
 
+open private step_control from D5.S3.Observer.RationalRouting.Source
+
 namespace D5.S3.Observer.RationalRouting
 
 /-- The complete integer reply at an arbitrary installed scale. -/
@@ -81,11 +83,6 @@ private theorem instant_step {B : ℕ} {x y : ℚ} (hx : 0 < x) (hy : 0 < y)
     simp only [mul_add, mul_one, Int.floor_add_natCast]
     exact congrArg (fun z : ℤ => z + m) (h m hm hB)
 
-private theorem step_positive (b : Bool) {x : ℚ} (hx : 0 < x) : 0 < step b x := by
-  cases b <;> dsimp [step]
-  · exact div_pos hx (by linarith)
-  · linarith
-
 /-- The instantaneous vector is a forward congruence, hence determines the
 entire unbounded-word profile, including the empty word. -/
 theorem instantaneous_iff_full_future {B : ℕ} {x y : ℚ} (hx : 0 < x) (hy : 0 < y) :
@@ -95,7 +92,8 @@ theorem instantaneous_iff_full_future {B : ℕ} {x y : ℚ} (hx : 0 < x) (hy : 0
     induction w generalizing x y with
     | nil => exact h
     | cons b w ih =>
-      exact ih (step_positive b hx) (step_positive b hy) (instant_step hx hy h b)
+      exact ih (step_control b hx le_rfl).1 (step_control b hy le_rfl).1
+        (instant_step hx hy h b)
   · intro h
     exact h []
 
