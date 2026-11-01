@@ -9,6 +9,110 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(false, "revalidate")]
+    [InlineData(true, "revalidate")]
+    [InlineData(false, "refused")]
+    [InlineData(true, "refused")]
+    [InlineData(false, "checkpoint_failed")]
+    [InlineData(true, "checkpoint_failed")]
+    [InlineData(false, "partial_or_indeterminate")]
+    [InlineData(true, "partial_or_indeterminate")]
+    public void IdlePoolProductionSweepContinuesAfterCandidateFailure(bool force, string failure)
+    {
+        using var fixture = new CleanLanesFixture();
+        var older = AddIdleSweepCandidate(fixture, 'a', 1000000000);
+        var newer = AddIdleSweepCandidate(fixture, 'b', 1000000001);
+        var injection = "pool = sys.modules['worktree_pool']\n"
+            + "pool.available_fraction = lambda source: 0.04\n"
+            + "native_remove, native_state = pool.remove, pool.idle_state\n"
+            + "validations = 0\n"
+            + "def fault_state(source, path, *args):\n"
+            + "    global validations\n"
+            + "    if str(path) == " + JsonSerializer.Serialize(older) + ":\n"
+            + "        validations += 1\n"
+            + (failure == "revalidate"
+                ? "        if validations == 2: raise pool.Refused('idle_identity_changed')\n" : string.Empty)
+            + "    return native_state(source, path, *args)\n"
+            + "def fault_remove(options):\n"
+            + "    if str(options.path[0]) == " + JsonSerializer.Serialize(older) + ":\n"
+            + "        return dict(status='failed', items=[dict(path=str(options.path[0]), outcome="
+            + JsonSerializer.Serialize(failure == "revalidate" ? "refused" : failure)
+            + ", reason='candidate_failure', error='candidate failure detail')])\n"
+            + "    return native_remove(options)\n"
+            + "pool.remove, pool.idle_state = fault_remove, fault_state\n";
+
+        var result = fixture.RunWithRaw(InjectIdlePoolProgram(fixture, injection), force ? ["--force"] : []);
+
+        Assert.True(result.Success, result.Output + result.Error);
+        AssertQualificationPublicExit(result, force, 0);
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, row => ItemMatches(row, newer, force ? "removed" : "would_remove", "idle_disk_pressure"));
+        Assert.True(Directory.Exists(older));
+        Assert.Equal(!force, Directory.Exists(newer));
+        var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
+        Assert.Equal(older, warning.GetProperty("path").GetString());
+        Assert.Equal(failure switch
+        {
+            "revalidate" => "idle_identity_changed",
+            "refused" => "candidate_failure",
+            _ => failure + ":candidate failure detail",
+        }, warning.GetProperty("reason").GetString());
+        Assert.Contains(failure == "revalidate" ? "idle_identity_changed" : "candidate failure detail",
+            warning.GetProperty("diagnostic").GetString());
+        Assert.Equal("succeeded", ReadSummary(result.Output).GetProperty("status").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IdlePoolProductionInventoryFailureRemainsGlobal(bool force)
+    {
+        using var fixture = new CleanLanesFixture();
+        var path = AddIdleSweepCandidate(fixture, 'c', 1000000000);
+        var judge = fixture.AddGitlessJudgeSnapshot("trureturing-pool-inventory-control");
+        const string injection = "def fail_inventory(source):\n"
+            + "    raise RuntimeError('pool inventory unavailable')\n"
+            + "sys.modules['worktree_pool'].inventory = fail_inventory\n";
+
+        var result = fixture.RunWithRaw(InjectIdlePoolProgram(fixture, injection), force ? ["--force"] : []);
+
+        Assert.False(result.Success, result.Output + result.Error);
+        AssertQualificationPublicExit(result, force, 2);
+        var failure = Assert.Single(ReadItems(result.Output), row => row.GetProperty("action").GetString() == "failed");
+        Assert.Equal("idle_pool", failure.GetProperty("kind").GetString());
+        Assert.Equal(JsonValueKind.Null, failure.GetProperty("path").ValueKind);
+        Assert.Contains("inventory:pool inventory unavailable", failure.GetProperty("reason").GetString());
+        Assert.Equal("failed", ReadSummary(result.Output).GetProperty("status").GetString());
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.True(Directory.Exists(path));
+        Assert.True(Directory.Exists(judge));
+    }
+
+    private static string AddIdleSweepCandidate(CleanLanesFixture fixture, char token, long timestamp)
+    {
+        var branch = "lane/governance/idle-" + new string(token, 32);
+        var path = fixture.AddMergedLane(branch);
+        var log = Path.Combine(fixture.RepositoryRoot, ".git/logs/refs/heads", branch);
+        var rows = File.ReadAllLines(log);
+        var fields = rows[0].Split('\t')[0];
+        fields = fields[..fields.LastIndexOf(' ')];
+        fields = fields[..fields.LastIndexOf(' ')] + " " + timestamp + " +0000";
+        rows[0] = fields + "\tworktree-idle:" + new string(token, 32);
+        File.WriteAllLines(log, rows);
+        return path;
+    }
+
+    private static IWorktreeProcessRunner InjectIdlePoolProgram(CleanLanesFixture fixture, string injection) =>
+        fixture.CreateRunner((file, args, directory) =>
+        {
+            if (file != "python3" || !IsProtocol(args, "pool")) return null;
+            File.WriteAllText(args[2], File.ReadAllText(args[2]).Replace("sys.exit(sys.modules['worktree_protocol'].main())",
+                injection + "sys.exit(sys.modules['worktree_protocol'].main())", StringComparison.Ordinal));
+            return TestProcessRunner.Run(file, args, directory, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
+        });
+
+    [Theory]
     [InlineData(false, "revalidate", "idle_identity_changed")]
     [InlineData(true, "remove", "locked_recent")]
     public void IdlePoolSelectedRefusalPreservesCauseAndContinues(bool force, string stage, string reason)
