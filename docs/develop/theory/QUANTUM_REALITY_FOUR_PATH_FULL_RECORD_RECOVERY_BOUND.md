@@ -1531,3 +1531,139 @@ Eliminating $\sin^2t$ gives the final identity. The effects remain complete, eac
 Theorem 10.3 closes the quantitative assertion left open after Section 9, while Proposition 10.4 records that its exponent cannot be improved using the same protocol class. The proof uses the degree-two homogeneous defect budget; the quartic statistics in Proposition 8.3 alone would be presentation-dependent under proportional refinement. The estimate is deliberately conservative and does not claim an optimal constant.
 
 ## 追加锚（本行以下为增补区）
+## 11. 原始效果与共享反馈的定性刚性
+
+Theorem 10.3 controls the implemented channel in the full reference-inclusive diamond norm.  The next distinction is at the producer level: an original outcome carries one normalized effect and one feedback unitary, and spectral refinement must not replace that shared unitary by separate controls.  This section extracts a uniform qualitative modulus for those original pairs.  Its consumer is a weighted producer certificate: near-optimal implementations can certify clustering of normalized effects and their actual feedback around the two joint optimizer classes, with no claim of uniform control for arbitrarily small-weight outcomes.  It does not assert a power law; the quadratic producer coercivity remains a separate open target.
+
+**定义 11.1（原始对的距离与联合缺陷）。** 保持定义 9.1 的紧空间
+
+$$
+\mathcal K=\operatorname{Dens}_2\times U(4)
+$$
+
+及定理 9.4 的两个优化集
+
+$$
+\mathcal S_\sigma
+ =\{(E_\sigma,e^{i\varphi}U_\sigma):\varphi\in\mathbb R\},
+\qquad
+\mathcal S=\mathcal S_+\cup\mathcal S_-.
+$$
+
+在 $\mathcal K$ 上定义
+
+$$
+\rho(E,U)
+ =\min_{\sigma\in\{+,-\},\ |\lambda|=1}
+ \left(\|E-E_\sigma\|_{\mathrm F}^2
+       +\|U-\lambda U_\sigma\|_{\mathrm F}^2\right)
+$$
+
+以及
+
+$$
+g(E,U)=a(E)+\tau(E,U),
+$$
+
+其中 $a$ 与 $\tau$ 正是式 (9.12) 的连续缺陷。$\rho$ 对反馈的标量相位取商，保留效果与反馈的共同符号选择；它不把同一原始结果的两个谱向量当成两个可重新控制的结果。
+
+**引理 11.2（单原始对的零集）。** 对所有 $(E,U)\in\mathcal K$，
+
+$$
+\boxed{\quad g(E,U)=0\quad\Longleftrightarrow\quad
+       \rho(E,U)=0\quad\Longleftrightarrow\quad
+       (E,U)\in\mathcal S.\quad}
+$$
+
+**证明。** 若 $(E,U)\in\mathcal S_\sigma$，式 (9.12) 中的两个平方根列均位于相同的证书射线上，且 $U$ 只是式 (6.3) 的极坐标修正乘以标量相位；故 $a=\tau=0$，从而 $\rho=0$。
+
+反之，$g=0$ 时，式 (9.12) 的每个非负项都为零。由定理 8.2 的等号刻画，每个非零列
+
+$$
+b_\ell(E)=(E^{\mathsf T})^{1/2}e_\ell
+$$
+
+位于两个证书复射线之一。其像 $R_0b_\ell(E)$ 的四个坐标均非零，因此 $\tau=0$ 迫使不等式
+
+$$
+\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b_\ell(E))\right)\right|
+\le\sum_i\left|(R_0b_\ell(E))_i\right|
+$$
+
+逐项取等号。于是 $U$ 为相应极坐标修正乘以一个共同标量相位。一个 $U$ 不可能同时修正两个不同的证书射线，因为式 (9.24) 不是标量矩阵；而 $\operatorname{Tr}E=1$ 保证至少一个列非零。所以全部非零列在同一射线上。由
+
+$$
+\sum_\ell b_\ell(E)b_\ell(E)^\dagger=E^{\mathsf T}
+$$
+
+及迹一归一化，得到 $E=E_\sigma$，并且 $U=e^{i\varphi}U_\sigma$。这正是 $(E,U)\in\mathcal S_\sigma$。$\square$
+
+**定理 11.3（原始对的统一定性模）。** 定义
+
+$$
+\omega(r)=\max\{\rho(E,U):(E,U)\in\mathcal K,\ g(E,U)\le r\}
+$$
+
+（当集合非空时；对超出 $g$ 的最大值的 $r$ 取同一常数延拓）。则 $\omega$ 有限、单调不减，并且
+
+$$
+\boxed{\qquad \lim_{r\downarrow0}\omega(r)=0.\qquad}
+$$
+
+令 $R_\rho=\max_{\mathcal K}\rho<\infty$，对 $s\ge0$ 定义
+
+$$
+\Omega(s)=\inf_{r>0}\left(2\omega(r)+\frac{R_\rho s}{r}\right).
+$$
+
+则对定义 1.2 的任意有限全结果协议，若其效果与实际反馈给出式 (9.3) 的测度 $\mu$，且 $\varepsilon\ge0$ 满足
+
+$$
+\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon,
+$$
+
+就有
+
+$$
+\boxed{
+\int_{\mathcal K}\rho(E,U)\,d\mu(E,U)
+ \le \Omega(8\varepsilon),
+\qquad
+\lim_{\varepsilon\downarrow0}\Omega(8\varepsilon)=0.
+}
+$$
+
+等价地，若原协议写成有限效果族，则
+
+$$
+\sum_{y:D_y\ne0}\operatorname{Tr}(D_y)\,
+ \rho\!\left(\frac{D_y}{\operatorname{Tr}D_y},U_y\right)
+ \le\Omega(8\varepsilon).
+$$
+
+**证明。** $\mathcal K$ 紧，且正平方根、$a$、$\tau$ 连续；对有限个符号和紧单位圆取最小值后，$\rho$ 也连续。引理 11.2 说明 $g^{-1}(0)=\mathcal S=\rho^{-1}(0)$。若存在 $\eta>0$、$r_n\downarrow0$ 及 $(E_n,U_n)$ 使 $g(E_n,U_n)\le r_n$ 而 $\rho(E_n,U_n)\ge\eta$，紧性给出收敛子列。连续性使极限点同时满足 $g=0$ 与 $\rho\ge\eta$，矛盾。因此 $\omega(r)\to0$。
+
+对任意 $r>0$，将 $\mathcal K$ 分成 $g\le r$ 与 $g>r$ 两部分。在前一部分 $\rho\le\omega(r)$；在后一部分 $\rho\le R_\rho$ 且 $1\le g/r$。因为 $\mu(\mathcal K)=2$，
+
+$$
+\begin{aligned}
+\int\rho\,d\mu
+&\le2\omega(r)+R_\rho\,\mu\{g>r\}\\
+&\le2\omega(r)+\frac{R_\rho}{r}\int g\,d\mu.
+\end{aligned}
+$$
+
+引理 9.3 的实际缺陷预算给出 $\int g\,d\mu\le8\varepsilon$。先对 $r$ 取下确界即得第一式。给定 $\eta>0$，先取 $r$ 使 $2\omega(r)<\eta/2$，再令 $s$ 足够小使 $R_\rho s/r<\eta/2$，故 $\Omega(s)\to0$。最后将 $d\mu$ 的原子表达式 (9.3) 代回即可。$\square$
+
+这个结果保留了原始结果的反馈共享关系，并且对结果数与最小结果权重不作假设。它只给出存在性的定性模；没有把 $\Omega$ 误称为平方根，也没有由紧性推出任何显式幂次或最佳常数。
+
+**问题 11.4（生产者层的定量缺口）。** 在定理 11.3 的同一距离 $\rho$ 与缺陷 $g$ 下，是否存在仅依赖固定记录的有限常数 $C$，使
+
+$$
+\rho(E,U)\le C\,g(E,U)
+\quad\text{对所有 }(E,U)\in\mathcal K
+$$
+
+成立，或至少使其在积分意义下给出 $\int\rho\,d\mu\le C\varepsilon$？若答案为否，应给出使 $\rho/g$ 发散的合法原始对序列。任何结论都必须保持同一 $U$ 作用于一个原始结果的全部谱列，并允许奇异效果、零列与任意小结果权重。该问题是生产者层的二次 coercivity 问题；定理 10.3 的通道级平方根估计不替代它。
+
+## 追加锚（本行以下为增补区）
