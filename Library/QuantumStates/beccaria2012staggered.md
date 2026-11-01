@@ -28,7 +28,7 @@ Section 2.1, printed page 3, specifies:
 
 > We shall work with free boundary conditions what is equivalent to add two inaccessible but empty sites at j = 0 and j = N + 1.
 
-The hard-core configurations use the existing admissible-word predicate `AdmissibleCount.Adm`; `ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true` identifies it with the stated nearest-neighbour exclusion.
+The hard-core configurations use the existing admissible-word predicate `AdmissibleCount.Adm`; `AdmissibleCount.adm_iff_no_adjacent_true` identifies it with the stated nearest-neighbour exclusion.
 
 The dressed annihilator is $d_j=P_{j-1}c_jP_{j+1}$, with
 $P_j=1-c_j^\dagger c_j$. In the hard-core realization,

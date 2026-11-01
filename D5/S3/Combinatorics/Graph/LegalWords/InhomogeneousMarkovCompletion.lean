@@ -6,12 +6,12 @@
    utility: none
    digest: Strictly interior site means determine a unique first-order legal binary chain. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-import D5.S1.Words.AdmissibleWords.AdmissibleCount
-import Mathlib
 namespace D5.S3.Combinatorics.Graph.LegalWords.InhomogeneousMarkovCompletion
 
 open scoped BigOperators

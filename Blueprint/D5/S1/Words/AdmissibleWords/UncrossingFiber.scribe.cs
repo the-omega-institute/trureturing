@@ -111,7 +111,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
                 H("Native admissibility is equivalent to the fence inequalities"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The zero-based alternating complement leaves even coordinates unchanged and complements odd coordinates. The native recursive Adm n predicate is equivalent to the alternating fence upper-set inequalities on transformed supports, for every n including zero."))),
+                Blocks(Paragraph(Text("The zero-based alternating complement leaves even coordinates unchanged and complements odd coordinates. AdmissibleCount.adm_iff_no_adjacent_true supplies the shared adjacency characterization of the native recursive Adm n predicate. This is equivalent to the alternating fence upper-set inequalities on transformed supports, for every n including zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("admissible-fence-bijection"),

@@ -86,7 +86,6 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
     private static Formula LeqOf(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
     private static Formula Less(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
     private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
-    private static Formula Or(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Or, y);
     private static Formula ImpliesOf(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula Add(Formula x, Formula y) => Seq(x, Sp, Plus, Sp, y);
     private static Formula Subtract(Formula x, Formula y) => Seq(x, Sp, Minus, Sp, y);
