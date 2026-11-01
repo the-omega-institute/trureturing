@@ -717,7 +717,7 @@ private theorem acquisition_spec {A : PositiveMatrix} (hA : Unimodular A)
       · refine ⟨s, hs, hsQ, ?_⟩
         change ((if determinedReply A I (Q ^ 2) = none then [(Q ^ 2, r)] else []) ++
           ((if determinedReply A J s = none then [(s, h)] else []) ++ [])) = [] ∨ _
-        split_ifs <;> simp [r, h]
+        split_ifs <;> simp [r, h, s, ProfileProgram.actualReads]
 
 /-- Actual acquisition on one authentic chronological prefix. The finite
 output is exactly the original cell and evaluates every future word and every
