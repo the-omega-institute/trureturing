@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Fermionic.BcGhostQuartetCount
 import Reg.Support.DependentFamily
 
+/-! Source-faithful actual coefficient readouts, interventions and sensitivity on original Fock. -/
+
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostQuartetCount
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -40,7 +42,7 @@ private theorem coefficientNegative (i : Bool) :
     ¬ coefficientArena.Law (coefficientRejected i) := by
   intro h
   have hh := h 0 ∅
-  cases i <;> norm_num [coefficientRejected, coefficientActual, realize] at hh
+  cases i <;> norm_num [coefficientRejected, coefficientActual, realize, Finsupp.zero_apply] at hh
 
 private theorem coefficientDependence :
     ObservationalDependence coefficientSignature coefficientActual := by
