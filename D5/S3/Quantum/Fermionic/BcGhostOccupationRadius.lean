@@ -49,9 +49,11 @@ private theorem radius_smul {A : ℕ} {w : Fock} (a : ℂ)
 private theorem radius_sum {ι : Type*} (s : Finset ι) {A : ℕ} (f : ι → Fock)
     (h : ∀ i ∈ s, Radius A (f i)) : Radius A (∑ i ∈ s, f i) := by
   classical
+  revert h
   induction s using Finset.induction_on with
-  | empty => simpa using radius_zero A
+  | empty => intro h; simpa using radius_zero A
   | @insert i s hi ih =>
+    intro h
     rw [Finset.sum_insert hi]
     exact radius_add (h i (by simp)) (ih (fun j hj => h j (by simp [hj])))
 

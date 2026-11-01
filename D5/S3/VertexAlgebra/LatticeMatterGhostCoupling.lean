@@ -20,7 +20,7 @@ open D5.S3.Quantum.Fermionic.CountableOccupationFock
 noncomputable section
 namespace D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 
-open D5.S3.Quantum.Fermionic (BcGhostFock BcGhostVirasoro BcGhostOccupationRadius)
+open D5.S3.Quantum.Fermionic
 
 /-- Algebraic tensor product of the original all-charge lattice and occupation carriers. -/
 abbrev State (D : LatticeData) := Carrier D ⊗[ℂ] Fock

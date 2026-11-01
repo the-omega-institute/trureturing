@@ -15,7 +15,7 @@ open D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 open D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
-open D5.S3.Quantum.Fermionic (BcGhostFock BcGhostVirasoro BcGhostOccupationRadius)
+open D5.S3.Quantum.Fermionic
 open private above_upper tensor_tail from D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 
 noncomputable section
@@ -105,12 +105,9 @@ private theorem matter_commutator (D : LatticeData)
     LinearMap.smul_apply, Module.End.one_apply] at h
   simp only [summand, matterMode, paired, ghostC, LinearMap.sub_apply,
     LinearMap.add_apply, LinearMap.smul_apply, Module.End.mul_apply,
-    TensorProduct.map_tmul, LinearMap.id_apply]
-  rw [← TensorProduct.sub_tmul, h, TensorProduct.add_tmul,
-    TensorProduct.smul_tmul, TensorProduct.smul_tmul]
-  congr 2
-  congr 1
-  omega
+    TensorProduct.map_tmul, LinearMap.id_apply, show r-(m+r) = -m by omega]
+  rw [← TensorProduct.sub_tmul, h, TensorProduct.add_tmul]
+  rfl
 
 private theorem ghost_commutator (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (m r : ℤ) :
