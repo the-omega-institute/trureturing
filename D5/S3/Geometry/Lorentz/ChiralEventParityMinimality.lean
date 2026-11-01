@@ -91,7 +91,7 @@ def family (v : EuclideanSpace ℝ (Fin 3)) : event :=
 
 private theorem family_mem_all
     (v : EuclideanSpace ℝ (Fin 3))
-    (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
+    (hv : v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1)) :
     family v ∈ allEvents := by
   have hvnorm : ‖v‖ = 1 := mem_sphere_zero_iff_norm.mp hv
   have hsq : v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = 1 := by
@@ -125,7 +125,7 @@ private theorem family_mem_all
 
 private theorem family_mem_collision
     (v : EuclideanSpace ℝ (Fin 3))
-    (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
+    (hv : v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1)) :
     family v ∈ collisionEvents := by
   constructor
   · exact family_mem_all v hv
@@ -133,7 +133,7 @@ private theorem family_mem_collision
 
 private theorem family_continuous :
     ContinuousOn family
-      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere := by
+      (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) := by
   apply Continuous.continuousOn
   change Continuous (fun v : EuclideanSpace ℝ (Fin 3) =>
     ![![30, 0, 0, 1], ![20, 0, 0, -1],
@@ -285,7 +285,7 @@ private theorem swap_stabilizer_contra
 
 private theorem family_chiral
     (v : EuclideanSpace ℝ (Fin 3))
-    (hv : v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere) :
+    (hv : v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1)) :
     chiral (family v) := by
   intro hbad
   rcases hbad with ⟨lam, hlam, sigma, tau, hact⟩
@@ -396,16 +396,16 @@ private theorem family_admissible_zero
     (om : Set event) (hom : collisionEvents ⊆ om) (f₁ f₂ : event → ℝ)
     (hf₁ : admissible om f₁) (hf₂ : admissible om f₂) :
     ContinuousOn (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
-      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere := by
-  have hmem : ∀ v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere,
+      (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) := by
+  have hmem : ∀ v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1),
       family v ∈ om := by
     intro v hv
     exact hom (family_mem_collision v hv)
   have h₁ : ContinuousOn (fun v => f₁ (family v))
-      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere :=
+      (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) :=
     hf₁.1.comp family_continuous hmem
   have h₂ : ContinuousOn (fun v => f₂ (family v))
-      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere :=
+      (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) :=
     hf₂.1.comp family_continuous hmem
   exact (Complex.continuous_ofReal.comp_continuousOn h₁).add
     ((Complex.continuous_ofReal.comp_continuousOn h₂).mul continuousOn_const)
@@ -455,7 +455,7 @@ private theorem rotation_proper : rotation ∈ properOrthochronous := by
 private theorem family_admissible_odd
     (om : Set event) (hom : collisionEvents ⊆ om) (f : event → ℝ)
     (hf : admissible om f) :
-    ∀ v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere,
+    ∀ v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1),
       ((f (family (-v)) : ℂ)) = -((f (family v) : ℂ)) := by
   intro v hv
   have hmem : family v ∈ om := hom (family_mem_collision v hv)
@@ -470,24 +470,24 @@ private theorem family_admissible_odd
 
 private theorem route_claim
     (hcollision : ∀ v,
-      v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere →
+      v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) →
         family v ∈ collisionEvents)
     (hall : ∀ v,
-      v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere →
+      v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) →
         family v ∈ allEvents)
     (hcont : ContinuousOn family
-      D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere)
+      (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))
     (hchir : ∀ v,
-      v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere → chiral (family v))
+      v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) → chiral (family v))
     (hneg : ∀ v, family (-v) =
       act rotation 1 (Equiv.swap 0 1)
         (parity (family v)))
     (hcomplex : ∀ om, collisionEvents ⊆ om → ∀ f₁ f₂,
       admissible om f₁ → admissible om f₂ →
       ContinuousOn (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
-        D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere)
+        (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))
     (hodd : ∀ om, collisionEvents ⊆ om → ∀ f,
-      admissible om f → ∀ v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere,
+      admissible om f → ∀ v ∈ (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1),
         ((f (family (-v)) : ℂ)) = -((f (family v) : ℂ))) :
     claim := by
   intro om hom f₁ f₂ hf₁ hf₂
