@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0738ace75e1d0b94ac9a6eea0a7cfbdd69467122c33edd12152308154501e04d
+  normalized_sha256: sha256:0738ace75e1d0b94ac9a6eea0a7cfbdd69467122c33edd12152308154501e04d
+cas_ref: sha256:0738ace75e1d0b94ac9a6eea0a7cfbdd69467122c33edd12152308154501e04d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Editorial dependency summary (Remark 5.1) cross-referencing which theorems, corollaries, propositions, and remarks in Section 3 cite earlier definitions and results; asserts no new mathematical proposition.
+    previous_atom_id: 70760e64cba13a53eb0474d85266dc24dcf8351347150698c882fb5d15419436
+    next_atom_id: 48e4227422b19271dbdd6111038f66f94c3f416ac1c699e0f9e20bd5a9243628
