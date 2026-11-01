@@ -1,1 +1,0 @@
-WIP: construct finite polynomial perturbation inference from actual contraction identities
