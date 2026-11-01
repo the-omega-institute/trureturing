@@ -1,0 +1,147 @@
+/- GID: D5/S3/ConceptDynamics/Spacetime/NamedPathDurationReconstruction
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Spacetime/NamedPathDurationReconstruction
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Positive duration reconstructs recurrent named paths exactly when there is no branching. -/
+
+import Mathlib.Combinatorics.Quiver.Path
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic
+
+set_option autoImplicit false
+
+namespace D5.S3.ConceptDynamics.Spacetime.NamedPathDurationReconstruction
+
+universe u v
+variable {V : Type u} [Quiver.{v} V]
+
+/-- A named edge retains both endpoints and the actual arrow, including parallel arrows. -/
+abbrev NamedEdge (V : Type u) [Quiver.{v} V] := Σ a b : V, a ⟶ b
+
+/-- Ordered names along the actual Mathlib path, in execution order. -/
+def edgeWord {a b : V} : Quiver.Path a b → List (NamedEdge V)
+  | .nil => []
+  | @Quiver.Path.cons _ _ _ c d p e => edgeWord p ++ [⟨c, d, e⟩]
+
+/-- Sum of the given one-edge durations; the empty path has duration zero. -/
+def duration (d : ∀ {a b : V}, (a ⟶ b) → ℝ) {a b : V} : Quiver.Path a b → ℝ
+  | .nil => 0
+  | .cons p e => duration d p + d e
+
+/-- Endpoint and elapsed duration of an arbitrary finite path from the fixed root. -/
+def readout (d : ∀ {a b : V}, (a ⟶ b) → ℝ) (r : V)
+    (p : Σ b : V, Quiver.Path r b) : V × ℝ := (p.1, duration d p.2)
+
+private theorem edgeWord_comp {a b c : V} (p : Quiver.Path a b) (q : Quiver.Path b c) :
+    edgeWord (p.comp q) = edgeWord p ++ edgeWord q := by
+  induction q with
+  | nil => simp [edgeWord]
+  | cons q e ih => simp [edgeWord, ih, List.append_assoc]
+
+private theorem duration_comp (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    {a b c : V} (p : Quiver.Path a b) (q : Quiver.Path b c) :
+    duration d (p.comp q) = duration d p + duration d q := by
+  induction q with
+  | nil => simp [duration]
+  | cons q e ih => simp [duration, ih, add_assoc]
+
+private theorem duration_nonneg (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    (hd : ∀ {a b : V} (e : a ⟶ b), 0 < d e) {a b : V} (p : Quiver.Path a b) :
+    0 ≤ duration d p := by
+  induction p with
+  | nil => exact le_rfl
+  | cons p e ih => exact add_nonneg ih (le_of_lt (hd e))
+
+private theorem duration_pos (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    (hd : ∀ {a b : V} (e : a ⟶ b), 0 < d e) {a b : V} (p : Quiver.Path a b)
+    (hp : p.length ≠ 0) : 0 < duration d p := by
+  cases p with
+  | nil => exact False.elim (hp rfl)
+  | cons p e => exact add_pos_of_nonneg_of_pos (duration_nonneg d hd p) (hd e)
+
+private theorem deterministic_duration_unique
+    (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    (hd : ∀ {a b : V} (e : a ⟶ b), 0 < d e)
+    (unique : ∀ a : V, Subsingleton (Σ b : V, a ⟶ b)) :
+    ∀ (n : ℕ) {a b c : V} (p : Quiver.Path a b) (q : Quiver.Path a c),
+      p.length = n → duration d p = duration d q →
+      (⟨b, p⟩ : Σ z : V, Quiver.Path a z) = ⟨c, q⟩ := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro a b c p q hlen heq
+    by_cases hp : p.length = 0
+    · have hq : q.length = 0 := by
+        by_contra hn
+        have hh := duration_pos d hd q hn
+        have hab := p.eq_of_length_zero hp
+        subst b
+        rw [p.eq_nil_of_length_zero hp] at heq
+        simp [duration] at heq
+        linarith
+      obtain rfl := p.eq_of_length_zero hp
+      obtain rfl := q.eq_of_length_zero hq
+      rw [p.eq_nil_of_length_zero hp, q.eq_nil_of_length_zero hq]
+    · have hq : q.length ≠ 0 := by
+        intro hq
+        have hh := duration_pos d hd p hp
+        obtain rfl := q.eq_of_length_zero hq
+        rw [q.eq_nil_of_length_zero hq] at heq
+        simp [duration] at heq
+        linarith
+      obtain ⟨a', e, p', rfl, hpl⟩ := p.length_ne_zero_iff_eq_comp.mp hp
+      obtain ⟨a'', f, q', rfl, _⟩ := q.length_ne_zero_iff_eq_comp.mp hq
+      have hfirst : (⟨a', e⟩ : Σ z : V, a ⟶ z) = ⟨a'', f⟩ :=
+        @Subsingleton.elim _ (unique a) _ _
+      cases hfirst
+      have htail : duration d p' = duration d q' := by
+        simpa only [duration_comp, Quiver.Hom.toPath, duration, zero_add,
+          add_right_inj] using heq
+      have hsmall : p'.length < n := by
+        simp only [Quiver.Path.length_comp, Quiver.length_toPath] at hlen
+        omega
+      have hrec := ih p'.length hsmall p' q' rfl htail
+      cases hrec
+      rfl
+
+/-- On a recurrent named graph, a positive additive clock and the endpoint recover
+all finite executed words exactly when every vertex has at most one named outgoing edge. -/
+theorem readout_injective_iff_no_branching
+    (d : ∀ {a b : V}, (a ⟶ b) → ℝ)
+    (hd : ∀ {a b : V} (e : a ⟶ b), 0 < d e) (r : V)
+    (recurrent : ∀ a b : V, Nonempty (Quiver.Path a b)) :
+    Function.Injective (readout d r) ↔
+      ∀ a : V, Subsingleton (Σ b : V, a ⟶ b) := by
+  classical
+  constructor
+  · intro hinj z
+    refine ⟨?_⟩
+    rintro ⟨a, e⟩ ⟨b, f⟩
+    obtain ⟨p⟩ := recurrent r z
+    obtain ⟨A⟩ := recurrent a z
+    obtain ⟨B⟩ := recurrent b z
+    let U := e.toPath.comp A
+    let W := f.toPath.comp B
+    have htime : duration d (p.comp (U.comp W)) =
+        duration d (p.comp (W.comp U)) := by
+      simp only [duration_comp]
+      ring
+    have hs := hinj (a₁ := ⟨z, p.comp (U.comp W)⟩)
+      (a₂ := ⟨z, p.comp (W.comp U)⟩) (Prod.ext rfl htime)
+    have hpath : p.comp (U.comp W) = p.comp (W.comp U) :=
+      eq_of_heq (Sigma.mk.inj hs).2
+    have hloops := p.comp_injective_right hpath
+    have hw := congrArg edgeWord hloops
+    simp only [U, W, edgeWord_comp, Quiver.Hom.toPath, edgeWord,
+      List.nil_append, List.singleton_append, List.cons_append] at hw
+    have he : (⟨z, a, e⟩ : NamedEdge V) = ⟨z, b, f⟩ := (List.cons.inj hw).1
+    exact eq_of_heq (Sigma.mk.inj he).2
+  · intro unique x y hxy
+    exact deterministic_duration_unique d hd unique x.2.length x.2 y.2 rfl
+      (congrArg Prod.snd hxy)
+
+#print axioms readout_injective_iff_no_branching
+
+end D5.S3.ConceptDynamics.Spacetime.NamedPathDurationReconstruction
