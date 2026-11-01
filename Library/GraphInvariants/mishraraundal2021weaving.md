@@ -40,8 +40,7 @@ neighbor slots, followed by an injection of edge subsets into support patterns.
 The forest contribution does **not** equal the negative-binomial comparison
 series. For the triangle, $v=e=3$ and $b=1$: its forest polynomial is
 $1-z+z^2$, so its cubic coefficient is zero, while
-$[z^3](1+z)^{-1}=-1$. The retained conditional finite-sum implication explicitly
-assumes forest equality and is not a proof of the graph theorem. The companion
+$[z^3](1+z)^{-1}=-1$. The companion
 `TutteCoefficientAsymptotics` module instead sums integer-binomial comparison
 terms over all subsets. Their total is the ideal coefficient, and their forest
 part agrees with the actual forest coefficient. The forest error is therefore

@@ -150,45 +150,6 @@ theorem coeff_split {E : Type*} [Fintype E] [DecidableEq E]
   rw [hcyc]
   congr 1
 
-theorem natAbs_cyclicCoefficient_le {E : Type*} [Fintype E] [DecidableEq E]
-    {v k : ℕ} {q : Finset E → ℕ} {B : ℕ}
-    (hExp : ∀ S : Finset E, 0 ≤ stateExponentInteger v (q S) S.card)
-    (hterm : ∀ S ∈ cyclicStates q, (termCoefficient v k q hExp S).natAbs ≤ B) :
-    (cyclicCoefficient v k q hExp).natAbs ≤ (cyclicStates q).card * B := by
-  unfold cyclicCoefficient
-  calc
-    (Finset.sum (cyclicStates q) (fun S => termCoefficient v k q hExp S)).natAbs ≤
-        Finset.sum (cyclicStates q) (fun S => (termCoefficient v k q hExp S).natAbs) := by
-      exact Int.natAbs_sum_le _ _
-    _ ≤ Finset.sum (cyclicStates q) (fun _S => B) := by
-      exact Finset.sum_le_sum (fun S hS => hterm S hS)
-    _ = (cyclicStates q).card * B := by simp
-
-/-- Conditional finite-sum bookkeeping; this does not establish a graph estimate. -/
-theorem conditional_signed_coefficient_bound
-    {E : Type*} [Fintype E] [DecidableEq E]
-    {v k b A B : ℕ} {q : Finset E → ℕ}
-    (hRank : ∀ S : Finset E, q S ≤ S.card)
-    (hExp : ∀ S : Finset E, 0 ≤ stateExponentInteger v (q S) S.card)
-    (hForest : forestCoefficient v k q hExp = idealCoefficient b k)
-    (hCount : (cyclicStates q).card ≤ A * (Fintype.card E + 1) ^ (k - 1))
-    (hTerm : ∀ S ∈ cyclicStates q, (termCoefficient v k q hExp S).natAbs ≤ B) :
-    ((statePolynomial v q hExp).coeff k - idealCoefficient b k).natAbs ≤
-      A * B * (Fintype.card E + 1) ^ (k - 1) := by
-  rw [coeff_split hRank hExp]
-  have hdiff :
-      forestCoefficient v k q hExp + cyclicCoefficient v k q hExp - idealCoefficient b k =
-        cyclicCoefficient v k q hExp := by
-    rw [hForest]
-    abel
-  rw [hdiff]
-  have hcyc := natAbs_cyclicCoefficient_le hExp hTerm
-  calc
-    (cyclicCoefficient v k q hExp).natAbs ≤ (cyclicStates q).card * B := hcyc
-    _ ≤ (A * (Fintype.card E + 1) ^ (k - 1)) * B :=
-      Nat.mul_le_mul_right B hCount
-    _ = A * B * (Fintype.card E + 1) ^ (k - 1) := by ac_rfl
-
 /-! The state graph retains all vertices, including isolated vertices. -/
 
 def graphEdgePredicate {n : ℕ} (G : SimpleGraph (Fin n)) :
