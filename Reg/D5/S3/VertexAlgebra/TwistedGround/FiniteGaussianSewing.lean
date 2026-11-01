@@ -110,7 +110,7 @@ def convergenceArena : Arena where
 
 private theorem convergence_rejected_fails : ¬ convergenceArena.{u,v,w}.Law rejectedOne := by
   intro h
-  have hn : ‖Matrix.toEuclideanCLM
+  have hn : ‖Matrix.toEuclideanCLM (𝕜 := ℂ)
       (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ)‖ < 1 := by simp
   have hh := @h PUnit.{u+1} inferInstance inferInstance PUnit.{v+1} PUnit.{w+1}
     inferInstance inferInstance inferInstance inferInstance 0 0
@@ -189,7 +189,7 @@ def expansionArena : Arena where
 
 private theorem expansion_rejected_fails : ¬ expansionArena.{u,v,w}.Law rejectedZero := by
   intro h
-  have hn : ‖Matrix.toEuclideanCLM
+  have hn : ‖Matrix.toEuclideanCLM (𝕜 := ℂ)
       (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ)‖ < 1 := by simp
   obtain ⟨p, q, hp, hq, hs, heq⟩ := @h PUnit.{u+1} inferInstance inferInstance
     PUnit.{v+1} PUnit.{w+1} inferInstance inferInstance inferInstance inferInstance
@@ -429,7 +429,7 @@ private theorem native_rejected_fails : ¬ nativeArena.{u}.Law rejectedZero := b
   have h00 : bilinearMoment (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ) 0 0 0 = 1 := by
     simpa [_root_.D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.nativeMoment,
       _root_.D5.S3.VertexAlgebra.FactorialFockMetric.weight,
-      _root_.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.gaussianCoefficient_zero] using hv
+      gaussianCoefficient_zero] using hv
   simpa [rejectedZero, realize, h00] using hh
 
 def sewingArena : Arena where
