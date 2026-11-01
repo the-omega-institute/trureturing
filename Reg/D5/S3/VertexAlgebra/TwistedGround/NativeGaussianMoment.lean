@@ -78,9 +78,10 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
   refine ⟨unitParameters, 0, Finsupp.single PUnit.unit 1, ?_⟩
   intro h
-  dsimp only [unitParameters] at h
+  dsimp only [actual, unitParameters] at h
   change (∑ j : PUnit.{u+1}, ((0 : PUnit.{u+1} →₀ ℕ) j : ℂ) * 1 *
-      nativeMoment (fun _ _ : PUnit.{u+1} => 1) (0 - Finsupp.single j 1)) =
+      nativeMoment (fun _ _ : PUnit.{u+1} => 1)
+        ((0 : PUnit.{u+1} →₀ ℕ) - Finsupp.single j 1)) =
     ∑ j : PUnit.{u+1}, ((Finsupp.single PUnit.unit 1 : PUnit.{u+1} →₀ ℕ) j : ℂ) * 1 *
       nativeMoment (fun _ _ : PUnit.{u+1} => 1)
         (Finsupp.single PUnit.unit 1 - Finsupp.single j 1) at h
