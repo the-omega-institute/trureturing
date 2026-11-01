@@ -91,10 +91,13 @@ internal sealed class PolygonStrictNormalizationDocument : IScribeDocumentDefini
     private static Formula CountDefinition()
     {
         var j = X("j");
-        var term = R(R(new Formula.Power(Grp(Seq(Minus, D(1))), j), Cdot, C("choose", X("q"), j)),
-            Cdot, C("Catalan", SubF(SubF(SubF(X("n"), X("p")), j), D(2))));
-        return EqF(Npq(X("p"), X("q")),
-            Seq(new Formula.Power(new Formula.Subscript(Sum, EqF(j, D(0))), X("q")), Sp, term));
+        var term = R(R(new Formula.Power(Seq(Open, Minus, D(1), Close), j),
+            Cdot, Cast(C("choose", X("q"), j), "Int")),
+            Cdot, Cast(C("Catalan", SubF(SubF(SubF(X("n"), X("p")), j), D(2))), "Int"));
+        return All("n", X("Nat"), All("p", X("Nat"), All("q", X("Nat"),
+            EqF(Npq(X("p"), X("q")),
+                Seq(Sum, Sp, Underscore, Grp(j, InMacro, Sp, C("range", AddF(X("q"), D(1)))),
+                    Sp, Open, term, Close)))));
     }
     private static Formula Counts() => AndF(
         EqF(Cast(C("Natcard", Whole(X("P"), X("Q"))), "Int"), Npq(X("p"), X("q"))),
