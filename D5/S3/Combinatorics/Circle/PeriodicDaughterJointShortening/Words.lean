@@ -172,7 +172,7 @@ theorem literal_ear (d r cut : ℕ) (hr : 2 ≤ r) (tau : List (Fin d))
         exact Fin.ext rfl
       · apply congrArg List.singleton
         exact Fin.ext rfl
-    simpa only [jt, Nat.add_sub_cancel] using hh'
+    simpa only [jt, Nat.succ_sub_one, Nat.add_sub_cancel] using hh'
   unfold shortenedWord commonCut
   rw [← hl, ear_after, hte]
   unfold daughterWord
