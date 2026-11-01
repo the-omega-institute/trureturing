@@ -82,6 +82,10 @@ $$\forall (p: \mathbb{N}), [\operatorname{Fact}\left(\operatorname{Nat}.\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/heimendahl-heinrich-gross-2022-affine-partition-flag` (proved) by `D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"heimendahl-heinrich-gross-2022-affine-partition-flag","declaration_gid":"D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arne Heimendahl; Markus Heinrich; David Gross (2022). *The axiomatic and the operational approaches to resource theories of magic do not coincide*. DOI: [10.1063/5.0085774](https://doi.org/10.1063/5.0085774). URL: <https://arxiv.org/abs/2011.11651v3>.

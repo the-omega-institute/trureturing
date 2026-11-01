@@ -50,7 +50,10 @@ internal sealed class AffinePartitionFlagMaximumDocument : IScribeDocumentDefini
                         + "cardinality p^(n−1−i). Summing over i and over "
                         + "the p−1 nonzero coordinate values gives flagValue. Combining these facts with the "
                         + "digit-potential bound proves claim (arXiv TeX lines 1219–1245)."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("heimendahl-heinrich-gross-2022-affine-partition-flag"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula, string prose) =>
