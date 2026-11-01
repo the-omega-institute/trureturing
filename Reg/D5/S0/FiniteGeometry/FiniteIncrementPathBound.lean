@@ -18,8 +18,8 @@ noncomputable section
 structure Space where
   carrier : Type u
   normed : NormedAddCommGroup carrier
-  inner : InnerProductSpace ℝ carrier
-  finite : FiniteDimensional ℝ carrier
+  inner : letI := normed; InnerProductSpace ℝ carrier
+  finite : letI := normed; letI := inner; FiniteDimensional ℝ carrier
 
 attribute [instance] Space.normed Space.inner Space.finite
 

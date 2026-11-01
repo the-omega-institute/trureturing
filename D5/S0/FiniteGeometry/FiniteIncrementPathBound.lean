@@ -44,8 +44,9 @@ private lemma local_radius (V : Finset E) (u : E) :
       have hε : 0 < ε := by dsimp [ε]; positivity
       refine ⟨min δ ε, lt_min hδ hε, (min_le_left _ _).trans hδhalf, ?_⟩
       intro s z hs hz hsz
-      rcases Finset.mem_insert.mp hz with rfl | hz
-      · have hdist : ‖u - s‖ ≤ ε := by
+      rcases Finset.mem_insert.mp hz with hz | hz
+      · subst z
+        have hdist : ‖u - s‖ ≤ ε := by
           rw [norm_sub_rev]
           exact hs.trans (min_le_right _ _)
         have hcs := (le_abs_self ⟪u - s, v⟫_ℝ).trans
@@ -136,7 +137,7 @@ theorem exists_uniform_bound [FiniteDimensional ℝ E] (V : Finset E) :
     (fun _ => Metric.isOpen_ball) (by
       intro s hs
       refine Set.mem_iUnion.mpr ⟨⟨s, hs⟩, ?_⟩
-      exact Metric.mem_ball_self (by dsimp [cap]; positivity))
+      exact Metric.mem_ball_self (div_pos (hδ s) (by norm_num)))
   let M : ℝ := 1 + ∑ v ∈ V, ‖v‖
   have hsum : 0 ≤ ∑ v ∈ V, ‖v‖ := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
   have hM : 0 < M := by dsimp [M]; linarith
@@ -186,7 +187,8 @@ theorem exists_uniform_bound [FiniteDimensional ℝ E] (V : Finset E) :
       exact (lt_div_iff₀ hRpos).mp hcapinner
     have hbar := projection_barrier V (u : E) (δ u) M R huunit (hδ u) (hδhalf u)
       hM.le hstep hRpos (hlocal u) N w hw0 hadm hmax j hjN
-    have hcoeff : 0 < 3 * δ u ^ 2 := by positivity
+    have hcoeff : 0 < 3 * δ u ^ 2 :=
+      mul_pos (by norm_num) (sq_pos_of_pos (hδ u))
     have hRB : R < B u := by
       dsimp [B]
       apply (lt_div_iff₀ hcoeff).mpr
