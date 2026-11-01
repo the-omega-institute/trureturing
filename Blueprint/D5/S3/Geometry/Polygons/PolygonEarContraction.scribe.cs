@@ -56,7 +56,34 @@ internal sealed class PolygonEarContractionDocument : IScribeDocumentDefinition
                 "Deletion and insertion are mutually inverse on the full subtypes B(m+1,1) and A(m). The result permits m=5 and hence every original polygon size at least six.", DescribeRole.Definition),
             Node("earEquiv", "Arbitrary original ear centre", Scope(All("i", V(Succ), Imp(Bound,
                 EqType(C("B", Succ, X("i")), C("A", X("m"))))))),
-                "Translate by 1-i, apply earOneEquiv, and invert the translation on insertion. This gives an actual unbounded ear-deletion correspondence at every cyclic placement. It is the geometric deletion step used in the B-32 containing-event count. It alone asserts neither the iterated conditioned Catalan formula of B-37.2 nor positivity, strictness, or normalized equality.", DescribeRole.Definition)
+                "Translate by 1-i, apply earOneEquiv, and invert the translation on insertion. This gives an actual unbounded ear-deletion correspondence at every cyclic placement. It is the geometric deletion step used in the B-32 containing-event count. The count consumer uses the repeated correspondence below. Positivity, strictness and normalized equality are separate statements.", DescribeRole.Definition)
+,
+            Node("Compatible", "Pairwise compatible original ears",
+                All("n", X("Nat"), All("P", C("Finset", V(X("n"))),
+                    Iff(C("Compatible", X("P")),
+                        All("i", V(X("n")), All("j", V(X("n")),
+                            Imp(In(X("i"), X("P")), Imp(In(X("j"), X("P")),
+                                Imp(C("ne", X("i"), X("j")), C("notCross", C("ear", X("i")), C("ear", X("j")))))))))),
+                "Compatible means pairwise noncrossing on distinct selected centres; it assumes no triangulation or recursive count.", DescribeRole.Definition),
+            Node("reducedCenters", "Relabel all remaining forced centres",
+                Scope(All("P", C("Finset", V(Succ)), Eq(C("reducedCenters", X("P")),
+                    C("image", C("erase", X("P"), N(1)), C("vertexDrop"))))),
+                "The selected centre is erased, then every remaining selected centre is relabelled.", DescribeRole.Definition),
+            Node("forcedOneEquiv", "All remaining compatible ears survive",
+                Scope(All("P", C("Finset", V(Succ)), Imp(R(N(6), Leq, X("m")),
+                    Imp(C("Compatible", X("P")), Imp(In(N(1), X("P")),
+                        EqType(C("H", Succ, X("P")), C("H", X("m"), C("reducedCenters", X("P"))))))))),
+                "H(k,P) is the subtype of all T in F(k) satisfying IsTriangulation T and P subset EarCenters T. Compatibility with ear(1) excludes the neighbouring centres 0 and 2. For each other selected centre, all three original vertices survive and its ear lifts exactly to the original ear. This preservation is derived, with no added survival premise.", DescribeRole.Definition),
+            Node("forcedEquiv", "Iterate actual deletion over any compatible forced set",
+                NScope(All("P", C("Finset", V(X("n"))),
+                    Imp(R(N(6), Leq, C("natSub", X("n"), C("card", X("P")))),
+                        Imp(C("Compatible", X("P")), EqType(C("H", X("n"), X("P")),
+                            C("A", C("natSub", X("n"), C("card", X("P"))))))))),
+                "Induction deletes one forced original centre at a time, composes the full correspondences, and reduces the forced-set cardinality by one. The result is a bijection onto all triangulations of the polygon with n-card(P) vertices. The size premise is exactly six remaining vertices and is preserved by each step.", DescribeRole.Definition),
+            Node("compatible_card_bound", "Independent centres occupy at most half the boundary",
+                NScope(All("P", C("Finset", V(X("n"))), Imp(R(N(6), Leq, X("n")),
+                    Imp(C("Compatible", X("P")), R(C("mul", N(2), C("card", X("P"))), Leq, X("n")))))),
+                "Adjacent ear centres have crossing ears. Hence a compatible selected set is disjoint from its translate by one, which has the same cardinality. Their union lies in the n boundary vertices. In particular, n at least fourteen leaves at least seven vertices after all compatible forced centres are deleted.")
         ), []));
 }
 
@@ -82,6 +109,7 @@ internal static class PolygonEarContractionFormula
     internal static Formula Succ => Add(X("m"), N(1));
     internal static Formula Ear => C("ear", N(1));
     internal static Formula Bound => R(N(5), Leq, X("m"));
+    internal static Formula NScope(Formula body) => All("n", X("Nat"), Seq(OpenBracket, C("NeZero", X("n")), CloseBracket, Comma, Sp, body));
     internal static Formula Scope(Formula body) => All("m", X("Nat"), Seq(OpenBracket, C("NeZero", X("m")), CloseBracket, Comma, Sp, body));
     internal static Formula Original(Formula body) => Scope(All("T", Fs(Succ), Imp(Bound, Imp(Tri(X("T")), Imp(In(Ear, X("T")), body)))));
     internal static Formula Reduced(Formula body) => Scope(All("U", Fs(X("m")), Imp(Bound, Imp(Tri(X("U")), body))));

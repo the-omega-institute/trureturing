@@ -91,7 +91,9 @@ private noncomputable def forbiddenEquiv (P Q : Finset (ZMod n)) :
     apply disjoint_left.mpr
     intro i hi hmem
     have h := (mem_inf_iff Q (fun i => (event P i)ᶜ) T.val).mp T.property i hi
-    simpa only [mem_compl, event, mem_filter, mem_univ, true_and] using h,
+    have h' : i ∉ EarCenters T.val.val := by
+      simpa only [mem_compl, event, mem_filter, mem_univ, true_and] using h
+    exact h' hmem,
     by simp⟩
   invFun T := ⟨⟨T.val, T.property.1, T.property.2.1⟩, by
     apply (mem_inf_iff _ _ _).mpr
@@ -132,7 +134,8 @@ theorem conditional_card (hn : 14 ≤ n) (P Q : Finset (ZMod n))
       intro S hS
       rw [hterm S (mem_powerset.mp hS)]
     _ = Npq n P.card Q.card := by
-      rw [Finset.sum_powerset_apply_card]
-      simp only [Npq, nsmul_eq_mul, mul_assoc, mul_left_comm]
+      have hsum := Finset.sum_powerset_apply_card (x := Q)
+        (fun j : ℕ => (-1 : ℤ) ^ j * (catalan (n - P.card - j - 2) : ℤ))
+      simpa only [Npq, nsmul_eq_mul, mul_assoc, mul_left_comm] using hsum
 
 end D5.S3.Geometry.Polygons.PolygonConditionalCounts

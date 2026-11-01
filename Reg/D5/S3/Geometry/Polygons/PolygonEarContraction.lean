@@ -28,4 +28,7 @@ def expand_reduce_source : expand_reduce_scope := @_root_.D5.S3.Geometry.Polygon
 abbrev reduce_expand_scope := type_of% (@_root_.D5.S3.Geometry.Polygons.PolygonEarContraction.reduce_expand)
 def reduce_expand_source : reduce_expand_scope := @_root_.D5.S3.Geometry.Polygons.PolygonEarContraction.reduce_expand
 
+abbrev compatible_card_bound_scope := type_of% (@_root_.D5.S3.Geometry.Polygons.PolygonEarContraction.compatible_card_bound)
+def compatible_card_bound_source : compatible_card_bound_scope := @_root_.D5.S3.Geometry.Polygons.PolygonEarContraction.compatible_card_bound
+
 end Reg.D5.S3.Geometry.Polygons.PolygonEarContraction
