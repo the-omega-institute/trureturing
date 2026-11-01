@@ -102,6 +102,60 @@ in $\{1,\ldots,k\}$, for $1\le k\le n$.
 These are computational findings; the survey and its normalization are not
 additional Lean theorems in this module.
 
+
+### Original full-R first clause
+
+Issue #25214 concerns the first clause itself, with positive weakly increasing
+Ferrers bounds, repeated columns and letters, natural content summing to the
+positive row count, and the original zero-polynomial convention. Its event is
+failure of the original full `R` to split over the reals; no refinement,
+interlacing surrogate or distinct-letter restriction is substituted.
+
+The full-polynomial counterexample has 120 rows with runs $(2,3),(3,4),(4,10),(5,2),
+(6,101)$ and content $(6,1,4,8,1,100)$. Its polynomial and negative Laguerre
+value are recorded in the corresponding Library note and new Blueprint Scribe.
+`MultisetRookEulerianRealRootednessRefutation` implements a generic equality
+between the remaining-content recurrence and the original full word sum,
+followed by a shared recurrence certificate and the literal `result : ¬ claim`.
+The certificate proves the 100-six tail formula by induction and evaluates
+664 prefix states, preserving every coefficient of the original full `R`.
+Its negative Laguerre value contradicts the original unrestricted
+`laguerre_splits` supplier. The interlacing-only result concerns the separate
+second clause. Neither counterexample asserts global priority.
+
+The quantified assertion ranges over every $n,k\in\mathbb{N}$ with $n>0$,
+every positive weakly increasing row-bound function
+$\lambda:\operatorname{Fin}(n)\to\mathbb{N}$, and every natural-valued
+content $\alpha:\operatorname{Fin}(k)\to\mathbb{N}$ with
+$\sum_c\alpha(c)=n$. The letter indexed by $c$ is $c+1$.
+The words are distinct words with those multiplicities, and the exponent
+counts strict adjacent ascents with no initial or terminal ascent.
+The conclusion is that the original full $R$ splits over $\mathbb{R}$,
+retaining multiplicity. The zero polynomial is included by
+`Polynomial.Splits`; no nonempty-word-set or nonzero-polynomial premise is added.
+
+Each pair in the displayed board runs gives a row bound and its multiplicity,
+so both the row count and the total content are $120$. The exact full polynomial is
+
+$$
+R(t)=t^2+261t^3+21704t^4+591814t^5+5372605t^6+18550680t^7
++27147806t^8+17137014t^9+4318325t^{10}+352440t^{11}.
+$$
+
+It has degree $11$ and $R(1)=73492650$. At $x=-1/100$,
+
+$$
+(R'(x))^2-R(x)R''(x)=
+-\frac{2294232329562528073294509555513}{12500000000000000000000000000000000000}<0.
+$$
+
+The original `laguerre_splits` supplier requires only splitting over the reals
+and gives a nonnegative Laguerre expression at every real argument; it adds
+no positivity, monicity, nonzero, root-sign or simple-root hypothesis.
+The literal first-clause conclusion is
+`MultisetRookEulerianRealRootednessRefutation.result : ¬ claim`, whose existing
+Scribe has the typed `ResolutionKind.Refuted` binding to this dossier's slug.
+
 ## Triage
 
 Tier 1; Refuted under `admission_basis: open-problem-resolution`, issue #12894.
@@ -143,24 +197,3 @@ The literature search excludes a settlement only within the stated sources and
 queries. The finite survey is independently computed, not kernel-verified;
 its results beyond the specific witness do not enlarge the public theorem.
 The open questions in Triage are not settled by finite agreement.
-
-
-## Original full-R first clause
-
-Issue #25214 concerns the first clause itself, with positive weakly increasing
-Ferrers bounds, repeated columns and letters, natural content summing to the
-positive row count, and the original zero-polynomial convention. Its event is
-failure of the original full `R` to split over the reals; no refinement,
-interlacing surrogate or distinct-letter restriction is substituted.
-
-The full-polynomial counterexample has 120 rows with runs $(2,3),(3,4),(4,10),(5,2),
-(6,101)$ and content $(6,1,4,8,1,100)$. Its polynomial and negative Laguerre
-value are recorded in the corresponding Library note and new Blueprint Scribe.
-`MultisetRookEulerianRealRootednessRefutation` implements a generic equality
-between the remaining-content recurrence and the original full word sum,
-followed by a shared recurrence certificate and the literal `result : ¬ claim`.
-The certificate proves the 100-six tail formula by induction and evaluates
-664 prefix states, preserving every coefficient of the original full `R`.
-Its negative Laguerre value contradicts the original unrestricted
-`laguerre_splits` supplier. The interlacing-only result concerns the separate
-second clause. Neither counterexample asserts global priority.
