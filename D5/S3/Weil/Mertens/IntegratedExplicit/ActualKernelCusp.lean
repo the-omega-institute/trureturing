@@ -8,7 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
 import Mathlib.Analysis.Calculus.LHopital
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Calculus.MeanValue
 
 /-! Subtracting the logarithmic cusp leaves a bounded curvature with a finite endpoint limit. -/
 
@@ -136,7 +136,8 @@ private lemma quotient_finite_part :
       · fun_prop
       · fun_prop
       · norm_num
-    simpa [f₂, g₂] using hc.tendsto.mono_left nhdsWithin_le_nhds
+    convert hc.tendsto.mono_left (y := 𝓝[>] 0) nhdsWithin_le_nhds using 1 <;>
+      norm_num [f₂, g₂]
   have hlim₁ : Tendsto (fun t => f₁ t / g₁ t) (𝓝[>] 0) (𝓝 (-3 / 4)) := by
     apply HasDerivAt.lhopital_zero_nhdsGT (Eventually.of_forall hf₁) (Eventually.of_forall hg₁) _ _ _ hlim
     · filter_upwards [self_mem_nhdsWithin] with t ht
@@ -366,5 +367,12 @@ theorem cusp_remainder_bound {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 2) :
 #print axioms cusp_remainder_bound
 
 #print axioms cusp_quadratic_limit
+#print axioms K_eq_local
+#print axioms K_zero
+#print axioms K_continuous
+#print axioms hasDerivAt_K
+#print axioms hasDerivAt_D1
+#print axioms log_argument_ratio_limit
+#print axioms D1_atBot
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp
 

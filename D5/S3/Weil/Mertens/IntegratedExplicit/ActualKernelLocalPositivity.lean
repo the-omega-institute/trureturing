@@ -234,7 +234,7 @@ private lemma weighted_log_limit :
   dsimp only [Function.comp_def]
   rw [← mul_assoc, div_mul_cancel₀ _ hne]
 
-private lemma D1_atBot : Tendsto D1 (𝓝[>] 0) atBot := by
+lemma D1_atBot : Tendsto D1 (𝓝[>] 0) atBot := by
   have hc : Tendsto (fun t : ℝ => 1 - Real.exp (-(2 * t))) (𝓝[>] 0) (𝓝[>] 0) := by
     refine tendsto_nhdsWithin_iff.mpr ⟨?_, ?_⟩
     · simpa using (show ContinuousAt (fun t : ℝ => 1 - Real.exp (-(2 * t))) 0 by

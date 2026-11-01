@@ -14,6 +14,7 @@ open scoped Topology
 open scoped BigOperators ComplexOrder
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+open _root_.D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open LeanInformationAudit
 
 namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
@@ -271,5 +272,334 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms evidence
 #print axioms registration
 end LogRatio
+
+
+
+namespace ValueAtZero
+
+def arena : Arena where
+  signature := LocalFormula.scalarSignature
+  Law A := A.readout () () 0 = firstLiMass
+
+private theorem rejected_law : ¬ arena.Law LocalFormula.rejected := by
+  intro h
+  change K 0 + 1 = firstLiMass at h
+  rw [K_zero] at h
+  linarith
+
+def evidence : Registration arena (type_of% @K_zero) where
+  actual := LocalFormula.actualKernel
+  bridge := Iff.rfl
+  variation := ⟨K_zero, LocalFormula.rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law LocalFormula.actualKernel LocalFormula.rejected rejected_law
+  dependence := LocalFormula.kernel_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@K_zero) (Realization LocalFormula.scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.K_zero.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.ValueAtZero.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize LocalFormula.scalarSignature
+    (fun _ _ t => K t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end ValueAtZero
+
+namespace Continuity
+
+def arena : Arena where
+  signature := LocalFormula.scalarSignature
+  Law A := Continuous (A.readout () ())
+
+def rejected : Realization LocalFormula.scalarSignature :=
+  realize LocalFormula.scalarSignature (fun _ _ t => if t = 0 then K t + 1 else K t)
+    (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  change Continuous (fun t : ℝ => if t = 0 then K t + 1 else K t) at h
+  have hc : ContinuousAt (fun t : ℝ => if t = 0 then K t + 1 else K t) 0 := h.continuousAt
+  have hbad : Tendsto (fun t : ℝ => if t = 0 then K t + 1 else K t)
+      (𝓝[>] 0) (𝓝 (K 0 + 1)) := by
+    simpa using hc.tendsto.mono_left (y := 𝓝[>] 0) nhdsWithin_le_nhds
+  have hgood : Tendsto (fun t : ℝ => if t = 0 then K t + 1 else K t)
+      (𝓝[>] 0) (𝓝 (K 0)) := by
+    apply (K_continuous.continuousAt.tendsto.mono_left
+      (y := 𝓝[>] 0) nhdsWithin_le_nhds).congr'
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    change 0 < t at ht
+    simp [ht.ne']
+  have he := tendsto_nhds_unique hbad hgood
+  linarith
+
+def evidence : Registration arena (type_of% @K_continuous) where
+  actual := LocalFormula.actualKernel
+  bridge := Iff.rfl
+  variation := ⟨K_continuous, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law LocalFormula.actualKernel rejected rejected_law
+  dependence := LocalFormula.kernel_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@K_continuous) (Realization LocalFormula.scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.K_continuous.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.Continuity.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize LocalFormula.scalarSignature
+    (fun _ _ t => K t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end Continuity
+
+namespace FirstDerivative
+
+def arena : Arena where
+  signature := LocalFormula.scalarSignature
+  Law A := ∀ {t : ℝ}, 0 < t → t < Real.log 2 →
+    HasDerivAt (A.readout () ()) (D1 t) t
+
+def rejected : Realization LocalFormula.scalarSignature :=
+  realize LocalFormula.scalarSignature (fun _ _ t => K t + t) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have ht : (1 / 4 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
+  have hh := h (t := 1 / 4) (by norm_num) ht
+  have he := ((hasDerivAt_K (by norm_num : (0 : ℝ) < 1 / 4) ht).add
+    (hasDerivAt_id (1 / 4 : ℝ))).unique hh
+  linarith
+
+def evidence : Registration arena (type_of% @hasDerivAt_K) where
+  actual := LocalFormula.actualKernel
+  bridge := Iff.rfl
+  variation := ⟨@hasDerivAt_K, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law LocalFormula.actualKernel rejected rejected_law
+  dependence := LocalFormula.kernel_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@hasDerivAt_K) (Realization LocalFormula.scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.hasDerivAt_K.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.FirstDerivative.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize LocalFormula.scalarSignature
+    (fun _ _ t => K t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end FirstDerivative
+
+namespace DerivativeAtBot
+
+def actualDerivative : Realization LocalFormula.scalarSignature :=
+  realize LocalFormula.scalarSignature (fun _ _ t => D1 t) (fun e => nomatch e)
+
+private theorem derivative_dependence :
+    ObservationalDependence LocalFormula.scalarSignature actualDerivative := by
+  intro role
+  by_contra hh
+  push_neg at hh
+  have hc : Tendsto D1 (𝓝[>] 0) (𝓝 (D1 0)) := by
+    apply tendsto_const_nhds.congr'
+    exact Eventually.of_forall (fun t => hh () 0 t)
+  exact not_tendsto_nhds_of_tendsto_atBot D1_atBot _ hc
+
+def arena : Arena where
+  signature := LocalFormula.scalarSignature
+  Law A := Tendsto (A.readout () ()) (𝓝[>] 0) atBot
+
+def rejected : Realization LocalFormula.scalarSignature :=
+  realize LocalFormula.scalarSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact not_tendsto_nhds_of_tendsto_atBot h _
+    (tendsto_const_nhds : Tendsto (fun _ : ℝ => (0 : ℝ)) (𝓝[>] 0) (𝓝 0))
+
+def evidence : Registration arena (type_of% @D1_atBot) where
+  actual := actualDerivative
+  bridge := Iff.rfl
+  variation := ⟨D1_atBot, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actualDerivative rejected rejected_law
+  dependence := derivative_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@D1_atBot) (Realization LocalFormula.scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.D1_atBot.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.DerivativeAtBot.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize LocalFormula.scalarSignature
+    (fun _ _ t => D1 t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end DerivativeAtBot
+
+namespace SecondDerivative
+
+def arena : Arena where
+  signature := LocalFormula.scalarSignature
+  Law A := ∀ {t : ℝ}, 0 < t → t < Real.log 2 →
+    HasDerivAt (A.readout () ()) (D2 t) t
+
+def rejected : Realization LocalFormula.scalarSignature :=
+  realize LocalFormula.scalarSignature (fun _ _ t => D1 t + t) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have ht : (1 / 4 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
+  have hh := h (t := 1 / 4) (by norm_num) ht
+  have he := ((hasDerivAt_D1 (by norm_num : (0 : ℝ) < 1 / 4) ht).add
+    (hasDerivAt_id (1 / 4 : ℝ))).unique hh
+  linarith
+
+def evidence : Registration arena (type_of% @hasDerivAt_D1) where
+  actual := DerivativeAtBot.actualDerivative
+  bridge := Iff.rfl
+  variation := ⟨@hasDerivAt_D1, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law DerivativeAtBot.actualDerivative rejected rejected_law
+  dependence := DerivativeAtBot.derivative_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@hasDerivAt_D1) (Realization LocalFormula.scalarSignature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.hasDerivAt_D1.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.SecondDerivative.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize LocalFormula.scalarSignature
+    (fun _ _ t => D1 t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+end SecondDerivative
 
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
