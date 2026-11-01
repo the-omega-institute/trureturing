@@ -334,7 +334,7 @@ theorem relative_ground_line (v : Fock) :
           have hEempty : S.erase 1 = ∅ := Finset.not_nonempty_iff_eq_empty.mp hempty
           have hcases : S = ∅ ∨ S = {1} := (Finset.erase_eq_empty_iff S 1).mp hEempty
           cases hcases with
-          | inl h => exact h1S (h ▸ Finset.not_mem_empty 1)
+          | inl h => exact (Finset.not_mem_empty 1) (h ▸ h1S)
           | inr h => exact hS h
         obtain ⟨j, hj⟩ := hnonempty
         have hj1 : j ≠ 1 := Finset.mem_erase.mp hj |>.1
