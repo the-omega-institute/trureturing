@@ -195,11 +195,7 @@ private theorem cert_h2_e2_old_seam_3 (Y T H E : ℤ)
   let r : ℤ := 1
   let R : ℤ := 3
   let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by
-  dsimp only
-  convert (show (0 : ℤ) ≤
-      (0 : ℤ) from by positivity) using 1 <;>
-    dsimp [model] <;> ring
+  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_e2_old_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
@@ -222,11 +218,7 @@ private theorem cert_h2_e2_new_seam_3 (Y T H E : ℤ)
   let r : ℤ := 1
   let R : ℤ := 3
   let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by
-  dsimp only
-  convert (show (0 : ℤ) ≤
-      (0 : ℤ) from by positivity) using 1 <;>
-    dsimp [model] <;> ring
+  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_e2_new_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
@@ -537,11 +529,7 @@ private theorem cert_h2_t8_old_seam_3 (Y T H E : ℤ)
   let r : ℤ := 2*(1+E)
   let R : ℤ := 6*(1+E)+1
   let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by
-  dsimp only
-  convert (show (0 : ℤ) ≤
-      (0 : ℤ) from by positivity) using 1 <;>
-    dsimp [model] <;> ring
+  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_t8_old_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
@@ -568,11 +556,7 @@ private theorem cert_h2_t8_new_seam_3 (Y T H E : ℤ)
   let r : ℤ := 2*(1+E)
   let R : ℤ := 6*(1+E)+1
   let C := (v.t+1)*v.z
-  0 ≤ 2*(0) := by
-  dsimp only
-  convert (show (0 : ℤ) ≤
-      (0 : ℤ) from by positivity) using 1 <;>
-    dsimp [model] <;> ring
+  0 ≤ 2*(0) := by norm_num
 
 private theorem cert_h2_t8_new_peak_3 (Y T H E : ℤ)
     (hY : 0 ≤ Y) (hT : 0 ≤ T) (hH : 0 ≤ H) (hE : 0 ≤ E) :
