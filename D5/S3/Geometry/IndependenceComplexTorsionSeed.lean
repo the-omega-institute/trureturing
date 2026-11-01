@@ -40,7 +40,6 @@ claim to resolve a separate published open problem.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 2000000
 
 namespace D5.S3.Geometry.IndependenceComplexTorsionSeed
 
@@ -113,17 +112,21 @@ def TriangleSimplex := {p : Vertex × Vertex × Vertex //
   p.1 < p.2.1 ∧ p.2.1 < p.2.2 ∧
     ({p.1, p.2.1, p.2.2} : Finset Vertex) ∈ seedComplex}
 
+set_option maxHeartbeats 2000000 in
 private theorem edge_enumeration : ∀ a b : Vertex,
     (a < b ∧ ({a, b} : Finset Vertex) ∈ seedComplex) ↔
       ∃ e : EdgeIndex, edge e = (a, b) := by
   decide
 
+set_option maxHeartbeats 2000000 in
 private theorem triangle_enumeration : ∀ a b c : Vertex,
     (a < b ∧ b < c ∧ ({a, b, c} : Finset Vertex) ∈ seedComplex) ↔
       ∃ t : TriangleIndex, triangle t = (a, b, c) := by
   decide
 
+set_option maxHeartbeats 2000000 in
 private theorem edge_injective : Function.Injective edge := by decide
+set_option maxHeartbeats 2000000 in
 private theorem triangle_injective : Function.Injective triangle := by decide
 
 /-- This equivalence certifies that every actual edge occurs, exactly once.
@@ -170,6 +173,7 @@ noncomputable def triangleBoundary (t : TriangleIndex) : C1 := fun e =>
 noncomputable def d2 : C2 →ₗ[ℤ] C1 :=
   Fintype.linearCombination ℤ triangleBoundary
 
+set_option maxHeartbeats 2000000 in
 private theorem triangleBoundary_cycle :
     ∀ t : TriangleIndex, d1 (triangleBoundary t) = 0 := by
   decide
@@ -179,8 +183,7 @@ theorem d1_comp_d2 : d1.comp d2 = 0 := by
   apply LinearMap.ext
   intro c
   change d1 (∑ t, c t • triangleBoundary t) = 0
-  simp only [map_sum, map_smul, triangleBoundary_cycle, smul_zero, Finset.sum_const_zero,
-    LinearMap.zero_apply]
+  simp only [map_sum, map_smul, triangleBoundary_cycle, smul_zero, Finset.sum_const_zero]
 
 /-- Degree-one finite ordered simplicial chain homology of `seedComplex`.
 The higher chain groups do not affect ker(d1)/im(d2). -/
@@ -212,6 +215,7 @@ def nonTreeCocycle : Fin 22 → ZMod 2 := ![
 
 /-- A full edge functional, with its zero-on-tree and retained non-tree values
 included in its type. No spanning-tree theorem is needed for the detection proof. -/
+set_option maxHeartbeats 2000000 in
 def extendedCocycle : {w : EdgeIndex → ZMod 2 //
     (∀ i : Fin 10, w (treeEdge i) = 0) ∧
     (∀ i : Fin 22, w (nonTreeEdge i) = nonTreeCocycle i)} :=
@@ -222,6 +226,7 @@ def extendedCocycle : {w : EdgeIndex → ZMod 2 //
 def detector : C1 →ₗ[ℤ] ZMod 2 :=
   Fintype.linearCombination ℤ extendedCocycle.val
 
+set_option maxHeartbeats 2000000 in
 private theorem detector_triangleBoundary :
     ∀ t : TriangleIndex, detector (triangleBoundary t) = 0 := by
   decide
@@ -232,12 +237,15 @@ theorem detector_d2 (c : C2) : detector (d2 c) = 0 := by
   simp only [map_sum, map_smul, detector_triangleBoundary, smul_zero, Finset.sum_const_zero]
 
 /-- The retained edge vector is a cycle. -/
+set_option maxHeartbeats 2000000 in
 theorem d1_z : d1 z = 0 := by decide
 
 /-- The retained triangle chain bounds twice the cycle, with integral coefficients. -/
+set_option maxHeartbeats 2000000 in
 theorem d2_boundingChain : d2 boundingChain = (2 : ℕ) • z := by decide
 
 /-- The full edge cocycle takes value one on the displayed cycle. -/
+set_option maxHeartbeats 2000000 in
 theorem detector_z : detector z = 1 := by decide
 
 /-- In particular the cycle is not an integral boundary. -/
@@ -257,7 +265,10 @@ noncomputable def seedClass : seedChainComplex.homology :=
 /-- Exact additive order two; no assertion about the other homology classes. -/
 theorem seedClass_addOrderOf : addOrderOf seedClass = 2 := by
   have h := detected_order_two seedChainComplex ⟨z, d1_z⟩ boundingChain
-    d2_boundingChain detector detector_d2 (by rw [detector_z]; exact one_ne_zero)
+    d2_boundingChain detector detector_d2 (by
+      change detector z ≠ (0 : ZMod 2)
+      rw [detector_z]
+      exact one_ne_zero)
   exact addOrderOf_eq_prime h.2 h.1
 
 /-- The displayed class is nonzero and killed by two in the degree-one
