@@ -1,6 +1,6 @@
 /- GID: D5/S3/Geometry/FiniteCoordinateTruncation
    generality: G
-   mirror-B: none(waiver:source-artifact-awaiting-canonical-transfer)
+   mirror-B: D5/B/S3/Geometry/FiniteCoordinateTruncation
    mirror-E: none(waiver:finite-coordinate-topology)
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
    utility: none
@@ -12,9 +12,6 @@ import Mathlib.Topology.Homotopy.Contractible
 Coordinate support for `FiniteGraphSubgraphSuspension`.  The carrier throughout
 is `FiniteConeCollapse.realization`, not a replacement homology theory.
 
-Source artifact, 2026-11-01: no elaboration or kernel run has been performed.
-Read against trureturing geometry at 8bf6f351a26466e267c7d0c740b820081ce297f7
-and Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
 -/
 
 noncomputable section

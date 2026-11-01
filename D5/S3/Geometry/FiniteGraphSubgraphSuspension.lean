@@ -1,6 +1,6 @@
 /- GID: D5/S3/Geometry/FiniteGraphSubgraphSuspension
    generality: G
-   mirror-B: none(waiver:source-artifact-awaiting-canonical-transfer)
+   mirror-B: D5/B/S3/Geometry/FiniteGraphSubgraphSuspension
    mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique]
    utility: none
@@ -13,25 +13,16 @@ import Mathlib.Algebra.Category.ModuleCat.Abelian
 /-!
 # Subgraph suspension by an independent star cluster
 
-The intended consumer is the forty subgraph-star operations in the explicit
-Question 32 king-grid construction (Carnero Bravo, arXiv:2505.06457v2).
-This is a necessary core of that counterexample, not a solution of Question 32.
-In particular, `H ≤ G` below never means that H is induced.
+This construction provides supporting machinery for the king-grid setting of
+Question 32 in Carnero Bravo, arXiv:2505.06457v2. It does not settle that
+question. In particular, H less than or equal to G never means that H is induced.
 
 The geometric carrier and independence complex are the existing project ones.
-The finite open cover is constructed in coordinates in this file; no cover,
-retraction, homotopy equivalence, homology shift, or torsion is assumed.
+The finite open cover, retraction and homotopies are constructed in coordinates.
 The final homology step uses the existing TauCeti reduced Mayer--Vietoris API.
-
-Provenance: ordinary full-construction review supplied in the task brief;
-new Lean implementation by this source worker, 2026-11-01. Geometry inspected
-at 8bf6f351a26466e267c7d0c740b820081ce297f7 (unchanged in inspected HEAD
-47c4bf60b02ba7c24acba82e8451ef78dca9ac60); current MV API touching commit
-0b2475bd3ab5eb1ff17c7d921298917b32014420; Mathlib
-56a005855ea17e0b0958f73ec801ae140b0a1679.
-
-SOURCE ONLY: all elaboration, coercions, typeclass synthesis, and proof terms
-remain unverified until a canonical shared-donor `make lean` run.
+The graph splitting, suspension and star-cluster mechanisms have classical
+sources in the work of Adamaszek, Barmak and Csorba. The corresponding Library
+note identifies their original references and the scope of this construction.
 -/
 
 noncomputable section
@@ -247,10 +238,10 @@ theorem intersection_faces (hHG : H ≤ G) :
     · intro a ha b hb hab hG
       have has : old a ∈ s := Finset.mem_preimage.mp ha
       have hbs : old b ∈ s := Finset.mem_preimage.mp hb
-      have haM : a ∈ M.val := by simpa [closedStar, apex, old, suspensionGraph, gadgetAdj]
-        using hB.2.2 (old a) has
-      have hbM : b ∈ M.val := by simpa [closedStar, apex, old, suspensionGraph, gadgetAdj]
-        using hB.2.2 (old b) hbs
+      have haM : a ∈ M.val := by
+        simpa only [adj_apex_old, not_not] using hB.2.2 (old a) has
+      have hbM : b ∈ M.val := by
+        simpa only [adj_apex_old, not_not] using hB.2.2 (old b) hbs
       by_cases hH : H.Adj a b
       · exact M.property.1 haM hbM hab hH
       · exact hA'.2.1 has hbs (fun h => hab (Sum.inl_injective h)) ⟨hG, hH⟩
@@ -330,8 +321,6 @@ theorem closedStar_realization_iff (a : Vertex H) (x : Vertex H → ℝ) :
       exact ⟨hp.1, hp.2, fun b hb => by simpa using hb⟩
 
 namespace Coordinates
-
-variable (G H)
 abbrev X := Ispace (suspensionGraph G H)
 
 def mass (x : Vertex H → ℝ) : ℝ := ∑ M : MaxIndependent H, x (apex M)
@@ -348,12 +337,12 @@ def delta (x : Vertex H → ℝ) : ℝ :=
 theorem bad_nonneg {x : Vertex H → ℝ} (hx : ∀ a, 0 ≤ x a)
     (M : MaxIndependent H) : 0 ≤ bad H M x := by
   apply add_nonneg (hx _)
-  exact Finset.sum_nonneg fun a _ => by split_ifs <;> simp_all
+  exact Finset.sum_nonneg fun a _ => by split_ifs <;> first | exact le_rfl | exact hx _
 
 theorem hub_le_bad {x : Vertex H → ℝ} (hx : ∀ a, 0 ≤ x a)
     (M : MaxIndependent H) : x (hub H) ≤ bad H M x := by
   have h : 0 ≤ ∑ a : V, if a ∈ M.val then 0 else x (old a) :=
-    Finset.sum_nonneg fun a _ => by split_ifs <;> simp_all
+    Finset.sum_nonneg fun a _ => by split_ifs <;> first | exact le_rfl | exact hx _
   dsimp [bad]; linarith
 
 theorem old_le_bad {x : Vertex H → ℝ} (hx : ∀ a, 0 ≤ x a)
@@ -361,7 +350,7 @@ theorem old_le_bad {x : Vertex H → ℝ} (hx : ∀ a, 0 ≤ x a)
   have hs : x (old a) ≤ ∑ b : V, if b ∈ M.val then 0 else x (old b) := by
     simpa only [if_neg ha] using
       (Finset.single_le_sum (f := fun b : V => if b ∈ M.val then 0 else x (old b))
-        (fun b _ => by split_ifs <;> simp_all) (Finset.mem_univ a))
+        (fun b _ => by split_ifs <;> first | exact le_rfl | exact hx _) (Finset.mem_univ a))
   dsimp [bad]; linarith [hx (hub H)]
 
 theorem delta_nonneg {x : Vertex H → ℝ} (hx : ∀ a, 0 ≤ x a) : 0 ≤ delta H x :=
@@ -487,8 +476,8 @@ theorem epsilon_small : epsilon H ≤ 1 / 4 := by
   nlinarith [Nat.cast_nonneg (α := ℝ) (Fintype.card (Vertex H))]
 
 /-- Both are genuinely open subsets of the actual realization. -/
-def U : Set (X G H) := {x | mass H x.val < 1 / 2}
-def O : Set (X G H) := {x | delta H x.val < epsilon H}
+abbrev U : Set (X G H) := {x | mass H x.val < 1 / 2}
+abbrev O : Set (X G H) := {x | delta H x.val < epsilon H}
 
 theorem isOpen_U : IsOpen (U G H) :=
   isOpen_lt ((continuous_mass H).comp continuous_subtype_val) continuous_const
@@ -606,8 +595,8 @@ theorem eraseA_nonneg (x : X G H) : ∀ a, 0 ≤ eraseA H x.val a := by
     · exact le_rfl
 
 theorem eraseA_support (x : X G H) (a : Vertex H) (ha : x.val a = 0) :
-    normalize (eraseA H x.val) a = 0 := by
-  apply normalize_zero
+    FiniteCoordinateTruncation.normalize (eraseA H x.val) a = 0 := by
+  apply FiniteCoordinateTruncation.normalize_zero
   rcases a with a | a
   · exact ha
   · cases a
@@ -629,17 +618,17 @@ theorem continuous_eraseA : Continuous (eraseA H) := by
 
 def aMap : C(↥(U G H), ↥(U G H)) :=
   regionMap G H (fun x => mass H x < 1 / 2)
-    (fun x => normalize (eraseA H x.val.val))
+    (fun x => FiniteCoordinateTruncation.normalize (eraseA H x.val.val))
     (continuous_normalize ((continuous_eraseA H).comp
       (continuous_subtype_val.comp continuous_subtype_val)) (fun x => by
-        rw [eraseA_sum]; exact (show 0 < 1 - mass H x.val.val by linarith [x.property]).ne'))
+        rw [eraseA_sum]; exact (show 0 < 1 - mass H x.val.val by linarith [show mass H x.val.val < 1 / 2 from x.property]).ne'))
     (fun x => ⟨probability_normalize (eraseA_nonneg G H x.val) (by
-      rw [eraseA_sum]; linarith [x.property]),
+      rw [eraseA_sum]; linarith [show mass H x.val.val < 1 / 2 from x.property]),
       avoid_of_support (avoid _ x.val) (eraseA_support G H x.val)⟩)
-    (fun x => by simp [mass, normalize, eraseA, apex])
+    (fun x => by simp [mass, FiniteCoordinateTruncation.normalize, eraseA, apex])
 
 theorem aMap_mass (x : U G H) : mass H (aMap G H x).val.val = 0 := by
-  simp [aMap, regionMap, mass, normalize, eraseA, apex]
+  simp [aMap, regionMap, mass, FiniteCoordinateTruncation.normalize, eraseA, apex]
 
 def aFirst : (ContinuousMap.id ↥(U G H)).Homotopy (aMap G H) :=
   regionStraight G H (fun x => mass H x < 1 / 2) _ _
@@ -687,7 +676,7 @@ def aSecond : (aMap G H).Homotopy (ContinuousMap.const _ (hubPoint G H)) :=
   regionStraight G H (fun x => mass H x < 1 / 2) _ _
     (fun t x => no_apex_avoid_hub_mix G H (probability _ (aMap G H x).val)
       (avoid _ (aMap G H x).val)
-      (fun M => by simp [aMap, regionMap, normalize, eraseA, apex]) t)
+      (fun M => by simp [aMap, regionMap, FiniteCoordinateTruncation.normalize, eraseA, apex]) t)
     (fun t x => by
       rw [mass_mix, aMap_mass]
       simp [hubPoint, mass, vertex, apex, hub, Pi.single_apply])
@@ -696,7 +685,7 @@ theorem contractible_U : ContractibleSpace ↥(U G H) :=
   (contractible_iff_id_nullhomotopic _).mpr
     ⟨hubPoint G H, ⟨(aFirst G H).trans (aSecond G H)⟩⟩
 
-def cutCoords (x : Vertex H → ℝ) : Vertex H → ℝ := normalize (cut (epsilon H) x)
+def cutCoords (x : Vertex H → ℝ) : Vertex H → ℝ := FiniteCoordinateTruncation.normalize (cut (epsilon H) x)
 
 theorem cut_sum_pos (x : X G H) : 0 < ∑ a, cut (epsilon H) x.val a := by
   have hb := cut_sum_bound (probability _ x) (epsilon H)
@@ -708,7 +697,7 @@ theorem cut_probability (x : X G H) : Probability (cutCoords H x.val) :=
 
 theorem cut_support (x : X G H) (a : Vertex H) (ha : x.val a = 0) :
     cutCoords H x.val a = 0 :=
-  normalize_zero (cut_zero (epsilon_pos H).le ha)
+  FiniteCoordinateTruncation.normalize_zero (cut_zero (epsilon_pos H).le ha)
 
 theorem cut_avoid (x : X G H) : Avoid (suspensionGraph G H) (cutCoords H x.val) :=
   avoid_of_support (avoid _ x) (cut_support G H x)
@@ -721,9 +710,9 @@ theorem cut_bad_zero (x : X G H) (M : MaxIndependent H)
     (hM : bad H M x.val < epsilon H) : bad H M (cutCoords H x.val) = 0 := by
   apply (bad_zero H (cut_probability G H x).1 M).mpr
   constructor
-  · exact normalize_zero (cut_eq_zero ((hub_le_bad H (probability _ x).1 M).trans hM.le))
+  · exact FiniteCoordinateTruncation.normalize_zero (cut_eq_zero ((hub_le_bad H (probability _ x).1 M).trans hM.le))
   · intro a ha
-    exact normalize_zero (cut_eq_zero ((old_le_bad H (probability _ x).1 M a ha).trans hM.le))
+    exact FiniteCoordinateTruncation.normalize_zero (cut_eq_zero ((old_le_bad H (probability _ x).1 M a ha).trans hM.le))
 
 theorem cut_delta_zero (x : O G H) : delta H (cutCoords H x.val.val) = 0 := by
   obtain ⟨M, hM⟩ := delta_witness H x.val.val
@@ -746,11 +735,12 @@ theorem apexRaw_nonneg (x : Vertex H → ℝ) : ∀ a, 0 ≤ apexRaw H x a := by
     · exact le_max_right _ _
 
 theorem apexRaw_sum_pos (x : O G H) : 0 < ∑ a, apexRaw H x.val.val a := by
+  have hx : delta H x.val.val < epsilon H := x.property
   obtain ⟨M, hM⟩ := delta_witness H x.val.val
   have hw : 0 < apexRaw H x.val.val (apex M) := by
     change 0 < max (epsilon H - bad H M x.val.val) 0
     apply lt_of_lt_of_le _ (le_max_left _ _)
-    linarith [x.property]
+    linarith [hx]
   exact hw.trans_le (Finset.single_le_sum
     (fun a _ => apexRaw_nonneg H x.val.val a) (Finset.mem_univ _))
 
@@ -762,15 +752,15 @@ theorem continuous_apexRaw : Continuous (apexRaw H) := by
     | none => exact continuous_const
     | some M => exact (continuous_const.sub (continuous_bad H M)).max continuous_const
 
-def weightCoords (x : Vertex H → ℝ) := normalize (apexRaw H x)
+def weightCoords (x : Vertex H → ℝ) := FiniteCoordinateTruncation.normalize (apexRaw H x)
 
 theorem weight_probability (x : O G H) : Probability (weightCoords H x.val.val) :=
   probability_normalize (apexRaw_nonneg H _) (apexRaw_sum_pos G H x)
 
 theorem weight_old (x : Vertex H → ℝ) (a : V) : weightCoords H x (old a) = 0 := by
-  simp [weightCoords, normalize, apexRaw, old]
+  simp [weightCoords, FiniteCoordinateTruncation.normalize, apexRaw, old]
 theorem weight_hub (x : Vertex H → ℝ) : weightCoords H x (hub H) = 0 := by
-  simp [weightCoords, normalize, apexRaw, hub]
+  simp [weightCoords, FiniteCoordinateTruncation.normalize, apexRaw, hub]
 
 theorem apex_supported_avoid {x : Vertex H → ℝ}
     (ho : ∀ a, x (old a) = 0) (hh : x (hub H) = 0) :
@@ -811,7 +801,7 @@ theorem cut_weight_avoid (x : O G H) (t : ℝ) :
       exact ⟨((bad_zero H (cut_probability G H x.val).1 M).mp
         (cut_bad_zero G H x.val M hM)).2 a ha, weight_old H _ a⟩
     · have hw : weightCoords H x.val.val (apex M) = 0 := by
-        apply normalize_zero
+        apply FiniteCoordinateTruncation.normalize_zero
         exact max_eq_right (sub_nonpos.mpr (le_of_not_gt hM))
       rcases hi (old a) (apex M) ha with ho | hm
       · exact Or.inl ⟨ho, weight_old H _ a⟩
@@ -856,8 +846,10 @@ theorem weight_apex_avoid (x : O G H) (t : ℝ) :
       (mix t (weightCoords H x.val.val) (apexPoint G H).val.val) := by
   apply apex_supported_avoid G H
   · intro a
-    simp [mix, weight_old, apexPoint, vertex, old, apex, Pi.single_apply]
-  · simp [mix, weight_hub, apexPoint, vertex, hub, apex, Pi.single_apply]
+    simp [mix, weightCoords, FiniteCoordinateTruncation.normalize, apexRaw,
+      apexPoint, vertex, old, apex, Pi.single_apply]
+  · simp [mix, weightCoords, FiniteCoordinateTruncation.normalize, apexRaw,
+      apexPoint, vertex, hub, apex, Pi.single_apply]
 
 theorem weight_apex_delta_zero (x : O G H) (t : I) :
     delta H (mix t (weightCoords H x.val.val) (apexPoint G H).val.val) = 0 := by
@@ -867,7 +859,7 @@ theorem weight_apex_delta_zero (x : O G H) (t : I) :
   · exact delta_nonneg H (probability_mix (weight_probability G H x)
       (probability _ (apexPoint G H).val) t).1
 
-def cluster : Set (X G H) := {x | delta H x.val = 0}
+abbrev cluster : Set (X G H) := {x | delta H x.val = 0}
 
 def clusterHomeomorph : ↥(realization (starB G H)) ≃ₜ ↥(cluster G H) where
   toFun x := ⟨⟨x.val, ((starB_realization_iff G H x.val).mp x.property).1⟩,
@@ -879,7 +871,7 @@ def clusterHomeomorph : ↥(realization (starB G H)) ≃ₜ ↥(cluster G H) whe
   continuous_invFun := (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _
 
 def clusterInO : C(↥(cluster G H), ↥(O G H)) where
-  toFun x := ⟨x.val, by change delta H x.val.val < epsilon H; rw [x.property]; exact epsilon_pos H⟩
+  toFun x := ⟨x.val, lt_of_eq_of_lt x.property (epsilon_pos H)⟩
   continuous_toFun := continuous_subtype_val.subtype_mk _
 
 def clusterCut : C(↥(cluster G H), ↥(cluster G H)) :=
@@ -938,7 +930,7 @@ theorem contractible_starB : ContractibleSpace ↥(realization (starB G H)) := b
 /- Unlike the fixed cutoff used in the contraction, the following variable
 cutoff vanishes on B. Thus it gives an actual neighborhood retraction. -/
 def retractRaw (x : Vertex H → ℝ) := cut (delta H x) x
-def retractCoords (x : Vertex H → ℝ) := normalize (retractRaw H x)
+def retractCoords (x : Vertex H → ℝ) := FiniteCoordinateTruncation.normalize (retractRaw H x)
 
 theorem retract_sum_pos (x : O G H) : 0 < ∑ a, retractRaw H x.val.val a := by
   have hb := cut_sum_bound (probability _ x.val) (delta H x.val.val)
@@ -954,16 +946,16 @@ theorem retract_probability (x : O G H) : Probability (retractCoords H x.val.val
 
 theorem retract_support (x : O G H) (a : Vertex H) (ha : x.val.val a = 0) :
     retractCoords H x.val.val a = 0 :=
-  normalize_zero (cut_zero (delta_nonneg H (probability _ x.val).1) ha)
+  FiniteCoordinateTruncation.normalize_zero (cut_zero (delta_nonneg H (probability _ x.val).1) ha)
 
 theorem retract_bad_zero (x : O G H) (M : MaxIndependent H)
     (hM : delta H x.val.val = bad H M x.val.val) :
     bad H M (retractCoords H x.val.val) = 0 := by
   apply (bad_zero H (retract_probability G H x).1 M).mpr
   constructor
-  · exact normalize_zero (cut_eq_zero (by rw [hM]; exact hub_le_bad H (probability _ x.val).1 M))
+  · exact FiniteCoordinateTruncation.normalize_zero (cut_eq_zero (by rw [hM]; exact hub_le_bad H (probability _ x.val).1 M))
   · intro a ha
-    exact normalize_zero (cut_eq_zero (by rw [hM]; exact old_le_bad H (probability _ x.val).1 M a ha))
+    exact FiniteCoordinateTruncation.normalize_zero (cut_eq_zero (by rw [hM]; exact old_le_bad H (probability _ x.val).1 M a ha))
 
 def neighborhoodRetraction : C(↥(O G H), ↥(cluster G H)) :=
   regionMap G H (fun x => delta H x = 0) (fun x => retractCoords H x.val.val)
@@ -992,13 +984,13 @@ theorem retraction_fixes (x : cluster G H) :
   apply Subtype.ext
   apply Subtype.ext
   ext a
-  change normalize (cut (delta H x.val.val) x.val.val) a = x.val.val a
+  change FiniteCoordinateTruncation.normalize (cut (delta H x.val.val) x.val.val) a = x.val.val a
   rw [x.property]
   have hc : cut 0 x.val.val = x.val.val := by
     ext b
     simp [cut, max_eq_left ((probability _ x.val).1 b)]
   rw [hc]
-  simp [normalize, (probability _ x.val).2]
+  simp [FiniteCoordinateTruncation.normalize, (probability _ x.val).2]
 
 /-- Explicit neighborhood equivalence, fixing the closed star cluster. -/
 def neighborhoodEquiv : ↥(O G H) ≃ₕ ↥(cluster G H) where
@@ -1018,7 +1010,7 @@ theorem contractible_O : ContractibleSpace ↥(O G H) := by
   exact (neighborhoodEquiv G H).contractibleSpace
 
 def oldRaw (x : Vertex H → ℝ) (a : V) : ℝ := cut (epsilon H) x (old a)
-def oldCoords (x : Vertex H → ℝ) : V → ℝ := normalize (oldRaw H x)
+def oldCoords (x : Vertex H → ℝ) : V → ℝ := FiniteCoordinateTruncation.normalize (oldRaw H x)
 
 theorem oldRaw_sum_pos (x : ↥(U G H ∩ O G H)) : 0 < ∑ a, oldRaw H x.val.val a := by
   obtain ⟨M, hM⟩ := delta_witness H x.val.val
@@ -1045,12 +1037,12 @@ theorem old_probability (x : ↥(U G H ∩ O G H)) : Probability (oldCoords H x.
 
 theorem old_support (x : X G H) (a : V) (ha : x.val (old a) = 0) :
     oldCoords H x.val a = 0 :=
-  normalize_zero (cut_zero (epsilon_pos H).le ha)
+  FiniteCoordinateTruncation.normalize_zero (cut_zero (epsilon_pos H).le ha)
 
 theorem old_off_M (x : X G H) (M : MaxIndependent H)
     (hM : bad H M x.val < epsilon H) (a : V) (ha : a ∉ M.val) :
     oldCoords H x.val a = 0 :=
-  normalize_zero (cut_eq_zero ((old_le_bad H (probability _ x).1 M a ha).trans hM.le))
+  FiniteCoordinateTruncation.normalize_zero (cut_eq_zero ((old_le_bad H (probability _ x).1 M a ha).trans hM.le))
 
 theorem old_avoid (x : ↥(U G H ∩ O G H)) : Avoid G (oldCoords H x.val.val) := by
   obtain ⟨M, hM⟩ := delta_witness H x.val.val
@@ -1120,7 +1112,7 @@ def intersectionSecond (hHG : H ≤ G) :
       (probability _ ((oldReturn G H) ((oldInclusion G H hHG) z))) t, ?_⟩
     apply avoid_mix_of_support (avoid _ z)
     intro a ha
-    apply normalize_zero
+    apply FiniteCoordinateTruncation.normalize_zero
     exact cut_zero (epsilon_pos H).le ha)
 
 /-- The intersection of the constructed OPEN neighborhoods is homotopy
@@ -1313,6 +1305,12 @@ def reducedHomologyIso [Nonempty V] (hHG : H ≤ G) (q : ℕ) (_hq : 1 ≤ q) :
   let R := ModuleCat.of ℤ ℤ
   letI : ContractibleSpace ↥(Coordinates.U G H) := Coordinates.contractible_U G H
   letI : ContractibleSpace ↥(Coordinates.O G H) := Coordinates.contractible_O G H
+  letI : IsIso (TopCat.reducedMayerVietorisδ R
+      (X := TopCat.of (Ispace (suspensionGraph G H)))
+      (U := Coordinates.U G H) (V := Coordinates.O G H) (Coordinates.isOpen_U G H)
+      (Coordinates.isOpen_O G H) (Coordinates.open_cover G H) q) :=
+    TopCat.isIso_reducedMayerVietorisδ_of_contractible R
+      (Coordinates.isOpen_U G H) (Coordinates.isOpen_O G H) (Coordinates.open_cover G H) q
   exact (TauCeti.reducedSingularHomologySuccIso R q).app
       (TopCat.of (Ispace (suspensionGraph G H))) ≪≫
     asIso (TopCat.reducedMayerVietorisδ R
