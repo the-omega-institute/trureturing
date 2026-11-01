@@ -120,10 +120,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ f => f ![false, false, false]) (fun e => nomatch e)
+  realize signature (fun _ _ f => f ![false, false, false]) (fun e => Empty.elim e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ f => f ![true, true, true]) (fun e => nomatch e)
+  realize signature (fun _ _ f => f ![true, true, true]) (fun e => Empty.elim e)
 
 /-- Retain the complete additive-monoid identity, replacing only its first summand. -/
 abbrev arena : Arena where
@@ -149,7 +149,7 @@ theorem dependence : ObservationalDependence signature.{u} actual := by
   have hd := congrArg ULift.down he
   exact Nat.zero_ne_one hd
 
-def source_registration : Registration arena.{u} (type_of% @sum_strings.{u}) where
+def source : Registration arena.{u} (type_of% @sum_strings.{u}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨sum_strings, rejected, rejected_law⟩
@@ -168,18 +168,18 @@ def registration :
       (@sum_strings.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.SumStrings.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.SumStrings.source_registration
+    `Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.SumStrings.source
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
   objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  realization := .source arena.{u} ⟨source.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u}
-    (fun _ _ f => f ![false, false, false]) (fun e => nomatch e))
+    (fun _ _ f => f ![false, false, false]) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -199,8 +199,9 @@ def registration :
   familyRecord := none
   options := #[] }
 
+set_option pp.proofs false in
 #print sum_strings
-#print axioms source_registration
+#print axioms source
 #print axioms registration
 
 end SumStrings
