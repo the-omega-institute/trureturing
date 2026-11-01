@@ -259,7 +259,8 @@ lemma chordSwap_sEar (hn : 6 ≤ n) : chordSwap (sEar (n := n)) = s(0, 1) := by
     have h2 : (2 : ZMod n).val = 2 := by
       simpa using (ZMod.val_natCast_of_lt (show 2 < n by omega))
     simpa [ZMod.val_zero, h2] using hv
-  simp [sEar, ear_one, chordSwap, vertexSwap, Equiv.swap_apply_def, h01, h02]
+  rw [sEar, ear_one, chordSwap_mk, vertexSwap_apply_two hn]
+  simp [vertexSwap, Equiv.swap_apply_def, h01, h02]
 
 lemma chordSwap_tEar (hn : 6 ≤ n) : chordSwap (tEar (n := n)) = s(2, 3) := by
   have h31 : (3 : ZMod n) ≠ 1 := by
@@ -278,7 +279,8 @@ lemma chordSwap_tEar (hn : 6 ≤ n) : chordSwap (tEar (n := n)) = s(2, 3) := by
     have h3 : (3 : ZMod n).val = 3 := by
       simpa using (ZMod.val_natCast_of_lt (show 3 < n by omega))
     simpa [h2, h3] using hv
-  simp [tEar, ear_two, chordSwap, vertexSwap, Equiv.swap_apply_def, h31, h32]
+  rw [tEar, ear_two, chordSwap_mk, vertexSwap_apply_one hn]
+  simp [vertexSwap, Equiv.swap_apply_def, h31, h32]
 
 def phi (T : Finset (Sym2 (ZMod n))) : Finset (Sym2 (ZMod n)) :=
   insert (sEar (n := n)) (image chordSwap (T.erase (tEar (n := n))))

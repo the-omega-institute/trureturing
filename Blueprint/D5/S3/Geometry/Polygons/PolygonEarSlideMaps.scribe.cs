@@ -44,4 +44,3 @@ internal sealed class PolygonEarSlideMapsDocument : IScribeDocumentDefinition
             Imp(Not(InF(Ear(forward ? 1 : 2), X("T"))),
                 EqF(C(forward ? "psi" : "phi", C(forward ? "phi" : "psi", X("T"))), X("T"))))))));
 }
-

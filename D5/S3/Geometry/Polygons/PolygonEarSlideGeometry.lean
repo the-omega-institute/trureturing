@@ -22,6 +22,8 @@ The cyclic translation lemmas are adapted from the rotation proof in
 `ClusterAlgebras/Plabic/CornerTriangulation.lean` at the same revision.
 -/
 
+import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Finset.Image
 import Mathlib.Data.Sym.Sym2
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Order.Circular.ZMod

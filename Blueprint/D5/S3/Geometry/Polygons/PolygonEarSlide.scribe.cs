@@ -50,4 +50,3 @@ internal sealed class PolygonEarSlideDocument : IScribeDocumentDefinition
     private static Formula Equivalence(bool cyclic) => Scope(SetsAll(cyclic ? All("a", Vertex, EquivBody(true)) : EquivBody(false), "P", "Q", "J", "R"));
     private static Formula EquivBody(bool cyclic) => Imp(Lower(14), Imp(SubF(X("J"), C("EK", Union(X("P"), X("Q")))),
         LocalHyp(cyclic, C("Equiv", Fibre(X("J"), Insert(Pos(cyclic, 2), X("R"))), Fibre(Reduced(cyclic), Insert(Pos(cyclic, 1), X("R")))))));}
-
