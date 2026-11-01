@@ -2,11 +2,10 @@ import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! SOURCE_ONLY_UNCOMPILED. Exact eight-binder, four-coordinate dependent-family
-mirror bound to actualSource_first_peak_saddle_joint_lift itself. Both actual
-OriginalOrder readouts, source equivalence, family laws, variation, sensitivity
-and observational dependence have explicit scripts. The audit is closed, with
-no endpoint argument. No declared_validated or Scribe emission is asserted. -/
+/-! Exact eight-binder, four-coordinate dependent-family mirror bound to
+actualSource_first_peak_saddle_joint_lift itself. Both actual OriginalOrder
+readouts, source equivalence, family laws, variation, sensitivity and
+observational dependence are included. The audit has no endpoint argument. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -37,7 +36,8 @@ private abbrev signature : Signature where
   Params := Params
   State _ := ℕ
   Role := Bool
-  finiteRole := inferInstance
+  -- The declared role order agrees with the old/new source occurrence order.
+  finiteRole := ⟨⟨{false, true}, by simp⟩, fun side => by cases side <;> simp⟩
   nonemptyRole := inferInstance
   Output side p := match side with
     | false => List (Fin (p.1 + p.2.1 + p.2.2.1 + p.2.2.2)) → Prop
