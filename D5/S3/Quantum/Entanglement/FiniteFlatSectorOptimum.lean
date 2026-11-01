@@ -250,11 +250,13 @@ private theorem exponential_quotient_minimum [Nonempty Sector]
   have hpq : aggregate f p = q := aggregate_section f g hg q
   refine ⟨n, a, f, loss, ha, hf, haf, hmono, hloss, hZ, ?_, ?_, htotal⟩
   · refine ⟨p, hp, ?_⟩
-    rw [← henergy]
-    change _ = ∑ i : Fin (n + 1), ∑ j : Fin (n + 1),
-      q i * q j * ExponentialSectorKernel.kernel loss i j
-    rw [← hpq, aggregate_energy]
-    simpa only [hk]
+    have he : ExponentialSectorKernel.energy n loss (aggregate f p) =
+        ∑ s, ∑ t, p s * p t *
+          Real.exp (-|Real.log (m s : ℝ) - Real.log (m t : ℝ)| / 2) := by
+      simpa only [ExponentialSectorKernel.energy, hk] using
+        aggregate_energy f p (fun i j => ExponentialSectorKernel.kernel loss i j)
+    rw [hpq] at he
+    exact he.symm.trans henergy
   · intro p hp
     have h := hminimum (aggregate f p) (aggregate_simplex f p hp)
     dsimp [ExponentialSectorKernel.energy] at h
@@ -894,6 +896,7 @@ theorem result [Nonempty Sector]
       funext s t
       change (kernel M s t : ℂ) * X s t = _
       rw [show kernel M s t = _ from hlog s t]
+      rfl
     exact (hSchur X).trans (congrArg
       (fun Y => targetEncoding d * Y * (targetEncoding d)ᴴ) hmatrix)
   · intro hn
