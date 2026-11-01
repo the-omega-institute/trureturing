@@ -71,8 +71,11 @@ private theorem native_torsionFree (b : List PositiveDimension) (r : ℕ) :
             (TopCat.of (EuclideanSphereJoin.StdSphere d.val))) :=
         SphereHomologyAllDegrees.isTorsionFree_singularHomology_sphere M
           (EuclideanSpace.basisFun (Fin (d.val + 1)) ℝ) (r + 1) (Nat.succ_pos r)
-      let eS := (sphereEquiv.toHomotopyEquiv.reducedSingularHomologyIso M
-        (r + 1)).toLinearEquiv
+      let eS :
+          (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).obj (TopCat.of X)) ≃ₗ[k]
+          (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).obj
+            (TopCat.of (EuclideanSphereJoin.StdSphere d.val))) :=
+        (sphereEquiv.toHomotopyEquiv.reducedSingularHomologyIso M (r + 1)).toLinearEquiv
       letI : Module.IsTorsionFree k
           (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).obj (TopCat.of X)) :=
         Function.Injective.moduleIsTorsionFree eS eS.injective (fun n z => eS.map_smul n z)
@@ -89,7 +92,8 @@ private theorem native_torsionFree (b : List PositiveDimension) (r : ℕ) :
       let E := PointedWedgeHomology.homologyIso a c hA hB ha hc H K M
         (r + 1) (Nat.succ_pos r)
       let F := ((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).mapIso
-        (TopCat.isoOfHomeo (bouquetAppendHomeomorph [d] b))
+        (TopCat.isoOfHomeo (X := TopCat.of (FiniteConeUnionWedge.Wedge a c))
+          (Y := TopCat.of (NativeBouquet ([d] ++ b))) (bouquetAppendHomeomorph [d] b))
       let L := (F.symm ≪≫ E.symm ≪≫ ModuleCat.biprodIsoProd _ _).toLinearEquiv
       change Module.IsTorsionFree k
         (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).obj
@@ -106,7 +110,8 @@ theorem finite_bouquet_torsionFree (b : List PositiveDimension)
   obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
   letI := native_torsionFree M b r
   let E := (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).mapIso
-    (TopCat.isoOfHomeo (nativeBouquetHomeomorph b))).symm.toLinearEquiv
+    (TopCat.isoOfHomeo (X := TopCat.of (NativeBouquet b))
+      (Y := TopCat.of (Bouquet b)) (nativeBouquetHomeomorph b))).symm.toLinearEquiv
   exact Function.Injective.moduleIsTorsionFree E E.injective (fun n z => E.map_smul n z)
 
 private def sigmaFinSucc {m : ℕ} (Z : Fin (m + 1) → Type)
@@ -124,7 +129,11 @@ private def sigmaFinSucc {m : ℕ} (Z : Fin (m + 1) → Type)
     intro i
     refine Fin.cases ?_ (fun j => ?_) i
     · exact continuous_inl
-    · exact continuous_inr.comp continuous_sigmaMk)
+    · change Continuous (fun x : Z j.succ =>
+        (Sum.inr (Sigma.mk j x) : Z 0 ⊕ (Σ i : Fin m, Z i.succ)))
+      exact continuous_inr.comp
+        (show Continuous (Sigma.mk j : Z j.succ → (Σ i : Fin m, Z i.succ)) from
+          continuous_sigmaMk))
   continuous_invFun := continuous_sigmaMk.sumElim
     (continuous_sigma_iff.mpr (fun i => continuous_sigmaMk))
 
@@ -135,7 +144,7 @@ theorem finite_model_torsionFree {m : ℕ} (b : Fin m → List PositiveDimension
     Module.IsTorsionFree k
       (((singularHomologyFunctor (ModuleCat k) q).obj M).obj (TopCat.of (Model b))) := by
   obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
-  induction m generalizing b with
+  induction m with
   | zero =>
       letI : IsEmpty (Model b) := ⟨fun z => Fin.elim0 z.1⟩
       letI : Subsingleton
@@ -149,7 +158,9 @@ theorem finite_model_torsionFree {m : ℕ} (b : Fin m → List PositiveDimension
       letI := finite_bouquet_torsionFree M (b 0) (r + 1) (by omega)
       letI := ih (fun i => b i.succ)
       let F := ((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).mapIso
-        (TopCat.isoOfHomeo (sigmaFinSucc (fun i => Bouquet (b i))))
+        (TopCat.isoOfHomeo (X := TopCat.of (Model b))
+          (Y := TopCat.of (Bouquet (b 0) ⊕ Model (fun i : Fin m => b i.succ)))
+          (sigmaFinSucc (fun i => Bouquet (b i))))
       let E := OpenCoverHomology.sumIso M (Bouquet (b 0))
         (Model (fun i : Fin m => b i.succ)) (r + 1) (Nat.succ_pos r)
       let L := (F ≪≫ E.symm ≪≫ ModuleCat.biprodIsoProd _ _).toLinearEquiv
@@ -167,7 +178,11 @@ theorem compact_wedge_torsionFree {X : Type} [TopologicalSpace X] [CompactSpace 
   obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
   let N := compactWedgeModel d p e
   letI := finite_model_torsionFree M N.bouquets (r + 1) (by omega)
-  let L := (N.equivalence.reducedSingularHomologyIso M (r + 1)).toLinearEquiv
+  let L :
+      (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).obj (TopCat.of X)) ≃ₗ[k]
+      (((singularHomologyFunctor (ModuleCat k) (r + 1)).obj M).obj
+        (TopCat.of (Model N.bouquets))) :=
+    (N.equivalence.reducedSingularHomologyIso M (r + 1)).toLinearEquiv
   exact Function.Injective.moduleIsTorsionFree L L.injective (fun n z => L.map_smul n z)
 
 end Coefficients
@@ -203,6 +218,7 @@ theorem compact_sourceSP_smul_eq_zero {X : Type} [TopologicalSpace X] [CompactSp
     (z : (((singularHomologyFunctor (ModuleCat ℤ) q).obj (ModuleCat.of ℤ ℤ)).obj
       (TopCat.of X))) (hz : n • z = 0) : z = 0 := by
   letI := compact_sourceSP_torsionFree h q hq
-  exact (smul_eq_zero_iff_right hn).mp hz
+  apply (smul_eq_zero_iff_right hn).mp
+  simpa only [Int.cast_id] using (Int.cast_smul_eq_zsmul ℤ n z).trans hz
 
 end D5.S3.Geometry.SphereBouquetHomology
