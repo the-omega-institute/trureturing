@@ -11,6 +11,7 @@ import D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
 import D5.S3.Quantum.Information.BargmannImaginaryMaximizers
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
+import D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction
 
 /-! The low-branch reading of Consiglio–Apollaro–Wieśniak, arXiv:2209.01430v2,
 Appendix A, equation (A11). Qubit zero is the most significant bit. -/
@@ -22,6 +23,8 @@ noncomputable section
 open Matrix
 open scoped BigOperators ComplexOrder Matrix.Norms.Frobenius
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
+open D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction
+  (IsFullySeparableLocal density_psd)
 
 namespace D5.S3.Quantum.Entanglement.GeometricMeasure.XMemsClosestSeparableShapeRefutation
 
@@ -49,11 +52,6 @@ def IsCssShape {n : ℕ} (σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
   ∃ (a b : ℝ) (d : ℂ), 0 ≤ a ∧ a ≤ 1 ∧ 0 ≤ b ∧ b ≤ 1 ∧
     a + b ≤ 1 ∧ ‖d‖ ≤ a / 2 ∧ σ = cssShape n a b d
 
-/-- Real convex mixtures of products of one-qubit density matrices. -/
-def FullySeparable (n : ℕ) : Set (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :=
-  convexHull ℝ {σ | ∃ p : Fin n → Matrix (Fin 2) (Fin 2) ℂ,
-    (∀ k, IsDensity (p k)) ∧ σ = Matrix.piProd p}
-
 /-- Squared Hilbert–Schmidt distance. -/
 def hsSq {n : ℕ} (ρ σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) : ℝ :=
   D5.S3.Quantum.Tomography.RankOneContextCommutator.hilbertSchmidtSquare (ρ - σ)
@@ -61,8 +59,40 @@ def hsSq {n : ℕ} (ρ σ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) : �
 /-- Every low-branch X-MEMS has a closest fully separable state of form (A11). -/
 def claim : Prop := ∀ n : ℕ, 2 ≤ n → ∀ γ : ℂ,
   ‖γ‖ ≤ 1 / ((2 : ℝ) ^ (n - 1) + 1) →
-  ∃ σ ∈ FullySeparable n, IsCssShape σ ∧
-    ∀ τ ∈ FullySeparable n, hsSq (xmems n γ) σ ≤ hsSq (xmems n γ) τ
+  ∃ σ, IsFullySeparableLocal σ ∧ IsCssShape σ ∧
+    ∀ τ, IsFullySeparableLocal τ → hsSq (xmems n γ) σ ≤ hsSq (xmems n γ) τ
+
+private theorem fullySeparable_iff (n : ℕ) (ρ : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
+    ρ ∈ convexHull ℝ {σ | ∃ p : Fin n → Matrix (Fin 2) (Fin 2) ℂ,
+      (∀ k, IsDensity (p k)) ∧ σ = Matrix.piProd p} ↔ IsFullySeparableLocal ρ := by
+  classical
+  constructor
+  · intro h
+    obtain ⟨ι, fi, w, z, hw, hsum, hz, he⟩ := mem_convexHull_iff_exists_fintype.mp h
+    let := fi
+    choose p hp hzp using hz
+    let e := Fintype.equivFin ι
+    refine ⟨Fintype.card ι, w ∘ e.symm,
+      fun j v => (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.densityBridge
+        (p (e.symm j) v) (hp (e.symm j) v).1 (hp (e.symm j) v).2).val,
+      fun j => hw (e.symm j), ?_, ?_⟩
+    · simpa only [Function.comp_apply, e.symm.sum_comp] using hsum
+    · intro x y
+      have hexy := congrArg (fun M => M x y) he.symm
+      rw [← e.symm.sum_comp] at hexy
+      simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul,
+        hzp, Matrix.piProd, Matrix.of_apply, Function.comp_apply,
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.densityBridge,
+        CStarMatrix.ofMatrix_apply] using hexy
+  · rintro ⟨k, p, σ, hp, hsum, he⟩
+    apply mem_convexHull_of_exists_fintype p
+      (fun j => Matrix.piProd (fun v => CStarMatrix.ofMatrix.symm (σ j v).val)) hp hsum
+    · intro j
+      refine ⟨_, fun v => ⟨density_psd (σ j v), (σ j v).property.2⟩, rfl⟩
+    · ext x y
+      simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul, Matrix.piProd,
+        Matrix.of_apply, CStarMatrix.ofMatrix_symm_apply] using
+        (he x y).symm
 
 private theorem sum_words {α : Type*} [AddCommMonoid α] (f : (Fin 3 → Fin 2) → α) :
     ∑ x, f x = f ![0,0,0] + f ![0,0,1] + f ![0,1,0] + f ![0,1,1] +
@@ -174,7 +204,7 @@ private theorem product_bounds (p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ)
   · simpa [hdiag, Fin.prod_univ_succ, mul_assoc, a, b] using hsecond
 
 private theorem separable_bounds (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ)
-    (hσ : σ ∈ FullySeparable 3) :
+    (hσ : IsFullySeparableLocal σ) :
     (σ ![0,0,0] ![1,1,1]).re ≤
       ((σ ![0,0,1] ![0,0,1]).re / 6 + 3 * (σ ![1,1,0] ![1,1,0]).re / 2) / 5 +
       4 / 5 * ((σ ![0,0,0] ![0,0,0]).re / 12 +
@@ -204,7 +234,7 @@ private theorem separable_bounds (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2
       ring
   have hc : Convex ℝ s := by
     simpa only [f, s, sub_nonneg] using convex_halfSpace_ge hf (0 : ℝ)
-  apply (convexHull_min (t := s) ?_ hc) hσ
+  apply (convexHull_min (t := s) ?_ hc) ((fullySeparable_iff 3 σ).mpr hσ)
   rintro _ ⟨p, hp, rfl⟩
   obtain ⟨h1, h2⟩ := product_bounds p hp
   change (Matrix.piProd p ![0,0,0] ![1,1,1]).re ≤ ((Matrix.piProd p ![0,0,1] ![0,0,1]).re / 6 + 3 * (Matrix.piProd p ![1,1,0] ![1,1,0]).re / 2) / 5 +
@@ -225,7 +255,7 @@ private theorem shape_distance (a b : ℝ) (d : ℂ) :
   ring
 
 private theorem shape_lower (σ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ)
-    (hσ : σ ∈ FullySeparable 3) (hs : IsCssShape σ) :
+    (hσ : IsFullySeparableLocal σ) (hs : IsCssShape σ) :
     (109 / 23520 : ℝ) ≤ hsSq (xmems 3 (11 / 112)) σ := by
   obtain ⟨a, b, d, _, _, _, _, _, _, rfl⟩ := hs
   have hd := separable_bounds (cssShape 3 a b d) hσ
@@ -403,25 +433,29 @@ private theorem tau_mixture : tau =
     norm_num [wordMagnitude_sq, ← pow_two, corner_magnitude, hc,
       Complex.real_smul, Fin.sum_univ_succ, Fin.rev]
 
-private theorem tau_separable : tau ∈ FullySeparable 3 := by
-  have hp (a b : ZMod 3) : phaseProduct a b ∈ FullySeparable 3 := by
+private theorem tau_separable : IsFullySeparableLocal tau := by
+  apply (fullySeparable_iff 3 tau).mp
+  let s : Set (Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) ℂ) :=
+    convexHull ℝ {σ | ∃ p : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ,
+      (∀ k, IsDensity (p k)) ∧ σ = Matrix.piProd p}
+  have hp (a b : ZMod 3) : phaseProduct a b ∈ s := by
     apply subset_convexHull ℝ _
     refine ⟨![localState (9 / 10) a, localState (199 / 400) b,
       localState (199 / 400) (-a-b)], ?_, rfl⟩
     intro k
     fin_cases k <;> exact localState_density _ (by norm_num) (by norm_num) _
-  have hb : Matrix.piProd (fun _ => localState 0 0) ∈ FullySeparable 3 := by
+  have hb : Matrix.piProd (fun _ => localState 0 0) ∈ s := by
     apply subset_convexHull ℝ _
     exact ⟨_, fun _ => localState_density 0 (by norm_num) (by norm_num) 0, rfl⟩
-  have hc : Convex ℝ (FullySeparable 3) := convex_convexHull ℝ _
+  have hc : Convex ℝ (s) := convex_convexHull ℝ _
   have hrow (a : ZMod 3) :
-      (∑ b : ZMod 3, (1 / 3 : ℝ) • phaseProduct a b) ∈ FullySeparable 3 := by
+      (∑ b : ZMod 3, (1 / 3 : ℝ) • phaseProduct a b) ∈ s := by
     apply hc.sum_mem
     · intro _ _; norm_num
     · norm_num
     · intro b _; exact hp a b
   have havg : (∑ a : ZMod 3, (1 / 3 : ℝ) •
-      (∑ b : ZMod 3, (1 / 3 : ℝ) • phaseProduct a b)) ∈ FullySeparable 3 := by
+      (∑ b : ZMod 3, (1 / 3 : ℝ) • phaseProduct a b)) ∈ s := by
     apply hc.sum_mem
     · intro _ _; norm_num
     · norm_num
