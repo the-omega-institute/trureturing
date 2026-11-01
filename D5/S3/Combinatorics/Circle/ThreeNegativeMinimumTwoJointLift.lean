@@ -9,7 +9,7 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 /-! The minimum - gap - two base of the three - negative joint lift. -/
 
@@ -26,7 +26,7 @@ open private ThreeBitSource.mask_labels ThreeBitSource.mask_labels_bound
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private ThreeNegativeEqualOuterJointLift.label ThreeNegativeEqualOuterJointLift.lift_order
   ThreeNegativeEqualOuterJointLift.marked_word ThreeNegativeEqualOuterJointLift.schedule_from_tail
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+  from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
   Order Ear Ear.p Ear.q Ear.t Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last oldMass

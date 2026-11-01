@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift
+/- GID: D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift
+   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegative/EqualOuterJointLift
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: One physical gamma-beta-alpha schedule and its marked ear for equal outer gaps. -/
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
+import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterSourceBridge
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 
 /-! A common zero cut for the actual three-negative sources with equal outer gaps. -/

@@ -1,8 +1,10 @@
-import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
+import Batteries.Tactic.OpenPrivate
+import Reg.D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Exact two-readout registration for the complete marked equal-outer joint lift. -/
+/-! Exact two-readout registration for the complete ordered-cone physical joint lift. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -10,16 +12,16 @@ set_option relaxedAutoImplicit false
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+namespace Reg.D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
 
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.PeriodicShortening
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open _root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open _root_.D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
 
 noncomputable section
 
-abbrev Params := Σ _ : ℕ, ℕ
+abbrev Params := Σ _ : ℕ, Σ _ : ℕ, ℕ
 
 abbrev signature : Signature where
   Params := Params
@@ -28,15 +30,15 @@ abbrev signature : Signature where
   finiteRole := inferInstance
   nonemptyRole := inferInstance
   Output side p := match side with
-    | false => List (Fin (p.1 + p.2 + p.1)) → Prop
-    | true => List (Fin (p.1 + p.2 + p.1 + 1)) → Prop
+    | false => List (Fin (p.1 + p.2.1 + p.2.2)) → Prop
+    | true => List (Fin (p.1 + p.2.1 + p.2.2 + 1)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun side p seed => match side with
-    | false => OriginalOrder (p.1 + p.2 + p.1) seed
-    | true => OriginalOrder (p.1 + p.2 + p.1 + 1) seed) (fun e => nomatch e)
+    | false => OriginalOrder (p.1 + p.2.1 + p.2.2) seed
+    | true => OriginalOrder (p.1 + p.2.1 + p.2.2 + 1) seed) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun side _ _ => match side with
@@ -49,68 +51,40 @@ def deleted (side : Bool) : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (a b : ℕ) (_ha : 2 ≤ a) (_hab : a < b),
-    ∃ sigma : List (Fin (a + b + a)),
-      R.readout false ⟨a, b⟩ (1 + 2 ^ a + 2 ^ (a + b)) sigma ∧
-      R.readout true ⟨a, b⟩ (2 * (1 + 2 ^ a + 2 ^ (a + b)))
-        (earWord (a + b + a) sigma (a + 1))
+  Law R := ∀ (a b c : ℕ) (_ha : 2 ≤ a) (_hab : a < b) (_hbc : b ≤ c),
+    ∃ sigma : List (Fin (a + b + c)), ∃ j : ℕ,
+      j ≤ a + b + c ∧
+      R.readout false ⟨a, b, c⟩ (1 + 2 ^ a + 2 ^ (a + b)) sigma ∧
+      R.readout true ⟨a, b, c⟩ (2 * (1 + 2 ^ a + 2 ^ (a + b)))
+        (earWord (a + b + c) sigma j)
 
 private theorem actual_law : arena.Law actual := by
-  intro a b ha hab
-  obtain ⟨sigma, hold, hnew⟩ := actualSource_three_negative_equal_outer_joint_lift a b ha hab
-  exact ⟨sigma, hold, hnew⟩
+  exact actualSource_three_negative_ordered_cone_joint_lift
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨sigma, hold, _⟩ := h 2 3 (by decide) (by decide)
+  obtain ⟨sigma, j, hj, hold, hnew⟩ := h 2 3 3 (by decide) (by decide) (by decide)
   simp [rejected, realize] at hold
 
 private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   intro h
-  obtain ⟨sigma, hold, hnew⟩ := h 2 3 (by decide) (by decide)
+  obtain ⟨sigma, j, hj, hold, hnew⟩ := h 2 3 3 (by decide) (by decide) (by decide)
   cases side
   · simp [deleted, rejected, realize] at hold
   · simp [deleted, rejected, realize] at hnew
 
-private def identityWord : List (Fin 7) := List.finRange 7
-
-private theorem zero_old : OriginalOrder 7 0 identityWord := by
-  have hf : actualSource 7 0 = fun _ => (0 : ℤ) := by
-    funext i
-    fin_cases i <;> norm_num [actualSource, centered, modulus]
-  refine ⟨List.Perm.refl _, ?_, ?_⟩
-  · simp [hf]
-  · intro n
-    simp [hf, modulus]
-
-private theorem zero_new : OriginalOrder 8 0 (earWord 7 identityWord 3) := by
-  have hf : actualSource 8 0 = fun _ => (0 : ℤ) := by
-    funext i
-    fin_cases i <;> norm_num [actualSource, centered, modulus]
-  refine ⟨by decide, ?_, ?_⟩
-  · simp [hf]
-  · intro n
-    simp [hf, modulus]
-
-private theorem bad_old : ¬ OriginalOrder 7 2 identityWord := by
-  intro h
-  have hh := h.2.2 6
-  norm_num [identityWord, List.finRange_succ, actualSource, centered, modulus] at hh
-
-private theorem bad_new : ¬ OriginalOrder 8 1 (earWord 7 identityWord 3) := by
-  intro h
-  have hh := h.2.2 4
-  norm_num [earWord, identityWord, List.finRange_succ, actualSource, centered, modulus] at hh
+open private identityWord zero_old zero_new bad_old bad_new from
+  Reg.D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨⟨2, 3⟩, 0, 2, ?_⟩
+  · refine ⟨⟨2, 3, 2⟩, 0, 2, ?_⟩
     intro he
     have hp := congrFun he identityWord
     change OriginalOrder 7 0 identityWord = OriginalOrder 7 2 identityWord at hp
     exact bad_old (hp.mp zero_old)
-  · refine ⟨⟨2, 3⟩, 0, 1, ?_⟩
+  · refine ⟨⟨2, 3, 2⟩, 0, 1, ?_⟩
     intro he
     have hp := congrFun he (earWord 7 identityWord 3)
     change OriginalOrder 8 0 (earWord 7 identityWord 3) =
@@ -118,7 +92,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     exact bad_new (hp.mp zero_new)
 
 def source_registration : Registration arena
-    (type_of% (@actualSource_three_negative_equal_outer_joint_lift)) where
+    (type_of% (@actualSource_three_negative_ordered_cone_joint_lift)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -133,11 +107,11 @@ def source_registration : Registration arena
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-    (@_root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift)
+    (@_root_.D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift)
     (type_of% (realize signature actual.readout actual.anchor))
     Nat Unit := {
-  unitName := `D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.actualSource_three_negative_equal_outer_joint_lift.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.source_registration
+  unitName := `D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -153,16 +127,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+    owner := `D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
       booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -176,4 +150,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 
 end
 
-end Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+end Reg.D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift

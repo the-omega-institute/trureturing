@@ -17,7 +17,7 @@ open private seed eta vcoef wcoef xcoef Table Table.u Table.un Table.v Table.vn 
 open private rank amplitude oldRow newRow source_data coeff_positive range_positive
   old_total inserted_perm new_total finish
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
-open private ladder_sum from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open private ladder_sum from D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
 open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
 private theorem packet_laws (f : ℕ → ℤ) (off len : ℕ) (F N Y : ℤ)
