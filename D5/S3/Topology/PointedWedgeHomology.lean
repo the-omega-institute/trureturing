@@ -134,7 +134,7 @@ def leftEquiv (H : (ContinuousMap.id Y).HomotopyRel
   exact {
     toFun := leftProjection a b
     invFun := leftInclusion a b
-    left_inv := ⟨by simpa only [he] using T.symm⟩
+    left_inv := ⟨T.symm.cast he rfl⟩
     right_inv := by
       have h : (leftProjection a b).comp (leftInclusion a b) = ContinuousMap.id X := by
         ext x; rfl
@@ -192,30 +192,30 @@ private def openRightEquiv : V a b ha ≃ₕ Y :=
     ((rightEquiv (⟨a, ha⟩ : A) (⟨b, mem_univ b⟩ : (univ : Set Y)) H).trans
       (Homeomorph.Set.univ Y).toHomotopyEquiv)
 
+set_option maxHeartbeats 1000000 in
 /-- Positive singular homology of the actual quotient wedge is the binary
 biproduct of the summands. All openness, quotient identifications, both
 homotopy equivalences and the intersection contraction are constructed above. -/
-set_option maxHeartbeats 1000000 in
 def homologyIso {C : Type u} [Category.{v} C] [HasCoproducts.{w} C] [Abelian C]
     (R : C) (q : ℕ) (hq : 0 < q) :
     (((singularHomologyFunctor C q).obj R).obj (TopCat.of X) ⊞
       ((singularHomologyFunctor C q).obj R).obj (TopCat.of Y)) ≅
       ((singularHomologyFunctor C q).obj R).obj (TopCat.of (Wedge a b)) := by
-  have hU : IsOpen (U a b hb) := isOpen_part a b isOpen_univ hB _ _
-  have hV : IsOpen (V a b ha) := isOpen_part a b hA isOpen_univ _ _
-  letI : ContractibleSpace (part a b A B ha hb) := by
-    letI := contractible_wedge (⟨a, ha⟩ : A) (⟨b, hb⟩ : B) H K
-    exact (partHomeomorph a b hA hB ha hb).symm.contractibleSpace
-  have hI : ContractibleSpace ↥(U a b hb ∩ V a b ha) :=
-    (Homeomorph.setCongr (inter a b ha hb)).contractibleSpace
-  let r := q - 1
-  have hqr : q = r + 1 := (Nat.sub_add_cancel hq).symm
-  rw [hqr]
-  exact biprod.mapIso
-      ((openLeftEquiv a b hB hb K).symm.reducedSingularHomologyIso R (r + 1))
-      ((openRightEquiv a b hA ha H).symm.reducedSingularHomologyIso R (r + 1)) ≪≫
-    OpenCoverHomology.inclusionIso R hU hV (cover a b ha hb) (Or.inr hI) (r + 1)
-      (Nat.succ_pos r)
+  cases q with
+  | zero => exact (Nat.not_lt_zero _ hq).elim
+  | succ r =>
+      have hU : IsOpen (U a b hb) := isOpen_part a b isOpen_univ hB _ _
+      have hV : IsOpen (V a b ha) := isOpen_part a b hA isOpen_univ _ _
+      letI : ContractibleSpace (part a b A B ha hb) := by
+        letI := contractible_wedge (⟨a, ha⟩ : A) (⟨b, hb⟩ : B) H K
+        exact (partHomeomorph a b hA hB ha hb).symm.contractibleSpace
+      have hI : ContractibleSpace ↥(U a b hb ∩ V a b ha) :=
+        (Homeomorph.setCongr (inter a b ha hb)).contractibleSpace
+      exact biprod.mapIso
+          ((openLeftEquiv a b hB hb K).symm.reducedSingularHomologyIso R (r + 1))
+          ((openRightEquiv a b hA ha H).symm.reducedSingularHomologyIso R (r + 1)) ≪≫
+        OpenCoverHomology.inclusionIso R hU hV (cover a b ha hb) (Or.inr hI) (r + 1)
+          (Nat.succ_pos r)
 
 end Cover
 end D5.S3.Topology.PointedWedgeHomology
