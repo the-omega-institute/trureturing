@@ -1057,12 +1057,20 @@ private theorem normalWord_cons (D : LatticeData) (T : ℂˣ) (B : Finset ℤ)
       creationSum D T B a * normalWord D T B w +
         normalWord D T B w * annihilationSum D T B a := by
   classical
-  simp only [normalWord, nativeModeBox, Finset.sum_product, nativeRawNormalTerm,
-    creationSum, annihilationSum, Finset.sum_mul, Finset.mul_sum,
-    ← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro m hm
-  by_cases hn : m < 0 <;> simp [hn, Finset.mul_sum, Finset.sum_mul]
+  calc
+    normalWord D T B (a :: w) = ∑ m ∈ B,
+        if m < 0 then rawModeOperator D T a m * normalWord D T B w
+        else normalWord D T B w * rawModeOperator D T a m := by
+      simp only [normalWord, nativeModeBox, Finset.sum_product, nativeRawNormalTerm]
+      apply Finset.sum_congr rfl
+      intro m hm
+      by_cases hn : m < 0 <;> simp [hn, Finset.mul_sum, Finset.sum_mul]
+    _ = _ := by
+      simp only [creationSum, annihilationSum, Finset.sum_mul, Finset.mul_sum,
+        ← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro m hm
+      by_cases hn : m < 0 <;> simp [hn]
 
 private theorem rawModeOperator_same_sign (D : LatticeData) (T : ℂˣ)
     (a b : Index D) (m n : ℤ)
@@ -1397,14 +1405,14 @@ def nativeThreeLegMatrix {I : Type*} (D : LatticeData) (T : ℂˣ)
     (label : I ↪ Index D) : Matrix (I ⊕ (I ⊕ I)) (I ⊕ (I ⊕ I)) ℂ := by
   classical
   exact fun
-  | .inl a, .inl b => nativeSourceSourceKernel D T (label a) (label b)
-  | .inl a, .inr (.inl b) => nativeSourceInputKernel D T (label a) (label b)
-  | .inl a, .inr (.inr b) => nativeSourceOutputKernel D T (label a) (label b)
-  | .inr (.inl a), .inl b => nativeSourceInputKernel D T (label b) (label a)
-  | .inr (.inr a), .inl b => nativeSourceOutputKernel D T (label b) (label a)
-  | .inr (.inl a), .inr (.inr b) => if a = b then 1 else 0
-  | .inr (.inr a), .inr (.inl b) => if b = a then 1 else 0
-  | _, _ => 0
+    | .inl a, .inl b => nativeSourceSourceKernel D T (label a) (label b)
+    | .inl a, .inr (.inl b) => nativeSourceInputKernel D T (label a) (label b)
+    | .inl a, .inr (.inr b) => nativeSourceOutputKernel D T (label a) (label b)
+    | .inr (.inl a), .inl b => nativeSourceInputKernel D T (label b) (label a)
+    | .inr (.inr a), .inl b => nativeSourceOutputKernel D T (label b) (label a)
+    | .inr (.inl a), .inr (.inr b) => if a = b then 1 else 0
+    | .inr (.inr a), .inr (.inl b) => if b = a then 1 else 0
+    | _, _ => 0
 
 /-- The finite three-leg monomial occupation retains every repeated position. -/
 def nativeThreeLegOccupation {I : Type*} (d input output : I →₀ ℕ) :
@@ -1585,7 +1593,7 @@ private theorem threeMoment_source_step {I : Type*} [Fintype I] [DecidableEq I]
   rw [threeOccupation_add_source, nativeMoment_step _ (nativeThreeLegMatrix_symm D T label)]
   rw [← Finsupp.sum_fintype _ _ (by simp)]
   simp only [nativeThreeLegOccupation, Finsupp.sum_sumElim, Function.comp_def,
-    Finsupp.sum, nativeThreeLegMatrix]
+    Finsupp.sum, nativeThreeLegMatrix, Finsupp.sumElim_inl, Finsupp.sumElim_inr]
   simp only [← nativeThreeLegOccupation, threeOccupation_sub_source,
     threeOccupation_sub_input, threeOccupation_sub_output]
   ring
@@ -1793,6 +1801,7 @@ private theorem nativeNeutralCoefficient_three_leg_gaussian {I : Type*} [Fintype
     exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos d))
   have hh : (FactorialFockMetric.weight h : ℂ) ≠ 0 := by
     exact_mod_cast (Nat.ne_of_gt (FactorialFockMetric.weight_pos h))
+  congr 1
   field_simp
 
 
