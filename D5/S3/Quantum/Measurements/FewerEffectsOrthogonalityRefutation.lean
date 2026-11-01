@@ -7,7 +7,6 @@
    digest: Four projectors of ranks 2,2,3,3 refute the fewer-effects orthogonality conjecture. -/
 
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
