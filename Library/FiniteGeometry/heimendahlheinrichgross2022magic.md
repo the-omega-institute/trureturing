@@ -20,7 +20,7 @@ For prime $d$, the paper writes the stabiliser operations in the diagonal subpol
 
 > We conjecture that such a projective measurement which maximizes \eqref{eq:estimation-of-overlapII} has the following form
 
-namely measuring the qudits in turn in the computational basis until a nonzero outcome occurs. The induced partition consists of the sets of vectors with a given first nonzero coordinate and value. The paper evaluates the resulting sum $\sum_{k=0}^{n-1}(d-1)d^{2k}$ as $(d-1)\frac{d^{2n-2}}{d^2-1}$; the sum equals $\frac{d^{2n}-1}{d+1}$.
+namely measuring the qudits in turn in the computational basis until a nonzero outcome occurs. The induced partition consists of the sets of vectors with a given first nonzero coordinate and value; with coordinates indexed from $0$, the cell whose first nonzero coordinate is $i$ has $n-1-i$ free coordinates. The paper writes the cells as $xe_i+(0^i\oplus\mathbb F_d^{n-i})$ with $|K|=d^{n-i}$ for $i=0,\dots,n-1$, which counts one free coordinate too many; its sum $\sum_{k=0}^{n-1}(d-1)d^{2k}$ matches the cells of the measurement procedure. The paper evaluates the resulting sum $\sum_{k=0}^{n-1}(d-1)d^{2k}$ as $(d-1)\frac{d^{2n-2}}{d^2-1}$; the sum equals $\frac{d^{2n}-1}{d+1}$.
 
 ## Verified locator
 

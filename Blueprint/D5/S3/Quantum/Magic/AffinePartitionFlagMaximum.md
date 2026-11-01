@@ -18,7 +18,7 @@ A finite family of affine subspaces is an affine partition when every part is no
 
 **Definition 1.2 (The squared-cardinality objective).**
 
-$$\forall (p: \mathbb{N}), (n: \mathbb{N}), [\operatorname{Fact}\left(\operatorname{Nat}.\operatorname{Prime}\left(p\right)\right)] \forall (parts: \operatorname{Finset}\left(\operatorname{AffineSubspace}\left(\operatorname{ZMod}\left(p\right), \operatorname{Fin}\left(n\right) \to \operatorname{ZMod}\left(p\right)\right)\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Magic}.\operatorname{AffinePartitionFlagMaximum}.\operatorname{sqSum}\left(p, n, parts\right) = \sum_{k \in parts} (\operatorname{Nat}.\operatorname{card}\left(\operatorname{CoeSort}.\operatorname{coe}\left((k: \operatorname{Set}\left(\operatorname{Fin}\left(n\right) \to \operatorname{ZMod}\left(p\right)\right))\right)\right)^{2}))$$
+$$\forall (p: \mathbb{N}), [\operatorname{Fact}\left(\operatorname{Nat}.\operatorname{Prime}\left(p\right)\right)] \forall (n: \mathbb{N}), (\forall (parts: \operatorname{Finset}\left(\operatorname{AffineSubspace}\left(\operatorname{ZMod}\left(p\right), \operatorname{Fin}\left(n\right) \to \operatorname{ZMod}\left(p\right)\right)\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Magic}.\operatorname{AffinePartitionFlagMaximum}.\operatorname{sqSum}\left(p, n, parts\right) = \sum_{k \in parts} (\operatorname{Nat}.\operatorname{card}\left(\operatorname{CoeSort}.\operatorname{coe}\left((k: \operatorname{Set}\left(\operatorname{Fin}\left(n\right) \to \operatorname{ZMod}\left(p\right)\right))\right)\right)^{2})))$$
 
 *Formalization.* `D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.sqSum` (`✓ std3`).
 
@@ -90,7 +90,7 @@ $$\forall (p: \mathbb{N}), [\operatorname{Fact}\left(\operatorname{Nat}.\operato
 
 The proof first identifies the cardinality of every nonempty affine part with p raised to the finrank of its direction, and uses disjointness and coverage to show that the part sizes sum to p^n−1. It then introduces a digit potential formed from the base-p digits of s. Its step, affine, and one-unit identities yield the power inequality p^(2k) plus the potential of s−p^k is at most the potential of s whenever p^k ≤ s. Induction over a finite family of powers of p gives the squared-size bound by the potential of the total size, and induction on n evaluates the potential at p^n−1 as flagValue p n.
 
-The flag-cell center Pi.single i x proves nonemptiness; the least nonzero coordinate of a vector gives the unique flag index, proving disjointness and covering exactly the nonzero vectors. An explicit finite equivalence identifies each cell with the free coordinates after i, so its cardinality is p^(n−1−i). Summing over i and over the p−1 nonzero coordinate values gives flagValue. Combining these facts with the digit-potential bound proves claim (arXiv TeX lines 1219–1245).
+The flag-cell center Pi.single i x proves nonemptiness; the least nonzero coordinate of a vector gives the unique flag index, proving disjointness and covering exactly the nonzero vectors. Each cell is the space of extensions of Pi.single i x on the record Finset.Iic i. The general record_extension_card theorem gives its cardinality p^(n−1−i). Summing over i and over the p−1 nonzero coordinate values gives flagValue. Combining these facts with the digit-potential bound proves claim (arXiv TeX lines 1219–1245).
 
 ## References
 
@@ -101,3 +101,4 @@ The flag-cell center Pi.single i x proves nonemptiness; the least nonzero coordi
 - Truth anchor: `D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.isAffinePartition`
 - Truth anchor: `D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.result`
 - Truth anchor: `D5/S3/Quantum/Magic/AffinePartitionFlagMaximum.sqSum`
+- Dependency: [D5/S0/Diagonal/RecordExtensionCount](../../../S0/Diagonal/RecordExtensionCount.md)
