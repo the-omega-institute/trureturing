@@ -4,7 +4,7 @@
    mirror-E: none(waiver:abstract-finite-degree-comparison)
    anchors: []
    utility: none
-   digest: Triangular column homology bounds give finite-degree comparison of native total complexes. -/
+   digest: Triangular column homology bounds compare native total homology in finite degrees. -/
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
@@ -21,6 +21,8 @@ docs/reports/licenses/tauceti-sphere-port-LICENSE.txt.
 
 import D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex
 import Mathlib.Algebra.Homology.TotalComplexSymmetry
+
+/-! # Finite-degree comparison of first-quadrant total complexes -/
 
 noncomputable section
 open CategoryTheory Limits HomologicalComplex
@@ -48,7 +50,7 @@ variable {C : Type u} [Category.{v} C] [Abelian C]
 
 open HomologicalComplex.HomologySequence ComplexShape in
 /-- Row homology comparison in the triangle below Q, with epimorphisms on its boundary. -/
-private lemma finiteDegreeComparison_rows (Q : ℕ) :
+private lemma finite_degree_comparison_rows (Q : ℕ) :
     ∀ {K L : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ)} (φ : K ⟶ L),
       (∀ p q, p + q < Q →
         IsIso (homologyMap (((eval C _ q).mapHomologicalComplex _).map φ) p)) →
@@ -89,7 +91,8 @@ private lemma finiteDegreeComparison_rows (Q : ℕ) :
           rw [← quasiIsoAt_iff_isIso_homologyMap] at this ⊢
           exact (quasiIsoAt_extendMap_iff _ embeddingDownNatSucc rfl).2 this
       · intro j hj
-        have := hIso j 0 (by simp at hj; omega)
+        have : IsIso (homologyMap (rowZeroShortComplexMap φ).τ₁ j) :=
+          hIso j 0 (by simp at hj; omega)
         infer_instance
     · refine epi_homologyMap_τ₂ (rowZeroShortComplexMap φ)
         (rowZeroShortComplex_shortExact K) (rowZeroShortComplex_shortExact L) (Q + 1)
@@ -97,40 +100,54 @@ private lemma finiteDegreeComparison_rows (Q : ℕ) :
         ((epi_homologyMap_extendMap_iff _
           (show embeddingDownNatSucc.f Q = Q + 1 from rfl)).2 ihEpi) ?_
       intro j hj
-      have := hIso j 0 (by simp at hj; omega)
+      have : IsIso (homologyMap (rowZeroShortComplexMap φ).τ₁ j) :=
+        hIso j 0 (by simp at hj; omega)
       infer_instance
 
 variable {K L : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ)}
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Naturality of the signed symmetry for the actual total map. -/
-private lemma finiteDegreeComparison_flip_naturality (φ : K ⟶ L) :
-    total.map ((flipFunctor C _ _).map φ) (ComplexShape.down ℕ) ≫
+private lemma finite_degree_comparison_flip_naturality (φ : K ⟶ L) :
+    let ψ : K.flip ⟶ L.flip := (flipFunctor C _ _).map φ
+    total.map ψ (ComplexShape.down ℕ) ≫
         (L.totalFlipIso (ComplexShape.down ℕ)).hom =
       (K.totalFlipIso (ComplexShape.down ℕ)).hom ≫ total.map φ (ComplexShape.down ℕ) := by
+  dsimp only
   ext n q p h
-  simp
+  dsimp only [HomologicalComplex.comp_f]
+  simp only [ιTotal_map_assoc, ιTotal_totalFlipIso_f_hom,
+    ιTotal_totalFlipIso_f_hom_assoc, Linear.units_smul_comp, Linear.comp_units_smul,
+    ιTotal_map, flipFunctor_map_f_f]
 
 /-- Triangular comparison of actual column homology gives isomorphisms on total homology
 through degree k and an epimorphism in degree k+1. -/
-theorem finiteDegreeComparison_total_map (k : ℕ) (φ : K ⟶ L)
+theorem finite_degree_comparison_total_map (k : ℕ) (φ : K ⟶ L)
     (hIso : ∀ p q : ℕ, p + q ≤ k → IsIso (homologyMap (φ.f p) q))
     (hEpi : ∀ p q : ℕ, p + q = k + 1 → Epi (homologyMap (φ.f p) q)) :
     (∀ n : ℕ, n ≤ k → IsIso (homologyMap (total.map φ (ComplexShape.down ℕ)) n)) ∧
       Epi (homologyMap (total.map φ (ComplexShape.down ℕ)) (k + 1)) := by
-  obtain ⟨hI, hE⟩ := finiteDegreeComparison_rows (k + 1) ((flipFunctor C _ _).map φ)
+  let ψ : K.flip ⟶ L.flip := (flipFunctor C _ _).map φ
+  obtain ⟨hI, hE⟩ := finite_degree_comparison_rows (k + 1) ψ
     (fun q p hpq ↦ hIso p q (by omega))
     (fun q p hpq ↦ hEpi p q (by omega))
+  have hnat : total.map ψ (ComplexShape.down ℕ) ≫
+      (L.totalFlipIso (ComplexShape.down ℕ)).hom =
+      (K.totalFlipIso (ComplexShape.down ℕ)).hom ≫ total.map φ (ComplexShape.down ℕ) :=
+    finite_degree_comparison_flip_naturality φ
   have hmap : total.map φ (ComplexShape.down ℕ) =
       (K.totalFlipIso (ComplexShape.down ℕ)).inv ≫
-        total.map ((flipFunctor C _ _).map φ) (ComplexShape.down ℕ) ≫
+        total.map ψ (ComplexShape.down ℕ) ≫
           (L.totalFlipIso (ComplexShape.down ℕ)).hom := by
-    rw [finiteDegreeComparison_flip_naturality, Iso.inv_hom_id_assoc]
+    rw [hnat, Iso.inv_hom_id_assoc]
   constructor
   · intro n hn
     have := hI n (by omega)
-    rw [hmap, homologyMap_comp, homologyMap_comp]
+    rw [hmap]
+    simp only [homologyMap_comp]
     infer_instance
-  · rw [hmap, homologyMap_comp, homologyMap_comp]
+  · rw [hmap]
+    simp only [homologyMap_comp]
     have := hE
     infer_instance
 

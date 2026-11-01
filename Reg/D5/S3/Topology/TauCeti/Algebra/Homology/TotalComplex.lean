@@ -89,3 +89,39 @@ theorem actual_positive.{v, u} : arena.{v, u}.Law actual :=
   source_bridge.mp source_actual
 
 end Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex
+
+
+/-! # Source scopes of the exposed homology-transfer interfaces
+
+These exact source types and their positive evidence retain all category,
+shape, degree and short-exactness parameters. They supply no variation,
+sensitivity, observational dependence or completed registration. The existing
+row-to-total source family and its issue reference remain unchanged.
+-/
+
+namespace Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed
+
+abbrev epi_transfer_scope :=
+  type_of% (@HomologicalComplex.HomologySequence.epi_homologyMap_τ₂)
+theorem epi_transfer_actual : epi_transfer_scope :=
+  @HomologicalComplex.HomologySequence.epi_homologyMap_τ₂
+
+abbrev iso_transfer_scope :=
+  type_of% (@HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂)
+theorem iso_transfer_actual : iso_transfer_scope :=
+  @HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂
+
+abbrev epi_extension_scope := type_of% (@HomologicalComplex.epi_homologyMap_extendMap_iff)
+theorem epi_extension_actual : epi_extension_scope :=
+  @HomologicalComplex.epi_homologyMap_extendMap_iff
+
+abbrev iso_extension_zero_scope :=
+  type_of% (@HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne)
+theorem iso_extension_zero_actual : iso_extension_zero_scope :=
+  @HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne
+
+abbrev short_exact_scope := type_of% (@HomologicalComplex₂.rowZeroShortComplex_shortExact)
+theorem short_exact_actual : short_exact_scope :=
+  @HomologicalComplex₂.rowZeroShortComplex_shortExact
+
+end Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed

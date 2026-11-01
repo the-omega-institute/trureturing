@@ -22,7 +22,8 @@ Selective adaptation of TauCetiProject/TauCeti revision
 HomologySequenceLemmas.lean (73–126), and
 Embedding/ExtendHomology/Basic.lean (64–82).
 Modifications: receiving Mathlib imports and native extension/homology interfaces;
-private consumed support only; augmentation, symmetry and singular-chain material omitted.
+consumed support with selected public comparison interfaces;
+augmentation, symmetry and singular-chain material omitted.
 The full Apache-2.0 license is in docs/reports/licenses/tauceti-sphere-port-LICENSE.txt.
 -/
 
@@ -146,7 +147,7 @@ omit [HasFiniteCoproducts C] in
 /-- The rows `≥ 1` of `K`, reindexed so that row `q + 1` of `K` is row `q`. The summands are
 `(K.X p).X (q + 1)` up to reducible unfolding, which lets rewriting identify them with those of
 `K`. -/
-abbrev rowsSucc : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) where
+private abbrev rowsSucc : HomologicalComplex₂ C (ComplexShape.down ℕ) (ComplexShape.down ℕ) where
   X p :=
     { X q := (K.X p).X (q + 1)
       d q q' := (K.X p).d (q + 1) (q' + 1)
