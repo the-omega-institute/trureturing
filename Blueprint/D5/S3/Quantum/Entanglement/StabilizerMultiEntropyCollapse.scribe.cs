@@ -100,19 +100,19 @@ internal sealed class StabilizerMultiEntropyCollapseDocument : IScribeDocumentDe
     private static Formula ZLocalScalarFormula() => All(V("N"), Nat, All(V("n"), Nat, All(V("q"), Nat,
         Instance(Call("NeZero", V("n")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
             All(Psi, State, All(V("U"), LocalUnitaries,
-                Imp(UnitariesMem(V("U")), All(V("c"), Complex,
+                ImpP(UnitariesMem(V("U")), All(V("c"), Complex,
                     Equal(Call("Z", V("n"), V("q"), V("col"), Multiply(V("c"), Call("mulVec", Call("tensorOp", V("U")), Psi))),
                         Call("Z", V("n"), V("q"), V("col"), Multiply(V("c"), Psi))))))))))));
 
     private static Formula GraphScalarNormFormula() => All(V("N"), Nat, All(V("A"), BinMatrix,
-        All(V("U"), LocalUnitaries, Imp(UnitariesMem(V("U")), All(V("c"), Complex,
-            Imp(Equal(NormSqSum(Multiply(V("c"), Call("mulVec", Call("tensorOp", V("U")), Call("graphAmp", V("A"))))), D(1)),
+        All(V("U"), LocalUnitaries, ImpP(UnitariesMem(V("U")), All(V("c"), Complex,
+            ImpP(Equal(NormSqSum(Parenthesized(Multiply(V("c"), Call("mulVec", Call("tensorOp", V("U")), Call("graphAmp", V("A")))))), D(1)),
                 Equal(Multiply(Call("star", V("c")), V("c")), RecipPowTwo(V("N")))))))));
 
     private static Formula GraphCountFormula() => All(V("N"), Nat, All(V("q"), Nat, All(V("A"), BinMatrix,
-        Imp(SymmEntries(V("A")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
+        ImpP(SymmEntries(V("A")), All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
             All(V("P"), Call("Finset", Replicas(D(3), V("q"))),
-                Imp(OppPairRep(V("P"), Difference(V("q"), D(1))),
+                ImpP(OppPairRep(V("P"), Difference(V("q"), D(1))),
                     Equal(Multiply(Pow(Parenthesized(RecipPowTwo(V("N"))), Pow(D(3), Difference(V("q"), D(1)))),
                             Call("Z", D(3), V("q"), V("col"), Call("graphAmp", V("A")))),
                         RecipPowTwo(RankSumOverP(V("A"), V("col"), V("P")))))))))));
@@ -128,9 +128,9 @@ internal sealed class StabilizerMultiEntropyCollapseDocument : IScribeDocumentDe
                 Pow(Call("Z", D(1), V("q"), V("col"), Psi), Pow(V("n"), Difference(V("q"), D(1))))))))));
 
     private static Formula EntropyFormula() => All(V("N"), Nat, All(Psi, State,
-        Imp(Equal(NormSqSum(Psi), D(1)), All(V("q"), Nat, All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
+        ImpP(Equal(NormSqSum(Psi), D(1)), All(V("q"), Nat, All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
             All(V("A"), BinMatrix, All(V("P"), Call("Finset", Replicas(D(3), V("q"))),
-                Imp(Equal(Call("Z", D(3), V("q"), V("col"), Psi), RecipPowTwo(RankSumOverP(V("A"), V("col"), V("P")))),
+                ImpP(Equal(Call("Z", D(3), V("q"), V("col"), Psi), RecipPowTwo(RankSumOverP(V("A"), V("col"), V("P")))),
                     Equal(Call("S", D(3), V("q"), V("col"), Psi),
                         Multiply(Fraction(Call("log", D(2)), Multiply(D(2), Pow(D(3), Difference(V("q"), D(2))))),
                             RankSumOverP(V("A"), V("col"), V("P"))))))))))));
@@ -153,7 +153,7 @@ internal sealed class StabilizerMultiEntropyCollapseDocument : IScribeDocumentDe
     private static Formula CollapseClaim() => Seq(V("claim"), Sp, Leftrightarrow, Sp, Parenthesized(
         All(V("N"), Nat, All(V("party"), Arrow(Fin(V("N")), Fin(D(4))), All(Psi, State,
             Imp(Call("StabilizedBy", V("pauliSet"), Psi),
-                Imp(Equal(NormSqSum(Psi), D(1)),
+                ImpP(Equal(NormSqSum(Psi), D(1)),
                     Conj(Parenthesized(All(V("q"), Nat, All(V("col"), Arrow(Fin(V("N")), Fin(V("q"))),
                             Conj(Seq(D(0), Sp, Lt, Sp, Call("Re", Call("Z", D(3), V("q"), V("col"), Psi))),
                                 Equal(Call("Im", Call("Z", D(3), V("q"), V("col"), Psi)), D(0)))))),
@@ -172,7 +172,7 @@ internal sealed class StabilizerMultiEntropyCollapseDocument : IScribeDocumentDe
     private static Formula OppPairRep(Formula p, Formula d) => Conj(
         Seq(Neg, Parenthesized(Seq(D(0), Sp, InMacro, Sp, p))),
         All(V("t"), Arrow(Fin(d), Call("ZMod", D(3))),
-            Imp(Seq(V("t"), Sp, Neq, Sp, D(0)),
+            ImpP(Seq(V("t"), Sp, Neq, Sp, D(0)),
                 Seq(Seq(V("t"), Sp, InMacro, Sp, p), Sp, Leftrightarrow, Sp,
                     Seq(Neg, Parenthesized(Seq(Seq(Minus, V("t")), Sp, InMacro, Sp, p)))))));
     private static Formula RecipPowTwo(Formula exp) => Pow(Parenthesized(Pow(D(2), exp)), Seq(Minus, D(1)));
@@ -210,6 +210,7 @@ internal sealed class StabilizerMultiEntropyCollapseDocument : IScribeDocumentDe
     private static Formula Arrow(Formula a, Formula b) => Parenthesized(Seq(a, Sp, To, Sp, b));
     private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, Parenthesized(b));
+    private static Formula ImpP(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Rightarrow, Sp, Parenthesized(b));
     private static Formula Instance(Formula a, Formula b) => Seq(OpenBracket, a, CloseBracket, Comma, Sp, b);
     private static Formula Conj(Formula a, Formula b) => Seq(a, Sp, Land, Sp, Parenthesized(b));
     private static Formula Multiply(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
