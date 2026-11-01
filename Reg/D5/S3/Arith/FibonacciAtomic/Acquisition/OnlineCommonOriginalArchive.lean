@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Acquisition.OnlineCommonOriginalArchive
 import Reg.Support.DependentFamily
 
+/-! Whole online archive law with a varying common-original readout. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -97,10 +99,12 @@ private def zeroTariffs : Tariffs := ⟨fun _ => 0, fun _ => 0, fun _ => 0⟩
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro bad
-  have good := complete_online_archive arithmeticService () arithmetic_complete zeroTariffs (1, 0) trivial
+  have good := complete_online_archive arithmeticService () arithmetic_complete
+    zeroTariffs (1, 0) trivial
   obtain ⟨a, x, hr⟩ := good.1 [.request 2 (by decide)]
   have s := (good.2.1 _ _ _ hr).1
-  have falseSound := ((bad arithmeticService () arithmetic_complete zeroTariffs (1, 0) trivial).2.1 _ _ _ hr).1
+  have falseSound :=
+    ((bad arithmeticService () arithmetic_complete zeroTariffs (1, 0) trivial).2.1 _ _ _ hr).1
   have ho : residueSource (envelope a.precision) (1, 0) = (0, 0) :=
     s.original_eq.symm.trans falseSound.original_eq
   have request_present : 2 ∈ a.requests := by
@@ -112,7 +116,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have one_zero := congrArg Prod.fst ho
   have hom := ZMod.castHom hd (ZMod 2)
   have absurd := congrArg hom one_zero
-  have : (1 : ZMod 2) = 0 := by simpa [residueSource] using absurd
+  have : (1 : ZMod 2) = 0 := by simpa only [residueSource, map_natCast, Nat.cast_one,
+    Nat.cast_zero] using absurd
   exact one_ne_zero this
 
 private theorem dependence : ObservationalDependence signature actual := by
@@ -125,7 +130,7 @@ private theorem dependence : ObservationalDependence signature actual := by
 
 def sourceRegistration : Registration arena (type_of% (@complete_online_archive)) where
   actual := actual
-  bridge := actual_bridge
+  bridge := actual_bridge.symm
   variation := ⟨actual_bridge.mpr complete_online_archive, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
