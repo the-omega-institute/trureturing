@@ -107,6 +107,9 @@ private theorem model_positive (y t e h : ℤ)
   have hh0 : 0≤h := by omega
   have hy1 : 1≤y := by omega
   have ht1 : 1≤t := by omega
+  have hD1 : (1 : ℤ) ≤ y*(e*t)+y+1 := by
+    have hz0 : (0 : ℤ) ≤ y*(e*t) := by positivity
+    nlinarith
   dsimp [model]
   refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,?_⟩
   · have hp : (0 : ℤ) ≤ e*h*t*(y*e*t+y+1) := by positivity
@@ -116,9 +119,9 @@ private theorem model_positive (y t e h : ℤ)
   · have hp : (0 : ℤ) ≤ e*h*t*(e*t)*t + (e*t)*t + e*t := by positivity
     nlinarith [hp]
   · have hp : (0 : ℤ) ≤ t*y*(e*t) + (y*(e*t)+y+1) := by positivity
-    nlinarith [hp]
+    nlinarith [hp,hD1]
   · have hp : (0 : ℤ) ≤ y*(e*t)+y+1 + 2*(t*y*(e*t)) := by positivity
-    nlinarith [hp]
+    nlinarith [hp,hD1]
   · have hp : (0 : ℤ) ≤ (y-1)*(e*t)+y := by positivity
     nlinarith [hp]
   · ring
@@ -147,10 +150,11 @@ private theorem x_floor_gates (y t e h s g : ℤ)
   let r:=ceil v.B v.Mn
   let w:=(v.L-r*v.M)/v.B
   obtain ⟨hA,hB,hLL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive y t e h hy ht he hh
-  have hc := ceil_bounds v.B v.M v.Mn v.D g (by omega) (by omega)
-    (by omega) (by
-      have hz : 0≤v.z := by dsimp [v,model]; positivity
-      omega)
+  have hvB : 0<v.B := by have := hB; omega
+  have hvM : 0<v.M := by have := hM; omega
+  have hvMn : 0<v.Mn := by have := hMn; omega
+  have hvD : 1≤v.D := by have := hD; omega
+  have hc := ceil_bounds v.B v.M v.Mn v.D g hvB hvM hvMn hvD
     (by dsimp [v,model]; ring) (by nlinarith [hrel]) (by linarith only [hg])
   change 1≤r ∧ r≤g ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
@@ -194,7 +198,11 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
   let r:=ceil v.B v.Mn
   obtain ⟨hA,hB,hL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive t t 2 h ht ht (by omega) (by omega)
   rcases hmargins with ⟨f0,f1,f2,f3,F,G,P,W⟩
-  have hc := ceil_bounds v.B v.M v.Mn v.D h (by omega) (by omega) (by omega)
+  have hvB : 0<v.B := by have := hB; omega
+  have hvM : 0<v.M := by have := hM; omega
+  have hvMn : 0<v.Mn := by have := hMn; omega
+  have hvD : 1≤v.D := by have := hD; omega
+  have hc := ceil_bounds v.B v.M v.Mn v.D h hvB hvM hvMn
     (by
       have hz : 4≤v.z := by dsimp [v,model]; omega
       omega)
@@ -241,7 +249,11 @@ private theorem dynamic_first (h : ℤ) (hh : 8≤h)
   let r:=ceil v.B v.Mn
   rcases hmargins with ⟨f0,f1,f2,f3,F,G⟩
   obtain ⟨hA,hB,hL,hM,hMn,hD,hrel,hBn,hLn⟩ := model_positive 4 4 4 h (by norm_num) (by norm_num) (by norm_num) (by omega)
-  have hc := ceil_bounds v.B v.M v.Mn v.D h (by omega) (by omega) (by omega)
+  have hvB : 0<v.B := by have := hB; omega
+  have hvM : 0<v.M := by have := hM; omega
+  have hvMn : 0<v.Mn := by have := hMn; omega
+  have hvD : 1≤v.D := by have := hD; omega
+  have hc := ceil_bounds v.B v.M v.Mn v.D h hvB hvM hvMn
     (by norm_num [v,model]) (by rfl) (by nlinarith [hrel]) (by linarith)
   change 1≤r ∧ r≤h ∧ v.B≤r*v.Mn ∧ r*v.Mn<v.B+v.Mn ∧
     r*v.M<v.B ∧ r*v.Mn≤2*v.B-1 at hc
@@ -422,7 +434,7 @@ private theorem x_inventory (a b c d m q w : ℕ)
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
         simp [xPackets,←hnum,blocksWord,←Multiset.coe_add,←Multiset.cons_coe,
-          List.append_assoc] <;> ac_rfl
+          ←Multiset.singleton_add,List.append_assoc] <;> ac_rfl
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
@@ -458,7 +470,7 @@ private theorem v_inventory (a b c d q R : ℕ)
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
         simp [vPackets,←hnum,blocksWord,←Multiset.coe_add,←Multiset.cons_coe,
-          List.append_assoc] <;> ac_rfl
+          ←Multiset.singleton_add,List.append_assoc] <;> ac_rfl
     _ = ↑(X (full a b c d 3)) + ↑(V (full a b c d 1)) + ↑(U (full a b c d 0)) +
       ↑(W (full a b c d 2)) + {terminal a b c d 0} + {terminal a b c d 1} +
       {terminal a b c d 2} + {terminal a b c d 3} := by
@@ -494,7 +506,7 @@ private theorem mask_positive (a b c d m : ℕ) (r : Fin 4)
   intro i hi
   obtain ⟨j,hj,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
   rw [h.2.1 r j (by omega),h.2.2.1 r j (by omega)]
-  simp only [if_pos (by omega)]
+  try simp only [if_pos (by omega)]
   have hp : (0 : ℤ) ≤ (2 : ℤ)^j := by positivity
   exact ⟨mul_nonneg hp (by have := (h.1 r).1; omega),
     mul_nonneg hp (by have := hn.1; omega)⟩
@@ -553,7 +565,7 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
   simp only [hx,←he]
-  repeat' constructor <;> try trivial <;> ring_nf <;> ring
+  repeat' constructor <;> try trivial <;> ring_nf <;> nlinarith
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
