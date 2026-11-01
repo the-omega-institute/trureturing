@@ -14,6 +14,9 @@ public import Mathlib.Tactic.FinCases
 public import Mathlib.Tactic.NormNum
 public import Mathlib.Tactic.Ring
 public import Mathlib.Data.Real.Basic
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-! The ordered inner triangles are precisely the faces that are subdivided.
 The outer triangle has vertices 0,1,2; seed vertex 3 is its centre.
@@ -677,5 +680,18 @@ theorem cutoff_gram_offdiag (k t : ℕ) (u v : Vertex k) (huv : u ≠ v) :
     · exact_mod_cast lateCommonCount_le k t u v huv
     · intro ha
       rw [lateCommonCount_zero_of_not_adj k t u v huv ha, Nat.cast_zero]
+
+/-- The zero-based index one, with its bound supplied by the persistent seed vertices. -/
+def secondIndex (n : ℕ) : Fin (Fintype.card (Vertex n)) :=
+  ⟨1, lt_of_lt_of_le (by decide : 1 < 4) (card_vertex_ge_four n)⟩
+
+/-- The second largest real eigenvalue of ordinary adjacency, counting multiplicity. -/
+noncomputable def secondEigenvalue (n : ℕ) : ℝ :=
+  ((graph n).isHermitian_adjMatrix ℝ).eigenvalues₀ (secondIndex n)
+
+/-- The original all-natural-stage limit, retained as the exact unproved integration target. -/
+def limitClaim : Prop :=
+  Filter.Tendsto (fun n : ℕ => secondEigenvalue n / (2 : ℝ) ^ ((n : ℝ) / 2))
+    Filter.atTop (nhds (Real.sqrt 2))
 
 end D5.S3.Combinatorics.Apollonian.InnerFaceStages

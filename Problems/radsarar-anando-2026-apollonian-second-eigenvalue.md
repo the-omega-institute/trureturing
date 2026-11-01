@@ -69,6 +69,9 @@ and preliminary bounds are not assumptions.
 The finite source construction and its graph laws belong to
 [InnerFaceStages](../D5/S3/Combinatorics/Apollonian/InnerFaceStages.lean), with
 their [canonical exposition](../Blueprint/D5/S3/Combinatorics/Apollonian/InnerFaceStages.md).
+The exact unproved proposition is `InnerFaceStages.limitClaim`;
+`secondEigenvalue` uses the decreasing real ordinary-adjacency spectrum,
+with index one and multiplicities, and the normalization is a real power.
 These combinatorial statements alone do not establish the spectral limit.
 No frozen graph-specific spectral resolution is asserted here.
 

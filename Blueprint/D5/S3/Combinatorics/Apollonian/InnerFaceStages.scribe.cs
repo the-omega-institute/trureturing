@@ -72,7 +72,13 @@ internal sealed class InnerFaceStagesDocument : IScribeDocumentDefinition
             Node("cutoff_gram_diag", "Exact Gram diagonal",
                 "For all k,t natural and u in Vertex k, the u,u entry of cutoffBlock k t times its transpose is the real cast of (graph (k+t)).degree (embed k t u) − (graph k).degree u, with subtraction in Nat. The decomposition of degree into old and late neighbours proves that this subtraction is the intended nonnegative degree increment.", DescribeRole.Theorem),
             Node("cutoff_gram_offdiag", "Common-neighbour estimate for the actual Gram matrix",
-                "For all k,t natural and distinct u,v in Vertex k, the u,v entry of B Bᵀ, where B=cutoffBlock k t, is nonnegative and at most 2t over the reals. If u,v are not adjacent at stage k, this entry is zero. Each new common neighbour is the centre of a face containing both old vertices; there are at most two such current inner faces, and no later old-old edge appears.", DescribeRole.Theorem))));
+                "For all k,t natural and distinct u,v in Vertex k, the u,v entry of B Bᵀ, where B=cutoffBlock k t, is nonnegative and at most 2t over the reals. If u,v are not adjacent at stage k, this entry is zero. Each new common neighbour is the centre of a face containing both old vertices; there are at most two such current inner faces, and no later old-old edge appears.", DescribeRole.Theorem),
+            Node("secondIndex", "The second spectral index",
+                "For every natural n, secondIndex n is index one in Fin (card (Vertex n)). The proved lower bound four supplies its strict bound. Indices are zero based.", DescribeRole.Definition),
+            Node("secondEigenvalue", "The ordinary ordered second eigenvalue",
+                "For every natural n, secondEigenvalue n is Mathlib’s decreasing real Hermitian eigenvalues₀ list for (graph n).adjMatrix over the reals, evaluated at secondIndex n. The imported ordered-spectrum API counts eigenvalues with their characteristic-polynomial multiplicities. It uses the actual simple graph and ordinary adjacency.", DescribeRole.Definition),
+            Node("limitClaim", "The exact remaining spectral target",
+                "limitClaim is Tendsto, along all natural n tending to infinity, of secondEigenvalue n divided by the real power 2^((n:Real)/2), to sqrt(2). The real exponent preserves odd stages. This declaration defines the original target and does not prove it; the graph and count laws alone do not establish this limit.", DescribeRole.Definition))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("apollonian-" + name.ToLowerInvariant().Replace("_", "-")),
