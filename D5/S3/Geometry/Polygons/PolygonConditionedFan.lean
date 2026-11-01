@@ -94,7 +94,7 @@ private lemma ear_diagonal (hn : 6 ≤ n) (i : ZMod n) : IsDiagonal (ear i) := b
   have h := isDiagonal_map_add (isDiagonal_sEar hn) (i - 1)
   simpa only [sEar, ← ear_add, show (1 : ZMod n) + (i - 1)=i by ring] using h
 
-private lemma ear_injective (hn : 6 ≤ n) : Function.Injective (ear (n := n)) := by
+lemma ear_injective (hn : 6 ≤ n) : Function.Injective (ear (n := n)) := by
   intro i j he
   change s(i - 1, i + 1)=s(j - 1, j + 1) at he
   rw [Sym2.eq_iff] at he
