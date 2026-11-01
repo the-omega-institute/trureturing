@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite polynomial rows of the actual block Gaussian coefficients. -/
+   digest: Full finite bilinear Gaussian coefficient sewing with native normalization. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum
 import D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment
@@ -38,17 +38,14 @@ def polynomialGaussian (A : Matrix H H ℂ) :
   (Finsupp.lsum ℂ (fun α =>
     LinearMap.toSpanSingleton ℂ _ (created α (gaussianCoefficient A)))).comp
       (AddMonoidAlgebra.coeffLinearEquiv ℂ).toLinearMap
-
 private theorem polynomialGaussian_monomial (A : Matrix H H ℂ)
     (α : H →₀ ℕ) (c : ℂ) :
     polynomialGaussian A (monomial α c) = c • created α (gaussianCoefficient A) := by
   simp [polynomialGaussian, monomial, AddMonoidAlgebra.lsingle,
     Finsupp.lsum_single, LinearMap.toSpanSingleton_apply]
-
 private theorem polynomialGaussian_one (A : Matrix H H ℂ) :
     polynomialGaussian A 1 = gaussianCoefficient A := by
   rw [one_def, polynomialGaussian_monomial, one_smul, created_zero]
-
 private theorem polynomialGaussian_X_mul (A : Matrix H H ℂ)
     (i : H) (p : MvPolynomial H ℂ) :
     polynomialGaussian A (X i * p) = created (Finsupp.single i 1) (polynomialGaussian A p) := by
@@ -62,7 +59,6 @@ private theorem polynomialGaussian_X_mul (A : Matrix H H ℂ)
     rw [mul_add, map_add, hp, hq, map_add]
     funext d
     by_cases h : Finsupp.single i 1 ≤ d <;> simp [created, h]
-
 private theorem polynomialGaussian_square_summable (A : Matrix H H ℂ)
     (hsym : ∀ i j, A i j = A j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1) (p : MvPolynomial H ℂ) :
@@ -88,14 +84,12 @@ private theorem polynomialGaussian_square_summable (A : Matrix H H ℂ)
 def row {X : Type v} [Fintype X] [DecidableEq X]
     (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) (d : X →₀ ℕ) (n : H →₀ ℕ) : ℂ :=
   gaussianCoefficient K (d.sumElim n)
-
 private theorem row_zero {X : Type v} [Fintype X] [DecidableEq X]
     (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) :
     row K 0 = gaussianCoefficient (fun i j => K (.inr i) (.inr j)) := by
   funext n
   have h := InfiniteGaussianFock.gaussianCoefficient_enlarge K Sum.inr Sum.inr_injective n
   simpa [row, Finsupp.sumElim_eq_add] using h
-
 private theorem row_step {X : Type v} [Fintype X] [DecidableEq X]
     (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
     (hsym : ∀ i j, K i j = K j i) (d : X →₀ ℕ) (i : X) (n : H →₀ ℕ) :
@@ -105,13 +99,13 @@ private theorem row_step {X : Type v} [Fintype X] [DecidableEq X]
       ∑ j, K (.inl i) (.inr j) * created (Finsupp.single j 1) (row K d) n := by
   have hadd : d.sumElim n + Finsupp.single (.inl i) 1 =
       (d + Finsupp.single i 1).sumElim n := by
-    ext (j | j) <;> simp [Finsupp.sumElim_apply]
+    ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.single_apply]
   have hleft (j : X) : d.sumElim n - Finsupp.single (.inl j) 1 =
       (d - Finsupp.single j 1).sumElim n := by
-    ext (k | k) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply]
+    ext (k | k) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply, Finsupp.single_apply]
   have hright (j : H) : d.sumElim n - Finsupp.single (.inr j) 1 =
       d.sumElim (n - Finsupp.single j 1) := by
-    ext (k | k) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply]
+    ext (k | k) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply, Finsupp.single_apply]
   have h := congrFun (gaussian_annihilate K hsym (.inl i)) (d.sumElim n)
   simpa only [annihilate, Finsupp.sumElim_inl, hadd, Fintype.sum_sum_type,
     created_single, Finsupp.sumElim_inr, hleft, hright, row] using h
@@ -198,7 +192,6 @@ theorem row_pair_norm_summable {X : Type v} {Y : Type w}
   obtain ⟨q, hq⟩ := row_polynomial L hL e
   simpa only [hp, hq, row] using polynomial_pair_norm_summable _ _
     (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j)) hA hB p q
-
 private theorem annihilate_created_monomial (i : H) (α : H →₀ ℕ)
     (f : (H →₀ ℕ) → ℂ) :
     annihilate i (created α f) = fun n =>
@@ -278,7 +271,7 @@ private theorem annihilate_created_monomial (i : H) (α : H →₀ ℕ)
           intro hh
           apply hplus
           rw [← hα]
-          exact add_le_add_right hh _
+          exact add_le_add hh le_rfl
         simp [annihilate, created, h, hplus, hminus]
 private theorem pairing_add_right (f g k : (H →₀ ℕ) → ℂ)
     (hg : Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * g n))
@@ -459,8 +452,9 @@ private theorem polynomialGaussian_expansion (A : Matrix H H ℂ)
         polynomialGaussian A (∑ α ∈ p.support, monomial α (p.coeff α)) :=
       congrArg (polynomialGaussian A) p.as_sum
     _ = _ := by
-      simp only [map_sum, polynomialGaussian_monomial, Finset.sum_apply,
-        Pi.smul_apply, smul_eq_mul]
+      simp only [map_sum, polynomialGaussian_monomial]
+      funext n
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
 private theorem pairing_finset_right {T : Type*} (s : Finset T)
     (f : (H →₀ ℕ) → ℂ) (g : T → (H →₀ ℕ) → ℂ)
     (hs : ∀ i ∈ s, Summable (fun n : H →₀ ℕ => (weight n : ℂ) * f n * g i n)) :
@@ -529,19 +523,19 @@ theorem row_pair_moments {X : Type v} {Y : Type w}
 private theorem sumElim_add_left {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : X) :
     (d + Finsupp.single i 1).sumElim e = d.sumElim e + Finsupp.single (.inl i) 1 := by
-  ext (j | j) <;> simp [Finsupp.sumElim_apply]
+  ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.single_apply]
 private theorem sumElim_add_right {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : Y) :
     d.sumElim (e + Finsupp.single i 1) = d.sumElim e + Finsupp.single (.inr i) 1 := by
-  ext (j | j) <;> simp [Finsupp.sumElim_apply]
+  ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.single_apply]
 private theorem sumElim_sub_left {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : X) :
     (d - Finsupp.single i 1).sumElim e = d.sumElim e - Finsupp.single (.inl i) 1 := by
-  ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply]
+  ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply, Finsupp.single_apply]
 private theorem sumElim_sub_right {X : Type*} {Y : Type*} [DecidableEq X] [DecidableEq Y]
     (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : Y) :
     d.sumElim (e - Finsupp.single i 1) = d.sumElim e - Finsupp.single (.inr i) 1 := by
-  ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply]
+  ext (j | j) <;> simp [Finsupp.sumElim_apply, Finsupp.tsub_apply, Finsupp.single_apply]
 /-- Identification of the actual factorial pairing with native Gaussian
 moments. The normalization is the native trace-log exponential. No inverse
 or nonvanishing premise for that scalar is used. -/
@@ -571,7 +565,7 @@ theorem bilinearMoment_native (A B : Matrix H H ℂ)
       · subst a
         by_cases hb : b = 0
         · subst b
-          simpa [NativeGaussianMoment.nativeMoment, weight] using hzero
+          simpa [NativeGaussianMoment.nativeMoment, weight, gaussianCoefficient_zero] using hzero
         obtain ⟨i, hi⟩ := NativeGaussianMoment.occupation_nonzero b hb
         let r := b - Finsupp.single i 1
         have hr : r + Finsupp.single i 1 = b := Finsupp.sub_add_single_one_cancel hi
@@ -588,7 +582,9 @@ theorem bilinearMoment_native (A B : Matrix H H ℂ)
           simp
         · apply Finset.sum_congr rfl
           intro j hj
-          rw [ih _ ((Finsupp.degree_mono tsub_le_self).trans_lt hd) 0
+          have hjd : (r - Finsupp.single j 1).degree < m :=
+            (Finsupp.degree_mono (show r - Finsupp.single j 1 ≤ r from tsub_le_self)).trans_lt hd
+          rw [ih (r - Finsupp.single j 1).degree hjd 0
             (r - Finsupp.single j 1) (by simp), sumElim_sub_right]
           simp only [Finsupp.sumElim_inr]
           ring
@@ -644,21 +640,24 @@ private theorem row_annihilate (K : Matrix (X ⊕ H) (X ⊕ H) ℂ)
   have h := congrFun (gaussian_annihilate K hK (.inr i)) (d.sumElim n)
   simpa only [annihilate, row, Finsupp.sumElim_inr, ← sumElim_add_right,
     Fintype.sum_sum_type, created_single, Finsupp.sumElim_inl,
-    ← sumElim_sub_left, ← sumElim_sub_right, rowLower, Pi.zero_apply,
+    ← sumElim_sub_left, ← sumElim_sub_right, rowLower, ite_apply, row, Pi.zero_apply,
     apply_ite] using h
 variable (K : Matrix (X ⊕ H) (X ⊕ H) ℂ) (L : Matrix (Y ⊕ H) (Y ⊕ H) ℂ)
   (hK : ∀ i j, K i j = K j i) (hL : ∀ i j, L i j = L j i)
   (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => K (.inr i) (.inr j))‖ < 1)
   (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) (fun i j => L (.inr i) (.inr j))‖ < 1)
+include hK hL hA hB
 private theorem row_pair_created_summable (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : H) :
     Summable (fun n : H →₀ ℕ => (weight n : ℂ) * row K d n *
       created (Finsupp.single i 1) (row L e) n) := by
   obtain ⟨p, hp⟩ := row_polynomial K hK d
   obtain ⟨q, hq⟩ := row_polynomial L hL e
-  simpa only [polynomialGaussian_X_mul, hp, hq] using
-    (polynomial_pair_norm_summable _ _
-      (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j))
-      hA hB p (MvPolynomial.X i * q)).of_norm
+  have hs := polynomial_pair_norm_summable
+    (fun i j : H => K (.inr i) (.inr j)) (fun i j : H => L (.inr i) (.inr j))
+    (fun i j => hK (.inr i) (.inr j)) (fun i j => hL (.inr i) (.inr j))
+    hA hB p (MvPolynomial.X i * q)
+  rw [polynomialGaussian_X_mul, hp, hq] at hs
+  exact hs.of_norm
 private theorem pairing_row_combination (d : X →₀ ℕ) (e : Y →₀ ℕ)
     (a : X → ℂ) (b : H → ℂ) :
     pairing (row L e) (fun n =>
@@ -703,7 +702,8 @@ private theorem rowPair_external_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i :
       simp_rw [row_step K hK d i]
       have hh := pairing_row_combination K L hK hL hA hB d e
         (fun j => K (.inl i) (.inl j)) (fun j => K (.inl i) (.inr j))
-      simpa only [rowLower, apply_ite, Pi.zero_apply, pairing_rowLower,
+      simp_rw [pairing_rowLower] at hh
+      simpa only [rowLower, ite_apply, apply_ite, Pi.zero_apply,
         pairing_comm (row L e)] using hh
 private theorem rowPair_internal_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i : H) :
     pairing (created (Finsupp.single i 1) (row K d)) (row L e) =
@@ -716,20 +716,17 @@ private theorem rowPair_internal_step (d : X →₀ ℕ) (e : Y →₀ ℕ) (i :
     (fun j => L (.inr i) (.inl j)) (fun j => L (.inr i) (.inr j))
   simpa only [pairing_rowLower, ← rowPair_swap K L] using hh
 private theorem rowPair_resolved_step (d : X →₀ ℕ) (e : Y →₀ ℕ) :
+    let A : Matrix H H ℂ := fun i j => K (.inr i) (.inr j)
+    let B : Matrix H H ℂ := fun i j => L (.inr i) (.inr j)
+    let P : Matrix X X ℂ := fun i j => K (.inl i) (.inl j)
+    let R : Matrix X H ℂ := fun i j => K (.inl i) (.inr j)
+    let Rt : Matrix H X ℂ := fun i j => K (.inr i) (.inl j)
+    let S : Matrix H Y ℂ := fun i j => L (.inr i) (.inl j)
+    let N : Matrix H H ℂ := (1 - B * A)⁻¹ʳ
     (fun i => (d i + 1 : ℂ) * rowPair K L (d + Finsupp.single i 1) e) =
-      Matrix.mulVec
-        ((fun i j => K (.inl i) (.inl j)) +
-          (fun i j => K (.inl i) (.inr j)) *
-          (1 - (fun i j => L (.inr i) (.inr j)) *
-            (fun i j => K (.inr i) (.inr j)))⁻¹ʳ *
-          (fun i j => L (.inr i) (.inr j)) *
-          (fun i j => K (.inr i) (.inl j)))
+      (P + (((R * N : Matrix X H ℂ) * B : Matrix X H ℂ) * Rt : Matrix X X ℂ)).mulVec
         (fun j => if d j = 0 then 0 else rowPair K L (d - Finsupp.single j 1) e) +
-      Matrix.mulVec
-        ((fun i j => K (.inl i) (.inr j)) *
-          (1 - (fun i j => L (.inr i) (.inr j)) *
-            (fun i j => K (.inr i) (.inr j)))⁻¹ʳ *
-          (fun i j => L (.inr i) (.inl j)))
+      ((R * N : Matrix X H ℂ) * S : Matrix X Y ℂ).mulVec
         (fun j => if e j = 0 then 0 else rowPair K L d (e - Finsupp.single j 1)) := by
   let A : Matrix H H ℂ := fun i j => K (.inr i) (.inr j)
   let B : Matrix H H ℂ := fun i j => L (.inr i) (.inr j)
@@ -843,13 +840,13 @@ theorem finite_sewing {X : Type v} {Y : Type w}
   let Z := Complex.exp ((1 / 2 : ℂ) *
     ∑' k : ℕ, Matrix.trace ((A * B) ^ (k + 1)) / (k + 1 : ℂ))
   have hK : ∀ i j, K i j = K j i := by
-    intro (i | i) (j | j)
+    rintro (i | i) (j | j)
     · exact hP i j
     · rfl
     · rfl
     · exact hAsym i j
   have hL : ∀ i j, L i j = L j i := by
-    intro (i | i) (j | j)
+    rintro (i | i) (j | j)
     · exact hQ i j
     · rfl
     · rfl
@@ -859,7 +856,7 @@ theorem finite_sewing {X : Type v} {Y : Type w}
   have hswap (a : Y →₀ ℕ) (n : H →₀ ℕ) :
       gaussianCoefficient K₂ (n.sumElim a) = row L a n := by
     have hh := InfiniteGaussianFock.gaussianCoefficient_enlarge K₂ Sum.swap
-      Sum.swap_injective (a.sumElim n)
+      (fun _ _ h => by simpa only [Sum.swap_swap] using congrArg Sum.swap h) (a.sumElim n)
     rw [Finsupp.mapDomain_swap_sumElim] at hh
     have hmat : (fun i j => K₂ (Sum.swap i) (Sum.swap j)) = L := by
       ext (i | i) (j | j) <;> rfl
@@ -868,7 +865,8 @@ theorem finite_sewing {X : Type v} {Y : Type w}
   have h00 : rowPair K L 0 0 = Z := by
     have hh := bilinearMoment_native A B hAsym hBsym hA hB 0 0
     rw [rowPair, row_zero, row_zero]
-    simpa [bilinearMoment, created_zero, NativeGaussianMoment.nativeMoment, weight] using hh
+    simpa [bilinearMoment, created_zero, NativeGaussianMoment.nativeMoment, weight,
+      gaussianCoefficient_zero, K, L, Z] using hh
   have hleft (a : X →₀ ℕ) (b : Y →₀ ℕ) (i : X) :
       (a i + 1 : ℂ) * rowPair K L (a + Finsupp.single i 1) b =
         (∑ j, E (.inl i) (.inl j) *
@@ -904,7 +902,7 @@ theorem finite_sewing {X : Type v} {Y : Type w}
           (if a j = 0 then 0 else g (a - Finsupp.single j 1) b)) +
         ∑ j, E (.inr i) (.inr j) *
           (if b j = 0 then 0 else g a (b - Finsupp.single j 1)) := by
-    simpa only [g, annihilate, row, rowLower, apply_ite, Pi.zero_apply, created_single] using
+    simpa only [g, annihilate, row, rowLower, ite_apply, apply_ite, Pi.zero_apply, created_single] using
       congrFun (row_annihilate E hE a i) b
   have go : ∀ m (a : X →₀ ℕ) (b : Y →₀ ℕ), a.degree + b.degree = m →
       rowPair K L a b = Z * g a b := by
@@ -938,7 +936,10 @@ theorem finite_sewing {X : Type v} {Y : Type w}
           by_cases hz : r j = 0
           · simp [hz]
           · simp only [hz, ite_false]
-            rw [ih _ ((Finsupp.degree_mono tsub_le_self).trans_lt hd) 0
+            have hjd : (r - Finsupp.single j 1).degree < m :=
+              (Finsupp.degree_mono
+                (show r - Finsupp.single j 1 ≤ r from tsub_le_self)).trans_lt hd
+            rw [ih (r - Finsupp.single j 1).degree hjd 0
               (r - Finsupp.single j 1) (by simp)]
             ring
       · obtain ⟨i, hi⟩ := NativeGaussianMoment.occupation_nonzero a ha
@@ -975,7 +976,8 @@ theorem finite_sewing {X : Type v} {Y : Type w}
   · change Summable (fun n : H →₀ ℕ => ‖(weight n : ℂ) *
       row K d n * gaussianCoefficient K₂ (n.sumElim e)‖)
     simp_rw [hswap]
-    exact row_pair_norm_summable K L hK hL hA hB d e
+    obtain ⟨p, q, hp, hq, hs, heq⟩ := row_pair_moments K L hK hL hA hB d e
+    exact hs
   · change (∑' n : H →₀ ℕ, (weight n : ℂ) *
       row K d n * gaussianCoefficient K₂ (n.sumElim e)) = Z * g d e
     simp_rw [hswap]

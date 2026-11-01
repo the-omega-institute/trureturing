@@ -21,8 +21,6 @@ internal sealed class FiniteSqueezedVacuumDocument : IScribeDocumentDefinition
             N("created_zero", "Zero creation shift", "Creation by the zero occupation is the identity on coefficient functions."),
             N("created_single", "Single-mode creation boundary", "Creation in a single mode is zero at zero occupation and otherwise lowers that coordinate once."),
             N("created_square_summable", "Shifted native Gaussian square estimate", "For every creation monomial alpha and symmetric strict Euclidean contraction A, sum_d weight(d) |created(alpha,gaussianCoefficient(A),d)|^2 converges. This is the original shifted occupation estimate and is consumed by the finite polynomial Gaussian row bridge."),
-            N("gaussian_annihilate", "Native Gaussian annihilation identity", "For every symmetric finite complex matrix A, annihilate(i,gaussianCoefficient(A)) equals sum_j A_ij created(e_j,gaussianCoefficient(A)). No norm hypothesis is used in this exact polynomial identity."),
-            D("pairing", "Original bilinear factorial pairing", "The pairing is the unconditional sum of weight(d) f(d) g(d), without conjugation."),
             N("created_const", "Scalar action of a creation shift", "A creation shift preserves scalar multiplication of coefficient functions."),
             N("created_sum", "Finite sums under a creation shift", "The original shift distributes over a finite sum indexed by the shared modes."),
             N("created_pair_summable", "Native two-sided created pairing", "The original two-sided Gaussian creation pairing is summable under only the two shared symmetric strict contractions."),

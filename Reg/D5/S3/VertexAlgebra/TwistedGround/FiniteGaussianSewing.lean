@@ -11,7 +11,7 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
 open _root_.D5.S3.VertexAlgebra.FactorialFockMetric (weight)
-open _root_.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate (gaussianCoefficient)
+open _root_.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate (gaussianCoefficient gaussianCoefficient_zero)
 
 universe u v w
 namespace Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteGaussianSewing
@@ -55,7 +55,7 @@ private theorem row_rejected_fails : ¬ rowArena.{u,v}.Law rejectedZero := by
   obtain ⟨p, hp⟩ := @h PUnit.{u+1} inferInstance inferInstance
     PUnit.{v+1} inferInstance inferInstance 0 (fun _ _ => rfl) 0
   have hh := congrFun hp 0
-  simpa [rejectedZero, realize, row] using hh
+  simpa [rejectedZero, realize, row, gaussianCoefficient_zero] using hh
 
 def rowEvidence : Registration rowArena.{u,v} (type_of% (@row_polynomial.{u,v})) where
   actual := actual
@@ -191,7 +191,7 @@ private theorem expansion_rejected_fails : ¬ expansionArena.{u,v,w}.Law rejecte
     PUnit.{v+1} PUnit.{w+1} inferInstance inferInstance inferInstance inferInstance
     0 0 (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
   have hh := congrFun hp 0
-  simpa [rejectedZero, realize, row] using hh
+  simpa [rejectedZero, realize, row, gaussianCoefficient_zero] using hh
 
 def expansionEvidence : Registration expansionArena.{u,v,w}
     (type_of% (@row_pair_moments.{u,v,w})) where
@@ -423,7 +423,8 @@ private theorem native_rejected_fails : ¬ nativeArena.{u}.Law rejectedZero := b
     (fun _ _ => rfl) (fun _ _ => rfl) (by simp) (by simp) 0 0
   have h00 : bilinearMoment (0 : Matrix PUnit.{u+1} PUnit.{u+1} ℂ) 0 0 0 = 1 := by
     simpa [_root_.D5.S3.VertexAlgebra.TwistedGround.NativeGaussianMoment.nativeMoment,
-      _root_.D5.S3.VertexAlgebra.FactorialFockMetric.weight] using hv
+      _root_.D5.S3.VertexAlgebra.FactorialFockMetric.weight,
+      _root_.D5.S3.VertexAlgebra.TwistedGround.FactorialFockQuadraticEstimate.gaussianCoefficient_zero] using hv
   simpa [rejectedZero, realize, h00] using hh
 
 def sewingArena : Arena where
