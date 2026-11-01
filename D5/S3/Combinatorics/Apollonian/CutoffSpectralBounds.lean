@@ -11,6 +11,8 @@ public import D5.S3.Combinatorics.Apollonian.InnerFaceStages
 public import D5.S3.SpectralTopology.SchurOperatorBound
 public import Mathlib.Tactic
 
+/-! Spectral cutoff estimates use the constructed graph and its proved birth orientation. -/
+
 @[expose] public section
 noncomputable section
 namespace D5.S3.Combinatorics.Apollonian.CutoffSpectralBounds
@@ -24,20 +26,35 @@ def lateDirected (k t : ℕ) : Matrix (LateVertex k t) (LateVertex k t) ℝ :=
 private theorem late_directed_row (k t : ℕ) (u : LateVertex k t) :
     ∑ v, ‖lateDirected k t u v‖ ≤ 3 := by
   have h := oriented_outdegree_le_three (k+t) u.val
-  have hs : (∑ v : LateVertex k t, if Oriented (k+t) u.val v.val then 1 else 0) ≤
+  have he := Finset.sum_subtype (F := inferInstance) (p := fun w : Vertex (k+t) => k < birth (k+t) w)
+    (Finset.univ.filter fun w : Vertex (k+t) => k < birth (k+t) w)
+    (by intro w; simp only [Finset.mem_filter, Finset.mem_univ, true_and])
+    (fun w => if Oriented (k+t) u.val w then (1:ℕ) else 0)
+  rw [Finset.sum_filter] at he
+  have hs : (∑ v : LateVertex k t, if Oriented (k+t) u.val v.val then (1:ℕ) else 0) ≤
       ∑ v : Vertex (k+t), if Oriented (k+t) u.val v then 1 else 0 := by
-    exact Finset.sum_le_sum_of_subset_of_nonneg (by simp) (by intros; positivity)
-  simp only [lateDirected, norm_ite, Real.norm_one, norm_zero]
+    rw [← he]
+    apply Finset.sum_le_sum
+    intro v _
+    split_ifs <;> omega
+  simp only [lateDirected, apply_ite norm, norm_one, norm_zero]
   exact_mod_cast hs.trans h
 
 private theorem late_directed_col (k t : ℕ) (v : LateVertex k t) :
     ∑ u, ‖lateDirected k t u v‖ ≤ (3 * 2 ^ (k+t-k-1) : ℕ) := by
   have h := late_oriented_indegree_le (k+t) k v.val v.property
-  have hs : (∑ u : LateVertex k t, if Oriented (k+t) u.val v.val then 1 else 0) =
+  have he := Finset.sum_subtype (F := inferInstance) (p := fun w : Vertex (k+t) => k < birth (k+t) w)
+    (Finset.univ.filter fun w : Vertex (k+t) => k < birth (k+t) w)
+    (by intro w; simp only [Finset.mem_filter, Finset.mem_univ, true_and])
+    (fun w => if Oriented (k+t) w v.val then (1:ℕ) else 0)
+  rw [Finset.sum_filter] at he
+  have hs : (∑ u : LateVertex k t, if Oriented (k+t) u.val v.val then (1:ℕ) else 0) =
       ∑ u : Vertex (k+t), if k < birth (k+t) u ∧ Oriented (k+t) u v.val then 1 else 0 := by
-    rw [← Finset.sum_filter]
-    exact Finset.sum_subtype _ (by intro u; simp) _
-  simp only [lateDirected, norm_ite, Real.norm_one, norm_zero]
+    rw [← he]
+    apply Finset.sum_congr rfl
+    intro u _
+    split_ifs <;> simp_all
+  simp only [lateDirected, apply_ite norm, norm_one, norm_zero]
   exact_mod_cast hs ▸ h
 
 /-- Exact decomposition of the late ordinary adjacency into its two birth directions. -/
