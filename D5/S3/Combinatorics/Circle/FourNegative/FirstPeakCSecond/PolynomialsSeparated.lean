@@ -10,6 +10,7 @@ Repository API pin: 1add3bcde3f5768e7c5b7c84867d9758df1e6e6b.
 Caller construction and ordinary proof; no Pro or kernel validation.
 Full unrestricted physical J / Circle C3.1 remain OPEN. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
+import Mathlib.Tactic.Linarith.Frontend
 import Batteries.Tactic.OpenPrivate
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
