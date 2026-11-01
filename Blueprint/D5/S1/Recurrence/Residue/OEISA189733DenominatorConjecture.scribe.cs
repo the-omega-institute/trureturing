@@ -32,10 +32,7 @@ internal sealed class OEISA189733DenominatorConjectureDocument : IScribeDocument
                 + "Finite polynomial moments connect the source recursion to the companion "
                 + "polynomials. The derivative identity gives an endpoint difference, "
                 + "and the recurrence at X=1 supplies period six. Positive reciprocal "
-                + "denominators then give the displayed reduced values.", DescribeRole.Theorem,
-                resolution: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("oeis-a189733-curtz-denominator-conjecture"),
-                    ResolutionKind.Proved)),
+                + "denominators then give the displayed reduced values.", DescribeRole.Theorem),
             Paragraph(Text("For the algebraic argument, define rational polynomials Q and L "
                 + "and a finite coefficient moment J as follows. The sum ranges over the "
                 + "finite support of P; X is the polynomial variable.")),
