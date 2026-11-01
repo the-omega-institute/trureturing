@@ -13,7 +13,7 @@ internal sealed class FinitePerturbationDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("finite-basic-perturbation"),
-                DeclarationHandle.Create(Prefix + "Input.finite_perturbation"),
+                DeclarationHandle.Create(Prefix + "finite_perturbation"),
                 H("The full finite perturbation inference"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -43,7 +43,7 @@ internal sealed class FinitePerturbationDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zero-transfer-explicit-representatives"),
-                DeclarationHandle.Create(Prefix + "Input.Conclusion"),
+                DeclarationHandle.Create(Prefix + "Conclusion"),
                 H("Explicit lifts, primitives and boundary detection"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
