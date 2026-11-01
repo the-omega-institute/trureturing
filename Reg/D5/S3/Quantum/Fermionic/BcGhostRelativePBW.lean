@@ -7,7 +7,8 @@ import D5.S3.Quantum.Fermionic.BcGhostRelativePBW
 noncomputable section
 namespace Reg.D5.S3.Quantum.Fermionic.BcGhostRelativePBW
 
-open _root_.D5.S3.Quantum.Fermionic.CountableOccupationFock
+open _root_.D5.S3.Quantum.Fermionic.CountableOccupationFock (vacuum ket)
+open _root_.D5.S3.Quantum.Fermionic.BcGhostFock (b c)
 open _root_.D5.S3.Quantum.Fermionic.BcGhostRelativePBW
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
