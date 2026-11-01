@@ -2,8 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 import Reg.Support.SingleDependentReadout
 
-/-! Source-only candidates. The selectors below are proposed raw-expression paths,
-not compiler-derived binding evidence. Each law retains the complete source result. -/
+/-! Literal norm, exponential and real-part observations of the full source laws.
+The family proofs retain the complete source telescopes, including empty index
+types and repeated nodes. Source selections locate the observed subexpressions. -/
 
 noncomputable section
 universe u
