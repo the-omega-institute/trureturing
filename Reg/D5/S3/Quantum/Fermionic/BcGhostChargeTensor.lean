@@ -47,7 +47,7 @@ abbrev arena : Arena where
 def rejected : Realization signature := realize signature (fun _ _ _ => 1)
   (fun e => nomatch e)
 
-private def scalarMatter : Matter := ⟨ℂ, inferInstance, inferInstance⟩
+private abbrev scalarMatter : Matter := ⟨ℂ, inferInstance, inferInstance⟩
 
 private theorem identity_ne_zero : (1 : jointEnd scalarMatter) ≠ 0 := by
   intro h
@@ -88,7 +88,7 @@ def family : Registration arena (type_of% @charged_commutant_vanishes.{0}) where
     refine ⟨scalarMatter, 0, 1, ?_⟩
     exact Ne.symm identity_ne_zero
 
-def charged_commutant_audit : Contract.Registration
+def charged_commutant_audit : Contract.Registration.{_,_,_,0,0,0,1,0,0,0,0,0}
     (@charged_commutant_vanishes.{0}) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostChargeTensor.chargedCommutantUnit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostChargeTensor.family
@@ -208,7 +208,7 @@ def family : Registration arena (type_of% @tensor_finite_capture.{0}) where
     rw [map_zero, hK K (fun _ hi => hi), number_chargedState] at hz
     exact chargedState_ne_zero hz.symm
 
-def audit : Contract.Registration (@tensor_finite_capture.{0})
+def audit : Contract.Registration.{_,_,_,0,0,0,1,0,0,0,0,0} (@tensor_finite_capture.{0})
     (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostChargeTensor.captureUnit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostChargeTensor.Capture.family
@@ -303,7 +303,7 @@ def family : Registration arena (type_of% @number_commutes_of_signed_modes.{0}) 
     rw [tensor_c_degree]
     simpa using Ne.symm tensor_c_ne_zero
 
-def audit : Contract.Registration (@number_commutes_of_signed_modes.{0})
+def audit : Contract.Registration.{_,_,_,0,0,0,1,0,0,0,0,0} (@number_commutes_of_signed_modes.{0})
     (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostChargeTensor.signedModesUnit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostChargeTensor.SignedModes.family
