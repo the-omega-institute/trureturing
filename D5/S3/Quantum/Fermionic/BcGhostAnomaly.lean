@@ -14,6 +14,7 @@ open scoped BigOperators
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.BcGhostVirasoro (L)
+open private cubic_eq from D5.S3.Quantum.Fermionic.BcGhostCubic
 
 noncomputable section
 namespace D5.S3.Quantum.Fermionic.BcGhostBRST
@@ -96,9 +97,9 @@ private theorem odd_product_three (A B C : Module.End ℂ Fock)
 private theorem cubic_odd (p q : ℤ) :
     parity * cubic p q + cubic p q * parity = 0 := by
   by_cases hk : -p-q ≤ -2
-  · simpa only [cubic, if_pos hk] using odd_product_three (b (-p-q)) (c p) (c q)
+  · simpa only [cubic_eq, if_pos hk] using odd_product_three (b (-p-q)) (c p) (c q)
       (ghost_parity _).1 (ghost_parity _).2 (ghost_parity _).2
-  · simpa only [cubic, if_neg hk] using odd_product_three (c p) (c q) (b (-p-q))
+  · simpa only [cubic_eq, if_neg hk] using odd_product_three (c p) (c q) (b (-p-q))
       (ghost_parity _).2 (ghost_parity _).2 (ghost_parity _).1
 
 /-- Oddness is proved for the actual pointwise cubic, using actual occupation parity. -/
