@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Information.MultiEntropyPositivityRefutation
 import D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
 import D5.S3.Zeros.CriticalPoints.RankOneTraceBound
+import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 
 /-! The geometric GME measure and optimized witness bound of Xu et al.,
 arXiv:2211.05563v1, Section "Estimating entanglement measures" and Appendix
@@ -456,18 +457,12 @@ private lemma weighted_cs (φ ψ : Word (Fin 3) 3 → ℂ) :
     rw [mulVec_mulVec, d_inverse, one_mulVec]
   have hr : star (dinv *ᵥ φ) ⬝ᵥ φ = star φ ⬝ᵥ dinv *ᵥ φ := by
     rw [star_mulVec, hi.isHermitian.eq, ← dotProduct_mulVec]
-  have hc := d_positive.star_dotProduct_mulVec_mul_le ψ (dinv *ᵥ φ)
+  have hc := D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.psd_cauchy_schwarz
+    dmat d_positive.posSemidef ψ (dinv *ᵥ φ)
   rw [hm, hr] at hc
-  have he := (Complex.le_def.mp hc).1
-  have hz := (Complex.nonneg_iff.mp (d_positive.posSemidef.dotProduct_mulVec_nonneg ψ)).2
-  have hn : Complex.normSq (star ψ ⬝ᵥ φ) = Complex.normSq (star φ ⬝ᵥ ψ) := by
-    rw [star_dotProduct ψ φ]
-    exact Complex.normSq_conj _
-  change ((star (star ψ ⬝ᵥ φ)) * (star ψ ⬝ᵥ φ)).re ≤
-    ((star ψ ⬝ᵥ dmat *ᵥ ψ) * (star φ ⬝ᵥ dinv *ᵥ φ)).re at he
-  rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re, hn,
-    Complex.mul_re, ← hz, zero_mul, sub_zero] at he
-  simpa only [readout, mul_comm] using he
+  rw [← Complex.normSq_eq_norm_sq,
+    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.normSq_overlap_comm ψ φ] at hc
+  simpa only [readout, mul_comm] using hc
 
 private lemma pure_lower (ψ : Word (Fin 3) 3 → ℂ) (hψ : IsUnitState ψ) :
     readout b ψ - 1 / 9 ≤ geometricMeasurePure ψ := by

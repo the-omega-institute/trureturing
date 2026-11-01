@@ -739,7 +739,7 @@ private theorem fourierVec_overlap {d : ℕ} [NeZero d] (f : ZMod d → ℂ) (s 
     star ((fun s t => ZMod.stdAddChar (t*s)) s) ⬝ᵥ f = ZMod.dft f s := by
   simpa only [dotProduct, Pi.star_apply, RCLike.star_def,
     ← AddChar.map_neg_eq_conj, smul_eq_mul] using (ZMod.dft_apply f s).symm
-private theorem normSq_overlap_comm {ι : Type*} [Fintype ι] (f g : ι → ℂ) :
+theorem normSq_overlap_comm {ι : Type*} [Fintype ι] (f g : ι → ℂ) :
     Complex.normSq (star f ⬝ᵥ g) = Complex.normSq (star g ⬝ᵥ f) := by
   rw [star_dotProduct f g, RCLike.star_def, Complex.normSq_conj]
 private theorem blockOp_quadratic {d : ℕ} [NeZero d] (x y : ZMod d) (f : ZMod d → ℂ) :
