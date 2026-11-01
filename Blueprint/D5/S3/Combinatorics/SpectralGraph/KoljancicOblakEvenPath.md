@@ -42,7 +42,7 @@ $$claim \Leftrightarrow \left(\forall n \in \operatorname{Nat},\; 0 < n \Rightar
 
 *Commentary.*
 
-This proposition is the full source question. No theorem in this module currently proves it.
+This proposition is the full source question. The companion KoljancicOblakEvenPathNSSP.result proves it with exactly these quantifiers.
 
 **Definition 1.4 (Zero-diagonal branch continuant).**
 
@@ -238,7 +238,7 @@ $$\forall bL \in \operatorname{Nat} \to \operatorname{Real},\; \forall bR \in \o
 
 *Commentary.*
 
-For every real edge and variation sequence, every loop weight and variation, every pair of natural branch lengths and every real spectral value x, the actual characteristic polynomial evaluated at x has the displayed derivative at perturbation parameter zero. Each edge is perturbed by b+t*db and the central loop by a+t*da. The squared-edge first variations are 2*b*db, with the complete joined product rule retained. The proof differentiates the continuant recurrence and applies joined_path_charpoly to the actual perturbed matrix. Zero edge weights, empty branches and endpoints remain included. The conditional application below uses these evaluated derivatives directly, together with an orthogonal diagonalization having distinct eigenvalues. It does not require a separate characteristic-coefficient or adjugate interface. The existence of that diagonalization for the selected branch weights and the final exact-support witnesses remain separate obligations.
+For every real edge and variation sequence, every loop weight and variation, every pair of natural branch lengths and every real spectral value x, the actual characteristic polynomial evaluated at x has the displayed derivative at perturbation parameter zero. Each edge is perturbed by b+t*db and the central loop by a+t*da. The squared-edge first variations are 2*b*db, with the complete joined product rule retained. The proof differentiates the continuant recurrence and applies joined_path_charpoly to the actual perturbed matrix. Zero edge weights, empty branches and endpoints remain included. The conditional application below uses these evaluated derivatives directly, together with an orthogonal diagonalization having distinct eigenvalues. It does not require a separate characteristic-coefficient or adjugate interface. The companion KoljancicOblakEvenPathNSSP.result supplies that diagonalization for the selected branch weights and constructs the final exact-support witnesses.
 
 Conditional unrestricted commutant application. Let the two branch lengths have odd sum, let the loop and all r+s used edge weights be nonzero, and let the two squared-weight continuants be coprime. Suppose U is real orthogonal and U-transpose A U is diagonal with pairwise distinct diagonal entries, where A is the actual joinedPath. Under these explicit hypotheses the existing matrix derivative and recovery relations imply HasNSSP A. This conditional application supplies no existence assertion for U, the branch weights or the final exact-support witness.
 
@@ -250,7 +250,7 @@ Put n=r+s+1. Parameterize a symmetric support tangent T(v) by its r left edges, 
 
 Now take an arbitrary real X satisfying entrywise A times X equal to zero and A X-transpose equal to X-transpose A. The matrix Y=U-transpose X-transpose U commutes with the diagonal spectral matrix. Distinct spectral entries force every off-diagonal entry of Y to vanish; symmetry of X is a consequence here and is never assumed. Entrywise annihilation gives trace(X-transpose T(v))=0 for every support tangent. Choose v whose spectral diagonal readout equals diag(Y). Invariance of trace under the orthogonal change of basis identifies that trace with the sum of the squares of the diagonal entries of Y. Thus Y=0 and X=0. This argument tests the full unrestricted real commutant.
 
-The remaining whole-event obligations are a compiled simple-spectrum orthogonal diagonalization for the constructed nonzero weighted paths; conversion of the positive coprime branch parameters into uniform singleton-loop exact-support witnesses at every positive even order and every loop position; enlargement to every nonempty loop set; and a proof of the full claim consuming these relations. Empty branches, endpoints and order two remain included in that goal. The source Superpattern Lemma also preserves similarity, which is stronger than the existential event requires.
+The companion KoljancicOblakEvenPathNSSP.result consumes these relations in a proof of the full claim. It applies the original Jacobi simple-spectrum supplier, takes square roots of the positive branch parameters, proves singleton-loop exact support and enlarges to every nonempty loop set using openness of the injective nSSP test map. Empty branches, endpoints and order two are included. The source Superpattern Lemma also preserves similarity, which is stronger than this existential event requires.
 
 Source attribution and license boundaries are recorded in Library/Eigenstructure/koljancic2026nssp.md. The continuant variation argument is a repository derivation; the source question and its published definitions are not claimed as new results.
 
