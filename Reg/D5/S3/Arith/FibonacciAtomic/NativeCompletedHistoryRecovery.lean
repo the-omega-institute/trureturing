@@ -32,17 +32,27 @@ abbrev arena : Arena where
   signature := signature
   Law A :=     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
       A.readout () n0 z = some (t,W) ↔
-        1 < n0 ∧ Native t ∧ eventIndex t = n0 ∧ run t W = z) ∧
+        1 < n0 ∧
+        (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+          Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
+        eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z : Source),
       recover n0 z = none ↔
         ¬ ∃ (t : Source) (W : List Letter),
-          1 < n0 ∧ Native t ∧ eventIndex t = n0 ∧ run t W = z) ∧
+          1 < n0 ∧
+        (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+          Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
+        eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
       recover n0 z = some (t,W) → W.length ≤ eventIndex z - n0) ∧
     (∀ (n0 : Nat) (z p : Source) (X : Letter), Native z →
       previous n0 z = some (p,X) →
         Native p ∧ act X p = z ∧ eventIndex p < eventIndex z) ∧
-    (∀ (n0 : Nat), 1 < n0 → ∀ (s t : Source), Native s → Native t →
+    (∀ (n0 : Nat), 1 < n0 → ∀ (s t : Source),
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some s) →
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) →
       eventIndex s = n0 → eventIndex t = n0 → ∀ (V W : List Letter),
         run s V = run t W → s = t ∧ V = W) ∧
     (∀ W : List Letter, run (.of false) W = .of false ↔ W = []) ∧
@@ -82,7 +92,7 @@ private theorem actual_law : arena.Law actual := by exact completed_history_reco
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  have impossible := (law.1 2 K K []).mpr ⟨by decide,rfl,rfl,rfl⟩
+  have impossible := (law.1 2 K K []).mpr ⟨by decide,⟨[.promote [],.split []],rfl⟩,rfl,rfl⟩
   change (none : Option (Source × List Letter)) = some (K,[]) at impossible
   cases impossible
 
@@ -98,7 +108,7 @@ def evidence : Registration arena (type_of% (@completed_history_recovery)) where
     refine ⟨2, K, .of false, ?_⟩
     intro eq
     have good : recover 2 K = some (K,[]) :=
-      (completed_history_recovery.1 2 K K []).mpr ⟨by decide,rfl,rfl,rfl⟩
+      (completed_history_recovery.1 2 K K []).mpr ⟨by decide,⟨[.promote [],.split []],rfl⟩,rfl,rfl⟩
     have bad : recover 2 (.of false) = none := rfl
     change recover 2 K = recover 2 (.of false) at eq
     rw [good,bad] at eq

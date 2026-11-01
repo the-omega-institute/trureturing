@@ -591,22 +591,66 @@ private theorem first_choice_sufficient (U : List Letter) :
       run (.of false) W = run K U → D (firstChoice W) = W := by
   exact (supplement_separation firstChoice U).mpr (by decide)
 
+private theorem attained_native (t : Source) (positive : 0 < eventIndex t)
+    (attained : ∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+      Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) : Native t := by
+  apply (guarded_attained t).mpr
+  refine ⟨attained,?_⟩
+  intro eq
+  subst t
+  change 0 < 0 at positive
+  omega
+
+private theorem recover_canonical (n0 : Nat) (z t : Source) (W : List Letter) :
+    recover n0 z = some (t,W) ↔
+      1 < n0 ∧
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
+      eventIndex t = n0 ∧ run t W = z := by
+  constructor
+  · intro h
+    obtain ⟨h0,hn,ht,eq⟩ := (recover_iff n0 z t W).mp h
+    exact ⟨h0,((guarded_attained t).mp hn).1,ht,eq⟩
+  · rintro ⟨h0,ha,ht,eq⟩
+    exact (recover_iff n0 z t W).mpr
+      ⟨h0,attained_native t (by omega) ha,ht,eq⟩
+
+private theorem run_injective_canonical (n0 : Nat) (h0 : 1 < n0) (s t : Source)
+    (hs : ∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+      Geometry.NativeGuardedLeafRepair.run (.of true) cs = some s)
+    (ht : ∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+      Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t)
+    (es : eventIndex s = n0) (et : eventIndex t = n0)
+    (V W : List Letter) (eq : run s V = run t W) : s = t ∧ V = W := by
+  exact run_injective n0 h0 s t (attained_native s (by omega) hs)
+    (attained_native t (by omega) ht) es et V W eq
+
 /-- The complete finite recovery statement on the native ordered syntax.
 No old tree, entry composition, entry depth or word length is supplied. -/
 theorem completed_history_recovery :
     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
       recover n0 z = some (t,W) ↔
-        1 < n0 ∧ Native t ∧ eventIndex t = n0 ∧ run t W = z) ∧
+        1 < n0 ∧
+        (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+          Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
+        eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z : Source),
       recover n0 z = none ↔
         ¬ ∃ (t : Source) (W : List Letter),
-          1 < n0 ∧ Native t ∧ eventIndex t = n0 ∧ run t W = z) ∧
+          1 < n0 ∧
+        (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+          Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) ∧
+        eventIndex t = n0 ∧ run t W = z) ∧
     (∀ (n0 : Nat) (z t : Source) (W : List Letter),
       recover n0 z = some (t,W) → W.length ≤ eventIndex z - n0) ∧
     (∀ (n0 : Nat) (z p : Source) (X : Letter), Native z →
       previous n0 z = some (p,X) →
         Native p ∧ act X p = z ∧ eventIndex p < eventIndex z) ∧
-    (∀ (n0 : Nat), 1 < n0 → ∀ (s t : Source), Native s → Native t →
+    (∀ (n0 : Nat), 1 < n0 → ∀ (s t : Source),
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some s) →
+      (∃ cs : List Geometry.NativeGuardedLeafRepair.Call,
+        Geometry.NativeGuardedLeafRepair.run (.of true) cs = some t) →
       eventIndex s = n0 → eventIndex t = n0 → ∀ (V W : List Letter),
         run s V = run t W → s = t ∧ V = W) ∧
     (∀ W : List Letter, run (.of false) W = .of false ↔ W = []) ∧
@@ -641,21 +685,21 @@ theorem completed_history_recovery :
     (∀ U : List Letter,
       ∃ D : Bool → List Letter, ∀ W : List Letter,
         run (.of false) W = run K U → D (firstChoice W) = W) := by
-  refine ⟨recover_iff,?_,?_,previous_sound,run_injective,beta_empty,beta_fibre_decoded,
+  refine ⟨recover_canonical,?_,?_,previous_sound,run_injective_canonical,beta_empty,beta_fibre_decoded,
     fun _ E U => supplement_separation E U,replay_guarded,guarded_attained,
     fun t W hn => ⟨primitive_word t W hn,primitive_length t W hn⟩,
     native_run,first_choice_sufficient⟩
   · intro n0 z
     constructor
     · intro h ⟨t,W,good⟩
-      have := (recover_iff n0 z t W).mpr good
+      have := (recover_canonical n0 z t W).mpr good
       rw [h] at this
       cases this
     · intro absent
       cases h : recover n0 z with
       | none => rfl
       | some p =>
-        exact (absent ⟨p.1,p.2,(recover_iff n0 z p.1 p.2).mp h⟩).elim
+        exact (absent ⟨p.1,p.2,(recover_canonical n0 z p.1 p.2).mp h⟩).elim
   · intro n0 z t W h
     exact (recover_fuel_sound _ _ _ _ _ h).2.2.2.2
 
