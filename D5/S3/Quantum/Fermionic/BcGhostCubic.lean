@@ -123,7 +123,7 @@ private theorem c_ket_tail (p : ℤ) (S : Finset ℕ)
   have hc : ¬p ≤ 1 := by omega
   have hj : 2 * (p-2).toNat ∉ S := by
     intro hj
-    have := Finset.le_sup (f := id) hj
+    have hs : 2 * (p-2).toNat ≤ S.sup id := Finset.le_sup (f := id) hj
     omega
   simp [c, hc, annihilate_ket, hj]
 
@@ -132,13 +132,13 @@ private theorem b_ket_tail (p : ℤ) (S : Finset ℕ)
   have hb : ¬p ≤ -2 := by omega
   have hj : 2 * (p+1).toNat + 1 ∉ S := by
     intro hj
-    have := Finset.le_sup (f := id) hj
+    have hs : 2 * (p+1).toNat + 1 ≤ S.sup id := Finset.le_sup (f := id) hj
     omega
   simp [b, hb, annihilate_ket, hj]
 
 private theorem cubic_ket_bound (p q : ℤ) (S : Finset ℕ)
     (h : cubic p q (ket S) ≠ 0) :
-    let A : ℤ := (S.sup id + 3 : ℕ)
+    let A : ℤ := (S.sup id + 3 : ℕ);
     -2*A ≤ p ∧ p ≤ A ∧ -2*A ≤ q ∧ q ≤ A := by
   dsimp
   have hp : p ≤ (S.sup id + 3 : ℕ) := by
@@ -213,16 +213,16 @@ theorem cubic_b (p q r : ℤ) :
   by_cases hk : -p-q ≤ -2
   · simp only [cubic_eq, if_pos hk, normal, if_pos hk]
     calc
-      _ = (b (-p-q) * c p) * (c q * b r + b r * c q) -
+      _ = (b (-p-q) * c p) * (b r * c q + c q * b r) -
           b (-p-q) * (b r * c p + c p * b r) * c q +
           (b (-p-q) * b r + b r * b (-p-q)) * c p * c q := by noncomm_ring
-      _ = _ := by rw [hbb, hbp, hbq]; simp only [hp, hq]; split_ifs <;> simp
+      _ = _ := by rw [hbb, hbp, hbq]; simp only [hp, hq]; split_ifs <;> simp <;> abel
   · simp only [cubic_eq, if_neg hk, normal, if_neg hk]
     calc
       _ = (b r * c p + c p * b r) * c q * b (-p-q) -
           c p * (b r * c q + c q * b r) * b (-p-q) +
           c p * c q * (b (-p-q) * b r + b r * b (-p-q)) := by noncomm_ring
-      _ = _ := by rw [hbb, hbp, hbq]; simp only [hp, hq]; split_ifs <;> simp
+      _ = _ := by rw [hbb, hbp, hbq]; simp only [hp, hq]; split_ifs <;> simp <;> abel
 
 /-- The second cubic CAR reduction has no normal-order correction. -/
 theorem cubic_c (p q r : ℤ) :
