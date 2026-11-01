@@ -6,7 +6,7 @@ internal sealed class UncrossingFiberDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/AdmissibleWords/UncrossingFiber.";
     private static readonly LibraryNoteRef Hibi =
-        LibraryNoteRef.Create("D5/L/Words/hibi1987distributivelattices");
+        LibraryNoteRef.Create("D5/L/Geometry/hibi1987distributivelattices");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual finite Boolean row multisets admit bounded meet-join sorting to a unique explicit "

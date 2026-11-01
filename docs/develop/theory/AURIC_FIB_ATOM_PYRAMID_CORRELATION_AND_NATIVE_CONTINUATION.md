@@ -31,7 +31,7 @@ $$
 
 依次记这些向量为 $v_0,v_2,v_5,v_{25},v_3$。$[25]$ 是两端共同选择的标签，数量为 $2+5=7$，不是十，也不是十进制二十五。$z=0$ 时两端在合法性上可任意组合；这不要求其概率统计独立。$z=1$ 时两端必须同时为零。
 
-**数学引文 1.2（路径凸包作为局部输入）。** 令 $\mathcal P=\operatorname{conv}\Sigma$。这是三顶点路径的经典稳定集凸包。其独立的原始文献桥为 [Stanley，Definition 2.1、Theorem 2.2、Example 4.3](../../../Library/Words/stanley1986posetpolytopes.md)：取三元偏序 $a<b>c$，按 $(a,b,c)=(x,z,y)$ 识别，反链正好为上述五模式。因此
+**数学引文 1.2（路径凸包作为局部输入）。** 令 $\mathcal P=\operatorname{conv}\Sigma$。这是三顶点路径的经典稳定集凸包。其独立的原始文献桥为 [Stanley，Definition 2.1、Theorem 2.2、Example 4.3](../../../Library/Geometry/stanley1986posetpolytopes.md)：取三元偏序 $a<b>c$，按 $(a,b,c)=(x,z,y)$ 识别，反链正好为上述五模式。因此
 
 $$
 \mathcal P=
@@ -554,7 +554,7 @@ $$
 
 满足 $0\le W\le m$、$0\le U,V\le m-W$。另将 $m=0$ 定义为零倍格体，只有原点；相应弱组合也只有全零一份，不在此时使用 $p_s=n_s/m$。
 
-**数学引文 9.2（方层和及 Ehrhart 归属）。** [Stanley，Theorem 4.1 与三元 fence](../../../Library/Words/stanley1986posetpolytopes.md)供应本凸体的 Ehrhart／order-polynomial 解释。具体地，可见格点数是
+**数学引文 9.2（方层和及 Ehrhart 归属）。** [Stanley，Theorem 4.1 与三元 fence](../../../Library/Geometry/stanley1986posetpolytopes.md)供应本凸体的 Ehrhart／order-polynomial 解释。具体地，可见格点数是
 
 $$
 N_m=\sum_{W=0}^{m}(m-W+1)^2

@@ -4,7 +4,7 @@
 
 **数学引文 0.2（固定来源与已有中间结果）。** 原生来源取快照 [`78698123a21c8dc8ce854d810a5fb8ef5ec11bb3`](https://github.com/the-omega-institute/trureturing/tree/78698123a21c8dc8ce854d810a5fb8ef5ec11bb3)：[关系延拓几何 §7](https://github.com/the-omega-institute/trureturing/blob/78698123a21c8dc8ce854d810a5fb8ef5ec11bb3/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 给出原生高到低读者、守卫及数量更新；[二阶关系完成 §§39、53、112](https://github.com/the-omega-institute/trureturing/blob/78698123a21c8dc8ce854d810a5fb8ef5ec11bb3/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 给出五函数基、概率逆式及额外表示的条件；[接缝、循环与算术边界重建 §§二–四](https://github.com/the-omega-institute/trureturing/blob/78698123a21c8dc8ce854d810a5fb8ef5ec11bb3/docs/develop/theory/AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md) 给出有向核与保留实际切口的同源拼接。该卷内部更早的来源引文不替换这里固定的正文版本。
 
-前卷 [金字塔：关联纤维与原生接续 §§一、三–四、八](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) 已有凸包、单窗纤维、目标差分和双窗联合障碍。路径凸包的文献归属与 Fréchet–Hoeffding 界复用前卷所列 [Stanley 笔记](../../../Library/Words/stanley1986posetpolytopes.md) 与 [Puccetti–Wang 笔记](../../../Library/Estimation/puccettiwang2015dependence.md)；这些经典结果只承担已注明的中间输入。
+前卷 [金字塔：关联纤维与原生接续 §§一、三–四、八](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) 已有凸包、单窗纤维、目标差分和双窗联合障碍。路径凸包的文献归属与 Fréchet–Hoeffding 界复用前卷所列 [Stanley 笔记](../../../Library/Geometry/stanley1986posetpolytopes.md) 与 [Puccetti–Wang 笔记](../../../Library/Estimation/puccettiwang2015dependence.md)；这些经典结果只承担已注明的中间输入。
 
 **约定 0.3（推导的角色）。** 第一至九节及第十节的插值计算，是命题 10.5–10.7 所消费的完整中间推导。经典列联表的行列式、条件独立与正概率比属 `literature-attested`；单窗五函数展开、占位凸包和纤维复用既有项目结果。新增的 `repo-derived` 回接是：一份实际奇偶回复记录可将原生继续守卫变成对局部对角关联敏感的任务，以及联合活动权对原生双端核的具体作用。它们不主张经典概率公式、金字塔插值或物理实现的全球原创。
 

@@ -21,7 +21,7 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
                     + "For a single vertex, the coordinate upper bound is essential.",
                 Eqn(Call("conv", Sub(F.Id("W"), F.Id("n"))), Sub(F.Id("P"), F.Id("n"))),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Words/chvatal1975polytopes"))),
+                    LibraryNoteRef.Create("D5/L/Geometry/chvatal1975polytopes"))),
             Result("pyramid", "convexHull_three_pyramid", "The three-coordinate pyramid",
                 "For three coordinates, nonnegativity and the two adjacent-sum inequalities "
                     + "already imply the coordinate upper bounds. Every point is a mixture "
