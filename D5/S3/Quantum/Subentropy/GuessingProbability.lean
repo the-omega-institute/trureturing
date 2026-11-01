@@ -38,6 +38,14 @@ def successProbabilitySet (p : X → ℝ) (rho : X → DensityState B) : Set ℝ
 def pGuess (p : X → ℝ) (rho : X → DensityState B) : ℝ :=
   sSup (successProbabilitySet p rho)
 
+/-- A measurement summing to the identity has total trace pairing one on a trace-one matrix. -/
+theorem measurement_trace_sum
+    (R : Matrix B B ℂ) (hR : Matrix.trace R = 1)
+    (M : X → Matrix B B ℂ) (hsM : ∑ x, M x = 1) :
+    ∑ x, (Matrix.trace (M x * R)).re = 1 := by
+  rw [← Complex.re_sum, ← Matrix.trace_sum, ← Matrix.sum_mul, hsM, Matrix.one_mul]
+  exact congrArg Complex.re hR
+
 theorem success_bounds (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
     (hs : ∑ x, p x = 1) (rho : X → DensityState B)
     (M : X → Matrix B B ℂ) (hM : ∀ x, (M x).PosSemidef)
@@ -46,9 +54,8 @@ theorem success_bounds (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
   have he (x y : X) : 0 ≤ (trace (M y * CStarMatrix.ofMatrix.symm (rho x).1)).re :=
     RHLinalg.trace_mul_nonneg_of_posSemidef (hM y) (density_posSemidef (rho x))
   have hsum (x : X) :
-      ∑ y, (trace (M y * CStarMatrix.ofMatrix.symm (rho x).1)).re = 1 := by
-    rw [← Complex.re_sum, ← Matrix.trace_sum, ← Matrix.sum_mul, hsM, Matrix.one_mul]
-    exact congrArg Complex.re (rho x).2.2
+      ∑ y, (trace (M y * CStarMatrix.ofMatrix.symm (rho x).1)).re = 1 :=
+    measurement_trace_sum _ (rho x).2.2 M hsM
   have hle (x : X) : (trace (M x * CStarMatrix.ofMatrix.symm (rho x).1)).re ≤ 1 := by
     rw [← hsum x]
     exact Finset.single_le_sum (fun y _ => he x y) (Finset.mem_univ x)

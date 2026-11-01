@@ -213,14 +213,13 @@ private theorem discrimination_bound {d : ℕ}
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
       intro k _
-      calc
-        _ = (projector ((stdOrthonormalBasis ℂ s) k : EuclideanSpace ℂ (Fin d)) *
-            ∑ b, m b).trace.re := by simp [Matrix.mul_sum, trace_sum]
-        _ = 1 := by
-          rw [hm.2, mul_one, projector, trace_vecMulVec]
-          change (⟪(stdOrthonormalBasis ℂ s) k, (stdOrthonormalBasis ℂ s) k⟫_ℂ).re = 1
-          rw [inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ) ((stdOrthonormalBasis ℂ s).orthonormal.1 k)]
-          rfl
+      have ht := D5.S3.Quantum.Subentropy.GuessingProbability.measurement_trace_sum
+          (projector ((stdOrthonormalBasis ℂ s) k : EuclideanSpace ℂ (Fin d))) (by
+            rw [projector, trace_vecMulVec]
+            exact inner_self_eq_one_of_norm_eq_one (𝕜 := ℂ)
+              ((stdOrthonormalBasis ℂ s).orthonormal.1 k)) m hm.2
+      simp_rw [trace_mul_comm (m _)] at ht
+      exact ht
     _ = Module.finrank ℂ s := by simp
     _ ≤ 2 := by exact_mod_cast hs
 
@@ -250,14 +249,12 @@ private theorem constant_discrimination {d : ℕ}
     (h : ∀ b, projector (v b) = projector (v 0)) :
     ∑ b, (projector (v b) * m b).trace.re = 1 := by
   simp_rw [h]
-  calc
-    _ = (projector (v 0) * ∑ b, m b).trace.re := by
-      simp [Matrix.mul_sum, trace_sum]
-    _ = 1 := by
-      rw [hm, mul_one, projector, trace_vecMulVec]
-      change (⟪v 0, v 0⟫_ℂ).re = 1
-      rw [inner_self_eq_one_of_norm_eq_one hv]
-      rfl
+  have ht := D5.S3.Quantum.Subentropy.GuessingProbability.measurement_trace_sum
+      (projector (v 0)) (by
+        rw [projector, trace_vecMulVec]
+        exact inner_self_eq_one_of_norm_eq_one hv) m hm
+  simp_rw [trace_mul_comm (m _)] at ht
+  exact ht
 
 private theorem value_reduction {d : ℕ}
     (ψ : ZMod 3 × ZMod 3 → EuclideanSpace ℂ (Fin d))
