@@ -258,8 +258,8 @@ private theorem x_one_gates (t h s : ℤ) (ht : 4≤t) (hh : 4≤h)
   · constructor <;> nlinarith [hs2,W]
   · constructor
     · nlinarith only [k2,hs2,hrD]
-    · change 2*(v.Ln-r*v.Mn-v.Bn)≤v.Ln-1
-      rw [hl,hb]
+    · change 2*(v.Ln-r*v.Mn-1*v.Bn)≤v.Ln-1
+      rw [one_mul,hl,hb]
       have hW : v.L≤2*v.B-1 := by linarith only [W]
       have hz : 0≤v.z := by dsimp [v,model]; omega
       nlinarith only [hc.2.2.1,hW,hB',hz]
@@ -610,8 +610,8 @@ private theorem row_source (a b c d : ℕ) (hac : c≤a) (hcd : d≤c) :
   have hh:=power_split a c hac
   have hx : (2:ℤ)^(c-d)*2^(a-c)*2^d=2^a := by rw [hh,he]; ring
   dsimp [actualRow,model,base,newBase,charge]
-  simp only [hx,←he]
-  repeat' constructor <;> ring
+  simp only [hx,←he,true_and]
+  refine ⟨?_,?_,?_,?_,?_,?_,?_,?_⟩ <;> ring
 
 private theorem power_pred (j : ℕ) (hj : 1≤j) :
     (2:ℤ)^j=2*2^(j-1) := by
