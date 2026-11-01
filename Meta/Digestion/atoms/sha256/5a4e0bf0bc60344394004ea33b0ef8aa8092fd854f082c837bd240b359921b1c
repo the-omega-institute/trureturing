@@ -1,0 +1,108 @@
+**Theorem 41.6 (all-prefix causal bijection and sharp payload).** For
+any source of Definition 41.1, initialize $Z_v(\varepsilon)=(v,0)$.
+If $h$ currently ends at $(A,B)$, its causal rank updates are
+
+$$
+\begin{aligned}
+r(hF)&=r(h),\\
+r(hG)&=r(h)+C_F^v(A+1,B),\\
+C_F^v(A+1,B)&=
+\begin{cases}N_v(B-A-1,A+1),&1\le A+1\le B,\\
+0,&\text{otherwise}.
+\end{cases}
+\end{aligned}
+\tag{41.20}
+$$
+
+Only the completed prefix, its current endpoint and the next actual
+completed macro enter this update. No final endpoint, final length or
+future word is supplied. At every completed prefix, $Z_v$ has the exact
+inverse $D_v$ on
+
+$$
+\mathcal I_v=\{(q,r):q\in\mathcal Q_+,\quad 0\le r<N_v(q)\}.
+\tag{41.21}
+$$
+
+For $(q,r)\in\mathcal I_v$, set $D_v(v,0)=\varepsilon$. For $q\ne v$,
+put $C=C_F^v(A,B)$ and define
+
+$$
+D_v(A,B,r)=
+\begin{cases}
+D_v(B-A,A,r)F,&r<C,\\
+D_v(A-1,B,r-C)G,&r\ge C.
+\end{cases}
+\tag{41.22}
+$$
+
+The first branch necessarily has $1\le A\le B$; the second necessarily
+has $A\ge1$ and a nonempty $G$ block. Inputs outside $\mathcal I_v$ are
+rejected, with no fabricated default history. The two inverse laws are
+
+$$
+D_v(Z_v(h))=h,\qquad
+Z_v(D_v(q,r))=(q,r)\quad((q,r)\in\mathcal I_v).
+\tag{41.23}
+$$
+
+For every **nonempty** endpoint fibre, the least number of supplementary
+payload values permitting exact recovery when $v,q$ are supplied is
+$N_v(q)$. Its fixed-fibre binary width is
+
+$$
+b_v(q)=\left\lceil\log_2N_v(q)\right\rceil
+\qquad(N_v(q)\ge1).
+\tag{41.24}
+$$
+
+If $k$ is also supplied, the corresponding number is $N_v^{(k)}(q)$
+and its width is $\lceil\log_2N_v^{(k)}(q)\rceil$ only when that count
+is positive. Empty fibres admit no valid rank and no logarithmic width
+claim. These are conditional payload minima, not optimal total
+physical memory.
+
+Proof. Theorem 41.3 partitions every nonbase dictionary into the two
+last-letter blocks, of sizes $C_F^v(A,B)$ and
+$\mathbf1_{\{A\ge1\}}N_v(A-1,B)$. This is the concrete block partition
+needed for the classical enumerative ranking and inverse of Cover,
+*Enumerative Source Encoding*, §I Propositions 1–2 and inverse algorithm;
+the generic enumeration principle is reused here.
+
+Appending $F$ sends the whole old dictionary bijectively onto the first
+block at the new endpoint, without changing its internal rank.
+Appending $G$ sends it onto the second block, so add the full first
+block at $(A+1,B)$. Its $F$ predecessor is $(B-A-1,A+1)$ exactly under
+(41.20)'s condition. Neither successor can be the source base, since
+potential increases. This proves initialization and the updates,
+including source pairs with $a=0$ and all zero-offset cases.
+
+On a valid nonbase input, $0\le r<N_v(q)$ selects precisely one nonempty
+block interval. If $r<C$, (41.13) gives a valid $F$ predecessor and the
+same in-range predecessor rank. Otherwise it gives a valid $G$
+predecessor and rank $r-C$ in its range. Each step decreases endpoint
+potential as in Theorem 41.3. It cannot stop at a lower-potential or
+unreachable cell, since such cells have no valid ranks. Thus it ends
+at the unique base $(v,0)$. Induction on this decreasing potential
+proves both laws in (41.23), not only decoding of the encoder's outputs.
+Every realized prefix uses exactly that dictionary and those updates;
+no future endpoint participates.
+
+For the lower bound, fix $v,q$ with $N_v(q)>0$. If two distinct words
+in its dictionary have the same supplementary payload, the decoder
+receives identical inputs and cannot return both. Hence at least
+$N_v(q)$ values are necessary. The rank bijection gives exactly that
+many. Applying the same injection argument within a nonempty fixed-$k$
+dictionary gives the conditional version. A fixed-width binary field
+with $d$ bits has $2^d$ values, yielding (41.24), with zero bits for a
+singleton. No distribution or physical storage optimality is used.
+$\square$
+
+At beta's $(2,3)$ endpoint the four histories need four payload values,
+hence two bits under this interface. Conditioning additionally on
+$k=1$ or $k=3$ gives a singleton, and on $k=2$ gives two histories and
+one bit. At beta's $(1,1)$ endpoint one bit distinguishes $F$ and $G$;
+at any fixed source $v$, its empty-history fibre needs no rank data bit.
+The decoder determines $k$ from the recovered word; it never assumes
+that the endpoint has already determined $k$.
+

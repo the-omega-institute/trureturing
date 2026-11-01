@@ -1,0 +1,63 @@
+**Definition 40.1 (composition interface and fixed-word compatibility).**
+Let $V=\mathbb N\times\mathbb N_{>0}$ and distinguish the pair actions
+from the rooted actions by their typefaces:
+
+$$
+\mathsf R(a,b)=(b,a+b),\qquad \mathsf G(a,b)=(a+1,b),
+\qquad L(x)=\frac{x}{1+x},\quad R(x)=x+1.
+\tag{40.1}
+$$
+
+All words are finite and chronological. Write $\operatorname{Run}(W,v)$
+for the pair action and $E(w,x)$ for the rooted action, so
+$E(uv,x)=E(v,E(u,x))$ and the empty word acts identically. For a fixed
+$v_0\in V$, put
+
+$$
+O(v_0)=\{\operatorname{Run}(W,v_0):W\in\{\mathsf R,\mathsf G\}^*\}.
+\tag{40.2}
+$$
+
+A fixed-word compatible representation on this orbit consists of a map
+$\iota:O(v_0)\to\mathbb Q_{>0}$ and two words
+$u,w\in\{L,R\}^*$ satisfying, for every $v\in O(v_0)$,
+
+$$
+\iota(\mathsf Gv)=E(u,\iota(v)),\qquad
+\iota(\mathsf Rv)=E(w,\iota(v)).
+\tag{40.3}
+$$
+
+The words are fixed independently of the running composition, native
+tree, history, occurrence and response. They may even be selected
+separately for each fixed $v_0$; the obstruction below still applies.
+No injectivity, computability or acquisition premise is imposed on
+$\iota$. Empty compiled words are allowed.
+
+The native interpretation is [LAB Arithmetic Growth, Definitions 9.1,
+9.3 and Theorems 9.4, 12.2](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md):
+fix one actual attained source $t_0\in\mathcal D_+$, with composition
+$v_0=v(t_0)$, its authentic root binding, current exclusive rights,
+ancestral tapes and sufficient finite material. A logical promotion
+$P_p$ changes an alpha leaf to beta; a split $S_p$ changes beta to
+$\langle\beta,\alpha\rangle$. Whole-frontier $\mathsf R$ acquires the
+entry leaf list and promotes its alpha leaves and splits its beta
+leaves, without editing newly born leaves again. The macro $\mathsf G$
+splits the acquired current leftmost beta. It realizes the composition
+effect of alpha graft, without being a literal root graft. Both macros
+consume their actual replies and return before the next macro.
+
+For every chronological $W$, these same-source procedures give
+
+$$
+v(F_W(t_0))=\operatorname{Run}(W,v_0).
+\tag{40.4}
+$$
+
+Every prefix stays beta-positive. Thus the orbit in (40.2) is realized
+on this one source, without importing another initialization or granting
+an inverse, reset or new primitive. In particular $\mathsf R$ is neither
+a single-leaf promotion nor the rooted translation $R$. A representation
+in (40.3) depends only on composition; a representation of full native
+trees or histories is a different domain.
+

@@ -1,0 +1,69 @@
+**Lemma 42.2 (exact event count and spine record).** The value $n(t)$ is
+the exact number of successful addressed $P/S$ events from the original
+allocated alpha to any attained $t$. On $\mathcal D_+$, $n(t)=1$ holds
+exactly at beta, and $n(t)>1$ exactly at multileaf entries. Each completed
+macro extends the logical leftmost spine by exactly one.
+
+More precisely let
+
+$$
+\operatorname{Sp}()=\beta,\qquad
+\operatorname{Sp}(r_1,\ldots,r_d)
+ =\langle\operatorname{Sp}(r_2,\ldots,r_d),r_1\rangle.
+\tag{42.2}
+$$
+
+Every $t\in\mathcal D_+$ has one such presentation, where $r_1$ is
+the root's right subtree and $r_d$ is the deepest right subtree.
+With $d$ its logical leftmost depth,
+
+$$
+\begin{aligned}
+F(t)&=\operatorname{Sp}(\rho r_1,\ldots,\rho r_d,\alpha),\\
+G(t)&=\operatorname{Sp}(r_1,\ldots,r_d,\alpha),\\
+n(F(t))-n(t)&=\ell(t),\qquad n(G(t))-n(t)=1.
+\end{aligned}
+\tag{42.3}
+$$
+
+For $W=X_1\cdots X_m$, let $K=|W|_F$ and
+$k_i=|X_{i+1}\cdots X_m|_F$. In the final spine, each entry position
+$j\le d$ has right subtree $\rho^K r_j$, and the position born at
+macro $i$ has right subtree
+
+$$
+\rho^{k_i}\alpha\quad(1\le i\le m).
+\tag{42.4}
+$$
+
+Proof. AA Definition 19.1, equation (AA.73), gives the alpha-origin
+split count $a+b-1$ and promotion count $b$, independently of their
+legal shuffle. Their sum is (42.1). Equivalently every $P$ and $S$
+increments $n$ by one, starting at zero. Since $b\ge1$ on
+$\mathcal D_+$, $a+2b-1=1$ forces $(a,b)=(0,1)$, hence the singleton
+beta tree. Every other entry has a branch. LAB Lemma 2.1 gives a beta
+at the end of its logical left descent; this proves the unique spine
+presentation, including the empty spine at beta.
+
+Global replacement preserves the old spine branches, replaces every
+old right subtree by its $\rho$ image and replaces its terminal beta
+by $\langle\beta,\alpha\rangle$. Native $G$ changes only that terminal
+beta. These are exactly the first two equations of (42.3). LAB Theorem
+9.4 gives their composition laws, whose substitution into (42.1)
+gives the last two equations. Induction on the chronological word now
+proves (42.4): a new spine position has right alpha; every later $F$
+replaces that whole subtree, and every later $G$ leaves it unchanged.
+$\square$
+
+The positions in (42.4) are proof coordinates, not acquired macro
+markers or a stored entry depth. They explain how this restricted
+chronology survives in geometry. The trees $\rho^k\alpha$ are pairwise
+distinct: for every nonempty ordered tree, replacement increases
+$a+2b$ by $a+b>0$. At two consecutive positions known to have been
+born after attachment, their exponents differ by one precisely when
+the later macro is $F$, and otherwise agree. The decoder below also
+locates the entry without being supplied those positions. Logical
+spine depth counts binary source branches. In AA Definition 17.3's
+material realization, a beta has a unary terminal marker; that extra
+material edge is excluded from this depth and from every macro frontier.
+

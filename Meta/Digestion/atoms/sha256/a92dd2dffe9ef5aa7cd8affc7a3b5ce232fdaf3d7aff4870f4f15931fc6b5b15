@@ -1,0 +1,44 @@
+**Definition 41.5 (source-relative order, retained information and costs).**
+Fix the supplied source parameter $v$ throughout. At $v$ the sole word
+$\varepsilon$ has rank zero. At every other reachable endpoint $q$,
+order all words ending in $F$ first, by predecessor order, then all
+words ending in $G$, by predecessor order. Empty blocks are skipped.
+Write
+
+$$
+C_F^v(A,B)=
+\begin{cases}N_v(B-A,A),&1\le A\le B,\\0,&\text{otherwise},\end{cases}
+\qquad(q=(A,B)\in\mathcal Q_+).
+\tag{41.18}
+$$
+
+For invalid endpoints take $C_F^v=0$. With zero-based fibre rank
+$\operatorname{rk}^v_q$, retain at every completed prefix
+
+$$
+Z_v(h)=\bigl(q,r(h)\bigr),\qquad
+q=\operatorname{Run}(h,v),\quad r(h)=\operatorname{rk}^v_q(h).
+\tag{41.19}
+$$
+
+The conditional recovery interface supplies the fixed source parameter
+and current **exact** endpoint. For an actual realization, initially
+acquire $v$ by a lawful paid source traversal if it has not already been
+earned. Subsequently maintain its exact binary counts from the completed
+macro and (41.1), or reacquire them by a paid traversal. Neither option
+is a free exact counter or a free source-tree oracle. A modular pair
+field alone is not this exact endpoint. Back all integer fields,
+rank growth and arithmetic workspace by sufficient lawful finite work
+material for the actual finite run, and complete each count/rank
+transaction before declaring its prefix record available. This is an
+additional record contract, not a new source edit or a claim that a
+fixed existing field has unlimited width.
+
+The lower bound below conditions only on $v$ and $q$. If the decoder
+uses additional history-dependent macro labels, primitive addresses,
+source-tree information, tapes, request records, timers or external
+acknowledgements, those distinctions must be included in its record
+or explicitly supplied as additional side information, changing the
+conditional fibre. The actual source is bound and lawful throughout;
+its entire tree and archive are not freely readable decoder inputs.
+

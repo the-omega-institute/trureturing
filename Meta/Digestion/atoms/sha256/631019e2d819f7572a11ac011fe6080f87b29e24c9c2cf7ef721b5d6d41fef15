@@ -1,0 +1,36 @@
+**Proposition 42.5 (least attachment-reference alphabet).** Fix an
+integer $N\ge2$. The entry is unknown in
+
+$$
+\mathcal E_N=\{t\in\mathcal D_+:2\le n(t)\le N\}.
+\tag{42.10}
+$$
+
+An encoder $E:\mathcal E_N\to A$ is fixed at attachment independently
+of all future macro choices. Supply only $E(t)$ and the final logical
+tree; the target is both $t$ and every finite completed macro word.
+The least possible attained reference alphabet has exactly $N-1$
+values. The exact index $E(t)=n(t)$ attains it, with conditional
+fixed-width binary width $\lceil\log_2(N-1)\rceil$.
+
+Proof. Theorem 42.4 supplies a decoder with the $N-1$ indices
+$2,\ldots,N$. For the reverse inequality, put
+$t_j=G^{j-1}(\beta)$ for $2\le j\le N$. These are actual native
+entries obtained after the original alpha promotion and successive
+leftmost-beta splits. Their indices are $j$, and all have the common
+final logical tree $t_N$, using the future word $G^{N-j}$, including
+the empty word at $j=N$. The targets $(t_j,G^{N-j})$ are distinct.
+Their attachment references must therefore be distinct when the
+final tree is fixed. Hence at least $N-1$ attained reference values
+are necessary. The generic pigeonhole and binary-width principles
+are reused; the native common-endpoint chain gives their lower-bound
+instance and Theorem 42.4 gives the matching upper bound. $\square$
+
+This is a side-information theorem for an attachment reference, not
+a minimum total physical-memory claim. It conditions on the complete
+final syntax and excludes all other history-dependent inputs. Adding
+beta to the entry domain makes this target impossible for an encoder
+of $t$ alone: $E(\beta)$ is the same for $F$ and $G$, which have the
+same final tree. A future first-choice distinction must then be supplied
+through some other channel.
+

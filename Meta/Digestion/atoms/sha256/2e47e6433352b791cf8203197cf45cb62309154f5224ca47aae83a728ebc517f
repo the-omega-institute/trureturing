@@ -1,0 +1,71 @@
+**Proposition 42.6 (paid inputs and the addressed-expansion consequence).**
+Under Definition 42.1, an exact entry index can be acquired by a
+stationary finite traversal of the actual bound source, counting its
+logical alpha and beta leaves with backed exact counters and computing
+(42.1). It can instead be supplied by a correctly maintained backed
+exact counter of all successful alpha-origin events. A final stationary
+finite traversal acquires the complete final logical syntax. Conditional
+on these acquired inputs and finite decoding workspace/output, Theorem
+42.4 needs no ancestral-tape contents as decoder input for its target.
+
+For each fixed multileaf entry, the map from completed native macro
+words to their full indexed addressed primitive expansions is injective.
+At beta, its only ambiguity is the first letter in (42.8). If the current
+source and its acquired all-event ancestral tapes are supplied, AA
+Theorem 19.2 recovers their full alpha-origin indexed addressed primitive
+history. An authenticated exact $n_0$ then locates the continuation
+suffix, and replay of the first $n_0$ acquired events on logical syntax
+recovers the entry if needed. These interfaces do not insert macro
+delimiters in the primitive records.
+
+Proof. The traversal uses AA Definitions 17.3 and 20.2's arity parsing
+and LAB's stationary logical-frontier acquisition. From the authentic
+root follow only existing logical child links, check current grants and
+the actual reached references, and exclude beta's unary material marker
+from the logical frontier. A finite traversal stack, acquired address
+backing and exact finite counter fields suffice to count each logical
+leaf once. The same finite traversal, retaining ordered constructors
+and leaf tags, obtains final syntax. Retain the source binding and epoch
+across both acquisitions and the intervening macros. Source stability
+through each traversal and serialization exclude mixing counts or
+subtrees from different cuts. All reference tests, reads, arithmetic,
+list operations, reply transport, workspace, clearing and output are
+charged uses of finite owned material. Counter width must suffice for
+the actual finite value; it is not an unbounded finite-control state.
+Attachment may discard its acquired old syntax after computing $n_0$;
+Theorem 42.4 does not secretly retain it as another decoder input.
+
+The default modular pair fields of LAB §11 give residues, not an exact
+$n_0$. They cannot replace this acquisition without an additional proven
+range/counter contract. Likewise the syntax is acquired data, not a
+free computation oracle, guessed reference or waiting-as-a-clock.
+Every finite syntax operation of the inverse terminates; backing all
+its integers, parsed trees, recursive work and materialized word gives
+a finite computation for each admitted finite input. This is neither
+a runtime bound for the native driver nor an assertion that one fixed
+finite arena handles all future inputs.
+
+For the expansion claim, the primitive list and fixed initial logical
+tree determine the final logical tree by the original addressed rules.
+Theorem 42.4 then recovers the unique word for a multileaf entry. At beta
+the two first macros both expand to the same single $S_\varepsilon$;
+the suffix starts at the same $K$ and has the same deterministic
+expansion. The theorem excludes any further ambiguity. This reuses
+AA19.2 for full-order recall from the current source and all-event tapes:
+its decoded events include both kinds and their logical addresses.
+By Lemma 42.2 the supplied $n_0$ is precisely the old-prefix length,
+so indices $n_0+1,\ldots,n(z)$ select the continuation. Replay of its
+old prefix from the known alpha computes $t_0$ as a description.
+Thereafter the source inverse, or primitive replay followed by it,
+recovers macro grouping with the stated beta qualification. No recall
+request is presumed callable outside the existing Ready contract.
+$\square$
+
+Dispensing with tape contents in this decoder does not remove tapes
+maintained by the installation. It establishes no smaller total storage
+or faster native implementation. Old tape acquisition, source growth,
+frontier acquisition, code, roots, rights, buffers and output retain
+their own costs. Nor does the source-only decoder recover an arbitrary
+pre-attachment primitive shuffle: that separate target still uses the
+appropriate records.
+

@@ -1,0 +1,40 @@
+**Proposition 42.9 (every-returned-macro pair archives).** Suppose the
+exact composition at attachment and after every completed macro is
+supplied as an acquired chronological archive. It determines all
+macro choices except the initial choice at beta. A single final pair,
+primitive-kind-only records, unordered work totals or §40's sparse
+block archives are different projections and do not in general
+supply this information.
+
+Proof. At a current composition $(a,b)$ the two possible successors
+are $(b,a+b)$ and $(a+1,b)$. They agree exactly when $a=0,b=1$.
+In $\mathcal D_+$ that pair forces beta. After the first macro its
+index strictly exceeds one and it never returns to beta. Successive
+exact pairs therefore determine every subsequent choice; at beta
+the first pair transition leaves the two choices unresolved.
+
+For the contrasting projections, §41.3's $GFF$ and $FGFG$ have the
+same final pair but different trees, and each has exactly two $F$'s,
+two successful primitive promotions and four splits when started at
+beta; their macro lengths nevertheless differ. At the attained entry
+$\langle\beta,\beta\rangle$, the completed words $F$ and $GG$ expand
+to $S_LS_R$ and $S_LS_{LL}$ respectively. Both have primitive-kind
+word $SS$, zero promotions, two splits and final composition $(2,2)$,
+but their logical endpoints are respectively
+$\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$
+and $\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\beta\rangle$.
+Thus even within the completed menu these smaller projections lose
+macro choices. Separately, the arbitrary legal primitive lists
+$S_LS_R$ and $S_RS_L$ from that entry have the same logical endpoint
+and kind word but different addressed order; the latter list is not
+its completed $F$ expansion. The sparse pair-archive collision family
+is exactly §40.3's paid block interface, whose record omits the
+intermediate returned-macro cuts. $\square$
+
+The archive in Proposition 42.9 contains paid cut history; it is not a
+source-only input or a full physical record. A primitive-kind word
+supplies neither its addresses nor macro separators. Conversely
+arbitrary $P/S$ shuffles with the same final source, as in AA17–19,
+do not refute Theorem 42.4's restriction to the completed native menu.
+None of the event counts, macro words or archives is elapsed time.
+

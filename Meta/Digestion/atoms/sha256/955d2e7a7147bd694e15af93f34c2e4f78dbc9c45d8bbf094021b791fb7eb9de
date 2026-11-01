@@ -1,0 +1,23 @@
+**Corollary 42.8 (number of native final trees in a composition fibre).**
+Fix an attained multileaf entry $t$ of composition $v$. With $N_v(q)$
+as already computed in §41, the number of distinct $F/G$-reachable
+final logical trees of composition $q$ is exactly $N_v(q)$. For the
+beta entry and a nonempty reachable endpoint $q\ne(0,1)$ it is
+$N_{(0,1)}(q)/2$. At $q=(0,1)$ there is the one empty-history tree;
+unreachable endpoints give zero.
+
+Proof. LAB12.2 identifies each word's final composition with §41's
+pair Run. For a fixed multileaf entry, Theorem 42.4 makes the map from
+that complete endpoint dictionary to final logical trees injective;
+it is surjective by the definition of its restricted orbit. At beta,
+Theorem 42.4 gives exactly two words per nonempty final tree. Their
+compositions agree, so each nonempty dictionary has even size and
+halving counts its distinct trees. Strict growth excludes a nonempty
+word at the beta endpoint. $\square$
+
+For example §41.3's four words at beta's composition $(2,3)$ yield
+exactly two native trees, as its explicit trees already show. The
+corollary counts the restricted macro orbit. It does not count all
+primitive-reachable trees of that composition, and it does not
+rederive §41's affine-action, full-word counting or ranking theory.
+

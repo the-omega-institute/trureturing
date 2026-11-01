@@ -1,0 +1,65 @@
+**Theorem 43.3 (complete active-macro history fibres).** For integer
+$n_0\ge1$ let the completed-history supplier be the ENTIRE set
+
+$$
+\mathcal C_{n_0}(u)=\{(t_0,W):t_0\in\mathcal D_+,\ n(t_0)=n_0,
+                         \operatorname{Run}(W,t_0)=u\}.
+\tag{43.8}
+$$
+
+For fixed current syntax $y$, the active-$F$ target is
+$(t_0,W,u,j)$, where $W$ contains only macros whose outer returns have
+actually completed, $u$ is the entry to the present $F$, and this call
+has completed $j$ old rows. Its exact fibre is
+
+$$
+\mathcal A^F_{n_0}(y)=
+\mathop{\dot\bigcup}_{j=0}^{K(y)}
+ \{(t_0,W,U_j(y),j):(t_0,W)\in\mathcal C_{n_0}(U_j(y))\}.
+\tag{43.9}
+$$
+
+Active $G$ restricts the union to $j\in\{0,1\}$; returned idle has
+just $\mathcal C_{n_0}(y)$ and no active progress. Every such set is
+finite and effectively recognizable, with rejection off its image.
+For $n_0>1$, a supplied earned $j$ selects at most one complete target;
+equivalently an exact current entry index $m=n(u)$ selects
+$j=n(y)-m$. For $n_0=1$, each selected nonempty completed prefix has
+exactly §42.4's first-$F/G$-bit pair; an empty prefix remains separate.
+The current macro identity is retained even when its effects coincide.
+
+Proof. Given an actual target, its last coherent source is $F_j(u)$.
+Theorem 43.2 forces $0\le j\le K(y)$ and $u=U_j(y)$; its preceding
+returned word gives a member of (43.8). Conversely any term in the
+right-hand side is realized by its completed word to $U_j(y)$, then
+by the first $j$ rows of a new native $F$, pausing before its outer
+return. LAB9.4 proves guards at all remaining old rows, and LAB11.2
+supplies the finite complete inner calls under the same-source backing
+premises. The proof is existential per finite alternative; it does not
+instantiate simultaneous physical copies. Retaining $j$ makes the union
+disjoint even if other coordinates coincide.
+
+Compute $K,U_j$ and apply Theorem 42.4's actual-image decoder at each
+candidate entry. Its syntax tests and strictly decreasing $n$ give a
+terminating exact recognizer, including the empty word at index $n_0$.
+For $n_0>1$ that theorem makes each summand empty or singleton. For
+$n_0=1$, its empty case is $(\beta,\varepsilon)$; every other accepted
+entry has exactly $(\beta,FV)$ and $(\beta,GV)$ with one unique $V$.
+No choice between them is recovered by their common $j$ or $m$.
+Restriction to $G$ uses its exactly one original beta split, not a new
+macro law. Its genuine outer request still identifies it as $G$ even
+at beta, where it shares the source effect of $F$. Idle follows the
+completed theorem directly. $\square$
+
+Initial-source information, a known script or control subphase can
+restrict (43.9) further. Let $\mathcal A^F_{n_0,\phi,Z}(y)$ denote
+the intersection with those actually supplied predicates, where $\phi$
+is the actual phase and $Z$ any other acquired information. Such a
+filtered set need not have interval progress indices. In the family
+below even completed-history filtering removes $j=1$ while retaining
+$j=0$ and larger values. Conditional cardinalities and supplement
+claims always use this filtered set, not the unfiltered interval of
+Theorem 43.2. Subphase compatibility is tested against the actual saved
+continuation; a source-only fibre does not reconstruct arbitrary
+controller bytes or grant a missing callable observation.
+
