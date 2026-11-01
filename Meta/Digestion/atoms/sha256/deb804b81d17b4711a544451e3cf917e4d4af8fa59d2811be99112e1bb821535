@@ -1,0 +1,12 @@
+**Lemma 126.1.** These data are realized by a unique, up to isometry, strictly hyperideal convex bipyramid P.
+
+**Proof.** The dual graph is the hexagonal prism. Its two horizontal six-cycles have exterior edge weights π/2, and its six vertical edges have exterior weights π−π/m_i, hence 2π/3 or 3π/4.
+
+Apply Bao–Bonahon Theorems 1 and 2. Every simple four-cycle in this prism is one of its square faces; it has two horizontal and two vertical edges, so its weight is at least 7π/3>2π. The prism is bipartite, and any other simple cycle has at least six edges, hence weight at least 3π>2π. This proves the strict circuit condition.
+
+An admissible path joins two vertices on one face and is not contained in that face's boundary. There is no admissible one-edge path, since neither a square nor one of the two hexagons has a chord in the prism. A two-edge path with weight at most π would have to use two horizontal edges. Such a path lies on a horizontal hexagon; its endpoints are distance two on that hexagon and cannot both belong to one square. It is therefore not admissible. Every other two-edge path has weight at least 7π/6>π, and every path with at least three edges has weight at least 3π/2>π. Thus the required path condition holds. All vertex circuits are strict, so every vertex is strictly hyperideal. ∎
+
+The cited primary source is X. Bao and F. Bonahon, “Hyperideal polyhedra in hyperbolic 3-space,” Bulletin de la Société Mathématique de France 130 (2002), 457–491, Theorems 1–2, pages 459–460. The definitions and diagonal/truncation facts used next are Lemmas 3–4, pages 463–464:
+
+https://www.numdam.org/item/10.24033/bsmf.2426.pdf
+
