@@ -415,7 +415,7 @@ theorem seed_injective (n : ℕ) : Function.Injective (seed n) := by
   | zero => exact Function.injective_id
   | succ n ih => exact Sum.inl_injective.comp ih
 
-private theorem seed_counts_zero (v : Fin 4) :
+theorem seed_counts_zero (v : Fin 4) :
     degreeCount 0 v = 3 ∧ faceCount 0 v = if v = 3 then 3 else 2 := by
   revert v; decide
 
