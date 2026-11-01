@@ -1,0 +1,32 @@
+**Definition 8.1 (certificate coordinates and ray distance).** Let $T$ be the unitary in (3.5). For a finite family $b_j\in\mathbb C^2$, write
+
+$$
+b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},
+\qquad p_j=|\xi_j|^2,\qquad q_j=|\eta_j|^2,
+\qquad w_j=p_j+q_j=\|b_j\|^2.
+\tag{8.1}
+$$
+
+Let
+
+$$
+\mathcal E=T(\mathbb C\times\{0\})\ \cup\ T(\{0\}\times\mathbb C)
+\tag{8.2}
+$$
+
+be the union of the two extremal complex rays. Since $T$ is unitary, the squared Euclidean distance from $b_j$ to $\mathcal E$ is
+
+$$
+d_j^2=\operatorname{dist}(b_j,\mathcal E)^2=\min\{p_j,q_j\}.
+\tag{8.3}
+$$
+
+For the pointwise certificate of (3.9), put
+
+$$
+\delta(b)=b^\dagger H b-\|R_0b\|_{\ell^1}^2.
+\tag{8.4}
+$$
+
+Whenever $w_j=0$, interpret $p_jq_j/w_j$ as zero. The same convention applies to an individual vector with coordinates $p,q,w$.
+
