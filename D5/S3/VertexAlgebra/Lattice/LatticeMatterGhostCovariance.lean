@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeMatterGhostCovariance
+/- GID: D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeMatterGhostCovariance
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance
    mirror-E: none(waiver:algebraic-matter-ghost-covariance)
    anchors: []
    utility: none
    digest: Finite shifted cancellation gives the matter coupling rank anomaly. -/
 
-import D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
+import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
 
 /-! Finite translation of original operator actions leaves the matter central anomaly. -/
 
@@ -18,7 +18,7 @@ open D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 open D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic
-open private above_upper tensor_tail from D5.S3.VertexAlgebra.LatticeMatterGhostCoupling
+open private above_upper tensor_tail from D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
 
 noncomputable section
 namespace D5.S3.VertexAlgebra.LatticeMatterGhostCovariance
