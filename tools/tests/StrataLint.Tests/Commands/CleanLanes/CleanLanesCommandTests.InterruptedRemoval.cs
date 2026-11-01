@@ -112,7 +112,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
 
-        Assert.Equal(!atRemovalEntry, result.Success);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(atRemovalEntry ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.True(injected);
         Assert.Equal(atRemovalEntry ? "checkpoint_failed:interrupted_removal_tree_changed" : "race_changed", ReasonFor(result.Output, lane));
         Assert.True(fixture.WorktreeRegistered(lane));
