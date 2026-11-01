@@ -7,6 +7,7 @@
    digest: The remaining correlation domain admits the weight gap exactly above sigma=c. -/
 
 import D5.S3.Estimation.CorrelationWeightSpectralBound
+import D5.S3.Estimation.RankTwoEigenvectorWeight
 import D5.S3.Weil.ZetaLinear.PosIndex
 import Mathlib.Algebra.Order.Round
 import Mathlib.Order.Interval.Finset.Fin
@@ -613,13 +614,110 @@ private lemma rank_two_realizes {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     nlinarith only [hasq]
   rw [stdCorr, hmean, hvar, Real.sqrt_sq hσ.le]
 
+private lemma signMatrix_action {n : ℕ} (k : ℤ) (a b d : ℝ)
+    (y : EuclideanSpace ℝ (Fin n)) :
+    (signMatrix n k a b d).toEuclideanLin y =
+      d • y + (a * ⟪WithLp.toLp 2 (signVector n k), y⟫) •
+        WithLp.toLp 2 (signVector n k) +
+      (b * ⟪WithLp.toLp 2 (fun _ : Fin n => (1 : ℝ)), y⟫) •
+        WithLp.toLp 2 (fun _ : Fin n => (1 : ℝ)) := by
+  apply WithLp.ofLp_injective 2
+  ext i
+  simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, WithLp.ofLp_toLp,
+    WithLp.ofLp_add, WithLp.ofLp_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+    signMatrix, add_mulVec, smul_mulVec, one_mulVec, mulVec, dotProduct,
+    vecMulVec_apply, EuclideanSpace.inner_eq_star_dotProduct, Pi.star_apply,
+    star_trivial, mul_one, one_mul, sum_add_distrib, ← mul_sum, ← sum_mul]
+  rw [show (∑ j, signVector n k i * signVector n k j * y.ofLp j) =
+      signVector n k i * ∑ j, y.ofLp j * signVector n k j by
+    rw [mul_sum]
+    exact sum_congr rfl fun j _ => by ring]
+  ring
+
 private lemma rank_two_weight_gap {n : ℕ} (hn : 3 ≤ n) (k : ℤ)
     (hk : 0 < k) (hkn : k < (n : ℤ)) (hbalance : 2 * k ≠ (n : ℤ))
     (a b d : ℝ) (ha : 0 < a) (hb : 0 < b)
     (hgap : 2 * ((n : ℝ) - 1) * (a * roundedZ n k + b) <
       ((n : ℝ) - 2) * (a + b)) :
     SatisfiesWGap (signMatrix n k a b d) := by
-  sorry
+  intro v l hv i htop
+  let u : EuclideanSpace ℝ (Fin n) := WithLp.toLp 2 (fun _ => 1)
+  let s : EuclideanSpace ℝ (Fin n) := WithLp.toLp 2 (signVector n k)
+  let e := fun j => ⟪v j, u⟫
+  let f := fun j => ⟪v j, s⟫
+  let μ := fun j => l j - d
+  have hnormu : ‖u‖ ^ 2 = (n : ℝ) := by
+    rw [← real_inner_self_eq_norm_sq]
+    simp only [u, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+      star_trivial, one_mul, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
+  have hnorms : ‖s‖ ^ 2 = (n : ℝ) := by
+    rw [← real_inner_self_eq_norm_sq]
+    simp only [s, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+      star_trivial, ← sq, signVector_sq, sum_const, card_univ, Fintype.card_fin,
+      nsmul_eq_mul, mul_one]
+  have heu : ∑ j, e j ^ 2 = (n : ℝ) := by rw [v.sum_sq_inner_right, hnormu]
+  have hfs : ∑ j, f j ^ 2 = (n : ℝ) := by rw [v.sum_sq_inner_right, hnorms]
+  have hvs : ∀ j, (signMatrix n k a b d).toEuclideanLin (v j) = l j • v j :=
+    fun j => (WithLp.equiv 2 _).injective (hv j)
+  have hdiag : ∀ j t, (if j = t then μ j else 0) =
+      a * (f j * f t) + b * (e j * e t) := by
+    intro j t
+    have heq := congrArg (fun y => ⟪v j, y⟫) (hvs t)
+    rw [signMatrix_action] at heq
+    simp only [inner_add_right, inner_smul_right] at heq
+    change d * ⟪v j, v t⟫ + a * ⟪s, v t⟫ * ⟪v j, s⟫ +
+      b * ⟪u, v t⟫ * ⟪v j, u⟫ = l t * ⟪v j, v t⟫ at heq
+    rw [real_inner_comm (v t) s, real_inner_comm (v t) u] at heq
+    have hort := orthonormal_iff_ite.mp v.orthonormal j t
+    rw [hort] at heq
+    by_cases hjt : j = t
+    · subst t
+      simp only [ite_true, mul_one] at heq ⊢
+      dsimp only [μ, f, e]
+      nlinarith only [heq]
+    · simp only [hjt, ite_false, mul_zero] at heq ⊢
+      dsimp only [f, e]
+      nlinarith only [heq]
+  have htrace : ∑ j, μ j = (n : ℝ) * (a + b) := by
+    have hself : ∀ j, μ j = a * f j ^ 2 + b * e j ^ 2 := by
+      intro j
+      simpa only [ite_true, ← sq] using hdiag j j
+    simp_rw [hself]
+    rw [sum_add_distrib, ← mul_sum, ← mul_sum, hfs, heu]
+    ring
+  have hdot : ⟪u, s⟫ = 2 * (k : ℝ) - (n : ℝ) := by
+    simpa only [u, s, EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+      star_trivial, mul_one] using signVector_sum k hk hkn
+  have henergy : ∑ j, μ j * e j ^ 2 =
+      a * (2 * (k : ℝ) - (n : ℝ)) ^ 2 + b * (n : ℝ) ^ 2 := by
+    dsimp only [μ, e]
+    simp only [sub_mul, sum_sub_distrib, ← mul_sum]
+    rw [eigenbasis_rayleigh (signMatrix n k a b d) v l hv u,
+      signMatrix_action, inner_add_right, inner_add_right,
+      inner_smul_right, inner_smul_right, inner_smul_right]
+    change d * ⟪u, u⟫ + a * ⟪s, u⟫ * ⟪u, s⟫ + b * ⟪u, u⟫ * ⟪u, u⟫ -
+      d * (∑ j, e j ^ 2) = _
+    rw [real_inner_comm u s, hdot, real_inner_self_eq_norm_sq, hnormu]
+    rw [heu]
+    ring
+  have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
+  have hnpos : 0 < (n : ℝ) := by linarith
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
+  have hscalar : 2 * (∑ j, μ j * e j ^ 2) < (∑ j, μ j) * ∑ j, e j ^ 2 := by
+    rw [henergy, htrace, heu]
+    have hmul := mul_lt_mul_of_pos_right hgap hnpos
+    dsimp only [roundedZ] at hmul
+    field_simp at hmul
+    nlinarith only [hmul]
+  obtain ⟨j, hji, hweight⟩ := RankTwoEigenvectorWeight.weight_gap μ e f a b ha hb hdiag
+    hscalar i (fun j => sub_le_sub_right (htop j) d)
+  refine ⟨j, hji, ?_⟩
+  have hd : delta n = (Real.sqrt (n : ℝ))⁻¹ • u := by
+    apply WithLp.ofLp_injective 2
+    ext t
+    simp [delta, u]
+  rw [hd, inner_smul_right, inner_smul_right, mul_pow, mul_pow]
+  exact mul_lt_mul_of_pos_left hweight (by positivity)
 
 private lemma wedge_construction {c σ : ℝ} (h : domainD c σ) (hcs : c < σ) :
     ∃ m : ℕ, ∀ n ≥ m, ∃ a : Matrix (Fin n) (Fin n) ℝ,
