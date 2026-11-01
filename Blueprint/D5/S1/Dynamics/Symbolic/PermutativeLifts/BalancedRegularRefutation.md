@@ -34,7 +34,7 @@ Lean statement: `D5/S1/Dynamics/Symbolic/PermutativeLifts/BalancedRegularRefutat
 
 *Commentary.*
 
-One fixed balanced binary subshift discharges every hypothesis: its integer orbits are dense, its invariant probability is unique, and one actual regular aperiodic Toeplitz point generates exactly this subshift. For every length k+2 and every bipermutative rule, the full inverse image splits over this same base with actual prefix fibre Bool^(k+1), so it is nonminimal. Thus no entire lift is strictly ergodic either. This strengthens the already delivered general minimal refutation of the same Question 1.10 and uses the same problem slug; it is not a second solved problem. Priority remains unestablished, and the coboundary mechanism has prior literature. Public escape registrations remain unfinished under issue 24726.
+One fixed balanced binary subshift discharges every hypothesis: its integer orbits are dense, its invariant probability is unique, and one actual regular aperiodic Toeplitz point generates exactly this subshift. For every length k+2 and every bipermutative rule, the full inverse image splits over this same base with actual prefix fibre Bool^(k+1), so it is nonminimal. Thus no entire lift is strictly ergodic either. This strengthens the already delivered general minimal refutation of the same Question 1.10 and uses the same problem slug; it is not a second solved problem. Priority remains unestablished, and the coboundary mechanism has prior literature.
 
 ## References
 
