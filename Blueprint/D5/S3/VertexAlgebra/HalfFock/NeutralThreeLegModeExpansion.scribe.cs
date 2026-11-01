@@ -134,7 +134,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The full actual finite Laurent entry equals the finite Corr shift and monomial expansion of these raw normal-mode operators. The full Gaussian identity consumes this finite raw expansion."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("consumed-normalPolynomial-projected-support"),
+                DescribeId.Create("consumed-normal-polynomial-projected-support"),
                 DeclarationHandle.Create(Prefix + "normalPolynomial_projected_support"),
                 H("Projected normal-polynomial support"),
                 StatementSource.WithoutFormula(),
@@ -142,7 +142,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The native output coefficient vanishes outside the common input/output frequency box; the normal-mode support proof consumes the creation and annihilation support arguments."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("consumed-rawModeOperator"),
+                DescribeId.Create("consumed-raw-mode-operator"),
                 DeclarationHandle.Create(Prefix + "rawModeOperator"),
                 H("Literal raw mode operator"),
                 StatementSource.WithoutFormula(),
@@ -150,7 +150,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("Negative modes multiply by the raw source-output coefficient and nonnegative modes apply the Gram-weighted source-input derivative."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("consumed-rawModeOperator-eq"),
+                DescribeId.Create("consumed-raw-mode-operator-eq"),
                 DeclarationHandle.Create(Prefix + "rawModeOperator_eq"),
                 H("Raw mode operator identifies the native current"),
                 StatementSource.WithoutFormula(),
@@ -158,7 +158,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The actual current at each mode, weighted by its Laurent power and jet factor, is the literal raw mode operator. The coefficient module consumes this equality in the normal-ordering proofs."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("consumed-nativeRawNormalTerm-eq"),
+                DescribeId.Create("consumed-native-raw-normal-term-eq"),
                 DeclarationHandle.Create(Prefix + "nativeRawNormalTerm_eq"),
                 H("Raw normal term identifies native normal action"),
                 StatementSource.WithoutFormula(),
@@ -166,7 +166,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The finite raw normal-mode term is the Laurent-weighted creation polynomial times the native right polynomial. This equality transfers the projected frequency support to the raw normal readout."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("consumed-correctionEvaluation"),
+                DescribeId.Create("consumed-correction-evaluation"),
                 DeclarationHandle.Create(Prefix + "correctionEvaluation"),
                 H("Evaluation of the original correction variables"),
                 StatementSource.WithoutFormula(),
@@ -174,7 +174,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The correction variable evaluates to T to minus two and oscillator variables remain the original variables."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("consumed-correctionAt"),
+                DescribeId.Create("consumed-correction-at"),
                 DeclarationHandle.Create(Prefix + "correctionAt"),
                 H("Evaluated original correction lift"),
                 StatementSource.WithoutFormula(),
@@ -182,7 +182,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The native correction lift at zero charge is composed with correction evaluation, retaining the literal Corr construction."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("consumed-correctionAt-shift-sum"),
+                DescribeId.Create("consumed-correction-at-shift-sum"),
                 DeclarationHandle.Create(Prefix + "correctionAt_shift_sum"),
                 H("Evaluated correction as a finite shift sum"),
                 StatementSource.WithoutFormula(),
@@ -190,7 +190,7 @@ internal sealed class NeutralThreeLegModeExpansionDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("Evaluating the original correction lift gives the finite sum of T to minus twice the shift times each actual Corr coefficient."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("consumed-correctionAt-X-mul"),
+                DescribeId.Create("consumed-correction-at-x-mul"),
                 DeclarationHandle.Create(Prefix + "correctionAt_X_mul"),
                 H("Insertion in the evaluated correction lift"),
                 StatementSource.WithoutFormula(),
