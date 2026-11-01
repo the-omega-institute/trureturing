@@ -19,6 +19,7 @@ open private rectangle scaled_margin grain_q high_margin scaled_to_rectangle
   ArithmeticSelection NativeChoice native_of_selection dyadic_time_cases from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 
+set_option linter.unusedVariables false in
 private theorem high_h_zero (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤high_margin (1+X) (1+Y) (4+Z) (4*(4+Z)+T) (0) i := by
   intro i
@@ -108,6 +109,7 @@ private theorem high_h_zero (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (169536))) * Z + (((512) * T + (16776)) * T + (137344)))) by positivity) using 1 <;>
       dsimp [high_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem high_h_max (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤high_margin (1+X) (1+Y) (4+Z) (4*(4+Z)+T) (2*(4+Z)*(1+X)) i := by
   intro i
@@ -197,6 +199,7 @@ private theorem high_h_max (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z
       (162624))) * Z + (((512) * T + (16392)) * T + (130816)))) by positivity) using 1 <;>
       dsimp [high_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem high_t_two_z (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤high_margin (1+X) (1+Y) (4+Z) (2*(4+Z)) (2*(1+X)) i := by
   intro i

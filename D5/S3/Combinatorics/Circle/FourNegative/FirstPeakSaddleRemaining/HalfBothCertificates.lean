@@ -17,6 +17,7 @@ set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q high_margin half_margin quarter_margin from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 
+set_option linter.unusedVariables false in
 private theorem half_both2_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (2+X) (2+Y) (1+Z) (4*(2*(2+X)*(2+Y))+T) (0) ((1+Z)) i := by
   intro i
@@ -189,6 +190,7 @@ private theorem half_both2_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (h
       (((448) * T + (28988)) * T + (468864)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_both2_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (2+X) (2+Y) (1+Z) (4*(2*(2+X)*(2+Y))+T) (1) (1) i := by
   intro i
@@ -361,6 +363,7 @@ private theorem half_both2_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0
       (((448) * T + (28908)) * T + (466227)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_both2_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (2+X) (2+Y) (1+Z) (4*(2*(2+X)*(2+Y))+T) (1) (2*(2+Y)*(1+Z)) i := by
   intro i
@@ -533,6 +536,7 @@ private theorem half_both2_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0
       (((448) * T + (29832)) * T + (495819)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_both2_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (2+X) (2+Y) (1+Z) (4*(2*(2+X)*(2+Y))+T) (2*(2+X)) (1) i := by
   intro i
@@ -705,6 +709,7 @@ private theorem half_both2_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0
       (((448) * T + (28668)) * T + (458316)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_both2_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (2+X) (2+Y) (1+Z) (4*(2*(2+X)*(2+Y))+T) (2*(2+X)) (2*(2+Y)*(1+Z)) i := by
   intro i
@@ -877,6 +882,7 @@ private theorem half_both2_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0
       (((448) * T + (29592)) * T + (487908)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_both2_boundary (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤rectangle (2*(2*(2+X)*(2+Y))) (2*(2+X)*(2+Y)) (4*(2+X)*((2+Y)*(1+Z))*(2*(2*(2+X)*(2+Y)))) (2*(2+X)*(2*(2*(2+X)*(2+Y)))) (4*(2+X)*((2+Y)*(1+Z))) (grain_q (2+X) ((2+Y)*(1+Z)) (2*(2*(2+X)*(2+Y)))) (2*(2+Y)*(1+Z)-(1+Z)) 1 1 i := by
   intro i

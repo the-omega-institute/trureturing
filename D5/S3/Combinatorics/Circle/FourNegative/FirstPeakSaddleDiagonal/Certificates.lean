@@ -251,6 +251,7 @@ ring goal, rather than a certificate predicate or native_decide oracle. -/
 set_option maxRecDepth 4096
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_neg1 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (1+Y) (2+Z) (4*((4*(1+X)*(1+Y))*(2+Z))+T) (((4*(1+X)*(1+Y))*(2+Z))-2*(2+Z)+1) (((4*(1+X)*(1+Y))*(2+Z))-3) 0 1 i := by
@@ -270,6 +271,7 @@ private theorem chart_strict_neg1 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_negg (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (1+Y) (2+Z) (4*((4*(1+X)*(1+Y))*(2+Z))+T) (((4*(1+X)*(1+Y))*(2+Z))-2*(2+Z)+1) (((4*(1+X)*(1+Y))*(2+Z))-3) 0 (4*(1+X)*(1+Y)) i := by
@@ -289,6 +291,7 @@ private theorem chart_strict_negg (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_pos11 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (1+Y) (2+Z) (4*((4*(1+X)*(1+Y))*(2+Z))+T) (((4*(1+X)*(1+Y))*(2+Z))-2*(2+Z)+1) (((4*(1+X)*(1+Y))*(2+Z))-3) 1 1 i := by
@@ -308,6 +311,7 @@ private theorem chart_strict_pos11 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_pos1max (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (1+Y) (2+Z) (4*((4*(1+X)*(1+Y))*(2+Z))+T) (((4*(1+X)*(1+Y))*(2+Z))-2*(2+Z)+1) (((4*(1+X)*(1+Y))*(2+Z))-3) 1 (2*(1+Y)) i := by
@@ -327,6 +331,7 @@ private theorem chart_strict_pos1max (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_posmax1 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (1+Y) (2+Z) (4*((4*(1+X)*(1+Y))*(2+Z))+T) (((4*(1+X)*(1+Y))*(2+Z))-2*(2+Z)+1) (((4*(1+X)*(1+Y))*(2+Z))-3) (2*(1+X)) 1 i := by
@@ -346,6 +351,7 @@ private theorem chart_strict_posmax1 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_posmaxmax (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (1+Y) (2+Z) (4*((4*(1+X)*(1+Y))*(2+Z))+T) (((4*(1+X)*(1+Y))*(2+Z))-2*(2+Z)+1) (((4*(1+X)*(1+Y))*(2+Z))-3) (2*(1+X)) (2*(1+Y)) i := by
@@ -365,6 +371,7 @@ private theorem chart_strict_posmaxmax (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_strict_boundary (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤boundaryMargin (1+X) (1+Y) (2+Z) i := by
@@ -384,6 +391,7 @@ private theorem chart_strict_boundary (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Klarge_neg1 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (2+X) (1+Y) 1 (4*((4*(2+X)*(1+Y))*1)+T) (((4*(2+X)*(1+Y))*1)-3) (((4*(2+X)*(1+Y))*1)-3) 0 1 i := by
@@ -403,6 +411,7 @@ private theorem chart_equality_Klarge_neg1 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Klarge_pos11 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (2+X) (1+Y) 1 (4*((4*(2+X)*(1+Y))*1)+T) (((4*(2+X)*(1+Y))*1)-3) (((4*(2+X)*(1+Y))*1)-3) 1 1 i := by
@@ -422,6 +431,7 @@ private theorem chart_equality_Klarge_pos11 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Klarge_pos1max (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (2+X) (1+Y) 1 (4*((4*(2+X)*(1+Y))*1)+T) (((4*(2+X)*(1+Y))*1)-3) (((4*(2+X)*(1+Y))*1)-3) 1 (2*(1+Y)) i := by
@@ -441,6 +451,7 @@ private theorem chart_equality_Klarge_pos1max (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Klarge_posmax1 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (2+X) (1+Y) 1 (4*((4*(2+X)*(1+Y))*1)+T) (((4*(2+X)*(1+Y))*1)-3) (((4*(2+X)*(1+Y))*1)-3) (2*(2+X)) 1 i := by
@@ -460,6 +471,7 @@ private theorem chart_equality_Klarge_posmax1 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Klarge_posmaxmax (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (2+X) (1+Y) 1 (4*((4*(2+X)*(1+Y))*1)+T) (((4*(2+X)*(1+Y))*1)-3) (((4*(2+X)*(1+Y))*1)-3) (2*(2+X)) (2*(1+Y)) i := by
@@ -479,6 +491,7 @@ private theorem chart_equality_Klarge_posmaxmax (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Klarge_boundary (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤boundaryMargin (2+X) (1+Y) 1 i := by
@@ -498,6 +511,7 @@ private theorem chart_equality_Klarge_boundary (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Jlarge_neg1 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (2+Y) 1 (4*((4*(1+X)*(2+Y))*1)+T) (((4*(1+X)*(2+Y))*1)-3) (((4*(1+X)*(2+Y))*1)-3) 0 1 i := by
@@ -517,6 +531,7 @@ private theorem chart_equality_Jlarge_neg1 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Jlarge_pos11 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (2+Y) 1 (4*((4*(1+X)*(2+Y))*1)+T) (((4*(1+X)*(2+Y))*1)-3) (((4*(1+X)*(2+Y))*1)-3) 1 1 i := by
@@ -536,6 +551,7 @@ private theorem chart_equality_Jlarge_pos11 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Jlarge_pos1max (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (2+Y) 1 (4*((4*(1+X)*(2+Y))*1)+T) (((4*(1+X)*(2+Y))*1)-3) (((4*(1+X)*(2+Y))*1)-3) 1 (2*(2+Y)) i := by
@@ -555,6 +571,7 @@ private theorem chart_equality_Jlarge_pos1max (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Jlarge_posmax1 (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (2+Y) 1 (4*((4*(1+X)*(2+Y))*1)+T) (((4*(1+X)*(2+Y))*1)-3) (((4*(1+X)*(2+Y))*1)-3) (2*(1+X)) 1 i := by
@@ -574,6 +591,7 @@ private theorem chart_equality_Jlarge_posmax1 (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Jlarge_posmaxmax (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤scaledMargin (1+X) (2+Y) 1 (4*((4*(1+X)*(2+Y))*1)+T) (((4*(1+X)*(2+Y))*1)-3) (((4*(1+X)*(2+Y))*1)-3) (2*(1+X)) (2*(2+Y)) i := by
@@ -593,6 +611,7 @@ private theorem chart_equality_Jlarge_posmaxmax (X Y Z T : ℤ)
       dsimp [scaledMargin,boundaryMargin,rectangleMargin,E0,H0,pivot,grain,reserve,C,A,D,L,M,Ln,Mn] <;> ring
 
 set_option maxHeartbeats 4000000 in
+set_option linter.unusedVariables false in
 private theorem chart_equality_Jlarge_boundary (X Y Z T : ℤ)
     (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i : Fin 4, 0≤boundaryMargin (1+X) (2+Y) 1 i := by

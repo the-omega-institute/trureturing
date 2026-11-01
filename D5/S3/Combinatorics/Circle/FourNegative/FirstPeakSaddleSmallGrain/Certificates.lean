@@ -35,6 +35,7 @@ private def margin (t x y s r h v : ℤ) : Fin 19 → ℤ :=
 private def Margins (t x y s r h v : ℤ) : Prop :=
   ∀ i : Fin 19, 0 ≤ margin t x y s r h v i
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J1_t8 :
     Margins 8 (4*1*1*8) (2*1*8) (16*1*1) (4*1*1) (0) 0 := by
   intro i
@@ -78,6 +79,7 @@ private theorem chart_K1_J1_t8 :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 8 by norm_num) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J1_0 (T : ℤ) (hT : 0≤T) :
     Margins (16+10*T) (4*1*1*(16+10*T)) (2*1*(16+10*T)) (1*1*(2*(16+10*T)-4)) (1) (1) (2+T) := by
   intro i
@@ -121,6 +123,7 @@ private theorem chart_K1_J1_0 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 16+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J1_1 (T : ℤ) (hT : 0≤T) :
     Margins (32+10*T) (4*1*1*(32+10*T)) (2*1*(32+10*T)) (1*1*(2*(32+10*T)-4)) (1) (2*1) (4+T) := by
   intro i
@@ -164,6 +167,7 @@ private theorem chart_K1_J1_1 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 40+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J1_2 (T : ℤ) (hT : 0≤T) :
     Margins (64+10*T) (4*1*1*(64+10*T)) (2*1*(64+10*T)) (1*1*(2*(64+10*T))) (1*(4*1+1)) (1) (6+T) := by
   intro i
@@ -207,6 +211,7 @@ private theorem chart_K1_J1_2 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 112+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J1_3 (T : ℤ) (hT : 0≤T) :
     Margins (128+10*T) (4*1*1*(128+10*T)) (2*1*(128+10*T)) (1*1*(2*(128+10*T))) (1*(4*1+1)) (0) (12+T) := by
   intro i
@@ -250,6 +255,7 @@ private theorem chart_K1_J1_3 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 248+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J2_t8 :
     Margins 8 (4*1*2*8) (2*1*8) (16*1*2) (4*1*2) (0) 0 := by
   intro i
@@ -293,6 +299,7 @@ private theorem chart_K1_J2_t8 :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 8 by norm_num) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J2_0 (T : ℤ) (hT : 0≤T) :
     Margins (16+10*T) (4*1*2*(16+10*T)) (2*1*(16+10*T)) (1*2*(2*(16+10*T)-4)) (2) (1) (2+T) := by
   intro i
@@ -336,6 +343,7 @@ private theorem chart_K1_J2_0 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 16+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J2_1 (T : ℤ) (hT : 0≤T) :
     Margins (32+10*T) (4*1*2*(32+10*T)) (2*1*(32+10*T)) (1*2*(2*(32+10*T)-4)) (2) (2*1) (4+T) := by
   intro i
@@ -379,6 +387,7 @@ private theorem chart_K1_J2_1 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 40+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J2_2 (T : ℤ) (hT : 0≤T) :
     Margins (64+10*T) (4*1*2*(64+10*T)) (2*1*(64+10*T)) (1*2*(2*(64+10*T))) (2*(4*1+1)) (1) (6+T) := by
   intro i
@@ -422,6 +431,7 @@ private theorem chart_K1_J2_2 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 112+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K1_J2_3 (T : ℤ) (hT : 0≤T) :
     Margins (128+10*T) (4*1*2*(128+10*T)) (2*1*(128+10*T)) (1*2*(2*(128+10*T))) (2*(4*1+1)) (0) (12+T) := by
   intro i
@@ -465,6 +475,7 @@ private theorem chart_K1_J2_3 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 248+20*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K2_J1_t8 :
     Margins 8 (4*2*1*8) (2*2*8) (16*2*1) (4*2*1) (0) 0 := by
   intro i
@@ -508,6 +519,7 @@ private theorem chart_K2_J1_t8 :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 24 by norm_num) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K2_J1_0 (T : ℤ) (hT : 0≤T) :
     Margins (16+10*T) (4*2*1*(16+10*T)) (2*2*(16+10*T)) (2*1*(2*(16+10*T)-4)) (1) (2) (2+T) := by
   intro i
@@ -551,6 +563,7 @@ private theorem chart_K2_J1_0 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 40+40*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K2_J1_1 (T : ℤ) (hT : 0≤T) :
     Margins (32+10*T) (4*2*1*(32+10*T)) (2*2*(32+10*T)) (2*1*(2*(32+10*T)-4)) (1) (2*2) (4+T) := by
   intro i
@@ -594,6 +607,7 @@ private theorem chart_K2_J1_1 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 88+40*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K2_J1_2 (T : ℤ) (hT : 0≤T) :
     Margins (64+10*T) (4*2*1*(64+10*T)) (2*2*(64+10*T)) (2*1*(2*(64+10*T))) (1*(4*2+1)) (2) (6+T) := by
   intro i
@@ -637,6 +651,7 @@ private theorem chart_K2_J1_2 (T : ℤ) (hT : 0≤T) :
   · -- h_capacity
     convert (show (0 : ℤ) ≤ 232+40*T by positivity) using 1 <;> dsimp [margin] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem chart_K2_J1_3 (T : ℤ) (hT : 0≤T) :
     Margins (128+10*T) (4*2*1*(128+10*T)) (2*2*(128+10*T)) (2*1*(2*(128+10*T))) (1*(4*2+1)) (0) (12+T) := by
   intro i

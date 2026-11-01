@@ -19,6 +19,7 @@ set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q high_margin half_margin quarter_margin from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 
+set_option linter.unusedVariables false in
 private theorem quarter_K1F2_t8 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 1 2 (1+Z) (8+10*T) (5*(1+Z)) 1 (1+T) i := by
   intro i
@@ -60,6 +61,7 @@ private theorem quarter_K1F2_t8 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (10) * T by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K1F2_t16 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 1 2 (1+Z) (16+10*T) (1*(1+Z)) 1 (2+T) i := by
   intro i
@@ -101,6 +103,7 @@ private theorem quarter_K1F2_t16 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (10) * T + (8) by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K1F2_t32 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 1 2 (1+Z) (32+10*T) (5*(1+Z)) 0 (3+T) i := by
   intro i
@@ -142,6 +145,7 @@ private theorem quarter_K1F2_t32 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (10) * T + (28) by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K1F2_t64 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 1 2 (1+Z) (64+10*T) (5*(1+Z)) 2 (7+T) i := by
   intro i
@@ -183,6 +187,7 @@ private theorem quarter_K1F2_t64 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (10) * T + (52) by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K2F1_t8 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 2 1 (1+Z) (8+10*T) (1*(1+Z)) 1 (1+T) i := by
   intro i
@@ -224,6 +229,7 @@ private theorem quarter_K2F1_t8 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (20) * T + (8) by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K2F1_t16 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 2 1 (1+Z) (16+10*T) (1*(1+Z)) 2 (2+T) i := by
   intro i
@@ -265,6 +271,7 @@ private theorem quarter_K2F1_t16 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (20) * T + (20) by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K2F1_t32 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 2 1 (1+Z) (32+10*T) (5*(1+Z)) 0 (3+T) i := by
   intro i
@@ -306,6 +313,7 @@ private theorem quarter_K2F1_t32 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
       (20) * T + (60) by positivity) using 1 <;>
       dsimp [quarter_margin,rectangle,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem quarter_K2F1_t64 (Z T : ℤ) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤quarter_margin 2 1 (1+Z) (64+10*T) (1*(1+Z)) 3 (7+T) i := by
   intro i

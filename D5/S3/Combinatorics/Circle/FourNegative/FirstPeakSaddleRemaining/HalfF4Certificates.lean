@@ -17,6 +17,7 @@ set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q high_margin half_margin quarter_margin from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 
+set_option linter.unusedVariables false in
 private theorem half_F4_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (1+X) (4+Y) (1+Z) (4*(2*(1+X)*(4+Y))+T) (0) ((1+Z)) i := by
   intro i
@@ -190,6 +191,7 @@ private theorem half_F4_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ :
       (10394)) * T + (168768)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_F4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (1+X) (4+Y) (1+Z) (4*(2*(1+X)*(4+Y))+T) (1) (1) i := by
   intro i
@@ -363,6 +365,7 @@ private theorem half_F4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (10378)) * T + (168183)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_F4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (1+X) (4+Y) (1+Z) (4*(2*(1+X)*(4+Y))+T) (1) (2*(4+Y)*(1+Z)) i := by
   intro i
@@ -536,6 +539,7 @@ private theorem half_F4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (11400)) * T + (200943)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_F4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (1+X) (4+Y) (1+Z) (4*(2*(1+X)*(4+Y))+T) (2*(1+X)) (1) i := by
   intro i
@@ -709,6 +713,7 @@ private theorem half_F4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (10362)) * T + (167598)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_F4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤half_margin (1+X) (4+Y) (1+Z) (4*(2*(1+X)*(4+Y))+T) (2*(1+X)) (2*(4+Y)*(1+Z)) i := by
   intro i
@@ -882,6 +887,7 @@ private theorem half_F4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (11384)) * T + (200358)))) by positivity) using 1 <;>
       dsimp [half_margin,scaled_margin,grain_q] <;> ring
 
+set_option linter.unusedVariables false in
 private theorem half_F4_boundary (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
     ∀ i, 0≤rectangle (2*(2*(1+X)*(4+Y))) (2*(1+X)*(4+Y)) (4*(1+X)*((4+Y)*(1+Z))*(2*(2*(1+X)*(4+Y)))) (2*(1+X)*(2*(2*(1+X)*(4+Y)))) (4*(1+X)*((4+Y)*(1+Z))) (grain_q (1+X) ((4+Y)*(1+Z)) (2*(2*(1+X)*(4+Y)))) (2*(4+Y)*(1+Z)-(1+Z)) 1 1 i := by
   intro i
