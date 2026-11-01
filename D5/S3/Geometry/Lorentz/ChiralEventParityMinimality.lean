@@ -182,12 +182,48 @@ private theorem family_admissible_zero
   exact (Complex.continuous_ofReal.comp_continuousOn h₁).add
     ((Complex.continuous_ofReal.comp_continuousOn h₂).mul continuousOn_const)
 
+private theorem parity_all_iff (x : event) :
+    parity x ∈ allEvents ↔ x ∈ allEvents := by
+  constructor <;> intro h
+  · change ∀ i, parity x i ∈ forwardCone at h
+    change ∀ i, x i ∈ forwardCone
+    intro i
+    have hi := h i
+    fin_cases i <;>
+      simpa [parity, parityVector, forwardCone] using hi
+  · change ∀ i, x i ∈ forwardCone at h
+    change ∀ i, parity x i ∈ forwardCone
+    intro i
+    have hi := h i
+    fin_cases i <;>
+      simpa [parity, parityVector, forwardCone] using hi
+
+private theorem parity_collision_iff (x : event) :
+    parity x ∈ collisionEvents ↔ x ∈ collisionEvents := by
+  constructor <;> intro h
+  · refine ⟨(parity_all_iff x).mp h.1, ?_⟩
+    simpa [parity, parityVector, minkowski] using h.2
+  · refine ⟨(parity_all_iff x).mpr h.1, ?_⟩
+    simpa [parity, parityVector, minkowski] using h.2
+
+private theorem rotation_proper : rotation ∈ properOrthochronous := by
+  sorry
+
 private theorem family_admissible_odd
     (om : Set event) (hom : collisionEvents ⊆ om) (f : event → ℝ)
     (hf : admissible om f) :
     ∀ v ∈ D5.S3.Topology.BorsukUlam.PlanarOddMapZero.unitSphere,
       ((f (family (-v)) : ℂ)) = -((f (family v) : ℂ)) := by
-  sorry
+  intro v hv
+  have hmem : family v ∈ om := hom (family_mem_collision v hv)
+  have hpmem : parity (family v) ∈ om := hom
+    ((parity_collision_iff (family v)).mpr (family_mem_collision v hv))
+  have hinv := hf.2.1 (parity (family v)) hpmem rotation rotation_proper
+    (1 : Equiv.Perm (Fin 2)) (Equiv.swap 0 1)
+  have hpar := hf.2.2 (family v) hmem
+  rw [family_neg v] at ⊢
+  rw [hinv, hpar]
+  norm_num
 
 private theorem route_claim
     (hcollision : ∀ v,
