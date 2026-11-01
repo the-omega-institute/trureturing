@@ -1,8 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonEarSlideCardinalityFormula;
-using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonCompressionFormula;
+using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonSimultaneousCompressionFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons;
 
@@ -55,4 +54,67 @@ internal sealed class PolygonSimultaneousCompressionDocument : IScribeDocumentDe
                 Imp(Nonempty(X("A")),Nonempty(X("C"))),Imp(Nonempty(X("B")),Nonempty(X("D"))),
                 Imps(Nonempty(X("H")),Nonempty(X("A")),Nonempty(X("B"))))))),Lower(14),Nonempty(Union(X("P"),X("Q"))),OriginalCross)),"P","Q")))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For n at least 14, arbitrary P,Q with nonempty union, and finite original families A subset WholeFiber P Q and B subset WholeFiber Q P whose opposite members share an ear, there are one common H subset E_K(P union Q) and families C,D on H. H consists of pairwise noncrossing actual ear chords. C,D are cross-intersecting and closed under every superset inside H.powerset. Their separate complete-fibre P|Q and Q|P masses dominate the respective original cardinalities. Each nonempty side stays nonempty; if both inputs are nonempty, a common output ear proves H nonempty. The empty initial E_K case is included: the same implication excludes two nonempty inputs. Apply the existing exists_terminal_compression to deletionSystem; terminal independence identifies feasible H with the entire powerset. This realizes exactly the compression prefix of B-37.2 residual child 82a336ea36dcb1fdf33de82be432b2ef57a5cccb4770e8737a97a557029cda16, bytes [0,1646), parent bb66dfd880da1b1f58a57a9d778dd6406ce5738d2f047f6862da8c62cf8288f6 bytes [4005,5651). The source cases with cardinalities 2,3,4 and disjoint compatible P,Q are included; those extra assumptions are unnecessary here. Rank/count/Catalan bounds, strictness, total-count positivity, inclusion-exclusion Npq and the normalized bound remain outside this theorem. The construction makes no assertion that every independent trace has a triangulation completion, and no identification of the two weights."))), DescribeRole.Theorem)), []));
+}
+
+internal static class PolygonSimultaneousCompressionFormula
+{
+    internal static Formula X(string name) => F.Id(name);
+    internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
+    internal static Formula C(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(X(name))), [.. args]);
+    internal static Formula Vertex => C("ZMod", X("n"));
+    internal static Formula Chord => new Formula.Apply(Seq(Operatorname, Grp(X("Sym"), D(2))), [Vertex]);
+    internal static Formula Sets => C("Finset", Vertex);
+    internal static Formula Chords => C("Finset", Chord);
+    internal static Formula All(string v, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula ExistsF(string v, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula Scope(Formula body) => All("n", X("Nat"), Seq(OpenBracket, C("NeZero", X("n")), CloseBracket, Comma, Sp, body));
+    internal static Formula SetsAll(Formula body, params string[] names) { for (int i = names.Length - 1; i >= 0; i--) body = All(names[i], Sets, body); return body; }
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open, f, Close) : f;
+    internal static Formula R(Formula a, Formula op, Formula b) => Seq(Open, Operand(a), Sp, op, Sp, Operand(b), Close);
+    internal static Formula EqF(Formula a, Formula b) => R(a, F.Eq, b);
+    internal static Formula IffF(Formula a, Formula b) => R(a, F.Iff, b);
+    internal static Formula AndF(Formula a, Formula b) => R(a, Land, b);
+    internal static Formula Imp(Formula a, Formula b) => R(a, Implies, b);
+    internal static Formula Not(Formula a) => Seq(Neg, Sp, Open, a, Close);
+    internal static Formula InF(Formula a, Formula b) => R(a, InMacro, b);
+    internal static Formula SubF(Formula a, Formula b) => R(a, Subseteq, b);
+    internal static Formula AddF(Formula a, Formula b) => R(a, Plus, b);
+    internal static Formula Sub(Formula a, Formula b) => R(a, Minus, b);
+    internal static Formula Union(Formula a, Formula b) => R(a, Cup, b);
+    internal static Formula Inter(Formula a, Formula b) => C("inter", a, b);
+    internal static Formula Erase(Formula a, Formula b) => C("erase", a, b);
+    internal static Formula Insert(Formula a, Formula b) => C("insert", a, b);
+    internal static Formula Pair(Formula a, Formula b) => C("symPair", a, b);
+    internal static Formula Ear(int i) => C("ear", N(i));
+    internal static Formula Ears(Formula t) => C("EarCenters", t);
+    internal static Formula Tri(Formula t) => C("IsTriangulation", t);
+    internal static Formula Diagonals(Formula t) => All("e", Chord, Imp(InF(X("e"), t), C("IsDiagonal", X("e"))));
+    internal static Formula Fibre(Formula j, Formula r) => C("ConditionFiber", X("P"), X("Q"), j, r);
+    internal static Formula Lower(int n) => R(N(n), Leq, X("n"));
+    internal static Formula Pos(bool cyclic, int i) => cyclic ? (i == 0 ? X("a") : AddF(X("a"), N(i))) : N(i);
+    internal static Formula Reduced(bool cyclic) => Erase(Erase(X("J"), Pos(cyclic, 2)), Pos(cyclic, 3));
+    internal static Formula LocalHyp(bool cyclic, Formula body) => Imp(Not(InF(Pos(cyclic, 0), X("J"))),
+        Imp(InF(Pos(cyclic, 1), X("J")), Imp(InF(Pos(cyclic, 2), X("J")),
+            Imp(SubF(X("R"), Erase(Erase(Erase(X("J"), Pos(cyclic, 1)), Pos(cyclic, 2)), Pos(cyclic, 3))), body))));
+    internal static Formula Family => C("Finset", Sets);
+    internal static Formula Omega(Formula h) => C("feasible", h);
+    internal static Formula Ind(Formula h) => C("Independent", h);
+    internal static Formula W(Formula p, Formula q, Formula h, Formula x) => C("weight", p, q, h, x);
+    internal static Formula Card(Formula f) => C("Natcard", f);
+    internal static Formula Cast(Formula f) => C("Realcast", f);
+    internal static Formula Ne(Formula x, Formula y) => Not(EqF(x,y));
+    internal static Formula Le(Formula x, Formula y) => R(x, Leq, y);
+    internal static Formula Nonempty(Formula x) => C("Nonempty", x);
+    internal static Formula Powers(Formula h) => C("powerset", h);
+    internal static Formula Shift(Formula a, Formula x) => C("shift", AddF(a,N(1)), AddF(a,N(2)), x);
+    internal static Formula Cj(params Formula[] fs) { Formula r = fs[^1]; for(int i=fs.Length-2;i>=0;i--) r=AndF(fs[i],r); return r; }
+    internal static Formula Imps(Formula result, params Formula[] hs) { for(int i=hs.Length-1;i>=0;i--) result=Imp(hs[i],result); return result; }
+    internal static Formula Sc(Formula f, bool nz=true) => nz ? Scope(f) : All("n", X("Nat"), f);
+    internal static Formula Cross(Formula i, Formula j) => C("Cross", C("ear",i),C("ear",j));
+    internal static Formula Geometric(Formula h) => All("i",Vertex,Imp(InF(X("i"),h),All("j",Vertex,Imp(InF(X("j"),h),Not(Cross(X("i"),X("j")))))));
+    internal static Formula Whole(Formula p,Formula q) => C("WholeFiber",p,q);
+    internal static Formula Traces(Formula h,Formula a) => C("familyTraces",h,a);
+    internal static Formula Mass(Formula p,Formula q,Formula h,Formula a) => C("mass",C("weight",p,q,h),a);
+    internal static Formula FamilyAll(Formula body) => All("A",C("Finset",Whole(X("P"),X("Q"))),All("B",C("Finset",Whole(X("Q"),X("P"))),body));
+    internal static Formula OriginalCross => All("T",Whole(X("P"),X("Q")),Imp(InF(X("T"),X("A")),All("U",Whole(X("Q"),X("P")),Imp(InF(X("U"),X("B")),Not(C("Disjoint",Ears(C("val",X("T"))),Ears(C("val",X("U")))))))));
 }
