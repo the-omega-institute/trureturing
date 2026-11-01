@@ -65,10 +65,14 @@ def sourceGraph : SimpleGraph (Fin 33) where
 instance : DecidableRel sourceGraph.Adj := fun _ _ => inferInstanceAs
   (Decidable (_ ∈ sourceEdges ∨ _ ∈ sourceEdges))
 
+attribute [-instance] instDecidableRelFinOfNatNatAdjSourceGraph in
 private theorem source_leaf : Leaf sourceGraph (5 : Fin 33) := by
-  have hu : ∃! w, sourceGraph.Adj (5 : Fin 33) w := by decide
+  have hn : ∀ w : Fin 33, sourceGraph.Adj 5 w ↔ w = 4 := by
+    letI := instDecidableRelFinOfNatNatAdjSourceGraph
+    decide
   classical
-  exact SimpleGraph.degree_eq_one_iff_existsUnique_adj.mpr hu
+  exact SimpleGraph.degree_eq_one_iff_existsUnique_adj.mpr
+    ⟨4, (hn 4).mpr rfl, fun w hw => (hn w).mp hw⟩
 
 private theorem source_leaf_edge : sourceGraph.Adj (5 : Fin 33) 4 := by decide
 
