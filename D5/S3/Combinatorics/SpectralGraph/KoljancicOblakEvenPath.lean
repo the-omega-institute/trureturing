@@ -468,12 +468,16 @@ private lemma continuant_front (q : ℕ → ℝ) (n : ℕ) :
       C (q 0) * continuant (fun k => q (k + 2)) n := by
   induction n using Nat.twoStepInduction with
   | zero => simp [continuant]
-  | one => simp [cont  | one => simp |  | one => simp [cont  simp only [continuant] at h0 h1 ⊢
+  | one => simp [continuant]; ring
+  | more n h0 h1 =>
+      simp only [continuant] at h0 h1 ⊢
       linear_combination X * h1 - C (q (n + 2)) * h0
 
 private lemma joined_endpoint_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (s : ℕ) :
     (joinedPath bL bR a 0 s).charpoly =
-      continuant (fun k => bR k       continuant (fun k => bR k       continuant (fun k => bR k       continual
+      continuant (fun k => bR k ^ 2) (s + 1) -
+        C a * continuant (fun k => bR k ^ 2) s := by
+  classical
   cases s with
   | zero =>
       simp [Matrix.charpoly, Matrix.det_fin_one, Matrix.charmatrix_apply_eq,
@@ -484,26 +488,35 @@ private lemma joined_endpoint_charpoly (bL bR : ℕ → ℝ) (a : ℝ) (s : ℕ)
         ext i j
         simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
           Matrix.diagonal_apply, Fin.succ_inj]
-                                                                              .ext_iff]
+        congr 1
+        simp only [joinedPath, weightedPath, Fin.val_succ, Fin.ext_iff]
         split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
-      have minor2 : (jo      have minor2 : (jo     charmatrix.submatrix
+      have minor2 : (joinedPath bL bR a 0 (s + 1)).charmatrix.submatrix
           (fun i : Fin s => i.succ.succ) (fun j : Fin s => j.succ.succ) =
           (weightedPath bR s).charmatrix := by
         ext i j
         simp only [Matrix.submatrix_apply, Matrix.charmatrix_apply,
           Matrix.diagonal_apply, Fin.succ_inj]
-                                                                                                                 p_all <;> first | omega | (congr 1 <;> omega)
+        congr 1
+        simp only [joinedPath, weightedPath, Fin.val_succ, Fin.ext_iff]
+        split_ifs <;> simp_all <;> first | omega | (congr 1 <;> omega)
       have row (j : Fin s) :
-          (joinedPath bL bR a 0 (s + 1)).charmatrix 0 j.succ.su          (j
+          (joinedPath bL bR a 0 (s + 1)).charmatrix 0 j.succ.succ = 0 := by
         simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
           joinedPath, show ¬ (0 + 1 = j.val + 1 + 1) by omega]
       have col (i : Fin s) :
-          (joinedPath bL bR a 0 (s + 1)).charmatrix i.succ.suc          (joinedPath bL bR a 0 (s + 1)).char_apply, Matrix.diagonal_apply, Fin.ext_iff,
-          joinedPath, show ¬ (0 + 1 = i.val +          joinedPath, show ¬ (0 + 1 = i.val +          joinedPath, sarmatrix 0 0 = X - C a := by
+          (joinedPath bL bR a 0 (s + 1)).charmatrix i.succ.succ 0 = 0 := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff,
+          joinedPath, show ¬ (0 + 1 = i.val + 1 + 1) by omega]
+      have diag : (joinedPath bL bR a 0 (s + 1)).charmatrix 0 0 = X - C a := by
         simp [Matrix.charmatrix_apply_eq, joinedPath]
       have upper : (joinedPath bL bR a 0 (s + 1)).charmatrix 0 1 = -C (bR s) := by
         simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
-      have lower : (joinedPath bL bR a 0 (s + 1)).charmatrix 1 0 = -C (bR      have lower : (joinedPath bL bR a 0 (s + 1)).charmatrix 1 0 = -C (bR      have lower : (joinedPath bL bR a 0 (s + 1)).charmatrix 1 0 = -C (b.S3.Quantum.FockSpace.ForbiddenNeighbourDet      have lower : (joinedPath bL bR a 0 (s  minor1, minor2, diag, upper, lower]
+      have lower : (joinedPath bL bR a 0 (s + 1)).charmatrix 1 0 = -C (bR s) := by
+        simp [Matrix.charmatrix_apply, Matrix.diagonal_apply, Fin.ext_iff, joinedPath]
+      unfold Matrix.charpoly
+      rw [_root_.D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front
+        _ row col, minor1, minor2, diag, upper, lower]
       change (X - C a) * (weightedPath bR (s + 1)).charpoly -
         (-C (bR s)) * (-C (bR s)) * (weightedPath bR s).charpoly = _
       rw [weighted_path_charpoly, weighted_path_charpoly, continuant, map_pow]
