@@ -1,16 +1,16 @@
-/- GID: D5/S0/History/Coding/RROTailLinearLengthSets
+/- GID: D5/S3/Combinatorics/Graph/Hypercube/RROTailLinearLengthSets
    generality: G
-   mirror-B: D5/B/S0/History/Coding/RROTailLinearLengthSets
+   mirror-B: D5/B/S3/Combinatorics/Graph/Hypercube/RROTailLinearLengthSets
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Boolean cube fibres have linear word length and distance-two edge contacts. -/
+   digest: Boolean cube fibres have linear word length and common-prefix edge contacts. -/
 
 import D5.S3.Combinatorics.Graph.Hypercube
 
 noncomputable section
 
-namespace D5.S0.History.Coding.RROTailLinearLengthSets
+namespace D5.S3.Combinatorics.Graph.Hypercube.RROTailLinearLengthSets
 
 open scoped Classical
 open D5.S3.Combinatorics.Graph.Hypercube
@@ -196,4 +196,4 @@ theorem proposition_36_1 (k : ℕ) (hk : 1 ≤ k) :
   · intro x y hxy
     exact fibre_contact hk hxy
 
-end D5.S0.History.Coding.RROTailLinearLengthSets
+end D5.S3.Combinatorics.Graph.Hypercube.RROTailLinearLengthSets

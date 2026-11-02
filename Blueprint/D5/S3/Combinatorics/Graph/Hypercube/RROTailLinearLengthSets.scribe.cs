@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.History.Coding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Hypercube;
 
 internal sealed class RROTailLinearLengthSetsDocument : IScribeDocumentDefinition
 {
@@ -11,8 +11,8 @@ internal sealed class RROTailLinearLengthSetsDocument : IScribeDocumentDefinitio
             Describe.Lean(
                 DescribeId.Create("rro-tail-linear-length-sets"),
                 DeclarationHandle.Create(
-                    "D5/S0/History/Coding/RROTailLinearLengthSets.proposition_36_1"),
-                H("Linear-length fibres and distance-two contacts"),
+                    "D5/S3/Combinatorics/Graph/Hypercube/RROTailLinearLengthSets.proposition_36_1"),
+                H("Linear-length fibres and edge contacts"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -29,8 +29,12 @@ internal sealed class RROTailLinearLengthSetsDocument : IScribeDocumentDefinitio
                             + "and the two endpoint bits are opposite.")),
                     Paragraph(Text(
                         "Each cube edge contributes one word to each endpoint fibre with a "
-                            + "common prefix and opposite final bits, which is the stated "
-                            + "distance-two contact. The word length is "
-                            + "(k−1+ceil(log₂ k))+1 = k+ceil(log₂ k)."))),
+                            + "common prefix and opposite final bits, exactly the contact relation "
+                            + "defined in Lean. The word length is "
+                            + "(k−1+ceil(log₂ k))+1 = k+ceil(log₂ k).")),
+                    Paragraph(Text(
+                        "This theorem establishes the fibre construction and edge contacts. "
+                            + "It does not establish metric, separator, causality, or finite-search "
+                            + "claims from the surrounding source."))),
                 DescribeRole.Theorem))));
 }
