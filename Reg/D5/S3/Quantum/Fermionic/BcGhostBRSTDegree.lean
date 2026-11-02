@@ -54,7 +54,7 @@ def family : Registration arena (type_of% @BcGhostBRST.ghost_number_Qg) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := ()
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩

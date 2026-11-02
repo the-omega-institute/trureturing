@@ -55,7 +55,7 @@ def family : Registration arena (type_of% @tensorNumber_T) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := ⟨zeroLattice,0⟩
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩
@@ -130,7 +130,7 @@ def family : Registration arena (type_of% @tensorNumber_G) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := zeroLattice
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩
@@ -205,7 +205,7 @@ def family : Registration arena (type_of% @tensorNumber_Q) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := ⟨zeroLattice,0⟩
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩
@@ -280,7 +280,7 @@ def family : Registration arena (type_of% @tensorNumber_E) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := ⟨zeroLattice,0⟩
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩

@@ -37,7 +37,8 @@ def rejected : Realization signature := realize signature
   (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (_ : H * gramComplex D = 1) (_ : gramComplex D * H = 1),
+  Law R := ∀ (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (_ : H * gramComplex D =
+    1) (_ : gramComplex D * H = 1),
     R.readout () ⟨D,H⟩ (((26-(D.rank : ℂ))/26) • ghostSquareAnomaly D)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -55,7 +56,7 @@ def family : Registration arena (type_of% @total_square_anomaly) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := ⟨zeroLattice,0⟩
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩
@@ -112,8 +113,10 @@ def rejected : Realization signature := realize signature
   (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (_ : H * gramComplex D = 1) (_ : gramComplex D * H = 1) (x : State D),
-    R.readout () ⟨D,H,x⟩ (∑ᶠ n : ℤ, (((D.rank : ℂ)-26)/24 * ((n : ℂ)^3-n)) • ((ghostC D (-n) * ghostC D n) x))
+  Law R := ∀ (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (_ : H * gramComplex D =
+    1) (_ : gramComplex D * H = 1) (x : State D),
+    R.readout () ⟨D,H,x⟩ (∑ᶠ n : ℤ, (((D.rank : ℂ)-26)/24 * ((n : ℂ)^3-n)) • ((ghostC D (-n) *
+      ghostC D n) x))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h zeroLattice 0 (by funext i; exact Fin.elim0 i) (by funext i; exact Fin.elim0 i) 0
@@ -130,7 +133,7 @@ def family : Registration arena (type_of% @total_square_apply) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     let p : signature.Params := ⟨zeroLattice,0,0⟩
     obtain ⟨y, hy⟩ := exists_ne (lhs p)
     refine ⟨p, lhs p, y, ?_⟩
@@ -204,11 +207,14 @@ def family : Registration arena (type_of% @total_square_finite) where
     · intro e; exact nomatch e
   dependence := by
     intro role
-    haveI := state_nontrivial zeroLattice
+    have := state_nontrivial zeroLattice
     obtain ⟨z, hz⟩ := exists_ne (0 : State zeroLattice)
     refine ⟨zeroLattice, (fun _ => 0), (fun _ => z), ?_⟩
     intro h
-    have hf : Function.HasFiniteSupport (fun _ : ℤ => z) := Eq.mp h (by simp)
+    change Function.HasFiniteSupport (fun _ : ℤ => (0 : State zeroLattice)) =
+      Function.HasFiniteSupport (fun _ : ℤ => z) at h
+    have hf : Function.HasFiniteSupport (fun _ : ℤ => z) :=
+      Eq.mp h (by simp [Function.HasFiniteSupport, Function.support])
     change (Function.support (fun _ : ℤ => z)).Finite at hf
     have he : Function.support (fun _ : ℤ => z) = Set.univ := by ext; simp [hz]
     rw [he] at hf
