@@ -210,7 +210,7 @@ theorem leeCode_complete {r : ℕ} {z : Plane}
     ext i
     fin_cases i <;> simp [decodeLee, a, b] <;> dsimp [u,v] at * <;> omega
 
-private def dilation (c : ℤ) : Plane →ₗ[ℤ] Plane := c • LinearMap.id
+def dilation (c : ℤ) : Plane →ₗ[ℤ] Plane := c • LinearMap.id
 
 private theorem scaled_cover (K : Submodule ℤ Plane) {c q : ℤ} (hc : 0 < c)
     (hdiv : ∀ z ∈ K, c ∣ z 0 ∧ c ∣ z 1)
@@ -278,7 +278,7 @@ private theorem dilation_index (c : ℤ) (hc : c ≠ 0) :
   simpa only [dilation, LinearMap.det_smul, LinearMap.det_id, Module.finrank_pi,
     Fintype.card_fin, mul_one, Int.natAbs_pow] using h.symm
 
-private theorem scaled_index (K : Submodule ℤ Plane) {c : ℤ} (hc : c ≠ 0)
+theorem scaled_index (K : Submodule ℤ Plane) {c : ℤ} (hc : c ≠ 0)
     (hdiv : ∀ z ∈ K, c ∣ z 0 ∧ c ∣ z 1) :
     K.toAddSubgroup.index =
       (K.comap (dilation c)).toAddSubgroup.index*c.natAbs^2 := by
@@ -370,7 +370,7 @@ private theorem rectangle_index_bound (L : Submodule ℤ Plane) {m : ℤ}
   change (Nat.card (Plane ⧸ L) : ℤ) ≤ _
   nlinarith
 
-private theorem residue_rectangle (M : Submodule ℤ Plane) {c s : ℤ} (hc : 0 < c)
+theorem residue_rectangle (M : Submodule ℤ Plane) {c s : ℤ} (hc : 0 < c)
     (hdiv : ∀ z ∈ M, c ∣ z 0 ∧ c ∣ z 1)
     (hcover : ∀ z : Plane, ∃ r : Plane, (|r 0| ≤ s ∧ |r 1| ≤ s) ∧
       (![(-s+(2*s+1)%c),(-s+(2*s+1)%c)] + c • z)-r ∈ M) :
@@ -408,7 +408,7 @@ private theorem residue_rectangle (M : Submodule ℤ Plane) {c s : ℤ} (hc : 0 
     dsimp [a] at hy
     nlinarith
 
-private theorem mapped_index (K : Submodule ℤ Plane) :
+theorem mapped_index (K : Submodule ℤ Plane) :
     (K.map sumDiff).toAddSubgroup.index = K.toAddSubgroup.index*2 := by
   have hi := AddSubgroup.index_map_of_injective
     (H := K.toAddSubgroup) (f := sumDiff.toAddMonoidHom) sumDiff_injective
