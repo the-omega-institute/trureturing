@@ -190,4 +190,3 @@ theorem bounded_finite_prime_valuation_robin_ratio (S : Finset ℕ)
 #print axioms bounded_finite_prime_valuation_robin_ratio
 
 end D5.S3.Weil.FinitePrimeValuationEnvelopes
-

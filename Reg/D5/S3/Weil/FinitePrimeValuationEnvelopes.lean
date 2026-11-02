@@ -90,4 +90,3 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms audit
 
 end Reg.D5.S3.Weil.FinitePrimeValuationEnvelopes
-

@@ -32,4 +32,3 @@ internal sealed class FinitePrimeValuationEnvelopesDocument : IScribeDocumentDef
                     + "(31/32)(26/27)(24/25)(48/49)=3224/3675"))),
                 DescribeRole.Theorem))));
 }
-
