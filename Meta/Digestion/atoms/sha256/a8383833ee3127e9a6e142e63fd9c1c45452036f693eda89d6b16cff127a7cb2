@@ -1,0 +1,72 @@
+### 证明第一步：可靠性
+
+用 $\mathcal R_k$ 表示全细节空间上的残差算子：
+
+$$
+\langle z,\mathcal R_k c\rangle_P
+=
+B_K\!\left(z,\sum_i c_i\nu_{k,i}\right),
+\qquad z\in Z.
+$$
+
+精确变分消去给出
+
+$$
+\boxed{
+\mathcal S_k-\mathcal S_D
+=
+\mathcal R_k^*\mathcal A^{-1}\mathcal R_k.
+}
+$$
+<a id="eq-10"></a>
+<div class="equation-caption">Equation (10).</div>
+
+对 $z=F'\in Z$，分部积分及式 (3) 给出
+
+$$
+B_K\!\left(F',\sum_i c_i\nu_{k,i}\right)
+=
+\int_I\overline{F(t)}
+\sum_i c_i g_{k,i}(t)\,dt.
+$$
+
+使用带权 Cauchy–Schwarz，
+
+$$
+\left|
+\int_I\overline F\sum_i c_i g_{k,i}
+\right|^2
+\leq
+\left[
+\frac1{2\pi}
+\int(1+m)|\widehat F|^2
+\right]
+c^*\mathcal E_kc.
+$$
+
+而式 (4) 给出
+
+$$
+\frac1{2\pi}\int(1+m)|\widehat F|^2
+=
+\|F\|_2^2+Q_P(F')
+\leq
+(1+\beta^{-1})Q_P(F').
+$$
+
+因此
+
+$$
+\mathcal R_k^*\mathcal R_k
+\preceq
+(1+\beta^{-1})\mathcal E_k.
+$$
+
+再由式 (5)，
+
+$$
+\mathcal A^{-1}\preceq\frac1{1-\theta}I.
+$$
+
+代入式 (10)，即得式 (7)。
+

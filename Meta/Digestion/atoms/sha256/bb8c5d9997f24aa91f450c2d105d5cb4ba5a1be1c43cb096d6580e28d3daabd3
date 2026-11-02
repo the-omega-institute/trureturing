@@ -1,0 +1,58 @@
+## 六、给“允许多大负误差”一个明确的归一尺度
+
+> **Editorial note — tolerance domain.** Equations (23), (27), and the strict-completeness paragraph require $\varepsilon\ge0$, with the eventual strict passage using a fixed $\varepsilon>0$ and a fixed window $D$. This is pointwise in $D$; it supplies no uniform choice of $k,J,\Omega$ as $D\to\infty$, and it does not establish the $\varepsilon=0$ case. The positive-definiteness of $M$ and the endpoint exponential extension used in (24)–(26) also remain conditional on the stated completion and Fourier/RKHS identification.
+
+接下来不必要求有限核心每一步都已经精确正定。我们可以允许一个由实际正核度量的负误差。
+
+希望得到
+
+$$
+\boxed{
+Q_K(\mu)\geq-\varepsilon Q_P(\mu)
+\qquad
+(\operatorname{supp}\mu\subset[0,D]).
+}
+$$
+<a id="eq-23"></a>
+<div class="equation-caption">Equation (23).</div>
+
+这等价于 $K+\varepsilon P$ 在该窗口上正半定。
+
+为避免把误差尺度藏在另一个无限维最小化里，下面构造一个完全明确的有限矩阵。
+
+取
+
+$$
+\lambda=\frac52,
+$$
+
+定义
+
+$$
+\begin{aligned}
+M_{ij}
+={}&
+\frac1{2\lambda}
+\int_0^D
+\left(
+\varphi_i'(t)\varphi_j'(t)
++\lambda^2\varphi_i(t)\varphi_j(t)
+\right)\,dt\\
+&+\frac12
+\left[
+\varphi_i(0)\varphi_j(0)
++\varphi_i(D)\varphi_j(D)
+\right].
+\end{aligned}
+$$
+<a id="eq-24"></a>
+<div class="equation-caption">Equation (24).</div>
+
+这是明确的正定矩阵。令
+
+$$
+\boxed{G_*=\frac16M^{-1}.}
+$$
+<a id="eq-25"></a>
+<div class="equation-caption">Equation (25).</div>
+
