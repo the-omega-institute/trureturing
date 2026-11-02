@@ -8,11 +8,13 @@
 
 import D5.S3.Quantum.Entanglement.PrecessionUniversalThresholdRefutation
 import D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.LinearAlgebra.Matrix.PerronFrobenius.Dominance
+import Mathlib.Analysis.Matrix.PosDef
 
 /-! The coefficient-one diamond on four complete normalized spin factors. -/
 
 noncomputable section
-open scoped BigOperators Matrix Kronecker
+open scoped BigOperators Matrix Kronecker ComplexOrder
 open Matrix Complex
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
 open D5.S3.Quantum.Entanglement.PrecessionUniversalThresholdRefutation (siteOperator)
@@ -29,7 +31,7 @@ def site (S : ℕ) (i : Fin 4) (A : Matrix (Weight S) (Weight S) ℂ) : Operator
   siteOperator (fun _ : Fin 4 => 2 * S) i A
 
 def raising (S : ℕ) (i : Fin 4) : Operator S := site S i (Jplus (2 * S))
-def lowering (S : ℕ) (i : Fin 4) : Operator S := site S i (Jplus (2 * S))ᴴ
+def lowering (S : ℕ) (i : Fin 4) : Operator S := site S i ((Jplus (2 * S))ᴴ)
 
 def edges : Finset (Fin 4 × Fin 4) := {(0, 1), (0, 2), (0, 3), (1, 2), (1, 3)}
 
@@ -374,7 +376,7 @@ private lemma local_weight_raising (n : ℕ) :
   simp only [Matrix.sub_apply, Jz, Matrix.diagonal_mul, Matrix.mul_diagonal,
     raising_entry]
   by_cases hij : i.val + 1 = j.val
-  · rw [if_pos hij]
+  · rw [ite_eq_left hij]
     push_cast
     rw [show (j.val : ℂ) = (i.val : ℂ) + 1 by exact_mod_cast hij.symm]
     ring
@@ -444,5 +446,494 @@ theorem zero_weight_invariant (S : ℕ) (v : Configuration S → ℂ)
   change totalWeight S *ᵥ (hamiltonian S *ᵥ v) = 0
   rw [Matrix.mulVec_mulVec, hamiltonian_preserves_weight,
     ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_zero]
+
+private lemma positive_eigenvector_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
+    [Nonempty ι] (A : Matrix ι ι ℝ) (hA : (A.map Complex.ofReal).IsHermitian)
+    (hpos : ∀ i j, 0 ≤ A i j) (w : ι → ℝ) (hw : ∀ i, 0 < w i)
+    (r : ℝ) (hr : 0 < r) (he : A *ᵥ w = r • w) :
+    ((r : ℂ) • (1 : Matrix ι ι ℂ) - A.map Complex.ofReal).PosSemidef := by
+  let B := (r : ℂ) • (1 : Matrix ι ι ℂ) - A.map Complex.ofReal
+  have hB : B.IsHermitian := by
+    change ((r : ℂ) • 1 - A.map Complex.ofReal)ᴴ = _
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, Complex.star_def, Complex.conj_ofReal, hA.eq]
+    rfl
+  apply hB.posSemidef_iff_eigenvalues_nonneg.mpr
+  intro i
+  change 0 ≤ hB.eigenvalues i
+  let v : ι → ℂ := (hB.eigenvectorBasis i).ofLp
+  have hv : v ≠ 0 := by
+    intro hv
+    have hh := hB.eigenvectorBasis.orthonormal.ne_zero i
+    apply hh
+    exact (WithLp.ofLp_injective 2) hv
+  have hev := hB.mulVec_eigenvectorBasis i
+  have heA : (A.map (algebraMap ℝ ℂ)) *ᵥ v =
+      ((r : ℂ) - (hB.eigenvalues i : ℂ)) • v := by
+    change ((r : ℂ) • 1 - A.map Complex.ofReal) *ᵥ v = (hB.eigenvalues i : ℂ) • v at hev
+    simp only [Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec] at hev
+    ext j
+    have hj := congrFun hev j
+    simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul] at hj ⊢
+    change (A.map Complex.ofReal *ᵥ v) j = _
+    linear_combination -hj
+  have habs := Matrix.eigenvalue_abs_subinvariant hpos heA
+  have hnorm : (fun j => ‖v j‖) ≠ 0 := Matrix.normFun_complex_ne_zero_of_ne_zero hv
+  have hle := Matrix.CollatzWielandt.le_of_subinvariant hpos
+    (fun j => norm_nonneg (v j)) hnorm habs
+  have hub := Matrix.CollatzWielandt.le_eigenvalue_of_right_eigenvector hpos hr hw he
+    (fun j => norm_nonneg (v j)) hnorm
+  have hh : |r - hB.eigenvalues i| ≤ r := by
+    simpa only [← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs] using hle.trans hub
+  have hh' := (abs_le.mp hh).2
+  linarith
+
+private def z (S : ℕ) (i : Fin 4) : Operator S := site S i (Jz (2 * S))
+
+private def xy (S : ℕ) (i j : Fin 4) : Operator S :=
+  raising S i * lowering S j + lowering S i * raising S j
+
+private def zz (S : ℕ) (i j : Fin 4) : Operator S := z S i * z S j
+
+private def dot (S : ℕ) (i j : Fin 4) : Operator S :=
+  (1 / 2 : ℂ) • xy S i j + zz S i j
+
+private def isotropic (S : ℕ) : Operator S := ∑ e ∈ edges, dot S e.1 e.2
+
+private def vertical (S : ℕ) : Operator S := ∑ e ∈ edges, zz S e.1 e.2
+
+private def expect {S : ℕ} (v : Configuration S → ℂ) (A : Operator S) : ℂ :=
+  star v ⬝ᵥ (A *ᵥ v)
+
+private lemma expect_add {S : ℕ} (v : Configuration S → ℂ) (A B : Operator S) :
+    expect v (A + B) = expect v A + expect v B := by
+  simp [expect, Matrix.add_mulVec, dotProduct_add]
+
+private lemma expect_sub {S : ℕ} (v : Configuration S → ℂ) (A B : Operator S) :
+    expect v (A - B) = expect v A - expect v B := by
+  simp [expect, Matrix.sub_mulVec, dotProduct_sub]
+
+private lemma expect_smul {S : ℕ} (v : Configuration S → ℂ) (c : ℂ) (A : Operator S) :
+    expect v (c • A) = c * expect v A := by
+  simp [expect, Matrix.smul_mulVec, dotProduct_smul]
+
+private lemma expect_sum {S : ℕ} {κ : Type*} (v : Configuration S → ℂ)
+    (s : Finset κ) (A : κ → Operator S) :
+    expect v (∑ k ∈ s, A k) = ∑ k ∈ s, expect v (A k) := by
+  simp [expect, Matrix.sum_mulVec, dotProduct_sum]
+
+private lemma singlet_commutator {S : ℕ} (v : Configuration S → ℂ)
+    (hv : v ∈ singletSpace S) (U : Operator S) :
+    expect v (totalLowering S * U - U * totalLowering S) = 0 := by
+  rcases hv with ⟨hp, hm⟩
+  change totalRaising S *ᵥ v = 0 at hp
+  change totalLowering S *ᵥ v = 0 at hm
+  have hstar : (totalLowering S)ᴴ = totalRaising S := by
+    simp [totalLowering, totalRaising, lowering, raising, Matrix.conjTranspose_sum, site_adjoint]
+  simp only [expect, Matrix.sub_mulVec, ← Matrix.mulVec_mulVec, hm,
+    Matrix.mulVec_zero, sub_zero]
+  rw [dotProduct_mulVec]
+  have hz : star v ᵥ* totalLowering S = 0 := by
+    calc
+      _ = star ((totalLowering S)ᴴ *ᵥ v) := by
+        rw [Matrix.star_mulVec, Matrix.conjTranspose_conjTranspose]
+      _ = 0 := by rw [hstar, hp]; simp
+  rw [hz, zero_dotProduct]
+
+private lemma lowering_raising_commutator (S : ℕ) (i : Fin 4) :
+    totalLowering S * raising S i - raising S i * totalLowering S =
+      (-2 : ℂ) • z S i := by
+  unfold totalLowering
+  simp only [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  rw [Finset.sum_eq_single i]
+  · have hh := congrArg (site S i) (ladder_commutator (2 * S))
+    simp only [site_sub, site_mul, site_smul] at hh
+    change lowering S i * raising S i - raising S i * lowering S i = _
+    change raising S i * lowering S i - lowering S i * raising S i = (2 : ℂ) • z S i at hh
+    calc
+      _ = -(raising S i * lowering S i - lowering S i * raising S i) := by abel
+      _ = _ := by rw [hh]; module
+  · intro j _ hji
+    exact sub_eq_zero.mpr (site_commute S j i hji _ _)
+  · simp
+
+private lemma lowering_z_commutator (S : ℕ) (i : Fin 4) :
+    totalLowering S * z S i - z S i * totalLowering S = lowering S i := by
+  unfold totalLowering
+  simp only [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  rw [Finset.sum_eq_single i]
+  · have h := congrArg Matrix.conjTranspose (local_weight_raising (2 * S))
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul,
+      show (Jz (2 * S))ᴴ = Jz (2 * S) from by simp [Jz]] at h
+    simpa only [lowering, z, raising, ← site_mul, ← site_sub] using congrArg (site S i) h
+  · intro j _ hji
+    exact sub_eq_zero.mpr (site_commute S j i hji _ _)
+  · simp
+
+private lemma commutator_product {S : ℕ} (Q A B : Operator S) :
+    Q * (A * B) - (A * B) * Q = (Q * A - A * Q) * B + A * (Q * B - B * Q) := by
+  noncomm_ring
+
+private lemma singlet_edge_isotropy (S : ℕ) (v : Configuration S → ℂ)
+    (hv : v ∈ singletSpace S) (i j : Fin 4) :
+    expect v (xy S i j) = 4 * expect v (zz S i j) := by
+  have hh := singlet_commutator v hv (raising S i * z S j + z S i * raising S j)
+  have hU : totalLowering S * (raising S i * z S j + z S i * raising S j) -
+      (raising S i * z S j + z S i * raising S j) * totalLowering S =
+      xy S i j - (4 : ℂ) • zz S i j := by
+    rw [Matrix.mul_add, Matrix.add_mul]
+    rw [show totalLowering S * (raising S i * z S j) +
+        totalLowering S * (z S i * raising S j) -
+        (raising S i * z S j * totalLowering S + z S i * raising S j * totalLowering S) =
+        (totalLowering S * (raising S i * z S j) - raising S i * z S j * totalLowering S) +
+        (totalLowering S * (z S i * raising S j) - z S i * raising S j * totalLowering S) by abel]
+    rw [commutator_product, commutator_product, lowering_raising_commutator,
+      lowering_z_commutator, lowering_raising_commutator, lowering_z_commutator]
+    unfold xy zz
+    simp only [Matrix.smul_mul, Matrix.mul_smul]
+    module
+  rw [hU, expect_sub, expect_smul] at hh
+  exact sub_eq_zero.mp hh
+
+private lemma singlet_isotropy (S : ℕ) (v : Configuration S → ℂ)
+    (hv : v ∈ singletSpace S) :
+    expect v (hamiltonian S) = (4 / 3 : ℂ) * expect v (isotropic S) := by
+  have h : expect v (hamiltonian S) = (4 : ℂ) * expect v (vertical S) := by
+    unfold hamiltonian vertical
+    rw [expect_sum, expect_sum, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro e he
+    exact singlet_edge_isotropy S v hv e.1 e.2
+  have hi : expect v (isotropic S) =
+      (1 / 2 : ℂ) * expect v (hamiltonian S) + expect v (vertical S) := by
+    unfold isotropic hamiltonian vertical
+    simp only [expect_sum, dot, expect_add, expect_smul, Finset.sum_add_distrib,
+      Finset.mul_sum, xy]
+    simp only [Finset.mul_sum, mul_add, Finset.sum_add_distrib]
+  rw [hi]
+  linear_combination (1 / 3 : ℂ) * h
+
+private lemma positive_complex_eigenvector_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
+    [Nonempty ι] (A : Matrix ι ι ℂ) (hA : A.IsHermitian)
+    (hpos : ∀ i j, 0 ≤ A i j) (w : ι → ℝ) (hw : ∀ i, 0 < w i)
+    (r : ℝ) (hr : 0 < r) (he : A *ᵥ (fun i => (w i : ℂ)) = (r : ℂ) • (fun i => (w i : ℂ))) :
+    ((r : ℂ) • (1 : Matrix ι ι ℂ) - A).PosSemidef := by
+  have hm : (A.map Complex.re).map Complex.ofReal = A := by
+    ext i j
+    exact (Complex.eq_re_of_ofReal_le (hpos i j)).symm
+  have he' : A.map Complex.re *ᵥ w = r • w := by
+    ext i
+    have hh := congrArg Complex.re (congrFun he i)
+    simpa [Matrix.mulVec, dotProduct, Complex.re_sum, Complex.mul_re] using hh
+  have hh := positive_eigenvector_bound (A.map Complex.re) (by rwa [hm])
+    (fun i j => (hpos i j).1) w hw r hr he'
+  rwa [hm] at hh
+
+private def productVector (S : ℕ) (f : Weight S → ℂ) : Configuration S → ℂ :=
+  fun x => ∏ i : Fin 4, f (x i)
+
+private lemma product_update (S : ℕ) (f : Weight S → ℂ) (x : Configuration S)
+    (i : Fin 4) (a : Weight S) :
+    productVector S f (Function.update x i a) =
+      f a * ∏ j ∈ (Finset.univ : Finset (Fin 4)).erase i, f (x j) := by
+  unfold productVector
+  rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i)]
+  rw [Function.update_self]
+  congr 1
+  apply Finset.prod_congr rfl
+  intro j hj
+  rw [Function.update_of_ne (Finset.mem_erase.mp hj).1]
+
+private lemma site_product (S : ℕ) (i : Fin 4)
+    (A : Matrix (Weight S) (Weight S) ℂ) (f : Weight S → ℂ) (x : Configuration S) :
+    (site S i A *ᵥ productVector S f) x =
+      (A *ᵥ f) (x i) * ∏ j ∈ (Finset.univ : Finset (Fin 4)).erase i, f (x j) := by
+  rw [site_action]
+  simp only [product_update, ← mul_assoc, ← Finset.sum_mul]
+  rfl
+
+private def binomialProduct (S : ℕ) : Configuration S → ℂ :=
+  productVector S (D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.binomVector (2 * S) 1)
+
+private def binomialProductReal (S : ℕ) : Configuration S → ℝ :=
+  fun x => ∏ i : Fin 4,
+    D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.spinRad (2 * S) (x i)
+
+private lemma binomialProduct_real (S : ℕ) (x : Configuration S) :
+    binomialProduct S x = (binomialProductReal S x : ℂ) := by
+  simp [binomialProduct, productVector, binomialProductReal,
+    D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.binomVector,
+    D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.coeff]
+
+private lemma binomialProduct_positive (S : ℕ) (x : Configuration S) :
+    0 < binomialProductReal S x := by
+  apply Finset.prod_pos
+  intro i _
+  apply Real.sqrt_pos.mpr
+  exact_mod_cast Nat.choose_pos (Nat.le_of_lt_succ (x i).isLt)
+
+private lemma raising_product (S : ℕ) (i : Fin 4) (x : Configuration S) :
+    (raising S i *ᵥ binomialProduct S) x =
+      ((2 * S : ℂ) - (x i).val) * binomialProduct S x := by
+  unfold raising binomialProduct
+  rw [site_product, D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.raising_action]
+  simp only [Complex.ofReal_one, mul_one]
+  simp only [Nat.cast_mul, Nat.cast_ofNat]
+  rw [mul_assoc]
+  congr 1
+  exact Finset.mul_prod_erase _ (fun j : Fin 4 =>
+    D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.binomVector (2 * S) 1 (x j))
+    (Finset.mem_univ i)
+
+private lemma lowering_product (S : ℕ) (i : Fin 4) (x : Configuration S) :
+    (lowering S i *ᵥ binomialProduct S) x =
+      ((x i).val : ℂ) * binomialProduct S x := by
+  unfold lowering binomialProduct
+  rw [site_product]
+  have hh := D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.lowering_action
+    (2 * S) 1 (x i)
+  simp only [Complex.ofReal_one, mul_one] at hh
+  rw [hh, mul_assoc]
+  congr 1
+  exact Finset.mul_prod_erase _ (fun j : Fin 4 =>
+    D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.binomVector (2 * S) 1 (x j))
+    (Finset.mem_univ i)
+
+private lemma site_spectator (S : ℕ) (i j : Fin 4) (hij : i ≠ j)
+    (A : Matrix (Weight S) (Weight S) ℂ) (v : Configuration S → ℂ)
+    (c : Weight S → ℂ) (x : Configuration S) :
+    (site S i A *ᵥ (fun y => c (y j) * v y)) x = c (x j) * (site S i A *ᵥ v) x := by
+  simp only [site_action, Function.update_of_ne hij.symm, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro a _
+  ring
+
+private lemma z_action (S : ℕ) (i : Fin 4) (v : Configuration S → ℂ) (x : Configuration S) :
+    (z S i *ᵥ v) x = ((S : ℂ) - (x i).val) * v x := by
+  simp only [z, Jz, site_diagonal, Matrix.mulVec_diagonal]
+  push_cast
+  ring
+
+private lemma dot_product_eigenvector (S : ℕ) (i j : Fin 4) (hij : i ≠ j) :
+    dot S i j *ᵥ binomialProduct S = ((S : ℂ) ^ 2) • binomialProduct S := by
+  ext x
+  simp only [dot, xy, zz, Matrix.add_mulVec, Matrix.smul_mulVec,
+    ← Matrix.mulVec_mulVec, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+  rw [show lowering S j *ᵥ binomialProduct S =
+      (fun y => ((y j).val : ℂ) * binomialProduct S y) by ext y; exact lowering_product S j y]
+  rw [show raising S j *ᵥ binomialProduct S =
+      (fun y => ((2 * S : ℂ) - (y j).val) * binomialProduct S y) by ext y; exact raising_product S j y]
+  rw [show raising S i = site S i (Jplus (2 * S)) from rfl,
+    show lowering S i = site S i ((Jplus (2 * S))ᴴ) from rfl]
+  rw [site_spectator S i j hij (Jplus (2 * S)) (binomialProduct S)
+      (fun a => (a.val : ℂ)) x,
+    site_spectator S i j hij ((Jplus (2 * S))ᴴ) (binomialProduct S)
+      (fun a => (2 * S : ℂ) - a.val) x]
+  change (1 / 2 : ℂ) * (((x j).val : ℂ) * (raising S i *ᵥ binomialProduct S) x +
+      ((2 * S : ℂ) - (x j).val) * (lowering S i *ᵥ binomialProduct S) x) + _ = _
+  rw [raising_product, lowering_product, z_action, z_action]
+  ring
+
+private lemma raising_nonneg (S : ℕ) (i : Fin 4) (x y : Configuration S) :
+    0 ≤ raising S i x y := by
+  unfold raising site siteOperator
+  apply mul_nonneg
+  · rw [raising_entry]
+    split_ifs <;> positivity
+  · apply Finset.prod_nonneg
+    intro j _
+    split_ifs <;> norm_num
+
+private lemma lowering_nonneg (S : ℕ) (i : Fin 4) (x y : Configuration S) :
+    0 ≤ lowering S i x y := by
+  have h : lowering S i = (raising S i)ᴴ := by simp [lowering, raising, site_adjoint]
+  rw [h, Matrix.conjTranspose_apply]
+  exact star_nonneg_iff.mpr (raising_nonneg S i y x)
+
+private lemma xy_nonneg (S : ℕ) (i j : Fin 4) (x y : Configuration S) :
+    0 ≤ xy S i j x y := by
+  unfold xy
+  simp only [Matrix.add_apply, Matrix.mul_apply]
+  apply add_nonneg
+  · apply Finset.sum_nonneg
+    intro k _
+    exact mul_nonneg (raising_nonneg S i x k) (lowering_nonneg S j k y)
+  · apply Finset.sum_nonneg
+    intro k _
+    exact mul_nonneg (lowering_nonneg S i x k) (raising_nonneg S j k y)
+
+private lemma z_diagonal (S : ℕ) (i : Fin 4) :
+    z S i = diagonal (fun x : Configuration S => (S : ℂ) - (x i).val) := by
+  simp only [z, Jz, site_diagonal]
+  congr 1
+  funext x
+  push_cast
+  ring
+
+private lemma zz_shift_nonneg (S : ℕ) (i j : Fin 4) (x y : Configuration S) :
+    0 ≤ (zz S i j + (S : ℂ)^2 • 1) x y := by
+  simp only [zz, z_diagonal, Matrix.diagonal_mul_diagonal, Matrix.add_apply,
+    Matrix.smul_apply, smul_eq_mul]
+  by_cases hxy : x = y
+  · subst y
+    simp only [Matrix.diagonal_apply_eq, Matrix.one_apply_eq, mul_one]
+    have hi : (x i).val ≤ 2 * S := Nat.le_of_lt_succ (x i).isLt
+    have hj : (x j).val ≤ 2 * S := Nat.le_of_lt_succ (x j).isLt
+    have hi' : ((x i).val : ℝ) ≤ 2 * (S : ℝ) := by exact_mod_cast hi
+    have hj' : ((x j).val : ℝ) ≤ 2 * (S : ℝ) := by exact_mod_cast hj
+    have h : 0 ≤ ((S : ℝ) - (x i).val) * (S - (x j).val) + S^2 := by
+      nlinarith [mul_nonneg (sub_nonneg.mpr hi') (sub_nonneg.mpr hj'),
+        mul_nonneg (Nat.cast_nonneg (x i).val : (0 : ℝ) ≤ (x i).val)
+          (Nat.cast_nonneg (x j).val : (0 : ℝ) ≤ (x j).val)]
+    exact_mod_cast h
+  · simp [Matrix.diagonal_apply_ne _ hxy, Matrix.one_apply_ne hxy]
+
+private lemma dot_hermitian (S : ℕ) (i j : Fin 4) (hij : i ≠ j) :
+    (dot S i j).IsHermitian := by
+  have hz (k : Fin 4) : (z S k)ᴴ = z S k := by simp [z_diagonal]
+  have hzz : (zz S i j).IsHermitian := by
+    change (z S i * z S j)ᴴ = _
+    rw [Matrix.conjTranspose_mul, hz, hz]
+    exact site_commute S j i hij.symm _ _
+  exact ((edge_hermitian S i j hij).smul (by simp)).add hzz
+
+private lemma pair_upper_bound (S : ℕ) (hS : 1 ≤ S) (i j : Fin 4) (hij : i ≠ j) :
+    ((S : ℂ)^2 • (1 : Operator S) - dot S i j).PosSemidef := by
+  let A := dot S i j + (S : ℂ)^2 • (1 : Operator S)
+  have hA : A.IsHermitian := (dot_hermitian S i j hij).add
+    ((isHermitian_one : (1 : Operator S).IsHermitian).smul ((IsSelfAdjoint.natCast S).pow 2))
+  have hpos : ∀ x y, 0 ≤ A x y := by
+    intro x y
+    have h := add_nonneg (mul_nonneg (by norm_num [Complex.le_def] : (0 : ℂ) ≤ 1 / 2)
+      (xy_nonneg S i j x y)) (zz_shift_nonneg S i j x y)
+    convert h using 1 <;> simp only [A, dot, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] <;> ring
+  have he : A *ᵥ binomialProduct S = (2 * (S : ℂ)^2) • binomialProduct S := by
+    dsimp [A]
+    rw [Matrix.add_mulVec, dot_product_eigenvector S i j hij,
+      Matrix.smul_mulVec, Matrix.one_mulVec]
+    module
+  have he' : A *ᵥ (fun x => (binomialProductReal S x : ℂ)) =
+      ((2 * (S : ℝ)^2 : ℝ) : ℂ) • (fun x => (binomialProductReal S x : ℂ)) := by
+    simpa [← binomialProduct_real] using he
+  have hr : 0 < 2 * (S : ℝ)^2 := by
+    have hSp : (0 : ℝ) < S := by exact_mod_cast (Nat.lt_of_lt_of_le Nat.zero_lt_one hS)
+    positivity
+  have hh := positive_complex_eigenvector_bound A hA hpos (binomialProductReal S)
+    (binomialProduct_positive S) (2 * (S : ℝ)^2) hr he'
+  convert hh using 1
+  dsimp [A]
+  push_cast
+  module
+
+private lemma site_add (S : ℕ) (i : Fin 4)
+    (A B : Matrix (Weight S) (Weight S) ℂ) :
+    site S i (A + B) = site S i A + site S i B := by
+  ext x y
+  simp [site, siteOperator, add_mul]
+
+private lemma site_one (S : ℕ) (i : Fin 4) : site S i 1 = 1 := by
+  apply Matrix.ext_iff_mulVec.mpr
+  intro v
+  ext x
+  simp [site_action, Matrix.one_apply]
+
+private lemma local_casimir (S : ℕ) :
+    Jz (2 * S) * Jz (2 * S) + (1 / 2 : ℂ) •
+      (Jplus (2 * S) * (Jplus (2 * S))ᴴ + (Jplus (2 * S))ᴴ * Jplus (2 * S)) =
+      ((S : ℂ) * (S + 1)) • (1 : Matrix (Weight S) (Weight S) ℂ) := by
+  rw [raising_times_lowering, lowering_times_raising]
+  simp only [Jz, Matrix.diagonal_mul_diagonal]
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.diagonal_apply_eq,
+      Matrix.one_apply_eq, smul_eq_mul, mul_one]
+    push_cast
+    ring
+  · simp [Matrix.diagonal_apply_ne _ hij, Matrix.one_apply_ne hij]
+
+private lemma site_casimir (S : ℕ) (i : Fin 4) :
+    z S i * z S i + (1 / 2 : ℂ) •
+      (raising S i * lowering S i + lowering S i * raising S i) =
+      ((S : ℂ) * (S + 1)) • (1 : Operator S) := by
+  have hh := congrArg (site S i) (local_casimir S)
+  simpa only [site_add, site_mul, site_smul, site_one, z, raising, lowering] using hh
+
+private lemma isotropic_expansion (S : ℕ) :
+    isotropic S = dot S 0 1 + dot S 0 2 + dot S 0 3 + dot S 1 2 + dot S 1 3 := by
+  simp [isotropic, edges]
+  abel
+
+private lemma central_identity (S : ℕ) :
+    isotropic S + dot S 0 1 + (2 * (S : ℂ) * (S + 1)) • 1 =
+      (z S 0 + z S 1) * totalWeight S + (1 / 2 : ℂ) •
+        ((raising S 0 + raising S 1) * totalLowering S +
+          (lowering S 0 + lowering S 1) * totalRaising S) := by
+  have hzz : z S 1 * z S 0 = z S 0 * z S 1 := site_commute S 1 0 (by decide) _ _
+  have hpq : raising S 1 * lowering S 0 = lowering S 0 * raising S 1 :=
+    site_commute S 1 0 (by decide) _ _
+  have hqp : lowering S 1 * raising S 0 = raising S 0 * lowering S 1 :=
+    site_commute S 1 0 (by decide) _ _
+  have h : (z S 0 + z S 1) * totalWeight S + (1 / 2 : ℂ) •
+        ((raising S 0 + raising S 1) * totalLowering S +
+          (lowering S 0 + lowering S 1) * totalRaising S) =
+      (z S 0 * z S 0 + (1 / 2 : ℂ) •
+        (raising S 0 * lowering S 0 + lowering S 0 * raising S 0)) +
+      (z S 1 * z S 1 + (1 / 2 : ℂ) •
+        (raising S 1 * lowering S 1 + lowering S 1 * raising S 1)) +
+      (isotropic S + dot S 0 1) := by
+    simp only [totalWeight, totalLowering, totalRaising, Fin.sum_univ_four]
+    change (z S 0 + z S 1) * (z S 0 + z S 1 + z S 2 + z S 3) +
+      (1 / 2 : ℂ) • ((raising S 0 + raising S 1) *
+        (lowering S 0 + lowering S 1 + lowering S 2 + lowering S 3) +
+        (lowering S 0 + lowering S 1) *
+        (raising S 0 + raising S 1 + raising S 2 + raising S 3)) = _
+    rw [isotropic_expansion]
+    simp only [dot, xy, zz, Matrix.mul_add, Matrix.add_mul, smul_add]
+    rw [hzz, hpq, hqp]
+    module
+  rw [h, site_casimir S 0, site_casimir S 1]
+  module
+
+private lemma isotropic_on_singlet (S : ℕ) (v : Configuration S → ℂ)
+    (hv : v ∈ singletSpace S) :
+    isotropic S *ᵥ v = (-2 * (S : ℂ) * (S + 1)) • v - dot S 0 1 *ᵥ v := by
+  have hp : totalRaising S *ᵥ v = 0 := hv.1
+  have hm : totalLowering S *ᵥ v = 0 := hv.2
+  have hz : totalWeight S *ᵥ v = 0 := singlet_has_zero_weight S hv
+  have hh := congrArg (fun A : Operator S => A *ᵥ v) (central_identity S)
+  simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+    ← Matrix.mulVec_mulVec, hp, hm, hz, Matrix.mulVec_zero, zero_add, add_zero,
+    smul_zero] at hh
+  have h : isotropic S *ᵥ v + dot S 0 1 *ᵥ v = (-2 * (S : ℂ) * (S + 1)) • v := by
+    calc
+      _ = -(2 * (S : ℂ) * (S + 1)) • v := by simpa only [neg_smul] using eq_neg_of_add_eq_zero_left hh
+      _ = _ := by ring_nf
+  exact eq_sub_iff_add_eq.mpr h
+
+private lemma singlet_lower_bound (S : ℕ) (hS : 1 ≤ S) (v : State S)
+    (hv : v.ofLp ∈ singletSpace S) (hn : ‖v‖ = 1) :
+    singletLowerBound S ≤ (expect v.ofLp (hamiltonian S)).re := by
+  have hnorm : star v.ofLp ⬝ᵥ v.ofLp = 1 := by
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct, inner_self_eq_norm_sq_to_K, hn]
+    norm_num
+  have hpair := (pair_upper_bound S hS 0 1 (by decide)).dotProduct_mulVec_nonneg v.ofLp
+  have hi : expect v.ofLp (isotropic S) =
+      -2 * (S : ℂ) * (S + 1) - expect v.ofLp (dot S 0 1) := by
+    unfold expect
+    rw [isotropic_on_singlet S v.ofLp hv, dotProduct_sub, dotProduct_smul, hnorm, smul_eq_mul, mul_one]
+  have hp : (expect v.ofLp (dot S 0 1)).re ≤ (S : ℝ)^2 := by
+    have hh := hpair.1
+    simp [Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+      dotProduct_sub, dotProduct_smul, hnorm, smul_eq_mul, pow_two, Complex.mul_re] at hh
+    unfold expect
+    nlinarith [hh]
+  have he := singlet_isotropy S v.ofLp hv
+  rw [hi] at he
+  have he' := congrArg Complex.re he
+  norm_num [Complex.mul_re, Complex.sub_re, Complex.add_re,
+    Complex.div_re, Complex.div_im] at he'
+  unfold singletLowerBound
+  linarith
 
 end D5.S3.Quantum.SpinChains.DiamondSingletExclusion
