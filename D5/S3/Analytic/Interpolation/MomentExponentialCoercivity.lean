@@ -654,7 +654,8 @@ theorem causal_prefix_deficit (D : ℝ) (hD : 0 ≤ D)
   let J := ∫ t in Icc (0 : ℝ) D, (star (g t) * A t).re
   let Eg := ∫ t in Icc (0 : ℝ) D, ‖g t‖ ^ 2
   have hg : Continuous g := resolvent_continuous _ x a
-  have hg2 := (hg.norm.pow 2).integrableOn_Icc (a := 0) (b := D)
+  have hg2 : IntegrableOn (fun t => ‖g t‖ ^ 2) (Icc 0 D) :=
+    (hg.norm.pow 2).integrableOn_Icc
   have hA2 := (shifted_hinge_prefix_energy x a ha 0).2.1.integrableOn (s := Icc 0 D)
   have hJ : IntegrableOn (fun t => (star (g t) * A t).re) (Icc 0 D) := by
     have hi := prefix_mul_integrable x a D (fun t => star (g t)) (by fun_prop)
@@ -721,6 +722,7 @@ theorem actual_prefix_primitive_gap (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤
   convert h using 1
   apply setIntegral_congr_fun measurableSet_Icc
   intro t ht
+  change ‖ramp x a t‖ ^ 2 = ‖∫ u in (0 : ℝ)..t, «prefix» x a u‖ ^ 2
   rw [ramp_is_primitive x a t (fun i => (hx i).1) ht.1]
 
 
@@ -754,8 +756,8 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
     second_right (-1 / 2) (by norm_num) x a t
   have hg (t : ℝ) : g t = G t + (1 / 2 : ℂ) * h t := by
     dsimp [g, G, h, secondResolvent]
-    field_simp
-    <;> ring
+    norm_num
+    ring
   have hintegrating (t : ℝ) : HasDerivWithinAt
       (fun v => (Real.exp (-v / 2) : ℂ) * h v)
       ((Real.exp (-t / 2) : ℂ) * G t) (Ioi t) t := by
@@ -763,15 +765,18 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
       (s := Ioi t)).mul (hderiv t)
     apply hd.congr_deriv
     rw [hg]
-    push_cast
+    simp only [Pi.neg_apply, id_eq, Complex.ofReal_mul, Complex.ofReal_div,
+      Complex.ofReal_neg, Complex.ofReal_one, Complex.ofReal_ofNat]
     ring
   have hconvolution (t : ℝ) (ht : 0 ≤ t) :
       h t = ∫ u in (0 : ℝ)..t, (Real.exp ((t - u) / 2) : ℂ) * G u := by
+    have hc : Continuous (fun u : ℝ => (Real.exp (-u / 2) : ℂ)) := by fun_prop
     have hi : IntervalIntegrable (fun u => (Real.exp (-u / 2) : ℂ) * G u) volume 0 t :=
-      ((by fun_prop).mul hG).intervalIntegrable 0 t
+      (hc.mul hG).intervalIntegrable 0 t
     have hf := intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le ht
-      (((by fun_prop).mul hh).continuousOn) (fun u _ => hintegrating u) hi
-    rw [hzero.2.2, mul_zero, sub_zero] at hf
+      ((hc.mul hh).continuousOn) (fun u _ => hintegrating u) hi
+    have hh0 : h 0 = 0 := hzero.2.2
+    rw [hh0, mul_zero, sub_zero] at hf
     have hexp : (Real.exp (t / 2) : ℂ) * (Real.exp (-t / 2) : ℂ) = 1 := by
       rw [← Complex.ofReal_mul, ← Real.exp_add]
       simp
@@ -788,8 +793,9 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
         congr 2
         ring
   have hJ : IntegrableOn (fun t => (star (h t) * G t).re) (Icc 0 D) :=
-    ((hh.star.mul hG).re).integrableOn_Icc
-  have hh2 := (hh.norm.pow 2).integrableOn_Icc (a := 0) (b := D)
+    (Complex.continuous_re.comp (hh.star.mul hG)).integrableOn_Icc
+  have hh2 : IntegrableOn (fun t => ‖h t‖ ^ 2) (Icc 0 D) :=
+    (hh.norm.pow 2).integrableOn_Icc
   have he (t : ℝ) : (star (h t) * g t).re =
       (star (h t) * G t).re + ‖h t‖ ^ 2 / 2 := by
     rw [hg]

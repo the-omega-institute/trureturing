@@ -533,7 +533,9 @@ private lemma corr_at_zero (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
   have hi := (shifted_hinge_prefix_energy x a ha 0).1
   change (∫ v : ℝ, star («prefix» x a (v + 0)) * «prefix» x a v).re =
     ∫ v : ℝ, ‖«prefix» x a v‖ ^ 2
-  rw [← integral_re hi]
+  have hre := integral_re hi
+  simp only [RCLike.re_to_complex] at hre
+  rw [← hre]
   apply integral_congr_ae
   exact ae_of_all _ (fun v => by
     simp only [add_zero]
@@ -572,7 +574,9 @@ private lemma clipped_corr (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
     apply Continuous.integrableOn_Icc
     dsimp [Q, H]
     fun_prop
-  rw [hrep, Complex.add_re, ← integral_re hi, Complex.mul_re,
+  have hre := integral_re hi
+  simp only [RCLike.re_to_complex] at hre
+  rw [hrep, Complex.add_re, ← hre, Complex.mul_re,
     Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, hinge_corr x a ha l hl]
   have he : (∫ s in Icc l D, ((f₂ s : ℂ) * Q x a (H s)).re) =
       -2 * ∫ s in Icc l D, f₂ s * actualCorr x a s := by
@@ -603,7 +607,7 @@ private lemma base_corr (D : ℝ) (hD : 0 ≤ D)
       _ = _ := by rw [Q_add, Q_constant x a ha, zero_add]
   rw [hrep, clipped_corr x a ha D hx f base₁ base₂
     (fun r => (base_deriv r).sub_const _) base₁_deriv
-    (by dsimp [base₂, base]; fun_prop) 0 le_rfl hD (by simp [f]), corr_at_zero x a ha]
+    (by fun_prop) 0 le_rfl hD (by simp [f]), corr_at_zero x a ha]
   norm_num [base₁]
   ring
 
@@ -611,7 +615,8 @@ private lemma smooth₁_entry (n : ℕ) (hn : 2 ≤ n) :
     smooth₁ n (Real.log n) = ArithmeticFunction.vonMangoldt n * Real.exp (-Real.log n / 2) := by
   have hn0 : (0 : ℝ) < n := by exact_mod_cast (by omega : 0 < n)
   have he : Real.exp (Real.log (n : ℝ) / 2) / n = Real.exp (-Real.log n / 2) := by
-    rw [← Real.exp_log hn0, div_eq_mul_inv, ← Real.exp_neg, ← Real.exp_add]
+    rw [div_eq_mul_inv, ← Real.exp_log hn0, ← Real.exp_neg, ← Real.exp_add]
+    simp only [Real.log_exp]
     congr 1 <;> ring
   dsimp [smooth₁]
   rw [he]
@@ -646,8 +651,7 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
   have hi (n : ℕ) : IntegrableOn (w n) (Icc 0 D) := by
     apply IntegrableOn.indicator
     · apply Continuous.integrableOn_Icc
-      dsimp [smooth₂, smooth]
-      exact (by fun_prop).mul (corr_continuous x a ha)
+      exact (show Continuous (smooth₂ n) by fun_prop).mul (corr_continuous x a ha)
     · exact measurableSet_Icc
   have hw (n : ℕ) (hn : n ∈ active D N) :
       (∫ s in Icc 0 D, w n s) = ∫ s in Icc (Real.log n) D, smooth₂ n s * actualCorr x a s := by
@@ -658,7 +662,7 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
       Set.inter_eq_right.mpr (Icc_subset_Icc_left hln)]
   have hbase : IntegrableOn (fun s : ℝ => base₂ s * actualCorr x a s) (Icc 0 D) := by
     apply Continuous.integrableOn_Icc
-    exact (by dsimp [base₂, base]; fun_prop).mul (corr_continuous x a ha)
+    exact (by fun_prop).mul (corr_continuous x a ha)
   have hcomb : (fun s : ℝ => base₂ s * actualCorr x a s + ∑ n ∈ active D N, w n s) =ᵐ[
       volume.restrict (Icc 0 D)] (fun s => (remainder s / 4 - Real.exp (s / 2)) * actualCorr x a s) := by
     filter_upwards [ae_restrict_mem measurableSet_Icc] with s hs
@@ -674,14 +678,15 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
     simp only [abs_of_nonneg hs.1, base₂]
     ring
   have hR : Continuous remainder := by
-    dsimp [remainder]
     exact ActualKernelLocalPositivity.K_continuous.sub
-      ((by fun_prop).mul (trivialT_continuousOn.comp_continuous continuous_abs
+      ((show Continuous (fun t : ℝ => Real.exp (-|t| / 2)) by fun_prop).mul
+      (trivialT_continuousOn.comp_continuous continuous_abs
         (fun t => abs_nonneg t)))
   have hRi : IntegrableOn (fun s : ℝ => remainder s * actualCorr x a s) (Icc 0 D) :=
     (hR.mul (corr_continuous x a ha)).integrableOn_Icc
   have hEi : IntegrableOn (fun s : ℝ => Real.exp (s / 2) * actualCorr x a s) (Icc 0 D) :=
-    ((by fun_prop).mul (corr_continuous x a ha)).integrableOn_Icc
+    ((show Continuous (fun s : ℝ => Real.exp (s / 2)) by fun_prop).mul
+      (corr_continuous x a ha)).integrableOn_Icc
   calc
     _ = ∫ s in Icc 0 D, base₂ s * actualCorr x a s + ∑ n ∈ active D N, w n s := by
       rw [integral_add hbase (integrable_finsetSum _ (fun n hn => hi n)),
@@ -729,7 +734,7 @@ theorem actual_remainder_correlation_identity (D : ℝ) (hD : 0 ≤ D)
     have hn2 := (Finset.mem_filter.mp hn).2.1
     have hln : 0 ≤ Real.log (n : ℝ) := Real.log_nonneg (by exact_mod_cast (by omega : 1 ≤ n))
     rw [clipped_corr x a ha D hdiam (smooth n) (smooth₁ n) (smooth₂ n)
-      (smooth_deriv n) (smooth₁_deriv n) (by dsimp [smooth₂, smooth]; fun_prop)
+      (smooth_deriv n) (smooth₁_deriv n) (by fun_prop)
       (Real.log n) hln (Finset.mem_filter.mp hn).2.2 (smooth_entry n hn2), smooth₁_entry n hn2]
   have hsum : (Q x a remainder).re =
       -(Real.eulerMascheroniConstant - 1 + Real.log (2 * Real.pi)) * E x a -
@@ -737,11 +742,14 @@ theorem actual_remainder_correlation_identity (D : ℝ) (hD : 0 ≤ D)
         (ArithmeticFunction.vonMangoldt n * Real.exp (-Real.log n / 2)) * actualCorr x a (Real.log n)) -
       2 * ((∫ s in Icc 0 D, base₂ s * actualCorr x a s) +
         ∑ n ∈ active D N, ∫ s in Icc (Real.log n) D, smooth₂ n s * actualCorr x a s) := by
-    rw [hrep, Complex.add_re, Complex.sum_re, base_corr D hD x a ha hdiam]
+    rw [hrep, Complex.add_re, show (∑ n ∈ active D N, Q x a (clipped (Real.log n) (smooth n))).re =
+      ∑ n ∈ active D N, (Q x a (clipped (Real.log n) (smooth n))).re from
+        map_sum Complex.reAddGroupHom _ _, base_corr D hD x a ha hdiam]
     simp_rw [Finset.sum_congr rfl hterm, Finset.sum_sub_distrib, ← Finset.mul_sum]
     ring
   rw [complete_curvature_integral D hD N hN x a ha, active_eq_Icc D N hN] at hsum
   dsimp [Q, remainder, E, actualCorr] at hsum
+  simp only [starRingEnd_apply] at hsum
   linear_combination hsum
 
 
@@ -776,7 +784,8 @@ theorem growing_exponential_correlation_identity (D : ℝ) (hD : 0 ≤ D)
     (by dsimp [f₂]; fun_prop) 0 le_rfl hD (by simp [f])
   rw [← hrep, corr_at_zero x a ha] at h
   have hi : IntegrableOn (fun s => Real.exp (s / 2) * actualCorr x a s) (Icc 0 D) :=
-    ((by fun_prop).mul (corr_continuous x a ha)).integrableOn_Icc
+    ((show Continuous (fun s : ℝ => Real.exp (s / 2)) by fun_prop).mul
+      (corr_continuous x a ha)).integrableOn_Icc
   have he : (∫ s in Icc (0 : ℝ) D, f₂ s * actualCorr x a s) =
       (1 / 4) * ∫ s in Icc (0 : ℝ) D, Real.exp (s / 2) * actualCorr x a s := by
     rw [← integral_const_mul]
