@@ -53,8 +53,8 @@ internal sealed class NativePreparedInsertionDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "This proves the source-relative preparation and literal insertion "
                         + "endpoint portion of Proposition 37.1. The unordered coloured quotient, "
-                        + "ordered decoding, recorder reconstruction and update interface, "
-                        + "payload edit sums and peak equalities are separate obligations. "
-                        + "No full-atom coverage or first freeze is asserted."))),
+                        + "active subset recognition, ordered labelled-bit decoding, current-term "
+                        + "recorder reconstruction, update and scratch clearing, payload edit sums "
+                        + "and induced peak equalities are separate obligations."))),
                 DescribeRole.Theorem))));
 }

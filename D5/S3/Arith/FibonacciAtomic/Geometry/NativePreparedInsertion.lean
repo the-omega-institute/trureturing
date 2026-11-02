@@ -120,16 +120,10 @@ private theorem inserts_from (k : ℕ) (x : Fin k → Bool) (todo : List (Fin k)
         intro i hi
         simp only [List.mem_cons, not_or]
         exact ⟨fun he => (List.nodup_cons.mp hn).1 (he ▸ hi), hf i (by simp [hi])⟩)
-      -- Reuse the original private composition proof without changing its frozen owner.
       have joined : run (endpoint k x active)
           (insertion x j ++ todo.flatMap (insertion x)) =
           some (endpoint k x (todo ++ j :: active)) := by
-        run_tac
-          let decl := (Lean.Name.num
-            `_private.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth 0) ++
-            `D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.run_append
-          Lean.Elab.Tactic.evalTactic (← `(tactic| exact $(Lean.mkIdent decl)
-            $(Lean.mkIdent `hj) $(Lean.mkIdent `ht)))
+        exact NativeFreshSensorGrowth.run_append hj ht
       have he : endpoint k x (todo ++ j :: active) =
           endpoint k x ((j :: todo) ++ active) := by
         unfold endpoint
@@ -152,12 +146,7 @@ theorem prepared_insertion (k : ℕ) (x : Fin k → Bool) (order : List (Fin k))
   rw [h0, List.append_nil] at h
   constructor
   · have hp := (prepares k).1
-    run_tac
-      let decl := (Lean.Name.num
-        `_private.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth 0) ++
-        `D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.run_append
-      Lean.Elab.Tactic.evalTactic (← `(tactic| exact $(Lean.mkIdent decl)
-        $(Lean.mkIdent `hp) $(Lean.mkIdent `h)))
+    exact NativeFreshSensorGrowth.run_append hp h
   · have hi (j : Fin k) : (insertion x j).length = 2 := by
       simp only [insertion, List.length_map]
       cases x j <;> rfl
