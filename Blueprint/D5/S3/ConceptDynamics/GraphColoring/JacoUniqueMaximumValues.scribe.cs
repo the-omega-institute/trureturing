@@ -31,7 +31,10 @@ internal sealed class JacoUniqueMaximumValuesDocument : IScribeDocumentDefinitio
                     "Maximum degrees are viewed as integers through the natural embedding. The graph is the existing underlying simple graph of the original f(x)=x recursive Jaco construction, not a graph defined by the desired degree formula. Reuse JacoMaximumDegree.result for its maximum degree at all n at least two. Irrational floor inversion gives the entire fiber B(k+1)-1 <= n <= B(k+2)-2. Both endpoints belong to the positive-order source domain. The fiber is a singleton exactly when floor((k+2)/phi)=floor((k+1)/phi). A strict jump is equivalent to k+1 belonging to the positive lower Beatty sequence. Direct application of Mathlib's Irrational.beattySeq_symmDiff_beattySeq_pos at phi and phi squared gives precisely its complementary upper Beatty sequence. This proves both directions for every positive integer k.")),
                     Paragraph(Text(
                     "For each positive t, the same explicit function realizingOrder selects the lower endpoint of that singleton fiber. Its degree is sequenceValue t, which is positive. The singleton graph has maximum degree zero, so uniqueness extends to every positive m including one. Thus G_t=jaco(realizingOrder t) is one whole infinite indexed realizing family. The source's family notation is read memberwise, its existence allows selection of corresponding orders, and the parameter is ordinary degree restricted to globally unique positive values. No total parameter on ineligible graphs or requirement G_t=J_t is added. These are the explicit source conventions; they do not assert an author-issued correction. Conjecture 2.5 concerns a different vertex-count property. The separately reported MathDB answers concern 2.2 and 2.5; neither report is attributed here to 2.3. Literature screening and external priority remain bounded; no worldwide novelty claim is made."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kok-jaco-unique-maximum-values"),
+                    ResolutionKind.Proved)))));
 
     private static Formula K => F.Id("k");
     private static Formula T => F.Id("t");
