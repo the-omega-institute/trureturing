@@ -34,6 +34,10 @@ index exceeds the upper index. The positive-index denominator contains
 its strictly positive k=0 term. Index m=0 is outside the positive-index
 limit. The positive real nth root is x raised to the reciprocal real n.
 
+## Locator
+
+DOI: 10.48550/arXiv.2508.14095; URL: https://arxiv.org/abs/2508.14095v3.
+
 ## Primary source
 
 The v3 source archive is https://arxiv.org/src/2508.14095v3.
