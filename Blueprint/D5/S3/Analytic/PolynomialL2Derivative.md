@@ -92,39 +92,154 @@ Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.exists_expansion`
 
 For every natural d and every complex polynomial p with degree(p)<d, there exists a full complex coefficient sequence a such that sum_(n<d) a_n L_n=p. This spanning identity is used by the derivative estimate and corrected polynomial approximation.
 
-**Theorem 1.7 (Hermitian pairing of finite expansions).**
+**Theorem 1.7 (Continuity of real polynomial evaluation).**
 
-Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.mixed_expansion`
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.eval_continuous`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.mixed_expansion` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every natural d and arbitrary complex coefficient sequences a,b, the bilinear moment of expansion(d,a) and the coefficient conjugate of expansion(d,b) equals sum_(n<d) a_n conjugate(b_n)/(2n+1). This finite moment identity is used both in inverse weighted energy and in the low/high orthogonality of corrected approximation.
-
-**Theorem 1.8 (The finite inverse Sturm energy estimate).**
-
-Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.complex_legendre_primitive_gap`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.complex_legendre_primitive_gap` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.eval_continuous` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For every natural d,q with q>=1 and every complex coefficient sequence a satisfying a_n=0 for all n<q, let p be sum_(n<d) a_n L_n. The integral over [0,1] of the squared norm of the actual interval primitive of p is at most 1/(4q(q+1)) times the squared L2 norm of p. No relation between d and q is imposed, and the empty expansion is included.
+For every complex polynomial p, the function from real x to p(x), using the complex embedding, is continuous. The actual primitive flux estimate consumes this continuity.
 
-For w=x(1-x), the coefficient recurrence proves -(w L_n')'=n(n+1)L_n. Dividing each high coefficient by this positive eigenvalue constructs F with -(w F')'=p. Both flux endpoints vanish. Integration by parts gives integral w norm(F')^2 equal to sum norm(a_n)^2/((2n+1)n(n+1)). The bound 0<=w<=1/4 then bounds primitive energy. Eigenvalue monotonicity and the existing exact finite Parseval identity finish the estimate. The infinite-dimensional extension is proved in MomentOrthogonalPrimitiveGap. There is no sublinear supplier or RH claim.
+**Theorem 1.8 (Left scalar multiplication in a bilinear moment).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.moment_C_mul_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.moment_C_mul_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex scalar a and complex polynomials p,q, moment(C(a)p,q)=a moment(p,q). The mixed expansion uses this existing bilinearity identity.
+
+**Theorem 1.9 (Integration by parts for polynomial moments).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.moment_derivative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.moment_derivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every pair of complex polynomials p,q, moment(p′,q)=p(1)q(1)-p(0)q(0)-moment(p,q′). Polynomial continuity supplies the analytic hypotheses. Weighted Sturm energy consumes this identity.
+
+**Theorem 1.10 (Evaluation after coefficient conjugation).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.eval_map_conj`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.eval_map_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex polynomial p and real x, evaluation of the coefficient conjugate of p at x equals conjugate(p(x)). Weighted energy retains this Hermitian pairing.
+
+**Theorem 1.11 (The actual complex shifted Legendre coefficients).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.coeff_legendreC`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.coeff_legendreC` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural n,k, coefficient k of legendreC(n) is (-1)^k choose(n,k) choose(n+k,n), as a complex number. The finite Sturm recurrence uses this existing coefficient formula, including coefficients outside the degree range.
+
+**Theorem 1.12 (Finite additivity of polynomial moments).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.moment_sum_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.moment_sum_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite set s of naturals, polynomial sequence p and complex polynomial q, moment(sum_(i in s) p_i,q)=sum_(i in s) moment(p_i,q). The finite mixed expansion consumes this equality.
+
+**Theorem 1.13 (Coefficient conjugation of a finite expansion).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.expansion_map_conj`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.expansion_map_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d and complex sequence a, coefficient conjugation of expansion(d,a) is expansion(d,conjugate(a)). The mixed expansion consumes the full sequence identity.
+
+**Theorem 1.14 (A row of Legendre orthogonality).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.moment_expansion_row`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.moment_expansion_row` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every d,i and complex sequence a with i in range(d), moment(legendreC(i),expansion(d,conjugate(a)))=conjugate(a_i)/(2i+1). The mixed expansion consumes the existing normalization and orthogonality.
+
+**Definition 1.15 (Legendre normalization weights).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.weight`
+
+*Formalization.* `D5/S3/Analytic/PolynomialL2Derivative.weight` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each natural k, weight(k)=2k+1 is the positive real normalization denominator. The high-mode coefficient gap consumes these weights.
+
+**Definition 1.16 (Finite coefficient energy).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.coefficientEnergy`
+
+*Formalization.* `D5/S3/Analytic/PolynomialL2Derivative.coefficientEnergy` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d and complex sequence a, coefficientEnergy(d,a)=sum_(i<d) norm(a_i)^2/(2i+1). The inverse Sturm estimate uses the same finite energy as the original Parseval identity.
+
+**Theorem 1.17 (Exact complex finite Parseval identity).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.expansion_parseval`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.expansion_parseval` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d and complex sequence a, the integral from zero to one of norm(expansion(d,a)(x))^2 equals coefficientEnergy(d,a). The empty expansion is included. The finite primitive estimate consumes this existing equality.
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.complex_legendre_primitive_gap`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.coeff_legendreC`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.coefficientEnergy`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.complex_polynomial_derivative_l2`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.complex_polynomial_derivative_l2_of_degree`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.eval_continuous`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.eval_map_conj`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.exists_expansion`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.expansion`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.expansion_map_conj`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.expansion_parseval`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.legendreC`
-- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.mixed_expansion`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.moment`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.moment_C_mul_left`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.moment_derivative`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.moment_expansion_row`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.moment_sum_left`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.weight`

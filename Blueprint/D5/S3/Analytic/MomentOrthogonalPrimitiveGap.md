@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Analytic/MomentOrthogonalPrimitiveGap.complex_L2_moment_p
 
 For every real D>0, every natural q>=1, and every function A from the reals to the complex numbers that belongs to L2 for volume restricted to the closed interval [0,D], assume that the integral of x^r A(x) vanishes for every natural r<q. Define V(x) as the Bochner interval integral of A from zero to x. The exact target is integral_[0,D] norm(V)^2 <= D^2/(4 q(q+1)) integral_[0,D] norm(A)^2. The zero function, arbitrary complex phases, all finite q and merely L2 representatives are included. There is no polynomial, continuity, real-valuedness or assumed spectral-expansion hypothesis.
 
-On [0,1], reuse PolynomialL2Derivative.legendreC, its actual coefficient formula, finite expansion and expansion_parseval. The existing normalization is integral norm(L_n)^2=1/(2n+1). The finite inverse Sturm construction uses the spanning and mixed expansion identities and the finite primitive estimate proved in PolynomialL2Derivative.
+On [0,1], reuse PolynomialL2Derivative.legendreC, its actual coefficient formula, finite expansion and expansion_parseval. The existing normalization is integral norm(L_n)^2=1/(2n+1). The finite inverse Sturm construction uses the spanning and mixed expansion identities and the finite primitive estimate proved in LegendrePrimitiveGap.
 
 Set w=x(1-x) and T(p)=-(w p')'. The coefficient calculation gives coeff_k(Tp)=k(k+1) coeff_k(p)-(k+1)^2 coeff_(k+1)(p). The two binomial recurrences in Mathlib imply T(L_n)=n(n+1)L_n, including n=0 and coefficients outside the degree range. For a finite high-mode expansion A=sum_(n<d) a_n L_n, with a_n=0 for n<q, set F=sum a_n/(n(n+1)) L_n. The formal division by zero at n=0 is harmless because its coefficient is zero; every used high eigenvalue is positive since q>=1. Then T(F)=A and V=-w F'.
 
@@ -33,4 +33,4 @@ This classical analytic estimate quantifies low-moment cancellation through the 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/MomentOrthogonalPrimitiveGap.complex_L2_moment_primitive_gap`
-- Dependency: [D5/S3/Analytic/PolynomialL2Derivative](PolynomialL2Derivative.md)
+- Dependency: [D5/S3/Analytic/LegendrePrimitiveGap](LegendrePrimitiveGap.md)
