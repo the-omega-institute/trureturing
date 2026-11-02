@@ -2,7 +2,7 @@
 
 ## Source statement and scope
 
-OEIS A014865, revision 18, lists N. J. A. Sloane and Olivier Gerard as the entry authors and attributes its conjectural clauses to Harvey P. Dale. The entry defines the integer sequence by
+OEIS A014865, revision 18, lists N. J. A. Sloane and Olivier Gérard as the entry authors and attributes its conjectural clauses to Harvey P. Dale. The entry defines the integer sequence by
 $$
 s(1)=1,\qquad s(j)=15s(j-1)+j\quad(j\ge 2),
 $$
@@ -65,11 +65,11 @@ For the valuation calculation used here, factor
 $$
 15^u-1=(15-1)(1+15+\cdots+15^{u-1}).
 $$
-The second factor is a sum of an odd number of odd terms, so $v_2(15^u-1)=1$. Also $15^u\equiv15\pmod {32}$, hence
+The second factor is a sum of an odd number of odd terms, so $v_2(15^u-1)=1$. Since $15^2\equiv1\pmod {32}$ and $u$ is odd, $15^u\equiv15\pmod {32}$, hence
 $$
 15^u+1\equiv15+1=16\pmod {32}
 $$
-and $v_2(15^{2u}-1)=1+4=5$. For every subsequent step $k\ge1$, one has $15^{2^ku}\equiv1\pmod 8$, so
+and $v_2(15^{2u}-1)=1+4=5$. For every subsequent step $k\ge1$, the exponent $2^ku$ is even and $15^2\equiv1\pmod 8$, so $15^{2^ku}\equiv1\pmod 8$ and
 $$
 \begin{aligned}
 v_2(15^{2^{k+1}u}-1)
@@ -81,7 +81,7 @@ After $a$ doublings this yields
 $$
 v_2(15^n-1)=1+4+(a-1)=a+4=v_2(n)+4.
 $$
-This is the $p=2$ valuation identity in Parvardi's cited lifting-the-exponent result, specialized to $15^n-1$; the calculation above supplies the specialization in the present proof. Since $1+14q$ is odd, the right-hand side of Corollary 2 has valuation $1+v_2(n)$, whereas its left-hand side has valuation $v_2(n)+4$ because $15$ is odd. These valuations cannot be equal. Hence no even $n$ belongs to $T$. ∎
+This is Parvardi's Theorem 4 for $x=15$, $y=1$ and even positive exponent $n$: both bases are odd, and $v_2(15-1)=1$, $v_2(15+1)=4$. It is a known intermediate valuation identity; the calculation above supplies the specialization in the present proof. Since $1+14q$ is odd, the right-hand side of Corollary 2 has valuation $1+v_2(n)$, whereas its left-hand side has valuation $v_2(n)+4$ because $15$ is odd. These valuations cannot be equal. Hence no even $n$ belongs to $T$. ∎
 
 **Theorem 4 (compositeness above $7$).** If $n\in T$ and $n>7$, then $n$ is composite.
 
@@ -96,13 +96,17 @@ $$
 3\mid n\quad\text{or}\quad5\mid n\quad\text{or}\quad7\mid n.
 $$
 
-**Proof.** If $3\mid n$ or $5\mid n$, the conclusion already holds, so assume $3\nmid n$ and $5\nmid n$. Theorem 3 makes $n$ odd, hence $\gcd(n,15)=1$. Corollary 2 then permits cancellation of $15$ and gives
+**Proof.** If $3\mid n$ or $5\mid n$, the conclusion already holds, so assume $3\nmid n$ and $5\nmid n$. By Theorem 3, $n$ is odd, and the assumptions on $3$ and $5$ give $\gcd(n,15)=1$. Corollary 2 then permits cancellation of $15$ and gives
 $$
 n\mid15^n-1.
 $$
-Let $p$ be the least prime divisor of $n$, which exists because $n>1$. The order mechanism used here is the one in the lower-bound part of the repository theorem `firoozbakht_a092028`: in that source the base is an integer $N>2$, a prime divisor supplies a finite-field multiplicative order, and that order divides both an exponent and the prime minus one. In the present specialization the base is $15$, the exponent is $n$, and the prime is $p$; the following argument supplies the complete specialization.
+Let $p$ be the least prime divisor of $n$, which exists because $n>1$. The known order mechanism used here occurs in the repository's private lemma `minFac_sub_one_le_of_dvd_pow_sub_one`, consumed by `firoozbakht_a092028`. Its hypotheses are a natural base $N>2$, an exponent $m>1$, and $m\mid N^m-1$; its proof takes the least prime divisor of $m$ and shows that the order of $N$ modulo that prime is one. Here $N=15$, $m=n$, and that least prime is $p$, so all these hypotheses have been established. The same least-prime order argument also occurs in the solution to Parvardi's Problem 3. The following specialization consumes this known mechanism within the present recurrence argument.
 
-Since $p\nmid15$, Fermat's theorem gives $15^{p-1}\equiv1\pmod p$, so let $d$ be the least positive integer with $15^d\equiv1\pmod p$. From $p\mid15^n-1$ and the division algorithm, the minimality of $d$ gives $d\mid n$; the same division argument applied to Fermat's congruence gives $d\mid p-1$. Thus
+Since $p\nmid15$, Fermat's theorem gives $15^{p-1}\equiv1\pmod p$, so let $d$ be the least positive integer with $15^d\equiv1\pmod p$. Write $n=hd+r$ with integers $h\ge0$ and $0\le r<d$. Since $p\mid15^n-1$,
+$$
+1\equiv15^n=(15^d)^h15^r\equiv15^r\pmod p.
+$$
+If $r>0$, this contradicts the minimality of $d$, so $r=0$ and $d\mid n$. The same division argument applied to $p-1$ and Fermat's congruence gives $d\mid p-1$. Thus
 $$
 d\mid\gcd(n,p-1).
 $$
@@ -122,8 +126,8 @@ These conclusions cover every positive qualifying index and make no claim about 
 
 ## Citations
 
-1. N. J. A. Sloane and Olivier Gerard, entry authors for OEIS A014865, revision 18 (2021-07-03), with the conjectural clauses attributed there to Harvey P. Dale, <https://oeis.org/A014865> and <https://oeis.org/A014865/internal>. The entry supplies the recurrence, the definition of $T$, and the three clauses proved here.
-2. Repository source: D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.lean, https://raw.githubusercontent.com/the-omega-institute/trureturing/e429c138785ec7abe5af8851acf67014b17af7e4/D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.lean, theorem `firoozbakht_a092028`, with its Blueprint Scribe Blueprint/D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.md. The theorem's lower-bound proof supplies the finite-field multiplicative-order mechanism consumed in Theorem 5; its public least-exponent conclusion is not used as a substitute for the displayed specialization.
-3. Amir Hossein Parvardi, *Lifting The Exponent Lemma*, version 6 (2011-04-07), <https://s3.amazonaws.com/aops-cdn.artofproblemsolving.com/resources/articles/lifting-the-exponent.pdf>. The $p=2$ valuation identity is specialized and proved inside Theorem 3.
+1. N. J. A. Sloane and Olivier Gérard, entry authors for OEIS A014865, revision 18 (2021-07-03), with the conjectural clauses attributed there to Harvey P. Dale, <https://oeis.org/A014865> and <https://oeis.org/A014865/internal>. The entry supplies the recurrence, the definition of $T$, and the three clauses proved here.
+2. Repository source: D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.lean, https://raw.githubusercontent.com/the-omega-institute/trureturing/e429c138785ec7abe5af8851acf67014b17af7e4/D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.lean, theorem `firoozbakht_a092028` on Farideh Firoozbakht's A092028 conjecture, with its Blueprint Scribe Blueprint/D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.md. The private lemma `minFac_sub_one_le_of_dvd_pow_sub_one` in the theorem's lower-bound proof supplies the least-prime finite-field order mechanism consumed in Theorem 5, under the explicit substitution $N=15$, $m=n$. The public least-exponent conclusion has a different statement from the divisibility conclusion used here.
+3. Amir Hossein Parvardi, *Lifting The Exponent Lemma*, version 6 (2011-04-07), <https://s3.amazonaws.com/aops-cdn.artofproblemsolving.com/resources/articles/lifting-the-exponent.pdf>. Theorem 4 in §4 (p. 4) supplies the known $p=2$ valuation identity specialized and proved inside Theorem 3. The solution to Problem 3 in §6 (p. 7) contains the least-prime multiplicative-order argument consumed inside Theorem 5.
 
 ## 追加锚（本行以下为增补区）
