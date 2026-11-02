@@ -50,13 +50,17 @@ internal sealed class BalaDivisorFactorialTotientPeriodDocument : IScribeDocumen
                 + "makes both powers unchanged by a shift of Nat.totient m. "
                 + "Weights (2,1) and (2,3) give the two sequences. In both conjuncts "
                 + "N=2*m+4 and T=Nat.totient m suffice. Neither is asserted minimal.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala-a258899-totient-period"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("bala-divisor-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula SequenceFormula(bool weighted)
     {

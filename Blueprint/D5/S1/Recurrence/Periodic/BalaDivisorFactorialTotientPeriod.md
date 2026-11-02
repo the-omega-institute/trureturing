@@ -48,6 +48,10 @@ $$(\forall m: \mathbb{N}, (0 < m) \Rightarrow (\exists N: \mathbb{N}, \exists T:
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/BalaDivisorFactorialTotientPeriod.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala-a258899-totient-period` (proved) by `D5/S1/Recurrence/Periodic/BalaDivisorFactorialTotientPeriod.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-a258899-totient-period","declaration_gid":"D5/S1/Recurrence/Periodic/BalaDivisorFactorialTotientPeriod.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna; Peter Bala (2025). *OEIS A258899 and A258903: divisor-factorial sequences and totient-period conjectures*. URL: <https://oeis.org/A258899>.
