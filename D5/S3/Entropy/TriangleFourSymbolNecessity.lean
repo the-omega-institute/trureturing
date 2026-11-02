@@ -9,12 +9,24 @@
 import Mathlib.Tactic
 import D5.S3.Divergence.ClassicalDPI
 import D5.S3.Entropy.MaxEntropy
+import D5.S3.Entropy.ConditionalEntropy
+import D5.S3.Entropy.Submodularity.StrongSubadditivity
+import D5.S3.Entropy.MutualInformationIndependence
+import D5.S3.Entropy.Relabeling.InjectiveInvariance
 
 /-! Finite incident laws retain structural zeros and all original source symbols. -/
 
 namespace D5.S3.Entropy.TriangleFourSymbolNecessity
 
 open scoped BigOperators
+open D5.S3.Divergence.ChainRule
+open D5.S3.Entropy.MaxEntropy
+open D5.S3.Entropy.ConditionalEntropy
+open D5.S3.Entropy.MutualInformation
+open D5.S3.Entropy.MutualInformationEntropy
+open D5.S3.Entropy.MutualInformationIndependence
+open D5.S3.Entropy.Submodularity.StrongSubadditivity
+open D5.S3.Entropy.Relabeling.InjectiveInvariance
 
 /-- The original finite source law and the three incident stochastic kernels.
 No source independence, source-cardinality bound, or strict positivity is imposed. -/
@@ -35,6 +47,144 @@ structure IncidentLaw (S₁ S₂ S₃ O : Type*)
 
 variable {S₁ S₂ S₃ O : Type*}
   [Fintype S₁] [Fintype S₂] [Fintype S₃] [Fintype O]
+
+namespace FiniteEntropy
+
+variable {A B C : Type*} [Fintype A] [Fintype B] [Fintype C]
+
+noncomputable def yz (p : A × B × C → ℝ) : B × C → ℝ :=
+  marginal (fun q : (B × C) × A => p (q.2, q.1))
+
+noncomputable def dual (p : A × B × C → ℝ) : ℝ :=
+  shannonEntropy (xyProjection p) + shannonEntropy (xzProjection p) +
+    shannonEntropy (yz p) - 2 * shannonEntropy p
+
+private theorem dual_nonneg (p : A × B × C → ℝ)
+    (hp : (∀ s, 0 ≤ p s) ∧ ∑ s, p s = 1) : 0 ≤ dual p := by
+  have h1 := entropy_submodular p hp
+  have h2 := entropy_subadditive p hp
+  change 0 ≤ shannonEntropy (xyProjection p) + shannonEntropy (xzProjection p) +
+    shannonEntropy (yz p) - 2 * shannonEntropy p
+  change shannonEntropy p ≤ shannonEntropy (marginal p) + shannonEntropy (yz p) at h2
+  linarith
+
+private theorem dual_zero_product (p : A × B × C → ℝ)
+    (hp : (∀ s, 0 ≤ p s) ∧ ∑ s, p s = 1) (hz : dual p = 0) :
+    ∀ a b c, p (a, b, c) = marginal p a * marginal (yz p) b *
+      marginal (fun q : C × B => yz p (q.2, q.1)) c := by
+  classical
+  have hs := entropy_submodular p hp
+  have hm := mutual_information_nonneg p hp
+  rw [mutual_information_eq_entropy_sub p hp.1] at hm
+  change 0 ≤ shannonEntropy (marginal p) + shannonEntropy (yz p) -
+    shannonEntropy p at hm
+  change shannonEntropy (xyProjection p) + shannonEntropy (xzProjection p) +
+    shannonEntropy (yz p) - 2 * shannonEntropy p = 0 at hz
+  have he : shannonEntropy p + shannonEntropy (marginal p) =
+      shannonEntropy (xyProjection p) + shannonEntropy (xzProjection p) := by linarith
+  have hmi : mutualInformation p = 0 := by
+    rw [mutual_information_eq_entropy_sub p hp.1]
+    change shannonEntropy (marginal p) + shannonEntropy (yz p) - shannonEntropy p = 0
+    linarith
+  have hprod := (mutual_information_eq_zero_iff_product p hp).mp hmi
+  have hcond := (entropy_submodular_eq_iff_conditional_product p hp).mp he
+  have hsum : ∑ a, marginal p a = 1 := by
+    simpa only [marginal, ← Fintype.sum_prod_type] using hp.2
+  obtain ⟨a, _, ha⟩ : ∃ a ∈ Finset.univ, 0 < marginal p a := by
+    apply (Finset.sum_pos_iff_of_nonneg (fun a _ =>
+      Finset.sum_nonneg (fun bc _ => hp.1 (a, bc)))).mp
+    change 0 < ∑ a, marginal p a
+    rw [hsum]; norm_num
+  have hslice : conditional p a = yz p := by
+    funext bc
+    simp only [conditional, congrFun hprod (a, bc)]
+    change marginal p a * yz p bc / marginal p a = yz p bc
+    exact mul_div_cancel_left₀ _ (ne_of_gt ha)
+  have hyz := hcond a (ne_of_gt ha)
+  rw [hslice] at hyz
+  intro a' b c
+  change p (a', (b, c)) = _
+  rw [congrFun hprod (a', (b, c))]
+  change marginal p a' * yz p (b, c) = _
+  rw [congrFun hyz (b, c)]
+  ring
+
+noncomputable def totalCorrelation (p : A × B × C → ℝ) : ℝ :=
+  D5.S3.Divergence.ClassicalDPI.klDivergence p (fun s =>
+    marginal p s.1 * marginal (yz p) s.2.1 *
+      marginal (fun q : C × B => yz p (q.2, q.1)) s.2.2)
+
+private theorem totalCorrelation_entropy (p : A × B × C → ℝ)
+    (hp : ∀ s, 0 ≤ p s) :
+    totalCorrelation p = shannonEntropy (marginal p) + shannonEntropy (marginal (yz p)) +
+      shannonEntropy (marginal (fun q : C × B => yz p (q.2, q.1))) - shannonEntropy p := by
+  classical
+  let m₁ := marginal p
+  let m₂ := marginal (yz p)
+  let m₃ := marginal (fun q : C × B => yz p (q.2, q.1))
+  have hterm (a : A) (b : B) (c : C) :
+      p (a, b, c) * Real.log (p (a, b, c) / (m₁ a * m₂ b * m₃ c)) =
+        -Real.negMulLog (p (a, b, c)) - p (a, b, c) * Real.log (m₁ a) -
+          p (a, b, c) * Real.log (m₂ b) - p (a, b, c) * Real.log (m₃ c) := by
+    by_cases hz : p (a, b, c) = 0
+    · simp [hz]
+    have hpos : 0 < p (a, b, c) := lt_of_le_of_ne (hp _) (Ne.symm hz)
+    have h₁ : 0 < m₁ a := lt_of_lt_of_le hpos
+      (Finset.single_le_sum (fun bc _ => hp (a, bc)) (Finset.mem_univ (b, c)))
+    have h₂ : 0 < m₂ b := by
+      apply lt_of_lt_of_le hpos
+      calc
+        p (a, b, c) ≤ ∑ a', p (a', b, c) :=
+          Finset.single_le_sum (fun a' _ => hp (a', b, c)) (Finset.mem_univ a)
+        _ ≤ ∑ c', ∑ a', p (a', b, c') :=
+          Finset.single_le_sum (fun c' _ => Finset.sum_nonneg fun a' _ => hp (a', b, c'))
+            (Finset.mem_univ c)
+    have h₃ : 0 < m₃ c := by
+      apply lt_of_lt_of_le hpos
+      calc
+        p (a, b, c) ≤ ∑ a', p (a', b, c) :=
+          Finset.single_le_sum (fun a' _ => hp (a', b, c)) (Finset.mem_univ a)
+        _ ≤ ∑ b', ∑ a', p (a', b', c) :=
+          Finset.single_le_sum (fun b' _ => Finset.sum_nonneg fun a' _ => hp (a', b', c))
+            (Finset.mem_univ b)
+    rw [Real.log_div hz (mul_ne_zero (mul_ne_zero (ne_of_gt h₁) (ne_of_gt h₂))
+      (ne_of_gt h₃)), Real.log_mul (mul_ne_zero (ne_of_gt h₁) (ne_of_gt h₂))
+      (ne_of_gt h₃), Real.log_mul (ne_of_gt h₁) (ne_of_gt h₂)]
+    simp only [Real.negMulLog]
+    ring
+  have hs₁ : (∑ a, ∑ b, ∑ c, p (a, b, c) * Real.log (m₁ a)) =
+      ∑ a, m₁ a * Real.log (m₁ a) := by
+    simp only [m₁, marginal, Fintype.sum_prod_type, Finset.sum_mul]
+  have hs₂ : (∑ a, ∑ b, ∑ c, p (a, b, c) * Real.log (m₂ b)) =
+      ∑ b, m₂ b * Real.log (m₂ b) := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro b _
+    rw [Finset.sum_comm]
+    simp only [m₂, marginal, yz, Finset.sum_mul]
+  have hs₃ : (∑ a, ∑ b, ∑ c, p (a, b, c) * Real.log (m₃ c)) =
+      ∑ c, m₃ c * Real.log (m₃ c) := by
+    calc
+      _ = ∑ b, ∑ a, ∑ c, p (a, b, c) * Real.log (m₃ c) := Finset.sum_comm
+      _ = ∑ b, ∑ c, ∑ a, p (a, b, c) * Real.log (m₃ c) := by
+        apply Finset.sum_congr rfl
+        intro b _
+        exact Finset.sum_comm
+      _ = ∑ c, ∑ b, ∑ a, p (a, b, c) * Real.log (m₃ c) := Finset.sum_comm
+      _ = ∑ c, m₃ c * Real.log (m₃ c) := by
+        simp only [m₃, marginal, yz, Finset.sum_mul]
+  unfold totalCorrelation D5.S3.Divergence.ClassicalDPI.klDivergence
+  simp only [Fintype.sum_prod_type]
+  change (∑ a, ∑ b, ∑ c, p (a, b, c) *
+    Real.log (p (a, b, c) / (m₁ a * m₂ b * m₃ c))) = _
+  simp_rw [hterm, Finset.sum_sub_distrib, Finset.sum_neg_distrib]
+  rw [hs₁, hs₂, hs₃]
+  simp only [shannonEntropy, Real.negMulLog, Fintype.sum_prod_type,
+    m₁, m₂, m₃]
+  simp only [neg_mul, Finset.sum_neg_distrib]
+  ring
+
+end FiniteEntropy
 
 namespace IncidentLaw
 
@@ -259,6 +409,152 @@ private theorem response_marginal_is_record (L : IncidentLaw S₁ S₂ S₃ O)
   classical
   simp only [responseLaw, recordLaw, ← Finset.mul_sum, L.KC_sum, mul_one,
     L.KB_sum]
+
+private theorem record_nonneg (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
+    (s : S₁ × S₂ × S₃) : 0 ≤ L.recordLaw x s :=
+  mul_nonneg (L.nu_nonneg s) (L.KA_nonneg _ _ _)
+
+private theorem output_is_probability (L : IncidentLaw S₁ S₂ S₃ O) :
+    IsProbability L.outputLaw := by
+  classical
+  constructor
+  · intro x
+    exact Finset.sum_nonneg fun s _ => L.record_nonneg x s
+  · simp only [outputLaw, recordLaw]
+    rw [Finset.sum_comm]
+    simp only [← Finset.mul_sum, L.KA_sum, mul_one, L.nu_sum]
+
+private theorem record_eq_other_responses (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (x : O) (s : S₁ × S₂ × S₃) :
+    L.recordLaw x s = L.nu s * L.KB s.2.2 s.1 x ∧
+      L.recordLaw x s = L.nu s * L.KC s.1 s.2.1 x := by
+  classical
+  by_cases hs : L.nu s = 0
+  · simp [recordLaw, hs]
+  · obtain ⟨ha, hb, hc, hab, hbc⟩ :=
+      L.point_at_readout hagree s (lt_of_le_of_ne (L.nu_nonneg s) (Ne.symm hs))
+    simp only [recordLaw, ha, hb, hc, hab, hbc, and_self]
+
+open Classical in
+/-- The same original law, including its six-variable response law and all
+incident conditional rows, has deterministic common-record support. -/
+theorem original_law_common_record (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    IsProbability L.outputLaw ∧
+    (∀ s x, (∑ b, ∑ c, L.responseLaw s x b c) = L.recordLaw x s) ∧
+    (∀ x s, L.recordLaw x s = L.nu s * L.KB s.2.2 s.1 x ∧
+      L.recordLaw x s = L.nu s * L.KC s.1 s.2.1 x) ∧
+    (∀ x s, L.recordLaw x s =
+      if x = L.readoutA s.2.1 s.2.2 then L.nu s else 0) ∧
+    (∀ s, 0 < L.nu s →
+      L.readoutA s.2.1 s.2.2 = L.readoutB s.2.2 s.1 ∧
+      L.readoutB s.2.2 s.1 = L.readoutC s.1 s.2.1) := by
+  refine ⟨L.output_is_probability, L.response_marginal_is_record,
+    L.record_eq_other_responses hagree, ?_, ?_⟩
+  · exact (L.original_law_recoverability hagree).2.2.2.2
+  · exact (L.original_law_recoverability hagree).2.2.2.1
+
+/-- The record/source joint table in the repository's finite entropy carrier. -/
+noncomputable def recordJoint (L : IncidentLaw S₁ S₂ S₃ O)
+    (z : O × (S₁ × S₂ × S₃)) : ℝ := L.recordLaw z.1 z.2
+noncomputable def recordPair₁₂ (L : IncidentLaw S₁ S₂ S₃ O)
+    (z : O × (S₁ × S₂)) : ℝ := ∑ s₃, L.recordLaw z.1 (z.2.1, z.2.2, s₃)
+noncomputable def recordPair₁₃ (L : IncidentLaw S₁ S₂ S₃ O)
+    (z : O × (S₁ × S₃)) : ℝ := ∑ s₂, L.recordLaw z.1 (z.2.1, s₂, z.2.2)
+noncomputable def recordPair₂₃ (L : IncidentLaw S₁ S₂ S₃ O)
+    (z : O × (S₂ × S₃)) : ℝ := ∑ s₁, L.recordLaw z.1 (s₁, z.2.1, z.2.2)
+
+private theorem entropy_deterministic_extension {Y X : Type*} [Fintype Y] [Fintype X]
+    (p : Y → ℝ) (f : Y → X) :
+    shannonEntropy (fun z : X × Y => if z.1 = f z.2 then p z.2 else 0) =
+      shannonEntropy p := by
+  classical
+  let e : Y → X × Y := fun y => (f y, y)
+  have he : Function.Injective e := fun a b h => congrArg Prod.snd h
+  have htable : (fun z : X × Y => if z.1 = f z.2 then p z.2 else 0) =
+      Function.extend e p (fun _ => 0) := by
+    funext z
+    by_cases hz : z.1 = f z.2
+    · have ze : z = e z.2 := by ext <;> simp_all [e]
+      rw [ze, he.extend_apply]
+      simp [e]
+    · have hn : ¬ ∃ y, e y = z := by
+        rintro ⟨y, hy⟩
+        have hy₂ := congrArg Prod.snd hy
+        have hy₁ := congrArg Prod.fst hy
+        exact hz (by simpa [e, ← hy₂] using hy₁.symm)
+      rw [if_neg hz, Function.extend_apply' _ _ _ hn]
+  rw [htable]
+  exact shannonEntropy_extend_injective he p
+
+private theorem record_pair_tables (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    (∀ z, L.recordPair₁₂ z =
+      if z.1 = L.readoutC z.2.1 z.2.2 then L.pair₁₂ z.2.1 z.2.2 else 0) ∧
+    (∀ z, L.recordPair₁₃ z =
+      if z.1 = L.readoutB z.2.2 z.2.1 then L.pair₁₃ z.2.1 z.2.2 else 0) ∧
+    (∀ z, L.recordPair₂₃ z =
+      if z.1 = L.readoutA z.2.1 z.2.2 then L.pair₂₃ z.2.1 z.2.2 else 0) := by
+  classical
+  have hr := L.original_law_recoverability hagree
+  refine ⟨?_, ?_, ?_⟩
+  · intro z
+    have he : L.recordPair₁₂ z = L.pair₁₂ z.2.1 z.2.2 * L.KC z.2.1 z.2.2 z.1 := by
+      simp only [recordPair₁₂, pair₁₂, Finset.sum_mul,
+        (L.record_eq_other_responses hagree _ _).2]
+    rw [he]
+    by_cases hz : L.pair₁₂ z.2.1 z.2.2 = 0
+    · simp [hz]
+    · have hp : 0 < L.pair₁₂ z.2.1 z.2.2 :=
+        lt_of_le_of_ne (Finset.sum_nonneg fun s₃ _ => L.nu_nonneg _) (Ne.symm hz)
+      rw [hr.2.2.1 _ _ hp z.1]
+      split_ifs <;> simp
+  · intro z
+    have he : L.recordPair₁₃ z = L.pair₁₃ z.2.1 z.2.2 * L.KB z.2.2 z.2.1 z.1 := by
+      simp only [recordPair₁₃, pair₁₃, Finset.sum_mul,
+        (L.record_eq_other_responses hagree _ _).1]
+    rw [he]
+    by_cases hz : L.pair₁₃ z.2.1 z.2.2 = 0
+    · simp [hz]
+    · have hp : 0 < L.pair₁₃ z.2.1 z.2.2 :=
+        lt_of_le_of_ne (Finset.sum_nonneg fun s₂ _ => L.nu_nonneg _) (Ne.symm hz)
+      rw [hr.2.1 _ _ hp z.1]
+      split_ifs <;> simp
+  · intro z
+    have he : L.recordPair₂₃ z = L.pair₂₃ z.2.1 z.2.2 * L.KA z.2.1 z.2.2 z.1 := by
+      simp only [recordPair₂₃, pair₂₃, recordLaw, Finset.sum_mul]
+    rw [he]
+    by_cases hz : L.pair₂₃ z.2.1 z.2.2 = 0
+    · simp [hz]
+    · have hp : 0 < L.pair₂₃ z.2.1 z.2.2 :=
+        lt_of_le_of_ne (Finset.sum_nonneg fun s₁ _ => L.nu_nonneg _) (Ne.symm hz)
+      rw [hr.1 _ _ hp z.1]
+      split_ifs <;> simp
+
+private theorem record_joint_entropy (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    shannonEntropy L.recordJoint = shannonEntropy L.nu := by
+  have he := (L.original_law_recoverability hagree).2.2.2.2
+  have ht : L.recordJoint = fun z : O × (S₁ × S₂ × S₃) =>
+      if z.1 = L.readoutA z.2.2.1 z.2.2.2 then L.nu z.2 else 0 := by
+    funext z
+    exact he _ _
+  rw [ht]
+  exact entropy_deterministic_extension L.nu (fun s => L.readoutA s.2.1 s.2.2)
+
+private theorem record_pair_entropies (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    shannonEntropy L.recordPair₁₂ = shannonEntropy (fun z : S₁ × S₂ => L.pair₁₂ z.1 z.2) ∧
+    shannonEntropy L.recordPair₁₃ = shannonEntropy (fun z : S₁ × S₃ => L.pair₁₃ z.1 z.2) ∧
+    shannonEntropy L.recordPair₂₃ = shannonEntropy (fun z : S₂ × S₃ => L.pair₂₃ z.1 z.2) := by
+  obtain ⟨h₁₂, h₁₃, h₂₃⟩ := L.record_pair_tables hagree
+  refine ⟨?_, ?_, ?_⟩
+  · rw [show L.recordPair₁₂ = _ from funext h₁₂]
+    exact entropy_deterministic_extension _ (fun z => L.readoutC z.1 z.2)
+  · rw [show L.recordPair₁₃ = _ from funext h₁₃]
+    exact entropy_deterministic_extension _ (fun z => L.readoutB z.2 z.1)
+  · rw [show L.recordPair₂₃ = _ from funext h₂₃]
+    exact entropy_deterministic_extension _ (fun z => L.readoutA z.1 z.2)
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
