@@ -122,8 +122,33 @@ private theorem cyclic_q_factorization (d : ℕ) (h : 2 ≤ d) :
   simp [cyclicQ, cyclicS, cyclicQbar, Equiv.Perm.permMatrix,
     cyclic_shift_factor d h i j k]
 
+private def cyclicFiberEquiv (d : ℕ) (h : 2 ≤ d) (m : Fin d) :
+    {p : Fin d × Fin d // cyclicS d p.1 p.2 ≠ 0 ∧ cyclicMu d p.1 p.2 = m} ≃ Fin d :=
+  { toFun := fun p => p.1.1
+    invFun := fun i => ⟨(i, cyclicShift d m i), by
+      refine ⟨by simp [cyclicS], ?_⟩
+      have hm := (cyclic_shift_factor d h i (cyclicShift d m i) m).mp ?_
+      · simpa [cyclicShiftEquiv] using hm.symm
+      · rfl⟩
+    left_inv := by
+      intro p
+      apply Subtype.ext
+      apply Prod.ext
+      · rfl
+      · have hm : m = cyclicMu d p.1.1 p.1.2 := p.2.2.symm
+        have hs := (cyclic_shift_factor d h p.1.1 p.1.2 m).mpr hm
+        simpa [cyclicShiftEquiv] using hs
+    right_inv := by intro i; rfl }
+
 private theorem cyclic_multiplicity (d : ℕ) (h : 2 ≤ d) (i j : Fin d) :
-    (cyclicS d i j) ^ 2 = (d : ℝ) / multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) := by sorry
+    (cyclicS d i j) ^ 2 = (d : ℝ) / multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) := by
+  have hc : multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) = d := by
+    unfold multiplicity
+    simpa [cyclicS] using Fintype.card_congr
+      (cyclicFiberEquiv d h (cyclicMu d i j))
+  have hd : (d : ℝ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt (lt_of_lt_of_le (by omega) h))
+  simp [cyclicS, hc, hd]
 
 private theorem cyclic_qbar_orthonormal (d : ℕ) :
     ∀ m n, ∑ k, cyclicQbar d m k * cyclicQbar d n k = if m = n then 1 else 0 := by
