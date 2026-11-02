@@ -1804,3 +1804,498 @@ recovery problem for space, time, boundary, memory and recursive
 observation remains unresolved by this conditional result.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. The sharp eight-invocation decision boundary of the prepared source
+
+### 6.1 The same experiment and its measurable protocol class
+
+Retain Definition 5.1 and Assumption 5.2 in full. In particular, the
+actual graph is (UJB.7502), with all three $w$ coordinates, $72$ left
+vertices, $243$ right vertices and $1944$ edges. Proposition 3.2 supplies
+the bijection from the actual order-six elements, Proposition 5.3 the
+legal native preparation and the exhaustive original-root address
+classification. The full-label experiment of §4 supplies a latent
+probability calculation; its handle/equality operations are not ports
+of the native observer of §5.
+
+For clarity, the two laws average over the **single** draw of each full
+injection (UJB.7701), independently across endpoint types and independently
+of the iid edge samples. They do not condition on particular realized
+injections. Conditional on $s$ distinct vertices of one type, their
+ordered labels have probability $1/(Q)_s$ for each ordered distinct
+$s$-tuple of words, with $Q=128$ or $256$, exactly as in (UJB.7708).
+Equal vertices retain the same word across every sample and query.
+This without-replacement law concerns images of distinct vertices;
+the original edges are sampled with replacement. No history-dependent
+redraw or independent-bit surrogate is used below.
+
+Write $\omega=(J,U)$ for the independently installed controller and
+supplied independent seed of (UJB.7704), on their product probability
+space $(\Omega,\mathcal F,\nu)$. Its sigma algebra is arbitrary. The
+initial observer state is a measurable function of public $N$, the
+public promise/law descriptions and $\omega$ **only**. Every subsequent
+query, stop, update, output and retained-state map is common to the two
+sources, measurable on its declared carriers, and receives only these
+public data, this seed and previously acquired replies. An initial
+state with equal marginal laws could still contain the hidden maps or
+correlated preparation data; equality of marginals is not a substitute
+for this derivation and joint independence requirement.
+
+Let $\mathcal A_8(N)$ contain all these protocols whose stopping is
+pathwise bounded by eight actual original-root Read invocations.
+There is no restriction on the finite operands, and repeats, constants,
+absences and off-path calls remain legal and paid. Local transitions
+retain Assumption 5.2's finite completion requirement; no additional
+computability, address-length or memory restriction is imposed. For
+$\mathcal A\in\mathcal A_8(N)$ let $\mathsf{Tr}_{\mathcal A}$ be its
+complete stopped record, including operands, replies, stop/truncation
+flag, output and retained state. For arbitrary measurable laws use
+$\operatorname{TV}(P,Q)=\sup_E|P(E)-Q(E)|$, which is half the absolute
+mass sum for finite laws. Define
+
+$$
+V_8(N)=\sup_{\mathcal A\in\mathcal A_8(N)}
+ \operatorname{TV}\bigl(\mathcal L_0(\mathsf{Tr}_{\mathcal A}),
+                         \mathcal L_1(\mathsf{Tr}_{\mathcal A})\bigr).
+\tag{UJB.7801}
+$$
+
+The upper bound will also hold with $\omega$ itself retained in the
+record. Edge sampling, full-injection selection, legal preparation and
+isolated handoff remain external premises. The statement does not
+supply them as new bare-LAB operations.
+
+### 6.2 A uniform cell bound from the actual full injections
+
+**Lemma 6.1 (sharp coefficient for every four-pair bit design).** Choose
+any four distinct sample indices. For each chosen sample $j=1,\ldots,4$,
+select a left coordinate $a_j\in[7]$ and a right coordinate $b_j\in[8]$.
+Let $Y_{\mathbf a,\mathbf b}\in\{0,1\}^8$ list these four left bits
+and four right bits, in those two blocks. Uniformly in all these
+indices, coordinates and values $y$,
+
+$$
+\begin{aligned}
+\Pr_1(Y_{\mathbf a,\mathbf b}=y)-\Pr_0(Y_{\mathbf a,\mathbf b}=y)
+ &=c_{\mathbf a,\mathbf b}(-1)^{\sum_{j=1}^8y_j},\\
+|c_{\mathbf a,\mathbf b}|&\le\Delta:=\frac{56}{158731093125}.
+\end{aligned}
+\tag{UJB.7802}
+$$
+
+When $a_1=\cdots=a_4$ and $b_1=\cdots=b_4$, the coefficient is
+$+\Delta$; the common left and right coordinates need not be equal.
+
+Proof. Use the partition refinement order of §4.1 and its three
+perfect matchings $\mathcal P=\{12|34,13|24,14|23\}$. For one side put
+$Q=2^d$ and $\chi_h(x)=(-1)^{x_h}$. Given a partition $p$ of $[4]$,
+define $m_Q(\mathbf a;p)$ to be the expected product
+$\prod_{j=1}^4\chi_{a_j}(X_{B_p(j)})$, where the distinct blocks of
+$p$ receive uniform ordered distinct labels in $\{0,1\}^d$.
+Here $B_p(j)$ denotes the block containing $j$. This is the actual
+conditional injection channel, by (UJB.7708), even when the named
+vertices conditional on their equality record are not uniform.
+
+We calculate these moments with their without-replacement denominator
+explicit. Write $k_p=|p|$, and for each block $B$ set
+$u_B=\bigoplus_{j\in B}e_{a_j}\in\mathbb F_2^d$. For a partition
+$\rho$ of the set of $p$-blocks put
+
+$$
+\mu(0,\rho)=\prod_{C\in\rho}(-1)^{|C|-1}(|C|-1)!.
+$$
+
+Distinct-label inclusion-exclusion gives
+
+$$
+m_Q(\mathbf a;p)=\frac1{(Q)_{k_p}}
+ \sum_{\rho}
+ \mu(0,\rho)Q^{|\rho|}
+ \prod_{C\in\rho}\mathbf1\left\{\bigoplus_{B\in C}u_B=0\right\}.
+\tag{UJB.7803}
+$$
+
+Indeed the indicator that $k_p$ label variables are all distinct is
+the sum over $\rho$ of $\mu(0,\rho)$ times the indicator of equality
+within each $C\in\rho$. The coefficient counts cyclic orderings on
+each block with sign $(-1)^{|C|-1}$. On a tuple with a nontrivial
+equality class, the sum is zero because the signed sum of permutations
+within that class is zero; on an all-distinct tuple it is one.
+After multiplying by the characters, each merged label sum is $Q$
+when its total character is zero and zero otherwise. Dividing by the
+number $(Q)_{k_p}$ of ordered distinct tuples proves (UJB.7803).
+
+For $t\in\mathcal P$ define its consumed matching coefficient
+
+$$
+K_Q(\mathbf a;t)=\sum_{p\preceq t}\mu(p,t)m_Q(\mathbf a;p).
+\tag{UJB.7804}
+$$
+
+If $t^-,t^+$ are its two one-pair splittings and $D=1|2|3|4$ is the
+discrete partition, then §4.1's interval calculation makes this exactly
+$m_Q(\mathbf a;t)-m_Q(\mathbf a;t^-)-m_Q(\mathbf a;t^+)
+ +m_Q(\mathbf a;D)$.
+
+Every proper marginal of $Y_{\mathbf a,\mathbf b}$ uses at most seven
+bits, hence is common by Theorem 5.4 and (UJB.7706). Apply the finite
+Boolean Fourier expansion to its signed mass function
+$d(y)=\Pr_1(Y=y)-\Pr_0(Y=y)$. A character supported on a proper subset
+has zero coefficient because the corresponding marginal difference
+is zero. Only the full character survives, so
+
+$$
+d(y)=c_{\mathbf a,\mathbf b}(-1)^{\sum y_j},\qquad
+c_{\mathbf a,\mathbf b}
+ =\frac1{256}\left(\mathbb E_1\prod_{j=1}^8(-1)^{Y_j}
+                  -\mathbb E_0\prod_{j=1}^8(-1)^{Y_j}\right).
+\tag{UJB.7805}
+$$
+
+This expands a real function on the finite cube; it does not assume
+independent or uniformly distributed observed bits.
+
+Set $h=(H_1-H_0)/1944^4=1/68024448$. Theorem 4.2, specifically
+(UJB.7603), supplies the entire signed exact partition law. Its only
+prescribed-equality differences are the six **ordered** pairs of
+distinct perfect matchings, each of size $h$. Averaging the independent
+left/right injection characters against that law and interchanging
+finite sums yields
+
+$$
+\begin{aligned}
+c_{\mathbf a,\mathbf b}
+ &=\frac1{256}\sum_{p,q}
+       (p_1(p,q)-p_0(p,q))m_{128}(\mathbf a;p)m_{256}(\mathbf b;q)\\
+ &=\frac h{256}
+   \sum_{\substack{t,s\in\mathcal P\\t\ne s}}
+        K_{128}(\mathbf a;t)K_{256}(\mathbf b;s).
+\end{aligned}
+\tag{UJB.7806}
+$$
+
+This reuses the full-label signed law without giving its equality
+record to the native observer.
+
+It remains to bound every possible coordinate tuple, rather than just
+the fixed coordinate used by the attaining protocol. Flipping one
+coordinate in **all** labels is a permutation of the full cube and
+preserves the uniform distinct-label law. If that coordinate occurs
+oddly among $a_1,\ldots,a_4$, it reverses the sign of the character
+product. Thus every $m_Q(\mathbf a;p)$ and $K_Q(\mathbf a;t)$ is zero
+in this case. If all multiplicities are even, the only possibilities
+are one coordinate four times, or two distinct coordinates twice each.
+These alternatives exhaust arbitrary coordinate choices, including all
+four distinct coordinates.
+
+For the nonzero cases put
+
+$$
+A_Q=\frac{Q(Q-2)}{(Q-1)(Q-3)}.
+$$
+
+The following small moment calculation follows directly from
+(UJB.7803). If all four coordinates agree, the matching, either split,
+and discrete moments are respectively
+
+$$
+m_t=1,\qquad m_{t^-}=m_{t^+}=-\frac1{Q-1},\qquad
+m_D=\frac3{(Q-1)(Q-3)}.
+\tag{UJB.7807}
+$$
+
+For example, the discrete numerator is $3Q^2-6Q$: the three pairings
+and the one four-block merger are precisely its zero-character
+partitions. The split has block characters $0,u,u$, with $u\ne0$;
+the two nontrivial labels have character correlation $-1/(Q-1)$.
+The same result also follows by including the third distinct label
+in (UJB.7803).
+
+If the two coordinates occur twice each, let $r\in\mathcal P$ be
+their coordinate-equality matching. Its discrete moment is
+
+$$
+m_D=\frac{Q-6}{(Q-1)(Q-2)(Q-3)}.
+\tag{UJB.7808}
+$$
+
+Here the block characters are $u,u,v,v$ with distinct nonzero basis
+characters $u,v$. Only the matching grouping like characters and the
+full merger contribute, with numerator $Q^2-6Q$. At $t=r$ the matching
+moment is $1$ and both split moments are $-1/(Q-1)$, as above.
+At $t\ne r$ the matching has block characters $u+v,u+v$, giving
+$-1/(Q-1)$, whereas either split has characters $u+v,u,v$ and moment
+$2/((Q-1)(Q-2))$. For this last value only their full merger contributes
+$2Q$ in (UJB.7803).
+
+Substitution into (UJB.7804) therefore gives the complete classification
+
+$$
+\begin{array}{c|c}
+\text{coordinate multiplicities}&K_Q(\mathbf a;t)\\\hline
+\text{some odd multiplicity}&0\\
+\text{all four coordinates equal}&A_Q\\
+\text{two pairs, with }t=r&A_Q\left(1-\dfrac2{(Q-2)^2}\right)\\
+\text{two pairs, with }t\ne r&-\dfrac{A_Q}{Q-2}
+\end{array}
+\tag{UJB.7809}
+$$
+
+For $Q=128,256$, these formulas give $|K_Q(\mathbf a;t)|\le A_Q$;
+the two-pair magnitudes are strictly smaller. Apply this bound to
+each of the six terms of (UJB.7806):
+
+$$
+\begin{aligned}
+|c_{\mathbf a,\mathbf b}|
+ &\le\frac{6h}{256}A_{128}A_{256}\\
+ &=\frac6{256\cdot68024448}
+     \frac{16128}{15875}\frac{65024}{64515}
+  =\frac{56}{158731093125}=\Delta.
+\end{aligned}
+\tag{UJB.7810}
+$$
+
+If each side uses one fixed coordinate, all three of its $K$ values
+are the positive $A_Q$, so every term has the same positive sign and
+$c_{\mathbf a,\mathbf b}=\Delta$. No calculation depends on which four
+sample indices were selected: their edges are iid and all unused
+samples integrate out under the same full injections. Together with
+(UJB.7805) this proves the uniform sharp cell statement. $\square$
+
+### 6.3 Every stopped adaptive leaf and every independent measurable seed
+
+**Theorem 6.2 (attained maximum over all lawful eight-call protocols).**
+For each fixed public $N\ge4$, under exactly the source and access
+hypotheses of §6.1,
+
+$$
+V_8(N)=\frac{7168}{158731093125}.
+\tag{UJB.7811}
+$$
+
+The upper bound includes the joint record of the independent installation,
+seed and complete stopped transcript. It is attained by the eight
+original-root operands in (UJB.7814) below.
+
+Proof. Fix $\omega$ first, making all common controller maps
+deterministic. For any control-consistent stopped leaf $\ell$, its
+operands and replies are fixed; its source event is the single
+unconditional cylinder
+
+$$
+C_\ell=\bigcap_{a=1}^{m_\ell}
+ \{t:\operatorname{Read}_t(w_a)=y_a\},\qquad m_\ell\le8.
+\tag{UJB.7812}
+$$
+
+Source-dependent adaptation chooses these operands along the path;
+fixing the path fixes them. There is no extra condition on the source
+from a stop or state value, since each is determined by the seed and
+that reply path. Inconsistent paths have zero probability under both
+laws. We evaluate (UJB.7812) under the original averaged preparation
+law, without assuming uniform labels conditional on the acquired path.
+
+By Proposition 5.3, each operand is constant or an invertible two-reply
+function of one bit in one endpoint field. Let $I_A,I_T$ be the sample
+indices whose respective endpoint fields are informatively touched on
+this leaf, and $r=|I_A\cap I_T|$. The equality-record extension argument
+in §5.3 applies to every fixed tuple with $r\le3$: its proof uses that
+condition for the paired core, then adjoins independent one-sided
+uniform endpoints and the channel (UJB.7708). The seven-call assumption
+there was used only to force $r\le3$, not in that extension. Hence
+$\mu_1^N(C_\ell)-\mu_0^N(C_\ell)=0$ whenever $r\le3$, also for
+an eight-call tuple with many one-sided samples, multiple coordinates
+of a field, repeated bits or constant replies.
+
+Otherwise $2r\le|I_A|+|I_T|\le m_\ell\le8$ forces $r=4$ and equality
+throughout. Consequently this leaf has exactly four paired sample
+indices, exactly one informative invocation for each of their eight
+endpoint roles, and no other invocation. A constant, repeated role or
+second coordinate in one role would violate that count. Decoding each
+of its invertible replies, the leaf is exactly one cell of one design
+in Lemma 6.1. It follows that for **every** leaf
+
+$$
+|\mu_1^N(C_\ell)-\mu_0^N(C_\ell)|\le\Delta.
+\tag{UJB.7813}
+$$
+
+The selected sample indices and coordinates may be completely different
+on different leaves; (UJB.7810) is uniform over all of them.
+
+At a fixed query node, its chosen word has at most two possible replies
+on the whole promised comb family, by (UJB.7705) and Proposition 5.3.
+Thus the attained reply tree is binary, possibly unary, with depth at
+most eight. Induction on the remaining depth bounds its number of
+stopped leaves by $2^8=256$: a stop contributes one leaf, a unary node
+uses the bound of its child, and a binary node sums the two child
+bounds. This retains all paid repeats and absences; it does not
+normalize them away. Therefore its discrete leaf record has TV at most
+$\tfrac12\cdot256\Delta=128\Delta$. The complete stopped record,
+including operands, output and every retained local state, is a common
+function of the seed and leaf. For this fixed seed it has TV at most
+that bound too. Zero-call, early-stop and truncated-at-eight leaves
+are included.
+
+To cover all the admitted seeds, let $\Theta=\mathcal C_N$ be the finite
+discrete space of prepared terms, with masses $p_i(\theta)=\mu_i^N
+(\{\theta\})$. Using the source-blind boundary, the complete record is
+a common function $\Psi(\omega,\theta)$. Measurability of the initial
+state and every query/stop/update/output/retained-state map makes
+$\Psi$ measurable by finite induction over the eight steps, padding
+stopped runs with a fixed stop marker. Read itself is measurable:
+words are countable discrete, $\Theta$ is finite discrete, and each
+reply fiber is a countable union of word/term rectangles. Thus arbitrary
+declared measurable state/output carriers introduce no missing
+transcript-measurability premise.
+
+For any measurable event $E$ in the joint seed/record space, its signed
+probability is exactly
+
+$$
+\Pr_1((\omega,\Psi)\in E)-\Pr_0((\omega,\Psi)\in E)
+ =\int_\Omega\sum_{\theta\in\Theta}
+       (p_1(\theta)-p_0(\theta))
+       \mathbf1_E(\omega,\Psi(\omega,\theta))\,d\nu(\omega).
+$$
+
+The integrand is a finite sum of measurable functions. For every fixed
+$\omega$, the event section selects a set of leaves in that seed's
+finite tree, so its absolute signed mass is at most $128\Delta$ by
+the deterministic result. Taking absolute values and integrating proves
+the same bound on every $E$, hence on joint TV. This is a direct
+finite-source product-measure argument, needing no regular conditional
+distribution and no standard-Borel or completeness assumption on
+$\Omega$. Dropping the seed or applying any common measurable decoder
+cannot increase this event bound. Independence of the *joint* hidden
+preparation from $\omega$ is essential to the product formula.
+
+For attainment choose the first coordinate of each endpoint type in
+samples $1,2,3,4$, and use the actual root operands
+
+$$
+w_{A,j}=R^{15j}LL,\qquad w_{T,j}=R^{15j+7}LL,
+\qquad j=0,1,2,3.
+\tag{UJB.7814}
+$$
+
+They are (UJB.7706) at $b=15j+1$ and $b=15j+8$, respectively. The
+reply $\beta$ decodes as zero and $\mathsf b$ as one; these are local
+$L$ Reads of the slots, with the same original root on every call.
+This deterministic protocol makes exactly eight lawful invocations.
+Lemma 6.1 gives discrepancy $+\Delta$ on each of the $128$ even-parity
+bit strings and $-\Delta$ on each of the $128$ odd ones. Thus the
+event of even parity has gap $128\Delta=7168/158731093125$, attaining
+the universal ceiling. Both the full transcript and its terminal parity
+have exactly that TV. The supremum is a maximum for every fixed
+$N\ge4$; additional prepared samples cannot improve it within eight
+calls. $\square$
+
+### 6.4 Exact decision, retained parity and resource boundaries
+
+**Corollary 6.3 (equal-prior performance).** Under Theorem 6.2's
+hypotheses the maximum equal-prior success of a lawful eight-call
+binary source decision is
+
+$$
+\frac12+\frac{3584}{158731093125}
+ =\frac{158731100293}{317462186250},
+\qquad
+\operatorname{Err}^{\mathrm{opt}}_{1/2}
+ =\frac12-\frac{3584}{158731093125}
+ =\frac{158731085957}{317462186250}.
+\tag{UJB.7815}
+$$
+
+The attaining protocol (UJB.7814) outputs $i=1$ on even decoded parity
+and $i=0$ on odd parity.
+
+Proof. A binary decision has equal-prior success
+$\tfrac12+\tfrac12(P_1(E)-P_0(E))$, where $E$ is its source-$1$ event;
+independent final randomization can be included in the supplied seed.
+Theorem 6.2 bounds the event gap by $128\Delta$, and its even-parity
+event attains it with the positive orientation. Substituting gives
+(UJB.7815). The two parity fibers contain only one sign each of the
+signed discrepancy, explaining TV preservation without a reversible
+transcript encoding. $\square$
+
+The eight literal operand lengths are $2,9,17,24,32,39,47,54$, with
+sum $224$ and maximum $54$, as in Proposition 5.5. Their construction,
+storage and navigation are separate from eight invocation charges.
+Proposition 5.3's exact $75N+4$ native preparation events also remain
+separate, together with their operands, external edge sampling, selection
+and storage of both full injection tables, controller installation,
+isolated handoff, local computation, decoding and memory. A running
+parity accumulator suffices for the acquired-bit component of the
+terminal rule; it supplies no minimum-memory result for the whole
+observer, operands, counters or source preparation.
+
+The one-event gap of Proposition 5.5 remains $\Delta$. Collecting all
+positive parity cells increases that gap by a factor of $128$ using
+the same eight calls. This is optimal pairwise TV and equal-prior
+binary decision performance under this particular averaged source law.
+It is not a general sufficient-statistic claim, an optimum for other
+priors or losses, source recovery, zero-error identification, a physical
+or native sampler, a total-time optimum, a memory minimum, or an
+optimum for any budget above eight. In particular $V_8(N)<1$, and
+Proposition 5.5's common full-tree sublaw still excludes zero-error
+source identification at fixed $N$ even after complete decoding.
+
+### 6.5 Suppliers, mathematical content and scope of verification
+
+The source-specific increment is (UJB.7803)–(UJB.7810)'s uniform
+mixed-coordinate coefficient bound and its use on every stopped
+adaptive leaf and every independent measurable seed. The actual graph,
+all $w_3$ values, order-six/edge bijection, complete four-sample signed
+law, native comb, all-address bridge and first distinction are reused
+from §§3–5 with their original hypotheses. Their different observer
+contracts are not identified. Section 1.3's distinction between a law
+difference and what one run can identify remains applicable; this
+finite decision theorem does not settle §1.4's four-view transport and
+mutual-recovery conditions.
+
+The finite real-function Fourier expansion and coefficient identity
+are [O'Donnell, *Analysis of Boolean Functions*, Theorem 1.1 and
+Proposition 1.8](https://arxiv.org/abs/2105.10386v1), applied here to
+the signed mass function on eight bits. They require neither an
+independent observed-bit law nor an independent source assignment.
+His Definition 3.13 excludes repeated-coordinate paths; that convention
+is not imported into native invocation accounting. The binary leaf
+bound above is proved directly with repetitions and unary nodes.
+
+The once-sampled function
+$w\mapsto\operatorname{Read}_{\theta}(w)$ and common adaptive controller
+have the random-function/interaction interpretation of
+[Maurer, *Indistinguishability of Random Systems*, Definitions 2–3,
+9–10 and Lemma 4](https://crypto.ethz.ch/publications/files/Maurer02.pdf).
+This supplies framework and credit, not the source-specific numerical
+ceiling or an assumption eliminating adaptive advantage. That ceiling
+comes from (UJB.7813) for this actual source. The equal-prior convention
+also agrees with the paragraph following Maurer's Lemma 5.
+
+For the finite parity channel $W(y,e)=\mathbf1\{e=\sum_jy_j\bmod2\}$,
+$W\ge0$ and each row sums to one. Its fibers do not mix positive and
+negative discrepancy signs. This is precisely the finite hypothesis
+of the existing
+[`total_variation_channel_eq_iff_no_sign_mixing`](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean)
+supplier, used here as ordinary mathematical credit for the TV equality.
+Reading that result supplies no fresh compiled application. Likewise
+[`ActualTreeReadoutAcquisition.RandomContract`](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+explicitly assumes neither measurable transcripts nor a common good-seed
+set, and its `paid` functional counts distinct addresses. The stronger
+measurable-map and pathwise invocation contract used here is stated in
+§6.1 and Assumption 5.2, not inferred from that Lean interface.
+
+This is a `repo-derived` application of the cited finite methods with
+an additional source-specific bound, not a new general Fourier, TV or
+random-system theorem. The named suppliers and bounded searches in the
+existing TV/budget modules do not supply this native eight-call ceiling;
+no worldwide novelty or exhaustive literature-absence claim is made.
+These are ordinary conditional proofs and exact arithmetic, not Lean
+verification. The external preparation and isolation premises are not
+verified physical capabilities. The autonomous recovery of space,
+time, boundary, memory and recursive observation remains unresolved
+by this finite result.
+
+## 追加锚（本行以下为增补区）

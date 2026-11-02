@@ -1,0 +1,14 @@
+For example, the second formula follows by squaring the last sum in (2.7); all mixed terms with different pairs have conditional expectation zero. Since $0\leq W_t,C_t\leq t$ and $\sum_e m_e^2\leq t^2$, all variables used here have finite second moments. The law of total variance now gives (2.1).
+
+By (1.5),
+
+$$
+\mathbb E\!\left[\sum_e m_e\right]
+=t-\mathbb E C_t
+=\sum_{i=1}^t\mathbb P(a_i\ne b_i).
+$$
+
+Subtract one quarter of this identity from (2.1) to get the first line of (2.2). For any fixed source realization, $m_e(m_e-1)/2$ counts the index pairs $i<j$ carrying the same noncoalesced unordered pair $e$. Summing this counting identity and taking expectations proves the second line of (2.2). Both terms of its first line are nonnegative, proving the first inequality of (2.3).
+
+The equality criterion follows in both directions from the same remainder. If equality holds, its two nonnegative terms vanish. Variance zero is equivalent to $C_t=\mathbb E C_t$ almost surely. Also the nonnegative integer-valued sum $\sum_e m_e(m_e-1)$ must be zero almost surely. On that probability-one event, every summand is zero and hence each $m_e$ is $0$ or $1$. Conversely, if $C_t$ is almost surely constant and all the multiplicities are at most one almost surely, both remainder terms vanish. The possible nonzero multiplicities belong to a deterministic finite set, so the simultaneous assertion over all $e$ introduces no exceptional-set problem. For $t=0$, both conditions and the equality hold automatically.
+

@@ -1,0 +1,20 @@
+#### 定理 7.2（端点之间保留稳定子自由度）
+
+固定单位 $x,y$，若 $U_0x=y$，则所有把 $x$ 送到 $y$ 的酉门恰为
+
+$$
+\boxed{\{U:Ux=y\}=U_0\operatorname{Stab} (x),\qquad
+\operatorname{Stab} (x)=\{S:Sx=x\}\cong U(d-1).}
+$$
+
+**证明。**
+
+$Ux=y$ 等价于 $`U_0^*Ux=x`$，故 $U=U_0S$、$S\in\operatorname{Stab} (x)$。
+固定 $x$ 的酉算符在 $x^\perp$ 上仍可任意酉作用，反向也成立，
+于是得到 $U(d-1)$。射线稳定子则允许在 $\mathbb C  x$ 上另有单位相位，
+对应 $U(1)\times U(d-1)$。
+
+□
+
+<a id="statement-7-3"></a>
+
