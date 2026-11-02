@@ -41,12 +41,8 @@ internal sealed class HermiteAbsoluteModeDocument : IScribeDocumentDefinition
                 + "Induction proves maximality at its last index and strict decrease beyond it, which supplies the smallest-exponent tie rule. "
                 + "Every true threshold persists when n increases by one; a true threshold at (n+1,r+1) implies a true threshold at (n,r). "
                 + "Hence mode(n+1) is mode(n) or mode(n)+1, and the exponent changes by +1 or -1. The argument includes order zero. "
-                + "The source-family audit observes the entire natural selector sequence, reconstructs the whole claim, rejects a constant-zero "
-                + "family and tests actual dependence between indices zero and one. Continuation is unknown. "
-                + "The admission basis is open-problem-resolution for the complete preregistered A381524 assertion; no escape witness is claimed. "
-                + "The independently accepted proof_shape is content for weight_le_mode, weight_lt_mode, b_spec and result; "
-                + "the other theorem helpers are consumed bind-only steps. This result is a repository derivation, not a literature priority claim. "
-                + "The specific Dudeja–Hsu Lemma 35 remains unidentified, and the source search remains bounded as stated in the Problems dossier.",
+                + "It applies to the complete natural selector sequence, preserving parity zeros, all ties, and the stated first-index convention. "
+                + "The result is derived from the displayed coefficient identities and makes no uniqueness or asymptotic assumption.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a381524-hermite-absolute-differences"), ResolutionKind.Proved)))));
 
