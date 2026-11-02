@@ -1166,3 +1166,353 @@ $$
 <a id="ref-previous"></a>
 
 10. 本对话连续研究稿 v84–v87，尤其 v86 的跨输入共同场相容，以及 v87 的相对锚、完整伙伴反作用、整体圆／局部椭圆和补向诱导曲率。这些是本轮连续性前件，不宣称已经合入上述固定仓库提交。
+
+## 20. 原左 GNS 代表的近似右序比较与合法替代分辨率
+
+**定义 20.1（比较域、普通迹与完全有界误差）。** 固定 $d\ge1$、$M=M_d(\mathbb C)$、忠实密度 $\rho>0$、$\operatorname{Tr}\rho=1$，以及共享单位元的 $*$-子代数 $A\subseteq M$。本节的 $\operatorname{Tr}$ 是普通矩阵迹。$E=E_{\rho,A}:M\to A$ 始终是定义 6.2 的实际左 GNS 正交投影：
+
+$$
+\operatorname{Tr}(\rho a^\dagger E(x))
+=\operatorname{Tr}(\rho a^\dagger x)
+\qquad(a\in A,\ x\in M).
+$$
+
+不对 $E$ 加正性前件。给定的右序比较缺陷是完整复收缩球上的标量：
+
+$$
+\epsilon=\sup_{\substack{x\in M,\ \|x\|_{\rm op}\le1\\
+a\in A,\ \|a\|_{\rm op}\le1}}
+\left|\operatorname{Tr}\bigl(\rho(E(x)a-xa)\bigr)\right|.
+\tag{20.1}
+$$
+
+记 $P=P_A:M\to A$ 为普通迹保持的条件期望，$h=P(\rho)$、$\lambda=\lambda_{\min}(h)>0$。沿用[读出闭合稿定义 351.1](ContextualSpacetimeQuantum/351_354_READOUT_CLOSURE_AND_REALIZATION.md) 的既有数学背景：$P$ 是 $U(A')$ 上的酉共轭平均，$Q=P_{A'}$ 是 $U(A)$ 上的酉共轭平均，二者交换。特别地，$P,Q$ 都 UCP、保持普通迹并在 Hilbert–Schmidt 内积下自伴。紧酉平均的存在不作为新增命题。
+
+对任意复线性 $T:M\to M$，约定
+
+$$
+T^{(k)}=\operatorname{id}_{M_k}\otimes T,\qquad
+\|T\|_{\rm cb}=\sup_{k\ge1}
+\sup_{0\ne X\in M_k\otimes M}
+\frac{\|T^{(k)}(X)\|_{\rm op}}{\|X\|_{\rm op}}.
+\tag{20.2}
+$$
+
+值域为 $A$ 的映射经自然包含视为 $M$ 值映射。$\|s\|_1=\operatorname{Tr}|s|$，不含因子 $1/2$；$T_*$ 表示普通迹对偶 $\operatorname{Tr}(T_*(s)x)=\operatorname{Tr}(sT(x))$。式 (20.1) 不含任何辅助矩阵输入。
+
+**命题 20.2（保持可见校准的条件化修复）。** 在定义 20.1 下，令
+
+$$
+K=h^{-1/2}\rho h^{-1/2},\qquad
+q=Q(K),\qquad
+\sigma=h^{1/2}q h^{1/2},\qquad
+F(x)=P(q^{1/2}xq^{1/2}).
+\tag{20.3}
+$$
+
+则 $\sigma>0$、$\operatorname{Tr}\sigma=1$，并且
+
+$$
+P(\sigma)=h,\qquad \sigma|_A=\rho|_A.
+\tag{20.4}
+$$
+
+$F$ 是 Heisenberg 图像中到恰好 $A$ 的 UCP、$A$-双模、幂等映射；它也是 $\sigma$ 的实际左 GNS 投影，且
+
+$$
+F_*(\rho)=\sigma=F_*(\sigma).
+\tag{20.5}
+$$
+
+令 $\Delta=\rho-\sigma$，则有充分界
+
+$$
+\boxed{
+\|\Delta\|_1\le\epsilon,\qquad
+\|E-F\|_{\rm cb}
+\le\frac{\|\Delta\|_{\rm op}}{\lambda}
+\le\frac{\|\Delta\|_1}{\lambda}
+\le\frac{\epsilon}{\lambda_{\min}(P_A(\rho))}.
+\ }
+\tag{20.6}
+$$
+
+该定量原 GNS 推论为 repo-derived 解析推导；不主张常数最优或世界范围的新颖性。所复用的精确 GNS／模不变性判据见定理 7.1、[Carlen–Vershynina, *Recovery map stability for the Data Processing Inequality*, §§1.4、4](https://arxiv.org/html/1710.02409v3)，以及 [Bardet–Capel–Rouzé, *Approximate tensorization of the relative entropy for noncommuting conditional expectations*, §2.3](https://arxiv.org/html/2001.07981)。这些精确判据、既有紧酉平均与已假定 UCP 的稳定性结论不是式 (20.6) 的定量原 GNS 推论本身；这里的文献归属限于这些具体来源与命题范围。
+
+证明。先由左比较和 $P$ 的迹自伴性，对所有 $a\in A$ 得
+
+$$
+\operatorname{Tr}(a^\dagger E(x)h)
+=\operatorname{Tr}(a^\dagger x\rho)
+=\operatorname{Tr}(a^\dagger P(x\rho)).
+$$
+
+两侧被配对的矩阵均在 $A$ 中，故
+
+$$
+E(x)=P(x\rho)h^{-1}.
+\tag{20.7}
+$$
+
+这只是实际正交投影的公式，不涉及其正性。将其代入右序比较，并使用 $P$ 的双模性，得到
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl(\rho(E(x)a-xa)\bigr)
+&=\operatorname{Tr}\bigl((\rho h^{-1}ah-a\rho)x\bigr),\\
+\epsilon
+&=\sup_{a\in A,\ \|a\|_{\rm op}\le1}
+\|\rho h^{-1}ah-a\rho\|_1.
+\end{aligned}
+\tag{20.8}
+$$
+
+第二式使用完整复收缩球的算符范数／迹范数对偶；只给有限测量菜单时不能直接使用这一步。
+
+对 $b\in A$、$y\in M$，有 $Q(by)=Q(yb)$：与任意 $z\in A'$ 作迹配对，利用 $zb=bz$ 和迹循环性即可。于是
+
+$$
+Q(\rho h^{-1})=Q(h^{-1/2}\rho h^{-1/2})=q.
+\tag{20.9}
+$$
+
+$K>0$，且若 $m=\lambda_{\min}(\rho)>0$，则 $K\ge(m/\|h\|_{\rm op})I$。$Q$ 正且保单位元，故 $q\ge(m/\|h\|_{\rm op})I>0$。$q\in A'$ 与 $h$ 交换，所以 $\sigma=qh>0$。又由两平均交换，
+
+$$
+P(K)=h^{-1/2}P(\rho)h^{-1/2}=I,\qquad
+P(q)=QP(K)=I,\qquad
+P(\sigma)=h.
+$$
+
+由此 $\operatorname{Tr}\sigma=\operatorname{Tr}h=1$，且式 (20.4) 对所有复 $a\in A$ 成立。
+
+现在只把式 (20.8) 用于 $a=u\in U(A)$。左乘 $u^\dagger$ 不改变迹范数，得到
+
+$$
+\|u^\dagger\rho h^{-1}u h-\rho\|_1\le\epsilon.
+$$
+
+对 $U(A)$ 的归一 Haar 测度积分；由式 (20.9) 与迹范数的凸性，
+
+$$
+\|\sigma-\rho\|_1
+=\left\|\int_{U(A)}
+(u^\dagger\rho h^{-1}u h-\rho)\,du\right\|_1
+\le\epsilon.
+\tag{20.10}
+$$
+
+因此态误差界没有除以最小谱值。
+
+$q$ 与 $A$ 交换，且 $P$ 是迹正交投影。与任意 $a\in A$ 作迹配对可将 $q^{1/2}$ 从左侧移到右侧，故
+
+$$
+F(x)=P(xq)=P(x\sigma)h^{-1}.
+\tag{20.11}
+$$
+
+式 (20.3) 是 CP 夹乘与 UCP 映射 $P$ 的组合，且 $F(I)=P(q)=I$。$q$ 与 $A$ 交换、$P$ 双模，给出 $F(axb)=aF(x)b$。于是 $F(a)=a$、像恰为 $A$、$F^2=F$。式 (20.7) 换成校准 $\sigma$ 后，因 $P(\sigma)=h$，其右端正是式 (20.11)，证明 $F=E_{\sigma,A}$。普通迹对偶为
+
+$$
+F_*(s)=q^{1/2}P(s)q^{1/2}.
+\tag{20.12}
+$$
+
+将 $s=\rho,\sigma$ 代入即得式 (20.5)。$F_*$ 是 CPTP；$F$ 本身一般不保持普通迹。
+
+最后，由式 (20.7)、(20.11)，对每个有限 $k$、每个复矩阵 $X\in M_k\otimes M$，
+
+$$
+\begin{aligned}
+(E-F)^{(k)}(X)
+&=P^{(k)}\bigl(X(I_k\otimes\Delta)\bigr)
+(I_k\otimes h^{-1}),\\
+\|(E-F)^{(k)}(X)\|_{\rm op}
+&\le\|X\|_{\rm op}\|\Delta\|_{\rm op}/\lambda .
+\end{aligned}
+\tag{20.13}
+$$
+
+这里用的是已知 $P$ 的完全收缩性以及普通右乘的算符范数界，没有对 $E$ 使用 Schwarz 不等式、正性或完全正性。对所有有限 $k$ 取上确界并结合式 (20.10)，得到式 (20.6)。这也说明结论中的辅助一致控制来自显式矩阵公式，而非把输入假设换成放大缺陷。
+
+**推论 20.3（同一代表、原校准保态与谱条件的分界）。** 在命题 20.2 的对象上，复用精确 $C_{88}$／Takesaki 判据，有
+
+$$
+\begin{aligned}
+\epsilon=0
+&\ \Longleftrightarrow\ E\text{ 正}\\
+&\ \Longleftrightarrow\ E\text{ 为 UCP}\\
+&\ \Longleftrightarrow\
+\rho^{it}A\rho^{-it}=A\quad(t\in\mathbb R)\\
+&\ \Longleftrightarrow\
+\text{存在到恰好 }A\text{ 的保持原 }\rho\text{ 的条件期望}\\
+&\ \Longleftrightarrow\ \sigma=\rho .
+\end{aligned}
+\tag{20.14}
+$$
+
+其中条件期望采用保单位元、完全正、幂等、$A$-双模的含义。对 $\epsilon>0$，式 (20.6) 供应保持 $\sigma$ 的替代 $F$，不供应原 $E$ 的正性，且 $F_*(\rho)\ne\rho$。若给定目标 $\eta_0\ge0$ 并要求完全有界误差不超过 $\eta_0$，一个充分条件是 $\epsilon\le\eta_0\lambda$。
+
+证明。$\epsilon=0$ 就是原 $C_{88}$。正复线性映射保持伴随，结合定理 7.1 给前三个等价。若 $R$ 是保持 $\rho$ 的条件期望，则
+
+$$
+\operatorname{Tr}(\rho a^\dagger R(x))
+=\operatorname{Tr}(\rho R(a^\dagger x))
+=\operatorname{Tr}(\rho a^\dagger x),
+$$
+
+所以 $R=E$，而定理 7.1 给存在性的精确模判据。$\epsilon=0$ 时式 (20.6) 给 $\sigma=\rho$；反之若 $\sigma=\rho$，式 (20.7)、(20.11) 给 $E=F$ 为 UCP，故 $\epsilon=0$。
+
+必须分别保留三个误差对象：式 (20.10) 是这一对校准态的迹范数误差；式 (20.13) 是原代表与替代映射的算符误差，且对所有有限辅助矩阵一致；它们都不是原 $\rho$ 的精确保态回缩。$\operatorname{Tr}h=1$ 意味着 $\lambda\le1/d$，而 $h\ge\lambda_{\min}(\rho)I$。因此对每个固定 $(d,\rho,A)$ 的结论不等于跨维数的一致小误差定理；即使已知 $h\ge\kappa I/d$、$0<\kappa\le1$，由式 (20.6) 取得的充分界仍是 $d\epsilon/\kappa$。以下二维族表明，仅有忠实性而没有统一谱下界时，连固定维数也不存在非零缺陷阈值保证原 $E$ 正或保证其接近正映射。
+
+原校准保态但不固定整个 $A$ 的广义 CP 粗化是另一种性质，见 Carlen–Vershynina §1.4 及 Bardet–Capel–Rouzé §§2.4.1、A.1；后者的固定点条件期望还可有严格较小的像。它们不能替代式 (20.14) 中“到恰好 $A$ 的原校准保态回缩”，这里不另提出定量 Petz 结论。
+
+## 21. 忠实量子比特上的小缺陷与无界映射距离
+
+**命题 21.1（原比较缺陷不能无条件控制合法映射距离）。** 固定 $A\subset M_2$ 为对角代数。对 $0<t<1/2$，取
+
+$$
+\rho_t=
+\begin{pmatrix}t^2&t/2\\ t/2&1-t^2\end{pmatrix},\qquad
+h_t=P_A(\rho_t)=\operatorname{diag}(t^2,1-t^2).
+\tag{21.1}
+$$
+
+这些校准均忠实，实际左 GNS 投影及原始缺陷恰为
+
+$$
+\begin{aligned}
+E_t(x)&=\operatorname{diag}\left(
+x_{11}+\frac{x_{12}}{2t},\
+x_{22}+\frac{t\,x_{21}}{2(1-t^2)}\right),\\
+\epsilon_t&=2t,\qquad
+\lambda_{\min}(h_t)=t^2 .
+\end{aligned}
+\tag{21.2}
+$$
+
+设 $\mathcal P$ 是所有正复线性映射 $M_2\to M_2$，不要求保单位元；$\mathcal U$ 是其中所有 UCP 映射。若 $\|T\|_{{\rm op}\to{\rm op}}=\sup_{\|x\|_{\rm op}\le1}\|T(x)\|_{\rm op}$，则
+
+$$
+\boxed{
+\begin{aligned}
+\inf_{T\in\mathcal P}\|E_t-T\|_{{\rm op}\to{\rm op}}
+&=\inf_{T\in\mathcal U}\|E_t-T\|_{{\rm op}\to{\rm op}}
+=\frac1{2t}=\frac1{\epsilon_t},\\
+\inf_{T\in\mathcal P}\|E_t-T\|_{\rm cb}
+&=\inf_{T\in\mathcal U}\|E_t-T\|_{\rm cb}
+=\frac1{2t}.
+\end{aligned}}
+\tag{21.3}
+$$
+
+故 $\epsilon_t\downarrow0$ 而距每个正映射或 UCP 映射的最佳距离均无界。非正性及坏角机制复用命题 9.2；这里的 repo-derived 定量增量是同一忠实二维族上原 $\epsilon_t$ 的精确计算及式 (21.3) 的距离结论。
+
+证明。$\operatorname{Tr}\rho_t=1$ 且 $\det\rho_t=t^2(3/4-t^2)>0$，故忠实。式 (20.7) 给出 $E_t$。对 $a=\operatorname{diag}(a_1,a_2)$，$a$ 与 $h_t$ 交换，因此式 (20.8) 中的矩阵为
+
+$$
+\rho_t a-a\rho_t
+=\frac t2
+\begin{pmatrix}0&a_2-a_1\\a_1-a_2&0\end{pmatrix}.
+$$
+
+其两个奇异值均为 $t|a_2-a_1|/2$，迹范数为 $t|a_2-a_1|$。完整复收缩球上 $|a_2-a_1|\le2$，并在 $a=\operatorname{diag}(1,-1)$ 取等，故原定义的 $\epsilon_t=2t$。等价地，该 $a$ 配合 $x=-i\sigma_y$ 已达到相同绝对比较值。
+
+对每个正复线性 $T$，$T(\sigma_y)$ Hermitian，其首个对角元为实数，而
+
+$$
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+E_t(\sigma_y)=
+\operatorname{diag}\left(-\frac{i}{2t},\frac{it}{2(1-t^2)}\right).
+$$
+
+由于 $\|\sigma_y\|_{\rm op}=1$，其首个对角元的虚部给出
+
+$$
+\|E_t-T\|_{{\rm op}\to{\rm op}}
+\ge\|(E_t-T)(\sigma_y)\|_{\rm op}
+\ge\frac1{2t}.
+\tag{21.4}
+$$
+
+这不依赖 $T$ 的值域是否为 $A$，也不依赖 $T$ 是否保单位元。另一方面，式 (20.3) 的构造在此处取 $q_t=I$、$\sigma_t=h_t$、$F_t=P_A$，于是
+
+$$
+(E_t-F_t)(x)
+=\operatorname{diag}\left(\frac{x_{12}}{2t},
+\frac{t\,x_{21}}{2(1-t^2)}\right).
+$$
+
+在每个有限放大上，输入块 $X_{12},X_{21}$ 的算符范数都不超过 $\|X\|_{\rm op}$，而输出是这两个块乘以所示标量后的直和。因 $t<1/2$，有 $t/[2(1-t^2)]<1/(2t)$，从而
+
+$$
+\|E_t-F_t\|_{\rm cb}\le1/(2t).
+$$
+
+取 $x=e_{12}$ 达到等号。$F_t$ 为 UCP，结合式 (21.4) 与 $\|\cdot\|_{{\rm op}\to{\rm op}}\le\|\cdot\|_{\rm cb}$，证明式 (21.3)。同时
+
+$$
+\|\rho_t-\sigma_t\|_1=t=\epsilon_t/2,\qquad
+\|\rho_t-\sigma_t\|_{\rm op}=t/2.
+$$
+
+态校准误差确实趋于零，但谱除数 $t^2$ 使映射距离发散。此族的两层估计与式 (20.6) 相容；它不把充分上界认作所有对象上的最优常数。
+
+## 22. 唯一整体中的域限定与二元关系应用
+
+**定义 22.1（内部历史、替代准备、观察及控制域）。** 固定唯一全局态 $\Omega$ 与全局载体 $\mathcal H_\Omega$。在当前有限切口声明嵌入 $\iota:M_d\to B(\mathcal H_\Omega)$、替代准备标签域 $\mathcal D_{\rm prep}$、观察设置域 $\mathcal D_{\rm obs}$、内部参照与记忆读出域 $\mathcal D_{\rm ref}$、允许延续控制域 $\mathcal D_{\rm ctrl}$，以及联合合法标签集
+
+$$
+\mathcal J\subseteq
+\mathcal D_{\rm prep}\times\mathcal D_{\rm obs}
+\times\mathcal D_{\rm ref}\times\mathcal D_{\rm ctrl}.
+$$
+
+对每个 $\alpha\in\mathcal J$，指定由内部量子门序列组成的整体历史 $U_\alpha$ 与切口读数
+
+$$
+\operatorname{Tr}(s_\alpha x)
+=\langle\Omega,U_\alpha^\dagger\iota(x)U_\alpha\Omega\rangle
+\qquad(x\in M).
+\tag{22.1}
+$$
+
+$\Omega$ 归一，$\iota$ 为保单位元的 $*$-嵌入，因此 $s_\alpha$ 是密度矩阵。设置、参照及记忆也属于历史标签及相应切口，不作为整体之外的独立装置。$\mathcal J$ 不假设为直积；共同起源不供应独立性、全部准备或全部控制。切口所保留的记忆和结果属于 $s_\alpha$ 的同一联合对象；未纳入 $M$ 的历史数据不能据此声称已保留或可返回。原生效果菜单是另行指定的 $\mathcal O_\alpha\subseteq[0,I]_M$，其内部记录与延续仍按 $\mathcal J$ 的合法关系决定。
+
+命题 20.2 的 $\rho$ 是此内部接口所声明的忠实比较校准；若以内部备选读数的加权校准表示，需给定 $s_{\alpha_j}$ 与正权重 $w_j$，满足 $\sum_jw_j=1$、$\rho=\sum_jw_js_{\alpha_j}>0$。不假定全部数学密度矩阵都出现在该准备域。$\sigma$ 定义为同一 $M$ 上用于比较的归一正泛函，不断言存在新的可执行准备标签使 $s_\alpha=\sigma$；式 (20.3) 不改变全局 $\Omega$，也不把 Haar 平均当作可用门菜单。式 (20.1) 是比有限原生测量菜单更强的完整复比较球假设，是否由某个原生接口供应须另证。
+
+**推论 22.2（可见二元几何与有域的操作误差）。** 在定义 22.1 的内部解释下应用命题 20.2，设 $\eta=\epsilon/\lambda$。则对所有 $a,b\in A$，
+
+$$
+\operatorname{Tr}(\rho a^\dagger b)
+=\operatorname{Tr}(\sigma a^\dagger b).
+\tag{22.2}
+$$
+
+故按 §14 对这些可见二元关系形成的 Gram 数据、保留强度的归一关系几何相同。$F$ 在整个数学态域 $\{s\ge0:\operatorname{Tr}s=1\}$ 上有 CPTP 对偶，在整个数学效果域 $[0,I]_M$ 上是合法 Heisenberg 分辨率。实际准备与控制只按各自已声明的域解释；实现 $F$ 的内部历史若未供应，就仍是缺失的实现桥梁。
+
+对任意有限 $k$、每个 $X\in M_k\otimes M$，以及在同一 $M$ 上的 UCP 前后处理 $B,C:M\to M$，
+
+$$
+\|(C\circ E\circ B-C\circ F\circ B)^{(k)}(X)\|_{\rm op}
+\le\eta\|X\|_{\rm op}.
+\tag{22.3}
+$$
+
+普通迹对偶还给所有复矩阵 $S\in M_k\otimes M$ 的线性误差界
+
+$$
+\|(\operatorname{id}_{M_k}\otimes(E_*-F_*))(S)\|_1
+\le\eta\|S\|_1.
+\tag{22.4}
+$$
+
+该式不把 $E_*(S)$ 宣称为正态；$\|\rho-\sigma\|_1\le\epsilon$ 只对应指定校准态对，而式 (22.4) 对应两映射之差。两种误差不可互换。
+
+证明。$a^\dagger b\in A$，故式 (22.2) 由式 (20.4) 得到，既有二元归一化只调用相同 Gram 数据。$F$ 的 UCP 性及 $F_*$ 的 CPTP 性保证所述数学态与效果域。式 (22.3) 由式 (20.13) 和 $B,C$ 的完全收缩性得到；这里只比较同一切口上有型的前后组合，不将另一个准备、另一份历史或不相容条件事件混入该组合。只有某个控制历史已在同一切口、所需输入域上实现相应 UCP 映射时，才能把式 (22.3) 解释为该控制的误差；整体酉序列本身不保证在关联的约化输入上存在统一 UCP 映射。式 (22.4) 对每个 $k$ 使用普通迹下的算符范数／迹范数对偶即得。
+
+[第 v89 卷 §§8、10](AURIC_SQUARE_CLOSURE_RECURSIVE_STABILITY_RELATIONAL_QUANTUM_FIELD_V89.md) 的有限词及保忠实态不动代数结论可在其各自前件下作用于显式 UCP 映射 $F$、校准 $\sigma$；它们不能先作用于未知正性的 $E$ 再反推其 CP。[第 v90 卷 §§5、14–15、19](AURIC_BINARY_INTERNAL_MIDPOINT_SQUARE_RECOVERY_SHARED_QUANTUM_STRUCTURE_V90.md) 的中点平方／Petz 论证同样使用已供应的 CPTP 过程，不替代命题 20.2 的原 GNS 推论。
+
+式 (20.2)、(20.13) 的任意有限辅助矩阵是完全有界范数的数学量词，不赋予可访问辅助系统、独立准备、初始环境、控制精度、额外记忆、门编译深度或原生记录器。Finite3 在这里仍是二元关系几何，不是全局维数三的假设。本推论也没有从一个切口的替代分辨率推出 V81 的全程返回／原生记录构造；该目标所需的历史、全部保留记录及控制实现不能由终端校准相近或式 (22.3) 的前后处理界替代。式 (20.6) 因而是声明前件下的解析关系，不承担经验性的量子起源或宇宙本体判定。
+
+## 追加锚（本行以下为增补区）

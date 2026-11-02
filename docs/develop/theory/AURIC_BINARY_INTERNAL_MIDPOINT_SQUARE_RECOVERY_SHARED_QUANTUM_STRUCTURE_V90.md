@@ -1103,7 +1103,7 @@ $p(0)=1/2$、$\operatorname{Var}_{\rho_1}(P_0)=1/4$。
 
 以下例子采用本轮的内生中点
 $\sigma=(\rho_0+\rho_1)/2$、半差 $d=(\rho_0-\rho_1)/2$。
-记 $\mathsf X=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}$、
+记 $\mathsf X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$、
 $\mathsf Z=\operatorname{diag}(1,-1)$ 为自伴 Pauli 统计算符；
 它们不是密度态。记 $P_0=\lvert 0\rangle\langle 0\rvert$、$P_1=\lvert 1\rangle\langle 1\rvert$、
 $P_+=\lvert +\rangle\langle +\rvert$，其中 $\lvert +\rangle=(\lvert 0\rangle+\lvert 1\rangle)/\sqrt2$。
@@ -1253,7 +1253,7 @@ $$
 
 解得 $A=P_0$、$B=P_1$。
 令 $F=S^*(P_0)$，则 $0\le F\le I$，且
-$\langle 0\rvertF\lvert 0\rangle=1$、$\langle +\rvertF\lvert +\rangle=0$。
+$\langle 0\rvert F\lvert 0\rangle=1$、$\langle +\rvert F\lvert +\rangle=0$。
 正性分别迫使 $F\lvert 0\rangle=\lvert 0\rangle$、$F\lvert +\rangle=0$，与
 $\langle0|+\rangle=1/\sqrt2$ 及 $F=F^\dagger$ 矛盾。
 

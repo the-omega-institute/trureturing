@@ -1492,3 +1492,153 @@ The proof retains the ordinary transpose, singular and mixed normalized effects,
 The shifted support comparisons, their transfer to the two original distance branches, and the uniform intervening gap are deductions for this fixed producer problem (`repo-derived`). Coordinate-disk support, differentiation, the square-root Taylor inequality, completing a real square and the two-by-two positive-matrix criterion are mature intermediate tools. The source identities in Sections 21, 23--26 and 30 are reused with their stated parameter correspondence. Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1, Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), supply the fixed-Kraus fidelity estimate and polar correction, with $t_j=\operatorname{diag}(R_0b_j)$ and input dimension four; their proposition does not assert (31.33)'s producer-distance bound. Buscemi--Chiribella--D'Ariano, [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5, Theorem 2 and (9)](https://arxiv.org/html/quant-ph/0504195v5), supply the rank-two four-dimensional correlation example, entrywise conjugate to the Schrödinger record here. Their random-unitary and perfect-correction conclusions do not supply the shifted support or population-gap estimates. These source distinctions assert no exhaustive literature-priority claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 32. Exact equality and nonattainment of the sharp producer ratio
+
+Retain the original record and Definitions 11.1 and 23.1 of the [source volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md). In particular, a normalized positive effect means $E\succeq0$ with $\operatorname{Tr}E=1$, and each original calculation has one actual $U\in U(4)$. The constant $\kappa$ is the smaller root of source Theorem 21.3, and $\gamma=1/25>\kappa$. The global inequality is Theorem 31.5. The question here is its exact equality set, rather than the zero set of $g$ alone.
+
+**Theorem 32.1 (complete original equality set and sharp-ratio nonattainment).** For every $E\in\operatorname{Dens}_2$ and every actual shared $U\in U(4)$,
+
+$$
+\boxed{\quad
+ g(E,U)=\kappa\rho(E,U)
+ \quad\Longleftrightarrow\quad
+ (E,U)\in\mathcal S_+\cup\mathcal S_-
+ =\{(E_\sigma,\lambda U_\sigma):
+          \sigma\in\{+,-\},\ |\lambda|=1\}.
+ \quad}
+\tag{32.1}
+$$
+
+Consequently every original pair with $\rho(E,U)>0$ satisfies
+
+$$
+ g(E,U)>\kappa\rho(E,U),\qquad
+ \frac{\rho(E,U)}{g(E,U)}<R_*=\kappa^{-1}.
+\tag{32.2}
+$$
+
+The supremum $C_{\mathrm{opt}}=R_*$ from Theorem 31.5 is therefore not attained on the domain where the quotient is defined.
+
+**Proof.** For the given original pair, use precisely its actual reduced data
+
+$$
+ w=\operatorname{diag}(UU_+^\dagger),\qquad
+ p=b_+^\dagger E^{\mathsf T}b_+,\qquad
+ \epsilon=1-\operatorname{Tr}(E^2).
+$$
+
+The ordinary transpose here is the one in source (23.9); no new effect is substituted. Write $F_\kappa=G-\kappa r$ as in (30.2). Source (23.14) and Theorem 31.5 give
+
+$$
+ g-\kappa\rho\ \ge F_\kappa(w,p)+\kappa\epsilon
+ \ \ge (1-\mu(w))\eta_\kappa+\kappa\epsilon\ \ge0,
+ \qquad \eta_\kappa>0.
+\tag{32.3}
+$$
+
+If the original pair is an equality pair, then $F_\kappa(w,p)=0$ and $\epsilon=0$. Moreover, source (23.5) gives $\rho=r$ and hence $g=G$. Equation (32.3) also forces $\mu(w)=1$: mixed effects and every actual lift with a diagonal modulus below one already have a strictly positive remainder. For the actual unitary $V=UU_+^\dagger$, all four diagonal moduli then equal one, so its row norms force its off-diagonal entries to vanish and $U=\operatorname{diag}(w)U_+$. This exclusion includes arbitrary actual nondiagonal lifts; it is a consequence of equality, not a restriction of the original domain.
+
+If $A(w)+B(w)\le4$, source Theorem 26.4 already supplies exactly the equality classes in (32.1), including its boundary. It remains to examine $A+B>4$.
+
+For $1/9\le p\le1/2$, Lemma 31.4 and the joint-sign average bound $r\le9-A-B$ give
+
+$$
+ G>\frac7{40}>5\kappa>\kappa r,
+\tag{32.4}
+$$
+
+where $0<\kappa<7/200$ is (31.15). Thus no equality occurs in this closed population interval. Its two endpoints are included.
+
+Suppose next that $1/2\le p\le1$. Put $\alpha=\sqrt p$, $\beta=\sqrt{1-p}$ and $t=\alpha u(w)+\beta v(w)$. If $t\le2$, then $G\ge e^2-4>2/5$, whereas $\kappa r\le\kappa r_+\le10\kappa<7/20$; the inequality is strict. If $t>2$, retain the actual support parameter $z=t$ and the same auxiliary $y\in[0,\pi/2)$ from (31.21)--(31.22):
+
+$$
+ \varepsilon=\kappa/t,\qquad
+ e^{iy}=\frac{h\alpha-\varepsilon+ih\beta}
+               {|h\alpha-\varepsilon+ih\beta|},\qquad
+ \delta=2(1-\cos y).
+$$
+
+Its real part is positive by (31.7). Let $w_0=w^+(y)$ be the actual scalar family (31.17), and use its source amplitude
+$t_0=\alpha(2h\cos y+2c)+2h\beta\sin y$.
+Define the auxiliary difference
+
+$$
+ H_+(y,p)=G(w_0,p)-\kappa r_+(w_0,p).
+$$
+
+The support comparison before discarding the real square is
+
+$$
+ t^2-2\kappa A(w)
+ \le2tt_0-t^2-2\kappa A(w_0)
+ =t_0^2-2\kappa A(w_0)-(t-t_0)^2.
+$$
+
+Subtracting this inequality from $D(p)-\kappa(10-2p)$, and then retaining the actual joint-sign minimum, yields
+
+$$
+ \boxed{\quad
+ F_\kappa(w,p)\ge
+ H_+(y,p)+(t-t_0)^2+\kappa\bigl(r_+(w,p)-r(w,p)\bigr).
+ \quad}
+\tag{32.5}
+$$
+
+The strictness of the family term is already contained in the matrix used to prove the first line of (31.18). Specifically, it is source (24.17) evaluated at
+$u_0=d-h\delta$, $v_0^2=2\delta-\delta^2/2$, with $0\le\delta\le2$ as established in Theorem 31.3. Its leading entry is
+$\delta(2(dh-\kappa)-\delta/2)>0$ for $\delta>0$, and its determinant is the source identity $J\delta^2$ with $J>21/10$. Thus that matrix is positive definite when $\delta>0$. At $\delta=0$ it is $\operatorname{diag}(0,e^2-2\kappa)$, with $e^2-2\kappa>0$. Its value on $(\sqrt p,\sqrt{1-p})$ is exactly $H_+(y,p)$, so
+
+$$
+ H_+(y,p)\ge0,\qquad
+ H_+(y,p)=0\quad\Longleftrightarrow\quad
+ \delta=0,\ p=1.
+\tag{32.6}
+$$
+
+This uses the supplied full-interval scalar matrix, without extending a cap assumption to the actual $w$.
+
+Every term on the right of (32.5) is nonnegative. Equality therefore forces $p=1$, $y=0$ and $t=t_0=d$. It follows that $G=d^2-t^2=0$. For the original equality pair we already have $g=G$, so source Lemma 11.2 gives the original optimizer class. Since $p=1$, this class is $\mathcal S_+$, by the certificate-basis correspondence (23.9)--(23.10). It has $A+B=4$, and hence cannot lie in the region $A+B>4$ under consideration.
+
+Finally suppose $0\le p\le1/9$. Put $\alpha=\sqrt{1-p}$, $\beta=\sqrt p$, and now $t=\alpha v(w)+\beta u(w)$, which is the same reduced amplitude as before. The case $t\le2$ is strictly separated just as above, using $r\le r_-\le10$. For $t>2$, use exactly the fixed coordinates and support comparison (31.23)--(31.24):
+
+$$
+ \widetilde w=(w_1,-w_2,iw_3,-iw_4),\qquad
+ \varepsilon=\kappa/t,\qquad
+ e^{iy}=\frac{s\alpha-\varepsilon+ic\beta}
+               {|s\alpha-\varepsilon+ic\beta|}.
+$$
+
+Here $0\le y<\pi/2$ by (31.10). With $\delta=2(1-\cos y)$, let $w_0=w^-(y)$ and
+$t_0=\alpha(2h+2s\cos y)+2c\beta\sin y$ as in the source comparison. The second line of (31.18) supplies
+
+$$
+ H_-^\gamma(y,p):=G(w_0,p)-\gamma r_-(w_0,p)\ge0,
+ \qquad
+ r_-(w_0,p)=2(p+\delta).
+$$
+
+Retaining the real square in (31.24), and using this stronger family comparison before returning to $\kappa$, gives
+
+$$
+ \boxed{\quad
+ F_\kappa(w,p)\ge
+ H_-^\gamma(y,p)+2(\gamma-\kappa)(p+\delta)
+ +(t-t_0)^2+\kappa\bigl(r_-(w,p)-r(w,p)\bigr).
+ \quad}
+\tag{32.7}
+$$
+
+All four terms are nonnegative. Since $\gamma>\kappa$, equality forces $p=0$ and $\delta=0$. The square then forces $t=t_0=e$, so $G=e^2-t^2=0$. Again $g=G$ for the original equality pair, and source Lemma 11.2, with $p=0$ in (23.9)--(23.10), gives exactly $\mathcal S_-$. Its trace sum is also $A+B=4$. Thus this population end contributes no equality in $A+B>4$.
+
+These cases exhaust all actual populations and all trace data. Conversely each pair in $\mathcal S_+\cup\mathcal S_-$ has $g=\rho=0$ by source Lemma 11.2, proving both directions of (32.1). That lemma also gives $g>0$ when $\rho>0$, so division proves (32.2). The supremum and its lower sharpness sequence are reused from Theorem 31.5 and source Theorem 21.3; strictness at every positive-distance original pair proves nonattainment. $\square$
+
+The two retained-square inequalities (32.5) and (32.7) propagate strictness from the supplied scalar families to the actual datum. Their consumers are the two population-end exclusions in the complete original equality proof. The nonnegative terms $r_\pm-r$ keep the actual joint optimizer-sign minimum, including ties; they do not assume which branch minimizes it. Each use of (31.21) or (31.24) takes only the original one common scalar rotation. The fixed transformation to $\widetilde w$ is the negative-optimizer correspondence, not an additional phase quotient. Each auxiliary $w^\pm(y)$ has the source actual lift $\operatorname{diag}(w^\pm(y))U_+$; it enters a one-sided support comparison and supplies no separately chosen control to any column of the original effect.
+
+No division by a trace, by $P$ or by $Q$ occurs. The sole amplitude division is restricted to $t>2$; zero amplitudes and zero traces are covered by the same comparisons and the $t\le2$ case. The original bridge (32.3) retains singular and mixed effects, all populations, and every actual lift. Equality in the quadratic tangent form of source Section 22 and convergence of the actual sharpness sequence are different statements from (32.1). In particular, the source sequence has $\rho>0$, approaches an optimizer and satisfies $\rho/g\to R_*$. Along it $g-\kappa\rho\to0$, so the pointwise strict inequality supplies neither a uniform positive additive gap on the punctured domain nor a smaller global sharp ratio.
+
+The equality propagation and its original nonattainment conclusion are deductions for the fixed producer problem (repo-derived). The optimizer zero set, limiting sequence, tangent form, trace-triangle equality theorem, full-interval scalar matrices and global bound remain the results of source Sections 11, 21--26 and continuation Sections 30--31. The added step is the propagation of equality through the support comparisons with their real-square and joint-branch remainders; nonnegativity of the endpoint or knowledge of the zero set alone does not supply this step.
+
+For the external source correspondence, Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1, Proposition 8 and (15)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), give the fixed-Kraus fidelity bound and its polar-recovery equality condition. In the present notation their $t_j$ is $\operatorname{diag}(R_0b_j)$ and their input dimension is four; that equality concerns the fixed-Kraus correction bound, rather than equality in $g-\kappa\rho$. It does not permit different feedbacks for the columns of an unchanged original effect. Buscemi--Chiribella--D'Ariano, [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5, Theorem 2 and (9)](https://arxiv.org/html/quant-ph/0504195v5), give the random-unitary context and rank-two four-dimensional correlation example. Their Heisenberg matrix (9) is entrywise conjugate to the fixed Schrödinger record here. Those results supply the record correspondence and correction context, not this producer-metric equality classification. These identified source statements and the repository results delimit the reuse and the new deduction; they imply no exhaustive literature-absence or priority claim.
+
+## 追加锚（本行以下为增补区）
