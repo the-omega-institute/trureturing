@@ -229,8 +229,7 @@ private lemma resolvent_right (lam : ℝ) (hlam : lam ≠ 0)
   intro i _
   by_cases hi : x i ≤ t
   · have hd := (((hasDerivAt_const t (1 : ℝ)).sub
-        ((((hasDerivAt_id t).sub_const (x i)).const_mul (-lam)).exp)).div_const lam)
-        .ofReal_comp.const_mul (a i)
+        ((((hasDerivAt_id t).sub_const (x i)).const_mul (-lam)).exp)).div_const lam).ofReal_comp.const_mul (a i)
     have hd' : HasDerivWithinAt
         (fun y : ℝ => a i * (((1 - Real.exp (-lam * (y - x i))) / lam : ℝ) : ℂ))
         (a i * (Real.exp (-lam * (t - x i)) : ℂ)) (Ioi t) t := by
@@ -420,7 +419,7 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
       integrable_finsetSum Finset.univ (fun i _ =>
         integrable_finsetSum Finset.univ (fun j _ => hi i j))
     have h' := h.congr (ae_of_all _ (fun t => (hs t).symm))
-    simpa only [← Complex.ofReal_pow, Complex.ofReal_re] using h'.re
+    simpa only [RCLike.re_eq_complex_re, ← Complex.ofReal_pow, Complex.ofReal_re] using h'.re
   have hint : ((∫ t in Icc 0 D, ‖response lam x a t‖ ^ 2 : ℝ) : ℂ) =
       ∑ i, ∑ j, star (a i) * a j * ((∫ t in Icc 0 D, p i t * p j t : ℝ) : ℂ) := by
     rw [← integral_complex_ofReal]
@@ -450,7 +449,8 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
     ring
   refine ⟨hsq, ?_⟩
   simpa only [← Complex.ofReal_pow, Complex.add_re, Complex.mul_re, Complex.mul_im,
-    Complex.ofReal_re, Complex.ofReal_im, Complex.ofNat_re, Complex.ofNat_im,
+    Complex.ofReal_re, Complex.ofReal_im,
+    show (2 : ℂ).re = 2 from rfl, show (2 : ℂ).im = 0 from rfl,
     mul_zero, zero_mul, add_zero, sub_zero] using congrArg Complex.re hid
 
 /-- The finite-interval analytic bridge, with both nonnegative error terms
