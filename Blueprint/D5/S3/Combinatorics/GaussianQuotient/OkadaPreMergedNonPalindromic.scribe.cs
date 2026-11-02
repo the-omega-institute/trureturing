@@ -143,7 +143,10 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                         + "reverse with itself. Comparing index one with List.getElem?_reverse "
                         + "would then equate its second entry (c : ℤ) + 1 with its penultimate "
                         + "entry (c : ℤ). This is impossible, so p is not almost palindromic."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("okada-2020-premerged-determinant-nonpalindromic"),
+                    ResolutionKind.Proved)))));
 
     private static Formula AlmostPalindromicDefinition()
     {

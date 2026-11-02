@@ -46,6 +46,10 @@ $$\forall (\mu: \mathbb{N}), (\forall (a: \operatorname{Fin}\left(\mu\right) \to
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/GaussianQuotient/OkadaPreMergedNonPalindromic.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/okada-2020-premerged-determinant-nonpalindromic` (proved) by `D5/S3/Combinatorics/GaussianQuotient/OkadaPreMergedNonPalindromic.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"okada-2020-premerged-determinant-nonpalindromic","declaration_gid":"D5/S3/Combinatorics/GaussianQuotient/OkadaPreMergedNonPalindromic.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Okada, So (2020). *Merged-log-concavity of rational functions, almost strictly unimodal sequences, and phase transitions of ideal boson-fermion gases*. DOI: [10.48550/arXiv.2003.02112](https://doi.org/10.48550/arXiv.2003.02112). URL: <https://arxiv.org/abs/2003.02112v2>.
