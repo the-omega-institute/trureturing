@@ -4755,3 +4755,194 @@ Every step of the polynomial lower bound works on the same two-dimensional reali
 The distinction between comparison maps and callable operations remains the one in Definition 42.2 and Definition 47.1: a polar complex structure, projected reference or diagnostic commutator gap does not supply the actual controlled oracle or calibrate its angle. The current argument changes a calibration quantifier inside an explicitly supplied coherent real menu. Its complex variable is auxiliary to the polynomial proof, and its norms and angle averages specify no outcome probabilities, physical preparations or instruments. Tensor independence is an interface premise rather than a derived physical law. The map $J^2=-I$ also differs from source-word reversal with square $I$, and no decoder or recovery operation appears in the circuit menu. No infinite-carrier extension is asserted. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 四维严格秩一桥与十一行列式残差
+
+**引理 57.1（四维 Gaussian 格的秩一抽取阈值）。** 令 $R=\mathbb Z[i]$。若 $H\in\operatorname{Herm}_r(R)$ 为正定，且 $1\le r\le3$，则存在 $0\ne q\in R^r$ 使
+
+$$
+q^*H^{-1}q\le1,\qquad 0<qq^*\le H.
+\tag{57.1}
+$$
+
+当 $r=4$ 时，同一结论在 $\det H\ge12$ 时成立。
+
+**证明。** 令 $D=\det H$。在实化的对偶格 $H^{-1}R^r$ 上使用 Hermitian 范数。其欧氏余体积为 $D^{-1}$，故普通实 Hermite 界给出某个非零 $q\in R^r$ 满足
+
+$$
+q^*H^{-1}q\le\gamma_{2r}D^{-1/r}.
+\tag{57.2}
+$$
+
+置 $a=Dq^*H^{-1}q=q^*\operatorname{adj}(H)q\in\mathbb Z_{>0}$。对于 $r=2,3$，已有式 (33.5) 及其后的整数性计算给出 $a<D+1$，因而 $a\le D$。$r=1$ 时取 $q=1$ 即可。
+
+当 $r=4$ 时，普通实常数 $\gamma _8=2$。Vance，[A Mordell Inequality for Lattices over Maximal Orders](https://arxiv.org/html/0810.2336v5)，§4.2 的 Table 3 在实维数 $8$ 列出 $E_8$ 的 Hermite 不变量 $2$，并在该表说明中明确指出维数不超过 $8$ 的这些格已证明为普通实格最优；因此这里使用的是全部实八维格的界，而非仅对某个 Gaussian 子类的猜测。若 $D\ge16$，则 $2D^{3/4}\le D<D+1$；对 $D=12,13,14,15$ 直接有 $2D^{3/4}<D+1$。由 (57.2)，$a\le2D^{3/4}<D+1$，故仍有 $a\le D$。
+
+最后，对任意 $z\in\mathbb C^r$，$H$-内积的 Cauchy 不等式给出
+
+$$
+|q^*z|^2\le(q^*H^{-1}q)(z^*Hz)\le z^*Hz,
+$$
+
+即 $0<qq^*\le H$。$\square$
+
+**引理 57.2（严格秩一效果的同网格奇偶完成）。** 在定义 16.1 的 $d=4$ 网格中，令 $e(Y)=p(Y)-\operatorname{Tr}(HY)$。当 $N=2^m\ge2048$ 时，每个秩一效果 $X\in K_{4,m}$ 且 $\|X\|_{\rm op}<1$ 都满足
+
+$$
+|e(X)|\le53142\,\epsilon.
+\tag{57.3}
+$$
+
+**证明。** 记 $\pi=1+i$。沿用定义 16.1 和定理 24.1 的常数
+
+$$
+ c_4=\frac1{52},\qquad K_4=102,\qquad
+ U_4=(2\cdot128-1)K_4+4(128-1)=26518.
+\tag{57.4}
+$$
+
+因此 $\|Y\|_{\rm op}\le c_4$ 时 $|e(Y)|\le102\epsilon$，而
+$\|Y\|_{\rm op}\le1-16/N$ 时 $|e(Y)|\le26518\epsilon$.
+
+由 §§31–33 使用的饱和子模论证，存在本原 $v\in R^4$ 和整数 $t\ge1$ 使
+
+$$
+X=\frac{t\,vv^*}{N},\qquad s=\|v\|^2,\qquad ts<N.
+\tag{57.5}
+$$
+
+若 $t\ge2$，把 $t=t_1+t_2$ 分成两个正整数且 $t_i\le\lceil t/2\rceil$。两个子效果的范数严格小于 $2/3$, 因为 $\lceil t/2\rceil/t\le2/3$；它们及其和仍在原网格中。由于 $N\ge2048$, 它们满足上侧条件 $\|Y\|\le1-16/N$。式 (16.4) 遂给出
+
+$$
+|e(X)|\le2U_4\epsilon+2\epsilon=53038\epsilon.
+\tag{57.6}
+$$
+
+以下设 $t=1$, 于是 $s<N$。对 $v_j\equiv0\pmod\pi$ 的坐标置 $w_j=0$，对其余坐标取 Gaussian 单位 $w_j\in\{1,-1,i,-i\}$，并记 $r=\|w\|^2$。本原性给出 $1\le r\le4$，且 $r\equiv s\equiv k\pmod2$, 其中 $k=N-s\ge1$；同时 $w\equiv v\pmod\pi$。
+
+若 $r\le k$, 则 $vv^*+ww^*\le(s+r)I_4\le NI_4$。只有两种情形需要改选单位相位：
+
+* $k=1,r=3$. 三个非零坐标记为 $\alpha_j=\overline v_jw_j$. 先选两个单位使 $\operatorname{Re}(\alpha_1\overline{\alpha_2})\le-1$, 再用第三个单位的相反两相之一使 $\operatorname{Re}((\alpha_1+\alpha_2)\overline{\alpha_3})\le0$. 于是
+  $|v^*w|^2\le s-2=N-3=k(N-r)$.
+* $k=2,r=4$. 对前两个坐标作同样的选择；随后逐次在相反两相中选择，使每次新增项与当前和的实部不正。于是
+  $|v^*w|^2\le s-2=N-4\le2(N-4)=k(N-r)$.
+
+在两种例外中，矩阵 $C=(v\;w)$ 的 Gram 矩阵满足
+
+$$
+C^*C\le NI_2,\qquad\text{hence}\qquad vv^*+ww^*=CC^*\le NI_4.
+\tag{57.7}
+$$
+
+令 $u=(v+w)/\pi$, $z=(v-w)/\pi$, 以及
+
+$$
+W=\frac{ww^*}{N},\qquad F=\frac{uu^*}{N},\qquad G=\frac{zz^*}{N}.
+$$
+
+则这些矩阵和共同和均属原 $K_{4,m}$，并且
+
+$$
+X+W=F+G\le I_4.
+\tag{57.8}
+$$
+
+此外 $\|W\|=r/N\le4/N\le c_4$, 而
+
+$$
+\max(\|F\|,\|G\|)\le\frac{(\sqrt{N-1}+2)^2}{2N}\le\frac34\le1-\frac{16}{N}\qquad(N\ge2048).
+\tag{57.9}
+$$
+
+对 (57.8) 使用四项关系式 (33.4)，再使用 (57.4) 的局部与上侧估计，得到
+
+$$
+|e(X)|\le(102+2\cdot26518+4)\epsilon=53142\epsilon.
+$$
+$\square$
+
+**定理 57.3（严格收缩效果的十一行列式残差分解）。** 令 $N=2^m$，$A\in\operatorname{Herm}_4(R)$ 满足 $A\succeq0$ 且 $A\prec NI_4$。则存在有限个非零 $v_j\in R^4$ 以及一个矩阵 $G$，使
+
+$$
+A=\sum_{j=1}^{\ell}v_jv_j^*+G,
+\tag{57.10}
+$$
+
+并且 $G=0$, 或者 $G\succ0$、$\det G\le11$, 且
+
+$$
+\{X\in\operatorname{Herm}_4(R):0\le X\le G\}=\{0,G\}.
+\tag{57.11}
+$$
+
+**证明。** 对任意半正定积分矩阵 $B$，其积分核是饱和 $R$-子模；取 Gaussian 幺模坐标后
+
+$$
+V^*BV=\begin{pmatrix}J&0\\0&0\end{pmatrix},\qquad J\succ0.
+\tag{57.12}
+$$
+
+若 $\operatorname{rank}B\le3$, 引理 57.1 在正定块 $J$ 上给出一个非零积分秩一子效应，拉回后得到 $0<vv^*\le B$. 对秩四的 $B$, 同样可做此事，只要 $\det B\ge12$。每次减去 $vv^*$ 后仍为积分半正定矩阵，而迹至少减少 $1$, 所以这个过程在有限步后停止于 $0$ 或一个正定矩阵 $G$ 满足 $\det G\le11$ 且不含非零积分秩一子效应。
+
+说明最后的 $G$ 必为区间原子。若存在 $0<X<G$ 的积分 Hermitian 矩阵，置 $Y=G-X$. 若 $X$ 或 $Y$ 奇异且非零，则秩至多三的情形已经给出一个 $vv^*\le X$ 或 $vv^*\le Y$, 与停止条件矛盾。若二者均正定，则 Minkowski 行列式不等式给出
+
+$$
+\det(G)^{1/4}\ge\det(X)^{1/4}+\det(Y)^{1/4}\ge2,
+$$
+
+因为正定积分矩阵的行列式是正整数；这与 $\det G\le11$ 矛盾。因此 (57.11) 成立。若过程在某一步降为奇异矩阵，秩至多三的抽取会继续到零，故非零余项必为正定。式 (57.10) 遂得证。$\square$
+
+**定理 57.4（原网格严格收缩目标的有界残差归约）。** 设 $N\ge2048$, $E\in K_{4,m}$ 且 $\|E\|_{\rm op}<1$. 令 $A=NE$, 并取定理 57.3 的分解。置
+
+$$
+Q_j=\frac{v_jv_j^*}{N},\qquad G_0=\frac GN,\qquad
+ e(G_0)=\begin{cases}p(G_0)-\operatorname{Tr}(HG_0),&G\ne0,\\ p(0),&G=0.\end{cases}
+$$
+
+则所有 $Q_j,G_0$ 及其任意部分和都属于原 $K_{4,m}$，并存在一个仅依赖于上述常数的显式界
+
+$$
+|e(E)-e(G_0)|\le902824\,\epsilon.
+\tag{57.13}
+$$
+
+**证明。** 由 $0\le G\le A<NI_4$, 每个 $Q_j$ 及 $G_0$ 都是原网格中的效果，且所有部分和仍不超过 $E$. 记 $\operatorname{tr}(Q_j)=\|v_j\|^2/N$. 将迹大于 $1/3$ 的单项列为大项；至多 $11$ 项。其余单项的迹至多 $1/3$, 按原顺序累积成若干组，每个完成组的迹属于 $[1/3,2/3)$, 最后未完成组的迹小于 $1/3$. 因 $\operatorname{Tr}(E)\le4$, 这样的组至多 $12$ 个。记大项数和小组数分别为 $L\le11$ 与 $M\le12$.
+
+每个大项是严格秩一效果：若某个 $Q_j$ 有范数 $1$, 则 $Q_j\le E$ 会迫使 $\|E\|\ge1$, 与假设矛盾。因此引理 57.2 给出其误差至多 $53142\epsilon$. 每个小组 $B_\nu$ 是一个原网格效果，且
+
+$$
+\|B_\nu\|\le\operatorname{Tr}(B_\nu)<\frac23\le1-\frac{16}{N},
+$$
+
+所以定理 24.1 给出 $|e(B_\nu)|\le26518\epsilon$。由 (16.4) 逐项相加，至多 $L+M\le23$ 次，得
+
+$$
+\begin{aligned}
+|e(E)-e(G_0)|
+&\le 11\cdot53142\,\epsilon+12\cdot26518\,\epsilon
+   +2\cdot23\,\epsilon\\
+&=902824\,\epsilon.
+\end{aligned}
+$$
+当 $G=0$ 时，首项是 $e(0)=p(0)$，而 $0\le p(0)\le2\epsilon$；这正是上式中允许的零项。$\square$
+
+**推论 57.5（严格收缩范围内四维二次裕量归约的剩余义务）。** 本归约继承定理 57.4 的条件 $N\ge2048$, $E\in K_{4,m}$ 且 $\|E\|_{\rm op}<1$；原下侧分支中范数等于 $1$ 的效果不在此直接归约的适用范围内。引理 57.2 和定理 57.4 只移除原事件中的秩一贡献；它们没有证明原事件。若 $E$ 还满足原显示的二次谱析取
+
+$$
+\lambda_{\max}(E)\le1-A N^{-2}\quad\text{或}\quad
+\lambda_{\min}(E)\ge A N^{-2},\qquad A>2,
+\tag{57.14}
+$$
+
+则仍须对定理 57.3 产生的单个正定区间原子 $G_0=G/N$ 建立一个统一的、与 $N,\epsilon,p$ 无关的常数 $C_{\rm atom}$，使
+
+$$
+|e(G_0)|\le C_{\rm atom}(\epsilon+N^{-1}).
+\tag{57.15}
+$$
+
+当 $G=0$ 时 (57.15) 按 $|e(0)|=p(0)\le2\epsilon$ 解释。上侧条件在 $G_0\le E$ 时可传给 $G_0$,但下侧条件一般不能由 $G_0\le E$ 传递；所以 (57.15) 必须覆盖由原下侧分支产生的原子，而不能把定理 24.1 的线性裕量误称为二次裕量结论。因此，式 (57.15) 的统一原子估计与完整的二次裕量结论仍未由本节的部分结果证明。$\square$
+
+本节的新增承重是四维原 Gaussian 网格上的严格秩一同网格完成、以及把任意严格收缩效果归约为至多一个行列式不超过 $11$ 的正定区间原子并给出有界表误差；式 (57.14)–(57.15) 保留原事件的量词和未决边界。Hermite 常数、Minkowski 行列式不等式、Gaussian 饱和子模与既有 §§31–33 的原语只作为证明中的明确中间工具使用，不把它们另列为新结论。
+
+## 追加锚（本行以下为增补区）

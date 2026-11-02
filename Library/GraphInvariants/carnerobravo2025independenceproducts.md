@@ -9,6 +9,7 @@ claim: "Theorem 21 gives a suspended independence-complex conclusion for induced
 strata_touched:
   - D5/S3/Geometry/FiniteGraphVertexSubstitution
   - D5/S3/Geometry/HereditaryLexicographicProduct
+  - D5/S3/Geometry/FiniteGraphSubgraphSuspension
   - D5/S3/Geometry/IndependenceComplexTorsionSeed
   - D5/S3/Geometry/FiniteSimplicialSingularHomology
   - D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
@@ -98,6 +99,57 @@ records the exact target, proof route and bounded literature standing.
 This is a local formal proof, not a theorem attributed to the source author,
 a global novelty certificate or official problem acceptance. The attempted
 source-readout registration remains unfinished under issue #22742.
+
+## Strong products and arbitrary subgraph suspension
+
+Theorem 31 states that $P_n\boxtimes P_m$ belongs to $\mathcal{SW}$ for
+all $n$ and $1\le m\le4$. Question 32 asks whether this extends to every
+$m$. The class $\mathcal{SW}$ quantifies over all induced subgraphs; this
+is stronger than Question 35, which asks only whether the independence
+complex of each full rectangle $P_n\boxtimes P_m$ is a wedge of spheres.
+These locators refer to the same version v2 at the verified URL above.
+
+`FiniteGraphSubgraphSuspension` constructs the maximal-independent-set star
+gadget for an arbitrary, possibly noninduced subgraph $H$ of a finite graph
+$G$. It retains all old edges of $G$ absent from $H$. A hub and independent
+apices indexed by the maximal independent sets of $H$ give a literal face
+cover whose intersection is $I(G)$. The local and spanning conventions
+are identified by adjoining the isolated vertices outside $V(H)$ to each
+maximal independent set.
+
+The coordinate neighborhoods use total apex mass, the finite minimum of
+hub mass plus old mass outside a maximal independent set, continuous
+cutoffs and normalization. Their actual intersection is homotopy equivalent
+to the coordinate realization of $I(G)$; the existing open-cover reduced
+Mayer--Vietoris theorem and homotopy invariance then give the integral
+singular homology shift in degrees $q+1$ and $q$, for $q\geq1$.
+This is supporting machinery for Question 32. It does not settle that
+question: the seed singular comparison, complete gadget replay, king-grid
+rotation and sphere-bouquet torsion obstruction remain further obligations.
+
+The general mechanisms of graph suspension, independence-complex splitting
+and star clusters have classical sources, including:
+
+- Michal Adamaszek, *Splittings of independence complexes and the powers of
+  cycles*, Journal of Combinatorial Theory, Series A 119 (2012), 1031--1047,
+  https://doi.org/10.1016/j.jcta.2012.01.009.
+- Jonathan Ariel Barmak, *Star clusters in independence complexes of graphs*,
+  Advances in Mathematics 241 (2013), 33--57,
+  https://doi.org/10.1016/j.aim.2013.03.016.
+- Péter Csorba, *Subdivision yields Alexander duality on independence
+  complexes*, Electronic Journal of Combinatorics 16 (2009), Research Paper 11,
+  https://doi.org/10.37236/77.
+
+These are references [3], [5] and [11] of Carnero Bravo's v2 paper. The
+explicit coordinate neighborhood construction here does not claim that the
+general suspension or star-cluster mechanism is new, and these supporting
+modules carry no claim of original-problem acceptance or priority.
+
+The unfinished source-readout registrations for the public lemmas in these
+four supporting modules are tracked in [issue #25180](https://github.com/the-omega-institute/trureturing/issues/25180).
+The three homology-isomorphism endpoints are definitions; they do not exhaust
+the public theorem audit targets. The issue is neither a proof nor a validated
+registration.
 
 ## King-grid question and the finite-chain seed
 
