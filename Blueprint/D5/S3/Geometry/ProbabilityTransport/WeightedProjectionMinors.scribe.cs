@@ -6,6 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.ProbabilityTransport;
 
 internal sealed class WeightedProjectionMinorsDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Geometry/melermo469781");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The weighted two-minor and three-minor inequality", H("The weighted two-minor and three-minor inequality"),
         Blocks(
@@ -13,7 +15,7 @@ internal sealed class WeightedProjectionMinorsDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("weighted-minors"),
                 DeclarationHandle.Create("D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.weighted_minors"),
                 H("Every positive symmetric real weight matrix satisfies the comparison"),
-                StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("Orthonormal means all three vectors have norm one and every two distinct vectors have inner product zero. The theorem applies to every such triple for every n at least three. The coordinate proof only requires the unit norm of z and its orthogonality to x and y; native Euclidean inner-product and squared-norm formulas discharge these conditions from orthonormality. No positive definiteness, distance condition, nonzero-minor premise, rational-weight restriction, or dimension cutoff is used.")),
                     Paragraph(Text("The finite-array proof sums over all ordered tuples. Skew(v) means v(i,j)=-v(j,i). Alt(b) means b(j,i,k)=-b(i,j,k) and b(k,i,j)=b(i,j,k). The actual maps are lift(z,v)(i,j,k)=z(i)v(j,k)-z(j)v(i,k)+z(k)v(i,j), lower(z,b)(i,j)=sum over k of z(k)b(k,i,j), and contract(z,v)(i)=sum over k of z(k)v(k,i). Pair mass is one half of the full squared-coordinate sum; triple mass is one sixth of its full squared-coordinate sum.")),
@@ -22,7 +24,10 @@ internal sealed class WeightedProjectionMinorsDocument : IScribeDocumentDefiniti
                     Paragraph(Text("An exact finite threshold expansion represents every nonnegative real value in a finite set as a sum of nonnegative coefficients times indicators of upper level sets. Induction on the maximum constructs the coefficients. Apply the family inequality at every threshold and interchange finite sums. The union condition on the three edges is exactly the upper level condition for the displayed maximum. Equal weights share the same value, so ties and zero minors require no perturbation or approximation.")),
                     Paragraph(Text("Symmetric pair summands occur twice in the full ordered sum. Symmetric triple summands that vanish on repeated indices occur six times. Explicit minimum-index partition and sorting of the other two indices prove these factors; cancellation gives the increasing-index statement. All inequalities are non-strict, including n=3 and equality cases.")),
                     Paragraph(Text("The external question is meler, Inequality involving minors of an orthogonal matrix, MathOverflow 469781, revision F53D06CE-3805-43B9-9FEB-43A79F67F7AB, CC-BY-SA 4.0, also Math StackExchange 4902019. The coordinate proof is a repository synthesis. It directly uses pinned Mathlib squared finite Cauchy-Schwarz and determinant expansions, and assumes no coupling, Hall inequality, exterior norm estimate, or probability normalization."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathoverflow-469781-weighted-orthogonal-minors"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula Statement()
     {
