@@ -195,7 +195,8 @@ private lemma rate_mass {c : ℝ} (hc : 0 < c) :
     _ = _ := by
       have hg : Real.Gamma (10 : ℝ) = (Nat.factorial 9 : ℝ) := by
         convert Real.Gamma_nat_eq_factorial 9 using 1 <;> norm_num
-      rw [hg, Real.rpow_natCast]
+      have hp : (1 / c) ^ (10 : ℝ) = (1 / c) ^ (10 : ℕ) := Real.rpow_natCast _ _
+      rw [hg, hp]
       norm_num [Nat.factorial] <;> ring
 
 private lemma weight_mass {c : ℝ} (hc : 0 < c) :
@@ -220,7 +221,7 @@ private lemma b_tail (t : ℝ) (ht : Real.log 2 ≤ t) :
   rw [Real.log_exp, ← F_eq_Ioc] at hid
   dsimp [b, relativeError]
   rw [he]
-  simp only [div_eq_mul_inv] at hid
+  simp only [div_eq_mul_inv] at hid ⊢
   linarith only [hid]
 
 lemma relativeError_le (p : PNTConstants) {t : ℝ} (ht : 0 ≤ t) :
@@ -694,7 +695,7 @@ theorem actual_weighted_mangoldt_translation_bound (p : PNTConstants)
         (density D (Real.log n) f u + density D (-Real.log n) f u) := by
     have hfin := Finset.sum_le_sum (s := primes D) (fun (n : ℕ) hn =>
       mul_le_mul_of_nonneg_left (hlocal (Real.log (n : ℝ))) (weight_nonneg n))
-    rw [integral_finsetSum _ (fun n hn =>
+    rw [integral_finsetSum _ (fun (n : ℕ) hn =>
       ((hd (Real.log n)).add (hd (-Real.log n))).const_mul (weight n))]
     simp_rw [integral_const_mul, integral_add (hd _) (hd _)]
     dsimp [primeQuadratic]
@@ -706,7 +707,7 @@ theorem actual_weighted_mangoldt_translation_bound (p : PNTConstants)
     ring
   have hint : Integrable (fun u : ℝ => ∑ n ∈ primes D, weight n *
       (density D (Real.log n) f u + density D (-Real.log n) f u)) :=
-    integrable_finsetSum _ (fun n hn =>
+    integrable_finsetSum _ (fun (n : ℕ) hn =>
       ((hd (Real.log n)).add (hd (-Real.log n))).const_mul (weight n))
   have hpoint (u : ℝ) :
       (∑ n ∈ primes D, weight n *
