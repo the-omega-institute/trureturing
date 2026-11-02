@@ -15,6 +15,7 @@ import Mathlib.Topology.Compactification.OnePoint.Basic
 map used by the free-fibre boundary construction. -/
 
 open TopologicalSpace Set Function
+open scoped Topology
 
 namespace D5.S1.Dynamics.Shadowing.FreeFibreBoundary
 
@@ -221,6 +222,91 @@ theorem firstDifferenceFiber_isClopen (a : BinaryName) (n : ℕ) :
       exact mem_iInter.mp hs ⟨k, hk⟩
   rw [hEq]
   exact hprefix.inter hlast
+
+/- The first-disagreement map is continuous.  Away from the distinguished
+point it is locally constant on a clopen fibre; at the distinguished point,
+the compact sets occurring in the one-point neighbourhood basis meet only
+finitely many such fibres. -/
+theorem continuous_firstDifference (a : BinaryName) :
+    Continuous (firstDifference a) := by
+  rw [continuous_iff_continuousAt]
+  intro s
+  rw [continuousAt_def]
+  intro V hV
+  by_cases hsa : s = a
+  · subst s
+    have haInf : firstDifference a a = ∞ :=
+      (firstDifference_eq_infty_iff a a).2 rfl
+    have hVInf : V ∈ 𝓝 (∞ : OnePoint ℕ) := by simpa [haInf] using hV
+    obtain ⟨O, hOV, hO, hInfO⟩ := mem_nhds_iff.mp hVInf
+    have hObasis : O ∈ 𝓝 (∞ : OnePoint ℕ) :=
+      mem_nhds_iff.mpr ⟨O, subset_rfl, hO, hInfO⟩
+    obtain ⟨K, ⟨hKclosed, hKcompact⟩, hKsub⟩ :=
+      (OnePoint.hasBasis_nhds_infty (X := ℕ)).mem_iff.mp hObasis
+    let F : Set BinaryName := ⋃ n ∈ K, firstDifferenceFiber a n
+    have hKfinite : K.Finite := hKcompact.finite_of_discrete
+    have hFcompact : IsCompact F := by
+      exact hKfinite.isCompact_biUnion fun n hn =>
+        (firstDifferenceFiber_isClopen a n).1.isCompact
+    have hFclosed : IsClosed F := hFcompact.isClosed
+    have haF : a ∉ F := by
+      intro haF'
+      rcases mem_iUnion₂.mp haF' with ⟨n, hnK, han⟩
+      exact han.2 rfl
+    have hFopen : IsOpen Fᶜ := hFclosed.isOpen_compl
+    have haFopen : Fᶜ ∈ 𝓝 a := hFopen.mem_nhds (show a ∈ Fᶜ from haF)
+    apply Filter.mem_of_superset haFopen
+    intro t ht
+    by_cases hta : t = a
+    · subst t
+      change firstDifference a a ∈ V
+      rw [haInf]
+      exact hOV (hKsub (mem_union_right _ (by simp)))
+    · have hd : ∃ n, t n ≠ a n := by
+        by_contra hnone
+        apply hta
+        funext n
+        by_contra hne
+        exact hnone ⟨n, hne⟩
+      let n := Nat.find hd
+      have hval : firstDifference a t = (n : OnePoint ℕ) := by
+        simp [firstDifference, n, hd]
+      have hnK : n ∉ K := by
+        intro hnK
+        apply ht
+        exact mem_iUnion₂.mpr
+          ⟨n, hnK, (firstDifference_eq_coe_iff a t n).mp hval⟩
+      change firstDifference a t ∈ V
+      rw [hval]
+      exact hOV (hKsub (mem_union_left _ ⟨n, hnK, rfl⟩))
+  · have hd : ∃ n, s n ≠ a n := by
+      by_contra hnone
+      apply hsa
+      funext n
+      by_contra hne
+      exact hnone ⟨n, hne⟩
+    let n := Nat.find hd
+    have hval : firstDifference a s = (n : OnePoint ℕ) := by
+      simp [firstDifference, n, hd]
+    rcases mem_nhds_iff.mp hV with ⟨O, hOV, hO, hxO⟩
+    have hnO : (n : OnePoint ℕ) ∈ O := by simpa [hval] using hxO
+    have hsingleton : IsOpen ({(n : OnePoint ℕ)} : Set (OnePoint ℕ)) := by
+      simpa using
+        (OnePoint.isOpen_image_coe (s := ({n} : Set ℕ))).2 (isOpen_discrete _)
+    have hsingletonV : ({(n : OnePoint ℕ)} : Set (OnePoint ℕ)) ⊆ V := by
+      intro z hz
+      have hz' : z = (n : OnePoint ℕ) := by simpa using hz
+      subst z
+      exact hOV hnO
+    have hpre : (firstDifference a) ⁻¹' ({(n : OnePoint ℕ)} : Set (OnePoint ℕ)) =
+        firstDifferenceFiber a n := by
+      ext t
+      change firstDifference a t = (n : OnePoint ℕ) ↔ _
+      exact firstDifference_eq_coe_iff a t n
+    apply Filter.mem_of_superset
+      (hpre ▸ (firstDifferenceFiber_isClopen a n).2.mem_nhds
+        ((firstDifference_eq_coe_iff a s n).mp hval))
+    exact preimage_mono hsingletonV
 
 /- Restricting the initial marker in the complete joint graph language gives
 an exact presentation.  No surjectivity or invariance of the dynamics is
