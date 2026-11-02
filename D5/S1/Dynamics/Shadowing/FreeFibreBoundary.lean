@@ -1315,4 +1315,3 @@ theorem result : ¬ claim := by
 
 end
 end D5.S1.Dynamics.Shadowing.FreeFibreBoundary
-
