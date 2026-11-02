@@ -65,6 +65,7 @@ def main():
     current.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
         "set_option maxHeartbeats 0\nopen Lean Elab Command LeanInformationAudit.SearchReduction\n"
         f"run_cmd do\n  let reading ← acquireInformation (← getEnv) `{TARGET} #[] (some `{APPLICATION})\n"
+        f"  pickle (System.FilePath.mk {json.dumps(str(directory / 'current-reading.pickle'))}) reading\n"
         f"  logInfo (observationJson (withInformation {{target := `{TARGET}, base := .found, paired := .found, verdict := .bindOnly}} reading)).compress\n")
     if SOURCE.exists() or FIXTURE.exists():
         raise RuntimeError("temporary fixture paths already exist; refusing to overwrite")
