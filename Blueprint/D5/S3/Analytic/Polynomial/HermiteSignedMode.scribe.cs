@@ -95,7 +95,7 @@ internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
         var n=F.Id("n"); var k=F.Id("k"); var j=Par(Sub(n,Mul(D(2),k)));
         var value=new Formula.Fraction(Mul(Mul(new Formula.Power(Par(Seq(Minus,D(1))),k),Call("factorial",n)),
             new Formula.Power(D(2),j)),Mul(Call("factorial",k),Call("factorial",j)));
-        var sum=new Formula.SumOver("k",Call("range",Add(Call("div",n,D(2)),D(1))),Call("monomial",j,value));
+        var sum=Seq(Sum,Underscore,Grp(Seq(k,InMacro,Call("range",Add(Call("div",n,D(2)),D(1))))),Call("monomial",j,value));
         return All("n",Nat(),Equal(Call("physicistsHermite",n),sum));
     }
     private static Formula AFormula() => All("n",Nat(),Equal(A(F.Id("n")),
