@@ -9,6 +9,7 @@
 import D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.Tactic.Ring
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Group.AddChar
@@ -448,6 +449,170 @@ theorem walsh_constant_derivative_iff {n : ℕ} [NeZero n] (f : Word n → ZMod 
       _ = sign c := by
         rw [mul_assoc, ← sign_add, CharTwo.add_self_eq_zero]
         simp [sign]
+
+/-! The next definitions package the nondegenerate binary dot pairing.  The
+constant-derivative directions are represented as the comap of the dual
+annihilator of the Walsh-support affine direction; the theorem below proves
+that this representation is exact before any coefficient classification. -/
+
+/-- The linear map sending a direction to its dot-product functional. -/
+def dotDual {n : ℕ} [NeZero n] : Word n →ₗ[ZMod 2] Module.Dual (ZMod 2) (Word n) :=
+  { toFun := fun u =>
+      { toFun := fun a => dot a u
+        map_add' := by
+          intro a b
+          simp [dot, add_mul, Finset.sum_add_distrib]
+        map_smul' := by
+          intro r a
+          simp [dot, Pi.smul_apply, smul_eq_mul, mul_assoc, mul_comm, mul_left_comm,
+            Finset.mul_sum] }
+    map_add' := by
+      intro u v
+      apply LinearMap.ext
+      intro a
+      change dot a (u + v) = dot a u + dot a v
+      rw [dot_add_right]
+    map_smul' := by
+      intro r u
+      apply LinearMap.ext
+      intro a
+      change dot a (r • u) = r * dot a u
+      simp [dot, Pi.smul_apply, smul_eq_mul, mul_assoc, mul_comm, mul_left_comm,
+        Finset.mul_sum] }
+
+private theorem dotDual_injective {n : ℕ} [NeZero n] :
+    Function.Injective (dotDual (n := n)) := by
+  intro u v huv
+  funext i
+  have hi := congrArg (fun ℓ : Module.Dual (ZMod 2) (Word n) =>
+    ℓ (Pi.single i 1)) huv
+  change dot (Pi.single i 1) u = dot (Pi.single i 1) v at hi
+  simpa [dot, Pi.single_apply] using hi
+
+/-- The binary dot pairing identifies the word space with its algebraic dual. -/
+  noncomputable def dotDualEquiv {n : ℕ} [NeZero n] :
+    Word n ≃ₗ[ZMod 2] Module.Dual (ZMod 2) (Word n) :=
+  LinearMap.linearEquivOfInjective (dotDual (n := n)) (dotDual_injective (n := n))
+    (Subspace.dual_finrank_eq (K := ZMod 2) (V := Word n)).symm
+
+/-- Direction of the affine span of the nonzero Walsh support. -/
+def walshSupportDirection {n : ℕ} [NeZero n] (f : Word n → ZMod 2) :
+    Subspace (ZMod 2) (Word n) :=
+  (affineSpan (ZMod 2) {a | walsh f a ≠ 0}).direction
+
+/-- The canonical submodule of constant-character derivative directions. -/
+def constantDerivativeSubmodule {n : ℕ} [NeZero n] (f : Word n → ZMod 2) :
+    Subspace (ZMod 2) (Word n) :=
+  Submodule.comap (dotDual (n := n)) (walshSupportDirection f).dualAnnihilator
+
+/-- Constant derivatives are the dot-annihilator of Walsh-support differences,
+and the two complementary directions have the exact finite-dimensional sum. -/
+theorem constantDerivative_affineSpan_duality {n : ℕ} [NeZero n]
+    (f : Word n → ZMod 2) :
+    (∀ u, u ∈ constantDerivativeSubmodule f ↔
+      ∃ c, ∀ y, f (y + u) + f y = c) ∧
+      Module.finrank (ZMod 2) (constantDerivativeSubmodule f) +
+          Module.finrank (ZMod 2) (walshSupportDirection f) =
+        Module.finrank (ZMod 2) (Word n) := by
+  classical
+  let S : Set (Word n) := {a | walsh f a ≠ 0}
+  let A : Subspace (ZMod 2) (Word n) := walshSupportDirection f
+  obtain ⟨a₀, ha₀⟩ := walsh_support_nonempty f
+  have ha₀S : a₀ ∈ S := ha₀
+  have hdir : A = Submodule.span (ZMod 2) ((fun a : Word n => a - a₀) '' S) := by
+    dsimp [A, walshSupportDirection, S]
+    rw [direction_affineSpan,
+      vectorSpan_eq_span_vsub_set_right (ZMod 2) (show a₀ ∈ {a | walsh f a ≠ 0} from ha₀)]
+    congr 1
+  have dot_add_left (x y z : Word n) : dot (x + y) z = dot x z + dot y z := by
+    simp [dot, add_mul, Finset.sum_add_distrib]
+  have dot_smul_left (r : ZMod 2) (x z : Word n) :
+      dot (r • x) z = r * dot x z := by
+    simp [dot, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc, mul_comm,
+      mul_left_comm]
+  have hdual (u : Word n) :
+      dotDual (n := n) u ∈ A.dualAnnihilator ↔
+        ∀ a ∈ S, dot a u = dot a₀ u := by
+    rw [hdir, Submodule.mem_dualAnnihilator]
+    constructor
+    · intro h a ha
+      have hz := h (a - a₀)
+        (Submodule.subset_span ⟨a, ha, by rfl⟩)
+      change dot (a - a₀) u = 0 at hz
+      have hdot : dot (a - a₀) u = dot a u + dot a₀ u := by
+        rw [ZModModule.sub_eq_add]
+        exact dot_add_left a a₀ u
+      rw [hdot] at hz
+      apply sub_eq_zero.mp
+      simpa [ZModModule.sub_eq_add] using hz
+    · intro h z hz
+      induction hz using Submodule.span_induction with
+      | mem z hz =>
+          obtain ⟨a, ha, rfl⟩ := hz
+          change dot (a - a₀) u = 0
+          have hdot : dot (a - a₀) u = dot a u + dot a₀ u := by
+            rw [ZModModule.sub_eq_add]
+            exact dot_add_left a a₀ u
+          rw [hdot, h a ha]
+          exact CharTwo.add_self_eq_zero _
+      | zero => simp [dot]
+      | add x y hx hy =>
+          change (dotDual (n := n) u) (x + y) = 0
+          simp_all [map_add]
+      | smul r x hx =>
+          change (dotDual (n := n) u) (r • x) = 0
+          simp_all [map_smul]
+  have hmem (u : Word n) :
+      u ∈ constantDerivativeSubmodule f ↔
+        ∃ c, ∀ y, f (y + u) + f y = c := by
+    change dotDual (n := n) u ∈ A.dualAnnihilator ↔ _
+    constructor
+    · intro hu
+      refine ⟨dot a₀ u, ?_⟩
+      apply (walsh_constant_derivative_iff f u (dot a₀ u)).mpr
+      intro a ha
+      exact (hdual u).mp hu a ha
+    · rintro ⟨c, hc⟩
+      apply (hdual u).mpr
+      intro a ha
+      have ha' := (walsh_constant_derivative_iff f u c).mp hc a ha
+      have ha₀' := (walsh_constant_derivative_iff f u c).mp hc a₀ ha₀S
+      exact ha'.trans ha₀'.symm
+  have hmap :
+      Submodule.map (dotDualEquiv (n := n)).toLinearMap (constantDerivativeSubmodule f) =
+        A.dualAnnihilator := by
+    ext φ
+    constructor
+    · rintro ⟨u, hu, rfl⟩
+      change dotDual (n := n) u ∈ A.dualAnnihilator at hu
+      change dotDual (n := n) u ∈ A.dualAnnihilator
+      exact hu
+    · intro hφ
+      refine ⟨(dotDualEquiv (n := n)).symm φ, ?_, ?_⟩
+      · change dotDual (n := n) ((dotDualEquiv (n := n)).symm φ) ∈ A.dualAnnihilator
+        have heq := (dotDualEquiv (n := n)).apply_symm_apply φ
+        change dotDual (n := n) ((dotDualEquiv (n := n)).symm φ) = φ at heq
+        rw [heq]
+        exact hφ
+      · simp
+  refine ⟨hmem, ?_⟩
+  have hfin :
+      Module.finrank (ZMod 2) (constantDerivativeSubmodule f) =
+        Module.finrank (ZMod 2) A.dualAnnihilator := by
+    calc
+      Module.finrank (ZMod 2) (constantDerivativeSubmodule f) =
+          Module.finrank (ZMod 2)
+            (Submodule.map (dotDualEquiv (n := n)).toLinearMap
+              (constantDerivativeSubmodule f)) :=
+        ((dotDualEquiv (n := n)).finrank_map_eq _).symm
+      _ = Module.finrank (ZMod 2) A.dualAnnihilator := by rw [hmap]
+  calc
+    Module.finrank (ZMod 2) (constantDerivativeSubmodule f) +
+        Module.finrank (ZMod 2) (walshSupportDirection f) =
+      Module.finrank (ZMod 2) A.dualAnnihilator + Module.finrank (ZMod 2) A := by
+        rw [hfin]
+    _ = Module.finrank (ZMod 2) (Word n) := by
+      rw [add_comm, Subspace.finrank_add_finrank_dualAnnihilator_eq]
 
 set_option backward.isDefEq.respectTransparency false in
 private theorem ordered_product_entry {ι : Type*} [Fintype ι] [DecidableEq ι]
