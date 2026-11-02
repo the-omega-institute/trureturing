@@ -40,7 +40,51 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
                     + "If x1 is below one, set t=x0/(1-x1); their mixture with coefficient t "
                     + "has the prescribed mean x. If x1 is one, x0 is zero and the first "
                     + "map suffices. A tail component of weight p therefore gives two "
-                    + "components of weights (1-t)p and tp, preserving all tail correlations.")))));
+                    + "components of weights (1-t)p and tp, preserving all tail correlations.")),
+            Paragraph(Text(
+                "Write P_n for the same polytope and keep the same occupancy and Adm "
+                    + "definitions. For natural n and k and an integer vector q indexed by "
+                    + "Fin n, the real vector q belongs to the set scalar image k times P_n "
+                    + "exactly when it is a sum of k occupancy vectors of admissible words, "
+                    + "indexed by Fin k. Repeated words and empty layers are allowed. "
+                    + "This is a derived application of the coordinate inequalities, "
+                    + "convexHull_vertices, the public no-adjacent-true characterization "
+                    + "ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true, and finite "
+                    + "prefix and complement counting.")),
+            Paragraph(Text(
+                "For positive k, scalar-image membership is equivalent to the integer "
+                    + "bounds 0 <= q_i <= k and q_i + q_j <= k on each edge i+1=j: "
+                    + "multiply the inequalities for a preimage in P_n by k, or divide "
+                    + "the bounded vector by k to obtain a preimage. Establish signed "
+                    + "nonnegativity before replacing q_i by the natural number z_i=q_i.toNat. "
+                    + "At k=0 the same bounds force q=0. The scalar image really contains "
+                    + "this zero vector, since the zero vector belongs to P_n and supplies "
+                    + "a preimage. The sum indexed by Fin 0 is also zero; no division by "
+                    + "zero is used. The empty path is included.")),
+            Paragraph(Text(
+                "Use one palette c=0,...,k-1. At an even zero-based position i, put a one "
+                    + "in row c exactly when c < z_i; at an odd position put a one exactly "
+                    + "when k-z_i <= c. Each column therefore contains exactly z_i ones: "
+                    + "Fin.card_filter_val_lt counts the initial segment, and "
+                    + "Finset.card_filter_add_card_filter_not counts its complement. "
+                    + "An adjacent pair has an even endpoint e and an odd endpoint o. "
+                    + "Occupying both would require k-z_o <= c < z_e, contradicting "
+                    + "z_e+z_o <= k. The public "
+                    + "Adm equivalence makes each row an admissible word, and summing "
+                    + "its zero-one occupancy entries recovers q coordinate by coordinate. "
+                    + "In one-based coordinates the odd columns use initial segments "
+                    + "and the even columns use final segments. Reversing row order "
+                    + "interchanges these with the final/initial threshold convention.")),
+            Paragraph(Text(
+                "Conversely, convexHull_vertices and subset_convexHull place each "
+                    + "admissible occupancy vector in P_n. Summing its coordinate and "
+                    + "edge bounds over exactly k rows gives the bounds above, hence "
+                    + "the required scalar-image membership, including k=0. The hull's "
+                    + "literature attribution supplies the convex-hull equality; the "
+                    + "palette and scalar calculation here records its application. "
+                    + "The scope is integer feasibility and occupancy decomposition. "
+                    + "Comparable-support histogram uniqueness, canonical boundary "
+                    + "uniqueness and sorting connectivity require separate arguments.")))));
 
     private static DocumentBlock Result(string id, string declaration, string title,
         string prose, Formula formula, AssessedProvenance provenance) =>

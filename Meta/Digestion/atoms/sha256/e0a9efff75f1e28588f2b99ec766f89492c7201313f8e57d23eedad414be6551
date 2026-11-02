@@ -1,0 +1,8 @@
+### 40.1. Fixed labelled domain and sharp core bound
+
+Let $P$ be any fixed strictly convex fourteen-gon with labelled vertices $v_0,\ldots,v_{13}$ in cyclic order. Write $e_i=v_{i-1}v_{i+1}$ for its original ear diagonal with centre $i$, with indices modulo $14$, and let $\mathcal T_{14}$ be all actual triangulations of this same polygon. Let $D$ be any six mutually noncrossing original ears whose successive cyclic gaps, counted in unselected centres, have multiset $(3,1,1,1,1,1)$. Partition $D$ into three pairs $M_1,M_2,M_3$. For $T\in\mathcal T_{14}$, $\operatorname{Ear}(T)$ is its complete set of original ears, and
+
+$$
+\Gamma(R)=\{T:\operatorname{Ear}(T)\cap D=R\}.
+$$
+

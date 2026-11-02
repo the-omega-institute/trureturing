@@ -1,0 +1,38 @@
+**Proposition 2.4 (Actual local presentation; `prop:local`).**
+In the stable domain there are inverse maps
+
+$$
+N_G:\mathscr A_{G,\boldsymbol\ell}\longrightarrow
+       \mathcal L_{\boldsymbol\ell}(G),\qquad
+ \Lambda_G:\mathcal L_{\boldsymbol\ell}(G)\longrightarrow
+       \mathscr A_{G,\boldsymbol\ell}.
+$$
+
+They identify the latter space with
+$\bigotimes_c\operatorname{Sym}^{\ell_c}H^1(G,A;\mathbb{Q})$.
+
+**Proof.**
+The coefficient correspondence is [Kuperberg, Lemma `l:sympow`](../../../Library/Topology/kuperberg2026oddvas.md), §3.1. We construct it in the stable domain with explicit inverse maps. Here are actual finite constructions. For an oriented edge with flags
+$h_t,h_h$, insert an ordered list of $m$ legs by replacing its pairing
+with
+
+$$
+h_t\leftrightarrow b_1,\quad
+ f_j\leftrightarrow b_{j+1}\ (j<m),\quad
+ f_m\leftrightarrow h_h,\quad
+ \lambda_j\leftrightarrow l_j.
+$$
+
+The new trivalent fibers have cycles $(\lambda_j,b_j,f_j)$ and $l_j$
+is an ordinary leaf with its prescribed color. For $m=0$ keep the original
+pairing. This works unchanged for a loop because $h_t\ne h_h$. Define
+$N_G$ on monomials by these insertions, using any fixed order of colors
+on each edge. CL makes the order choice irrelevant.
+
+To see the vertex relations in actual diagrams, give a core vertex cycle
+$(a,b,c)$ and temporarily direct its three branches outward. The following
+one-leg instances of [(1.1)](#eq-ihx) are exact:
+
+<a id="eq-move"></a>
+<a id="eq:move"></a>
+

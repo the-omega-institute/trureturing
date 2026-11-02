@@ -1,0 +1,5 @@
+source_id = "fiedler-resistance-k2m-optimizer"
+path = "docs/develop/theory/FIEDLER_RESISTANCE_K2M_OPTIMIZER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

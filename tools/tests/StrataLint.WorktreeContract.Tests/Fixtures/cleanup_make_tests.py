@@ -55,6 +55,14 @@ class CleanupMakeTests(NativeFixture):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
 
     def build_cli(self, repository):
+        # The Make entrance exercises production sweep logic, but every deletion
+        # must stay inside this fixture. TMPDIR alone does not exclude /tmp.
+        source = repository / "tools/StrataLint.Cli/Commands/Worktrees/CleanLanesCommand.cs"
+        content = source.read_text()
+        original = "DefaultTempRoots(), now, Directory.SetCurrentDirectory);"
+        self.assertEqual(1, content.count(original))
+        source.write_text(content.replace(original,
+            "new[] { Path.GetTempPath() }, now, Directory.SetCurrentDirectory);"))
         self.mark_phase("canonical-build")
         self.run_command(["make", "--no-print-directory", "-C", repository / "tools", "dotnet",
                           "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
@@ -114,8 +122,8 @@ class CleanupMakeTests(NativeFixture):
             self.git("checkout", "--detach", cwd=tree)
         (self.detached_dirty / "owned").write_text("detached tracked\n")
         (self.detached_dirty / "untracked").write_text("detached untracked\n")
-        # A current Git lock keeps the separate orphan/snapshot sweep out of
-        # host-wide temporary roots while exercising the real canonical door.
+        # Keep an intentional lock in the qualification fixture; independent
+        # sweeps still run within the fixture's isolated temporary root.
         self.current = self.add_lane("current-lock")
         self.git("worktree", "lock", "--reason", "fixture", self.current)
         self.mark_phase("participant-start")
@@ -226,6 +234,41 @@ class CleanupMakeTests(NativeFixture):
                     self.assertEqual("detached tracked\n", (recovery / "owned").read_text())
                     self.assertEqual("detached untracked\n", (recovery / "untracked").read_text())
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
+
+    def test_single_tree_refusal_keeps_aggregate_success_and_warning(self):
+        nested = self.cache / ".lake/nested-repository"
+        self.git("init", nested)
+        recent = self.add_lane("recent")
+        previous = self.environment["GIT_COMMITTER_DATE"]
+        self.environment["GIT_COMMITTER_DATE"] = str(int(time.time())) + " +0000"
+        try:
+            self.git("commit", "--allow-empty", "-m", "recent saved work", cwd=recent)
+        finally:
+            self.environment["GIT_COMMITTER_DATE"] = previous
+        self.build_cli(self.repository)
+        arguments = ["make", "--no-print-directory", "-C", self.repository / "tools", "clean-all",
+                     "BASE=dev", "FORCE=1", "VERBOSE=1",
+                     "CLEAN_CODEX_HOME=" + str(self.root / "codex"),
+                     "CLEAN_SSHX_HOME=" + str(self.root / "sshx"),
+                     "CLEAN_TMP_ROOT=" + self.environment["TMPDIR"]]
+        result = self.run_command(arguments, self.root, phase="aggregate-tree-refusal", check=False)
+        self.assert_aggregate_result(result)
+        warnings = [json.loads(line) for line in result.stderr.splitlines() if line.startswith('{')]
+        warning = next(row for row in warnings if row.get("event") == "clean_lanes_warning"
+                       and row.get("path") == str(self.cache))
+        self.assertEqual("skipped", warning["action"])
+        self.assertIn("nested_git_boundary:", warning["reason"])
+        self.assertTrue(warning["diagnostic"])
+        self.assertEqual([str(self.cache)], [row["path"] for row in warnings
+                                           if row.get("event") == "clean_lanes_warning"])
+        rows = [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')]
+        items = {row.get("path"): row for row in rows
+                 if row.get("event") == "clean_lanes_item"}
+        self.assertEqual("recently_updated", items[str(recent)]["reason"])
+        self.assertEqual("locked_recent", items[str(self.current)]["reason"])
+        self.assertTrue(recent.exists())
+        self.assertTrue(nested.exists())
+        self.assertFalse(self.dirty.exists())
 
     def test_aggregate_survives_repository_removal(self):
         selected = self.add_lane("aggregate-anchor")

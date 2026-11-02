@@ -9,7 +9,7 @@
    bbd2f34ff81c827b099c0c58d05372c6091ac050, files
    `TauCeti/MeasureTheory/Integral/ExpDecay.lean` and
    `TauCeti/Analysis/Fourier/ExpNegAbs.lean`.
-   Modified by trureturing on 2026-09-02 for Lean/mathlib v4.33.0 and local routing.
+   Adapted for local imports, routing and shared exponential-integrability ownership.
 
    Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
    Released under Apache 2.0 license as described below.
@@ -171,6 +171,7 @@ KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 -/
 
+import D5.S3.Analytic.Asymptotics.ExponentialAbsIntegrability
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Tactic
 
@@ -207,24 +208,8 @@ noncomputable def poissonPhaseHolonomyEnergy
       Complex.normSq
         (pairwisePoissonSwapCurvature deltaI deltaJ gammaI gammaJ k)
 
-/- The following two lemmas are the adapted TauCeti leaves named in the
-   provenance and license block above. -/
-
-/-- The two-sided real exponential is integrable at every positive rate. -/
-private theorem integrable_exp_neg_mul_abs {a : ℝ} (ha : 0 < a) :
-    Integrable (fun x : ℝ => Real.exp (-(a * |x|))) := by
-  have hIic : IntegrableOn (fun x : ℝ => Real.exp (-(a * |x|))) (Iic 0) := by
-    refine (integrableOn_exp_mul_Iic (a := a) ha 0).congr_fun (fun x hx => ?_)
-      measurableSet_Iic
-    rw [abs_of_nonpos (mem_Iic.mp hx)]
-    ring_nf
-  have hIoi : IntegrableOn (fun x : ℝ => Real.exp (-(a * |x|))) (Ioi 0) := by
-    refine (integrableOn_exp_mul_Ioi (a := -a) (by linarith) 0).congr_fun
-      (fun x hx => ?_) measurableSet_Ioi
-    rw [abs_of_pos (mem_Ioi.mp hx)]
-    ring_nf
-  rw [← integrableOn_univ, ← Iic_union_Ioi (a := (0 : ℝ))]
-  exact hIic.union hIoi
+/- The transform below and the imported exponential-integrability lemma are
+   the adapted TauCeti leaves named in the provenance and license block above. -/
 
 /-- The Lorentzian pairing of a two-sided exponential with a complex oscillation. -/
 private theorem integral_exp_mul_I_mul_exp_neg_mul_abs
@@ -269,7 +254,7 @@ private theorem integral_exp_mul_I_mul_exp_neg_mul_abs
       (fun x : ℝ =>
         Complex.exp ((b : ℂ) * x * Complex.I) *
           (Real.exp (-(a * |x|)) : ℂ)) :=
-    ((integrable_exp_neg_mul_abs ha).ofReal).bdd_mul (c := 1) (by fun_prop)
+    ((D5.S3.Analytic.Asymptotics.ExponentialAbsIntegrability.integrable_exp_neg_mul_abs ha).ofReal).bdd_mul (c := 1) (by fun_prop)
       (.of_forall fun x => by simp [Complex.norm_exp])
   have hneIic : (a : ℂ) + b * Complex.I ≠ 0 := by
     intro h
@@ -310,7 +295,7 @@ private theorem damped_cosine_integral
       (Real.exp (-(a * |x|)) : ℂ)
   have hf : Integrable f := by
     dsimp only [f]
-    exact ((integrable_exp_neg_mul_abs ha).ofReal).bdd_mul (c := 1) (by fun_prop)
+    exact ((D5.S3.Analytic.Asymptotics.ExponentialAbsIntegrability.integrable_exp_neg_mul_abs ha).ofReal).bdd_mul (c := 1) (by fun_prop)
       (.of_forall fun x => by simp [Complex.norm_exp])
   calc
     (∫ x : ℝ, Real.exp (-(a * |x|)) * Real.cos (b * x)) =
@@ -338,7 +323,7 @@ private theorem damped_sine_sq_integral
       d ^ 2 / (2 * a * (a ^ 2 + d ^ 2)) := by
   have hTwoA : 0 < 2 * a := by positivity
   have hExp : Integrable (fun x : ℝ => Real.exp (-((2 * a) * |x|))) :=
-    integrable_exp_neg_mul_abs hTwoA
+    D5.S3.Analytic.Asymptotics.ExponentialAbsIntegrability.integrable_exp_neg_mul_abs hTwoA
   have hCos : Integrable
       (fun x : ℝ => Real.exp (-((2 * a) * |x|)) * Real.cos ((2 * d) * x)) := by
     exact hExp.mul_bdd (c := 1) (by fun_prop)

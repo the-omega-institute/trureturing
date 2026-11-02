@@ -1,0 +1,48 @@
+**v17.0 · 2026 年 10 月 30 日 · Asia/Singapore**
+
+> **转换说明（编者）。** 本文完整转换作者提供的同名 XeLaTeX 稿件；陈述沿用每节共享编号，公式保留全局编号 (1)–(3)，引文与固定项目链接均保留。正文的“本轮”“最新”、固定提交审计、历史及推进报告归属于原作者，本次转换不重新认证这些报告或主张数学首创。正文保留全部纸面证明及其前提；本次仅作内容与本地排版核对，不主张 Lean、数学数值、CAS、模拟、门搜索、硬件或原生托管 MathJax 认证。
+
+<a id="sec-abstract"></a>
+
+## 摘要
+
+本文把“加法、乘法、指数、对数、三角形与量子门”的联系落实为同一五模式来源上的若干精确恒等式。对数把正权电路的乘法变成加法，把加法变成 log-sum-exp；五模式底面的唯一仿射回路产生隐藏关联参数，对数优势比是其 Fisher 对偶坐标。最大熵完成满足 KL 勾股恒等式，概率平方根实现 Fisher 球面几何，Gram 行列式把整体体积写成三角形或四面体体积平方之和。在明确给定的条件两比特纯态中，四角振幅比的复对数由经典关联与相位两部分组成，纠缠强度恰分解为双曲正弦平方与正弦平方之和。最后，从 Fibonacci 融合的加乘规则推得黄金归一三角，再通过相邻投影的编织相容性确定相对相位及门的转移权重。各项定理注明欧氏尺子、概率标定、Hilbert 与张量结构等前提；它们构成可继续研究的桥梁，不把不同层次的“正交”混为一谈。
+
+**证明与来源身份。**本文给出经典工具在项目指定对象上的自足证明、已有项目结论的核对以及本轮的综合推论。不主张发明指数族、KL 投影、Fisher 几何、Cauchy--Binet、concurrence 或 Fibonacci 任意子理论。未运行 Lean 构建、数学数值程序、CAS、模拟或门序列搜索。
+
+## 目录
+
+1. [最新项目进展与本轮的证明目标](#sec-1)
+2. [加法、乘法与对数电路](#sec-2)
+3. [五个模式、唯一四角关系与十个三角形](#sec-3)
+4. [三读出、隐藏关联与指数族](#sec-4)
+5. [信息勾股：三个可见误差与一个隐藏关联](#sec-5)
+6. [三个稳定读出的正交性究竟在哪里](#sec-6)
+7. [三角面积平方为何会相加](#sec-7)
+8. [从加乘到量子电路：直和、张量积与平方](#sec-8)
+9. [核心定理：对数关联与相位的量子勾股](#sec-9)
+10. [量子相对熵把三层缺失精确相加](#sec-10)
+11. [递归观测如何在复对数中累加关系](#sec-11)
+12. [黄金门：融合加乘、勾股三角与编织相位](#sec-12)
+13. [指数门、谱与记录后的概率电路](#sec-13)
+14. [本轮形成的理论与可检验的后续问题](#sec-14)
+
+[文献与固定项目来源](#sec-bibliography)
+
+<a id="sec-1"></a>
+
+## 1. 最新项目进展与本轮的证明目标
+
+本轮只读固定的 `dev` 提交为
+`d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a`。
+提交时间为 2026-10-30 01:43:03（Asia/Singapore），合并 #23783，主题为区分近似 Walsh 范数与合法取得。相对 v16 的 `f22ccafb…`，理论目录有六个路径变化，其中一新增、五修改；当前理论树含 1006 个文件。本轮核验了二十份当前源码与五份前版源码的 Git blob，按主题阅读有关章节。这是有范围的研究审计，不是对整个仓库的形式化认证。
+
+真正最新且与本题直接相关的两项进展是：
+
+1. [《真实切面恢复》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md)新增 §§18--20：指定实际一阶来源的近似 Walsh $\ell^1$ 范数可指数大，同时整个允许的一阶类仍有两条常量探测词的合法取得方法；已知目标公式还有 $O(H)$ 计数器求值。**一个谱表示的系数范数，不等于所有电路或实际取得协议的成本。**
+2. [《统一联合律桥》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)新增 §2：给定完整实际过去的下一探针校准律，才能由塔式递归推出条件乘积律。相同单次边缘不提供独立乘法。它还区分完整概率律的可识别性与一份有限记录对隐藏来源的零误差识别。
+
+本题的主要数学基础已经出现在未变更的《金字塔基础公式》、[《读口与记录三角形》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md)、[《关系三角形与反演精度》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md)及[《概率、相位运输与完整回路》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)中。前稿 v14、v15 的仓库转录是研究连续性，不是额外独立验证。本文进一步把这些材料组织成一条从加乘电路到复四角关系、再到黄金门的证明链。
+
+<a id="statement-1-1"></a>
+

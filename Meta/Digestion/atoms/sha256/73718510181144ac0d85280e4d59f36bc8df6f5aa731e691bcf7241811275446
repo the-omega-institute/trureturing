@@ -1,0 +1,12 @@
+**定理 319.3（自适应细化的任务单调性）。** 若 $\pi\preceq\pi'$，则
+
+$$
+\boxed{
+\operatorname{Rec}_{\mathcal T}(\pi)
+\subseteq
+\operatorname{Rec}_{\mathcal T}(\pi').
+}
+$$
+
+若 $phi$ 由 $f$ 从 $Z_\pi$ 恢复，则在 $\pi'$ 上使用 $f\circ H$ 即可恢复 $\phi$。
+

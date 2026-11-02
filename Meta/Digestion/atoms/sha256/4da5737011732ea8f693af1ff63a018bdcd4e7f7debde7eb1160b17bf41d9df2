@@ -1,0 +1,78 @@
+**Theorem 11.2 (complete cut classification and finite arithmetic core).** Put
+
+$$
+\begin{aligned}
+\mathcal G_M&=\{k/M:k\in\mathbb Z_{>0}\},\\
+P(z)&=\begin{cases}z/(1-z),&0<z<1,\\z-1,&z>1,\end{cases}\\
+\mathcal A_M&=\bigcup_{r=1}^{M-1}
+ \{P^i(r/M):i\ge0\text{ and all }i\text{ parent steps are defined}\},\\
+\mathcal C_M&=\mathcal G_M\cup\mathcal A_M.
+\end{aligned}
+\tag{11.3}
+$$
+
+Here $P$ is undefined at $1$, and the union defining $\mathcal A_1$ is empty. For every $0<x<y$ in the entire positive rational carrier,
+
+$$
+x\equiv_M y
+\quad\Longleftrightarrow\quad
+\mathcal C_M\cap(x,y]=\varnothing.
+\tag{11.4}
+$$
+
+The nongrid part has the exact description
+
+$$
+\mathcal K_M:=\mathcal C_M\setminus\mathcal G_M
+ =\left\{\frac ab:
+ \begin{array}{l}
+a,b\in\mathbb Z_{>0},\ \gcd(a,b)=1,\ b\nmid M,\\
+\exists h,j\in\mathbb Z_{>0},\quad ah+bj=M
+\end{array}\right\}.
+\tag{11.5}
+$$
+
+In particular $a+b\le M$ for every member of $\mathcal K_M$, so this core is finite. The cuts are locally finite and have minimum $1/M$. If they are ordered as $c_1<c_2<\cdots$, the predictive cells are exactly
+
+$$
+(0,c_1)\cap\mathbb Q,\qquad
+[c_i,c_{i+1})\cap\mathbb Q\quad(i\ge1),\qquad c_1=1/M.
+\tag{11.6}
+$$
+
+A canonical integer naming these cells on their actual image is
+
+$$
+\kappa_M(x)=\lfloor Mx\rfloor+
+ \#\{z\in\mathcal K_M:z\le x\},\qquad
+\kappa_M(x)=\kappa_M(y)\Longleftrightarrow x\equiv_M y.
+\tag{11.7}
+$$
+
+Proof. Every $f_u$ is strictly increasing on positive inputs. Two of its floor reports differ precisely when a grid threshold $k/M$ lies in $(f_u(x),f_u(y)]$. Such a threshold has a unique preimage in $(x,y]$. Let $\mathcal D_M$ be the union of all these positive threshold preimages over all words, including the empty word. This proves (11.4) with $\mathcal D_M$ in place of $\mathcal C_M$; the right endpoint is included because floor takes its upper value at a threshold.
+
+The image of $L$ is $(0,1)$ and that of $R$ is $(1,\infty)$. A positive threshold can therefore be pulled back through a last action in exactly one way: through $L$ by the first branch of $P$, or through $R$ by the second. The threshold $1$ has no positive preimage through either action. Conversely every finite legal parent chain reverses to a forward word whose final response is its starting threshold. Thus $\mathcal D_M$ is exactly the legal parent closure of $\mathcal G_M$.
+
+In reduced coordinates $z=p/q$, a parent replaces $(p,q)$ by $(p,q-p)$ or $(p-q,q)$. Positivity and coprimality are preserved, and $p+q$ decreases strictly until $(1,1)$. Each chain is finite. Starting at $k/M>1$, the successive parents are subtractions of $1$, still on the same grid, until reaching $1$ or some $r/M$ with $1\le r<M$. Hence this closure is exactly (11.3), and $\mathcal A_M$ is finite.
+
+For (11.5), let reduced $a/b$ be a nongrid threshold preimage. For some word matrix
+
+$$
+G_u=\begin{pmatrix}\alpha&\beta\\c&d\end{pmatrix},\qquad
+\alpha d-\beta c=1,\quad d\ge1,
+$$
+
+its image is $(\alpha a+\beta b)/(ca+db)$. The numerator and denominator are coprime: a common divisor divides both $a$ and $b$ after multiplication by the integer inverse matrix. Since the image is on $\mathcal G_M$, its reduced denominator $ca+db$ divides $M$. If $c=0$, the determinant forces $\alpha=d=1$, so $b\mid M$, contrary to being nongrid. Thus $c\ge1$. With $t=M/(ca+db)$, take $h=tc$ and $j=td$ to obtain $ah+bj=M$ with both integers positive.
+
+Conversely suppose the conditions on the right of (11.5) hold. Let $g=\gcd(h,j)$ and $(c,d)=(h/g,j/g)$, so $c,d\ge1$ are coprime. Choose $1\le\alpha\le c$ with $\alpha d\equiv1\pmod c$; for $c=1$ take $\alpha=1$. Then $\beta=(\alpha d-1)/c$ is a nonnegative integer. The nonnegative matrix with rows $(\alpha,\beta)$ and $(c,d)$ has determinant one. The supplier `unimodular_iff_wordMatrix` cited in §14 gives its generator factorization; reversing that supplier's word gives the chronological $u$. Consequently
+
+$$
+M f_u(a/b)
+ =M\frac{\alpha a+\beta b}{ca+db}
+ =g(\alpha a+\beta b)\in\mathbb Z_{>0},
+$$
+
+since $ca+db=M/g$. Thus $a/b\in\mathcal D_M$, and $b\nmid M$ excludes the initial grid. This proves (11.5).
+
+Every parent in a chain from $r/M$ has reduced denominator at most $M$: subtraction either decreases that denominator or leaves it fixed. Its positive value is therefore at least $1/M$. The grid attains this minimum. A finite extra set together with a positive uniform grid is locally finite, unbounded, and has a successor for each cut. The no-cut condition now gives precisely (11.6), including the exceptional open initial cell. As $x$ crosses a grid cut, the first term of (11.7) increases by one; as it crosses a nongrid cut, the second does. Both terms are constant between cuts and take the upper value at a cut. Their sum therefore names exactly the cells, proving (11.7). $\square$
+

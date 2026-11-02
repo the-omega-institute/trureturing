@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a4d6be320548ff9dbfaf069e8d01940326da2d2565670fca35d991570ac989ef
+  normalized_sha256: sha256:a4d6be320548ff9dbfaf069e8d01940326da2d2565670fca35d991570ac989ef
+cas_ref: sha256:a4d6be320548ff9dbfaf069e8d01940326da2d2565670fca35d991570ac989ef
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonEarSlideCardinality.condition_fibre_card_at
+    target_statement_id: sha256:e67ec8a865c77ce9fded23b5e4d5a4f96f8a78706419a23a1a1fe7c67c4c25a6
+receipts:
+  unresolved_subitems: []

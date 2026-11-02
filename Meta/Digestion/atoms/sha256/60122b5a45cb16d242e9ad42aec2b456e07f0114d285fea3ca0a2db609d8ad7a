@@ -1,0 +1,11 @@
+**Theorem 3.1 (sharp interval supremum and attainment).** For every
+$n\ge2$, every faithful density operator $\rho$ on $\mathbb C^n$, every
+finite $c\ge0$, every $R\subseteq H$, and every two-dimensional
+$T\subseteq R^\perp$, use the parameters of Definition 1.3. Then
+
+$$
+\sup_{X,Y,Z\in[R,R\oplus T]}\Delta_c(X,Y,Z)
+=\frac{M-m}{b+s}.
+\tag{3.1}
+$$
+

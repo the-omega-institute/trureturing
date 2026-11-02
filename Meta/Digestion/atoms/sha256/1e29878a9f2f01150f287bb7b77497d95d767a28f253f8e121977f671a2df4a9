@@ -1,0 +1,55 @@
+#### 定理 4.2（条件关系、最大熵与遗漏损失；项目既有结果）
+
+当 $r>0$，
+
+$$
+\operatorname{Cov}(\xi,\eta\mid\zeta=0)=\frac{\Delta}{r^2}.
+$$
+
+底面条件独立等价于 $\Delta=0$，唯一补全为 $\kappa^\star=XY/r$。
+固定三轴后，这个 $p^\star$ 是整个闭纤维的唯一最大熵律，且
+
+$$
+\boxed{
+H(p^\star)-H(p)=D_2(p\Vert p^\star)
+=r\,I_p(\xi:\eta\mid\zeta=0),
+}
+$$
+
+$$
+\boxed{\operatorname{TV}(p,p^\star)=\frac{2|\Delta|}{r}.}
+$$
+
+$H,D_2$ 使用二为底的对数；零概率按连续惯例处理。
+
+**证明。**
+
+$Q/r$ 的两个边缘均值为 $X/r,Y/r$，联合概率为 $\kappa/r$；
+协方差相减给第一式。二元乘积表在固定边缘下唯一，故独立等价于 $\Delta=0$。
+令 $q=Q/r$，其行列边缘为 $u,v$。按中位事件分组，
+
+$$
+H(p)=h_2(Z)+rH(q),\qquad
+H(p^\star)=h_2(Z)+r[H(u)+H(v)].
+$$
+
+若 $q_{ij}>0$，则 $u_iv_j>0$；因此支撑包含，展开有限和得到
+$D_2(q\Vert u\otimes v)=H(u)+H(v)-H(q)$，
+以及 $D_2(p\Vert p^\star)=rD_2(q\Vert u\otimes v)$。
+相对熵非负且只在两律相同取零，给唯一最大值。
+最后两律的 $\kappa$ 差为 $\Delta/r$，应用定理 [3.4](#thm-task)。
+
+∎
+
+$r=0$ 时只有中位顶点 $p_2=1$，不定义底面条件律。
+此外，条件独立仍可有无条件关联：
+
+$$
+\operatorname{Cov}(\xi,\eta)=\frac{\Delta+XYZ}{r}.
+$$
+
+最大熵补全是一条明示的关系选择；实际来源是否满足它，由来源本身决定。
+它一般也不同于定理 [3.4](#thm-task) 的中点 minimax 选择。[[2](#ref-foundation), [4](#ref-determinant)]
+
+<a id="thm-odds"></a>
+

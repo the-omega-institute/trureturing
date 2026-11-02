@@ -58,6 +58,19 @@ internal sealed class CircularDeletionTransportDocument : IScribeDocumentDefinit
                     + "The ambient label type may be infinite, and intermediate circles need not have the initial support."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
+                "Every readout that factors through an untouched restriction inherits this invariant: "
+                + "if r(C)=h(restrict(p,C)) and p excludes every label in xs, restrict_walk gives r(C)=r(D) "
+                + "at the two ends of DeleteWalk(xs,C,D). The factor h may have any output type. "
+                + "This supplies a concrete readout invariant without introducing a state-record or trajectory structure.")),
+            Paragraph(Text(
+                "DeleteWalk is a relation of legal deletion/reinsertion incidences, not a selected controlled update. "
+                + "For example C=[0,1,2] and D=[0,2,1] are distinct oriented rotation classes, but deleting 0 gives "
+                + "the same two-label residual. Thus both DeleteWalk([0],C,C) and DeleteWalk([0],C,D) hold. "
+                + "The same source and omitted label therefore admit different successors. The definition supplies "
+                + "neither a canonical deterministic choice of successor nor an append operation or certified history observation. "
+                + "A separately specified controller may choose a successor and a separately specified history may record it; "
+                + "the relational interface alone does not supply those extra data or their laws.")),
+            Paragraph(Text(
                 "If C has no repeated labels and contains all n labels, the bound gives at least n minus two distinct omissions. "
                 + "Its use for a whole-supplier incidence requires an actual equality of oriented deletion residuals at that incidence. "
                 + "Equality after also identifying reversal is insufficient. This result neither constructs a Hamilton cycle "

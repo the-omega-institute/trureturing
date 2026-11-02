@@ -1,0 +1,31 @@
+**假设 B-33.1（固定标号配置与指定耳内相交）。** 固定定义B-32.1的同一个严格凸标号 $n$ 边形、六条不同实际耳 $D=\{f_{ab}:1\le a<b\le4\}$、四颗星 $S_a=\{f_{ab}:b\ne a\}$，以及四个已经指定的实际剖分 $T_a$，其完整耳集满足 $\operatorname{Ear}(T_a)=S_a$。本节取
+
+$$
+(q=0,\ n\ge12)\quad\text{或}\quad(q=1,\ n\ge11),
+$$
+
+并量化满足这些条件的每一种标号放置。令 $\mathcal H$ 仍为定义B-32.1中与四颗星都相交的实际容许族。另定义较强的关系：族 $\mathcal F$ 是 $D$ 相交的，若
+
+$$
+\operatorname{Ear}(U)\cap\operatorname{Ear}(V)\cap D\ne\varnothing
+\qquad(U,V\in\mathcal F,\ U\ne V).
+$$
+
+所求族必须包含全部四个固定 $T_a$。对 $A\subseteq D$ 及 $\mathscr B\subseteq2^D$，记
+
+$$
+\begin{aligned}
+\tau(T)&=\operatorname{Ear}(T)\cap D,\\
+\Gamma(A)&=\{T\in\mathcal T_n:\tau(T)=A\},\qquad w(A)=|\Gamma(A)|,\\
+\Gamma[\mathscr B]&=\bigcup_{A\in\mathscr B}\Gamma(A),\\
+\mathscr C_q&=\{A\subseteq D:A\cap S_a\ne\varnothing\ (1\le a\le4),
+\ A\text{ 内无交叉}\}.
+\end{aligned} \tag{33.1}
+$$
+
+$\Gamma(A)$ 包含具有此迹的全部实际剖分；其中 $D$ 外耳及其他对角线任取，不要求完整耳集等于 $A$。沿用约定B-32.2的 $c_r=C_{n-r-2}$，并记
+
+$$
+L=c_2+6c_3-10c_4+4c_5. \tag{33.2}
+$$
+

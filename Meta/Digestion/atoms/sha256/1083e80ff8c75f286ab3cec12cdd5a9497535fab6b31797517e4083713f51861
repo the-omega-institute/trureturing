@@ -1,0 +1,19 @@
+**Definition 39.4 (earned unit slice and authentic prefix).** An actual original reply $q_1(x)=k$, or a derived value from an actually acquired original archive, earns
+
+$$
+I_k=\begin{cases}(0,1),&k=0,\\\left[k,k+1\right),&k\ge1.\end{cases}
+\qquad k=\lfloor x\rfloor\ge0.
+\tag{39.5}
+$$
+
+Let $u$ be the authentic actually executed chronological prefix, with
+
+$$
+A_u=\begin{pmatrix}a&b\\c&d\end{pmatrix},\quad
+ad-bc=1,\quad a,d\ge1,\quad b,c\ge0,\qquad
+z=f_u(x)=\frac{ax+b}{cx+d}.
+\tag{39.6}
+$$
+
+The square compares the original full profile $\mathsf P_B(x)$ and the current full profile $\mathsf P_C(z)$ on this same slice and actual prefix. The current profile must come from actual current replies, for example Theorem 39.3, or be derived from already acquired evidence. The square's upper map is the real action $u$; mathematical inverse arithmetic below is not a source operation.
+

@@ -120,3 +120,202 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+
+namespace Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.RaisingEntry
+
+open _root_.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+open _root_.D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+noncomputable section
+
+/-- Observe the square root at the radicand in the raising-operator entry. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+/-- Retain every dimension, index, and branch of the original entry identity. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (i j : Fin (n + 1)),
+    Jplus n i j = if i.val + 1 = j.val then
+      (R.readout () () ((j.val : ℝ) * ((n : ℝ) + 1 - j.val)) : ℂ) else 0
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hbad := h 1 0 1
+  norm_num [rejected, realize, raising_entry] at hbad
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change Real.sqrt 0 ≠ Real.sqrt 1
+  norm_num
+
+def source_registration : Registration arena
+    (∀ (n : ℕ) (i j : Fin (n + 1)),
+      Jplus n i j = if i.val + 1 = j.val then
+        (Real.sqrt ((j.val : ℝ) * ((n : ℝ) + 1 - j.val)) : ℂ) else 0) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨raising_entry, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.raising_entry)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.RaisingEntry.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.RaisingEntry.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some
+    (realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print _root_.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.raising_entry
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.RaisingEntry
+
+namespace Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.LadderPair
+
+open _root_.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+noncomputable section
+
+/-- Observe the square root of the first ladder coefficient's radicand. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+/-- Retain the strict index bound and both ladder identities. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n k : ℕ), k < n →
+    R.readout () () ((k + 1 : ℝ) * (n - k : ℝ)) *
+        Real.sqrt (n.choose (k + 1) : ℝ) =
+      (n - k : ℝ) * Real.sqrt (n.choose k : ℝ) ∧
+    Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose k : ℝ) =
+      (k + 1 : ℝ) * Real.sqrt (n.choose (k + 1) : ℝ)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hbad := (h 1 0 (by decide)).1
+  norm_num [rejected, realize] at hbad
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change Real.sqrt 0 ≠ Real.sqrt 1
+  norm_num
+
+def source_registration : Registration arena (type_of% @ladder_pair) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨ladder_pair, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@ladder_pair) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.LadderPair.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.LadderPair.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print _root_.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.ladder_pair
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment.LadderPair

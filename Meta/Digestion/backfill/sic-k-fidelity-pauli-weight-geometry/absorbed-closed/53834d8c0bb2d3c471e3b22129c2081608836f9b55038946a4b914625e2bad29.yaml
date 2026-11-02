@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:53834d8c0bb2d3c471e3b22129c2081608836f9b55038946a4b914625e2bad29
+  normalized_sha256: sha256:53834d8c0bb2d3c471e3b22129c2081608836f9b55038946a4b914625e2bad29
+cas_ref: sha256:53834d8c0bb2d3c471e3b22129c2081608836f9b55038946a4b914625e2bad29
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.cptp_joint_kFidelity_simplex_range
+    target_statement_id: sha256:d04f0a4526009ac56a3ba36e9244078603ac40fd63bbd578206ee3c29523c275
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityRange
+    target_statement_id: sha256:1f0bac151a0f949fa68b2aa5d9416b8d2b1ebd4acb54371a761eb3bf8d51f623
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.jointKFidelityVec
+    target_statement_id: sha256:52f340422d145c4f9e6f479cf0c58c3ab7115d2a7bae1f4bc77d621fd3c4c69b
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.simplexVertex
+    target_statement_id: sha256:eedd72a655db58144ccdc2b152d6a0ec48fb284577b5c012ecb82b3b17df2755
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.tp_exact_fidelity_reconstruction
+    target_statement_id: sha256:1efb7cbcb9f4299629e2248b28c244e75a0ceab109e80d6e037f2236beec74e0
+receipts:
+  unresolved_subitems: []

@@ -602,6 +602,11 @@ class IdlePoolCases:
                     self.assertEqual("sweep_failed", failed["outcome"])
                 self.assertTrue(newer.exists())
                 self.g(self.main, "worktree", "remove", newer)
+                if action == "return":
+                    returned = next(row for row in result["items"] if row["path"] == str(self.tree))
+                    self.assertEqual("removed", returned["outcome"])
+                    self.assertFalse(self.tree.exists())
+                    self.g(self.main, "worktree", "add", self.tree, self.branch)
 
     def pool_validation_failure_after_eviction_preserves_receipt(self):
         self.pool_validation_failures("pool")
@@ -619,9 +624,13 @@ class IdlePoolCases:
             code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base, "--force"])
         self.assertEqual(74, code)
         result = json.loads(output.getvalue())
-        self.assertEqual(["removed", "sweep_failed"], [row["outcome"] for row in result["items"]])
+        self.assertEqual("failed", result["status"])
+        self.assertEqual("operation:idle-pool", result["failure"]["scope"])
+        self.assertEqual("disk_pressure", result["failure"]["stage"])
+        self.assertEqual("disk reading failed", result["failure"]["error"])
+        self.assertEqual(["removed", "retained"], [row["outcome"] for row in result["items"]])
         self.assertEqual(str(newer), result["items"][1]["path"])
-        self.assertEqual("disk_pressure", result["items"][1]["stage"])
+        self.assertEqual("idle_sweep_deferred", result["items"][1]["reason"])
         self.assertFalse(older.exists())
         self.assertTrue(newer.exists())
 

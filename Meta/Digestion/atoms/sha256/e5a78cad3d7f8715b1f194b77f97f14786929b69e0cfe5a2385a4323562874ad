@@ -1,0 +1,11 @@
+## 4. 三读出、隐藏关联与指数族
+
+令 $p_s\ge0$、$\sum_sp_s=1$，并记
+
+$$
+X=\mathbb{E}_px=p_1+p_{13},\quad Y=\mathbb{E}_py=p_3+p_{13},\quad
+Z=\mathbb{E}_pz=p_2,\quad R=1-Z,\quad \kappa=p_{13}.
+$$
+
+<a id="statement-4-1"></a>
+

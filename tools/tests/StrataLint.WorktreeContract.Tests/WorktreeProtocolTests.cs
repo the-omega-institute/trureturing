@@ -49,6 +49,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void AggregateCleanupWarnsAndSucceedsForOneRefusedTree()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-all", "directory",
+                "CleanupMakeTests.test_single_tree_refusal_keeps_aggregate_success_and_warning"],
+            root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData("self")]
     [InlineData("stable")]
@@ -253,8 +270,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
     [InlineData("pool_return_selected_eviction_refusal_fails_public_exit")]
-    [InlineData("pool_final_qualification_defers_later_candidates")]
-    [InlineData("pool_return_final_qualification_defers_later_candidates")]
+    [InlineData("pool_final_qualification_continues_later_candidates")]
+    [InlineData("pool_return_final_qualification_continues_later_candidates")]
     [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
     [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
@@ -372,6 +389,16 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_pressure_failure_after_eviction_preserves_receipt")]
     [InlineData("pool_confirmation_timeout_after_eviction_preserves_receipt")]
     [InlineData("pool_unexpected_removal_failure_preserves_recovery")]
+    [InlineData("pool_resumes_interrupted_eviction_without_cache")]
+    [InlineData("pool_resumes_interrupted_eviction_with_deleted_ignore")]
+    [InlineData("pool_retains_dirty_idle_without_removal_record")]
+    [InlineData("pool_retains_interrupted_eviction_with_modified_file")]
+    [InlineData("pool_retains_interrupted_eviction_with_untracked_file")]
+    [InlineData("pool_never_claims_pending_removal_even_when_clean")]
+    [InlineData("pool_retains_mismatched_removal_record_without_reconverging")]
+    [InlineData("pool_revalidates_interrupted_eviction_before_common_removal")]
+    [InlineData("pool_pending_removal_keeps_unfinished_operation_guard")]
+    [InlineData("pool_pending_removal_does_not_displace_healthy_capacity")]
     public void IdlePoolPreservesNativeGitState(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

@@ -1,0 +1,47 @@
+**Theorem 4.2 (all-policy domination on the original seed).** Let any lawful
+almost-sure-decision controller and decoder have paid mean $C$ and error $E$.
+Its hypothetical all-zero replay determines a measurable horizon
+$H:U\to S:=\mathbb N_0\cup\{\infty\}$. There is a lawful replacement on
+the same source, using exactly the same seed $U$ and the same map $H$, with
+$$
+\boxed{
+\widetilde C=\int K_{H(u)}\,\nu(du)\le C,\qquad
+\widetilde E=\int R_{H(u)}^*\,\nu(du)\le E,
+}
+$$
+where $R_\infty^*=0$. Products $0\cdot\infty$ in the corresponding
+countable sums are interpreted as zero. Every measurable horizon selector has
+such an attainer; an infinite replay is allowed because the marker still
+arrives almost surely.
+
+**Proof.** Before a marker the only possible reply string is all zeros. At
+every finite depth its past actions and stop decision are measurable functions
+of $u$: induction uses a finite partition by action words and the measurable
+seed sections. The first replay stop therefore defines the measurable sets
+$\{H=h\}$, and $\{H=\infty\}$ is their complement. Extend each finite
+replay route arbitrarily after its voluntary stop. The actual paid count agrees
+with $\min(H,\tau)$ under that route, including a marker at query $H$.
+There is no other source-dependent non-marker branch on which to choose a
+horizon.
+
+For a fixed finite fiber $\{H=h\}$, each replay action word has mean at least
+$K_h$ by Theorem 3.2, and its Bayes leaf error is at least $R_h^*$ by the
+published cap supplier. The actual decoder can only have larger error. These
+statements are integrated on the finite measurable action-word partitions, not
+by conditioning on a seed singleton of possibly zero probability. On the
+infinite fiber the marker arrives almost surely for each seed route: the
+conditional cylinder tails are bounded by the larger of the two even tails,
+which tends to zero for every $q<1$. Dominated convergence and Tonelli give
+almost-sure decision after integration. The waiting mean is at least
+$K_\infty$ by PG27.17, with all waiting means infinite if $I_\mu=\infty$.
+
+Use the deterministic joint route of Theorem 3.2 on each finite horizon fiber,
+and the route of Theorem 4.1 on the infinite fiber. At a marker decode exactly;
+on a finite zero leaf compare the two already integrated root masses and use
+MAP, with either fixed choice on a tie. A countable measurable partition of the
+seed gives measurable finite-history sections for this one controller. Tonelli
+and source-seed independence give the two identities and inequalities. The
+same underlying $Q,X_0$, and two actual arms may be used for both executions;
+expected domination is claimed, not a pathwise paid-count ordering. No source
+copy or new seed draw is used. $\square$
+

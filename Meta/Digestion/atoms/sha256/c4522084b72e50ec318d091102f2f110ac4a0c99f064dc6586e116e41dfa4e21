@@ -1,0 +1,35 @@
+#### 定理 10.1（有限黄金电路的静态零能历史）
+
+在 $\mathbb{C}^{L+1}\otimes\mathcal H$ 上，定义
+
+$$
+D_j=\langle j|\otimes I-\langle j-1|\otimes U_j,
+\qquad H_{\rm prop}=\frac{1}{2}\sum_{j=1}^L D_j^\dagger D_j.
+$$
+
+对 $\Psi=\sum_j|j\rangle\psi_j$，有
+
+$$
+\langle\Psi,H_{\rm prop}\Psi\rangle
+=\frac{1}{2}\sum_j\left\lVert \psi_j-U_j\psi_{j-1}\right\rVert^2.
+$$
+
+其归一化零能态恰是
+
+$$
+|\Psi_\eta\rangle=\frac{1}{\sqrt{L+1}}
+\sum_{j=0}^L |j\rangle W_j|\eta\rangle,\quad\left\lVert \eta\right\rVert=1.
+$$
+
+对单位输入 $b$ 再加 $H_{\rm in}=|0\rangle\langle0|\otimes(I-|b\rangle\langle b|)$，归一化零能态在整体相位之外唯一，为 $\Psi_b$。
+
+**证明。**
+
+逐项平方给期望式；非负和为零当且仅当全部传播约束成立。它们唯一确定 $\psi_j=W_j\psi_0$，酉性给总范数 $(L+1)\left\lVert \psi_0\right\rVert^2$。正算子和的核是各核之交，输入项把 $\psi_0$ 限制为 $b$ 的倍数。
+
+∎
+
+这是标准历史态构造 （[5](#ref-aharonov)） 在黄金门菜单上的应用。标签 $j$ 可解释为逻辑切面地址，不必是外部绝对时钟；但新增地址寄存器、输入罚项、历史态制备与读出均有资源要求。数学上存在零能态不等于原始固定门菜单可免费精确制备它。
+
+<a id="statement-10-2"></a>
+

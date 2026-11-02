@@ -1,0 +1,46 @@
+**Theorem 14.1 (doubling envelopes, return and every finite request prefix).** Under Assumption 13.1 there is one deterministic program, uniform over all original pairs and successively revealed positive integer requests, which supplies the compatible archive of Definition 13.2 and the recovery of Theorem 13.3. It uses no future request or future continuation. If $C_n$ counts all paid source reads through completion of request $n$, then
+
+$$
+\begin{cases}
+C_n=0,&m_n=0,\\[2mm]
+C_n\le 4b_n-2<8m_n
+       =4Q_{\rm ret}(H^{[n]}),&m_n\ge1,
+\end{cases}
+\qquad
+b_n=2^{\lceil\log_2m_n\rceil}\quad(m_n\ge1).
+\tag{AQBRO.6}
+$$
+
+The exponent in $b_n$ is computed by integer doubling, without a real-number oracle. At every completed request the installed envelope is $E(b_n)$ when $m_n>0$, and is $1$ otherwise. It answers every requested modulus and every divisor of that envelope at the current cut or any retained authentic past cut. Current output, finite-word prediction and synchronized further original actions require no additional source read at these covered moduli. Actual actions and all local processing remain charged.
+
+The bound is pointwise for every completed finite request prefix, including when request choices depend on the accessible preceding history. It compares cumulative paid reads with the joint fixed-modulus benchmark; it asserts no optimal competitive ratio for the full variable-modulus problem.
+
+**Proof (what the envelope supplies).** For each prime $p$, the exponent in $E(b)$ is $\lfloor b/(p-1)\rfloor$ when $p\le b+1$ and zero otherwise. Therefore
+
+$$
+H\mid E(b)\ \Longleftrightarrow\ B(H)\le b,
+\qquad B(E(b))=b\quad(b\ge1),
+\qquad E(b)\mid E(b')\quad(0\le b\le b').
+\tag{AQBRO.7}
+$$
+
+For the first equivalence compare prime exponents. A positive exponent allowed by $B(H)\le b$ forces $p\le b+1$; each exponent is then at most $\lfloor b/(p-1)\rfloor$. The reverse implication uses the same inequalities. For equality $B(E(b))=b$, every axis has cost at most $b$, and the $2$-axis has exponent exactly $b$. Monotonicity follows by comparing floors. Thus $E(b)$ is the least common multiple of all positive $H$ with $B(H)\le b$. In particular a single earned label modulo this one integer covers every such request, rather than predicting which prime will be asked for next. This elementary divisibility calculation is an intermediate step for the acquisition construction.
+
+**Proof (the actual online controller).** Start with envelope $1$, its singleton original/current labels, and an empty actual action record. On receiving $H$, factor that public integer by finite trial division to compute $B(H)$. If $H$ divides the installed envelope, use the earned residue registers and Theorem 10.3; do not read the source. Otherwise compute the least power of two $b\ge B(H)$, form the exact public integer $E(b)$, and execute Theorem 13.3 on the very current source. Finish every physical closing letter, record it, compute the new common-original label, install current use, and only then complete the request.
+
+No intermediate skipped power of two is acquired. At a miss the new budget exceeds the old one; (AQBRO.7) shows that every previously requested modulus and every previous envelope divides the new envelope. Induction proves that at prefix $n$ this budget is exactly the least power of two covering $m_n$. The same induction with Theorem 13.3 proves original-label and past-cut compatibility, actual modular return at each upgrade, and correct synchronized current use between upgrades. This preserves one source and one archive even when intermediate continuations change its original behavior. An upgrade returns the behavior at that upgrade's entry; it does not undo those continuations.
+
+**Proof (cumulative payment and nonanticipation).** Let $b_1'<\cdots<b_J'$ be the budgets actually acquired by prefix $n$. They are distinct nonnegative powers of two, with last term $b_n$. At each such stage Theorem 10.2 is executed at the actual modulus $E(b_j')$, and (AQBRO.7) gives at most $2b_j'$ genuine paid reads. Thus
+
+$$
+C_n=\sum_{j=1}^J Q_j
+\le2\sum_{j=1}^J b_j'
+\le2(1+2+\cdots+b_n)
+=4b_n-2.
+\tag{AQBRO.8}
+$$
+
+For $m_n\ge1$ the least covering power satisfies $m_n\le b_n<2m_n$, proving (AQBRO.6). If every request is one, no acquisition is made. Public preparation, action selection inside the fixed-modulus routine and subsequent register updates depend only on delivered integers, recorded letters and already acquired replies. The algorithm uses neither a future request nor a source-indexed choice of initial code.
+
+The finite geometric payment inequality is the classical doubling argument in Chrobak–Kenyon–Noga–Young, [*Incremental Medians via Online Bidding*, Theorem 1(a) and Section 2](https://arxiv.org/html/cs/0504103v3). Here current requests reveal their budget, so the controller can skip unused bids; the displayed sum is an upper bound by that classical payment sequence. The source-specific content is that each actually paid envelope is acquired and returned on the same changing source and is transported to one original-cut archive. The bidding inequality alone supplies none of those correspondences. Its classical lower bounds do not prove an online lower bound in this apparatus. $\square$
+

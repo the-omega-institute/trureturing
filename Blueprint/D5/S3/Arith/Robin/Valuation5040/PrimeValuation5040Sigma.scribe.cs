@@ -51,5 +51,15 @@ internal sealed class PrimeValuation5040SigmaDocument : IScribeDocumentDefinitio
                 Blocks(Paragraph(Text(
                     "Any upper bound B for normalized sigma on positive ordered residuals "
                         + "propagates to the joint fibre with the multiplicative factor 403/105."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("normalized-sigma-5040-threshold"),
+                DeclarationHandle.Create(Prefix + "normalized_sigma_5040_gt_two_iff"),
+                H("Exact abundancy threshold transfer"),
+                StatementSource.FromAuthor(Disp(F.Id("normalizedSigma5040GtTwoIff"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On the coprime residual fibre, exceeding the strict abundancy threshold 2 "
+                        + "is equivalent to the residual normalized ratio exceeding 210/403."))),
                 DescribeRole.Theorem))));
 }

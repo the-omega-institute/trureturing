@@ -1,0 +1,21 @@
+#### 定义 4.2（完整四参数指数族）
+
+设 $T=(x,y,z,xy)$，自然参数为 $\vartheta=(\theta_x,\theta_y,\theta_z,\eta)$，定义
+
+$$
+\begin{aligned}
+\Psi(\vartheta)&=\log\left(1+e^{\theta_x}+e^{\theta_z}+e^{\theta_y}
+  +e^{\theta_x+\theta_y+\eta}\right),
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+p_\vartheta(s)&=\exp\{\vartheta\cdot T(s)-\Psi(\vartheta)\}.
+\end{aligned}
+$$
+
+未归一化权重为 $(1,a,b,c,dac)$，其中 $a=e^{\theta_x}$、$b=e^{\theta_z}$、$c=e^{\theta_y}$、$d=e^\eta$。
+
+<a id="statement-4-3"></a>
+

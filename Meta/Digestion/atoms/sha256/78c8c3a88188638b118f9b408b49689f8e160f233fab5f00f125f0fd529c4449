@@ -1,0 +1,10 @@
+**Corollary 3.5 (Party symmetry and coarse-graining).** $S_3^{(\mathtt q)}(\psi,\mathrm{col})$ is unchanged when the party labels are permuted, that is, when $\mathrm{col}$ is replaced by $\tau\circ\mathrm{col}$ for a permutation $\tau$ of $[\mathtt q]$. For $\pi\in\Pi_k(\mathtt q)$ with $k\ge2$,
+
+$$
+S_3^{(k)}(\pi)=\frac{\log2}{2\cdot3^{k-2}}\sum_{\substack{\sigma\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)\\ \sigma\ge\pi}}r(\sigma),
+$$
+
+where $r$ is computed for the original colouring $\mathrm{col}$. Stance: suspected-novel (§6).
+
+**Proof.** Relabelling parties by $\tau$ permutes $\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)$ through $\pi\mapsto\tau(\pi)$, and the matrix $\Gamma^{\tau(\pi)}$ for the colouring $\tau\circ\mathrm{col}$ equals $\Gamma^{\pi}$ for $\mathrm{col}$; the right-hand side of Theorem 3.4 is therefore invariant. For the second statement, apply Theorem 3.4 to the $k$-party state $(\psi,\mathrm{col}_\pi)$ with the same graph form $\Gamma$. A partition $\rho$ of $[k]$ determines the partition $\sigma$ of $[\mathtt q]$ whose blocks are the unions $\bigcup_{j\in D}B_j$ over the blocks $D$ of $\rho$; this is a bijection from $\Pi(k)$ onto the set of $\sigma\ge\pi$, preserving the number of blocks. Two qubits lie in different blocks of $\rho$ with respect to $\mathrm{col}_\pi$ exactly when they lie in different blocks of $\sigma$ with respect to $\mathrm{col}$, so the masked matrices coincide and the ranks agree. By the first statement the value does not depend on the order of the blocks $B_1,\dots,B_k$. ∎
+

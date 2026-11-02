@@ -1,0 +1,9 @@
+**Definition 39.9 (joint evidence interval and authentic cut indices).** Retain the source/epoch binding, the serialized actual action/acknowledgement sequence and the actual read records $(t_i,D_i,r_i)$, where $t_i$ is an authentic position in that sequence and $r_i=q_{D_i}(f_{u_{t_i}}(x))$. Authenticity assumes faithful recording and exclusive serialization, not cryptographic protection against a malicious recorder. The semantic source-dependent state can be retained as just
+
+$$
+K=(0,\infty)\cap\bigcap_i f_{u_{t_i}}^{-1}(J_{D_i}(r_i)).
+\tag{39.16}
+$$
+
+This is one interval with rational endpoints, possibly unbounded before entrance. A derived full-profile cell, original band and floor tuple are computed from $K$ when needed. They need not be separately retained as stage archives. A known current matrix is updated by left multiplication on each acknowledged letter; matrices at older authentic cuts can be recomputed from the recorded sequence. Source-blind requests or choices are allowed to depend on earlier exposed data; extra source-dependent request parameters would be additional evidence and must be declared as such.
+

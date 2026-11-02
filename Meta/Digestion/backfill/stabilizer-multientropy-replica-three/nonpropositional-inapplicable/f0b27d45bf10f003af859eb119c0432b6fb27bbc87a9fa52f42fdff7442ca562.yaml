@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0b27d45bf10f003af859eb119c0432b6fb27bbc87a9fa52f42fdff7442ca562
+  normalized_sha256: sha256:f0b27d45bf10f003af859eb119c0432b6fb27bbc87a9fa52f42fdff7442ca562
+cas_ref: sha256:f0b27d45bf10f003af859eb119c0432b6fb27bbc87a9fa52f42fdff7442ca562
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 3 heading and standing notational preamble fixing the symbols psi, Gamma, and col used throughout Section 3; asserts no standalone mathematical proposition.
+    previous_atom_id: 315e7d229c2f901a5d533a7a8643201b711799e494339818ecade76dbb7aadd3
+    next_atom_id: bbb0229da92a908572e8a1f1d56f545851525f02cf858a339a36a8989e6aa5fc

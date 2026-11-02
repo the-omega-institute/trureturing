@@ -30,7 +30,31 @@ $$\forall (n: \mathbb{N}), (\forall (u: (\operatorname{Fin}\left(3\right) \to \m
 
 The spin component u·S is u₀Jx(n) + u₁Jy(n) + u₂Jz(n). This definition allows every real direction u; the unit-length conditions for the four measurement directions appear in claim.
 
-**Definition 1.3 (The projector onto an outcome eigenspace).**
+**Theorem 1.3 (Binomial spin ladder coefficients).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \mathbb{N}), ((k < n) \Rightarrow ((\operatorname{sqrt}\left(\left((\operatorname{cast}\left(k\right): \mathbb{R}) + 1\right) \cdot \left((\operatorname{cast}\left(n\right): \mathbb{R}) - (\operatorname{cast}\left(k\right): \mathbb{R})\right)\right) \cdot \operatorname{sqrt}\left((\operatorname{cast}\left(\operatorname{choose}\left(n, k + 1\right)\right): \mathbb{R})\right) = \left((\operatorname{cast}\left(n\right): \mathbb{R}) - (\operatorname{cast}\left(k\right): \mathbb{R})\right) \cdot \operatorname{sqrt}\left((\operatorname{cast}\left(\operatorname{choose}\left(n, k\right)\right): \mathbb{R})\right)) \land (\operatorname{sqrt}\left(\left((\operatorname{cast}\left(k\right): \mathbb{R}) + 1\right) \cdot \left((\operatorname{cast}\left(n\right): \mathbb{R}) - (\operatorname{cast}\left(k\right): \mathbb{R})\right)\right) \cdot \operatorname{sqrt}\left((\operatorname{cast}\left(\operatorname{choose}\left(n, k\right)\right): \mathbb{R})\right) = \left((\operatorname{cast}\left(k\right): \mathbb{R}) + 1\right) \cdot \operatorname{sqrt}\left((\operatorname{cast}\left(\operatorname{choose}\left(n, k + 1\right)\right): \mathbb{R})\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.ladder_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For k < n, the spin ladder coefficient relates the square roots of two adjacent binomial coefficients in both directions.
+
+**Theorem 1.4 (Entries of the raising matrix).**
+
+$$\forall (n: \mathbb{N}), (\forall (i: \operatorname{Fin}\left((n + 1)\right)), (\forall (j: \operatorname{Fin}\left((n + 1)\right)), (\operatorname{Jplus}\left(n, i, j\right) = \begin{cases}\operatorname{ofReal}\left(\operatorname{sqrt}\left((\operatorname{cast}\left(\operatorname{val}\left(j\right)\right): \mathbb{R}) \cdot \left((\operatorname{cast}\left(n\right): \mathbb{R}) + 1 - (\operatorname{cast}\left(\operatorname{val}\left(j\right)\right): \mathbb{R})\right)\right)\right)&\operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(j\right)\\0&\text{otherwise}\end{cases})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.raising_entry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The raising matrix has the square-root spin coefficient on its superdiagonal and zero elsewhere.
+
+**Definition 1.5 (The projector onto an outcome eigenspace).**
 
 $$\forall (n: \mathbb{N}), (\forall (M: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\forall (\pi: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\forall (a: \mathbb{R}), ((\operatorname{IsSpectralProjector}\left(M, \pi, a\right)) \Leftrightarrow ((\pi^{2} = \pi) \land ((\pi^{*} = \pi) \land (\forall (v: (\operatorname{Fin}\left((n + 1)\right) \to \mathbb{C})), ((\pi \cdot v = v) \Leftrightarrow (M \cdot v = \operatorname{ofReal}\left(a\right) \cdot v)))))))))$$
 
@@ -42,7 +66,7 @@ $$\forall (n: \mathbb{N}), (\forall (M: \operatorname{Matrix}\left(\operatorname
 
 For complex matrices M and Π and a real outcome a, IsSpectralProjector requires Π to be idempotent and self-adjoint, with fixed vectors exactly the a-eigenvectors of M. Thus its range is the whole a-eigenspace, including any degeneracy, as required for a Lüders measurement in Section III.
 
-**Definition 1.4 (The sequential expectation).**
+**Definition 1.6 (The sequential expectation).**
 
 $$\forall (n: \mathbb{N}), (\forall (\psi: (\operatorname{Fin}\left((n + 1)\right) \to \mathbb{C})), (\forall (\pi_{X}: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\forall (\pi_{Y}: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\operatorname{seqProb}\left(\psi, \pi_{X}, \pi_{Y}\right) = \langle \psi \mid (\pi_{X} \cdot \pi_{Y} \cdot \pi_{X}) \mid \psi \rangle))))$$
 
@@ -54,7 +78,7 @@ $$\forall (n: \mathbb{N}), (\forall (\psi: (\operatorname{Fin}\left((n + 1)\righ
 
 The expression is defined for every complex vector ψ and every pair of complex matrices Π_X and Π_Y. For a unit state and orthogonal outcome projectors it is the sequential probability in Section III: first measure X and then Y. The complementary outcome uses I − Π.
 
-**Definition 1.5 (Attainability with spin measurements).**
+**Definition 1.7 (Attainability with spin measurements).**
 
 $$(\operatorname{claim}) \Leftrightarrow (\forall (n: \mathbb{N}), ((1 \le n) \Rightarrow (\exists (u_{A1}: (\operatorname{Fin}\left(3\right) \to \mathbb{R})), (\exists (u_{A2}: (\operatorname{Fin}\left(3\right) \to \mathbb{R})), (\exists (u_{B1}: (\operatorname{Fin}\left(3\right) \to \mathbb{R})), (\exists (u_{B2}: (\operatorname{Fin}\left(3\right) \to \mathbb{R})), (\exists (a_{1}: \mathbb{R}), (\exists (a_{2}: \mathbb{R}), (\exists (b_{1}: \mathbb{R}), (\exists (b_{2}: \mathbb{R}), (\exists (\pi_{A1}: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\exists (\pi_{A2}: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\exists (\pi_{B1}: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\exists (\pi_{B2}: \operatorname{Matrix}\left(\operatorname{Fin}\left((n + 1)\right), \operatorname{Fin}\left((n + 1)\right), \mathbb{C}\right)), (\exists (\psi: (\operatorname{Fin}\left((n + 1)\right) \to \mathbb{C})), ((\sum_{(i: \operatorname{Fin}\left(3\right))} (\left(u_{A1}\right)\left(i\right))^{2} = 1) \land ((\sum_{(i: \operatorname{Fin}\left(3\right))} (\left(u_{A2}\right)\left(i\right))^{2} = 1) \land ((\sum_{(i: \operatorname{Fin}\left(3\right))} (\left(u_{B1}\right)\left(i\right))^{2} = 1) \land ((\sum_{(i: \operatorname{Fin}\left(3\right))} (\left(u_{B2}\right)\left(i\right))^{2} = 1) \land ((\operatorname{IsSpectralProjector}\left(\operatorname{spinComponent}\left(n, u_{A1}\right), \pi_{A1}, a_{1}\right)) \land ((\operatorname{IsSpectralProjector}\left(\operatorname{spinComponent}\left(n, u_{A2}\right), \pi_{A2}, a_{2}\right)) \land ((\operatorname{IsSpectralProjector}\left(\operatorname{spinComponent}\left(n, u_{B1}\right), \pi_{B1}, b_{1}\right)) \land ((\operatorname{IsSpectralProjector}\left(\operatorname{spinComponent}\left(n, u_{B2}\right), \pi_{B2}, b_{2}\right)) \land ((\langle \psi, \psi \rangle = 1) \land ((\operatorname{seqProb}\left(\psi, \pi_{A1}, \pi_{B1}\right) = 0) \land ((\operatorname{seqProb}\left(\psi, (1 - \pi_{A1}), \pi_{B2}\right) = 0) \land ((\operatorname{seqProb}\left(\psi, \pi_{A2}, (1 - \pi_{B1})\right) = 0) \land (\operatorname{seqProb}\left(\psi, \pi_{A2}, \pi_{B2}\right) = \frac{1}{4}))))))))))))))))))))))))))))$$
 
@@ -66,7 +90,7 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall (n: \mathbb{N}), ((1 \le n) \R
 
 For every n ≥ 1, there are four real unit directions, four real outcomes, their full spectral projectors, and a unit complex state ψ satisfying the three zero conditions and attaining success probability 1/4. These are the temporal Hardy conditions of Sections II and III, with the attainable value conjectured for every spin in the conclusion and Appendix B. The assertion is attainability; the dimension-independent upper bound is established in Section III of the source.
 
-**Theorem 1.6 (A construction attaining one quarter for every positive spin).**
+**Theorem 1.8 (A construction attaining one quarter for every positive spin).**
 
 $$\operatorname{claim}$$
 
@@ -92,6 +116,8 @@ Choose A₁ = B₂ = Jz(n), A₂ = B₁ = S, and all four outcomes n/2. Their sp
 
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.IsSpectralProjector`
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.claim`
+- Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.ladder_pair`
+- Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.raising_entry`
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.ray`
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.result`
 - Truth anchor: `D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment.seqProb`

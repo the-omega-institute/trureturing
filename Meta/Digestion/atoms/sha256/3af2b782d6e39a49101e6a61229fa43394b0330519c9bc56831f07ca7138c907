@@ -1,0 +1,23 @@
+**Theorem 18.3 (finite adaptive observations leave a right neighborhood of original ambiguity).** Under Assumption 18.2, fix a run that terminates on an actual original $x>0$. There exists a real $\delta>0$ such that every rational $y\in[x,x+\delta)$ produces exactly the same complete acquired transcript, stopping decision and output. In every open subinterval of $(x,x+\delta)$ there are alternative originals extending any prescribed chronological prefix, at arbitrarily large original depth. Consequently no such deterministic policy can stop finitely and correctly recover the original word for every positive rational source. The same impossibility holds for each exact original four-view expression in Theorem 17.3, even though the entire mathematical tower separates all original sources.
+
+Proof. List the finitely many reads on the terminating run. A read made after its known chronological probe prefix $u_i$, at its chosen integer scale $D_i$, returns
+
+$$
+q_{D_i}(f_{u_i}(x))
+ =\lfloor D_i f_{u_i}(x)\rfloor=:k_i.
+\tag{18.1}
+$$
+
+For fixed $u_i$, the nonnegative determinant-one matrix of Definition 10.1 makes $f_{u_i}$ continuous and strictly increasing at every positive input. Since
+
+$$
+k_i\le D_i f_{u_i}(x)<k_i+1,
+\tag{18.2}
+$$
+
+continuity gives $\delta_i>0$ such that $D_i f_{u_i}(y)<k_i+1$ whenever $x\le y<x+\delta_i$. Monotonicity gives the other inequality $D_i f_{u_i}(y)\ge k_i$ on that interval, including when the original input is exactly on a floor threshold. Hence the report remains $k_i$. Let $\delta$ be the minimum of these finitely many positive $\delta_i$; if there are no reads take any positive $\delta$.
+
+Now replay the controller from an original $y\in[x,x+\delta)$. Before its first read, its decisions and actions agree because it has no different source-dependent input. The first read has the fixed prefix and scale listed above, so it gives the same report. Inductively equal previous reports and known actions force the same computations, next scale, probe actions and stop choice, and the corresponding read agrees by the same bound. Deterministic computations between reads therefore terminate exactly as on the fixed run. This proves transcript and output equality without presuming that scales on different branches would have been bounded or predetermined. The minimum is taken only over one completed branch; adaptivity is handled by equality of its prefixes.
+
+Every positive open subinterval of the resulting right neighborhood contains a descendant of any finite chronological prefix by the same Calkin–Wilf density corollary used in Theorem 18.1. Extending that prescribed prefix beyond any requested depth before applying density gives arbitrarily deep alternatives. Choose one such rational $y\ne x$. Its unique original word differs from that of $x$, yet the policy returns the same output. If a policy were correct on every original source and terminated on each, applying this argument to any one of its runs would contradict correctness on this alternative. The original pair boundary, oriented named path, literal chronology and indexed prefix table each determine the original word, and the word constructs each, by Theorem 17.3. Composing a hypothetical correct acquisition of any one with its word decoder therefore gives the same contradiction. This proves the four-view claim at the unchanged original cut. $\square$
+

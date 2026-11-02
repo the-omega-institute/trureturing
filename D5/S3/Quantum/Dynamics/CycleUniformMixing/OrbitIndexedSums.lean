@@ -596,7 +596,7 @@ noncomputable section
 variable {N : ℕ} [NeZero N]
 private def corr (z : ZMod N → ℂ) (l : ZMod N) : ℂ :=
   ∑ j, z (j+l) * (starRingEnd ℂ) (z j)
-private theorem char_star (x : ZMod N) : (starRingEnd ℂ) (ZMod.stdAddChar x) = ZMod.stdAddChar (-x) := by
+theorem char_star (x : ZMod N) : (starRingEnd ℂ) (ZMod.stdAddChar x) = ZMod.stdAddChar (-x) := by
   simpa only [ZMod.stdAddChar_apply, AddChar.map_neg_eq_inv, Circle.coe_inv] using
     (Circle.coe_inv_eq_conj (ZMod.toCircle x)).symm
 private theorem corr_transform (z : ZMod N → ℂ) (k : ZMod N) :

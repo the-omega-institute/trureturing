@@ -1,0 +1,23 @@
+**Definition 38.1 (one public prior and the two action contracts).** Retain the positive-rational process rooted at $1$, chronological actions $L(z)=z/(1+z)$ and $R(z)=z+1$, ORIGINAL views $B,T,S,M$ of §§6 and 17, and precisely the supplied dyadic services of Definition 33.1. Fix the single public prior
+
+$$
+c_0=\frac16,\qquad c_1=\frac23,\qquad
+x_{i,n}=c_i-\frac1n\quad(i\in\{0,1\},\ n\in\mathbb Z,\ n\ge12),
+\qquad P_i=\{c_i\}\cup\{x_{i,n}:n\ge12\},\qquad P=P_0\cup P_1.
+\tag{38.1}
+$$
+
+This is one source-independent finite presentation: emit $c_0,c_1$, then emit $x_{0,n},x_{1,n}$ for successive integers $n\ge12$. Membership is decidable on any finitely encoded rational $y$: for each of the two $i$, accept if $y=c_i$, or if $y<c_i$ and the exactly computed $1/(c_i-y)$ is an integer at least $12$; otherwise reject. These are finitely many rational operations and integer tests. The decider's input is a candidate rational, not an extra input to the acquisition controller. Every member is positive and has exactly one original finite history by Theorem 6.2. Moreover
+
+$$
+P_0\subset[1/12,1/6],\qquad P_1\subset[7/12,2/3],\qquad
+q_2(x)=i\quad(x\in P_i).
+\tag{38.2}
+$$
+
+Thus an actually acquired initial $q_2$ report identifies the band, without identifying its unknown rational, endpoint status or tail index.
+
+A record-dependent action controller may select its next physical $L/R$ action from its acquired records and local state. A preset action controller instead has one public source-independent finite word or effectively generated infinite schedule $v_1v_2\cdots$: its $k$th executed action must be $v_k$. It may pause for reads and computation or stop at any prefix, but may not skip, replace, reorder or restart letters. In BOTH classes dyadic scales, read count, finite local work and stopping are allowed to depend on all acquired reports. Both have common source-independent initialization and ordinary deterministic finite code. For $V\in\{B,T,S,M,(B,T,S,M)\}$, let $h_{\rm rec}(V)$ and $h_{\rm pre}(V)$ be their respective least uniform caps on actual new source actions among controllers that correctly output the exact ORIGINAL $V$ and stop finitely on every $x\in P$.
+
+There is only one current source: every physical prefix is executed on it in chronological order. The exact, noiseless, unclipped, nondisturbing, finite-completing services remain a conditional mathematical grant. No reset, copy, inverse source action, unknown original archive, exact unknown input, hidden source advice, timing channel, auxiliary oracle or acquired infinite thread is supplied. Every other resource is paid and finite on each run; no uniform bound or unit-cost convention is imposed on those resource coordinates.
+

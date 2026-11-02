@@ -1,0 +1,20 @@
+**Theorem 12.2 (whole-carrier scale refinement is divisibility).** For positive integers $M,N$, the following conditions are equivalent:
+
+$$
+\begin{aligned}
+&\text{for all }x,y\in\mathbb Q_{>0},\quad
+ x\equiv_N y\Longrightarrow x\equiv_M y;\\
+&\mathcal C_M\subseteq\mathcal C_N;\\
+&M\mid N.
+\end{aligned}
+\tag{12.5}
+$$
+
+In particular a numerically larger fixed scale need not refine a smaller scale on this source.
+
+Proof. Cut inclusion implies the first condition by (11.4). Conversely let $z\in\mathcal C_M\setminus\mathcal C_N$. Local finiteness permits a positive rational $x<z$ so close to $z$ that $\mathcal C_N\cap(x,z]=\varnothing$. Then $x\equiv_N z$ but $x\not\equiv_M z$, contradicting the first condition.
+
+If $M\mid N$, then $\mathcal G_M\subseteq\mathcal G_N$; taking the same legal parent closure gives $\mathcal C_M\subseteq\mathcal C_N$. For necessity suppose that cut inclusion holds. Every nongrid cut $a/b\in\mathcal K_N$ satisfies $a+b\le N$, so its value is at most $N-1$. Choose an integer $s>N$ and put $z=s+1/M$. This lies in $\mathcal G_M$ and hence $\mathcal C_N$, but exceeds every member of $\mathcal K_N$. Therefore $z\in\mathcal G_N$, giving $Ns+N/M\in\mathbb Z$ and hence $M\mid N$.
+
+For the direct observation correspondence when $N=tM$, one also has $q_M(z)=\lfloor q_N(z)/t\rfloor$ at every actual cut: writing $Nz=t k+r+\theta$ with $0\le r<t$ integral and $0\le\theta<1$ gives $Mz=k+(r+\theta)/t$ with $0\le(r+\theta)/t<1$. This is a computation from an acquired finer-scale report when that port is installed; (12.5) by itself does not install a second port. $\square$
+

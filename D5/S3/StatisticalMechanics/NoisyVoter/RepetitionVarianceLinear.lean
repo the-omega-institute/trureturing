@@ -233,7 +233,7 @@ private theorem flipFresh_sameExcept (x : ((i : Coord V) → Value G i)) (r : �
   intro i hi
   simp [flipFresh, Pi.map, flipValue, hi]
 
-private theorem nvm_measurable [MeasurableSpace Ω]
+theorem nvm_measurable [MeasurableSpace Ω]
     (x : (i : Coord V) → Ω → Value G i) (hx : ∀ i, Measurable (x i)) :
     ∀ t v, Measurable (nvm x t v) := by
   intro t

@@ -1,0 +1,115 @@
+**Definition 3.1 (Supported path and covariance).** For $0\leq t\leq1$, define
+
+$$
+A_t=\frac{1+t}{2}P+\frac{1-t}{2}KPK,
+ \qquad H=\frac{P-KPK}{2}.
+\tag{3.1}
+$$
+
+Then $A_1=P$, $A_a=R$, and $A_t'=H$.  For $t<1$,
+
+$$
+ \operatorname{supp} A_t=\operatorname{supp}(P+KPK)=:{\cal S},
+$$
+
+and $A_t$ is positive definite on ${\cal S}$; $H$ is supported on
+${\cal S}$.  The endpoint $t=1$ may be singular. Every BKM quantity below is used
+pointwise only for $0\leq t<1$, on the fixed support $\mathcal S$.
+An integral written with upper endpoint $1$ means its improper limit from
+below, and any singular-support endpoint statement means that support
+limit. No finite pointwise BKM value at $t=1$ is asserted.
+
+For a density matrix $A$ that is positive on its support, define
+
+$$
+ \Omega_A(B)=\int_0^1A^sBA^{1-s}\,ds,
+ \qquad
+ \mathcal K_A(B,C)=\operatorname{Re}\operatorname{tr}\bigl(B^\circ\Omega_A(C^\circ)\bigr),
+$$
+
+where $B^\circ=B-\operatorname{tr}(AB)I$ and the identity is understood on the
+support.  In an eigenbasis of $A$,
+
+$$
+ \Omega_A(B)_{ij}=L(\lambda_i,\lambda_j)B_{ij},\qquad
+ L(x,y)=\begin{cases}
+ (x-y)/(\log x-\log y),&x,y>0,\ x\ne y,\\
+ x,&x=y>0,\\
+ 0,&xy=0.
+ \end{cases}
+$$
+
+Let
+
+$$
+ G_A(D)=\operatorname{tr} D\,\mathrm D\log_A[D]
+$$
+
+for supported Hermitian trace-zero $D$.  The logarithmic-mean covariance and its inverse metric are standard
+BKM constructions; see D. Petz, *Covariance and Fisher information in
+quantum mechanics*, arXiv:quant-ph/0106125. The inverse relation between
+$\Omega_A$ and $\mathrm D\log_A$ gives, within the covariance argument,
+the variational identity
+
+$$
+G_A(D)=\sup_{B=B^*}\{2\operatorname{tr}(DB)-\mathcal K_A(B,B)\}.
+\tag{3.2}
+$$
+
+At a singular ambient state all expressions in this identity are taken on
+its support.  If a linear combination of observables has zero centered
+$\mathcal K_A$ norm, it is scalar on the support and hence pairs to zero with
+any supported trace-zero $D$.  Thus every expectation-derivative vector
+belongs to the range of the corresponding covariance Gram matrix, which
+justifies Moore--Penrose inverses below.
+
+Write the six local observables as
+
+$$
+ (O_1,\ldots,O_6)=(XI,YI,ZI,IX,IY,IZ),
+$$
+
+and set
+
+$$
+V_t=[\mathcal K_{A_t}(O_i,O_j)]_{i,j=1}^6
+ =\begin{pmatrix}V_C&B_t\\ B_t^{\mathsf T}&V_D\end{pmatrix},
+ \qquad d_t=\binom{p'(t)}{q'(t)},
+\tag{3.3}
+$$
+
+where $p(t),q(t)$ are the Bloch vectors of $A_{t,C},A_{t,D}$.
+For any unit vectors $n_0,m_0\in\mathbb R^3$, let
+
+$$
+ W=(n_0\cdot\boldsymbol\sigma)\otimes(m_0\cdot\boldsymbol\sigma),
+\quad z_t=(\mathcal K_{A_t}(O_i,W))_{i=1}^6,
+\quad v_t=\mathcal K_{A_t}(W,W),\quad e_t=\operatorname{tr}(HW).
+$$
+
+Define the support-aware residual
+
+$$
+\mathcal R_t=\begin{cases}
+ \displaystyle\frac{(e_t-z_t^{\mathsf T}V_t^+d_t)^2}
+ {v_t-z_t^{\mathsf T}V_t^+z_t},&v_t-z_t^{\mathsf T}V_t^+z_t>0,\\[3mm]
+ 0,&v_t-z_t^{\mathsf T}V_t^+z_t=0.
+ \end{cases}
+\tag{3.4}
+$$
+
+The second case uses both the PSD Gram matrix and the actual augmented
+tangent expectation vector. If
+
+$$
+ \widehat V_t=\begin{pmatrix}V_t&z_t\\z_t^{\mathsf T}&v_t\end{pmatrix},
+ \qquad \widehat d_t=\binom{d_t}{e_t},
+$$
+
+then $\widehat d_t\in\operatorname{ran}\widehat V_t$ by the zero-norm
+pairing argument above applied to all seven observables. PSD alone does
+not imply the required residual pairing is zero. When the Schur
+complement vanishes, the coefficient vector
+$(-V_t^+z_t,1)$ is in $\ker\widehat V_t$; its pairing with
+$\widehat d_t$ vanishes. Thus $e_t-z_t^{\mathsf T}V_t^+d_t=0$.
+

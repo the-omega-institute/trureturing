@@ -1,0 +1,14 @@
+**假设 B-19.1（另供的记录载体）。** 给同一个复 Hilbert 空间中的单位记录 $`e_1,e_2,e_3`$，内积对第二变量线性。记 $`a=\langle e_1,e_2\rangle,b=\langle e_2,e_3\rangle,c=\langle e_3,e_1\rangle`$，Gram 候选是
+
+
+```math
+G=\begin{pmatrix}
+1&a&\bar c\\
+\bar a&1&b\\
+c&\bar b&1
+\end{pmatrix}.
+```
+
+
+归一化记录的模型和共同环境边界采用 [B-S2] §§107–109；其通道系数 $`\Gamma_{hk}=\langle e_k,e_h\rangle`$ 是此约定的 $`G^{\mathsf{\text{𝖳}}}`$，不能直接混用共轭位置。经典向量 Gram 不自动意味着量子实验；物理记录取得及共同相干实现另外供应。
+

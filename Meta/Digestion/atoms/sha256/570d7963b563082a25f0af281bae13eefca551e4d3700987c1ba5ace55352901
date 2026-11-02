@@ -1,0 +1,25 @@
+### 定理 1：短窗口内的全有限阶正定性
+
+存在上述固定的 $\delta>0$，使得对任意 $m\ge1$ 和任意互异实数节点
+
+$$
+t_1,\ldots,t_m,
+\qquad
+\max_i t_i-\min_i t_i\le\delta,
+$$
+
+实际矩阵
+
+<a id="eq-7"></a>
+
+$$
+\boxed{
+H=\bigl[\mathscr K(t_i-t_j)\bigr]_{i,j=1}^{m}
+}
+\tag{7}
+$$
+
+都严格正定。
+
+这里对节点数 $m$ 没有上界。
+

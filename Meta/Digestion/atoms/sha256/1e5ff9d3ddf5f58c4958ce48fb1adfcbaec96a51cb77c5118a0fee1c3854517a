@@ -1,0 +1,19 @@
+**推论 5.4（随机混合不能隐藏跨扇区泄漏）。**
+
+若 $\Phi(\rho)=\sum_jp_jU_j\rho U_j^*$，$p_j>0$，
+则 $\Phi^*(P)=P$ 当且仅当每个 $U_j$ 与 $P$ 对易。
+
+**证明。**
+
+应用定理于 Kraus 算符 $\sqrt{p_j}U_j$。
+
+□
+
+只对一个实际态保持期望则弱得多。
+例如 $P=\lvert 1\rangle\langle 1\rvert$、$\rho=\lvert +\rangle\langle +\rvert$，
+$X\rho X=\rho$，但 $[X,P]\ne0$。
+而恒等通道虽对所有态保 $P$，若只有一个固定结果，就没有取得任何指针信息。
+因此守恒和信息性须分别证明。
+
+<a id="section-6"></a>
+

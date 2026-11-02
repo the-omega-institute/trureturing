@@ -1,0 +1,78 @@
+### 1. 局部实际关系具有显式酉实现
+
+由式 (8)，定义正测度
+
+$$
+d\mu(s)
+=
+\mathbf1_{(0,\delta)}(s)\mathscr K''(s)\,ds
++r\,\delta_L(ds).
+$$
+
+虽然它的总质量可以无限大，但其一阶矩有限：
+
+$$
+\int s\,d\mu(s)=S.
+$$
+
+在 Hilbert 空间
+
+$$
+\mathcal H
+=
+L^2\bigl((0,\infty)\times\mathbb R,\,
+d\mu(s)\,du\bigr)
+$$
+
+中定义
+
+$$
+\Phi_t(s,u)=\mathbf1_{[t,t+s]}(u).
+$$
+
+于是
+
+$$
+\|\Phi_t\|^2=S,
+\qquad
+\langle\Phi_t,\Phi_v\rangle
+=
+\widetilde{\mathscr K}(t-v).
+$$
+
+特别地，当 $|t-v|\le\delta$ 时，
+
+<a id="eq-19"></a>
+
+$$
+\boxed{
+\langle\Phi_t,\Phi_v\rangle
+=
+\mathscr K(t-v).
+}
+\tag{19}
+$$
+
+平移算子
+
+$$
+(U_a f)(s,u)=f(s,u-a)
+$$
+
+满足
+
+<a id="eq-20"></a>
+
+$$
+\boxed{
+U_a^*U_a=I,\qquad
+U_aU_b=U_{a+b},\qquad
+U_a\Phi_t=\Phi_{t+a}.
+}
+\tag{20}
+$$
+
+所以，这个局部实际关系模型确实有酉平移实现。
+
+这里实现于全实线的核是 $\widetilde{\mathscr K}$；它与实际核 $\mathscr K$ 的相等范围由式 (9) 精确限定。这一范围必须随证明一起保存。
+

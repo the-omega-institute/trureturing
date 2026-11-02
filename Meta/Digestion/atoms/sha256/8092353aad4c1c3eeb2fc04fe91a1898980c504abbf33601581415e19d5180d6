@@ -1,0 +1,51 @@
+**Theorem 40.5 (sharp retention on the equal-composition block family).**
+All $2^n$ histories of Definition 40.4 are legal on the fixed source,
+have pair $F^j(v_0)$ after block $j$, and give the same $Q_n$. Their
+literal macro words are pairwise distinct. Exact recovery through the
+declared interface holds precisely when $Z$ is injective on this family.
+Consequently at least $2^n$ record values are necessary, and an
+$n$-bit fixed-width payload is both necessary and sufficient, with
+$n$ public. This bound remains valid after adding the complete pair
+continuation profile, or a deterministic pair-only future experiment
+whose initial state and choices use only the declared retained inputs.
+
+Proof. Beta positivity and (40.4) make every finite choice legal. Equation
+(40.6) gives the same map $F$ for either block. Induction on $j$ proves
+the asserted archive equality. The block words are a prefix code:
+their first letters differ, and neither is empty. Reading that first
+letter determines the next block and its length; removing it and
+inducting recovers $\sigma$ uniquely. Thus the target has exactly
+$2^n$ values on a single common archive fiber.
+
+If two distinct choices have the same $Z$, the decoder has identical
+inputs and cannot return both targets. Conversely an injective $Z$
+has an inverse on its finite actual image and determines the target.
+A fixed-width $b$-bit payload has at most $2^b$ values, forcing $b\ge n$.
+Retaining the actual block-choice bit at each block supplies $n$ bits
+and decodes by the fixed two-block rule. This is an online record of
+known issued choices, not acquisition of an unknown earlier word.
+For $n=0$ the family is a singleton and the required payload is zero.
+
+At the last block every run has the same exact pair. Any common
+continuation therefore has the same subsequent pairs by induction on
+its letters. A deterministic adaptive pair experiment makes the same
+choices after the same replies, so it also cannot separate this fiber.
+This includes every pair residue, quantity and terminal gcd derived
+from those pairs. Native non-pair observations are outside this claim.
+
+For entry $v_0=(a_0,b_0)$ and final $(a_n,b_n)=F^n(v_0)$, LAB's exact
+count law further gives the same successful promotion and split totals
+on all these histories:
+
+$$
+p=b_n-b_0,\qquad s=a_n+b_n-a_0-b_0.
+\tag{40.9}
+$$
+
+Revealing just these two totals adds no distinction. The records may
+instead be carried by native source features, when accessible and
+counted in $Z$; the information bound does not demand a separately
+allocated auxiliary $n$-bit device. Code, framing when $n$ is not public,
+actual records, workspace and source backing remain additional costs.
+$\square$
+

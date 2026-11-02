@@ -1,0 +1,21 @@
+**Equation 2.2 (`eq:cherry`).**
+
+$$
+\begin{array}{c|cc|c}
+I&(k^+,x,A)&(k^-,B,y)&D_{xy}\\
+H&(k^+,x,B)&(k^-,A,y)&D_{yx}\\
+X&(k^+,x,y)&(k^-,A,B)&Y_{xy}
+\end{array}
+\qquad Y_{xy}=D_{yx}-D_{xy}=0.
+$$
+
+The interpretation of the $H$ term has sign $+1$: reading along $A$ to
+$B$ reverses each of its two insertion cycles, giving two AS signs.
+The last equality is precisely CL. Every attached ordinary tree with
+at least two leaves has a terminal cherry. The stem of that cherry
+ends at another trivalent vertex, except in the entire unstable
+one-anchor Y already excluded. Hence [(2.2)](#eq-cherry) applies inside
+the full graph and kills it. No induction on a degree bound is involved.
+We have proved that every nonzero stable diagram is represented by
+single ordinary legs inserted on skeleton edges. $\square$
+

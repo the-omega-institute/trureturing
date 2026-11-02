@@ -1,0 +1,23 @@
+**推论 B-34.5（实际不相容图的亏量、紧集与严格扩张）。** 取定义B-33.5的实际完整耳不相容二部图，两侧为 $\mathcal X_A,\mathcal X_B$；边仍要求两个完整耳集不交。对任一侧 $\mathcal X$ 及另一侧 $\mathcal Y$，有
+
+$$
+\begin{gathered}
+\delta(\mathcal X,\mathcal Y)=0,\qquad
+N_{\mathcal Y}(\mathcal X)=\mathcal Y,\\
+|N_{\mathcal Y}(Z)|>|Z|\quad
+(\varnothing\ne Z\subsetneq\mathcal X).
+\end{gathered} \tag{34.15}
+$$
+
+所以该侧只有 $\varnothing$ 与 $\mathcal X$ 两个紧集；同样结论在另一侧成立，特别 $\delta_1=0$。
+
+证明。两侧大小都为 $a$。给定 $\varnothing\ne Z\subsetneq\mathcal X$，置 $G=\mathcal Y\setminus N_{\mathcal Y}(Z)$。若 $G\ne\varnothing$，则 $Z,G$ 按边定义在完整耳上交叉相交，定理B-34.4给
+
+$$
+|Z|+a-|N_{\mathcal Y}(Z)|<a,
+$$
+
+即严格扩张。若 $G=\varnothing$，则 $|N_{\mathcal Y}(Z)|=a>|Z|$。定理B-32.3的完整双耳构造供应一个完整耳集恰为该侧匹配的实际成员；它与另一侧的每个成员完整耳不交，因为另一侧避免这个匹配。因此整侧的邻域是整对侧。空集邻域为空，整侧大小相等，所有非空真子集严格扩张，遂得全部结论。定义B-33.5的 $\mathcal X,\mathcal Y$ 正是这里的两条件纤维，因为避免另一匹配的覆盖迹只能是自身匹配或加上 $x,y$ 之一。
+
+这些实际邻域读数满足经典 Hall 条件，故图有完美匹配；所用通用结论是 Koperberg [B34-K] Theorem2，亏量解释是其 Proposition5（这里两侧数 $n$ 对应 $a$，亏量参数 $k=0$）。严格扩张与紧集的具体取值则由上面的实际耳论证给出。∎
+

@@ -1,0 +1,55 @@
+#### 定理 3.3（完整关系纤维；项目既有结果）
+
+设
+
+$$
+X=\mathbb E\xi,\quad Y=\mathbb E\eta,\quad Z=\mathbb E\zeta,\quad
+r=1-Z,\quad \kappa=\mathbb E(\xi\eta).
+$$
+
+则全部五模式概率恰为
+
+$$
+\boxed{
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+}
+$$
+
+可行三轴满足 $X,Y,Z\ge0,\ X+Z\le1,\ Y+Z\le1$；
+在此域上关系参数的完整范围为
+
+$$
+\boxed{
+L=\max(0,X+Y-r)\le\kappa\le U=\min(X,Y).
+}
+$$
+
+纤维宽度为
+
+$$
+w=U-L=\min\{X,Y,r-X,r-Y\}.
+$$
+
+**证明。**
+
+三个读出给 $p_1=X-\kappa,p_3=Y-\kappa,p_2=Z$；
+总和一给 $p_N=r-X-Y+\kappa$。五项非负恰为区间条件。
+区间非空等价于上述三轴约束。宽度式按 $X\le Y$ 与 $X+Y\le r$
+的四种组合相减即得。
+
+∎
+
+当 $w>0$，三个均值仍对应一整条联合概率纤维。
+给出实际 $\kappa$ 才把这条纤维定位为一点。
+这也是定理 [2.2](#thm-dimension) 的精确例子：
+
+$$
+\dim\operatorname{span}_{\mathbb R}\{1,\xi,\eta,\zeta\}=4,\qquad
+\operatorname{span}_{\mathbb R}\{1,\xi,\eta,\zeta,\xi\eta\}=\mathbb R^5.
+$$
+
+完整五模式对角律恰缺一个线性关系坐标。
+空间中的三轴金字塔是四维概率单纯形的投影；指定关系律可以选择三维截面。
+
+<a id="thm-task"></a>
+

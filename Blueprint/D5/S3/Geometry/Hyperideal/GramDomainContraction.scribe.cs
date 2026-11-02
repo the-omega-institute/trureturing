@@ -9,6 +9,21 @@ internal sealed class GramDomainContractionDocument : IScribeDocumentDefinition
         "The full six-cosh negative-determinant Gram domain has an explicit contraction.",
         H("Contracting the actual six-coordinate Gram domain"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("twice-sqrt-product-le-add"),
+                DeclarationHandle.Create(
+                    "D5/S3/Geometry/Hyperideal/GramDomainContraction.twice_sqrt_product_le_add"),
+                H("The two-variable arithmetic-geometric mean bound"),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    F.Forall, F.Sp, F.Id("u"), F.Sp, F.Id("v"), F.Colon,
+                    F.Mathbb, F.Grp(F.Id("R")), F.Comma, F.Sp,
+                    F.D(0), F.Le, F.Sp, F.Id("u"), F.Implies,
+                    F.D(0), F.Le, F.Sp, F.Id("v"), F.Implies,
+                    F.D(2), F.Cdot, F.Sqrt, F.Grp(F.Id("u"), F.Cdot, F.Sp, F.Id("v")),
+                    F.Le, F.Sp, F.Id("u"), F.Plus, F.Id("v")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Twice the geometric mean of two nonnegative real numbers is bounded by their sum."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Use the edge order (12,13,14,34,24,23). For x in R6, "
                 + "G(x) is the existing OriginalCosineDeterminantInterface.gram: its "
                 + "diagonal is one and its six off-diagonal edge entries are minus "
