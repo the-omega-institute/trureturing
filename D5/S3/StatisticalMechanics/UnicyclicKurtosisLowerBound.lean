@@ -140,9 +140,8 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) : lowerBound < kurtosis k := by
   have hs : 0 < powerSum n 1 (fun i => (k i)⁻¹) := by
     let i : Fin n := ⟨0, by omega⟩
-    exact lt_of_lt_of_le (by simpa using inv_pos.mpr (hk i))
-      (Finset.single_le_sum (fun j _ => by simpa using (inv_pos.mpr (hk j)).le)
-        (Finset.mem_univ i))
+    exact Finset.sum_pos' (fun j _ => (pow_pos (inv_pos.mpr (hk j)) 1).le)
+      ⟨i, Finset.mem_univ i, pow_pos (inv_pos.mpr (hk i)) 1⟩
   rw [normalized]
   obtain ⟨ha, hb, hbc, hc⟩ := moments hn
     (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹))
