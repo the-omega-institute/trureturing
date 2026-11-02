@@ -105,10 +105,10 @@ namespace Econlib.Probability
 lemma IsMartingaleCoupling.condExp_snd_eq_fst {μ ν : ProbDist ℝ}
     {π : ProbDist (ℝ × ℝ)} (h : IsMartingaleCoupling μ ν π) :
     π.toMeasure[Prod.snd | (borel ℝ).comap Prod.fst] =ᵐ[π.toMeasure] Prod.fst := by
-  let m := (borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ)
-  have hm : m ≤ (inferInstance : MeasurableSpace (ℝ × ℝ)) := measurable_fst.comap_le
-  have hxm : StronglyMeasurable[m] (Prod.fst : ℝ × ℝ → ℝ) :=
-    (MeasurableSpace.comap_measurable _).stronglyMeasurable
+  have hm : ((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ)) ≤ (inferInstance : MeasurableSpace (ℝ × ℝ)) :=
+    (measurable_fst : Measurable (Prod.fst : ℝ × ℝ → ℝ)).comap_le
+  have hxm : StronglyMeasurable[((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ))] (Prod.fst : ℝ × ℝ → ℝ) :=
+    (comap_measurable _).stronglyMeasurable
   apply Filter.EventuallyEq.symm
   refine ae_eq_condExp_of_forall_setIntegral_eq hm h.integrable_snd
     (fun _ _ _ => h.integrable_fst.integrableOn) ?_ hxm.aestronglyMeasurable
@@ -150,10 +150,10 @@ lemma isMartingaleCoupling_of_condExp {a b : ℝ} {μ ν : ProbDist ℝ}
     ProbabilityMeasure.toMeasure_injective hsnd, hxi, hyi, ?_⟩
   intro ψ hψ hbψ
   obtain ⟨M, hM⟩ := hbψ
-  let m := (borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ)
-  have hm : m ≤ (inferInstance : MeasurableSpace (ℝ × ℝ)) := measurable_fst.comap_le
-  have hψm : StronglyMeasurable[m] (fun p : ℝ × ℝ => ψ p.1) :=
-    (hψ.comp (MeasurableSpace.comap_measurable _)).stronglyMeasurable
+  have hm : ((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ)) ≤ (inferInstance : MeasurableSpace (ℝ × ℝ)) :=
+    (measurable_fst : Measurable (Prod.fst : ℝ × ℝ → ℝ)).comap_le
+  have hψm : StronglyMeasurable[((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ))] (fun p : ℝ × ℝ => ψ p.1) :=
+    (hψ.comp (comap_measurable _)).stronglyMeasurable
   have hψae : AEStronglyMeasurable (fun p : ℝ × ℝ => ψ p.1) π.toMeasure :=
     (hψ.comp measurable_fst).aestronglyMeasurable
   have hbound : ∀ᵐ p ∂π.toMeasure, ‖ψ p.1‖ ≤ M :=
@@ -163,12 +163,12 @@ lemma isMartingaleCoupling_of_condExp {a b : ℝ} {μ ν : ProbDist ℝ}
   have hpull := condExp_mul_of_stronglyMeasurable_right hψm hprod_y hyi
   have hi : (∫ p, p.2 * ψ p.1 ∂π.toMeasure) = ∫ p, p.1 * ψ p.1 ∂π.toMeasure := by
     calc
-      _ = ∫ p, (π.toMeasure[(fun q : ℝ × ℝ => q.2 * ψ q.1) | m]) p ∂π.toMeasure :=
+      _ = ∫ p, (π.toMeasure[(fun q : ℝ × ℝ => q.2 * ψ q.1) | ((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ))]) p ∂π.toMeasure :=
         (integral_condExp hm).symm
       _ = ∫ p, p.1 * ψ p.1 ∂π.toMeasure := by
         apply integral_congr_ae
         filter_upwards [hpull, hce] with p hp hc
-        exact hp.trans (by change (π.toMeasure[Prod.snd | m]) p * ψ p.1 = _; rw [hc])
+        exact hp.trans (by change (π.toMeasure[Prod.snd | ((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ))]) p * ψ p.1 = _; rw [hc])
   simp_rw [sub_mul]
   rw [integral_sub hprod_y hprod_x, hi, sub_self]
 
