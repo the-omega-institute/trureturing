@@ -79,7 +79,6 @@ theorem bank_dominance (h : ℝ → ℝ) (R : ℝ) (hR : 1 < R)
   have hev : ∀ᶠ n : ℕ in atTop, B * (b / R) ^ n < c / Real.pi :=
     hlim.eventually (gt_mem_nhds (div_pos hcpos Real.pi_pos))
   filter_upwards [hev] with n hn'
-  have hRp : 0 < R ^ n := pow_pos (by linarith) _
   have hbp : 0 < b ^ n := pow_pos (by linarith) _
   have hcmp : B / R ^ n < (c / b ^ n) / Real.pi := by
     rw [div_pow] at hn'
@@ -90,5 +89,7 @@ theorem bank_dominance (h : ℝ → ℝ) (R : ℝ) (hR : 1 < R)
   exact hcmp.trans_le (by
     simpa only [one_div, div_eq_mul_inv, mul_comm, mul_one] using
       div_le_div_of_nonneg_right (hbound n) Real.pi_pos.le)
+
+#print axioms bank_dominance
 
 end D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitBankMoments

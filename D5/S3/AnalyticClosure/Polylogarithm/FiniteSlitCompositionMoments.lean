@@ -4,9 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual reciprocal branches and bank moment domination for every positive Xu--Zhao composition and power. -/
+   digest: Actual composition reciprocal banks, outer norm bounds and moment domination. -/
 
 import D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitBankMoments
+
+/-! Actual finite-bank data and outer-circle bounds for normalized reciprocal branches. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -44,7 +46,8 @@ private theorem outer_bound (A upper lower : ℂ → ℂ) (R0 ρ R : ℝ)
     rw [Complex.mem_slitPlane_iff] at hzo
     push_neg at hzo
     have hzim : z.im = 0 := by simpa using hzo.2
-    have hre : 1 ≤ z.re := by simpa using hzo.1
+    have hre0 : 1 - z.re ≤ 0 := by simpa only [sub_re, one_re] using hzo.1
+    have hre : 1 ≤ z.re := by linarith
     have hzreal : z = (z.re : ℂ) := by
       apply Complex.ext <;> simp [hzim]
     have hnorm : ‖z‖ = z.re := by
@@ -191,5 +194,7 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
     filter_upwards [he] with n hn'
     simp only [neg_div, intervalIntegral.integral_neg] at hn'
     linarith
+
+#print axioms result
 
 end D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitCompositionMoments
