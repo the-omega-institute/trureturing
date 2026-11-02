@@ -268,13 +268,6 @@ private theorem groundAction_reduction (D : LatticeData) (hu : IsUnit D.G.det)
   rw [reduced_lift]
   rfl
 
-private theorem groundAction_neg (D : LatticeData) (hu : IsUnit D.G.det)
-    (a : Charge D) : groundAction D hu (-a) = groundAction D hu a := by
-  rw [groundAction_reduction, groundAction_reduction, map_neg]
-  congr 1
-  funext i
-  exact CharTwo.neg_eq _
-
 private theorem chargeOperator_mul (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : ModTwoCharge D) :
     chargeOperator D (groundRepresentation D hu) a *
@@ -540,7 +533,7 @@ theorem fourM_factorization (D : LatticeData) (hu : IsUnit D.G.det)
         (thetaLinear D (Finsupp.single b.val.1 (MvPolynomial.monomial b.val.2 1)))) * _ = _
     rw [theta_single, kernel_single_tmul, kernel_single_tmul]
     simp only [dualCarrierBasis, corrected_tmul, map_smul, actualForm_tmul,
-      chargeScalar_neg, groundAction_neg, groundAction_reduction,
+      chargeScalar_neg, groundAction_reduction,
       map_neg]
     have negRed : -reduceCharge D b.val.1 = reduceCharge D b.val.1 := by
       funext i; exact CharTwo.neg_eq _
@@ -645,7 +638,7 @@ set_option maxHeartbeats 4000000 in
 EXPLICIT charge-coset kernel law, tested against all oscillator/ground tensor
 detectors. TensorProduct.induction_on recovers every original detector. This
 consumes S and O5 and supplies their operator-to-polynomial connection.
-It does not yet extend the INPUTS from homogeneous pure tensors to all states. -/
+OriginalFourMReduction extends the INPUTS from these tensors to all states. -/
 theorem original_jacobi_tensor_kernel (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
     (H K L : ℕ) (m n r : ℤ) (u v w : paritySpace D hu (-1))
@@ -764,9 +757,9 @@ private theorem original_ground_dimension (D : LatticeData) (hu : IsUnit D.G.det
 /-- Actual ground elimination for the three EXPLICIT polynomial/coset channels.
 No crossing assumption is used in either direction. The reverse implication
 uses the independent ORIGINAL ground tensor coefficients above. The connection
-to actual homogeneous tensor inputs is original_jacobi_tensor_kernel. Extending
-INPUTS through their finite homogeneous tensor expansions and packaging the
-all-state equivalence are separate remaining source obligations. -/
+to actual homogeneous tensor inputs is original_jacobi_tensor_kernel. The finite
+trilinear input extension and full all-state equivalence are proved in
+OriginalFourMReduction. -/
 theorem coset_ground_elimination (D : LatticeData) (hu : IsUnit D.G.det)
     (h24 : D.rank = 24) (H K L : ℕ) (m n r : ℤ) (P Q R S : Oscillator D) :
     (∀ x y z t : ActualGround D hu,
@@ -813,7 +806,7 @@ theorem coset_ground_elimination (D : LatticeData) (hu : IsUnit D.G.det)
     apply Finset.sum_congr rfl
     intro a ha
     dsimp only [size]
-    field_simp <;> ring
+    field_simp
   have second (x y z t : ActualGround D hu) :
       size * (∑ a : ModTwoCharge D, F a *
         groundForm D hu z (chargeOperator D (groundRepresentation D hu) a x) *
@@ -838,7 +831,7 @@ theorem coset_ground_elimination (D : LatticeData) (hu : IsUnit D.G.det)
     apply Finset.sum_congr rfl
     intro a ha
     dsimp only [size]
-    field_simp <;> ring
+    field_simp
   have expansion (x y z t : ActualGround D hu) :
       size * ((∑ a : ModTwoCharge D, A a *
         groundForm D hu y (chargeOperator D (groundRepresentation D hu) a x) *
