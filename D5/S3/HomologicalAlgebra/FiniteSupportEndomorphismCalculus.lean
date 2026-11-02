@@ -8,8 +8,10 @@
 
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.LinearAlgebra.Basis.Defs
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Tactic
+
+/-! Statewise finite sums and functional calculus of an algebraic basis count. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -66,7 +68,7 @@ def total : Module.End ℂ V where
     let N := max (A.bound (z • v)) (A.bound v)
     rw [A.value_eq_sum (z • v) N (le_max_left _ _),
       A.value_eq_sum v N (le_max_right _ _)]
-    simp only [map_smul, Finset.smul_sum]
+    simp only [map_smul, Finset.smul_sum, RingHom.id_apply]
 
 theorem total_eq_sum (v : V) (N : ℕ) (hN : A.bound v ≤ N) :
     A.total v = ∑ n ∈ Finset.range N, A.term n v := A.value_eq_sum v N hN
@@ -93,7 +95,11 @@ theorem trunc_ac (A B C : Family V)
       simp only [ac, trunc, Finset.sum_mul, Finset.mul_sum, Finset.sum_add_distrib]
       congr 1
       exact Finset.sum_comm
-    _ = C.trunc N := by simp [hab, trunc]
+    _ = C.trunc N := by
+      simp [hab, trunc]
+      apply Finset.sum_congr rfl
+      intro i hi
+      simp only [if_pos (Finset.mem_range.mp hi)]
 
 /-- Only finite sums are expanded: N also captures both composed outputs. -/
 theorem total_ac (A B C : Family V)
@@ -170,17 +176,17 @@ theorem signed_sum (f : ℤ → V) (hf0 : f 0 = 0) (N : ℕ)
       | succ r =>
         have hr : r < N := by
           by_contra h
-          exact hz (by simpa using (hN r (by omega)).1)
-        exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨r, Finset.mem_range.mpr hr, by omega⟩)
+          exact hz (by simpa only [Int.ofNat_eq_natCast, Nat.cast_add, Nat.cast_one] using (hN r (by omega)).1)
+        exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨r, Finset.mem_range.mpr hr, by simp [Int.ofNat_eq_natCast, Int.negSucc_eq, Nat.cast_add]⟩)
     | negSucc r =>
       have hr : r < N := by
         by_contra h
-        exact hz (by simpa using (hN r (by omega)).2)
-      exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨r, Finset.mem_range.mpr hr, by omega⟩)
+        exact hz (by simpa only [Int.negSucc_eq, Int.ofNat_eq_natCast, Nat.cast_add, Nat.cast_one] using (hN r (by omega)).2)
+      exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨r, Finset.mem_range.mpr hr, by simp [Int.ofNat_eq_natCast, Int.negSucc_eq, Nat.cast_add]⟩)
   rw [finsum_eq_finsetSum_of_support_subset f hs, Finset.sum_union hd]
   simp only [P, Q]
-  rw [Finset.sum_image (by intro a ha b hb h; omega),
-    Finset.sum_image (by intro a ha b hb h; omega), Finset.sum_add_distrib]
+  rw [Finset.sum_image (by intro a ha b hb h; exact_mod_cast (add_right_cancel h)),
+    Finset.sum_image (by intro a ha b hb h; exact_mod_cast (add_right_cancel (neg_injective h))), Finset.sum_add_distrib]
 
 section Diagonal
 variable {I : Type*} (b : Module.Basis I ℂ V)
