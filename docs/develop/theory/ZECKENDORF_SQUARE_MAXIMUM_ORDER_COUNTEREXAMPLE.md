@@ -76,7 +76,7 @@ $$
 \forall P\in\mathcal A\quad
 &\exists c_P>0\ \exists C_P>0\ \exists N_P\in\mathbb N,\quad N_P\ge2,\\
 &\forall N\in\mathbb N,\quad
-N\ge N_P\ \Longrightarrow\
+N\ge N_P\ \Longrightarrow\quad
 c_P N^{1/(2\deg P)}\le M(S_{Z,P},N)\le C_P N^{1/(2\deg P)}.
 \end{aligned}
 \tag{3.1}
@@ -181,7 +181,7 @@ $$
 \tag{4.7}
 $$
 
-(4.4)–(4.5) 的坐标方法对应仓内 [ZeckendorfBeattyBridge 的 `conjugate_error_bounds`、`sum_fib_mul_inv_golden` 及其局部辅助引理](https://github.com/the-omega-institute/trureturing/blob/8b9b65f4a2eb01e267a4704da33fd01b022ffaa7/D5/S1/Words/ZeckendorfBeattyBridge.lean)；单位区间识别误差与 (4.7) 的最小下标估计也见 [ZeckendorfCarryBarrier 的 `same_error`、`least_large` 局部论证](https://github.com/the-omega-institute/trureturing/blob/8b9b65f4a2eb01e267a4704da33fd01b022ffaa7/D5/S1/Digit/ZeckendorfCarryBarrier.lean)。这些是这里使用的中间坐标事实。
+(4.4)–(4.5) 的坐标方法对应仓内 [ZeckendorfBeattyBridge 的 `conjugate_error_bounds`、`sum_fib_mul_inv_golden` 及其局部辅助引理](https://github.com/the-omega-institute/trureturing/blob/8b9b65f4a2eb01e267a4704da33fd01b022ffaa7/D5/S1/Words/ZeckendorfBeattyBridge.lean)；单位区间识别误差与 (4.7) 的最小下标估计也见 [ZeckendorfCarryBarrier 的 `same_error`、`least_large` 局部论证](https://github.com/the-omega-institute/trureturing/blob/8b9b65f4a2eb01e267a4704da33fd01b022ffaa7/D5/S1/Digit/ZeckendorfCarryBarrier.lean)。同一有符号坐标亦见 [Fibonacci Canonical Window Compiler Geometry，定义 17.5、定理 17.6](https://github.com/the-omega-institute/trureturing/blob/8b9b65f4a2eb01e267a4704da33fd01b022ffaa7/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md)，其 $\alpha=\rho$、$s(x)=-E(x)$。这些是这里使用的中间坐标事实。
 
 现在设 $u,t$ 均为偶整数，$t\ge2$，$u-t\ge3$，且 $m$ 是满足 $0<m<F_t$ 的整数。表示
 
@@ -286,7 +286,7 @@ q\le(F_s-1)^2+2\le F_s^2<F_sL_s=F_{2s}.
 \tag{4.14}
 $$
 
-中间的弱不等式等价于 $3\le2F_s$；严格不等式使用 $L_s=F_s+2F_{s-1}>F_s$。最后的等式是上面的 Lucas–Fibonacci 乘积式在相同下标时的形式，也可直接由 (4.2) 得到。因此
+中间的弱不等式等价于 $3\le2F_s$；严格不等式使用 $L_s=F_s+2F_{s-1}>F_s$。最后的等式直接由 (4.2) 得到：$F_sL_s=(\varphi^{2s}-\psi^{2s})/\sqrt5=F_{2s}$。因此
 
 $$
 Z(q)\subseteq\{2,\ldots,2s-1\}.
