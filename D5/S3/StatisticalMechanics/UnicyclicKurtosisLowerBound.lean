@@ -54,7 +54,7 @@ private lemma normalized {n : ℕ} (k : Fin n → ℝ) :
   · simp [h]
   by_cases h2 : a = 0
   · simp [h2]; ring
-  field_simp [h, h2]
+  field_simp (disch := positivity)
 
 private lemma moments {n : ℕ} (hn : 2 ≤ n) (x : Fin n → ℝ)
     (hx : ∀ i, 0 < x i) :
@@ -112,7 +112,7 @@ private lemma moment_lower_bound (a b c : ℝ) (ha : 0 < a) (hb : 0 ≤ b)
     (hbc : b ^ 2 ≤ a * c) (hc : c < a ^ 2) :
     lowerBound < 15 * a ^ 2 - 20 * b + 6 * c / a := by
   let t := b / a
-  have hat : a * t = b := by dsimp [t]; field_simp
+  have hat : a * t = b := by dsimp [t]; field_simp (disch := positivity)
   have hat2 : a ^ 2 * t ^ 2 = b ^ 2 := by rw [← hat]; ring
   have ht : 0 ≤ t := div_nonneg hb ha.le
   have hts : t ^ 2 < a := by
@@ -166,7 +166,7 @@ private lemma source_rates_positive (m : ℕ) : ∀ i, 0 < sourceRates m i := by
   have hs0 := Real.sqrt_nonneg (5 : ℝ)
   have ha : 0 < sourceParameter := by dsimp [sourceParameter]; nlinarith
   intro i
-  dsimp [sourceRates]
+  rw [sourceRates]
   split_ifs <;> positivity
 
 private def approximation (a t : ℝ) : ℝ :=
@@ -184,7 +184,9 @@ private lemma source_kurtosis (m : ℕ) :
   have hn : 0 < (m : ℝ) + 2 := by positivity
   have hs (j : ℕ) : powerSum (m + 2) j (fun i => (sourceRates m i)⁻¹) =
       (((m : ℝ) + 2) / sourceParameter) ^ j + ((m : ℝ) + 1) := by
-    simp [powerSum, sourceRates, Fin.sum_univ_succ]
+    simp only [powerSum, sourceRates, Nat.cast_add, Nat.cast_ofNat, inv_pow, ite_pow,
+      one_pow, Fin.sum_univ_succ, ↓reduceIte, Fin.succ_ne_zero, inv_one, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_one, mul_one, add_left_inj]
     rw [← inv_pow, inv_div]
   delta kurtosis approximation
   simp only [hs, Nat.cast_add, Nat.cast_ofNat]
@@ -207,8 +209,8 @@ private lemma source_kurtosis (m : ℕ) :
   have hv1 : 0 < ((m : ℝ) + 2) ^ 2 + sourceParameter ^ 2 * ((m : ℝ) + 2 - 1) := by
     positivity
   field_simp (disch := positivity)
-  <;> field_simp (disch := positivity)
-  <;> ring
+  field_simp (disch := positivity)
+  ring
 
 private lemma source_limit :
     Tendsto (fun m : ℕ => kurtosis (sourceRates m)) atTop (nhds lowerBound) := by
@@ -236,7 +238,8 @@ private lemma source_limit :
       calc
         _ = Real.sqrt 5 ^ 4 * Real.sqrt 5 := by ring
         _ = _ := by rw [hs4]
-    norm_num [approximation]
+    rw [approximation]
+    norm_num
     field_simp (disch := positivity)
     dsimp [sourceParameter, lowerBound]
     ring_nf
