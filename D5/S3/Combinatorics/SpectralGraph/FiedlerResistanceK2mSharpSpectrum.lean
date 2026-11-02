@@ -7,6 +7,7 @@
    digest: Sharp product equality determines the complete native K2m Laplacian spectrum. -/
 import D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer
 
+/-! Sharp product equality on the full positive labelled family determines every native spectral multiplicity. -/
 set_option autoImplicit false
 open Matrix Finset
 noncomputable section
@@ -113,7 +114,7 @@ private lemma spectrum_at_equality {m : ℕ} (hm : 3 ≤ m)
     rw [hL.trace_eq_sum_eigenvalues]
     change (∑ i : J, e i) = ∑ i,e i
     rw [← Finset.sum_subtype (Finset.univ.filter (fun i => e i ≠ 0)) (by simp) e]
-    exact Finset.sum_filter_ne_zero e
+    exact Finset.sum_filter_ne_zero Finset.univ
   have hinverse : (∑ i : J, (e i)⁻¹) = ∑ i,(e i)⁻¹ := by
     rw [← Finset.sum_subtype (Finset.univ.filter (fun i => e i ≠ 0)) (by simp) (fun i => (e i)⁻¹)]
     simp only [Finset.sum_filter]
@@ -174,5 +175,123 @@ private lemma spectrum_at_equality {m : ℕ} (hm : 3 ≤ m)
   · rw [hsmall,Finset.card_erase_of_mem (by simp only [Finset.mem_filter,Finset.mem_univ,true_and]; exact j.2),hc]
     omega
   · rw [hmax,Finset.card_singleton]
+
+/-- A common sign fixes all labelled edge conductances; nonedges are unrestricted. -/
+def Ray (m : ℕ) (t ε : ℝ) (w : Sym2 (Fin (2+m)) → ℝ) : Prop :=
+  EdgeRestriction m (t/2*(1+ε*splitRatio m)) (t/2*(1-ε*splitRatio m)) w
+
+private lemma ray_parameters {m : ℕ} (hm : 3 ≤ m) (t ε : ℝ) (ht : 0 < t)
+    (hε : ε = 1 ∨ ε = -1) :
+    0 < t/2*(1+ε*splitRatio m) ∧ 0 < t/2*(1-ε*splitRatio m) ∧
+    t/2*(1+ε*splitRatio m)+t/2*(1-ε*splitRatio m) = t ∧
+    (m+2 : ℝ)*(t/2*(1+ε*splitRatio m))*(t/2*(1-ε*splitRatio m)) = t^2 := by
+  obtain ⟨hρ,hρ1,hρsq⟩ := splitRatio_facts hm
+  have hr : (m+2 : ℝ)*(splitRatio m)^2 = m-2 := by
+    have hh := (eq_div_iff (show (m+2 : ℝ) ≠ 0 by positivity)).mp hρsq
+    simpa only [mul_comm] using hh
+  rcases hε with rfl | rfl
+  all_goals norm_num only [one_mul,neg_one_mul,add_neg_cancel_right,sub_neg_eq_add]
+  all_goals refine ⟨mul_pos (by positivity) (by linarith),mul_pos (by positivity) (by linarith),by ring,?_⟩
+  all_goals nlinarith [sq_nonneg t,show t^2*((m+2)*(splitRatio m)^2) = t^2*(m-2) by rw [hr]]
+
+private lemma restriction_positive {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ)
+    (a b : ℝ) (ha : 0 < a) (hb : 0 < b) (hE : EdgeRestriction m a b w) :
+    ∀ e ∈ (K2m m).edgeSet, 0 < w e := by
+  intro e he
+  induction e using Sym2.ind with
+  | _ p q =>
+    have hpq : (K2m m).Adj p q := by simpa using he
+    revert hpq
+    refine Fin.addCases (fun j => ?_) (fun i => ?_) p
+    · refine Fin.addCases (fun k => ?_) (fun i => ?_) q
+      · intro h
+        exact (adj_hub_hub m j k h).elim
+      · intro _
+        change 0 < w s(hub m j,leaf m i)
+        fin_cases j
+        · change 0 < w s(hub m 0,leaf m i)
+          rw [(hE i).1]; exact ha
+        · change 0 < w s(hub m 1,leaf m i)
+          rw [(hE i).2]; exact hb
+    · refine Fin.addCases (fun j => ?_) (fun k => ?_) q
+      · intro _
+        change 0 < w s(leaf m i,hub m j)
+        rw [Sym2.eq_swap]
+        fin_cases j
+        · change 0 < w s(hub m 0,leaf m i)
+          rw [(hE i).1]; exact ha
+        · change 0 < w s(hub m 1,leaf m i)
+          rw [(hE i).2]; exact hb
+      · intro h
+        exact (adj_leaf_leaf m i k h).elim
+
+private lemma ray_facts {m : ℕ} (hm : 3 ≤ m) (t ε : ℝ) (ht : 0 < t)
+    (hε : ε = 1 ∨ ε = -1) (w : Sym2 (Fin (2+m)) → ℝ) (hE : Ray m t ε w) :
+    (∀ e ∈ (K2m m).edgeSet, 0 < w e) ∧ lambda2 (K2m m) w = t ∧
+    totalRes (K2m m) w = sharpConstant m/t ∧ FullSpectrum m w t := by
+  obtain ⟨ha,hb,hs,hab⟩ := ray_parameters hm t ε ht hε
+  have hw := restriction_positive w _ _ ha hb hE
+  have hval := uniform_extremal hm w hw _ _ t ha hb ht hs hab hE
+  have heq : lambda2 (K2m m) w*totalRes (K2m m) w = sharpConstant m := by
+    rw [hval.1,hval.2]
+    exact mul_div_cancel₀ _ ht.ne'
+  refine ⟨hw,hval.1,hval.2,?_⟩
+  simpa only [hval.1] using spectrum_at_equality hm w hw heq
+
+/-- The full sharp product endpoint on independent positive labelled edge weights. -/
+def SharpProductClaim (m : ℕ) : Prop :=
+  (∀ w : Sym2 (Fin (2+m)) → ℝ, (∀ e ∈ (K2m m).edgeSet, 0 < w e) →
+    lambda2 (K2m m) w*totalRes (K2m m) w ≤ sharpConstant m) ∧
+  (∀ w : Sym2 (Fin (2+m)) → ℝ, (∀ e ∈ (K2m m).edgeSet, 0 < w e) →
+    (lambda2 (K2m m) w*totalRes (K2m m) w = sharpConstant m ↔
+      ∃ t ε : ℝ, 0 < t ∧ (ε = 1 ∨ ε = -1) ∧ Ray m t ε w)) ∧
+  (∀ t ε : ℝ, 0 < t → (ε = 1 ∨ ε = -1) →
+    (∃ w, Ray m t ε w) ∧
+    ∀ w, Ray m t ε w → (∀ e ∈ (K2m m).edgeSet, 0 < w e) ∧
+      lambda2 (K2m m) w = t ∧ totalRes (K2m m) w = sharpConstant m/t ∧
+      FullSpectrum m w t) ∧
+  (¬ ∃ (t s : ℝ) (w : Sym2 (Fin (2+m)) → ℝ),
+    0 < t ∧ 0 < s ∧ Ray m t 1 w ∧ Ray m s (-1) w) ∧
+  (∀ (t ε : ℝ) (w : Sym2 (Fin (2+m)) → ℝ),
+    Ray m t ε w → Ray m t (-ε) (exchangeWeights m w)) ∧
+  (∀ w w' : Sym2 (Fin (2+m)) → ℝ, (∀ e ∈ (K2m m).edgeSet, w e = w' e) →
+    lambda2 (K2m m) w = lambda2 (K2m m) w' ∧ totalRes (K2m m) w = totalRes (K2m m) w')
+
+/-- The two common-sign positive rays exhaust equality, including every spectral multiplicity. -/
+theorem result (m : ℕ) (hm : 3 ≤ m) : SharpProductClaim m := by
+  refine ⟨?_,?_,?_,?_,?_,?_⟩
+  · intro w hw
+    exact (product_bound_trace hm w hw).1
+  · intro w hw
+    constructor
+    · intro heq
+      obtain ⟨a,b,ha,hb,hs,hab,hE⟩ := equality_parameters hm w hw heq
+      have ht := (lambda2_spectral (by omega) w hw).1
+      rcases parameter_roots hm a b _ hs hab with h | h
+      · refine ⟨lambda2 (K2m m) w,1,ht,Or.inl rfl,?_⟩
+        simpa only [Ray,one_mul,h.1,h.2] using hE
+      · refine ⟨lambda2 (K2m m) w,-1,ht,Or.inr rfl,?_⟩
+        simpa only [Ray,neg_one_mul,sub_neg_eq_add,h.1,h.2] using hE
+    · rintro ⟨t,ε,ht,hε,hE⟩
+      have hh := ray_facts hm t ε ht hε w hE
+      rw [hh.2.1,hh.2.2.1]
+      exact mul_div_cancel₀ _ ht.ne'
+  · intro t ε ht hε
+    refine ⟨?_,fun w hE => ray_facts hm t ε ht hε w hE⟩
+    exact ⟨uniformWeights m _ _, uniformWeights_edges m _ _⟩
+  · rintro ⟨t,s,w,ht,hs,hp,hn⟩
+    let i : Fin m := ⟨0,by omega⟩
+    have hA := (hp i).1.symm.trans (hn i).1
+    have hB := (hp i).2.symm.trans (hn i).2
+    simp only [one_mul,neg_one_mul,sub_neg_eq_add] at hA hB
+    have hts : t = s := by linarith
+    have hρ := (splitRatio_facts hm).1
+    rw [← hts] at hA
+    nlinarith [mul_pos ht hρ]
+  · intro t ε w hE
+    have hh := exchange_edges _ _ w hE
+    simpa only [Ray,neg_mul,add_neg_eq_sub,sub_neg_eq_add] using hh
+  · intro w w' hE
+    exact invariants_congr _ w w' hE
 
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum

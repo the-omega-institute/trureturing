@@ -24,9 +24,9 @@ instance K2m_dec (m : ℕ) : DecidableRel (K2m m).Adj := by
   infer_instance
 def hub (m : ℕ) (j : Fin 2) : Fin (2 + m) := j.castAdd m
 def leaf (m : ℕ) (i : Fin m) : Fin (2 + m) := i.natAdd 2
-private lemma adj_hub_hub (m : ℕ) (i j : Fin 2) : ¬ (K2m m).Adj (hub m i) (hub m j) := by
+lemma adj_hub_hub (m : ℕ) (i j : Fin 2) : ¬ (K2m m).Adj (hub m i) (hub m j) := by
   simp [K2m, SimpleGraph.comap, completeBipartiteGraph, hub, finSumFinEquiv]
-private lemma adj_leaf_leaf (m : ℕ) (i j : Fin m) : ¬ (K2m m).Adj (leaf m i) (leaf m j) := by
+lemma adj_leaf_leaf (m : ℕ) (i j : Fin m) : ¬ (K2m m).Adj (leaf m i) (leaf m j) := by
   simp [K2m, SimpleGraph.comap, completeBipartiteGraph, leaf, finSumFinEquiv]
 private lemma adj_hub_leaf (m : ℕ) (i : Fin 2) (j : Fin m) : (K2m m).Adj (hub m i) (leaf m j) := by
   simp [K2m, SimpleGraph.comap, completeBipartiteGraph, hub, leaf, finSumFinEquiv]
@@ -857,7 +857,7 @@ lemma uniformWeights_edges (m : ℕ) (a b : ℝ) : EdgeRestriction m a b (unifor
   have hh : hub m 1 ≠ hub m 0 := by simp [hub,Fin.ext_iff]
   have hl := Ne.symm (adj_hub_leaf m 0 i).ne
   simp [uniformWeights,hh,hl]
-lemma uniformWeights_positive (m : ℕ) (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : ∀ e ∈ (K2m m).edgeSet, 0 < uniformWeights m a b e := by
+private lemma uniformWeights_positive (m : ℕ) (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : ∀ e ∈ (K2m m).edgeSet, 0 < uniformWeights m a b e := by
   intro e he
   induction e using Sym2.ind with
   | _ p q =>
