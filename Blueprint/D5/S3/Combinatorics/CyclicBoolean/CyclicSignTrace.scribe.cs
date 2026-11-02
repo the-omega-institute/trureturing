@@ -85,6 +85,7 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                 "For every m, b and cyclic coordinate i, the coefficient of the shifted inverse component at topVariables(m,i) is exactly b_i. Cardinality excludes every shorter prefix and endpoint term; injectivity of the highest-degree variable sets leaves exactly the term indexed by i. Length one and zero masks are included.", DescribeRole.Theorem),
             Node("inverse_component_top_derivative", "The degree-m derivative equation", StatementSource.FromAuthor(TopDerivativeFormula()),
                 "For every positive m and constant derivative direction u of the inverse component, and every finite coordinate set s of cardinality m, the sum over i of b_i times the product of u on topVariables(m,i) minus s, with zero contribution unless s is a subset, vanishes. A derivative of a monomial of degree at most m has zero degree-m coefficient; hence only the degree-(m+1) endpoint terms survive. The statement includes m=1 but does not claim the subsequent overlap classification.", DescribeRole.Theorem),
+            Paragraph(Text("For positive m, each topVariables(m,i) has exactly one adjacent cyclic pair, at i+2m-1 and i+2m. The prefix itself contains no adjacent pair, including across the cyclic boundary. Deleting any other coordinate a leaves this pair intact, so any top variable set containing the deletion must have the same index i. Applying the degree-m derivative equation at that deletion therefore proves b_i u_a=0. This establishes the interior-deletion constraints for every odd length at least five, and the same implication at length three where there is no interior coordinate. The endpoint deletions, their shared coefficient equation and the lower-degree equations remain unproved here.")),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
             Paragraph(Text("The affine-span duality is proved above. The affine-support assertion still requires the complete classification of constant derivative directions for every nonzero inverse-component mask, including the cyclic top-overlap and lower-coefficient arguments for lengths at least five, the length-three polar case and assembly with length one. The coefficient formula alone does not establish that classification or settle the dimension bound."))
         ), []));
@@ -223,12 +224,11 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
     {
         Formula m = F.Id("m"), b = F.Id("b"), u = F.Id("u"), s = F.Id("s"),
             i = F.Id("i"), y = F.Id("y"), n = OddLength(m), t = Call("topVariables", m, i);
-        Formula constant = Some("c", Call("ZMod", D(2)), All("y", Word(n),
-            Eq(Plus(Call("inverseComponent", m, b, Plus(y, u)), Call("inverseComponent", m, b, y)), F.Id("c"))));
         Formula summand = Times(Call("b", i), Call("ite", Call("subset", s, t),
             Call("booleanMonomial", Call("sdiff", t, s), u), D(0)));
         return Disp(All("m", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, m),
-            All("b", Word(n), All("u", Word(n), Imp(constant,
+            All("b", Word(n), All("u", Word(n), Imp(
+                Call("mem", u, Call("constantDerivativeSubmodule", Call("inverseComponent", m, b))),
                 All("s", Call("Finset", Call("ZMod", n)), Imp(Eq(Call("card", s), m),
                     Eq(Sum("i", Call("ZMod", n), summand), D(0)))))))));
     }

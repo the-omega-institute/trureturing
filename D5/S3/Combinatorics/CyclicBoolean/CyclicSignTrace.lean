@@ -1093,12 +1093,13 @@ private theorem monomial_derivative_degree {n : ℕ} (t s : Finset (ZMod n))
 to a constant inverse derivative. No cyclic overlap classification is assumed. -/
 theorem inverse_component_top_derivative (m : ℕ) (hm : 0 < m)
     (b u : Word (2 * m + 1))
-    (hc : ∃ c, ∀ y, inverseComponent m b (y + u) + inverseComponent m b y = c)
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
     (s : Finset (ZMod (2 * m + 1))) (hs : s.card = m) :
     (∑ i, b i * (if s ⊆ topVariables m i then
       booleanMonomial (topVariables m i \ s) u else 0)) = 0 := by
   classical
   have hsne : s.Nonempty := Finset.card_pos.mp (by omega)
+  have hc := (constantDerivative_affineSpan_duality (inverseComponent m b)).1 u |>.mp hu
   have hcoeff := inverse_component_derivative_coefficients m b u hc s hsne
   have hinner (i : ZMod (2 * m + 1)) :
       (∑ r ∈ Finset.range (m + 1), b i *
@@ -1129,5 +1130,116 @@ theorem inverse_component_top_derivative (m : ℕ) (hm : 0 < m)
       simp
     · simp
   simpa only [hinner] using hcoeff
+
+private theorem prefix_no_adjacent (m : ℕ) (i j : ZMod (2 * m + 1))
+    (hj : j ∈ prefixVariables i m) : j + 1 ∉ prefixVariables i m := by
+  obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp hj
+  intro h
+  obtain ⟨b, hb, he⟩ := Finset.mem_image.mp h
+  have ha' := Finset.mem_range.mp ha
+  have hb' := Finset.mem_range.mp hb
+  have hx : ((2 * b + 1 : ℕ) : ZMod (2 * m + 1)) = (2 * a + 2 : ℕ) := by
+    apply add_left_cancel (a := i)
+    convert he using 1 <;> push_cast <;> ring
+  have hx' := (ZMod.natCast_eq_natCast_iff' (2 * b + 1) (2 * a + 2)
+    (2 * m + 1)).mp hx
+  rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at hx'
+  omega
+
+private theorem top_adjacent_pair (m : ℕ) (hm : 0 < m)
+    (i j : ZMod (2 * m + 1))
+    (hj : j ∈ topVariables m i) (hj' : j + 1 ∈ topVariables m i) :
+    j = i + (2 * m - 1 : ℕ) := by
+  classical
+  have hstep : i + (2 * m : ℕ) + 1 = i := by
+    have hz := ZMod.natCast_self (2 * m + 1)
+    push_cast at hz ⊢
+    linear_combination hz
+  have hnot : i ∉ topVariables m i := by
+    simp only [topVariables, Finset.mem_insert]
+    rintro (he | he)
+    · have hx : ((0 : ℕ) : ZMod (2 * m + 1)) = (2 * m : ℕ) := by
+        simpa using (add_left_cancel (a := i) (show i + 0 = i + (2 * m : ℕ) by simpa using he))
+      have hx' := (ZMod.natCast_eq_natCast_iff' 0 (2 * m) (2 * m + 1)).mp hx
+      rw [Nat.zero_mod, Nat.mod_eq_of_lt (by omega)] at hx'
+      omega
+    · obtain ⟨a, ha, he⟩ := Finset.mem_image.mp he
+      have ha' := Finset.mem_range.mp ha
+      have hx : ((2 * a + 1 : ℕ) : ZMod (2 * m + 1)) = 0 := by
+        exact add_left_cancel (he.trans (add_zero i).symm)
+      have hx' := (ZMod.natCast_eq_natCast_iff' (2 * a + 1) 0 (2 * m + 1)).mp hx
+      rw [Nat.mod_eq_of_lt (by omega), Nat.zero_mod] at hx'
+      omega
+  rcases Finset.mem_insert.mp hj with he | hp
+  · exact (hnot (by simpa only [he, hstep] using hj')).elim
+  · rcases Finset.mem_insert.mp hj' with he | hp'
+    · have he' : j + 1 = i + (2 * m - 1 : ℕ) + 1 := by
+        have hnat : 2 * m - 1 + 1 = 2 * m := by omega
+        have hx := congrArg (fun r : ℕ => i + (r : ZMod (2 * m + 1))) hnat
+        exact he.trans (by simpa only [Nat.cast_add, Nat.cast_one, add_assoc] using hx.symm)
+      exact add_right_cancel he'
+    · exact (prefix_no_adjacent m i j hp hp').elim
+
+private theorem interior_deletion_unique (m : ℕ) (hm : 0 < m)
+    (i a k : ZMod (2 * m + 1))
+    (ha : a ≠ i + (2 * m - 1 : ℕ)) (ha' : a ≠ i + (2 * m : ℕ))
+    (hsub : (topVariables m i).erase a ⊆ topVariables m k) : k = i := by
+  classical
+  let j : ZMod (2 * m + 1) := i + (2 * m - 1 : ℕ)
+  have hlast : j ∈ prefixVariables i m := by
+    refine Finset.mem_image.mpr ⟨m - 1, Finset.mem_range.mpr (by omega), ?_⟩
+    dsimp [j]
+    have hn : 2 * (m - 1) + 1 = 2 * m - 1 := by omega
+    rw [hn]
+  have hj : j ∈ (topVariables m i).erase a := by
+    exact Finset.mem_erase.mpr ⟨Ne.symm ha, Finset.mem_insert_of_mem hlast⟩
+  have hje : j + 1 = i + (2 * m : ℕ) := by
+    dsimp [j]
+    have hnat : 2 * m - 1 + 1 = 2 * m := by omega
+    simpa only [Nat.cast_add, Nat.cast_one, add_assoc] using
+      congrArg (fun r : ℕ => i + (r : ZMod (2 * m + 1))) hnat
+  have hj' : j + 1 ∈ (topVariables m i).erase a := by
+    rw [hje]
+    exact Finset.mem_erase.mpr ⟨Ne.symm ha', Finset.mem_insert_self _ _⟩
+  have he := top_adjacent_pair m hm k j (hsub hj) (hsub hj')
+  change i + (2 * m - 1 : ℕ) = k + (2 * m - 1 : ℕ) at he
+  exact (add_right_cancel he).symm
+
+private theorem inverse_component_interior_constraint (m : ℕ) (hm : 0 < m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (i a : ZMod (2 * m + 1)) (ha : a ∈ topVariables m i)
+    (ha₁ : a ≠ i + (2 * m - 1 : ℕ)) (ha₂ : a ≠ i + (2 * m : ℕ)) :
+    b i * u a = 0 := by
+  classical
+  let s := (topVariables m i).erase a
+  have hs : s.card = m := by
+    dsimp [s]
+    rw [Finset.card_erase_of_mem ha, top_card]
+    omega
+  have hcoeff := inverse_component_top_derivative m hm b u hu s hs
+  have hterm (k : ZMod (2 * m + 1)) :
+      (if s ⊆ topVariables m k then
+        booleanMonomial (topVariables m k \ s) u else 0) =
+      if k = i then u a else 0 := by
+    by_cases hk : k = i
+    · subst k
+      have hsub : s ⊆ topVariables m i := Finset.erase_subset _ _
+      rw [if_pos hsub, if_pos rfl]
+      have hdiff : topVariables m i \ s = {a} := by
+        ext j
+        simp only [Finset.mem_sdiff, Finset.mem_erase, Finset.mem_singleton, s]
+        constructor
+        · rintro ⟨hj, hn⟩
+          by_contra hja
+          exact hn ⟨hja, hj⟩
+        · rintro rfl
+          simp [ha]
+      simp [hdiff, booleanMonomial]
+    · have hsub : ¬s ⊆ topVariables m k :=
+        fun h => hk (interior_deletion_unique m hm i a k ha₁ ha₂ h)
+      simp [hsub, hk]
+  simp_rw [hterm] at hcoeff
+  simpa [mul_ite] using hcoeff
 
 end D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
