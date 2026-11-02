@@ -1,3 +1,11 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/ActualMomentOrderArithmetic
+   generality: I
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/ActualMomentOrderArithmetic
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact scalar order arithmetic and leading-one asymptotic for the original moment ceiling. -/
+
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics

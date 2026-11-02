@@ -1,19 +1,11 @@
-/-
-Source preparation only. Not compiled or admitted.
-Project: 1557f3c2e0078a531049b1d292043e726e7f1e25.
-Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679.
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentArithmetic
+   generality: I
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentArithmetic
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual arithmetic translation and finite-prefix estimates for the full moment certificate. -/
 
-The companion WeightedMangoldtRate source changes visibility of exactly
-rate, weight and chebyshev_tail_bound. Its existing tail proof is reused,
-not reimplemented. The MomentExponentialCoercivity overlay retains the
-historically compiled endpoint statement and body, generalizes its finite
-owner identities to nonzero rates, and adds consumed source-only exports.
-The changed overlay is uncompiled and is not a standalone contribution.
-
-The full original endpoint now has a source proof body. Every new body is
-uncompiled; elaboration and independent signed-J identification remain
-separate obligations. No acceptance or kernel claim is made.
--/
 import D5.S3.Weil.Mertens.WeightedMangoldtRate
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation
 import D5.S3.Analytic.Interpolation.MomentExponentialCoercivity

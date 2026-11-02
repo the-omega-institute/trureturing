@@ -1,5 +1,11 @@
-/- Uncompiled source preparation; internal part of the full original actual-K certificate.
-No standalone helper admission is requested. -/
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture
+   generality: I
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Complete positive mixture logarithmic bound for the actual exponential rates. -/
+
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
 
 set_option autoImplicit false

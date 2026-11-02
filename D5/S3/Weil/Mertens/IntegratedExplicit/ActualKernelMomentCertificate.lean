@@ -1,5 +1,11 @@
-/- Uncompiled source preparation; internal part of the full original actual-K certificate.
-No standalone helper admission is requested. -/
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate
+   generality: I
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Full actual-K endpoint certificate, finite signed expression, and leading-one asymptotic. -/
+
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentPayments
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualMomentOrderArithmetic
 
@@ -61,7 +67,7 @@ private theorem original_order_arithmetic (p : PNTConstants) (D : ℝ) (hD : 0 <
 /-- The original actual-K certificate at exactly the displayed N(D).
 The fixed unconditional pnt witnesses precede every finite atomic family.
 Atomic moments include degree N. No distinctness, nonempty type,
-positive-energy or real-coefficient restriction occurs. SOURCE ONLY. -/
+positive-energy or real-coefficient restriction occurs. -/
 theorem actual_kernel_explicit_leading_one (D : ℝ) (hD : 0 < D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (hm : ∀ r : ℕ, r ≤ order pnt D → ∑ i, a i * (x i : ℂ) ^ r = 0) :
@@ -78,7 +84,7 @@ theorem actual_kernel_explicit_leading_one (D : ℝ) (hD : 0 < D)
 
 /-- Compensation for the explicitly defined finite formula only. Equality
 with an independently defined original signed-J integral is an additional,
-separate obligation and is not assumed or asserted here. SOURCE ONLY. -/
+separate obligation and is not assumed or asserted here. -/
 theorem actual_signed_expression_compensation (D : ℝ) (hD : 0 < D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (hm : ∀ r : ℕ, r ≤ order pnt D → ∑ i, a i * (x i : ℂ) ^ r = 0) :

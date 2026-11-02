@@ -701,7 +701,7 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
       ring
 
 /-- Complete actual-R correlation identity. The finite Mangoldt sum includes
-every upper cutoff and every prime power. This is SOURCE ONLY, uncompiled. -/
+every upper cutoff and every prime power. This is the complete finite-window remainder identity. -/
 theorem actual_remainder_correlation_identity (D : ℝ) (hD : 0 ≤ D)
     (N : ℕ) (hN : Real.exp D < N) (x : I → ℝ) (a : I → ℂ)
     (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (ha : ∑ i, a i = 0) :
