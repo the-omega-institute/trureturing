@@ -3587,3 +3587,226 @@ Finally, every included value has the stated actual population, and every feasib
 All reduced formulas are invariant under the common scalar phase, even at a zero trace or at $w=0$; the proof never divides by $A$, $B$, $P$ or $Q$. The only division in (23.19) is made when $\omega>0$, so $D_\sigma>0$. The realization condition (23.1) retains all boundary diagonals and excludes diagonals not belonging to any actual unitary. The remaining universal assertion is precisely the nonnegativity of these finite expressions over that entire set, modulo its common scalar phase. Neither the restricted-family theorem nor the local limits of Section 22 settle that assertion. Thus the sharp global endpoint remains unresolved, with the established bounds $R_*\le C_{\mathrm{opt}}<135580$ of Sections 20–21. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 24. The exact high-trace cap
+
+This section proves the finite-scale endpoint on the cap which is separated from the
+minus optimizer by the attainable-diagonal constraint.  Put
+
+$$
+A_0=2+\sqrt{\frac83},\qquad \delta_*=4-A_0=2-\sqrt{\frac83}.
+$$
+
+Thus \(0<\delta_*<1/2\).  The constants \(h,c,s,d,e,\kappa\) are exactly those of
+Sections 1, 21 and 23; in particular \(h=1/\sqrt2\), \(d=2h+2c\), \(e=2h+2s\),
+and \(f(\kappa)=0\).
+
+**Lemma 24.1 (two-pair cap estimate).**  Let \(w\in\mathcal W\), let
+\(A=|w_1+w_2+w_3+w_4|\), and assume \(A\ge A_0\).  Write
+\(\delta=4-A\), \(u=|P(w)|\), \(v=|Q(w)|\), and
+
+$$
+u_0=d-h\delta,\qquad V_\delta=2\delta-\frac{\delta^2}{2}.
+$$
+
+Then
+
+$$
+d-c\delta\le u\le u_0,\qquad
+v^2\le V_\delta+2(u_0-u).
+\tag{24.1}
+$$
+
+Proof.  Multiply \(w\) by a common scalar of modulus one so that
+\(w_1+w_2+w_3+w_4=A\ge0\).  Put \(X=w_1+w_2\) and \(Y=w_3+w_4\).  Since
+\(|X|,|Y|\le2\),
+
+$$
+P=c(X+Y)-(c-h)X=hA+(c-h)Y,
+$$
+
+and the reverse and direct triangle inequalities give the first pair of bounds in
+(24.1).
+
+For completeness, the elementary disk calculation that supplies the second bound is
+recorded here.  Write \(w_j=1-a_j+ib_j\), where
+
+$$
+0\le a_j\le2,\quad b_j^2\le2a_j-a_j^2,\quad
+\sum_j a_j=\delta,\quad\sum_j b_j=0.
+\tag{24.2}
+$$
+
+Set \(a=a_1+a_2\), \(t=a_3+a_4\), \(\xi=w_1-w_2\), and
+\(\eta=w_3-w_4\).  Maximizing the quadratic form
+\(\lvert h\xi+is\eta\rvert^2\) under (24.2), first for fixed \(a,t\) and then for
+\(a+t=\delta\), gives
+
+$$
+\lvert h\xi+is\eta\rvert^2
+\le 2\delta-\frac{\delta^2}{2}+2(c-h)t .
+\tag{24.3}
+$$
+
+Here is an exact way to check the maximization.  For each pair put
+\(S_1=w_1+w_2\), \(S_2=w_3+w_4\), \(\Delta_1=w_1-w_2\), and
+\(\Delta_2=w_3-w_4\).  The two disk constraints are exactly
+
+$$
+|S_k|^2+|\Delta_k|^2
++2\bigl|\operatorname{Re}(\overline{S_k}\Delta_k)\bigr|
+\le4\qquad(k=1,2).
+\tag{24.4}
+$$
+
+For fixed \(S_1,S_2\), diagonalizing the resulting real quadratic form in
+\((\operatorname{Re}\Delta_1,\operatorname{Im}\Delta_1,
+\operatorname{Re}\Delta_2,\operatorname{Im}\Delta_2)\) gives
+
+$$
+\max_{\Delta_1,\Delta_2}
+|h\Delta_1+is\Delta_2|^2
+\le 2\delta-\frac{\delta^2}{2}+2(c-h)(2-\operatorname{Re}S_2).
+\tag{24.5}
+$$
+
+The diagonalization uses only \(S_1+S_2=A\), \(0\le\delta<1/2\), and
+\(c^2+s^2=1\), \(c^2-s^2=h\).  Expanding the two constraints in (24.4), resolving
+the real and imaginary components, and completing the two resulting squares gives
+(24.5); the remaining coefficients are \(1-\delta\), \(c-h\), and
+\((h-s)^2\), all strictly positive.  Since \(2-\operatorname{Re}S_2=t\), (24.5)
+is (24.3).
+For reference, the elementary pair bound used in this diagonalization is
+
+$$
+|w_1-w_2|^2\le4a-a^2,\qquad
+|w_3-w_4|^2\le4t-t^2,
+\tag{24.6}
+$$
+
+which follows by applying the parallelogram identity to \(w_j-1\) and using
+\(|w_j-1|^2\le2a_j\).  Finally
+\(u_0-u\ge(c-h)(2-\operatorname{Re}Y)\ge(c-h)t\), again by the reverse triangle
+inequality, so (24.3) implies the second inequality in (24.1).  \(\square\)
+
+**Lemma 24.2 (cap Gram certificate).**  Under the hypotheses of Lemma 24.1, the
+matrix
+
+$$
+M(w)=\begin{pmatrix}
+d^2+2\kappa-u^2&-uv\\
+-uv&e^2-\kappa(2+2\delta)-v^2
+\end{pmatrix}
+\tag{24.6}
+$$
+
+is positive definite.
+
+Proof.  Put \(H=d^2+2\kappa\), \(E_\delta=e^2-\kappa(2+2\delta)\), and
+\(x=u_0-u\).  Lemma 24.1 gives \(0\le x\le(c-h)\delta\) and
+\(v^2\le V_\delta+2x\).  The first principal minor satisfies
+
+$$
+H-u^2\ge H-u_0^2
+=2\kappa+2dh\,\delta-\frac{\delta^2}{2}>0.
+\tag{24.7}
+$$
+
+For the determinant, use the cancellation of the \(u^2v^2\) term:
+
+$$
+\begin{aligned}
+\det M
+&=H E_\delta-E_\delta u^2-Hv^2\\
+&\ge \Phi(\delta)+\bigl(2u_0E_\delta-2H-E_\delta x\bigr)x,
+\end{aligned}
+\tag{24.8}
+$$
+
+where
+
+$$
+\Phi(\delta)=(H-u_0^2)E_\delta-HV_\delta.
+\tag{24.9}
+$$
+
+The elementary bounds \(u_0>3\), \(E_\delta>23/5\), \(H<43/4\), and
+\(x<1/12\) follow from \(0<\delta\le\delta_*\), \(0<\kappa<1/25\), and the exact
+half-angle expressions for \(c,s\).  Hence the coefficient of \(x\) in (24.8) is
+strictly positive.  Expanding (24.9), and using \(f(\kappa)=0\) once, gives the exact
+identity
+
+$$
+\begin{aligned}
+\Phi(\delta)
+={}&2\kappa(e^2-2\kappa)
++2\kappa(e^2-4\kappa-2)\delta\\
+&+\left(\frac{d^2-e^2}{2}+2\kappa-4dh\,\kappa\right)\delta^2
++\kappa\delta^3 .
+\end{aligned}
+\tag{24.10}
+$$
+
+Every coefficient in (24.10) is positive: \(e^2>4\), \(0<\kappa<1/25\), and
+\(d^2-e^2>5\) while \(4dh\,\kappa<1/2\).  Thus \(\det M>0\), proving positive
+definiteness.  \(\square\)
+
+**Theorem 24.3 (the original cap inequality).**  For every \(E\in\operatorname{Dens}_2\)
+and every actual \(U\in U(4)\) whose reduced datum \(w=\operatorname{diag}(UU_+^\dagger)\)
+satisfies
+
+$$
+\lvert w_1+w_2+w_3+w_4\rvert\ge 2+\sqrt{\frac83},
+$$
+
+one has
+
+$$
+g(E,U)\ge\kappa\,\rho(E,U).
+\tag{24.11}
+$$
+
+Proof.  Let \(p\in[0,1]\) be the population supplied by the exact reduction of
+Theorem 23.2.  With \(\delta=4-A\), the two distance branches are
+\(r_+=2(1-p+\delta)\) and \(r_-=8+2p-2B\).  The estimate in the proof of
+Lemma 24.1 gives, directly from (24.4), after the same phase normalization, with
+\(a_j=1-\operatorname{Re}w_j\),
+\(\xi=w_1-w_2\), \(\eta=w_3-w_4\), \(a=a_1+a_2\), and \(t=a_3+a_4\),
+
+$$
+B^2=\lvert \xi+i\eta\rvert^2
+\le2(\lvert\xi\rvert^2+\lvert\eta\rvert^2)
+\le2\bigl((4a-a^2)+(4t-t^2)\bigr)\le8\delta,
+$$
+
+so \(B\le\sqrt{8\delta}\le2\), whereas
+\(A-1\ge1+\sqrt{8/3}>2\).  Hence \(p_0=(1-A+B)/2<0\) and the joint optimizer-sign
+minimum is \(r=r_+\) on the whole interval \(0\le p\le1\).
+
+Using (23.6),
+
+$$
+G-\kappa r_+
+=\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+M(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{24.12}
+$$
+
+Lemma 24.2 makes the right side nonnegative.  Theorem 23.2 transfers this inequality
+back to every positive trace-one effect and to every actual shared feedback lift,
+including singular effects, zero \(P\) or \(Q\), all common scalar phases, and all
+nondiagonal unitaries.  \(\square\)
+
+The cap therefore supplies a genuine finite-scale whole-class result with the exact
+constant \(R_*=\kappa^{-1}\).  The argument uses only the original attainable set
+\(\mathcal W\); it does not replace it by a polydisk or by independent column controls.
+The sharp global question remains the complementary region
+\(A<2+\sqrt{8/3}\), where the sign branches can both be active and where no universal
+finite-scale positivity statement has yet been proved.  The Sections 20--23 bounds and
+the exact criterion (23.22) remain unchanged, and this cap result does not settle or
+reopen either of the separate open issues mentioned there.
+
+
+
+## 追加锚（本行以下为增补区）
