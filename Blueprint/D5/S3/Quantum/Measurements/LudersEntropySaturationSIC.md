@@ -64,6 +64,10 @@ $$\forall \left(d: \mathbb{N}\right), \left(\left(\operatorname{NeZero}\left(d\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/LudersEntropySaturationSIC.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/debrota-stacey-2019-luders-entropy-saturation-sic` (proved) by `D5/S3/Quantum/Measurements/LudersEntropySaturationSIC.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"debrota-stacey-2019-luders-entropy-saturation-sic","declaration_gid":"D5/S3/Quantum/Measurements/LudersEntropySaturationSIC.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* DeBrota, John B.; Stacey, Blake C. (2019). *Lüders channels and the existence of symmetric-informationally-complete measurements*. DOI: [10.1103/PhysRevA.100.062327](https://doi.org/10.1103/PhysRevA.100.062327). URL: <https://arxiv.org/abs/1907.10999v2>.

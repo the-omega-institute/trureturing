@@ -154,7 +154,10 @@ internal sealed class LudersEntropySaturationSICDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "The original MIC is therefore rank one and equiangular. It satisfies IsSIC, "
                         + "and choosing f = e proves the existential conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("debrota-stacey-2019-luders-entropy-saturation-sic"),
+                    ResolutionKind.Proved)))));
 
     private static Formula MicDefinition() => OverEffects(IffOf(LocalCall("IsMIC", X("d"), X("e")),
         And(All("i", Outcomes(), At(Qualified("Matrix", "PosSemidef"), Effect(X("i")))),
