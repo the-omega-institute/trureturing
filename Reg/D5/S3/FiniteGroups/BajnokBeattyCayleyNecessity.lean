@@ -98,4 +98,255 @@ def topStripRegistration :
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+open _root_.D5.S3.FiniteGroups.NearSquareLatticeRigidity
+
+private def sampleMap : Plane →+ Target 1 where
+  toFun z := ((z 0 : ZMod 2), (z 1 : ZMod 2))
+  map_zero' := by simp
+  map_add' z w := by simp
+
+private theorem sampleMap_surjective : Function.Surjective sampleMap := by
+  rintro ⟨a, b⟩
+  refine ⟨![(a.val : ℤ), (b.val : ℤ)], ?_⟩
+  apply Prod.ext <;> simp [sampleMap]
+
+private theorem sampleMap_cover : LeeCovers sampleMap (2 * (1 : ℤ)) := by
+  rintro ⟨a, b⟩
+  fin_cases a <;> fin_cases b
+  · exact ⟨![0, 0], by norm_num, by norm_num [sampleMap] <;> rfl⟩
+  · exact ⟨![0, 1], by norm_num, by norm_num [sampleMap] <;> rfl⟩
+  · exact ⟨![1, 0], by norm_num, by norm_num [sampleMap] <;> rfl⟩
+  · exact ⟨![1, 1], by norm_num, by norm_num [sampleMap] <;> rfl⟩
+
+abbrev kernelSignature : Signature where
+  Params := Unit
+  State _ := Plane
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def kernelActual : Realization kernelSignature := realize kernelSignature
+  (fun _ _ z => z 0) (fun e => nomatch e)
+
+def kernelRejected : Realization kernelSignature := realize kernelSignature
+  (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev kernelArena : Arena where
+  signature := kernelSignature
+  Law R := ∀ {k : ℕ} (f : Plane →+ Target k)
+    (_ : Function.Surjective f) {z : Plane} (_ : f z = 0),
+    2 ∣ R.readout () () z ∧ 2 ∣ z 1
+
+private theorem kernelRejected_law : ¬ kernelArena.Law kernelRejected := by
+  intro h
+  have hh := h sampleMap sampleMap_surjective (z := 0) (map_zero sampleMap)
+  norm_num [kernelRejected, realize] at hh
+
+def kernelSource : Registration kernelArena (type_of% (@kernel_even)) where
+  actual := kernelActual
+  bridge := Iff.rfl
+  variation := ⟨kernel_even, kernelRejected, kernelRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨kernelRejected, ?_, rfl, kernelRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    exact ⟨(), ![0, 0], ![1, 0], by norm_num [kernelActual, realize]⟩
+
+abbrev orderSignature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def orderActual : Realization orderSignature := realize orderSignature
+  (fun _ _ k => 2 * k) (fun e => nomatch e)
+
+def orderRejected : Realization orderSignature := realize orderSignature
+  (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev orderArena : Arena where
+  signature := orderSignature
+  Law R := ∀ {k : ℕ} (_ : 0 < k) (f : Plane →+ Target k)
+    (_ : Function.Surjective f),
+    (oddLattice f).toAddSubgroup.index = R.readout () () k
+
+private theorem orderRejected_law : ¬ orderArena.Law orderRejected := by
+  intro h
+  have hh := h (k := 1) (by decide) sampleMap sampleMap_surjective
+  rw [oddLattice_index (by decide) sampleMap sampleMap_surjective] at hh
+  norm_num [orderRejected, realize] at hh
+
+def orderSource : Registration orderArena (type_of% (@oddLattice_index)) where
+  actual := orderActual
+  bridge := Iff.rfl
+  variation := ⟨oddLattice_index, orderRejected, orderRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨orderRejected, ?_, rfl, orderRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, by norm_num [orderActual, realize]⟩
+
+abbrev squareSignature : Signature where
+  Params := Unit
+  State _ := ℤ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def squareActual : Realization squareSignature := realize squareSignature
+  (fun _ _ t => 2 * t) (fun e => nomatch e)
+
+def squareRejected : Realization squareSignature := realize squareSignature
+  (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev squareArena : Arena where
+  signature := squareSignature
+  Law R := ∀ {k : ℕ} (f : Plane →+ Target k) {t : ℤ}
+    (_ : LeeCovers f (2 * t)),
+    RectangleCovers (oddLattice f) (R.readout () () t) (2 * t)
+
+private theorem squareRejected_law : ¬ squareArena.Law squareRejected := by
+  intro h
+  obtain ⟨x, y, hx, hx', _⟩ := h sampleMap (t := 1) sampleMap_cover (0 : Plane)
+  change x < 0 at hx'
+  omega
+
+def squareSource : Registration squareArena (type_of% (@oddLattice_cover)) where
+  actual := squareActual
+  bridge := Iff.rfl
+  variation := ⟨oddLattice_cover, squareRejected, squareRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨squareRejected, ?_, rfl, squareRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, by norm_num [squareActual, realize]⟩
+
+def kernelRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@kernel_even) (Realization kernelSignature) Unit Unit := {
+  unitName := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.kernel_even.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.kernelSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨kernelArena⟩
+  objectArena := .source ⟨kernelArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source kernelArena ⟨kernelSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize kernelSignature (fun _ _ z => z 0) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","fn","arg","arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def orderRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@oddLattice_index) (Realization orderSignature) Unit Unit := {
+  unitName := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.oddLattice_index.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.orderSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨orderArena⟩
+  objectArena := .source ⟨orderArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source orderArena ⟨orderSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize orderSignature (fun _ _ k => 2 * k) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def squareRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@oddLattice_cover) (Realization squareSignature) Unit Unit := {
+  unitName := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.oddLattice_cover.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.squareSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨squareArena⟩
+  objectArena := .source ⟨squareArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source squareArena ⟨squareSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize squareSignature (fun _ _ t => 2 * t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","fn","arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
