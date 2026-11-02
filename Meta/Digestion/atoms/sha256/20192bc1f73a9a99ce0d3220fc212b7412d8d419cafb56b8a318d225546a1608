@@ -1,0 +1,89 @@
+## 七、Robin 正预算加强到平方根尺度
+
+现在回到原整数 $n$，始终保持
+
+
+<a id="display-93"></a>
+
+$$
+T=\log n,
+\qquad
+R(n)=\frac{\sigma(n)}
+{e^\gamma n\log\log n}.
+$$
+
+
+沿用已经建立的精确分解
+
+
+<a id="display-94"></a><a id="eq-29"></a>
+
+$$
+\boxed{
+-\log R(n)
+=
+\mathcal D(n)+I_\psi(T)+\mathcal B(T),
+\qquad
+\mathcal D(n)\ge0.
+}
+$$
+
+<p align="center" data-equation-number="29"><a href="#eq-29">(29)</a></p>
+
+
+其中
+
+
+<a id="display-95"></a>
+
+$$
+I_\psi(T)
+=
+\frac{\psi(T)-T}{T\log T}
++\gamma+\log\log T
+-\sum_{p^j\le T}\frac1{jp^j},
+$$
+
+
+而
+
+
+<a id="display-96"></a>
+
+$$
+\mathcal B(T)=\sum_p\mathcal B_p(T),
+$$
+
+
+
+<a id="display-97"></a>
+
+$$
+\mathcal B_p(T)
+=
+\sum_{j\ge1}
+\left[
+\min(z_p,\lambda_{p,j})
+-\min(z_p,\nu_{p,j})
+\right],
+$$
+
+
+
+<a id="display-98"></a>
+
+$$
+z_p=\frac{\log p}{T\log T},
+\quad
+\lambda_{p,j}
+=
+\log\frac{1-p^{-j-1}}{1-p^{-j}},
+\quad
+\nu_{p,j}=\frac1{jp^j}.
+$$
+
+
+各 $\mathcal B_p(T)\ge0$，并且 $p\ge T$ 时为零。全部素数层仍然保留在定义中。
+
+项目的[严格 Euler 层根尺度修正](https://github.com/the-omega-institute/trureturing/blob/08e8767227de53351c42cb35028e01de5e88287d/Blueprint/D5/S3/Arith/Robin/EulerLayerRootCorrection.md)已经建立了保留全部指数层的根尺度结构。下面进一步给出一个完全初等、带明确阈值的预算下界。
+

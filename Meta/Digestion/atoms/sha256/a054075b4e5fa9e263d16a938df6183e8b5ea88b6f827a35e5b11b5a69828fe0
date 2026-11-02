@@ -1,0 +1,17 @@
+### 定理 3：显式平方根尺度正预算
+
+
+<a id="display-99"></a><a id="eq-30"></a>
+
+$$
+\boxed{
+T\ge2^{19}
+\quad\Longrightarrow\quad
+\mathcal B(T)>
+\frac{\log2}{64\sqrt2\,\sqrt T\log T}.
+}
+$$
+
+<p align="center" data-equation-number="30"><a href="#eq-30">(30)</a></p>
+
+
