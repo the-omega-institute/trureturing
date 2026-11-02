@@ -433,7 +433,7 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
           exact Option.some.inj hg
         have hx : edited (cutTerm b (.mul l r) I) (.split []) =
             .mul (.of false) (.of true) := by rw [hp]; rfl
-        rw [hx, cutTerm, if_pos (Set.mem_insert_self (.split []) I),
+        rw [hx, cutTerm, if_pos (show Call.split [] ∈ insert (Call.split []) I from Or.inl rfl),
           section_insert_root I false (.split []) rfl,
           section_insert_root I true (.split []) rfl]
         simpa only [Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte] using
@@ -456,7 +456,9 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
           have hi' := il false (sectionAt I [false]) hc.1 hi d hmem hguard
           have hs' : Call.split [] ∈ insert (d.shift [false]) I := Or.inr hs
           simp only [cutTerm, hs, hs', ↓reduceIte]
-          rw [section_insert_same, section_insert_other I true d]
+          have ho : sectionAt (insert (d.shift [false]) I) [true] = sectionAt I [true] := by
+            simpa only [Bool.not_true] using section_insert_other I true d
+          rw [section_insert_same, ho]
           cases d <;> simpa [edited, kind, replacement, address, Call.shift, replace] using
             congrArg (fun x => FreeMagma.mul x (cutTerm true r (sectionAt I [true]))) hi'
         · have hguard : Guard d (cutTerm true r (sectionAt I [true])) := by
@@ -464,7 +466,9 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
           have hi' := ir true (sectionAt I [true]) hc.2 hi d hmem hguard
           have hs' : Call.split [] ∈ insert (d.shift [true]) I := Or.inr hs
           simp only [cutTerm, hs, hs', ↓reduceIte]
-          rw [section_insert_other I false d, section_insert_same]
+          have ho : sectionAt (insert (d.shift [true]) I) [false] = sectionAt I [false] := by
+            simpa only [Bool.not_false] using section_insert_other I false d
+          rw [ho, section_insert_same]
           cases d <;> simpa [edited, kind, replacement, address, Call.shift, replace] using
             congrArg (fun x => FreeMagma.mul (cutTerm false l (sectionAt I [false])) x) hi'
       cases e with
