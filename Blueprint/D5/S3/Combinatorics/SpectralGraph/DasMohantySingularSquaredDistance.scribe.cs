@@ -122,14 +122,19 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
                 + "positive index N-s-1. Multiset inclusion and equal cardinality give exact "
                 + "equality, excluding every extra positive root or extra multiplicity. "
                 + "No inverse of singular delta, additional matrix identity, genericity "
-                + "condition or spectral-transfer premise is assumed."))));
+                + "condition or spectral-transfer premise is assumed.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("das-mohanty-singular-squared-distance-laplacian"),
+                    ResolutionKind.Proved)))));
 
-    private static DocumentBlock Entry(string name, string title, Formula? formula, string prose) =>
+    private static DocumentBlock Entry(string name, string title, Formula? formula, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("das-mohanty-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Owner + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            openProblemResolutionClaim: resolution);
 
     private static DocumentBlock SourceDefinition(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("das-mohanty-source-" + name.ToLowerInvariant()),
