@@ -1,0 +1,30 @@
+#### 命题 15.2（非正交态没有无扰经典地址读口）
+
+若完整等距满足
+
+$$
+V|\psi\rangle =|\psi\rangle \otimes|R_\psi\rangle ,\qquad
+V|\phi\rangle =|\phi\rangle \otimes|R_\phi\rangle ,
+$$
+
+其中输入及记录都归一，且 $\langle \psi,\phi\rangle \ne0$，
+则 $R_\psi=R_\phi$。
+
+**证明。**
+
+保持内积给
+
+$$
+\langle \psi,\phi\rangle
+=\langle \psi,\phi\rangle \,\langle R_\psi,R_\phi\rangle .
+$$
+
+故记录内积为 $1$，两个单位记录相同。
+
+□
+
+因此内容等价类不是一个自动可读取、可区别任意非正交未知态的经典散列。
+已知制备程序的经典标签，与未知态本身可无扰输出什么标签，是两件不同的事。
+
+<a id="statement-15-3"></a>
+

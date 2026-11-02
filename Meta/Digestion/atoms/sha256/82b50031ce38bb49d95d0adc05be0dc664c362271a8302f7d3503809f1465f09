@@ -1,0 +1,49 @@
+#### 定理 10.1（共同幅度的完整预算判据）
+
+给定输出单位方向 $s_0$ 及 $t\ge0$。
+存在同一收缩满足 $Mx_j=\sqrt t\,s_0$，当且仅当
+
+<a id="eq-budget"></a>
+
+$$
+\boxed{
+G-t\mathbf1\mathbf1^*\succeq0.
+}\tag{10.1}
+$$
+
+等价地，对全部复系数 $c$，
+
+<a id="eq-coherentbudget"></a>
+
+$$
+\boxed{
+t\left|\sum_jc_j\right|^2
+\le\left\lVert \sum_jc_jx_j\right\rVert ^2.
+}\tag{10.2}
+$$
+
+这又等价于 $`0\le t\le t_*`$。
+
+**证明。**
+
+收缩作用于每个相干组合，直接给式[(10.2)](#eq-coherentbudget)；
+矩阵二次型展开给式[(10.1)](#eq-budget)。
+反向，在 $L=\operatorname{ran}  X$ 上定义
+
+$$
+M(Xc)=\sqrt t\,s_0(\mathbf1^*c).
+$$
+
+若 $Xc=0$，不等式使右边为零，故定义与表达式无关；
+同一个不等式使该映射为收缩。
+在 $L^\perp$ 上取零即可延拓。
+最优强度及缩放最优分支给最后的区间刻画。
+
+□
+
+此判据是既有核支配定理的秩一常数核特化，
+也在一般概率纯态变换的 Gram 框架内[6](#ref-closure)、[5](#ref-foundations)、[11](#ref-cjw)。
+本稿的显式求解如下。
+
+<a id="statement-10-2"></a>
+
