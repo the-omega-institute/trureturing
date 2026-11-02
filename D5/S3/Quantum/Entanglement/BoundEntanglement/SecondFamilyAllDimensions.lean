@@ -9,7 +9,8 @@
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.Permutation
 
-/-! The cyclic construction and its defining certificate. -/
+/-! Cyclic shifts give difference labels, while sum-indexed shield vectors supply the
+partial-transpose certificate. -/
 
 set_option autoImplicit false
 open scoped BigOperators
@@ -113,11 +114,11 @@ private theorem cyclic_shift_factor (d : ℕ) (h : 2 ≤ d) (i j k : Fin d) :
   · intro hk
     apply (ZMod.finEquiv d).injective
     have hsum := hs.symm.trans (congrArg (ZMod.finEquiv d) hk)
-    exact ((eq_sub_iff_add_eq).2 (by simpa only [add_comm] using hsum)).trans hm.symm
+    exact ((eq_sub_iff_add_eq).2 ((add_comm _ _).trans hsum)).trans hm.symm
   · intro hk
     apply (ZMod.finEquiv d).injective
     have hsub := (congrArg (ZMod.finEquiv d) hk).trans hm
-    exact hs.trans (by simpa only [add_comm] using (eq_sub_iff_add_eq.1 hsub))
+    exact hs.trans ((add_comm _ _).trans (eq_sub_iff_add_eq.1 hsub))
 
 private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
     (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by
@@ -240,9 +241,6 @@ theorem result : claim := by
   intro d hd
   exact ⟨cyclicQ d, cyclicQbar d, cyclicMu d, cyclicS d, cyclicShield d,
     cyclic_data d hd⟩
-
-
-
 
 end
 end D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
