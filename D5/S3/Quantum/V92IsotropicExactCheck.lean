@@ -7,6 +7,8 @@ import D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
 
 open Matrix
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
+open D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
+  (bell_pure_state_has_maximally_mixed_marginal)
 open scoped BigOperators ComplexOrder Kronecker
 
 noncomputable section
@@ -40,7 +42,9 @@ private theorem chi_psd (η : M2) (hη : η.PosSemidef) : (chi η).PosSemidef :=
   exact (hη.mul_mul_conjTranspose_same (V b)).smul (by norm_num : (0:ℝ) ≤ 1/2)
 
 private theorem sqrt_two_sq : (Real.sqrt 2 : ℂ)^2 = 2 := by
-  exact D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_sq
+  have h := congrArg (fun z : ℂ => z⁻¹)
+    D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
+  simpa [mul_inv, pow_two] using h
 private theorem sqrt_three_sq : (Real.sqrt 3 : ℂ)^2 = 3 := by
   norm_cast
   exact Real.sq_sqrt (by norm_num)
@@ -67,7 +71,7 @@ private theorem source_marginals (a : ℝ) (c : ℂ) :
       Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_two, Fintype.sum_prod_type, Matrix.one_apply, hc] <;>
     push_cast <;> field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_two_sq, sqrt_three_sq, map_ofNat] <;> ring
 
 #print axioms source_marginals
 
@@ -182,7 +186,7 @@ private theorem orthoblocks (b c : Q) : (V b)ᴴ * V c = if b=c then 1 else 0 :=
     simp [V, g, h, f, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fintype.sum_prod_type, Fin.sum_univ_two] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_two_sq, sqrt_three_sq, map_ofNat] <;> ring
 
 set_option maxHeartbeats 2000000 in
 private theorem projection_blocks (b : Q) :
@@ -196,7 +200,7 @@ private theorem projection_blocks (b : Q) :
     norm_num [PiL, PiR, PL, PR, bell_entries, V, g, h, f,
       Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_two_sq, sqrt_three_sq, map_ofNat] <;> ring
 
 set_option maxHeartbeats 2000000 in
 private theorem common_kernel : PiL * kernel = 0 ∧ PiR * kernel = 0 := by
@@ -209,7 +213,7 @@ private theorem common_kernel : PiL * kernel = 0 ∧ PiR * kernel = 0 := by
       Matrix.mul_apply, Matrix.vecMulVec_apply, Fintype.sum_prod_type,
       Fin.sum_univ_succ] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_three_sq, map_ofNat] <;> ring
 
 set_option maxHeartbeats 2000000 in
 private theorem source_tau0 :
@@ -223,7 +227,7 @@ private theorem source_tau0 :
       Matrix.mul_apply, Matrix.vecMulVec_apply, Fintype.sum_prod_type,
       Fin.sum_univ_succ, Complex.real_smul] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_three_sq, map_ofNat] <;> ring
 
 set_option maxHeartbeats 2000000 in
 private theorem support_kernel : support + kernel = 1 := by
@@ -238,7 +242,7 @@ private theorem support_kernel : support + kernel = 1 := by
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.vecMulVec_apply,
       Fin.sum_univ_succ] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_two_sq, sqrt_three_sq, map_ofNat] <;> ring
 
 private theorem compression_trace (ρ : M8) :
     Matrix.trace (compression ρ) = Matrix.trace (ρ * support) := by
@@ -266,13 +270,12 @@ private theorem compression_readouts (ρ : M8) :
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.vecMulVec_apply,
       Matrix.trace, Fintype.sum_prod_type, Fin.sum_univ_two] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_two_sq, sqrt_three_sq, map_ofNat] <;> ring
 
 private theorem sigma_bell_readout (v : ℝ) :
     Matrix.trace (sigma v * bell) = (((1+3*v)/4 : ℝ) : ℂ) := by
   have hi : bell * bell = bell :=
-    D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal.
-      bell_pure_state_has_maximally_mixed_marginal.2.2.2.2.1
+    bell_pure_state_has_maximally_mixed_marginal.2.2.2.2.1
   have ht : Matrix.trace bell = 1 :=
     D5.S3.QuantumBounds.CHSHWitness.bell_density_is_state.2
   simp only [sigma, add_mul, Matrix.smul_mul, one_mul,
@@ -297,7 +300,7 @@ private theorem kernel_marginals :
       D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self,
       Fin.sum_univ_succ] <;>
     field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+    norm_num [sqrt_two_sq, sqrt_three_sq, map_ofNat] <;> ring
 
 private theorem marginal_linear (a b : ℝ) (ρ σ : M8) :
     ab (a • ρ + b • σ) = a • ab ρ + b • ab σ ∧
@@ -381,10 +384,11 @@ private theorem hull_necessity (p : ℝ × ℝ) (hp : Compatible p) :
   have htreal : Matrix.trace M = (t : ℂ) := by
     apply Complex.ext
     · rfl
-    · simpa using (Complex.nonneg_iff.mp hM.trace_nonneg).2
+    · simpa using (Complex.nonneg_iff.mp hM.trace_nonneg).2.symm
   have ht0 : 0 ≤ t := (Complex.nonneg_iff.mp hM.trace_nonneg).1
   have ht1 : t ≤ 1 := by
     have hk := RHLinalg.trace_mul_nonneg_of_posSemidef hρ kernel_psd
+    change 0 ≤ (Matrix.trace (ρ * kernel)).re at hk
     have he : Matrix.trace (ρ * support) + Matrix.trace (ρ * kernel) = 1 := by
       rw [← Matrix.trace_add, ← Matrix.mul_add, support_kernel, mul_one, htr]
     have her := congrArg Complex.re he
@@ -436,13 +440,19 @@ private theorem hull_necessity (p : ℝ × ℝ) (hp : Compatible p) :
       norm_num [rightReadout, blochMatrix, Complex.mul_re, Complex.div_re]
       ring
     have hscaleL : (N 0 0).re = (M 0 0).re/t := by
-      simp [N, Matrix.smul_apply, Complex.real_smul, div_eq_mul_inv, mul_comm]
+      change RCLike.re ((1/t : ℝ) • M 0 0) = (M 0 0).re/t
+      rw [RCLike.smul_re]
+      change (1/t) * (M 0 0).re = (M 0 0).re/t
+      ring
     have hrlin : rightReadout N = (1/t : ℝ) • rightReadout M := by
       simp only [N, rightReadout, Matrix.smul_apply, Complex.real_smul]
       ring
     have hscaleR : (rightReadout N).re = (rightReadout M).re/t := by
       rw [hrlin]
-      simp [Complex.real_smul, div_eq_mul_inv, mul_comm]
+      change RCLike.re ((1/t : ℝ) • rightReadout M) = (rightReadout M).re/t
+      rw [RCLike.smul_re]
+      change (1/t) * (rightReadout M).re = (rightReadout M).re/t
+      ring
     have hL := congrArg Complex.re hread.1
     have hR := congrArg Complex.re hread.2
     simp only [Complex.ofReal_re] at hL hR
@@ -503,7 +513,6 @@ private theorem hull_nonnegative (v w : ℝ) (hv : 0 ≤ v) (hw : 0 ≤ w)
       ring
     · intro a p
       dsimp
-      simp only [smul_eq_mul]
       ring
   have hsub : insert pminus ellipse ⊆ H := by
     intro q hq
