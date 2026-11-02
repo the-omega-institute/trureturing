@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 
 /-! DeBrota--Stacey's saturation implication for Lüders MIC channels. -/
 
@@ -102,7 +103,12 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
 private theorem rank_one_forcing {d : ℕ}
     (a : Matrix (Fin d) (Fin d) ℂ) (ha : a.PosSemidef) :
     (a.trace.re) ^ 2 ≥ (a * a).trace.re := by
-  sorry
+  let h : HermitianMat (Fin d) ℂ := ⟨a, ha.isHermitian⟩
+  have hh : 0 ≤ h := HermitianMat.zero_le_iff.mpr ha
+  have hi := HermitianMat.inner_le_mul_trace hh hh
+  rw [HermitianMat.inner_eq_re_trace, HermitianMat.trace_eq_re_trace] at hi
+  change (a * a).trace.re ≤ a.trace.re * a.trace.re at hi
+  simpa [pow_two] using hi
 
 private theorem rank_one_from_equality {d : ℕ}
     (a : Matrix (Fin d) (Fin d) ℂ) (ha : a.PosSemidef) (ha0 : a ≠ 0)
@@ -168,11 +174,11 @@ def claim : Prop :=
     ∃ f : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ, IsSIC d f
 
 private theorem route_result_from
-    (hstate : ∀ {d : ℕ} [NeZero d]
+    (_hstate : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
       (u : Matrix.unitaryGroup (Fin d) ℂ), IsMIC d e →
       (ludersState e u).1 = ludersChannel e (inputProjector u))
-    (hgap : ∀ {d : ℕ} [NeZero d]
+    (_hgap : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
       (u : Matrix.unitaryGroup (Fin d) ℂ), IsMIC d e →
       Real.log (d + 1) - 2 / (d + 1) * Real.log 2 -
@@ -180,17 +186,16 @@ private theorem route_result_from
         quantumRelativeEntropy (ludersState e u) (sigmaState u) +
           ((Matrix.trace (inputProjector u * ludersChannel e (inputProjector u))).re -
             2 / (d + 1)) * Real.log 2)
-    (hmoment : ∀ {d : ℕ} [NeZero d]
+    (_hmoment : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ),
       (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
-          (Matrix.trace (inputProjector u * ludersChannel e (inputProjector u))).re ∂
-            (Measure.haarMeasure
+          (Matrix.trace (inputProjector u * ludersChannel e (inputProjector u))).re ∂(Measure.haarMeasure
               (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
         ((∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2) + d) /
           (d * (d + 1)))
-    (hforce : ∀ {d : ℕ} (a : Matrix (Fin d) (Fin d) ℂ), a.PosSemidef →
+    (_hforce : ∀ {d : ℕ} (a : Matrix (Fin d) (Fin d) ℂ), a.PosSemidef →
       (a.trace.re) ^ 2 ≥ (a * a).trace.re)
-    (hequality : ∀ {d : ℕ} (a : Matrix (Fin d) (Fin d) ℂ), a.PosSemidef →
+    (_hequality : ∀ {d : ℕ} (a : Matrix (Fin d) (Fin d) ℂ), a.PosSemidef →
       a ≠ 0 → (a.trace.re) ^ 2 = (a * a).trace.re →
       ∃ c : ℝ, ∃ p : Matrix (Fin d) (Fin d) ℂ,
         p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ a = (c : ℂ) • p)
@@ -199,13 +204,13 @@ private theorem route_result_from
       typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
       ∀ i, ∃ c : ℝ, ∃ p : Matrix (Fin d) (Fin d) ℂ,
         p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ e i = (c : ℂ) • p)
-    (hae : ∀ {d : ℕ} [NeZero d]
+    (_hae : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
       typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
       ∀ᵐ u ∂(Measure.haarMeasure
         (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))),
         ludersChannel e (inputProjector u) = (sigmaState u).1)
-    (hevery : ∀ {d : ℕ} [NeZero d]
+    (_hevery : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
       typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
       ∀ u : Matrix.unitaryGroup (Fin d) ℂ,
