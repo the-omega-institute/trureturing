@@ -144,7 +144,41 @@ private theorem index_bounds
     (∀ i, t + 2 ≤ b i - a i) ∧
       b ⟨0, by omega⟩ - a (⟨μ - 1, by omega⟩) = t ∧
       (∀ i : Fin μ, 0 < i.val → t + 2 ≤ b i - a (Fin.rev i)) := by
-  sorry
+  dsimp only
+  let z : Fin μ := ⟨0, by omega⟩
+  let u : Fin μ := ⟨1, by omega⟩
+  let v : Fin μ := ⟨μ - 1, by omega⟩
+  have hazu := ha (show z < u by change 0 < 1; omega)
+  have hauv := ha (show u < v by change 1 < μ - 1; omega)
+  have hbzu := hb (show z < u by change 0 < 1; omega)
+  have hbuv := hb (show u < v by change 1 < μ - 1; omega)
+  have hbase := hcross v z
+  change (∀ i, b z - a v + 2 ≤ b i - a i) ∧ _ ∧ _
+  refine ⟨?_, rfl, ?_⟩
+  · intro i
+    by_cases hiz : i = z
+    · subst i
+      omega
+    by_cases hiv : i = v
+    · subst i
+      omega
+    have hbi := hb (show z < i by
+      change 0 < i.val
+      have : i.val ≠ 0 := fun h => hiz (Fin.ext h)
+      omega)
+    have hai := ha (show i < v by
+      change i.val < μ - 1
+      have : i.val ≠ μ - 1 := fun h => hiv (Fin.ext h)
+      omega)
+    omega
+  · intro i hi
+    have hbi := hb (show z < i from hi)
+    have hai := ha (show Fin.rev i < v by
+      change (Fin.rev i).val < μ - 1
+      simp only [Fin.val_rev]
+      omega)
+    change b z - a v + 2 ≤ b i - a (Fin.rev i)
+    omega
 
 private theorem low_end
     (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
@@ -173,7 +207,65 @@ private theorem palindrome_contradiction
     (hbelow : ∀ n, n < r → p.coeff n = 0) (hcpos : 0 < c)
     (hgap : r + 1 < d - 1) (hc : c + 1 ≠ c)
     (hpal : IsAlmostPalindromic p) : False := by
-  sorry
+  let l := p.support.sort (· ≤ ·)
+  have hsorted : l.SortedLT := p.support.sortedLT_sort
+  have hmem (n : ℕ) : n ∈ l ↔ p.coeff n ≠ 0 := by
+    simp [l]
+  have hr : r ∈ l := (hmem r).2 (by rw [hfirst.1]; norm_num)
+  have hs : r + 1 ∈ l := (hmem (r + 1)).2 (by rw [hfirst.2]; positivity)
+  have ht : d - 1 ∈ l := (hmem (d - 1)).2 (by
+    rw [hlast.2.2]
+    exact_mod_cast hcpos.ne')
+  have hd : d ∈ l := (hmem d).2 (by rw [hlast.2.1]; norm_num)
+  have hb (n : ℕ) (hn : n ∈ l) : r ≤ n ∧ n ≤ d := by
+    refine ⟨?_, ?_⟩
+    · by_contra h
+      exact (hmem n).1 hn (hbelow n (by omega))
+    · rw [← hlast.1]
+      exact le_natDegree_of_ne_zero ((hmem n).1 hn)
+  obtain ⟨ir, hir, her⟩ := List.mem_iff_getElem.1 hr
+  obtain ⟨is, his, hes⟩ := List.mem_iff_getElem.1 hs
+  obtain ⟨it, hit, het⟩ := List.mem_iff_getElem.1 ht
+  obtain ⟨id, hid, hed⟩ := List.mem_iff_getElem.1 hd
+  have hn : 0 < l.length := by omega
+  have hz : l[0] = r := by
+    have hle := hsorted.sortedLE.getElem_le_getElem_of_le
+      (hi := hn) (hj := hir) (Nat.zero_le ir)
+    have hge := (hb l[0] (List.getElem_mem hn)).1
+    omega
+  have hspos : 0 < is := by
+    have hlt : l[0] < l[is] := by omega
+    exact hsorted.getElem_lt_getElem_iff.1 hlt
+  have hn2 : 1 < l.length := by omega
+  have hsecond : l[1] = r + 1 := by
+    have hlt := hsorted.getElem_lt_getElem_of_lt (hi := hn) (hj := hn2) (by omega : 0 < 1)
+    have hle := hsorted.sortedLE.getElem_le_getElem_of_le
+      (hi := hn2) (hj := his) (by omega : 1 ≤ is)
+    omega
+  have htop : l[l.length - 1] = d := by
+    have hle := hsorted.sortedLE.getElem_le_getElem_of_le (hi := hid)
+      (hj := (by omega : l.length - 1 < l.length)) (by omega : id ≤ l.length - 1)
+    have hge := (hb l[l.length - 1] (List.getElem_mem (by omega))).2
+    omega
+  have htlt : it < l.length - 1 := by
+    apply hsorted.getElem_lt_getElem_iff.1
+    omega
+  have hpenult : l[l.length - 2] = d - 1 := by
+    have hle := hsorted.sortedLE.getElem_le_getElem_of_le (hi := hit)
+      (hj := (by omega : l.length - 2 < l.length)) (by omega : it ≤ l.length - 2)
+    have hlt := hsorted.getElem_lt_getElem_of_lt
+      (hi := (by omega : l.length - 2 < l.length))
+      (hj := (by omega : l.length - 1 < l.length)) (by omega : l.length - 2 < l.length - 1)
+    omega
+  change (l.map p.coeff).reverse = l.map p.coeff at hpal
+  have heq := congrArg (fun xs : List ℤ => xs[1]?) hpal
+  have hidx : l.length - 1 - 1 = l.length - 2 := by omega
+  rw [List.getElem?_reverse (l := l.map p.coeff) (i := 1) (by simpa using hn2)] at heq
+  simp only [List.length_map, hidx,
+    List.getElem?_map, List.getElem?_eq_getElem (by omega : l.length - 2 < l.length),
+    List.getElem?_eq_getElem hn2, Option.map_some, hpenult, hsecond,
+    hlast.2.2, hfirst.2, Option.some.injEq] at heq
+  exact hc (by exact_mod_cast heq.symm)
 
 theorem result : claim := by
   intro μ a b hμ ha hb hcross
