@@ -39,6 +39,7 @@ internal sealed class BinaryWordNearPairsDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Definition(string selector, string title, string prose) =>
         Describe.Lean(DescribeId.Create(selector.Replace('.', '-').ToLowerInvariant()),
-            DeclarationHandle.Create(Owner + selector), H(title), StatementSource.WithoutFormula(),
+            DeclarationHandle.Create(Owner + selector[(selector.LastIndexOf('.') + 1)..]),
+            H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }
