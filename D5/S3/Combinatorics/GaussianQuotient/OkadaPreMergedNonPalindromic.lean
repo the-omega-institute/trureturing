@@ -7,6 +7,7 @@
    digest: Width-three pre-merged Gaussian determinants are not almost palindromic. -/
 
 import D5.S3.Combinatorics.CylindricPartition.LiUncuGaussian
+import Mathlib.Algebra.Order.Monovary
 
 /-! Okada's width-three pre-merged determinant conjecture. -/
 
@@ -34,7 +35,7 @@ private theorem gauss_coeff_zero (n k : ℕ) (hkn : k ≤ n) :
     (gauss n k).coeff 0 = 1 := by
   induction n generalizing k with
   | zero =>
-      have : k = 0 := by omega
+      have : k = 0 := Nat.eq_zero_of_le_zero hkn
       subst k
       simp [gauss]
   | succ n ih =>
@@ -90,7 +91,7 @@ private theorem factorial_identity
     gauss n k * qFactorial k * qFactorial (n - k) = qFactorial n := by
   induction n generalizing k with
   | zero =>
-      have hk : k = 0 := by omega
+      have hk : k = 0 := Nat.eq_zero_of_le_zero hkn
       subst hk
       simp [qFactorial, gauss]
   | succ n ih =>
@@ -106,7 +107,7 @@ private theorem factorial_identity
         simp [qFactorial]
       have hkn'' : k ≤ n := by omega
       have hkpos : 0 < k := by omega
-      have hsub : n + 1 - k = n - k + 1 := by omega
+      have hsub : n + 1 - k = n - k + 1 := Nat.succ_sub hkn''
       have hhook :
           (1 - X ^ (n + 1 - k)) * gauss (n + 1) k =
             (1 - X ^ (n + 1)) * gauss n k := by
@@ -118,7 +119,7 @@ private theorem factorial_identity
             (qFactorial (n - k) * (1 - X ^ (n - k + 1))) =
             qFactorial k * qFactorial (n - k) *
               ((1 - X ^ (n + 1 - k)) * gauss (n + 1) k) := by
-          rw [show n + 1 - k = (n - k) + 1 by omega, pow_succ]
+          rw [hsub, pow_succ]
           ring
         _ = qFactorial k * qFactorial (n - k) *
               ((1 - X ^ (n + 1)) * gauss n k) := by rw [hhook]
@@ -297,7 +298,7 @@ private theorem low_end
       φ (qFactorial t) * φ (qFactorial (t + 2)) ^ (μ - 1) := by
     rw [map_prod, ← Finset.mul_prod_erase Finset.univ
       (fun i => φ (qFactorial (b i - a (Fin.rev i)))) (by simp : z ∈ Finset.univ)]
-    have hzrev : Fin.rev z = v := by ext; simp [z, v]
+    have hzrev : Fin.rev z = v := Fin.ext (Fin.val_rev z)
     rw [hzrev]
     change φ (qFactorial t) * _ = _
     congr 1
@@ -328,7 +329,7 @@ private theorem low_end
     apply hu.mul_right_cancel
     have hpow : φ (qFactorial (t + 2)) ^ μ =
         φ (qFactorial (t + 2)) ^ (μ - 1) * φ (qFactorial (t + 2)) := by
-      conv_lhs => rw [show μ = (μ - 1) + 1 by omega, pow_succ]
+      exact (pow_sub_one_mul (by omega : μ ≠ 0) _).symm
     rw [hpow, hq] at hf
     dsimp [a0, b0, u]
     rw [map_mul, hq]
@@ -372,7 +373,7 @@ private theorem gaussian_shape (n k : ℕ) (hk : k ≤ n) :
       (gauss n k).reverse = gauss n k := by
   induction n generalizing k with
   | zero =>
-      have : k = 0 := by omega
+      have : k = 0 := Nat.eq_zero_of_le_zero hk
       subst k
       simp [gauss, reverse]
   | succ n ih =>
@@ -385,9 +386,11 @@ private theorem gaussian_shape (n k : ℕ) (hk : k ≤ n) :
           have hk1 : k + 1 ≤ n := by omega
           obtain ⟨hm1, hd1, hr1⟩ := ih (k + 1) hk1
           obtain ⟨hm2, hd2, hr2⟩ := ih k (by omega)
-          have hsub : n + 1 - (k + 1) = n - k := by omega
+          have hsub : n + 1 - (k + 1) = n - k := Nat.add_sub_add_right n 1 k
           have he1 : (k + 1) * (n - k) = k + 1 + (k + 1) * (n - (k + 1)) := by
-            have : n - k = (n - (k + 1)) + 1 := by omega
+            have : n - k = (n - (k + 1)) + 1 := by
+              simpa only [Nat.sub_sub] using
+                (Nat.sub_add_cancel (by omega : 1 ≤ n - k)).symm
             rw [this]
             ring
           have he2 : (k + 1) * (n - k) = (n - k) + k * (n - k) := by ring
@@ -427,11 +430,10 @@ private theorem gaussian_product_shape
   have hshape (i : Fin μ) := gaussian_shape (b i) (a i) (hab i)
   have hprod (s : Finset (Fin μ)) :
       (∏ i ∈ s, gauss (b i) (a i)).reverse = ∏ i ∈ s, gauss (b i) (a i) := by
-    classical
-    induction s using Finset.induction_on with
-    | empty => simp [reverse]
-    | @insert i s hi ih =>
-        rw [Finset.prod_insert hi, reverse_mul_of_domain, (hshape i).2.2, ih]
+    exact Finset.prod_induction (fun i => gauss (b i) (a i))
+      (fun p => p.reverse = p)
+      (fun p q hp hq => by rw [reverse_mul_of_domain, hp, hq])
+      (by simp [reverse]) (fun i _ => (hshape i).2.2)
   refine ⟨monic_prod_of_monic _ _ (fun i _ => (hshape i).1), ?_, hprod Finset.univ⟩
   rw [natDegree_prod_of_monic _ _ (fun i _ => (hshape i).1)]
   exact Finset.sum_congr rfl (fun i _ => (hshape i).2.1)
@@ -469,13 +471,11 @@ private theorem reversed_degree_gap
     ((b i : ℤ) - (b (Fin.rev i) : ℤ))
   have hnonneg (i : Fin μ) : 0 ≤ f i := by
     dsimp [f]
-    rcases le_total i (Fin.rev i) with hi | hi
-    · have hai : (a i : ℤ) ≤ a (Fin.rev i) := by exact_mod_cast ha.monotone hi
-      have hbi : (b i : ℤ) ≤ b (Fin.rev i) := by exact_mod_cast hb.monotone hi
-      exact mul_nonneg_of_nonpos_of_nonpos (by omega) (by omega)
-    · have hai : (a (Fin.rev i) : ℤ) ≤ a i := by exact_mod_cast ha.monotone hi
-      have hbi : (b (Fin.rev i) : ℤ) ≤ b i := by exact_mod_cast hb.monotone hi
-      exact mul_nonneg (by omega) (by omega)
+    have hma : Monotone (fun i => (a i : ℤ)) :=
+      fun i j h => Int.ofNat_le.mpr (ha.monotone h)
+    have hmb : Monotone (fun i => (b i : ℤ)) :=
+      fun i j h => Int.ofNat_le.mpr (hb.monotone h)
+    exact (hma.monovary hmb).sub_mul_sub_nonneg (Fin.rev i) i
   have hsum : ∑ i, f i = 2 * (u - v) := by
     have hperm : (∑ i, (a (Fin.rev i) : ℤ) * (b (Fin.rev i) : ℤ)) = u :=
       Equiv.sum_comp Fin.revPerm (fun i => (a i : ℤ) * (b i : ℤ))
@@ -497,7 +497,7 @@ private theorem reversed_degree_gap
   have hbzj : (b z : ℤ) < b j := by exact_mod_cast hb (show z < j from Nat.zero_lt_one)
   have hbjk : (b j : ℤ) < b k := by
     exact_mod_cast hb (show j < k by change 1 < μ - 1; omega)
-  have hzrev : Fin.rev z = k := by ext; simp [z, k]
+  have hzrev : Fin.rev z = k := Fin.ext (Fin.val_rev z)
   have hfour : 4 ≤ f z := by
     dsimp [f]
     rw [hzrev]
@@ -621,7 +621,7 @@ private theorem palindrome_contradiction
     omega
   change (l.map p.coeff).reverse = l.map p.coeff at hpal
   have heq := congrArg (fun xs : List ℤ => xs[1]?) hpal
-  have hidx : l.length - 1 - 1 = l.length - 2 := by omega
+  have hidx : l.length - 1 - 1 = l.length - 2 := Nat.sub_sub l.length 1 1
   rw [List.getElem?_reverse (l := l.map p.coeff) (i := 1) (by simpa using hn2)] at heq
   simp only [List.length_map, hidx,
     List.getElem?_map, List.getElem?_eq_getElem (by omega : l.length - 2 < l.length),
