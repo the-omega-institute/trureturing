@@ -169,7 +169,7 @@ private theorem fourier_unitary : fourierᴴ * fourier = 1 := by
       Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
       neg_zero, neg_neg, and_true, true_and]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq]
+    <;> (try constructor) <;> ring_nf <;> simp only [sqrt3_sq] <;> ring
 
 private noncomputable def baseA : Matrix.unitaryGroup (Fin 9) ℂ := 1
 private noncomputable def baseB : Matrix.unitaryGroup (Fin 9) ℂ :=
@@ -282,7 +282,7 @@ private theorem sld_coefficient (x k : Fin 9) :
       Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
       neg_zero, neg_neg, and_true, true_and]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq]
+    <;> (try constructor) <;> ring_nf <;> simp only [sqrt3_sq] <;> ring
 
 
 set_option Elab.async false in
@@ -305,7 +305,7 @@ private theorem sld_equation :
       Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
       neg_zero, neg_neg, and_true, true_and]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq]
+    <;> (try constructor) <;> ring_nf <;> simp only [sqrt3_sq] <;> ring
 
 set_option Elab.async false in
 private theorem qfi_value :
