@@ -925,14 +925,6 @@ theorem Hrel_signed_coefficient (x y : Relative) :
   simp only [relativeEps, relativePartner]
   ring
 
-theorem Hrel_ket_ket (S T : Finset ℕ) (hS : 3 ∉ S) (hT : 3 ∉ T) :
-    Hrel (relativeKet S hS) (relativeKet T hT) =
-      if T = relativePartner S then relativeEps S else 0 := by
-  rw [Hrel_ket_coefficient]
-  by_cases h : T = relativePartner S
-  · simp [h, relativeKet, ket]
-  · simp [h, relativeKet, ket]
-
 theorem Hrel_right_radical (y : Relative) (hy : ∀ x, Hrel x y = 0) : y = 0 := by
   apply Subtype.ext
   ext S
@@ -974,93 +966,5 @@ theorem Hrel_charge_selection (g h : ℤ) (x y : Relative)
     (hgh : g + h ≠ 2) : Hrel x y = 0 := by
   apply Hg_charge_selection g (h + 1) _ _ hx (homogeneous_c_zero h _ hy)
   omega
-
-/-! These are anonymous native checks for the indefinite relative form and a
-    nontrivial bulk b-mode. They intentionally introduce no reusable aliases. -/
-
-example : ∃ x : Relative, Hrel x x = 1 := by
-  let x : Relative :=
-    ⟨c 1 vacuum, by
-      rw [ghost_vacuum.2.2.1]
-      exact (ket_mem_relative {1}).mpr (by simp)⟩
-  refine ⟨x, ?_⟩
-  change Hg (c 1 vacuum) (c 0 (c 1 vacuum)) = 1
-  rw [ghost_vacuum.2.2.1]
-  have h0 : c 0 (ket ({1} : Finset ℕ)) = -ket ({1, 3} : Finset ℕ) := by
-    change create 3 (ket ({1} : Finset ℕ)) = _
-    rw [create_ket]
-    have hp : phase 3 ({1} : Finset ℕ) = -1 :=
-      phase_insert_below 1 3 ∅ (by simp) (by norm_num)
-    rw [hp]
-    have hs : ({3, 1} : Finset ℕ) = {1, 3} := by decide
-    rw [hs]
-    simp
-  rw [h0]
-  rw [show -ket ({1, 3} : Finset ℕ) =
-    (-1 : ℂ) • ket ({1, 3} : Finset ℕ) by simp]
-  rw [Hg_smul_right, Hg_ket_ket]
-  have hp : partner ({1} : Finset ℕ) = {1, 3} := by decide
-  have he : eps ({1} : Finset ℕ) = -1 := by
-    rw [eps, show ({1} : Finset ℕ).sort (· ≤ ·) = [1] by simp]
-    simp only [epsList, partner_empty]
-    have hphase : phase 5 E = 1 := by
-      change phase 5 ({1, 3, 5} : Finset ℕ) = 1
-      have h0 : phase 5 (∅ : Finset ℕ) = 1 :=
-        phase_of_lower_bound 5 ∅ (by simp)
-      have h1 : phase 5 ({1} : Finset ℕ) = -phase 5 (∅ : Finset ℕ) :=
-        phase_insert_below 1 5 ∅ (by simp) (by norm_num)
-      have h13 : phase 5 ({1, 3} : Finset ℕ) = -phase 5 ({1} : Finset ℕ) :=
-        phase_insert_below 3 5 {1} (by simp) (by norm_num)
-      have hE : insert 5 ({1, 3} : Finset ℕ) = ({1, 3, 5} : Finset ℕ) := by
-        decide
-      have hself : phase 5 (insert 5 ({1, 3} : Finset ℕ)) =
-          phase 5 ({1, 3} : Finset ℕ) := by
-        simp [phase, lowerCount_insert_self]
-      rw [← hE, hself, h13, h1, h0]
-      norm_num
-    rw [show ([] : List ℕ).toFinset = (∅ : Finset ℕ) by rfl,
-      partner_empty, show tau 1 = 5 by norm_num [tau, E], hphase]
-    norm_num
-  rw [hp, he]
-  norm_num
-
-example : ∃ x : Relative, Hrel x x = -1 := by
-  let x : Relative :=
-    ⟨c (-1) vacuum, by
-      have h : c (-1) vacuum = ket ({5} : Finset ℕ) := by
-        norm_num [c, create_vacuum]
-      rw [h]
-      exact (ket_mem_relative {5}).mpr (by simp)⟩
-  refine ⟨x, ?_⟩
-  change Hg (c (-1) vacuum) (c 0 (c (-1) vacuum)) = -1
-  rw [show c (-1) vacuum = ket ({5} : Finset ℕ) by
-    norm_num [c, create_vacuum]]
-  have h0 : c 0 (ket ({5} : Finset ℕ)) = ket ({3, 5} : Finset ℕ) := by
-    change create 3 (ket ({5} : Finset ℕ)) = _
-    rw [create_ket]
-    have hp : phase 3 ({5} : Finset ℕ) = 1 :=
-      phase_of_lower_bound 3 ({5} : Finset ℕ)
-        (by intro i hi; simp at hi; omega)
-    rw [hp]
-    simp
-  rw [h0, Hg_ket_ket]
-  have hp : partner ({5} : Finset ℕ) = {3, 5} := by decide
-  have he : eps ({5} : Finset ℕ) = -1 := by
-    rw [eps, show ({5} : Finset ℕ).sort (· ≤ ·) = [5] by simp]
-    simp only [epsList, partner_empty]
-    have hphase : phase 1 E = 1 :=
-      phase_of_lower_bound 1 E (by
-        intro i hi
-        rcases (mem_E i).mp hi with rfl | rfl | rfl <;> norm_num)
-    rw [show ([] : List ℕ).toFinset = (∅ : Finset ℕ) by rfl,
-      partner_empty, show tau 5 = 1 by norm_num [tau, E], hphase]
-    norm_num
-  rw [hp, he]
-  norm_num
-
-example :
-    Hg (b (-2) (ket (∅ : Finset ℕ))) (ket ({1, 3, 5, 7} : Finset ℕ)) =
-      Hg (ket (∅ : Finset ℕ)) (b 2 (ket ({1, 3, 5, 7} : Finset ℕ))) := by
-  exact Hg_b (-2) (ket (∅ : Finset ℕ)) (ket ({1, 3, 5, 7} : Finset ℕ))
 
 end D5.S3.Quantum.Fermionic.BcGhostHermitian

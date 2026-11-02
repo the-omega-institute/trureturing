@@ -11,27 +11,28 @@ internal sealed class BcGhostHermitianDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Native signed Hermitian and literal c0-relative pairings on the original finite-support bc occupation Fock space.",
         H("Original bc Hermitian and relative ghost metric"),
+        Paragraph(Text("Here actualFock denotes exactly CountableOccupationFock.Fock, the Finsupp space (Finset Nat) →₀ Complex, and FinsetNat denotes Finset Nat. Relative is the subtype of actualFock in relativeSpace = ker(b 0). The notation (x : actualFock) is the subtype coercion. The support is the finite Finsupp support, star is complex conjugation, eps is the original sorted-word sign, and relativeEps(S) = eps(S) * phase(3, partner(S)). The relative pairing is exactly Hrel(x,y) = Hg((x : actualFock), c(0,(y : actualFock))).")),
         Blocks(
             Theorem("hg-signed-coefficient", "Hg_signed_coefficient", "Finite-support signed coefficient expansion",
-                Equal(Call("Hg", F.Id("x"), F.Id("y")), Call("FinsuppSum", F.Id("x"), F.Id("starCoeffTimesSignedRow"))),
+                SignedCoefficientFormula(false),
                 "The ambient pairing is the actual finite Finsupp sum over the support of x, with the derived epsilon sign and involutive partner."),
             Theorem("hg-hermitian", "Hg_hermitian", "Ordinary Hermitian symmetry",
-                Quant2("x", "y", "Fock", Equal(Call("Hg", F.Id("x"), F.Id("y")), Call("star", Call("Hg", F.Id("y"), F.Id("x"))))),
+                Quant2("x", "y", "actualFock", Equal(Call("Hg", F.Id("x"), F.Id("y")), Call("star", Call("Hg", F.Id("y"), F.Id("x"))))),
                 "Hermitian symmetry is proved from the vacuum base, creator and annihilator adjoints, and the finite occupation induction."),
             Theorem("hg-radicals", "Hg_left_radical", "Zero left radical",
-                Quant("x", "Fock", Implies(Call("forallZeroRight", F.Id("x")), Equal(F.Id("x"), D(0)))),
+                RadicalFormula(false, true),
                 "The involutive partner row and nonzero derived epsilon force every coefficient of a left-radical vector to vanish."),
             Theorem("hg-radicals-right", "Hg_right_radical", "Zero right radical",
-                Quant("y", "Fock", Implies(Call("forallZeroLeft", F.Id("y")), Equal(F.Id("y"), D(0)))),
+                RadicalFormula(false, false),
                 "The same finite-support coefficient argument proves the right radical is zero."),
             Theorem("hg-literal-dagger", "Hg_literal_dagger", "Literal reversed dagger word",
-                Quant2("S", "y", "FinsetNatFock", Equal(Call("Hg", Call("ket", F.Id("S")), F.Id("y")), Call("rho", Call("daggerWord", F.Id("S"), F.Id("y"))))),
+                Quant("S", "FinsetNat", Quant("y", "actualFock", Equal(Call("Hg", Call("ket", F.Id("S")), F.Id("y")), Call("rho", Call("daggerWord", Seq(F.Id("S"), Dot, Call("sort", Leq)), F.Id("y")))))),
                 "The row is represented by the literal reverse-ordered dagger word on the original occupation ket."),
             Theorem("hg-b-adjoint", "Hg_b", "All-integer b adjoint",
-                QuantMode("m", "x", "y", "b", "Fock", Equal(Call("Hg", Call("b", F.Id("m"), F.Id("x")), F.Id("y")), Call("Hg", F.Id("x"), Call("b", Call("neg", F.Id("m")), F.Id("y"))))),
+                QuantMode("m", "x", "y", "b", "actualFock", Equal(Call("Hg", Call("b", F.Id("m"), F.Id("x")), F.Id("y")), Call("Hg", F.Id("x"), Call("b", Call("neg", F.Id("m")), F.Id("y"))))),
                 "Both b cuts and every exceptional and bulk integer mode are covered by one derived theorem."),
             Theorem("hg-c-adjoint", "Hg_c", "All-integer c adjoint",
-                QuantMode("n", "x", "y", "c", "Fock", Equal(Call("Hg", Call("c", F.Id("n"), F.Id("x")), F.Id("y")), Call("Hg", F.Id("x"), Call("c", Call("neg", F.Id("n")), F.Id("y"))))),
+                QuantMode("n", "x", "y", "c", "actualFock", Equal(Call("Hg", Call("c", F.Id("n"), F.Id("x")), F.Id("y")), Call("Hg", F.Id("x"), Call("c", Call("neg", F.Id("n")), F.Id("y"))))),
                 "The original c vacuum cut and all integer branches use the same native signed pairing."),
             Theorem("ghost-charge", "charge_partner", "Partner charge sum",
                 Quant("S", "FinsetNat", Equal(Call("add", Call("charge", F.Id("S")), Call("charge", Call("partner", F.Id("S")))), D(3))),
@@ -43,13 +44,13 @@ internal sealed class BcGhostHermitianDocument : IScribeDocumentDefinition
                 Quant2("x", "y", "Relative", Equal(Call("Hrel", F.Id("x"), F.Id("y")), Call("star", Call("Hrel", F.Id("y"), F.Id("x"))))),
                 "The relative form is Hg(x,c0 y) on the actual kernel of b0; its symmetry follows from the derived c0 adjoint."),
             Theorem("relative-signed-coefficient", "Hrel_signed_coefficient", "Relative finite-support signed expansion",
-                Equal(Call("Hrel", F.Id("x"), F.Id("y")), Call("FinsuppSum", F.Id("x"), F.Id("relativeSignedCoefficient"))),
+                SignedCoefficientFormula(true),
                 "The c0 insertion produces the exact relative partner and lowerCount sign on every arbitrary finite support."),
             Theorem("relative-radicals", "Hrel_left_radical", "Zero relative left radical",
-                Quant("x", "Relative", Implies(Call("forallZeroRightRelative", F.Id("x")), Equal(F.Id("x"), D(0)))),
+                RadicalFormula(true, true),
                 "The relative pairing has no left radical on the actual ker(b0) carrier."),
             Theorem("relative-radicals-right", "Hrel_right_radical", "Zero relative right radical",
-                Quant("y", "Relative", Implies(Call("forallZeroLeftRelative", F.Id("y")), Equal(F.Id("y"), D(0)))),
+                RadicalFormula(true, false),
                 "The relative partner involution and nonzero relative epsilon give the right radical proof."),
             Theorem("relative-charge", "charge_relativePartner", "Relative partner charge sum",
                 Quant("S", "FinsetNat", Implies(Call("notMem", D(3), F.Id("S")), Equal(Call("add", Call("charge", F.Id("S")), Call("charge", Call("relativePartner", F.Id("S")))), D(2)))),
@@ -89,7 +90,7 @@ internal sealed class BcGhostHermitianDocument : IScribeDocumentDefinition
                 NotEqual(Call("add", g, h), D(3))));
         Formula body = Implies(premises, Equal(Call("Hg", x, y), D(0)));
         return Quant("g", "Int", Quant("h", "Int",
-            Quant("x", "Fock", Quant("y", "Fock", body))));
+            Quant("x", "actualFock", Quant("y", "actualFock", body))));
     }
 
     private static Formula RelativeChargeSelectionFormula()
@@ -99,12 +100,43 @@ internal sealed class BcGhostHermitianDocument : IScribeDocumentDefinition
         Formula x = F.Id("x");
         Formula y = F.Id("y");
         Formula premises = And(
-            Call("Homogeneous", g, x),
-            And(Call("Homogeneous", h, y),
+            Call("Homogeneous", g, Coerce("x")),
+            And(Call("Homogeneous", h, Coerce("y")),
                 NotEqual(Call("add", g, h), D(2))));
         Formula body = Implies(premises, Equal(Call("Hrel", x, y), D(0)));
         return Quant("g", "Int", Quant("h", "Int",
             Quant("x", "Relative", Quant("y", "Relative", body))));
+    }
+
+    private static Formula Coerce(string name) =>
+        Seq(Open, F.Id(name), Colon, Sp, F.Id("actualFock"), Close);
+
+    private static Formula SignedCoefficientFormula(bool relative)
+    {
+        Formula x = relative ? Coerce("x") : F.Id("x");
+        Formula y = relative ? Coerce("y") : F.Id("y");
+        Formula s = F.Id("S");
+        Formula coefficientX = Seq(x, Open, s, Close);
+        Formula coefficientY = Seq(y, Open,
+            Call(relative ? "relativePartner" : "partner", s), Close);
+        Formula summand = new Formula.Binary(
+            new Formula.Binary(Call("star", coefficientX), FormulaBinaryOperator.Multiply,
+                Call(relative ? "relativeEps" : "eps", s)),
+            FormulaBinaryOperator.Multiply, coefficientY);
+        Formula finiteSum = Seq(Sum, Underscore,
+            Grp(s, InMacro, Call("support", x)), Sp, summand);
+        return Quant2("x", "y", relative ? "Relative" : "actualFock",
+            Equal(Call(relative ? "Hrel" : "Hg", F.Id("x"), F.Id("y")), finiteSum));
+    }
+
+    private static Formula RadicalFormula(bool relative, bool left)
+    {
+        string type = relative ? "Relative" : "actualFock";
+        string outer = left ? "x" : "y";
+        string inner = left ? "y" : "x";
+        Formula premise = Quant(inner, type,
+            Equal(Call(relative ? "Hrel" : "Hg", F.Id("x"), F.Id("y")), D(0)));
+        return Quant(outer, type, Implies(premise, Equal(F.Id(outer), D(0))));
     }
 
     private static Formula Implies(Formula left, Formula right) =>
