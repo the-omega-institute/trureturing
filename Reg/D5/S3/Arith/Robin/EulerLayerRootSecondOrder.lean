@@ -64,7 +64,7 @@ private theorem root_second_order_rejected_law :
   have hh := hbad t htT U (by omega) (fun q _ => hcounts q)
   change |Real.sqrt 2| < (1 / 2 : ℝ) at hh
   have hsqrt : 1 ≤ Real.sqrt 2 := by nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), Real.sqrt_nonneg (2 : ℝ)]
-  linarith
+  linarith [le_abs_self (Real.sqrt 2)]
 
 def rootSecondOrderFamily : Registration rootSecondOrderArena rootSecondOrderScope where
   actual := rootSecondOrderActual
@@ -77,7 +77,7 @@ def rootSecondOrderFamily : Registration rootSecondOrderArena rootSecondOrderSco
     fun i => nomatch i⟩
   dependence := by
     intro i
-    refine ⟨(), 2, 1, ?_⟩
+    refine ⟨2, 1, 2, ?_⟩
     change Real.log 2 *
         ((Real.log (1 : ℕ) - Chebyshev.psi 2) / Real.sqrt 2 - (Real.sqrt 2 - 1)) +
           Real.sqrt 2 * Real.log 2 / 2 ≠
@@ -85,13 +85,12 @@ def rootSecondOrderFamily : Registration rootSecondOrderArena rootSecondOrderSco
         ((Real.log (2 : ℕ) - Chebyshev.psi 2) / Real.sqrt 2 - (Real.sqrt 2 - 1)) +
           Real.sqrt 2 * Real.log 2 / 2
     have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-    have hlog2 : Real.log (2 : ℕ) ≠ Real.log (1 : ℕ) := by
-      norm_num
+    have hsqrt : Real.sqrt (2 : ℝ) ≠ 0 :=
+      ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
     intro heq
-    have : Real.log (1 : ℕ) = Real.log (2 : ℕ) := by
-      field_simp at heq
-      linarith
-    exact hlog2 this.symm
+    norm_num only [Nat.cast_one, Nat.cast_ofNat, Real.log_one] at heq
+    field_simp [hsqrt] at heq
+    nlinarith only [heq, sq_pos_of_pos hlog]
 
 /-- The readout selects the complete residual under the original absolute value. -/
 def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
