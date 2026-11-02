@@ -392,14 +392,19 @@ private theorem physical_mem (a b c d alpha S i : ℕ) (bank : Fin 4) :
 private theorem local_chain (a b c d : ℕ) (chain : Fin 4) (e : ℕ)
     (he : e < chainLength a b c d chain-1) :
     chainOf b c d (chainStart b c d chain+e) = chain := by
-  apply Fin.ext
-  fin_cases chain <;> simp [chainOf,chainStart,chainLength,apply_ite,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-    Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
-    Matrix.vecHead,Matrix.vecTail,Function.comp_apply] at he ⊢ <;>
-    split_ifs <;> first | rfl | omega
-
-private theorem physical_internal (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
+  fin_cases chain
+  · change e < d-1 at he
+    change chainOf b c d (0+e) = 0
+    rw [zero_add,chainOf,if_pos (by omega)]
+  · change e < c-1 at he
+    change chainOf b c d (d+e) = 1
+    rw [chainOf,if_neg (by omega),if_pos (by omega)]
+  · change e < b-1 at he
+    change chainOf b c d (d+c+e) = 2
+    rw [chainOf,if_neg (by omega),if_neg (by omega),if_pos (by omega)]
+  · change chainOf b c d (d+c+b+e) = 3
+    rw [chainOf,if_neg (by omega),if_neg (by omega),if_neg (by omega)]
+\nprivate theorem physical_internal (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     (hAlpha : alpha < 2^(d-1)-1) (hS2 : 2 ≤ S) (hSh : S < 2^(d-a))
     (bank : Fin 4) (i : ℕ) (hi : i ∈ physicalBank a b c d alpha S bank) :
     i < size a b c d ∧ i ∉ negatives a b c d := by

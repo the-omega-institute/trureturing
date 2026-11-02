@@ -134,11 +134,67 @@ private theorem strip_gate_polynomial_eq (u z h t S delta : ℚ) (i : Fin 6) :
     norm_num [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
       qHead,qNewHead,qModulus,qTerminal,polynomialGate] <;> ring
 
--- Four corners for exactly the six sides consumed by physical_prefixes.
--- ring_nf computes the positive polynomial in the four nonnegative increments.
--- This retains the full unbounded cone, without exporting coefficient tables.
 set_option maxRecDepth 8192 in
-set_option maxHeartbeats 16000000 in
+private theorem polynomial_corner_0 (U Z H T : ℚ)
+    (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
+    (highS highDelta : Bool) :
+    0 ≤ polynomialGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
+      (if highS then 7*(16+Z)/4 else 2)
+      (if highDelta then 2*((4+U)-1) else 0) 0 := by
+  cases highS <;> cases highDelta <;>
+    dsimp [polynomialGate] <;> ring_nf <;> positivity
+
+set_option maxRecDepth 8192 in
+private theorem polynomial_corner_1 (U Z H T : ℚ)
+    (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
+    (highS highDelta : Bool) :
+    0 ≤ polynomialGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
+      (if highS then 7*(16+Z)/4 else 2)
+      (if highDelta then 2*((4+U)-1) else 0) 1 := by
+  cases highS <;> cases highDelta <;>
+    dsimp [polynomialGate] <;> ring_nf <;> positivity
+
+set_option maxRecDepth 8192 in
+private theorem polynomial_corner_2 (U Z H T : ℚ)
+    (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
+    (highS highDelta : Bool) :
+    0 ≤ polynomialGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
+      (if highS then 7*(16+Z)/4 else 2)
+      (if highDelta then 2*((4+U)-1) else 0) 2 := by
+  cases highS <;> cases highDelta <;>
+    dsimp [polynomialGate] <;> ring_nf <;> positivity
+
+set_option maxRecDepth 8192 in
+private theorem polynomial_corner_3 (U Z H T : ℚ)
+    (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
+    (highS highDelta : Bool) :
+    0 ≤ polynomialGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
+      (if highS then 7*(16+Z)/4 else 2)
+      (if highDelta then 2*((4+U)-1) else 0) 3 := by
+  cases highS <;> cases highDelta <;>
+    dsimp [polynomialGate] <;> ring_nf <;> positivity
+
+set_option maxRecDepth 8192 in
+private theorem polynomial_corner_4 (U Z H T : ℚ)
+    (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
+    (highS highDelta : Bool) :
+    0 ≤ polynomialGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
+      (if highS then 7*(16+Z)/4 else 2)
+      (if highDelta then 2*((4+U)-1) else 0) 4 := by
+  cases highS <;> cases highDelta <;>
+    dsimp [polynomialGate] <;> ring_nf <;> positivity
+
+set_option maxRecDepth 8192 in
+private theorem polynomial_corner_5 (U Z H T : ℚ)
+    (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
+    (highS highDelta : Bool) :
+    0 ≤ polynomialGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
+      (if highS then 7*(16+Z)/4 else 2)
+      (if highDelta then 2*((4+U)-1) else 0) 5 := by
+  cases highS <;> cases highDelta <;>
+    dsimp [polynomialGate] <;> ring_nf <;> positivity
+
+-- The six sides on the entire nonnegative cone of increments.
 private theorem strip_corners (U Z H T : ℚ)
     (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
     (highS highDelta : Bool) (i : Fin 6) :
@@ -146,8 +202,13 @@ private theorem strip_corners (U Z H T : ℚ)
       (if highS then 7*(16+Z)/4 else 2)
       (if highDelta then 2*((4+U)-1) else 0) i := by
   rw [strip_gate_polynomial_eq]
-  cases highS <;> cases highDelta <;> fin_cases i <;>
-    norm_num only [polynomialGate] <;> ring_nf <;> positivity
+  fin_cases i
+  · exact polynomial_corner_0 U Z H T hU hZ hH hT highS highDelta
+  · exact polynomial_corner_1 U Z H T hU hZ hH hT highS highDelta
+  · exact polynomial_corner_2 U Z H T hU hZ hH hT highS highDelta
+  · exact polynomial_corner_3 U Z H T hU hZ hH hT highS highDelta
+  · exact polynomial_corner_4 U Z H T hU hZ hH hT highS highDelta
+  · exact polynomial_corner_5 U Z H T hU hZ hH hT highS highDelta
 
 -- Exact joint affinity in S and delta. In particular no S*delta term is hidden.
 private theorem strip_rectangle_identity (u z h t S delta : ℚ) (i : Fin 6) :
