@@ -74,8 +74,6 @@ private def graph : SimpleGraph (Sum ℤ (ℤ × List Bool)) where
     have hr := parent_rank i
     rcases h with h | h <;> rw [h] at hr <;> omega⟩
 
-private instance graph_decidable : DecidableRel graph.Adj := Classical.decRel _
-
 private def neighbors (i : Sum ℤ (ℤ × List Bool)) : Finset (Sum ℤ (ℤ × List Bool)) :=
   Sum.elim (fun n => {Sum.inl (n - 1), Sum.inl (n + 1), Sum.inr (n, [])})
     (fun p => {parent (Sum.inr p), Sum.inr (p.1, false :: p.2),
@@ -164,26 +162,11 @@ private lemma graph_acyclic : graph.IsAcyclic := by
 
 private lemma graph_tree : graph.IsTree := ⟨graph_connected, graph_acyclic⟩
 
-private def scale (n : ℤ) : ℝ := (2 : ℝ) ^ n
-
-private lemma scale_positive (n : ℤ) : 0 < scale n := by
-  exact zpow_pos (by norm_num) n
-
-private lemma scale_next (n : ℤ) : scale (n + 1) = 2 * scale n := by
-  simp only [scale.eq_1]
-  rw [zpow_add₀ (by norm_num : (2 : ℝ) ≠ 0)]
-  simp [mul_comm]
-
-private lemma scale_previous (n : ℤ) : scale (n - 1) = scale n / 2 := by
-  have h := scale_next (n - 1)
-  rw [sub_add_cancel] at h
-  linarith
-
 private def lengths : Sum ℤ (ℤ × List Bool) → Sum ℤ (ℤ × List Bool) → ℝ :=
   Sum.elim
-    (fun n => Sum.elim (fun m => (5 / 3 : ℝ) * scale (min n m))
-      (fun p => scale p.1))
-    (fun p => Sum.elim (fun _ => scale p.1) (fun q => scale (min p.1 q.1)))
+    (fun n => Sum.elim (fun m => (5 / 3 : ℝ) * ((2 : ℝ) ^ (min n m)))
+      (fun p => ((2 : ℝ) ^ p.1)))
+    (fun p => Sum.elim (fun _ => ((2 : ℝ) ^ p.1)) (fun q => ((2 : ℝ) ^ (min p.1 q.1))))
 
 private lemma lengths_symmetric (i j : Sum ℤ (ℤ × List Bool)) :
     graph.Adj i j → lengths i j = lengths j i := by
@@ -196,26 +179,26 @@ private lemma lengths_positive (i j : Sum ℤ (ℤ × List Bool)) :
   intro _
   rcases i with n | ⟨n, w⟩ <;> rcases j with m | ⟨m, z⟩ <;>
     simp only [lengths.eq_1, Sum.elim_inl, Sum.elim_inr]
-  · exact mul_pos (by norm_num) (scale_positive _)
-  all_goals exact scale_positive _
+  · exact mul_pos (by norm_num) (zpow_pos (by norm_num) _)
+  all_goals exact zpow_pos (by norm_num) _
 
-private lemma ratio_spine (n : ℤ) : ratio graph lengths (Sum.inl n) = scale n := by
-  have hn := (scale_positive n).ne'
+private lemma ratio_spine (n : ℤ) : ratio graph lengths (Sum.inl n) = ((2 : ℝ) ^ n) := by
+  have hn := zpow_ne_zero n (by norm_num : (2 : ℝ) ≠ 0)
   change (∑ j ∈ graph.neighborFinset (Sum.inl n), 1 / lengths (Sum.inl n) j) /
-    (∑ j ∈ graph.neighborFinset (Sum.inl n), 1 / lengths (Sum.inl n) j ^ 2) = scale n
+    (∑ j ∈ graph.neighborFinset (Sum.inl n), 1 / lengths (Sum.inl n) j ^ 2) = ((2 : ℝ) ^ n)
   simp [neighbor_eq, neighbors.eq_1, lengths.eq_1,
-    show n - 1 ≠ n + 1 by omega, scale_previous]
+    show n - 1 ≠ n + 1 by omega, zpow_sub_one₀ (by norm_num : (2 : ℝ) ≠ 0)]
   field_simp
   ring
 
 private lemma ratio_branch (n : ℤ) (w : List Bool) :
-    ratio graph lengths (Sum.inr (n, w)) = scale n := by
-  have hn := (scale_positive n).ne'
-  have hp : lengths (Sum.inr (n, w)) (parent (Sum.inr (n, w))) = scale n := by
+    ratio graph lengths (Sum.inr (n, w)) = ((2 : ℝ) ^ n) := by
+  have hn := zpow_ne_zero n (by norm_num : (2 : ℝ) ≠ 0)
+  have hp : lengths (Sum.inr (n, w)) (parent (Sum.inr (n, w))) = ((2 : ℝ) ^ n) := by
     cases w <;> simp [lengths.eq_1, parent.eq_1]
   change (∑ j ∈ graph.neighborFinset (Sum.inr (n, w)), 1 / lengths (Sum.inr (n, w)) j) /
     (∑ j ∈ graph.neighborFinset (Sum.inr (n, w)),
-      1 / lengths (Sum.inr (n, w)) j ^ 2) = scale n
+      1 / lengths (Sum.inr (n, w)) j ^ 2) = ((2 : ℝ) ^ n)
   simp [neighbor_eq, neighbors.eq_1, parent_child_ne, hp]
   simp [lengths.eq_1]
   field_simp
@@ -228,12 +211,12 @@ private lemma residuals (i j : Sum ℤ (ℤ × List Bool)) :
       (ratio graph lengths x ^ 2 + ratio graph lengths (parent x) ^ 2) -
       ratio graph lengths x - ratio graph lengths (parent x) = 0
     rcases x with n | ⟨n, w⟩
-    · have hn := (scale_positive n).ne'
+    · have hn := zpow_ne_zero n (by norm_num : (2 : ℝ) ≠ 0)
       simp only [parent.eq_1, Sum.elim_inl, ratio_spine]
-      simp [lengths.eq_1, scale_previous]
+      simp [lengths.eq_1, zpow_sub_one₀ (by norm_num : (2 : ℝ) ≠ 0)]
       field_simp
       ring
-    · have hn := (scale_positive n).ne'
+    · have hn := zpow_ne_zero n (by norm_num : (2 : ℝ) ≠ 0)
       cases w <;> simp only [parent.eq_1, Sum.elim_inr, ratio_spine, ratio_branch]
       all_goals simp [lengths.eq_1]
       all_goals field_simp; ring
@@ -257,11 +240,12 @@ private lemma nonconstant :
   rintro ⟨c, h⟩
   have hb := h (Sum.inl 0) (Sum.inr (0, [])) (Or.inr rfl)
   have hs := h (Sum.inl 0) (Sum.inl 1) (Or.inr (by norm_num [parent.eq_1]))
-  norm_num [lengths.eq_1, scale.eq_1] at hb hs
+  norm_num [lengths.eq_1] at hb hs
   linarith
 
 /-- The preregistered cubic tree carries a positive nonconstant tEoM solution. -/
 theorem result : ¬ claim := by
+  classical
   intro h
   exact nonconstant (h _ graph graph_tree graph_degree lengths
     lengths_symmetric lengths_positive residuals)
