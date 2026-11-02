@@ -138,7 +138,223 @@ $$\forall m \in \mathrm{Nat},\; \forall R \in \mathrm{Real},\; (\operatorname{Op
 
 The conjunction gives the upper bound, both explicit positive feasible attainments, the iff exclusion of every other labelled edge restriction, distinctness, exchange in both directions, and invariance under arbitrary nonedge changes.
 
-**Theorem 1.12 (The fixed-resistance maximum and all maximizers).**
+**Definition 1.12 (The labelled hubs).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.hub`
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.hub` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original hub coordinate is castAdd m j for j in Fin 2.
+
+**Definition 1.13 (The labelled leaves).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leaf`
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leaf` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original leaf coordinate is natAdd 2 i for i in Fin m.
+
+**Theorem 1.14 (No hub-to-hub edges).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_hub_hub`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_hub_hub` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two hubs are never adjacent in K2m.
+
+**Theorem 1.15 (No leaf-to-leaf edges).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_leaf_leaf`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_leaf_leaf` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+No two leaves are adjacent in K2m.
+
+**Theorem 1.16 (Symmetry of the native weighted Laplacian).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite simple graph with decidable adjacency and every real pair-weight function, the original wLap is Hermitian.
+
+**Definition 1.17 (The constant-space projection matrix).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.constProj`
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.constProj` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every entry is the reciprocal of the number of vertices.
+
+**Theorem 1.18 (The native zero eigenvalue has multiplicity one).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.zero_eigenvalue_count`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.zero_eigenvalue_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m positive and every positive edge weighting of K2m, exactly one indexed native Hermitian eigenvalue is zero.
+
+**Theorem 1.19 (The Rayleigh value and the native eigenvalues).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lambda2_spectral`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lambda2_spectral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m positive and every positive edge weighting, lambda2 is positive, L-lambda2*(I-P) is positive semidefinite, and every nonzero native eigenvalue is at least lambda2.
+
+**Theorem 1.20 (Harmonic all-pairs resistance and the native spectrum).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.resistance_spectral`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.resistance_spectral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m positive and every positive edge weighting, the harmonic totalRes is (m+2) times the sum of reciprocal native Hermitian eigenvalues, with the zero inverse interpreted as zero.
+
+**Definition 1.21 (The two conductances incident to a leaf).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leafSum`
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leafSum` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original leafSum is the sum of its two hub-to-leaf conductances.
+
+**Theorem 1.22 (The native Laplacian trace).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_trace`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The trace equals twice the sum of all leafSum values, for arbitrary real weights.
+
+**Theorem 1.23 (The sharp product bound and its trace equality consequence).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.product_bound_trace`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.product_bound_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m at least three and positive edge weighting, lambda2*totalRes is at most C_m; equality forces the sum of leafSum values to be m*lambda2.
+
+**Theorem 1.24 (The positive uniform parameters forced by equality).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.equality_parameters`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.equality_parameters` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Product equality forces positive a and b, common across every leaf, with a+b=lambda2 and (m+2)*a*b=lambda2 squared.
+
+**Theorem 1.25 (The explicit representative has its prescribed edge restriction).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniformWeights_edges`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniformWeights_edges` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original uniformWeights representative has first-hub conductance a and second-hub conductance b on every leaf.
+
+**Theorem 1.26 (Bounds and square of the splitting ratio).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.splitRatio_facts`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.splitRatio_facts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m at least three, splitRatio is strictly between zero and one and its square is (m-2)/(m+2).
+
+**Theorem 1.27 (Both common-sign quadratic solutions).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.parameter_roots`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.parameter_roots` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m at least three, if a+b=t and (m+2)*a*b=t squared, then the ordered pair is t/2*(1+rho),t/2*(1-rho), or the reverse pair.
+
+**Theorem 1.28 (The extremal Rayleigh and harmonic resistance values).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniform_extremal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniform_extremal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m at least three and positive a,b,t satisfying a+b=t and (m+2)*a*b=t squared, any positive K2m weighting with that edge restriction has lambda2=t and totalRes=C_m/t.
+
+**Theorem 1.29 (Hub exchange interchanges the two edge families).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchange_edges`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchange_edges` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original hub swap maps EdgeRestriction a b to EdgeRestriction b a for arbitrary real a and b.
+
+**Theorem 1.30 (The fixed-resistance maximum and all maximizers).**
 
 $$\forall m \in \mathrm{Nat},\; (3 \le m) \Rightarrow (\forall R \in \mathrm{Real},\; (0 < R) \Rightarrow ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < w\left(e\right))) \Rightarrow ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), w\right) = R) \Rightarrow (\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), w\right) \le \operatorname{maxValue}\left(m, R\right)))) \land (((\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\left(e\right))) \land ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\right) = R) \land ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\right) = \operatorname{maxValue}\left(m, R\right)) \land (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\right))))) \land (((\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\left(e\right))) \land ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\right) = R) \land ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\right) = \operatorname{maxValue}\left(m, R\right)) \land (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\right))))) \land ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < w\left(e\right))) \Rightarrow ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), w\right) = R) \Rightarrow ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), w\right) = \operatorname{maxValue}\left(m, R\right)) \Leftrightarrow ((\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), w\right)) \lor (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), w\right)))))) \land ((\neg \left(\exists w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), w\right)) \land (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), w\right))\right)) \land ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), w\right)) \Rightarrow (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), \operatorname{exchangeWeights}\left(m, w\right)\right))) \land ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), w\right)) \Rightarrow (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), \operatorname{exchangeWeights}\left(m, w\right)\right))) \land (\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; \forall z \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (w\left(e\right) = z\left(e\right))) \Rightarrow ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), w\right) = \operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), z\right)) \land (\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), w\right) = \operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), z\right))))))))))))$$
 
@@ -156,13 +372,31 @@ The weighted energy is a sum of positive edge squares, so its kernel is exactly 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.K2m`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.K2m_dec`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.OptimizerClaim`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_hub_hub`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_leaf_leaf`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.constProj`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.equality_parameters`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchangeWeights`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchange_edges`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.hub`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lambda2_spectral`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_trace`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leaf`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leafSum`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.maxValue`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.minusConductance`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.parameter_roots`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.plusConductance`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.product_bound_trace`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.resistance_spectral`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.result`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.sharpConstant`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.splitRatio`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.splitRatio_facts`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniformWeights`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniformWeights_edges`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniform_extremal`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.zero_eigenvalue_count`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation](AlbrightKemenyEdgeDerivativeRefutation.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation](FiedlerResistanceInvariantWeightsRefutation.md)
