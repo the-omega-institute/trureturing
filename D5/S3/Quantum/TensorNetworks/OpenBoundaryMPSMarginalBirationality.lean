@@ -418,7 +418,7 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
   have hlt (i : Fin 2) : reconstructedLeft t ᵥ* Matrix.of (fun j k => t ![j, i, k]) =
       fun k => reconstructedBasis t i k := by
     funext k
-    simp only [Matrix.vecMul, reconstructedBasis, basisNumerator,
+    simp only [Matrix.vecMul, reconstructedBasis.eq_1, basisNumerator.eq_1,
       RingHom.map_dotProduct, Function.comp_def, coordinate, MvPolynomial.eval_X]
     simp only [dotProduct, reconstructedLeft, Matrix.of_apply, div_eq_mul_inv,
       Finset.sum_mul, mul_right_comm]
@@ -777,7 +777,7 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     ext i j
     have hli : (reconstructedLeft t ᵥ* Matrix.of (fun p q => t ![p, i, q])) j =
         reconstructedBasis t i j := by
-      simp only [Matrix.vecMul, reconstructedBasis, basisNumerator,
+      simp only [Matrix.vecMul, reconstructedBasis.eq_1, basisNumerator.eq_1,
         RingHom.map_dotProduct, Function.comp_def, coordinate, MvPolynomial.eval_X]
       simp only [dotProduct, reconstructedLeft, Matrix.of_apply, div_eq_mul_inv,
         Finset.sum_mul, mul_right_comm]
