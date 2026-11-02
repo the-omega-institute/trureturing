@@ -695,9 +695,20 @@ theorem actual_weighted_mangoldt_translation_bound (p : PNTConstants)
         (density D (Real.log n) f u + density D (-Real.log n) f u) := by
     have hfin := Finset.sum_le_sum (s := primes D) (fun (n : ℕ) hn =>
       mul_le_mul_of_nonneg_left (hlocal (Real.log (n : ℝ))) (weight_nonneg n))
-    rw [integral_finsetSum _ (fun (n : ℕ) hn =>
-      ((hd (Real.log n)).add (hd (-Real.log n))).const_mul (weight n))]
-    simp_rw [integral_const_mul, integral_add (hd _) (hd _)]
+    have hsumint : (∫ u : ℝ, ∑ n ∈ primes D, weight n *
+        (density D (Real.log n) f u + density D (-Real.log n) f u)) =
+        ∑ n ∈ primes D, ∫ u : ℝ, weight n *
+          (density D (Real.log n) f u + density D (-Real.log n) f u) :=
+      integral_finsetSum _ (fun (n : ℕ) hn =>
+        ((hd (Real.log n)).add (hd (-Real.log n))).const_mul (weight n))
+    rw [hsumint]
+    have hsplit (n : ℕ) : (∫ u : ℝ, weight n *
+        (density D (Real.log n) f u + density D (-Real.log n) f u)) =
+        weight n * ((∫ u : ℝ, density D (Real.log n) f u) +
+          ∫ u : ℝ, density D (-Real.log n) f u) := by
+      rw [integral_const_mul]
+      exact congrArg (fun z => weight n * z) (integral_add (hd _) (hd _))
+    simp_rw [hsplit]
     dsimp [primeQuadratic]
     rw [Finset.mul_sum]
     convert hfin using 1
