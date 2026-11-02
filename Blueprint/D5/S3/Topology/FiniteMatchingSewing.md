@@ -54,25 +54,12 @@ $$\forall N \in Nat,\; \operatorname{closedCount}\left(\operatorname{identityMat
 
 *Commentary.*
 
-The index projection identifies each closed identity component with its Fin N label. In particular N=0 contributes zero circles, without an extra empty-diagram circle.
-
-**Theorem 1.5 (The empty boundary has no closure component).**
-
-$$\forall d \in \operatorname{Matching}\left(\operatorname{Boundary}\left(0\right)\right),\; \operatorname{closedCount}\left(d\right) = 0$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Topology/FiniteMatchingSewing.closedCount_empty` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-There is only one matching on the empty boundary. Its closed count is the N=0 identity count.
+The index projection identifies each closed identity component with its Fin N label. In particular N=0 contributes zero circles, without an extra empty-diagram circle. Every matching on Boundary(0) equals identityMatching(0) by extensionality on the empty boundary, so the same count applies to every empty matching.
 
 Straight matchings are also proved to be left and right units for the actual composite, with zero internal loops. The unit contractions retain every outer boundary vertex. This is the classical Brauer pairing and circle-removal construction. Associative multiplication on the free module, the tower inclusion, the local Temperley--Lieb relations and Jones identification are separate assertions.
 
 ## References
 
-- Truth anchor: `D5/S3/Topology/FiniteMatchingSewing.closedCount_empty`
 - Truth anchor: `D5/S3/Topology/FiniteMatchingSewing.closedCount_identity`
 - Truth anchor: `D5/S3/Topology/FiniteMatchingSewing.closedStackInventory`
 - Truth anchor: `D5/S3/Topology/FiniteMatchingSewing.closed_weight_cyclic`
