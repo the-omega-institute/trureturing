@@ -23,3 +23,12 @@ At n=3 these are 3 and 4. They are exactly the d=2 boundary values for the
 ternary deficits t=5 and t=4, since kappa(2)=6. They receive no novelty credit.
 Their role in the retained threshold theorem is to rule out every cutoff
 at most two; the three-landmark L and four-corner square realize the values.
+
+## Verified locator
+
+DOI: https://doi.org/10.1016/j.disopt.2026.100945
+
+Source: https://arxiv.org/abs/2505.19642
+
+The introduction and Theorem 1.1 locate the weak one-metric and weak
+two-metric square-product values described above.

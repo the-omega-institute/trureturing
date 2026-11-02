@@ -34,3 +34,12 @@ only concerns q=3 and t in {4,5}; it does not settle that whole nonbinary
 question. The adjacent bound and orbit idea are attributed prerequisites.
 The proposed improvement is the all-pair sufficiency estimate and the exact
 least threshold for those two deficits. No global priority claim is made.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2609.32161
+
+Source: https://arxiv.org/abs/2609.32161
+
+Lemma 6.3, Theorem 6.4 and Section 7 locate the adjacent-frequency bound,
+eventual near-maximum formula and sharp-threshold question described above.
