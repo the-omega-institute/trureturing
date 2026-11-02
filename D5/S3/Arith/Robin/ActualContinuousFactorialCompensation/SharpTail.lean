@@ -9,6 +9,9 @@
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.SharpTail.Cancellation
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.SharpTail.Factorial
 
+/-! The harmonic, factorial and signed-tail estimates cancel the entire floor
+phase and identify the exact limit of the existing arithmetic G. -/
+
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

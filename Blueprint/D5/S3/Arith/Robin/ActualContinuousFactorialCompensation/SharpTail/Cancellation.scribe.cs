@@ -10,7 +10,7 @@ internal sealed class SharpCancellationDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text("The arithmetic suppliers preserve the Terence Tao / Apache-2.0 attribution at LogConvolutionMassExpansion. Harmonic, Stirling, Abel and integral APIs are reused from pinned Mathlib. These are repository deductions, with no literature novelty claim. The literal factorial G is distinct from prime-weighted primitives in other RH routes.")),
             Describe.Lean(
-                DescribeId.Create("actual-factorial-sharp-epsilonDensity-integrable"),
+                DescribeId.Create("actual-factorial-sharp-epsilondensity-integrable"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.epsilonDensity_integrable"),
                 H("Integrability of the actual epsilon density"),
                 StatementSource.WithoutFormula(),
@@ -18,7 +18,7 @@ internal sealed class SharpCancellationDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The actual epsilonDensity(t)=epsilon(t)/t is integrable on the complete set t>1. The proof splits it into the compensated primitive density and the signed floor-phase density."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-factorial-sharp-T-epsilon-quadratic-bound"),
+                DescribeId.Create("actual-factorial-sharp-t-epsilon-quadratic-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.T_epsilon_quadratic_bound"),
                 H("A quadratic tail bound from genuine cancellation"),
                 StatementSource.WithoutFormula(),

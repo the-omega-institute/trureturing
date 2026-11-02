@@ -9,6 +9,9 @@
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.SharpTail
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.CausalKernel
 
+/-! The arithmetic sharp tail is consumed by the existing causal kernel.
+Weighted integrability is a real analytic consequence; RH remains open. -/
+
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

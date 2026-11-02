@@ -14,7 +14,6 @@ Mathlib's Stirling theorem. The factorial residual is the original arithmetic
 object from ActualFactorialRobinHighDerivative. -/
 
 noncomputable section
-set_option pp.proofs false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false

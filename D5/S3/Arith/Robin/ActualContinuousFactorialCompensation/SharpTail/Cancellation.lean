@@ -8,8 +8,10 @@
 
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.SharpTail.Arithmetic
 
+/-! Exact Abel cancellation for the literal harmonic tail. The signed floor
+phase is integrated before taking absolute values. -/
+
 noncomputable section
-set_option pp.proofs false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +30,7 @@ private lemma inv_sq_integrable {x : ℝ} (hx : 0 < x) :
     ?_ measurableSet_Ioi
   intro t ht
   change t ^ (-(2 : ℝ)) = 1 / t ^ 2
-  rw [Real.rpow_neg (by linarith [ht] : 0 ≤ t), Real.rpow_two, one_div]
+  rw [Real.rpow_neg (hx.trans ht).le, Real.rpow_two, one_div]
 
 private lemma inv_sq_integral {x : ℝ} (hx : 0 < x) :
     (∫ t : ℝ in Ioi x, 1 / t ^ 2) = 1 / x := by
@@ -82,7 +84,8 @@ private lemma primitive_integrable : IntegrableOn primitiveDensity (Ioi (1 : ℝ
     _ ≤ 4 * (1 / t ^ 2) := by
       rw [mul_one_div]
       gcongr
-      simpa only [div_eq_mul_inv, mul_one, one_mul] using mul_le_mul_of_nonneg_left hi (by norm_num : (0 : ℝ) ≤ 4)
+      simpa only [div_eq_mul_inv, mul_one, one_mul] using
+        mul_le_mul_of_nonneg_left hi (by norm_num : (0 : ℝ) ≤ 4)
 
 private lemma epsilon_density_split (t : ℝ) :
     epsilonDensity t = primitiveDensity t + phaseDensity t := by
@@ -114,7 +117,7 @@ private lemma floor_inverse_integral {x : ℝ} (hx : 1 ≤ x) :
   have hd (t : ℝ) (ht : t ∈ Icc (1 : ℝ) x) :
       HasDerivAt (fun u : ℝ => u⁻¹) (-(1 / t ^ 2)) t := by
     convert (hasDerivAt_id t).inv (by linarith [ht.1] : t ≠ 0) using 1 <;>
-      first | rfl | (simp only [id_eq, one_div, inv_pow]; ring)
+      first | rfl | (simp only [id_eq, one_div]; ring)
   have hi : IntegrableOn (deriv (fun u : ℝ => u⁻¹)) (Icc (1 : ℝ) x) := by
     have hc : ContinuousOn (fun t : ℝ => -(1 / t ^ 2)) (Icc (1 : ℝ) x) := by
       fun_prop (disch := intro t ht; nlinarith [ht.1])
