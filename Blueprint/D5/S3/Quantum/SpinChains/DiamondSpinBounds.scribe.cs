@@ -84,9 +84,9 @@ internal sealed class DiamondSpinBoundsDocument : IScribeDocumentDefinition
                 "Every coefficient is strictly positive, including at both endpoints."),
             Describe.Lean(DescribeId.Create("diamond-native-relations"), DeclarationHandle.Create(Prefix + "native_relations"),
                 H("Native spin relations and the whole-carrier pair bound"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(NativeRelationsFormula())), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The conjunction records the exact site action, linearity, adjoints and commutation, the normalized ladder products, weight support and invariance, Hermiticity of the restriction, singlet expectation isotropy, and the pair order bound. Every spin, site, matrix and vector variable retains its full stated range.")),
+                    Paragraph(Text("The displayed rows form one conjunction. In the two local ladder products diag maps r in Fin(n+1) to its displayed entry; in the site weight identity it maps x in C(S). The maps ofNat and ofReal embed scalars in the complex numbers. Write comm(A,B)=AB−BA and update(x,i,r) for replacement at site i. The conjunction records the exact site action, linearity, adjoints and commutation, the normalized ladder products, weight support and invariance, Hermiticity of the restriction, singlet expectation isotropy, and the pair order bound. Every spin, site, matrix and vector variable retains its full stated range.")),
                     Paragraph(Text("A strictly positive product of binomial vectors is a Dᵢⱼ eigenvector of eigenvalue S². Adding S² times the identity to Dᵢⱼ gives an entrywise nonnegative matrix. The Perron comparison bound and the Hermitian spectral theorem yield Dᵢⱼ≤S²I for S≥1 on the whole complex carrier, with every coupling sector and multiplicity included.")),
                     Paragraph(Text("Total-ladder commutators give ⟨v,Kv⟩=(4/3)⟨v,Iv⟩ for every singlet. This is an expectation identity; no vector equation Kv=(4/3)Iv is asserted. Both total ladders imply zero total weight, and weight invariance identifies the displayed submatrix with the complete Hermitian restriction."))),
                 DescribeRole.Theorem))));
@@ -116,4 +116,34 @@ internal sealed class DiamondSpinBoundsDocument : IScribeDocumentDefinition
         Seq(new Formula.Subscript(Sum,Seq(PairVariables(),InMacro,Call("edges"))),Sp,
             Mul(D(2),P(Add(Mul(Call("X",I),Call("X",J)),Mul(Call("Y",I),Call("Y",J))))))));
     private static Formula PairVariables() => Seq(Open,I,Comma,J,Close);
+
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Subtract,y);
+    private static Formula Pow(Formula x, byte n) => new Formula.Power(x,D(n));
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(P(x),FormulaLogicOperator.Implies,P(y));
+    private static Formula IffFormula(Formula x, Formula y) => new Formula.Logic(P(x),FormulaLogicOperator.Iff,P(y));
+    private static Formula NativeRelationsFormula() => new Formula.Aligned([
+        All(S,Nat(),Imp(new Formula.Relation(D(1),FormulaRelationOperator.LessThanOrEqual,S),All(I,Call("Fin",D(4)),All(J,Call("Fin",D(4)),Imp(new Formula.Relation(I,FormulaRelationOperator.NotEqual,J),Call("PosSemidef",Sub(Mul(Pow(Call("ofNat",S),2),D(1)),Call("dot",S,I,J)))))))),
+        All(S,Nat(),All(X,C(),new Formula.Relation(D(0),FormulaRelationOperator.LessThan,Call("binomialProductReal",S,X)))),
+        All(S,Nat(),All(X,C(),Equal(Call("binomialProduct",S,X),Call("ofReal",Call("binomialProductReal",S,X))))),
+        All(S,Nat(),All(F.Id("Q"),Call("O",S),All(F.Id("A"),Call("O",S),All(F.Id("B"),Call("O",S),Equal(Call("comm",F.Id("Q"),Mul(F.Id("A"),F.Id("B"))),Add(Mul(Call("comm",F.Id("Q"),F.Id("A")),F.Id("B")),Mul(F.Id("A"),Call("comm",F.Id("Q"),F.Id("B"))))))))),
+        All(S,Nat(),Equal(Call("hamiltonian",S),Seq(new Formula.Subscript(Sum,Seq(PairVariables(),InMacro,Call("edges"))),Sp,Add(Mul(Call("raising",S,I),Call("lowering",S,J)),Mul(Call("lowering",S,I),Call("raising",S,J)))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(X,C(),Equal(At(Mul(Call("lowering",S,I),Call("binomialProduct",S)),X),Mul(Call("ofNat",Call("val",At(X,I))),Call("binomialProduct",S,X)))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),Equal(Call("comm",Call("totalLowering",S),Call("raising",S,I)),Mul(new Formula.Negate(D(2)),Call("z",S,I))))),
+        All(F.Id("n"),Nat(),Equal(Mul(Adj(Call("Jplus",F.Id("n"))),Call("Jplus",F.Id("n"))),Call("diag",Seq(F.Id("r"),Mapsto,Mul(Call("ofNat",Call("val",F.Id("r"))),Sub(Add(Call("ofNat",F.Id("n")),D(1)),Call("ofNat",Call("val",F.Id("r"))))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),Equal(Call("comm",Call("totalLowering",S),Call("z",S,I)),Call("lowering",S,I)))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(X,C(),Equal(At(Mul(Call("raising",S,I),Call("binomialProduct",S)),X),Mul(Sub(Mul(D(2),Call("ofNat",S)),Call("ofNat",Call("val",At(X,I)))),Call("binomialProduct",S,X)))))),
+        All(F.Id("n"),Nat(),Equal(Mul(Call("Jplus",F.Id("n")),Adj(Call("Jplus",F.Id("n")))),Call("diag",Seq(F.Id("r"),Mapsto,Mul(Add(Call("ofNat",Call("val",F.Id("r"))),D(1)),Sub(Call("ofNat",F.Id("n")),Call("ofNat",Call("val",F.Id("r"))))))))),
+        All(S,Nat(),Call("Hermitian",Call("restrictedHamiltonian",S))),
+        All(S,Nat(),new Formula.Relation(Call("singletSpace",S),FormulaRelationOperator.SubsetOf,Call("zeroWeightSpace",S))),
+        All(S,Nat(),All(V,C(),Imp(new Formula.Relation(V,FormulaRelationOperator.MemberOf,Call("singletSpace",S)),Equal(Call("expect",V,Call("hamiltonian",S)),Mul(new Formula.Fraction(D(4),D(3)),Call("expect",V,Call("isotropic",S))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(F.Id("A"),Call("Matrix",W(),W(),Complexes()),All(V,C(),All(X,C(),Equal(At(Mul(Call("site",S,I,F.Id("A")),V),X),Seq(new Formula.Subscript(Sum,Seq(F.Id("r"),InMacro,W())),Sp,Mul(Call("A",At(X,I),F.Id("r")),At(V,Call("update",X,I,F.Id("r"))))))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(F.Id("A"),Call("Matrix",W(),W(),Complexes()),All(F.Id("B"),Call("Matrix",W(),W(),Complexes()),Equal(Call("site",S,I,Add(F.Id("A"),F.Id("B"))),Add(Call("site",S,I,F.Id("A")),Call("site",S,I,F.Id("B")))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(F.Id("A"),Call("Matrix",W(),W(),Complexes()),Equal(Adj(Call("site",S,I,F.Id("A"))),Call("site",S,I,Adj(F.Id("A"))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(J,Call("Fin",D(4)),Imp(new Formula.Relation(I,FormulaRelationOperator.NotEqual,J),All(F.Id("A"),Call("Matrix",W(),W(),Complexes()),All(F.Id("B"),Call("Matrix",W(),W(),Complexes()),Equal(Mul(Call("site",S,I,F.Id("A")),Call("site",S,J,F.Id("B"))),Mul(Call("site",S,J,F.Id("B")),Call("site",S,I,F.Id("A")))))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(F.Id("A"),Call("Matrix",W(),W(),Complexes()),All(F.Id("B"),Call("Matrix",W(),W(),Complexes()),Equal(Call("site",S,I,Mul(F.Id("A"),F.Id("B"))),Mul(Call("site",S,I,F.Id("A")),Call("site",S,I,F.Id("B")))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(F.Id("c"),Complexes(),All(F.Id("A"),Call("Matrix",W(),W(),Complexes()),Equal(Call("site",S,I,Mul(F.Id("c"),F.Id("A"))),Mul(F.Id("c"),Call("site",S,I,F.Id("A")))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),All(V,C(),All(X,C(),Equal(At(Mul(Call("z",S,I),V),X),Mul(Sub(Call("ofNat",S),Call("ofNat",Call("val",At(X,I)))),At(V,X))))))),
+        All(S,Nat(),All(I,Call("Fin",D(4)),Equal(Call("z",S,I),Call("diag",Seq(X,Mapsto,Sub(Call("ofNat",S),Call("ofNat",Call("val",At(X,I))))))))),
+        All(S,Nat(),All(V,C(),IffFormula(new Formula.Relation(V,FormulaRelationOperator.MemberOf,Call("zeroWeightSpace",S)),All(X,C(),Imp(new Formula.Relation(Seq(new Formula.Subscript(Sum,Seq(I,InMacro,Call("Fin",D(4)))),Sp,Call("val",At(X,I))),FormulaRelationOperator.NotEqual,Mul(D(4),S)),Equal(At(V,X),D(0))))))),
+        All(S,Nat(),All(V,C(),Imp(new Formula.Relation(V,FormulaRelationOperator.MemberOf,Call("zeroWeightSpace",S)),new Formula.Relation(Mul(Call("hamiltonian",S),V),FormulaRelationOperator.MemberOf,Call("zeroWeightSpace",S)))))]);
 }
