@@ -269,4 +269,5 @@ For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2
 - Dependency: [D5/S3/Quantum/Magic/WignerDistanceMinimum](../Magic/WignerDistanceMinimum.md)
 - Dependency: [D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral](../Measurement/OccupationPartialTransposeSpectral.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity](../QuantumChannels/EntanglementBreakingOverlapPurity.md)
 - Dependency: [D5/S3/Quantum/Recovery/FiniteLocalLatitudeGeometry](../Recovery/FiniteLocalLatitudeGeometry.md)

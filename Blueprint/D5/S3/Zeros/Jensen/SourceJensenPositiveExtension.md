@@ -4,7 +4,31 @@
 
 Nonnegative source residues exactly characterize positive real extension.
 
-**Theorem 1.1 (The residue criterion and its arrow matrix).**
+**Definition 1.1 (The Laguerre expression).**
+
+$$\forall p \in \mathbb{R}[X],\; \forall x \in \mathbb{R},\; LaguerreAt\left(p, x\right) = \left(0 \le eval\left(derivative\left(p\right), x\right)^{2} - eval\left(p, x\right) \cdot eval\left(derivative\left(derivative\left(p\right)\right), x\right)\right)$$
+
+*Formalization.* `D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.LaguerreAt` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a real polynomial p and real x, LaguerreAt means that p'(x)^2-p(x)p''(x) is nonnegative. The definition includes zero and constant polynomials.
+
+**Theorem 1.2 (Splitting implies the Laguerre inequality).**
+
+$$\forall p \in \mathbb{R}[X],\; Splits\left(p\right) \Rightarrow \left(\forall x \in \mathbb{R},\; LaguerreAt\left(p, x\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.laguerre_splits` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every real polynomial splitting over the reals satisfies the Laguerre inequality at every real argument. There is no nonzero, monic, coefficient-sign, root-sign or simple-root hypothesis. At a root the expression is a square. Away from the roots, differentiating the finite logarithmic derivative gives a nonnegative sum of reciprocal squares weighted by root multiplicities.
+
+**Theorem 1.3 (The residue criterion and its arrow matrix).**
 
 $$\begin{aligned}\forall n\in \mathbb{N},\quad \forall \lambda:\operatorname{Fin}(n+1)\to \mathbb{R},\\a_{0}=1\land \operatorname{Injective}(\lambda)\land (\forall i,0< \lambda_{i}\land q_{d-1}(\lambda_{i})=0)\implies\\(\forall i,0< t_{i})\land (\forall i,q_{d}''(t_{i})\neq 0)\\\land (\operatorname{PositiveSplit}(q_{d})\iff (\forall i,0\le \mathrm{eta}_{i}))\\\land ((\forall i,0\le \mathrm{eta}_{i})\implies \operatorname{PosDef}(K)\land \operatorname{charpoly}(K)=q_{d})\end{aligned}$$
 
@@ -32,6 +56,8 @@ Under the preceding row's complete distinct positive roots and the stated source
 
 ## References
 
+- Truth anchor: `D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.LaguerreAt`
+- Truth anchor: `D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.laguerre_splits`
 - Truth anchor: `D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.source_jensen_positive_extension`
 - Dependency: [D5/S3/Zeros/Jensen/SourceJensenIntegralExtension](SourceJensenIntegralExtension.md)
 - Dependency: [D5/S3/Zeros/Jensen/SourceThetaMomentBounds](SourceThetaMomentBounds.md)
