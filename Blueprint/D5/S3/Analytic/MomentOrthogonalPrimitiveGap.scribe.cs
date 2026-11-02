@@ -30,7 +30,7 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "coefficient formula, finite expansion and expansion_parseval. The "
                         + "existing normalization is integral norm(L_n)^2=1/(2n+1). The finite inverse "
                         + "Sturm construction uses the spanning and mixed expansion identities "
-                        + "and the finite primitive estimate proved in PolynomialL2Derivative.")),
+                        + "and the finite primitive estimate proved in LegendrePrimitiveGap.")),
                     Paragraph(Text("Set w=x(1-x) and T(p)=-(w p')'. The coefficient "
                         + "calculation gives coeff_k(Tp)=k(k+1) coeff_k(p)-(k+1)^2 coeff_(k+1)(p). "
                         + "The two binomial recurrences in Mathlib imply T(L_n)=n(n+1)L_n, "

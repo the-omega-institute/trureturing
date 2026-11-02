@@ -6,7 +6,7 @@
    utility: none
    digest: Moment cancellation gives a quantitative complex L2 primitive gap. -/
 
-import D5.S3.Analytic.PolynomialL2Derivative
+import D5.S3.Analytic.LegendrePrimitiveGap
 import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.ContinuousMapDense
 import Mathlib.Topology.ContinuousMap.Weierstrass
@@ -16,7 +16,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 /-!
 # Complex L2 moment-orthogonal primitive energy
 
-The finite inverse Sturm estimate in `PolynomialL2Derivative` extends to
+The finite inverse Sturm estimate in `LegendrePrimitiveGap` extends to
 arbitrary complex L2 functions by corrected polynomial approximation.
 The correction removes the first q Legendre coordinates and does not
 increase the approximation error. A bounded linear map on the actual
@@ -236,7 +236,7 @@ private lemma correction_nonexpansive (d q : ℕ) (a : ℕ → ℂ) (A : ℝ →
     rw [hu, hv]
     simp only [pv, he, eval_add]
   have huv : inner ℂ (polyLp u) (polyLp v) = 0 := by
-    rw [poly_inner, PolynomialL2Derivative.mixed_expansion]
+    rw [poly_inner, LegendrePrimitiveGap.mixed_expansion]
     apply Finset.sum_eq_zero
     intro n hn
     by_cases h : n < q <;> simp [low, high, h]
@@ -429,7 +429,7 @@ private lemma unit_primitive_gap (q : ℕ) (hq : 1 ≤ q) (A : ℝ → ℂ)
     simp_rw [he, energy_eq_norm_sq hA]
     exact tendsto_const_nhds.mul (hlim.norm.pow 2)
   exact le_of_tendsto_of_tendsto' hleft hright
-    (fun j => PolynomialL2Derivative.complex_legendre_primitive_gap (d j) q hq (a j) (ha j))
+    (fun j => LegendrePrimitiveGap.complex_legendre_primitive_gap (d j) q hq (a j) (ha j))
 
 /-- Dilation of the merely L2 input, its moments and its actual primitive.
 The energy factors are D^{-1} and D^{-3}; these are essential to D^2. -/
