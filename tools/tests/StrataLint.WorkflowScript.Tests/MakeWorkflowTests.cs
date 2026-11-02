@@ -95,6 +95,7 @@ public sealed partial class MakeWorkflowTests
         "search-reduction-sensitivity-v1",
         "search-reduction-production-negative",
         "search-reduction-probe-cache-test",
+        "search-reduction-information-cache-test",
         "search-reduction-index-failure-test",
         "search-reduction-replay-test",
         "search-reduction-replay-calibration",

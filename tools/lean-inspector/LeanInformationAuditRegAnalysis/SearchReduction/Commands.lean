@@ -1022,6 +1022,15 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   let .observed result := record.outcome | throwError "search.probe_cache_invalid_outcome"
   unless (← auditProbeCertificates source request result).isNone do
     throwError "search.probe_cache_rejection_mismatch"
+  -- The record authenticates computational evidence. Optional information is
+  -- an ordinary assessment of current compiled artifacts, even on hot replay.
+  let result ← if request.informationApplication.isSome then do
+    profilePhase "probe/information-start"
+    let information ← acquireInformationFromOwners owners request.target request.additions
+      request.informationApplication
+    profilePhase "probe/information-end"
+    pure (withInformation result information)
+    else pure result
   profilePhase "probe/publication-start"
   liftTermElabM <| publish name result (some source) (some record.targetHeader)
   emitLookupRecord "PROBE_CACHE_CURRENT_CLASSIFIER checked=true input_versions=explicit"

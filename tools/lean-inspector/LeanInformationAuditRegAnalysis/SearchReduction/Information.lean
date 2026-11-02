@@ -137,16 +137,47 @@ private def readFace (store : RawArtifacts.Store) (state : ArtifactRegistration.
     application := some application.name
     registration := some record.occurrence.realizationName }
 
+/-- Detach the full report tree before its compiled input regions are freed. -/
+private partial def ownJson : Json → Json
+  | .null => .null
+  | .bool value => .bool value
+  | .num value => .num {
+      mantissa := (toString value.mantissa).toInt!
+      exponent := (toString value.exponent).toNat! }
+  | .str value => .str (String.ofList value.toList)
+  | .arr values => .arr (values.map ownJson)
+  | .obj values => Json.mkObj (values.toArray.toList.map fun (key, value) =>
+      (String.ofList key.toList, ownJson value))
+
+/-- Ownership discovery reads compiler tables without executing initializers.
+Only detached import names leave this region's local read boundary. -/
+@[noinline] private unsafe def informationOwnerStep (owner name : Name) :
+    IO (Bool × Array Name × Array CompactedRegion) := do
+  let (data, regions) ← RawArtifacts.readOwn owner
+  return (data.constNames.contains name,
+    data.imports.map (fun item => RawArtifacts.ownName item.module), regions)
+
+private unsafe def informationOwner (owners : Array Name) (name : Name) : IO Name := do
+  let mut pending := owners.toList
+  let mut seen : NameSet := {}
+  while let owner :: rest := pending do
+    pending := rest
+    if seen.contains owner then continue
+    seen := seen.insert owner
+    let (found, imports, regions) ← informationOwnerStep owner name
+    for region in regions.reverse do region.free
+    if found then return owner
+    pending := pending ++ imports.toList
+  throw <| IO.userError "application_owner_missing"
+
 /-- The ordinary assessor is rerun on this exact compiled request. Its typed
 records accompany the optional reading; no receipt or JSON is read as evidence. -/
-unsafe def acquireInformation (source : Environment) (target : Name)
+unsafe def acquireInformationFromOwners (owners : Array Name) (target : Name)
     (structures : Array Name) (application : Option Name) : IO InformationReading := do
   let some name := application | return {}
   let reader ← IO.mkRef ({} : RawArtifacts.Store)
   try
-    let some index := source.getModuleIdxFor? name
-      | throw <| IO.userError "application_owner_missing"
-    let owner := source.header.moduleNames[index.toNat]!
+    let owner ← informationOwner owners name
     RawArtifacts.loadModule owner reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     let store ← reader.get
@@ -173,8 +204,22 @@ unsafe def acquireInformation (source : Environment) (target : Name)
     let axioms ← CompiledAxioms.collectAxiomsShared store.constants.find? closures name
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
       throw <| IO.userError "unaccepted_axiom_closure"
-    return {reading with ordinaryRecords := records}
+    -- Every published field must outlive the mapped artifacts released below.
+    return {reading with
+      application := reading.application.map RawArtifacts.ownName
+      registration := reading.registration.map RawArtifacts.ownName
+      ordinaryRecords := records.map ownJson}
   catch error => return {face := .notBound error.toString, application := some name}
   finally RawArtifacts.release reader
+
+/-- The ordinary environment supplies ownership only. Assessment always reads
+current compiled artifacts through the same extension-free reader. -/
+unsafe def acquireInformation (source : Environment) (target : Name)
+    (structures : Array Name) (application : Option Name) : IO InformationReading := do
+  let some name := application | return {}
+  let some index := source.getModuleIdxFor? name
+    | return {face := .notBound "application_owner_missing", application := some name}
+  acquireInformationFromOwners #[source.header.moduleNames[index.toNat]!]
+    target structures application
 
 end LeanInformationAudit.SearchReduction
