@@ -17,6 +17,8 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open private Values values route_windows
+  Values.z Values.x Values.y Values.H Values.A Values.B Values.L Values.K
+  Values.SU Values.SV Values.SW Values.alpha Values.gamma Values.D Values.Dp Values.E Values.F
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Arithmetic
 open private pieces banks terminals word banks_inventory banks_good banks_masses
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.PhysicalBanks
@@ -25,7 +27,7 @@ open private size sourceMod base newBase charge chainLength chainStart nextBase 
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private oldMass newMass
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private DataCertificate orderedPackets finiteChecks finiteEarChecks
+open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open private blocksWord
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
@@ -44,7 +46,7 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   let q : ℤ := 2^(b-a)
   let s : ℤ := 2^(a-d-2)
   let V := values w h v q
-  let first := decide (V.gamma≤V.Dp)
+  let first := decide ((Values.gamma V)≤(Values.Dp V))
   let r := if first then 2*s else 3*s
   have hw : 4≤w := by
     have hh := pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) hd
@@ -70,17 +72,17 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
     rw [←pow_add]
     congr 1
     omega
-  have hbase : base a b c d=![V.A,V.B,V.L,V.K] := by
+  have hbase : base a b c d=![(Values.A V),(Values.B V),(Values.L V),(Values.K V)] := by
     funext i
     fin_cases i <;> dsimp [base,V,values]
-    all_goals simp only [hy,hx,hz]
+    all_goals try simp only [hy,hx,hz]
     all_goals dsimp [w];ring
-  have hnewbase : newBase a b c d=![2*V.A,V.SU,V.SV,V.SW] := by
+  have hnewbase : newBase a b c d=![2*(Values.A V),(Values.SU V),(Values.SV V),(Values.SW V)] := by
     funext i
     fin_cases i <;> dsimp [newBase,charge]
     all_goals rw [hbase]
     all_goals dsimp [V,values]
-    all_goals simp only [hy,hx,hz]
+    all_goals try simp only [hy,hx,hz]
     all_goals ring
   let f := oldValue a b c d
   let g := newValue a b c d
@@ -91,7 +93,7 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   let ps : List (Finset ℕ × ℕ) := [(B 0,T 0),(B 1,T 1),(B 2,T 2),(B 3,T 3)]
   have hp := banks_inventory a b c d hd hdc hca hab first
   have hn (j : Fin 4) : (P j).Nodup := by
-    have ht := hp.nodup_iff.mpr (List.nodup_range _)
+    have ht := hp.nodup_iff.mpr List.nodup_range
     simp only [word,List.nodup_append] at ht
     fin_cases j <;> tauto
   have hperm (j : Fin 4) : (B j).toList.Perm (P j) := by
@@ -122,14 +124,16 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   rw [hbase] at mo
   rw [hnewbase] at mg
   dsimp only at mo mg
-  change ((P 0).map f).sum=((2:ℤ)^(b-1)-q)*V.L ∧
-    ((P 1).map f).sum=((2:ℤ)^(a-1)-r)*V.K ∧
-    ((P 2).map f).sum=((2:ℤ)^(d-1)-1)*V.A+(r-v)*V.K ∧
-    ((P 3).map f).sum=((2:ℤ)^(c-1)-1)*V.B+(q-1)*V.L+(v-1)*V.K at mo
-  change ((P 0).map g).sum=((2:ℤ)^(b-1)-q)*V.SV ∧
-    ((P 1).map g).sum=((2:ℤ)^(a-1)-r)*V.SW ∧
-    ((P 2).map g).sum=((2:ℤ)^(d-1)-1)*(2*V.A)+(r-v)*V.SW ∧
-    ((P 3).map g).sum=((2:ℤ)^(c-1)-1)*V.SU+(q-1)*V.SV+(v-1)*V.SW at mg
+  simp only [sub_add_cancel,Matrix.cons_val_zero,Matrix.cons_val_one,
+    Matrix.cons_val_two,Matrix.cons_val_three] at mo mg
+  change ((P 0).map f).sum=((2:ℤ)^(b-1)-q)*(Values.L V) ∧
+    ((P 1).map f).sum=((2:ℤ)^(a-1)-r)*(Values.K V) ∧
+    ((P 2).map f).sum=((2:ℤ)^(d-1)-1)*(Values.A V)+(r-v)*(Values.K V) ∧
+    ((P 3).map f).sum=((2:ℤ)^(c-1)-1)*(Values.B V)+(q-1)*(Values.L V)+(v-1)*(Values.K V) at mo
+  change ((P 0).map g).sum=((2:ℤ)^(b-1)-q)*(Values.SV V) ∧
+    ((P 1).map g).sum=((2:ℤ)^(a-1)-r)*(Values.SW V) ∧
+    ((P 2).map g).sum=((2:ℤ)^(d-1)-1)*(2*(Values.A V))+(r-v)*(Values.SW V) ∧
+    ((P 3).map g).sum=((2:ℤ)^(c-1)-1)*(Values.SU V)+(q-1)*(Values.SV V)+(v-1)*(Values.SW V) at mg
   have native (j : Fin 4) := native_masses a b c d (by omega) (by omega) (by omega) hd j
   have n0 := native 2
   have n1 := native 3
@@ -139,7 +143,8 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
     rw [Nat.cast_sub (by have := Nat.two_pow_pos (n-1);omega)]
     norm_cast
   simp only [chainLength,chainStart,nextBase,nextNewBase,hbase,hnewbase,hcast,
-    Matrix.cons_val_zero,Matrix.cons_val_succ,Matrix.cons_val_zero',Matrix.cons_val_succ',
+    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+    Matrix.cons_val_succ,
     Matrix.vecHead,Matrix.vecTail,Function.comp_apply,zero_add] at n0 n1 n2 n3
   have e0 : d+c+(b-1)=T 0 := by dsimp [T,terminals];omega
   have e1 : d+c+b+(a-1)=T 1 := by dsimp [T,terminals];omega
@@ -147,55 +152,75 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   have e3 : d+(c-1)=T 3 := by dsimp [T,terminals];omega
   rw [e0] at n0
   rw [e1] at n1
-  rw [e2] at n2
   rw [e3] at n3
+  change ((2:ℤ)^(b-1)-1)*(Values.L V)+f (T 0)=(Values.K V)-(Values.L V) ∧
+    ((2:ℤ)^(b-1)-1)*(Values.SV V)+g (T 0)=(Values.SW V)-(Values.SV V) ∧
+    2*f (T 0)=(Values.K V)-N ∧ 2*g (T 0)=(Values.SW V)-(2*N+1) at n0
+  change ((2:ℤ)^(a-1)-1)*(Values.K V)+f (T 1)=(Values.A V)-(Values.K V) ∧
+    ((2:ℤ)^(a-1)-1)*(Values.SW V)+g (T 1)=(Values.A V)-(Values.SW V) ∧
+    2*f (T 1)=(Values.A V)-N ∧ 2*g (T 1)=(Values.A V)-(2*N+1) at n1
+  change ((2:ℤ)^(d-1)-1)*(Values.A V)+f (T 2)=(Values.B V)-(Values.A V) ∧
+    ((2:ℤ)^(d-1)-1)*((2*Values.A V))+g (T 2)=(Values.SU V)-((2*Values.A V)) ∧
+    2*f (T 2)=(Values.B V)-N ∧ 2*g (T 2)=(Values.SU V)-(2*N+1) at n2
+  change ((2:ℤ)^(c-1)-1)*(Values.B V)+f (T 3)=(Values.L V)-(Values.B V) ∧
+    ((2:ℤ)^(c-1)-1)*(Values.SU V)+g (T 3)=(Values.SV V)-(Values.SU V) ∧
+    2*f (T 3)=(Values.L V)-N ∧ 2*g (T 3)=(Values.SV V)-(2*N+1) at n3
   let M := fun j : Fin 4 => oldMass a b c d (B j)
   let G := fun j : Fin 4 => newMass a b c d (B j)
-  have m0 : M 0+f (T 0)=V.D := by
+  have m0 : M 0+f (T 0)=(Values.D V) := by
     rw [show M 0=((P 0).map f).sum from hm false 0,mo.1]
-    have he : V.D=V.K-q*V.L := rfl
+    have he : (Values.D V)=(Values.K V)-q*(Values.L V) := rfl
     rw [he]
     nlinarith only [n0.1]
-  have m1 : M 1+f (T 1)=V.A-r*V.K := by
+  have m1 : M 1+f (T 1)=(Values.A V)-r*(Values.K V) := by
     rw [show M 1=((P 1).map f).sum from hm false 1,mo.2.1]
     nlinarith only [n1.1]
-  have m2 : M 2+f (T 2)=V.B-V.A+(r-v)*V.K := by
+  have m2 : M 2+f (T 2)=(Values.B V)-(Values.A V)+(r-v)*(Values.K V) := by
     rw [show M 2=((P 2).map f).sum from hm false 2,mo.2.2.1]
     nlinarith only [n2.1]
-  have m3 : M 3+f (T 3)=V.L-V.B+(q-1)*V.L+(v-1)*V.K := by
+  have m3 : M 3+f (T 3)=(Values.L V)-(Values.B V)+(q-1)*(Values.L V)+(v-1)*(Values.K V) := by
     rw [show M 3=((P 3).map f).sum from hm false 3,mo.2.2.2]
     nlinarith only [n3.1]
-  have g0 : G 0+g (T 0)=V.Dp := by
+  have g0 : G 0+g (T 0)=(Values.Dp V) := by
     rw [show G 0=((P 0).map g).sum from hm true 0,mg.1]
-    have he : V.Dp=V.SW-q*V.SV := rfl
+    have he : (Values.Dp V)=(Values.SW V)-q*(Values.SV V) := rfl
     rw [he]
     nlinarith only [n0.2.1]
-  have g1 : G 1+g (T 1)=V.A-r*V.SW := by
+  have g1 : G 1+g (T 1)=(Values.A V)-r*(Values.SW V) := by
     rw [show G 1=((P 1).map g).sum from hm true 1,mg.2.1]
     nlinarith only [n1.2.1]
-  have g2 : G 2+g (T 2)=V.SU-2*V.A+(r-v)*V.SW := by
+  have g2 : G 2+g (T 2)=(Values.SU V)-2*(Values.A V)+(r-v)*(Values.SW V) := by
     rw [show G 2=((P 2).map g).sum from hm true 2,mg.2.2.1]
     nlinarith only [n2.2.1]
-  have g3 : G 3+g (T 3)=V.SV-V.SU+(q-1)*V.SV+(v-1)*V.SW := by
+  have g3 : G 3+g (T 3)=(Values.SV V)-(Values.SU V)+(q-1)*(Values.SV V)+(v-1)*(Values.SW V) := by
     rw [show G 3=((P 3).map g).sum from hm true 3,mg.2.2.2]
     nlinarith only [n3.2.1]
-  have eold : M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)=V.E := by
-    have he : V.E=V.B+V.D-v*V.K := rfl
+  have eold : M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)=(Values.E V) := by
+    have he : (Values.E V)=(Values.B V)+(Values.D V)-v*(Values.K V) := rfl
     rw [he]
     nlinarith only [m0,m1,m2]
-  have enew : G 0+g (T 0)+G 1+g (T 1)+G 2+g (T 2)+V.A=V.F := by
-    have he : V.F=V.SU+V.Dp-v*V.SW := rfl
+  have enew : G 0+g (T 0)+G 1+g (T 1)+G 2+g (T 2)+(Values.A V)=(Values.F V) := by
+    have he : (Values.F V)=(Values.SU V)+(Values.Dp V)-v*(Values.SW V) := rfl
     rw [he]
     nlinarith only [g0,g1,g2]
   have zold : M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)+M 3+f (T 3)=0 := by
-    have he : V.D=V.K-q*V.L := rfl
+    have he : (Values.D V)=(Values.K V)-q*(Values.L V) := rfl
     nlinarith only [he,m0,m1,m2,m3]
-  have znew : G 0+g (T 0)+G 1+g (T 1)+G 2+g (T 2)+G 3+g (T 3)+V.A=0 := by
-    have he : V.Dp=V.SW-q*V.SV := rfl
+  have znew : G 0+g (T 0)+G 1+g (T 1)+G 2+g (T 2)+G 3+g (T 3)+(Values.A V)=0 := by
+    have he : (Values.Dp V)=(Values.SW V)-q*(Values.SV V) := rfl
     nlinarith only [he,g0,g1,g2,g3]
   obtain ⟨w0,w0n,w1,w1n,w2,w2n⟩ := route_windows w h v q hw hh hv hq
-  have rdef : r=(if V.gamma≤V.Dp then 2*h*v else 3*h*v) := by simp [r,first,hs]
+  have rdef : r=(if (Values.gamma V)≤(Values.Dp V) then 2*h*v else 3*h*v) := by simp [r,first,hs,mul_assoc]
+  dsimp only [V] at rdef
   rw [←rdef] at w1 w1n
+  change 0≤Values.D V ∧ 2*Values.D V≤Values.K V-1 at w0
+  change 0≤Values.Dp V ∧ 2*Values.Dp V≤Values.SW V-1 at w0n
+  change 0≤Values.D V+Values.A V-r*Values.K V ∧
+    2*(Values.D V+Values.A V-r*Values.K V)≤Values.A V-1 at w1
+  change 0≤Values.Dp V+Values.A V+(if Values.gamma V≤Values.Dp V then 0 else Values.A V)-r*Values.SW V ∧
+    2*(Values.Dp V+Values.A V+(if Values.gamma V≤Values.Dp V then 0 else Values.A V)-r*Values.SW V)≤Values.A V-1 at w1n
+  change 0≤Values.E V ∧ 2*Values.E V≤Values.B V-1 at w2
+  change 0≤Values.F V ∧ 2*Values.F V≤Values.SU V-1 at w2n
   have win (e S z C : ℤ) (he : 0≤e ∧ 2*e≤S-1)
       (hz : 2*z=S-(2*C+1)) : 0≤e ∧ e-z≤C := by omega
   have hN : 2*(N/2)+1=N := by
@@ -205,28 +230,32 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   have lastO : 0≤-f (T 3) ∧ -f (T 3)≤N/2 := by
     have hh := tab.1 2
     rw [hbase] at hh
-    dsimp at hh
+    change 1 ≤ Values.L V ∧ Values.L V < N at hh
     have hz := n3.2.2.1
+    change 2*f (T 3)=Values.L V-N at hz
     omega
   have lastN : 0≤-g (T 3) ∧ -g (T 3)≤N := by
     have hb := new_base_bounds a b c d (by omega) (by omega) (by omega) hd 2
     rw [hnewbase] at hb
-    dsimp at hb
+    change 1 ≤ Values.SV V ∧ Values.SV V < 2*N+1 at hb
     have hz := n3.2.2.2
+    change 2*g (T 3)=Values.SV V-(2*N+1) at hz
     omega
-  refine ⟨{ packets := ps, earSlot := if first then ⟨2,by decide⟩ else ⟨1,by decide⟩,
-    negativeOrder := ?_, positiveLabels := ?_, partition := ?_, oldEndpoints := ?_, newEndpoints := ?_ }⟩
-  · apply Multiset.coe_eq_coe.mp
-    dsimp [ps,T,terminals,negatives,size]
-    simp only [List.map_cons,List.map_nil,←Multiset.coe_add,Multiset.coe_singleton]
-    ac_rfl
+  refine ⟨DataCertificate.mk ps ?_ ⟨if first then 2 else 1,by cases first <;> decide⟩ ?_ ?_ ?_ ?_⟩
+  · change [T 0,T 1,T 2,T 3].Perm (negatives a b c d)
+    have he : negatives a b c d=[T 2,T 3,T 0,T 1] := by
+      dsimp [negatives,T,terminals,size]
+    rw [he]
+    change ([T 0,T 1]++[T 2,T 3]).Perm ([T 2,T 3]++[T 0,T 1])
+    exact List.perm_append_comm
   · intro pkt hpkt i hi
     simp only [ps,List.mem_cons,List.mem_nil_iff,or_false] at hpkt
     rcases hpkt with rfl|rfl|rfl|rfl
     all_goals exact banks_good a b c d hd hdc hca hab first _ i (List.mem_toFinset.mp hi)
-  · have he : blocksWord (orderedPackets ps) ~ word a b c d first := by
+  · have he : (blocksWord (orderedPackets ps)).Perm (word a b c d first) := by
       dsimp [ps,orderedPackets,blocksWord,word]
-      simpa only [List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using
+      simpa only [List.map_cons,List.map_nil,blocksWord,
+        List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using
         (((((((hperm 0).append_right [T 0]).append (hperm 1)).append_right [T 1]).append
           (hperm 2)).append_right [T 2]).append (hperm 3)).append_right [T 3]
     exact Multiset.coe_eq_coe.mpr (he.trans hp)
@@ -238,21 +267,21 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
       M 0+f (T 0)+M 1+f (T 1)+M 2≤N/2 ∧
       0≤M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)+M 3+f (T 3) ∧
       M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)+M 3≤N/2 ∧ True
-    have k0 := win V.D V.K (f (T 0)) (N/2) w0 (by have hz := n0.2.2.1;omega)
-    have k1 := win (V.D+V.A-r*V.K) V.A (f (T 1)) (N/2) w1
+    have k0 := win (Values.D V) (Values.K V) (f (T 0)) (N/2) w0 (by have hz := n0.2.2.1;omega)
+    have k1 := win ((Values.D V)+(Values.A V)-r*(Values.K V)) (Values.A V) (f (T 1)) (N/2) w1
       (by have hz := n1.2.2.1;omega)
-    have k2 := win V.E V.B (f (T 2)) (N/2) w2 (by have hz := n2.2.2.1;omega)
+    have k2 := win (Values.E V) (Values.B V) (f (T 2)) (N/2) w2 (by have hz := n2.2.2.1;omega)
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,trivial⟩ <;>
       nlinarith only [k0.1,k0.2,k1.1,k1.2,k2.1,k2.2,m0,m1,m2,eold,zold,lastO.2]
   · change finiteEarChecks (newMass a b c d) g N (base a b c d 0) 0
       (if first then (2:ℕ) else 1) ps
     rw [hbase]
-    change finiteEarChecks (newMass a b c d) g N V.A 0
+    change finiteEarChecks (newMass a b c d) g N (Values.A V) 0
       (if first then (2:ℕ) else 1) ps
-    have k0 := win V.Dp V.SW (g (T 0)) N w0n n0.2.2.2
-    have k2 := win V.F V.SU (g (T 2)) N w2n n2.2.2.2
-    by_cases he : V.gamma≤V.Dp
-    all_goals have k1 := win _ V.A (g (T 1)) N w1n n1.2.2.2
+    have k0 := win (Values.Dp V) (Values.SW V) (g (T 0)) N w0n n0.2.2.2
+    have k2 := win (Values.F V) (Values.SU V) (g (T 2)) N w2n n2.2.2.2
+    by_cases he : (Values.gamma V)≤(Values.Dp V)
+    all_goals have k1 := win _ (Values.A V) (g (T 1)) N w1n n1.2.2.2
     all_goals simp only [first,he,decide_true,decide_false,ite_true,ite_false,
       finiteEarChecks,finiteChecks,ps,zero_add] at *
     all_goals change _ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _ ∧ True
