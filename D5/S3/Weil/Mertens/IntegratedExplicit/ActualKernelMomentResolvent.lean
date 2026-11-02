@@ -65,7 +65,10 @@ private lemma correlation_neg (x : I → ℝ) (a : I → ℂ) (s : ℝ) :
   have he (v : ℝ) : f (v + s) =
       star (star («prefix» x a (v + s)) * «prefix» x a v) := by
     dsimp [f]
-    rw [show v + s - s = v by ring, star_mul, star_star]
+    rw [show v + s - s = v by ring]
+    change star («prefix» x a v) * «prefix» x a (v + s) =
+      star (star («prefix» x a (v + s)) * «prefix» x a v)
+    rw [star_mul, star_star]
     ring
   simp_rw [he] at ht
   have hc : (∫ v : ℝ, star (star («prefix» x a (v + s)) * «prefix» x a v)) =
@@ -110,7 +113,7 @@ lemma S_half_window (D : ℝ) (hD : 0 ≤ D)
   rw [hw (-D) D (by linarith),
     ← intervalIntegral.integral_add_adjacent_intervals
       (hf.intervalIntegrable (-D) 0) (hf.intervalIntegrable 0 D), hn]
-  have hadd := intervalIntegral.integral_add
+  have hadd := intervalIntegral.integral_add (μ := (volume : Measure ℝ))
     ((hf.comp continuous_neg).intervalIntegrable 0 D) (hf.intervalIntegrable 0 D)
   dsimp only [Function.comp_def] at hadd
   rw [← hadd]
@@ -235,7 +238,7 @@ private lemma fullR_resolvent_reconstruction (D t : ℝ) (ht : t ∈ Icc (0 : �
   have hs : (∑ n ∈ primes D, weight n * pairedResolvent t (Real.log n)) =
       F D * (Real.exp (t / 2) + Real.exp (-t / 2)) +
         Chebyshev.psi (Real.exp t) * Real.exp (-t / 2) - F t * Real.exp (t / 2) := by
-    rw [Finset.sum_congr (s := primes D) rfl (fun n hn =>
+    rw [Finset.sum_congr (s₁ := primes D) rfl (fun n hn =>
       paired_weight t ht.1 n (Finset.mem_Icc.mp hn).1)]
     rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_filter,
       indices D t ht.2, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
@@ -356,7 +359,7 @@ theorem actual_fullR_resolvent_identity (D : ℝ) (hD : 0 ≤ D)
       have h := hprod.integral_prod_left
       apply h.congr
       filter_upwards [] with t
-      dsimp only [f]
+      dsimp only [Function.uncurry, f]
       rw [integral_mul_const]
     have hib : IntegrableOn (fun t => b D * M D * L t D * c t) (Icc 0 D) := by
       have hbcont : Continuous (fun t => b D * M D * L t D * c t) :=
@@ -417,7 +420,6 @@ private lemma W_eq_exponential_deficit (D : ℝ) (hD : 0 ≤ D)
     zero_mul, sub_zero] at he
   have hre := integral_re hi
   simp only [RCLike.re_to_complex] at hre
-  dsimp only at hre
   rw [← hre] at he
   simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
     zero_mul, sub_zero] at he
@@ -575,10 +577,10 @@ private lemma shifted_prefix (x : I → ℝ) (a : I → ℂ) (t r v : ℝ) :
   congr 1
   · apply Finset.sum_congr rfl
     intro i _
-    simp only [add_le_iff_le_sub_right]
+    simp only [← le_sub_iff_add_le]
   · apply Finset.sum_congr rfl
     intro i _
-    simp only [add_le_iff_le_sub_right]
+    simp only [← le_sub_iff_add_le]
     split_ifs <;> simp
 
 private lemma real_cross_translation (x : I → ℝ) (a : I → ℂ)
@@ -637,6 +639,7 @@ private lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
     «prefix» (shiftedNodes x t) (shiftedCoeffs a r) v).re = _
   rw [← hre]
   simp_rw [hterm, sub_eq_add_neg]
+  simp only [sub_eq_add_neg] at h1 h2 h3 h4
   have ha3 := integral_add ((h1.1.add (h2.1.const_mul r)).add (h3.1.const_mul r)) h4.1
   have ha2 := integral_add (h1.1.add (h2.1.const_mul r)) (h3.1.const_mul r)
   have ha1 := integral_add h1.1 (h2.1.const_mul r)
@@ -646,6 +649,7 @@ private lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
   have he2 : s - max t 0 - -max (-t) 0 = s - t := by linarith only [hdelta]
   have he3 : s - max (-t) 0 - -max t 0 = s + t := by linarith only [hdelta]
   have he4 : s - max (-t) 0 - -max (-t) 0 = s := by ring
+  simp only [sub_eq_add_neg] at he1 he2 he3 he4
   rw [h1.2, h2.2, h3.2, h4.2, he1, he2, he3, he4]
   ring
 
@@ -716,7 +720,6 @@ private lemma shifted_W (D : ℝ) (hD : 0 ≤ D)
   rw [ha2, ha1,
     integral_const_mul, integral_const_mul, integral_const_mul, hz, hs t, hs (-t),
     S_even D hD x a ha]
-  simp only [add_zero] at *
   dsimp only [W]
   ring
 
