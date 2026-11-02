@@ -132,6 +132,64 @@ private theorem deterministic_duration_unique
       cases hrec
       rfl
 
+/-- The specified unequal actual outgoing arrows produce the particular rooted
+collision obtained by exchanging their nonempty return blocks. Return segments may be empty. -/
+theorem branching_collision_inventory
+    (d : ∀ {a b : V}, (a ⟶ b) → ℝ) (r : V)
+    (recurrent : ∀ a b : V, Nonempty (Quiver.Path a b))
+    (z : V) (a b : Σ t : V, z ⟶ t) (hab : a ≠ b) :
+    ∃ (p : Quiver.Path r z) (A : Quiver.Path a.1 z) (B : Quiver.Path b.1 z),
+      let U := a.2.toPath.comp A
+      let W := b.2.toPath.comp B
+      0 < U.length ∧ 0 < W.length ∧
+      edgeWord U = ⟨z, a.1, a.2⟩ :: edgeWord A ∧
+      edgeWord W = ⟨z, b.1, b.2⟩ :: edgeWord B ∧
+      (⟨z, a.1, a.2⟩ : NamedEdge V) ≠ ⟨z, b.1, b.2⟩ ∧
+      p.comp (U.comp W) ≠ p.comp (W.comp U) ∧
+      duration d (p.comp (U.comp W)) = duration d p + duration d U + duration d W ∧
+      duration d (p.comp (W.comp U)) = duration d p + duration d W + duration d U ∧
+      readout d r ⟨z, p.comp (U.comp W)⟩ = readout d r ⟨z, p.comp (W.comp U)⟩ ∧
+      ¬ Function.Injective (readout d r) := by
+  obtain ⟨p⟩ := recurrent r z
+  obtain ⟨A⟩ := recurrent a.1 z
+  obtain ⟨B⟩ := recurrent b.1 z
+  let U := a.2.toPath.comp A
+  let W := b.2.toPath.comp B
+  have hfirst : (⟨z, a.1, a.2⟩ : NamedEdge V) ≠ ⟨z, b.1, b.2⟩ := by
+    intro h
+    exact hab (eq_of_heq (Sigma.mk.inj h).2)
+  have hdistinct : p.comp (U.comp W) ≠ p.comp (W.comp U) := by
+    intro hpath
+    have hw := congrArg edgeWord (p.comp_injective_right hpath)
+    simp only [U, W, edgeWord_comp, Quiver.Hom.toPath, edgeWord,
+      List.nil_append, List.cons_append] at hw
+    exact hfirst (List.cons.inj hw).1
+  have hleft : duration d (p.comp (U.comp W)) =
+      duration d p + duration d U + duration d W := by
+    simp only [duration_comp, add_assoc]
+  have hright : duration d (p.comp (W.comp U)) =
+      duration d p + duration d W + duration d U := by
+    simp only [duration_comp, add_assoc]
+  have hequal : readout d r ⟨z, p.comp (U.comp W)⟩ =
+      readout d r ⟨z, p.comp (W.comp U)⟩ := by
+    apply Prod.ext rfl
+    change duration d (p.comp (U.comp W)) = duration d (p.comp (W.comp U))
+    rw [hleft, hright]
+    ring
+  have hnoninjective : ¬ Function.Injective (readout d r) := by
+    intro hinj
+    exact hdistinct (eq_of_heq (Sigma.mk.inj (hinj hequal)).2)
+  refine ⟨p, A, B, ?_, ?_, ?_, ?_, hfirst, hdistinct, hleft, hright, hequal,
+    hnoninjective⟩
+  · simp only [U, Quiver.Path.length_comp, Quiver.Path.length_toPath]
+    omega
+  · simp only [W, Quiver.Path.length_comp, Quiver.Path.length_toPath]
+    omega
+  · simp only [U, edgeWord_comp, Quiver.Hom.toPath, edgeWord, List.nil_append,
+      List.cons_append]
+  · simp only [W, edgeWord_comp, Quiver.Hom.toPath, edgeWord, List.nil_append,
+      List.cons_append]
+
 /-- On a recurrent named graph, a positive additive clock and the endpoint recover
 all finite executed words exactly when every vertex has at most one named outgoing edge. -/
 theorem readout_injective_iff_no_branching
@@ -145,29 +203,15 @@ theorem readout_injective_iff_no_branching
   · intro hinj z
     refine ⟨?_⟩
     rintro ⟨a, e⟩ ⟨b, f⟩
-    obtain ⟨p⟩ := recurrent r z
-    obtain ⟨A⟩ := recurrent a z
-    obtain ⟨B⟩ := recurrent b z
-    let U := e.toPath.comp A
-    let W := f.toPath.comp B
-    have htime : duration d (p.comp (U.comp W)) =
-        duration d (p.comp (W.comp U)) := by
-      simp only [duration_comp]
-      ring
-    have hs := hinj (a₁ := ⟨z, p.comp (U.comp W)⟩)
-      (a₂ := ⟨z, p.comp (W.comp U)⟩) (Prod.ext rfl htime)
-    have hpath : p.comp (U.comp W) = p.comp (W.comp U) :=
-      eq_of_heq (Sigma.mk.inj hs).2
-    have hloops := p.comp_injective_right hpath
-    have hw := congrArg edgeWord hloops
-    simp only [U, W, edgeWord_comp, Quiver.Hom.toPath, edgeWord,
-      List.nil_append, List.cons_append] at hw
-    have he : (⟨z, a, e⟩ : NamedEdge V) = ⟨z, b, f⟩ := (List.cons.inj hw).1
-    exact eq_of_heq (Sigma.mk.inj he).2
+    by_contra hab
+    obtain ⟨p, A, B, _, _, _, _, _, _, _, _, _, hnoninjective⟩ :=
+      branching_collision_inventory d r recurrent z ⟨a, e⟩ ⟨b, f⟩ hab
+    exact hnoninjective hinj
   · intro unique x y hxy
     exact deterministic_duration_unique d hd unique x.2.length x.2 y.2 rfl
       (congrArg Prod.snd hxy)
 
+#print axioms branching_collision_inventory
 #print axioms readout_injective_iff_no_branching
 
 end D5.S3.ConceptDynamics.Spacetime.NamedPathDurationReconstruction
