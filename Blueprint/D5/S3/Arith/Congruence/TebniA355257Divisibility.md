@@ -118,6 +118,10 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; (1 \le k) \Rightarrow 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/TebniA355257Divisibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tebni355257-logcoef` (proved) by `D5/S3/Arith/Congruence/TebniA355257Divisibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tebni355257-logcoef","declaration_gid":"D5/S3/Arith/Congruence/TebniA355257Divisibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Luschny and Mélika Tebni (2022). *OEIS A355257, logarithmic coefficient array and congruence conjectures*. URL: <https://oeis.org/A355257>.

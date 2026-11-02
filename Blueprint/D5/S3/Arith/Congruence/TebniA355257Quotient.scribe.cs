@@ -22,12 +22,13 @@ internal sealed class TebniA355257QuotientDocument : IScribeDocumentDefinition
             Node("result", "The quotient congruence holds", ClaimBody(),
                 "The shared coefficient sum is divisible by p-1 for even n. Its residue modulo p is minus one. "
                 + "Writing that integer as (p-1)q and reducing modulo p gives -q=-1, hence q=1 modulo p.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("tebni355257-quotient"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("tebni355257-quotient-" + name), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClaimBody()
     {

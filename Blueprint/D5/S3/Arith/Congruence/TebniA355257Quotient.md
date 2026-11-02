@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; \forall p \in \mathbb{N},\; (\operatorname{Nat}.\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/TebniA355257Quotient.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tebni355257-quotient` (proved) by `D5/S3/Arith/Congruence/TebniA355257Quotient.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tebni355257-quotient","declaration_gid":"D5/S3/Arith/Congruence/TebniA355257Quotient.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Luschny and Mélika Tebni (2022). *OEIS A355257, logarithmic coefficient array and congruence conjectures*. URL: <https://oeis.org/A355257>.

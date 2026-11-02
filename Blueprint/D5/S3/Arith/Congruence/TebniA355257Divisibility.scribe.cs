@@ -56,13 +56,14 @@ internal sealed class TebniA355257DivisibilityDocument : IScribeDocumentDefiniti
             Node("result", "The divisibility criterion holds", ClaimBody(),
                 "Modulo k all terms below j=k vanish. The remaining value is (k-1)! times 2^k-1. "
                 + "For prime k it is minus one; for composite k other than four the factorial is divisible by k. "
-                + "The index k=1 is included.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                + "The index k=1 is included.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("tebni355257-logcoef"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("tebni355257-" + name.Replace("_", "-").ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula LFormula()
     {
