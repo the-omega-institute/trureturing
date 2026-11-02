@@ -61,7 +61,7 @@ private lemma correlation_neg (x : I → ℝ) (a : I → ℂ) (s : ℝ) :
     correlation x a (-s) = correlation x a s := by
   let f : ℝ → ℂ := fun v =>
     star («prefix» x a (v - s)) * «prefix» x a v
-  have ht := integral_add_right_eq_self f s
+  have ht := integral_add_right_eq_self (μ := (volume : Measure ℝ)) f s
   have he (v : ℝ) : f (v + s) =
       star (star («prefix» x a (v + s)) * «prefix» x a v) := by
     dsimp [f]
@@ -109,9 +109,11 @@ lemma S_half_window (D : ℝ) (hD : 0 ≤ D)
   congr 1
   rw [hw (-D) D (by linarith),
     ← intervalIntegral.integral_add_adjacent_intervals
-      (hf.intervalIntegrable (-D) 0) (hf.intervalIntegrable 0 D), hn,
-    ← intervalIntegral.integral_add
-      ((hf.comp continuous_neg).intervalIntegrable 0 D) (hf.intervalIntegrable 0 D)]
+      (hf.intervalIntegrable (-D) 0) (hf.intervalIntegrable 0 D), hn]
+  have hadd := intervalIntegral.integral_add
+    ((hf.comp continuous_neg).intervalIntegrable 0 D) (hf.intervalIntegrable 0 D)
+  dsimp only [Function.comp_def] at hadd
+  rw [← hadd]
   simp_rw [he]
   rw [integral_Icc_eq_integral_Ioc, intervalIntegral.integral_of_le hD]
 
@@ -173,7 +175,7 @@ private lemma pairedResolvent_exp_integral (D t : ℝ) (ht : t ∈ Icc (0 : ℝ)
         apply intervalIntegral.integral_congr
         intro s hs
         exact hr s (by simpa only [uIcc_of_le ht.2] using hs)
-      _ = _ := by simp
+      _ = _ := by simp <;> ring
   have he : Real.exp (-t / 2) * Real.exp t = Real.exp (t / 2) := by
     rw [← Real.exp_add]; congr 1; ring
   rw [integral_Icc_eq_integral_Ioc,
@@ -233,7 +235,7 @@ private lemma fullR_resolvent_reconstruction (D t : ℝ) (ht : t ∈ Icc (0 : �
   have hs : (∑ n ∈ primes D, weight n * pairedResolvent t (Real.log n)) =
       F D * (Real.exp (t / 2) + Real.exp (-t / 2)) +
         Chebyshev.psi (Real.exp t) * Real.exp (-t / 2) - F t * Real.exp (t / 2) := by
-    rw [Finset.sum_congr rfl (fun n hn =>
+    rw [Finset.sum_congr (s := primes D) rfl (fun n hn =>
       paired_weight t ht.1 n (Finset.mem_Icc.mp hn).1)]
     rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_filter,
       indices D t ht.2, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
@@ -264,7 +266,7 @@ theorem actual_fullR_resolvent_identity (D : ℝ) (hD : 0 ≤ D)
   let f : ℝ → ℝ → ℝ := fun t s => Real.exp (s / 2) * L t s * c t
   have hc : Continuous c := correlation_continuous x a ha
   have hkernel (s : ℝ) : Continuous (fun t : ℝ => L t s * c t) := by
-    exact (by dsimp [L, pairedResolvent]; fun_prop).mul hc
+    exact (by dsimp [L, pairedResolvent]; fun_prop : Continuous (fun t : ℝ => L t s)).mul hc
   have hjoint : Continuous (Function.uncurry f) := by
     dsimp [Function.uncurry, f, L, pairedResolvent]
     exact (by fun_prop : Continuous (fun z : ℝ × ℝ =>
@@ -302,7 +304,7 @@ theorem actual_fullR_resolvent_identity (D : ℝ) (hD : 0 ≤ D)
       (∑ n ∈ primes D, weight n * L t (Real.log n)) * c t) =
         4 * ∑ n ∈ primes D, weight n * S D x a (Real.log n) := by
     simp_rw [Finset.sum_mul]
-    rw [integral_finsetSum _ (fun n _ =>
+    rw [integral_finsetSum _ (fun (n : ℕ) _ =>
       (((hkernel (Real.log n)).const_mul (weight n)).congr
         (fun t => by ring)).integrableOn_Icc)]
     rw [Finset.mul_sum]
@@ -352,7 +354,10 @@ theorem actual_fullR_resolvent_identity (D : ℝ) (hD : 0 ≤ D)
     have hic : IntegrableOn (fun t =>
         (∫ s in Icc (0 : ℝ) D, Real.exp (s / 2) * L t s) * c t) (Icc 0 D) := by
       have h := hprod.integral_prod_left
-      simpa only [Function.uncurry, f, integral_mul_const] using h
+      apply h.congr
+      filter_upwards [] with t
+      dsimp only [f]
+      rw [integral_mul_const]
     have hib : IntegrableOn (fun t => b D * M D * L t D * c t) (Icc 0 D) := by
       have hbcont : Continuous (fun t => b D * M D * L t D * c t) :=
         ((hkernel D).const_mul (b D * M D)).congr (fun t => by ring)
@@ -365,13 +370,16 @@ theorem actual_fullR_resolvent_identity (D : ℝ) (hD : 0 ≤ D)
               b D * M D * L t D * c t := by
         apply setIntegral_congr_fun measurableSet_Icc
         intro t ht
+        dsimp only
         rw [fullR_resolvent_reconstruction D t ht]
         dsimp [L]
         ring
       _ = _ := by
-        rw [integral_add ((hi0.sub hip).add hic) hib,
-          integral_add (hi0.sub hip) hic, integral_sub hi0 hip,
-          hprime, hcont, hboundary]
+        have ha3 := integral_add ((hi0.sub hip).add hic) hib
+        have ha2 := integral_add (hi0.sub hip) hic
+        have hs1 := integral_sub hi0 hip
+        simp only [Pi.add_apply, Pi.sub_apply] at ha3 ha2 hs1
+        rw [ha3, ha2, hs1, hprime, hcont, hboundary]
         rw [show (fun t : ℝ => -d0 * Real.exp (-t / 2) * c t) =
           (fun t => -d0 * (Real.exp (-t / 2) * c t)) by ext t; ring,
           integral_const_mul, hzero]
@@ -407,7 +415,10 @@ private lemma W_eq_exponential_deficit (D : ℝ) (hD : 0 ≤ D)
   have he := congrArg Complex.re hc
   simp only [Complex.sub_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
     zero_mul, sub_zero] at he
-  rw [← integral_re hi] at he
+  have hre := integral_re hi
+  simp only [RCLike.re_to_complex] at hre
+  dsimp only at hre
+  rw [← hre] at he
   simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
     zero_mul, sub_zero] at he
   have hh (s : ℝ) : -(1 / 2 : ℝ) * |s| = -|s| / 2 := by ring
@@ -432,6 +443,7 @@ private lemma W_moment_upper (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤ q)
   have hh (t : ℝ) : -(1 / 2 : ℝ) * |t| = -|t| / 2 := by ring
   simp_rw [hh] at h
   dsimp only [energy, quadratic] at *
+  ring_nf at h ⊢
   nlinarith only [h]
 
 lemma original_K_split (t : ℝ) : ActualKernelLocalPositivity.K t = P t + fullR t := by
@@ -515,12 +527,15 @@ private lemma correlation_kernel_integrable (D : ℝ) (hD : 0 ≤ D)
     (ha : ∑ i, a i = 0) (t : ℝ) :
     Integrable (fun s : ℝ => Real.exp (-|t - s| / 2) * correlation x a s) := by
   have hc : Continuous (fun s => Real.exp (-|t - s| / 2) * correlation x a s) :=
-    (by fun_prop).mul (correlation_continuous x a ha)
+    (by fun_prop : Continuous (fun s : ℝ => Real.exp (-|t - s| / 2))).mul
+      (correlation_continuous x a ha)
   apply (integrableOn_iff_integrable_of_support_subset (s := Icc (-D) D) ?_).mp
     hc.integrableOn_Icc
   intro s hs
   by_contra h
-  exact hs (by rw [correlation_support D hD x a hx ha s h, mul_zero])
+  exact hs (by
+    dsimp only
+    rw [correlation_support D hD x a hx ha s h, mul_zero])
 
 private lemma S_global (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
@@ -560,10 +575,10 @@ private lemma shifted_prefix (x : I → ℝ) (a : I → ℂ) (t r v : ℝ) :
   congr 1
   · apply Finset.sum_congr rfl
     intro i _
-    rw [show x i + max t 0 ≤ v ↔ x i ≤ v - max t 0 by constructor <;> linarith]
+    simp only [add_le_iff_le_sub_right]
   · apply Finset.sum_congr rfl
     intro i _
-    rw [show x i + max (-t) 0 ≤ v ↔ x i ≤ v - max (-t) 0 by constructor <;> linarith]
+    simp only [add_le_iff_le_sub_right]
     split_ifs <;> simp
 
 private lemma real_cross_translation (x : I → ℝ) (a : I → ℂ)
@@ -575,11 +590,12 @@ private lemma real_cross_translation (x : I → ℝ) (a : I → ℂ)
   have he (v : ℝ) : v + r + (l - r) = v + l := by ring
   simp_rw [he] at hi
   refine ⟨hi, ?_⟩
-  have ht := integral_add_right_eq_self
+  have ht := integral_add_right_eq_self (μ := (volume : Measure ℝ))
     (fun v : ℝ => (star («prefix» x a (v + (l - r))) * «prefix» x a v).re) r
   simp_rw [he] at ht
-  rw [ht, integral_re (shifted_hinge_prefix_energy x a ha (l - r)).1]
-  rfl
+  rw [ht]
+  have hre := integral_re (shifted_hinge_prefix_energy x a ha (l - r)).1
+  simpa only [RCLike.re_to_complex, correlation] using hre
 
 private lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (t r s : ℝ) (hr : r ^ 2 = 1) :
@@ -612,19 +628,27 @@ private lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
   have h2 := real_cross_translation x a ha (s - max t 0) (-max (-t) 0)
   have h3 := real_cross_translation x a ha (s - max (-t) 0) (-max t 0)
   have h4 := real_cross_translation x a ha (s - max (-t) 0) (-max (-t) 0)
-  rw [correlation, ← integral_re]
-  · simp_rw [hterm, sub_eq_add_neg]
-    rw [integral_add ((h1.1.add (h2.1.const_mul r)).add (h3.1.const_mul r)) h4.1,
-      integral_add (h1.1.add (h2.1.const_mul r)) (h3.1.const_mul r),
-      integral_add h1.1 (h2.1.const_mul r), integral_const_mul, integral_const_mul]
-    have he1 : s - max t 0 - -max t 0 = s := by ring
-    have he2 : s - max t 0 - -max (-t) 0 = s - t := by linarith only [hdelta]
-    have he3 : s - max (-t) 0 - -max t 0 = s + t := by linarith only [hdelta]
-    have he4 : s - max (-t) 0 - -max (-t) 0 = s := by ring
-    rw [h1.2, h2.2, h3.2, h4.2, he1, he2, he3, he4]
-    ring
-  · exact (shifted_hinge_prefix_energy _ _ (by
-      simp [shiftedCoeffs, Fintype.sum_sum_type, ← Finset.mul_sum, ha]) s).1
+  have ha' : ∑ i, shiftedCoeffs a r i = 0 := by
+    simp [shiftedCoeffs, Fintype.sum_sum_type, ← Finset.mul_sum, ha]
+  have hre := integral_re (shifted_hinge_prefix_energy
+    (shiftedNodes x t) (shiftedCoeffs a r) ha' s).1
+  simp only [RCLike.re_to_complex] at hre
+  change (∫ v : ℝ, star («prefix» (shiftedNodes x t) (shiftedCoeffs a r) (v + s)) *
+    «prefix» (shiftedNodes x t) (shiftedCoeffs a r) v).re = _
+  rw [← hre]
+  simp_rw [hterm, sub_eq_add_neg]
+  have ha3 := integral_add ((h1.1.add (h2.1.const_mul r)).add (h3.1.const_mul r)) h4.1
+  have ha2 := integral_add (h1.1.add (h2.1.const_mul r)) (h3.1.const_mul r)
+  have ha1 := integral_add h1.1 (h2.1.const_mul r)
+  simp only [Pi.add_apply] at ha3 ha2 ha1
+  rw [ha3, ha2, ha1, integral_const_mul, integral_const_mul]
+  have he1 : s - max t 0 - -max t 0 = s := by ring
+  have he2 : s - max t 0 - -max (-t) 0 = s - t := by linarith only [hdelta]
+  have he3 : s - max (-t) 0 - -max t 0 = s + t := by linarith only [hdelta]
+  have he4 : s - max (-t) 0 - -max (-t) 0 = s := by ring
+  rw [h1.2, h2.2, h3.2, h4.2, he1, he2, he3, he4]
+  ring
+
 
 private lemma S_even (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0) (t : ℝ) :
@@ -666,7 +690,7 @@ private lemma shifted_W (D : ℝ) (hD : 0 ≤ D)
       (∫ s : ℝ, Real.exp (-|s| / 2) * correlation x a (s + z)) =
         4 * S D x a z := by
     rw [S_global D hD x a hx ha z]
-    have ht := integral_add_right_eq_self
+    have ht := integral_add_right_eq_self (μ := (volume : Measure ℝ))
       (fun s : ℝ => Real.exp (-|z - s| / 2) * correlation x a s) z
     have he (s : ℝ) : |z - (s + z)| = |s| := by
       rw [show z - (s + z) = -s by ring, abs_neg]
@@ -685,9 +709,11 @@ private lemma shifted_W (D : ℝ) (hD : 0 ≤ D)
       r * (Real.exp (-|s| / 2) * correlation x a (s + -t)) := by
     rw [sub_eq_add_neg]; ring
   simp_rw [he]
-  rw [integral_add ((hbase'.const_mul 2).add ((hshift t).const_mul r))
-      ((hshift (-t)).const_mul r),
-    integral_add (hbase'.const_mul 2) ((hshift t).const_mul r),
+  have ha2 := integral_add ((hbase'.const_mul 2).add ((hshift t).const_mul r))
+    ((hshift (-t)).const_mul r)
+  have ha1 := integral_add (hbase'.const_mul 2) ((hshift t).const_mul r)
+  simp only [Pi.add_apply] at ha2 ha1
+  rw [ha2, ha1,
     integral_const_mul, integral_const_mul, integral_const_mul, hz, hs t, hs (-t),
     S_even D hD x a ha]
   simp only [add_zero] at *
