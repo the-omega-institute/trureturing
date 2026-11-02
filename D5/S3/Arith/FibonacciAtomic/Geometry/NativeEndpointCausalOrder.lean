@@ -129,15 +129,15 @@ private theorem complete (b : Bool) (t : Source) (c d : Call)
             Or.inl ⟨hb, rfl, rfl⟩
           apply (Relation.TransGen.single hs).trans
           cases a
-          · exact left_path e (by simpa using hd)
-          · exact right_path e (by simpa using hd)
+          · exact left_path e ((shift_mem b false l r e).mp hd)
+          · exact right_path e ((shift_mem b true l r e).mp hd)
         · subst c
           cases a
-          · exact left_path e (by simpa using hd)
-          · exact right_path e (by simpa using hd)
+          · exact left_path e ((shift_mem b false l r e).mp hd)
+          · exact right_path e ((shift_mem b true l r e).mp hd)
         · cases a
-          · exact lift_left b l r (il false f e (by simpa using hc) (by simpa using hd) hfe)
-          · exact lift_right b l r (ir true f e (by simpa using hc) (by simpa using hd) hfe)
+          · exact lift_left b l r (il false f e ((shift_mem b false l r f).mp hc) ((shift_mem b false l r e).mp hd) hfe)
+          · exact lift_right b l r (ir true f e ((shift_mem b true l r f).mp hc) ((shift_mem b true l r e).mp hd) hfe)
       cases d with
       | promote p => cases p with
         | nil => exact (lt_promote_root c hcd).elim

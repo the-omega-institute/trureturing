@@ -99,5 +99,90 @@ noncomputable def guardRegistration :
   familyRecord := none
   options := #[] }
 
+@[reducible] def runSignature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Call → Option Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actualRun : Realization runSignature :=
+  realize runSignature (fun _ _ t =>
+    _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair.run t)
+    (fun e => nomatch e)
+def badRun : Realization runSignature :=
+  realize runSignature (fun _ _ _ _ => none) (fun e => nomatch e)
+
+@[reducible] def historyArena : Arena where
+  signature := runSignature
+  Law R := ∀ (t : Source),
+    _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition.D t →
+    ∀ w : List Call, R.readout () () (.of true) w = some t ↔
+      ∃ l : List (Event true t), l.map Subtype.val = w ∧
+        _root_.D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity.ExtensionList
+          ∅ Set.univ l
+
+private theorem bad_history : ¬ historyArena.Law badRun := by
+  intro h
+  have hd := _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair.alphaRHistory.domain
+  have ex := (all_histories (.of true) hd []).mp rfl
+  have hh := (h (.of true) hd []).mpr ex
+  change none = some (FreeMagma.of true : Source) at hh
+  contradiction
+
+private theorem run_dependence : ObservationalDependence runSignature actualRun := by
+  intro i
+  cases i
+  refine ⟨(), .of true, .of false, ?_⟩
+  intro h
+  have hh := congrFun h []
+  change some (FreeMagma.of true : Source) = some (.of false) at hh
+  cases hh
+
+def historyFamilyRegistration : Registration historyArena (type_of% all_histories) := {
+  actual := actualRun
+  bridge := Iff.rfl
+  variation := ⟨all_histories, badRun, bad_history⟩
+  sensitivity := ⟨fun i => ⟨badRun,
+    fun j hj => False.elim (hj (Subsingleton.elim j i)), rfl, bad_history⟩,
+    fun e => nomatch e⟩
+  dependence := run_dependence }
+
+noncomputable def historyRegistration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@all_histories) (type_of% (realize runSignature actualRun.readout actualRun.anchor)) Unit Unit := {
+  unitName := Lean.Name.str
+    `D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals.all_histories "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals.historyFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨historyArena⟩
+  objectArena := .source ⟨historyArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source historyArena ⟨historyFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize runSignature actualRun.readout actualRun.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals

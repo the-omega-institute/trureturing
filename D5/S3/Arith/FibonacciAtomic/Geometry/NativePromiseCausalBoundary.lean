@@ -39,12 +39,18 @@ def promise (N : ℕ) (z : Fin (15 * N) → Bool) : Source :=
 private theorem domain_slot (b : Bool) : D (slot b) := by
   have ha : D (.of true) := NativeGuardedLeafRepair.alphaRHistory.domain
   have hb : D (.of false) := NativeGuardedLeafRepair.betaFHistory.domain
-  cases b <;> simp [slot, FourExitRawEndpointSpectrum.z, A, E, D_mul, readout, ha, hb]
+  have hc : D E := (D_mul _ _).mpr ⟨hb, ha, by simp [readout]⟩
+  cases b
+  · exact (D_mul _ _).mpr ⟨hb, hc, by simp [readout]⟩
+  · exact (D_mul _ _).mpr ⟨hc, hb, by simp [E, readout]⟩
 
 private theorem domain_marker : D marker := by
   have ha : D (.of true) := NativeGuardedLeafRepair.alphaRHistory.domain
   have hb : D (.of false) := NativeGuardedLeafRepair.betaFHistory.domain
-  simp [marker, NativeFreshSensorGrowth.cone, D_mul, readout, ha, hb]
+  have hc : D E := (D_mul _ _).mpr ⟨hb, ha, by simp [readout]⟩
+  have hca : D (.mul E (.of true)) :=
+    (D_mul _ _).mpr ⟨hc, ha, by simp [E, readout]⟩
+  exact (D_mul _ _).mpr ⟨hca, ha, by simp [readout]⟩
 
 private theorem domain_comb (k : ℕ) (f : Fin k → Bool) :
     D (comb k (fun i => slot (f i)) marker) := by
@@ -96,6 +102,7 @@ private theorem two_slot_histories (n : ℕ) (hn : 2 ≤ n) (z : Fin n → Bool)
       run (.of true) v = some (comb n (fun i => slot (z i)) marker) := by
   obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hn
   have hkt : n = k + 2 := by omega
+  clear hk
   subst n
   let r := comb k (fun i => slot (z i.succ.succ)) marker
   have hp : comb (k + 2) (fun i => slot (z i)) marker =
@@ -103,7 +110,7 @@ private theorem two_slot_histories (n : ℕ) (hn : 2 ≤ n) (z : Fin n → Bool)
   have hbase : D (.mul E (.mul E r)) := by
     have ha : D (.of true) := NativeGuardedLeafRepair.alphaRHistory.domain
     have hb : D (.of false) := NativeGuardedLeafRepair.betaFHistory.domain
-    have he : D E := by simp [E, D_mul, readout, ha, hb]
+    have he : D E := (D_mul _ _).mpr ⟨hb, ha, by simp [readout]⟩
     have hr := domain_comb k (fun i => z i.succ.succ)
     exact (D_mul _ _).mpr ⟨he, (D_mul _ _).mpr ⟨he, hr, by simp [E, readout]⟩,
       by simp [E, readout]⟩
