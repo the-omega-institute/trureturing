@@ -7,13 +7,6 @@
    digest: Width-three pre-merged Gaussian determinants are not almost palindromic. -/
 
 import D5.S3.Combinatorics.CylindricPartition.LiUncuGaussian
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.BigOperators
-import Mathlib.Algebra.Polynomial.Reverse
-import Mathlib.RingTheory.Ideal.Quotient.Defs
-import Mathlib.RingTheory.Nilpotent.Basic
-import Mathlib.Tactic
 
 /-! Okada's width-three pre-merged determinant conjecture. -/
 
@@ -37,7 +30,8 @@ private theorem gauss_diagonal (n : ℕ) : gauss n n = 1 := by
   induction n with
   | zero => rfl
   | succ n ih =>
-      rw [gauss, D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
+      rw [gauss,
+        D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
         Nat.sub_self]
       simpa using ih
 
@@ -111,7 +105,8 @@ private theorem factorial_identity
       by_cases hkn' : k = n + 1
       · subst k
         rw [qFactorial_succ]
-        rw [gauss, D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
+        rw [gauss,
+          D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
           gauss_diagonal]
         simp [qFactorial]
       have hkn'' : k ≤ n := by omega
@@ -186,7 +181,7 @@ private theorem index_bounds
 
 private theorem qFactorial_coeff_zero (n : ℕ) : (qFactorial n).coeff 0 = 1 := by
   induction n with
-  | zero => simp [qFactorial]
+  | zero => simp [qFactorial.eq_1]
   | succ n ih => simp [qFactorial_succ, mul_coeff_zero, ih]
 
 private theorem factorial_product_identity
@@ -230,7 +225,7 @@ private theorem qFactorial_image_unit
     {s : Type*} [CommRing s] (φ : ℤ[X] →+* s) (hx : IsNilpotent (φ X)) (n : ℕ) :
     IsUnit (φ (qFactorial n)) := by
   induction n with
-  | zero => simpa [qFactorial] using isUnit_one (α := s)
+  | zero => simp [qFactorial]
   | succ n ih =>
       rw [qFactorial_succ, map_mul, map_sub, map_one, map_pow]
       exact ih.mul (IsNilpotent.pow_succ n hx).isUnit_one_sub
@@ -263,12 +258,12 @@ private theorem gaussian_product_low
   rw [product_coeff_one _ _ (fun i _ => hz i)]
   let z : Fin μ := ⟨0, hμ⟩
   by_cases ha0 : 0 < a z
-  · rw [if_pos ha0]
+  · rw [ite_eq_left ha0]
     have hc (i : Fin μ) : (gauss (b i) (a i)).coeff 1 = 1 := by
       apply gauss_coeff_one _ _ _ (hab i)
       exact lt_of_lt_of_le ha0 (ha.monotone (show z ≤ i from Nat.zero_le _))
     simp [hc]
-  · rw [if_neg ha0]
+  · rw [ite_eq_right ha0]
     have hc (i : Fin μ) : (gauss (b i) (a i)).coeff 1 =
         (1 : ℤ) - if i = z then 1 else 0 := by
       by_cases hi : i = z
@@ -279,7 +274,7 @@ private theorem gaussian_product_low
           have : i.val ≠ 0 := fun h => hi (Fin.ext h)
           omega
         have hai := ha (show z < i from hipos)
-        rw [gauss_coeff_one _ _ (by omega) (hab i), if_neg hi, sub_zero]
+        rw [gauss_coeff_one _ _ (by omega) (hab i), ite_eq_right hi, sub_zero]
     simp only [hc, Finset.sum_sub_distrib]
     simp [Nat.cast_sub hμ]
 
@@ -349,7 +344,7 @@ private theorem low_end
     rw [hpow, hq] at hf
     dsimp [a0, b0, u]
     rw [map_mul, hq]
-    convert hf using 1 <;> ring
+    convert hf using 1; ring
   have hdiv : (X : ℤ[X]) ^ (t + 3) ∣ a0 * f - b0 :=
     Ideal.mem_span_singleton.1 (Ideal.Quotient.eq.1 heq)
   have hcoeff (n : ℕ) (hn : n < t + 3) :
@@ -442,15 +437,14 @@ private theorem gaussian_product_shape
       (∏ i, gauss (b i) (a i)).natDegree = ∑ i, a i * (b i - a i) ∧
       (∏ i, gauss (b i) (a i)).reverse = ∏ i, gauss (b i) (a i) := by
   have hshape (i : Fin μ) := gaussian_shape (b i) (a i) (hab i)
-  have hprod (s : Finset (Fin μ)) : (∏ i ∈ s, gauss (b i) (a i)).Monic ∧
+  have hprod (s : Finset (Fin μ)) :
       (∏ i ∈ s, gauss (b i) (a i)).reverse = ∏ i ∈ s, gauss (b i) (a i) := by
     classical
     induction s using Finset.induction_on with
     | empty => simp [reverse]
     | @insert i s hi ih =>
-        rw [Finset.prod_insert hi, reverse_mul_of_domain, (hshape i).2.2, ih.2]
-        exact ⟨(hshape i).1.mul ih.1, rfl⟩
-  refine ⟨(hprod Finset.univ).1, ?_, (hprod Finset.univ).2⟩
+        rw [Finset.prod_insert hi, reverse_mul_of_domain, (hshape i).2.2, ih]
+  refine ⟨monic_prod_of_monic _ _ (fun i _ => (hshape i).1), ?_, hprod Finset.univ⟩
   rw [natDegree_prod_of_monic _ _ (fun i _ => (hshape i).1)]
   exact Finset.sum_congr rfl (fun i _ => (hshape i).2.1)
 
