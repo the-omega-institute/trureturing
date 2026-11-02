@@ -36,12 +36,13 @@ internal sealed class LagTwoOptimalBracketDocument : IScribeDocumentDefinition
     private static Formula Eqn(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Pow(Formula a, int n) => new Formula.Power(a, D(n));
-    private static Formula Frac(Formula a, int n) => new Formula.Fraction(a, D(n));
+    private static Formula Pow(Formula a, byte n) => new Formula.Power(a, D(n));
+    private static Formula Frac(Formula a, byte n) => new Formula.Fraction(a, D(n));
     private static Formula Real() => Seq(Mathbb, Grp(X("R")));
     private static Formula Nat() => Seq(Mathbb, Grp(X("N")));
     private static Formula E() => X("epsilon");
-    private static Formula Q() => Grp(Seq(D(1), Minus, E()));
+    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula Q() => Par(Seq(D(1), Minus, E()));
     private static Formula P() => Frac(Seq(D(1), Plus, Pow(Q(), 2)), 2);
     private static Formula Opt(Formula e) => C("copt", e);
     private static Formula Conjoin(params Formula[] fs)
@@ -57,9 +58,9 @@ internal sealed class LagTwoOptimalBracketDocument : IScribeDocumentDefinition
         var lo = Seq(D(1), Minus, Pow(Q(), 2));
         var hi = Seq(D(1), Minus, Pow(Q(), 4));
         var ratio = Seq(D(1), Plus, Pow(Q(), 2));
-        var lowerPoly = Seq(D(2), Times, E(), Minus, Pow(E(), 2));
-        var upperPoly = Seq(D(4), Times, E(), Minus, D(6), Times, Pow(E(), 2),
-            Plus, D(4), Times, Pow(E(), 3), Minus, Pow(E(), 4));
+        var lowerPoly = Seq(D(2), Times, Sp, E(), Minus, Pow(E(), 2));
+        var upperPoly = Seq(D(4), Times, Sp, E(), Minus, D(6), Times, Sp, Pow(E(), 2),
+            Plus, D(4), Times, Sp, Pow(E(), 3), Minus, Pow(E(), 4));
         return Conjoin(Le(Frac(lo, 4), Opt(E())), Le(Opt(E()), Frac(hi, 4)),
             Eqn(new Formula.Fraction(hi, lo), ratio), Lt(ratio, D(2)),
             Le(Frac(lowerPoly, 4), Opt(E())), Le(Opt(E()), Frac(upperPoly, 4)),
@@ -75,7 +76,7 @@ internal sealed class LagTwoOptimalBracketDocument : IScribeDocumentDefinition
         var history = C("History", X("x"), X("u"), X("n"), X("z"));
         var next = C("HistoryNext", X("x"), X("u"), X("n"), X("z"), X("b"));
         var kernel = Seq(Frac(Seq(D(1), Minus, Pow(Q(), 2)), 2), Plus,
-            Pow(Q(), 2), Times, C("Indicate", Eqn(X("b"), C("Entry", X("z"), X("n")))));
+            Pow(Q(), 2), Times, Sp, C("Indicate", Eqn(X("b"), C("Entry", X("z"), X("n")))));
         var transition = All("n", Nat(), All("z", C("Bits", Seq(X("n"), Plus, D(2))),
             All("b", Named("Bool"), Imp(Lt(D(0), C("P", history)),
                 Eqn(new Formula.Fraction(C("P", next), C("P", history)), kernel)))));
@@ -84,10 +85,10 @@ internal sealed class LagTwoOptimalBracketDocument : IScribeDocumentDefinition
         var w = C("W", X("x"), X("u"), D(2), X("t"));
         var statistic = All("t", Nat(), And(
             C("HasLaw", w, C("CastBinomial", X("t"), P()), X("P")),
-            Eqn(C("Var", w, X("P")), Frac(Seq(X("t"), Times,
-                Grp(Seq(D(1), Minus, Pow(Q(), 4)))), 4))));
+            Eqn(C("Var", w, X("P")), Frac(Seq(X("t"), Times, Sp,
+                Par(Seq(D(1), Minus, Pow(Q(), 4)))), 4))));
         return All("O", Named("Type"), All("m", C("MeasurableSpace", X("O")),
-            All("P", C("Measure", X("O")), All("x", C("Coordinates", Named("Ktwo"), X("O")),
+            All("P", C("Measure", X("O"), X("m")), All("x", C("Coordinates", Named("Ktwo"), X("O")),
             Imp(C("OriginalLaw", Named("Ktwo"), X("P"), E(), X("x")),
                 All("u", Named("Bool"), Conjoin(transition, joint, statistic)))))));
     }

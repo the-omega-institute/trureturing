@@ -13,23 +13,20 @@ open _root_.D5.S3.StatisticalMechanics.NoisyVoter.RepetitionVarianceLinear
 open _root_.D5.S3.StatisticalMechanics.NoisyVoter.LagTwoOptimalBracket
 noncomputable section
 
-structure Query where
-  Ω : Type
-  u : Bool
-  N : ℕ
+abbrev Query := Σ _Ω : Type, Σ _u : Bool, ℕ
 
 def signature : Signature where
   Params := Query
-  State p := (c : Coord Bool) → p.Ω → Value K2 c
+  State p := (c : Coord Bool) → p.1 → Value K2 c
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := p.Ω → Fin (p.N + 2) → Bool
+  Output _ p := p.1 → Fin (p.2.2 + 2) → Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p x => innovations x p.u p.N) (fun e => nomatch e)
+  realize signature (fun _ p x => innovations x p.2.1 p.2.2) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ _ _ => false) (fun e => nomatch e)
 
@@ -137,7 +134,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p x => innovations x p.u p.N) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p x => innovations x p.2.1 p.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

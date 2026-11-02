@@ -6,6 +6,64 @@
    utility: none
    digest: The native two-vertex history supplies the uniform lag-two variance bracket. -/
 
+/-
+proof_shape: result: content
+escape_witness: input_time_vertex; innovation_history_law
+admission_basis: escape-witness
+literature_status: inherited source consequence; no novelty claim
+The actual native innovation law is used by native_variance, upper_member and bracket.
+The causal-support induction proves a time-and-vertex restriction absent from the suppliers.
+The horizon induction proves the joint law of the actual synchronous agreement variables.
+Initial and positive-time laws are the only coordinate premises on the original P.
+Declaration rows: name | proof_shape | escape_witness | direct value consumers.
+Compiler-generated proof auxiliaries inherit their enclosing authored proof classification.
+Constructions and generated structure projections carry no claim of new mathematical content.
+input_time_vertex | content | input_time_vertex | history_input_time_vertex
+history_input_time_vertex | content | input_time_vertex | block_not_past
+k2Neighbor | bind-only | none | nativeConclusions, result, agreement_extension, block_hasLaw, block_independent_past, initial_block_law, initial_history_law, innovation_history_law, native_binomial, native_conclusions, native_transition_fiber, native_variance, repetitions_law, upper_member
+choice_other | bind-only | none | initial_history_law, native_two_step
+block_positive | bind-only | none | block_hasLaw, block_independent_past
+block_injective | bind-only | none | block_hasLaw
+block_not_past | content | input_time_vertex | block_independent_past
+native_two_step | bind-only | none | agreement_extension, native_transition_fiber
+block_hasLaw | bind-only | none | agreement_extension, native_transition_fiber
+block_kernel | bind-only | none | block_agreement_kernel, native_transition_fiber
+bits_measurable | bind-only | none | agreement_extension, initial_history_law, innovation_history_law
+block_independent_past | content | input_time_vertex | agreement_extension, native_transition_fiber
+independent_update_fiber | bind-only | none | agreement_extension, native_transition_fiber
+native_transition_fiber | content | input_time_vertex | native_conclusions
+block_agreement_kernel | bind-only | none | agreement_extension
+agreement_extension | content | input_time_vertex | innovation_history_law
+initial_block_law | bind-only | none | initial_history_law
+initial_kernel | bind-only | none | initial_history_law
+initial_history_law | bind-only | none | innovation_history_law
+innovations_snoc | bind-only | none | innovation_history_law._simp_1_4
+innovation_history_law | content | innovation_history_law | native_conclusions, repetitions_law
+repetitions_law | content | innovation_history_law | native_binomial, native_variance
+original_W_sum | bind-only | none | native_binomial, native_variance
+bit_variance | bind-only | none | native_variance
+native_variance | content | innovation_history_law | native_conclusions, upper_member
+bit_count_law | bind-only | none | native_binomial
+original_lower | bind-only | none | bracket
+upper_member | content | innovation_history_law | bracket
+bracket | content | innovation_history_law | asymptotic_bounds, scalar_bounds
+scalar_bounds | content | innovation_history_law | result, asymptotic_bounds
+native_binomial | content | innovation_history_law | native_conclusions
+near_zero | bind-only | none | asymptotic_bounds
+asymptotic_bounds | content | innovation_history_law | result
+native_conclusions | content | innovation_history_law | result
+result | content | innovation_history_law | terminal complete Theorem 3.2
+Frozen module pins and directly used original suppliers:
+D5/S3/StatisticalMechanics/NoisyVoter/PotentialPaths: original_potential_path_bounds
+  module statement_id: sha256:2c0a4740fd3192bd7ed2ed950aca034cd004d7ba2bb3fcca0883169f430e432d
+D5/S3/StatisticalMechanics/NoisyVoter/FiniteCausalInputs: finite_history_factorization, inputs, historyInputs, positive, decode
+  module statement_id: sha256:81feffad81eb171cb125c1ea50f72b90ca584552238c96c8498bd11504367f2e
+D5/S3/StatisticalMechanics/NoisyVoter/RepetitionVarianceLinear: nvm, W, coordinateLaw, Coord, Value
+  module statement_id: sha256:d0ef35748b99db85baa606316acc01db27d583a5a6de1a54c800bdc6a2a06afc
+D5/S3/StatisticalMechanics/NoisyVoter/AncestralSources: coordinateTime
+  module statement_id: sha256:0a187dc75326fb897504e7e4efe52c7c454137d1c6dcab7904797dabdab00bc2
+-/
+
 import D5.S3.StatisticalMechanics.NoisyVoter.PotentialPaths
 import Mathlib.Probability.Distributions.Binomial
 import Mathlib.Analysis.Asymptotics.Theta
@@ -758,7 +816,7 @@ theorem result (ε : unitInterval) (hε : 0 < (ε : ℝ)) (hε' : (ε : ℝ) < 1
     (∀ t : ℕ, @HasLaw Ω ℝ m _ (W x u 2 t)
         ((binomial t (successProbability ε)).map (Nat.cast : ℕ → ℝ)) P ∧
       variance (W x u 2 t) P = (t : ℝ) * (1-(1-(ε : ℝ)) ^ 4) / 4)
-) := by
+    ) := by
   exact ⟨scalar_bounds ε hε hε', asymptotic_bounds, native_conclusions ε⟩
 
 end D5.S3.StatisticalMechanics.NoisyVoter.LagTwoOptimalBracket
