@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice;
 
 internal sealed class LatticeMatterGhostCovarianceDocument : IScribeDocumentDefinition
 {
