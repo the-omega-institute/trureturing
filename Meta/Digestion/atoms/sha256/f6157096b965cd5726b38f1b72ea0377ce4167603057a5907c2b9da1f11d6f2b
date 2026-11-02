@@ -1,0 +1,47 @@
+#### 定理 7.1（事件二元关系的带尺度三维表示）
+
+对两个输入 $u,v$，令
+
+$$
+a_e=w_e(u),\quad b_e=w_e(v),\quad z_e=k_e(u,v),\quad s_e=a_e+b_e.
+$$
+
+若 $s_e>0$，定义
+
+$$
+R_e=\frac1{s_e}
+\begin{pmatrix}a_e&\overline{z_e}\\z_e&b_e\end{pmatrix}
+=\frac12(I+\mathbf r_e\cdot\boldsymbol\sigma).
+$$
+
+则
+
+$$
+\mathbf r_e=
+\left(\frac{2\operatorname{Re}z_e}{s_e},
+\frac{2\operatorname{Im}z_e}{s_e},
+\frac{a_e-b_e}{s_e}\right),
+$$
+
+且
+
+<a id="eq-ball"></a>
+
+$$
+\boxed{1-\left\lVert \mathbf r_e\right\rVert ^2
+=\frac{4(a_eb_e-|z_e|^2)}{s_e^2}\ge0.}\tag{7.2}
+$$
+
+完整二元事件数据为 $(s_e,\mathbf r_e)$。若 $s_e=0$，整个事件二元核为零，不赋予球方向。
+
+**证明。**
+
+以 $E_e^{1/2}u,E_e^{1/2}v$ 的 Cauchy--Schwarz 不等式得
+$|z_e|^2\le a_eb_e$。上式矩阵为 Gram 矩阵的转置，仍为正，
+迹为一。直接展开三个坐标给[(7.2)](#eq-ball)。
+若 $s_e=0$，两项非负使 $a_e=b_e=0$，交叉项亦为零。
+
+□
+
+<a id="statement-7-2"></a>
+

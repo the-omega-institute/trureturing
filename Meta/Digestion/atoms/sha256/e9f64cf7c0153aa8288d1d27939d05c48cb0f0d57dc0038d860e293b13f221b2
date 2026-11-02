@@ -1,0 +1,34 @@
+**图 1。**
+
+```latex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[xshift=-3.5cm]
+\draw[ink,thick] (0,0) circle (1.35);
+\draw[ink!40,dashed] (-1.35,0)--(1.35,0);
+\draw[->,ink!65] (0,-1.7)--(0,1.8) node[above] {$Z$};
+\fill[accent] (0,1.35) circle (2pt);
+\fill[accent] (0,-1.35) circle (2pt);
+\fill[warm] (1.35,0) circle (2pt);
+\node[anchor=west,align=left] at (.18,1.38) {$p_0=1$};
+\node[anchor=west,align=left] at (.18,-1.38) {$p_0=1$};
+\node[anchor=north,align=center] at (1.38,-.15) {$p_0=0$};
+\node[align=center,text width=4.8cm] at (0,-2.15) {输入纯态球的经线截面\\失败读出 $p_0=Z^2$};
+\end{scope}
+\begin{scope}[xshift=3.5cm]
+\fill[accent!8] (0,0) circle (1.35);
+\draw[ink,thick] (0,0) circle (1.35);
+\draw[->,ink!65] (-1.8,0)--(1.8,0) node[right] {$X$};
+\draw[->,ink!65] (0,-1.8)--(0,1.8) node[above] {$Y$};
+\draw[->,warm,thick] (0,0)--(-1.35,-1.35);
+\fill[warm] (-1.35,-1.35) circle (2.3pt);
+\node[anchor=east,align=right,text=warm] at (-1.4,-1.28) {$(-1,-1)$};
+\node[align=center,text width=5.3cm] at (0,-2.15) {事件二元关系的 $Z=0$ 截面\\失败表超出单位圆盘};
+\end{scope}
+\end{tikzpicture}
+\caption{同一反例的两层表示。左侧是输入纯态球上的读出规则；右侧是尝试重建的事件关系表。
+二者不是同一个球。右侧横纵轴以单位半径标度，所示失败表不属于量子效果。}
+\end{figure}
+```
+

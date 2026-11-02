@@ -1,0 +1,17 @@
+#### 定义 2.2（同一事件的权重）
+
+有限结果菜单 $\mathcal E$ 对每个 $e\in\mathcal E$ 给同一个函数
+$w_e:V\to[0,\infty)$，并满足
+
+<a id="eq-menu"></a>
+
+$$
+\sum_{e\in\mathcal E}w_e(x)=N(x).\tag{2.1}
+$$
+
+因此 $w_e(0)=0$ 且 $0\le w_e(x)\le N(x)$。
+结果标签、读出装置及归一化口径在比较中保持同一。
+本轮不先要求 $w_e$ 连续、偶、齐次或为二次型。
+
+<a id="statement-2-3"></a>
+

@@ -1,0 +1,44 @@
+#### 定理 5.2（v79 量子读出表示）
+
+上述候选当且仅当存在唯一一族复效果
+
+<a id="eq-born"></a>
+
+$$
+\boxed{
+0\le E_e\le I,\qquad \sum_eE_e=I,\qquad
+w_e(x)=\langle x,E_ex\rangle .
+}\tag{5.1}
+$$
+
+因此对非零输入
+
+$$
+p_e(x)=\frac{\langle x,E_ex\rangle }{\left\lVert x\right\rVert ^2},
+$$
+
+这给出数学上的归一 Born 形式；在继承的同根校准与声明准备范围内，
+它就是该输入的实际读出概率。
+
+**证明。**
+
+定理[3.3](#statement-3-3)逐事件给实效果，菜单守恒给其和为 $I$。
+定理[4.2](#statement-4-2)使每个效果与 $J$ 对易，得到[(5.1)](#eq-born)。
+极化与历史张成保证唯一性。
+反向，复效果的二次式非负、完备，并且
+$C_e(u,v)=2\operatorname{Re}\langle u,E_ev\rangle$，所以相干反向使它反号；
+效果复线性使所有共同相位不变，当然通过有限锚。
+
+□
+
+概率来源仍继承上一轮的同根读出合同：同一个 $p_0$ 定义在全部效果上，
+非负、满足 $p_0(I)=1$，并对 $E,F\ge0$、$E+F\le I$ 的合法效果和可加。
+单位根满足 $p_0(P_{\Omega_0})=1$，声明准备运输满足
+$p_h(E)=p_0(U_h^*EU_h)$。
+项目的同根定理因而给出
+$p_h(E)=\langle U_h\Omega_0,EU_h\Omega_0\rangle$[3](#ref-closure)。
+当 $x/\left\lVert x\right\rVert =U_h\Omega_0$ 是声明的准备历史时，上式就是相应 Born 读出。
+平方总强度、共同 $J$、合法效果读出的同一性及实际准备供应继续继承原合同。
+
+<a id="statement-5-3"></a>
+

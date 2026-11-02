@@ -1,0 +1,27 @@
+## 4. 有限相位证书：从实效果到共同复效果
+
+只有实二次形式还不够：实效果可能把共同复方向当成额外可区分轴。
+本轮用有限内部锚来认证读出对共同 $J$ 的相容。
+
+选择实际可用的实正交基
+
+$$
+e_1,\ldots,e_d,\quad f_1=Je_1,\ldots,f_d=Je_d.
+$$
+
+所有锚均取单位长度。定义
+
+<a id="eq-probes"></a>
+
+$$
+\begin{split}
+\mathcal S_J={}&\{e_i:1\le i\le d\}\\
+&{}\cup\{(e_i+e_j)/\sqrt2: i<j\}\\
+&{}\cup\{(e_i+f_j)/\sqrt2:i\le j\}.
+\end{split}\tag{4.1}
+$$
+
+它有 $d+d(d-1)/2+d(d+1)/2=d(d+1)$ 个锚。
+
+<a id="statement-4-1"></a>
+

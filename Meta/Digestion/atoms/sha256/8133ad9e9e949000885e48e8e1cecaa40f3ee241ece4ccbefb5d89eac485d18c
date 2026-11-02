@@ -1,0 +1,65 @@
+#### 定理 10.1（有限锚误差到共同复效果）
+
+若 $0\le A\le I$ 且对所有 $v\in\mathcal S_J$ 有
+
+$$
+|w(v)-w(Jv)|\le\varepsilon,
+$$
+
+令
+
+$$
+\tau(A)=J^*AJ,\qquad E=\frac12(A+\tau(A)).
+$$
+
+则 $E$ 是与 $J$ 对易的正效果，且
+
+<a id="eq-stability"></a>
+
+$$
+\boxed{\left\lVert A-E\right\rVert \le
+\min\{1/2,(2d-1)\varepsilon\}.}\tag{10.1}
+$$
+
+若整个实效果菜单满足 $\sum_eA_e=I$，同样逐事件平均后仍有 $\sum_eE_e=I$。
+
+**证明。**
+
+$\tau$ 是保正、保单位的对合，故平均 $E$ 正、被 $I$ 支配，并满足 $\tau(E)=E$。
+写
+
+$$
+D=A-\tau(A)=\begin{pmatrix}S&T\\T&-S\end{pmatrix},
+\qquad S=S^{\mathsf T},\quad T=T^{\mathsf T}.
+$$
+
+单轴锚给 $|S_{ii}|\le\varepsilon$。
+实和桥读出
+$(S_{ii}+S_{jj})/2+S_{ij}$，故 $|S_{ij}|\le2\varepsilon$。
+混合桥读出 $(S_{ii}-S_{jj})/2+T_{ij}$，故 $|T_{ij}|\le2\varepsilon$；
+$i=j$ 时有更强的 $|T_{ii}|\le\varepsilon$。
+每行绝对值之和至多
+
+$$
+\varepsilon+\varepsilon+(2d-2)\,2\varepsilon
+=(4d-2)\varepsilon.
+$$
+
+实对称矩阵的算符范数不超过最大行绝对和，因此
+$\left\lVert A-E\right\rVert =\left\lVert D\right\rVert /2\le(2d-1)\varepsilon$。
+同时 $0\le A,\tau(A)\le I$ 给 $-I\le D\le I$，产生 $1/2$ 上界。
+最后 $\sum_eE_e=(I+\tau(I))/2=I$。
+
+□
+
+于是对任意 $x$，
+
+$$
+|w(x)-\langle x,Ex\rangle |\le
+\min\{1/2,(2d-1)\varepsilon\}\left\lVert x\right\rVert ^2.
+$$
+
+该界对正菜单同时保持完备性；未主张常数最优。
+平均给出相容效果的数学修复，不自动供应一个可实现的实验控制，
+也不自动修改既有事件的实际后继。
+

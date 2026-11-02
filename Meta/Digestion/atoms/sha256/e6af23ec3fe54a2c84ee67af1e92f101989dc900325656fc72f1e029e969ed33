@@ -1,0 +1,71 @@
+#### 定理 12.1（同一事件核锁定实际后继的线性表示）
+
+设声明历史向量 $x_h$ 复张成输入空间，事件 $e$ 后的*实际*输出向量为 $y_{e,h}$，
+并满足已经声明的 Gram 匹配
+
+$$
+\langle y_{e,h},y_{e,g}\rangle =k_e(x_h,x_g).
+$$
+
+则存在唯一线性映射 $M_e$ 到实际输出的张成空间，使
+
+$$
+M_ex_h=y_{e,h},\qquad M_e^*M_e=E_e.
+$$
+
+其最小输出表示满足
+
+$$
+M_e=V_eE_e^{1/2},
+$$
+
+其中 $V_e$ 在 $E_e^{1/2}$ 的像上等距。
+
+**证明。**
+
+先令 $M_e(\sum_hc_hx_h)=\sum_hc_hy_{e,h}$。
+若输入线性组合为零，则
+
+$$
+\left\lVert \sum_hc_hy_{e,h}\right\rVert ^2
+=\sum_{h,g}\overline{c_h}c_gk_e(x_h,x_g)
+=\langle \sum_hc_hx_h,E_e\sum_gc_gx_g\rangle =0.
+$$
+
+所以定义无歧义。相同等式给
+$\left\lVert M_ex\right\rVert ^2=\langle x,E_ex\rangle \le\left\lVert x\right\rVert ^2$。
+由极化得到 $M_e^*M_e=E_e$，张成性保证唯一。
+令 $V_e(E_e^{1/2}x)=M_ex$；两个输入代表同一个左侧时，它们的差也有零输出范数，
+故 $V_e$ 良定义，且由同一范数恒等式为等距。
+
+□
+
+这重述了项目中已经证明的实际后继桥[3](#ref-closure)，以显示 v79 怎样供应它的输入。
+效果只固定读出与输出之间的内积几何；实际后继决定等距方向 $V_e$。
+所以 $E_e$ 不是完整测后态的唯一指定：不同实际装置可以有同一效果，而有不同输出方向。
+
+若记录结果 $e$ 的实际分支为 $M_e$，则
+
+$$
+\mathcal I_e(\rho)=M_e\rho M_e^*,\qquad
+\Pr(e\mid\rho)=\operatorname{Tr} (\rho E_e).
+$$
+
+当该概率非零时，再除以它得到条件后态。
+完整菜单给 $\sum_eM_e^*M_e=I$。
+若各结果输出空间不同，带结果标签的完整输出取
+$\bigoplus_e M_e\rho M_e^*$，其总迹保持不变；
+若已声明共同输出空间及相应嵌入，才可在该空间直接求和得到无选择映射。
+对任意辅助空间与正 $X$，
+
+$$
+(\mathcal I_e\otimes\operatorname{id})(X)
+=(M_e\otimes I)X(M_e^*\otimes I)\ge0,
+$$
+
+故其表示完全正。
+若粗事件包含实际声明的细结果 $\alpha$，且这些细分支已嵌入同一声明输出空间，
+相应求和得到 $\mathcal I_e(\rho)=\sum_\alpha M_{e\alpha}\rho M_{e\alpha}^*$；
+否则先保留带细结果标签的直和输出。
+这些结论表述已有操作的结构，不授予任意数学完全正映射的可实现性。
+

@@ -1,0 +1,64 @@
+#### 定理 3.3（受共同标尺支配的实效果表示）
+
+若 $0\le w(x)\le N(x)$ 且满足二元反向相容，则存在唯一实自伴算符 $A$，
+
+$$
+0\le A\le I,\qquad w(x)=g(x,Ax).
+$$
+
+交叉余量为
+
+<a id="eq-bilinear"></a>
+
+$$
+C(u,v)=2g(u,Av).\tag{3.2}
+$$
+
+因此，偶性、实二次齐次性、连续性以及 $C$ 的实双线性全部是结论。
+
+**证明。**
+
+定义极化
+
+$$
+b(u,v)=\frac14\{w(u+v)-w(u-v)\}.
+$$
+
+偶性使它对称，并对任一变量为奇函数。
+把平行四边形式用于 $(u+z,v)$、$(u-z,v)$ 后相减，可得
+
+$$
+b(u+v,z)+b(u-v,z)=2b(u,z).
+$$
+
+取 $v=u$ 得 $b(2u,z)=2b(u,z)$；再令
+$u=(a+c)/2,v=(a-c)/2$，得到 $b(a+c,z)=b(a,z)+b(c,z)$。
+因此 $b$ 对两变量可加。
+
+范数支配给
+
+$$
+|b(u,z)|
+\le\frac{\left\lVert u+z\right\rVert ^2+\left\lVert u-z\right\rVert ^2}{4}
+=\frac{\left\lVert u\right\rVert ^2+\left\lVert z\right\rVert ^2}{2}.
+$$
+
+固定 $z$，这个加性函数在单位球有界，故在零处连续：
+若界为 $M$，取整数 $n>M/\varepsilon$，则 $\left\lVert u\right\rVert <1/n$ 时
+$|b(u,z)|=|b(nu,z)|/n<\varepsilon$。
+加性与连续性给实线性，对称性给实双线性。
+
+又 $b(u,u)=w(u)\ge0$，对所有实 $t$ 的 $b(u+tv,u+tv)\ge0$ 给
+
+$$
+|b(u,v)|^2\le w(u)w(v)\le\left\lVert u\right\rVert ^2\left\lVert v\right\rVert ^2.
+$$
+
+实 Riesz 表示于是给唯一自伴 $A$，$b(u,v)=g(u,Av)$，
+而对角界给 $0\le A\le I$。
+最后展开 $w(u+v)$ 得[(3.2)](#eq-bilinear)。
+
+□
+
+<a id="statement-3-4"></a>
+

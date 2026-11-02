@@ -1,0 +1,101 @@
+#### 命题 11.1（任意小相干缺陷与固定跨尺度距离并存）
+
+对任意 $\delta>0$，在任一非零有限复 Hilbert 空间上定义
+
+<a id="eq-logweight"></a>
+
+$$
+w_\delta(x)=\left\lVert x\right\rVert ^2
+\left[\frac12+\frac14\sin\!\left(\delta\log\left\lVert x\right\rVert ^2\right)\right]
+\quad(x\ne0),\qquad w_\delta(0)=0.\tag{11.1}
+$$
+
+它与 $N-w_\delta$ 构成非负完整菜单，连续且共同相位不变。
+记 $S=\left\lVert u\right\rVert ^2+\left\lVert v\right\rVert ^2+\left\lVert z\right\rVert ^2$，则
+
+<a id="eq-i3small"></a>
+
+$$
+|I_3(u,v,z)|\le\frac{15}{4}\delta S\le4\delta S.\tag{11.2}
+$$
+
+但是
+
+<a id="eq-farallscales"></a>
+
+$$
+\boxed{\inf_{0\le E\le I}\ \sup_{x\ne0}
+\frac{|w_\delta(x)-\langle x,Ex\rangle |}{\left\lVert x\right\rVert ^2}=\frac14.}\tag{11.3}
+$$
+
+**证明。**
+
+权重处于 $[N/4,3N/4]$，所以非负、完备且在零处连续，其余连续性与相位不变显然。
+若 $S=0$，全部输入为零，式[(11.2)](#eq-i3small)成立。
+设 $S>0$，把 $I_3$ 的七个非空项对应平方范数记为 $t$，符号记为 $\pm$。
+范数平方是二次型，所以 $\sum\pm t=0$。
+利用 $\sin$ 的 Lipschitz 界，可减去共同的 $\sin(\delta\log S)$ 而得
+
+$$
+|I_3|\le\frac\delta4\sum t\,|\log(t/S)|,
+$$
+
+其中 $t=0$ 的项按极限取零。
+三个输入之和的 $t\le3S$，三项双输入之和各有 $t\le2S$，
+三项单输入各有 $t\le S$。
+对 $0<r\le1$，有 $-r\log r\le1-r\le1$；
+对 $1\le r\le a$，有 $r\log r\le r(r-1)\le a(a-1)$。
+所以三类上界可依次取 $6,2,1$，从而
+
+$$
+\sum t|\log(t/S)|\le (6+3\cdot2+3\cdot1)S=15S.
+$$
+
+这证明[(11.2)](#eq-i3small)。
+
+固定一个单位向量 $\psi$，令 $x=r\psi,r>0$。
+由于 $\delta\log r^2$ 遍历实数，
+$w_\delta(r\psi)/r^2$ 遍历 $[1/4,3/4]$。
+任何固定效果 $E$ 沿该射线只给常数 $\langle \psi,E\psi\rangle$，
+到区间两端的最大距离至少 $1/4$。
+因此左侧不小于 $1/4$；取 $E=I/2$ 则达到该界。
+
+□
+
+由恒等式 $I_3(u,v,-v)=-\Delta(u,v)$，这个例子还满足
+
+$$
+|\Delta(u,v)|\le 8\delta(\left\lVert u\right\rVert ^2+\left\lVert v\right\rVert ^2).
+$$
+
+所以令 $\delta\to0$ 确实能使相对反向缺陷任意小，
+而全部强度尺度上的相对二次逼近距离保持 $1/4$。
+
+这项边界必须准确阅读：
+
+1. 在单位球面上，该例恰好为 $w_\delta=1/2$，已经是 Born 读出。
+
+   它不否定只讨论归一态的稳定性结论。
+2. 它不满足精确二次齐次性；若额外保留了这项跨尺度约束，反例便被排除。
+
+   本节检验的是近似反向闭合、正菜单与共同相位的组合。
+3. 一个固定尺度锚并不足以排除它，因为它在尺度 $\left\lVert x\right\rVert ^2=1$ 已完全正确。
+
+4. 对这个例子，在有限对数范围
+
+   $|\log(\left\lVert x\right\rVert ^2/s_0)|\le L$ 内，取
+
+   $$
+   E_0=\left[\frac12+\frac14\sin(\delta\log s_0)\right]I
+   $$
+
+   即有相对误差至多 $\delta L/4$。这只是该解析族的范围界，
+   不是已经证明任意近似规则都满足同样的通用稳定定理。
+
+**白话图景。**每次局部比较只偏一点，偏差仍可能随着总强度缓慢积累。
+在一个固定尺度看，它完全正常；走过无限多尺度以后，它却能偏到另一边。
+因此“精确相容推出二次读出”已经证明，“近似相容在所有尺度都可靠”还需要额外的尺度控制。
+这个区别让新候选的适用边界保持清楚。
+
+<a id="section-12"></a>
+

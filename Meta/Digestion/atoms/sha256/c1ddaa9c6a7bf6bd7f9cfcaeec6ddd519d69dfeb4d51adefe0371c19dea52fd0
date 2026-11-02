@@ -1,0 +1,59 @@
+#### 命题 8.1（相对相位的圆周读出）
+
+在 v79 条件下，对固定 $u,v$，令 $v_\theta=e^{i\theta}v$。
+若相应输入族属于声明域，则
+
+$$
+k_e(u,v_\theta)=e^{i\theta}k_e(u,v),\qquad
+w_e(v_\theta)=w_e(v).
+$$
+
+在 $s_e>0$ 时，事件关系的 $(X_e,Y_e)$ 绕圆转动，$Z_e$ 与 $s_e$ 保持不变。
+若 $s_e=0$，整个事件二元核始终为零，不使用归一坐标。
+同一幅度标尺上的事件权重为
+
+<a id="eq-phasecircle"></a>
+
+$$
+w_e(u+e^{i\theta}v)
+=w_e(u)+w_e(v)
++2\operatorname{Re}(e^{i\theta}k_e(u,v)).\tag{8.1}
+$$
+
+**证明。**
+
+这是事件核的复半双线性及对角式的直接展开。
+实部与虚部按
+$(X,Y)\mapsto(X\cos\theta-Y\sin\theta,X\sin\theta+Y\cos\theta)$ 旋转。
+
+□
+
+于是半周 $\theta\mapsto\theta+\pi$ 反转交叉余量，全周返回。
+候选从半周反向相容出发，结合全部合成输入的约束，推出完整余弦、正弦读出。
+只观察某一条相位曲线有半周反号仍然不够，因为 $\sin3\theta$ 也有此性质；
+本定理使用的是对*全部可合成输入*的一致条件。
+
+式[(8.1)](#eq-phasecircle)首先是未归一权重恒等式，允许半径为零的退化圆。
+若每个 $\theta$ 都另行把 $u+e^{i\theta}v$ 归一化，令
+
+$$
+d(\theta)=\left\lVert u+e^{i\theta}v\right\rVert ^2
+=s+2\operatorname{Re}(e^{i\theta}K(u,v)),\qquad s=N(u)+N(v).
+$$
+
+它满足 $s-2|K(u,v)|\le d(\theta)\le s+2|K(u,v)|$。
+概率只在 $d(\theta)>0$ 时定义，且为
+
+$$
+p_e(\theta)=\frac{a_e+b_e+2\operatorname{Re}(e^{i\theta}z_e)}{d(\theta)}.
+$$
+
+分母固定时，例如 $u\perp v$，直接得到一阶正弦型概率曲线。
+分母变化时一般是两个一阶谐波的比值，特殊情况下也可因分子分母成比例而成为常数。
+若 $d(\theta)=0$，所有事件权重均为零，此处条件概率未定义。
+分母改变造成的比值非线性不等于出现新的高阶幅度关系。
+
+实际时间周期仍需内部钟的推进规律。有限圆形相位读口不自动保证完整历史返回，
+也不自动供应任意连续相位控制。
+v78 已完成的历史切向圆、椭圆投影及返回群定理继续保持其原有前件[6](#ref-arcs)、[7](#ref-periods)。
+

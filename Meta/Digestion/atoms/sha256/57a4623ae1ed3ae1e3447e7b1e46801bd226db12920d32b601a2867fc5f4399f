@@ -1,0 +1,42 @@
+#### 定理 4.2（有限锚认证共同复方向）
+
+在定理[3.3](#statement-3-3)已得实效果 $A$ 后，
+有限校准[(4.2)](#eq-phase)当且仅当 $AJ=JA$。
+因此 $A$ 是唯一复效果 $E$，且
+
+$$
+w(x)=\langle x,Ex\rangle ,\qquad 0\le E\le I.
+$$
+
+全部 $x$ 的 $w(Jx)=w(x)$ 及全部共同相位不变随之成立。
+
+**证明。**
+
+按 $(e_1,\ldots,e_d,f_1,\ldots,f_d)$ 分块写
+
+$$
+A=\begin{pmatrix}P&B\\B^{\mathsf T}&Q\end{pmatrix},
+\qquad
+J=\begin{pmatrix}0&-I\\I&0\end{pmatrix},
+$$
+
+其中 $P,Q$ 实对称。$AJ=JA$ 等价于
+
+$$
+P=Q,\qquad B=-B^{\mathsf T}.
+$$
+
+$e_i$ 锚先给 $P_{ii}=Q_{ii}$。
+实和桥 $(e_i+e_j)/\sqrt2$ 再给 $P_{ij}=Q_{ij}$。
+混合桥 $(e_i+f_j)/\sqrt2$ 的 $J$ 像为 $(f_i-e_j)/\sqrt2$，
+利用已经相等的对角项，校准等式给 $B_{ij}+B_{ji}=0$，包括 $i=j$。
+所以所需两项全部成立。
+
+反向，对易立即给全域 $w(Jx)=w(x)$。
+实自伴且与 $J$ 对易，使 $A$ 对共同复内积复线性、自伴且为正收缩。
+$g(Jx,Ax)=0$，故 $\langle x,Ax\rangle =g(x,Ax)=w(x)$。
+
+□
+
+<a id="statement-4-3"></a>
+
