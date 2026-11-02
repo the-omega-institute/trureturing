@@ -62,4 +62,3 @@ Summing the full original three-source cell law over the third source gives the 
 - Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.binary_block_source_pair_marginal`
 - Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.binary_latin_square_is_xor`
 - Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.weighted_likelihood_frame_card_ge_four`
-- Dependency: [D5/S3/Entropy/EntropyEquality](EntropyEquality.md)

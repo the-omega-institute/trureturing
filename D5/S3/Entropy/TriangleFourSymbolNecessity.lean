@@ -5,7 +5,7 @@
    anchors: []
    digest: Three nonzero pairwise-orthogonal likelihood directions force four output symbols; binary Latin squares are parity and the original block cell law has independent source-pair marginals. -/
 
-import D5.S3.Entropy.EntropyEquality
+import Mathlib
 
 /-!
 # Triangle four-symbol necessity core
