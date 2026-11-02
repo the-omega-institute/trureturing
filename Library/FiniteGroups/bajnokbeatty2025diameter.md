@@ -25,7 +25,9 @@ In Section 4, an s-spanning pair represents every group element with integer
 coefficients whose absolute values sum to at most s. Conjecture 4.1 gives a
 classification for Z/2 × Z/(2k). Theorem 4.2 proves a necessary order bound;
 Theorem 4.3 treats odd s; Theorem 4.4 gives sufficiency for even s only when
-k ≤ (s²−s)/2.
+k ≤ (s²−s)/2. Theorem 1.9 asserts the maximal order 2s² at even radius
+for groups of this form; it therefore already attests the j=0 endpoint.
+That endpoint is not claimed as a new positive case here.
 
 The earlier positive constructions do not directly supply the whole retained
 family. Proposition 2.2 is cyclic. Proposition 2.3 concerns Z/s × Z/(2s).
