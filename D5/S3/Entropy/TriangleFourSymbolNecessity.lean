@@ -585,11 +585,11 @@ private theorem record_pair_entropies (L : IncidentLaw S₁ S₂ S₃ O)
   obtain ⟨h₁₂, h₁₃, h₂₃⟩ := L.record_pair_tables hagree
   refine ⟨?_, ?_, ?_⟩
   · rw [show L.recordPair₁₂ = _ from funext h₁₂]
-    exact entropy_deterministic_extension _ (fun z => L.readoutC z.1 z.2)
+    exact entropy_deterministic_extension _ (fun z : S₁ × S₂ => L.readoutC z.1 z.2)
   · rw [show L.recordPair₁₃ = _ from funext h₁₃]
-    exact entropy_deterministic_extension _ (fun z => L.readoutB z.2 z.1)
+    exact entropy_deterministic_extension _ (fun z : S₁ × S₃ => L.readoutB z.2 z.1)
   · rw [show L.recordPair₂₃ = _ from funext h₂₃]
-    exact entropy_deterministic_extension _ (fun z => L.readoutA z.1 z.2)
+    exact entropy_deterministic_extension _ (fun z : S₂ × S₃ => L.readoutA z.1 z.2)
 
 private theorem record_marginals (L : IncidentLaw S₁ S₂ S₃ O) :
     marginal L.recordJoint = L.outputLaw ∧
@@ -606,8 +606,10 @@ private theorem record_marginals (L : IncidentLaw S₁ S₂ S₃ O) :
     intro s₁ _
     exact Finset.sum_comm
   · funext x
-    simp only [marginal, recordPair₂₃, outputLaw, Fintype.sum_prod_type]
+    change (∑ z : S₂ × S₃, ∑ s₁, L.recordLaw x (s₁, z)) =
+      ∑ s, L.recordLaw x s
     rw [Finset.sum_comm]
+    exact (Fintype.sum_prod_type _).symm
 
 private theorem record_conditionals (L : IncidentLaw S₁ S₂ S₃ O) (x : O) :
     conditional L.recordPair₁₂ x = xyProjection (conditional L.recordJoint x) ∧
@@ -623,8 +625,9 @@ private theorem record_conditionals (L : IncidentLaw S₁ S₂ S₃ O) (x : O) :
     simp only [conditional, h₁₃, h₀, recordPair₁₃, recordJoint, xzProjection,
       Finset.sum_div]
   · funext z
-    simp only [conditional, h₂₃, h₀, recordPair₂₃, recordJoint, FiniteEntropy.yz,
-      marginal, Finset.sum_div]
+    simp only [FiniteEntropy.yz, marginal]
+    simp only [conditional, h₂₃, h₀]
+    simp only [recordPair₂₃, recordJoint, Finset.sum_div]
 
 private theorem record_dual_balance (L : IncidentLaw S₁ S₂ S₃ O)
     (hagree : L.Agreement) :
@@ -660,6 +663,128 @@ private theorem record_dual_balance (L : IncidentLaw S₁ S₂ S₃ O)
   simp_rw [← mul_assoc, mul_comm (L.outputLaw _) (2 : ℝ), mul_assoc]
   rw [← Finset.mul_sum]
   linarith
+
+private theorem source_gap_balance (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    2 * L.sourceCost - shannonEntropy L.outputLaw =
+      mutualInformation (xyProjection L.nu) + mutualInformation (xzProjection L.nu) +
+        mutualInformation (FiniteEntropy.yz L.nu) +
+          ∑ x, L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) := by
+  classical
+  have hm₂ (s₂ : S₂) : marginal (FiniteEntropy.yz L.nu) s₂ = L.marginal₂ s₂ := by
+    simp only [marginal, FiniteEntropy.yz, marginal₂]
+    exact Finset.sum_comm
+  have hm₃ (s₃ : S₃) :
+      marginal (fun z : S₃ × S₂ => FiniteEntropy.yz L.nu (z.2, z.1)) s₃ =
+        L.marginal₃ s₃ := by
+    simp only [marginal, FiniteEntropy.yz, marginal₃]
+    exact Finset.sum_comm
+  have hcost : L.sourceCost = FiniteEntropy.totalCorrelation L.nu := by
+    unfold sourceCost FiniteEntropy.totalCorrelation
+    congr 1
+    funext s
+    rw [hm₂, hm₃]
+    rfl
+  calc
+    _ = mutualInformation (xyProjection L.nu) + mutualInformation (xzProjection L.nu) +
+        mutualInformation (FiniteEntropy.yz L.nu) +
+          (FiniteEntropy.dual L.nu - shannonEntropy L.outputLaw) := by
+      rw [hcost, FiniteEntropy.totalCorrelation_dual_balance L.nu L.nu_nonneg]
+      ring
+    _ = _ := by rw [L.record_dual_balance hagree]
+
+/-- Equality of the original KL source cost forces unconditional source-pair
+products and a threefold product on every positive original output fiber. -/
+theorem original_equality_fibers (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement)
+    (heq : L.sourceCost = shannonEntropy L.outputLaw / 2) :
+    (∀ s₁ s₂, L.pair₁₂ s₁ s₂ = L.marginal₁ s₁ * L.marginal₂ s₂) ∧
+    (∀ s₁ s₃, L.pair₁₃ s₁ s₃ = L.marginal₁ s₁ * L.marginal₃ s₃) ∧
+    (∀ s₂ s₃, L.pair₂₃ s₂ s₃ = L.marginal₂ s₂ * L.marginal₃ s₃) ∧
+    (∀ x, 0 < L.outputLaw x →
+      ∀ s₁ s₂ s₃, conditional L.recordJoint x (s₁, s₂, s₃) =
+        marginal (conditional L.recordJoint x) s₁ *
+          marginal (FiniteEntropy.yz (conditional L.recordJoint x)) s₂ *
+          marginal (fun z : S₃ × S₂ =>
+            FiniteEntropy.yz (conditional L.recordJoint x) (z.2, z.1)) s₃) := by
+  classical
+  have hp₁₂ : (∀ z, 0 ≤ xyProjection L.nu z) ∧ ∑ z, xyProjection L.nu z = 1 := by
+    refine ⟨fun z => Finset.sum_nonneg fun s₃ _ => L.nu_nonneg _, ?_⟩
+    simpa only [xyProjection, Fintype.sum_prod_type] using L.nu_sum
+  have hp₁₃ : (∀ z, 0 ≤ xzProjection L.nu z) ∧ ∑ z, xzProjection L.nu z = 1 := by
+    refine ⟨fun z => Finset.sum_nonneg fun s₂ _ => L.nu_nonneg _, ?_⟩
+    simp only [xzProjection, Fintype.sum_prod_type]
+    have he : (∑ s₁, ∑ s₃, ∑ s₂, L.nu (s₁, s₂, s₃)) =
+        ∑ s₁, ∑ s₂, ∑ s₃, L.nu (s₁, s₂, s₃) := by
+      apply Finset.sum_congr rfl
+      intro s₁ _
+      exact Finset.sum_comm
+    rw [he]
+    simpa only [Fintype.sum_prod_type] using L.nu_sum
+  have hp₂₃ : (∀ z, 0 ≤ FiniteEntropy.yz L.nu z) ∧
+      ∑ z, FiniteEntropy.yz L.nu z = 1 := by
+    refine ⟨fun z => Finset.sum_nonneg fun s₁ _ => L.nu_nonneg _, ?_⟩
+    simp only [FiniteEntropy.yz, marginal]
+    rw [Finset.sum_comm]
+    simpa only [Fintype.sum_prod_type] using L.nu_sum
+  have hout := L.output_is_probability
+  have hmarg := L.record_marginals
+  have hfiber (x : O) (hx : L.outputLaw x ≠ 0) :
+      (∀ s, 0 ≤ conditional L.recordJoint x s) ∧
+        ∑ s, conditional L.recordJoint x s = 1 := by
+    constructor
+    · intro s
+      exact div_nonneg (L.record_nonneg x s) (by simpa only [hmarg.1] using hout.1 x)
+    · simp only [conditional, ← Finset.sum_div, ← marginal, hmarg.1]
+      exact div_self hx
+  have hweighted (x : O) :
+      0 ≤ L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) := by
+    by_cases hx : L.outputLaw x = 0
+    · simp only [hx, zero_mul, le_refl]
+    · exact mul_nonneg (hout.1 x) (FiniteEntropy.dual_nonneg _ (hfiber x hx))
+  have h₁₂ := mutual_information_nonneg _ hp₁₂
+  have h₁₃ := mutual_information_nonneg _ hp₁₃
+  have h₂₃ := mutual_information_nonneg _ hp₂₃
+  have hsum := Finset.sum_nonneg (fun x _ => hweighted x)
+  have hz : mutualInformation (xyProjection L.nu) + mutualInformation (xzProjection L.nu) +
+      mutualInformation (FiniteEntropy.yz L.nu) +
+        ∑ x, L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) = 0 := by
+    rw [← L.source_gap_balance hagree, heq]
+    ring
+  have hz₁₂ : mutualInformation (xyProjection L.nu) = 0 := by linarith
+  have hz₁₃ : mutualInformation (xzProjection L.nu) = 0 := by linarith
+  have hz₂₃ : mutualInformation (FiniteEntropy.yz L.nu) = 0 := by linarith
+  have hzw : ∑ x, L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) = 0 := by
+    linarith
+  have prod₁₂ := (mutual_information_eq_zero_iff_product _ hp₁₂).mp hz₁₂
+  have prod₁₃ := (mutual_information_eq_zero_iff_product _ hp₁₃).mp hz₁₃
+  have prod₂₃ := (mutual_information_eq_zero_iff_product _ hp₂₃).mp hz₂₃
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro s₁ s₂
+    have hh := congrFun prod₁₂ (s₁, s₂)
+    simpa only [xyProjection, marginal, Fintype.sum_prod_type, pair₁₂, marginal₁,
+      marginal₂] using hh
+  · intro s₁ s₃
+    have hh := congrFun prod₁₃ (s₁, s₃)
+    have hm : marginal (xzProjection L.nu) s₁ = L.marginal₁ s₁ := by
+      simp only [marginal, xzProjection, marginal₁]
+      exact Finset.sum_comm
+    simpa only [hm, xzProjection, marginal, pair₁₃, marginal₃] using hh
+  · intro s₂ s₃
+    have hh := congrFun prod₂₃ (s₂, s₃)
+    have hm₂ : marginal (FiniteEntropy.yz L.nu) s₂ = L.marginal₂ s₂ := by
+      simp only [marginal, FiniteEntropy.yz, marginal₂]
+      exact Finset.sum_comm
+    have hm₃ : marginal (fun z : S₃ × S₂ => FiniteEntropy.yz L.nu (z.2, z.1)) s₃ =
+        L.marginal₃ s₃ := by
+      simp only [marginal, FiniteEntropy.yz, marginal₃]
+      exact Finset.sum_comm
+    simpa only [hm₂, hm₃, FiniteEntropy.yz, marginal, pair₂₃] using hh
+  · intro x hx
+    have hwzero := (Finset.sum_eq_zero_iff_of_nonneg (fun x _ => hweighted x)).mp hzw
+    have hd : FiniteEntropy.dual (conditional L.recordJoint x) = 0 :=
+      (mul_eq_zero.mp (hwzero x (Finset.mem_univ x))).resolve_left (ne_of_gt hx)
+    exact FiniteEntropy.dual_zero_product _ (hfiber x (ne_of_gt hx)) hd
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
