@@ -41,7 +41,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (D : ℝ) (hD : 0 < D),
+  Law R := ∀ (D : ℝ) (_hD : 0 < D),
     ∃ M : ℝ, 0 ≤ M ∧ ∀ {I : Type u} [Fintype I]
       (x : I → ℝ) (a : I → ℂ),
       (∀ i, x i ∈ Icc (0 : ℝ) D) → (∑ i, a i = 0) →
@@ -55,7 +55,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   obtain ⟨M, hM, hbound⟩ := h 1 (by norm_num)
   have hb := @hbound (ULift.{u} Empty) inferInstance (fun _ => 0) (fun _ => 0)
     (by intro i; cases i.down) (by simp)
-  norm_num [rejected, realize, «prefix»] at hb
+  change (1 : ℝ) ≤ M * (∫ v : ℝ,
+    ‖«prefix» (fun _ : ULift.{u} Empty => (0 : ℝ)) (fun _ => (0 : ℂ)) v‖ ^ 2) at hb
+  norm_num [«prefix»] at hb
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro role
@@ -79,8 +81,11 @@ keeps realization, lawful template readout, original source selection and residu
 continuation together, using the same owner pattern as AtomicPrefixEnergy. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@actual_remainder_prefix_bound.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.actual_remainder_prefix_bound.__information_unit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.family
+  unitName := .str
+    `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.actual_remainder_prefix_bound
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation "family"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -100,7 +105,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+      path := #["body", "body", "arg", "body", "arg", "body", "body",
+        "body", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
