@@ -8,6 +8,7 @@
 
 import D5.S1.Dynamics.Shadowing.GenericBinarySection
 import D5.S1.Dynamics.Shadowing.MetricTracing
+import Mathlib.Topology.MetricSpace.PiNat
 import Mathlib.Topology.ShrinkingLemma
 import Mathlib.Topology.UniformSpace.Compact
 import Mathlib.Topology.UniformSpace.OfCompactT2
