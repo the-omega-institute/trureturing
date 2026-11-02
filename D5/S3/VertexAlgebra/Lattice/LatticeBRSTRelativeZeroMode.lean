@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-original-relative-zero-mode)
    anchors: []
    utility: none
-   digest: Statewise finite zero-mode decomposition of the original all-charge BRST action and preservation of its literal relative shell. -/
+   digest: Original finite BRST zero-mode decomposition and literal relative-shell stability. -/
 
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
 import D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
@@ -14,9 +14,13 @@ import D5.S3.Quantum.Fermionic.BcGhostSquare
 import D5.S3.Quantum.Fermionic.BcGhostChargeTensor
 import Mathlib.LinearAlgebra.Projection
 
+/-! # Original BRST zero modes
+
+Statewise finite decomposition and stability of the unshifted fixed-momentum relative shell.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 
 open scoped BigOperators TensorProduct
 open D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
@@ -27,6 +31,8 @@ open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.BcGhostBRST
 open private cubic_eq c_swap from D5.S3.Quantum.Fermionic.BcGhostCubic
+open private cc_b from D5.S3.Quantum.Fermionic.BcGhostSquare
+open private summand_product from D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
 
 namespace D5.S3.VertexAlgebra.LatticeBRSTRelativeZeroMode
 noncomputable section
@@ -70,9 +76,10 @@ def cubicZeroFree : Module.End ℂ Fock where
     by_cases h : pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 + pq.2 ≠ 0 <;>
       simp [h, map_add]
   map_smul' a v := by
+    simp only [RingHom.id_apply]
     rw [smul_finsum' a
       (filter_finite (fun pq : ℤ × ℤ => cubicTerm pq v)
-        (cubicTerm_finite v) _)]
+        (cubicTerm_finite v) (fun pq => pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 + pq.2 ≠ 0))]
     apply finsum_congr
     intro pq
     by_cases h : pq.1 ≠ 0 ∧ pq.2 ≠ 0 ∧ pq.1 + pq.2 ≠ 0 <;>
@@ -93,9 +100,10 @@ def matterZeroFree (D : LatticeData)
     intro m
     by_cases h : m ≠ 0 <;> simp [h, map_add]
   map_smul' a x := by
+    simp only [RingHom.id_apply]
     rw [smul_finsum' a
       (filter_finite (fun m : ℤ => summand D H m x)
-        (summand_finite D H x) _)]
+        (summand_finite D H x) (fun m => m ≠ 0))]
     apply finsum_congr
     intro m
     by_cases h : m ≠ 0 <;> simp [h]
@@ -119,7 +127,7 @@ theorem ghost_b_zero_square (D : LatticeData) :
   apply TensorProduct.ext'
   intro v w
   simp only [ghostB, Module.End.mul_apply, TensorProduct.map_tmul,
-    LinearMap.id_apply]
+    LinearMap.id_apply, LinearMap.zero_apply]
   have hw := LinearMap.congr_fun hF w
   simp only [Module.End.mul_apply, LinearMap.zero_apply] at hw
   rw [hw, TensorProduct.tmul_zero]
@@ -134,7 +142,7 @@ theorem ghost_c_zero_square (D : LatticeData) :
   apply TensorProduct.ext'
   intro v w
   simp only [ghostC, Module.End.mul_apply, TensorProduct.map_tmul,
-    LinearMap.id_apply]
+    LinearMap.id_apply, LinearMap.zero_apply]
   have hw := LinearMap.congr_fun hF w
   simp only [Module.End.mul_apply, LinearMap.zero_apply] at hw
   rw [hw, TensorProduct.tmul_zero]
@@ -149,7 +157,7 @@ theorem ghost_zero_mixed (D : LatticeData) :
   have hw := LinearMap.congr_fun (BcGhostFock.ghost_mixed_car 0 0) w
   have hw' : b 0 (c 0 w) + c 0 (b 0 w) = w := by
     simpa only [LinearMap.add_apply, Module.End.mul_apply, zero_add,
-      if_true, Module.End.one_apply] using hw
+      ite_true, Module.End.one_apply] using hw
   rw [← TensorProduct.tmul_add, hw']
   rfl
 
@@ -226,14 +234,9 @@ private theorem rTerm_b_zero (p : ℤ) :
     BcGhostBRST.rTerm 0 p * b 0 - b 0 * BcGhostBRST.rTerm 0 p = 0 := by
   by_cases hp : p = 0
   · subst p
-    simp [BcGhostBRST.rTerm, BcGhostFock.ghost_c_car]
+    simp [BcGhostBRST.rTerm]
   · have hcc : (c p * c (-p)) * b 0 - b 0 * (c p * c (-p)) = 0 := by
-      calc
-        _ = c p * (b 0 * c (-p) + c (-p) * b 0) -
-            (b 0 * c p + c p * b 0) * c (-p) := by noncomm_ring
-        _ = 0 := by
-          rw [BcGhostFock.ghost_mixed_car, BcGhostFock.ghost_mixed_car]
-          simp [hp]
+      simpa [hp] using cc_b p (-p) 0
     simp only [BcGhostBRST.rTerm, zero_sub]
     rw [smul_mul_assoc, mul_smul_comm, ← smul_sub, hcc, smul_zero]
 
@@ -269,7 +272,8 @@ theorem totalL0_b_zero (D : LatticeData)
   have hm : matterMode D H 0 * ghostB D 0 - ghostB D 0 * matterMode D H 0 = 0 := by
     apply TensorProduct.ext'
     intro v w
-    simp [matterMode, ghostB, Module.End.mul_apply]
+    simp only [matterMode, ghostB, LinearMap.sub_apply, Module.End.mul_apply,
+      TensorProduct.map_tmul, LinearMap.id_apply, LinearMap.zero_apply, sub_self]
   have hg' : ghostVirasoro D 0 * ghostB D 0 -
       ghostB D 0 * ghostVirasoro D 0 = 0 := by
     apply TensorProduct.ext'
@@ -324,7 +328,9 @@ theorem Qhat_b_zero (D : LatticeData)
         ((ghostC D 0 * L0 D H) * ghostB D 0 +
           ghostB D 0 * (ghostC D 0 * L0 D H)) -
         ((ghostB D 0 * ghostR D 0) * ghostB D 0 +
-          ghostB D 0 * (ghostB D 0 * ghostR D 0)) := by noncomm_ring
+          ghostB D 0 * (ghostB D 0 * ghostR D 0)) := by
+      simp only [sub_mul, mul_sub, mul_assoc]
+      abel
     _ = 0 := by rw [hward, hcL, hbR, sub_self, sub_zero]
 
 /-- The zero row and column are computed using the supplier's actual cyclic ordering. -/
@@ -334,9 +340,9 @@ private theorem cubicTerm_zero_row (q : ℤ) :
   have hswap : cubic q 0 = -cubic 0 q := by
     simp only [cubic_eq, neg_zero, sub_zero, zero_sub]
     by_cases ht : -q ≤ -2
-    · simp only [ht, if_true]
+    · simp only [ht, ite_true]
       rw [mul_assoc, c_swap q 0, mul_neg, ← mul_assoc]
-    · simp only [ht, if_false]
+    · simp only [ht, ite_false]
       rw [c_swap q 0, neg_mul]
   have hnormal : c 0 * BcGhostVirasoro.summand 0 q =
       -(q : ℂ) • cubic 0 q := by
@@ -345,13 +351,13 @@ private theorem cubicTerm_zero_row (q : ℤ) :
     by_cases ht : -q ≤ -2
     · have hb : c 0 * b (-q) = -(b (-q) * c 0) := by
         have h : b (-q) * c 0 + c 0 * b (-q) = 0 := by
-          rw [BcGhostFock.ghost_mixed_car, if_neg (by omega)]
+          rw [BcGhostFock.ghost_mixed_car, ite_eq_right (by omega)]
         exact eq_neg_of_add_eq_zero_right h
-      simp only [ht, if_true]
+      simp only [ht, ite_true]
       rw [← mul_assoc, hb, neg_mul, smul_neg, neg_smul]
-    · simp only [ht, if_false, mul_neg, smul_neg, neg_smul, mul_assoc]
+    · simp only [ht, ite_false, mul_neg, smul_neg, neg_smul, mul_assoc]
   rw [hnormal]
-  simp only [cubicTerm, Int.cast_sub, Int.cast_zero, zero_sub, sub_zero]
+  simp only [cubicTerm, zero_sub, sub_zero]
   rw [hswap]
   module
 
@@ -370,7 +376,7 @@ private theorem cubicTerm_zero_diag (p : ℤ) :
           simp [hp]
     have hz : -p - -p = (0 : ℤ) := by omega
     simp only [cubicTerm, cubic_eq, hz, show ¬ (0 : ℤ) ≤ -2 by omega,
-      if_false, BcGhostBRST.rTerm, zero_sub, sub_zero, mul_smul_comm]
+      ite_false, BcGhostBRST.rTerm, zero_sub, sub_zero, mul_smul_comm]
     rw [← mul_assoc, hbc]
     congr 1
     push_cast
@@ -421,7 +427,7 @@ private theorem cubic_zero_rows (v : Fock) :
       simp [he, hoverlap]
     all_goals simp [hp0, hq0]
   rw [hunion, hrow', hcol', ← finsum_add_distrib hp hq]
-  change (∑ᶠ q : ℤ, cubicTerm (0,q) v + cubicTerm (q,0) v) =
+  change (∑ᶠ q : ℤ, (cubicTerm (0,q) v + cubicTerm (q,0) v)) =
     c 0 (∑ᶠ q : ℤ, BcGhostVirasoro.summand 0 q v)
   rw [map_finsum (c 0) (BcGhostVirasoro.summand_finite 0 v)]
   apply finsum_congr
@@ -458,7 +464,7 @@ private theorem cubic_zero_diag (v : Fock) :
         simp [hz, cubicTerm]
       · have hq : pq.2 ≠ 0 := by omega
         have hs : pq.1 + pq.2 = 0 := by omega
-        simp [he, hp, hq, hs]
+        simp [he, hp]
     · have hs : pq.1 + pq.2 ≠ 0 := by omega
       simp [he, hs]
   rw [← hremove, hgraph]
@@ -520,18 +526,14 @@ theorem matter_zero_split (D : LatticeData)
     simp
   rw [hz]
   simp only [matterZeroFree]
-  have hs : summand D H 0 = matterMode D H 0 * ghostC D 0 := by
-    apply TensorProduct.ext'
-    intro v w
-    simp [summand, matterMode, ghostC, Module.End.mul_apply]
-  rw [hs]
+  rw [summand_product]
+  rfl
 
 /-- The zero-mode-free sum is exactly the original charge after the Ward terms. -/
 theorem original_charge_split (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (x : State D) :
     totalCharge D H x = ghostC D 0 (L0 D H x) + ghostB D 0 (ghostR D 0 x) +
       zeroModeFreeCharge D H x := by
-  have hm := matter_zero_split D H x
   -- The following tensor extensionality step is the literal lift of `ghost_zero_split`.
   have hgl : ghostCharge D x = ghostC D 0 (ghostVirasoro D 0 x) +
       ghostB D 0 (ghostR D 0 x) + ghostZeroFree D x := by
@@ -544,11 +546,13 @@ theorem original_charge_split (D : LatticeData)
     | add x y hx hy =>
         simp only [map_add, hx, hy]
         abel
+  have hm := matter_zero_split D H x
   have hcomm : matterMode D H 0 * ghostC D 0 =
       ghostC D 0 * matterMode D H 0 := by
     apply TensorProduct.ext'
     intro v w
-    simp [matterMode, ghostC, Module.End.mul_apply]
+    simp only [matterMode, ghostC, Module.End.mul_apply,
+      TensorProduct.map_tmul, LinearMap.id_apply]
   change T D H x + ghostCharge D x = _
   rw [hm, hgl, hcomm]
   change ghostC D 0 (matterMode D H 0 x) + matterZeroFree D H x +
@@ -602,7 +606,8 @@ private theorem totalL0_c_zero (D : LatticeData)
   have hm : matterMode D H 0 * ghostC D 0 - ghostC D 0 * matterMode D H 0 = 0 := by
     apply TensorProduct.ext'
     intro v w
-    simp [matterMode, ghostC, Module.End.mul_apply]
+    simp only [matterMode, ghostC, LinearMap.sub_apply, Module.End.mul_apply,
+      TensorProduct.map_tmul, LinearMap.id_apply, LinearMap.zero_apply, sub_self]
   have hg : ghostVirasoro D 0 * ghostC D 0 - ghostC D 0 * ghostVirasoro D 0 = 0 := by
     apply TensorProduct.ext'
     intro v w
@@ -647,7 +652,13 @@ theorem Qhat_totalL0_comm (D : LatticeData)
         (L0 D H * ghostC D 0 - ghostC D 0 * L0 D H) * L0 D H -
         ((L0 D H * ghostB D 0 - ghostB D 0 * L0 D H) * ghostR D 0 +
           ghostB D 0 * (L0 D H * ghostR D 0 - ghostR D 0 * L0 D H)) := by
-      noncomm_ring
+      generalize L0 D H = A
+      generalize totalCharge D H = Q
+      generalize ghostC D 0 = C
+      generalize ghostB D 0 = B
+      generalize ghostR D 0 = R
+      simp only [sub_mul, mul_sub, add_mul, mul_add, mul_assoc]
+      abel
     _ = 0 := by
       rw [totalCharge_totalL0_comm D H hHG hGH, totalL0_c_zero,
         totalL0_b_zero, totalL0_R_zero D H]
@@ -677,12 +688,22 @@ theorem Qhat_preserves_relativeMassShell (D : LatticeData)
     (hGH : LatticeSugawaraCurrents.gramComplex D * H = 1)
     (a : Charge D) (x : State D)
     (hx : x ∈ LatticeRelativeMassShell.relativeMassShell D H a) :
-    Qhat D H x ∈ LatticeRelativeMassShell.relativeMassShell D H a  := by
+    Qhat D H x ∈ LatticeRelativeMassShell.relativeMassShell D H a := by
   exact ⟨⟨by
     rw [Qhat_eq_original_on_relative_shell D H x hx.1.2 hx.2]
     exact LatticeRelativeMassShell.totalCharge_mem_fixedMomentum D H a hx.1.1,
     Qhat_preserves_b0_kernel D H x hx.1.2⟩,
     Qhat_preserves_L0_kernel D H hHG hGH x hx.2⟩
+
+/-- The actual Qhat action restricted to the original fixed-momentum relative shell. -/
+def relativeQhat (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * LatticeSugawaraCurrents.gramComplex D = 1)
+    (hGH : LatticeSugawaraCurrents.gramComplex D * H = 1) (a : Charge D) :
+    Module.End ℂ (LatticeRelativeMassShell.relativeMassShell D H a) :=
+  (zeroModeFreeCharge D H).restrict (fun x hx => by
+    rw [← Qhat_eq_zeroModeFree D H]
+    exact Qhat_preserves_relativeMassShell D H hHG hGH a x hx)
 
 end
 end D5.S3.VertexAlgebra.LatticeBRSTRelativeZeroMode
