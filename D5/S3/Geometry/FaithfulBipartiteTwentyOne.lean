@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FaithfulBipartiteTwentyOne
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Geometry/FiveAnchorFaithfulPlacement, D5/S3/Geometry/LowDegreeFaithfulExtension]
+   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
    utility: none
    digest: Faithful bipartite realizations at the twenty-one-edge budget. -/
 module

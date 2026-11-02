@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FiveAnchorFaithfulPlacement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Geometry/CosphericalUnitLocus, D5/S3/Geometry/SphereGeneralPosition]
+   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
    utility: none
    digest: Faithful finite bipartite placement from small cospherical anchor families. -/
 module
