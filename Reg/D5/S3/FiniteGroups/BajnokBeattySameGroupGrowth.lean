@@ -1,4 +1,3 @@
-import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth
 import Reg.Support.DependentFamily
 
@@ -169,40 +168,5 @@ noncomputable def growthSource : Registration growthArena
       rw [hz, hs]
       norm_num
 
-noncomputable def growthRegistration :
-    Contract.Registration same_group_different_growth
-      (Realization growthSignature) Unit Unit := {
-  unitName := `D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth.same_group_different_growth.__information_unit
-  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth.growthSource
-  realizationSource := none
-  generated := false
-  arena := .source ⟨growthArena⟩
-  objectArena := .source ⟨growthArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source growthArena ⟨growthSource⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize growthSignature
-    (fun i pt r => if i = 0 then growth19 pt.1 pt.2 r else growth33 pt.1 pt.2 r)
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth
-    definition := none
-    coordinates := #[0, 1]
-    readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
-        stateBinder := 0, functionOperand := true,
-        stateOperand := none, booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
-        stateBinder := 0, functionOperand := true,
-        stateOperand := none, booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end Reg.D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth
