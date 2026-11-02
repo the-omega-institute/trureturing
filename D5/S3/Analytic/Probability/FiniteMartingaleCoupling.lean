@@ -34,12 +34,7 @@ private lemma measure_map_finset_sum {α β ι : Type*}
     {f : α → β} (hf : Measurable f)
     {s : Finset ι} (m : ι → Measure α) :
     Measure.map f (∑ i ∈ s, m i) = ∑ i ∈ s, Measure.map f (m i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp [Measure.map_zero]
-  | insert a s has ih =>
-      rw [Finset.sum_insert has, Finset.sum_insert has,
-        Measure.map_add _ _ hf, ih]
+  exact Measure.map_finset_sum hf.aemeasurable
 
 end MeasureTheory
 end
@@ -55,11 +50,11 @@ abbrev IsCoupling {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
 
 namespace IsCoupling
 
-lemma fst_marginal {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
+lemma fst_probability_marginal {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
     (h : IsCoupling μ ν π) : ProbDist.map π Prod.fst measurable_fst = μ :=
   ProbabilityMeasure.toMeasure_injective h.1
 
-lemma snd_marginal {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
+lemma snd_probability_marginal {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
     (h : IsCoupling μ ν π) : ProbDist.map π Prod.snd measurable_snd = ν :=
   ProbabilityMeasure.toMeasure_injective h.2
 
@@ -70,10 +65,10 @@ private lemma supportsOn_prod_set {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × 
     (hμ : μ.supportsOn s) (hν : ν.supportsOn t) :
     π.toMeasure (s ×ˢ t) = 1 := by
   have hfst : π.toMeasure.fst = μ.toMeasure := by
-    have heq := congrArg (fun d : ProbDist ℝ => (d : Measure ℝ)) hπ.fst_marginal
+    have heq := congrArg (fun d : ProbDist ℝ => (d : Measure ℝ)) hπ.fst_probability_marginal
     simpa [Measure.fst, ProbDist.map_toMeasure] using heq
   have hsnd : π.toMeasure.snd = ν.toMeasure := by
-    have heq := congrArg (fun d : ProbDist ℝ => (d : Measure ℝ)) hπ.snd_marginal
+    have heq := congrArg (fun d : ProbDist ℝ => (d : Measure ℝ)) hπ.snd_probability_marginal
     simpa [Measure.snd, ProbDist.map_toMeasure] using heq
   have h_sfst : π.toMeasure (sᶜ ×ˢ (Set.univ : Set ℝ)) = 0 := by
     have hpre : (sᶜ ×ˢ (Set.univ : Set ℝ)) = Prod.fst ⁻¹' sᶜ := by
@@ -228,7 +223,7 @@ private lemma ae_conditional_mean_eq (h : IsMartingaleCoupling μ ν π) :
   rw [h_sub_out, h_first, h_second, h_sub_in, hmart]
 
 /-- Marginals of a martingale coupling have equal means. -/
-lemma mean_eq (h : IsMartingaleCoupling μ ν π) :
+lemma marginal_mean_eq (h : IsMartingaleCoupling μ ν π) :
     μ.expect id = ν.expect id := by
   -- Martingale condition at `φ ≡ 1`: ∫ (p.2 - p.1) dπ = 0.
   have hmart := h.martingale (fun _ => (1 : ℝ)) measurable_const ⟨1, fun _ => by simp⟩
@@ -415,7 +410,7 @@ def ConvexOrder (p q : DiscreteLaw) : Prop :=
 
 /-- Convex order on discrete laws forces equal means: Testing against `id` and `-id` (both convex)
 gives `p.mean ≤ q.mean ≤ p.mean`. -/
-private lemma ConvexOrder.mean_eq {p q : DiscreteLaw} (h : p.ConvexOrder q) : p.mean = q.mean := by
+private lemma ConvexOrder.finite_mean_eq {p q : DiscreteLaw} (h : p.ConvexOrder q) : p.mean = q.mean := by
   have hconv_id : ConvexOn ℝ Set.univ (id : ℝ → ℝ) := convexOn_id convex_univ
   have hconv_neg : ConvexOn ℝ Set.univ (fun x : ℝ => -x) := (concaveOn_id convex_univ).neg
   have h_le : p.mean ≤ q.mean := by
@@ -568,16 +563,16 @@ private lemma sum_eq_of_uniform_mean_eq
 between two finitely-supported laws that carry the same number of atoms and uniform weights `1/n`
 yields a bistochastic martingale matrix.
 
-This is the special case used by the continuous Strassen proof, where the quantile atomization
-`condMeanAtomize` produces uniform, equal-cardinality laws. The general discrete Strassen theorem —
-arbitrary finite support with nonuniform weights — is `DiscreteLaw.exists_martingaleCoupling`. -/
+This is the case used by the compact-law construction: conditional-mean quantile atomization
+produces uniform, equal-cardinality laws. The matrix-to-joint-law construction below also accepts
+arbitrary nonnegative atom weights satisfying its row, column and mean constraints. -/
 private theorem discrete_martingale_matrix_exists_uniform (p q : DiscreteLaw)
     (hn_pos : 0 < p.n) (hn : p.n = q.n)
     (hp_uniform : ∀ i, p.weight i = (1 : ℝ) / p.n)
     (hq_uniform : ∀ j, q.weight j = (1 : ℝ) / q.n)
     (h : DiscreteLaw.ConvexOrder p q) :
     Nonempty (BistochasticMartingaleMatrix p q) := by
-  have hmean_eq : p.mean = q.mean := DiscreteLaw.ConvexOrder.mean_eq h
+  have hmean_eq : p.mean = q.mean := DiscreteLaw.ConvexOrder.finite_mean_eq h
   -- Base case: `p` has exactly one atom. Then `p.atom i = p.mean = q.mean` for the unique
   -- `i`, and `T i j := q.weight j` satisfies all four properties trivially.
   by_cases hp1 : p.n = 1
@@ -650,7 +645,7 @@ private lemma row_ofReal_sum (M : BistochasticMartingaleMatrix p q) (i : Fin p.n
 
 /-- The joint law `π({(p.atom i, q.atom j)}) = p.weight i · T i j`, promoted to a
 `ProbDist (ℝ × ℝ)`. -/
-noncomputable def toProbDist (M : BistochasticMartingaleMatrix p q) :
+noncomputable def toJointProbDist (M : BistochasticMartingaleMatrix p q) :
     ProbDist (ℝ × ℝ) :=
   ⟨∑ i, ∑ j, ENNReal.ofReal (p.weight i * M.T i j) •
       Measure.dirac (p.atom i, q.atom j), by
@@ -664,8 +659,8 @@ noncomputable def toProbDist (M : BistochasticMartingaleMatrix p q) :
       rw [← ENNReal.ofReal_sum_of_nonneg (fun i _ => p.weight_nonneg i),
         p.weight_sum, ENNReal.ofReal_one]⟩
 
-@[simp] private lemma toProbDist_toMeasure (M : BistochasticMartingaleMatrix p q) :
-    M.toProbDist.toMeasure
+@[simp] private lemma toJointProbDist_toMeasure (M : BistochasticMartingaleMatrix p q) :
+    M.toJointProbDist.toMeasure
       = ∑ i, ∑ j, ENNReal.ofReal (p.weight i * M.T i j)
           • Measure.dirac (p.atom i, q.atom j) :=
   rfl
@@ -673,26 +668,26 @@ noncomputable def toProbDist (M : BistochasticMartingaleMatrix p q) :
 /-- The assembled coupling has `p.toProbDist` as first marginal, `q.toProbDist` as second marginal,
 and satisfies the tested martingale identity. -/
 lemma isMartingaleCoupling (M : BistochasticMartingaleMatrix p q) :
-    IsMartingaleCoupling p.toProbDist q.toProbDist M.toProbDist := by
+    IsMartingaleCoupling p.toProbDist q.toProbDist M.toJointProbDist := by
   -- Convenience: integration against the joint measure reduces to a finite double sum.
   have hnn : ∀ i j, 0 ≤ p.weight i * M.T i j := fun i j =>
     mul_nonneg (p.weight_nonneg i) (M.nonneg i j)
   -- Every strongly measurable `f` is integrable against the finitely-supported joint measure:
   -- each scaled Dirac is integrable and the measure is a finite sum of them.
   have h_integ : ∀ f : ℝ × ℝ → ℝ, StronglyMeasurable f →
-      Integrable f M.toProbDist.toMeasure := by
+      Integrable f M.toJointProbDist.toMeasure := by
     intro f hf
-    rw [toProbDist_toMeasure]
+    rw [toJointProbDist_toMeasure]
     refine integrable_finset_sum_measure.mpr fun i _ => ?_
     refine integrable_finset_sum_measure.mpr fun j _ => ?_
     exact (integrable_dirac' hf (a := (p.atom i, q.atom j))
       ENNReal.coe_lt_top).smul_measure ENNReal.ofReal_ne_top
   -- The integral against the total measure is a double sum of pointwise values.
   have h_int : ∀ f : ℝ × ℝ → ℝ, StronglyMeasurable f →
-      ∫ x, f x ∂M.toProbDist.toMeasure
+      ∫ x, f x ∂M.toJointProbDist.toMeasure
         = ∑ i, ∑ j, p.weight i * M.T i j * f (p.atom i, q.atom j) := by
     intro f hf
-    rw [toProbDist_toMeasure]
+    rw [toJointProbDist_toMeasure]
     -- Pull the outer `∑ i` out of the integral.
     rw [integral_finset_sum_measure (fun i _ => by
       refine integrable_finset_sum_measure.mpr (fun j _ => ?_)
@@ -710,8 +705,8 @@ lemma isMartingaleCoupling (M : BistochasticMartingaleMatrix p q) :
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · -- fst_marginal: pushforward by `Prod.fst` equals `p.toProbDist`.
     apply ProbabilityMeasure.toMeasure_injective
-    change (Measure.map Prod.fst M.toProbDist.toMeasure) = p.toProbDist.toMeasure
-    rw [toProbDist_toMeasure, DiscreteLaw.toProbDist_toMeasure]
+    change (Measure.map Prod.fst M.toJointProbDist.toMeasure) = p.toProbDist.toMeasure
+    rw [toJointProbDist_toMeasure, DiscreteLaw.toProbDist_toMeasure]
     -- Push `Prod.fst` through both sums and each `c • δ_{(xᵢ,yⱼ)} = c • δ_{xᵢ}`.
     rw [MeasureTheory.measure_map_finset_sum measurable_fst]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -724,8 +719,8 @@ lemma isMartingaleCoupling (M : BistochasticMartingaleMatrix p q) :
     exact row_ofReal_sum M i
   · -- snd_marginal: pushforward by `Prod.snd` equals `q.toProbDist`.
     apply ProbabilityMeasure.toMeasure_injective
-    change (Measure.map Prod.snd M.toProbDist.toMeasure) = q.toProbDist.toMeasure
-    rw [toProbDist_toMeasure, DiscreteLaw.toProbDist_toMeasure]
+    change (Measure.map Prod.snd M.toJointProbDist.toMeasure) = q.toProbDist.toMeasure
+    rw [toJointProbDist_toMeasure, DiscreteLaw.toProbDist_toMeasure]
     rw [MeasureTheory.measure_map_finset_sum measurable_snd]
     simp_rw [MeasureTheory.measure_map_finset_sum measurable_snd,
       Measure.map_smul _ measurable_snd.aemeasurable, Measure.map_dirac' measurable_snd]
@@ -780,7 +775,7 @@ theorem DiscreteLaw.exists_martingaleCoupling_uniform (p q : DiscreteLaw)
     (h : DiscreteLaw.ConvexOrder p q) :
     ∃ π : ProbDist (ℝ × ℝ), IsMartingaleCoupling p.toProbDist q.toProbDist π := by
   obtain ⟨M⟩ := discrete_martingale_matrix_exists_uniform p q hn_pos hn hp_uniform hq_uniform h
-  exact ⟨M.toProbDist, M.isMartingaleCoupling⟩
+  exact ⟨M.toJointProbDist, M.isMartingaleCoupling⟩
 
 end Econlib.Probability
 end

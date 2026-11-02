@@ -104,7 +104,7 @@ private lemma ProbabilityMeasure.continuous_map_snd :
 
 /-- **Weak-limit marginals.** If `πₙ → πInf` weakly and each `πₙ` has marginals `(μₙ, νₙ)` with
 `μₙ → μ`, `νₙ → ν`, then `πInf` has marginals `(μ, ν)`. -/
-private lemma IsCoupling.of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
+private lemma IsCoupling.coupling_of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
     {π_seq : ℕ → ProbDist (ℝ × ℝ)} {πInf : ProbDist (ℝ × ℝ)}
     (hπcoup : ∀ n, IsCoupling (μ_seq n) (ν_seq n) (π_seq n))
     (hπlim : Tendsto (fun n => (π_seq n : ProbabilityMeasure (ℝ × ℝ))) atTop (𝓝 πInf))
@@ -129,10 +129,10 @@ private lemma IsCoupling.of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : �
   -- definitionally `ProbabilityMeasure.map ... aemeasurable`.
   have hfst_eq : ∀ n, ProbabilityMeasure.map (π_seq n : ProbabilityMeasure (ℝ × ℝ))
       (Prod.fst : ℝ × ℝ → ℝ) = (μ_seq n : ProbabilityMeasure ℝ) :=
-    fun n => (hπcoup n).fst_marginal
+    fun n => (hπcoup n).fst_probability_marginal
   have hsnd_eq : ∀ n, ProbabilityMeasure.map (π_seq n : ProbabilityMeasure (ℝ × ℝ))
       (Prod.snd : ℝ × ℝ → ℝ) = (ν_seq n : ProbabilityMeasure ℝ) :=
-    fun n => (hπcoup n).snd_marginal
+    fun n => (hπcoup n).snd_probability_marginal
   -- Substitute into the convergence.
   rw [funext hfst_eq] at hfst_lim
   rw [funext hsnd_eq] at hsnd_lim
@@ -414,7 +414,7 @@ lemma tested_martingale_measurable_of_continuous {a b : ℝ} {π : ProbDist (ℝ
 `πₙ : IsMartingaleCoupling μₙ νₙ πₙ` with all `πₙ` concentrated on `Icc a b × Icc a b` and
 marginals converging weakly to `μ, ν`, every weak limit point of `πₙ` is a martingale coupling of
 `(μ, ν)`. -/
-theorem IsMartingaleCoupling.of_weak_limit {a b : ℝ}
+theorem IsMartingaleCoupling.martingaleCoupling_of_weak_limit {a b : ℝ}
     {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
     {π_seq : ℕ → ProbDist (ℝ × ℝ)} {πInf : ProbDist (ℝ × ℝ)}
     (_hμ_supp : μ.supportsOn (Icc a b)) (_hν_supp : ν.supportsOn (Icc a b))
@@ -425,11 +425,11 @@ theorem IsMartingaleCoupling.of_weak_limit {a b : ℝ}
     (hμlim : Tendsto (fun n => (μ_seq n : ProbabilityMeasure ℝ)) atTop (𝓝 μ))
     (hνlim : Tendsto (fun n => (ν_seq n : ProbabilityMeasure ℝ)) atTop (𝓝 ν)) :
     IsMartingaleCoupling μ ν πInf := by
-  -- Step 1: marginals via `IsCoupling.of_weak_limit`.
+  -- Step 1: marginals via `IsCoupling.coupling_of_weak_limit`.
   have hπcoup' : ∀ n, IsCoupling (μ_seq n) (ν_seq n) (π_seq n) := fun n =>
     ⟨(hπcoup n).fst_measure, (hπcoup n).snd_measure⟩
   have hcoup : IsCoupling μ ν πInf :=
-    IsCoupling.of_weak_limit hπcoup' hπlim hμlim hνlim
+    IsCoupling.coupling_of_weak_limit hπcoup' hπlim hμlim hνlim
   -- Step 2: integrability of coordinate projections against πInf.
   have hmeas_sq : MeasurableSet (Icc a b ×ˢ Icc a b : Set (ℝ × ℝ)) :=
     measurableSet_Icc.prod measurableSet_Icc
@@ -462,8 +462,8 @@ theorem IsMartingaleCoupling.of_weak_limit {a b : ℝ}
     tested_martingale_measurable_of_continuous hInfSupp hint_fst hint_snd hcts
   -- Assemble.
   exact {
-    fst_marginal := hcoup.fst_marginal
-    snd_marginal := hcoup.snd_marginal
+    fst_marginal := hcoup.fst_probability_marginal
+    snd_marginal := hcoup.snd_probability_marginal
     integrable_fst := hint_fst
     integrable_snd := hint_snd
     martingale := hmart
@@ -512,7 +512,7 @@ private theorem exists_martingaleCoupling_of_convexOrderOnIcc (a b : ℝ) {μ ν
       (fun n => ((q (φ n)).toProbDist : ProbabilityMeasure ℝ)) atTop (𝓝 ν) :=
     hq_lim.comp hmono.tendsto_atTop
   refine ⟨πInf, ?_⟩
-  exact IsMartingaleCoupling.of_weak_limit
+  exact IsMartingaleCoupling.martingaleCoupling_of_weak_limit
     (μ_seq := fun n => (p (φ n)).toProbDist) (ν_seq := fun n => (q (φ n)).toProbDist)
     (π_seq := fun n => π (φ n))
     hμ_supp hν_supp (fun n => hπmart (φ n)) (fun n => hπ_supp (φ n)) hInfSupp
@@ -609,7 +609,7 @@ theorem compact_convex_order_iff_martingale (a b : ℝ) (μ ν : ProbabilityMeas
     exact ⟨π, hπ.fst_measure, hπ.snd_measure, hπ.condExp_snd_eq_fst⟩
   · rintro ⟨π, hfst, hsnd, hce⟩
     have hπ := isMartingaleCoupling_of_condExp hμ hν hfst hsnd hce
-    exact ⟨hπ.mean_eq, fun φ hc ht => hπ.convex_expect_le hμ hν φ hc ht⟩
+    exact ⟨hπ.marginal_mean_eq, fun φ hc ht => hπ.convex_expect_le hμ hν φ hc ht⟩
 
 end Econlib.Probability
 end
