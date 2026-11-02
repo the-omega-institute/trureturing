@@ -15,6 +15,10 @@ strata_touched:
   - D5/S3/Geometry/FiniteSimplicialSingularHomology
   - D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
   - D5/S3/Geometry/SphereBouquetHomology
+  - D5/S3/Geometry/FiniteGraphSuspensionMoves
+  - D5/S3/Geometry/PrescribedSubdivisionHomology
+  - D5/S3/Geometry/KingFiniteReplay
+  - D5/S3/Geometry/KingFinalComposition
 license: citation-only
 triage: anchor
 ---
@@ -124,9 +128,8 @@ cutoffs and normalization. Their actual intersection is homotopy equivalent
 to the coordinate realization of $I(G)$; the existing open-cover reduced
 Mayer--Vietoris theorem and homotopy invariance then give the integral
 singular homology shift in degrees $q+1$ and $q$, for $q\geq1$.
-This is supporting machinery for Question 32. It does not settle that
-question: the seed singular comparison, complete gadget replay, king-grid
-rotation and sphere-bouquet torsion obstruction remain further obligations.
+This supplies the single-move homology input for the complete Question 32
+composition below. Its local suspension theorem alone is not a counterexample.
 
 The general mechanisms of graph suspension, independence-complex splitting
 and star clusters have classical sources, including:
@@ -195,10 +198,9 @@ nonzero and killed by two in singular H1 of the original coordinate
 realization, with the same integer coefficient object. No abstract
 comparison is assumed.
 
-Transport through the proposed graph construction, the remaining suspension
-steps and induced king-grid embedding, and assembly with the sphere-source
-obstruction below remain necessary for a complete Question 32 counterexample. The singular seed itself does
-not settle the question. The new comparison audit is unfinished under
+The finite replay and prescribed-subdivision transport below carry this
+class into the selected king-grid graph. The singular seed itself does not
+settle Question 32. The comparison audit is unfinished under
 issue #25205; the original finite-chain seed audit remains unfinished
 under issue #25149.
 
@@ -231,11 +233,9 @@ is used.
 
 The seed is Adamaszek's; the supplied graph-move route uses the Barmak/Lozin
 approach. The explicit coordinate construction is local proof content, not a
-theorem attributed to Carnero Bravo or an originality claim. The supplied
-40-move replay, prescribed-subdivision suspension transport, and application
-of the singular-homology comparison and sphere-wedge obstruction remain separate
-obligations. This
-interface alone does not settle Question 32 and makes no claim about Question
+theorem attributed to Carnero Bravo or an originality claim. The forty-move replay, prescribed-subdivision suspension transport and
+sphere-wedge obstruction are combined in `KingFinalComposition` below. This
+routing interface alone does not settle Question 32 and makes no claim about Question
 35 or an additional solved original problem.
 The source-readout registrations remain unfinished under
 [issue #25256](https://github.com/the-omega-institute/trureturing/issues/25256).
@@ -271,10 +271,9 @@ supplier modules. No literature novelty claim is made. The generic ring
 statements use Mathlib's regular-scalar meaning of module torsion-freeness;
 the nonzero-integer injectivity statement uses the integral-domain endpoint.
 
-This obstruction batch contributes zero original-problem resolution credit
-for Question 32. Its intended use takes n=2. Applying it to the comparison
-above, the remaining suspension and graph construction steps, the
-induced-coordinate embedding and the final refutation are still required.
+This obstruction batch alone contributes zero original-problem resolution
+credit for Question 32. The complete composition below applies it with n=2
+to the transported seed class in the actual selected induced graph.
 
 The new source modules' readout registration remains unfinished under
 [issue #25194](https://github.com/the-omega-institute/trureturing/issues/25194).
@@ -282,3 +281,58 @@ The dependent-family interface is available, but an actual homology/quotient
 source arena, complete source reconstruction and equivalence bridge, and
 whole-family variation, sensitivity and observational-dependence proofs
 have not been delivered. No `declared_validated` status is claimed.
+
+
+## Induced king-grid counterexample to Question 32
+
+`KingFiniteReplay.fortyMoves` starts at the actual complementary graph of
+Adamaszek's graph6 seed `JEhbtj{rve?`. Its literal finite vertex and edge
+lists verify ten triple subdivisions, five matching suspensions and
+twenty-five Lozin replacements. The endpoint has 141 vertices and 178 edges.
+The local edge and star subgraphs are arbitrary subgraphs: extra ambient
+edges in moves 11, 13, 15, 19 and 39 are retained. The suspension mechanisms
+are classical, with attribution to Barmak, Proposition 7.2, and
+Biyikoglu–Civan, Proposition 3.4, in the corresponding move sources.
+
+`PrescribedSubdivisionHomology` treats an arbitrary finite endpoint inventory
+with injective unordered endpoint pairs. Partial paths retain an original
+edge at multiplicity zero. Increasing one multiplicity identifies the graph
+with one literal triple subdivision of its terminal edge. A proved label
+bijection accounts for all old and fresh vertices, and recursion on the sum
+of multiplicities composes the single-move homology shifts. Thus every
+positive degree q shifts by the prescribed sum; no graph or homology
+correctness premise is supplied by the caller.
+
+`KingFinalComposition` identifies the finite replay endpoint with the actual
+routing base graph by its natural labels and complete edge inventory. The
+forty moves and the 31286 prescribed triple subdivisions transport the
+original nonzero integral singular H1 seed class into ordinary integral
+singular H31327 of the independence realization of the selected induced
+graph. `selectedSingularClass_nonzero_killed_by_two` proves that the class is
+nonzero and twice it is zero. This is homology of the actual finite-coordinate
+realization, with coefficient object `ModuleCat.of ℤ ℤ`.
+
+The selected realization is compact. Applying
+`SphereBouquetHomology.compact_sourceSP_smul_eq_zero` contradicts this class,
+so `selected_not_sourceSP` excludes the original contractible-or-sphere-wedge
+alternatives. Arbitrary sphere index families, natural dimensions including
+S0, arbitrary sphere basepoints and the ordinary quotient wedge topology
+remain in scope. The argument does not assume a finite original sphere
+family or replace the realization with a homology record.
+
+`question32_counterexample` supplies the nonempty selected set, its 93999
+vertices and 94036 edges, and its failure of sourceSP inside the strong
+product of paths on 9337 and 9061 vertices. `rectangle_not_sourceSW` and
+`result : ¬ claim` refute the universal positive-order hereditary extension
+of Theorem 31 asked in Question 32. The sourceSW convention excludes empty
+induced sets, while the paper does not specify the vertexless convention;
+this counterexample is nonempty. No conclusion about the full-rectangle
+Question 35 follows.
+
+The literal construction is identified by SHA-256
+`ff9876310835eca475074719e41da20ea0d5056d76b996c3ea7d5b63fcaa0980`.
+The original-statement evidence pins arXiv v2 and distinguishes Questions
+32 and 35. Bounded later-literature inspection supplies no verified exact
+resolution; it does not certify priority or uniqueness. Lean verification
+of this construction does not itself constitute independent fidelity review,
+required CI, publication acceptance or a priority certificate.

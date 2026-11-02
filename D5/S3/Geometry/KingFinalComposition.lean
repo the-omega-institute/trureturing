@@ -36,7 +36,7 @@ Question 35. Reused project content is licensed under Apache-2.0.
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxRecDepth 1000000
+set_option maxRecDepth 8192
 
 open CategoryTheory
 open scoped BigOperators
@@ -81,9 +81,9 @@ def replayToRouteVertex : ConcreteSubcubicVertex ≃ Original :=
         exact h y.val y.property
       exact ⟨⟨y.val, hy⟩, Subtype.ext rfl⟩⟩
 
+set_option maxHeartbeats 8000000 in
 /-- The literal endpoint adjacency tables agree. Every edge is checked in the
 actual finite list data; no size-only identification is used. -/
-set_option maxHeartbeats 8000000 in
 theorem replayToRouteAdjacency : ∀ x y : ConcreteSubcubicVertex,
     baseGraph.Adj (replayToRouteVertex x) (replayToRouteVertex y) ↔
       concreteSubcubicGraph.Adj x y := by
@@ -103,8 +103,12 @@ theorem replayToRouteAdjacency : ∀ x y : ConcreteSubcubicVertex,
     · rw [← inventory, List.mem_toFinset, List.mem_map] at h
       obtain ⟨⟨a, b⟩, hab, heq⟩ := h
       rcases Sym2.eq_iff.mp heq with ⟨ha, hb⟩ | ⟨ha, hb⟩
-      · exact Or.inl (by simpa only [ha, hb] using hab)
-      · exact Or.inr (by simpa only [ha, hb] using hab)
+      · change a = x.val at ha
+        change b = y.val at hb
+        exact Or.inl (by simpa only [ha, hb] using hab)
+      · change a = y.val at ha
+        change b = x.val at hb
+        exact Or.inr (by simpa only [ha, hb] using hab)
   · rintro ⟨_, h | h⟩
     · rw [← inventory, List.mem_toFinset, List.mem_map]
       exact ⟨(x.val, y.val), h, rfl⟩
