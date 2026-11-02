@@ -24,15 +24,24 @@ private def primitiveDensity (t : ℝ) : ℝ := harmonicPrimitive t / t ^ 2
 
 private lemma inv_sq_integrable {x : ℝ} (hx : 0 < x) :
     IntegrableOn (fun t : ℝ => 1 / t ^ 2) (Ioi x) := by
-  simpa only [Real.rpow_neg_natCast, zpow_neg, zpow_natCast, one_div] using
-    (integrableOn_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx)
+  refine (integrableOn_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx).congr_fun
+    ?_ measurableSet_Ioi
+  intro t ht
+  change t ^ (-(2 : ℝ)) = 1 / t ^ 2
+  rw [Real.rpow_neg (by linarith [ht] : 0 ≤ t), Real.rpow_two, one_div]
 
 private lemma inv_sq_integral {x : ℝ} (hx : 0 < x) :
     (∫ t : ℝ in Ioi x, 1 / t ^ 2) = 1 / x := by
-  have h := integral_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx
-  norm_num only [show -(2 : ℝ) + 1 = -1 by norm_num, Real.rpow_neg_one] at h
-  simpa only [Real.rpow_neg_natCast, zpow_neg, zpow_natCast,
-    one_div, neg_div_neg_eq, div_one] using h
+  calc
+    _ = ∫ t : ℝ in Ioi x, t ^ (-(2 : ℝ)) := by
+      apply setIntegral_congr_fun measurableSet_Ioi
+      intro t ht
+      change 1 / t ^ 2 = t ^ (-(2 : ℝ))
+      rw [Real.rpow_neg (by linarith [ht] : 0 ≤ t), Real.rpow_two, one_div]
+    _ = 1 / x := by
+      have h := integral_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx
+      norm_num only [show -(2 : ℝ) + 1 = -1 by norm_num, Real.rpow_neg_one] at h
+      simpa only [one_div, neg_div_neg_eq, div_one] using h
 
 private lemma primitive_measurable : Measurable harmonicPrimitive := by
   have hH : Measurable H := by
@@ -73,7 +82,7 @@ private lemma primitive_integrable : IntegrableOn primitiveDensity (Ioi (1 : ℝ
     _ ≤ 4 * (1 / t ^ 2) := by
       rw [mul_one_div]
       gcongr
-      simpa only [div_eq_mul_inv, mul_one] using mul_le_mul_of_nonneg_left hi (by norm_num : (0 : ℝ) ≤ 4)
+      simpa only [div_eq_mul_inv, mul_one, one_mul] using mul_le_mul_of_nonneg_left hi (by norm_num : (0 : ℝ) ≤ 4)
 
 private lemma epsilon_density_split (t : ℝ) :
     epsilonDensity t = primitiveDensity t + phaseDensity t := by
@@ -104,7 +113,8 @@ private lemma floor_inverse_integral {x : ℝ} (hx : 1 ≤ x) :
     simp
   have hd (t : ℝ) (ht : t ∈ Icc (1 : ℝ) x) :
       HasDerivAt (fun u : ℝ => u⁻¹) (-(1 / t ^ 2)) t := by
-    convert (hasDerivAt_id t).inv (by linarith [ht.1] : t ≠ 0) using 1 <;> ring
+    convert (hasDerivAt_id t).inv (by linarith [ht.1] : t ≠ 0) using 1 <;>
+      first | rfl | (simp only [id_eq, one_div, inv_pow]; ring)
   have hi : IntegrableOn (deriv (fun u : ℝ => u⁻¹)) (Icc (1 : ℝ) x) := by
     have hc : ContinuousOn (fun t : ℝ => -(1 / t ^ 2)) (Icc (1 : ℝ) x) := by
       fun_prop (disch := intro t ht; nlinarith [ht.1])
@@ -172,7 +182,8 @@ private lemma phase_interval_identity {x : ℝ} (hx : 1 ≤ x) :
     have hd (t : ℝ) (ht : t ∈ uIcc (1 : ℝ) x) :
         HasDerivAt (fun u : ℝ => -u⁻¹) (1 / t ^ 2) t := by
       have ht0 : t ≠ 0 := by rw [uIcc_of_le hx] at ht; linarith [ht.1]
-      convert ((hasDerivAt_id t).inv ht0).neg using 1 <;> ring
+      convert ((hasDerivAt_id t).inv ht0).neg using 1 <;>
+        first | rfl | (simp only [id_eq, one_div, inv_pow]; ring)
     simpa only [inv_one, neg_neg, sub_neg_eq_add, one_div, sub_eq_add_neg, add_comm] using
       (intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi2)
   rw [he, floor_inverse_integral hx, integral_inv_of_pos zero_lt_one hx0,
@@ -194,7 +205,7 @@ private lemma primitive_ratio_tendsto :
     calc
       _ ≤ (4 / x) / x := by gcongr; exact harmonicPrimitive_bound hx
       _ = 4 / x ^ 2 := by ring
-  · simpa only [div_eq_mul_inv, inv_pow, mul_zero] using
+  · simpa only [div_eq_mul_inv, inv_pow, zero_pow two_ne_zero, mul_zero] using
       (tendsto_inv_atTop_zero.pow 2).const_mul (4 : ℝ)
 
 private lemma phase_tail_identity {x : ℝ} (hx : 1 ≤ x) :
