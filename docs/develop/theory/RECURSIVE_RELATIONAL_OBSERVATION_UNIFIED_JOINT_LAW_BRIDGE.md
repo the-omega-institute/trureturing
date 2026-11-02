@@ -2962,9 +2962,8 @@ operations remains unresolved. $\square$
 
 ### 9.1 The actual generator and its indexed restrictions
 
-Sections 9–14 extend the prediction task, rather than extend the scope of
-§8's thirty-five names. Throughout, Definition 5.1 and Assumption 5.2
-remain in force: public finite $N\ge4$, $k=15N$, the actual graphs
+Throughout §§9–14, assume Definition 5.1 and Assumption 5.2: public
+finite $N\ge4$, $k=15N$, the actual graphs
 $E_i$ of Proposition 3.2, both complete once-shared injections, the
 stationary original root, and no additional source port. Fix public
 $\theta\in[0,1]$. Every conditional statement below is restricted to
@@ -3198,11 +3197,12 @@ $\sum_s|w_s|$ literal operand symbols and $\max_s|w_s|$ maximum operand
 length. The set of distinct earned bits describes the cache, not that
 invocation list's cost. Scanning all $k$ standard operands has the costs
 in Proposition 5.3; scanning only a new mask uses the corresponding
-subsum of $b+1$, and every repeated invocation still counts. $\square$
+subsum of $b+1$, and every repeated invocation still counts.
 
-A source-blind implementation can retain $15N$ mask flags and at most
-$15N$ acquired values, plus its actual program, counters, addresses and
-workspace, and update this cache with each reply. The public graph and
+A source-independent observer can retain $15N$ mask flags and at most
+$15N$ acquired values, in addition to its controller description,
+counters, addresses and workspace, and update this cache with each
+reply. The public graph and
 prior descriptions then define finite sums for its predictions. For a
 rational prior these sums can in principle be evaluated by exhaustive
 finite enumeration and rational arithmetic; the injection enumeration
@@ -3213,6 +3213,7 @@ preparation remains exactly $75N+4$ native $P/S$ events, besides edge
 sampling, selecting/storing both full maps, source storage and handoff.
 Observer computation, input, output, controller, seed, navigation,
 retention and any physical service costs are separate resource axes.
+$\square$
 
 ## 10. Equal complete generator posteriors can lose old-sample association
 
@@ -3295,10 +3296,10 @@ edges in the pattern required by either history proves that history's
 positive probability. Equation (UJB.10003) is strictly positive for
 each unmixed prior and every mixture, proving all assertions. $\square$
 
-This supplies the missing instance test for
-`posterior_future_policy_universal_sufficiency`: its argument
-`futureExperimentLaw : Policy → Theta → PMF Future` has no History
-argument. With $\mathit{Theta}=g$, the $h$-dependent old-slot factors
+The supplier `posterior_future_policy_universal_sufficiency` assumes
+a future-response law indexed by policy and latent state, with no
+additional history argument. With $\mathit{Theta}=g$, the $h$-dependent
+old-slot factors
 $Q_{g,j,D}$ cannot be discarded. Taking $\mathit{Theta}$ to include
 the entire prepared array does give a history-independent deterministic
 Read function, which is exactly the bridge proved in §9. A posterior
@@ -3340,8 +3341,8 @@ uses $24$ more invocations, length sum $422$, maximum $31$.
 All numbers follow by summing (UJB.9008). No observed bit is queried
 in this separating continuation. $\square$
 
-For a reproducible finite strictness certificate, the lexicographic
-injections in (UJB.10004) give first/second mask edge counts
+For the lexicographic injections in (UJB.10004), the first/second
+mask edge counts are
 $(447,449)$ in $E_0$ and $(458,438)$ in $E_1$. Their squared suffix-law
 differences are respectively $716/200703$ and $367/100302$.
 These are positive contributions to (UJB.10003), not evaluations of its
@@ -3453,12 +3454,11 @@ These numbers refer to one ordered future word, with no multinomial
 factor. They are independent of $i$ and $\theta$ for the stated reason,
 not because the full graphs have been replaced. The same support
 contains the positive $125$-point grid
-$(16+x,16+y,16+z,24-x-y-z)$, $x,y,z\in\{0,\ldots,4\}$;
-no grid interpolation or new class count is needed for this obstruction.
+$(16+x,16+y,16+z,24-x-y-z)$, $x,y,z\in\{0,\ldots,4\}$.
 
-### 11.2 The repair is a relation on the combined evidence
+### 11.2 Joint evidence and recoverable continuation laws
 
-**Proposition 11.3 (exact combination condition and implementation).**
+**Proposition 11.3 (joint-count recovery for the actual paired-coordinate task).**
 Let $H=(H_1,H_2)$ range over positive combined evidence of a fixed
 public acquisition schedule, and let $K(H)$ be its requested joint
 continuation law. A decoder from the two page summaries exists exactly
@@ -3492,15 +3492,13 @@ maximum $48$; the displayed future costs eight, length sum $680$,
 maximum $108$. Each coordinate is one actual original-root operand.
 Joint counting can be performed after the second half of each actual
 pair, retaining its unmatched first reply and sample cursor until then.
-This is an implementable use of acquired records, with that extra
-retention and computation charged separately. $\square$
+The unmatched reply and cursor are additional retained data; their
+retention and the joint-count computation are separate resource costs. $\square$
 
 The page summaries are not asserted sufficient for the full combined
 conditioning event. Their failure is precisely that upgrade. Joint
 counts here do not repair old-slot replay, supply unread coordinates
-of partly constrained samples, or inherit §8's $35$-value bound. No
-additional cut-rank catalogue or five-probe decision-tree enumeration
-is used in this result.
+of partly constrained samples, or inherit §8's $35$-value bound.
 
 ## 12. Predictive support closure of complete labels and its partial-read composition
 
@@ -3687,9 +3685,32 @@ completion boundary while preserving the old-slot restrictions.
 
 ## 13. Transporting future readouts does not transport past evidence for free
 
-### 13.1 The exact evidence fiber condition
+### 13.1 Actual full-label evidence and its coarsening
 
-**Proposition 13.1 (fixed-past pushforward and changed-past conditioning).**
+**Theorem 13.2 (full-label evidence versus its missing first bit).**
+For any $N\ge4$ and $\theta\in[0,1]$, completely read sample 1.
+Write its left label as $(B,u)$ with $u\in\{0,1\}^6$, and its right
+label as $v\in\{0,1\}^8$. The full past is $H=(B,u,v)$ and its
+coarsening is $C=(u,v)$. The future response is $X=\lambda(a_2)_1$,
+a previously unread bit of the second prepared sample. Every full
+past has positive probability, and for each fixed $u,v$,
+
+$$
+\begin{aligned}
+\Pr(X=0\mid B=0,u,v)&=\frac{575}{1143},\\
+\Pr(X=0\mid B=1,u,v)&=\frac{568}{1143},\\
+\Pr(X=0\mid u,v)&=\frac12.
+\end{aligned}
+\tag{UJB.13003}
+$$
+
+This fails the fiber condition for the legal first-bit future readout
+at every one of these coarsened-past fibers, even with $i$ known.
+
+Proof. We use the following finite conditional-law identities and the
+image-factorization principle cited in §14.1 within this actual-source
+calculation.
+
 Let $H$ be a finite acquired history, $X$ a named finite future response
 under a declared protocol, and $K(h)=\mathcal L(X\mid H=h)$ on its
 positive domain in the actual source. Let $W$ be a public future-readout
@@ -3715,38 +3736,18 @@ well, by summing its rows. They do not license a new physical readout
 port: the named response must be an actual native protocol or declared
 postprocessing of one.
 
-Proof. Sum the finite joint law over each readout fiber for (UJB.13001),
+Sum the finite joint law over each readout fiber for (UJB.13001),
 and then over the histories in the evidence fiber for (UJB.13002).
 Constancy is sufficient by assigning its common law to each fiber,
 and necessary because a decoder has one output per coarsened value.
 This reuses abstract image factorization; the substantive test is which
 fibers the actual source permits and which target laws vary there.
 A conditional mean of different laws in (UJB.13002) does not provide
-the realized $h$-specific law. $\square$
+the realized $h$-specific law.
+For the stated first-bit task, $W$ is the identity and $c$ forgets $B$.
+It remains to compute the actual conditional laws on each coarse fiber.
 
-### 13.2 One actual positive source separates the tasks
-
-**Theorem 13.2 (full-label evidence versus its missing first bit).**
-For any $N\ge4$ and $\theta\in[0,1]$, completely read sample 1.
-Write its left label as $(B,u)$ with $u\in\{0,1\}^6$, and its right
-label as $v\in\{0,1\}^8$. The full past is $H=(B,u,v)$ and its
-coarsening is $C=(u,v)$. The future response is $X=\lambda(a_2)_1$,
-a previously unread bit of the second prepared sample. Every full
-past has positive probability, and for each fixed $u,v$,
-
-$$
-\begin{aligned}
-\Pr(X=0\mid B=0,u,v)&=\frac{575}{1143},\\
-\Pr(X=0\mid B=1,u,v)&=\frac{568}{1143},\\
-\Pr(X=0\mid u,v)&=\frac12.
-\end{aligned}
-\tag{UJB.13003}
-$$
-
-This fails the fiber condition for the legal first-bit future readout
-at every one of these coarsened-past fibers, even with $i$ known.
-
-Proof. Fix any actual first edge. Its two assigned labels are independent
+Fix any actual first edge. Its two assigned labels are independent
 uniform elements of their full alphabets, so
 $\Pr_i(H=(B,u,v))=1/(128\cdot256)>0$ for both sources. Conditional
 on this edge and its complete labels, the rest of the full left
@@ -3775,6 +3776,8 @@ values of $B$. Thus $B$ is conditionally fair given $C$, and averaging
 the first two probabilities gives $1/2$. This is the actual mixture
 (UJB.13002), not the full-past pushforward (UJB.13001). The two
 history-specific probabilities differ by $7/1143>0$. $\square$
+
+### 13.2 Recoverable refinement and acquisition costs
 
 **Corollary 13.3 (the additional relation for the named combined task).**
 At a fixed public coarsened value $(u,v)$, retaining the coarsened record
@@ -3813,107 +3816,80 @@ to this bit at the fixed full past is ordinary lawful postprocessing;
 replacing the full past by its fourteen-bit coarsening is a different
 conditioning event. Neither operation identifies the hidden endpoint.
 
-## 14. Sources, exact certificates and the remaining recovery boundary
+## 14. Supplier correspondences and recovery domains
 
-### 14.1 Reused suppliers and the scope of the new synthesis
+### 14.1 Scoped mathematical suppliers
 
-The actual group/edge adapter, all three $w$ coordinates in both sources,
-all full-injection correlations, native preparation and complete
-operand classification are reused from §§3–5. FARG §9 supplies ordered
-term serialization and all-path separation; the specific material
-support, boundary and local-generation partial-order inverses are
-AA17.2–17.3 as already instantiated by Proposition 5.3. This distinction
-avoids attributing local $P/S$ chronology to the global substitution
-model. Theorem 9.3 transports those existing bijections at the law
-level; it does not duplicate their source proofs.
+The group/edge adapter, all three $w$ coordinates in both sources,
+full-injection law, native preparation and complete operand
+classification are those of §§3–5. FARG §9 supplies ordered term
+serialization and all-path separation; AA17.2–17.3 supply the material
+support, boundary and local-generation partial-order inverses used by
+Proposition 5.3. FARG's global simultaneous substitution and AA17's
+local $P/S$ generation are distinct operations. Theorem 9.3 uses the
+bijections instantiated in Proposition 5.3 to transport probability laws.
 
-The repository suppliers
+For image factorization and separation of unequal target laws, the
+repository suppliers are
 `CausalStateFactorization.causal_state_factorization` and
-`PredictiveStateUniversalMinimality.predictive_state_universal_minimality`
-supply abstract image factorization and separation of unequal target
-laws. `PosteriorFuturePolicySufficiency.posterior_future_policy_universal_sufficiency`
-requires a future PMF indexed by policy and latent state without an
-extra history argument. Sections 9–10 give and test the actual instance
-bridge, rather than treating that requirement as automatic. Reading
-these Lean sources supplies no fresh compilation or exact Lean
-application. All new results here are ordinary conditional proofs.
+`PredictiveStateUniversalMinimality.predictive_state_universal_minimality`.
+For latent-state sufficiency, the supplier
+`PosteriorFuturePolicySufficiency.posterior_future_policy_universal_sufficiency`
+assumes a future PMF indexed by policy and latent state without an
+extra history argument. With latent state $g$, the old-slot factors
+$Q_{g,j,D}$ retain that extra dependence; with latent state the entire
+prepared array, the Read response is history-independent, as in §9.
 
-For predictive equivalence, the checked primary paper is
 [Shalizi and Crutchfield, *Computational Mechanics: Pattern and Prediction,
 Structure and Simplicity*, arXiv:cond-mat/9907176v2](https://arxiv.org/html/cond-mat/9907176v2),
-Definition 5, equation (16), Lemma 7 and Theorem 2. It groups histories
-by future conditional law and proves a refinement/minimality result
-with its stationary process and almost-sure entropy hypotheses. We
-reuse that perspective and credit, not its entropy conclusion as a
-finite cache-size theorem or its entire-past domain as this finite
-old-slot access contract.
+Definition 5, equation (16), Lemma 7 and Theorem 2, supply conditional
+future-law equivalence and its refinement/minimality principle under
+their stationary-process and almost-sure entropy hypotheses. The
+finite-law factorization in §§9, 11 and 13 uses equality of the declared
+conditional continuation laws; it does not identify entropy with a
+finite fixed-width cache size or substitute an entire-past domain for
+the indexed old-slot access domain.
 
-For the conditional iid mixture construction, the checked author text is
-[Aldous, *Exchangeability and Related Topics*, §2, equations (2.1)–(2.2)](https://www.stat.berkeley.edu/~aldous/Papers/me22.pdf),
-Lecture Notes in Mathematics 1117, pp. 1–198. The relevant two-stage
-construction first selects a distribution and then samples iid from it;
-its finite-dimensional law is the corresponding mixture of product
-laws. Here $g\mapsto p_g$ is obtained from the actual finite groups,
-full injections and independent original edge samples, so that bridge
-is proved directly in Definition 9.1. We do not infer a mixture
-representation from finite exchangeability alone, assert an infinite
-physical sampler, or use de Finetti's converse to obtain a new port.
-The finite conditional ratios, saturation closure identity and weighted
-partial composition are proved explicitly above; no unverified
-literature theorem about support closure is cited in their place.
+[Aldous, *Exchangeability and Related Topics*, §2, printed pp. 9–10
+(PDF pp. 11–12), equations (2.1)–(2.2)](https://www.stat.berkeley.edu/~aldous/Papers/me22.pdf),
+Lecture Notes in Mathematics 1117, pp. 1–198, gives the two-stage
+construction that first selects a distribution and then samples iid
+from it, with finite-dimensional laws equal to mixtures of products.
+Here the distribution is $p_g$ from (UJB.9002), with $g$ sampled by the
+full-injection prior (UJB.9001) and the original independent edge
+samples. This construction is a premise of the actual source, rather
+than a converse inferred from finite exchangeability. The observation
+domain contains only the $N$ prepared samples. The saturation inverse
+in §12 uses the additional equal nonzero edge mass $1/M$ and positive
+support conditions proved there.
 
-Sections 9–13 are `repo-derived` synthesis in this particular source
-and access contract. The added mathematical content is the indexed
-old-sample continuation correspondence, the equal-complete-generator
-posterior strict witness, the actual hypergeometric cross-coordinate
-obstruction, the sharp saturated predictive closure with its partial
-composition, and the full-label changed-past counterexample. This is
-not a claim of world originality, a new generic Bayesian or closure
-theory, or a newly kernel-verified result.
+### 14.2 Domains of the recovery correspondences
 
-### 14.2 Finite certificates and stated limits
+For fixed $N,\theta$, the conditional law of the indexed constraints
+on one prepared array, together with the declared controller resources,
+determines all stationary original-root Read continuation laws. Its
+correspondence with endpoint, material-space, boundary and labelled
+generation-order laws is Theorem 9.3. The additional inverse to the
+acquired assignments holds on each fixed public mask. Invocation order,
+repeats and cost are not determined by that law when masks vary.
 
-The reusable exact certificate program and its result data are in the
-private experiment repository, directory
-`rro-indexed-recovery-continuation`, files `certify.py` and
-`certificate.json`. The program constructs both actual $E_i$ directly
-from (UJB.7502), retains all $w_3,z$ values, checks the two complete
-injections in (UJB.10004), counts their mask cells and computes their
-suffix norm differences by rational arithmetic. It also enumerates
-all $22109$ hypergeometric bucket-count vectors for (UJB.11005), verifies
-the $125$ positive grid points, checks (UJB.13004), and sums the actual
-native slot operand lengths displayed in §§10–13. It uses Python 3.12
-or later and no floating-point sign test. The invocation is
-`python3 certify.py --output certificate.json` from that directory.
+For wholly unread labels, §12's smaller support-closure representation
+is equivalent to the unread-sample law when at least one unread sample
+remains, with the partial cache held fixed in Theorem 12.3. The indexed
+partial cache and the assigned completed labels are retained for
+continuations on old slots. If there is no unread sample, the unread
+law is the constant empty-product law, and its closure inverse holds
+exactly on domains with constant closure. Combining coordinate pages
+or refining past evidence uses the joint relations in §§11 and 13.
 
-The certificates verify those finite source contributions, exact
-moments and costs. They do not enumerate all full injections, compute
-Theorem 10.1's entire posterior collision gap, machine-check the prose
-proofs, rerun published decision bounds, certify physical access, or
-replace independent review and the canonical repository gate. Strictness
-of the full collision gap follows from its nonnegative-square identity
-and the exhibited positive generator masses; it does not require that
-infeasible enumeration.
-
-The common recovery structure established here is the conditional law
-of an actually acquired, indexed set of constraints on one prepared
-array, together with its declared controller resources. For the full
-stationary Read menu it transports to endpoint, material space, boundary
-and labelled generation-order laws. For wholly unread labels it has
-the smaller support-closure representation precisely under §12's
-constant-edge-likelihood and fixed-partial-evidence conditions. Changing
-coordinate pages or past evidence requires the joint relations proved
-necessary in §§11 and 13. No claim is made that those smaller states
-supply all original-root continuations, identify an inaccessible latent
-realization, reconstruct a chosen serial history, or minimize total
-storage and computation. Source acquisition, law computation, law
-naming and actual realization remain different tasks.
-
-The broader program of a minimal relational structure for autonomous
-space, time, boundary, memory and recursive observation therefore
-remains active. These are additional exact recovery conditions and
-obstructions in its specified finite native model; extension to other
-ports, evolving source operations or physical spacetime still requires
-its own actual-source and lawful-operation bridge.
+These correspondences are between conditional laws on the stated
+finite source and native operation domains. A law is distinct from a
+realized endpoint, an inaccessible latent realization, or a chosen
+serial generation history. Fixed-width names for law values are
+distinct from total observer storage and computation. Source
+acquisition, conditional-law computation and actual realization have
+the separate resource costs stated in §§9–13. No equivalence with
+additional source ports, evolving source operations or physical
+spacetime is assumed.
 
 ## 追加锚（本行以下为增补区）
