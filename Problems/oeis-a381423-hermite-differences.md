@@ -107,10 +107,7 @@ assumption would not establish this target.
 ## Evidence
 
 `HermiteSignedMode.result : claim` includes both the exact selector certificate
-and the universal difference assertion. The mathematical source is returned
-for independent review before freezing, publication or KPI counting. Scoped
-build, report, registration and emitted projection status belong to the
-implementation handoff; no whole-repository check is claimed here.
+and the universal difference assertion.
 
 The source-owner Reg mirror observes the complete natural sequence. Its law
 preserves the selector and every integer difference. The constant-zero family
@@ -137,6 +134,5 @@ statements and eligibility decisions.
 ## ASSUMED-UNVERIFIED
 
 Literature completeness and global priority remain unverified because the
-source screen is bounded. Independent reviews, canonical settlement, required
-checks, merge and the first dev push remain caller-owned. The unknown audit
-continuation supplies no further mathematical conclusion.
+source screen is bounded. The unknown audit continuation supplies no further
+mathematical conclusion.

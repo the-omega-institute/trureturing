@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Polynomial;
 internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/Polynomial/HermiteSignedMode.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/sheppard2025a381423");
-    private static readonly LibraryNoteRef Dlmf = LibraryNoteRef.Create("D5/L/Analytic/dlmf2010hermitecoefficients");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/OrthogonalPolynomials/sheppard2025a381423");
+    private static readonly LibraryNoteRef Dlmf = LibraryNoteRef.Create("D5/L/OrthogonalPolynomials/dlmf2010hermitecoefficients");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The smallest exponent with maximum signed physicists Hermite coefficient changes by one or minus three.",
