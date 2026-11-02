@@ -10,11 +10,11 @@ import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
 /-!
-UNCOMPILED candidate. Circle J OPEN. No kernel/freeze/official acceptance claim.
-The physical allocation is reused unchanged. The prefix argument follows the
-LowX Endpoint source at pinned 3c4a31804e74bcf6bed19cf190c721f107a330b1.
-Here alpha,S,delta are produced by physical_selection, the six sides by
-selected_six, and the W low subword is the already constructed literal wLast.
+A joint physical source order on the full parity-tail parameter domain.
+The prefix argument uses the matched-charge decomposition of the LowX
+construction. The integral selector produces alpha, S and delta; the six
+strip margins control the physical banks, whose last bank ends in wLast.
+The unrestricted four-gap problem remains open.
 -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -489,7 +489,7 @@ private theorem repeated_prefixes {α : Type*} (f : α → ℤ) (B : ℤ) (word 
   · intro m
     exact (cycles m).2
 
-/-- UNCOMPILED: one genuine physical sigma, the literal cut zero, both actual
+/-- One physical sigma, the literal cut zero, both actual
 orders, every individual repeated prefix and exact totals on the full domain. -/
 theorem actualSource_second_peak_parity_tail_joint_lift (a b c d : ℕ)
     (hc : 4 ≤ c) (ha : c+2 ≤ a) (hd : a+c+1 ≤ d) (hb : d+1 ≤ b) :
