@@ -138,6 +138,10 @@ $$\forall n: \mathbb{N}, 0 < n \Rightarrow \exists t: \mathbb{N}, \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S0/Computability/BinaryMachine/Machine3626.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala-machine3626-exact-halting-time` (proved) by `D5/S0/Computability/BinaryMachine/Machine3626.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-machine3626-exact-halting-time","declaration_gid":"D5/S0/Computability/BinaryMachine/Machine3626.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala; Sean A. Irvine; Stephen Wolfram (2026). *OEIS A393210: halting time for Wolfram machine 3626*. URL: <https://oeis.org/A393210>.

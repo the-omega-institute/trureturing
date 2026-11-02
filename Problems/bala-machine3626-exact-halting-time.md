@@ -45,8 +45,8 @@ The external conjecture identifies an operational transition count with
 an arithmetic divisor transform. Its exact all-positive-input event is
 registered in issue [25808](https://github.com/the-omega-institute/trureturing/issues/25808),
 with the unchanged [prospective declaration](https://github.com/the-omega-institute/trureturing/issues/25808#issuecomment-6587694551).
-The missing bridge is the relation between a restoring binary block and
-the arithmetic transform, rather than a finite simulation table.
+The formal bridge relates a restoring binary block to the arithmetic
+transform for all positive inputs.
 
 ## Route
 
