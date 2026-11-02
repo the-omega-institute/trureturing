@@ -57,7 +57,7 @@ private theorem actual_dependence (role : Unit) :
 namespace d0_preserves_original_relative_constraints
 abbrev arena : Arena where
   signature := signature
-  Law obs := ∀ {D : LatticeData} (F : NullFrame D) 
+  Law obs := ∀ {D : LatticeData} (F : NullFrame D)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (p q : Charge D) (x : State D)
