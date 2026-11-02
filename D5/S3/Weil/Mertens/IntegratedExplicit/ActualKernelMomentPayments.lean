@@ -58,7 +58,8 @@ private lemma inclusive_abel_half (D : ℝ) (hD : 0 ≤ D) :
     have hd (t : ℝ) : HasDerivAt (fun t => -2 * Real.exp (-t / 2))
         (Real.exp (-t / 2)) t := by
       convert (((hasDerivAt_id t).neg.div_const 2).exp.const_mul (-2)) using 1 <;> (try funext y) <;> (try dsimp only [id, Pi.neg_apply]) <;> ring
-    have he := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
+    have he := intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (a := Real.log (n : ℝ)) (b := D) (fun t _ => hd t)
       ((by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2))).intervalIntegrable _ _)
     rw [intervalIntegral.integral_const_mul, he]
     dsimp [weight]
@@ -176,7 +177,7 @@ theorem actual_cutoff_resolvent_payment (p : PNTConstants)
       apply continuous_const.mul
       apply continuous_parametric_integral_of_continuous _ isCompact_Icc
       dsimp [pairedResolvent]
-      exact (by fun_prop : Continuous (fun z : ℝ × ℝ => pairedResolvent z.1 z.2)).mul
+      exact (by dsimp [pairedResolvent]; fun_prop : Continuous (fun z : ℝ × ℝ => pairedResolvent z.1 z.2)).mul
         ((correlation_continuous x a ha).comp continuous_snd)
     exact ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2))).mul hs).integrableOn_Icc
   have hc : |∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * S D x a t| ≤
@@ -197,12 +198,14 @@ theorem actual_cutoff_resolvent_payment (p : PNTConstants)
           ← intervalIntegral.integral_of_le hD.le,
           intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => he t)
             ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2))).intervalIntegrable 0 D)]
-        simp [M]
+        simp only [M, Real.exp_zero, smul_eq_mul]
         ring
   have hb : |b D / 2 * Z D x a| ≤ 2 * B p * M D * W D x a := by
     rw [abs_mul, abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
-    have h := mul_le_mul (div_le_div_of_nonneg_right (b_bound p D hD.le) (by norm_num))
-      hZ (abs_nonneg _) (by have := B_ge_C p; linarith [p.one_le_C])
+    have hdiv : |b D| / 2 ≤ B p / 2 :=
+      div_le_div_of_nonneg_right (b_bound p D hD.le) (by norm_num : (0 : ℝ) ≤ 2)
+    have h := mul_le_mul hdiv hZ (abs_nonneg (Z D x a))
+      (by have := B_ge_C p; linarith [p.one_le_C] : 0 ≤ B p / 2)
     nlinarith only [h]
   have htri := (abs_sub
     (2 * (∑ n ∈ primes D,
@@ -251,8 +254,8 @@ private lemma growingForm_causal (D : ℝ) (hD : 0 ≤ D)
     Real.exp (|u - v| / 2) * (star (f u) * f v).re
   let L : ℝ → ℝ → ℝ := fun u v => if v ≤ u then K u v else 0
   have hK : Continuous (Function.uncurry K) := by
-    exact (by fun_prop : Continuous (fun z : ℝ × ℝ => Real.exp (|z.1 - z.2| / 2))).mul (((hf.comp continuous_fst).star.mul
-      (hf.comp continuous_snd)).re)
+    exact (by fun_prop : Continuous (fun z : ℝ × ℝ => Real.exp (|z.1 - z.2| / 2))).mul (Complex.continuous_re.comp ((hf.comp continuous_fst).star.mul
+      (hf.comp continuous_snd)))
   have hsymm (u v : ℝ) : K u v = K v u := by
     dsimp [K]
     rw [abs_sub_comm]
@@ -423,7 +426,9 @@ private lemma growingForm_upper (D : ℝ) (hD : 0 ≤ D)
     (fun z => hlocal z.1 z.2)
   simp only [Pi.add_apply] at hmono
   rw [integral_add hFi hFi.swap, integral_prod _ hKi, integral_prod _ hFi,
-    integral_prod _ hFi.swap, ← integral_integral_swap hFi] at hmono
+    integral_prod _ hFi.swap] at hmono
+  dsimp only [Function.uncurry, Function.comp_def, Prod.swap] at hmono
+  rw [← integral_integral_swap hFi] at hmono
   have hleft : (∫ u in Icc (0 : ℝ) D, ∫ v in Icc (0 : ℝ) D,
       2 * (k u v * (star (f u) * f v).re)) = 2 * growingForm D f := by
     simp only [integral_const_mul, growingForm, k]
@@ -490,6 +495,7 @@ theorem actual_continuum_moment_payment (D : ℝ) (hD : 0 < D)
     apply intervalIntegral.integral_congr
     intro u hu
     rw [uIcc_of_le ht.1] at hu
+    dsimp only
     rw [hG u hu.1]
   have hEG : (∫ t in Icc (0 : ℝ) D, ‖G x a t‖ ^ 2) =
       ∫ t in Icc (0 : ℝ) D, ‖R t‖ ^ 2 :=
