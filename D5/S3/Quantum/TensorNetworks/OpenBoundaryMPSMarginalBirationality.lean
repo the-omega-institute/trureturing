@@ -9,9 +9,12 @@
 import Mathlib.RingTheory.Nullstellensatz
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
+import Mathlib.Algebra.CharZero.Infinite
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
+
+/-! The affine model and its Cramer reconstruction on a principal open chart. -/
 
 set_option autoImplicit false
 
@@ -74,7 +77,7 @@ private abbrev parameterIndex :=
 private def parameterPolys (n : ℕ) (w : Fin n → Fin 2) :
     MvPolynomial parameterIndex ℂ :=
   dotProduct (fun i => MvPolynomial.X (Sum.inr (Sum.inl i)))
-    ((List.ofFn fun j => (fun i k =>
+    ((List.ofFn fun j => Matrix.of (fun i k =>
       MvPolynomial.X (Sum.inl (w j, i, k)))).prod *ᵥ
       (fun i => MvPolynomial.X (Sum.inr (Sum.inr i))))
 
@@ -82,13 +85,79 @@ private lemma polynomial_image_prime {ι σ : Type*}
     (f : σ → MvPolynomial ι ℂ) :
     (MvPolynomial.vanishingIdeal ℂ
       (Set.range fun x : ι → ℂ => fun j => MvPolynomial.eval x (f j))).IsPrime := by
-  sorry
+  let φ := MvPolynomial.eval₂Hom MvPolynomial.C f
+  have heq : MvPolynomial.vanishingIdeal ℂ
+      (Set.range fun x : ι → ℂ => fun j => MvPolynomial.eval x (f j)) =
+      RingHom.ker φ := by
+    ext p
+    change (∀ y ∈ Set.range (fun x : ι → ℂ =>
+      fun j => MvPolynomial.eval x (f j)), MvPolynomial.eval y p = 0) ↔ φ p = 0
+    constructor
+    · intro hp
+      apply MvPolynomial.funext
+      intro x
+      have hx := hp _ ⟨x, rfl⟩
+      simpa only [φ, MvPolynomial.coe_eval₂Hom, ← MvPolynomial.eval_assoc,
+        Function.comp_def, map_zero] using hx
+    · intro hp y hy
+      obtain ⟨x, rfl⟩ := hy
+      change MvPolynomial.eval (MvPolynomial.eval x ∘ f) p = 0
+      rw [MvPolynomial.eval_assoc]
+      change MvPolynomial.eval x (φ p) = 0
+      rw [hp, map_zero]
+  rw [heq]
+  exact RingHom.ker_isPrime φ
+
+private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
+    (fun w => MvPolynomial.eval x (parameterPolys n w)) =
+      mpsState n (Matrix.of fun i k => x (Sum.inl (0, i, k)))
+        (Matrix.of fun i k => x (Sum.inl (1, i, k)))
+        (fun i => x (Sum.inr (Sum.inl i))) (fun i => x (Sum.inr (Sum.inr i))) := by
+  funext w
+  have hprod : ((List.ofFn fun j => (Matrix.of fun i k =>
+      (MvPolynomial.X (Sum.inl (w j, i, k)) : MvPolynomial parameterIndex ℂ))).prod).map
+      (MvPolynomial.eval x) =
+      (List.ofFn fun j => (![Matrix.of (fun i k => x (Sum.inl (0, i, k))),
+        Matrix.of (fun i k => x (Sum.inl (1, i, k)))] :
+          Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) (w j)).prod := by
+    change (MvPolynomial.eval x).mapMatrix _ = _
+    rw [map_list_prod, List.map_ofFn]
+    congr 1
+    apply congrArg List.ofFn
+    funext j
+    ext i k
+    change MvPolynomial.eval x (MvPolynomial.X (Sum.inl (w j, i, k))) = _
+    rw [MvPolynomial.eval_X]
+    generalize w j = b
+    fin_cases b <;> rfl
+  change MvPolynomial.eval x (dotProduct _ _) = dotProduct _ _
+  rw [RingHom.map_dotProduct]
+  apply congrArg₂ dotProduct
+  · funext i
+    exact MvPolynomial.eval_X _
+  · funext i
+    rw [Function.comp_apply, RingHom.map_mulVec]
+    simp only [Function.comp_def, MvPolynomial.eval_X]
+    rw [hprod]
 
 private lemma parameter_image (n : ℕ) :
     openBoundaryMPS n =
       Set.range (fun x : parameterIndex → ℂ =>
         fun w => MvPolynomial.eval x (parameterPolys n w)) := by
-  sorry
+  ext ψ
+  constructor
+  · rintro ⟨a₀, a₁, b₀, b₁, rfl⟩
+    let x : parameterIndex → ℂ := Sum.elim
+      (fun ijk => (![a₀, a₁] : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) ijk.1 ijk.2.1 ijk.2.2)
+      (Sum.elim b₀ b₁)
+    refine ⟨x, ?_⟩
+    change (fun w => MvPolynomial.eval x (parameterPolys n w)) = _
+    rw [parameter_eval]
+    rfl
+  · rintro ⟨x, rfl⟩
+    change (fun w => MvPolynomial.eval x (parameterPolys n w)) ∈ openBoundaryMPS n
+    rw [parameter_eval]
+    exact ⟨_, _, _, _, rfl⟩
 
 private lemma model_prime (n : ℕ) : (vanishingPolys n).IsPrime := by
   rw [vanishingPolys, parameter_image]
@@ -169,7 +238,7 @@ private def reconstructedBasis (t : (Fin 3 → Fin 2) → ℂ) : Matrix (Fin 2) 
 
 private def reconstructedMatrix (t : (Fin 3 → Fin 2) → ℂ) (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ :=
-  (fun i k => t ![i, j, k]) * (reconstructedBasis t)⁻¹
+  Matrix.of (fun i k => t ![i, j, k]) * (reconstructedBasis t)⁻¹
 
 private def reconstructedRight (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   reconstructedBasis t *ᵥ reconstructedKernel t
@@ -199,6 +268,20 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     (reconstructedSum t).det ≠ 0 := by
   sorry
 
+private lemma chart_denominator (n : ℕ) (t : (Fin 3 → Fin 2) → ℂ)
+    (hg : MvPolynomial.eval t chartPoly ≠ 0) :
+    MvPolynomial.eval t (denominator n) ≠ 0 := by
+  have hv : MvPolynomial.eval t basisNumerator.det ≠ 0 := by
+    intro hv
+    apply hg
+    simp only [chartPoly, map_mul, hv, mul_zero, zero_mul]
+  have hc : MvPolynomial.eval t sumNumerator.det ≠ 0 := by
+    intro hc
+    apply hg
+    simp only [chartPoly, map_mul, hc, mul_zero, zero_mul]
+  simpa only [denominator, map_mul, map_pow] using
+    mul_ne_zero (pow_ne_zero 3 hv) (pow_ne_zero (n - 3) hc)
+
 private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
     (t : (Fin 3 → Fin 2) → ℂ) (hg : MvPolynomial.eval t chartPoly ≠ 0) :
     MvPolynomial.eval t (denominator n) ≠ 0 ∧
@@ -206,6 +289,7 @@ private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
       mpsState n (reconstructedMatrix t 0) (reconstructedMatrix t 1)
         ((reconstructedLeft t) ᵥ* ((reconstructedSum t)⁻¹ ^ a))
         (((reconstructedSum t)⁻¹ ^ (n - 3 - a)) *ᵥ reconstructedRight t) := by
+  refine ⟨chart_denominator n t hg, ?_⟩
   sorry
 
 private lemma outside_sum (n a : ℕ) (h : a + 3 ≤ n)
@@ -222,16 +306,53 @@ private lemma inverse_on_chart (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
       improperMarginal n a h (rationalInverse n a t) = t := by
   have hrec := chart_reconstruction t (quartic_closure t ht) hg
   have hformula := inverse_formula n a hn h t hg
-  have hsum := outside_sum n a h (reconstructedMatrix t 0) (reconstructedMatrix t 1)
-    ((reconstructedLeft t) ᵥ* ((reconstructedSum t)⁻¹ ^ a))
-    (((reconstructedSum t)⁻¹ ^ (n - 3 - a)) *ᵥ reconstructedRight t)
-  sorry
+  refine ⟨hformula.1, image_subset_closure n ?_, ?_⟩
+  · exact ⟨_, _, _, _, hformula.2⟩
+  · rw [hformula.2, outside_sum]
+    have hunit : IsUnit (reconstructedSum t).det := isUnit_iff_ne_zero.mpr hrec.2.2.2.2
+    have hl (k : ℕ) : (reconstructedSum t)⁻¹ ^ k * reconstructedSum t ^ k = 1 :=
+      pow_mul_pow_eq_one k (Matrix.nonsing_inv_mul _ hunit)
+    have hr (k : ℕ) : reconstructedSum t ^ k * (reconstructedSum t)⁻¹ ^ k = 1 :=
+      pow_mul_pow_eq_one k (Matrix.mul_nonsing_inv _ hunit)
+    change mpsState 3 _ _
+      ((reconstructedLeft t ᵥ* ((reconstructedSum t)⁻¹ ^ a)) ᵥ* reconstructedSum t ^ a)
+      (reconstructedSum t ^ (n - 3 - a) *ᵥ
+        ((reconstructedSum t)⁻¹ ^ (n - 3 - a) *ᵥ reconstructedRight t)) = t
+    rw [Matrix.vecMul_vecMul, Matrix.mulVec_mulVec, hl, hr,
+      Matrix.vecMul_one, Matrix.one_mulVec]
+    exact hrec.2.2.2.1
 
 private lemma gauge_uniqueness_image (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
     (ψ : (Fin n → Fin 2) → ℂ) (hψ : ψ ∈ openBoundaryMPS n)
     (hg : MvPolynomial.eval (improperMarginal n a h ψ) chartPoly ≠ 0) :
     rationalInverse n a (improperMarginal n a h ψ) = ψ := by
   sorry
+
+private def marginalCoordinate (n a : ℕ) (h : a + 3 ≤ n) (t : Fin 3 → Fin 2) :
+    MvPolynomial (Fin n → Fin 2) ℂ :=
+  ∑ w : Fin n → Fin 2,
+    if (fun j : Fin 3 => w ⟨a + j.val, by omega⟩) = t then MvPolynomial.X w else 0
+
+private lemma marginal_coordinate_eval (n a : ℕ) (h : a + 3 ≤ n)
+    (ψ : (Fin n → Fin 2) → ℂ) (t : Fin 3 → Fin 2) :
+    MvPolynomial.eval ψ (marginalCoordinate n a h t) = improperMarginal n a h ψ t := by
+  classical
+  rw [marginalCoordinate, map_sum]
+  apply Finset.sum_congr rfl
+  intro w _
+  split <;> simp only [MvPolynomial.eval_X, map_zero]
+
+private lemma marginal_pullback_eval (n a : ℕ) (h : a + 3 ≤ n)
+    (ψ : (Fin n → Fin 2) → ℂ) (f : MvPolynomial (Fin 3 → Fin 2) ℂ) :
+    MvPolynomial.eval ψ
+      (MvPolynomial.eval₂Hom MvPolynomial.C (marginalCoordinate n a h) f) =
+      MvPolynomial.eval (improperMarginal n a h ψ) f := by
+  change MvPolynomial.eval ψ
+    (MvPolynomial.eval₂ MvPolynomial.C (marginalCoordinate n a h) f) = _
+  rw [← MvPolynomial.eval_assoc]
+  apply congrArg (fun z => MvPolynomial.eval z f)
+  funext t
+  exact marginal_coordinate_eval n a h ψ t
 
 private lemma uniqueness_closure (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
     (himage : ∀ ψ ∈ openBoundaryMPS n,
@@ -241,7 +362,30 @@ private lemma uniqueness_closure (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
     (hg : MvPolynomial.eval (improperMarginal n a h ψ) chartPoly ≠ 0) :
     MvPolynomial.eval (improperMarginal n a h ψ) (denominator n) ≠ 0 ∧
       rationalInverse n a (improperMarginal n a h ψ) = ψ := by
-  sorry
+  classical
+  refine ⟨chart_denominator n _ hg, ?_⟩
+  funext w
+  let φ := MvPolynomial.eval₂Hom MvPolynomial.C (marginalCoordinate n a h)
+  let r := φ chartPoly * (φ (numerator n a w) - MvPolynomial.X w * φ (denominator n))
+  have hr : r ∈ vanishingPolys n := by
+    intro x hx
+    change MvPolynomial.eval x r = 0
+    dsimp only [r, φ]
+    rw [map_mul, map_sub, map_mul, MvPolynomial.eval_X,
+      marginal_pullback_eval, marginal_pullback_eval, marginal_pullback_eval]
+    by_cases hgx : MvPolynomial.eval (improperMarginal n a h x) chartPoly = 0
+    · rw [hgx, zero_mul]
+    · have heq := congrFun (himage x hx hgx) w
+      have hqx := chart_denominator n (improperMarginal n a h x) hgx
+      have hmul := (div_eq_iff hqx).mp heq
+      rw [hmul, sub_self, mul_zero]
+  have hzero := hψ r hr
+  change MvPolynomial.eval ψ r = 0 at hzero
+  dsimp only [r, φ] at hzero
+  rw [map_mul, map_sub, map_mul, MvPolynomial.eval_X,
+    marginal_pullback_eval, marginal_pullback_eval, marginal_pullback_eval] at hzero
+  exact (div_eq_iff (chart_denominator n _ hg)).mpr
+    (sub_eq_zero.mp ((mul_eq_zero.mp hzero).resolve_left hg))
 
 private def explicitTriple : (Fin 3 → Fin 2) → ℂ :=
   mpsState 3 !![1, 2; 3, 4] !![5, 6; 7, 8] ![1, 0] ![1, 2]
@@ -253,13 +397,19 @@ private lemma explicit_chart_nonempty :
 /-- Every improper marginalization in Conjecture 8 has a rational inverse. -/
 theorem result : claim := by
   intro n a hn h
-  refine ⟨model_prime n, model_prime 3, chartPoly, denominator n, numerator n a, ?_, ?_, ?_⟩
+  refine ⟨model_prime n, model_prime 3, ?_⟩
+  refine ⟨chartPoly, denominator n, numerator n a, ?_, ?_, ?_⟩
   · obtain ⟨ht, hg⟩ := explicit_chart_nonempty
     obtain ⟨_, hf, hm⟩ := inverse_on_chart n a hn h explicitTriple ht hg
-    exact ⟨rationalInverse n a explicitTriple, hf, hm ▸ hg⟩
+    refine ⟨rationalInverse n a explicitTriple, hf, ?_⟩
+    rw [hm]
+    exact hg
   · intro t ht hg
     obtain ⟨hq, hf, hm⟩ := inverse_on_chart n a hn h t ht hg
-    exact ⟨hq, hf, hm ▸ hg, hm⟩
+    refine ⟨hq, hf, ?_, hm⟩
+    change MvPolynomial.eval (improperMarginal n a h (rationalInverse n a t)) chartPoly ≠ 0
+    rw [hm]
+    exact hg
   · exact uniqueness_closure n a hn h (gauge_uniqueness_image n a hn h)
 
 end
