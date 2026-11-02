@@ -7,6 +7,8 @@
    digest: An exact two-path configuration-series identity with an arbitrary residual factor. -/
 
 import D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
+import D5.S3.StatisticalMechanics.HardCore.PartitionRelabeling
+import Mathlib.Combinatorics.SimpleGraph.Sum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -66,7 +68,7 @@ private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
         have hi₃ : n - 5 + 1 = n - 4 := by omega
         have hi₄ : n - 1 - 3 = n - 4 := by omega
         have hi₅ : n - 2 - 3 = n - 5 := by omega
-            have hiC : n + k - 3 = n - 2 + k - 1 := by omega
+        have hiC : n + k - 3 = n - 2 + k - 1 := by omega
         rw [hi₄] at h₁
         rw [hi₅] at h₂
         rw [hi₁, hi₂, hi₃, hiC] at ⊢
@@ -151,6 +153,124 @@ theorem two_path_series_concentration (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q)
   rw [hp', hq'] at h'
   rw [hL] at h'
   convert h' using 1 <;> ring
+
+
+open SimpleGraph
+open D5.S3.StatisticalMechanics.HardCore.PartitionRelabeling
+
+private lemma configurations_sum {α β : Type*} [DecidableEq α] [DecidableEq β]
+    (G : SimpleGraph α) (H : SimpleGraph β) [DecidableRel G.Adj] [DecidableRel H.Adj]
+    (V : Finset α) (W : Finset β) :
+    configurations (G ⊕g H) (V.disjSum W) =
+      ((configurations G V) ×ˢ (configurations H W)).image
+        (fun st => st.1.disjSum st.2) := by
+  classical
+  have hi (S : Finset α) (T : Finset β) :
+      (G ⊕g H).IsIndepSet (S.disjSum T : Set (α ⊕ β)) ↔
+        G.IsIndepSet (S : Set α) ∧ H.IsIndepSet (T : Set β) := by
+    constructor
+    · intro h
+      constructor
+      · intro x hx y hy hn he
+        exact h (by simpa using hx) (by simpa using hy)
+          (by simpa using hn) he
+      · intro x hx y hy hn he
+        exact h (by simpa using hx) (by simpa using hy)
+          (by simpa using hn) he
+    · rintro ⟨hs, ht⟩ (x | x) hx (y | y) hy hn he
+      · exact hs (by simpa using hx) (by simpa using hy)
+          (by simpa using hn) he
+      · exact he
+      · exact he
+      · exact ht (by simpa using hx) (by simpa using hy)
+          (by simpa using hn) he
+  ext U
+  constructor
+  · intro hU
+    have hh := Finset.mem_filter.mp hU
+    have hs := Finset.subset_disjSum.mp (Finset.mem_powerset.mp hh.1)
+    have hind := (hi U.toLeft U.toRight).mp (by
+      simpa only [Finset.toLeft_disjSum_toRight] using hh.2)
+    exact Finset.mem_image.mpr ⟨(U.toLeft, U.toRight),
+      Finset.mem_product.mpr ⟨Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr hs.1, hind.1⟩,
+        Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr hs.2, hind.2⟩⟩,
+      Finset.toLeft_disjSum_toRight⟩
+  · rintro hU
+    obtain ⟨⟨S,T⟩, hST, rfl⟩ := Finset.mem_image.mp hU
+    obtain ⟨hS,hT⟩ := Finset.mem_product.mp hST
+    obtain ⟨hs, hiS⟩ := Finset.mem_filter.mp hS
+    obtain ⟨ht, hiT⟩ := Finset.mem_filter.mp hT
+    exact Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr
+      (Finset.disjSum_mono (Finset.mem_powerset.mp hs) (Finset.mem_powerset.mp ht)),
+      (hi S T).mpr ⟨hiS,hiT⟩⟩
+
+private lemma partition_sum {α β K : Type*} [DecidableEq α] [DecidableEq β]
+    [CommSemiring K] (G : SimpleGraph α) (H : SimpleGraph β)
+    [DecidableRel G.Adj] [DecidableRel H.Adj]
+    (V : Finset α) (W : Finset β) (w : α ⊕ β → K) :
+    partition (G ⊕g H) (V.disjSum W) w =
+      partition G V (fun x => w (.inl x)) * partition H W (fun x => w (.inr x)) := by
+  classical
+  unfold partition
+  rw [configurations_sum]
+  rw [Finset.sum_image (by
+    intro x hx y hy he
+    exact Prod.ext (Finset.disjSum_inj.mp he).1 (Finset.disjSum_inj.mp he).2)]
+  simp only [Finset.prod_disjSum]
+  rw [Finset.sum_product]
+  simp only [← Finset.mul_sum, ← Finset.sum_mul]
+
+private lemma partition_subtype {α K : Type*} [DecidableEq α] [CommSemiring K]
+    (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (w : α → K) :
+    partition (G.induce (V : Set α)) univ (fun x => w x.val) = partition G V w := by
+  classical
+  unfold partition
+  apply Finset.sum_bij (fun S _ => S.image Subtype.val)
+  · intro S hS
+    have hh := Finset.mem_filter.mp hS
+    refine Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr ?_, ?_⟩
+    · intro x hx
+      obtain ⟨x,hx,rfl⟩ := Finset.mem_image.mp hx
+      exact x.property
+    · intro x hx y hy hn he
+      obtain ⟨x,hx,rfl⟩ := Finset.mem_image.mp hx
+      obtain ⟨y,hy,rfl⟩ := Finset.mem_image.mp hy
+      exact hh.2 hx hy (fun h => hn (congrArg Subtype.val h)) he
+  · intro S hS T hT he
+    exact Finset.image_injective (Subtype.val_injective) he
+  · intro S hS
+    have hh := Finset.mem_filter.mp hS
+    let T : Finset (V : Set α) := S.attach.image
+      (fun x => (⟨x.val, (Finset.mem_powerset.mp hh.1) x.property⟩ : (V : Set α)))
+    refine ⟨T, Finset.mem_filter.mpr ⟨by simp, ?_⟩, ?_⟩
+    · intro x hx y hy hn he
+      obtain ⟨a,ha,hax⟩ := Finset.mem_image.mp hx
+      obtain ⟨b,hb,hby⟩ := Finset.mem_image.mp hy
+      exact hh.2 (by simpa [← hax] using a.property)
+        (by simpa [← hby] using b.property) (fun h => hn (Subtype.ext h)) he
+    · ext x
+      simp [T]
+  · intro S hS
+    exact (Finset.prod_image (fun x _ y _ h => Subtype.ext h)).symm
+
+private lemma partition_path (n : ℕ) :
+    partition (pathGraph n) univ (fun _ => (-X : PowerSeries ℤ)) = pathSeries n := by
+  classical
+  let e : Fin n ≃ (range n : Set ℕ) :=
+    { toFun := fun i => ⟨i.val, by simpa using i.isLt⟩
+      invFun := fun i => ⟨i.val, by simpa using i.property⟩
+      left_inv := by intro i; rfl
+      right_inv := by intro i; rfl }
+  have he : ∀ i j, ((SimpleGraph.hasse ℕ).induce (range n : Set ℕ)).Adj (e i) (e j) ↔
+      (pathGraph n).Adj i j := by
+    intro i j
+    change (SimpleGraph.hasse ℕ).Adj i.val j.val ↔ (pathGraph n).Adj i j
+    rw [path_adj, pathGraph_adj]
+  have hh := partition_relabel (pathGraph n) ((SimpleGraph.hasse ℕ).induce (range n : Set ℕ))
+    e he univ (fun _ => (-X : PowerSeries ℤ))
+  rw [Equiv.image_univ] at hh
+  rw [partition_subtype] at hh
+  exact hh.symm
 
 #print axioms two_path_series_concentration
 end D5.S3.Combinatorics.Graph.LinearForests.TwoPathConcentration

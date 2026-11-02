@@ -20,7 +20,7 @@ namespace D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 
 local instance : DecidableRel (SimpleGraph.hasse ℕ).Adj := Classical.decRel _
 
-private lemma path_adj (u v : ℕ) :
+lemma path_adj (u v : ℕ) :
     (SimpleGraph.hasse ℕ).Adj u v ↔ u + 1 = v ∨ v + 1 = u := by
   simp [SimpleGraph.hasse_adj, ← Order.succ_eq_iff_covBy]
 
