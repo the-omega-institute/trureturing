@@ -208,7 +208,7 @@ private theorem proj_gram : projᴴ * proj = proj := by
       Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
       neg_zero, neg_neg, and_true, true_and]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq]
+    <;> (try constructor) <;> ring_nf <;> simp only [sqrt3_sq] <;> ring
 
 set_option Elab.async false in
 private theorem rho_positive : rho.PosDef := by
@@ -242,7 +242,7 @@ private theorem rho_coefficient (x k : Fin 9) :
       Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
       neg_zero, neg_neg, and_true, true_and]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq, sqrt3_cube]
+    <;> (try constructor) <;> ring_nf <;> simp only [sqrt3_sq, sqrt3_cube] <;> ring
 
 set_option Elab.async false in
 private theorem obs_coefficient (x k : Fin 9) :
@@ -262,7 +262,7 @@ private theorem obs_coefficient (x k : Fin 9) :
       Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
       neg_zero, neg_neg, and_true, true_and]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq, sqrt3_cube]
+    <;> (try constructor) <;> ring_nf <;> simp only [sqrt3_sq, sqrt3_cube] <;> ring
 
 set_option Elab.async false in
 private theorem sld_coefficient (x k : Fin 9) :
