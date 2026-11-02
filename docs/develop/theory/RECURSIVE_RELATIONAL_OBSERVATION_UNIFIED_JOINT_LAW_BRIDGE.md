@@ -959,3 +959,401 @@ methods, not the specific rank counts and probabilities for $S_0,S_1$;
 the contribution is the stated source-specific operational application.
 
 ## 追加锚（本行以下为增补区）
+
+## 4. Exact four-sample relation strength and the uses lost by a decision bit
+
+### 4.1 Source contract and the complete signed law
+
+**Definition 4.1 (the four-sample experiment).** Retain Definition 3.1
+without changing its operations: one hidden $i$ is fixed, each paid draw
+is iid uniform with replacement on the actual $1944$ edges of
+(UJB.7502), and an explicitly supplied nondestructive same-source fork
+returns the two typed handles from that draw. Stable equality is only
+within type; the two charts share sample indices, and comparisons to
+retained old handles remain legal. Control, permissions, initialization
+and auxiliary randomness are source-blind. Old source-dependent handles
+and records must come from this same experiment and their draws remain
+charged. Coordinates, multiplication, an inverse operation, reset and
+any additional sampler are unavailable to the observer. Proposition 3.2
+supplies the mathematical correspondence with the published groups;
+in particular the third $w$ coordinate remains present also for $S_1$.
+
+Let $p_i(\pi,\sigma)=\Pr_i(H_4=(\pi,\sigma))$. Partitions here are
+exact equality patterns on the same ordered set $[4]$; e.g. $12|3|4$
+means precisely $a_1=a_2$, with $a_3,a_4$ distinct from that value and
+each other. Write $\pi\preceq\rho$ for refinement, $|\pi|$ for the
+number of blocks, and
+
+$$
+\mathcal P=\{12|34,13|24,14|23\},\qquad
+\mathcal M(\pi)=\{\rho\in\mathcal P:\pi\preceq\rho\}.
+$$
+
+The scalar $H_i=\sum_{t,t'}c_i(t,t')^2$ is the four-cycle homomorphism
+count from (UJB.7506), including diagonal and other noninjective maps;
+it is distinct from the indexed history $H_n$.
+
+**Theorem 4.2 (complete signed law and optimal terminal decision).** For
+the actual sources of Definition 4.1, put $\Delta H=H_1-H_0=209952$.
+For every pair of partitions of $[4]$,
+
+$$
+\begin{aligned}
+p_1(\pi,\sigma)-p_0(\pi,\sigma)
+ &=\frac{\Delta H}{1944^4}K(\pi,\sigma),\\
+K(\pi,\sigma)
+ &=(-1)^{|\pi|+|\sigma|}
+ \bigl(|\mathcal M(\pi)|\,|\mathcal M(\sigma)|
+       -|\mathcal M(\pi)\cap\mathcal M(\sigma)|\bigr).
+\end{aligned}
+\tag{UJB.7601}
+$$
+
+Thus $K=0$ if either partition has a block of size at least three.
+With $\operatorname{TV}(p_0,p_1)=\frac12\sum_{\pi,\sigma}|p_1-p_0|$,
+
+$$
+\operatorname{TV}(p_0,p_1)=\frac1{1417176},\qquad
+\operatorname{Succ}_{1/2}^{\mathrm{opt}}
+ =\frac12+\frac1{2834352}.
+\tag{UJB.7602}
+$$
+
+A permitted optimal terminal rule chooses $S_1$ when
+$|\pi|+|\sigma|$ is even and $S_0$ when it is odd. Every zero-difference
+atom can instead be assigned either decision, or randomized.
+
+Proof. The counting argument also applies to two finite simple typed
+bipartite graphs with common positive parameters
+$\ell,r,d_A,d_T$, where $M=\ell d_A=rd_T$. For prescribed equalities
+$(\rho,\tau)$, let $Q(\rho,\tau)$ be the quotient graph with one vertex
+per block on each side and edge $j$ between the blocks containing $j$.
+Let $F_i(\rho,\tau)$ count its type-preserving homomorphisms into $G_i$.
+There is exactly one such map for each ordered edge tuple satisfying
+the prescribed equalities. Parallel edges collapse for this count,
+since the host is simple, but the probability denominator stays $M^4$.
+No automorphism division and no exclusion of unused cross-edges occur.
+
+By (UJB.7505), a connected tree with $u$ left and $v$ right vertices
+has $M d_T^{u-1}d_A^{v-1}$ homomorphisms. Products give the forest
+counts. A simple bipartite graph with at most four edges and no isolated
+vertices is a forest unless it is exactly a four-cycle. Here that
+cycle occurs exactly when $\rho,\tau$ are distinct members of
+$\mathcal P$: both sides have two blocks of size two, and the distinct
+matchings make all four endpoint pairs different. There are six ordered
+cases. Therefore $F_1-F_0=\Delta H$ on these six cases and is zero
+elsewhere. This uses the common degrees, not graph isomorphism.
+
+Let $N_i(\pi,\sigma)=M^4p_i(\pi,\sigma)$. Each prescribed equality
+count is the sum of $N_i$ over its coarsenings. Finite partition-lattice
+inversion gives the full exact law, as well as its signed difference:
+
+$$
+\begin{aligned}
+N_i(\pi,\sigma)
+ &=\sum_{\rho\succeq\pi,\ \tau\succeq\sigma}
+   \mu(\pi,\rho)\mu(\sigma,\tau)F_i(\rho,\tau),\\
+N_1(\pi,\sigma)-N_0(\pi,\sigma)
+ &=\Delta H
+   \sum_{\substack{\rho\in\mathcal M(\pi),\,
+                    \tau\in\mathcal M(\sigma)\\\rho\ne\tau}}
+       \mu(\pi,\rho)\mu(\sigma,\tau).
+\end{aligned}
+\tag{UJB.7603}
+$$
+
+Here $\mu$ is the inverse of the refinement incidence matrix. On an
+interval from $\pi$ to a matching $\rho$, each pair is either already
+a block or is obtained by merging two singletons. The interval is a
+product of two-element chains, whose inverse coefficients are $-1$
+for a merge and $1$ for no merge. Consequently
+$\mu(\pi,\rho)=(-1)^{|\pi|-2}$. All surviving summands in the second
+line have the same sign. Their number is the number of ordered distinct
+compatible matchings, exactly the parenthesis in (UJB.7601). A block
+of size at least three has no compatible matching. This proves every
+signed atom, without an enumeration of the $225$ pairs.
+
+For a fixed matching $\rho$, its refinements are itself, its two
+one-pair splittings, and the discrete partition. Their coefficients
+are $1,-1,-1,1$, with absolute sum $4$. Since the contributions to each
+$K$ have a common sign, absolute values introduce no cancellations:
+
+$$
+\sum_{\pi,\sigma}|K(\pi,\sigma)|=6\cdot4\cdot4=96,
+\qquad \sum_{\pi,\sigma}K(\pi,\sigma)=6(1-1-1+1)^2=0.
+\tag{UJB.7604}
+$$
+
+For an explicit compact description, the partition types with nonempty
+$\mathcal M$ are the discrete partition $D$, six one-pair partitions
+$E$, and three matchings $P$. Each $E$ has one matching completion,
+with two $E$ per matching. The cells $DD$, $DE/ED$, $DP/PD$ contribute
+respectively $6,-2,2$, with multiplicities $1,12,6$. Cells $EE$, $EP/PE$
+and $PP$ with different completions contribute $1,-1,1$, with
+multiplicities $24,24,6$. All other cells are zero. Equivalently the
+coefficients $(-2,-1,0,1,2,6)$ have multiplicities
+$(12,24,152,30,6,1)$.
+
+Thus generally $\operatorname{TV}=48|\Delta H|/M^4$. In the actual
+sources, (UJB.7506) gives
+
+$$
+H_0=17496\cdot2^2+2187\cdot8^2=209952,\qquad
+H_1=6561\cdot8^2=419904,
+$$
+
+and hence $48\cdot209952/1944^4=1/1417176$. For any randomized terminal
+decision with probability $d(h)$ of choosing $S_1$ at atom $h$, its
+equal-prior success is
+
+$$
+\frac12\sum_h\bigl[p_0(h)(1-d(h))+p_1(h)d(h)\bigr]
+ =\frac12+\frac12\sum_h(p_1(h)-p_0(h))d(h).
+$$
+
+It is maximized by $d=1$ on positive differences and $d=0$ on negative
+ones. The sum of positive differences is TV, proving (UJB.7602).
+Since $\Delta H>0$, (UJB.7601) identifies exactly those strict signs
+by the parity of the occupied endpoint counts. Stable typed equality
+computes these counts legally. This establishes terminal performance,
+not a one-bit bound on storage during acquisition.
+
+The prescribed rectangle $R$ of Theorem 3.3 has gap
+$\Delta H/M^4=\operatorname{TV}/48$. Each of the six exact strict-cycle
+atoms has the same gap, so their disjoint union has gap
+$\operatorname{TV}/8$. They retain the earlier separation, but neither
+is the complete optimal event. The pair of occupancies and its parity
+retain the full TV for this equal-prior task. $\square$
+
+### 4.2 Strict actual atoms and later source decisions
+
+**Proposition 4.3 (every optimal binary decision discards later uses).**
+For the actual four-sample laws define the exact atoms
+
+$$
+C=(12|34,13|24),\qquad
+U=(1|2|3|4,12|34),\qquad
+V=(12|3|4,13|24).
+$$
+
+Writing $L(h)=p_1(h)/p_0(h)$ on these positive atoms, their counts and
+likelihood ratios are
+
+| Atom $h$ | $N_0(h)/M$ | $N_1(h)/M$ | $L(h)$ |
+| --- | ---: | ---: | ---: |
+| $C$ | $74$ | $182$ | $91/37$ |
+| $U$ | $89916$ | $90132$ | $7511/7493$ |
+| $V$ | $1200$ | $1092$ | $91/100$ |
+
+Any binary summary that retains the equal-prior optimal binary testing
+value merges $C$ and $U$, after labeling its two outputs by their optimal
+decisions. It cannot retain the optimal value for prior
+$\Pr(i=1)=1/3$. Applied separately to two four-sample blocks, its two
+retained bits also fail to retain the equal-prior optimum of the two
+full block records. Both failures hold for every assignment on ties.
+
+Proof. Let $I_i=N_i(C)$. Reusing (UJB.7507), or excluding equal left
+vertices and equal right vertices from the four-cycle homomorphisms,
+gives
+
+$$
+I_i=H_i-\ell d_A^2-rd_T^2+M=H_i-66096.
+\tag{UJB.7605}
+$$
+
+The subtraction removes $\ell d_A^2$ maps with coincident left vertices
+and $rd_T^2$ with coincident right vertices; their intersection has
+$M$ maps and is restored once. Thus $(I_0,I_1)=(143856,353808)$.
+
+For $V$, choose the repeated left vertex, then its ordered two distinct
+right neighbors, and then one further left neighbor at each right
+endpoint, excluding the middle vertex. This gives
+$\ell d_A(d_A-1)(d_T-1)^2$ assignments. The only remaining forbidden
+equality identifies those two outer left vertices. The resulting exact
+four-cycle assignments are counted by $I_i$. Therefore
+
+$$
+N_i(V)=72\cdot27\cdot26\cdot7^2-I_i.
+\tag{UJB.7606}
+$$
+
+For $U$, fix ordered distinct right endpoints $t,t'$ with codegree
+$c=c_i(t,t')$. Each right endpoint must choose two ordered distinct
+left neighbors. Before cross-exclusions there are $56^2$ choices.
+Each of the four cross equalities has $c\cdot7^2$ assignments. The
+only compatible intersections are the two bijections identifying both
+left pairs, each with $c(c-1)$ assignments; three cross equalities
+would violate a within-pair inequality. Inclusion-exclusion therefore
+gives $56^2-196c+2c(c-1)$ assignments. Moreover
+
+$$
+\sum_{t\ne t'}c_i(t,t')=M(d_A-1),\qquad
+\sum_{t\ne t'}c_i(t,t')(c_i(t,t')-1)=I_i.
+$$
+
+The first identity chooses a left vertex and two distinct neighbors;
+the second counts the strict cycles. Consequently
+
+$$
+N_i(U)=243\cdot242\cdot56^2-196M\cdot26+2I_i.
+\tag{UJB.7607}
+$$
+
+Dividing (UJB.7605)–(UJB.7607) by $M=1944$ proves the table. All three
+atoms have positive mass under both sources. In particular $C,U$ have
+strictly positive signed differences and $V$ has a strictly negative
+one. The pointwise optimization in Theorem 4.2 forces the decisions
+$1,1,0$ at these atoms, respectively. More generally a two-output
+summary followed by an optimal decoder must send all strict positive
+atoms to the output decoded as $1$ and all strict negative atoms to
+the other output: mixing strict signs would strictly decrease success.
+This also forces deterministic outputs there for a randomized summary.
+Hence $C$ and $U$ occupy the same summary fiber irrespective of ties.
+
+For prior $q=\Pr(i=1)$ and zero-one loss, the optimal decision chooses
+$1$ precisely when $q p_1(h)>(1-q)p_0(h)$. At $q=1/3$ this is $L>2$.
+Now $91/37>2$ while $7511/7493<2$. The strict decisions at $C,U$ are
+opposite, so any common decision on their summary fiber incurs strictly
+larger Bayes risk. Even with prior $1/2$, their posteriors
+$91/128$ and $7511/15004$ differ, although their optimal actions agree.
+
+For two consecutive blocks of four paid draws, Proposition 3.6 gives
+conditional independence under the same fixed $i$. Retain only the two
+full internal partition records for the moment. Their law is
+$p_i\otimes p_i$, so the joint likelihood ratios multiply:
+
+$$
+L(C)L(V)=\frac{8281}{3700}>1,\qquad
+L(U)L(V)=\frac{683501}{749300}<1.
+\tag{UJB.7608}
+$$
+
+Both block records have the same retained decision bits $(1,0)$, but
+the equal-prior optimal decisions are opposite and strict. Each record
+has positive probability under both sources. The compressed fiber thus
+mixes strictly positive and strictly negative product-law differences,
+strictly decreasing TV and increasing optimal error. Extra permitted
+cross-block comparisons can only improve the full eight-sample
+experiment; no value for its optimum is asserted here. $\square$
+
+### 4.3 Old handles, next-read prediction and kernel descent
+
+**Proposition 4.4 (a legal next-read use lost under either tie choice).**
+Let $Z=(1234,1234)$, the all-same-edge atom. Retain the four old paired
+handles and buy a fifth draw from the same source. Let $J$ report whether
+its paired handle equals any of the old paired handles, using the two
+within-type comparisons at the same old index. Then, for each $i$,
+
+$$
+\Pr_i(J=1\mid Z)=\frac1M,\qquad
+\Pr_i(J=1\mid h)=\frac4M\quad(h=C,U,V).
+\tag{UJB.7609}
+$$
+
+No equal-prior-optimal binary summary alone preserves these conditional
+prediction probabilities. In particular neither historical equality
+sufficiency nor optimal terminal testing implies pointwise descent of
+the actual next-state kernel.
+
+Proof. For a concrete retained edge history $e=(e_1,\ldots,e_4)$ let
+$m(e)$ be the number of distinct edge pairs in that list. The event
+$J=1$ is the disjoint union of those $m(e)$ edge outcomes. The next
+edge is independent and uniform on the same support, so its conditional
+probability given this actual history is exactly $m(e)/M$. This count
+is determined by the intersection of the two equality partitions.
+It equals one on $Z$ and four on each of $C,U,V$, proving (UJB.7609)
+both pointwise for this readout and after conditioning on the observed
+atom. These atoms have positive probability; $p_i(Z)=M/M^4=M^{-3}$.
+
+The atom $Z$ is an equal-prior tie. Every optimal binary summary sends
+$C,U$ to one bit and $V$ to the other by Proposition 4.3. Whichever
+bit receives $Z$, it therefore merges a history with repeat probability
+$1/M$ with one having probability $4/M$. A randomized assignment of
+$Z$ has at least one output of positive probability and has the same
+obstruction there. If old handles are separately retained to execute
+$J$, those handles belong to the full continuation state and cannot be
+counted as part of a state consisting only of the decision bit.
+
+For clarity, an averaged conditional history law always exists here.
+For a general $n$-sample exact record $h$ let $N_i(h)$ count compatible
+ordered edge tuples. For an $(n+1)$-sample record $h'$ restricting to
+$h$, uniform sampling gives, when $N_i(h)>0$,
+
+$$
+Q_i(h,h')=\Pr_i(H_{n+1}=h'\mid H_n=h)
+ =\frac{N_i(h')}{M N_i(h)}.
+\tag{UJB.7610}
+$$
+
+For public prior $q=\Pr(i=1)$ the corresponding mixture kernel is
+
+$$
+Q_q(h,h')=
+\frac{(1-q)N_0(h')+qN_1(h')}
+ {M\bigl((1-q)N_0(h)+qN_1(h)\bigr)}
+\tag{UJB.7611}
+$$
+
+on positive conditioning events. These formulas average over compatible
+actual histories, and in the second case over the posterior source.
+They do not assert that each concrete history inducing $h$ has that
+same next-state row. Proposition 3.5 already gives two positive-mass
+actual histories in $G_0$ with the same $H_2$, but respective next-read
+probabilities $1/M$ and $0$ for $a_3=a_1,t_3=t_2$. That is a pointwise
+failure of descent even for the full equality record. It coexists with
+(UJB.7610), and with the particular readout $J$ whose probability does
+depend only on its full equality record. Any further state quotient
+must preserve the relevant legal actions, available references, joint
+response laws and updates on its fibers, as required in §1. $\square$
+
+**Interpretation 4.5 (reused principles and the remaining bridge).**
+The homomorphism/injective-count distinction and finite inversion in
+Theorem 4.2 use the mature methods of Lovász–Szegedy,
+[§§2.1, 2.4](https://arxiv.org/abs/math/0408173v2), and
+Levin–Chandrasekaran,
+[Proposition 2.6 and §4.1](https://arxiv.org/html/2512.23149v3).
+The latter's iid edge-sampling construction is used only with the
+explicit typed, index-preserving adapter of §3; its general limit
+results are not premises of these finite computations. Exact equality
+patterns require distinct block vertices within each type, not induced
+nonedges. The signed-law calculation and C/U/V counts are consequences
+for the actual published pair, rather than a new general sampling
+framework or a novelty claim for inversion or likelihood testing.
+
+The distinction between an action optimal for one decision problem and
+statistical sufficiency is classical; see Blackwell,
+[Equivalent Comparisons of Experiments](https://doi.org/10.1214/aoms/1177729032).
+On a common positive support, constancy of $L$ on a deterministic
+summary fiber makes the conditional distribution on that fiber the
+same for both sources: dividing $p_1(h)=L p_0(h)$ by the two fiber
+masses proves it. Conversely a common conditional distribution forces
+that ratio to be constant. The likelihood ratio consequently preserves
+all source posteriors and source decision uses there, including product
+likelihoods for conditionally independent blocks. It need not preserve
+old handles or response laws for a different continuation task.
+
+The existing repository declarations
+[`total_variation_channel_eq_iff_no_sign_mixing`](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean),
+[`bayesRisk_le_of_blackwellDominates`](../../../D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.lean),
+and [`causal_state_factorization`](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean)
+state the corresponding channel-sign criterion, decision-risk
+monotonicity and unequal-future-law obstruction under their explicit
+finite-kernel, Markov-kernel or factorization hypotheses. The finite
+experiment and positive-mass atoms above supply the concrete sign and
+fiber obstructions; the general declarations alone do not supply the
+source-specific counts (UJB.7605)–(UJB.7608).
+
+The witnessed relation still has the explicit map
+$O_6(S_i)\xrightarrow{(x^2,x^3)}A\times T$ of Proposition 3.2, with
+unit witness multiplicity on each actual edge. The two endpoint charts,
+the paired history and its sample-index order encode different
+relations of the acquired data; parity preserves just the stated
+terminal testing value. A joint-law-, permission- and cost-preserving
+implementation of the supplied uniform sampler, same-source fork,
+stable equality and retained-handle contract using the original native
+$\alpha/\beta$ preparation and acquisition operations remains unproved.
+The conditional four-sample result therefore leaves that bridge and
+the broader recursive recovery of space, time, boundary and memory
+unresolved.
+
+## 追加锚（本行以下为增补区）
