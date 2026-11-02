@@ -20,6 +20,8 @@ triage: anchor
 
 ## Verified locator
 
+Source: https://mathoverflow.net/questions/512655
+
 MathOverflow question 512655, revision 1, revision GUID
 `E06A6743-2C15-41CD-9390-04D1862ABA02`, by ricardorr (user 49534).
 The versioned question is attributed under CC BY-SA 4.0. The title is only a
