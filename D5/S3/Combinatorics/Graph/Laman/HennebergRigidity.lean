@@ -432,15 +432,9 @@ inner product at `s(a, b)`:
   `(s − 1) · ⟪q − p' a, x none − x (some a)⟫_ℝ − s · ⟪q − p' b, x none − x (some b)⟫_ℝ
    = s(s − 1) · ⟪p' a − p' b, x (some a) − x (some b)⟫_ℝ`
 
-valid for any motion `x : Framework (Option V) d`. This is the algebraic content shared by
-`typeII_isInfinitesimallyRigid_extend` (kernel / IR side) and
-`typeII_edgeSetRowIndependent_extend` (`MatroidIdentification.lean`; dual / row-LI side): in the
-IR setting both new-edge inner products vanish at a kernel element, and dividing by
-`s(s − 1) ≠ 0` recovers the deleted-edge G'-constraint; in the row-LI setting the equation is
-the row identity
-`(s−1)·rigidityRow newA − s·rigidityRow newB = s(s−1) · restrictMap.dualMap (rigidityRow eAB)`
-applied at `x`, which combined with G'-row LI and `dualMap` injectivity forces the
-typeII coefficients to vanish.
+valid for any motion `x : Framework (Option V) d`. The consumer is
+`typeII_isInfinitesimallyRigid_extend`: both new-edge inner products vanish at a kernel
+element, and dividing by `s(s − 1) ≠ 0` recovers the deleted-edge constraint.
 
 Proof: derive `q - p' b = (s − 1) • (p' b - p' a)` from `hcoll` by `q − p' b = (q − p' a) −
 (p' b − p' a)`, factor both inner-product scalars via `real_inner_smul_left`, and finish by
