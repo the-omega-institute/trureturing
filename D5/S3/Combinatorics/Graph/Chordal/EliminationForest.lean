@@ -77,12 +77,6 @@ variable {T}
 
 @[refl] theorem isAncestor_refl (i : ι) : T.IsAncestor i i := Relation.ReflTransGen.refl
 
-theorem IsAncestor.trans {i j k : ι} (h₁ : T.IsAncestor i j) (h₂ : T.IsAncestor j k) :
-    T.IsAncestor i k := Relation.ReflTransGen.trans h₁ h₂
-
-theorem isAncestor_parent {i j : ι} (h : T.parent i = some j) : T.IsAncestor i j :=
-  Relation.ReflTransGen.single h
-
 theorem IsAncestor.rank_le {i j : ι} (h : T.IsAncestor i j) : T.rank j ≤ T.rank i := by
   induction h with
   | refl => exact le_rfl
