@@ -11,11 +11,27 @@ import Mathlib.Data.Nat.Find
 import Mathlib.Tactic
 
 /- Source admission: #25489, continuation 6567741241.
-The new live mathematical mechanism is simultaneous skew - lattice remainder
+The new live mathematical mechanism is simultaneous skew lattice remainder
 descent. This is partial sufficiency, not a resolution of Conjecture 4.1.
 All parameters are unbounded; no finite enumeration is mathematical content.
-Direct frozen project dependencies: none. Pinned Mathlib supplies well - ordering,
+Direct frozen project dependencies: none. Pinned Mathlib supplies well-ordering,
 integer arithmetic, additive homomorphisms, and modular casts.
+Admission basis: escape-witness (not open-problem-resolution).
+Proof shapes and live consumers, with same-delivery helpers inlined:
+  skew_remainder: content; witness is simultaneous least-sum descent;
+    consumed by integer_diamond_cover.
+  integer_diamond_cover: content; live descent plus rotated integer bounds;
+    consumed by hom_diamond_cover.
+  hom_diamond_cover: content; live descent transferred through the homomorphism;
+    consumed by result.
+  matrix_map: definition; consumed by the modular map helpers.
+  matrix_map_zero, matrix_map_distinct: bind-only; consumed by even_family_map
+    and odd_family_map.
+  even_family_map, odd_family_map: bind-only coordinate constructions from
+    modular lifts and IsCoprime.mul_left; consumed by result.
+  result: content; skew_remainder remains on its live proof path.
+The displayed family is a sufficient construction; its failure at other
+parameters cannot establish a universal exclusion.
 -/
 
 namespace D5.S3.FiniteGroups.BajnokBeattyCayleySufficiency
@@ -36,11 +52,11 @@ private theorem skew_remainder (A a b x y : ℤ) (hA : 0 < A)
     have hN : 0 ≤ N := add_nonneg (abs_nonneg _) (abs_nonneg _)
     have hx : 0 ≤ x - (-N) * A + (-N) * a := by
       have := mul_nonneg hN (show 0 ≤ A - a-1 by omega)
-      dsimp [N] at * 
+      dsimp [N] at *
       nlinarith [neg_abs_le x, abs_nonneg y]
     have hy : 0 ≤ y + (-N) * b - (-N) * A := by
       have := mul_nonneg hN (show 0 ≤ A - b-1 by omega)
-      dsimp [N] at * 
+      dsimp [N] at *
       nlinarith [neg_abs_le y, abs_nonneg x]
     refine ⟨((x - (-N) * A + (-N) * a) + (y + (-N) * b - (-N) * A)).toNat,
       -N, -N, hx, hy, ?_⟩
@@ -77,7 +93,7 @@ private theorem skew_remainder (A a b x y : ℤ) (hA : 0 < A)
 private theorem integer_diamond_cover (t j x y : ℤ)
     (ht : 1 ≤ t) (hj : 0 ≤ j) (hjt : j < t) :
     ∃ p q : ℤ,
-      |x - p * (2 * (t - 1)) - q * (2 * (t - j))| + 
+      |x - p * (2 * (t - 1)) - q * (2 * (t - j))| +
         |y - p * (2 * (t + 1)) + q * (2 * (t + j))| ≤ 2 * t := by
   have hrem : ∃ p q : ℤ,
       0 ≤ x + y + 2 * t - p * (4 * t) + q * (4 * j) ∧
@@ -92,7 +108,7 @@ private theorem integer_diamond_cover (t j x y : ℤ)
         (by omega) (by omega) (by omega) (by omega) (by omega)
   obtain ⟨p, q, hx, hxA, hy, hyA⟩ := hrem
   refine ⟨p, q, ?_⟩
-  have he1 : (x - p * (2 * (t - 1)) - q * (2 * (t - j))) + 
+  have he1 : (x - p * (2 * (t - 1)) - q * (2 * (t - j))) +
       (y - p * (2 * (t + 1)) + q * (2 * (t + j))) = x + y - p * (4 * t) + q * (4 * j) := by ring
   have he2 : (x - p * (2 * (t - 1)) - q * (2 * (t - j))) -
       (y - p * (2 * (t + 1)) + q * (2 * (t + j))) = x - y + p * 4 - q * (4 * t) := by ring
@@ -127,11 +143,11 @@ private def matrix_map (N : ℕ) (r s c d : ℤ) :
   map_zero' := by simp
   map_add' z w := by
     apply Prod.ext
-    · change (↑(r * (z.1 + w.1) + s * (z.2 + w.2)) : ZMod 2) = 
+    · change (↑(r * (z.1 + w.1) + s * (z.2 + w.2)) : ZMod 2) =
         ↑(r * z.1 + s * z.2) + ↑(r * w.1 + s * w.2)
       push_cast
       ring
-    · change (↑(c * (z.1 + w.1) + d * (z.2 + w.2)) : ZMod N) = 
+    · change (↑(c * (z.1 + w.1) + d * (z.2 + w.2)) : ZMod N) =
         ↑(c * z.1 + d * z.2) + ↑(c * w.1 + d * w.2)
       push_cast
       ring
@@ -245,7 +261,7 @@ private theorem odd_family_map (N : ℕ) (t j : ℤ) (ht : Odd t) (hj : Even j)
       ring
 
 /-- A uniform sufficiency family. In particular, `0 ≤ 2 * j < t` covers the
-allowed even - radius top strip. No converse or exclusion is asserted. -/
+allowed even-radius top strip. No converse or exclusion is asserted. -/
 theorem result (t j : ℕ) (ht : 1 ≤ t) (hjt : j < t)
     (hpar : Even t ∨ Even j) :
     ∃ a b : ZMod 2 × ZMod (4 * (t ^ 2 - j)), a ≠ b ∧
@@ -271,24 +287,5 @@ theorem result (t j : ℕ) (ht : 1 ≤ t) (hjt : j < t)
     (by exact_mod_cast Nat.zero_le j) (by exact_mod_cast hjt) hv hw hsur
 
 #print axioms result
-
--- Transient exact applications and hypothesis boundary; removed after the scoped build.
-example : ∃ a b : ZMod 2 × ZMod 16, a ≠ b ∧
-    ∀ g, ∃ x y : ℤ, g = x • a + y • b ∧ |x| + |y| ≤ 4 :=
-  result 2 0 (by omega) (by omega) (Or.inl ⟨1, rfl⟩)
-
-example : ∃ a b : ZMod 2 × ZMod 28, a ≠ b ∧
-    ∀ g, ∃ x y : ℤ, g = x • a + y • b ∧ |x| + |y| ≤ 6 :=
-  result 3 2 (by omega) (by omega) (Or.inr ⟨1, rfl⟩)
-
-example (x y : ℤ) : ∃ p q : ℤ,
-    0 ≤ x - p * 5 + q * 4 ∧ x - p * 5 + q * 4 < 5 ∧
-    0 ≤ y - q * 5 ∧ y - q * 5 < 5 := by
-  simpa using skew_remainder 5 4 0 x y (by omega) (by omega) (by omega)
-    (by omega) (by omega)
-
-example : ¬ ∃ p q : ℤ,
-    0 ≤ 1 - p + q ∧ 1 - p + q < 1 ∧ 0 ≤ p - q ∧ p - q < 1 := by
-  omega
 
 end D5.S3.FiniteGroups.BajnokBeattyCayleySufficiency
