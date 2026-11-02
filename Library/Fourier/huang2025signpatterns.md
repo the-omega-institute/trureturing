@@ -8,6 +8,11 @@ url: https://arxiv.org/abs/2507.16644v1
 claim: "Classical cubic theta definitions, Euler product identities, and the three-core lattice exponent used in the study of infinite-product signs."
 strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaLattice
+  - D5/S3/Arith/ModularForms/CubicThetaShifted
+  - D5/S3/Arith/ModularForms/CubicThetaJacobi
+  - D5/S3/Arith/ModularForms/CubicThetaRootProduct
+  - D5/S3/Arith/ModularForms/CubicThetaJacobiCube
+  - D5/S3/Arith/ModularForms/CubicThetaJacobiColumns
 license: citation-only
 triage: anchor
 ---
@@ -44,6 +49,36 @@ mathematics, with no mathematical novelty claim.
 `D5/S3/Arith/ModularForms/CubicThetaLattice.hasSum_lattice_theta` identifies
 the coefficient-cardinality series with the full integer lattice sums.
 The positivity and constant terms refer to these lattice series.
+
+`D5/S3/Arith/ModularForms/CubicThetaShifted.shiftedCoreEquiv` gives three
+disjoint exhaustive affine copies of each core fibre in the shifted
+norm fibre `Q(x,y)-x-y=n`. Its series identity is
+`shifted_theta_eq_three_core`.
+
+`D5/S3/Arith/ModularForms/CubicThetaJacobi` reuses the repository's
+`InversionSeq207TripleProduct.formal_triple_product` and
+`InversionSeq207Euler.euler_coefficient_construction`. Its
+`tendsto_finite_jacobi` proves that the actual finite Jacobi products
+converge coefficientwise to the normalized supplier, while
+`jacobiSeries_column` identifies every integer Laurent column. The
+supplier, including its Durfee normalization, is attributed repository
+mathematics, not a new cubic identity.
+
+`D5/S3/Arith/ModularForms/CubicThetaRootProduct.jacobi_cubic_root_product`
+proves the specialization `J(w;X)=(1-w)E(X^3)` under `w^2+w+1=0`, by
+exact finite factorization followed by a coefficientwise limit. It does
+not by itself identify the Euler quotient with the core lattice.
+
+`D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_jacobi_cube` proves
+local finiteness and the full integer-triple sum for the cube of the
+actual Jacobi product. The complete pair sums for each fixed Laurent
+index are recorded by
+`D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.hasSum_cube_column`.
+The anchors `cube_column_zero` and `cube_column_one` identify its first
+two columns with `A` and `-3*T_lattice`, respectively. These column
+identities do not yet give the complete evaluation of the cube at the
+cubic root; in particular the product-to-core lattice equality remains
+unproved.
 
 This module does not identify `T_lattice` with `E(X^3)^3/E(X)` and does
 not prove the other two cubic product identities in `abc1`. Consequently

@@ -151,7 +151,7 @@ theorem theta_nonnegative_and_normalized :
 
 open scoped PowerSeries.WithPiTopology
 
-private theorem hasSum_counted_fibers [TopologicalSpace ℚ]
+theorem hasSum_counted_fibers [TopologicalSpace ℚ]
     (w : ℤ × ℤ → ℤ) (hw : ∀ p, 0 ≤ w p)
     (hf : ∀ n : ℕ, Finite {p : ℤ × ℤ // w p = (n : ℤ)}) :
     HasSum (fun p => (PowerSeries.X : PowerSeries ℚ) ^ (w p).toNat)
