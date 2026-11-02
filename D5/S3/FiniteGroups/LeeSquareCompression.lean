@@ -39,7 +39,7 @@ open NearSquareLatticeRigidity BajnokBeattyCayleyNecessity
 def SquareCovers (L : Submodule ℤ Plane) (s : ℤ) : Prop :=
   ∀ z : Plane, ∃ r : Plane, (|r 0| ≤ s ∧ |r 1| ≤ s) ∧ z - r ∈ L
 
-private theorem lee_iff_square (x y s : ℤ) :
+theorem lee_iff_square (x y s : ℤ) :
     |x| + |y| ≤ s ↔ |x+y| ≤ s ∧ |x-y| ≤ s := by
   simp only [abs_le]
   rcases le_total 0 x with hx | hx <;> rcases le_total 0 y with hy | hy
@@ -180,14 +180,14 @@ private theorem kernel_index {c k : ℕ} (f : Plane →+ Target c k)
   simp [Target, Nat.card_prod, Nat.card_zmod]
   ring
 
-private abbrev LeeCode (r : ℕ) :=
+abbrev LeeCode (r : ℕ) :=
   (Fin (r+1) × Fin (r+1)) ⊕ (Fin r × Fin r)
 
-private def decodeLee (r : ℕ) : LeeCode r → Plane
+def decodeLee (r : ℕ) : LeeCode r → Plane
   | .inl (a,b) => ![(a : ℤ)+(b : ℤ)-r, (a : ℤ)-(b : ℤ)]
   | .inr (a,b) => ![(a : ℤ)+(b : ℤ)+1-r, (a : ℤ)-(b : ℤ)]
 
-private theorem leeCode_complete {r : ℕ} {z : Plane}
+theorem leeCode_complete {r : ℕ} {z : Plane}
     (hz : |z 0| + |z 1| ≤ (r : ℤ)) : ∃ a : LeeCode r, decodeLee r a = z := by
   have hs := (lee_iff_square _ _ _).mp hz
   have h0 := abs_le.mp hs.1
