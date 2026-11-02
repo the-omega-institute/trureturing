@@ -103,7 +103,10 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
                         "For om equal to allEvents, use the inclusion of collisionEvents into allEvents. Apply the planar odd-map zero theorem, Borsuk's Satz II (1933) for n=2, reviewed in Library note D5/L/Topology/borsuk1933spheres, to the complex combination and obtain a unit vector where it vanishes. "
                             + "The family event there is in om and is chiral; taking real and imaginary parts gives f₁ = f₂ = 0. "
                             + "For om equal to collisionEvents, use the identity inclusion and repeat the same argument. These are the two possibilities for om, which proves the full assertion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lester-haddadin-gripaios-2022-chiral-event-parity-minimality"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose, bool literature) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
