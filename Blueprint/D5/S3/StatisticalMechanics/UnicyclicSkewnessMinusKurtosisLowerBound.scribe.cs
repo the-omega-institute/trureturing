@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics;
 
@@ -16,7 +17,9 @@ internal sealed class UnicyclicSkewnessMinusKurtosisLowerBoundDocument : IScribe
             Describe.Lean(
                 DescribeId.Create("lower-bound"), DeclarationHandle.Create(Prefix + "lowerBound"),
                 H("The detailed source's lower endpoint"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Equal(Typed(Local("lowerBound"), Reals()),
+                    Divide(Multiply(Real(3), Subtract(Real(1, 0, 7), Multiply(Real(5, 1),
+                        At(Qualified("Real", "sqrt"), Real(1, 7))))), Real(2, 0, 4, 8))))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The primary arXiv v4 main.tex display at line 431 and Figure 6 concern S − K. "
@@ -29,7 +32,7 @@ internal sealed class UnicyclicSkewnessMinusKurtosisLowerBoundDocument : IScribe
             Describe.Lean(
                 DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("Every positive vector and the entire actual value set"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Equivalence(Local("claim"), ClaimBody()))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The first clause includes every natural n ≥ 2 and every k : Fin n → ℝ "
@@ -42,7 +45,7 @@ internal sealed class UnicyclicSkewnessMinusKurtosisLowerBoundDocument : IScribe
             Describe.Lean(
                 DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The universal bound and its sharp actual approximation"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -90,4 +93,61 @@ internal sealed class UnicyclicSkewnessMinusKurtosisLowerBoundDocument : IScribe
                         + "networks and finite-time cumulants are outside its scope. Bounded source and "
                         + "literature searches do not establish worldwide openness or priority."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ClaimBody()
+    {
+        Formula bound = All("n", Naturals(), Implication(LessEqual(Natural(2), X("n")),
+            All("k", RateType(), Implication(PositiveRates(),
+                LessEqual(Local("lowerBound"), DifferenceValue())))));
+        Formula values = Seq(OpenBrace, Typed(X("s"), Reals()), Sp, Mid, Sp,
+            Some("n", Naturals(), Conjunction(LessEqual(Natural(2), X("n")),
+                Some("k", RateType(), Conjunction(PositiveRates(), Equal(X("s"), DifferenceValue()))))),
+            CloseBrace);
+        return Conjunction(bound, At(Qualified("IsGLB"), values, Local("lowerBound")));
+    }
+
+    private static Formula DifferenceValue() => Subtract(
+        At(Qualified("D5", "S3", "StatisticalMechanics", "UnicyclicSkewnessMinimum", "skewness"), X("k")),
+        At(Qualified("D5", "S3", "StatisticalMechanics", "UnicyclicKurtosisLowerBound", "kurtosis"), X("k")));
+    private static Formula PositiveRates() =>
+        All("i", FinOf(X("n")), Less(Real(0), At(X("k"), X("i"))));
+    private static Formula Local(string name) =>
+        Qualified("D5", "S3", "StatisticalMechanics", "UnicyclicSkewnessMinusKurtosisLowerBound", name);
+    private static Formula Qualified(params string[] parts)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+    private static Formula X(string name) => F.Id(name);
+    private static Formula At(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
+    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Natural(params byte[] digits) => Typed(D(digits), Naturals());
+    private static Formula Real(params byte[] digits) => Typed(D(digits), Reals());
+    private static Formula FinOf(Formula size) => At(Qualified("Fin"), size);
+    private static Formula RateType() => new Formula.TypeArrow(FinOf(X("n")), Reals());
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
+    private static Formula Some(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
+    private static Formula Equal(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Less(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula LessEqual(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Equivalence(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff, Parenthesized(right));
+    private static Formula Conjunction(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Implication(Formula left, Formula right) =>
+        new Formula.TypeArrow(Parenthesized(left), Parenthesized(right));
+    private static Formula Add(Formula left, Formula right) => new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Add, Parenthesized(right));
+    private static Formula Multiply(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+    private static Formula Subtract(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Divide(Formula numerator, Formula denominator) => new Formula.Fraction(numerator, denominator);
 }
