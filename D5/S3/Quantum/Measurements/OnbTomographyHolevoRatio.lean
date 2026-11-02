@@ -310,7 +310,98 @@ private lemma holevo_lower {d : ℕ} (hd : 2 ≤ d)
 private lemma primal_admissible {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b) :
     IsAdmissible b (primal d b) := by
-  sorry
+  classical
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  have hd1 : (d : ℂ) + 1 ≠ 0 := by
+    exact_mod_cast ne_of_gt (by positivity : (0 : ℝ) < d + 1)
+  have hd2 : (d : ℂ) + 2 ≠ 0 := by
+    exact_mod_cast ne_of_gt (by positivity : (0 : ℝ) < d + 2)
+  let r : ℂ := 1 / ((d : ℂ) + 1)
+  let t : Matrix (Fin (d ^ 2 - 1)) (Fin (d ^ 2 - 1))
+      (Matrix (Fin d) (Fin d) ℂ) := fun j k => b k * b j - r • (b j * b k)
+  have ht : t.IsHermitian := by
+    apply Matrix.IsHermitian.ext
+    intro j k
+    change (b j * b k - r • (b k * b j))ᴴ = _
+    simp only [conjTranspose_sub, conjTranspose_mul, conjTranspose_smul,
+      (hb.1 j).eq, (hb.1 k).eq]
+    simp [r, t]
+  have ht2 : t * t = 1 := by
+    apply Matrix.ext
+    intro j l
+    change (∑ k, t j k * t k l) = (1 : Matrix _ _ (Matrix (Fin d) (Fin d) ℂ)) j l
+    have he : (∑ k, t j k * t k l) =
+        (∑ k, b k * (b j * b l) * b k) -
+        r • ((∑ k, b k * b j * b k) * b l) -
+        r • (b j * (∑ k, b k * b l * b k)) +
+        (r * r) • (b j * (∑ k, b k * b k) * b l) := by
+      simp only [Matrix.sum_mul, Matrix.mul_sum, Finset.smul_sum]
+      rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro k _
+      simp only [t, sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+        mul_assoc]
+      module
+    rw [he, fierz hd hb, fierz hd hb, fierz hd hb, casimir hd hb, hb.2.1,
+      hb.2.1, hb.2.2]
+    simp only [zero_smul, zero_sub, neg_mul, mul_neg, Matrix.smul_mul, Matrix.mul_smul,
+      mul_one, one_mul, smul_neg, smul_smul, sub_neg_eq_add]
+    rw [Matrix.one_apply]
+    split_ifs <;> simp only [zero_smul, one_smul] <;> match_scalars <;>
+      dsimp [r] <;> field_simp <;> ring
+  let s : Matrix (Fin (d ^ 2 - 1) × Fin d) (Fin (d ^ 2 - 1) × Fin d) ℂ :=
+    Matrix.comp _ _ _ _ ℂ t
+  have hs : s.IsHermitian := Matrix.isHermitian_comp_iff.mpr ht
+  have hs2 : s * s = 1 := by
+    change Matrix.compRingEquiv _ _ ℂ t * Matrix.compRingEquiv _ _ ℂ t = 1
+    rw [← map_mul, ht2, map_one]
+  have hg : (1 + s)ᴴ * (1 + s) = (2 : ℂ) • (1 + s) := by
+    rw [conjTranspose_add, conjTranspose_one, hs.eq, add_mul, mul_add, mul_add, hs2]
+    simp only [one_mul, mul_one]
+    module
+  have hp : ((1 / (2 : ℂ)) • ((1 + s)ᴴ * (1 + s))).PosSemidef :=
+    (posSemidef_conjTranspose_mul_self (1 + s)).smul
+      (by rw [Complex.nonneg_iff]; norm_num)
+  have hps : (1 + s).PosSemidef := by
+    simpa only [hg, smul_smul, one_div_mul_cancel (by norm_num : (2 : ℂ) ≠ 0),
+      one_smul] using hp
+  refine ⟨?_, ?_, ?_⟩
+  · intro j k
+    rw [IsHermitian, primal]
+    simp only [conjTranspose_smul, conjTranspose_add, conjTranspose_mul,
+      (hb.1 j).eq, (hb.1 k).eq, star_div₀, star_add, star_natCast, star_one,
+      star_ofNat, apply_ite, conjTranspose_one, conjTranspose_zero]
+    rw [add_comm (b k * b j) (b j * b k)]
+    split_ifs <;> rfl
+  · intro j k
+    simp only [primal]
+    rw [add_comm (b j * b k) (b k * b j)]
+    congr 2
+    simp only [eq_comm]
+  · have hscale : (0 : ℂ) ≤ ((d : ℂ) + 1) / ((d : ℂ) + 2) := by
+      have he : ((d : ℂ) + 1) / ((d : ℂ) + 2) =
+          ((((d : ℝ) + 1) / ((d : ℝ) + 2) : ℝ) : ℂ) := by push_cast; rfl
+      rw [he, Complex.zero_le_real]
+      positivity
+    have hcoef : (((d : ℂ) + 1) / ((d : ℂ) + 2)) * r =
+        1 - ((d : ℂ) + 1) / ((d : ℂ) + 2) := by
+      dsimp [r]
+      field_simp
+      <;> ring
+    have hblock (j k) : primal d b j k - b j * b k =
+        (((d : ℂ) + 1) / ((d : ℂ) + 2)) •
+          ((if j = k then 1 else 0) + (b k * b j - r • (b j * b k))) := by
+      simp only [primal, smul_add, smul_sub, smul_smul, hcoef]
+      module
+    convert hps.smul hscale using 1
+    ext a c
+    have hi : (1 : Matrix (Fin (d ^ 2 - 1) × Fin d) _ ℂ) a c =
+        (if a.1 = c.1 then (1 : Matrix (Fin d) (Fin d) ℂ) else 0) a.2 c.2 := by
+      by_cases he : a.1 = c.1 <;> simp [he, Matrix.one_apply, Prod.ext_iff]
+    change (primal d b a.1 c.1 - b a.1 * b c.1) a.2 c.2 =
+      (((d : ℂ) + 1) / ((d : ℂ) + 2)) * ((1 : Matrix _ _ ℂ) a c + s a c)
+    rw [hblock, hi]
+    rfl
 
 private lemma primal_cost {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
