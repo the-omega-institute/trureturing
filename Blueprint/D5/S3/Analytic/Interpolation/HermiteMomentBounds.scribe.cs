@@ -46,16 +46,26 @@ internal sealed class HermiteMomentBoundsDocument : IScribeDocumentDefinition
         Formula i = F.Id("i");
         Formula k = F.Id("k");
         Formula sum = Seq(Sum, Underscore, Grp(i, Sp, InMacro, Sp, Call("Fin", k)), Sp);
-        return Disp(Seq(
-            Forall, Sp, k, Colon, Sp, Call("Nat"), Comma, Sp,
-            Forall, Sp, F.Id("x"), Colon, Sp, Call("Fin", k), Sp, To, Sp, Call("Real"), Comma, Sp,
-            Open, D(2), Sp, Le, Sp, k, Sp, Land, Sp,
-                Open, Forall, Sp, i, Colon, Sp, Call("Fin", k), Comma, Sp,
-                    D(0), Sp, Lt, Sp, Call("x", i), Close, Close,
-            Sp, Implies, Sp,
-            sum, Call("x", i), Caret, Grp(D(2)), Sp, Lt, Sp,
-            Open, sum, Call("x", i), Close, Caret, Grp(D(2))));
+        Formula positive = All("i", Call("Fin", k), Less(D(0), Call("x", i)));
+        Formula antecedent = Conjunction(LessEqual(D(2), k), positive);
+        Formula sumOfSquares = Seq(sum, Call("x", i), Caret, Grp(D(2)));
+        Formula squaredSum = new Formula.Power(Parenthesized(Seq(sum, Call("x", i))), D(2));
+        return Disp(All("k", Call("Nat"),
+            All("x", Seq(Call("Fin", k), Sp, To, Sp, Call("Real")),
+                Implication(antecedent, Less(sumOfSquares, squaredSum)))));
     }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Conjunction(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Implication(Formula left, Formula right) =>
+        new Formula.TypeArrow(Parenthesized(left), Parenthesized(right));
+    private static Formula LessEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Less(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
 
     private static Formula DefinitionsFormula()
     {
