@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cada538e9ece2a7291bdd8dd500bcd4fdbbfd0aab6b5b857ba5d73639bd98443
+  normalized_sha256: sha256:cada538e9ece2a7291bdd8dd500bcd4fdbbfd0aab6b5b857ba5d73639bd98443
+cas_ref: sha256:cada538e9ece2a7291bdd8dd500bcd4fdbbfd0aab6b5b857ba5d73639bd98443
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativePromiseCausalBoundary.result
+    target_statement_id: sha256:f7e2383edfab80285e35f86fa61f71452dd22396741952132e220f7b57a52838
+receipts:
+  unresolved_subitems: []

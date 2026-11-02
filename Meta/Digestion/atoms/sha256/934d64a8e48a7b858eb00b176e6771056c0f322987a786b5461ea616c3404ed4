@@ -1,0 +1,28 @@
+**Definition 31.1 (local membership marks).** For a current logical
+position $p$ retain two bits $\mu_P(p),\mu_S(p)$. A bit is one exactly
+when that local event has actually occurred and was selected by $C$.
+A nonexistent or occurred-but-unselected event has bit zero. The source
+already determines which local events have occurred by (AA.67), so these
+bits need not duplicate event existence. Positions that are unary
+material markers in $C(t)$ are not yet logical event positions.
+
+Write $\mathcal L(t)$ for all present logical positions, branches and
+logical leaves, and put
+
+$$
+\begin{aligned}
+\mathcal R_C(w)&=\bigl(t,(\mu_P(p),\mu_S(p))_{p\in\mathcal L(t)},
+                         (V^C_v(w))_{v\in I(t)},q_C(w)\bigr),\\
+K_C(w)&=(t,\nu_C(w),q_C(w)).
+\end{aligned}
+\tag{AA.105}
+$$
+
+Both domains are actual images of the same lawful words with the same
+$C,q_0$. Arbitrary separately chosen source, marks, tapes and control
+are not asserted to be jointly realizable. Marks express the relation
+between occurred lifecycle events and the selected serial chain;
+side words express the relative order between its two child projections.
+These are different relations: (AA.101) retains the latter while erasing
+the former.
+

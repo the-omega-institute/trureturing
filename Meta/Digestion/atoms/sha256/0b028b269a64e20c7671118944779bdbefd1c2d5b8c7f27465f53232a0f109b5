@@ -1,0 +1,25 @@
+**Theorem 18.3 (split order cannot remove a genuine endpoint ambiguity
+uniformly).** For each $t\in\mathcal D$, the following are equivalent:
+$\pi$ is injective on all of $\mathcal H(t)$; $|\mathcal H(t)|=1$; and
+at every branch $v$ at least one of
+
+$$
+t_{vL}=\beta,\qquad t_{vR}=\alpha
+\tag{AA.71}
+$$
+
+holds. This does not say that every individual split fibre is ambiguous
+whenever the endpoint is ambiguous.
+
+Proof. If (AA.71) holds, at each split at most one child has any generation
+events. The local prefix is forced and the unique nonempty child list,
+if any, is forced recursively. Hence the complete list is unique.
+Conversely suppose both child subtrees have grown at some branch $v$.
+Execute the events creating $v$ and its split without yet growing either
+child. Both $S_{vL}$ and $P_{vR}$ are now enabled. Execute them adjacently
+in either order. They leave the same source and the same occurred event
+set; complete by any one extension of the remaining events. Such a
+completion exists by the finite-order correspondence in Theorem 17.2.
+The two words differ, while erasing the swapped promotion leaves exactly
+the same split word. Thus $\pi$ is not injective. $\square$
+
