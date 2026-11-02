@@ -2,7 +2,6 @@
 slug: kok-linear-jaco-maximum-degree
 bibkey: kok2025jaco
 doi: 10.48550/arXiv.2507.16500
-url: https://arxiv.org/abs/2507.16500v1
 triage: theorem
 motivation_gids:
   - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree.result
@@ -33,8 +32,10 @@ maximum degree.
 
 The sequence term uses its actual offset-zero index. For `n > 0`, write the
 canonical Zeckendorf representation with weights `Fib_2=1`, `Fib_3=2`, and no
-consecutive occupied positions; delete the least-significant occupied position
-and decode the remaining digits in the same Fibonacci system. Call the result
+consecutive occupied positions. Delete the digit position of weight `Fib_2`,
+whether its digit is one or zero: remove occupied index 2 if present, lower
+every surviving occupied index by one, and decode in the same Fibonacci
+system. Call the result
 `a(n)=deleteLeast(n)`, with `a(0)=a(1)=0`.
 
 The complete assertion is
@@ -105,9 +106,11 @@ which records the verified locator
 `https://arxiv.org/html/2507.16500v1#S2.Thmtheorem2` (Conjecture 2.2),
 the DOI, and the original A319433/A014417 sequence attribution.
 
-The D5/Reg proof bytes, standard axiom closure, and current source bindings
-are carried by the canonical frozen states. No new Lean declaration, axiom,
-or reproof is introduced by this dossier. The four-slot audit boundary for
+The unchanged D5/Reg sources carry the proof terms; the accepted scoped Lean
+report supplies the standard axiom-closure and current-binding evidence.
+Canonical frozen states record statement IDs and declaration name/kind lists.
+No new Lean declaration, axiom, or reproof is introduced by this dossier. The
+four-slot audit boundary for
 the accepted delivery is:
 
 | Target | Current audit state |
@@ -133,6 +136,20 @@ claim is attached only to this complete result. The endpoint and degree
 lemmas are proof components, and the Zeckendorf deletion module is a consumed
 helper rather than a second problem resolution.
 
+**Proved structure:** The recursive endpoint law connects the graph
+construction to the Beatty description. Incoming and outgoing neighbor
+intervals give the vertex degrees, and the attainment argument supplies a
+vertex meeting the maximum-degree bound. The deletion bridge therefore
+identifies an attained maximum, rather than only an upper bound. The
+positive-order identity also settles the source's dependent p-graphical
+clause, including the singleton and every positive finite prefix.
+
+**Unresolved extensions:** The result does not settle other graph parameters
+or other Jaco defining functions. Extending this route requires an endpoint
+law, a neighbor-counting formula and an attainment argument for the proposed
+family; no such extension or further source-conjecture consequence is proved
+here.
+
 The source is a mathematical application of the cited article and OEIS
 sequence. Attribution is retained; code licensing is not asserted.
 
@@ -140,7 +157,9 @@ sequence. Attribution is retained; code licensing is not asserted.
 
 The literature and ownership checks are bounded to the source note and the
 surfaces recorded there. They do not establish exhaustive priority,
-worldwide openness, publisher status, or legal-code licensing. The four
-unfinished audit cases and the missing aggregate-result registration remain
-unfinished under the linked issue exception; `unknown` continuation is not a
+worldwide openness, publisher status, or legal-code licensing. Four audit
+targets remain unfinished in total: the three `declared_unresolved` targets
+and the aggregate result without registration, under the linked issue
+exception [#25698, comment 6582601274](https://github.com/the-omega-institute/trureturing/issues/25698#issuecomment-6582601274).
+The `unknown` continuation is not a
 claim of undecidability or inexhaustibility.
