@@ -1,8 +1,14 @@
-/- Physical natural-domain bridge for the sealed low-X Selection intervals.
-   Source preparation only: this file is intentionally UNCOMPILED. -/
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakLowXTail/Selection
+   generality: I
+   mirror-B: none(waiver:private-consumed-implementation)
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: All six rational low-X margins hold at the actual physical dyadic reservations. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Intervals
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalArithmetic
 
+/-! Physical dyadic margins on the complete low-X domain. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
@@ -35,7 +41,7 @@ private theorem qpow_cutoff_of_not_e_general (a b c d : ℕ)
     omega
   have hp := qpow_mono (b-a-1+3) a (by omega : b-a-1+3 ≤ a)
   rw [← show (8 : ℚ) * 2^(b-a-1) = 2^(b-a-1+3) by
-    rw [← show (8 : ℚ) = 2^3 by norm_num, ← pow_add]; ring] at hp
+    rw [show (8 : ℚ) = 2^3 by norm_num, ← pow_add]; ring] at hp
   exact hp
 
 private theorem qpow_t_upper_of_not_r (a b c d : ℕ)
@@ -138,7 +144,12 @@ private theorem rweight_as_beta (a b c d : ℕ) (h : physicalDomain a b c d)
     (hr : rOn b c d) :
     rWeight a b c d =
       (if collide a b c d then (2 : ℚ) else 1) * (2 : ℚ)^(b-d-2*c) := by
-  by_cases hc : collide a b c d <;> simp [rWeight, rExponent, hr, hc, pow_succ] <;> ring
+  have hc : 2 ≤ c := h.1
+  have hn : ¬ b-d ≤ 2*c-1 := by dsimp [rOn] at hr; omega
+  rw [(reservation_choices a b c d h).2, if_neg hn]
+  change (if collide a b c d then 2*(2:ℚ)^(b-d-2*c) else 2^(b-d-2*c)) = _
+  split_ifs <;> ring
+
 
 private theorem rweight_large_formula (a b c d : ℕ) (h : physicalDomain a b c d)
     (hr : rOn b c d) (he : eOn a b) :

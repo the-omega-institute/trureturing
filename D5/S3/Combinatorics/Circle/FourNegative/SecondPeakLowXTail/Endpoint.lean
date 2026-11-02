@@ -1,15 +1,16 @@
-/- Actual-source low-X endpoint candidate. UNCOMPILED source preparation.
-   No elaboration, kernel check, integration or acceptance is claimed.
-   The physical domain and reservations are exactly the seven sealed inputs:
-   c >= 2, a >= 2*c+1, d >= a, b >= d+1; eExponent = b+1-2*a.
-   Empty E=1 blocks, e=1, d=a, b=d+1 and reservation collisions are retained.
-   Attribution: the sealed rational model/certificates and physical source layers;
-   this file connects their actual masses to the existing prefix/lifting library. -/
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakLowXTail/Endpoint
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakLowXTail/Endpoint
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: A shared physical low-X permutation and its doubled-source ear order at cut zero. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Selection
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Terminals
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
+/-! A physical low-X joint lift; the unrestricted problem remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
@@ -29,9 +30,9 @@ open private physical_moduli terminal_index physical_terminal_values
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Terminals
 open private physical_margins
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Selection
-open private size sourceMod base newBase charge chainLength chainStart
+open private size seed sourceMod base newBase charge chainLength chainStart
   nextBase nextNewBase oldValue newValue negatives chainOf chain_index
-  chain_values source_signs source_totals new_base_bounds
+  chain_values source_signs source_totals new_base_bounds actual_values
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
@@ -47,11 +48,11 @@ open private actual_nat_joint_iff
 private def physicalRow (a b c d : ℕ) (isNew : Bool) : ℕ → ℤ :=
   if isNew then newValue a b c d else oldValue a b c d
 
-private def bankSum (a b c d : ℕ) (isNew : Bool) (r : Fin 4) : ℤ :=
+private noncomputable def bankSum (a b c d : ℕ) (isNew : Bool) (r : Fin 4) : ℤ :=
   ((physicalBank a b c d r).toList.map (physicalRow a b c d isNew)).sum
 
 -- These are the actual integer prefix peaks, in terminal order U,X,W,V.
-private def physicalPeak (a b c d : ℕ) (isNew : Bool) : Fin 4 → ℤ :=
+private noncomputable def physicalPeak (a b c d : ℕ) (isNew : Bool) : Fin 4 → ℤ :=
   let m := bankSum a b c d isNew
   let f := physicalRow a b c d isNew
   let t := terminal a b c d
@@ -60,7 +61,7 @@ private def physicalPeak (a b c d : ℕ) (isNew : Bool) : Fin 4 → ℤ :=
     H+m 0+f (t 0)+m 1+f (t 1)+m 2,
     H+m 0+f (t 0)+m 1+f (t 1)+m 2+f (t 2)+m 3]
 
-private def physicalWord (a b c d : ℕ) : List ℕ :=
+private noncomputable def physicalWord (a b c d : ℕ) : List ℕ :=
   (physicalBank a b c d 0).toList ++ terminal a b c d 0 ::
   (physicalBank a b c d 1).toList ++ terminal a b c d 1 ::
   (physicalBank a b c d 2).toList ++ terminal a b c d 2 ::
@@ -77,9 +78,16 @@ private theorem bankSum_cast (a b c d : ℕ) (h : physicalDomain a b c d)
     (bankSum a b c d isNew r : ℚ) =
       qMass ((2:ℚ)^c) (2^a) (2^(d-a)) (2^(b-a-1))
         (rWeight a b c d) (eWeight a b) isNew r := by
-  have hm := physical_mass a b c d h isNew r
-  rw [← sum_toList] at hm
-  cases isNew <;> simpa [bankSum, physicalRow, physicalValue] using hm
+  rw [bankSum, Int.cast_list_sum, List.map_map]
+  change ((physicalBank a b c d r).toList.map
+    (fun i => (physicalRow a b c d isNew i : ℚ))).sum = _
+  have hf : (fun i => (physicalRow a b c d isNew i : ℚ)) =
+      physicalValue a b c d isNew := by
+    funext i
+    cases isNew <;> rfl
+  rw [hf,sum_toList]
+  exact physical_mass a b c d h isNew r
+
 
 private theorem terminal_cast (a b c d : ℕ) (h : physicalDomain a b c d)
     (isNew : Bool) (r : Fin 4) :
@@ -114,7 +122,7 @@ private theorem physical_six (a b c d : ℕ) (h : physicalDomain a b c d) :
         (rWeight a b c d) (eWeight a b) ⟨r.val, by omega⟩ =
         qSeam ((2:ℚ)^c) (2^a) (2^(d-a)) (2^(b-a-1))
           (rWeight a b c d) (eWeight a b) false r := by
-      fin_cases r <;> norm_num at hr ⊢ <;> rfl
+      fin_cases r <;> first | rfl | norm_num at hr
     rw [he, qSeam, ← peak_cast a b c d h false r,
       ← terminal_cast a b c d h false r] at hh
     exact_mod_cast hh
@@ -124,7 +132,7 @@ private theorem physical_six (a b c d : ℕ) (h : physicalDomain a b c d) :
         (rWeight a b c d) (eWeight a b) ⟨r.val+3, by omega⟩ =
         qSlack ((2:ℚ)^c) (2^a) (2^(d-a)) (2^(b-a-1))
           (rWeight a b c d) (eWeight a b) true r := by
-      fin_cases r <;> norm_num at hr ⊢ <;> rfl
+      fin_cases r <;> first | rfl | norm_num at hr
     rw [he, qSlack, physical_moduli a b c d h true,
       ← peak_cast a b c d h true r] at hh
     simp only [↓reduceIte] at hh
@@ -179,9 +187,14 @@ private theorem physical_perm (a b c d : ℕ) (h : physicalDomain a b c d) :
         fin_cases r <;> simp [t, ← hr]
       obtain ⟨r,hr⟩ := (hcover i).mpr ⟨Finset.mem_range.mp hib,hn⟩
       fin_cases r
-      · exact (hin (by simp [hr])).elim
-      · exact (hin (by simp [hr])).elim
-      · exact (hin (by simp [hr])).elim
+      · change i ∈ B 0 at hr
+        exact (hin (Finset.mem_union_left _ (Finset.mem_union_left _
+          (Finset.mem_union_left _ hr)))).elim
+      · change i ∈ B 1 at hr
+        exact (hin (Finset.mem_union_left _ (Finset.mem_union_left _
+          (Finset.mem_union_right _ hr)))).elim
+      · change i ∈ B 2 at hr
+        exact (hin (Finset.mem_union_left _ (Finset.mem_union_right _ hr))).elim
       · exact hr
     · intro hi
       have hh := good 3 i hi
@@ -204,50 +217,49 @@ private theorem physical_perm (a b c d : ℕ) (h : physicalDomain a b c d) :
   rw [hG] at hp
   exact hp
 
--- Pointwise matched charge is nonnegative at ALL old physical labels,
--- including each of the four negative terminals. No strip is used here.
-private theorem matched_charge_nonneg (a b c d : ℕ) (h : physicalDomain a b c d)
-    (i : ℕ) (hi : i < size a b c d) :
-    0 ≤ 2*oldValue a b c d i-newValue a b c d i := by
+-- Native digit data retain the common physical phase of the old and new rows.
+private theorem matched_data (a b c d : ℕ) (h : physicalDomain a b c d) :
+    seed a b c ≤ 2^(size a b c d-1)-1 ∧
+    ∀ i : Fin (size a b c d),
+      0 ≤ PeriodicShorteningArithmetic.charge (size a b c d) (seed a b c) i ∧
+      2*oldValue a b c d i.val-newValue a b c d i.val =
+        PeriodicShorteningArithmetic.charge (size a b c d) (seed a b c) i := by
   have ha : 2 ≤ a := by rcases h with ⟨hc,ha,hd,hb⟩; omega
   have hb : 2 ≤ b := by rcases h with ⟨hc,ha,hd,hb⟩; omega
   have hc : 2 ≤ c := h.1
   have hd : 2 ≤ d := by rcases h with ⟨hc,ha,hd,hb⟩; omega
-  let r := chainOf b c d i
-  let e := i-chainStart b c d r
-  obtain ⟨hei,hel,_⟩ := chain_index a b c d i ha hb hc hd hi
-  change chainStart b c d r+e=i at hei
-  change e < chainLength a b c d r at hel
-  have tab := chain_values a b c d ha hb hc hd
-  have hf := tab.2.1 r e hel
-  have hg := tab.2.2.1 r e hel
-  have hcharge (s : Fin 4) : 0 ≤ charge b c s := by
-    fin_cases s <;> simp [charge] <;> positivity
-  have hnext (s : Fin 4) : 0 ≤ 2*nextBase a b c d s-nextNewBase a b c d s := by
-    fin_cases s
-    · change 0 ≤ 2*base a b c d 1-(2*base a b c d 1-charge b c 1)
-      linarith only [hcharge 1]
-    · change 0 ≤ 2*base a b c d 2-(2*base a b c d 2-charge b c 2)
-      linarith only [hcharge 2]
-    · change 0 ≤ 2*base a b c d 3-(2*base a b c d 3-charge b c 3)
-      linarith only [hcharge 3]
-    · change 0 ≤ 2*base a b c d 0-base a b c d 0
-      linarith only [(tab.1 0).1]
-  by_cases hp : e+1 < chainLength a b c d r
-  · rw [hei, if_pos hp] at hf hg
-    rw [hf,hg,newBase]
-    have hh := mul_nonneg (by positivity : (0:ℤ) ≤ 2^e) (hcharge r)
-    nlinarith only [hh]
-  · have he : e=chainLength a b c d r-1 := by omega
-    have hn := native_masses a b c d ha hb hc hd r
-    dsimp only at hn
-    have ht : chainStart b c d r+(chainLength a b c d r-1)=i := by
-      rw [← he]; exact hei
-    have ho := hn.2.2.1
-    have hnew := hn.2.2.2
-    rw [ht] at ho hnew
-    have hh := hnext r
+  have hk : 2 ≤ size a b c d := by dsimp [size]; omega
+  have hwa : 1 < (2:ℕ)^a := lt_of_lt_of_le (by decide : 1 < (2:ℕ)^2)
+    (pow_le_pow_right₀ (by decide) ha)
+  have hab : 2*(2:ℕ)^a ≤ 2^(a+b) := by
+    calc
+      _ = (2:ℕ)^(a+1) := by rw [pow_succ]; ring
+      _ ≤ _ := pow_le_pow_right₀ (by decide) (by omega)
+  have hbc : 2*(2:ℕ)^(a+b) ≤ 2^(a+b+c) := by
+    calc
+      _ = (2:ℕ)^(a+b+1) := by rw [pow_succ]; ring
+      _ ≤ _ := pow_le_pow_right₀ (by decide) (by omega)
+  have hlast : 2*(2:ℕ)^(a+b+c) ≤ 2^(size a b c d-1) := by
+    calc
+      _ = (2:ℕ)^(a+b+c+1) := by rw [pow_succ]; ring
+      _ ≤ _ := pow_le_pow_right₀ (by decide) (by dsimp [size]; omega)
+  have hw : seed a b c ≤ 2^(size a b c d-1)-1 := by
+    dsimp [seed]
     omega
+  refine ⟨hw,?_⟩
+  intro i
+  have digit := PeriodicShorteningArithmetic.digit_data (size a b c d) (seed a b c) hk hw i
+  have shift : actualSource (size a b c d+1) (2*seed a b c) i.castSucc =
+      actualSource (size a b c d+1) (seed a b c)
+        ⟨i.val+1,Nat.succ_lt_succ i.isLt⟩ := by
+    dsimp [actualSource]
+    push_cast
+    rw [pow_succ]
+    congr 1 <;> ring
+  have he := shift.trans digit.2.2
+  rw [(actual_values a b c d).2 i.castSucc, (actual_values a b c d).1 i] at he
+  simp only [Fin.val_castSucc] at he
+  exact ⟨digit.1,by omega⟩
 
 -- Final terminal V: exact doubled integer identities, not a floor/division cast.
 private theorem last_bounds (a b c d : ℕ) (h : physicalDomain a b c d) :
@@ -339,20 +351,34 @@ private theorem physical_prefixes (a b c d : ℕ) (h : physicalDomain a b c d) :
     · exact ⟨by simpa [physicalPeak,bankSum,physicalRow,f] using c2,
         by simpa [physicalPeak,bankSum,physicalRow,f] using lower 2 (by decide)⟩
     · exact ⟨lastold.1,c3⟩
-    · simpa only [zero_add] using hfzero
+    · simpa only [zero_add,word,physicalWord,B,t] using hfzero
   have old_nonneg (n : ℕ) : 0 ≤ ((word.take n).map f).sum := by
     simpa only [zero_add] using (inStrip_prefix oldLoose n).1
+  have data := matched_data a b c d h
   let chi : ℕ → ℤ := fun i => 2*f i-g i
   have chi_nonneg : ∀ i ∈ word, 0 ≤ chi i := by
     intro i hi
     have hib : i < k := List.mem_range.mp ((hp.mem_iff).mp hi)
-    exact matched_charge_nonneg a b c d h i hib
+    have hh := data.2 ⟨i,hib⟩
+    change 0 ≤ 2*oldValue a b c d i-newValue a b c d i
+    rw [hh.2]
+    exact hh.1
   have chi_sum : (word.map chi).sum=A := by
-    have he := sum_linear word f g 2 (-1)
-    have hform : (fun i => (2:ℤ)*f i+(-1)*g i)=chi := by
-      funext i; dsimp [chi]; ring
-    rw [hform,hfzero,hgtotal] at he
-    linarith only [he]
+    have hk : 2 ≤ k := by dsimp [k,size]; omega
+    have hcast : (seed a b c : ℤ)=A := by
+      simp only [seed, Nat.cast_add, Nat.cast_one, Nat.cast_pow, Nat.cast_ofNat]
+      dsimp [A,base]
+      ring
+    rw [(hp.map chi).sum_eq]
+    rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
+    calc
+      _ = ∑ i : Fin k, chi i.val := (Fin.sum_univ_eq_sum_range chi k).symm
+      _ = ∑ i : Fin k, PeriodicShorteningArithmetic.charge k (seed a b c) i := by
+        apply Finset.sum_congr rfl
+        intro i _
+        exact (data.2 i).2
+      _ = (seed a b c : ℤ) := PeriodicShorteningArithmetic.charge_sum k (seed a b c) hk data.1
+      _ = A := hcast
   have remaining (n : ℕ) :
       0 ≤ A+((word.take n).map g).sum-2*((word.take n).map f).sum := by
     have hc := (prefix_nonneg_le word chi chi_nonneg n).2
@@ -416,10 +442,10 @@ private theorem physical_prefixes (a b c d : ℕ) (h : physicalDomain a b c d) :
   · intro n
     simpa only [zero_add] using inStrip_prefix newSharp n
 
-/-- The sealed physical construction gives one actual old order and its actual
+/-- The physical construction gives one actual old order and its actual
     doubled-source ear order. The natural witness uses the literal cut j=0. -/
 theorem actualSource_second_peak_low_x_joint_lift (a b c d : ℕ)
-    (hc : 2≤c) (ha : 2*c+1≤a) (hd : a≤d) (hb : d+1≤b) :
+    (hc : 2 ≤ c) (ha : 2*c+1 ≤ a) (hd : a ≤ d) (hb : d+1 ≤ b) :
     ∃ sigma : List (Fin (a+b+c+d)), ∃ j : ℕ, j≤a+b+c+d ∧
       OriginalOrder (a+b+c+d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
       OriginalOrder (a+b+c+d+1) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
