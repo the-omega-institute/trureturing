@@ -194,6 +194,10 @@ $$\forall (om: \operatorname{Set}\left(\operatorname{D5.S3.Geometry.Lorentz.Chir
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lester-haddadin-gripaios-2022-chiral-event-parity-minimality` (proved) by `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lester-haddadin-gripaios-2022-chiral-event-parity-minimality","declaration_gid":"D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christopher G. Lester; Ward Haddadin; Ben Gripaios (2022). *Lorentz and permutation invariants of particles III: constraining non-standard sources of parity violation*. DOI: [10.1142/S0217751X22500932](https://doi.org/10.1142/S0217751X22500932). URL: <https://arxiv.org/abs/2008.05206v6>.
