@@ -104,7 +104,10 @@ internal sealed class UnicyclicSkewnessPlusKurtosisLowerBoundDocument : IScribeD
                         + "than every sum in the explicit sequence of cycles of size m + 2. "
                         + "Passing to the limit gives b ≤ lowerBound. Thus lowerBound is the "
                         + "greatest lower bound, and no finite positive cycle attains it."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ptaszynski-2022-unidirectional-skewness-plus-kurtosis-lower-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula LowerBoundFormula() =>
         Equal(Typed(Local("lowerBound"), Reals()),
