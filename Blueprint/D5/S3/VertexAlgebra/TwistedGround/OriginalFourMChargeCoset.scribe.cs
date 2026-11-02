@@ -20,7 +20,7 @@ internal sealed class OriginalFourMChargeCosetDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The selected ground pairing and the actual charge representation give the exact quadratic and bilinear Fourier signs. Ground completeness consumes OperatorAlgebra.actual_operator_algebra and its reconstruction of rank-one endomorphisms. No ground-basis or reconstruction hypothesis is added."))
                 ), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("originalfourmchargecoset-fourM-factorization"),
+            Describe.Lean(DescribeId.Create("originalfourmchargecoset-fourm-factorization"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeCoset.fourM_factorization"),
                 H("Signed full-energy-fiber coset factorization"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(

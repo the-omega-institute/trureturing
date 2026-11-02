@@ -8,13 +8,13 @@ internal sealed class OriginalFourMReductionDocument : IScribeDocumentDefinition
         "Original lattice twisted-sector coefficient reduction, preserving the original carriers and operators.",
         H("OriginalFourMReduction"),
         Blocks(
-            Describe.Lean(DescribeId.Create("originalfourmreduction-homogeneous-jacobi-iff-identityK"),
+            Describe.Lean(DescribeId.Create("originalfourmreduction-homogeneous-jacobi-iff-identityk"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.homogeneous_jacobi_iff_identityK"),
                 H("Quantified original tensor reduction"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For any three compatible original homogeneous odd polynomials and all integer m,n,r, quantify the original vector Jacobi law over every actual ground x,y,z. Quantify the detector polynomial S before applying coset_ground_elimination to all four ground variables, including its ground detector. This is equivalent to identityK for every S, with no permanent output-weight premise."))
                 ), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("originalfourmreduction-original-jacobi-iff-identityK"),
+            Describe.Lean(DescribeId.Create("originalfourmreduction-original-jacobi-iff-identityk"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.original_jacobi_iff_identityK"),
                 H("All-state original Jacobi if and only if the explicit coset law"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
