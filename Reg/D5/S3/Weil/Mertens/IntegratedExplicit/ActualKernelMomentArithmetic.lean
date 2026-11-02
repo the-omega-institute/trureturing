@@ -1,8 +1,5 @@
-/- Faithful Reg source attempts for internal exported lemmas of the SAME
-full actual-K payload. These consumed helpers are not standalone content.
-No compilation, sourceSelection or registration acceptance is claimed. -/
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
@@ -13,7 +10,7 @@ open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations
+namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
 
 namespace BLower
 abbrev signature : Signature :=
@@ -40,7 +37,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.B_ge_C) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.B_ge_C.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.BLower.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.BLower.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -60,6 +57,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end BLower
+
 
 namespace InclusiveF
 abbrev signature : Signature :=
@@ -86,7 +84,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.F_eq_Ioc) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.F_eq_Ioc.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.InclusiveF.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.InclusiveF.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -106,6 +104,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end InclusiveF
+
 
 namespace RelativeError
 abbrev signature : Signature :=
@@ -133,7 +132,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.relativeError_le) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.relativeError_le.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.RelativeError.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.RelativeError.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -153,6 +152,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end RelativeError
+
 
 namespace Boundary
 abbrev signature : Signature :=
@@ -180,7 +180,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.b_bound) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.b_bound.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.Boundary.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.Boundary.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -200,6 +200,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end Boundary
+
 
 namespace PositiveWeight
 abbrev signature : Signature :=
@@ -225,7 +226,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.g_pos) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.g_pos.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.PositiveWeight.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.PositiveWeight.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -245,6 +246,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end PositiveWeight
+
 
 namespace HalfWeight
 abbrev signature : Signature :=
@@ -274,7 +276,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.weight_eq_sqrt) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.weight_eq_sqrt.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.HalfWeight.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.HalfWeight.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -294,6 +296,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end HalfWeight
+
 
 namespace LogEntry
 abbrev signature : Signature :=
@@ -320,7 +323,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.log_cut_iff) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.log_cut_iff.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.LogEntry.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.LogEntry.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -340,6 +343,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end LogEntry
+
 
 namespace InclusiveIndices
 abbrev signature : Signature :=
@@ -366,7 +370,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.indices) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.indices.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.InclusiveIndices.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.InclusiveIndices.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -386,6 +390,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end InclusiveIndices
+
 
 namespace Cumulative
 abbrev signature : Signature :=
@@ -412,7 +417,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.cumulative) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.cumulative.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.Cumulative.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.Cumulative.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -432,6 +437,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end Cumulative
+
 
 namespace ComplexPair
 abbrev signature : Signature :=
@@ -459,7 +465,7 @@ def family : Registration arena (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedE
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.weighted_complex_pair) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.weighted_complex_pair.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.ComplexPair.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.ComplexPair.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -479,6 +485,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end ComplexPair
+
 
 namespace PrefixSupport
 abbrev signature : Signature :=
@@ -507,7 +514,7 @@ def family : Registration arena.{u} (type_of% @_root_.D5.S3.Weil.Mertens.Integra
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.prefix_support.{u}) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.prefix_support.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations.PrefixSupport.family
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.PrefixSupport.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -528,4 +535,68 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end PrefixSupport
 
-end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmeticRealizations
+
+namespace Translation
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] (p : PNTConstants)
+    (D : ℝ) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (ha : ∑ i, a i = 0),
+    R.readout () () (primeQuadratic D x a) ≤ beta p D * energy x a
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have h0 := @h (ULift.{u} Empty) inferInstance pnt 1 (fun _ => 0) (fun _ => 0)
+    (by intro i; exact Empty.elim i.down) (by simp)
+  norm_num [rejected, realize, primeQuadratic, energy, «prefix»] at h0
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change (0 : ℝ) ≠ 1
+  norm_num
+
+def family : Registration arena.{u} (type_of% @actual_weighted_mangoldt_translation_bound.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@actual_weighted_mangoldt_translation_bound.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_weighted_mangoldt_translation_bound.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.actual_weighted_mangoldt_translation_bound.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic.Translation.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Translation
+
+
+end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
