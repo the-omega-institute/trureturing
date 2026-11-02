@@ -25,7 +25,13 @@ internal sealed class PotentialPathsDocument : IScribeDocumentDefinition
             H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/StatisticalMechanics/benjaminihelmantovzhukovskii2023noisyvoter")),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
-    private static Formula X(string s) => F.Id(s);
+    private static Formula X(string s) => s switch {
+        "i+d" => Seq(F.Id("i"), Plus, F.Id("d")),
+        "i+d-k" => Seq(F.Id("i"), Plus, F.Id("d"), Minus, F.Id("k")),
+        "k+1" => Seq(F.Id("k"), Plus, D(1)),
+        "E_i" => C("E", F.Id("i")),
+        "N_i" => C("N", F.Id("i")),
+        _ => F.Id(s) };
     private static Formula Named(string s) => Seq(Operatorname, Grp(X(s)));
     private static Formula C(string s, params Formula[] a) => new Formula.Apply(Named(s), [.. a]);
     private static Formula All(string s, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(s), t, b);
@@ -67,9 +73,9 @@ internal sealed class PotentialPathsDocument : IScribeDocumentDefinition
             And(Eqn(C("P", aevent), qd), And(C("subset", X("E_i"), aevent),
             And(Le(C("P", X("E_i")), qd), Le(oneMinus, C("P", X("N_i"))))))));
         var sum = C("sumNoncollision", X("P"), X("x"), X("u"), X("d"), X("t"));
-        var quarter = Frac(D(1), D(4));
+        var quarter = new Formula.Fraction(D(1), D(4));
         var chain = And(Le(Seq(quarter, Times, sum), C("Var", C("W", X("x"), X("u"), X("d"), X("t")), X("P"))),
-            Le(Frac(Seq(X("t"), Times, Grp(oneMinus)), D(4)), Seq(quarter, Times, sum)));
+            Le(new Formula.Fraction(Seq(X("t"), Times, Grp(oneMinus)), D(4)), Seq(quarter, Times, sum)));
         return Disp(All("G", Named("SimpleGraph"), All("P", Named("ProbabilityMeasure"),
             All("epsilon", Named("Real"), All("x", Named("NativeCoordinates"),
             Imp(C("OriginalLaw", X("G"), X("P"), X("epsilon"), X("x")),

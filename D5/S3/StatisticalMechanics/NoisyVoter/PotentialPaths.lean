@@ -6,7 +6,30 @@
    utility: none
    digest: Unstopped potential paths identify native survival and the first fresh source. -/
 
+/-
+proof_shape: potential_path_source_correspondence: content; original_potential_path_bounds: content
+admission_basis: escape-witness
+escape_witness: prefix_source; A_survives
+Reuse: native_source, source_birth_le, survives_iff_old_source, survival_probability,
+collision_probability_le, native_variance_lower, finite_history_factorization and
+history_law_of_positive_coordinate_laws; Mathlib IdentDistrib and infinitePi.
+No literature-originality claim is made.
+Declaration | proof_shape | witness | live consumer(s).
+path | construction | none | path_tail, A, prefix_source, potential_path_source_correspondence
+A | construction | none | A_step, A_survives, potential_path_source_correspondence, original_potential_path_bounds
+path_tail | content | path_tail | A_step
+A_step | content | path_tail | A_survives
+source_nonrefresh | bind-only | none | prefix_source
+source_refresh | bind-only | none | potential_path_source_correspondence
+prefix_source | content | prefix_source | potential_path_source_correspondence
+A_survives | content | A_survives | potential_path_source_correspondence
+potential_path_source_correspondence | content | prefix_source, A_survives | original_potential_path_bounds
+history_measurable_positive | bind-only | none | original_potential_path_bounds
+original_potential_path_bounds | content | A_survives | terminal original-space probability and variance chain
+-/
+
 import D5.S3.StatisticalMechanics.NoisyVoter.RectangularSupport
+import Mathlib.Probability.IdentDistrib
 
 /-! # Unstopped potential copy paths
 
@@ -53,12 +76,14 @@ private theorem A_step (x : (c : Coord V) → Ω → Value G c)
     refine ⟨by simpa only [Nat.sub_zero, path] using h 0 (by omega), ?_⟩
     intro k hk
     have hh := h (k+1) (by omega)
-    simpa only [← Nat.add_assoc, path_tail, Nat.add_sub_add_right] using hh
+    rw [path_tail, Nat.add_sub_add_right] at hh
+    exact hh
   · rintro ⟨h₀, h⟩ k hk
     cases k with
     | zero => simpa only [Nat.sub_zero, path] using h₀
     | succ k =>
-      simpa only [← Nat.add_assoc, path_tail, Nat.add_sub_add_right] using h k (by omega)
+      rw [path_tail, Nat.add_sub_add_right]
+      exact h k (by omega)
 
 private theorem source_nonrefresh (x : (c : Coord V) → Ω → Value G c)
     (n : ℕ) (hn : 0 < n) (v : V) (ω : Ω)
@@ -181,7 +206,7 @@ theorem original_potential_path_bounds [G.LocallyFinite] [MeasurableSpace Ω]
       (1/4 : ℝ) * ∑ i ∈ Finset.Icc 1 t,
         P.real {ω | source x i u ω ≠ source x (i+d) u ω}) := by
   classical
-  letI : Countable V := RectangularSupport.vertices_countable hG u
+  have : Countable V := RectangularSupport.vertices_countable hG u
   let S := (c : Coord V) → Value G c
   let Q : Measure S := Measure.infinitePi (coordinateLaw G ε hNbr)
   let y (c : Coord V) (z : S) : Value G c := z c
@@ -241,7 +266,7 @@ theorem original_potential_path_bounds [G.LocallyFinite] [MeasurableSpace Ω]
     rw [show {ω | source x i u ω ≠ source x (i+d) u ω} =
       {ω | source x i u ω = source x (i+d) u ω}ᶜ from rfl,
       measureReal_compl (hcolmeas i)]
-    simp only [measureReal_univ, Measure.real, hcol]
+    simp only [Measure.real, hcol, measure_univ, ENNReal.toReal_one]
   have hlo (i : ℕ) :
       1 - (1-(ε : ℝ))^d ≤ P.real {ω | source x i u ω ≠ source x (i+d) u ω} := by
     rw [hnoncol]
@@ -283,7 +308,9 @@ theorem original_potential_path_bounds [G.LocallyFinite] [MeasurableSpace Ω]
   · have hh := Finset.sum_le_sum (s := Finset.Icc 1 t) (fun i _ => hlo i)
     have hs : (t : ℝ) * (1-(1-(ε : ℝ))^d) ≤
         ∑ i ∈ Finset.Icc 1 t, P.real {ω | source x i u ω ≠ source x (i+d) u ω} := by
-      simpa using hh
+      simp only [Finset.sum_const, nsmul_eq_mul, Nat.card_Icc,
+        Nat.add_sub_cancel_right] at hh
+      nlinarith
     nlinarith
 
 end D5.S3.StatisticalMechanics.NoisyVoter.PotentialPaths
