@@ -50,7 +50,8 @@ internal sealed class NativeEndpointEventIdealsDocument : IScribeDocumentDefinit
     private static Formula V(string name) => F.Id(name);
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula C(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+        args.Length == 0 ? Seq(Operatorname, Grp(V(name)))
+            : new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula Q(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, P(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
@@ -58,6 +59,12 @@ internal sealed class NativeEndpointEventIdealsDocument : IScribeDocumentDefinit
     private static Formula Bind(string[] names, Formula[] types, Formula body)
     {
         for (var i = names.Length - 1; i >= 0; --i) body = Q(names[i], types[i], body);
+        return body;
+    }
+    private static Formula BindFlat(string[] names, Formula[] types, Formula body)
+    {
+        for (var i = names.Length - 1; i >= 0; --i)
+            body = Seq(Forall, Sp, V(names[i]), Colon, Sp, types[i], Comma, Sp, body);
         return body;
     }
     private static Formula Rel(Formula x, Formula op, Formula y) => Seq(x, Sp, op, Sp, y);
@@ -126,15 +133,18 @@ internal sealed class NativeEndpointEventIdealsDocument : IScribeDocumentDefinit
                 Im(subtree, Bind(["b", "I"], [Bool, Set(Call)],
                     Eqn(C("subtree", p, cut), C("ite", C("Created", i, p),
                         Some(Cut(C("birthAt", b, p), v, C("sectionAt", i, p))), C("none")))))),
-            "guard_ancestor" => Bind(["t", "p", "v"], [Source, C("Address"), Source],
-                Im(subtree, Im(Rel(v, Neq, AlphaLeaf), Bind(["b", "I"], [Bool, Set(Call)],
-                    And(Iffn(C("Guard", Promote(p), cut),
-                            Ands(C("Created", i, p), Eqn(C("birthAt", b, p), C("true")),
-                                Not(Mem(Promote(p), i)), noSplit)),
-                        Iffn(C("Guard", Split(p), cut),
-                            Ands(C("Created", i, p),
-                                Or(Eqn(C("birthAt", b, p), C("false")), Mem(Promote(p), i)),
-                                noSplit))))))),
+            "guard_ancestor" => new Formula.Aligned([
+                Seq(Amp, BindFlat(["t", "p", "v"], [Source, C("Address"), Source],
+                    Seq(P(subtree), Sp, Rightarrow, Sp, Open))),
+                Seq(Amp, P(Rel(v, Neq, AlphaLeaf)), Sp, Rightarrow, Sp, Open,
+                    BindFlat(["b", "I"], [Bool, Set(Call)], Open)),
+                Seq(Amp, P(Iffn(C("Guard", Promote(p), cut),
+                    Ands(C("Created", i, p), Eqn(C("birthAt", b, p), C("true")),
+                        Not(Mem(Promote(p), i)), noSplit)))),
+                Seq(Amp, Land, Sp, P(Iffn(C("Guard", Split(p), cut),
+                    Ands(C("Created", i, p),
+                        Or(Eqn(C("birthAt", b, p), C("false")), Mem(Promote(p), i)),
+                        noSplit))), Close, Close, Close)]),
             "partial_empty" => Bind(["b", "t"], [Bool, Source],
                 Im(Born(b, t), Eqn(Cut(b, t, Emptyset), C("of", b)))),
             "partial_insert" => Bind(["b", "t", "I"], [Bool, Source, Set(Call)],
@@ -148,12 +158,16 @@ internal sealed class NativeEndpointEventIdealsDocument : IScribeDocumentDefinit
                 Im(Born(b, t), Im(Ideal(b, t, i), Eqn(Events(b, cut), i)))),
             "cut_full" => Bind(["b", "t"], [Bool, Source],
                 Im(Born(b, t), Eqn(Cut(b, t, Events(b, t)), t))),
-            "execution_adequacy" => Bind(["b", "t"], [Bool, Source], Im(Born(b, t),
-                Bind(["K", "J"], [Set(Event(b, t)), Set(Event(b, t))],
-                    Im(C("IsLowerSet", k), Im(C("IsLowerSet", j), Q("l", List(Event(b, t)),
-                        Iffn(C("Exec", k, l, j),
-                            Eqn(Run(Cut(b, t, C("raw", b, t, k)), Erase(l)),
-                                Some(Cut(b, t, C("raw", b, t, j))))))))))),
+            "execution_adequacy" => new Formula.Aligned([
+                Seq(Amp, BindFlat(["b", "t"], [Bool, Source],
+                    Seq(P(Born(b, t)), Sp, Rightarrow, Sp, Open))),
+                Seq(Amp, BindFlat(["K", "J"], [Set(Event(b, t)), Set(Event(b, t))],
+                    Seq(P(C("IsLowerSet", k)), Sp, Rightarrow, Sp, Open,
+                        P(C("IsLowerSet", j)), Sp, Rightarrow, Sp, Open))),
+                Seq(Amp, Q("l", List(Event(b, t)),
+                    Iffn(C("Exec", k, l, j),
+                        Eqn(Run(Cut(b, t, C("raw", b, t, k)), Erase(l)),
+                            Some(Cut(b, t, C("raw", b, t, j)))))), Close, Close, Close)]),
             "linear_extension_histories" => Q("t", Source, Im(C("D", t),
                 Q("l", List(Event(C("true"), t)),
                     Iffn(Eqn(Run(AlphaLeaf, Erase(l)), Some(t)), Extension(l))))),

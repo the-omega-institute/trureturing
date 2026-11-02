@@ -30,7 +30,8 @@ internal sealed class NativePromiseCausalBoundaryDocument : IScribeDocumentDefin
     private static Formula V(string name) => F.Id(name);
     private static Formula P(Formula f) => Seq(Open, f, Close);
     private static Formula C(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+        args.Length == 0 ? Seq(Operatorname, Grp(V(name)))
+            : new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula Q(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, P(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
