@@ -210,7 +210,7 @@ def momentPositive (F : ℝ → ℝ) (m : ℝ → ℕ) : Prop :=
         a i * conj (a j) * (F (x i - x j) : ℂ)).re
 
 /-- The compact envelope, finite on nonnegative radii by continuity. -/
-private def envelope (F : ℝ → ℝ) (R : ℝ) : ℝ :=
+def envelope (F : ℝ → ℝ) (R : ℝ) : ℝ :=
   max 1 (sSup ((fun x : ℝ => |F x|) '' Set.Icc 0 R))
 
 private lemma abs_le_envelope {F : ℝ → ℝ} (hF : Continuous F)
@@ -218,14 +218,14 @@ private lemma abs_le_envelope {F : ℝ → ℝ} (hF : Continuous F)
   exact (le_csSup (isCompact_Icc.bddAbove_image hF.abs.continuousOn)
     (Set.mem_image_of_mem (fun y : ℝ => |F y|) hx)).trans (le_max_right _ _)
 
-private lemma envelope_mono {F : ℝ → ℝ} (hF : Continuous F)
+lemma envelope_mono {F : ℝ → ℝ} (hF : Continuous F)
     {R S : ℝ} (hR : 0 ≤ R) (hRS : R ≤ S) : envelope F R ≤ envelope F S := by
   refine max_le (le_max_left _ _) ?_
   refine csSup_le ⟨|F 0|, ⟨0, ⟨le_rfl, hR⟩, rfl⟩⟩ ?_
   rintro y ⟨x, hx, rfl⟩
   exact abs_le_envelope hF ⟨hx.1, hx.2.trans hRS⟩
 
-private lemma abs_le_envelope_of_even {F : ℝ → ℝ} (hF : Continuous F)
+lemma abs_le_envelope_of_even {F : ℝ → ℝ} (hF : Continuous F)
     (heven : ∀ t : ℝ, F (-t) = F t) {R x : ℝ} (hx : |x| ≤ R) :
     |F x| ≤ envelope F R := by
   have h := abs_le_envelope hF ⟨abs_nonneg x, hx⟩
@@ -438,7 +438,7 @@ Finite Newton envelope estimate. Its high difference bound is derived from
 positivity at `D = n+r` with order exactly `k`. The low differences use only
 continuity on `[0,2k+1]`. Thus both finite joins above are consumed here.
 -/
-private lemma finite_newton_envelope {F : ℝ → ℝ} (hF : Continuous F)
+lemma finite_newton_envelope {F : ℝ → ℝ} (hF : Continuous F)
     (heven : ∀ t : ℝ, F (-t) = F t) (k n : ℕ) (r : ℝ)
     (hk : 1 ≤ k) (hkn : 2 * k ≤ n) (hr0 : 0 ≤ r) (hr1 : r ≤ 1)
     (hD : ∀ (N : ℕ) (x : Fin N → ℝ) (a : Fin N → ℂ),
@@ -526,7 +526,7 @@ private lemma eventual_newton_envelope {F : ℝ → ℝ} {m : ℝ → ℕ}
 /-- A fixed auxiliary generating-function parameter suffices; it is not a
 fixed moment order. The bound is deliberately weaker than the optimized
 entropy bound, but has the same sublinear-order consequence. -/
-private lemma binomial_sum_exp (n p : ℕ) (z : ℝ) (hpn : p ≤ n)
+lemma binomial_sum_exp (n p : ℕ) (z : ℝ) (hpn : p ≤ n)
     (hz : 0 < z) (hz1 : z ≤ 1) :
     (∑ q ∈ range (p + 1), (2 : ℝ) ^ q * (n.choose q : ℝ)) ≤
       exp ((p : ℝ) / z + 2 * (n : ℝ) * z) := by
@@ -602,7 +602,7 @@ private lemma eventual_binomial_exp {m : ℝ → ℕ}
   exact (binomial_sum_exp (Nat.floor t) (2 * m t) z hpn hz hz1).trans
     (exp_le_exp.mpr hexp)
 
-private lemma envelope_pos (F : ℝ → ℝ) (R : ℝ) : 0 < envelope F R :=
+lemma envelope_pos (F : ℝ → ℝ) (R : ℝ) : 0 < envelope F R :=
   lt_of_lt_of_le zero_lt_one (le_max_left _ _)
 
 /-- The pointwise estimate closes both the variable-order combinatorial and
@@ -627,7 +627,7 @@ private lemma eventual_half_envelope {F : ℝ → ℝ} {m : ℝ → ℕ}
 
 /-- A real-radius step; the small-t part is absorbed by the half-radius
 compact envelope. Only compact, nonempty interval suprema are used. -/
-private lemma envelope_half_step {F : ℝ → ℝ} (hF : Continuous F)
+lemma envelope_half_step {F : ℝ → ℝ} (hF : Continuous F)
     {η T : ℝ} (hη : 0 < η) (hT : 0 < T)
     (htail : ∀ t : ℝ, T ≤ t → |F t| ≤ envelope F (t / 2) * exp (η * t))
     (R : ℝ) (hR : 2 * T ≤ R) :
@@ -652,7 +652,7 @@ private lemma envelope_half_step {F : ℝ → ℝ} (hF : Continuous F)
 /-- Finite dyadic induction. At depth N only radii at most 2T*2^N are
 considered, so no infinite iteration or a priori growth bound enters. The
 induction invariant accounts for the geometric sum by 2ηR. -/
-private lemma envelope_dyadic {F : ℝ → ℝ} (hF : Continuous F)
+lemma envelope_dyadic {F : ℝ → ℝ} (hF : Continuous F)
     {η T : ℝ} (hη : 0 < η) (hT : 0 < T)
     (hstep : ∀ R : ℝ, 2 * T ≤ R →
       envelope F R ≤ envelope F (R / 2) * exp (η * R)) :
