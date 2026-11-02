@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native finite-degree sesquilinear pairing and finite HPL inclusion isometry. -/
+   digest: Conditional finite-degree sesquilinear pairing and finite geometric pairing preservation. -/
 
 import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.SesquilinearForm.Basic
