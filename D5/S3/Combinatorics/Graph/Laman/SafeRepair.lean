@@ -16,6 +16,8 @@ Source: CombinatorialRigidity@021c2284bc387efee3c3b20a18eb5f769638b578.
 -/
 import D5.S3.Combinatorics.Graph.Laman.SparseSets
 
+/-! # SafeRepair: finite graph sparsity and Henneberg constructions -/
+
 namespace SimpleGraph
 
 variable {V : Type*}
@@ -365,11 +367,9 @@ theorem IsSparse.typeII_reverse_blocker
   set bridge : Sym2 {w : V // w ≠ v} := s(xs, ys) with hbridge_def
   set G' : SimpleGraph {w : V // w ≠ v} :=
     G.comap f ⊔ fromEdgeSet ({bridge} : Set _) with hG'_def
-
   unfold IsSparse at h_not_sparse
   push Not at h_not_sparse
   obtain ⟨s', hs'_card, hviol⟩ := h_not_sparse
-
   set S : Finset V := s'.image f with hS_def
   have hS_card : S.card = s'.card :=
     Finset.card_image_of_injective s' Subtype.val_injective
@@ -377,17 +377,13 @@ theorem IsSparse.typeII_reverse_blocker
     intro hmem
     obtain ⟨w, _, hw⟩ := Finset.mem_image.mp hmem
     exact w.2 hw
-
   have h_link : ((G.comap f).edgesIn (↑s' : Set _)).ncard = (G.edgesIn (↑S : Set V)).ncard :=
     G.ncard_edgesIn_comap Subtype.val_injective s'
-
   have hS_sparse : (G.edgesIn (↑S : Set V)).ncard + 3 ≤ 2 * S.card := by
     have := h S (by rw [hS_card]; exact hs'_card)
     exact this
-
   by_cases h_both : xs ∈ s' ∧ ys ∈ s'
-  ·
-    obtain ⟨hxs_in, hys_in⟩ := h_both
+  · obtain ⟨hxs_in, hys_in⟩ := h_both
     have h_subset : G'.edgesIn (↑s' : Set _) ⊆
         (G.comap f).edgesIn (↑s' : Set _) ∪ ({bridge} : Set _) := by
       intro e he
@@ -417,8 +413,7 @@ theorem IsSparse.typeII_reverse_blocker
     refine h.isTightOn_of_le ?_ ?_
     · rw [hS_card]; exact hs'_card
     · rw [hS_card]; omega
-  ·
-    have h_subset : G'.edgesIn (↑s' : Set _) ⊆ (G.comap f).edgesIn (↑s' : Set _) := by
+  · have h_subset : G'.edgesIn (↑s' : Set _) ⊆ (G.comap f).edgesIn (↑s' : Set _) := by
       intro e he
       rw [mem_edgesIn] at he ⊢
       obtain ⟨he_edge, he_sub⟩ := he
@@ -486,18 +481,15 @@ theorem IsSparse.exists_typeI_or_typeII_reverse [Fintype V]
   classical
   obtain ⟨v, hv1, hv3⟩ := h.exists_one_le_degree_le_three hE
   refine ⟨v, ?_⟩
-
   rcases (show G.degree v = 1 ∨ G.degree v = 2 ∨ G.degree v = 3 from by omega)
     with hdeg1 | hdeg2 | hdeg3
-  ·
-    obtain ⟨a, hN_eq⟩ := Finset.card_eq_one.mp hdeg1
+  · obtain ⟨a, hN_eq⟩ := Finset.card_eq_one.mp hdeg1
     have hN_iff : ∀ w, G.Adj v w ↔ w = a := fun w => by
       rw [← mem_neighborFinset, hN_eq]; simp
     have ha_adj : G.Adj v a := (hN_iff a).mpr rfl
     have hva : v ≠ a := G.ne_of_adj ha_adj
     exact Or.inl ⟨hdeg1, ⟨a, hva.symm⟩, hN_iff, h.comap Subtype.val_injective⟩
-  ·
-    obtain ⟨a, b, hab, hN_eq⟩ := Finset.card_eq_two.mp hdeg2
+  · obtain ⟨a, b, hab, hN_eq⟩ := Finset.card_eq_two.mp hdeg2
     have hN_iff : ∀ w, G.Adj v w ↔ w = a ∨ w = b := fun w => by
       rw [← mem_neighborFinset, hN_eq]; simp
     have ha_adj : G.Adj v a := (hN_iff a).mpr (Or.inl rfl)
@@ -508,9 +500,7 @@ theorem IsSparse.exists_typeI_or_typeII_reverse [Fintype V]
       fun heq => hab (Subtype.mk.injEq .. |>.mp heq)
     exact Or.inr (Or.inl ⟨hdeg2, ⟨a, hva.symm⟩, ⟨b, hvb.symm⟩, hab_s, hN_iff,
       h.comap Subtype.val_injective⟩)
-  ·
-
-    refine Or.inr (Or.inr ⟨hdeg3, ?_⟩)
+  · refine Or.inr (Or.inr ⟨hdeg3, ?_⟩)
     obtain ⟨a, b, c, hab, hac, hbc, hN_eq⟩ := Finset.card_eq_three.mp hdeg3
     have hN_iff : ∀ w, G.Adj v w ↔ w = a ∨ w = b ∨ w = c := fun w => by
       rw [← mem_neighborFinset, hN_eq]; simp
@@ -524,7 +514,6 @@ theorem IsSparse.exists_typeI_or_typeII_reverse [Fintype V]
       rw [hN_iff]; tauto
     have hN_iff_bca : ∀ w, G.Adj v w ↔ w = b ∨ w = c ∨ w = a := fun w => by
       rw [hN_iff]; tauto
-
     have h_ab := h.typeII_pair_dispatch_aux ⟨a, hva.symm⟩ ⟨b, hvb.symm⟩ ⟨c, hvc.symm⟩
       hab hac.symm hbc.symm hN_iff
     have h_ac := h.typeII_pair_dispatch_aux ⟨a, hva.symm⟩ ⟨c, hvc.symm⟩ ⟨b, hvb.symm⟩

@@ -26,6 +26,8 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Sym.Sym2
 import Mathlib.Logic.Equiv.Option
 
+/-! # SparseSets: finite graph sparsity and Henneberg constructions -/
+
 namespace Finset
 
 variable {α : Type*}
@@ -58,6 +60,17 @@ namespace Sym2
 variable {α β : Type*}
 
 @[simp]
+lemma exists_and_map_eq_mk_iff {f : α → β} {P : Sym2 α → Prop} {x y : β} :
+    (∃ e, P e ∧ Sym2.map f e = s(x, y)) ↔ ∃ p q, f p = x ∧ f q = y ∧ P s(p, q) := by
+  constructor
+  · rintro ⟨e, hP, hmap⟩
+    induction e with | h α' β' => ?_
+    rw [Sym2.map_mk, Sym2.eq_iff] at hmap
+    obtain ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ := hmap
+    · exact ⟨_, _, rfl, rfl, hP⟩
+    · exact ⟨_, _, rfl, rfl, by rwa [Sym2.eq_swap]⟩
+  · rintro ⟨p, q, rfl, rfl, hP⟩
+    exact ⟨s(p, q), hP, by rw [Sym2.map_mk]⟩
 
 lemma mk_mem_image_map_iff {f : α → β} {S : Set (Sym2 α)} {x y : β} :
     s(x, y) ∈ Sym2.map f '' S ↔ ∃ p q, f p = x ∧ f q = y ∧ s(p, q) ∈ S := by
@@ -95,6 +108,8 @@ lemma notMem_edgesIn_mk_of_right_notMem {x y : V} {s : Set V} (hys : y ∉ s) :
   exact hys (hmem.2 (Set.mem_insert_of_mem _ rfl))
 
 @[gcongr]
+lemma edgesIn_mono {s t : Set V} (h : s ⊆ t) : G.edgesIn s ⊆ G.edgesIn t :=
+  fun _ ⟨he₁, he₂⟩ ↦ ⟨he₁, (Set.mem_sym2_iff_subset.mp he₂).trans h |> Set.mem_sym2_iff_subset.mpr⟩
 
 @[simp] lemma edgesIn_univ : G.edgesIn Set.univ = G.edgeSet := by
   simp [edgesIn]
@@ -200,9 +215,7 @@ theorem IsSparse.exists_one_le_degree_le_three [Fintype V]
   classical
   by_contra hcontra
   push Not at hcontra
-
   set S : Finset V := Finset.univ.filter (fun v => 1 ≤ G.degree v) with hS_def
-
   obtain ⟨e, he⟩ := hE
   induction e with | h u v => ?_
   rw [mem_edgeSet] at he
@@ -217,7 +230,6 @@ theorem IsSparse.exists_one_le_degree_le_three [Fintype V]
     intro x hx
     simp only [Finset.mem_insert, Finset.mem_singleton] at hx
     rcases hx with rfl | rfl <;> assumption
-
   have h_edgesIn : G.edgesIn (↑S : Set V) = G.edgeSet := by
     refine Set.eq_of_subset_of_subset (fun _ he => he.1) (fun e he => mem_edgesIn.mpr ⟨he, ?_⟩)
     induction e with | h x y => ?_
@@ -228,14 +240,12 @@ theorem IsSparse.exists_one_le_degree_le_three [Fintype V]
         ⟨Finset.mem_univ _, (G.degree_pos_iff_exists_adj _).mpr ⟨_, he⟩⟩)
     · exact Finset.mem_coe.mpr (Finset.mem_filter.mpr
         ⟨Finset.mem_univ _, (G.degree_pos_iff_exists_adj _).mpr ⟨_, he.symm⟩⟩)
-
   have h_deg_4 : ∀ w ∈ S, 4 ≤ G.degree w := fun w hw => by
     have h1 := (Finset.mem_filter.mp hw).2
     have := hcontra w h1; omega
   have h_sum_4 : (∑ _ ∈ S, (4 : ℕ)) ≤ ∑ w ∈ S, G.degree w :=
     Finset.sum_le_sum h_deg_4
   simp at h_sum_4
-
   have h_sum_eq : ∑ w ∈ S, G.degree w = ∑ w, G.degree w := by
     rw [hS_def]; exact Finset.sum_filter_of_ne fun w _ hw => by omega
   have hsum := G.sum_degrees_eq_twice_card_edges
@@ -257,10 +267,8 @@ theorem IsSparse.exists_nonadj_among_three_neighbors [Finite V]
   have hva : v ≠ a := G.ne_of_adj ha
   have hvb : v ≠ b := G.ne_of_adj hb
   have hvc : v ≠ c := G.ne_of_adj hc
-
   have hs_card : ({v, a, b, c} : Finset V).card = 4 := by
     grind [Finset.card_insert_of_notMem, Finset.card_singleton]
-
   set E : Finset (Sym2 V) :=
     {s(v, a), s(v, b), s(v, c), s(a, b), s(a, c), s(b, c)} with hE_def
   have hE_card : E.card = 6 := by
@@ -381,7 +389,6 @@ theorem IsTightOn.union_with_bonus [Finite V] [DecidableEq V] {G : SimpleGraph V
     (h_close : (G.edgesIn (↑(S₁ ∩ S₂) : Set V)).ncard + ℓ ≤
                F.ncard + k * (S₁ ∩ S₂).card) :
     G.IsTightOn k ℓ (S₁ ∪ S₂) := by
-
   have h_un_sub :
       G.edgesIn (↑S₁ : Set V) ∪ G.edgesIn (↑S₂ : Set V) ⊆ G.edgesIn (↑(S₁ ∪ S₂) : Set V) := by
     rw [Finset.coe_union]
@@ -405,9 +412,7 @@ theorem IsTightOn.union_with_bonus [Finite V] [DecidableEq V] {G : SimpleGraph V
       ((G.edgesIn_finite S₁).union (G.edgesIn_finite S₂)) ((G.edgesIn_finite _).subset hF_sub)
   have h_le_union :=
     Set.ncard_le_ncard h_combined_sub (G.edgesIn_finite (S₁ ∪ S₂))
-
   have h_card_mul := Finset.mul_card_union_add_mul_card_inter S₁ S₂ k
-
   have h_S1_size : ℓ ≤ k * S₁.card := by grind only [IsTightOn]
   have h_union_size : ℓ ≤ k * (S₁ ∪ S₂).card :=
     h_S1_size.trans (Nat.mul_le_mul_left k (Finset.card_le_card Finset.subset_union_left))
