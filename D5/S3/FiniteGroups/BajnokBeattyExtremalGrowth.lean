@@ -7,8 +7,6 @@
    digest: Short-kernel Lee image counting by an upper-cap transversal. -/
 
 import D5.S3.FiniteGroups.BajnokBeattySharpMaximum
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Int.Interval
 
 /-!
 proof_shape: lee_ball_image_card_of_short_kernel, sharp_pair_growth: content.
@@ -379,8 +377,9 @@ private theorem sharp_compressed_kernel {G : Type u} [AddCommGroup G] [Finite G]
     by_contra hn
     have hb0 : b = 0 := by omega
     simp [hb0] at hab
-  have haeq : a = 1 := by nlinarith [mul_le_mul_of_nonneg_left hb1 ha]
-  have hbeq : b = 1 := by nlinarith
+  have haeq : a = 1 := by
+    nlinarith only [ha1, hab, mul_le_mul_of_nonneg_left hb1 ha]
+  have hbeq : b = 1 := by simpa only [haeq, one_mul] using hab
   refine ⟨ε,hε,?_⟩
   simpa only [compressedKernel, K, M, L, haeq,hbeq,mul_one,neg_one_mul] using hL
 
@@ -444,7 +443,9 @@ private theorem compressed_preimage_mem {G : Type u} [AddCommGroup G]
   change (p : ℤ) • w ∈ f.toIntLinearMap.ker.map sumDiff at hw
   obtain ⟨k,hk,hke⟩ := hw
   have he : k = z := sumDiff_injective (hke.trans hz.symm)
-  simpa only [he] using hk
+  change f k = 0 at hk
+  change f z = 0
+  rwa [he] at hk
 
 /-- The finite-index classification is consumed solely to discharge the
 short-kernel premise of the general cap-transversal count. -/
@@ -471,7 +472,9 @@ private theorem short_relations_of_rigidity {G : Type u} [AddCommGroup G]
   have hsum : A+B = 2*(s : ℤ)+1 := by dsimp [A,B]; nlinarith
   have hdiff : A-B = p := by dsimp [A,B]; ring
   have h4B : 2*(s : ℤ) < 4*B := by
-    have hpt : (p : ℤ) ≤ (p : ℤ)*t := mul_le_mul_of_nonneg_left htZ (by omega)
+    have hpt : (p : ℤ) ≤ (p : ℤ)*t := by
+      simpa only [mul_one] using
+        mul_le_mul_of_nonneg_left htZ (show (0 : ℤ) ≤ p by omega)
     dsimp [B]
     nlinarith
   have h2A : 2*(s : ℤ) < 2*A := by nlinarith
@@ -498,21 +501,29 @@ private theorem short_relations_of_rigidity {G : Type u} [AddCommGroup G]
     obtain ⟨u,v,hw⟩ := hw
     have h0 := congrFun hw 0
     have h1 := congrFun hw 1
-    simp only [Pi.add_apply,Pi.smul_apply,smul_eq_mul,Matrix.cons_val_zero,
-      Matrix.cons_val_one,sumDiff] at h0 h1
+    change u*(2*(t : ℤ)+1)+v*(-1) = x+y at h0
+    change u*(-ε)+v*(ε*(2*(t : ℤ)+1)) = x-y at h1
     refine ⟨u,v,?_⟩
     rcases hε with hε | hε
     · right
       refine ⟨hε,?_⟩
-      have hx' : x = (t : ℤ)*(u+v) := by rw [hε] at h0 h1; nlinarith
-      have hy' : y = ((t : ℤ)+1)*(u-v) := by rw [hε] at h0 h1; nlinarith
+      have hx' : x = (t : ℤ)*(u+v) := by
+        simp only [hε] at h1
+        nlinarith only [h0, h1]
+      have hy' : y = ((t : ℤ)+1)*(u-v) := by
+        simp only [hε] at h1
+        nlinarith only [h0, h1]
       rw [he,hx',hy']
       ext i
       fin_cases i <;> simp [A,B] <;> ring
     · left
       refine ⟨hε,?_⟩
-      have hx' : x = ((t : ℤ)+1)*(u-v) := by rw [hε] at h0 h1; nlinarith
-      have hy' : y = (t : ℤ)*(u+v) := by rw [hε] at h0 h1; nlinarith
+      have hx' : x = ((t : ℤ)+1)*(u-v) := by
+        simp only [hε] at h1
+        nlinarith only [h0, h1]
+      have hy' : y = (t : ℤ)*(u+v) := by
+        simp only [hε] at h1
+        nlinarith only [h0, h1]
       rw [he,hx',hy']
       ext i
       fin_cases i <;> simp [A,B] <;> ring
@@ -562,7 +573,7 @@ private theorem short_relations_of_rigidity {G : Type u} [AddCommGroup G]
 
 private theorem swapped_image_card {G : Type u} [AddCommGroup G]
     (f : (ℤ × ℤ) →+ G) (r : ℕ) :
-    ((leeDiamond r).image (f.comp (AddEquiv.prodComm ℤ ℤ).toAddMonoidHom)).card =
+    ((leeDiamond r).image (f.comp (AddEquiv.prodComm : (ℤ × ℤ) ≃+ (ℤ × ℤ)).toAddMonoidHom)).card =
       ((leeDiamond r).image f).card := by
   congr 1
   ext g
@@ -615,10 +626,13 @@ private theorem sharp_pair_growth_with_cofactor {G : Type u} [AddCommGroup G] [F
     have hpZ : (3 : ℤ) ≤ p := by exact_mod_cast hp3
     have htZ : (1 : ℤ) ≤ t := by exact_mod_cast ht
     have hsizeZ : (p : ℤ)*(2*(t : ℤ)+1) = 2*(s : ℤ)+1 := by exact_mod_cast hsize
-    have hpt : (p : ℤ) ≤ (p : ℤ)*t := mul_le_mul_of_nonneg_left htZ (by omega)
+    have hpt : (p : ℤ) ≤ (p : ℤ)*t := by
+      simpa only [mul_one] using
+        mul_le_mul_of_nonneg_left htZ (show (0 : ℤ) ≤ p by omega)
     have hz : (s : ℤ) < 2*(p : ℤ)*t := by nlinarith
     change s < 2*(p*t)
-    exact_mod_cast hz
+    have hn : s < 2*p*t := by exact_mod_cast hz
+    simpa only [mul_assoc] using hn
   have hrB : r < 2*B := lt_of_le_of_lt hr hsB
   have hrZ : (r : ℤ) ≤ s := by exact_mod_cast hr
   change ((leeDiamond r).image f).card =
@@ -633,14 +647,12 @@ private theorem sharp_pair_growth_with_cofactor {G : Type u} [AddCommGroup G] [F
       · left
         exact Prod.ext (congrFun h 0) (congrFun h 1)
       · right; left
-        simpa [B,Nat.cast_mul,mul_assoc] using
-          Prod.ext (congrFun h 0) (congrFun h 1)
+        simpa [pairHom,B,p,Nat.cast_mul,mul_assoc] using congrArg pairHom h
       · right; right
-        simpa [B,Nat.cast_mul,mul_assoc] using
-          Prod.ext (congrFun h 0) (congrFun h 1)
+        simpa [pairHom,B,p,Nat.cast_mul,mul_assoc] using congrArg pairHom h
   · rw [← swapped_image_card f r]
     apply lee_ball_image_card_of_short_kernel
-      (f.comp (AddEquiv.prodComm ℤ ℤ).toAddMonoidHom) hBp hrB
+      (f.comp (AddEquiv.prodComm : (ℤ × ℤ) ≃+ (ℤ × ℤ)).toAddMonoidHom) hBp hrB
     · simpa [F,f,pairHom,B,Nat.cast_mul,mul_assoc] using hh.1
     · intro z hz hzero
       have hz' : |z.2|+|z.1| ≤ 2*(s : ℤ) := by linarith
@@ -649,11 +661,11 @@ private theorem sharp_pair_growth_with_cofactor {G : Type u} [AddCommGroup G] [F
       · left
         exact Prod.ext (congrFun h 1) (congrFun h 0)
       · right; left
-        simpa [B,Nat.cast_mul,mul_assoc] using
-          Prod.ext (congrFun h 1) (congrFun h 0)
+        simpa [B,p,Nat.cast_mul,mul_assoc] using
+          congrArg (fun w : Plane => (w 1,w 0)) h
       · right; right
-        simpa [B,Nat.cast_mul,mul_assoc] using
-          Prod.ext (congrFun h 1) (congrFun h 0)
+        simpa [B,p,Nat.cast_mul,mul_assoc] using
+          congrArg (fun w : Plane => (w 1,w 0)) h
 
 /-- Exact ball growth for every actual composite maximum pair, with the
 transition radius determined by the least prime factor of `2*s+1`. -/
