@@ -70,6 +70,10 @@ $$\neg (\forall (v: \operatorname{Type}), (\forall (g: \operatorname{SimpleGraph
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/DiscreteGravity/TreeEquationsNonconstantRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/huang-stoica-xia-zhong-2020-tree-equations-nonconstant` (refuted) by `D5/S3/Geometry/DiscreteGravity/TreeEquationsNonconstantRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"huang-stoica-xia-zhong-2020-tree-equations-nonconstant","declaration_gid":"D5/S3/Geometry/DiscreteGravity/TreeEquationsNonconstantRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* An Huang; Bogdan Stoica; Xuyang Xia; Xiao Zhong (2020). *Bounds on the Ricci curvature and solutions to the Einstein equations for weighted graphs*. URL: <https://arxiv.org/abs/2006.06716v1>.

@@ -133,7 +133,10 @@ internal sealed class TreeEquationsNonconstantRefutationDocument : IScribeDocume
                         + "5/3, so the edge lengths cannot all equal a single c. Applying the "
                         + "conjectured implication to this tree and L would give exactly such "
                         + "a c, contradicting these two edge values."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("huang-stoica-xia-zhong-2020-tree-equations-nonconstant"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula CValFormula() => LengthBinders(All("i", X("v"),
         Equal(Typed(LocalCall("cVal", X("g"), X("ell"), X("i")), Reals()),
