@@ -39,7 +39,7 @@ private lemma inv_sq_integral {x : ℝ} (hx : 0 < x) :
       apply setIntegral_congr_fun measurableSet_Ioi
       intro t ht
       change 1 / t ^ 2 = t ^ (-(2 : ℝ))
-      rw [Real.rpow_neg (by linarith [ht] : 0 ≤ t), Real.rpow_two, one_div]
+      rw [Real.rpow_neg (hx.trans ht).le, Real.rpow_two, one_div]
     _ = 1 / x := by
       have h := integral_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx
       norm_num only [show -(2 : ℝ) + 1 = -1 by norm_num, Real.rpow_neg_one] at h
@@ -186,7 +186,7 @@ private lemma phase_interval_identity {x : ℝ} (hx : 1 ≤ x) :
         HasDerivAt (fun u : ℝ => -u⁻¹) (1 / t ^ 2) t := by
       have ht0 : t ≠ 0 := by rw [uIcc_of_le hx] at ht; linarith [ht.1]
       convert ((hasDerivAt_id t).inv ht0).neg using 1 <;>
-        first | rfl | (simp only [id_eq, one_div, inv_pow]; ring)
+        first | rfl | (simp only [id_eq, one_div]; ring)
     simpa only [inv_one, neg_neg, sub_neg_eq_add, one_div, sub_eq_add_neg, add_comm] using
       (intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi2)
   rw [he, floor_inverse_integral hx, integral_inv_of_pos zero_lt_one hx0,
