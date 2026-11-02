@@ -113,7 +113,7 @@ Every other public declaration is a definition used by a public statement. The b
 - *Why the triplets miss it.* Condition (3) on a triplet sees only that triplet's rates and energy gaps. The effect here comes from the joint slow mode of all four levels, which no three-level reduction with unmodified rates represents.
 
 **Open.**
-- Whether some local condition on triplets, with recomputed effective rates, is necessary for the effect.
+- Whether some local condition on triplets, with recomputed effective rates, is necessary for the effect. Static Schur elimination of the remaining level does not give one: in the same witness every statically reduced triplet also violates (3), proved by `D5/S3/StatisticalMechanics/MarkovMpembaSchurTripletRefutation.result`. Reductions that keep the eigenvalue dependence of the eliminated block remain open.
 - Whether the conjecture holds under additional hypotheses on the energy spectrum, for example bounded level spacing.
 
 **Effect on the paper.** The triplet test cannot rule out the Mpemba effect in N-level systems. The negative examples it generates, and the use of the conjecture in arXiv:2609.09988, need another criterion.
