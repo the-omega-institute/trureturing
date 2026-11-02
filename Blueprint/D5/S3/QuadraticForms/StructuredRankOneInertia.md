@@ -10,7 +10,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Formalization.* `D5/S3/QuadraticForms/StructuredRankOneInertia.pivot` (`✓ std3`).
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -22,7 +24,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Formalization.* `D5/S3/QuadraticForms/StructuredRankOneInertia.downdate` (`✓ std3`).
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -34,7 +38,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Formalization.* `D5/S3/QuadraticForms/StructuredRankOneInertia.zeroIndex` (`✓ std3`).
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -46,7 +52,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneInertia.diagonal_counts` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -58,7 +66,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneInertia.kernel_split` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -70,7 +80,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneInertia.nullity_downdate` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -82,7 +94,9 @@ $$(\forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneInertia.inertia_downdate` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -94,7 +108,7 @@ The kernel proof writes each v in ker M as v-tx plus tx, where t=Delta-inverse t
 
 For the other two counts, augment A by one zero coordinate. The upper triangular matrix with upper-right column x transforms diag(A,0) into [[A,w],[w-transpose,Delta]]. A lower triangular matrix with lower-left row -w-transpose/Delta transforms that same form into diag(M,Delta). Both transformers have determinant one. The existing invertible Hermitian inertia theorem applies over the reals. Characteristic-polynomial roots prove block additivity, preserving multiplicities; the real diagonal-count proof uses the real spectral theorem directly, without a complex-to-real identification.
 
-For MO513954 revision 2, substitute A=Matrix.diagonal d. The theorem includes dimension zero vacuously and every positive finite dimension, both pivot signs and singular diagonal matrices. The source author already proposed the hyperplane/direct-sum and block-congruence mechanism. These are standard Sylvester inertia arguments, with no ordinary novelty or priority claim. The continuous-family corollary is a separate source obligation; the matrix theorem by itself does not settle the full named question. Audit registration remains unfinished under issue #25408.
+For MO513954 revision 2, substitute A=Matrix.diagonal d. The theorem includes dimension zero vacuously and every positive finite dimension, both pivot signs and singular diagonal matrices. The source author already proposed the hyperplane/direct-sum and block-congruence mechanism. The exact definitions, real spectral-count derivation, kernel and nullity proofs, and complete symmetric-matrix inertia theorem here are repository-derived; the source question and proposed mechanism are acknowledged separately from these completed derivations. These are standard Sylvester inertia arguments, with no ordinary novelty or priority claim. The continuous-family corollary is a separate source obligation; the matrix theorem by itself does not settle the full named question. Audit registration remains unfinished under issue #25408.
 
 ## References
 

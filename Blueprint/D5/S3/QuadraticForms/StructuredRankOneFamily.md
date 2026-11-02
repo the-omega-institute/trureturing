@@ -10,7 +10,9 @@ $$(\forall (m : \mathbb{N}), \operatorname{openSimplex}\left(m\right) = \operato
 
 *Formalization.* `D5/S3/QuadraticForms/StructuredRankOneFamily.openSimplex` (`✓ std3`).
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -22,7 +24,9 @@ $$(\forall (n : \mathbb{N}), (3 \le n) \Rightarrow ((\forall (X : \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneFamily.punctured_simplex_pathConnected` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -34,7 +38,9 @@ $$(\forall (n : \mathbb{N}), (3 \le n) \Rightarrow ((\forall (X : \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneFamily.continuous_family` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -46,7 +52,9 @@ $$(((\forall (n : \mathbb{N}), (\forall (d : (\operatorname{Fin}\left(n\right) \
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneFamily.mo513954_revision2` (`✓ std3`). ∎
 
-*Citation.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
 
 *Commentary.*
 
@@ -60,7 +68,7 @@ The diagonal entries d and vector x are continuous on exactly Y. Delta(y)=pivot(
 
 In the negative-sign case, the additive inertia identity gives negIndex(D)=negIndex(M)+1. Positive semidefiniteness gives negIndex(M)=0 using the existing positive-index/rank identity and the positive-plus-negative rank partition. The real diagonal sign-count theorem therefore supplies exactly one negative diagonal coordinate at every point. For each coordinate j, the set where d_j is negative is open. Its complement is the union of the other negative-coordinate sets, so it is also closed. Nonemptiness selects one j, and connectedness forces its negative set to be all Y. Every other coordinate is nonnegative everywhere, and a point of Y proves global uniqueness.
 
-Together with StructuredRankOneInertia.inertia_downdate specialized to Matrix.diagonal d, these statements establish both source clauses of Lucid's MO513954 revision 2. Singular matrices, every finite matrix dimension, both signs and all zero multiplicities are retained. There is no extra invertibility, spectral gap, tolerance, compactness or supplied connectedness assumption. This implements the author's proposed block-congruence mechanism and standard Sylvester inertia; no ordinary novelty or global openness claim is made. Public theorem audit registration remains unfinished under issue #25408.
+Together with StructuredRankOneInertia.inertia_downdate specialized to Matrix.diagonal d, these statements establish both source clauses of Lucid's MO513954 revision 2. Singular matrices, every finite matrix dimension, both signs and all zero multiplicities are retained. There is no extra invertibility, spectral gap, tolerance, compactness or supplied connectedness assumption. The open-simplex definition, explicit domain chart and finite-puncture transport, global fixed-index argument, and complete conjunction here are repository-derived. Lucid's revision supplies the source questions and proposed matrix mechanism, not an attestation of these completed theorems. The matrix argument implements the author's proposed block-congruence mechanism and standard Sylvester inertia; no ordinary novelty or global openness claim is made. Public theorem audit registration remains unfinished under issue #25408.
 
 ## References
 
