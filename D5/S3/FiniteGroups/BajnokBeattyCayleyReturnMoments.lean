@@ -10,15 +10,11 @@ import D5.S3.FiniteGroups.BajnokBeattyFirstReturnDefect
 import Mathlib.Combinatorics.SimpleGraph.Cayley
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Tactic.FinCases
 
 /-!
-SOURCE-ONLY DRAFT: this file has not been elaborated or compiled.
-
-proof_shape: return_word_walk_equiv: content.
-proof_shape: actual_steps_separated: content.
 proof_shape: first_return_moment_defect: content.
 admission_basis: escape-witness.
 escape_witness: the actual quotient return fibers are transported by the
@@ -174,7 +170,10 @@ private def wordHeadEquiv {G : Type*} [AddCommGroup G]
     exact Fin.cons_self_tail w.val
   right_inv := by
     rintro ⟨i, w⟩
-    simp only [Fin.cons_zero, Fin.tail_cons]
+    apply Sigma.ext rfl
+    apply heq_of_eq
+    apply Subtype.ext
+    rfl
 
 private def walkHeadEquiv {V : Type*} (C : SimpleGraph V) (x y : V) (l : ℕ) :
     LengthWalks C x y (l + 1) ≃ Σ z : C.neighborSet x, LengthWalks C z.val y l where
@@ -183,9 +182,9 @@ private def walkHeadEquiv {V : Type*} (C : SimpleGraph V) (x y : V) (l : ℕ) :
     cases q with
     | nil => simp at hq
     | @cons u z v h p =>
-      exact ⟨⟨z, h⟩, ⟨p, Nat.add_right_cancel hq⟩⟩
+      exact ⟨⟨z, h⟩, ⟨p, Nat.succ.inj hq⟩⟩
   invFun v := ⟨SimpleGraph.Walk.cons v.1.property v.2.val, by
-    simpa only [SimpleGraph.Walk.length_cons] using congrArg (· + 1) v.2.property⟩
+    exact congrArg Nat.succ v.2.property⟩
   left_inv := by
     rintro ⟨q, hq⟩
     cases q with
@@ -264,8 +263,8 @@ private theorem walk_card_eq_W {G : Type*} [AddCommGroup G]
     Nat.card (LengthWalks (graph F) x x l) = W F l :=
   (Nat.card_congr (returnWordWalkEquiv F hinj hzero x l)).symm
 
-private theorem trace_eq_card_mul_W {G : Type*} [AddCommGroup G] [Fintype G]
-    (F : Plane →+ G) (hinj : Function.Injective (fun i => F (step i)))
+private theorem trace_eq_card_mul_W {G : Type*} [AddCommGroup G] [Fintype G] [DecidableEq G]
+    (F : Plane →+ G) [DecidableRel (graph F).Adj] (hinj : Function.Injective (fun i => F (step i)))
     (hzero : ∀ i, F (step i) ≠ 0) (l : ℕ) :
     Matrix.trace ((graph F).adjMatrix ℂ ^ l) =
       (Fintype.card G : ℂ) * (W F l : ℂ) := by
@@ -291,7 +290,7 @@ private def returnWordsMapEquiv {G K : Type*} [AddCommGroup G] [AddCommGroup K]
 private theorem parameter_bounds (p t : ℤ) (hp3 : 3 ≤ p) (ht : 2 ≤ t) :
     let m : ℤ := 6 * t - 1
     let D : ℤ := (m ^ 2 - 9)/2
-    0 < D ∧ 6 * t + 2 < p * D := by
+    0 < D ∧ 6 * t + 2 < D ∧ D < p * D := by
   dsimp only
   have hnum : (6 * t - 1) ^ 2 - 9 = 2 * ((3 * t + 1) * (6 * t - 4)) := by ring
   have hfactor : ((6 * t - 1) ^ 2 - 9)/2 = (3 * t + 1) * (6 * t - 4) := by
@@ -301,9 +300,9 @@ private theorem parameter_bounds (p t : ℤ) (hp3 : 3 ≤ p) (ht : 2 ≤ t) :
     rw [hfactor]
     nlinarith
   have hDpos : 0 < ((6 * t - 1) ^ 2 - 9)/2 := by omega
-  have hmul : ((6 * t - 1) ^ 2 - 9)/2 ≤ p * (((6 * t - 1) ^ 2 - 9)/2) := by
+  have hmul : ((6 * t - 1) ^ 2 - 9)/2 < p * (((6 * t - 1) ^ 2 - 9)/2) := by
     nlinarith
-  exact ⟨hDpos, by omega⟩
+  exact ⟨hDpos, by omega, hmul⟩
 
 private theorem vertices_finite (p t : ℤ) (hp3 : 3 ≤ p) (ht : 2 ≤ t) :
     Finite (ZMod p.natAbs × ZMod (p * (((6 * t - 1) ^ 2 - 9)/2)).natAbs) := by
@@ -361,7 +360,7 @@ private theorem actual_steps_separated (p D t : ℤ) (ht : 2 ≤ t)
     · intro i
       fin_cases i <;> simp <;> omega
     · intro i
-      fin_cases i <;> simp [q19, step] <;> push_cast <;> ring
+      fin_cases i <;> simp [q19, step]
   · apply separated_of_second (p * D) (3 * t + 1)
       (fun i => q33 p D t (step i)) ![-(3 * t + 1), 3 * t + 1, 3 * t - 2, 2 - 3 * t]
     · omega
@@ -373,7 +372,7 @@ private theorem actual_steps_separated (p D t : ℤ) (ht : 2 ≤ t)
     · intro i
       fin_cases i <;> simp <;> omega
     · intro i
-      fin_cases i <;> simp [q33, step] <;> push_cast <;> ring
+      fin_cases i <;> simp [q33, step]
 
 /-- For all odd integers `p ≥ 3` (including composite ones) and `t ≥ 2`, the
 two actual simple Cayley graphs on `H` have equal rooted closed-walk counts
@@ -423,7 +422,8 @@ theorem first_return_moment_defect (p t : ℤ)
       Matrix.trace ((graph Q19).adjMatrix ℂ ^ n) = 2 * (N : ℂ)
   have hp : 0 < p := by omega
   have hDpos : 0 < D := (parameter_bounds p t hp3 ht).1
-  have hM : 6 * t + 2 < p * D := (parameter_bounds p t hp3 ht).2
+  have hbounds := (parameter_bounds p t hp3 ht).2
+  have hM : 6 * t + 2 < p * D := hbounds.1.trans hbounds.2
   obtain ⟨⟨hinj19, hzero19⟩, ⟨hinj33, hzero33⟩⟩ := actual_steps_separated p D t ht hM
   let v119 : Plane := ![p * (m - 1)/2, p * (m + 1)/2]
   let v219 : Plane := ![p * (m - 9)/2, -(p * (m + 9)/2)]
