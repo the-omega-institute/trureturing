@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
-import D5.S3.Quantum.Measurements.HaarPureProjectorMoment
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
 /-! DeBrota--Stacey's saturation implication for Lüders MIC channels. -/
 
@@ -26,6 +26,75 @@ open D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+private theorem unitary_pure_ext {d : ℕ} [NeZero d]
+    (f g : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)
+    (h : ∀ u : Matrix.unitaryGroup (Fin d) ℂ,
+      f (u.1 * Matrix.single 0 0 1 * u.1ᴴ) =
+        g (u.1 * Matrix.single 0 0 1 * u.1ᴴ)) : f = g := by
+  have hs (u : Matrix.unitaryGroup (Fin d) ℂ) (i : Fin d) :
+      f (u.1 * Matrix.single i i 1 * u.1ᴴ) =
+        g (u.1 * Matrix.single i i 1 * u.1ᴴ) := by
+    let p := (Equiv.swap (0 : Fin d) i).permMatrix ℂ
+    have hp : p ∈ Matrix.unitaryGroup (Fin d) ℂ := by
+      rw [Matrix.mem_unitaryGroup_iff]
+      simp [p, Matrix.star_eq_conjTranspose, ← Matrix.permMatrix_mul]
+    let v : Matrix.unitaryGroup (Fin d) ℂ := u * ⟨p, hp⟩
+    have hsingle : p * Matrix.single 0 0 1 * pᴴ = Matrix.single i i 1 := by
+      dsimp [p]
+      rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
+        PEquiv.mul_toMatrix_toPEquiv]
+      ext a b
+      simp only [Matrix.submatrix_apply, Function.id_def, Equiv.swap_inv,
+        Equiv.symm_swap, Matrix.single]
+      have ha : (0 : Fin d) = (Equiv.swap 0 i) a ↔ i = a := by
+        constructor
+        · intro hzero
+          simpa using congrArg (Equiv.swap (0 : Fin d) i) hzero
+        · intro hai
+          rw [← hai]
+          simp
+      have hb : (0 : Fin d) = (Equiv.swap 0 i) b ↔ i = b := by
+        constructor
+        · intro hzero
+          simpa using congrArg (Equiv.swap (0 : Fin d) i) hzero
+        · intro hbi
+          rw [← hbi]
+          simp
+      change (if 0 = (Equiv.swap 0 i) a ∧ 0 = (Equiv.swap 0 i) b then (1 : ℂ) else 0) =
+        if i = a ∧ i = b then 1 else 0
+      simp only [ha, hb]
+    have hv : v.1 * Matrix.single 0 0 1 * v.1ᴴ =
+        u.1 * Matrix.single i i 1 * u.1ᴴ := by
+      change (u.1 * p) * Matrix.single 0 0 1 * (u.1 * p)ᴴ = _
+      simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc p (Matrix.single 0 0 1),
+        ← Matrix.mul_assoc (p * Matrix.single 0 0 1), hsingle]
+    simpa only [hv] using h v
+  have hh (x : Matrix (Fin d) (Fin d) ℂ) (hx : x.IsHermitian) : f x = g x := by
+    let u := hx.eigenvectorUnitary
+    have hdec : x = ∑ i, (hx.eigenvalues i : ℂ) •
+        ((u : Matrix (Fin d) (Fin d) ℂ) * Matrix.single i i 1 *
+          (u : Matrix (Fin d) (Fin d) ℂ)ᴴ) := by
+      conv_lhs => rw [hx.spectral_theorem, Unitary.conjStarAlgAut_apply]
+      rw [← Matrix.sum_single_eq_diagonal]
+      simp only [Function.comp_apply, Matrix.mul_sum, Matrix.sum_mul]
+      apply Finset.sum_congr rfl
+      intro i hi
+      have hi : Matrix.single i i (RCLike.ofReal (hx.eigenvalues i) : ℂ) =
+          (hx.eigenvalues i : ℂ) • Matrix.single i i 1 := by
+        rw [Matrix.smul_single, smul_eq_mul, mul_one]
+        simp
+      rw [hi, Matrix.mul_smul, Matrix.smul_mul]
+      simp [u, Matrix.star_eq_conjTranspose]
+    rw [hdec, map_sum, map_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [map_smul, map_smul, hs u i]
+  apply LinearMap.ext
+  intro x
+  rw [← realPart_add_I_smul_imaginaryPart x, map_add, map_add,
+    map_smul, map_smul, hh _ (realPart x).2, hh _ (imaginaryPart x).2]
 
 def IsMIC (d : ℕ)
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) : Prop :=
@@ -269,7 +338,7 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
     have het : ((e i).trace.re : ℂ) = (e i).trace :=
       Complex.ext rfl (by simpa (config := { congrConsts := false })
         using (Complex.nonneg_iff.mp (he.1 i).trace_nonneg).2)
-    have hh := HaarPureProjectorMoment.pure_quadratic (CFC.sqrt (e i))
+    have hh := D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.pure_quadratic (CFC.sqrt (e i))
     change (∫ u, (inputProjector u * CFC.sqrt (e i) * inputProjector u *
       CFC.sqrt (e i)).trace ∂mu) = _ at hh
     rw [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg, ← ht, ← het] at hh
@@ -674,7 +743,7 @@ private theorem depolarizing_identity {d : ℕ} [NeZero d]
     (1 / (d + 1 : ℂ)) •
       (LinearMap.id + (Matrix.traceLinearMap (Fin d) ℂ ℂ).smulRight 1)
   have hfg : f = g := by
-    apply D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan.unitary_pure_ext
+    apply unitary_pure_ext
     intro u
     change ludersChannel e (inputProjector u) =
       (1 / (d + 1 : ℂ)) • (inputProjector u + (inputProjector u).trace • 1)
@@ -718,7 +787,7 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
     intro i hi
     simp (config := { congrConsts := false }) only [hsqrt, Matrix.smul_mul,
       Matrix.mul_smul, smul_smul]
-    rw [D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan.trace_one_sandwich
+    rw [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.trace_one_sandwich
         (p i) x (hpp i) (htr i), heq i, smul_smul, smul_smul]
     congr 1
     have hsq : (Real.sqrt (c i) : ℂ) * (Real.sqrt (c i) : ℂ) = (c i : ℂ) := by

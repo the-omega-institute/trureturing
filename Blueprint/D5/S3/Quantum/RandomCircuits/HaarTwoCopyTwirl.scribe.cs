@@ -46,6 +46,8 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("swapcommutes","Replica swap commutes with a tensor square",ReplicaSwapCommutes(),"The replica swap commutes with the tensor square of every complex matrix.","replicaSwap_commutes",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("imagespan","The image is in the identity/swap span",ImageSpan(),"Two distinct coordinates suffice for the commutant argument. Each averaged vector is a linear combination of the vectorized identity and replica swap.","haarAverage_image_span",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("fixedpairing","Pairing against a Hermitian fixed vector",FixedPairing(),"Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.","hermitian_fixed_pairing",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("trace-one-sandwich","Sandwiching by a trace-one idempotent",TraceOneSandwich(),"For any complex square matrices p and x, an idempotent p with trace one satisfies p x p = trace(p x) p. No self-adjointness assumption is required.","trace_one_sandwich",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("pure-quadratic","The pure-projector quadratic Haar integral",PureQuadratic(),"In every positive dimension, averaging trace(P a P a) over the unitary orbit of the first coordinate projector gives (trace(a) squared + trace(a a))/(d(d + 1)). The matrix a is arbitrary and need not be self-adjoint.","pure_quadratic",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("replicaswap","Entries of the replica swap",ReplicaSwapEntry(),"The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.","D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("gram","The physical two-site Gram matrix",Gram(),"The one-site overlap of equal identity/swap choices is one; distinct choices have overlap 1/q. The two-site overlap is the product of the two one-site overlaps.","localPermutation_gram",DescribeRole.Theorem),
             Node("identity","The identity vector is fixed",Fixed(D(0)),"The identity commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_identity_fixed",DescribeRole.Theorem),
@@ -148,6 +150,27 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
         Formula f=Seq(F.Id("fun"),Sp,u,Colon,Sp,Unit(n),Sp,Mapsto,Sp,
             At(Call("literalMoment",Call("val",u)),R,C));
         return Generic(All("r",Replica(n),All("c",Replica(n),Call("Integrable",Parenthesized(f),Haar(n)))));
+    }
+    private static Formula TraceOneSandwich()
+    {
+        Formula d=F.Id("d"),p=F.Id("p"),x=F.Id("x");
+        return All("d",Nat(),All("p",MatrixOf(Fin(d)),All("x",MatrixOf(Fin(d)),
+            Implies(Eqn(Mul(p,p),p),Implies(Eqn(QCall("Matrix","trace",p),D(1)),
+                Eqn(Mul(Mul(p,x),p),Smul(QCall("Matrix","trace",Mul(p,x)),p)))))));
+    }
+    private static Formula PureQuadratic()
+    {
+        Formula d=F.Id("d"),a=F.Id("a"),u=F.Id("u"),uc=Proj(u,1);
+        Formula p=Mul(Mul(uc,QCall("Matrix","single",D(0),D(0),Cast(D(1),Complex()))),
+            QCall("Matrix","conjTranspose",uc));
+        Formula integrand=QCall("Matrix","trace",Mul(Mul(Mul(p,a),p),a));
+        Formula integral=Seq(Int,Underscore,Grp(u,Colon,Sp,Unit(Fin(d))),Sp,
+            Parenthesized(integrand),Sp,F.Id("d"),Parenthesized(Haar(Fin(d))));
+        Formula value=new Formula.Fraction(
+            Add(new Formula.Power(QCall("Matrix","trace",a),D(2)),QCall("Matrix","trace",Mul(a,a))),
+            Mul(Cast(d,Complex()),Add(Cast(d,Complex()),D(1))));
+        return All("d",Nat(),Seq(OpenBracket,Call("NeZero",d),CloseBracket,Sp,
+            All("a",MatrixOf(Fin(d)),Eqn(integral,value))));
     }
     private static Formula Vectorize()
     {
