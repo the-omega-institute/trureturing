@@ -123,7 +123,7 @@ private lemma ambient_hyperdisk : IsHyperdisk ambient := by
   · rw [ambient_span]
     have he : (fun j : Fin 4 => EuclideanSpace.single j (1 : ℂ)) =
         ⇑(EuclideanSpace.basisFun (Fin 4) ℂ) := by
-      funext j; exact (EuclideanSpace.basisFun_apply j).symm
+      funext j; exact (EuclideanSpace.basisFun_apply (Fin 4) ℂ j).symm
     rw [he]
     simpa only [OrthonormalBasis.coe_toBasis] using
       (EuclideanSpace.basisFun (Fin 4) ℂ).toBasis.span_eq
@@ -269,14 +269,14 @@ private lemma constant_modulus {m : ℕ} (a : Fin m → ℂ) (r : ℝ)
       have hh := h (fun i => if i = p then v else u i) (by
         intro i
         by_cases hip : i = p
-        · simpa only [if_pos hip] using hv
-        · simpa only [if_neg hip] using hu i)
+        · simpa only [ite_eq_left hip] using hv
+        · simpa only [ite_eq_right hip] using hu i)
       rw [← Finset.add_sum_erase _ _ (Finset.mem_univ p)] at hh
       have he : (∑ i ∈ Finset.univ.erase p, a i * (if i = p then v else u i)) =
           ∑ i ∈ Finset.univ.erase p, a i * u i := by
         apply Finset.sum_congr rfl
         intro i hi
-        rw [if_neg (Finset.mem_erase.mp hi).1]
+        rw [ite_eq_right (Finset.mem_erase.mp hi).1]
       simpa only [ite_true, he] using hh
     apply (four_phase_zero (a p) (∑ i ∈ Finset.univ.erase p, a i * u i)
       (by simpa using (hn (-1) (by simp)).trans (hn 1 (by simp)).symm)
@@ -292,8 +292,8 @@ private lemma constant_modulus {m : ℕ} (a : Fin m → ℂ) (r : ℝ)
       ∑ i ∈ (Finset.univ.erase p).erase q, a i := by
     apply Finset.sum_congr rfl
     intro i hi
-    rw [if_neg (Finset.mem_erase.mp hi).1, mul_one]
-  rw [if_pos rfl, mul_neg_one, hrest] at hflip
+    rw [ite_eq_right (Finset.mem_erase.mp hi).1, mul_one]
+  rw [ite_eq_left rfl, mul_neg_one, hrest] at hflip
   have : 2 * a q = 0 := by linear_combination hbase - hflip
   exact (mul_eq_zero.mp this).resolve_left (by norm_num)
 
@@ -325,10 +325,9 @@ private lemma phase_state {m : ℕ} (φ : Fin m → EuclideanSpace ℂ (Fin 4))
       ‖∑ p, c p • φ p‖ ^ 2 = ∑ p, ‖c p‖ ^ 2 := by
     have he : ⟪∑ p, c p • φ p, ∑ p, c p • φ p⟫_ℂ = ∑ p, conj (c p) * c p := by
       simpa using ho.inner_sum c c Finset.univ
-    rw [inner_self_eq_norm_sq_to_K] at he
-    simp only [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq,
-      ← Complex.ofReal_sum] at he
-    exact Complex.ofReal_injective (by simpa only [Complex.ofReal_pow] using he)
+    have hreal := congrArg (RCLike.re : ℂ → ℝ) he
+    rw [inner_self_eq_norm_sq] at hreal
+    simpa only [map_sum, RCLike.conj_mul, RCLike.re_ofReal_pow] using hreal
   have hsum : ∑ p, (r p) ^ 2 = 1 := by
     have he := energy (fun p => ⟪φ p, x⟫_ℂ)
     rw [span_reconstruction φ ho x hspan, hx] at he
@@ -352,7 +351,7 @@ private lemma coordinate_sum {m : ℕ} (c : Fin m → ℂ)
 
 private lemma disjoint_generators {m : ℕ}
     (φ : Fin m → EuclideanSpace ℂ (Fin 4)) (r : Fin m → ℝ)
-    (ho : Orthonormal ℂ φ) (hr : ∀ p, 0 < r p)
+    (_ho : Orthonormal ℂ φ) (hr : ∀ p, 0 < r p)
     (hs : ∀ u : Fin m → ℂ, (∀ p, ‖u p‖ = 1) →
       (∑ p, ((r p : ℂ) * u p) • φ p) ∈ counterexample) :
     ∀ j p q, p ≠ q → φ p j = 0 ∨ φ q j = 0 := by
@@ -521,28 +520,39 @@ private lemma hyperdisk_single_ray (h : Set (EuclideanSpace ℂ (Fin 4)))
   have hm := block_obstruction φ r ho hr (disjoint_generators φ r ho hr hs) hs
   have hxr := span_reconstruction φ ho x hxspan
   have hyr := span_reconstruction φ ho y hyspan
-  cases m with
-  | zero =>
-    simp only [Finset.univ_eq_empty, Finset.sum_empty] at hxr
+  have hmpos : 0 < m := by
+    by_contra hn
+    have hxzero : x = 0 := hxr.symm.trans (Finset.sum_eq_zero (by
+      intro p _
+      have hp := p.isLt
+      omega))
     have he := hxdata.1
-    rw [← hxr, norm_zero] at he
+    rw [hxzero, norm_zero] at he
     norm_num at he
-  | succ m =>
-    have hm0 : m = 0 := by omega
-    subst m
-    have hxr1 : ⟪φ 0, x⟫_ℂ • φ 0 = x := by simpa only [Fin.sum_univ_one] using hxr
-    have hyr1 : ⟪φ 0, y⟫_ℂ • φ 0 = y := by simpa only [Fin.sum_univ_one] using hyr
-    have hy0 : ⟪φ 0, y⟫_ℂ ≠ 0 := by
-      intro he
-      have hn := hydata.2 0
-      rw [he, norm_zero] at hn
-      linarith [hr 0]
-    refine ⟨⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ, ?_⟩
-    calc
-      x = ⟪φ 0, x⟫_ℂ • φ 0 := hxr1.symm
-      _ = (⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ) • (⟪φ 0, y⟫_ℂ • φ 0) := by
-        rw [smul_smul, div_mul_cancel₀ _ hy0]
-      _ = (⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ) • y := by rw [hyr1]
+  let p : Fin m := ⟨0, hmpos⟩
+  have hp (q : Fin m) : q = p := by
+    apply Fin.ext
+    have hq := q.isLt
+    change q.val = 0
+    omega
+  have reduce (v : EuclideanSpace ℂ (Fin 4)) :
+      (∑ q, ⟪φ q, v⟫_ℂ • φ q) = ⟪φ p, v⟫_ℂ • φ p := by
+    apply Finset.sum_eq_single p
+    · intro q _ hqp; exact (hqp (hp q)).elim
+    · simp
+  have hxr1 := (reduce x).symm.trans hxr
+  have hyr1 := (reduce y).symm.trans hyr
+  have hy0 : ⟪φ p, y⟫_ℂ ≠ 0 := by
+    intro he
+    have hn := hydata.2 p
+    rw [he, norm_zero] at hn
+    linarith [hr p]
+  refine ⟨⟪φ p, x⟫_ℂ / ⟪φ p, y⟫_ℂ, ?_⟩
+  calc
+    x = ⟪φ p, x⟫_ℂ • φ p := hxr1.symm
+    _ = (⟪φ p, x⟫_ℂ / ⟪φ p, y⟫_ℂ) • (⟪φ p, y⟫_ℂ • φ p) := by
+      rw [smul_smul, div_mul_cancel₀ _ hy0]
+    _ = (⟪φ p, x⟫_ℂ / ⟪φ p, y⟫_ℂ) • y := by rw [hyr1]
 
 /-- The registered four-coordinate regular subset refutes the finite-cover question. -/
 theorem result : ¬ claim := by
