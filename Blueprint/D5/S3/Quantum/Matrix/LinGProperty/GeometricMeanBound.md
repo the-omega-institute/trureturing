@@ -30,7 +30,27 @@ Lean statement: `D5/S3/Quantum/Matrix/LinGProperty/GeometricMeanBound.geometricM
 
 *Commentary.*
 
-For every dimension and positive definite P,Q, their geometric mean G is positive definite and satisfies G P inverse G=Q. This uses the existing Riccati theorem at base P inverse and supplies positivity and the identity used below.
+For every dimension and positive definite P,Q, their geometric mean G is positive definite and satisfies G P inverse G=Q. This uses the existing AlternativeMeanLinearization.riccati theorem at base P inverse and supplies positivity and the identity used below.
+
+Application: covariance metrics. The following is an ordinary application derivation of existing formal facts, not additional exported Lean declarations. Write X* for conjugate transpose, Re Tr for the real part of the trace, and X≥0 for positive semidefiniteness. All products below retain their displayed order; no commutativity or common spectral basis is assumed.
+
+Rectangular square. Let m,k be arbitrary finite index types, D an m×m complex positive definite matrix, and A,C arbitrary m×k complex matrices. D inverse is the ordinary two-sided inverse and is Hermitian. With E=A−D inverse C, the ordered expansion is E* D E = A* D A − A* D (D inverse C) − (D inverse C)* D A + (D inverse C)* D (D inverse C) = A* D A + C* D inverse C − A* C − C* A. Here D(D inverse C)=C and (D inverse C)*D=C*. Matrix.PosSemidef.conjTranspose_mul_mul_same applied to D and E makes this k×k remainder positive semidefinite.
+
+Sharp rectangular trace bound. Matrix.PosSemidef.trace_nonneg and RCLike.nonneg_iff give a nonnegative real trace of that remainder. Matrix.trace_conjTranspose gives Re Tr(C* A)=Re Tr(A* C), so 2 Re Tr(A* C)≤Re Tr(A* D A)+Re Tr(C* D inverse C). The coefficient 2 is attained by D=I and A=C≠0 whenever the dimensions allow a nonzero factor. This is a bound on the real cross trace; no absolute-value or Schatten estimate is asserted.
+
+Ordered Riccati square. For any n≥0, positive definite complex n×n D and Hermitian n×n G, put K=(D−G)D inverse(D−G). Expansion in the given order gives K=D D inverse D−D D inverse G−G D inverse D+G D inverse G=D−G−G+G D inverse G. Thus D+G D inverse G−G−G=K≥0, by congruence of the positive matrix D inverse with the Hermitian matrix D−G. Positivity of G is not needed for this square identity.
+
+Weighted trace positivity. For positive definite n×n P and positive semidefinite n×n K, set H=CFC.sqrt(P). The existing CFC.sqrt_mul_sqrt_self gives H H=P, and the positive square root is Hermitian. Congruence makes H K H=H* K H positive semidefinite. Matrix.trace_mul_comm and associativity give Tr(KP)=Tr(K H H)=Tr(H K H), hence Re Tr(KP)≥0 by trace_nonneg. This argument does not require or assert that the product KP is Hermitian or positive semidefinite.
+
+Optimizer orientation. Let P,S be positive definite complex n×n matrices and set G=geometricMean(P inverse,S). Applying geometricMean_riccati to P inverse and S, then cancelling the double inverse of P, gives G positive definite and G P G=S. The first argument is P inverse. Equivalently, G=P^(-1/2)(P^(1/2) S P^(1/2))^(1/2)P^(-1/2): the positive matrix P^(1/2) G P^(1/2) squares to P^(1/2) S P^(1/2), which identifies its positive square root.
+
+Exact cost gap. For every positive definite n×n competitor D define J(D)=Re Tr(DP)+Re Tr(D inverse S). Cyclicity gives Tr((G D inverse G)P)=Tr(D inverse(G P G))=Tr(D inverse S). Multiply D+G D inverse G−G−G=K by P and take the real trace to obtain J(D)−2 Re Tr(GP)=Re Tr(((D−G)D inverse(D−G))P)≥0. Weighted trace positivity applies to this K and the same actual P; no independently chosen covariance or spectrum is substituted.
+
+Attainment. Since G is positive definite and G P G=S, cancellation gives G inverse S=P G. Therefore J(G)=Re Tr(GP)+Re Tr(PG)=2 Re Tr(GP). Together with the gap this proves J(G)≤J(D) for every positive definite D, and min over positive definite D of J(D)=2 Re Tr(GP). This is the attained global value on the stated positive definite domain; no separate equality characterization or uniqueness assertion is made here.
+
+Rectangular correspondence and limits. Taking P=A A* and S=C C* uses rectangular trace cyclicity to rewrite the right side of the rectangular bound as J(D). The optimizer calculation applies to these covariances only if both A A* and C C* are positive definite. In applications C=ZB, with B an r×k matrix and Z an m×r matrix, the same statement uses the actual product ZB. The rectangular square and bound allow arbitrary rank-deficient and zero A,C, since only D is inverted. They include m=0, k=0 and n=0, where the corresponding traces and identities vanish. No inverse or attained optimizer for arbitrary singular metrics or singular covariances follows from this derivation.
+
+Scope and attribution. The reused suppliers are geometricMean and geometricMean_riccati in this module, AlternativeMeanLinearization.riccati, Matrix.PosSemidef.conjTranspose_mul_mul_same, Matrix.PosSemidef.trace_nonneg, Matrix.trace_mul_comm, Matrix.trace_conjTranspose, CFC.sqrt_mul_sqrt_self and the positive-square-root Hermitian facts. These yield the displayed application through inverse cancellation, ordered expansion and trace normalization. The derivation is not a new kernel theorem or a literature novelty claim, does not solve Audenaert's norm-compression conjecture, and supplies no joint Schatten comparison for unrelated spectra.
 
 **Theorem 1.3 (Harmonic lower bound).**
 

@@ -1,0 +1,84 @@
+**Proposition 13.2 (the full native product, including delayed
+promotions).** For every such vector of block lengths, the complete
+fibre of $t_r$ has
+
+$$
+\begin{aligned}
+F(t_r)&=\prod_{i=1}^r
+ \left(\sum_{j=i}^r d_j+r-i\right),\\
+a(t_r)&=q_r-r,\qquad c(t_r)=r+1,\qquad
+N(t_r)=q_r+r+1.
+\end{aligned}
+\tag{IV.27}
+$$
+
+Every member of this fibre is an admitted native history, including
+histories that do not pass through one or more selected $t_i$.
+
+Proof. Write the actual addressed events as
+
+$$
+\rho=P_\varepsilon,\qquad
+A_j=S_{L^{j-1}}\ (1\le j\le q_r),\qquad
+Q_i=P_{L^{q_{i-1}}R}\ (1\le i\le r).
+\tag{IV.28}
+$$
+
+There are $q_r$ branches, all on the left spine. The right child born
+at its $(q_{i-1}+1)$st split is a final beta leaf, requiring exactly
+$Q_i$. Every other right child remains alpha, and the deepest left leaf
+is born beta. Thus AA Theorem 17.2 reconstructs exactly the displayed
+event set, with generating relations
+
+$$
+\rho<A_1<\cdots<A_{q_r},\qquad
+A_{q_{i-1}+1}<Q_i\quad(1\le i\le r).
+\tag{IV.29}
+$$
+
+The $Q_i$ have no successors. There is no promotion at a left-born
+position, no right split, and no additional event that can disappear
+from the final term. Conversely every linear extension of (IV.29) is
+legal at every prefix and ends at $t_r$, by that same source theorem.
+In particular this identifies the full native fibre without restricting
+the schedule to block-completed histories.
+
+Remove the forced first event $\rho$. Remove $Q_1,Q_2,\ldots,Q_r$ in
+that order to count the extensions. In the reduced order with
+$Q_1,\ldots,Q_i$ absent, every remaining promotion $Q_j$, $j>i$, is
+anchored strictly after $A_{q_{i-1}+1}$. The latter split therefore has
+position $q_{i-1}+1$ in every extension of that reduced order. Its word
+has length $q_r+r-i$. Reinserting $Q_i$ has precisely
+
+$$
+(q_r+r-i)-(q_{i-1}+1)+1
+=q_r-q_{i-1}+r-i
+\tag{IV.30}
+$$
+
+slots after its anchor, including immediately after the anchor and at
+the end. Each slot is legal, since this is $Q_i$'s only prerequisite
+apart from the already forced split ancestors, and it has no successors.
+Deletion and insertion are inverse operations. Hence the number of
+extensions before each deletion is the constant (IV.30) times the
+number after it. After all deletions only the one split-chain order
+remains. Multiplication proves the first line of (IV.27).
+
+Equivalently, for the beta-born suffix terms $x$ in (IV.26), AA Theorem
+19.2's local shuffle product gives
+$F(D_d(x))=(d+e_\beta(x))F(x)$: the left child has
+$d-1+e_\beta(x)$ events and the right beta child has its one promotion.
+Also $e_\beta(D_d(x))=d+1+e_\beta(x)$ and $e_\beta(\beta)=0$.
+These identities give the same factors, retaining the events in all
+deeper blocks rather than multiplying conditional suffix counts.
+
+Each split increases the leaf count by one and preserves the beta-leaf
+count; $\rho$ and the $r$ right promotions give $r+1$ beta leaves.
+Thus the remaining $q_r-r$ leaves are alpha and the native event count
+is $q_r+r+1$, also directly visible in (IV.28). For example,
+$(d_1,d_2)=(3,2)$ gives $F(t_2)=6\cdot2=12$. Only
+$3\cdot2=6$ histories finish the first block before entering the second;
+the other six delay $Q_1$ beyond that cut. The product
+$\prod_i d_i$ counts just such block-completed concatenations, not the
+complete endpoint fibre. $\square$
+

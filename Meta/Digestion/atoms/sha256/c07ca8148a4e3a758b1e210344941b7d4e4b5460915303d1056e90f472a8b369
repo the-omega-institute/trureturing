@@ -1,0 +1,16 @@
+### 命题 15.3（丢弃一个共同因子后的精确重建）
+
+若 $\mathcal N=\operatorname{Tr}_R$、$\sigma=\sigma_L\otimes\omega_R>0$，则
+
+$$
+\mathcal R_{\sigma,\mathcal N}(Y)=Y\otimes\omega_R.
+$$
+
+所以所有 $\rho_L\otimes\omega_R$ 都由同一恢复保留，
+而一般相关态的固定条件仍是 $\rho=(\operatorname{Tr}_R\rho)\otimes\omega_R$。
+
+**证明。**
+此时 $\tau=\sigma_L$、$\mathcal N^*(Z)=Z\otimes I_R$。
+代入 Petz 公式，左右两个 $\sigma_L^{1/2}$ 分别抵消 $\sigma_L^{-1/2}$，
+留下 $Y\otimes\omega_R$。固定条件由复合映射直接得到。
+

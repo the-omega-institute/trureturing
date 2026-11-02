@@ -1,0 +1,39 @@
+### 定义 3.1（局部谱比二次比较类）
+
+设 $\sigma=\sum_i s_i\lvert i\rangle\langle i\rvert>0$，$\operatorname{Tr}\sigma=1$。
+对同一个正函数 $\kappa:(0,\infty)\to(0,\infty)$，$\kappa(1)=1$，定义
+
+$$
+\Omega_\sigma^\kappa(E_{ij})
+ =\frac1{s_j}\kappa\!\left(\frac{s_i}{s_j}\right)E_{ij},
+ \qquad
+ g_\sigma^\kappa(X,Y)=\operatorname{Tr}(X^\dagger\Omega_\sigma^\kappa(Y)).
+$$
+
+这个谱比形式要求一个矩阵方向的权只取决于其两端谱值；
+它等价于左右乘法算符的函数，故不依赖简并谱空间中任选的基。
+其对角部分是经典二次校准 $\sum_i|X_{ii}|^2/s_i$。
+
+这里 $\Omega_\sigma^\kappa$ 在 Hilbert–Schmidt 空间上给出正内积。
+尚未把它假定为一个作用于状态的量子通道，也未预先假定数据处理单调性。
+所选择的是如下两个完整比较接口：
+
+<a id="eq-c90-star-weight"></a>
+
+$$
+\Omega_\sigma^\kappa(X^\dagger)
+ =\Omega_\sigma^\kappa(X)^\dagger,
+\tag{3.1}
+$$
+
+<a id="eq-c90-tensor-weight"></a>
+
+$$
+\Omega_{\sigma\otimes\tau}^\kappa
+ =\Omega_\sigma^\kappa\otimes\Omega_\tau^\kappa.
+\tag{3.2}
+$$
+
+第二式要求全部复极化比较随独立组合相容，包含交叉项与次序，
+不能弱化成只检查若干 Hermitian 自平方或概率。
+

@@ -1,0 +1,23 @@
+**Proposition 36.1 (linear-length sets with distance-two contacts).**
+For every $k\ge1$ there are disjoint nonempty terminal sets satisfying
+(IV.100) with $D=1$, each of $k$ words of common length
+$k+\lceil\log_2 k\rceil$. This statement supplies no causal updater.
+
+**Proof.** The cube has $E=k2^{k-1}$ edges. Give each edge $e$ a
+different binary prefix $p_e$ of length $m=\lceil\log_2 E\rceil$.
+For an edge $e=xy$ differing at coordinate $j$, put $p_ex_j$ in $R_x$
+and $p_ey_j$ in $R_y$. Every vertex has $k$ incident edges and therefore
+$k$ distinct assigned leaves. A leaf's first $m$ bits identify its edge,
+and its last bit distinguishes the two endpoints. No leaf belongs to
+two fibres. The two leaves assigned to any edge have common prefix
+$p_e$ and distance exactly two. Finally
+$m+1=k+\lceil\log_2 k\rceil$. For $k\ge2$ each fibre consists of
+multiple leaves with no joining path inside it, hence is disconnected.
+No records for partial assignments, common initial word or compatible
+extension rule have been constructed. Edge proximity is a necessary
+relaxation of the causal contract, not its converse. $\square$
+
+For comparison, the finite $k=3,L=3,D=1$ causal witness has 39 family
+representatives but only 37 actually reachable state-word pairs; its
+independent direct verifier covers 48 complete histories and 78 prefix
+transitions. The disconnected $R_{\{2,3\},00}=\{01,11\}$ is a

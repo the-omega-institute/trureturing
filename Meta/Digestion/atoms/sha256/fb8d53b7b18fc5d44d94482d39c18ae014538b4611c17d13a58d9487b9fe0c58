@@ -1,0 +1,38 @@
+# 9 二元关系所属的更大几何结构
+
+主定理所得生成元满足
+
+```math
+K^*=-K,\qquad KJ=JK.
+```
+
+它们构成酉群 U(d) 的李代数。对实系数 α,β，αK+βL 仍反自伴；交换子也满足
+
+```math
+[K,L]^*=-[K,L].
+```
+
+这是代数上的闭合；实际菜单是否供应对应控制，还须沿用项目的操作条件。
+
+有限门的小回路显示顺序关系：
+
+```math
+e^{\varepsilon K}e^{\varepsilon L}
+e^{-\varepsilon K}e^{-\varepsilon L}
+=
+I+\varepsilon^2[K,L]+O(\varepsilon^3).
+```
+
+\*\*证明。\*\*将四个矩阵指数展开到二阶，一阶项相消，二阶剩余 KL−LK。证毕。
+
+共同复结构还同时给出实度量与反对称比较：
+
+```math
+g(u,v)=\operatorname{Re}\langle u,v\rangle,\qquad
+\omega_0(u,v)=\operatorname{Im}\langle u,v\rangle=g(Ju,v).
+```
+
+酉流保留两者。商去不可读的整体相位以后，纯态射线空间具有相容的度量、复结构与辛结构；保度量的场称为 Killing 场。v82 将这个几何结构的入口供应为尚未预设光滑或线性的实际场上的二元条件。
+
+标准几何量子力学已把量子可观测量与 Hamiltonian 且 Killing 的场联系起来；本稿不认领这一已知表示的首次提出。[Ashtekar 与 Schilling 原始章稿第 II 节](https://arxiv.org/pdf/gr-qc/9706069)
+

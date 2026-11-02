@@ -1,0 +1,16 @@
+### 命题 19.5（不确定性保留为内部比较的约束）
+
+对自伴 $A,B$ 与态 $\rho$，令
+$\widetilde A=A-\operatorname{Tr}(\rho A)I$、$\widetilde B=B-\operatorname{Tr}(\rho B)I$。
+则
+
+$$
+\Delta_\rho A\,\Delta_\rho B
+ \ge\frac12|\operatorname{Tr}(\rho[A,B])|.
+$$
+
+**证明。**
+取 HS 向量 $X=\widetilde A\sqrt\rho$、$Y=\widetilde B\sqrt\rho$。
+其范数分别为两个标准差，内积为 $\operatorname{Tr}(\rho\widetilde A\widetilde B)$。
+Cauchy–Schwarz 说明标准差乘积不小于该内积的绝对值，再取虚部，即得所示界。
+
