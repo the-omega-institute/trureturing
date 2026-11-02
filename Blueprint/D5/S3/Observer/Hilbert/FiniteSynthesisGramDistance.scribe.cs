@@ -22,6 +22,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
     private static Formula BindV => Seq(Forall, Sp, V, Colon, F.Id("E"), To,
         Underscore, Grp(F.Id("k")), F.Id("H"), Comma, Sp);
     private static Formula BindVX => Seq(BindV, Forall, Sp, X, InMacro, Sp, F.Id("H"), Comma, Sp);
+    private static DocumentBlock Display(Formula formula) => Paragraph(Math(Disp(formula)));
     private static Formula Sub(Formula a, Formula b) => Seq(a, Underscore, Grp(b));
     private static Formula Pow(Formula a, Formula b) => Seq(a, Caret, Grp(b));
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));
@@ -110,7 +111,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                     "Only this specialization assumes that the Gram operator is a linear "
                     + "equivalence. The singular case remains covered by the preceding identities."))),
                 DescribeRole.Theorem),
-            H("Application: a fixed coherent affine constraint"),
+            Paragraph(Text("Application: a fixed coherent affine constraint.")),
             Paragraph(Text(
                 "Let ι be any finite nonempty index set, let i₀ be one of its elements, "
                 + "and let H be a finite-dimensional complex Hilbert space. Thus the number "
@@ -118,11 +119,11 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "its fixed cross-input complex phases. Give the coefficient space C^ι "
                 + "its usual Euclidean inner product, conjugate-linear in the first slot. "
                 + "The following application uses the actual synthesis and its Gram operator:")),
-            Disp(Seq(F.Id("X"), C, Eq, Sum, Underscore, Grp(J, InMacro, Iota),
+            Display(Seq(F.Id("X"), C, Eq, Sum, Underscore, Grp(J, InMacro, Iota),
                 Sub(C, J), Sub(X, J), Comma, Sp,
                 G, Eq, Pow(F.Id("X"), Star), F.Id("X"), Comma, Sp,
                 B, Eq, Seq(Mathbf, Grp(D(1))))),
-            Disp(Seq(F.Id("D"), Eq, Op("span"), Underscore, Grp(Seq(Mathbb, Grp(F.Id("C")))),
+            Display(Seq(F.Id("D"), Eq, Op("span"), Underscore, Grp(Seq(Mathbb, Grp(F.Id("C")))),
                 OpenBrace, Sub(X, J), Minus, XRef, Colon, J, InMacro, Iota, CloseBrace,
                 Comma, Sp, Q, Eq, Sub(F.Id("P"), Pow(F.Id("D"), Perp)), XRef,
                 Comma, Sp, TStar, Eq, NormSq(Q))),
@@ -131,10 +132,10 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "norm of its synthesis. Since b has every coordinate equal to one, "
                 + "the constraint is exactly sum c_j = 1, without conjugating the "
                 + "coefficients or changing the input phases.")),
-            Disp(Seq(Forall, C, InMacro, Coeff, Comma, Sp,
+            Display(Seq(Forall, C, InMacro, Coeff, Comma, Sp,
                 Energy(C), Eq, NormSq(Seq(F.Id("X"), C)), Comma, Sp,
                 Inner(B, C), Eq, SumC)),
-            Disp(Seq(Forall, F.Id("z"), InMacro, F.Id("H"), Comma, Sp,
+            Display(Seq(Forall, F.Id("z"), InMacro, F.Id("H"), Comma, Sp,
                 Open, Exists, C, InMacro, Coeff, Comma, Sp,
                 SumC, Eq, D(1), Land, F.Id("X"), C, Eq, F.Id("z"), Close,
                 Leftrightarrow, F.Id("z"), Minus, XRef, InMacro, F.Id("D"))),
@@ -145,28 +146,28 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "coefficients to the i₀ coordinate. This gives actual feasible "
                 + "coefficients. Projection gives q − x_i₀ in D and q orthogonal to D. "
                 + "Consequently q is feasible and the minimum is attained:")),
-            Disp(Seq(Min, Underscore, Grp(C, InMacro, Coeff, Comma, SumC, Eq, D(1)),
+            Display(Seq(Min, Underscore, Grp(C, InMacro, Coeff, Comma, SumC, Eq, D(1)),
                 Energy(C), Eq, TStar, Eq, NormSq(Q))),
-            Disp(Seq(Exists, CStar, InMacro, Coeff, Comma, Sp,
+            Display(Seq(Exists, CStar, InMacro, Coeff, Comma, Sp,
                 SumStar, Eq, D(1), Land, F.Id("X"), CStar, Eq, Q, Land,
                 Energy(CStar), Eq, TStar)),
-            Disp(Seq(Forall, C, InMacro, Coeff, Comma, Sp,
+            Display(Seq(Forall, C, InMacro, Coeff, Comma, Sp,
                 SumC, Eq, D(1), Rightarrow, Sp,
                 NormSq(Seq(F.Id("X"), C)), Eq, NormSq(Q), Plus,
                 NormSq(Seq(F.Id("X"), C, Minus, Q)), Ge, TStar)),
-            H("Range case, including singular Gram operators"),
+            Paragraph(Text("Range case, including singular Gram operators.")),
             Paragraph(Text(
                 "Take G⁺ to be the constructed Moore-Penrose inverse, not an assumed "
                 + "optimization oracle. Suppose b lies in range G and put p = G⁺b. "
                 + "The first Penrose law gives Gp = b. Hence a = ⟨b,p⟩ is the real "
                 + "number ‖Xp‖². It is strictly positive: Xp = 0 would imply Gp = 0 "
                 + "and then b = 0, impossible for a nonempty coefficient set.")),
-            Disp(Seq(B, InMacro, Op("range"), G, Rightarrow, Sp,
+            Display(Seq(B, InMacro, Op("range"), G, Rightarrow, Sp,
                 F.Id("p"), Eq, Pow(G, Plus), B, Comma, Sp,
                 G, F.Id("p"), Eq, B, Comma, Sp,
                 F.Id("a"), Eq, Inner(B, F.Id("p")), Eq,
                 NormSq(Seq(F.Id("X"), F.Id("p"))), Gt, D(0))),
-            Disp(Seq(CStar, Eq, Pow(F.Id("a"), Seq(Minus, D(1))), F.Id("p"),
+            Display(Seq(CStar, Eq, Pow(F.Id("a"), Seq(Minus, D(1))), F.Id("p"),
                 Comma, Sp, SumStar, Eq, D(1), Comma, Sp,
                 Energy(CStar), Eq, TStar, Eq, Pow(F.Id("a"), Seq(Minus, D(1))))),
             Paragraph(Text(
@@ -174,15 +175,15 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "X(c − c_*). The squared-norm decomposition proves minimality, "
                 + "so this explicit normalized Moore-Penrose vector attains the same "
                 + "minimum as q. No invertibility of G is used.")),
-            H("Nonrange case and an actual kernel minimizer"),
+            Paragraph(Text("Nonrange case and an actual kernel minimizer.")),
             Paragraph(Text(
                 "If b does not lie in range G, the identities range G = (ker G)⊥ "
                 + "and ker G = ker X supply a kernel vector k whose inner product "
                 + "with b is nonzero. Normalize that vector by this inner product:")),
-            Disp(Seq(Neg, Open, B, InMacro, Op("range"), G, Close, Rightarrow, Sp,
+            Display(Seq(Neg, Open, B, InMacro, Op("range"), G, Close, Rightarrow, Sp,
                 Exists, F.Id("k"), InMacro, Ker, G, Comma, Sp,
                 Inner(B, F.Id("k")), Neq, D(0))),
-            Disp(Seq(CStar, Eq, Frac, Grp(D(1)), Grp(Inner(B, F.Id("k"))), F.Id("k"),
+            Display(Seq(CStar, Eq, Frac, Grp(D(1)), Grp(Inner(B, F.Id("k"))), F.Id("k"),
                 Comma, Sp, SumStar, Eq, D(1), Comma, Sp,
                 G, CStar, Eq, D(0), Comma, Sp,
                 F.Id("X"), CStar, Eq, D(0), Comma, Sp,
@@ -191,7 +192,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 "This produces an actual feasible minimizer even at the singular "
                 + "boundary. In the range case the value is (b*G⁺b)⁻¹ with a strictly "
                 + "positive real denominator; in the nonrange case it is zero.")),
-            H("Interpretation and realization boundary"),
+            Paragraph(Text("Interpretation and realization boundary.")),
             Paragraph(Text(
                 "For a common-output task, the same linear contraction must act on "
                 + "every input, and the common output includes all records in that "
