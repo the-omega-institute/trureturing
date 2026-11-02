@@ -50,7 +50,7 @@ private theorem domain_marker : D marker := by
   have hc : D E := (D_mul _ _).mpr ⟨hb, ha, by simp [readout]⟩
   have hca : D (.mul E (.of true)) :=
     (D_mul _ _).mpr ⟨hc, ha, by simp [E, readout]⟩
-  exact (D_mul _ _).mpr ⟨hca, ha, by simp [readout]⟩
+  exact (D_mul _ _).mpr ⟨hca, ha, by simp [NativeFreshSensorGrowth.cone, readout]⟩
 
 private theorem domain_comb (k : ℕ) (f : Fin k → Bool) :
     D (comb k (fun i => slot (f i)) marker) := by

@@ -15,7 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 
 @[reducible] def signature : Signature where
-  Params := Bool × Source
+  Params := Σ _ : Bool, Source
   State _ := Set Call
   Role := Unit
   finiteRole := inferInstance
@@ -33,7 +33,7 @@ def bad : Realization signature :=
 @[reducible] def guardArena : Arena where
   signature := signature
   Law R := ∀ (b : Bool) (t : Source) (I : Set Call), Born b t → Ideal b t I →
-    ∀ e ∈ events b t, Guard e (R.readout () (b,t) I) ↔ Enabled b t I e
+    ∀ e ∈ events b t, Guard e (R.readout () ⟨b,t⟩ I) ↔ Enabled b t I e
 
 private theorem bad_guard : ¬ guardArena.Law bad := by
   classical
@@ -48,13 +48,13 @@ private theorem bad_guard : ¬ guardArena.Law bad := by
     · intro e he d hd _
       simpa [events] using he
   have hh := (h true (.of false) {Call.promote []} hb hI (.promote []) (by simp [events])).mp
-    (show Guard (.promote []) (bad.readout () (true,.of false) {Call.promote []}) from rfl)
+    (show Guard (.promote []) (bad.readout () ⟨true,.of false⟩ {Call.promote []}) from rfl)
   exact hh.1 (by simp)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   cases i
-  refine ⟨(true,.of false), ∅, {Call.promote []}, ?_⟩
+  refine ⟨⟨true,.of false⟩, ∅, {Call.promote []}, ?_⟩
   simp [actual, realize, cutTerm]
 
 def guardFamilyRegistration : Registration guardArena (type_of% guard_enabled) := {
