@@ -69,7 +69,6 @@ private lemma correlation_neg (x : I → ℝ) (a : I → ℂ) (s : ℝ) :
     change star («prefix» x a v) * «prefix» x a (v + s) =
       star (star («prefix» x a (v + s)) * «prefix» x a v)
     rw [star_mul, star_star]
-    ring
   simp_rw [he] at ht
   have hc : (∫ v : ℝ, star (star («prefix» x a (v + s)) * «prefix» x a v)) =
       star (∫ v : ℝ, star («prefix» x a (v + s)) * «prefix» x a v) := by
