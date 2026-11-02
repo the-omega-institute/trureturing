@@ -319,21 +319,10 @@ private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
   let d := ε minorPoly
   let v := ε basisNumerator.det
   let c := ε sumNumerator.det
-  have hd : d ≠ 0 := by
-    intro he
-    apply hg
-    simp only [chartPoly, map_mul, show MvPolynomial.eval t minorPoly = 0 from he,
-      zero_mul]
-  have hv : v ≠ 0 := by
-    intro he
-    apply hg
-    simp only [chartPoly, map_mul, show MvPolynomial.eval t basisNumerator.det = 0 from he,
-      mul_zero, zero_mul]
-  have hc : c ≠ 0 := by
-    intro he
-    apply hg
-    simp only [chartPoly, map_mul, show MvPolynomial.eval t sumNumerator.det = 0 from he,
-      mul_zero, zero_mul]
+  simp only [chartPoly, map_mul, mul_ne_zero_iff] at hg
+  have hd : d ≠ 0 := hg.1.1.1.1
+  have hv : v ≠ 0 := hg.1.1.1.2
+  have hc : c ≠ 0 := hg.1.1.2
   have hV : reconstructedBasis t = d⁻¹ • ε.mapMatrix basisNumerator := by
     ext i k
     change ε (basisNumerator i k) / d = d⁻¹ * ε (basisNumerator i k)
@@ -395,10 +384,8 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     (reconstructedSum t).det ≠ 0 := by
   have hraw := kernel_cramer_identity
   obtain ⟨hv, _, _, _, hc, _⟩ := chart_scalars t hg
-  have hd : MvPolynomial.eval t minorPoly ≠ 0 := by
-    intro he
-    apply hg
-    simp only [chartPoly, map_mul, he, zero_mul]
+  simp only [chartPoly, map_mul, mul_ne_zero_iff] at hg
+  have hd : MvPolynomial.eval t minorPoly ≠ 0 := hg.1.1.1.1
   have hk (i k : Fin 2) :
       dotProduct (fun j => t ![i, k, j]) (reconstructedKernel t) =
         reconstructedBasis t i k := by
@@ -448,14 +435,9 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
 private lemma chart_denominator (n : ℕ) (t : (Fin 3 → Fin 2) → ℂ)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
     MvPolynomial.eval t (denominator n) ≠ 0 := by
-  have hv : MvPolynomial.eval t basisNumerator.det ≠ 0 := by
-    intro hv
-    apply hg
-    simp only [chartPoly, map_mul, hv, mul_zero, zero_mul]
-  have hc : MvPolynomial.eval t sumNumerator.det ≠ 0 := by
-    intro hc
-    apply hg
-    simp only [chartPoly, map_mul, hc, mul_zero, zero_mul]
+  simp only [chartPoly, map_mul, mul_ne_zero_iff] at hg
+  have hv : MvPolynomial.eval t basisNumerator.det ≠ 0 := hg.1.1.1.2
+  have hc : MvPolynomial.eval t sumNumerator.det ≠ 0 := hg.1.1.2
   simpa only [denominator, map_mul, map_pow] using
     mul_ne_zero (pow_ne_zero 3 hv) (pow_ne_zero (n - 3) hc)
 
@@ -699,6 +681,7 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
       reconstructedRight (mpsState 3 a₀ a₁ l r) = s⁻¹ ^ 2 • (u *ᵥ r) := by
   let t := mpsState 3 a₀ a₁ l r
   change MvPolynomial.eval t chartPoly ≠ 0 at hg
+  simp only [chartPoly, map_mul, mul_ne_zero_iff] at hg
   let m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ := ![a₀, a₁]
   let u : Matrix (Fin 2) (Fin 2) ℂ := Matrix.of fun i j => (l ᵥ* m i) j
   let v : Matrix (Fin 2) (Fin 2) ℂ := Matrix.of fun j k => (m k *ᵥ r) j
@@ -711,14 +694,11 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     rfl
   have hdet : (u * m 0 * v).det ≠ 0 := by
     rw [← ht 0, Matrix.det_fin_two]
-    intro he
-    apply hg
-    change t ![0, 0, 0] * t ![1, 0, 1] - t ![0, 0, 1] * t ![1, 0, 0] = 0 at he
-    simp only [chartPoly, map_mul, map_sub, coordinate, MvPolynomial.eval_X, he, mul_zero, zero_mul]
-  have hu : IsUnit u.det := isUnit_iff_ne_zero.mpr
-    (fun he => hdet (by rw [Matrix.det_mul, Matrix.det_mul, he, zero_mul, zero_mul]))
-  have hv : IsUnit v.det := isUnit_iff_ne_zero.mpr
-    (fun he => hdet (by rw [Matrix.det_mul, he, mul_zero]))
+    simpa only [map_sub, map_mul, coordinate, MvPolynomial.eval_X, Matrix.of_apply] using
+      hg.1.2
+  simp only [Matrix.det_mul, mul_ne_zero_iff] at hdet
+  have hu : IsUnit u.det := isUnit_iff_ne_zero.mpr hdet.1.1
+  have hv : IsUnit v.det := isUnit_iff_ne_zero.mpr hdet.2
   let z := v⁻¹ *ᵥ r
   let e := l ᵥ* u⁻¹
   let k : Fin 4 → ℂ := ![z 0, z 1, e 0, e 1]
@@ -746,8 +726,7 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     · linear_combination h01
     · linear_combination h10
     · linear_combination h11
-  have hd : MvPolynomial.eval t minorPoly ≠ 0 := by
-    intro he; apply hg; simp only [chartPoly, map_mul, he, zero_mul]
+  have hd : MvPolynomial.eval t minorPoly ≠ 0 := hg.1.1.1.1
   have huniq := kernel_vector_unique t hd k hk
   have hs : k 3 ≠ 0 := by
     intro hs
