@@ -42,7 +42,35 @@ $$(\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.claim}) 
 
 For every natural n at least two and every strictly positive vector k indexed by Fin n, kurtosis k strictly exceeds lowerBound. The same lowerBound is the greatest lower bound of the set of all such values, allowing n to vary. This is the unidirectional lower-bound assertion of main.tex lines 417 and 424-427, with the asymptotic minimum read as an infimum and with strictness for each finite cycle. The source's choice of extremal rates is a numerical conjecture in line 417 and in the Appendix, line 792. The assertion here concerns only the lower endpoint for the displayed inverse-rate expression on positive unidirectional cycles.
 
-**Theorem 1.4 (The strict bound and its sharp limiting value).**
+**Theorem 1.4 (Kurtosis in rescaled inverse rates).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right) = ((((15: \mathbb{R})) \cdot ((\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (2: \mathbb{N}), \lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (1: \mathbb{N}), \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})\right))^{(2: \mathbb{N})})) - (((20: \mathbb{R})) \cdot (\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (3: \mathbb{N}), \lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (1: \mathbb{N}), \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})\right)))) + (\frac{((6: \mathbb{R})) \cdot (\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (4: \mathbb{N}), \lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (1: \mathbb{N}), \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})\right))}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (2: \mathbb{N}), \lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (1: \mathbb{N}), \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})\right)})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.normalized` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+Dividing every inverse rate by its first power sum rewrites kurtosis as 15 times the square of the second power sum, minus 20 times the third, plus 6 times the fourth divided by the second. The identity holds for every natural n and every real vector k, using total real inversion and division. To prove it, factor the normalization denominator out of each sum. If the first or second inverse-rate power sum is zero, simplify using division by zero; otherwise clear the nonzero denominators.
+
+**Theorem 1.5 (Four inequalities for positive-coordinate power sums).**
+
+$$\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (x: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < x\left(i\right))) \to (((0: \mathbb{R}) < \operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (2: \mathbb{N}), x\right)) \land (((0: \mathbb{R}) \le \operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (3: \mathbb{N}), x\right)) \land (((\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (3: \mathbb{N}), x\right))^{(2: \mathbb{N})} \le (\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (2: \mathbb{N}), x\right)) \cdot (\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (4: \mathbb{N}), x\right))) \land (\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (4: \mathbb{N}), x\right) < (\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (2: \mathbb{N}), x\right))^{(2: \mathbb{N})})))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.moments` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+For a strictly positive real vector x on Fin n with n at least two, the second power sum is positive and the third is nonnegative. Cauchy-Schwarz applied to x and its coordinatewise square bounds the square of the third power sum by the product of the second and fourth. The strict square-sum inequality applied to the positive coordinates xᵢ² bounds the fourth power sum strictly below the square of the second.
+
+**Theorem 1.6 (The strict bound and its sharp limiting value).**
 
 $$(\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.lowerBound} < \operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right)))))) \land (\operatorname{IsGLB}\left(\{(s: \mathbb{R}) \mid \exists (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \land (\exists (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \land (s = \operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right)))))\}, \operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.lowerBound}\right))$$
 
@@ -79,6 +107,8 @@ Finally, the strict inequality implies that C is a lower bound of the set of pos
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.kurtosis`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.lowerBound`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.moments`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.normalized`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.result`
 - Dependency: [D5/S3/Analytic/Interpolation/HermiteMomentBounds](../Analytic/Interpolation/HermiteMomentBounds.md)
 - Dependency: [D5/S3/Quantum/Transport/StrongAbsorption/Foundations](../Quantum/Transport/StrongAbsorption/Foundations.md)
