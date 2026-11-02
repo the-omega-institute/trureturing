@@ -19,6 +19,8 @@ open D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
 open D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 namespace D5.S3.Combinatorics.Graph.LinearForests.TwoPathConcentration
 
+local attribute [instance] Classical.propDecidable
+
 local instance : DecidableRel (SimpleGraph.hasse ℕ).Adj := Classical.decRel _
 
 private lemma path_two : pathSeries 2 = 1 - 2 * X := by
@@ -172,16 +174,16 @@ private lemma configurations_sum {α β : Type*} [DecidableEq α] [DecidableEq �
     · intro h
       constructor
       · intro x hx y hy hn he
-        exact h (by simpa using hx) (by simpa using hy)
-          (by simpa using hn) he
+        exact h (a := Sum.inl x) (b := Sum.inl y) (by simpa using hx) (by simpa using hy)
+          (by simpa using hn) (by simpa using he)
       · intro x hx y hy hn he
-        exact h (by simpa using hx) (by simpa using hy)
-          (by simpa using hn) he
+        exact h (a := Sum.inr x) (b := Sum.inr y) (by simpa using hx) (by simpa using hy)
+          (by simpa using hn) (by simpa using he)
     · rintro ⟨hs, ht⟩ (x | x) hx (y | y) hy hn he
       · exact hs (by simpa using hx) (by simpa using hy)
           (by simpa using hn) he
-      · exact he
-      · exact he
+      · simpa using he
+      · simpa using he
       · exact ht (by simpa using hx) (by simpa using hy)
           (by simpa using hn) he
   ext U
@@ -233,16 +235,18 @@ private lemma partition_subtype {α K : Type*} [DecidableEq α] [CommSemiring K]
       obtain ⟨x,hx,rfl⟩ := Finset.mem_image.mp hx
       exact x.property
     · intro x hx y hy hn he
-      obtain ⟨x,hx,rfl⟩ := Finset.mem_image.mp hx
-      obtain ⟨y,hy,rfl⟩ := Finset.mem_image.mp hy
-      exact hh.2 hx hy (fun h => hn (congrArg Subtype.val h)) he
+      obtain ⟨a,ha,hax⟩ := Finset.mem_image.mp hx
+      obtain ⟨b,hb,hby⟩ := Finset.mem_image.mp hy
+      subst x
+      subst y
+      exact hh.2 ha hb (fun h => hn (congrArg Subtype.val h)) he
   · intro S hS T hT he
     exact Finset.image_injective (Subtype.val_injective) he
   · intro S hS
     have hh := Finset.mem_filter.mp hS
     let T : Finset (V : Set α) := S.attach.image
       (fun x => (⟨x.val, (Finset.mem_powerset.mp hh.1) x.property⟩ : (V : Set α)))
-    refine ⟨T, Finset.mem_filter.mpr ⟨by simp, ?_⟩, ?_⟩
+    refine ⟨T, Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ T), ?_⟩, ?_⟩
     · intro x hx y hy hn he
       obtain ⟨a,ha,hax⟩ := Finset.mem_image.mp hx
       obtain ⟨b,hb,hby⟩ := Finset.mem_image.mp hy
@@ -250,6 +254,7 @@ private lemma partition_subtype {α K : Type*} [DecidableEq α] [CommSemiring K]
         (by simpa [← hby] using b.property) (fun h => hn (Subtype.ext h)) he
     · ext x
       simp [T]
+      exact (Finset.mem_powerset.mp hh.1)
   · intro S hS
     exact (Finset.prod_image (fun x _ y _ h => Subtype.ext h)).symm
 
@@ -268,9 +273,124 @@ private lemma partition_path (n : ℕ) :
     rw [path_adj, pathGraph_adj]
   have hh := partition_relabel (pathGraph n) ((SimpleGraph.hasse ℕ).induce (range n : Set ℕ))
     e he univ (fun _ => (-X : PowerSeries ℤ))
-  rw [Equiv.image_univ] at hh
+  rw [Finset.image_univ_equiv] at hh
   rw [partition_subtype] at hh
   exact hh.symm
+
+
+private lemma partition_embedding {α β K : Type*} [Fintype α]
+    [DecidableEq α] [DecidableEq β] [CommSemiring K]
+    (G : SimpleGraph α) (H : SimpleGraph β) [DecidableRel G.Adj] [DecidableRel H.Adj]
+    (f : α ↪ β) (hf : ∀ x y, H.Adj (f x) (f y) ↔ G.Adj x y) (w : β → K) :
+    partition H (univ.image f) w = partition G univ (fun x => w (f x)) := by
+  classical
+  let V := univ.image f
+  let e : α ≃ (V : Set β) := Equiv.ofBijective
+    (fun x => ⟨f x, Finset.mem_image.mpr ⟨x, mem_univ x, rfl⟩⟩)
+    ⟨fun x y h => f.injective (congrArg Subtype.val h), by
+      intro y
+      obtain ⟨x,hx,he⟩ := Finset.mem_image.mp y.property
+      exact ⟨x, Subtype.ext he⟩⟩
+  have h := partition_relabel G (H.induce (V : Set β)) e
+    (fun x y => hf x y) univ (fun x => w x.val)
+  rw [Finset.image_univ_equiv, partition_subtype] at h
+  exact h
+
+/-- Separate the last B vertex of the first path and concatenate its even
+prefix with the entire second path. -/
+def joinEquiv (p q : ℕ) :
+    Fin (2 * p + 1) ⊕ Fin (2 * q + 1) ≃
+      Fin (2 * p + (2 * q + 1)) ⊕ Fin 1 :=
+  (Equiv.sumCongr finSumFinEquiv.symm (Equiv.refl _)).trans
+    ((Equiv.sumAssoc _ _ _).trans
+      ((Equiv.sumCongr (Equiv.refl _) (Equiv.sumComm _ _)).trans
+        ((Equiv.sumAssoc _ _ _).symm.trans
+          (Equiv.sumCongr finSumFinEquiv (Equiv.refl _)))))
+
+private lemma join_left (p q : ℕ) (i : Fin (2 * p)) :
+    joinEquiv p q (.inl (i.castAdd 1)) =
+      .inl (i.castAdd (2 * q + 1)) := by
+  simp [joinEquiv]
+
+private lemma join_right (p q : ℕ) (i : Fin (2 * q + 1)) :
+    joinEquiv p q (.inr i) = .inl (i.natAdd (2 * p)) := by
+  simp [joinEquiv]
+
+private lemma join_isolate (p q : ℕ) :
+    joinEquiv p q (.inl (Fin.last (2 * p))) = .inr 0 := by
+  simp [joinEquiv]
+
+/-- A complete actual component witness; the residual is the given induced
+subgraph on `R`, and its labels are fixed by the coordinate map. -/
+structure ActualTwoPaths {α : Type*} [Fintype α] [DecidableEq α]
+    (G : SimpleGraph α) (A B R : Finset α) (p q : ℕ) where
+  labels : α ≃ ((Fin (2 * p + 1) ⊕ Fin (2 * q + 1)) ⊕ (R : Set α))
+  rest : ∀ r : (R : Set α), labels r.val = .inr r
+  adjacency : ∀ x y, G.Adj x y ↔
+    (((pathGraph (2 * p + 1)) ⊕g (pathGraph (2 * q + 1))) ⊕g
+      (G.induce (R : Set α))).Adj (labels x) (labels y)
+  left_A : ∀ i, labels.symm (.inl (.inl i)) ∈ A ↔ Odd i.val
+  left_B : ∀ i, labels.symm (.inl (.inl i)) ∈ B ↔ Even i.val
+  right_A : ∀ i, labels.symm (.inl (.inr i)) ∈ A ↔ Odd i.val
+  right_B : ∀ i, labels.symm (.inl (.inr i)) ∈ B ↔ Even i.val
+
+namespace ActualTwoPaths
+variable {α : Type*} [Fintype α] [DecidableEq α]
+  {G : SimpleGraph α} {A B R : Finset α} {p q : ℕ}
+
+/-- Coordinates of the new long path, the B isolate, and the untouched R. -/
+def afterLabels (w : ActualTwoPaths G A B R p q) :
+    α ≃ ((Fin (2 * p + (2 * q + 1)) ⊕ Fin 1) ⊕ (R : Set α)) :=
+  w.labels.trans (Equiv.sumCongr (joinEquiv p q) (Equiv.refl _))
+
+/-- The graph after the move has the complete original carrier. -/
+def after (w : ActualTwoPaths G A B R p q) : SimpleGraph α :=
+  (((pathGraph (2 * p + (2 * q + 1))) ⊕g (pathGraph 1)) ⊕g
+    (G.induce (R : Set α))).comap w.afterLabels
+
+/-- The actual embedding of the two shortened paths and the original R. -/
+def residualEmbedding (w : ActualTwoPaths G A B R p q) :
+    ((Fin (2 * p - 2) ⊕ Fin (2 * q - 2)) ⊕ (R : Set α)) ↪ α :=
+  (Function.Embedding.sumMap
+    (Function.Embedding.sumMap
+      (Fin.castLEEmb (by omega : 2 * p - 2 ≤ 2 * p + 1))
+      (Fin.castLEEmb (by omega : 2 * q - 2 ≤ 2 * q + 1)))
+    (Function.Embedding.refl _)).trans w.labels.symm.toEmbedding
+
+/-- The residual domain consists of original vertices, with no padding. -/
+def residual (w : ActualTwoPaths G A B R p q) : Finset α :=
+  univ.image w.residualEmbedding
+
+private lemma residual_adjacency (w : ActualTwoPaths G A B R p q)
+    (x y : ((Fin (2 * p - 2) ⊕ Fin (2 * q - 2)) ⊕ (R : Set α))) :
+    G.Adj (w.residualEmbedding x) (w.residualEmbedding y) ↔
+      (((pathGraph (2 * p - 2)) ⊕g (pathGraph (2 * q - 2))) ⊕g
+        (G.induce (R : Set α))).Adj x y := by
+  rw [w.adjacency]
+  rcases x with (x | x) | x <;> rcases y with (y | y) | y <;>
+    simp [residualEmbedding, SimpleGraph.sum_adj, pathGraph_adj]
+
+private lemma residual_card (w : ActualTwoPaths G A B R p q)
+    (hp : 1 ≤ p) (hq : 1 ≤ q) :
+    w.residual.card + 6 = Fintype.card α := by
+  have h := Fintype.card_congr w.labels
+  simp only [Fintype.card_sum, Fintype.card_fin, Fintype.card_coe] at h
+  simp only [residual, Finset.card_image_of_injective _ w.residualEmbedding.injective,
+    Finset.card_univ, Fintype.card_sum, Fintype.card_fin, Fintype.card_coe]
+  omega
+
+private lemma residual_rest (w : ActualTwoPaths G A B R p q) : R ⊆ w.residual := by
+  intro r hr
+  apply Finset.mem_image.mpr
+  refine ⟨.inr ⟨r,hr⟩, mem_univ _, ?_⟩
+  change w.labels.symm (.inr ⟨r,hr⟩) = r
+  exact w.labels.symm_apply_eq.mpr (w.rest ⟨r,hr⟩).symm
+
+private lemma after_rest (w : ActualTwoPaths G A B R p q) (x y : (R : Set α)) :
+    w.after.Adj x.val y.val ↔ G.Adj x.val y.val := by
+  simp [after, afterLabels, w.rest, SimpleGraph.comap_adj, SimpleGraph.sum_adj]
+
+end ActualTwoPaths
 
 #print axioms two_path_series_concentration
 end D5.S3.Combinatorics.Graph.LinearForests.TwoPathConcentration
