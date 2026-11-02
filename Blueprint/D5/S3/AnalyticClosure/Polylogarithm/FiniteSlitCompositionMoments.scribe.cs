@@ -32,7 +32,8 @@ internal sealed class FiniteSlitCompositionMomentsDocument : IScribeDocumentDefi
                         + "and has its correct value at zero. The upper bank is continuous on the "
                         + "closed upper half-collar and agrees there with the reciprocal at every "
                         + "point of omega. At one its value is zeta(head,tail)^(-ell) for head>1 "
-                        + "and zero for head=1.")),
+                        + "and zero for head=1. There is also a nonnegative constant bounding the norm "
+                        + "of the actual reciprocal at every point of omega on the fixed circle of radius R.")),
                     Paragraph(Text(
                         "For every real B, B/R^n plus (1/pi) times the integral from 1 to R of "
                         + "Im upper(x)/x^(n+1) is strictly negative eventually. CompositionBanks.result "
@@ -40,13 +41,17 @@ internal sealed class FiniteSlitCompositionMomentsDocument : IScribeDocumentDefi
                         + "the actual zero-free radius. The radius R is 1+min(R0-1,rho)/2. "
                         + "The bank density h(x)=-Im upper(x) is continuous, zero at one and "
                         + "strictly positive inside the interval. FiniteSlitBankMoments.bank_dominance "
-                        + "then supplies the strict geometric comparison.")),
+                        + "then supplies the strict geometric comparison. For the outer norm bound, "
+                        + "separate the circle by a distance delta strictly between R-1 and rho from one. "
+                        + "Its far part is a compact subset of omega. On the near part, the upper "
+                        + "or lower closed half-collar gives the bound according to the sign of Im z.")),
                     Paragraph(Text(
                         "The positive compositions use the original largest strict index and "
                         + "depth(tail)=1+length(tail). Every finite leading-one block and every "
                         + "positive ell is included. No global nonvanishing premise is imposed. "
-                        + "The Cauchy coefficient identity, shrinking connector limits and uniform "
-                        + "outer bound remain to be established. Taylor coefficients must also be "
+                        + "The Cauchy coefficient identity and shrinking connector limits remain "
+                        + "to be established, together with the geometric bound for the actual "
+                        + "outer coefficient integral. Taylor coefficients must also be "
                         + "identified with the exact ordinary formal inverse, followed by the "
                         + "all-j finite-prefix and strict admissible lower-bound argument. "
                         + "Consequently this result does not prove eventual coefficient negativity "
