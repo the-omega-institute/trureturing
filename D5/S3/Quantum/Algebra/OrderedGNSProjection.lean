@@ -107,7 +107,8 @@ def projection (rho : Matrix n n ℂ) (hrho : rho.PosDef)
   letI := rho.toMatrixNormedAddCommGroup hrho
   letI := rho.toMatrixInnerProductSpace hrho.posSemidef
   letI : TopologicalSpace (Matrix n n ℂ) :=
-    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace
+      |>.toUniformSpace.toTopologicalSpace
   exact A.toSubmodule.starProjection.toLinearMap
 
 private theorem projection_mem (rho : Matrix n n ℂ) (hrho : rho.PosDef)
@@ -116,7 +117,8 @@ private theorem projection_mem (rho : Matrix n n ℂ) (hrho : rho.PosDef)
   letI := rho.toMatrixNormedAddCommGroup hrho
   letI := rho.toMatrixInnerProductSpace hrho.posSemidef
   letI : TopologicalSpace (Matrix n n ℂ) :=
-    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace
+      |>.toUniformSpace.toTopologicalSpace
   exact A.toSubmodule.starProjection_apply_mem x
 
 private theorem projection_left_comparison (rho : Matrix n n ℂ) (hrho : rho.PosDef)
@@ -125,10 +127,13 @@ private theorem projection_left_comparison (rho : Matrix n n ℂ) (hrho : rho.Po
   letI := rho.toMatrixNormedAddCommGroup hrho
   letI := rho.toMatrixInnerProductSpace hrho.posSemidef
   letI : TopologicalSpace (Matrix n n ℂ) :=
-    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace
+      |>.toUniformSpace.toTopologicalSpace
   have h := A.toSubmodule.inner_orthogonalProjectionOnto_eq_of_mem_left ⟨a, ha⟩ x
   change trace (projection rho hrho A x * rho * aᴴ) = trace (x * rho * aᴴ) at h
-  simpa only [state, star_eq_conjTranspose, ← trace_mul_cycle] using h
+  rw [← trace_mul_cycle rho aᴴ (projection rho hrho A x),
+    ← trace_mul_cycle rho aᴴ x] at h
+  simpa only [state, star_eq_conjTranspose, mul_assoc] using h
 
 private theorem projection_unique (rho : Matrix n n ℂ) (hrho : rho.PosDef)
     (A : StarSubalgebra ℂ (Matrix n n ℂ)) (x y : Matrix n n ℂ) (hy : y ∈ A)
@@ -137,13 +142,14 @@ private theorem projection_unique (rho : Matrix n n ℂ) (hrho : rho.PosDef)
   letI := rho.toMatrixNormedAddCommGroup hrho
   letI := rho.toMatrixInnerProductSpace hrho.posSemidef
   letI : TopologicalSpace (Matrix n n ℂ) :=
-    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    (rho.toMatrixNormedAddCommGroup hrho).toMetricSpace.toPseudoMetricSpace
+      |>.toUniformSpace.toTopologicalSpace
   apply A.toSubmodule.eq_starProjection_of_mem_of_inner_eq_zero hy
   intro a ha
   rw [inner_eq_zero_symm]
   change trace ((x - y) * rho * aᴴ) = 0
   rw [← trace_mul_cycle rho aᴴ (x - y), mul_sub, trace_sub, sub_eq_zero]
-  exact (h a ha).symm
+  simpa only [state, star_eq_conjTranspose, mul_assoc] using (h a ha).symm
 
 private theorem projection_retract (rho : Matrix n n ℂ) (hrho : rho.PosDef)
     (A : StarSubalgebra ℂ (Matrix n n ℂ)) (a : Matrix n n ℂ) (ha : a ∈ A) :
@@ -303,7 +309,7 @@ private theorem amplify_left_module (A : StarSubalgebra ℂ (Matrix n n ℂ))
   change E (block (B * X) r s) i j = _
   rw [block_mul, map_sum]
   simp_rw [hl _ (hB r _) _]
-  simp only [amplify, LinearMap.coe_mk, AddHom.coe_mk, mul_apply, Fintype.sum_prod_type,
+  simp only [amplify, LinearMap.coe_mk, mul_apply, Fintype.sum_prod_type,
     Matrix.sum_apply, block]
   rfl
 
@@ -316,7 +322,7 @@ private theorem amplify_right_module (A : StarSubalgebra ℂ (Matrix n n ℂ))
   change E (block (X * B) r s) i j = _
   rw [block_mul, map_sum]
   simp_rw [hr _ (hB _ s) _]
-  simp only [amplify, LinearMap.coe_mk, AddHom.coe_mk, mul_apply, Fintype.sum_prod_type,
+  simp only [amplify, LinearMap.coe_mk, mul_apply, Fintype.sum_prod_type,
     Matrix.sum_apply, block]
   rfl
 
@@ -328,13 +334,28 @@ private theorem amplified_state (rho : Matrix n n ℂ)
     one_apply, block, ite_mul]
 
 open scoped Kronecker in
+/-- The normalized faithful density for each nonempty finite amplification. -/
+def amplifiedDensity (rho : Matrix n n ℂ) : Matrix (k × n) (k × n) ℂ :=
+  (Fintype.card k : ℝ)⁻¹ • ((1 : Matrix k k ℂ) ⊗ₖ rho)
+
+private theorem amplified_normalized_state (rho : Matrix n n ℂ)
+    (X : Matrix (k × n) (k × n) ℂ) :
+    state (amplifiedDensity rho) X =
+      (Fintype.card k : ℝ)⁻¹ • ∑ r, state rho (block X r r) := by
+  unfold amplifiedDensity state
+  rw [smul_mul_assoc, trace_smul]
+  congr 1
+  exact amplified_state rho X
+
+open scoped Kronecker in
 private theorem amplify_state (rho : Matrix n n ℂ)
     (E : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ)
     (hstate : ∀ x, state rho (E x) = state rho x)
     (X : Matrix (k × n) (k × n) ℂ) :
-    state ((1 : Matrix k k ℂ) ⊗ₖ rho) (amplify E X) =
-      state ((1 : Matrix k k ℂ) ⊗ₖ rho) X := by
-  rw [amplified_state, amplified_state]
+    state (amplifiedDensity rho) (amplify E X) =
+      state (amplifiedDensity rho) X := by
+  rw [amplified_normalized_state, amplified_normalized_state]
+  congr 1
   exact Finset.sum_congr rfl (fun r _ => hstate (block X r r))
 
 open scoped Kronecker in
@@ -348,11 +369,36 @@ private theorem amplify_positive (rho : Matrix n n ℂ) (hrho : rho.PosDef)
     (hr : ∀ b ∈ A, ∀ x, E (x * b) = E x * b)
     {X : Matrix (k × n) (k × n) ℂ} (hX : X.PosSemidef) :
     (amplify E X).PosSemidef := by
-  apply positive_of_bimodule ((1 : Matrix k k ℂ) ⊗ₖ rho)
-    (Matrix.PosDef.one.kronecker hrho) (amplifiedAlgebra A) (amplify E)
-    (amplify_mem A E hrange) (amplify_star E hstar) (amplify_state rho E hstate) _ hX
-  intro B hB C hC X
-  rw [amplify_right_module A E hr _ _ hC, amplify_left_module A E hl _ _ hB]
+  by_cases hk : Nonempty k
+  · letI := hk
+    have hn : 0 < (Fintype.card k : ℝ)⁻¹ := inv_pos.mpr (by
+      exact_mod_cast Fintype.card_pos)
+    apply positive_of_bimodule (amplifiedDensity rho)
+      ((Matrix.PosDef.one.kronecker hrho).smul hn) (amplifiedAlgebra A) (amplify E)
+      (amplify_mem A E hrange) (amplify_star E hstar) (amplify_state rho E hstate) _ hX
+    intro B hB C hC X
+    rw [amplify_right_module A E hr _ _ hC, amplify_left_module A E hl _ _ hB]
+  · letI : IsEmpty k := ⟨fun r => hk ⟨r⟩⟩
+    have he : amplify E X = 0 := Subsingleton.elim _ _
+    rw [he]
+    exact Matrix.PosSemidef.zero
+
+private theorem amplify_one (E : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ)
+    (hu : E 1 = 1) : amplify E (1 : Matrix (k × n) (k × n) ℂ) = 1 := by
+  ext ⟨r, i⟩ ⟨s, j⟩
+  change E (block 1 r s) i j = _
+  by_cases hrs : r = s
+  · subst s
+    have hb : block (1 : Matrix (k × n) (k × n) ℂ) r r = 1 := by
+      ext i j
+      simp [block, one_apply]
+    rw [hb, hu]
+    simp [one_apply]
+  · have hb : block (1 : Matrix (k × n) (k × n) ℂ) r s = 0 := by
+      ext i j
+      simp [block, one_apply, hrs]
+    rw [hb, map_zero]
+    simp [one_apply, hrs]
 
 end Amplification
 
@@ -397,9 +443,11 @@ def Expectation (rho : Matrix n n ℂ) (A : StarSubalgebra ℂ (Matrix n n ℂ))
     (E : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ) : Prop :=
   E 1 = 1 ∧
   PhyslibLeaf.MatrixMap.IsCompletelyPositive E ∧
-  (∀ k : ℕ, PhyslibLeaf.MatrixMap.IsPositive
-    (PhyslibLeaf.MatrixMap.kron (LinearMap.id :
-      Matrix (Fin k) (Fin k) ℂ →ₗ[ℂ] Matrix (Fin k) (Fin k) ℂ) E)) ∧
+  (∀ k : ℕ,
+    let Ek := PhyslibLeaf.MatrixMap.kron (LinearMap.id :
+      Matrix (Fin k) (Fin k) ℂ →ₗ[ℂ] Matrix (Fin k) (Fin k) ℂ) E
+    PhyslibLeaf.MatrixMap.IsPositive Ek ∧ Ek 1 = 1 ∧
+      ∀ X, state (amplifiedDensity rho) (Ek X) = state (amplifiedDensity rho) X) ∧
   (∀ x, E (E x) = E x) ∧
   Set.range E = (A : Set (Matrix n n ℂ)) ∧
   (∀ x, state rho (E x) = state rho x) ∧
@@ -442,9 +490,16 @@ theorem ordered_gns_characterization
       · intro k X hX
         rw [right_kron_eq_amplify_swap]
         exact (hpos (Fin k) _ (hX.submatrix Prod.swap)).submatrix Prod.swap
-      · intro k X hX
-        rw [← amplify_eq_left_kron]
-        exact hpos (Fin k) X hX
+      · intro k
+        refine ⟨?_, ?_, ?_⟩
+        · intro X hX
+          rw [← amplify_eq_left_kron]
+          exact hpos (Fin k) X hX
+        · rw [← amplify_eq_left_kron]
+          exact amplify_one _ (projection_retract rho hrho A 1 A.one_mem)
+        · intro X
+          rw [← amplify_eq_left_kron]
+          exact amplify_state rho _ (projection_state rho hrho A) X
       · ext y
         constructor
         · rintro ⟨x, rfl⟩

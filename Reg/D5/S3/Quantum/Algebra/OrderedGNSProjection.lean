@@ -166,5 +166,82 @@ def projection_source_registration :
   dependence := projection_dependence
 
 
+def positivity_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@positive_of_internal_compressions.{u}) (Realization testSignature.{u}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Algebra.OrderedGNSProjection.positive_of_internal_compressions.audit
+  realizationName := `Reg.D5.S3.Quantum.Algebra.OrderedGNSProjection.positive_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨testArena⟩
+  objectArena := .source ⟨testArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source testArena ⟨positive_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize testSignature (fun _ p q =>
+      letI := p.finite
+      letI := p.decEq
+      (state p.rho (star q * p.y * q)).re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Algebra.OrderedGNSProjection
+    definition := none
+    coordinates := #[0, 1, 2, 3, 6]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "body", "body", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def projection_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@ordered_gns_characterization.{u}) (Realization projectionSignature.{u}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Algebra.OrderedGNSProjection.ordered_gns_characterization.audit
+  realizationName := `Reg.D5.S3.Quantum.Algebra.OrderedGNSProjection.projection_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨projectionArena⟩
+  objectArena := .source ⟨projectionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source projectionArena ⟨projection_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize projectionSignature (fun _ p A =>
+      letI := p.finite
+      letI := p.decEq
+      projection p.rho p.faithful A) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Algebra.OrderedGNSProjection
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms positive_source_registration
+#print axioms projection_source_registration
+#print axioms positivity_registration
+#print axioms projection_registration
+
 end
 end Reg.D5.S3.Quantum.Algebra.OrderedGNSProjection
