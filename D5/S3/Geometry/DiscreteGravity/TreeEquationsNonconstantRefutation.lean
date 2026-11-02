@@ -94,8 +94,7 @@ private instance graph_finite : graph.LocallyFinite :=
 
 private lemma neighbor_eq (i : Sum ℤ (ℤ × List Bool)) :
     graph.neighborFinset i = neighbors i := by
-  ext j
-  exact (graph.mem_neighborFinset i j).trans (mem_neighbors i j).symm
+  exact Set.toFinset_ofFinset (neighbors i) (mem_neighbors i)
 
 private lemma parent_child_ne (n : ℤ) (w : List Bool) (b : Bool) :
     parent (Sum.inr (n, w)) ≠ Sum.inr (n, b :: w) := by
