@@ -7,6 +7,7 @@
    digest: Literal multipartite squared-distance matrices and the singular source Laplacian rank-one bridge. -/
 
 import D5.S3.QuadraticForms.StructuredRankOneInertia
+import Mathlib.LinearAlgebra.Eigenspace.Zero
 
 /-! Literal source functions and their singular rank-one identity. -/
 
@@ -366,6 +367,246 @@ theorem singular_source_reduction (hn : ∀ i, 0 < n i) (hs : (delta n).det = 0)
   · exact fun w hw => deviation_action n hn (singular_ratio n hn hs) w hw
   · exact fun w hw hsum => singleton_action n hn (singular_ratio n hn hs) w hw hsum
 
+private def first (hn : ∀ i, 0 < n i) (i : Fin t) : Vertex n := ⟨i, ⟨0, hn i⟩⟩
+
+private def changeBasis : Matrix (Vertex n) (Vertex n) ℝ := fun u v =>
+  (if u = v then 1 else 0) +
+  (if u.1 = v.1 then if v.2.val = 0 then 1 else 0 else 0) -
+  (if u.1 = v.1 then if u.2.val = 0 then 1 else 0 else 0)
+
+private def diagonalValues (u : Vertex n) : ℝ :=
+  if u.2.val = 0 then -1 / d n u.1 else 1 / 4
+
+private theorem changeBasis_sum (hn : ∀ i, 0 < n i) (v : Vertex n) (i : Fin t) :
+    (∑ j : Fin (n i), changeBasis n ⟨i,j⟩ v) =
+      if i = v.1 then (if v.2.val = 0 then (n i : ℝ) else 0) else 0 := by
+  rcases v with ⟨k,l⟩
+  by_cases hi : i = k
+  · subst k
+    simp only [changeBasis, Finset.sum_sub_distrib, Finset.sum_add_distrib,
+      ite_true, Sigma.mk.inj_iff, heq_eq_eq, true_and]
+    have hz : ∀ j : Fin (n i), (j.val = 0) ↔ j = ⟨0, hn i⟩ := by
+      intro j; exact ⟨fun h => Fin.ext h, fun h => congrArg Fin.val h⟩
+    simp only [hz]
+    simp
+  · have he : ∀ j : Fin (n i), (⟨i,j⟩ : Vertex n) ≠ ⟨k,l⟩ := by
+      intro j h; exact hi (congrArg Sigma.fst h)
+    simp [changeBasis, hi, he]
+
+private theorem changeBasis_action (hn : ∀ i, 0 < n i) (f : Vertex n → ℝ)
+    (u : Vertex n) :
+    (changeBasis n *ᵥ f) u = f u + f (first n hn u.1) -
+      (if u.2.val = 0 then ∑ j : Fin (n u.1), f ⟨u.1,j⟩ else 0) := by
+  simp only [mulVec, dotProduct, changeBasis, sub_mul, add_mul,
+    Finset.sum_sub_distrib, Finset.sum_add_distrib, ite_mul, one_mul, zero_mul]
+  have hfirst : (∑ v : Vertex n,
+      if u.1 = v.1 then if v.2.val = 0 then f v else 0 else 0) =
+      f (first n hn u.1) := by
+    rw [Fintype.sum_sigma]
+    simp only [Finset.sum_ite_irrel, Finset.sum_const_zero]
+    rw [Finset.sum_eq_single u.1 (by intro i _ hi; simp [hi.symm]) (by simp)]
+    have hz : ∀ j : Fin (n u.1), (j.val = 0) ↔ j = ⟨0, hn u.1⟩ := by
+      intro j; exact ⟨fun h => Fin.ext h, fun h => congrArg Fin.val h⟩
+    simp [hz, first]
+  have hlast : (∑ v : Vertex n,
+      if u.1 = v.1 then if u.2.val = 0 then f v else 0 else 0) =
+      if u.2.val = 0 then ∑ j : Fin (n u.1), f ⟨u.1,j⟩ else 0 := by
+    rw [Fintype.sum_sigma]
+    simp only [Finset.sum_ite_irrel, Finset.sum_const_zero]
+    rw [Finset.sum_eq_single u.1 (by intro i _ hi; simp [hi.symm]) (by simp)]
+    simp
+  rw [hfirst, hlast]
+  simp
+
+private theorem changeBasis_unit (hn : ∀ i, 0 < n i) : IsUnit (changeBasis n) := by
+  apply Matrix.mulVec_injective_iff_isUnit.mp
+  apply (changeBasis n).mulVecLin.ker_eq_bot.mp
+  apply eq_bot_iff.mpr
+  intro f hf
+  change changeBasis n *ᵥ f = 0 at hf
+  have hs (i : Fin t) : (n i : ℝ) * f (first n hn i) = 0 := by
+    have h := congrArg (fun g : Vertex n → ℝ => ∑ j : Fin (n i), g ⟨i,j⟩) hf
+    simp only [mulVec, dotProduct, Pi.zero_apply, Finset.sum_const_zero] at h
+    rw [Finset.sum_comm] at h
+    simp_rw [← Finset.sum_mul, changeBasis_sum n hn] at h
+    rw [Fintype.sum_sigma] at h
+    have hz : ∀ j : Fin (n i), (j.val = 0) ↔ j = ⟨0, hn i⟩ := by
+      intro j; exact ⟨fun h => Fin.ext h, fun h => congrArg Fin.val h⟩
+    simp only [ite_mul, zero_mul] at h
+    simpa [hz, first] using h
+  have hz (i : Fin t) : f (first n hn i) = 0 :=
+    (mul_eq_zero.mp (hs i)).resolve_left (by exact_mod_cast (hn i).ne')
+  have hsum (i : Fin t) : (∑ j : Fin (n i), f ⟨i,j⟩) = 0 := by
+    have h := congrFun hf (first n hn i)
+    rw [changeBasis_action n hn] at h
+    change f (first n hn i) + f (first n hn i) -
+      (if (0 : ℕ) = 0 then ∑ j : Fin (n i), f ⟨i,j⟩ else 0) = 0 at h
+    simpa only [hz, zero_add, ite_true, zero_sub, neg_eq_zero] using h
+  change f = 0
+  funext u
+  have h := congrFun hf u
+  rw [changeBasis_action n hn, hz, hsum] at h
+  simpa using h
+
+private theorem a_diagonalization (hn : ∀ i, 0 < n i) :
+    A n * changeBasis n = changeBasis n * diagonal (diagonalValues n) := by
+  ext u v
+  change (A n *ᵥ fun x => changeBasis n x v) u = _
+  rw [a_action, changeBasis_sum n hn, Matrix.mul_diagonal]
+  have hd := d_ne_zero n hn v.1
+  by_cases hi : u.1 = v.1
+  · by_cases hv : v.2.val = 0
+    · have he : (u = v) ↔ u.2.val = 0 := by
+        rcases u with ⟨i,j⟩; rcases v with ⟨k,l⟩
+        dsimp at hi hv ⊢; subst k
+        simp [Fin.ext_iff, hv]
+      simp only [changeBasis, hi, ite_true, hv, he, diagonalValues]
+      split_ifs <;> (dsimp [d] at *; field_simp; ring)
+    · simp [changeBasis, hi, hv, diagonalValues, div_eq_mul_inv]
+  · have huv : u ≠ v := fun h => hi (congrArg Sigma.fst h)
+    simp [changeBasis, hi, huv]
+
+private theorem a_roots (hn : ∀ i, 0 < n i) :
+    (A n).charpoly.roots = Finset.univ.val.map (diagonalValues n) := by
+  have hunit : IsUnit (changeBasis n).det := (changeBasis_unit n hn).map Matrix.detMonoidHom
+  have hsim : A n = changeBasis n * diagonal (diagonalValues n) * (changeBasis n)⁻¹ := by
+    rw [← a_diagonalization n hn, Matrix.mul_assoc,
+      Matrix.mul_nonsing_inv _ hunit, Matrix.mul_one]
+  rw [hsim, Matrix.charpoly_mul_comm, ← Matrix.mul_assoc,
+    Matrix.nonsing_inv_mul _ hunit, Matrix.one_mul,
+    Matrix.charpoly_diagonal, Polynomial.roots_prod]
+  · simp
+  · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
+
+private theorem diagonal_negative (hn : ∀ i, 0 < n i) (u : Vertex n) :
+    diagonalValues n u < 0 ↔ u.2.val = 0 ∧ 2 ≤ n u.1 := by
+  by_cases hu : u.2.val = 0
+  · simp only [diagonalValues, hu, ite_true, true_and]
+    by_cases hi : n u.1 = 1
+    · norm_num [d, hi]
+    · have htwo : 2 ≤ n u.1 := by have := hn u.1; omega
+      have hd : 0 < d n u.1 := by
+        have hr : (2 : ℝ) ≤ n u.1 := by exact_mod_cast htwo
+        dsimp [d]; linarith
+      exact iff_of_true (div_neg_of_neg_of_pos (by norm_num) hd) htwo
+  · norm_num [diagonalValues, hu]
+
+private theorem a_negative_count (hn : ∀ i, 0 < n i) :
+    RHLinalg.negIndex (a_hermitian n) =
+      (Finset.univ.filter fun i => 2 ≤ n i).card := by
+  have hr : (A n).charpoly.roots.countP (fun x => x < 0) =
+      RHLinalg.negIndex (a_hermitian n) := by
+    rw [(a_hermitian n).roots_charpoly_eq_eigenvalues, Multiset.countP_map]
+    rfl
+  rw [← hr, a_roots n hn, Multiset.countP_map]
+  change (Finset.univ.filter fun u : Vertex n => diagonalValues n u < 0).card = _
+  apply Finset.card_bij (fun u _ => u.1)
+  · intro u hu
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
+      ((diagonal_negative n hn u).mp (Finset.mem_filter.mp hu).2).2⟩
+  · intro u hu v hv h
+    have hu0 := ((diagonal_negative n hn u).mp (Finset.mem_filter.mp hu).2).1
+    have hv0 := ((diagonal_negative n hn v).mp (Finset.mem_filter.mp hv).2).1
+    rcases u with ⟨i,j⟩; rcases v with ⟨k,l⟩
+    dsimp at h hu0 hv0; subst k
+    congr 1
+    exact Fin.ext (hu0.trans hv0.symm)
+  · intro i hi
+    refine ⟨first n hn i, ?_, rfl⟩
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
+      (diagonal_negative n hn _).mpr ⟨rfl, (Finset.mem_filter.mp hi).2⟩⟩
+
+private theorem a_positive_count (hn : ∀ i, 0 < n i) :
+    RHLinalg.posIndex (a_hermitian n) =
+      (∑ i, n i) - (Finset.univ.filter fun i => 2 ≤ n i).card := by
+  have hpart := D5.S3.SpectralTopology.PointGapExactInertia.posIndex_add_negIndex_eq_rank
+    (a_hermitian n)
+  have hdet : (A n).det ≠ 0 := by
+    apply Matrix.det_ne_zero_of_right_inverse (B := -blockBase n)
+    rw [A, neg_mul_neg, inverse_mul_base n hn]
+  have hfull : (A n).rank = Fintype.card (Vertex n) :=
+    Matrix.rank_of_det_ne_zero hdet
+  rw [hfull, a_negative_count n hn] at hpart
+  have hc : Fintype.card (Vertex n) = ∑ i, n i := by simp [Vertex]
+  rw [hc] at hpart
+  omega
+
+private abbrev SingletonPart := {i : Fin t // n i = 1}
+
+private def singletonLift : (SingletonPart n → ℝ) →ₗ[ℝ] (Vertex n → ℝ) where
+  toFun f u := if h : n u.1 = 1 then f ⟨u.1,h⟩ else 0
+  map_add' f g := by ext u; dsimp; split_ifs <;> simp
+  map_smul' c f := by ext u; dsimp; split_ifs <;> simp
+
+private def singletonSum : (SingletonPart n → ℝ) →ₗ[ℝ] ℝ where
+  toFun f := ∑ i, f i
+  map_add' f g := by simp [Finset.sum_add_distrib]
+  map_smul' c f := by simp [Finset.mul_sum]
+
+private theorem singletonLift_injective (hn : ∀ i, 0 < n i) :
+    Function.Injective (singletonLift n) := by
+  intro f g h
+  funext i
+  have he := congrFun h (first n hn i.1)
+  simpa [singletonLift, first, i.2] using he
+
+private theorem singletonLift_sum (f : SingletonPart n → ℝ) :
+    (∑ u : Vertex n, singletonLift n f u) = ∑ i, f i := by
+  rw [Fintype.sum_sigma]
+  simp only [singletonLift, LinearMap.coe_mk, AddHom.coe_mk]
+  have he (i : Fin t) : (∑ j : Fin (n i),
+      if h : n i = 1 then f ⟨i,h⟩ else 0) = if h : n i = 1 then f ⟨i,h⟩ else 0 := by
+    by_cases h : n i = 1 <;> simp [h]
+  simp_rw [he]
+  rw [Finset.sum_dite]
+  simp only [Finset.sum_const_zero, add_zero]
+  let e : {i : Fin t // i ∈ Finset.univ.filter (fun i => n i = 1)} ≃ SingletonPart n :=
+    Equiv.subtypeEquivRight (by intro i; simp)
+  exact e.sum_comp f
+
+private theorem quarter_count_lower (hn : ∀ i, 0 < n i) (hs : (delta n).det = 0) :
+    (∑ i, n i) - t ≤ (sourceL n).charpoly.roots.count (1 / 4 : ℝ) := by
+  have he : deviationSpace n ≤ Module.End.eigenspace (sourceL n).mulVecLin (1 / 4 : ℝ) := by
+    intro w hw
+    rw [Module.End.mem_eigenspace_iff]
+    have hw' : partSum n w = 0 := hw
+    exact deviation_action n hn (singular_ratio n hn hs) w (fun i => congrFun hw' i)
+  have hdim := (Submodule.finrank_mono he).trans
+    (LinearMap.finrank_eigenspace_le (sourceL n).mulVecLin (1 / 4 : ℝ))
+  rw [deviation_dimension n hn, Matrix.charpoly_mulVecLin, ← Polynomial.count_roots] at hdim
+  exact hdim
+
+private theorem one_count_lower (hn : ∀ i, 0 < n i) (hs : (delta n).det = 0) :
+    (Finset.univ.filter (fun i => n i = 1)).card - 1 ≤
+      (sourceL n).charpoly.roots.count 1 := by
+  let K := LinearMap.ker (singletonSum n)
+  let F : K →ₗ[ℝ] Module.End.eigenspace (sourceL n).mulVecLin 1 :=
+    { toFun := fun f => ⟨singletonLift n f, by
+        rw [Module.End.mem_eigenspace_iff]
+        simp only [one_smul]
+        apply singleton_action n hn (singular_ratio n hn hs)
+        · intro i hi j; simp [singletonLift, hi]
+        · rw [singletonLift_sum]
+          exact f.2⟩
+      map_add' := fun f g => by apply Subtype.ext; exact (singletonLift n).map_add f g
+      map_smul' := fun c f => by apply Subtype.ext; exact (singletonLift n).map_smul c f }
+  have hinj : Function.Injective F := by
+    intro f g h
+    apply Subtype.ext
+    exact singletonLift_injective n hn (congrArg Subtype.val h)
+  have hdim := (LinearMap.finrank_le_finrank_of_injective hinj).trans
+    (LinearMap.finrank_eigenspace_le (sourceL n).mulVecLin 1)
+  rw [Matrix.charpoly_mulVecLin, ← Polynomial.count_roots] at hdim
+  have hrank := (singletonSum n).finrank_range_add_finrank_ker
+  have hle : Module.finrank ℝ (LinearMap.range (singletonSum n)) ≤ 1 := by
+    simpa using (Submodule.finrank_le (LinearMap.range (singletonSum n)))
+  have hc : Module.finrank ℝ (SingletonPart n → ℝ) =
+      (Finset.univ.filter fun i => n i = 1).card := by
+    simp [SingletonPart, Fintype.card_subtype]
+  rw [hc] at hrank
+  dsimp only [K] at hdim
+  omega
+
 /-- The complete unchanged two-clause target, with algebraic positive multiplicities. -/
 def completeConjecture : Prop :=
   ∀ (t : ℕ) (n : Fin t → ℕ), 2 ≤ t → (∀ i, 0 < n i) →
@@ -378,6 +619,85 @@ def completeConjecture : Prop :=
         (∑ i, n i) - (Finset.univ.filter (fun i => 2 ≤ n i)).card - 1 ∧
       D5.S3.QuadraticForms.StructuredRankOneInertia.zeroIndex hL = 1 ∧
       RHLinalg.negIndex hL = (Finset.univ.filter (fun i => 2 ≤ n i)).card
+
+/-- Both complete singular spectral clauses on the original source domain. -/
+theorem result : completeConjecture := by
+  intro t n ht hn hcof hs
+  obtain ⟨hA,hL,hplus,hminus,hzero,hquarter,hone,hdim⟩ :=
+    singular_source_reduction n hn hs
+  have hneg : RHLinalg.negIndex hL = (Finset.univ.filter fun i => 2 ≤ n i).card := by
+    rw [hminus]
+    exact a_negative_count n hn
+  have hpos : RHLinalg.posIndex hL =
+      (∑ i, n i) - (Finset.univ.filter fun i => 2 ≤ n i).card - 1 := by
+    have hp := a_positive_count n hn
+    have he : RHLinalg.posIndex hA = RHLinalg.posIndex (a_hermitian n) := rfl
+    rw [he, hp] at hplus
+    omega
+  have hsize : t ≤ ∑ i, n i := by
+    have h := Finset.sum_le_sum (s := Finset.univ) (f := fun _ : Fin t => 1)
+      (g := n) (fun i _ => hn i)
+    simpa using h
+  have hparts : (Finset.univ.filter (fun i => n i = 1)).card +
+      (Finset.univ.filter (fun i => 2 ≤ n i)).card = t := by
+    have he : Finset.univ.filter (fun i => ¬ n i = 1) =
+        Finset.univ.filter (fun i => 2 ≤ n i) := by
+      ext i
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+      have := hn i
+      omega
+    have hc := Finset.card_filter_add_card_filter_not (s := Finset.univ)
+      (fun i => n i = 1)
+    rw [he] at hc
+    simpa using hc
+  have hex : ∃ i, n i = 1 := by
+    by_contra! hall
+    have hr : 0 ≤ ratio n := by
+      apply Finset.sum_nonneg
+      intro i _
+      have htwo : 2 ≤ n i := by have := hn i; have := hall i; omega
+      have hd : 0 < d n i := by
+        have hh : (2 : ℝ) ≤ n i := by exact_mod_cast htwo
+        dsimp [d]; linarith
+      exact div_nonneg (Nat.cast_nonneg _) hd.le
+    rw [singular_ratio n hn hs] at hr
+    norm_num at hr
+  have hh : 0 < (Finset.univ.filter (fun i => n i = 1)).card := by
+    obtain ⟨i,hi⟩ := hex
+    exact Finset.card_pos.mpr ⟨i, by simp [hi]⟩
+  let roots := (sourceL n).charpoly.roots.filter (fun x => 0 < x)
+  let target := Multiset.replicate ((∑ i, n i) - t) (1 / 4 : ℝ) +
+    Multiset.replicate ((Finset.univ.filter (fun i => n i = 1)).card - 1) (1 : ℝ)
+  have hle : target ≤ roots := by
+    apply Multiset.le_iff_count.mpr
+    intro x
+    by_cases hx : x = (1 / 4 : ℝ)
+    · subst x
+      simpa only [target, roots, Multiset.count_add, Multiset.count_replicate,
+        Multiset.count_filter, show (0 : ℝ) < 1 / 4 by norm_num,
+        show ¬(1 : ℝ) = 1 / 4 by norm_num, ite_true, ite_false, add_zero]
+        using quarter_count_lower n hn hs
+    · by_cases hx1 : x = (1 : ℝ)
+      · subst x
+        simpa only [target, roots, Multiset.count_add, Multiset.count_replicate,
+          Multiset.count_filter, show (0 : ℝ) < 1 by norm_num,
+          show ¬(1 / 4 : ℝ) = 1 by norm_num, ite_true, ite_false, zero_add]
+          using one_count_lower n hn hs
+      · simp only [target, Multiset.count_add, Multiset.count_replicate,
+          if_neg (Ne.symm hx), if_neg (Ne.symm hx1), zero_add]
+        exact Nat.zero_le _
+  have hcard : roots.card = RHLinalg.posIndex hL := by
+    dsimp [roots]
+    rw [hL.roots_charpoly_eq_eigenvalues, Multiset.filter_map, Multiset.card_map]
+    rfl
+  have hcardtarget : target.card = RHLinalg.posIndex hL := by
+    simp only [target, Multiset.card_add, Multiset.card_replicate]
+    rw [hpos]
+    omega
+  refine ⟨hL, ?_, hpos, hzero, hneg⟩
+  exact (Multiset.eq_of_le_of_card_le hle (by omega)).symm
+
+#print axioms result
 
 #print axioms singular_source_downdate
 #print axioms singular_source_reduction
