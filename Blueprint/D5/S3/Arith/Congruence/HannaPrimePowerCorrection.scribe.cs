@@ -45,7 +45,10 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
                 + "and uniqueness of a representative in the bounded interval preserves p-1. "
                 + "The integer ledger theorem is integral_input_ledger in "
                 + "HannaDiagonalGhostPowerIntegrality. The conclusion is unbounded in p and r.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("h384819-primepower"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

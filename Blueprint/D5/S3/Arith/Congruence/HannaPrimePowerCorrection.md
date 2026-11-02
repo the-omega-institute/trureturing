@@ -36,6 +36,10 @@ $$\forall a: \mathbb{N} \to \mathbb{Z}, (\operatorname{IsCorrection}\left(a\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h384819-primepower` (proved) by `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h384819-primepower","declaration_gid":"D5/S3/Arith/Congruence/HannaPrimePowerCorrection.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A384819: bounded integral square-weight corrections*. URL: <https://oeis.org/A384819>.

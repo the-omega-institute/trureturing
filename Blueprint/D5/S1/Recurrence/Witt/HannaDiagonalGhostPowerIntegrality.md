@@ -104,6 +104,10 @@ $$\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/a156216-diagonalghost` (proved) by `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"a156216-diagonalghost","declaration_gid":"D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2009). *OEIS A156216: diagonal ghost-power integrality conjecture*. URL: <https://oeis.org/A156216/internal>.
