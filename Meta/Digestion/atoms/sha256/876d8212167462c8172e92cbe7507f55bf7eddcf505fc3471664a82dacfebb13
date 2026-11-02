@@ -1,0 +1,55 @@
+**Definition 9.1 (the source-conditioned head contract).** Retain
+Definition 1.1's entire known-alpha native domain, actual beta-left
+operations and complete fibres. In §§9–12, $J$ denotes an alternative
+binary recorder, rather than the end-visible recorder of §§1–8. It is
+injective on every $\mathcal H(t)$ and obeys
+
+$$
+J(h)\preceq J(he)
+\quad\text{for every enabled extension},\qquad
+M_J(t)=\max_{h\in\mathcal H(t)}|J(h)|,\qquad
+G(t)=\lceil\log_2F(t)\rceil.
+\tag{IV.14}
+$$
+
+Only data bits are immutable; this imposes no new immutability on paid
+link or header maintenance. The decoder has the actual acquired current
+source $t$, the fixed program and common live binding/rights context,
+and starts at the fixed installed journal entry. It may acquire successive
+data bits in forward order and perform backed finite computation. On every
+maintained input $(t,J(h))$, it must halt with the exact full addressed $h$
+without requesting a bit beyond that record. No journal end, tail, length,
+next-cell absence, timing, capacity, allocator identity or hidden serial
+advice is supplied as a stopping observation. A count computed from the
+acquired source or the already read bits is permitted; an independently
+observed current record length is not. No varying persistent codebook or
+chosen entry binding accompanies the record. Off-image inputs have no
+additional promised response. In particular this is not an arbitrary-input
+trailing-bit validator.
+
+For a fixed finite source fibre and its codebook, this on-image head
+contract is equivalent to injection together with prefix freedom:
+
+$$
+h,h'\in\mathcal H(t),\quad J(h)\preceq J(h')
+\quad\Longrightarrow\quad h=h'.
+\tag{IV.15}
+$$
+
+Indeed, if distinct histories had words $x\preceq y$, a correct deterministic
+decoder on $x$ would have to halt using at most its $|x|$ bits. The same
+source and acquired bits on $y$ force the same computation and answer.
+Trying an extra read on $x$ would invoke the excluded end/absence channel.
+Conversely, follow the finite codebook trie and stop on reaching a codeword.
+On-image prefix freedom makes this its unique history; no next-bit test is
+needed. An empty word can therefore occur only on a singleton fibre. This
+is the usual instantaneous-code argument with the source as side information.
+
+This equivalence is initially one of source-conditioned decision trees.
+If $J$ is computable on native histories, it is also effective uniformly:
+enumerate the finite $\mathcal H(t)$ by (IV.3), compute all its records in
+paid scratch, and construct that trie with one fixed finite program. No
+source-dependent table is supplied as advice. Prefix freedom alone for an
+arbitrary noncomputable $J$ does not assert a uniform computable decoder.
+The lower bound below applies even to such noncomputable recorders.
+
