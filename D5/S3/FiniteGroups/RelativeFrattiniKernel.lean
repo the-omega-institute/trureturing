@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/RelativeFrattiniKernel
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S3/FiniteGroups/FrattiniAutomorphismKernel.isPGroup_quotientAut_frattini_kernel, mathlib/module/Mathlib.GroupTheory.QuotientGroup.Basic]
+   anchors: [mathlib/module/Mathlib.GroupTheory.QuotientGroup.Basic]
    utility: none
    digest: Relative Frattini automorphism and outer-automorphism kernels for a normal p-subgroup. -/
 
