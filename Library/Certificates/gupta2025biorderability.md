@@ -31,7 +31,7 @@ After Table tbl8_20 the authors state:
 > Linear order on the generating set of Q(8_20) as in D2 in Table tbl8_20 could be extendable to a biorder on Q(8_20).
 
 This is an author-stated possibility, not a numbered conjecture. The implemented
-claim is the stronger necessary existence assertion: one LinearOrder on the
+claim is the necessary existence assertion: one LinearOrder on the
 entire quandle for which both translations are strictly increasing. Its negation
 rules out every generator order and hence D2; the proof does not assume the table
 is exhaustive. It does not address the paper's separate figure-eight possibility.
@@ -89,3 +89,15 @@ The supplied primary text has SHA256
 `169ddc39dceb0b64eb7e68ef5c054ba7b82adcc03d1f09c4d83c63974b562328`.
 Its relevant locators are equations at supplied-text lines 1409--1416, the
 separator paragraph at 1426 and the possibility statement at 1446.
+
+A bounded third-party supplier check found `thea-vik/power-quandle-lean` at
+commit `452437602c4be2e6c5ad5f5224b068baabfdf9e1`. Its `leanpkg.toml` pins
+Lean 3.23.0 and Mathlib `834d491dd7c0aa0ed423bf1253d6d56182f6aa6e`;
+`src/free_pq.lean` constructs free **power** quandles, with a unit and integer
+powers governed by extra axioms in `src/power_quandle.lean`. It is not a
+Lean 4.35 Mathlib Quandle supplier and replacing the present algebraic theory
+by that stronger theory would change the presentation. Its existence is prior
+formal work on related term quotients, not an absence or novelty claim. The
+public repository search returned one Lean/quandle repository; the attempted
+Reservoir API search endpoint returned HTTP 404, so that endpoint supplied no
+search evidence. No third-party source was imported or copied.

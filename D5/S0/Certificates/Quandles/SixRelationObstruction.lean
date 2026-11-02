@@ -1,7 +1,7 @@
 /- GID: D5/S0/Certificates/Quandles/SixRelationObstruction
    generality: G
    mirror-B: D5/B/S0/Certificates/Quandles/SixRelationObstruction
-   mirror-E: none(waiver:ordered-magma-obstruction)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [lit/gupta2025biorderability]
    utility: kind=none
    digest: Six relations force collapse in a biordered idempotent magma. -/
@@ -13,6 +13,9 @@
    This is a general order theorem, not finite or numerical computation. -/
 
 import Mathlib.Order.Monotone.Basic
+
+/-! Full presentation and order-obstruction sources; see the corresponding Scribe. -/
+
 
 namespace D5.S0.Certificates.Quandles.SixRelationObstruction
 

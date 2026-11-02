@@ -17,6 +17,9 @@
 import D5.S0.Certificates.Quandles.PresentedQuandle
 import D5.S0.Certificates.Quandles.SixRelationObstruction
 
+/-! Full presentation and order-obstruction sources; see the corresponding Scribe. -/
+
+
 namespace D5.S0.Certificates.Quandles.EightTwentyNonBiorderable
 
 open PresentedQuandle
@@ -61,7 +64,23 @@ def color : Arc → Quandle.Dihedral 9
 private theorem color_crossings :
     ∀ x y, Crossing x y → x.eval color = y.eval color := by
   intro x y h
-  cases h <;> decide
+  cases h
+  · change (2 * 2 - 6 : ZMod 9) = 7
+    decide
+  · change (2 * 1 - 5 : ZMod 9) = 6
+    decide
+  · change (2 * 1 - 0 : ZMod 9) = 2
+    decide
+  · change (2 * 2 - 1 : ZMod 9) = 3
+    decide
+  · change (2 * 0 - 8 : ZMod 9) = 1
+    decide
+  · change (2 * 7 - 0 : ZMod 9) = 5
+    decide
+  · change (2 * 5 - 7 : ZMod 9) = 3
+    decide
+  · change (2 * 5 - 8 : ZMod 9) = 2
+    decide
 
 /-- Universal evaluation extends the coloring to the entire presented quandle. -/
 def colorHom : ShelfHom KnotQuandle (Quandle.Dihedral 9) :=
@@ -91,11 +110,11 @@ theorem result : ¬ claim := by
   exact SixRelationObstruction.sixRelation_forces_eq op
     (fun _ => Quandle.fix) hl hr
     (arc .a) (arc .c) (arc .d) (arc .e) (arc .f) (arc .g) (arc .h)
-    (equation Crossing Crossing.r3)
-    (equation Crossing Crossing.r4)
-    (equation Crossing Crossing.r5)
-    (equation Crossing Crossing.r6)
-    (equation Crossing Crossing.r7)
-    (equation Crossing Crossing.r8)
+    (relation_eq Crossing Crossing.r3)
+    (relation_eq Crossing Crossing.r4)
+    (relation_eq Crossing Crossing.r5)
+    (relation_eq Crossing Crossing.r6)
+    (relation_eq Crossing Crossing.r7)
+    (relation_eq Crossing Crossing.r8)
 
 end D5.S0.Certificates.Quandles.EightTwentyNonBiorderable

@@ -1,7 +1,7 @@
 /- GID: D5/S0/Certificates/Quandles/PresentedQuandle
    generality: G
    mirror-B: D5/B/S0/Certificates/Quandles/PresentedQuandle
-   mirror-E: none(waiver:generic-term-quotient)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Quandle, mathlib/module/Mathlib.Data.Quot]
    utility: kind=none
    digest: Term presentation of quandles with inverse action and its universal evaluation map. -/
@@ -14,6 +14,9 @@
 
 import Mathlib.Algebra.Quandle
 import Mathlib.Data.Quot
+
+/-! Full presentation and order-obstruction sources; see the corresponding Scribe. -/
+
 
 namespace D5.S0.Certificates.Quandles.PresentedQuandle
 
@@ -51,7 +54,7 @@ def congruence {G : Type u} (R : Term G → Term G → Prop) : Setoid (Term G) w
   iseqv := ⟨Rel.refl, Rel.symm, Rel.trans⟩
 
 /-- The full presented quandle, not just the positive-term shelf. -/
-def Carrier {G : Type u} (R : Term G → Term G → Prop) : Type u := Quotient (congruence R)
+abbrev Carrier {G : Type u} (R : Term G → Term G → Prop) : Type u := Quotient (congruence R)
 
 variable {G : Type u} (R : Term G → Term G → Prop)
 
@@ -59,10 +62,10 @@ variable {G : Type u} (R : Term G → Term G → Prop)
 def of (g : G) : Carrier R := Quotient.mk _ (.gen g)
 
 instance : Quandle (Carrier R) where
-  act := @Quotient.map₂ _ _ _ (congruence R) (congruence R) (congruence R)
-    Term.act (fun h₁ h₂ => Rel.act h₁ h₂)
-  invAct := @Quotient.map₂ _ _ _ (congruence R) (congruence R) (congruence R)
-    Term.invAct (fun h₁ h₂ => Rel.invAct h₁ h₂)
+  act := Quotient.map₂ (sa := congruence R) (sb := congruence R) (sc := congruence R)
+    Term.act (by intro a a' ha b b' hb; exact Rel.act ha hb)
+  invAct := Quotient.map₂ (sa := congruence R) (sb := congruence R) (sc := congruence R)
+    Term.invAct (by intro a a' ha b b' hb; exact Rel.invAct ha hb)
   self_distrib := by
     intro x y z
     refine Quotient.inductionOn₃ x y z ?_
@@ -85,7 +88,7 @@ instance : Quandle (Carrier R) where
     exact Quotient.sound (Rel.fix a)
 
 /-- Every supplied relation holds in the quotient. -/
-theorem equation {x y : Term G} (h : R x y) :
+theorem relation_eq {x y : Term G} (h : R x y) :
     (Quotient.mk (congruence R) x : Carrier R) = Quotient.mk _ y :=
   Quotient.sound (Rel.equation h)
 
