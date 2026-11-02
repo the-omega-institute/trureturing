@@ -14,8 +14,7 @@ import Mathlib.Combinatorics.Colex
 import Mathlib.Order.Interval.Finset.Nat
 
 /-!
-UNCOMPILED candidate: actual-label allocation and both actual source masses.
-No strip, endpoint, kernel, freeze or official acceptance claim.
+Actual-label allocation and both actual source masses.
 Chains are U,V,W,X. Banks have terminal order U,X,W,V.
 Every choice below is produced by the exact integral selector; no physical
 certificate or arbitrary source family is assumed.

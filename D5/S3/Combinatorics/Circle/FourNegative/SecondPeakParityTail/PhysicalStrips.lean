@@ -70,7 +70,6 @@ private theorem physical_heads (a b c d : ℕ) (h : physicalDomain a b c d) :
     (∀ r : Fin 4, (newBase a b c d r : ℚ)=
       qNewHead ((2:ℚ)^c) (2^(a-c)*2^c) (2^(d-a)) (2^(d-a)*2^(b-d-1)) r) := by
   obtain ⟨hx,hw,hq,hy,hz,hcap,hhalf⟩ := rational_coordinates a b c d h
-  dsimp only at hx hw hq hy hz hcap hhalf
   constructor <;> intro r <;> fin_cases r <;>
     simp only [base,newBase,charge,qHead,qNewHead,
       Int.cast_add,Int.cast_sub,Int.cast_mul,Int.cast_pow,Int.cast_ofNat,Int.cast_one,
@@ -85,7 +84,6 @@ private theorem physical_modulus (a b c d : ℕ) (h : physicalDomain a b c d)
       (2^(d-a)*2^(b-d-1)) isNew =
       if isNew then 2*(sourceMod a b c d : ℚ)+1 else (sourceMod a b c d : ℚ) := by
   obtain ⟨hx,hw,hq,hy,hz,hcap,hhalf⟩ := rational_coordinates a b c d h
-  dsimp only at hx hw hy
   cases isNew <;> simp only [qModulus,Bool.false_eq_true,↓reduceIte,
     sourceMod,Int.cast_sub,Int.cast_mul,Int.cast_pow,Int.cast_ofNat,Int.cast_one]
   all_goals rw [←hx,←hw,←hy]
@@ -96,7 +94,6 @@ private theorem mask_cast (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     (exponentMask a b c d alpha S r j : ℚ)=
       parityMask ((2:ℚ)^(a-c)) (2^c) (2^(d-a)) (2^(b-d-1)) alpha S r j := by
   obtain ⟨hx,hw,hq,hy,hz,hcap,hhalf⟩ := rational_coordinates a b c d h
-  dsimp only at hx hw hq hy hz hcap hhalf
   fin_cases r <;> fin_cases j <;>
     simp only [exponentMask,parityMask,Int.cast_sub,Int.cast_add,Int.cast_mul,
       Int.cast_pow,Int.cast_natCast,Int.cast_ofNat,Int.cast_one,Int.cast_zero,
@@ -211,18 +208,18 @@ private theorem selected_six (a b c d alpha S : ℕ) (delta : ℤ)
     have hp := dyadic_lower (d-a) (c+1) (by have := h.2.2.1; omega)
     simpa only [pow_succ'] using hp
   have htI : (1:ℤ) ≤ 2^(b-d-1) := by simpa using dyadic_lower (b-d-1) 0 (by omega)
-  have hu : 4 ≤ u := by exact_mod_cast huI
-  have hz : 16 ≤ z := by exact_mod_cast hzI
-  have hhh : 2*z ≤ hh := by exact_mod_cast hhI
-  have ht : 1 ≤ t := by exact_mod_cast htI
+  have hu : 4 ≤ u := by dsimp only [u]; exact_mod_cast huI
+  have hz : 16 ≤ z := by dsimp only [z]; exact_mod_cast hzI
+  have hhh : 2*z ≤ hh := by dsimp only [z,hh]; exact_mod_cast hhI
+  have ht : 1 ≤ t := by dsimp only [t]; exact_mod_cast htI
   have hs : (2:ℚ) ≤ (S:ℚ) := by exact_mod_cast hS2
-  have hs4 : (4:ℚ)*(S:ℚ) ≤ 7*z := by exact_mod_cast hS4
+  have hs4 : (4:ℚ)*(S:ℚ) ≤ 7*z := by dsimp only [z]; exact_mod_cast hS4
   have hdQ : (0:ℚ) ≤ (delta:ℚ) := by exact_mod_cast hd0
-  have hdJQ : (delta:ℚ) ≤ 2*(u-1) := by exact_mod_cast hdJ
+  have hdJQ : (delta:ℚ) ≤ 2*(u-1) := by dsimp only [u]; exact_mod_cast hdJ
   let B : ℤ := 15*(2:ℤ)^(a-c)*2^c/8
-  have hBQ : (8:ℚ)*(B:ℚ)=15*u*z := by exact_mod_cast hB
+  have hBQ : (8:ℚ)*(B:ℚ)=15*u*z := by dsimp only [B,u,z]; exact_mod_cast hB
   have hIQ : 2*u*(z+1)*(alpha:ℚ)=
-      (u^2*z+1)*hh+(u*z+1)*(S:ℚ)-(B:ℚ)+(delta:ℚ) := by exact_mod_cast hid
+      (u^2*z+1)*hh+(u*z+1)*(S:ℚ)-(B:ℚ)+(delta:ℚ) := by dsimp only [u,z,hh,B]; exact_mod_cast hid
   have heq : 2*u*(z+1)*(alpha:ℚ)=selectorNumerator u z hh S delta := by
     dsimp [selectorNumerator]
     linarith only [hIQ,hBQ]
