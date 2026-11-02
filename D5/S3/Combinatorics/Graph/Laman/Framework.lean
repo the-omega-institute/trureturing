@@ -38,7 +38,7 @@ the definition of infinitesimal rigidity agrees with his when `|V| ≥ d` or `|V
 always in the plane, and is weaker otherwise (`IsInfinitesimallyRigid`).
 
 These definitions are stated for general dimension `d`; Laman's theorem
-(`LamanTheorem.lean`) takes `d = 2`.
+(`PlanarLaman.lean`) takes `d = 2`.
 
 ## Main definitions
 
@@ -49,7 +49,7 @@ These definitions are stated for general dimension `d`; Laman's theorem
 * `SimpleGraph.IsGenericallyRigidInj G d` — existence of a rigid *injective*
   placement; the predicate the Henneberg induction of Laman's theorem maintains.
 
-The blueprint's `sec:frameworks` presents this file.
+The corresponding Framework Blueprint presents this file.
 -/
 
 @[expose] public section
@@ -275,7 +275,7 @@ theorem IsInfinitesimallyRigid.eventually [Finite V] {G : SimpleGraph V}
 infinitesimally rigid placement is also injective. It implies `IsGenericallyRigid`
 (`IsGenericallyRigidInj.toIsGenericallyRigid`), strictly at `d = 0`, where `K₂` has no injective
 placement; the blueprint's remark after `def:isGenericallyRigidInj` compares the two. The
-Henneberg induction of Laman's theorem (`LamanTheorem.lean`) maintains the injective placement at
+Henneberg induction of Laman's theorem (`PlanarForward.lean`) maintains the injective placement at
 each step (the per-move arguments of `HennebergRigidity.lean` need `p a ≠ p b`, which
 `IsGenericallyRigid` does not supply) and weakens to `IsGenericallyRigid` at the end. -/
 def IsGenericallyRigidInj [Finite V] (G : SimpleGraph V) (d : ℕ) : Prop :=

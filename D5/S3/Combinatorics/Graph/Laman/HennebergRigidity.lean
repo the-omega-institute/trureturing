@@ -329,8 +329,7 @@ cover `{affineSpan {pa, pb}} ∪ {affineSpan {s} | s ∈ S}`. The LI condition
 `(q - pa, pb - pa)`.
 
 Used by `typeI_isGenericallyRigidInj_two` with `S = Set.range p` to get a `q` outside
-the image of `p`, and by `typeI_edgeSetRowIndependent_lift` (`MatroidIdentification.lean`) with
-`S = ∅` (row-independence does not need an injective extended placement). -/
+the image of `p`. -/
 lemma exists_off_line_off_finite_dim_two
     (pa pb : EuclideanSpace ℝ (Fin 2)) (hab : pa ≠ pb)
     (S : Set (EuclideanSpace ℝ (Fin 2))) (hS : S.Finite) :
@@ -625,10 +624,8 @@ theorem typeII_isGenericallyRigidInj_two_of_nonCollinear [Finite V] {G : SimpleG
     typeII_isInfinitesimallyRigid_extend hp_rig hα0 hα1 hcoll hLI,
     injective_option_elim hp_inj hq_notmem⟩
 
-/-- **Non-collinear placement via `Function.update`-perturbation in dim 2.** Shared core of
-`exists_nonCollinear_rigid_placement_dim_two` (rigidity and injectivity) and
-`exists_nonCollinear_rowIndependent_placement_dim_two` (row-independence,
-`MatroidIdentification.lean`). Given a
+/-- **Non-collinear placement via `Function.update`-perturbation in dim 2.** Core of
+`exists_nonCollinear_rigid_placement_dim_two` (rigidity and injectivity). Given a
 placement `p₀` with `p₀ b - p₀ a ≠ 0`, a property `P` preserved on a neighborhood of `t = 0`
 along the one-vertex perturbation `t ↦ Function.update p₀ c (p₀ c + t • w)` for a direction
 `w` outside `span {p₀ b - p₀ a}`, produce a placement `p` with `P p` and the non-collinearity
@@ -641,9 +638,9 @@ any `t ≠ 0` follows from `pair_add_smul_add_smul_iff` against the auxiliary
 `![w, p₀ b - p₀ a]` LI. A witness `t ≠ 0` in the `P`-preservation neighborhood exists because
 `𝓝[≠] 0` is `NeBot` in `ℝ`.
 
-Callers supply `hP_ev` per their preservation property: row-LI / IR pull back
-`EdgeSetRowIndependent.eventually` / `IsInfinitesimallyRigid.eventually` through continuity of
-the update, and IR + injectivity additionally `.and`-conjoins
+The rigid-placement consumer supplies `hP_ev` by pulling back
+`IsInfinitesimallyRigid.eventually` through continuity of
+the update and `.and`-conjoining
 `Function.Injective.eventually_update_of_continuousAt` (whose `Function.update` shape is what
 forces the eventually-on-`t` rather than eventually-on-`p` form here). -/
 lemma exists_nonCollinear_update_perturbation_dim_two {V : Type*} [DecidableEq V]
