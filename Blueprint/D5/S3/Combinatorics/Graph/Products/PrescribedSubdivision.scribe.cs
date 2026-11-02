@@ -64,7 +64,7 @@ internal sealed class PrescribedSubdivisionDocument : IScribeDocumentDefinition
         return Inst("Fintype", I("V"), Inst("Fintype", I("E"), b));
     }
     private static Formula SumOver(string n, Formula t, Formula b) =>
-        Seq(new Formula.Subscript(Sum, Seq(I(n), Sp, InMacro, Sp, t)), Sp, b);
+        Seq(new Formula.Subscript(Sum, Seq(I(n), Sp, InMacro, Sp, t)), Sp, Open, b, Close);
     private static Formula I(string n) => F.Id(n);
     private static Formula C(string n, params Formula[] a) => a.Length == 0
         ? new Formula.NamedConstant(FormulaIdentifier.Create(n))

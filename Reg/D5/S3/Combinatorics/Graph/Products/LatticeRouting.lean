@@ -82,7 +82,7 @@ def rotationRegistration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Products.LatticeRouting
     definition := none
-    coordinates := #[]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "fn", "arg"]
       stateBinder := 0
