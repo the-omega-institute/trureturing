@@ -48,6 +48,10 @@ $$(\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ptaszynski-2022-unidirectional-kurtosis-lower-bound` (proved) by `D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ptaszynski-2022-unidirectional-kurtosis-lower-bound","declaration_gid":"D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.

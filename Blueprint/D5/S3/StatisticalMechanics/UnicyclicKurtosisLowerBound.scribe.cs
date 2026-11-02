@@ -136,7 +136,10 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                         + "each value in the explicit sequence. Passing to its limit gives b ≤ C. "
                         + "Thus C is the greatest lower bound, and the strict finite-cycle inequality "
                         + "shows that no finite positive cycle attains it."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ptaszynski-2022-unidirectional-kurtosis-lower-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula KurtosisFormula()
     {
