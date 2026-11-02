@@ -68,6 +68,20 @@ private lemma quadratic_mixture_abs (x : I → ℝ) (a : I → ℂ) :
   intro n
   exact (norm_sum_le _ _).trans (Finset.sum_le_sum (fun i hi => norm_sum_le _ _))
 
+private lemma quadratic_mixture_scale (x : I → ℝ) (a : I → ℂ) (n : ℕ) :
+    (quadratic x a (mixtureTerm n)).re = trivialCoeff n *
+      (quadratic x a (fun t => Real.exp (-rate n * |t|))).re := by
+  have he : quadratic x a (mixtureTerm n) = (trivialCoeff n : ℂ) *
+      quadratic x a (fun t => Real.exp (-rate n * |t|)) := by
+    simp only [quadratic, mixtureTerm, Complex.ofReal_mul, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    ring
+  simpa only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    using congrArg Complex.re he
+
 private lemma quadratic_mixture_nonneg (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (ha : ∑ i, a i = 0) (n : ℕ) : 0 ≤ (quadratic x a (mixtureTerm n)).re := by
@@ -78,16 +92,7 @@ private lemma quadratic_mixture_nonneg (D : ℝ) (hD : 0 ≤ D)
   have hE : 0 ≤ energy x a := integral_nonneg (fun _ => sq_nonneg _)
   have hq : 0 ≤ (quadratic x a (fun t => Real.exp (-rate n * |t|))).re := by
     exact le_trans (by positivity) h
-  have hid : (quadratic x a (mixtureTerm n)).re = trivialCoeff n *
-      (quadratic x a (fun t => Real.exp (-rate n * |t|))).re := by
-    simp only [quadratic, mixtureTerm, Complex.ofReal_mul, Complex.mul_re,
-      Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, map_sum Complex.reCLM _ _,
-      Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro i hi
-    apply Finset.sum_congr rfl
-    intro j hj
-    ring
+  have hid := quadratic_mixture_scale x a n
   rw [hid]
   exact mul_nonneg (trivialCoeff_nonneg n) hq
 
@@ -168,18 +173,9 @@ private theorem complete_positive_mixture_head
     have h := D5.S3.Analytic.Interpolation.MomentExponentialCoercivity.moment_exponential_prefix_coercivity
       D hD q hq (rate n) (by dsimp [rate]; positivity) x a hx hm
     have hscaled := mul_le_mul_of_nonneg_left h (trivialCoeff_nonneg n)
-    have hquad : (quadratic x a (mixtureTerm n)).re = trivialCoeff n *
-        (quadratic x a (fun t => Real.exp (-rate n * |t|))).re := by
-      simp only [quadratic, mixtureTerm, Complex.ofReal_mul, Complex.mul_re,
-        Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, map_sum Complex.reCLM _ _,
-        Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro i hi
-      apply Finset.sum_congr rfl
-      intro j hj
-      ring
+    have hquad := quadratic_mixture_scale x a n
     rw [hquad]
-    convert hscaled using 1 <;> (try dsimp only [energy]) <;> ring
+    convert hscaled using 1 <;> (try dsimp only [energy, quadratic]) <;> ring
   have hsum := Finset.sum_le_sum (s := Finset.range M) (fun n hn => hterm n)
   have hid : (∑ n ∈ Finset.range M,
       (2 * rate n * trivialCoeff n - D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)) *
