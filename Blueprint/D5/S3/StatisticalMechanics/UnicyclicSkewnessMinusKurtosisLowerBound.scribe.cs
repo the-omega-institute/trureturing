@@ -146,7 +146,6 @@ internal sealed class UnicyclicSkewnessMinusKurtosisLowerBoundDocument : IScribe
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
     private static Formula Implication(Formula left, Formula right) =>
         new Formula.TypeArrow(Parenthesized(left), Parenthesized(right));
-    private static Formula Add(Formula left, Formula right) => new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Add, Parenthesized(right));
     private static Formula Multiply(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula Subtract(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Divide(Formula numerator, Formula denominator) => new Formula.Fraction(numerator, denominator);
