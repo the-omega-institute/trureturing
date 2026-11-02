@@ -8,7 +8,7 @@
 
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 /-! The source sums use positive indices, inclusive endpoints and integer Moebius values. -/
 
