@@ -73,11 +73,12 @@ def rotationRegistration :
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ b a => max |a + b| |a - b|) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ b a => max |a + b| |a - b|) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℤ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Products.LatticeRouting
     definition := none

@@ -124,12 +124,8 @@ internal sealed class LatticeRoutingDocument : IScribeDocumentDefinition
     private static Formula Bicond(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole role) => Describe.Lean(
-            DescribeId.Create(id), DeclarationHandle.Create(declaration switch
-            {
-                "Occupancy.insert_spec" => "D5/S3/Combinatorics/Graph/Products/LatticeRouting/Occupancy.insert_spec",
-                "Occupancy.fill_spec" => "D5/S3/Combinatorics/Graph/Products/LatticeRouting/Occupancy.fill_spec",
-                _ => Prefix + declaration
-            }), H(title),
+            DescribeId.Create(id), DeclarationHandle.Create(
+                Prefix + declaration[(declaration.LastIndexOf('.') + 1)..]), H(title),
             StatementSource.FromAuthor(Disp(Statement(declaration))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }
