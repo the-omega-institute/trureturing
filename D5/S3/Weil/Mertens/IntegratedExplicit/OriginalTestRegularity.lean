@@ -107,53 +107,15 @@ lemma spectralKernel_continuous (t : ℝ) : Continuous (spectralKernel t) := by
     (continuous_const.add (continuous_const.mul (continuous_id.pow 2)))
     (fun w => (denom_pos w).ne')
 
-lemma spectralKernelPrime_continuous (t : ℝ) : Continuous (spectralKernelPrime t) := by
-  unfold spectralKernelPrime
-  exact (continuous_id.neg.mul
-    (Real.continuous_sin.comp (continuous_id.mul continuous_const))).div
-    (continuous_const.add (continuous_const.mul (continuous_id.pow 2)))
-    (fun w => (denom_pos w).ne')
-
 lemma spectralKernel_bound (t w : ℝ) : |spectralKernel t w| ≤ 1 := by
   rw [spectralKernel, abs_div, abs_of_pos (denom_pos w)]
   apply (div_le_one (denom_pos w)).mpr
   exact (Real.abs_cos_le_one _).trans (by nlinarith [sq_nonneg w])
 
-lemma spectralKernelPrime_bound (t w : ℝ) : |spectralKernelPrime t w| ≤ 1 / 4 := by
-  have hnum : |-w * Real.sin (w * t)| ≤ |w| := by
-    rw [abs_mul, abs_neg]
-    exact (mul_le_mul_of_nonneg_left (Real.abs_sin_le_one _) (abs_nonneg w)).trans_eq (mul_one _)
-  have hden : |w| / (1 + 4 * w ^ 2) ≤ 1 / 4 := by
-    apply (div_le_iff₀ (denom_pos w)).mpr
-    nlinarith [sq_nonneg (2 * |w| - 1), sq_abs w]
-  rw [spectralKernelPrime, abs_div, abs_of_pos (denom_pos w)]
-  exact (div_le_div_of_nonneg_right hnum (denom_pos w).le).trans hden
-
-lemma spectralKernel_hasDerivAt (t w : ℝ) :
-    HasDerivAt (fun t => spectralKernel t w) (spectralKernelPrime t w) t := by
-  unfold spectralKernel spectralKernelPrime
-  convert (((hasDerivAt_id t).const_mul w).cos.div_const (1 + 4 * w ^ 2)) using 1 <;>
-    simp [spectralKernel, spectralKernelPrime] <;> ring
-
 lemma spectralKernel_integrable (ρ : Measure ℝ) [IsFiniteMeasure ρ] (t : ℝ) :
     Integrable (spectralKernel t) ρ := by
   apply (integrable_const (1 : ℝ)).mono' (spectralKernel_continuous t).aestronglyMeasurable
   exact Eventually.of_forall (fun w => by simpa [Real.norm_eq_abs] using spectralKernel_bound t w)
-
-/-- No symmetry of ρ and no frequency moment are needed: |w|/(1+4w²) ≤ 1/4. -/
-theorem spectralS_hasDerivAt (ρ : Measure ℝ) [IsFiniteMeasure ρ] (t : ℝ) :
-    Integrable (spectralKernelPrime t) ρ ∧
-    HasDerivAt (spectralS ρ) (∫ w, spectralKernelPrime t w ∂ρ) t := by
-  apply hasDerivAt_integral_of_dominated_loc_of_deriv_le
-    (μ := ρ) (F := spectralKernel) (F' := spectralKernelPrime)
-    (s := univ) (bound := fun _ : ℝ => (1 : ℝ) / 4) (by simp)
-  · exact Eventually.of_forall (fun x => (spectralKernel_continuous x).aestronglyMeasurable)
-  · exact spectralKernel_integrable ρ t
-  · exact (spectralKernelPrime_continuous t).aestronglyMeasurable
-  · exact Eventually.of_forall (fun w x _ => by
-      simpa [Real.norm_eq_abs] using spectralKernelPrime_bound x w)
-  · exact integrable_const _
-  · exact Eventually.of_forall (fun w x _ => spectralKernel_hasDerivAt x w)
 
 theorem spectralS_ac (ρ : Measure ℝ) [IsFiniteMeasure ρ] (a b : ℝ) :
     AbsolutelyContinuousOnInterval (spectralS ρ) a b := by

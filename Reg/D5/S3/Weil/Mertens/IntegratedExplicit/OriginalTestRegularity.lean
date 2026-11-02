@@ -200,33 +200,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
     options := #[] })
 
 #check fun (arena : DependentFamily.Arena)
-    (family : DependentFamily.Registration arena (type_of% @OriginalTestRegularity.spectralKernelPrime_continuous))
-    (selection : Contract.SourceSelection) =>
-  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalTestRegularity.spectralKernelPrime_continuous)
-      (DependentFamily.Realization arena.signature) Unit Unit from {
-    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalTestRegularity.spectralKernelPrime_continuous.__information_unit
-    realizationName := Lean.Name.anonymous
-    realizationSource := none
-    generated := false
-    arena := .source ⟨arena⟩
-    objectArena := .source ⟨arena⟩
-    catalog := Lean.Name.anonymous
-    localNames := false
-    realization := .source arena ⟨family⟩
-    correspondence := { stage := .evidence, objectStage := .evidence }
-    bundleNonempty := .absent
-    readout := some (DependentFamily.realize arena.signature
-      family.actual.readout family.actual.anchor)
-    variation := .absent
-    sensitivity := .absent
-    partialSensitivity := none
-    escapeFrom := none
-    sourceSelection := some selection
-    continuation := .unknown
-    familyRecord := none
-    options := #[] })
-
-#check fun (arena : DependentFamily.Arena)
     (family : DependentFamily.Registration arena (type_of% @OriginalTestRegularity.spectralKernel_bound))
     (selection : Contract.SourceSelection) =>
   (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalTestRegularity.spectralKernel_bound)
@@ -254,92 +227,11 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
     options := #[] })
 
 #check fun (arena : DependentFamily.Arena)
-    (family : DependentFamily.Registration arena (type_of% @OriginalTestRegularity.spectralKernelPrime_bound))
-    (selection : Contract.SourceSelection) =>
-  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalTestRegularity.spectralKernelPrime_bound)
-      (DependentFamily.Realization arena.signature) Unit Unit from {
-    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalTestRegularity.spectralKernelPrime_bound.__information_unit
-    realizationName := Lean.Name.anonymous
-    realizationSource := none
-    generated := false
-    arena := .source ⟨arena⟩
-    objectArena := .source ⟨arena⟩
-    catalog := Lean.Name.anonymous
-    localNames := false
-    realization := .source arena ⟨family⟩
-    correspondence := { stage := .evidence, objectStage := .evidence }
-    bundleNonempty := .absent
-    readout := some (DependentFamily.realize arena.signature
-      family.actual.readout family.actual.anchor)
-    variation := .absent
-    sensitivity := .absent
-    partialSensitivity := none
-    escapeFrom := none
-    sourceSelection := some selection
-    continuation := .unknown
-    familyRecord := none
-    options := #[] })
-
-#check fun (arena : DependentFamily.Arena)
-    (family : DependentFamily.Registration arena (type_of% @OriginalTestRegularity.spectralKernel_hasDerivAt))
-    (selection : Contract.SourceSelection) =>
-  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalTestRegularity.spectralKernel_hasDerivAt)
-      (DependentFamily.Realization arena.signature) Unit Unit from {
-    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalTestRegularity.spectralKernel_hasDerivAt.__information_unit
-    realizationName := Lean.Name.anonymous
-    realizationSource := none
-    generated := false
-    arena := .source ⟨arena⟩
-    objectArena := .source ⟨arena⟩
-    catalog := Lean.Name.anonymous
-    localNames := false
-    realization := .source arena ⟨family⟩
-    correspondence := { stage := .evidence, objectStage := .evidence }
-    bundleNonempty := .absent
-    readout := some (DependentFamily.realize arena.signature
-      family.actual.readout family.actual.anchor)
-    variation := .absent
-    sensitivity := .absent
-    partialSensitivity := none
-    escapeFrom := none
-    sourceSelection := some selection
-    continuation := .unknown
-    familyRecord := none
-    options := #[] })
-
-#check fun (arena : DependentFamily.Arena)
     (family : DependentFamily.Registration arena (type_of% @OriginalTestRegularity.spectralKernel_integrable))
     (selection : Contract.SourceSelection) =>
   (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalTestRegularity.spectralKernel_integrable)
       (DependentFamily.Realization arena.signature) Unit Unit from {
     unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalTestRegularity.spectralKernel_integrable.__information_unit
-    realizationName := Lean.Name.anonymous
-    realizationSource := none
-    generated := false
-    arena := .source ⟨arena⟩
-    objectArena := .source ⟨arena⟩
-    catalog := Lean.Name.anonymous
-    localNames := false
-    realization := .source arena ⟨family⟩
-    correspondence := { stage := .evidence, objectStage := .evidence }
-    bundleNonempty := .absent
-    readout := some (DependentFamily.realize arena.signature
-      family.actual.readout family.actual.anchor)
-    variation := .absent
-    sensitivity := .absent
-    partialSensitivity := none
-    escapeFrom := none
-    sourceSelection := some selection
-    continuation := .unknown
-    familyRecord := none
-    options := #[] })
-
-#check fun (arena : DependentFamily.Arena)
-    (family : DependentFamily.Registration arena (type_of% @OriginalTestRegularity.spectralS_hasDerivAt))
-    (selection : Contract.SourceSelection) =>
-  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalTestRegularity.spectralS_hasDerivAt)
-      (DependentFamily.Realization arena.signature) Unit Unit from {
-    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalTestRegularity.spectralS_hasDerivAt.__information_unit
     realizationName := Lean.Name.anonymous
     realizationSource := none
     generated := false

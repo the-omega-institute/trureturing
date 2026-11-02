@@ -102,13 +102,8 @@ lemma prefix_eq_steps (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0)
     (D : ℝ) (hx : ∀ i, x i ≤ D) (u : ℝ) :
     «prefix» x a u = ∑ i, (Icc (x i) D).indicator (fun _ => a i) u := by
   classical
-  by_cases hu : u ≤ D
-  · unfold «prefix»
-    apply Finset.sum_congr rfl
-    intro i _
-    by_cases hi : x i ≤ u <;> simp [Set.indicator, mem_Icc, hu, hi]
-  · have hi : ∀ i, x i ≤ u := fun i => (hx i).trans (le_of_not_ge hu)
-    simp [«prefix», Set.indicator, mem_Icc, hu, hi, ha]
+  simpa only [add_zero, sub_zero, intervalStep, Set.indicator, ite_mul, one_mul, zero_mul] using
+    prefix_interval_expansion x a ha D 0 (by simpa only [sub_zero] using hx) u
 
 lemma prefix_measurable (x : ι → ℝ) (a : ι → ℂ) : Measurable («prefix» x a) := by
   classical
