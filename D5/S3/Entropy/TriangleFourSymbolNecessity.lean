@@ -607,8 +607,9 @@ private theorem mass_pos (mu : A → ℝ) (b : {a // 0 < mu a} → Bool)
     simp [extendLabel, a.property, ha]
   rw [← hterm]
   unfold mass
-  exact Finset.single_le_sum (fun a _ => by split_ifs <;> simp_all [hmu a])
-    (Finset.mem_univ a.val)
+  exact Finset.single_le_sum
+    (f := fun a => if extendLabel mu b a = u then mu a else 0)
+    (fun a _ => by split_ifs <;> simp_all [hmu a]) (Finset.mem_univ a.val)
 
 private theorem mass_sum (mu : A → ℝ) (b : A → Bool) (hnorm : ∑ a, mu a = 1) :
     mass mu b false + mass mu b true = 1 := by
@@ -689,8 +690,8 @@ private theorem posterior_from_pair {A B : Type*} [Fintype A] [Fintype B]
     (htable : ∀ a b, p * r a * s b = f a * g b) : ∀ a, r a = 2 * f a := by
   classical
   intro a
-  have hsum := Finset.sum_congr (s := Finset.univ) rfl
-    (fun b _ => htable a b)
+  have hsum : (∑ b, p * r a * s b) = ∑ b, f a * g b :=
+    Finset.sum_congr rfl (fun b _ => htable a b)
   simp only [← Finset.mul_sum, hs, mul_one] at hsum
   rw [hg, hp] at hsum
   linarith
@@ -1728,6 +1729,7 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
         _ = (∑ a, M₁ u a) * ∑ b, M₂ v b := by
           simp_rw [(table u v).1]
           simp only [Finset.mul_sum, Finset.sum_mul]
+          exact Finset.sum_comm
         _ = _ := rfl
     · calc
         _ = ∑ a, ∑ c, L.recordPair₁₃ ((h (u, v)).val, a, c) := by
@@ -1735,6 +1737,7 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
         _ = (∑ a, M₁ u a) * ∑ c, M₃ (u ^^ v) c := by
           simp_rw [(table u v).2.1]
           simp only [Finset.mul_sum, Finset.sum_mul]
+          exact Finset.sum_comm
         _ = _ := rfl
     · calc
         _ = ∑ b, ∑ c, L.recordPair₂₃ ((h (u, v)).val, b, c) := by
@@ -1742,6 +1745,7 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
         _ = (∑ b, M₂ v b) * ∑ c, M₃ (u ^^ v) c := by
           simp_rw [(table u v).2.2]
           simp only [Finset.mul_sum, Finset.sum_mul]
+          exact Finset.sum_comm
         _ = _ := rfl
   have pos₁ : ∀ u, 0 < rho₁ u := BlockAlgebra.mass_pos _ _ mu₁.1 surj₁
   have pos₂ : ∀ v, 0 < rho₂ v := BlockAlgebra.mass_pos _ _ mu₂.1 surj₂
@@ -1782,17 +1786,32 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       nlinarith only [tt₁₃ a c]
   have prob (b : Bool) : IsProbability (q₁ b) ∧ IsProbability (q₂ b) ∧ IsProbability (q₃ b) := by
     refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
-    · intro a; dsimp [q₁, M₁]; split_ifs <;> positivity
+    · intro a
+      apply mul_nonneg (by norm_num)
+      dsimp [M₁]
+      split_ifs
+      · exact mu₁.1 a
+      · norm_num
     · change ∑ a, 2 * M₁ b a = 1
       rw [← Finset.mul_sum]
       change 2 * rho₁ b = 1
       rw [fair₁]; norm_num
-    · intro a; dsimp [q₂, M₂]; split_ifs <;> positivity
+    · intro a
+      apply mul_nonneg (by norm_num)
+      dsimp [M₂]
+      split_ifs
+      · exact mu₂.1 a
+      · norm_num
     · change ∑ a, 2 * M₂ b a = 1
       rw [← Finset.mul_sum]
       change 2 * rho₂ b = 1
       rw [fair₂]; norm_num
-    · intro a; dsimp [q₃, M₃]; split_ifs <;> positivity
+    · intro a
+      apply mul_nonneg (by norm_num)
+      dsimp [M₃]
+      split_ifs
+      · exact mu₃.1 a
+      · norm_num
     · change ∑ a, 2 * M₃ b a = 1
       rw [← Finset.mul_sum]
       change 2 * rho₃ b = 1
@@ -1834,8 +1853,10 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       · exact he
       · linarith
     refine ⟨v, w, ?_, ?_, ?_⟩
-    · dsimp [q₂, M₂, v]; simp only [if_pos rfl]; positivity
-    · dsimp [q₃, M₃, w]; simp only [if_pos rfl]; positivity
+    · simpa only [q₂, M₂, v, if_pos rfl] using
+        mul_pos (show (0 : ℝ) < 2 by norm_num) hb
+    · simpa only [q₃, M₃, w, if_pos rfl] using
+        mul_pos (show (0 : ℝ) < 2 by norm_num) hc
     · intro x
       simpa only [he] using rowA b c hp x
   · intro c a hp
@@ -1860,8 +1881,10 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       · exact he
       · linarith
     refine ⟨u, w, ?_, ?_, ?_⟩
-    · dsimp [q₁, M₁, u]; simp only [if_pos rfl]; positivity
-    · dsimp [q₃, M₃, w]; simp only [if_pos rfl]; positivity
+    · simpa only [q₁, M₁, u, if_pos rfl] using
+        mul_pos (show (0 : ℝ) < 2 by norm_num) ha
+    · simpa only [q₃, M₃, w, if_pos rfl] using
+        mul_pos (show (0 : ℝ) < 2 by norm_num) hc
     · intro x
       simpa only [he] using rowB c a hp x
   · intro a b hp
@@ -1885,8 +1908,10 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       · exact he
       · linarith
     refine ⟨u, v, ?_, ?_, ?_⟩
-    · dsimp [q₁, M₁, u]; simp only [if_pos rfl]; positivity
-    · dsimp [q₂, M₂, v]; simp only [if_pos rfl]; positivity
+    · simpa only [q₁, M₁, u, if_pos rfl] using
+        mul_pos (show (0 : ℝ) < 2 by norm_num) ha
+    · simpa only [q₂, M₂, v, if_pos rfl] using
+        mul_pos (show (0 : ℝ) < 2 by norm_num) hb
     · intro x
       simpa only [he] using rowC a b hp x
 
