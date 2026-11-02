@@ -1,0 +1,38 @@
+# OriginalFourMReduction
+
+## Abstract
+
+Original lattice twisted-sector coefficient reduction, preserving the original carriers and operators.
+
+Audit remains incomplete for the 24 new public theorems in OriginalFourMInputs, OriginalFourMCoefficients, OriginalFourMChargeCoset and OriginalFourMReduction: declared_validated=0, with no new Reg mirrors or faithful four-slot attempts supplied. Source-owner disposition https://github.com/the-omega-institute/trureturing/issues/25603 lists every exact source, statement and type identity, the absent dependent-family realization/readout bridge and whole-family intervention/sensitivity evidence. This linked-issue exception permits delivery under CLAUDE 3.9 and supplies no validation. Universal identityK remains unproved.
+
+**Theorem 1.1 (Quantified original tensor reduction).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.homogeneous_jacobi_iff_identityK`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.homogeneous_jacobi_iff_identityK` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any three compatible original homogeneous odd polynomials and all integer m,n,r, quantify the original vector Jacobi law over every actual ground x,y,z. Quantify the detector polynomial S before applying coset_ground_elimination to all four ground variables, including its ground detector. This is equivalent to identityK for every S, with no permanent output-weight premise.
+
+**Theorem 1.2 (All-state original Jacobi if and only if the explicit coset law).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.original_jacobi_iff_identityK`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.original_jacobi_iff_identityK` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The vector side quantifies every u,v,w in the full original paritySpace(-1). The explicit K side quantifies natural weights H,K,L, all compatible original homogeneous odd P,Q,R, every detector polynomial S and, inside identityK, every mod-two charge. All m,n,r are arbitrary integers. The original three j families are statewise finite; their product and balance form a trilinear residual. Accepted finite input expansion, not detector induction or a vacuum argument, extends the law to every input. This is a reduction only: universal K, crossing, Monster/moonshine, full VOA/CFT, BRST/string and AdS/CFT remain unproved.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.homogeneous_jacobi_iff_identityK`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.original_jacobi_iff_identityK`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeCoset](OriginalFourMChargeCoset.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalFourMInputs](OriginalFourMInputs.md)
