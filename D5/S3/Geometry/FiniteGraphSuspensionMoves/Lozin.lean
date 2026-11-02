@@ -1,18 +1,19 @@
 /- GID: D5/S3/Geometry/FiniteGraphSuspensionMoves/Lozin
    generality: G
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/FiniteGraphSuspensionMoves/Lozin
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: none
    digest: A literal Lozin replacement and its exact star-subgraph suspension identification. -/
 import D5.S3.Geometry.FiniteGraphSuspensionMoves.EdgeMatching
 
 /-!
-UNCOMPILED source candidate. The classical Lozin suspension is attributed to
-Biyikoglu--Civan (2013), Proposition 3.4. Here the graph identification is made
-explicit, using the arbitrary-subgraph gadget of Barmak (2010), Proposition 7.2.
-No claim of novelty, priority, original Question 32 completion, or kernel
-acceptance is made. In particular, ambient edges inside Y are retained.
+# Lozin replacements
+
+The classical Lozin suspension is attributed to Biyikoglu--Civan,
+Proposition 3.4. Its graph is identified explicitly with the arbitrary local
+star-subgraph gadget of Barmak, Proposition 7.2. Ambient edges inside the
+selected leaf set are retained.
 -/
 
 noncomputable section
@@ -36,10 +37,14 @@ def starEmbedding (v : V) (Y : Finset V) (hvY : v ∉ Y) : Option ↥Y ↪ V whe
     | none =>
       cases b with
       | none => rfl
-      | some b => exact False.elim (hvY (h.symm ▸ b.property))
+      | some b =>
+        change v = b.val at h
+        exact False.elim (hvY (h.symm ▸ b.property))
     | some a =>
       cases b with
-      | none => exact False.elim (hvY (h ▸ a.property))
+      | none =>
+        change a.val = v at h
+        exact False.elim (hvY (h ▸ a.property))
       | some b => exact congrArg some (Subtype.ext h)
 
 private theorem star_embedding_adj (G : SimpleGraph V) (v : V) (Y : Finset V)
@@ -208,26 +213,51 @@ def lozinSuspensionIso (G : SimpleGraph V) (v : V) (Y Z : Finset V)
         (localSuspensionGraph G H).Adj (E (.inl x)) (E (.inr j)) ↔
           (lozinSuspension G v Y Z).Adj (.inl x) (.inr j) := by
       fin_cases j
-      all_goals
-        simp [E, H, lozinVertexEquiv, lozinBaseEquiv, tripleNewCode,
-          lozinSuspension, lozinAdj, star_complement,
-          retained_center G v Y Z hpart hdisj x.val x.property, x.property]
+      · change (x.val ∈ H.verts ∧
+          x.val ∉ (starApexEquiv G v Y (partitionYAdj G v Y Z hpart) hYn false).val.image
+            Subtype.val) ↔ _
+        rw [star_complement]
+        simp [lozinSuspension, lozinAdj]
+      · change False ↔ _
+        simp [lozinSuspension, lozinAdj]
+      · change (x.val ∈ H.verts ∧
+          x.val ∉ (starApexEquiv G v Y (partitionYAdj G v Y Z hpart) hYn true).val.image
+            Subtype.val) ↔ _
+        rw [star_complement]
+        simp [lozinSuspension, lozinAdj, x.property]
+      · change (G.Adj x.val v ∧ ¬ H.Adj x.val v) ↔ _
+        rw [retained_center G v Y Z hpart hdisj x.val x.property]
+        simp [lozinSuspension, lozinAdj]
     rintro (x | i) (y | j)
-    · change (localSuspensionGraph G H).Adj (.inl x.val) (.inl y.val) ↔ _
-      simpa only [local_old_old] using
-        retained_old G v Y (partitionYAdj G v Y Z hpart) x.val y.val x.property y.property
+    · change (G.Adj x.val y.val ∧ ¬ H.Adj x.val y.val) ↔ G.Adj x.val y.val
+      exact retained_old G v Y (partitionYAdj G v Y Z hpart)
+        x.val y.val x.property y.property
     · exact mixed x j
     · exact ((localSuspensionGraph G H).adj_comm _ _).trans
         ((mixed y i).trans ((lozinSuspension G v Y Z).adj_comm _ _))
-    · fin_cases i <;> fin_cases j <;>
-        simp [E, H, lozinVertexEquiv, lozinBaseEquiv, tripleNewCode,
-          lozinSuspension, lozinAdj, star_complement, hvY]
+    · fin_cases i <;> fin_cases j
+      all_goals
+        first
+        | change (v ∈ H.verts ∧
+            v ∉ (starApexEquiv G v Y (partitionYAdj G v Y Z hpart) hYn false).val.image
+              Subtype.val) ↔ _
+          rw [star_complement]
+          simp [lozinSuspension, lozinAdj, hvY]
+        | change (v ∈ H.verts ∧
+            v ∉ (starApexEquiv G v Y (partitionYAdj G v Y Z hpart) hYn true).val.image
+              Subtype.val) ↔ _
+          rw [star_complement]
+          simp [lozinSuspension, lozinAdj]
+        | simp [E, H, lozinVertexEquiv, lozinBaseEquiv, tripleNewCode,
+            lozinSuspension, lozinAdj, hvY]
 
 def lozinSuspensionReducedHomologyIso (G : SimpleGraph V) (v : V) (Y Z : Finset V)
     (hpart : ∀ x, G.Adj v x ↔ x ∈ Y ∨ x ∈ Z) (hdisj : Disjoint Y Z)
     (hYn : Y.Nonempty) (q : ℕ) (hq : 1 ≤ q) :
     Reduced (lozinSuspension G v Y Z) (q + 1) ≅ Reduced G q := by
   letI : Nonempty V := ⟨v⟩
+  letI : Fintype (starSubgraph G v Y (partitionYAdj G v Y Z hpart)).verts :=
+    Fintype.ofFinite _
   exact graphReducedIso (lozinSuspensionIso G v Y Z hpart hdisj hYn) (q + 1) ≪≫
     localSubgraphReducedHomologyIso G
       (starSubgraph G v Y (partitionYAdj G v Y Z hpart)) q hq

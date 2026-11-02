@@ -1,15 +1,21 @@
 /- GID: D5/S3/Geometry/FiniteGraphSuspensionMoves/EdgeMatching
    generality: G
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/FiniteGraphSuspensionMoves/EdgeMatching
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: none
    digest: Literal triple subdivisions and crossing suspensions identified with arbitrary-subgraph gadgets. -/
 import D5.S3.Geometry.FiniteGraphSuspensionMoves.Models
 
-/-! UNCOMPILED. Three fresh path vertices, or a hub and four fresh quadrant
-vertices, are specified independently of the suspension supplier. All other
-old edges are retained. The matching need not be induced. -/
+/-!
+# Triple subdivisions and matching suspensions
+
+Three fresh path vertices, or a hub and four fresh quadrant vertices, give
+literal graphs isomorphic to arbitrary local-subgraph suspension gadgets.
+All old edges outside the chosen subgraph are retained. The matching need
+not be induced. The reduced integral singular homology shift follows from
+the local gadget construction of Barmak, Proposition 7.2.
+-/
 
 noncomputable section
 open CategoryTheory
@@ -30,7 +36,8 @@ private theorem edge_embedding_adj (G : SimpleGraph V) {a b : V} (hab : G.Adj a 
     ∀ s t, edgeModel.Adj s t →
       G.Adj (edgeEmbedding a b hab.ne s) (edgeEmbedding a b hab.ne t) := by
   intro s t h
-  cases s <;> cases t <;> simp_all [edgeModel, edgeEmbedding, G.adj_comm]
+  change G.Adj (if s then b else a) (if t then b else a)
+  cases s <;> cases t <;> simp_all [edgeModel, G.adj_comm]
 
 def edgeSubgraph (G : SimpleGraph V) {a b : V} (hab : G.Adj a b) : G.Subgraph :=
   embeddedSubgraph G edgeModel (edgeEmbedding a b hab.ne) (edge_embedding_adj G hab)
@@ -46,7 +53,9 @@ theorem edge_removed (G : SimpleGraph V) {a b : V} (hab : G.Adj a b) (x y : V) :
     edgeEmbedding a b hab.ne s = x ∧ edgeEmbedding a b hab.ne t = y) ↔ _
   constructor
   · rintro ⟨s, t, h, hs, ht⟩
-    cases s <;> cases t <;> simp_all [edgeModel, edgeEmbedding]
+    change (if s then b else a) = x at hs
+    change (if t then b else a) = y at ht
+    cases s <;> cases t <;> simp_all [edgeModel]
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩)
     · exact ⟨false, true, by simp [edgeModel], rfl, rfl⟩
     · exact ⟨true, false, by simp [edgeModel], rfl, rfl⟩
@@ -106,12 +115,36 @@ def tripleSubdivisionIso (G : SimpleGraph V) {a b : V} (hab : G.Adj a b) :
     rintro (x | i) (y | j)
     · change (localSuspensionGraph G (edgeSubgraph G hab)).Adj (.inl x) (.inl y) ↔ _
       simp [tripleSubdivision, tripleAdj, edge_removed]
-    · fin_cases j <;>
-        simp [tripleVertexEquiv, tripleNewCode, tripleSubdivision, tripleAdj,
-          edge_complement, edgeEmbedding]
-    · fin_cases i <;>
-        simp [tripleVertexEquiv, tripleNewCode, tripleSubdivision, tripleAdj,
-          edge_complement, edgeEmbedding]
+    · fin_cases j
+      · change (x ∈ (edgeSubgraph G hab).verts ∧
+          x ∉ (edgeApexEquiv G hab false).val.image Subtype.val) ↔
+          ((0 : Fin 3) = 0 ∧ x = a) ∨ ((0 : Fin 3) = 2 ∧ x = b)
+        rw [edge_complement]
+        change (x = a) ↔ _
+        simp
+      · change False ↔ ((1 : Fin 3) = 0 ∧ x = a) ∨ ((1 : Fin 3) = 2 ∧ x = b)
+        simp
+      · change (x ∈ (edgeSubgraph G hab).verts ∧
+          x ∉ (edgeApexEquiv G hab true).val.image Subtype.val) ↔
+          ((2 : Fin 3) = 0 ∧ x = a) ∨ ((2 : Fin 3) = 2 ∧ x = b)
+        rw [edge_complement]
+        change (x = b) ↔ _
+        simp
+    · fin_cases i
+      · change (y ∈ (edgeSubgraph G hab).verts ∧
+          y ∉ (edgeApexEquiv G hab false).val.image Subtype.val) ↔
+          ((0 : Fin 3) = 0 ∧ y = a) ∨ ((0 : Fin 3) = 2 ∧ y = b)
+        rw [edge_complement]
+        change (y = a) ↔ _
+        simp
+      · change False ↔ ((1 : Fin 3) = 0 ∧ y = a) ∨ ((1 : Fin 3) = 2 ∧ y = b)
+        simp
+      · change (y ∈ (edgeSubgraph G hab).verts ∧
+          y ∉ (edgeApexEquiv G hab true).val.image Subtype.val) ↔
+          ((2 : Fin 3) = 0 ∧ y = a) ∨ ((2 : Fin 3) = 2 ∧ y = b)
+        rw [edge_complement]
+        change (y = b) ↔ _
+        simp
     · fin_cases i <;> fin_cases j <;>
         simp [tripleVertexEquiv, tripleNewCode, tripleSubdivision, tripleAdj]
 
@@ -121,6 +154,7 @@ variable (G : SimpleGraph V) (e : (Bool × Bool) ↪ V)
   (hab : G.Adj (e (false, false)) (e (false, true)))
   (hcd : G.Adj (e (true, false)) (e (true, true)))
 
+include hab hcd in
 private theorem matching_embedding_adj : ∀ x y, matchingModel.Adj x y → G.Adj (e x) (e y) := by
   rintro ⟨i, s⟩ ⟨j, t⟩ ⟨hij, hst⟩
   dsimp at hij hst
@@ -217,9 +251,19 @@ def crossingSuspensionIso (G : SimpleGraph V) (e : (Bool × Bool) ↪ V)
     rintro (x | p) (y | q)
     · change (localSuspensionGraph G (matchingSubgraph G e hab hcd)).Adj (.inl x) (.inl y) ↔ _
       simp [crossingSuspension, crossingAdj, matching_removed]
-    · cases q <;> simp [crossingSuspension, crossingAdj, crossing_complement]
-    · cases p <;> simp [crossingSuspension, crossingAdj, crossing_complement]
-    · cases p <;> cases q <;> simp [crossingSuspension, crossingAdj]
+    · cases q with
+      | none => rfl
+      | some p =>
+        change (x ∈ (matchingSubgraph G e hab hcd).verts ∧
+          x ∉ (crossingApexEquiv G e hab hcd p).val.image Subtype.val) ↔ _
+        exact crossing_complement G e hab hcd p x
+    · cases p with
+      | none => rfl
+      | some p =>
+        change (y ∈ (matchingSubgraph G e hab hcd).verts ∧
+          y ∉ (crossingApexEquiv G e hab hcd p).val.image Subtype.val) ↔ _
+        exact crossing_complement G e hab hcd p y
+    · cases p <;> cases q <;> rfl
 
 /- The actual graph identifications, not an assumed move-correctness premise,
 are consumed by the singular homology shift. -/
@@ -239,6 +283,7 @@ def tripleSubdivisionReducedHomologyIso (G : SimpleGraph V) {a b : V}
     (hab : G.Adj a b) (q : ℕ) (hq : 1 ≤ q) :
     Reduced (tripleSubdivision G a b) (q + 1) ≅ Reduced G q := by
   letI : Nonempty V := ⟨a⟩
+  letI : Fintype (edgeSubgraph G hab).verts := Fintype.ofFinite _
   exact graphReducedIso (tripleSubdivisionIso G hab) (q + 1) ≪≫
     localSubgraphReducedHomologyIso G (edgeSubgraph G hab) q hq
 
@@ -247,6 +292,7 @@ def crossingSuspensionReducedHomologyIso (G : SimpleGraph V) (e : (Bool × Bool)
     (hcd : G.Adj (e (true, false)) (e (true, true))) (q : ℕ) (hq : 1 ≤ q) :
     Reduced (crossingSuspension G e) (q + 1) ≅ Reduced G q := by
   letI : Nonempty V := ⟨e (false, false)⟩
+  letI : Fintype (matchingSubgraph G e hab hcd).verts := Fintype.ofFinite _
   exact graphReducedIso (crossingSuspensionIso G e hab hcd) (q + 1) ≪≫
     localSubgraphReducedHomologyIso G (matchingSubgraph G e hab hcd) q hq
 

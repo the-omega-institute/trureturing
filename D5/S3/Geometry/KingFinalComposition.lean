@@ -1,9 +1,9 @@
 /- GID: D5/S3/Geometry/KingFinalComposition
    generality: I
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/KingFinalComposition
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
-   utility: kind=scientific-composition; consumer=Question32 King-grid counterexample
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Geometry/KingFinalComposition.claim; result=D5/S3/Geometry/KingFinalComposition.result; claim=D5/S3/Geometry/KingFinalComposition.claim
    digest: The actual selected king-grid graph has an integral singular class
      of order two in degree 31327, via canonical prescribed-path induction
      and the retained seed class; arbitrary-family sourceSP is contradicted.
@@ -17,40 +17,22 @@ import D5.S3.Geometry.SphereBouquetHomology
 import D5.S3.Combinatorics.Graph.Products.CarneroBravoKingRoutes
 
 /-!
-UNCOMPILED SOURCE-ONLY CONTINUATION for Carnero Bravo, arXiv:2505.06457v2,
-Question 32. Reused project source is licensed under Apache-2.0, as in the
-canonical repository LICENSE. Supplier files retain their original GID and
-source text. The source pins (which do not assert future merged delivery) are:
-* star and coordinate modules: ca35a11485807c5009f6f3afdef81f72f3f48cef;
-* singular comparison and its two required support updates:
-  d40ed0116eaff5bc2f6afe06f7728b2062e49ed6;
-* routing modules: 4024e536502e407db7cd86352cbe5e18baa04d73;
-* remaining project imports, including SphereBouquetHomology:
-  31fa401a7c17858fa323ddd0886ed580e0c57347 (the freshdev BASE, with no star
-  modules; its sphere source is identical to the d40 pin).
-The seven move/replay files are retained source-only scientific inputs from
-king-suspension-moves-source and king-finite-replay-source. Their original
-source-stage comments describe their upstream status, not current acceptance.
-Lean 4.35.0 and Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679
-are the intended immutable language/library baseline.
-This file imports those exact suppliers and the source-only replay. It contains no `sorry`, `admit`, custom axiom, native
-proof escape, build result, or original-problem completion claim.
+# Integral torsion in an induced king-grid graph
 
-The finite replay endpoint is identified with the routing base graph by its
-literal labels and actual adjacency. The preserved source supplier
-`PrescribedSubdivisionHomology` proves the simultaneous subdivision shift
-by a well-founded recursion on the total multiplicity: each partial graph
-has the canonical Original + Sigma internal carrier, and each step is an
-explicit graph isomorphism from a literal triple subdivision. No 31286-deep
-carrier or graph/homology correctness premise is introduced.
+The literal forty-move endpoint is identified with the routing base graph
+by natural labels and actual adjacency. Simultaneous prescribed subdivision
+shifts reduced integral singular homology by 31286 further degrees. The
+actual induced graph isomorphism places the resulting graph inside the
+strong product of paths on 9337 and 9061 vertices.
 
-The final composition uses the actual singular seed class, a reflexive
-homeomorphism identifying its actual realization with Ispace G0, the natural
-positive-degree reduced/ordinary comparison, forty moves, the prescribed
-31286 subdivisions, and the actual selected induced graph isomorphism.
-Compactness and the original arbitrary-family sourceSP theorem then give
-the contradiction. Every declaration here and every uncompiled imported
-source supplier still requires the owner's canonical kernel/CI checks.
+The original nonzero seed class killed by two transports to ordinary
+integral singular degree 31327 of the actual selected independence
+realization. Compactness and the sphere-bouquet torsion obstruction retain
+arbitrary indexing families, dimensions including zero, arbitrary basepoints
+and ordinary quotient topology. The selected set is nonempty. Thus its
+obstruction addresses hereditary Question 32 independently of the paper's
+unspecified vertexless convention; it does not address full-rectangle
+Question 35. Reused project content is licensed under Apache-2.0.
 -/
 
 
@@ -126,128 +108,6 @@ def routeBaseReducedHomologyIso (q : ℕ) (hq : 1 ≤ q) :
   (graphReducedIso replayToRouteBaseIso (q + 40)).symm ≪≫
     KingFiniteReplay.reducedHomologyIso q hq
 
-/-! ## A genuine repeated-triple path expansion -/
-
-/-- The nested carrier after `k` literal triple subdivisions of one edge.
-Keeping the nested sums avoids allocating or unrolling 31286 global labels.
-This local recursion is retained for reuse; the simultaneous bridge below
-uses canonical partial graphs and never flattens these nested carriers. -/
-def pathCarrier (X : Type) : ℕ → Type
-  | 0 => X
-  | n + 1 => pathCarrier X n ⊕ Fin 3
-
-/-- The recursively defined carrier has the actual finite instances required
-by MoveChain; typeclass search does not invent these through a variable n. -/
-instance pathCarrierFintype {X : Type} [Fintype X] :
-    (n : ℕ) → Fintype (pathCarrier X n)
-  | 0 => inferInstanceAs (Fintype X)
-  | n + 1 => by
-      letI := pathCarrierFintype (X := X) n
-      exact inferInstanceAs (Fintype (pathCarrier X n ⊕ Fin 3))
-
-instance pathCarrierDecidableEq {X : Type} [DecidableEq X] :
-    (n : ℕ) → DecidableEq (pathCarrier X n)
-  | 0 => inferInstanceAs (DecidableEq X)
-  | n + 1 => by
-      letI := pathCarrierDecidableEq (X := X) n
-      exact inferInstanceAs (DecidableEq (pathCarrier X n ⊕ Fin 3))
-
-/-- The old vertices are lifted through each successive fresh triple. -/
-def pathOldLift {X : Type} : (n : ℕ) → X → pathCarrier X n
-  | 0 => id
-  | n + 1 => Sum.inl ∘ pathOldLift n
-
-/-- The right endpoint is lifted through the nested carrier. -/
-def pathRightLift {X : Type} {a b : X} : (n : ℕ) → pathCarrier X n
-  | 0 => b
-  | n + 1 => Sum.inl (pathRightLift (a := a) (b := b) n)
-
-/-- After at least one step, the new last vertex is the rightmost fresh
-vertex of the latest triple. -/
-def pathLast {X : Type} {a b : X} : (n : ℕ) → pathCarrier X n
-  | 0 => a
-  | n + 1 => Sum.inr (2 : Fin 3)
-
-/-- Actual graph obtained after `n` successive triple subdivisions of the edge
-whose endpoints are `pathLast n` and `pathRightLift n`. -/
-def pathGraph {X : Type} [Fintype X] [DecidableEq X]
-    (G : SimpleGraph X) {a b : X} (h : G.Adj a b) :
-    (n : ℕ) → SimpleGraph (pathCarrier X n)
-  | 0 => G
-  | n + 1 =>
-      tripleSubdivision (pathGraph G h n) (pathLast (a := a) (b := b) n)
-        (pathRightLift (a := a) (b := b) n)
-
-/-- The selected edge remains present after each preceding subdivision. This
-is the exact edge condition consumed by the next `MoveChain.triple`. -/
-def pathEdgeProof {X : Type} [Fintype X] [DecidableEq X]
-    (G : SimpleGraph X) {a b : X} (h : G.Adj a b) :
-    (n : ℕ) → (pathGraph G h n).Adj
-      (pathLast (a := a) (b := b) n)
-      (pathRightLift (a := a) (b := b) n)
-  | 0 => h
-  | n + 1 => by
-      change (tripleSubdivision (pathGraph G h n)
-        (pathLast (a := a) (b := b) n)
-        (pathRightLift (a := a) (b := b) n)).Adj
-        (Sum.inr (2 : Fin 3)) (Sum.inl (pathRightLift (a := a) (b := b) n))
-      change ((2 : Fin 3) = 0 ∧
-        pathRightLift (a := a) (b := b) n = pathLast (a := a) (b := b) n) ∨
-        ((2 : Fin 3) = 2 ∧
-          pathRightLift (a := a) (b := b) n = pathRightLift (a := a) (b := b) n)
-      exact Or.inr ⟨rfl, rfl⟩
-
-/-- The complete concrete chain for one path. The recursion is on the actual
-number of triple subdivisions and does not assume a homology shift. -/
-def pathMoveChain {X : Type} [Fintype X] [DecidableEq X]
-    (G : SimpleGraph X) {a b : X} (h : G.Adj a b) :
-    (n : ℕ) → MoveChain G (pathGraph G h n) n
-  | 0 => MoveChain.refl G
-  | n + 1 => by
-      let prior := pathMoveChain G h n
-      have hstep := pathEdgeProof G h n
-      simpa [pathGraph] using
-        (MoveChain.triple prior
-          (pathLast (a := a) (b := b) n)
-          (pathRightLift (a := a) (b := b) n)
-          hstep (Equiv.refl _))
-
-/-- Actual reduced singular-homology transport for one prescribed path. -/
-def pathReducedHomologyIso {X : Type} [Fintype X] [DecidableEq X]
-    (G : SimpleGraph X) {a b : X} (h : G.Adj a b)
-    (n q : ℕ) (hq : 1 ≤ q) :
-    Reduced (pathGraph G h n) (q + n) ≅ Reduced G q :=
-  (pathMoveChain G h n).reducedHomologyIso q hq
-
-/-- A preceding triple subdivision preserves an unrelated old adjacency.
-The disequality is stated on the unordered endpoint pairs, so ambient cross
-edges are retained exactly as required by the local-subgraph suppliers. -/
-theorem tripleSubdivision_old_adj_of_pair_ne
-    {X : Type} [Fintype X] [DecidableEq X]
-    (G : SimpleGraph X) {a b x y : X}
-    (hxy : G.Adj x y)
-    (hne : ¬ ((x = a ∧ y = b) ∨ (x = b ∧ y = a))) :
-    (tripleSubdivision G a b).Adj (Sum.inl x) (Sum.inl y) := by
-  exact ⟨hxy, hne⟩
-
-/-- Iterating the preceding lemma gives the old-edge preservation needed when
-processing a second route edge. This is the reusable combinatorial half of
-the simultaneous-subdivision construction. -/
-theorem pathGraph_old_adj_of_pair_ne
-    {X : Type} [Fintype X] [DecidableEq X]
-    (G : SimpleGraph X) {a b x y : X}
-    (hxy : G.Adj x y)
-    (hne : ∀ n, ¬ ((pathOldLift n x = pathLast (a := a) (b := b) n ∧
-      pathOldLift n y = pathRightLift (a := a) (b := b) n) ∨
-      (pathOldLift n x = pathRightLift (a := a) (b := b) n ∧
-       pathOldLift n y = pathLast (a := a) (b := b) n)))
-    (h : G.Adj a b) (n : ℕ) :
-    (pathGraph G h n).Adj (pathOldLift n x) (pathOldLift n y) := by
-  induction n with
-  | zero => exact hxy
-  | succ n ih =>
-      exact tripleSubdivision_old_adj_of_pair_ne _ ih (hne n)
-
 /-! ## The simultaneous prescribed subdivision and the actual selected graph -/
 
 /-- The route's final graph is the actual selected induced finite graph, via
@@ -255,16 +115,6 @@ the reviewed induced graph isomorphism. -/
 def selectedToRoutedReducedIso (q : ℕ) :
     Reduced (rectangle.induce selected) q ≅ Reduced RoutedGraph q :=
   (graphReducedIso inducedIso q).symm
-
-/-- The actual route counts, supplied by the unchanged routing data. -/
-theorem route_counts :
-    Fintype.card Original = 141 ∧
-    Fintype.card Edge = 178 ∧
-    (∑ e : Edge, subdivision.k e) = 31286 ∧
-    Fintype.card Vertex = 93999 ∧
-    RoutedGraph.edgeFinset.card = 94036 := by
-  exact ⟨original_card, edge_card, sum_subdivisions, actual_vertex_count,
-    actual_edge_count⟩
 
 /-- Pair injectivity on the actual Original subtype follows from the
 routing supplier's injectivity on the underlying Nat labels. -/
@@ -411,5 +261,17 @@ theorem question32_counterexample :
         (Ispace (rectangle.induce selected)) := by
   exact ⟨selected_nonempty, selected_vertex_count,
     selected_edge_count, selected_not_sourceSP⟩
+
+/-- The positive-order hereditary extension asked in Question 32.
+The sourceSW convention quantifies over nonempty induced sets. -/
+def claim : Prop :=
+  ∀ n m : ℕ, 0 < n → 0 < m →
+    HereditaryLexicographicProduct.sourceSW.{0, v}
+      (LatticeRouting.strongProduct (SimpleGraph.pathGraph n) (SimpleGraph.pathGraph m))
+
+/-- The nonempty selected graph refutes the hereditary extension. -/
+theorem result : ¬ claim.{v} := by
+  intro h
+  exact rectangle_not_sourceSW (h 9337 9061 (by decide) (by decide))
 
 end D5.S3.Geometry.KingFinalComposition

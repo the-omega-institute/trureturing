@@ -1,7 +1,7 @@
 /- GID: D5/S3/Geometry/PrescribedSubdivisionHomology
    generality: G
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/PrescribedSubdivisionHomology
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
    utility: none
    digest: Symbolic iteration of literal triple edge subdivisions with exact path vertices. -/
@@ -9,30 +9,17 @@ import D5.S3.Geometry.FiniteGraphSuspensionMoves
 import D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 
 /-!
-UNELABORATED SOURCE CANDIDATE. Reused verbatim mathematical source from
-king-prescribed-subdivision-homology-source; upstream SHA256 233cecfe6cbcd8518154c03ca754dd7228931d4e80658fad15d4ba00b3335b41.
-This dependent composition snapshot also opens the BigOperators notation
-used below. No Lean/lake invocation, kernel evidence,
-axiom-closure report, or retained verified theorem is claimed. Intended pins:
-Lean 4.35.0; Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-The move candidate is uncompiled here; the actual star source pin is
-ca35a11485807c5009f6f3afdef81f72f3f48cef and routing source pin is
-4024e536502e407db7cd86352cbe5e18baa04d73. Source availability is not
-publication or kernel acceptance of this composition.
+# Simultaneous prescribed triple subdivisions
 
-The homological input is the terminal candidate
-`FiniteGraphSuspensionMoves.tripleSubdivisionReducedHomologyIso`, ultimately
-from Barmak (2010), Proposition 7.2. The new content here is the exact graph
-identification and induction for arbitrarily many prescribed subdivisions.
-`Reduced` means integral reduced singular homology of the realized independence
-complex `FiniteCoordinateTruncation.Ispace`, with coefficients ModuleCat.of ℤ ℤ.
-`Partial.graph D n` permits zero entries in n WITHOUT constructing an invalid
-positive-only `PrescribedSubdivision.Data`. The original D is never changed.
-Every original vertex is retained, including isolated vertices. Its base graph
-has precisely all unordered endpoint pairs, and injectivity of those pairs is
-used when deleting the last edge of a zero-stage path. No desired graph or
-homology isomorphism is assumed. This is an auxiliary connection for the SAME
-Carnero Bravo arXiv:2505.06457v2 Question 32; zero solved-original-problem credit.
+The homological input is the literal triple-subdivision isomorphism, from
+Barmak, Proposition 7.2. Partial graphs retain every original vertex and
+use an indexed internal carrier with three times the current multiplicity
+vertices on each edge. Zero multiplicity retains the original edge.
+Injectivity of unordered endpoint pairs controls deletion at zero stages.
+An explicit graph isomorphism identifies every increment with one literal
+triple subdivision. Well-founded recursion on the sum of multiplicities
+gives the reduced integral singular homology shift without nested expanded
+carriers or a supplied graph or homology correctness premise.
 -/
 
 noncomputable section

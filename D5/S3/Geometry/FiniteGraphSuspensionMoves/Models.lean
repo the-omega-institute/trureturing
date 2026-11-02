@@ -1,19 +1,20 @@
 /- GID: D5/S3/Geometry/FiniteGraphSuspensionMoves/Models
    generality: G
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/FiniteGraphSuspensionMoves/Models
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: none
    digest: Exact local edge subgraphs and their maximal independent sets. -/
 import D5.S3.Geometry.FiniteGraphSubgraphSuspension
 
 /-!
-UNCOMPILED source candidate. Baseline 1c0bfc7c3def330e285978ef4c1b8fbfd993d538;
-Lean 4.35.0; Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-The imported suspension supplier is itself an uncompiled terminal candidate.
-These are the local graph identifications needed for the SAME Carnero Bravo
-arXiv:2505.06457v2 Question 32 construction. No original-problem credit is claimed.
-The arbitrary-edge-subgraph gadget is Barmak (2010), Proposition 7.2.
+# Finite local subgraphs and maximal independent sets
+
+An injective graph map specifies precisely the model edges, including when
+extra ambient edges join vertices in its range. Maximal independent sets
+are transported through the resulting local graph isomorphism. The edge,
+two-edge matching and nonempty star models have explicit maximal-set
+classifications used by the suspension moves.
 -/
 
 noncomputable section
@@ -106,7 +107,9 @@ theorem embedded_complement (G : SimpleGraph V) (T : SimpleGraph A) (e : A ↪ V
   classical
   have himage : (mapMax (embeddedIso G T e he) M).val.image Subtype.val =
       M.val.image e := by
-    simp [mapMax, Finset.image_image, Function.comp_def, embeddedIso, rangeEquiv]
+    change (M.val.image (embeddedIso G T e he)).image Subtype.val = _
+    rw [Finset.image_image]
+    rfl
   rw [himage]
   constructor
   · rintro ⟨⟨a, rfl⟩, ha⟩
@@ -240,7 +243,8 @@ private theorem center_maximal :
   cases x with
   | none => simp
   | some x =>
-    exact False.elim (hN (hsub (by simp)) hx (by simp) (by trivial))
+    have hnone : (none : Option L) ∈ N := hsub (Finset.mem_singleton_self _)
+    exact False.elim (hN hnone hx (by simp) (by trivial))
 
 private theorem leaves_maximal [Nonempty L] :
     ∀ N : Finset (Option L), (starModel L).IsIndepSet (N : Set (Option L)) →
@@ -255,7 +259,8 @@ private theorem leaves_maximal [Nonempty L] :
 
 def starMax [Nonempty L] (b : Bool) : MaxIndependent (starModel L) :=
   if b then ⟨leaves L, leaves_independent L, leaves_maximal L⟩
-  else ⟨{none}, center_independent L, center_maximal L⟩
+  else ⟨{none}, by simpa only [Finset.coe_singleton] using center_independent L,
+    center_maximal L⟩
 
 /-- A nonempty star has exactly {center} and the full leaf set as its maximal
 independent sets. Edges in an ambient graph between leaves play no role. -/
@@ -292,7 +297,7 @@ end Star
 /- The supplier's local adjacency is private. These definitional equations
 expose only its public graph and do not alter or duplicate the supplier. -/
 section LocalEquations
-variable (G : SimpleGraph V) (H : G.Subgraph) [Fintype H.verts]
+variable (G : SimpleGraph V) (H : G.Subgraph)
 
 @[simp] theorem local_old_old (x y : V) :
     (localSuspensionGraph G H).Adj (.inl x) (.inl y) ↔ G.Adj x y ∧ ¬ H.Adj x y := Iff.rfl

@@ -1,23 +1,19 @@
 /- GID: D5/S3/Geometry/FiniteGraphSuspensionMoves
    generality: G
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/FiniteGraphSuspensionMoves
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
    utility: none
    digest: Concrete finite move chains consume the three proved graph identifications and their integral singular-homology shifts. -/
 import D5.S3.Geometry.FiniteGraphSuspensionMoves.Lozin
 
 /-!
-UNCOMPILED, including every imported terminal-candidate dependency.
-Source-only implementation for the SAME induced-king-grid Question 32 route.
-No 93999-vertex expansion, degree-31327 theorem, torsion comparison, SW
-refutation, CI, PR, or original-problem completion is asserted here.
+# Finite chains of literal suspension operations
 
-`SimpleGraph.Iso.map` is the proved relabeling interface. The move-chain
-constructors consume it after EVERY literal operation. Thus finite Nat labels
-can be supplied as equivalences onto the actual finite vertex subtype, with
-freshness and deletion represented exactly by the equivalence domain. No
-graph isomorphism, homotopy equivalence, or homology shift is an input.
+Graph-map isomorphisms transport reduced integral singular homology after
+each triple subdivision, matching suspension or Lozin replacement. A chain
+of n moves shifts every degree q at least one to q+n. Its constructors
+contain the actual graph operations and relabeling equivalences.
 -/
 
 noncomputable section
@@ -91,11 +87,14 @@ def MoveChain.reducedHomologyIso {G : SimpleGraph V} {F : SimpleGraph W} {n : �
   induction moves with
   | refl G => exact Iso.refl _
   | triple prior a b hab labels ih =>
-    exact tripleRelabeledReducedHomologyIso _ hab labels _ (by omega) ≪≫ ih
+    refine tripleRelabeledReducedHomologyIso _ hab labels _ ?_ ≪≫ ih
+    omega
   | crossing prior ends hab hcd labels ih =>
-    exact crossingRelabeledReducedHomologyIso _ ends hab hcd labels _ (by omega) ≪≫ ih
+    refine crossingRelabeledReducedHomologyIso _ ends hab hcd labels _ ?_ ≪≫ ih
+    omega
   | lozin prior v Y Z hpart hdisj hYn labels ih =>
-    exact lozinRelabeledReducedHomologyIso _ v Y Z hpart hdisj hYn labels _ (by omega) ≪≫ ih
+    refine lozinRelabeledReducedHomologyIso _ v Y Z hpart hdisj hYn labels _ ?_ ≪≫ ih
+    omega
 
 /-- Finite Nat-labeled replay endpoint. The sequence itself supplies each
 literal step and relabeling. This consumes the iterated shift; it does not

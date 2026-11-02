@@ -1,7 +1,7 @@
 /- GID: D5/S3/Geometry/KingFiniteReplay/FiniteLabels
    generality: G
-   mirror-B: none(waiver:source-only-stage)
-   mirror-E: none(waiver:source-only-stage)
+   mirror-B: D5/B/S3/Geometry/KingFiniteReplay/FiniteLabels
+   mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
    utility: none
    digest: Finite label and adjacency reductions consumed by the forty literal graph moves. -/
@@ -10,11 +10,12 @@ import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Data.Nat.Bitwise
 
 /-!
-UNELABORATED SOURCE CANDIDATE. No Lean invocation or kernel acceptance.
-Baseline 1c0bfc7c3def330e285978ef4c1b8fbfd993d538, Lean 4.35.0,
-Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-All terminal suspension suppliers are also uncompiled. This file adds finite
-label bookkeeping, not a replacement suspension or homology theorem.
+# Exact finite labels and adjacency rows
+
+The graph is defined by its original unordered edge list. A proved bit-row
+identity evaluates the same adjacency relation. Old and fresh label maps
+assemble an equivalence when their images are disjoint and jointly cover
+the specified target finite set.
 -/
 
 noncomputable section
