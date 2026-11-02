@@ -70,7 +70,8 @@ private lemma coordinate_norm (x : EuclideanSpace ℂ (Fin 4))
   have hs : ‖x‖ ^ 2 = 1 := by
     rw [EuclideanSpace.norm_sq_eq]
     simp only [hx]
-    norm_num [radii, Fin.sum_univ_succ, div_pow, Real.sq_sqrt]
+    dsimp only [radii]
+    norm_num [Fin.sum_univ_succ, div_pow, Real.sq_sqrt]
   nlinarith [norm_nonneg x]
 
 private lemma ambient_span : Submodule.span ℂ ambient = ⊤ := by
@@ -120,7 +121,8 @@ private lemma ambient_hyperdisk : IsHyperdisk ambient := by
     simpa only [OrthonormalBasis.coe_toBasis] using
       (EuclideanSpace.basisFun (Fin 4) ℂ).toBasis.span_eq
   · ext x
-    simp only [ambient, Set.mem_ofPred_eq, EuclideanSpace.inner_single_left,
+    dsimp only [ambient]
+    simp only [Set.mem_ofPred_eq, EuclideanSpace.inner_single_left,
       map_one, one_mul]
 
 private lemma regular : IsRegularSubset counterexample ambient := by
@@ -191,7 +193,8 @@ private lemma phases_unit (t : ℝ) (ht : -(3 : ℝ) / 4 ≤ t ∧ t ≤ -(1 : �
       rw [map_div₀, map_mul, hw, hm]
       norm_num
       exact hcalc
-    · norm_num [phases]
+    · change ‖(1 : ℂ)‖ = 1
+      norm_num
   · change z + w * (1 + Complex.I * (k : ℂ)) / 2 +
       w * (1 - Complex.I * (k : ℂ)) / 2 + 2 * 1 = 0
     dsimp [w]
@@ -200,7 +203,9 @@ private lemma phases_unit (t : ℝ) (ht : -(3 : ℝ) / 4 ≤ t ∧ t ≤ -(1 : �
 private lemma family_mem (a : ℕ) : family a ∈ counterexample := by
   obtain ⟨hn, hs⟩ := phases_unit (parameter a) (parameter_bounds a)
   have hc (j : Fin 4) : ‖family a j‖ = radii j := by
-    simp [family, hn j, Complex.norm_real, abs_of_pos (radii_pos j)]
+    change ‖(radii j : ℂ) * phases (parameter a) j‖ = radii j
+    rw [norm_mul, hn j, mul_one, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (radii_pos j)]
   refine ⟨?_, coordinate_norm (family a) hc, hc⟩
   change 6 * family a 0 + 3 * family a 1 + 2 * family a 2 + 3 * family a 3 = 0
   dsimp [family, radii, Matrix.vecHead, Matrix.vecTail]
@@ -213,14 +218,16 @@ private lemma family_ray_injective (a b : ℕ) (u : ℂ)
   have hr : (radii 3 : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt (radii_pos 3))
   have hu : u = 1 := by
     have he : (radii 3 : ℂ) = u * (radii 3 : ℂ) := by
-      simpa [family, phases, PiLp.smul_apply] using h4
+      dsimp only [family, phases] at h4
+      simpa [PiLp.smul_apply] using h4
     exact (mul_right_cancel₀ hr (by simpa using he.symm) : u = 1)
   rw [hu, one_smul] at h
   have h0 := congrArg (fun x : EuclideanSpace ℂ (Fin 4) => (x 0).re) h
   have ht : parameter a = parameter b := by
     have hr0 : radii 0 ≠ 0 := ne_of_gt (radii_pos 0)
     have he : radii 0 * parameter a = radii 0 * parameter b := by
-      simpa [family, phases, Complex.mul_re] using h0
+      dsimp only [family, phases] at h0
+      simpa [Complex.mul_re] using h0
     exact mul_left_cancel₀ hr0 he
   dsimp only [parameter] at ht
   have hd : (4 : ℝ) * ((a : ℝ) + 1) = 4 * ((b : ℝ) + 1) := by
@@ -453,7 +460,8 @@ private lemma block_obstruction {m : ℕ}
     have hsqrt : 0 < Real.sqrt (30 : ℝ) := Real.sqrt_pos.mpr (by norm_num)
     simp only [b, norm_div, norm_mul, Complex.norm_real,
       Complex.norm_ofNat, hc]
-    fin_cases j <;> norm_num [radii, abs_of_pos hsqrt] <;> field_simp <;> ring
+    dsimp only [radii]
+    fin_cases j <;> norm_num [abs_of_pos hsqrt] <;> field_simp <;> ring
   have hbd (p q : Fin m) (hpq : p ≠ q) (j : Fin 4) : b p j = 0 ∨ b q j = 0 := by
     rcases hd j p q hpq with hp | hq
     · left; simp [b, hp]
