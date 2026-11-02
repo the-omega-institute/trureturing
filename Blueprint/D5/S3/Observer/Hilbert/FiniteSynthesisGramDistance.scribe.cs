@@ -35,7 +35,8 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
     private static Formula TStar => Sub(F.Id("t"), Star);
     private static Formula CStar => Sub(C, Star);
     private static Formula Energy(Formula c) => Inner(c, Seq(G, c));
-    private static Formula SumStar => Seq(Sum, Underscore, Grp(J, InMacro, Iota), Sub(CStar, J));
+    private static Formula SumStar => Seq(Sum, Underscore, Grp(J, InMacro, Iota),
+        Sub(Seq(Open, CStar, Close), J));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite synthesis into a Hilbert space gives a singular Gram formula for projection and distance.",
@@ -181,7 +182,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
             Disp(Seq(Neg, Open, B, InMacro, Op("range"), G, Close, Rightarrow, Sp,
                 Exists, F.Id("k"), InMacro, Ker, G, Comma, Sp,
                 Inner(B, F.Id("k")), Neq, D(0))),
-            Disp(Seq(CStar, Eq, Frac(D(1), Inner(B, F.Id("k"))), F.Id("k"),
+            Disp(Seq(CStar, Eq, Frac, Grp(D(1)), Grp(Inner(B, F.Id("k"))), F.Id("k"),
                 Comma, Sp, SumStar, Eq, D(1), Comma, Sp,
                 G, CStar, Eq, D(0), Comma, Sp,
                 F.Id("X"), CStar, Eq, D(0), Comma, Sp,
