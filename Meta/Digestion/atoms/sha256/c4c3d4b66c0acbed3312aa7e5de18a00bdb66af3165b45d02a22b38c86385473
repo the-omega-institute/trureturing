@@ -1,0 +1,138 @@
+### 定理 9.1（C94 的唯一块重置与完全正性）
+
+<a id="thm-c94-block-reset"></a>
+
+若 $R$ 满足 C94，则在式 [(8.1)](#eq-c94-finite-blocks) 的坐标中，
+忠实参照必须具有
+
+<a id="eq-c94-reference-product"></a>
+
+$$
+\tau=\bigoplus_kq_k\tau_{L,k}\otimes\tau_{R,k},
+ \quad q_k>0,\quad\sum_kq_k=1,
+\tag{9.1}
+$$
+
+其中各因子态忠实。
+该 $R$ 唯一，并且
+
+<a id="eq-c94-reset"></a>
+
+$$
+\boxed{\quad
+ R(\rho)=R_{\mathcal A,\tau}(\rho)
+ =\bigoplus_k\operatorname{Tr}_{R,k}(P_k\rho P_k)\otimes\tau_{R,k}.
+ \quad}
+\tag{9.2}
+$$
+
+它完全正、保迹、幂等。
+反过来，给定式 [(8.1)](#eq-c94-finite-blocks) 与
+式 [(9.1)](#eq-c94-reference-product)，式 [(9.2)](#eq-c94-reset) 满足全部 C94 条件。
+
+**证明。**
+先利用上一节已经证明的双模关系。
+对不同中央块，
+
+$$
+E(P_kBP_l)=P_kE(B)P_l=0\qquad(k\ne l),
+$$
+
+因为 $E(B)\in\mathcal A$ 块对角。
+
+在第 $k$ 块内，对任意 $b\in B(H_{R,k})$，
+$I_L\otimes b$ 与全部 $a\otimes I_R$ 对易。
+双模关系因而使 $E(I_L\otimes b)$ 与这些可见算符对易。
+它又属于 $B(H_L)\otimes I_R$，所以只能是标量：
+
+$$
+E(I_L\otimes b)=\varphi_k(b)I_L\otimes I_R.
+$$
+
+这里按第 $k$ 块理解单位；$E(P_k)=P_k$。
+正性与单位保持说明 $\varphi_k$ 是正归一泛函。
+有限维迹配对给唯一密度矩阵 $\eta_k$，使
+$\varphi_k(b)=\operatorname{Tr}(\eta_k b)$。
+再由双模关系，
+
+<a id="eq-c94-weighted-expectation"></a>
+
+$$
+E(a\otimes b)
+ =a\otimes I_R\,\operatorname{Tr}(\eta_k b).
+\tag{9.3}
+$$
+
+简单张量张成整个块，故这已确定 $E$，取对偶即得
+
+$$
+R(\rho)=\bigoplus_k a_k(\rho)\otimes\eta_k.
+$$
+
+现在使用参照固定：
+
+$$
+\tau=R(\tau)=\bigoplus_k a_k(\tau)\otimes\eta_k.
+$$
+
+由于 $\tau>0$，各 $a_k(\tau)>0$，各 $\eta_k$ 也必须严格正。
+取 $q_k=\operatorname{Tr} a_k(\tau)$、$\tau_{L,k}=a_k(\tau)/q_k$、
+$\tau_{R,k}=\eta_k$，便得到式 [(9.1)](#eq-c94-reference-product)。
+而
+
+$$
+\tau_{R,k}
+ =\frac{\operatorname{Tr}_{L,k}(P_k\tau P_k)}{q_k}
+$$
+
+已由给定参照唯一确定，所以 $R$ 唯一。
+
+为了不预设完全正性，直接给 Kraus 表示。
+写 $\tau_{R,k}=\sum_a\lambda_{ka}\lvert u_{ka}\rangle\langle u_{ka}\rvert$，
+并选择右因子的任意正交基 $\lvert e_{kj}\rangle$。
+将下式按零延拓到其余块：
+
+<a id="eq-c94-reset-kraus"></a>
+
+$$
+M_{kaj}
+ =\sqrt{\lambda_{ka}}
+ \bigl(I_{L,k}\otimes\lvert u_{ka}\rangle\langle e_{kj}\rvert\bigr)P_k.
+\tag{9.4}
+$$
+
+展开矩阵单位便得
+
+$$
+\sum_{k,a,j}M_{kaj}\rho M_{kaj}^\dagger
+ =\bigoplus_k a_k(\rho)\otimes\tau_{R,k},
+ \qquad
+ \sum_{k,a,j}M_{kaj}^\dagger M_{kaj}=I.
+$$
+
+每个夹乘在任意参考扩张下都保持正性，故 $R$ 完全正；
+第二式给保迹性。
+再次取右侧部分迹不改变 $a_k$，所以 $R^2=R$。
+
+反向，给定上述代数与参照块结构，显式公式显然只依赖 $a_k$，
+并保留全部 $a_k$，固定 $\tau$；Kraus 表示给完全正性及保迹性，
+尤其满足二值参考检查。因此全部 C94 条件成立。
+
+$E$ 是保持 $\tau$ 期望的加权条件期望。
+一般而言，$E$ 保持单位但不保持普通迹；$R$ 保迹但不保持单位。
+还须区分
+
+$$
+\operatorname{ran}E=\mathcal A,
+ \qquad
+ \operatorname{ran}R
+ =\left\{\bigoplus_kx_k\otimes\tau_{R,k}:x_k\in B(H_{L,k})\right\}.
+$$
+
+后一个线性空间通常不对普通乘法闭合，
+因为乘法会出现 $\tau_{R,k}^2$。
+
+式 [(9.4)](#eq-c94-reset-kraus) 给有限量子通道的数学表示。
+要把它供应为某个具体装置，仍须前稿中的实际内部记录、控制和过程接口 [5](#ref-v80)；
+这里没有由表示存在性推断实现成本或物理时间。
+

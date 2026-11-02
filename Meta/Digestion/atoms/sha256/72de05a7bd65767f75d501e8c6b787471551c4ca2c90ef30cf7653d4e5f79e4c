@@ -1,0 +1,22 @@
+## 9. 三角形闭环：精确可行区间、球外点与最小修复
+
+<a id="sec-c92-triangle"></a>
+
+v91 用三条经典对角边际说明：每个相邻窗口均可 Markov 拼接，
+闭环仍可能没有共同全态 [13](#ref-v91)。
+这里把同一反例展开成完整的参数分类，并求出精确修复量。
+以下统一记迹距离为 $D(\rho,\sigma)=\tfrac12\left\lVert \rho-\sigma\right\rVert_1$。
+
+对三个 qubit 的每条边指定
+
+<a id="eq-c92-triangle-marginals"></a>
+
+$$
+\rho_{XY}(r)=\frac14(I+rZ_XZ_Y),
+ \qquad XY\in\{AB,BC,CA\},\qquad -1\le r\le1.
+\tag{9.1}
+$$
+
+每份边际都是合法状态，共有单点态 $I/2$。
+任取两边，它们在计算基中同时对角，因此始终满足 v91 的双向 Markov 拼接条件。
+

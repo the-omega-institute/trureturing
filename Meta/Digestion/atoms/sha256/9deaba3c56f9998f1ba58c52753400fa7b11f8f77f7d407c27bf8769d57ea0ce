@@ -1,0 +1,18 @@
+### 命题 14.1（关系球与尺度账本）
+
+若 $a,b>0$，则
+
+$$
+\boxed{q_\rho(x,y)=\frac1{\sqrt{ab}}
+\bigl(\operatorname{Re}c,\operatorname{Im}c,\sqrt{ab-|c|^2}\bigr)\in S^2_+.}
+$$
+
+只要同时保留 $a,b$、共同历史身份与相位比较协议，就能由这个球点恢复整个二元 Gram 块，因为 $c=\sqrt{ab}(q_1+iq_2)$。等价的标准坐标是
+
+$$
+\frac G{a+b}=\frac12(I+r\cdot\sigma),\qquad
+r=\frac{(2\operatorname{Re}c,-2\operatorname{Im}c,a-b)}{a+b},\quad |r|\le1,
+$$
+
+并且 $1-|r|^2=4\Delta/(a+b)^2$。若 $a=0$ 或 $b=0$，忠实性意味着相应向量为零，不能给零向量强行规定一个归一方向；若两者很小，归一图像可能相同而实际强度不同。
+

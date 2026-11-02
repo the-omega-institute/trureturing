@@ -1,0 +1,35 @@
+### 定理 16.2（补向比较给分辨率场曲率）
+
+在已展开的平坦共同参照中，以 $d$ 为延续，定义 $\nabla s=\Pi,ds$，其中 $s=\Pi s$。则
+
+$$
+\boxed{F_\Pi=\Pi(d\Pi\wedge d\Pi)\Pi.}
+$$
+
+一般地，若环境比较空间带度量相容连接 $D=d+B$，在算符场上定义 $D\Pi=d\Pi+[B,\Pi]$，并记 $F_B=dB+B\wedge B$，则
+
+$$
+\boxed{F_\nabla=\Pi F_B\Pi+\Pi(D\Pi\wedge D\Pi)\Pi,\qquad \nabla=\Pi D.}
+$$
+
+**证明。**由 $\Pi^2=\Pi$ 求协变导数得 $\Pi(D\Pi)\Pi=0$。对可见截面 $s=\Pi s$，
+
+$$
+\begin{aligned}
+\nabla^2s
+&=\Pi D(\Pi Ds)\\
+&=\Pi(D\Pi)\wedge Ds+\Pi D^2s\\
+&=\Pi(D\Pi)\wedge(D\Pi)s+\Pi F_B\Pi s.
+\end{aligned}
+$$
+
+取 $B=0$ 得第一式。这里连接描述邻近比较如何接合，补空间来回的剩余给出诱导曲率。
+
+把 $x,\rho_z,\mathcal A_z$ 同时按 $U_z$ 共轭变换时，$J_z$ 诱导 $\mathcal K$ 上的酉变换 $G_z(X)=U_zXU_z^\dagger$，必须同时变换
+
+$$
+\Pi'=G\Pi G^{-1},\qquad D'=GDG^{-1},\qquad F_{\nabla'}=GF_\nabla G^{-1}.
+$$
+
+不能在时变或空变换框以后把随之产生的参照连接任意重置为零，再宣称轨迹或曲率改变了。
+
