@@ -9,7 +9,7 @@ open MeasureTheory Matrix
 open D5.S3.Fourier.MatrixGaussian
 open D5.S3.VertexAlgebra LatticeGeneratingFieldLocality LatticePositiveEnergy
 open LatticeTwistedGroundRealization.SignQuotient
-open TwistedGround.OriginalFourMChargeCoset
+open TwistedGround.OriginalFourMChargeCoset TwistedGround.OperatorAlgebra
 
 namespace OriginalCosetThetaNativeCheck
 noncomputable section
@@ -41,6 +41,40 @@ private lemma term_T (D : LatticeData) (τ : ℂ) (V : Fin D.rank → ℂ) (l : 
     Complex.exp_add, he, quadraticSign_integral]
   rfl
 
+
+-- Literal mod-two fibers are exactly the affine 2L cosets, at every rank.
+private lemma reduce_lift (D : LatticeData) (a : ModTwoCharge D) :
+    reduceCharge D (integralLift D a) = a := by
+  funext i
+  simp [reduceCharge, integralLift]
+
+private lemma reduce_affine (D : LatticeData) (a : ModTwoCharge D) (n : Charge D) :
+    reduceCharge D (integralLift D a + 2 • n) = a := by
+  rw [map_add, map_nsmul, reduce_lift]
+  have htwo : 2 • reduceCharge D n = 0 := by
+    ext i
+    simp [two_smul, CharTwo.add_self_eq_zero]
+  rw [htwo, add_zero]
+
+-- Anonymous equivalence check; this is not a delivered library declaration.
+example (D : LatticeData) (a : ModTwoCharge D) (l : Charge D) :
+    reduceCharge D l = a ↔ ∃ n : Charge D, l = integralLift D a + 2 • n := by
+  constructor
+  · intro h
+    refine ⟨fun i => (l i - integralLift D a i)/2, ?_⟩
+    funext i
+    have hi : (integralLift D a i : F₂) = (l i : F₂) := by
+      have hl := congrFun (reduce_lift D a) i
+      have hr := congrFun h i
+      exact hl.trans hr.symm
+    have hd : (2 : ℤ) ∣ l i - integralLift D a i :=
+      (ZMod.intCast_eq_intCast_iff_dvd_sub _ _ 2).mp hi
+    have he := Int.mul_ediv_cancel' hd
+    change l i = integralLift D a i + 2*((l i - integralLift D a i)/2)
+    omega
+  · rintro ⟨n, rfl⟩
+    exact reduce_affine D a n
+
 -- The full-source original T telescope, checked anonymously.
 example (D : LatticeData) (a : ModTwoCharge D) (τ : ℂ) (V : Fin D.rank → ℂ) :
     theta D a (τ+1) V = quadraticSign D a * theta D a τ V := by
@@ -69,11 +103,18 @@ example (D : LatticeData)
     congr 1
     have hQ : (quadratic A (fun i => (l i : ℝ)) : ℂ) = (bilinear D l l : ℂ) := by
       simp [A, quadratic, bilinear, Matrix.mulVec, dotProduct, Finset.mul_sum,
-        Complex.ofReal_sum, Complex.ofReal_mul]
+        Complex.ofReal_sum, Complex.ofReal_mul, mul_assoc]
     rw [hQ]
-    dsimp [z, source, Matrix.mulVec, dotProduct]
-    simp only [Finset.mul_sum, ← Complex.intCast_mul, ← Complex.intCast_sum]
+    have hL : (∑ i, z i*(l i : ℂ)) = source D l V := by
+      dsimp [z, source]
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      ring
     push_cast
+    rw [hL]
     ring
   have hs := h.congr (fun l => congrArg norm (he l))
   refine hs.of_nonneg_of_le (fun _ => norm_nonneg _) (fun l => ?_)

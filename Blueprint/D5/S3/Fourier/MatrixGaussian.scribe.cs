@@ -59,7 +59,7 @@ internal sealed class MatrixGaussianDocument : IScribeDocumentDefinition
             SourceEntry("integral-fourier-gaussian-source", "integral_fourier_gaussian_source", "Independent complex-source Fourier transform",
                 SourceFourierFormula(), "The actual real-coordinate Fourier integral shifts z to z-2 pi i w inside the inverse bilinear quadratic form. The principal complex power is b^(-card(n)/2); the right half-plane supplies its branch condition."))));
 
-    private static ScribeNode SourceEntry(string id, string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock.Describe SourceEntry(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("matrixgaussian-" + id),
             DeclarationHandle.Create("D5/S3/Fourier/MatrixGaussian." + name), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),

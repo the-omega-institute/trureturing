@@ -31,8 +31,8 @@ internal sealed class MatrixGaussianSourcePoissonDocument : IScribeDocumentDefin
                 "The proof reuses the actual coordinate Fourier periodization engine. Positive definiteness proves the input integrability, the compact normal convergence and dual lattice summability. The conclusion has no Poisson, covariance or convergence certificate as a hypothesis.", DescribeRole.Theorem),
             Paragraph(Text("This general analytic supplier does not by itself identify the original mod-two charge cosets, their integral-unimodular dual reindexing, or the original fourierSign multiplier. It does not assert the original coset S/T laws, fullK, Jacobi, a VOA/CFT construction, BRST/string or AdS/CFT. The overarching original goal remains active.")))));
 
-    private static ScribeNode Entry(string name, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("matrixgaussiansourcepoisson-"+name.Replace('_','-')),
+    private static DocumentBlock.Describe Entry(string name, string title, Formula formula, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("matrixgaussiansourcepoisson-"+name.Replace('_','-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Fourier/MatrixGaussianSourcePoisson."+name),H(title),
             StatementSource.FromAuthor(formula),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),role);
     private static Formula V(string s) => F.Id(s);

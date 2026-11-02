@@ -190,7 +190,7 @@ private lemma complex_sqrt_linear (A : Matrix n n ℝ) (hA : A.PosDef)
   rw [cast_mulVec, ← dotProduct_transpose_mulVec,
     ← Matrix.transpose_map, sqrt_transpose, mulVec_mulVec, ← Matrix.map_mul,
     mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr (sqrt_det_ne_zero A hA))]
-  simp
+  simp [dotProduct_comm]
 
 private lemma complex_sqrt_quadratic (A : Matrix n n ℝ) (hA : A.PosDef)
     (z : n → ℂ) :

@@ -8,6 +8,8 @@
 
 import D5.S3.Fourier.MatrixGaussianPoisson
 
+/-! Independent complex sources, normal convergence and matrix Poisson summation. -/
+
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
@@ -31,7 +33,7 @@ private lemma real_source_absorption (s R : ℝ) (hs : 0 < s) (u x : ℝ)
     simpa only [sq_abs] using (sq_le_sq₀ (abs_nonneg u) hR).mpr hu
   have hd : 0 < 2*s := by positivity
   apply le_of_mul_le_mul_left (a := 2*s) _ hd
-  have he : (s / 2 * x^2 + R^2 / (2*s)) * (2*s) = s^2*x^2 + R^2 := by field_simp; ring
+  have he : (s / 2 * x^2 + R^2 / (2*s)) * (2*s) = s^2*x^2 + R^2 := by field_simp
   nlinarith [he, sq_nonneg (s*x-u)]
 
 /-- A source bounded in every coordinate is absorbed uniformly by half the
@@ -54,10 +56,13 @@ theorem source_gaussian_bound (A : Matrix (Fin r) (Fin r) ℝ) (b : ℂ)
     _ * ‖Complex.exp (-Real.pi * (b/2) * (quadratic A x : ℂ))‖
   rw [Complex.norm_exp, Complex.norm_exp, ← Real.exp_add]
   apply Real.exp_le_exp.mpr
-  simp only [Complex.add_re, Complex.sum_re, Complex.mul_re, Complex.neg_re,
+  simp only [Complex.add_re, Complex.re_sum, Complex.mul_re, Complex.neg_re,
     Complex.neg_im, Complex.ofReal_re, Complex.ofReal_im, mul_zero, zero_mul, sub_zero,
     Complex.div_ofNat_re]
   dsimp [s] at hlin
+  have hc : (r : ℝ) * R^2 / (2 * (Real.pi * b.re * t)) =
+      (r : ℝ) * (R^2 / (2 * (Real.pi * b.re * t))) := by ring
+  rw [hc]
   nlinarith
 
 /-- Every fixed polynomial degree is uniformly absorbed, simultaneously for
@@ -77,15 +82,15 @@ theorem polynomial_source_gaussian_bound (A : Matrix (Fin r) (Fin r) ℝ) (b : �
         (Finset.mem_univ i))
   have hp : ‖x‖^k ≤ (k.factorial : ℝ)*Real.exp (∑ i, |x i|) := by
     have h := (div_le_iff₀ (show (0 : ℝ) < k.factorial by positivity)).mp
-      (Real.pow_div_factorial_le_exp (norm_nonneg x) k)
+      (Real.pow_div_factorial_le_exp ‖x‖ (norm_nonneg x) k)
     have he := Real.exp_le_exp.mpr hn
     nlinarith [mul_le_mul_of_nonneg_left he (show (0 : ℝ) ≤ k.factorial by positivity)]
   let z' : Fin r → ℂ := fun i => z i + (if 0 ≤ x i then 1 else -1)
   have hz' (i : Fin r) : |(z' i).re| ≤ R+1 := by
     dsimp [z']
     split_ifs <;> simp only [Complex.add_re, Complex.one_re, Complex.neg_re]
-    · exact (abs_add _ _).trans (by simpa using add_le_add_right (hz i) 1)
-    · exact (abs_add _ _).trans (by simpa using add_le_add_right (hz i) 1)
+    · exact (abs_add_le _ _).trans (by simpa using add_le_add_right (hz i) 1)
+    · exact (abs_add_le _ _).trans (by simpa using add_le_add_right (hz i) 1)
   have hlin : (∑ i, (z' i).re*x i) = (∑ i, (z i).re*x i) + ∑ i, |x i| := by
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
@@ -100,8 +105,9 @@ theorem polynomial_source_gaussian_bound (A : Matrix (Fin r) (Fin r) ℝ) (b : �
       ‖Complex.exp (-Real.pi*b*(quadratic A x : ℂ) + ∑ i, z' i*(x i : ℂ))‖
     rw [Complex.norm_exp, Complex.norm_exp, ← Real.exp_add]
     congr 1
-    simp only [Complex.add_re, Complex.sum_re, Complex.mul_re, Complex.ofReal_re,
-      Complex.ofReal_im, mul_zero, sub_zero]
+    simp only [Complex.add_re, Complex.re_sum, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, Complex.neg_re, Complex.neg_im,
+      mul_zero, zero_mul, sub_zero]
     rw [hlin]
     ring
   calc
@@ -139,15 +145,18 @@ theorem locally_summable_norm_source_gaussian (A : Matrix (Fin r) (Fin r) ℝ) (
   have hb2 : 0 < (b/2).re := by simpa using half_pos hb
   refine ((locally_summable_norm_gaussian A hA (b/2) hb2 K).mul_left c).of_nonneg_of_le
     (fun _ => norm_nonneg _) (fun a => ?_)
-  apply (ContinuousMap.norm_le _ (mul_nonneg (Real.exp_pos _).le (norm_nonneg _))).mpr
+  let g : C(K, ℂ) := ((gaussianMap A (b/2)).comp
+    (ContinuousMap.addRight (fun i => (a i : ℝ)))).restrict K
+  have hc : 0 ≤ c := (Real.exp_pos _).le
+  apply (ContinuousMap.norm_le _ (mul_nonneg hc (norm_nonneg g))).mpr
   intro x
+  change ‖sourceGaussianMap A b z ((x : Fin r → ℝ) + fun i => (a i : ℝ))‖ ≤ c * ‖g‖
+  have hx : ‖gaussianMap A (b/2) ((x : Fin r → ℝ) + fun i => (a i : ℝ))‖ ≤ ‖g‖ :=
+    g.norm_coe_le_norm x
   exact (source_gaussian_bound A b hb t ht hq ‖z‖ z
     (fun i => (Complex.abs_re_le_norm (z i)).trans (norm_le_pi_norm z i))
     ((x : Fin r → ℝ) + fun i => (a i : ℝ))).trans
-      (mul_le_mul_of_nonneg_left
-        (((gaussianMap A (b/2)).comp
-          (ContinuousMap.addRight (fun i => (a i : ℝ)))).restrict K |>.norm_coe_le_norm x)
-        (Real.exp_pos _).le)
+      (mul_le_mul_of_nonneg_left hx hc)
 
 /-- Each lattice term as an entire-source continuous function. -/
 def latticeSourceMap (A : Matrix (Fin r) (Fin r) ℝ) (b : ℂ) (a : Fin r → ℤ) :
@@ -178,12 +187,13 @@ theorem locally_summable_norm_polynomial_source (A : Matrix (Fin r) (Fin r) ℝ)
   apply (ContinuousMap.norm_le _ (mul_nonneg hc (norm_nonneg _))).mpr
   intro z
   have hz : ‖(z : Fin r → ℂ)‖ ≤ R := by simpa using hR z.property
-  have h := polynomial_source_gaussian_bound A b hb t ht hq R z
-    (fun i => (Complex.abs_re_le_norm (z i)).trans ((norm_le_pi_norm _ i).trans hz))
+  have h := polynomial_source_gaussian_bound A b hb t ht hq R (z : Fin r → ℂ)
+    (fun i => (Complex.abs_re_le_norm ((z : Fin r → ℂ) i)).trans
+      ((norm_le_pi_norm (z : Fin r → ℂ) i).trans hz))
     k (fun i => (a i : ℝ))
   simpa only [weightedLatticeSourceMap, ContinuousMap.restrict_apply, ContinuousMap.smul_apply,
-    smul_eq_mul, norm_mul, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_nonneg (pow_nonneg (norm_nonneg _) _), latticeSourceMap, ContinuousMap.coe_mk]
+    smul_eq_mul, norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_norm,
+    latticeSourceMap, ContinuousMap.coe_mk, c, gaussianMap]
     using h
 
 private lemma complexQuadratic_sub_smul (A : Matrix (Fin r) (Fin r) ℝ)
@@ -245,7 +255,7 @@ theorem integral_fourier_source_gaussian (A : Matrix (Fin r) (Fin r) ℝ) (hA : 
       Complex.exp (-Real.pi*b*(quadratic A x : ℂ) + ∑ i, z i*(x i : ℂ))) by rfl,
     integral_fourier_gaussian_source A hA b hb z w,
     fourier_source_exponent A⁻¹ hsym b hb0 z w, Complex.exp_add]
-  simp only [sourceGaussianMap, ContinuousMap.coe_mk, mul_assoc]
+  simp only [sourceGaussianMap, ContinuousMap.coe_mk, Fintype.card_fin, mul_assoc]
 
 /-- Sourceful matrix Poisson summation. Its analytic hypotheses are proved from
 positive definiteness; the coordinate periodization engine is reused unchanged. -/
