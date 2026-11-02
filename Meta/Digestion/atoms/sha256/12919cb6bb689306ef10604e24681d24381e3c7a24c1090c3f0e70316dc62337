@@ -1,0 +1,32 @@
+### 推论 4.2（归一 Hilbert–Schmidt 见证的精确缺额）
+
+<a id="cor-c92-hs-distance"></a>
+
+令 $d_2(R,\mathcal K)=\min_{k\in\mathcal K}\left\lVert R-k\right\rVert_2$，则
+
+<a id="eq-c92-hs-duality"></a>
+
+$$
+d_2(R,\mathcal K)
+ =\max_{\left\lVert h\right\rVert_2\le1}
+ \left[b_R(h)-\lambda_{\max}(W(h))\right].
+\tag{4.4}
+$$
+
+若距离非零，$h=(R-k_*)/d_2$ 达到最大值；距离为零时 $h=0$ 达到。
+
+**证明。**
+对任意 $k\in\mathcal K$ 与 $\left\lVert h\right\rVert_2\le1$，
+
+$$
+b_R(h)-\lambda_{\max}(W(h))
+ \le\langle h,R-k\rangle\le\left\lVert R-k\right\rVert_2.
+$$
+
+取最小值得上界。非零时将式 [(4.3)](#eq-c92-projection-normal) 的
+$z$ 归一，恰好得到等号；零距离时各缺额非正，而 $h=0$ 给零。
+
+这是一份有限见证存在定理，不承诺寻找见证所需的资源随系统数多项式增长。
+“有限维”也不等于只需预先固定有限条线性不等式：
+见证仍可来自连续的局部算符菜单。
+

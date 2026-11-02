@@ -1,0 +1,15 @@
+**Definition 17.3 (source space and source boundary).** Realize the source
+by an oriented finite rooted tree $C(t)$: $C(\alpha)$ is terminal,
+$C(\beta)$ has one terminal left child, and $C(\langle u,v\rangle)$ has
+ordered children $C(u),C(v)$. Write $S_0$ for its actual address support and
+$B_0$ for its actual terminal-address antichain. A unary marker is material;
+it is not a logical growth target. Source edges alone define these views,
+excluding the auxiliary record edges introduced in §19.
+
+Arity recursively parses a valid $C(t)$ as terminal $\alpha$, unary
+$\beta$, or binary branch. Prefix closure of $B_0$ gives $S_0$, and maximal
+elements of $S_0$ give $B_0$. Hence $S_0$, $B_0$, and the labelled causal
+order of Theorem 17.2 recover one another at settled source cuts. This is
+an application of the existing ordered-tree/support method, with the unary
+case expressly retained; it supplies no chosen serial extension.
+

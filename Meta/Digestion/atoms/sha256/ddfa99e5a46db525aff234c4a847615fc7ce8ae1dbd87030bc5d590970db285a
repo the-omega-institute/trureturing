@@ -1,0 +1,85 @@
+**Theorem 5.4 (first native observation horizon).** Under Definitions
+5.1 and Assumption 5.2, for every $N\ge4$ and every common measurable
+adaptive observer using at most seven original-root Read invocations,
+the complete transcript laws under $\mu_0^N,\mu_1^N$ are equal.
+This includes arbitrary finite operands, repeats, constant/absent
+answers, partial fields, retained state and bounded stopping. At eight
+invocations a fixed event has the strictly positive gap (UJB.7710)
+below. Thus eight is the first possible invocation budget for a law
+difference in this conditional experiment.
+
+Proof. First fix any tuple of at most seven words, without imposing a
+length bound or requiring the words to differ. By (UJB.7705) and its
+exhaustive root classification, each nonconstant answer uses one bit
+of one field in (UJB.7702). Let $I_A,I_T\subseteq[N]$ be the sample
+positions whose respective left and right fields are touched. Then
+
+$$
+|I_A|+|I_T|\le7,\qquad r:=|I_A\cap I_T|\le3.
+\tag{UJB.7707}
+$$
+
+Several bits of a field, or repeated queries for a bit, add no new
+field to these sets. For the $r$ doubly touched samples, Theorem 3.3
+gives equality of the complete typed equality-partition law: its
+prescribed-equality quotients have at most three edges, hence after
+parallel-edge collapse are forests, with counts (UJB.7505). Finite
+inclusion-exclusion gives exact partitions as well as required
+equalities. Its hypotheses hold here because these samples are iid
+uniform actual edges of the same simple biregular $G_i$.
+
+Every other touched field comes from a different edge sample, with
+only one endpoint selected. By biregularity its endpoint is uniform on
+its own type, independently of the doubly touched core and of all
+other such one-sided samples. Given any concrete selected values so
+far, a new left endpoint equals each existing left equality block
+with probability $1/72$ and forms a new block with probability
+$(72-s)/72$ if there are $s$ existing blocks. For a right endpoint the
+corresponding probabilities are $1/243$ and $(243-s)/243$. These
+probabilities depend only on the partitions, even when the core's
+conditional named-vertex distribution is not uniform. Adjoining these
+fields one by one proves equality of the entire selected typed
+partition law under the two sources.
+
+Conditional on any such partitions with $s_A,s_T$ distinct selected
+vertices, the complete codewords assigned to their ordered blocks
+are independent uniform ordered injections into alphabets of sizes
+$128,256$. Explicitly, any proposed word assignment has probability
+
+$$
+\frac{\mathbf1\{\text{exactly the prescribed within-type equalities}\}}
+ {(128)_{s_A}(256)_{s_T}},
+\qquad (K)_s=K(K-1)\cdots(K-s+1).
+\tag{UJB.7708}
+$$
+
+Indeed each restriction of a uniform full injection has the same
+number of full extensions. The maps are independent of the actual
+endpoints and of one another. Hence the law in (UJB.7708) depends on
+the equality record only. Combining the two common laws proves
+equality even of all selected **complete** codewords, so also of the
+particular bit projections and deterministic native replies. Hidden
+labels are shared throughout this argument; no unobserved label or
+endpoint is redrawn in response to a query.
+
+For adaptive control fix $J=j,U=u$. These determine one common
+deterministic program. For any control-consistent stopped or truncated
+path $h=((w_1,y_1),\ldots,(w_m,y_m))$, $m\le7$, its source event is
+exactly $\bigcap_{a=1}^m\{t:\operatorname{Read}_t(w_a)=y_a\}$.
+On this path the operands are fixed, so its probability agrees by
+the preceding argument; inconsistent paths have probability zero
+under both laws. There are at most four children per Read and depth
+at most seven, hence finitely many paths for this fixed program,
+despite the countably infinite operand vocabulary. Stop/output,
+next-operand and retained-state values are common functions of the
+path, including the zero-Read case. They therefore have equal joint
+laws. This is the fixed-source cylinder argument of
+[NCO4.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATION_ORDER_ACQUISITION.md#4-bounded-experiments-stopping-and-fixed-family-saturation),
+applied to the present all-word equality rather than its different
+future-read task. Finally (UJB.7704) permits integration over $(j,u)$
+against the same product law; measurability of all the stated maps
+ensures these are measurable transcript pushforwards. It is not
+necessary to assume that adaptive operands are unconditionally
+independent of the source. The eight-Read event below proves the
+remaining assertion. $\square$
+

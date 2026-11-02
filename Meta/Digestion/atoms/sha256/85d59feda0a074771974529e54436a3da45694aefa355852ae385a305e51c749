@@ -1,0 +1,37 @@
+**Assumption 32.1 (a marked owned LAB installation).** Use Assumption
+20.1's actual known-seed allocation, bound root, current exclusive
+source/record/input/output rights, retention, finite work arena, individual
+field and bit primitives, and supplied local acknowledgement. All claimed
+finite completed operations have sufficient finite material, including
+backed program workspace; quota, exhaustion and material-supply state are
+not observable service branches. No concurrent writer, revocation, crash
+or interrupt is admitted. The root, driver and its real input/output
+connections are installed before an arbitrary schedule, independently of
+that schedule and its future endpoint. This is a distinct installation,
+with the following additional acquired fields and control; it does not
+change the original installations of §§20 or 26.
+
+Install the fixed program $C$ and its initialized persistent selection
+state $q_0$. Each logical source position has two writable auxiliary mark
+fields, initially zero when that logical position is created. They are
+excluded from source edges. An inactive unary marker is not consulted as
+a logical mark record; if it later becomes a logical child, its fields
+are initialized for that role. Other unused auxiliary fields have fixed
+inactive values. At every logical branch use an actual selected-tape
+descriptor with source-reference binding, head, tail and next reference,
+in canonical source preorder, as in Assumption 26.1. Its cells have a side
+bit and next reference. Lookup scans this retained list using real
+reference equality. New descriptor insertion uses finite source-preorder
+navigation. No numeral-to-reference cast or creation-order directory is
+supplied. All records, links, bindings and their rights are actually
+constructed, retained and charged.
+
+This installation starts with no historical archive or handoff. It maintains
+selected tapes and local marks from its actual seed growth. No old full
+service, response table, source-dependent code or saved request history
+is a selector input. The source fields, marks, tapes, current selection
+state and installed entry remain live. A mathematical description of
+these fields does not allocate them, authenticate an imported past or
+grant access. In particular initializing empty marks at a late endpoint
+is not one of the acquisition procedures asserted here.
+

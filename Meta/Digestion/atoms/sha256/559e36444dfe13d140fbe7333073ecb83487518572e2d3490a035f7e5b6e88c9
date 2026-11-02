@@ -1,0 +1,31 @@
+### 命题 5.2（无限轨迹层不能单独恢复完整 Hamiltonian）
+
+给定任意光滑 Bloch 路 $n(t)$，对任意实函数 $\lambda(t),c(t)$ 定义
+
+$$
+\boxed{H_{\lambda,c}(t)=\frac\hbar2
+\bigl[n\times\dot n+\lambda(t)n\bigr]\cdot\sigma+c(t)I.}
+$$
+
+它们都产生同一给定初始射线的 Bloch 轨迹。因此全部递归切向与曲率也相同，但完整态相位和对其他输入的作用不由该轨迹确定。
+
+**证明。**$H=(\hbar/2)\omega\cdot\sigma+cI$ 的 Bloch 方程为 $\dot n=\omega\times n$，而
+
+$$
+[n\times\dot n+\lambda n]\times n=\dot n.
+$$
+
+若 $\psi_0$ 是 $H_{0,0}$ 的完整态，则另一 Hamiltonian 的对应解为
+
+$$
+\psi_{\lambda,c}(t)=\exp\left[-i\int_{t_0}^t\left(\frac{\lambda(u)}2+\frac{c(u)}\hbar\right)du\right]\psi_0(t).
+$$
+
+非零 $\lambda$ 项一般还改变其他输入射线的演化。因而本节不能替代 v86 的全部输入共同场条件，也不能替代 v87 的完整相干比较。单个球面点有两个实自由度；连同单位切向的定向框架已有三个。一般 $d$ 维纯态空间 $\mathbb CP^{d-1}$ 有 $2d-2$ 个实维度，$d>2$ 时维数已经不同。
+
+**白话图景。**把切箭头画成球面上的一个新点是可以的，但这个新点不是原态的正交补态。箭头朝哪边，还依赖补态相对于原态的相位。若只保留各自的射线，原本不同的箭头方向就会被压成同一个补态。
+
+本节是轨迹的微分层级。后续候选所讨论的操作分辨率，则要求对可见代数的压缩保持有序复比较、正性与组合一致性。归一切向依赖历史导数，既不是仅由当前态确定的普遍映射，也不自动是一条可执行量子通道。
+
+<a id="section-6"></a>
+

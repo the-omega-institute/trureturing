@@ -1,0 +1,60 @@
+### 引理 6.1（有限凸集的距离与范数支撑）
+
+<a id="lem-c92-norm-separation"></a>
+
+设 $K$ 是有限维实内积空间中的非空紧凸集，$N$ 是任意范数，
+$N^*$ 是其对偶范数。记 $s_K(h)=\max_{k\in K}\langle h,k\rangle$。
+则对任意 $r$，
+
+<a id="eq-c92-general-norm-duality"></a>
+
+$$
+\min_{k\in K}N(r-k)
+ =\max_{N^*(h)\le1}\bigl[\langle h,r\rangle-s_K(h)\bigr].
+\tag{6.2}
+$$
+
+两边均达到极值。
+
+**证明。**
+记左侧为 $d$。对任意允许的 $h$ 与 $k\in K$，
+
+$$
+\langle h,r\rangle-s_K(h)
+ \le\langle h,r-k\rangle\le N(r-k),
+$$
+
+所以右侧不超过 $d$。若 $d=0$，取 $h=0$ 即给等号。
+
+设 $d>0$。对 $0<\varepsilon<d$，两个紧凸集
+$K$ 与 $B_\varepsilon=\{u:N(u-r)\le\varepsilon\}$ 不相交。
+取它们的 Euclidean 最近点对 $k_\varepsilon,u_\varepsilon$，令
+$z=u_\varepsilon-k_\varepsilon\ne0$。
+分别沿两集合内的线段展开平方距离，得到
+
+$$
+\langle z,k-k_\varepsilon\rangle\le0\ (k\in K),
+ \qquad
+ \langle z,u-u_\varepsilon\rangle\ge0\ (u\in B_\varepsilon).
+$$
+
+故 $s_K(z)=\langle z,k_\varepsilon\rangle$，而
+
+$$
+\min_{u\in B_\varepsilon}\langle z,u\rangle
+ =\langle z,r\rangle-\varepsilon N^*(z)
+ =\langle z,u_\varepsilon\rangle.
+$$
+
+两式相减得
+
+$$
+\langle z,r\rangle-s_K(z)
+ =\varepsilon N^*(z)+\left\lVert z\right\rVert_2^2.
+$$
+
+归一 $h_\varepsilon=z/N^*(z)$ 后，其对偶缺额严格大于 $\varepsilon$。
+令 $\varepsilon\uparrow d$，对偶单位球的有限维紧性给收敛子列。
+支撑函数连续，极限向量的缺额至少为 $d$。
+结合已证上界，得到等号与右侧极值的达到。左侧由紧性达到。
+
