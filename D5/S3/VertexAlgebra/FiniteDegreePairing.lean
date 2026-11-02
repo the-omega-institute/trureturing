@@ -1,7 +1,16 @@
-/- SOURCE ONLY / UNCOMPILED. Finite algebra, no analytic completion. -/
+/- GID: D5/S3/VertexAlgebra/FiniteDegreePairing
+   generality: G
+   mirror-B: D5/B/S3/VertexAlgebra/FiniteDegreePairing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Native finite-degree sesquilinear pairing and finite HPL inclusion isometry. -/
+
 import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.SesquilinearForm.Basic
 import Mathlib.Tactic
+
+/-! Finite-support sesquilinear pairing and geometric inclusion isometry. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -35,7 +44,7 @@ theorem supported_basis (b : Module.Basis ι ℂ V) {P : ι → Prop}
   intro j hj
   have he : i = j := by
     by_contra he
-    exact hj (by simp [b.repr_self, Finsupp.single_apply, he])
+    exact hj (by simp [b.repr_self, he])
   simpa [← he] using hi
 
 theorem supported_add (b : Module.Basis ι ℂ V) {P : ι → Prop}
@@ -80,13 +89,13 @@ theorem map_contribution (b : Module.Basis ι ℂ V) (A : Module.End ℂ V)
     conv_lhs => rw [← expansion b x]
     simp only [map_sum, map_smul]
   have hs : (∑ i ∈ (b.repr x).support,
-      b.repr x i * b.repr (A (b i)) j) ≠ 0 := by
-    simpa only [he, map_sum, map_smul, Finsupp.sum_apply,
-      Finsupp.smul_apply, smul_eq_mul] using hj
+      b.repr x i • b.repr (A (b i)) j) ≠ 0 := by
+    simpa only [he, map_sum, map_smul, Finsupp.sum_apply, Finset.sum_apply',
+      Finsupp.smul_apply] using hj
   obtain ⟨i, hi, hci⟩ := Finset.exists_ne_zero_of_sum_ne_zero hs
   refine ⟨i, Finsupp.mem_support_iff.mp hi, ?_⟩
   intro hz
-  exact hci (by rw [hz, mul_zero])
+  exact hci (by rw [hz, smul_zero])
 
 theorem map_supported (b : Module.Basis ι ℂ V) (A : Module.End ℂ V)
     {P Q : ι → Prop} {x : V} (hx : Supported b P x)
@@ -104,7 +113,8 @@ theorem form_expansion (b : Module.Basis ι ℂ V)
   classical
   conv_lhs => rw [← expansion b x, ← expansion b y]
   simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
-    starRingEnd_apply, smul_eq_mul, Finset.mul_sum]
+    starRingEnd_apply, RingHom.id_apply, smul_eq_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro i hi
   apply Finset.sum_congr rfl
@@ -142,17 +152,20 @@ theorem raising_power_support (b : Module.Basis ι ℂ V) (d : ι → ℤ)
     (hA : ∀ i j, sector i → b.repr (A (b i)) j ≠ 0 →
       sector j ∧ d i + 1 ≤ d j)
     {x : V} (hx : Supported b (fun i => sector i ∧ d i = 0) x) (r : ℕ) :
-    Supported b (fun i => sector i ∧ (r : ℤ) ≤ d i) ((-A)^r x) := by
+    Supported b (fun i => sector i ∧ (r : ℤ) ≤ d i) (((-A)^r) x) := by
   induction r with
   | zero =>
     simpa using supported_mono b hx (fun i hi => ⟨hi.1, by omega⟩)
   | succ r ih =>
-    rw [pow_succ', Module.End.mul_apply, LinearMap.neg_apply]
-    apply supported_neg b
-    apply map_supported b A ih
-    intro i j hi hij
-    obtain ⟨hj, hd⟩ := hA i j hi.1 hij
-    exact ⟨hj, by push_cast; omega⟩
+    rw [pow_succ', Module.End.mul_apply]
+    have hsupport : Supported b (fun i => sector i ∧ (↑(r + 1) : ℤ) ≤ d i)
+        (A (((-A)^r) x)) := by
+      refine map_supported (P := fun i => sector i ∧ (r : ℤ) ≤ d i)
+        (Q := fun i => sector i ∧ (↑(r + 1) : ℤ) ≤ d i) b A ih ?_
+      intro i j hi hij
+      obtain ⟨hj, hd⟩ := hA i j hi.1 hij
+      exact ⟨hj, by push_cast; omega⟩
+    simpa using supported_neg b hsupport
 
 /-- Every cross term except (0,0) is zero; no inverse or nilpotence needed. -/
 theorem powers_orthogonal (b : Module.Basis ι ℂ V) (d : ι → ℤ)
@@ -163,7 +176,7 @@ theorem powers_orthogonal (b : Module.Basis ι ℂ V) (d : ι → ℤ)
       sector j ∧ d i + 1 ≤ d j)
     {x y : V} (hx : Supported b (fun i => sector i ∧ d i = 0) x)
     (hy : Supported b (fun i => sector i ∧ d i = 0) y)
-    (r s : ℕ) (hrs : 0 < r + s) : H ((-A)^r x) ((-A)^s y) = 0 := by
+    (r s : ℕ) (hrs : 0 < r + s) : H (((-A)^r) x) (((-A)^s) y) = 0 := by
   apply lower_bounds_orthogonal b d H hH
     (supported_mono b (raising_power_support b d sector A hA hx r) (fun _ h => h.2))
     (supported_mono b (raising_power_support b d sector A hA hy s) (fun _ h => h.2))
@@ -186,13 +199,13 @@ theorem finite_inclusion_isometry (b : Module.Basis ι ℂ V) (d : ι → ℤ)
   · rw [Finset.sum_eq_single 0]
     · simp
     · intro s hs hs0
-      exact powers_orthogonal b d H hH sector A hA hx hy 0 s (by omega)
+      exact powers_orthogonal b d H hH sector A hA hx hy s 0 (by omega)
     · intro h0
       exact False.elim (h0 (Finset.mem_range.mpr (by omega)))
   · intro r hr hr0
     apply Finset.sum_eq_zero
     intro s hs
-    exact powers_orthogonal b d H hH sector A hA hx hy r s (by omega)
+    exact powers_orthogonal b d H hH sector A hA hx hy s r (by omega)
   · intro h0
     exact False.elim (h0 (Finset.mem_range.mpr (by omega)))
 
