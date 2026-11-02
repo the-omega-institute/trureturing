@@ -1,0 +1,11 @@
+### [2]
+
+trureturing，*TargetRecoveryCriterion.lean*，
+[当前源码](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)。
+本轮核读 `target_recovery_criterion` 的声明与证明：
+非空来源上的目标因子化、同纤维恒定及缺陷关系为空等价。
+该文件使用已有因子化判据；不据此推断可计算性、完全正性或实现成本。
+未执行 Lean 构建。
+
+<a id="ref-atlas"></a>
+
