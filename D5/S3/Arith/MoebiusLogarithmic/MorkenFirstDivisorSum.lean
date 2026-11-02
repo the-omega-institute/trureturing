@@ -7,7 +7,10 @@
    digest: The first Morken conjecture expresses the coprime Moebius sum as a divisor double sum. -/
 
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Tactic
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Omega
+
+/-! The source sums use positive indices, inclusive endpoints and integer Moebius values. -/
 
 open Finset ArithmeticFunction
 open scoped BigOperators ArithmeticFunction.zeta
@@ -23,10 +26,12 @@ private theorem summand (d m : ℕ) :
   · simp [hd]
   have hds := moebius_ne_zero_iff_squarefree.mp hd
   by_cases hc : m.Coprime d
-  · rw [if_pos ⟨hd, hc⟩, isMultiplicative_moebius.map_mul_of_coprime hc.symm]
+  · rw [ite_eq_left ⟨hd, hc⟩, isMultiplicative_moebius.map_mul_of_coprime hc.symm]
     have hs := moebius_sq_eq_one_of_squarefree hds
-    nlinarith
-  · rw [if_neg (by simp [hc])]
+    calc
+      moebius m = moebius m * (moebius d ^ 2) := by rw [hs, mul_one]
+      _ = _ := by ring
+  · rw [ite_eq_right (by simp [hc])]
     have hns : ¬ Squarefree (d * m) := fun h => hc (Nat.coprime_of_squarefree_mul h).symm
     rw [moebius_eq_zero_of_not_squarefree hns, zero_mul]
 
@@ -38,7 +43,7 @@ private theorem reindex (n d : ℕ) (hd : 0 < d) :
   · intro m hm
     obtain ⟨hm1, hmn⟩ := mem_Icc.mp hm
     apply mem_filter.mpr
-    refine ⟨mem_Icc.mpr ⟨by nlinarith, ?_⟩, dvd_mul_right d m⟩
+    refine ⟨mem_Icc.mpr ⟨by exact Nat.mul_pos hd (by omega), ?_⟩, dvd_mul_right d m⟩
     have h := (Nat.le_div_iff_mul_le hd).mp hmn
     simpa [Nat.mul_comm] using h
   · intro a ha b hb h
@@ -65,11 +70,11 @@ theorem result (n : ℕ) (hn : 0 < n) :
       apply sum_congr rfl
       intro d hd
       by_cases hmu : moebius d ≠ 0
-      · rw [if_pos hmu, sum_filter]
+      · rw [ite_eq_left hmu, sum_filter]
         apply sum_congr rfl
         intro m hm
-        simpa only [hmu, true_and] using summand d m
-      · simp [hmu, not_not.mp hmu]
+        simpa [hmu] using summand d m
+      · simp [not_not.mp hmu]
     _ = ∑ d ∈ n.divisors,
           ∑ k ∈ (Icc 1 n).filter (fun k => d ∣ k), moebius k * moebius d := by
       apply sum_congr rfl
@@ -105,7 +110,7 @@ theorem result (n : ℕ) (hn : 0 < n) :
       · simp [Nat.Coprime] at hc
         simp [hc]
       · have hgc : k.gcd n ≠ 1 := hc
-        simp [hgc, hc]
+        simp [hgc]
 
 #print axioms result
 end D5.S3.Arith.MoebiusLogarithmic.MorkenFirstDivisorSum
