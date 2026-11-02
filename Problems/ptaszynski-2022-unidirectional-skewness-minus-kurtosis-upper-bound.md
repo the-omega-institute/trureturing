@@ -131,7 +131,7 @@ Primary v4 `main.tex` SHA-256: `0d8f9bf311a07990b64d4746e9ec4fb1e164deec23b27050
 
 ## Triage
 
-`theorem`; resolution `proved` for the exact preregistered upper-endpoint conjunction. Admission uses the external open-problem-resolution basis in CLAUDE.md §3.2. The retained proof's algebra, moment reuse, explicit family evaluation and limit argument do not assert a new escape witness; proof shape and admission basis are separate. Helpers and sharpness steps carry no additional external-problem credit.
+`theorem`; resolution `proved` for the exact preregistered upper-endpoint conjunction. Admission uses the external open-problem-resolution basis in CLAUDE.md §3.2. The public result and retained theorem helpers have `proof_shape: bind-only`; each helper is consumed on the result's live proof path. Their algebra, moment reuse, explicit family evaluation and limit argument supply no separate escape witness. Proof shape and the external-resolution admission basis are distinct. Helpers and sharpness steps carry no additional external-problem credit.
 
 ### What the settlement shows
 
