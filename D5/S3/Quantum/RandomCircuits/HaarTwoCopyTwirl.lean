@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl
    mirror-E: none(waiver:kernel-checked-content)
    anchors: []
@@ -16,10 +16,16 @@ proof_shape: localPermutation_gram: bind-only; consumer: gate_mixed_rule.
 proof_shape: local_identity_fixed: bind-only; consumer: gate_mixed_rule.
 proof_shape: local_swap_fixed: bind-only; consumer: gate_mixed_rule.
 proof_shape: gate_mixed_rule: content.
-proof_shape: haarAverage_identity_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
-proof_shape: haarAverage_swap_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlSwapTrace.
-proof_shape: haarAverage_image_span: bind-only; consumer: CHaarConcatenationNonmonotone.twirlFormula.
-proof_shape: hermitian_fixed_pairing: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
+proof_shape: haarAverage_identity_fixed: bind-only; consumer: twirlTrace.
+proof_shape: haarAverage_swap_fixed: bind-only; consumer: twirlSwapTrace.
+proof_shape: haarAverage_image_span: bind-only; consumer: twirlFormula.
+proof_shape: hermitian_fixed_pairing: bind-only; consumer: twirlTrace.
+proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace, WernerTesterIncompleteness.flip_facts.
+proof_shape: swapSquare: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.flip_facts.
+proof_shape: traceSwap: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.
+proof_shape: twirlTrace: bind-only; consumer: twirlFormula.
+proof_shape: twirlSwapTrace: bind-only; consumer: twirlFormula.
+proof_shape: twirlFormula: bind-only; consumers: pure_twirl, CHaarConcatenationNonmonotone.haarAverageEntry.
 proof_shape: literalMoment_integrable: bind-only; consumer: CHaarConcatenationNonmonotone.momentOp2HaarEntries.
 proof_shape: literalMoment_vectorize: bind-only; consumer: haarAverage_identity_fixed.
 proof_shape: Commutant.replicaSwap_apply: bind-only; consumer: CHaarConcatenationNonmonotone.moment22Reindex.
@@ -32,11 +38,12 @@ content is a universal commutant classification and the literal Haar-average red
 no bounded enumeration, checker, numerical certificate or positive finite instance is retained.
 -/
 
+import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Topology.Algebra.Star.Unitary
 import Mathlib.LinearAlgebra.Matrix.Vec
-import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.Permutation
+import Mathlib.MeasureTheory.SpecificCodomains.Pi
 
 open Matrix MeasureTheory TopologicalSpace
 open scoped Kronecker ComplexOrder Matrix.Norms.Elementwise
@@ -669,5 +676,257 @@ theorem gate_mixed_rule (q : ℕ) (hq : 2≤q) (b : Fin 2 × Fin 2) (hb : b.1≠
     linear_combination h0
   have hy : y = (q:ℂ)/((q:ℂ)^2+1) := hsame.symm.trans hx
   rw [hxy,hx,hy,smul_add]
+
+open scoped BigOperators
+
+theorem trace_one_sandwich {d : ℕ} (p x : Matrix (Fin d) (Fin d) ℂ)
+    (hpp : p * p = p) (htr : p.trace = 1) :
+    p * x * p = (p * x).trace • p := by
+  let f := Matrix.toLin' p
+  have hf : IsIdempotentElem f := by
+    change f * f = f
+    simpa only [f, Module.End.mul_eq_comp, ← Matrix.toLin'_mul] using
+      congrArg Matrix.toLin' hpp
+  have hdim : Module.finrank ℂ (LinearMap.range f) = 1 := by
+    have ht := ((LinearMap.isProj_range_iff_isIdempotentElem f).mpr hf).trace
+    rw [Matrix.trace_toLin'_eq, htr] at ht
+    exact_mod_cast ht.symm
+  let t : LinearMap.range f →ₗ[ℂ] LinearMap.range f :=
+    (f.rangeRestrict.comp (Matrix.toLin' x)).comp (LinearMap.range f).subtype
+  obtain ⟨c, hc, hu⟩ := LinearMap.existsUnique_eq_smul_id_of_finrank_eq_one hdim t
+  have hmat : p * x * p = c • p := by
+    apply Matrix.toLin'.injective
+    apply LinearMap.ext
+    intro v
+    have hv := congrArg (fun z : LinearMap.range f => (z : Fin d → ℂ))
+      (LinearMap.congr_fun hc (f.rangeRestrict v))
+    change f ((Matrix.toLin' x) (f v)) = c • f v at hv
+    simpa only [f, Matrix.toLin'_mul_apply, map_smul, LinearMap.smul_apply] using hv
+  have hcval : c = (p * x).trace := by
+    have ht := congrArg Matrix.trace hmat
+    rw [Matrix.trace_smul, htr, smul_eq_mul, mul_one,
+      Matrix.trace_mul_cycle, hpp] at ht
+    exact ht.symm
+  simpa only [hcval] using hmat
+
+section
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
+  ext ⟨a,b⟩ ⟨c,d⟩
+  simp only [Matrix.conjTranspose_apply, Prod.swap_prod_mk, Prod.mk.injEq]
+  simp [and_comm, eq_comm]
+
+theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
+  have h : Equiv.prodComm n n * Equiv.prodComm n n = (1 : Equiv.Perm (n×n)) := by
+    ext x <;> rfl
+  simp [← Matrix.permMatrix_mul, h]
+
+theorem traceSwap : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) = (Fintype.card n : ℂ) := by
+  simp only [Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
+  simp [Prod.ext_iff, eq_comm]
+
+private theorem twirlTrace (Y : Matrix (n×n) (n×n) ℂ) :
+    Matrix.trace (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = Matrix.trace Y := by
+  have h := hermitian_fixed_pairing (haarAverage n) haarAverage_hermitian
+    (Matrix.vec (1 : Matrix (n×n) (n×n) ℂ)) (Matrix.vec Y) haarAverage_identity_fixed
+  have hv : Matrix.vec (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = (haarAverage n).mulVec (Matrix.vec Y) := by rfl
+  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec] at h
+  simpa using h
+
+private theorem twirlSwapTrace (Y : Matrix (n×n) (n×n) ℂ) :
+    Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) := by
+  have h := hermitian_fixed_pairing (haarAverage n) haarAverage_hermitian
+    (Matrix.vec ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)))) (Matrix.vec Y) haarAverage_swap_fixed
+  have hv : Matrix.vec (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = (haarAverage n).mulVec (Matrix.vec Y) := by rfl
+  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec,
+      swapHermitian.eq] at h
+  exact h
+
+theorem twirlFormula (Y : Matrix (n×n) (n×n) ℂ) (hN : 2 ≤ Fintype.card n) :
+    Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap)) =
+      ((Matrix.trace Y - Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) / (Fintype.card n : ℂ)) /
+        ((Fintype.card n : ℂ)^2 - 1)) • (1 : Matrix (n×n) (n×n) ℂ) +
+      ((Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) - Matrix.trace Y / (Fintype.card n : ℂ)) /
+        ((Fintype.card n : ℂ)^2 - 1)) • (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
+  letI : Nontrivial n := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  obtain ⟨a,b,hab⟩ := exists_pair_ne n
+  obtain ⟨x,y,hxy⟩ := haarAverage_image_span (Matrix.vec Y) a b hab
+  have hv : Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap)) = x • (1 : Matrix (n×n) (n×n) ℂ) + y • (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
+    ext r c
+    change ((haarAverage n).mulVec (Matrix.vec Y)) (c,r) = _
+    exact congrFun hxy (c,r)
+  have h0 := twirlTrace Y
+  have h1 := twirlSwapTrace Y
+  rw [hv, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
+      Matrix.trace_one, traceSwap] at h0
+  rw [hv, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
+      swapSquare, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
+      traceSwap, Matrix.trace_one] at h1
+  simp only [Fintype.card_prod, Nat.cast_mul, smul_eq_mul] at h0 h1
+  have hn : (Fintype.card n : ℂ) ≠ 0 := by exact_mod_cast (show Fintype.card n ≠ 0 by omega)
+  have hden : (Fintype.card n : ℂ)^2 - 1 ≠ 0 := by
+    have hi : (2 : ℤ) ≤ Fintype.card n := by exact_mod_cast hN
+    have hz : (Fintype.card n : ℤ)^2 - 1 ≠ 0 := by nlinarith
+    exact_mod_cast hz
+  have hx : x = (Matrix.trace Y - Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) / (Fintype.card n : ℂ)) /
+      ((Fintype.card n : ℂ)^2 - 1) := by
+    rw [← h0, ← h1]
+    field_simp [hn, hden]
+    <;> ring
+  have hy : y = (Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) - Matrix.trace Y / (Fintype.card n : ℂ)) /
+      ((Fintype.card n : ℂ)^2 - 1) := by
+    rw [← h0, ← h1]
+    field_simp [hn, hden]
+    <;> ring
+  rw [hv, hx, hy]
+
+end
+
+private theorem pure_twirl {d : ℕ} [NeZero d] :
+    (haarAverage (Fin d)).mulVec
+        (Matrix.vec (Matrix.single (0, 0) (0, 0) (1 : ℂ))) =
+      (1 / ((d : ℂ) * (d + 1))) •
+        (Matrix.vec (1 : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) +
+          Matrix.vec (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)))) := by
+  classical
+  by_cases hd : d = 1
+  · subst d
+    have hy : (Matrix.single (0, 0) (0, 0) (1 : ℂ) :
+        Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) = 1 := by
+      simpa only [Fintype.sum_prod_type, Fin.sum_univ_one] using
+        (Matrix.sum_single_one (m := Fin 1 × Fin 1) (α := ℂ))
+    rw [hy, haarAverage_identity_fixed]
+    ext r
+    simp [Matrix.vec, Matrix.one_apply, Equiv.Perm.permMatrix, Subsingleton.elim r.1 (0, 0),
+      Subsingleton.elim r.2 (0, 0)]
+  have hd2 : 2 ≤ d := by have := NeZero.ne d; omega
+  have h := twirlFormula (Matrix.single (0, 0) (0, 0) (1 : ℂ) :
+    Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (by simpa only [Fintype.card_fin] using hd2)
+  have hn : (d : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne d
+  have hnm1 : (d - 1 : ℂ) ≠ 0 := by
+    exact_mod_cast (show (d : ℤ) - 1 ≠ 0 by omega)
+  have hn1 : (d + 1 : ℂ) ≠ 0 := by exact_mod_cast (show d + 1 ≠ 0 by omega)
+  have hden : (d : ℂ) ^ 2 - 1 ≠ 0 := by
+    have he : (d : ℂ) ^ 2 - 1 = (d - 1) * (d + 1) := by ring
+    rw [he]
+    exact mul_ne_zero hnm1 hn1
+  have hc : (1 - 1 / (d : ℂ)) / ((d : ℂ) ^ 2 - 1) =
+      1 / ((d : ℂ) * (d + 1)) := by
+    field_simp [hn, hn1, hden]
+    <;> ring
+  have ht : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))) *
+      (Matrix.single (0, 0) (0, 0) (1 : ℂ))) = 1 := by
+    simp [Matrix.trace_mul_single, Equiv.Perm.permMatrix]
+  simp only [Matrix.trace_single_eq_same, ht, Fintype.card_fin, hc] at h
+  have hv := congrArg Matrix.vec h
+  rw [Matrix.vec_add, Matrix.vec_smul, Matrix.vec_smul, ← smul_add] at hv
+  exact hv
+
+private theorem pure_tensor_integral {d : ℕ} [NeZero d] :
+    (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+      (u.1 * Matrix.single 0 0 1 * u.1ᴴ) ⊗ₖ
+        (u.1 * Matrix.single 0 0 1 * u.1ᴴ) ∂(Measure.haarMeasure
+          (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
+      (1 / ((d : ℂ) * (d + 1))) •
+        (1 + Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))) := by
+  classical
+  let z := fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+    (u.1 * Matrix.single 0 0 1 * u.1ᴴ) ⊗ₖ (u.1 * Matrix.single 0 0 1 * u.1ᴴ)
+  have hp (u : Matrix.unitaryGroup (Fin d) ℂ) (i j : Fin d) :
+      ((u.1 * Matrix.single 0 0 1 * u.1ᴴ) : Matrix (Fin d) (Fin d) ℂ) i j =
+        u.1 i 0 * star (u.1 j 0) := by
+    rw [Matrix.single_eq_single_vecMulVec_single, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+    simp [Matrix.vecMulVec_apply, Matrix.single_vecMul, Matrix.conjTranspose_apply]
+  have hz : Continuous z := by
+    apply continuous_pi
+    intro r
+    apply continuous_pi
+    intro c
+    convert literalMoment_continuous (c, r) ((0, 0), (0, 0)) using 1
+    funext u
+    simp only [z, Matrix.kroneckerMap_apply, hp, literalMoment, Matrix.kronecker, Matrix.map_apply]
+    ring
+  have hi := hz.integrable_of_hasCompactSupport
+    (μ := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))
+    (HasCompactSupport.of_compactSpace z)
+  ext r c
+  have heval : (∫ u, z u ∂_) r c = ∫ u, z u r c ∂_ :=
+    (congrFun (eval_integral (fun r => hi.eval r) r) c).trans
+      (eval_integral (fun c => (hi.eval r).eval c) c)
+  rw [heval]
+  have h := congrFun (pure_twirl (d := d)) (c, r)
+  simp only [Matrix.vec_single, Matrix.mulVec_single_one] at h
+  change (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+    literalMoment u.1 (c, r) ((0, 0), (0, 0)) ∂_) = _ at h
+  convert h using 1
+  · apply integral_congr_ae
+    filter_upwards [] with u
+    simp only [z, Matrix.kroneckerMap_apply, hp, literalMoment, Matrix.kronecker, Matrix.map_apply]
+    ring
+  · rfl
+
+theorem pure_quadratic {d : ℕ} [NeZero d] (a : Matrix (Fin d) (Fin d) ℂ) :
+    (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+      Matrix.trace ((u.1 * Matrix.single 0 0 1 * u.1ᴴ) * a *
+        (u.1 * Matrix.single 0 0 1 * u.1ᴴ) * a) ∂(Measure.haarMeasure
+          (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
+      (a.trace ^ 2 + (a * a).trace) / ((d : ℂ) * (d + 1)) := by
+  classical
+  let q : Matrix (Fin d) (Fin d) ℂ := Matrix.single 0 0 1
+  let p := fun u : Matrix.unitaryGroup (Fin d) ℂ => u.1 * q * u.1ᴴ
+  let z := fun u : Matrix.unitaryGroup (Fin d) ℂ => p u ⊗ₖ p u
+  have hp : Continuous p :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hz : Continuous z := by
+    apply continuous_pi
+    intro r
+    apply continuous_pi
+    intro c
+    exact (hp.matrix_elem r.1 c.1).mul (hp.matrix_elem r.2 c.2)
+  have hi := hz.integrable_of_hasCompactSupport
+    (μ := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))
+    (HasCompactSupport.of_compactSpace z)
+  let f : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →L[ℂ] ℂ :=
+    ((Matrix.traceLinearMap (Fin d × Fin d) ℂ ℂ).comp
+      (LinearMap.mulLeft ℂ (a ⊗ₖ a))).toContinuousLinearMap
+  have heq : ∀ u, f (z u) = (p u * a * p u * a).trace := by
+    intro u
+    change ((a ⊗ₖ a) * (p u ⊗ₖ p u)).trace = _
+    rw [← Matrix.mul_kronecker_mul, Matrix.trace_kronecker]
+    have hpp : p u * p u = p u := by
+      have hb : IsIdempotentElem (Matrix.single (0 : Fin d) (0 : Fin d) (1 : ℂ)) := by
+        change Matrix.single (0 : Fin d) 0 (1 : ℂ) * Matrix.single 0 0 1 = Matrix.single 0 0 1
+        simpa only [mul_one] using
+          Matrix.single_mul_single_same (1 : ℂ) (0 : Fin d) (0 : Fin d) (0 : Fin d) 1
+      change (u.1 * Matrix.single 0 0 1 * u.1ᴴ) * (u.1 * Matrix.single 0 0 1 * u.1ᴴ) =
+        u.1 * Matrix.single 0 0 1 * u.1ᴴ
+      simpa only [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose] using
+        (hb.map (Unitary.conjStarAlgAut ℂ _ u)).eq
+    have hpt : (p u).trace = 1 :=
+      (Matrix.trace_units_conj (Unitary.toUnits u) q).trans (Matrix.trace_single_eq_same _ _)
+    rw [trace_one_sandwich (p u) a hpp hpt,
+      Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul, Matrix.trace_mul_comm a (p u)]
+  have hs : ((a ⊗ₖ a) *
+      Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).trace =
+        (a * a).trace := by
+    rw [PEquiv.mul_toMatrix_toPEquiv]
+    simp only [Matrix.trace, Matrix.diag, Matrix.submatrix_apply, Function.id_def,
+      Equiv.prodComm_apply, Matrix.kroneckerMap_apply, Fintype.sum_prod_type,
+      Matrix.mul_apply]
+    rfl
+  calc
+    (∫ u, (p u * a * p u * a).trace ∂_) = ∫ u, f (z u) ∂_ := by
+      apply integral_congr_ae
+      exact Filter.Eventually.of_forall (fun u => (heq u).symm)
+    _ = f (∫ u, z u ∂_) := f.integral_comp_comm hi
+    _ = _ := by
+      rw [show (∫ u, z u ∂_) = _ from pure_tensor_integral (d := d)]
+      change ((a ⊗ₖ a) * ((1 / ((d : ℂ) * (d + 1))) •
+        (1 + Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))))).trace = _
+      rw [Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_add, Matrix.mul_one,
+        Matrix.trace_add, Matrix.trace_kronecker, hs]
+      simp [pow_two, div_eq_mul_inv, mul_comm]
 
 end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl

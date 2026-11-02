@@ -1,0 +1,32 @@
+### 定理 18.2（共同恢复等价于同一完整效果翻译）
+
+若 C90 成立，则存在同一个 UCP 映射
+$\mathcal R^*$，把输入端的全部效果翻译为输出端效果，并对 $b=0,1$ 满足
+
+<a id="eq-c90-effect-translation"></a>
+
+$$
+\operatorname{Tr}(\rho_bF)
+ =\operatorname{Tr}\bigl(\mathcal N(\rho_b)\mathcal R^*(F)\bigr),
+ \qquad 0\le F\le I.
+\tag{18.1}
+$$
+
+完整 POVM 的归一以及所有辅助矩阵级的正性都被保持。
+反之，若同一个 UCP 效果翻译满足上述等式，则其迹对偶为两态的共同 CPTP 恢复，
+故 C90 成立。
+
+**证明。**
+C90 给出 CPTP 的 $\mathcal R$。
+其对偶 UCP，故 $0\le\mathcal R^*(F)\le I$，
+且 $\sum_y\mathcal R^*(F_y)=I$ 当 $\sum_yF_y=I$。
+迹对偶与 $\mathcal R\mathcal N(\rho_b)=\rho_b$ 给出等式。
+反之，全部效果的实线性张成是 Hermitian 矩阵空间；
+与它们的迹配对相等就迫使两个状态相等。
+UCP 的迹对偶是 CPTP，故得到所需共同恢复。
+
+这使“关系的关系”有一个具体数学对象：
+$\mathcal R^*$ 本身就是把一整套读出关系连到另一套读出关系的同一个映射。
+其复合与保单位条件正是读出之间必须相容的约束。
+仅对每一个效果分别寻找一个无共同正性保证的替代效果，不能代替此定理。
+
