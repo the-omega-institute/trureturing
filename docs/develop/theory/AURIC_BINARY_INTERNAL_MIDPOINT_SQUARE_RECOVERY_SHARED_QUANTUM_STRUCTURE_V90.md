@@ -1253,7 +1253,7 @@ $$
 
 解得 $A=P_0$、$B=P_1$。
 令 $F=S^*(P_0)$，则 $0\le F\le I$，且
-$\langle 0\rvertF\lvert 0\rangle=1$、$\langle +\rvertF\lvert +\rangle=0$。
+$\langle 0\rvert F\lvert 0\rangle=1$、$\langle +\rvert F\lvert +\rangle=0$。
 正性分别迫使 $F\lvert 0\rangle=\lvert 0\rangle$、$F\lvert +\rangle=0$，与
 $\langle0|+\rangle=1/\sqrt2$ 及 $F=F^\dagger$ 矛盾。
 
