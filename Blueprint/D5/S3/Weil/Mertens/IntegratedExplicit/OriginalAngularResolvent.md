@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalAngularResolvent.
 
 *Commentary.*
 
-The real part of the same integrable complex kernel gives the normalized cosine integral exp(-abs(s)/2)/4 for every real s. It is consumed by the finite-measure spectral construction.
+The real part of the same integrable complex kernel gives the normalized cosine integral exp(-abs(s)/2)/4 for every real s. The finite-measure spectral construction uses angular_resolvent to obtain the complex resolvent identity, then takes real parts.
 
 ## References
 
