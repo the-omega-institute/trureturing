@@ -36,10 +36,8 @@ private theorem unitary_pure_ext {d : ℕ} [NeZero d]
       f (u.1 * Matrix.single i i 1 * u.1ᴴ) =
         g (u.1 * Matrix.single i i 1 * u.1ᴴ) := by
     let p := (Equiv.swap (0 : Fin d) i).permMatrix ℂ
-    have hp : p ∈ Matrix.unitaryGroup (Fin d) ℂ := by
-      rw [Matrix.mem_unitaryGroup_iff]
-      simp [p, Matrix.star_eq_conjTranspose, ← Matrix.permMatrix_mul]
-    let v : Matrix.unitaryGroup (Fin d) ℂ := u * ⟨p, hp⟩
+    let v : Matrix.unitaryGroup (Fin d) ℂ :=
+      u * D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary (Equiv.swap 0 i)
     have hsingle : p * Matrix.single 0 0 1 * pᴴ = Matrix.single i i 1 := by
       dsimp [p]
       rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
@@ -123,10 +121,7 @@ private def inputProjector {d : ℕ} [NeZero d]
 private theorem base_projector_psd {d : ℕ} [NeZero d] :
     (baseProjector : Matrix (Fin d) (Fin d) ℂ).PosSemidef := by
   change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).PosSemidef
-  rw [← Matrix.diagonal_single]
-  apply Matrix.PosSemidef.diagonal
-  intro j
-  by_cases hj : j = 0 <;> simp (config := { congrConsts := false }) [hj]
+  exact (Matrix.PosSemidef.stdBasisMatrix_iff_eq 0 0 (by norm_num : (0 : ℂ) < 1)).mpr rfl
 
 private theorem input_projector_psd {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
@@ -400,10 +395,7 @@ private theorem rank_one_from_equality {d : ℕ}
     change Matrix.toEuclideanLin _ ∘ₗ Matrix.toEuclideanLin a = 0 at hc
     calc
       _ = Matrix.toEuclideanLin (h.trace • (1 : HermitianMat (Fin d) ℂ) - h).mat ∘ₗ
-          Matrix.toEuclideanLin a := by
-        ext v
-        simp (config := { congrConsts := false })
-          [Matrix.toLpLin_apply, Matrix.mulVec_mulVec, Matrix.toEuclideanLin]
+          Matrix.toEuclideanLin a := Matrix.toLpLin_mul 2 2 2 _ _
       _ = 0 := hc
       _ = Matrix.toEuclideanLin 0 := (map_zero Matrix.toEuclideanLin).symm
   have hsquare : a * a = (a.trace.re : ℂ) • a := by
@@ -437,13 +429,12 @@ private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
     exact congrArg Complex.re s.2.2
   have hceiling (s : DensityState (Fin d)) :
       CStarMatrix.ofMatrix.symm s.1 ≤ (1 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
-    have heig : ∑ i, (hpsd s).1.eigenvalues i = 1 := by
-      have ht := congrArg Complex.re (hpsd s).1.trace_eq_sum_eigenvalues
-      simpa (config := { congrConsts := false }) [htrace s] using ht.symm
-    apply (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff (hpsd s).1 (1 : ℝ)).mp
-    intro i
-    rw [← heig]
-    exact Finset.single_le_sum (fun j _ => (hpsd s).eigenvalues_nonneg j) (Finset.mem_univ i)
+    let h : HermitianMat (Fin d) ℂ := ⟨_, (hpsd s).isHermitian⟩
+    have hb := HermitianMat.le_trace_smul_one
+      (HermitianMat.zero_le_iff.mpr (hpsd s) : 0 ≤ h)
+    change CStarMatrix.ofMatrix.symm s.1 ≤
+      (CStarMatrix.ofMatrix.symm s.1).trace.re • (1 : Matrix (Fin d) (Fin d) ℂ) at hb
+    simpa only [htrace s, one_smul] using hb
   have hsupport : ∀ v, CStarMatrix.ofMatrix.symm sigma.1 *ᵥ v = 0 →
       CStarMatrix.ofMatrix.symm rho.1 *ᵥ v = 0 := by
     intro v hv
