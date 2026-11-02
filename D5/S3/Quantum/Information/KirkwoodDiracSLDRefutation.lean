@@ -155,9 +155,19 @@ private theorem fourier_unitary : fourierᴴ * fourier = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_succ] <;>
-    norm_num [fourier, ph, z, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    norm_num only [fourier, ph, z, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_succ, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
-      Complex.div_re, Complex.div_im, Complex.normSq_apply]
+      Complex.div_re, Complex.div_im, Complex.normSq_apply,
+      Matrix.cons_val, RCLike.ofReal_eq_complex_ofReal, ↓reduceIte,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.add_apply, Matrix.one_apply,
+      Fin.sum_univ_zero, Fin.ext_iff, Fin.val_ofNat, Fin.val_zero, Fin.val_one, Fin.val_succ, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.neg_re, Complex.neg_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im, Complex.I_re, Complex.I_im,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.zero_re, Complex.zero_im,
+      Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
+      mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
+      neg_zero, neg_neg, and_true, true_and]
     <;> (try constructor) <;> nlinarith [sqrt3_sq]
 
 private noncomputable def baseA : Matrix.unitaryGroup (Fin 9) ℂ := 1
@@ -184,8 +194,18 @@ private theorem proj_gram : projᴴ * proj = proj := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_succ] <;>
-    norm_num [proj, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fin.sum_univ_succ, Complex.ext_iff, Complex.mul_re, Complex.mul_im]
+    norm_num only [proj, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Fin.sum_univ_succ, Complex.ext_iff, Complex.mul_re, Complex.mul_im,
+      Matrix.cons_val, RCLike.ofReal_eq_complex_ofReal, ↓reduceIte,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.add_apply, Matrix.one_apply,
+      Fin.sum_univ_zero, Fin.ext_iff, Fin.val_ofNat, Fin.val_zero, Fin.val_one, Fin.val_succ, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.neg_re, Complex.neg_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im, Complex.I_re, Complex.I_im,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.zero_re, Complex.zero_im,
+      Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
+      mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
+      neg_zero, neg_neg, and_true, true_and]
     <;> (try constructor) <;> nlinarith [sqrt3_sq]
 
 set_option Elab.async false in
@@ -206,9 +226,19 @@ private theorem rho_coefficient (x k : Fin 9) :
     ((9 * star (fourier x k)) * ((rho * fourier) x k)).im = 0 := by
   fin_cases x <;> fin_cases k <;>
     simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
-    norm_num [rho, proj, fourier, ph, z, Matrix.mul_apply, Matrix.smul_apply,
+    norm_num only [rho, proj, fourier, ph, z, Matrix.mul_apply, Matrix.smul_apply,
       RCLike.real_smul_eq_coe_mul, Fin.sum_univ_succ, Complex.mul_re, Complex.mul_im,
-      Complex.div_re, Complex.div_im, Complex.normSq_apply]
+      Complex.div_re, Complex.div_im, Complex.normSq_apply,
+      Matrix.cons_val, RCLike.ofReal_eq_complex_ofReal, ↓reduceIte,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.add_apply, Matrix.one_apply,
+      Fin.sum_univ_zero, Fin.ext_iff, Fin.val_ofNat, Fin.val_zero, Fin.val_one, Fin.val_succ, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.neg_re, Complex.neg_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im, Complex.I_re, Complex.I_im,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.zero_re, Complex.zero_im,
+      Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
+      mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
+      neg_zero, neg_neg, and_true, true_and]
     <;> (try constructor) <;> nlinarith [sqrt3_sq, sqrt3_cube]
 
 set_option Elab.async false in
@@ -216,8 +246,18 @@ private theorem obs_coefficient (x k : Fin 9) :
     ((9 * star (fourier x k)) * ((obs * fourier) x k)).im = 0 := by
   fin_cases x <;> fin_cases k <;>
     simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
-    norm_num [obs, fourier, ph, z, Matrix.mul_apply, Fin.sum_univ_succ,
-      Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq_apply]
+    norm_num only [obs, fourier, ph, z, Matrix.mul_apply, Fin.sum_univ_succ,
+      Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq_apply,
+      Matrix.cons_val, RCLike.ofReal_eq_complex_ofReal, ↓reduceIte,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.add_apply, Matrix.one_apply,
+      Fin.sum_univ_zero, Fin.ext_iff, Fin.val_ofNat, Fin.val_zero, Fin.val_one, Fin.val_succ, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.neg_re, Complex.neg_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im, Complex.I_re, Complex.I_im,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.zero_re, Complex.zero_im,
+      Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
+      mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
+      neg_zero, neg_neg, and_true, true_and]
     <;> (try constructor) <;> nlinarith [sqrt3_sq, sqrt3_cube]
 
 set_option Elab.async false in
@@ -225,9 +265,19 @@ private theorem sld_coefficient (x k : Fin 9) :
     ((9 * star (fourier x k)) * ((sld * fourier) x k)).im = 0 := by
   fin_cases x <;> fin_cases k <;>
     simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
-    norm_num [sld, fourier, ph, z, Matrix.mul_apply, Fin.sum_univ_succ,
-      Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq_apply]
-    <;> (try constructor) <;> nlinarith [sqrt3_sq, sqrt3_cube]
+    norm_num only [sld, fourier, ph, z, Matrix.mul_apply, Fin.sum_univ_succ,
+      Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq_apply,
+      Matrix.cons_val, RCLike.ofReal_eq_complex_ofReal, ↓reduceIte,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.add_apply, Matrix.one_apply,
+      Fin.sum_univ_zero, Fin.ext_iff, Fin.val_ofNat, Fin.val_zero, Fin.val_one, Fin.val_succ, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.neg_re, Complex.neg_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im, Complex.I_re, Complex.I_im,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.zero_re, Complex.zero_im,
+      Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
+      mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
+      neg_zero, neg_neg, and_true, true_and]
+    <;> (try constructor) <;> nlinarith [sqrt3_sq]
 
 
 set_option Elab.async false in
@@ -236,9 +286,19 @@ private theorem sld_equation :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_succ] <;>
-    norm_num [rho, proj, obs, sld, Matrix.mul_apply, Matrix.smul_apply, smul_eq_mul,
+    norm_num only [rho, proj, obs, sld, Matrix.mul_apply, Matrix.smul_apply, smul_eq_mul,
       RCLike.real_smul_eq_coe_mul, Fin.sum_univ_succ, Complex.ext_iff,
-      Complex.mul_re, Complex.mul_im]
+      Complex.mul_re, Complex.mul_im,
+      Matrix.cons_val, RCLike.ofReal_eq_complex_ofReal, ↓reduceIte,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.add_apply, Matrix.one_apply,
+      Fin.sum_univ_zero, Fin.ext_iff, Fin.val_ofNat, Fin.val_zero, Fin.val_one, Fin.val_succ, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.neg_re, Complex.neg_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im, Complex.I_re, Complex.I_im,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.zero_re, Complex.zero_im,
+      Complex.one_re, Complex.one_im, Complex.re_ofNat, Complex.im_ofNat,
+      mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero, zero_sub,
+      neg_zero, neg_neg, and_true, true_and]
     <;> (try constructor) <;> nlinarith [sqrt3_sq]
 
 set_option Elab.async false in
