@@ -229,16 +229,12 @@ private theorem product_coeff_one
     {ι : Type*} (s : Finset ι) (f : ι → ℤ[X]) (hf : ∀ i ∈ s, (f i).coeff 0 = 1) :
     (∏ i ∈ s, f i).coeff 1 = ∑ i ∈ s, (f i).coeff 1 := by
   classical
-  induction s using Finset.induction_on with
-  | empty => simp [coeff_one]
-  | @insert i s hi ih =>
-      rw [Finset.prod_insert hi, Finset.sum_insert hi, mul_coeff_one,
-        hf i (Finset.mem_insert_self i s), ih (fun j hj => hf j (Finset.mem_insert_of_mem hj))]
-      have hp : (∏ j ∈ s, f j).coeff 0 = 1 := by
-        rw [coeff_zero_prod]
-        exact Finset.prod_eq_one (fun j hj => hf j (Finset.mem_insert_of_mem hj))
-      rw [hp]
-      ring
+  have hz (i : ι) : (∏ j ∈ s.erase i, f j).coeff 0 = 1 := by
+    rw [coeff_zero_prod]
+    exact Finset.prod_eq_one fun j hj => hf j (Finset.mem_of_mem_erase hj)
+  simpa only [coeff_derivative, zero_add, Nat.cast_zero, Nat.cast_one, mul_one,
+    finsetSum_coeff, mul_coeff_zero, hz, one_mul] using
+    congrArg (fun p : ℤ[X] => p.coeff 0) (derivative_prod_finset (s := s) (f := f))
 
 private theorem gaussian_product_low
     (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 0 < μ) (ha : StrictMono a)
