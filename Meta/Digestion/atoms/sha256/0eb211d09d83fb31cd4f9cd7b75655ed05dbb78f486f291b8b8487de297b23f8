@@ -1,0 +1,57 @@
+# 8 同一个切向不能唯一决定完整门与曲率
+
+\*\*命题 8.1 单点求值的自由度。\*\*固定单位 ψ，对复反自伴 K 的求值 K↦Kψ 的核，是在 ψ 的正交补上任意作用、并消去 ψ 的反自伴算符。其真实参数维数为 (d−1)²。
+
+\*\*证明。\*\*Kψ=0 与反自伴性共同保证 ψ 的正交补不变；限制在该补空间上的任意反自伴算符又可延拓为这样的 K。该补空间复维数 d−1，其反自伴矩阵实维数为 (d−1)²。证毕。
+
+\*\*命题 8.2 同一初始箭头允许不同曲率。\*\*令 ψ,u 正交归一，ν>0，定义
+
+```math
+H_0=i\hbar\nu
+\bigl(|u\rangle\langle\psi|-|\psi\rangle\langle u|\bigr),
+\qquad
+H_\kappa=H_0+\hbar\kappa|u\rangle\langle u|.
+```
+
+则二者在 ψ 上的初始切向相同：
+
+```math
+-\frac{i}{\hbar}H_0\psi
+=-\frac{i}{\hbar}H_\kappa\psi=\nu u.
+```
+
+但二阶变化为
+
+```math
+-\frac{H_0^2}{\hbar^2}\psi=-\nu^2\psi,\qquad
+-\frac{H_\kappa^2}{\hbar^2}\psi=-\nu^2\psi-i\nu\kappa u.
+```
+
+\*\*证明。\*\*Hκψ=iℏνu，Hκu=−iℏνψ+ℏκu，连续作用一次即得。证毕。
+
+在基 (ψ,u) 的 Bloch 球中，
+
+```math
+H_\kappa=\frac{\hbar\kappa}{2}I+
+\frac{\hbar}{2}(0,2\nu,-\kappa)\cdot\boldsymbol\sigma.
+```
+
+初始球点为 (0,0,1)，两者的初始速度均为 (2ν,0,0)，但加速度为
+
+```math
+\ddot{\mathbf r}(0)=(0,-2\kappa\nu,-4\nu^2).
+```
+
+因此切线并不指定随后怎样弯曲。
+
+有限端点门也不唯一决定历史。对投影 P 和 T>0，
+
+```math
+e^{-iT(0)/\hbar}=I,\qquad
+e^{-iT(2\pi\hbar P/T)/\hbar}=I.
+```
+
+中间的切向历史却不同。
+
+\*\*白话图景。\*\*当前箭头只说明眼前的一步。正交方向上还藏着怎样作用，会影响下一步怎样转弯。绕过一圈再回到同一个门，也不会使中间路线自动变成没有发生。
+

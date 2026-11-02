@@ -1,0 +1,36 @@
+**定理 11.1 切向 Gram 相容。**
+
+```math
+\boxed{
+(\Delta A)^2(\Delta B)^2
+\ge
+\operatorname{Cov}(A,B)^2+
+\frac14|\langle[A,B]\rangle|^2.
+}
+```
+
+其中协方差为中心化反交换子的期望之一半。
+
+\*\*证明。\*\*二元 Gram 正性给
+
+```math
+\|u\|^2\|w\|^2\ge|\langle u,w\rangle|^2.
+```
+
+又
+
+```math
+\|u\|^2=(\Delta A)^2,\quad
+\|w\|^2=(\Delta B)^2,
+```
+
+```math
+\operatorname{Re}\langle u,w\rangle
+=\frac12\langle AB+BA\rangle-ab,
+\qquad
+\operatorname{Im}\langle u,w\rangle
+=\frac{\langle[A,B]\rangle}{2i}.
+```
+
+取复数模平方即得。证毕。
+
