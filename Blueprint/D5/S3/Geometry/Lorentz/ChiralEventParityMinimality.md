@@ -216,7 +216,7 @@ $$
 \lambda (f_{1}: (\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.event}) \to (\mathbb{R})) \mapsto (\lambda (f_{2}: (\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.event}) \to (\mathbb{R})) \mapsto (\lambda (v: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)) \mapsto ((\operatorname{Complex.ofReal}\left(\left(f_{1}\right)\left(\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.family}\left(v\right)\right)\right)) + ((\operatorname{Complex.ofReal}\left(\left(f_{2}\right)\left(\operatorname{D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.family}\left(v\right)\right)\right)) \cdot (\operatorname{Complex.I})))))
 $$
 
-For om equal to allEvents, use the inclusion of collisionEvents into allEvents. Apply the planar odd-map zero theorem to the complex combination and obtain a unit vector where it vanishes. The family event there is in om and is chiral; taking real and imaginary parts gives f₁ = f₂ = 0. For om equal to collisionEvents, use the identity inclusion and repeat the same argument. These are the two possibilities for om, which proves the full assertion.
+For om equal to allEvents, use the inclusion of collisionEvents into allEvents. Apply the planar odd-map zero theorem, Borsuk's Satz II (1933) for n=2, reviewed in Library note D5/L/Topology/borsuk1933spheres, to the complex combination and obtain a unit vector where it vanishes. The family event there is in om and is chiral; taking real and imaginary parts gives f₁ = f₂ = 0. For om equal to collisionEvents, use the identity inclusion and repeat the same argument. These are the two possibilities for om, which proves the full assertion.
 
 ## References
 
@@ -237,4 +237,3 @@ For om equal to allEvents, use the inclusion of collisionEvents into allEvents. 
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.result`
 - Truth anchor: `D5/S3/Geometry/Lorentz/ChiralEventParityMinimality.rotation`
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/SerialEndpointPairing](../../Combinatorics/PerfectMatchings/SerialEndpointPairing.md)
-- Dependency: [D5/S3/Topology/BorsukUlam/PlanarOddMapZero](../../Topology/BorsukUlam/PlanarOddMapZero.md)
