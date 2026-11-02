@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Stirling]
    utility: none
-   digest: Floor-uniform harmonic and factorial remainders for the literal factorial compensation. -/
+   digest: Real-floor harmonic remainders for the literal factorial compensation. -/
 
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.Basic
 import D5.S3.Arith.GoldenResource.RobinRationalBasis
@@ -48,14 +48,16 @@ lemma G_tail_decomposition {x : ℝ} (hx : 1 ≤ x) :
   have hf : Int.fract x = x - (⌊x⌋₊ : ℝ) := by
     rw [Int.fract, ← natCast_floor_eq_intCast_floor (by linarith : 0 ≤ x)]
   rw [G, finite_smoothing hx, h1]
-  dsimp [epsilon]
-  rw [hf]
-  nlinarith only [hj, he]
+  have hH : H x = Real.log x + gamma + epsilon x := by simp [epsilon]
+  rw [hj, hH, show eta x = Real.log (⌊x⌋₊.factorial : ℝ) -
+    (x * Real.log x - x) from he, hf]
+  ring
 
 lemma H_eq_harmonic (x : ℝ) : H x = (harmonic ⌊x⌋₊ : ℝ) := by
   simp only [H, prefixSum, harmonic_eq_sum_Icc, Rat.cast_sum, Rat.cast_inv,
     Rat.cast_natCast]
   rw [Finset.Icc_eq_cons_Ioc (Nat.zero_le _), Finset.sum_cons]
+  rw [← Finset.Icc_add_one_left_eq_Ioc]
   simp
 
 /-- Elementary real-floor bounds, including the entire first cell. -/
@@ -74,18 +76,51 @@ lemma harmonicPrimitive_bound {x : ℝ} (hx : 1 ≤ x) :
   have hb := GoldenResource.RobinRationalBasis.eulerMascheroni_remainder_bounds n hn
   have hfrac : Int.fract x = x - (n : ℝ) := by
     rw [Int.fract, ← natCast_floor_eq_intCast_floor hx0.le]
-  rw [harmonicPrimitive, epsilon, H_eq_harmonic, hfrac, abs_le]
-  change -(4 / x) ≤ x * ((harmonic n : ℝ) - Real.log x - gamma) +
-      (x - (n : ℝ)) - 1 / 2 ∧
-    x * ((harmonic n : ℝ) - Real.log x - gamma) + (x - (n : ℝ)) - 1 / 2 ≤ 4 / x
-  have hmul_u := mul_le_mul_of_nonneg_left hlogu hx0.le
-  have hmul_l := mul_le_mul_of_nonneg_left hlogl hx0.le
-  have hmul_hi := mul_le_mul_of_nonneg_left hb.2.le hx0.le
-  have hmul_lo := mul_le_mul_of_nonneg_left hb.1.le hx0.le
-  constructor <;> dsimp [gamma] at *
-  · field_simp at hmul_l hmul_u hmul_hi hmul_lo ⊢
-    nlinarith [sq_nonneg (x - n)]
-  · field_simp at hmul_l hmul_u hmul_hi hmul_lo ⊢
-    nlinarith [sq_nonneg (x - n)]
+  let d : ℝ := (harmonic n : ℝ) - Real.log n - gamma
+  let l : ℝ := Real.log x - Real.log n
+  let u : ℝ := x - n
+  have hu : 0 ≤ u ∧ u ≤ 1 := ⟨sub_nonneg.mpr hnx, by dsimp [u]; linarith⟩
+  have hu2 : u ^ 2 ≤ 1 := by nlinarith [sq_nonneg (u - 1)]
+  have hd : 1 / (2 * ((n : ℝ) + 1)) ≤ d ∧ d ≤ 1 / (2 * n) :=
+    ⟨hb.1.le, hb.2.le⟩
+  have hdl : -(1 / n : ℝ) ≤ x * d - 1 / 2 := by
+    calc
+      -(1 / n : ℝ) ≤ (n : ℝ) / (2 * ((n : ℝ) + 1)) - 1 / 2 := by
+        field_simp
+        nlinarith
+      _ ≤ x * d - 1 / 2 := by
+        simpa only [mul_one_div] using
+          (sub_le_sub_right (mul_le_mul hnx hd.1 (by positivity) hx0.le) (1 / 2))
+  have hdu : x * d - 1 / 2 ≤ 1 / n := by
+    calc
+      _ ≤ x * (1 / (2 * n)) - 1 / 2 := by gcongr; exact hd.2
+      _ ≤ 1 / n := by
+        field_simp
+        nlinarith
+  have hll : 0 ≤ x * l - u := by
+    have h := mul_le_mul_of_nonneg_left hlogl hx0.le
+    dsimp [l, u]
+    field_simp at h
+    linarith
+  have hlu : x * l - u ≤ 1 / n := by
+    have h := mul_le_mul_of_nonneg_left hlogu hx0.le
+    dsimp [l, u] at *
+    apply (le_div_iff₀ hn0).mpr
+    have h' := mul_le_mul_of_nonneg_left h hn0.le
+    field_simp at h'
+    nlinarith only [mul_le_mul_of_nonneg_left h' hx0.le, hu2]
+  have he : harmonicPrimitive x = (x * d - 1 / 2) - (x * l - u) := by
+    rw [harmonicPrimitive, epsilon, H_eq_harmonic, hfrac]
+    dsimp [d, l, u, n]
+    ring
+  have hf : |harmonicPrimitive x| ≤ 2 / n := by
+    rw [he, abs_le]
+    simp only [div_eq_mul_inv] at hdl hdu hlu ⊢
+    constructor <;> linarith
+  refine hf.trans ?_
+  apply (div_le_div_iff₀ hn0 hx0).mpr
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  linarith
+
 
 end D5.S3.Arith.Robin.ActualContinuousFactorialCompensation
