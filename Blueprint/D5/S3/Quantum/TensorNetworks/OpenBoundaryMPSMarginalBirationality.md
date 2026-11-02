@@ -96,6 +96,10 @@ $$\forall (n: \mathbb{N}), (\forall (a: \mathbb{N}), ((4 \le n) \Rightarrow (\fo
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/critch-morton-2014-open-boundary-mps-marginal-birationality` (proved) by `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"critch-morton-2014-open-boundary-mps-marginal-birationality","declaration_gid":"D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.

@@ -114,7 +114,10 @@ internal sealed class OpenBoundaryMPSMarginalBirationalityDocument : IScribeDocu
                             + "and the two endpoint minors are −576 and 2592. Every factor of g is nonzero. "
                             + "Thus the target chart contains a point t, and Fₙ,ₐ sends any such point to a point of Xₙ whose marginal is t. "
                             + "The existence of t supplies the nonempty source chart for every n, a and bound proof h in the stated range. Together with primeness and the two inverse identities, this proves all three clauses."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("critch-morton-2014-open-boundary-mps-marginal-birationality"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
