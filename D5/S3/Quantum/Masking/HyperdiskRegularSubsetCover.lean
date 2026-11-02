@@ -91,10 +91,22 @@ private lemma ambient_span : Submodule.span ℂ ambient = ⊤ := by
           abs_of_pos (radii_pos k)]
       exact ⟨coordinate_norm b hn, hn⟩
     have he : a - b = (2 * (radii j : ℂ)) • EuclideanSpace.single j 1 := by
-      ext k
-      by_cases hk : k = j
-      · subst k; simp [a, b]; ring
-      · simp [a, b, hk]
+      apply WithLp.ofLp_injective
+      have hu : (fun k => if k = j then -(radii k : ℂ) else (radii k : ℂ)) =
+          Function.update (fun k => (radii k : ℂ)) j (-(radii j : ℂ)) := by
+        funext k
+        simp only [Function.update_apply, eq_comm]
+        split_ifs with h
+        · rw [h]
+        · rfl
+      change (fun k => (radii k : ℂ)) -
+        (fun k => if k = j then -(radii k : ℂ) else (radii k : ℂ)) = _
+      rw [hu, Pi.update_eq_sub_add_single, Pi.single_neg]
+      change (fun k => (radii k : ℂ)) -
+        ((fun k => (radii k : ℂ)) - Pi.single j (radii j : ℂ) +
+          -Pi.single j (radii j : ℂ)) = (2 * (radii j : ℂ)) • Pi.single j 1
+      rw [← Pi.single_smul, smul_eq_mul, mul_one, two_mul, Pi.single_add]
+      abel
     have hz : (2 * (radii j : ℂ)) ≠ 0 :=
       mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr (ne_of_gt (radii_pos j)))
     have hm := (Submodule.span ℂ ambient).smul_mem ((2 * (radii j : ℂ))⁻¹)
