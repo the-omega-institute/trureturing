@@ -150,13 +150,10 @@ private theorem input_projector_idempotent {d : ℕ} [NeZero d]
   have hu : u.1ᴴ * u.1 = 1 := by
     simpa (config := { congrConsts := false }) only [Matrix.star_eq_conjTranspose]
       using Matrix.mem_unitaryGroup_iff'.mp u.2
-  have hb : (baseProjector : Matrix (Fin d) (Fin d) ℂ) * baseProjector = baseProjector := by
-    change (Matrix.single (0 : Fin d) 0 (1 : ℂ)) * Matrix.single 0 0 1 =
-      Matrix.single 0 0 1
-    simp (config := { congrConsts := false }) [Matrix.single_mul_single_same]
   simp (config := { congrConsts := false }) only [inputProjector, Matrix.mul_assoc,
-    ← Matrix.mul_assoc u.1ᴴ u.1, hu, Matrix.one_mul,
-    ← Matrix.mul_assoc baseProjector baseProjector, hb]
+    ← Matrix.mul_assoc u.1ᴴ u.1, hu, Matrix.one_mul]
+  rw [← Matrix.mul_assoc baseProjector baseProjector u.1ᴴ]
+  simp [baseProjector, Matrix.single_mul_single_same]
 
 private noncomputable def ludersState {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)

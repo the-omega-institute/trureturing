@@ -855,11 +855,9 @@ theorem pure_quadratic {d : ℕ} [NeZero d] (a : Matrix (Fin d) (Fin d) ℂ) :
     rw [← Matrix.mul_kronecker_mul, Matrix.trace_kronecker]
     have hu : u.1ᴴ * u.1 = 1 := by
       simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
-    have hb : q * q = q := by
-      simp [q, Matrix.single_mul_single_same]
     have hpp : p u * p u = p u := by
       simp only [p, Matrix.mul_assoc, ← Matrix.mul_assoc u.1ᴴ u.1, hu,
-        Matrix.one_mul, ← Matrix.mul_assoc q q, hb]
+        Matrix.one_mul, ← Matrix.mul_assoc q q, q, Matrix.single_mul_single_same, one_mul]
     have hpt : (p u).trace = 1 := by
       dsimp only [p]
       rw [Matrix.trace_mul_cycle, hu, Matrix.one_mul]
