@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/GranvikMobiusRealPart
+/- GID: D5/S3/Arith/Mobius/GranvikMobiusRealPart
    generality: G
-   mirror-B: D5/B/S3/Arith/GranvikMobiusRealPart
+   mirror-B: D5/B/S3/Arith/Mobius/GranvikMobiusRealPart
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -15,7 +15,7 @@ import Mathlib.Tactic.IntervalCases
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.GranvikMobiusRealPart
+namespace D5.S3.Arith.Mobius.GranvikMobiusRealPart
 
 /-- The arithmetic definition of OEIS A292273 at positive indices. -/
 def a (n : ℕ) : ℤ :=
@@ -43,4 +43,4 @@ theorem result (n : ℕ) (hn : 0 < n) :
     rw [Complex.I_pow_eq_pow_mod, h]
     simp [a, htwo, Complex.I_pow_three, Complex.mul_re]
 
-end D5.S3.Arith.GranvikMobiusRealPart
+end D5.S3.Arith.Mobius.GranvikMobiusRealPart
