@@ -51,7 +51,7 @@ theorem G_sharp_tail_bound {x : ℝ} (hx : 1 ≤ x) :
         |2 * x * T_epsilon x| := abs_add_le _ _
     _ ≤ (|(1 + gamma + Real.log x) * harmonicPrimitive x| +
         |eta x - ((1 / 2 - Int.fract x) * Real.log x + L / 2)|) +
-        |2 * x * T_epsilon x| := add_le_add_right (abs_sub _ _) _
+        |2 * x * T_epsilon x| := add_le_add (abs_sub _ _) (le_refl _)
     _ ≤ ((1 + gamma + Real.log x) * (4 / x) + 4 / x) +
         (2 * x) * (8 / x ^ 2) := by
       rw [abs_mul, abs_of_nonneg hc, abs_mul, abs_of_pos (by positivity : 0 < 2 * x)]
