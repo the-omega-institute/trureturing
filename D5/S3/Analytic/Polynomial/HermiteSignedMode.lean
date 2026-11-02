@@ -1,7 +1,7 @@
 /- GID: D5/S3/Analytic/Polynomial/HermiteSignedMode
    generality: G
-   mirror - B: D5/B/S3/Analytic/Polynomial/HermiteSignedMode
-   mirror - E: none(waiver:external-open-problem-resolution)
+   mirror-B: D5/B/S3/Analytic/Polynomial/HermiteSignedMode
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Signed coefficient modes of physicists Hermite polynomials. -/
