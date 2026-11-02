@@ -1,0 +1,36 @@
+#### 定理 9.1（球面端点切向的运输）
+
+给 $\mathbf p,\mathbf q\in S^2$，非重合、非对跖，
+记 $c=\mathbf p\cdot\mathbf q=\cos\theta$、$s=\sin\theta>0$。
+从 $\mathbf p$ 到 $\mathbf q$ 的最短大圆初始切向为
+
+$$
+\mathbf u_0=\frac{\mathbf q-c\mathbf p}{s},
+$$
+
+正向抵达的切向为
+
+$$
+\mathbf u_T=\frac{c\mathbf q-\mathbf p}{s}.
+$$
+
+反向从终点出发的切向恰为
+
+$$
+\boxed{\mathbf u_{\mathrm{rev}}=
+\frac{\mathbf p-c\mathbf q}{s}=-\mathbf u_T.}
+$$
+
+**证明。**
+
+取弧长参数
+$\gamma(a)=\cos a\,\mathbf p+\sin a\,\mathbf u_0$，
+$0\le a\le\theta$。
+求导并代入 $a=\theta$，得
+$-s\mathbf p+c(\mathbf q-c\mathbf p)/s=(c\mathbf q-\mathbf p)/s$。
+反向路径导数取负即得。
+
+□
+
+对跖点的最短弧不唯一，须另给历史切向；相同点则不能由端点数据指定非零圈数和路径。
+

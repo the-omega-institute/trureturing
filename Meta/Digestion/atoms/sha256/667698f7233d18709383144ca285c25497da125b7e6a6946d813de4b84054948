@@ -1,0 +1,15 @@
+### 9.2 当前态与当前切向的球图
+
+对归一态 $\psi$，水平切向 $\xi\perp\psi$ 落在
+$\operatorname{span} _{\mathbb C }\{\psi,\xi\}$ 中。若 $\xi=zu$、$u\perp\psi$ 单位，
+则该二维载体上的 Bloch 坐标满足
+
+$$
+\mathbf r_\psi=(0,0,1),\qquad
+\dot{\mathbf r}_\psi=(2\operatorname{Re}  z,2\operatorname{Im}  z,0).
+$$
+
+这是即时一阶的三维表示，不把全部高维态空间压成同一个三维球。
+
+<a id="statement-9-1"></a>
+

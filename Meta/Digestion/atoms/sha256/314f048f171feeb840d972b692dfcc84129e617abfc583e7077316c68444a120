@@ -1,0 +1,72 @@
+#### 定理 5.1（有限复球面刚性）
+
+实际 $F:S(H)\to S(H)$ 满足 A、N、J，当且仅当存在唯一
+$U\in U(H)$ 使 $F(x)=Ux$。
+因此 $F$ 自动满射、可逆，并满足
+
+$$
+\langle F(x),F(y)\rangle =\langle x,y\rangle ,\qquad F^{-1}=U^*|_{S(H)}.
+$$
+
+**证明。**
+
+**第一步，球面直径迫出反向输入。**
+固定 $x$，A 给某个 $y$ 使 $F(y)=-F(x)$。由 N，
+
+$$
+2=\left\lVert F(x)-F(y)\right\rVert \le\left\lVert x-y\right\rVert \le2.
+$$
+
+单位 Hilbert 球面上，$\left\lVert x-y\right\rVert =2$ 当且仅当 $y=-x$：
+因为 $\left\lVert x-y\right\rVert ^2=2-2\operatorname{Re} \langle x,y\rangle$，
+取等给 $\left\lVert x+y\right\rVert ^2=0$。因此
+
+<a id="equation-5-1"></a>
+
+$$
+\boxed{F(-x)=-F(x).}\tag{5.1}
+$$
+
+**第二步，正反二元不等式夹成等距。**
+将 N 分别用于 $(x,y)$ 与 $(x,-y)$，得到
+
+$$
+\left\lVert F(x)-F(y)\right\rVert ^2\le\left\lVert x-y\right\rVert ^2,\qquad
+\left\lVert F(x)+F(y)\right\rVert ^2\le\left\lVert x+y\right\rVert ^2.
+$$
+
+两边各自求和都等于四，故每一项分别取等。
+于是 $F$ 保持全部弦距离，并有
+
+<a id="equation-5-2"></a>
+
+$$
+g(F(x),F(y))=g(x,y),\qquad g=\operatorname{Re} \langle \cdot,\cdot\rangle .\tag{5.2}
+$$
+
+**第三步，全部实际坐标给实线性。**
+取实正交单位基 $b_1,\ldots,b_{2d}=a_1,ia_1,\ldots,a_d,ia_d$。
+令 $c_j=F(b_j)$。保实内积说明 $c_j$ 也是实正交单位基。
+因此对任意单位 $x$，
+
+$$
+F(x)=\sum_j g(c_j,F(x))c_j
+=\sum_j g(b_j,x)c_j.
+$$
+
+定义 $Ux=\sum_jg(b_j,x)c_j$，即得实际 $F$ 的唯一实线性正交延拓。
+
+**第四步，J 给复线性。**
+J 说明 $U(ia_j)=iU(a_j)$，故实线性给 $UJ=JU$。
+所以 $U$ 复线性；实内积保持及对 $ix,y$ 的同一等式恢复虚部，
+得到 $`U^*U=I`$。有限同维保证满射，故 $`U^{-1}=U^*`$。
+反向，任意酉算符的球面限制显然满足 A、N、J。
+
+□
+
+主证明的实球面部分是 Ding 的球面等距延拓结果在本有限情形中的直接证明
+[6](#ref-ding)。这里的新候选是将其前件解释为已有内部相干接口上的完整续接约束，
+再分析其对地址、根态回返和切向的具体后果。
+
+<a id="statement-5-2"></a>
+
