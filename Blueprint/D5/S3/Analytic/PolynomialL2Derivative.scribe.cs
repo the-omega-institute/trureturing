@@ -134,25 +134,23 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("legendre-polynomial-expansion"),
                 DeclarationHandle.Create(Prefix + "exists_expansion"),
-                H("The consumed polynomial spanning interface"),
+                H("Polynomial spanning"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural d and every complex polynomial p "
                     + "with degree(p)<d, there exists a full complex coefficient sequence a "
-                    + "such that sum_(n<d) a_n L_n=p. This exposes the existing spanning "
-                    + "proof without changing its statement or proof. It is a consumed "
-                    + "binding interface, used by the derivative estimate and corrected "
-                    + "polynomial approximation; it supplies no new mathematical content."))),
+                    + "such that sum_(n<d) a_n L_n=p. This spanning identity is used by "
+                    + "the derivative estimate and corrected polynomial approximation."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("legendre-mixed-expansion"),
                 DeclarationHandle.Create(Prefix + "mixed_expansion"),
-                H("The consumed Hermitian expansion interface"),
+                H("Hermitian pairing of finite expansions"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural d and arbitrary complex coefficient "
                     + "sequences a,b, the bilinear moment of expansion(d,a) and the "
                     + "coefficient conjugate of expansion(d,b) equals "
-                    + "sum_(n<d) a_n conjugate(b_n)/(2n+1). This consumed binding of the "
-                    + "existing finite moment identities is used both in inverse weighted "
+                    + "sum_(n<d) a_n conjugate(b_n)/(2n+1). This finite moment identity "
+                    + "is used both in inverse weighted "
                     + "energy and in the low/high orthogonality of corrected approximation."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -173,9 +171,7 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                     + "equal to sum norm(a_n)^2/((2n+1)n(n+1)). The bound 0<=w<=1/4 "
                     + "then bounds primitive energy. Eigenvalue monotonicity and the "
                     + "existing exact finite Parseval identity finish the estimate. "
-                    + "This new inverse spectral energy construction is the content; "
-                    + "the exposed spanning and mixed-moment interfaces are bind-only. "
-                    + "The infinite-dimensional extension is owned by "
+                    + "The infinite-dimensional extension is proved in "
                     + "MomentOrthogonalPrimitiveGap. There is no sublinear supplier or RH claim."))),
                 DescribeRole.Theorem))));
 }

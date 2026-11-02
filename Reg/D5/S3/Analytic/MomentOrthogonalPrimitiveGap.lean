@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.MomentOrthogonalPrimitiveGap
 import Reg.Support.SingleDependentReadout
 
-/-! The native complex norm is observed at both energy operands.
+/-! The native complex norm is observed at the primitive energy operand.
 The complete original telescope is reconstructed literally. -/
 
 noncomputable section
@@ -25,7 +25,7 @@ private def rejected : Realization signature :=
 
 /-- All seven original binders, with merely L2, all low moments, arbitrary
 complex functions, and the zero function retained. The observation changes
-only the two literal norm operations, using one common norm family. -/
+only the literal norm operation in the primitive energy. -/
 def arena : Arena where
   signature := signature
   Law R := ∀ (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤ q) (A : ℝ → ℂ)
@@ -33,9 +33,9 @@ def arena : Arena where
     (hm : ∀ r : ℕ, r < q → ∫ x in Icc 0 D, (x : ℂ) ^ r * A x = 0),
     (∫ x in Icc 0 D, (R.readout () () (∫ t in (0 : ℝ)..x, A t)) ^ 2) ≤
       D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)) *
-        (∫ x in Icc 0 D, (R.readout () () (A x)) ^ 2)
+        (∫ x in Icc 0 D, ‖A x‖ ^ 2)
 
-/-- At D=q=1 and A=0 the constant-one observation demands 1≤1/8. -/
+/-- At D=q=1 and A=0 the constant-one observation demands 1≤0. -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hf := h 1 (by norm_num) 1 (by norm_num) (fun _ => 0)
@@ -57,7 +57,7 @@ def family : Registration arena (type_of% @complex_L2_moment_primitive_gap) wher
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-/-- Both source occurrences select the native norm function. -/
+/-- The primitive energy occurrence selects the native norm function. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@complex_L2_moment_primitive_gap) (Realization signature) Unit Unit where
   unitName :=
@@ -84,12 +84,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

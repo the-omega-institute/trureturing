@@ -23,17 +23,14 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "x^r A(x) vanishes for every natural r<q. Define V(x) as the Bochner "
                         + "interval integral of A from zero to x. The exact target is "
                         + "integral_[0,D] norm(V)^2 <= D^2/(4 q(q+1)) integral_[0,D] norm(A)^2. "
-                        + "All seven source binders D,hD,q,hq,A,hA,hm are retained. The zero "
-                        + "function, arbitrary complex phases, all finite q and merely L2 "
+                        + "The zero function, arbitrary complex phases, all finite q and merely L2 "
                         + "representatives are included. There is no polynomial, continuity, "
                         + "real-valuedness or assumed spectral-expansion hypothesis.")),
                     Paragraph(Text("On [0,1], reuse PolynomialL2Derivative.legendreC, its actual "
                         + "coefficient formula, finite expansion and expansion_parseval. The "
                         + "existing normalization is integral norm(L_n)^2=1/(2n+1). The finite inverse "
-                        + "Sturm construction is co-located with these private proofs in their "
-                        + "original owner. Only the consumed spanning and mixed expansion "
-                        + "interfaces and the finite primitive estimate are public; no Rodrigues, "
-                        + "orthogonality, normalization or Parseval proof is duplicated.")),
+                        + "Sturm construction uses the spanning and mixed expansion identities "
+                        + "and the finite primitive estimate proved in PolynomialL2Derivative.")),
                     Paragraph(Text("Set w=x(1-x) and T(p)=-(w p')'. The coefficient "
                         + "calculation gives coeff_k(Tp)=k(k+1) coeff_k(p)-(k+1)^2 coeff_(k+1)(p). "
                         + "The two binomial recurrences in Mathlib imply T(L_n)=n(n+1)L_n, "
@@ -72,9 +69,9 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "These exact factors yield D^2 in the final bound. There is no "
                         + "measure-preservation assumption for the dilation.")),
                     Paragraph(Text("The same-unit four-slot Reg source observes the native "
-                        + "complex norm at both energy operands and reconstructs the complete "
+                        + "complex norm at the primitive energy operand and reconstructs the complete "
                         + "source telescope. Replacing that observation by constant one, with "
-                        + "D=q=1 and A=0, demands 1<=1/8; norm(0)!=norm(1) supplies actual "
+                        + "D=q=1 and A=0, demands 1<=0; norm(0)!=norm(1) supplies actual "
                         + "observational dependence. The dependent-family enrolled template "
                         + "provides the readout; continuation is unknown. This is a classical analytic estimate, with no literature novelty, "
                         + "scalar subexponential remainder, R-bound or RH claim."))),

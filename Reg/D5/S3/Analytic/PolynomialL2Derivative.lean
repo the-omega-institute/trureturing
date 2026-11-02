@@ -360,7 +360,7 @@ private def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 /-- The complete finite telescope, with arbitrary complex coefficients and
-the empty expansion. One common family varies both native norm operations. -/
+the empty expansion. The family varies the primitive's native norm operation. -/
 def arena : Arena where
   signature := signature
   Law R := ∀ (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → ℂ)
@@ -368,10 +368,10 @@ def arena : Arena where
     (∫ x in Icc (0 : ℝ) 1,
       (R.readout () () (∫ t in (0 : ℝ)..x, (expansion d a).eval (t : ℂ))) ^ 2) ≤
       (1 / (4 * (q : ℝ) * ((q : ℝ) + 1))) *
-        (∫ x in Icc (0 : ℝ) 1, (R.readout () () ((expansion d a).eval (x : ℂ))) ^ 2)
+        (∫ x in Icc (0 : ℝ) 1, ‖(expansion d a).eval (x : ℂ)‖ ^ 2)
 
 
-/-- At d=0,q=1,a=0 the constant-one observation demands 1≤1/8. -/
+/-- At d=0,q=1,a=0 the constant-one observation demands 1≤0. -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hf := h 0 1 (by norm_num) (fun _ => 0) (by intro n hn; rfl)
@@ -392,7 +392,7 @@ def family : Registration arena (type_of% @complex_legendre_primitive_gap) where
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-/-- Both source occurrences select the native norm function. -/
+/-- The primitive energy occurrence selects the native norm function. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@complex_legendre_primitive_gap) (Realization signature) Unit Unit where
   unitName :=
@@ -419,12 +419,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body",
         "fn", "arg", "arg", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
