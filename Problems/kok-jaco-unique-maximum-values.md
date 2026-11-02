@@ -200,6 +200,7 @@ order-preserving witness requirement and $G_t=J_t$ are outside that reading.
 The literature screen and specific prior-answer qualifications are bounded;
 later publisher texts, worldwide openness and priority remain unverified.
 The Reg continuation `unknown` asserts no undecidability or inexhaustibility.
-Final resolution-binding validation and Markdown emission require current
-frozen membership of the settling declaration; this source unit makes no
-claim that those later publication obligations are complete.
+Final resolution-binding validation requires current frozen membership of
+the settling declaration. Canonical rendering alone does not certify this
+binding; this source unit makes no claim that publication obligations are
+complete.
