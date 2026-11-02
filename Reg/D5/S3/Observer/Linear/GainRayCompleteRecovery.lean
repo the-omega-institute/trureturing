@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.GainRayCompleteRecovery
 import Reg.Support.DependentFamily
 
+/-! Typed history-family and whole-world identification audit evidence. -/
+
 namespace Reg.D5.S3.Observer.Linear.GainRayCompleteRecovery
 open _root_.D5.S3.Observer.Linear.GainRay
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -11,7 +13,7 @@ noncomputable section
 
 private def fixture (δ : ℝ) : World 1 :=
   chartWorld 1 1 1 zero_lt_one zero_lt_one (Pi.single 0 1)
-    (by intro h; have hh := congrFun h 0; simpa using hh) δ
+    (by intro h; have hh := congrFun h 0; simp at hh) δ
 
 private theorem answer_word (d : ℕ) (hd : 1 ≤ d) (W : World d) :
     recoveryAnswer d (recoveryWord d) (readings W (recoveryWord d)) =
@@ -22,7 +24,7 @@ private theorem answer_word (d : ℕ) (hd : 1 ≤ d) (W : World d) :
   exact ha
 
 abbrev signature : Signature where
-  Params := (d : ℕ) × List Bool
+  Params := ℕ × List Bool
   State p := History p.2
   Role := Unit
   finiteRole := inferInstance
@@ -148,6 +150,8 @@ def identificationRegistration : Registration identificationArena
       exact nomatch i
   dependence := by
     intro i
+    change ∃ (d : ℕ) (W V : World d),
+      readings W (recoveryWord d) ≠ readings V (recoveryWord d)
     refine ⟨1,fixture 0,fixture 1,?_⟩
     intro h
     exact zero_ne_one ((recovery_identifies 1 (fixture 0) (fixture 1) h).2.2)
