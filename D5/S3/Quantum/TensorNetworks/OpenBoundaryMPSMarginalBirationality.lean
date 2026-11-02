@@ -9,7 +9,6 @@
 import Mathlib.RingTheory.Nullstellensatz
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.CharZero.Infinite
 import Mathlib.Tactic.FinCases
