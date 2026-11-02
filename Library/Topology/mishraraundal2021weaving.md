@@ -74,6 +74,19 @@ No priority, originality, uniqueness or original-problem credit follows.
 The existing Aharonov–Jones–Landau Library note concerns a separate algebraic
 Artin/trace bridge and also leaves geometric Jones identification unpaid.
 
+The finite matching network modules construct the actual first-return
+composite, identify its exposed partners with the literal three-level
+gluing graph, and transport the internal-component subtype through the
+same seam contraction. Sewing labels give an equivalence from closed
+two-layer components to internal gluing components plus the closed
+composite. Exchanging the two actual layers proves cyclic invariance of
+the total circle exponent. These are classical Brauer matching and
+circle-removal constructions, not new claims attributed to Mishra and
+Raundal. They allow arbitrary pairings, including nonplanar ones, and
+include empty boundaries and parallel colored edges. Four-layer
+associativity, the free-module algebra and the Jones identification do
+not follow merely from this two-layer component inventory.
+
 The inspected source audit also records later width-three coefficient results and
 a 2026 JIMS paper whose full body was unavailable in the public access route.
 Consequently this note records the source and formalization boundary only; it
