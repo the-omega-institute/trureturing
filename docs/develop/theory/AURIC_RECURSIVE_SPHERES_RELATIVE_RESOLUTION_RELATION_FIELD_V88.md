@@ -1833,7 +1833,7 @@ $$
 $$
 h=P_A(\chi)=\operatorname{diag}(s,r),\qquad
 \lambda=r,\qquad \mu=pr=r^3,\qquad
-\epsilon=2r\beta,\qquad \delta_{\rm raw}=2r^3\beta.
+\epsilon=4r\beta,\qquad \delta_{\rm raw}=4r^3\beta.
 \tag{26.3}
 $$
 
@@ -1920,12 +1920,27 @@ E(x)=\operatorname{diag}\left(x_{00}+x_{01}\overline\gamma/s,
 \tag{26.10}
 $$
 
-对角 $A$ 下原式 (20.8) 的缺陷为 $\sup_{|a_i|\le1}\|\chi a-a\chi\|_1=2|\gamma|$，在 $a=\operatorname{diag}(1,-1)$ 达到。原命题 20.2 的 $q=I$，故 $\sigma=h$、$F=P_A$。每个有限放大上的两个非对角块压缩给
+对角 $A$ 下，$a=\operatorname{diag}(a_0,a_1)$ 与 $h$ 交换，原式 (20.8) 中的矩阵为
+
+$$
+\chi a-a\chi=(a_1-a_0)
+\begin{pmatrix}0&\gamma\\-\overline\gamma&0\end{pmatrix}.
+$$
+
+其两个奇异值均为 $|\gamma||a_1-a_0|$，故普通迹范数为 $2|\gamma||a_1-a_0|$。完整复收缩球上 $|a_1-a_0|\le2$，并在 $a=\operatorname{diag}(1,-1)$ 取等，因此 $\epsilon=4|\gamma|=4r\beta$，由式 (25.2) 得 $\delta_{\rm raw}=p\epsilon=4r^3\beta$。也可直接取
+
+$$
+u=\gamma/|\gamma|,\qquad
+x=\begin{pmatrix}0&u\\-\overline u&0\end{pmatrix},\qquad
+a=\operatorname{diag}(1,-1).
+$$
+
+此时 $x^\dagger x=I$、$\|a\|_{\rm op}=1$，且式 (20.8) 给出 $\operatorname{Tr}(\chi(E(x)a-xa))=\operatorname{Tr}((\chi a-a\chi)x)=4|\gamma|$。这是原数学比较域中达到缺陷的收缩对，不增加任何原生取得或控制权限。原命题 20.2 的 $q=I$，故 $\sigma=h$、$F=P_A$；态的迹范数误差 $\|\chi-h\|_1=2|\gamma|=\epsilon/2$ 与上述完整复比较缺陷不同。每个有限放大上的两个非对角块压缩给
 
 $$
 \|E-F\|_{\rm cb}=|\gamma|/r=\beta,
 \qquad
-\frac\epsilon\lambda=\frac{\delta_{\rm raw}}\mu=2\beta.
+\frac\epsilon\lambda=\frac{\delta_{\rm raw}}\mu=4\beta.
 \tag{26.11}
 $$
 
