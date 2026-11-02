@@ -766,8 +766,8 @@ end BistochasticMartingaleMatrix
 /-- Discrete Strassen — uniform equal-cardinality case: Two finitely-supported laws with equal atom
 count and uniform weights `1/n`, in convex order, admit an explicit martingale coupling.
 
-This is the special case consumed by the continuous Strassen proof. The general statement for
-arbitrary finite support and nonuniform weights is `DiscreteLaw.exists_martingaleCoupling`. -/
+This is the special case consumed by the compact-law Strassen construction. The matrix-to-joint
+assembly accepts arbitrary weights once the matrix constraints are supplied. -/
 theorem DiscreteLaw.exists_martingaleCoupling_uniform (p q : DiscreteLaw)
     (hn_pos : 0 < p.n) (hn : p.n = q.n)
     (hp_uniform : ∀ i, p.weight i = (1 : ℝ) / p.n)
