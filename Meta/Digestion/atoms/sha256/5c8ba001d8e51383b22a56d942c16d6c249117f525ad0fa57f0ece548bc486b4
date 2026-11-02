@@ -1,0 +1,101 @@
+### 证明第三步：有限个矩条件抑制低频部分
+
+由式 (17) 分部积分，得到
+
+
+<a id="display-71"></a>
+
+$$
+\int
+\left(t-\frac D2\right)^jF_\mu(t)\,dt=0,
+\qquad j=0,\ldots,N-1.
+$$
+
+
+因此，在 $\widehat F_\mu$ 的积分中可以减去前 $N$ 项 Taylor 多项式。纯虚参数的 Taylor 余项满足
+
+
+<a id="display-72"></a>
+
+$$
+\left|
+e^{-iu}-\sum_{j=0}^{N-1}\frac{(-iu)^j}{j!}
+\right|
+\le\frac{|u|^N}{N!}.
+$$
+
+
+于是对 $|\xi|\le R_0$，
+
+
+<a id="display-73"></a>
+
+$$
+|\widehat F_\mu(\xi)|
+\le
+\sqrt D\,
+\frac{(DR_0/2)^N}{N!}\,
+\|F_\mu\|_2.
+$$
+
+
+从而
+
+
+<a id="display-74"></a>
+
+$$
+\frac1{2\pi}\int_{-R_0}^{R_0}
+|\widehat F_\mu(\xi)|^2\,d\xi
+\le
+\varepsilon_N\|F_\mu\|_2^2,
+$$
+
+
+其中
+
+
+<a id="display-75"></a><a id="eq-23"></a>
+
+$$
+\boxed{
+\varepsilon_N=
+\frac{DR_0}{\pi}
+\frac{(DR_0/2)^{2N}}{(N!)^2}
+\longrightarrow0.
+}
+$$
+
+<p align="center" data-equation-number="23"><a href="#eq-23">(23)</a></p>
+
+
+选择有限 $N$，使 $\varepsilon_N\le\frac12$。
+
+由 Plancherel 等式，至少一半的 $L^2$ 质量位于 $|\xi|\ge R_0$。结合式 (20)、(22)，
+
+
+<a id="display-76"></a>
+
+$$
+Q_P(\mu)\ge(M_D+\kappa)\|F_\mu\|_2^2.
+$$
+
+
+再减去式 (19) 的全部扰动成本：
+
+
+<a id="display-77"></a>
+
+$$
+Q_{\mathscr K}(\mu)\ge\kappa\|F_\mu\|_2^2.
+$$
+
+
+最后，若 $F_\mu=0$ 几乎处处，则其分布导数 $\mu=0$，故非零 $\mu$ 对应严格正值。证毕。
+
+这种“消去有限个低频条件后取得正性”的结构，与 Yoshida、Suzuki 对相关 Weil／screw 二次型的研究相近；上面的证明直接作用于这里的实际核和有限原子读出。[arxiv.org](https://arxiv.org/pdf/2206.03682?utm_source=chatgpt.com)
+
+---
+
+<a id="section-6"></a>
+
