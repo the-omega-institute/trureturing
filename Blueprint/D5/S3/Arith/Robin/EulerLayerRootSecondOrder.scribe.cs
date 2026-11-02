@@ -32,7 +32,7 @@ internal sealed class EulerLayerRootSecondOrderDocument : IScribeDocumentDefinit
                         "The proof reuses the existing MediumPNT and the first-layer and "
                         + "third-layer inventory bounds. The second layer is bracketed between "
                         + "theta(rho-1) and theta(rho), where rho is the unique real solution "
-                        + "of rho^2*log(rho)=t*log(t). Writing "
+                        + "with rho>1 of rho^2*log(rho)=t*log(t). Writing "
                         + "s=rho/sqrt(2*t) and using the exact equation gives "
                         + "log(t)*(s-1) tending to -log(2)/2 without assuming an expansion. "
                         + "The resulting coefficient is -sqrt(2)*log(2)/2.")),
