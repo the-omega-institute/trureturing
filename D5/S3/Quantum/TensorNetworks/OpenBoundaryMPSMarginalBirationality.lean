@@ -161,9 +161,6 @@ private lemma model_prime (n : ℕ) : (vanishingPolys n).IsPrime := by
   rw [vanishingPolys, parameter_image]
   exact polynomial_image_prime (parameterPolys n)
 
-private lemma image_subset_closure (n : ℕ) : openBoundaryMPS n ⊆ closure n :=
-  MvPolynomial.zeroLocus_vanishingIdeal_le _
-
 private def coordinate (i j k : Fin 2) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   MvPolynomial.X ![i, j, k]
 private def kernelMatrix : Matrix (Fin 4) (Fin 4) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
@@ -379,14 +376,6 @@ private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     change ((d / v) ^ 2 * c)⁻¹ * (d / v) = v / (d * c)
     field_simp
 
-private lemma matrix_word_scale (n : ℕ) (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ)
-    (s : ℂ) (w : Fin n → Fin 2) :
-    (List.ofFn fun j => s • m (w j)).prod =
-      s ^ n • (List.ofFn fun j => m (w j)).prod := by
-  rw [show (List.ofFn fun j => s • m (w j)) =
-    (List.ofFn fun j => m (w j)).map (s • ·) from List.map_ofFn.symm,
-    ← List.smul_prod, List.length_ofFn]
-
 private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     (hquartic : MvPolynomial.eval t kernelMatrix.det = 0)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
@@ -515,7 +504,11 @@ private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
     rw [show (fun i => reconstructedMatrix t (w i)) =
       (fun i => (d / v) • ε.mapMatrix (matrixNumerator (w i))) from
         funext (fun i => hB (w i))]
-    exact matrix_word_scale n (fun i => ε.mapMatrix (matrixNumerator i)) (d / v) w
+    rw [show (List.ofFn fun i => (d / v) • ε.mapMatrix (matrixNumerator (w i))) =
+      (List.ofFn fun i => ε.mapMatrix (matrixNumerator (w i))).map ((d / v) • ·) from
+        List.map_ofFn.symm]
+    simpa only [List.length_ofFn] using
+      (List.smul_prod (List.ofFn fun i => ε.mapMatrix (matrixNumerator (w i))) (d / v)).symm
   have hstate : mpsState n (reconstructedMatrix t 0) (reconstructedMatrix t 1)
       (reconstructedLeft t ᵥ* ((reconstructedSum t)⁻¹ ^ a))
       (((reconstructedSum t)⁻¹ ^ (n - 3 - a)) *ᵥ reconstructedRight t) w =
@@ -542,31 +535,19 @@ private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
   simp only [pow_add, mul_pow, div_pow, inv_pow]
   field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hd, hv, hc])
 
-private def splitWordEquiv (a b : ℕ) :
-    ((Fin a → Fin 2) × (Fin b → Fin 2)) ≃ (Fin (a + b) → Fin 2) where
-  toFun uv := Fin.append uv.1 uv.2
-  invFun w := (fun i => w (Fin.castAdd b i), fun i => w (Fin.natAdd a i))
-  left_inv uv := by
-    apply Prod.ext <;> funext i
-    · exact Fin.append_left _ _ _
-    · exact Fin.append_right _ _ _
-  right_inv w := Fin.append_castAdd_natAdd
-
 private lemma sum_append_words {r : Type*} [AddCommMonoid r] (a b : ℕ)
     (f : (Fin (a + b) → Fin 2) → r) :
     ∑ w, f w = ∑ u : Fin a → Fin 2, ∑ v : Fin b → Fin 2, f (Fin.append u v) := by
-  rw [← (splitWordEquiv a b).sum_comp f, Fintype.sum_prod_type]
+  rw [← (Fin.appendEquiv a b).sum_comp f, Fintype.sum_prod_type]
   rfl
 
 private lemma word_append (a b : ℕ) (u : Fin a → Fin 2) (v : Fin b → Fin 2)
     (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     (List.ofFn fun j => m (Fin.append u v j)).prod =
       (List.ofFn fun j => m (u j)).prod * (List.ofFn fun j => m (v j)).prod := by
-  have heq : (fun j => m (Fin.append u v j)) =
-      Fin.append (fun j => m (u j)) (fun j => m (v j)) := by
-    funext j
-    cases j using Fin.addCases <;> simp only [Fin.append_left, Fin.append_right]
-  rw [heq, List.ofFn_fin_append, List.prod_append]
+  rw [show (List.ofFn fun j => m (Fin.append u v j)) = (List.ofFn (Fin.append u v)).map m
+    from List.map_ofFn.symm, List.ofFn_fin_append, List.map_append, List.prod_append]
+  simp only [List.map_ofFn, Function.comp_def]
 
 private lemma sum_words (n : ℕ) (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     (∑ w : Fin n → Fin 2, (List.ofFn fun j => m (w j)).prod) = (m 0 + m 1) ^ n := by
@@ -621,7 +602,7 @@ private lemma inverse_on_chart (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
       improperMarginal n a h (rationalInverse n a t) = t := by
   have hrec := chart_reconstruction t (quartic_closure t ht) hg
   have hformula := inverse_formula n a hn h t hg
-  refine ⟨hformula.1, image_subset_closure n ?_, ?_⟩
+  refine ⟨hformula.1, MvPolynomial.zeroLocus_vanishingIdeal_le _ ?_, ?_⟩
   · exact ⟨_, _, _, _, hformula.2⟩
   · rw [hformula.2, outside_sum]
     have hunit : IsUnit (reconstructedSum t).det := isUnit_iff_ne_zero.mpr hrec.2.2.2.2
@@ -858,7 +839,9 @@ private lemma gauge_uniqueness_image (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n
       s ^ n • (u * (List.ofFn fun i => m (w i)).prod * u⁻¹) := by
     rw [show (fun i => reconstructedMatrix t (w i)) =
       (fun i => s • φ (m (w i))) from funext (fun i => hm (w i))]
-    rw [matrix_word_scale n (fun j => φ (m j)) s w]
+    rw [show (List.ofFn fun i => s • φ (m (w i))) =
+      (List.ofFn fun i => φ (m (w i))).map (s • ·) from List.map_ofFn.symm]
+    rw [← List.smul_prod, List.length_ofFn]
     congr 1
     exact (show φ (List.ofFn fun i => m (w i)).prod = _ from
       by rw [map_list_prod, List.map_ofFn]; rfl).symm
@@ -940,7 +923,7 @@ private def explicitTriple : (Fin 3 → Fin 2) → ℂ :=
 
 private lemma explicit_chart_nonempty :
     explicitTriple ∈ closure 3 ∧ MvPolynomial.eval explicitTriple chartPoly ≠ 0 := by
-  refine ⟨image_subset_closure 3 ⟨_, _, _, _, rfl⟩, ?_⟩
+  refine ⟨MvPolynomial.zeroLocus_vanishingIdeal_le _ ⟨_, _, _, _, rfl⟩, ?_⟩
   have hx (i j k : Fin 2) : MvPolynomial.eval explicitTriple (coordinate i j k) =
       ![![![145, 349], ![337, 829]], ![![489, 1173], ![1193, 2933]]] i j k := by
     rw [coordinate, explicitTriple]
