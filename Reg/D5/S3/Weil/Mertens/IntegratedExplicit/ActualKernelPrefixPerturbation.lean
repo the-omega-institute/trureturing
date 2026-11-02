@@ -116,9 +116,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 
-/-- Source-only candidate audit for the explicit finite component-curvature witness.
+/-- Audit for the explicit finite component-curvature witness.
 The witness is selected by D and N; the atom telescope and literal K-P kernel
-are unchanged. This registration is not a compiled or accepted receipt. -/
+are unchanged. -/
 abbrev finiteCostArena : Arena where
   signature := signature
   Law R := ∀ (D : ℝ) (_hD : 0 < D) (N : ℕ) (_hN : Real.exp D < N),
@@ -183,7 +183,7 @@ noncomputable def finiteCostAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "body", "body",
+      path := #["body", "body", "body", "body", "arg", "body", "body",
         "body", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true

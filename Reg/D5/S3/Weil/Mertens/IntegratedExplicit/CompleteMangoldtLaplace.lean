@@ -4,11 +4,11 @@ import Reg.Support.SingleDependentReadout
 
 /-!
 Source-owner audit for the newly public complete finite Mangoldt localization.
-The law retains the theorem's two nonnegative hypotheses, arbitrary real t,
+The law retains the theorem's nonnegativity hypothesis, arbitrary real t,
 implicit natural N and strict cutoff t<N, and the literal range sum. The
 rejected constant-one realization fails at t=0,N=1. Actual dependence uses
 actual Mangoldt ramps at t=0 and t=3; no auxiliary anchor or detached utility
-is introduced. This file is source-only and unelaborated.
+is introduced.
 -/
 
 noncomputable section
@@ -22,10 +22,10 @@ open scoped BigOperators
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit
-    (fun _ => ℝ × ℕ) (fun _ => ℝ)
+    (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ z => mangoldtPart z.1) (fun e => nomatch e)
+  realize signature (fun _ _ z => mangoldtPart z) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -33,7 +33,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {t : ℝ}, 0 ≤ t → ∀ {N : ℕ}, t < N →
-    R.readout () () (t, N) = ∑ n ∈ Finset.range N, mangoldtRamp n t
+    R.readout () () t = ∑ n ∈ Finset.range N, mangoldtRamp n t
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -43,11 +43,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro role
-  refine ⟨(), (0, 1), (3, 4), ?_⟩
+  refine ⟨(), 0, 3, ?_⟩
   change mangoldtPart 0 ≠ mangoldtPart 3
   have hzero : mangoldtPart 0 = 0 := by
     rw [@mangoldtPart_eq_range (t := 0) (by norm_num) (N := 1) (by norm_num)]
     norm_num [mangoldtRamp]
+  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
   have hthree : 0 < mangoldtPart 3 := by
     rw [@mangoldtPart_eq_range (t := 3) (by norm_num) (N := 4) (by norm_num)]
     norm_num [mangoldtRamp,
@@ -55,7 +56,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
       ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_three] <;>
       positivity
   rw [hzero]
-  exact hthree.ne'
+  exact hthree.ne
 
 def family : Registration arena
     (type_of% @mangoldtPart_eq_range) where
@@ -83,7 +84,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ z => mangoldtPart z.1) (fun e => nomatch e))
+    (fun _ _ z => mangoldtPart z) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -93,10 +94,10 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
-      stateOperand := some #["arg", "fst"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

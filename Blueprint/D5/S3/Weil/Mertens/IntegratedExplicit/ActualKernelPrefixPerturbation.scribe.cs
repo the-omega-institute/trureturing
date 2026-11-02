@@ -7,6 +7,19 @@ internal sealed class ActualKernelPrefixPerturbationDocument : IScribeDocumentDe
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete actual arithmetic remainder has a uniform finite atomic prefix-energy cost on every fixed window.",
         H("Actual arithmetic remainder and atomic prefix energy"), Blocks(
+            Describe.Lean(DescribeId.Create("actual-kernel-finite-curvature-cost"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.finite_curvature_cost"),
+                H("Explicit finite component-curvature cost"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every real D and natural N, finite_curvature_cost(D,N) is cost(B',B'',0,D) plus the sum over n<N with 2<=n and log(n)<=D of cost(g_n',g_n'',log(n),D), where cost(f1,f2,ell,D)=2(abs(f1(ell))+integral_[ell,D] abs(f2(s)) ds). The functions B and g_n and their derivatives are given below. This is a finite sum of component costs. Cancellations can make the total variation of the combined distributional second derivative smaller."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-kernel-prefix-explicit-finite-cost-bound"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost"),
+                H("Constructive bound with the exact finite cost"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every real D>0 and every natural N with exp(D)<N, finite_curvature_cost(D,N)>=0 and, for every universe-polymorphic finite I, x:I to R in [0,D] and a:I to C with sum_i a(i)=0, the norm of sum_i sum_j conjugate(a(i))a(j)(K(x(i)-x(j))-exp(-abs(x(i)-x(j))/2)trivialT(abs(x(i)-x(j)))) is bounded by finite_curvature_cost(D,N) times integral_R norm(prefix(x,a,v))^2 dv. D and N precede all atomic data; the literal complete K-P and endpoint-inclusive prefix are retained. No further moments, positivity, RH, node-dependent constant or division by the energy is used.")),
+                    Paragraph(Text("Finite arithmetic localization, the exact Volterra identities and the shifted-hinge estimate prove this constructive bound. The original existential theorem chooses N by the Archimedean property and directly uses this bound. The explicit cost is the finite-window intermediate in Appendix H of the owning theory. The total-variation formulation of equation (19), Fourier Appendix C and finite-codimension coercivity remain separate mathematical questions."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-kernel-prefix-perturbation-bound"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound"),
                 H("Uniform actual remainder bound"), StatementSource.WithoutFormula(),
