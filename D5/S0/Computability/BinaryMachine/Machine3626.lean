@@ -10,6 +10,9 @@ module
 
 public import Mathlib.Data.List.Basic
 public import Mathlib.Data.Nat.Bits
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+import Mathlib.Data.Nat.Totient
+import Mathlib.Tactic
 import Lean.Elab.Tactic.Omega
 
 /-!
@@ -152,7 +155,156 @@ theorem positive_input_first_crossing (n : ℕ) (hn : 0 < n) :
   refine ⟨k, higher, hk, ?_⟩
   simpa only [initial, hk] using block_first_crossing k higher
 
+open scoped ArithmeticFunction.zeta BigOperators
+open ArithmeticFunction
+
+private def signedMu : ArithmeticFunction ℤ :=
+  ⟨fun n => (-1 : ℤ) ^ (n + 1) * moebius n, by simp⟩
+
+private def mass : ArithmeticFunction ℤ := (ζ : ArithmeticFunction ℤ) * signedMu
+
+private def tot : ArithmeticFunction ℤ :=
+  ⟨fun n => (Nat.totient n : ℤ), by simp⟩
+
+private def cost : ArithmeticFunction ℤ :=
+  (ζ : ArithmeticFunction ℤ) * ((mass.ppow 2).pmul tot)
+
+private theorem signedMu_mult : signedMu.IsMultiplicative := by
+  refine ⟨by norm_num [signedMu], ?_⟩
+  intro a b hab
+  change (-1 : ℤ) ^ (a * b + 1) * moebius (a * b) =
+    ((-1 : ℤ) ^ (a + 1) * moebius a) * ((-1 : ℤ) ^ (b + 1) * moebius b)
+  rw [isMultiplicative_moebius.map_mul_of_coprime hab]
+  have hp : (-1 : ℤ) ^ (a * b + 1) = (-1 : ℤ) ^ (a + 1) * (-1 : ℤ) ^ (b + 1) := by
+    have hnot : ¬ (2 ∣ a ∧ 2 ∣ b) := by
+      rintro ⟨ha, hb⟩
+      have := Nat.dvd_gcd ha hb
+      rw [hab.gcd_eq_one] at this
+      norm_num at this
+    rw [neg_one_pow_eq_pow_mod_two (a * b + 1),
+      neg_one_pow_eq_pow_mod_two (a + 1), neg_one_pow_eq_pow_mod_two (b + 1)]
+    have ha := Nat.mod_lt a (by omega : 0 < 2)
+    have hb := Nat.mod_lt b (by omega : 0 < 2)
+    simp only [Nat.dvd_iff_mod_eq_zero] at hnot
+    rcases Nat.mod_two_eq_zero_or_one a with ha | ha <;>
+      rcases Nat.mod_two_eq_zero_or_one b with hb | hb <;>
+      simp [Nat.add_mod, Nat.mul_mod, ha, hb] at *
+  rw [hp]
+  ring
+
+private theorem mass_mult : mass.IsMultiplicative :=
+  isMultiplicative_zeta.natCast.mul signedMu_mult
+
+private theorem cost_mult : cost.IsMultiplicative :=
+  isMultiplicative_zeta.natCast.mul
+    ((mass_mult.ppow).pmul ⟨by simp [tot], by
+      intro a b hab
+      change (Nat.totient (a * b) : ℤ) = (Nat.totient a : ℤ) * Nat.totient b
+      rw [Nat.totient_mul hab, Nat.cast_mul]⟩)
+
+private theorem mass_prime_pow (p k : ℕ) (hp : p.Prime) (hk : 0 < k) :
+    mass (p ^ k) = 1 - (-1 : ℤ) ^ (p + 1) := by
+  rw [mass, coe_zeta_mul_apply, Nat.sum_divisors_prime_pow hp]
+  rw [Finset.sum_range_succ']
+  simp only [pow_zero]
+  have hterm : ∀ j : ℕ, signedMu (p ^ (j + 1)) =
+      if j = 0 then -(-1 : ℤ) ^ (p + 1) else 0 := by
+    intro j
+    simp only [signedMu, ArithmeticFunction.coe_mk,
+      moebius_apply_prime_pow hp (by omega : j + 1 ≠ 0)]
+    by_cases hj : j = 0
+    · simp [hj]
+    · simp [hj, show j + 1 ≠ 1 by omega]
+  simp_rw [hterm]
+  simp [signedMu, Finset.sum_ite_eq', hk, sub_eq_add_neg, add_comm]
+
+private theorem cost_two_pow (k : ℕ) : cost (2 ^ k) = 4 * (2 : ℤ) ^ k - 3 := by
+  have ht := congrArg (fun x : ℕ => (x : ℤ)) (Nat.sum_totient (2 ^ k))
+  rw [Nat.sum_divisors_prime_pow Nat.prime_two, Finset.sum_range_succ'] at ht
+  push_cast at ht
+  rw [cost, coe_zeta_mul_apply, Nat.sum_divisors_prime_pow Nat.prime_two,
+    Finset.sum_range_succ']
+  simp only [ArithmeticFunction.pmul_apply, ArithmeticFunction.ppow_apply (by norm_num : 0 < 2)]
+  simp_rw [mass_prime_pow 2 _ Nat.prime_two (Nat.succ_pos _)]
+  norm_num [tot, mass_mult.map_one] at *
+  rw [← Finset.mul_sum]
+  linarith
+
+private theorem cost_odd_prime_pow (p k : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) :
+    cost (p ^ k) = 1 := by
+  have hs : (-1 : ℤ) ^ (p + 1) = 1 := by
+    exact (hp.odd_of_ne_two hp2).add_one.neg_one_pow
+  rw [cost, coe_zeta_mul_apply, Nat.sum_divisors_prime_pow hp, Finset.sum_range_succ']
+  simp only [ArithmeticFunction.pmul_apply, ArithmeticFunction.ppow_apply (by norm_num : 0 < 2)]
+  simp_rw [mass_prime_pow p _ hp (Nat.succ_pos _), hs]
+  simp [tot, mass_mult.map_one]
+
+private theorem cost_odd (n : ℕ) (hn : Odd n) : cost n = 1 := by
+  induction n using Nat.recOnPrimeCoprime with
+  | zero => simp at hn
+  | prime_pow p k hp =>
+    by_cases hk : k = 0
+    · simp [hk, cost_mult.map_one]
+    have hp2 : p ≠ 2 := by
+      intro h
+      subst p
+      have : Even (2 ^ k) := (even_two).pow hk
+      exact this.not_odd hn
+    exact cost_odd_prime_pow p k hp hp2
+  | coprime a b ha hb hab iha ihb =>
+    rw [cost_mult.map_mul_of_coprime hab, iha (Nat.odd_mul.mp hn).1,
+      ihb (Nat.odd_mul.mp hn).2, one_mul]
+
+private theorem cost_binary_block (n : ℕ) (hn : 0 < n) :
+    ∃ (k : ℕ) (higher : List Bool), n.bits = block k higher ∧
+      cost n = 4 * (2 : ℤ) ^ k - 3 := by
+  have hshape : ∀ m : ℕ, m ≠ 0 → ∃ (k q : ℕ),
+      Odd q ∧ m = 2 ^ k * q ∧ m.bits = block k ((q / 2).bits) := by
+    intro m
+    induction m using Nat.binaryRec' with
+    | zero => intro h; exact (h rfl).elim
+    | bit b m hb ih =>
+      intro hm
+      cases b with
+      | true =>
+        refine ⟨0, 2 * m + 1, ⟨m, by omega⟩, by simp [Nat.bit], ?_⟩
+        simp [Nat.bit, block, show (2 * m + 1) / 2 = m by omega]
+      | false =>
+        have hm0 : m ≠ 0 := by intro h; simpa using hb h
+        obtain ⟨k, q, hq, he, hs⟩ := ih hm0
+        refine ⟨k + 1, q, hq, ?_, ?_⟩
+        · simp only [Nat.bit, Bool.false_eq_true, ↓reduceIte, Nat.pow_succ]
+          rw [he]
+          ring
+        · rw [Nat.bits_append_bit m false hb, hs]
+          simp [block, List.replicate_succ]
+  obtain ⟨k, q, hq, he, hs⟩ := hshape n (Nat.ne_of_gt hn)
+  refine ⟨k, (q / 2).bits, hs, ?_⟩
+  rw [he, cost_mult.map_mul_of_coprime (hq.coprime_two_left.pow_left k), cost_odd q hq,
+    mul_one, cost_two_pow]
+
+/-- The exact registered signed-Moebius/totient formula counts actual transitions,
+including the first move across the fixed right boundary, for every positive input. -/
+theorem result (n : ℕ) (hn : 0 < n) :
+    ∃ t : ℕ, Trace t (initial n) none ∧
+      (t : ℤ) = ∑ d ∈ n.divisors,
+        (∑ e ∈ d.divisors, (-1 : ℤ) ^ (e + 1) * moebius e) ^ 2 * (Nat.totient d : ℤ) := by
+  obtain ⟨k, higher, hs, hc⟩ := cost_binary_block n hn
+  refine ⟨4 * 2 ^ k - 3, ?_, ?_⟩
+  · simpa only [initial, hs] using block_first_crossing k higher
+  have hpow : 3 ≤ 4 * 2 ^ k := by have := Nat.one_le_pow k 2 (by omega); omega
+  have he : ((4 * 2 ^ k - 3 : ℕ) : ℤ) = cost n := by
+    rw [Nat.cast_sub hpow, Nat.cast_mul, Nat.cast_pow, hc]
+    norm_num
+  rw [he, cost, coe_zeta_mul_apply]
+  apply Finset.sum_congr rfl
+  intro d hd
+  rw [ArithmeticFunction.pmul_apply, ArithmeticFunction.ppow_apply (by norm_num : 0 < 2),
+    mass, coe_zeta_mul_apply]
+  rfl
+
 #print axioms block_first_crossing
 #print axioms positive_input_first_crossing
+#print axioms result
 
 end D5.S0.Computability.BinaryMachine.Machine3626
