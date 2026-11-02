@@ -118,7 +118,10 @@ internal sealed class KimotoWakayamaEvenCongruenceRefutationDocument
                             + "The congruence conclusion alone already fails; the assertion "
                             + "about odd weights and any corrected even congruence are not "
                             + "conclusions of this argument."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kimoto-wakayama-2019-even-normalized-apery-congruence"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula NormalizedEvenFormula()
     {

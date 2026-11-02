@@ -54,6 +54,10 @@ $$\neg (\forall (p: \mathbb{N}), ((\operatorname{Nat.Prime}\left(p\right)) \to (
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/KimotoWakayamaEvenCongruenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kimoto-wakayama-2019-even-normalized-apery-congruence` (refuted) by `D5/S3/Arith/Congruence/KimotoWakayamaEvenCongruenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kimoto-wakayama-2019-even-normalized-apery-congruence","declaration_gid":"D5/S3/Arith/Congruence/KimotoWakayamaEvenCongruenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kimoto, Kazufumi; Wakayama, Masato (2022). *Apéry-like numbers for non-commutative harmonic oscillators and automorphic integrals*. DOI: [10.4171/aihpd/129](https://doi.org/10.4171/aihpd/129). URL: <https://arxiv.org/abs/1905.01775v2>.
