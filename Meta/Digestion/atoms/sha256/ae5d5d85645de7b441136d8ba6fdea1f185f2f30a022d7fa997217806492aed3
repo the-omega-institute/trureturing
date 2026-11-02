@@ -1,0 +1,34 @@
+### 命题 12.1（固定平方总量可以集中成奇异读出）
+
+取 $f\in C_c^\infty(\mathbb R^3)$、$\|f\|_2=1$，令
+
+$$
+f_\varepsilon(x)=\varepsilon^{-3/2}f(x/\varepsilon),\qquad\varepsilon>0.
+$$
+
+则
+
+$$
+\|f_\varepsilon\|_2=1,\qquad
+\|f_\varepsilon\|_\infty=\varepsilon^{-3/2}\|f\|_\infty,\qquad
+\|\nabla f_\varepsilon\|_2=\varepsilon^{-1}\|\nabla f\|_2.
+$$
+
+当 $\varepsilon\downarrow0$ 时，$f_\varepsilon$ 在 $L^2$ 中弱收敛于零，但概率测度 $|f_\varepsilon|^2dx$ 弱收敛于原点单位点质量 $\delta_0$。
+
+**证明。**代换 $x=\varepsilon y$ 得 $L^2$ 等式；上确界由幅度缩放，求导多出 $\varepsilon^{-1}$。取 $R$ 使 $\operatorname{supp}f\subseteq B_R$，对任意 $g\in L^2$，Cauchy–Schwarz 给
+
+$$
+|\langle g,f_\varepsilon\rangle|\le\|g1_{B_{\varepsilon R}}\|_2\|f_\varepsilon\|_2\longrightarrow0.
+$$
+
+对任意有界连续函数 $h$，
+
+$$
+\int h(x)|f_\varepsilon(x)|^2dx=\int h(\varepsilon y)|f(y)|^2dy\longrightarrow h(0)
+$$
+
+由控制收敛得到点质量极限。
+
+所以“先取幅度弱极限再平方”与“先平方再取读出极限”一般不交换。这没有构造 Navier–Stokes 解，也没有声称证明量子场的紫外发散；它只严格证明平方归一不是导数界、强紧性或二次读出极限交换的替代品。若希望内生分辨率无限提升后仍保留同一物理读出，就必须控制集中，以及实际所用算符、相关函数和状态的收敛方式。
+
