@@ -606,6 +606,7 @@ private theorem mass_pos (mu : A → ℝ) (b : {a // 0 < mu a} → Bool)
   have hterm : (if extendLabel mu b a.val = u then mu a.val else 0) = mu a.val := by
     simp [extendLabel, a.property, ha]
   rw [← hterm]
+  unfold mass
   exact Finset.single_le_sum (fun a _ => by split_ifs <;> simp_all [hmu a])
     (Finset.mem_univ a.val)
 
@@ -681,6 +682,18 @@ private theorem fair_weights (f g k : Bool → ℝ)
   have hf₁ : f true = 1 / 2 := by linarith
   exact ⟨(fun b => by cases b <;> assumption),
     (fun b => by cases b <;> assumption), (fun b => by cases b <;> assumption)⟩
+
+private theorem posterior_from_pair {A B : Type*} [Fintype A] [Fintype B]
+    (p : ℝ) (r : A → ℝ) (s : B → ℝ) (f : A → ℝ) (g : B → ℝ)
+    (hp : p = 1 / 4) (hs : ∑ b, s b = 1) (hg : ∑ b, g b = 1 / 2)
+    (htable : ∀ a b, p * r a * s b = f a * g b) : ∀ a, r a = 2 * f a := by
+  classical
+  intro a
+  have hsum := Finset.sum_congr (s := Finset.univ) rfl
+    (fun b _ => htable a b)
+  simp only [← Finset.mul_sum, hs, mul_one] at hsum
+  rw [hg, hp] at hsum
+  linarith
 
 end BlockAlgebra
 
@@ -1654,6 +1667,228 @@ private theorem original_block_pair_tables (L : IncidentLaw S₁ S₂ S₃ O)
     · exact L.posterior_active₃ _ (h (u, v)).property c
     · exact hc₂ b
     · exact hc₃ c
+
+/-- On arbitrary original finite alphabets, equality with two to four positive
+outputs has the complete binary block form and exactly the forced active rows. -/
+theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2)
+    (hmin : 2 ≤ Fintype.card L.PositiveOutput)
+    (hmax : Fintype.card L.PositiveOutput ≤ 4) :
+    Fintype.card L.PositiveOutput = 4 ∧ L.BinaryBlockConclusion := by
+  classical
+  obtain ⟨hcard, b₁, b₂, b₃, h, surj₁, surj₂, surj₃, code₁, code₂, code₃⟩ :=
+    L.original_binary_supports hagree heq hmin hmax
+  let l₁ := BlockAlgebra.extendLabel L.marginal₁ b₁
+  let l₂ := BlockAlgebra.extendLabel L.marginal₂ b₂
+  let l₃ := BlockAlgebra.extendLabel L.marginal₃ b₃
+  let M₁ (u : Bool) (a : S₁) := if l₁ a = u then L.marginal₁ a else 0
+  let M₂ (v : Bool) (b : S₂) := if l₂ b = v then L.marginal₂ b else 0
+  let M₃ (w : Bool) (c : S₃) := if l₃ c = w then L.marginal₃ c else 0
+  let rho₁ := BlockAlgebra.mass L.marginal₁ l₁
+  let rho₂ := BlockAlgebra.mass L.marginal₂ l₂
+  let rho₃ := BlockAlgebra.mass L.marginal₃ l₃
+  have mu₁ : IsProbability L.marginal₁ := by
+    constructor
+    · intro a
+      exact Finset.sum_nonneg fun b _ => Finset.sum_nonneg fun c _ => L.nu_nonneg (a, b, c)
+    · simpa only [marginal₁, Fintype.sum_prod_type] using L.nu_sum
+  have mu₂ : IsProbability L.marginal₂ := by
+    constructor
+    · intro b
+      exact Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun c _ => L.nu_nonneg (a, b, c)
+    · simp only [marginal₂]
+      rw [Finset.sum_comm]
+      simpa only [Fintype.sum_prod_type] using L.nu_sum
+  have mu₃ : IsProbability L.marginal₃ := by
+    constructor
+    · intro c
+      exact Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun b _ => L.nu_nonneg (a, b, c)
+    · simp only [marginal₃]
+      rw [Finset.sum_comm]
+      calc
+        _ = ∑ a, ∑ b, ∑ c, L.nu (a, b, c) := by
+          apply Finset.sum_congr rfl
+          intro a _
+          exact Finset.sum_comm
+        _ = 1 := by simpa only [Fintype.sum_prod_type] using L.nu_sum
+  have table := L.original_block_pair_tables hagree heq b₁ b₂ b₃ h code₁ code₂ code₃
+  change ∀ u v,
+    (∀ a b, L.recordPair₁₂ ((h (u, v)).val, a, b) = M₁ u a * M₂ v b) ∧
+    (∀ a c, L.recordPair₁₃ ((h (u, v)).val, a, c) = M₁ u a * M₃ (u ^^ v) c) ∧
+    (∀ b c, L.recordPair₂₃ ((h (u, v)).val, b, c) = M₂ v b * M₃ (u ^^ v) c) at table
+  have weights (u v : Bool) :
+      L.outputLaw (h (u, v)).val = rho₁ u * rho₂ v ∧
+      L.outputLaw (h (u, v)).val = rho₁ u * rho₃ (u ^^ v) ∧
+      L.outputLaw (h (u, v)).val = rho₂ v * rho₃ (u ^^ v) := by
+    obtain ⟨m₀, m₁₂, m₁₃, m₂₃⟩ := L.record_marginals
+    refine ⟨?_, ?_, ?_⟩
+    · calc
+        _ = ∑ a, ∑ b, L.recordPair₁₂ ((h (u, v)).val, a, b) := by
+          simpa only [marginal, Fintype.sum_prod_type] using (congrFun m₁₂ (h (u, v)).val).symm
+        _ = (∑ a, M₁ u a) * ∑ b, M₂ v b := by
+          simp_rw [(table u v).1]
+          simp only [Finset.mul_sum, Finset.sum_mul]
+        _ = _ := rfl
+    · calc
+        _ = ∑ a, ∑ c, L.recordPair₁₃ ((h (u, v)).val, a, c) := by
+          simpa only [marginal, Fintype.sum_prod_type] using (congrFun m₁₃ (h (u, v)).val).symm
+        _ = (∑ a, M₁ u a) * ∑ c, M₃ (u ^^ v) c := by
+          simp_rw [(table u v).2.1]
+          simp only [Finset.mul_sum, Finset.sum_mul]
+        _ = _ := rfl
+    · calc
+        _ = ∑ b, ∑ c, L.recordPair₂₃ ((h (u, v)).val, b, c) := by
+          simpa only [marginal, Fintype.sum_prod_type] using (congrFun m₂₃ (h (u, v)).val).symm
+        _ = (∑ b, M₂ v b) * ∑ c, M₃ (u ^^ v) c := by
+          simp_rw [(table u v).2.2]
+          simp only [Finset.mul_sum, Finset.sum_mul]
+        _ = _ := rfl
+  have pos₁ : ∀ u, 0 < rho₁ u := BlockAlgebra.mass_pos _ _ mu₁.1 surj₁
+  have pos₂ : ∀ v, 0 < rho₂ v := BlockAlgebra.mass_pos _ _ mu₂.1 surj₂
+  have sum₁ : rho₁ false + rho₁ true = 1 := BlockAlgebra.mass_sum _ _ mu₁.2
+  have sum₂ : rho₂ false + rho₂ true = 1 := BlockAlgebra.mass_sum _ _ mu₂.2
+  have sum₃ : rho₃ false + rho₃ true = 1 := BlockAlgebra.mass_sum _ _ mu₃.2
+  obtain ⟨fair₁, fair₂, fair₃⟩ := BlockAlgebra.fair_weights rho₁ rho₂ rho₃ pos₁ pos₂
+    sum₁ sum₂ sum₃ (fun u v => (weights u v).1.symm.trans (weights u v).2.1)
+    (fun u v => (weights u v).1.symm.trans (weights u v).2.2)
+  have quarter (u v : Bool) : L.outputLaw (h (u, v)).val = 1 / 4 := by
+    rw [(weights u v).1, fair₁, fair₂]; norm_num
+  let q₁ (u : Bool) (a : S₁) := 2 * M₁ u a
+  let q₂ (v : Bool) (b : S₂) := 2 * M₂ v b
+  let q₃ (w : Bool) (c : S₃) := 2 * M₃ w c
+  have posteriors (u v : Bool) :
+      (∀ a, L.posterior₁ (h (u, v)).val a = q₁ u a) ∧
+      (∀ b, L.posterior₂ (h (u, v)).val b = q₂ v b) ∧
+      (∀ c, L.posterior₃ (h (u, v)).val c = q₃ (u ^^ v) c) := by
+    obtain ⟨hp₁, hp₂, hp₃⟩ := L.posterior_probabilities (h (u, v)).val (h (u, v)).property
+    obtain ⟨pr₁₂, pr₁₃, pr₂₃⟩ :=
+      L.original_product_pairs hagree heq (h (u, v)).val (h (u, v)).property
+    have tt₁₂ (a b) : L.outputLaw (h (u, v)).val *
+        L.posterior₁ (h (u, v)).val a * L.posterior₂ (h (u, v)).val b =
+        M₁ u a * M₂ v b := (pr₁₂ a b).symm.trans ((table u v).1 a b)
+    have tt₁₃ (a c) : L.outputLaw (h (u, v)).val *
+        L.posterior₁ (h (u, v)).val a * L.posterior₃ (h (u, v)).val c =
+        M₁ u a * M₃ (u ^^ v) c := (pr₁₃ a c).symm.trans ((table u v).2.1 a c)
+    refine ⟨?_, ?_, ?_⟩
+    · exact BlockAlgebra.posterior_from_pair _ _ _ (M₁ u) (M₂ v)
+        (quarter u v) hp₂.2 (fair₂ v) tt₁₂
+    · apply BlockAlgebra.posterior_from_pair _ _ _ (M₂ v) (M₁ u)
+        (quarter u v) hp₁.2 (fair₁ u)
+      intro b a
+      nlinarith only [tt₁₂ a b]
+    · apply BlockAlgebra.posterior_from_pair _ _ _ (M₃ (u ^^ v)) (M₁ u)
+        (quarter u v) hp₁.2 (fair₁ u)
+      intro c a
+      nlinarith only [tt₁₃ a c]
+  have prob (b : Bool) : IsProbability (q₁ b) ∧ IsProbability (q₂ b) ∧ IsProbability (q₃ b) := by
+    refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
+    · intro a; dsimp [q₁, M₁]; split_ifs <;> positivity
+    · change ∑ a, 2 * M₁ b a = 1
+      rw [← Finset.mul_sum]
+      change 2 * rho₁ b = 1
+      rw [fair₁]; norm_num
+    · intro a; dsimp [q₂, M₂]; split_ifs <;> positivity
+    · change ∑ a, 2 * M₂ b a = 1
+      rw [← Finset.mul_sum]
+      change 2 * rho₂ b = 1
+      rw [fair₂]; norm_num
+    · intro a; dsimp [q₃, M₃]; split_ifs <;> positivity
+    · change ∑ a, 2 * M₃ b a = 1
+      rw [← Finset.mul_sum]
+      change 2 * rho₃ b = 1
+      rw [fair₃]; norm_num
+  have dis₁ (a : S₁) : q₁ false a * q₁ true a = 0 := by
+    dsimp [q₁, M₁]; cases l₁ a <;> simp
+  have dis₂ (a : S₂) : q₂ false a * q₂ true a = 0 := by
+    dsimp [q₂, M₂]; cases l₂ a <;> simp
+  have dis₃ (a : S₃) : q₃ false a * q₃ true a = 0 := by
+    dsimp [q₃, M₃]; cases l₃ a <;> simp
+  have cells (u v : Bool) (s : S₁ × S₂ × S₃) :
+      L.recordLaw (h (u, v)).val s = (1 / 4 : ℝ) *
+        q₁ u s.1 * q₂ v s.2.1 * q₃ (u ^^ v) s.2.2 := by
+    rw [L.original_product_cells hagree heq _ (h (u, v)).property,
+      (posteriors u v).1, (posteriors u v).2.1, (posteriors u v).2.2, quarter]
+  obtain ⟨ind₁₂, ind₁₃, ind₂₃, _⟩ := L.original_equality_fibers hagree heq
+  obtain ⟨tab₁₂, tab₁₃, tab₂₃⟩ := L.record_pair_tables hagree
+  obtain ⟨rowA, rowB, rowC, _, _⟩ := L.original_law_recoverability hagree
+  refine ⟨hcard, ⟨h.symm⟩, h, q₁, q₂, q₃, prob, dis₁, dis₂, dis₃, cells, ?_, ?_, ?_⟩
+  · intro b c hp
+    have hm : 0 < L.marginal₂ b * L.marginal₃ c := by rwa [← ind₂₃]
+    have hb : 0 < L.marginal₂ b := by
+      by_contra! hn
+      have hz : L.marginal₂ b = 0 := le_antisymm hn (mu₂.1 b)
+      simp [hz] at hm
+    have hc : 0 < L.marginal₃ c := by
+      by_contra! hn
+      have hz : L.marginal₃ c = 0 := le_antisymm hn (mu₃.1 c)
+      simp [hz] at hm
+    let v := l₂ b
+    let w := l₃ c
+    have hx : ((v ^^ w) ^^ v) = w := by cases v <;> cases w <;> rfl
+    have hpos : 0 < L.recordPair₂₃ ((h (v ^^ w, v)).val, b, c) := by
+      rw [(table (v ^^ w) v).2.2]
+      simpa only [M₂, M₃, v, w, hx, if_pos rfl] using hm
+    have he : (h (v ^^ w, v)).val = L.readoutA b c := by
+      rw [tab₂₃] at hpos
+      split_ifs at hpos with he
+      · exact he
+      · linarith
+    refine ⟨v, w, ?_, ?_, ?_⟩
+    · dsimp [q₂, M₂, v]; simp only [if_pos rfl]; positivity
+    · dsimp [q₃, M₃, w]; simp only [if_pos rfl]; positivity
+    · intro x
+      simpa only [he] using rowA b c hp x
+  · intro c a hp
+    have hm : 0 < L.marginal₁ a * L.marginal₃ c := by rwa [← ind₁₃]
+    have ha : 0 < L.marginal₁ a := by
+      by_contra! hn
+      have hz : L.marginal₁ a = 0 := le_antisymm hn (mu₁.1 a)
+      simp [hz] at hm
+    have hc : 0 < L.marginal₃ c := by
+      by_contra! hn
+      have hz : L.marginal₃ c = 0 := le_antisymm hn (mu₃.1 c)
+      simp [hz] at hm
+    let u := l₁ a
+    let w := l₃ c
+    have hx : (u ^^ (u ^^ w)) = w := by cases u <;> cases w <;> rfl
+    have hpos : 0 < L.recordPair₁₃ ((h (u, u ^^ w)).val, a, c) := by
+      rw [(table u (u ^^ w)).2.1]
+      simpa only [M₁, M₃, u, w, hx, if_pos rfl] using hm
+    have he : (h (u, u ^^ w)).val = L.readoutB c a := by
+      rw [tab₁₃] at hpos
+      split_ifs at hpos with he
+      · exact he
+      · linarith
+    refine ⟨u, w, ?_, ?_, ?_⟩
+    · dsimp [q₁, M₁, u]; simp only [if_pos rfl]; positivity
+    · dsimp [q₃, M₃, w]; simp only [if_pos rfl]; positivity
+    · intro x
+      simpa only [he] using rowB c a hp x
+  · intro a b hp
+    have hm : 0 < L.marginal₁ a * L.marginal₂ b := by rwa [← ind₁₂]
+    have ha : 0 < L.marginal₁ a := by
+      by_contra! hn
+      have hz : L.marginal₁ a = 0 := le_antisymm hn (mu₁.1 a)
+      simp [hz] at hm
+    have hb : 0 < L.marginal₂ b := by
+      by_contra! hn
+      have hz : L.marginal₂ b = 0 := le_antisymm hn (mu₂.1 b)
+      simp [hz] at hm
+    let u := l₁ a
+    let v := l₂ b
+    have hpos : 0 < L.recordPair₁₂ ((h (u, v)).val, a, b) := by
+      rw [(table u v).1]
+      simpa only [M₁, M₂, u, v, if_pos rfl] using hm
+    have he : (h (u, v)).val = L.readoutC a b := by
+      rw [tab₁₂] at hpos
+      split_ifs at hpos with he
+      · exact he
+      · linarith
+    refine ⟨u, v, ?_, ?_, ?_⟩
+    · dsimp [q₁, M₁, u]; simp only [if_pos rfl]; positivity
+    · dsimp [q₂, M₂, v]; simp only [if_pos rfl]; positivity
+    · intro x
+      simpa only [he] using rowC a b hp x
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
