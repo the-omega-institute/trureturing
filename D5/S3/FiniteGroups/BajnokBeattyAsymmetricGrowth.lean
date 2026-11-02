@@ -166,7 +166,7 @@ private theorem asymmetric_rank_one_span_short {p m a b r : ℤ}
 
 /- Exact halves give the concrete S-coordinates before any quotient argument.
 The short-kernel conclusion allows arbitrary integer multiples of h. -/
-private theorem asymmetric_rank_one_actual_data (p m a b : ℤ)
+theorem asymmetric_rank_one_actual_data (p m a b : ℤ)
     (hp : 0 < p) (hpo : Odd p) (hmo : Odd m) (hao : Odd a) (hbo : Odd b)
     (ha : 0 < a) (ham : a < m) (hb : 0 < b) (hbm : b < m) :
     let v1 : Plane := ![p*(m-a)/2, p*(m+a)/2]
