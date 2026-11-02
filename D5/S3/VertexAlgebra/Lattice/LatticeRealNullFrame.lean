@@ -8,9 +8,9 @@
 
 /- Original integral-lattice real Gram coordinates. The source-only draft at
 ba3cb869 was fallible input, repaired against Lean 4.35 and pinned Mathlib.
-The immutable cbbea638 coordinate supplier is preserved; its official release
-remains pending. Classical Sylvester signature theory supplies the normal
-form; the charge-adapted plane, projection inverse, positive real complement
+The original native run used cbbea638. Delivery uses the accepted corrected
+coordinate supplier from PR #25556, merge 835f8774. Classical Sylvester
+signature theory supplies the normal form; the charge-adapted plane, projection inverse, positive real complement
 and faithful conjugation-fixed complex basis are proved here.
 proof_shape: content
 admission_basis: escape-witness

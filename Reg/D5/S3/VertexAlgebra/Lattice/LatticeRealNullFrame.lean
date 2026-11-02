@@ -13,8 +13,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 /- Exact original source-family bridges only. No enrolled readout, lawful
 whole-family intervention, role sensitivity or source-selection evidence is
 asserted here. Native compilation of these bridges is not declared_validated.
-The remaining four-slot registration obligations are reported to the host;
-this unit does not change the registration machinery or file an issue. -/
+The 66 public-theorem audits remain unresolved, with no Contract registrations
+or declared_validated audits. The delivery links the exact registration issue. -/
 namespace Reg.D5.S3.VertexAlgebra.Lattice.LatticeRealNullFrame
 namespace SignatureGeometry
 structure Params where
