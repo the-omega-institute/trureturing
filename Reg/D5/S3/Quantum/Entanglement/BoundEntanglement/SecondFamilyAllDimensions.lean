@@ -24,12 +24,58 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Parameters
     (fun p => Fin p.1 → Fin p.1 × Fin p.1 → ℂ) (fun _ => Bool)
 
+private def nextFin {n : ℕ} (i : Fin n) : Fin (Nat.succ n) :=
+  ⟨Nat.succ i.val, Nat.succ_lt_succ i.isLt⟩
+
+private theorem forall_nextFin {n : ℕ} (P : Fin (Nat.succ n) → Prop) :
+    (∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P (nextFin i) := by
+  constructor
+  · intro h
+    exact ⟨h _, fun i => h _⟩
+  · rintro ⟨hzero, hnext⟩ ⟨i, hi⟩
+    cases i with
+    | zero => exact hzero
+    | succ i => exact hnext ⟨i, Nat.lt_of_succ_lt_succ hi⟩
+
+private def finForallDecision : (n : ℕ) → (P : Fin n → Prop) →
+    (∀ i, Decidable (P i)) → Decidable (∀ i, P i) :=
+  Nat.rec (motive := fun n => (P : Fin n → Prop) →
+    (∀ i, Decidable (P i)) → Decidable (∀ i, P i))
+    (fun _ _ => isTrue (fun i => Fin.elim0 i))
+    (fun n ih P h =>
+      letI : Decidable (P ⟨0, Nat.zero_lt_succ n⟩) := h _
+      letI : Decidable (∀ i : Fin n, P (nextFin i)) :=
+        ih (fun i => P (nextFin i)) (fun i => h (nextFin i))
+      decidable_of_iff (P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P (nextFin i))
+        (forall_nextFin P).symm)
+
+private def finProductDecision (n m : ℕ) (P : Fin n × Fin m → Prop)
+    (h : ∀ p, Decidable (P p)) : Decidable (∀ p, P p) :=
+  letI : Decidable (∀ i : Fin n, ∀ j : Fin m, P (i, j)) :=
+    finForallDecision n _ (fun i => finForallDecision m _ (fun j => h (i, j)))
+  decidable_of_iff (∀ i : Fin n, ∀ j : Fin m, P (i, j))
+    (by simp only [Prod.forall])
+
 private def dataDecidable (d : ℕ) (q : Fin d → Matrix (Fin d) (Fin d) ℝ)
     (qbar : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
     (a : Fin d → Fin d → ℝ) (s : Fin d → Fin d × Fin d → ℂ) :
     Decidable (IsSecondFamilyData d q qbar μ a s) := by
   letI : DecidableEq ℂ := fun z w =>
     decidable_of_iff (z.re = w.re ∧ z.im = w.im) Complex.ext_iff.symm
+  letI (n : ℕ) (P : Fin n → Prop) [h : DecidablePred P] : Decidable (∀ i, P i) :=
+    finForallDecision n P h
+  letI (n m : ℕ) (P : Fin n × Fin m → Prop) [h : DecidablePred P] :
+      Decidable (∀ i, P i) := finProductDecision n m P h
+  letI (n : ℕ) {β : Fin n → Type} [h : ∀ i, DecidableEq (β i)] :
+      DecidableEq (∀ i, β i) := fun f g =>
+    letI : Decidable (∀ i, f i = g i) :=
+      finForallDecision n _ (fun i => h i (f i) (g i))
+    decidable_of_iff (∀ i, f i = g i) (funext_iff).symm
+  letI (n m : ℕ) {β : Fin n × Fin m → Type} [h : ∀ i, DecidableEq (β i)] :
+      DecidableEq (∀ i, β i) := fun f g =>
+    letI : Decidable (∀ i, f i = g i) :=
+      finProductDecision n m _ (fun i => h i (f i) (g i))
+    decidable_of_iff (∀ i, f i = g i) (funext_iff).symm
   unfold IsSecondFamilyData
   infer_instance
 
