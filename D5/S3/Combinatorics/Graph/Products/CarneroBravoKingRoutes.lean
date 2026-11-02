@@ -640,31 +640,75 @@ def routingBuckets : List ℕ := List.range 16
 theorem routing_bucket_mem (q : Point) : routingBucket q ∈ routingBuckets :=
   List.mem_range.mpr (Nat.mod_lt _ (by decide))
 
+open Lean Meta in
+private def quoteRawVertex (v : RawVertex) : MetaM Expr := do
+  let oldTy := mkConst ``Original
+  let pairTy := mkApp2 (mkConst ``Prod [.zero, .zero]) (mkConst ``Edge) (mkConst ``Nat)
+  match v with
+  | .inl a =>
+    let pred := (← whnf oldTy).appArg!
+    let n := toExpr a.val
+    let pf ← mkDecideProof (mkApp pred n)
+    let v ← mkAppOptM ``Subtype.mk #[some (mkConst ``Nat), some pred, some n, some pf]
+    return mkApp3 (mkConst ``Sum.inl [.zero, .zero]) oldTy pairTy v
+  | .inr p => return mkApp3 (mkConst ``Sum.inr [.zero, .zero]) oldTy pairTy (toExpr p)
+
+open Lean Meta in
+private unsafe def quoteCheckElements (input : Expr) : MetaM (Expr × List Expr) := do
+  let ty ← whnf (← inferType input)
+  let elt := ty.appArg!
+  let rawTy := mkConst ``RawVertex
+  if ← isDefEq elt rawTy then
+    let xs ← evalExpr (List RawVertex) ty input
+    return (elt, ← xs.mapM quoteRawVertex)
+  else
+    let pairTy := mkApp2 (mkConst ``Prod [.zero, .zero]) rawTy rawTy
+    unless ← isDefEq elt pairTy do throwError "Unexpected check-list element type"
+    let xs ← evalExpr (List (RawVertex × RawVertex)) ty input
+    let es ← xs.mapM fun (a, b) => do
+      return mkApp4 (mkConst ``Prod.mk [.zero, .zero]) rawTy rawTy
+        (← quoteRawVertex a) (← quoteRawVertex b)
+    return (elt, es)
+
+private theorem checked_all_append {α : Type} (f : α → Bool) (xs ys : List α)
+    (hx : xs.all f = true) (hy : ys.all f = true) : (xs ++ ys).all f = true := by
+  simp only [List.all_append, hx, hy, Bool.true_and]
+
+open Lean Meta in
+local elab "king_kernel_all" : tactic => do
+  Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_all fun expected _ => do
+    let expected ← instantiateMVars expected
+    let some (_, lhs, rhs) := expected.eq? | throwError "Expected an equality"
+    unless lhs.isAppOfArity ``List.all 3 do throwError "Expected List.all"
+    let args := lhs.getAppArgs
+    let xs := args[1]!
+    let f := args[2]!
+    let (elt, es) ← unsafe quoteCheckElements xs
+    let all := mkApp (mkConst ``List.all [.zero]) elt
+    let mut assembled ← mkListLit elt []
+    let mut pf ← mkEqRefl rhs
+    for block in (es.toChunks 64).reverse do
+      let chunk ← mkListLit elt block
+      let target ← mkEq (mkApp2 all chunk f) rhs
+      let name ← withOptions (Lean.Elab.async.set · false) <|
+        mkAuxLemma [] target (← mkEqRefl rhs)
+      pf ← mkAppM ``checked_all_append #[f, chunk, assembled, mkConst name, pf]
+      assembled ← mkAppM ``List.append #[chunk, assembled]
+    let target ← mkEq xs assembled
+    let name ← withOptions (Lean.Elab.async.set · false) <|
+      mkAuxLemma [] target (← mkEqRefl assembled)
+    let listTy ← inferType xs
+    let mapper ← withLocalDeclD `l listTy fun l => mkLambdaFVars #[l] (mkApp2 all l f)
+    let heq ← mkAppM ``congrArg #[mapper, mkConst name]
+    mkAppM ``Eq.trans #[heq, pf]
+
+open Lean Meta in
 /-- The evaluator supplies untrusted tree values. The exact fill equations
 below are checked by the kernel against the original literal enumeration. -/
-open Lean Meta in
 private unsafe def quoteOccupancyValue (input : Expr) : MetaM Expr := do
   let rawTy := mkConst ``RawVertex
   let treeTy := mkApp (mkConst ``Occupancy [.zero]) rawTy
   let t ← evalExpr (Occupancy RawVertex) treeTy input
-  let oldTy := mkConst ``Original
-  let pairTy := mkApp2 (mkConst ``Prod [.zero, .zero]) (mkConst ``Edge) (mkConst ``Nat)
-  let inl := mkApp2 (mkConst ``Sum.inl [.zero, .zero]) oldTy pairTy
-  let inr := mkApp2 (mkConst ``Sum.inr [.zero, .zero]) oldTy pairTy
-  let oldPred := (← whnf oldTy).appArg!
-  let mut olds : Array (ℕ × Expr) := #[]
-  for a in originalVertices do
-    let n := toExpr a.val
-    let pf ← mkDecideProof (mkApp oldPred n)
-    let v ← mkAppOptM ``Subtype.mk #[some (mkConst ``Nat), some oldPred, some n, some pf]
-    olds := olds.push (a.val, v)
-  let quoteV (v : RawVertex) : MetaM Expr := do
-    match v with
-    | .inl a =>
-      let some (_, e) := olds.find? (fun p => p.1 == a.val) |
-        throwError "Original vertex absent from literal inventory"
-      return mkApp inl e
-    | .inr p => return mkApp inr (toExpr p)
   let empty := mkApp (mkConst ``Occupancy.empty [.zero]) rawTy
   let node := mkApp (mkConst ``Occupancy.node [.zero]) rawTy
   let noneC := mkApp (mkConst ``Option.none [.zero]) rawTy
@@ -676,7 +720,7 @@ private unsafe def quoteOccupancyValue (input : Expr) : MetaM Expr := do
       let v ← match v with
         | .none => pure noneC
         | .some v => do
-          let ev ← quoteV v
+          let ev ← quoteRawVertex v
           pure (mkApp someC ev)
       let l ← quoteTree l
       let r ← quoteTree r
@@ -783,26 +827,31 @@ noncomputable def actualBucketCheck (b : ℕ) : Bool :=
     (subdivision.rawVertices originalVertices edgeIndices)
     (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph actualTrees b
 
-/-- Each reduction checks the actual tags and routes with the same global
-query dispatch. The partition bounds the size of each kernel reduction. -/
-private theorem routing_bucket_0 : actualBucketCheck 0 = true := by decide +kernel
-private theorem routing_bucket_1 : actualBucketCheck 1 = true := by decide +kernel
-private theorem routing_bucket_2 : actualBucketCheck 2 = true := by decide +kernel
-private theorem routing_bucket_3 : actualBucketCheck 3 = true := by decide +kernel
-private theorem routing_bucket_4 : actualBucketCheck 4 = true := by decide +kernel
-private theorem routing_bucket_5 : actualBucketCheck 5 = true := by decide +kernel
-private theorem routing_bucket_6 : actualBucketCheck 6 = true := by decide +kernel
-private theorem routing_bucket_7 : actualBucketCheck 7 = true := by decide +kernel
-private theorem routing_bucket_8 : actualBucketCheck 8 = true := by decide +kernel
-private theorem routing_bucket_9 : actualBucketCheck 9 = true := by decide +kernel
-private theorem routing_bucket_10 : actualBucketCheck 10 = true := by decide +kernel
-private theorem routing_bucket_11 : actualBucketCheck 11 = true := by decide +kernel
-private theorem routing_bucket_12 : actualBucketCheck 12 = true := by decide +kernel
-private theorem routing_bucket_13 : actualBucketCheck 13 = true := by decide +kernel
-private theorem routing_bucket_14 : actualBucketCheck 14 = true := by decide +kernel
-private theorem routing_bucket_15 : actualBucketCheck 15 = true := by decide +kernel
+local macro "king_kernel_bucket" : tactic => `(tactic| (
+  unfold actualBucketCheck bucketCheck edgeCheck localCheck
+  apply Bool.and_eq_true_iff.mpr
+  constructor <;> king_kernel_all))
 
-/-- All buckets succeed by ordinary kernel reduction, with no native evaluator,
+/-- Exact list equalities preserve the original enumeration. Each block of at
+most 64 entries is kernel checked and List.all_append combines the results. -/
+private theorem routing_bucket_0 : actualBucketCheck 0 = true := by king_kernel_bucket
+private theorem routing_bucket_1 : actualBucketCheck 1 = true := by king_kernel_bucket
+private theorem routing_bucket_2 : actualBucketCheck 2 = true := by king_kernel_bucket
+private theorem routing_bucket_3 : actualBucketCheck 3 = true := by king_kernel_bucket
+private theorem routing_bucket_4 : actualBucketCheck 4 = true := by king_kernel_bucket
+private theorem routing_bucket_5 : actualBucketCheck 5 = true := by king_kernel_bucket
+private theorem routing_bucket_6 : actualBucketCheck 6 = true := by king_kernel_bucket
+private theorem routing_bucket_7 : actualBucketCheck 7 = true := by king_kernel_bucket
+private theorem routing_bucket_8 : actualBucketCheck 8 = true := by king_kernel_bucket
+private theorem routing_bucket_9 : actualBucketCheck 9 = true := by king_kernel_bucket
+private theorem routing_bucket_10 : actualBucketCheck 10 = true := by king_kernel_bucket
+private theorem routing_bucket_11 : actualBucketCheck 11 = true := by king_kernel_bucket
+private theorem routing_bucket_12 : actualBucketCheck 12 = true := by king_kernel_bucket
+private theorem routing_bucket_13 : actualBucketCheck 13 = true := by king_kernel_bucket
+private theorem routing_bucket_14 : actualBucketCheck 14 = true := by king_kernel_bucket
+private theorem routing_bucket_15 : actualBucketCheck 15 = true := by king_kernel_bucket
+
+/-- All buckets succeed by kernel-checked proof terms, with no trusted evaluator,
 external certificate-correctness premise, or additional axiom. -/
 theorem routing_check_success :
     routingCheck routingBucket routingBuckets
@@ -810,18 +859,9 @@ theorem routing_check_success :
       (subdivision.rawEdgePairs edgeIndices) rawCoordinate subdivision.rawGraph actualTrees = true := by
   change ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] : List ℕ).all actualBucketCheck = true
   simp only [List.all_cons, List.all_nil, routing_bucket_0,
-    routing_bucket_1,
-    routing_bucket_2,
-    routing_bucket_3,
-    routing_bucket_4,
-    routing_bucket_5,
-    routing_bucket_6,
-    routing_bucket_7,
-    routing_bucket_8,
-    routing_bucket_9,
-    routing_bucket_10,
-    routing_bucket_11,
-    routing_bucket_12,
+    routing_bucket_1, routing_bucket_2, routing_bucket_3, routing_bucket_4,
+    routing_bucket_5, routing_bucket_6, routing_bucket_7, routing_bucket_8,
+    routing_bucket_9, routing_bucket_10, routing_bucket_11, routing_bucket_12,
     routing_bucket_13,
     routing_bucket_14,
     routing_bucket_15, Bool.true_and]
@@ -849,38 +889,29 @@ def bucketBoundaryCheck (b : ℕ) : Bool :=
 
 def boundaryCheck : Bool := routingBuckets.all bucketBoundaryCheck
 
-private theorem boundary_bucket_0 : bucketBoundaryCheck 0 = true := by decide +kernel
-private theorem boundary_bucket_1 : bucketBoundaryCheck 1 = true := by decide +kernel
-private theorem boundary_bucket_2 : bucketBoundaryCheck 2 = true := by decide +kernel
-private theorem boundary_bucket_3 : bucketBoundaryCheck 3 = true := by decide +kernel
-private theorem boundary_bucket_4 : bucketBoundaryCheck 4 = true := by decide +kernel
-private theorem boundary_bucket_5 : bucketBoundaryCheck 5 = true := by decide +kernel
-private theorem boundary_bucket_6 : bucketBoundaryCheck 6 = true := by decide +kernel
-private theorem boundary_bucket_7 : bucketBoundaryCheck 7 = true := by decide +kernel
-private theorem boundary_bucket_8 : bucketBoundaryCheck 8 = true := by decide +kernel
-private theorem boundary_bucket_9 : bucketBoundaryCheck 9 = true := by decide +kernel
-private theorem boundary_bucket_10 : bucketBoundaryCheck 10 = true := by decide +kernel
-private theorem boundary_bucket_11 : bucketBoundaryCheck 11 = true := by decide +kernel
-private theorem boundary_bucket_12 : bucketBoundaryCheck 12 = true := by decide +kernel
-private theorem boundary_bucket_13 : bucketBoundaryCheck 13 = true := by decide +kernel
-private theorem boundary_bucket_14 : bucketBoundaryCheck 14 = true := by decide +kernel
-private theorem boundary_bucket_15 : bucketBoundaryCheck 15 = true := by decide +kernel
+private theorem boundary_bucket_0 : bucketBoundaryCheck 0 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_1 : bucketBoundaryCheck 1 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_2 : bucketBoundaryCheck 2 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_3 : bucketBoundaryCheck 3 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_4 : bucketBoundaryCheck 4 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_5 : bucketBoundaryCheck 5 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_6 : bucketBoundaryCheck 6 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_7 : bucketBoundaryCheck 7 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_8 : bucketBoundaryCheck 8 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_9 : bucketBoundaryCheck 9 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_10 : bucketBoundaryCheck 10 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_11 : bucketBoundaryCheck 11 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_12 : bucketBoundaryCheck 12 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_13 : bucketBoundaryCheck 13 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_14 : bucketBoundaryCheck 14 = true := by unfold bucketBoundaryCheck; king_kernel_all
+private theorem boundary_bucket_15 : bucketBoundaryCheck 15 = true := by unfold bucketBoundaryCheck; king_kernel_all
 
 theorem boundary_check_success : boundaryCheck = true := by
   change ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] : List ℕ).all bucketBoundaryCheck = true
   simp only [List.all_cons, List.all_nil, boundary_bucket_0,
-    boundary_bucket_1,
-    boundary_bucket_2,
-    boundary_bucket_3,
-    boundary_bucket_4,
-    boundary_bucket_5,
-    boundary_bucket_6,
-    boundary_bucket_7,
-    boundary_bucket_8,
-    boundary_bucket_9,
-    boundary_bucket_10,
-    boundary_bucket_11,
-    boundary_bucket_12,
+    boundary_bucket_1, boundary_bucket_2, boundary_bucket_3, boundary_bucket_4,
+    boundary_bucket_5, boundary_bucket_6, boundary_bucket_7, boundary_bucket_8,
+    boundary_bucket_9, boundary_bucket_10, boundary_bucket_11, boundary_bucket_12,
     boundary_bucket_13,
     boundary_bucket_14,
     boundary_bucket_15, Bool.true_and]
