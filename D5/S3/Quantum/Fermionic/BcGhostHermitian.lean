@@ -1,18 +1,17 @@
+/- GID: D5/S3/Quantum/Fermionic/BcGhostHermitian
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Fermionic/BcGhostHermitian
+   mirror-E: none(waiver:algebraic-bc-hermitian)
+   anchors: []
+   utility: none
+   digest: Native signed Hermitian and c₀-relative pairings on the original infinite finite-support bc occupation Fock space. -/
+
 import D5.S3.Quantum.Fermionic.BcGhostCharge
 import Mathlib.Data.Finset.Sort
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.LinearCombination
 
 /-!
-GID: D5/S3/Quantum/Fermionic/BcGhostHermitian
-generality: I
-mirror-B: D5/B/S3/Quantum/Fermionic/BcGhostHermitian
-mirror-E: none(waiver:algebraic-bc-hermitian)
-anchors: []
-utility: none
-digest: Native signed Hermitian and c₀-relative pairings on the original
-  infinite finite-support bc occupation Fock space.
-
 The carrier, modes, phases and charge are the original algebraic ones. All
 sums are Finsupp sums; there is no completion or cutoff parameter. The
 functional rho is minus the coefficient of {1,3,5}. Dagger reverses the
