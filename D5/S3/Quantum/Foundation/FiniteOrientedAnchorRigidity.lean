@@ -14,21 +14,21 @@ public import Mathlib.Tactic.NormNum
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Ring
 
-@[expose] public section
-
 /-! The complete output is a finite Hilbert direct sum. All comparisons use
 the same actual function, with a shared complex reference in each channel.
 The direct sum supplies no physical operation between different labels. -/
 
+@[expose] public section
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 800000
 
 open scoped BigOperators
 
 namespace D5.S3.Quantum.Foundation.FiniteOrientedAnchorRigidity
 
+set_option maxHeartbeats 800000 in
 /-- Four calibrated orientations of each basis anchor, compared against every
 input, determine the whole actual map. The exponent zero calibration is the
 identity and imposes no extra condition beyond the three nonzero orientations.
@@ -85,8 +85,13 @@ theorem finite_oriented_anchor_rigidity
     rw [hcoord j (a i), a.inner_eq_ite]
   let L : H →ₗ[ℂ] PiLp 2 W := a.toBasis.constr ℂ (fun j => F (a j))
   have hL (j : Fin d) : L (a j) = F (a j) := a.toBasis.constr_basis ℂ _ j
-  let V : H →ₗᵢ[ℂ] PiLp 2 W := L.isometryOfOrthonormal a.orthonormal (by
-    simpa only [Function.comp_def, hL] using hortho)
+  have hLorth : Orthonormal ℂ (L ∘ a.toBasis) := by
+    change Orthonormal ℂ (fun j => L (a j))
+    have hf : (fun j => L (a j)) = (fun j => F (a j)) := funext hL
+    rw [hf]
+    exact hortho
+  let V : H →ₗᵢ[ℂ] PiLp 2 W :=
+    L.isometryOfOrthonormal (v := a.toBasis) a.orthonormal hLorth
   have hV (j : Fin d) : V (a j) = F (a j) := hL j
   have hsum (x : H) : V x = ∑ j, (inner ℂ (a j) x) • F (a j) := by
     calc
@@ -104,12 +109,13 @@ theorem finite_oriented_anchor_rigidity
     have hz : ‖F x - V x‖ ^ 2 = 0 := by
       rw [norm_sub_sq (𝕜 := ℂ), hnorm x, V.norm_map, hcross,
         inner_self_eq_norm_sq_to_K]
-      simp only [Complex.ofReal_re]
+      rw [RCLike.re_ofReal_pow]
       ring
     exact sub_eq_zero.mp (norm_eq_zero.mp (by nlinarith [norm_nonneg (F x - V x)]))
   refine ⟨V, ⟨heq, V.adjoint_comp_self'⟩, ?_⟩
   intro U hU
-  ext x
+  apply LinearIsometry.ext
+  intro x
   exact (hU.1 x).symm.trans (heq x)
 
 end D5.S3.Quantum.Foundation.FiniteOrientedAnchorRigidity
