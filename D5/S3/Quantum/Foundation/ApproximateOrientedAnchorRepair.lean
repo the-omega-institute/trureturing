@@ -13,6 +13,7 @@ public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.InnerProductSpace.Positive
 public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 public import Mathlib.Analysis.InnerProductSpace.StarOrder
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 public import Mathlib.LinearAlgebra.Matrix.Gershgorin
@@ -23,7 +24,8 @@ public import Mathlib.Tactic
 
 public section
 noncomputable section
-open scoped InnerProductSpace ComplexOrder BigOperators MatrixOrder Matrix.Norms.L2Operator Ring
+open scoped InnerProductSpace ComplexOrder BigOperators MatrixOrder
+  Matrix.Norms.L2Operator Ring CStarAlgebra
 open Complex ContinuousLinearMap
 
 namespace D5.S3.Quantum.Foundation.ApproximateOrientedAnchorRepair
@@ -43,10 +45,12 @@ def eta (d : ℕ) (δ : ℝ) : ℝ := Real.sqrt ((d : ℝ) / 2) * δ
 
 def kappa (d : ℕ) (δ : ℝ) : ℝ := ((d : ℝ) - 1) / Real.sqrt 2 * δ
 
+omit [FiniteDimensional ℂ W] in
 private lemma basisExtension_apply {d : ℕ} (a : OrthonormalBasis (Fin d) ℂ H)
     (F : H → W) (j : Fin d) : basisExtension a F (a j) = F (a j) := by
   simp [basisExtension]
 
+omit [FiniteDimensional ℂ H] [FiniteDimensional ℂ W] in
 private lemma comparison_re (x a : H) (y b : W)
     (hx : ‖x‖ = 1) (ha : ‖a‖ = 1) (hy : ‖y‖ = 1) (hb : ‖b‖ = 1)
     {δ : ℝ} (h : ‖y - b‖ ^ 2 ≤ ‖x - a‖ ^ 2 + δ) :
@@ -266,20 +270,19 @@ theorem finite_oriented_anchor_polar_repair {d : ℕ} (hd : 1 ≤ d)
   let R := CFC.sqrt G
   let Q := R⁻¹ʳ
   have hR : IsUnit R := (CFC.isUnit_sqrt_iff G hG0).mpr hpos.isUnit
-  have hRQ : R * Q = 1 := Ring.mul_inverse_cancel R hR
   have hQR : Q * R = 1 := Ring.inverse_mul_cancel R hR
   have hQ : Q.adjoint = Q := (CFC.sqrt_nonneg G).isSelfAdjoint.ringInverse.star_eq
+  have hQpow : Q = G ^ (-(1 / 2) : ℝ) := by
+    change (CFC.sqrt G)⁻¹ʳ = _
+    rw [CFC.sqrt_eq_rpow, CFC.inverse_rpow G (1 / 2 : ℝ) (by norm_num) hpos]
   let U₀ := B.comp Q
   have hU : U₀.adjoint.comp U₀ = 1 := by
     have heq : U₀.adjoint.comp U₀ = Q * (G * Q) := by
       ext x
       simp only [U₀, G, adjoint_comp, comp_apply, hQ]
       rfl
-    rw [heq, ← CFC.sqrt_mul_sqrt_self G hG0]
-    change Q * (R * R * Q) = 1
-    calc
-      _ = (Q * R) * (R * Q) := by noncomm_ring
-      _ = 1 := by rw [hQR, hRQ, one_mul]
+    rw [heq, hQpow, ← mul_assoc]
+    exact CFC.conjugate_rpow_neg_one_half G hpos
   let U : H →ₗᵢ[ℂ] W :=
     { U₀.toLinearMap with norm_map' := U₀.norm_map_iff_adjoint_comp_self.mpr hU }
   have hUR : U₀.comp R = B := by
@@ -329,7 +332,7 @@ theorem finite_oriented_anchor_polar_repair {d : ℕ} (hd : 1 ≤ d)
       rw [inner_self_eq_norm_sq_to_K, hx]
       norm_num
     have hone : (1 : H →L[ℂ] H) x = x := rfl
-    simp only [ContinuousLinearMap.sub_apply, hone,
+    simp only [sub_apply, hone,
       inner_sub_right, Complex.sub_re, hxx, Complex.one_re]
     linarith
 
