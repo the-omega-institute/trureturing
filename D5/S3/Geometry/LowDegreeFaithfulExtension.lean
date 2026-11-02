@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/LowDegreeFaithfulExtension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Geometry/SphereSectionAvoidance]
+   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
    utility: none
    digest: Restore low-degree vertices without moving a faithful partial placement. -/
 module
