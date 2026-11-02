@@ -11,7 +11,7 @@ internal sealed class ActualKernelPrefixPerturbationDocument : IScribeDocumentDe
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.finite_curvature_cost"),
                 H("Explicit finite component-curvature cost"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For every real D and natural N, finite_curvature_cost(D,N) is cost(B',B'',0,D) plus the sum over n<N with 2<=n and log(n)<=D of cost(g_n',g_n'',log(n),D), where cost(f1,f2,ell,D)=2(abs(f1(ell))+integral_[ell,D] abs(f2(s)) ds). The functions B and g_n and their derivatives are given below. This is a finite sum of component costs. Cancellations can make the total variation of the combined distributional second derivative smaller."))),
+                    Paragraph(Text("For every real D and natural N, finite_curvature_cost(D,N) is cost(B',B'',0,D) plus the sum over n<N with 2<=n and log(n)<=D of cost(g_n',g_n'',log(n),D), where cost(f1,f2,ell,D)=2(abs(f1(ell))+the Lebesgue integral over Icc(ell,D) of abs(f2(s))). The functions B and g_n and their derivatives are given below. This is a finite sum of component costs. Cancellations can make the total variation of the combined distributional second derivative smaller."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("actual-kernel-prefix-explicit-finite-cost-bound"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost"),
