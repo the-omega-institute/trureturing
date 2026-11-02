@@ -29,11 +29,12 @@ internal sealed class BalaA295462ParityDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", ClaimBody(),
                 "Every quotient is a natural integer, and it is odd exactly when occupied binary positions are separated by at least four. The binary prime valuation is a sum of nonnegative floor defects. Spacing makes all defects zero. The first shorter gap forces one defect to equal one; a strict geometric bound controls the lower occupied positions.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala295462"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala-parity-" + name.Replace("spacedBits", "spaced-bits")), DeclarationHandle.Create(Prefix + name), H(name),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
