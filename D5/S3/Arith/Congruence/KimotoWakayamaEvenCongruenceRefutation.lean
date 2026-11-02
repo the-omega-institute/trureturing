@@ -14,6 +14,7 @@ and the even assertion of Conjecture 3.6. The index `s` denotes weight `2*s+2`;
 the weight-zero row is identically zero, as in preregistration #25637. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 namespace D5.S3.Arith.Congruence.KimotoWakayamaEvenCongruenceRefutation
 
@@ -630,17 +631,19 @@ private lemma sample_45 : sampleRows 45 =
   rw [sample_step, sample_44]
   norm_num [List.range_succ, List.getD]
 
+private lemma sample_value (j : ℕ) :
+    normalizedEven 7 j = (sampleRows j).2.getD 7 0 := by
+  rfl
+
 private lemma value_fifteen : normalizedEven 7 15 =
     7333120509469805428121 / 355769406331851217305600000 := by
-  change (sampleRows 15).2.getD 7 0 = _
-  rw [sample_15]
-  decide
+  rw [sample_value, sample_15]
+  rfl
 
 private lemma value_forty_five : normalizedEven 7 45 =
     102790658465770739117540100122976721847176041588902154700374527298060572494857673559242663743632025784157718049052857 / 57561990252524346183252148053608130482118358853580167199822526442550512853169148312714991466237887774720000000000000000 := by
-  change (sampleRows 45).2.getD 7 0 = _
-  rw [sample_45]
-  decide
+  rw [sample_value, sample_45]
+  rfl
 
 private lemma left_value :
     (3 : ℚ) ^ 28 * normalizedEven 7 45 / ((3 : ℚ) ^ 14 * normalizedEven 7 15) =
@@ -658,8 +661,9 @@ private lemma ratio_not_congruent : ¬ RatCongr 3 2
   rintro ⟨a, b, hb, hab⟩
   have hs : (102790658465770739117540100122976721847176041588902154700374527298060572494857673559242663743632025784157718049052857 / 248060981949704625896344570711464099546609864372154310051109270678757921001761367078238673489100800000000000 : ℚ) - 1 =
       102790658217709757167835474226632151135711942042292290328220217246951301816099752557481296665393352295056918049052857 / 248060981949704625896344570711464099546609864372154310051109270678757921001761367078238673489100800000000000 := by norm_num
-  rw [hs, show (3 : ℚ) ^ 2 = 9 by norm_num, div_mul_eq_mul_div,
-    div_eq_iff (by norm_num)] at hab
+  rw [hs] at hab
+  norm_num only at hab
+  rw [div_mul_eq_mul_div, div_eq_iff (by norm_num)] at hab
   have hi : (102790658217709757167835474226632151135711942042292290328220217246951301816099752557481296665393352295056918049052857 : ℤ) * b =
       9 * a * 248060981949704625896344570711464099546609864372154310051109270678757921001761367078238673489100800000000000 := by
     apply Rat.intCast_injective
@@ -667,7 +671,7 @@ private lemma ratio_not_congruent : ¬ RatCongr 3 2
   have hm := congrArg (fun z : ℤ => z % 9) hi
   norm_num [Int.mul_emod] at hm
   apply hb
-  exact Int.dvd_of_emod_eq_zero (by omega)
+  exact Int.dvd_of_emod_eq_zero (by clear hab hi hs a; omega)
 
 private lemma claim_instance (h : claim) : RatCongr 3 2
     ((3 : ℚ) ^ 28 * normalizedEven 7 45 / ((3 : ℚ) ^ 14 * normalizedEven 7 15))
