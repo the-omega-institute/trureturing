@@ -15,6 +15,12 @@ Source: CombinatorialRigidity@021c2284bc387efee3c3b20a18eb5f769638b578.
 -/
 import D5.S3.Combinatorics.Graph.Laman.HennebergRigidity
 
+/-!
+# PlanarForward
+
+Every finite Laman graph has a rigid planar placement. Strong induction uses exact reverse reconstruction, both geometric Henneberg moves, and the two-vertex complete graph.
+-/
+
 @[expose] public section
 
 namespace SimpleGraph

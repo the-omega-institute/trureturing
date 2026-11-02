@@ -22,6 +22,12 @@ import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 import Mathlib.LinearAlgebra.Matrix.Polynomial
 import Mathlib.LinearAlgebra.Vandermonde
 
+/-!
+# PlanarRows
+
+Independent rigidity rows restrict to induced subgraphs. A moment curve perturbation preserves any open placement property while making each sufficiently large vertex subset affinely spanning. Independent translations and rotations then give the planar sparsity bound.
+-/
+
 @[expose] public section
 
 namespace LinearMap
@@ -249,7 +255,7 @@ theorem exists_edgeSetRowIndependent_of_finrank_range_ge_dim_two [Fintype V]
   have h_le_card : 2 * Fintype.card V - 3 ≤ b.ncard := by
     have h1 := h_card_b
     rw [h_span_b, LinearMap.finrank_range_dualMap_eq_finrank_range] at h1
-    rw [Set.ncard_eq_card_coe]
+    rw [Set.ncard_eq_toFinset_card', Set.toFinset_card]
     omega
   -- Truncate `b` to a subset `I ⊆ b` with `|I| = 2 * #V - 3`.
   obtain ⟨I, hI_sub, hI_card⟩ := Set.exists_subset_card_eq h_le_card
@@ -383,7 +389,8 @@ theorem exists_affinelySpanning_of_eventually [Finite V] {d : ℕ}
   · -- Affinely spans on every size-`≥ d + 1` subset.
     intros S hS
     -- Pick `d + 1` distinct elements in `S` as an injective `q : Fin (d + 1) → V`.
-    obtain ⟨q, hq_inj, hq_S⟩ := Set.exists_injective_fin_of_le_ncard hS
+    obtain ⟨q, hq_S, hq_inj⟩ := (Set.le_encard_iff_exists_fin_injective S (d + 1)).mp
+      (by rw [← S.toFinite.cast_ncard_eq]; exact_mod_cast hS)
     -- The `(d+1)`-tuple at `pt t` is affinely independent.
     have h_AI : AffineIndependent ℝ (fun i => pt t (q i)) := by
       by_contra h
@@ -434,7 +441,9 @@ theorem isSparse_of_edgeSetRowIndependent_dim_two {V : Type*} {G : SimpleGraph V
   rw [ncard_edgesIn_eq_ncard_induce_edgeSet]
   set S : Set V := (↑s : Set V) with hS_def
   have hS_ncard : S.ncard = s.card := by rw [hS_def]; exact Set.ncard_coe_finset s
-  have hS_card : Fintype.card ↥S = s.card := (Set.ncard_eq_card_coe _).symm.trans hS_ncard
+  have hS_card : Fintype.card ↥S = s.card := by
+    rw [Set.ncard_eq_toFinset_card', Set.toFinset_card] at hS_ncard
+    exact hS_ncard
   -- Case split: `hs : 3 ≤ 2 * s.card` forces `s.card = 2 ∨ 3 ≤ s.card`.
   obtain hs_two | hs_ge : s.card = 2 ∨ 3 ≤ s.card := by omega
   · -- `s.card = 2`: simple-graph combinatorics gives ≤ 1 edge in the induced subgraph.
@@ -442,7 +451,7 @@ theorem isSparse_of_edgeSetRowIndependent_dim_two {V : Type*} {G : SimpleGraph V
       card_edgeFinset_le_card_choose_two
     rw [hS_card, hs_two, Nat.choose_self] at h_card_le
     have h_ncard_eq : (H.induce S).edgeSet.ncard = (H.induce S).edgeFinset.card := by
-      rw [Set.ncard_eq_card_coe, ← SimpleGraph.edgeFinset_card]
+      rw [Set.ncard_eq_toFinset_card', Set.toFinset_card, ← SimpleGraph.edgeFinset_card]
     omega
   · -- `s.card ≥ 3`: row factoring + rank upper bound at affinely-spanning placement.
     set p_s : Framework ↥S 2 := fun v => p v.val with hp_s_def
@@ -499,7 +508,7 @@ theorem isSparse_of_edgeSetRowIndependent_dim_two {V : Type*} {G : SimpleGraph V
       rw [Set.finrank] at h
       rw [h, (H.induce S).span_range_rigidityRow p_s]
       exact LinearMap.finrank_range_dualMap_eq_finrank_range _
-    rw [Set.ncard_eq_card_coe]
+    rw [Set.ncard_eq_toFinset_card', Set.toFinset_card]
     omega
 
 

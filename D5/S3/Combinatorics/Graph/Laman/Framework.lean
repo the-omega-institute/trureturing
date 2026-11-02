@@ -9,6 +9,9 @@
 Copyright (c) 2026 Bryan Gin-ge Chen. All rights reserved.
 Released under Apache 2.0 license as described in docs/reports/licenses/laman-henneberg/LICENSE.txt.
 Authors: Bryan Gin-ge Chen
+Modified file: selected source declarations reorganized for trureturing;
+receiver imports and API adaptations; unconsumed declarations omitted.
+Source: CombinatorialRigidity@021c2284bc387efee3c3b20a18eb5f769638b578.
 -/
 import D5.S3.Combinatorics.Graph.Laman.SparseSets
 import Mathlib.Analysis.InnerProductSpace.PiL2

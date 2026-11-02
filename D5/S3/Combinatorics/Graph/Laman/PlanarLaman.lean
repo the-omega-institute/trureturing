@@ -16,6 +16,12 @@ Source: CombinatorialRigidity@021c2284bc387efee3c3b20a18eb5f769638b578.
 import D5.S3.Combinatorics.Graph.Laman.PlanarForward
 import D5.S3.Combinatorics.Graph.Laman.PlanarRows
 
+/-!
+# PlanarLaman
+
+A finite simple graph on at least two vertices admits an arbitrary real planar placement with rigidity kernel dimension at most three if and only if it contains a spanning Laman subgraph. The placement need not be injective. The graph need not be planar and may contain additional edges.
+-/
+
 @[expose] public section
 
 namespace SimpleGraph
@@ -62,10 +68,12 @@ vertices is generically rigid in the plane iff it contains a Laman spanning subg
 
 The iff is composed from the two named directional theorems
 `IsLaman.isGenericallyRigid_two` and `IsGenericallyRigid.exists_isLaman_le`. -/
-theorem isGenericallyRigid_two_iff_exists_isLaman_le [Fintype V] {G : SimpleGraph V}
-    (hV : 2 ≤ Fintype.card V) :
-    G.IsGenericallyRigid 2 ↔ ∃ H : SimpleGraph V, H ≤ G ∧ H.IsLaman :=
-  ⟨fun h => h.exists_isLaman_le hV,
+theorem isGenericallyRigid_two_iff_exists_isLaman_le [Finite V] {G : SimpleGraph V}
+    (hV : 2 ≤ Nat.card V) :
+    G.IsGenericallyRigid 2 ↔ ∃ H : SimpleGraph V, H ≤ G ∧ H.IsLaman := by
+  have : Fintype V := Fintype.ofFinite V
+  rw [Nat.card_eq_fintype_card] at hV
+  exact ⟨fun h => h.exists_isLaman_le hV,
    fun ⟨_, hHG, hLam⟩ => hLam.isGenericallyRigid_two.mono hHG⟩
 
 end SimpleGraph

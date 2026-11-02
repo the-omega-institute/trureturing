@@ -16,6 +16,12 @@ Source: CombinatorialRigidity@021c2284bc387efee3c3b20a18eb5f769638b578.
 import D5.S3.Combinatorics.Graph.Laman.Framework
 import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 
+/-!
+# TrivialMotions
+
+Translations and elementary skew rotations are infinitesimal motions for every graph. Their joint linear independence at an affinely spanning placement bounds the dimension of the rigidity kernel.
+-/
+
 @[expose] public section
 
 open scoped InnerProductSpace
