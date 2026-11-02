@@ -193,19 +193,19 @@ private lemma rate_mass {c : ℝ} (hc : 0 < c) :
     _ = 10 * ((1 / c) ^ (10 : ℝ) * Real.Gamma 10) := by
       rw [integral_const_mul, Real.integral_rpow_mul_exp_neg_mul_Ioi (by norm_num) hc]
     _ = _ := by
-      have hg := Real.Gamma_nat_eq_factorial 9
-      norm_num at hg
+      have hg : Real.Gamma (10 : ℝ) = (Nat.factorial 9 : ℝ) := by
+        convert Real.Gamma_nat_eq_factorial 9 using 1 <;> norm_num
       rw [hg, Real.rpow_natCast]
-      norm_num [Nat.factorial]
-      ring
+      norm_num [Nat.factorial] <;> ring
 
 private lemma weight_mass {c : ℝ} (hc : 0 < c) :
     (∫ u : ℝ in Ioi 1, WeightedMangoldtRate.weight c u) =
       (Nat.factorial 10 : ℝ) * (1 / c) ^ 10 := by
   have h := integral_comp_log_Ioi
     (fun t : ℝ => Real.exp (-c * t ^ ((1 : ℝ) / 10))) (a := 1) one_pos
+  rw [Real.log_one, rate_mass hc] at h
   simpa only [WeightedMangoldtRate.weight, WeightedMangoldtRate.rate,
-    Real.log_one, smul_eq_mul, div_eq_mul_inv, mul_comm, rate_mass hc] using h
+    smul_eq_mul, div_eq_mul_inv, mul_comm] using h
 
 private lemma b_tail (t : ℝ) (ht : Real.log 2 ≤ t) :
     b t = relativeError t -
@@ -220,6 +220,7 @@ private lemma b_tail (t : ℝ) (ht : Real.log 2 ≤ t) :
   rw [Real.log_exp, ← F_eq_Ioc] at hid
   dsimp [b, relativeError]
   rw [he]
+  simp only [div_eq_mul_inv] at hid
   linarith only [hid]
 
 lemma relativeError_le (p : PNTConstants) {t : ℝ} (ht : 0 ≤ t) :
@@ -254,7 +255,8 @@ lemma b_bound (p : PNTConstants) (t : ℝ) (ht : 0 ≤ t) :
       have hn2 : (2 : ℝ) ≤ n := by exact_mod_cast hl
       linarith
     have hlog : Real.log (2 : ℝ) ≤ 1 := by
-      simpa using Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+      have h := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+      linarith
     have hg0 : 0 ≤ Real.eulerMascheroniConstant :=
       le_trans (by norm_num) Real.one_half_lt_eulerMascheroniConstant.le
     have hg1 : Real.eulerMascheroniConstant ≤ 1 := by
@@ -277,11 +279,11 @@ lemma b_bound (p : PNTConstants) (t : ℝ) (ht : 0 ≤ t) :
       simp only [relativeError, Real.exp_neg, Real.exp_log hu0] at h
       have he : u * (u⁻¹ * Chebyshev.psi u - 1) = Chebyshev.psi u - u := by
         field_simp
-        ring
       rw [← he, abs_mul, abs_of_pos hu0]
       have h' := mul_le_mul_of_nonneg_left h hu0.le
-      convert h' using 1 <;>
-        simp only [WeightedMangoldtRate.rate] <;> congr 2 <;> ring
+      dsimp only [WeightedMangoldtRate.rate]
+      rw [show 2 * (p.alpha / 2) = p.alpha by ring]
+      nlinarith only [h']
     have htail := WeightedMangoldtRate.chebyshev_tail_bound
       (half_pos p.alpha_pos) (show 0 ≤ p.C by linarith [p.one_le_C])
       (show (2 : ℝ) ≤ 2 from le_rfl) hx hpsi
@@ -332,7 +334,8 @@ lemma weight_eq_sqrt (n : ℕ) (hn : 2 ≤ n) :
   have hroot : Real.sqrt n = Real.exp (Real.log n / 2) := by
     nlinarith [Real.sqrt_nonneg (n : ℝ), Real.exp_pos (Real.log n / 2)]
   rw [hroot, weight, show -Real.log (n : ℝ) / 2 = -(Real.log n / 2) by ring,
-    Real.exp_neg, div_eq_mul_inv]
+    Real.exp_neg]
+  simp only [div_eq_mul_inv]
 
 lemma log_cut_iff (n : ℕ) (hn : 2 ≤ n) (t : ℝ) :
     Real.log (n : ℝ) ≤ t ↔ n ≤ ⌊Real.exp t⌋₊ := by
@@ -345,7 +348,7 @@ lemma log_cut_iff (n : ℕ) (hn : 2 ≤ n) (t : ℝ) :
     simpa only [Real.log_exp] using Real.log_le_log hp h
 
 lemma indices (D t : ℝ) (ht : t ≤ D) :
-    (primes D).filter (fun n => Real.log n ≤ t) = primes t := by
+    (primes D).filter (fun n : ℕ => Real.log (n : ℝ) ≤ t) = primes t := by
   classical
   ext n
   simp only [Finset.mem_filter, primes, Finset.mem_Icc]
@@ -505,7 +508,7 @@ private lemma weighted_error (p : PNTConstants) (D u : ℝ)
         exact Real.exp_le_exp.mpr (by linarith)
       have hru := le_trans (le_abs_self _) (relativeError_decay p (by linarith : 0 ≤ D / 4)
         (by linarith : D / 4 ≤ u))
-      have hrv := le_trans (le_abs_self _) (relativeError_le p (by linarith : 0 ≤ D - u))
+      have hrv := le_trans (le_abs_self _) (relativeError_le p (by linarith [hu.2] : 0 ≤ D - u))
       have h1 := mul_le_mul_of_nonneg_left hru hx
       have h2 := mul_le_mul_of_nonneg_left hrv hy
       have h3 := mul_le_mul_of_nonneg_left hyx hC
@@ -571,8 +574,8 @@ private lemma density_integrable (D t : ℝ) (f : ℝ → ℂ)
     measurableSet_Icc.inter (measurableSet_Icc.preimage (by fun_prop))
   have hg : Continuous (fun u : ℝ => g D (u + t) / g D u) := by
     apply Continuous.div
-    · dsimp [g]; fun_prop
-    · dsimp [g]; fun_prop
+    · unfold g; fun_prop
+    · unfold g; fun_prop
     · intro u; exact (g_pos D u).ne'
   have hd : AEStronglyMeasurable (density D t f) volume := by
     change AEStronglyMeasurable
@@ -606,7 +609,7 @@ lemma weighted_complex_pair (X Y : ℝ) (hX : 0 < X) (hY : 0 < Y) (z w : ℂ) :
   calc
     _ ≤ (Y ^ 2 * ‖w‖ ^ 2 + X ^ 2 * ‖z‖ ^ 2) / (X * Y) :=
       (le_div_iff₀ (mul_pos hX hY)).mpr h1
-    _ = _ := by field_simp [hX.ne', hY.ne']; ring
+    _ = _ := by field_simp [hX.ne', hY.ne']
 
 private lemma pair_density (D t : ℝ) (f : ℝ → ℂ)
     (hs : ∀ u : ℝ, u ∉ Icc (0 : ℝ) D → f u = 0) (u : ℝ) :
@@ -631,7 +634,8 @@ private lemma density_row (D : ℝ) (f : ℝ → ℂ) (u : ℝ)
   intro n hn
   by_cases hp : u + Real.log (n : ℝ) ∈ Icc (0 : ℝ) D <;>
     by_cases hm : u - Real.log (n : ℝ) ∈ Icc (0 : ℝ) D <;>
-    simp [density, Set.indicator, hu, hp, hm, sub_eq_add_neg] <;> ring
+    simp only [sub_eq_add_neg] at hm ⊢ <;>
+    simp only [density, Set.indicator, hu, hp, hm, true_and, ite_true, ite_false] <;> ring
 
 private lemma prefix_measurable {I : Type u} [Fintype I] (x : I → ℝ) (a : I → ℂ) :
     Measurable («prefix» x a) := by
@@ -680,15 +684,16 @@ theorem actual_weighted_mangoldt_translation_bound (p : PNTConstants)
         (∫ u : ℝ, density D t f u) + ∫ u : ℝ, density D (-t) f u := by
     have hmono := integral_mono ((hc t).re.const_mul 2)
       ((hd t).add ((hd (-t)).comp_add_right t)) (pair_density D t f hs)
+    simp only [Pi.add_apply] at hmono
     rw [integral_const_mul, integral_re (hc t),
       integral_add (hd t) ((hd (-t)).comp_add_right t),
       integral_add_right_eq_self] at hmono
-    exact hmono
+    simpa only [RCLike.re_to_complex] using hmono
   have hsum : primeQuadratic D x a ≤
       ∫ u : ℝ, ∑ n ∈ primes D, weight n *
         (density D (Real.log n) f u + density D (-Real.log n) f u) := by
-    have hfin := Finset.sum_le_sum (s := primes D) (fun n hn =>
-      mul_le_mul_of_nonneg_left (hlocal (Real.log n)) (weight_nonneg n))
+    have hfin := Finset.sum_le_sum (s := primes D) (fun (n : ℕ) hn =>
+      mul_le_mul_of_nonneg_left (hlocal (Real.log (n : ℝ))) (weight_nonneg n))
     rw [integral_finsetSum _ (fun n hn =>
       ((hd (Real.log n)).add (hd (-Real.log n))).const_mul (weight n))]
     simp_rw [integral_const_mul, integral_add (hd _) (hd _)]
