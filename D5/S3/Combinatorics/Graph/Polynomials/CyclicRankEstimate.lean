@@ -1,13 +1,10 @@
-/-! GID: D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate
+/- GID: D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Coeff,
-     mathlib/module/Mathlib.RingTheory.Binomial]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Coeff, mathlib/module/Mathlib.RingTheory.Binomial]
    utility: none
-   digest: The signed rank-state coefficient splits into forest and cyclic states,
-     and graph ranks control the support and the individual coefficient growth.
--/
+   digest: The signed rank-state coefficient splits into forest and cyclic states, and graph ranks control the support and the individual coefficient growth. -/
 
 import D5.S3.Combinatorics.Graph.Jacobi.LeafPruningRanks
 import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace

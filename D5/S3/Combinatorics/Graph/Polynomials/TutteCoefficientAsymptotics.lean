@@ -1,11 +1,10 @@
-/-! GID: D5/S3/Combinatorics/Graph/Polynomials/TutteCoefficientAsymptotics
+/- GID: D5/S3/Combinatorics/Graph/Polynomials/TutteCoefficientAsymptotics
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Polynomials/TutteCoefficientAsymptotics
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.RingTheory.Binomial]
    utility: none
-   digest: Fixed-rank cyclic state counts control the signed graph coefficient error.
--/
+   digest: Fixed-rank cyclic state counts control the signed graph coefficient error. -/
 
 import D5.S3.Combinatorics.Graph.Polynomials.CyclicRankEstimate
 import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
