@@ -45,8 +45,8 @@ private theorem controls_measurable (P : Measure Ω) (M : Model G P) :
     @Measurable Ω (Controls G) (H M) inferInstance (controls M) :=
   measurable_iff_comap_le.mpr le_rfl
 
-/-- Sources use neither opinion values nor auxiliary coordinates at time zero. -/
 omit [G.LocallyFinite] [MeasurableSpace Ω] in
+/-- Sources use neither opinion values nor auxiliary coordinates at time zero. -/
 private theorem source_control_congr {Ω' : Type}
     (x : (c : Coord V) → Ω → Value G c)
     (y : (c : Coord V) → Ω' → Value G c) (ω : Ω) (ω' : Ω')
@@ -57,8 +57,8 @@ private theorem source_control_congr {Ω' : Type}
   | zero => intros; rfl
   | succ n ih =>
       intro v
-      simp only [source, h (.refresh (n+1) v) (Nat.succ_pos n),
-        h (.choice (n+1) v) (Nat.succ_pos n)]
+      simp only [source, h (.refresh (n + 1) v) (Nat.succ_pos n),
+        h (.choice (n + 1) v) (Nat.succ_pos n)]
       split_ifs
       · rfl
       · exact ih _
@@ -67,9 +67,9 @@ private noncomputable def fill (M : Model G (P : Measure Ω)) (z : Controls G) :
     (c : Coord V) → Value G c
   | .initial _ | .fresh _ _ => false
   | .refresh 0 _ => false
-  | .refresh (n+1) v => z ⟨.refresh (n+1) v, Nat.succ_pos n⟩
+  | .refresh (n + 1) v => z ⟨.refresh (n + 1) v, Nat.succ_pos n⟩
   | .choice 0 v => ⟨(M.hasNeighbor v).choose, (M.hasNeighbor v).choose_spec⟩
-  | .choice (n+1) v => z ⟨.choice (n+1) v, Nat.succ_pos n⟩
+  | .choice (n + 1) v => z ⟨.choice (n + 1) v, Nat.succ_pos n⟩
 
 private theorem fill_measurable (P : Measure Ω) (M : Model G P) (c : Coord V) :
     Measurable (fun z => fill M z c) := by
@@ -116,15 +116,15 @@ private theorem coins_controls_independent (P : Measure Ω) (M : Model G P) :
 noncomputable def C (M : Model G (P : Measure Ω)) (u : V) (d t : ℕ) (ω : Ω) : ℝ := by
   classical
   exact ∑ i ∈ Finset.Icc 1 t,
-    if source M.coordinate i u ω = source M.coordinate (i+d) u ω then 1 else 0
+    if source M.coordinate i u ω = source M.coordinate (i + d) u ω then 1 else 0
 
 /-- Unordered, noncoalesced native source-pair multiplicity. -/
 noncomputable def multiplicity (M : Model G (P : Measure Ω)) (u : V) (d t : ℕ)
     (e : Finset (Label V)) (ω : Ω) : ℕ := by
   classical
   exact ((Finset.Icc 1 t).filter (fun i =>
-    source M.coordinate i u ω ≠ source M.coordinate (i+d) u ω ∧
-    {source M.coordinate i u ω, source M.coordinate (i+d) u ω} = e)).card
+    source M.coordinate i u ω ≠ source M.coordinate (i + d) u ω ∧
+    {source M.coordinate i u ω, source M.coordinate (i + d) u ω} = e)).card
 
 noncomputable def pairs (G : SimpleGraph V) [G.LocallyFinite] (u : V) (N : ℕ) :=
   (RectangularSupport.L G u N).powersetCard 2
@@ -228,14 +228,14 @@ private theorem C_H (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ) :
   apply Finset.measurable_sum
   intro i hi
   exact Measurable.ite (measurableSet_eq_fun (source_H P M i u)
-    (source_H P M (i+d) u)) measurable_const measurable_const
+    (source_H P M (i + d) u)) measurable_const measurable_const
 
 open Classical in
 private theorem multiplicity_sum (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ)
     (e : Finset (Label V)) (ω : Ω) :
     (multiplicity M u d t e ω : ℝ) = ∑ i ∈ Finset.Icc 1 t,
-      if source M.coordinate i u ω ≠ source M.coordinate (i+d) u ω ∧
-        {source M.coordinate i u ω, source M.coordinate (i+d) u ω} = e then 1 else 0 := by
+      if source M.coordinate i u ω ≠ source M.coordinate (i + d) u ω ∧
+        {source M.coordinate i u ω, source M.coordinate (i + d) u ω} = e then 1 else 0 := by
   classical
   simp [multiplicity, Finset.sum_boole]
 
@@ -249,7 +249,7 @@ private theorem multiplicity_H (P : Measure Ω) (M : Model G P) (u : V) (d t : �
   intro i hi
   exact (measurable_of_countable (fun p : Label V × Label V =>
     if p.1 ≠ p.2 ∧ {p.1,p.2} = e then (1 : ℝ) else 0)).comp
-      ((source_H P M i u).prodMk (source_H P M (i+d) u))
+      ((source_H P M i u).prodMk (source_H P M (i + d) u))
 
 private theorem multiplicity_bound (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ)
     (e : Finset (Label V)) (ω : Ω) : ‖(multiplicity M u d t e ω : ℝ)‖ ≤ t := by
@@ -279,36 +279,36 @@ private theorem source_support (P : Measure Ω) (M : Model G P) (u : V) (N : ℕ
 open Classical in
 private theorem source_pair_mem (P : Measure Ω) (M : Model G P) (u : V) (d t i : ℕ)
     (hi : i ∈ Finset.Icc 1 t) (ω : Ω)
-    (hne : source M.coordinate i u ω ≠ source M.coordinate (i+d) u ω) :
-    {source M.coordinate i u ω, source M.coordinate (i+d) u ω} ∈ pairs G u (t+d) := by
+    (hne : source M.coordinate i u ω ≠ source M.coordinate (i + d) u ω) :
+    {source M.coordinate i u ω, source M.coordinate (i + d) u ω} ∈ pairs G u (t + d) := by
   classical
   apply Finset.mem_powersetCard.mpr
   constructor
   · intro l hl
     simp only [Finset.mem_insert, Finset.mem_singleton] at hl
     rcases hl with rfl | rfl
-    · exact source_support P M u (t+d) i (by have := Finset.mem_Icc.mp hi; omega) ω
-    · exact source_support P M u (t+d) (i+d) (by have := Finset.mem_Icc.mp hi; omega) ω
+    · exact source_support P M u (t + d) i (by have := Finset.mem_Icc.mp hi; omega) ω
+    · exact source_support P M u (t + d) (i + d) (by have := Finset.mem_Icc.mp hi; omega) ω
   · simp [hne]
 
 open Classical in
 private theorem grouped_characters (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ)
     (ω : Ω) :
-    (∑ e ∈ pairs G u (t+d), (multiplicity M u d t e ω : ℝ) * character M e ω) =
+    (∑ e ∈ pairs G u (t + d), (multiplicity M u d t e ω : ℝ) * character M e ω) =
       ∑ i ∈ Finset.Icc 1 t,
-        if source M.coordinate i u ω = source M.coordinate (i+d) u ω then 0
+        if source M.coordinate i u ω = source M.coordinate (i + d) u ω then 0
         else sgn (coin M.coordinate (source M.coordinate i u ω) ω) *
-          sgn (coin M.coordinate (source M.coordinate (i+d) u ω) ω) := by
+          sgn (coin M.coordinate (source M.coordinate (i + d) u ω) ω) := by
   classical
   simp_rw [multiplicity_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro i hi
-  by_cases heq : source M.coordinate i u ω = source M.coordinate (i+d) u ω
+  by_cases heq : source M.coordinate i u ω = source M.coordinate (i + d) u ω
   · simp [heq]
   · rw [ite_eq_right heq]
     rw [Finset.sum_eq_single_of_mem
-      {source M.coordinate i u ω, source M.coordinate (i+d) u ω}
+      {source M.coordinate i u ω, source M.coordinate (i + d) u ω}
       (source_pair_mem P M u d t i hi ω heq)]
     · simp [heq, character_pair P M _ _ heq]
     · intro e he hne
@@ -316,7 +316,7 @@ private theorem grouped_characters (P : Measure Ω) (M : Model G P) (u : V) (d t
 
 private theorem repetition_expansion (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ)
     (ω : Ω) : W M.coordinate u d t ω = ((t : ℝ) + C M u d t ω) / 2 +
-      (1/2 : ℝ) * ∑ e ∈ pairs G u (t+d),
+      (1/2 : ℝ) * ∑ e ∈ pairs G u (t + d),
         (multiplicity M u d t e ω : ℝ) * character M e ω := by
   classical
   rw [grouped_characters]
@@ -327,10 +327,10 @@ private theorem repetition_expansion (P : Measure Ω) (M : Model G P) (u : V) (d
   rw [← Finset.sum_add_distrib, Finset.sum_div, Finset.mul_sum, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro i hi
-  by_cases heq : source M.coordinate i u ω = source M.coordinate (i+d) u ω
+  by_cases heq : source M.coordinate i u ω = source M.coordinate (i + d) u ω
   · rw [heq]
-    have hs : sgn (coin M.coordinate (source M.coordinate (i+d) u ω) ω) ^ 2 = 1 := by
-      cases coin M.coordinate (source M.coordinate (i+d) u ω) ω <;> norm_num [sgn]
+    have hs : sgn (coin M.coordinate (source M.coordinate (i + d) u ω) ω) ^ 2 = 1 := by
+      cases coin M.coordinate (source M.coordinate (i + d) u ω) ω <;> norm_num [sgn]
     simp [← pow_two, hs]
   · simp only [ite_eq_right heq]
     ring
@@ -359,7 +359,7 @@ private theorem term_integrable (P : Measure Ω) (M : Model G P) (u : V) (d t : 
   exact bounded_integrable P (term_measurable P M u d t e) t (term_bound P M u d t e)
 
 private theorem term_condExp (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ)
-    (e : Finset (Label V)) (he : e ∈ pairs G u (t+d)) :
+    (e : Finset (Label V)) (he : e ∈ pairs G u (t + d)) :
     P[term M u d t e | H M] =ᵐ[P] 0 := by
   let := M.probability
   have hp := condExp_stronglyMeasurable_mul_of_bound (H_le P M)
@@ -384,7 +384,7 @@ private theorem cross_integrable (P : Measure Ω) (M : Model G P) (u : V) (d t :
 
 open Classical in
 private theorem cross_condExp (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ)
-    (e f : Finset (Label V)) (he : e ∈ pairs G u (t+d)) (hf : f ∈ pairs G u (t+d)) :
+    (e f : Finset (Label V)) (he : e ∈ pairs G u (t + d)) (hf : f ∈ pairs G u (t + d)) :
     P[(fun ω => term M u d t e ω * term M u d t f ω) | H M] =ᵐ[P]
       fun ω => if e = f then (multiplicity M u d t e ω : ℝ)^2 else 0 := by
   classical
@@ -416,54 +416,54 @@ private theorem cross_condExp (P : Measure Ω) (M : Model G P) (u : V) (d t : �
   filter_upwards [hp,hc] with ω h1 h2
   simp only [Pi.mul_def] at h1 ⊢
   rw [h1]
-  simp only [Pi.mul_apply, h2, hm]
+  simp only [h2, hm]
   split_ifs with hef
   · subst f
     ring
   · ring
 
 private noncomputable def noise (M : Model G (P : Measure Ω)) (u : V) (d t : ℕ) : Ω → ℝ :=
-  ∑ e ∈ pairs G u (t+d), term M u d t e
+  ∑ e ∈ pairs G u (t + d), term M u d t e
 
 private theorem noise_condExp (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ) :
     P[noise M u d t | H M] =ᵐ[P] 0 := by
   classical
-  have hs := condExp_finsetSum (s := pairs G u (t+d)) (fun e _ => term_integrable P M u d t e) (H M)
-  have ht : ∀ᵐ ω ∂P, ∀ e ∈ pairs G u (t+d), P[term M u d t e | H M] ω = 0 :=
+  have hs := condExp_finsetSum (s := pairs G u (t + d)) (fun e _ => term_integrable P M u d t e) (H M)
+  have ht : ∀ᵐ ω ∂P, ∀ e ∈ pairs G u (t + d), P[term M u d t e | H M] ω = 0 :=
     (eventually_all_finset _).mpr (fun e he => term_condExp P M u d t e he)
   filter_upwards [hs, ht] with ω h1 h2
-  change P[∑ e ∈ pairs G u (t+d), term M u d t e | H M] ω = 0
+  change P[∑ e ∈ pairs G u (t + d), term M u d t e | H M] ω = 0
   rw [h1]
   simp only [Finset.sum_apply]
   exact Finset.sum_eq_zero (fun e he => h2 e he)
 
 private theorem noise_square_condExp (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ) :
     P[(fun ω => noise M u d t ω ^ 2) | H M] =ᵐ[P]
-      fun ω => ∑ e ∈ pairs G u (t+d), (multiplicity M u d t e ω : ℝ)^2 := by
+      fun ω => ∑ e ∈ pairs G u (t + d), (multiplicity M u d t e ω : ℝ)^2 := by
   classical
   have heq : (fun ω => noise M u d t ω ^ 2) =
-      ∑ e ∈ pairs G u (t+d), ∑ f ∈ pairs G u (t+d),
+      ∑ e ∈ pairs G u (t + d), ∑ f ∈ pairs G u (t + d),
         (fun ω => term M u d t e ω * term M u d t f ω) := by
     funext ω
     simp only [noise, Finset.sum_apply, pow_two, Finset.sum_mul_sum]
   rw [heq]
-  have houter := condExp_finsetSum (s := pairs G u (t+d))
-    (f := fun e => ∑ f ∈ pairs G u (t+d),
+  have houter := condExp_finsetSum (s := pairs G u (t + d))
+    (f := fun e => ∑ f ∈ pairs G u (t + d),
       (fun ω => term M u d t e ω * term M u d t f ω))
-    (fun e _ => integrable_finsetSum' (pairs G u (t+d))
+    (fun e _ => integrable_finsetSum' (pairs G u (t + d))
       (fun f _ => cross_integrable P M u d t e f)) (H M)
-  have hinner : ∀ e ∈ pairs G u (t+d),
-      P[∑ f ∈ pairs G u (t+d), (fun ω => term M u d t e ω * term M u d t f ω) | H M] =ᵐ[P]
-        ∑ f ∈ pairs G u (t+d), P[(fun ω => term M u d t e ω * term M u d t f ω) | H M] :=
-    fun e he => condExp_finsetSum (s := pairs G u (t+d)) (fun f _ => cross_integrable P M u d t e f) (H M)
-  have hcross : ∀ᵐ ω ∂P, ∀ e ∈ pairs G u (t+d), ∀ f ∈ pairs G u (t+d),
+  have hinner : ∀ e ∈ pairs G u (t + d),
+      P[∑ f ∈ pairs G u (t + d), (fun ω => term M u d t e ω * term M u d t f ω) | H M] =ᵐ[P]
+        ∑ f ∈ pairs G u (t + d), P[(fun ω => term M u d t e ω * term M u d t f ω) | H M] :=
+    fun e he => condExp_finsetSum (s := pairs G u (t + d)) (fun f _ => cross_integrable P M u d t e f) (H M)
+  have hcross : ∀ᵐ ω ∂P, ∀ e ∈ pairs G u (t + d), ∀ f ∈ pairs G u (t + d),
       P[(fun ω => term M u d t e ω * term M u d t f ω) | H M] ω =
         if e = f then (multiplicity M u d t e ω : ℝ)^2 else 0 := by
     simp only [eventually_all_finset]
     exact fun e he f hf => cross_condExp P M u d t e f he hf
-  have hinner' : ∀ᵐ ω ∂P, ∀ e ∈ pairs G u (t+d),
-      P[∑ f ∈ pairs G u (t+d), (fun ω => term M u d t e ω * term M u d t f ω) | H M] ω =
-        (∑ f ∈ pairs G u (t+d), P[(fun ω => term M u d t e ω * term M u d t f ω) | H M]) ω := by
+  have hinner' : ∀ᵐ ω ∂P, ∀ e ∈ pairs G u (t + d),
+      P[∑ f ∈ pairs G u (t + d), (fun ω => term M u d t e ω * term M u d t f ω) | H M] ω =
+        (∑ f ∈ pairs G u (t + d), P[(fun ω => term M u d t e ω * term M u d t f ω) | H M]) ω := by
     simp only [eventually_all_finset]
     exact hinner
   filter_upwards [houter,hinner',hcross] with ω h1 h2 h3
@@ -520,7 +520,7 @@ theorem conditional_repetition_moments (P : Measure Ω) (M : Model G P)
     (P[W M.coordinate u d t | H M] =ᵐ[P]
       fun ω => ((t : ℝ) + C M u d t ω) / 2) ∧
     (P[(fun ω => (W M.coordinate u d t ω - P[W M.coordinate u d t | H M] ω)^2) | H M] =ᵐ[P]
-      fun ω => (1/4 : ℝ) * ∑ e ∈ pairs G u (t+d), (multiplicity M u d t e ω : ℝ)^2) := by
+      fun ω => (1/4 : ℝ) * ∑ e ∈ pairs G u (t + d), (multiplicity M u d t e ω : ℝ)^2) := by
   classical
   constructor
   · exact conditional_mean P M u d t
