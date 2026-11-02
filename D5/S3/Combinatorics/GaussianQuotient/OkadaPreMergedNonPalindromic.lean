@@ -219,11 +219,9 @@ private theorem qFactorial_image_stable
 private theorem qFactorial_image_unit
     {s : Type*} [CommRing s] (φ : ℤ[X] →+* s) (hx : IsNilpotent (φ X)) (n : ℕ) :
     IsUnit (φ (qFactorial n)) := by
-  induction n with
-  | zero => simp [qFactorial]
-  | succ n ih =>
-      rw [qFactorial_succ, map_mul, map_sub, map_one, map_pow]
-      exact ih.mul (IsNilpotent.pow_succ n hx).isUnit_one_sub
+  rw [qFactorial, map_prod]
+  exact IsUnit.prod_iff.mpr fun i _ => by
+    simpa only [map_sub, map_one, map_pow] using (hx.pow_succ i).isUnit_one_sub
 
 private theorem product_coeff_one
     {ι : Type*} (s : Finset ι) (f : ι → ℤ[X]) (hf : ∀ i ∈ s, (f i).coeff 0 = 1) :
