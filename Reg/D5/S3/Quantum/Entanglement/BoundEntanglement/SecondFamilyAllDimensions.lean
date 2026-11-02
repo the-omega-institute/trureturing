@@ -24,10 +24,19 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Parameters
     (fun p => Fin p.1 → Fin p.1 × Fin p.1 → ℂ) (fun _ => Bool)
 
+private def dataDecidable (d : ℕ) (q : Fin d → Matrix (Fin d) (Fin d) ℝ)
+    (qbar : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
+    (a : Fin d → Fin d → ℝ) (s : Fin d → Fin d × Fin d → ℂ) :
+    Decidable (IsSecondFamilyData d q qbar μ a s) := by
+  letI : DecidableEq ℂ := fun z w =>
+    decidable_of_iff (z.re = w.re ∧ z.im = w.im) Complex.ext_iff.symm
+  unfold IsSecondFamilyData
+  infer_instance
+
 def actual : Realization signature :=
   realize signature (fun _ p s =>
     @decide (IsSecondFamilyData p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 s)
-      (Classical.propDecidable _)) (fun e => nomatch e)
+      (dataDecidable p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 s)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
@@ -61,9 +70,13 @@ theorem dependence : ObservationalDependence signature actual := by
   intro i
   obtain ⟨q, qbar, μ, a, s, hs⟩ := result 2 (by decide)
   refine ⟨⟨2, q, qbar, μ, a⟩, s, 0, ?_⟩
-  change @decide (IsSecondFamilyData 2 q qbar μ a s) (Classical.propDecidable _) ≠
-    @decide (IsSecondFamilyData 2 q qbar μ a 0) (Classical.propDecidable _)
-  rw [decide_eq_true hs, decide_eq_false (zero_shield_invalid q qbar μ a)]
+  change @decide (IsSecondFamilyData 2 q qbar μ a s) (dataDecidable 2 q qbar μ a s) ≠
+    @decide (IsSecondFamilyData 2 q qbar μ a 0) (dataDecidable 2 q qbar μ a 0)
+  have ht := @decide_eq_true (IsSecondFamilyData 2 q qbar μ a s)
+    (dataDecidable 2 q qbar μ a s) hs
+  have hf := @decide_eq_false (IsSecondFamilyData 2 q qbar μ a 0)
+    (dataDecidable 2 q qbar μ a 0) (zero_shield_invalid q qbar μ a)
+  rw [ht, hf]
   decide
 
 def source_registration : Registration arena claim where
@@ -94,7 +107,7 @@ def registration :
   bundleNonempty := .absent
   readout := some (realize signature (fun _ p s =>
     @decide (IsSecondFamilyData p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 s)
-      (Classical.propDecidable _)) (fun e => nomatch e))
+      (dataDecidable p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 s)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
