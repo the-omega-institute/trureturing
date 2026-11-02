@@ -806,3 +806,348 @@ The measured continuation in Theorem 5.4 inserts successor measurements and reta
 Native $\alpha/\beta$ acquisition, realization of (1.2)–(1.3), actual result carriers, calibration and executable precision remain separately supplied conditions of Assumptions 1.4 and 7.5. The classical transition matrix retains its positive loops and legal paths. These do not imply quantum primitivity: (8.5) acts trivially on the entire framed logical factor $K$, in agreement with Theorem 3.1. The Choi/Kraus and pure-environment principles used in the proof are existing suppliers; the new source-specific conclusion is the homogeneous terminal rank (8.3), established by (8.8)–(8.12) on the exact balanced source.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Common autonomous prefixes on the balanced source
+
+**定义 9.1（Common-prefix contract and its two minima）。** Keep the balanced source (8.1), the full ten-dimensional $H$, and the channel $\Phi$ of §8. For a finite horizon $N$, a common autonomous realization is a finite environment $E$, one density operator $\sigma$ on $E$ independent of the input and of $n$, and one unitary $W$ on $H\otimes E$ such that, for every density operator $\rho_{HR}$ and every untouched reference $R$,
+
+$$
+\operatorname{Tr}_{E}\!\left[(W^n\otimes I_R)(\rho_{HR}\otimes\sigma)(W^{-n}\otimes I_R)\right]
+=(\Phi^n\otimes\operatorname{id}_R)(\rho_{HR}),\qquad 0\le n\le N .
+\tag{9.1}
+$$
+
+Every clock, reset supply, controller or other interacting carrier belongs to $E$. The unitary and $\sigma$ may depend on $N$ and on the source parameters, but not on the input or on the time index. Let $d_{\mathrm{pure}}(N)$ be the minimum $\dim E$ when $\sigma$ is pure, and let $d_{\mathrm{any}}(N)$ allow every density $\sigma$. The terminal problem in Theorem 8.2 asks only for one channel $\Phi^N$ and may choose a new terminal dilation for each $N$; (9.1) asks one $W$ and one initial density to realize every requested prefix power. Equality in (9.1) is an identity on the full matrix algebra and therefore includes all coherent inputs and all untouched references.
+
+Put
+
+$$
+\alpha=1-2p,\qquad \beta=2p,\qquad \alpha,\beta>0,\qquad \alpha+\beta=1,
+\tag{9.2}
+$$
+
+and work first in the fixed frame (8.5), writing again $U,V$ for $U\otimes I_K,V\otimes I_K$ and $R=UV$, $S=VU=R^{-1}$. Thus $\Phi=\alpha\,\operatorname{Ad}_U+\beta\,\operatorname{Ad}_V$ and $U^2=V^2=I$.
+
+**引理 9.2（Whole-input Gram compatibility for one temporal unitary）。** Let $J_0,\ldots,J_N:H\to\mathcal K$ be isometries into one finite-dimensional joint space. There is a unitary $W$ on $\mathcal K$ with
+
+$$
+WJ_n=J_{n+1}\qquad(0\le n<N)
+\tag{9.3}
+$$
+
+if and only if the block Gram operators agree:
+
+$$
+J_n^*J_m=J_{n+1}^*J_{m+1}\qquad(0\le n,m<N).
+\tag{9.4}
+$$
+
+**证明。** Define $F,G:H^{\oplus N}\to\mathcal K$ by $F(x_0,\ldots,x_{N-1})=\sum_nJ_nx_n$ and $G(x_0,\ldots,x_{N-1})=\sum_nJ_{n+1}x_n$. Equation (9.4) is exactly $F^*F=G^*G$. It makes $Fx\mapsto Gx$ well-defined and isometric, including all coherent superpositions of inputs; its domain and range have the same dimension. Extend this partial isometry to a unitary between the two orthogonal complements in $\mathcal K$. Conversely, any $W$ satisfying (9.3) preserves every block inner product and hence gives (9.4). For two boundaries $J_0,J_1$ and $J_1,J_2$, the condition reduces to $J_0^*J_1=J_1^*J_2$ because each $J_n$ is an isometry. This is the exact operator-Gram condition; checking basis vectors or one internal vector is insufficient. $\square$
+
+**定理 9.3（Exact pure and unrestricted minima at $N=2$）。** Throughout (8.1),
+
+$$
+\boxed{d_{\mathrm{pure}}(2)=3,}
+\qquad
+\boxed{
+ d_{\mathrm{any}}(2)=
+\begin{cases}
+2,&p=q=1/4,\\
+3,&p=q\ne1/4.
+\end{cases}}
+\tag{9.5}
+$$
+
+The same $W$ and the same input-independent initial density realize $n=0,1,2$ on all $H$ and on every untouched reference. The qubit exclusion below ranges over every joint unitary and every density on a two-dimensional environment; it is not a restricted controlled ansatz.
+
+**证明。** Since $U^2=V^2=I$,
+
+$$
+\Phi^2=(\alpha^2+\beta^2)\operatorname{Ad}_I
++\alpha\beta\operatorname{Ad}_R+\alpha\beta\operatorname{Ad}_S .
+\tag{9.6}
+$$
+
+The operators $I,R,S$ are linearly independent: a relation becomes a relation among $I,R,R^2$ after multiplication by $R$, and those powers are independent by (8.9). All three coefficients in (9.6) are positive, so the Choi rank of $\Phi^2$ is three. A pure environment of dimension $d$ supplies at most $d$ Kraus operators at each time, hence $d_{\mathrm{pure}}(2)\ge3$.
+
+For attainment, let $E_3$ have orthonormal basis $f_0,f_1,f_2$ and prepare the single state
+
+$$
+|e\rangle=\beta f_0+\alpha f_1+\sqrt{2\alpha\beta}\,f_2 .
+\tag{9.7}
+$$
+
+Its norm is one. Define whole-input isometries $J_j:H\to H\otimes E_3$ by
+
+$$
+\begin{aligned}
+J_0x&=x\otimes |e\rangle,\\
+J_1x&=\sqrt\alpha\,Ux\otimes f_0+\sqrt\beta\,Vx\otimes f_1,\\
+J_2x&=\sqrt{\alpha\beta}\,Rx\otimes f_0+\sqrt{\alpha\beta}\,Sx\otimes f_1
+       +\sqrt{\alpha^2+\beta^2}\,x\otimes f_2 .
+\end{aligned}
+\tag{9.8}
+$$
+
+The reduced maps of $J_0,J_1,J_2$ are respectively $\operatorname{id},\Phi,\Phi^2$. The only nontrivial Gram block is
+
+$$
+J_0^*J_1=\beta\sqrt\alpha\,U+\alpha\sqrt\beta\,V=J_1^*J_2=:C,
+\tag{9.9}
+$$
+
+where the second equality uses $U^*R=V$ and $V^*S=U$. The norm bound
+
+$$
+\|C\|\le\beta\sqrt\alpha+\alpha\sqrt\beta
+=\sqrt{\alpha\beta}(\sqrt\alpha+\sqrt\beta)\le\frac1{\sqrt2}<1
+\tag{9.10}
+$$
+
+makes $Q=\begin{psmallmatrix}I&C\\ C&I\end{psmallmatrix}$ positive definite. Let $F=[J_0\ J_1]$ and $G=[J_1\ J_2]$. Then $F^*F=G^*G=Q$. Lemma 9.2, or its explicit extension
+
+$$
+W=GQ^{-1}F^*+L_G L_F^* ,
+\tag{9.11}
+$$
+
+where $L_F,L_G$ are unitary identifications of the two orthogonal complements, supplies one unitary on $H\otimes E_3$ with $WJ_0=J_1$ and $WJ_1=J_2$. Since $J_0x=x\otimes|e\rangle$, induction gives the required powers. Conjugating by the fixed source frame $D$ returns a unitary on the declared $H\otimes E_3$ and does not change dimensions or any reference extension. Thus $d_{\mathrm{pure}}(2)\le3$.
+
+It remains to classify a possible mixed qubit. If $\dim E=2$ and $\sigma$ were pure, the preceding lower bound would already contradict the prefix, so $\sigma$ has full support. In an eigenbasis of $\sigma$, every environment block of $W$ is a Kraus operator of the one-step channel up to a nonzero scalar. The Choi range of $\Phi$ is exactly $\operatorname{span}\{U,V\}$; positivity of a Kraus sum forces every block into that range. Consequently every possible $W$ has the forced form
+
+$$
+W=U\otimes A+V\otimes B
+\tag{9.12}
+$$
+
+for two $2\times2$ matrices $A,B$. Comparing the coefficients of the independent $I,R,S$ in both $W^*W=I$ and $WW^*=I$ gives
+
+$$
+A^*B=B^*A=AB^*=BA^*=0,\qquad
+A^*A+B^*B=AA^*+BB^*=I.
+\tag{9.13}
+$$
+
+Writing $T=A+B$, (9.13) says that $T$ is unitary and, in the output basis of the complementary projections,
+
+$$
+A=|0\rangle\langle0|\,T,\qquad B=|1\rangle\langle1|\,T,\qquad
+W=(U\otimes|0\rangle\langle0|+V\otimes|1\rangle\langle1|)(I\otimes T).
+\tag{9.14}
+$$
+
+Let $\tau=T\sigma T^*$ and set $x=|T_{01}|^2=|T_{10}|^2$. The one-step equality gives $\tau_{00}=\alpha$ and $\tau_{11}=\beta$. Expanding the two-step Choi operator in the independent operator basis $\{I,R,S\}$, the diagonal coefficients of $|R\rangle\langle R|$ and $|S\rangle\langle S|$ are respectively
+
+$$
+\beta x,\qquad \alpha x .
+\tag{9.15}
+$$
+
+The target coefficients from (9.6) are both $\alpha\beta$. Uniqueness of the coefficient matrix in an independent vectorized operator basis therefore gives $\beta x=\alpha\beta$ and $\alpha x=\alpha\beta$. Since $\alpha,\beta>0$, $x=\alpha=\beta=1/2$, hence $p=q=1/4$. At this point all entries of $T$ are nonzero. The target $I,R$ off-diagonal coefficient in the same exact expansion is $T_{00}\overline{T_{01}}\,\tau_{01}$; it must vanish, so $\tau_{01}=0$. Therefore $\tau=I_2/2$ and $\sigma=I_2/2$. This proves that no arbitrary mixed qubit works away from the stated locus.
+
+At $p=q=1/4$, take instead
+
+$$
+\sigma=I_2/2,\qquad
+W={1\over\sqrt2}
+\begin{pmatrix}U&U\\ V&-V\end{pmatrix}
+=(U\otimes|0\rangle\langle0|+V\otimes|1\rangle\langle1|)(I\otimes H_2),
+\tag{9.16}
+$$
+
+where $H_2$ is the Hadamard matrix. This $W$ is unitary. Its square is
+
+$$
+W^2={1\over2}
+\begin{pmatrix}I+R&I-R\\ S-I&S+I\end{pmatrix}.
+\tag{9.17}
+$$
+
+With the maximally mixed initial qubit, the four block Kraus operators have all cross terms cancel, leaving
+
+$$
+\Psi_1={1\over2}\operatorname{Ad}_U+{1\over2}\operatorname{Ad}_V=\Phi,\qquad
+\Psi_2={1\over2}\operatorname{Ad}_I+{1\over4}\operatorname{Ad}_R+{1\over4}\operatorname{Ad}_S=\Phi^2.
+\tag{9.18}
+$$
+
+This is a full-channel equality on $H$, not a restricted sector calculation, and it tensor-extends to every untouched reference. Dimension one cannot realize the rank-two channel $\Phi$, so $d_{\mathrm{any}}(2)=2$ at the locus. Together with the qutrit construction and the exclusion, (9.5) follows. $\square$
+
+**命题 9.4（What the N=2 boundary does and does not recover）。** The Gram equality (9.9) is the exact compatibility needed to turn the three whole-input boundary embeddings into one common temporal unitary. It does not assert equality for inserted interventions, measured successor histories, or a process tensor. The pure qutrit and mixed qubit states are prepared once in $E$; no environment is reset between $n=0,1,2$, and no clock label is read out. The qutrit result is a common-prefix realization, whereas the terminal rank statement (8.3) is a fresh terminal-channel contract.
+
+**证明。** This is the direct specialization of Lemma 9.2 to $F=[J_0\ J_1]$ and $G=[J_1\ J_2]$. The reduced identities are linear identities on all matrices, so untouched references are included. The stated intervention and history claims would require additional joint maps and readout interfaces absent from (9.1), and therefore do not follow from the Gram calculation. $\square$
+
+## 10. Quantitative finite-prefix growth and charged attainability
+
+**定理 10.1（Arbitrary-density finite-prefix lower bound）。** For every strict balanced source and every finite realization (9.1),
+
+$$
+\boxed{d_{\mathrm{any}}(N)^2\ge N+1,\qquad d_{\mathrm{pure}}(N)^2\ge N+1.}
+\tag{10.1}
+$$
+
+The first inequality allows arbitrary rank and arbitrary coherences in the initial density. It is a source-specific application of the existing arbitrary-complex-weight Prony annihilator, not a new generic Prony theorem.
+
+**证明。** Work in the frame (8.5). Define
+
+$$
+x_\pm={e_1+e_3\over2}\pm {e_2\over\sqrt2},\qquad
+h_\pm=x_\pm\otimes k,\qquad O=|h_+\rangle\langle h_-|,
+\tag{10.2}
+$$
+
+for any unit $k\in K$. Direct multiplication of the actual matrices (8.6) gives $x_\pm$ orthonormal, $Ux_\pm=x_\pm$, and $Vx_\pm=\pm x_\pm$, independently of $\eta,\zeta$. In the original source coordinates these are the actual full-input states
+
+$$
+g_\pm=D^\dagger h_\pm
+={1\over2}|1\rangle\otimes ak-{1\over2}|3\rangle\otimes ck
+\mp {1\over\sqrt2}|2\rangle\otimes bk .
+\tag{10.3}
+$$
+
+Thus $P_\pm=|h_\pm\rangle\langle h_\pm|$ are fixed by $\Phi$, while
+
+$$
+\Phi(O)=\lambda O,\qquad \lambda=1-4p,\qquad |\lambda|<1.
+\tag{10.4}
+$$
+
+Although $O$ is not a density operator, equality on densities implies equality on all matrices. Explicitly, $O$ is the complex polarization combination of the four projectors onto $(h_+\pm h_-)/\sqrt2$ and $(h_+\pm i h_-)/\sqrt2$. Hence, for the reduced maps $\Psi_n$ in (9.1),
+
+$$
+f_n:=\langle h_+|\Psi_n(O)|h_-\rangle=\lambda^n,\qquad 0\le n\le N.
+\tag{10.5}
+$$
+
+Let $S=\operatorname{supp}\sigma$ and write its spectral decomposition as $\sigma=\sum_j s_j|e_j\rangle\langle e_j|$ with every $s_j>0$ on $S$. Since $\Psi_n(P_\pm)=P_\pm$ and the summands of a positive leakage probability are nonnegative,
+
+$$
+W^n(h_\pm\otimes e)=h_\pm\otimes T_{\pm,n}e\qquad(e\in S,\ 0\le n\le N)
+\tag{10.6}
+$$
+
+for isometries $T_{\pm,n}:S\to E$. This step uses the actual positive spectral support and does not purify $\sigma$ or assume that it is diagonal in a source basis. On
+
+$$
+F_\pm=\operatorname{span}\{T_{\pm,n}S:0\le n<N\},
+$$
+
+the same $W$ defines the isometry $T_{\pm,n}e\mapsto T_{\pm,n+1}e$. Extending it on $E$ gives a unitary $A_\pm$ with $A_\pm^ne=T_{\pm,n}e$ for $e\in S$ and $n\le N. Consequently,
+
+$$
+f_n=\operatorname{Tr}(A_+^n\sigma A_-^{-n}).
+\tag{10.7}
+$$
+
+Diagonalize the two auxiliary unitaries, $A_+=\sum_i u_iP_i$ and $A_-=\sum_jv_jQ_j$. Then
+
+$$
+f_n=\sum_{i,j}c_{ij}(u_i\overline v_j)^n,\qquad
+c_{ij}=\operatorname{Tr}(P_i\sigma Q_j).
+\tag{10.8}
+$$
+
+After combining equal frequencies and deleting zero combined coefficients, this is $\sum_{\ell=1}^K a_\ell\omega_\ell^n$ with $1\le K\le d^2$ and $|\omega_\ell|=1$. The coefficients may be arbitrary complex numbers; no positivity is used.
+
+Reuse the existing finite Prony annihilator with
+
+$$
+q(z)=\prod_{\ell=1}^K(z-\omega_\ell)=\sum_{j=0}^Kq_jz^j .
+$$
+
+It gives $\sum_{j=0}^Kq_jf_j=0$. If $N\ge K$, (10.5) would imply $q(\lambda)=0$, impossible because every root of $q$ lies on the unit circle and $|\lambda|<1$. Therefore $N<K\le d^2$, proving (10.1). The endpoint is exact: the contradiction uses $f_0,\ldots,f_K$, so the conclusion is $N<K$. At $\lambda=0$ one has $q(0)=(-1)^K\prod_\ell\omega_\ell\ne0$; the zeroth sample is essential. The faces excluded by (8.1) would allow $|\lambda|=1$, so the strict domain is used.
+
+For mixed $\sigma$, the usual Choi accounting is only
+
+$$
+\operatorname{rank}J(\Psi_n)\le d\,\operatorname{rank}(\sigma)\le d^2,
+\tag{10.9}
+$$
+
+not $\operatorname{rank}J(\Psi_n)\le d$. The latter is a pure-environment statement and is not used in this proof. $\square$
+
+**推论 10.2（Finite dimensions are unbounded across exact horizons）。** No single finite environment dimension can satisfy (9.1) for every horizon. In particular, for $N=16$ the terminal pure minimum from Theorem 8.2 is four, whereas every common-prefix realization, including arbitrary mixed initial densities, has $d\ge\lceil\sqrt{17}\rceil=5$. At this horizon the fully labelled construction below uses $62$ dimensions and the endpoint-sharing construction uses $61$; these are upper bounds, not optima.
+
+**证明。** Letting $N$ increase in (10.1) rules out a fixed finite $d$. For $N=16$, (10.1) gives $d^2\ge17$. The terminal statement is a separate rank-of-one-channel contract and is therefore not contradicted. $\square$
+
+**定理 10.3（Charged fully labelled upper construction and its finite return）。** Let $\Lambda_0=\operatorname{id}_H,\Lambda_n=\Phi^n$ and $r_n=\operatorname{rank}J(\Lambda_n)$. For every finite $N$ there is a pure initial state, one unitary $W$ and one charged environment with
+
+$$
+\dim E=\sum_{n=0}^N r_n
+\tag{10.10}
+$$
+
+that satisfies (9.1). For the balanced source this gives
+
+$$
+\dim E=1,3,4N-2\quad\text{for }N=0,1,N\ge2,
+\tag{10.11}
+$$
+
+using $r_n=\min(n+1,4)$ from Theorem 8.2. For $N\ge2$ the construction has an exact global return at time $N+1$, but that return is the boundary of the finite contract and does not assert $\Phi^{N+1}$.
+
+**证明。** Choose minimal Stinespring isometries $V_n:H\to H\otimes E_n$ for $\Lambda_n$, with $\dim E_n=r_n$, and take $E=\bigoplus_{n=0}^NE_n$. Embed the ranges $M_n=V_nH$ in their mutually orthogonal environment summands. Let $V_{N+1}=V_0$ and define
+
+$$
+W=\sum_{n=0}^NV_{n+1}V_n^*+(I-P),\qquad
+P=\sum_{n=0}^NV_nV_n^* .
+\tag{10.12}
+$$
+
+The first term cyclically permutes the orthogonal copies $M_n$ and the second is the identity on their orthogonal complement. Thus $W$ is unitary, $W^{N+1}=I$ on the whole joint space, and $W^n(x\otimes e_0)=V_nx$ for $0\le n\le N$, where $V_0x=x\otimes e_0$. Partial tracing gives $\Lambda_n$ on all matrices, and tensoring the identities with $I_R$ gives all untouched-reference cases. All time sectors, including the finite clock, are in $E$; no clock readout, reset or external controller is used. The return at $N+1$ gives the identity channel on the prepared boundary state, which generally differs from $\Phi^{N+1}$, so it is not an all-horizon realization. The one-step two-dimensional construction of Theorem 2.1 and the exact N=2 values of Theorem 9.3 remain sharper small-horizon results. $\square$
+
+**引理 10.4（One endpoint can share one charged environment dimension）。** Let a channel $\Lambda$ have Choi rank $r>0$ and Choi operator $J$ supported on $S$. For any nonzero $k\in S$, there is a Kraus family of $\Lambda$ with $r$ members whose first member is $cK$, where $\operatorname{vec}K=k$ and $c>0$, and whose other $r-1$ members span the residual support. Indeed, with $J_S^{-1}$ the inverse on $S$, choose
+
+$$
+c^2=\langle k,J_S^{-1}k\rangle^{-1}.
+\tag{10.13}
+$$
+
+Then $J-c^2|k\rangle\langle k|$ is positive semidefinite of rank $r-1$, and its rank-one decomposition supplies the remaining Kraus operators.
+
+**证明。** On the support, $J_S$ is positive definite. The rank-one Schur-complement identity gives $J_S-c^2kk^*\succeq0$ for (10.13), with one-dimensional kernel generated by $J_S^{-1}k$; hence its rank is $r-1$. Vectorizing a rank-one decomposition is exactly a Kraus decomposition. $\square$
+
+**定理 10.5（Endpoint-sharing upper construction, with a distinct boundary）。** For every $N\ge2$ the same contract (9.1) has a pure realization with
+
+$$
+\dim E=\sum_{n=0}^Nr_n-1=4N-3 .
+\tag{10.14}
+$$
+
+This construction shares one environment coordinate between the initial and final boundary embeddings. It has no guaranteed cyclic return and does not provide distinct initial and final time labels; those are different contracts from the fully labelled construction.
+
+**证明。** Use $E_0=\mathbb C e_0$ and mutually orthogonal $E_n$ for $1\le n<N$, with $\dim E_n=r_n$. Apply Lemma 10.4 to $\Lambda_N$ and write a minimal Kraus family whose first operator is $K_0$ on the shared coordinate $e_0$ and whose other $r_N-1$ operators use a fresh space $F_N$. Define $V_0x=x\otimes e_0$, use arbitrary minimal $V_n$ in $E_n$ for $1\le n<N$, and use the split family for $V_N$ in $e_0\oplus F_N$. Then $V_0,\ldots,V_{N-1}$ have pairwise orthogonal ranges, and $V_1,\ldots,V_N$ also have pairwise orthogonal ranges; only $V_0$ and $V_N$ may overlap. Therefore every off-diagonal block on the two sides of (9.4) is zero, while diagonal blocks are $I_H$, so Lemma 9.2 extends $V_n\mapsto V_{n+1}$ to one unitary $W$ on $H\otimes E$. With the pure initial state $|e_0\rangle$, induction gives $W^n(x\otimes e_0)=V_nx$ for $n\le N$. The environment dimension is
+
+$$
+1+\sum_{n=1}^{N-1}r_n+(r_N-1)=\sum_{n=0}^Nr_n-1.
+$$
+
+For the source, (8.3) gives (10.14). The shared $e_0$ component in $V_N$ prevents interpreting the final embedding as a distinct time label. The extension on the orthogonal complement is arbitrary, so neither $W^{N+1}=I$ nor any cyclic return is guaranteed. Nevertheless this is the same full-input/reference and no-clock-readout contract (9.1). $\square$
+
+**命题 10.6（No automatic positive-moment strengthening）。** Equation (10.7) is not in general a positive-definite unitary moment sequence. A positive-moment argument is valid under the additional hypothesis $[A_-,\sigma]=0$: then $\sqrt\sigma$ is a Hilbert--Schmidt cyclic vector for $X\mapsto A_+XA_-^*$ and the Gram matrix of the first $N+1$ orbit vectors is $(\lambda^{|i-j|})$, whose determinant is $(1-\lambda^2)^N>0$ for real $|\lambda|<1$. That conditional route can yield a stronger $d\,\operatorname{rank}\sigma\ge N+1$, but the commutation/stationarity hypothesis is not part of (9.1).
+
+A source-compatible one-step counterexample at $p=q=1/4$ makes the missing hypothesis concrete. On an environment qubit take
+
+$$
+C={I-iZ\over\sqrt2},\qquad P={I+X\over2},\qquad Q={I-X\over2},\qquad
+\sigma={I+Y/2\over2},
+$$
+
+and $W=(I_H\otimes C)(U\otimes P+V\otimes Q)$. The one-step reduced channel is $\Phi$ on the full $H$ and all references, while on the two sectors $h_\pm$ the branch unitaries are $A_+=C$ and $A_-=CX$. Direct exact multiplication gives
+
+$$
+(f_0,f_1,f_2,f_3,f_4)=(1,0,0,-1/2,-1).
+\tag{10.15}
+$$
+
+The Hermitian Toeplitz matrix $(f_{i-j})_{0\le i,j\le4}$ has determinant $-7/16$, so this readout is not positive semidefinite. The example is only a one-step source counterexample to automatic positivity; it is not claimed to satisfy a longer prefix. Thus no conclusion $d\ge N+1$ is automatic. The proved general statement is the arbitrary-complex-weight bound (10.1). $\square$
+
+## 11. Source correspondence, literature and limits
+
+**定义 11.1（What the quantitative addition reuses）。** The matrices, frame $D$, channel and terminal ranks are exactly those of §§1--3 and 8. The vectors (10.2)--(10.3) are the source's actual full-input states, not a substituted configuration-only model. The finite-frequency annihilator is reused from the existing arbitrary-field Prony suppliers prony_moment_linear_recurrence and prony_annihilator; no generic Prony theorem is introduced here. Choi/Kraus rank and finite Stinespring dilations are standard suppliers. The charged clock method is the finite-dimensional specialization of the Stinespring-plus-clock construction in vom Ende--Dirr, arXiv:1804.00918v3, Theorem 4. Theorem 7.4 of RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md contains a related $4N-2$ direct-sum clock argument under a different receiving/blank-output contract; it is credited as a method comparison and is not used as a stronger lower bound. The exact endpoint-sharing construction is the same finite isometry-extension mechanism with one deliberately shared boundary coordinate.
+
+**假设 11.2（Operational and epistemic limits）。** Every displayed equality is finite-dimensional exact mathematics about the abstract source channel. It does not certify physical preparation of arbitrary real $\alpha,\beta,\eta,\zeta$, calibration, native $\alpha/\beta$ acquisition, a physical clock, spatial geometry, thermodynamic or erasure cost, or executable finite precision. It does not reproduce an acquired edge or path archive, a measured-history instrument, arbitrary inserted interventions, feedback, or an intervened process tensor. The untouched reference is a proof of complete input action and is not a memory or an extra environment. The finite clock sectors are internal charged degrees of freedom and are not read out. No optimum for $N\ge3$, matching lower and upper rate, or exact classification beyond (9.5) is claimed. The small-$N$ constructions already established in §§2 and 9 are retained. The long-term restoration problem remains open beyond this finite prefix result.
+
+**本批核验。** Exact symbolic checks for the source vectors, the eigenoperator equation (10.4), the mixed one-step counterexample (10.15), the $N=2$ block construction (9.16)--(9.18), the four-node Prony endpoint, and the charged cyclic embeddings agree with the displayed identities. These are ordinary algebraic checks, not Lean verification or a replacement for the repository's required checks. No digestion, Lean addition, judge/tool change, experiment material, publication or physical implementation is part of this addition.
+
+## 追加锚（本行以下为增补区）
