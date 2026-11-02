@@ -9,6 +9,7 @@
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.SharpTail.Arithmetic
 
 noncomputable section
+set_option pp.proofs false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -29,10 +30,7 @@ private lemma inv_sq_integrable {x : ℝ} (hx : 0 < x) :
 private lemma inv_sq_integral {x : ℝ} (hx : 0 < x) :
     (∫ t : ℝ in Ioi x, 1 / t ^ 2) = 1 / x := by
   have h := integral_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx
-  norm_num only [neg_add_cancel_left, neg_add_rev, neg_sub, sub_neg_eq_add,
-    show -(2 : ℝ) + 1 = -1 by norm_num, Real.rpow_neg_one] at h
-  simpa only [Real.rpow_neg, Real.rpow_natCast, one_div, neg_div_neg_eq,
-    div_one] using h
+  simpa [Real.rpow_neg, Real.rpow_natCast, Real.rpow_neg_one] using h
 
 private lemma primitive_measurable : Measurable harmonicPrimitive := by
   have hH : Measurable H := by
