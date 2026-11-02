@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-implementation-described-at-endpoint)
    mirror-E: none(waiver:physical-dependent-source-registration-at-endpoint)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
+   anchors: [mathlib/module/Mathlib.Data.Int.Basic]
    utility: none
    digest: Row/model and the 16 exact strict S1/S2 coefficient identities. -/
 import Mathlib.Data.Int.Basic

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-implementation-described-at-endpoint)
    mirror-E: none(waiver:physical-dependent-source-registration-at-endpoint)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
+   anchors: [mathlib/module/Mathlib.Data.Int.Basic]
    utility: none
    digest: 40 exact X1/X2/X3/X4/X5 equality-chart coefficient identities and margins. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddlePolynomials

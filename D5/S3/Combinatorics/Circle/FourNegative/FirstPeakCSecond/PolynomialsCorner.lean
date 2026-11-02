@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-implementation-described-at-endpoint)
    mirror-E: none(waiver:physical-dependent-source-registration-at-endpoint)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Nat.Bitwise]
+   anchors: [mathlib/module/Mathlib.Data.Int.Basic]
    utility: none
    digest: Nine tight-quotient identities for the full unbounded small-corner C4 chart. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Polynomials
