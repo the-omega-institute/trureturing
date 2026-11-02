@@ -175,7 +175,7 @@ def nvm (x : (i : Coord V) → Ω → Value G i) : ℕ → V → Ω → Bool
 noncomputable def W (x : (i : Coord V) → Ω → Value G i) (u : V) (d t : ℕ) : Ω → ℝ :=
   fun ω => ∑ i ∈ Finset.Icc 1 t, (if nvm x i u ω = nvm x (i+d) u ω then 1 else 0 : ℝ)
 
-private instance coordinateLawProbability (ε : unitInterval) (hNbr : ∀ v, ∃ w, G.Adj v w)
+instance coordinateLawProbability (ε : unitInterval) (hNbr : ∀ v, ∃ w, G.Adj v w)
     (i : Coord V) : IsProbabilityMeasure (coordinateLaw G ε hNbr i) := by
   cases i with
   | initial v => exact instIsProbabilityMeasureBernoulliMeasure

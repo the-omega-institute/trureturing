@@ -1,0 +1,13 @@
+It remains to prove the second inequality of (2.3). For a fixed $i\geq1$, follow the potential copy path from $(u,i+d)$ through exactly $d$ layers, whether or not a refresh is present. Define
+
+$$
+Z_0=u,\qquad
+Z_{k+1}=J_{i+d-k,Z_k}\quad(0\leq k<d),
+$$
+
+and let
+
+$$
+A_i=\bigcap_{k=0}^{d-1}\{R_{i+d-k,Z_k}=0\}.
+$$
+
