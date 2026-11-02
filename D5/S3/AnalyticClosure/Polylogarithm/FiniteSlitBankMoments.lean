@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite bank moments dominate outer geometric errors for every positive composition and reciprocal power. -/
+   digest: A signed finite bank dominates any faster outer geometric error. -/
 
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionZeroFreeCollar
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.Analysis.SpecificLimits.Basic
+
+/-! Signed finite-interval moments and their strict geometric comparison. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -40,13 +42,13 @@ private theorem moment_lower_bound (h : ℝ → ℝ) (R : ℝ) (hR : 1 < R)
   have hcont : ContinuousOn (fun x : ℝ ↦ h x / x ^ (n + 1)) (Icc 1 R) :=
     hc.div (continuousOn_id.pow _) (fun x hx ↦ pow_ne_zero _ (ne_of_gt (lt_of_lt_of_le zero_lt_one hx.1)))
   have hint : IntervalIntegrable (fun x : ℝ ↦ h x / x ^ (n + 1)) volume 1 R :=
-    (by simpa only [uIcc_of_le hR.le] using hcont).intervalIntegrable
+    hcont.intervalIntegrable_of_Icc hR.le
   have hsmall : IntervalIntegrable (fun x : ℝ ↦ h x / x ^ (n + 1)) volume a b :=
-    (by simpa only [uIcc_of_le hab.le] using hcont.mono hsub).intervalIntegrable
+    (hcont.mono hsub).intervalIntegrable_of_Icc hab.le
   have hmono := intervalIntegral.integral_mono_on hab.le
     (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ ↦ h m / b ^ (n + 1)) volume a b)
     hsmall (fun x hx ↦
-      div_le_div₀ hmpos.le (hmin hx) (pow_pos (lt_of_lt_of_le zero_lt_one (hsub hx).1) _)
+      div_le_div₀ (hn x (hsub hx)) (hmin hx) (pow_pos (lt_of_lt_of_le zero_lt_one (hsub hx).1) _)
         (pow_le_pow_left₀ (by linarith [(hsub hx).1] : 0 ≤ x) hx.2 _))
   have hlarge := intervalIntegral.integral_mono_interval ha.le hab.le hb.le
     (ae_restrict_of_forall_mem measurableSet_Ioc (fun x hx ↦
@@ -55,8 +57,8 @@ private theorem moment_lower_bound (h : ℝ → ℝ) (R : ℝ) (hR : 1 < R)
     c / b ^ n = ∫ _ in a..b, h m / b ^ (n + 1) := by
       rw [intervalIntegral.integral_const]
       dsimp [c]
-      rw [smul_eq_mul, pow_succ]
-      field_simp
+      rw [pow_succ]
+      field_simp [hbpos.ne'] <;> ring
     _ ≤ ∫ x in a..b, h x / x ^ (n + 1) := hmono
     _ ≤ ∫ x in (1 : ℝ)..R, h x / x ^ (n + 1) := hlarge
 
@@ -84,11 +86,9 @@ theorem bank_dominance (h : ℝ → ℝ) (R : ℝ) (hR : 1 < R)
     apply (lt_div_iff₀ Real.pi_pos).2
     apply (lt_div_iff₀ hbp).2
     have := (lt_div_iff₀ Real.pi_pos).mp hn'
-    apply (div_lt_iff₀ hRp).2
-    apply (div_lt_iff₀ hRp).mp
     convert this using 1 <;> ring
   exact hcmp.trans_le (by
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using
+    simpa only [one_div, div_eq_mul_inv, mul_comm, mul_one] using
       div_le_div_of_nonneg_right (hbound n) Real.pi_pos.le)
 
 end D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitBankMoments
