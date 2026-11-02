@@ -10,6 +10,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 namespace Reg.D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitCompositionMoments
+open _root_.D5.S3.AnalyticClosure.Polylogarithm
 open _root_.D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitCompositionMoments
 
 abbrev signature : Signature where
