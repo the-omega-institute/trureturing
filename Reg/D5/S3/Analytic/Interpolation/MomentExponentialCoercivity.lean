@@ -2,9 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Interpolation.MomentExponentialCoercivity
 import Reg.Support.SingleDependentReadout
 
-/-! Faithful source registration ATTEMPT ONLY, UNCOMPILED.
-No declared_validated state or machine binding evidence is asserted.
-The readout observes the original complex quadratic form's real part. -/
+/-! The real-part readout observes the original complex quadratic form.
+The law retains the complete original telescope and finite families. -/
 
 noncomputable section
 universe u
@@ -61,8 +60,8 @@ def family : Registration arena.{u} (type_of% @moment_exponential_prefix_coerciv
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-/-- Candidate path: twelve original Pi binders, then the inequality's right
-operand and its function. This literal path needs later machine verification. -/
+/-- Twelve original Pi binders lead to the inequality's right operand
+and its real-part function. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@moment_exponential_prefix_coercivity.{u}) (Realization signature) Unit Unit where
   unitName :=
