@@ -37,18 +37,19 @@ private theorem projection_latitude (p : E₅) (hp : p 4 = 0) (s t : ℝ) :
   ext i
   by_cases hi : i = 4
   · subst i; simp [equatorialProjection, hp]
-  · simp [equatorialProjection, hp, PiLp.single_apply, hi]
+  · simp [equatorialProjection, hp, hi]
 
 /-- The two latitude signs retain every affine independence visible in the
 uniform nonzero equatorial projection. The pole is checked against each
 label, including every label outside the exceptional neighborhood. -/
-private theorem latitude_anchors {α : Type*} [Fintype α] (H : Finset α) :
+private theorem latitude_anchors {α : Type*} [Finite α] (H : Finset α) :
     ∃ x : α → E₅, Function.Injective x ∧
       (∀ a, ‖x a‖ = 1 / 4) ∧
       (∀ T : Finset α, T.card ≤ 5 → AffineIndepOn ℝ x (T : Set α)) ∧
       ∃ p : E₅, (1 / 4 : ℝ) < ‖p‖ ∧
         ∀ a, dist p (x a) = 1 ↔ a ∈ H := by
   classical
+  letI := Fintype.ofFinite α
   obtain ⟨y, hyi, hyn, _, hyr, hyg⟩ := general_anchors (α := α) 4 (by norm_num) (by norm_num)
   have hy4 (a : α) : y a 4 = 0 := by
     obtain ⟨z, hz⟩ := hyr a
@@ -83,7 +84,8 @@ private theorem latitude_anchors {α : Type*} [Fintype α] (H : Finset α) :
   have hxi : Function.Injective x := by
     intro a b hab
     apply hyi
-    exact (smul_right_injective _ hs) (by simpa only [hproj] using congrArg equatorialProjection hab)
+    exact (smul_right_injective _ hs)
+      (by simpa only [hproj] using congrArg equatorialProjection hab)
   let k : ℝ := (1 + Real.sqrt 61) / 8
   have hk2 : k ^ 2 - k / 4 = 15 / 16 := by
     dsimp [k]
@@ -96,7 +98,7 @@ private theorem latitude_anchors {α : Type*} [Fintype α] (H : Finset α) :
   have hdist (a : α) : dist p (x a) ^ 2 = k ^ 2 + 1 / 16 - 2 * k * t a := by
     rw [dist_eq_norm, norm_sub_sq_real, hpn, hxnorm]
     simp [p, EuclideanSpace.inner_single_left, hx4]
-    <;> ring
+    ring
   refine ⟨x, hxi, hxnorm, hxgp, p, by rw [hpn]; exact hk, fun a => ?_⟩
   by_cases ha : a ∈ H
   · have ht : t a = 1 / 8 := by simp [t, ha]
@@ -114,10 +116,12 @@ private theorem latitude_anchors {α : Type*} [Fintype α] (H : Finset α) :
       nlinarith
     · exact fun h => (ha h).elim
 
-private theorem common_unit_nonempty {α : Type*} [Fintype α]
+private theorem common_unit_nonempty {α : Type*} [Finite α]
     (x : α → E₅) (hx : ∀ a, ‖x a‖ = 1 / 4)
     (N : Finset α) (hN : N.card ≤ 4) (a₀ : N) :
     ∃ p : E₅, ∀ a : N, dist p (x a.val) = 1 := by
+  classical
+  letI := Fintype.ofFinite α
   let W := CosphericalUnitLocus.anchorDirection (fun a : N => x a.val) a₀
   let c := CosphericalUnitLocus.anchorCenter (fun a : N => x a.val) a₀
   let R := Real.sqrt (1 - (1 / 4 : ℝ) ^ 2 + ‖c‖ ^ 2)
@@ -137,7 +141,7 @@ private theorem common_unit_nonempty {α : Type*} [Fintype α]
     rw [hw]
     exact Real.sq_sqrt hpos.le
 
-private theorem choose_ordinary {α β : Type*} [Fintype α] [Finite β]
+private theorem choose_ordinary {α β : Type*} [Finite α] [Finite β]
     (x : α → E₅) (hx : ∀ a, ‖x a‖ = 1 / 4)
     (hgp : ∀ T : Finset α, T.card ≤ 5 → AffineIndepOn ℝ x (T : Set α))
     (N : Finset α) (hN : N.card ≤ 4) (hne : N.Nonempty)
@@ -146,6 +150,7 @@ private theorem choose_ordinary {α β : Type*} [Fintype α] [Finite β]
       (∀ a, dist p (x a) = 1 ↔ a ∈ N) ∧
       (∀ b, dist p (y b) ≠ 1) ∧ ∀ b, p ≠ y b := by
   classical
+  letI := Fintype.ofFinite α
   obtain ⟨a, ha⟩ := hne
   let a₀ : N := ⟨a, ha⟩
   obtain ⟨p₀, hp₀⟩ := common_unit_nonempty x hx N hN a₀
@@ -165,7 +170,7 @@ private theorem choose_ordinary {α β : Type*} [Fintype α] [Finite β]
   by_cases ha : a ∈ N
   · exact ⟨fun _ => ha, fun _ => hpx ⟨a, ha⟩⟩
   · exact ⟨fun h => (hpz (.inl ⟨a, ha⟩) h).elim, fun h => (ha h).elim⟩
-private theorem place_positive_rows {α β : Type*} [Fintype α] [Fintype β]
+private theorem place_positive_rows {α β : Type*} [Finite α] [Finite β]
     (x : α → E₅) (hx : ∀ a, ‖x a‖ = 1 / 4)
     (hgp : ∀ T : Finset α, T.card ≤ 5 → AffineIndepOn ℝ x (T : Set α))
     (N : β → Finset α)
@@ -179,6 +184,8 @@ private theorem place_positive_rows {α β : Type*} [Fintype α] [Fintype β]
       (∀ b, (1 / 4 : ℝ) < ‖y b‖) ∧ (∀ b a, dist (y b) (x a) = 1 ↔ a ∈ N b) ∧
       ∀ b : s₀, y b.val = y₀ b := by
   classical
+  letI := Fintype.ofFinite α
+  letI := Fintype.ofFinite β
   generalize hn : (Finset.univ \ s₀).card = n
   induction n generalizing s₀ with
   | zero =>
@@ -242,7 +249,7 @@ private theorem place_positive_rows {α β : Type*} [Fintype α] [Fintype β]
     exact ⟨y, hyi, hyu, hyn, hyr, fun c =>
       (hyo ⟨c.val, Finset.mem_insert_of_mem c.property⟩).trans (hold c)⟩
 
-private theorem exceptional_rows {α β : Type*} [Fintype α] [Fintype β]
+private theorem exceptional_rows {α β : Type*} [Finite α] [Fintype β]
     (N : β → Finset α) (hne : ∀ b, (N b).Nonempty)
     (hhigh : (Finset.univ.filter (fun b => 5 ≤ (N b).card)).card ≤ 1) :
     ∃ (x : α → E₅) (y : β → E₅), Function.Injective x ∧
@@ -251,6 +258,7 @@ private theorem exceptional_rows {α β : Type*} [Fintype α] [Fintype β]
       (∀ b, (1 / 4 : ℝ) < ‖y b‖) ∧
       ∀ b a, dist (y b) (x a) = 1 ↔ a ∈ N b := by
   classical
+  letI := Fintype.ofFinite α
   let T := Finset.univ.filter (fun b => 5 ≤ (N b).card)
   have huniq (b : T) (c : T) : b = c :=
     Subtype.ext ((Finset.card_le_one.mp hhigh) b.val b.property c.val c.property)
@@ -293,7 +301,7 @@ private theorem exceptional_rows {α β : Type*} [Fintype α] [Fintype β]
     place_positive_rows x hxn hxg N T y₀ hyi hyu hyn hyr hsmall hne
   exact ⟨x, y, hxi, hxn, hyi, hyu, hyn, hyr⟩
 
-private theorem combine_rows {V : Type*} [Fintype V] [DecidableEq V]
+private theorem combine_rows {V : Type*} [DecidableEq V]
     (G : SimpleGraph V) (A B C : Finset V)
     (hG : G.IsBipartiteWith (A : Set V) (B : Set V)) (hCA : C ⊆ A)
     (x : B → E₅) (hxi : Function.Injective x) (hxn : ∀ b, ‖x b‖ = 1 / 4)
@@ -376,7 +384,7 @@ private theorem restore_core {V : Type*} [Fintype V] [DecidableEq V]
     exact hsmall a ((hcover a).resolve_right haB)
       (fun h => ha (Finset.mem_union_left B h))
 
-private theorem exists_exceptional_placement {V : Type*} [Fintype V] [DecidableEq V]
+private theorem exists_exceptional_placement {V : Type*} [Fintype V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (A B : Finset V)
     (hG : G.IsBipartiteWith (A : Set V) (B : Set V))
     (hcover : ∀ v, v ∈ A ∨ v ∈ B)
@@ -436,7 +444,7 @@ private theorem exists_exceptional_placement {V : Type*} [Fintype V] [DecidableE
   refine ⟨P, hPi, hPf, hPn, fun b hb c hc => ?_⟩
   exact (dist_le_norm_add_norm _ _).trans_lt (by rw [hPn b hb, hPn c hc]; norm_num)
 
-private theorem exists_small_core {V : Type*} [Fintype V] [DecidableEq V]
+private theorem exists_small_core {V : Type*} [Fintype V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (A B C : Finset V)
     (hG : G.IsBipartiteWith (A : Set V) (B : Set V))
     (hcover : ∀ v, v ∈ A ∨ v ∈ B) (hCA : C ⊆ A) (hC : C.card ≤ 5)
@@ -500,7 +508,7 @@ theorem exists_faithful_realization_of_card_edges_le_twenty_one
     constructor
     · exact Set.disjoint_left.mpr (by intro v hv hw; simp_all [A, B])
     · intro u v huv
-      have hne := hc huv
+      have hne : c u ≠ c v := hc huv
       simp only [Finset.mem_coe, A, B, Finset.mem_filter, Finset.mem_univ, true_and]
       omega
   let C := A.filter (fun a => 3 ≤ G.degree a)
