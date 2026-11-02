@@ -443,3 +443,373 @@ $$
 **定义 7.2（候选的有限理论边界）。** 本候选的结论限定在有限正关系球、非零局部度量 Lie 变化、式 (1.1) 的联合模板及明确的操作闭包内。一般非球形局部结构的选择、无限维极限、连续时空、具体 Hamiltonian、物理单位的经验标定及所有维数的 SIC 存在性，不是上述定理的结论。若要从更弱的内部比较关系推出这些前件，需要另给对象对应与证明，不能以同一术语替代该桥梁。
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 一般正比较场与不含外部标尺的候选
+
+**定义 8.1（未预设 Lie 结构的内部比较场）。** 设 $J$ 是非零有限维实向量空间，$1\in J$，$S:J\times J\to J$ 是交换双线性运算，$g$ 是正定内积，满足
+
+$$
+S(1,a)=a,\qquad g(S(a,b),c)=g(b,S(a,c)).
+$$
+
+给实线性映射 $D:J\to\operatorname{Der}(J,S)$，并要求 $D\ne0$。记 $L_ab=S(a,b)$、$B(a,b)=D_ab$。此处不要求 $S$ 为 Jordan 乘法，不要求 $B$ 交替、自守、满足 Jacobi 或消去第一槽的单位，也不要求 $J$ 是关系球。维数 $n=\dim J$ 包括单位方向。
+
+每个 $S$ 的导子都对 $g$ 斜伴随，直接复用[比较曲率 V95，定理 2.1 第一项](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)的有限正 Frobenius 论证；这个事实只依赖本定义中的比较前件。单位律给 $D_a1=0$，此时尚不能据此断言 $D_1a=0$。
+
+**定义 8.2（未校准联合运算）。** 对两个定义 8.1 的场 $A,B$，在实张量空间上使用
+
+$$
+M_\lambda=S_A\otimes S_B-\lambda B_A\otimes B_B,
+\qquad
+T=B_A\otimes S_B+S_A\otimes B_B,
+$$
+
+其中 $\lambda$ 先仅为实代数变量。定义联合导子残差
+
+$$
+R_\lambda(H,X,Y)=T(H,M_\lambda(X,Y))
+-M_\lambda(T(H,X),Y)-M_\lambda(X,T(H,Y)).\tag{8.1}
+$$
+
+此时不预设 $M_\lambda$ 对称或 $T$ 交替；它们是由局部定义给出的待检验运算。实张量空间及这两个联合模板仍为明确前件。
+
+**定义 8.3（完整有限探针族）。** 对每个局部场 $J$ 取完整正交单位基 $e_1,\ldots,e_n$，并令
+
+$$
+\mathcal P_J=\{e_i:1\le i\le n\}
+\cup\{(e_i+e_j)/\sqrt2:1\le i<j\le n\}.
+$$
+
+在另一场取一个固定的有序参照对 $(b,d)$，使 $v=D_bd\ne0$。取以下带标签的三元探针族：
+
+$$
+\begin{aligned}
+\Pi_J^{\rm self}
+&=\{(p\otimes d,p\otimes b,p\otimes1):p\in\mathcal P_J\},\\
+\Pi_J^{\rm mix}
+&=\{(e_i\otimes b,e_k\otimes d,e_j\otimes1):i<j,\ 1\le k\le n\}.
+\end{aligned}\tag{8.2}
+$$
+
+自身探针交换了参照的两个槽，因此只需 $D_bd\ne0$，无需预先要求 $D_db\ne0$。对第二场按交换因子的顺序定义同样的族。两边残差所在空间的有限正交直和记为 $\mathcal H_\Pi$，其内积由各局部乘积内积给出。探针保留标签，数量按出现次数计算。
+
+**定义 8.4（候选 C97：有限缺陷可由同一内部比例抵消）。** 在 $\mathcal H_\Pi$ 中定义
+
+$$
+P=(R_0(\pi))_{\pi\in\Pi},\qquad
+Q=(R_0(\pi)-R_1(\pi))_{\pi\in\Pi}.
+$$
+
+残差关于 $\lambda$ 仿射，所以全部有限报告为 $P-\lambda Q$。令
+
+$$
+\lambda_*=
+\begin{cases}
+\langle P,Q\rangle/\|Q\|^2,&Q\ne0,\\
+0,&Q=0,
+\end{cases}
+\qquad
+\Gamma=\|P-\lambda_*Q\|^2.
+$$
+
+唯一候选条件为
+
+$$
+\boxed{\Gamma=0.}\tag{C97}
+$$
+
+$P,Q$ 都由已经定义的内部比较、变化及参照对产生；$\lambda_*$ 由它们定义，不是另行输入的数值。该条件要求同一比例消去全部有限联合缺陷，不允许逐探针选择比例。此处的投影是有限正内积空间的通常正交投影；$\lambda_*$ 的正号尚不是定义条件。
+
+## 9. 有限报告推出局部 Lie 结构与全部联合相容
+
+**定理 9.1（一般正场的有限压缩与内生量子端点）。** 对定义 8.1–8.4 的两个场，下列条件等价：
+
+1. C97 成立；
+2. 存在实数 $\lambda$，使全部联合输入满足 $R_\lambda(H,X,Y)=0$。
+
+成立时，$\lambda=\lambda_*>0$ 唯一，且两边均有
+
+$$
+D_aa=0,\qquad B(a,b)=-B(b,a),\qquad D_1=0,
+$$
+
+以及 Jacobi 律和
+
+$$
+\boxed{[L_a,L_b]+\lambda_*[D_a,D_b]=0.}\tag{9.1}
+$$
+
+各局部复化上
+
+$$
+m(a,b)=S(a,b)-i\sqrt{\lambda_*}B(a,b)
+$$
+
+是具有忠实正 $*$ 表示的复结合乘法；原实场恰为其自伴部分。局部与联合的 Jordan 性、变化的交替性与 Jacobi 性因而都是结论。每方所用探针数为
+
+$$
+\boxed{|\Pi_J|=\frac{n(n+1)}2+\frac{n^2(n-1)}2=\frac{n^3+n}2.}\tag{9.2}
+$$
+
+该数量是一个充分证书，不主张最小性。
+
+证明。首先不使用交替性，直接展开得到
+
+$$
+\boxed{
+R_\lambda(a\otimes b,c\otimes d,e\otimes1)
+=[L_a,L_e]c\otimes D_bd
++\lambda D_cD_ae\otimes D_db.
+}\tag{9.3}
+$$
+
+乘 $S_B(b,d)$ 的项由局部导子律抵消，其他项正是上式。特别地，交换参照槽后
+
+$$
+\boxed{R_\lambda(p\otimes d,p\otimes b,p\otimes1)
+=\lambda D_p^2p\otimes v.}\tag{9.4}
+$$
+
+$P\ne0$。否则混合探针的零参数报告给全部 $[L_{e_i},L_{e_j}]e_k=0$，故所有左乘算子对易。交换性继而给
+
+$$
+S(S(a,b),c)=L_cL_ab=L_aL_cb=S(a,S(b,c)),
+$$
+
+所以 $S$ 结合。全部 $L_a$ 自伴且可同时对角化，$L_a1=a$ 又使表示忠实，因而此有限正交换结合代数为若干个 $\mathbb R$ 的直积。其导子为零：对谱幂等元 $p$，$\delta p=2p\delta p$ 逐坐标强迫 $\delta p=0$。这与定义 8.1 的 $D\ne0$ 矛盾。
+
+若 $\Gamma=0$，则 $P=\lambda_*Q$。$P\ne0$ 自动排除 $Q=0$ 和 $\lambda_*=0$，且全部有限探针在同一个非零参数上消失。由 (9.4) 及斜伴随性，
+
+$$
+0=-g(p,D_p^2p)=\|D_pp\|^2.
+$$
+
+对基向量及归一两两和均如此，极化遂给
+
+$$
+D_{e_i}e_j+D_{e_j}e_i=0,
+$$
+
+并由双线性扩展为全部 $a,b$ 的交替性。再由 $D_a1=0$ 得 $D_1a=0$。两边均先完成这一步，才在 (9.3) 中替换 $D_db=-D_bd$。
+
+因此混合报告成为
+
+$$
+R_\lambda(a\otimes b,c\otimes d,e\otimes1)
+=\bigl([L_a,L_e]+\lambda D_{B(a,e)}\bigr)c\otimes v.\tag{9.5}
+$$
+
+$[L_a,L_e]$ 和 $D_{B(a,e)}$ 对 $a,e$ 都交替；完整的 $i<j,k$ 族足以推出
+
+$$
+[L_a,L_e]= -\lambda_*D_{B(a,e)}
+$$
+
+对全部元成立。交换乘法的恒等式
+
+$$
+[L_a,L_e]c+[L_e,L_c]a+[L_c,L_a]e=0
+$$
+
+逐项抵消成立，因而给
+
+$$
+B(B(a,e),c)+B(B(e,c),a)+B(B(c,a),e)=0.
+$$
+
+这推出 Jacobi，而非预先使用它。于是 $[D_a,D_e]=D_{B(a,e)}$，得到 (9.1)。
+
+为确定符号，定义正定迹比较
+
+$$
+q(a,b)=\operatorname{Tr}(L_aL_b).
+$$
+
+正定性来自 $L_a$ 自伴及 $L_a1=a$。任意比较导子 $\delta$ 满足
+
+$$
+q(\delta a,b)+q(a,\delta b)=\operatorname{Tr}[\delta,L_aL_b]=0.
+$$
+
+选 $v=D_ab\ne0$，记 $K=[L_a,L_b]$、$C=[D_a,D_b]$。由交替性和自守，$Ca=-D_a^2b$，故
+
+$$
+\operatorname{Tr}(CK)
+=\operatorname{Tr}([C,L_a]L_b)
+=q(Ca,b)=q(D_ab,D_ab)>0.
+$$
+
+$K=-\lambda_*C$ 且 $K$ 斜伴随，因此
+
+$$
+\boxed{\|K\|_{\rm HS}^2=\lambda_*q(D_ab,D_ab).}\tag{9.6}
+$$
+
+左侧非负、右侧第二因子正，结合 $\lambda_*\ne0$，给出 $\lambda_*>0$。每个非零变化对同时给出同一内部标尺
+
+$$
+\boxed{\lambda_*
+=\frac{\|[L_a,L_b]\|_{\rm HS}^2}{q(D_ab,D_ab)}.}\tag{9.7}
+$$
+
+复结合重构现在直接复用比较曲率 V95 定理 2.1 的缩放形式。其左正则表示为
+
+$$
+\pi(a)=L_a-i\sqrt{\lambda_*}D_a,\qquad \pi(z)1=z.
+$$
+
+实元的左乘算子自伴，结合性使 $\pi$ 成为忠实含幺 $*$ 表示，有限维像因此为复 $C^*$ 代数。两边结合张量积的乘法恰为 $M_{\lambda_*}-i\sqrt{\lambda_*}T$，故全部联合导子残差消失。有限 $C^*$ 与动力对应的成熟重构在此仅作为有限证书端点的中间工具，出处同定理 2.1；不另认领该标准表示。
+
+反过来，若某个参数上全部联合残差消失，则 $P=\lambda Q$。$P\ne0$ 迫使 $Q\ne0$，正交投影给 $\lambda_*=\lambda$、$\Gamma=0$，也证明该参数唯一。有限计数由两族的指标直接相加，得到 (9.2)。例如两个实自伴维数均为 $4$ 的场使用 $68$ 个带标签报告；逐一检查整个 $16$ 维联合空间上的全部基三元组则有 $16^3=4096$ 项。这里仅比较这两种明确证书，不声称排除了其他压缩方式。∎
+
+## 10. 自守缺陷的有限正证书与尖锐误差律
+
+**定理 10.1（尚未交替时的平方根界）。** 在定义 8.1–8.2 下，不要求 C97。固定另一边的 $v=D_bd\ne0$，令 $r=\|v\|$、$\lambda\ne0$，则每个局部元 $a$ 满足
+
+$$
+\boxed{\|D_aa\|^2
+\le\frac{\|a\|\,
+\|R_\lambda(a\otimes d,a\otimes b,a\otimes1)\|}{|\lambda|r}.}\tag{10.1}
+$$
+
+若
+
+$$
+\delta=\sup_{\|a\|=1}\|D_aa\|,\qquad
+\varepsilon=\sup_{\|a\|=1}
+\|R_\lambda(a\otimes d,a\otimes b,a\otimes1)\|,
+$$
+
+则 $\delta\le\sqrt{\varepsilon/(|\lambda|r)}$，平方根指数及常数 $1$ 均尖锐。该界只控制所定义自身探针族，不把它升级为任意近似量子代数的稳定性定理。
+
+证明。式 (9.4) 与斜伴随性给
+
+$$
+\|D_aa\|^2=-g(a,D_a^2a)
+\le\|a\|\|D_a^2a\|
+=\frac{\|a\|\|R_{\rm self}\|}{|\lambda|r}.
+$$
+
+为达到等号，取 $J=\mathbb R1\oplus\mathbb R^2$ 的通常球比较，令 $J_0e_1=e_2$、$J_0e_2=-e_1$，定义
+
+$$
+D^t_{(\alpha,u)}(\beta,w)=(0,t u_1J_0w).
+$$
+
+$J_0$ 为旋转导子，所以该指派满足定义 8.1；$t\ne0$ 时非零。对单位向量 $a=e_1$ 有
+
+$$
+D_aa=te_2,\qquad D_a^2a=-t^2e_1.
+$$
+
+对任意单位 $a$ 又有 $\|D_aa\|\le|t|$、$\|D_a^2a\|\le t^2$，上式同时达到。因此
+
+$$
+\delta=|t|,\qquad \varepsilon=|\lambda|rt^2.
+$$
+
+这精确达到常数并在 $t\to0$ 时固定指数。若误差被定义为残差的平方或平方和，则相应是该平方误差的四分之一次幂；不能混同两种误差。此例没有让全部联合残差趋零的结论。∎
+
+## 11. 未假设 Jacobi 时的内部标定障碍
+
+**定理 11.1（有限迹缺额与正的最佳比例）。** 在定义 8.1 的单场中，另已得到或明确要求 $B(a,b)=-B(b,a)$，但不要求 Jacobi。记
+
+$$
+K_{ab}=[L_a,L_b],\qquad E_{ab}(\lambda)=K_{ab}+\lambda D_{B(a,b)},
+\qquad q(a,b)=\operatorname{Tr}(L_aL_b).
+$$
+
+则
+
+$$
+\operatorname{Tr}(K_{ab}D_{B(a,b)})=q(B(a,b),B(a,b)).\tag{11.1}
+$$
+
+对完整正交基，定义
+
+$$
+\mathsf a=\sum_{i<j}\|K_{ij}\|_{\rm HS}^2,\quad
+\mathsf h=\sum_{i<j}q(B(e_i,e_j),B(e_i,e_j)),\quad
+\mathsf c=\sum_{i<j}\|D_{B(e_i,e_j)}\|_{\rm HS}^2.
+$$
+
+活动条件给 $\mathsf a,\mathsf h,\mathsf c>0$，并有精确恒等式
+
+$$
+\boxed{\sum_{i<j}\|E_{ij}(\lambda)\|_{\rm HS}^2
+=\mathsf c\left(\lambda-\frac{\mathsf h}{\mathsf c}\right)^2
++\frac{\mathsf a\mathsf c-\mathsf h^2}{\mathsf c}.}\tag{11.2}
+$$
+
+因此最佳局部比例唯一且为正，剩余障碍为非负量 $\mathsf a\mathsf c-\mathsf h^2$。若另一场的括号也已交替，则在固定非零参照 $v$ 下，式 (9.5) 的完整混合残差平方和恰为式 (11.2) 乘 $\|v\|^2$。这里的 $E$ 使用 $D_{B(a,b)}$；在尚未得到 Jacobi 时，不得换成 $[D_a,D_b]$。
+
+证明。令 $z=B(a,b)$，$D_z$ 仍为比较导子。迹循环性、交替性与 $q$ 的导子不变性给
+
+$$
+\begin{aligned}
+\operatorname{Tr}(K_{ab}D_z)
+&=\operatorname{Tr}([D_z,L_a]L_b)\\
+&=q(D_za,b)=q(-D_a^2b,b)=q(z,z).
+\end{aligned}
+$$
+
+这证明 (11.1)，完全没有使用 Jacobi。$K_{ab},D_z$ 均斜伴随，故其 Hilbert–Schmidt 内积为 $-q(z,z)$。逐对展开平方并配方，得到 (11.2)。
+
+至少一个基对有 $z\ne0$，于是 $\mathsf h>0$；(11.1) 同时迫使该对的 $K_{ab},D_z$ 非零，故其余两数为正。把所有 $K_{ij}$ 与 $D_{B(e_i,e_j)}$ 当作有限直和中的两个向量，Cauchy–Schwarz 给 $\mathsf h^2\le\mathsf a\mathsf c$。等号、配合比例 $\lambda=\mathsf h/\mathsf c$，恰使全部 $E_{ij}$ 消失；随后定理 9.1 的循环抵消步骤给出 Jacobi。张量范数乘法则给所述联合残差对应。此处正交投影和 Cauchy–Schwarz 是标准工具，有限缺额针对的是当前未预设 Lie 的关系接口。∎
+
+## 12. 一般有限量子理论及共同标尺的范围
+
+**定理 12.1（有限证书的类别、单位自由与操作接续）。** C97 的每个局部场都同构于某个有限复 $C^*$ 代数的自伴部分，其复代数为
+
+$$
+\mathcal A\cong\bigoplus_sM_{d_s}(\mathbb C),
+$$
+
+且至少一个 $d_s\ge2$。反过来，每个具有非交换块的有限复 $C^*$ 代数，取任意正的逐块加权迹内积及共同 $\lambda>0$，并令
+
+$$
+S(a,b)=\tfrac12(ab+ba),\qquad D_ab=\frac{i}{2\sqrt\lambda}(ab-ba),
+$$
+
+即满足本候选。允许交换直和块；活动条件仅排除作为独立输入的纯交换场。
+
+沿连通网络共享同一个局部定义时，各边精确 C97 的内部 $\lambda_*$ 一致。但共同重标 $D\mapsto tD$、$t\ne0$，给
+
+$$
+P\mapsto tP,\quad Q\mapsto t^3Q,\quad
+\lambda_*\mapsto\lambda_*/t^2,\quad\Gamma\mapsto t^2\Gamma.
+$$
+
+故零缺陷与重构类别不变，绝对时间单位仍未由该候选固定。
+
+证明。定理 9.1 的忠实正表示和标准有限 $C^*$ 结构定理给直和形式。若全部块交换，则交换子为零，与 $D\ne0$ 矛盾；反向代入给 $S-i\sqrt\lambda D=ab$，并由结合张量积得到全部联合残差为零。正加权迹形式保持 Frobenius 与正定性。此处的有限代数分类是成熟表示工具，不作为新发现。
+
+每个固定局部非零变化对通过 (9.7) 唯一确定其 $\lambda_*$，所以同一顶点的各条边不能给不同参数。连通性沿边传播此等式。缩放时 $T$ 一次齐次、$M_0$ 不变、有向修正二次齐次，故零参数残差一次齐次、其参数系数三次齐次，得到所列缩放式。兼容端点的参数及候选真假不依赖完整基或活动参照对；非零 $\Gamma$ 的具体数值是已声明探针规范下的读数，不主张这种不变性。
+
+其完整有限操作解释直接复用定理 6.2：全部正归一泛函和效果给密度矩阵与 Born 规则，所有有限参考上的联合保正及结果标签给完全正仪器，连续可逆自同构给 Hamilton 演化。该接续仍要求相应状态、效果与参考的完整供应。这里直接重构一般矩阵块，不再要求先把局部系统设成球再用角闭包生成每个被给定系统；但“所有维数的系统均可取得”仍是对象族的供应条件，不由一个固定有限场的分类推出。内生终态仍使用定理 6.2 所引的所选过程收敛判据，C97 本身不保证吸引终态。∎
+
+## 13. 缺失前件的具体后果
+
+**命题 13.1（活动、正性与有限族完整性的不同作用）。** 以下放宽不能保留定理 9.1 的全部结论。
+
+- 删去双方活动要求时，即使全部联合残差恒为零，也不能推出复结合结构。
+- 把正 Frobenius 内积换成非退化但不定的形式时，即使保留双方非零导子，也允许参数零的完整联合相容与自守失败。
+- 在自身探针中只保留基向量、删去两两和时，基向量的自守不能推出全部元的自守。
+
+证明。第一项取定理 4.1 的零括号关系球，其非结合比较已给出显式三元反例。真正的经典结合记录仍可依该定理与量子系统并置；它不属于本定理双方均活动的起点。
+
+第二项取 $J=\mathbb R[\epsilon]/(\epsilon^2)$，比较为普通乘法，令 $g(a,b)=\tau(ab)$，其中 $\tau(1)=0,\tau(\epsilon)=1$。其矩阵为 $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，非退化且不定。定义导子 $\delta1=0,\delta\epsilon=\epsilon$，令 $D_{\alpha+\beta\epsilon}=\alpha\delta$。取两份此场，$\lambda=0$ 时 $M_0$ 为交换结合张量乘法，每个 $T_H$ 都是乘法乘以导子的有限和，因而为导子。但 $D_{1+\epsilon}(1+\epsilon)=\epsilon\ne0$，且非零自伴随幂零元不可能有忠实 $C^*$ 表示。正性被删除后原来的 Hilbert 投影规范本身也不再可用；此例针对的是即使完整联合导子律仍不足的强边界，不把不定形式冒称范数。
+
+第三项取 $\mathbb R1\oplus\mathbb R^3$ 的球比较，令
+
+$$
+D_{(\alpha,u)}(\beta,w)=(0,u_1(e_1\times w)).
+$$
+
+它是比较导子指派。对基 $1,e_1,e_2,e_3$，均有 $D_{e_i}e_i=0$，但对 $p=(e_1+e_2)/\sqrt2$ 有 $D_pp=e_3/2\ne0$，因此在 $\lambda=1$ 时相应自身联合报告非零。这只反驳由基向量自守推出全体自守，不宣称该对象通过剩余混合族。∎
+
+**定义 13.2（文献对应与本候选边界）。** Jordan–Lie 复合性产生复结构及共同参数的背景仍按定理 2.1 引用。另见 [Moldoveanu，*Quantum mechanics from invariance principles*，式 (6) 及其后的单位关系](https://arxiv.org/html/1303.3935)：该路线讨论从复合性导出交替性，但局部不变性对所列全部运算施加 Leibniz，包含有向运算自身，并明确输入 $1\alpha f=0$。当前有限证书只预设 $D_a$ 导出交换比较，未预设 $D_1=0$ 或有向运算的局部 Loday 律；两者的假设不相同。
+
+本候选的有限压缩、尚未交替时的尖锐自身缺陷界及内部迹标定作为上述一般场中的推导使用，不据此主张文献原创优先权。正定 Frobenius 比较、有限维、双方活动、联合模板及完整参考供应仍为前件；联合模板的唯一来源、无限维极限和实际物理单位不是本候选的结论。
+
+## 追加锚（本行以下为增补区）
