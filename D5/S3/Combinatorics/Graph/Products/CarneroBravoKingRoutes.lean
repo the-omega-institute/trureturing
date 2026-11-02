@@ -926,7 +926,7 @@ theorem actual_T_bounds (v : Vertex) :
         rawCoordinate (routingBucket (rawCoordinate (subdivision.code v))) := by
     simp only [bucketVertices, List.mem_filter, decide_eq_true_eq]
     exact ⟨subdivision.mem_raw_vertices originalVertices edgeIndices
-      mem_original_vertices mem_edge_indices v, rfl⟩
+      mem_original_vertices mem_edge_indices v, True.intro⟩
   have h := of_decide_eq_true (List.all_eq_true.mp hb (subdivision.code v) hm)
   simpa only [raw_coordinate_code] using h
 
