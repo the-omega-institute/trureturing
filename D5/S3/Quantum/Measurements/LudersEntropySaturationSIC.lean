@@ -7,7 +7,6 @@
    digest: Entropy saturation of a Lüders MIC channel forces the source SIC structure. -/
 
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Mixed.MState.Basic
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
