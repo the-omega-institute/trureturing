@@ -126,7 +126,7 @@ def support_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, 
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.NoisyVoter.RectangularSupport
     definition := none
-    coordinates := #[0, 1, 2, 6, 7]
+    coordinates := #[0, 1, 2, 6, 7, 10]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "body", "body",
