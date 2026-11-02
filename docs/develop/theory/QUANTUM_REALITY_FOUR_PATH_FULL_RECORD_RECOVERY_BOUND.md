@@ -3587,3 +3587,368 @@ Finally, every included value has the stated actual population, and every feasib
 All reduced formulas are invariant under the common scalar phase, even at a zero trace or at $w=0$; the proof never divides by $A$, $B$, $P$ or $Q$. The only division in (23.19) is made when $\omega>0$, so $D_\sigma>0$. The realization condition (23.1) retains all boundary diagonals and excludes diagonals not belonging to any actual unitary. The remaining universal assertion is precisely the nonnegativity of these finite expressions over that entire set, modulo its common scalar phase. Neither the restricted-family theorem nor the local limits of Section 22 settle that assertion. Thus the sharp global endpoint remains unresolved, with the established bounds $R_*\le C_{\mathrm{opt}}<135580$ of Sections 20–21. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 24. The sharp endpoint on the high-trace cap
+
+Keep the constants and original producer data of Sections 21–23. Put
+
+$$
+A_0=2+\sqrt{\frac83},\qquad
+\delta_*=4-A_0=2-\sqrt{\frac83},\qquad
+\mathcal C=\{w\in\mathcal W:A(w)\ge A_0\}.
+\tag{24.1}
+$$
+
+Thus $0<\delta_*<1/2$. The following amplitude bound controls all complex
+phases on this cap.
+
+**Lemma 24.1 (a uniform disk-support bound).** For every real $\lambda\ge1$
+and every $z\in\mathbb C^4$ with $|z_j|\le1$,
+
+$$
+\left|h(z_1-z_2)+is(z_3-z_4)\right|
+ +\lambda\operatorname{Re}\sum_{j=1}^4z_j
+\le 2\sqrt{\lambda^2+h^2}+2\lambda.
+\tag{24.2}
+$$
+
+Proof. Write $q=(h,-h,is,-is)$. For every real $\phi$, the support function
+of each coordinate disk gives
+
+$$
+\lambda\operatorname{Re}\sum_jz_j
+ +\operatorname{Re}\left(e^{-i\phi}\sum_jq_jz_j\right)
+\le\sum_j|\lambda+e^{-i\phi}q_j|.
+\tag{24.3}
+$$
+
+We bound the right side uniformly in $\phi$. For $a\in\{h,s\}$ and
+$0\le t\le1$, define
+
+$$
+\begin{aligned}
+D_a(t)&=\sqrt{(\lambda^2+a^2)^2-4\lambda^2a^2t},\\
+F_a(t)&=\sqrt{2(\lambda^2+a^2)+2D_a(t)}.
+\end{aligned}
+\tag{24.4}
+$$
+
+In particular, $F_a(t)$ is the sum of the two square roots with radicands
+$\lambda^2+a^2\pm2\lambda a\sqrt t$. Since $\lambda\ge1>h>s>0$,
+these functions and their derivatives are defined on the entire closed
+interval. Both $D_a$ and $F_a$ decrease with $t$, and
+
+$$
+F_a'(t)=-\frac{2\lambda^2a^2}{F_a(t)D_a(t)}.
+\tag{24.5}
+$$
+
+Consequently $F_a'$ is nonincreasing. With $t=\cos^2\phi$, the right side
+of (24.3) is exactly $F_h(t)+F_s(1-t)$, whose derivative satisfies
+
+$$
+\begin{aligned}
+\frac{d}{dt}\bigl(F_h(t)+F_s(1-t)\bigr)
+&\le F_h'(0)-F_s'(1)\\
+&=-\frac{\lambda^2h^2}{(\lambda^2+h^2)^{3/2}}
+  +\frac{\lambda s^2}{\lambda^2-s^2}<0.
+\end{aligned}
+\tag{24.6}
+$$
+
+Here the strict inequality has a uniform elementary certificate. Using
+$h^2=1/2$, $s^2=(2-\sqrt2)/4<1/6$ and $\lambda\ge1$ gives
+
+$$
+\begin{aligned}
+\frac{h^2\lambda(\lambda^2-s^2)}{\lambda^3}
+&=\frac12\left(1-\frac{s^2}{\lambda^2}\right)>\frac5{12},\\
+\frac{s^2(\lambda^2+h^2)^{3/2}}{\lambda^3}
+&\le s^2\left(\frac32\right)^{3/2}<\frac13.
+\end{aligned}
+\tag{24.7}
+$$
+
+The last bound uses $(3/2)^{3/2}<2$. Multiplication by the positive
+denominators in (24.6) shows that (24.7) is sufficient for its sign.
+Thus the maximum in $t$ is its value at $0$, namely
+$2\sqrt{\lambda^2+h^2}+2\lambda$. Choose $\phi$ to align
+$e^{-i\phi}\sum_jq_jz_j$ with the nonnegative real axis in (24.3).
+If that sum is zero, every $\phi$ suffices. This proves (24.2). $\square$
+
+**Lemma 24.2 (simultaneous amplitude envelopes on the cap).** Let
+$w\in\mathcal C$, and put
+
+$$
+\delta=4-A(w),\qquad u_0=d-h\delta,\qquad
+V_\delta=2\delta-\frac{\delta^2}{2}.
+\tag{24.8}
+$$
+
+Then
+
+$$
+0\le u(w)\le u_0,\qquad v(w)^2\le V_\delta,
+\qquad r(w,p)=r_+(w,p)=2(1-p+\delta)
+\quad(0\le p\le1).
+\tag{24.9}
+$$
+
+For each fixed $A\in[A_0,4]$, the two amplitude bounds are attained
+simultaneously by an actual shared-unitary datum with that value of $A$.
+
+Proof. Since $A\ge A_0>0$, multiply $w$ by one common scalar phase so that
+$\sum_jw_j=A$ is real and positive. This preserves every quantity in
+(24.9). With $Y=w_3+w_4$,
+
+$$
+P=hA+(c-h)Y,\qquad
+|P|\le hA+2(c-h)=d-h\delta=u_0.
+\tag{24.10}
+$$
+
+For $A<4$, set
+
+$$
+x=\frac{A-2}{2}=1-\frac\delta2
+\in[\sqrt{2/3},1),\qquad
+\lambda=\frac{hx}{\sqrt{1-x^2}}\ge1.
+\tag{24.11}
+$$
+
+Apply Lemma 24.1 to the normalized $w$. It gives
+
+$$
+\begin{aligned}
+v&\le2\sqrt{\lambda^2+h^2}-\lambda(A-2)
+   =2h\sqrt{1-x^2},\\
+v^2&\le4h^2(1-x^2)=2\delta-\frac{\delta^2}{2}.
+\end{aligned}
+\tag{24.12}
+$$
+
+If $A=4$, the normalized $w_j$ all equal $1$, since their real parts
+are at most $1$ and sum to $4$. Then $u=d$, $v=0$, and the same bounds
+hold without the parameter in (24.11).
+
+To identify the joint sign branch, use $|w_j|\le1$ to obtain
+
+$$
+\sum_j|w_j-1|^2\le 8-2A=2\delta,
+\qquad
+B^2=|(w_1-1)-(w_2-1)+i(w_3-1)-i(w_4-1)|^2
+\le8\delta<4.
+\tag{24.13}
+$$
+
+Since $A\ge A_0>7/2$ and $B<2$, one has $A-B-1>0$. Therefore
+
+$$
+r_-(w,p)-r_+(w,p)=2(A-B-1)+4p>0
+\qquad(0\le p\le1),
+\tag{24.14}
+$$
+
+which proves the last part of (24.9).
+
+Finally, for any $A\in[A_0,4]$, put $x=(A-2)/2$ and take
+
+$$
+w^{(A)}=(x+i\sqrt{1-x^2},\ x-i\sqrt{1-x^2},\ 1,\ 1).
+\tag{24.15}
+$$
+
+All four entries have modulus one, so $w^{(A)}\in\mathcal W$, and
+$U=\operatorname{diag}(w^{(A)})U_+$ is an actual unitary lift. Direct
+substitution gives $A(w^{(A)})=A$, $u(w^{(A)})=u_0$ and
+$v(w^{(A)})^2=V_\delta$. In particular, (24.9) yields the whole-cap
+comparison
+
+$$
+G(w,p)\ge G(w^{(A(w))},p),\qquad
+r(w,p)=r(w^{(A(w))},p)
+\quad(0\le p\le1).
+\tag{24.16}
+$$
+
+This comparison follows from simultaneous envelopes, rather than from
+an assumption about which feedback matrices optimize the quotient. $\square$
+
+**Lemma 24.3 (the matrix of the required difference).** For $w\in\mathcal C$,
+write $u=u(w)$, $v=v(w)$ and $\delta=4-A(w)$. Define
+
+$$
+\begin{aligned}
+D_\delta&=d^2-2\kappa\delta,\\
+F_\delta&=e^2-2\kappa(1+\delta),\\
+M(w)&=\begin{pmatrix}
+D_\delta-u^2&-uv\\
+-uv&F_\delta-v^2
+\end{pmatrix}.
+\end{aligned}
+\tag{24.17}
+$$
+
+Then $M(w)$ is positive semidefinite. It is positive definite if
+$\delta>0$; at $\delta=0$ it is exactly
+$\operatorname{diag}(0,e^2-2\kappa)$. For every $p\in[0,1]$,
+
+$$
+G(w,p)-\kappa r(w,p)
+=\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+M(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{24.18}
+$$
+
+Proof. The bounds (22.13) and $0<\kappa<1/25$ imply
+
+$$
+d>3,\qquad e^2>4,\qquad dh<\frac52,
+\qquad d^2-e^2>5.
+\tag{24.19}
+$$
+
+Since $0\le\delta\le\delta_*<1/2$, both $D_\delta$ and $F_\delta$ are
+positive. The identity $f(\kappa)=0$ of Theorem 21.3 is equivalently
+
+$$
+(dh-\kappa)(e^2-2\kappa)=d^2.
+\tag{24.20}
+$$
+
+For $u_0,V_\delta$ from (24.8), set
+
+$$
+J=\frac{d^2-e^2}{2}+(5-4dh)\kappa+4\kappa^2.
+\tag{24.21}
+$$
+
+Using (24.19),
+
+$$
+J>\frac52-4\cdot\frac52\cdot\frac1{25}
+=\frac{21}{10}>0.
+\tag{24.22}
+$$
+
+The determinant cancellation is explicit:
+
+$$
+\begin{aligned}
+D_\delta-u_0^2
+ &=2(dh-\kappa)\delta-\frac{\delta^2}{2},\\
+(D_\delta-u_0^2)F_\delta-D_\delta V_\delta
+ &=\left(2(dh-\kappa)\delta-\frac{\delta^2}{2}\right)
+     (e^2-2\kappa-2\kappa\delta)\\
+ &\quad -(d^2-2\kappa\delta)
+              \left(2\delta-\frac{\delta^2}{2}\right)\\
+ &=J\delta^2.
+\end{aligned}
+\tag{24.23}
+$$
+
+The coefficient of $\delta$ vanishes by (24.20), and the two cubic
+terms cancel. This is the scalar polynomial cancellation used in
+Theorem 21.3, now combined with the uniform envelopes of Lemma 24.2.
+Consequently,
+
+$$
+\frac{u^2}{D_\delta}+\frac{v^2}{F_\delta}
+\le\frac{u_0^2}{D_\delta}+\frac{V_\delta}{F_\delta}
+=1-\frac{J\delta^2}{D_\delta F_\delta}\le1.
+\tag{24.24}
+$$
+
+For arbitrary real $a,b$, weighted Cauchy–Schwarz gives
+
+$$
+(ua+vb)^2
+\le\left(\frac{u^2}{D_\delta}+\frac{v^2}{F_\delta}\right)
+      (D_\delta a^2+F_\delta b^2)
+\le D_\delta a^2+F_\delta b^2.
+\tag{24.25}
+$$
+
+This proves positive semidefiniteness of $M(w)$. If $\delta>0$, the
+first factor in (24.25) is strictly less than $1$ by (24.22)–(24.24),
+so the quadratic form is strictly positive at every nonzero $(a,b)$.
+If $\delta=0$, Lemma 24.2 gives $u=d$, $v=0$, proving the stated
+boundary matrix.
+
+Finally, (23.3) and (24.9) give
+
+$$
+\begin{aligned}
+G-\kappa r
+&=d^2p+e^2(1-p)-(u\sqrt p+v\sqrt{1-p})^2
+       -2\kappa(1-p+\delta)\\
+&=D_\delta p+F_\delta(1-p)
+       -(u\sqrt p+v\sqrt{1-p})^2,
+\end{aligned}
+\tag{24.26}
+$$
+
+which is exactly (24.18), including $p=0,1$ and $\delta=0$. $\square$
+
+**Theorem 24.4 (the sharp original producer inequality on the cap).**
+For every $E\in\operatorname{Dens}_2$ and every $U\in U(4)$ such that
+
+$$
+|\operatorname{Tr}(UU_+^\dagger)|\ge2+\sqrt{\frac83},
+\tag{24.27}
+$$
+
+one has
+
+$$
+g(E,U)\ge\kappa\rho(E,U).
+\tag{24.28}
+$$
+
+Equality holds exactly when $E=E_+$ and $U=\lambda U_+$ for one common
+scalar $\lambda$ with $|\lambda|=1$.
+
+Proof. Let $w=\operatorname{diag}(UU_+^\dagger)$, so $w\in\mathcal C$
+by Theorem 23.2 and (24.27). For the actual population
+$p=b_+^\dagger E^{\mathsf T}b_+$, that theorem gives
+
+$$
+g(E,U)-\kappa\rho(E,U)
+\ge G(w,p)-\kappa r(w,p)+\kappa\epsilon(E),
+\qquad \epsilon(E)=1-\operatorname{Tr}(E^2)\ge0.
+\tag{24.29}
+$$
+
+Lemma 24.3 makes the right side nonnegative. If $\delta>0$, the vector
+$(\sqrt p,\sqrt{1-p})$ is nonzero, so its quadratic form is strictly
+positive. If $\delta=0$, that form is
+$(e^2-2\kappa)(1-p)$, where $e^2-2\kappa>0$. Equality in (24.28)
+therefore forces $\delta=0$ and $p=1$. Positivity of the matrix (23.9)
+then forces its off-diagonal entry to vanish, so $E=E_+$.
+At $A=4$ the diagonal $w$ is a common scalar multiple of $(1,1,1,1)$;
+a unitary with that diagonal has zero off-diagonal entries by its row
+norms. Thus $U=\lambda U_+$. Conversely these original optimizer pairs
+have $g=\rho=0$ by Lemma 11.2.
+
+The argument uses the original ordinary transpose and the same actual
+$U$ throughout (24.29). It includes all populations, singular and mixed
+normalized effects, zero $Q$, and arbitrary nondiagonal unitary lifts.
+The cap has $A>0$, which justifies its common-phase normalization;
+no individual coordinate phase is fixed. $\square$
+
+Theorem 21.3 supplies an actual sequence approaching the positive
+optimizer with $\rho/g\to\kappa^{-1}$. Its trace modulus tends to $4$,
+so it eventually lies in (24.27). Hence the supremum of $\rho/g$ over
+$g>0$ in this entire cap is exactly $R_*=\kappa^{-1}$.
+
+The realization and mixed-effect transfer are those of Theorem 23.2;
+the scalar cancellation (24.23) reuses Theorem 21.3. Disk support
+functions and Cauchy–Schwarz are standard intermediate tools.
+The additional whole-cap content is the simultaneous envelope
+(24.9)–(24.16), with its uniform complex-phase proof, and its application
+to (24.28). These source correspondences make no literature-priority
+claim. The remaining global obligation is
+$\nu_\kappa(w)\ge0$ for every $w\in\mathcal W$ with $A(w)<A_0$;
+the full sharp global constant is unresolved outside the proved cap.
+
+## 追加锚（本行以下为增补区）
