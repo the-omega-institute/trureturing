@@ -21,7 +21,8 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(Disp(KurtosisFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "For n real rates k, powerSum n j sums the jth powers of its argument over Fin n. "
+                    "For a real rate vector k indexed by Fin n, powerSum n j sums the jth powers "
+                    + "of its argument over Fin n. "
                     + "The source defines kurtosis as the fourth scaled current cumulant divided by the second "
                     + "in main.tex line 54. Substituting the current cumulants in lines 773-775 and the "
                     + "waiting-time cumulants in lines 787-790 gives the displayed rational expression. "
@@ -41,7 +42,7 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                     + "Section III E 1, lines 424-427, gives this value in the limit of infinitely many "
                     + "states, with one rate equal to A/n and all other rates equal to one, "
                     + "where A = (3 - √5)/2. It is an infimum over cycle sizes, rather than "
-                    + "a value attained by a finite positive cycle."))),
+                    + "a value attained by a finite positive cycle with at least two states."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("claim"),
@@ -74,18 +75,21 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                         + "The algebraic identity holds with total division even when R₁ or R₂ vanishes: "
                         + "those cases are handled separately before clearing denominators.")),
                     Paragraph(Text(
-                        "For a positive vector x on Fin n with n ≥ 2, choose i = 0 and j = 1. "
-                        + "The positive ith square gives a > 0, and positivity of the cubes gives b ≥ 0. "
-                        + "Cauchy-Schwarz applied to x and its coordinatewise square gives b² ≤ ac. "
-                        + "Each xₗ² ≤ a; moreover xᵢ² < a because the distinct coordinate xⱼ² is positive. "
-                        + "Multiplying these comparisons by xₗ² and summing gives "
-                        + "c < ∑ₗxₗ²a = a².")),
+                        "For a positive vector x on Fin n with n ≥ 2, the squares are nonnegative "
+                        + "and the square at i = 0 is positive, so Finset.sum_pos' gives a > 0. "
+                        + "Positivity of the cubes gives b ≥ 0. "
+                        + "Cauchy-Schwarz, in the form Finset.sum_mul_sq_le_sq_mul_sq, applied to x "
+                        + "and its coordinatewise square gives b² ≤ ac. "
+                        + "HermiteMomentBounds.sum_sq_lt_sq_sum applied to the positive coordinates "
+                        + "yₗ = xₗ² gives ∑ₗyₗ² < (∑ₗyₗ)². "
+                        + "The power identity (xₗ²)² = xₗ⁴ then gives c < a².")),
                     Paragraph(Text(
                         "Put C = lowerBound and f(u) = 15u⁴ - 20u³ + 6u². "
                         + "For u ≥ 0, direct expansion using (√5)² = 5 gives "
                         + "f(u) - C = (u - (5 + √5)/10)² "
                         + "[15u² + (3√5 - 5)u + (√5 - 1)/2]. "
-                        + "The coefficients 3√5 - 5 and (√5 - 1)/2 are nonnegative, "
+                        + "The comparisons 5/3 ≤ √5 and 1 ≤ √5 show that the coefficients "
+                        + "3√5 - 5 and (√5 - 1)/2 are nonnegative, "
                         + "so every factor on the right is nonnegative and f(u) ≥ C.")),
                     Paragraph(Text(
                         "Now suppose a > 0, b ≥ 0, b² ≤ ac and c < a², and set t = b/a. "
@@ -99,15 +103,15 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                         + "Q - f(t) = (a - t²)[15(a + t²) - 20t] > 0. "
                         + "Combining this with f(t) ≥ C again gives Q > C.")),
                     Paragraph(Text(
-                        "For positive rates k, the sum R₁ is positive: one positive inverse rate "
-                        + "is bounded above by the sum of all the nonnegative inverse rates. "
+                        "For positive rates k, Finset.sum_pos' gives R₁ > 0 from the nonnegative "
+                        + "inverse rates and the positive inverse rate at i = 0. "
                         + "The rescaled vector x is therefore positive. Applying its moment inequalities "
                         + "and the preceding estimate to the rescaled kurtosis identity proves "
                         + "lowerBound < kurtosis k for every n ≥ 2.")),
                     Paragraph(Text(
                         "To approach the bound, put A = (3 - √5)/2 and, for each natural m, take "
                         + "n = m + 2, k₀ = A/((m + 2 : ℕ) : ℝ) and kᵢ = 1 for i ≠ 0. "
-                        + "The relations (√5)² = 5 and √5 ≥ 0 imply A > 0, so every rate is positive. "
+                        + "Since √5 < 3, A > 0 and every rate is positive. "
                         + "For each natural j, their inverse-rate power sum is "
                         + "Rⱼ = (((m : ℝ) + 2)/A)ʲ + ((m : ℝ) + 1). "
                         + "Introduce the rational function "
