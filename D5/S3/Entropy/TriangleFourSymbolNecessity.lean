@@ -1853,9 +1853,9 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       · exact he
       · linarith
     refine ⟨v, w, ?_, ?_, ?_⟩
-    · simpa only [q₂, M₂, v, if_pos rfl] using
+    · simpa only [q₂, M₂, v, if_pos rfl, ite_true] using
         mul_pos (show (0 : ℝ) < 2 by norm_num) hb
-    · simpa only [q₃, M₃, w, if_pos rfl] using
+    · simpa only [q₃, M₃, w, if_pos rfl, ite_true] using
         mul_pos (show (0 : ℝ) < 2 by norm_num) hc
     · intro x
       simpa only [he] using rowA b c hp x
@@ -1881,9 +1881,9 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       · exact he
       · linarith
     refine ⟨u, w, ?_, ?_, ?_⟩
-    · simpa only [q₁, M₁, u, if_pos rfl] using
+    · simpa only [q₁, M₁, u, if_pos rfl, ite_true] using
         mul_pos (show (0 : ℝ) < 2 by norm_num) ha
-    · simpa only [q₃, M₃, w, if_pos rfl] using
+    · simpa only [q₃, M₃, w, if_pos rfl, ite_true] using
         mul_pos (show (0 : ℝ) < 2 by norm_num) hc
     · intro x
       simpa only [he] using rowB c a hp x
@@ -1908,9 +1908,9 @@ theorem original_law_necessity (L : IncidentLaw S₁ S₂ S₃ O)
       · exact he
       · linarith
     refine ⟨u, v, ?_, ?_, ?_⟩
-    · simpa only [q₁, M₁, u, if_pos rfl] using
+    · simpa only [q₁, M₁, u, if_pos rfl, ite_true] using
         mul_pos (show (0 : ℝ) < 2 by norm_num) ha
-    · simpa only [q₂, M₂, v, if_pos rfl] using
+    · simpa only [q₂, M₂, v, if_pos rfl, ite_true] using
         mul_pos (show (0 : ℝ) < 2 by norm_num) hb
     · intro x
       simpa only [he] using rowC a b hp x
