@@ -1,0 +1,31 @@
+### 4.1 强度、光滑与全部相位协变仍允许错误后继
+
+取一个结果，$H=W=\mathbb C ^2$，定义
+
+<a id="eq-nonlinear"></a>
+
+$$
+F(z_1,z_2)=\bigl(z_1,e^{i\pi|z_1|^2}z_2\bigr).\tag{4.1}
+$$
+
+它光滑、保范数，且对全部共同相位满足
+$F(e^{i\theta}x)=e^{i\theta}F(x)$。
+对标准基 $a_1=e_1,a_2=e_2$，全部四周锚都被逐点固定。
+
+但令 $a=e_2,x=(e_1+e_2)/\sqrt2$，就有
+
+$$
+F(a)=e_2,\qquad F(x)=\frac{e_1+ie_2}{\sqrt2},
+$$
+
+<a id="eq-nonlinear-fail"></a>
+
+$$
+\left\lVert x-a\right\rVert ^2=2-\sqrt2,\qquad
+\left\lVert F(x)-F(a)\right\rVert ^2=2.\tag{4.2}
+$$
+
+失败精确落在这一对输入上。
+它还显示：即使一个过程在所有基锚与相位方向上正常，
+对合成输入的差分约束仍不可省略。
+

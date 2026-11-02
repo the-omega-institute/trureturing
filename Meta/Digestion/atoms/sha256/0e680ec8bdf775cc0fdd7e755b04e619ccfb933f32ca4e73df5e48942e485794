@@ -1,0 +1,63 @@
+#### 定理 5.1（有限定向锚的完整记录刚性）
+
+设 $F:H\to W$ 满足定义[3.2](#statement-3-2)，$\dim_{\mathbb C }H=d$。
+则存在唯一复线性等距 $V:H\to W$，使
+
+<a id="eq-isometry"></a>
+
+$$
+\boxed{F(x)=Vx\quad(x\in H),\qquad V^*V=I.}\tag{5.1}
+$$
+
+特别地，完整二元距离、复内积、可加性、齐次性与连续性全部成为结论。
+
+**证明。**
+
+令 $b_j=F(a_j)$。由完整强度，$\left\lVert b_j\right\rVert =1$。
+将不增式展开，并使用两边已经相同的对角范数，得到
+
+$$
+\operatorname{Re} \langle b_j,F(x)\rangle \ge\operatorname{Re} \langle a_j,x\rangle .
+$$
+
+再用反向锚 $-a_j$；定向校准给 $F(-a_j)=-b_j$，
+故相同展开给反向不等式。因此
+
+$$
+\operatorname{Re} \langle b_j,F(x)\rangle =\operatorname{Re} \langle a_j,x\rangle .
+$$
+
+用 $ia_j,-ia_j$，并注意
+$\operatorname{Re} \langle ib_j,F(x)\rangle =\operatorname{Im} \langle b_j,F(x)\rangle$，同样得到虚部相等。
+所以
+
+<a id="eq-coordinate"></a>
+
+$$
+\boxed{\langle b_j,F(x)\rangle =\langle a_j,x\rangle \quad(1\le j\le d,\ x\in H).}\tag{5.2}
+$$
+
+取 $x=a_k$，即得 $\langle b_j,b_k\rangle =\delta_{jk}$：
+输出种子框自动复正交。
+按基定义复线性等距
+
+$$
+Vx=\sum_{j=1}^d\langle a_j,x\rangle \,b_j.
+$$
+
+式[(5.2)](#eq-coordinate)表明，$F(x)$ 在
+$L=\operatorname{span} _{\mathbb C }\{b_1,\ldots,b_d\}$ 上的正交投影恰为 $Vx$。
+但是
+
+$$
+\left\lVert F(x)\right\rVert ^2=\left\lVert x\right\rVert ^2
+=\sum_j|\langle a_j,x\rangle |^2=\left\lVert Vx\right\rVert ^2.
+$$
+
+正交余量范数因此为零，得到 $F(x)=Vx$。
+种子框张成输入，故该线性映射唯一。
+
+□
+
+<a id="statement-5-2"></a>
+

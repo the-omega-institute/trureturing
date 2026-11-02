@@ -1,0 +1,17 @@
+## 8. 整体圆、分支椭圆与周期：一个可严格证明的图景
+
+这一节把“圆与椭圆”放入明确的输入历程，而不将任意历史假定为闭轨。
+设 $u,v$ 为实正交单位向量，即
+
+$$
+\left\lVert u\right\rVert =\left\lVert v\right\rVert =1,\qquad \operatorname{Re} \langle u,v\rangle =0.
+$$
+
+考虑已经声明的圆形幅度族
+
+$$
+x(t)=u\cos t+v\sin t.
+$$
+
+<a id="statement-8-1"></a>
+

@@ -1,0 +1,61 @@
+#### 定理 10.1（实际分支唯一决定仪器响应）
+
+给输入密度算符 $\rho$、结果 $e$ 后的效果 $B$。
+对应未归一响应为
+
+$$
+\operatorname{Tr} (\rho M_e^*BM_e)
+=\operatorname{Tr} (M_e\rho M_e^*B).
+$$
+
+因此实际分支在密度算符上的表示唯一为
+
+$$
+\mathcal I_e(\rho)=M_e\rho M_e^*.
+$$
+
+它完全正；完整带标签输出保持总迹。
+
+**证明。**
+
+迹的循环性给响应等式，全部效果分离 Hermitian 算符，故表示唯一。
+对任意有限参考空间 $R$ 和正 $X$，
+
+$$
+(\mathcal I_e\otimes\operatorname{id}_R)(X)
+=(M_e\otimes I_R)X(M_e^*\otimes I_R)\ge0.
+$$
+
+所以完全正。又
+$\sum_e\operatorname{Tr} (M_e\rho M_e^*)=\operatorname{Tr} (\rho\sum_eM_e^*M_e)=\operatorname{Tr} \rho$。
+若输出空间各异，完整输出写作
+$\bigoplus_eM_e\rho M_e^*$；
+在声明的共同输出空间中实现后，才可直接对支路求和。
+
+□
+
+若结果 $e$ 的实际输出中还包含内部记录因子 $R_e$，
+选择其正交记录框 $\{|\alpha\rangle \}$，写
+
+$$
+M_ex=\sum_\alpha M_{e\alpha}x\otimes|\alpha\rangle .
+$$
+
+忽略这份记录后，
+
+<a id="eq-kraus"></a>
+
+$$
+\mathcal I_e(\rho)=\sum_\alpha M_{e\alpha}\rho M_{e\alpha}^*,
+\qquad E_e=\sum_\alpha M_{e\alpha}^*M_{e\alpha}.\tag{10.1}
+$$
+
+每个求和内的输出空间须相同或已有指定嵌入。
+若某份记忆还会返回影响后续过程，就不能在描述该未来问题时提前忽略它。
+最新设置--源稿和可见代数稿都保留了这项输入充分性要求[3](#ref-whole)、[4](#ref-atlas3)。
+
+结果概率为 $p_e=\operatorname{Tr} (\rho E_e)$；
+仅在 $p_e>0$ 时定义条件后态
+$\rho_e=\mathcal I_e(\rho)/p_e$。
+归一化条件映射一般非线性，不与未归一 CP 映射混淆。
+

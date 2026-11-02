@@ -1,0 +1,21 @@
+### 9.2 同一根锁定概率的来源
+
+已有读出合同还给
+
+$$
+p_0(P_{\Omega_0})=1,\qquad
+p_h(E)=p_0(U_h^*EU_h).
+$$
+
+由状态表示，$p_0(P_{\Omega_0})=1$ 迫使根密度矩阵支撑在
+$\operatorname{span} \{\Omega_0\}$，故 $p_0(E)=\langle \Omega_0,E\Omega_0\rangle$。
+沿声明准备 $U_h$ 运输，得到
+
+$$
+p_h(E)=\langle U_h\Omega_0,EU_h\Omega_0\rangle .
+$$
+
+将本轮推出的 $E_e=M_e^*M_e$ 代入，
+就把实际事件权重与同根 Born 概率绑定。
+更一般维数下的纯根版本已由 Closure 给出，本轮只消费其有限截口[2](#ref-closure)。
+

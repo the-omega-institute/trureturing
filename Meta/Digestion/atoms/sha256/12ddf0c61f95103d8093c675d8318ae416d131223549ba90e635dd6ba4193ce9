@@ -1,0 +1,46 @@
+#### 命题 14.3（平方根阶不能统一改成线性阶）
+
+即使 $d=1$、输出锚精确、原映射在单位圆上光滑，
+式[(14.1)](#eq-approx)也不能统一推出 $O(\delta)$ 的线性幅度近似。
+
+**证明。**
+
+取 $0<\delta<2$，$t=\delta/2$，$|z|=1$，
+$h(z)=\operatorname{Im} (z^2)$，定义
+
+$$
+F_\delta(z)=
+\left(\sqrt{1-th(z)^2}\,z,\sqrt t\,h(z)\right)\in\mathbb C ^2.
+$$
+
+它具有单位范数，在 $a\in\{1,i,-1,-i\}$ 上等于 $(a,0)$。
+对任意这样的锚，
+
+$$
+\left\lVert F_\delta(z)-(a,0)\right\rVert ^2-|z-a|^2
+=2\bigl(1-\sqrt{1-th(z)^2}\bigr)\operatorname{Re} (\bar a z)
+\le2t=\delta.
+$$
+
+取 $z_0=e^{i\pi/4}$，则 $h(z_0)=h(-z_0)=1$，故
+
+$$
+F_\delta(z_0)+F_\delta(-z_0)=(0,2\sqrt t).
+$$
+
+任何实线性或复线性算符 $M$ 都满足
+$Mz_0+M(-z_0)=0$。三角不等式说明至少一个点满足
+
+$$
+\left\lVert F_\delta(\pm z_0)-M(\pm z_0)\right\rVert
+\ge\sqrt t=\sqrt{\delta/2}.
+$$
+
+所以本类假设下的最坏幅度误差具有不可消除的平方根阶。
+
+□
+
+这里的最优阶针对完整幅度；它并未声称每种固定结果概率的误差都必须同阶。
+此外，此例只满足所用的有限四周校准，
+并未额外假定对所有输入的精确全相位协变。
+

@@ -1,0 +1,47 @@
+#### 推论 8.2（二次读出的双角周期）
+
+同一圆形输入上的事件强度为
+
+<a id="eq-doubleangle"></a>
+
+$$
+w_e(t)=
+\frac{a_e+b_e}{2}
+\,+\,\frac{a_e-b_e}{2}\cos2t
+\,+\,c_e\sin2t.\tag{8.3}
+$$
+
+因此 $\pi$ 是强度的周期；非常数时其基本参数周期为 $\pi$。
+完整非退化幅度圆的参数周期为 $2\pi$。
+
+**证明。**
+
+展开 $\left\lVert y_e(t)\right\rVert ^2$，再使用二倍角恒等式。
+非常数的一阶 $\cos2t,\sin2t$ 组合的基本周期为 $\pi$。
+
+□
+
+正负幅度在普通纯态射线中已经识别，因此不能把幅度周期、
+纯态射线周期和实际记录返回周期混成一个数。
+如果 $u,v$ 在同一复直线上，射线轨迹甚至可能不动。
+时间周期还需要实际时钟如何推进参数 $t$。
+
+一个具体例子是两结果滤波：
+
+$$
+M_0=\begin{pmatrix}\sqrt3/2&0\\0&1/2\end{pmatrix},
+\qquad
+M_1=\begin{pmatrix}1/2&0\\0&\sqrt3/2\end{pmatrix}.
+$$
+
+输入 $x(t)=(\cos t,\sin t)$ 的两条分支分别为横长、纵长椭圆，
+而
+
+$$
+w_0(t)=\frac34\cos^2t+\frac14\sin^2t,\qquad
+w_1(t)=\frac14\cos^2t+\frac34\sin^2t,\qquad
+w_0+w_1=1.
+$$
+
+<a id="figure-2"></a>
+

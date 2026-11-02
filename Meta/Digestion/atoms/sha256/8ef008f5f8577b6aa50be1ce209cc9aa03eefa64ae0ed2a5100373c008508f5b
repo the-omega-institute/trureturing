@@ -1,0 +1,22 @@
+#### 定义 3.2（v80 完整候选）
+
+在上述实际输出接口中，要求完整强度标定[(2.1)](#eq-mass)、
+有限四周校准[(3.2)](#eq-orientation)，以及
+
+<a id="eq-nonexpansion"></a>
+
+$$
+\boxed{
+\sum_e\left\lVert F_e(x)-F_e(a)\right\rVert ^2
+\le\left\lVert x-a\right\rVert ^2,
+\qquad x\in H,\ a\in\mathcal A.
+}\tag{3.3}
+$$
+
+真正新增的关系条件为式[(3.3)](#eq-nonexpansion)：
+同一完整过程相对于有限定向锚不增加相干差分。
+
+两边比较的两个元是输入 $x$ 与锚历史 $a$；
+每一结果中比较的是它们的两个实际后继。
+该条件目前只有单边不等式，没有预先要求完整交叉核相等。
+

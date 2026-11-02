@@ -1,0 +1,44 @@
+**图 1。**
+
+```latex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[xshift=-3.55cm]
+\fill[accent!7] (0,0) circle (1.35);
+\draw[ink,thick] (0,0) circle (1.35);
+\draw[->,ink!65] (-1.6,0)--(1.65,0) node[right] {$X$};
+\draw[->,ink!65] (0,-1.55)--(0,1.65) node[above] {$Y$};
+\draw[accent,dashed] (.405,-1.28)--(.405,1.28);
+\draw[accent,dashed] (-1.25,.54)--(1.25,.54);
+\draw[->,warm,thick] (-.9,.54)--(.29,.54);
+\draw[->,warm,thick] (1.2,.54)--(.52,.54);
+\draw[->,warm,thick] (.405,-.8)--(.405,.42);
+\draw[->,warm,thick] (.405,1.2)--(.405,.66);
+\fill[ink] (.405,.54) circle (2.4pt);
+\node[anchor=north west] at (.47,.45) {$\mathbf r_0$};
+\node[align=center,text width=5.4cm] at (0,-2.02)
+{正反参考锁定 $X$\\四分之一周参考锁定 $Y$};
+\end{scope}
+\begin{scope}[xshift=3.55cm]
+\fill[accent!7] (0,0) circle (1.35);
+\draw[ink,thick] (0,0) circle (1.35);
+\draw[->,ink!65] (-1.6,0)--(1.65,0) node[right] {$X$};
+\draw[->,ink!65] (0,-1.55)--(0,1.65) node[above] {$Y$};
+\fill[accent] (.955,0) circle (2.5pt);
+\fill[warm] (0,.955) circle (2.5pt);
+\draw[->,warm,thick] (.92,.15) to[bend right=20] (.15,.92);
+\node[anchor=north] at (.92,-.13) {输入};
+\node[anchor=east] at (-.12,.95) {失败输出};
+\node[align=center,text width=5.4cm] at (0,-2.02)
+{两个点都在球内\\同一关系仍可能没有匹配};
+\end{scope}
+\end{tikzpicture}
+\caption{$Z=0$ 截面的示意。左侧把四个比较拉回同一坐标后，交点被锁定；
+右侧对应式\eqref{eq:nonlinear}，关系点从 $(1/\sqrt2,0,0)$ 转到 $(0,1/\sqrt2,0)$。
+失败不必表现为球外点，也可能是两个合法关系之间缺少同一性。}
+\end{figure}
+```
+
+<a id="statement-7-2"></a>
+

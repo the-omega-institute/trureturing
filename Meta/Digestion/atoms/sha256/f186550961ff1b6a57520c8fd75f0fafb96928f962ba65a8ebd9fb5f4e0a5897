@@ -1,0 +1,46 @@
+**图 2。**
+
+```latex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[xshift=-4.8cm]
+\draw[->,ink!45] (-1.45,0)--(1.45,0);
+\draw[->,ink!45] (0,-1.45)--(0,1.45);
+\draw[ink,thick] (0,0) circle (1.2);
+\node[align=center,text width=4cm] at (0,-1.95)
+{输入圆\\$\norm{x(t)}=1$};
+\end{scope}
+\begin{scope}
+\draw[->,ink!45] (-1.45,0)--(1.45,0);
+\draw[->,ink!45] (0,-1.45)--(0,1.45);
+\draw[accent,thick] (0,0) ellipse [x radius=1.03923,y radius=.6];
+\node[align=center,text width=4cm] at (0,-1.95)
+{结果 $0$ 的幅度平面\\半轴 $\sqrt3/2,\ 1/2$};
+\end{scope}
+\begin{scope}[xshift=4.8cm]
+\draw[->,ink!45] (-1.45,0)--(1.45,0);
+\draw[->,ink!45] (0,-1.45)--(0,1.45);
+\draw[warm,thick] (0,0) ellipse [x radius=.6,y radius=1.03923];
+\node[align=center,text width=4cm] at (0,-1.95)
+{结果 $1$ 的幅度平面\\半轴 $1/2,\ \sqrt3/2$};
+\end{scope}
+\end{tikzpicture}
+\caption{两个分支图画在各自的输出幅度平面中。
+形状矩阵相加为 $I_2$，所以各方向被分走的平方强度互补。
+这里画的是未归一事件幅度；条件归一后的曲线需另外分析。}
+\end{figure}
+```
+
+上述椭圆结论是固定线性映射对已给圆形输入的结果。
+它没有把“目标偏离历史切线”单独作为椭圆判据，
+也没有将条件归一后的轨迹自动称为欧氏椭圆。
+历史切向、测地线与椭圆读出的既有分类继续按 v78 的前件使用[5](#ref-arcs)、[6](#ref-periods)。
+
+**白话图景。**完整过程保住整圈；某个结果只接收这圈的一部分，于是这一份可以被压成椭圆。
+一个方向被这个结果多拿走，其他结果就必须少拿走，所有形状矩阵合起来仍是原圆。
+幅度转一整圈，平方读数在相反位置已经重复，所以自然出现双角周期。
+这给“圆、椭圆、周期”一个有明确前提的统一解释。
+
+<a id="section-9"></a>
+

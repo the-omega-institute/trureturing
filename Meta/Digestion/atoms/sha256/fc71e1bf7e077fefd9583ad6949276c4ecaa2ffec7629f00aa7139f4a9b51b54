@@ -1,0 +1,47 @@
+#### 定理 7.2（完整菜单的带尺度重心守恒）
+
+在 v80 结论下，对各事件定义
+
+$$
+a_e=\left\lVert M_eu\right\rVert ^2,\quad b_e=\left\lVert M_ev\right\rVert ^2,\quad
+z_e=\langle M_eu,M_ev\rangle ,\quad s_e=a_e+b_e.
+$$
+
+当 $s_e>0$ 时由式[(7.1)](#eq-bloch)定义 $R_e,\mathbf r_e$，令 $\tau_e=s_e/s$。
+忽略零 $s_e$ 的项，则
+
+<a id="eq-bary"></a>
+
+$$
+\boxed{
+\sum_e\tau_e=1,\qquad
+R=\sum_e\tau_eR_e,\qquad
+\mathbf r=\sum_e\tau_e\mathbf r_e.
+}\tag{7.2}
+$$
+
+**证明。**
+
+$V^*V=I$ 给各事件未归一 Gram 矩阵之和为输入 Gram 矩阵。
+除以共同的 $s$，得到矩阵重心式；Pauli 坐标为线性的，给向量式。
+若 $s_e=0$，两输出均为零，交叉项也为零，不定义其归一方向。
+
+□
+
+这个较大结构正是
+
+$$
+0\preceq k_e\preceq K,\qquad
+\sum_ek_e=K,\qquad K(u,v)=\langle u,v\rangle ,
+$$
+
+即已有正核序区间 $[0,K]$ 的完备分解[2](#ref-closure)。
+核正性涉及全部有限相干系数，不是逐条目大小。
+
+**白话图景。**一条不等式只把关系限制在球的一侧，反向参考把它限制在另一侧；
+两个方向合起来，就锁住一个坐标。另一对相位参考锁住第二个坐标，
+总强度锁住第三个坐标。每个结果仍可拿走不同份额，但这些份额按强度合起来，
+必须恢复同一个父关系。
+
+<a id="section-8"></a>
+

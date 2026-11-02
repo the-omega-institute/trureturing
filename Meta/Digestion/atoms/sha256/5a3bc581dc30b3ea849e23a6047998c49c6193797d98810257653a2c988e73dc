@@ -1,0 +1,25 @@
+### 11.3 共同方向为何与完整正性相接
+
+仅保实距离允许共轭。若把共轭在密度矩阵上解释为转置，
+它在单系统上保正，却不能作为任意内部参考上的局部操作。
+取
+
+$$
+|\Phi^+\rangle =\frac{|00\rangle +|11\rangle }{\sqrt2},
+\qquad
+|\psi^-\rangle =\frac{|01\rangle -|10\rangle }{\sqrt2}.
+$$
+
+只在一侧转置后，
+
+$$
+\langle \psi^-,(\operatorname{id}\otimes{\rm T})
+(|\Phi^+\rangle \langle \Phi^+|)\psi^-\rangle
+=-\frac12.
+$$
+
+这是直接的负读出见证。
+共同四周方向在幅度层排除共轭式翻转，
+完整复线性分支随后保证所有参考扩张上的正性。
+标准转置反例及 CP 表示的文献背景见 Watrous[12](#ref-watrous)。
+

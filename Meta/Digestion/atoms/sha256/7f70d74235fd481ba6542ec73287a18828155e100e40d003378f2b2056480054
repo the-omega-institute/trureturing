@@ -1,0 +1,79 @@
+#### 定理 14.1（一般近似锚框的极分解修复）
+
+令 $b_j=F(a_j)$，定义线性算符 $B:H\to W$ 满足 $Ba_j=b_j$。
+置
+
+$$
+\eta=\sqrt{\frac d2}\,\delta,\qquad
+\kappa=\frac{d-1}{\sqrt2}\,\delta<1.
+$$
+
+在式[(14.1)](#eq-approx)的条件下，$B^*B$ 正定，
+
+$$
+U=B(B^*B)^{-1/2}
+$$
+
+为复线性等距，且对全部单位 $x$，
+
+<a id="eq-stable"></a>
+
+$$
+\boxed{\left\lVert F(x)-Ux\right\rVert
+\le L:=\min\!\left\{2,\sqrt{\kappa+2\eta}
+                     +1-\sqrt{1-\kappa}\right\}.}\tag{14.2}
+$$
+
+**证明。**
+
+对每个 $j$，四个相反方向的近似比较夹定
+
+$$
+\left|\operatorname{Re} \!\left(\langle b_j,F(x)\rangle -\langle a_j,x\rangle \right)\right|
+\le\frac\delta2,\qquad
+\left|\operatorname{Im} \!\left(\langle b_j,F(x)\rangle -\langle a_j,x\rangle \right)\right|
+\le\frac\delta2.
+$$
+
+故
+
+<a id="eq-coorderr"></a>
+
+$$
+\left\lVert B^*F(x)-x\right\rVert \le\sqrt{d/2}\,\delta=\eta.\tag{14.3}
+$$
+
+在 $x=a_k$ 处应用该比较。Gram 矩阵 $G=B^*B$ 对角为 $1$，
+非对角元满足 $|G_{jk}|\le\delta/\sqrt2$。
+Hermitian 矩阵的算符范数不超过其最大绝对行和，因而
+
+$$
+\left\lVert G-I\right\rVert \le\kappa<1.
+$$
+
+所以 $G$ 正定，$U^*U=I$。
+记 $\zeta=B^*F(x)-x$。由 $\left\lVert F(x)\right\rVert =\left\lVert x\right\rVert =1$，
+
+$$
+\begin{aligned}
+\left\lVert F(x)-Bx\right\rVert ^2
+&=1+\langle x,Gx\rangle -2\operatorname{Re} \langle x,B^*F(x)\rangle \\
+&=\langle x,(G-I)x\rangle -2\operatorname{Re} \langle x,\zeta\rangle
+\le\kappa+2\eta.
+\end{aligned}
+$$
+
+又由 $B=UG^{1/2}$，
+
+$$
+\left\lVert B-U\right\rVert
+=\left\lVert G^{1/2}-I\right\rVert
+\le1-\sqrt{1-\kappa}.
+$$
+
+最后使用三角不等式及两个单位向量距离不超过 $2$，得到式[(14.2)](#eq-stable)。
+
+□
+
+<a id="statement-14-2"></a>
+

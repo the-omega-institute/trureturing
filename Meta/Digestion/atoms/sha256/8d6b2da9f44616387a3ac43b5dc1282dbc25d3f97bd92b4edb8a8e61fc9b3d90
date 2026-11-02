@@ -1,0 +1,18 @@
+## 14. 近似比较：单位输入的稳定性与误差阶
+
+本节取单位输入，完整强度及四周定向校准保持精确，
+只允许锚比较出现加性误差：
+
+<a id="eq-approx"></a>
+
+$$
+\left\lVert F(x)-F(a)\right\rVert ^2
+\le\left\lVert x-a\right\rVert ^2+\delta,
+\qquad \left\lVert x\right\rVert =1,\ a\in\mathcal A,\quad\delta\ge0.\tag{14.1}
+$$
+
+它是一条对全部单位输入的统一界，不是抽样统计置信区间。
+该规范也不把固定加性误差无条件推广到任意振幅尺度。
+
+<a id="statement-14-1"></a>
+

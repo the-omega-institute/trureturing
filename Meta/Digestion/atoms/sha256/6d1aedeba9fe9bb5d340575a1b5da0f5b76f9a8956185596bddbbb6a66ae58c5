@@ -1,0 +1,57 @@
+#### 定理 10.2（标准有限 CP/Kraus 闭包；继承定理）
+
+设 $\Phi$ 是有限矩阵空间间的复线性映射。
+则它完全正，当且仅当存在有限算符族 $M_\alpha$，使
+
+$$
+\Phi(X)=\sum_\alpha M_\alpha X M_\alpha^*.
+$$
+
+保迹等价于 $\sum_\alpha M_\alpha^*M_\alpha=I$。
+因此任何有限完备量子仪器都能通过细记录形成一个复等距 $V$，
+并满足 v80 的全部精确条件。
+
+**证明。**
+
+给输入正交基 $|j\rangle$，令
+
+$$
+C_\Phi=\sum_{j,k}|j\rangle \langle k|\otimes\Phi(|j\rangle \langle k|).
+$$
+
+若 $\Phi$ 完全正，令
+$|\Gamma\rangle =\sum_j|j\rangle \otimes|j\rangle$，
+则 $C_\Phi=(\operatorname{id}\otimes\Phi) (|\Gamma\rangle \langle \Gamma|)$；
+秩一正算符经该扩张仍为正，故 $C_\Phi\ge0$。
+对它作谱分解并吸收正特征值，写
+$C_\Phi=\sum_\alpha|v_\alpha\rangle \langle v_\alpha|$。
+唯一地将 $v_\alpha$ 写成
+$\sum_j|j\rangle \otimes M_\alpha|j\rangle$；
+比较 $(j,k)$ 块，得到每个矩阵单位上的 Kraus 式，再由线性推广到全部 $X$。
+反向，每项在任意参考扩张上仍是算符夹乘，故完全正。
+对全部 $X$ 取迹给保迹刻画。
+对仪器的各个结果执行同一分解，把所有 $M_{e\alpha}x$ 收集到直和，
+完备性使这个映射为复等距。
+
+□
+
+这是项目综合稿第 10 节已纳入的标准 Choi--Kraus--Stinespring 链[1](#ref-synthesis)、[12](#ref-watrous)。
+本轮复述它以闭合理论，而非认领其为新增数学结果。
+反向构造给出数学实现；实际记录载体、耦合及控制的供应仍需声明。
+
+最少 Kraus 数等于 $\operatorname{rank}  C_\Phi$：
+任何 $m$ 项分解使 $C_\Phi$ 为 $m$ 个秩一正矩阵之和，故秩不超过 $m$；
+谱分解则达到该数。
+它与 $\operatorname{rank}  E_e$ 是不同的容量概念。
+例如二态完全混合通道
+$\Phi(X)=\operatorname{Tr} (X)I_2/2$ 有 $E=I_2$、$\operatorname{rank}  E=2$，
+而 $C_\Phi=I_2\otimes I_2/2$ 的秩为 $4$。
+完整等距像的维数、单事件的可见输入秩与被忽略记录的最小维数不能相互代替。
+
+**白话图景。**完整记录中的线性后继，把后续读口拉回输入，就给出密度矩阵上的过程。
+忽略细记录时，同一个粗结果可以包含多个线性分支；
+这正是 Kraus 和完全正映射的来源。
+它们没有另加一个外部观察者，记录本身仍是整体内部的一部分。
+
+<a id="section-11"></a>
+
