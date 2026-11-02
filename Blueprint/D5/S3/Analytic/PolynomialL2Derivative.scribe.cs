@@ -147,7 +147,7 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every complex polynomial p, the function from real x to p(x), using the complex embedding, is continuous. The actual primitive flux estimate consumes this continuity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("legendre-interface-moment-C-mul-left"),
+                DescribeId.Create("legendre-interface-moment-c-mul-left"),
                 DeclarationHandle.Create(Prefix + "moment_C_mul_left"),
                 H("Left scalar multiplication in a bilinear moment"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -168,7 +168,7 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every complex polynomial p and real x, evaluation of the coefficient conjugate of p at x equals conjugate(p(x)). Weighted energy retains this Hermitian pairing."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("legendre-interface-coeff-legendreC"),
+                DescribeId.Create("legendre-interface-coeff-legendrec"),
                 DeclarationHandle.Create(Prefix + "coeff_legendreC"),
                 H("The actual complex shifted Legendre coefficients"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -203,7 +203,7 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For each natural k, weight(k)=2k+1 is the positive real normalization denominator. The high-mode coefficient gap consumes these weights."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("legendre-interface-coefficientEnergy"),
+                DescribeId.Create("legendre-interface-coefficientenergy"),
                 DeclarationHandle.Create(Prefix + "coefficientEnergy"),
                 H("Finite coefficient energy"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
