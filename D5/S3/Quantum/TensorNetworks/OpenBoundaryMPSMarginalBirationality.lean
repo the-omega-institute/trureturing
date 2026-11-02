@@ -117,7 +117,7 @@ private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
       mpsState n (Matrix.of fun i k => x (Sum.inl (0, i, k)))
         (Matrix.of fun i k => x (Sum.inl (1, i, k)))
         (fun i => x (Sum.inr (Sum.inl i))) (fun i => x (Sum.inr (Sum.inr i))) := by
-  funext w
+  funext w; rw [parameterPolys]
   have hprod : ((List.ofFn fun j => (Matrix.of fun i k =>
       (MvPolynomial.X (Sum.inl (w j, i, k)) : MvPolynomial parameterIndex ℂ))).prod).map
       (MvPolynomial.eval x) =
@@ -303,7 +303,7 @@ private lemma quartic_closure (t : (Fin 3 → Fin 2) → ℂ) (ht : t ∈ closur
 private lemma kernel_cramer_identity :
     kernelMatrix *ᵥ ![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] =
       ![0, 0, 0, kernelMatrix.det] := by
-  funext i
+  rw [kernelMatrix]; funext i
   fin_cases i <;>
     norm_num [kernelMatrix, kernelMinor, minorPoly, cramerNumerator, Matrix.cramer_apply,
       Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix_apply,
@@ -357,7 +357,8 @@ private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
       (d / v) • ε.mapMatrix (matrixNumerator j) := by
     have hs : ε.mapMatrix (slicePoly j) = Matrix.of (fun i k => t ![i, j, k]) := by
       ext i k
-      exact MvPolynomial.eval_X _
+      change ε (slicePoly j i k) = t ![i, j, k]
+      rw [slicePoly]; exact MvPolynomial.eval_X _
     rw [reconstructedMatrix, hVinv, mul_smul_comm, matrixNumerator, map_mul,
       ε.map_adjugate, hs]
   have hz : reconstructedKernel t = d⁻¹ • (ε ∘ rightKernelNumerator) := by
@@ -426,7 +427,7 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     all_goals
       norm_num [reconstructedKernel, rightKernelNumerator, reconstructedBasis,
         basisNumerator, leftNumerator, dotProduct, Fin.sum_univ_two, coordinate]
-      field_simp [hd]
+      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hd])
       linear_combination heq
   have hunit : IsUnit (reconstructedBasis t).det := isUnit_iff_ne_zero.mpr hv
   have hlt (i : Fin 2) : reconstructedLeft t ᵥ* Matrix.of (fun j k => t ![j, i, k]) =
@@ -548,7 +549,7 @@ private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
   generalize he : n - 3 - a = b at *
   rw [hb, hn]
   simp only [pow_add, mul_pow, div_pow, inv_pow]
-  field_simp [hd, hv, hc]
+  field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hd, hv, hc])
 
 private def splitWordEquiv (a b : ℕ) :
     ((Fin a → Fin 2) × (Fin b → Fin 2)) ≃ (Fin (a + b) → Fin 2) where
@@ -657,6 +658,7 @@ private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
   let x : Fin 3 → ℂ := fun i => v (Fin.castSucc i)
   let y : Fin 3 → ℂ := fun i => ε (cramerNumerator i)
   let b : Fin 3 → ℂ := fun i => ε (kernelMatrix (Fin.castSucc i) 3)
+  have hd0 : d ≠ 0 := hd
   have hx : a *ᵥ x = (-v 3) • b := by
     funext i
     have he := congrFun hv (Fin.castSucc i)
@@ -694,11 +696,11 @@ private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
     apply Matrix.mulVec_injective_iff_isUnit.mpr ((a.isUnit_iff_isUnit_det).mpr ha)
     rw [hx, Matrix.mulVec_smul, hy, smul_smul]
     apply congrArg (fun s : ℂ => s • b)
-    field_simp [show d ≠ 0 from hd]
+    field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hd0])
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
   · change v 3 = (v 3 / d) * d
-    field_simp [show d ≠ 0 from hd]
+    field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hd0])
   · change x j = (v 3 / d) * ε
       ((![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
         (Fin.castSucc j))
@@ -770,21 +772,23 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     have hr0 : r = 0 := by rw [← hz, hz0, Matrix.mulVec_zero]
     have hv0 : v = 0 := by ext i j; change (m j *ᵥ r) i = 0; rw [hr0, Matrix.mulVec_zero]; rfl
     exact hv.ne_zero (by rw [hv0, Matrix.det_zero])
+  have hs0 : e 1 ≠ 0 := hs
   have hl : reconstructedLeft t = (k 3)⁻¹ • e := by
     have hh := congrFun huniq 2; have hh3 := congrFun huniq 3
-    funext i; fin_cases i <;>
+    funext i; rw [reconstructedLeft, leftNumerator]; fin_cases i <;>
       norm_num [k, reconstructedLeft, leftNumerator, Function.comp_def] at hh hh3 ⊢ <;>
-      field_simp [show e 1 ≠ 0 from hs, hd] at hh hh3 ⊢ <;> linear_combination -hh
+      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs0, hd]) at hh hh3 ⊢ <;> linear_combination -hh
   have hzr : reconstructedKernel t = (k 3)⁻¹ • z := by
     have hh := congrFun huniq 0; have hh1 := congrFun huniq 1
-    funext i; fin_cases i <;>
+    funext i; rw [reconstructedKernel, rightKernelNumerator]; fin_cases i <;>
       norm_num [k, reconstructedKernel, rightKernelNumerator, Function.comp_def] at hh hh1 ⊢ <;>
-      field_simp [show e 1 ≠ 0 from hs, hd] at hh hh1 ⊢ <;>
+      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs0, hd]) at hh hh1 ⊢ <;>
       (first | linear_combination -hh | linear_combination -hh1)
   have hbase : reconstructedBasis t = (k 3)⁻¹ • (u * v) := by
     ext i j
     have hli : (reconstructedLeft t ᵥ* Matrix.of (fun p q => t ![p, i, q])) j =
         reconstructedBasis t i j := by
+      rw [reconstructedBasis, basisNumerator]
       norm_num [reconstructedLeft, reconstructedBasis, basisNumerator, leftNumerator,
         coordinate, Matrix.vecMul, dotProduct, Fin.sum_univ_two]; ring
     rw [← hli, hl, ht, Matrix.smul_vecMul, ← Matrix.vecMul_vecMul,
@@ -872,7 +876,7 @@ private lemma gauge_uniqueness_image (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n
   have hnb : n = a + b + 3 := by dsimp [b]; omega
   rw [show s ^ n = s ^ a * s ^ b * s ^ 3 from by rw [hnb, pow_add, pow_add]]
   simp only [inv_pow]
-  field_simp [hs] <;> simp only [mul_one, m]
+  field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs]) <;> simp only [mul_one, m]
 
 private def marginalCoordinate (n a : ℕ) (h : a + 3 ≤ n) (t : Fin 3 → Fin 2) :
     MvPolynomial (Fin n → Fin 2) ℂ :=
@@ -941,17 +945,18 @@ private lemma explicit_chart_nonempty :
   refine ⟨image_subset_closure 3 ⟨_, _, _, _, rfl⟩, ?_⟩
   have hx (i j k : Fin 2) : MvPolynomial.eval explicitTriple (coordinate i j k) =
       ![![![145, 349], ![337, 829]], ![![489, 1173], ![1193, 2933]]] i j k := by
+    rw [coordinate, explicitTriple]
     fin_cases i <;> fin_cases j <;> fin_cases k <;>
       norm_num [coordinate, explicitTriple, mpsState, List.ofFn_succ,
         Matrix.mul_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   have hd : MvPolynomial.eval explicitTriple minorPoly = 387072 := by
-    norm_num [minorPoly, Matrix.det_fin_three, kernelMinor, kernelMatrix,
+    rw [minorPoly, kernelMinor]; norm_num [minorPoly, Matrix.det_fin_three, kernelMinor, kernelMatrix,
       Matrix.submatrix_apply, hx]
   have hc (i : Fin 3) : MvPolynomial.eval explicitTriple (cramerNumerator i) =
       ![118272, 10752, -1161216] i := by
-    fin_cases i <;> norm_num [cramerNumerator, Matrix.cramer_apply, Matrix.det_fin_three,
+    rw [cramerNumerator]; fin_cases i <;> norm_num [cramerNumerator, Matrix.cramer_apply, Matrix.det_fin_three,
       kernelMinor, kernelMatrix, Matrix.submatrix_apply, Matrix.updateCol_apply, hx]
-  norm_num [chartPoly, Matrix.det_fin_two, sumNumerator, matrixNumerator,
+  rw [chartPoly]; norm_num [chartPoly, Matrix.det_fin_two, sumNumerator, matrixNumerator,
     slicePoly, Matrix.adjugate_fin_two, basisNumerator, leftNumerator,
     dotProduct, Matrix.mul_apply, Fin.sum_univ_two, hd, hc, hx]
 
