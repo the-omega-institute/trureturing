@@ -1,0 +1,6 @@
+**Corollary 2.2 (the ceiling guarantee is retained).** The same recorder
+satisfies $|J(h)|\le\lceil\log_2 F(t)\rceil$ for every
+$h\in\mathcal H(t)$, with the complete domain and literal prefix law
+unchanged. This follows directly from (IV.5). It neither rewrites nor
+weakens the distinct fixed-width obstruction of AAII §100.
+

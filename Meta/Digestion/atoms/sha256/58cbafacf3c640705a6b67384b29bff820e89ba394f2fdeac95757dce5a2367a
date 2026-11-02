@@ -1,0 +1,19 @@
+**Proposition 4.2 (compatibility with the exact-width obstruction).**
+Theorem 2.1 does not satisfy the exact-width premise of AAII Theorem
+100.3 and does not contradict its native obstruction. On its three
+witness fibres of sizes $35,35,126$, the present maximum lengths are
+$5,5,6$, while AAII §100's fixed widths are $6,6,7$.
+
+Proof. AAII §100 requires every word at a source to have its stipulated
+common width. Here occupied internal nodes are valid terminated values,
+and some codewords can be empty even in a nonsingleton fibre. In a
+one-additional-bit budget, a terminated prefix $x$ has three possible
+terminated extensions $x,x0,x1$; an exact one-bit-longer width has only
+$x0,x1$. The fixed-width cylinder-capacity argument therefore has a
+different counting premise. The local three-value observation is not
+itself an existence proof for simultaneous native demands; (IV.6)–(IV.10)
+provide that proof on the full domain. In particular no padding to a
+common source width has been used: such padding need not preserve the
+literal history-prefix law. AAII §100's conclusion on exact widths
+retains its original scope. $\square$
+
