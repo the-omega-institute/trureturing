@@ -86,7 +86,7 @@ private lemma polynomial_hinge_integral (p q : ℂ[X])
             (p.eval (s : ℂ)) s := by
           simpa only [hq] using (q.derivative.hasDerivAt (s : ℂ)).comp_ofReal
         have hq' := (q.hasDerivAt (s : ℂ)).comp_ofReal
-        convert (hlinear.mul hp').add hq' using 1 <;> dsimp [G] <;> ring
+        convert (hlinear.mul hp').add hq' using 1 <;> ring
       · exact ((p.continuous.comp Complex.continuous_ofReal).mul
           (by fun_prop : Continuous (fun s : ℝ => (d : ℂ) - (s : ℂ)))).intervalIntegrable (-D) d
     rw [hFTC]
@@ -240,7 +240,7 @@ private lemma complex_polynomial_approximation (D : ℝ) (w : ℝ → ℂ)
   let P : ℂ[X] := p.map Complex.ofRealHom +
     Polynomial.C Complex.I * q.map Complex.ofRealHom
   have hcast (r : ℝ[X]) (s : ℝ) :
-      (r.map Complex.ofRealHom).eval (s : ℂ) = (r.eval s : ℂ) :=
+      (r.map Complex.ofRealHom).eval (s : ℂ) = ((r.eval s : ℝ) : ℂ) :=
     Polynomial.eval_map_apply Complex.ofRealHom s
   refine ⟨P, ?_⟩
   intro s hs
@@ -296,7 +296,7 @@ theorem finite_moment_correlation (D : ℝ) (hD : 0 < D)
     polynomial_correlation_zero x a D hx p R hR hm
   have hiw : IntegrableOn (fun s => w s * C s) (Icc (-D) D) :=
     (hw.mul hC.continuousOn).integrableOn_Icc
-  have hip : IntegrableOn (fun s => p.eval (s : ℂ) * C s) (Icc (-D) D) :=
+  have hip : IntegrableOn (fun s : ℝ => p.eval (s : ℂ) * C s) (Icc (-D) D) :=
     ((p.continuous.comp Complex.continuous_ofReal).mul hC).integrableOn_Icc
   have hrem : (∫ s in Icc (-D) D, (w s - p.eval (s : ℂ)) * C s) =
       ∫ s in Icc (-D) D, w s * C s := by

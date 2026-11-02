@@ -8,9 +8,6 @@ The observed operation is the outer complex norm of the weighted correlation
 integral. The prefix energy retains its original norm. Types, coefficients,
 nodes, all moments, both positive real parameters and the continuous weight
 remain in the original telescope, with the finite type quantified after N.
-
-This is an unelaborated source attempt. In particular the sourceSelection path
-below is a structural proposal, not binding evidence or a validated selection.
 -/
 
 noncomputable section
@@ -102,7 +99,6 @@ def correlationAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       -- Six outer binders; Exists predicate; second And argument; six atomic
       -- binders; three lets; left side of <=; the norm function operand.
-      -- UNASSESSED: neither elaboration nor the source binding evaluator ran.
       path := #["body", "body", "body", "body", "body", "body",
         "arg", "body", "arg",
         "body", "body", "body", "body", "body", "body",
