@@ -597,18 +597,18 @@ private theorem broad_certificate_exists (a b c d : ℕ)
         simp [chainStart]; omega] at hh
       change f (b+c+d+i) = (2:ℤ)^i*base a b c d 3 at hh
       rw [hbase] at hh
-      simpa only [Nat.zero_add, Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead,
-        Matrix.vecTail] using hh
+      simpa [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.vecHead, Matrix.vecTail] using hh
     · have hh := tab.2.2.1 3 i (by simp [chainLength]; omega)
       rw [if_pos (by simp [chainLength]; omega)] at hh
       rw [show chainStart b c d 3 + i = b+c+d+i by
         simp [chainStart]; omega] at hh
       change g (b+c+d+i) = (2:ℤ)^i*newBase a b c d 3 at hh
       rw [hnewbase] at hh
-      simpa only [Nat.zero_add, Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead,
-        Matrix.vecTail] using hh
+      simpa [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.vecHead, Matrix.vecTail] using hh
   have hV (side : Bool) (i : ℕ) (hi : i<c-1) :
       (if side then g else f) (d+i) =
         (2:ℤ)^i * (if side then V.SU else V.B) := by
@@ -651,7 +651,7 @@ private theorem broad_certificate_exists (a b c d : ℕ)
     rw [hh]
     rw [hpowq]
     ring
-  have hXold : ((P 1).map f).sum = ((2:ℤ)^(a-1)-r)*V.K := by
+  have hXoldMass : ((P 1).map f).sum = ((2:ℤ)^(a-1)-r)*V.K := by
     dsimp [P,broadBanks]
     have hh := range_mass f (r*V.K) (a+b+c) (d-1) (by
       intro i hi
@@ -659,7 +659,7 @@ private theorem broad_certificate_exists (a b c d : ℕ)
     rw [hh]
     rw [hpowr]
     ring
-  have hXnew : ((P 1).map g).sum = ((2:ℤ)^(a-1)-r)*V.SW := by
+  have hXnewMass : ((P 1).map g).sum = ((2:ℤ)^(a-1)-r)*V.SW := by
     dsimp [P,broadBanks]
     have hh := range_mass g (r*V.SW) (a+b+c) (d-1) (by
       intro i hi
@@ -703,9 +703,9 @@ private theorem broad_certificate_exists (a b c d : ℕ)
       rw [show chainStart b c d 0 + e = e by simp [chainStart]] at hh
       change f e = (2:ℤ)^e * base a b c d 0 at hh
       rw [hbase] at hh
-      simpa only [Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead,
-        Matrix.vecTail] using hh
+      simpa [Nat.zero_add, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.vecHead, Matrix.vecTail] using hh
   have hU1new : (U1.map g).sum = ((u : ℕ):ℤ)*(2*V.A) := by
     dsimp [U1]
     apply chamberLabels_sum
@@ -716,9 +716,9 @@ private theorem broad_certificate_exists (a b c d : ℕ)
       rw [show chainStart b c d 0 + e = e by simp [chainStart]] at hh
       change g e = (2:ℤ)^e * newBase a b c d 0 at hh
       rw [hnewbase] at hh
-      simpa only [Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead,
-        Matrix.vecTail] using hh
+      simpa [Nat.zero_add, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.vecHead, Matrix.vecTail] using hh
   have hUfullold : ((List.range' 0 (d-1)).map f).sum =
       ((2:ℤ)^(d-1)-1)*V.A := by
     exact range_mass f V.A 0 (d-1) (by
@@ -741,31 +741,49 @@ private theorem broad_certificate_exists (a b c d : ℕ)
       simpa using hh)
   have hU0old : (U0.map f).sum =
       ((2:ℤ)^(d-1)-1-(u : ℕ))*V.A := by
+    have hU1old' :
+        (chamberLabels (d-1) 0 u |>.map f).sum = ((u : ℕ):ℤ)*V.A := by
+      simpa [U1] using hU1old
     have hs := chamberLabels_split (d-1) 0 (2^(d-1)-1) (u)
       (by intro e he _; simp [Nat.testBit_two_pow_sub_one,he])
     have hs' := (hs.map f).sum_eq
-    rw [← chamberLabels_full (d-1) 0] at hs'
-    rw [hUfullold,hU1old] at hs'
+    rw [chamberLabels_full (d-1) 0] at hs'
+    simp only [List.map_append, List.sum_append] at hs'
+    rw [hU1old'] at hs'
+    rw [hUfullold] at hs'
     norm_num at hs'
     push_cast at hs'
-    simpa [U0] using hs'
+    have hs0 :
+        (List.map f (chamberLabels (d-1) 0 ((2^(d-1)-1) ^^^ u))).sum =
+          ((2:ℤ)^(d-1)-1-(u : ℕ))*V.A := by
+      linarith only [hs']
+    simpa [U0] using hs0
   have hU0new : (U0.map g).sum =
       ((2:ℤ)^(d-1)-1-(u : ℕ))*(2*V.A) := by
+    have hU1new' :
+        (chamberLabels (d-1) 0 u |>.map g).sum = ((u : ℕ):ℤ)*(2*V.A) := by
+      simpa [U1] using hU1new
     have hs := chamberLabels_split (d-1) 0 (2^(d-1)-1) (u)
       (by intro e he _; simp [Nat.testBit_two_pow_sub_one,he])
     have hs' := (hs.map g).sum_eq
-    rw [← chamberLabels_full (d-1) 0] at hs'
-    rw [hUfullnew,hU1new] at hs'
+    rw [chamberLabels_full (d-1) 0] at hs'
+    simp only [List.map_append, List.sum_append] at hs'
+    rw [hU1new'] at hs'
+    rw [hUfullnew] at hs'
     norm_num at hs'
     push_cast at hs'
-    simpa [U0] using hs'
+    have hs0 :
+        (List.map g (chamberLabels (d-1) 0 ((2^(d-1)-1) ^^^ u))).sum =
+          ((2:ℤ)^(d-1)-1-(u : ℕ))*(2*V.A) := by
+      linarith only [hs']
+    simpa [U0] using hs0
   have mo : ((P 0).map f).sum = ((2:ℤ)^(b-1)-q)*V.L ∧
       ((P 1).map f).sum = ((2:ℤ)^(a-1)-r)*V.K ∧
       ((P 2).map f).sum = ((2:ℤ)^(d-1)-1-(u : ℕ))*V.A ∧
       ((P 3).map f).sum = ((2:ℤ)^(c-1)-1)*V.B +
         ((2:ℤ)^(b-a)-1)*V.L + ((2:ℤ)^(a-d)-1)*V.K +
         ((u : ℕ):ℤ)*V.A := by
-    refine ⟨hWold,hXold,?_,?_⟩
+    refine ⟨hWold,hXoldMass,?_,?_⟩
     · dsimp [P,broadBanks,U0]
       exact hU0old
     · dsimp [P,broadBanks,U1]
@@ -777,7 +795,7 @@ private theorem broad_certificate_exists (a b c d : ℕ)
       ((P 3).map g).sum = ((2:ℤ)^(c-1)-1)*V.SU +
         ((2:ℤ)^(b-a)-1)*V.SV + ((2:ℤ)^(a-d)-1)*V.SW +
         ((u : ℕ):ℤ)*(2*V.A) := by
-    refine ⟨hWnew,hXnew,?_,?_⟩
+    refine ⟨hWnew,hXnewMass,?_,?_⟩
     · dsimp [P,broadBanks,U0]
       exact hU0new
     · dsimp [P,broadBanks,U1]
@@ -864,28 +882,37 @@ private theorem broad_certificate_exists (a b c d : ℕ)
   have znew : G 0+g (T 0)+G 1+g (T 1)+G 2+g (T 2)+G 3+g (T 3)+V.A=0 := by
     have he : V.Dp=V.SW-q*V.SV := rfl
     nlinarith only [g0,g1,g2,g3,he]
-  have xid : V.A-r*V.K=V.D+V.S-r*V.H := by
-    dsimp [V,values]
-    ring
-  have xid' : V.A-r*V.SW=V.Dp+2*V.S-r*V.H := by
-    dsimp [V,values]
-    ring
   have hrem_lt : V.E % V.A < V.A := Int.emod_lt_of_pos _ hApos
   have hUold : 0 ≤ V.E % V.A ∧ 2*(V.E % V.A) ≤ V.B-1 := by
-    have := hB3A
-    omega
+    constructor
+    · exact hrem_nonneg
+    · have hrem_le : V.E % V.A ≤ V.A - 1 := by omega
+      have hB3AV : 3 * V.A < V.B := by simpa [V] using hB3A
+      omega
   have hUnew : 0 ≤ 2*(V.E % V.A)+V.J ∧
       2*(2*(V.E % V.A)+V.J) ≤ V.SU-1 := by
-    have := hJA
-    have := hJpos
-    have := hB3A
-    omega
+    constructor
+    · have hJposV : 0 < V.J := by simpa [V] using hJpos
+      omega
+    · rw [show V.SU = 2 * V.B - 1 by rfl]
+      have hrem_le : V.E % V.A ≤ V.A - 1 := by omega
+      have hJAV : V.J < V.A := by simpa [V] using hJA
+      have hB3AV : 3 * V.A < V.B := by simpa [V] using hB3A
+      omega
   have heq : V.E-(u:ℤ)*V.A=V.E%V.A := by
-    rw [←hu_cast]
-    nlinarith [hdiv]
+    linarith only [hdiv]
   have win (e S z C : ℤ) (he : 0≤e ∧ 2*e≤S-1)
       (hz : 2*z=S-(2*C+1)) : 0≤e ∧ e-z≤C := by omega
-  have k0 := win V.D V.K (f (T 0)) (N/2) ⟨by omega,hKcap⟩ (by
+  have hKcapV : 2*V.H ≤ V.K-1 := by simpa [V] using hKcap
+  have hSWcapV : 2*V.H ≤ V.SW-1 := by simpa [V] using hSWcap
+  have hDltHV : V.D < V.H := by simpa [V] using hDH
+  have hDpD_V : V.Dp < V.D := by simpa [V] using hDpD
+  have hDH_V : V.D < V.H := by simpa [V] using hDH
+  have hDpV : 0 < V.Dp := by simpa [V] using hDp
+  have hDposV : 0 < V.D := by omega
+  have hDpcap : 2*V.Dp ≤ V.SW-1 := by omega
+  have hDcap : 2*V.D ≤ V.K-1 := by omega
+  have k0 := win V.D V.K (f (T 0)) (N/2) ⟨by omega,hDcap⟩ (by
     have hz := n0.2.2.1
     omega)
   have k1 := win (V.D+V.S-r*V.H) V.A (f (T 1)) (N/2)
@@ -896,7 +923,7 @@ private theorem broad_certificate_exists (a b c d : ℕ)
       (by rw [heq]; exact hUold) (by
     have hz := n2.2.2.1
     omega)
-  have k0n := win V.Dp V.SW (g (T 0)) N ⟨hDp.le,by omega⟩ n0.2.2.2
+  have k0n := win V.Dp V.SW (g (T 0)) N ⟨hDp.le,hDpcap⟩ n0.2.2.2
   have k1n := win (V.Dp+2*V.S-r*V.H) V.A (g (T 1)) N
       ⟨hXnew,hXnewcap⟩ (by
     have hz := n1.2.2.2
@@ -904,8 +931,13 @@ private theorem broad_certificate_exists (a b c d : ℕ)
   have k2n := win (V.F-2*(u:ℤ)*V.A) V.SU (g (T 2)) N
       (by
         have he : V.F-2*(u:ℤ)*V.A = 2*(V.E%V.A)+V.J := by
-          rw [←hu_cast]
-          nlinarith [hdiv]
+          have hFJ : V.F = 2*V.E+V.J := by
+            dsimp [V,values]
+            ring
+          calc
+            V.F-2*(u:ℤ)*V.A = (2*V.E+V.J)-2*(u:ℤ)*V.A := by rw [hFJ]
+            _ = 2*(V.E-(u:ℤ)*V.A)+V.J := by ring
+            _ = 2*(V.E%V.A)+V.J := by rw [heq]
         rw [he]
         exact hUnew)
       n2.2.2.2
@@ -933,13 +965,11 @@ private theorem broad_certificate_exists (a b c d : ℕ)
   · intro pkt hpkt i hi
     simp only [ps,List.mem_cons,List.mem_nil_iff,or_false] at hpkt
     rcases hpkt with rfl|rfl|rfl|rfl
-    all_goals exact good _ i (List.mem_toFinset.mp hi)
+    all_goals exact good _ i hi
   · have he : (blocksWord (orderedPackets ps)).Perm (broadWord a b c d u) := by
-      dsimp [ps,orderedPackets,blocksWord]
-      simpa only [List.map_cons,List.map_nil,blocksWord,
-        List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using
-        (((((((hperm 0).append_right [T 0]).append (hperm 1)).append_right [T 1]).append
-          (hperm 2)).append_right [T 2]).append (hperm 3)).append_right [T 3]
+      have hh := (((((((hperm 0).append_right [T 0]).append (hperm 1)).append_right [T 1]).append
+        (hperm 2)).append_right [T 2]).append (hperm 3)).append_right [T 3]
+      simpa [ps, orderedPackets, blocksWord, broadWord] using hh
     exact Multiset.coe_eq_coe.mpr (he.trans hp)
   · change finiteChecks (oldMass a b c d) f (N/2) 0 ps
     simp only [ps,finiteChecks,zero_add]
@@ -949,18 +979,76 @@ private theorem broad_certificate_exists (a b c d : ℕ)
       M 0+f (T 0)+M 1+f (T 1)+M 2≤N/2 ∧
       0≤M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)+M 3+f (T 3) ∧
       M 0+f (T 0)+M 1+f (T 1)+M 2+f (T 2)+M 3≤N/2 ∧ True
-    refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,trivial⟩ <;>
-      nlinarith only [k0.1,k0.2,k1.1,k1.2,k2.1,k2.2,m0,m1,m2,heold,zold,lastO.2]
+    have hAS : V.A - r * V.K = V.S - r * V.H := by
+      dsimp [V,values]
+      ring
+    have p0 : M 0 + f (T 0) = V.D := m0
+    have p1 : M 0 + f (T 0) + M 1 + f (T 1) =
+        V.D + V.A - r * V.K := by linarith [m0,m1]
+    have p1' : M 0 + f (T 0) + M 1 + f (T 1) =
+        V.D + V.S - r * V.H := by linarith [p1,hAS]
+    have p2 : M 0 + f (T 0) + M 1 + f (T 1) + M 2 + f (T 2) =
+        V.E - (u : ℤ) * V.A := heold
+    have p2m : M 0 + f (T 0) + M 1 + f (T 1) + M 2 =
+        V.E - (u : ℤ) * V.A - f (T 2) := by linarith [p2]
+    have p3 : M 0 + f (T 0) + M 1 + f (T 1) + M 2 + f (T 2) + M 3 + f (T 3) = 0 := zold
+    constructor
+    · linarith [m0, k0.1]
+    constructor
+    · linarith [m0, k0.2]
+    constructor
+    · linarith [p1', k1.1]
+    constructor
+    · linarith [p1', k1.2]
+    constructor
+    · linarith [p2, k2.1]
+    constructor
+    · linarith [p2m, k2.2]
+    constructor
+    · linarith [p3, lastO.1]
+    constructor
+    · linarith [p3, lastO.2]
+    · trivial
   · change finiteEarChecks (newMass a b c d) g N (base a b c d 0) 0 1 ps
     rw [hbase]
     change finiteEarChecks (newMass a b c d) g N V.A 0 1 ps
     simp only [ps,finiteEarChecks,finiteChecks,zero_add]
-    change 0≤G 0+g (T 0) ∧ G 0≤N ∧
-      0≤G 0+G 1+V.A+g (T 1) ∧ G 0+G 1+V.A≤N ∧
-      0≤G 0+G 1+V.A+g (T 1)+G 2+g (T 2) ∧
-      G 0+G 1+V.A+g (T 1)+G 2≤N ∧
-      0≤G 0+G 1+V.A+g (T 1)+G 2+g (T 2)+G 3+g (T 3) ∧
-      G 0+G 1+V.A+g (T 1)+G 2+g (T 2)+G 3≤N ∧ True
-    refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,trivial⟩ <;>
-      nlinarith only [k0n.1,k0n.2,k1n.1,k1n.2,k2n.1,k2n.2,g0,g1,g2,henew,znew,lastN.2]
+    change 0≤newMass a b c d (B 0)+g (T 0) ∧ newMass a b c d (B 0)≤N ∧
+      0≤newMass a b c d (B 0)+g (T 0)+(newMass a b c d (B 1)+V.A)+g (T 1) ∧
+      newMass a b c d (B 0)+g (T 0)+(newMass a b c d (B 1)+V.A)≤N ∧
+      0≤newMass a b c d (B 0)+g (T 0)+(newMass a b c d (B 1)+V.A)+g (T 1)+newMass a b c d (B 2)+g (T 2) ∧
+      newMass a b c d (B 0)+g (T 0)+(newMass a b c d (B 1)+V.A)+g (T 1)+newMass a b c d (B 2)≤N ∧
+      0≤newMass a b c d (B 0)+g (T 0)+(newMass a b c d (B 1)+V.A)+g (T 1)+newMass a b c d (B 2)+g (T 2)+newMass a b c d (B 3)+g (T 3) ∧
+      newMass a b c d (B 0)+g (T 0)+(newMass a b c d (B 1)+V.A)+g (T 1)+newMass a b c d (B 2)+g (T 2)+newMass a b c d (B 3)≤N ∧ True
+    have hASnew : 2 * V.A - r * V.SW = 2 * V.S - r * V.H := by
+      dsimp [V,values]
+      ring_nf
+    have q0 : G 0 + g (T 0) = V.Dp := g0
+    have q1 : G 0 + g (T 0) + G 1 + V.A + g (T 1) =
+        V.Dp + 2 * V.S - r * V.H := by linarith [g0,g1,hASnew]
+    have q1m : G 0 + g (T 0) + G 1 + V.A =
+        V.Dp + 2 * V.S - r * V.H - g (T 1) := by linarith [q1]
+    have q2 : G 0 + g (T 0) + G 1 + V.A + g (T 1) + G 2 + g (T 2) =
+        V.F - 2 * (u : ℤ) * V.A := by linarith [henew]
+    have q2m : G 0 + g (T 0) + G 1 + V.A + g (T 1) + G 2 =
+        V.F - 2 * (u : ℤ) * V.A - g (T 2) := by linarith [q2]
+    have q3 : G 0 + g (T 0) + G 1 + V.A + g (T 1) + G 2 + g (T 2) + G 3 + g (T 3) = 0 := by
+      linarith [znew]
+    constructor
+    · linarith [g0, k0n.1]
+    constructor
+    · linarith [g0, k0n.2]
+    constructor
+    · linarith [q1, k1n.1]
+    constructor
+    · linarith [q1m, k1n.2]
+    constructor
+    · linarith [q2, k2n.1]
+    constructor
+    · linarith [q2m, k2n.2]
+    constructor
+    · linarith [q3]
+    constructor
+    · linarith [lastN.2]
+    · trivial
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum
