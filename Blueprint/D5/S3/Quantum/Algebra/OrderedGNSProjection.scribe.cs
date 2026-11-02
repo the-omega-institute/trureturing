@@ -76,7 +76,7 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
     private static Formula StateOf(Formula rho, Formula value) => Call("state", rho, value);
     private static Formula Par(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, Par(body));
+        Seq(Forall, Sp, Typed(F.Id(name), type), Comma, Sp, Par(body));
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(Par(left), FormulaLogicOperator.And, Par(right));
     private static Formula Imp(Formula left, Formula right) =>
@@ -168,7 +168,7 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
         Formula bigX = F.Id("X");
         Formula indices = Call("Fin", k);
         Formula blocks = MatrixOn(indices);
-        Formula amplified = MatrixOn(Par(Seq(indices, Times, F.Id("n"))));
+        Formula amplified = MatrixOn(Par(Seq(indices, Sp, Times, Sp, F.Id("n"))));
         Formula density = Call("amplifiedDensity", indices, rho);
         Formula Ex = Apply(e, x);
         Formula finiteAmplifications = All("k", Seq(Mathbb, Grp(F.Id("N"))),
