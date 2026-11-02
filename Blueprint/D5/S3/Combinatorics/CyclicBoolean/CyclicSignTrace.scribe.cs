@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.CyclicBoolean;
 internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.";
+    private static readonly LibraryNoteRef SourceNote =
+        LibraryNoteRef.Create("D5/L/Combinatorics/ricardorr2026mo512655");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "At every positive odd length, the literal ordered integer sign-matrix trace of every nonzero mask has affine support dimension at least one less than the length. Exact Boolean inversion, Walsh duality and coefficient constraints supply the proof.",
@@ -97,7 +99,7 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, StatementSource statement, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("cyclic-sign-trace-" + name.ToLowerInvariant().Replace("_", "-")),
-            DeclarationHandle.Create(Prefix + name), H(title), statement, AssessedProvenance.FromRepo(),
+            DeclarationHandle.Create(Prefix + name), H(title), statement, AssessedProvenance.FromRepo(SourceNote),
             Blocks(Paragraph(Text(prose))), role);
     private static Formula Named(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
