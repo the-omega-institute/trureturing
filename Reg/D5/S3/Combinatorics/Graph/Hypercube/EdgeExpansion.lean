@@ -46,9 +46,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro h
   change (boundaryEdges 1 ∅).card = (boundaryEdges 1 {((false, ()) : Vertex 1)}).card at h
   have he : (boundaryEdges 1 ∅).card = 0 := by simp [boundaryEdges]
-  have hp := edge_expansion 1 {((false, ()) : Vertex 1)}
-  norm_num at hp
-  omega
+  have hp : 1 ≤ (boundaryEdges 1 {((false, ()) : Vertex 1)}).card := by
+    simpa using edge_expansion 1 {((false, ()) : Vertex 1)}
+  exact (Nat.ne_of_gt (lt_of_lt_of_le Nat.zero_lt_one hp)) (h.symm.trans he)
 
 def family : Registration arena (type_of% (@edge_expansion)) where
   actual := actual
