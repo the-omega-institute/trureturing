@@ -81,7 +81,7 @@ private lemma quadratic_mixture_nonneg (D : ℝ) (hD : 0 ≤ D)
   have hid : (quadratic x a (mixtureTerm n)).re = trivialCoeff n *
       (quadratic x a (fun t => Real.exp (-rate n * |t|))).re := by
     simp only [quadratic, mixtureTerm, Complex.ofReal_mul, Complex.mul_re,
-      Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, Complex.sum_re,
+      Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, map_sum Complex.reCLM _ _,
       Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i hi
@@ -129,7 +129,7 @@ private lemma head_mass_harmonic (M : ℕ) :
     change headMass M + 2 * rate M * trivialCoeff M = _
     rw [ih, head_mass_step]
     have hidx : 2 * (M + 1) + 1 = ((2 * M + 1) + 1) + 1 := by omega
-    rw [hidx, harmonic_succ, harmonic_succ]
+    rw [hidx, harmonic_succ (2 * M + 1 + 1), harmonic_succ (2 * M + 1)]
     push_cast
     ring
 
@@ -140,7 +140,10 @@ private lemma head_loss_exact (M : ℕ) :
   | succ M ih =>
     rw [headLoss, Finset.sum_range_succ]
     change headLoss M + 2 * rate M ^ 3 * trivialCoeff M = _
-    rw [ih, head_loss_step, headMass, Finset.sum_range_succ]
+    rw [ih, head_loss_step]
+    have hs : headMass (M + 1) = headMass M + 2 * rate M * trivialCoeff M := by
+      exact Finset.sum_range_succ _ M
+    rw [hs]
     change 2 * (M : ℝ) ^ 2 + 3 * M + headMass M / 4 +
         (4 * ((M : ℝ) + 1) + 1 + (2 * rate M * trivialCoeff M) / 4) = _
     push_cast
@@ -168,7 +171,7 @@ private theorem complete_positive_mixture_head
     have hquad : (quadratic x a (mixtureTerm n)).re = trivialCoeff n *
         (quadratic x a (fun t => Real.exp (-rate n * |t|))).re := by
       simp only [quadratic, mixtureTerm, Complex.ofReal_mul, Complex.mul_re,
-        Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, Complex.sum_re,
+        Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, map_sum Complex.reCLM _ _,
         Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro i hi
@@ -176,7 +179,7 @@ private theorem complete_positive_mixture_head
       intro j hj
       ring
     rw [hquad]
-    convert hscaled using 1 <;> dsimp only [energy] <;> ring
+    convert hscaled using 1 <;> (try dsimp only [energy]) <;> ring
   have hsum := Finset.sum_le_sum (s := Finset.range M) (fun n hn => hterm n)
   have hid : (∑ n ∈ Finset.range M,
       (2 * rate n * trivialCoeff n - D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)) *
