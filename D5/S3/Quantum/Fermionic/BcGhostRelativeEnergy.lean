@@ -127,8 +127,6 @@ theorem siteEnergy_pos_of_ne_one_three {j : ℕ} (h1 : j ≠ 1) (h3 : j ≠ 3) :
       omega
     omega
 
-theorem b_zero : b 0 = annihilate 3 := by simp [b]
-
 theorem L_zero_down : L 0 (c 1 vacuum) = -(c 1 vacuum) := by
   rw [ghost_vacuum.2.2.1, L_zero_ket]
   norm_num [energy, siteEnergy, siteMode, siteSign]

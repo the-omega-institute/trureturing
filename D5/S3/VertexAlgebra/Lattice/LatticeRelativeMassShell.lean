@@ -1,4 +1,11 @@
-/-
+/- GID: D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell
+   mirror-E: none(waiver:algebraic-original-relative-mass-shell)
+   anchors: []
+   utility: none
+   digest: The literal original fixed-momentum relative mass shell has a finite tensor basis and is preserved by the actual total BRST charge.
+
 The fixed-momentum kinematic component on the ORIGINAL
 `LatticeMatterGhostCoupling.State D = Carrier D ⊗ Fock`.  This module proves
 the literal kernel/support/basis and finite-dimensional endpoints needed by
@@ -8,7 +15,6 @@ the relative shell.  It does not assert a no-ghost theorem or positivity.
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
-import D5.S3.VertexAlgebra.Lattice.LatticeBRSTSquare
 import D5.S3.Quantum.Fermionic.BcGhostRelativeEnergy
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.LinearAlgebra.Finsupp.Supported
@@ -161,10 +167,6 @@ def totalEnergy (D : LatticeData) (i : TensorLabel D) : ℤ :=
    grading definition. -/
 abbrev totalL0 (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
     Module.End ℂ (State D) := matterMode D H 0 + ghostVirasoro D 0
-
-theorem totalL0_eq_actual (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
-    totalL0 D H = matterMode D H 0 + ghostVirasoro D 0 := rfl
 
 theorem totalL0_basis (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -580,24 +582,6 @@ theorem relativeMassShell_finiteDimensional (D : LatticeData)
     (a : Charge D) : FiniteDimensional ℂ (relativeMassShell D H a) := by
   letI := shellIndex_finite D a
   exact Module.Finite.of_basis (shellBasis D H hHG hGH a)
-
-/- Small anonymous consumer checks for the native endpoints.  These retain no
-   alternate operator or positivity premise. -/
-example (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
-    totalL0 D H = matterMode D H 0 + ghostVirasoro D 0 :=
-  totalL0_eq_actual D H
-
-example (D : LatticeData) : massShellCutoff D 0 = 1 := by
-  simp [massShellCutoff]
-
-example (D : LatticeData) (a : Charge D) : Finite (ShellIndex D a) :=
-  shellIndex_finite D a
-
-example (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (hrank : D.rank = 26) : totalCharge D H ^ 2 = 0 := by
-  rw [LatticeBRST.total_square_anomaly D H hHG hGH]
-  simp [hrank]
 
 end
 end D5.S3.VertexAlgebra.LatticeRelativeMassShell
