@@ -253,15 +253,6 @@ def vertices : List D.Vertex :=
     (es.flatMap fun e =>
       (List.finRange (3 * D.k e)).map fun i => Sum.inr ⟨e, i⟩)
 
-theorem mem_vertices (hvs : ∀ a, a ∈ vs) (hes : ∀ e, e ∈ es)
-    (a : D.Vertex) : a ∈ D.vertices vs es := by
-  cases a with
-  | inl a => simp [vertices, hvs a]
-  | inr a =>
-    rcases a with ⟨e, i⟩
-    simp only [vertices, List.mem_append, List.mem_map, List.mem_flatMap]
-    exact Or.inr ⟨e, hes e, i, by simp, rfl⟩
-
 def slots : List D.Slot :=
   es.flatMap fun e =>
     (List.finRange (3 * D.k e + 1)).map fun i => ⟨e, i⟩

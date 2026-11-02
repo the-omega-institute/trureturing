@@ -49,7 +49,7 @@ internal sealed class CarneroBravoKingRoutesDocument : IScribeDocumentDefinition
                 "The range isomorphism transfers the exact vertex cardinality to selected.", DescribeRole.Theorem),
             Node("selected-edges", "selected_edge_count", "The induced range has 94,036 edges",
                 "The range isomorphism transfers the exact edge cardinality to rectangle.induce(selected).", DescribeRole.Theorem),
-            Paragraph(Text("Separate obligations remain: replay of the supplied 40 graph moves from the Adamaszek seed with the actual ambient edges, identification of prescribed subdivisions with genuine suspension moves, transport of the torsion class through those moves, and application of the finite-chain/singular-homology comparison and sphere-wedge torsion obstruction. The large routing certificate supplies none of those homology conclusions as an assumption.")))));
+            Paragraph(Text("The routing module leaves separate homological obligations: replay of the supplied 40 graph moves from the Adamaszek seed with the actual ambient edges, identification of prescribed subdivisions with genuine suspension moves, transport of the torsion class through those moves, and application of the finite-chain/singular-homology comparison and sphere-wedge torsion obstruction. KingFinalComposition discharges these obligations. The large routing certificate supplies none of those homology conclusions as an assumption.")))));
 
     private static Formula Statement(string declaration)
     {

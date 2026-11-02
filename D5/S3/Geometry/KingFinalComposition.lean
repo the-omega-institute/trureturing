@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Geometry/KingFinalComposition
    mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Geometry/KingFinalComposition.claim; result=D5/S3/Geometry/KingFinalComposition.result; claim=D5/S3/Geometry/KingFinalComposition.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Geometry/KingFinalComposition.utilityClaim; result=D5/S3/Geometry/KingFinalComposition.utilityRefutation; claim=D5/S3/Geometry/KingFinalComposition.utilityClaim
    digest: The selected induced king-grid graph has nonzero integral singular 2-torsion in degree 31327 and refutes arbitrary-family sourceSP. -/
 
 import D5.S3.Geometry.FiniteGraphSuspensionMoves
@@ -295,5 +295,15 @@ def claim : Prop :=
 theorem result : ¬ claim.{v} := by
   intro h
   exact rectangle_not_sourceSW (h 9337 9061 (by decide) (by decide))
+
+/-- Closed utility enrollment of the universe-zero instance of `claim`.
+This administrative declaration does not replace the arbitrary-universe
+claim or supply the mathematical scope of the counterexample. -/
+def utilityClaim : Prop := claim.{0}
+
+/-- The closed refutation required by the utility interface, enrolled from
+the existing arbitrary-universe `result`. This is administrative support,
+not an additional mathematical result. -/
+theorem utilityRefutation : ¬ utilityClaim := result.{0}
 
 end D5.S3.Geometry.KingFinalComposition

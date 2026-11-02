@@ -337,7 +337,8 @@ resolution; it does not certify priority or uniqueness. Lean verification
 of this construction does not itself constitute independent fidelity review,
 required CI, publication acceptance or a priority certificate.
 
-The 378 new public theorem audit targets remain unfinished under
+The 379 public theorem audit targets, including the universe-polymorphic
+`KingFinalComposition.result`, remain unfinished under
 [issue #25577](https://github.com/the-omega-institute/trureturing/issues/25577).
 The typed dependent-family attempt for `KingFiniteReplay.rowBits_spec` has a
 compiled equivalence bridge, rejected whole-family intervention, sensitivity
