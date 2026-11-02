@@ -61,7 +61,8 @@ private def cyclicShield (d : ℕ) : Fin d → Fin d × Fin d → ℂ :=
 private theorem cyclic_shift_factor (d : ℕ) (i j k : Fin d) :
     i + k = j ↔ k = cyclicMu d i j := by
   have := i.neZero
-  simp only [cyclicMu, eq_sub_iff_add_eq, add_comm]
+  change i + k = j ↔ k = j - i
+  simp only [eq_sub_iff_add_eq, add_comm]
 
 private theorem cyclic_q_orthogonal (d : ℕ) (k : Fin d) :
     (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by
@@ -159,8 +160,8 @@ private theorem cyclic_partial_transpose (d : ℕ) :
     constructor <;> intro hh <;> simpa only [add_comm] using hh.symm
   delta D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
   simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply]
-  delta cyclicShield tVec cyclicS
-  simp [cyclicMu, ite_mul, heq]
+  delta cyclicShield tVec cyclicS cyclicMu
+  simp [ite_mul, heq]
 
 private theorem cyclic_data (d : ℕ) (h : 2 ≤ d) :
     IsSecondFamilyData d (cyclicQ d) (cyclicQbar d) (cyclicMu d) (cyclicS d)
