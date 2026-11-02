@@ -59,7 +59,143 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
                     + "give defect (mu(L)+mu(N)-mu(T))/(c+mu(R)+mu(T)). This proves the fixed-overlap maximum in Theorem 2.1 of Born-weighted "
                     + "Jaccard projection geometry. The cases r=0, M=m, and c+mu(R)=0 remain "
                     + "included. This is a repository derivation, with no originality claim."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Paragraph(Text("Coincident-line boundary (Proposition 3.2). Keep the same n, rho, c, R "
+                + "and T throughout. Write S=R+T and E(L)=R+L, with orthogonal sums. "
+                + "For y in T the actual compression is Ky=P(T)(rho y), and a(L) is "
+                + "the real quadratic form of K on any unit generator of L. In the notation "
+                + "of the theorem, M=lam(0), m=lam(1). Put"),
+                Math(Disp(BoundaryParameters())),
+                Text("Choose one orthonormal eigenbasis e,f of K with eigenvalues M,m, "
+                + "once for the entire family, also when M=m. For any unit x in T, "
+                + "compression_inner and compression_quadratic identify a(L) with "
+                + "M times the squared modulus of its e coordinate plus m times that of "
+                + "its f coordinate. Those squared moduli sum to one, so m<=a(L)<=M "
+                + "and s-a(L)>=m>0.")),
+            Paragraph(Text("For every line L in T, distance_properties gives the zero diagonal "
+                + "and symmetry. Since E(L) is contained in S, the actual meet and join "
+                + "in its distance to S are E(L) and S. The projection and weight identities "
+                + "projection_orthogonal_sup, weight_orthogonal_sup and weight_unit_line give"),
+                Math(Disp(CoincidentValue())),
+                Text("Thus this statement covers every coincident pair, not just an eigenline. "
+                + "The disjoint-line hypotheses of interval_inf and interval_defect hold only "
+                + "for distinct lines and are not used at coincidence.")),
+            Paragraph(Text("Use the actual simultaneous source family (2.7), with e and f fixed:"),
+                Math(Disp(BoundaryFamily())),
+                Text("For every 0<=r<1 both coefficients are positive, the vectors are unit "
+                + "and their inner product is r. Their lines L(r) and N(r) are distinct, "
+                + "have zero intersection, and span T. These are the explicit vectors in "
+                + "pair_construction used by fixed_overlap_attainment; the choice of "
+                + "eigenbasis does not depend on r. Merely choosing an unrelated maximizer "
+                + "for each r would not identify this limiting line. For either "
+                + "w(r)=u(r) or w(r)=v(r), orthonormality gives"),
+                Math(Disp(VectorConvergence())),
+                Text("The limits are taken through 0<=r<1 as r tends to one. The continuity "
+                + "of Real.sqrt, scalar multiplication and addition gives these vector limits "
+                + "in the ambient H, using the actual inclusion of T into H.")),
+            Paragraph(Text("To identify the topology on lines, let Q(x,y) be the ambient rank-one "
+                + "operator z maps to inner(y,z)x. P(L) denotes the ambient orthogonal "
+                + "projector onto L. For a unit w, starProjection_unit_singleton and "
+                + "InnerProductSpace.rankOne_apply identify P(C w) with Q(w,w). "
+                + "Additivity and conjugate additivity in the two rankOne arguments, "
+                + "the triangle inequality and InnerProductSpace.norm_rankOne give"),
+                Math(Disp(ProjectorConvergence())),
+                Text("Consequently both actual line projectors converge in operator norm "
+                + "to P(C e). This proves convergence in the topology of ambient orthogonal "
+                + "projectors, with the same M-eigenline for both families. Also "
+                + "P(E(L(r)))=P(R)+P(L(r)) and likewise for N(r), so both interval "
+                + "elements converge to E(C e) in this topology. The continuity inputs "
+                + "are pinned Mathlib results: Mathlib/Analysis/Real/Sqrt.lean, "
+                + "Mathlib/Topology/Algebra/Module/Basic.lean and "
+                + "Mathlib/Topology/Algebra/Group/Basic.lean; the projector and rankOne "
+                + "identities are in Mathlib/Analysis/InnerProductSpace/Projection/Basic.lean "
+                + "and Mathlib/Analysis/InnerProductSpace/LinearMap.lean. These references "
+                + "use mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679.")),
+            Paragraph(Text("For r<1 the explicit weights are "
+                + "a(L(r))=a(N(r))=(s+r(M-m))/2. unit_pair_geometry and interval_defect "
+                + "therefore compute the distinct-pair defect; fixed_overlap_maximum "
+                + "identifies it as the maximum at that overlap. At r=1 both actual "
+                + "lines are C e and a(C e)=M. The preceding coincident calculation gives"),
+                Math(Disp(BoundaryJump())),
+                Text("For every r<1 the meet of E(L(r)) and E(N(r)) is R and their join "
+                + "is S. At r=1 the meet and join are both E(C e). Thus the distance "
+                + "between the distinct endpoints is s/(b+s), while its actual coincident "
+                + "value is zero. The two distances to S converge to m/(b+s). "
+                + "The positive discrepancy s/(b+s) is exactly the meet-over-join change; "
+                + "substituting r=1 into the distinct-line formula is invalid.")),
+            Paragraph(Text("All denominators above remain positive when c=0, R=0 or b=0, "
+                + "because m>0 and s=M+m. For n=2 the assumptions force R=0 and T=H, "
+                + "and the same argument applies. When M=m the chosen basis is still "
+                + "fixed, all distinct-pair defects are zero, and the coincident endpoint "
+                + "is -2m/(b+2m)<0, with positive discrepancy 2m/(b+2m). No invariance "
+                + "of T or R under rho is used: compression_inner, compression_symmetric "
+                + "and native_matrix_faithfulness justify the compression and its positive "
+                + "eigenvalues, while weight_nonneg gives b>=0. This is an application "
+                + "of the existing results to the coherent source family, with no originality "
+                + "claim. Singular densities and "
+                + "infinite-dimensional spaces remain outside these assumptions.")))));
+
+    private static Formula Fr(Formula numerator, Formula denominator) =>
+        new Formula.Fraction(numerator, denominator);
+    private static Formula Sq(Formula x) => new Formula.Power(Par(x), D(2));
+    private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Vert);
+    private static Formula P(Formula x) => Call("P", x);
+    private static Formula E(Formula x) => Call("E", x);
+    private static Formula A(Formula x) => Call("a", x);
+    private static Formula Diff(Formula x, Formula y) => Seq(x, Minus, y);
+    private static Formula W() => Par(Seq(F.Id("b"), Plus, F.Id("s")));
+    private static Formula Defect(Formula x, Formula y, Formula z) =>
+        Seq(new Formula.Subscript(Delta, F.Id("c")), Par(Seq(x, Comma, y, Comma, z)));
+    private static Formula BoundaryParameters() => new Formula.Aligned([
+        Eqn(F.Id("b"), Seq(F.Id("c"), Plus, Call("mu", Rho, F.Id("R")))),
+        Eqn(F.Id("s"), Seq(F.Id("M"), Plus, F.Id("m"))),
+        Seq(D(0), F.Lt, F.Id("m"), Leq, Sp, F.Id("M"), Comma, Quad,
+            D(0), F.Lt, Seq(F.Id("b"), Plus, F.Id("s")))]);
+    private static Formula CoincidentValue()
+    {
+        var L = F.Id("L"); var S = F.Id("S");
+        var beta = Fr(Diff(F.Id("s"), A(L)), W());
+        return new Formula.Aligned([
+            Eqn(Call("d", E(L), S), beta),
+            Seq(Defect(E(L), S, E(L)), F.Eq, Minus, D(2), Call("d", E(L), S),
+                F.Eq, Minus, Fr(Seq(D(2), Par(Diff(F.Id("s"), A(L)))), W()),
+                F.Lt, D(0))]);
+    }
+    private static Formula BoundaryFamily() => new Formula.Aligned([
+        Eqn(Alpha, Seq(Sqrt, Grp(Fr(Seq(D(1), Plus, F.Id("r")), D(2))))),
+        Eqn(Beta, Seq(Sqrt, Grp(Fr(Diff(D(1), F.Id("r")), D(2))))),
+        Eqn(Call("u", F.Id("r")), Seq(Alpha, Sp, F.Id("e"), Plus, Beta, Sp, F.Id("f"))),
+        Eqn(Call("v", F.Id("r")), Seq(Alpha, Sp, F.Id("e"), Minus, Beta, Sp, F.Id("f"))),
+        Eqn(Call("L", F.Id("r")), Seq(Mathbb, Grp(F.Id("C")), Call("u", F.Id("r")))),
+        Eqn(Call("N", F.Id("r")), Seq(Mathbb, Grp(F.Id("C")), Call("v", F.Id("r"))))]);
+    private static Formula VectorConvergence() => new Formula.Aligned([
+        Seq(Alpha, To, D(1), Comma, Quad, Beta, To, D(0)),
+        Seq(Sq(Norm(Diff(Call("w", F.Id("r")), F.Id("e")))), F.Eq,
+            Sq(Diff(Alpha, D(1))), Plus, Sq(Beta), F.Eq,
+            D(2), Par(Diff(D(1), Alpha)), To, D(0))]);
+    private static Formula ProjectorConvergence()
+    {
+        var w = F.Id("w"); var e = F.Id("e");
+        var cw = Seq(Mathbb, Grp(F.Id("C")), w);
+        var ce = Seq(Mathbb, Grp(F.Id("C")), e);
+        return new Formula.Aligned([
+            Eqn(Diff(P(cw), P(ce)), Seq(Call("Q", Diff(w, e), w), Plus,
+                Call("Q", e, Diff(w, e)))),
+            Seq(Norm(Diff(P(cw), P(ce))), Leq,
+                D(2), Norm(Diff(w, e)), To, D(0))]);
+    }
+    private static Formula BoundaryJump()
+    {
+        var eLine = Seq(Mathbb, Grp(F.Id("C")), F.Id("e"));
+        var limit = Fr(Diff(F.Id("M"), F.Id("m")), W());
+        var endpoint = Seq(Minus, Fr(Seq(D(2), F.Id("m")), W()));
+        return new Formula.Aligned([
+            Seq(Defect(E(Call("L", F.Id("r"))), F.Id("S"), E(Call("N", F.Id("r")))),
+                F.Eq, Fr(Seq(F.Id("r"), Par(Diff(F.Id("M"), F.Id("m")))), W()), To, limit),
+            Eqn(Defect(E(eLine), F.Id("S"), E(eLine)), endpoint),
+            Seq(limit, Minus, Par(endpoint), F.Eq, Fr(F.Id("s"), W()), F.Gt, D(0))]);
+    }
+
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
