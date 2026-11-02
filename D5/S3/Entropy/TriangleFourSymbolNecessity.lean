@@ -585,11 +585,14 @@ private theorem record_pair_entropies (L : IncidentLaw S₁ S₂ S₃ O)
   obtain ⟨h₁₂, h₁₃, h₂₃⟩ := L.record_pair_tables hagree
   refine ⟨?_, ?_, ?_⟩
   · rw [show L.recordPair₁₂ = _ from funext h₁₂]
-    exact entropy_deterministic_extension _ (fun z : S₁ × S₂ => L.readoutC z.1 z.2)
+    exact entropy_deterministic_extension (fun z : S₁ × S₂ => L.pair₁₂ z.1 z.2)
+      (fun z => L.readoutC z.1 z.2)
   · rw [show L.recordPair₁₃ = _ from funext h₁₃]
-    exact entropy_deterministic_extension _ (fun z : S₁ × S₃ => L.readoutB z.2 z.1)
+    exact entropy_deterministic_extension (fun z : S₁ × S₃ => L.pair₁₃ z.1 z.2)
+      (fun z => L.readoutB z.2 z.1)
   · rw [show L.recordPair₂₃ = _ from funext h₂₃]
-    exact entropy_deterministic_extension _ (fun z : S₂ × S₃ => L.readoutA z.1 z.2)
+    exact entropy_deterministic_extension (fun z : S₂ × S₃ => L.pair₂₃ z.1 z.2)
+      (fun z => L.readoutA z.1 z.2)
 
 private theorem record_marginals (L : IncidentLaw S₁ S₂ S₃ O) :
     marginal L.recordJoint = L.outputLaw ∧
@@ -684,7 +687,7 @@ private theorem source_gap_balance (L : IncidentLaw S₁ S₂ S₃ O)
     congr 1
     funext s
     rw [hm₂, hm₃]
-    rfl
+    simp only [marginal₁, marginal, Fintype.sum_prod_type]
   calc
     _ = mutualInformation (xyProjection L.nu) + mutualInformation (xzProjection L.nu) +
         mutualInformation (FiniteEntropy.yz L.nu) +
@@ -735,7 +738,9 @@ theorem original_equality_fibers (L : IncidentLaw S₁ S₂ S₃ O)
     constructor
     · intro s
       exact div_nonneg (L.record_nonneg x s) (by simpa only [hmarg.1] using hout.1 x)
-    · simp only [conditional, ← Finset.sum_div, ← marginal, hmarg.1]
+    · simp only [conditional, ← Finset.sum_div]
+      change marginal L.recordJoint x / marginal L.recordJoint x = 1
+      rw [hmarg.1]
       exact div_self hx
   have hweighted (x : O) :
       0 ≤ L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) := by
