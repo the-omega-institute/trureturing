@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakParityTail/PhysicalSelection
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakParityTail/PhysicalSelection
-   mirror-E: none(waiver:physical-source-family-registration)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   mirror-B: none(waiver:private-consumed-implementation)
+   mirror-E: none(waiver:private-consumed-implementation)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Full-domain parity-tail physical source construction. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.IntegerSelector

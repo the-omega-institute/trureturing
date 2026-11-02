@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakParityTail/IntegerSelector
    generality: I
-   mirror-B: none(waiver:unpublished-private-wip-awaiting-physical-endpoint)
-   mirror-E: none(waiver:unpublished-private-wip-awaiting-physical-endpoint)
+   mirror-B: none(waiver:private-consumed-implementation)
+   mirror-E: none(waiver:private-consumed-implementation)
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Two interlaced integer lattices select an exact bounded parity reserve. -/
@@ -72,7 +72,7 @@ private theorem interlaced_choice (M A D B : ℤ)
   have hMA : 0 < M - A := by omega
   by_cases hc : C0 ≤ C1
   · refine ⟨0, K0, Or.inl rfl, ?_, ?_, ?_, ?_⟩
-    · simpa only [zero_mul, sub_zero] using (rfl : K0 = ceilDiv (D + B) M)
+    · simp only [zero_mul, sub_zero, K0]
     · intro q hq
       rcases hq with rfl | rfl
       · simpa only [zero_mul, sub_zero, add_zero] using (le_refl C0)
@@ -92,7 +92,7 @@ private theorem interlaced_choice (M A D B : ℤ)
         nlinarith only [hm, hMA]
       linarith only [hc, hbefore]
   · refine ⟨1, K1, Or.inr rfl, ?_, ?_, ?_, ?_⟩
-    · simpa only [one_mul] using (rfl : K1 = ceilDiv (D + B - A) M)
+    · simp only [one_mul, K1]
     · intro q hq
       rcases hq with rfl | rfl
       · have hle : C1 ≤ C0 := by omega
