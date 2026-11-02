@@ -18,6 +18,10 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/RankAssembly.affine_trace_support_dimension` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathoverflow-512655-cyclic-sign-trace-affine-support` (proved) by `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/RankAssembly.affine_trace_support_dimension`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathoverflow-512655-cyclic-sign-trace-affine-support","declaration_gid":"D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/RankAssembly.affine_trace_support_dimension","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.

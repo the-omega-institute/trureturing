@@ -26,7 +26,10 @@ internal sealed class CyclicSignTraceRankAssemblyDocument : IScribeDocumentDefin
                 AssessedProvenance.FromRepo(SourceNote),
                 Blocks(
                     Paragraph(Text("For every natural m and every nonzero binary word b of length 2m+1, the affine span over ZMod 2 of all a with nonzero literal ordered integer sourceTrace(b,a) has direction dimension at least 2m. All positive odd lengths, including one and three, and every nonzero mask are retained. The proof assumes neither the direction classification nor a coefficient-uniqueness or dimension conclusion. This is the complete assertion defined by claim."))
-                ), DescribeRole.Theorem),
+                ), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathoverflow-512655-cyclic-sign-trace-affine-support"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
             Paragraph(Text("The theorem establishes the full mathematical inequality for the specified model. It does not assert that every support is a hyperplane or classify all masks attaining equality. The source attribution and library reuse do not establish a novelty or priority claim."))
         ), []));
