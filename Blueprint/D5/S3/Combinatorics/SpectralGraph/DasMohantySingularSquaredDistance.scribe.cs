@@ -10,8 +10,8 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
         "D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDistance.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal singular multipartite source Laplacian has a verified rank-one reduction; "
-        + "the complete positive multiplicity and inertia conjecture remains open.",
+        "The singular multipartite source Laplacian has exactly the stated positive spectrum "
+        + "and inertia on every original part-size domain.",
         H("Singular multipartite squared-distance Laplacian"), Blocks(
             Paragraph(Text(
                 "The source is Joyentanuj Das and Sumit Mohanty, Inverse of the Squared Distance "
@@ -77,11 +77,33 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
                     + "multiset equals N-t copies of 1/4 plus h-1 copies of one; and the "
                     + "positive, zero, negative indices equal N-s-1, one, s. Multisets preserve "
                     + "algebraic multiplicity, and Hermitian symmetry connects them to the "
-                    + "indexed eigenvalues. This definition is a target, not a proof. The "
-                    + "remaining formal obligations are the exact sign counts of A, dimensions "
-                    + "of the singleton-supported source eigenspace, and exhaustion of the positive spectrum. "
-                    + "The boundary cases remain in the quantified domain. No partial result "
-                    + "settles either complete source clause."))), DescribeRole.Definition))));
+                    + "indexed eigenvalues. The theorem result proves this complete conjunction. "
+                    + "The boundary cases remain in the quantified domain."))), DescribeRole.Definition)),
+            Entry("result", "Complete singular positive spectrum and inertia", null,
+                "For every finite t at least two and every positive integer part-size function, "
+                + "assume the sum of all cofactors is nonzero and the literal squared-distance "
+                + "matrix is singular. The positive characteristic-root multiset of the exact "
+                + "source matrix is N-t copies of 1/4 plus h-1 copies of one. Its positive, zero "
+                + "and negative indices are N-s-1, one and s. The multiplicities are algebraic. "
+                + "The proof keeps the dependent vertex carrier and all omitted-list conventions. "
+                + "On each part, use the constant column and the differences of each remaining "
+                + "coordinate vector with the first coordinate vector. Their change-of-basis "
+                + "matrix is invertible: summing a kernel vector over a part first forces its "
+                + "constant coordinate to vanish, then its remaining coordinates vanish. In this "
+                + "basis A is diagonal with value -1/d(i) on the constant column and 1/4 on "
+                + "each other column. Exactly the s nonsingleton constant columns are negative; "
+                + "there are N-s positive columns. The pivot-one downdate therefore gives the "
+                + "asserted absolute inertia of sourceL. The partwise-zero-sum space has "
+                + "dimension N-t and lies in its quarter eigenspace. Lifting functions on the "
+                + "singleton parts whose sum is zero injects a space of dimension at least h-1 "
+                + "into the one eigenspace. The standard geometric-to-algebraic multiplicity "
+                + "bound gives the two lower bounds on characteristic roots. Positive sizes "
+                + "give t=s+h; singularity forces h positive, since otherwise ratio is "
+                + "nonnegative. The two multiplicity lower bounds thus sum to the entire "
+                + "positive index N-s-1. Multiset inclusion and equal cardinality give exact "
+                + "equality, excluding every extra positive root or extra multiplicity. "
+                + "No inverse of singular delta, additional matrix identity, genericity "
+                + "condition or spectral-transfer premise is assumed."))));
 
     private static DocumentBlock Entry(string name, string title, Formula? formula, string prose) =>
         Describe.Lean(DescribeId.Create("das-mohanty-" + name.Replace('_', '-')),
