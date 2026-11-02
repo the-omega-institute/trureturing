@@ -14,6 +14,7 @@ Mathlib's Stirling theorem. The factorial residual is the original arithmetic
 object from ActualFactorialRobinHighDerivative. -/
 
 noncomputable section
+set_option pp.proofs false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -42,12 +43,12 @@ lemma log_factorial_remainder {n : ℕ} (hn : 0 < n) :
         field_simp
         ring
       rw [ht] at hstep
-      simpa only [Nat.add_succ] using (by linarith only [ih, hstep] :
+      simpa only [Nat.add_succ, Nat.cast_succ] using (by linarith only [ih, hstep] :
         Real.log (Stirling.stirlingSeq n) -
           Real.log (Stirling.stirlingSeq ((n + k) + 1)) ≤
             1 / (12 * n : ℝ) - 1 / (12 * ((n + k : ℕ) + 1)))
   have hnlim : Tendsto (fun k : ℕ => n + k) atTop atTop :=
-    tendsto_const_add_atTop_nat n
+    by simpa only [Nat.add_comm] using tendsto_add_atTop_nat n
   have hloglim : Tendsto (fun k : ℕ => Real.log (Stirling.stirlingSeq (n + k)))
       atTop (𝓝 (Real.log (Real.sqrt Real.pi))) :=
     (Real.continuousAt_log (by positivity : Real.sqrt Real.pi ≠ 0)).tendsto.comp
@@ -56,7 +57,7 @@ lemma log_factorial_remainder {n : ℕ} (hn : 0 < n) :
     have hi := (tendsto_inv_atTop_zero.comp
       (tendsto_natCast_atTop_atTop.comp hnlim) : Tendsto
         (fun k : ℕ => ((n + k : ℕ) : ℝ)⁻¹) atTop (𝓝 0))
-    simpa only [one_div, mul_inv_rev, mul_zero] using hi.const_mul (12 : ℝ)⁻¹
+    simpa only [Function.comp_def, one_div, mul_inv_rev, mul_zero, mul_comm] using hi.const_mul (12 : ℝ)⁻¹
   have hlim := le_of_tendsto_of_tendsto
     (tendsto_const_nhds.sub hloglim) (tendsto_const_nhds.sub hinvlim)
     (Eventually.of_forall hfinite)
@@ -102,13 +103,18 @@ lemma eta_phase_bound {x : ℝ} (hx : 1 ≤ x) :
     rw [show eta x = Real.log (n.factorial : ℝ) - (x * Real.log x - x) from he, hf]
     dsimp [s, l, u]
     ring
+  have hlog : l ≤ 1 / n := by
+    dsimp [l]
+    calc
+      _ ≤ x / n - 1 := hhi
+      _ ≤ 1 / n := by field_simp; linarith
   have hlow : -(1 / n : ℝ) ≤ ((n : ℝ) + 1 / 2) * l - u := by
     have h := mul_le_mul_of_nonneg_left hlo hx0.le
+    have huL : u * l ≤ 1 / n := by
+      nlinarith [mul_nonneg (1 - u) hl]
     dsimp [l, u] at *
     field_simp at h
-    apply (div_le_iff₀ hn0).mpr
-    nlinarith [mul_le_mul_of_nonneg_left h hn0.le,
-      mul_nonneg hl hn0.le]
+    nlinarith only [h, huL, hl]
   have hhigh : ((n : ℝ) + 1 / 2) * l - u ≤ 1 / n := by
     have h := mul_le_mul_of_nonneg_left hhi (by positivity : 0 ≤ (n : ℝ) + 1 / 2)
     dsimp [l, u] at *
