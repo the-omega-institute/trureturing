@@ -7,6 +7,7 @@
    digest: The sharp unicyclic current kurtosis lower bound is approached by one slow rate. -/
 
 import D5.S3.Quantum.Transport.StrongAbsorption.Foundations
+import D5.S3.Analytic.Interpolation.HermiteMomentBounds
 
 /-! The fourth-to-second current cumulant ratio for positive unidirectional cycle rates.
 The finite-cycle inequality is strict; the optimal constant is an asymptotic value. -/
@@ -63,31 +64,17 @@ private lemma moments {n : ℕ} (hn : 2 ≤ n) (x : Fin n → ℝ)
       powerSum n 4 x < powerSum n 2 x ^ 2 := by
   classical
   let i : Fin n := ⟨0, by omega⟩
-  let j : Fin n := ⟨1, by omega⟩
-  have hij : j ≠ i := by simp [i, j, Fin.ext_iff]
   have hp : 0 < ∑ l, x l ^ 2 :=
-    lt_of_lt_of_le (sq_pos_of_pos (hx i))
-      (Finset.single_le_sum (fun l _ => sq_nonneg (x l)) (Finset.mem_univ i))
-  have hsingle (l : Fin n) : x l ^ 2 ≤ ∑ t, x t ^ 2 :=
-    Finset.single_le_sum (fun t _ => sq_nonneg (x t)) (Finset.mem_univ l)
-  have hi : x i ^ 2 < ∑ l, x l ^ 2 := by
-    have he := Finset.single_le_sum (s := Finset.univ.erase i)
-      (fun t _ => sq_nonneg (x t)) (Finset.mem_erase.mpr ⟨hij, Finset.mem_univ j⟩)
-    have hs := Finset.sum_erase_add Finset.univ (fun t => x t ^ 2) (Finset.mem_univ i)
-    nlinarith [sq_pos_of_pos (hx j)]
+    Finset.sum_pos' (fun l _ => sq_nonneg (x l))
+      ⟨i, Finset.mem_univ i, sq_pos_of_pos (hx i)⟩
   have hcauchy := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ x (fun l => x l ^ 2)
-  have hpow (l : Fin n) : x l * x l ^ 2 = x l ^ 3 := by ring
-  have hpow2 (l : Fin n) : (x l ^ 2) ^ 2 = x l ^ 4 := by ring
+  have hpow (l : Fin n) : x l * x l ^ 2 = x l ^ 3 := (pow_succ' (x l) 2).symm
+  have hpow2 (l : Fin n) : (x l ^ 2) ^ 2 = x l ^ 4 := (pow_mul (x l) 2 2).symm
   simp only [hpow, hpow2] at hcauchy
   have hstrict : (∑ l, x l ^ 4) < (∑ l, x l ^ 2) ^ 2 := by
-    calc
-      _ < ∑ l, x l ^ 2 * ∑ t, x t ^ 2 := by
-        apply Finset.sum_lt_sum
-        · intro l _
-          nlinarith [mul_le_mul_of_nonneg_left (hsingle l) (sq_nonneg (x l))]
-        · exact ⟨i, Finset.mem_univ i, by
-            nlinarith [mul_lt_mul_of_pos_left hi (sq_pos_of_pos (hx i))]⟩
-      _ = _ := by rw [← Finset.sum_mul]; ring
+    simpa only [← pow_mul] using
+      D5.S3.Analytic.Interpolation.HermiteMomentBounds.sum_sq_lt_sq_sum hn
+        (fun l => x l ^ 2) (fun l => sq_pos_of_pos (hx l))
   exact ⟨hp, Finset.sum_nonneg (fun l _ => le_of_lt (pow_pos (hx l) 3)),
     hcauchy, hstrict⟩
 
@@ -95,8 +82,13 @@ private lemma polynomial_lower_bound (u : ℝ) (hu : 0 ≤ u) :
     lowerBound ≤ 15 * u ^ 4 - 20 * u ^ 3 + 6 * u ^ 2 := by
   have hs : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
   have hs0 := Real.sqrt_nonneg (5 : ℝ)
-  have hcoef : 0 ≤ 3 * Real.sqrt 5 - 5 := by nlinarith
-  have hconst : 0 ≤ (Real.sqrt 5 - 1) / 2 := by nlinarith
+  have hcoef : 0 ≤ 3 * Real.sqrt 5 - 5 := by
+    apply sub_nonneg.mpr
+    simpa only [mul_comm] using
+      (div_le_iff₀ (by norm_num : (0 : ℝ) < 3)).mp
+        (Real.le_sqrt_of_sq_le (by norm_num : (5 / 3 : ℝ) ^ 2 ≤ 5))
+  have hconst : 0 ≤ (Real.sqrt 5 - 1) / 2 :=
+    div_nonneg (sub_nonneg.mpr (Real.one_le_sqrt.mpr (by norm_num))) (by norm_num)
   have hid : 15 * u ^ 4 - 20 * u ^ 3 + 6 * u ^ 2 - lowerBound =
       (u - (5 + Real.sqrt 5) / 10) ^ 2 *
         (15 * u ^ 2 + (3 * Real.sqrt 5 - 5) * u + (Real.sqrt 5 - 1) / 2) := by
@@ -112,8 +104,8 @@ private lemma moment_lower_bound (a b c : ℝ) (ha : 0 < a) (hb : 0 ≤ b)
     (hbc : b ^ 2 ≤ a * c) (hc : c < a ^ 2) :
     lowerBound < 15 * a ^ 2 - 20 * b + 6 * c / a := by
   let t := b / a
-  have hat : a * t = b := by dsimp [t]; field_simp (disch := positivity)
-  have hat2 : a ^ 2 * t ^ 2 = b ^ 2 := by rw [← hat]; ring
+  have hat : a * t = b := mul_div_cancel₀ b ha.ne'
+  have hat2 : a ^ 2 * t ^ 2 = b ^ 2 := by rw [← mul_pow, hat]
   have ht : 0 ≤ t := div_nonneg hb ha.le
   have hts : t ^ 2 < a := by
     have h := mul_lt_mul_of_pos_left hc ha
@@ -128,7 +120,8 @@ private lemma moment_lower_bound (a b c : ℝ) (ha : 0 < a) (hb : 0 ≤ b)
     rw [mul_div_assoc]
     nlinarith
   by_cases ht23 : t ≤ 2 / 3
-  · have hsq : t ^ 2 ≤ 4 / 9 := by nlinarith
+  · have hsq : t ^ 2 ≤ 4 / 9 := by
+      convert pow_le_pow_left₀ ht ht23 2 using 1; norm_num
     have hbound : -(8 / 27 : ℝ) ≤ 15 * a ^ 2 - 20 * a * t + 6 * t ^ 2 := by
       nlinarith [sq_nonneg (3 * a - 2 * t)]
     have hs : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
@@ -162,9 +155,9 @@ private def sourceRates (m : ℕ) : Fin (m + 2) → ℝ :=
   fun i => if i = 0 then sourceParameter / (m + 2 : ℕ) else 1
 
 private lemma source_rates_positive (m : ℕ) : ∀ i, 0 < sourceRates m i := by
-  have hs : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
-  have hs0 := Real.sqrt_nonneg (5 : ℝ)
-  have ha : 0 < sourceParameter := by dsimp [sourceParameter]; nlinarith
+  have ha : 0 < sourceParameter :=
+    div_pos (sub_pos.mpr ((Real.sqrt_lt' (by norm_num : (0 : ℝ) < 3)).mpr
+      (by norm_num))) (by norm_num)
   intro i
   rw [sourceRates]
   split_ifs <;> positivity
@@ -180,7 +173,7 @@ private lemma source_kurtosis (m : ℕ) :
   have ha : 0 < sourceParameter := by
     have h := source_rates_positive 0 0
     simp only [sourceRates, ↓reduceIte] at h
-    linarith
+    exact (div_pos_iff_of_pos_right (by norm_num : (0 : ℝ) < 2)).mp h
   have hn : 0 < (m : ℝ) + 2 := by positivity
   have hs (j : ℕ) : powerSum (m + 2) j (fun i => (sourceRates m i)⁻¹) =
       (((m : ℝ) + 2) / sourceParameter) ^ j + ((m : ℝ) + 1) := by
@@ -195,13 +188,15 @@ private lemma source_kurtosis (m : ℕ) :
     positivity
   have ht : 0 < 1 / ((m : ℝ) + 2) := by positivity
   have ht1 : 1 / ((m : ℝ) + 2) ≤ 1 := by
-    apply (div_le_iff₀ hn).mpr
-    nlinarith [Nat.cast_nonneg (α := ℝ) m]
+    simpa only [one_div] using
+      inv_le_one_of_one_le₀ (by exact_mod_cast (show 1 ≤ m + 2 by omega))
   have hd : 0 < 1 + sourceParameter - sourceParameter * (1 / ((m : ℝ) + 2)) := by
     nlinarith [mul_le_mul_of_nonneg_left ht1 ha.le]
   have hv : 0 < 1 + sourceParameter ^ 2 *
       (1 / ((m : ℝ) + 2) - (1 / ((m : ℝ) + 2)) ^ 2) := by
-    have : 0 ≤ 1 / ((m : ℝ) + 2) - (1 / ((m : ℝ) + 2)) ^ 2 := by nlinarith
+    have : 0 ≤ 1 / ((m : ℝ) + 2) - (1 / ((m : ℝ) + 2)) ^ 2 := by
+      apply sub_nonneg.mpr
+      simpa only [pow_two] using mul_le_of_le_one_right ht.le ht1
     positivity
   have hd1 : 0 < ((m : ℝ) + 2) * (1 + sourceParameter) - sourceParameter := by
     nlinarith [mul_nonneg (Nat.cast_nonneg (α := ℝ) m) ha.le]
@@ -217,7 +212,7 @@ private lemma source_limit :
   have ha : 0 < sourceParameter := by
     have h := source_rates_positive 0 0
     simp only [sourceRates, ↓reduceIte] at h
-    linarith
+    exact (div_pos_iff_of_pos_right (by norm_num : (0 : ℝ) < 2)).mp h
   have hc : ContinuousAt (approximation sourceParameter) 0 := by
     unfold approximation
     fun_prop (disch := (norm_num; positivity))
@@ -225,19 +220,14 @@ private lemma source_limit :
     (tendsto_add_atTop_iff_nat 2).mpr tendsto_one_div_atTop_nhds_zero_nat
   have he : approximation sourceParameter 0 = lowerBound := by
     have hs : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
-    have hs0 := Real.sqrt_nonneg (5 : ℝ)
     have hs3 : Real.sqrt 5 ^ 3 = 5 * Real.sqrt 5 := by
-      calc
-        _ = Real.sqrt 5 ^ 2 * Real.sqrt 5 := by ring
-        _ = _ := by rw [hs]
+      rw [pow_succ, hs]
     have hs4 : Real.sqrt 5 ^ 4 = 25 := by
       calc
-        _ = (Real.sqrt 5 ^ 2) ^ 2 := by ring
+        _ = (Real.sqrt 5 ^ 2) ^ 2 := pow_mul _ 2 2
         _ = _ := by rw [hs]; norm_num
     have hs5 : Real.sqrt 5 ^ 5 = 25 * Real.sqrt 5 := by
-      calc
-        _ = Real.sqrt 5 ^ 4 * Real.sqrt 5 := by ring
-        _ = _ := by rw [hs4]
+      rw [pow_succ, hs4]
     rw [approximation]
     norm_num
     field_simp (disch := positivity)
