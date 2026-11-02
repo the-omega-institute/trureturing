@@ -64,8 +64,19 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                 "At every positive length n and for all words b,a, the literal ordered matrix trace is the sum over every x of sign(dot(b,x)+dot(a,chi(x))). Length one and all coincident cyclic indices are included. This identity also applies to even lengths; oddness is needed only for the inverse construction.", DescribeRole.Theorem),
             Paragraph(Text("For a list of r+1 matrices, expand its (i,j) entry over all r intermediate states. The row tuple is i followed by the intermediate states; the column tuple is those states followed by j. Induction uses the first matrix factor and the ordinary Matrix.mul entry formula, preserving the complete list order. Taking the trace identifies j with i. Joining the initial state to the intermediate tuple gives every cyclic path exactly once; the final column is the initial state, including for a one-factor product.")),
             Paragraph(Text("The path product is the sign of the sum of its entry exponents. Reindex the a_(k-2)x_k term by k=i+2 and the a_(k-1)x_k x_(k+1) term by k=i+1. The coefficient of a_i becomes x_i+x_(i+2)+x_(i+1)x_(i+2), exactly chi(x)_i. These are bijections of the actual cyclic index set, so repeated indices need no separate independence assumption. Combining this identity with the inverse phase formula identifies traceSupport(b) with the nonzero Walsh support of inverseComponent(m,b) at every odd length. The established phase nonemptiness thus supplies trace nonemptiness.")),
+            Node("booleanMonomial", "Squarefree Boolean monomials", StatementSource.WithoutFormula(),
+                "For a finite set s of actual cyclic coordinates, booleanMonomial(s,z) is the product of z_i over i in s. Repeated cyclic coordinates are represented only once; the empty monomial is one.", DescribeRole.Definition),
+            Node("indicatorWord", "Indicator words", StatementSource.WithoutFormula(),
+                "The word indicatorWord(s) is one at coordinates in s and zero elsewhere.", DescribeRole.Definition),
+            Node("booleanCoeff", "Coefficients from actual function values", StatementSource.WithoutFormula(),
+                "The coefficient of a Boolean function f at s is the sum in ZMod 2 of f(indicatorWord(t)) over every subset t of s. Thus equal actual functions have equal coefficients. Subset cancellation proves that extraction applied to the monomial at t is one exactly when s=t and zero otherwise; this establishes uniqueness for finite sums of squarefree monomials without assuming injectivity of polynomial evaluation.", DescribeRole.Definition),
+            Node("prefixVariables", "Cyclic prefix variable sets", StatementSource.WithoutFormula(),
+                "The finite set prefixVariables(i,r) is the image of t=0,...,r-1 under t ↦ i+2t+1 in the actual cyclic index type.", DescribeRole.Definition),
+            Node("inverse_component_boolean_coefficient", "Exact coefficients of the shifted inverse component", StatementSource.FromAuthor(BooleanCoefficientFormula()),
+                "For every m, mask b and finite cyclic-coordinate set s, extract the coefficient of z ↦ inverseComponent(m,b)(1+z). Each inverse term contributes the prefix monomial and the prefix with its endpoint i+2r inserted, weighted by b_i. Equality of finite sets decides whether each contributes at s. This statement includes all masks and length one, with no distinct-index premise.", DescribeRole.Theorem),
+            Paragraph(Text("Binary idempotence identifies a product over repeated coordinates with its squarefree monomial. After y=1+z the alternating prefix becomes the monomial on prefixVariables(i,r), and its endpoint factor is 1+z_(i+2r). The coefficient formula follows by linearity of extraction and the subset-cancellation identity. No Boolean normal-form uniqueness or coefficient vanishing is assumed.")),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
-            Paragraph(Text("The affine-support assertion still requires the affine-span dimension identity and the complete coefficient classification for every nonzero inverse-component mask. The trace identity and the constant-derivative/Walsh-support equivalence identify the relevant support and its constant characters, but do not by themselves settle the dimension bound."))
+            Paragraph(Text("The affine-span duality is proved above. The affine-support assertion still requires the complete classification of constant derivative directions for every nonzero inverse-component mask, including the cyclic top-overlap and lower-coefficient arguments for lengths at least five, the length-three polar case and assembly with length one. The coefficient formula alone does not establish that classification or settle the dimension bound."))
         ), []));
 
     private static DocumentBlock Node(string name, string title, StatementSource statement, string prose, DescribeRole role) =>
@@ -163,5 +174,18 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                         new Formula.Logic(Grp(membership), FormulaLogicOperator.Iff,
                             Grp(derivative))),
                     Eq(Plus(finrankD, finrankA), finrankV))))));
+    }
+    private static Formula BooleanCoefficientFormula()
+    {
+        Formula m = F.Id("m"), b = F.Id("b"), s = F.Id("s"), i = F.Id("i"), r = F.Id("r"),
+            n = OddLength(m), p = Call("prefixVariables", i, r);
+        Formula delta(Formula t) => Call("ite", Eq(s, t), D(1), D(0));
+        Formula endpoint = Plus(i, Times(D(2), r));
+        Formula rhs = Sum("i", Call("ZMod", n), Sum("r", Call("range", Plus(m, D(1))),
+            Times(Call("b", i), Plus(delta(p), delta(Call("insert", endpoint, p))))));
+        Formula shifted = new Formula.Bind(FormulaQuantifier.Lambda, FormulaIdentifier.Create("z"), Word(n),
+            Call("inverseComponent", m, b, Plus(D(1), F.Id("z"))));
+        return Disp(All("m", Named("Nat"), All("b", Word(n),
+            All("s", Call("Finset", Call("ZMod", n)), Eq(Call("booleanCoeff", shifted, s), rhs)))));
     }
 }

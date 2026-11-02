@@ -15,6 +15,8 @@ import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Group.AddChar
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
+import Mathlib.Algebra.BigOperators.Ring.Finset
 
 /-! # Cyclic Boolean maps and the ordered sign-matrix model -/
 
@@ -741,5 +743,165 @@ theorem sourceTrace_eq_phase_sum {n : ℕ} [NeZero n] (b a : Word n) :
     rw [← cyclic_exponent b a x]
     exact Equiv.sum_comp (ZMod.finEquiv (r + 1)).toEquiv
       (fun k => (a k + a (k - 2) + b k) * x k + a (k - 1) * x k * x (k + 1))
+
+/-- A squarefree monomial, evaluated on an actual binary word. -/
+def booleanMonomial {n : ℕ} (s : Finset (ZMod n)) (z : Word n) : ZMod 2 :=
+  ∏ i ∈ s, z i
+
+/-- The indicator word of a finite set of cyclic coordinates. -/
+noncomputable def indicatorWord {n : ℕ} (s : Finset (ZMod n)) : Word n :=
+  fun i => if i ∈ s then 1 else 0
+
+/-- Boolean coefficient extraction from function values, rather than a formal
+polynomial whose evaluation might have a kernel. -/
+noncomputable def booleanCoeff {n : ℕ} (f : Word n → ZMod 2)
+    (s : Finset (ZMod n)) : ZMod 2 :=
+  ∑ t ∈ s.powerset, f (indicatorWord t)
+
+private theorem monomial_indicator {n : ℕ} (s t : Finset (ZMod n)) :
+    booleanMonomial s (indicatorWord t) = if s ⊆ t then 1 else 0 := by
+  classical
+  by_cases h : s ⊆ t
+  · rw [if_pos h]
+    apply Finset.prod_eq_one
+    intro i hi
+    simp [indicatorWord, h hi]
+  · obtain ⟨i, hi, hit⟩ := Finset.not_subset.mp h
+    rw [if_neg h]
+    exact Finset.prod_eq_zero hi (by simp [indicatorWord, hit])
+
+private theorem subset_parity {n : ℕ} (s t : Finset (ZMod n)) :
+    (∑ v ∈ s.powerset, if t ⊆ v then (1 : ZMod 2) else 0) =
+      if s = t then 1 else 0 := by
+  classical
+  induction s using Finset.induction_on generalizing t with
+  | empty =>
+      simp only [Finset.powerset_empty, Finset.sum_singleton, Finset.subset_empty]
+      simp only [eq_comm]
+  | @insert i s hi ih =>
+      rw [Finset.sum_powerset_insert hi]
+      by_cases hit : i ∈ t
+      · have hz : (∑ v ∈ s.powerset, if t ⊆ v then (1 : ZMod 2) else 0) = 0 := by
+          apply Finset.sum_eq_zero
+          intro v hv
+          have hiv : i ∉ v := fun h => hi ((Finset.mem_powerset.mp hv) h)
+          simp [show ¬t ⊆ v from fun h => hiv (h hit)]
+        rw [hz, zero_add]
+        simp_rw [Finset.subset_insert_iff]
+        rw [ih]
+        have he : s = t.erase i ↔ insert i s = t := by
+          constructor
+          · intro h
+            rw [h, Finset.insert_erase hit]
+          · intro h
+            rw [← h, Finset.erase_insert hi]
+        simp only [he]
+      · have he (v : Finset (ZMod n)) : t ⊆ insert i v ↔ t ⊆ v :=
+          Finset.subset_insert_iff_of_notMem hit
+        simp_rw [he]
+        rw [CharTwo.add_self_eq_zero]
+        simp [show insert i s ≠ t from fun h => hit (h ▸ Finset.mem_insert_self i s)]
+
+private theorem coeff_monomial {n : ℕ} (s t : Finset (ZMod n)) :
+    booleanCoeff (booleanMonomial t) s = if s = t then 1 else 0 := by
+  classical
+  simp only [booleanCoeff, monomial_indicator]
+  exact subset_parity s t
+
+private theorem coeff_add {n : ℕ} (f g : Word n → ZMod 2)
+    (s : Finset (ZMod n)) :
+    booleanCoeff (fun z => f z + g z) s = booleanCoeff f s + booleanCoeff g s := by
+  classical
+  simp [booleanCoeff, Finset.sum_add_distrib]
+
+private theorem coeff_sum {n : ℕ} {ι : Type*} (v : Finset ι)
+    (f : ι → Word n → ZMod 2) (s : Finset (ZMod n)) :
+    booleanCoeff (fun z => ∑ i ∈ v, f i z) s =
+      ∑ i ∈ v, booleanCoeff (f i) s := by
+  classical
+  simp only [booleanCoeff]
+  exact Finset.sum_comm
+
+private theorem coeff_mul {n : ℕ} (a : ZMod 2) (f : Word n → ZMod 2)
+    (s : Finset (ZMod n)) :
+    booleanCoeff (fun z => a * f z) s = a * booleanCoeff f s := by
+  classical
+  simp [booleanCoeff, Finset.mul_sum]
+
+private theorem coeff_constant {n : ℕ} (a : ZMod 2) (s : Finset (ZMod n))
+    (hs : s.Nonempty) : booleanCoeff (fun _ : Word n => a) s = 0 := by
+  have he : (fun _ : Word n => a) = fun z => a * booleanMonomial ∅ z := by
+    funext z
+    simp [booleanMonomial]
+  rw [he, coeff_mul, coeff_monomial]
+  simp [Finset.nonempty_iff_ne_empty.mp hs]
+
+/-- The cyclic variable set in an alternating prefix. -/
+def prefixVariables {n : ℕ} (i : ZMod n) (r : ℕ) : Finset (ZMod n) :=
+  (Finset.range r).image (fun t => i + (2 * t + 1 : ℕ))
+
+private theorem bit_square (a : ZMod 2) : a * a = a := by
+  rcases bit_cases a with rfl | rfl <;> decide
+
+private theorem monomial_insert {n : ℕ} (s : Finset (ZMod n))
+    (i : ZMod n) (z : Word n) :
+    booleanMonomial (insert i s) z = z i * booleanMonomial s z := by
+  classical
+  by_cases hi : i ∈ s
+  · rw [Finset.insert_eq_of_mem hi]
+    have hp : booleanMonomial s z = z i * booleanMonomial (s.erase i) z := by
+      exact (Finset.mul_prod_erase s z hi).symm
+    rw [hp, ← mul_assoc, bit_square]
+  · exact Finset.prod_insert hi
+
+private theorem prefix_monomial {n : ℕ} (z : Word n) (i : ZMod n) (r : ℕ) :
+    alternatingPrefix (1 + z) i r = booleanMonomial (prefixVariables i r) z := by
+  classical
+  induction r with
+  | zero => simp [alternatingPrefix, prefixVariables, booleanMonomial]
+  | succ r ih =>
+      have he : prefixVariables i (r + 1) = insert (i + (2 * r + 1 : ℕ))
+          (prefixVariables i r) := by
+        simp [prefixVariables, Finset.range_add_one, Finset.image_insert]
+      rw [he, monomial_insert]
+      simp only [alternatingPrefix, Finset.prod_range_succ] at ih ⊢
+      rw [ih]
+      have hz : 1 + (1 + z) (i + (2 * r + 1 : ℕ)) = z (i + (2 * r + 1 : ℕ)) := by
+        change 1 + (1 + z _) = _
+        rw [← add_assoc, CharTwo.add_self_eq_zero, zero_add]
+      rw [hz, mul_comm]
+
+private theorem shifted_inverse_expansion (m : ℕ) (b z : Word (2 * m + 1)) :
+    inverseComponent m b (1 + z) =
+      ∑ i, ∑ r ∈ Finset.range (m + 1), b i *
+        (booleanMonomial (prefixVariables i r) z +
+          booleanMonomial (insert (i + (2 * r : ℕ)) (prefixVariables i r)) z) := by
+  classical
+  simp only [inverseComponent, dot, inverse, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro r _
+  rw [prefix_monomial, monomial_insert]
+  change b i * (booleanMonomial _ z * (1 + z _)) = _
+  ring
+
+/-- Extract the coefficients of the shifted inverse component from its actual
+function values. Coincident cyclic variables are identified by finite sets. -/
+theorem inverse_component_boolean_coefficient (m : ℕ) (b : Word (2 * m + 1))
+    (s : Finset (ZMod (2 * m + 1))) :
+    booleanCoeff (fun z => inverseComponent m b (1 + z)) s =
+      ∑ i, ∑ r ∈ Finset.range (m + 1), b i *
+        ((if s = prefixVariables i r then 1 else 0) +
+          (if s = insert (i + (2 * r : ℕ)) (prefixVariables i r) then 1 else 0)) := by
+  classical
+  have he := funext (shifted_inverse_expansion m b)
+  rw [he, coeff_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [coeff_sum]
+  apply Finset.sum_congr rfl
+  intro r _
+  rw [coeff_mul, coeff_add, coeff_monomial, coeff_monomial]
 
 end D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
