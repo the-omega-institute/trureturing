@@ -6,7 +6,7 @@ The automorphism and outer-automorphism kernels of a normal prime-power subgroup
 
 **Definition 1.1 (Automorphisms preserving a specified subgroup).**
 
-$$\operatorname{preservingAut}\left(P\right) = \operatorname{Stabilizer}\left(\operatorname{MulAut}\left(Q\right), P\right)$$
+$$\forall Q \in Type,\; [\operatorname{Group}\left(Q\right)], \forall P \in \operatorname{Subgroup}\left(Q\right),\; \operatorname{preservingAut}\left(P\right) = \operatorname{Stabilizer}\left(\operatorname{MulAut}\left(Q\right), P\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/RelativeFrattiniKernel.preservingAut` (`✓ std3`).
 
@@ -18,7 +18,7 @@ Let Q be a group and P a specified subgroup. The group A consists of all automor
 
 **Definition 1.2 (The common subgroup inside the ambient group).**
 
-$$\operatorname{relativeFrattini}\left(P\right) = \operatorname{map}\left(\operatorname{frattini}\left(P\right), \operatorname{subtype}\left(P\right)\right)$$
+$$\forall Q \in Type,\; [\operatorname{Group}\left(Q\right)], \forall P \in \operatorname{Subgroup}\left(Q\right),\; \operatorname{relativeFrattini}\left(P\right) = \operatorname{map}\left(\operatorname{frattini}\left(P\right), \operatorname{subtype}\left(P\right)\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/RelativeFrattiniKernel.relativeFrattini` (`✓ std3`).
 
@@ -30,7 +30,7 @@ Write F for the image of Frattini(P) under the inclusion of P in Q. If P is norm
 
 **Definition 1.3 (Restriction to P).**
 
-$$\forall a \in \operatorname{preservingAut}\left(P\right),\; \forall x \in P,\; \operatorname{apply}\left(\operatorname{restriction}\left(P, a\right), x\right) = \operatorname{apply}\left(a, x\right)$$
+$$\forall Q \in Type,\; [\operatorname{Group}\left(Q\right)], \forall P \in \operatorname{Subgroup}\left(Q\right),\; \forall a \in \operatorname{preservingAut}\left(P\right),\; \forall x \in P,\; \operatorname{apply}\left(\operatorname{restriction}\left(P, a\right), x\right) = \operatorname{apply}\left(a, x\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/RelativeFrattiniKernel.restriction` (`✓ std3`).
 
@@ -42,7 +42,7 @@ Restriction is a homomorphism from A to Aut(P). Its inverse on each individual a
 
 **Definition 1.4 (The induced action on the actual quotient).**
 
-$$\forall a \in \operatorname{preservingAut}\left(P\right),\; \forall x \in Q,\; \operatorname{apply}\left(\operatorname{apply}\left(\operatorname{quotientAction}\left(P\right), a\right), \operatorname{coset}\left(x, \operatorname{relativeFrattini}\left(P\right)\right)\right) = \operatorname{coset}\left(\operatorname{apply}\left(a, x\right), \operatorname{relativeFrattini}\left(P\right)\right)$$
+$$\forall Q \in Type,\; [\operatorname{Group}\left(Q\right)], \forall P \in \operatorname{Subgroup}\left(Q\right),\; [\operatorname{Normal}\left(P\right)], \forall a \in \operatorname{preservingAut}\left(P\right),\; \forall x \in Q,\; \operatorname{apply}\left(\operatorname{apply}\left(\operatorname{quotientAction}\left(P\right), a\right), \operatorname{coset}\left(x, \operatorname{relativeFrattini}\left(P\right)\right)\right) = \operatorname{coset}\left(\operatorname{apply}\left(a, x\right), \operatorname{relativeFrattini}\left(P\right)\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/RelativeFrattiniKernel.quotientAction` (`✓ std3`).
 
@@ -78,7 +78,7 @@ The displacement is injective because its values recover a(x) for every x. A sin
 
 **Definition 1.6 (The actual relative outer automorphism group).**
 
-$$\operatorname{RelativeOuter}\left(P\right) = \operatorname{Quotient}\left(\operatorname{preservingAut}\left(P\right), \operatorname{relativeInner}\left(P\right)\right)$$
+$$\forall Q \in Type,\; [\operatorname{Group}\left(Q\right)], \forall P \in \operatorname{Subgroup}\left(Q\right),\; [\operatorname{Normal}\left(P\right)], \operatorname{RelativeOuter}\left(P\right) = \operatorname{Quotient}\left(\operatorname{preservingAut}\left(P\right), \operatorname{relativeInner}\left(P\right)\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/RelativeFrattiniKernel.RelativeOuter` (`✓ std3`).
 
@@ -90,7 +90,7 @@ For any group G, innerAut G is the image of conjugation G to Aut(G), and OuterAu
 
 **Definition 1.7 (The homomorphism on outer automorphisms).**
 
-$$\forall a \in \operatorname{preservingAut}\left(P\right),\; \operatorname{apply}\left(\operatorname{outerAction}\left(P\right), \operatorname{coset}\left(a, \operatorname{relativeInner}\left(P\right)\right)\right) = \operatorname{coset}\left(\operatorname{apply}\left(\operatorname{quotientAction}\left(P\right), a\right), \operatorname{innerAut}\left(\operatorname{Quotient}\left(Q, \operatorname{relativeFrattini}\left(P\right)\right)\right)\right)$$
+$$\forall Q \in Type,\; [\operatorname{Group}\left(Q\right)], \forall P \in \operatorname{Subgroup}\left(Q\right),\; [\operatorname{Normal}\left(P\right)], \forall a \in \operatorname{preservingAut}\left(P\right),\; \operatorname{apply}\left(\operatorname{outerAction}\left(P\right), \operatorname{coset}\left(a, \operatorname{relativeInner}\left(P\right)\right)\right) = \operatorname{coset}\left(\operatorname{apply}\left(\operatorname{quotientAction}\left(P\right), a\right), \operatorname{innerAut}\left(\operatorname{Quotient}\left(Q, \operatorname{relativeFrattini}\left(P\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/RelativeFrattiniKernel.outerAction` (`✓ std3`).
 
