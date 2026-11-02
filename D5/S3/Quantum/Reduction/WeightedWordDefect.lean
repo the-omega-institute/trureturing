@@ -4,18 +4,23 @@
    mirror-E: none(waiver:analytic-word-estimate)
    anchors: []
    utility: none
-   digest: Weighted pair defects bound every finite Hermitian word of a unital completely positive map. -/
+   digest: Weighted pair defects control finite Hermitian words under a UCP map. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Reduction.IsometricCompression
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.CStarAlgebra.Spectrum
+
+/-! # Weighted errors of finite Hermitian words
+
+A finite Kraus dilation identifies the multiplicative defect with a discarded
+Gram product. Unbounded finite-word induction gives the full weighted pair sum
+in the Euclidean operator norm, including zero norms and empty coordinate types.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-open scoped BigOperators Matrix Matrix.Norms.L2Operator
+open scoped BigOperators Matrix CStarAlgebra ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Reduction.WeightedWordDefect
 
@@ -51,13 +56,13 @@ private lemma complement_sq (V : Matrix n k ℂ) (hV : Vᴴ * V = 1) :
 private lemma complement_norm (V : Matrix n k ℂ) (hV : Vᴴ * V = 1) :
     ‖1 - support V‖ ≤ 1 := by
   apply IsStarProjection.norm_le
-  exact ⟨complement_star V, complement_sq V hV⟩
+  exact ⟨complement_sq V hV, complement_star V⟩
 
 private lemma frame_norm (V : Matrix n k ℂ) (hV : Vᴴ * V = 1) : ‖V‖ ≤ 1 := by
   have h := Matrix.l2_opNorm_conjTranspose_mul_self V
   rw [hV] at h
   have h1 : ‖(1 : Matrix k k ℂ)‖ ≤ 1 :=
-    IsStarProjection.norm_le _ ⟨by simp, by simp⟩
+    IsStarProjection.norm_le _ (IsStarProjection.one _)
   nlinarith [norm_nonneg V]
 
 private lemma compression_norm (V : Matrix n k ℂ) (hV : Vᴴ * V = 1)
@@ -101,34 +106,21 @@ def amplify : Matrix d d ℂ →⋆ₐ[ℂ] Matrix (d × s) (d × s) ℂ where
 
 
 private lemma norm_one_le_matrix : ‖(1 : Matrix d d ℂ)‖ ≤ 1 :=
-  IsStarProjection.norm_le _ ⟨by simp, by simp⟩
-
-private lemma norm_prod_le (w : List (Matrix d d ℂ)) :
-    ‖w.prod‖ ≤ (w.map norm).prod := by
-  induction w with
-  | nil => simpa using (norm_one_le_matrix (d := d))
-  | cons a w ih =>
-      simpa only [List.prod_cons, List.map_cons] using
-        (norm_mul_le a w.prod).trans (mul_le_mul_of_nonneg_left ih (norm_nonneg _))
+  IsStarProjection.norm_le _ (IsStarProjection.one _)
 
 private lemma mapped_norm_prod_le
     (π : Matrix d d ℂ →⋆ₐ[ℂ] Matrix n n ℂ)
     (V : Matrix n k ℂ) (hV : Vᴴ * V = 1) (w : List (Matrix d d ℂ)) :
     ‖(w.map (fun a => compress V (π a))).prod‖ ≤ (w.map norm).prod := by
-  induction w with
-  | nil => simpa using (norm_one_le_matrix (d := k))
-  | cons a w ih =>
-      simp only [List.map_cons, List.prod_cons]
-      exact (norm_mul_le _ _).trans (mul_le_mul
-        ((compression_norm V hV _).trans (NonUnitalStarAlgHom.norm_apply_le π a))
-        ih (norm_nonneg _) (norm_nonneg _))
-
-private lemma normal_product (V : Matrix n k ℂ) (A B : Matrix n n ℂ) :
-    normal V (A * B * V) =
-      normal V (A * V) * compress V B + (1 - support V) * A * normal V (B * V) := by
-  simp only [normal, support, compress, Matrix.sub_mul, Matrix.mul_sub,
-    Matrix.one_mul, Matrix.mul_assoc]
-  abel
+  by_cases hw : w = []
+  · subst w
+    simpa using (norm_one_le_matrix (d := k))
+  have hp := List.norm_prod_le' (l := w.map (fun a => compress V (π a)))
+    (by simpa using hw)
+  simp only [List.map_map, Function.comp_def] at hp
+  exact hp.trans (List.prod_map_le_prod_map₀ _ _ (fun _ _ => norm_nonneg _)
+    (fun a _ => (compression_norm V hV _).trans
+      (NonUnitalStarAlgHom.norm_apply_le π a)))
 
 private lemma residual_product (π : Matrix d d ℂ →⋆ₐ[ℂ] Matrix n n ℂ)
     (V : Matrix n k ℂ) (a : Matrix d d ℂ) (w : List (Matrix d d ℂ)) :
@@ -184,8 +176,10 @@ private lemma compression_word_bound (π : Matrix d d ℂ →⋆ₐ[ℂ] Matrix 
         change star (π a) = π a
         rw [← map_star]
         exact congrArg π (hw a (by simp))
+      have hca : (compress V (π a))ᴴ = compress V (π a) := by
+        simp [compress, ha, Matrix.mul_assoc]
       have hg := gram V hV (π a) (π w.prod)
-      rw [ha] at hg
+      rw [ha, hca] at hg
       have heq : compress V (π ((a :: w).prod)) -
           ((a :: w).map (fun a => compress V (π a))).prod =
           (normal V (π a * V))ᴴ * normal V (π w.prod * V) +
@@ -199,8 +193,9 @@ private lemma compression_word_bound (π : Matrix d d ℂ →⋆ₐ[ℂ] Matrix 
         _ ≤ ‖normal V (π a * V)‖ * ‖normal V (π w.prod * V)‖ +
             ‖compress V (π a)‖ * ‖compress V (π w.prod) -
               (w.map (fun a => compress V (π a))).prod‖ := by
-          simpa only [Matrix.l2_opNorm_conjTranspose] using
-            (norm_add_le _ _).trans (add_le_add (Matrix.l2_opNorm_mul _ _) (Matrix.l2_opNorm_mul _ _))
+          have hn := Matrix.l2_opNorm_mul (normal V (π a * V))ᴴ (normal V (π w.prod * V))
+          rw [Matrix.l2_opNorm_conjTranspose] at hn
+          exact (norm_add_le _ _).trans (add_le_add hn (Matrix.l2_opNorm_mul _ _))
         _ ≤ ‖normal V (π a * V)‖ * singleWeight norm (fun a => ‖normal V (π a * V)‖) w +
             ‖a‖ * pairWeight norm (fun a => ‖normal V (π a * V)‖) w :=
           add_le_add (mul_le_mul_of_nonneg_left (leakage_bound π V hV w) (norm_nonneg _))
@@ -208,5 +203,153 @@ private lemma compression_word_bound (π : Matrix d d ℂ →⋆ₐ[ℂ] Matrix 
               (NonUnitalStarAlgHom.norm_apply_le π a))
               (ih (fun b hb => hw b (by simp [hb]))) (norm_nonneg _) (norm_nonneg _))
         _ = _ := rfl
+
+
+local notation "matrixAction" => (fun
+    (Φ : CompletelyPositiveMap (CStarMatrix d d ℂ) (CStarMatrix k k ℂ))
+    (A : Matrix d d ℂ) => CStarMatrix.ofMatrix.symm (Φ (CStarMatrix.ofMatrix A)))
+
+/-- Stack the adjoints of the original rectangular Kraus witnesses. -/
+def krausFrame (K : s → Matrix k d ℂ) : Matrix (d × s) k ℂ :=
+  fun p i => star (K p.2 i p.1)
+
+private lemma frame_compress (K : s → Matrix k d ℂ) (A : Matrix d d ℂ) :
+    compress (krausFrame K) (amplify (s := s) A) = ∑ r, K r * A * (K r)ᴴ := by
+  ext i j
+  change (((krausFrame K)ᴴ * blockDiagonal (fun _ : s => A)) * krausFrame K) i j = _
+  simp only [Matrix.mul_apply, krausFrame, Matrix.conjTranspose_apply, star_star,
+    blockDiagonal_apply, Matrix.sum_apply, Fintype.sum_prod_type, mul_ite, mul_zero,
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  exact Finset.sum_comm
+
+private lemma actual_frame_isometry
+    (Φ : CompletelyPositiveMap (CStarMatrix d d ℂ) (CStarMatrix k k ℂ))
+    (hΦ : Φ 1 = 1) :
+    let K := (D5.S3.Quantum.Foundation.FiniteKrausChannel.krausRepresentation Φ).1
+    (krausFrame K)ᴴ * krausFrame K = 1 := by
+  intro K
+  have h := (D5.S3.Quantum.Foundation.FiniteKrausChannel.krausRepresentation Φ).2 (1 : Matrix d d ℂ)
+  simp only [Matrix.mul_one] at h
+  have h1 : matrixAction Φ 1 = 1 := by
+    change CStarMatrix.ofMatrix.symm (Φ 1) = 1
+    rw [hΦ]
+    rfl
+  have h2 := frame_compress K (1 : Matrix d d ℂ)
+  rw [map_one] at h2
+  simp only [compress, Matrix.mul_one] at h2
+  exact h2.trans (h.symm.trans h1)
+
+private lemma actual_compress
+    (Φ : CompletelyPositiveMap (CStarMatrix d d ℂ) (CStarMatrix k k ℂ))
+    (A : Matrix d d ℂ) :
+    compress (krausFrame (D5.S3.Quantum.Foundation.FiniteKrausChannel.krausRepresentation Φ).1)
+        (amplify (s := k × d) A) = matrixAction Φ A := by
+  rw [frame_compress]
+  exact ((D5.S3.Quantum.Foundation.FiniteKrausChannel.krausRepresentation Φ).2 A).symm
+
+private lemma leakage_sqrt (π : Matrix d d ℂ →⋆ₐ[ℂ] Matrix n n ℂ)
+    (V : Matrix n k ℂ) (hV : Vᴴ * V = 1) (A : Matrix d d ℂ) :
+    ‖normal V (π A * V)‖ = Real.sqrt
+      ‖compress V (π (Aᴴ * A)) - (compress V (π A))ᴴ * compress V (π A)‖ := by
+  have h := gram V hV (π A) (π A)
+  have hp : π (Aᴴ * A) = (π A)ᴴ * π A := by
+    rw [map_mul]
+    change π (star A) * π A = star (π A) * π A
+    rw [map_star]
+  rw [hp, h, Matrix.l2_opNorm_conjTranspose_mul_self, ← sq]
+  exact (Real.sqrt_sq (norm_nonneg _)).symm
+
+/-- The complete weighted error estimate for the actual finite UCP matrix map.
+The list may be empty, may repeat letters, and may contain zero matrices. -/
+private lemma ucp_pairWeight_bound
+    (Φ : CompletelyPositiveMap (CStarMatrix d d ℂ) (CStarMatrix k k ℂ))
+    (hΦ : Φ 1 = 1) (w : List (Matrix d d ℂ)) (hw : ∀ A ∈ w, Aᴴ = A) :
+    ‖matrixAction Φ w.prod - (w.map (matrixAction Φ)).prod‖ ≤
+      pairWeight norm (fun A => Real.sqrt
+        ‖matrixAction Φ (Aᴴ * A) - (matrixAction Φ A)ᴴ * matrixAction Φ A‖) w := by
+  let K := (D5.S3.Quantum.Foundation.FiniteKrausChannel.krausRepresentation Φ).1
+  let V := krausFrame K
+  have hV : Vᴴ * V = 1 := actual_frame_isometry Φ hΦ
+  have h := compression_word_bound (amplify (s := k × d)) V hV w hw
+  have hc : ∀ A, compress V (amplify (s := k × d) A) = matrixAction Φ A :=
+    actual_compress Φ
+  have he : ∀ A, ‖normal V (amplify (s := k × d) A * V)‖ =
+      Real.sqrt ‖matrixAction Φ (Aᴴ * A) - (matrixAction Φ A)ᴴ * matrixAction Φ A‖ := by
+    intro A
+    rw [leakage_sqrt (amplify (s := k × d)) V hV A, hc, hc]
+  simp_rw [hc, he] at h
+  exact h
+
+
+
+
+private def singleSum {ℓ : ℕ} (M ε : Fin ℓ → ℝ) : ℝ :=
+  ∑ i, ε i * ∏ r, if r = i then 1 else M r
+
+/-- The explicit sum over all positional pairs i < j, omitting exactly those two norms. -/
+def pairSum {ℓ : ℕ} (M ε : Fin ℓ → ℝ) : ℝ :=
+  ∑ i, ∑ j, if i < j then ε i * ε j * ∏ r, if r = i ∨ r = j then 1 else M r else 0
+
+private lemma singleSum_succ {ℓ : ℕ} (M ε : Fin (ℓ + 1) → ℝ) :
+    singleSum M ε = ε 0 * (∏ r : Fin ℓ, M r.succ) +
+      M 0 * singleSum (fun r => M r.succ) (fun r => ε r.succ) := by
+  simp only [singleSum, Fin.sum_univ_succ, Fin.prod_univ_succ]
+  simp only [Fin.succ_ne_zero, (Ne.symm (Fin.succ_ne_zero _)), Fin.succ_inj, ite_true, ite_false,
+    one_mul, mul_one]
+  rw [Finset.mul_sum]
+  apply congrArg₂ (· + ·) rfl
+  apply Finset.sum_congr rfl
+  intro i _
+  ring
+
+private lemma pairSum_succ {ℓ : ℕ} (M ε : Fin (ℓ + 1) → ℝ) :
+    pairSum M ε = ε 0 * singleSum (fun r => M r.succ) (fun r => ε r.succ) +
+      M 0 * pairSum (fun r => M r.succ) (fun r => ε r.succ) := by
+  simp only [pairSum, Fin.sum_univ_succ, Fin.prod_univ_succ]
+  simp only [Fin.lt_irrefl, Fin.succ_pos, Fin.not_lt_zero, Fin.succ_lt_succ_iff,
+    Fin.succ_ne_zero, (Ne.symm (Fin.succ_ne_zero _)), Fin.succ_inj, false_or, or_false, true_or,
+    ite_true, ite_false, zero_add, mul_one, one_mul]
+  simp only [singleSum, Finset.mul_sum]
+  apply congrArg₂ (· + ·)
+  · apply Finset.sum_congr rfl
+    intro i _
+    ring
+  · apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    split_ifs <;> ring
+
+private lemma singleWeight_ofFn {α : Type*} (M ε : α → ℝ) {ℓ : ℕ} (A : Fin ℓ → α) :
+    singleWeight M ε (List.ofFn A) = singleSum (fun i => M (A i)) (fun i => ε (A i)) := by
+  induction ℓ with
+  | zero => simp [singleWeight, singleSum]
+  | succ ℓ ih =>
+      rw [List.ofFn_succ, singleWeight, singleSum_succ, ih]
+      simp [List.map_ofFn, List.prod_ofFn]
+
+private lemma pairWeight_ofFn {α : Type*} (M ε : α → ℝ) {ℓ : ℕ} (A : Fin ℓ → α) :
+    pairWeight M ε (List.ofFn A) = pairSum (fun i => M (A i)) (fun i => ε (A i)) := by
+  induction ℓ with
+  | zero => simp [pairWeight, pairSum]
+  | succ ℓ ih =>
+      rw [List.ofFn_succ, pairWeight, pairSum_succ, singleWeight_ofFn, ih]
+
+/-- The complete weighted pair bound for an arbitrary finite ordered Hermitian word
+under one actual finite-dimensional unital completely positive map. -/
+theorem ucp_word_pair_bound
+    (Φ : CompletelyPositiveMap (CStarMatrix d d ℂ) (CStarMatrix k k ℂ))
+    (hΦ : Φ 1 = 1) (w : List (Matrix d d ℂ)) (hw : ∀ A ∈ w, Aᴴ = A) :
+    ‖matrixAction Φ w.prod - (w.map (matrixAction Φ)).prod‖ ≤
+      pairSum (fun i : Fin w.length => ‖w.get i‖) (fun i => Real.sqrt
+        ‖matrixAction Φ ((w.get i)ᴴ * w.get i) -
+          (matrixAction Φ (w.get i))ᴴ * matrixAction Φ (w.get i)‖) := by
+  have h := ucp_pairWeight_bound Φ hΦ w hw
+  have heq := pairWeight_ofFn norm (fun A => Real.sqrt
+    ‖matrixAction Φ (Aᴴ * A) - (matrixAction Φ A)ᴴ * matrixAction Φ A‖) w.get
+  rw [List.ofFn_get] at heq
+  exact h.trans_eq heq
+
+#print axioms ucp_word_pair_bound
 
 end D5.S3.Quantum.Reduction.WeightedWordDefect
