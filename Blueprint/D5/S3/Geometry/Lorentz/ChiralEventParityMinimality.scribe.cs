@@ -100,7 +100,7 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
                             + "The same holds after the explicit inclusions into the complex numbers, so their displayed complex combination is odd.")),
                     new DocumentBlock.DisplayFormula(ComplexMapFormula()),
                     Paragraph(Text(
-                        "For om equal to allEvents, use the inclusion of collisionEvents into allEvents. Apply the planar odd-map zero theorem to the complex combination and obtain a unit vector where it vanishes. "
+                        "For om equal to allEvents, use the inclusion of collisionEvents into allEvents. Apply the planar odd-map zero theorem, Borsuk's Satz II (1933) for n=2, reviewed in Library note D5/L/Topology/borsuk1933spheres, to the complex combination and obtain a unit vector where it vanishes. "
                             + "The family event there is in om and is chiral; taking real and imaginary parts gives f₁ = f₂ = 0. "
                             + "For om equal to collisionEvents, use the identity inclusion and repeat the same argument. These are the two possibilities for om, which proves the full assertion."))),
                 DescribeRole.Theorem))));

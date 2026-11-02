@@ -7,7 +7,7 @@ doi: 10.4064/fm-20-1-177-190
 url: "https://matwbn.icm.edu.pl/ksiazki/fm/fm20/fm20117.pdf"
 claim: "The paper proves three theorems on the n-dimensional sphere; the second states that every continuous map of the n-sphere into n-dimensional Euclidean space sends some pair of antipodal points to the same point."
 strata_touched:
-  - D5/S3/Topology/BorsukUlam/PlanarOddMapZero
+  - D5/S3/Geometry/Lorentz/ChiralEventParityMinimality
 license: citation-only
 triage: anchor
 ---
