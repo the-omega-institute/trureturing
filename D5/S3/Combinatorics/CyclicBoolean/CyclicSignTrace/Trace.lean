@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace.Prelude
 
+/-! Exact ordered trace expansion and cyclic Boolean phase bridge. -/
+
 set_option autoImplicit false
 open scoped BigOperators
 

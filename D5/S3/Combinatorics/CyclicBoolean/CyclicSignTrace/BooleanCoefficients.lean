@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace.Prelude
 
+/-! Boolean coefficient extraction and top-degree derivative constraints. -/
+
 set_option autoImplicit false
 open scoped BigOperators
 

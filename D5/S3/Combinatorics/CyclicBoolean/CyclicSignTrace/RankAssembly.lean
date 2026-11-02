@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace.Prelude
 import D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace.Trace
 import D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace.BooleanCoefficients
 
+/-! Cyclic overlap constraints, mask boundary, rank bound, and final assembly. -/
+
 set_option autoImplicit false
 open scoped BigOperators
 

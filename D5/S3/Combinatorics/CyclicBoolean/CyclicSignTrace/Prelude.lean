@@ -96,7 +96,7 @@ private theorem recurrence_iterate {n : ℕ} (x : Word n) (i : ZMod n) (t : ℕ)
     rw [hr]
     ring
 
-private theorem twice_half (m : ℕ) :
+theorem twice_half (m : ℕ) :
     (2 : ZMod (2 * m + 1)) * (m + 1 : ℕ) = 1 := by
   have h := ZMod.natCast_self (2 * m + 1)
   push_cast at h ⊢
