@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ActualContinuousFactorialCompensation;
 
 internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDocumentDefinition
 {
@@ -20,7 +20,7 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
                 + "no supplier identity or regularity is a theorem hypothesis.")),
             Describe.Lean(
                 DescribeId.Create("actual-continuous-factorial-finite-smoothing"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.finite_smoothing"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.finite_smoothing"),
                 H("Exact finite smoothing at every real cutoff"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -33,7 +33,7 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-continuous-factorial-integral-seam"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.G_eq_integral"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.G_eq_integral"),
                 H("The literal G is the slope primitive"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -46,7 +46,7 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-continuous-factorial-slope-measurable"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.slope_measurable"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.slope_measurable"),
                 H("Measurability of the actual arithmetic slope"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -57,7 +57,7 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-continuous-factorial-compensation"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.compensation"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.compensation"),
                 H("Complete compensation and actual restricted-ae derivative"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

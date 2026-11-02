@@ -6,7 +6,7 @@
    utility: none
    digest: The actual causal logarithmic pullback is globally continuous, locally absolutely continuous and W1,1 with both L1 budgets at most four gamma plus sixteen. -/
 
-import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation
+import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.LebesgueDifferentiationThm
 

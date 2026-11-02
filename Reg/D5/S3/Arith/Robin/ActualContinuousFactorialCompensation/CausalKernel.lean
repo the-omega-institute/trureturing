@@ -11,7 +11,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.CausalKernel
 
-/- Proposed source-owner audit attempt only; UNCOMPILED.
+/- Compiled source-owner audit attempt; four-slot registration unfinished.
 The selected existing template is DependentFamily.realize, enrolled through
 Reg.Support.DependentFamily. The actual readout is the literal causal r.
 The exact source bridge below retains the origin, every real interval,
@@ -22,8 +22,8 @@ of r+1. Actual observational dependence of the literal r and a lawful full
 sourceSelection/current binding remain unpaid. These are required proof/
 binding obligations, not asserted interface limitations or compiler errors.
 Continuation is unknown. No incomplete Contract.Registration is fabricated,
-and no declared_validated or linked-issue status is claimed. The later
-integration flight owns authorized issue linkage and actual compilation. -/
+and no declared_validated status is claimed. The unfinished registration is
+tracked at https://github.com/the-omega-institute/trureturing/issues/25738. -/
 
 abbrev signature : Signature where
   Params := Unit

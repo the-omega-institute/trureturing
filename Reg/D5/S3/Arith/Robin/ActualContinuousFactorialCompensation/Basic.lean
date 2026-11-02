@@ -1,4 +1,4 @@
-import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation
+import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.Basic
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -11,11 +11,11 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.Arith.Robin.ActualContinuousFactorialCompensation
 
-/- Proposed source-owner audit attempt only; UNCOMPILED.
+/- Compiled source-owner audit attempts; four-slot registrations unfinished.
 The existing enrolled DependentFamily.realize interface is used below to
 retain the actual readouts and complete original laws. No regularity or
 arithmetic hypothesis is added. The exact source bridges and the available
-whole-family variation/sensitivity terms are proposed proof sources only.
+whole-family variation/sensitivity terms below are compiled proof sources.
 
 Unfinished four-slot obligations, per target:
 * finite_smoothing: actual readout Z_h; exact all-real floor/factorial law below;
@@ -31,9 +31,9 @@ Unfinished four-slot obligations, per target:
   generic assumed-regularity theorem.
 Continuation is unknown in all four attempts. No Contract.Registration or
 DependentFamily.Registration is fabricated with missing proof fields.
-No declared_validated status or linked-issue coverage is claimed. Opening or
-reusing a suitable issue belongs to the later authorized integration flight;
-Git/GitHub writes are prohibited in this source-only flight. -/
+The unfinished registrations are tracked at
+https://github.com/the-omega-institute/trureturing/issues/25738.
+No declared_validated status is claimed. -/
 
 abbrev signature : Signature where
   Params := Unit

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ActualContinuousFactorialCompensation
+/- GID: D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/ActualContinuousFactorialCompensation
+   mirror-B: D5/B/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
