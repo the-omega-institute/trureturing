@@ -9,8 +9,6 @@
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Tactic
 
 /-! The operator-norm conjecture following Theorem 3 of Peled, Te'eni, Carmi
 and Cohen, arXiv:2005.12079v2. Hermitian bases have trace-product normalization one. -/
