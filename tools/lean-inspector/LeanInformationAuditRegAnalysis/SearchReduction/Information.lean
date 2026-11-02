@@ -173,7 +173,11 @@ unsafe def acquireInformation (source : Environment) (target : Name)
     let axioms ← CompiledAxioms.collectAxiomsShared store.constants.find? closures name
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
       throw <| IO.userError "unaccepted_axiom_closure"
-    return {reading with ordinaryRecords := records}
+    -- These names must outlive the mapped artifacts released below.
+    return {reading with
+      application := reading.application.map RawArtifacts.ownName
+      registration := reading.registration.map RawArtifacts.ownName
+      ordinaryRecords := records}
   catch error => return {face := .notBound error.toString, application := some name}
   finally RawArtifacts.release reader
 
