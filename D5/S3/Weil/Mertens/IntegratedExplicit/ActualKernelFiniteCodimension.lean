@@ -12,12 +12,9 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Analysis.PSeries
 
 /-!
-SOURCE PREPARATION ONLY: this file has not been elaborated.
-
-Canonical inputs: trureturing 6509238f4b736633f2995a759b89dde27dc8f5eb,
-Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. The two imported
-preparatory bridges are source drafts, not verified dependencies. The remainder
-draft also requires its supplied visibility-only mangoldtPart_eq_range patch.
+This module gives the compiled exact actual-kernel finite-codimension theorem.
+Its imported bridges are the existing verified APIs for finite moment
+correlation, atomic prefix energy, and the literal actual-kernel remainder.
 
 The source clause is the existing AURIC prime-power difference coupling,
 finite-codimension positivity and root Robin budget, Section 5, Theorem 2,

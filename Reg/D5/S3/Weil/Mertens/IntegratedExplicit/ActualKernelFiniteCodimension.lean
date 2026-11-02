@@ -3,7 +3,9 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelFiniteCodimension
 import Reg.Support.SingleDependentReadout
 
 /-!
-UNELABORATED SAME-UNIT OWNER ATTEMPT. No audit or source selection is validated.
+SAME-UNIT OWNER ATTEMPT. The source compiles; the dependent-family audit
+record remains declared_unresolved because source binding classification is
+not validated.
 
 The law retains the whole original telescope: arbitrary positive real D,
 arbitrary positive target kappa, existential uniform N>=1, universe-polymorphic
