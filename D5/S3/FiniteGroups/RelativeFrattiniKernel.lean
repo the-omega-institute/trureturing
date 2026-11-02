@@ -136,12 +136,13 @@ theorem isPGroup_automorphism_kernel [Finite Q] (P : Subgroup Q) [P.Normal]
     intro y
     induction y using Quotient.inductionOn with
     | h y =>
+      symm
       apply (QuotientGroup.eq).mpr
       obtain ⟨z, hz, he⟩ := displacement_mem P a y
       have he' : z = y⁻¹ * r a y := Subtype.ext he
       exact he' ▸ hz
-  have ht := (FrattiniAutomorphismKernel.isPGroup_quotientAut_frattini_kernel hP)
-    .comap_of_ker_isPGroup r hk
+  have ht := IsPGroup.comap_of_ker_isPGroup
+    (FrattiniAutomorphismKernel.isPGroup_quotientAut_frattini_kernel hP) r hk
   have he : (FrattiniAutomorphismKernel.quotientAut (frattini P)).ker.comap r = ⊤ := by
     ext a
     exact iff_of_true (hr a) (mem_top a)
@@ -179,9 +180,9 @@ def innerLift (P : Subgroup Q) [P.Normal] : Q →* preservingAut P :=
   (MulAut.conj : Q →* MulAut Q).codRestrict (preservingAut P) (by
     intro q x
     constructor
-    · intro hx; exact P.normal.conj_mem x hx q
+    · intro hx; exact (inferInstance : P.Normal).conj_mem x hx q
     · intro hx
-      have hh := P.normal.conj_mem _ hx q⁻¹
+      have hh := (inferInstance : P.Normal).conj_mem _ hx q⁻¹
       simpa [MulAut.conj_apply, mul_assoc] using hh)
 
 private theorem quotientAction_inner (P : Subgroup Q) [P.Normal] (q : Q) :
@@ -190,7 +191,7 @@ private theorem quotientAction_inner (P : Subgroup Q) [P.Normal] (q : Q) :
   apply MulEquiv.ext
   intro x
   induction x using Quotient.inductionOn with
-  | h x => simp [quotientAction, innerLift, MulAut.conj_apply]
+  | h x => rfl
 
 /-- The actual induced homomorphism from P-preserving outer automorphisms
 to the outer automorphisms of Q/Frattini(P). -/
@@ -201,7 +202,7 @@ def outerAction (P : Subgroup Q) [P.Normal] :
       rintro a ⟨q, hq⟩
       have ha : a = innerLift P q := Subtype.ext hq.symm
       rw [ha, MonoidHom.mem_ker, MonoidHom.comp_apply, quotientAction_inner]
-      exact QuotientGroup.eq_one_iff.mpr ⟨QuotientGroup.mk' (relativeFrattini P) q, rfl⟩)
+      exact (QuotientGroup.eq_one_iff _).mpr ⟨QuotientGroup.mk' (relativeFrattini P) q, rfl⟩)
 
 /-- For every subgroup of the actual P-preserving outer automorphism group,
 the kernel of its induced action on Out(Q/Frattini(P)) is a p-group. -/
@@ -216,7 +217,7 @@ theorem isPGroup_outer_kernel [Finite Q] (P : Subgroup Q) [P.Normal]
       intro ha
       change QuotientGroup.mk' (innerAut (Q ⧸ relativeFrattini P))
         (quotientAction P a) = 1 at ha
-      obtain ⟨y, hy⟩ := QuotientGroup.eq_one_iff.mp ha
+      obtain ⟨y, hy⟩ := (QuotientGroup.eq_one_iff _).mp ha
       obtain ⟨q, rfl⟩ := QuotientGroup.mk'_surjective (relativeFrattini P) y
       let b := a * (innerLift P q)⁻¹
       have hb : b ∈ (quotientAction P).ker := by
@@ -225,7 +226,7 @@ theorem isPGroup_outer_kernel [Finite Q] (P : Subgroup Q) [P.Normal]
         exact mul_inv_cancel _
       refine ⟨b, hb, ?_⟩
       have hi : pi (innerLift P q) = 1 :=
-        QuotientGroup.eq_one_iff.mpr ⟨q, rfl⟩
+        (QuotientGroup.eq_one_iff _).mpr ⟨q, rfl⟩
       change pi (a * (innerLift P q)⁻¹) = pi a
       simp only [map_mul, map_inv, hi, inv_one, mul_one]
   have hpker := ((isPGroup_automorphism_kernel P hP).map pi).to_le hk
