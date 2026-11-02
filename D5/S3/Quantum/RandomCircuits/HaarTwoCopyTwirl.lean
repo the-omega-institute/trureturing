@@ -743,7 +743,8 @@ private theorem pure_twirl {d : ℕ} [NeZero d] :
   have hts : s.trace = (d : ℂ) := by
     simp only [s, Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
     simp [Equiv.Perm.permMatrix, Prod.ext_iff, eq_comm]
-  have hv : Matrix.vec w = (haarAverage (Fin d)).mulVec (Matrix.vec y) := rfl
+  have hv : Matrix.vec w = (haarAverage (Fin d)).mulVec (Matrix.vec y) :=
+    vec_unvectorize _
   have ht := hermitian_fixed_pairing (haarAverage (Fin d)) haarAverage_hermitian
     (Matrix.vec (1 : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ))
     (Matrix.vec y) haarAverage_identity_fixed
@@ -795,10 +796,10 @@ private theorem pure_tensor_integral {d : ℕ} [NeZero d] :
     intro r
     apply continuous_pi
     intro c
-    simp only [z, Matrix.kroneckerMap_apply, hp]
-    have he (i j : Fin d) : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
-        u.1 i j) := (continuous_apply j).comp ((continuous_apply i).comp continuous_subtype_val)
-    exact ((he _ _).mul (he _ _).star).mul ((he _ _).mul (he _ _).star)
+    convert literalMoment_continuous (c, r) ((0, 0), (0, 0)) using 1
+    funext u
+    simp only [z, Matrix.kroneckerMap_apply, hp, literalMoment, Matrix.kronecker, Matrix.map_apply]
+    ring
   have hi := hz.integrable_of_hasCompactSupport
     (μ := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))
     (HasCompactSupport.of_compactSpace z)
