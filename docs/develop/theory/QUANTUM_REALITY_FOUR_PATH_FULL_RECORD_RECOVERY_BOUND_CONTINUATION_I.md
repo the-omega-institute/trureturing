@@ -694,3 +694,269 @@ $$
 未决断言是 (29.20) 最后一行在整个 $\mathcal R_{H,\mathfrak J}$ 上的统一非负性，或其中经源卷 (23.13) 及实际酉提升得到的原可行严格反例。$\mathfrak J>1$ 仅表示本节充分证书不适用，不蕴含 $\nu_\kappa<0$；上述剩余例也不是原端点的反例。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 30. 全模长域到共同相位核的继承定理
+
+**定义 30.1（坐标相位与最小模长）。** 对 $z\in\mathbb C$ 定义
+
+$$
+\operatorname{ph}(z)=
+\begin{cases}z/|z|,&z\ne0,\\
+1,&z=0.
+\end{cases}
+$$
+
+对 $w\in\mathcal W$ 置
+
+$$
+\widehat w=(\operatorname{ph}(w_1),\ldots,\operatorname{ph}(w_4)),
+\qquad
+\mu(w)=\min_j|w_j|.
+\tag{30.1}
+$$
+
+于是 $\widehat w\in\mathbb T^4:=\{z\in\mathbb C^4:|z_j|=1\}$；当某坐标为零时，(30.1) 的取值约定只用于定义一个单位模代表。记
+
+$$
+F_\kappa(w,p)=G(w,p)-\kappa r(w,p).
+\tag{30.2}
+$$
+
+**引理 30.2（最小模长分解保持可实现域）。** 若 $0\le t:=\mu(w)<1$，定义
+
+$$
+ y_j=\frac{|w_j|-t}{1-t}\,\widehat w_j\qquad(1\le j\le4).
+\tag{30.3}
+$$
+
+则
+
+$$
+ w=t\widehat w+(1-t)y,\qquad y\in\mathcal W,\qquad
+\min_j|y_j|=0,\qquad \sum_j|y_j|\le2.
+\tag{30.4}
+$$
+
+若 $t=1$，则 $w=\widehat w$，无需定义 $y$；若 $t=0$，(30.3) 给出 $y=w$，不发生除以最小模长的操作。
+
+**证明。** 由 $|w_j|\le1$，有 $0\le|y_j|\le1$，且至少一个 $y_j$ 为零。因为 $w\in\mathcal W$，
+
+$$
+\sum_j|w_j|-2t\le2.
+$$
+
+故
+
+$$
+\sum_j|y_j|
+=\frac{\sum_j|w_j|-4t}{1-t}
+\le\frac{2-2t}{1-t}=2.
+$$
+
+当 $\min_j|y_j|=0$ 时，最后一个不等式正是 (23.1) 的第二个不等式；因此 $y\in\mathcal W$。等式 $w=t\widehat w+(1-t)y$ 按坐标直接成立。$\square$
+
+**引理 30.3（零坐标层的统一能量余量）。** 对满足 (30.4) 的 $y$ 及每个 $p\in[0,1]$，有
+
+$$
+G(y,p)\ge e^2-4.
+\tag{30.5}
+$$
+
+**证明。** 写 $\alpha=\sqrt p$、$\beta=\sqrt{1-p}$。由 (23.2)，对某个 $|\lambda|=1$ 的系数行
+
+$$
+ a_j(\lambda)=\alpha P_j+\lambda\beta Q_j
+$$
+有
+
+$$
+ |P_j|^2+|Q_j|^2=1\qquad(j=1,2,3,4),
+$$
+因为 $(P_1,P_2,P_3,P_4)=(h,h,c,c)$、
+$(Q_1,Q_2,Q_3,Q_4)=(h,-h,is,-is)$。于是复 Cauchy--Schwarz 给出
+$|a_j(\lambda)|\le1$。另一方面
+
+$$
+\sqrt p\,u(y)+\sqrt{1-p}\,v(y)
+ =\max_{|\lambda|=1}\left|\sum_j a_j(\lambda)y_j\right|
+ \le\sum_j|y_j|\le2.
+$$
+
+而 $d^2p+e^2(1-p)\ge e^2$。代入 (23.3) 即得 (30.5)。$\square$
+
+**引理 30.4（共同分解下的距离控制）。** 对 $w,t,y$ 如引理 30.2 及任意 $p\in[0,1]$，有
+
+$$
+ r(w,p)\le t\,r(\widehat w,p)+14(1-t).
+\tag{30.6}
+$$
+
+**证明。** 置 $c_+(p)=10-2p$、$c_-(p)=8+2p$。三角不等式及 (30.4) 给出
+
+$$
+ A(w)\ge tA(\widehat w)-(1-t)A(y),
+$$
+从而
+
+$$
+ r_+(w,p)
+ \le t r_+(\widehat w,p)+(1-t)\bigl(c_+(p)+2A(y)\bigr).
+$$
+
+同理
+
+$$
+ r_-(w,p)
+ \le t r_-(\widehat w,p)+(1-t)\bigl(c_-(p)+2B(y)\bigr).
+$$
+
+由 $\sum_j|y_j|\le2$，有 $A(y),B(y)\le2$，而 $c_\pm(p)\le10$。取 $\widehat w$ 上达到 $r(\widehat w,p)$ 的同一分支，得到
+
+$$
+ r(w,p)\le t r(\widehat w,p)+14(1-t).
+$$
+这里没有把两个符号分支分别取到；所取分支仍是原联合距离的同一个最小化符号。$\square$
+
+**定理 30.5（全模长域的原生产者相位继承）。** 对每个 $w\in\mathcal W$ 及每个 $p\in[0,1]$，有
+
+$$
+\boxed{
+F_\kappa(w,p)
+\ge \mu(w)F_\kappa(\widehat w,p)
+ +(1-\mu(w))\eta_\kappa,
+}
+\tag{30.7}
+$$
+
+其中
+
+$$
+\eta_\kappa=e^2-4-14\kappa>\frac9{50}>0.
+\tag{30.8}
+$$
+
+因此只要 $\mu(w)<1$ 且相位数据满足 $F_\kappa(\widehat w,p)\ge0$，便有严格余量
+
+$$
+F_\kappa(w,p)>0.
+\tag{30.9}
+$$
+
+**证明。** $t=\mu(w)=1$ 时 $w=\widehat w$，(30.7) 是等式。以下令 $t<1$。置 $S_p(w)=\sqrt p\,u(w)+\sqrt{1-p}\,v(w)$。由
+
+$$
+S_p(w)=\max_{|\lambda|=1}
+ \left|\sqrt p\,P(w)+\lambda\sqrt{1-p}\,Q(w)\right|
+$$
+可知 $S_p^2$ 是复线性形式平方模的逐点上确界，故是实向量 $w$ 的凸函数；因而 $G(w,p)=d^2p+e^2(1-p)-S_p(w)^2$ 是凹函数。引理 30.2、30.3 给出
+
+$$
+G(w,p)
+\ge tG(\widehat w,p)+(1-t)G(y,p)
+\ge tG(\widehat w,p)+(1-t)(e^2-4),
+\tag{30.10}
+$$
+其中 $t=\mu(w)$。引理 30.4 同时给出
+
+$$
+-\kappa r(w,p)
+\ge-\kappa t r(\widehat w,p)-14\kappa(1-t).
+$$
+两式相加即为 (30.7)。
+
+为核验余量的严格正性，源卷 (22.13) 给出
+$h<7072/10000$ 及 $s>3826/10000$，所以
+
+$$
+ e=\frac1h+2s>\frac{10000}{7072}+2\frac{3826}{10000}
+ >\frac{10896}{5000}.
+$$
+结合源卷定理 21.3 的 $0<\kappa<1/25$，有
+
+$$
+\eta_\kappa>
+\left(\frac{10896}{5000}\right)^2-4-\frac{14}{25}
+=\frac{73794}{390625}>\frac9{50}.
+$$
+所有这些估计在 $p=0,1$ 仍是闭区间上的等式或不等式；(30.1)--(30.4) 也覆盖零坐标。故没有使用非零幅度、非零迹或可逆的归一化。$\square$
+
+**定理 30.6（完整原端点与共同相位核的精确等价）。** 令
+
+$$
+\mathsf{Core}_\kappa:\qquad
+F_\kappa(\theta,p)\ge0
+\quad\text{对所有 }\theta\in\mathbb T^4/U(1),\quad p\in[0,1],
+\tag{30.11}
+$$
+其中商只表示定义 23.1 的一个共同标量相位，不选取代表。则
+
+$$
+\boxed{
+\begin{aligned}
+&g(E,U)\ge\kappa\rho(E,U)
+\quad\text{对所有 }E\in\operatorname{Dens}_2,\ U\in U(4)\\
+&\quad\Longleftrightarrow\quad C_{\mathrm{opt}}=R_*\\
+&\quad\Longleftrightarrow\quad \mathsf{Core}_\kappa.
+\end{aligned}}
+\tag{30.12}
+$$
+
+更具体地，在 $\mathsf{Core}_\kappa$ 成立时，每个原始可实现 $w$、每个原始总体 $p$ 都满足
+
+$$
+F_\kappa(w,p)\ge(1-\mu(w))\eta_\kappa,
+\tag{30.13}
+$$
+
+且当 $\mu(w)<1$ 时严格为正。此结论覆盖坐标饱和层、模长不平衡饱和层、二者交叠、内部点以及全单位模层；这些 $w$ 均仍由定理 23.2 的实际共享酉实现，而 (30.3) 的 $y$ 只是可实现约化数据的分解，不是对任何实际反馈 $U$ 的物理缩放。对给定实际 $U$，源卷 (23.14) 在其同一总体
+$p=b_+^\dagger E^{\mathsf T}b_+$ 上给出原效应结论，故普通转置、联合优化器符号、奇异或混合效应以及任意实际非对角提升均保留。
+
+**证明。** 假设 $\mathsf{Core}_\kappa$。对任意 $w\in\mathcal W$，$\widehat w$ 是单位模可实现数据，故定理 30.5 给出 (30.13)，于是 $F_\kappa(w,p)\ge0$。定理 23.4 及 (23.14) 随即给出第一行的原端点，且对每个实际 $U$ 使用同一个 $U$ 完成全部联合计算。
+
+反之，若原端点成立，取任意 $\theta\in\mathbb T^4$ 的实际酉提升及任意 $p$。源卷 (23.6) 的同一实际提升和达到相对相位给出
+$F_\kappa(\theta,p)\ge0$；故成立 (30.11)。第一行与第二行的等价沿用源卷 (23.22)。$\square$
+
+**命题 30.7（共同相位核中尚未支付的精确范围）。** 在 $\mathbb T^4$ 上有
+
+$$
+ n_{12}=n_{34}=2,\qquad
+\mathfrak J(\theta)=\frac12+\frac{A(\theta)^2+B(\theta)^2}{20}.
+\tag{30.14}
+$$
+源卷第 24--26 节及定理 29.2 已经处理 $A\ge A_0$、$B\ge23/6$、$A+B\le4$ 以及
+$A^2+B^2\le10$ 的相位数据。又
+
+$$
+H(2,2)=4s-2c<0,\qquad 9-A(\theta)-B(\theta)\ge1,
+$$
+所以单位模数据均满足 $H(2,2)<\kappa(9-A-B)$；成对能量充分条件 (28.5) 不覆盖这些数据。因而 (30.11) 的唯一未付断言精确为
+
+$$
+\boxed{
+\nu_\kappa(\theta)\ge0
+\quad\text{对所有 }\theta\in\mathbb T^4/U(1)\text{ 满足 }
+ A(\theta)<A_0,\quad B(\theta)<23/6,\quad
+ A(\theta)+B(\theta)>4,\quad
+ A(\theta)^2+B(\theta)^2>10.
+}
+\tag{30.15}
+$$
+
+该范围确实非空；例如
+
+$$
+\theta_0=(1,i,e^{-i\pi/4},e^{i\pi/4})
+$$
+满足
+
+$$
+ A(\theta_0)=B(\theta_0)=\sqrt{4+2\sqrt2},\qquad
+ A(\theta_0)^2+B(\theta_0)^2=8+4\sqrt2>10,
+$$
+并且 $A(\theta_0)+B(\theta_0)>4$、$A(\theta_0)<A_0$、$B(\theta_0)<23/6$。该点及其共同相位类是原始单位酉反馈的实际数据。
+
+**证明。** (30.14) 由 $N=4$ 代入 (29.1) 得到。若 $A^2+B^2\le10$ 且 $A+B>4$，则 $\mathfrak J\le1$，定理 29.2 给出原端点；若 $A\ge A_0$、$B\ge23/6$ 或 $A+B\le4$，则分别由源卷第 24、25、26 节给出。剩下的区域使 $H(2,2)<0<\kappa(9-A-B)$，故属于 (28.21)，并由 (30.14) 有 $\mathfrak J>1$。于是该区域正是 $\mathbb T^4\cap\mathcal R_{H,\mathfrak J}$，而定理 30.6 与源卷定理 23.4 给出所述等价。对所给 $\theta_0$，两条迹的平方均为 $4+2\sqrt2$；$2<\sqrt{4+2\sqrt2}<3<A_0$ 且 $3<23/6$，故所有严格条件成立。$\square$
+
+(30.15) 是完整共同相位核上的相关相位不等式；本节没有把它替换为独立幅度最大值、独立符号分支或另一充分截面。它仍是原全局端点的开放数学义务；若在该集合找到负的有限判据值，源卷 (23.13) 及定理 23.2 会给出同一共享酉下的原始可行严格反例。
+
+## 追加锚（本行以下为增补区）
