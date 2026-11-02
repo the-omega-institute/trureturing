@@ -67,12 +67,20 @@ private lemma parent_rank (i : Sum ℤ (ℤ × List Bool)) :
   · cases w <;> simp [parent.eq_1, rank.eq_1]
     omega
 
-private def graph : SimpleGraph (Sum ℤ (ℤ × List Bool)) where
-  Adj i j := parent i = j ∨ parent j = i
-  symm := ⟨fun _ _ h => h.symm⟩
-  loopless := ⟨fun i h => by
+private def graph : SimpleGraph (Sum ℤ (ℤ × List Bool)) :=
+  SimpleGraph.fromRel (fun i j => parent i = j)
+
+private lemma graph_adj (i j : Sum ℤ (ℤ × List Bool)) :
+    graph.Adj i j ↔ parent i = j ∨ parent j = i := by
+  rw [graph.eq_1, SimpleGraph.fromRel_adj]
+  constructor
+  · exact And.right
+  · intro h
+    refine ⟨?_, h⟩
+    intro he
+    subst j
     have hr := parent_rank i
-    rcases h with h | h <;> rw [h] at hr <;> omega⟩
+    rcases h with h | h <;> rw [h] at hr <;> omega
 
 private def neighbors (i : Sum ℤ (ℤ × List Bool)) : Finset (Sum ℤ (ℤ × List Bool)) :=
   Sum.elim (fun n => {Sum.inl (n - 1), Sum.inl (n + 1), Sum.inr (n, [])})
@@ -82,11 +90,11 @@ private def neighbors (i : Sum ℤ (ℤ × List Bool)) : Finset (Sum ℤ (ℤ ×
 private lemma mem_neighbors (i j : Sum ℤ (ℤ × List Bool)) :
     j ∈ neighbors i ↔ graph.Adj i j := by
   rcases i with n | ⟨n, w⟩ <;> rcases j with m | ⟨m, z⟩
-  · simp [neighbors.eq_1, graph.eq_1, parent.eq_1]
+  · simp [neighbors.eq_1, graph_adj, parent.eq_1]
     omega
-  · cases z <;> simp [neighbors.eq_1, graph.eq_1, parent.eq_1, eq_comm]
-  · cases w <;> simp [neighbors.eq_1, graph.eq_1, parent.eq_1, eq_comm]
-  · cases w <;> cases z <;> simp [neighbors.eq_1, graph.eq_1, parent.eq_1]
+  · cases z <;> simp [neighbors.eq_1, graph_adj, parent.eq_1, eq_comm]
+  · cases w <;> simp [neighbors.eq_1, graph_adj, parent.eq_1, eq_comm]
+  · cases w <;> cases z <;> simp [neighbors.eq_1, graph_adj, parent.eq_1]
     all_goals aesop
 
 private instance graph_finite : graph.LocallyFinite :=
@@ -117,18 +125,18 @@ private lemma graph_connected : graph.Connected := by
     | zero => exact .rfl
     | succ n ih =>
       exact (show graph.Adj (Sum.inl ((n : ℤ) + 1)) (Sum.inl n) from
-        Or.inl (by simp [parent.eq_1])).reachable.trans ih
+        (graph_adj _ _).mpr (Or.inl (by simp [parent.eq_1]))).reachable.trans ih
     | pred n ih =>
       exact (show graph.Adj (Sum.inl (-(n : ℤ) - 1)) (Sum.inl (-n)) from
-        Or.inr rfl).reachable.trans ih
+        (graph_adj _ _).mpr (Or.inr rfl)).reachable.trans ih
   have hb : ∀ (n : ℤ) (w : List Bool),
       graph.Reachable (Sum.inr (n, w)) (Sum.inl n) := by
     intro n w
     induction w with
-    | nil => exact (show graph.Adj (Sum.inr (n, [])) (Sum.inl n) from Or.inl rfl).reachable
+    | nil => exact (show graph.Adj (Sum.inr (n, [])) (Sum.inl n) from (graph_adj _ _).mpr (Or.inl rfl)).reachable
     | cons b w ih =>
       exact (show graph.Adj (Sum.inr (n, b :: w)) (Sum.inr (n, w)) from
-        Or.inl rfl).reachable.trans ih
+        (graph_adj _ _).mpr (Or.inl rfl)).reachable.trans ih
   apply (graph.connected_iff_exists_forall_reachable).mpr
   refine ⟨Sum.inl 0, ?_⟩
   rintro (n | ⟨n, w⟩)
@@ -138,7 +146,7 @@ private lemma graph_connected : graph.Connected := by
 private lemma graph_acyclic : graph.IsAcyclic := by
   have down : ∀ x y, graph.Adj x y → rank y ≤ rank x → y = parent x := by
     intro x y h hle
-    rcases h with h | h
+    rcases (graph_adj x y).mp h with h | h
     · exact h.symm
     · have hr := parent_rank y
       rw [h] at hr
@@ -220,10 +228,10 @@ private lemma residuals (i j : Sum ℤ (ℤ × List Bool)) :
       all_goals simp [lengths.eq_1]
       all_goals field_simp; ring
   intro h
-  rcases h with h | h
+  rcases (graph_adj i j).mp h with h | h
   · rw [← h]
     exact hp i
-  · have he : graph.Adj i j := Or.inr h
+  · have he : graph.Adj i j := (graph_adj i j).mpr (Or.inr h)
     have hs := lengths_symmetric i j he
     have hz := hp j
     rw [h] at hz
@@ -237,8 +245,8 @@ private lemma residuals (i j : Sum ℤ (ℤ × List Bool)) :
 private lemma nonconstant :
     ¬ ∃ c, ∀ i j, graph.Adj i j → lengths i j = c := by
   rintro ⟨c, h⟩
-  have hb := h (Sum.inl 0) (Sum.inr (0, [])) (Or.inr rfl)
-  have hs := h (Sum.inl 0) (Sum.inl 1) (Or.inr (by norm_num [parent.eq_1]))
+  have hb := h (Sum.inl 0) (Sum.inr (0, [])) ((graph_adj _ _).mpr (Or.inr rfl))
+  have hs := h (Sum.inl 0) (Sum.inl 1) ((graph_adj _ _).mpr (Or.inr (by norm_num [parent.eq_1])))
   norm_num [lengths.eq_1] at hb hs
   linarith
 
