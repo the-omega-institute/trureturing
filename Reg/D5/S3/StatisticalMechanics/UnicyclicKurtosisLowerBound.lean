@@ -124,7 +124,9 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ n k => powerSum n 3 (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹))) (fun e => nomatch e)
+  realize signature
+    (fun _ n k => powerSum n 3 (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)))
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -172,7 +174,8 @@ def registration :
       (@_root_.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.normalized)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.Normalized.unit
-  realizationName := `Reg.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.Normalized.source_registration
+  realizationName :=
+    `Reg.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.Normalized.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -182,7 +185,9 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ n k => powerSum n 3 (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹))) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ n k => powerSum n 3 (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -263,7 +268,8 @@ def registration :
       (@_root_.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.moments)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.Moments.unit
-  realizationName := `Reg.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.Moments.source_registration
+  realizationName :=
+    `Reg.D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.Moments.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
