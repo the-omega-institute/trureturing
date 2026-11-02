@@ -125,7 +125,8 @@ lemma spectralKernelPrime_bound (t w : ℝ) : |spectralKernelPrime t w| ≤ 1 / 
 lemma spectralKernel_hasDerivAt (t w : ℝ) :
     HasDerivAt (fun t => spectralKernel t w) (spectralKernelPrime t w) t := by
   unfold spectralKernel spectralKernelPrime
-  convert (((hasDerivAt_id t).const_mul w).cos.div_const (1 + 4 * w ^ 2)) using 1 <;> ring
+  convert (((hasDerivAt_id t).const_mul w).cos.div_const (1 + 4 * w ^ 2)) using 1 <;>
+    simp [spectralKernel, spectralKernelPrime] <;> ring
 
 lemma spectralKernel_integrable (ρ : Measure ℝ) [IsFiniteMeasure ρ] (t : ℝ) :
     Integrable (spectralKernel t) ρ := by

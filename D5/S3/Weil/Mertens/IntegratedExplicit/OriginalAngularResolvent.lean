@@ -88,7 +88,10 @@ private lemma forward_integrable (w : ℝ) : Integrable (forwardIntegrand w) := 
   simpa only [Iic_union_Ioi, integrableOn_univ] using h
 
 private lemma decay_integrable : Integrable decay := by
-  simpa [forwardIntegrand] using forward_integrable 0
+  have h := forward_integrable 0
+  convert h using 1
+  funext t
+  simp [forwardIntegrand, decay]
 
 private lemma decay_continuous : Continuous decay := by
   unfold decay
@@ -147,8 +150,9 @@ private lemma forward_integral (w : ℝ) :
       _ = _ := by
         rw [integral_exp_mul_complex_Ioi (by
           norm_num [Complex.mul_re, Complex.div_re])]
-        simp
-  rw [← integral_Iic_add_Ioi (left_integrable w) (right_integrable w), hl, hr]
+        rw [neg_div]
+        norm_num [Complex.exp_zero, one_div]
+  rw [← intervalIntegral.integral_Iic_add_Ioi (left_integrable w) (right_integrable w), hl, hr]
   simpa only [sub_eq_add_neg] using rational_identity w
 
 /-- Convert the angular forward computation to Mathlib's cyclic convention. -/
@@ -160,7 +164,6 @@ private lemma fourier_decay (ξ : ℝ) :
       apply integral_congr_ae
       filter_upwards with t
       dsimp [forwardIntegrand]
-      rw [smul_eq_mul]
       congr 1
       congr 1
       push_cast
@@ -169,8 +172,11 @@ private lemma fourier_decay (ξ : ℝ) :
 
 private lemma fourier_decay_integrable : Integrable (𝓕 decay) := by
   have hscale : (2 * Real.pi : ℝ) ≠ 0 := by positivity
+  have hwc : Integrable (fun w : ℝ => (weight w : ℂ)) := weight_integrable.ofReal
+  have hscale' : Integrable (fun ξ : ℝ => (weight (2 * Real.pi * ξ) : ℂ)) :=
+    hwc.comp_mul_left' hscale
   have h : Integrable (fun ξ : ℝ => (4 : ℂ) * (weight (2 * Real.pi * ξ) : ℂ)) :=
-    (weight_integrable.ofReal.comp_mul_left' hscale).const_mul (4 : ℂ)
+    hscale'.const_mul (4 : ℂ)
   have he : 𝓕 decay = fun ξ : ℝ => (4 : ℂ) * (weight (2 * Real.pi * ξ) : ℂ) :=
     funext fourier_decay
   simpa only [he] using h
@@ -259,9 +265,29 @@ theorem cosine_resolvent (s : ℝ) :
   have hr := congrArg Complex.re (normalized_integral s)
   have hint : (∫ w : ℝ, angularIntegrand s w).re =
       ∫ w : ℝ, Real.cos (w * s) / (1 + 4 * w ^ 2) := by
-    rw [← integral_re (angular_integrable s)]
-    simp only [integrand_re]
-  simpa only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-    sub_zero, Complex.div_ofReal_re, decay, hint] using hr
+    calc
+      (∫ w : ℝ, angularIntegrand s w).re =
+          ∫ w : ℝ, (angularIntegrand s w).re :=
+        (integral_re (angular_integrable s)).symm
+      _ = _ := by
+        apply integral_congr_ae
+        filter_upwards with w
+        exact integrand_re s w
+  have hr' : (1 / (2 * Real.pi)) *
+      (∫ w : ℝ, Real.cos (w * s) / (1 + 4 * w ^ 2)) =
+      Real.exp (-|s| / 2) / 4 := by
+    change (↑(1 / (2 * Real.pi)) * ∫ w : ℝ, angularIntegrand s w).re =
+      ((Real.exp (-|s| / 2) : ℂ) / (4 : ℂ)).re at hr
+    norm_num [Complex.mul_re, Complex.div_re] at hr
+    have harg : (-(↑(|s| : ℝ) : ℂ) / 2) = ((-|s| / 2 : ℝ) : ℂ) := by
+      push_cast
+      ring
+    have hreal : (Complex.exp (-(↑(|s| : ℝ) : ℂ) / 2)).re =
+        Real.exp (-|s| / 2) := by
+      rw [harg, Complex.exp_ofReal_re]
+    rw [hreal] at hr
+    rw [hint] at hr
+    simpa using hr
+  exact hr'
 
 end OriginalAngularResolvent

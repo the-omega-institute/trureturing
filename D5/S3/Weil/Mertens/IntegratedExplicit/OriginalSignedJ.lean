@@ -82,7 +82,7 @@ lemma finiteB_mul_integrable {ι : Type*} (s : Finset ι) (γ : ℝ) (w k : ι �
     ((continuous_const : Continuous (fun _ : ℝ => γ)).sub continuous_id).continuousOn
   convert hc.add hs using 1
   ext t
-  simp only [finiteB, Pi.add_apply, Finset.sum_apply, add_mul, Finset.sum_mul]
+  simp [finiteB, Finset.sum_apply, add_mul, Finset.sum_mul]
 
 /-- Finite indicator/Fubini plus AC integration by parts, with no smoothness
 assumption at the knots and no assumed Abel identity. -/
@@ -133,13 +133,34 @@ theorem finite_abel_ac {ι : Type*} (s : Finset ι) (γ : ℝ) (w k : ι → ℝ
         intro t _
         simp only [finiteB, add_mul, sub_mul, Finset.sum_mul]
       _ = _ := by
-        rw [intervalIntegral.integral_add ((hg.const_mul γ).sub ht)
-          (IntervalIntegrable.sum s (fun i _ => hi i)),
-          intervalIntegral.integral_sub (hg.const_mul γ) ht,
-          intervalIntegral.integral_const_mul, hprimitive, hparts,
-          intervalIntegral.integral_finsetSum (fun i _ => hi i)]
-        congr 1
-        exact Finset.sum_congr rfl htail
+        have hadd := intervalIntegral.integral_add ((hg.const_mul γ).sub ht)
+          (IntervalIntegrable.sum s (fun i _ => hi i))
+        calc
+          _ = (∫ t in (0 : ℝ)..D, γ * deriv H t - t * deriv H t) +
+              ∫ t in (0 : ℝ)..D,
+                (∑ i ∈ s, fun u => (if k i ≤ u then w i else 0) * deriv H u) t := by
+            convert hadd using 1 <;> simp
+          _ = _ := by
+            have hsub := intervalIntegral.integral_sub (hg.const_mul γ) ht
+            have hparts' :
+                (∫ x in (0 : ℝ)..D, id x * deriv H x) =
+                  D * H D - ∫ x in (0 : ℝ)..D, H x := by
+              simpa only [id_eq] using hparts
+            rw [intervalIntegral.integral_const_mul, hprimitive, hparts'] at hsub
+            have hsub' :
+                (∫ t in (0 : ℝ)..D, γ * deriv H t - t * deriv H t) =
+                  γ * (H D - H 0) - (D * H D - ∫ t in (0 : ℝ)..D, H t) := by
+              simpa only [id_eq] using hsub
+            rw [hsub']
+            have hsum :
+                (∫ t in (0 : ℝ)..D,
+                  (∑ i ∈ s, fun u => (if k i ≤ u then w i else 0) * deriv H u) t) =
+                  ∑ i ∈ s, ∫ t in (0 : ℝ)..D,
+                    (if k i ≤ t then w i else 0) * deriv H t := by
+              convert intervalIntegral.integral_finsetSum (fun i _ => hi i) using 1 <;> simp
+            rw [hsum]
+            congr 1
+            exact Finset.sum_congr rfl htail
   rw [hexpand]
   simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul]
   ring
@@ -199,8 +220,15 @@ lemma testLift_ae_deriv {D : ℝ} {f fprime : ℝ → ℝ}
       deriv (testLift f) t = Real.exp (t / 2) * (fprime t + f t / 2) := by
   filter_upwards [hfp] with t ht htD
   have he : HasDerivAt (fun t : ℝ => Real.exp (t / 2)) (Real.exp (t / 2) / 2) t := by
-    convert ((hasDerivAt_id t).div_const (2 : ℝ)).exp using 1 <;> ring
-  convert (he.mul (ht htD)).deriv using 1 <;> dsimp [testLift] <;> ring
+    have h := (Real.hasDerivAt_exp (t / 2)).comp t
+      ((hasDerivAt_id t).div_const (2 : ℝ))
+    simpa only [Function.comp_def, id_eq, div_eq_mul_inv, one_mul] using h
+  have hp := (he.mul (ht htD)).deriv
+  change deriv ((fun t : ℝ => Real.exp (t / 2)) * f) t = _
+  calc
+    _ = Real.exp (t / 2) / 2 * f t +
+        Real.exp (t / 2) * fprime t := by simpa [testLift] using hp
+    _ = Real.exp (t / 2) * (fprime t + f t / 2) := by ring
 
 lemma original_integrands_integrable {D : ℝ} (hD : 0 ≤ D) {f fprime : ℝ → ℝ}
     (hf : AbsolutelyContinuousOnInterval f 0 D)
