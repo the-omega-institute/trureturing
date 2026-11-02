@@ -54,13 +54,12 @@ def main():
     request = directory / "request.lean"
     request.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
         "set_option Elab.async false\nset_option maxHeartbeats 0\n"
-        "run_cmd LeanInformationAudit.SearchReduction.executeProbe "
-        f'{{ target := `{TARGET}, «baseline» := #[], baselineCommit := "{B0}", '
-        f'informationApplication := some `{APPLICATION} }} '
-        f"#[`LeanInformationAuditRegAnalysis.SearchReduction.Commands, `{MODULE}] "
-        "`informationCacheReading (fixture := true)\n")
-    # Fixture mode permits the existing test-index fallback; it installs no
-    # production index. Request and compiled ordinary assessment stay real.
+        "run_cmd modifyEnv fun env => env.setMainModule "
+        "`LeanInformationAuditRegTests.SearchReduction.InformationCacheRequest\n"
+        f'#search_reduction {TARGET} at "{B0}" baseline [] using [] '
+        f"information {APPLICATION} as informationCacheReading\n")
+    # The normal command owns child isolation and the cache base. The fixture
+    # module address permits the existing test-index fallback, without changing B0.
 
     current = directory / "current.lean"
     current.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
