@@ -52,13 +52,17 @@ $$(\forall n:\mathbb{N}, \operatorname{IsSmallestAbsMax}\left(n, \operatorname{b
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Polynomial/HermiteAbsoluteMode.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a381524-hermite-absolute-differences` (proved) by `D5/S3/Analytic/Polynomial/HermiteAbsoluteMode.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a381524-hermite-absolute-differences","declaration_gid":"D5/S3/Analytic/Polynomial/HermiteAbsoluteMode.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mike Sheppard (2025). *OEIS A381524, smallest exponent of a maximal absolute Hermite coefficient*. URL: <https://oeis.org/A381524/internal?rev=18>.
 
 *Commentary.*
 
-Write w(n,r) for the absolute value of the original signedCoeff at exponent n-2r. The original polynomial_coeff theorem connects these values to the polynomial. On 2r at most n they are positive; all other parity coefficients are zero. For 2(r+1) at most n, successive weights satisfy w(n,r+1) times 4(r+1) = w(n,r) times (n-2r-1)(n-2r). Consequently rises(n,r+1) is exactly the nondecrease test. The true thresholds form an initial segment. Induction proves maximality at its last index and strict decrease beyond it, which supplies the smallest-exponent tie rule. Every true threshold persists when n increases by one; a true threshold at (n+1,r+1) implies a true threshold at (n,r). Hence mode(n+1) is mode(n) or mode(n)+1, and the exponent changes by +1 or -1. The argument includes order zero. The source-family audit observes the entire natural selector sequence, reconstructs the whole claim, rejects a constant-zero family and tests actual dependence between indices zero and one. Continuation is unknown.
+Write w(n,r) for the absolute value of the original signedCoeff at exponent n-2r. The original polynomial_coeff theorem connects these values to the polynomial. On 2r at most n they are positive; all other parity coefficients are zero. For 2(r+1) at most n, successive weights satisfy w(n,r+1) times 4(r+1) = w(n,r) times (n-2r-1)(n-2r). Consequently rises(n,r+1) is exactly the nondecrease test. The true thresholds form an initial segment. Induction proves maximality at its last index and strict decrease beyond it, which supplies the smallest-exponent tie rule. Every true threshold persists when n increases by one; a true threshold at (n+1,r+1) implies a true threshold at (n,r). Hence mode(n+1) is mode(n) or mode(n)+1, and the exponent changes by +1 or -1. The argument includes order zero. The source-family audit observes the entire natural selector sequence, reconstructs the whole claim, rejects a constant-zero family and tests actual dependence between indices zero and one. Continuation is unknown. The admission basis is open-problem-resolution for the complete preregistered A381524 assertion; no escape witness is claimed. The independently accepted proof_shape is content for weight_le_mode, weight_lt_mode, b_spec and result; the other theorem helpers are consumed bind-only steps. This result is a repository derivation, not a literature priority claim. The specific Dudeja–Hsu Lemma 35 remains unidentified, and the source search remains bounded as stated in the Problems dossier.
 
 ## References
 
