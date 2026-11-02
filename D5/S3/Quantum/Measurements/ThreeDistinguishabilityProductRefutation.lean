@@ -6,15 +6,10 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.claim; result=D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result; claim=D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.claim
    digest: Three orthogonal pure states exclude every labelling of the product ansatz. -/
 
+import D5.S0.Carrier.GoldenRatio
+import D5.S3.Constants.PentagonCosines
 import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! Korzekwa, Czachórski, Puchała and Życzkowski, arXiv:1812.09083v3,
 Equation (30). Classical versions are the real diagonals in the preferred basis;
@@ -87,13 +82,22 @@ private lemma phase_unit : conj ζ * ζ = 1 := by
 private lemma phase_fifth : ζ ^ 5 = -1 := by
   dsimp only [ζ]
   rw [← Complex.exp_nat_mul]
-  convert Complex.exp_pi_mul_I using 1 <;> congr 1 <;> push_cast <;> ring
+  convert Complex.exp_pi_mul_I using 1
+  congr 1
+  push_cast
+  ring
 
 private lemma phase_quadratic : ζ ^ 2 = ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ) * ζ - 1 := by
   have hr : ζ.re = (1 + Real.sqrt 5) / 4 := by
-    simp [ζ, Complex.exp_re, Real.cos_pi_div_five]
+    have hcos := D5.S3.Constants.PentagonCosines.pentagon_golden_cosines.1
+    have hre : ζ.re = Real.cos (Real.pi / 5) := by simp [ζ, Complex.exp_re]
+    rw [hre]
+    change 2 * Real.cos (Real.pi / 5) = (1 + Real.sqrt 5) / 2 at hcos
+    linarith
   have hs : conj ζ + ζ = ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ) := by
-    apply Complex.ext <;> simp [hr] <;> ring
+    apply Complex.ext
+    · simp [hr]; ring
+    · simp
   linear_combination ζ * hs - phase_unit
 
 private lemma phases_unit (i : Fin 3) (k : Fin 4) :
@@ -106,12 +110,10 @@ private lemma phase_powers :
     ζ ^ 3 = t * ζ - t ∧ ζ ^ 4 = ζ - t ∧ ζ ^ 7 = 1 - t * ζ ∧
       ζ ^ 9 = t - ζ ∧ conj ζ = t - ζ := by
   let t : ℂ := ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ)
-  have hr : (Real.sqrt 5 : ℂ) ^ 2 = 5 := by
-    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   have ht : t ^ 2 = t + 1 := by
-    dsimp only [t]
-    push_cast
-    linear_combination hr / 4
+    have hg : (Real.goldenRatio : ℂ) ^ 2 = (Real.goldenRatio : ℂ) + 1 := by
+      exact_mod_cast D5.S0.Carrier.golden_ratio_spec.2.1
+    simpa only [t, Real.goldenRatio, Complex.ofReal_div, Complex.ofReal_ofNat] using hg
   have h2 : ζ ^ 2 = t * ζ - 1 := phase_quadratic
   have h3 : ζ ^ 3 = t * ζ - t := by
     linear_combination (ζ + t) * h2 + ζ * ht
@@ -142,14 +144,14 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
   have hi : i = 0 ∨ i = 1 ∨ i = 2 := by omega
   have hj : j = 0 ∨ j = 1 ∨ j = 2 := by omega
   rcases hi with rfl | rfl | rfl <;> rcases hj with rfl | rfl | rfl
-  all_goals first | exact (h rfl).elim | skip
+  all_goals try exact (h rfl).elim
   all_goals
     simp only [Fin.sum_univ_succ, phases, point, Matrix.cons_val_zero,
-      Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.cons_val_succ, Matrix.cons_val_fin_one, Matrix.vecHead, Matrix.vecTail,
       Function.comp_apply]
     simp only [h2, h3, h4, h7, h9, map_one, map_neg, map_mul, map_sub,
-      map_add, map_div₀, Complex.conj_ofReal, hc]
+      map_div₀, Complex.conj_ofReal, hc]
     push_cast
     norm_num only [map_ofNat]
     ring_nf
