@@ -115,4 +115,82 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+/-- Source-only candidate audit for the explicit finite component-curvature witness.
+The witness is selected by D and N; the atom telescope and literal K-P kernel
+are unchanged. This registration is not a compiled or accepted receipt. -/
+abbrev finiteCostArena : Arena where
+  signature := signature
+  Law R := ∀ (D : ℝ) (_hD : 0 < D) (N : ℕ) (_hN : Real.exp D < N),
+    0 ≤ _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.finite_curvature_cost D N ∧
+    ∀ {I : Type u} [Fintype I]
+      (x : I → ℝ) (a : I → ℂ),
+      (∀ i, x i ∈ Icc (0 : ℝ) D) → (∑ i, a i = 0) →
+      R.readout () () (∑ i, ∑ j, star (a i) * a j *
+        ((ActualKernelLocalPositivity.K (x i - x j) -
+          Real.exp (-|x i - x j| / 2) * trivialT |x i - x j| : ℝ) : ℂ)) ≤
+        _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.finite_curvature_cost D N *
+          (∫ v : ℝ, ‖«prefix» x a v‖ ^ 2)
+
+def finiteCostRejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem finiteCostRejectedLaw : ¬ finiteCostArena.{u}.Law finiteCostRejected := by
+  intro h
+  obtain ⟨N, hN⟩ := exists_nat_gt (Real.exp 1)
+  obtain ⟨_, hbound⟩ := h 1 (by norm_num) N hN
+  have hb := @hbound (ULift.{u} Empty) inferInstance (fun _ => 0) (fun _ => 0)
+    (by intro i; cases i.down) (by simp)
+  change (1 : ℝ) ≤
+    _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.finite_curvature_cost 1 N *
+      (∫ v : ℝ, ‖«prefix» (fun _ : ULift.{u} Empty => (0 : ℝ))
+        (fun _ => (0 : ℂ)) v‖ ^ 2) at hb
+  norm_num [«prefix»] at hb
+
+def finiteCostFamily : Registration finiteCostArena.{u}
+    (type_of% @actual_remainder_prefix_bound_with_finite_cost.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@actual_remainder_prefix_bound_with_finite_cost.{u},
+    finiteCostRejected, finiteCostRejectedLaw⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    finiteCostArena.Law actual finiteCostRejected finiteCostRejectedLaw
+  dependence := actual_dependence
+
+noncomputable def finiteCostAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_remainder_prefix_bound_with_finite_cost.{u}) (Realization signature) Unit Unit where
+  unitName := .str
+    `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation "finiteCostFamily"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨finiteCostArena⟩
+  objectArena := .source ⟨finiteCostArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source finiteCostArena ⟨finiteCostFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "body", "body",
+        "body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation

@@ -16,7 +16,8 @@ The proof replaces the signed-measure argument there by finitely many ordinary
 FTC identities and the published shifted-hinge/prefix theorem. No cutoff of the
 arithmetic series is made outside the fixed compact window.
 
-All auxiliary declarations are private and consumed by the one public theorem.
+The auxiliary declarations are consumed by the explicit finite-cost theorem.
+The original existential bound is its direct consequence.
 The remainder in that theorem is literally K minus the COMPLETE trivial-zero
 kernel. It is not `ActualKernelCusp.R`.
 -/
@@ -434,25 +435,28 @@ private lemma base_bound (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
           Real.log (2 * Real.pi) * Real.exp (-r / 2)) / 4 - Real.exp (r / 2))
       fun_prop) 0 le_rfl hD (by simp [f])
 
-/-- For every real D>0, a finite nonnegative real M is chosen BEFORE the finite
-index type, its universe-polymorphic atoms, nodes and coefficients. The literal
-complete trivial-zero kernel is subtracted from the literal actual K. No moment
-condition other than zero total mass is assumed; the atomic prefix includes its
-endpoint. This statement alone asserts no PSD, finite-codimension positivity or RH. -/
-theorem actual_remainder_prefix_bound (D : ℝ) (hD : 0 < D) :
-    ∃ M : ℝ, 0 ≤ M ∧ ∀ {I : Type u} [Fintype I]
+/-- The finite component-curvature cost used by the proof.  The index N is
+chosen after D and before the atomic data; no atom-dependent quantity occurs. -/
+def finite_curvature_cost (D : ℝ) (N : ℕ) : ℝ :=
+  cost base₁ base₂ 0 D +
+    ∑ n ∈ active D N, cost (smooth₁ n) (smooth₂ n) (Real.log n) D
+
+/-- The complete literal remainder has the exact finite component-curvature
+bound supplied by the proof.  This is a constructive strengthening of the
+existential statement below; it does not identify component curvature with
+any total-variation norm. -/
+theorem actual_remainder_prefix_bound_with_finite_cost (D : ℝ) (hD : 0 < D)
+    (N : ℕ) (hN : Real.exp D < N) :
+    0 ≤ finite_curvature_cost D N ∧ ∀ {I : Type u} [Fintype I]
       (x : I → ℝ) (a : I → ℂ),
       (∀ i, x i ∈ Icc (0 : ℝ) D) → (∑ i, a i = 0) →
       ‖∑ i, ∑ j, star (a i) * a j *
         ((ActualKernelLocalPositivity.K (x i - x j) -
           Real.exp (-|x i - x j| / 2) * trivialT |x i - x j| : ℝ) : ℂ)‖ ≤
-        M * (∫ v : ℝ, ‖«prefix» x a v‖ ^ 2) := by
+        finite_curvature_cost D N * (∫ v : ℝ, ‖«prefix» x a v‖ ^ 2) := by
   classical
-  obtain ⟨N, hN⟩ := exists_nat_gt (Real.exp D)
   let S : Finset ℕ := active D N
-  let M : ℝ := cost base₁ base₂ 0 D +
-    ∑ n ∈ S, cost (smooth₁ n) (smooth₂ n) (Real.log n) D
-  refine ⟨M, add_nonneg (cost_nonneg _ _ _ _)
+  refine ⟨add_nonneg (cost_nonneg _ _ _ _)
     (Finset.sum_nonneg (fun n _ => cost_nonneg _ _ _ _)), ?_⟩
   intro I inst x a hx ha
   have hdiam (i j : I) : |x i - x j| ≤ D := by
@@ -475,7 +479,7 @@ theorem actual_remainder_prefix_bound (D : ℝ) (hD : 0 < D) :
           (Real.exp (r / 2) / (n : ℝ) - Real.exp (-r / 2)) / 4)
         fun_prop)
       (Real.log n) (Real.log_nonneg hn1) hm.2 (smooth_entry n hm.1)
-  change ‖Q x a remainder‖ ≤ M * E x a
+  change ‖Q x a remainder‖ ≤ finite_curvature_cost D N * E x a
   rw [hsplit]
   calc
     _ ≤ ‖Q x a (fun t => base |t|)‖ +
@@ -484,7 +488,25 @@ theorem actual_remainder_prefix_bound (D : ℝ) (hD : 0 < D) :
         ∑ n ∈ S, cost (smooth₁ n) (smooth₂ n) (Real.log n) D * E x a := by
       apply add_le_add (base_bound x a ha D hD.le hdiam)
       exact (norm_sum_le _ _).trans (Finset.sum_le_sum hterms)
-    _ = M * E x a := by dsimp only [M]; rw [add_mul, Finset.sum_mul]
+    _ = finite_curvature_cost D N * E x a := by
+      dsimp only [finite_curvature_cost]; rw [add_mul, Finset.sum_mul]
+
+/-- For every real D>0, a finite nonnegative real M is chosen BEFORE the finite
+index type, its universe-polymorphic atoms, nodes and coefficients. The literal
+complete trivial-zero kernel is subtracted from the literal actual K. No moment
+condition other than zero total mass is assumed; the atomic prefix includes its
+endpoint. This statement alone asserts no PSD, finite-codimension positivity or RH. -/
+theorem actual_remainder_prefix_bound (D : ℝ) (hD : 0 < D) :
+    ∃ M : ℝ, 0 ≤ M ∧ ∀ {I : Type u} [Fintype I]
+      (x : I → ℝ) (a : I → ℂ),
+      (∀ i, x i ∈ Icc (0 : ℝ) D) → (∑ i, a i = 0) →
+      ‖∑ i, ∑ j, star (a i) * a j *
+        ((ActualKernelLocalPositivity.K (x i - x j) -
+          Real.exp (-|x i - x j| / 2) * trivialT |x i - x j| : ℝ) : ℂ)‖ ≤
+        M * (∫ v : ℝ, ‖«prefix» x a v‖ ^ 2) := by
+  obtain ⟨N, hN⟩ := exists_nat_gt (Real.exp D)
+  obtain ⟨hM, hbound⟩ := actual_remainder_prefix_bound_with_finite_cost D hD N hN
+  exact ⟨finite_curvature_cost D N, hM, hbound⟩
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation
 end
