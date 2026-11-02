@@ -39,9 +39,10 @@ private theorem hemisphere_mem (z : ℂ) (hz : z ∈ Metric.closedBall (0 : ℂ)
     simpa [w, Fin.sum_univ_three, Complex.normSq_apply, pow_two] using
       Complex.normSq_eq_norm_sq z
   have he : ‖e‖ = 1 := by
-    apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)).mp
-    rw [EuclideanSpace.real_norm_sq_eq]
-    norm_num [e, Fin.sum_univ_three]
+    have heq : e = PiLp.single 2 (2 : Fin 3) (1 : ℝ) := by
+      ext i
+      fin_cases i <;> simp [e]
+    rw [heq, PiLp.norm_single, norm_one]
   have horth : inner ℝ w e = 0 := by
     simp [w, e, PiLp.inner_apply, Fin.sum_univ_three]
   have hpad : hemisphere z = w + Real.sqrt (1 - ‖w‖ ^ 2) • e := by
@@ -73,7 +74,7 @@ private theorem planar_odd_map_zero (f : EuclideanSpace ℝ (Fin 3) → ℂ)
   have hne : ∀ v ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1, f v ≠ 0 := by
     simpa only [not_exists, not_and] using hn
   let D := Metric.closedBall (0 : ℂ) 1
-  let : ContractibleSpace D := (convex_closedBall 0 1).contractibleSpace ⟨0, by simp [D]⟩
+  let : ContractibleSpace D := (convex_closedBall 0 1).contractibleSpace ⟨0, by simp⟩
   let : LocallyPathConnectedSpace D := (convex_closedBall 0 1).locallyPathConnectedSpace
   let q : D → ℂ := fun z => f (hemisphere z)
   have hq : Continuous q := hf.comp_continuous
@@ -177,10 +178,12 @@ private theorem family_mem_all
   have hvnorm : ‖v‖ = 1 := mem_sphere_zero_iff_norm.mp hv
   have hsq : v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = 1 := by
     simpa [hvnorm, Fin.sum_univ_three] using (EuclideanSpace.real_norm_sq_eq v).symm
-  have hs : -1 ≤ v 0 := by nlinarith [sq_nonneg (v 1), sq_nonneg (v 2)]
-  have hsn : v 0 ≤ 1 := by nlinarith [sq_nonneg (v 1), sq_nonneg (v 2)]
-  have ht : -1 ≤ v 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2)]
-  have htn : v 1 ≤ 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2)]
+  have hsabs : |v 0| ≤ 1 := by simpa [hvnorm] using PiLp.norm_apply_le v 0
+  have hs : -1 ≤ v 0 := (abs_le.mp hsabs).1
+  have hsn : v 0 ≤ 1 := (abs_le.mp hsabs).2
+  have htabs : |v 1| ≤ 1 := by simpa [hvnorm] using PiLp.norm_apply_le v 1
+  have ht : -1 ≤ v 1 := (abs_le.mp htabs).1
+  have htn : v 1 ≤ 1 := (abs_le.mp htabs).2
   have h4t : 0 ≤ 4 + v 1 := by linarith
   have h4tn : 0 ≤ 4 - v 1 := by linarith
   have hsa : (Real.sqrt (4 + v 1)) ^ 2 = 4 + v 1 := Real.sq_sqrt h4t
@@ -243,7 +246,9 @@ private theorem fixed_axes (h : Matrix (Fin 4) (Fin 4) ℝ)
   have hq2 := congrFun hq 1
   have hq3 := congrFun hq 2
   have hq4 := congrFun hq 3
-  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four] at hp1 hp2 hp3 hp4 hq1 hq2 hq3 hq4
+  simp only [Matrix.mulVec, dotProduct, Fin.isValue, Fin.sum_univ_four, Matrix.cons_val_zero,
+    Matrix.cons_val_one, mul_zero, add_zero, Matrix.cons_val, mul_one, Nat.succ_eq_add_one,
+    Nat.reduceAdd, mul_neg] at hp1 hp2 hp3 hp4 hq1 hq2 hq3 hq4
   have h00 : h 0 0 = 1 := by nlinarith [hp1, hq1]
   have h03 : h 0 3 = 0 := by nlinarith [hp1, hq1]
   have h10 : h 1 0 = 0 := by nlinarith [hp2, hq2]
@@ -256,22 +261,23 @@ private theorem fixed_axes (h : Matrix (Fin 4) (Fin 4) ℝ)
   have h02 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 0 2) hhL
   have h31 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 3 1) hhL
   have h32 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 3 2) hhL
-  simp [Matrix.mul_apply, eta.eq_1, Fin.sum_univ_four, h00, h03, h10, h13, h20, h23,
-    h30, h33] at h01 h02 h31 h32
-  have h01 : h 0 1 = 0 := by nlinarith [h01]
-  have h02 : h 0 2 = 0 := by nlinarith [h02]
-  have h31 : h 3 1 = 0 := by nlinarith [h31]
-  have h32 : h 3 2 = 0 := by nlinarith [h32]
+  rw [Matrix.mul_apply] at h01 h02 h31 h32
+  simp only [eta.eq_1, Fin.isValue, Matrix.mul_diagonal, Matrix.transpose_apply,
+    Fin.sum_univ_four, h00, Matrix.cons_val_zero, mul_one, one_mul, h10, Matrix.cons_val_one,
+    mul_neg, neg_zero, zero_mul, add_zero, h20, Matrix.cons_val, h30, ne_eq, zero_ne_one,
+    not_false_eq_true, Matrix.diagonal_apply_ne, Fin.reduceEq, h03, h13, h23, h33, neg_mul,
+    zero_add, neg_eq_zero] at h01 h02 h31 h32
   exact ⟨h00, h01, h02, h03, h10, h13, h20, h23, h30, h31, h32, h33⟩
 
 private theorem lorentz_norm (h : Matrix (Fin 4) (Fin 4) ℝ)
     (hhL : h.transpose * eta * h = eta) (x : Fin 4 → ℝ) :
     minkowski (h.mulVec x) (h.mulVec x) = minkowski x x := by
-  have hq := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ =>
-      ∑ i : Fin 4, ∑ j : Fin 4, x i * M i j * x j) hhL
-  simp [Matrix.mul_apply, Matrix.mulVec, minkowski.eq_1, eta.eq_1, dotProduct,
-    Fin.sum_univ_four] at hq ⊢
-  nlinarith
+  have hq := congrArg (fun B : LinearMap.BilinForm ℝ (Fin 4 → ℝ) => B x x)
+    (Matrix.toBilin'_comp eta h h)
+  rw [hhL] at hq
+  simpa [LinearMap.BilinForm.comp_apply, Matrix.toLin'_apply, Matrix.toBilin'_apply',
+    eta.eq_1, Matrix.mulVec_diagonal, dotProduct, Fin.sum_univ_four,
+    minkowski.eq_1, sub_eq_add_neg] using hq
 
 private theorem identity_stabilizer_contra
     (s d A B : ℝ) (h : Matrix (Fin 4) (Fin 4) ℝ)
@@ -287,23 +293,26 @@ private theorem identity_stabilizer_contra
   have ha1 := congrFun ha 1
   have ha2 := congrFun ha 2
   have ha3 := congrFun ha 3
-  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, h00, h03, h10, h13, h20,
-    h23, h30, h33, h01, h02, h31, h32] at ha0 ha1 ha2 ha3
+  simp only [Matrix.mulVec, dotProduct, Fin.isValue, Fin.sum_univ_four, h00,
+    Matrix.cons_val_zero, one_mul, h01, Matrix.cons_val_one, zero_mul, add_zero, h02,
+    Matrix.cons_val, mul_zero, h03, Nat.succ_eq_add_one, Nat.reduceAdd, h10, zero_add,
+    h13, h20, h23, mul_eq_zero, h30, h31, h32, h33] at ha0 ha1 ha2 ha3
   have hb0 := congrFun hb 0
   have hb1 := congrFun hb 1
   have hb2 := congrFun hb 2
   have hb3 := congrFun hb 3
-  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, h00, h03, h10, h13, h20,
-    h23, h30, h33, h01, h02, h31, h32] at hb0 hb1 hb2 hb3
-  have h11 : h 1 1 = 1 := by nlinarith [ha1]
+  simp only [Matrix.mulVec, dotProduct, Fin.isValue, Fin.sum_univ_four, h00,
+    Matrix.cons_val_zero, one_mul, h01, Matrix.cons_val_one, mul_zero, add_zero, h02,
+    Matrix.cons_val, zero_mul, h03, mul_neg, neg_zero, Nat.succ_eq_add_one, Nat.reduceAdd,
+    h10, zero_add, h13, mul_eq_zero, h20, h23, h30, h31, h32, h33] at hb0 hb1 hb2 hb3
+  have h11 : h 1 1 = 1 := (mul_eq_right₀ (ne_of_gt hA)).mp ha1
   have h21 : h 2 1 = 0 := Or.resolve_right ha2 (ne_of_gt hA)
   have h12 : h 1 2 = 0 := Or.resolve_right hb1 (ne_of_gt hB)
-  have h22eq : h 2 2 * B = 1 * B := by simpa using hb2
-  have h22 : h 2 2 = 1 := mul_right_cancel₀ (ne_of_gt hB) h22eq
+  have h22 : h 2 2 = 1 := (mul_eq_right₀ (ne_of_gt hB)).mp hb2
   have hid : h = (1 : Matrix (Fin 4) (Fin 4) ℝ) := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [Matrix.one_apply, h00, h01, h02, h03, h10, h11, h12, h13,
+      simp [h00, h01, h02, h03, h10, h11, h12, h13,
         h20, h21, h22, h23, h30, h31, h32, h33]
   rw [hid] at hdet
   norm_num at hdet
@@ -321,14 +330,18 @@ private theorem swap_stabilizer_contra
   rcases haxes with ⟨h00, h01, h02, h03, h10, h13, h20, h23, h30, h31, h32, h33⟩
   have ha0 := congrFun ha 0
   have ha3 := congrFun ha 3
-  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, h00, h03, h10, h13, h20,
-    h23, h30, h33, h01, h02, h31, h32] at ha0 ha3
+  simp only [Matrix.mulVec, dotProduct, Fin.isValue, Fin.sum_univ_four, h00,
+    Matrix.cons_val_zero, one_mul, h01, Matrix.cons_val_one, zero_mul, add_zero, h02,
+    Matrix.cons_val, mul_zero, h03, Nat.succ_eq_add_one, Nat.reduceAdd, h30, h31, h32,
+    h33, zero_add] at ha0 ha3
   have hs : s = 0 := by linarith [ha0]
   have hd : d = 0 := by linarith [ha3]
   have hnorm := lorentz_norm h hhL (![10 + s, A, 0, d] : Fin 4 → ℝ)
   rw [ha] at hnorm
-  simp [minkowski.eq_1] at hnorm
-  have hAB : A = B := by nlinarith [hnorm, hA, hB, hs, hd]
+  simp only [Nat.succ_eq_add_one, Nat.reduceAdd, minkowski.eq_1, Fin.isValue,
+    Matrix.cons_val_zero, Matrix.cons_val_one, mul_zero, sub_zero, Matrix.cons_val,
+    mul_neg, neg_mul, neg_neg, sub_left_inj] at hnorm
+  have hAB : A = B := (sq_eq_sq₀ hA.le hB.le).mp (by nlinarith [hnorm, hs, hd])
   nlinarith [hsq, hA2, hB2, hAB]
 
 private theorem family_chiral
@@ -346,12 +359,12 @@ private theorem family_chiral
       simpa [act.eq_1, parity.eq_1, family.eq_1] using congrFun hact 1
     let h := eta * lam
     have heta : eta * eta = (1 : Matrix (Fin 4) (Fin 4) ℝ) := by
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [eta.eq_1, Matrix.mul_apply, Fin.sum_univ_four]
+      rw [eta.eq_1, Matrix.diagonal_mul_diagonal, Matrix.diagonal_eq_one]
+      ext i
+      fin_cases i <;> norm_num
     have hetaT : eta.transpose = eta := by
-      ext i j
-      fin_cases i <;> fin_cases j <;> simp [eta.eq_1]
+      unfold eta
+      exact Matrix.diagonal_transpose _
     have hhL : h.transpose * eta * h = eta := by
       dsimp [h]
       have heta3 : eta * eta * eta = eta := by
@@ -365,18 +378,14 @@ private theorem family_chiral
               simp only [mul_assoc]
         _ = lam.transpose * eta * lam := by rw [heta3]
         _ = eta := hlam.1
-    have hp' : h.mulVec ![30, 0, 0, 1] = ![30, 0, 0, 1] := by
+    have hpar (x y : Fin 4 → ℝ) (hx : lam.mulVec x = parityVector y) :
+        h.mulVec x = y := by
       dsimp [h]
-      rw [← Matrix.mulVec_mulVec, hp]
+      rw [← Matrix.mulVec_mulVec, hx]
       ext i
-      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
-        dotProduct, Fin.sum_univ_four]
-    have hq' : h.mulVec ![20, 0, 0, -1] = ![20, 0, 0, -1] := by
-      dsimp [h]
-      rw [← Matrix.mulVec_mulVec, hq]
-      ext i
-      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
-        dotProduct, Fin.sum_univ_four]
+      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec_diagonal]
+    have hp' : h.mulVec ![30, 0, 0, 1] = ![30, 0, 0, 1] := hpar _ _ hp
+    have hq' : h.mulVec ![20, 0, 0, -1] = ![20, 0, 0, -1] := hpar _ _ hq
     have hdet : h.det = -1 := by
       dsimp [h]
       rw [Matrix.det_mul]
@@ -384,17 +393,11 @@ private theorem family_chiral
     have hvnorm : ‖v‖ = 1 := mem_sphere_zero_iff_norm.mp hv
     have hsq : v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = 1 := by
       simpa [hvnorm, Fin.sum_univ_three] using (EuclideanSpace.real_norm_sq_eq v).symm
-    have ht : -1 ≤ v 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2), hsq]
-    have htn : v 1 ≤ 1 := by nlinarith [sq_nonneg (v 0), sq_nonneg (v 2), hsq]
+    have htabs : |v 1| ≤ 1 := by simpa [hvnorm] using PiLp.norm_apply_le v 1
+    have ht : -1 ≤ v 1 := (abs_le.mp htabs).1
+    have htn : v 1 ≤ 1 := (abs_le.mp htabs).2
     have hA : 0 < Real.sqrt (4 + v 1) := Real.sqrt_pos.2 (by linarith)
     have hB : 0 < Real.sqrt (4 - v 1) := Real.sqrt_pos.2 (by linarith)
-    have hpar (x y : Fin 4 → ℝ) (hx : lam.mulVec x = parityVector y) :
-        h.mulVec x = y := by
-      dsimp [h]
-      rw [← Matrix.mulVec_mulVec, hx]
-      ext i
-      fin_cases i <;> simp [eta.eq_1, parityVector.eq_1, Matrix.mulVec,
-        dotProduct, Fin.sum_univ_four]
     have haxes := fixed_axes h hhL hp' hq'
     rcases D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing.two_forms tau with
       htau | htau
@@ -436,8 +439,7 @@ private theorem family_neg
   fin_cases i <;>
     funext j <;>
       fin_cases j <;>
-        simp [family.eq_1, act.eq_1, parity.eq_1, parityVector.eq_1, rotation.eq_1, Matrix.mulVec,
-          dotProduct, Fin.sum_univ_three] <;> ring_nf
+        simp [family.eq_1, act.eq_1, parity.eq_1, parityVector.eq_1, rotation.eq_1] <;> ring_nf
 
 private theorem family_admissible_zero
     (om : Set event) (hom : collisionEvents ⊆ om) (f₁ f₂ : event → ℝ)
@@ -484,14 +486,16 @@ private theorem parity_collision_iff (x : event) :
 private theorem rotation_proper : rotation ∈ properOrthochronous := by
   refine ⟨?_, ?_, ?_⟩
   · ext i j
+    rw [Matrix.mul_apply]
+    simp only [eta.eq_1, Matrix.mul_diagonal, Matrix.transpose_apply, Fin.sum_univ_four]
     fin_cases i <;> fin_cases j <;>
-      norm_num [rotation.eq_1, eta.eq_1, Matrix.mul_apply, Fin.sum_univ_four]
+      norm_num [rotation.eq_1]
   · let t : Equiv.Perm (Fin 4) := Equiv.swap 1 2
     have ht : t.permMatrix ℝ * eta = rotation := by
+      rw [PEquiv.toMatrix_toPEquiv_mul]
       ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [t, rotation.eq_1, eta.eq_1, Matrix.mul_apply, Fin.sum_univ_four,
-          Equiv.swap_apply_def]
+        simp [t, rotation.eq_1, eta.eq_1, Equiv.swap_apply_def]
     rw [← ht, Matrix.det_mul, Matrix.det_permutation]
     have hsign : Equiv.Perm.sign t = -1 := by
       dsimp [t]
@@ -542,7 +546,6 @@ private theorem route_claim
         have h₁ := hodd allEvents hsub f₁ hf₁ v hv
         have h₂ := hodd allEvents hsub f₂ hf₂ v hv
         rw [h₁, h₂]
-        push_cast
         ring)
     obtain ⟨v, hv, hz⟩ := hz
     have hm : family v ∈ allEvents := hsub (hcollision v hv)
@@ -551,9 +554,7 @@ private theorem route_claim
       simpa using h
     · have h := congrArg Complex.im hz
       simpa using h
-  · have hsub : collisionEvents ⊆ collisionEvents := by
-      intro x hx
-      exact hx
+  · have hsub : collisionEvents ⊆ collisionEvents := Set.Subset.rfl
     have hz := planar_odd_map_zero
       (fun v => (f₁ (family v) : ℂ) + (f₂ (family v) : ℂ) * Complex.I)
       (hcomplex collisionEvents hsub f₁ f₂ hf₁ hf₂)
@@ -562,7 +563,6 @@ private theorem route_claim
         have h₁ := hodd collisionEvents hsub f₁ hf₁ v hv
         have h₂ := hodd collisionEvents hsub f₂ hf₂ v hv
         rw [h₁, h₂]
-        push_cast
         ring)
     obtain ⟨v, hv, hz⟩ := hz
     have hm : family v ∈ collisionEvents := hcollision v hv
