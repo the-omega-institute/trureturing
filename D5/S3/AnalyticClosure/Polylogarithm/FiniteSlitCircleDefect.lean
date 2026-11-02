@@ -73,6 +73,7 @@ private theorem outer_integrable (A : ℂ → ℂ) (R0 R B : ℝ)
     apply (hcA.div ((continuous_circleMap 0 R).continuousOn.pow (n + 1)) (fun θ _ ↦
       pow_ne_zero _ (hcz θ))).congr
     intro θ hθ
+    change circleMap 0 R θ ≠ (R : ℂ) at hθ
     simp [outerIntegrand, hθ]
   have hcount : Sᶜ.Countable := by
     simpa only [S, compl_setOf, not_not, preimage, mem_singleton_iff] using
@@ -169,6 +170,73 @@ private theorem upper_extension_continuous (A upper : ℂ → ℂ) (R0 ρ R : �
   · exact Or.inl ⟨hz.1, hz.2, hd⟩
   · exact Or.inr ⟨hz.1, hz.2, (le_of_not_ge hd)⟩
 
+/-- The Jacobian-cancelled pullback to logarithmic coordinates. -/
+def upperPullback (P : ℂ → ℂ) (n : ℕ) (w : ℂ) : ℂ :=
+  P (Complex.exp w) / (Complex.exp w) ^ n
+
+/-- The oriented boundary identity on the closed upper logarithmic rectangle. -/
+def upperRectangleBalance (P : ℂ → ℂ) (R : ℝ) (n : ℕ) : Prop :=
+    (∫ x in Real.log (1 / 2 : ℝ)..Real.log R, upperPullback P n (x : ℂ)) -
+    (∫ x in Real.log (1 / 2 : ℝ)..Real.log R,
+      upperPullback P n ((x : ℂ) + Real.pi * I)) +
+    I * (∫ y in (0 : ℝ)..Real.pi, upperPullback P n (Real.log R + y * I)) -
+    I * (∫ y in (0 : ℝ)..Real.pi,
+      upperPullback P n (Real.log (1 / 2 : ℝ) + y * I)) = 0
+
+private theorem upper_rectangle (A upper : ℂ → ℂ) (R0 ρ R : ℝ)
+    (hR : 1 < R) (hRR0 : R < R0) (hRρ : R < 1 + ρ)
+    (ha : AnalyticOnNhd ℂ A {z | z ∈ CompositionContinuation.omega ∧ ‖z‖ < R0})
+    (hu : ContinuousOn upper {z | ‖z - 1‖ ≤ ρ ∧ 0 ≤ z.im})
+    (he : ∀ z, ‖z - 1‖ ≤ ρ → 0 ≤ z.im → z ∈ CompositionContinuation.omega → upper z = A z)
+    (n : ℕ) : upperRectangleBalance (upperExtension A upper) R n := by
+  classical
+  let P := upperExtension A upper
+  let f := upperPullback P n
+  have hRpos : 0 < R := by linarith
+  have hl : Real.log (1 / 2 : ℝ) ≤ Real.log R :=
+    Real.log_le_log (by norm_num) (by linarith)
+  have hP := upper_extension_continuous A upper R0 ρ R hR hRR0 hRρ
+    ha.continuousOn hu he
+  have hnorm : ∀ z : ℂ, z.re ≤ Real.log R → ‖Complex.exp z‖ ≤ R := by
+    intro z hz
+    rw [Complex.norm_exp]
+    exact (Real.exp_le_exp.mpr hz).trans_eq (Real.exp_log hRpos)
+  have hc : ContinuousOn f
+      (Icc (Real.log (1 / 2 : ℝ)) (Real.log R) ×ℂ Icc 0 Real.pi) := by
+    apply (hP.comp' Complex.continuous_exp.continuousOn ?_).div
+      (Complex.continuous_exp.continuousOn.pow n) (fun z _ ↦ pow_ne_zero _ (Complex.exp_ne_zero z))
+    intro z hz
+    refine ⟨hnorm z hz.1.2, ?_⟩
+    rw [Complex.exp_im]
+    exact mul_nonneg (Real.exp_pos _).le (Real.sin_nonneg_of_mem_Icc hz.2)
+  have hd : DifferentiableOn ℂ f
+      (Ioo (Real.log (1 / 2 : ℝ)) (Real.log R) ×ℂ Ioo 0 Real.pi) := by
+    intro z hz
+    have hi : 0 < (Complex.exp z).im := by
+      rw [Complex.exp_im]
+      exact mul_pos (Real.exp_pos _) (Real.sin_pos_of_pos_of_lt_pi hz.2.1 hz.2.2)
+    have ho : Complex.exp z ∈ CompositionContinuation.omega := by
+      change 1 - Complex.exp z ∈ Complex.slitPlane
+      rw [Complex.mem_slitPlane_iff]
+      right
+      simp only [sub_im, one_im, zero_sub, neg_ne_zero]
+      exact ne_of_gt hi
+    have hpa : AnalyticAt ℂ P (Complex.exp z) := by
+      apply (ha _ ⟨ho, (hnorm z hz.1.2.le).trans_lt hRR0⟩).congr
+      have hopen : IsOpen CompositionContinuation.omega :=
+        Complex.isOpen_slitPlane.preimage (by fun_prop)
+      filter_upwards [hopen.mem_nhds ho] with w hw
+      simp only [P, upperExtension, if_pos hw]
+    exact ((hpa.differentiableAt.comp z Complex.differentiable_exp.differentiableAt).div
+      (Complex.differentiable_exp.differentiableAt.pow n)
+      (pow_ne_zero _ (Complex.exp_ne_zero z))).differentiableWithinAt
+  have h := Complex.integral_boundary_rect_eq_zero_of_continuousOn_of_differentiableOn
+    f ⟨Real.log (1 / 2 : ℝ), 0⟩ ⟨Real.log R, Real.pi⟩
+    (by simpa only [uIcc_of_le hl, uIcc_of_le Real.pi_pos.le] using hc)
+    (by simpa only [min_eq_left hl, max_eq_right hl,
+      min_eq_left Real.pi_pos.le, max_eq_right Real.pi_pos.le] using hd)
+  simpa only [upperRectangleBalance, f, Complex.zero_mul, add_zero, smul_eq_mul] using h
+
 /-- The literal all-composition outer integral is integrable, and the very same source B
 bounds every coefficient error. The finite-slit coefficient identity is a separate obligation. -/
 theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
@@ -193,6 +261,7 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
           (outerIntegrand (FiniteSlitCompositionMoments.reciprocal head tail ell) R n) 0 R ∧
         IntervalIntegrable (fun x : ℝ ↦ (upper (x : ℂ)).im / x ^ (n + 1)) volume 1 R ∧
         ‖outerCoefficient (FiniteSlitCompositionMoments.reciprocal head tail ell) R n‖ ≤ B / R ^ n) ∧
+      (∀ n : ℕ, upperRectangleBalance P R n) ∧
       (∀ᶠ n : ℕ in atTop, B / R ^ n + (1 / Real.pi) *
         (∫ x in (1 : ℝ)..R, (upper (x : ℂ)).im / x ^ (n + 1)) < 0) := by
   obtain ⟨R0, ρ, R, upper, hR0, hρ, hρ1, hR, hRR0, hRρ, ha,
@@ -201,7 +270,8 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
   refine ⟨R0, ρ, R, B, upper, upperExtension _ upper,
     hR0, hρ, hρ1, hR, hRR0, hRρ, hB, ha, hdisk, hzero, hu, he,
     upper_extension_continuous _ _ _ _ _ hR hRR0 hRρ ha.continuousOn hu he,
-    ?_, ?_, hb, ?_, hnegative B⟩
+    ?_, ?_, hb, ?_, (fun n ↦ upper_rectangle _ _ _ _ _ hR hRR0 hRρ ha hu he n),
+    hnegative B⟩
   · intro z _ _ ho
     simp only [upperExtension, if_pos ho]
   · intro z _ _ ho
