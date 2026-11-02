@@ -4,7 +4,7 @@
 
 The literal finite common-phase probes bound the genuine real Hilbert operator error, with positive contraction and simultaneous finite-menu preservation.
 
-The source is Theorem 10.1 of the V79 finite-phase-certificate theory volume, with its standing real dimension 2d, d>=1, positive inner product and orthogonal complex structure. The exact real effect representation has already been obtained from exact binary reversal compatibility. This result starts from that representation; it does not replace exact reversal compatibility by approximate reversal compatibility.
+Let V be a finite real Hilbert space of dimension 2d, with d>=1, equipped with an orthogonal complex structure J and an exact quadratic effect readout. The finite phase comparisons below control a compatible repaired effect. The exact quadratic representation is an assumption; approximate comparison of these probes does not replace it by an approximate representation.
 
 V is any complete real inner product space, with its given norm. An orthonormal basis b indexed by Fin(d) disjoint-union Fin(d) fixes its real dimension to 2d. Write e(i)=b(inl(i)) and f(i)=b(inr(i)); J is a continuous real linear operator, J(Jx)=-x, J*= -J, and J(e(i))=f(i). These assumptions also give J(f(i))=-e(i). The star is the genuine real Hilbert adjoint. Completeness and continuity add no restriction in the source finite dimension.
 
