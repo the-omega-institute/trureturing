@@ -1,10 +1,10 @@
 /- GID: D5/S0/Computability/BinaryMachine/Machine3626
    generality: G
    mirror-B: D5/B/S0/Computability/BinaryMachine/Machine3626
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.List.Basic, mathlib/module/Mathlib.Data.Nat.Bits]
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: [mathlib/module/Mathlib.Data.Nat.Bits, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Moebius, mathlib/module/Mathlib.Data.Nat.Totient]
    utility: none
-   digest: Exact restoring block traces for one-sided machine 3626. -/
+   digest: The signed Moebius divisor sum counts actual transitions of machine 3626. -/
 
 module
 
@@ -12,11 +12,35 @@ public import Mathlib.Data.List.Basic
 public import Mathlib.Data.Nat.Bits
 public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 public import Mathlib.Data.Nat.Totient
-import Mathlib.Tactic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
 import Lean.Elab.Tactic.Omega
 
 /-!
-# Exact block traces for the one-sided two-state machine
+# Exact halting formula for the one-sided two-state machine
+
+Admission basis: open-problem-resolution, preregistered issue #25808.
+The arithmetic prime-power identities are literature-attested in A069517.
+They are consumed here, rather than delivered as separate known results.
+
+Proof shapes and live consumers (same-delivery helpers are inlined):
+* trace_trans: content; consumed by block_trace.
+* block_trace: content; restoring recursion consumed by block_first_crossing.
+* block_first_crossing: content; consumed by positive_input_first_crossing.
+* positive_input_first_crossing: content; consumed by result.
+* signedMu_mult: bind-only; consumed by mass_mult.
+* mass_mult: bind-only; consumed by cost_mult, cost_two_pow, cost_odd_prime_pow.
+* cost_mult: bind-only; consumed by cost_odd and cost_binary_block.
+* mass_prime_pow: bind-only; consumed by cost_two_pow and cost_odd_prime_pow.
+* cost_two_pow: bind-only; consumed by cost_binary_block.
+* cost_odd_prime_pow: bind-only; consumed by cost_odd.
+* cost_odd: bind-only; consumed by cost_binary_block.
+* cost_binary_block: bind-only; consumed by result.
+* block_prefix_unique: bind-only; consumed by result.
+* result: content through the live restoring trace; settling result.
+All direct frozen D5 dependencies are absent; pinned Mathlib is used directly.
+No arithmetic helper supplies an independent escape witness.
 -/
 
 set_option autoImplicit false
