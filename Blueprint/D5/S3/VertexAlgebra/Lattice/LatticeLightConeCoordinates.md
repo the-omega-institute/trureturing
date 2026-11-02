@@ -42,19 +42,9 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.vector_
 
 For every D, null frame F, t, actual basis B of F.K, original vector v and frequency index r, the image of lin(r,v) is g(eMinus,v) X(plus,r)+g(ePlus,v) X(minus,r)+the B-coordinates of projK(v) in the transverse variables.
 
-**Theorem 1.4 (NullFrame.inverse_variables).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.inverse_variables`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.inverse_variables` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
 For every actual frame and transverse basis, the inverse sends the plus and minus variables to lin(r,ePlus) and lin(r,eMinus), and the jth transverse variable to lin(r,B(j)) in the original polynomial algebra.
 
-**Theorem 1.5 (NullFrame.creation_plus).**
+**Theorem 1.4 (NullFrame.creation_plus).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creation_plus`
 
@@ -66,7 +56,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creatio
 
 For every original integral charge p, r and polynomial P, a(ePlus,-r-1) becomes multiplication by X(plus,r).
 
-**Theorem 1.6 (NullFrame.creation_minus).**
+**Theorem 1.5 (NullFrame.creation_minus).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creation_minus`
 
@@ -78,7 +68,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creatio
 
 For every original integral charge p, r and polynomial P, a(eMinus,-r-1) becomes multiplication by X(minus,r).
 
-**Theorem 1.7 (NullFrame.annihilation_minus).**
+**Theorem 1.6 (NullFrame.annihilation_minus).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.annihilation_minus`
 
@@ -90,7 +80,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.annihil
 
 For every original integral charge p, r and polynomial P, a(eMinus,r+1) becomes (r+1) times partial differentiation in X(plus,r). The Gram pairing swaps the longitudinal derivative directions.
 
-**Theorem 1.8 (NullFrame.annihilation_plus).**
+**Theorem 1.7 (NullFrame.annihilation_plus).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.annihilation_plus`
 
@@ -102,31 +92,11 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.annihil
 
 For every original integral charge p, r and polynomial P, a(ePlus,r+1) becomes (r+1) times partial differentiation in X(minus,r).
 
-**Theorem 1.9 (NullFrame.zero_plus).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.zero_plus`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.zero_plus` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
 For every original integral charge p and P, the ePlus zero mode acts by pPlus(p)=g(ePlus,chargeVector(p)), with no nonzero-charge assumption needed for this identity.
-
-**Theorem 1.10 (NullFrame.zero_minus).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.zero_minus`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.zero_minus` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
 
 For every original integral charge p and P, the eMinus zero mode acts by pMinus(p)=g(eMinus,chargeVector(p)).
 
-**Theorem 1.11 (NullFrame.creation_K).**
+**Theorem 1.8 (NullFrame.creation_K).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creation_K`
 
@@ -138,7 +108,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creatio
 
 For every k in the actual K, original charge p, r and P, the negative current is multiplication by the sum of B-coordinates of k times the original-frequency transverse variables.
 
-**Theorem 1.12 (NullFrame.annihilation_K).**
+**Theorem 1.9 (NullFrame.annihilation_K).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.annihilation_K`
 
@@ -150,7 +120,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.annihil
 
 For every k in the actual K, original charge p, r and P, the positive current is (r+1) times the sum of g(k,B(j)) times transverse partial derivatives. The transverse basis need not be orthogonal or integral.
 
-**Theorem 1.13 (NullFrame.original_carrier_all_charges).**
+**Theorem 1.10 (NullFrame.original_carrier_all_charges).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.original_carrier_all_charges`
 
@@ -162,7 +132,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.origina
 
 For every original complex direction u, integer m and original finite-charge state v, allChargeEquiv intertwines the actual original current a(u,m) with the explicitly constructed chargewise coordinateMode. The support index remains exactly Charge D.
 
-**Theorem 1.14 (NullFrame.frequency_grading).**
+**Theorem 1.11 (NullFrame.frequency_grading).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.frequency_grading`
 
@@ -184,10 +154,7 @@ For every original D, F, actual basis B of F.K, P and natural n, the transformed
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.creation_plus`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.frameEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.frequency_grading`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.inverse_variables`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.original_carrier_all_charges`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.polynomialEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.vector_substitution`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.zero_minus`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates.zero_plus`
 - Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraCurrents](../LatticeSugawaraCurrents.md)
