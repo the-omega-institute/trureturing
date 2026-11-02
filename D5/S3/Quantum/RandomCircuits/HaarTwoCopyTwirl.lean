@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl
    mirror-E: none(waiver:kernel-checked-content)
    anchors: []
