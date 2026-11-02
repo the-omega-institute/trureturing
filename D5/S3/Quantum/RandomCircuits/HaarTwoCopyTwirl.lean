@@ -899,8 +899,6 @@ theorem pure_quadratic {d : ℕ} [NeZero d] (a : Matrix (Fin d) (Fin d) ℂ) :
     intro u
     change ((a ⊗ₖ a) * (p u ⊗ₖ p u)).trace = _
     rw [← Matrix.mul_kronecker_mul, Matrix.trace_kronecker]
-    have hu : u.1ᴴ * u.1 = 1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
     have hpp : p u * p u = p u := by
       have hb : IsIdempotentElem (Matrix.single (0 : Fin d) (0 : Fin d) (1 : ℂ)) := by
         change Matrix.single (0 : Fin d) 0 (1 : ℂ) * Matrix.single 0 0 1 = Matrix.single 0 0 1
@@ -910,10 +908,8 @@ theorem pure_quadratic {d : ℕ} [NeZero d] (a : Matrix (Fin d) (Fin d) ℂ) :
         u.1 * Matrix.single 0 0 1 * u.1ᴴ
       simpa only [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose] using
         (hb.map (Unitary.conjStarAlgAut ℂ _ u)).eq
-    have hpt : (p u).trace = 1 := by
-      dsimp only [p]
-      rw [Matrix.trace_mul_cycle, hu, Matrix.one_mul]
-      simp [q]
+    have hpt : (p u).trace = 1 :=
+      (Matrix.trace_units_conj (Unitary.toUnits u) q).trans (Matrix.trace_single_eq_same _ _)
     rw [trace_one_sandwich (p u) a hpp hpt,
       Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul, Matrix.trace_mul_comm a (p u)]
   have hs : ((a ⊗ₖ a) *

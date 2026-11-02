@@ -10,6 +10,7 @@ import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 
 /-! DeBrota--Stacey's saturation implication for Lüders MIC channels. -/
 
@@ -82,33 +83,21 @@ def IsSIC (d : ℕ)
       p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ e i = (c : ℂ) • p) ∧
     ∃ a b : ℂ, ∀ i j, (e i * e j).trace = if i = j then a else b
 
-private def baseProjector {d : ℕ} [NeZero d] : Matrix (Fin d) (Fin d) ℂ :=
-  Matrix.single 0 0 1
-
 private def inputProjector {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) : Matrix (Fin d) (Fin d) ℂ :=
-  u.1 * baseProjector * u.1ᴴ
-
-private theorem base_projector_psd {d : ℕ} [NeZero d] :
-    (baseProjector : Matrix (Fin d) (Fin d) ℂ).PosSemidef := by
-  rw [baseProjector.eq_1]
-  exact (Matrix.PosSemidef.stdBasisMatrix_iff_eq 0 0 (by norm_num : (0 : ℂ) < 1)).mpr rfl
+  u.1 * Matrix.single 0 0 1 * u.1ᴴ
 
 private theorem input_projector_psd {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
     (inputProjector u).PosSemidef := by
-  exact base_projector_psd.mul_mul_conjTranspose_same u.1
+  exact ((Matrix.PosSemidef.stdBasisMatrix_iff_eq 0 0
+    (by norm_num : (0 : ℂ) < 1)).mpr rfl).mul_mul_conjTranspose_same u.1
 
 private theorem input_projector_trace {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
-    (inputProjector u).trace = 1 := by
-  rw [inputProjector, Matrix.trace_mul_cycle]
-  have hu : u.1ᴴ * u.1 = 1 := by
-    simpa (config := { congrConsts := false }) only [Matrix.star_eq_conjTranspose]
-      using Matrix.mem_unitaryGroup_iff'.mp u.2
-  rw [hu, Matrix.one_mul]
-  change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).trace = 1
-  exact Matrix.trace_single_eq_same _ _
+    (inputProjector u).trace = 1 :=
+  (Matrix.trace_units_conj (Unitary.toUnits u) (Matrix.single 0 0 1)).trans
+    (Matrix.trace_single_eq_same _ _)
 
 private theorem input_projector_idempotent {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
@@ -159,11 +148,7 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
         _ = 1 := by
           simpa (config := { congrConsts := false }) [Matrix.mul_one]
             using input_projector_trace u
-  · refine ⟨baseProjector, ?_, ?_⟩
-    · change 0 ≤ CStarMatrix.ofMatrix baseProjector
-      exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv base_projector_psd.nonneg
-    · change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).trace = 1
-      exact Matrix.trace_single_eq_same _ _
+  · exact D5.S3.Quantum.Information.OrthogonalRecordEntropy.pointerState (0 : Fin d)
 
 private noncomputable def sigmaState {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) : DensityState (Fin d) := by
@@ -294,11 +279,9 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
           ∂mu) = ((CFC.sqrt (e i)).trace.re ^ 2 + (e i).trace.re) / (d * (d + 1)) := by
     have ha := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i))
     have ht : ((CFC.sqrt (e i)).trace.re : ℂ) = (CFC.sqrt (e i)).trace :=
-      Complex.ext rfl (by simpa (config := { congrConsts := false })
-        using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
+      ha.isHermitian.re_trace_eq_trace
     have het : ((e i).trace.re : ℂ) = (e i).trace :=
-      Complex.ext rfl (by simpa (config := { congrConsts := false })
-        using (Complex.nonneg_iff.mp (he.1 i).trace_nonneg).2)
+      (he.1 i).isHermitian.re_trace_eq_trace
     have hh := D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.pure_quadratic (CFC.sqrt (e i))
     change (∫ u, (inputProjector u * CFC.sqrt (e i) * inputProjector u *
       CFC.sqrt (e i)).trace ∂mu) = _ at hh
@@ -347,8 +330,7 @@ private theorem rank_one_from_equality {d : ℕ}
   let h : HermitianMat (Fin d) ℂ := ⟨a, ha.isHermitian⟩
   have hh : 0 ≤ h := HermitianMat.zero_le_iff.mpr ha
   have ht : (a.trace.re : ℂ) = a.trace :=
-    Complex.ext rfl (by simpa (config := { congrConsts := false })
-      using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
+    ha.isHermitian.re_trace_eq_trace
   have ht0 : a.trace.re ≠ 0 := by
     intro hz
     apply ha0
@@ -464,25 +446,14 @@ private theorem continuous_output_entropy {d : ℕ} [NeZero d]
       vonNeumannEntropy s =
         -(Matrix.trace (CStarMatrix.ofMatrix.symm
           (cfc (fun x : ℝ => x * Real.log x) s.1))).re := by
-    let m := CStarMatrix.ofMatrix.symm s.1
-    have hm : m.IsHermitian := (Matrix.nonneg_iff_posSemidef.mp
-      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm s.2.1)).1
-    have hmap (f : ℝ → ℝ) : CStarMatrix.ofMatrix (cfc f m) = cfc f s.1 :=
-      StarAlgHomClass.map_cfc (p := IsSelfAdjoint) (q := IsSelfAdjoint)
-        CStarMatrix.ofMatrixStarAlgEquiv f m (m.finite_real_spectrum.continuousOn _)
-        CStarMatrix.ofMatrixL.continuous hm (by exact hm)
-    have hlog : CStarMatrix.ofMatrix (cfc Real.log m) = CFC.log s.1 := by
-      exact StarAlgHomClass.map_cfc CStarMatrix.ofMatrixStarAlgEquiv Real.log m
-        (m.finite_real_spectrum.continuousOn _) CStarMatrix.ofMatrixL.continuous hm
-        (by exact hm)
-    unfold vonNeumannEntropy
-    rw [← hlog, ← hmap (fun x : ℝ => x * Real.log x)]
-    change -(Matrix.trace (m * cfc Real.log m)).re = -(cfc (fun x : ℝ => x * Real.log x) m).trace.re
-    have hmprod : m * cfc Real.log m = cfc (fun x : ℝ => x * Real.log x) m := by
-      conv_lhs => lhs; rw [← cfc_id ℝ m hm]
-      exact (cfc_mul id Real.log m (m.finite_real_spectrum.continuousOn _)
-        (m.finite_real_spectrum.continuousOn _)).symm
-    rw [hmprod]
+    rw [D5.S3.Quantum.Information.OrthogonalRecordEntropy.entropy_eq_trace_cfc]
+    change (Matrix.trace (CStarMatrix.ofMatrix.symm (cfc Real.negMulLog s.1))).re = _
+    rw [show Real.negMulLog = fun x : ℝ => -(x * Real.log x) by
+      funext x; simp only [Real.negMulLog, neg_mul],
+      cfc_neg (fun x : ℝ => x * Real.log x) s.1]
+    change (Matrix.trace (-CStarMatrix.ofMatrix.symm
+      (cfc (fun x : ℝ => x * Real.log x) s.1))).re = _
+    rw [Matrix.trace_neg, Complex.neg_re]
   simp_rw (config := { congrConsts := false }) [hid]
   exact (Complex.continuous_re.comp
     (CStarMatrix.ofMatrixL.symm.continuous.comp hc).matrix_trace).neg
