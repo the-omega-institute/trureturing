@@ -884,7 +884,8 @@ theorem original_equality_fibers (L : IncidentLaw S₁ S₂ S₃ O)
     have hm : marginal (xzProjection L.nu) s₁ = L.marginal₁ s₁ := by
       simp only [marginal, xzProjection, marginal₁]
       exact Finset.sum_comm
-    simpa only [hm, xzProjection, marginal, pair₁₃, marginal₃] using hh
+    rw [hm] at hh
+    exact hh
   · intro s₂ s₃
     have hh := congrFun prod₂₃ (s₂, s₃)
     have hm₂ : marginal (FiniteEntropy.yz L.nu) s₂ = L.marginal₂ s₂ := by
@@ -894,12 +895,213 @@ theorem original_equality_fibers (L : IncidentLaw S₁ S₂ S₃ O)
         L.marginal₃ s₃ := by
       simp only [marginal, FiniteEntropy.yz, marginal₃]
       exact Finset.sum_comm
-    simpa only [hm₂, hm₃, FiniteEntropy.yz, marginal, pair₂₃] using hh
+    rw [hm₂, hm₃] at hh
+    exact hh
   · intro x hx
     have hwzero := (Finset.sum_eq_zero_iff_of_nonneg (fun x _ => hweighted x)).mp hzw
     have hd : FiniteEntropy.dual (conditional L.recordJoint x) = 0 :=
       (mul_eq_zero.mp (hwzero x (Finset.mem_univ x))).resolve_left (ne_of_gt hx)
     exact FiniteEntropy.dual_zero_product _ (hfiber x (ne_of_gt hx)) hd
+
+/-- Conditional source laws on the original source alphabets. -/
+noncomputable def posterior₁ (L : IncidentLaw S₁ S₂ S₃ O) (x : O) : S₁ → ℝ :=
+  marginal (conditional L.recordJoint x)
+noncomputable def posterior₂ (L : IncidentLaw S₁ S₂ S₃ O) (x : O) : S₂ → ℝ :=
+  marginal (FiniteEntropy.yz (conditional L.recordJoint x))
+noncomputable def posterior₃ (L : IncidentLaw S₁ S₂ S₃ O) (x : O) : S₃ → ℝ :=
+  marginal (fun z : S₃ × S₂ => FiniteEntropy.yz (conditional L.recordJoint x) (z.2, z.1))
+
+private theorem conditional_is_probability (L : IncidentLaw S₁ S₂ S₃ O)
+    (x : O) (hx : 0 < L.outputLaw x) : IsProbability (conditional L.recordJoint x) := by
+  classical
+  have hm := L.record_marginals
+  constructor
+  · intro s
+    exact div_nonneg (L.record_nonneg x s) (by simpa only [hm.1] using le_of_lt hx)
+  · simp only [conditional, ← Finset.sum_div]
+    change marginal L.recordJoint x / marginal L.recordJoint x = 1
+    rw [hm.1]
+    exact div_self (ne_of_gt hx)
+
+private theorem posterior_probabilities (L : IncidentLaw S₁ S₂ S₃ O)
+    (x : O) (hx : 0 < L.outputLaw x) :
+    IsProbability (L.posterior₁ x) ∧ IsProbability (L.posterior₂ x) ∧
+      IsProbability (L.posterior₃ x) := by
+  classical
+  have hp := L.conditional_is_probability x hx
+  have hyz : IsProbability (FiniteEntropy.yz (conditional L.recordJoint x)) := by
+    constructor
+    · intro z
+      exact Finset.sum_nonneg fun a _ => hp.1 (a, z)
+    · simp only [FiniteEntropy.yz, marginal]
+      rw [Finset.sum_comm]
+      simpa only [Fintype.sum_prod_type] using hp.2
+  refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
+  · intro s₁
+    exact Finset.sum_nonneg fun z _ => hp.1 (s₁, z)
+  · simpa only [posterior₁, marginal, ← Fintype.sum_prod_type] using hp.2
+  · intro s₂
+    exact Finset.sum_nonneg fun s₃ _ => hyz.1 (s₂, s₃)
+  · simpa only [posterior₂, marginal, ← Fintype.sum_prod_type] using hyz.2
+  · intro s₃
+    exact Finset.sum_nonneg fun s₂ _ => hyz.1 (s₂, s₃)
+  · simp only [posterior₃, marginal]
+    rw [Finset.sum_comm]
+    simpa only [Fintype.sum_prod_type] using hyz.2
+
+private theorem original_product_cells (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2)
+    (x : O) (hx : 0 < L.outputLaw x) (s : S₁ × S₂ × S₃) :
+    L.recordLaw x s = L.outputLaw x * L.posterior₁ x s.1 *
+      L.posterior₂ x s.2.1 * L.posterior₃ x s.2.2 := by
+  have hh := (L.original_equality_fibers hagree heq).2.2.2 x hx s.1 s.2.1 s.2.2
+  change conditional L.recordJoint x s =
+    L.posterior₁ x s.1 * L.posterior₂ x s.2.1 * L.posterior₃ x s.2.2 at hh
+  have hm := (L.record_marginals).1
+  simp only [conditional, hm, recordJoint] at hh
+  calc
+    _ = L.outputLaw x * (L.recordLaw x s / L.outputLaw x) :=
+      (mul_div_cancel₀ _ (ne_of_gt hx)).symm
+    _ = _ := by rw [hh]; ring
+
+private theorem original_product_pairs (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2)
+    (x : O) (hx : 0 < L.outputLaw x) :
+    (∀ a b, L.recordPair₁₂ (x, a, b) =
+      L.outputLaw x * L.posterior₁ x a * L.posterior₂ x b) ∧
+    (∀ a c, L.recordPair₁₃ (x, a, c) =
+      L.outputLaw x * L.posterior₁ x a * L.posterior₃ x c) ∧
+    (∀ b c, L.recordPair₂₃ (x, b, c) =
+      L.outputLaw x * L.posterior₂ x b * L.posterior₃ x c) := by
+  classical
+  obtain ⟨hp₁, hp₂, hp₃⟩ := L.posterior_probabilities x hx
+  refine ⟨?_, ?_, ?_⟩
+  · intro a b
+    simp only [recordPair₁₂, L.original_product_cells hagree heq x hx,
+      ← Finset.mul_sum, hp₃.2, mul_one]
+  · intro a c
+    simp only [recordPair₁₃, L.original_product_cells hagree heq x hx]
+    calc
+      _ = (L.outputLaw x * L.posterior₁ x a) * (∑ b, L.posterior₂ x b) *
+          L.posterior₃ x c := by rw [Finset.sum_mul, Finset.mul_sum]
+      _ = _ := by rw [hp₂.2, mul_one]
+  · intro b c
+    simp only [recordPair₂₃, L.original_product_cells hagree heq x hx]
+    calc
+      _ = L.outputLaw x * (∑ a, L.posterior₁ x a) *
+          L.posterior₂ x b * L.posterior₃ x c := by
+        rw [Finset.sum_mul, Finset.sum_mul, Finset.mul_sum]
+      _ = _ := by rw [hp₁.2, mul_one]
+
+private theorem positive_factors_of_cell {x : O} (L : IncidentLaw S₁ S₂ S₃ O)
+    (hx : 0 < L.outputLaw x) {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
+    (hpos : 0 < L.outputLaw x * a * b) : 0 < a ∧ 0 < b := by
+  constructor
+  · by_contra! hn
+    have hz : a = 0 := le_antisymm hn ha
+    simp [hz] at hpos
+  · by_contra! hn
+    have hz : b = 0 := le_antisymm hn hb
+    simp [hz] at hpos
+
+/-- Positive source symbols are retained as subtypes of the original alphabets. -/
+def Active₁ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₁ // 0 < L.marginal₁ s}
+def Active₂ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₂ // 0 < L.marginal₂ s}
+def Active₃ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₃ // 0 < L.marginal₃ s}
+
+noncomputable def support₁ (L : IncidentLaw S₁ S₂ S₃ O) (s : L.Active₁) :
+    Finset L.PositiveOutput := Finset.univ.filter (fun x => 0 < L.posterior₁ x.val s.val)
+noncomputable def support₂ (L : IncidentLaw S₁ S₂ S₃ O) (s : L.Active₂) :
+    Finset L.PositiveOutput := Finset.univ.filter (fun x => 0 < L.posterior₂ x.val s.val)
+noncomputable def support₃ (L : IncidentLaw S₁ S₂ S₃ O) (s : L.Active₃) :
+    Finset L.PositiveOutput := Finset.univ.filter (fun x => 0 < L.posterior₃ x.val s.val)
+
+private theorem posterior_active₁ (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
+    (hx : 0 < L.outputLaw x) (s : S₁) (hs : 0 < L.posterior₁ x s) :
+    0 < L.marginal₁ s := by
+  classical
+  have hm := (L.record_marginals).1
+  change 0 < ∑ z, conditional L.recordJoint x (s, z) at hs
+  obtain ⟨z, hz⟩ := positive_entry _ hs
+  have hr : 0 < L.recordLaw x (s, z) := by
+    simpa only [conditional, hm, recordJoint] using
+      (div_pos_iff_of_pos_right hx).mp hz
+  have hnu : 0 < L.nu (s, z) := by
+    by_contra! hn
+    have hnz : L.nu (s, z) = 0 := le_antisymm hn (L.nu_nonneg _)
+    simp [recordLaw, hnz] at hr
+  apply lt_of_lt_of_le hnu
+  exact (Finset.single_le_sum
+    (fun bc _ => L.nu_nonneg (s, bc)) (Finset.mem_univ z)).trans_eq
+      (by simp only [marginal₁, Fintype.sum_prod_type])
+
+private theorem posterior_active₂ (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
+    (hx : 0 < L.outputLaw x) (s : S₂) (hs : 0 < L.posterior₂ x s) :
+    0 < L.marginal₂ s := by
+  classical
+  have hm := (L.record_marginals).1
+  change 0 < ∑ c, ∑ a, conditional L.recordJoint x (a, s, c) at hs
+  obtain ⟨c, hc⟩ := positive_entry _ hs
+  obtain ⟨a, ha⟩ := positive_entry _ hc
+  have hr : 0 < L.recordLaw x (a, s, c) := by
+    simpa only [conditional, hm, recordJoint] using
+      (div_pos_iff_of_pos_right hx).mp ha
+  have hnu : 0 < L.nu (a, s, c) := by
+    by_contra! hn
+    have hnz : L.nu (a, s, c) = 0 := le_antisymm hn (L.nu_nonneg _)
+    simp [recordLaw, hnz] at hr
+  apply lt_of_lt_of_le hnu
+  calc
+    _ ≤ ∑ c', L.nu (a, s, c') :=
+      Finset.single_le_sum (fun c' _ => L.nu_nonneg _) (Finset.mem_univ c)
+    _ ≤ L.marginal₂ s :=
+      Finset.single_le_sum (fun a' _ => Finset.sum_nonneg fun c' _ => L.nu_nonneg _)
+        (Finset.mem_univ a)
+
+private theorem posterior_active₃ (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
+    (hx : 0 < L.outputLaw x) (s : S₃) (hs : 0 < L.posterior₃ x s) :
+    0 < L.marginal₃ s := by
+  classical
+  have hm := (L.record_marginals).1
+  change 0 < ∑ b, ∑ a, conditional L.recordJoint x (a, b, s) at hs
+  obtain ⟨b, hb⟩ := positive_entry _ hs
+  obtain ⟨a, ha⟩ := positive_entry _ hb
+  have hr : 0 < L.recordLaw x (a, b, s) := by
+    simpa only [conditional, hm, recordJoint] using
+      (div_pos_iff_of_pos_right hx).mp ha
+  have hnu : 0 < L.nu (a, b, s) := by
+    by_contra! hn
+    have hnz : L.nu (a, b, s) = 0 := le_antisymm hn (L.nu_nonneg _)
+    simp [recordLaw, hnz] at hr
+  apply lt_of_lt_of_le hnu
+  calc
+    _ ≤ ∑ b', L.nu (a, b', s) :=
+      Finset.single_le_sum (fun b' _ => L.nu_nonneg _) (Finset.mem_univ b)
+    _ ≤ L.marginal₃ s :=
+      Finset.single_le_sum (fun a' _ => Finset.sum_nonneg fun b' _ => L.nu_nonneg _)
+        (Finset.mem_univ a)
+
+private theorem support_cover (L : IncidentLaw S₁ S₂ S₃ O) :
+    (∀ x, ∃ s, x ∈ L.support₁ s) ∧
+    (∀ x, ∃ s, x ∈ L.support₂ s) ∧
+    (∀ x, ∃ s, x ∈ L.support₃ s) := by
+  classical
+  refine ⟨?_, ?_, ?_⟩
+  · intro x
+    have hp := (L.posterior_probabilities x.val x.property).1
+    obtain ⟨s, hs⟩ := positive_entry _ (show 0 < ∑ s, L.posterior₁ x.val s by
+      rw [hp.2]; norm_num)
+    exact ⟨⟨s, L.posterior_active₁ _ x.property s hs⟩, by simp [support₁, hs]⟩
+  · intro x
+    have hp := (L.posterior_probabilities x.val x.property).2.1
+    obtain ⟨s, hs⟩ := positive_entry _ (show 0 < ∑ s, L.posterior₂ x.val s by
+      rw [hp.2]; norm_num)
+    exact ⟨⟨s, L.posterior_active₂ _ x.property s hs⟩, by simp [support₂, hs]⟩
+  · intro x
+    have hp := (L.posterior_probabilities x.val x.property).2.2
+    obtain ⟨s, hs⟩ := positive_entry _ (show 0 < ∑ s, L.posterior₃ x.val s by
+      rw [hp.2]; norm_num)
+    exact ⟨⟨s, L.posterior_active₃ _ x.property s hs⟩, by simp [support₃, hs]⟩
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
