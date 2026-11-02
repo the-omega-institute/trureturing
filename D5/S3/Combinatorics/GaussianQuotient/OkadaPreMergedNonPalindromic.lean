@@ -9,6 +9,9 @@
 import D5.S3.Combinatorics.CylindricPartition.LiUncuGaussian
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Polynomial.Coeff
+import Mathlib.Algebra.Polynomial.BigOperators
+import Mathlib.RingTheory.Ideal.Quotient.Defs
+import Mathlib.RingTheory.Nilpotent.Basic
 import Mathlib.Tactic
 
 /-! Okada's width-three pre-merged determinant conjecture. -/
@@ -180,6 +183,105 @@ private theorem index_bounds
     change b z - a v + 2 ≤ b i - a (Fin.rev i)
     omega
 
+private theorem qFactorial_coeff_zero (n : ℕ) : (qFactorial n).coeff 0 = 1 := by
+  induction n with
+  | zero => simp [qFactorial]
+  | succ n ih => simp [qFactorial_succ, mul_coeff_zero, ih]
+
+private theorem factorial_product_identity
+    (μ : ℕ) (a b : Fin μ → ℕ) (hab : ∀ i j, a i ≤ b j) :
+    (∏ i, gauss (b i) (a i)) * (∏ i, qFactorial (b i - a i)) =
+      (∏ i, gauss (b i) (a (Fin.rev i))) *
+        (∏ i, qFactorial (b i - a (Fin.rev i))) := by
+  have hleft := Finset.prod_congr (s₁ := Finset.univ) (s₂ := Finset.univ) rfl
+    (fun i _ => factorial_identity (b i) (a i) (hab i i))
+  have hright := Finset.prod_congr (s₁ := Finset.univ) (s₂ := Finset.univ) rfl
+    (fun i _ => factorial_identity (b i) (a (Fin.rev i)) (hab (Fin.rev i) i))
+  simp only [Finset.prod_mul_distrib] at hleft hright
+  have hrev : (∏ i, qFactorial (a (Fin.rev i))) = ∏ i, qFactorial (a i) :=
+    Equiv.prod_comp Fin.revPerm (fun i => qFactorial (a i))
+  rw [hrev] at hright
+  have hne : (∏ i, qFactorial (a i)) ≠ 0 := by
+    intro h
+    have hz := congrArg (fun f : ℤ[X] => f.coeff 0) h
+    simp [coeff_zero_prod, qFactorial_coeff_zero] at hz
+  apply mul_right_cancel₀ hne
+  calc
+    _ = (∏ i, gauss (b i) (a i)) * (∏ i, qFactorial (a i)) *
+        (∏ i, qFactorial (b i - a i)) := by ring
+    _ = (∏ i, gauss (b i) (a (Fin.rev i))) * (∏ i, qFactorial (a i)) *
+        (∏ i, qFactorial (b i - a (Fin.rev i))) := hleft.trans hright.symm
+    _ = _ := by ring
+
+private theorem qFactorial_image_stable
+    {s : Type*} [CommRing s] (φ : ℤ[X] →+* s) (n m : ℕ)
+    (hx : φ (X ^ (m + 1)) = 0) (hmn : m ≤ n) :
+    φ (qFactorial n) = φ (qFactorial m) := by
+  induction n, hmn using Nat.le_induction with
+  | base => rfl
+  | succ n hn ih =>
+      have hz : φ (X ^ (n + 1)) = 0 := by
+        have he : n + 1 = (m + 1) + (n - m) := by omega
+        rw [he, pow_add, map_mul, hx, zero_mul]
+      rw [qFactorial_succ, map_mul, ih, map_sub, map_one, hz, sub_zero, mul_one]
+
+private theorem qFactorial_image_unit
+    {s : Type*} [CommRing s] (φ : ℤ[X] →+* s) (hx : IsNilpotent (φ X)) (n : ℕ) :
+    IsUnit (φ (qFactorial n)) := by
+  induction n with
+  | zero => simpa [qFactorial] using isUnit_one (α := s)
+  | succ n ih =>
+      rw [qFactorial_succ, map_mul, map_sub, map_one, map_pow]
+      exact ih.mul (IsNilpotent.pow_succ n hx).isUnit_one_sub
+
+private theorem product_coeff_one
+    {ι : Type*} (s : Finset ι) (f : ι → ℤ[X]) (hf : ∀ i ∈ s, (f i).coeff 0 = 1) :
+    (∏ i ∈ s, f i).coeff 1 = ∑ i ∈ s, (f i).coeff 1 := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp [coeff_one]
+  | @insert i s hi ih =>
+      rw [Finset.prod_insert hi, Finset.sum_insert hi, mul_coeff_one,
+        hf i (Finset.mem_insert_self i s), ih (fun j hj => hf j (Finset.mem_insert_of_mem hj))]
+      have hp : (∏ j ∈ s, f j).coeff 0 = 1 := by
+        rw [coeff_zero_prod]
+        exact Finset.prod_eq_one (fun j hj => hf j (Finset.mem_insert_of_mem hj))
+      rw [hp]
+      ring
+
+private theorem gaussian_product_low
+    (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 0 < μ) (ha : StrictMono a)
+    (hab : ∀ i, a i < b i) :
+    let c := if 0 < a ⟨0, hμ⟩ then μ else μ - 1
+    (∏ i, gauss (b i) (a i)).coeff 0 = 1 ∧
+      (∏ i, gauss (b i) (a i)).coeff 1 = c := by
+  dsimp only
+  have hz : ∀ i, (gauss (b i) (a i)).coeff 0 = 1 :=
+    fun i => gauss_coeff_zero _ _ (hab i).le
+  refine ⟨by simp [coeff_zero_prod, hz], ?_⟩
+  rw [product_coeff_one _ _ (fun i _ => hz i)]
+  let z : Fin μ := ⟨0, hμ⟩
+  by_cases ha0 : 0 < a z
+  · rw [if_pos ha0]
+    have hc (i : Fin μ) : (gauss (b i) (a i)).coeff 1 = 1 := by
+      apply gauss_coeff_one _ _ _ (hab i)
+      exact lt_of_lt_of_le ha0 (ha.monotone (show z ≤ i from Nat.zero_le _))
+    simp [hc]
+  · rw [if_neg ha0]
+    have hc (i : Fin μ) : (gauss (b i) (a i)).coeff 1 =
+        (1 : ℤ) - if i = z then 1 else 0 := by
+      by_cases hi : i = z
+      · subst i
+        have haz : a z = 0 := by omega
+        simp [haz, gauss, coeff_one]
+      · have hipos : 0 < i.val := by
+          have : i.val ≠ 0 := fun h => hi (Fin.ext h)
+          omega
+        have hai := ha (show z < i from hipos)
+        rw [gauss_coeff_one _ _ (by omega) (hab i), if_neg hi, sub_zero]
+    simp only [hc, Finset.sum_sub_distrib]
+    simp [Nat.cast_sub hμ]
+
 private theorem low_end
     (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
     (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
@@ -188,7 +290,98 @@ private theorem low_end
     let c := if 0 < a ⟨0, by omega⟩ then μ else μ - 1
     p.coeff (t + 1) = 1 ∧ p.coeff (t + 2) = c + 1 ∧
       (∀ n, n < t + 1 → p.coeff n = 0) := by
-  sorry
+  classical
+  let z : Fin μ := ⟨0, by omega⟩
+  let v : Fin μ := ⟨μ - 1, by omega⟩
+  let t := b z - a v
+  let a0 := ∏ i, gauss (b i) (a i)
+  let b0 := ∏ i, gauss (b i) (a (Fin.rev i))
+  let i0 : Ideal ℤ[X] := Ideal.span {X ^ (t + 3)}
+  let φ := Ideal.Quotient.mk i0
+  have hx : φ (X ^ (t + 3)) = 0 :=
+    Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.subset_span (by simp))
+  have hnil : IsNilpotent (φ X) := ⟨t + 3, by rw [← map_pow, hx]⟩
+  have hstable (n : ℕ) (hn : t + 2 ≤ n) :
+      φ (qFactorial n) = φ (qFactorial (t + 2)) :=
+    qFactorial_image_stable φ n (t + 2) hx hn
+  have hi := index_bounds μ a b hμ ha hb hcross
+  have hd : φ (∏ i, qFactorial (b i - a i)) = φ (qFactorial (t + 2)) ^ μ := by
+    rw [map_prod]
+    simp_rw [hstable _ (hi.1 _)]
+    simp
+  have he : φ (∏ i, qFactorial (b i - a (Fin.rev i))) =
+      φ (qFactorial t) * φ (qFactorial (t + 2)) ^ (μ - 1) := by
+    rw [map_prod, ← Finset.mul_prod_erase Finset.univ
+      (fun i => φ (qFactorial (b i - a (Fin.rev i)))) (by simp : z ∈ Finset.univ)]
+    have hzrev : Fin.rev z = v := by ext; simp [z, v]
+    rw [hzrev]
+    change φ (qFactorial t) * _ = _
+    congr 1
+    calc
+      _ = ∏ _i ∈ Finset.univ.erase z, φ (qFactorial (t + 2)) := by
+        apply Finset.prod_congr rfl
+        intro i hi0
+        have hiz : i ≠ z := (Finset.mem_erase.1 hi0).1
+        have hipos : 0 < i.val := by
+          have : i.val ≠ 0 := fun h => hiz (Fin.ext h)
+          omega
+        exact hstable _ (hi.2.2 i hipos)
+      _ = _ := by simp
+  have hf := congrArg φ (factorial_product_identity μ a b hcross)
+  simp only [map_mul] at hf
+  rw [hd, he] at hf
+  let f : ℤ[X] := (1 - X ^ (t + 1)) * (1 - X ^ (t + 2))
+  have hq : φ (qFactorial (t + 2)) = φ (qFactorial t) * φ f := by
+    rw [qFactorial_succ (t + 1), qFactorial_succ t]
+    simp only [map_mul]
+    dsimp [f]
+    simp only [map_mul]
+    ring
+  let u := φ (qFactorial t) * φ (qFactorial (t + 2)) ^ (μ - 1)
+  have hu : IsUnit u := (qFactorial_image_unit φ hnil t).mul
+    ((qFactorial_image_unit φ hnil (t + 2)).pow (μ - 1))
+  have heq : φ (a0 * f) = φ b0 := by
+    apply hu.mul_right_cancel
+    have hpow : φ (qFactorial (t + 2)) ^ μ =
+        φ (qFactorial (t + 2)) ^ (μ - 1) * φ (qFactorial (t + 2)) := by
+      conv_lhs => rw [show μ = (μ - 1) + 1 by omega, pow_succ]
+    rw [hpow, hq] at hf
+    dsimp [a0, b0, u]
+    rw [map_mul, hq]
+    convert hf using 1 <;> ring
+  have hdiv : (X : ℤ[X]) ^ (t + 3) ∣ a0 * f - b0 :=
+    Ideal.mem_span_singleton.1 (Ideal.Quotient.eq.1 heq)
+  have hcoeff (n : ℕ) (hn : n < t + 3) :
+      (preMerged a b).coeff n =
+        (a0 * X ^ (t + 1) + a0 * X ^ (t + 2) - a0 * X ^ ((t + 1) + (t + 2))).coeff n := by
+    have hc0 := X_pow_dvd_iff.1 hdiv n hn
+    rw [coeff_sub] at hc0
+    have hb0 : b0.coeff n = (a0 * f).coeff n := by omega
+    change (a0 - b0).coeff n = _
+    rw [coeff_sub, hb0, ← coeff_sub]
+    congr 1
+    dsimp [f]
+    simp only [pow_add]
+    ring
+  have halow := gaussian_product_low μ a b (by omega) ha (fun i => by
+    have := hi.1 i
+    have := hcross i i
+    omega)
+  change (preMerged a b).coeff (t + 1) = 1 ∧
+    (preMerged a b).coeff (t + 2) = _ ∧ _
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hcoeff _ (by omega)]
+    simp [coeff_sub, coeff_add, coeff_mul_X_pow', halow.1, a0]
+  · rw [hcoeff _ (by omega)]
+    simp only [coeff_sub, coeff_add, coeff_mul_X_pow']
+    simp [show t + 2 - (t + 1) = 1 by omega, show ¬ (t + 1) + (t + 2) ≤ t + 2 by omega,
+      halow.1, halow.2, a0]
+  · intro n hn
+    change n < t + 1 at hn
+    rw [hcoeff n (by omega)]
+    simp only [coeff_sub, coeff_add, coeff_mul_X_pow']
+    simp [show ¬ t + 1 ≤ n by omega, show ¬ t + 2 ≤ n by omega,
+      show ¬ (t + 1) + (t + 2) ≤ n by omega]
 
 private theorem high_end
     (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
