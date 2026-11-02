@@ -119,12 +119,12 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "its fixed cross-input complex phases. Give the coefficient space C^ι "
                 + "its usual Euclidean inner product, conjugate-linear in the first slot. "
                 + "The following application uses the actual synthesis and its Gram operator:")),
-            Display(Seq(F.Id("X"), C, Eq, Sum, Underscore, Grp(J, InMacro, Iota),
+            Display(Seq(F.Id("X"), C, Eq, Sum, Underscore, Grp(J, InMacro, Sp, Iota),
                 Sub(C, J), Sub(X, J), Comma, Sp,
                 G, Eq, Pow(F.Id("X"), Star), F.Id("X"), Comma, Sp,
                 B, Eq, Seq(Mathbf, Grp(D(1))))),
             Display(Seq(F.Id("D"), Eq, Op("span"), Underscore, Grp(Seq(Mathbb, Grp(F.Id("C")))),
-                OpenBrace, Sub(X, J), Minus, XRef, Colon, J, InMacro, Iota, CloseBrace,
+                OpenBrace, Sub(X, J), Minus, XRef, Colon, J, InMacro, Sp, Iota, CloseBrace,
                 Comma, Sp, Q, Eq, Sub(F.Id("P"), Pow(F.Id("D"), Perp)), XRef,
                 Comma, Sp, TStar, Eq, NormSq(Q))),
             Paragraph(Text(
@@ -132,13 +132,13 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "norm of its synthesis. Since b has every coordinate equal to one, "
                 + "the constraint is exactly sum c_j = 1, without conjugating the "
                 + "coefficients or changing the input phases.")),
-            Display(Seq(Forall, C, InMacro, Coeff, Comma, Sp,
+            Display(Seq(Forall, Sp, C, InMacro, Sp, Coeff, Comma, Sp,
                 Energy(C), Eq, NormSq(Seq(F.Id("X"), C)), Comma, Sp,
                 Inner(B, C), Eq, SumC)),
-            Display(Seq(Forall, F.Id("z"), InMacro, F.Id("H"), Comma, Sp,
-                Open, Exists, C, InMacro, Coeff, Comma, Sp,
-                SumC, Eq, D(1), Land, F.Id("X"), C, Eq, F.Id("z"), Close,
-                Leftrightarrow, F.Id("z"), Minus, XRef, InMacro, F.Id("D"))),
+            Display(Seq(Forall, Sp, F.Id("z"), InMacro, Sp, F.Id("H"), Comma, Sp,
+                Open, Exists, Sp, C, InMacro, Sp, Coeff, Comma, Sp,
+                SumC, Eq, D(1), Land, Sp, F.Id("X"), C, Eq, F.Id("z"), Close,
+                Leftrightarrow, F.Id("z"), Minus, XRef, InMacro, Sp, F.Id("D"))),
             Paragraph(Text(
                 "For the forward affine-image inclusion, subtract x_i₀ and distribute "
                 + "the coefficient sum. For the reverse inclusion, write z − x_i₀ as "
@@ -146,15 +146,15 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "coefficients to the i₀ coordinate. This gives actual feasible "
                 + "coefficients. Projection gives q − x_i₀ in D and q orthogonal to D. "
                 + "Consequently q is feasible and the minimum is attained:")),
-            Display(Seq(Min, Underscore, Grp(C, InMacro, Coeff, Comma, SumC, Eq, D(1)),
+            Display(Seq(Min, Underscore, Grp(C, InMacro, Sp, Coeff, Comma, SumC, Eq, D(1)),
                 Energy(C), Eq, TStar, Eq, NormSq(Q))),
-            Display(Seq(Exists, CStar, InMacro, Coeff, Comma, Sp,
-                SumStar, Eq, D(1), Land, F.Id("X"), CStar, Eq, Q, Land,
+            Display(Seq(Exists, Sp, CStar, InMacro, Sp, Coeff, Comma, Sp,
+                SumStar, Eq, D(1), Land, Sp, F.Id("X"), CStar, Eq, Q, Land,
                 Energy(CStar), Eq, TStar)),
-            Display(Seq(Forall, C, InMacro, Coeff, Comma, Sp,
+            Display(Seq(Forall, Sp, C, InMacro, Sp, Coeff, Comma, Sp,
                 SumC, Eq, D(1), Rightarrow, Sp,
                 NormSq(Seq(F.Id("X"), C)), Eq, NormSq(Q), Plus,
-                NormSq(Seq(F.Id("X"), C, Minus, Q)), Ge, TStar)),
+                NormSq(Seq(F.Id("X"), C, Minus, Q)), Ge, Sp, TStar)),
             Paragraph(Text("Range case, including singular Gram operators.")),
             Paragraph(Text(
                 "Take G⁺ to be the constructed Moore-Penrose inverse, not an assumed "
@@ -162,7 +162,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 + "The first Penrose law gives Gp = b. Hence a = ⟨b,p⟩ is the real "
                 + "number ‖Xp‖². It is strictly positive: Xp = 0 would imply Gp = 0 "
                 + "and then b = 0, impossible for a nonempty coefficient set.")),
-            Display(Seq(B, InMacro, Op("range"), G, Rightarrow, Sp,
+            Display(Seq(B, InMacro, Sp, Op("range"), G, Rightarrow, Sp,
                 F.Id("p"), Eq, Pow(G, Plus), B, Comma, Sp,
                 G, F.Id("p"), Eq, B, Comma, Sp,
                 F.Id("a"), Eq, Inner(B, F.Id("p")), Eq,
@@ -180,8 +180,8 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
                 "If b does not lie in range G, the identities range G = (ker G)⊥ "
                 + "and ker G = ker X supply a kernel vector k whose inner product "
                 + "with b is nonzero. Normalize that vector by this inner product:")),
-            Display(Seq(Neg, Open, B, InMacro, Op("range"), G, Close, Rightarrow, Sp,
-                Exists, F.Id("k"), InMacro, Ker, G, Comma, Sp,
+            Display(Seq(Neg, Open, B, InMacro, Sp, Op("range"), G, Close, Rightarrow, Sp,
+                Exists, Sp, F.Id("k"), InMacro, Sp, Ker, Sp, G, Comma, Sp,
                 Inner(B, F.Id("k")), Neq, D(0))),
             Display(Seq(CStar, Eq, Frac, Grp(D(1)), Grp(Inner(B, F.Id("k"))), F.Id("k"),
                 Comma, Sp, SumStar, Eq, D(1), Comma, Sp,
