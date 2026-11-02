@@ -1,0 +1,328 @@
+/- GID: D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/CyclicBoolean/CyclicSignTrace
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Odd cyclic Boolean chi, its explicit inverse, and integer cyclic sign traces. -/
+
+import D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.Field.ZMod
+import Mathlib.Algebra.Group.AddChar
+
+/-! # Cyclic Boolean maps and the ordered sign-matrix model -/
+
+set_option autoImplicit false
+open scoped BigOperators
+
+namespace D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
+
+open D5.S3.QuantumBounds.MerminMeasurementDependence (bit_cases)
+
+abbrev Word (n : ℕ) := ZMod n → ZMod 2
+
+/-- The forward cyclic Boolean map, with repeated indices identified. -/
+def chi {n : ℕ} (x : Word n) : Word n :=
+  fun i => x i + x (i + 2) + x (i + 1) * x (i + 2)
+
+/-- Integer signs of binary exponents. -/
+def sign (z : ZMod 2) : ℤ := (-1) ^ z.val
+
+/-- The source matrix at cyclic index k; its rows and columns are the two field elements. -/
+def sourceMatrix {n : ℕ} (b a : Word n) (k : ZMod n) :
+    Matrix (ZMod 2) (ZMod 2) ℤ :=
+  fun s t => sign ((a k + a (k - 2) + b k) * s + a (k - 1) * s * t)
+
+/-- The literal integer trace of the product in increasing representative order. -/
+def sourceTrace {n : ℕ} (b a : Word n) : ℤ :=
+  Matrix.trace (List.ofFn (fun k : Fin n => sourceMatrix b a (k.val : ZMod n))).prod
+
+def traceSupport {n : ℕ} (b : Word n) : Set (Word n) :=
+  {a | sourceTrace b a ≠ 0}
+
+/-- The full positive odd-length question, without a support nonemptiness premise. -/
+def claim : Prop :=
+  ∀ m : ℕ, ∀ b : Word (2 * m + 1), b ≠ 0 →
+    2 * m ≤ Module.finrank (ZMod 2)
+      (affineSpan (ZMod 2) (traceSupport b)).direction
+
+/-- The alternating product in the inverse formula. -/
+def alternatingPrefix {n : ℕ} (y : Word n) (i : ZMod n) (t : ℕ) : ZMod 2 :=
+  ∏ r ∈ Finset.range t, (1 + y (i + (2 * r + 1 : ℕ)))
+
+/-- The truncated inverse polynomial at odd length 2m+1. -/
+def inverse (m : ℕ) (y : Word (2 * m + 1)) : Word (2 * m + 1) :=
+  fun i => ∑ r ∈ Finset.range (m + 1), alternatingPrefix y i r * y (i + (2 * r : ℕ))
+
+private theorem bit_mul_one {a b : ZMod 2} (h : a * b = 1) : a = 1 ∧ b = 1 := by
+  rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
+    norm_num at h <;> constructor <;> rfl
+
+private theorem chi_recurrence {n : ℕ} (x : Word n) (i : ZMod n) :
+    x i = chi x i + (1 + chi x (i + 1)) * x (i + 2) := by
+  have hi : i + 1 + 1 = i + 2 := by ring
+  have hi' : i + 1 + 2 = i + 3 := by ring
+  simp only [chi, hi, hi']
+  rcases bit_cases (x i) with h0 | h0 <;>
+    rcases bit_cases (x (i + 1)) with h1 | h1 <;>
+    rcases bit_cases (x (i + 2)) with h2 | h2 <;>
+    rcases bit_cases (x (i + 3)) with h3 | h3 <;>
+    simp [h0, h1, h2, h3, show (1 : ZMod 2) + 1 = 0 by decide]
+
+private theorem recurrence_iterate {n : ℕ} (x : Word n) (i : ZMod n) (t : ℕ) :
+    x i = (∑ r ∈ Finset.range t, alternatingPrefix (chi x) i r * chi x (i + (2 * r : ℕ))) +
+      alternatingPrefix (chi x) i t * x (i + (2 * t : ℕ)) := by
+  induction t with
+  | zero => simp [alternatingPrefix]
+  | succ t ih =>
+    rw [Finset.sum_range_succ]
+    have hp : alternatingPrefix (chi x) i (t + 1) =
+        alternatingPrefix (chi x) i t * (1 + chi x (i + (2 * t + 1 : ℕ))) := by
+      simp [alternatingPrefix, Finset.prod_range_succ]
+    rw [hp]
+    have hr := chi_recurrence x (i + (2 * t : ℕ))
+    have h1 : i + (2 * t : ℕ) + 1 = i + (2 * t + 1 : ℕ) := by push_cast; ring
+    have h2 : i + (2 * t : ℕ) + 2 = i + (2 * (t + 1) : ℕ) := by push_cast; ring
+    rw [h1, h2] at hr
+    rw [ih]
+    rw [hr]
+    ring
+
+private theorem twice_half (m : ℕ) :
+    (2 : ZMod (2 * m + 1)) * (m + 1 : ℕ) = 1 := by
+  have h := ZMod.natCast_self (2 * m + 1)
+  push_cast at h ⊢
+  linear_combination h
+
+private theorem step_two_reaches (m : ℕ) (i k : ZMod (2 * m + 1)) :
+    ∃ r : ℕ, i + (2 * r : ℕ) = k := by
+  let a : ZMod (2 * m + 1) := (m + 1 : ℕ) * (k - i)
+  refine ⟨a.val, ?_⟩
+  rw [Nat.cast_mul, ZMod.natCast_zmod_val]
+  dsimp [a]
+  rw [← mul_assoc, twice_half, one_mul]
+  ring
+
+private theorem chi_zero_fiber (m : ℕ) (x : Word (2 * m + 1))
+    (h : chi x = 0) : x = 0 := by
+  have step (i : ZMod (2 * m + 1)) : x i = x (i + 2) := by
+    have hr := chi_recurrence x i
+    simpa [h] using hr
+  have orbit (i : ZMod (2 * m + 1)) (r : ℕ) : x (i + (2 * r : ℕ)) = x i := by
+    induction r with
+    | zero => simp
+    | succ r ih =>
+      have he : i + (2 * (r + 1) : ℕ) = (i + (2 * r : ℕ)) + 2 := by push_cast; ring
+      rw [he, ← step, ih]
+  have constant (i k : ZMod (2 * m + 1)) : x k = x i := by
+    obtain ⟨r, hr⟩ := step_two_reaches m i k
+    rw [← hr]
+    exact orbit i r
+  funext i
+  have hh := congrFun h i
+  simp only [chi, Pi.zero_apply] at hh
+  rw [constant i (i + 1), constant i (i + 2)] at hh
+  rcases bit_cases (x i) with hx | hx
+  · exact hx
+  · simp [hx, show (1 : ZMod 2) + 1 = 0 by decide] at hh
+
+
+
+private theorem truncation_tail (m : ℕ) (x : Word (2 * m + 1))
+    (i : ZMod (2 * m + 1)) :
+    alternatingPrefix (chi x) i (m + 1) * x (i + (2 * (m + 1) : ℕ)) = 0 := by
+  classical
+  let y := chi x
+  let j := i + 1
+  by_contra htail
+  have htail1 : alternatingPrefix y i (m + 1) *
+      x (i + (2 * (m + 1) : ℕ)) = 1 := by
+    rcases bit_cases (alternatingPrefix y i (m + 1) *
+      x (i + (2 * (m + 1) : ℕ))) with h | h
+    · exact (htail h).elim
+    · exact h
+  obtain ⟨hp, hx⟩ := bit_mul_one htail1
+  have hidx : i + (2 * (m + 1) : ℕ) = j := by
+    dsimp [j]
+    simpa only [Nat.cast_mul, Nat.cast_ofNat] using congrArg (fun t => i + t) (twice_half m)
+  have hxj : x j = 1 := by simpa only [hidx] using hx
+  have hz (r : ℕ) (hr : r ≤ m) : y (j + (2 * r : ℕ)) = 0 := by
+    have hpn : alternatingPrefix y i (m + 1) ≠ 0 := by rw [hp]; exact one_ne_zero
+    have hf := (Finset.prod_ne_zero_iff.mp hpn) r (Finset.mem_range.mpr (by omega))
+    change 1 + y (i + (2 * r + 1 : ℕ)) ≠ 0 at hf
+    have he : i + (2 * r + 1 : ℕ) = j + (2 * r : ℕ) := by dsimp [j]; push_cast; ring
+    rw [he] at hf
+    rcases bit_cases (y (j + (2 * r : ℕ))) with h | h
+    · exact h
+    · rw [h] at hf
+      exact (hf (by decide)).elim
+  have hxstep (r : ℕ) (hr : r ≤ m + 1) : x (j + (2 * r : ℕ)) = 1 := by
+    induction r with
+    | zero => simpa using hxj
+    | succ r ih =>
+      have hprev : x (j + (2 * r : ℕ)) = 1 := ih (by omega)
+      have hc := chi_recurrence x (j + (2 * r : ℕ))
+      change x (j + (2 * r : ℕ)) =
+        y (j + (2 * r : ℕ)) +
+          (1 + y (j + (2 * r : ℕ) + 1)) * x (j + (2 * r : ℕ) + 2) at hc
+      rw [hprev, hz r (by omega), zero_add] at hc
+      have he : j + (2 * r : ℕ) + 2 = j + (2 * (r + 1) : ℕ) := by push_cast; ring
+      rw [he] at hc
+      exact (bit_mul_one hc.symm).2
+  have hodd (r : ℕ) (hr : r ≤ m) : y (j + (2 * r + 1 : ℕ)) = 0 := by
+    have hc := chi_recurrence x (j + (2 * r : ℕ))
+    change x (j + (2 * r : ℕ)) =
+      y (j + (2 * r : ℕ)) +
+        (1 + y (j + (2 * r : ℕ) + 1)) * x (j + (2 * r : ℕ) + 2) at hc
+    rw [hxstep r (by omega), hz r hr, zero_add] at hc
+    have hh := (bit_mul_one hc.symm).1
+    have he : j + (2 * r : ℕ) + 1 = j + (2 * r + 1 : ℕ) := by push_cast; ring
+    rw [he] at hh
+    exact add_left_cancel (show 1 + y (j + (2 * r + 1 : ℕ)) = 1 + 0 by simpa using hh)
+  have hy : y = 0 := by
+    funext k
+    have hk : j + ((k - j).val : ZMod (2 * m + 1)) = k := by
+      rw [ZMod.natCast_zmod_val]; ring
+    have hlt := ZMod.val_lt (k - j)
+    rcases Nat.even_or_odd (k - j).val with he | ho
+    · obtain ⟨r, hr⟩ := he
+      have heq : (k - j).val = 2 * r := by omega
+      rw [← hk, heq]
+      exact hz r (by omega)
+    · obtain ⟨r, hr⟩ := ho
+      have heq : (k - j).val = 2 * r + 1 := by omega
+      rw [← hk, heq]
+      exact hodd r (by omega)
+  have hxx := chi_zero_fiber m x hy
+  have hj0 := congrFun hxx j
+  rw [hxj] at hj0
+  exact one_ne_zero hj0
+
+/-- The explicit inverse identity at every positive odd length, including one. -/
+private theorem inverse_left (m : ℕ) (x : Word (2 * m + 1)) :
+    inverse m (chi x) = x := by
+  funext i
+  have h := recurrence_iterate x i (m + 1)
+  rw [truncation_tail, add_zero] at h
+  exact h.symm
+
+/-- The forward cyclic map is bijective at every positive odd length. -/
+private theorem chi_bijective (m : ℕ) : Function.Bijective (@chi (2 * m + 1)) := by
+  apply (Finite.injective_iff_bijective).mp
+  exact (show Function.LeftInverse (inverse m) chi from inverse_left m).injective
+
+/-- The explicit polynomial is both a left and a right inverse, at all odd lengths. -/
+theorem inverse_spec (m : ℕ) :
+    Function.LeftInverse (inverse m) chi ∧ Function.RightInverse (inverse m) chi := by
+  refine ⟨inverse_left m, ?_⟩
+  exact (show Function.LeftInverse (inverse m) chi from inverse_left m).rightInverse_of_surjective
+    (chi_bijective m).surjective
+
+
+
+/-- The binary dot product. -/
+def dot {n : ℕ} [NeZero n] (a x : Word n) : ZMod 2 := ∑ i, a i * x i
+
+/-- Unnormalized integer Walsh coefficients of a Boolean function. -/
+def walsh {n : ℕ} [NeZero n] (f : Word n → ZMod 2) (a : Word n) : ℤ :=
+  ∑ x, sign (f x + dot a x)
+
+private theorem sign_add (a b : ZMod 2) : sign (a + b) = sign a * sign b := by
+  rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
+    norm_num [sign, ZMod.val_one_eq_one_mod, ZMod.val_two_eq_two_mod, show (1 : ZMod 2) + 1 = 0 by decide]
+
+private theorem sign_injective : Function.Injective sign := by
+  intro a b h
+  rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
+    simp_all [sign, ZMod.val_one_eq_one_mod]
+
+private theorem dot_add_right {n : ℕ} [NeZero n] (a x y : Word n) :
+    dot a (x + y) = dot a x + dot a y := by
+  simp [dot, mul_add, Finset.sum_add_distrib]
+
+private theorem dot_comm {n : ℕ} [NeZero n] (a x : Word n) : dot a x = dot x a := by
+  simp only [dot, mul_comm]
+
+private theorem character_sum {n : ℕ} [NeZero n] (x : Word n) :
+    (∑ a, sign (dot a x)) = if x = 0 then (Fintype.card (Word n) : ℤ) else 0 := by
+  classical
+  let ch : AddChar (Word n) ℤ :=
+    { toFun := fun a => sign (dot a x)
+      map_zero_eq_one' := by simp [dot, sign]
+      map_add_eq_mul' := by
+        intro a b
+        rw [dot_comm (a + b) x, dot_add_right, sign_add, dot_comm x a, dot_comm x b] }
+  have he : ch = 0 ↔ x = 0 := by
+    constructor
+    · intro h
+      funext i
+      have hi := congrArg (fun c : AddChar (Word n) ℤ => c (Pi.single i 1)) h
+      have hs : sign (x i) = sign 0 := by
+        simpa [ch, dot, Pi.single_apply, sign] using hi
+      exact sign_injective hs
+    · intro h
+      ext a
+      simp [ch, h, dot, sign]
+  have hc := AddChar.sum_eq_ite ch
+  change (∑ a, sign (dot a x)) = if ch = 0 then _ else _ at hc
+  simpa only [he] using hc
+
+/-- Integer Fourier inversion, without normalization or a nonempty-support hypothesis. -/
+theorem walsh_inversion {n : ℕ} [NeZero n] (f : Word n → ZMod 2) (y : Word n) :
+    (∑ a, walsh f a * sign (dot a y)) =
+      (Fintype.card (Word n) : ℤ) * sign (f y) := by
+  classical
+  unfold walsh
+  simp_rw [Finset.sum_mul]
+  rw [Finset.sum_comm]
+  have hxy (x a : Word n) :
+      sign (f x + dot a x) * sign (dot a y) =
+        sign (f x) * sign (dot a (x + y)) := by
+    rw [sign_add, dot_add_right, sign_add]
+    ring
+  simp_rw [hxy, ← Finset.mul_sum, character_sum]
+  have hzero (x : Word n) : x + y = 0 ↔ x = y := by
+    constructor
+    · intro h
+      have hy : y + y = 0 := by ext i; exact CharTwo.add_self_eq_zero _
+      exact add_right_cancel (h.trans hy.symm)
+    · rintro rfl
+      ext i
+      exact CharTwo.add_self_eq_zero _
+  simp only [hzero]
+  simp [mul_comm]
+
+/-- Every Boolean function has at least one nonzero integer Walsh coefficient. -/
+theorem walsh_support_nonempty {n : ℕ} [NeZero n] (f : Word n → ZMod 2) :
+    ∃ a, walsh f a ≠ 0 := by
+  by_contra h
+  push Not at h
+  have hi := walsh_inversion f 0
+  simp only [h, zero_mul, Finset.sum_const_zero] at hi
+  have hs : sign (f 0) ≠ 0 := by
+    rcases bit_cases (f 0) with hf | hf <;> simp [hf, sign, ZMod.val_one_eq_one_mod]
+  exact (mul_ne_zero (Nat.cast_ne_zero.mpr Fintype.card_ne_zero) hs) hi.symm
+
+/-- The component of the explicit inverse associated with an arbitrary mask. -/
+def inverseComponent (m : ℕ) (b : Word (2 * m + 1)) :
+    Word (2 * m + 1) → ZMod 2 := fun y => dot b (inverse m y)
+
+/-- Reindexing the exact Boolean phase sum uses the proved odd-cycle inverse. -/
+theorem inverse_phase_sum (m : ℕ) (b a : Word (2 * m + 1)) :
+    (∑ x, sign (dot b x + dot a (chi x))) = walsh (inverseComponent m b) a := by
+  classical
+  let e : Word (2 * m + 1) ≃ Word (2 * m + 1) :=
+    { toFun := chi
+      invFun := inverse m
+      left_inv := (inverse_spec m).1
+      right_inv := (inverse_spec m).2 }
+  unfold walsh inverseComponent
+  conv_rhs => rw [← Equiv.sum_comp e]
+  apply Finset.sum_congr rfl
+  intro x _
+  simp [e, (inverse_spec m).1 x]
+
+end D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
