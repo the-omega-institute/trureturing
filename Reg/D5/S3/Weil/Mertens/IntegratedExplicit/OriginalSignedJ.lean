@@ -11,60 +11,6 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 
 #check fun (arena : DependentFamily.Arena)
-    (family : DependentFamily.Registration arena (type_of% @OriginalSignedJ.b_zero))
-    (selection : Contract.SourceSelection) =>
-  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalSignedJ.b_zero)
-      (DependentFamily.Realization arena.signature) Unit Unit from {
-    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalSignedJ.b_zero.__information_unit
-    realizationName := Lean.Name.anonymous
-    realizationSource := none
-    generated := false
-    arena := .source ⟨arena⟩
-    objectArena := .source ⟨arena⟩
-    catalog := Lean.Name.anonymous
-    localNames := false
-    realization := .source arena ⟨family⟩
-    correspondence := { stage := .evidence, objectStage := .evidence }
-    bundleNonempty := .absent
-    readout := some (DependentFamily.realize arena.signature
-      family.actual.readout family.actual.anchor)
-    variation := .absent
-    sensitivity := .absent
-    partialSensitivity := none
-    escapeFrom := none
-    sourceSelection := some selection
-    continuation := .unknown
-    familyRecord := none
-    options := #[] })
-
-#check fun (arena : DependentFamily.Arena)
-    (family : DependentFamily.Registration arena (type_of% @OriginalSignedJ.J_zero))
-    (selection : Contract.SourceSelection) =>
-  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalSignedJ.J_zero)
-      (DependentFamily.Realization arena.signature) Unit Unit from {
-    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalSignedJ.J_zero.__information_unit
-    realizationName := Lean.Name.anonymous
-    realizationSource := none
-    generated := false
-    arena := .source ⟨arena⟩
-    objectArena := .source ⟨arena⟩
-    catalog := Lean.Name.anonymous
-    localNames := false
-    realization := .source arena ⟨family⟩
-    correspondence := { stage := .evidence, objectStage := .evidence }
-    bundleNonempty := .absent
-    readout := some (DependentFamily.realize arena.signature
-      family.actual.readout family.actual.anchor)
-    variation := .absent
-    sensitivity := .absent
-    partialSensitivity := none
-    escapeFrom := none
-    sourceSelection := some selection
-    continuation := .unknown
-    familyRecord := none
-    options := #[] })
-
-#check fun (arena : DependentFamily.Arena)
     (family : DependentFamily.Registration arena (type_of% @OriginalSignedJ.indicator_tail_integrable))
     (selection : Contract.SourceSelection) =>
   (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalSignedJ.indicator_tail_integrable)

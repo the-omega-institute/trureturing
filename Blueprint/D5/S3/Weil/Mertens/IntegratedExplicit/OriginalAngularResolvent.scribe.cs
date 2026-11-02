@@ -18,6 +18,6 @@ internal sealed class OriginalAngularResolventDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/OriginalAngularResolvent.cosine_resolvent"),
                 H("The cosine formula"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The real part of the same integrable complex kernel gives the normalized cosine integral exp(-abs(s)/2)/4 for every real s. It is consumed by the finite-measure spectral construction."))),
+                Blocks(Paragraph(Text("The real part of the same integrable complex kernel gives the normalized cosine integral exp(-abs(s)/2)/4 for every real s. The finite-measure spectral construction uses angular_resolvent to obtain the complex resolvent identity, then takes real parts."))),
                 DescribeRole.Theorem))));
 }

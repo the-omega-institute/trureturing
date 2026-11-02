@@ -43,12 +43,6 @@ def fullR (D Z : ℝ) (f : ℝ → ℝ) : ℝ :=
     ArithmeticFunction.vonMangoldt n / Real.sqrt (n : ℝ) * f (Real.log n)) -
   2 * (∫ t in (0 : ℝ)..D, Real.exp (t / 2) * f t) + b D * Z / 2
 
-lemma b_zero : b 0 = Real.eulerMascheroniConstant := by
-  norm_num [b, cutoff]
-
-lemma J_zero (f fprime : ℝ → ℝ) : J 0 f fprime = 0 := by
-  simp [J]
-
 /-- A finite-horizon representation; this is not a definition of the original b. -/
 def finiteB {ι : Type*} (s : Finset ι) (γ : ℝ) (w k : ι → ℝ) (t : ℝ) : ℝ :=
   γ - t + ∑ i ∈ s, if k i ≤ t then w i else 0
