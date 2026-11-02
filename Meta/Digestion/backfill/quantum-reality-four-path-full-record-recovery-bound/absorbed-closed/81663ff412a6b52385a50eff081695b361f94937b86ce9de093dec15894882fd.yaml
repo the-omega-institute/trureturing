@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:81663ff412a6b52385a50eff081695b361f94937b86ce9de093dec15894882fd
+  normalized_sha256: sha256:81663ff412a6b52385a50eff081695b361f94937b86ce9de093dec15894882fd
+cas_ref: sha256:81663ff412a6b52385a50eff081695b361f94937b86ce9de093dec15894882fd
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/ProportionalRefinement.actual_channel_preserved_rectangular
+    target_statement_id: sha256:f0060aee022ae255aca58d46161ce0562c9967502e5cd5607b7f95f955aff1de
+  - gid: D5/S3/Quantum/Measurement/ProportionalRefinement.completeness_preserved
+    target_statement_id: sha256:c8a4f66ff990500be8c1a94af651c4669d29839eb6cf3b30ffbad2c15e7c983a
+  - gid: D5/S3/Quantum/Measurement/ProportionalRefinement.min_coordinate_budget_preserved
+    target_statement_id: sha256:04c03ba798a9512c92eeb466f2d23a39f2e4fb5c4438a0a1f08bcac2d12acc2b
+  - gid: D5/S3/Quantum/Measurement/ProportionalRefinement.quadratic_budgets
+    target_statement_id: sha256:f98d44ca9995cb7394b1b8da3fd7d59fefc9f7284084e9da11241efeeadd2945
+  - gid: D5/S3/Quantum/Measurement/ProportionalRefinement.quartic_budgets
+    target_statement_id: sha256:e4676730f31a2c6174afdd0aa7ebea1fd6d80b18d77076d1884684591249e1bb
+receipts:
+  unresolved_subitems: []
