@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15ff9986819775e98bb5707bb59f6d631a725a04bead81e213abf4d2970d5fa0
+  normalized_sha256: sha256:15ff9986819775e98bb5707bb59f6d631a725a04bead81e213abf4d2970d5fa0
+cas_ref: sha256:15ff9986819775e98bb5707bb59f6d631a725a04bead81e213abf4d2970d5fa0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic attribution and supplied-result correspondence, naming established tools and the scope of credited source results; this is interpretive metadata, not another proof or an unresolved mathematical question.
+    previous_atom_id: 5705c915794e0f3e6af8b361e7cec117deff93fdc8bd52363ce64e2d4847bdb4
+    next_atom_id: ec960da66a6f34e402f9bf3e87100d879e693311b557aa819d10310831172d8a
