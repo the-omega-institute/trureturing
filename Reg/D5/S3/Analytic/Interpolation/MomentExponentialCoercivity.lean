@@ -3,14 +3,20 @@ import D5.S3.Analytic.Interpolation.MomentExponentialCoercivity
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
-open MeasureTheory Set Filter
+open MeasureTheory Set Filter Asymptotics
 open scoped BigOperators Topology
 open _root_.D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
-open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
-open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace Reg.D5.S3.Analytic.Interpolation.MomentExponentialCoercivity
+
+private def halfResolvent {I : Type u} [Fintype I]
+    (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
+  ∑ i, a i * (((1 - Real.exp (-(1 / 2 : ℝ) * max (t - x i) 0)) / (1 / 2 : ℝ) : ℝ) : ℂ)
+
+private def rampValue {I : Type u} [Fintype I]
+    (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
+  ∑ i, a i * (max (t - x i) 0 : ℝ)
 
 namespace CausalDeficit
 abbrev signature : Signature :=
@@ -31,6 +37,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, halfResolvent, rampValue, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -83,6 +90,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, halfResolvent, rampValue, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -135,6 +143,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num) 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down)
     (by intro r hr; simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, halfResolvent, rampValue, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -193,6 +202,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, halfResolvent, rampValue, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -242,6 +252,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance (fun _ => 0) (fun _ => 0)
     (by intro i; exact Empty.elim i.down) 0 le_rfl
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, halfResolvent, rampValue, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -297,6 +308,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num) 1 (by norm_num) 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down)
     (by intro r hr; simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, halfResolvent, rampValue, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i

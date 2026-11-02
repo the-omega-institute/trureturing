@@ -3,7 +3,7 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
-open MeasureTheory Set Filter
+open MeasureTheory Set Filter Asymptotics
 open scoped BigOperators Topology
 open _root_.D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
@@ -35,6 +35,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down)
     (by intro r hr; simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, energy, «prefix»] at h0
 
 

@@ -3,7 +3,7 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
-open MeasureTheory Set Filter
+open MeasureTheory Set Filter Asymptotics
 open scoped BigOperators Topology
 open _root_.D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
@@ -28,7 +28,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num) 8 (by norm_num) (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by intro r hr; simp)
-  norm_num [rejected, realize, energy, quadratic, W, S, correlation, V, Z, «prefix»] at h0
+  dsimp only [rejected, realize] at h0
+  norm_num [rejected, realize, energy, quadratic, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), 0, 1, by change (0 : ℂ).re ≠ (1 : ℂ).re; norm_num⟩

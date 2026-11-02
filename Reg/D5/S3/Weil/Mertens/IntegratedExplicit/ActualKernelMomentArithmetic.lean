@@ -3,7 +3,7 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
-open MeasureTheory Set Filter
+open MeasureTheory Set Filter Asymptotics
 open scoped BigOperators Topology
 open _root_.D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
@@ -71,6 +71,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -213,6 +214,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 0 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -310,6 +312,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 2 le_rfl 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -357,7 +360,9 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 0 0 le_rfl
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, primes] at h0
+  exact Finset.singleton_ne_empty 0 h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), ∅, {0}, by change (∅ : Finset ℕ) ≠ {0}; simp⟩
@@ -404,6 +409,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, Chebyshev.psi] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -452,6 +458,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 1 1 (by norm_num) (by norm_num) 0 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -501,6 +508,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 0 (fun _ => 0) (fun _ => 0)
     (by intro i; exact Empty.elim i.down) (by simp) 1 (by norm_num)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -557,6 +565,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance pnt 1 (fun _ => 0) (fun _ => 0)
     (by intro i; exact Empty.elim i.down) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, primeQuadratic, energy, «prefix»] at h0
 
 private theorem dependence : ObservationalDependence signature actual := by

@@ -3,7 +3,7 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
-open MeasureTheory Set Filter
+open MeasureTheory Set Filter Asymptotics
 open scoped BigOperators Topology
 open _root_.D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
@@ -30,6 +30,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num) 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by intro r hr; simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, energy, quadratic, W, S, correlation, V, Z, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -81,6 +82,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, energy, quadratic, W, S, correlation, V, Z, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -130,7 +132,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hc := @h (ULift.{u} Empty) inferInstance (fun _ => 0) (fun _ => 0) (by simp)
   change Continuous (fun t : ℝ => if t = 0 then (1 : ℝ) else 0) at hc
   have hlim : Tendsto (fun t : ℝ => if t⁻¹ = 0 then (1 : ℝ) else 0) atTop (𝓝 1) := by
-    simpa using hc.continuousAt.tendsto.comp tendsto_inv_atTop_zero
+    have ht := (hc.continuousAt (x := (0 : ℝ))).tendsto.comp
+      (tendsto_inv_atTop_zero : Tendsto (fun t : ℝ => t⁻¹) atTop (𝓝 0))
+    change Tendsto (fun t : ℝ => if t⁻¹ = 0 then (1 : ℝ) else 0) atTop (𝓝 1) at ht
+    exact ht
   have he : (fun t : ℝ => if t⁻¹ = 0 then (1 : ℝ) else 0) =ᶠ[atTop] fun _ => 0 := by
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
     simp [inv_ne_zero ht.ne']
@@ -140,7 +145,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   norm_num at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), (fun _ => 0), (fun _ => 1), by intro he; have hh := congrFun he 0; norm_num at hh⟩
+  exact ⟨(), (fun _ => 0), (fun _ => 1), by intro he; have hh := congrFun he 0; change (0 : ℝ) = 1 at hh; norm_num at hh⟩
 def family : Registration arena.{u} (type_of% @_root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.correlation_continuous.{u}) where
   actual := actual
   bridge := Iff.rfl
@@ -187,6 +192,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by simp) 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, correlation, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -285,6 +291,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, energy, primeQuadratic, continuum, correlation, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -334,6 +341,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -383,6 +391,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have h0 := @h (ULift.{u} Empty) inferInstance 1 (by norm_num)
     (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp) 0
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, S, correlation, «prefix»] at h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -444,6 +453,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have h0 := @h (ULift.{u} Empty) inferInstance pnt 1 (by norm_num) 8
     (by norm_num) (by norm_num) (fun _ => 0) (fun _ => 0)
     (by intro i; exact Empty.elim i.down) (by intro r hr; simp)
+  dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, energy, continuum, correlation, W, S, V, Z, «prefix»] at h0
 
 private theorem dependence : ObservationalDependence signature actual := by

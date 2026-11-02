@@ -3,11 +3,8 @@ import D5.S3.Weil.Mertens.WeightedMangoldtRate
 import Reg.Support.SingleDependentReadout
 noncomputable section
 universe u
-open MeasureTheory Set Filter
+open MeasureTheory Set Filter Asymptotics
 open scoped BigOperators Topology
-open _root_.D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
-open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
-open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace Reg.D5.S3.Weil.Mertens.WeightedMangoldtRate
