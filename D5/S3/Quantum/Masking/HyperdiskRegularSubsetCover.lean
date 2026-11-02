@@ -7,14 +7,6 @@
    digest: A regular subset of a four-dimensional hyperdisk has no finite hyperdisk cover. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.Set.Finite.Lattice
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.LinearCombination
 
 /-! Ding and Hu, arXiv:1909.11256v3, Definitions 1 and 4 and the second open
 question in the conclusion. Pure states are unit vectors, including their global
