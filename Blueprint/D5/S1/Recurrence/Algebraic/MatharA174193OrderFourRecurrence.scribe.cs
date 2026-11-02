@@ -61,11 +61,12 @@ internal sealed class MatharA174193OrderFourRecurrenceDocument : IScribeDocument
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("mathar-a174193-" + (name == "P" ? "numerator" : name.ToLowerInvariant())),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Mathar's order-four recurrence holds for the specified algebraic power series.",
@@ -129,5 +130,8 @@ internal sealed class MatharA174193OrderFourRecurrenceDocument : IScribeDocument
                 + "identities. Coefficients of degree n ≥ 4 therefore give the displayed recurrence. "
                 + "The identification with the counting series of Av(321)^{+1}, and the background "
                 + "paper's Section 4 questions, are not proved here.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathar-a174193-order-four-recurrence"),
+                    ResolutionKind.Proved)))));
 }

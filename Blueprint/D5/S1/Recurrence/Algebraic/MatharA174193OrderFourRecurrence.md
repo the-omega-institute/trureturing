@@ -84,6 +84,10 @@ $$\left(\exists A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \oper
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/MatharA174193OrderFourRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a174193-order-four-recurrence` (proved) by `D5/S1/Recurrence/Algebraic/MatharA174193OrderFourRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a174193-order-four-recurrence","declaration_gid":"D5/S1/Recurrence/Algebraic/MatharA174193OrderFourRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; OEIS Foundation Inc. (2016). *OEIS A174193 — an order-four recurrence for an algebraic generating series*. URL: <https://oeis.org/A174193>.
