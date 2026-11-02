@@ -4294,3 +4294,422 @@ $1/25$ or the cutoff $23/6$, nor a global sharp constant outside
 the union of these two caps, is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 26. The original producer endpoint on the trace triangle
+
+**Definition 26.1 (trace triangle and its increment).** Keep the original
+record, ordinary transpose, producer quantities and reduced data of
+Sections 21–25. In particular, $\kappa$ is exactly the smaller root in
+Theorem 21.3, $\gamma=1/25$ as in (25.1), and
+$A_0=2+\sqrt{8/3}$ as in (24.1). Define
+
+$$
+\begin{aligned}
+\mathcal T&=\{w\in\mathcal W:A(w)+B(w)\le4\},\\
+\mathcal T_{\rm new}
+&=\{w\in\mathcal T:A(w)<A_0,\ B(w)<23/6\}.
+\end{aligned}
+\tag{26.1}
+$$
+
+These sets retain the realizability condition (23.1) and are invariant
+under the one common scalar phase of Definition 23.1.
+
+**Lemma 26.2 (linear amplitude bounds for one datum).** For every
+$w\in\mathcal W$, its original amplitudes satisfy
+
+$$
+u(w)\le hA(w)+2(c-h),\qquad
+v(w)\le sB(w)+2(h-s).
+\tag{26.2}
+$$
+
+Consequently, for $w\in\mathcal T$, either trace can be used as a
+parameter in the following bounds:
+
+$$
+\begin{array}{lll}
+t=A(w):&u(w)\le a_+(t):=2(c-h)+ht,
+       &v(w)\le b_+(t):=e-st,\\
+t=B(w):&u(w)\le a_-(t):=d-ht,
+       &v(w)\le b_-(t):=2(h-s)+st.
+\end{array}
+\tag{26.3}
+$$
+
+Proof. For the same fixed $w$, put
+$S=w_1+w_2+w_3+w_4$ and
+$Z=w_1-w_2+i(w_3-w_4)$. The exact identities (23.2) give
+
+$$
+P=hS+(c-h)(w_3+w_4),\qquad
+Q=sZ+(h-s)(w_1-w_2).
+\tag{26.4}
+$$
+
+Since $c>h>s>0$ and $|w_j|\le1$, the triangle inequality proves
+(26.2), without choosing any coordinate phase. If $t=A$, then
+$B\le4-t$ and
+$2(h-s)+s(4-t)=e-st$. If $t=B$, then $A\le4-t$ and
+$2(c-h)+h(4-t)=d-ht$. This proves (26.3). These are upper bounds
+for two amplitudes of the same $w$; simultaneous attainment is not
+asserted or needed. $\square$
+
+**Lemma 26.3 (two uniform matrix certificates).** Define the intervals
+
+$$
+J_+=[1/2,11/3],\qquad J_-=[1/2,23/6]
+\tag{26.5}
+$$
+
+and, for $t$ in the corresponding interval, put
+
+$$
+\begin{aligned}
+D_+(t)&=d^2-\gamma(8-2t),&
+F_+(t)&=e^2-\gamma(10-2t),\\
+D_-(t)&=d^2-\gamma(10-2t),&
+F_-(t)&=e^2-\gamma(8-2t),\\
+M_\sigma(t)&=
+\begin{pmatrix}
+D_\sigma(t)-a_\sigma(t)^2&-a_\sigma(t)b_\sigma(t)\\
+-a_\sigma(t)b_\sigma(t)&F_\sigma(t)-b_\sigma(t)^2
+\end{pmatrix},
+\qquad \sigma\in\{+,-\}.
+\end{aligned}
+\tag{26.6}
+$$
+
+Both matrices are positive definite throughout their closed intervals.
+In particular, for every $w\in\mathcal T$ and every $p\in[0,1]$,
+
+$$
+\begin{aligned}
+A(w)\in J_+&\quad\Longrightarrow\quad
+G(w,p)>\gamma r_+(w,p)\ge\gamma r(w,p),\\
+B(w)\in J_-&\quad\Longrightarrow\quad
+G(w,p)>\gamma r_-(w,p)\ge\gamma r(w,p).
+\end{aligned}
+\tag{26.7}
+$$
+
+Proof. All four amplitudes $a_\sigma,b_\sigma$ are positive on the
+stated intervals, as follows directly from (22.13). The bounds
+$d^2>9$, $e^2>4$ and $t\ge0$ imply
+$D_\sigma>0$ and $F_\sigma>0$. Write
+
+$$
+\Delta_\sigma(t)=\det M_\sigma(t)
+=D_\sigma F_\sigma-F_\sigma a_\sigma^2-D_\sigma b_\sigma^2.
+\tag{26.8}
+$$
+
+Each determinant is a concave polynomial on its interval. To check
+this with explicit signs, let
+
+$$
+a_0=2(c-h)>0,\qquad b_0=2(h-s)>0,
+\qquad
+D_{\sigma,0}=D_\sigma(0),\quad
+F_{\sigma,0}=F_\sigma(0),
+\tag{26.9}
+$$
+
+where the formulas (26.6) also define the values at $0$.
+Twice differentiating (26.8) gives
+
+$$
+\begin{aligned}
+\Delta_+''(t)
+&=8\gamma^2-2F_{+,0}h^2-2D_{+,0}s^2
+  -8\gamma(a_0h-es)-12\gamma(h^2+s^2)t,\\
+\Delta_-''(t)
+&=8\gamma^2-2F_{-,0}h^2-2D_{-,0}s^2
+  +8\gamma(dh-b_0s)-12\gamma(h^2+s^2)t.
+\end{aligned}
+\tag{26.10}
+$$
+
+Here $D_{\sigma,0}>0$, $h^2=1/2$, $es<1$ and $dh<5/2$;
+the latter two inequalities follow from (22.13), also giving
+$e<11/5$ and $s<2/5$. Since
+$F_{+,0}>18/5$ and $F_{-,0}>92/25$, (26.10) yields, for $t\ge0$,
+
+$$
+\begin{aligned}
+\Delta_+''(t)
+&<\frac8{625}-\frac{18}{5}+\frac8{25}<0,\\
+\Delta_-''(t)
+&<\frac8{625}-\frac{92}{25}+\frac45<0.
+\end{aligned}
+\tag{26.11}
+$$
+
+It remains to check the four interval endpoints. The following table
+uses only the rational half-angle bounds (22.13). In each row its
+entries $x,y,z,v_0$ mean, at the indicated $\sigma,t$,
+
+$$
+D_\sigma-a_\sigma^2>x>0,\qquad
+F_\sigma>y>0,\qquad
+D_\sigma<z,\qquad 0<b_\sigma<v_0.
+\tag{26.12}
+$$
+
+| $\sigma,t$ | $x$ | $y$ | $z$ | $v_0$ | $xy-zv_0^2$ |
+| --- | --- | --- | --- | --- | --- |
+| $+,1/2$ | $97/10$ | $219/50$ | $1037/100$ | $199/100$ | $1419763/10^6$ |
+| $+,11/3$ | $29/20$ | $116/25$ | $531/50$ | $39/50$ | $33349/125000$ |
+| $-,1/2$ | $181/100$ | $223/50$ | $1029/100$ | $17/20$ | $25523/40000$ |
+| $-,23/6$ | $256/25$ | $473/100$ | $211/20$ | $53/25$ | $12741/12500$ |
+
+For an explicit way to verify every entry, (22.13) gives
+
+$$
+\frac{16309}{5000}<d<\frac{16311}{5000},\qquad
+\frac{10897}{5000}<e<\frac{10899}{5000}.
+\tag{26.13}
+$$
+
+Use their squared bounds in $D_\sigma,F_\sigma$, and use (22.13)
+in the following affine expressions for the amplitudes:
+
+$$
+\begin{aligned}
+a_+(t)&=2c+(t-2)h,& b_+(t)&=2h+(2-t)s,\\
+a_-(t)&=2c+(2-t)h,& b_-(t)&=2h+(t-2)s.
+\end{aligned}
+\tag{26.14}
+$$
+
+For a negative coefficient use the lower bound to bound that term
+above. For example, at $\sigma=+$, $t=11/3$ these substitutions give
+
+$$
+\begin{aligned}
+D_+-a_+^2
+&>\left(\frac{16309}{5000}\right)^2-\frac2{75}
+ -\left(\frac{2\cdot9239}{10000}
+          +\frac{5\cdot7072}{3\cdot10000}\right)^2
+ >\frac{29}{20},\\
+F_+&>\left(\frac{10897}{5000}\right)^2-\frac8{75}
+ >\frac{116}{25},\\
+D_+&<\left(\frac{16311}{5000}\right)^2-\frac2{75}
+ <\frac{531}{50},\\
+b_+&<\frac{2\cdot7072}{10000}
+       -\frac{5\cdot3826}{3\cdot10000}<\frac{39}{50}.
+\end{aligned}
+\tag{26.15}
+$$
+
+The other rows follow by the same substitutions in (26.14);
+their rational products are displayed in the last column.
+Thus (26.8) and (26.12) give
+$\Delta_\sigma(t)>xy-zv_0^2>0$ at both endpoints of each
+interval. Concavity places every value between the endpoints above
+their linear interpolation, so $\Delta_\sigma>0$ on all of $J_\sigma$.
+
+Because $D_\sigma,F_\sigma>0$, this proves
+
+$$
+\frac{a_\sigma^2}{D_\sigma}
+ +\frac{b_\sigma^2}{F_\sigma}
+=1-\frac{\Delta_\sigma}{D_\sigma F_\sigma}<1.
+\tag{26.16}
+$$
+
+Weighted Cauchy–Schwarz now gives, for every nonzero real pair $(X,Y)$,
+
+$$
+(a_\sigma X+b_\sigma Y)^2
+\le\left(\frac{a_\sigma^2}{D_\sigma}
+          +\frac{b_\sigma^2}{F_\sigma}\right)
+   (D_\sigma X^2+F_\sigma Y^2)
+<D_\sigma X^2+F_\sigma Y^2.
+\tag{26.17}
+$$
+
+This proves positive definiteness of $M_\sigma$. For $t=A(w)\in J_+$,
+use (26.3), the nonnegative square roots of both populations, and (23.3):
+
+$$
+\begin{aligned}
+G(w,p)-\gamma r_+(w,p)
+&=D_+(t)p+F_+(t)(1-p)
+  -(u\sqrt p+v\sqrt{1-p})^2\\
+&\ge D_+(t)p+F_+(t)(1-p)
+  -(a_+(t)\sqrt p+b_+(t)\sqrt{1-p})^2>0.
+\end{aligned}
+\tag{26.18}
+$$
+
+The last step is (26.17) at the nonzero vector
+$(\sqrt p,\sqrt{1-p})$. For $t=B(w)\in J_-$ the identical
+calculation uses $D_-,F_-,a_-,b_-$ and $r_-$ instead.
+Finally $r=\min\{r_+,r_-\}\le r_\sigma$ gives (26.7).
+This is a comparison with a candidate joint-sign distance; it does
+not assert that the chosen candidate is the minimizing branch.
+Both endpoint populations and all zeros of $P$ or $Q$ are included.
+$\square$
+
+**Theorem 26.4 (the endpoint on the entire trace triangle).** For every
+normalized effect $E\in\operatorname{Dens}_2$ and every actual shared
+feedback $U\in U(4)$ with
+$w=\operatorname{diag}(UU_+^\dagger)\in\mathcal T$,
+
+$$
+g(E,U)\ge\kappa\rho(E,U).
+\tag{26.19}
+$$
+
+On the whole newly covered set $\mathcal T_{\rm new}$ there is the
+stronger strict inequality
+
+$$
+g(E,U)>\frac1{25}\rho(E,U).
+\tag{26.20}
+$$
+
+Equality in (26.19) holds exactly at the two original optimizer
+classes $(E_\sigma,\lambda U_\sigma)$, $\sigma\in\{+,-\}$,
+$|\lambda|=1$.
+
+Proof. If $A\ge A_0$, apply Theorem 24.4. If $B\ge23/6$, apply
+Theorem 25.3 and $0<\kappa<\gamma$. These establish (26.19),
+with the stated equality cases, on both old caps.
+
+Otherwise $w\in\mathcal T_{\rm new}$. If $A\ge1/2$, then
+$A<A_0<11/3$, so the first line of (26.7) proves
+$G(w,p)>\gamma r(w,p)$ for every $p$. Here $A_0<11/3$ follows
+from $8/3<25/9$. If $A<1/2$ but $B\ge1/2$, then
+$B<23/6$, so the second line proves the same conclusion.
+
+In the remaining case $A,B<1/2$, (26.2) and (22.13) give
+
+$$
+0\le u<2c-\tfrac32h<1,\qquad
+0\le v<2h-\tfrac32s<1.
+\tag{26.21}
+$$
+
+Since $d^2>9$ and $e^2>4$, ordinary Cauchy–Schwarz implies,
+for every $p\in[0,1]$,
+
+$$
+\begin{aligned}
+G(w,p)
+&\ge4-(u^2+v^2)>2,\\
+r(w,p)&\le r_+(w,p)\le10,\\
+G(w,p)-\gamma r(w,p)&>2-\frac{10}{25}=\frac85>0.
+\end{aligned}
+\tag{26.22}
+$$
+
+Thus all of $\mathcal T_{\rm new}$ has been covered, including its
+boundary $A+B=4$. For the actual original effect use precisely
+
+$$
+p=b_+^\dagger E^{\mathsf T}b_+,\qquad
+\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0.
+\tag{26.23}
+$$
+
+The same-feedback transfer (23.14), now with $\gamma=1/25$, gives
+
+$$
+g(E,U)-\gamma\rho(E,U)
+\ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E)>0.
+\tag{26.24}
+$$
+
+This proves (26.20). Since $\rho\ge0$ and $\gamma>\kappa$,
+it also proves strictness of (26.19) on $\mathcal T_{\rm new}$.
+On the caps, Theorems 24.4 and 25.3 supply exactly the equality
+cases already stated. Conversely both original optimizer classes
+belong to $\mathcal T$, with trace pairs $(A,B)=(4,0)$ and $(0,4)$,
+and have $g=\rho=0$ by Lemma 11.2.
+
+The transfer retains the ordinary transpose, the joint optimizer-sign
+minimum and the common scalar phase quotient of Definition 11.1.
+It uses the same actual $U$ for both amplitude estimates and for
+(26.24). No effect is inverted and no feedback is assigned to an
+individual spectral piece, so arbitrary mixed and singular normalized
+effects, every population and arbitrary nondiagonal lifts are included.
+$\square$
+
+**Proposition 26.5 (a realizable nondiagonal increment).** The set
+$\mathcal T_{\rm new}$ contains actual nondiagonal feedback data.
+In particular, let
+
+$$
+V=\begin{pmatrix}
+1/2&\sqrt3/2&0&0\\
+-\sqrt3/2&1/2&0&0\\
+0&0&1/2&\sqrt3/2\\
+0&0&-\sqrt3/2&1/2
+\end{pmatrix},\qquad U=VU_+.
+\tag{26.25}
+$$
+
+Then $U\in U(4)$ is nondiagonal and its reduced datum is
+$w=(1/2,1/2,1/2,1/2)\in\mathcal T_{\rm new}$.
+For this fixed feedback, (26.20) holds for every normalized effect.
+For example, the original pair with $E=E_+$ satisfies
+
+$$
+\rho(E_+,U)=4,\qquad g(E_+,U)=\frac34d^2>0.
+\tag{26.26}
+$$
+
+Proof. Each real two-by-two rotation block of $V$ is orthogonal,
+so $V^\dagger V=I_4$ and $UU_+^\dagger=V$. Since $U_+$ is diagonal
+unitary by (6.3), multiplying its columns by the nonzero phases
+preserves the nonzero off-diagonal entries of $V$. Thus $U$ is an
+actual nondiagonal unitary lift. Its diagonal gives $A=2$, $B=0$,
+so $A+B=2<4$, $A<A_0$ and $B<23/6$. This datum lies in neither
+old cap. Direct substitution in (23.2) gives $P=d/2$, $Q=0$.
+For $E_+$, $p=1$ and $\epsilon=0$, hence
+$r=\min\{4,10\}=4$ and (23.12) gives $g=3d^2/4$.
+This proves (26.26) and shows that the uniform domain extension
+contains original feasible pairs beyond Sections 24–25. $\square$
+
+**Corollary 26.6 (the remaining uniform obligation).** Let
+
+$$
+\mathcal O=\{w\in\mathcal W:
+ A(w)<2+\sqrt{8/3},\quad B(w)<23/6,\quad A(w)+B(w)>4\}.
+\tag{26.27}
+$$
+
+The inequality $g\ge\kappa\rho$ holds for all normalized effects
+and actual shared feedback whose reduced data lie outside $\mathcal O$.
+The original global endpoint is therefore equivalent to the remaining
+uniform assertion
+
+$$
+\nu_\kappa(w)\ge0\qquad\text{for every }w\in\mathcal O.
+\tag{26.28}
+$$
+
+Proof. The complement of $\mathcal O$ in the realizable set
+$\mathcal W$ is exactly the union of the two caps in Theorems
+24.4 and 25.3 and the trace triangle in Theorem 26.4.
+Theorem 23.4 transfers these uniform original inequalities to
+$\nu_\kappa\ge0$ there and identifies (26.28) as precisely the
+remaining condition for $C_{\rm opt}=\kappa^{-1}$.
+
+The source correspondence is (23.2) for the two original amplitudes,
+(23.3) for the joint-sign distance, and Theorem 23.2 for realizability
+and the mixed-effect transfer. The realization theorem used there
+continues to apply to every datum here; (26.25) supplies an explicit
+nondiagonal lift for the increment. Triangle inequalities, polynomial
+concavity and Cauchy–Schwarz are standard intermediate tools. The
+additional fixed-record content is the uniform certificate
+(26.8)–(26.18) and its coverage of all of $\mathcal T_{\rm new}$.
+The bounds (26.2)–(26.3) are sufficient envelopes, not a jointly
+attained optimization. Failure of such an envelope certificate
+outside its proved intervals would not give an original producer
+counterexample. Assertion (26.28) remains unresolved; neither global
+sharpness nor literature priority is asserted. $\square$
+
+## 追加锚（本行以下为增补区）
