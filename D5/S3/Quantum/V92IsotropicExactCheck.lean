@@ -66,7 +66,7 @@ private theorem source_marginals (a : ℝ) (c : ℂ) :
       Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_two, Fintype.sum_prod_type, Matrix.one_apply, hc] <;>
     push_cast <;> field_simp <;> ring_nf <;>
-    simp [sqrt_two_sq, sqrt_three_sq] <;> ring
+    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
 
 #print axioms source_marginals
 
