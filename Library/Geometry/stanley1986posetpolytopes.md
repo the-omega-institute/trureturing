@@ -38,7 +38,7 @@ Its five antichains are $\varnothing,\{a\},\{c\},\{a,c\},\{b\}$.
 Thus the chain polytope is the same occupancy hull as the three-vertex
 path stable-set polytope: $X,Y,Z\ge0$, $X+Z,Y+Z\le1$.
 The two existing notes [Chvátal](chvatal1975polytopes.md) and
-[the path pyramid](standard2026pathpyramid.md) retain their own ownership
+[the path pyramid](../Words/standard2026pathpyramid.md) retain their own ownership
 and verification boundaries. This paper supplies an independently
 specified primary source, not a replacement claim that those notes had
 inspected Chvátal's full text.

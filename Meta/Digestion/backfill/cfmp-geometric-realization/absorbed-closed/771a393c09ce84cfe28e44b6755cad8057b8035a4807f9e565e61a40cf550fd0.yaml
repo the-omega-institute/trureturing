@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:771a393c09ce84cfe28e44b6755cad8057b8035a4807f9e565e61a40cf550fd0
   normalized_sha256: sha256:771a393c09ce84cfe28e44b6755cad8057b8035a4807f9e565e61a40cf550fd0
 cas_ref: sha256:771a393c09ce84cfe28e44b6755cad8057b8035a4807f9e565e61a40cf550fd0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/FlatCandidateAcyclicity.flat_candidate_cycle_exclusion
+    target_statement_id: sha256:7629a9764b0c2e86384711015232f764d851ef690f9c1d651052c7079ce848e9
 receipts:
   unresolved_subitems: []
   chain_atoms:
