@@ -36,7 +36,9 @@ No priority, originality, uniqueness or original-problem credit follows.
 The existing Aharonov–Jones–Landau Library note concerns a separate algebraic
 Artin/trace bridge and also leaves geometric Jones identification unpaid.
 
-## Verified locator and read boundary
+## Verified locator
+
+Primary source: https://arxiv.org/abs/1908.04152v3.
 
 The retained primary v3 TeX verifies the authors, title, braid convention,
 Definition 5.1, equation (5.5) and Conjecture 5.2; the retained arXiv abstract
