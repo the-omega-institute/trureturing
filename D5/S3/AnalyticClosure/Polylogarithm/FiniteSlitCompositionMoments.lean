@@ -152,7 +152,11 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
     · subst x
       rw [Complex.ofReal_one, hupperOne]
       split
-      · rw [← Complex.ofReal_inv, ← Complex.ofReal_pow]
+      · have hreal :
+            ((CompositionBoundary.zeta head tail : ℂ)⁻¹) ^ (ell : ℕ) =
+              (((CompositionBoundary.zeta head tail)⁻¹ ^ (ell : ℕ) : ℝ) : ℂ) := by
+          rw [Complex.ofReal_pow, Complex.ofReal_inv]
+        rw [hreal]
         simp
       · simp
     · have hpos : 0 < x - 1 := by
