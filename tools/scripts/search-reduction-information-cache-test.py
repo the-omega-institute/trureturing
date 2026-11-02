@@ -123,7 +123,13 @@ def main():
             raise RuntimeError(label + ": missing executed hot kernel phase")
         if metadata(value) != metadata(expected):
             raise RuntimeError(label + ": stale optional information: " + json.dumps({
-                "cached": metadata(value), "current": metadata(expected)}, sort_keys=True))
+                "cached_face": value["information_face"],
+                "current_face": expected["information_face"],
+                "different_fields": [field for field in FIELDS if value[field] != expected[field]]}))
+        computational = lambda row: {key: item for key, item in row.items()
+                                     if key not in (*FIELDS, "information_tag")}
+        if computational(value) != computational(cold):
+            raise RuntimeError(label + ": optional information changed computational observation")
         return value
 
     try:
