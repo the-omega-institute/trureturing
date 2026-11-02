@@ -1,12 +1,6 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0.
 
-SOURCE-ONLY CANDIDATE; no elaboration, kernel or axiom check has been run.
-Intended module:
-  D5.S3.Weil.Mertens.IntegratedExplicit.OriginalActualSpectralEndpoint.
-The three Original* imports from earlier flights are fallible source inputs,
-not accepted compiled results. Their bodies are neither copied nor rewritten.
-
 Mathlib suppliers are imported under Apache 2.0, retaining upstream notices:
 Integral/Prod (Floris van Doorn, copyright 2020),
 Bochner/ContinuousLinearMap and Function/LocallyIntegrable. No upstream proof
@@ -24,6 +18,8 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalSignedJ
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.Tactic
+
+/-! Absolute Fourier Fubini, the actual spectral endpoint, and the original J identity. -/
 
 noncomputable section
 open Set MeasureTheory Filter
@@ -48,7 +44,6 @@ def fourierPair (A : ℝ → ℂ) (w : ℝ) (p : ℝ × ℝ) : ℂ :=
   coefficient A p * phase (-w) (p.1 - p.2)
 
 lemma denominator_pos (w : ℝ) : 0 < 1 + 4 * w ^ 2 := by positivity
-lemma weight_nonneg (w : ℝ) : 0 ≤ weight w := by unfold weight; positivity
 
 lemma weight_integrable : Integrable weight := by
   have he : weight = fun w : ℝ => (1 + (2 * w) ^ 2)⁻¹ := by
@@ -112,12 +107,12 @@ lemma fourierPair_integrable {A : ℝ → ℂ} (hAm : Measurable A) (hA : Integr
     (conjugate_integrable hm (transform_integrable hA w))
   exact hi.congr (ae_of_all _ fun p => (fourierPair_eq_product A w p).symm)
 
-lemma Ahat_normSq_eq_pair (A : ℝ → ℂ) (w : ℝ) :
+lemma Ahat_normSq_eq_pair {A : ℝ → ℂ} (hAm : Measurable A)
+    (hA : Integrable A) (w : ℝ) :
     ((‖Ahat A w‖ ^ 2 : ℝ) : ℂ) =
       ∫ p : ℝ × ℝ, fourierPair A w p ∂pairMeasure := by
-  simp_rw [fourierPair_eq_product]
-  rw [integral_prod_mul (fun u : ℝ => A u * phase (-w) u)
-    (fun v : ℝ => conj (A v * phase (-w) v)), integral_conj]
+  rw [integral_prod (fourierPair A w) (fourierPair_integrable hAm hA w)]
+  simp_rw [fourierPair_eq_product, integral_const_mul, integral_mul_const, integral_conj]
   change ((‖Ahat A w‖ ^ 2 : ℝ) : ℂ) = Ahat A w * conj (Ahat A w)
   simpa only [Complex.ofReal_pow] using (Complex.mul_conj' (Ahat A w)).symm
 
@@ -138,20 +133,10 @@ theorem triple_integrable {A : ℝ → ℂ} (hAm : Measurable A) (hA : Integrabl
     fun_prop
   exact hm.aestronglyMeasurable
 
-/-- Quantitative absolute Fubini certificate, with no unweighted Fourier L2 premise. -/
-theorem triple_absolute_integral {A : ℝ → ℂ} (_hAm : Measurable A)
-    (_hA : Integrable A) (t : ℝ) :
-    (∫ z : ℝ × (ℝ × ℝ), ‖triple A t z.1 z.2‖
-      ∂((volume : Measure ℝ).prod pairMeasure)) =
-      (∫ w : ℝ, weight w) * (∫ u : ℝ, ‖A u‖) ^ 2 := by
-  simp_rw [triple_norm]
-  rw [integral_prod_mul weight (fun p : ℝ × ℝ => ‖A p.1‖ * ‖A p.2‖),
-    integral_prod_mul (fun u : ℝ => ‖A u‖) (fun v : ℝ => ‖A v‖)]
-  ring
-
 /-- Expansion of the literal modulus square of the literal L1 transform.
 Only products of two independent L1 functions are integrated here. -/
-lemma pair_expansion (A : ℝ → ℂ) (t w : ℝ) :
+lemma pair_expansion {A : ℝ → ℂ} (hAm : Measurable A)
+    (hA : Integrable A) (t w : ℝ) :
     (∫ p : ℝ × ℝ, triple A t w p ∂pairMeasure) = frequencyIntegrand A t w := by
   have he (p : ℝ × ℝ) : triple A t w p =
       resolvent t w *
@@ -164,7 +149,7 @@ lemma pair_expansion (A : ℝ → ℂ) (t w : ℝ) :
     simp only [neg_neg]
     ring
   simp_rw [he, ← fourierPair_eq_product]
-  rw [integral_const_mul, ← Ahat_normSq_eq_pair]
+  rw [integral_const_mul, ← Ahat_normSq_eq_pair hAm hA w]
   rfl
 
 lemma frequencyIntegrand_integrable {A : ℝ → ℂ} (hA : Integrable A) (t : ℝ) :
@@ -209,7 +194,7 @@ theorem complex_resolvent_identity {A : ℝ → ℂ} (hAm : Measurable A)
   calc
     _ = (((1 / (2 * Real.pi) : ℝ) : ℂ)) *
         (∫ w : ℝ, ∫ p : ℝ × ℝ, triple A t w p ∂pairMeasure) := by
-      simp only [pair_expansion]
+      simp only [pair_expansion hAm hA]
     _ = (((1 / (2 * Real.pi) : ℝ) : ℂ)) *
         (∫ p : ℝ × ℝ, (∫ w : ℝ, triple A t w p) ∂pairMeasure) := by
       rw [integral_integral_swap (triple_integrable hAm hA t)]
@@ -309,21 +294,6 @@ lemma spatial_real_integrable {A : ℝ → ℂ} (hAm : Measurable A)
 
 variable {ι : Type*} [Fintype ι]
 
-/-- Actual finite-atom instance of the absolutely integrable modulus-square expansion. -/
-theorem actual_fourier_expansion (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0)
-    {D : ℝ} (hx : ∀ i, x i ∈ Icc 0 D) (w : ℝ) :
-    Integrable (fourierPair («prefix» x a) w) pairMeasure ∧
-      ((‖Ahat («prefix» x a) w‖ ^ 2 : ℝ) : ℂ) =
-        ∫ p : ℝ × ℝ, fourierPair («prefix» x a) w p ∂pairMeasure :=
-  ⟨fourierPair_integrable (prefix_measurable x a)
-    (prefix_L1_L2 x a ha D (fun i => (hx i).2)).1 w, Ahat_normSq_eq_pair _ w⟩
-
-theorem actual_spectral_integrable (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0)
-    {D : ℝ} (hx : ∀ i, x i ∈ Icc 0 D) (t : ℝ) :
-    Integrable (OriginalTestRegularity.spectralKernel t) (rho («prefix» x a)) := by
-  letI : IsFiniteMeasure (rho («prefix» x a)) := actual_rho_finite x a ha D (fun i => (hx i).2)
-  exact OriginalTestRegularity.spectralKernel_integrable _ t
-
 /-- Original finite atoms, actual Lebesgue restrictions, all real lags. -/
 theorem actual_spectral_square (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0)
     {D : ℝ} (hx : ∀ i, x i ∈ Icc 0 D) (t : ℝ) :
@@ -336,11 +306,18 @@ theorem actual_spectral_square (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a 
   have hi : Integrable A := (prefix_L1_L2 x a ha D (fun i => (hx i).2)).1
   let F : ℝ × ℝ → ℝ := fun p => (coefficient A p).re * decay (t + p.1 - p.2)
   have hF : Integrable F pairMeasure := spatial_real_integrable hm hi t
+  have hwindow : (Icc 0 D).indicator A = A := prefix_eq_zero_extension x a ha hx
+  have hout (u : ℝ) (hu : u ∉ Icc 0 D) : A u = 0 := by
+    rw [← congrFun hwindow u, indicator_of_notMem hu]
   have hzero (p : ℝ × ℝ) (hp : p ∉ (Icc 0 D) ×ˢ (Icc 0 D)) : F p = 0 := by
     by_cases hu : p.1 ∈ Icc 0 D
     · have hv : p.2 ∉ Icc 0 D := fun hv => hp ⟨hu, hv⟩
-      simp [F, coefficient, A, prefix_zero_off_window x a ha hx p.2 hv]
-    · simp [F, coefficient, A, prefix_zero_off_window x a ha hx p.1 hu]
+      change (A p.1 * conj (A p.2)).re * _ = 0
+      rw [hout p.2 hv]
+      simp
+    · change (A p.1 * conj (A p.2)).re * _ = 0
+      rw [hout p.1 hu]
+      simp
   have hr : (∫ p : ℝ × ℝ, F p ∂pairMeasure) =
       ∫ u : ℝ in Icc 0 D, ∫ v : ℝ in Icc 0 D, F (u, v) := by
     rw [← setIntegral_eq_integral_of_forall_compl_eq_zero hzero]
@@ -355,20 +332,12 @@ theorem actual_spectral_square (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a 
   simp_rw [he]
   ring
 
-/-- Closed-window definitions; below they are also identified with 0..D integrals. -/
+/-- Closed-window weighted moments. Lebesgue endpoint atoms have measure zero. -/
 def Iplus (A : ℝ → ℂ) (D : ℝ) : ℂ :=
   ∫ u : ℝ in Icc 0 D, (Real.exp (u / 2) : ℂ) * A u
 def Iminus (A : ℝ → ℂ) (D : ℝ) : ℂ :=
   ∫ u : ℝ in Icc 0 D, (Real.exp (-u / 2) : ℂ) * A u
 def Z (A : ℝ → ℂ) (D : ℝ) : ℝ := (conj (Iplus A D) * Iminus A D).re
-
-lemma Iplus_eq_interval (A : ℝ → ℂ) {D : ℝ} (hD : 0 ≤ D) :
-    Iplus A D = ∫ u : ℝ in (0 : ℝ)..D, (Real.exp (u / 2) : ℂ) * A u := by
-  rw [Iplus, integral_Icc_eq_integral_Ioc, intervalIntegral.integral_of_le hD]
-
-lemma Iminus_eq_interval (A : ℝ → ℂ) {D : ℝ} (hD : 0 ≤ D) :
-    Iminus A D = ∫ u : ℝ in (0 : ℝ)..D, (Real.exp (-u / 2) : ℂ) * A u := by
-  rw [Iminus, integral_Icc_eq_integral_Ioc, intervalIntegral.integral_of_le hD]
 
 lemma weighted_integrableOn {A : ℝ → ℂ} (hA : Integrable A) (D k : ℝ) :
     IntegrableOn (fun u : ℝ => (Real.exp (k * u) : ℂ) * A u) (Icc 0 D) := by

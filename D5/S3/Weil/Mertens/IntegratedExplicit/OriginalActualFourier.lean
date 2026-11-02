@@ -1,8 +1,6 @@
 /-
 Copyright (c) 2026. Released under Apache 2.0.
 
-SOURCE-ONLY CANDIDATE: this file has not been elaborated or kernel checked.
-Intended module: D5.S3.Weil.Mertens.IntegratedExplicit.OriginalActualFourier.
 Suppliers are imported, not copied. In particular Mathlib's FourierTransform
 (David Loeffler), ImproperIntegrals (David Loeffler), and Bochner integral
 files retain their own Apache-2.0 copyright and author notices upstream.
@@ -17,6 +15,8 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Tactic
+
+/-! Finite closed-step Fourier transforms and the actual finite spectral density. -/
 
 noncomputable section
 open Set MeasureTheory
@@ -246,18 +246,5 @@ theorem actual_rho_finite (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0
   apply isFiniteMeasure_withDensity
   exact (lintegral_ofReal_ne_top_iff_integrable hi.aestronglyMeasurable
     (ae_of_all _ fun w => density_nonneg _ w)).mpr hi
-
-/-- The actual angular Fourier integral vanishes when the window has length zero. -/
-theorem zero_window_Ahat (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0)
-    (hx : ∀ i, x i ∈ Icc (0 : ℝ) 0) : Ahat («prefix» x a) = 0 := by
-  have hp : «prefix» x a = 0 := by
-    funext u
-    by_cases hu : 0 ≤ u
-    · have hi : ∀ i, x i ≤ u := fun i => (hx i).2.trans hu
-      simp [«prefix», hi, ha]
-    · have hi : ∀ i, ¬x i ≤ u := fun i h => hu ((hx i).1.trans h)
-      simp [«prefix», hi]
-  funext w
-  simp [hp, Ahat]
 
 end OriginalActualFourier
