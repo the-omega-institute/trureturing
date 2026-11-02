@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7f70d74235fd481ba6542ec73287a18828155e100e40d003378f2b2056480054
   normalized_sha256: sha256:7f70d74235fd481ba6542ec73287a18828155e100e40d003378f2b2056480054
 cas_ref: sha256:7f70d74235fd481ba6542ec73287a18828155e100e40d003378f2b2056480054
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ApproximateOrientedAnchorRepair.finite_oriented_anchor_polar_repair
+    target_statement_id: sha256:ad0645386674a033bfd2f8ba88d168b21e0814fc8db7fe46e02b823ca98392de
 receipts:
   unresolved_subitems: []
