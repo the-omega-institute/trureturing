@@ -11,7 +11,6 @@ import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.CharZero.Infinite
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 
 /-! The affine model and its Cramer reconstruction on a principal open chart. -/
