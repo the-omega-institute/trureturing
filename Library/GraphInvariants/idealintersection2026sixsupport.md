@@ -41,3 +41,16 @@ coordinate after eliminating the two positive paired diagonals. These
 constructions preserve the real domain and the singular boundary
 `a = 3`. The generic spectral expansion is supplied by `RHLinalg` and
 Mathlib; it is not claimed as new mathematics.
+
+The endpoint equality polynomial is in
+[paper/sections/endpoint-one-spectrum.tex](https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/sections/endpoint-one-spectrum.tex#L184),
+Remark `rem:endpoint-one-equality-curve`, at the same pinned revision.
+This file has 11,394 bytes and SHA256
+`16c52326f7c88bf538ee2b70bfc4f6c6e4b6901f93d963cd288ab96e4d4c50f5`.
+The polynomial on lines 186–190 is the source for the arithmetic
+application in the owning Blueprint. Its elementary representative,
+bounded-auxiliary-integer and eliminant argument applies existing
+polynomial-root and finite-fiber results; it is distinct from the public
+source's geometric argument. No novelty claim is made for this application,
+and it does not establish the graph/matrix correspondence or the geometric
+claims in that remark.
