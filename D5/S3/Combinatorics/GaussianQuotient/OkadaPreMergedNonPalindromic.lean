@@ -72,7 +72,7 @@ private theorem factorial_identity
           (1 - X ^ (n + 1 - k)) * gauss (n + 1) k =
             (1 - X ^ (n + 1)) * gauss n k := by
         simpa using D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_hook (n + 1) k (by omega)
-      rw [hsub, qFactorial_succ, qFactorial_succ]
+      rw [hsub, qFactorial_succ (n - k)]
       calc
         gauss (n + 1) k * qFactorial k *
             (qFactorial (n - k) * (1 - X ^ (n - k + 1))) =
