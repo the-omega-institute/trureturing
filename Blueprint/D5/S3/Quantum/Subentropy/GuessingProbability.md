@@ -4,7 +4,31 @@
 
 Finite positive operator-valued measurements define an honest supremum guessing probability.
 
-**Definition 1.1 (The success probability of a labelled measurement).**
+**Theorem 1.1 (Identity-summing measurements preserve total trace pairing).**
+
+$$\forall (X B: Type) [Fintype\left(X\right)] [Fintype\left(B\right)] [DecidableEq\left(B\right)], \forall R \in Matrix\left(B, B, \mathbb{C}\right), M \in X \to Matrix\left(B, B, \mathbb{C}\right),\; trace\left(R\right) = 1 \land sum\left(M\right) = 1 \Rightarrow \sum_{x \in X} Re\left(trace\left(M\left(x\right) R\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/GuessingProbability.measurement_trace_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For finite label and matrix index types, a trace-one complex matrix has total real trace pairing one with any matrix family whose sum is the identity.
+
+**Theorem 1.2 (Every POVM success probability lies between zero and one).**
+
+$$\forall (X B: Type) [Fintype\left(X\right)] [Fintype\left(B\right)] [DecidableEq\left(B\right)], \forall p \in X \to \mathbb{R}, rho \in X \to DensityState\left(B\right), M \in X \to Matrix\left(B, B, \mathbb{C}\right),\; ((\forall x \in X,\; 0 \le p\left(x\right)) \land sum\left(p\right) = 1 \land (\forall x \in X,\; PosSemidef\left(M\left(x\right)\right)) \land sum\left(M\right) = 1) \Rightarrow (0 \le successProbability\left(p, rho, M\right) \land successProbability\left(p, rho, M\right) \le 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/GuessingProbability.success_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For finite label and matrix index types, nonnegative weights summing to one, density states, and positive semidefinite measurement effects summing to the identity, the success probability lies in the closed unit interval.
+
+**Definition 1.3 (The success probability of a labelled measurement).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/GuessingProbability.successProbability`
 
@@ -18,7 +42,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/GuessingProbability.successProbability
 
 For a finite ensemble of density states rho_x with label weights p_x, successProbability is sum_x p_x Re Tr(M_x rho_x). The finite measurement has exactly one output for each guessed label.
 
-**Definition 1.2 (The genuine POVM success set).**
+**Definition 1.4 (The genuine POVM success set).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/GuessingProbability.successProbabilitySet`
 
@@ -32,7 +56,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/GuessingProbability.successProbability
 
 successProbabilitySet consists of exactly the success probabilities of matrices M_x that are positive semidefinite and sum to the identity. No restriction to projective measurements is imposed.
 
-**Definition 1.3 (The optimal guessing probability).**
+**Definition 1.5 (The optimal guessing probability).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/GuessingProbability.pGuess`
 
@@ -48,7 +72,7 @@ pGuess is the supremum of successProbabilitySet. For nonnegative normalized ense
 
 These probability and supremum statements do not assert a bound on conditional subentropy. That further conclusion requires the separate matrix pinching-gap inequality for every POVM.
 
-**Theorem 1.4 (Bounded positive guessing probability and supremum transfer).**
+**Theorem 1.6 (Bounded positive guessing probability and supremum transfer).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/GuessingProbability.pGuess_bounds`
 
@@ -64,9 +88,11 @@ For every finite nonnegative normalized ensemble, the genuine POVM success set i
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Subentropy/GuessingProbability.measurement_trace_sum`
 - Truth anchor: `D5/S3/Quantum/Subentropy/GuessingProbability.pGuess`
 - Truth anchor: `D5/S3/Quantum/Subentropy/GuessingProbability.pGuess_bounds`
 - Truth anchor: `D5/S3/Quantum/Subentropy/GuessingProbability.successProbability`
 - Truth anchor: `D5/S3/Quantum/Subentropy/GuessingProbability.successProbabilitySet`
+- Truth anchor: `D5/S3/Quantum/Subentropy/GuessingProbability.success_bounds`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../Information/OrthogonalRecordEntropy.md)
