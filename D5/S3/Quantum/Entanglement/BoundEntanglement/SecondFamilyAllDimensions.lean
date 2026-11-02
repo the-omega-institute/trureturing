@@ -50,8 +50,14 @@ def claim : Prop :=
 private def cyclicShift (d : ℕ) (k i : Fin d) : Fin d :=
   if h : 0 < d then ⟨(i.val + k.val) % d, Nat.mod_lt _ h⟩ else i
 
+private theorem cyclic_shift_bijective0 (d : ℕ) (k : Fin d) :
+    Function.Bijective (cyclicShift d k) := by sorry
+
+private def cyclicShiftEquiv (d : ℕ) (k : Fin d) : Fin d ≃ Fin d :=
+  Equiv.ofBijective (cyclicShift d k) (cyclic_shift_bijective0 d k)
+
 private def cyclicQ (d : ℕ) (k : Fin d) : Matrix (Fin d) (Fin d) ℝ :=
-  fun i j => if j = cyclicShift d k i then 1 else 0
+  Equiv.Perm.permMatrix ℝ (cyclicShiftEquiv d k)
 
 private def cyclicMu (d : ℕ) : Fin d → Fin d → Fin d :=
   fun i j => ⟨(j.val + d - i.val) % d, by
@@ -66,11 +72,12 @@ private def cyclicQbar (d : ℕ) : Fin d → Fin d → ℝ :=
 private def cyclicShield (d : ℕ) : Fin d → Fin d × Fin d → ℂ :=
   fun m p => if p.1 + p.2 = m then (Real.sqrt d : ℂ)⁻¹ else 0
 
-private theorem cyclic_shift_bijective (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
-    Function.Bijective (cyclicShift d k) := by sorry
-
 private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
-    (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by sorry
+    (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by
+  change (Equiv.Perm.permMatrix ℝ (cyclicShiftEquiv d k))ᵀ *
+    Equiv.Perm.permMatrix ℝ (cyclicShiftEquiv d k) = 1
+  rw [Matrix.transpose_permMatrix, ← Matrix.permMatrix_mul]
+  simp
 
 private theorem cyclic_q_factorization (d : ℕ) (h : 2 ≤ d) :
     ∀ i j k, cyclicQ d k i j = cyclicS d i j * cyclicQbar d (cyclicMu d i j) k := by sorry
