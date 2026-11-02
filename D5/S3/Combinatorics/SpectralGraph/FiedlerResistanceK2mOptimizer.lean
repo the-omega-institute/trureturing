@@ -560,4 +560,569 @@ private lemma resistance_spectral {m : ℕ} (hm : 0 < m)
   dsimp [T]
   rw [Matrix.trace_sub, hPtr]
 
+private def leafSum {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ) (i : Fin m) : ℝ :=
+  w s(hub m 0,leaf m i) + w s(hub m 1,leaf m i)
+
+private lemma delta_leaf_hub {m : ℕ} (i j : Fin m) (k : Fin 2) :
+    delta (leaf m i) (leaf m j) (hub m k) = 0 := by
+  have hi := (adj_hub_leaf m k i).ne
+  have hj := (adj_hub_leaf m k j).ne
+  simp [delta,hi,hj]
+
+private lemma delta_leaf_leaf {m : ℕ} (i j k : Fin m) :
+    delta (leaf m i) (leaf m j) (leaf m k) =
+      (if k = i then 1 else 0) - (if k = j then 1 else 0) := by
+  simp [delta,Pi.single_apply,leaf,Fin.ext_iff]
+
+private lemma leaf_delta_norm {m : ℕ} {i j : Fin m} (hij : i ≠ j) :
+    dotProduct (delta (leaf m i) (leaf m j)) (delta (leaf m i) (leaf m j)) = 2 := by
+  rw [delta_dot]
+  norm_num [delta_leaf_leaf,hij,Ne.symm hij]
+
+private lemma leaf_delta_energy {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ)
+    {i j : Fin m} (hij : i ≠ j) :
+    dotProduct (delta (leaf m i) (leaf m j))
+      (wLap (K2m m) w *ᵥ delta (leaf m i) (leaf m j)) = leafSum w i + leafSum w j := by
+  rw [delta_dot,lap_mul_leaf,lap_mul_leaf]
+  simp [delta_leaf_leaf,delta_leaf_hub,hij,Ne.symm hij,leafSum]
+  <;> ring
+
+private lemma leaf_pair_bound {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ) (t : ℝ)
+    (hP : (wLap (K2m m) w - t • (1 - constProj (2+m))).PosSemidef)
+    {i j : Fin m} (hij : i ≠ j) : 2*t ≤ leafSum w i + leafSum w j := by
+  have h := psd_rayleigh w t hP (delta (leaf m i) (leaf m j)) (delta_sum _ _)
+  rw [leaf_delta_norm hij,leaf_delta_energy w hij] at h
+  linarith
+
+private lemma pair_gap_sum {m : ℕ} (s : Fin m → ℝ) (t : ℝ) :
+    (∑ i, ∑ j, if i = j then 0 else s i + s j - 2*t) =
+      2 * (m-1 : ℝ) * ((∑ i, s i) - m*t) := by
+  have he (i j : Fin m) : (if i = j then 0 else s i+s j-2*t) =
+      (s i+s j-2*t) - if i = j then (2*s i-2*t) else 0 := by
+    split_ifs with h
+    · subst j; ring
+    · ring
+  simp_rw [he]
+  simp only [Finset.sum_sub_distrib,Finset.sum_add_distrib,Finset.sum_ite_eq,
+    Finset.mem_univ,ite_true,Finset.sum_const,Finset.card_univ,Fintype.card_fin,
+    nsmul_eq_mul,← Finset.mul_sum,Finset.sum_mul]
+  ring
+
+private lemma leaf_trace_bound {m : ℕ} (hm : 1 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (t : ℝ)
+    (hP : (wLap (K2m m) w - t • (1 - constProj (2+m))).PosSemidef) :
+    m*t ≤ ∑ i, leafSum w i := by
+  have hg : 0 ≤ ∑ i, ∑ j, if i = j then 0 else leafSum w i+leafSum w j-2*t := by
+    apply Finset.sum_nonneg
+    intro i hi
+    apply Finset.sum_nonneg
+    intro j hj
+    split_ifs with hij
+    · rfl
+    · linarith [leaf_pair_bound w t hP hij]
+  rw [pair_gap_sum] at hg
+  have hm1 : (1 : ℝ) < m := by exact_mod_cast hm
+  have hm' : (0 : ℝ) < m-1 := by linarith
+  nlinarith
+
+private lemma lap_trace {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ) :
+    (wLap (K2m m) w).trace = 2 * ∑ i, leafSum w i := by
+  have hd (k : Fin (2+m)) : wLap (K2m m) w k k =
+      ∑ j with (K2m m).Adj k j, w s(k,j) := by simp [wLap]
+  simp only [Matrix.trace,Matrix.diag_apply,sum_vertices,hd,Finset.sum_filter,
+    sum_vertices,adj_hub_hub,adj_hub_leaf,(adj_hub_leaf m 0 _).symm,
+    (adj_hub_leaf m 1 _).symm,adj_leaf_leaf,ite_true,ite_false,zero_add,
+    add_zero,Finset.sum_const_zero]
+  simp_rw [show ∀ i : Fin m, s(leaf m i,hub m 0) = s(hub m 0,leaf m i) from fun _ => Sym2.eq_swap,
+    show ∀ i : Fin m, s(leaf m i,hub m 1) = s(hub m 1,leaf m i) from fun _ => Sym2.eq_swap]
+  simp only [leafSum,Finset.sum_add_distrib]
+  ring
+
+private lemma reciprocal_bound {ι : Type*} [Fintype ι] (m : ℕ) (hm : 1 < m)
+    (hcard : Fintype.card ι = m+1) (r : ι → ℝ) (t : ℝ) (ht : 0 < t)
+    (hr : ∀ i, t ≤ r i) (htrace : 2*m*t ≤ ∑ i, r i) :
+    t * (∑ i, (r i)⁻¹) ≤ m+1/m ∧
+    (t * (∑ i, (r i)⁻¹) = m+1/m → (∑ i, r i) = 2*m*t) := by
+  let q := fun i => r i/t-1
+  let Q := ∑ i, q i
+  have hm1 : (1 : ℝ) < m := by exact_mod_cast hm
+  have hm0 : (0 : ℝ) < m := by linarith
+  have hrpos (i : ι) : 0 < r i := lt_of_lt_of_le ht (hr i)
+  have hq (i : ι) : 0 ≤ q i := by
+    dsimp [q]
+    rw [sub_nonneg,le_div_iff₀ ht]
+    simpa only [one_mul] using hr i
+  have hQeq : Q = (∑ i, r i)/t - (m+1) := by
+    simp [Q,q,Finset.sum_sub_distrib,← Finset.sum_div,hcard,Nat.cast_add,Nat.cast_ofNat]
+  have hQ : m-1 ≤ Q := by
+    have hh : 2*m ≤ (∑ i,r i)/t := (le_div_iff₀ ht).mpr (by nlinarith [htrace])
+    linarith
+  have hQ0 : 0 < Q := by linarith
+  have hQp : 0 < 1+Q := by linarith
+  have hqi (i : ι) : q i ≤ Q := Finset.single_le_sum (fun j _ => hq j) (Finset.mem_univ i)
+  have hterm (i : ι) : q i/(1+Q) ≤ q i/(1+q i) := by
+    exact div_le_div_of_nonneg_left (hq i) (by linarith [hq i]) (by linarith [hqi i])
+  have hsum : Q/(1+Q) ≤ ∑ i, q i/(1+q i) := by
+    rw [show Q/(1+Q) = ∑ i, q i/(1+Q) from (Finset.sum_div _ _ _)]
+    exact Finset.sum_le_sum fun i _ => hterm i
+  have hfrac : (m-1)/m ≤ Q/(1+Q) := by
+    rw [div_le_div_iff₀ hm0 hQp]
+    nlinarith
+  have hid : t * (∑ i, (r i)⁻¹) = (m+1) - ∑ i, q i/(1+q i) := by
+    have he (i : ι) : t * (r i)⁻¹ = 1 - q i/(1+q i) := by
+      dsimp [q]
+      field_simp [ht.ne', (hrpos i).ne']
+      <;> ring
+    rw [Finset.mul_sum]
+    simp_rw [he]
+    simp [Finset.sum_sub_distrib,hcard,Nat.cast_add,Nat.cast_ofNat]
+  constructor
+  · have hnum : (m+1 : ℝ) - (m-1)/m = m+1/m := by field_simp; ring
+    linarith
+  · intro heq
+    have hnum : (m+1 : ℝ) - (m+1/m) = (m-1)/m := by field_simp; ring
+    have hh : Q/(1+Q) ≤ (m-1)/m := by linarith
+    rw [div_le_div_iff₀ hQp hm0] at hh
+    have hQexact : Q = m-1 := by nlinarith
+    rw [hQeq] at hQexact
+    have hs : (∑ i,r i)/t = 2*m := by linarith
+    exact (div_eq_iff ht.ne').mp hs
+
+private lemma product_bound_trace {m : ℕ} (hm : 3 ≤ m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e) :
+    lambda2 (K2m m) w * totalRes (K2m m) w ≤ (m+2 : ℝ) * (m+1/m) ∧
+    (lambda2 (K2m m) w * totalRes (K2m m) w = (m+2 : ℝ) * (m+1/m) →
+      (∑ i, leafSum w i) = m * lambda2 (K2m m) w) := by
+  let hL := lap_hermitian (K2m m) w
+  let e := hL.eigenvalues
+  let J := {i : Fin (2+m) // e i ≠ 0}
+  let t := lambda2 (K2m m) w
+  have hs := lambda2_spectral (by omega) w hw
+  have hcard : Fintype.card J = m+1 := by
+    rw [Fintype.card_subtype]
+    have hc := Finset.card_filter_add_card_filter_not (s := Finset.univ) (fun i => e i = 0)
+    rw [zero_eigenvalue_count (by omega) w hw] at hc
+    simp only [Finset.card_univ,Fintype.card_fin] at hc
+    have hc' : 1 + (Finset.univ.filter (fun i => e i ≠ 0)).card = 2+m := by
+      simpa only [ne_eq] using hc
+    omega
+  have hsum : (∑ i : J, e i) = (wLap (K2m m) w).trace := by
+    rw [hL.trace_eq_sum_eigenvalues]
+    change (∑ i : J, e i) = ∑ i, e i
+    rw [← Finset.sum_subtype (Finset.univ.filter (fun i => e i ≠ 0)) (by simp) e]
+    simp only [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro i hi
+    by_cases he : e i = 0 <;> simp [he]
+  have hinv : (∑ i : J, (e i)⁻¹) = ∑ i, (e i)⁻¹ := by
+    rw [← Finset.sum_subtype (Finset.univ.filter (fun i => e i ≠ 0)) (by simp) (fun i => (e i)⁻¹)]
+    simp only [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro i hi
+    by_cases he : e i = 0 <;> simp [he]
+  have htrace : 2*m*t ≤ ∑ i : J, e i := by
+    rw [hsum,lap_trace]
+    have h := leaf_trace_bound (by omega) w t hs.2.1
+    nlinarith
+  have hb := reciprocal_bound m (by omega) hcard (fun i : J => e i) t hs.1
+    (fun i => hs.2.2 i i.2) htrace
+  have hn : (0 : ℝ) < m+2 := by positivity
+  have hR : totalRes (K2m m) w = (m+2 : ℝ) * ∑ i : J, (e i)⁻¹ := by
+    rw [resistance_spectral (by omega) w hw, hinv]
+    simp [e,hL,Nat.cast_add,Nat.cast_ofNat,add_comm]
+  constructor
+  · rw [hR]
+    nlinarith [mul_le_mul_of_nonneg_left hb.1 hn.le]
+  · intro heq
+    have hh : t * (∑ i : J, (e i)⁻¹) = m+1/m := by
+      rw [hR] at heq
+      dsimp [t]
+      nlinarith
+    have htr := hb.2 hh
+    rw [hsum,lap_trace] at htr
+    linarith
+
+private lemma leaf_eigen_of_trace {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ) (t : ℝ)
+    (hP : (wLap (K2m m) w - t • (1 - constProj (2+m))).PosSemidef)
+    (hsum : (∑ i, leafSum w i) = m*t) {i j : Fin m} (hij : i ≠ j) :
+    wLap (K2m m) w *ᵥ delta (leaf m i) (leaf m j) = t • delta (leaf m i) (leaf m j) := by
+  let g := fun i j : Fin m => if i = j then 0 else leafSum w i+leafSum w j-2*t
+  have hg (i j : Fin m) : 0 ≤ g i j := by
+    dsimp [g]
+    split_ifs with h
+    · rfl
+    · linarith [leaf_pair_bound w t hP h]
+  have htot : (∑ i, ∑ j, g i j) = 0 := by
+    dsimp [g]
+    rw [pair_gap_sum,hsum,sub_self,mul_zero]
+  have hrow (i : Fin m) : (∑ j, g i j) = 0 :=
+    (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => Finset.sum_nonneg (fun l _ => hg k l))).mp
+      htot i (Finset.mem_univ _)
+  have hgap := (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => hg i k)).mp
+    (hrow i) j (Finset.mem_univ _)
+  simp only [g,hij,ite_false] at hgap
+  have he : dotProduct (delta (leaf m i) (leaf m j))
+      ((wLap (K2m m) w - t • (1 - constProj (2+m))) *ᵥ delta (leaf m i) (leaf m j)) = 0 := by
+    rw [Matrix.sub_mulVec,Matrix.smul_mulVec,Matrix.sub_mulVec,Matrix.one_mulVec,
+      proj_delta,sub_zero,dotProduct_sub,dotProduct_smul,smul_eq_mul,
+      leaf_delta_norm hij,leaf_delta_energy w hij]
+    linarith
+  have hz : (wLap (K2m m) w - t • (1 - constProj (2+m))) *ᵥ
+      delta (leaf m i) (leaf m j) = 0 :=
+    hP.dotProduct_mulVec_zero_iff.mp (by simpa only [star_trivial] using he)
+  rw [Matrix.sub_mulVec,Matrix.smul_mulVec,Matrix.sub_mulVec,Matrix.one_mulVec,
+    proj_delta,sub_zero] at hz
+  exact sub_eq_zero.mp hz
+
+private lemma lap_delta_hub {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ)
+    (i j : Fin m) (k : Fin 2) :
+    (wLap (K2m m) w *ᵥ delta (leaf m i) (leaf m j)) (hub m k) =
+      -w s(hub m k,leaf m i) + w s(hub m k,leaf m j) := by
+  simp [delta,Matrix.mulVec_sub,Matrix.mulVec_single_one,Matrix.col_apply,wLap,
+    (adj_hub_leaf m k i).ne,(adj_hub_leaf m k j).ne,adj_hub_leaf]
+
+private lemma equality_leaf_uniform {m : ℕ} (hm : 3 ≤ m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (heq : lambda2 (K2m m) w * totalRes (K2m m) w = (m+2 : ℝ) * (m+1/m)) :
+    ∃ a b : ℝ, 0 < a ∧ 0 < b ∧ a+b = lambda2 (K2m m) w ∧
+      ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b := by
+  let i0 : Fin m := ⟨0,by omega⟩
+  let j0 : Fin m := ⟨1,by omega⟩
+  have hi0j0 : i0 ≠ j0 := by
+    intro h
+    have := congrArg Fin.val h
+    norm_num [i0,j0] at this
+  have hs := (product_bound_trace hm w hw).2 heq
+  have hP := (lambda2_spectral (by omega) w hw).2.1
+  have hu (i j : Fin m) (hij : i ≠ j) (k : Fin 2) :
+      w s(hub m k,leaf m i) = w s(hub m k,leaf m j) := by
+    have h := congrFun (leaf_eigen_of_trace w _ hP hs hij) (hub m k)
+    rw [lap_delta_hub] at h
+    simp only [Pi.smul_apply,smul_eq_mul,delta_leaf_hub,mul_zero] at h
+    linarith
+  refine ⟨w s(hub m 0,leaf m i0),w s(hub m 1,leaf m i0),
+    hw _ (by simpa using adj_hub_leaf m 0 i0),
+    hw _ (by simpa using adj_hub_leaf m 1 i0), ?_, ?_⟩
+  · have h := congrFun (leaf_eigen_of_trace w _ hP hs hi0j0) (leaf m i0)
+    rw [lap_mul_leaf] at h
+    norm_num only [delta_leaf_hub,delta_leaf_leaf,hi0j0,ite_false,ite_true,
+      Pi.smul_apply,smul_eq_mul,sub_zero,zero_sub,mul_one] at h
+    linarith
+  · intro i
+    by_cases hi : i = i0
+    · subst i; exact ⟨rfl,rfl⟩
+    · exact ⟨hu i i0 hi 0,hu i i0 hi 1⟩
+
+private lemma resistance_of_current {m : ℕ} (hm : 0 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (p q : Fin (2+m)) (hpq : p ≠ q) (x : Fin (2+m) → ℝ)
+    (hx : wLap (K2m m) w *ᵥ x = delta p q) :
+    effRes (K2m m) w p q = x p-x q := by
+  rw [(harmonic_resistance hm w hw p q hpq).2]
+  let v := shiftInv w *ᵥ delta p q
+  have hz : wLap (K2m m) w *ᵥ (v-x) = 0 := by
+    rw [Matrix.mulVec_sub,inv_delta_equation hm w hw,hx,sub_self]
+  have hE : dotProduct (v-x) (wLap (K2m m) w *ᵥ (v-x)) = 0 := by rw [hz,dotProduct_zero]
+  obtain ⟨c,hc⟩ := (energy_zero_iff hm w hw (v-x)).mp hE
+  have hp := congrFun hc p
+  have hq := congrFun hc q
+  change v p-x p = c at hp
+  change v q-x q = c at hq
+  change v p-v q = x p-x q
+  linarith
+
+private def vector {m : ℕ} (u v : ℝ) (z : Fin m → ℝ) : Fin (2+m) → ℝ :=
+  Fin.addCases (fun j : Fin 2 => if j = 0 then u else v) z
+
+private lemma vector_hub {m : ℕ} (u v : ℝ) (z : Fin m → ℝ) (j : Fin 2) :
+    vector u v z (hub m j) = if j = 0 then u else v := by simp [vector,hub]
+
+private lemma vector_leaf {m : ℕ} (u v : ℝ) (z : Fin m → ℝ) (i : Fin m) :
+    vector u v z (leaf m i) = z i := by simp [vector,leaf]
+
+private lemma uniform_lap_hub {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ)
+    (a b : ℝ) (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b)
+    (u v : ℝ) (z : Fin m → ℝ) :
+    (wLap (K2m m) w *ᵥ vector u v z) (hub m 0) = a*(m*u-∑ i,z i) ∧
+    (wLap (K2m m) w *ᵥ vector u v z) (hub m 1) = b*(m*v-∑ i,z i) := by
+  constructor
+  · rw [lap_mul_hub]
+    simp_rw [(hu _).1,vector_hub,vector_leaf]
+    simp [Finset.sum_sub_distrib,Finset.sum_const,← Finset.mul_sum,mul_sub,mul_comm,mul_left_comm]
+    <;> ring
+  · rw [lap_mul_hub]
+    simp_rw [(hu _).2,vector_hub,vector_leaf]
+    simp [Finset.sum_sub_distrib,Finset.sum_const,← Finset.mul_sum,mul_sub,mul_comm,mul_left_comm]
+    <;> ring
+
+private lemma uniform_lap_leaf {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ)
+    (a b : ℝ) (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b)
+    (u v : ℝ) (z : Fin m → ℝ) (i : Fin m) :
+    (wLap (K2m m) w *ᵥ vector u v z) (leaf m i) = (a+b)*z i-a*u-b*v := by
+  rw [lap_mul_leaf,(hu i).1,(hu i).2,vector_leaf,vector_hub,vector_hub]
+  norm_num
+  <;> ring
+
+private lemma uniform_hub_resistance {m : ℕ} (hm : 0 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
+    (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b) :
+    effRes (K2m m) w (hub m 0) (hub m 1) = (a+b)/(m*a*b) := by
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  let z : Fin m → ℝ := fun _ => 1/(m*b)
+  let x := vector ((a+b)/(m*a*b)) 0 z
+  have hpq : hub m 0 ≠ hub m 1 := by simp [hub,Fin.ext_iff]
+  rw [resistance_of_current hm w hw _ _ hpq x ?_]
+  · simp [x,vector_hub]
+  · dsimp only [x]
+    ext k
+    refine Fin.addCases (fun j => ?_) (fun i => ?_) k
+    · fin_cases j
+      · change (wLap (K2m m) w *ᵥ vector ((a+b)/(m*a*b)) 0 z) (hub m 0) = _
+        rw [(uniform_lap_hub (m := m) w a b hu _ _ _).1]
+        simp [z,delta,Pi.single_apply,hub,Fin.ext_iff]
+        <;> field_simp [hm0,ha.ne',hb.ne']
+        <;> ring
+      · change (wLap (K2m m) w *ᵥ vector ((a+b)/(m*a*b)) 0 z) (hub m 1) = _
+        rw [(uniform_lap_hub (m := m) w a b hu _ _ _).2]
+        simp [z,delta,Pi.single_apply,hub,Fin.ext_iff]
+        <;> field_simp [hm0,ha.ne',hb.ne']
+        <;> ring
+    · change (wLap (K2m m) w *ᵥ vector ((a+b)/(m*a*b)) 0 z) (leaf m i) = _
+      rw [uniform_lap_leaf (m := m) w a b hu]
+      have h0 : Fin.natAdd 2 i ≠ hub m 0 := Ne.symm (adj_hub_leaf m 0 i).ne
+      have h1 : Fin.natAdd 2 i ≠ hub m 1 := Ne.symm (adj_hub_leaf m 1 i).ne
+      simp [z,delta,Pi.single_apply,h0,h1]
+      <;> field_simp [hm0,ha.ne',hb.ne']
+      <;> ring
+
+private lemma vertex_ext {m : ℕ} {x y : Fin (2+m) → ℝ}
+    (hh : ∀ j, x (hub m j) = y (hub m j))
+    (hl : ∀ i, x (leaf m i) = y (leaf m i)) : x = y := by
+  funext k
+  exact Fin.addCases hh hl k
+
+private lemma effRes_comm {m : ℕ} (hm : 0 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (p q : Fin (2+m)) : effRes (K2m m) w p q = effRes (K2m m) w q p := by
+  rw [effRes_inverse hm w hw,effRes_inverse hm w hw]
+  ring
+
+private lemma delta_hub_leaf_at_hub {m : ℕ} (i : Fin m) (j k : Fin 2) :
+    delta (hub m j) (leaf m i) (hub m k) = if k = j then 1 else 0 := by
+  have h := (adj_hub_leaf m k i).ne
+  simp only [delta,Pi.sub_apply,Pi.single_apply,h,Ne.symm h,ite_false,sub_zero]
+  simp [hub,Fin.ext_iff]
+
+private lemma delta_hub_leaf_at_leaf {m : ℕ} (i k : Fin m) (j : Fin 2) :
+    delta (hub m j) (leaf m i) (leaf m k) = -(if k = i then 1 else 0) := by
+  have h := (adj_hub_leaf m j k).ne
+  simp only [delta,Pi.sub_apply,Pi.single_apply,h,Ne.symm h,ite_false,zero_sub]
+  simp [leaf,Fin.ext_iff]
+
+private lemma uniform_hub_leaf_resistance {m : ℕ} (hm : 0 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
+    (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b)
+    (i : Fin m) :
+    effRes (K2m m) w (hub m 0) (leaf m i) = (m*a+b)/(m*a*(a+b)) ∧
+    effRes (K2m m) w (hub m 1) (leaf m i) = (a+m*b)/(m*b*(a+b)) := by
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  have hs0 : a+b ≠ 0 := by positivity
+  let z : Fin m → ℝ := fun k => 1/(m*(a+b)) - if k = i then 1/(a+b) else 0
+  have hzs : (∑ k,z k) = 0 := by
+    simp [z,Finset.sum_sub_distrib]
+    field_simp [hm0,hs0]
+    <;> ring
+  constructor
+  · let x := vector (1/(m*a)) 0 z
+    have hcur : wLap (K2m m) w *ᵥ x = delta (hub m 0) (leaf m i) := by
+      dsimp only [x]
+      apply vertex_ext
+      · intro j; fin_cases j
+        · change (wLap (K2m m) w *ᵥ vector (1/(m*a)) 0 z) (hub m 0) = _
+          rw [(uniform_lap_hub (m := m) w a b hu _ _ _).1,hzs]
+          simp [delta_hub_leaf_at_hub]
+          field_simp [hm0,ha.ne']
+        · change (wLap (K2m m) w *ᵥ vector (1/(m*a)) 0 z) (hub m 1) = _
+          rw [(uniform_lap_hub (m := m) w a b hu _ _ _).2,hzs]
+          simp [delta_hub_leaf_at_hub]
+      · intro k
+        rw [uniform_lap_leaf (m := m) w a b hu]
+        simp only [delta_hub_leaf_at_leaf,z]
+        split_ifs <;> field_simp [hm0,ha.ne',hs0] <;> ring
+    rw [resistance_of_current hm w hw _ _ (adj_hub_leaf m 0 i).ne x hcur]
+    simp [x,z,vector_hub,vector_leaf]
+    field_simp
+    <;> ring
+  · let x := vector 0 (1/(m*b)) z
+    have hcur : wLap (K2m m) w *ᵥ x = delta (hub m 1) (leaf m i) := by
+      dsimp only [x]
+      apply vertex_ext
+      · intro j; fin_cases j
+        · change (wLap (K2m m) w *ᵥ vector 0 (1/(m*b)) z) (hub m 0) = _
+          rw [(uniform_lap_hub (m := m) w a b hu _ _ _).1,hzs]
+          simp [delta_hub_leaf_at_hub]
+        · change (wLap (K2m m) w *ᵥ vector 0 (1/(m*b)) z) (hub m 1) = _
+          rw [(uniform_lap_hub (m := m) w a b hu _ _ _).2,hzs]
+          simp [delta_hub_leaf_at_hub]
+          field_simp [hm0,hb.ne']
+      · intro k
+        rw [uniform_lap_leaf (m := m) w a b hu]
+        simp only [delta_hub_leaf_at_leaf,z]
+        split_ifs <;> field_simp [hm0,hb.ne',hs0] <;> ring
+    rw [resistance_of_current hm w hw _ _ (adj_hub_leaf m 1 i).ne x hcur]
+    simp [x,z,vector_hub,vector_leaf]
+    field_simp
+    <;> ring
+
+private lemma uniform_leaf_resistance {m : ℕ} (hm : 0 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
+    (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b)
+    (i j : Fin m) :
+    effRes (K2m m) w (leaf m i) (leaf m j) = if i = j then 0 else 2/(a+b) := by
+  by_cases hij : i = j
+  · subst j; simp [effRes]
+  rw [if_neg hij]
+  have hs0 : a+b ≠ 0 := by positivity
+  let z : Fin m → ℝ := fun k => delta i j k/(a+b)
+  let x := vector 0 0 z
+  have hzs : (∑ k,z k) = 0 := by simp [z,← Finset.sum_div,delta_sum]
+  have hpq : leaf m i ≠ leaf m j := by simpa [leaf,Fin.ext_iff] using hij
+  have hcur : wLap (K2m m) w *ᵥ x = delta (leaf m i) (leaf m j) := by
+    dsimp only [x]
+    apply vertex_ext
+    · intro k; fin_cases k
+      · change (wLap (K2m m) w *ᵥ vector 0 0 z) (hub m 0) = _
+        rw [(uniform_lap_hub (m := m) w a b hu _ _ _).1,hzs,delta_leaf_hub]; simp
+      · change (wLap (K2m m) w *ᵥ vector 0 0 z) (hub m 1) = _
+        rw [(uniform_lap_hub (m := m) w a b hu _ _ _).2,hzs,delta_leaf_hub]; simp
+    · intro k
+      rw [uniform_lap_leaf (m := m) w a b hu,delta_leaf_leaf]
+      simp [z,delta,Pi.single_apply]
+      field_simp [hs0]
+  rw [resistance_of_current hm w hw _ _ hpq x hcur]
+  simp [x,z,vector_leaf,delta,Pi.single_apply,hij,Ne.symm hij]
+  <;> ring
+
+private lemma uniform_totalRes {m : ℕ} (hm : 0 < m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
+    (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b) :
+    totalRes (K2m m) w = (m+1 : ℝ)/m * (a+b)/(a*b) + (m*m+m-2 : ℝ)/(a+b) := by
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  have hs0 : a+b ≠ 0 := by positivity
+  have hdiag (p : Fin (2+m)) : effRes (K2m m) w p p = 0 := by simp [effRes]
+  have h01 := uniform_hub_resistance hm w hw a b ha hb hu
+  have h10 := (effRes_comm hm w hw (hub m 1) (hub m 0)).trans h01
+  have h0 (i : Fin m) := (uniform_hub_leaf_resistance hm w hw a b ha hb hu i).1
+  have h1 (i : Fin m) := (uniform_hub_leaf_resistance hm w hw a b ha hb hu i).2
+  have h0' (i : Fin m) := (effRes_comm hm w hw (leaf m i) (hub m 0)).trans (h0 i)
+  have h1' (i : Fin m) := (effRes_comm hm w hw (leaf m i) (hub m 1)).trans (h1 i)
+  have hll (i : Fin m) : (∑ j, effRes (K2m m) w (leaf m i) (leaf m j)) =
+      m*(2/(a+b)) - 2/(a+b) := by
+    simp_rw [uniform_leaf_resistance hm w hw a b ha hb hu]
+    have he (j : Fin m) : (if i=j then (0 : ℝ) else 2/(a+b)) =
+        2/(a+b) - if i=j then 2/(a+b) else 0 := by split_ifs <;> ring
+    simp_rw [he]
+    simp [Finset.sum_sub_distrib]
+  have hh : 2 * totalRes (K2m m) w = ∑ p, ∑ q, effRes (K2m m) w p q := by
+    simpa only [effRes_inverse hm w hw] using totalRes_twice hm w hw
+  simp only [sum_vertices,hdiag,h01,h10,h0,h1,h0',h1',hll,Finset.sum_add_distrib,
+    Finset.sum_const,Finset.card_univ,Fintype.card_fin,nsmul_eq_mul] at hh
+  apply mul_left_cancel₀ (show (2 : ℝ) ≠ 0 by norm_num)
+  rw [hh]
+  field_simp [hm0,ha.ne',hb.ne',hs0]
+  <;> ring
+
+private lemma uniform_energy_difference {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ)
+    (a b t : ℝ) (hs : a+b=t)
+    (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b)
+    (x : Fin (2+m) → ℝ) (hx : ∑ k,x k = 0) :
+    dotProduct x (wLap (K2m m) w *ᵥ x) - t*dotProduct x x =
+      ((m+2)*a-t)*(x (hub m 0))^2 + ((m+2)*b-t)*(x (hub m 1))^2 +
+        2*t*x (hub m 0)*x (hub m 1) := by
+  subst t
+  have hz : (∑ i,x (leaf m i)) = -x (hub m 0)-x (hub m 1) := by
+    rw [sum_vertices] at hx
+    linarith
+  have hn : dotProduct x x = (x (hub m 0))^2+(x (hub m 1))^2+∑ i,(x (leaf m i))^2 := by
+    simp only [dotProduct,sum_vertices,pow_two]
+  have he (i : Fin m) : a*(x (hub m 0)-x (leaf m i))^2 + b*(x (hub m 1)-x (leaf m i))^2 =
+      (a*(x (hub m 0))^2+b*(x (hub m 1))^2) -
+        2*(a*x (hub m 0)+b*x (hub m 1))*x (leaf m i) + (a+b)*(x (leaf m i))^2 := by ring
+  rw [energy,hn]
+  simp_rw [(hu _).1,(hu _).2,he]
+  simp only [Finset.sum_add_distrib,Finset.sum_sub_distrib,Finset.sum_const,
+    Finset.card_univ,Fintype.card_fin,nsmul_eq_mul,← Finset.mul_sum,hz]
+  ring
+
+private lemma uniform_lambda2 {m : ℕ} (hm : 3 ≤ m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (a b t : ℝ) (ha : 0 < a) (hb : 0 < b) (ht : 0 < t)
+    (hs : a+b=t) (hab : (m+2)*a*b=t^2)
+    (hu : ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b) :
+    lambda2 (K2m m) w = t := by
+  let α := (m+2 : ℝ)*a-t
+  let β := (m+2 : ℝ)*b-t
+  have hα : 0 < α := by
+    have hprod : α*b = t*a := by dsimp [α]; nlinarith [hab]
+    by_contra! h
+    have hh := mul_nonpos_of_nonpos_of_nonneg h hb.le
+    nlinarith [mul_pos ht ha]
+  have hαβ : α*β=t^2 := by
+    calc
+      _ = t^2+(m+2)*((m+2)*a*b-t*(a+b)) := by dsimp [α,β]; ring
+      _ = _ := by rw [hab,hs]; ring
+  have hlower (x : Fin (2+m) → ℝ) (hx : ∑ k,x k = 0) :
+      t*dotProduct x x ≤ dotProduct x (wLap (K2m m) w *ᵥ x) := by
+    have he := uniform_energy_difference w a b t hs hu x hx
+    have hid : α*(dotProduct x (wLap (K2m m) w *ᵥ x)-t*dotProduct x x) =
+        (α*x (hub m 0)+t*x (hub m 1))^2 := by
+      rw [he]
+      change α*(α*(x (hub m 0))^2+β*(x (hub m 1))^2+2*t*x (hub m 0)*x (hub m 1)) = _
+      calc
+        _ = (α*x (hub m 0)+t*x (hub m 1))^2 + (α*β-t^2)*(x (hub m 1))^2 := by ring
+        _ = _ := by rw [hαβ]; ring
+    have hnonneg : 0 ≤ α*(dotProduct x (wLap (K2m m) w *ᵥ x)-t*dotProduct x x) := by
+      rw [hid]; exact sq_nonneg _
+    exact sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hα).mp hnonneg)
+  let i0 : Fin m := ⟨0,by omega⟩
+  let j0 : Fin m := ⟨1,by omega⟩
+  have hij : i0 ≠ j0 := by intro h; have := congrArg Fin.val h; norm_num [i0,j0] at this
+  have hpq : leaf m i0 ≠ leaf m j0 := by simpa [leaf,Fin.ext_iff] using hij
+  have heigen : wLap (K2m m) w *ᵥ delta (leaf m i0) (leaf m j0) =
+      t • delta (leaf m i0) (leaf m j0) := by
+    apply vertex_ext
+    · intro k
+      rw [lap_delta_hub]
+      simp only [Pi.smul_apply,smul_eq_mul,delta_leaf_hub,mul_zero]
+      fin_cases k <;> simp [(hu i0).1,(hu i0).2,(hu j0).1,(hu j0).2]
+    · intro k
+      rw [lap_mul_leaf,(hu k).1,(hu k).2]
+      simp only [delta_leaf_hub,sub_zero,Pi.smul_apply,smul_eq_mul]
+      rw [← add_mul,hs]
+  exact lambda2_eq_of_rayleigh _ _ t hlower _ (delta_ne hpq) (delta_sum _ _) heigen
+
+private lemma equality_parameters {m : ℕ} (hm : 3 ≤ m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (heq : lambda2 (K2m m) w * totalRes (K2m m) w = (m+2 : ℝ) * (m+1/m)) :
+    ∃ a b : ℝ, 0 < a ∧ 0 < b ∧ a+b = lambda2 (K2m m) w ∧
+      (m+2)*a*b = (lambda2 (K2m m) w)^2 ∧
+      ∀ i, w s(hub m 0,leaf m i) = a ∧ w s(hub m 1,leaf m i) = b := by
+  obtain ⟨a,b,ha,hb,hs,hu⟩ := equality_leaf_uniform hm w hw heq
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  have hs0 : a+b ≠ 0 := by positivity
+  rw [uniform_totalRes (by omega) w hw a b ha hb hu,← hs] at heq
+  have hid : (a+b)*((m+1 : ℝ)/m*(a+b)/(a*b)+(m*m+m-2 : ℝ)/(a+b)) -
+      (m+2 : ℝ)*(m+1/m) = (m+1)/(m*a*b)*((a+b)^2-(m+2)*a*b) := by
+    field_simp [hm0,ha.ne',hb.ne',hs0]
+    <;> ring
+  have hz : (m+1 : ℝ)/(m*a*b)*((a+b)^2-(m+2)*a*b) = 0 := by rw [← hid,heq]; ring
+  have hc : (m+1 : ℝ)/(m*a*b) ≠ 0 := by positivity
+  have hab := (mul_eq_zero.mp hz).resolve_left hc
+  refine ⟨a,b,ha,hb,hs,?_,hu⟩
+  rw [← hs]
+  linarith
+
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer
