@@ -34,12 +34,11 @@ internal sealed class WeightedProjectionMinorsDocument : IScribeDocumentDefiniti
         var orthonormal = Call("Orthonormal",Real(),Seq(OpenBracket,X("x"),Comma,X("y"),Comma,X("z"),CloseBracket));
         return All("n",Seq(Mathbb,Grp(X("N"))),All("x",Vec(),All("y",Vec(),All("z",Vec(),
             Imp(orthonormal,All("A",Call("Matrix",Index(),Index(),Real()),
-                Imp(And(symmetry,positive),LE(lhs,rhs)))))));
+                Imp(And(symmetry,positive),LE(lhs,rhs))))))));
     }
 
     private static Formula X(string n) => F.Id(n);
     private static Formula Real() => Seq(Mathbb,Grp(X("R")));
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a,b);
     private static Formula Index() => Call("Fin",X("n"));
     private static Formula Vec() => Call("EuclideanSpace",Real(),Index());
     private static Formula A(string i,string j) => Call("A",X(i),X(j));
@@ -49,7 +48,6 @@ internal sealed class WeightedProjectionMinorsDocument : IScribeDocumentDefiniti
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.And,b);
     private static Formula LT(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula LE(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
-    private static Formula SumAt(string n, Formula a) => Seq(F.Sum,Underscore,Grp(X(n),InMacro,Sp,Index()),Sp,a);
     private static Formula SumPairs(Formula a) => Seq(F.Sum,Underscore,Grp(X("i"),Comma,X("j"),InMacro,Sp,Index(),Comma,LT(X("i"),X("j"))),Sp,a);
     private static Formula SumTriples(Formula a) => Seq(F.Sum,Underscore,Grp(X("i"),Comma,X("j"),Comma,X("k"),InMacro,Sp,Index(),Comma,LT(X("i"),X("j")),Comma,LT(X("j"),X("k"))),Sp,a);
 }
