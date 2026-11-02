@@ -1,0 +1,70 @@
+### 定理 2：完全有限积分的误差包络
+
+有
+
+$$
+\boxed{
+0\preceq\mathcal E_k
+\preceq\mathcal U_{k,J,\Omega},
+}
+$$
+
+以及
+
+$$
+\boxed{
+0\preceq
+\mathcal U_{k,J,\Omega}-\mathcal E_k
+\preceq
+\left(
+\frac{\Omega^2}{8J^2}
++
+\frac1{1+m_J(\Omega)}
+\right)\mathcal E_k^{(0)}.
+}
+$$
+<a id="eq-14"></a>
+<div class="equation-caption">Equation (14).</div>
+
+**证明。**
+
+在 $|\xi|\leq\Omega$ 内，用式 (12) 控制分母替换的误差；在 $|\xi|>\Omega$ 内，用 $m$ 随 $|\xi|$ 增加以及 Plancherel 等式控制尾部。对任意粗向量 $c$ 应用这个标量估计，即得矩阵不等式。证毕。
+
+因此，
+
+$$
+\boxed{
+\mathcal S_k-c_D\mathcal U_{k,J,\Omega}
+\preceq\mathcal S_D.
+}
+$$
+<a id="eq-15"></a>
+<div class="equation-caption">Equation (15).</div>
+
+而且可以逐步选择有限的 $J_k,\Omega_k$，使
+
+$$
+\mathcal U_{k,J_k,\Omega_k}\to0.
+$$
+
+这不要求 $\mathcal E_k^{(0)}$ 有界或趋零：每一步只需把式 (14) 的标量系数取得足够小。
+
+至此，我们得到一对真正收敛的有限步上下界：
+
+$$
+\boxed{
+\mathcal S_k-c_D\mathcal U_{k,J_k,\Omega_k}
+\preceq
+\mathcal S_D
+\preceq
+\mathcal S_k.
+}
+$$
+<a id="eq-16"></a>
+<div class="equation-caption">Equation (16).</div>
+
+它们只涉及有限实际关系矩阵、有限和，以及有限区间上的积分。
+
+---
+
+<a id="section-5-unitary-error-conservation"></a>

@@ -228,7 +228,7 @@ private lemma coeff_partition_phi {α : Type*} [DecidableEq α]
     rw [Finset.prod_const, he, mul_assoc, coeff_C_mul, coeff_X_pow_mul', ite_eq_left hsm]
     simp [catalanIntegerSeries]
 
-private lemma residual_card {α : Type*} [DecidableEq α]
+lemma residual_card {α : Type*} [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (u v : α)
     (hu : u ∈ V) (hv : v ∈ V) (hne : u ≠ v) :
     (closedComplement G V u ∩ closedComplement G V v).card ≤ V.card - 2 ∧ 2 ≤ V.card := by
@@ -243,7 +243,7 @@ private lemma residual_card {α : Type*} [DecidableEq α]
   have hh := card_le_card hs
   constructor <;> omega
 
-private lemma phi_add_edge {α : Type*} [DecidableEq α]
+lemma phi_add_edge {α : Type*} [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (u v : α)
     (hu : u ∈ V) (hv : v ∈ V) (hne : u ≠ v) (hn : ¬G.Adj u v)
     (m : ℕ) (hm : V.card ≤ m) :
@@ -294,7 +294,7 @@ private lemma phi_map {α β : Type*} [DecidableEq α] [DecidableEq β]
   rw [he, Finset.sum_map]
   simp
 
-private lemma phi_subtype {α : Type*} [DecidableEq α]
+lemma phi_subtype {α : Type*} [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (m : ℕ) :
     phi (G.induce (V : Set α)) univ m = phi G V m := by
   classical

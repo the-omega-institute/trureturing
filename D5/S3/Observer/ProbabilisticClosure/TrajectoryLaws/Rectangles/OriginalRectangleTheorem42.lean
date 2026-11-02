@@ -1,0 +1,302 @@
+/- GID: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleTheorem42
+   generality: I
+   mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleTheorem42
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Native closed-component rectangle bounds and both original geometric tails. -/
+
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.OriginalRectanglePosteriors
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.OriginalRectangleRoutes
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalUnifilarErasureTail
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+noncomputable section
+open MeasureTheory ProbabilityTheory Function Filter Matrix
+open scoped BigOperators ENNReal Classical
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalLawTrimming
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveSupportPresentation
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureCylinders
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureScreening
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleMessages
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalErasureComparison
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleRoutes
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectanglePosteriors
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleSmoothing
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalUnifilarErasureTail
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteClosedClasses
+
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleTheorem42
+universe u
+variable {H : Type u} [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
+
+/- The root tail is the source's A_P(R); `erasureTail` is its squared tau_P(R).
+   The summands use the risks from OriginalErasureComparison verbatim. -/
+def rootErasureTail (θ : Presentation H) (R : ℕ) : ℝ :=
+  ∑' n : ℕ, (Real.sqrt (leftRisk θ (R+n)) + Real.sqrt (rightRisk θ (R+n)))
+
+private theorem native_visible_pushforward (κ : Presentation H)
+    (K : Measure (PathSpace H))
+    (hK : K = (jointLaw κ : Measure (PathSpace H))) :
+    K.map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) := by
+  subst K
+  change ((retainedLaw κ : Measure (PathSpace (Positive κ))).map (includePath κ)).map Prod.snd = _
+  rw [Measure.map_map measurable_snd (inclusion_measurable κ)]
+  exact (same_law_trimming κ).2.2.2.1
+
+private theorem native_component_irreducible
+    (θ : Presentation H)
+    (D : FiniteClosedClasses.ClosedClass (θ.matrix false + θ.matrix true))
+    (hc : 0 < ∑ i : D.val, θ.initial i.val) :
+    IsIrreducible ((nativeComponent θ D hc).matrix false +
+      (nativeComponent θ D hc).matrix true) := by
+  let T := θ.matrix false + θ.matrix true
+  have hT : T ∈ rowStochastic ℝ H := Matrix.mem_rowStochastic_iff_sum.mpr
+    ⟨fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _), θ.stochastic⟩
+  have hi : IsIrreducible (FiniteClosedClasses.restriction T D.val) :=
+    (FiniteClosedClasses.actual_structure T hT).class_irreducible D
+  have hκ : IsIrreducible ((nativeComponent θ D hc).matrix false +
+      (nativeComponent θ D hc).matrix true) := by
+    have he : (nativeComponent θ D hc).matrix false +
+        (nativeComponent θ D hc).matrix true = FiniteClosedClasses.restriction T D.val := by
+      ext i j
+      rfl
+    rw [he]
+    exact hi
+  exact hκ
+
+private theorem geometric_root_tail
+    (b : ℕ) (hb : 0 < b) (η : ℝ) (hη0 : 0 ≤ η) (hη1 : η < 1)
+    (eL eR : ℕ → ℝ)
+    (hbound : ∀ n, eL n ≤ η^(n/b) ∧ eR n ≤ η^(n/b)) (R : ℕ) :
+    Summable (fun n => Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) ∧
+      (∑' n : ℕ, (Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n)))) ≤
+        2 * (b : ℝ) * (Real.sqrt η)^(R/b) / (1-Real.sqrt η) := by
+  have hsη0 : 0 ≤ Real.sqrt η := Real.sqrt_nonneg _
+  have hsη1 : Real.sqrt η < 1 :=
+    (Real.sqrt_lt hη0 zero_le_one).mpr (by simpa using hη1)
+  have hseries := tail_series (1 : ℝ) (Real.sqrt η) (by norm_num) hsη0 hsη1 b hb R
+  simp only [one_mul] at hseries
+  have hsqrt (n : ℕ) :
+      Real.sqrt (eL (R+n)) ≤ (Real.sqrt η)^((R+n)/b) := by
+    calc
+      Real.sqrt (eL (R+n)) ≤ Real.sqrt (η^((R+n)/b)) :=
+        Real.sqrt_le_sqrt (hbound (R+n)).1
+      _ = η ^ ((((R+n)/b : ℕ) : ℝ) / 2) := by
+        rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast_mul hη0]
+        congr 1
+        ring
+      _ = (Real.sqrt η)^((R+n)/b) := by
+        rw [Real.rpow_div_two_eq_sqrt _ hη0, Real.rpow_natCast]
+  have hsqrt' (n : ℕ) :
+      Real.sqrt (eR (R+n)) ≤ (Real.sqrt η)^((R+n)/b) := by
+    calc
+      Real.sqrt (eR (R+n)) ≤ Real.sqrt (η^((R+n)/b)) :=
+        Real.sqrt_le_sqrt (hbound (R+n)).2
+      _ = η ^ ((((R+n)/b : ℕ) : ℝ) / 2) := by
+        rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast_mul hη0]
+        congr 1
+        ring
+      _ = (Real.sqrt η)^((R+n)/b) := by
+        rw [Real.rpow_div_two_eq_sqrt _ hη0, Real.rpow_natCast]
+  have hpoint (n : ℕ) :
+      Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n)) ≤
+        2 * (Real.sqrt η)^((R+n)/b) := by
+    calc
+      _ ≤ (Real.sqrt η)^((R+n)/b) + (Real.sqrt η)^((R+n)/b) :=
+        add_le_add (hsqrt n) (hsqrt' n)
+      _ = 2 * (Real.sqrt η)^((R+n)/b) := by ring
+  have hnon (n : ℕ) : 0 ≤ Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n)) :=
+    add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
+  have hsum : Summable (fun n => Real.sqrt (eL (R+n)) + Real.sqrt (eR (R+n))) :=
+    Summable.of_nonneg_of_le hnon hpoint (hseries.1.mul_left 2)
+  refine ⟨hsum, (hsum.tsum_le_tsum hpoint (hseries.1.mul_left 2)).trans ?_⟩
+  rw [tsum_mul_left]
+  calc
+    2 * ∑' n : ℕ, (Real.sqrt η)^((R+n)/b) ≤
+        2 * ((b : ℝ)/(1-Real.sqrt η) * (Real.sqrt η)^(R/b)) :=
+      mul_le_mul_of_nonneg_left hseries.2 (by norm_num)
+    _ = 2 * (b : ℝ) * (Real.sqrt η)^(R/b) / (1-Real.sqrt η) := by ring
+
+private theorem geometric_square_tail
+    (b : ℕ) (hb : 0 < b) (η : ℝ) (hη0 : 0 ≤ η) (hη1 : η < 1)
+    (eL eR : ℕ → ℝ)
+    (hnonneg : ∀ n, 0 ≤ eL n ∧ 0 ≤ eR n)
+    (hbound : ∀ n, eL n ≤ η^(n/b) ∧ eR n ≤ η^(n/b)) (R : ℕ) :
+    ∑' n : ℕ, (ENNReal.ofReal (eL (R+n)) + ENNReal.ofReal (eR (R+n))) ≤
+      ENNReal.ofReal (2 * (b : ℝ) * η^(R/b) / (1-η)) := by
+  have hseries := tail_series (1 : ℝ) η (by norm_num) hη0 hη1 b hb R
+  simp only [one_mul] at hseries
+  have hpoint (n : ℕ) :
+      ENNReal.ofReal (eL (R+n)) + ENNReal.ofReal (eR (R+n)) ≤
+        ENNReal.ofReal (2 * η^((R+n)/b)) := by
+    rw [← ENNReal.ofReal_add (hnonneg (R+n)).1 (hnonneg (R+n)).2]
+    exact ENNReal.ofReal_le_ofReal (by
+      linarith [(hbound (R+n)).1, (hbound (R+n)).2])
+  have hsum : Summable (fun n : ℕ => 2 * η^((R+n)/b)) := hseries.1.mul_left 2
+  calc
+    _ ≤ ∑' n : ℕ, ENNReal.ofReal (2 * η^((R+n)/b)) :=
+      ENNReal.tsum_le_tsum hpoint
+    _ = ENNReal.ofReal (2 * ∑' n : ℕ, η^((R+n)/b)) := by
+      rw [← ENNReal.ofReal_tsum_of_nonneg
+        (fun n => mul_nonneg (by norm_num) (pow_nonneg hη0 _)) hsum]
+      rw [← tsum_mul_left]
+    _ ≤ ENNReal.ofReal (2 * ((b : ℝ)/(1-η) * η^(R/b))) := by
+      apply ENNReal.ofReal_le_ofReal
+      exact mul_le_mul_of_nonneg_left hseries.2 (by norm_num)
+    _ = ENNReal.ofReal (2 * (b : ℝ) * η^(R/b) / (1-η)) := by
+      congr 1 <;> ring
+
+/-! The complete native-component consumer of the finite posterior/count bridge.
+
+The class is the actual closed communicating class of the original M₀+M₁
+support.  `K` is definitionally the selected original law of the native
+component; `component_restriction` is retained in the conclusion so every
+payment and every risk remains on the same original measure J. -/
+theorem native_component_rectangle_theorem42
+    (θ : Presentation H)
+    (J : Measure (PathSpace H)) [IsProbabilityMeasure J]
+    (hJ : HasOriginalCylinders J θ)
+    (D : FiniteClosedClasses.ClosedClass (θ.matrix false + θ.matrix true))
+    (hc : 0 < ∑ i : D.val, θ.initial i.val)
+    (w : List Bool) (hw : w ≠ [])
+    (R : Rectangle (product (nativeComponent θ D hc) w))
+    (r : D.val) (hr : r ∈ R.rows) :
+    let κ := nativeComponent θ D hc
+    let K : ProbabilityMeasure (PathSpace D.val) := jointLaw κ
+    let b := w.length + Fintype.card D.val
+    ∃ a : ∀ h, LabelledRoute κ h r,
+      (a r).length = 0 ∧ (∀ h, (a h).length ≤ Fintype.card D.val) ∧
+      (∀ h, w.head? = some false → (a h).length < Fintype.card D.val) ∧
+      (∀ h, h ≠ r → w.head? = some true →
+        (List.ofFn (a h).labels).getLast? = some false) ∧
+      (∀ h, Function.Injective (a h).states) ∧
+      (w.head? = some true → ∀ s, κ.matrix true s r = 0) ∧
+      (∀ t : ℤ,
+        ENNReal.ofReal (∑ i : D.val, θ.initial i.val) •
+            (K : Measure (PathSpace D.val)).map (componentInclusion D.val) =
+          J.restrict (state t ⁻¹' (D.val : Set H))) ∧
+      (∀ w' (i j : D.val),
+        product κ w' i j = product θ w' i.val j.val) ∧
+      (K : Measure (PathSpace D.val)).map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) ∧
+      (∀ j : ℕ,
+        let ρ := 1 - rectangleMinimum (product κ w) R /
+          rectangleMaximum (product κ w) R
+        let ε := selectedEpsilon κ w r a
+        let η := 1 - ε * (1-ρ^2)
+        (0 ≤ ρ ∧ ρ < 1) ∧ (0 < ε ∧ ε ≤ 1) ∧ (0 ≤ η ∧ η < 1) ∧
+        ((∀ᵐ z ∂(K : Measure (PathSpace D.val)),
+          |bitPredictor (visibleLaw κ : Measure _) (fun z => z 0) exterior
+              (exterior z.2) -
+            bitPredictor (visibleLaw κ : Measure _) (fun z => z 0)
+              (leftObservation j) (leftObservation j z.2)| ≤
+            ρ ^ OriginalRectangleMoments.chronologicalCount w b
+              (-((j/b : ℕ) : ℤ)*b) (j/b) z ∧
+          |bitPredictor (visibleLaw κ : Measure _) (fun z => z 0) exterior
+              (exterior z.2) -
+            bitPredictor (visibleLaw κ : Measure _) (fun z => z 0)
+              (rightObservation j) (rightObservation j z.2)| ≤
+            ρ ^ OriginalRectangleMoments.chronologicalCount w b 1 (j/b) z) ∧
+        leftRisk κ j ≤ η^(j/b) ∧ rightRisk κ j ≤ η^(j/b)) ∧
+      (∀ R₀ : ℕ,
+        Summable (fun n : ℕ =>
+          Real.sqrt (leftRisk κ (R₀+n)) + Real.sqrt (rightRisk κ (R₀+n))) ∧
+        rootErasureTail κ R₀ ≤
+          2 * (b : ℝ) * (Real.sqrt (1 - selectedEpsilon κ w r a *
+            (1-(1-rectangleMinimum (product κ w) R /
+              rectangleMaximum (product κ w) R)^2)))^(R₀/b) /
+            (1-Real.sqrt (1 - selectedEpsilon κ w r a *
+              (1-(1-rectangleMinimum (product κ w) R /
+                rectangleMaximum (product κ w) R)^2))) ∧
+        erasureTail κ R₀ ≤ ENNReal.ofReal
+          (2 * (b : ℝ) *
+            (1 - selectedEpsilon κ w r a *
+              (1-(1-rectangleMinimum (product κ w) R /
+                rectangleMaximum (product κ w) R)^2))^(R₀/b) /
+            (1-(1 - selectedEpsilon κ w r a *
+              (1-(1-rectangleMinimum (product κ w) R /
+                rectangleMaximum (product κ w) R)^2)))) ∧
+        rootErasureTail κ 0 ≤
+          2 * (b : ℝ) /
+            (1-Real.sqrt (1 - selectedEpsilon κ w r a *
+              (1-(1-rectangleMinimum (product κ w) R /
+              rectangleMaximum (product κ w) R)^2))))) := by
+  classical
+  letI : DecidableEq D.val := fun i j => Classical.propDecidable (i = j)
+  dsimp only
+  let κ := nativeComponent θ D hc
+  let K : ProbabilityMeasure (PathSpace D.val) := jointLaw κ
+  let b := w.length + Fintype.card D.val
+  have hK : HasOriginalCylinders K κ := by
+    exact (same_law_trimming κ).1
+  have hcomponent : ∀ i j : D.val, ∃ n : ℕ,
+      0 < ((κ.matrix false + κ.matrix true)^n) i j := by
+    have hnonneg : ∀ i j : D.val, 0 ≤ (κ.matrix false + κ.matrix true) i j := by
+      intro i j
+      exact add_nonneg (κ.matrix_nonneg false i j) (κ.matrix_nonneg true i j)
+    intro i j
+    obtain ⟨n, _, hn⟩ := (Matrix.isIrreducible_iff_exists_pow_pos hnonneg).mp
+      (native_component_irreducible θ D hc) i j
+    exact ⟨n, hn⟩
+  obtain ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, hocc⟩ :=
+    irreducible_rectangle_occurrence κ K hK hcomponent w R r hr
+  have hclass := component_restriction θ D hc J hJ K hK
+  have hvis : (K : Measure (PathSpace D.val)).map Prod.snd = (visibleLaw κ : Measure (ℤ → Bool)) :=
+    native_visible_pushforward κ K rfl
+  have hρ := rectangle_rho_range (product κ w) R
+  let ρ := 1 - rectangleMinimum (product κ w) R /
+    rectangleMaximum (product κ w) R
+  let ε := selectedEpsilon κ w r a
+  let η := 1 - ε * (1-ρ^2)
+  have hε : 0 < ε ∧ ε ≤ 1 := by
+    simpa [ε] using And.intro hocc.1 hocc.2.1
+  have hη : 0 ≤ η ∧ η < 1 := by
+    dsimp [η]
+    have hs : 0 < 1-ρ^2 := by nlinarith [hρ.1, hρ.2]
+    constructor <;> nlinarith [hε.1, hε.2, hs]
+  have hbound (j : ℕ) :
+      leftRisk κ j ≤ η^(j/b) ∧ rightRisk κ j ≤ η^(j/b) := by
+    have hh := original_rectangle_erasure_bounds κ K hK w hw R r hr a hab j
+    have hhL := hh.2.1
+    have hhR := hh.2.2
+    simpa [leftRisk, rightRisk, fullMean, leftMean, rightMean, hvis, ρ, ε, η, b] using
+      And.intro hhL hhR
+  have hnonneg (j : ℕ) : 0 ≤ leftRisk κ j ∧ 0 ≤ rightRisk κ j := by
+    exact ⟨integral_nonneg (fun z => sq_nonneg _), integral_nonneg (fun z => sq_nonneg _)⟩
+  have hb : 0 < b := by
+    have hcD : 0 < Fintype.card D.val := Fintype.card_pos_iff.mpr ⟨r⟩
+    omega
+  have hroot (R₀ : ℕ) := geometric_root_tail b hb η hη.1 hη.2
+    (leftRisk κ) (rightRisk κ) hbound R₀
+  have hsq (R₀ : ℕ) := geometric_square_tail b hb η hη.1 hη.2
+    (leftRisk κ) (rightRisk κ) hnonneg hbound R₀
+  refine ⟨a, ha0, hab, hafalse, haseam, hainj, haincoming, ?_, ?_, hvis, ?_⟩
+  · intro t
+    exact (hclass t).1
+  · intro w' i j
+    exact (hclass 0).2 w' i j
+  · intro j
+    have hh := original_rectangle_erasure_bounds κ K hK w hw R r hr a hab j
+    refine ⟨⟨by simpa [ρ] using hρ.1, by simpa [ρ] using hρ.2⟩,
+      hε, hη, ?_, ?_⟩
+    · refine ⟨?_, ?_, ?_⟩
+      · simpa [ρ, ε, η, b, hvis, bitPredictor, fullMean, leftMean, rightMean]
+          using hh.1
+      · simpa [κ, ρ, ε, η, b] using (hbound j).1
+      · simpa [κ, ρ, ε, η, b] using (hbound j).2
+    · intro R₀
+      have hroot0 := hroot R₀
+      have hsq0 := hsq R₀
+      refine ⟨hroot0.1, ?_, ?_, ?_⟩
+      · simpa [rootErasureTail, η, ε, ρ, b] using hroot0.2
+      · simpa [erasureTail, η, ε, ρ, b] using hsq0
+      · simpa [rootErasureTail, η, ε, ρ, b] using (hroot 0).2
+
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleTheorem42

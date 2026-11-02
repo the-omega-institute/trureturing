@@ -28,6 +28,34 @@ instance decAdm : (m : ℕ) → (w : Fin m → Bool) → Decidable (Adm m w)
       have : Decidable (Adm (m+1) (Fin.tail w)) := decAdm (m+1) (Fin.tail w)
       inferInstanceAs (Decidable ((¬ (w 0 ∧ w 1)) ∧ Adm (m+1) (Fin.tail w)))
 
+/-- The upstream admissibility predicate is exactly exclusion of adjacent occupied coordinates. -/
+theorem adm_iff_no_adjacent_true (n : Nat) (b : Fin n → Bool) :
+    Adm n b ↔ ∀ i j : Fin n, i.val + 1 = j.val → b i = false ∨ b j = false := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [Adm]
+  | one => simp [Adm]
+  | more n _ ih =>
+    rw [Adm, ih]
+    have hfront : (¬ (b 0 ∧ b 1)) ↔ b 0 = false ∨ b 1 = false := by
+      cases b 0 <;> cases b 1 <;> simp
+    rw [hfront]
+    constructor
+    · rintro ⟨hfront, htail⟩ i j
+      refine Fin.cases ?_ (fun i => ?_) i
+      · intro hij
+        have : j = 1 := Fin.ext (by simpa using hij.symm)
+        simpa [this] using hfront
+      · intro hij
+        revert hij
+        refine Fin.cases ?_ (fun j => ?_) j
+        · simp
+        · intro hij
+          simpa [Fin.tail] using htail i j (by simpa using hij)
+    · intro h
+      refine ⟨h 0 1 (by simp), ?_⟩
+      intro i j hij
+      simpa [Fin.tail] using h i.succ j.succ (by simpa using hij)
+
 theorem adm_two_iff (m : ℕ) (w : Fin (m+2) → Bool) :
     Adm (m+2) w ↔ (¬ (w 0 ∧ w 1)) ∧ Adm (m+1) (Fin.tail w) := Iff.rfl
 
