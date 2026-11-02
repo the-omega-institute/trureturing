@@ -46,6 +46,10 @@ $$\neg (\forall (n : \mathbb{N}), \forall (G : \operatorname{SimpleGraph}\left(\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SignlessLaplacian/LiGuoDegreeSequenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-guo-signless-laplacian` (refuted) by `D5/S3/Combinatorics/Graph/SignlessLaplacian/LiGuoDegreeSequenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-guo-signless-laplacian","declaration_gid":"D5/S3/Combinatorics/Graph/SignlessLaplacian/LiGuoDegreeSequenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wen-Jun Li; Ji-Ming Guo (2025). *A new conjecture on Laplacian eigenvalues and degree sequence of a graph*. DOI: [10.2298/FIL2513551L](https://doi.org/10.2298/FIL2513551L). URL: <https://www.pmf.ni.ac.rs/filomat-content/2025/39-13/39-13-22-25952.pdf>.
