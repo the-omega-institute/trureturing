@@ -6,6 +6,7 @@
    utility: none
    digest: Cyclic shifts give the second family in every dimension. -/
 
+import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
 import Mathlib.LinearAlgebra.Matrix.Permutation
 
 /-! Cyclic shifts give difference labels, while sum-indexed shield vectors supply the
@@ -29,11 +30,6 @@ def tVec {d : ℕ} (a : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d
     (a p.1 p.2 : ℂ) / Real.sqrt d
   else 0
 
-def partialTransposeB {d : ℕ}
-    (a : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
-    Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
-  fun p q => a (p.1, q.2) (q.1, p.2)
-
 def IsSecondFamilyData (d : ℕ) (q : Fin d → Matrix (Fin d) (Fin d) ℝ)
     (qbar : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
     (a : Fin d → Fin d → ℝ) (s : Fin d → Fin d × Fin d → ℂ) : Prop :=
@@ -42,7 +38,8 @@ def IsSecondFamilyData (d : ℕ) (q : Fin d → Matrix (Fin d) (Fin d) ℝ)
   (∀ i j k, q k i j = a i j * qbar (μ i j) k) ∧
   (∀ i j, a i j ≠ 0 → a i j ^ 2 = (d : ℝ) / multiplicity a μ (μ i j)) ∧
   (∀ m n, ∑ x, star (s m x) * s n x = if m = n then 1 else 0) ∧
-  partialTransposeB (∑ m, Matrix.vecMulVec (s m) (star (s m))) =
+  D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
+      (∑ m, Matrix.vecMulVec (s m) (star (s m))) =
     ∑ m, Matrix.vecMulVec (tVec a μ m) (star (tVec a μ m))
 
 def claim : Prop :=
@@ -202,7 +199,8 @@ private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
   by_cases hmn : m = n <;> simp [hmn, inv_pow, hs, hd]
 
 private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
-    partialTransposeB (∑ m, Matrix.vecMulVec (cyclicShield d m) (star (cyclicShield d m))) =
+    D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
+        (∑ m, Matrix.vecMulVec (cyclicShield d m) (star (cyclicShield d m))) =
       ∑ m, Matrix.vecMulVec (tVec (cyclicS d) (cyclicMu d) m)
         (star (tVec (cyclicS d) (cyclicMu d) m)) := by
   classical
@@ -221,7 +219,7 @@ private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
   have heq : q.1 + p.2 = p.1 + q.2 ↔ q.2 - q.1 = p.2 - p.1 := by
     rw [sub_eq_sub_iff_add_eq_add]
     constructor <;> intro hh <;> simpa only [add_comm] using hh.symm
-  delta partialTransposeB
+  delta D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
   simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply]
   delta cyclicShield tVec cyclicS
   simp [hmu, ite_mul, heq]
