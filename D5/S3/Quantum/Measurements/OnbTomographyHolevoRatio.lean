@@ -6,7 +6,6 @@
    utility: none
    digest: Full orthonormal qudit tomography has NHCRB at most d+1 times HCRB. -/
 
-import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import D5.S3.Quantum.Matrix.LinGProperty.ArithmeticBound
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 import D5.S3.Resource.LogDet.PathSpectralClassical
@@ -120,22 +119,14 @@ private lemma matrix_expansion {d : ℕ} (hd : 2 ≤ d)
   let f : Option (Fin (d ^ 2 - 1)) → Matrix (Fin d) (Fin d) ℂ :=
     fun i => i.elim 1 b
   have hli : LinearIndependent ℂ f := by
-    rw [Fintype.linearIndependent_iff]
-    intro c hc i
-    rw [Fintype.sum_option] at hc
-    change c none • 1 + ∑ j, c (some j) • b j = 0 at hc
-    have ht := congrArg Matrix.trace hc
-    simp only [trace_add, trace_smul, trace_one, Fintype.card_fin, trace_sum,
-      hb.2.1, smul_eq_mul, mul_zero, Finset.sum_const_zero, add_zero, trace_zero] at ht
-    have hn : c none = 0 := (mul_eq_zero.mp ht).resolve_right hd0
-    have hs (j : Fin (d ^ 2 - 1)) : c (some j) = 0 := by
-      have he := congrArg (fun m => (b j * m).trace) hc
-      simp only [hn, zero_smul, zero_add, Matrix.mul_sum, Matrix.mul_smul,
-        trace_sum, trace_smul, hb.2.2, mul_zero, trace_zero, smul_eq_mul] at he
-      simpa using he
-    cases i with
-    | none => exact hn
-    | some j => exact hs j
+    let g : Option (Fin (d ^ 2 - 1)) → (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] ℂ) :=
+      fun i => i.elim ((1 / (d : ℂ)) • Matrix.traceLinearMap (Fin d) ℂ ℂ)
+        (fun j => (Matrix.traceLinearMap (Fin d) ℂ ℂ).comp (LinearMap.mulLeft ℂ (b j)))
+    apply LinearIndependent.of_pairwise_dual_eq_zero_one f g
+    · intro i j hij
+      cases i <;> cases j <;> simp_all [g, f, hb.2.1, hb.2.2]
+    · intro i
+      cases i <;> simp [g, f, hd0, hb.2.2]
   have hdim : Fintype.card (Option (Fin (d ^ 2 - 1))) =
       Module.finrank ℂ (Matrix (Fin d) (Fin d) ℂ) := by
     simp only [Fintype.card_option, Fintype.card_fin, Module.finrank_matrix,
@@ -392,8 +383,9 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
     ext j k
     have hjk : z k j = star (z j k) := (hzh.apply k j).symm
     change Complex.I * ((z j k).im : ℂ) = (1 / (2 : ℂ)) * (z j k - z k j)
-    rw [hjk]
-    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
+    rw [hjk, Complex.star_def, Complex.sub_conj]
+    push_cast
+    ring
   have hah : a.IsHermitian := by
     rw [haz]
     exact (hzh.sub hzh.transpose).smul (by simp)
