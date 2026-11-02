@@ -6,7 +6,8 @@ title: Math 210B. Group cohomology and group extensions
 doi: null
 url: https://virtualmath1.stanford.edu/~conrad/210BPage/handouts/gpext.pdf
 claim: "For an arbitrary extension with abelian kernel and its induced action, H1 acts simply transitively on endpoint-fixing automorphisms modulo conjugation by kernel elements."
-strata_touched: [S3]
+strata_touched:
+  - S3
 license: citation-only
 triage: anchor
 ---
