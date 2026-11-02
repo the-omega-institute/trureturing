@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/math/0702186v2
 claim: "Conjecture 1, upper branch: Schatten norm compression for arbitrary 2×N compatible block matrices at p ≥ 2."
 strata_touched:
   - D5/S3/Quantum/NormCompression/UpperBranchReduction
+  - D5/S3/Quantum/Matrix/CovarianceMetric
 license: citation-only
 triage: anchor
 ---
@@ -59,3 +60,11 @@ matrix and increases the original Schatten norm after nonnegative
 square-root rescaling. This is a reduction of the upper branch, not a proof
 of Conjecture 1. AUD-UP on 2 < p < 4 remains open. The lower-branch reduction
 requires trace-power concavity and is not established by this module.
+
+The covariance-metric support is formalized separately in
+`D5/S3/Quantum/Matrix/CovarianceMetric`. It proves the rectangular completion
+of the square and the positive-definite Riccati trace minimum used by the
+ordinary covariance calculation. Its metric matrices are explicitly positive
+definite wherever an inverse or an attained minimizer is asserted; it does not
+settle Conjecture 1 or extend those inverse statements to arbitrary singular
+metrics.
