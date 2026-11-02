@@ -39,10 +39,9 @@ def claim : Prop :=
 
 private def radii : Fin 4 → ℝ := fun j => ![1, 2, 3, 4] j / Real.sqrt 30
 
-private def constraint : EuclideanSpace ℂ (Fin 4) →ₗ[ℂ] ℂ where
-  toFun x := 6 * x 0 + 3 * x 1 + 2 * x 2 + 3 * x 3
-  map_add' x y := by simp only [PiLp.add_apply]; ring
-  map_smul' a x := by simp only [PiLp.smul_apply, smul_eq_mul, RingHom.id_apply]; ring
+private def constraint : EuclideanSpace ℂ (Fin 4) →ₗ[ℂ] ℂ :=
+  (6 : ℂ) • EuclideanSpace.projₗ 0 + (3 : ℂ) • EuclideanSpace.projₗ 1 +
+    (2 : ℂ) • EuclideanSpace.projₗ 2 + (3 : ℂ) • EuclideanSpace.projₗ 3
 
 private def ambient : Set (EuclideanSpace ℂ (Fin 4)) :=
   {x | ‖x‖ = 1 ∧ ∀ j, ‖x j‖ = radii j}
