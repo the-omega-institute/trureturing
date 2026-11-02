@@ -63,7 +63,8 @@ private theorem cyclic_shift_bijective0 (d : ℕ) (k : Fin d) :
     have hfun : cyclicShift d k = e := by
       funext i
       delta cyclicShift
-      simp [h, e]
+      rw [dif_pos h]
+      rfl
     rw [hfun]
     exact e.bijective
   · have hd : d = 0 := Nat.eq_zero_of_not_pos h
@@ -94,26 +95,29 @@ private theorem cyclic_shift_factor (d : ℕ) (h : 2 ≤ d) (i j k : Fin d) :
     cyclicShiftEquiv d k i = j ↔ k = cyclicMu d i j := by
   have hp : 0 < d := lt_of_lt_of_le (by omega) h
   letI : NeZero d := ⟨Nat.ne_of_gt hp⟩
+  have hs : (ZMod.finEquiv d) (cyclicShiftEquiv d k i) =
+      (ZMod.finEquiv d i) + (ZMod.finEquiv d k) := by
+    change (ZMod.finEquiv d) (dite (0 < d)
+      (fun _ => (ZMod.finEquiv d).symm ((ZMod.finEquiv d i) + (ZMod.finEquiv d k)))
+      (fun _ => i)) = _
+    rw [dif_pos hp]
+    exact (ZMod.finEquiv d).apply_symm_apply _
+  have hm : (ZMod.finEquiv d) (cyclicMu d i j) =
+      (ZMod.finEquiv d j) - (ZMod.finEquiv d i) := by
+    change (ZMod.finEquiv d) (dite (0 < d)
+      (fun _ => (ZMod.finEquiv d).symm ((ZMod.finEquiv d j) - (ZMod.finEquiv d i)))
+      (fun _ => i)) = _
+    rw [dif_pos hp]
+    exact (ZMod.finEquiv d).apply_symm_apply _
   constructor
   · intro hk
     apply (ZMod.finEquiv d).injective
-    delta cyclicShiftEquiv cyclicShift at hk
-    have hk' := congrArg (ZMod.finEquiv d) hk
-    have hsum : (ZMod.finEquiv d i) + (ZMod.finEquiv d k) =
-        ZMod.finEquiv d j := by
-      simpa [hp] using hk'
-    delta cyclicMu
-    simp [hp]
-    exact (eq_sub_iff_add_eq).2 (by simpa [add_comm] using hsum)
+    have hsum := hs.symm.trans (congrArg (ZMod.finEquiv d) hk)
+    exact ((eq_sub_iff_add_eq).2 (by simpa only [add_comm] using hsum)).trans hm.symm
   · intro hk
     apply (ZMod.finEquiv d).injective
-    delta cyclicMu at hk
-    have hk' := congrArg (ZMod.finEquiv d) hk
-    have hsub : (ZMod.finEquiv d k) = ZMod.finEquiv d j - ZMod.finEquiv d i := by
-      simpa [hp] using hk'
-    delta cyclicShiftEquiv cyclicShift
-    simpa [hp] using
-      (by simpa [add_comm] using (eq_sub_iff_add_eq.1 hsub))
+    have hsub := (congrArg (ZMod.finEquiv d) hk).trans hm
+    exact hs.trans (by simpa only [add_comm] using (eq_sub_iff_add_eq.1 hsub))
 
 private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
     (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by
@@ -185,7 +189,7 @@ private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
       star (if j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
         (if j = n then (Real.sqrt d : ℂ)⁻¹ else 0))
     simp only [Equiv.coe_addLeft] at he
-    rw [he]
+    refine he.trans ?_
     by_cases hmn : m = n
     · subst n
       simp [← pow_two]
@@ -206,8 +210,12 @@ private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
   letI : NeZero d := ⟨Nat.ne_of_gt hp⟩
   have hmu (i j : Fin d) : cyclicMu d i j = j - i := by
     apply (ZMod.finEquiv d).injective
-    delta cyclicMu
-    simp [hp]
+    change (ZMod.finEquiv d) (dite (0 < d)
+      (fun _ => (ZMod.finEquiv d).symm ((ZMod.finEquiv d j) - (ZMod.finEquiv d i)))
+      (fun _ => i)) = _
+    rw [dif_pos hp]
+    exact ((ZMod.finEquiv d).apply_symm_apply _).trans
+      ((ZMod.finEquiv d).map_sub j i).symm
   apply Matrix.ext
   intro p q
   have heq : q.1 + p.2 = p.1 + q.2 ↔ q.2 - q.1 = p.2 - p.1 := by
@@ -232,6 +240,7 @@ theorem result : claim := by
   intro d hd
   exact ⟨cyclicQ d, cyclicQbar d, cyclicMu d, cyclicS d, cyclicShield d,
     cyclic_data d hd⟩
+
 
 
 
