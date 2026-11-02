@@ -8,9 +8,9 @@ The carrier is the original all-charge lattice carrier tensor over the complex n
 
 **Definition 1.1 (The original algebraic tensor carrier).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.State`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.State`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.State` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.State` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For every lattice data D, State D is Carrier D tensor over the complex numbers w
 
 **Definition 1.2 (The original b lift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostB`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostB`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostB` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostB` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ For every D and integer r, ghostB D r is the tensor map id tensor BcGhostFock.b 
 
 **Definition 1.3 (The original c lift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostC`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostC`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostC` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostC` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ For every D and integer r, ghostC D r is the tensor map id tensor BcGhostFock.c 
 
 **Definition 1.4 (The actual Sugawara lift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.matterMode`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.matterMode`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.matterMode` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.matterMode` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ For every D, complex matrix H and integer r, matterMode D H r is sugawaraMode D 
 
 **Definition 1.5 (The original ghost Virasoro lift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostVirasoro`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostVirasoro`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostVirasoro` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostVirasoro` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ For every D and integer r, ghostVirasoro D r is id tensor BcGhostVirasoro.L r. L
 
 **Definition 1.6 (The original matter-c action family).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.summand`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.summand`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.summand` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.summand` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ For every D,H and integer m, summand D H m is sugawaraMode D H m tensor BcGhostF
 
 **Definition 1.7 (The actual integer field cutoff).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.upper`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.upper`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.upper` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.upper` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ For every D,H and matter state v, upper D H v is max(0,-order(sugawaraField D H 
 
 **Definition 1.8 (The pointwise locally finite coupling).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ For arbitrary lattice data D and complex matrix H, T acts on x as the finite-sup
 
 **Theorem 1.9 (Finiteness on every algebraic tensor state).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.summand_finite`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.summand_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.summand_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.summand_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -116,9 +116,9 @@ For every D,H,x, the action family m maps to (L_m tensor c_{-m})x has finite sup
 
 **Theorem 1.10 (Equality with the actual operator-product local sum).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T_apply`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T_apply`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T_apply` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T_apply` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -128,9 +128,9 @@ For every tensor state x, T x equals the pointwise finite sum of (M_m C_{-m})x, 
 
 **Theorem 1.11 (Cutoff independence).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.finite_capture`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.finite_capture`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.finite_capture` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.finite_capture` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -140,9 +140,9 @@ For every finite set containing the support of the state-action family, its fini
 
 **Theorem 1.12 (Joint capture of all prescribed intermediates).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.common_capture`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.common_capture`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.common_capture` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.common_capture` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -152,9 +152,9 @@ Every finite collection X of tensor states has one finite mode set containing ev
 
 **Theorem 1.13 (The actual simple-tensor finite formula).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T_tmul`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T_tmul`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T_tmul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T_tmul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -164,9 +164,9 @@ For every lattice state v and ghost state w in radius A at least two, T(v tensor
 
 **Theorem 1.14 (All-integer b Ward identity).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_b`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ward_b`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_b` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ward_b` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -176,9 +176,9 @@ For arbitrary D,H and every integer r, T B_r+B_r T=M_r. The CAR contraction is a
 
 **Theorem 1.15 (All-integer c Ward identity).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_c`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ward_c`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_c` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ward_c` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -188,20 +188,20 @@ For arbitrary D,H and every integer r, T C_r+C_r T=0. The proof uses the origina
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.State`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T_apply`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.T_tmul`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.common_capture`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.finite_capture`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostB`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostC`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ghostVirasoro`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.matterMode`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.summand`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.summand_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.upper`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_b`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCoupling.ward_c`
-- Dependency: [D5/S3/Quantum/Fermionic/BcGhostOccupationRadius](../Quantum/Fermionic/BcGhostOccupationRadius.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](LatticeSugawaraVirasoro.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.State`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T_apply`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.T_tmul`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.common_capture`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.finite_capture`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostB`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostC`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ghostVirasoro`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.matterMode`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.summand`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.summand_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.upper`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ward_b`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling.ward_c`
+- Dependency: [D5/S3/Quantum/Fermionic/BcGhostOccupationRadius](../../Quantum/Fermionic/BcGhostOccupationRadius.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](../LatticeSugawaraVirasoro.md)
