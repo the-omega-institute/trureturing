@@ -77,7 +77,7 @@ theorem ghost_abs_charge_sub_one_le_count (S : Finset ℕ) (h3 : 3 ∉ S) :
   by_cases h1 : 1 ∈ S
   · have h3' : 3 ∉ S.erase 1 := by simp [h3]
     have hregular : (S.erase 1).erase 3 = S.erase 1 :=
-      Finset.erase_eq_of_not_mem h3'
+      Finset.erase_eq_of_notMem h3'
     have hsum : charge S - 1 = ∑ j ∈ S.erase 1, siteSign j := by
       rw [charge_sum, ← Finset.sum_erase_add S siteSign h1]
       have hone : siteSign 1 = 1 := by norm_num [siteSign]
@@ -106,7 +106,7 @@ theorem ghost_count_le_relativeEnergy (S : Finset ℕ) (h3 : 3 ∉ S) :
   by_cases h1 : 1 ∈ S
   · have h3' : 3 ∉ S.erase 1 := by simp [h3]
     have hregular : (S.erase 1).erase 3 = S.erase 1 :=
-      Finset.erase_eq_of_not_mem h3'
+      Finset.erase_eq_of_notMem h3'
     have hcount : (count S : ℤ) = ((S.erase 1).card : ℤ) := by
       simp [count, h1, hregular]
     rw [hcount]
@@ -141,7 +141,7 @@ private theorem variableWeight_abs_le_one {t : ℕ} (x : Variables t) :
   · simp [variableWeight, hp]
   · by_cases hm : x.1 = minus t <;> simp [variableWeight, hp, hm]
 
-/-- The EXISTING signed exponentDegree is bounded by the frequency-weighted
+/-- The original signed exponentDegree is bounded by the frequency-weighted
 excitation sum, rather than by an assumed coordinate energy. -/
 theorem abs_exponentDegree_le_frameEnergy {t : ℕ} (m : Exponents t) :
     |exponentDegree m| ≤ (frameEnergy m : ℤ) := by
@@ -164,8 +164,8 @@ theorem abs_exponentDegree_le_frameEnergy {t : ℕ} (m : Exponents t) :
         smul_eq_mul, Nat.cast_sum, Nat.cast_mul]
 
 /-- Pull back the ORIGINAL tensor coefficient Finsupp along d ↦ ((p,d),S).
-The injection is genuine; the old double-curry index mismatch is absent.
-The pinned polynomial type is an AddMonoidAlgebra wrapper, hence ofCoeff. -/
+The exponent-to-tensor-label map is injective. AddMonoidAlgebra.ofCoeff
+packages the resulting finite coefficient function as the original polynomial. -/
 def originalSlice (D : LatticeData) (p : Charge D) (S : Finset ℕ) :
     State D →ₗ[ℂ] Oscillator D where
   toFun x := AddMonoidAlgebra.ofCoeff
@@ -258,7 +258,7 @@ private theorem exists_original_coeff_of_coordinate_coeff
 
 /- The original L0 diagonal enters through mem_relativeMassShell_iff.
 Every original monomial in this slice has the same natural frequency as d.
-frequency_grading is the supplied theorem proved from the actual forward
+frequency_grading is the native theorem proved from the actual forward
 and inverse frame-variable substitutions and lin_homogeneous, with no
 coordinate-energy identity premise. -/
 private theorem coordinate_slice_shell_support
