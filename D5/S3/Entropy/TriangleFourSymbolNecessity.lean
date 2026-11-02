@@ -1103,5 +1103,93 @@ private theorem support_cover (L : IncidentLaw S₁ S₂ S₃ O) :
       rw [hp.2]; norm_num)
     exact ⟨⟨s, L.posterior_active₃ _ x.property s hs⟩, by simp [support₃, hs]⟩
 
+private theorem unique_factor_support (L : IncidentLaw S₁ S₂ S₃ O)
+    (f g : L.PositiveOutput → ℝ) (hf : ∀ x, 0 ≤ f x) (hg : ∀ x, 0 ≤ g x)
+    (t : O → ℝ) (m : ℝ) (a : O) (hm : 0 < m)
+    (ht : ∀ x, t x = if x = a then m else 0)
+    (hle : ∀ x, t x ≤ L.outputLaw x)
+    (hfactor : ∀ x : L.PositiveOutput, t x.val = L.outputLaw x.val * f x * g x) :
+    ∃! x : L.PositiveOutput, 0 < f x ∧ 0 < g x := by
+  classical
+  have hta : t a = m := by simp [ht]
+  have ha : 0 < L.outputLaw a := lt_of_lt_of_le (by rwa [hta]) (hle a)
+  let x : L.PositiveOutput := ⟨a, ha⟩
+  have hx : 0 < f x ∧ 0 < g x := by
+    apply L.positive_factors_of_cell ha (hf x) (hg x)
+    rw [← hfactor x]
+    simpa only [x, hta] using hm
+  refine ⟨x, hx, ?_⟩
+  intro y hy
+  have hpos : 0 < t y.val := by
+    rw [hfactor]
+    exact mul_pos (mul_pos y.property hy.1) hy.2
+  have he : y.val = a := by
+    by_contra hn
+    simp [ht, hn] at hpos
+  exact Subtype.ext he
+
+private theorem support_cross (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2) :
+    (∀ a b, ∃! x, x ∈ L.support₁ a ∧ x ∈ L.support₂ b) ∧
+    (∀ a c, ∃! x, x ∈ L.support₁ a ∧ x ∈ L.support₃ c) ∧
+    (∀ b c, ∃! x, x ∈ L.support₂ b ∧ x ∈ L.support₃ c) := by
+  classical
+  obtain ⟨ind₁₂, ind₁₃, ind₂₃, _⟩ := L.original_equality_fibers hagree heq
+  obtain ⟨tab₁₂, tab₁₃, tab₂₃⟩ := L.record_pair_tables hagree
+  obtain ⟨m₀, m₁₂, m₁₃, m₂₃⟩ := L.record_marginals
+  refine ⟨?_, ?_, ?_⟩
+  · intro a b
+    have hm : 0 < L.pair₁₂ a.val b.val := by
+      rw [ind₁₂]; exact mul_pos a.property b.property
+    have hh := L.unique_factor_support
+      (fun x => L.posterior₁ x.val a.val) (fun x => L.posterior₂ x.val b.val)
+      (fun x => (L.posterior_probabilities x.val x.property).1.1 a.val)
+      (fun x => (L.posterior_probabilities x.val x.property).2.1.1 b.val)
+      (fun x => L.recordPair₁₂ (x, a.val, b.val)) (L.pair₁₂ a.val b.val)
+      (L.readoutC a.val b.val) hm (fun x => tab₁₂ (x, a.val, b.val))
+      (fun x => (Finset.single_le_sum
+        (fun z _ => Finset.sum_nonneg fun c _ => L.record_nonneg x (z.1, z.2, c))
+        (Finset.mem_univ (a.val, b.val))).trans_eq (congrFun m₁₂ x))
+      (fun x => (L.original_product_pairs hagree heq x.val x.property).1 a.val b.val)
+    simpa only [support₁, support₂, Finset.mem_filter, Finset.mem_univ, true_and] using hh
+  · intro a c
+    have hm : 0 < L.pair₁₃ a.val c.val := by
+      rw [ind₁₃]; exact mul_pos a.property c.property
+    have hh := L.unique_factor_support
+      (fun x => L.posterior₁ x.val a.val) (fun x => L.posterior₃ x.val c.val)
+      (fun x => (L.posterior_probabilities x.val x.property).1.1 a.val)
+      (fun x => (L.posterior_probabilities x.val x.property).2.2.1 c.val)
+      (fun x => L.recordPair₁₃ (x, a.val, c.val)) (L.pair₁₃ a.val c.val)
+      (L.readoutB c.val a.val) hm (fun x => tab₁₃ (x, a.val, c.val))
+      (fun x => (Finset.single_le_sum
+        (fun z _ => Finset.sum_nonneg fun b _ => L.record_nonneg x (z.1, b, z.2))
+        (Finset.mem_univ (a.val, c.val))).trans_eq (congrFun m₁₃ x))
+      (fun x => (L.original_product_pairs hagree heq x.val x.property).2.1 a.val c.val)
+    simpa only [support₁, support₃, Finset.mem_filter, Finset.mem_univ, true_and] using hh
+  · intro b c
+    have hm : 0 < L.pair₂₃ b.val c.val := by
+      rw [ind₂₃]; exact mul_pos b.property c.property
+    have hh := L.unique_factor_support
+      (fun x => L.posterior₂ x.val b.val) (fun x => L.posterior₃ x.val c.val)
+      (fun x => (L.posterior_probabilities x.val x.property).2.1.1 b.val)
+      (fun x => (L.posterior_probabilities x.val x.property).2.2.1 c.val)
+      (fun x => L.recordPair₂₃ (x, b.val, c.val)) (L.pair₂₃ b.val c.val)
+      (L.readoutA b.val c.val) hm (fun x => tab₂₃ (x, b.val, c.val))
+      (fun x => (Finset.single_le_sum
+        (fun z _ => Finset.sum_nonneg fun a _ => L.record_nonneg x (a, z))
+        (Finset.mem_univ (b.val, c.val))).trans_eq (congrFun m₂₃ x))
+      (fun x => (L.original_product_pairs hagree heq x.val x.property).2.2 b.val c.val)
+    simpa only [support₂, support₃, Finset.mem_filter, Finset.mem_univ, true_and] using hh
+
+/-- The original equality law has at least four positive outputs. -/
+theorem original_output_cardinality (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2)
+    (hmin : 2 ≤ Fintype.card L.PositiveOutput) : 4 ≤ Fintype.card L.PositiveOutput := by
+  classical
+  obtain ⟨cover₁, cover₂, cover₃⟩ := L.support_cover
+  obtain ⟨cross₁₂, cross₁₃, cross₂₃⟩ := L.support_cross hagree heq
+  exact CrossSupport.cardinal_lower_bound L.support₁ L.support₂ L.support₃
+    cover₁ cover₂ cover₃ cross₁₂ cross₁₃ cross₂₃ hmin
+
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
