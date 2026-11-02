@@ -8,6 +8,8 @@ MatterDatum has exactly the original mode family, central charge, integer Viraso
 
 T sums matterMode m times c(-m) only after evaluation on a state. Genuine matter lower truncation and the native ghost occupation radius give finite support. Translated paired finite sums have coefficients k-2r and 2r-k; the original Virasoro central singleton at -r survives their cancellation. The finite pure-c Ward operator R commutes with T using a common capture of x and R x. The remaining square residual has degree two and commutes with all original b and c modes, so the charged tensor commutant annihilates it.
 
+The twenty public theorem source-family audits remain unfinished; see https://github.com/the-omega-institute/trureturing/issues/25671 for the exact targets and native statement identities. Empty registration inventory and empty error arrays do not validate an audit. The missing evidence is a lawful enrolled readout and exact polymorphic realization bridge, with actual-positive law, whole-family variation, fixed-other sensitivity and observational dependence proofs.
+
 **Theorem 1.1 (summand finite).**
 
 Lean statement: `D5/S3/VertexAlgebra/VirasoroBRST.summand_finite`
