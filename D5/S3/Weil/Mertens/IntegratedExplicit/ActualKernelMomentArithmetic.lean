@@ -715,7 +715,11 @@ theorem actual_weighted_mangoldt_translation_bound (p : PNTConstants)
     apply Finset.sum_congr rfl
     intro n hn
     rw [weight_eq_sqrt n (Finset.mem_Icc.mp hn).1]
-    simp only [f, add_comm] <;> ring
+    change 2 * (ArithmeticFunction.vonMangoldt n / Real.sqrt n *
+        (∫ u : ℝ, star (f (u + Real.log n)) * f u).re) =
+      ArithmeticFunction.vonMangoldt n / Real.sqrt n *
+        (2 * (∫ u : ℝ, star (f (u + Real.log n)) * f u).re)
+    ring
   have hint : Integrable (fun u : ℝ => ∑ n ∈ primes D, weight n *
       (density D (Real.log n) f u + density D (-Real.log n) f u)) :=
     integrable_finsetSum _ (fun (n : ℕ) hn =>
