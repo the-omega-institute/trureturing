@@ -76,4 +76,4 @@ The bounded reuse order was public and private D5, pinned Mathlib `56a005855ea17
 
 The bounded literature screen checked exact arXiv metadata and independently retrieved `2305.09759v1`, `2411.19643v3` and `2610.12652v1` without identifying settlement of this target. OpenAlex/Semantic Scholar citation-list requests returned 429, unauthenticated code search returned 401, and the journal PDF returned 401. Loogle, LeanSearch and Reservoir coverage was not completed. These limits are not no-hit evidence. No worldwide novelty, openness or priority is claimed; no broad literature enumeration is implied.
 
-Physical identification of the $N=2$ marked-stage model, full stochastic-process/renewal construction and empirical correspondence remain outside the formal assertion. Publication producers, final inventory, fresh independent CLI architecture/quality/tests judgments, exact-head required CI, actual MERGED/dev push/synchronization and applicable termination remain caller-owned obligations.
+Physical identification of the $N=2$ marked-stage model, full stochastic-process/renewal construction and empirical correspondence remain outside the formal assertion.
