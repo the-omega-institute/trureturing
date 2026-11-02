@@ -4,21 +4,7 @@
 
 A generic binary-shift source refutes the unrestricted compact Hausdorff zero-dimensional shadowing-cover assertion.
 
-**Theorem 1.1 (Locally deciding binary name).**
-
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.exists_binary_name_locally_deciding`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.exists_binary_name_locally_deciding` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Dekui Peng (2026). *Shadowing in Dynamical Systems: Zero-dimensional Extensions and Inverse Limits*. URL: <https://arxiv.org/abs/2606.14435v3>.
-
-*Commentary.*
-
-For every countable family of closed subsets of the binary name space, there is a binary name a such that each family member has an open neighborhood of a contained in it or in its complement. The countability is over the closed family itself.
-
-**Theorem 1.2 (Finite initial graph presentation).**
+**Theorem 1.1 (Finite initial graph presentation).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage`
 
@@ -32,7 +18,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finite_initial_prese
 
 Every set of binary names presented by a finite directed graph, a vertex label, and an arbitrary initial vertex set is exactly a finite graph language with Boolean coded edge, label, and initial data.
 
-**Theorem 1.3 (Marked clopen image language).**
+**Theorem 1.2 (Marked clopen image language).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage`
 
@@ -46,7 +32,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.semiconj_clopen_imag
 
 If T shadows and phi is a continuous shift semiconjugacy into binary names, then the image phi(W) of every clopen W is exactly a finite initial graph language. The initial graph vertices are restricted by the marker at time zero, so the statement covers all natural times including zero and does not assume T is onto.
 
-**Theorem 1.4 (Convergent section restriction).**
+**Theorem 1.3 (Convergent section restriction).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen`
 
@@ -60,7 +46,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finiteGraphLanguage_
 
 For the first-disagreement convergent section S0 consisting of the generic name and one selected name in each finite fibre, the restriction of every finite graph language is clopen in S0 whenever the generic name locally decides that language.
 
-**Theorem 1.5 (Free-fibre source shadowing).**
+**Theorem 1.4 (Free-fibre source shadowing).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing`
 
@@ -74,7 +60,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibreSource_hasS
 
 Given a compact Hausdorff continuous open onto map p:T to the one-point compactification of the naturals and a generic binary name a, the disjoint source consisting of the pullback of p along firstDifference a and a binary shift copy has a continuous forward map with finite-open-cover shadowing. The proof fixes finite control before the pseudo-orbit and pays the time-zero lift explicitly.
 
-**Theorem 1.6 (A hypothetical cover forces an open resolution).**
+**Theorem 1.5 (A hypothetical cover forces an open resolution).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution`
 
@@ -88,7 +74,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibre_cover_forc
 
 For every compact Hausdorff zero-dimensional shadowing system (Y,tau), every continuous onto q from Y to the free-fibre source, and every equivariant semiconjugacy, the restriction over the convergent section yields a continuous onto map r to T whose composite p composed r is open on the whole one-point base. No shadowing or invariance is assumed of the restriction Y0; no injectivity, global openness, or fibre restriction is imposed on the upstairs cover.
 
-**Definition 1.7 (Peng's unrestricted Question 5.1).**
+**Definition 1.6 (Peng's unrestricted Question 5.1).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim`
 
@@ -102,7 +88,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim`
 
 For every compact Hausdorff space X with a continuous forward map f and finite-open-cover shadowing, there should exist a compact Hausdorff zero-dimensional space Y with a continuous forward map tau and shadowing, together with a continuous onto q:Y to X satisfying q composed tau equals f composed q. The statement retains arbitrary fibres, transients, dynamics, and natural time zero.
 
-**Theorem 1.8 (Question 5.1 is refuted).**
+**Theorem 1.7 (Question 5.1 is refuted).**
 
 $$\neg claim$$
 
@@ -123,7 +109,6 @@ Use the supplied compact Hausdorff continuous open surjection p:T to the one-poi
 ## References
 
 - Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.exists_binary_name_locally_deciding`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing`
@@ -131,5 +116,5 @@ Use the supplied compact Hausdorff continuous open surjection p:T to the one-poi
 - Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage`
 - Dependency: [D5/S1/Dynamics/Shadowing/FiniteObservationSofic](FiniteObservationSofic.md)
-- Dependency: [D5/S1/Dynamics/Shadowing/MetricTracing](MetricTracing.md)
+- Dependency: [D5/S1/Dynamics/Shadowing/OpenCoreShadowing](OpenCoreShadowing.md)
 - Dependency: [D5/S3/Topology/AlmostDisjoint/AdaptiveRefinementCounterexample](../../../S3/Topology/AlmostDisjoint/AdaptiveRefinementCounterexample.md)

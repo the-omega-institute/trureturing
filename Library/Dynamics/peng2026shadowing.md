@@ -40,8 +40,8 @@ a binary full-shift core. The proof derives an open zero-dimensional
 resolution from any hypothetical cover by finite initial graph languages and
 the convergent Cantor section, contradicting that supplied static witness.
 The formal result keeps arbitrary upstairs fibres and transients, continuous
-onto semiconjugacy, and all natural times including zero. The new generic
-shift amplification is authored in the cited D5 module; the static compact
+onto semiconjugacy, and all natural times including zero. The generic
+shift amplification is developed in the three modules listed below; the static compact
 map and finite-observation suppliers are reused repository mathematics. This
 records kernel status and attribution only; it makes no priority, uniqueness,
 publication, or official-acceptance claim.
