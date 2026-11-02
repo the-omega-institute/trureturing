@@ -36,7 +36,7 @@ internal sealed class OpenBoundaryMPSMarginalBirationalityDocument : IScribeDocu
                 "For each three-letter word t, sum the amplitudes of all n-letter words whose letters at positions a, a+1 and a+2 equal t. "
                     + "This sums every index outside the three consecutive sites, as in sigma14-095.tex, lines 420–426. "
                     + "The sum is coherent in complex amplitudes. The bound a+3 ≤ n makes each selected index valid; "
-                    + "Fin.val is the inclusion of a finite index into the natural numbers. The indexing bound appears as an implication.",
+                    + "Fin.val is the inclusion of a finite index into the natural numbers. The proof h of the indexing bound is an explicit argument.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("is-birational-via", "IsBirationalVia", "A rational inverse on principal open subsets", BirationalFormula(),
                 "The polynomials g and q and the coordinate polynomials p give the rational map F(t)(w) = p(w)(t)/q(t). "
@@ -45,7 +45,7 @@ internal sealed class OpenBoundaryMPSMarginalBirationalityDocument : IScribeDocu
                     + "Write Xₙ for the affine closure. Since the linear marginal takes the parametrized models into one another, it also takes their Zariski closures into one another. "
                     + "Consequently these conditions express the isomorphism between the nonempty Zariski-open subsets "
                     + "U = {ψ ∈ Xₙ : g(mψ) ≠ 0} and V = {t ∈ X₃ : g(t) ≠ 0}, given by the marginal and its rational inverse. "
-                    + "For irreducible Xₙ and X₃ these subsets are dense. The indexing bound is displayed as an implication.",
+                    + "For irreducible Xₙ and X₃ these subsets are dense. The proof h of the indexing bound is an explicit argument.",
                 AssessedProvenance.FromRepo(Source)),
             Definition("claim", "claim", "The three-site birationality conjecture", Equal(Local("claim"), Parenthesized(ClaimFormula())),
                 "For every natural n at least four and every starting position a with a+3 ≤ n, "
@@ -108,12 +108,12 @@ internal sealed class OpenBoundaryMPSMarginalBirationalityDocument : IScribeDocu
                             + "when g(mψ) is zero the first factor vanishes, and otherwise uniqueness and the nonzero denominator make the second factor vanish. "
                             + "It therefore vanishes on Xₙ. On the chart, cancel g(mψ) and divide by q(mψ), obtaining F(mψ) = ψ on the closure.")),
                     Paragraph(Text(
-                        "Finally choose A₀ = ((1,2),(3,4)), A₁ = ((5,6),(7,8)), b₀ = (1,0) and b₁ = (1,2). "
+                        "Finally there exists a triple t in X₃ with g(t) ≠ 0. To prove this, choose A₀ = ((1,2),(3,4)), A₁ = ((5,6),(7,8)), b₀ = (1,0) and b₁ = (1,2). "
                             + "The resulting triple, in lexicographic word order, is (145,349,337,829,489,1173,1193,2933). "
                             + "At this point d = 387072 and (Δ₀,Δ₁,Δ₂) = (118272,10752,−1161216); the reconstructed determinants are det V = 1152 and det C = −2, "
                             + "and the two endpoint minors are −576 and 2592. Every factor of g is nonzero. "
-                            + "This triple lies in X₃, and Fₙ,ₐ sends it to a point of Xₙ whose marginal is the same triple. "
-                            + "It supplies the nonempty source chart for every n and a in the stated range. Together with primeness and the two inverse identities, this proves all three clauses."))),
+                            + "Thus the target chart contains a point t, and Fₙ,ₐ sends any such point to a point of Xₙ whose marginal is t. "
+                            + "The existence of t supplies the nonempty source chart for every n, a and bound proof h in the stated range. Together with primeness and the two inverse identities, this proves all three clauses."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
@@ -156,40 +156,41 @@ internal sealed class OpenBoundaryMPSMarginalBirationalityDocument : IScribeDocu
             At(X("ψ"), X("w")), Typed(D(0), Complexes()));
         Formula sum = Seq(new Formula.Subscript(Sum, Typed(X("w"), Words(X("n")))),
             Sp, Parenthesized(summand));
-        return All("n", Naturals(), All("a", Naturals(), Imp(IndexBound(), All("ψ", States(X("n")),
-            Equal(Marginal(X("ψ")), LambdaOf("t", Words(D(3)), sum))))));
+        return All("n", Naturals(), All("a", Naturals(), All("h", IndexBound(), All("ψ", States(X("n")),
+            Equal(Marginal(X("ψ"), X("h")), LambdaOf("t", Words(D(3)), sum))))));
     }
 
     private static Formula BirationalFormula() => All("n", Naturals(), All("a", Naturals(),
-        Imp(IndexBound(), Equal(LocalCall("IsBirationalVia", X("n"), X("a")), Parenthesized(BirationalBody())))));
+        All("h", IndexBound(), Equal(LocalCall("IsBirationalVia", X("n"), X("a"), X("h")), Parenthesized(BirationalBody())))));
 
     private static Formula BirationalBody()
     {
         Formula sourcePoint = Some("ψ", States(X("n")), And(Member(X("ψ"), Closed(X("n"))),
-            Nonzero(Evaluate(Marginal(X("ψ")), X("g")))));
+            Nonzero(Evaluate(Marginal(X("ψ"), X("h")), X("g")))));
         Formula targetInverse = All("t", States(D(3)), Imp(Member(X("t"), Closed(D(3))),
             Imp(Nonzero(Evaluate(X("t"), X("g"))),
                 And(Nonzero(Evaluate(X("t"), X("q"))),
                     And(Member(Rational(X("t")), Closed(X("n"))),
-                        And(Nonzero(Evaluate(Marginal(Rational(X("t"))), X("g"))),
-                            Equal(Marginal(Rational(X("t"))), X("t"))))))));
+                        And(Nonzero(Evaluate(Marginal(Rational(X("t")), X("h")), X("g"))),
+                            Equal(Marginal(Rational(X("t")), X("h")), X("t"))))))));
         Formula sourceInverse = All("ψ", States(X("n")), Imp(Member(X("ψ"), Closed(X("n"))),
-            Imp(Nonzero(Evaluate(Marginal(X("ψ")), X("g"))),
-                And(Nonzero(Evaluate(Marginal(X("ψ")), X("q"))),
-                    Equal(Rational(Marginal(X("ψ"))), X("ψ"))))));
+            Imp(Nonzero(Evaluate(Marginal(X("ψ"), X("h")), X("g"))),
+                And(Nonzero(Evaluate(Marginal(X("ψ"), X("h")), X("q"))),
+                    Equal(Rational(Marginal(X("ψ"), X("h"))), X("ψ"))))));
         return Some("g", Polynomials(), Some("q", Polynomials(),
             Some("p", Arrow(Words(X("n")), Polynomials()), And(sourcePoint, And(targetInverse, sourceInverse)))));
     }
 
     private static Formula ClaimFormula() => All("n", Naturals(), All("a", Naturals(),
-        Imp(LE(D(4), X("n")), Imp(IndexBound(),
+        Imp(LE(D(4), X("n")), All("h", IndexBound(),
             And(At(Qualified("Ideal", "IsPrime"), LocalCall("vanishingPolys", X("n"))),
-                And(At(Qualified("Ideal", "IsPrime"), LocalCall("vanishingPolys", D(3))), BirationalBody()))))));
+                And(At(Qualified("Ideal", "IsPrime"), LocalCall("vanishingPolys", D(3))),
+                    LocalCall("IsBirationalVia", X("n"), X("a"), X("h"))))))));
 
     private static Formula Rational(Formula t) => LambdaOf("w", Words(X("n")),
         new Formula.Fraction(Evaluate(t, At(X("p"), X("w"))), Evaluate(t, X("q"))));
     private static Formula Evaluate(Formula t, Formula polynomial) => At(Qualified("MvPolynomial", "eval"), t, polynomial);
-    private static Formula Marginal(Formula state) => LocalCall("improperMarginal", X("n"), X("a"), state);
+    private static Formula Marginal(Formula state, Formula h) => LocalCall("improperMarginal", X("n"), X("a"), h, state);
     private static Formula Closed(Formula n) => LocalCall("closure", n);
     private static Formula IndexBound() => LE(Add(X("a"), D(3)), X("n"));
     private static Formula Polynomials() => At(Qualified("MvPolynomial"), Words(D(3)), Complexes());

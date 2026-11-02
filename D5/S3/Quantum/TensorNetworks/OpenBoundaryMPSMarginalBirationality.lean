@@ -11,6 +11,7 @@ import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.CharZero.Infinite
+import D5.S3.Analytic.Hunter.NCHunterPositivity
 
 /-! The affine model and its Cramer reconstruction on a principal open chart. -/
 
@@ -530,9 +531,7 @@ private lemma word_append (a b : ℕ) (u : Fin a → Fin 2) (v : Fin b → Fin 2
     (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     (List.ofFn fun j => m (Fin.append u v j)).prod =
       (List.ofFn fun j => m (u j)).prod * (List.ofFn fun j => m (v j)).prod := by
-  rw [show (List.ofFn fun j => m (Fin.append u v j)) = (List.ofFn (Fin.append u v)).map m
-    from List.map_ofFn.symm, List.ofFn_fin_append, List.map_append, List.prod_append]
-  simp only [List.map_ofFn, Function.comp_def]
+  exact GVHunter.word_eval_append m u v
 
 private lemma sum_words (n : ℕ) (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     (∑ w : Fin n → Fin 2, (List.ofFn fun j => m (w j)).prod) = (m 0 + m 1) ^ n := by
@@ -910,23 +909,21 @@ private lemma uniqueness_closure (n a : ℕ) (h : a + 3 ≤ n)
   exact (div_eq_iff (chart_denominator n _ hg)).mpr
     (sub_eq_zero.mp ((mul_eq_zero.mp hzero).resolve_left hg))
 
-private def explicitTriple : (Fin 3 → Fin 2) → ℂ :=
-  mpsState 3 !![1, 2; 3, 4] !![5, 6; 7, 8] ![1, 0] ![1, 2]
-
-private lemma explicit_chart_nonempty :
-    explicitTriple ∈ closure 3 ∧ MvPolynomial.eval explicitTriple chartPoly ≠ 0 := by
-  refine ⟨MvPolynomial.zeroLocus_vanishingIdeal_le _ ⟨_, _, _, _, rfl⟩, ?_⟩
-  have hx (i j k : Fin 2) : MvPolynomial.eval explicitTriple (coordinate i j k) =
+private lemma chart_nonempty :
+    ∃ t ∈ closure 3, MvPolynomial.eval t chartPoly ≠ 0 := by
+  let t := mpsState 3 !![1, 2; 3, 4] !![5, 6; 7, 8] ![1, 0] ![1, 2]
+  refine ⟨t, MvPolynomial.zeroLocus_vanishingIdeal_le _ ⟨_, _, _, _, rfl⟩, ?_⟩
+  have hx (i j k : Fin 2) : MvPolynomial.eval t (coordinate i j k) =
       ![![![145, 349], ![337, 829]], ![![489, 1173], ![1193, 2933]]] i j k := by
-    rw [coordinate, explicitTriple]
+    rw [coordinate]
     fin_cases i <;> fin_cases j <;> fin_cases k <;>
-      norm_num [coordinate, explicitTriple, mpsState, List.ofFn_succ,
+      norm_num [coordinate, t, mpsState, List.ofFn_succ,
         Matrix.mul_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
-  have hd : MvPolynomial.eval explicitTriple minorPoly = 387072 := by
+  have hd : MvPolynomial.eval t minorPoly = 387072 := by
     rw [minorPoly, kernelMinor]
     norm_num [minorPoly, Matrix.det_fin_three, kernelMinor, kernelMatrix,
       Matrix.submatrix_apply, hx]
-  have hc (i : Fin 3) : MvPolynomial.eval explicitTriple (cramerNumerator i) =
+  have hc (i : Fin 3) : MvPolynomial.eval t (cramerNumerator i) =
       ![118272, 10752, -1161216] i := by
     rw [cramerNumerator]; fin_cases i <;>
       norm_num [cramerNumerator, Matrix.cramer_apply, Matrix.det_fin_three,
@@ -940,9 +937,9 @@ theorem result : claim := by
   intro n a hn h
   refine ⟨model_prime n, model_prime 3, ?_⟩
   refine ⟨chartPoly, denominator n, numerator n a, ?_, ?_, ?_⟩
-  · obtain ⟨ht, hg⟩ := explicit_chart_nonempty
-    obtain ⟨_, hf, hm⟩ := inverse_on_chart n a hn h explicitTriple ht hg
-    refine ⟨rationalInverse n a explicitTriple, hf, ?_⟩
+  · obtain ⟨t, ht, hg⟩ := chart_nonempty
+    obtain ⟨_, hf, hm⟩ := inverse_on_chart n a hn h t ht hg
+    refine ⟨rationalInverse n a t, hf, ?_⟩
     rw [hm]
     exact hg
   · intro t ht hg
