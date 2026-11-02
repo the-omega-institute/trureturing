@@ -44,7 +44,11 @@ internal sealed class Machine3626Document : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("machine3626-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), role,
+            openProblemResolutionClaim: name == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala-machine3626-exact-halting-time"), ResolutionKind.Proved)
+                : null);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
