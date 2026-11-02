@@ -30,14 +30,14 @@ def claim : Prop :=
   IsGLB {s : ℝ | ∃ n : ℕ, 2 ≤ n ∧ ∃ k : Fin n → ℝ,
     (∀ i, 0 < k i) ∧ s = skewness k + kurtosis k} lowerBound
 
-private def normalizedRates {n : ℕ} (k : Fin n → ℝ) : Fin n → ℝ :=
+def normalizedRates {n : ℕ} (k : Fin n → ℝ) : Fin n → ℝ :=
   fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)
 
-private def p {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 2 (normalizedRates k)
+def p {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 2 (normalizedRates k)
 
-private def q {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 3 (normalizedRates k)
+def q {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 3 (normalizedRates k)
 
-private def r {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 4 (normalizedRates k)
+def r {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 4 (normalizedRates k)
 
 private lemma normalized_sum {n : ℕ} (k : Fin n → ℝ) :
     skewness k + kurtosis k = 18 * p k ^ 2 - 22 * q k + 6 * r k / p k := by
@@ -47,7 +47,7 @@ private lemma normalized_sum {n : ℕ} (k : Fin n → ℝ) :
     p q r normalizedRates
   ring
 
-private lemma normalized_moments {n : ℕ} (hn : 2 ≤ n) (k : Fin n → ℝ)
+lemma normalized_moments {n : ℕ} (hn : 2 ≤ n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) :
     0 < p k ∧ 0 ≤ q k ∧ q k ^ 2 ≤ p k * r k ∧ r k < p k ^ 2 := by
   have hs : 0 < powerSum n 1 (fun j => (k j)⁻¹) := by

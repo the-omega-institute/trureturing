@@ -1,0 +1,36 @@
+### 引理 7.1（零平方缺额给双模关系）
+
+<a id="lem-c94-bimodule"></a>
+
+设 $s=s^\dagger$、$E(s)=s$、$E(s^2)=s^2$，且 $E$ 满足
+式 [(6.1)](#eq-c94-schwarz)。则对任意 $b\in B(H)$，
+
+<a id="eq-c94-bimodule-one"></a>
+
+$$
+E(sb)=sE(b),\qquad E(bs)=E(b)s.
+\tag{7.1}
+$$
+
+**证明。**
+记
+
+$$
+F=E(sb)-sE(b),\qquad
+ D_b=E(b^\dagger b)-E(b)^\dagger E(b)\ge0.
+$$
+
+对 $s+zb$ 使用 Schwarz 不等式，常数缺额为零，展开得到
+
+<a id="eq-c94-polarized-defect"></a>
+
+$$
+zF+\bar zF^\dagger+|z|^2D_b\ge0\qquad(z\in\mathbb C).
+\tag{7.2}
+$$
+
+对任意向量 $v$ 取二次型，依次令 $z=t,-t,it,-it$，再令 $t\downarrow0$。
+实部和虚部的一阶项都必须为零，所以 $\langle v,Fv\rangle=0$。
+复极化说明 $F=0$，得到第一式。
+取伴随，再将 $b^\dagger$ 替换为 $b$，得到第二式。
+

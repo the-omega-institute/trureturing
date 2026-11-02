@@ -15,6 +15,19 @@ internal sealed class UnicyclicSkewnessPlusKurtosisLowerBoundDocument : IScribeD
         H("The sharp lower bound on unicyclic skewness plus kurtosis"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("normalized-rates"), DeclarationHandle.Create(Prefix + "normalizedRates"),
+                H("Normalized inverse rates"), StatementSource.FromAuthor(Disp(NormalizedRatesFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every natural n and real rate vector k, normalizedRates k divides each inverse rate by their first power sum. Real inversion and division are total; positivity is assumed only in the moment theorem."))),
+                DescribeRole.Definition),
+            MomentDefinition("p", 2), MomentDefinition("q", 3), MomentDefinition("r", 4),
+            Describe.Lean(
+                DescribeId.Create("normalized-moments"), DeclarationHandle.Create(Prefix + "normalized_moments"),
+                H("Joint moments of the same normalized vector"), StatementSource.FromAuthor(Disp(NormalizedMomentsFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For n ≥ 2 and every positive k, these four facts hold jointly for its normalized inverse rates. The proof applies the original public kurtosis moments theorem after proving positivity of the first power sum. The same suppliers support the sum and difference endpoints."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("lower-bound"),
                 DeclarationHandle.Create(Prefix + "lowerBound"),
                 H("The asymptotic lower endpoint"),
@@ -108,6 +121,31 @@ internal sealed class UnicyclicSkewnessPlusKurtosisLowerBoundDocument : IScribeD
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("ptaszynski-2022-unidirectional-skewness-plus-kurtosis-lower-bound"),
                     ResolutionKind.Proved)))));
+
+    private static DocumentBlock.Describe MomentDefinition(string name, byte degree) => Describe.Lean(
+        DescribeId.Create(name), DeclarationHandle.Create(Prefix + name), H("Normalized inverse-rate moment " + name),
+        StatementSource.FromAuthor(Disp(All("n", Naturals(), All("k", RateType(),
+            Equal(Typed(At(Local(name), X("k")), Reals()), PowerSum(Natural(degree), At(Local("normalizedRates"), X("k")))))))),
+        AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text("This is the degree " + degree + " power sum of the same normalized inverse-rate vector, for every natural n and real k."))),
+        DescribeRole.Definition);
+
+    private static Formula NormalizedRatesFormula() => All("n", Naturals(), All("k", RateType(),
+        Equal(Typed(At(Local("normalizedRates"), X("k")), RateType()),
+            LambdaOf("i", FinOf(X("n")), Divide(At(Qualified("Inv", "inv"), At(X("k"), X("i"))),
+                PowerSum(Natural(1), LambdaOf("j", FinOf(X("n")), At(Qualified("Inv", "inv"), At(X("k"), X("j"))))))))));
+
+    private static Formula NormalizedMomentsFormula()
+    {
+        Formula a = At(Local("p"), X("k")), b = At(Local("q"), X("k")), c = At(Local("r"), X("k"));
+        return All("n", Naturals(), Implication(LessEqual(Natural(2), X("n")), All("k", RateType(),
+            Implication(PositiveRates(), Conjunction(Less(Real(0), a), Conjunction(LessEqual(Real(0), b),
+                Conjunction(LessEqual(Power(b, Natural(2)), Multiply(a, c)), Less(c, Power(a, Natural(2))))))))));
+    }
+    private static Formula LambdaOf(string name, Formula type, Formula body) => Seq(Qualified("fun"), Sp, Typed(X(name), type), Sp, Mapsto, Sp, Parenthesized(body));
+    private static Formula PowerSum(Formula degree, Formula vector) => At(Qualified("D5", "S3", "Quantum", "Transport", "StrongAbsorption", "Foundations", "powerSum"), X("n"), degree, vector);
+    private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
+    private static Formula Multiply(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
 
     private static Formula LowerBoundFormula() =>
         Equal(Typed(Local("lowerBound"), Reals()),

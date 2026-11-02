@@ -1,0 +1,71 @@
+### 定理 17.1（块重置的显式内部记录等距）
+
+<a id="thm-c94-record-isometry"></a>
+
+将 $\eta_\alpha$ 对角化为
+$\sum_r\lambda_{\alpha r}\lvert r\rangle\langle r\rvert$，定义
+
+$$
+K_{\alpha rs}
+ =\sqrt{\lambda_{\alpha r}}
+ (I_{V_\alpha}\otimes\lvert r\rangle\langle s\rvert)P_\alpha.
+$$
+
+若记录载体具有正交基 $\lvert \alpha,r,s\rangle$，则
+
+<a id="eq-c94-record-isometry"></a>
+
+$$
+V\psi=\sum_{\alpha,r,s}K_{\alpha rs}\psi\otimes\lvert \alpha,r,s\rangle
+\tag{17.1}
+$$
+
+满足 $V^\dagger V=I$ 且
+
+$$
+R(\rho)=\operatorname{Tr}_{\rm rec}(V\rho V^\dagger).
+$$
+
+完整记录输出保留全部输入区别；特别地
+$V^\dagger(V\rho V^\dagger)V=\rho$。
+
+**证明。**
+对每个扇区求和，
+
+$$
+\sum_{r,s}K_{\alpha rs}^\dagger K_{\alpha rs}
+ =I_{V_\alpha}\otimes\sum_s\lvert s\rangle\langle s\rvert=P_\alpha,
+$$
+
+这里使用 $\sum_r\lambda_{\alpha r}=1$，并将算符视为该扇区的嵌入。
+再对 $\alpha$ 求和得到单位，所以 $V^\dagger V=I$。
+对记录偏迹消去不同标签之间的交叉项，留下
+
+$$
+\sum_{\alpha,r,s}K_{\alpha rs}\rho K_{\alpha rs}^\dagger
+ =\bigoplus_\alpha
+   \operatorname{Tr}_{W_\alpha}(P_\alpha\rho P_\alpha)\otimes\eta_\alpha,
+$$
+
+即所需重置式。最后一个恢复恒等式由 $V^\dagger V=I$ 直接得到。
+
+记录维数 $\sum_\alpha(\dim W_\alpha)^2$ 已足以完成这个构造。
+若坚持纯初始记录的标准等距表示，且全部 $\eta_\alpha$ 忠实，
+这些 Kraus 算符线性独立：不同扇区支撑不同，同扇区的右因子为独立矩阵单位。
+其向量化外积之和是 Choi 矩阵，秩因而等于该数；
+任何纯记录等距的 Kraus 数至少等于这个秩。
+这只是所给通道的标准有限表示维数，不等同于原生装置取得成本或项目其他共享历史预算。
+
+取记录的一份固定纯态，有限维等距可通过补齐正交基扩张成更大系统上的酉矩阵。
+这承接 V80 的完整记录表示与 v90 的恢复区分 [5](#ref-v80)、[6](#ref-v90)。
+实际供应何种门、初始记录与控制仍是过程合同的一部分；数学表示不自动采购装置。
+
+若 $R\rho=R\sigma$ 而 $\rho\ne\sigma$，完整输出仍然不同。
+区别可能位于记录边际，也可能位于系统与记录的联合关联，
+不能一概宣称记录边际独自包含全部输入内容。
+
+**白话图景。**局部整理可以让两份状态给出同一个可见输出。
+把内部记录也保留下来，整个等距过程仍然能区分原来的两份内容。
+区别被转移到记录和联合关联中，而非从整个 $\Omega$ 消失。
+当前读口不访问这些区别，正是局部融合的含义。
+
