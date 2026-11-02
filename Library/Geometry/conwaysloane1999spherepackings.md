@@ -28,7 +28,10 @@ vector. Setting one coordinate to zero gives the signed coordinate units
 and signed all-ones charges. This is classical A-type dual minimum-vector
 geometry, with no novelty claim.
 
-The book identity, authors, year and DOI are confirmed by the Crossref record:
+## Verified locator
+
+The book identity, authors, year and DOI 10.1007/978-1-4757-6568-7 are confirmed
+by the Crossref record:
 https://api.crossref.org/works/10.1007%2F978-1-4757-6568-7 .
 The root/dual terminology and book reference are independently displayed at
 https://errorcorrectionzoo.org/c/an and
