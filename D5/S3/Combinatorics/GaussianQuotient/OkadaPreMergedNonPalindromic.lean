@@ -20,6 +20,21 @@ open Polynomial
 open scoped BigOperators
 open D5.S3.Combinatorics.CylindricPartition.LiUncuDefs (gauss)
 
+private noncomputable def qFactorial (n : ℕ) : ℤ[X] :=
+  ∏ h ∈ Finset.range n, (1 - X ^ (h + 1))
+
+private theorem qFactorial_succ (n : ℕ) :
+    qFactorial (n + 1) = qFactorial n * (1 - X ^ (n + 1)) := by
+  simp [qFactorial, Finset.prod_range_succ, mul_comm]
+
+private theorem gauss_diagonal (n : ℕ) : gauss n n = 1 := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      rw [gauss, D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
+        Nat.sub_self]
+      simpa using ih
+
 def IsAlmostPalindromic (f : ℤ[X]) : Prop :=
   ((f.support.sort (· ≤ ·)).map f.coeff).reverse =
     (f.support.sort (· ≤ ·)).map f.coeff
@@ -33,12 +48,48 @@ def claim : Prop :=
       ¬ IsAlmostPalindromic (preMerged a b)
 
 private theorem factorial_identity
-    (μ : ℕ) (a b : Fin μ → ℕ) (hab : ∀ i, a i ≤ b i) :
-    (∀ n k : ℕ, k ≤ n →
-      gauss n k * (∏ h ∈ Finset.range k, (1 - X ^ (h + 1))) *
-          (∏ h ∈ Finset.range (n - k), (1 - X ^ (h + 1))) =
-        ∏ h ∈ Finset.range n, (1 - X ^ (h + 1))) := by
-  sorry
+    (n k : ℕ) (hkn : k ≤ n) :
+    gauss n k * qFactorial k * qFactorial (n - k) = qFactorial n := by
+  induction n generalizing k with
+  | zero =>
+      have hk : k = 0 := by omega
+      subst hk
+      simp [qFactorial, gauss]
+  | succ n ih =>
+      by_cases hk : k = 0
+      · subst k
+        simp [qFactorial, gauss]
+      by_cases hkn' : k = n + 1
+      · subst k
+        rw [qFactorial_succ]
+        rw [gauss, D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
+          gauss_diagonal]
+        simp [qFactorial]
+      have hkn'' : k ≤ n := by omega
+      have hkpos : 0 < k := by omega
+      have hsub : n + 1 - k = n - k + 1 := by omega
+      have hhook :
+          (1 - X ^ (n + 1 - k)) * gauss (n + 1) k =
+            (1 - X ^ (n + 1)) * gauss n k := by
+        simpa using D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_hook (n + 1) k (by omega)
+      rw [hsub, qFactorial_succ, qFactorial_succ]
+      calc
+        gauss (n + 1) k * qFactorial k *
+            (qFactorial (n - k) * (1 - X ^ (n - k + 1))) =
+            qFactorial k * qFactorial (n - k) *
+              ((1 - X ^ (n + 1 - k)) * gauss (n + 1) k) := by
+          rw [show n + 1 - k = (n - k) + 1 by omega, pow_succ]
+          ring
+        _ = qFactorial k * qFactorial (n - k) *
+              ((1 - X ^ (n + 1)) * gauss n k) := by rw [hhook]
+        _ = qFactorial (n + 1) := by
+          calc
+            qFactorial k * qFactorial (n - k) *
+                ((1 - X ^ (n + 1)) * gauss n k) =
+                gauss n k * qFactorial k * qFactorial (n - k) *
+                  (1 - X ^ (n + 1)) := by ring
+            _ = qFactorial n * (1 - X ^ (n + 1)) := by rw [ih k hkn'']
+            _ = qFactorial (n + 1) := (qFactorial_succ n).symm
 
 private theorem index_bounds
     (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
