@@ -136,7 +136,7 @@ internal sealed class FiroozbakhtLeastSelfDivisorPowerMinusOneDocument : IScribe
             Relation(n, FormulaRelationOperator.Divides, Call("t", n)));
         var composite = Imply(Relation(Num(7), FormulaRelationOperator.LessThan, n),
             And(Relation(Num(1), FormulaRelationOperator.LessThan, n),
-                Seq(Neg, Call("Prime", Call("toNat", n)))));
+                Seq(Neg, Sp, Call("Prime", Call("toNat", n)))));
         var alternative = Imply(Relation(Num(1), FormulaRelationOperator.LessThan, n),
             Or(Relation(Num(3), FormulaRelationOperator.Divides, n),
                 Or(Relation(Num(5), FormulaRelationOperator.Divides, n),
