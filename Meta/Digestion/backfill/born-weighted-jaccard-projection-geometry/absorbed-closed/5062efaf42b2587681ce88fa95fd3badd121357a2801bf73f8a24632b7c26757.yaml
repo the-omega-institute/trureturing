@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:5062efaf42b2587681ce88fa95fd3badd121357a2801bf73f8a24632b7c26757
+  normalized_sha256: sha256:5062efaf42b2587681ce88fa95fd3badd121357a2801bf73f8a24632b7c26757
+cas_ref: sha256:5062efaf42b2587681ce88fa95fd3badd121357a2801bf73f8a24632b7c26757
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.compression_inner
+    target_statement_id: sha256:e157f0abad66a8cd03192999d5e00d79808b7c980210c213d3f95d3451f57b3b
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.compression_quadratic
+    target_statement_id: sha256:28cd7c5d788f30743366fa964c7e844cfcb0d57c33e0f88f5df280b8ee2e8a57
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.compression_symmetric
+    target_statement_id: sha256:c0f78aa7381ae19ddf2de08667860b9dc7f65f40bedb20e4cfdf7794dd820528
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.compression_trace
+    target_statement_id: sha256:b3502a071dcfeabdabda90b410c5cc2c035484541a1c84ada22c5e3367f03b98
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.fixed_overlap_attainment
+    target_statement_id: sha256:9fff70d75b830e01e2b7f3b08f4f4a1c8a9087447d9d3eb19bf90149d873e2ae
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.fixed_overlap_maximum
+    target_statement_id: sha256:2d85711d080db9d5c3f88f0541fac21c6c31bac2858cd323cdf84e190f121481
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.interval_inf
+    target_statement_id: sha256:e661e2a7f1a278e3f5846e87a77b5610f0e039ad1934b7ce3981dd2eca5e4309
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.projection_orthogonal_sup
+    target_statement_id: sha256:f09883b8e36d17049379314f7c85d5a5cc8b21a25fb60786ce1808e73cde1fc7
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.weight_orthogonal_sup
+    target_statement_id: sha256:d86c29de0de24fd0f333faad0d81a3009b8bab0cc972f902d677075d7c3e0bf2
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.weight_unit_line
+    target_statement_id: sha256:0adb780fe54dc782fe05ab7b26a1c1812e7ec9545d474285d113e55e1ce62696
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.distance_properties
+    target_statement_id: sha256:d759568d967c7b0a91bbc67d8dfbdee8689430e600e6cea72117de6ce2a6ebaa
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.native_matrix_faithfulness
+    target_statement_id: sha256:dc65f4db4b9d06b451c891e4d646b2a0798964ba43ae680e46afe7b97f3f8990
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.weight_nonneg
+    target_statement_id: sha256:7a56c81fa96fdf894be1337432bf3e1a6f02bee57392ef1aac9c6e67d6f060b6
+receipts:
+  unresolved_subitems: []
