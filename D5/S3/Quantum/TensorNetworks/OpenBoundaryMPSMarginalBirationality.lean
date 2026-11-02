@@ -645,11 +645,234 @@ private lemma inverse_on_chart (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
       Matrix.vecMul_one, Matrix.one_mulVec]
     exact hrec.2.2.2.1
 
+private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
+    (hd : MvPolynomial.eval t minorPoly ≠ 0) (v : Fin 4 → ℂ)
+    (hv : (MvPolynomial.eval t).mapMatrix kernelMatrix *ᵥ v = 0) :
+    v = (v 3 / MvPolynomial.eval t minorPoly) •
+      (MvPolynomial.eval t ∘
+        ![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly]) := by
+  let ε := MvPolynomial.eval t
+  let d := ε minorPoly
+  let a := ε.mapMatrix kernelMinor
+  let x : Fin 3 → ℂ := fun i => v (Fin.castSucc i)
+  let y : Fin 3 → ℂ := fun i => ε (cramerNumerator i)
+  let b : Fin 3 → ℂ := fun i => ε (kernelMatrix (Fin.castSucc i) 3)
+  have hx : a *ᵥ x = (-v 3) • b := by
+    funext i
+    have he := congrFun hv (Fin.castSucc i)
+    change (∑ j : Fin 4, ε (kernelMatrix (Fin.castSucc i) j) * v j) = 0 at he
+    rw [Fin.sum_univ_castSucc] at he
+    change (∑ j : Fin 3, ε (kernelMatrix (Fin.castSucc i) (Fin.castSucc j)) *
+      v (Fin.castSucc j)) + ε (kernelMatrix (Fin.castSucc i) 3) * v 3 = 0 at he
+    change (∑ j : Fin 3, ε (kernelMatrix (Fin.castSucc i) (Fin.castSucc j)) *
+      v (Fin.castSucc j)) = -v 3 * ε (kernelMatrix (Fin.castSucc i) 3)
+    linear_combination he
+  have hy : a *ᵥ y = (-d) • b := by
+    funext i
+    have he := congrArg ε (congrFun kernel_cramer_identity (Fin.castSucc i))
+    have hz : (![0, 0, 0, kernelMatrix.det] : Fin 4 → _) (Fin.castSucc i) = 0 := by
+      fin_cases i <;> rfl
+    rw [hz, map_zero] at he
+    change ε (dotProduct (kernelMatrix (Fin.castSucc i))
+      ![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly]) = 0 at he
+    rw [ε.map_dotProduct] at he
+    rw [dotProduct, Fin.sum_univ_castSucc] at he
+    simp only [Function.comp_apply] at he
+    change (∑ j : Fin 3, ε (kernelMatrix (Fin.castSucc i) (Fin.castSucc j)) *
+      ε (cramerNumerator j)) = -d * ε (kernelMatrix (Fin.castSucc i) 3)
+    have heq (j : Fin 3) :
+        (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
+          (Fin.castSucc j) = cramerNumerator j := by fin_cases j <;> rfl
+    simp only [heq] at he
+    change (∑ j : Fin 3, ε (kernelMatrix (Fin.castSucc i) (Fin.castSucc j)) *
+      ε (cramerNumerator j)) + ε (kernelMatrix (Fin.castSucc i) 3) * d = 0 at he
+    linear_combination he
+  have ha : IsUnit a.det := by
+    rw [show a.det = ε minorPoly from (ε.map_det kernelMinor).symm]
+    exact isUnit_iff_ne_zero.mpr hd
+  have hxy : x = (v 3 / d) • y := by
+    apply Matrix.mulVec_injective_iff_isUnit.mpr ((a.isUnit_iff_isUnit_det).mpr ha)
+    rw [hx, Matrix.mulVec_smul, hy, smul_smul]
+    apply congrArg (fun s : ℂ => s • b)
+    field_simp [show d ≠ 0 from hd]
+  funext i
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · change v 3 = (v 3 / d) * d
+    field_simp [show d ≠ 0 from hd]
+  · change x j = (v 3 / d) * ε
+      ((![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
+        (Fin.castSucc j))
+    have heq : (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
+        (Fin.castSucc j) = cramerNumerator j := by fin_cases j <;> rfl
+    rw [heq]
+    exact congrFun hxy j
+
+private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2 → ℂ)
+    (hg : MvPolynomial.eval (mpsState 3 a₀ a₁ l r) chartPoly ≠ 0) :
+    ∃ s : ℂ, s ≠ 0 ∧ ∃ u : Matrix (Fin 2) (Fin 2) ℂ, IsUnit u.det ∧
+      reconstructedLeft (mpsState 3 a₀ a₁ l r) = s⁻¹ • (l ᵥ* u⁻¹) ∧
+      (∀ j, reconstructedMatrix (mpsState 3 a₀ a₁ l r) j =
+        s • (u * (![a₀, a₁] : Fin 2 → _) j * u⁻¹)) ∧
+      reconstructedRight (mpsState 3 a₀ a₁ l r) = s⁻¹ ^ 2 • (u *ᵥ r) := by
+  let t := mpsState 3 a₀ a₁ l r
+  change MvPolynomial.eval t chartPoly ≠ 0 at hg
+  let m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ := ![a₀, a₁]
+  let u : Matrix (Fin 2) (Fin 2) ℂ := Matrix.of fun i j => (l ᵥ* m i) j
+  let v : Matrix (Fin 2) (Fin 2) ℂ := Matrix.of fun j k => (m k *ᵥ r) j
+  have ht (j : Fin 2) : Matrix.of (fun i k => t ![i, j, k]) = u * m j * v := by
+    ext i k
+    norm_num [t, mpsState, List.ofFn_succ, u, v, Matrix.mul_apply,
+      Matrix.vecMul, Matrix.mulVec, dotProduct, Fin.sum_univ_two, m]
+    ring
+  have hdet : (u * m 0 * v).det ≠ 0 := by
+    rw [← ht 0, Matrix.det_fin_two]
+    intro he
+    apply hg
+    change t ![0, 0, 0] * t ![1, 0, 1] - t ![0, 0, 1] * t ![1, 0, 0] = 0 at he
+    change MvPolynomial.eval t chartPoly = 0
+    simp only [chartPoly, map_mul, map_sub, coordinate, MvPolynomial.eval_X, he, mul_zero, zero_mul]
+  have hu : IsUnit u.det := isUnit_iff_ne_zero.mpr
+    (fun he => hdet (by rw [Matrix.det_mul, Matrix.det_mul, he, zero_mul, zero_mul]))
+  have hv : IsUnit v.det := isUnit_iff_ne_zero.mpr
+    (fun he => hdet (by rw [Matrix.det_mul, he, mul_zero]))
+  let z := v⁻¹ *ᵥ r
+  let e := l ᵥ* u⁻¹
+  let k : Fin 4 → ℂ := ![z 0, z 1, e 0, e 1]
+  have hz : v *ᵥ z = r := by rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hv, Matrix.one_mulVec]
+  have he : e ᵥ* u = l := by rw [Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hu, Matrix.vecMul_one]
+  have hrow (i j : Fin 2) : dotProduct (fun k => t ![i, j, k]) z =
+      dotProduct e (fun k => t ![k, i, j]) := by
+    change ((Matrix.of (fun p q => t ![p, j, q])) *ᵥ z) i =
+      (e ᵥ* Matrix.of (fun p q => t ![p, i, q])) j
+    rw [ht, ht, ← Matrix.mulVec_mulVec, hz, ← Matrix.vecMul_vecMul,
+      ← Matrix.vecMul_vecMul, he]
+    rw [← Matrix.mulVec_mulVec]
+    change dotProduct (u i) (m j *ᵥ r) = ((l ᵥ* m i) ᵥ* v) j
+    rfl
+  have hk : (MvPolynomial.eval t).mapMatrix kernelMatrix *ᵥ k = 0 := by
+    have h00 := hrow 0 0; have h01 := hrow 0 1
+    have h10 := hrow 1 0; have h11 := hrow 1 1
+    norm_num [dotProduct, Fin.sum_univ_two] at h00 h01 h10 h11
+    funext i
+    fin_cases i <;> norm_num [kernelMatrix, coordinate, k, Matrix.mulVec, dotProduct,
+      Fin.sum_univ_succ] <;>
+      (first | linear_combination h00 | linear_combination h01 | linear_combination h10 | linear_combination h11)
+  have hd : MvPolynomial.eval t minorPoly ≠ 0 := by
+    intro he; apply hg; simp only [chartPoly, map_mul, he, zero_mul]
+  have huniq := kernel_vector_unique t hd k hk
+  have hs : k 3 ≠ 0 := by
+    intro hs
+    have hk0 : k = 0 := by rw [huniq, hs, zero_div, zero_smul]
+    have hz0 : z = 0 := by
+      funext i; fin_cases i
+      · exact congrFun hk0 0
+      · exact congrFun hk0 1
+    have hr0 : r = 0 := by rw [← hz, hz0, Matrix.mulVec_zero]
+    have hv0 : v = 0 := by ext i j; change (m j *ᵥ r) i = 0; rw [hr0, Matrix.mulVec_zero]; rfl
+    exact hv.ne_zero (by rw [hv0, Matrix.det_zero])
+  have hl : reconstructedLeft t = (k 3)⁻¹ • e := by
+    have hh := congrFun huniq 2; have hh3 := congrFun huniq 3
+    funext i; fin_cases i <;>
+      norm_num [k, reconstructedLeft, leftNumerator, Function.comp_def] at hh hh3 ⊢ <;>
+      field_simp [show e 1 ≠ 0 from hs, hd] at hh hh3 ⊢ <;> linear_combination -hh
+  have hzr : reconstructedKernel t = (k 3)⁻¹ • z := by
+    have hh := congrFun huniq 0; have hh1 := congrFun huniq 1
+    funext i; fin_cases i <;>
+      norm_num [k, reconstructedKernel, rightKernelNumerator, Function.comp_def] at hh hh1 ⊢ <;>
+      field_simp [show e 1 ≠ 0 from hs, hd] at hh hh1 ⊢ <;>
+      (first | linear_combination -hh | linear_combination -hh1)
+  have hbase : reconstructedBasis t = (k 3)⁻¹ • (u * v) := by
+    ext i j
+    have hli : (reconstructedLeft t ᵥ* Matrix.of (fun p q => t ![p, i, q])) j =
+        reconstructedBasis t i j := by
+      norm_num [reconstructedLeft, reconstructedBasis, basisNumerator, leftNumerator,
+        coordinate, Matrix.vecMul, dotProduct, Fin.sum_univ_two]; ring
+    rw [← hli, hl, ht, Matrix.smul_vecMul, ← Matrix.vecMul_vecMul,
+      ← Matrix.vecMul_vecMul, he]
+    rfl
+  have hbi : (reconstructedBasis t)⁻¹ = k 3 • (v⁻¹ * u⁻¹) := by
+    apply Matrix.inv_eq_left_inv
+    rw [hbase, smul_mul_smul_comm, mul_inv_cancel₀ hs, one_smul]
+    simp only [Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_left _ _ hu,
+      Matrix.nonsing_inv_mul _ hv]
+  refine ⟨k 3, hs, u, hu, hl, ?_, ?_⟩
+  · intro j
+    rw [reconstructedMatrix, ht, hbi, mul_smul_comm]
+    simp only [Matrix.mul_assoc, Matrix.mul_nonsing_inv_cancel_left _ _ hv]
+    rfl
+  · rw [reconstructedRight, hbase, hzr, Matrix.smul_mulVec, Matrix.mulVec_smul,
+      ← Matrix.mulVec_mulVec, hz, smul_smul, pow_two]
+
 private lemma gauge_uniqueness_image (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
     (ψ : (Fin n → Fin 2) → ℂ) (hψ : ψ ∈ openBoundaryMPS n)
     (hg : MvPolynomial.eval (improperMarginal n a h ψ) chartPoly ≠ 0) :
     rationalInverse n a (improperMarginal n a h ψ) = ψ := by
-  sorry
+  obtain ⟨a₀, a₁, α, β, rfl⟩ := hψ
+  rw [outside_sum] at hg ⊢
+  let m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ := ![a₀, a₁]
+  let s₀ := a₀ + a₁
+  let b := n - 3 - a
+  let t := mpsState 3 a₀ a₁ (α ᵥ* s₀ ^ a) (s₀ ^ b *ᵥ β)
+  obtain ⟨s, hs, u, hu, hl, hm, hr⟩ := triple_gauge a₀ a₁
+    (α ᵥ* s₀ ^ a) (s₀ ^ b *ᵥ β) hg
+  let φ : Matrix (Fin 2) (Fin 2) ℂ →* Matrix (Fin 2) (Fin 2) ℂ :=
+    { toFun := fun x => u * x * u⁻¹
+      map_one' := by simp only [mul_one, Matrix.mul_nonsing_inv _ hu]
+      map_mul' := by intro x y; simp only [Matrix.mul_assoc,
+        Matrix.nonsing_inv_mul_cancel_left _ _ hu] }
+  have hc : φ s₀ = s⁻¹ • reconstructedSum t := by
+    rw [reconstructedSum, hm, hm, ← smul_add, smul_smul, inv_mul_cancel₀ hs, one_smul]
+    change u * (a₀ + a₁) * u⁻¹ = u * a₀ * u⁻¹ + u * a₁ * u⁻¹
+    rw [mul_add, add_mul]
+  have hp (k : ℕ) : u * s₀ ^ k * u⁻¹ = s⁻¹ ^ k • reconstructedSum t ^ k := by
+    change φ (s₀ ^ k) = _
+    rw [map_pow, hc, smul_pow]
+  have hpl (k : ℕ) : s₀ ^ k * u⁻¹ = s⁻¹ ^ k • (u⁻¹ * reconstructedSum t ^ k) := by
+    have hh := congrArg (u⁻¹ * ·) (hp k)
+    simpa only [Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_left _ _ hu,
+      mul_smul_comm] using hh
+  have hpr (k : ℕ) : u * s₀ ^ k = s⁻¹ ^ k • (reconstructedSum t ^ k * u) := by
+    have hh := congrArg (· * u) (hp k)
+    simpa only [Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hu, mul_one, Matrix.smul_mul] using hh
+  have hcu := isUnit_iff_ne_zero.mpr (chart_scalars t hg).2.2.2.2.1
+  have hcancel (k : ℕ) : reconstructedSum t ^ k * (reconstructedSum t)⁻¹ ^ k = 1 ∧
+      (reconstructedSum t)⁻¹ ^ k * reconstructedSum t ^ k = 1 :=
+    ⟨pow_mul_pow_eq_one k (Matrix.mul_nonsing_inv _ hcu),
+      pow_mul_pow_eq_one k (Matrix.nonsing_inv_mul _ hcu)⟩
+  have hleft : reconstructedLeft t ᵥ* (reconstructedSum t)⁻¹ ^ a =
+      (s⁻¹ * s⁻¹ ^ a) • (α ᵥ* u⁻¹) := by
+    rw [hl, Matrix.smul_vecMul]
+    simp only [Matrix.vecMul_vecMul]
+    rw [hpl, Matrix.smul_mul, Matrix.vecMul_smul, smul_smul,
+      Matrix.mul_assoc, (hcancel a).1, mul_one]
+  have hright : (reconstructedSum t)⁻¹ ^ b *ᵥ reconstructedRight t =
+      (s⁻¹ ^ 2 * s⁻¹ ^ b) • (u *ᵥ β) := by
+    rw [hr, Matrix.mulVec_smul]
+    simp only [Matrix.mulVec_mulVec]
+    rw [hpr, mul_smul_comm, Matrix.smul_mulVec, smul_smul,
+      ← Matrix.mul_assoc, (hcancel b).2, one_mul]
+  rw [(inverse_formula n a hn h t hg).2]
+  funext w
+  have hword : (List.ofFn fun i => reconstructedMatrix t (w i)).prod =
+      s ^ n • (u * (List.ofFn fun i => m (w i)).prod * u⁻¹) := by
+    rw [show (fun i => reconstructedMatrix t (w i)) =
+      (fun i => s • φ (m (w i))) from funext (fun i => hm (w i))]
+    rw [matrix_word_scale n (fun j => φ (m j)) s w]
+    congr 1
+    exact (show φ (List.ofFn fun i => m (w i)).prod = _ from
+      by rw [map_list_prod, List.map_ofFn]; rfl).symm
+  have he : (![reconstructedMatrix t 0, reconstructedMatrix t 1] :
+      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) = reconstructedMatrix t := by funext j; fin_cases j <;> rfl
+  simp only [mpsState, he]
+  rw [hword, hleft, hright]
+  simp only [Matrix.smul_mulVec, Matrix.mulVec_smul, smul_smul,
+    smul_dotProduct, dotProduct_smul, smul_eq_mul, Matrix.dotProduct_mulVec,
+    Matrix.smul_vecMul, Matrix.vecMul_vecMul, Matrix.mul_assoc,
+    Matrix.nonsing_inv_mul_cancel_left _ _ hu, Matrix.nonsing_inv_mul _ hu, Matrix.vecMul_one]
+  have hnb : n = a + b + 3 := by dsimp [b]; omega
+  rw [show s ^ n = s ^ a * s ^ b * s ^ 3 from by rw [hnb, pow_add, pow_add]]
+  simp only [inv_pow]
+  field_simp [hs] <;> simp only [mul_one, m]
 
 private def marginalCoordinate (n a : ℕ) (h : a + 3 ≤ n) (t : Fin 3 → Fin 2) :
     MvPolynomial (Fin n → Fin 2) ℂ :=
