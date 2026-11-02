@@ -48,7 +48,9 @@ internal sealed class HyperdiskRegularSubsetCoverDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(Disp(Equal(Local("claim"), Parenthesized(ClaimProposition())))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "For every natural dimension n and every regular subset c of a hyperdisk s, "
+                    "The source states: \"A related open question is whether a regular subset of a hyperdisk "
+                    + "can be covered with finite number of hyperdisks.\" "
+                    + "For every natural dimension n and every regular subset c of a hyperdisk s, "
                     + "the assertion asks for a natural k and k hyperdisks h i, each contained in c, "
                     + "whose union is exactly c. It expresses the second open question in the conclusion, "
                     + "masking.tex line 651, with the contained-cover convention of lines 272–279. "
