@@ -62,7 +62,7 @@ internal sealed class DiamondSpinBoundsDocument : IScribeDocumentDefinition
                 Spin(All(I, Call("Fin", D(4)), All(J, Call("Fin", D(4)), Equal(Call("zz", S, I, J), Mul(Call("z", S, I), Call("z", S, J)))))),
                 "For distinct sites this is their commuting weight product."),
             Node("dot", "The isotropic pair operator", "dot",
-                Spin(All(I, Call("Fin", D(4)), All(J, Call("Fin", D(4)), Equal(Call("dot", S, I, J), Add(Mul(new Formula.Fraction(D(1), D(2)), Call("xy", S, I, J)), Call("zz", S, I, J))))))),
+                Spin(All(I, Call("Fin", D(4)), All(J, Call("Fin", D(4)), Equal(Call("dot", S, I, J), Add(Mul(new Formula.Fraction(D(1), D(2)), Call("xy", S, I, J)), Call("zz", S, I, J)))))),
                 "This is XᵢXⱼ+YᵢYⱼ+ZᵢZⱼ. The native pair bound holds for every distinct pair."),
             Node("isotropic", "The isotropic diamond sum", "isotropic",
                 Spin(Equal(Call("isotropic", S), Seq(new Formula.Subscript(Sum, Seq(PairVariables(), InMacro, Call("edges"))), Sp, Call("dot", S, I, J)))),
@@ -107,33 +107,13 @@ internal sealed class DiamondSpinBoundsDocument : IScribeDocumentDefinition
     private static Formula W() => Call("W",S);
     private static Formula C() => Call("C",S);
     private static Formula Equal(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.Equal,y);
-    private static Formula LE(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThanOrEqual,y);
-    private static Formula LT(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.LessThan,y);
-    private static Formula Mem(Formula x, Formula y) => new Formula.Relation(x,FormulaRelationOperator.MemberOf,y);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Add,y);
-    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Subtract,y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x,FormulaBinaryOperator.Multiply,y);
-    private static Formula Pow(Formula x, byte n) => new Formula.Power(x,D(n));
     private static Formula Adj(Formula x) => new Formula.Power(P(x),Star);
-    private static Formula And(Formula x, Formula y) => new Formula.Logic(P(x),FormulaLogicOperator.And,P(y));
-    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(P(x),FormulaLogicOperator.Implies,P(y));
     private static Formula SumSites(Formula x) => Seq(new Formula.Subscript(Sum,Seq(I,InMacro,Call("Fin",D(4)))),Sp,x);
     private static Formula Pair(byte a, byte b) => Seq(Open,D(a),Comma,D(b),Close);
     private static Formula HamiltonianFormula() => Spin(Equal(Call("hamiltonian",S),
         Seq(new Formula.Subscript(Sum,Seq(PairVariables(),InMacro,Call("edges"))),Sp,
             Mul(D(2),P(Add(Mul(Call("X",I),Call("X",J)),Mul(Call("Y",I),Call("Y",J))))))));
-    private static Formula GroundSpaceFormula()
-    {
-        var shifted = Sub(Call("hamiltonian", S),
-            Mul(Call("ofReal", Call("groundEnergy", S)), D(1)));
-        return Spin(Equal(Call("groundSpace", S),
-            Call("inf", Call("ker", shifted), Call("zeroWeightSpace", S))));
-    }
     private static Formula PairVariables() => Seq(Open,I,Comma,J,Close);
-    private static Formula ClaimFormula() => new Formula.Logic(Call("claim"),FormulaLogicOperator.Iff,
-        Spin(Imp(LE(D(1),S), And(
-            All(V,Call("V",S),Imp(And(Mem(V,Call("singletSpace",S)),Equal(Call("norm",V),D(1))),
-                LE(Call("singletLowerBound",S),Call("re",Call("inner",V,Mul(Call("hamiltonian",S),V)))))),
-            And(LT(Call("groundEnergy",S),Call("singletLowerBound",S)),
-                Equal(Call("inf",Call("groundSpace",S),Call("singletSpace",S)),Call("bottom")))))));
 }
