@@ -1,0 +1,18 @@
+The following observations select different relations of this one process.
+
+- $S_C$ exposes the actual oriented source-edge support $S_0$, with the
+  local membership bits at logical positions, selected side words at
+  branches, and current selection state $q$ as explicit annotations.
+- $B_C$ exposes the actual terminal source antichain $B_0$, with those
+  same source-indexed annotations and $q$. Their indices are positions
+  in its prefix closure; record cells are not extra source-boundary leaves.
+- $T_C$ exposes the labelled causal creation/lifecycle order $T_c$, the
+  actual selected serial chain of literal event identities, and current
+  selection state $q$. It retains causal precedence and chosen-event
+  precedence, not durations or the unselected serial extension.
+- $M_C$ exposes the actually retained source/mark/selected-tape/control
+  fields, their real source bindings and readable backing, and the
+  callable installed entry under its current rights. It excludes unused
+  reservations, inactive auxiliary fields and obsolete scratch. Record
+  list order is source preorder and each tape is a null-ended linked word.
+
