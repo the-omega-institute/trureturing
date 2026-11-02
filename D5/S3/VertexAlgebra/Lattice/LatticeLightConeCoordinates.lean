@@ -526,11 +526,6 @@ abbrev allChargeEquiv := carrierEquiv (F.completeBasis B)
 def pPlus (p : Charge D) : ℂ := g D F.ePlus (chargeVector p)
 def pMinus (p : Charge D) : ℂ := g D F.eMinus (chargeVector p)
 
-/-- Coefficients of ePlus/eMinus are pMinus/pPlus, respectively. -/
-theorem charge_decomposition (p : Charge D) :
-    chargeVector p = F.pMinus p • F.ePlus + F.pPlus p • F.eMinus +
-      (F.projK (chargeVector p) : E D) := F.decomposition _
-
 theorem vector_substitution (v : E D) (r : ℕ) :
     F.coordinateEquiv B (lin r v) =
       g D F.eMinus v • X (plus t,r) + g D F.ePlus v • X (minus t,r) +
@@ -542,23 +537,6 @@ theorem vector_substitution (v : E D) (r : ℕ) :
       ∑ j : Fin t, (F.completeBasis B).repr v (transverse t j) •
         X (transverse t j,r)) = _
   simp only [F.repr_plus, F.repr_minus, F.repr_transverse, add_assoc]
-
-theorem forward_variables (i : Fin D.rank) (r : ℕ) :
-    F.coordinateEquiv B (X (i,r)) =
-      g D F.eMinus (standardBasis D i) • X (plus t,r) +
-        g D F.ePlus (standardBasis D i) • X (minus t,r) +
-        ∑ j : Fin t, B.repr (F.projK (standardBasis D i)) j •
-          X (transverse t j,r) := by
-  simpa only [standardBasis, Pi.basisFun_apply, lin_single] using
-    F.vector_substitution B (standardBasis D i) r
-
-/-- Explicit inverse on each longitudinal/transverse variable. -/
-theorem inverse_variables (r : ℕ) :
-    ((F.coordinateEquiv B).symm (X (plus t,r)) = lin r F.ePlus) ∧
-    ((F.coordinateEquiv B).symm (X (minus t,r)) = lin r F.eMinus) ∧
-    (∀ j : Fin t, (F.coordinateEquiv B).symm (X (transverse t j,r)) =
-      lin r (B j : E D)) := by
-  simp
 
 private theorem coordinateDerivative_minus (r : ℕ) :
     coordinateDerivative (F.completeBasis B) F.eMinus r = pderiv (plus t,r) := by
@@ -642,18 +620,6 @@ theorem annihilation_plus (p : Charge D) (r : ℕ) (P : Oscillator D) :
   rw [polynomialCurrent_positive, map_smul, derivative_transport,
     F.coordinateDerivative_plus B]
 
-theorem zero_plus (p : Charge D) (P : Oscillator D) :
-    F.coordinateEquiv B (polynomialCurrent F.ePlus p 0 P) =
-      F.pPlus p • F.coordinateEquiv B P := by
-  rw [polynomialCurrent_zero, map_smul]
-  rfl
-
-theorem zero_minus (p : Charge D) (P : Oscillator D) :
-    F.coordinateEquiv B (polynomialCurrent F.eMinus p 0 P) =
-      F.pMinus p • F.coordinateEquiv B P := by
-  rw [polynomialCurrent_zero, map_smul]
-  rfl
-
 theorem creation_K (k : F.K) (p : Charge D) (r : ℕ) (P : Oscillator D) :
     F.coordinateEquiv B (polynomialCurrent (k : E D) p (-(r : ℤ)-1) P) =
       (∑ j : Fin t, B.repr k j • X (transverse t j,r)) * F.coordinateEquiv B P := by
@@ -668,38 +634,10 @@ theorem annihilation_K (k : F.K) (p : Charge D) (r : ℕ) (P : Oscillator D) :
     F.coordinateDerivative_K B]
   simp
 
-/-- The fixed-sector identity on the original Carrier, using its original a(u,m). -/
-theorem original_carrier_sector (u : E D) (p : Charge D) (m : ℤ)
-    (P : Oscillator D) :
-    F.allChargeEquiv B (a u m (Finsupp.single p P)) =
-      Finsupp.single p (coordinatePolynomialMode (F.completeBasis B) u p m
-        (F.coordinateEquiv B P)) := by
-  rw [a_single, carrierEquiv_single, fixed_charge_transport]
-
 theorem original_carrier_all_charges (u : E D) (m : ℤ) (v : Carrier D) :
     F.allChargeEquiv B (a u m v) =
       coordinateMode (F.completeBasis B) u m (F.allChargeEquiv B v) :=
   all_charge_transport (F.completeBasis B) u m v
-
-/-- The same formulas written with n>0 and the original n-1 variable indexing. -/
-theorem positive_integer_frequencies (p : Charge D) (n : ℕ) (hn : 0 < n)
-    (P : Oscillator D) :
-    (F.coordinateEquiv B (polynomialCurrent F.eMinus p (n : ℤ) P) =
-      (n : ℂ) • pderiv (plus t,n-1) (F.coordinateEquiv B P)) ∧
-    (F.coordinateEquiv B (polynomialCurrent F.ePlus p (n : ℤ) P) =
-      (n : ℂ) • pderiv (minus t,n-1) (F.coordinateEquiv B P)) ∧
-    (F.coordinateEquiv B (polynomialCurrent F.ePlus p (-(n : ℤ)) P) =
-      X (plus t,n-1) * F.coordinateEquiv B P) ∧
-    (F.coordinateEquiv B (polynomialCurrent F.eMinus p (-(n : ℤ)) P) =
-      X (minus t,n-1) * F.coordinateEquiv B P) := by
-  cases n with
-  | zero => omega
-  | succ r =>
-    simpa only [Nat.succ_eq_add_one, Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one,
-      neg_add, sub_eq_add_neg] using
-      And.intro (F.annihilation_minus B p r P)
-        (And.intro (F.annihilation_plus B p r P)
-          (And.intro (F.creation_plus B p r P) (F.creation_minus B p r P)))
 
 end NullFrame
 
