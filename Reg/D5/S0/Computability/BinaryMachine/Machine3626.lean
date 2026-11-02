@@ -1,8 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.BinaryMachine.Machine3626
 import Reg.Support.DependentFamily
-import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
 
 /-! Whole-family source-bound audits for the three live operational declarations. -/
 

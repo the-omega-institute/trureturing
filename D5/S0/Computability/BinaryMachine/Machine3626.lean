@@ -8,14 +8,8 @@
 
 module
 
-public import Mathlib.Data.List.Basic
-public import Mathlib.Data.Nat.Bits
 public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 public import Mathlib.Data.Nat.Totient
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
-import Lean.Elab.Tactic.Omega
 
 /-!
 # Exact halting formula for the one-sided two-state machine
