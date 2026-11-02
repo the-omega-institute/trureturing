@@ -70,6 +70,7 @@ theorem exists_G_sharp_tail_constant :
 
 /-- The limit is exact and is taken over the full real half-line. -/
 theorem tendsto_G_ell : Tendsto G atTop (𝓝 (alpha + h1 / 2)) := by
+  obtain ⟨C, _, hC⟩ := exists_G_sharp_tail_constant
   have hz : Tendsto (fun x : ℝ => (1 + Real.log x) / x) atTop (𝓝 0) := by
     have hlog : Tendsto (fun x : ℝ => Real.log x / x) atTop (𝓝 0) := by
       simpa only [id_eq] using Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero
@@ -79,11 +80,11 @@ theorem tendsto_G_ell : Tendsto G atTop (𝓝 (alpha + h1 / 2)) := by
     convert hi.add hlog using 1
     · ext x; ring
     · norm_num
-  have hbound := hz.const_mul (4 * gamma + 24)
+  have hbound := hz.const_mul C
   have hc : Tendsto (fun x : ℝ => G x - ell) atTop (𝓝 0) := by
-    apply squeeze_zero_norm' (a := fun x : ℝ => (4 * gamma + 24) * ((1 + Real.log x) / x))
+    apply squeeze_zero_norm' (a := fun x : ℝ => C * ((1 + Real.log x) / x))
     · filter_upwards [eventually_ge_atTop (1 : ℝ)] with x hx
-      simpa only [Real.norm_eq_abs, mul_div_assoc] using G_sharp_tail_bound hx
+      simpa only [Real.norm_eq_abs, mul_div_assoc, ell] using hC x hx
     · simpa only [mul_zero] using hbound
   simpa only [sub_add_cancel, zero_add, ell] using hc.add_const ell
 
