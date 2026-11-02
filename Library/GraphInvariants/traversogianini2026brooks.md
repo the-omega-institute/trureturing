@@ -129,7 +129,12 @@ and Chordal/Characterization. Repository imports and ordinary Lean sections
 replace the donor module interface. The pinned dif_pos reduces the dependent
 parent choice. Walk.mk_mem_edges_iff_exists and
 Walk.IsCycle.snd_ne_penultimate replace the two duplicate upstream walk proofs
-by direct pinned applications. Unused Set-separator adapters, connected-only
+by direct pinned applications. Relation.ReflTransGen.total_of_right_unique
+supplies ancestor comparability for the Option-parent relation; right uniqueness
+follows from Option.some_inj and equality transitivity. The consumed
+IsAncestor.comparable helper retains no independent escape credit. These four
+supplier adaptations preserve the original construction. Unused Set-separator
+adapters, connected-only
 public conclusion, leaf/branch/edge-accounting, maximum-clique, other Helly
 and separate clique-tree-existence conclusions are excluded.
 

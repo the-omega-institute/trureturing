@@ -23,7 +23,7 @@ The complete Apache-2.0 LICENSE and upstream NOTICE are retained in
 docs/reports/brooks-suppliers/lean-pool-LICENSE.txt and lean-pool-NOTICE.txt.
 Modifications: repository imports and ordinary Lean sections replace the donor
 module interface; only the dependencies of the finite PEO characterization are
-retained, with pinned Mathlib walk suppliers used directly.
+retained, with pinned Mathlib walk and relation suppliers used directly.
 Retirement requires an equivalent complete characterization in the host's
 pinned Mathlib, correspondence to the native predicate, and migrated consumers.
 -/
@@ -89,13 +89,8 @@ theorem IsAncestor.antisymm {i j : ι} (h₁ : T.IsAncestor i j) (h₂ : T.IsAnc
 /-- Ancestors of a fixed node are linearly ordered. -/
 theorem IsAncestor.comparable {i j k : ι} (h₁ : T.IsAncestor i j) (h₂ : T.IsAncestor i k) :
     T.IsAncestor j k ∨ T.IsAncestor k j := by
-  induction h₁ using Relation.ReflTransGen.head_induction_on with
-  | refl => exact Or.inl h₂
-  | @head a c hstep hchain ih =>
-      rcases Relation.ReflTransGen.cases_head h₂ with rfl | ⟨m, hm, hmk⟩
-      · exact Or.inr (Relation.ReflTransGen.head hstep hchain)
-      · have hmc : m = c := Option.some_inj.1 (hm.symm.trans hstep)
-        exact ih (hmc ▸ hmk)
+  exact Relation.ReflTransGen.total_of_right_unique
+    (fun _ _ _ hab hac => Option.some_inj.1 (hab.symm.trans hac)) h₁ h₂
 
 /-- Following parents from any bag containing `v` eventually reaches `T.top v`. -/
 theorem isAncestor_top_of_mem_bag {i : ι} {v : V} (h : v ∈ T.bag i) :
