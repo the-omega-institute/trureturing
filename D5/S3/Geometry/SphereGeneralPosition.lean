@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/SphereGeneralPosition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.AffineSpace.Independent]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional]
    utility: none
    digest: Arbitrarily large finite affine-general-position sets on a round sphere. -/
 module
