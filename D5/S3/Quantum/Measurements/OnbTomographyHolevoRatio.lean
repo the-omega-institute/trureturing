@@ -9,7 +9,20 @@
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Weil.ZetaLinear.RankTrace
 
-/-! The source bounds use uncentered LUB operators and subtract the parameter square. -/
+/-!
+For a full Hilbert–Schmidt orthonormal basis of traceless Hermitian matrices,
+the locally unbiased family is unique. The covariance's imaginary part obeys
+`traceNorm (imPart z) ≥ d * tr(ρ²) - 1`: its Hermitian multiple `i imPart z`
+is bounded between `-1/2` and `1/2`, and its squared Frobenius norm is
+`(d * tr(ρ²) - 1) / 2`. This gives the required Holevo lower bound.
+
+The Nagaoka–Hayashi upper bound uses the feasible point of Das et al.,
+"Holevo Cramér-Rao bound: How close can we get without entangling measurements?",
+arXiv:2405.09622v2, equation `upperboundNHCRB` and Lemma `primalsolutionNHCRB`.
+Its positivity follows from a Hermitian block involution and the ONB contraction identity.
+Both bounds use the source's uncentered LUB operators, identity weight, and parameter-square
+subtraction. The semidefinite block constraint uses a parameter–quantum pair as its index.
+-/
 
 set_option autoImplicit false
 open scoped BigOperators ComplexOrder MatrixOrder
@@ -84,7 +97,8 @@ private lemma model_trace {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
     (θ : Fin (d ^ 2 - 1) → ℝ) : (model d b θ).trace = 1 := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
-  simp [model, trace_add, trace_smul, trace_sum, hb.2.1, hd0]
+  rw [model]
+  simp [trace_add, trace_smul, trace_sum, hb.2.1, hd0]
 
 private lemma basis_is_lub {d : ℕ}
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
@@ -92,7 +106,7 @@ private lemma basis_is_lub {d : ℕ}
   classical
   refine ⟨hb.1, ?_, hb.2.2⟩
   intro k
-  simp [model, add_mul, smul_mul, Finset.sum_mul, trace_add, trace_sum,
+  simp [model, add_mul, Finset.sum_mul, trace_add, trace_sum,
     trace_smul, hb.2.1, hb.2.2]
 
 private lemma matrix_expansion {d : ℕ} (hd : 2 ≤ d)
@@ -161,10 +175,10 @@ private lemma basis_tensor {d : ℕ} (hd : 2 ≤ d)
   have heq : (Matrix.single j i (1 : ℂ)) k l =
       if i = l then if j = k then 1 else 0 else 0 := by
     by_cases hil : i = l <;> by_cases hjk : j = k <;>
-      simp [Matrix.single_apply, hil, hjk, eq_comm]
+      simp [hil, hjk]
   rw [heq, Matrix.one_apply] at he
   by_cases hij : i = j <;> by_cases hkl : k = l <;>
-    simp only [hij, hkl, ↓reduceIte, zero_div, zero_mul, one_mul, div_one] at he ⊢ <;>
+    simp only [hij, hkl, ↓reduceIte, zero_div, zero_mul] at he ⊢ <;>
     linear_combination -he
 
 private lemma fierz {d : ℕ} (hd : 2 ≤ d)
@@ -195,8 +209,7 @@ private lemma fierz {d : ℕ} (hd : 2 ≤ d)
       simp only [mul_sub, Finset.sum_sub_distrib, mul_ite, mul_zero, mul_one,
         Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte,
         Matrix.one_apply]
-      split_ifs <;> simp_all [Matrix.trace, Matrix.diag_apply, Finset.mul_sum,
-        Finset.sum_mul, mul_assoc, mul_comm]
+      split_ifs <;> simp_all [Matrix.trace, Matrix.diag_apply, mul_comm]
 
 private lemma unique_lub {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
@@ -210,7 +223,7 @@ private lemma unique_lub {d : ℕ} (hd : 2 ≤ d)
   have ht0 : (x k).trace = 0 := by
     have heq : (model d b θ * x k).trace =
         (1 / (d : ℂ)) * (x k).trace + (θ k : ℂ) := by
-      simp [model, add_mul, Matrix.smul_mul, Matrix.sum_mul, trace_add,
+      simp [model, add_mul, Matrix.sum_mul, trace_add,
         trace_smul, trace_sum, hx.2.2]
     rw [heq] at ht
     have hz : (1 / (d : ℂ)) * (x k).trace = 0 := by linear_combination ht
@@ -225,8 +238,9 @@ private lemma casimir {d : ℕ} (hd : 2 ≤ d)
   rw [he, ← sub_smul]
   congr 1
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
-  field_simp
-  <;> ring
+  apply (eq_div_iff hd0).mpr
+  rw [sub_mul, one_div_mul_cancel hd0]
+  ring
 
 private lemma purity_expansion {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
@@ -284,7 +298,7 @@ private lemma covariance_hermitian {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
   rw [← trace_conjTranspose, conjTranspose_mul, conjTranspose_mul,
     (hb j).eq, (hb k).eq, hρ.eq, trace_mul_comm]
   rw [mul_assoc, trace_mul_comm (b k) (ρ * b j)]
-  simp only [zMatrix, mul_assoc]
+  rw [zMatrix]
 
 private lemma covariance_psd {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
     (hρ : ρ.PosSemidef) {b : Fin n → Matrix (Fin d) (Fin d) ℂ}
@@ -295,7 +309,7 @@ private lemma covariance_psd {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
   let a := ∑ j, v j • b j
   have he : star v ⬝ᵥ (zMatrix ρ b *ᵥ v) = (a * ρ * aᴴ).trace := by
     simp only [a, conjTranspose_sum, conjTranspose_smul, (hb _).eq,
-      Matrix.sum_mul, Matrix.smul_mul, Matrix.mul_sum, Matrix.mul_smul,
+      Matrix.sum_mul, Matrix.smul_mul, Matrix.mul_smul,
       trace_sum, trace_smul, smul_eq_mul, dotProduct, mulVec, zMatrix,
       Pi.star_apply, Finset.mul_sum, Matrix.mul_assoc]
     apply Finset.sum_congr rfl
@@ -320,16 +334,16 @@ private lemma norm_contraction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℂ)
     have hplus := hp.re_dotProduct_nonneg ⇑(ha.eigenvectorBasis j)
     have hminus := hm.re_dotProduct_nonneg ⇑(ha.eigenvectorBasis j)
     simp [add_mulVec, sub_mulVec, Matrix.smul_mulVec, dotProduct_add, dotProduct_sub,
-      dotProduct_smul, ha.mulVec_eigenvectorBasis, hv, RCLike.real_smul_eq_coe_mul,
-      RCLike.re_eq_complex_re] at hplus hminus
+      dotProduct_smul, ha.mulVec_eigenvectorBasis, hv, RCLike.real_smul_eq_coe_mul] at hplus hminus
     exact abs_le.mpr ⟨by linarith, by linarith⟩
   have hn : traceNorm a = ∑ j, |ha.eigenvalues j| := by
     change (CFC.abs a).trace.re = _
     rw [CFC.abs_eq_cfc_norm a ha.isSelfAdjoint, ha.cfc_eq, Matrix.IsHermitian.cfc]
     simp [Matrix.trace_mul_comm, Matrix.mul_assoc, Real.norm_eq_abs]
   have hs : (a * a).trace.re = ∑ j, (ha.eigenvalues j) ^ 2 := by
-    simpa only [RHLinalg.frobSq, ha.eq, RCLike.re_eq_complex_re] using
-      RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues ha
+    have h := RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues ha
+    rw [RHLinalg.frobSq, ha.eq] at h
+    exact h
   rw [hn, hs, Finset.mul_sum]
   apply Finset.sum_le_sum
   intro j _
@@ -352,7 +366,7 @@ private lemma density_complement {d : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
   have hid : diagonal (fun j => ((1 - hρ.1.eigenvalues j : ℝ) : ℂ)) =
       1 - diagonal (fun j => (hρ.1.eigenvalues j : ℂ)) := by
     ext i j
-    by_cases hij : i = j <;> simp [Matrix.diagonal_apply, hij]
+    by_cases hij : i = j <;> simp [hij]
   have hspec : ρ = (u : Matrix (Fin d) (Fin d) ℂ) *
       diagonal (fun j => (hρ.1.eigenvalues j : ℂ)) * (u : Matrix _ _ ℂ)ᴴ :=
     hρ.1.spectral_theorem
@@ -393,7 +407,7 @@ private lemma commutator_square_sum {d : ℕ} (hd : 2 ≤ d)
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum, h1, h2]
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
   field_simp
-  <;> ring
+  ring
 
 private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
@@ -410,8 +424,8 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
   have haz : a = (1 / (2 : ℂ)) • (z - zᵀ) := by
     ext j k
     have hjk : z k j = star (z j k) := by rw [← hzh.apply j k, star_star]
-    simp only [a, Matrix.smul_apply, imPart, Matrix.sub_apply, Matrix.transpose_apply,
-      hjk, smul_eq_mul]
+    change Complex.I * ((z j k).im : ℂ) = (1 / (2 : ℂ)) * (z j k - z k j)
+    rw [hjk]
     apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
   have hah : a.IsHermitian := by
     rw [haz]
@@ -478,7 +492,7 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
   rw [hsq, hn] at h
   have he : (((d : ℂ) * (ρ * ρ).trace - 1) / 2).re =
       ((d : ℝ) * (ρ * ρ).trace.re - 1) / 2 := by
-    simp [Complex.div_re, Complex.mul_re]
+    simp [Complex.mul_re]
   rw [he] at h
   change (d : ℝ) * (ρ * ρ).trace.re - 1 ≤ traceNorm (imPart z)
   linarith
@@ -557,7 +571,7 @@ private lemma primal_admissible {d : ℕ} (hd : 2 ≤ d)
     rw [he, fierz hd hb, fierz hd hb, fierz hd hb, casimir hd hb, hb.2.1,
       hb.2.1, hb.2.2]
     simp only [zero_smul, zero_sub, neg_mul, mul_neg, Matrix.smul_mul, Matrix.mul_smul,
-      mul_one, one_mul, smul_neg, smul_smul, sub_neg_eq_add]
+      mul_one, smul_neg, smul_smul, sub_neg_eq_add]
     rw [Matrix.one_apply]
     split_ifs <;> simp only [zero_smul, one_smul] <;> match_scalars <;>
       dsimp [r] <;> field_simp <;> ring
@@ -599,7 +613,7 @@ private lemma primal_admissible {d : ℕ} (hd : 2 ≤ d)
         1 - ((d : ℂ) + 1) / ((d : ℂ) + 2) := by
       dsimp [r]
       field_simp
-      <;> ring
+      ring
     have hblock (j k) : primal d b j k - b j * b k =
         (((d : ℂ) + 1) / ((d : ℂ) + 2)) •
           ((if j = k then 1 else 0) + (b k * b j - r • (b j * b k))) := by
@@ -636,8 +650,13 @@ private lemma primal_cost {d : ℕ} (hd : 2 ≤ d)
     rw [← add_smul, ← Nat.cast_smul_eq_nsmul ℂ,
       hn, ← add_smul, smul_smul]
     congr 1
-    field_simp
-    <;> ring
+    apply (eq_div_iff hd0).mpr
+    rw [mul_assoc]
+    simp only [add_mul, div_mul_cancel₀ _ hd0]
+    have hf : ((d : ℂ) ^ 2 - 1) + ((d : ℂ) ^ 2 - 1) +
+        ((d : ℂ) ^ 2 - 1) * d = ((d : ℂ) + 2) * ((d : ℂ) ^ 2 - 1) := by ring
+    rw [hf, ← mul_assoc, div_mul_cancel₀ _ hd2]
+    ring
   have he : (∑ j, (model d b θ * primal d b j j).trace) =
       (((d : ℂ) ^ 2 - 1) * ((d : ℂ) + 1)) / d := by
     rw [← trace_sum, ← Matrix.mul_sum, hs, Matrix.mul_smul, mul_one, trace_smul, ht]
