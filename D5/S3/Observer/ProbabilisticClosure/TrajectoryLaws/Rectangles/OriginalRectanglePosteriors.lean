@@ -265,38 +265,19 @@ private theorem half_line_count_bounds (θ : Presentation H)
 theorem rectangle_rho_range (B : Matrix H H ℝ) (R : Rectangle B) :
     0 ≤ 1-rectangleMinimum B R / rectangleMaximum B R ∧
       1-rectangleMinimum B R / rectangleMaximum B R < 1 := by
-  let S := (R.rows ×ˢ R.cols).image fun ij => B ij.1 ij.2
-  have hS : S.Nonempty := (R.rows_nonempty.product R.cols_nonempty).image _
-  have hu : 0 < rectangleMinimum B R := by
-    obtain ⟨ij,hij,he⟩ := Finset.mem_image.mp (Finset.min'_mem S hS)
-    change 0 < S.min' hS
-    rw [← he]
-    exact R.positive ij.1 (Finset.mem_product.mp hij).1 ij.2 (Finset.mem_product.mp hij).2
-  have huv : rectangleMinimum B R ≤ rectangleMaximum B R := Finset.min'_le_max' S hS
+  have hu := (extrema B R).1
+  have huv := (extrema B R).2.1
   have hv : 0 < rectangleMaximum B R := hu.trans_le huv
   exact ⟨sub_nonneg.mpr ((div_le_one hv).mpr huv),
     sub_lt_self _ (div_pos hu hv)⟩
 
-/-- The finite-word representation also makes the chronological count measurable;
-no completion or future-conditioned occurrence premise is introduced. -/
+/-- The owning chronological payment is integrable, and its pointwise count
+identity transfers that existing result without an additional readout proof. -/
 private theorem count_payment_integrable (J : Measure (PathSpace H)) [IsProbabilityMeasure J]
     (w : List Bool) (b : ℕ) (d : ℤ) (q : ℕ) (ρ : ℝ) (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1) :
     Integrable (fun z => ρ^(2 * chronologicalCount w b d q z)) J := by
-  let read : PathSpace H → (Fin (q*b) → Bool) := fun z i => z.2 (d+i.val)
-  let value : (Fin (q*b) → Bool) → ℝ :=
-    fun v => ρ^(2 * originalSuccessCount w b q (List.ofFn v))
-  have hm : Measurable (fun z : PathSpace H => ρ^(2 * chronologicalCount w b d q z)) := by
-    have hh : Measurable (value ∘ read) :=
-      (measurable_of_finite value).comp (by dsimp [read]; fun_prop)
-    convert hh using 1
-    funext z
-    dsimp [value,read,Function.comp_def]
-    rw [show (List.ofFn fun i : Fin (q*b) => z.2 (d+i.val)) = wordAt d (q*b) z.2 from rfl,
-      count_wordAt w b q (q*b) d le_rfl z]
-  apply (integrable_const (μ := J) (1 : ℝ)).mono' hm.aestronglyMeasurable
-  exact Filter.Eventually.of_forall fun z => by
-    rw [Real.norm_eq_abs,abs_of_nonneg (pow_nonneg hρ _)]
-    exact pow_le_one₀ hρ hρ1
+  exact (payment_integrable J w b d ρ hρ hρ1 q).congr
+    (Filter.Eventually.of_forall fun z => payment_power w b d ρ q z)
 
 private theorem erasedBit_memLp (P : Measure Visible) [IsProbabilityMeasure P] :
     MemLp erasedBit 2 P := by

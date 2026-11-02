@@ -206,7 +206,7 @@ private theorem payment_measurable (w : List Bool) (b : ℕ) (d : ℤ) (ρ : ℝ
   exact StronglyMeasurable.ite (blockSuccess_measurable w b _)
     stronglyMeasurable_const stronglyMeasurable_const
 
-private theorem payment_integrable (J : Measure (PathSpace H)) [IsProbabilityMeasure J]
+theorem payment_integrable (J : Measure (PathSpace H)) [IsProbabilityMeasure J]
     (w : List Bool) (b : ℕ) (d : ℤ) (ρ : ℝ) (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1) (q : ℕ) :
     Integrable (payment w b d ρ q) J := by
   apply (integrable_const (μ := J) (1 : ℝ)).mono' (payment_measurable w b d ρ q).aestronglyMeasurable
@@ -214,7 +214,7 @@ private theorem payment_integrable (J : Measure (PathSpace H)) [IsProbabilityMea
     rw [Real.norm_eq_abs, abs_of_nonneg (payment_bounds w b d ρ hρ hρ1 q z).1]
     exact (payment_bounds w b d ρ hρ hρ1 q z).2
 
-private theorem payment_power (w : List Bool) (b : ℕ) (d : ℤ) (ρ : ℝ) (q : ℕ)
+theorem payment_power (w : List Bool) (b : ℕ) (d : ℤ) (ρ : ℝ) (q : ℕ)
     (z : PathSpace H) : payment w b d ρ q z = ρ^(2 * chronologicalCount w b d q z) := by
   induction q with
   | zero => simp [payment,chronologicalCount]
