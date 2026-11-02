@@ -18,45 +18,11 @@ internal sealed class DiamondSingletExclusionDocument : IScribeDocumentDefinitio
         "For every positive integer spin, the coefficient-one diamond has no singlet ground vector in its entire zero-weight sector.",
         H("Singlet exclusion for the equal-spin diamond"), Blocks(
             Paragraph(Text("Let S be a natural number. Each of the four factors is the complete complex spin-S space with orthonormal basis indexed by W(S) = Fin(2S+1). Index r has weight S−r; the native normalized raising matrix Jplus(2S) has coefficient √((r+1)(2S−r)) from r+1 to r, with zero endpoint, and lowering is its adjoint. Put C(S) = Fin(4) → W(S), V(S) = C(S) → ℂ and O(S) = Matrix(C(S),C(S),ℂ). Norms are the Euclidean norms and inner products conjugate the first argument. Matrices act on every complex superposition in V(S). Sites 0,1,2,3 correspond to vertices 1,2,3,4. A submodule infimum denotes intersection; bottom is the zero submodule.")),
-            Node("site", "An operator at one site", "site",
-                Spin(All(I, Call("Fin", D(4)), All(F.Id("A"), Call("Matrix", W(), W(), Complexes()),
-                    All(X, C(), All(Y, C(), Equal(Call("site", S, I, F.Id("A"), X, Y),
-                        Mul(Call("A", At(X, I), At(Y, I)), Call("prodExcept", I, X, Y)))))))),
-                "prodExcept(i,x,y) is the product of Kronecker deltas δ(xⱼ,yⱼ) over the three sites j≠i. Thus site is exactly the tensor placement of A with identities on all other factors."),
-            Node("raising", "The raising operator at a site", "raising",
-                Spin(All(I, Call("Fin", D(4)), Equal(Call("raising", S, I), Call("site", S, I, Call("Jplus", Mul(D(2), S)))))),
-                "This is the normalized native raising matrix on the full factor."),
-            Node("lowering", "The lowering operator at a site", "lowering",
-                Spin(All(I, Call("Fin", D(4)), Equal(Call("lowering", S, I), Call("site", S, I, Adj(Call("Jplus", Mul(D(2), S))))))),
-                "The adjoint convention includes both ladder endpoints."),
-            Node("edges", "The five edges", "edges",
-                Equal(Call("edges"), Call("finset", Pair(0,1), Pair(0,2), Pair(0,3), Pair(1,2), Pair(1,3))),
-                "Each listed unordered edge is included once. The absent edge is (2,3); there are no loops or additional coefficients."),
-            Node("hamiltonian", "The diamond Hamiltonian", "hamiltonian", HamiltonianFormula(),
-                "Writing Xᵢ=site(S,i,Jx(2S)) and Yᵢ=site(S,i,Jy(2S)), this is 2Σedges(XᵢXⱼ+YᵢYⱼ). The native Cartesian identity proves it equals Σedges(Jᵢ⁺Jⱼ⁻+Jᵢ⁻Jⱼ⁺), with coefficient +1 on each of the five edges. Operators at distinct sites commute, so the Hamiltonian is Hermitian."),
-            Node("total-raising", "Total raising", "totalRaising",
-                Spin(Equal(Call("totalRaising", S), SumSites(Call("raising", S, I)))),
-                "The sum runs over all four sites."),
-            Node("total-lowering", "Total lowering", "totalLowering",
-                Spin(Equal(Call("totalLowering", S), SumSites(Call("lowering", S, I)))),
-                "This is the adjoint of total raising."),
-            Node("total-weight", "Total weight", "totalWeight",
-                Spin(Equal(Call("totalWeight", S), SumSites(Call("site", S, I, Call("Jz", Mul(D(2), S)))))),
-                "At configuration x its diagonal entry is 4S−Σᵢxᵢ. The Hamiltonian commutes with total weight."),
-            Node("singlets", "The entire singlet space", "singletSpace",
-                Spin(Equal(Call("singletSpace", S), Call("inf", Call("ker", Call("totalRaising", S)), Call("ker", Call("totalLowering", S))))),
-                "Both kernels are taken on V(S). No pair-coupling sector or multiplicity is selected. The total ladder commutator implies that every vector here has total weight zero."),
-            Node("zero-weight", "The entire zero-weight space", "zeroWeightSpace",
-                Spin(Equal(Call("zeroWeightSpace", S), Call("ker", Call("totalWeight", S)))),
-                "It consists exactly of vectors supported on configurations Z(S) with Σᵢxᵢ=4S. These coordinate vectors form an orthonormal basis of the entire kernel. The middle configuration xᵢ=S belongs to Z(S), including at S=0."),
-            Node("restriction", "The actual Hermitian restriction", "restrictedHamiltonian",
-                Spin(All(X, Call("Z", S), All(Y, Call("Z", S), Equal(Call("restrictedHamiltonian", S, X, Y), Call("hamiltonian", S, Call("val", X), Call("val", Y)))))),
-                "Z(S) is the subtype of C(S) just described. Invariance of zero weight identifies this submatrix with the genuine restricted operator, including its action, inner product and eigenvectors."),
             Node("minimum", "The ground energy", "groundEnergy",
                 Spin(Equal(Call("groundEnergy", S), Call("sInf", Call("spectrumReal", Call("restrictedHamiltonian", S))))),
                 "The restricted Hermitian matrix has finite nonempty real spectrum. Its infimum belongs to that spectrum and is its least element, so groundEnergy is the actual attained minimum."),
             Node("ground-space", "The entire zero-weight ground eigenspace", "groundSpace",
-                Spin(Equal(Call("groundSpace", S), Call("inf", Call("ker", Sub(Call("hamiltonian", S), Mul(Call("ofReal", Call("groundEnergy", S)), D(1)))), Call("zeroWeightSpace", S))))),
+                GroundSpaceFormula(),
                 "The identity matrix in this expression acts on V(S). Intersecting its kernel with zero weight includes every vector of the minimum eigenspace and all degeneracies."),
             Node("bound", "The singlet threshold", "singletLowerBound",
                 Spin(Equal(Call("singletLowerBound", S), Sub(new Formula.Negate(Mul(D(4), Pow(S,2))), Mul(new Formula.Fraction(D(8),D(3)),S)))),
@@ -74,7 +40,7 @@ internal sealed class DiamondSingletExclusionDocument : IScribeDocumentDefinitio
                     Paragraph(Text("If the restricted minimum were at least L(S), the Hermitian matrix Krestricted−L(S)I would be positive semidefinite. The zero quadratic form of the restricted t would place it in that matrix's kernel, contradicting the preceding non-eigenvector result. Thus the actual minimum is strictly below L(S). Finally any nonzero ground singlet could be normalized and would contradict the unit-singlet lower bound. The full ground-singlet intersection is therefore zero."))),
                 DescribeRole.Theorem))));
 
-    private static ScribeNode Node(string id, string title, string name, Formula formula, string prose) =>
+    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("diamond-singlet-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
@@ -105,6 +71,13 @@ internal sealed class DiamondSingletExclusionDocument : IScribeDocumentDefinitio
     private static Formula HamiltonianFormula() => Spin(Equal(Call("hamiltonian",S),
         Seq(new Formula.Subscript(Sum,Seq(PairVariables(),InMacro,Call("edges"))),Sp,
             Mul(D(2),P(Add(Mul(Call("X",I),Call("X",J)),Mul(Call("Y",I),Call("Y",J))))))));
+    private static Formula GroundSpaceFormula()
+    {
+        var shifted = Sub(Call("hamiltonian", S),
+            Mul(Call("ofReal", Call("groundEnergy", S)), D(1)));
+        return Spin(Equal(Call("groundSpace", S),
+            Call("inf", Call("ker", shifted), Call("zeroWeightSpace", S))));
+    }
     private static Formula PairVariables() => Seq(Open,I,Comma,J,Close);
     private static Formula ClaimFormula() => new Formula.Logic(Call("claim"),FormulaLogicOperator.Iff,
         Spin(Imp(LE(D(1),S), And(

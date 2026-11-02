@@ -7,6 +7,7 @@ import Reg.Support.DependentFamily
 namespace Reg.D5.S3.Quantum.SpinChains.DiamondSingletExclusion
 
 open _root_.D5.S3.Quantum.SpinChains.DiamondSingletExclusion
+open _root_.D5.S3.Quantum.SpinChains.DiamondSpinBounds
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Matrix
 open scoped BigOperators Matrix
