@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit
+/- GID: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit
    generality: G
-   mirror-B: D5/B/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit
+   mirror-B: D5/B/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
@@ -32,7 +32,7 @@ noncomputable section
 open Filter Topology
 open scoped BigOperators ComplexConjugate Matrix
 
-namespace D5.S3.Quantum.Entanglement.GaussianMultiEntropyResidualLimit
+namespace D5.S3.Quantum.Entanglement.GaussianMultiEntropy.ResidualLimit
 
 open GaussianReplicaReduction GaussianMultiEntropyAsymptotic
 
@@ -862,4 +862,4 @@ theorem residual_determinant_limit (n NA NB NC : ℕ) (hn : 2 ≤ n) (hNA : 0 < 
   filter_upwards [eventually_ge_atTop (1 : ℝ)] with a ha
   rw [GM3_eq_fourierGM n NA NB NC hn a ha hNA hNB hNC]
 
-end D5.S3.Quantum.Entanglement.GaussianMultiEntropyResidualLimit
+end D5.S3.Quantum.Entanglement.GaussianMultiEntropy.ResidualLimit

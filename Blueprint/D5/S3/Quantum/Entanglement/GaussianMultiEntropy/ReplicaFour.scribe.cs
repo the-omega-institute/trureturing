@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.GaussianMultiEntropy;
 
-internal sealed class GaussianMultiEntropyReplicaFourDocument : IScribeDocumentDefinition
+internal sealed class ReplicaFourDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.";
     private static Formula Sub(string name, Formula index) => Seq(F.Id(name), Underscore, Grp(index));
     private static Formula M => F.Id("m");
     private static Formula A2 => Seq(F.Id("a"), Caret, D(2));

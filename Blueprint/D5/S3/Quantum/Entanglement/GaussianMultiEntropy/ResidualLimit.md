@@ -8,7 +8,7 @@ For the fully symmetric pure Gaussian state with positive party sizes, the discr
 
 $$\operatorname{det}(\alpha I-\beta Q^{T}Q)=\prod_{p,q}(\alpha-\beta\lambda_{pq})$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.tripartite_gram_det` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.tripartite_gram_det` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ Let n be positive and let A, B, C be natural numbers with positive sum N. On the
 
 $$\operatorname{det}(\alpha I-\beta Q^{T}Q)=\prod_{k}(\alpha-\beta\lambda_{k})$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.cycle_gram_det` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.cycle_gram_det` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ Let n be positive and let U, V be natural numbers with positive sum. On the repl
 
 $$1-\lambda_{pq}=\frac{4w_{pq}}{N^2}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.one_sub_tripartiteEigenvalue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.one_sub_tripartiteEigenvalue` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ For real A, B, C with nonzero sum N and natural p, q, the defect 1 - lambda_pq e
 
 $$GM_n=\frac{2\log P_{3}-n(\log P_{A}+\log P_{B}+\log P_{C})}{4n(n-1)}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.GM3_eq_fourierGM` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.GM3_eq_fourierGM` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,7 +56,7 @@ For every replica order n >= 2, all positive integer party sizes A, B, C and eve
 
 $$K_{n}=\frac{2\log H_{3}-n(\log H_{A}+\log H_{B}+\log H_{C})}{4n(n-1)}$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.residualConstant` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.residualConstant` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ The tripartite residual product D_3 is the product of 1 - lambda_pq over the n^2
 
 $$\lim_{a\to\infty}(GM_n+\frac{n-2}{2n}\log a)=K_{n}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.residual_determinant_limit` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.residual_determinant_limit` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,10 +78,10 @@ For every replica order n >= 2 and all positive integer party sizes, the genuine
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.GM3_eq_fourierGM`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.cycle_gram_det`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.one_sub_tripartiteEigenvalue`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.residualConstant`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.residual_determinant_limit`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.tripartite_gram_det`
-- Dependency: [D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic](GaussianMultiEntropyAsymptotic.md)
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.GM3_eq_fourierGM`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.cycle_gram_det`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.one_sub_tripartiteEigenvalue`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.residualConstant`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.residual_determinant_limit`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.tripartite_gram_det`
+- Dependency: [D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic](../GaussianMultiEntropyAsymptotic.md)

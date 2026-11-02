@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.GaussianMultiEntropy;
 
-internal sealed class GaussianMultiEntropyResidualLimitDocument : IScribeDocumentDefinition
+internal sealed class ResidualLimitDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit.";
     private static Formula Det(Formula x) => Seq(Operatorname, Grp(F.Id("det")), Open, x, Close);
     private static Formula Sub(string name, Formula index) => Seq(F.Id(name), Underscore, Grp(index));
     private static Formula Gram => Seq(Alpha, Sp, F.Id("I"), Minus, Beta, Sp, F.Id("Q"), Caret, Grp(F.Id("T")), F.Id("Q"));

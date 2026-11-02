@@ -1,12 +1,12 @@
-/- GID: D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour
+/- GID: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour
+   mirror-B: D5/B/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Replica-four constant, correction and remainder of Gaussian multi-entropy. -/
 
-import D5.S3.Quantum.Entanglement.GaussianMultiEntropyResidualLimit
+import D5.S3.Quantum.Entanglement.GaussianMultiEntropy.ResidualLimit
 
 /-!
 # Replica order four for the `(m, 1, 1)` Gaussian state
@@ -27,9 +27,9 @@ noncomputable section
 open Filter Topology Set
 open scoped BigOperators Matrix
 
-namespace D5.S3.Quantum.Entanglement.GaussianMultiEntropyReplicaFour
+namespace D5.S3.Quantum.Entanglement.GaussianMultiEntropy.ReplicaFour
 
-open GaussianMultiEntropyAsymptotic GaussianMultiEntropyResidualLimit
+open GaussianMultiEntropyAsymptotic GaussianMultiEntropy.ResidualLimit
 
 /-! ## Fourier weights at replica order four -/
 
@@ -449,4 +449,4 @@ theorem residualConstant_four (m : ℕ) (hm : 1 ≤ m) : residualConstant 4 m 1 
     (GM3_four_tendsto m hm)
   simpa using h
 
-end D5.S3.Quantum.Entanglement.GaussianMultiEntropyReplicaFour
+end D5.S3.Quantum.Entanglement.GaussianMultiEntropy.ReplicaFour

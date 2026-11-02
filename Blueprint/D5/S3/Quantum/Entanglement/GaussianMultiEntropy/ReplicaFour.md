@@ -8,7 +8,7 @@ At replica order four the sixteen Fourier modes of the replica torus collapse th
 
 $$P_{3}=P_{A}P_{B}P_{C}\prod_{v}(1+\frac{x(s+v)}{2})^2$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.tripartiteProduct_four` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.tripartiteProduct_four` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ For nonnegative real A, B, C with nonzero sum and every real x, the order-four t
 
 $$GM_{4}=\frac{1}{24}\log \frac{((3m+1)a^2-m+1)^4}{(m+1)(m a^2+1)^2(2m a^2-m+1)(a^2+1)^4}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.GM3_four_closed` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.GM3_four_closed` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ For every integer m >= 1 and every real a >= 1, the genuine multi-entropy at rep
 
 $$K_{4}(m)=\frac{1}{24}\log \frac{(3m+1)^4}{2m^3(m+1)}$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.K4` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.K4` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ The constant term of the large-squeezing expansion at replica order four for par
 
 $$c_{4}(m)=-\frac{29m^2+14m+5}{48m(3m+1)}$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.c4` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.c4` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,7 +56,7 @@ The coefficient of a^(-2) in the large-squeezing expansion at replica order four
 
 $$0\leq GM_{4}-(-\frac{\log a}{4}+K_{4}(m)+\frac{c_{4}(m)}{a^2})\leq\frac{1}{8a^4}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.GM3_four_remainder` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.GM3_four_remainder` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ For every integer m >= 1 and every real a >= 1, the remainder R_4 = GM_4 - (-(lo
 
 $$\lim_{a\to\infty}(GM_{4}+\frac{1}{4}\log a)=K_{4}(m)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.GM3_four_tendsto` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.GM3_four_tendsto` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,7 +80,7 @@ For every integer m >= 1, the genuine multi-entropy at replica order four plus (
 
 $$K_{4}(m,1,1)=K_{4}(m)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.residualConstant_four` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.residualConstant_four` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -90,11 +90,11 @@ For every integer m >= 1, the residual-determinant constant of replica order fou
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.GM3_four_closed`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.GM3_four_remainder`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.GM3_four_tendsto`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.K4`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.c4`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.residualConstant_four`
-- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropyReplicaFour.tripartiteProduct_four`
-- Dependency: [D5/S3/Quantum/Entanglement/GaussianMultiEntropyResidualLimit](GaussianMultiEntropyResidualLimit.md)
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.GM3_four_closed`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.GM3_four_remainder`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.GM3_four_tendsto`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.K4`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.c4`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.residualConstant_four`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaFour.tripartiteProduct_four`
+- Dependency: [D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ResidualLimit](ResidualLimit.md)
