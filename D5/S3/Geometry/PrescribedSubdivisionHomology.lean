@@ -73,6 +73,7 @@ def graph (n : E → ℕ) : SimpleGraph (Vertex D n) where
     · rcases h with h | h
       all_goals have : i.val + 1 = i.val := h.2; omega
 
+include D in
 @[simp] theorem inner_eq_iff (n : E → ℕ) (e f : E)
     (i : Fin (3 * n e)) (j : Fin (3 * n f)) :
     (Sum.inr ⟨e, i⟩ : Vertex D n) = .inr ⟨f, j⟩ ↔ e = f ∧ i.val = j.val := by
@@ -151,8 +152,7 @@ private theorem old_injective (n : E → ℕ) (e : E) : Function.Injective (old 
 private theorem fresh_injective (n : E → ℕ) (e : E) : Function.Injective (fresh D n e) := by
   intro i j h
   have hh := (inner_eq_iff D _ _ _ _ _).mp h
-  apply Fin.ext
-  omega
+  exact Fin.ext (Nat.add_left_cancel hh.2)
 
 private theorem old_ne_fresh (n : E → ℕ) (e : E) (x : Vertex D n) (i : Fin 3) :
     old D n e x ≠ fresh D n e i := by
@@ -163,6 +163,7 @@ private theorem old_ne_fresh (n : E → ℕ) (e : E) (x : Vertex D n) (i : Fin 3
     intro h
     have hh := (inner_eq_iff D _ _ _ _ _).mp h
     obtain ⟨rfl, hj⟩ := hh
+    change j.val = 3 * n f + i.val at hj
     have := j.isLt
     omega
 
@@ -184,6 +185,7 @@ def labels (n : E → ℕ) (e : E) : (Vertex D n ⊕ Fin 3) ≃ Vertex D (bump n
         · have hib := i.isLt
           simp only [bump_self] at hib
           refine ⟨.inr ⟨i.val - 3 * n e, by omega⟩, ?_⟩
+          dsimp only [Sum.elim, fresh]
           apply (inner_eq_iff D _ _ _ _ _).mpr
           exact ⟨rfl, by omega⟩
       · have hi : i.val < 3 * n f := by simpa [bump, hf] using i.isLt
@@ -213,7 +215,7 @@ def tip (n : E → ℕ) (e : E) : Vertex D n :=
     subst f
     have := i.isLt
     omega
-  · simp only [tip, h, ↓reduceDIte, inner_eq_iff]
+  · simp only [tip, h, ↓reduceDIte, inner_eq_iff D]
     constructor
     · rintro ⟨hf, hi⟩
       exact ⟨hf, by omega⟩
@@ -224,12 +226,12 @@ def tip (n : E → ℕ) (e : E) : Vertex D n :=
 theorem tip_adjacent (n : E → ℕ) (e : E) :
     (graph D n).Adj (tip D n e) (.inl (D.right e)) := by
   by_cases h : n e = 0
-  · simp only [tip, h, ↓reduceDIte, adj_old_old]
+  · simp only [tip, h, ↓reduceDIte, adj_old_old D]
     exact ⟨e, h, Or.inl ⟨rfl, rfl⟩⟩
   · apply Or.inl
     change Arc D n (tip D n e) (.inl (D.right e))
     simp only [tip, h, ↓reduceDIte, Arc]
-    exact ⟨rfl, by omega⟩
+    exact ⟨True.intro, by omega⟩
 
 private def Tail (n : E → ℕ) (e : E) (x y : Vertex D n) : Prop :=
   (x = tip D n e ∧ y = .inl (D.right e)) ∨
@@ -253,7 +255,7 @@ private theorem old_old_adj
       (graph D (bump n e)).Adj (.inl a) (.inl b) ↔
         (graph D n).Adj (.inl a) (.inl b) ∧
           ¬ Tail D n e (.inl a) (.inl b) := by
-    simp only [adj_old_old, Tail, old_eq_tip, Sum.inl.injEq]
+    simp only [adj_old_old D, Tail, old_eq_tip D, Sum.inl.injEq]
     constructor
     · rintro ⟨f, hf, hab⟩
       have hfe : f ≠ e := by intro h; subst f; simp at hf
@@ -283,13 +285,14 @@ private theorem old_old_adj
       (graph D (bump n e)).Adj (old D n e (.inl a)) (old D n e (.inr ⟨f, i⟩)) ↔
         (graph D n).Adj (.inl a) (.inr ⟨f, i⟩) ∧
           ¬ Tail D n e (.inl a) (.inr ⟨f, i⟩) := by
+    dsimp only [old]
     by_cases hf : f = e
     · subst f
       have hi := i.isLt
-      simp only [old, adj_old_inner, bump_self, Tail, Sum.inr_ne_inl,
-        and_false, false_or, Sum.inl.injEq, inner_eq_tip, eq_self, true_and]
+      simp only [old, adj_old_inner D, bump_self, Tail, Sum.inr_ne_inl,
+        and_false, false_or, Sum.inl.injEq, inner_eq_tip D, eq_self, true_and]
       omega
-    · simp [old, adj_old_inner, bump, hf, Tail, inner_eq_tip]
+    · simp [old, adj_old_inner D, bump, hf, Tail, inner_eq_tip D]
   cases x with
   | inl a =>
     cases y with
@@ -303,7 +306,7 @@ private theorem old_old_adj
       simp only [SimpleGraph.adj_comm, Tail, or_comm, and_comm]
     | inr y =>
       rcases y with ⟨g, j⟩
-      simp [old, adj_inner_inner, Tail]
+      simp [old, adj_inner_inner D, Tail]
 
 private theorem old_fresh_adj (n : E → ℕ) (e : E) (x : Vertex D n) (i : Fin 3) :
     (graph D (bump n e)).Adj (old D n e x) (fresh D n e i) ↔
@@ -311,7 +314,8 @@ private theorem old_fresh_adj (n : E → ℕ) (e : E) (x : Vertex D n) (i : Fin 
   have hi := i.isLt
   cases x with
   | inl a =>
-    simp only [old, fresh, adj_old_inner, bump_self, old_eq_tip,
+    dsimp only [old, fresh]
+    simp only [old, fresh, adj_old_inner D, bump_self, old_eq_tip D,
       Sum.inl.injEq, Fin.ext_iff, Fin.val_zero, Fin.val_ofNat]
     omega
   | inr x =>
@@ -319,15 +323,15 @@ private theorem old_fresh_adj (n : E → ℕ) (e : E) (x : Vertex D n) (i : Fin 
     have hj := j.isLt
     by_cases hf : f = e
     · subst f
-      simp only [old, fresh, adj_inner_inner, true_and, inner_eq_tip,
+      simp only [old, fresh, adj_inner_inner D, true_and, inner_eq_tip D,
         eq_self, Sum.inr_ne_inl, and_false, or_false, Fin.ext_iff, Fin.val_zero]
       omega
-    · simp [old, fresh, adj_inner_inner, hf, inner_eq_tip]
+    · simp [old, fresh, adj_inner_inner D, hf, inner_eq_tip D]
 
 private theorem fresh_fresh_adj (n : E → ℕ) (e : E) (i j : Fin 3) :
     (graph D (bump n e)).Adj (fresh D n e i) (fresh D n e j) ↔
       i.val + 1 = j.val ∨ j.val + 1 = i.val := by
-  simp only [fresh, adj_inner_inner, eq_self, true_and]
+  simp only [fresh, adj_inner_inner D, eq_self, true_and]
   omega
 
 /-- Exact symbolic graph identification for ONE increment of an arbitrary
@@ -369,7 +373,7 @@ def positiveIso : graph D D.k ≃g D.graph where
   map_rel_iff' := by
     rintro (x | ⟨e, i⟩) (y | ⟨f, j⟩)
     · change (False ∨ False) ↔ _
-      simp only [false_or, adj_old_old]
+      simp only [false_or, adj_old_old D]
       have hz : ∀ e : E, D.k e ≠ 0 := fun e => Nat.ne_of_gt (D.positive e)
       simp [hz]
     · rfl
@@ -397,19 +401,20 @@ def reducedHomologyIso
   · have hn : n = fun _ => 0 := funext hz
     subst n
     simpa using graphReducedIso (zeroIso D).symm q
-  · obtain ⟨e, he⟩ := not_forall.mp hz
+  · let e : E := Classical.choose (not_forall.mp hz)
+    have he : n e ≠ 0 := Classical.choose_spec (not_forall.mp hz)
     let p : E → ℕ := fun f => if f = e then n f - 1 else n f
     have hp : bump p e = n := by
       funext f
       by_cases hf : f = e
       · subst f
-        simp only [bump_self, p, if_pos rfl]
+        simp only [bump_self, p, if_pos rfl, ite_true]
         omega
       · simp [bump, p, hf]
     have hs : (∑ f, n f) = (∑ f, p f) + 1 := by
       rw [← hp, sum_bump]
     have hlt : (∑ f, p f) < ∑ f, n f := by omega
-    have ih := reducedHomologyIso D hinj p q hq
+    have ih := reducedHomologyIso hinj p q hq
     have step : Reduced (graph D (bump p e)) ((q + ∑ f, p f) + 1) ≅
         Reduced (graph D p) (q + ∑ f, p f) :=
       (graphReducedIso (stepIso D hinj p e) _).symm ≪≫

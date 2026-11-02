@@ -54,9 +54,13 @@ theorem rowBits_spec (E : List (ℕ × ℕ)) (x y : ℕ) :
   | nil => simp [rowBits]
   | cons e E ih =>
     rcases e with ⟨a, b⟩
-    by_cases ha : x = a <;> by_cases hb : x = b <;>
-      simp [rowBits, ha, hb, Nat.testBit_two_pow, ih, Prod.mk.injEq,
-        and_comm, and_left_comm, or_assoc, or_comm, or_left_comm, eq_comm]
+    have ha : (if x = a then 2 ^ b else 0).testBit y = true ↔ x = a ∧ y = b := by
+      by_cases hx : x = a <;> simp [hx, Nat.testBit_two_pow, eq_comm]
+    have hb : (if x = b then 2 ^ a else 0).testBit y = true ↔ x = b ∧ y = a := by
+      by_cases hx : x = b <;> simp [hx, Nat.testBit_two_pow, eq_comm]
+    simp only [rowBits, Nat.testBit_lor, Bool.or_eq_true, ha, hb, ih,
+      List.mem_cons, Prod.mk.injEq]
+    tauto
 
 /-- Every cached row has a kernel proof of equality with the row computed
 from the actual edge list. The cache changes only the decision procedure. -/
@@ -100,7 +104,8 @@ There is no existential search over `SimpleGraph.map` in the finite check. -/
 theorem map_eq_of_forward {A B : Type} (G : SimpleGraph A) (F : SimpleGraph B)
     (e : A ≃ B) (h : ∀ x y, F.Adj (e x) (e y) ↔ G.Adj x y) : G.map e = F := by
   apply SimpleGraph.ext
-  intro u v
+  funext u v
+  apply propext
   obtain ⟨x, rfl⟩ := e.surjective u
   obtain ⟨y, rfl⟩ := e.surjective v
   exact ((SimpleGraph.Iso.map e G).map_adj_iff).trans (h x y).symm

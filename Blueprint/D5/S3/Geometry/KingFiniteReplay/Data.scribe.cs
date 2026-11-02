@@ -10,8 +10,6 @@ internal sealed class KingFiniteReplayDataDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal forty-one finite graph states", H("The literal forty-one finite graph states"), Blocks(
-            Node("n0", "graph00", "The original graph",
-                "The initial graph is the complement of graph6 JEhbtj{rve?, on eleven vertices with twenty-three graph edges. Its independence complex has thirty-two edges and twenty-four triangles."),
             Node("n1", "graph40", "The final finite graph",
                 "The forty moves consist of ten triple subdivisions, five matching suspensions and twenty-five Lozin replacements. The final literal natural-labeled graph has 141 vertices and 178 edges. Every state is specified by its original edge list and an exactly equal adjacency-row function."))));
 

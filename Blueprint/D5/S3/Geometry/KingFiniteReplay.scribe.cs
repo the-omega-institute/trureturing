@@ -10,8 +10,6 @@ internal sealed class KingFiniteReplayDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Forty concrete suspensions of the torsion seed", H("Forty concrete suspensions of the torsion seed"), Blocks(
-            Node("n0", "initialGraphIdentity", "Identification of the seed graph",
-                "The natural labels of the initial state identify its actual adjacency with the original eleven-vertex graph used by the integral torsion seed."),
             Node("n1", "fortyMoves", "The forty-move chain",
                 "The literal adjacency, freshness, label-coverage and neighborhood-partition proofs assemble a MoveChain of length forty from the actual seed graph to the actual 141-vertex final graph. Local edge subgraphs need not be induced."),
             Node("n2", "reducedHomologyIso", "The complete finite-replay shift",

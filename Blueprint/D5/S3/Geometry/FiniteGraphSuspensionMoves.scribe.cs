@@ -13,9 +13,7 @@ internal sealed class FiniteGraphSuspensionMovesDocument : IScribeDocumentDefini
             Node("n0", "MoveChain", "Literal operation chains",
                 "A chain is built from identity, triple-subdivision, matching and Lozin constructors. Every constructor contains its chosen vertices, adjacency or neighborhood-partition proofs, and an actual relabeling equivalence."),
             Node("n1", "reducedHomologyIso", "The iterated shift",
-                "A chain of n moves from G to F gives reduced integral singular homology of the actual F-independence realization in degree q+n isomorphic to that of G in degree q, for q at least one."),
-            Node("n2", "natReplayReducedHomologyIso", "Finite natural labels",
-                "The same transport applies to finite subtypes of natural labels, with every graph operation and label equivalence retained."))));
+                "A chain of n moves from G to F gives reduced integral singular homology of the actual F-independence realization in degree q+n isomorphic to that of G in degree q, for q at least one."))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),

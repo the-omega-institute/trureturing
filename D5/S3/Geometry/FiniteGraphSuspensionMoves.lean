@@ -88,24 +88,12 @@ def MoveChain.reducedHomologyIso {G : SimpleGraph V} {F : SimpleGraph W} {n : �
   | refl G => exact Iso.refl _
   | triple prior a b hab labels ih =>
     refine tripleRelabeledReducedHomologyIso _ hab labels _ ?_ ≪≫ ih
-    omega
+    exact hq.trans (Nat.le_add_right _ _)
   | crossing prior ends hab hcd labels ih =>
     refine crossingRelabeledReducedHomologyIso _ ends hab hcd labels _ ?_ ≪≫ ih
-    omega
+    exact hq.trans (Nat.le_add_right _ _)
   | lozin prior v Y Z hpart hdisj hYn labels ih =>
     refine lozinRelabeledReducedHomologyIso _ v Y Z hpart hdisj hYn labels _ ?_ ≪≫ ih
-    omega
-
-/-- Finite Nat-labeled replay endpoint. The sequence itself supplies each
-literal step and relabeling. This consumes the iterated shift; it does not
-postulate correctness of the scientific replay or identify its final graph. -/
-def natReplayReducedHomologyIso (S T : Finset ℕ)
-    (G : SimpleGraph ↥S) (F : SimpleGraph ↥T) (n : ℕ)
-    (moves : MoveChain G F n) (q : ℕ) (hq : 1 ≤ q) :
-    (TauCeti.reducedSingularHomologyFunctor (ModuleCat.of ℤ ℤ) (q + n)).obj
-      (TopCat.of (FiniteCoordinateTruncation.Ispace F)) ≅
-    (TauCeti.reducedSingularHomologyFunctor (ModuleCat.of ℤ ℤ) q).obj
-      (TopCat.of (FiniteCoordinateTruncation.Ispace G)) :=
-  moves.reducedHomologyIso q hq
+    exact hq.trans (Nat.le_add_right _ _)
 
 end D5.S3.Geometry.FiniteGraphSuspensionMoves
