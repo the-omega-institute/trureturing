@@ -32,7 +32,7 @@ def V (b : Q) : Matrix Triple Q ℂ := fun p i => if i = 0 then g b p else f b p
 def chi (η : M2) : M8 := ∑ b : Q, (1/2 : ℝ) • (V b * η * (V b)ᴴ)
 def eta (a : ℝ) (c : ℂ) : M2 := !![(a : ℂ), c; star c, (1-a : ℝ)]
 
-example (η : M2) (hη : η.PosSemidef) : (chi η).PosSemidef := by
+private theorem chi_psd (η : M2) (hη : η.PosSemidef) : (chi η).PosSemidef := by
   apply Matrix.posSemidef_sum
   intro b _
   exact (hη.mul_mul_conjTranspose_same (V b)).smul (by norm_num : (0:ℝ) ≤ 1/2)
@@ -69,5 +69,63 @@ private theorem source_marginals (a : ℝ) (c : ℂ) :
     simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
 
 #print axioms source_marginals
+
+private theorem trace_ab (ρ : M8) : Matrix.trace (ab ρ) = Matrix.trace ρ := by
+  simp [Matrix.trace, ab, Fintype.sum_prod_type]
+
+private theorem chi_trace (a : ℝ) (c : ℂ) : Matrix.trace (chi (eta a c)) = 1 := by
+  rw [← trace_ab, (source_marginals a c).1]
+  norm_num [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub, bell,
+    D5.S3.QuantumBounds.CHSHWitness.bell_density_is_state.2]
+  push_cast
+  ring
+
+private theorem ellipse_construction (v w : ℝ) (hE : v^2+w^2+v*w ≤ v+w) :
+    ∃ ρ : M8, ρ.PosSemidef ∧ Matrix.trace ρ = 1 ∧ ab ρ = sigma v ∧ bc ρ = sigma w := by
+  let x := Real.sqrt 3 / 2 * (v+2*w-1)
+  let z := (3*v-1)/2
+  let a := (1+z)/2
+  let c : ℂ := ((x/2 : ℝ) : ℂ)
+  have hs3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hid : x^2+z^2 = 3*(v^2+w^2+v*w-v-w)+1 := by
+    dsimp [x, z]
+    ring_nf
+    rw [hs3]
+    ring
+  have hd : x^2+z^2 ≤ 1 := by rw [hid]; linarith
+  have hm : eta a c =
+      D5.S3.Quantum.Information.QubitNormalFormState.qubitMatrix x z := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [eta, D5.S3.Quantum.Information.QubitNormalFormState.qubitMatrix, a, c] <;>
+      push_cast <;> ring
+  have hp := D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef
+    (D5.S3.Quantum.Information.QubitNormalFormState.qubitState x z hd)
+  change (D5.S3.Quantum.Information.QubitNormalFormState.qubitMatrix x z).PosSemidef at hp
+  rw [← hm] at hp
+  refine ⟨chi (eta a c), chi_psd _ hp, chi_trace a c, ?_, ?_⟩
+  · have ha : a-(1-a)/3 = v := by dsimp [a, z]; ring
+    have hu : (1-a)/3 = (1-v)/4 := by dsimp [a, z]; ring
+    rw [(source_marginals a c).1]
+    calc
+      _ = (((a-(1-a)/3 : ℝ) : ℂ)) • bell + (((1-a)/3 : ℝ) : ℂ) • 1 := by
+        push_cast
+        module
+      _ = sigma v := by rw [ha, hu]; rfl
+  · have hn : Real.sqrt 3 ≠ 0 := ne_of_gt (Real.sqrt_pos.2 (by norm_num : (0:ℝ)<3))
+    have hw : 2/3*(1-a)+2*c.re/Real.sqrt 3 = w := by
+      simp only [c, Complex.ofReal_re]
+      dsimp [a, z, x]
+      field_simp
+      ring
+    have hi : (1+2*a)/12-c.re/(2*Real.sqrt 3) = (1-w)/4 := by
+      simp only [c, Complex.ofReal_re]
+      dsimp [a, z, x]
+      field_simp
+      ring
+    rw [(source_marginals a c).2, hw, hi]
+    rfl
+
+#print axioms ellipse_construction
 
 end V92IsotropicExactCheck
