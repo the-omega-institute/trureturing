@@ -515,8 +515,6 @@ theorem actualSource_second_peak_parity_tail_joint_lift (a b c d : ℕ)
     physical_selection a b c d h
   obtain ⟨hp,hold,hnew⟩ := physical_prefixes a b c d alpha S delta h
     hAlpha hS2 hSh hS4 hd0 hdJ hid hB
-  dsimp only [oldValue] at hold
-  dsimp only [newValue] at hnew
   let k := a+b+c+d
   let A := 1+2^a+2^(a+b)+2^(a+b+c)
   let word := physicalWord a b c d alpha S
@@ -532,12 +530,16 @@ theorem actualSource_second_peak_parity_tail_joint_lift (a b c d : ℕ)
       (modulus k/2) 0 word := by
     apply strip_of_prefix
     intro n
-    simpa only [hmod,hseed,oldValue,zero_add,word] using hold n
+    have hrow : oldValue a b c d =
+        (fun i => centered (sourceMod a b c d) ((2:ℤ)^i*base a b c d 0)) := rfl
+    simpa only [hmod,hseed,hrow,zero_add,word] using hold n
   have newstrip : InStrip (fun i => centered (modulus (k+1)) ((2:ℤ)^i*(2*A)))
       (modulus (k+1)/2) 0 (k::word) := by
     apply strip_of_prefix
     intro n
-    simpa only [hmod',hhalf,hseed,hseed',newValue,zero_add,word,k,size] using hnew n
+    have hrow : newValue a b c d =
+        (fun i => centered (2*sourceMod a b c d+1) ((2:ℤ)^i*(2*base a b c d 0))) := rfl
+    simpa only [hmod',hhalf,hseed,hseed',hrow,zero_add,word,k,size] using hnew n
   let sigma := word.map (label k hk)
   have ho : OriginalOrder k A sigma := by
     apply lift_order k A hk word hp oldstrip
