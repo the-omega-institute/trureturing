@@ -24,7 +24,7 @@ private lemma path_adj (u v : ℕ) :
     (SimpleGraph.hasse ℕ).Adj u v ↔ u + 1 = v ∨ v + 1 = u := by
   simp [SimpleGraph.hasse_adj, ← Order.succ_eq_iff_covBy]
 
-private def pathSeries (v : ℕ) : PowerSeries ℤ :=
+def pathSeries (v : ℕ) : PowerSeries ℤ :=
   partition (SimpleGraph.hasse ℕ) (range v) (fun _ => -X)
 
 private def C : PowerSeries ℤ := catalanSeries.map (Nat.castRingHom ℤ)
@@ -33,10 +33,10 @@ private lemma C_eq : C ^ 2 * X + 1 = C := by
   simpa [C] using congrArg (PowerSeries.map (Nat.castRingHom ℤ))
     catalanSeries_sq_mul_X_add_one
 
-private lemma path_zero : pathSeries 0 = 1 := by
+lemma path_zero : pathSeries 0 = 1 := by
   simp [pathSeries, partition_empty]
 
-private lemma path_rec (v : ℕ) :
+lemma path_rec (v : ℕ) :
     pathSeries (v + 2) = pathSeries (v + 1) - X * pathSeries v := by
   have he : (range (v + 2)).erase (v + 1) = range (v + 1) := by
     ext x
@@ -51,7 +51,7 @@ private lemma path_rec (v : ℕ) :
     partition_delete (SimpleGraph.hasse ℕ) (range (v + 2)) (v + 1)
       (by simp) (fun _ => (-X : PowerSeries ℤ))
 
-private lemma path_one : pathSeries 1 = 1 - X := by
+lemma path_one : pathSeries 1 = 1 - X := by
   have he : (range 1).erase 0 = ∅ := by decide
   have hc : closedComplement (SimpleGraph.hasse ℕ) (range 1) 0 = ∅ := by
     simp [closedComplement]
