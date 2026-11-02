@@ -173,12 +173,6 @@ def events : Bool → Source → Finset Call
   | of a => cases a <;> cases b <;> simp [events]
   | mul l r => cases b <;> simp [events]
 
-@[simp] private theorem promote_ne_shift (b : Bool) (c : Call) :
-    Call.promote [] ≠ c.shift [b] := Ne.symm (shift_ne_promote b c)
-
-@[simp] private theorem split_ne_shift (b : Bool) (c : Call) :
-    Call.split [] ≠ c.shift [b] := Ne.symm (shift_ne_split b c)
-
 @[simp] private theorem false_true_shift (c d : Call) :
     c.shift [false] ≠ d.shift [true] := by cases c <;> cases d <;> simp [Call.shift]
 
