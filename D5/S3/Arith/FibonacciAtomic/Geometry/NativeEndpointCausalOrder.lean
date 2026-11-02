@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals
 
+/-! Exact source-local edges for the endpoint-labelled causal order. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -39,9 +41,7 @@ private theorem first_le (b : Bool) (t : Source) (e : Call) (he : e ∈ events b
       (if b then Call.promote [] else .split []) ≤ e := by
   cases t with
   | of a =>
-      cases b <;> cases a <;> simp_all [events]
-      subst e
-      exact ⟨⟨rfl, by simp [events]⟩, le_rfl⟩
+      cases b <;> cases a <;> simp_all [events, First]
   | mul l r =>
       refine ⟨⟨rfl, ?_⟩, ?_⟩
       · cases b <;> simp
@@ -155,11 +155,12 @@ theorem result (b : Bool) (t : Source) (c d : Event b t) :
     Relation.TransGen (Edge b t) c.1 d.1 ↔ c < d := by
   constructor
   · intro h
-    have hs : c.1 < d.1 := by
-      induction h with
-      | single h => exact edge_lt b t _ _ h
-      | tail _ h ih => exact ih.trans (edge_lt b t _ _ h)
-    exact hs
+    have all : ∀ {e f : Call}, Relation.TransGen (Edge b t) e f → e < f := by
+      intro e f hp
+      induction hp with
+      | single he => exact edge_lt b t _ _ he
+      | tail _ he ih => exact ih.trans (edge_lt b t _ _ he)
+    exact all h
   · exact fun h => complete b t c.1 d.1 c.2 d.2 h
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointCausalOrder

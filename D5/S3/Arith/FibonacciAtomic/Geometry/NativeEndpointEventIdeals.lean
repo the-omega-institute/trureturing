@@ -185,7 +185,7 @@ def events : Bool → Source → Finset Call
 @[simp] private theorem true_false_shift (c d : Call) :
     c.shift [true] ≠ d.shift [false] := by cases c <;> cases d <;> simp [Call.shift]
 
-@[simp] private theorem shift_mem (b c : Bool) (l r : Source) (e : Call) :
+@[simp] theorem shift_mem (b c : Bool) (l r : Source) (e : Call) :
     e.shift [c] ∈ events b (.mul l r) ↔ e ∈ events c (if c then r else l) := by
   cases b <;> cases c <;> simp [events, Finset.mem_image]
 

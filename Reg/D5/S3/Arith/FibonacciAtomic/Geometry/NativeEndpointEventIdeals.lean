@@ -90,10 +90,10 @@ noncomputable def guardRegistration :
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 2, functionOperand := false, stateOperand := some #["arg"]
+      stateBinder := 2, functionOperand := false, stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
