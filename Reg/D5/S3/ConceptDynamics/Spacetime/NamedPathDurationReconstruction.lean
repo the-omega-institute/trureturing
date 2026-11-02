@@ -167,7 +167,7 @@ abbrev inventoryArena : Arena where
       ¬ Function.Injective (q.readout () c)
 
 theorem inventory_bridge :
-    (type_of% (@branching_collision_inventory.{u,v})) ↔ inventoryArena.Law actual := by
+    (type_of% (@branching_collision_inventory.{u,v})) ↔ inventoryArena.{u,v}.Law actual := by
   constructor
   · intro h c hc z a b hab
     exact h c.d c.root hc z a b hab
