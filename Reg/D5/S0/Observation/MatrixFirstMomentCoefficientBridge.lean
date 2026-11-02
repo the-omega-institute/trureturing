@@ -7,6 +7,13 @@ The actual readout is the matrix whose characteristic coefficient is observed, i
 index type and both matrices. Four-slot discovery is attempted separately; compilation
 of these terms alone is not a declared_validated audit. -/
 
+/-! UNFINISHED outer four-slot audit: the selected batch failed at the concrete
+consumer with `contract.discovery:rigid_universes`; the generic outer assessment
+was not completed by that failed batch. Both outer terms genuinely compiled.
+See https://github.com/the-omega-institute/trureturing/issues/24448.
+The full-telescope family evidence below is kernel checked; it is not a
+`declared_validated` outer registration. -/
+
 namespace Reg.D5.S0.Observation.MatrixFirstMomentCoefficientBridge
 open _root_.D5.S0.Observation.MatrixFirstMomentCoefficientBridge
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -74,54 +81,6 @@ noncomputable def coefficientSource : Registration coefficientArena.{u}
     change (0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ) ≠ 1
     exact zero_ne_one
 
-
-noncomputable def coefficientRegistration :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@matrix_first_moment_coefficient_bridge.{u}) (Realization coefficientSignature.{u}) (Type (u + 1)) Unit := {
-  unitName := `D5.S0.Observation.MatrixFirstMomentCoefficientBridge.matrix_first_moment_coefficient_bridge.__information_unit
-  realizationName := `Reg.D5.S0.Observation.MatrixFirstMomentCoefficientBridge.coefficientSource
-  realizationSource := none
-  generated := false
-  arena := .source ⟨coefficientArena.{u}⟩
-  objectArena := .source ⟨coefficientArena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source coefficientArena.{u} ⟨coefficientSource.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize coefficientSignature.{u} (fun _ _ A => A) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some (Type u)
-  sourceSelection := some {
-    owner := `D5.S0.Observation.MatrixFirstMomentCoefficientBridge
-    definition := none
-    coordinates := #[0,1,2]
-    readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg", "fn", "arg", "arg"]
-        stateBinder := 3
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "fn", "arg", "arg"]
-        stateBinder := 4
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
-        stateBinder := 4
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "arg", "fn", "arg", "arg"]
-        stateBinder := 3
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 
 end Reg.D5.S0.Observation.MatrixFirstMomentCoefficientBridge

@@ -11,6 +11,13 @@ Only genuine kernel-checked family proof terms are retained here; no
 `declared_validated` status is claimed. The complete coefficient-prefix, exact-gap and polynomial-inequality conclusion
 is preserved in the closed law, observing the actual group-order family. -/
 
+/-! UNFINISHED outer four-slot audit: the selected batch failed at the concrete
+consumer with `contract.discovery:rigid_universes`; the generic outer assessment
+was not completed by that failed batch. Both outer terms genuinely compiled.
+See https://github.com/the-omega-institute/trureturing/issues/24448.
+The full-telescope family evidence below is kernel checked; it is not a
+`declared_validated` outer registration. -/
+
 namespace Reg.D5.S3.FiniteGroups.BajnokBeattyFirstCharacteristicDefect
 open _root_.D5.S3.FiniteGroups.BajnokBeattyFirstCharacteristicDefect
 open _root_.D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments (graph q19 q33)
@@ -110,38 +117,6 @@ noncomputable def coefficientSource : Registration coefficientArena
     change groupOrder (5,2) = 1400 at h5
     change groupOrder (3,2) ≠ groupOrder (5,2)
     omega
-
-noncomputable def coefficientRegistration :
-    Contract.Registration first_characteristic_defect (Realization coefficientSignature) Type Unit := {
-  unitName := `D5.S3.FiniteGroups.BajnokBeattyFirstCharacteristicDefect.first_characteristic_defect.__information_unit
-  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyFirstCharacteristicDefect.coefficientSource
-  realizationSource := none
-  generated := false
-  arena := .source ⟨coefficientArena⟩
-  objectArena := .source ⟨coefficientArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source coefficientArena ⟨coefficientSource⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize coefficientSignature (fun _ _ pt => groupOrder pt) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℤ
-  sourceSelection := some {
-    owner := `D5.S3.FiniteGroups.BajnokBeattyFirstCharacteristicDefect
-    definition := none
-    coordinates := #[0,1]
-    readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-        stateBinder := 0
-        functionOperand := false
-        stateOperand := some #["arg"]
-        booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 
 end Reg.D5.S3.FiniteGroups.BajnokBeattyFirstCharacteristicDefect
