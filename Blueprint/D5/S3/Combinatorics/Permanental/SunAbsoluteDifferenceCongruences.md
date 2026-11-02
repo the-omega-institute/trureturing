@@ -30,15 +30,23 @@ Conjecture 4.2(i), p. 25: “(i) For any odd prime p, we have per[|j − k|]₁�
 
 Nat.Prime and Odd express exactly an odd prime. Matrix.permanent uses the sum of column-indexed permutation products, equal to the source's row-indexed sum by inversion of the permutation. Since 2 is invertible modulo an odd prime, the two integer divisibilities are precisely (4.3) and (4.4). The same p serves both conjuncts.
 
-**Theorem 1.3 (result).**
+**Theorem 1.3 (alternating_sum).**
+
+$$\forall m \in \mathbb{N},\; \forall s \in \mathbb{Z},\; \sum_{r < 2 \cdot m + 1} (- 1)^{r} \cdot ((r:\mathbb{Z}) + s) = (m:\mathbb{Z}) + s$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.alternating_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonnegative m and integer shift s, the alternating affine sum through 2m is m+s. This telescoping identity supplies the two parity cases in the permanent evaluation.
+
+**Theorem 1.4 (result).**
 
 $$\forall p \in \mathbb{N},\; \operatorname{Nat.Prime}\left(p\right) \Rightarrow \left(\operatorname{Odd}\left(p\right) \Rightarrow \left(((p:\mathbb{Z}) \mid (2 \cdot \operatorname{Matrix.permanent}\left(\operatorname{A}\left(p, 0\right)\right) + 1)) \land ((p:\mathbb{Z}) \mid (2 \cdot \operatorname{Matrix.permanent}\left(\operatorname{A}\left(p, 1\right)\right) - 1))\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/sun210842` (proved) by `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun210842","declaration_gid":"D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -51,5 +59,6 @@ Alternating row and column signs give circulants without changing their permanen
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.A`
+- Truth anchor: `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.alternating_sum`
 - Truth anchor: `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.claim`
 - Truth anchor: `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result`
