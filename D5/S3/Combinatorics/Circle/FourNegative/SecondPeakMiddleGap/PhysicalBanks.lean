@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Arithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 
+/-! Private consumed arithmetic and physical construction for the middle-gap joint lift. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap
@@ -55,7 +57,6 @@ private theorem banks_inventory (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
     rw [join]
     have e0 : a-c-1+(c-d-1)=a-d-2 := by omega
     rw [e0]
-    have e1 : d+c+b+(a-d-2)=d+c+b+(a-d-2)+1-1 := by omega
     rw [show [d+c+b+(a-d-2)]=List.range' (d+c+b+(a-d-2)) 1 by simp]
     rw [join]
     rw [show a-d-2+1=a-d-1 by omega]
@@ -71,12 +72,16 @@ private theorem banks_inventory (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
         List.range (a+b+c+d) := by
     rw [hW,hX]
     dsimp [P,pieces]
-    rw [show d-1=0+d-1 by omega,merge 0 d (by omega),
-      merge d c (by omega),merge (d+c) b (by omega)]
+    have h0 := merge 0 d (by omega)
+    simp only [Nat.zero_add] at h0
+    rw [h0,merge d c (by omega),merge (d+c) b (by omega)]
     rw [show a+b+c+d-1=d+c+b+a-1 by omega,merge (d+c+b) a (by omega)]
-    simp only [Nat.zero_add]
-    rw [show d=0+d by omega,join,show d+c=0+(d+c) by omega,join,
-      show d+c+b=0+(d+c+b) by omega,join]
+    rw [show List.range' 0 d ++ List.range' d c = List.range' 0 (d+c) by
+      simpa only [Nat.zero_add] using join 0 d c]
+    rw [show List.range' 0 (d+c) ++ List.range' (d+c) b = List.range' 0 (d+c+b) by
+      simpa only [Nat.zero_add] using join 0 (d+c) b]
+    rw [show List.range' 0 (d+c+b) ++ List.range' (d+c+b) a =
+      List.range' 0 (d+c+b+a) by simpa only [Nat.zero_add] using join 0 (d+c+b) a]
     simp only [←List.range_eq_range']
     congr 1
     omega
@@ -92,11 +97,18 @@ private theorem banks_good (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
     (hca : c<a) (hab : a≤b) (first : Bool)
     (j : Fin 4) (i : ℕ) (hi : i∈banks a b c d first j) :
     i<size a b c d ∧ i∉negatives a b c d := by
+  have range_iff (start len : ℕ) :
+      i ∈ List.range' start len ↔ start ≤ i ∧ i < start + len := by
+    simp only [List.mem_range',Nat.one_mul]
+    constructor
+    · rintro ⟨j,hj,rfl⟩
+      omega
+    · intro hh
+      exact ⟨i-start,by omega,by omega⟩
   cases first <;> fin_cases j
-  all_goals simp only [banks,pieces,Matrix.cons_val_zero,Matrix.cons_val_succ,
-    Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,
-    Function.comp_apply,List.mem_append,List.mem_singleton,List.mem_range',
-    ite_true,ite_false,Bool.false_eq_true] at hi
+  all_goals dsimp [banks,pieces] at hi
+  all_goals simp only [List.mem_append,List.mem_cons,List.mem_nil_iff,or_false,
+    List.mem_singleton,range_iff] at hi
   all_goals simp only [size,negatives,List.mem_cons,List.mem_nil_iff,or_false]
   all_goals omega
 
@@ -145,20 +157,24 @@ private theorem banks_masses (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   have m6 := hs 3 (a-d-2) (by simp [chainLength];omega)
   have m7 := hs 3 (a-d-1) (by simp [chainLength];omega)
   have m8 := part 3 (a-d) (d-1) (by simp [chainLength];omega)
-  simp only [chainStart,Matrix.cons_val_zero,Matrix.cons_val_succ,
+  simp only [chainStart,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+    Matrix.cons_val_three,Matrix.cons_val_succ,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,
     Function.comp_apply,Nat.add_zero,pow_zero,zero_add] at m0 m1 m2 m3 m4 m5 m6 m7 m8
   rw [show b-a+(a-1)=b-1 by omega] at m3
   rw [show a-c-1+(c-d-1)=a-d-2 by omega] at m5
   rw [show a-d+(d-1)=a-1 by omega] at m8
   have e1 : (2:ℤ)^(a-d-1)=2*2^(a-d-2) := by
-    rw [show a-d-1=(a-d-2)+1 by omega,pow_succ];ring
+    conv_lhs => rw [show a-d-1=(a-d-2)+1 by omega,pow_succ]
+    ring
   have e2 : (2:ℤ)^(a-d)=4*2^(a-d-2) := by
-    rw [show a-d=(a-d-2)+2 by omega,pow_add];ring
+    conv_lhs => rw [show a-d=(a-d-2)+2 by omega,pow_add]
+    ring
   rw [e1] at m7
   rw [e2] at m8
   cases first <;> dsimp [banks,pieces]
   all_goals simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,
+    List.map_cons,List.sum_cons,List.map_nil,List.sum_nil,add_zero,
     ite_true,ite_false,Bool.false_eq_true]
   all_goals rw [m0,m1,m2,m3,m4,m5,m6,m7,m8]
   all_goals refine ⟨by ring,by ring,by ring,by ring⟩

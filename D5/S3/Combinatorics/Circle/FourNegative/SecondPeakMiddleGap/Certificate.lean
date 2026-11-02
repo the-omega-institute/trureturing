@@ -9,6 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.PhysicalBanks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
 
+/-! Private consumed arithmetic and physical construction for the middle-gap joint lift. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap
@@ -71,14 +73,14 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   have hbase : base a b c d=![V.A,V.B,V.L,V.K] := by
     funext i
     fin_cases i <;> dsimp [base,V,values]
-    all_goals rw [hy,hx,hz]
+    all_goals simp only [hy,hx,hz]
     all_goals dsimp [w];ring
   have hnewbase : newBase a b c d=![2*V.A,V.SU,V.SV,V.SW] := by
     funext i
     fin_cases i <;> dsimp [newBase,charge]
     all_goals rw [hbase]
     all_goals dsimp [V,values]
-    all_goals try rw [hy,hx,hz]
+    all_goals simp only [hy,hx,hz]
     all_goals ring
   let f := oldValue a b c d
   let g := newValue a b c d
@@ -194,12 +196,6 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
   obtain ⟨w0,w0n,w1,w1n,w2,w2n⟩ := route_windows w h v q hw hh hv hq
   have rdef : r=(if V.gamma≤V.Dp then 2*h*v else 3*h*v) := by simp [r,first,hs]
   rw [←rdef] at w1 w1n
-  have nd : (N-1)/2=N/2 := by
-    have hn : N=2*((2:ℤ)^a*2^b*2^c*2^(d-1))-1 := by
-      dsimp [N,sourceMod]
-      rw [half_power d (by omega)]
-      ring
-    omega
   have win (e S z C : ℤ) (he : 0≤e ∧ 2*e≤S-1)
       (hz : 2*z=S-(2*C+1)) : 0≤e ∧ e-z≤C := by omega
   have hN : 2*(N/2)+1=N := by
@@ -248,7 +244,10 @@ private theorem certificate_exists (a b c d : ℕ) (hd : 2≤d) (hdc : d<c)
     have k2 := win V.E V.B (f (T 2)) (N/2) w2 (by have hz := n2.2.2.1;omega)
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,trivial⟩ <;>
       nlinarith only [k0.1,k0.2,k1.1,k1.2,k2.1,k2.2,m0,m1,m2,eold,zold,lastO.2]
-  · change finiteEarChecks (newMass a b c d) g N V.A 0
+  · change finiteEarChecks (newMass a b c d) g N (base a b c d 0) 0
+      (if first then (2:ℕ) else 1) ps
+    rw [hbase]
+    change finiteEarChecks (newMass a b c d) g N V.A 0
       (if first then (2:ℕ) else 1) ps
     have k0 := win V.Dp V.SW (g (T 0)) N w0n n0.2.2.2
     have k2 := win V.F V.SU (g (T 2)) N w2n n2.2.2.2
