@@ -329,10 +329,10 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 4, 6, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 12
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
