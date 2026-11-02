@@ -58,6 +58,26 @@ private theorem gauss_coeff_zero (n k : ℕ) (hkn : k ≤ n) :
             rw [coeff_X_pow_mul']
             simp [hnk.ne']
 
+private theorem gauss_coeff_one (n k : ℕ) (hk : 0 < k) (hkn : k < n) :
+    (gauss n k).coeff 1 = 1 := by
+  induction n generalizing k with
+  | zero => omega
+  | succ n ih =>
+      cases k with
+      | zero => omega
+      | succ k =>
+          have hkn' : k + 1 ≤ n := by omega
+          rw [gauss, coeff_add]
+          by_cases hdiag : k + 1 = n
+          · subst n
+            rw [gauss_diagonal, coeff_one, coeff_X_pow_mul']
+            simp [gauss_coeff_zero]
+          · have hlt : k + 1 < n := by omega
+            rw [ih (k + 1) (by omega) hlt, coeff_X_pow_mul']
+            have hpow : 1 < n - k := by omega
+            have hnot : ¬ n ≤ 1 + k := by omega
+            simp [hnot]
+
 def IsAlmostPalindromic (f : ℤ[X]) : Prop :=
   ((f.support.sort (· ≤ ·)).map f.coeff).reverse =
     (f.support.sort (· ≤ ·)).map f.coeff
