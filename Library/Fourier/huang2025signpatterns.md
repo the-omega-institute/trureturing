@@ -13,6 +13,10 @@ strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaRootProduct
   - D5/S3/Arith/ModularForms/CubicThetaJacobiCube
   - D5/S3/Arith/ModularForms/CubicThetaJacobiColumns
+  - D5/S3/Arith/ModularForms/CubicThetaCubeDissection
+  - D5/S3/Arith/ModularForms/CubicThetaResidueSums
+  - D5/S3/Arith/ModularForms/CubicThetaRootEvaluation
+  - D5/S3/Arith/ModularForms/CubicThetaCoreProduct
 license: citation-only
 triage: anchor
 ---
@@ -75,17 +79,32 @@ actual Jacobi product. The complete pair sums for each fixed Laurent
 index are recorded by
 `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.hasSum_cube_column`.
 The anchors `cube_column_zero` and `cube_column_one` identify its first
-two columns with `A` and `-3*T_lattice`, respectively. These column
-identities do not yet give the complete evaluation of the cube at the
-cubic root; in particular the product-to-core lattice equality remains
-unproved.
+two columns with `A` and `-3*T_lattice`, respectively. The three anchors in
+`D5/S3/Arith/ModularForms/CubicThetaCubeDissection`,
+`cube_column_three_mul`, `cube_column_three_mul_add_one`, and
+`cube_column_three_mul_add_two`, evaluate every integer Laurent column,
+including all negative indices, by full affine lattice reindexing.
 
-This module does not identify `T_lattice` with `E(X^3)^3/E(X)` and does
-not prove the other two cubic product identities in `abc1`. Consequently
-it does not establish any complete sign pattern for an Euler quotient.
-In particular the selected full k6 table entry in Bringmann--Han--Heim--Kane
-remains a separate formalization obligation. No finite coefficient check
-is used as an infinite identity.
+`D5/S3/Arith/ModularForms/CubicThetaResidueSums.hasSum_residue_zero`
+uses a complete sign-reversing involution. Its `hasSum_residue_one` and
+`hasSum_residue_two` are the two forms of Euler's pentagonal series.
+`D5/S3/Arith/ModularForms/CubicThetaRootEvaluation.evaluated_jacobi_cube`
+combines all columns, with finite Laurent support justifying evaluation.
+
+`D5/S3/Arith/ModularForms/CubicThetaCoreProduct.core_product_eq_theta`
+proves the actual identity `E(X^3)^3/E(X)=T_lattice` using unit inverses.
+Its `coeff_core_product` counts the full finite fibre
+`3*(x^2+x*y+y^2)-2*x-y=n` for every natural index, including zero.
+The proof compares the complete cube evaluation with the actual Jacobi
+finite-product limit in the rational quadratic algebra `w^2+w+1=0`,
+then cancels a proven unit. This is a formal proof of the attributed
+classical three-core identity, not an assumed theta identity or a
+finite coefficient test.
+
+The other two cubic product identities in `abc1` remain unproved here.
+These intermediates do not establish any complete sign pattern for an
+Euler quotient. In particular the selected full k6 table entry in
+Bringmann--Han--Heim--Kane remains a separate formalization obligation.
 
 The printed progressions in the proof of `lem9` omit a factor `-9` in
 residue one and retain an undilated denominator after extraction. They

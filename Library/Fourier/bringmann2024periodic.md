@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2409.07164v1
 claim: "Appendix A Table 1 asks for the period-nine signs of the normalized Euler quotient with exponents 9 at 1 and -6 at 3."
 strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaLattice
+  - D5/S3/Arith/ModularForms/CubicThetaCoreProduct
 license: citation-only
 triage: anchor
 ---
@@ -42,9 +43,12 @@ the residue labels of the normalized Euler coefficients.
 The formal anchor
 `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_theta_dissection`
 is a classical lattice intermediate motivated by this question. It is
-not the original sign theorem. Its lattice series has not been identified
-with the actual Euler quotient `E(X^3)^3/E(X)`. The cubic product
-identities and the sign deduction remain unpaid formal obligations.
+not the original sign theorem. The later anchor
+`D5/S3/Arith/ModularForms/CubicThetaCoreProduct.coeff_core_product`
+identifies the full core lattice coefficients with the actual Euler
+quotient `E(X^3)^3/E(X)` for every natural index. The remaining two
+Borwein cubic identities and the full k6 sign deduction remain unpaid
+formal obligations.
 
 The supplied bounded literature review found no inspected theorem stating
 the complete k6 entry. This note asserts no worldwide absence, priority,
