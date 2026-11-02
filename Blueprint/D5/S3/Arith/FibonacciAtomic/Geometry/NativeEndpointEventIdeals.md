@@ -12,7 +12,7 @@ Mathematical notation. Bool is {false,true}; Source is the free ordered binary-t
 
 Native operations. subtree : Address × Source → Option(Source) follows false to the left child and true to the right child; the empty address returns the whole term, and descent across a leaf returns none. replace(t,p,v) replaces the subtree at p by v and leaves a crossed leaf unchanged. The address of promote(p) or split(p) is p; phase(promote(p)) = 0 and phase(split(p)) = 1. The relation c ≤ d means that address(c) is a prefix of address(d) and that equal addresses imply phase(c) ≤ phase(d); c < d means c ≤ d and not d ≤ c. Event(b,t) is the subtype of Calls in events(b,t), with this induced order; val forgets only the membership proof. erase(l) = l.map(val), retaining the order and every Call label.
 
-Endpoint definitions. For b,a : Bool, events(b,of(a)) is {promote([])} exactly when b = true and a = false, and is empty otherwise. For b : Bool and l,r : Source, events(b,mul(l,r)) is the union of {split([])}, {promote([])} if b = true, the shifts by [false] of events(false,l), and the shifts by [true] of events(true,r). For b : Bool and p : Address, birthAt(b,[]) = b and birthAt(b,c::p) = birthAt(c,p). For I : Set(Call) and p : Address, sectionAt(I,p) = {c : Call | shift(c,p) belongs to I}. Created(I,[]) is true, and Created(I,b::p) means split([]) belongs to I and Created(sectionAt(I,[b]),p).
+Endpoint definitions. For b,a : Bool, events(b,of(a)) is {promote([])} exactly when b = true and a = false, and is empty otherwise. For b : Bool and l,r : Source, events(b,mul(l,r)) is the union of {split([])}, the conditional set ({promote([])} when b = true and empty otherwise), the shifts by [false] of events(false,l), and the shifts by [true] of events(true,r). For b,c : Bool and p : Address, birthAt(b,[]) = b and birthAt(b,c::p) = birthAt(c,p). For I : Set(Call) and p : Address, sectionAt(I,p) = {c : Call | shift(c,p) belongs to I}. Created(I,[]) is true, and Created(I,b::p) means split([]) belongs to I and Created(sectionAt(I,[b]),p).
 
 Membership cuts. For b,a : Bool and I : Set(Call), cutTerm(b,of(a),I) is of(a) unless b = true and a = false; in that case it is beta if promote([]) belongs to I, and alpha otherwise. For b : Bool, l,r : Source and I : Set(Call), cutTerm(b,mul(l,r),I) is mul(cutTerm(false,l,sectionAt(I,[false])),cutTerm(true,r,sectionAt(I,[true]))) if split([]) belongs to I; otherwise it is beta when b = false or promote([]) belongs to I, and alpha otherwise. No execution or lower-set hypothesis enters these definitions.
 
@@ -22,7 +22,7 @@ Finite-order notation. For b : Bool, t : Source and K : Set(Event(b,t)), raw(b,t
 
 **Theorem 1.1 (Creating root split precedence).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall c: \operatorname{Call}\left(\right), (\operatorname{split}\left([]\right) < \operatorname{shift}\left(c, [b]\right)))$$
+$$\forall b: \operatorname{Bool}, (\forall c: \operatorname{Call}, (\operatorname{split}\left([]\right) < \operatorname{shift}\left(c, [b]\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.root_before` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ The root split strictly precedes every call shifted into either child. This cons
 
 **Theorem 1.2 (Strict order under one child shift).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall c: \operatorname{Call}\left(\right), (\forall d: \operatorname{Call}\left(\right), ((\operatorname{shift}\left(c, [b]\right) < \operatorname{shift}\left(d, [b]\right)) \iff (c < d))))$$
+$$\forall b: \operatorname{Bool}, (\forall c: \operatorname{Call}, (\forall d: \operatorname{Call}, ((\operatorname{shift}\left(c, [b]\right) < \operatorname{shift}\left(d, [b]\right)) \iff (c < d))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.shift_lt` (`✓ std3`). ∎
 
@@ -46,7 +46,7 @@ Shifting two original calls into the same child preserves and reflects their str
 
 **Theorem 1.3 (No predecessor of the root promotion).**
 
-$$\forall c: \operatorname{Call}\left(\right), (\neg (c < \operatorname{promote}\left([]\right)))$$
+$$\forall c: \operatorname{Call}, (\neg (c < \operatorname{promote}\left([]\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.lt_promote_root` (`✓ std3`). ∎
 
@@ -58,7 +58,7 @@ No original call strictly precedes the root promotion in the prefix/phase order.
 
 **Theorem 1.4 (Only predecessor of the root split).**
 
-$$\forall c: \operatorname{Call}\left(\right), ((c < \operatorname{split}\left([]\right)) \iff (c = \operatorname{promote}\left([]\right)))$$
+$$\forall c: \operatorname{Call}, ((c < \operatorname{split}\left([]\right)) \iff (c = \operatorname{promote}\left([]\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.lt_split_root` (`✓ std3`). ∎
 
@@ -70,7 +70,7 @@ An original call strictly precedes the root split if and only if it is the root 
 
 **Theorem 1.5 (Predecessors of a shifted event).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall c: \operatorname{Call}\left(\right), (\forall d: \operatorname{Call}\left(\right), ((d < \operatorname{shift}\left(c, [b]\right)) \iff ((d = \operatorname{promote}\left([]\right)) \lor ((d = \operatorname{split}\left([]\right)) \lor (\exists f: \operatorname{Call}\left(\right), ((d = \operatorname{shift}\left(f, [b]\right)) \land (f < c))))))))$$
+$$\forall b: \operatorname{Bool}, (\forall c: \operatorname{Call}, (\forall d: \operatorname{Call}, ((d < \operatorname{shift}\left(c, [b]\right)) \iff ((d = \operatorname{promote}\left([]\right)) \lor ((d = \operatorname{split}\left([]\right)) \lor (\exists f: \operatorname{Call}, ((d = \operatorname{shift}\left(f, [b]\right)) \land (f < c))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.lt_shift` (`✓ std3`). ∎
 
@@ -82,7 +82,7 @@ Every strict predecessor of a call shifted into child b is a root promotion, a r
 
 **Theorem 1.6 (Event support under a child shift).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall c: \operatorname{Bool}\left(\right), (\forall l: \operatorname{Source}\left(\right), (\forall r: \operatorname{Source}\left(\right), (\forall e: \operatorname{Call}\left(\right), ((\operatorname{shift}\left(e, [c]\right) \in \operatorname{events}\left(b, \operatorname{mul}\left(l, r\right)\right)) \iff (e \in \operatorname{events}\left(c, \operatorname{ite}\left(c, r, l\right)\right)))))))$$
+$$\forall b: \operatorname{Bool}, (\forall c: \operatorname{Bool}, (\forall l: \operatorname{Source}, (\forall r: \operatorname{Source}, (\forall e: \operatorname{Call}, ((\operatorname{shift}\left(e, [c]\right) \in \operatorname{events}\left(b, \operatorname{mul}\left(l, r\right)\right)) \iff (e \in \operatorname{events}\left(c, \operatorname{ite}\left(c, r, l\right)\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.shift_mem` (`✓ std3`). ∎
 
@@ -94,7 +94,7 @@ A shifted call belongs to the endpoint event set of a branch exactly when its un
 
 **Theorem 1.7 (Actual addressed subtrees of membership cuts).**
 
-$$\forall t: \operatorname{Source}\left(\right), (\forall p: \operatorname{Address}\left(\right), (\forall v: \operatorname{Source}\left(\right), ((\operatorname{subtree}\left(p, t\right) = \operatorname{some}\left(v\right)) \Rightarrow (\forall b: \operatorname{Bool}\left(\right), (\forall I: \operatorname{Set}\left(\operatorname{Call}\left(\right)\right), (\operatorname{subtree}\left(p, \operatorname{cutTerm}\left(b, t, I\right)\right) = \operatorname{ite}\left(\operatorname{Created}\left(I, p\right), \operatorname{some}\left(\operatorname{cutTerm}\left(\operatorname{birthAt}\left(b, p\right), v, \operatorname{sectionAt}\left(I, p\right)\right)\right), \operatorname{none}\left(\right)\right)))))))$$
+$$\forall t: \operatorname{Source}, (\forall p: \operatorname{Address}, (\forall v: \operatorname{Source}, ((\operatorname{subtree}\left(p, t\right) = \operatorname{some}\left(v\right)) \Rightarrow (\forall b: \operatorname{Bool}, (\forall I: \operatorname{Set}\left(\operatorname{Call}\right), (\operatorname{subtree}\left(p, \operatorname{cutTerm}\left(b, t, I\right)\right) = \operatorname{ite}\left(\operatorname{Created}\left(I, p\right), \operatorname{some}\left(\operatorname{cutTerm}\left(\operatorname{birthAt}\left(b, p\right), v, \operatorname{sectionAt}\left(I, p\right)\right)\right), \operatorname{none}\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.subtree_partial` (`✓ std3`). ∎
 
@@ -106,7 +106,7 @@ For every target subtree at address p, the actual subtree of the membership-defi
 
 **Theorem 1.8 (Native guard and creating ancestors).**
 
-$$\forall t: \operatorname{Source}\left(\right), (\forall p: \operatorname{Address}\left(\right), (\forall v: \operatorname{Source}\left(\right), ((\operatorname{subtree}\left(p, t\right) = \operatorname{some}\left(v\right)) \Rightarrow ((v \neq \operatorname{of}\left(\operatorname{true}\left(\right)\right)) \Rightarrow (\forall b: \operatorname{Bool}\left(\right), (\forall I: \operatorname{Set}\left(\operatorname{Call}\left(\right)\right), (((\operatorname{Guard}\left(\operatorname{promote}\left(p\right), \operatorname{cutTerm}\left(b, t, I\right)\right)) \iff ((\operatorname{Created}\left(I, p\right)) \land ((\operatorname{birthAt}\left(b, p\right) = \operatorname{true}\left(\right)) \land ((\neg (\operatorname{promote}\left(p\right) \in I)) \land (\forall l: \operatorname{Source}\left(\right), (\forall r: \operatorname{Source}\left(\right), ((v = \operatorname{mul}\left(l, r\right)) \Rightarrow (\neg (\operatorname{split}\left(p\right) \in I))))))))) \land ((\operatorname{Guard}\left(\operatorname{split}\left(p\right), \operatorname{cutTerm}\left(b, t, I\right)\right)) \iff ((\operatorname{Created}\left(I, p\right)) \land (((\operatorname{birthAt}\left(b, p\right) = \operatorname{false}\left(\right)) \lor (\operatorname{promote}\left(p\right) \in I)) \land (\forall l: \operatorname{Source}\left(\right), (\forall r: \operatorname{Source}\left(\right), ((v = \operatorname{mul}\left(l, r\right)) \Rightarrow (\neg (\operatorname{split}\left(p\right) \in I)))))))))))))))$$
+$$\begin{aligned}&\forall t: \operatorname{Source}, \forall p: \operatorname{Address}, \forall v: \operatorname{Source}, (\operatorname{subtree}\left(p, t\right) = \operatorname{some}\left(v\right)) \Rightarrow (\\&(v \neq \operatorname{of}\left(\operatorname{true}\right)) \Rightarrow (\forall b: \operatorname{Bool}, \forall I: \operatorname{Set}\left(\operatorname{Call}\right), (\\&((\operatorname{Guard}\left(\operatorname{promote}\left(p\right), \operatorname{cutTerm}\left(b, t, I\right)\right)) \iff ((\operatorname{Created}\left(I, p\right)) \land ((\operatorname{birthAt}\left(b, p\right) = \operatorname{true}) \land ((\neg (\operatorname{promote}\left(p\right) \in I)) \land (\forall l: \operatorname{Source}, (\forall r: \operatorname{Source}, ((v = \operatorname{mul}\left(l, r\right)) \Rightarrow (\neg (\operatorname{split}\left(p\right) \in I)))))))))\\&\land ((\operatorname{Guard}\left(\operatorname{split}\left(p\right), \operatorname{cutTerm}\left(b, t, I\right)\right)) \iff ((\operatorname{Created}\left(I, p\right)) \land (((\operatorname{birthAt}\left(b, p\right) = \operatorname{false}) \lor (\operatorname{promote}\left(p\right) \in I)) \land (\forall l: \operatorname{Source}, (\forall r: \operatorname{Source}, ((v = \operatorname{mul}\left(l, r\right)) \Rightarrow (\neg (\operatorname{split}\left(p\right) \in I)))))))))))\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.guard_ancestor` (`✓ std3`). ∎
 
@@ -118,7 +118,7 @@ For every non-alpha target subtree, promotion is guarded exactly when all strict
 
 **Theorem 1.9 (Initial birth leaf).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow (\operatorname{cutTerm}\left(b, t, \emptyset\right) = \operatorname{of}\left(b\right))))$$
+$$\forall b: \operatorname{Bool}, (\forall t: \operatorname{Source}, ((\operatorname{Born}\left(b, t\right)) \Rightarrow (\operatorname{cutTerm}\left(b, t, \emptyset\right) = \operatorname{of}\left(b\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.partial_empty` (`✓ std3`). ∎
 
@@ -130,7 +130,7 @@ For a target in the original no-left-alpha domain compatible with its specified 
 
 **Theorem 1.10 (Actual native transition).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), (\forall I: \operatorname{Set}\left(\operatorname{Call}\left(\right)\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow ((\operatorname{Ideal}\left(b, t, I\right)) \Rightarrow (\forall e: \operatorname{Call}\left(\right), ((e \in \operatorname{events}\left(b, t\right)) \Rightarrow ((\operatorname{Guard}\left(e, \operatorname{cutTerm}\left(b, t, I\right)\right)) \Rightarrow (\operatorname{edited}\left(\operatorname{cutTerm}\left(b, t, I\right), e\right) = \operatorname{cutTerm}\left(b, t, \operatorname{insert}\left(e, I\right)\right)))))))))$$
+$$\forall b: \operatorname{Bool}, (\forall t: \operatorname{Source}, (\forall I: \operatorname{Set}\left(\operatorname{Call}\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow ((\operatorname{Ideal}\left(b, t, I\right)) \Rightarrow (\forall e: \operatorname{Call}, ((e \in \operatorname{events}\left(b, t\right)) \Rightarrow ((\operatorname{Guard}\left(e, \operatorname{cutTerm}\left(b, t, I\right)\right)) \Rightarrow (\operatorname{edited}\left(\operatorname{cutTerm}\left(b, t, I\right), e\right) = \operatorname{cutTerm}\left(b, t, \operatorname{insert}\left(e, I\right)\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.partial_insert` (`✓ std3`). ∎
 
@@ -142,7 +142,7 @@ For every supported lower set, every endpoint event whose actual leaf guard hold
 
 **Theorem 1.11 (Actual guards are finite-order enabling).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), (\forall I: \operatorname{Set}\left(\operatorname{Call}\left(\right)\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow ((\operatorname{Ideal}\left(b, t, I\right)) \Rightarrow (\forall e: \operatorname{Call}\left(\right), ((e \in \operatorname{events}\left(b, t\right)) \Rightarrow ((\operatorname{Guard}\left(e, \operatorname{cutTerm}\left(b, t, I\right)\right)) \iff (\operatorname{Enabled}\left(b, t, I, e\right)))))))))$$
+$$\forall b: \operatorname{Bool}, (\forall t: \operatorname{Source}, (\forall I: \operatorname{Set}\left(\operatorname{Call}\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow ((\operatorname{Ideal}\left(b, t, I\right)) \Rightarrow (\forall e: \operatorname{Call}, ((e \in \operatorname{events}\left(b, t\right)) \Rightarrow ((\operatorname{Guard}\left(e, \operatorname{cutTerm}\left(b, t, I\right)\right)) \iff (\operatorname{Enabled}\left(b, t, I, e\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.guard_enabled` (`✓ std3`). ∎
 
@@ -154,7 +154,7 @@ For every compatible target, supported lower set and endpoint event, the actual 
 
 **Theorem 1.12 (History-independent inventory).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), (\forall I: \operatorname{Set}\left(\operatorname{Call}\left(\right)\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow ((\operatorname{Ideal}\left(b, t, I\right)) \Rightarrow (\operatorname{events}\left(b, \operatorname{cutTerm}\left(b, t, I\right)\right) = I)))))$$
+$$\forall b: \operatorname{Bool}, (\forall t: \operatorname{Source}, (\forall I: \operatorname{Set}\left(\operatorname{Call}\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow ((\operatorname{Ideal}\left(b, t, I\right)) \Rightarrow (\operatorname{events}\left(b, \operatorname{cutTerm}\left(b, t, I\right)\right) = I)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.cut_events` (`✓ std3`). ∎
 
@@ -166,7 +166,7 @@ Reading the endpoint-defined event inventory of a membership cut returns exactly
 
 **Theorem 1.13 (Full endpoint reconstruction).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow (\operatorname{cutTerm}\left(b, t, \operatorname{events}\left(b, t\right)\right) = t)))$$
+$$\forall b: \operatorname{Bool}, (\forall t: \operatorname{Source}, ((\operatorname{Born}\left(b, t\right)) \Rightarrow (\operatorname{cutTerm}\left(b, t, \operatorname{events}\left(b, t\right)\right) = t)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.cut_full` (`✓ std3`). ∎
 
@@ -178,7 +178,7 @@ The cut containing every endpoint label reconstructs the original target term. T
 
 **Theorem 1.14 (Native executions between arbitrary ideals).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), ((\operatorname{Born}\left(b, t\right)) \Rightarrow (\forall K: \operatorname{Set}\left(\operatorname{Event}\left(b, t\right)\right), (\forall J: \operatorname{Set}\left(\operatorname{Event}\left(b, t\right)\right), ((\operatorname{IsLowerSet}\left(K\right)) \Rightarrow ((\operatorname{IsLowerSet}\left(J\right)) \Rightarrow (\forall l: \operatorname{List}\left(\operatorname{Event}\left(b, t\right)\right), ((\operatorname{Exec}\left(K, l, J\right)) \iff (\operatorname{run}\left(\operatorname{cutTerm}\left(b, t, \operatorname{raw}\left(b, t, K\right)\right), \operatorname{erase}\left(l\right)\right) = \operatorname{some}\left(\operatorname{cutTerm}\left(b, t, \operatorname{raw}\left(b, t, J\right)\right)\right))))))))))$$
+$$\begin{aligned}&\forall b: \operatorname{Bool}, \forall t: \operatorname{Source}, (\operatorname{Born}\left(b, t\right)) \Rightarrow (\\&\forall K: \operatorname{Set}\left(\operatorname{Event}\left(b, t\right)\right), \forall J: \operatorname{Set}\left(\operatorname{Event}\left(b, t\right)\right), (\operatorname{IsLowerSet}\left(K\right)) \Rightarrow ((\operatorname{IsLowerSet}\left(J\right)) \Rightarrow (\\&\forall l: \operatorname{List}\left(\operatorname{Event}\left(b, t\right)\right), ((\operatorname{Exec}\left(K, l, J\right)) \iff (\operatorname{run}\left(\operatorname{cutTerm}\left(b, t, \operatorname{raw}\left(b, t, K\right)\right), \operatorname{erase}\left(l\right)\right) = \operatorname{some}\left(\operatorname{cutTerm}\left(b, t, \operatorname{raw}\left(b, t, J\right)\right)\right))))))\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.execution_adequacy` (`✓ std3`). ∎
 
@@ -190,7 +190,7 @@ For all two lower sets and every list of endpoint labels, abstract enabled execu
 
 **Theorem 1.15 (Exact labelled extension histories).**
 
-$$\forall t: \operatorname{Source}\left(\right), ((\operatorname{D}\left(t\right)) \Rightarrow (\forall l: \operatorname{List}\left(\operatorname{Event}\left(\operatorname{true}\left(\right), t\right)\right), ((\operatorname{run}\left(\operatorname{of}\left(\operatorname{true}\left(\right)\right), \operatorname{erase}\left(l\right)\right) = \operatorname{some}\left(t\right)) \iff (\operatorname{ExtensionList}\left(\emptyset, \operatorname{univ}\left(\right), l\right)))))$$
+$$\forall t: \operatorname{Source}, ((\operatorname{D}\left(t\right)) \Rightarrow (\forall l: \operatorname{List}\left(\operatorname{Event}\left(\operatorname{true}, t\right)\right), ((\operatorname{run}\left(\operatorname{of}\left(\operatorname{true}\right), \operatorname{erase}\left(l\right)\right) = \operatorname{some}\left(t\right)) \iff (\operatorname{ExtensionList}\left(\emptyset, \operatorname{univ}, l\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.linear_extension_histories` (`✓ std3`). ∎
 
@@ -202,7 +202,7 @@ For every original D target and every list of its labelled endpoint events, succ
 
 **Theorem 1.16 (No hidden membership premise on histories).**
 
-$$\forall t: \operatorname{Source}\left(\right), ((\operatorname{D}\left(t\right)) \Rightarrow (\forall w: \operatorname{List}\left(\operatorname{Call}\left(\right)\right), ((\operatorname{run}\left(\operatorname{of}\left(\operatorname{true}\left(\right)\right), w\right) = \operatorname{some}\left(t\right)) \iff (\exists l: \operatorname{List}\left(\operatorname{Event}\left(\operatorname{true}\left(\right), t\right)\right), ((\operatorname{erase}\left(l\right) = w) \land (\operatorname{ExtensionList}\left(\emptyset, \operatorname{univ}\left(\right), l\right)))))))$$
+$$\forall t: \operatorname{Source}, ((\operatorname{D}\left(t\right)) \Rightarrow (\forall w: \operatorname{List}\left(\operatorname{Call}\right), ((\operatorname{run}\left(\operatorname{of}\left(\operatorname{true}\right), w\right) = \operatorname{some}\left(t\right)) \iff (\exists l: \operatorname{List}\left(\operatorname{Event}\left(\operatorname{true}, t\right)\right), ((\operatorname{erase}\left(l\right) = w) \land (\operatorname{ExtensionList}\left(\emptyset, \operatorname{univ}, l\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.all_histories` (`✓ std3`). ∎
 

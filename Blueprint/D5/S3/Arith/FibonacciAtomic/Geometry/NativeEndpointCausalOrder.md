@@ -12,7 +12,7 @@ For b : Bool, t : Source and e : Call, First(b,t,e) means e = ite(b,promote([]),
 
 **Theorem 1.1 (Exact transitive-closure correspondence).**
 
-$$\forall b: \operatorname{Bool}\left(\right), (\forall t: \operatorname{Source}\left(\right), (\forall c: \operatorname{Event}\left(b, t\right), (\forall d: \operatorname{Event}\left(b, t\right), (\operatorname{TransGen}\left(\operatorname{Edge}\left(b, t\right), \operatorname{val}\left(c\right), \operatorname{val}\left(d\right)\right) \iff c < d))))$$
+$$\forall b: \operatorname{Bool}, (\forall t: \operatorname{Source}, (\forall c: \operatorname{Event}\left(b, t\right), (\forall d: \operatorname{Event}\left(b, t\right), (\operatorname{TransGen}\left(\operatorname{Edge}\left(b, t\right), \operatorname{val}\left(c\right), \operatorname{val}\left(d\right)\right) \iff c < d))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointCausalOrder.result` (`✓ std3`). ∎
 
