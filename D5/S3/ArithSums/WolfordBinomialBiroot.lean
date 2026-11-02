@@ -224,7 +224,7 @@ private def weight (m : ℕ) (c r : ℝ) (l : ℕ) : ℝ :=
 private theorem weight_zero (m : ℕ) (c r : ℝ) (l : ℕ) (h : m < l) :
     weight m c r l = 0 := by simp [weight, Nat.choose_eq_zero_of_lt h]
 
-private theorem numerator_residue (m : ℕ) (x c r : ℝ) (hroot : r^n = x) :
+private theorem numerator_residue (m : ℕ) (x c r : ℝ) (hroot : r ^ n = x) :
     numerator x c n m = residue (n := n) m c r 0 := by
   have hterm (k : ℕ) :
       x^k * c^((m : ℤ)-(n : ℤ)*k) * (m.choose (n*k) : ℝ) =
@@ -249,7 +249,7 @@ private theorem numerator_residue (m : ℕ) (x c r : ℝ) (hroot : r^n = x) :
   simpa [residue, weight] using h
 
 private theorem denominator_residue (hn : 2 ≤ n) (m : ℕ) (hm : 0 < m)
-    (x c r : ℝ) (hroot : r^n = x) :
+    (x c r : ℝ) (hroot : r ^ n = x) :
     r * denominator x c n m = residue (n := n) m c r 1 := by
   have hC : 0 < ceiling m n := by
     have hb := ceiling_bound (n := n) m
@@ -290,7 +290,7 @@ private theorem denominator_pos (x c : ℝ) (hx : 0 < x) (hc : 0 < c)
   apply (Finset.sum_pos_iff_of_nonneg ?_).mpr
   · refine ⟨0, Finset.mem_range.mpr (by omega), ?_⟩
     simp only [pow_zero, one_mul, Nat.cast_zero, mul_zero, sub_zero,
-      Nat.mul_zero, zero_add, Nat.choose_one_right]
+      zero_add, Nat.choose_one_right]
     exact mul_pos (zpow_pos hc _) (by exact_mod_cast hm)
   · intro k hk
     positivity
@@ -299,12 +299,12 @@ private theorem limit_ge_two (hn : 2 ≤ n) (x c : ℝ) (hx : 0 < x) (hc : 0 < c
     Tendsto (beta x c n) atTop (𝓝 (x ^ ((n : ℝ)⁻¹))) := by
   let r : ℝ := x ^ ((n : ℝ)⁻¹)
   have hr : 0 < r := Real.rpow_pos_of_pos hx _
-  have hroot : r^n = x := Real.rpow_inv_natCast_pow hx.le (NeZero.ne n)
+  have hroot : r ^ n = x := Real.rpow_inv_natCast_pow hx.le (NeZero.ne n)
   have hl := residue_ratio_limit (n := n) c r hc hr 0 1
   apply hl.congr'
   filter_upwards [eventually_ge_atTop 1] with m hm
   have hm0 : 0 < m := by omega
-  rw [beta, if_neg (by omega), ← numerator_residue m x c r hroot,
+  rw [beta, ite_eq_right (by omega), ← numerator_residue m x c r hroot,
     ← denominator_residue hn m hm0 x c r hroot, mul_div_mul_left _ _ hr.ne']
 
 private theorem denominator_one (m : ℕ) (hm : 0 < m) (x c : ℝ) :
@@ -325,7 +325,7 @@ private theorem denominator_one (m : ℕ) (hm : 0 < m) (x c : ℝ) :
   · apply Finset.sum_congr rfl
     intro k hk
     exact hterm k (Finset.mem_range.mp hk)
-  · simp only [residue, Subsingleton.elim (0 : ZMod 1) 0, eq_self_iff_true, ite_true, mul_one]
+  · simp only [residue, eq_iff_true_of_subsingleton, eq_self_iff_true, ite_true, mul_one]
     change _ = (∑ k ∈ Finset.range (m+1), weight m c x k) - c^m
     rw [Finset.sum_range_succ']
     simp [weight]
@@ -347,17 +347,23 @@ private theorem limit_one (x c : ℝ) (hx : 0 < x) (hc : 0 < c) :
   filter_upwards [eventually_ge_atTop 1] with m hm
   have hm0 : 0 < m := by omega
   rw [← sub_div, div_div_div_cancel_right₀ (pow_ne_zero m ht.ne'),
-    ← numerator_residue (n := 1) m x c x (by simp),
-    ← denominator_one m hm0 x c, ← mul_div_assoc, mul_div_mul_left _ _ hx.ne']
+    ← denominator_one m hm0 x c,
+    ← numerator_residue (n := 1) m x c x (by simp), ← mul_div_assoc, mul_div_mul_left _ _ hx.ne']
   simp [beta, ne_of_gt hm0]
 
 /-- The original full generalized binomial biroot convergence assertion. -/
 theorem result (x c : ℝ) (n : ℕ) (hx : 0 < x) (hc : 0 < c) (hn : 1 ≤ n) :
-    Tendsto (beta x c n) atTop (𝓝 (x ^ ((n : ℝ)⁻¹))) := by
+    (∀ m : ℕ, 0 < m → 0 < denominator x c n m) ∧
+      Tendsto (beta x c n) atTop (𝓝 (x ^ ((n : ℝ)⁻¹))) := by
   letI : NeZero n := ⟨by omega⟩
+  refine ⟨denominator_pos x c hx hc, ?_⟩
   rcases eq_or_lt_of_le hn with h | h
   · subst n
     simpa using limit_one x c hx hc
   · exact limit_ge_two (by omega) x c hx hc
+
+#print axioms result
+
+end
 
 end D5.S3.ArithSums.WolfordBinomialBiroot
