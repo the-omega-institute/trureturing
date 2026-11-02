@@ -7,7 +7,7 @@
    digest: Entropy saturation of a Lüders MIC channel forces the source SIC structure. -/
 
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
@@ -55,17 +55,10 @@ private theorem unitary_pure_ext {d : ℕ} [NeZero d]
     have hdec : x = ∑ i, (hx.eigenvalues i : ℂ) •
         ((u : Matrix (Fin d) (Fin d) ℂ) * Matrix.single i i 1 *
           (u : Matrix (Fin d) (Fin d) ℂ)ᴴ) := by
-      conv_lhs => rw [hx.spectral_theorem, Unitary.conjStarAlgAut_apply]
-      rw [← Matrix.sum_single_eq_diagonal]
-      simp only [Function.comp_apply, Matrix.mul_sum, Matrix.sum_mul]
-      apply Finset.sum_congr rfl
-      intro i hi
-      have hi : Matrix.single i i (RCLike.ofReal (hx.eigenvalues i) : ℂ) =
-          (hx.eigenvalues i : ℂ) • Matrix.single i i 1 := by
-        rw [Matrix.smul_single, smul_eq_mul, mul_one]
-        simp
-      rw [hi, Matrix.mul_smul, Matrix.smul_mul]
-      simp [u, Matrix.star_eq_conjTranspose]
+      let a : HermitianMat (Fin d) ℂ := ⟨x, hx⟩
+      have hs := a.cfc_toMat_eq_sum_smul_proj id
+      rw [HermitianMat.cfc_id] at hs
+      simpa only [a, HermitianMat.mat, id_eq, Complex.coe_smul] using hs
     rw [hdec, map_sum, map_sum]
     apply Finset.sum_congr rfl
     intro i hi
