@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaProductTwist.finiteFactor`
 
 *Commentary.*
 
-One exact Jacobi factor, including its Euler factor and both Laurent directions.
+The single finite product of shifted factors 1-C(z)X^(j+shift), for j below the cutoff.
 
 **Definition 1.2 (finiteEuler).**
 
