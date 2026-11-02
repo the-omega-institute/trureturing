@@ -66,13 +66,13 @@ $$\forall (d: \mathbb{N}), (((2: \mathbb{N}) \le d) \Rightarrow (\exists (q: (\o
 
 *Commentary.*
 
-Fix d at least two. For each k in Fin d, let Qᵏ be the real permutation matrix of the cyclic shift i ↦ i+k on Fin d. The shift is Mathlib's permutation finCycle k; the permutation-matrix multiplication identity then gives (Qᵏ)ᵀQᵏ=1.
+Fix d at least two. For each k in Fin d, let Qᵏ be the real permutation matrix of the cyclic shift i ↦ i+k on Fin d. The shift is Mathlib's permutation finCycle k; Equiv.Perm.permMatrix_mem_unitaryGroup gives unitarity, and real conjugation turns its adjoint identity into (Qᵏ)ᵀQᵏ=1.
 
 Set μ i j to be the cyclic difference j−i in Fin d, set a i j=1, and let qbar m be the m-th coordinate vector. Thus Qᵏ i j is one exactly when j=i+k, equivalently k=μ i j, and the shift factorization says Qᵏ i j = a i j qbar (μ i j) k. The map i ↦ (i,i+m) parametrizes the m-th label fiber bijectively, so its multiplicity is d and the square law for a is d/d=1. The coordinate vectors qbar are orthonormal by a finite case split on their labels.
 
 For these witnesses, tVec at label m has coefficient (sqrt d)⁻¹ on pairs with j−i=m and zero elsewhere. All sums and differences of pair coordinates are taken modulo d.
 
-Define the shield vector at label m by the constant coefficient (sqrt d)⁻¹ on pairs with i+j=m in the cyclic group and zero elsewhere. Changing the second coordinate by a fixed first coordinate reindexes the finite sum, proving the shield vectors are orthonormal; the identity (sqrt d)²=d supplies the normalization.
+Define the shield vector at label m by the constant coefficient (sqrt d)⁻¹ on pairs with i+j=m in the cyclic group and zero elsewhere. Transport (i,j) to the two-coordinate residue string (i,−j) through ZMod.finEquiv d. The shield vector becomes the zero-frequency Fourier vector with sector label (0,−m). The shared sector_basis theorem in AbsolutePPT.Bipartite then proves orthonormality.
 
 For the partial-transpose identity, evaluate both matrix sides at arbitrary pair indices p and q. After the pair-coordinate substitution, the shield side is nonzero exactly when q.1+p.2=p.1+q.2, which is equivalent in the cyclic group to q.2−q.1=p.2−p.1. That is exactly equality of the difference labels, so the resulting entry agrees with the sum of the tVec projectors. These constructions give the five witnesses and IsSecondFamilyData, proving the full quantified claim.
 
