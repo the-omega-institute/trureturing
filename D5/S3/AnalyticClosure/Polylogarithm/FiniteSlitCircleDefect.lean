@@ -9,6 +9,8 @@
 import D5.S3.AnalyticClosure.Polylogarithm.FiniteSlitCompositionMoments
 import Mathlib.Analysis.Complex.CauchyIntegral
 
+/-! Same-witness outer Cauchy control and closed-bank extensions. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -35,7 +37,7 @@ private theorem sphere_omega (R : ℝ) (hR : 0 ≤ R) (z : ℂ)
   have hr : 1 ≤ z.re := by simpa only [sub_re, one_re] using (sub_nonpos.mp ho.1)
   have he : z = (z.re : ℂ) := by apply Complex.ext <;> simp [hi]
   have hn : ‖z‖ = z.re := by
-    rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)]
+    rw [he, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)] <;> simp
   apply hne
   rw [he, ← hn, hz]
 
@@ -68,12 +70,12 @@ private theorem outer_integrable (A : ℂ → ℂ) (R0 R B : ℝ)
     rw [he, norm_zero] at this
     linarith
   have hc : ContinuousOn (fun θ : ℝ ↦ outerIntegrand A R n (circleMap 0 R θ)) S := by
-    apply (hcA.div ((continuous_circleMap 0 R).continuousOn.pow _) (fun θ _ ↦
+    apply (hcA.div ((continuous_circleMap 0 R).continuousOn.pow (n + 1)) (fun θ _ ↦
       pow_ne_zero _ (hcz θ))).congr
     intro θ hθ
-    simp only [outerIntegrand, if_neg hθ]
+    simp [outerIntegrand, hθ]
   have hcount : Sᶜ.Countable := by
-    simpa only [S, compl_setOf, not_not, mem_singleton_iff] using
+    simpa only [S, compl_setOf, not_not, preimage, mem_singleton_iff] using
       (countable_singleton (R : ℂ)).preimage_circleMap (0 : ℂ) hR.ne'
   have hm := hc.stronglyMeasurable_of_countable_compl hcount
   change IntervalIntegrable _ volume 0 (2 * Real.pi)
@@ -85,10 +87,13 @@ private theorem outer_bound (A : ℂ → ℂ) (R B : ℝ) (hR : 0 < R) (hB : 0 �
     (hb : ∀ z ∈ CompositionContinuation.omega, ‖z‖ = R → ‖A z‖ ≤ B)
     (n : ℕ) : ‖outerCoefficient A R n‖ ≤ B / R ^ n := by
   have hn := circleIntegral.norm_two_pi_i_inv_smul_integral_le_of_norm_le_const
-    (f := outerIntegrand A R n) hR.le (fun z hz ↦
+    (f := outerIntegrand A R n) (c := (0 : ℂ)) (C := B / R ^ (n + 1)) hR.le (fun z hz ↦
       outer_norm A R B hR hB hb n z (by simpa [Metric.mem_sphere, dist_zero_right] using hz))
   change ‖outerCoefficient A R n‖ ≤ R * (B / R ^ (n + 1)) at hn
-  convert hn using 1 <;> field_simp <;> ring
+  have heq : R * (B / R ^ (n + 1)) = B / R ^ n := by
+    rw [pow_succ]
+    field_simp
+  rwa [heq] at hn
 
 private theorem bank_integrable (upper : ℂ → ℂ) (ρ R : ℝ)
     (hR : 1 < R) (hRρ : R < 1 + ρ)
@@ -102,12 +107,13 @@ private theorem bank_integrable (upper : ℂ → ℂ) (ρ R : ℝ)
     rw [← Complex.ofReal_one, ← Complex.ofReal_sub, Complex.norm_real,
       Real.norm_eq_abs, abs_of_nonneg (by linarith [hx.1] : 0 ≤ x - 1)]
     linarith [hx.2]
-  exact (hc.div (continuousOn_id.pow _) (fun x hx ↦ pow_ne_zero _ (by linarith [hx.1]))).
-    intervalIntegrable_of_Icc hR.le
+  have hd := hc.div (continuousOn_id.pow (n + 1)) (fun x hx ↦
+    pow_ne_zero (n + 1) (show x ≠ 0 by linarith [hx.1]))
+  exact hd.intervalIntegrable_of_Icc hR.le
 
 /-- The continuous upper extension across the finite slit, constructed from the same bank. -/
 private def upperExtension (A upper : ℂ → ℂ) (z : ℂ) : ℂ :=
-  if z ∈ CompositionContinuation.omega then A z else upper z
+  by classical exact if z ∈ CompositionContinuation.omega then A z else upper z
 
 private theorem upper_extension_continuous (A upper : ℂ → ℂ) (R0 ρ R : ℝ)
     (hR : 1 < R) (hRR0 : R < R0) (hRρ : R < 1 + ρ)
@@ -115,6 +121,7 @@ private theorem upper_extension_continuous (A upper : ℂ → ℂ) (R0 ρ R : �
     (hu : ContinuousOn upper {z | ‖z - 1‖ ≤ ρ ∧ 0 ≤ z.im})
     (he : ∀ z, ‖z - 1‖ ≤ ρ → 0 ≤ z.im → z ∈ CompositionContinuation.omega → upper z = A z) :
     ContinuousOn (upperExtension A upper) {z | ‖z‖ ≤ R ∧ 0 ≤ z.im} := by
+  classical
   let δ := (ρ + (R - 1)) / 2
   have hδ : R - 1 < δ := by dsimp [δ]; linarith
   have hδρ : δ < ρ := by dsimp [δ]; linarith
@@ -130,10 +137,10 @@ private theorem upper_extension_continuous (A upper : ℂ → ℂ) (R0 ρ R : �
     have hr : 1 ≤ z.re := by simpa only [sub_re, one_re] using (sub_nonpos.mp ho.1)
     have hez : z = (z.re : ℂ) := by apply Complex.ext <;> simp [hi]
     have hn : ‖z‖ = z.re := by
-      rw [hez, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)]
+      rw [hez, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)] <;> simp
     have hn1 : ‖z - 1‖ = z.re - 1 := by
       rw [hez, ← Complex.ofReal_one, ← Complex.ofReal_sub, Complex.norm_real,
-        Real.norm_eq_abs, abs_of_nonneg (by linarith)]
+        Real.norm_eq_abs, abs_of_nonneg (by linarith)] <;> simp
     have hz1 := hz.1
     have hz2 := hz.2.2
     rw [hn] at hz1
@@ -152,10 +159,10 @@ private theorem upper_extension_continuous (A upper : ℂ → ℂ) (R0 ρ R : �
     · rfl
   have hK : IsClosed K := (isClosed_le continuous_norm continuous_const).inter
     ((isClosed_le continuous_const Complex.continuous_im).inter
-      (isClosed_le continuous_const (by fun_prop)))
+      (isClosed_le continuous_const (show Continuous (fun z : ℂ ↦ ‖z - 1‖) by fun_prop)))
   have hL : IsClosed L := (isClosed_le continuous_norm continuous_const).inter
     ((isClosed_le continuous_const Complex.continuous_im).inter
-      (isClosed_le (by fun_prop) continuous_const))
+      (isClosed_le (show Continuous (fun z : ℂ ↦ ‖z - 1‖) by fun_prop) continuous_const))
   apply (hcK.union_of_isClosed hcL hK hL).mono
   intro z hz
   by_cases hd : δ ≤ ‖z - 1‖
@@ -169,7 +176,13 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
       1 < R0 ∧ 0 < ρ ∧ ρ < 1 ∧ 1 < R ∧ R < R0 ∧ R < 1 + ρ ∧ 0 ≤ B ∧
       AnalyticOnNhd ℂ (FiniteSlitCompositionMoments.reciprocal head tail ell)
         {z | z ∈ CompositionContinuation.omega ∧ ‖z‖ < R0} ∧
+      (∀ z : ℂ, ‖z‖ < 1 → FiniteSlitCompositionMoments.reciprocal head tail ell z =
+        ((CompositionDisk.normalized head tail z)⁻¹) ^ (ell : ℕ)) ∧
+      FiniteSlitCompositionMoments.reciprocal head tail ell 0 =
+        ((CompositionDisk.normalized head tail 0)⁻¹) ^ (ell : ℕ) ∧
       ContinuousOn upper {z | ‖z - 1‖ ≤ ρ ∧ 0 ≤ z.im} ∧
+      (∀ z : ℂ, ‖z - 1‖ ≤ ρ → 0 ≤ z.im → z ∈ CompositionContinuation.omega →
+        upper z = FiniteSlitCompositionMoments.reciprocal head tail ell z) ∧
       ContinuousOn P {z | ‖z‖ ≤ R ∧ 0 ≤ z.im} ∧
       (∀ z, ‖z‖ ≤ R → 0 ≤ z.im → z ∈ CompositionContinuation.omega →
         P z = FiniteSlitCompositionMoments.reciprocal head tail ell z) ∧
@@ -183,16 +196,16 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
       (∀ᶠ n : ℕ in atTop, B / R ^ n + (1 / Real.pi) *
         (∫ x in (1 : ℝ)..R, (upper (x : ℂ)).im / x ^ (n + 1)) < 0) := by
   obtain ⟨R0, ρ, R, upper, hR0, hρ, hρ1, hR, hRR0, hRρ, ha,
-    _hdisk, _hzero, hu, he, _hendpoint, ⟨B, hB, hb⟩, hnegative⟩ :=
+    hdisk, hzero, hu, he, _hendpoint, ⟨B, hB, hb⟩, hnegative⟩ :=
       FiniteSlitCompositionMoments.result head tail ell
   refine ⟨R0, ρ, R, B, upper, upperExtension _ upper,
-    hR0, hρ, hρ1, hR, hRR0, hRρ, hB, ha, hu,
+    hR0, hρ, hρ1, hR, hRR0, hRρ, hB, ha, hdisk, hzero, hu, he,
     upper_extension_continuous _ _ _ _ _ hR hRR0 hRρ ha.continuousOn hu he,
     ?_, ?_, hb, ?_, hnegative B⟩
   · intro z _ _ ho
-    exact if_pos ho
+    simp only [upperExtension, if_pos ho]
   · intro z _ _ ho
-    exact if_neg ho
+    simp only [upperExtension, if_neg ho]
   · intro n
     exact ⟨outer_integrable _ R0 R B (by linarith) hRR0 hB ha hb n,
       bank_integrable upper ρ R hR hRρ hu n, outer_bound _ R B (by linarith) hB hb n⟩
