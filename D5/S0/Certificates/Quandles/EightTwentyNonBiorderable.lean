@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S0/Certificates/Quandles/EightTwentyNonBiorderable
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [lit/gupta2025biorderability]
+   anchors: [lake/module/D5.S0.Certificates.Quandles.PresentedQuandle, lake/module/D5.S0.Certificates.Quandles.SixRelationObstruction]
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Quandles/EightTwentyNonBiorderable.claim; result=D5/S0/Certificates/Quandles/EightTwentyNonBiorderable.result; claim=D5/S0/Certificates/Quandles/EightTwentyNonBiorderable.claim
    digest: No order on the full eight-crossing presented quandle is strictly increasing in both variables. -/
 

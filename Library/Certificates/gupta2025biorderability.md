@@ -36,6 +36,13 @@ entire quandle for which both translations are strictly increasing. Its negation
 rules out every generator order and hence D2; the proof does not assume the table
 is exhaustive. It does not address the paper's separate figure-eight possibility.
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2505.19573. URL: https://arxiv.org/abs/2505.19573v1.
+Scope: Eight Crossing Knots / Knot8_20, Figure fig8_20, equations
+8_20_1--8_20_8, Table tbl8_20 row D2 and the following possibility paragraph.
+D2 is an unnumbered author possibility.
+
 ## Formal source map and conventions
 
 `PresentedQuandle` is the quotient of unrestricted finite expressions in eight

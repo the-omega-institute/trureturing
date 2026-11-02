@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/Quandles/SixRelationObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/gupta2025biorderability]
+   anchors: [mathlib/module/Mathlib.Order.Monotone.Basic]
    utility: none
    digest: Six relations force collapse in a biordered idempotent magma. -/
 
