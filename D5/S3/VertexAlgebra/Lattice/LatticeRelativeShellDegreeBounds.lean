@@ -10,11 +10,12 @@ import D5.S3.Quantum.Fermionic.BcGhostQuartetCount
 import D5.S3.Quantum.Fermionic.BcGhostRelativeEnergy
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration
 import D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
-import Mathlib.Tactic
+
+/-! A coefficient bound on the literal original relative mass shell, obtained
+through the actual tensor representation and null-frame polynomial substitution. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 4000000
 
 open scoped BigOperators TensorProduct
 
@@ -84,7 +85,6 @@ theorem ghost_abs_charge_sub_one_le_count (S : Finset ℕ) (h3 : 3 ∉ S) :
       rw [hone]
       omega
     rw [hsum]
-    -- Unfold count before using hregular; its erases are inside count.
     simpa [count, h1, hregular] using abs_site_sum_le_card (S.erase 1)
   · have hsum : charge S - 1 = (∑ j ∈ S, siteSign j) - 1 := by
       rw [charge_sum]
@@ -96,8 +96,9 @@ theorem ghost_abs_charge_sub_one_le_count (S : Finset ℕ) (h3 : 3 ∉ S) :
           |∑ j ∈ S, siteSign j| + (1 : ℤ) := by
         simpa only [sub_eq_add_neg, abs_neg, abs_one] using
           (abs_add_le (∑ j ∈ S, siteSign j) (-1 : ℤ))
-      _ ≤ (S.card : ℤ) + 1 :=
-        add_le_add_right (abs_site_sum_le_card S) 1
+      _ ≤ (S.card : ℤ) + 1 := by
+        have h := abs_site_sum_le_card S
+        omega
 
 /-- Literal positive site energies dominate the count, including its site-1 hole. -/
 theorem ghost_count_le_relativeEnergy (S : Finset ℕ) (h3 : 3 ∉ S) :
@@ -120,8 +121,9 @@ theorem ghost_count_le_relativeEnergy (S : Finset ℕ) (h3 : 3 ∉ S) :
       simp [count, h1, h3]
     rw [hcount]
     calc
-      (S.card : ℤ) + 1 ≤ (∑ j ∈ S, siteEnergy j) + 1 :=
-        add_le_add_right (card_le_siteEnergy_sum S h1 h3) 1
+      (S.card : ℤ) + 1 ≤ (∑ j ∈ S, siteEnergy j) + 1 := by
+        have h := card_le_siteEnergy_sum S h1 h3
+        omega
       _ = relativeEnergy S := by
         rw [relativeEnergy_split]
         simp [h1, h3, add_comm]
@@ -137,9 +139,8 @@ def frameEnergy {t : ℕ} (m : Exponents t) : ℕ :=
 
 private theorem variableWeight_abs_le_one {t : ℕ} (x : Variables t) :
     |variableWeight x| ≤ (1 : ℤ) := by
-  by_cases hp : x.1 = plus t
-  · simp [variableWeight, hp]
-  · by_cases hm : x.1 = minus t <;> simp [variableWeight, hp, hm]
+  unfold variableWeight
+  split_ifs <;> norm_num
 
 /-- The original signed exponentDegree is bounded by the frequency-weighted
 excitation sum, rather than by an assumed coordinate energy. -/
@@ -157,7 +158,6 @@ theorem abs_exponentDegree_le_frameEnergy {t : ℕ} (m : Exponents t) :
       have hn : (0 : ℤ) ≤ (m x : ℤ) := by omega
       have hf : (1 : ℤ) ≤ ((x.2 + 1 : ℕ) : ℤ) := by omega
       rw [abs_mul, abs_of_nonneg hn]
-      -- Both monotone steps matter: |w| ≤ 1 ≤ r+1, multiplied by m ≥ 0.
       exact mul_le_mul_of_nonneg_left ((variableWeight_abs_le_one x).trans hf) hn
     _ = (frameEnergy m : ℤ) := by
       simp [frameEnergy, frequencyWeight, Finsupp.weight_apply, Finsupp.sum,
@@ -214,7 +214,7 @@ private theorem coordinateSlice_sector {D : LatticeData} (F : NullFrame D)
   change F.coordinateEquiv B
     (originalSlice D p S (Finsupp.single q ((F.coordinateEquiv B).symm Q) ⊗ₜ[ℂ] w)) = _
   rw [originalSlice_tmul, map_smul]
-  by_cases hp : q = p <;> simp [Finsupp.single_apply, hp]
+  by_cases hp : q = p <;> simp [hp]
 
 /-- Arbitrary-state bridge, proved by equality of two linear maps on the
 ORIGINAL tensor basis. The sector coefficient theorem is used only where
@@ -280,8 +280,10 @@ private theorem coordinate_slice_shell_support
     intro e he
     have hj := hs ((q,e),S) (by simpa only [originalSlice_coeff] using he)
     change oscillatorEnergy e = oscillatorEnergy d
-    have hei := hi.2.2
-    have hej := hj.2.2
+    have hei : (oscillatorEnergy d : ℤ) + relativeEnergy S =
+        1 - chargeEnergy D p := hi.2.2
+    have hej : (oscillatorEnergy e : ℤ) + relativeEnergy S =
+        1 - chargeEnergy D p := hj.2.2
     omega
   have hcoord : IsWeightedHomogeneous frequencyWeight
       (coordinateSlice F B q S x) (oscillatorEnergy d) :=
@@ -332,8 +334,7 @@ theorem actualBasis_coefficient_shell_degree_bound
 /- For chargeEnergy > 1, use the existing concrete theorem
 LatticeRelativeMassShell.relativeMassShell_eq_bot_of_one_lt directly.
 Its proof uses nonnegative original oscillator and relative ghost energies
-in mem_relativeMassShell_iff and coefficient separation. No duplicate
-empty-shell wrapper or conditional interval/nilpotence wrapper is added. -/
+in mem_relativeMassShell_iff and coefficient separation. -/
 
 end
 end D5.S3.VertexAlgebra.LatticeRelativeShellDegreeBounds
