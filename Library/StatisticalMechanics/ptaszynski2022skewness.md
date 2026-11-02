@@ -5,10 +5,11 @@ year: 2022
 title: "Bounds on skewness and kurtosis of steady-state currents"
 doi: 10.1103/PhysRevE.106.024119
 url: https://arxiv.org/abs/2204.08421v4
-claim: "The paper derives bounds on the skewness and kurtosis of steady-state currents for several classes of systems; for unicyclic Markovian networks it infers numerically that the extremal values are attained when all clockwise rates are equal but one, and on that topology finds the minimum skewness -(8-8N+N^2)/(16(N-1)^2) of a unidirectional N-state cycle at a = 1/(N-1); in the limit N -> infinity it gives the minimum kurtosis -(1+sqrt(5))/10 for a = A/N, A = (3-sqrt(5))/2."
+claim: "The paper derives bounds on the skewness and kurtosis of steady-state currents for several classes of systems; for unicyclic Markovian networks it infers numerically that the extremal values are attained when all clockwise rates are equal but one, and on that topology finds the minimum skewness -(8-8N+N^2)/(16(N-1)^2) of a unidirectional N-state cycle at a = 1/(N-1); in the limit N -> infinity it gives the minimum kurtosis -(1+sqrt(5))/10 for a = A/N, A = (3-sqrt(5))/2, and the minimum of skewness plus kurtosis -8/27 for A = 1/2."
 strata_touched:
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum
   - D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound
+  - D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound
 license: citation-only
 triage: anchor
 ---
@@ -33,6 +34,10 @@ The kurtosis is $\mathcal{K}=\langle\!\langle j^4\rangle\!\rangle/\langle\!\lang
 
 > The other bounds have been derived in the assymptotic limit $N \rightarrow \infty$ in which the saturating value of $a$ scales as $a=A/N$. They read as $\min(\mathcal{K})= -\frac{1+\sqrt{5}}{10}$ for $A=\frac{3-\sqrt{5}}{2}$, $\max(\mathcal{K})=1$ for $A \rightarrow 0$, …
 
+and, for the sum (l. 434–437):
+
+> $\min(\mathcal{S}+ \mathcal{K})= -\frac{8}{27}$ for $A=\frac{1}{2}$, $\max(\mathcal{S}+\mathcal{K})=2$ for $A \rightarrow 0$
+
 > it was numerically conjectured that the minimum and maximum values of $\mathcal{S}$, $\mathcal{K}$, $\mathcal{S}+\mathcal{K}$, $\mathcal{S}-\mathcal{K}$ and $\mathcal{S} \times \mathcal{K}$ are always obtained for a specific type of network topology, with all rates $k_{ij}$ equal to $k$ apart from one (here $k_{21}$) equal to $ak$.
 
 ## Verified locator
@@ -42,6 +47,7 @@ Source: https://arxiv.org/abs/2204.08421v4
 - URL: https://arxiv.org/abs/2204.08421v4 (the e-print is a gzipped tar archive; member `main.tex`, 1102 lines, md5 `5b72a7d5de1e5c34c76db21badb56492`):
   - the skewness, l. 53;
   - unidirectional networks, the skewness minimum and the asymptotic kurtosis minimum, Section III E 1, l. 407–432;
+  - the asymptotic minimum of $\mathcal S+\mathcal K$, l. 434–437;
   - the winding-number cumulants and the waiting-time cumulants, Appendix, l. 768–790;
   - the numerically conjectured extremal topology, Appendix, l. 792.
 - The author and the arXiv dates are from the arXiv metadata.

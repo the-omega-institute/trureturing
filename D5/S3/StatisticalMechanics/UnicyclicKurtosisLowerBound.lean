@@ -39,7 +39,7 @@ def claim : Prop :=
   IsGLB {s : ℝ | ∃ n : ℕ, 2 ≤ n ∧ ∃ k : Fin n → ℝ,
     (∀ i, 0 < k i) ∧ s = kurtosis k} lowerBound
 
-private lemma normalized {n : ℕ} (k : Fin n → ℝ) :
+lemma normalized {n : ℕ} (k : Fin n → ℝ) :
     kurtosis k =
       15 * powerSum n 2 (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) ^ 2 -
       20 * powerSum n 3 (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) +
@@ -57,7 +57,7 @@ private lemma normalized {n : ℕ} (k : Fin n → ℝ) :
   · simp [h2]; ring
   field_simp (disch := positivity)
 
-private lemma moments {n : ℕ} (hn : 2 ≤ n) (x : Fin n → ℝ)
+lemma moments {n : ℕ} (hn : 2 ≤ n) (x : Fin n → ℝ)
     (hx : ∀ i, 0 < x i) :
     0 < powerSum n 2 x ∧ 0 ≤ powerSum n 3 x ∧
       powerSum n 3 x ^ 2 ≤ powerSum n 2 x * powerSum n 4 x ∧

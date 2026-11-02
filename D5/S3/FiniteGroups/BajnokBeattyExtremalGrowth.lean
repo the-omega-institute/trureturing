@@ -4,18 +4,25 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Short-kernel Lee image counting by an upper-cap transversal. -/
+   digest: Rank-one Lee image counting by a finite-fiber transversal. -/
 
 import D5.S3.FiniteGroups.BajnokBeattySharpMaximum
+import Mathlib.Data.Int.CardIntervalMod
+import Mathlib.Data.Finset.Max
 
 /-!
-proof_shape: lee_ball_image_card_of_short_kernel, sharp_pair_growth: content.
+proof_shape: lee_ball_image_card_of_displacement, sharp_pair_growth: content.
+lee_ball_image_card_of_short_kernel: bind-only, consumed by
+sharp_pair_growth_with_cofactor on the live path to sharp_pair_growth.
 admission_basis: escape-witness.
-escape_witness: trim_bijOn constructs a transversal by lowering precisely the
-upper overlap cap once. Its injectivity and surjectivity feed finsetCard_eq,
-then card_sdiff_add_card_eq_card, on the live path to the numerical formula.
-The encoding, cap translation and norm adapters are consumed private helpers.
-No literature novelty or current-publication priority is claimed.
+escape_witness: trim_bijOn retains the bottom of each finite rank-one fiber.
+A minimum of the dot product with h exists by Finset.exists_min_image;
+subtracting h strictly lowers it. Integer Lee-norm interpolation forces any
+other fiber point into the oriented cap. The sum/difference map identifies
+the cap with a parity rectangle; the existing residue-count and
+filtered-product suppliers count that rectangle.
+The axial theorem consumes this generic balance and supplies the counting
+step in the actual maximum-pair growth theorem. No literature novelty or publication priority is claimed.
 -/
 
 set_option autoImplicit false
@@ -52,47 +59,69 @@ private theorem norm_sub_le (x y : ℤ × ℤ) :
   change |x.1-y.1| + |x.2-y.2| ≤ |x.1|+|x.2|+(|y.1|+|y.2|)
   linarith [abs_sub x.1 y.1, abs_sub x.2 y.2]
 
-private def upperCap (B r : ℕ) : Finset (ℤ × ℤ) :=
-  leeDiamond r ∩ (leeDiamond r).image (fun z => z+(0,2*(B : ℤ)))
+private def upperCap (h : ℤ × ℤ) (r : ℕ) : Finset (ℤ × ℤ) :=
+  leeDiamond r ∩ (leeDiamond r).image (fun z => z+h)
 
-private def trimmedDiamond (B r : ℕ) : Finset (ℤ × ℤ) :=
-  leeDiamond r \ upperCap B r
+private def trimmedDiamond (h : ℤ × ℤ) (r : ℕ) : Finset (ℤ × ℤ) :=
+  leeDiamond r \ upperCap h r
 
-private theorem mem_upperCap {B r : ℕ} {z : ℤ × ℤ} :
-    z ∈ upperCap B r ↔ z ∈ leeDiamond r ∧
-      z - (0, 2*(B : ℤ)) ∈ leeDiamond r := by
+private theorem mem_upperCap {h : ℤ × ℤ} {r : ℕ} {z : ℤ × ℤ} :
+    z ∈ upperCap h r ↔ z ∈ leeDiamond r ∧ z-h ∈ leeDiamond r := by
   simp only [upperCap, Finset.mem_inter, Finset.mem_image]
   constructor
   · rintro ⟨hz,w,hw,rfl⟩
     exact ⟨hz, by simpa using hw⟩
   · rintro ⟨hz,hzm⟩
-    exact ⟨hz,z-(0,2*(B : ℤ)),hzm,sub_add_cancel _ _⟩
+    exact ⟨hz,z-h,hzm,sub_add_cancel _ _⟩
 
-private theorem cap_lower_not_cap {B r : ℕ} (hBr : r < 2*B)
-    {z : ℤ × ℤ} (hz : z ∈ upperCap B r) :
-    z - (0,2*(B : ℤ)) ∉ upperCap B r := by
-  intro hl
-  have htop := mem_leeDiamond.mp (mem_upperCap.mp hz).1
-  have hbottom := mem_leeDiamond.mp (mem_upperCap.mp hl).2
-  have hd := norm_sub_le z ((z-(0,2*(B : ℤ)))-(0,2*(B : ℤ)))
-  have he : z-((z-(0,2*(B : ℤ)))-(0,2*(B : ℤ))) = (0,4*(B : ℤ)) := by
-    ext <;> simp <;> ring
-  rw [he] at hd
-  have hB : (0 : ℤ) ≤ 4*(B : ℤ) := by positivity
-  simp only [leeNorm, abs_zero, zero_add, abs_of_nonneg hB] at hd
-  change |z.1-0-0| + |z.2-2*(B : ℤ)-2*(B : ℤ)| ≤ (r : ℤ) at hbottom
-  dsimp [leeNorm] at hd
-  have hBrZ : (r : ℤ) < 2*(B : ℤ) := by exact_mod_cast hBr
-  linarith
+private theorem leeNorm_add (x y : ℤ × ℤ) :
+    leeNorm (x+y) ≤ leeNorm x+leeNorm y := by
+  dsimp [leeNorm]
+  change |x.1+y.1|+|x.2+y.2| ≤ |x.1|+|x.2|+(|y.1|+|y.2|)
+  linarith [abs_add_le x.1 y.1, abs_add_le x.2 y.2]
 
-/-- The new fiber argument. It is private because its actual consumer is the
-cardinality theorem, not a separate transversal endpoint. -/
+private theorem leeNorm_zsmul (k : ℤ) (z : ℤ × ℤ) :
+    leeNorm (k • z) = |k| * leeNorm z := by
+  change |k*z.1|+|k*z.2| = |k| * (|z.1|+|z.2|)
+  rw [abs_mul, abs_mul, mul_add]
+
+/-- Integer interpolation on a fiber: for positive k, y-h lies between
+x and y when y-x = k • h. No real-vector-space structure is used. -/
+private theorem leeDiamond_sub_mem_of_pos_multiple {x y h : ℤ × ℤ}
+    {r : ℕ} {k : ℤ} (hx : x ∈ leeDiamond r) (hy : y ∈ leeDiamond r)
+    (hk : 0 < k) (hxy : y-x = k • h) : y-h ∈ leeDiamond r := by
+  have hk0 : 0 ≤ k := le_of_lt hk
+  have hkm0 : 0 ≤ k-1 := by omega
+  have hx' : x = y-k • h := by rw [← hxy]; abel
+  have hline : k • (y-h) = (k-1) • y+x := by
+    rw [hx', smul_sub, sub_smul, one_smul]
+    abel
+  have hweighted : k*leeNorm (y-h) ≤ (k-1)*leeNorm y+leeNorm x := by
+    calc
+      k*leeNorm (y-h) = leeNorm (k • (y-h)) := by
+        rw [leeNorm_zsmul, abs_of_nonneg hk0]
+      _ = leeNorm ((k-1) • y+x) := by rw [hline]
+      _ ≤ leeNorm ((k-1) • y)+leeNorm x := leeNorm_add _ _
+      _ = (k-1)*leeNorm y+leeNorm x := by
+        rw [leeNorm_zsmul, abs_of_nonneg hkm0]
+  have hxbound : leeNorm x ≤ (r : ℤ) := mem_leeDiamond.mp hx
+  have hybound : leeNorm y ≤ (r : ℤ) := mem_leeDiamond.mp hy
+  have hmul : k*leeNorm (y-h) ≤ k*(r : ℤ) := by
+    calc
+      k*leeNorm (y-h) ≤ (k-1)*leeNorm y+leeNorm x := hweighted
+      _ ≤ (k-1)*(r : ℤ)+(r : ℤ) :=
+        add_le_add (mul_le_mul_of_nonneg_left hybound hkm0) hxbound
+      _ = k*(r : ℤ) := by ring
+  exact mem_leeDiamond.mpr (le_of_mul_le_mul_left hmul hk)
+
+/-- The single shared fiber proof: the trimmed diamond retains precisely
+one bottom point of each finite fiber parallel to the nonzero vector h. -/
 private theorem trim_bijOn {G : Type u} [AddCommGroup G]
-    (f : (ℤ × ℤ) →+ G) {B r : ℕ} (hBr : r < 2*B)
-    (hh : f (0,2*(B : ℤ)) = 0)
+    (f : (ℤ × ℤ) →+ G) {h : ℤ × ℤ} {r : ℕ} (hne : h ≠ 0)
+    (hh : f h = 0)
     (hshort : ∀ z : ℤ × ℤ, |z.1|+|z.2| ≤ 2*(r : ℤ) → f z = 0 →
-      z = 0 ∨ z = (0,2*(B : ℤ)) ∨ z = (0,-2*(B : ℤ))) :
-    Set.BijOn f (↑(trimmedDiamond B r) : Set (ℤ × ℤ))
+      ∃ k : ℤ, z = k • h) :
+    Set.BijOn f (↑(trimmedDiamond h r) : Set (ℤ × ℤ))
       (↑((leeDiamond r).image f) : Set G) := by
   classical
   refine ⟨?_, ?_, ?_⟩
@@ -101,33 +130,242 @@ private theorem trim_bijOn {G : Type u} [AddCommGroup G]
   · intro x hx y hy he
     obtain ⟨hxD,hxC⟩ := Finset.mem_sdiff.mp hx
     obtain ⟨hyD,hyC⟩ := Finset.mem_sdiff.mp hy
-    have hnorm : |(x-y).1|+|(x-y).2| ≤ 2*(r : ℤ) := by
-      have ht := norm_sub_le x y
+    have hnorm : |(y-x).1|+|(y-x).2| ≤ 2*(r : ℤ) := by
+      have ht := norm_sub_le y x
       have h1 := mem_leeDiamond.mp hxD
       have h2 := mem_leeDiamond.mp hyD
       dsimp [leeNorm] at ht
-      change |x.1-y.1|+|x.2-y.2| ≤ 2*(r : ℤ)
+      change |y.1-x.1|+|y.2-x.2| ≤ 2*(r : ℤ)
       linarith
-    have hzero : f (x-y) = 0 := by rw [map_sub, he, sub_self]
-    rcases hshort (x-y) hnorm hzero with h0 | hp | hn
-    · exact sub_eq_zero.mp h0
-    · exact False.elim (hxC (mem_upperCap.mpr ⟨hxD, by
-        have hxy : x-(0,2*(B : ℤ)) = y := by rw [← hp]; abel
-        simpa only [hxy] using hyD⟩))
-    · exact False.elim (hyC (mem_upperCap.mpr ⟨hyD, by
-        have hyx : y-(0,2*(B : ℤ)) = x := by
-          have hn' : x-y = -(0,2*(B : ℤ)) := by simpa using hn
-          have hp' := congrArg Neg.neg hn'
-          have hp'' : y-x = (0,2*(B : ℤ)) := by simpa using hp'
-          rw [← hp'']; abel
-        simpa only [hyx] using hxD⟩))
+    have hzero : f (y-x) = 0 := by rw [map_sub, he, sub_self]
+    obtain ⟨k,hk⟩ := hshort (y-x) hnorm hzero
+    rcases lt_trichotomy k 0 with hkneg | hkzero | hkpos
+    · have hxy : x-y = (-k) • h := by
+        rw [neg_smul, ← hk]
+        abel
+      have hxm := leeDiamond_sub_mem_of_pos_multiple hyD hxD
+        (by omega : 0 < -k) hxy
+      exact False.elim (hxC (mem_upperCap.mpr ⟨hxD,hxm⟩))
+    · have h0 : y-x = 0 := by simpa only [hkzero, zero_smul] using hk
+      exact (sub_eq_zero.mp h0).symm
+    · have hym := leeDiamond_sub_mem_of_pos_multiple hxD hyD hkpos hk
+      exact False.elim (hyC (mem_upperCap.mpr ⟨hyD,hym⟩))
   · intro g hg
-    obtain ⟨z,hz,rfl⟩ := Finset.mem_image.mp hg
-    by_cases hcap : z ∈ upperCap B r
-    · refine ⟨z-(0,2*(B : ℤ)), Finset.mem_sdiff.mpr
-        ⟨(mem_upperCap.mp hcap).2, cap_lower_not_cap hBr hcap⟩, ?_⟩
-      rw [map_sub, hh, sub_zero]
-    · exact ⟨z, Finset.mem_sdiff.mpr ⟨hz,hcap⟩, rfl⟩
+    obtain ⟨z,hz,hzg⟩ := Finset.mem_image.mp hg
+    let fiber := (leeDiamond r).filter (fun w => f w = g)
+    have hnonempty : fiber.Nonempty := ⟨z, Finset.mem_filter.mpr ⟨hz,hzg⟩⟩
+    obtain ⟨w,hw,hmin⟩ := Finset.exists_min_image fiber
+      (fun w => w.1*h.1+w.2*h.2) hnonempty
+    obtain ⟨hwD,hwf⟩ := Finset.mem_filter.mp hw
+    refine ⟨w, Finset.mem_sdiff.mpr ⟨hwD,?_⟩, hwf⟩
+    intro hwC
+    have hminusD := (mem_upperCap.mp hwC).2
+    have hminusf : f (w-h) = g := by rw [map_sub, hh, sub_zero]; exact hwf
+    have hminus : w-h ∈ fiber := Finset.mem_filter.mpr ⟨hminusD,hminusf⟩
+    have hle := hmin (w-h) hminus
+    change w.1*h.1+w.2*h.2 ≤ (w.1-h.1)*h.1+(w.2-h.2)*h.2 at hle
+    have hpos : 0 < h.1^2+h.2^2 := by
+      by_cases hx : h.1 = 0
+      · have hy : h.2 ≠ 0 := by
+          intro hy
+          exact hne (Prod.ext hx hy)
+        have hp := sq_pos_of_ne_zero hy
+        nlinarith only [hx, hp]
+      · have hp := sq_pos_of_ne_zero hx
+        nlinarith only [hp, sq_nonneg h.2]
+    nlinarith only [hle, hpos]
+
+-- The widths are integer positive parts, not natural absolute-value subtraction.
+private def capWidth (r : ℕ) (t : ℤ) : ℕ :=
+  (2*(r : ℤ)+1-|t|).toNat
+
+private def capStart (r : ℕ) (t : ℤ) : ℤ :=
+  max (-(r : ℤ)) (t-r)
+
+private def capInterval (r : ℕ) (t : ℤ) : Finset ℤ :=
+  Finset.Ico (capStart r t) (min (r : ℤ) (t+r)+1)
+
+private theorem mem_capInterval {r : ℕ} {t x : ℤ} :
+    x ∈ capInterval r t ↔ |x| ≤ (r : ℤ) ∧ |x-t| ≤ (r : ℤ) := by
+  simp only [capInterval, capStart, Finset.mem_Ico, abs_le]
+  omega
+
+private theorem capInterval_coordinates {r : ℕ} {t x : ℤ} :
+    x ∈ capInterval r t ↔
+      0 ≤ x-capStart r t ∧ x-capStart r t < (capWidth r t : ℤ) := by
+  simp only [capInterval, capStart, capWidth, Finset.mem_Ico]
+  by_cases ht : 0 ≤ t
+  · rw [abs_of_nonneg ht]
+    omega
+  · rw [abs_of_nonpos (by omega : t ≤ 0)]
+    omega
+
+private theorem capInterval_card (r : ℕ) (t : ℤ) :
+    (capInterval r t).card = capWidth r t := by
+  rw [capInterval, Int.card_Ico]
+  dsimp [capStart, capWidth]
+  by_cases ht : 0 ≤ t
+  · rw [abs_of_nonneg ht]
+    omega
+  · rw [abs_of_nonpos (by omega : t ≤ 0)]
+    omega
+
+/-- A private translation adapter to the existing residue-count supplier.
+For odd nonempty widths the initial point has parity r, for either sign of t. -/
+private theorem capInterval_majority_card (r : ℕ) (t : ℤ) :
+    ((capInterval r t).filter (fun x => x % 2 = (r : ℤ) % 2)).card =
+      (capWidth r t+1)/2 := by
+  classical
+  let e : ℕ := (((r : ℤ)-capStart r t)%2).toNat
+  have he : e < 2 := by dsimp [e]; omega
+  have hodd : capWidth r t % 2 = 1 → e = 0 := by
+    intro hw
+    dsimp [capWidth, e, capStart] at *
+    by_cases ht : 0 ≤ t
+    · rw [abs_of_nonneg ht] at hw
+      omega
+    · rw [abs_of_nonpos (by omega : t ≤ 0)] at hw
+      omega
+  have hres (i : ℕ) : i ≡ e [MOD 2] ↔
+      (capStart r t+(i : ℤ))%2 = (r : ℤ)%2 := by
+    dsimp [Nat.ModEq, e]
+    omega
+  have hbij : Set.BijOn (fun i : ℕ => capStart r t+(i : ℤ))
+      (↑((Finset.range (capWidth r t)).filter (fun i => i ≡ e [MOD 2])) : Set ℕ)
+      (↑((capInterval r t).filter (fun x => x%2 = (r : ℤ)%2)) : Set ℤ) := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro i hi
+      obtain ⟨hi,hm⟩ := Finset.mem_filter.mp hi
+      have hi' := Finset.mem_range.mp hi
+      refine Finset.mem_filter.mpr ⟨capInterval_coordinates.mpr ?_, (hres i).mp hm⟩
+      dsimp only
+      constructor <;> omega
+    · intro i _ j _ hij
+      change capStart r t+(i : ℤ) = capStart r t+(j : ℤ) at hij
+      omega
+    · intro x hx
+      obtain ⟨hx,hp⟩ := Finset.mem_filter.mp hx
+      have hc := capInterval_coordinates.mp hx
+      have hi : (x-capStart r t).toNat < capWidth r t := by omega
+      have hxi : capStart r t+((x-capStart r t).toNat : ℤ) = x := by omega
+      refine ⟨(x-capStart r t).toNat, ?_, hxi⟩
+      exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr hi,
+        (hres _).mpr (by rwa [hxi])⟩
+  have hcard := Set.BijOn.finsetCard_eq (fun i : ℕ => capStart r t+(i : ℤ)) hbij
+  have hcount := Nat.count_modEq_card (capWidth r t) (r := 2) (by decide) e
+  rw [Nat.count_eq_card_filter_range] at hcount
+  rw [← hcard, hcount]
+  split_ifs with hp
+  · have hw : capWidth r t % 2 = 1 := by omega
+    have he0 := hodd hw
+    omega
+  · have hw : capWidth r t % 2 = 0 := by
+      by_contra hn
+      have hw : capWidth r t % 2 = 1 := by omega
+      have he0 := hodd hw
+      omega
+    omega
+
+private theorem capInterval_minority_card (r : ℕ) (t : ℤ) :
+    ((capInterval r t).filter (fun x => ¬ x % 2 = (r : ℤ) % 2)).card =
+      capWidth r t/2 := by
+  have h := Finset.card_filter_add_card_filter_not (s := capInterval r t)
+    (fun x => x%2 = (r : ℤ)%2)
+  rw [capInterval_majority_card, capInterval_card] at h
+  omega
+
+/-- S is kept on integer pairs; its inverse on equal-parity pairs uses /2. -/
+private def capSumDiff (z : ℤ × ℤ) : ℤ × ℤ := (z.1+z.2,z.1-z.2)
+
+private def capRectangle (h : ℤ × ℤ) (r : ℕ) : Finset (ℤ × ℤ) :=
+  ((capInterval r (h.1+h.2)) ×ˢ (capInterval r (h.1-h.2))).filter
+    (fun q => (q.1%2 = (r : ℤ)%2) = (q.2%2 = (r : ℤ)%2))
+
+private theorem capSumDiff_bijOn (h : ℤ × ℤ) (r : ℕ) :
+    Set.BijOn capSumDiff (↑(upperCap h r) : Set (ℤ × ℤ))
+      (↑(capRectangle h r) : Set (ℤ × ℤ)) := by
+  classical
+  refine ⟨?_, ?_, ?_⟩
+  · intro z hz
+    obtain ⟨hz,hm⟩ := mem_upperCap.mp hz
+    have hz' := (LeeSquareCompression.lee_iff_square _ _ _).mp (mem_leeDiamond.mp hz)
+    have hm' := (LeeSquareCompression.lee_iff_square _ _ _).mp (mem_leeDiamond.mp hm)
+    change |z.1-h.1+(z.2-h.2)| ≤ (r : ℤ) ∧
+      |z.1-h.1-(z.2-h.2)| ≤ (r : ℤ) at hm'
+    have hsum : (z.1+z.2)-(h.1+h.2) = z.1-h.1+(z.2-h.2) := by ring
+    have hdiff : (z.1-z.2)-(h.1-h.2) = z.1-h.1-(z.2-h.2) := by ring
+    refine Finset.mem_filter.mpr ⟨Finset.mem_product.mpr ⟨?_, ?_⟩, ?_⟩
+    · exact mem_capInterval.mpr ⟨hz'.1, by simpa only [capSumDiff, hsum] using hm'.1⟩
+    · exact mem_capInterval.mpr ⟨hz'.2, by simpa only [capSumDiff, hdiff] using hm'.2⟩
+    · dsimp [capSumDiff]
+      apply propext
+      omega
+  · intro x _ y _ he
+    have h0 := congrArg Prod.fst he
+    have h1 := congrArg Prod.snd he
+    dsimp [capSumDiff] at h0 h1
+    apply Prod.ext <;> omega
+  · intro q hq
+    obtain ⟨hq,hp⟩ := Finset.mem_filter.mp hq
+    obtain ⟨hq0,hq1⟩ := Finset.mem_product.mp hq
+    have h0 := mem_capInterval.mp hq0
+    have h1 := mem_capInterval.mp hq1
+    have hp' : q.1%2 = q.2%2 := by
+      have hpiff := Iff.of_eq hp
+      omega
+    let z : ℤ × ℤ := ((q.1+q.2)/2,(q.1-q.2)/2)
+    have hz0 : z.1+z.2 = q.1 := by dsimp [z]; omega
+    have hz1 : z.1-z.2 = q.2 := by dsimp [z]; omega
+    refine ⟨z, mem_upperCap.mpr ⟨?_, ?_⟩, Prod.ext hz0 hz1⟩
+    · apply mem_leeDiamond.mpr
+      apply (LeeSquareCompression.lee_iff_square _ _ _).mpr
+      simpa only [hz0,hz1] using And.intro h0.1 h1.1
+    · apply mem_leeDiamond.mpr
+      apply (LeeSquareCompression.lee_iff_square _ _ _).mpr
+      change |z.1-h.1+(z.2-h.2)| ≤ (r : ℤ) ∧
+        |z.1-h.1-(z.2-h.2)| ≤ (r : ℤ)
+      have he0 : z.1-h.1+(z.2-h.2) = q.1-(h.1+h.2) := by
+        calc
+          _ = (z.1+z.2)-(h.1+h.2) := by ring
+          _ = _ := by rw [hz0]
+      have he1 : z.1-h.1-(z.2-h.2) = q.2-(h.1-h.2) := by
+        calc
+          _ = (z.1-z.2)-(h.1-h.2) := by ring
+          _ = _ := by rw [hz1]
+      simpa only [he0,he1] using And.intro h0.2 h1.2
+
+private theorem parity_product_halves (A B : ℕ) :
+    ((A+1)/2)*((B+1)/2)+(A/2)*(B/2) = (A*B+1)/2 := by
+  have ha : A = 2*(A/2)+A%2 := by omega
+  have hb : B = 2*(B/2)+B%2 := by omega
+  have ha' : (A+1)/2 = A/2+A%2 := by omega
+  have hb' : (B+1)/2 = B/2+B%2 := by omega
+  rw [ha', hb']
+  have hab : A*B = (2*(A/2)+A%2)*(2*(B/2)+B%2) := by
+    conv_lhs => rw [ha,hb]
+  have ha2 : A%2 = 0 ∨ A%2 = 1 := by omega
+  have hb2 : B%2 = 0 ∨ B%2 = 1 := by omega
+  rcases ha2 with ha2 | ha2 <;> rcases hb2 with hb2 | hb2
+  all_goals
+    rw [ha2,hb2] at hab ⊢
+    have hlo : 2*((A/2+ A%2)*(B/2+B%2)+(A/2)*(B/2)) ≤ A*B+1 := by
+      rw [ha2,hb2]
+      nlinarith [hab]
+    have hhi : A*B+1 < 2*(((A/2+A%2)*(B/2+B%2)+(A/2)*(B/2))+1) := by
+      rw [ha2,hb2]
+      nlinarith [hab]
+    simp only [ha2,hb2] at hlo hhi
+    omega
+
+private theorem upperCap_card (h : ℤ × ℤ) (r : ℕ) :
+    (upperCap h r).card =
+      (capWidth r (h.1+h.2)*capWidth r (h.1-h.2)+1)/2 := by
+  have hcard := Set.BijOn.finsetCard_eq capSumDiff (capSumDiff_bijOn h r)
+  rw [hcard, capRectangle, Finset.filter_product_card _ _
+    (fun x : ℤ => x%2 = (r : ℤ)%2) (fun y : ℤ => y%2 = (r : ℤ)%2),
+    capInterval_majority_card, capInterval_majority_card,
+    capInterval_minority_card, capInterval_minority_card]
+  exact parity_product_halves _ _
 
 private def decodePair (r : ℕ) (c : LeeSquareCompression.LeeCode r) : ℤ × ℤ :=
   (LeeSquareCompression.decodeLee r c 0, LeeSquareCompression.decodeLee r c 1)
@@ -177,51 +415,31 @@ private theorem leeDiamond_card (r : ℕ) :
   rw [Finset.card_univ, hcode] at hcard
   nlinarith
 
-private theorem cap_empty {B r : ℕ} (hr : r < B) : upperCap B r = ∅ := by
-  apply Finset.eq_empty_iff_forall_notMem.mpr
-  intro z hz
-  obtain ⟨h1,h2⟩ := mem_upperCap.mp hz
-  have h1' := mem_leeDiamond.mp h1
-  have h2' := mem_leeDiamond.mp h2
-  have hd := abs_sub z.2 (z.2-2*(B : ℤ))
-  have he : z.2-(z.2-2*(B : ℤ)) = 2*(B : ℤ) := by ring
-  rw [he, abs_of_nonneg (by positivity)] at hd
-  change |z.1-0|+|z.2-2*(B : ℤ)| ≤ (r : ℤ) at h2'
-  have hrZ : (r : ℤ) < (B : ℤ) := by exact_mod_cast hr
-  simp only [sub_zero] at h2'
-  linarith [abs_nonneg z.1]
+/-- A nonzero displacement spanning every short kernel vector determines the Lee image.
+The balance form avoids any ambiguity from natural truncated subtraction.
+No finiteness, surjectivity, sign condition, or extra radius bound is needed. -/
+theorem lee_ball_image_card_of_displacement {G : Type u} [AddCommGroup G]
+    (f : (ℤ × ℤ) →+ G) {h : ℤ × ℤ} {r : ℕ} (hne : h ≠ 0)
+    (hh : f h = 0)
+    (hshort : ∀ z : ℤ × ℤ, |z.1|+|z.2| ≤ 2*(r : ℤ) → f z = 0 →
+      ∃ k : ℤ, z = k • h) :
+    let A := (2*(r : ℤ)+1-|h.1+h.2|).toNat
+    let B := (2*(r : ℤ)+1-|h.1-h.2|).toNat
+    ((leeDiamond r).image f).card + (A*B+1)/2 = 2*r^2+2*r+1 := by
+  classical
+  have hbij := trim_bijOn f hne hh hshort
+  have hcard := Set.BijOn.finsetCard_eq f hbij
+  have hsub : upperCap h r ⊆ leeDiamond r := by
+    intro z hz
+    exact (mem_upperCap.mp hz).1
+  have hbalance := Finset.card_sdiff_add_card_eq_card hsub
+  change (trimmedDiamond h r).card + (upperCap h r).card =
+    (leeDiamond r).card at hbalance
+  rw [hcard, upperCap_card, leeDiamond_card] at hbalance
+  exact hbalance
 
-private theorem cap_translate {B r : ℕ} (hBr : B ≤ r) :
-    upperCap B r = (leeDiamond (r-B)).image (fun z => z+(0,(B : ℤ))) := by
-  ext z
-  have hcast : ((r-B : ℕ) : ℤ) = (r : ℤ)-(B : ℤ) := by omega
-  have habs : ∀ y : ℤ, max |y| |y-2*(B : ℤ)| = (B : ℤ)+|y-(B : ℤ)| := by
-    intro y
-    rw [max_def]
-    split_ifs with hmax
-    all_goals
-      rcases le_total 0 y with hy | hy <;>
-        rcases le_total 0 (y-2*(B : ℤ)) with hy2 | hy2 <;>
-        rcases le_total 0 (y-(B : ℤ)) with hy1 | hy1
-      all_goals simp only [abs_of_nonneg, abs_of_nonpos, hy, hy2, hy1] at hmax ⊢
-      all_goals omega
-  have hm : (z ∈ upperCap B r) ↔
-      z-(0,(B : ℤ)) ∈ leeDiamond (r-B) := by
-    simp only [mem_upperCap, mem_leeDiamond, Prod.fst_sub, Prod.snd_sub,
-      sub_zero, hcast]
-    have ht := habs z.2
-    rw [max_def] at ht
-    split_ifs at ht <;> omega
-  rw [hm, Finset.mem_image]
-  constructor
-  · intro hz
-    exact ⟨z-(0,(B : ℤ)), hz, sub_add_cancel _ _⟩
-  · rintro ⟨w,hw,rfl⟩
-    simpa using hw
-
-/-- For any additive commutative group, the short-kernel hypothesis determines
-the finite Lee image exactly. Neither finiteness of `G` nor surjectivity of `f`
-is assumed. The natural radius condition `r < 2*B` is essential. -/
+/-- The axial API specializes the displacement balance. Its radius premise
+is supplied by the actual maximum-pair consumer. -/
 theorem lee_ball_image_card_of_short_kernel {G : Type u} [AddCommGroup G]
     (f : (ℤ × ℤ) →+ G) {B r : ℕ} (hB : 0 < B) (hBr : r < 2*B)
     (hh : f (0,2*(B : ℤ)) = 0)
@@ -230,24 +448,37 @@ theorem lee_ball_image_card_of_short_kernel {G : Type u} [AddCommGroup G]
     ((leeDiamond r).image f).card =
       if r < B then 2*r^2+2*r+1 else 2*B*(2*r-B+1) := by
   classical
-  have hbij := trim_bijOn f hBr hh hshort
-  have hcard := Set.BijOn.finsetCard_eq f hbij
-  have hsub : upperCap B r ⊆ leeDiamond r := by
-    intro z hz
-    exact (mem_upperCap.mp hz).1
-  have hbalance := Finset.card_sdiff_add_card_eq_card hsub
-  change (trimmedDiamond B r).card + (upperCap B r).card =
-    (leeDiamond r).card at hbalance
-  rw [hcard, leeDiamond_card] at hbalance
+  have hne : (0,2*(B : ℤ)) ≠ (0 : ℤ × ℤ) := by
+    intro he
+    have hc := congrArg Prod.snd he
+    change 2*(B : ℤ) = 0 at hc
+    omega
+  have hshort' : ∀ z : ℤ × ℤ, |z.1|+|z.2| ≤ 2*(r : ℤ) → f z = 0 →
+      ∃ k : ℤ, z = k • (0,2*(B : ℤ)) := by
+    intro z hz hzero
+    rcases hshort z hz hzero with h0 | hp | hn
+    · exact ⟨0, by simpa only [zero_smul] using h0⟩
+    · exact ⟨1, by simpa only [one_smul] using hp⟩
+    · exact ⟨-1, by
+        simpa only [neg_one_smul, Prod.neg_mk, neg_zero, neg_mul] using hn⟩
+  have hbalance := lee_ball_image_card_of_displacement f hne hh hshort'
+  have hB0 : (0 : ℤ) ≤ 2*(B : ℤ) := by positivity
+  simp only [zero_add, zero_sub, abs_neg, abs_of_nonneg hB0] at hbalance
+  let W : ℕ := (2*(r : ℤ)+1-2*(B : ℤ)).toNat
+  change ((leeDiamond r).image f).card + (W*W+1)/2 =
+    2*r^2+2*r+1 at hbalance
   by_cases hr : r < B
-  · rw [cap_empty hr, Finset.card_empty, add_zero] at hbalance
-    simpa only [if_pos hr] using hbalance
-  · have hBr' : B ≤ r := by omega
-    rw [if_neg hr]
-    have hcap : (upperCap B r).card = 2*(r-B)^2+2*(r-B)+1 := by
-      rw [cap_translate hBr', Finset.card_image_of_injective _
-        (fun x y h => add_right_cancel h),
-        leeDiamond_card]
+  · have hw : W = 0 := by dsimp [W]; omega
+    rw [hw] at hbalance
+    simpa [if_pos hr] using hbalance
+  · rw [if_neg hr]
+    have hw : W = 2*(r-B)+1 := by dsimp [W]; omega
+    have hcap : (W*W+1)/2 = 2*(r-B)^2+2*(r-B)+1 := by
+      rw [hw]
+      have he : (2*(r-B)+1)*(2*(r-B)+1)+1 =
+          2*(2*(r-B)^2+2*(r-B)+1) := by ring
+      rw [he]
+      omega
     rw [hcap] at hbalance
     have hsplit : r = (r-B)+B := by omega
     have hpoly : 2*r^2+2*r+1 =
@@ -259,6 +490,7 @@ theorem lee_ball_image_card_of_short_kernel {G : Type u} [AddCommGroup G]
           conv_lhs => rw [hsplit]
         _ = 2*B*(2*(r-B)+B+1)+(2*(r-B)^2+2*(r-B)+1) := by ring
     omega
+
 
 open NearSquareLatticeRigidity BajnokBeattyCayleyNecessity
 open scoped Classical
