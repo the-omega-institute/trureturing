@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality
 import Reg.Support.DependentFamily
 
-/-! Source-bound audit of the prime vanishing ideal in the birationality settlement. -/
+/-! Source-bound audit of the vanishing-ideal coordinate in the birationality settlement. -/
 
 namespace Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality
 
@@ -13,54 +13,43 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe primality as the polynomial ideal varies at each chain length. -/
+/-- Evaluate a polynomial-ideal family at the original chain length. -/
 abbrev signature : Signature where
   Params := ℕ
-  State n := Ideal (MvPolynomial (Fin n → Fin 2) ℂ)
+  State _ := ∀ n : ℕ, Ideal (MvPolynomial (Fin n → Fin 2) ℂ)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ n := Ideal (MvPolynomial (Fin n → Fin 2) ℂ)
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ I => @decide I.IsPrime (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ n I => I n) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => ⊤) (fun e => nomatch e)
 
 /-- Preserve all lengths, positions, hypotheses, prime ideals and rational inverses. -/
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ n a : ℕ, 4 ≤ n → ∀ h : a + 3 ≤ n,
-    R.readout () n (vanishingPolys n) = true ∧
+    (R.readout () n vanishingPolys).IsPrime ∧
       (vanishingPolys 3).IsPrime ∧ IsBirationalVia n a h
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := (h 4 0 (by norm_num) (by norm_num)).1
-  change false = true at hbad
-  cases hbad
+  exact (h 4 0 (by norm_num) (by norm_num)).1.ne_top rfl
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, ⊥, ⊤, ?_⟩
-  have hbot : (⊥ : Ideal (MvPolynomial (Fin 0 → Fin 2) ℂ)).IsPrime :=
-    Ideal.isPrime_bot
-  have htop : ¬ (⊤ : Ideal (MvPolynomial (Fin 0 → Fin 2) ℂ)).IsPrime :=
-    fun h => h.ne_top rfl
-  simp only [actual, realize, hbot, htop, decide_true, decide_false]
-  decide
+  refine ⟨0, (fun _ => ⊥), (fun _ => ⊤), ?_⟩
+  exact bot_ne_top
 
 def source_registration : Registration arena claim where
   actual := actual
-  bridge := by simp only [actual, realize, decide_eq_true_eq, claim]
-  variation := ⟨by
-    intro n a hn h
-    simpa only [actual, realize, decide_eq_true_eq] using result n a hn h,
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -85,9 +74,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ _ I => @decide I.IsPrime (Classical.propDecidable _))
-    (fun e => nomatch e))
+  readout := some (realize signature (fun _ n I => I n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -100,11 +87,11 @@ def registration :
       path := #[] }
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := some #["fn"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
