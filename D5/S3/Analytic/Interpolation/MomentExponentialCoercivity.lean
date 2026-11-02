@@ -419,7 +419,7 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
       integrable_finsetSum Finset.univ (fun i _ =>
         integrable_finsetSum Finset.univ (fun j _ => hi i j))
     have h' := h.congr (ae_of_all _ (fun t => (hs t).symm))
-    simpa only [RCLike.re_eq_complex_re, ← Complex.ofReal_pow, Complex.ofReal_re] using h'.re
+    simpa only [RCLike.re_eq_complex_re, ← Complex.ofReal_pow, Complex.ofReal_re] using! h'.re
   have hint : ((∫ t in Icc 0 D, ‖response lam x a t‖ ^ 2 : ℝ) : ℂ) =
       ∑ i, ∑ j, star (a i) * a j * ((∫ t in Icc 0 D, p i t * p j t : ℝ) : ℂ) := by
     rw [← integral_complex_ofReal]
