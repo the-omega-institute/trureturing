@@ -25,13 +25,13 @@ open IndependentSeedPosterior TwelveStateFullErasure
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.TwelveStateErgodicity
 
-private def translate (a : ℤ) (z : ℤ → Bool) : ℤ → Bool := fun t => z (a+t)
+def translate (a : ℤ) (z : ℤ → Bool) : ℤ → Bool := fun t => z (a+t)
 
 private theorem translate_preserving (a : ℤ) : MeasurePreserving (translate a)
     (visible : Measure (ℤ → Bool)) (visible : Measure (ℤ → Bool)) :=
   ⟨by unfold translate; fun_prop,(same_law_trimming parameter).2.2.2.2.2.2.1 a⟩
 
-private theorem all_invariant (E : Set (ℤ → Bool)) (hE : translate 1 ⁻¹' E = E) (a : ℤ) :
+theorem all_invariant (E : Set (ℤ → Bool)) (hE : translate 1 ⁻¹' E = E) (a : ℤ) :
     translate a ⁻¹' E = E := by
   induction a using Int.induction_on with
   | zero =>
