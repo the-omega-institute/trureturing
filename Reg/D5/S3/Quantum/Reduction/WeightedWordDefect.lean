@@ -127,7 +127,7 @@ def source_registration : Registration arena.{u,v} (type_of% @ucp_word_pair_boun
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@ucp_word_pair_bound.{u,v}) (Realization signature) Type Unit := {
+      (@ucp_word_pair_bound.{u,v}) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Reduction.WeightedWordDefect.unit
   realizationName := `Reg.D5.S3.Quantum.Reduction.WeightedWordDefect.source_registration
   realizationSource := none
@@ -143,7 +143,7 @@ def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Reduction.WeightedWordDefect
     definition := none
