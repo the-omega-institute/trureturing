@@ -33,6 +33,7 @@ For a random complete game, put \(X_{N,i}=1\) when the \(i\)-th actual move is a
  \qquad
  \mathcal F^{(N)}_{0,m}=\sigma(X_{N,1},\ldots ,X_{N,m}).
 \]
+When the original notation uses \(\mathcal F^{(N)}_{m+k,\infty}\), extend the row by \(X_{N,i}=0\) for \(i>d_N\); the resulting sigma-algebra is exactly \(\mathcal F^{(N)}_{m+k,d_N}\).
 For \(k\ge0\), define
 \[
  \alpha_N(k)=
