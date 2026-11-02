@@ -1,45 +1,67 @@
+/- GID: D5/S3/Analytic/Probability/CompactConvexOrder
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Probability/CompactConvexOrder
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: CompactConvexOrder for compact scalar martingale transport. -/
 /-
 Copyright (c) 2026 Daniel Lyng. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
+Released under Apache 2.0, retained in docs/reports/licenses/econlib-strassen/LICENSE.txt.
 Authors: Daniel Lyng
+Ported from danlyng/Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f.
+Modified for the host probability-measure API, native conditional expectation,
+existing library suppliers, and a construction-oriented module organization.
 -/
-module
-public import D5.S3.Analytic.Probability.StrassenSource.Econlib.Math.Probability.Quantile
-public import D5.S3.Analytic.Probability.StrassenSource.Econlib.Math.Probability.StopLoss
+import D5.S3.Analytic.Probability.CompactQuantile
+import D5.S3.Analytic.Probability.FiniteMajorization
+import Mathlib.Analysis.Convex.Integral
+import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 
-/-!
-# Legendre-type identities relating stop-loss and integrated quantile
 
-For a probability measure `μ` on `ℝ` with finite first moment, the **stop-loss function** and the
-**upper integrated quantile** are related by a Legendre-Fenchel-type pair:
+open MeasureTheory Set Filter Topology
 
-`∫ u in Ioc t 1, quantile μ u ≤ stopLoss μ z + z · (1 - t)`      (universal bound)
+namespace Econlib.Probability
+abbrev ProbDist (α : Type*) [MeasurableSpace α] := ProbabilityMeasure α
+namespace ProbDist
+variable {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
+noncomputable def expect (d : ProbDist α) (f : α → ℝ) : ℝ := ∫ x, f x ∂d.toMeasure
+noncomputable def map (d : ProbDist α) (f : α → β) (_hf : Measurable f) : ProbDist β :=
+  ProbabilityMeasure.map d f
+@[simp] lemma map_toMeasure (d : ProbDist α) (f : α → β) (hf : Measurable f) :
+    ((map d f hf : ProbDist β) : Measure β) = Measure.map f d.toMeasure := rfl
+lemma expect_map (d : ProbDist α) (f : α → β) (hf : Measurable f) (g : β → ℝ)
+    (hg : AEStronglyMeasurable g ((map d f hf : ProbDist β).toMeasure)) :
+    (map d f hf).expect g = d.expect (fun x => g (f x)) := by
+  simp [expect, map, MeasureTheory.integral_map hf.aemeasurable hg]
+def supportsOn {α : Type*} [MeasurableSpace α] (d : ProbDist α) (s : Set α) : Prop :=
+  d.toMeasure s = 1
+lemma ae_mem_of_supportsOn {d : ProbDist ℝ} {s : Set ℝ} (hs : MeasurableSet s)
+    (h : d.supportsOn s) : ∀ᵐ x ∂d.toMeasure, x ∈ s :=
+  (ae_mem_iff_measure_eq hs.nullMeasurableSet).mpr (h.trans (measure_univ).symm)
+lemma integrable_of_supportsOn_Icc {d : ProbDist ℝ} {a b : ℝ} {f : ℝ → ℝ}
+    (h : d.supportsOn (Set.Icc a b)) (hf : ContinuousOn f (Set.Icc a b)) :
+    Integrable f d.toMeasure := by
+  have hind : Integrable ((Set.Icc a b).indicator f) d.toMeasure :=
+    (hf.integrableOn_Icc).integrable_indicator measurableSet_Icc
+  have hae : (fun x ↦ (Set.Icc a b).indicator f x) =ᵐ[d.toMeasure] f := by
+    filter_upwards [d.ae_mem_of_supportsOn measurableSet_Icc h] with x hx
+    simp [hx]
+  exact (integrable_congr hae).mp hind
+lemma integrable_id_of_supportsOn_Icc {d : ProbDist ℝ} {a b : ℝ}
+    (h : d.supportsOn (Set.Icc a b)) : Integrable id d.toMeasure :=
+  d.integrable_of_supportsOn_Icc h continuousOn_id
+end ProbDist
+structure ConvexOrderOnIcc (a b : ℝ) (μ ν : ProbDist ℝ) : Prop where
+  support_left : μ.supportsOn (Set.Icc a b)
+  support_right : ν.supportsOn (Set.Icc a b)
+  mean_eq : μ.expect id = ν.expect id
+  convex_expect_le : ∀ φ : ℝ → ℝ, ConvexOn ℝ (Set.Icc a b) φ → ContinuousOn φ (Set.Icc a b) →
+    μ.expect φ ≤ ν.expect φ
+notation:50 μ " ≼cx[" a "," b "] " ν => ConvexOrderOnIcc a b μ ν
+end Econlib.Probability
 
-with equality at `z = quantile μ t`:
-
-`∫ u in Ioc t 1, quantile μ u = stopLoss μ (quantile μ t) + (quantile μ t) · (1 - t)`.
-
-## Main statements
-
-* `Measure.upperIntegratedQuantile_le_stopLoss_add` — universal upper bound, for `t ∈ Icc 0 1`.
-* `Measure.upperIntegratedQuantile_eq_stopLoss_add` — equality at `z = quantile μ t`, for
-  `t ∈ Ioo 0 1`.
-* `Measure.integral_quantile_Ioo_split` — additivity of the quantile integral across `Ioc 0 t` and
-  `Ioc t 1`.
-
-## Notes
-
-The pushforward identity `stopLoss μ z = ∫ u in Ioo 0 1, max (quantile μ u - z) 0` reduces both
-statements to estimates on the quantile transform; monotonicity of `quantile μ` on `(0, 1)`
-supplies the equality case.
-
-## Tags
-
-stop-loss, quantile, legendre transform, convex conjugate
--/
-
-@[expose] public section
-
+section
 open MeasureTheory Set Filter Topology
 
 noncomputable section
@@ -47,8 +69,6 @@ noncomputable section
 namespace MeasureTheory.Measure
 
 variable {μ : Measure ℝ}
-
-/-! ### Hinge-quantile pushforward identity -/
 
 /-- The hinge function `x ↦ max (x - z) 0` is continuous. -/
 private lemma continuous_hinge (z : ℝ) : Continuous (fun x : ℝ => max (x - z) 0) :=
@@ -62,8 +82,6 @@ lemma stopLoss_eq_integral_hinge_quantile [IsProbabilityMeasure μ] (z : ℝ) :
   exact integral_eq_integral_quantile (fun x => max (x - z) 0)
     (continuous_hinge z).aestronglyMeasurable
 
-/-! ### AE-equality of `Ioo 0 1` with `Ioc 0 t ∪ Ioc t 1` -/
-
 /-- `Ioo 0 1 =ᵐ[volume] Ioc 0 t ∪ Ioc t 1` when `0 ≤ t ≤ 1`. -/
 private lemma Ioo_01_ae_eq_union {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     (Ioo (0 : ℝ) 1 : Set ℝ) =ᵐ[volume] (Ioc (0 : ℝ) t ∪ Ioc t 1 : Set ℝ) := by
@@ -75,8 +93,6 @@ private lemma Ioo_01_ae_eq_union {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
 /-- `Ioc 0 1 =ᵐ[volume] Ioo 0 1`. -/
 private lemma Ioc_01_ae_eq_Ioo : (Ioc (0 : ℝ) 1 : Set ℝ) =ᵐ[volume] (Ioo (0 : ℝ) 1 : Set ℝ) :=
   Ioo_ae_eq_Ioc.symm
-
-/-! ### Integrability of hinge-quantile on subintervals -/
 
 /-- If `id` is `μ`-integrable, then `max (quantile μ · - z) 0` is integrable on `Ioo 0 1`. -/
 lemma integrable_hinge_quantile [IsProbabilityMeasure μ]
@@ -158,8 +174,6 @@ lemma integrable_quantile_Ioc_0_t [IsProbabilityMeasure μ]
   intro u hu
   exact ⟨hu.1, lt_of_le_of_lt hu.2 ht1⟩
 
-/-! ### Volume of `Ioc t 1` when `t ≤ 1` -/
-
 private lemma volume_real_Ioc_t_one {t : ℝ} (ht : t ≤ 1) :
     volume.real (Ioc t 1) = 1 - t :=
   Real.volume_real_Ioc_of_le ht
@@ -170,8 +184,6 @@ private lemma setIntegral_const_Ioc_t_one {t : ℝ} (ht : t ≤ 1) (z : ℝ) :
   rw [setIntegral_const, volume_real_Ioc_t_one ht, smul_eq_mul]
   ring
 
-/-! ### Constant function integrability on `Ioo 0 1` and `Ioc t 1` -/
-
 private lemma integrable_const_Ioo_01 (z : ℝ) :
     IntegrableOn (fun _ : ℝ => z) (Ioo (0 : ℝ) 1) volume := by
   refine integrableOn_const (by rw [Real.volume_Ioo]; exact ENNReal.ofReal_ne_top) ?_
@@ -181,8 +193,6 @@ private lemma integrable_const_Ioc_t_one {t : ℝ} (z : ℝ) :
     IntegrableOn (fun _ : ℝ => z) (Ioc t 1) volume := by
   refine integrableOn_const (by rw [Real.volume_Ioc]; exact ENNReal.ofReal_ne_top) ?_
   exact enorm_ne_top
-
-/-! ### Split `Ioo 0 1` integral into two pieces -/
 
 /-- Split the integral of the hinge-quantile over `Ioo 0 1` into integrals over `Ioc 0 t` and
 `Ioc t 1` (for `0 < t ≤ 1`). -/
@@ -225,8 +235,6 @@ theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
   have h2 : IntegrableOn (quantile μ) (Ioc t 1) volume :=
     integrable_quantile_Ioc hμ_int ht0.le
   exact setIntegral_union hdisj measurableSet_Ioc h1 h2
-
-/-! ### Main lemmas: Universal bound -/
 
 /-- **Universal upper bound (Legendre):** For any `z ∈ ℝ`,
 `∫ u in Ioc t 1, quantile μ u ≤ stopLoss μ z + z · (1 - t)`. -/
@@ -289,8 +297,6 @@ theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ]
     integral_nonneg (fun _ => le_max_right _ _)
   linarith
 
-/-! ### Main lemma: Equality case -/
-
 /-- **Equality at `z = quantile μ t`:** the Legendre conjugate is attained. -/
 theorem upperIntegratedQuantile_eq_stopLoss_add [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ)
@@ -341,4 +347,137 @@ theorem upperIntegratedQuantile_eq_stopLoss_add [IsProbabilityMeasure μ]
 
 end MeasureTheory.Measure
 
+end
+end
+
+section
+noncomputable section
+
+open MeasureTheory Set
+
+namespace Econlib.Probability
+
+/-- The hinge/stop-loss test function `x ↦ max (x - z) 0` is convex on any set. -/
+lemma convexOn_hinge_on (a b z : ℝ) :
+    ConvexOn ℝ (Set.Icc a b) (fun x : ℝ => max (x - z) 0) := by
+  have h_univ : ConvexOn ℝ (Set.univ : Set ℝ) (fun x : ℝ => max (x - z) 0) :=
+    convexOn_hinge_right z
+  exact h_univ.subset (subset_univ _) (convex_Icc a b)
+
+/-- The hinge test function is continuous. -/
+lemma continuous_hinge (z : ℝ) : Continuous (fun x : ℝ => max (x - z) 0) :=
+  (continuous_id.sub continuous_const).max continuous_const
+
+/-- **Stop-loss monotonicity under convex order.** If `μ ≼cx[a,b] ν`, then the stop-loss function
+of `μ` is pointwise bounded by the stop-loss function of `ν`. -/
+lemma stopLoss_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
+    (h : ConvexOrderOnIcc a b μ ν) (z : ℝ) :
+    μ.toMeasure.stopLoss z ≤ ν.toMeasure.stopLoss z := by
+  -- `stopLoss d z = d.expect (fun x => max (x - z) 0)`; apply `h.convex_expect_le`.
+  have hconv : ConvexOn ℝ (Set.Icc a b) (fun x : ℝ => max (x - z) 0) :=
+    convexOn_hinge_on a b z
+  have hcont : ContinuousOn (fun x : ℝ => max (x - z) 0) (Set.Icc a b) :=
+    (continuous_hinge z).continuousOn
+  have hexpect := h.convex_expect_le _ hconv hcont
+  exact hexpect
+
+/-- **Tail bound under convex order.** If `μ ≼cx[a,b] ν`, then `(r - s) · μ[r, ∞) ≤ stopLoss ν s`
+for every hinge point `s` and threshold `r`. Optimizing over `s` gives a tight tail bound on the
+lower law in terms of the upper law's stop-loss transform. -/
+lemma mul_measureReal_Ici_le_stopLoss_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
+    (h : ConvexOrderOnIcc a b μ ν) (s r : ℝ) :
+    (r - s) * μ.toMeasure.real (Ici r) ≤ ν.toMeasure.stopLoss s := by
+  have hμ_int : Integrable (fun x : ℝ => x) μ.toMeasure :=
+    ProbDist.integrable_id_of_supportsOn_Icc h.support_left
+  exact le_trans (Measure.mul_measureReal_Ici_le_stopLoss hμ_int s r)
+    (stopLoss_le_of_convexOrderOnIcc h s)
+
+/-- **Upper integrated-quantile inequality under convex order.** For compact-supported
+`μ ≼cx[a,b] ν` and `t ∈ (0, 1]`, the upper integrated quantile of `μ` is at most that of `ν`. -/
+theorem upperIntegratedQuantile_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
+    (h : ConvexOrderOnIcc a b μ ν) {t : ℝ} (ht : t ∈ Set.Ioc (0 : ℝ) 1) :
+    (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile μ.toMeasure u) ≤
+    (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile ν.toMeasure u) := by
+  obtain ⟨ht0, ht1⟩ := ht
+  -- Handle t = 1 degenerately.
+  rcases eq_or_lt_of_le ht1 with ht1_eq | ht1_lt
+  · subst ht1_eq
+    rw [Set.Ioc_self, setIntegral_empty, setIntegral_empty]
+  -- Main case: 0 < t < 1.
+  set z := MeasureTheory.Measure.quantile ν.toMeasure t with hz_def
+  -- Integrability of `id` for μ and ν from compact support on `[a, b]`.
+  have hμ_int : Integrable (fun x : ℝ => x) μ.toMeasure :=
+    ProbDist.integrable_id_of_supportsOn_Icc h.support_left
+  have hν_int : Integrable (fun x : ℝ => x) ν.toMeasure :=
+    ProbDist.integrable_id_of_supportsOn_Icc h.support_right
+  have ht_Icc : t ∈ Set.Icc (0 : ℝ) 1 := ⟨ht0.le, ht1⟩
+  have ht_Ioo : t ∈ Set.Ioo (0 : ℝ) 1 := ⟨ht0, ht1_lt⟩
+  -- Step 1: universal bound for μ at z.
+  have h_step1 : (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile μ.toMeasure u) ≤
+      μ.toMeasure.stopLoss z + z * (1 - t) :=
+    MeasureTheory.Measure.upperIntegratedQuantile_le_stopLoss_add hμ_int ht_Icc z
+  -- Step 2: stop-loss monotonicity.
+  have h_step2 : μ.toMeasure.stopLoss z ≤ ν.toMeasure.stopLoss z :=
+    stopLoss_le_of_convexOrderOnIcc h z
+  -- Step 3: equality for ν at z = quantile ν.toMeasure t.
+  have h_step3 : ν.toMeasure.stopLoss z + z * (1 - t) =
+      ∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile ν.toMeasure u :=
+    (MeasureTheory.Measure.upperIntegratedQuantile_eq_stopLoss_add hν_int ht_Ioo).symm
+  -- Chain.
+  linarith
+
+/-- **Lower integrated-quantile inequality under convex order.** For compact-supported
+`μ ≼cx[a,b] ν` and `t ∈ (0, 1]`, the lower integrated quantile of `ν` is at most that of `μ`. -/
+theorem lowerIntegratedQuantile_ge_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
+    (h : ConvexOrderOnIcc a b μ ν) {t : ℝ} (ht : t ∈ Set.Ioc (0 : ℝ) 1) :
+    (∫ u in Set.Ioc 0 t, MeasureTheory.Measure.quantile ν.toMeasure u) ≤
+    (∫ u in Set.Ioc 0 t, MeasureTheory.Measure.quantile μ.toMeasure u) := by
+  obtain ⟨ht0, ht1⟩ := ht
+  -- Integrability of `id` for μ and ν from compact support on `[a, b]`.
+  have hμ_int : Integrable (fun x : ℝ => x) μ.toMeasure :=
+    ProbDist.integrable_id_of_supportsOn_Icc h.support_left
+  have hν_int : Integrable (fun x : ℝ => x) ν.toMeasure :=
+    ProbDist.integrable_id_of_supportsOn_Icc h.support_right
+  -- Step: ∫ Ioo 0 1, q_μ = μ.expect id (via pushforward), similarly for ν. Then mean_eq gives
+  -- ∫ Ioo 0 1, q_μ = ∫ Ioo 0 1, q_ν.
+  -- Split each into Ioc 0 t + Ioc t 1 and use upper inequality on Ioc t 1.
+  have h_mean_eq : μ.expect id = ν.expect id := h.mean_eq
+  -- Use integral_eq_integral_quantile to compute expect id as ∫ Ioo 0 1, q.
+  -- `expect id` equals the integrated quantile over `Ioo 0 1` (pushforward to the unit interval).
+  have h_pushforward : ∀ d : ProbDist ℝ, d.expect id =
+      ∫ u in Set.Ioo (0 : ℝ) 1, MeasureTheory.Measure.quantile d.toMeasure u := fun d => by
+    unfold ProbDist.expect
+    exact MeasureTheory.Measure.integral_eq_integral_quantile (fun x => x)
+      aestronglyMeasurable_id
+  have h_μ_pushforward := h_pushforward μ
+  have h_ν_pushforward := h_pushforward ν
+  -- Split the integral: ∫ Ioo 0 1 = ∫ Ioc 0 t + ∫ Ioc t 1.
+  have h_split_μ : (∫ u in Set.Ioo (0 : ℝ) 1,
+        MeasureTheory.Measure.quantile μ.toMeasure u) =
+      (∫ u in Set.Ioc (0 : ℝ) t, MeasureTheory.Measure.quantile μ.toMeasure u) +
+      (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile μ.toMeasure u) :=
+    MeasureTheory.Measure.integral_quantile_Ioo_split hμ_int ht0 ht1
+  have h_split_ν : (∫ u in Set.Ioo (0 : ℝ) 1,
+        MeasureTheory.Measure.quantile ν.toMeasure u) =
+      (∫ u in Set.Ioc (0 : ℝ) t, MeasureTheory.Measure.quantile ν.toMeasure u) +
+      (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile ν.toMeasure u) :=
+    MeasureTheory.Measure.integral_quantile_Ioo_split hν_int ht0 ht1
+  -- ∫ Ioo q_μ = ∫ Ioo q_ν.
+  have h_total : (∫ u in Set.Ioo (0 : ℝ) 1,
+        MeasureTheory.Measure.quantile μ.toMeasure u) =
+      (∫ u in Set.Ioo (0 : ℝ) 1, MeasureTheory.Measure.quantile ν.toMeasure u) := by
+    rw [← h_μ_pushforward, ← h_ν_pushforward, h_mean_eq]
+  -- Upper inequality on Ioc t 1.
+  have h_upper : (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile μ.toMeasure u) ≤
+      (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile ν.toMeasure u) :=
+    upperIntegratedQuantile_le_of_convexOrderOnIcc h ⟨ht0, ht1⟩
+  -- Combine: ∫ Ioc 0 t, q_μ = (∫ Ioo q_μ) - ∫ Ioc t 1, q_μ
+  --                       = (∫ Ioo q_ν) - ∫ Ioc t 1, q_μ
+  --                       ≥ (∫ Ioo q_ν) - ∫ Ioc t 1, q_ν
+  --                       = ∫ Ioc 0 t, q_ν.
+  linarith
+
+end Econlib.Probability
+
+end
 end

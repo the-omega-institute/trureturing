@@ -1,45 +1,82 @@
+/- GID: D5/S3/Analytic/Probability/FiniteMajorization
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Probability/FiniteMajorization
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: FiniteMajorization for compact scalar martingale transport. -/
 /-
 Copyright (c) 2026 Daniel Lyng. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
+Released under Apache 2.0, retained in docs/reports/licenses/econlib-strassen/LICENSE.txt.
 Authors: Daniel Lyng
+Ported from danlyng/Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f.
+Modified for the host probability-measure API, native conditional expectation,
+existing library suppliers, and a construction-oriented module organization.
 -/
-module
+import Mathlib.Algebra.Order.Rearrangement
+import Mathlib.Analysis.Convex.Birkhoff
+import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Data.Fin.Tuple.Sort
+import Mathlib.Data.Real.Hom
+import Mathlib.Data.Real.StarOrdered
 
-public import D5.S3.Analytic.Probability.StrassenSource.Econlib.Math.Analysis.HingeConvex
-public import Mathlib.Algebra.Order.Rearrangement
-public import Mathlib.Analysis.Convex.Birkhoff
-public import Mathlib.Analysis.Convex.Deriv
-public import Mathlib.Data.Fin.Tuple.Sort
-public import Mathlib.Data.Real.Hom
 
-/-!
-# Hardy–Littlewood–Pólya Majorization Theorem
+open Set Filter Topology
 
-Classical discrete majorization: If `x, y : Fin n → ℝ` satisfy `∑ x = ∑ y` and `∑ φ(x) ≤ ∑ φ(y)`
-for every convex `φ : ℝ → ℝ`, then there exists a doubly stochastic matrix `D` with `D *ᵥ y = x`.
+section
+open Set
 
-This matrix-level statement is formulated in the real linear space `Fin n → ℝ` and is independent
-of any probability-law representation.
+lemma convexOn_hinge_right (a : ℝ) :
+    ConvexOn ℝ Set.univ (fun z : ℝ => max (z - a) 0) := by
+  refine ⟨convex_univ, ?_⟩
+  intro x hx y hy u v hu hv huv
+  change max (u * x + v * y - a) 0 ≤
+    u * max (x - a) 0 + v * max (y - a) 0
+  refine max_le ?_ ?_
+  · calc
+      u * x + v * y - a = u * (x - a) + v * (y - a) := by
+        have ha : u * a + v * a = a := by
+          calc
+            u * a + v * a = (u + v) * a := by ring
+            _ = a := by rw [huv, one_mul]
+        calc
+          u * x + v * y - a = u * x + v * y - (u * a + v * a) := by rw [ha]
+          _ = u * (x - a) + v * (y - a) := by ring
+      _ ≤ u * max (x - a) 0 + v * max (y - a) 0 := by
+        exact add_le_add
+          (mul_le_mul_of_nonneg_left (le_max_left _ _) hu)
+          (mul_le_mul_of_nonneg_left (le_max_left _ _) hv)
+  · exact add_nonneg
+      (mul_nonneg hu (le_max_right _ _))
+      (mul_nonneg hv (le_max_right _ _))
 
-## Main statements
+lemma convexOn_hinge_left (a : ℝ) :
+    ConvexOn ℝ Set.univ (fun z : ℝ => max (a - z) 0) := by
+  refine ⟨convex_univ, ?_⟩
+  intro x hx y hy u v hu hv huv
+  change max (a - (u * x + v * y)) 0 ≤
+    u * max (a - x) 0 + v * max (a - y) 0
+  refine max_le ?_ ?_
+  · calc
+      a - (u * x + v * y) = u * (a - x) + v * (a - y) := by
+        have ha : u * a + v * a = a := by
+          calc
+            u * a + v * a = (u + v) * a := by ring
+            _ = a := by rw [huv, one_mul]
+        calc
+          a - (u * x + v * y) = (u * a + v * a) - (u * x + v * y) := by rw [ha]
+          _ = u * (a - x) + v * (a - y) := by ring
+      _ ≤ u * max (a - x) 0 + v * max (a - y) 0 := by
+        exact add_le_add
+          (mul_le_mul_of_nonneg_left (le_max_left _ _) hu)
+          (mul_le_mul_of_nonneg_left (le_max_left _ _) hv)
+  · exact add_nonneg
+      (mul_nonneg hu (le_max_right _ _))
+      (mul_nonneg hv (le_max_right _ _))
+end
 
-* `subset_sum_le_scale_plus_hinge` — for any subset `S` of size `k`, the `S`-sum of `v` is bounded
-  by `k · t + ∑ max (v - t) 0`.
-* `abel_pull_partial_sum` — a strict dot-product inequality between equal-sum vectors under a
-  monotone weight implies a strict prefix-sum inequality.
-* `exists_doublyStochastic_mulVec_of_convex_dominates` — the **Hardy–Littlewood–Pólya theorem**:
-  Convex domination at equal sum yields a doubly stochastic matrix carrying `y` to `x`.
-* `sum_convex_le_of_partial_sum_ge` — the converse direction: Prefix-sum domination of two monotone
-  equal-sum vectors yields `∑ φ(x) ≤ ∑ φ(y)` for every convex `φ`.
-
-## References
-
-* Hardy, G. H., J. E. Littlewood, and G. Polya. 1934. *Inequalities*. Cambridge University Press.
-* Marshall, Albert W. 2009. *Inequalities*. Springer.
--/
-
-@[expose] public section
-
+section
 open Finset Set BigOperators
 
 /-- For any subset `S ⊆ Fin n` of size `k` and threshold `t`, the `S`-sum of `v` is bounded above
@@ -662,3 +699,4 @@ theorem sum_convex_le_of_partial_sum_ge
     le_trans h_sum_tangent htangent_sum_nonpos
   rw [Finset.sum_sub_distrib] at h_final
   linarith
+end

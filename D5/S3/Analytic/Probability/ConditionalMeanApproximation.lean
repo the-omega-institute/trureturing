@@ -1,43 +1,31 @@
+/- GID: D5/S3/Analytic/Probability/ConditionalMeanApproximation
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Probability/ConditionalMeanApproximation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: ConditionalMeanApproximation for compact scalar martingale transport. -/
 /-
 Copyright (c) 2026 Daniel Lyng. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
+Released under Apache 2.0, retained in docs/reports/licenses/econlib-strassen/LICENSE.txt.
 Authors: Daniel Lyng
+Ported from danlyng/Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f.
+Modified for the host probability-measure API, native conditional expectation,
+existing library suppliers, and a construction-oriented module organization.
 -/
-module
-
-public import D5.S3.Analytic.Probability.StrassenSource.Econlib.Probability.Order.Strassen.CondMeanAtom.Properties
+import D5.S3.Analytic.Probability.ConditionalMeanAtoms
 import Mathlib.MeasureTheory.Function.Floor
 
-/-!
-# Conditional-mean atomization: Weak convergence and convex-order preservation
-
-The **conditional-mean atomization** `condMeanAtomize μ (n+1)` of a compactly-supported probability
-law converges weakly to `μ` as `n → ∞`, and the atomization preserves the **convex order**: If
-`μ ≼cx[a,b] ν`, then the atomizations at any resolution are in the discrete convex order.
-
-## Main statements
-
-* `DiscreteLaw.condMeanAtomize_tendsto` — weak convergence of the atomization to `μ`.
-* `DiscreteLaw.condMeanAtomize_convexOrder` — preservation of the convex order under atomization.
-
-## References
-
-* Strassen, V. 1965. “The Existence of Probability Measures with Given Marginals.” *The Annals of
-  Mathematical Statistics* 36 (2): 423–39. [https://doi.org/10.1214/aoms/1177700153](https://doi.org/10.1214/aoms/1177700153).
-
-## Tags
-
-quantile, conditional mean, atomization, weak convergence, convex order
--/
 
 open MeasureTheory Set Filter Topology
 
-@[expose] public noncomputable section
+section
+open MeasureTheory Set Filter Topology
+
+noncomputable section
 
 namespace Econlib.Probability
 namespace DiscreteLaw
-
-/-! ### Weak convergence of conditional-mean atomization -/
 
 /-- Bin index function: `binIndex n t = ⌊n·t⌋₊`. For `t ∈ Ioo 0 1` and `n ≥ 1`, this sits in
 `[0, n-1]`, so it represents a bin in `Fin n`. -/
@@ -222,8 +210,6 @@ private lemma integral_toProbDist_condMeanAtomize {μ : ProbDist ℝ} {φ : ℝ 
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   exact h_sum i
-
-/-! ### Pointwise convergence of the conditional-mean step function -/
 
 /-- For `t ∈ Ioo 0 1` and `n ≥ 1`, the bin containing `t` (namely `Ico (k/n) ((k+1)/n)` where
 `k = binIndex n t`) has endpoints within `1/n` of `t`, both endpoints in `[0, 1]`. -/
@@ -531,8 +517,6 @@ private lemma condStepFun_tendsto_ae
   intro h_cts
   exact h_no_conv (tendsto_condStepFun_of_continuousWithinAt h hφ h_t_in h_cts)
 
-/-! ### Main theorem -/
-
 /-- **Weak convergence of conditional-mean atomization.** The `condMeanAtomize` of a
 compactly-supported probability law converges weakly to the law itself. -/
 theorem condMeanAtomize_tendsto {a b : ℝ} {μ : ProbDist ℝ} (h : μ.supportsOn (Icc a b)) :
@@ -578,8 +562,6 @@ theorem condMeanAtomize_tendsto {a b : ℝ} {μ : ProbDist ℝ} (h : μ.supports
       simp only [Real.norm_eq_abs]
       exact abs_condStepFun_le hM (Nat.succ_pos n) t)
   · exact condStepFun_tendsto_ae h hφ_cts
-
-/-! ### Convex-order preservation -/
 
 /-- **Convex order preservation under conditional-mean atomization.** If `μ ≼cx[a,b] ν`, the
 conditional-mean atomizations at any resolution satisfy the discrete convex order. -/
@@ -669,4 +651,48 @@ theorem condMeanAtomize_convexOrder {a b : ℝ} {μ ν : ProbDist ℝ}
 end DiscreteLaw
 end Econlib.Probability
 
+end
+end
+
+section
+open MeasureTheory Set Filter Topology
+
+namespace Econlib.Probability
+
+/-- **Discrete approximation in convex order.** A pair `μ ≼cx[a,b] ν` of real-valued laws supported
+on `[a, b]` admits a sequence of finitely-supported pairs `(pₙ, qₙ)` in convex order, with weak
+convergence of the embedded laws to `μ` and `ν` respectively. -/
+theorem exists_discrete_approximation {a b : ℝ} {μ ν : ProbDist ℝ}
+    (h : ConvexOrderOnIcc a b μ ν) :
+    ∃ p q : ℕ → DiscreteLaw,
+      (∀ n, DiscreteLaw.ConvexOrder (p n) (q n)) ∧
+      (∀ n, 0 < (p n).n) ∧
+      (∀ n, (p n).n = (q n).n) ∧
+      (∀ n i, (p n).weight i = (1 : ℝ) / (p n).n) ∧
+      (∀ n j, (q n).weight j = (1 : ℝ) / (q n).n) ∧
+      (∀ n i, (p n).atom i ∈ Icc a b) ∧
+      (∀ n j, (q n).atom j ∈ Icc a b) ∧
+      Tendsto (fun n => (p n).toProbDist : ℕ → ProbabilityMeasure ℝ) atTop (𝓝 μ) ∧
+      Tendsto (fun n => (q n).toProbDist : ℕ → ProbabilityMeasure ℝ) atTop (𝓝 ν) := by
+  refine ⟨fun n => DiscreteLaw.condMeanAtomize μ (n + 1) (Nat.succ_pos n),
+          fun n => DiscreteLaw.condMeanAtomize ν (n + 1) (Nat.succ_pos n),
+          ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact fun n =>
+      DiscreteLaw.condMeanAtomize_convexOrder h (n + 1) (Nat.succ_pos n)
+  · intro n
+    simp [DiscreteLaw.condMeanAtomize_n]
+  · intro n
+    simp [DiscreteLaw.condMeanAtomize_n]
+  · intro n i
+    rfl
+  · intro n j
+    rfl
+  · exact fun n i =>
+      DiscreteLaw.condMeanAtom_mem_Icc h.support_left (n + 1) (Nat.succ_pos n) i
+  · exact fun n j =>
+      DiscreteLaw.condMeanAtom_mem_Icc h.support_right (n + 1) (Nat.succ_pos n) j
+  · exact DiscreteLaw.condMeanAtomize_tendsto h.support_left
+  · exact DiscreteLaw.condMeanAtomize_tendsto h.support_right
+
+end Econlib.Probability
 end

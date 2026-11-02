@@ -1,41 +1,66 @@
+/- GID: D5/S3/Analytic/Probability/ConditionalMeanAtoms
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Probability/ConditionalMeanAtoms
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: ConditionalMeanAtoms for compact scalar martingale transport. -/
 /-
 Copyright (c) 2026 Daniel Lyng. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
+Released under Apache 2.0, retained in docs/reports/licenses/econlib-strassen/LICENSE.txt.
 Authors: Daniel Lyng
+Ported from danlyng/Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f.
+Modified for the host probability-measure API, native conditional expectation,
+existing library suppliers, and a construction-oriented module organization.
 -/
-module
+import D5.S3.Analytic.Probability.CompactConvexOrder
+import D5.S3.Analytic.Probability.CompactQuantile
+import D5.S3.Analytic.Probability.FiniteMartingaleCoupling
+import Mathlib.MeasureTheory.Function.Floor
 
-public import D5.S3.Analytic.Probability.StrassenSource.Econlib.Probability.Order.Strassen.CondMeanAtom.Defs
-
-/-!
-# Conditional-mean atomization: Bin, quantile, monotonicity, and mean-preservation lemmas
-
-Supporting lemmas for the **conditional-mean atomization** `condMeanAtomize`: Bin geometry,
-membership and integrability of the quantile function on each bin, monotonicity of the atoms in the
-bin index, and mean preservation.
-
-## Main statements
-
-* `DiscreteLaw.condMeanAtom_mem_Icc` — each conditional-mean atom lies in any interval supporting
-  `μ`.
-* `DiscreteLaw.condMeanAtom_monotone` — conditional-mean atoms are monotone in the bin index.
-* `DiscreteLaw.condMeanAtomize_mean_eq` — the atomization preserves the mean.
-* `DiscreteLaw.condMeanAtomize_partial_sum_eq` — the partial sum of atoms up to index `K` equals
-  `n · ∫_{(0, (K+1)/n]} q_μ`.
-
-## Tags
-
-quantile, conditional mean, atomization, monotone, mean-preserving
--/
 
 open MeasureTheory Set Filter Topology
 
-@[expose] public noncomputable section
+section
+open MeasureTheory Set Filter Topology
+
+noncomputable section
 
 namespace Econlib.Probability
 namespace DiscreteLaw
 
-/-! ### Bin endpoints -/
+/-- The `k`-th conditional-mean atom of `μ`: The average of `quantile μ` over the bin
+`(k/n, (k+1)/n]`. -/
+noncomputable def condMeanAtom (μ : ProbDist ℝ) (n : ℕ) (_hn : 0 < n) (k : Fin n) : ℝ :=
+  (n : ℝ) * ∫ u in Set.Ioc ((k : ℝ) / n) (((k : ℝ) + 1) / n),
+    MeasureTheory.Measure.quantile μ.toMeasure u
+
+/-- Uniform discrete law with atoms at conditional means of each equal bin. -/
+noncomputable def condMeanAtomize (μ : ProbDist ℝ) (n : ℕ) (hn : 0 < n) : DiscreteLaw :=
+  DiscreteLaw.uniform n hn (fun k => DiscreteLaw.condMeanAtom μ n hn k)
+
+@[simp] lemma condMeanAtomize_n {μ : ProbDist ℝ} {n : ℕ} {hn : 0 < n} :
+    (condMeanAtomize μ n hn).n = n := rfl
+
+@[simp] lemma condMeanAtomize_atom {μ : ProbDist ℝ} {n : ℕ} {hn : 0 < n} {k : Fin n} :
+    (condMeanAtomize μ n hn).atom k = condMeanAtom μ n hn k := rfl
+
+@[simp] lemma condMeanAtomize_weight {μ : ProbDist ℝ} {n : ℕ} {hn : 0 < n} {k : Fin n} :
+    (condMeanAtomize μ n hn).weight k = (1 : ℝ) / n := rfl
+
+end DiscreteLaw
+end Econlib.Probability
+
+end
+end
+
+section
+open MeasureTheory Set Filter Topology
+
+noncomputable section
+
+namespace Econlib.Probability
+namespace DiscreteLaw
 
 /-- The bin endpoints `k/n, (k+1)/n` sit in `[0, 1]` with `(k+1)/n ≤ 1`. -/
 private lemma bin_endpoints {n : ℕ} (hn : 0 < n) (k : Fin n) :
@@ -87,8 +112,6 @@ private lemma bins_pairwise_disjoint_Ioc {n : ℕ} (hn : 0 < n) :
     refine Set.disjoint_iff.mpr fun t ht => ?_
     simp only [Set.mem_inter_iff, Set.mem_Ioc] at ht
     linarith [ht.2.2, ht.1.1]
-
-/-! ### Quantile membership -/
 
 /-- A `μ`-quantile at `u ∈ (0, 1)` lies in any closed interval supporting `μ`. -/
 lemma quantile_mem_Icc_of_supportsOn_Icc {a b : ℝ} {μ : ProbDist ℝ}
@@ -268,8 +291,6 @@ lemma condMeanAtom_mem_Icc {a b : ℝ} {μ : ProbDist ℝ}
     have hsimp : (n : ℝ) * (b * (1 / n)) = b := by field_simp
     linarith
 
-/-! ### Monotonicity -/
-
 /-- Conditional-mean atoms are monotone non-decreasing in the bin index. Requires boundedness of
 `μ`'s support for integrability on each bin. -/
 lemma condMeanAtom_monotone {a b : ℝ} {μ : ProbDist ℝ}
@@ -429,8 +450,6 @@ lemma condMeanAtom_monotone {a b : ℝ} {μ : ProbDist ℝ}
   -- Chain: f i ≤ q_μ(r) ≤ q_μ(s) ≤ f j.
   exact h_atom_i_le.trans (hq_rs.trans h_atom_j_ge)
 
-/-! ### Mean preservation -/
-
 /-- The mean of `condMeanAtomize μ n` equals the mean of `μ`, whenever `id` is integrable against
 `μ` (e.g., `μ` supported on a bounded interval). -/
 lemma condMeanAtomize_mean_eq {μ : ProbDist ℝ}
@@ -552,8 +571,6 @@ lemma condMeanAtomize_mean_eq {μ : ProbDist ℝ}
       simp]
   rw [← MeasureTheory.integral_biUnion_finset (t := Finset.univ) h_meas h_disj h_int_Ioc]
 
-/-! ### Partial-sum identity -/
-
 /-- Partial sum of conditional-mean atoms up to index `K` equals `n · ∫_{(0, (K+1)/n]} q_μ`. This
 requires boundedness of `μ`'s support so that the quantile is integrable on each bin. -/
 lemma condMeanAtomize_partial_sum_eq {a b : ℝ} {μ : ProbDist ℝ}
@@ -644,4 +661,5 @@ lemma condMeanAtomize_partial_sum_eq {a b : ℝ} {μ : ProbDist ℝ}
 end DiscreteLaw
 end Econlib.Probability
 
+end
 end
