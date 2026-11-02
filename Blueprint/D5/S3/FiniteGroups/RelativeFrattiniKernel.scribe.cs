@@ -16,6 +16,14 @@ internal sealed class RelativeFrattiniKernelDocument : IScribeDocumentDefinition
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+    private static Formula Instance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Comma, Sp, body);
+    private static Formula BaseGroup(Formula body) =>
+        All("Q", F.Id("Type"), Instance(Call("Group", Q), body));
+    private static Formula SubgroupContext(Formula body) =>
+        BaseGroup(All("P", Call("Subgroup", Q), body));
+    private static Formula NormalSubgroupContext(Formula body) =>
+        SubgroupContext(Instance(Call("Normal", P), body));
     private static Formula Eq(Formula x, Formula y) =>
         new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Hypotheses(Formula body) =>
@@ -37,32 +45,32 @@ internal sealed class RelativeFrattiniKernelDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("preserving-automorphisms"),
                 DeclarationHandle.Create(Owner + "preservingAut"),
                 H("Automorphisms preserving a specified subgroup"),
-                StatementSource.FromAuthor(Disp(Eq(A, Call("Stabilizer", Call("MulAut", Q), P)))),
+                StatementSource.FromAuthor(Disp(SubgroupContext(Eq(A, Call("Stabilizer", Call("MulAut", Q), P))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let Q be a group and P a specified subgroup. The group A consists of all automorphisms a of Q for which x belongs to P exactly when a(x) belongs to P. No characteristic-subgroup assumption is imposed on P."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("relative-frattini-subgroup"),
                 DeclarationHandle.Create(Owner + "relativeFrattini"),
                 H("The common subgroup inside the ambient group"),
-                StatementSource.FromAuthor(Disp(Eq(Fr, Call("map", Call("frattini", P), Call("subtype", P))))),
+                StatementSource.FromAuthor(Disp(SubgroupContext(Eq(Fr, Call("map", Call("frattini", P), Call("subtype", P)))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Write F for the image of Frattini(P) under the inclusion of P in Q. If P is normal in Q, then F is normal in Q, since Frattini(P) is characteristic in P. Every element of A preserves F."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("restriction-action"),
                 DeclarationHandle.Create(Owner + "restriction"),
                 H("Restriction to P"),
-                StatementSource.FromAuthor(Disp(All("a", A, All("x", P,
+                StatementSource.FromAuthor(Disp(SubgroupContext(All("a", A, All("x", P,
                     Eq(Call("apply", Call("restriction", P, F.Id("a")), F.Id("x")),
-                        Call("apply", F.Id("a"), F.Id("x"))))))),
+                        Call("apply", F.Id("a"), F.Id("x")))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Restriction is a homomorphism from A to Aut(P). Its inverse on each individual automorphism is the restriction of that automorphism's inverse."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("relative-quotient-action"),
                 DeclarationHandle.Create(Owner + "quotientAction"),
                 H("The induced action on the actual quotient"),
-                StatementSource.FromAuthor(Disp(All("a", A, All("x", Q,
+                StatementSource.FromAuthor(Disp(NormalSubgroupContext(All("a", A, All("x", Q,
                     Eq(Call("apply", Call("apply", Rho, F.Id("a")), Call("coset", F.Id("x"), Fr)),
-                        Call("coset", Call("apply", F.Id("a"), F.Id("x")), Fr)))))),
+                        Call("coset", Call("apply", F.Id("a"), F.Id("x")), Fr))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The homomorphism rho from A to Aut(Q/F) sends the coset of x to the coset of a(x). Its kernel B is exactly the group of all P-preserving automorphisms inducing the identity on Q/F."))),
                 DescribeRole.Definition),
@@ -83,16 +91,16 @@ internal sealed class RelativeFrattiniKernelDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("relative-outer-group"),
                 DeclarationHandle.Create(Owner + "RelativeOuter"),
                 H("The actual relative outer automorphism group"),
-                StatementSource.FromAuthor(Disp(Eq(OutP, Call("Quotient", A, Call("relativeInner", P))))),
+                StatementSource.FromAuthor(Disp(NormalSubgroupContext(Eq(OutP, Call("Quotient", A, Call("relativeInner", P)))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For any group G, innerAut G is the image of conjugation G to Aut(G), and OuterAut G is Aut(G) modulo that normal subgroup. The subgroup relativeInner P is the inverse image of innerAut Q under the inclusion A into Aut(Q). Since P is normal, all inner automorphisms of Q lie in A. RelativeOuter P is therefore the group of P-preserving outer automorphisms, with its actual inner equivalence relation."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("relative-outer-action"),
                 DeclarationHandle.Create(Owner + "outerAction"),
                 H("The homomorphism on outer automorphisms"),
-                StatementSource.FromAuthor(Disp(All("a", A,
+                StatementSource.FromAuthor(Disp(NormalSubgroupContext(All("a", A,
                     Eq(Call("apply", BarRho, Call("coset", F.Id("a"), Call("relativeInner", P))),
-                        Call("coset", Call("apply", Rho, F.Id("a")), Call("innerAut", Quot)))))),
+                        Call("coset", Call("apply", Rho, F.Id("a")), Call("innerAut", Quot))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("An inner automorphism represented by q in Q induces conjugation by qF on Q/F. Consequently rho descends to a homomorphism from RelativeOuter P to OuterAut(Q/F). Both sides use the same Q, P and F as the automorphism theorem."))),
                 DescribeRole.Definition),
