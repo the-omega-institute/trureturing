@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Polynomial;
 internal sealed class HermiteAbsoluteModeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/Polynomial/HermiteAbsoluteMode.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/sheppard2025a381524");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/sheppard2025a381524");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The smallest exponent of a largest absolute physicists Hermite coefficient changes by one or minus one.",
