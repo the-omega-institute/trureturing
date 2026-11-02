@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.CylindricPartition.LiUncuGaussian
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Polynomial.Coeff
 import Mathlib.Algebra.Polynomial.BigOperators
+import Mathlib.Algebra.Polynomial.Reverse
 import Mathlib.RingTheory.Ideal.Quotient.Defs
 import Mathlib.RingTheory.Nilpotent.Basic
 import Mathlib.Tactic
@@ -383,6 +384,149 @@ private theorem low_end
     simp [show ¬ t + 1 ≤ n by omega, show ¬ t + 2 ≤ n by omega,
       show ¬ (t + 1) + (t + 2) ≤ n by omega]
 
+private theorem gaussian_shape (n k : ℕ) (hk : k ≤ n) :
+    (gauss n k).Monic ∧ (gauss n k).natDegree = k * (n - k) ∧
+      (gauss n k).reverse = gauss n k := by
+  induction n generalizing k with
+  | zero =>
+      have : k = 0 := by omega
+      subst k
+      simp [gauss, reverse]
+  | succ n ih =>
+      cases k with
+      | zero => simp [gauss, reverse]
+      | succ k =>
+          by_cases he : k = n
+          · subst k
+            simp [gauss_diagonal, reverse]
+          have hk1 : k + 1 ≤ n := by omega
+          obtain ⟨hm1, hd1, hr1⟩ := ih (k + 1) hk1
+          obtain ⟨hm2, hd2, hr2⟩ := ih k (by omega)
+          have hsub : n + 1 - (k + 1) = n - k := by omega
+          have he1 : (k + 1) * (n - k) = k + 1 + (k + 1) * (n - (k + 1)) := by
+            have : n - k = (n - (k + 1)) + 1 := by omega
+            rw [this]
+            ring
+          have he2 : (k + 1) * (n - k) = (n - k) + k * (n - k) := by ring
+          have hmon : (X ^ (n - k) * gauss n k).Monic := (monic_X_pow _).mul hm2
+          have hdeg : (X ^ (n - k) * gauss n k).natDegree = (k + 1) * (n - k) := by
+            rw [natDegree_mul (pow_ne_zero _ X_ne_zero) hm2.ne_zero,
+              natDegree_X_pow, hd2, he2]
+          have hlt : (gauss n (k + 1)).natDegree <
+              (X ^ (n - k) * gauss n k).natDegree := by
+            rw [hd1, hdeg, he1]
+            omega
+          have hrec : gauss (n + 1) (k + 1) =
+              gauss n (k + 1) + X ^ (n - k) * gauss n k := by rw [gauss]
+          have hd : (gauss (n + 1) (k + 1)).natDegree = (k + 1) * (n - k) := by
+            rw [hrec, natDegree_add_eq_right_of_natDegree_lt hlt, hdeg]
+          refine ⟨hrec ▸ hmon.add_of_right (degree_lt_degree hlt), by simpa [hsub] using hd, ?_⟩
+          change (gauss (n + 1) (k + 1)).reflect
+            (gauss (n + 1) (k + 1)).natDegree = _
+          rw [hd, hrec, reflect_add]
+          have hreflect1 : (gauss n (k + 1)).reflect ((k + 1) * (n - k)) =
+              X ^ (k + 1) * gauss n (k + 1) := by
+            rw [he1, ← one_mul (gauss n (k + 1)), reflect_mul _ _ (by simp) hd1.le]
+            rw [reflect_one, ← hd1, ← reverse, hr1]
+            simp
+          have hreflect2 : (X ^ (n - k) * gauss n k).reflect ((k + 1) * (n - k)) =
+              gauss n k := by
+            rw [he2, reflect_mul _ _ (by simp) hd2.le, reflect_monomial,
+              revAt_le (le_refl _), Nat.sub_self, pow_zero, one_mul, ← hd2, ← reverse, hr2]
+          rw [hreflect1, hreflect2]
+          exact (D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_pascal_dual n k).symm
+
+private theorem gaussian_product_shape
+    (μ : ℕ) (a b : Fin μ → ℕ) (hab : ∀ i, a i ≤ b i) :
+    (∏ i, gauss (b i) (a i)).Monic ∧
+      (∏ i, gauss (b i) (a i)).natDegree = ∑ i, a i * (b i - a i) ∧
+      (∏ i, gauss (b i) (a i)).reverse = ∏ i, gauss (b i) (a i) := by
+  have hshape (i : Fin μ) := gaussian_shape (b i) (a i) (hab i)
+  have hprod (s : Finset (Fin μ)) : (∏ i ∈ s, gauss (b i) (a i)).Monic ∧
+      (∏ i ∈ s, gauss (b i) (a i)).reverse = ∏ i ∈ s, gauss (b i) (a i) := by
+    classical
+    induction s using Finset.induction_on with
+    | empty => simp [reverse]
+    | @insert i s hi ih =>
+        rw [Finset.prod_insert hi, reverse_mul_of_domain, (hshape i).2.2, ih.2]
+        exact ⟨(hshape i).1.mul ih.1, rfl⟩
+  refine ⟨(hprod Finset.univ).1, ?_, (hprod Finset.univ).2⟩
+  rw [natDegree_prod_of_monic _ _ (fun i _ => (hshape i).1)]
+  exact Finset.sum_congr rfl (fun i _ => (hshape i).2.1)
+
+private theorem reversed_degree_gap
+    (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
+    (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
+    (∑ i, a (Fin.rev i) * (b i - a (Fin.rev i))) + 2 ≤
+      ∑ i, a i * (b i - a i) := by
+  let d := ∑ i, a i * (b i - a i)
+  let e := ∑ i, a (Fin.rev i) * (b i - a (Fin.rev i))
+  let u := ∑ i, (a i : ℤ) * (b i : ℤ)
+  let v := ∑ i, (a (Fin.rev i) : ℤ) * (b i : ℤ)
+  have hd : (d : ℤ) = u - ∑ i, (a i : ℤ) * (a i : ℤ) := by
+    dsimp [d, u]
+    rw [← Finset.sum_sub_distrib]
+    push_cast
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [Nat.cast_sub (hcross i i)]
+    ring
+  have he : (e : ℤ) = v - ∑ i, (a i : ℤ) * (a i : ℤ) := by
+    have hperm : (∑ i, (a (Fin.rev i) : ℤ) * (a (Fin.rev i) : ℤ)) =
+        ∑ i, (a i : ℤ) * (a i : ℤ) :=
+      Equiv.sum_comp Fin.revPerm (fun i => (a i : ℤ) * (a i : ℤ))
+    rw [← hperm]
+    dsimp [e, v]
+    rw [← Finset.sum_sub_distrib]
+    push_cast
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [Nat.cast_sub (hcross (Fin.rev i) i)]
+    ring
+  let f := fun i : Fin μ => ((a i : ℤ) - (a (Fin.rev i) : ℤ)) *
+    ((b i : ℤ) - (b (Fin.rev i) : ℤ))
+  have hnonneg (i : Fin μ) : 0 ≤ f i := by
+    dsimp [f]
+    rcases le_total i (Fin.rev i) with hi | hi
+    · have hai : (a i : ℤ) ≤ a (Fin.rev i) := by exact_mod_cast ha.monotone hi
+      have hbi : (b i : ℤ) ≤ b (Fin.rev i) := by exact_mod_cast hb.monotone hi
+      exact mul_nonneg_of_nonpos_of_nonpos (by omega) (by omega)
+    · have hai : (a (Fin.rev i) : ℤ) ≤ a i := by exact_mod_cast ha.monotone hi
+      have hbi : (b (Fin.rev i) : ℤ) ≤ b i := by exact_mod_cast hb.monotone hi
+      exact mul_nonneg (by omega) (by omega)
+  have hsum : ∑ i, f i = 2 * (u - v) := by
+    have hperm : (∑ i, (a (Fin.rev i) : ℤ) * (b (Fin.rev i) : ℤ)) = u :=
+      Equiv.sum_comp Fin.revPerm (fun i => (a i : ℤ) * (b i : ℤ))
+    have hswap : (∑ i, (a i : ℤ) * (b (Fin.rev i) : ℤ)) = v := by
+      symm
+      simpa [v] using Equiv.sum_comp Fin.revPerm
+        (fun i => (a i : ℤ) * (b (Fin.rev i) : ℤ))
+    dsimp [f]
+    simp_rw [sub_mul, mul_sub]
+    simp only [Finset.sum_sub_distrib, hswap, hperm]
+    dsimp [u, v]
+    ring
+  let z : Fin μ := ⟨0, by omega⟩
+  let j : Fin μ := ⟨1, by omega⟩
+  let k : Fin μ := ⟨μ - 1, by omega⟩
+  have hazj : (a z : ℤ) < a j := by exact_mod_cast ha (show z < j from Nat.zero_lt_one)
+  have hajk : (a j : ℤ) < a k := by
+    exact_mod_cast ha (show j < k by change 1 < μ - 1; omega)
+  have hbzj : (b z : ℤ) < b j := by exact_mod_cast hb (show z < j from Nat.zero_lt_one)
+  have hbjk : (b j : ℤ) < b k := by
+    exact_mod_cast hb (show j < k by change 1 < μ - 1; omega)
+  have hzrev : Fin.rev z = k := by ext; simp [z, k]
+  have hfour : 4 ≤ f z := by
+    dsimp [f]
+    rw [hzrev]
+    have ham : (a z : ℤ) - a k ≤ -2 := by omega
+    have hbm : (b z : ℤ) - b k ≤ -2 := by omega
+    nlinarith [mul_nonneg (show 0 ≤ (a k : ℤ) - a z - 2 by omega)
+      (show 0 ≤ (b k : ℤ) - b z - 2 by omega)]
+  have hle : f z ≤ ∑ i, f i := Finset.single_le_sum (fun i _ => hnonneg i) (Finset.mem_univ z)
+  have hde : (e : ℤ) + 2 ≤ d := by omega
+  exact_mod_cast hde
+
 private theorem high_end
     (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
     (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
@@ -391,7 +535,50 @@ private theorem high_end
     let c := if 0 < a ⟨0, by omega⟩ then μ else μ - 1
     p.natDegree = d ∧ p.coeff d = 1 ∧ p.coeff (d - 1) = c ∧
       d ≥ b ⟨0, by omega⟩ - a ⟨μ - 1, by omega⟩ + 4 := by
-  sorry
+  let z : Fin μ := ⟨0, by omega⟩
+  let j : Fin μ := ⟨1, by omega⟩
+  let k : Fin μ := ⟨μ - 1, by omega⟩
+  let t := b z - a k
+  let d := ∑ i, a i * (b i - a i)
+  let a0 := ∏ i, gauss (b i) (a i)
+  let b0 := ∏ i, gauss (b i) (a (Fin.rev i))
+  have hi := index_bounds μ a b hμ ha hb hcross
+  have has := gaussian_product_shape μ a b (fun i => hcross i i)
+  change a0.Monic ∧ a0.natDegree = d ∧ a0.reverse = a0 at has
+  have hbs := gaussian_product_shape μ (fun i => a (Fin.rev i)) b
+    (fun i => hcross (Fin.rev i) i)
+  have hdegap := reversed_degree_gap μ a b hμ ha hb hcross
+  have hblt : b0.natDegree + 2 ≤ d := by
+    rw [hbs.2.1]
+    exact hdegap
+  have hazj := ha (show z < j from Nat.zero_lt_one)
+  have hajk := ha (show j < k by change 1 < μ - 1; omega)
+  have hak : 2 ≤ a k := by omega
+  have hdk : t + 2 ≤ b k - a k := hi.1 k
+  have hkd : a k * (b k - a k) ≤ d :=
+    Finset.single_le_sum (f := fun i : Fin μ => a i * (b i - a i))
+      (fun _ _ => Nat.zero_le _) (Finset.mem_univ k)
+  have hbound : t + 4 ≤ d := by nlinarith
+  have halow := gaussian_product_low μ a b (by omega) ha (fun i => by
+    have := hi.1 i
+    have := hcross i i
+    omega)
+  have htop : a0.coeff d = 1 := by
+    rw [← has.2.1]
+    exact has.1.coeff_natDegree
+  have hnext : a0.coeff (d - 1) =
+      (if 0 < a z then μ else μ - 1 : ℕ) := by
+    have hrev := congrArg (fun f : ℤ[X] => f.coeff 1) has.2.2
+    rw [coeff_reverse, has.2.1, revAt_le (by omega)] at hrev
+    exact hrev.trans halow.2
+  have hbtop : b0.coeff d = 0 := coeff_eq_zero_of_natDegree_lt (by omega)
+  have hbnext : b0.coeff (d - 1) = 0 := coeff_eq_zero_of_natDegree_lt (by omega)
+  change (a0 - b0).natDegree = d ∧ (a0 - b0).coeff d = 1 ∧
+    (a0 - b0).coeff (d - 1) = _ ∧ d ≥ t + 4
+  refine ⟨?_, ?_, ?_, hbound⟩
+  · rw [natDegree_sub_eq_left_of_natDegree_lt (by rw [has.2.1]; omega), has.2.1]
+  · rw [coeff_sub, htop, hbtop, sub_zero]
+  · rw [coeff_sub, hnext, hbnext, sub_zero]
 
 private theorem palindrome_contradiction
     (p : ℤ[X]) (r d c : ℕ)
