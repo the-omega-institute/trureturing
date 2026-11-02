@@ -46,6 +46,10 @@ $$\neg \left(\forall \left(n: \mathbb{N}\right), \left(\forall \left(s: \operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Masking/HyperdiskRegularSubsetCover.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ding-hu-2020-hyperdisk-regular-subset-finite-cover` (refuted) by `D5/S3/Quantum/Masking/HyperdiskRegularSubsetCover.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ding-hu-2020-hyperdisk-regular-subset-finite-cover","declaration_gid":"D5/S3/Quantum/Masking/HyperdiskRegularSubsetCover.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ding, Feng; Hu, Xueyuan (2020). *Masking quantum information on hyperdisks*. DOI: [10.1103/PhysRevA.102.042404](https://doi.org/10.1103/PhysRevA.102.042404). URL: <https://arxiv.org/abs/1909.11256v3>.

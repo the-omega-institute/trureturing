@@ -149,7 +149,10 @@ internal sealed class HyperdiskRegularSubsetCoverDocument : IScribeDocumentDefin
                         + "one-ray conclusion makes xₐ a complex scalar multiple of xᵦ, so a = b. "
                         + "This gives an injection from the natural numbers into Fin k, which would "
                         + "make the natural numbers finite. Their infinitude is the contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ding-hu-2020-hyperdisk-regular-subset-finite-cover"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula HyperdiskDefinition()
     {
