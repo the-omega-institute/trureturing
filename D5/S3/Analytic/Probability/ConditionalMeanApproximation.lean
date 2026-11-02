@@ -574,7 +574,7 @@ theorem condMeanAtomize_convexOrder {a b : ℝ} {μ ν : ProbDist ℝ}
   have hn_pos_R : (0 : ℝ) < n := by exact_mod_cast hn
   have hn_ne : (n : ℝ) ≠ 0 := hn_pos_R.ne'
   -- Reduce weighted sum to unweighted sum by factoring out the uniform weight 1/n.
-  simp only [condMeanAtomize_weight, condMeanAtomize_n, condMeanAtomize_atom]
+  simp only [condMeanAtomize, uniform]
   rw [← Finset.mul_sum, ← Finset.mul_sum]
   -- Use monotonicity of scaling by 1/n ≥ 0.
   have hn_inv_nonneg : (0 : ℝ) ≤ 1 / n := by positivity
@@ -680,9 +680,9 @@ theorem exists_discrete_approximation {a b : ℝ} {μ ν : ProbDist ℝ}
   · exact fun n =>
       DiscreteLaw.condMeanAtomize_convexOrder h (n + 1) (Nat.succ_pos n)
   · intro n
-    simp [DiscreteLaw.condMeanAtomize_n]
+    simp [DiscreteLaw.condMeanAtomize, DiscreteLaw.uniform]
   · intro n
-    simp [DiscreteLaw.condMeanAtomize_n]
+    simp [DiscreteLaw.condMeanAtomize, DiscreteLaw.uniform]
   · intro n i
     rfl
   · intro n j

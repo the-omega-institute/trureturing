@@ -13,7 +13,7 @@ Ported from danlyng/Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f.
 Modified for the host probability-measure API, native conditional expectation,
 existing library suppliers, and a construction-oriented module organization.
 -/
-import D5.S3.Analytic.Probability.FiniteMajorization
+import D5.S3.Analytic.Convexity.FiniteMajorization
 import D5.S3.Geometry.ProbabilityTransport.CostCoupling
 import D5.S3.Analytic.Probability.CompactConvexOrder
 import Mathlib.MeasureTheory.Integral.Bochner.Set
@@ -29,7 +29,7 @@ open MeasureTheory
 namespace MeasureTheory
 /-- Pushforward by a measurable map commutes with a finite sum of measures:
 `(∑ i ∈ s, m i).map f = ∑ i ∈ s, (m i).map f`. -/
-lemma measure_map_finset_sum {α β ι : Type*}
+private lemma measure_map_finset_sum {α β ι : Type*}
     [MeasurableSpace α] [MeasurableSpace β]
     {f : α → β} (hf : Measurable f)
     {s : Finset ι} (m : ι → Measure α) :
@@ -65,7 +65,7 @@ lemma snd_marginal {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
 
 
 /-- A coupling of laws supported on `s` and `t` is supported on `s ×ˢ t`. -/
-lemma supportsOn_prod_set {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
+private lemma supportsOn_prod_set {μ ν : ProbDist ℝ} {π : ProbDist (ℝ × ℝ)}
     (hπ : IsCoupling μ ν π) {s t : Set ℝ} (hs : MeasurableSet s) (ht : MeasurableSet t)
     (hμ : μ.supportsOn s) (hν : ν.supportsOn t) :
     π.toMeasure (s ×ˢ t) = 1 := by
@@ -151,7 +151,7 @@ lemma snd_measure (h : IsMartingaleCoupling μ ν π) :
   simpa [Measure.snd, ProbDist.map_toMeasure] using heq
 
 /-- Integrability of `id` against the first marginal, deduced from `integrable_fst`. -/
-lemma integrable_id_fst (h : IsMartingaleCoupling μ ν π) :
+private lemma integrable_id_fst (h : IsMartingaleCoupling μ ν π) :
     Integrable (fun x : ℝ => x) μ.toMeasure := by
   have hmap : μ.toMeasure = Measure.map Prod.fst π.toMeasure := by rw [← h.fst_measure]; rfl
   rw [hmap]
@@ -161,7 +161,7 @@ lemma integrable_id_fst (h : IsMartingaleCoupling μ ν π) :
 
 /-- **Conditional martingale identity.** For a martingale coupling `π` of `μ, ν`, the `condKernel`
 of `π` has μ-a.e. fiber mean equal to the base point. -/
-lemma ae_conditional_mean_eq (h : IsMartingaleCoupling μ ν π) :
+private lemma ae_conditional_mean_eq (h : IsMartingaleCoupling μ ν π) :
     ∀ᵐ x ∂μ.toMeasure, ∫ y, y ∂(π.toMeasure.condKernel x) = x := by
   have hfst : π.toMeasure.fst = μ.toMeasure := h.fst_measure
   set K := π.toMeasure.condKernel with hK_def
@@ -415,7 +415,7 @@ def ConvexOrder (p q : DiscreteLaw) : Prop :=
 
 /-- Convex order on discrete laws forces equal means: Testing against `id` and `-id` (both convex)
 gives `p.mean ≤ q.mean ≤ p.mean`. -/
-lemma ConvexOrder.mean_eq {p q : DiscreteLaw} (h : p.ConvexOrder q) : p.mean = q.mean := by
+private lemma ConvexOrder.mean_eq {p q : DiscreteLaw} (h : p.ConvexOrder q) : p.mean = q.mean := by
   have hconv_id : ConvexOn ℝ Set.univ (id : ℝ → ℝ) := convexOn_id convex_univ
   have hconv_neg : ConvexOn ℝ Set.univ (fun x : ℝ => -x) := (concaveOn_id convex_univ).neg
   have h_le : p.mean ≤ q.mean := by
@@ -441,15 +441,6 @@ noncomputable def uniform (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ) : DiscreteL
     rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     have hn' : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
     field_simp
-
-@[simp] lemma uniform_n {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) :
-    (uniform n hn x).n = n := rfl
-
-@[simp] lemma uniform_atom {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) (i : Fin n) :
-    (uniform n hn x).atom i = x i := rfl
-
-@[simp] lemma uniform_weight {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) (i : Fin n) :
-    (uniform n hn x).weight i = (1 : ℝ) / n := rfl
 
 /-- The mean of a uniform-weight discrete law is the arithmetic mean of its atoms. -/
 lemma uniform_mean {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) :
@@ -486,7 +477,7 @@ structure BistochasticMartingaleMatrix (p q : DiscreteLaw) where
 /-- Build a `BistochasticMartingaleMatrix` from a square doubly stochastic matrix on `Fin p.n` once
 the target law is reindexed to the same cardinality and both laws have uniform weights. This
 isolates the remaining discrete Strassen gap to the majorization statement `D *ᵥ y = x`. -/
-lemma BistochasticMartingaleMatrix.nonempty_of_doublyStochastic
+private lemma BistochasticMartingaleMatrix.nonempty_of_doublyStochastic
     {p q : DiscreteLaw} (hn : p.n = q.n)
     (hp_uniform : ∀ i, p.weight i = (1 : ℝ) / p.n)
     (hq_uniform : ∀ j, q.weight j = (1 : ℝ) / q.n)
@@ -580,7 +571,7 @@ yields a bistochastic martingale matrix.
 This is the special case used by the continuous Strassen proof, where the quantile atomization
 `condMeanAtomize` produces uniform, equal-cardinality laws. The general discrete Strassen theorem —
 arbitrary finite support with nonuniform weights — is `DiscreteLaw.exists_martingaleCoupling`. -/
-theorem discrete_martingale_matrix_exists_uniform (p q : DiscreteLaw)
+private theorem discrete_martingale_matrix_exists_uniform (p q : DiscreteLaw)
     (hn_pos : 0 < p.n) (hn : p.n = q.n)
     (hp_uniform : ∀ i, p.weight i = (1 : ℝ) / p.n)
     (hq_uniform : ∀ j, q.weight j = (1 : ℝ) / q.n)
@@ -673,7 +664,7 @@ noncomputable def toProbDist (M : BistochasticMartingaleMatrix p q) :
       rw [← ENNReal.ofReal_sum_of_nonneg (fun i _ => p.weight_nonneg i),
         p.weight_sum, ENNReal.ofReal_one]⟩
 
-@[simp] lemma toProbDist_toMeasure (M : BistochasticMartingaleMatrix p q) :
+@[simp] private lemma toProbDist_toMeasure (M : BistochasticMartingaleMatrix p q) :
     M.toProbDist.toMeasure
       = ∑ i, ∑ j, ENNReal.ofReal (p.weight i * M.T i j)
           • Measure.dirac (p.atom i, q.atom j) :=

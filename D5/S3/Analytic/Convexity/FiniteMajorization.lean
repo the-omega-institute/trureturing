@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Probability/FiniteMajorization
+/- GID: D5/S3/Analytic/Convexity/FiniteMajorization
    generality: G
-   mirror-B: D5/B/S3/Analytic/Probability/FiniteMajorization
+   mirror-B: D5/B/S3/Analytic/Convexity/FiniteMajorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -29,51 +29,10 @@ open Set
 
 lemma convexOn_hinge_right (a : ℝ) :
     ConvexOn ℝ Set.univ (fun z : ℝ => max (z - a) 0) := by
-  refine ⟨convex_univ, ?_⟩
-  intro x hx y hy u v hu hv huv
-  change max (u * x + v * y - a) 0 ≤
-    u * max (x - a) 0 + v * max (y - a) 0
-  refine max_le ?_ ?_
-  · calc
-      u * x + v * y - a = u * (x - a) + v * (y - a) := by
-        have ha : u * a + v * a = a := by
-          calc
-            u * a + v * a = (u + v) * a := by ring
-            _ = a := by rw [huv, one_mul]
-        calc
-          u * x + v * y - a = u * x + v * y - (u * a + v * a) := by rw [ha]
-          _ = u * (x - a) + v * (y - a) := by ring
-      _ ≤ u * max (x - a) 0 + v * max (y - a) 0 := by
-        exact add_le_add
-          (mul_le_mul_of_nonneg_left (le_max_left _ _) hu)
-          (mul_le_mul_of_nonneg_left (le_max_left _ _) hv)
-  · exact add_nonneg
-      (mul_nonneg hu (le_max_right _ _))
-      (mul_nonneg hv (le_max_right _ _))
+  have hid : ConvexOn ℝ (Set.univ : Set ℝ) id := convexOn_id convex_univ
+  convert (hid.add_const (-a)).sup (convexOn_const 0 convex_univ) using 1 <;>
+    ext z <;> simp [sub_eq_add_neg]
 
-lemma convexOn_hinge_left (a : ℝ) :
-    ConvexOn ℝ Set.univ (fun z : ℝ => max (a - z) 0) := by
-  refine ⟨convex_univ, ?_⟩
-  intro x hx y hy u v hu hv huv
-  change max (a - (u * x + v * y)) 0 ≤
-    u * max (a - x) 0 + v * max (a - y) 0
-  refine max_le ?_ ?_
-  · calc
-      a - (u * x + v * y) = u * (a - x) + v * (a - y) := by
-        have ha : u * a + v * a = a := by
-          calc
-            u * a + v * a = (u + v) * a := by ring
-            _ = a := by rw [huv, one_mul]
-        calc
-          a - (u * x + v * y) = (u * a + v * a) - (u * x + v * y) := by rw [ha]
-          _ = u * (a - x) + v * (a - y) := by ring
-      _ ≤ u * max (a - x) 0 + v * max (a - y) 0 := by
-        exact add_le_add
-          (mul_le_mul_of_nonneg_left (le_max_left _ _) hu)
-          (mul_le_mul_of_nonneg_left (le_max_left _ _) hv)
-  · exact add_nonneg
-      (mul_nonneg hu (le_max_right _ _))
-      (mul_nonneg hv (le_max_right _ _))
 end
 
 section
@@ -81,7 +40,7 @@ open Finset Set BigOperators
 
 /-- For any subset `S ⊆ Fin n` of size `k` and threshold `t`, the `S`-sum of `v` is bounded above
 by `k · t` plus the total positive-part sum `∑ max (v - t) 0`. -/
-lemma subset_sum_le_scale_plus_hinge {n : ℕ} (v : Fin n → ℝ) {k : ℕ}
+private lemma subset_sum_le_scale_plus_hinge {n : ℕ} (v : Fin n → ℝ) {k : ℕ}
     (S : Finset (Fin n)) (hS : S.card = k) (t : ℝ) :
     ∑ i ∈ S, v i ≤ (k : ℝ) * t + ∑ i, max (v i - t) 0 := by
   have h_sub : ∑ i ∈ S, (v i - t) = ∑ i ∈ S, v i - (k : ℝ) * t := by
@@ -96,7 +55,7 @@ lemma subset_sum_le_scale_plus_hinge {n : ℕ} (v : Fin n → ℝ) {k : ℕ}
 /-- Given a monotone vector `d` and vectors `x, y` with equal total sums but `∑ d · x < ∑ d · y`,
 there is a prefix index `k` (with `k + 1 < n`) whose `x`-prefix sum strictly exceeds the `y`-prefix
 sum. -/
-lemma abel_pull_partial_sum {n : ℕ} (d x y : Fin n → ℝ)
+private lemma abel_pull_partial_sum {n : ℕ} (d x y : Fin n → ℝ)
     (hd_mono : Monotone d)
     (hsum : ∑ i, x i = ∑ i, y i)
     (hfact : ∑ i, d i * x i < ∑ i, d i * y i) :

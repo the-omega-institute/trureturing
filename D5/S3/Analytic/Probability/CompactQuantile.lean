@@ -40,42 +40,42 @@ def quantile (t : ℝ) : ℝ :=
 variable {μ}
 
 /-- For a probability measure, `F_μ = ↑(cdf μ)` agrees with `(μ (Iic ·)).toReal`. -/
-lemma cdf_eq_toReal_measure_Iic [IsProbabilityMeasure μ] (x : ℝ) :
+private lemma cdf_eq_toReal_measure_Iic [IsProbabilityMeasure μ] (x : ℝ) :
     (ProbabilityTheory.cdf μ) x = (μ (Iic x)).toReal := by
   rw [ProbabilityTheory.cdf_eq_real]; rfl
 
 /-- The coerced CDF is, as a function, `x ↦ (μ (Iic x)).toReal`. -/
-lemma cdf_coe_eq_toReal_measure_Iic [IsProbabilityMeasure μ] :
+private lemma cdf_coe_eq_toReal_measure_Iic [IsProbabilityMeasure μ] :
     ((ProbabilityTheory.cdf μ) : ℝ → ℝ) = fun x : ℝ => (μ (Iic x)).toReal :=
   funext cdf_eq_toReal_measure_Iic
 
 /-- For a probability measure, the CDF `x ↦ (μ (Iic x)).toReal` tends to `1` at `+∞`. -/
-lemma tendsto_toReal_measure_Iic_atTop [IsProbabilityMeasure μ] :
+private lemma tendsto_toReal_measure_Iic_atTop [IsProbabilityMeasure μ] :
     Tendsto (fun x : ℝ => (μ (Iic x)).toReal) atTop (𝓝 1) :=
   cdf_coe_eq_toReal_measure_Iic (μ := μ) ▸ ProbabilityTheory.tendsto_cdf_atTop μ
 
 /-- For a probability measure, the CDF `x ↦ (μ (Iic x)).toReal` tends to `0` at `-∞`. -/
-lemma tendsto_toReal_measure_Iic_atBot [IsProbabilityMeasure μ] :
+private lemma tendsto_toReal_measure_Iic_atBot [IsProbabilityMeasure μ] :
     Tendsto (fun x : ℝ => (μ (Iic x)).toReal) atBot (𝓝 0) :=
   cdf_coe_eq_toReal_measure_Iic (μ := μ) ▸ ProbabilityTheory.tendsto_cdf_atBot μ
 
 /-- For a probability measure, the CDF is monotone. -/
-lemma monotone_toReal_measure_Iic [IsProbabilityMeasure μ] :
+private lemma monotone_toReal_measure_Iic [IsProbabilityMeasure μ] :
     Monotone (fun x : ℝ => (μ (Iic x)).toReal) := by
   intro x y hxy
   simp_rw [← cdf_eq_toReal_measure_Iic]
   exact ProbabilityTheory.monotone_cdf μ hxy
 
 /-- For a probability measure, the CDF is right-continuous. -/
-lemma rightContinuous_toReal_measure_Iic [IsProbabilityMeasure μ] (x : ℝ) :
+private lemma rightContinuous_toReal_measure_Iic [IsProbabilityMeasure μ] (x : ℝ) :
     ContinuousWithinAt (fun y : ℝ => (μ (Iic y)).toReal) (Ici x) x :=
   cdf_coe_eq_toReal_measure_Iic (μ := μ) ▸ (ProbabilityTheory.cdf μ).right_continuous x
 
 /-- The CDF value `(μ (Iic x)).toReal` is nonnegative. -/
-lemma toReal_measure_Iic_nonneg (x : ℝ) : 0 ≤ (μ (Iic x)).toReal := ENNReal.toReal_nonneg
+private lemma toReal_measure_Iic_nonneg (x : ℝ) : 0 ≤ (μ (Iic x)).toReal := ENNReal.toReal_nonneg
 
 /-- For a probability measure, the CDF value `(μ (Iic x)).toReal` is at most `1`. -/
-lemma toReal_measure_Iic_le_one [IsProbabilityMeasure μ] (x : ℝ) :
+private lemma toReal_measure_Iic_le_one [IsProbabilityMeasure μ] (x : ℝ) :
     (μ (Iic x)).toReal ≤ 1 := by
   simp_rw [← cdf_eq_toReal_measure_Iic]
   exact ProbabilityTheory.cdf_le_one μ x
@@ -98,7 +98,7 @@ lemma set_nonempty [IsProbabilityMeasure μ] {t : ℝ} (ht_lt : t < 1) :
 
 /-- For a probability measure and `0 < t`, the superlevel set of the CDF at height `t` is bounded
 below. Follows from `(μ(Iic x)).toReal → 0` at `-∞`. -/
-lemma set_bddBelow [IsProbabilityMeasure μ] {t : ℝ} (ht_pos : 0 < t) :
+private lemma set_bddBelow [IsProbabilityMeasure μ] {t : ℝ} (ht_pos : 0 < t) :
     BddBelow { x : ℝ | t ≤ (μ (Iic x)).toReal } := by
   have h := tendsto_toReal_measure_Iic_atBot (μ := μ)
   -- Use Filter.tendsto_atBot characterization via eventual bounds.
@@ -312,7 +312,7 @@ def binMidpoint (n : ℕ) (t : ℝ) : ℝ := ((⌊(n : ℝ) * t⌋₊ : ℝ) + 1
 /-- On `[0, 1)`, the midpoint is within `1/n` of `t`. -/
 -- `_ht1` unused: the bound only needs the floor sandwich, not `t < 1`; kept to match
 -- `binMidpoint_mem_Ioo`'s hypotheses.
-lemma abs_binMidpoint_sub_le {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht0 : 0 ≤ t) (_ht1 : t < 1) :
+private lemma abs_binMidpoint_sub_le {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht0 : 0 ≤ t) (_ht1 : t < 1) :
     |binMidpoint n t - t| ≤ 1 / n := by
   have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
   have hnne : (n : ℝ) ≠ 0 := ne_of_gt hnpos
@@ -332,7 +332,7 @@ lemma abs_binMidpoint_sub_le {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht0 : 0 ≤ t) 
   gcongr
 
 /-- On `[0, 1)`, the midpoint lands in `Ioo 0 1`. -/
-lemma binMidpoint_mem_Ioo {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t < 1) :
+private lemma binMidpoint_mem_Ioo {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t < 1) :
     binMidpoint n t ∈ Ioo (0 : ℝ) 1 := by
   have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
   have hnne : (n : ℝ) ≠ 0 := ne_of_gt hnpos
@@ -363,7 +363,7 @@ lemma binMidpoint_mem_Ioo {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht0 : 0 ≤ t) (ht
 
 /-- `binMidpoint` is constant on each bin `Ico (k/n) ((k+1)/n)` with `k : Fin n`. On that bin, its
 value is `(k + 1/2) / n`. -/
-lemma binMidpoint_eq_of_mem_Ico {n : ℕ} (hn : 1 ≤ n) (k : Fin n) {t : ℝ}
+private lemma binMidpoint_eq_of_mem_Ico {n : ℕ} (hn : 1 ≤ n) (k : Fin n) {t : ℝ}
     (ht : t ∈ Ico ((k : ℝ) / n) (((k : ℝ) + 1) / n)) :
     binMidpoint n t = ((k : ℝ) + 1 / 2) / n := by
   have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
@@ -449,35 +449,22 @@ def stepFun (μ : Measure ℝ) (φ : ℝ → ℝ) (n : ℕ) (t : ℝ) : ℝ :=
   φ (quantile μ (binMidpoint n t))
 
 /-- On each bin, `stepFun` is the constant `φ (quantile μ ((k + 1/2) / n))`. -/
-lemma stepFun_eq_of_mem_Ico {μ : Measure ℝ} {φ : ℝ → ℝ} {n : ℕ} (hn : 1 ≤ n) (k : Fin n)
+private lemma stepFun_eq_of_mem_Ico {μ : Measure ℝ} {φ : ℝ → ℝ} {n : ℕ} (hn : 1 ≤ n) (k : Fin n)
     {t : ℝ} (ht : t ∈ Ico ((k : ℝ) / n) (((k : ℝ) + 1) / n)) :
     stepFun μ φ n t = φ (quantile μ (((k : ℝ) + 1 / 2) / n)) := by
   unfold stepFun
   rw [binMidpoint_eq_of_mem_Ico hn k ht]
 
 /-- The step function is bounded by `M` whenever `|φ| ≤ M`. -/
-lemma abs_stepFun_le {μ : Measure ℝ} {φ : ℝ → ℝ} {M : ℝ} (hM : ∀ x, |φ x| ≤ M)
+private lemma abs_stepFun_le {μ : Measure ℝ} {φ : ℝ → ℝ} {M : ℝ} (hM : ∀ x, |φ x| ≤ M)
     (n : ℕ) (t : ℝ) : |stepFun μ φ n t| ≤ M := by
   unfold stepFun
   exact hM _
 
-/-- Measurability: `binMidpoint n` is measurable. -/
-lemma measurable_binMidpoint (n : ℕ) : Measurable (binMidpoint n) := by
-  unfold binMidpoint
-  -- `(⌊n · t⌋₊ : ℝ) + 1/2) / n` is measurable as a composition of measurable functions.
-  refine Measurable.div_const ?_ _
-  refine Measurable.add_const ?_ _
-  -- `⌊n · t⌋₊ : ℕ → ℝ`, the natural-cast.
-  have h1 : Measurable fun t : ℝ => ⌊(n : ℝ) * t⌋₊ := by
-    exact Nat.measurable_floor.comp (measurable_const.mul measurable_id)
-  -- Any function from `ℕ` (discrete measurable space) to `ℝ` is measurable.
-  have h2 : Measurable ((↑) : ℕ → ℝ) := fun _ _ => trivial
-  exact h2.comp h1
-
 /-- The step function is AE-strongly-measurable on `Ioo 0 1`, for continuous `φ`. -/
 -- `_hφ` unused: `stepFun` is a finite sum of indicators of constants, measurable regardless of
 -- `φ`'s continuity; kept so the hypothesis matches `integral_stepFun_Ioo`.
-lemma aestronglyMeasurable_stepFun {φ : ℝ → ℝ} (_hφ : Continuous φ) (n : ℕ) :
+private lemma aestronglyMeasurable_stepFun {φ : ℝ → ℝ} (_hφ : Continuous φ) (n : ℕ) :
     AEStronglyMeasurable (stepFun μ φ n) (volume.restrict (Ioo (0 : ℝ) 1)) := by
   by_cases hn : 1 ≤ n
   · -- On Ico 0 1, stepFun equals ∑ k ∈ Finset.univ, indicator of k-th bin times v_k.
@@ -528,7 +515,7 @@ lemma aestronglyMeasurable_stepFun {φ : ℝ → ℝ} (_hφ : Continuous φ) (n 
 /-- The integral of the step function over `Ioo 0 1` equals the midpoint Riemann sum. -/
 -- `_hφ` unused: the integral is a finite sum over bins where `stepFun` is constant, computed
 -- without appealing to continuity of `φ`; kept so the hypothesis matches the calling context.
-lemma integral_stepFun_Ioo {φ : ℝ → ℝ} (_hφ : Continuous φ) {n : ℕ} (hn : 1 ≤ n) :
+private lemma integral_stepFun_Ioo {φ : ℝ → ℝ} (_hφ : Continuous φ) {n : ℕ} (hn : 1 ≤ n) :
     ∫ t in Ioo (0 : ℝ) 1, stepFun μ φ n t
       = (1 / n) * ∑ k : Fin n, φ (quantile μ (((k : ℝ) + 1 / 2) / n)) := by
   have hnpos : (0 : ℝ) < n := by exact_mod_cast hn
@@ -595,7 +582,7 @@ lemma integral_stepFun_Ioo {φ : ℝ → ℝ} (_hφ : Continuous φ) {n : ℕ} (
 
 /-- For `t ∈ Ioo 0 1` where `quantile μ` is continuous within `Ioo 0 1` at `t`, the step function
 value `stepFun μ φ n t` converges to `φ (quantile μ t)` as `n → ∞`. -/
-lemma tendsto_stepFun_of_continuousWithinAt {φ : ℝ → ℝ} (hφ : Continuous φ)
+private lemma tendsto_stepFun_of_continuousWithinAt {φ : ℝ → ℝ} (hφ : Continuous φ)
     {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1)
     (h_qcts : ContinuousWithinAt (quantile μ) (Ioo (0 : ℝ) 1) t) :
     Tendsto (fun n : ℕ => stepFun μ φ n t) atTop (𝓝 (φ (quantile μ t))) := by
@@ -646,7 +633,7 @@ lemma countable_not_continuousWithinAt_quantile [IsProbabilityMeasure μ] :
   (monotoneOn_quantile (μ := μ)).countable_not_continuousWithinAt
 
 /-- Pointwise AE convergence of step functions on `Ioo 0 1`. -/
-lemma stepFun_tendsto_ae [IsProbabilityMeasure μ] {φ : ℝ → ℝ} (hφ : Continuous φ) :
+private lemma stepFun_tendsto_ae [IsProbabilityMeasure μ] {φ : ℝ → ℝ} (hφ : Continuous φ) :
     ∀ᵐ t ∂(volume.restrict (Ioo (0 : ℝ) 1)),
       Tendsto (fun n : ℕ => stepFun μ φ n t) atTop (𝓝 (φ (quantile μ t))) := by
   -- The set of discontinuity points of `quantile μ` on `Ioo 0 1` is countable, hence null
@@ -670,23 +657,9 @@ lemma stepFun_tendsto_ae [IsProbabilityMeasure μ] {φ : ℝ → ℝ} (hφ : Con
   exact h_no_conv (tendsto_stepFun_of_continuousWithinAt hφ h_t_in h_cts)
 
 /-- The constant `M` is integrable on `Ioo 0 1` (a finite-measure set). -/
-lemma integrable_const_Ioo (M : ℝ) :
+private lemma integrable_const_Ioo (M : ℝ) :
     Integrable (fun _ : ℝ => M) (volume.restrict (Ioo (0 : ℝ) 1)) := by
   refine integrable_const _
-
-/-- The step function is integrable on `Ioo 0 1`. -/
-lemma integrable_stepFun_Ioo {φ : ℝ → ℝ} (hφ : Continuous φ) {M : ℝ} (hM : ∀ x, |φ x| ≤ M)
-    (n : ℕ) : Integrable (stepFun μ φ n) (volume.restrict (Ioo (0 : ℝ) 1)) := by
-  refine ⟨aestronglyMeasurable_stepFun hφ n, ?_⟩
-  -- HasFiniteIntegral: bounded by M on finite-measure set.
-  have hMnn : 0 ≤ M := le_trans (abs_nonneg _) (hM 0)
-  refine MeasureTheory.HasFiniteIntegral.mono' (g := fun _ => M) ?_ ?_
-  · -- `HasFiniteIntegral (const M)` on restrict to Ioo 0 1.
-    exact (integrable_const_Ioo M).2
-  · -- `‖stepFun μ φ n t‖ ≤ M` everywhere.
-    refine Filter.Eventually.of_forall (fun t => ?_)
-    simp only [Real.norm_eq_abs]
-    exact abs_stepFun_le hM n t
 
 /-- **Midpoint Riemann sum convergence for bounded continuous `φ`.** The midpoint Riemann sums of
 `φ ∘ quantile μ` at resolution `n+1` converge to `∫ φ dμ`. -/
@@ -763,27 +736,6 @@ lemma stopLoss_integrable [IsFiniteMeasure μ] (hμ : Integrable (fun x : ℝ =>
   have h1 : Integrable (fun x : ℝ => x - z) μ := hμ.sub (integrable_const z)
   have h2 : Integrable (fun _ : ℝ => (0 : ℝ)) μ := integrable_const 0
   exact h1.sup h2
-
-/-- **Markov-type tail bound through the stop-loss.** The hinge at `s` dominates the scaled
-indicator of `[r, ∞)`, so `(r - s) · μ[r, ∞) ≤ stopLoss μ s`. (For `s ≥ r` the left side is
-nonpositive and the bound is trivial.) -/
-lemma mul_measureReal_Ici_le_stopLoss [IsFiniteMeasure μ]
-    (hμ : Integrable (fun x : ℝ => x) μ) (s r : ℝ) :
-    (r - s) * μ.real (Ici r) ≤ μ.stopLoss s := by
-  have hind : ∀ x : ℝ, (Ici r).indicator (fun _ => r - s) x ≤ max (x - s) 0 := by
-    intro x
-    by_cases hx : x ∈ Ici r
-    · rw [indicator_of_mem hx]
-      exact le_max_of_le_left (by linarith [mem_Ici.mp hx])
-    · rw [indicator_of_notMem hx]
-      exact le_max_right _ _
-  have hind_int : Integrable ((Ici r).indicator fun _ : ℝ => r - s) μ :=
-    (integrable_const (r - s)).indicator measurableSet_Ici
-  calc (r - s) * μ.real (Ici r)
-      = ∫ x, (Ici r).indicator (fun _ => r - s) x ∂μ := by
-        rw [integral_indicator_const _ measurableSet_Ici, smul_eq_mul, mul_comm]
-    _ ≤ μ.stopLoss s :=
-        integral_mono hind_int (stopLoss_integrable hμ s) hind
 
 end MeasureTheory.Measure
 

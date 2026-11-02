@@ -30,7 +30,7 @@ namespace Econlib.Probability
 
 /-- **Tightness on a compact support.** A sequence of probability measures on `ℝ × ℝ` all
 concentrated on the compact set `Icc a b ×ˢ Icc a b` is a tight family. -/
-lemma isTight_of_supportsOn_Icc_prod (a b : ℝ) (π : ℕ → ProbabilityMeasure (ℝ × ℝ))
+private lemma isTight_of_supportsOn_Icc_prod (a b : ℝ) (π : ℕ → ProbabilityMeasure (ℝ × ℝ))
     (hπ : ∀ n, (π n).toMeasure (Icc a b ×ˢ Icc a b) = 1) :
     IsTightMeasureSet { ρ : Measure (ℝ × ℝ) | ∃ n, (π n : Measure (ℝ × ℝ)) = ρ } := by
   rw [isTightMeasureSet_iff_exists_isCompact_measure_compl_le]
@@ -46,7 +46,7 @@ lemma isTight_of_supportsOn_Icc_prod (a b : ℝ) (π : ℕ → ProbabilityMeasur
 
 /-- **Weak-limit extraction.** A sequence of probability measures on `ℝ × ℝ` all concentrated on a
 compact square admits a weakly convergent subsequence. -/
-lemma exists_weak_limit_of_supportsOn_Icc_prod (a b : ℝ)
+private lemma exists_weak_limit_of_supportsOn_Icc_prod (a b : ℝ)
     (π : ℕ → ProbabilityMeasure (ℝ × ℝ))
     (hπ : ∀ n, (π n).toMeasure (Icc a b ×ˢ Icc a b) = 1) :
     ∃ (φ : ℕ → ℕ) (_ : StrictMono φ) (πInf : ProbabilityMeasure (ℝ × ℝ)),
@@ -89,14 +89,14 @@ lemma exists_weak_limit_of_supportsOn_Icc_prod (a b : ℝ)
   exact le_antisymm MeasureTheory.prob_le_one hge
 
 /-- Marginal pushforward is continuous in the weak-* topology on probability measures. -/
-lemma ProbabilityMeasure.continuous_map_fst :
+private lemma ProbabilityMeasure.continuous_map_fst :
     Continuous (fun π : ProbabilityMeasure (ℝ × ℝ) =>
       ProbabilityMeasure.map π (Prod.fst : ℝ × ℝ → ℝ)) :=
   MeasureTheory.ProbabilityMeasure.continuous_map (f := (Prod.fst : ℝ × ℝ → ℝ))
     continuous_fst
 
 /-- Marginal pushforward is continuous in the weak-* topology on probability measures. -/
-lemma ProbabilityMeasure.continuous_map_snd :
+private lemma ProbabilityMeasure.continuous_map_snd :
     Continuous (fun π : ProbabilityMeasure (ℝ × ℝ) =>
       ProbabilityMeasure.map π (Prod.snd : ℝ × ℝ → ℝ)) :=
   MeasureTheory.ProbabilityMeasure.continuous_map (f := (Prod.snd : ℝ × ℝ → ℝ))
@@ -104,7 +104,7 @@ lemma ProbabilityMeasure.continuous_map_snd :
 
 /-- **Weak-limit marginals.** If `πₙ → πInf` weakly and each `πₙ` has marginals `(μₙ, νₙ)` with
 `μₙ → μ`, `νₙ → ν`, then `πInf` has marginals `(μ, ν)`. -/
-lemma IsCoupling.of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
+private lemma IsCoupling.of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
     {π_seq : ℕ → ProbDist (ℝ × ℝ)} {πInf : ProbDist (ℝ × ℝ)}
     (hπcoup : ∀ n, IsCoupling (μ_seq n) (ν_seq n) (π_seq n))
     (hπlim : Tendsto (fun n => (π_seq n : ProbabilityMeasure (ℝ × ℝ))) atTop (𝓝 πInf))
@@ -480,7 +480,7 @@ namespace Econlib.Probability
 /-- **Strassen's theorem (hard direction)** (Strassen 1965). On compact support `[a, b]`, the
 convex order `μ ≼cx[a,b] ν` implies the existence of a martingale coupling `π : ProbDist (ℝ × ℝ)`
 with `Prod.fst`-marginal `μ`, `Prod.snd`-marginal `ν`, and `𝔼π[Y ∣ X] = X` almost surely. -/
-theorem exists_martingaleCoupling_of_convexOrderOnIcc (a b : ℝ) {μ ν : ProbDist ℝ}
+private theorem exists_martingaleCoupling_of_convexOrderOnIcc (a b : ℝ) {μ ν : ProbDist ℝ}
     (h : ConvexOrderOnIcc a b μ ν) :
     ∃ π : ProbDist (ℝ × ℝ), IsMartingaleCoupling μ ν π := by
   have hμ_supp : μ.supportsOn (Icc a b) := h.support_left
@@ -522,7 +522,7 @@ end Econlib.Probability
 
 namespace Econlib.Probability
 
-lemma IsMartingaleCoupling.condExp_snd_eq_fst {μ ν : ProbDist ℝ}
+private lemma IsMartingaleCoupling.condExp_snd_eq_fst {μ ν : ProbDist ℝ}
     {π : ProbDist (ℝ × ℝ)} (h : IsMartingaleCoupling μ ν π) :
     π.toMeasure[Prod.snd | (borel ℝ).comap Prod.fst] =ᵐ[π.toMeasure] Prod.fst := by
   have hm : ((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ)) ≤ (inferInstance : MeasurableSpace (ℝ × ℝ)) :=
@@ -549,7 +549,7 @@ lemma IsMartingaleCoupling.condExp_snd_eq_fst {μ ν : ProbDist ℝ}
     integral_sub h.integrable_snd.integrableOn h.integrable_fst.integrableOn] at heq
   linarith
 
-lemma isMartingaleCoupling_of_condExp {a b : ℝ} {μ ν : ProbDist ℝ}
+private lemma isMartingaleCoupling_of_condExp {a b : ℝ} {μ ν : ProbDist ℝ}
     (hμ : μ.toMeasure (Icc a b) = 1) (hν : ν.toMeasure (Icc a b) = 1)
     {π : ProbDist (ℝ × ℝ)}
     (hfst : π.toMeasure.map Prod.fst = μ.toMeasure)

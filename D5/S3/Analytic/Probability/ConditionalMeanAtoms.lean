@@ -39,15 +39,6 @@ noncomputable def condMeanAtom (μ : ProbDist ℝ) (n : ℕ) (_hn : 0 < n) (k : 
 noncomputable def condMeanAtomize (μ : ProbDist ℝ) (n : ℕ) (hn : 0 < n) : DiscreteLaw :=
   DiscreteLaw.uniform n hn (fun k => DiscreteLaw.condMeanAtom μ n hn k)
 
-@[simp] lemma condMeanAtomize_n {μ : ProbDist ℝ} {n : ℕ} {hn : 0 < n} :
-    (condMeanAtomize μ n hn).n = n := rfl
-
-@[simp] lemma condMeanAtomize_atom {μ : ProbDist ℝ} {n : ℕ} {hn : 0 < n} {k : Fin n} :
-    (condMeanAtomize μ n hn).atom k = condMeanAtom μ n hn k := rfl
-
-@[simp] lemma condMeanAtomize_weight {μ : ProbDist ℝ} {n : ℕ} {hn : 0 < n} {k : Fin n} :
-    (condMeanAtomize μ n hn).weight k = (1 : ℝ) / n := rfl
-
 end DiscreteLaw
 end Econlib.Probability
 
@@ -114,7 +105,7 @@ private lemma bins_pairwise_disjoint_Ioc {n : ℕ} (hn : 0 < n) :
     linarith [ht.2.2, ht.1.1]
 
 /-- A `μ`-quantile at `u ∈ (0, 1)` lies in any closed interval supporting `μ`. -/
-lemma quantile_mem_Icc_of_supportsOn_Icc {a b : ℝ} {μ : ProbDist ℝ}
+private lemma quantile_mem_Icc_of_supportsOn_Icc {a b : ℝ} {μ : ProbDist ℝ}
     (h : μ.supportsOn (Icc a b)) {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
     MeasureTheory.Measure.quantile μ.toMeasure u ∈ Icc a b := by
   obtain ⟨hu_pos, hu_lt⟩ := hu
@@ -161,7 +152,7 @@ lemma quantile_mem_Icc_of_supportsOn_Icc {a b : ℝ} {μ : ProbDist ℝ}
 
 /-- On the `k`-th bin `Ioc (k/n) ((k+1)/n)`, the quantile lies a.e. in `Icc a b` whenever `μ` is
 supported on `Icc a b`. -/
-lemma quantile_mem_Icc_ae_on_bin {a b : ℝ} {μ : ProbDist ℝ}
+private lemma quantile_mem_Icc_ae_on_bin {a b : ℝ} {μ : ProbDist ℝ}
     (h : μ.supportsOn (Icc a b)) {n : ℕ} (hn : 0 < n) (k : Fin n) :
     ∀ᵐ u ∂(MeasureTheory.volume.restrict
         (Set.Ioc ((k : ℝ) / n) (((k : ℝ) + 1) / n))),
@@ -179,7 +170,7 @@ lemma quantile_mem_Icc_ae_on_bin {a b : ℝ} {μ : ProbDist ℝ}
   exact quantile_mem_Icc_of_supportsOn_Icc h ⟨hu_pos, hu_lt⟩
 
 /-- The quantile function of `μ` is a.e.-measurable on each bin, with no support assumption. -/
-lemma aemeasurable_quantile_bin (μ : ProbDist ℝ) {n : ℕ} (hn : 0 < n) (k : Fin n) :
+private lemma aemeasurable_quantile_bin (μ : ProbDist ℝ) {n : ℕ} (hn : 0 < n) (k : Fin n) :
     AEMeasurable (MeasureTheory.Measure.quantile μ.toMeasure)
       ((MeasureTheory.volume : Measure ℝ).restrict
         (Set.Ioc ((k : ℝ) / n) (((k : ℝ) + 1) / n))) := by

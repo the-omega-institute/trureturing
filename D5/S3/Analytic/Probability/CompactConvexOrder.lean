@@ -14,7 +14,7 @@ Modified for the host probability-measure API, native conditional expectation,
 existing library suppliers, and a construction-oriented module organization.
 -/
 import D5.S3.Analytic.Probability.CompactQuantile
-import D5.S3.Analytic.Probability.FiniteMajorization
+import D5.S3.Analytic.Convexity.FiniteMajorization
 import Mathlib.Analysis.Convex.Integral
 import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 
@@ -76,7 +76,7 @@ private lemma continuous_hinge (z : ℝ) : Continuous (fun x : ℝ => max (x - z
 
 /-- Pushforward identity for the stop-loss: Integrating the hinge against `μ` equals integrating
 `max (quantile μ u - z) 0` against Lebesgue on `Ioo 0 1`. -/
-lemma stopLoss_eq_integral_hinge_quantile [IsProbabilityMeasure μ] (z : ℝ) :
+private lemma stopLoss_eq_integral_hinge_quantile [IsProbabilityMeasure μ] (z : ℝ) :
     stopLoss μ z = ∫ u in Ioo (0 : ℝ) 1, max (quantile μ u - z) 0 := by
   unfold stopLoss
   exact integral_eq_integral_quantile (fun x => max (x - z) 0)
@@ -95,7 +95,7 @@ private lemma Ioc_01_ae_eq_Ioo : (Ioc (0 : ℝ) 1 : Set ℝ) =ᵐ[volume] (Ioo (
   Ioo_ae_eq_Ioc.symm
 
 /-- If `id` is `μ`-integrable, then `max (quantile μ · - z) 0` is integrable on `Ioo 0 1`. -/
-lemma integrable_hinge_quantile [IsProbabilityMeasure μ]
+private lemma integrable_hinge_quantile [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) (z : ℝ) :
     IntegrableOn (fun u => max (quantile μ u - z) 0) (Ioo (0 : ℝ) 1) volume := by
   have h1 : Integrable (fun x : ℝ => max (x - z) 0) μ :=
@@ -108,7 +108,7 @@ lemma integrable_hinge_quantile [IsProbabilityMeasure μ]
   rwa [integrable_map_measure (continuous_hinge z).aestronglyMeasurable hqae] at h1
 
 /-- If `id` is `μ`-integrable, then `quantile μ` is integrable on `Ioo 0 1`. -/
-lemma integrable_quantile_Ioo [IsProbabilityMeasure μ]
+private lemma integrable_quantile_Ioo [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) :
     IntegrableOn (quantile μ) (Ioo (0 : ℝ) 1) volume := by
   have h_map : Measure.map (quantile μ) (volume.restrict (Ioo (0 : ℝ) 1)) = μ :=
@@ -145,14 +145,14 @@ private lemma Ioc_01_ae_le_Ioo_01 :
   Ioc_t_one_ae_le_Ioo_01 le_rfl
 
 /-- On `Ioc t 1` (for `0 ≤ t`), the hinge-quantile is integrable. -/
-lemma integrable_hinge_quantile_Ioc [IsProbabilityMeasure μ]
+private lemma integrable_hinge_quantile_Ioc [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht0 : 0 ≤ t) (z : ℝ) :
     IntegrableOn (fun u => max (quantile μ u - z) 0) (Ioc t 1) volume :=
   (integrable_hinge_quantile hμ_int (μ := μ) z).mono_set_ae
     (Ioc_t_one_ae_le_Ioo_01 ht0)
 
 /-- On `Ioc 0 t` (for `t < 1`), the hinge-quantile is integrable. -/
-lemma integrable_hinge_quantile_Ioc_0_t [IsProbabilityMeasure μ]
+private lemma integrable_hinge_quantile_Ioc_0_t [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht1 : t < 1) (z : ℝ) :
     IntegrableOn (fun u => max (quantile μ u - z) 0) (Ioc (0 : ℝ) t) volume := by
   refine (integrable_hinge_quantile hμ_int (μ := μ) z).mono_set ?_
@@ -160,14 +160,14 @@ lemma integrable_hinge_quantile_Ioc_0_t [IsProbabilityMeasure μ]
   exact ⟨hu.1, lt_of_le_of_lt hu.2 ht1⟩
 
 /-- On `Ioc t 1` (for `0 ≤ t`), the quantile function is integrable. -/
-lemma integrable_quantile_Ioc [IsProbabilityMeasure μ]
+private lemma integrable_quantile_Ioc [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht0 : 0 ≤ t) :
     IntegrableOn (quantile μ) (Ioc t 1) volume :=
   (integrable_quantile_Ioo hμ_int (μ := μ)).mono_set_ae
     (Ioc_t_one_ae_le_Ioo_01 ht0)
 
 /-- On `Ioc 0 t` (for `t < 1`), the quantile is integrable. -/
-lemma integrable_quantile_Ioc_0_t [IsProbabilityMeasure μ]
+private lemma integrable_quantile_Ioc_0_t [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht1 : t < 1) :
     IntegrableOn (quantile μ) (Ioc (0 : ℝ) t) volume := by
   refine (integrable_quantile_Ioo hμ_int (μ := μ)).mono_set ?_
@@ -217,7 +217,7 @@ private lemma integral_hinge_quantile_Ioo_split [IsProbabilityMeasure μ]
 
 /-- Split the integral of `quantile μ` over `Ioo 0 1` into integrals over `Ioc 0 t` and `Ioc t 1`
 (for `0 < t ≤ 1`). -/
-theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
+private theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht0 : 0 < t) (ht1 : t ≤ 1) :
     ∫ u in Ioo (0 : ℝ) 1, quantile μ u =
       (∫ u in Ioc (0 : ℝ) t, quantile μ u) +
@@ -238,7 +238,7 @@ theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
 
 /-- **Universal upper bound (Legendre):** For any `z ∈ ℝ`,
 `∫ u in Ioc t 1, quantile μ u ≤ stopLoss μ z + z · (1 - t)`. -/
-theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ]
+private theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ)
     {t : ℝ} (ht : t ∈ Icc (0 : ℝ) 1) (z : ℝ) :
     (∫ u in Ioc t 1, quantile μ u) ≤ stopLoss μ z + z * (1 - t) := by
@@ -298,7 +298,7 @@ theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ]
   linarith
 
 /-- **Equality at `z = quantile μ t`:** the Legendre conjugate is attained. -/
-theorem upperIntegratedQuantile_eq_stopLoss_add [IsProbabilityMeasure μ]
+private theorem upperIntegratedQuantile_eq_stopLoss_add [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ)
     {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
     (∫ u in Ioc t 1, quantile μ u) =
@@ -358,19 +358,19 @@ open MeasureTheory Set
 namespace Econlib.Probability
 
 /-- The hinge/stop-loss test function `x ↦ max (x - z) 0` is convex on any set. -/
-lemma convexOn_hinge_on (a b z : ℝ) :
+private lemma convexOn_hinge_on (a b z : ℝ) :
     ConvexOn ℝ (Set.Icc a b) (fun x : ℝ => max (x - z) 0) := by
   have h_univ : ConvexOn ℝ (Set.univ : Set ℝ) (fun x : ℝ => max (x - z) 0) :=
     convexOn_hinge_right z
   exact h_univ.subset (subset_univ _) (convex_Icc a b)
 
 /-- The hinge test function is continuous. -/
-lemma continuous_hinge (z : ℝ) : Continuous (fun x : ℝ => max (x - z) 0) :=
+private lemma continuous_hinge (z : ℝ) : Continuous (fun x : ℝ => max (x - z) 0) :=
   (continuous_id.sub continuous_const).max continuous_const
 
 /-- **Stop-loss monotonicity under convex order.** If `μ ≼cx[a,b] ν`, then the stop-loss function
 of `μ` is pointwise bounded by the stop-loss function of `ν`. -/
-lemma stopLoss_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
+private lemma stopLoss_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
     (h : ConvexOrderOnIcc a b μ ν) (z : ℝ) :
     μ.toMeasure.stopLoss z ≤ ν.toMeasure.stopLoss z := by
   -- `stopLoss d z = d.expect (fun x => max (x - z) 0)`; apply `h.convex_expect_le`.
@@ -381,20 +381,9 @@ lemma stopLoss_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
   have hexpect := h.convex_expect_le _ hconv hcont
   exact hexpect
 
-/-- **Tail bound under convex order.** If `μ ≼cx[a,b] ν`, then `(r - s) · μ[r, ∞) ≤ stopLoss ν s`
-for every hinge point `s` and threshold `r`. Optimizing over `s` gives a tight tail bound on the
-lower law in terms of the upper law's stop-loss transform. -/
-lemma mul_measureReal_Ici_le_stopLoss_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
-    (h : ConvexOrderOnIcc a b μ ν) (s r : ℝ) :
-    (r - s) * μ.toMeasure.real (Ici r) ≤ ν.toMeasure.stopLoss s := by
-  have hμ_int : Integrable (fun x : ℝ => x) μ.toMeasure :=
-    ProbDist.integrable_id_of_supportsOn_Icc h.support_left
-  exact le_trans (Measure.mul_measureReal_Ici_le_stopLoss hμ_int s r)
-    (stopLoss_le_of_convexOrderOnIcc h s)
-
 /-- **Upper integrated-quantile inequality under convex order.** For compact-supported
 `μ ≼cx[a,b] ν` and `t ∈ (0, 1]`, the upper integrated quantile of `μ` is at most that of `ν`. -/
-theorem upperIntegratedQuantile_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
+private theorem upperIntegratedQuantile_le_of_convexOrderOnIcc {a b : ℝ} {μ ν : ProbDist ℝ}
     (h : ConvexOrderOnIcc a b μ ν) {t : ℝ} (ht : t ∈ Set.Ioc (0 : ℝ) 1) :
     (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile μ.toMeasure u) ≤
     (∫ u in Set.Ioc t 1, MeasureTheory.Measure.quantile ν.toMeasure u) := by
