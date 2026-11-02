@@ -2956,3 +2956,940 @@ boundary, memory and recursive observation under the full original
 operations remains unresolved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 9. Indexed acquisition on the entire stationary native Read menu
+
+### 9.1 The actual generator and its indexed restrictions
+
+Throughout §§9–14, assume Definition 5.1 and Assumption 5.2: public
+finite $N\ge4$, $k=15N$, the actual graphs
+$E_i$ of Proposition 3.2, both complete once-shared injections, the
+stationary original root, and no additional source port. Fix public
+$\theta\in[0,1]$. Every conditional statement below is restricted to
+positive-probability evidence under this very prior. Specific results
+requiring unread indices impose their additional bounds on $N$.
+
+**Definition 9.1 (complete shared generator and labelled edges).** Put
+$\mathcal L=\{0,1\}^7$, $\mathcal R=\{0,1\}^8$, and
+$\mathcal Y=\mathcal L\times\mathcal R$. The complete once-shared
+generator is $g=(i,\lambda,\varrho)$, including every value of both
+full injections, not just their observed coordinates or their cut sizes.
+Its finite prior $\pi_\theta$ assigns to each such $g$ the mass
+
+$$
+\pi_\theta(g)=\frac{w_i}{(128)_{72}(256)_{243}},\qquad
+w_0=1-\theta,\quad w_1=\theta.
+\tag{UJB.9001}
+$$
+
+Here $(Q)_r$ is the falling factorial. Let $\mathcal G_\theta$ be
+its positive-mass support. Transport the actual edge relation by the
+injections, writing
+
+$$
+\begin{aligned}
+\mathcal E_g&=\{(\lambda(a),\varrho(t)):(a,t)\in E_i\},\\
+p_g(y)&=\frac1M\mathbf1_{\{y\in\mathcal E_g\}},\qquad M=1944.
+\end{aligned}
+\tag{UJB.9002}
+$$
+
+Thus $|\mathcal E_g|=M$, with no multiplicities lost: Proposition 3.2's
+edge adapter is bijective and both label maps are injective. Given $g$,
+the originally prepared label pairs $Y_1,\ldots,Y_N$ are iid with law
+$p_g$. They are not new draws available to the observer. Their fifteen
+bits, concatenated in the original order, are exactly $z$ in (UJB.7702).
+
+An indexed cache $D$ consists of masks $m_j\subseteq[15]$ and acquired
+bit assignments $d_j\in\{0,1\}^{m_j}$, for $1\le j\le N$.
+Repeated information is entered once in this cache, while its invocation
+cost is counted every time. Define the label rectangle
+
+$$
+B_j(D)=\{y\in\mathcal Y:y|_{m_j}=d_j\},\qquad
+r_j(g;D)=\frac{|\mathcal E_g\cap B_j(D)|}{M}.
+\tag{UJB.9003}
+$$
+
+The rectangle can constrain arbitrary, overlapping or disjoint subsets
+of coordinates within a sample. Different samples keep their original
+indices even when their masks coincide. Empty masks have $r_j=1$.
+Let
+
+$$
+\begin{aligned}
+Z(D)&=\sum_g\pi_\theta(g)\prod_{j=1}^Nr_j(g;D),\\
+\pi_D(g)&=Z(D)^{-1}\pi_\theta(g)\prod_{j=1}^Nr_j(g;D),\\
+Q_{g,j,D}(y)&=
+ \frac{\mathbf1_{\{y\in\mathcal E_g\cap B_j(D)\}}}
+ {|\mathcal E_g\cap B_j(D)|}.
+\end{aligned}
+\tag{UJB.9004}
+$$
+
+Only $Z(D)>0$ caches are admitted. The last expression is needed only
+where $\pi_D(g)>0$, so every denominator used there is positive.
+The indexed acquired-law interface is
+
+$$
+\mathsf I_D(y_1,\ldots,y_N)
+ =\sum_g\pi_D(g)\prod_{j=1}^NQ_{g,j,D}(y_j).
+\tag{UJB.9005}
+$$
+
+It is a conditional law of the actual entire prepared array, not a table
+of accessible hidden values. The distinction between $\pi_D$ and the
+indexed factors $Q_{g,j,D}$ is essential for old-sample continuations.
+
+**Proposition 9.2 (native acquisition and continued conditioning).**
+For every attained finite native transcript, its source-dependent content
+is exactly a consistent indexed cache as above. Conditional on that
+transcript, the prepared-array law is (UJB.9005). For every further legal
+finite sequence of original-root Reads, including adaptive bounded
+stopping and repeats, (UJB.9005), the declared controller and its available
+control resources determine the complete continuation law. No whole
+label, endpoint or generator is supplied by a bit acquisition.
+
+Proof. Proposition 5.3 classifies every finite operand, not merely the
+canonical decoder operands. A constant reply makes no new restriction.
+For a nonconstant entry of (UJB.7705), its two possible replies are
+distinct, so the reply gives exactly the designated $z_b$, at sample
+$j=1+\lfloor(b-1)/15\rfloor$ and local coordinate
+$h=1+((b-1)\bmod15)$. Repeated consistent replies impose the same
+restriction; inconsistent replies describe a null event. These facts
+also apply to absences that are informative entries of the local table;
+fixed absences contribute no restriction. Conditional iid edge sampling
+then gives the likelihood $\prod_jr_j(g;D)$. Conditioning each sample
+on its own rectangle gives the product in (UJB.9005), proving the formula.
+
+For a fixed controller and fixed random seed, every complete attained
+transcript fixes its successive operands, stops, outputs and state
+updates. All arrays satisfying its cache follow that same transcript;
+all others fail a recorded reply. Thus its source likelihood is the
+cache indicator. With randomized installation or a measurable independent
+seed, the probability of the compatible controller choices is the same
+for every array satisfying this indicator. The joint conditional measure
+factors into (UJB.9005) and that transcript's conditional controller/seed
+measure. Because the array is finite, this argument uses finite sums
+and Radon–Nikodym identities; it does not condition on a zero-mass seed
+value. The identities hold almost surely for nondiscrete controller data.
+Assumption 5.2's independence from the whole hidden source is used here.
+
+For any next operand $w$, let $f_w(y_1,\ldots,y_N)$ be its actual reply
+from Proposition 5.3. A positive reply $v$ updates the array law by
+
+$$
+\mathsf I_{D'}(y)=
+ \frac{\mathbf1_{\{f_w(y)=v\}}\mathsf I_D(y)}
+ {\sum_x\mathbf1_{\{f_w(x)=v\}}\mathsf I_D(x)}.
+\tag{UJB.9006}
+$$
+
+The new cache is the old one with that earned bit added, or the unchanged
+cache for a constant/repeated reply. Summing along the actual controller
+transitions proves every finite continuation cylinder. Measurable
+independent controller mixtures preserve the identity, as does bounded
+stopping. Controller state, retained query cursor, available seed,
+operands, permission contract and output maps remain explicit inputs to
+this pushforward. Two different controllers do not acquire equal output
+laws merely because their source interfaces agree. $\square$
+
+### 9.2 Recovering laws, rather than hidden realizations
+
+**Theorem 9.3 (actual-source four-view law correspondence).** Fix $N$,
+$\theta$ and the same source access and continuation-controller convention.
+On positive histories the following objects determine one another:
+
+1. The conditional prepared-array law $\mathsf I_D$.
+2. The conditional law of the current ordered endpoint $F_1(z)$.
+3. The conditional law of its oriented material support $S_0$.
+4. The conditional law of its terminal-address boundary $B_0$.
+5. The conditional law of its labelled generation partial order.
+6. The family of conditional transcript laws for all finite original-root
+   Read continuations with declared common controllers.
+
+The last object is a family indexed by protocols, including the decoder,
+not one experiment's marginal reply law. At a fixed public mask
+$m=(m_1,\ldots,m_N)$, the acquired assignments $d$ and $\mathsf I_D$
+also recover one another on their realized images. This additional
+cache recovery has exactly that fixed-mask scope.
+
+Proof. Proposition 5.3 supplies an injection $z\mapsto F_1(z)$ and its
+full-promise inverse, together with the source-to-support, boundary and
+labelled-order inverses. We reuse those maps, AA17.2–17.3's local LAB
+correspondences, and FARG §9's ordered parsing and path-read separation;
+we do not replace local LAB by FARG's global simultaneous substitution.
+Pushing a finite probability law through each bijection and its inverse
+proves mutual recovery of objects 1–5, including probabilities outside
+one source's support if they occur in the promised family.
+
+Proposition 9.2 maps object 1 to object 6. Conversely object 6 includes
+Proposition 5.3's fixed $k$-Read decoder, whose complete replies biject
+with $z$. Its law therefore recovers object 1. This also proves the
+precise minimality statement: a deterministic summary sufficient for
+all those continuation laws must distinguish unequal $\mathsf I_D$;
+$\mathsf I_D$ attains that behavior/law quotient. No cardinality or
+whole-memory optimum is implied.
+
+At a fixed mask, each acquired bit has a Dirac marginal under
+$\mathsf I_D$, located at its acquired value. Reading those marginals
+recovers every $d_j$, and (UJB.9003)–(UJB.9005) give the inverse map.
+If $s_m$ positive assignments occur on this fixed mask, their exact
+interface values need and admit $\lceil\log_2s_m\rceil$ fixed-width
+naming bits. This names an interface value with the public mask supplied;
+it does not pay for retaining the mask or implementing its decoder.
+When the mask varies, an already forced bit can be acquired again without
+changing the law. The law then does not recover which invocations
+occurred, their order, their cost, or which forced bits were explicitly
+read. No variable-mask cache inverse follows. $\square$
+
+The generation order in object 5 is the labelled precedence relation,
+not the actual chosen serial extension. These law inverses neither
+identify the realized endpoint from an unacquired law nor recover the
+realized $i$, either injection, the sampled group elements or an actual
+preparation chronology. The source may have multiple latent realizations
+of the same array. Equality of posterior laws is likewise distinct from
+having observed the hidden variable itself.
+
+**Proposition 9.4 (lawful reindexing and actual address costs).**
+A public permutation of sample indices, separate public permutations of
+the seven left and eight right coordinates, and fixed public bit flips
+induce a bijection $T$ of arrays and indexed caches. The actual prior
+array law is invariant under $T$, for every $\theta\in[0,1]$, and
+
+$$
+\mathsf I_{TD}=T_\#\mathsf I_D.
+\tag{UJB.9007}
+$$
+
+These are exact law transports with translated operands and evidence;
+they are not physical source edits or free navigation. Every bit requested
+at local coordinate $h$ of sample $j$ has the actual decoder operand
+
+$$
+b(j,h)=15(j-1)+h,\qquad
+w_{j,h}=R^{b(j,h)-1}LL,\qquad |w_{j,h}|=b(j,h)+1.
+\tag{UJB.9008}
+$$
+
+Proof. Sample permutations preserve the conditional iid law. Coordinate
+permutations and flips are bijections of each full label alphabet, so
+postcomposition preserves the uniform law of the entire injection.
+Transform the whole maps and all samples together; independently
+redrawing a coordinate would not be this bijection. Transforming the
+conditioning rectangles proves (UJB.9007).
+
+For an arbitrary informative operand $q_bu$, transform its slot to the
+new $b'$. If the bit is flipped, exchange the first letter of its
+nonempty local suffix $u$: $L\leftrightarrow R$, $LL\leftrightarrow RL$,
+and $LR\leftrightarrow RR$. The table (UJB.7705) verifies that this
+exactly compensates the flip in the reply. Constant spine, slot-root,
+long-absent and marker replies remain their known constants. Thus the
+translation covers the full native menu. The translated informative
+operand has length $b'+|u|$, not its old slot's length. For the standard
+bit decoder this is (UJB.9008). Its evaluation on $Ty$ agrees with the
+old evaluation on $y$; executing the translated query on the original
+array instead requests the correspondingly changed task.
+
+For any actual invocation list $w_1,\ldots,w_t$, charge $t$ invocations,
+$\sum_s|w_s|$ literal operand symbols and $\max_s|w_s|$ maximum operand
+length. The set of distinct earned bits describes the cache, not that
+invocation list's cost. Scanning all $k$ standard operands has the costs
+in Proposition 5.3; scanning only a new mask uses the corresponding
+subsum of $b+1$, and every repeated invocation still counts.
+
+A source-independent observer can retain $15N$ mask flags and at most
+$15N$ acquired values, in addition to its controller description,
+counters, addresses and workspace, and update this cache with each
+reply. The public graph and
+prior descriptions then define finite sums for its predictions. For a
+rational prior these sums can in principle be evaluated by exhaustive
+finite enumeration and rational arithmetic; the injection enumeration
+alone has $2(128)_{72}(256)_{243}$ terms before any array calculation.
+For arbitrary real $\theta$ the displayed laws are mathematical maps,
+not an effective exact-real oracle. No efficiency follows. The external
+preparation remains exactly $75N+4$ native $P/S$ events, besides edge
+sampling, selecting/storing both full maps, source storage and handoff.
+Observer computation, input, output, controller, seed, navigation,
+retention and any physical service costs are separate resource axes.
+$\square$
+
+## 10. Equal complete generator posteriors can lose old-sample association
+
+### 10.1 A positive witness on both actual graphs
+
+**Theorem 10.1 (strict indexed association witness).** For any fixed
+$N\ge4$ and $\theta\in[0,1]$, read $A$ coordinate 1 and $T$
+coordinate 1 in samples $1,\ldots,4$, obtaining $00$ in every sample.
+Also read left coordinate 2 in those four samples. Consider its two
+ordered patterns
+
+$$
+h=(0,0,1,1),\qquad h'=(0,1,0,1).
+\tag{UJB.10001}
+$$
+
+Both full acquired histories are positive under each actual source.
+They have the same old fixed-cut count $(4,0,0,0)$ and the identical
+posterior distribution of the complete generator $g=(i,\lambda,\varrho)$.
+Nevertheless their joint continuation laws differ when only previously
+unread coordinates of the old samples 1 and 2 are queried.
+
+Proof. For each $g$, let $a_g$ and $b_g$ be the probabilities of the
+two masks
+
+$$
+(A_1,A_2,T_1)=(0,0,0),\qquad (0,1,0),
+$$
+
+respectively. Each history's likelihood at this very same $g$ is
+$a_g^2b_g^2$. Hence their generator posteriors agree pointwise, not just
+after projection to $i$ or to a cut statistic. Denote their common law
+by $\eta$. Where it has mass, $a_g,b_g>0$.
+
+Let $V_j=(A_{j,3},\ldots,A_{j,7},T_{j,2},\ldots,T_{j,8})$ be the
+remaining twelve bits at sample $j$. Let $u_g$ and $v_g$ be its laws
+under those two masks. Given $g$, distinct samples remain independent.
+Thus the same continuation event $\{V_1=V_2\}$ has probabilities
+
+$$
+P_h=\mathbb E_\eta\|u_g\|_2^2,\qquad
+P_{h'}=\mathbb E_\eta\langle u_g,v_g\rangle.
+\tag{UJB.10002}
+$$
+
+Flipping coordinate 2 in every left label preserves the prior of the
+full injections, exchanges $a_g,b_g$ and $u_g,v_g$, and preserves
+$a_g^2b_g^2$. Consequently
+
+$$
+P_h-P_{h'}=\frac12\mathbb E_\eta\|u_g-v_g\|_2^2.
+\tag{UJB.10003}
+$$
+
+Here the event compares the same unread reply words in both histories;
+it is not a comparison of differently conditioned marginal pages.
+To prove strictness and positivity in the actual source, take
+
+$$
+a_0=((1,0),(0,0)),\quad a_1=((0,1),(0,0)),\quad
+ t_0=((0,0,0),(0,0)).
+\tag{UJB.10004}
+$$
+
+The two pairs $(a_0,t_0),(a_1,t_0)$ are edges of both $E_i$ by their
+actual bilinear formulas. Assign the seven-bit labels of $a_0,a_1$ the
+binary integers $0$ and $33$ (most significant coordinate first), and
+leave label $32$ unused. Extend to a full injection by assigning the
+remaining left vertices, in lexicographic order, the first $70$ unused
+integers other than $32$. Assign $t_0$ right label $0$ and the remaining
+right vertices the integers $1,\ldots,242$ in lexicographic order.
+These are legal complete injections with positive actual probability.
+
+Their first edge belongs to the first mask and their second to the
+second mask, so $a_g,b_g>0$. At the all-zero twelve-bit suffix the
+first conditional law is positive, while the second is zero: the latter
+would require the unused left label $32$. Hence $u_g\ne v_g$ on a
+positive-mass generator in each actual source. Repeating these actual
+edges in the pattern required by either history proves that history's
+positive probability. Equation (UJB.10003) is strictly positive for
+each unmixed prior and every mixture, proving all assertions. $\square$
+
+The supplier `posterior_future_policy_universal_sufficiency` assumes
+a future-response law indexed by policy and latent state, with no
+additional history argument. With $\mathit{Theta}=g$, the $h$-dependent
+old-slot factors
+$Q_{g,j,D}$ cannot be discarded. Taking $\mathit{Theta}$ to include
+the entire prepared array does give a history-independent deterministic
+Read function, which is exactly the bridge proved in §9. A posterior
+on the shared generator suffices for wholly unread samples, but not
+for samples already constrained in different indexed ways.
+
+### 10.2 What the response law recovers
+
+**Proposition 10.2 (recoverable collision law and paid continuation).**
+For either history in Theorem 10.1, the joint law of $(V_1,V_2)$
+determines the law of the typed endpoint-equality relation on samples
+1 and 2 after their labels are completed. It also determines the suffix
+collision probabilities in (UJB.10002). Neither law identifies their
+realized named endpoints, generator, or realized collision outcome.
+
+Proof. Combine the known three prefix bits per sample with $V_j$.
+This recovers their complete observed label pairs. Injectivity gives
+
+$$
+a_1=a_2\iff\lambda(a_1)=\lambda(a_2),\qquad
+t_1=t_2\iff\varrho(t_1)=\varrho(t_2).
+\tag{UJB.10005}
+$$
+
+Thus equality of the appropriate complete words is a deterministic
+pushforward of the joint response. Under $h$, full edge equality is
+exactly $V_1=V_2$; under $h'$ it is impossible because the acquired
+left second bits differ. These are statements of collision laws, not
+an inversion from equality to named vertices. At an actual execution,
+completing the words yields the realized equality test. Before such
+execution the probability law supplies no actual outcome. Even after
+it, Proposition 3.2's named edge inverse is unavailable: the full maps
+are not known, and no group-operation port has been granted.
+
+The acquired past uses coordinates $1,8,2$ in each of four samples:
+$12$ invocations, total literal length $326$, maximum $54$.
+Completing the twelve remaining coordinates in each of samples 1 and 2
+uses $24$ more invocations, length sum $422$, maximum $31$.
+All numbers follow by summing (UJB.9008). No observed bit is queried
+in this separating continuation. $\square$
+
+For the lexicographic injections in (UJB.10004), the first/second
+mask edge counts are
+$(447,449)$ in $E_0$ and $(458,438)$ in $E_1$. Their squared suffix-law
+differences are respectively $716/200703$ and $367/100302$.
+These are positive contributions to (UJB.10003), not evaluations of its
+full posterior average. Every such generator has positive prior mass
+when its source has positive prior mass; the theorem's strictness
+therefore includes $\theta=0$ and $1$ without numerical approximation.
+
+## 11. Separate coordinate pages do not supply their joint continuation
+
+### 11.1 Conditioning each page on its declared evidence
+
+**Definition 11.1 (two separate prediction pages).** Use $N\ge8$.
+Page $r\in\{1,2\}$ acquires only left coordinate $r$ in samples
+$1,\ldots,4$. Its evidence is the ordered four-bit word $H_r$ and its
+summary $S_r$ is the number of zeros in that word. Its declared consumer
+is the law of left coordinate $r$ on any selection of wholly unread
+sample indices, conditional on $H_r$ alone. Neither page observes the
+other coordinate, a right bit, or a paired old-slot continuation.
+
+For each fixed source, a fresh endpoint $a_j$ is uniform on $A$, since
+every vertex has degree $27$. Conditional on the complete left
+injection, this page has iid Bernoulli parameter
+$L_r/72$, where $L_r=|\{a:\lambda(a)_r=0\}|$. A four-bit word with
+$n$ zeros has likelihood $(L_r/72)^n(1-L_r/72)^{4-n}$. Thus $S_r$
+is sufficient for exactly its declared consumer. This proof integrates
+over the unobserved coordinates and right injection; it never
+conditions the page's law on evidence the page did not acquire.
+
+**Theorem 11.2 (strict actual cross-coordinate obstruction).** Both
+combined histories
+
+$$
+\begin{array}{c|cc}
+ &H_1&H_2\\\hline
+c&(0,0,1,1)&(0,0,1,1)\\
+c'&(0,0,1,1)&(1,1,0,0)
+\end{array}
+\tag{UJB.11001}
+$$
+
+have strictly positive actual probability under both sources. Each
+has $(S_1,S_2)=(2,2)$, so the two page summaries and their page-specific
+predictive laws agree. Nevertheless, conditional on the full combined
+evidence in each row, the joint continuation reading left coordinates
+1 and 2 in samples $5,\ldots,8$ has different laws. This remains true
+for every $\theta\in[0,1]$.
+
+Proof. For a full injection put $n_{uv}=|\{a:\lambda(a)_{1,2}=uv\}|$
+and $q_{uv}=n_{uv}/72$. Its actual support is all integer vectors
+
+$$
+0\le n_{uv}\le32,\qquad \sum_{uv}n_{uv}=72,
+\tag{UJB.11002}
+$$
+
+with probability
+
+$$
+\omega(n)=\frac{\prod_{uv}\binom{32}{n_{uv}}}{\binom{128}{72}}.
+\tag{UJB.11003}
+$$
+
+Indeed the image of the uniform full injection is a uniform $72$-subset
+of the $128$ labels, partitioned into four buckets of size $32$.
+Each possible image has the same $72!$ assignments to the actual
+vertices. Consequently (UJB.11003) is the actual injection pushforward,
+not an arbitrary categorical prior. Right labels and the index $i$
+integrate out because the observed samples have uniform left endpoints.
+Given this injection, the paired left-coordinate observations are iid
+with parameter $q$.
+
+Write $p(q)=q_{00}^2q_{11}^2$ and $r(q)=q_{01}^2q_{10}^2$.
+Their expectations under $\omega$ agree, by flipping the second label
+coordinate; call the common positive value $Z$. For the fixed ordered
+future word $e=(00,00,11,11)$ the two conditional probabilities differ
+by
+
+$$
+\Pr(e\mid c)-\Pr(e\mid c')
+ =\frac{\mathbb E[p^2]-\mathbb E[pr]}Z
+ =\frac{\mathbb E[(p-r)^2]}{2Z}>0.
+\tag{UJB.11004}
+$$
+
+Strictness holds at the actual bucket vector $(16,16,16,24)$:
+all its cells are positive, it satisfies (UJB.11002), and
+$16^2\,24^2\ne16^4$. Assign that many distinct labels from the four
+buckets to any corresponding partition of the $72$ actual left
+vertices and extend to the full right injection. Regular degrees
+supply actual edges at each vertex, so each row of (UJB.11001) has
+positive probability in either graph. The same full-injection law
+works under any source prior, including its endpoints. $\square$
+
+For explicit rational values, let $\mathcal N$ be the $22109$ vectors
+in (UJB.11002). Summing the displayed finite hypergeometric weights gives
+
+$$
+\begin{aligned}
+Z&=\frac{1318541}{333298800},\\
+\Pr(e\mid c)&=\frac{59793742630939}{13730035262017536},\\
+\Pr(e\mid c')&=\frac{32023312367}{8938825040376},\\
+\Pr(e\mid c)-\Pr(e\mid c')
+ &=\frac{10605934835227}{13730035262017536}>0.
+\end{aligned}
+\tag{UJB.11005}
+$$
+
+These numbers refer to one ordered future word, with no multinomial
+factor. They are independent of $i$ and $\theta$ for the stated reason,
+not because the full graphs have been replaced. The same support
+contains the positive $125$-point grid
+$(16+x,16+y,16+z,24-x-y-z)$, $x,y,z\in\{0,\ldots,4\}$.
+
+### 11.2 Joint evidence and recoverable continuation laws
+
+**Proposition 11.3 (joint-count recovery for the actual paired-coordinate task).**
+Let $H=(H_1,H_2)$ range over positive combined evidence of a fixed
+public acquisition schedule, and let $K(H)$ be its requested joint
+continuation law. A decoder from the two page summaries exists exactly
+when
+
+$$
+(S_1(H_1),S_2(H_2))=(S_1(H'_1),S_2(H'_2))
+ \ \Longrightarrow\ K(H)=K(H')
+\tag{UJB.11006}
+$$
+
+for all such histories. For the actual paired-coordinate task above,
+retaining the four joint counts $n^{\rm past}_{uv}$ repairs the loss:
+the full-evidence likelihood is $\prod q_{uv}^{n^{\rm past}_{uv}}$,
+and its finite conditional ratios supply every wholly unread
+paired-coordinate sequence. For arbitrary partial reads and old slots,
+the indexed rectangles of Definition 9.1 supply the sufficient repair.
+
+Proof. A decoder implies constancy on every summary fiber. Conversely
+choose the common law on each realized fiber; this is well-defined
+exactly under (UJB.11006). This is the existing abstract factorization
+principle, not a new factorization theorem. Its actual premise fails
+by Theorem 11.2 and is restored for the stated unread consumer by the
+joint likelihood just displayed. In the general native task the repair
+is (UJB.9003)–(UJB.9006): each new coordinate must be conjoined with the
+other restrictions at its actual sample index before counting compatible
+edges. Multiplying page marginals does not count those intersections.
+
+The paired past in (UJB.11001) costs eight invocations, length sum $200$,
+maximum $48$; the displayed future costs eight, length sum $680$,
+maximum $108$. Each coordinate is one actual original-root operand.
+Joint counting can be performed after the second half of each actual
+pair, retaining its unmatched first reply and sample cursor until then.
+The unmatched reply and cursor are additional retained data; their
+retention and the joint-count computation are separate resource costs. $\square$
+
+The page summaries are not asserted sufficient for the full combined
+conditioning event. Their failure is precisely that upgrade. Joint
+counts here do not repair old-slot replay, supply unread coordinates
+of partly constrained samples, or inherit §8's $35$-value bound.
+
+## 12. Predictive support closure of complete labels and its partial-read composition
+
+### 12.1 Complete histories have a constant edge likelihood
+
+**Definition 12.1 (version set and support closure).** Fix a public set
+$C\subseteq[N]$ of completed samples, whose entire fifteen-bit labels
+$y_j$ were actually acquired. Write $D_C=\{y_j:j\in C\}$ as a set
+of distinct label pairs. The version set and its closure are
+
+$$
+\begin{aligned}
+\mathcal V(D_C)&=\{g\in\mathcal G_\theta:D_C\subseteq\mathcal E_g\},\\
+\operatorname{cl}_\theta(D_C)
+ &=\bigcap_{g\in\mathcal V(D_C)}\mathcal E_g.
+\end{aligned}
+\tag{UJB.12001}
+$$
+
+Only nonempty version sets are admitted. Closure means forced presence
+in every still possible labelled edge relation, not a topological
+completion or reachability closure on the material tree. It depends
+on the positive support of the actual prior; at $\theta=0,1$ only
+that source's full injections are in $\mathcal G_\theta$.
+
+**Theorem 12.2 (sharp complete-label predictive closure).** Suppose all
+samples outside $C$ are wholly unread, and $U=[N]\setminus C$ is
+nonempty. For fixed $C,N,\theta$, the following determine one another
+on the positive-history image:
+
+- $\operatorname{cl}_\theta(D_C)$;
+- the law $P_C$ of the next full label pair at any designated $u\in U$;
+- the indexed joint law of all the still unread samples $Y_U$.
+
+More precisely,
+
+$$
+\begin{aligned}
+\pi(g\mid y_C)&=
+ \frac{\pi_\theta(g)\mathbf1_{\{g\in\mathcal V(D_C)\}}}
+ {\pi_\theta(\mathcal V(D_C))},\\
+P_C(y)&=\frac1M\Pr(g\in\mathcal G_\theta:
+                           y\in\mathcal E_g\mid y_C),\\
+\operatorname{cl}_\theta(D_C)&=\{y:P_C(y)=1/M\}.
+\end{aligned}
+\tag{UJB.12002}
+$$
+
+Thus equality of closures is exactly equality of these unread-sample
+laws, not merely a sufficient condition. No observed label multiplicity,
+chronological order or original-slot assignment is recovered by this
+equivalence.
+
+Proof. At each $g$ the likelihood of the particular ordered completed
+history is $M^{-|C|}\mathbf1_{\{D_C\subseteq\mathcal E_g\}}$.
+The constant cancels in conditioning, proving the first line. Repeats
+have the same factor $1/M$ per occurrence, which is why their
+multiplicity disappears only after conditioning; they are not removed
+from the original sample law.
+
+Every compatible $g$ contains the intersection in (UJB.12001), and
+$D_C$ is a subset of that intersection. Hence
+
+$$
+\mathcal V(D_C)
+ =\mathcal V(\operatorname{cl}_\theta(D_C)).
+\tag{UJB.12003}
+$$
+
+Closure is consequently extensive, monotone and idempotent on this
+positive domain. It reconstructs the version set and hence the complete
+conditional generator law using the fixed public prior. That law gives
+$\sum_g\pi(g\mid y_C)\prod_{u\in U}p_g(y_u)$, proving recovery of
+the full unread law, whose marginal gives $P_C$.
+
+Conversely each $p_g(y)$ is either $0$ or exactly $1/M$, and every
+$g$ in the version set retains strictly positive conditional mass.
+Its average reaches $1/M$ exactly when every such $g$ contains $y$.
+This proves the last line of (UJB.12002), and completes both inverse
+directions. The equal nonzero edge mass is crucial: a general weighted
+latent mixture does not recover its version set from a saturated
+one-step law in this way. $\square$
+
+If $C$ is empty, this proof still applies, with the public prior and
+its initial closure. If $U$ is empty there is no next unread sample and
+the unread-array law is the singleton empty-product law. It determines
+closure on a chosen history domain exactly when closure is constant
+on that domain. This is the precise exception to the inverse, not an
+implicit permission to create a fresh sample. On the full completed
+history domain it is not constant: repeat a label edge $y$ in every
+sample, or repeat $y'$ with a different left label. Both are positive;
+there is a full injection realizing $y'$ while omitting $y$'s left
+label, so $y$ belongs to the first closure and not the second.
+
+### 12.2 Partially acquired samples keep their own likelihoods
+
+**Theorem 12.3 (weighted partial composition and effective closure).**
+Partition $[N]=C\sqcup P\sqcup U$. Samples in $C$ are complete;
+each sample in $P$ has a specified nonempty proper mask and acquired
+assignment; every sample in $U$ has an empty mask. Fix these index
+sets, the entire indexed partial cache $D_P$, and $N,\theta$.
+For a positive combined history set
+
+$$
+\begin{aligned}
+W_P(g)&=\prod_{j\in P}r_j(g;D_P),\\
+\mathcal V_P(D_C)&=\{g\in\mathcal V(D_C):W_P(g)>0\},\\
+C_P(D_C)&=\bigcap_{g\in\mathcal V_P(D_C)}\mathcal E_g.
+\end{aligned}
+\tag{UJB.12004}
+$$
+
+If $U\ne\varnothing$, the effective closure $C_P(D_C)$, the next
+full-label law on a designated $u\in U$, and the joint law of all
+$Y_U$ determine one another, **with the indexed partial cache held
+fixed**. The closure and that cache also determine all continuations
+on partly acquired samples and their joint law with $Y_U$.
+The unweighted complete-history closure together with $D_P$ is
+another sufficient representation, but is not asserted recoverable
+from the next-label law.
+
+Proof. Direct conditioning of the same actual source gives
+
+$$
+\pi(g\mid y_C,D_P)
+ \ \propto\ \pi_\theta(g)
+       \mathbf1_{\{D_C\subseteq\mathcal E_g\}}W_P(g).
+\tag{UJB.12005}
+$$
+
+It has positive support exactly $\mathcal V_P(D_C)$, which is nonempty
+by positivity of the history. As in (UJB.12003),
+
+$$
+\mathcal V_P(D_C)
+ =\{g\in\mathcal G_\theta:C_P(D_C)\subseteq\mathcal E_g,
+                                      \ W_P(g)>0\}.
+\tag{UJB.12006}
+$$
+
+Indeed $D_C\subseteq C_P(D_C)$ proves right-to-left inclusion;
+left-to-right follows from the definition of the intersection.
+Thus $C_P$ and the fixed actual $W_P$ reconstruct both the support
+and the weights in (UJB.12005). The still unread sample law is again
+an average of products of $p_g$. Its next-label marginal is bounded
+by $1/M$, with saturation set exactly $C_P$. The proof of Theorem
+12.2 therefore gives both inverse directions verbatim for this
+weighted, fixed-partial-cache domain.
+
+For $j\in P$ use $Q_{g,j,D_P}$ in (UJB.9004), not $p_g$.
+Their product with the unread $p_g$ factors, mixed under (UJB.12005),
+gives the joint law of all unfinished and unread samples. Already
+read bits at those partial indices have their fixed values, so rereads
+and completions are also supplied. The complete-history closure first
+recovers $\mathcal V(D_C)$ by (UJB.12003); attaching $W_P$ supplies
+(UJB.12005), proving the other sufficient representation. $\square$
+
+This composition has three necessary scope qualifications. First,
+allowing $D_P$ to vary without retaining it loses its index association
+and weights; Theorem 10.1 demonstrates that even the whole generator
+posterior then fails for old-slot completion. Second, these closure
+inverses consume at least one wholly unread sample, with its entire
+label law available as a mathematical object. When $U$ is empty the
+unread consumer is constant, even if partly acquired samples remain;
+no inverse from that constant is claimed. Third, $C_P$ or the
+unread law does not recover the assigned completed labels at each old
+index in $C$. To extend to the full native menu, keep those indexed
+completed labels as well; replay reads return them deterministically.
+Equations (UJB.12005)–(UJB.12006) and those indexed values then recover
+$\mathsf I_D$. Conversely $\mathsf I_D$ at the fixed total mask
+recovers the whole cache by Theorem 9.3. All masks and values arise
+by the paid native process, rather than by a free latent-state input.
+
+For dynamic use, partial acquisition adds its actual rectangle
+restriction and reweights by (UJB.9006). On completing a sample,
+move its index from $P$ to $C$, delete its former partial likelihood
+factor and replace it by the exact complete-label constraint with
+factor $1/M$. The deleted factor must not also be retained as an
+independent observation. Equivalently retain the entire indexed cache
+and recompute (UJB.9004); it gives the same law. Moving a wholly
+unread index into $P$ is likewise an actual new Read, not an external
+resampling step. This specifies legal updates through every sample
+completion boundary while preserving the old-slot restrictions.
+
+## 13. Transporting future readouts does not transport past evidence for free
+
+### 13.1 Actual full-label evidence and its coarsening
+
+**Theorem 13.2 (full-label evidence versus its missing first bit).**
+For any $N\ge4$ and $\theta\in[0,1]$, completely read sample 1.
+Write its left label as $(B,u)$ with $u\in\{0,1\}^6$, and its right
+label as $v\in\{0,1\}^8$. The full past is $H=(B,u,v)$ and its
+coarsening is $C=(u,v)$. The future response is $X=\lambda(a_2)_1$,
+a previously unread bit of the second prepared sample. Every full
+past has positive probability, and for each fixed $u,v$,
+
+$$
+\begin{aligned}
+\Pr(X=0\mid B=0,u,v)&=\frac{575}{1143},\\
+\Pr(X=0\mid B=1,u,v)&=\frac{568}{1143},\\
+\Pr(X=0\mid u,v)&=\frac12.
+\end{aligned}
+\tag{UJB.13003}
+$$
+
+This fails the fiber condition for the legal first-bit future readout
+at every one of these coarsened-past fibers, even with $i$ known.
+
+Proof. We use the following finite conditional-law identities and the
+image-factorization principle cited in §14.1 within this actual-source
+calculation.
+
+Let $H$ be a finite acquired history, $X$ a named finite future response
+under a declared protocol, and $K(h)=\mathcal L(X\mid H=h)$ on its
+positive domain in the actual source. Let $W$ be a public future-readout
+map, and let $C=c(H)$ coarsen the past. At each fixed full past $h$,
+
+$$
+\mathcal L(W(X)\mid H=h)=W_\#K(h).
+\tag{UJB.13001}
+$$
+
+The history-specific transported law is recoverable from $c(h)$ exactly
+when $W_\#K$ is constant on every positive $c$-fiber. Conditioning on
+the coarsened past instead always gives the mixture
+
+$$
+\mathcal L(W(X)\mid C=c)
+ =\sum_{h:c(h)=c}\Pr(H=h\mid C=c)\,W_\#K(h).
+\tag{UJB.13002}
+$$
+
+Both formulas hold for a fixed public stochastic readout channel as
+well, by summing its rows. They do not license a new physical readout
+port: the named response must be an actual native protocol or declared
+postprocessing of one.
+
+Sum the finite joint law over each readout fiber for (UJB.13001),
+and then over the histories in the evidence fiber for (UJB.13002).
+Constancy is sufficient by assigning its common law to each fiber,
+and necessary because a decoder has one output per coarsened value.
+This reuses abstract image factorization; the substantive test is which
+fibers the actual source permits and which target laws vary there.
+A conditional mean of different laws in (UJB.13002) does not provide
+the realized $h$-specific law.
+For the stated first-bit task, $W$ is the identity and $c$ forgets $B$.
+It remains to compute the actual conditional laws on each coarse fiber.
+
+Fix any actual first edge. Its two assigned labels are independent
+uniform elements of their full alphabets, so
+$\Pr_i(H=(B,u,v))=1/(128\cdot256)>0$ for both sources. Conditional
+on this edge and its complete labels, the rest of the full left
+injection is a uniform injection avoiding its one used label. The
+next left endpoint is uniform on $72$ vertices. It equals the first
+one with probability $1/72$, and otherwise its label is uniform among
+the $127$ remaining labels. Therefore, if $B=0$,
+
+$$
+\Pr(X=0\mid H)
+ =\frac1{72}+\frac{71}{72}\frac{63}{127}
+ =\frac12+\frac7{2286}=\frac{575}{1143}.
+\tag{UJB.13004}
+$$
+
+If $B=1$ the value is $(71/72)(64/127)=568/1143$.
+The argument is unchanged by the right label: after the chosen first
+edge, it imposes no restriction on the unassigned left labels. More
+formally, for any fixed first edge the conditional left-injection
+extension has exactly this same distribution, so mixing over possible
+first edges or source indices preserves the result.
+
+Flipping the first coordinate of the whole left injection is a
+probability-preserving bijection fixing $u,v$ and exchanging the two
+values of $B$. Thus $B$ is conditionally fair given $C$, and averaging
+the first two probabilities gives $1/2$. This is the actual mixture
+(UJB.13002), not the full-past pushforward (UJB.13001). The two
+history-specific probabilities differ by $7/1143>0$. $\square$
+
+### 13.2 Recoverable refinement and acquisition costs
+
+**Corollary 13.3 (the additional relation for the named combined task).**
+At a fixed public coarsened value $(u,v)$, retaining the coarsened record
+and its realized full-past-specific first-bit prediction law requires
+and admits two distinct supplemental names. The missing relation can
+be carried by the earned bit $B$, or by that two-valued law name. It
+is one fixed-width naming bit for this task with $(u,v)$ supplied,
+not one bit of total observer memory or a bound for the full native menu.
+
+Proof. Theorem 13.2 supplies two distinct law values in the same positive
+fiber, proving the two-name lower bound. Retaining $B$ attains it by
+(UJB.13003). More generally, to pass from coarse evidence $C$ to a
+specified refinement $B$, one needs its joint relation with the target:
+
+$$
+\Pr(X=x\mid C=c,B=b)
+ =\frac{\Pr(X=x,B=b\mid C=c)}{\Pr(B=b\mid C=c)}
+\tag{UJB.13005}
+$$
+
+where the denominator is positive. Separate laws of $B\mid C$ and
+$X\mid C$ omit that relation. Here (UJB.13003) makes $B$ conditionally
+fair and $X$ conditionally fair but not conditionally independent.
+An indexed acquired interface supplies this joint relation for each
+actually retained refinement; forgetting the refinement changes the
+prediction task. $\square$
+
+The full past costs fifteen actual invocations, operand lengths
+$2,\ldots,16$, sum $135$, maximum $16$. Acquiring only its coarsening
+costs fourteen, lengths $3,\ldots,16$, sum $133$; acquiring the full
+past and later forgetting $B$ still costs fifteen. The next bit is
+$w_{2,1}=R^{15}LL$, length $17$, costing one more invocation.
+These are three different acquisition histories even where their
+retained coarse records coincide. Restricting a future label readout
+to this bit at the fixed full past is ordinary lawful postprocessing;
+replacing the full past by its fourteen-bit coarsening is a different
+conditioning event. Neither operation identifies the hidden endpoint.
+
+## 14. Supplier correspondences and recovery domains
+
+### 14.1 Scoped mathematical suppliers
+
+The group/edge adapter, all three $w$ coordinates in both sources,
+full-injection law, native preparation and complete operand
+classification are those of §§3–5. FARG §9 supplies ordered term
+serialization and all-path separation; AA17.2–17.3 supply the material
+support, boundary and local-generation partial-order inverses used by
+Proposition 5.3. FARG's global simultaneous substitution and AA17's
+local $P/S$ generation are distinct operations. Theorem 9.3 uses the
+bijections instantiated in Proposition 5.3 to transport probability laws.
+
+For image factorization and separation of unequal target laws, the
+repository suppliers are
+`CausalStateFactorization.causal_state_factorization` and
+`PredictiveStateUniversalMinimality.predictive_state_universal_minimality`.
+For latent-state sufficiency, the supplier
+`PosteriorFuturePolicySufficiency.posterior_future_policy_universal_sufficiency`
+assumes a future PMF indexed by policy and latent state without an
+extra history argument. With latent state $g$, the old-slot factors
+$Q_{g,j,D}$ retain that extra dependence; with latent state the entire
+prepared array, the Read response is history-independent, as in §9.
+
+[Shalizi and Crutchfield, *Computational Mechanics: Pattern and Prediction,
+Structure and Simplicity*, arXiv:cond-mat/9907176v2](https://arxiv.org/html/cond-mat/9907176v2),
+Definition 5, equation (16), Lemma 7 and Theorem 2, supply conditional
+future-law equivalence and its refinement/minimality principle under
+their stationary-process and almost-sure entropy hypotheses. The
+finite-law factorization in §§9, 11 and 13 uses equality of the declared
+conditional continuation laws; it does not identify entropy with a
+finite fixed-width cache size or substitute an entire-past domain for
+the indexed old-slot access domain.
+
+[Aldous, *Exchangeability and Related Topics*, §2, printed pp. 9–10
+(PDF pp. 11–12), equations (2.1)–(2.2)](https://www.stat.berkeley.edu/~aldous/Papers/me22.pdf),
+Lecture Notes in Mathematics 1117, pp. 1–198, gives the two-stage
+construction that first selects a distribution and then samples iid
+from it, with finite-dimensional laws equal to mixtures of products.
+Here the distribution is $p_g$ from (UJB.9002), with $g$ sampled by the
+full-injection prior (UJB.9001) and the original independent edge
+samples. This construction is a premise of the actual source, rather
+than a converse inferred from finite exchangeability. The observation
+domain contains only the $N$ prepared samples. The saturation inverse
+in §12 uses the additional equal nonzero edge mass $1/M$ and positive
+support conditions proved there.
+
+### 14.2 Domains of the recovery correspondences
+
+For fixed $N,\theta$, the conditional law of the indexed constraints
+on one prepared array, together with the declared controller resources,
+determines all stationary original-root Read continuation laws. Its
+correspondence with endpoint, material-space, boundary and labelled
+generation-order laws is Theorem 9.3. The additional inverse to the
+acquired assignments holds on each fixed public mask. Invocation order,
+repeats and cost are not determined by that law when masks vary.
+
+For wholly unread labels, §12's smaller support-closure representation
+is equivalent to the unread-sample law when at least one unread sample
+remains, with the partial cache held fixed in Theorem 12.3. The indexed
+partial cache and the assigned completed labels are retained for
+continuations on old slots. If there is no unread sample, the unread
+law is the constant empty-product law, and its closure inverse holds
+exactly on domains with constant closure. Combining coordinate pages
+or refining past evidence uses the joint relations in §§11 and 13.
+
+These correspondences are between conditional laws on the stated
+finite source and native operation domains. A law is distinct from a
+realized endpoint, an inaccessible latent realization, or a chosen
+serial generation history. Fixed-width names for law values are
+distinct from total observer storage and computation. Source
+acquisition, conditional-law computation and actual realization have
+the separate resource costs stated in §§9–13. No equivalence with
+additional source ports, evolving source operations or physical
+spacetime is assumed.
+
+## 追加锚（本行以下为增补区）
