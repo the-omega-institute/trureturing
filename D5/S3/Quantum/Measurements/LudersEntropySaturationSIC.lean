@@ -42,26 +42,7 @@ private theorem unitary_pure_ext {d : ℕ} [NeZero d]
       dsimp [p]
       rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
         PEquiv.mul_toMatrix_toPEquiv]
-      ext a b
-      simp only [Matrix.submatrix_apply, Function.id_def, Equiv.swap_inv,
-        Equiv.symm_swap, Matrix.single]
-      have ha : (0 : Fin d) = (Equiv.swap 0 i) a ↔ i = a := by
-        constructor
-        · intro hzero
-          simpa using congrArg (Equiv.swap (0 : Fin d) i) hzero
-        · intro hai
-          rw [← hai]
-          simp
-      have hb : (0 : Fin d) = (Equiv.swap 0 i) b ↔ i = b := by
-        constructor
-        · intro hzero
-          simpa using congrArg (Equiv.swap (0 : Fin d) i) hzero
-        · intro hbi
-          rw [← hbi]
-          simp
-      change (if 0 = (Equiv.swap 0 i) a ∧ 0 = (Equiv.swap 0 i) b then (1 : ℂ) else 0) =
-        if i = a ∧ i = b then 1 else 0
-      simp only [ha, hb]
+      simp [Matrix.submatrix_single_equiv]
     have hv : v.1 * Matrix.single 0 0 1 * v.1ᴴ =
         u.1 * Matrix.single i i 1 * u.1ᴴ := by
       change (u.1 * p) * Matrix.single 0 0 1 * (u.1 * p)ᴴ = _
