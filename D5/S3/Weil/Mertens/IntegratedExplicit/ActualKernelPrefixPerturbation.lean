@@ -662,7 +662,7 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
       Set.inter_eq_right.mpr (Icc_subset_Icc_left hln)]
   have hbase : IntegrableOn (fun s : ℝ => base₂ s * actualCorr x a s) (Icc 0 D) := by
     apply Continuous.integrableOn_Icc
-    exact (by fun_prop).mul (corr_continuous x a ha)
+    exact (show Continuous base₂ by fun_prop).mul (corr_continuous x a ha)
   have hcomb : (fun s : ℝ => base₂ s * actualCorr x a s + ∑ n ∈ active D N, w n s) =ᵐ[
       volume.restrict (Icc 0 D)] (fun s => (remainder s / 4 - Real.exp (s / 2)) * actualCorr x a s) := by
     filter_upwards [ae_restrict_mem measurableSet_Icc] with s hs
@@ -744,7 +744,7 @@ theorem actual_remainder_correlation_identity (D : ℝ) (hD : 0 ≤ D)
         ∑ n ∈ active D N, ∫ s in Icc (Real.log n) D, smooth₂ n s * actualCorr x a s) := by
     rw [hrep, Complex.add_re, show (∑ n ∈ active D N, Q x a (clipped (Real.log n) (smooth n))).re =
       ∑ n ∈ active D N, (Q x a (clipped (Real.log n) (smooth n))).re from
-        map_sum Complex.reAddGroupHom _ _, base_corr D hD x a ha hdiam]
+        map_sum Complex.reCLM _ _, base_corr D hD x a ha hdiam]
     simp_rw [Finset.sum_congr rfl hterm, Finset.sum_sub_distrib, ← Finset.mul_sum]
     ring
   rw [complete_curvature_integral D hD N hN x a ha, active_eq_Icc D N hN] at hsum
