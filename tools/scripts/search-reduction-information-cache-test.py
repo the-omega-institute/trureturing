@@ -72,7 +72,7 @@ def main():
     FIXTURE.parent.mkdir(parents=True, exist_ok=True)
     FIXTURE.write_text(fixture_original.read_text().replace(
         "LeanInformationAuditFibTests.AuricFib.LawFixture", FIXTURE_MODULE))
-    original = (f"module\npublic import {FIXTURE_MODULE}\npublic section\n"
+    original = (f"import {FIXTURE_MODULE}\n"
         "namespace LeanInformationAudit.Tests.SearchReduction.InformationCacheApplication\n"
         "open LeanInformationAudit.AuricFib.Contract\n"
         f"open {FIXTURE_MODULE}\n"
@@ -157,16 +157,18 @@ def main():
         SOURCE.write_bytes(original)
         if sha(SOURCE) != expected_source:
             raise RuntimeError("application fixture source restoration failed")
-        build("restored-build")
+        try:
+            build("restored-build")
+        finally:
+            (directory / "application.lean").write_bytes(original)
+            (directory / "target.lean").write_bytes(FIXTURE.read_bytes())
+            SOURCE.unlink()
+            FIXTURE.unlink()
+            FIXTURE.parent.rmdir()
         if identities[-1]["compiled"] != identities[0]["compiled"]:
             raise RuntimeError("compiled application restoration changed bytes")
         if len({row["target_sha256"] for row in identities}) != 1:
             raise RuntimeError("application mutation changed the mathematical target artifact")
-        (directory / "application.lean").write_bytes(original)
-        (directory / "target.lean").write_bytes(FIXTURE.read_bytes())
-        SOURCE.unlink()
-        FIXTURE.unlink()
-        FIXTURE.parent.rmdir()
         (directory / "result.json").write_text(json.dumps(dict(checks=checks,
             identities=identities, observations=observations, request_sha256=sha(request),
             restored_source_sha256=expected_source), indent=2) + "\n")
