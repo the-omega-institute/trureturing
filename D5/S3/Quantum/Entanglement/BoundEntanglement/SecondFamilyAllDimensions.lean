@@ -13,6 +13,7 @@ import Mathlib.LinearAlgebra.Matrix.Permutation
 
 set_option autoImplicit false
 open scoped BigOperators
+open Matrix
 
 namespace D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
 
@@ -96,19 +97,19 @@ private theorem cyclic_shift_factor (d : ℕ) (h : 2 ≤ d) (i j k : Fin d) :
   constructor
   · intro hk
     apply (ZMod.finEquiv d).injective
+    delta cyclicShiftEquiv cyclicShift at hk
     have hk' := congrArg (ZMod.finEquiv d) hk
     have hsum : (ZMod.finEquiv d i) + (ZMod.finEquiv d k) =
         ZMod.finEquiv d j := by
-      delta cyclicShiftEquiv cyclicShift at hk'
       simpa [hp] using hk'
     delta cyclicMu
     simp [hp]
     exact (eq_sub_iff_add_eq).2 (by simpa [add_comm] using hsum)
   · intro hk
     apply (ZMod.finEquiv d).injective
+    delta cyclicMu at hk
     have hk' := congrArg (ZMod.finEquiv d) hk
     have hsub : (ZMod.finEquiv d k) = ZMod.finEquiv d j - ZMod.finEquiv d i := by
-      delta cyclicMu at hk'
       simpa [hp] using hk'
     delta cyclicShiftEquiv cyclicShift
     simpa [hp] using
@@ -180,9 +181,11 @@ private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
     change (∑ j : Fin d,
       star (if i + j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
         (if i + j = n then (Real.sqrt d : ℂ)⁻¹ else 0)) = _
-    rw [Equiv.sum_comp (Equiv.addLeft i) (fun j : Fin d =>
+    have he := Equiv.sum_comp (Equiv.addLeft i) (fun j : Fin d =>
       star (if j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
-        (if j = n then (Real.sqrt d : ℂ)⁻¹ else 0))]
+        (if j = n then (Real.sqrt d : ℂ)⁻¹ else 0))
+    simp only [Equiv.coe_addLeft] at he
+    rw [he]
     by_cases hmn : m = n
     · subst n
       simp [← pow_two]
@@ -229,6 +232,7 @@ theorem result : claim := by
   intro d hd
   exact ⟨cyclicQ d, cyclicQbar d, cyclicMu d, cyclicS d, cyclicShield d,
     cyclic_data d hd⟩
+
 
 
 end
