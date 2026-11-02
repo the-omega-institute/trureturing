@@ -413,4 +413,3 @@ theorem full_remainder_fixed_charge_vectors
       (h_full_remainder_fixed_charge_basis_raises F B H hHG hGH p)⟩⟩
 
 end D5.S3.VertexAlgebra.LatticeBRSTFullOriginalRaising
-
