@@ -13,9 +13,8 @@ import Mathlib.Tactic
 
 /-!
 The second-order continuation keeps the literal strict comparison at every real clock.
-The only new analytic scale is the moving second-layer cutoff.  The source attempt below
-uses the existing MediumPNT, the existing first-layer comparison, and the existing
-third-layer envelope; it does not add a PNT/RH/JY hypothesis.
+The moving second-layer cutoff is controlled by MediumPNT, the first-layer
+comparison, and the third-layer envelope.
 -/
 
 namespace D5.S3.Arith.Robin.EulerLayerRootSecondOrder
@@ -30,8 +29,9 @@ noncomputable section
 
 /-- A canonical choice of the root of `x^2 log x = t log t` when it exists.
 The fallback is never used by the asymptotic statements, whose thresholds are >2. -/
-noncomputable def second_cutoff_root (t : ℝ) : ℝ :=
-  if h : ∃ x : ℝ, 1 < x ∧ x ^ 2 * Real.log x = t * Real.log t then
+private noncomputable def second_cutoff_root (t : ℝ) : ℝ := by
+  classical
+  exact if h : ∃ x : ℝ, 1 < x ∧ x ^ 2 * Real.log x = t * Real.log t then
     Classical.choose h
   else 2
 
@@ -91,7 +91,7 @@ private theorem second_cutoff_root_spec {t : ℝ} (ht : 2 ≤ t) :
   have hchosen : 1 < second_cutoff_root t ∧
       (second_cutoff_root t) ^ 2 * Real.log (second_cutoff_root t) =
         t * Real.log t := by
-    rw [second_cutoff_root, dif_pos hexists]
+    rw [second_cutoff_root, dite_eq_left hexists]
     exact Classical.choose_spec hexists
   have hchoice : second_cutoff_root t = ρ :=
     second_cutoff_root_unique hchosen.1 hρ1 hchosen.2 hρeq
@@ -393,7 +393,7 @@ private theorem psi_after_sqrt_small :
       linarith
     have h := mul_le_mul_of_nonneg_left
       (div_le_div_of_nonneg_right hbound (Real.sqrt_nonneg t)) (Real.log_nonneg ht)
-    simpa only [add_div, mul_add] using h
+    simpa only [add_div, mul_add, one_div] using h
   · filter_upwards [eventually_ge_atTop (1 : ℝ)] with t ht
     have hcp : Chebyshev.psi t - Chebyshev.theta t ≤
         Chebyshev.psi (Real.sqrt t) + Chebyshev.psi (t ^ (1 / 3 : ℝ)) +
@@ -406,7 +406,7 @@ private theorem psi_after_sqrt_small :
       linarith
     have h := mul_le_mul_of_nonneg_left
       (div_le_div_of_nonneg_right hbound (Real.sqrt_nonneg t)) (Real.log_nonneg ht)
-    simpa only [add_div, mul_add] using h
+    simpa only [add_div, mul_add, one_div] using h
 
 /-- Exact second-layer bracket at a moving real cutoff. -/
 private theorem second_layer_cutoff_bracket :
@@ -432,103 +432,6 @@ private theorem second_layer_cutoff_bracket :
   have hρ0 : 0 < ρ := by linarith
   have hlogρ : 0 < Real.log ρ := Real.log_pos hρ1
   -- These are bounds for the literal marginal, not a replacement activation cut.
-/-- The explicit third-layer envelope is still negligible after multiplication
-by `log t`, uniformly before choosing the strict inventory. -/
-private theorem strict_inventory_third_layer_log_vanishing :
-    ∀ ε : ℝ, 0 < ε → ∃ T : ℝ, 1 < T ∧ ∀ t : ℝ, T ≤ t → ∀ U : ℕ, 0 < U →
-      (∀ q : ℕ, q.Prime →
-        U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) →
-      |Real.log t * (strict_inventory_third_layer_mass U / Real.sqrt t)| < ε := by
-  classical
-  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hlog2lower : (1 / 2 : ℝ) ≤ Real.log 2 := by
-    have h := Real.one_sub_inv_le_log_of_pos (by norm_num : (0 : ℝ) < 2)
-    norm_num at h ⊢
-    exact h
-  have hrootcoeff : (3 : ℝ) ^ (1 / 3 : ℝ) ≤ 3 := by
-    calc
-      (3 : ℝ) ^ (1 / 3 : ℝ) ≤ (3 : ℝ) ^ (1 : ℝ) :=
-        Real.rpow_le_rpow_of_exponent_le (by norm_num) (by norm_num)
-      _ = 3 := by norm_num
-  have hlogpow : Tendsto
-      (fun t : ℝ => Real.log t ^ 2 / t ^ (1 / 6 : ℝ)) atTop (𝓝 0) := by
-    simpa only [Real.rpow_two] using
-      (isLittleO_log_rpow_rpow_atTop (2 : ℝ)
-        (by norm_num : (0 : ℝ) < 1 / 6)).tendsto_div_nhds_zero
-  have hscale : ∀ᶠ t : ℝ in atTop,
-      Real.log t *
-        ((((3 * t) ^ (1 / 3 : ℝ) + 1) *
-          Real.log (t * Real.log t / Real.log 2)) / Real.sqrt t) ≤
-        12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ)) := by
-    filter_upwards [eventually_ge_atTop (2 : ℝ)] with t ht
-    have ht0 : 0 < t := by linarith
-    have hlogt : 0 < Real.log t := Real.log_pos (by linarith)
-    have hsqrt : 0 < Real.sqrt t := Real.sqrt_pos.2 ht0
-    have hargpos : 0 < t * Real.log t / Real.log 2 :=
-      div_pos (mul_pos ht0 hlogt) hlog2
-    have hargle : t * Real.log t / Real.log 2 ≤ 2 * t ^ 2 := by
-      apply (div_le_iff₀ hlog2).mpr
-      have hleft := mul_le_mul_of_nonneg_left (Real.log_le_self ht0.le) ht0.le
-      have hright := mul_le_mul_of_nonneg_left hlog2lower
-        (show 0 ≤ 2 * t ^ 2 by positivity)
-      nlinarith only [hleft, hright]
-    have hlogarg : Real.log (t * Real.log t / Real.log 2) ≤ 3 * Real.log t := by
-      calc
-        _ ≤ Real.log (2 * t ^ 2) := Real.log_le_log hargpos hargle
-        _ = Real.log 2 + 2 * Real.log t := by
-          rw [Real.log_mul (by norm_num) (by positivity), Real.log_pow]
-          norm_num
-        _ ≤ 3 * Real.log t := by
-          linarith [Real.log_le_log (by norm_num : (0 : ℝ) < 2) ht]
-    have hroot : (3 * t) ^ (1 / 3 : ℝ) + 1 ≤ 4 * t ^ (1 / 3 : ℝ) := by
-      rw [Real.mul_rpow (by norm_num) ht0.le]
-      have htroot : 1 ≤ t ^ (1 / 3 : ℝ) :=
-        Real.one_le_rpow (by linarith) (by norm_num)
-      have hmul := mul_le_mul_of_nonneg_right hrootcoeff
-        (show 0 ≤ t ^ (1 / 3 : ℝ) by positivity)
-      linarith only [hmul, htroot]
-    have hnum : ((3 * t) ^ (1 / 3 : ℝ) + 1) *
-        Real.log (t * Real.log t / Real.log 2) ≤
-        12 * t ^ (1 / 3 : ℝ) * Real.log t := by
-      calc
-        _ ≤ ((3 * t) ^ (1 / 3 : ℝ) + 1) * (3 * Real.log t) :=
-          mul_le_mul_of_nonneg_left hlogarg (by positivity)
-        _ ≤ (4 * t ^ (1 / 3 : ℝ)) * (3 * Real.log t) :=
-          mul_le_mul_of_nonneg_right hroot (by positivity)
-        _ = 12 * t ^ (1 / 3 : ℝ) * Real.log t := by ring
-    have hpower : Real.sqrt t = t ^ (1 / 3 : ℝ) * t ^ (1 / 6 : ℝ) := by
-      rw [Real.sqrt_eq_rpow, ← Real.rpow_add ht0]
-      norm_num
-    calc
-      _ ≤ Real.log t * ((12 * t ^ (1 / 3 : ℝ) * Real.log t) / Real.sqrt t) :=
-        mul_le_mul_of_nonneg_left
-          (div_le_div_of_nonneg_right hnum hsqrt.le) hlogt.le
-      _ = 12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ)) := by
-        rw [hpower]
-        field_simp [ne_of_gt (Real.rpow_pos_of_pos ht0 (1 / 3 : ℝ)),
-          ne_of_gt (Real.rpow_pos_of_pos ht0 (1 / 6 : ℝ))]
-        <;> ring
-  have hlimit : Tendsto
-      (fun t : ℝ => 12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ))) atTop (𝓝 0) := by
-    simpa only [mul_zero] using hlogpow.const_mul 12
-  intro ε hε
-  obtain ⟨T, hT⟩ := eventually_atTop.mp ((hlimit.eventually_lt_const hε).and hscale)
-  refine ⟨max T 2, lt_of_lt_of_le (by norm_num) (le_max_right _ _), ?_⟩
-  intro t ht U hU hstrict
-  have ht2 : 2 ≤ t := (le_max_right T 2).trans ht
-  have hsqrt : 0 < Real.sqrt t := Real.sqrt_pos.2 (by linarith)
-  have hlogt : 0 < Real.log t := Real.log_pos (by linarith)
-  have hmass_nonneg : 0 ≤ strict_inventory_third_layer_mass U := by
-    unfold strict_inventory_third_layer_mass
-    exact Finset.sum_nonneg fun q _ =>
-      mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg q)
-  rw [abs_of_nonneg (mul_nonneg hlogt.le (div_nonneg hmass_nonneg hsqrt.le))]
-  have hweighted := mul_le_mul_of_nonneg_left
-    (div_le_div_of_nonneg_right
-      (strict_inventory_third_layer_bound ht2 hU hstrict) hsqrt.le) hlogt.le
-  have hT' := hT t ((le_max_left T 2).trans ht)
-  exact hweighted.trans_lt (hT'.2.trans_lt hT'.1)
-
   have hmarginal (q : ℕ) (hq : q.Prime) :
       1 / (((q : ℝ) ^ 2 + q + 1) * Real.log q) ≤
         D5.S3.Arith.GoldenResourceOptimalInteger.goldenLayerMarginal q 2 ∧
@@ -646,6 +549,103 @@ private theorem strict_inventory_third_layer_log_vanishing :
     · intro q _ _
       exact Real.log_natCast_nonneg q
   exact ⟨ρ, hρlo, hρhi, hρeq, hlower, hupper⟩
+
+/-- The explicit third-layer envelope is still negligible after multiplication
+by `log t`, uniformly before choosing the strict inventory. -/
+private theorem strict_inventory_third_layer_log_vanishing :
+    ∀ ε : ℝ, 0 < ε → ∃ T : ℝ, 1 < T ∧ ∀ t : ℝ, T ≤ t → ∀ U : ℕ, 0 < U →
+      (∀ q : ℕ, q.Prime →
+        U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) →
+      |Real.log t * (strict_inventory_third_layer_mass U / Real.sqrt t)| < ε := by
+  classical
+  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hlog2lower : (1 / 2 : ℝ) ≤ Real.log 2 := by
+    have h := Real.one_sub_inv_le_log_of_pos (by norm_num : (0 : ℝ) < 2)
+    norm_num at h ⊢
+    exact h
+  have hrootcoeff : (3 : ℝ) ^ (1 / 3 : ℝ) ≤ 3 := by
+    calc
+      (3 : ℝ) ^ (1 / 3 : ℝ) ≤ (3 : ℝ) ^ (1 : ℝ) :=
+        Real.rpow_le_rpow_of_exponent_le (by norm_num) (by norm_num)
+      _ = 3 := by norm_num
+  have hlogpow : Tendsto
+      (fun t : ℝ => Real.log t ^ 2 / t ^ (1 / 6 : ℝ)) atTop (𝓝 0) := by
+    simpa only [Real.rpow_two] using
+      (isLittleO_log_rpow_rpow_atTop (2 : ℝ)
+        (by norm_num : (0 : ℝ) < 1 / 6)).tendsto_div_nhds_zero
+  have hscale : ∀ᶠ t : ℝ in atTop,
+      Real.log t *
+        ((((3 * t) ^ (1 / 3 : ℝ) + 1) *
+          Real.log (t * Real.log t / Real.log 2)) / Real.sqrt t) ≤
+        12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ)) := by
+    filter_upwards [eventually_ge_atTop (2 : ℝ)] with t ht
+    have ht0 : 0 < t := by linarith
+    have hlogt : 0 < Real.log t := Real.log_pos (by linarith)
+    have hsqrt : 0 < Real.sqrt t := Real.sqrt_pos.2 ht0
+    have hargpos : 0 < t * Real.log t / Real.log 2 :=
+      div_pos (mul_pos ht0 hlogt) hlog2
+    have hargle : t * Real.log t / Real.log 2 ≤ 2 * t ^ 2 := by
+      apply (div_le_iff₀ hlog2).mpr
+      have hleft := mul_le_mul_of_nonneg_left (Real.log_le_self ht0.le) ht0.le
+      have hright := mul_le_mul_of_nonneg_left hlog2lower
+        (show 0 ≤ 2 * t ^ 2 by positivity)
+      nlinarith only [hleft, hright]
+    have hlogarg : Real.log (t * Real.log t / Real.log 2) ≤ 3 * Real.log t := by
+      calc
+        _ ≤ Real.log (2 * t ^ 2) := Real.log_le_log hargpos hargle
+        _ = Real.log 2 + 2 * Real.log t := by
+          rw [Real.log_mul (by norm_num) (by positivity), Real.log_pow]
+          norm_num
+        _ ≤ 3 * Real.log t := by
+          linarith [Real.log_le_log (by norm_num : (0 : ℝ) < 2) ht]
+    have hroot : (3 * t) ^ (1 / 3 : ℝ) + 1 ≤ 4 * t ^ (1 / 3 : ℝ) := by
+      rw [Real.mul_rpow (by norm_num) ht0.le]
+      have htroot : 1 ≤ t ^ (1 / 3 : ℝ) :=
+        Real.one_le_rpow (by linarith) (by norm_num)
+      have hmul := mul_le_mul_of_nonneg_right hrootcoeff
+        (show 0 ≤ t ^ (1 / 3 : ℝ) by positivity)
+      linarith only [hmul, htroot]
+    have hnum : ((3 * t) ^ (1 / 3 : ℝ) + 1) *
+        Real.log (t * Real.log t / Real.log 2) ≤
+        12 * t ^ (1 / 3 : ℝ) * Real.log t := by
+      calc
+        _ ≤ ((3 * t) ^ (1 / 3 : ℝ) + 1) * (3 * Real.log t) :=
+          mul_le_mul_of_nonneg_left hlogarg (by positivity)
+        _ ≤ (4 * t ^ (1 / 3 : ℝ)) * (3 * Real.log t) :=
+          mul_le_mul_of_nonneg_right hroot (by positivity)
+        _ = 12 * t ^ (1 / 3 : ℝ) * Real.log t := by ring
+    have hpower : Real.sqrt t = t ^ (1 / 3 : ℝ) * t ^ (1 / 6 : ℝ) := by
+      rw [Real.sqrt_eq_rpow, ← Real.rpow_add ht0]
+      norm_num
+    calc
+      _ ≤ Real.log t * ((12 * t ^ (1 / 3 : ℝ) * Real.log t) / Real.sqrt t) :=
+        mul_le_mul_of_nonneg_left
+          (div_le_div_of_nonneg_right hnum hsqrt.le) hlogt.le
+      _ = 12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ)) := by
+        rw [hpower]
+        field_simp [ne_of_gt (Real.rpow_pos_of_pos ht0 (1 / 3 : ℝ)),
+          ne_of_gt (Real.rpow_pos_of_pos ht0 (1 / 6 : ℝ))]
+        <;> ring
+  have hlimit : Tendsto
+      (fun t : ℝ => 12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ))) atTop (𝓝 0) := by
+    simpa only [mul_zero] using hlogpow.const_mul 12
+  intro ε hε
+  obtain ⟨T, hT⟩ := eventually_atTop.mp ((hlimit.eventually_lt_const hε).and hscale)
+  refine ⟨max T 2, lt_of_lt_of_le (by norm_num) (le_max_right _ _), ?_⟩
+  intro t ht U hU hstrict
+  have ht2 : 2 ≤ t := (le_max_right T 2).trans ht
+  have hsqrt : 0 < Real.sqrt t := Real.sqrt_pos.2 (by linarith)
+  have hlogt : 0 < Real.log t := Real.log_pos (by linarith)
+  have hmass_nonneg : 0 ≤ strict_inventory_third_layer_mass U := by
+    unfold strict_inventory_third_layer_mass
+    exact Finset.sum_nonneg fun q _ =>
+      mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg q)
+  rw [abs_of_nonneg (mul_nonneg hlogt.le (div_nonneg hmass_nonneg hsqrt.le))]
+  have hweighted := mul_le_mul_of_nonneg_left
+    (div_le_div_of_nonneg_right
+      (strict_inventory_third_layer_bound ht2 hU hstrict) hsqrt.le) hlogt.le
+  have hT' := hT t ((le_max_left T 2).trans ht)
+  exact hweighted.trans_lt (hT'.2.trans_lt hT'.1)
 
 /-- Transport the logarithmic theta error along a moving root-scale endpoint. -/
 private theorem theta_endpoint_second_order (x : ℝ → ℝ)

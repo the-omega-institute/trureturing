@@ -16,9 +16,6 @@ noncomputable section
 
 abbrev rootSecondOrderScope := type_of% (@strict_inventory_root_second_order)
 
-theorem source_root_second_order : rootSecondOrderScope :=
-  @strict_inventory_root_second_order
-
 abbrev rootSecondOrderSignature : Signature where
   Params := ℝ
   State _ := ℕ
@@ -60,13 +57,13 @@ private theorem root_second_order_rejected_law :
   obtain ⟨T, hT, hbad⟩ := h (1 / 2) (by norm_num)
   let t : ℝ := max T (Real.exp 1)
   have htT : T ≤ t := le_max_left _ _
-  have ht1 : 1 < t := lt_of_lt_of_le (by positivity) (le_max_right _ _)
+  have ht1 : 1 < t := lt_of_lt_of_le (Real.one_lt_exp_iff.mpr (by norm_num)) (le_max_right _ _)
   have hprice : 0 < 1 / (t * Real.log t) :=
     one_div_pos.mpr (mul_pos (by linarith) (Real.log_pos ht1))
   obtain ⟨U, hU, hcounts, _⟩ := optimal_layer_count_spec hprice
   have hh := hbad t htT U (by omega) (fun q _ => hcounts q)
   change |Real.sqrt 2| < (1 / 2 : ℝ) at hh
-  have hsqrt : 1 ≤ Real.sqrt 2 := by nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hsqrt : 1 ≤ Real.sqrt 2 := by nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), Real.sqrt_nonneg (2 : ℝ)]
   linarith
 
 def rootSecondOrderFamily : Registration rootSecondOrderArena rootSecondOrderScope where
@@ -96,9 +93,7 @@ def rootSecondOrderFamily : Registration rootSecondOrderArena rootSecondOrderSco
       linarith
     exact hlog2 this.symm
 
-/-- The typed source mirror deliberately records the unresolved source-selection
-coordinates for the nested epsilon/T/t/U/q telescope.  It is an audit attempt,
-not a declared-valid registration. -/
+/-- The readout selects the complete residual under the original absolute value. -/
 def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@strict_inventory_root_second_order) (Realization rootSecondOrderSignature) Type Unit where
   unitName := `D5.S3.Arith.Robin.EulerLayerRootSecondOrder.strict_inventory_root_second_order.audit
@@ -121,8 +116,14 @@ def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.EulerLayerRootSecondOrder
     definition := none
-    coordinates := #[]
-    readouts := #[] }
+    coordinates := #[3]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "body", "body", "body",
+        "body", "body", "fn", "arg", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
