@@ -28,7 +28,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula C => F.Id("c");
     private static Formula J => F.Id("j");
-    private static Formula Iota => F.Id("ι");
+    private static Formula Iota => F.Iota;
     private static Formula Coeff => Pow(Seq(Mathbb, Grp(F.Id("C"))), Iota);
     private static Formula SumC => Seq(Sum, Underscore, Grp(J, InMacro, Iota), Sub(C, J));
     private static Formula XRef => Sub(X, Sub(F.Id("i"), D(0)));
