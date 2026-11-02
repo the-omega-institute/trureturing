@@ -117,8 +117,10 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
     DensityState (Fin d) := by
   classical
   by_cases he : IsMIC d e
-  · refine ⟨D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u), ?_, ?_⟩
-    · change 0 ≤ CStarMatrix.ofMatrix (D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u))
+  · refine ⟨D5.S3.Observer.Conditioning.unreadState
+      (fun i => CFC.sqrt (e i)) (inputProjector u), ?_, ?_⟩
+    · change 0 ≤ CStarMatrix.ofMatrix (D5.S3.Observer.Conditioning.unreadState
+        (fun i => CFC.sqrt (e i)) (inputProjector u))
       refine map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
         (Matrix.nonneg_iff_posSemidef.mpr ?_)
       rw [D5.S3.Observer.Conditioning.unreadState]
@@ -130,7 +132,8 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
         simpa (config := { congrConsts := false }) [Matrix.star_eq_conjTranspose] using
           (CFC.sqrt_nonneg (e i)).isSelfAdjoint.star_eq
       simpa (config := { congrConsts := false }) [hs, Matrix.mul_assoc] using hterm
-    · rw [show D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) =
+    · rw [show D5.S3.Observer.Conditioning.unreadState
+          (fun i => CFC.sqrt (e i)) (inputProjector u) =
           ∑ i, CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i) by rfl,
         Matrix.trace_sum]
       calc
@@ -177,7 +180,8 @@ noncomputable def typicalEntropy (d : ℕ) [NeZero d]
 private theorem luders_state_density {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
     (u : Matrix.unitaryGroup (Fin d) ℂ) (he : IsMIC d e) :
-    (ludersState e u).1 = D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) := by
+    (ludersState e u).1 = D5.S3.Observer.Conditioning.unreadState
+      (fun i => CFC.sqrt (e i)) (inputProjector u) := by
   rw [ludersState]
   simp (config := { congrConsts := false }) [he]
   rfl
@@ -187,8 +191,8 @@ private theorem sigma_log {d : ℕ} [NeZero d]
     CFC.log (sigmaState u).1 = CStarMatrix.ofMatrix
       ((-Real.log (d + 1)) • (1 : Matrix (Fin d) (Fin d) ℂ) +
         Real.log 2 • inputProjector u) := by
-  haveI : Nontrivial (CStarMatrix (Fin d) (Fin d) ℂ) := inferInstance
-  haveI : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
+  have : Nontrivial (CStarMatrix (Fin d) (Fin d) ℂ) := inferInstance
+  have : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
     IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
   let k : ℝ := 1 / (d + 1)
   let p := inputProjector u
@@ -235,7 +239,8 @@ private theorem entropy_gap {d : ℕ} [NeZero d]
     Real.log (d + 1) - 2 / (d + 1) * Real.log 2 -
         vonNeumannEntropy (ludersState e u) =
       quantumRelativeEntropy (ludersState e u) (sigmaState u) +
-        ((Matrix.trace (inputProjector u * D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u))).re -
+        ((Matrix.trace (inputProjector u * D5.S3.Observer.Conditioning.unreadState
+          (fun i => CFC.sqrt (e i)) (inputProjector u))).re -
           2 / (d + 1)) * Real.log 2 := by
   rw [quantum_relative_entropy_eq_neg_entropy_sub_cross, sigma_log]
   have hr := (ludersState e u).2.2
@@ -247,17 +252,18 @@ private theorem entropy_gap {d : ℕ} [NeZero d]
   rw [Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
     Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, hr]
   simp (config := { congrConsts := false }) only [Complex.add_re, Complex.real_smul, Complex.mul_re,
-    Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, Complex.one_re,
-    Complex.one_im, mul_one]
+    Complex.ofReal_re, Complex.ofReal_im, mul_one]
   have hv : CStarMatrix.ofMatrix.symm (ludersState e u).1 =
-      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) := luders_state_density e u he
+      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) :=
+    luders_state_density e u he
   rw [Matrix.trace_mul_comm, hv]
   ring
 
 private theorem haar_second_moment {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) (he : IsMIC d e) :
     (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
-        (Matrix.trace (inputProjector u * D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u))).re ∂
+        (Matrix.trace (inputProjector u * D5.S3.Observer.Conditioning.unreadState
+          (fun i => CFC.sqrt (e i)) (inputProjector u))).re ∂
           (Measure.haarMeasure
             (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
       ((∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2) + d) /
@@ -298,8 +304,8 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
           CFC.sqrt (e i)).trace ∂mu) := integral_re (hi i)
       _ = _ := congrArg Complex.re hr
   change (∫ u, _ ∂mu) = _
-  simp (config := { congrConsts := false }) only [D5.S3.Observer.Conditioning.unreadState, Matrix.mul_sum,
-    Matrix.trace_sum, Complex.re_sum, ← Matrix.mul_assoc]
+  simp (config := { congrConsts := false }) only [D5.S3.Observer.Conditioning.unreadState,
+    Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum, ← Matrix.mul_assoc]
   have hir (i : Fin (d ^ 2)) : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       (inputProjector u * CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i)).trace.re) mu :=
     (Complex.continuous_re.comp (hc i)).integrable_of_hasCompactSupport
@@ -361,7 +367,7 @@ private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
     ((CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)ᴴ *
       (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)).trace.re / 2 ≤
         quantumRelativeEntropy rho sigma := by
-  haveI : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
+  have : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
     IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
   have hpsd (s : DensityState (Fin d)) : (CStarMatrix.ofMatrix.symm s.1).PosSemidef :=
     D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef s
@@ -413,7 +419,8 @@ private theorem continuous_luders_state {d : ℕ} [NeZero d]
     intro i hi
     exact (continuous_const.matrix_mul hp).matrix_mul continuous_const
   have hv : (fun u : Matrix.unitaryGroup (Fin d) ℂ => (ludersState e u).1) =
-      (fun u => CStarMatrix.ofMatrix (D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u))) :=
+      (fun u => CStarMatrix.ofMatrix (D5.S3.Observer.Conditioning.unreadState
+        (fun i => CFC.sqrt (e i)) (inputProjector u))) :=
     funext (fun u => luders_state_density e u he)
   rw [hv]
   exact CStarMatrix.ofMatrixL.continuous.comp hl
@@ -422,7 +429,7 @@ private theorem continuous_output_entropy {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) (he : IsMIC d e) :
     Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       vonNeumannEntropy (ludersState e u)) := by
-  haveI : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
+  have : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
     IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
   have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       cfc (fun x : ℝ => x * Real.log x) (ludersState e u).1) :=
@@ -454,7 +461,8 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
   let mu := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
   let t := ∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2
   let a := ∫ u : Matrix.unitaryGroup (Fin d) ℂ,
-    (inputProjector u * D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re ∂mu
+    (inputProjector u * D5.S3.Observer.Conditioning.unreadState
+      (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re ∂mu
   let b := Real.log (d + 1) - 2 / (d + 1) * Real.log 2
   have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
     (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
@@ -465,18 +473,21 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
   have hlv : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u)) := by
     have hv (u : Matrix.unitaryGroup (Fin d) ℂ) :
-        CStarMatrix.ofMatrix.symm (ludersState e u).1 = D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) :=
+        CStarMatrix.ofMatrix.symm (ludersState e u).1 = D5.S3.Observer.Conditioning.unreadState
+          (fun i => CFC.sqrt (e i)) (inputProjector u) :=
       luders_state_density e u he
     simpa (config := { congrConsts := false }) only [Function.comp_def, hv] using hl
   have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
-      (inputProjector u * D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re) :=
+      (inputProjector u * D5.S3.Observer.Conditioning.unreadState
+        (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re) :=
     Complex.continuous_re.comp (hp.matrix_mul hlv).matrix_trace
   have hs := continuous_output_entropy e he
   have hdc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       quantumRelativeEntropy (ludersState e u) (sigmaState u)) := by
     have hc0 : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
         b - vonNeumannEntropy (ludersState e u) -
-          ((inputProjector u * D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re -
+          ((inputProjector u * D5.S3.Observer.Conditioning.unreadState
+            (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re -
             2 / (d + 1)) * Real.log 2) :=
       (continuous_const.sub hs).sub ((hc.sub continuous_const).mul continuous_const)
     convert hc0 using 1
@@ -519,7 +530,8 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
   have heq : 0 = (∫ u, quantumRelativeEntropy (ludersState e u) (sigmaState u) ∂mu) +
       (a - 2 / (d + 1)) * Real.log 2 := by
     have hki : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
-        ((inputProjector u * D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re -
+        ((inputProjector u * D5.S3.Observer.Conditioning.unreadState
+          (fun i => CFC.sqrt (e i)) (inputProjector u)).trace.re -
           2 / (d + 1)) * Real.log 2) mu :=
       (hci.sub (integrable_const (2 / (d + 1 : ℝ)))).mul_const (Real.log 2)
     have hid := integral_congr_ae (μ := mu)
@@ -589,7 +601,8 @@ private theorem saturation_ae_luders_eq_sigma {d : ℕ} [NeZero d]
       2 / (d + 1) * Real.log 2) :
     ∀ᵐ u ∂(Measure.haarMeasure
       (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))),
-      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) = (sigmaState u).1 := by
+      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) =
+        (sigmaState u).1 := by
   filter_upwards [(saturation_remainders e he hsat).2] with u hu
   have hpd : (CStarMatrix.ofMatrix.symm (sigmaState u).1).PosDef := by
     change ((1 / (d + 1 : ℝ)) • (1 + inputProjector u)).PosDef
@@ -609,7 +622,8 @@ private theorem saturation_ae_luders_eq_sigma {d : ℕ} [NeZero d]
   have hx : x = 0 := Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp htr
   have heq := sub_eq_zero.mp hx
   have hv : CStarMatrix.ofMatrix.symm (ludersState e u).1 =
-      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) := luders_state_density e u he
+      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) :=
+    luders_state_density e u he
   rw [hv] at heq
   exact heq
 
@@ -619,7 +633,8 @@ private theorem saturation_everywhere_luders_eq_sigma {d : ℕ} [NeZero d]
     (hsat : typicalEntropy d e = Real.log (d + 1) -
       2 / (d + 1) * Real.log 2) :
     ∀ u : Matrix.unitaryGroup (Fin d) ℂ,
-      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) = (sigmaState u).1 := by
+      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) (inputProjector u) =
+        (sigmaState u).1 := by
   have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
     (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
       continuous_subtype_val.matrix_conjTranspose
@@ -648,12 +663,12 @@ private theorem depolarizing_identity {d : ℕ} [NeZero d]
     { toFun := D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i))
       map_add' := by
         intro x y
-        simp (config := { congrConsts := false }) only [D5.S3.Observer.Conditioning.unreadState, Matrix.mul_add,
-          Matrix.add_mul, Finset.sum_add_distrib]
+        simp (config := { congrConsts := false }) only [D5.S3.Observer.Conditioning.unreadState,
+          Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
       map_smul' := by
         intro c x
-        simp (config := { congrConsts := false }) only [D5.S3.Observer.Conditioning.unreadState, Matrix.mul_smul,
-          Matrix.smul_mul, Finset.smul_sum, RingHom.id_apply] }
+        simp (config := { congrConsts := false }) only [D5.S3.Observer.Conditioning.unreadState,
+          Matrix.mul_smul, Matrix.smul_mul, Finset.smul_sum, RingHom.id_apply] }
   let g : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ :=
     (1 / (d + 1 : ℂ)) •
       (LinearMap.id + (Matrix.traceLinearMap (Fin d) ℂ ℂ).smulRight 1)
@@ -696,7 +711,8 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
     norm_cast
     exact Real.mul_self_sqrt (hc i)
   have hexp (x : Matrix (Fin d) (Fin d) ℂ) :
-      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) x = ∑ i, (p i * x).trace • e i := by
+      D5.S3.Observer.Conditioning.unreadState (fun i => CFC.sqrt (e i)) x =
+        ∑ i, (p i * x).trace • e i := by
     unfold D5.S3.Observer.Conditioning.unreadState
     apply Finset.sum_congr rfl
     intro i hi
