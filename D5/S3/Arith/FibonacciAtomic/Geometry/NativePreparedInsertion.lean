@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Geometry/NativePreparedInsertion
    generality: G
-   mirror-B: none(waiver:unbounded-symbolic-proof)
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/NativePreparedInsertion
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -67,6 +67,10 @@ private theorem comb_run : ∀ (k : ℕ) (f : Fin k → Source) (tail u : Source
           Function.update, Fin.succ_ne_zero] using h
       · intro w hw
         have h := ih (fun i => f i.succ) tail u i w hw
+        have hu : Function.update (fun i => f i.succ) i u =
+            (fun a => if a = i then u else f a.succ) :=
+          funext (fun a => Function.update_apply _ _ _ a)
+        rw [hu] at h
         have h' := NativeGuardedLeafRepair.context_run (.right (f 0) .hole) h
         simpa [comb, slotAddress, OutputContext.plug, OutputContext.holeAddress,
           List.map_map, Function.comp_def, shift_shift, List.replicate_succ,
@@ -116,8 +120,16 @@ private theorem inserts_from (k : ℕ) (x : Fin k → Bool) (todo : List (Fin k)
         intro i hi
         simp only [List.mem_cons, not_or]
         exact ⟨fun he => (List.nodup_cons.mp hn).1 (he ▸ hi), hf i (by simp [hi])⟩)
-      have joined :=
-        (private_decl% NativeFreshSensorGrowth.run_append) hj ht
+      -- Reuse the original private composition proof without changing its frozen owner.
+      have joined : run (endpoint k x active)
+          (insertion x j ++ todo.flatMap (insertion x)) =
+          some (endpoint k x (todo ++ j :: active)) := by
+        run_tac
+          let decl := (Lean.Name.num
+            `_private.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth 0) ++
+            `D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.run_append
+          Lean.Elab.Tactic.evalTactic (← `(tactic| exact $(Lean.mkIdent decl)
+            $(Lean.mkIdent `hj) $(Lean.mkIdent `ht)))
       have he : endpoint k x (todo ++ j :: active) =
           endpoint k x ((j :: todo) ++ active) := by
         unfold endpoint
@@ -139,19 +151,23 @@ theorem prepared_insertion (k : ℕ) (x : Fin k → Bool) (order : List (Fin k))
   have h0 : endpoint k x [] = comb k (fun _ => C) M := by simp [endpoint]
   rw [h0, List.append_nil] at h
   constructor
-  · exact
-    (private_decl% NativeFreshSensorGrowth.run_append)
-      (prepares k).1 h
+  · have hp := (prepares k).1
+    run_tac
+      let decl := (Lean.Name.num
+        `_private.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth 0) ++
+        `D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.run_append
+      Lean.Elab.Tactic.evalTactic (← `(tactic| exact $(Lean.mkIdent decl)
+        $(Lean.mkIdent `hp) $(Lean.mkIdent `h)))
   · have hi (j : Fin k) : (insertion x j).length = 2 := by
       simp only [insertion, List.length_map]
       cases x j <;> rfl
-    have ht : (order.flatMap (insertion x)).length = 2 * order.length := by
-      induction order with
+    have ht (l : List (Fin k)) : (l.flatMap (insertion x)).length = 2 * l.length := by
+      induction l with
       | nil => rfl
       | cons j order ih =>
           simp only [List.flatMap_cons, List.length_append, hi,
             List.length_cons, ih]
           omega
-    rw [List.length_append, (prepares k).2, ht]
+    rw [List.length_append, (prepares k).2, ht order]
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativePreparedInsertion
