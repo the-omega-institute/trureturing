@@ -1,5 +1,8 @@
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.Information.QubitNormalFormState
+import D5.S3.QuantumBounds.CHSHWitness
+
+/-! Transient exact checks of the source construction, with no retention claim. -/
 
 open Matrix
 open scoped BigOperators ComplexOrder Kronecker
@@ -14,7 +17,7 @@ abbrev M2 := Matrix Q Q ℂ
 abbrev M4 := Matrix Pair Pair ℂ
 abbrev M8 := Matrix Triple Triple ℂ
 
-def bell : M4 := fun p q => if p.1 = p.2 ∧ q.1 = q.2 then 1 / 2 else 0
+def bell : M4 := D5.S3.QuantumBounds.CHSHWitness.bellDensity
 def sigma (v : ℝ) : M4 := (v : ℂ) • bell + (((1-v)/4 : ℝ) : ℂ) • 1
 def ab (ρ : M8) : M4 := fun p q => ∑ k : Q, ρ (p.1,p.2,k) (q.1,q.2,k)
 def bc (ρ : M8) : M4 :=
@@ -41,6 +44,7 @@ private theorem sqrt_three_sq : (Real.sqrt 3 : ℂ)^2 = 3 := by
   norm_cast
   exact Real.sq_sqrt (by norm_num)
 
+set_option maxHeartbeats 2000000 in
 private theorem source_marginals (a : ℝ) (c : ℂ) :
     ab (chi (eta a c)) = (a : ℂ) • bell + (((1-a)/3 : ℝ) : ℂ) • (1-bell) ∧
     bc (chi (eta a c)) =
@@ -53,9 +57,17 @@ private theorem source_marginals (a : ℝ) (c : ℂ) :
   constructor <;> ext ⟨i,j⟩ ⟨k,l⟩ <;>
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     simp [ab, bc, D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft,
-      chi, V, eta, g, h, f, bell, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      chi, V, eta, g, h, f, bell,
+      D5.S3.QuantumBounds.CHSHWitness.bellDensity,
+      D5.S3.QuantumBounds.CHSHWitness.bellVector,
+      D5.S3.Quantum.QubitWitnesses.bellCoefficients,
+      Matrix.vecMulVec_apply,
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self,
+      Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_two, Fintype.sum_prod_type, Matrix.one_apply, hc] <;>
     push_cast <;> field_simp <;> ring_nf <;>
     simp [sqrt_two_sq, sqrt_three_sq] <;> ring
+
+#print axioms source_marginals
 
 end V92IsotropicExactCheck
