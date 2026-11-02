@@ -10,7 +10,6 @@ internal sealed class DiracDocument : IScribeDocumentDefinition
         "The vertex type may lie in any universe u. IsChordal means that every cycle of length at least four has an adjacency between two supported vertices whose unordered edge is absent from that cycle. IsSimplicial means that the entire neighbor set is a clique.",
         H("Chordal graphs and simplicial vertices"),
         Blocks(
-            Paragraph(Text("The vertex type may lie in any universe u. IsChordal means that every cycle of length at least four has an adjacency between two supported vertices whose unordered edge is absent from that cycle. IsSimplicial means that the entire neighbor set is a clique.")),
             Describe.Lean(DescribeId.Create("induced-heredity"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Chordal/Dirac.induce"),
                 H("Induced-subgraph heredity"),
@@ -36,6 +35,4 @@ internal sealed class DiracDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
     private static Formula Logic(Formula l, FormulaLogicOperator op, Formula r) =>
         new Formula.Logic(l, op, r);
-    private static Formula Rel(Formula l, FormulaRelationOperator op, Formula r) =>
-        new Formula.Relation(l, op, r);
 }

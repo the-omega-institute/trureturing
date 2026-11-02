@@ -10,7 +10,6 @@ internal sealed class CharacterizationDocument : IScribeDocumentDefinition
         "The source theorem ranges over V : Type u for any universe u; the existing native predicate ranges over V : Type 0. NativeChordal denotes FaalNonStable.Chordal. Later(G,ord,v) denotes exactly the set of u in V satisfying ord(v) < ord(u) and G.Adj v u. IsPEO has exactly the injective and isClique_later fields. Both finite equivalences include empty and disconnected graphs and require neither a supplied Fintype nor decidable adjacency.",
         H("Finite chordality and perfect elimination"),
         Blocks(
-            Paragraph(Text("The source theorem ranges over V : Type u for any universe u; the existing native predicate ranges over V : Type 0. NativeChordal denotes FaalNonStable.Chordal. Later(G,ord,v) denotes exactly the set of u in V satisfying ord(v) < ord(u) and G.Adj v u. IsPEO has exactly the injective and isClique_later fields. Both finite equivalences include empty and disconnected graphs and require neither a supplied Fintype nor decidable adjacency.")),
             Describe.Lean(DescribeId.Create("peo-converse"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Chordal/Characterization.isChordal"),
                 H("An elimination order implies chordality"),
@@ -50,6 +49,4 @@ internal sealed class CharacterizationDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
     private static Formula Logic(Formula l, FormulaLogicOperator op, Formula r) =>
         new Formula.Logic(l, op, r);
-    private static Formula Rel(Formula l, FormulaRelationOperator op, Formula r) =>
-        new Formula.Relation(l, op, r);
 }

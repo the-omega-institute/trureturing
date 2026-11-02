@@ -7,10 +7,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Chordal;
 internal sealed class EliminationForestDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The universe u is arbitrary. IsPEO(G,ord) has exactly two fields: ord is injective, and for each v the set of neighbors u with ord(v) < ord(u) is a clique. RelativeSimplicial(G,S,z) means that for all distinct a,b in S, adjacency of z to a and b implies adjacency of a to b. EliminatesEveryFiniteSet(G) says that each nonempty finite set contains such a z. LaterIn(G,S,f,v) is exactly the set of u in S with f(v) < f(u) and G.Adj v u.",
+        "The universe u is arbitrary. IsPEO(G,ord) has exactly two fields: ord is injective, and for each v the set of neighbors u with ord(v) < ord(u) is a clique. RelativeSimplicial(G,S,z) means that for all distinct a,b in S, adjacency of z to a and b implies adjacency of a to b. Nonempty(S) means that S contains an element. EliminatesEveryFiniteSet(G) says that each nonempty finite set contains such a z. LaterIn(G,S,f,v) is exactly the set of u in S with f(v) < f(u) and G.Adj v u.",
         H("Elimination rankings and rooted clique forests"),
         Blocks(
-            Paragraph(Text("The universe u is arbitrary. IsPEO(G,ord) has exactly two fields: ord is injective, and for each v the set of neighbors u with ord(v) < ord(u) is a clique. RelativeSimplicial(G,S,z) means that for all distinct a,b in S, adjacency of z to a and b implies adjacency of a to b. EliminatesEveryFiniteSet(G) says that each nonempty finite set contains such a z. LaterIn(G,S,f,v) is exactly the set of u in S with f(v) < f(u) and G.Adj v u.")),
             Describe.Lean(DescribeId.Create("relative-simplicial"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Chordal/EliminationForest.exists_simplicial_in_finset"),
                 H("Simpliciality inside each finite set"),
