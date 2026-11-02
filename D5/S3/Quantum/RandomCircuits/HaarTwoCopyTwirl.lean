@@ -789,8 +789,8 @@ private theorem pure_tensor_integral {d : ℕ} [NeZero d] :
   have hp (u : Matrix.unitaryGroup (Fin d) ℂ) (i j : Fin d) :
       ((u.1 * Matrix.single 0 0 1 * u.1ᴴ) : Matrix (Fin d) (Fin d) ℂ) i j =
         u.1 i 0 * star (u.1 j 0) := by
-    simp [Matrix.mul_apply, Matrix.single, Matrix.conjTranspose_apply,
-      Finset.sum_mul, Finset.mul_sum, ite_and]
+    rw [Matrix.single_eq_single_vecMulVec_single, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+    simp [Matrix.vecMulVec_apply, Matrix.single_vecMul, Matrix.conjTranspose_apply]
   have hz : Continuous z := by
     apply continuous_pi
     intro r

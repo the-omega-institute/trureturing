@@ -101,7 +101,7 @@ private def inputProjector {d : ℕ} [NeZero d]
 
 private theorem base_projector_psd {d : ℕ} [NeZero d] :
     (baseProjector : Matrix (Fin d) (Fin d) ℂ).PosSemidef := by
-  change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).PosSemidef
+  rw [baseProjector.eq_1]
   exact (Matrix.PosSemidef.stdBasisMatrix_iff_eq 0 0 (by norm_num : (0 : ℂ) < 1)).mpr rfl
 
 private theorem input_projector_psd {d : ℕ} [NeZero d]
