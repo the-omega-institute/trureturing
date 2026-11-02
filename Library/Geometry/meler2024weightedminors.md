@@ -1,5 +1,5 @@
 ---
-bibkey: melermo469781
+bibkey: meler2024weightedminors
 authors: meler (MathOverflow user 526848; real name unverified)
 year: 2024
 title: Inequality involving minors of an orthogonal matrix

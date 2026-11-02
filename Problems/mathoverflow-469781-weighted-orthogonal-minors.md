@@ -1,6 +1,6 @@
 ---
 slug: mathoverflow-469781-weighted-orthogonal-minors
-bibkey: melermo469781
+bibkey: meler2024weightedminors
 doi: null
 url: https://mathoverflow.net/questions/469781
 triage: theorem
@@ -12,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-The source is meler (MathOverflow user 526848; real name unverified), [MO469781](https://mathoverflow.net/questions/469781), revision 1, GUID `F53D06CE-3805-43B9-9FEB-43A79F67F7AB`, CC BY-SA 4.0, with identical [MSE4902019](https://math.stackexchange.com/questions/4902019) crosspost. The [Library note](../Library/Geometry/melermo469781.md) owns the source citation. The complete external question is:
+The source is meler (MathOverflow user 526848; real name unverified), [MO469781](https://mathoverflow.net/questions/469781), revision 1, GUID `F53D06CE-3805-43B9-9FEB-43A79F67F7AB`, CC BY-SA 4.0, with identical [MSE4902019](https://math.stackexchange.com/questions/4902019) crosspost. The [Library note](../Library/Geometry/meler2024weightedminors.md) owns the source citation. The complete external question is:
 
 > Fix $n \geq 3$ and take any orthonormal vectors $x,y,z \in \mathbb{R}^n$. Let also $A \in M_n(\mathbb{R})$ be a symmetric matrix with positive entries ($A_{ij} = A_{ji} > 0$). Is the following inequality true? $$\sum_{i<j}A_{ij}\begin{vmatrix}x_i & x_j \\newline y_i & y_j \end{vmatrix}^2 \leq \sum_{i<j<k}\max(A_{ij},A_{ik},A_{jk})\begin{vmatrix}x_i & x_j & x_k \\newline y_i & y_j & y_k \\newline z_i & z_j & z_k \end{vmatrix}^2$$
 
@@ -40,7 +40,7 @@ A falsifier of the source assertion must give an integer n≥3, a real orthonorm
 
 ## Evidence
 
-The sole proof owner is `D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.lean`, public theorem `AlternatingArrayContraction.weighted_minors`. Its [canonical Blueprint](../Blueprint/D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.md) binds the closed formula to `D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.weighted_minors`, acknowledges `melermo469781` as repo-derived provenance and carries a typed `OpenProblemResolutionClaim` with `Proved` for this dossier. This is the candidate full formal settlement; independent prefreeze acceptance, freeze and publication are pending. The prior independent ordinary-proof acceptance does not certify this Lean implementation.
+The sole proof owner is `D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.lean`, public theorem `AlternatingArrayContraction.weighted_minors`. Its [canonical Blueprint](../Blueprint/D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.md) binds the closed formula to `D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.weighted_minors`, acknowledges `meler2024weightedminors` as repo-derived provenance and carries a typed `OpenProblemResolutionClaim` with `Proved` for this dossier. This is the candidate full formal settlement; independent prefreeze acceptance, freeze and publication are pending. The prior independent ordinary-proof acceptance does not certify this Lean implementation.
 
 The retained mirrored Reg source compiles but its four-slot audit remains unfinished: `declared_unresolved`, `IE-C050 ClosedTruthReadout`, `source.residual_requires_open`, reason `unclassified_form`, certificate and `escape_from` null, and continuation open. [Issue #25537](https://github.com/the-omega-institute/trureturing/issues/25537) is the parent-owned disclosure target. Compilation is not `declared_validated`, and an unknown residual is no undecidability theorem.
 

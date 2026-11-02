@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.ProbabilityTransport;
 
 internal sealed class WeightedProjectionMinorsDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Geometry/melermo469781");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Geometry/meler2024weightedminors");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The weighted two-minor and three-minor inequality", H("The weighted two-minor and three-minor inequality"),

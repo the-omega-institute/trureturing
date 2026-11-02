@@ -12,7 +12,13 @@ $$\forall n \in \mathbb{N},\; \forall x \in \operatorname{EuclideanSpace}\left(\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.weighted_minors` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathoverflow-469781-weighted-orthogonal-minors` (proved) by `D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.weighted_minors`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathoverflow-469781-weighted-orthogonal-minors","declaration_gid":"D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinors.weighted_minors","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* meler (MathOverflow user 526848; real name unverified) (2024). *Inequality involving minors of an orthogonal matrix*. URL: <https://mathoverflow.net/questions/469781>.
 
 *Commentary.*
 
