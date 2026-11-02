@@ -362,7 +362,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have h0 := h 0 0 le_rfl
   dsimp only [rejected, realize] at h0
   norm_num [rejected, realize, primes] at h0
-  exact Finset.singleton_ne_empty 0 h0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), ∅, {0}, by change (∅ : Finset ℕ) ≠ {0}; simp⟩

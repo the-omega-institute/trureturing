@@ -134,8 +134,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hlim : Tendsto (fun t : ℝ => if t⁻¹ = 0 then (1 : ℝ) else 0) atTop (𝓝 1) := by
     have ht := (hc.continuousAt (x := (0 : ℝ))).tendsto.comp
       (tendsto_inv_atTop_zero : Tendsto (fun t : ℝ => t⁻¹) atTop (𝓝 0))
-    change Tendsto (fun t : ℝ => if t⁻¹ = 0 then (1 : ℝ) else 0) atTop (𝓝 1) at ht
-    exact ht
+    simpa only [Function.comp_def, if_pos rfl] using ht
   have he : (fun t : ℝ => if t⁻¹ = 0 then (1 : ℝ) else 0) =ᶠ[atTop] fun _ => 0 := by
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
     simp [inv_ne_zero ht.ne']
