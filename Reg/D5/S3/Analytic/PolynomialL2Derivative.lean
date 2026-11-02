@@ -375,7 +375,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hf := h 0 1 (by norm_num) (fun _ => 0) (by intro n hn; rfl)
-  norm_num [rejected, realize, integral_Icc_eq_integral_Ioc,
+  norm_num [rejected, realize, expansion, integral_Icc_eq_integral_Ioc,
     ← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hf
 
 private theorem dependence : ObservationalDependence signature actual := by
