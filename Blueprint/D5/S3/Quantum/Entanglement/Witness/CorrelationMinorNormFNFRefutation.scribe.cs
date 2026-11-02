@@ -93,7 +93,10 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                             + "would bound the correlation-minor norm by 3/(64√2): the dimension conditions hold because 8 ≤ 9 and 3 ≤ 4. "
                             + "Both sides are nonnegative, so squaring would contradict the strict numerical gap. "
                             + "Therefore the bound does not hold for all separable states without filter normal form."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("peled-teeni-carmi-cohen-2021-correlation-minor-norm-fnf"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),

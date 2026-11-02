@@ -82,6 +82,10 @@ $$\neg \left(\forall \left(da: \mathbb{N}\right), \left(\forall \left(db: \mathb
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/peled-teeni-carmi-cohen-2021-correlation-minor-norm-fnf` (refuted) by `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"peled-teeni-carmi-cohen-2021-correlation-minor-norm-fnf","declaration_gid":"D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
