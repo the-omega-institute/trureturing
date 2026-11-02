@@ -4,8 +4,6 @@
 
 The generalized inverse of a real CDF pushes Lebesgue measure on the open unit interval to the original probability measure. Atoms and singular laws are included. The midpoint approximation uses bounded continuous real tests; integration against the quantile is stated for arbitrary normed real vector targets with the declared measurability assumption.
 
-The generalized inverse of a real CDF pushes Lebesgue measure on the open unit interval to the original probability measure. Atoms and singular laws are included. The midpoint approximation uses bounded continuous real tests; integration against the quantile is stated for arbitrary normed real vector targets with the declared measurability assumption.
-
 The construction of Daniel Lyng in Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f is adapted under Apache-2.0. Apache-2.0 license: docs/reports/licenses/econlib-strassen/LICENSE.txt. Strassen (1965) provides the historical martingale-transport context. In formulas, coe denotes the canonical coercion, dmu the integration measure, iUnion indexed union, smul scalar multiplication, and ae almost everywhere. Namespace-qualified Lean names and interval constructors retain their mathematical meaning; separated identifier words denote the corresponding underscored Lean constant.
 
 **Definition 1.1 (quantile).**

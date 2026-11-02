@@ -4,8 +4,6 @@
 
 Compact interval convex order includes both mass-one support conditions, equality of means, and all tests that are convex and continuous on the interval. No strict endpoint, absolute continuity, or finite-support condition is imposed. Stop-loss comparison gives the lower integrated-quantile inequalities used by conditional-mean discretization.
 
-Compact interval convex order includes both mass-one support conditions, equality of means, and all tests that are convex and continuous on the interval. No strict endpoint, absolute continuity, or finite-support condition is imposed. Stop-loss comparison gives the lower integrated-quantile inequalities used by conditional-mean discretization.
-
 The construction of Daniel Lyng in Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f is adapted under Apache-2.0. Apache-2.0 license: docs/reports/licenses/econlib-strassen/LICENSE.txt. Strassen (1965) provides the historical martingale-transport context. In formulas, coe denotes the canonical coercion, dmu the integration measure, iUnion indexed union, smul scalar multiplication, and ae almost everywhere. Namespace-qualified Lean names and interval constructors retain their mathematical meaning; separated identifier words denote the corresponding underscored Lean constant.
 
 **Definition 1.1 (ProbDist).**

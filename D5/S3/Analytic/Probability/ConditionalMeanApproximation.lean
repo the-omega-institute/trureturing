@@ -62,14 +62,9 @@ private lemma binIndex_eq_of_mem_Ico {n : ℕ} (hn : 1 ≤ n) (k : Fin n) {t : �
   refine ⟨h_nt_ge, ?_⟩
   linarith
 
-/-- `binIndex n` is measurable (as a function `ℝ → ℕ`). -/
-private lemma measurable_binIndex (n : ℕ) : Measurable (binIndex n) := by
-  unfold binIndex
-  exact Nat.measurable_floor.comp (measurable_const.mul measurable_id)
-
 /-- The conditional-mean step function: For `t ∈ Ioo 0 1`, it returns
 `φ(condMeanAtom μ n _ (binIndex n t))` when `binIndex n t < n`, and a default `φ(atom_0)`
-otherwise. This is the step-function analog of `stepFun` in `QuantileIntegral.lean`. -/
+otherwise. This is the step-function analog of `stepFun` in the quantile midpoint construction. -/
 private noncomputable def condStepFun (μ : ProbDist ℝ) (φ : ℝ → ℝ) (n : ℕ) (hn : 0 < n)
     (t : ℝ) : ℝ :=
   if h : binIndex n t < n then

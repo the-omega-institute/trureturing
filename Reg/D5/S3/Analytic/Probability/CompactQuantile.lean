@@ -42,7 +42,7 @@ def source_registration : Registration arena
     fun e => nomatch e⟩
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@MeasureTheory.Measure.Quantile.set_nonempty) (Realization ToReal) Unit Unit := {
   unitName := `Reg.D5.S3.Analytic.Probability.CompactQuantile.set_nonempty.unit
   realizationName := `Reg.D5.S3.Analytic.Probability.CompactQuantile.set_nonempty.source_registration

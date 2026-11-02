@@ -4,8 +4,6 @@
 
 Finite real-vector convex domination yields a doubly stochastic matrix carrying the larger vector to the smaller one. Prefix sums of increasing vectors give convex domination. The proof constructs the majorization relation and consumes pinned Mathlib Birkhoff theory; it is not a second proof of Birkhoff.
 
-Finite real-vector convex domination yields a doubly stochastic matrix carrying the larger vector to the smaller one. Prefix sums of increasing vectors give convex domination. The proof constructs the majorization relation and consumes pinned Mathlib Birkhoff theory; it is not a second proof of Birkhoff.
-
 The construction of Daniel Lyng in Econlib revision d7bd9477476cade1c6695c8891746048ceddc52f is adapted under Apache-2.0. Apache-2.0 license: docs/reports/licenses/econlib-strassen/LICENSE.txt. Strassen (1965) provides the historical martingale-transport context. In formulas, coe denotes the canonical coercion, dmu the integration measure, iUnion indexed union, smul scalar multiplication, and ae almost everywhere. Namespace-qualified Lean names and interval constructors retain their mathematical meaning; separated identifier words denote the corresponding underscored Lean constant.
 
 **Lemma 1.1 (convexOn_hinge_right).**

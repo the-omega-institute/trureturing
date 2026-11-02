@@ -196,16 +196,6 @@ section Pushforward
 
 variable [IsProbabilityMeasure μ]
 
-/-- Lebesgue measure of `Ioo 0 1` is `1`. -/
-private lemma volume_Ioo_0_1 : volume (Ioo (0 : ℝ) 1) = 1 := by
-  rw [Real.volume_Ioo]; simp
-
-/-- The restriction of Lebesgue measure to `Ioo 0 1` is a probability measure. -/
-instance : IsProbabilityMeasure ((volume : Measure ℝ).restrict (Ioo (0 : ℝ) 1)) := by
-  refine ⟨?_⟩
-  rw [Measure.restrict_apply_univ]
-  exact volume_Ioo_0_1
-
 /-- Key computation: Volume of `{t ∈ Ioo 0 1 | t ≤ a}` when `0 ≤ a ≤ 1`. -/
 private lemma volume_Ioo_inter_Iic {a : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1) :
     volume (Ioo (0 : ℝ) 1 ∩ Iic a) = ENNReal.ofReal a := by
@@ -262,11 +252,6 @@ private lemma map_quantile_apply_Iic (x : ℝ) :
 function `quantile μ` is `μ`. -/
 theorem map_quantile_volume_Ioo :
     Measure.map (quantile μ) (volume.restrict (Ioo (0 : ℝ) 1)) = μ := by
-  -- The pushforward is a probability measure since `volume.restrict (Ioo 0 1)` is,
-  -- and `quantile μ` is AE-measurable.
-  haveI : IsProbabilityMeasure
-      (Measure.map (quantile μ) (volume.restrict (Ioo (0 : ℝ) 1))) :=
-    (Measure.isProbabilityMeasure_map_iff aemeasurable_quantile_restrict_Ioo).mpr inferInstance
   -- Apply extensionality on `Iic`.
   refine Measure.ext_of_Iic _ _ (fun x => ?_)
   exact map_quantile_apply_Iic x
