@@ -14,6 +14,8 @@ The original physicists polynomial and signed coefficient supplier are reused.
 
 import D5.S3.Analytic.Polynomial.HermiteSignedMode
 
+/-! Exact smallest absolute-coefficient modes and consecutive-order transitions. -/
+
 namespace D5.S3.Analytic.Polynomial.HermiteAbsoluteMode
 
 open Finset HermiteSignedMode
@@ -58,11 +60,10 @@ private theorem mode_step (n : ℕ) : mode n ≤ mode (n + 1) ∧ mode (n + 1) �
 private def weight (n r : ℕ) : ℚ := |signedCoeff n (n - 2 * r)|
 
 private theorem weight_pos (n r : ℕ) (hr : 2 * r ≤ n) : 0 < weight n r := by
-  have hs : n - (n - 2 * r) = 2 * r := by omega
-  have he : 2 * r / 2 = r := by omega
-  simp [weight, signedCoeff, hs, he, show (2 * r) % 2 = 0 by omega,
-    show n - 2 * r ≤ n by omega, abs_mul, abs_div, abs_pow]
-  <;> positivity
+  have h : n - 2 * r ≤ n ∧ (n - (n - 2 * r)) % 2 = 0 := by constructor <;> omega
+  simp only [weight, signedCoeff, if_pos h, abs_div, abs_mul, abs_pow, abs_neg,
+    abs_one, one_pow, one_mul, Nat.abs_cast, abs_of_nonneg (by norm_num : (0 : ℚ) ≤ 2)]
+  positivity
 
 private theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
     weight n (r + 1) * (4 * (r + 1)) =
@@ -76,11 +77,11 @@ private theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
   simp only [weight, signedCoeff, show n - 2 * (r + 1) ≤ n by omega,
     show n - 2 * r ≤ n by omega, hs, ht, he, hf,
     show 2 * (r + 1) % 2 = 0 by omega, show (2 * r) % 2 = 0 by omega,
-    and_self, if_true, abs_div, abs_mul, abs_pow, abs_neg, abs_one,
+    and_self, ite_true, abs_div, abs_mul, abs_pow, abs_neg, abs_one,
     one_pow, one_mul, Nat.abs_cast, abs_of_nonneg (by norm_num : (0 : ℚ) ≤ 2)]
   rw [hj]
   change (↑n.factorial * 2^j / (↑(r + 1).factorial * ↑j.factorial)) *
-      ↑(4 * (r + 1)) =
+      (4 * ((r : ℚ) + 1)) =
     (↑n.factorial * 2^(j + 2) / (↑r.factorial * ↑(j + 2).factorial)) *
       ↑((j + 1) * (j + 2))
   simp only [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_ofNat, pow_add]
