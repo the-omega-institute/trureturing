@@ -39,12 +39,10 @@ private theorem physical_moduli (a b c d : ℕ) (h : physicalDomain a b c d)
     congr 1
     rcases h with ⟨hc,ha,hd,hb⟩
     omega
-  have hY' : (2:ℚ)*((2:ℚ)^a*2^(b-a-1)) = 2^b := by
-    simpa only [mul_assoc] using hY
   cases isNew <;> simp only [qModulus, Bool.false_eq_true, ↓reduceIte,
     sourceMod, Int.cast_sub, Int.cast_mul, Int.cast_pow, Int.cast_ofNat,
     Int.cast_one]
-  all_goals rw [hY',hw]
+  all_goals rw [hY,hw]
   all_goals ring
 
 private theorem terminal_index (a b c d : ℕ) (h : physicalDomain a b c d)
@@ -89,7 +87,7 @@ private theorem physical_terminal_values (a b c d : ℕ)
   · simp only [Bool.false_eq_true,↓reduceIte] at hM
     simp only [physicalValue,Bool.false_eq_true,↓reduceIte]
     rw [qTerminal,hM]
-    fin_cases bank <;> simp only [terminalChain,nextBase,
+    fin_cases bank <;> simp only [terminalChain,nextBase,Bool.false_eq_true,↓reduceIte,
       Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
       Matrix.cons_val_three,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply] at hoQ ⊢
@@ -98,7 +96,7 @@ private theorem physical_terminal_values (a b c d : ℕ)
   · simp only [↓reduceIte] at hM
     simp only [physicalValue,↓reduceIte]
     rw [qTerminal,hM]
-    fin_cases bank <;> simp only [terminalChain,nextNewBase,
+    fin_cases bank <;> simp only [terminalChain,nextNewBase,Bool.false_eq_true,↓reduceIte,
       Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
       Matrix.cons_val_three,Matrix.cons_val_zero',Matrix.cons_val_succ',
       Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply] at hnQ ⊢

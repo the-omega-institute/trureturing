@@ -76,8 +76,10 @@ private theorem local_internal (a b c d : ℕ) (h : physicalDomain a b c d)
   all_goals fin_cases chain <;> fin_cases bank
   all_goals simp only [localBits,chainLength,Matrix.cons_val_zero,Matrix.cons_val_one,
     Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',
-    Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_empty,Finset.mem_singleton,
+    Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.notMem_empty,Finset.mem_singleton,
     Finset.mem_range,Finset.mem_Ico,Finset.mem_sdiff,Finset.mem_union,hiE,hiR] at hi ⊢
+  all_goals simp_all only [false_or, or_false, true_or, or_true, true_and, and_true,
+    false_and, and_false, not_true_eq_false, not_false_eq_true]
   all_goals omega
 
 private theorem local_disjoint (a b c d : ℕ) (h : physicalDomain a b c d)
@@ -99,28 +101,43 @@ private theorem local_disjoint (a b c d : ℕ) (h : physicalDomain a b c d)
   all_goals try exact (hne rfl).elim
   all_goals simp only [localBits,Matrix.cons_val_zero,Matrix.cons_val_one,
     Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',
-    Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_empty,Finset.mem_singleton,
+    Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.notMem_empty,Finset.mem_singleton,
     Finset.mem_range,Finset.mem_Ico,Finset.mem_sdiff,Finset.mem_union,hiE,hiR] at hi hj
+  all_goals simp_all only [false_or, or_false, true_or, or_true, true_and, and_true,
+    false_and, and_false, not_true_eq_false, not_false_eq_true]
   all_goals omega
 
 private theorem local_cover (a b c d : ℕ) (h : physicalDomain a b c d) (chain : Fin 4) :
     localBits a b c d chain 0 ∪ localBits a b c d chain 1 ∪
       localBits a b c d chain 2 ∪ localBits a b c d chain 3 =
       Finset.range (chainLength a b c d chain - 1) := by
-  obtain ⟨he,hr,_⟩ := reservation_sets a b c d h
-  ext i
-  have heB : i ∈ eBits a b → i < b-a := fun hh => Finset.mem_range.mp (he hh)
-  have hrB : i ∈ rBits a b c d → i < b-a := fun hh => Finset.mem_range.mp (hr hh)
-  rcases h with ⟨hc,ha,hd,hb⟩
-  by_cases hiE : i ∈ eBits a b <;> by_cases hiR : i ∈ rBits a b c d
-  all_goals try have hei := heB hiE
-  all_goals try have hri := hrB hiR
-  all_goals fin_cases chain
-  all_goals simp only [localBits,chainLength,Matrix.cons_val_zero,Matrix.cons_val_one,
-    Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',
-    Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Finset.mem_empty,Finset.mem_singleton,
-    Finset.mem_range,Finset.mem_Ico,Finset.mem_sdiff,Finset.mem_union,hiE,hiR]
-  all_goals omega
+  apply Finset.Subset.antisymm
+  · intro i hi
+    simp only [Finset.mem_union] at hi
+    rcases hi with ((hi | hi) | hi) | hi
+    · exact Finset.mem_range.mpr (local_internal a b c d h chain 0 i hi)
+    · exact Finset.mem_range.mpr (local_internal a b c d h chain 1 i hi)
+    · exact Finset.mem_range.mpr (local_internal a b c d h chain 2 i hi)
+    · exact Finset.mem_range.mpr (local_internal a b c d h chain 3 i hi)
+  · intro i hi
+    have hi' := Finset.mem_range.mp hi
+    rcases h with ⟨hc,ha,hd,hb⟩
+    fin_cases chain
+    all_goals simp only [localBits,chainLength,Matrix.cons_val_zero,Matrix.cons_val_one,
+      Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',
+      Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
+      Function.comp_apply,Finset.mem_union,Finset.notMem_empty,Finset.mem_singleton,
+      Finset.mem_range,Finset.mem_Ico,Finset.mem_sdiff,false_or,or_false,or_assoc] at hi' ⊢
+    · omega
+    · omega
+    · by_cases hiR : i ∈ rBits a b c d
+      · exact Or.inl hiR
+      · by_cases hiE : i ∈ eBits a b
+        · exact Or.inr (Or.inr (Or.inr hiE))
+        · by_cases hil : i < b-a
+          · exact Or.inr (Or.inl ⟨hil,fun hh => hh.elim hiR hiE⟩)
+          · exact Or.inr (Or.inr (Or.inl ⟨by omega,hi'⟩))
+    · omega
 
 private def physicalBank (a b c d : ℕ) (bank : Fin 4) : Finset ℕ :=
   (Finset.univ : Finset (Fin 4)).biUnion fun chain =>
@@ -253,10 +270,10 @@ private theorem local_sums (a b c d : ℕ) (h : physicalDomain a b c d)
     (∑ e ∈ localBits a b c d chain bank, (2:ℚ)^e) = exponentMask a b c d bank chain := by
   classical
   have hs (n : ℕ) : (∑ e ∈ Finset.range n, (2:ℚ)^e) = 2^n-1 := by
-    simpa using geom_sum_mul (2:ℚ) n
+    simpa only [show (2:ℚ)-1=1 by norm_num, mul_one] using geom_sum_mul (2:ℚ) n
   have ht (l u : ℕ) (hle : l ≤ u) :
       (∑ e ∈ Finset.Ico l u, (2:ℚ)^e) = 2^u-2^l := by
-    simpa using geom_sum_Ico_mul (2:ℚ) hle
+    simpa only [show (2:ℚ)-1=1 by norm_num, mul_one] using geom_sum_Ico_mul (2:ℚ) hle
   have es : (∑ e ∈ eBits a b, (2:ℚ)^e) = eWeight a b := by
     by_cases he : eOn a b <;> simp [eBits,eWeight,he]
   have rs : (∑ e ∈ rBits a b c d, (2:ℚ)^e) = rWeight a b c d := by
