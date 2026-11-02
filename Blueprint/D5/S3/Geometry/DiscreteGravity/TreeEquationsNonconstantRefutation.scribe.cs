@@ -198,7 +198,7 @@ internal sealed class TreeEquationsNonconstantRefutationDocument : IScribeDocume
         return Seq(Operatorname, Grp(Seq([.. items])));
     }
     private static Formula At(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
-    private static Formula Parenthesized(Formula body) => Seq(Left, Open, body, Right, Close);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Reals() => Seq(Mathbb, Grp(X("R")));
     private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
