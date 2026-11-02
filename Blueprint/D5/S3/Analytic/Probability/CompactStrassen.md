@@ -62,3 +62,4 @@ For every pair of compactly concentrated Borel real laws, equal means and all in
 - Truth anchor: `D5/S3/Analytic/Probability/CompactStrassen.tested_martingale_of_weak_limit`
 - Dependency: [D5/S3/Analytic/Probability/ConditionalMeanApproximation](ConditionalMeanApproximation.md)
 - Dependency: [D5/S3/Analytic/Probability/FiniteMartingaleCoupling](FiniteMartingaleCoupling.md)
+- Dependency: [D5/S3/Analytic/Probability/NoncompactQuantile](NoncompactQuantile.md)
