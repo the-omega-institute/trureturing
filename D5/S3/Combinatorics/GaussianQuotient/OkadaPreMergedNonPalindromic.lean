@@ -175,9 +175,7 @@ private theorem index_bounds
     omega
 
 private theorem qFactorial_coeff_zero (n : ℕ) : (qFactorial n).coeff 0 = 1 := by
-  induction n with
-  | zero => simp [qFactorial.eq_1]
-  | succ n ih => simp [qFactorial_succ, mul_coeff_zero, ih]
+  simp [qFactorial, coeff_zero_prod]
 
 private theorem factorial_product_identity
     (μ : ℕ) (a b : Fin μ → ℕ) (hab : ∀ i j, a i ≤ b j) :
