@@ -258,7 +258,91 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] \forall P \in \op
 
 Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.
 
-**Theorem 1.21 (Entries of the replica swap).**
+**Theorem 1.21 (The coordinate swap is Hermitian).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Matrix.IsHermitian}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.swapHermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+The permutation matrix of the coordinate swap equals its conjugate transpose.
+
+**Theorem 1.22 (The coordinate swap is an involution).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) \cdot \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) = (1: \operatorname{Matrix}\left((n \times n), (n \times n), \mathbb{C}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.swapSquare` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+Applying the coordinate swap twice gives the identity matrix.
+
+**Theorem 1.23 (The trace of the coordinate swap).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Matrix.trace}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\right) = (\operatorname{Fintype.card}\left(n\right): \mathbb{C})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.traceSwap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+A diagonal entry of the coordinate swap is one exactly when its two coordinates coincide, and zero otherwise. Summing these entries gives the cardinality of n, explicitly cast from the natural numbers to the complex numbers.
+
+**Theorem 1.24 (The general two-copy twirl formula).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall Y \in \operatorname{Matrix}\left((n \times n), (n \times n), \mathbb{C}\right),\; (2 \le \operatorname{Fintype.card}\left(n\right)) \Rightarrow (\operatorname{Matrix.of}\left(\operatorname{Function.curry}\left(\operatorname{Function.comp}\left(\operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left(n\right), \operatorname{Matrix.vec}\left(Y\right)\right), \operatorname{Prod.swap}\left(\right)\right)\right)\right) = (\frac{\operatorname{Matrix.trace}\left(Y\right) - \frac{\operatorname{Matrix.trace}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) \cdot Y\right)}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})}}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})^{2} - 1}) \cdot ((1: \operatorname{Matrix}\left((n \times n), (n \times n), \mathbb{C}\right))) + (\frac{\operatorname{Matrix.trace}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right) \cdot Y\right) - \frac{\operatorname{Matrix.trace}\left(Y\right)}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})}}{(\operatorname{Fintype.card}\left(n\right): \mathbb{C})^{2} - 1}) \cdot (\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.twirlFormula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+For every complex matrix on two copies of a finite space of cardinality at least two, Haar conjugation is the displayed identity/swap combination. Pairing with the identity and swap preserves their traces and determines both coefficients. The pure-state formula is its specialization, with dimension one handled separately.
+
+**Theorem 1.25 (Sandwiching by a trace-one idempotent).**
+
+$$\forall d \in \mathbb{N},\; \forall p \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall x \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (p \cdot p = p) \Rightarrow ((\operatorname{Matrix.trace}\left(p\right) = 1) \Rightarrow (p \cdot x \cdot p = (\operatorname{Matrix.trace}\left(p \cdot x\right)) \cdot (p)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.trace_one_sandwich` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Belkin, James Allen, Bryan K. Clark (2025). *Apparent Universal Behavior in 2nd Moments of Random Quantum Circuits*. URL: <https://arxiv.org/abs/2510.23726v2>.
+
+*Commentary.*
+
+For any complex square matrices p and x, an idempotent p with trace one satisfies p x p = trace(p x) p. No self-adjointness assumption is required.
+
+**Theorem 1.26 (The pure-projector quadratic Haar integral).**
+
+$$\forall d \in \mathbb{N},\; [\operatorname{NeZero}\left(d\right)] \forall a \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \int_{u: \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)} (\operatorname{Matrix.trace}\left(u.1 \cdot \operatorname{Matrix.single}\left(0, 0, (1: \mathbb{C})\right) \cdot \operatorname{Matrix.conjTranspose}\left(u.1\right) \cdot a \cdot u.1 \cdot \operatorname{Matrix.single}\left(0, 0, (1: \mathbb{C})\right) \cdot \operatorname{Matrix.conjTranspose}\left(u.1\right) \cdot a\right)) d(\operatorname{Measure.haarMeasure}\left((\operatorname{Top.top}: \operatorname{TopologicalSpace.PositiveCompacts}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right))\right)) = \frac{\operatorname{Matrix.trace}\left(a\right)^{2} + \operatorname{Matrix.trace}\left(a \cdot a\right)}{(d: \mathbb{C}) \cdot \left((d: \mathbb{C}) + 1\right)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.pure_quadratic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Belkin, James Allen, Bryan K. Clark (2025). *Apparent Universal Behavior in 2nd Moments of Random Quantum Circuits*. URL: <https://arxiv.org/abs/2510.23726v2>.
+
+*Commentary.*
+
+In every positive dimension, averaging trace(P a P a) over the unitary orbit of the first coordinate projector gives (trace(a) squared + trace(a a))/(d(d + 1)). The matrix a is arbitrary and need not be self-adjoint.
+
+**Theorem 1.27 (Entries of the replica swap).**
 
 $$\forall n \in Type,\; [\operatorname{DecidableEq}\left(n\right)] \forall r \in (n \times n),\; \forall c \in (n \times n),\; \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\left(r, c\right) = \operatorname{ite}\left(\operatorname{Prod.swap}\left(r\right) = c, 1, 0\right)$$
 
@@ -272,7 +356,7 @@ $$\forall n \in Type,\; [\operatorname{DecidableEq}\left(n\right)] \forall r \in
 
 The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.
 
-**Theorem 1.22 (The physical two-site Gram matrix).**
+**Theorem 1.28 (The physical two-site Gram matrix).**
 
 $$\forall q \in \mathbb{N},\; (0 < q) \Rightarrow (\forall b \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; \forall c \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; \operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{localPermutation}\left(q, b\right)\right), \operatorname{localPermutation}\left(q, c\right)\right) = \operatorname{ite}\left(b.1 = c.1, 1, ((q: \mathbb{C}))^{-1}\right) \cdot \operatorname{ite}\left(b.2 = c.2, 1, ((q: \mathbb{C}))^{-1}\right))$$
 
@@ -284,7 +368,7 @@ $$\forall q \in \mathbb{N},\; (0 < q) \Rightarrow (\forall b \in (\operatorname{
 
 The one-site overlap of equal identity/swap choices is one; distinct choices have overlap 1/q. The two-site overlap is the product of the two one-site overlaps.
 
-**Theorem 1.23 (The identity vector is fixed).**
+**Theorem 1.29 (The identity vector is fixed).**
 
 $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left((\operatorname{Fin}\left(q\right) \times \operatorname{Fin}\left(q\right))\right), \operatorname{localPermutation}\left(q, (0, 0)\right)\right) = \operatorname{localPermutation}\left(q, (0, 0)\right)$$
 
@@ -296,7 +380,7 @@ $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{ha
 
 The identity commutes with the two-copy unitary action, so the Haar expectation fixes it.
 
-**Theorem 1.24 (The swap vector is fixed).**
+**Theorem 1.30 (The swap vector is fixed).**
 
 $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left((\operatorname{Fin}\left(q\right) \times \operatorname{Fin}\left(q\right))\right), \operatorname{localPermutation}\left(q, (1, 1)\right)\right) = \operatorname{localPermutation}\left(q, (1, 1)\right)$$
 
@@ -308,7 +392,7 @@ $$\forall q \in \mathbb{N},\; \operatorname{Matrix.mulVec}\left(\operatorname{ha
 
 The replica swap commutes with the two-copy unitary action, so the Haar expectation fixes it.
 
-**Theorem 1.25 (The exact mixed local rule).**
+**Theorem 1.31 (The exact mixed local rule).**
 
 $$\forall q \in \mathbb{N},\; (2 \le q) \Rightarrow (\forall b \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; (b.1 \ne b.2) \Rightarrow (\operatorname{Matrix.mulVec}\left(\operatorname{haarAverage}\left((\operatorname{Fin}\left(q\right) \times \operatorname{Fin}\left(q\right))\right), \operatorname{localPermutation}\left(q, b\right)\right) = (\frac{(q: \mathbb{C})}{(q: \mathbb{C})^{2} + 1}) \cdot (\operatorname{localPermutation}\left(q, (0, 0)\right) + \operatorname{localPermutation}\left(q, (1, 1)\right))))$$
 
@@ -341,9 +425,15 @@ Quarter phases force the two-copy commutant to have only identity and swap suppo
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.local_identity_fixed`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.local_swap_fixed`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.permutationUnitary`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.pure_quadratic`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_apply`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_commutes`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.sitePermutation`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.swapHermitian`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.swapSquare`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.traceSwap`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.trace_one_sandwich`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.twirlFormula`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryBorelSpace`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryCompactSpace`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryMeasurableSpace`
