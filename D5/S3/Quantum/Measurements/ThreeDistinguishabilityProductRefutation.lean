@@ -7,10 +7,7 @@
    digest: Three orthogonal pure states exclude every labelling of the product ansatz. -/
 
 import D5.S0.Carrier.GoldenRatio
-import D5.S3.Constants.PentagonCosines
 import D5.S3.Quantum.PureState.PureStateHandshake
-import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.LinearAlgebra.Matrix.PosDef
 
 /-! Korzekwa, Czachórski, Puchała and Życzkowski, arXiv:1812.09083v3,
 Equation (30). Classical versions are the real diagonals in the preferred basis;
