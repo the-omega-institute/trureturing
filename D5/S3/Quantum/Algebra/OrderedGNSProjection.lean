@@ -6,7 +6,6 @@
    utility: none
    digest: Ordered comparisons characterize faithful-state matrix conditional expectations. -/
 
-
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.Matrix.Order
@@ -443,7 +442,7 @@ def Expectation (rho : Matrix n n ℂ) (A : StarSubalgebra ℂ (Matrix n n ℂ))
     (E : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ) : Prop :=
   E 1 = 1 ∧
   PhyslibLeaf.MatrixMap.IsCompletelyPositive E ∧
-  (∀ k : ℕ,
+  (PhyslibLeaf.MatrixMap.IsPositive E ∧ ∀ k : ℕ,
     let Ek := PhyslibLeaf.MatrixMap.kron (LinearMap.id :
       Matrix (Fin k) (Fin k) ℂ →ₗ[ℂ] Matrix (Fin k) (Fin k) ℂ) E
     PhyslibLeaf.MatrixMap.IsPositive Ek ∧ Ek 1 = 1 ∧
@@ -490,16 +489,22 @@ theorem ordered_gns_characterization
       · intro k X hX
         rw [right_kron_eq_amplify_swap]
         exact (hpos (Fin k) _ (hX.submatrix Prod.swap)).submatrix Prod.swap
-      · intro k
-        refine ⟨?_, ?_, ?_⟩
-        · intro X hX
-          rw [← amplify_eq_left_kron]
-          exact hpos (Fin k) X hX
-        · rw [← amplify_eq_left_kron]
-          exact amplify_one _ (projection_retract rho hrho A 1 A.one_mem)
-        · intro X
-          rw [← amplify_eq_left_kron]
-          exact amplify_state rho _ (projection_state rho hrho A) X
+      · refine ⟨?_, ?_⟩
+        · intro x hx
+          apply positive_of_bimodule rho hrho A (projection rho hrho A)
+            (projection_mem rho hrho A) hs (projection_state rho hrho A) _ hx
+          intro a ha b hb z
+          rw [hr _ b hb, hl a z ha]
+        · intro k
+          refine ⟨?_, ?_, ?_⟩
+          · intro X hX
+            rw [← amplify_eq_left_kron]
+            exact hpos (Fin k) X hX
+          · rw [← amplify_eq_left_kron]
+            exact amplify_one _ (projection_retract rho hrho A 1 A.one_mem)
+          · intro X
+            rw [← amplify_eq_left_kron]
+            exact amplify_state rho _ (projection_state rho hrho A) X
       · ext y
         constructor
         · rintro ⟨x, rfl⟩
@@ -514,6 +519,5 @@ theorem ordered_gns_characterization
       simp only [one_mul] at hm
       rw [hm] at hp
       exact hp
-
 
 end D5.S3.Quantum.Algebra.OrderedGNSProjection

@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 
@@ -14,7 +15,7 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Algebra/OrderedGNSProjection.positive_of_internal_compressions"),
                 H("Internal compressions detect positivity"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(InternalPositivityFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -31,7 +32,7 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Algebra/OrderedGNSProjection.ordered_gns_characterization"),
                 H("Ordered comparisons and complete positivity"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(CharacterizationFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -60,4 +61,37 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
                         + "equivalence concerns these three conditions; no modular-flow or block "
                         + "classification is asserted."))),
                 DescribeRole.Theorem))));
+
+    private static Formula StarOf(Formula value) => Seq(value, Caret, Grp(Star));
+    private static Formula StateOf(Formula value) => Seq(
+        Varphi, Underscore, Grp(Rho), Open, value, Close);
+
+    private static Formula InternalPositivityFormula()
+    {
+        Formula y = F.Id("y");
+        Formula q = F.Id("q");
+        Formula a = F.Id("A");
+        return Disp(Seq(
+            Forall, Sp, y, InMacro, a, Comma, Sp,
+            StarOf(y), Eq, y, Implies,
+            Open, Forall, Sp, q, InMacro, a, Comma, Sp,
+                Re, StateOf(Seq(StarOf(q), y, q)), Geq, D(0), Close,
+            Implies, y, Geq, D(0)));
+    }
+
+    private static Formula CharacterizationFormula()
+    {
+        Formula x = F.Id("x");
+        Formula a = F.Id("a");
+        Formula e = F.Id("E");
+        Formula algebra = F.Id("A");
+        Formula Apply(Formula value) => Seq(e, Open, value, Close);
+        Formula right = Seq(Open, Forall, Sp, x, Comma, Sp,
+            Forall, Sp, a, InMacro, algebra, Comma, Sp,
+            StateOf(Seq(Apply(x), a)), Eq, StateOf(Seq(x, a)), Close);
+        return Disp(Seq(
+            right, Iff,
+            Open, Forall, Sp, x, Comma, Sp, Apply(StarOf(x)), Eq, StarOf(Apply(x)), Close,
+            Iff, Call("Expectation", Rho, algebra, e)));
+    }
 }

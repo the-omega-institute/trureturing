@@ -20,7 +20,7 @@ structure TestParams where
   rho : Matrix carrier carrier ℂ
   y : Matrix carrier carrier ℂ
 
-def testSignature : Signature where
+abbrev testSignature : Signature where
   Params := TestParams.{u}
   State p := Matrix p.carrier p.carrier ℂ
   Role := Unit
@@ -39,10 +39,10 @@ def testActual : Realization testSignature.{u} :=
 def testBad : Realization testSignature.{u} :=
   realize testSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-def testArena : Arena where
+abbrev testArena : Arena where
   signature := testSignature.{u}
   Law obs :=
-    ∀ (n : Type u) [fin : Fintype n] [dec : DecidableEq n]
+    ∀ {n : Type u} [fin : Fintype n] [dec : DecidableEq n]
       (rho : Matrix n n ℂ) (_hrho : rho.PosDef)
       (A : StarSubalgebra ℂ (Matrix n n ℂ))
       (y : Matrix n n ℂ) (_hy : y.IsHermitian) (_hyA : y ∈ A),
@@ -52,10 +52,10 @@ private theorem test_bad_law : ¬ testArena.{u}.Law testBad := by
   intro h
   let n := ULift.{u} (Fin 1)
   have hy : (-1 : Matrix n n ℂ).IsHermitian := by simp
-  have hn := h n 1 Matrix.PosDef.one ⊤ (-1) hy (by trivial) (by
+  have hn := @h n inferInstance inferInstance 1 Matrix.PosDef.one ⊤ (-1) hy (by trivial) (by
     intro q hq
     exact le_rfl)
-  have hd := hn.diag_nonneg (ULift.up (0 : Fin 1))
+  have hd := hn.diag_nonneg (i := ULift.up (0 : Fin 1))
   norm_num at hd
 
 private theorem test_dependence : ObservationalDependence testSignature.{u} testActual := by
@@ -67,7 +67,7 @@ def positive_source_registration :
     Registration testArena (type_of% @positive_of_internal_compressions.{u}) where
   actual := testActual
   bridge := Iff.rfl
-  variation := ⟨positive_of_internal_compressions, testBad, test_bad_law⟩
+  variation := ⟨@positive_of_internal_compressions, testBad, test_bad_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -87,7 +87,7 @@ structure ProjectionParams where
   rho : Matrix carrier carrier ℂ
   faithful : letI := finite; letI := decEq; rho.PosDef
 
-def projectionSignature : Signature where
+abbrev projectionSignature : Signature where
   Params := ProjectionParams.{u}
   State p := letI := p.finite; letI := p.decEq; StarSubalgebra ℂ (Matrix p.carrier p.carrier ℂ)
   Role := Unit
@@ -106,10 +106,10 @@ def projectionActual : Realization projectionSignature.{u} :=
 def projectionBad : Realization projectionSignature.{u} :=
   realize projectionSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-def projectionArena : Arena where
+abbrev projectionArena : Arena where
   signature := projectionSignature.{u}
   Law obs :=
-    ∀ (n : Type u) [fin : Fintype n] [dec : DecidableEq n]
+    ∀ {n : Type u} [fin : Fintype n] [dec : DecidableEq n]
       (rho : Matrix n n ℂ) (hrho : rho.PosDef) (htrace : trace rho = 1)
       (A : StarSubalgebra ℂ (Matrix n n ℂ)),
       let E := obs.readout () ⟨n, fin, dec, rho, hrho⟩ A
@@ -125,8 +125,10 @@ private theorem projection_bad_law : ¬ projectionArena.{u}.Law projectionBad :=
   intro h
   let n := ULift.{u} (Fin 1)
   have ht : trace (1 : Matrix n n ℂ) = 1 := by simp [trace]
-  have hl := (h n 1 Matrix.PosDef.one ht ⊤).2.2.1 1 1 (by trivial)
-  norm_num [projectionBad, realize, state, trace] at hl
+  have hl := (@h n inferInstance inferInstance 1 Matrix.PosDef.one ht ⊤).2.2.1 1 1 (by trivial)
+  change state (1 : Matrix n n ℂ) (star (1 : Matrix n n ℂ) * (0 : Matrix n n ℂ)) =
+    state (1 : Matrix n n ℂ) (star (1 : Matrix n n ℂ) * 1) at hl
+  norm_num [state, trace, n] at hl
 
 private theorem projection_dependence :
     ObservationalDependence projectionSignature.{u} projectionActual := by
@@ -134,7 +136,7 @@ private theorem projection_dependence :
   let n := ULift.{u} (Fin 2)
   let rho : Matrix n n ℂ := (1 / 2 : ℝ) • 1
   have hrho : rho.PosDef := Matrix.PosDef.one.smul (by norm_num : (0 : ℝ) < 1 / 2)
-  have ht : trace rho = 1 := by simp [rho, trace, Fintype.sum_ulift, Fin.sum_univ_two]
+  have ht : trace rho = 1 := by norm_num [rho, trace, n]
   let T := ordered_gns_characterization rho hrho ht
   have hu := (T ⊤).2.2.2.1
   refine ⟨⟨n, inferInstance, inferInstance, rho, hrho⟩, ⊤, ⊥, ?_⟩
@@ -146,13 +148,14 @@ private theorem projection_dependence :
   rw [← he, hx] at hxmem
   rcases StarSubalgebra.mem_bot.mp hxmem with ⟨c, hc⟩
   have hij := congrArg (fun z : Matrix n n ℂ => z (ULift.up 0) (ULift.up 1)) hc
-  norm_num [x, Matrix.algebraMap_matrix_apply, Matrix.single] at hij
+  have hne : (ULift.up (0 : Fin 2) : n) ≠ ULift.up 1 := by decide
+  norm_num [x, Matrix.algebraMap_matrix_apply, Matrix.single, hne] at hij
 
 def projection_source_registration :
     Registration projectionArena (type_of% @ordered_gns_characterization.{u}) where
   actual := projectionActual
   bridge := Iff.rfl
-  variation := ⟨ordered_gns_characterization, projectionBad, projection_bad_law⟩
+  variation := ⟨@ordered_gns_characterization, projectionBad, projection_bad_law⟩
   sensitivity := by
     constructor
     · intro i
