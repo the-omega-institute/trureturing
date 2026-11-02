@@ -36,8 +36,8 @@ private theorem actual_remainder_prefix_bound_leading_one (p : PNTConstants)
   have hcut := actual_cutoff_resolvent_payment p D hD x a hx ha
   have hcoeff : 0 ≤ (8 + 4 * p.C + 2 * B p) * M D := by
     have hb := p.one_le_C.trans (B_ge_C p)
-    dsimp [M]
-    positivity
+    have hC := p.one_le_C
+    exact mul_nonneg (by linarith) (Real.exp_nonneg _)
   have hVlower : -((8 + 4 * p.C + 2 * B p) * M D *
       (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1))) * energy x a / 4) ≤ V D x a := by
     have h := mul_le_mul_of_nonneg_left hS.2.2.1 hcoeff
