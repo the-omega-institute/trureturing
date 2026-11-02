@@ -1,6 +1,6 @@
 /- GID: D5/S3/VertexAlgebra/Lattice/LatticeQuartetOperators
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeQuartetContraction
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeQuartetOperators
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none
@@ -45,11 +45,11 @@ def tp (A : Module.End ℂ (Carrier D)) (G : Module.End ℂ Fock) :
 @[simp] theorem tp_tmul (A : Module.End ℂ (Carrier D)) (G : Module.End ℂ Fock)
     (v : Carrier D) (w : Fock) : tp A G (v ⊗ₜ w) = A v ⊗ₜ G w := rfl
 
-theorem tensor_sub_left (A B : Module.End ℂ (Carrier D)) (G : Module.End ℂ Fock) :
+private theorem tensor_sub_left (A B : Module.End ℂ (Carrier D)) (G : Module.End ℂ Fock) :
     TensorProduct.map (A-B) G = TensorProduct.map A G - TensorProduct.map B G := by
   ext v w
   simp [TensorProduct.sub_tmul]
-theorem tensor_sub_right (A : Module.End ℂ (Carrier D)) (G H : Module.End ℂ Fock) :
+private theorem tensor_sub_right (A : Module.End ℂ (Carrier D)) (G H : Module.End ℂ Fock) :
     TensorProduct.map A (G-H) = TensorProduct.map A G - TensorProduct.map A H := by
   ext v w
   simp [TensorProduct.tmul_sub]
@@ -62,14 +62,14 @@ theorem tp_ac (A B : Module.End ℂ (Carrier D)) (G H : Module.End ℂ Fock) :
   simp only [tensor_sub_left, TensorProduct.map_add_right]
   abel
 
-theorem tp_zero_ac (A B : Module.End ℂ (Carrier D)) (G H : Module.End ℂ Fock)
+private theorem tp_zero_ac (A B : Module.End ℂ (Carrier D)) (G H : Module.End ℂ Fock)
     (hAB : A * B - B * A = 0) (hGH : G * H + H * G = 0) :
     ac (tp A G) (tp B H) = 0 := by
   rw [tp_ac, hAB, hGH]
   simp [tp]
 
 /-- Bilinear extension of the pinned original Heisenberg law. -/
-theorem a_heisenberg (u v : E D) (m n : ℤ) :
+private theorem a_heisenberg (u v : E D) (m n : ℤ) :
     a u m * a v n - a v n * a u m =
       (if m+n=0 then (m : ℂ) * g D u v else 0) • (1 : Module.End ℂ (Carrier D)) := by
   classical
@@ -110,18 +110,18 @@ variable (F : NullFrame D)
 def dm (n : ℤ) : Module.End ℂ (State D) := tp (a F.eMinus n) (c (-n))
 def rr (n : ℤ) : Module.End ℂ (State D) := tp (a F.ePlus (-n)) (b n)
 
-theorem dm_dm (m n : ℤ) : ac (dm F m) (dm F n) = 0 := by
+private theorem dm_dm (m n : ℤ) : ac (dm F m) (dm F n) = 0 := by
   apply tp_zero_ac
   · simp [a_heisenberg, F.minus_null]
   · exact ghost_c_car (-m) (-n)
 
-theorem rr_rr (m n : ℤ) : ac (rr F m) (rr F n) = 0 := by
+private theorem rr_rr (m n : ℤ) : ac (rr F m) (rr F n) = 0 := by
   apply tp_zero_ac
   · simp [a_heisenberg, F.plus_null]
   · exact ghost_b_car m n
 
 /-- This identity is on the original tensor carrier at every integer mode. -/
-theorem dm_rr (m n : ℤ) :
+private theorem dm_rr (m n : ℤ) :
     ac (dm F m) (rr F n) = if m = n then
       (m : ℂ) • tp 1 (c (-m) * b m) + tp (a F.ePlus (-m) * a F.eMinus m) 1
       else 0 := by
@@ -148,7 +148,7 @@ def numberTerm (r : ℕ) : Module.End ℂ (State D) :=
      a F.eMinus (-((r : ℤ)+1)) * a F.ePlus ((r : ℤ)+1)) 1 +
     tp 1 (GC.U (r+1))
 
-theorem original_single_frequency (r : ℕ) :
+private theorem original_single_frequency (r : ℕ) :
     ac (dTerm F r) (rTerm F r) = numberTerm F r := by
   let k : ℤ := (r : ℤ)+1
   let z : ℂ := r+1
@@ -189,7 +189,7 @@ theorem original_single_frequency (r : ℕ) :
     inv_mul_cancel₀ hz, one_smul, sub_eq_add_neg]
   abel
 
-theorem distinct_frequencies (r s : ℕ) (hrs : r ≠ s) :
+private theorem distinct_frequencies (r s : ℕ) (hrs : r ≠ s) :
     ac (dTerm F r) (rTerm F s) = 0 := by
   simp only [dTerm, rTerm, ac_smul_right, ac_add_left, ac_add_right, dm_rr]
   have h1 : (r : ℤ)+1 ≠ (s : ℤ)+1 := by omega
@@ -198,19 +198,19 @@ theorem distinct_frequencies (r s : ℕ) (hrs : r ≠ s) :
   have h4 : -((r : ℤ)+1) ≠ -((s : ℤ)+1) := by omega
   simp only [if_neg h1, if_neg h2, if_neg h3, if_neg h4, add_zero, zero_add, smul_zero]
 
-theorem dTerm_rTerm (r s : ℕ) : ac (dTerm F r) (rTerm F s) =
+private theorem dTerm_rTerm (r s : ℕ) : ac (dTerm F r) (rTerm F s) =
     if r = s then numberTerm F r else 0 := by
   by_cases h : r = s
   · subst s; simpa using original_single_frequency F r
   · simpa [h] using distinct_frequencies F r s h
 
-theorem dTerm_dTerm (r s : ℕ) : ac (dTerm F r) (dTerm F s) = 0 := by
+private theorem dTerm_dTerm (r s : ℕ) : ac (dTerm F r) (dTerm F s) = 0 := by
   simp only [dTerm, ac_add_left, ac_add_right, dm_dm, add_zero]
-theorem rTerm_rTerm (r s : ℕ) : ac (rTerm F r) (rTerm F s) = 0 := by
+private theorem rTerm_rTerm (r s : ℕ) : ac (rTerm F r) (rTerm F s) = 0 := by
   simp only [rTerm, ac_smul_left, ac_smul_right, ac_add_left, ac_add_right,
     rr_rr, add_zero, smul_zero]
 
-theorem a_positive_vanish (u : E D) (v : Carrier D) (k : ℕ)
+private theorem a_positive_vanish (u : E D) (v : Carrier D) (k : ℕ)
     (hk : vectorFrequencyBound D v < k) : a u (k : ℤ) v = 0 := by
   classical
   simp only [a, LinearMap.sum_apply, LinearMap.smul_apply]
@@ -218,7 +218,7 @@ theorem a_positive_vanish (u : E D) (v : Carrier D) (k : ℕ)
   intro i hi
   rw [neutralMode_vanish D i v (k : ℤ) (by exact_mod_cast hk), smul_zero]
 
-theorem positive_ghosts_vanish (w : Fock) (k : ℕ) (hk : GC.capture w ≤ k) :
+private theorem positive_ghosts_vanish (w : Fock) (k : ℕ) (hk : GC.capture w ≤ k) :
     b (k : ℤ) w = 0 ∧ c (k : ℤ) w = 0 := by
   classical
   have hk3 : 3 ≤ k := by unfold GC.capture at hk; omega
@@ -241,7 +241,7 @@ theorem positive_ghosts_vanish (w : Fock) (k : ℕ) (hk : GC.capture w ≤ k) :
     omega
 
 /-- The four individual summands, not merely their sums, have actual captures. -/
-theorem four_modes_tmul_vanish (v : Carrier D) (w : Fock) (r : ℕ)
+private theorem four_modes_tmul_vanish (v : Carrier D) (w : Fock) (r : ℕ)
     (hr : max (vectorFrequencyBound D v + 1) (GC.capture w) ≤ r) :
     dm F ((r : ℤ)+1) (v ⊗ₜ w) = 0 ∧
     dm F (-((r : ℤ)+1)) (v ⊗ₜ w) = 0 ∧
@@ -254,7 +254,7 @@ theorem four_modes_tmul_vanish (v : Carrier D) (w : Fock) (r : ℕ)
   simp only [Nat.cast_add, Nat.cast_one] at hg
   simp [dm, rr, ha, hg.1, hg.2]
 
-theorem four_modes_capture (v : State D) : ∃ N : ℕ, ∀ r, N ≤ r →
+private theorem four_modes_capture (v : State D) : ∃ N : ℕ, ∀ r, N ≤ r →
     dm F ((r : ℤ)+1) v = 0 ∧ dm F (-((r : ℤ)+1)) v = 0 ∧
     rr F ((r : ℤ)+1) v = 0 ∧ rr F (-((r : ℤ)+1)) v = 0 := by
   induction v using TensorProduct.induction_on with
@@ -271,7 +271,7 @@ theorem four_modes_capture (v : State D) : ∃ N : ℕ, ∀ r, N ≤ r →
 
 def modeBound (v : State D) : ℕ := Classical.choose (four_modes_capture F v)
 
-theorem modeBound_spec (v : State D) (r : ℕ) (hr : modeBound F v ≤ r) :
+private theorem modeBound_spec (v : State D) (r : ℕ) (hr : modeBound F v ≤ r) :
     dm F ((r : ℤ)+1) v = 0 ∧ dm F (-((r : ℤ)+1)) v = 0 ∧
     rr F ((r : ℤ)+1) v = 0 ∧ rr F (-((r : ℤ)+1)) v = 0 :=
   Classical.choose_spec (four_modes_capture F v) r hr
@@ -304,9 +304,9 @@ def R (p : Charge D) : Module.End ℂ (State D) := (F.pPlus p)⁻¹ • unscaled
 theorem unscaled_contraction : ac (unscaledD F) (unscaledR F) = M F :=
   Family.total_ac (dFamily F) (rFamily F) (numberFamily F) (dTerm_rTerm F)
 
-theorem unscaledD_square : unscaledD F * unscaledD F = 0 :=
+private theorem unscaledD_square : unscaledD F * unscaledD F = 0 :=
   Family.total_square_zero (dFamily F) (dTerm_dTerm F)
-theorem unscaledR_square : unscaledR F * unscaledR F = 0 :=
+private theorem unscaledR_square : unscaledR F * unscaledR F = 0 :=
   Family.total_square_zero (rFamily F) (rTerm_rTerm F)
 
 theorem original_contraction (p : Charge D) (hp : F.pPlus p ≠ 0) :

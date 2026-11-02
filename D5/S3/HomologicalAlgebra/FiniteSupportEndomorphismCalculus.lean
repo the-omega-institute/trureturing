@@ -43,14 +43,9 @@ structure Family (V : Type*) [AddCommGroup V] [Module ℂ V] where
 namespace Family
 variable (A : Family V)
 
-theorem support_finite (v : V) : (Function.support (fun n => A.term n v)).Finite := by
-  apply (Finset.range (A.bound v)).finite_toSet.subset
-  intro n hn
-  exact Finset.mem_range.mpr (lt_of_not_ge (fun h => hn (A.vanish v n h)))
-
 def value (v : V) : V := ∑ᶠ n, A.term n v
 
-theorem value_eq_sum (v : V) (N : ℕ) (hN : A.bound v ≤ N) :
+private theorem value_eq_sum (v : V) (N : ℕ) (hN : A.bound v ≤ N) :
     A.value v = ∑ n ∈ Finset.range N, A.term n v := by
   apply finsum_eq_finsetSum_of_support_subset
   intro n hn
@@ -73,20 +68,12 @@ def total : Module.End ℂ V where
 theorem total_eq_sum (v : V) (N : ℕ) (hN : A.bound v ≤ N) :
     A.total v = ∑ n ∈ Finset.range N, A.term n v := A.value_eq_sum v N hN
 
-/-- Captures arbitrary finite collections of actual intermediate outputs as well. -/
-theorem finite_outputs_capture (v : V) (W : Finset (Module.End ℂ V)) :
-    ∃ N, A.bound v ≤ N ∧ ∀ T ∈ W, A.bound (T v) ≤ N := by
-  classical
-  refine ⟨max (A.bound v) (W.sup (fun T => A.bound (T v))), le_max_left _ _, ?_⟩
-  intro T hT
-  exact (Finset.le_sup (f := fun T => A.bound (T v)) hT).trans (le_max_right _ _)
-
 def trunc (N : ℕ) : Module.End ℂ V := ∑ n ∈ Finset.range N, A.term n
 
-theorem trunc_apply (N : ℕ) (v : V) :
+private theorem trunc_apply (N : ℕ) (v : V) :
     A.trunc N v = ∑ n ∈ Finset.range N, A.term n v := by simp [trunc]
 
-theorem trunc_ac (A B C : Family V)
+private theorem trunc_ac (A B C : Family V)
     (hab : ∀ i j, ac (A.term i) (B.term j) = if i = j then C.term i else 0)
     (N : ℕ) : ac (A.trunc N) (B.trunc N) = C.trunc N := by
   classical

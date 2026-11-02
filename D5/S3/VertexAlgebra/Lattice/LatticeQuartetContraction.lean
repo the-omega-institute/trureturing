@@ -37,30 +37,25 @@ def tensorCoordinates : State D ≃ₗ[ℂ] (CoordinateCarrier D t ⊗[ℂ] Fock
 def sector (p : Charge D) (Q : PolynomialCoordinates (Label t)) (w : Fock) : State D :=
   Finsupp.single p ((F.coordinateEquiv B).symm Q) ⊗ₜ[ℂ] w
 
-@[simp] theorem tensorCoordinates_sector (p : Charge D)
-    (Q : PolynomialCoordinates (Label t)) (w : Fock) :
-    tensorCoordinates F B (sector F B p Q w) = Finsupp.single p Q ⊗ₜ[ℂ] w := by
-  simp [sector, tensorCoordinates, carrierEquiv_single]
-
-theorem sector_current (p : Charge D) (Q : PolynomialCoordinates (Label t))
+private theorem sector_current (p : Charge D) (Q : PolynomialCoordinates (Label t))
     (w : Fock) (u : E D) (n : ℤ) (G : Module.End ℂ Fock) :
     tp (a u n) G (sector F B p Q w) =
       sector F B p
         (F.coordinateEquiv B (polynomialCurrent u p n ((F.coordinateEquiv B).symm Q))) (G w) := by
   simp only [sector, tp_tmul, a_single, AlgEquiv.symm_apply_apply]
 
-theorem sector_add (p : Charge D) (Q T : PolynomialCoordinates (Label t)) (w : Fock) :
+private theorem sector_add (p : Charge D) (Q T : PolynomialCoordinates (Label t)) (w : Fock) :
     sector F B p (Q+T) w = sector F B p Q w + sector F B p T w := by
   simp [sector, TensorProduct.add_tmul]
-theorem sector_smul (p : Charge D) (z : ℂ) (Q : PolynomialCoordinates (Label t)) (w : Fock) :
+private theorem sector_smul (p : Charge D) (z : ℂ) (Q : PolynomialCoordinates (Label t)) (w : Fock) :
     sector F B p (z • Q) w = z • sector F B p Q w := by
-  simp only [sector, map_smul, ← Finsupp.smul_single, TensorProduct.smul_tmul]
-theorem sector_smul_right (p : Charge D) (z : ℂ) (Q : PolynomialCoordinates (Label t)) (w : Fock) :
+  simp only [sector, map_smul, ← Finsupp.smul_single, ← TensorProduct.smul_tmul']
+private theorem sector_smul_right (p : Charge D) (z : ℂ) (Q : PolynomialCoordinates (Label t)) (w : Fock) :
     sector F B p Q (z • w) = z • sector F B p Q w := by
   simp [sector, TensorProduct.tmul_smul]
 
 /-- The displayed x,y derivative and multiplication formulas act on ORIGINAL states. -/
-theorem grouped_coordinate_d (p : Charge D) (r : ℕ)
+private theorem grouped_coordinate_d (p : Charge D) (r : ℕ)
     (Q : PolynomialCoordinates (Label t)) (w : Fock) :
     dTerm F r (sector F B p Q w) =
       (r+1 : ℂ) • sector F B p (pderiv (plus t,r) Q) (c (-((r : ℤ)+1)) w) +
@@ -70,7 +65,7 @@ theorem grouped_coordinate_d (p : Charge D) (r : ℕ)
     F.creation_minus B, AlgEquiv.apply_symm_apply, sector_smul]
   simp only [neg_sub, sub_neg_eq_add, add_comm]
 
-theorem grouped_coordinate_R (p : Charge D) (r : ℕ)
+private theorem grouped_coordinate_R (p : Charge D) (r : ℕ)
     (Q : PolynomialCoordinates (Label t)) (w : Fock) :
     rTerm F r (sector F B p Q w) =
       (r+1 : ℂ)⁻¹ • sector F B p (X (plus t,r) * Q) (b ((r : ℤ)+1) w) +
@@ -93,7 +88,7 @@ def actualBasis : Module.Basis (StateIndex D t) ℂ (State D) :=
     (Finsupp.basisSingleOne : Module.Basis (Finset ℕ) ℂ Fock)).map
       (tensorCoordinates F B).symm
 
-@[simp] theorem actualBasis_apply (p : Charge D) (m : Exponents t) (S : Finset ℕ) :
+@[simp] private theorem actualBasis_apply (p : Charge D) (m : Exponents t) (S : Finset ℕ) :
     actualBasis F B (⟨p,m⟩,S) = sector F B p (monomial m 1) (ket S) := by
   simp [actualBasis, coordinateMatterBasis, Finsupp.coe_basis,
     MvPolynomial.coe_basisMonomials, tensorCoordinates, sector, ket,
@@ -101,7 +96,7 @@ def actualBasis : Module.Basis (StateIndex D t) ℂ (State D) :=
   congr 1
   exact Finsupp.mapRange_single
 
-theorem basis_expansion (v : State D) :
+private theorem basis_expansion (v : State D) :
     (∑ i ∈ ((actualBasis F B).repr v).support,
       (actualBasis F B).repr v i • actualBasis F B i) = v := by
   simpa [Finsupp.linearCombination_apply, Finsupp.sum] using
@@ -112,13 +107,13 @@ def frequencies (m : Exponents t) : Finset ℕ := m.support.image Prod.snd
 def longitudinalCount (m : Exponents t) : ℕ := ∑ r ∈ frequencies m, localDegree m r
 def totalCount (i : StateIndex D t) : ℕ := longitudinalCount i.1.2 + GC.count i.2
 
-theorem localDegree_zero_outside (m : Exponents t) (r : ℕ) (hr : r ∉ frequencies m) :
+private theorem localDegree_zero_outside (m : Exponents t) (r : ℕ) (hr : r ∉ frequencies m) :
     localDegree m r = 0 := by
   have h1 : (plus t,r) ∉ m.support := fun h => hr (Finset.mem_image.mpr ⟨_,h,rfl⟩)
   have h2 : (minus t,r) ∉ m.support := fun h => hr (Finset.mem_image.mpr ⟨_,h,rfl⟩)
   simp [localDegree, Finsupp.notMem_support_iff.mp h1, Finsupp.notMem_support_iff.mp h2]
 
-theorem sum_localDegree (m : Exponents t) (N : ℕ)
+private theorem sum_localDegree (m : Exponents t) (N : ℕ)
     (hN : ∀ r ∈ frequencies m, r < N) :
     (∑ r ∈ Finset.range N, localDegree m r) = longitudinalCount m := by
   symm
@@ -126,7 +121,7 @@ theorem sum_localDegree (m : Exponents t) (N : ℕ)
   intro r hr hnot
   exact localDegree_zero_outside m r hnot
 
-theorem numberTerm_coordinate (p : Charge D) (r : ℕ)
+private theorem numberTerm_coordinate (p : Charge D) (r : ℕ)
     (Q : PolynomialCoordinates (Label t)) (w : Fock) :
     numberTerm F r (sector F B p Q w) =
       sector F B p (X (plus t,r) * pderiv (plus t,r) Q +
@@ -159,7 +154,7 @@ theorem numberTerm_coordinate (p : Charge D) (r : ℕ)
   simp only [sector_add]
   rfl
 
-theorem numberTerm_basis (r : ℕ) (i : StateIndex D t) :
+private theorem numberTerm_basis (r : ℕ) (i : StateIndex D t) :
     numberTerm F r (actualBasis F B i) =
       (localDegree i.1.2 r + GC.localCount (r+1) i.2 : ℕ) • actualBasis F B i := by
   rcases i with ⟨⟨p,m⟩,S⟩
@@ -200,7 +195,7 @@ theorem M_basis (i : StateIndex D t) :
     sum_localDegree i.1.2 N hf, hg]
   simp only [totalCount, Nat.cast_add]
 
-theorem M_eq_number : M F = number (actualBasis F B) totalCount := by
+private theorem M_eq_number : M F = number (actualBasis F B) totalCount := by
   apply (actualBasis F B).ext
   intro i
   rw [M_basis, number, diagonal_basis]
@@ -209,17 +204,17 @@ def P0 : Module.End ℂ (State D) := projectZero (actualBasis F B) totalCount
 def invM : Module.End ℂ (State D) := inverseNumber (actualBasis F B) totalCount
 def h (p : Charge D) : Module.End ℂ (State D) := R F p * invM F B
 
-theorem spectral_projection_inverse :
+private theorem spectral_projection_inverse :
     M F * invM F B = 1 - P0 F B ∧ invM F B * M F = 1 - P0 F B ∧
     P0 F B * P0 F B = P0 F B ∧ M F * P0 F B = 0 ∧ invM F B * P0 F B = 0 := by
   simp only [M_eq_number F B]
   exact spectral_identities (actualBasis F B) totalCount
 
-theorem invM_commutes_d0 (p : Charge D) : invM F B * d0 F p = d0 F p * invM F B := by
+private theorem invM_commutes_d0 (p : Charge D) : invM F B * d0 F p = d0 F p * invM F B := by
   exact commutes_function (actualBasis F B) totalCount (d0 F p)
     (by simpa only [M_eq_number F B] using M_commutes_d0 F p) (fun n => if n = 0 then 0 else (n : ℂ)⁻¹)
 
-theorem invM_commutes_R (p : Charge D) : invM F B * R F p = R F p * invM F B := by
+private theorem invM_commutes_R (p : Charge D) : invM F B * R F p = R F p * invM F B := by
   exact commutes_function (actualBasis F B) totalCount (R F p)
     (by simpa only [M_eq_number F B] using M_commutes_R F p) (fun n => if n = 0 then 0 else (n : ℂ)⁻¹)
 
@@ -240,7 +235,7 @@ theorem homotopy_square (p : Charge D) : h F B p * h F B p = 0 := by
 
 def NoLongitudinal (m : Exponents t) : Prop := ∀ r, m (plus t,r) = 0 ∧ m (minus t,r) = 0
 
-theorem longitudinalCount_zero_iff (m : Exponents t) :
+private theorem longitudinalCount_zero_iff (m : Exponents t) :
     longitudinalCount m = 0 ↔ NoLongitudinal m := by
   classical
   constructor
@@ -258,19 +253,19 @@ theorem longitudinalCount_zero_iff (m : Exponents t) :
     intro r hr
     simp [localDegree, (hm r).1, (hm r).2]
 
-theorem totalCount_zero_iff (i : StateIndex D t) :
+private theorem totalCount_zero_iff (i : StateIndex D t) :
     totalCount i = 0 ↔ NoLongitudinal i.1.2 ∧ (i.2 = {1} ∨ i.2 = {1,3}) := by
   simp only [totalCount, Nat.add_eq_zero_iff, longitudinalCount_zero_iff, GC.count_zero_iff]
 
 def transverseVariable (x : Fin t × ℕ) : Variables t := (transverse t x.1,x.2)
 
-theorem transverseVariable_injective : Function.Injective (transverseVariable (t := t)) := by
+private theorem transverseVariable_injective : Function.Injective (transverseVariable (t := t)) := by
   intro x y h
   rcases x with ⟨i,r⟩
   rcases y with ⟨j,s⟩
   simpa [transverseVariable, transverse] using h
 
-theorem noLongitudinal_mapDomain (d : (Fin t × ℕ) →₀ ℕ) :
+private theorem noLongitudinal_mapDomain (d : (Fin t × ℕ) →₀ ℕ) :
     NoLongitudinal (d.mapDomain transverseVariable) := by
   intro r
   constructor
@@ -281,7 +276,7 @@ theorem noLongitudinal_mapDomain (d : (Fin t × ℕ) →₀ ℕ) :
     rintro ⟨⟨j,s⟩,h⟩
     simp [transverseVariable, transverse, minus] at h
 
-theorem noLongitudinal_support (m : Exponents t) (hm : NoLongitudinal m) :
+private theorem noLongitudinal_support (m : Exponents t) (hm : NoLongitudinal m) :
     (m.support : Set (Variables t)) ⊆ Set.range transverseVariable := by
   intro x hx
   rcases x with ⟨l,r⟩
@@ -293,7 +288,7 @@ theorem noLongitudinal_support (m : Exponents t) (hm : NoLongitudinal m) :
   · exact ⟨(j,r),rfl⟩
 
 /-- Surjectivity onto precisely the polynomials with no longitudinal variables is constructed. -/
-theorem transverse_monomial_preimage (m : Exponents t) (hm : NoLongitudinal m) :
+private theorem transverse_monomial_preimage (m : Exponents t) (hm : NoLongitudinal m) :
     ∃ Q : MvPolynomial (Fin t × ℕ) ℂ,
       rename transverseVariable Q = monomial m 1 := by
   refine ⟨monomial (m.comapDomain transverseVariable transverseVariable_injective.injOn) 1, ?_⟩
@@ -304,21 +299,17 @@ theorem transverse_monomial_preimage (m : Exponents t) (hm : NoLongitudinal m) :
 def transverseOriginal : MvPolynomial (Fin t × ℕ) ℂ →ₐ[ℂ] Oscillator D :=
   (F.coordinateEquiv B).symm.toAlgHom.comp (rename transverseVariable)
 
-@[simp] theorem transverseOriginal_X (j : Fin t) (r : ℕ) :
-    transverseOriginal F B (X (j,r)) = lin r (B j : E D) := by
-  simp [transverseOriginal, transverseVariable]
-
 def ghostB0 : Module.End ℂ (State D) := tp 1 (b 0)
 def chargeMatter (p : Charge D) : Module.End ℂ (Carrier D) :=
   (Finsupp.lsingle p).comp (Finsupp.lapply p)
 def chargeProject (p : Charge D) : Module.End ℂ (State D) := tp (chargeMatter p) 1
 
-theorem ghost_sector (p : Charge D) (Q : PolynomialCoordinates (Label t))
+private theorem ghost_sector (p : Charge D) (Q : PolynomialCoordinates (Label t))
     (w : Fock) (G : Module.End ℂ Fock) :
     tp (1 : Module.End ℂ (Carrier D)) G (sector F B p Q w) = sector F B p Q (G w) := by
   simp [sector]
 
-theorem chargeProject_basis (p : Charge D) (i : StateIndex D t) :
+private theorem chargeProject_basis (p : Charge D) (i : StateIndex D t) :
     chargeProject p (actualBasis F B i) =
       (if i.1.1 = p then (1 : ℂ) else 0) • actualBasis F B i := by
   rcases i with ⟨⟨q,m⟩,S⟩
@@ -328,13 +319,13 @@ theorem chargeProject_basis (p : Charge D) (i : StateIndex D t) :
     simp [chargeProject, chargeMatter, sector]
   · simp [chargeProject, chargeMatter, sector, h, Ne.symm h]
 
-theorem chargeProject_diagonal (p : Charge D) : chargeProject (D := D) p =
+private theorem chargeProject_diagonal (p : Charge D) : chargeProject (D := D) p =
     diagonal (actualBasis F B) (fun i => if i.1.1 = p then 1 else 0) := by
   apply (actualBasis F B).ext
   intro i
   rw [chargeProject_basis, diagonal_basis]
 
-theorem fixed_charge_coefficients (p : Charge D) (v : State D) :
+private theorem fixed_charge_coefficients (p : Charge D) (v : State D) :
     chargeProject p v = v ↔ ∀ i : StateIndex D t, i.1.1 ≠ p → (actualBasis F B).repr v i = 0 := by
   rw [chargeProject_diagonal F B]
   constructor
@@ -349,7 +340,7 @@ theorem fixed_charge_coefficients (p : Charge D) (v : State D) :
     · simp [diagonal_coefficient, hi, h i hi]
 
 /-- The literal original b0 kernel is detected, without imposing a physical mass shell. -/
-theorem b0_coefficients (v : State D) : ghostB0 v = 0 ↔
+private theorem b0_coefficients (v : State D) : ghostB0 v = 0 ↔
     ∀ i : StateIndex D t, 3 ∈ i.2 → (actualBasis F B).repr v i = 0 := by
   classical
   let J : Module.End ℂ (State D) := tp 1 (create 3 * annihilate 3)
@@ -386,21 +377,21 @@ def groundMap (p : Charge D) : MvPolynomial (Fin t × ℕ) ℂ →ₗ[ℂ] State
     D5.S3.Quantum.Fermionic.BcGhostQuartetCount.c1vac).comp
       ((Finsupp.lsingle p).comp (transverseOriginal F B).toLinearMap)
 
-theorem groundMap_apply (p : Charge D) (Q : MvPolynomial (Fin t × ℕ) ℂ) :
+private theorem groundMap_apply (p : Charge D) (Q : MvPolynomial (Fin t × ℕ) ℂ) :
     groundMap F B p Q = Finsupp.single p (transverseOriginal F B Q) ⊗ₜ[ℂ]
       D5.S3.Quantum.Fermionic.BcGhostQuartetCount.c1vac := rfl
 
-theorem groundMap_sector (p : Charge D) (Q : MvPolynomial (Fin t × ℕ) ℂ) :
+private theorem groundMap_sector (p : Charge D) (Q : MvPolynomial (Fin t × ℕ) ℂ) :
     groundMap F B p Q = sector F B p (rename transverseVariable Q) (ket {1}) := by
   rw [groundMap_apply, D5.S3.Quantum.Fermionic.BcGhostQuartetCount.c1vac_eq]
   rfl
 
-theorem groundMap_monomial (p : Charge D) (d : (Fin t × ℕ) →₀ ℕ) :
+private theorem groundMap_monomial (p : Charge D) (d : (Fin t × ℕ) →₀ ℕ) :
     groundMap F B p (monomial d 1) = actualBasis F B
       (⟨p,d.mapDomain transverseVariable⟩,{1}) := by
   rw [groundMap_sector, rename_monomial, actualBasis_apply]
 
-theorem groundMap_identities (p : Charge D) :
+private theorem groundMap_identities (p : Charge D) :
     (M F).comp (groundMap F B p) = 0 ∧ ghostB0.comp (groundMap F B p) = 0 ∧
     (chargeProject p).comp (groundMap F B p) = groundMap F B p := by
   have hq (d : (Fin t × ℕ) →₀ ℕ) : totalCount (D := D)
@@ -415,10 +406,11 @@ theorem groundMap_identities (p : Charge D) :
   · rw [M_basis, hq]; simp
   · rw [actualBasis_apply]
     simp [ghostB0, ghost_sector, GC.b_zero, annihilate_ket, sector]
-  · simp only [chargeProject, chargeMatter, sector, tp_tmul, LinearMap.comp_apply, Finsupp.lapply_apply, Finsupp.lsingle_apply, Finsupp.single_eq_same, LinearMap.one_apply]
+  · rw [chargeProject_basis]
+    simp only [if_pos rfl, if_true, one_smul]
 
 /-- Full ghost zero count has two states, before b0 is imposed. -/
-theorem full_zero_count_coefficients (v : State D) : M F v = 0 ↔
+private theorem full_zero_count_coefficients (v : State D) : M F v = 0 ↔
     ∀ i ∈ ((actualBasis F B).repr v).support,
       NoLongitudinal i.1.2 ∧ (i.2 = {1} ∨ i.2 = {1,3}) := by
   rw [M_eq_number F B, kernel_number_iff]
@@ -474,41 +466,32 @@ theorem literal_relative_ground (p : Charge D) (v : State D) :
       LinearMap.congr_fun (groundMap_identities F B p).2.1 Q,
       LinearMap.congr_fun (groundMap_identities F B p).2.2 Q⟩
 
-theorem actual_composition_capture (v : State D) (W : Finset (Module.End ℂ (State D))) :
-    ∃ N, modeBound F v ≤ N ∧ ∀ T ∈ W, ∀ r, N ≤ r →
-      dm F ((r : ℤ)+1) (T v) = 0 ∧ dm F (-((r : ℤ)+1)) (T v) = 0 ∧
-      rr F ((r : ℤ)+1) (T v) = 0 ∧ rr F (-((r : ℤ)+1)) (T v) = 0 := by
-  obtain ⟨N,hN,hW⟩ := (dFamily F).finite_outputs_capture v W
-  refine ⟨N,hN,?_⟩
-  intro T hT r hr
-  exact modeBound_spec F (T v) r ((hW T hT).trans hr)
-
-theorem b0_dm (n : ℤ) (hn : n ≠ 0) : ac (ghostB0 (D := D)) (dm F n) = 0 := by
+private theorem b0_dm (n : ℤ) (hn : n ≠ 0) : ac (ghostB0 (D := D)) (dm F n) = 0 := by
   have hc : b 0 * c (-n) + c (-n) * b 0 = 0 := by
     simpa [hn] using ghost_mixed_car 0 (-n)
   rw [ghostB0, dm, tp_ac]
   simp only [one_mul, mul_one, sub_self, tp, TensorProduct.map_zero_left, TensorProduct.map_zero_right, hc, add_zero]
 
-theorem b0_rr (n : ℤ) : ac (ghostB0 (D := D)) (rr F n) = 0 := by
+private theorem b0_rr (n : ℤ) : ac (ghostB0 (D := D)) (rr F n) = 0 := by
   rw [ghostB0, rr, tp_ac]
   simp only [one_mul, mul_one, sub_self, tp, TensorProduct.map_zero_left, TensorProduct.map_zero_right, ghost_b_car, add_zero]
 
-theorem b0_unscaledD : ac (ghostB0 (D := D)) (unscaledD F) = 0 := by
+private theorem b0_unscaledD : ac (ghostB0 (D := D)) (unscaledD F) = 0 := by
   apply Family.total_ac_fixed
   intro r
   simp only [dFamily, dTerm, ac_add_right, b0_dm F _ (by omega : (r : ℤ)+1 ≠ 0), b0_dm F _ (by omega : -((r : ℤ)+1) ≠ 0), add_zero]
 
-theorem b0_unscaledR : ac (ghostB0 (D := D)) (unscaledR F) = 0 := by
+private theorem b0_unscaledR : ac (ghostB0 (D := D)) (unscaledR F) = 0 := by
   apply Family.total_ac_fixed
   intro r
   simp [rFamily, rTerm, ac_smul_right, ac_add_right, b0_rr]
 
 theorem b0_d0 (p : Charge D) : ac (ghostB0 (D := D)) (d0 F p) = 0 := by
   rw [d0, ac_smul_right, b0_unscaledD, smul_zero]
-theorem b0_R (p : Charge D) : ac (ghostB0 (D := D)) (R F p) = 0 := by
+private theorem b0_R (p : Charge D) : ac (ghostB0 (D := D)) (R F p) = 0 := by
   rw [R, ac_smul_right, b0_unscaledR, smul_zero]
 
-theorem odd_even_commutes {V : Type*} [AddCommGroup V] [Module ℂ V]
+private theorem odd_even_commutes {V : Type*} [AddCommGroup V] [Module ℂ V]
     (T A C : Module.End ℂ V) (hA : ac T A = 0) (hC : ac T C = 0) :
     T * ac A C = ac A C * T := by
   have hTA : T*A = -(A*T) := eq_neg_iff_add_eq_zero.mpr hA
@@ -519,19 +502,19 @@ theorem odd_even_commutes {V : Type*} [AddCommGroup V] [Module ℂ V]
     _ = -(A*(T*C)) - C*(T*A) := by noncomm_ring
     _ = _ := by rw [hTC,hTA]; unfold ac; noncomm_ring
 
-theorem M_commutes_b0 : M F * ghostB0 = ghostB0 * M F := by
+private theorem M_commutes_b0 : M F * ghostB0 = ghostB0 * M F := by
   simp only [← unscaled_contraction F]
   exact (odd_even_commutes ghostB0 (unscaledD F) (unscaledR F)
     (b0_unscaledD F) (b0_unscaledR F)).symm
 
-theorem invM_commutes_b0 : invM F B * ghostB0 = ghostB0 * invM F B := by
+private theorem invM_commutes_b0 : invM F B * ghostB0 = ghostB0 * invM F B := by
   exact commutes_function (actualBasis F B) totalCount ghostB0
     (by simpa only [M_eq_number F B] using M_commutes_b0 F) (fun n => if n = 0 then 0 else (n : ℂ)⁻¹)
 theorem P0_commutes_b0 : P0 F B * ghostB0 = ghostB0 * P0 F B := by
   exact commutes_function (actualBasis F B) totalCount ghostB0
     (by simpa only [M_eq_number F B] using M_commutes_b0 F) (fun n => if n = 0 then 1 else 0)
 
-theorem chargeMatter_a (p : Charge D) (u : E D) (n : ℤ) :
+private theorem chargeMatter_a (p : Charge D) (u : E D) (n : ℤ) :
     chargeMatter p * a u n = a u n * chargeMatter p := by
   apply Finsupp.lhom_ext
   intro q P
@@ -540,7 +523,7 @@ theorem chargeMatter_a (p : Charge D) (u : E D) (n : ℤ) :
     simp [Module.End.mul_apply, chargeMatter, a_single]
   · simp [Module.End.mul_apply, chargeMatter, a_single, hq, Ne.symm hq]
 
-theorem chargeProject_current (p : Charge D) (u : E D) (n : ℤ) (G : Module.End ℂ Fock) :
+private theorem chargeProject_current (p : Charge D) (u : E D) (n : ℤ) (G : Module.End ℂ Fock) :
     chargeProject p * tp (a u n) G = tp (a u n) G * chargeProject p := by
   simp only [chargeProject, tp, ← TensorProduct.map_mul, one_mul, mul_one, chargeMatter_a]
 
@@ -561,24 +544,7 @@ theorem chargeProject_R (p q : Charge D) :
       Algebra.smul_mul_assoc, chargeProject_current]
   simp only [R, Algebra.mul_smul_comm, Algebra.smul_mul_assoc, hu]
 
-include B in
-theorem M_commutes_chargeProject (p : Charge D) : M F * chargeProject p = chargeProject p * M F := by
-  simp only [M_eq_number F B, chargeProject_diagonal F B]
-  apply (actualBasis F B).ext
-  intro i
-  simp only [number, Module.End.mul_apply, diagonal_basis, map_smul, smul_smul]
-  rw [mul_comm]
-
-theorem invM_commutes_chargeProject (p : Charge D) :
-    invM F B * chargeProject p = chargeProject p * invM F B := by
-  exact commutes_function (actualBasis F B) totalCount (chargeProject p)
-    (by simpa only [M_eq_number F B] using M_commutes_chargeProject F B p) (fun n => if n = 0 then 0 else (n : ℂ)⁻¹)
-theorem P0_commutes_chargeProject (p : Charge D) :
-    P0 F B * chargeProject p = chargeProject p * P0 F B := by
-  exact commutes_function (actualBasis F B) totalCount (chargeProject p)
-    (by simpa only [M_eq_number F B] using M_commutes_chargeProject F B p) (fun n => if n = 0 then 1 else 0)
-
-theorem spectral_remaining_identities : P0 F B * M F = 0 ∧
+private theorem spectral_remaining_identities : P0 F B * M F = 0 ∧
     P0 F B * invM F B = 0 ∧ invM F B * P0 F B = 0 := by
   rw [M_eq_number F B]
   repeat' constructor
@@ -589,57 +555,69 @@ theorem spectral_remaining_identities : P0 F B * M F = 0 ∧
     · simp [P0, invM, number, inverseNumber, projectZero, Module.End.mul_apply, hi]
     · simp [P0, invM, number, inverseNumber, projectZero, Module.End.mul_apply, hi]
 
-theorem zero_count_iff_projection (v : State D) : M F v = 0 ↔ P0 F B v = v := by
-  constructor
-  · intro hv
-    have hh := LinearMap.congr_fun (spectral_projection_inverse F B).2.1 v
-    change invM F B (M F v) = v-P0 F B v at hh
-    rw [hv, map_zero] at hh
-    exact (sub_eq_zero.mp hh.symm).symm
-  · intro hv
-    calc
-      M F v = M F (P0 F B v) := congrArg (M F) hv.symm
-      _ = 0 := LinearMap.congr_fun (spectral_projection_inverse F B).2.2.2.1 v
-
-theorem invM_basis (i : StateIndex D t) : invM F B (actualBasis F B i) =
-    (if totalCount i=0 then (0 : ℂ) else (totalCount i : ℂ)⁻¹) • actualBasis F B i := by
-  simp [invM, inverseNumber]
-theorem P0_basis (i : StateIndex D t) : P0 F B (actualBasis F B i) =
+private theorem P0_basis (i : StateIndex D t) : P0 F B (actualBasis F B i) =
     (if totalCount i=0 then (1 : ℂ) else 0) • actualBasis F B i := by
   simp [P0, projectZero]
 
-/-- The fixed-charge predicate is the image of the original sector inclusion. -/
-theorem fixed_charge_original_image (p : Charge D) (v : State D) :
-    chargeProject p v = v ↔ ∃ w : Oscillator D ⊗[ℂ] Fock,
-      TensorProduct.map (Finsupp.lsingle p : Oscillator D →ₗ[ℂ] Carrier D)
-        (1 : Module.End ℂ Fock) w = v := by
-  let I := TensorProduct.map (Finsupp.lsingle p : Oscillator D →ₗ[ℂ] Carrier D)
-    (1 : Module.End ℂ Fock)
-  let E := TensorProduct.map (Finsupp.lapply p : Carrier D →ₗ[ℂ] Oscillator D)
-    (1 : Module.End ℂ Fock)
-  have hIE : I.comp E = chargeProject p := by
-    simp only [I, E, chargeProject, chargeMatter, tp, ← TensorProduct.map_comp,
-      show (1 : Module.End ℂ Fock).comp 1 = 1 from rfl]
-  have hI (w : Oscillator D ⊗[ℂ] Fock) : chargeProject p (I w) = I w := by
-    induction w using TensorProduct.induction_on with
-    | zero => simp
-    | tmul P g => simp [I, chargeProject, chargeMatter, tp]
-    | add x y hx hy => simp only [map_add, hx, hy]
-  constructor
-  · intro hv
-    exact ⟨E v, (LinearMap.congr_fun hIE v).trans hv⟩
-  · rintro ⟨w,rfl⟩
-    exact hI w
-
-theorem P0_commutes_R (p : Charge D) : P0 F B * R F p = R F p * P0 F B := by
+private theorem P0_commutes_R (p : Charge D) : P0 F B * R F p = R F p * P0 F B := by
   exact commutes_function (actualBasis F B) totalCount (R F p)
     (by simpa only [M_eq_number F B] using M_commutes_R F p) (fun n => if n = 0 then 1 else 0)
 
-theorem homotopy_projection_zero (p : Charge D) :
-    h F B p * P0 F B = 0 ∧ P0 F B * h F B p = 0 := by
-  constructor
-  · rw [h, mul_assoc, (spectral_remaining_identities F B).2.2, mul_zero]
-  · rw [h, ← mul_assoc, P0_commutes_R, mul_assoc,
-      (spectral_remaining_identities F B).2.1, mul_zero]
+theorem h_mul_P0 (p : Charge D) : h F B p * P0 F B = 0 := by
+  rw [h, mul_assoc, (spectral_remaining_identities F B).2.2, mul_zero]
+
+theorem P0_mul_h (p : Charge D) : P0 F B * h F B p = 0 := by
+  rw [h, ← mul_assoc, P0_commutes_R, mul_assoc,
+    (spectral_remaining_identities F B).2.1, mul_zero]
+
+private theorem dTerm_zero_count (r : ℕ) (i : StateIndex D t)
+    (hi : totalCount i = 0) : dTerm F r (actualBasis F B i) = 0 := by
+  classical
+  obtain ⟨hm,hS⟩ := (totalCount_zero_iff i).mp hi
+  rcases i with ⟨⟨p,m⟩,S⟩
+  have hd : pderiv (plus t,r) (monomial m (1 : ℂ)) = 0 := by
+    simp [pderiv_monomial, (hm r).1]
+  have hc : c ((r : ℤ)+1) (ket S) = 0 := by
+    rcases hS with rfl | rfl
+    all_goals
+      by_cases hr : r = 0
+      · subst r
+        simp [GC.c_positive_one]
+      · have hr2 : 2 ≤ r+1 := by omega
+        have he1 : 2*(r+1-2) ≠ 1 := by omega
+        have he3 : 2*(r+1-2) ≠ 3 := by omega
+        have hh := GC.c_positive_ge_two (r+1) hr2
+        simp only [Nat.cast_add, Nat.cast_one] at hh
+        rw [hh]
+        simp only [annihilate_ket, Finset.mem_insert, Finset.mem_singleton, he1, he3, or_self, if_false]
+  rw [actualBasis_apply, grouped_coordinate_d, hd, hc]
+  simp [sector]
+
+theorem d0_mul_P0 (p : Charge D) : d0 F p * P0 F B = 0 := by
+  apply (actualBasis F B).ext
+  intro i
+  change d0 F p (P0 F B (actualBasis F B i)) = 0
+  rw [P0_basis]
+  by_cases hi : totalCount i = 0
+  · simp only [hi, if_pos rfl, if_true, one_smul]
+    change F.pPlus p • (dFamily F).total (actualBasis F B i) = 0
+    rw [(dFamily F).total_eq_sum _ (modeBound F (actualBasis F B i)) le_rfl]
+    simp only [dFamily, dTerm_zero_count F B _ i hi, Finset.sum_const_zero, smul_zero]
+  · simp only [if_neg hi, zero_smul, map_zero]
+
+theorem P0_mul_d0 (p : Charge D) : P0 F B * d0 F p = 0 := by
+  have hc : P0 F B * d0 F p = d0 F p * P0 F B :=
+    commutes_function (actualBasis F B) totalCount (d0 F p)
+      (by simpa only [M_eq_number F B] using M_commutes_d0 F p)
+      (fun n => if n = 0 then 1 else 0)
+  exact hc.trans (d0_mul_P0 F B p)
+
+/-- The actual inverse-count homotopy preserves the literal b0 kernel. -/
+theorem b0_h (p : Charge D) : ac (ghostB0 (D := D)) (h F B p) = 0 := by
+  change ghostB0 * (R F p * invM F B) + (R F p * invM F B) * ghostB0 = 0
+  rw [mul_assoc (R F p) (invM F B) ghostB0, invM_commutes_b0 F B]
+  calc
+    _ = (ghostB0 * R F p + R F p * ghostB0) * invM F B := by noncomm_ring
+    _ = 0 := by rw [← ac, b0_R, zero_mul]
 
 end D5.S3.VertexAlgebra.LatticeQuartetContraction
