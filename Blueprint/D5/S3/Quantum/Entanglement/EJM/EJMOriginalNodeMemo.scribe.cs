@@ -22,8 +22,6 @@ internal sealed class EJMOriginalNodeMemoDocument : IScribeDocumentDefinition
                 "Any selector may return no receipt or propose a receipt. Reuse first requires equality of the complete receipt input and the actual key. A missing or mismatched proposal evaluates the original function. No property of the selector is assumed.", DescribeRole.Definition),
             Node("exact-memo-step-eq", "memoStep_eq", "Exact memoization preserves every output",
                 "For arbitrary key and output types with decidable key equality, every selector and every input, memoStep equals the original function. The proof uses the receipt equation only after complete input equality. No equality instance for outputs is required.", DescribeRole.Theorem),
-            Node("exact-memo-step-fun-eq", "memoStep_fun_eq", "The memoized and original functions are equal",
-                "Function extensionality turns the pointwise receipt soundness theorem into equality of the complete functions. This is a computation-preserving equality, not an acceptance assertion.", DescribeRole.Theorem),
             Node("replay-node", "ReplayNode", "The complete original EJM node type",
                 "The node type retains the original DAG size, twenty coordinates, four values and complete original symmetry Cut. Split nodes retain the whole child function.", DescribeRole.Definition),
             Node("key", "Key", "Keep remaining fuel and the original finite index",

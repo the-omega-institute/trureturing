@@ -60,10 +60,6 @@ theorem memoStep_eq [DecidableEq Key] (actual : Key → Output)
         receipt.correct.trans (congrArg actual same)
     · simp only [memoStep, selected, if_neg same]
 
-/-- Function equality transports any existing consumer without changing it. -/
-theorem memoStep_fun_eq [DecidableEq Key] (actual : Key → Output)
-    (lookup : Key → Option (Receipt actual)) : memoStep actual lookup = actual :=
-  funext (memoStep_eq actual lookup)
 
 
 end ExactMemo
@@ -288,7 +284,6 @@ theorem check_eq_original
     nodes_fun_eq
 
 #print axioms ExactMemo.memoStep_eq
-#print axioms ExactMemo.memoStep_fun_eq
 #print axioms bound_of_isBound
 #print axioms symmetry_of_checked
 #print axioms node_2_0
