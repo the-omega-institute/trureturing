@@ -60,6 +60,10 @@ $$\forall (d: \mathbb{N}), (((2: \mathbb{N}) \le d) \Rightarrow (\exists (q: (\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/BoundEntanglement/SecondFamilyAllDimensions.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pal-toth-bene-vertesi-2021-second-family-all-dimensions` (proved) by `D5/S3/Quantum/Entanglement/BoundEntanglement/SecondFamilyAllDimensions.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pal-toth-bene-vertesi-2021-second-family-all-dimensions","declaration_gid":"D5/S3/Quantum/Entanglement/BoundEntanglement/SecondFamilyAllDimensions.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pál, Károly F.; Tóth, Géza; Bene, Erika; Vértesi, Tamás (2021). *Bound entangled singlet-like states for quantum metrology*. DOI: [10.1103/PhysRevResearch.3.023101](https://doi.org/10.1103/PhysRevResearch.3.023101). URL: <https://arxiv.org/abs/2002.12409v4>.
