@@ -60,6 +60,10 @@ $$\forall x:\mathbb{R}, \forall c:\mathbb{R}, \forall n:\mathbb{N}, (0<x\land 0<
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/WolfordBinomialBiroot.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wolford-2025-generalized-binomial-biroot-conjecture-3-4` (proved) by `D5/S3/ArithSums/WolfordBinomialBiroot.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wolford-2025-generalized-binomial-biroot-conjecture-3-4","declaration_gid":"D5/S3/ArithSums/WolfordBinomialBiroot.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Isaac Wolford (2025). *Combinatorial and Gaussian Foundations of Rational Nth Root Approximations: Theorems and Conjectures*. DOI: [10.48550/arXiv.2508.14095](https://doi.org/10.48550/arXiv.2508.14095). URL: <https://arxiv.org/abs/2508.14095v3>.
