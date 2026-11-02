@@ -33,7 +33,9 @@ internal sealed class KirkwoodDiracSLDRefutationDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The explicit p = 3, dimension-nine witness uses the identity basis and an explicit Fourier basis, a faithful density matrix rho, the Hermitian observable X and the Hermitian matrix L. The coefficient calculations make rho, X and L KD-real; L solves the SLD equation; and the source-normalized QFI is 1/6, so the universal conclusion that every nonzero-QFI SLD is not KD-real fails."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("slbd2026"), ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

@@ -58,6 +58,10 @@ $$\neg (\forall d \in \mathbb{N},\; (0 < d) \Rightarrow (\forall a \in \operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/KirkwoodDiracSLDRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/slbd2026` (refuted) by `D5/S3/Quantum/Information/KirkwoodDiracSLDRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"slbd2026","declaration_gid":"D5/S3/Quantum/Information/KirkwoodDiracSLDRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matéo Spriet, Christopher Langrenez, Raymond Brummelhuis, Stephan De Bièvre (2026). *What Is Special About the Kirkwood–Dirac Distributions? Only They Produce Natural Conditional Expectations*. DOI: [10.48550/arXiv.2511.01996](https://doi.org/10.48550/arXiv.2511.01996). URL: <https://arxiv.org/abs/2511.01996v2>.
