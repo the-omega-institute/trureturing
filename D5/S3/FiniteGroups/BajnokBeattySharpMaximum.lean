@@ -309,7 +309,7 @@ private theorem composite_attainment (p t s : ℕ) (hp : 3 ≤ p) (ht : 1 ≤ t)
 /-- For composite 2s+1, its least prime factor and odd cofactor give t≥1.
 Mathlib's minFac_le_div reuses its existing least-factor arithmetic; no new
 factorization theorem or floor bound is needed. -/
-private theorem minFac_parameters (s : ℕ) (hs : 3 ≤ s)
+theorem minFac_parameters (s : ℕ) (hs : 3 ≤ s)
     (hcomposite : ¬ Nat.Prime (2 * s + 1)) :
     Nat.Prime (Nat.minFac (2 * s + 1)) ∧
     3 ≤ Nat.minFac (2 * s + 1) ∧
@@ -344,7 +344,7 @@ private theorem minFac_parameters (s : ℕ) (hs : 3 ≤ s)
 
 /-- Exact arithmetic for the composite expression: its two subtractions do
 not truncate, and the odd square correction is an integer at least four. -/
-private theorem composite_arithmetic (s : ℕ) (hs : 3 ≤ s)
+theorem composite_arithmetic (s : ℕ) (hs : 3 ≤ s)
     (hcomposite : ¬ Nat.Prime (2 * s + 1)) :
     2 * (2 * s^2 + 2 * s - (Nat.minFac (2 * s + 1)^2 - 1) / 2) =
         (2 * s + 1)^2 - Nat.minFac (2 * s + 1)^2 ∧
