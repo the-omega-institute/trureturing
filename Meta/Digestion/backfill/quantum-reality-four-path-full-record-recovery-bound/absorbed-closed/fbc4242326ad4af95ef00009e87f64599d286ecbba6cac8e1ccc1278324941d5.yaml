@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fbc4242326ad4af95ef00009e87f64599d286ecbba6cac8e1ccc1278324941d5
+  normalized_sha256: sha256:fbc4242326ad4af95ef00009e87f64599d286ecbba6cac8e1ccc1278324941d5
+cas_ref: sha256:fbc4242326ad4af95ef00009e87f64599d286ecbba6cac8e1ccc1278324941d5
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FourPathAggregateBudget.certificate_distance_budget
+    target_statement_id: sha256:409cf444d746e3f2bd0b1571373b79edc4deaed96e7a389b8c2b73103c4862a9
+  - gid: D5/S3/Quantum/Recovery/FourPathAggregateBudget.quartic_distance_budget
+    target_statement_id: sha256:2950d1878f96fea9db3b6628b2f0ea2ed2fda12f4b726c1593f7c50aa12c8e8e
+  - gid: D5/S3/Quantum/Recovery/FourPathAggregateBudget.square_root_budget
+    target_statement_id: sha256:fa6dec5b28995ff2502e5686f8d03741dfaa7cb7c11bd7d93cbde12eb04709a7
+receipts:
+  unresolved_subitems: []

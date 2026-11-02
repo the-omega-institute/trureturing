@@ -2923,3 +2923,664 @@ No sharp constants, complete Pareto frontier, total resource optimality
 or Lean verification is asserted by these ordinary arguments.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. All-history labelled bits with paid tail updates
+
+**Definition 34.1 (the causal record contract).** Fix an integer $k\ge1$.
+An input history is any sequence $h=((j_1,b_1),\ldots,(j_m,b_m))$,
+$0\le m\le k$, of distinct labels $j_i\in[k]$ and arbitrary bits
+$b_i\in\{0,1\}$. Write $A(h)=\{j_1,\ldots,j_m\}$ and
+$x_h:A(h)\to\{0,1\}$ for its partial assignment. Every order and every
+bit assignment is admitted. Fixed code and an arbitrary finite initial
+word $K_0$ may depend on $k$, but are chosen before the unknown inputs.
+At a settled cut the only variable retained record is one binary word
+$K(h)$; the current subset $A(h)$ is supplied side information. Exactness
+means, for every history and every allowed run,
+
+$$
+\operatorname{Dec}_k(A(h),K(h))=x_h.
+\tag{IV.99}
+$$
+
+Update receives only $(k,A,K,j,b)$, with $j\notin A$, and produces the
+next word by finitely many actual unit POPs and APPENDs, as in Definition
+30.1. It is causal: a run on a prefix is independent of future labels
+and bits. Deterministic update is allowed; if fresh internal choices are
+allowed, every allowed outcome must terminate and satisfy (IV.99) and
+the stated resource bounds. Such choices provide no additional retained
+state. Computation, decoding, input handling and scratch are separately
+paid, and scratch is cleared before return. No history, bits array,
+controller, old word or advice is retained outside $(A,K)$. The whole
+current word and its end are visible; there is no prefix-free or
+history-injectivity requirement.
+
+Let $c(h,j,b)$ count all actual tail edits, including detours, on the
+particular run. A worst-update bound $D\in\mathbb N$ requires $c\le D$
+on every insertion of every run. A true payload peak bound $L\in\mathbb N$
+includes $K_0$, every settled word and every intermediate edit word.
+Neither bound pays for scratch or total execution time. No canonical
+record is required: for every partial assignment $x:A\to\{0,1\}$ use
+**all** reachable settled words $R_{A,x}$ over all histories and allowed
+outcomes with that assignment. With finite peak these sets are finite,
+nonempty, and disjoint for different $x$ at the same $A$, by (IV.99).
+In particular put $R_x=R_{[k],x}$ for terminal $x\in\{0,1\}^k$.
+
+**Lemma 34.2 (edge-specific causal witnesses).** In this contract with
+finite peak and worst-update bound $D$, every edge $xy$ of the Boolean
+cube $Q_k$ has some $a\in R_x$, $b\in R_y$ at tail-tree distance at most
+$2D$. The pair may depend on the edge.
+
+**Proof.** If the edge differs at label $j$, insert the other $k-1$
+labels first, in any one order with their shared bits, and choose one
+allowed prefix run. Causality and future-independent $K_0$ give the same
+prefix word $p$ before either choice of the last bit. Complete this run
+with each last bit; the words $a,b$ obtained are in the respective
+all-history terminal sets. Each actual edit path from $p$ has length at
+most $D$, so the tree triangle inequality gives $d(a,b)\le2D$. A detour
+cannot reduce its charged cost. No choice of one representative per
+assignment has been used. $\square$
+
+## 35. A separator counting fibres across one common cut
+
+**Theorem 35.1 (original-branch separator).** Let $T$ be the tree of all
+finite binary words, with edges $w\!-!wb$, $b\in\{0,1\}$, and unit
+path metric $d$. The statement also holds for its truncation to lengths
+at most any integer $L\ge0$, with balls and components taken there.
+For every integer $k\ge1$, integer $D\ge0$, and family of finite,
+nonempty, pairwise disjoint sets $(R_x)_{x\in\{0,1\}^k}$ of vertices of
+$T$, assume
+
+$$
+\forall xy\in E(Q_k)\quad
+\exists a_{xy}\in R_x\ \exists b_{xy}\in R_y:
+\quad d(a_{xy},b_{xy})\le2D.
+\tag{IV.100}
+$$
+
+Put $N=2^k$, $B_D(v)=\{w:d(w,v)\le D\}$, and define
+
+$$
+\begin{aligned}
+C_v&=\#\{x:R_x\cap B_D(v)=\varnothing,\ R_x\text{ meets two components of }T-\{v\}\},\\
+F_v&=\#\{x:R_x\cap B_D(v)=\varnothing,\ R_x\text{ meets two components of }T-B_D(v)\}.
+\end{aligned}
+\tag{IV.101}
+$$
+
+There exists one vertex $v$ such that
+
+$$
+F_v\ge C_v\ge
+\max\!\left(0,\left\lceil\frac{N}{k+1}\right\rceil-|B_D(v)|\right)
+\ge
+\max\!\left(0,\left\lceil\frac{N}{k+1}\right\rceil-(3\cdot2^D-2)\right).
+\tag{IV.102}
+$$
+
+Thus the same conclusion applies to Lemma 34.2's all-history sets,
+without fixing edge endpoints globally or assuming fibre connectivity.
+
+**Proof.** Choose one $r_x\in R_x$ **only for weights**, assigning one
+unit of weight there. Their finite spanning subtree has a weighted
+centroid $v$: every component of $T-\{v\}$ contains at most $N/2$
+selected representatives. To prove this, start in that finite subtree
+and move toward any component of weight greater than $N/2$. After a
+move the reverse component has weight less than $N/2$, so it cannot be
+the next heavy direction. A walk without reversal in a finite tree
+cannot continue forever. At its last vertex no heavy component remains;
+branches outside the finite subtree have weight zero. Disjointness
+makes the selected representatives distinct. They need not be the
+witnesses in (IV.100).
+
+Let $I=\{x:R_x\cap B_D(v)\ne\varnothing\}$ and let $H$ be the set
+counted by $C_v$. These classes are disjoint. Selecting a ball word for
+each member of $I$ is injective, so $|I|\le|B_D(v)|$. Set $S=I\cup H$,
+as a vertex set of $Q_k$. For every surviving $x\notin S$, the whole
+nonempty $R_x$ lies in one original component of $T-\{v\}$, and all its
+words have distance at least $D+1$ from $v$.
+
+There is no cube edge between surviving fibres in different original
+components. Indeed **every** pair $a,b$ across those components has its
+unique tree path through $v$, hence
+
+$$
+d(a,b)=d(a,v)+d(v,b)\ge2D+2,
+\tag{IV.103}
+$$
+
+contrary to the edge's own witnesses in (IV.100). Each connected
+component $W$ of $Q_k-S$ therefore has all its representatives $r_x$
+in one original branch at $v$, so $|W|\le N/2$ by centroid balance.
+
+Here is a complete elementary expansion bound for the cube. For every
+subset $W\subseteq V(Q_k)$ its edge boundary satisfies
+$|\partial_E W|\ge\min(|W|,2^k-|W|)$. Induct from $Q_0$, where both
+possible subsets have zero boundary. Split $Q_k$ into two $(k-1)$-cubes
+of size $M=2^{k-1}$, and let their intersections with $W$ have sizes
+$a,b$. Internal boundaries give at least
+$\min(a,M-a)+\min(b,M-b)$ by induction. The matching between halves
+adds at least $|a-b|$ crossing edges, since at most $\min(a,b)$ matched
+pairs have both ends in $W$. Assume $a\ge b$. If $a,b\le M/2$, the
+sum of these three bounds is $2a\ge a+b$. If $a,b\ge M/2$, it is
+$2M-2b\ge2M-a-b$. In the remaining case $b\le M/2\le a$, it is
+$M\ge\min(a+b,2M-a-b)$. This proves the induction in every case.
+
+Apply this bound to each component $W$ of $Q_k-S$. Its size is at most
+$N/2$, so $|\partial_E W|\ge|W|$; all its outgoing edges end in $S$.
+Summing over the components counts each edge to $S$ once. Since every
+cube vertex has degree $k$,
+
+$$
+N-|S|=\sum_W|W|\le\sum_W|\partial_E W|
+=|E(S,V(Q_k)\setminus S)|\le k|S|.
+\tag{IV.104}
+$$
+
+This includes the empty-complement case. Thus
+$|S|\ge\lceil N/(k+1)\rceil$ and
+$C_v=|S|-|I|\ge\lceil N/(k+1)\rceil-|B_D(v)|$.
+A tree of maximum degree three has at most $3\cdot2^{i-1}$ vertices at
+distance $i\ge1$ from a fixed vertex. Therefore
+$|B_D(v)|\le1+3\sum_{i=0}^{D-1}2^i=3\cdot2^D-2$, also for $D=0$
+with the empty sum. Root and truncation only reduce this count.
+Every component of $T-B_D(v)$ lies in an original component of
+$T-\{v\}$. Hence a fibre counted by $C_v$ is counted by $F_v$.
+Nonnegativity completes (IV.102). $\square$
+
+The original-branch qualification is essential. Different fine
+components of $T-B_D(v)$ need not be more than $2D$ apart: for
+$v=\varepsilon$, $D=1$, the words $00$ and $01$ are in different fine
+components at distance two. Equation (IV.103) is used only across
+original incident branches. Nor does the weighted choice assert a
+fixed-representative embedding of the cube.
+
+**Corollary 35.2 (connected fibres and logarithmic updates).** Under
+Theorem 35.1's hypotheses, if every $R_x$ is connected in the word tree,
+then
+
+$$
+3\cdot2^D-2\ge\left\lceil\frac{2^k}{k+1}\right\rceil,
+\qquad
+D\ge\max\!\left(0,\left\lceil\log_2
+\frac{\lceil2^k/(k+1)\rceil+2}{3}\right\rceil\right).
+\tag{IV.105}
+$$
+
+In particular $D\ge k-\log_2(12k)$. Without connectivity, for any fixed
+real constants $c\ge0,c_0$, a family with integer
+$D(k)\le c\log_2 k+c_0$ has one cut $v=v_k$ with
+
+$$
+C_v\ge\max\!\left(0,\left\lceil\frac{2^k}{k+1}\right\rceil
+-3\cdot2^{c_0}k^c+2\right).
+\tag{IV.106}
+$$
+
+For all sufficiently large $k$ this is at least $2^k/(2(k+1))$.
+Each counted assignment has two record words in different original
+branches, each outside the same ball, at distance at least $2D(k)+2$.
+
+**Proof.** A connected vertex subset of a tree contains the unique path
+between any two of its vertices. If it avoids $B_D(v)$, it therefore
+lies in one component of the complement, so $F_v=C_v=0$. Equation
+(IV.102), followed by rearrangement and integer rounding, proves
+(IV.105). Dropping its positive additive term gives
+$D\ge k-\log_2(3(k+1))\ge k-\log_2(12k)$. Substituting the assumed
+upper bound on $D(k)$ into (IV.102) proves (IV.106); exponential growth
+eventually exceeds twice the fixed polynomial loss. Equation (IV.103)
+gives the separation of the two words. These are counts of assignments
+across one common cut, not counts of histories, update events, word
+vertices or all connected components. $\square$
+
+## 36. The terminal-only boundary
+
+**Proposition 36.1 (linear-length sets with distance-two contacts).**
+For every $k\ge1$ there are disjoint nonempty terminal sets satisfying
+(IV.100) with $D=1$, each of $k$ words of common length
+$k+\lceil\log_2 k\rceil$. This statement supplies no causal updater.
+
+**Proof.** The cube has $E=k2^{k-1}$ edges. Give each edge $e$ a
+different binary prefix $p_e$ of length $m=\lceil\log_2 E\rceil$.
+For an edge $e=xy$ differing at coordinate $j$, put $p_ex_j$ in $R_x$
+and $p_ey_j$ in $R_y$. Every vertex has $k$ incident edges and therefore
+$k$ distinct assigned leaves. A leaf's first $m$ bits identify its edge,
+and its last bit distinguishes the two endpoints. No leaf belongs to
+two fibres. The two leaves assigned to any edge have common prefix
+$p_e$ and distance exactly two. Finally
+$m+1=k+\lceil\log_2 k\rceil$. For $k\ge2$ each fibre consists of
+multiple leaves with no joining path inside it, hence is disconnected.
+No records for partial assignments, common initial word or compatible
+extension rule have been constructed. Edge proximity is a necessary
+relaxation of the causal contract, not its converse. $\square$
+
+For comparison, the finite $k=3,L=3,D=1$ causal witness has 39 family
+representatives but only 37 actually reachable state-word pairs; its
+independent direct verifier covers 48 complete histories and 78 prefix
+transitions. The disconnected $R_{\{2,3\},00}=\{01,11\}$ is a
+**partial** fibre; the terminal example is $R_{000}=\{011,100,110\}$.
+At these parameters (IV.102)'s uniform lower bound is zero. This finite
+example supplies neither an all-$k$ scheme nor an asymptotic obstruction.
+Its finite checks, like the ordinary proofs here, are not Lean verification.
+
+## 37. The exact native alpha/beta connection
+
+**Proposition 37.1 (prepared restriction and actual interfaces).** Use
+AA17/19's native rules and Definition 30.1's current-term recorder.
+For each $k\ge1$ the source-relative preparation bridge uses
+
+$$
+C=\langle\beta,\alpha\rangle,\quad
+D_0=\langle\beta,C\rangle,\quad D_1=\langle C,\beta\rangle,\quad
+M=\langle\langle C,\alpha\rangle,\alpha\rangle.
+\tag{IV.107}
+$$
+
+The marker $M$ has **four** leaves. After a fixed preparation of
+$g_0=3k+4$ events, any distinct-label insertion history is simulated
+with exactly two actual native events per insertion. Its endpoint is
+$F_1$, where $F_{k+1}=M$ and $F_j=\langle B_j,F_{j+1}\rangle$,
+with $B_j=C$ if $j\notin A$ and $B_j=D_{x_j}$ otherwise. Its grade is
+$3k+4+2|A|$, hence $5k+4$ at full assignment. The unordered coloured
+quotient $U_{k,A}$ depends only on $k,A$ at these macro-cuts, while the
+ordered endpoint determines all inserted labelled bits.
+
+**Proof.** At $r=R^{j-1}$, for $j=1,\ldots,k$, the preparation executes
+$P_r,S_r,S_{rL}$. It changes the current alpha continuation into
+$\langle C,\alpha\rangle$ and proceeds into its right alpha. At
+$r=R^k$ execute $P_r,S_r,S_{rL},S_{rLL}$, producing exactly the
+bracketed four-leaf $M$ in (IV.107). Each promotion sees alpha and each
+split sees beta. This accounts for $3k+4$ events. An inactive slot at
+$q_j=R^{j-1}L$ is $C$. For insertion zero,
+$P_{q_jR},S_{q_jR}$ changes it through
+$\langle\beta,\beta\rangle$ to $D_0$; for insertion one,
+$S_{q_jL},P_{q_jR}$ changes it through
+$\langle C,\alpha\rangle$ to $D_1$. All guards hold, and different
+slots are disjoint, so every insertion order is legal and the asserted
+endpoint follows by induction.
+
+Each slot has two or three leaves; every continuation has at least four.
+Consequently even in the unordered quotient the continuation is the
+unique larger child at each comb position. These positions identify the
+labels and active subset without tags or allocation identities. Since
+$[D_0]=[D_1]$, this quotient is independent of the bits at macro-cuts.
+The ordered slots distinguish $C,D_0,D_1$ and recover their bits. The
+intermediate quotient during a two-event insertion need not be
+bit-independent. Event counting gives the stated grades. $\square$
+
+For a native recorder $R$ put $K_0=J_R(\mathrm{prep}_k)$ and
+$K_i=J_R(\mathrm{prep}_k\,\mathrm{insertions}_{1:i})$ at macro-cuts.
+This $K_0$ is fixed independently of the unknown bits and order. A
+coding decoder first forms $U_{k,A}$, applies the native decoder to
+$(U_{k,A},K)$, and reads the ordered slots. Update reconstructs that
+same current term, performs the two guarded native events through the
+native recorder interface, and clears all additional scratch. No old
+term or history is retained. With $e_r$ denoting the actual native
+record edits on event $r$, on every induced run
+
+$$
+c_i=e_{g_0+2i-1}+e_{g_0+2i},\qquad
+\sum_{i=1}^m c_i=\sum_{r=g_0+1}^{g_0+2m}e_r,\qquad
+\max_i c_i\le2d,
+\tag{IV.108}
+$$
+
+where $d$ is the maximum single-event payload cost over all prepared
+insertion runs for this $k$. Their true induced payload peak equals the
+native peak from the prepared cut through these events, including $K_0$,
+both subevent cuts and every edit word. Preparation cost remains charged
+on the native side; it is not part of the insertion suffix sum. Extra
+parsing, reconstruction, addresses, navigation and scratch remain
+separately paid, with no constant overhead or workspace bound asserted.
+
+**Theorem 37.2 (restricted and full native fibre applications).** Fix
+an admissible deterministic native recorder and $k\ge1$, and take $d$
+as in (IV.108). For the selected full-assignment endpoints $t_x=F_1(x)$,
+define two different families
+
+$$
+R_x^{\mathrm{prep}}=\{J_R(h):h\text{ is a prepared insertion history ending at }t_x\},
+\qquad
+R_x^{\mathrm{all}}=\{J_R(h):h\in\mathcal H(t_x)\}.
+\tag{IV.109}
+$$
+
+Each family separately satisfies Theorem 35.1 with $D=2d$, using its
+own centroid and ball. Thus (IV.102) and (IV.106) apply with that radius.
+If all fibres of either one of these families are word-tree connected,
+then
+
+$$
+3\cdot2^{2d}-2\ge\left\lceil\frac{2^k}{k+1}\right\rceil,
+\qquad d\ge\tfrac12\bigl(k-\log_2(12k)\bigr).
+\tag{IV.110}
+$$
+
+In particular logarithmic native payload updates force exponentially
+many branch-crossing assignments in each family's own common cut.
+
+**Proof.** The prepared family is the all-history terminal family of
+Proposition 37.1's coding restriction. Equation (IV.108) and Lemma 34.2
+give edge witnesses at distance at most $4d$. Finiteness follows from
+the finitely many orders and bits and finite deterministic runs.
+Nonemptiness follows from the preparation. All $t_x$ have the same
+$U_{k,[k]}$ and distinct ordered slots, so exact native decoding makes
+their record sets disjoint. This verifies all premises for that family.
+
+For the full family prove the premises again. Every $t_x$ has grade
+$5k+4$. At every finite grade a finite term has finitely many enabled
+addressed events, so induction on grade gives finitely many legal
+histories of that length. Hence each $R_x^{\mathrm{all}}$ is finite;
+it is nonempty because it contains its prepared histories. If a word
+belonged to two such fibres, the same native decoder input
+$(U_{k,[k]},J)$ would return the two distinct $t_x$, a contradiction.
+Finally the prepared edge witnesses are themselves legal full native
+histories, so they belong to these full sets and still have distance
+at most $4d$. Theorem 35.1 therefore applies directly to the full sets.
+Corollary 35.2 gives (IV.110) under the stated connectivity hypothesis,
+and its logarithmic consequence with $D=2d$ gives the claimed count.
+The bound $d$ is attained on some prepared suffix event, since that
+family of deterministic runs is finite. $\square$
+
+Connectivity is not inherited by restriction: $\{\varepsilon,0,1\}$
+is connected but its subset $\{0,1\}$ is not. Nor must restricted
+fragmentation persist on enlargement; extra words may enter the ball
+and join the branches. The two applications above establish their
+premises independently and do not identify their cuts. Taking connected
+hulls would add possibly unreachable words and can destroy disjointness.
+Connectivity of legal histories under adjacent swaps likewise supplies
+no word-tree connectivity without a path-preserving record map.
+
+## 38. Suppliers and unresolved scope of the separator
+
+**Definition 38.1 (source-relative contribution and evidence boundary).**
+AA17/19 supply the local guards, all legal histories and grade;
+§§23–26 supply the quotient and orientation distinction, including
+$C,D_0,D_1$. Proposition 37.1 spells out the source-relative preparation
+bridge and its four-leaf positional separation. Definition 30.1 supplies
+the native paid-tail interface; AAII94 and Theorem 31.2 supply journal
+and snapshot methods for cumulative edits, not a logarithmic bound for
+each update. The existing
+[Hypercube](../../../D5/S3/Combinatorics/Graph/Hypercube.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/Hypercube.scribe.cs)
+supply the cube graph, degree and edge count. The existing
+[EnabledPathSwapConnectivity](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean)
+is about legal execution histories, while
+[MinimumRollbackAlphabet](../../../D5/S0/History/Coding/MinimumRollbackAlphabet.lean)
+is about static injective fibre labels. These inspected suppliers do
+not establish connectivity of the present record images.
+
+Weighted centroids, cube expansion and separator methods are classical.
+For connected fibres the sets are disjoint connected branch sets in
+$T^{2D}$ with touching pairs for cube edges, the standard minor-mapping
+setting discussed by Marx,
+[*Can You Beat Treewidth?*, pp. 88, 91](https://theoryofcomputing.org/articles/v006a005/v006a005.pdf).
+The inspected introduction, Definition 2.1, Proposition 2.4 and §3 of
+[Wang–Cao–Lv–Lu, *Treewidth of generalized Hamming graph, bipartite Kneser graph and generalized Petersen graph*, v2](https://arxiv.org/html/2403.12549v2)
+provide separator/tree-decomposition context, including references to
+[Chandran–Kavitha's hypercube treewidth work](https://doi.org/10.1016/j.disc.2005.12.011)
+and [Harper's isoperimetric work](https://doi.org/10.1016/S0021-9800(66)80059-5).
+For these last two references only publication metadata and the cited
+context were checked, not their full theorem texts; no sharper constant
+from them is used. The balance here is relative to the original $N$,
+and the complete weak expansion and separator proofs are given in
+Theorem 35.1. The connected-fibre mechanism is classical, not a new
+general graph principle.
+
+The added source-relative deduction retains every history-dependent
+representative, counts ball-avoiding fibres across original branches
+at one cut, separates this necessity from the terminal-only construction,
+and transfers precisely the native payload interfaces. Bounded inspection
+of these sources and the completed literature intake found no exact
+statement of that combined application; it does not certify exhaustive
+absence or research priority. The finite witness is supplied finite
+executable evidence, not an asymptotic result or a formal proof. The
+appendix contains ordinary proofs and source applications; no fresh
+Lean/kernel verification is claimed.
+
+No new physical $U$ acquisition service, hidden retained memory,
+source-bound authority, navigation/scratch bound, total-service optimum
+or all-native update algorithm follows. The result imposes no
+superlinear peak lower bound. The unrestricted all-$k$ exact causal
+$O(k)$-peak/$O(\log k)$-worst-update problem, and its native worst-event
+counterpart, remain unresolved: (IV.105) and (IV.110) require their
+explicit connected-fibre hypotheses. Hard histories may depend on the
+recorder and $k$; no common infinite hard history or completion of the
+persistent RRO goal is asserted.
+
+## 追加锚（本行以下为增补区）
+## 39. Pair capacity for arbitrary-order labelled-bit tails
+
+**Definition 39.1 (the physical pair count).** Use the causal record
+contract of Definition 34.1. Thus $k\ge1$ is fixed before the inputs,
+$K_0$ is any fixed finite word, every label occurs once in an arbitrary
+order with an arbitrary bit, the settled public input is the exact current
+set $A$, and the only persistent private record is the visible whole word
+$K$. POP and APPEND each cost one, every edit and every intermediate word is
+charged, and separately paid scratch is cleared at each logical cut. For a
+terminal assignment $x\in\{0,1\}^k$, let $R_x$ contain **all** reachable
+terminal words. These fibres may be history-dependent, have many words, and
+be disconnected. Put
+
+$$
+T_L=\{w\in\{0,1\}^{*}:|w|\le L\},\qquad
+\delta(u,v)=|u|+|v|-2|\operatorname{lcp}(u,v)|,
+$$
+
+and, for integers $L,D\ge0$,
+
+$$
+P(L,D)=\#\bigl\{\{u,v\}\subseteq T_L:u\ne v,
+\ \delta(u,v)\le2D\bigr\}.
+\tag{IV.111}
+$$
+
+The metric $\delta$ is the shortest POP/APPEND distance, so every actual
+update path is at least its endpoint distance.
+
+**Theorem 39.2 (edge-specific pair-capacity obstruction).** Every
+admissible causal recorder with finite peak $L$ and worst logical update bill
+$D$ satisfies
+
+$$
+ k2^{k-1}\le P(L,D),
+\tag{IV.112}
+$$
+
+and, for every $L,D\ge0$,
+
+$$
+P(L,D)=
+\sum_{t=1}^{L}2^{L-t}
+\left(\sum_{d=1}^{\min(2D,t)}2^d
++\sum_{\substack{1\le i,j\le t\\i+j\le2D}}2^{i+j-2}\right).
+\tag{IV.113}
+$$
+
+Moreover,
+
+$$
+P(L,D)\le5\,2^L(2^D-1),
+\tag{IV.114}
+$$
+
+for all $L,D\ge0$, and the closed form
+
+$$
+P(L,D)=5\,2^L(2^D-1)-(D+1)2^{2D}+1
+\tag{IV.115}
+$$
+
+holds whenever $L\ge2D-1$ (in particular, for every $L\ge0$ when
+$D=0$).
+
+**Proof.** Let $e=\{x,y\}$ be a Boolean-cube edge whose differing label is
+$j$. Run all other labels first in one fixed order, with their common bits.
+The two runs have the same initial word and the same first $k-1$ inputs, so
+causality gives the same word $z_e$ immediately before the last insertion.
+If internal choices are allowed, choose one allowed outcome of this common
+prefix and use that same outcome for the two completions; the all-outcomes
+contract makes both completions admissible. Let $u_e\in R_x$ and
+$v_e\in R_y$ be the two terminal outputs. Each last
+update has at most $D$ actual edits, hence
+$\delta(u_e,v_e)\le\delta(u_e,z_e)+\delta(z_e,v_e)\le2D$.
+Exact terminal decoding makes $u_e\ne v_e$. If two cube edges selected the
+same unordered pair of words, decoding that pair would give the same
+unordered pair of assignments, and hence the same cube edge. Thus
+$e\mapsto\{u_e,v_e\}$ is injective. This proves (IV.112). The argument uses
+no global choice of one representative per assignment and no connectedness
+of any $R_x$; an assignment can use different representatives on its
+incident edges.
+
+For the count, assign a distinct word pair to its unique lowest common
+ancestor $w$. If $w$ has depth $L-t$, there are $2^{L-t}$ choices for it.
+If one endpoint is $w$ and the other is $d$ edges below, there are $2^d$
+choices for $1\le d\le\min(2D,t)$. Otherwise the endpoints lie in opposite
+child subtrees at distances $i,j\ge1$ from $w$, with $i,j\le t$ and
+$i+j\le2D$; there are $2^{i-1}2^{j-1}=2^{i+j-2}$ choices. The left/right
+roles count each unordered pair once. Summing over $t$ proves (IV.113),
+including the empty sum for $L=0$ or $D=0$.
+
+For $D=0$ every count is zero. Assume $D\ge1$. Divide (IV.113) by
+$2^L$ and extend the nonnegative sum to all $t\ge1$. An ancestor term of
+depth $d$ contributes
+$2^d\sum_{t=d}^{\infty}2^{-t}=2$, so these terms contribute $4D$. A
+cross-branch pair $(i,j)$ contributes
+$2^{i+j-2}\sum_{t=\max(i,j)}^{\infty}2^{-t}=2^{\min(i,j)-1}$. For
+$m=\min(i,j)$ there is one diagonal pair and $2(2D-2m)$ off-diagonal
+pairs. Therefore
+
+$$
+4D+\sum_{m=1}^{D}(4D-4m+1)2^{m-1}=5(2^D-1),
+$$
+
+which gives (IV.114). When $t\ge2D$, the inner bracket in (IV.113) is
+constant and equals
+
+$$
+\sum_{d=1}^{2D}2^d+\sum_{s=2}^{2D}(s-1)2^{s-2}
+=(D+1)2^{2D}-1.
+$$
+
+If $L\ge2D-1$, every omitted term in the infinite geometric sum has
+$t\ge2D$. Its normalized tail is therefore
+$2^{-L}((D+1)2^{2D}-1)$, and subtracting it from
+$2^{-L}5\,2^L(2^D-1)$ proves (IV.115). For $D=0$, both sides are zero for
+all $L$. $\square$
+
+**Corollary 39.3 (near-minimal memory and the $D=1$ boundary).** Exact
+terminal decoding gives
+
+$$
+2^k\le|T_L|=2^{L+1}-1,\qquad L\ge k.
+\tag{IV.116}
+$$
+
+Combining (IV.112) with (IV.114) gives the integer necessity
+
+$$
+D\ge
+\left\lceil\log_2\left(1+\frac{k\,2^{k-L}}{10}\right)\right\rceil.
+\tag{IV.117}
+$$
+
+Consequently, for any fixed integer additive allowance $c\ge0$, the regime
+$L\le k+c$ forces
+
+$$
+D\ge\left\lceil\log_2\left(1+\frac{k}{10\,2^c}\right)\right\rceil,
+$$
+
+so the worst logical update is logarithmic in $k$ at fixed additive peak
+redundancy. These are necessary bounds; they provide no matching coding
+construction and do not rule out constant $D$ when an unrestricted linear
+peak is available.
+
+For $D\le1$, the concatenation of the $k$ update paths puts every terminal
+word within distance $k$ of the same $K_0$. A radius-$k$ ball in the binary
+word tree is contained isometrically in a radius-$k$ ball of the infinite
+trivalent tree. That ball has $3\,2^k-2$ vertices and $3\,2^k-3$ edges;
+its $3\,2^{k-1}-2$ internal vertices have degree three. A distance-two
+pair has a unique midpoint, so the number of distance-one-or-two pairs is
+
+$$
+(3\,2^k-3)+3(3\,2^{k-1}-2)=15\,2^{k-1}-9.
+$$
+
+Thus (IV.112) excludes $D\le1$ for every $k\ge15$ with arbitrary fixed
+$K_0$. If $K_0=\varepsilon$, all terminal words lie in $T_k$, and (IV.115)
+gives $P(k,1)=5\,2^k-7$; hence the same obstruction excludes $D\le1$ for
+$k\ge10$. These are sufficient exclusions, not sharp thresholds, and they
+make no claim that every fixed $D>1$ is impossible.
+
+The parameters $k=L=10,D=1$ separate static capacity from update capacity:
+$T_{10}$ has $2047$ words for $1024$ assignments, but (IV.112) asks for
+$5120$ distinct physical pairs while $P(10,1)=5113$. The model itself is
+inhabited at peak $L=k$: initialize $K_0=0^k$, let public $A$ select the
+labelled positions in $K$, and rebuild the required tail in paid scratch;
+this has exact current decoding, peak $k$, and at most $2k$ paid edits per
+arbitrary-order update. With a fixed known arrival order, appending each
+new bit gives the separate comparison $L=k,D=1$. Neither comparison is a
+construction for the unrestricted logarithmic-update target.
+
+**Theorem 39.4 (prepared native current-term consequence).** Apply the
+contract of Definition 30.1 to the known-alpha, beta-left recorder and use
+the prepared family of Proposition 37.1. Its explicit marker is
+
+$$
+C=\langle\beta,\alpha\rangle,\qquad
+M=\langle\langle C,\alpha\rangle,\alpha\rangle
+=\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+$$
+
+with four leaves. The preparation has exactly $3k+4$ native events, each
+insertion has exactly two legal native events, and a full assignment has
+grade $5k+4$. At every macro-cut on this family, public $A$ computes the
+same $U_{k,A}$ used by the native decoder, and the coding word is literally
+$K=J$ after the fixed preparation. No new encoding or canonical native
+representative is introduced.
+
+Let $d_{\rm native}$ be the largest actual POP/APPEND bill of one of the two
+native suffix events over all prepared orders and assignments, and let $L$
+include the preparation, every settled macro-cut, both native subcuts and
+every intermediate edit word. The induced labelled-bit recorder has
+
+$$
+D_{\rm code}\le2d_{\rm native},\qquad
+ d_{\rm native}\ge
+\left\lceil\frac12\left\lceil\log_2\left(1+\frac{k\,2^{k-L}}{10}\right)\right\rceil\right\rceil.
+\tag{IV.118}
+$$
+
+For $L\le k+c$ this is the corresponding logarithmic necessary condition
+with $k/(10\,2^c)$. The equality $K=J$ is at every macro-cut; the two
+subevent bills are both included in the logical bill, while U acquisition,
+address navigation, reconstruction, scratch, source access and all other
+physical service remain separately paid. Preparation cost is charged on the
+native side and is not hidden in the insertion suffix sum. The native bound
+is a necessary condition for this prepared restriction, not an all-native
+update algorithm or a claim about a common cube embedding. In particular,
+combining $D_{\rm code}\le2$ with (IV.115) gives only the optional prepared
+consequence that $L=k$ and $d_{\rm native}=1$ cannot hold for $k\ge30$;
+the general bound (IV.118) is the result retained here.
+
+**Definition 39.5 (suppliers and limits).** The LCA decomposition and
+trivalent-ball shell count are classical tree counting inside this
+application. The existing Hypercube source supplies the cube edge count;
+Definitions 30.1 and 34.1, Proposition 37.1 and the published journal/
+preparation interfaces supply the native guards, exact current-term
+readout, paid-tail accounting and the ordinal $U$-input correspondence.
+The bounded source-relative contribution is the edge-specific injection
+(IV.112), its all-height count and the consequent near-minimal-memory
+inequality, followed by the faithful prepared native mapping. It is not a
+new general counting framework, a repetition of the separator theorem in
+§35, or a claim that the cited classical suppliers are project inventions.
+
+No global terminal representative choice, common cube embedding, physical
+$U$ acquisition service, navigation or scratch bound, total-service optimum,
+matching tradeoff, or actual native implementation follows. The unrestricted
+all-$k$ $O(k)$-peak/$O(\log k)$-worst-update coding question and its native
+counterpart remain open; no all-constant-$D$ impossibility, Lean/kernel
+verification, exhaustive originality result or completion of the persistent
+RRO goal is asserted.
+
+## 追加锚（本行以下为增补区）

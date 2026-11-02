@@ -1,0 +1,21 @@
+**Proposition 26.2 (which relation supplies orientation).** On the full
+native fibre, an endpoint-preserving bijection
+$\mathcal J(U)\cong\mathcal O(U)\times C$ with one common independent
+history alphabet $C$ exists exactly under Theorem 25.1's equal-mass
+condition. In general the child-root precedence in the increasing
+labelling supplies orientation jointly with chronology, through
+Theorem 24.1; the unordered endpoint alone supplies neither that
+precedence nor the original addressed guard at every endpoint.
+
+**Proof.** A product over the endpoint projection has $|C|$ histories at
+each endpoint, so constant fibre size is necessary. If the sizes are
+constant, rank each finite history fibre separately in a common set of
+that size, obtaining such a product. Without this condition, orientation
+followed by endpoint-conditioned history remains a valid encoding, but
+all pairs from independent orientation and chronology alphabets do not:
+(IV.68) has two endpoint choices and three joint histories. The inverse
+of (IV.63) shows exactly how first-child precedence restores the left
+child of a split, including the forced unary case. Distinct labels do
+not name physical ports; an automorphism orbit supplies no physical
+vertex binding. $\square$
+

@@ -3587,3 +3587,1387 @@ Finally, every included value has the stated actual population, and every feasib
 All reduced formulas are invariant under the common scalar phase, even at a zero trace or at $w=0$; the proof never divides by $A$, $B$, $P$ or $Q$. The only division in (23.19) is made when $\omega>0$, so $D_\sigma>0$. The realization condition (23.1) retains all boundary diagonals and excludes diagonals not belonging to any actual unitary. The remaining universal assertion is precisely the nonnegativity of these finite expressions over that entire set, modulo its common scalar phase. Neither the restricted-family theorem nor the local limits of Section 22 settle that assertion. Thus the sharp global endpoint remains unresolved, with the established bounds $R_*\le C_{\mathrm{opt}}<135580$ of Sections 20–21. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 24. The sharp endpoint on the high-trace cap
+
+Keep the constants and original producer data of Sections 21–23. Put
+
+$$
+A_0=2+\sqrt{\frac83},\qquad
+\delta_*=4-A_0=2-\sqrt{\frac83},\qquad
+\mathcal C=\{w\in\mathcal W:A(w)\ge A_0\}.
+\tag{24.1}
+$$
+
+Thus $0<\delta_*<1/2$. The following amplitude bound controls all complex
+phases on this cap.
+
+**Lemma 24.1 (a uniform disk-support bound).** For every real $\lambda\ge1$
+and every $z\in\mathbb C^4$ with $|z_j|\le1$,
+
+$$
+\left|h(z_1-z_2)+is(z_3-z_4)\right|
+ +\lambda\operatorname{Re}\sum_{j=1}^4z_j
+\le 2\sqrt{\lambda^2+h^2}+2\lambda.
+\tag{24.2}
+$$
+
+Proof. Write $q=(h,-h,is,-is)$. For every real $\phi$, the support function
+of each coordinate disk gives
+
+$$
+\lambda\operatorname{Re}\sum_jz_j
+ +\operatorname{Re}\left(e^{-i\phi}\sum_jq_jz_j\right)
+\le\sum_j|\lambda+e^{-i\phi}q_j|.
+\tag{24.3}
+$$
+
+We bound the right side uniformly in $\phi$. For $a\in\{h,s\}$ and
+$0\le t\le1$, define
+
+$$
+\begin{aligned}
+D_a(t)&=\sqrt{(\lambda^2+a^2)^2-4\lambda^2a^2t},\\
+F_a(t)&=\sqrt{2(\lambda^2+a^2)+2D_a(t)}.
+\end{aligned}
+\tag{24.4}
+$$
+
+In particular, $F_a(t)$ is the sum of the two square roots with radicands
+$\lambda^2+a^2\pm2\lambda a\sqrt t$. Since $\lambda\ge1>h>s>0$,
+these functions and their derivatives are defined on the entire closed
+interval. Both $D_a$ and $F_a$ decrease with $t$, and
+
+$$
+F_a'(t)=-\frac{2\lambda^2a^2}{F_a(t)D_a(t)}.
+\tag{24.5}
+$$
+
+Consequently $F_a'$ is nonincreasing. With $t=\cos^2\phi$, the right side
+of (24.3) is exactly $F_h(t)+F_s(1-t)$, whose derivative satisfies
+
+$$
+\begin{aligned}
+\frac{d}{dt}\bigl(F_h(t)+F_s(1-t)\bigr)
+&\le F_h'(0)-F_s'(1)\\
+&=-\frac{\lambda^2h^2}{(\lambda^2+h^2)^{3/2}}
+  +\frac{\lambda s^2}{\lambda^2-s^2}<0.
+\end{aligned}
+\tag{24.6}
+$$
+
+Here the strict inequality has a uniform elementary certificate. Using
+$h^2=1/2$, $s^2=(2-\sqrt2)/4<1/6$ and $\lambda\ge1$ gives
+
+$$
+\begin{aligned}
+\frac{h^2\lambda(\lambda^2-s^2)}{\lambda^3}
+&=\frac12\left(1-\frac{s^2}{\lambda^2}\right)>\frac5{12},\\
+\frac{s^2(\lambda^2+h^2)^{3/2}}{\lambda^3}
+&\le s^2\left(\frac32\right)^{3/2}<\frac13.
+\end{aligned}
+\tag{24.7}
+$$
+
+The last bound uses $(3/2)^{3/2}<2$. Multiplication by the positive
+denominators in (24.6) shows that (24.7) is sufficient for its sign.
+Thus the maximum in $t$ is its value at $0$, namely
+$2\sqrt{\lambda^2+h^2}+2\lambda$. Choose $\phi$ to align
+$e^{-i\phi}\sum_jq_jz_j$ with the nonnegative real axis in (24.3).
+If that sum is zero, every $\phi$ suffices. This proves (24.2). $\square$
+
+**Lemma 24.2 (simultaneous amplitude envelopes on the cap).** Let
+$w\in\mathcal C$, and put
+
+$$
+\delta=4-A(w),\qquad u_0=d-h\delta,\qquad
+V_\delta=2\delta-\frac{\delta^2}{2}.
+\tag{24.8}
+$$
+
+Then
+
+$$
+0\le u(w)\le u_0,\qquad v(w)^2\le V_\delta,
+\qquad r(w,p)=r_+(w,p)=2(1-p+\delta)
+\quad(0\le p\le1).
+\tag{24.9}
+$$
+
+For each fixed $A\in[A_0,4]$, the two amplitude bounds are attained
+simultaneously by an actual shared-unitary datum with that value of $A$.
+
+Proof. Since $A\ge A_0>0$, multiply $w$ by one common scalar phase so that
+$\sum_jw_j=A$ is real and positive. This preserves every quantity in
+(24.9). With $Y=w_3+w_4$,
+
+$$
+P=hA+(c-h)Y,\qquad
+|P|\le hA+2(c-h)=d-h\delta=u_0.
+\tag{24.10}
+$$
+
+For $A<4$, set
+
+$$
+x=\frac{A-2}{2}=1-\frac\delta2
+\in[\sqrt{2/3},1),\qquad
+\lambda=\frac{hx}{\sqrt{1-x^2}}\ge1.
+\tag{24.11}
+$$
+
+Apply Lemma 24.1 to the normalized $w$. It gives
+
+$$
+\begin{aligned}
+v&\le2\sqrt{\lambda^2+h^2}-\lambda(A-2)
+   =2h\sqrt{1-x^2},\\
+v^2&\le4h^2(1-x^2)=2\delta-\frac{\delta^2}{2}.
+\end{aligned}
+\tag{24.12}
+$$
+
+If $A=4$, the normalized $w_j$ all equal $1$, since their real parts
+are at most $1$ and sum to $4$. Then $u=d$, $v=0$, and the same bounds
+hold without the parameter in (24.11).
+
+To identify the joint sign branch, use $|w_j|\le1$ to obtain
+
+$$
+\sum_j|w_j-1|^2\le 8-2A=2\delta,
+\qquad
+B^2=|(w_1-1)-(w_2-1)+i(w_3-1)-i(w_4-1)|^2
+\le8\delta<4.
+\tag{24.13}
+$$
+
+Since $A\ge A_0>7/2$ and $B<2$, one has $A-B-1>0$. Therefore
+
+$$
+r_-(w,p)-r_+(w,p)=2(A-B-1)+4p>0
+\qquad(0\le p\le1),
+\tag{24.14}
+$$
+
+which proves the last part of (24.9).
+
+Finally, for any $A\in[A_0,4]$, put $x=(A-2)/2$ and take
+
+$$
+w^{(A)}=(x+i\sqrt{1-x^2},\ x-i\sqrt{1-x^2},\ 1,\ 1).
+\tag{24.15}
+$$
+
+All four entries have modulus one, so $w^{(A)}\in\mathcal W$, and
+$U=\operatorname{diag}(w^{(A)})U_+$ is an actual unitary lift. Direct
+substitution gives $A(w^{(A)})=A$, $u(w^{(A)})=u_0$ and
+$v(w^{(A)})^2=V_\delta$. In particular, (24.9) yields the whole-cap
+comparison
+
+$$
+G(w,p)\ge G(w^{(A(w))},p),\qquad
+r(w,p)=r(w^{(A(w))},p)
+\quad(0\le p\le1).
+\tag{24.16}
+$$
+
+This comparison follows from simultaneous envelopes, rather than from
+an assumption about which feedback matrices optimize the quotient. $\square$
+
+**Lemma 24.3 (the matrix of the required difference).** For $w\in\mathcal C$,
+write $u=u(w)$, $v=v(w)$ and $\delta=4-A(w)$. Define
+
+$$
+\begin{aligned}
+D_\delta&=d^2-2\kappa\delta,\\
+F_\delta&=e^2-2\kappa(1+\delta),\\
+M(w)&=\begin{pmatrix}
+D_\delta-u^2&-uv\\
+-uv&F_\delta-v^2
+\end{pmatrix}.
+\end{aligned}
+\tag{24.17}
+$$
+
+Then $M(w)$ is positive semidefinite. It is positive definite if
+$\delta>0$; at $\delta=0$ it is exactly
+$\operatorname{diag}(0,e^2-2\kappa)$. For every $p\in[0,1]$,
+
+$$
+G(w,p)-\kappa r(w,p)
+=\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+M(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{24.18}
+$$
+
+Proof. The bounds (22.13) and $0<\kappa<1/25$ imply
+
+$$
+d>3,\qquad e^2>4,\qquad dh<\frac52,
+\qquad d^2-e^2>5.
+\tag{24.19}
+$$
+
+Since $0\le\delta\le\delta_*<1/2$, both $D_\delta$ and $F_\delta$ are
+positive. The identity $f(\kappa)=0$ of Theorem 21.3 is equivalently
+
+$$
+(dh-\kappa)(e^2-2\kappa)=d^2.
+\tag{24.20}
+$$
+
+For $u_0,V_\delta$ from (24.8), set
+
+$$
+J=\frac{d^2-e^2}{2}+(5-4dh)\kappa+4\kappa^2.
+\tag{24.21}
+$$
+
+Using (24.19),
+
+$$
+J>\frac52-4\cdot\frac52\cdot\frac1{25}
+=\frac{21}{10}>0.
+\tag{24.22}
+$$
+
+The determinant cancellation is explicit:
+
+$$
+\begin{aligned}
+D_\delta-u_0^2
+ &=2(dh-\kappa)\delta-\frac{\delta^2}{2},\\
+(D_\delta-u_0^2)F_\delta-D_\delta V_\delta
+ &=\left(2(dh-\kappa)\delta-\frac{\delta^2}{2}\right)
+     (e^2-2\kappa-2\kappa\delta)\\
+ &\quad -(d^2-2\kappa\delta)
+              \left(2\delta-\frac{\delta^2}{2}\right)\\
+ &=J\delta^2.
+\end{aligned}
+\tag{24.23}
+$$
+
+The coefficient of $\delta$ vanishes by (24.20), and the two cubic
+terms cancel. This is the scalar polynomial cancellation used in
+Theorem 21.3, now combined with the uniform envelopes of Lemma 24.2.
+Consequently,
+
+$$
+\frac{u^2}{D_\delta}+\frac{v^2}{F_\delta}
+\le\frac{u_0^2}{D_\delta}+\frac{V_\delta}{F_\delta}
+=1-\frac{J\delta^2}{D_\delta F_\delta}\le1.
+\tag{24.24}
+$$
+
+For arbitrary real $a,b$, weighted Cauchy–Schwarz gives
+
+$$
+(ua+vb)^2
+\le\left(\frac{u^2}{D_\delta}+\frac{v^2}{F_\delta}\right)
+      (D_\delta a^2+F_\delta b^2)
+\le D_\delta a^2+F_\delta b^2.
+\tag{24.25}
+$$
+
+This proves positive semidefiniteness of $M(w)$. If $\delta>0$, the
+first factor in (24.25) is strictly less than $1$ by (24.22)–(24.24),
+so the quadratic form is strictly positive at every nonzero $(a,b)$.
+If $\delta=0$, Lemma 24.2 gives $u=d$, $v=0$, proving the stated
+boundary matrix.
+
+Finally, (23.3) and (24.9) give
+
+$$
+\begin{aligned}
+G-\kappa r
+&=d^2p+e^2(1-p)-(u\sqrt p+v\sqrt{1-p})^2
+       -2\kappa(1-p+\delta)\\
+&=D_\delta p+F_\delta(1-p)
+       -(u\sqrt p+v\sqrt{1-p})^2,
+\end{aligned}
+\tag{24.26}
+$$
+
+which is exactly (24.18), including $p=0,1$ and $\delta=0$. $\square$
+
+**Theorem 24.4 (the sharp original producer inequality on the cap).**
+For every $E\in\operatorname{Dens}_2$ and every $U\in U(4)$ such that
+
+$$
+|\operatorname{Tr}(UU_+^\dagger)|\ge2+\sqrt{\frac83},
+\tag{24.27}
+$$
+
+one has
+
+$$
+g(E,U)\ge\kappa\rho(E,U).
+\tag{24.28}
+$$
+
+Equality holds exactly when $E=E_+$ and $U=\lambda U_+$ for one common
+scalar $\lambda$ with $|\lambda|=1$.
+
+Proof. Let $w=\operatorname{diag}(UU_+^\dagger)$, so $w\in\mathcal C$
+by Theorem 23.2 and (24.27). For the actual population
+$p=b_+^\dagger E^{\mathsf T}b_+$, that theorem gives
+
+$$
+g(E,U)-\kappa\rho(E,U)
+\ge G(w,p)-\kappa r(w,p)+\kappa\epsilon(E),
+\qquad \epsilon(E)=1-\operatorname{Tr}(E^2)\ge0.
+\tag{24.29}
+$$
+
+Lemma 24.3 makes the right side nonnegative. If $\delta>0$, the vector
+$(\sqrt p,\sqrt{1-p})$ is nonzero, so its quadratic form is strictly
+positive. If $\delta=0$, that form is
+$(e^2-2\kappa)(1-p)$, where $e^2-2\kappa>0$. Equality in (24.28)
+therefore forces $\delta=0$ and $p=1$. Positivity of the matrix (23.9)
+then forces its off-diagonal entry to vanish, so $E=E_+$.
+At $A=4$ the diagonal $w$ is a common scalar multiple of $(1,1,1,1)$;
+a unitary with that diagonal has zero off-diagonal entries by its row
+norms. Thus $U=\lambda U_+$. Conversely these original optimizer pairs
+have $g=\rho=0$ by Lemma 11.2.
+
+The argument uses the original ordinary transpose and the same actual
+$U$ throughout (24.29). It includes all populations, singular and mixed
+normalized effects, zero $Q$, and arbitrary nondiagonal unitary lifts.
+The cap has $A>0$, which justifies its common-phase normalization;
+no individual coordinate phase is fixed. $\square$
+
+Theorem 21.3 supplies an actual sequence approaching the positive
+optimizer with $\rho/g\to\kappa^{-1}$. Its trace modulus tends to $4$,
+so it eventually lies in (24.27). Hence the supremum of $\rho/g$ over
+$g>0$ in this entire cap is exactly $R_*=\kappa^{-1}$.
+
+The realization and mixed-effect transfer are those of Theorem 23.2;
+the scalar cancellation (24.23) reuses Theorem 21.3. Disk support
+functions and Cauchy–Schwarz are standard intermediate tools.
+The additional whole-cap content is the simultaneous envelope
+(24.9)–(24.16), with its uniform complex-phase proof, and its application
+to (24.28). These source correspondences make no literature-priority
+claim. The remaining global obligation is
+$\nu_\kappa(w)\ge0$ for every $w\in\mathcal W$ with $A(w)<A_0$;
+the full sharp global constant is unresolved outside the proved cap.
+
+## 追加锚（本行以下为增补区）
+
+## 25. A finite-scale cap around the opposite optimizer
+
+Keep the fixed record $R_0$ of (1.1), the original producer quantities
+of Definition 11.1, and all reduced data of Definition 23.1. Put
+
+$$
+\gamma=\frac1{25},\qquad
+\mathcal C_-=\{w\in\mathcal W:B(w)\ge23/6\}.
+\tag{25.1}
+$$
+
+**Lemma 25.1 (simultaneous opposite-cap envelopes).** For every
+$w\in\mathcal C_-$, set $\delta=4-B(w)\in[0,1/6]$. Then
+
+$$
+\begin{aligned}
+u(w)^2&\le c^2(4\delta-\delta^2),&
+v(w)&\le e-s\delta,\\
+A(w)^2&\le8\delta,&
+r(w,p)&=r_-(w,p)=2(p+\delta)\quad(0\le p\le1).
+\end{aligned}
+\tag{25.2}
+$$
+
+For each fixed $\delta\in[0,1/6]$, both amplitude bounds in (25.2)
+are attained simultaneously by one actual shared-unitary datum.
+
+Proof. Since $B>0$, use one common scalar phase and the fixed
+coordinate transformation
+
+$$
+z=(w_1,-w_2,iw_3,-iw_4)
+\tag{25.3}
+$$
+
+to arrange $\sum_jz_j=B$ real and positive. Multiplying the original
+$w$ by this scalar preserves all quantities in the statement. The
+coordinate transformation in (25.3) expresses displacement from the
+negative optimizer; it imposes no additional phase quotient. In these
+coordinates, the original amplitudes are exactly
+
+$$
+P=h(z_1-z_2)-ic(z_3-z_4),\qquad
+Q=h(z_1+z_2)+s(z_3+z_4).
+\tag{25.4}
+$$
+
+Consequently,
+
+$$
+v=|sB+(h-s)(z_1+z_2)|
+\le sB+2(h-s)=e-s\delta.
+\tag{25.5}
+$$
+
+For the other amplitude, first establish the following support
+inequality for every $\lambda\ge2$ and every $|z_j|\le1$:
+
+$$
+|h(z_1-z_2)-ic(z_3-z_4)|
++\lambda\operatorname{Re}\sum_jz_j
+\le2\sqrt{\lambda^2+c^2}+2\lambda.
+\tag{25.6}
+$$
+
+Indeed, the coordinate-disk support calculation (24.3), now with
+$q=(h,-h,-ic,ic)$, bounds its left side by
+$\sum_j|\lambda+e^{-i\phi}q_j|$ for a phase $\phi$ aligning the
+amplitude. Use the functions $F_a,D_a$ of (24.4) with $a=c,h$.
+They are differentiable on $[0,1]$ since $\lambda\ge2>c>h$.
+With $t=\sin^2\phi$, the support sum equals $F_c(t)+F_h(1-t)$.
+The derivative formula (24.5) and its monotonicity give
+
+$$
+\frac{d}{dt}\bigl(F_c(t)+F_h(1-t)\bigr)
+\le-\frac{\lambda^2c^2}{(\lambda^2+c^2)^{3/2}}
+    +\frac{\lambda h^2}{\lambda^2-h^2}<0.
+\tag{25.7}
+$$
+
+To verify the strict sign, $h^2=1/2$ and $5/6<c^2<1$ imply
+
+$$
+\begin{aligned}
+c^2\left(1-\frac{h^2}{\lambda^2}\right)
+&>\frac{35}{48},\\
+h^2\left(1+\frac{c^2}{\lambda^2}\right)^{3/2}
+&<\frac12\left(\frac54\right)^{3/2}
+ <\frac7{10}<\frac{35}{48}.
+\end{aligned}
+\tag{25.8}
+$$
+
+Here $(5/4)^{3/2}<7/5$ follows by squaring, since
+$125/64<49/25$. Multiplication by the positive denominators in
+(25.7) shows that (25.8) is precisely the sufficient comparison.
+Thus the maximum support sum occurs at $t=0$, with value
+$2\sqrt{\lambda^2+c^2}+2\lambda$, proving (25.6).
+
+If $\delta>0$, put
+
+$$
+x=1-\frac\delta2\in[11/12,1),\qquad
+\lambda=\frac{cx}{\sqrt{1-x^2}}.
+\tag{25.9}
+$$
+
+Then $\lambda^2\ge121c^2/23>605/138>4$, so (25.6) applies to the
+same normalized $z$. It yields
+
+$$
+u\le2\sqrt{\lambda^2+c^2}-\lambda(B-2)
+  =2c\sqrt{1-x^2},\qquad
+u^2\le c^2(4\delta-\delta^2).
+\tag{25.10}
+$$
+
+When $\delta=0$, all normalized $z_j=1$ because their real parts
+are at most $1$ and sum to $4$. Then $u=0$ and $v=e$, so (25.2)
+holds at that boundary as well.
+
+For the trace and the joint sign, $|z_j|\le1$ gives
+
+$$
+\sum_j|z_j-1|^2\le8-2B=2\delta,\qquad
+A=|(z_1-1)-(z_2-1)-i(z_3-1)+i(z_4-1)|,
+\qquad A^2\le8\delta\le\frac43.
+\tag{25.11}
+$$
+
+In particular $A<2$ and $B-A-1>23/6-2-1=5/6$. Hence, for
+every population,
+
+$$
+r_+(w,p)-r_-(w,p)
+=2(1-A+B-2p)\ge2(B-A-1)>0,
+\tag{25.12}
+$$
+
+which proves the exact branch formula in (25.2).
+
+Finally, let $x=1-\delta/2$, $y=\sqrt{1-x^2}$, and choose
+
+$$
+z^{(\delta)}=(1,1,x+iy,x-iy),\qquad
+w^{(\delta)}=(1,-1,-i(x+iy),i(x-iy)).
+\tag{25.13}
+$$
+
+All four coordinates have modulus one. Thus
+$U=\operatorname{diag}(w^{(\delta)})U_+$ is an actual unitary
+with reduced diagonal $w^{(\delta)}\in\mathcal W$. Equations
+(25.4) give $P=2cy$ and $Q=e-s\delta$, while $B=4-\delta$.
+This proves simultaneous attainment with the same $U$.
+The construction supplies an attaining datum for the envelopes;
+the inequalities above apply to every unitary lift. $\square$
+
+**Lemma 25.2 (a uniform matrix bound with a rational margin).**
+For $w\in\mathcal C_-$, abbreviate $u=u(w)$, $v=v(w)$,
+$\delta=4-B(w)$, and define
+
+$$
+\begin{aligned}
+L_\delta&=d^2-2\gamma(1+\delta),&
+N_\delta&=e^2-2\gamma\delta,\\
+K(w)&=
+\begin{pmatrix}
+L_\delta-u^2&-uv\\
+-uv&N_\delta-v^2
+\end{pmatrix}.
+\end{aligned}
+\tag{25.14}
+$$
+
+Then $K(w)$ is positive semidefinite. For $\delta>0$ it is positive
+definite and satisfies
+
+$$
+N_\delta-v^2>\frac{937}{600}\delta,\qquad
+\det K(w)>\frac{724}{5625}\delta>\frac{\delta}{8}.
+\tag{25.15}
+$$
+
+At $\delta=0$, it is exactly
+$\operatorname{diag}(d^2-2/25,0)$. For all $p\in[0,1]$,
+
+$$
+G(w,p)-\gamma r(w,p)
+=
+\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+K(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{25.16}
+$$
+
+Proof. The half-angle bounds (22.13), with
+$d=2(h+c)$ and $e=2(h+s)$, give the following rational consequences:
+
+$$
+d^2>\frac{53}{5},\qquad
+e^2<\frac{119}{25},\qquad
+es>\frac56,\qquad
+c^2<\frac{171}{200},\qquad
+s^2<\frac3{20}.
+\tag{25.17}
+$$
+
+For $\gamma=1/25$ and $0\le\delta\le1/6$, these imply
+
+$$
+L_\delta>\frac{53}{5}-\frac7{75}=\frac{788}{75},
+\qquad 0<N_\delta<\frac{119}{25}.
+\tag{25.18}
+$$
+
+The positivity of $N_\delta$ also follows from $e^2>4$ in
+(24.19) and $2\gamma\delta\le1/75$. If $\delta>0$,
+
+$$
+\begin{aligned}
+N_\delta-(e-s\delta)^2
+&=\delta\bigl(2(es-\gamma)-s^2\delta\bigr)\\
+&>\delta\left(2\left(\frac56-\frac1{25}\right)
+                       -\frac3{20}\frac16\right)
+=\frac{937}{600}\delta.
+\end{aligned}
+\tag{25.19}
+$$
+
+The envelope for $v$ proves the first inequality in (25.15).
+Expanding the determinant and applying both simultaneous bounds
+of Lemma 25.1 gives
+
+$$
+\begin{aligned}
+\det K(w)
+&=L_\delta(N_\delta-v^2)-N_\delta u^2\\
+&\ge L_\delta\bigl(N_\delta-(e-s\delta)^2\bigr)
+       -N_\delta c^2(4\delta-\delta^2)\\
+&\ge L_\delta\bigl(N_\delta-(e-s\delta)^2\bigr)
+       -4N_\delta c^2\delta\\
+&>\delta\left(\frac{788}{75}\frac{937}{600}
+          -4\frac{119}{25}\frac{171}{200}\right)
+=\frac{724}{5625}\delta>\frac{\delta}{8}.
+\end{aligned}
+\tag{25.20}
+$$
+
+Thus the lower-right entry and determinant are positive whenever
+$\delta>0$, proving positive definiteness. At $\delta=0$, Lemma 25.1
+gives $u=0$, $v=e$, and the stated boundary matrix has
+$d^2-2/25>0$. Finally, (23.3) and $r=2(p+\delta)$ give
+
+$$
+G-\gamma r
+=L_\delta p+N_\delta(1-p)
+ -(u\sqrt p+v\sqrt{1-p})^2,
+\tag{25.21}
+$$
+
+which is (25.16), including both endpoint populations. $\square$
+
+**Theorem 25.3 (the original producer inequality on the opposite cap).**
+For every $E\in\operatorname{Dens}_2$ and every actual $U\in U(4)$,
+
+$$
+B\bigl(\operatorname{diag}(UU_+^\dagger)\bigr)\ge\frac{23}{6}
+\quad\Longrightarrow\quad
+g(E,U)\ge\frac1{25}\rho(E,U).
+\tag{25.22}
+$$
+
+Equality holds exactly when $E=E_-$ and $U=\lambda U_-$ for one
+common scalar $\lambda$ with $|\lambda|=1$. In particular, on
+this entire cap $g(E,U)\ge\kappa\rho(E,U)$; this latter inequality
+is strict at every pair outside the negative optimizer class.
+
+Proof. For the original $E,U$, take
+$w=\operatorname{diag}(UU_+^\dagger)$,
+$p=b_+^\dagger E^{\mathsf T}b_+$ and
+$\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0$.
+The exact same-feedback comparison (23.14) gives
+
+$$
+g(E,U)-\gamma\rho(E,U)
+\ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E).
+\tag{25.23}
+$$
+
+Lemma 25.2 makes the right side nonnegative. If $\delta>0$,
+its quadratic-form term is strictly positive, since
+$(\sqrt p,\sqrt{1-p})$ is nonzero. If $\delta=0$, that term is
+$(d^2-2/25)p$; equality therefore forces $p=0$. Positivity of
+(23.9) then forces its off-diagonal entry to be zero and
+$E=E_-$. At $B=4$, (25.3) gives
+$w=\lambda(1,-1,-i,i)$. The unitary $UU_+^\dagger$ has all four
+diagonal entries of modulus one, so its row norms force all
+off-diagonal entries to vanish. As
+$U_-=\operatorname{diag}(1,-1,-i,i)U_+$, this yields
+$U=\lambda U_-$. Conversely, these original optimizer pairs
+have $g=\rho=0$ by Lemma 11.2.
+
+Section 22 proves $0<\kappa<1/25$. Outside this optimizer class,
+$\rho>0$ by Lemma 11.2, and (25.22) consequently implies
+$g-\kappa\rho\ge(1/25-\kappa)\rho>0$.
+
+The ordinary transpose in $p$ and (25.23) is the one fixed by
+the original record convention. The proof retains one actual
+shared $U$, the joint optimizer sign, and just the common
+scalar feedback phase. Equation (25.23) includes the impurity
+term with its nonnegative sign, so both singular and mixed
+normalized effects and every population are included. No
+spectral component is assigned a different feedback. $\square$
+
+The new cap is wholly in the complement of Section 24: (25.11)
+gives $A\le2/\sqrt3<2<A_0$ throughout $\mathcal C_-$.
+It contains the negative optimizer $B=4$ and every datum
+(25.13) with $0<\delta\le1/6$, for which $r=2(p+\delta)>0$.
+Combining Theorems 24.4 and 25.3, the remaining global
+sharp-endpoint obligation is exactly
+
+$$
+\nu_\kappa(w)\ge0
+\quad\text{for every }w\in\mathcal W
+\text{ with }A(w)<2+\sqrt{8/3}\text{ and }B(w)<23/6.
+\tag{25.24}
+$$
+
+The fixed-source implication (25.22) is repo-derived.
+Its exact source correspondence and mixed-effect transfer are
+Theorem 23.2, including the Thompson realization theorem in the
+Jasper--Loreaux--Weiss formulation cited there. The disk support
+and monotonicity calculation reuses (24.3)--(24.5), with the
+opposite coefficient pair and the range $\lambda\ge2$ justified
+in (25.7)--(25.9). The substantive uniform increment is the
+simultaneous opposite-cap bound (25.2) and its positive rational
+matrix margin (25.15). Neither optimality of the coefficient
+$1/25$ or the cutoff $23/6$, nor a global sharp constant outside
+the union of these two caps, is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 26. The original producer endpoint on the trace triangle
+
+**Definition 26.1 (trace triangle and its increment).** Keep the original
+record, ordinary transpose, producer quantities and reduced data of
+Sections 21–25. In particular, $\kappa$ is exactly the smaller root in
+Theorem 21.3, $\gamma=1/25$ as in (25.1), and
+$A_0=2+\sqrt{8/3}$ as in (24.1). Define
+
+$$
+\begin{aligned}
+\mathcal T&=\{w\in\mathcal W:A(w)+B(w)\le4\},\\
+\mathcal T_{\rm new}
+&=\{w\in\mathcal T:A(w)<A_0,\ B(w)<23/6\}.
+\end{aligned}
+\tag{26.1}
+$$
+
+These sets retain the realizability condition (23.1) and are invariant
+under the one common scalar phase of Definition 23.1.
+
+**Lemma 26.2 (linear amplitude bounds for one datum).** For every
+$w\in\mathcal W$, its original amplitudes satisfy
+
+$$
+u(w)\le hA(w)+2(c-h),\qquad
+v(w)\le sB(w)+2(h-s).
+\tag{26.2}
+$$
+
+Consequently, for $w\in\mathcal T$, either trace can be used as a
+parameter in the following bounds:
+
+$$
+\begin{array}{lll}
+t=A(w):&u(w)\le a_+(t):=2(c-h)+ht,
+       &v(w)\le b_+(t):=e-st,\\
+t=B(w):&u(w)\le a_-(t):=d-ht,
+       &v(w)\le b_-(t):=2(h-s)+st.
+\end{array}
+\tag{26.3}
+$$
+
+Proof. For the same fixed $w$, put
+$S=w_1+w_2+w_3+w_4$ and
+$Z=w_1-w_2+i(w_3-w_4)$. The exact identities (23.2) give
+
+$$
+P=hS+(c-h)(w_3+w_4),\qquad
+Q=sZ+(h-s)(w_1-w_2).
+\tag{26.4}
+$$
+
+Since $c>h>s>0$ and $|w_j|\le1$, the triangle inequality proves
+(26.2), without choosing any coordinate phase. If $t=A$, then
+$B\le4-t$ and
+$2(h-s)+s(4-t)=e-st$. If $t=B$, then $A\le4-t$ and
+$2(c-h)+h(4-t)=d-ht$. This proves (26.3). These are upper bounds
+for two amplitudes of the same $w$; simultaneous attainment is not
+asserted or needed. $\square$
+
+**Lemma 26.3 (two uniform matrix certificates).** Define the intervals
+
+$$
+J_+=[1/2,11/3],\qquad J_-=[1/2,23/6]
+\tag{26.5}
+$$
+
+and, for $t$ in the corresponding interval, put
+
+$$
+\begin{aligned}
+D_+(t)&=d^2-\gamma(8-2t),&
+F_+(t)&=e^2-\gamma(10-2t),\\
+D_-(t)&=d^2-\gamma(10-2t),&
+F_-(t)&=e^2-\gamma(8-2t),\\
+M_\sigma(t)&=
+\begin{pmatrix}
+D_\sigma(t)-a_\sigma(t)^2&-a_\sigma(t)b_\sigma(t)\\
+-a_\sigma(t)b_\sigma(t)&F_\sigma(t)-b_\sigma(t)^2
+\end{pmatrix},
+\qquad \sigma\in\{+,-\}.
+\end{aligned}
+\tag{26.6}
+$$
+
+Both matrices are positive definite throughout their closed intervals.
+In particular, for every $w\in\mathcal T$ and every $p\in[0,1]$,
+
+$$
+\begin{aligned}
+A(w)\in J_+&\quad\Longrightarrow\quad
+G(w,p)>\gamma r_+(w,p)\ge\gamma r(w,p),\\
+B(w)\in J_-&\quad\Longrightarrow\quad
+G(w,p)>\gamma r_-(w,p)\ge\gamma r(w,p).
+\end{aligned}
+\tag{26.7}
+$$
+
+Proof. All four amplitudes $a_\sigma,b_\sigma$ are positive on the
+stated intervals, as follows directly from (22.13). The bounds
+$d^2>9$, $e^2>4$ and $t\ge0$ imply
+$D_\sigma>0$ and $F_\sigma>0$. Write
+
+$$
+\Delta_\sigma(t)=\det M_\sigma(t)
+=D_\sigma F_\sigma-F_\sigma a_\sigma^2-D_\sigma b_\sigma^2.
+\tag{26.8}
+$$
+
+Each determinant is a concave polynomial on its interval. To check
+this with explicit signs, let
+
+$$
+a_0=2(c-h)>0,\qquad b_0=2(h-s)>0,
+\qquad
+D_{\sigma,0}=D_\sigma(0),\quad
+F_{\sigma,0}=F_\sigma(0),
+\tag{26.9}
+$$
+
+where the formulas (26.6) also define the values at $0$.
+Twice differentiating (26.8) gives
+
+$$
+\begin{aligned}
+\Delta_+''(t)
+&=8\gamma^2-2F_{+,0}h^2-2D_{+,0}s^2
+  -8\gamma(a_0h-es)-12\gamma(h^2+s^2)t,\\
+\Delta_-''(t)
+&=8\gamma^2-2F_{-,0}h^2-2D_{-,0}s^2
+  +8\gamma(dh-b_0s)-12\gamma(h^2+s^2)t.
+\end{aligned}
+\tag{26.10}
+$$
+
+Here $D_{\sigma,0}>0$, $h^2=1/2$, $es<1$ and $dh<5/2$;
+the latter two inequalities follow from (22.13), also giving
+$e<11/5$ and $s<2/5$. Since
+$F_{+,0}>18/5$ and $F_{-,0}>92/25$, (26.10) yields, for $t\ge0$,
+
+$$
+\begin{aligned}
+\Delta_+''(t)
+&<\frac8{625}-\frac{18}{5}+\frac8{25}<0,\\
+\Delta_-''(t)
+&<\frac8{625}-\frac{92}{25}+\frac45<0.
+\end{aligned}
+\tag{26.11}
+$$
+
+It remains to check the four interval endpoints. The following table
+uses only the rational half-angle bounds (22.13). In each row its
+entries $x,y,z,v_0$ mean, at the indicated $\sigma,t$,
+
+$$
+D_\sigma-a_\sigma^2>x>0,\qquad
+F_\sigma>y>0,\qquad
+D_\sigma<z,\qquad 0<b_\sigma<v_0.
+\tag{26.12}
+$$
+
+| $\sigma,t$ | $x$ | $y$ | $z$ | $v_0$ | $xy-zv_0^2$ |
+| --- | --- | --- | --- | --- | --- |
+| $+,1/2$ | $97/10$ | $219/50$ | $1037/100$ | $199/100$ | $1419763/10^6$ |
+| $+,11/3$ | $29/20$ | $116/25$ | $531/50$ | $39/50$ | $33349/125000$ |
+| $-,1/2$ | $181/100$ | $223/50$ | $1029/100$ | $17/20$ | $25523/40000$ |
+| $-,23/6$ | $256/25$ | $473/100$ | $211/20$ | $53/25$ | $12741/12500$ |
+
+For an explicit way to verify every entry, (22.13) gives
+
+$$
+\frac{16309}{5000}<d<\frac{16311}{5000},\qquad
+\frac{10897}{5000}<e<\frac{10899}{5000}.
+\tag{26.13}
+$$
+
+Use their squared bounds in $D_\sigma,F_\sigma$, and use (22.13)
+in the following affine expressions for the amplitudes:
+
+$$
+\begin{aligned}
+a_+(t)&=2c+(t-2)h,& b_+(t)&=2h+(2-t)s,\\
+a_-(t)&=2c+(2-t)h,& b_-(t)&=2h+(t-2)s.
+\end{aligned}
+\tag{26.14}
+$$
+
+For a negative coefficient use the lower bound to bound that term
+above. For example, at $\sigma=+$, $t=11/3$ these substitutions give
+
+$$
+\begin{aligned}
+D_+-a_+^2
+&>\left(\frac{16309}{5000}\right)^2-\frac2{75}
+ -\left(\frac{2\cdot9239}{10000}
+          +\frac{5\cdot7072}{3\cdot10000}\right)^2
+ >\frac{29}{20},\\
+F_+&>\left(\frac{10897}{5000}\right)^2-\frac8{75}
+ >\frac{116}{25},\\
+D_+&<\left(\frac{16311}{5000}\right)^2-\frac2{75}
+ <\frac{531}{50},\\
+b_+&<\frac{2\cdot7072}{10000}
+       -\frac{5\cdot3826}{3\cdot10000}<\frac{39}{50}.
+\end{aligned}
+\tag{26.15}
+$$
+
+The other rows follow by the same substitutions in (26.14);
+their rational products are displayed in the last column.
+Thus (26.8) and (26.12) give
+$\Delta_\sigma(t)>xy-zv_0^2>0$ at both endpoints of each
+interval. Concavity places every value between the endpoints above
+their linear interpolation, so $\Delta_\sigma>0$ on all of $J_\sigma$.
+
+Because $D_\sigma,F_\sigma>0$, this proves
+
+$$
+\frac{a_\sigma^2}{D_\sigma}
+ +\frac{b_\sigma^2}{F_\sigma}
+=1-\frac{\Delta_\sigma}{D_\sigma F_\sigma}<1.
+\tag{26.16}
+$$
+
+Weighted Cauchy–Schwarz now gives, for every nonzero real pair $(X,Y)$,
+
+$$
+(a_\sigma X+b_\sigma Y)^2
+\le\left(\frac{a_\sigma^2}{D_\sigma}
+          +\frac{b_\sigma^2}{F_\sigma}\right)
+   (D_\sigma X^2+F_\sigma Y^2)
+<D_\sigma X^2+F_\sigma Y^2.
+\tag{26.17}
+$$
+
+This proves positive definiteness of $M_\sigma$. For $t=A(w)\in J_+$,
+use (26.3), the nonnegative square roots of both populations, and (23.3):
+
+$$
+\begin{aligned}
+G(w,p)-\gamma r_+(w,p)
+&=D_+(t)p+F_+(t)(1-p)
+  -(u\sqrt p+v\sqrt{1-p})^2\\
+&\ge D_+(t)p+F_+(t)(1-p)
+  -(a_+(t)\sqrt p+b_+(t)\sqrt{1-p})^2>0.
+\end{aligned}
+\tag{26.18}
+$$
+
+The last step is (26.17) at the nonzero vector
+$(\sqrt p,\sqrt{1-p})$. For $t=B(w)\in J_-$ the identical
+calculation uses $D_-,F_-,a_-,b_-$ and $r_-$ instead.
+Finally $r=\min\{r_+,r_-\}\le r_\sigma$ gives (26.7).
+This is a comparison with a candidate joint-sign distance; it does
+not assert that the chosen candidate is the minimizing branch.
+Both endpoint populations and all zeros of $P$ or $Q$ are included.
+$\square$
+
+**Theorem 26.4 (the endpoint on the entire trace triangle).** For every
+normalized effect $E\in\operatorname{Dens}_2$ and every actual shared
+feedback $U\in U(4)$ with
+$w=\operatorname{diag}(UU_+^\dagger)\in\mathcal T$,
+
+$$
+g(E,U)\ge\kappa\rho(E,U).
+\tag{26.19}
+$$
+
+On the whole newly covered set $\mathcal T_{\rm new}$ there is the
+stronger strict inequality
+
+$$
+g(E,U)>\frac1{25}\rho(E,U).
+\tag{26.20}
+$$
+
+Equality in (26.19) holds exactly at the two original optimizer
+classes $(E_\sigma,\lambda U_\sigma)$, $\sigma\in\{+,-\}$,
+$|\lambda|=1$.
+
+Proof. If $A\ge A_0$, apply Theorem 24.4. If $B\ge23/6$, apply
+Theorem 25.3 and $0<\kappa<\gamma$. These establish (26.19),
+with the stated equality cases, on both old caps.
+
+Otherwise $w\in\mathcal T_{\rm new}$. If $A\ge1/2$, then
+$A<A_0<11/3$, so the first line of (26.7) proves
+$G(w,p)>\gamma r(w,p)$ for every $p$. Here $A_0<11/3$ follows
+from $8/3<25/9$. If $A<1/2$ but $B\ge1/2$, then
+$B<23/6$, so the second line proves the same conclusion.
+
+In the remaining case $A,B<1/2$, (26.2) and (22.13) give
+
+$$
+0\le u<2c-\tfrac32h<1,\qquad
+0\le v<2h-\tfrac32s<1.
+\tag{26.21}
+$$
+
+Since $d^2>9$ and $e^2>4$, ordinary Cauchy–Schwarz implies,
+for every $p\in[0,1]$,
+
+$$
+\begin{aligned}
+G(w,p)
+&\ge4-(u^2+v^2)>2,\\
+r(w,p)&\le r_+(w,p)\le10,\\
+G(w,p)-\gamma r(w,p)&>2-\frac{10}{25}=\frac85>0.
+\end{aligned}
+\tag{26.22}
+$$
+
+Thus all of $\mathcal T_{\rm new}$ has been covered, including its
+boundary $A+B=4$. For the actual original effect use precisely
+
+$$
+p=b_+^\dagger E^{\mathsf T}b_+,\qquad
+\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0.
+\tag{26.23}
+$$
+
+The same-feedback transfer (23.14), now with $\gamma=1/25$, gives
+
+$$
+g(E,U)-\gamma\rho(E,U)
+\ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E)>0.
+\tag{26.24}
+$$
+
+This proves (26.20). Since $\rho\ge0$ and $\gamma>\kappa$,
+it also proves strictness of (26.19) on $\mathcal T_{\rm new}$.
+On the caps, Theorems 24.4 and 25.3 supply exactly the equality
+cases already stated. Conversely both original optimizer classes
+belong to $\mathcal T$, with trace pairs $(A,B)=(4,0)$ and $(0,4)$,
+and have $g=\rho=0$ by Lemma 11.2.
+
+The transfer retains the ordinary transpose, the joint optimizer-sign
+minimum and the common scalar phase quotient of Definition 11.1.
+It uses the same actual $U$ for both amplitude estimates and for
+(26.24). No effect is inverted and no feedback is assigned to an
+individual spectral piece, so arbitrary mixed and singular normalized
+effects, every population and arbitrary nondiagonal lifts are included.
+$\square$
+
+**Proposition 26.5 (a realizable nondiagonal increment).** The set
+$\mathcal T_{\rm new}$ contains actual nondiagonal feedback data.
+In particular, let
+
+$$
+V=\begin{pmatrix}
+1/2&\sqrt3/2&0&0\\
+-\sqrt3/2&1/2&0&0\\
+0&0&1/2&\sqrt3/2\\
+0&0&-\sqrt3/2&1/2
+\end{pmatrix},\qquad U=VU_+.
+\tag{26.25}
+$$
+
+Then $U\in U(4)$ is nondiagonal and its reduced datum is
+$w=(1/2,1/2,1/2,1/2)\in\mathcal T_{\rm new}$.
+For this fixed feedback, (26.20) holds for every normalized effect.
+For example, the original pair with $E=E_+$ satisfies
+
+$$
+\rho(E_+,U)=4,\qquad g(E_+,U)=\frac34d^2>0.
+\tag{26.26}
+$$
+
+Proof. Each real two-by-two rotation block of $V$ is orthogonal,
+so $V^\dagger V=I_4$ and $UU_+^\dagger=V$. Since $U_+$ is diagonal
+unitary by (6.3), multiplying its columns by the nonzero phases
+preserves the nonzero off-diagonal entries of $V$. Thus $U$ is an
+actual nondiagonal unitary lift. Its diagonal gives $A=2$, $B=0$,
+so $A+B=2<4$, $A<A_0$ and $B<23/6$. This datum lies in neither
+old cap. Direct substitution in (23.2) gives $P=d/2$, $Q=0$.
+For $E_+$, $p=1$ and $\epsilon=0$, hence
+$r=\min\{4,10\}=4$ and (23.12) gives $g=3d^2/4$.
+This proves (26.26) and shows that the uniform domain extension
+contains original feasible pairs beyond Sections 24–25. $\square$
+
+**Corollary 26.6 (the remaining uniform obligation).** Let
+
+$$
+\mathcal O=\{w\in\mathcal W:
+ A(w)<2+\sqrt{8/3},\quad B(w)<23/6,\quad A(w)+B(w)>4\}.
+\tag{26.27}
+$$
+
+The inequality $g\ge\kappa\rho$ holds for all normalized effects
+and actual shared feedback whose reduced data lie outside $\mathcal O$.
+The original global endpoint is therefore equivalent to the remaining
+uniform assertion
+
+$$
+\nu_\kappa(w)\ge0\qquad\text{for every }w\in\mathcal O.
+\tag{26.28}
+$$
+
+Proof. The complement of $\mathcal O$ in the realizable set
+$\mathcal W$ is exactly the union of the two caps in Theorems
+24.4 and 25.3 and the trace triangle in Theorem 26.4.
+Theorem 23.4 transfers these uniform original inequalities to
+$\nu_\kappa\ge0$ there and identifies (26.28) as precisely the
+remaining condition for $C_{\rm opt}=\kappa^{-1}$.
+
+The source correspondence is (23.2) for the two original amplitudes,
+(23.3) for the joint-sign distance, and Theorem 23.2 for realizability
+and the mixed-effect transfer. The realization theorem used there
+continues to apply to every datum here; (26.25) supplies an explicit
+nondiagonal lift for the increment. Triangle inequalities, polynomial
+concavity and Cauchy–Schwarz are standard intermediate tools. The
+additional fixed-record content is the uniform certificate
+(26.8)–(26.18) and its coverage of all of $\mathcal T_{\rm new}$.
+The bounds (26.2)–(26.3) are sufficient envelopes, not a jointly
+attained optimization. Failure of such an envelope certificate
+outside its proved intervals would not give an original producer
+counterexample. Assertion (26.28) remains unresolved; neither global
+sharpness nor literature priority is asserted. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 27. Radial contraction, an interior margin and the remaining realizable boundary
+
+**Definition 27.1 (feedback radial functional).** Keep the original record,
+ordinary transpose and producer quantities of Sections 21–26, including
+$A_0=2+\sqrt{8/3}$, $\kappa$ of Theorem 21.3 and $\mathcal O$ of (26.27).
+For $w\in\mathbb C^4$ define the scalar functional
+
+$$
+m(w)=\max\left\{\max_j|w_j|,
+ \frac{\sum_j|w_j|-2\min_j|w_j|}{2}\right\}.
+\tag{27.1}
+$$
+
+This $m$ is a functional of feedback diagonal data, not a protocol measure.
+No triangle inequality or norm property is assumed.
+
+**Lemma 27.2 (exact radial boundary).** The set (23.1) is
+$\mathcal W=\{m\le1\}$, its interior is $\{m<1\}$, and
+
+$$
+\begin{aligned}
+\partial\mathcal W=\{m=1\}
+=\{z\in\mathcal W:\ &\max_j|z_j|=1\ \text{or}\\
+ &\sum_j|z_j|-2\min_j|z_j|=2\}.
+\end{aligned}
+\tag{27.2}
+$$
+
+Every nonzero $w\in\mathcal W$ has the unique radial representation
+$w=tz$ with $t=m(w)\in(0,1]$ and $m(z)=1$.
+
+Proof. Formula (27.1) is continuous, $m(w)=0$ exactly when $w=0$,
+and $m(tw)=t m(w)$ for every real $t\ge0$. Its two inequalities are
+exactly (23.1). Continuity makes $\{m<1\}$ open. If $m(z)=1$, the
+points $(1+\eta)z$, $\eta>0$, lie outside $\mathcal W$ and approach $z$;
+thus such a point is on the boundary. These observations prove (27.2)
+and the radial representation, without division at $w=0$.
+The first boundary type requires only one saturated coordinate; the
+second can have all coordinates strictly below one, as at
+$z=(2/3,2/3,2/3,0)$. This example has $m(z)=1$ and is realizable by
+Theorem 23.2. The full boundary is therefore not the coordinate torus.
+$\square$
+
+**Theorem 27.3 (radial inheritance with its sign conditions).** For every
+real $\gamma\ge0$, every $z\in\mathcal W$ and $t\in[0,1]$,
+
+$$
+\nu_\gamma(tz)\ge t^2\nu_\gamma(z)
+ +(1-t^2)(e^2-10\gamma),
+\tag{27.3}
+$$
+
+where $\nu_\gamma$ is precisely (23.20). Nonnegativity, respectively
+positivity, of the right side is sufficient for the corresponding sign
+of $\nu_\gamma(tz)$. In particular, if $0\le\gamma\le e^2/10$ and
+$\nu_\gamma(z)\ge0$, all $tz$ inherit nonnegativity. Under these hypotheses,
+$\nu_\gamma(tz)>0$ whenever $t<1$ and $\gamma<e^2/10$, or whenever
+$t>0$ and $\nu_\gamma(z)>0$. These are sufficient strictness conditions, not
+necessary ones. For $\gamma>e^2/10$, nonnegativity at $z$ alone is
+not asserted to propagate; the quantitative right side remains valid.
+
+Proof. Put $D(p)=d^2p+e^2(1-p)\ge e^2$ for $p\in[0,1]$.
+The exact amplitudes (23.2) give
+
+$$
+G(tz,p)=t^2G(z,p)+(1-t^2)D(p).
+\tag{27.4}
+$$
+
+For the positive distance branch, direct subtraction gives
+
+$$
+\begin{aligned}
+r_+(tz,p)-t^2r_+(z,p)
+ &=(1-t^2)(10-2p)-2t(1-t)A(z)\\
+ &\le10(1-t^2).
+\end{aligned}
+\tag{27.5}
+$$
+
+The negative branch obeys the same bound, replacing $10-2p,A(z)$
+by $8+2p,B(z)$. Taking the minimum of these two inequalities yields
+$r(tz,p)\le t^2r(z,p)+10(1-t^2)$, without requiring the minimizing
+sign at $tz$ to agree with that at $z$. Since $\gamma\ge0$,
+
+$$
+G(tz,p)-\gamma r(tz,p)
+\ge t^2\bigl(G(z,p)-\gamma r(z,p)\bigr)
+ +(1-t^2)(e^2-10\gamma).
+\tag{27.6}
+$$
+
+Minimize over the same full population interval and use Theorem 23.4
+to obtain (27.3). The stated sign conclusions follow from its right side.
+At $t=1$ it is an identity; at $t=0$ it gives
+$\nu_\gamma(0)\ge e^2-10\gamma$, with no normalization or division.
+No step divides by a trace or amplitude, so zeros, endpoint populations,
+sign changes and sign ties are included. $\square$
+
+**Theorem 27.4 (an unconditional original-effect margin).** For every
+normalized effect $E\in\operatorname{Dens}_2$ and every actual shared
+$U\in U(4)$, write $w=\operatorname{diag}(UU_+^\dagger)$. Then
+
+$$
+\boxed{\quad g(E,U)-\kappa\rho(E,U)
+\ge e^2(1-m(w)^2)-\kappa(9-A(w)-B(w))
+ +\kappa\bigl(1-\operatorname{Tr}(E^2)\bigr).\quad}
+\tag{27.7}
+$$
+
+Consequently the sufficient safe domain inside (26.27) is
+
+$$
+\mathcal O_{\rm rad}
+=\{w\in\mathcal O:
+ e^2(1-m(w)^2)\ge\kappa(9-A(w)-B(w))\}.
+\tag{27.8}
+$$
+
+Every actual lift of any $w$ in this domain satisfies the endpoint for
+all normalized effects. It is strict if the inequality defining this
+domain is strict or if $1-\operatorname{Tr}(E^2)>0$.
+In particular, throughout the nonempty interior domain
+
+$$
+w\in\mathcal O,\qquad m(w)\le\sqrt{1-5\kappa/e^2},
+\tag{27.9}
+$$
+
+all normalized effects satisfy the strict uniform-in-effect estimate
+
+$$
+g(E,U)-\kappa\rho(E,U)
+\ge\kappa(A(w)+B(w)-4)
+ +\kappa\bigl(1-\operatorname{Tr}(E^2)\bigr)>0.
+\tag{27.10}
+$$
+
+The smaller domain $w\in\mathcal O$, $m(w)\le4/5$ even has the
+constant margin $g(E,U)-\kappa\rho(E,U)>31/25$.
+
+Proof. If $w\ne0$, use Lemma 27.2 with $t=m(w)$ and $z=w/t$.
+The already proved $G(z,p)\ge0$ of Theorem 23.2 and (27.4) imply
+$G(w,p)\ge e^2(1-m(w)^2)$ for every $p$. At $w=0$, the same
+conclusion follows from $G(0,p)=d^2p+e^2(1-p)\ge e^2$.
+The two original joint-sign branches satisfy
+
+$$
+r(w,p)\le\frac{r_+(w,p)+r_-(w,p)}2=9-A(w)-B(w).
+\tag{27.11}
+$$
+
+Apply (23.14) at precisely $p=b_+^\dagger E^{\mathsf T}b_+$ and
+$\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0$ to obtain (27.7).
+This uses only the established $G\ge0$, not a boundary endpoint
+hypothesis. On $\mathcal O$, $1\le9-A-B<5$, since $A,B\le4$ and
+$A+B>4$. Thus (27.8) has the stated consequences. Section 22 gives
+$0<\kappa<1/25$ and (22.13) gives $d^2>e^2>4$; hence
+$0<5\kappa/e^2<1/20$, so the radius in (27.9) is real and below one.
+Substitution in (27.7) proves (27.10). If $m\le4/5$, its right side
+is greater than $9\cdot4/25-5/25=31/25$, uniformly over all effects.
+The next proposition proves nonemptiness. $\square$
+
+**Proposition 27.5 (an actual nondiagonal increment with $A<3$).** Set
+
+$$
+\begin{aligned}
+R&=\frac15\begin{pmatrix}
+4&3&0&0\\-3&4&0&0\\0&0&4&3\\0&0&-3&4
+\end{pmatrix},\qquad
+D_0=\operatorname{diag}(1,i,e^{-i\pi/4},e^{i\pi/4}),\\
+U&=D_0 R U_+,\qquad
+w=\frac45(1,i,e^{-i\pi/4},e^{i\pi/4}).
+\end{aligned}
+\tag{27.12}
+$$
+
+This $U$ is an actual nondiagonal shared unitary with
+$\operatorname{diag}(UU_+^\dagger)=w\in\mathcal O_{\rm rad}$,
+$m(w)=4/5$ and $A(w)=B(w)<3$. For this one fixed feedback,
+every normalized effect satisfies $g(E,U)-\kappa\rho(E,U)>31/25$.
+
+Proof. Each rotation block in $R$ is orthogonal, $D_0$ is unitary,
+and $U_+$ is the diagonal unitary (6.3). Thus $U$ is unitary and
+has nonzero off-diagonal entries; its indicated diagonal is exact.
+All four moduli of $w$ are $4/5$, so (27.1) gives $m=4/5$.
+The two complex trace sums are $\frac45(1+\sqrt2+i)$ and
+$\frac45(1+\sqrt2-i)$, respectively. Hence
+$A=B=\frac45\sqrt{4+2\sqrt2}$. The inequalities
+$\sqrt2>9/8$ and $\sqrt2<3/2$ give $2<A=B<3$.
+Thus $A<A_0$, $B<23/6$, and $A+B>4$. Finally
+$m^2=16/25<19/20<1-5\kappa/e^2$, so (27.9) and the constant
+margin in Theorem 27.4 apply. This realizes the increment by an original
+feedback, rather than by independent amplitude or sign optimizers.
+$\square$
+
+**Theorem 27.6 (equivalent residual on the full realizable radial boundary).**
+Put
+
+$$
+\mathcal B_{\mathcal O}
+=\{z\in\mathcal W:m(z)=1,\ A(z)<A_0,\ B(z)<23/6,\ A(z)+B(z)>4\}.
+\tag{27.13}
+$$
+
+The original global endpoint $g\ge\kappa\rho$ for all normalized effects
+and actual shared feedback, equivalently $C_{\rm opt}=R_*$, holds if
+and only if $\nu_\kappa(z)\ge0$ for every $z\in\mathcal B_{\mathcal O}$.
+Every original strict endpoint violation yields an original strict
+violation at a realizable datum in $\mathcal B_{\mathcal O}$.
+
+Proof. Necessity follows from Theorems 23.2–23.4. For sufficiency,
+Corollary 26.6 already gives $\nu_\kappa\ge0$ outside $\mathcal O$.
+Assume the boundary assertion. For any $w\ne0$ in $\mathcal W$, write
+$w=tz$ as in Lemma 27.2. If $z\notin\mathcal O$, use Corollary 26.6;
+otherwise $z\in\mathcal B_{\mathcal O}$ and use the assumption.
+Thus $\nu_\kappa(z)\ge0$ in either case. Since
+$e^2-10\kappa>4-10/25>0$, (27.3) proves $\nu_\kappa(w)\ge0$,
+and is strict for $t<1$. At $w=0$ it is strictly positive by the
+$t=0$ case. Theorem 23.4 proves the original endpoint, including mixed
+effects. These interior strictness conclusions are conditional on the
+boundary assertion; (27.7)–(27.10) have no such assumption.
+
+More explicitly, suppose an original $E,U$ has $g(E,U)-\kappa\rho(E,U)<0$.
+At its actual population, (23.14) forces $G(w,p)-\kappa r(w,p)<0$.
+Corollary 26.6 forces $w\in\mathcal O$, and $w\ne0$ by Theorem 27.4.
+Let $t=m(w)>0$ and $z=w/t$. Inequality (27.6), with its positive
+constant $e^2-10\kappa$, forces $G(z,p)-\kappa r(z,p)<0$.
+It follows that $\nu_\kappa(z)<0$ and hence $z\in\mathcal O$ by
+Corollary 26.6. In particular radial expansion cannot take a violation
+into either already proved cap; $z$ satisfies all of (27.13).
+Theorem 23.2 supplies an actual unitary $U_z$ with this diagonal.
+For that one $U_z$ and the same population, choose the original pure
+effect (23.13), with its attaining relative phase, including arbitrary
+phase when $P$ or $Q$ vanishes. Equations (23.6) give the strict
+original violation; Lemma 11.2 then ensures $g>0$, $\rho>0$ and
+$\rho/g>R_*$. This also covers $t=1$, without any radial division at zero.
+
+The comparison is between different realizable data, not a protocol
+operation: $U_z$ is a new unitary realization, not $U/m(w)$. All
+calculations within each original effect use one actual shared unitary,
+the ordinary transpose, all populations and singular or mixed normalized
+effects. The joint optimizer sign and the one common scalar phase
+quotient are those of Section 23; neither is independently optimized
+with an amplitude. Arbitrary nondiagonal lifts remain included.
+The remaining assertion on (27.13) is unresolved on both boundary types
+of (27.2), with their overlap retained. Failure of the sufficient
+certificate (27.8) does not produce a counterexample. The radial
+comparison and margin are repo-derived consequences of (23.1)–(23.3),
+the exact realization/population bridge and Sections 24–26. The
+homogeneity in Section 8 concerns refinement of effect columns and
+does not supply this feedback-diagonal comparison. The global endpoint
+still requires a uniform proof on (27.13) or an original feasible
+violation; this reduction makes no complete quantum reconstruction or
+literature-priority assertion. $\square$
+
+## 追加锚（本行以下为增补区）

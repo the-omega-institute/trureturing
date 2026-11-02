@@ -23,9 +23,9 @@ open scoped BigOperators Topology
 
 namespace D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
 
-private def weight (k j : ℕ) : ℝ := (-1) ^ j * k.choose j
+def weight (k j : ℕ) : ℝ := (-1) ^ j * k.choose j
 
-private lemma weighted_shift (k : ℕ) (g : ℝ → ℝ) (x : ℝ) :
+lemma weighted_shift (k : ℕ) (g : ℝ → ℝ) (x : ℝ) :
     ∑ j ∈ range (k + 1), weight k j * g (x + j) =
       (-1) ^ k * (fwdDiff (1 : ℝ))^[k] g x := by
   rw [fwdDiff_iter_eq_sum_shift, mul_sum]
@@ -40,7 +40,7 @@ private lemma weighted_shift (k : ℕ) (g : ℝ → ℝ) (x : ℝ) :
     Int.cast_one, Int.cast_natCast, nsmul_eq_mul, mul_one]
   rw [← mul_assoc, ← mul_assoc, hs]
 
-private lemma double_weighted_shift (k : ℕ) (g : ℝ → ℝ) :
+lemma double_weighted_shift (k : ℕ) (g : ℝ → ℝ) :
     ∑ i ∈ range (k + 1), ∑ j ∈ range (k + 1),
       weight k i * weight k j * g ((i : ℝ) - j) =
       (-1) ^ k * (fwdDiff (1 : ℝ))^[2 * k] g (-(k : ℝ)) := by
