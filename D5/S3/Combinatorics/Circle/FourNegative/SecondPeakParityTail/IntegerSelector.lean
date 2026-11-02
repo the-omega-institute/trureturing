@@ -12,17 +12,8 @@ import Mathlib.Tactic.Ring
 import Lean.Elab.Tactic.Omega
 import Batteries.Tactic.OpenPrivate
 
-/-!
-UNCOMPILED private WIP: no kernel, admission, retention or endpoint claim.
-The header follows neighbouring private implementation modules; its WIP mirror
-entries do not assert that a publication waiver has been granted.
-
-Caller derivation: uxwv-parity-lattice-linear-tail-20261102.py,
-SHA256 babbd52e84602a942b9aa943cf4ebeea4c3937450fc71f87bae3f031c558e275.
-Only the integer selector is prepared here. A later physical endpoint must use
-alpha to allocate its actual labels. No source family or physical realization
-is postulated by this file.
--/
+/-! Two interlaced integer lattices give exact bounded allocation data.
+The Euclidean ceiling retains its negative-input semantics. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

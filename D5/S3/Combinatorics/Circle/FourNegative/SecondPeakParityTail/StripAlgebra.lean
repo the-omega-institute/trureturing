@@ -82,7 +82,7 @@ private theorem scaled_mass_eq (u z h t alpha S delta : ℚ)
       stripScale u z * parityMass u z h t alpha S isNew r := by
   rw [scaledMass,←hid]
   cases isNew <;> fin_cases r <;>
-    norm_num [parityMass,parityMask,stripScale,Fin.sum_univ_succ] <;> ring
+    norm_num [parityMass,parityMask,stripScale,Fin.sum_univ_succ] <;> ring <;> simp
 
 private theorem scaled_peak_eq (u z h t alpha S delta : ℚ)
     (hid : 2*u*(z+1)*alpha=selectorNumerator u z h S delta)
@@ -99,6 +99,7 @@ private theorem scaled_peak_eq (u z h t alpha S delta : ℚ)
 -- Four corners for exactly the six sides consumed by physical_prefixes.
 -- ring_nf computes the positive polynomial in the four nonnegative increments.
 -- This retains the full unbounded cone, without exporting coefficient tables.
+set_option maxRecDepth 8192 in
 private theorem strip_corners (U Z H T : ℚ)
     (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
     (highS highDelta : Bool) (i : Fin 6) :
@@ -170,9 +171,8 @@ private theorem six_strip_sides (u z h t alpha S delta : ℚ)
     have he : stripGate u z h t S delta ⟨r.val,by omega⟩ =
         stripScale u z*(parityPeak u z h t alpha S false r+
           qTerminal z (u*z) h (h*t) false r) := by
-      fin_cases r <;> first
-      | omega
-      | simp [stripGate,scaled_peak_eq u z h t alpha S delta hid]; ring
+      fin_cases r <;> norm_num at hr
+      all_goals simp [stripGate,scaled_peak_eq u z h t alpha S delta hid] <;> ring
     rw [he] at hv
     exact (mul_nonneg_iff_of_pos_left hC).mp hv
   · intro r hr
@@ -180,9 +180,8 @@ private theorem six_strip_sides (u z h t alpha S delta : ℚ)
     have he : stripGate u z h t S delta ⟨r.val+3,by omega⟩ =
         stripScale u z*(qModulus z (u*z) h (h*t) false-
           parityPeak u z h t alpha S true r) := by
-      fin_cases r <;> first
-      | omega
-      | simp [stripGate,scaled_peak_eq u z h t alpha S delta hid]; ring
+      fin_cases r <;> norm_num at hr
+      all_goals simp [stripGate,scaled_peak_eq u z h t alpha S delta hid] <;> ring
     rw [he] at hv
     exact sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hC).mp hv)
 

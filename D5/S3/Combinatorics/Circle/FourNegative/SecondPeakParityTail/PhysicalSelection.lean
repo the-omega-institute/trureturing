@@ -46,7 +46,7 @@ private theorem selector_capacities (u z h alpha S delta B : ℤ)
   have hAS : 0 ≤ (u*z+1)*S := mul_nonneg (by positivity) (by omega)
   have hB0 : 0 ≤ B := by nlinarith only [hB,huz]
   have hlow : 0 < (u^2*z+1)*h-B := by
-    have hm : 0 < (u*z)*(8*u*h-15) := mul_pos huz (by omega)
+    have hm : 0 < (u*z)*(8*u*h-15) := mul_pos huz (by nlinarith only [huh])
     nlinarith only [hm,hB,hh1]
   have ha0 : 0 < alpha := by
     by_contra ha
@@ -138,10 +138,11 @@ private theorem selected_arithmetic (a b c d : ℕ) (hd : physicalDomain a b c d
   let u := (2 : ℤ)^(a-c)
   let z := (2 : ℤ)^c
   let h := (2 : ℤ)^(d-a)
-  have hu : 4 ≤ u := by simpa only [show (2 : ℤ)^2=4 by norm_num] using
-    dyadic_lower (a-c) 2 (by omega)
-  have hz : 16 ≤ z := by simpa only [show (2 : ℤ)^4=16 by norm_num] using
-    dyadic_lower c 4 hc
+  have hu : 4 ≤ u := by
+    simpa only [show (2 : ℤ)^2=4 by norm_num] using
+      (dyadic_lower (a-c) 2 (by omega))
+  have hz : 16 ≤ z := by
+    simpa only [show (2 : ℤ)^4=16 by norm_num] using (dyadic_lower c 4 hc)
   have hh : 2*z ≤ h := by
     have hm := dyadic_lower (d-a) (c+1) (by omega)
     simpa only [pow_succ',z] using hm
