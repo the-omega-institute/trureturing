@@ -129,33 +129,33 @@ def realPart {D : LatticeData} (z : E D) : E_R D := fun i => (z i).re
 def imagPart {D : LatticeData} (z : E D) : E_R D := fun i => (z i).im
 
 @[simp] theorem realPart_complexify (D : LatticeData) (v : E_R D) :
-    realPart (complexify D v) = v := by ext i; simp [realPart]
+    realPart (complexify D v) = v := by ext i; simp [complexify, realPart]
 
 @[simp] theorem imagPart_complexify (D : LatticeData) (v : E_R D) :
-    imagPart (complexify D v) = 0 := by ext i; simp [imagPart]
+    imagPart (complexify D v) = 0 := by ext i; simp [complexify, imagPart]
 
 @[simp] theorem complexify_charge {D : LatticeData} (p : Charge D) :
     complexify D (realCharge p) = chargeVector p := by
   ext i
-  simp [realCharge, chargeVector]
+  simp [complexify, realCharge, chargeVector]
 
 theorem complexify_decomposition {D : LatticeData} (z : E D) :
     complexify D (realPart z) + Complex.I • complexify D (imagPart z) = z := by
   ext i
-  simpa [realPart, imagPart, smul_eq_mul, mul_comm] using Complex.re_add_im (z i)
+  simpa [complexify, realPart, imagPart, smul_eq_mul, mul_comm] using Complex.re_add_im (z i)
 
 /-- Literal finite-sum scalar extension of the original Gram form. -/
 theorem complexify_gram (D : LatticeData) (v w : E_R D) :
     g D (complexify D v) (complexify D w) = (g_R D v w : ℂ) := by
-  simp [g, g_R_apply, Complex.ofReal_sum, Complex.ofReal_mul]
+  simp [complexify, g, g_R_apply, Complex.ofReal_sum, Complex.ofReal_mul]
 
 @[simp] theorem gram_real_left_re (D : LatticeData) (v : E_R D) (z : E D) :
     (g D (complexify D v) z).re = g_R D v (realPart z) := by
-  simp [g, g_R_apply, realPart, Complex.mul_re, Complex.mul_im]
+  simp [complexify, g, g_R_apply, realPart, Complex.mul_re, Complex.mul_im]
 
 @[simp] theorem gram_real_left_im (D : LatticeData) (v : E_R D) (z : E D) :
     (g D (complexify D v) z).im = g_R D v (imagPart z) := by
-  simp [g, g_R_apply, imagPart, Complex.mul_re, Complex.mul_im]
+  simp [complexify, g, g_R_apply, imagPart, Complex.mul_re, Complex.mul_im]
 
 /- The following is an extracted normal form, not an additional hypothesis of
    the existence result. Its construction counts the literal Sylvester weights. -/
@@ -435,7 +435,8 @@ def projection : E_R D →ₗ[ℝ] P.K_R :=
     intro v
     rw [P.mem_K_R_iff]
     constructor <;>
-      simp [projectionVector, pairingR, P.time_norm, P.space_norm, P.time_space, P.space_time])
+      simp [projectionVector, pairingR, P.time_norm, P.space_norm, P.time_space, P.space_time] <;>
+        simp [g_R])
 
 @[simp] theorem coe_projection (v : E_R D) :
     (P.projection v : E_R D) =
@@ -661,11 +662,11 @@ theorem complex_spanning (z : P.complexFrame.K) :
   apply Complex.ext
   · have h := congrArg (fun v : P.K_R => (v : E_R D) i)
       (P.realBasis_expansion (P.realK z))
-    simpa [basisVector, includeK, realK, realPart, Complex.mul_re, Complex.mul_im,
+    simpa [complexify, basisVector, includeK, realK, realPart, Complex.mul_re, Complex.mul_im,
       smul_eq_mul] using h
   · have h := congrArg (fun v : P.K_R => (v : E_R D) i)
       (P.realBasis_expansion (P.imagK z))
-    simpa [basisVector, includeK, imagK, imagPart, Complex.mul_re, Complex.mul_im,
+    simpa [complexify, basisVector, includeK, imagK, imagPart, Complex.mul_re, Complex.mul_im,
       smul_eq_mul] using h
 
 /-- Coordinates are actual original Gram pairings, with a proved inverse. -/
@@ -716,7 +717,7 @@ def conjugateVector {D : LatticeData} (z : E D) : E D := fun i => star (z i)
 theorem complexify_conjugate (D : LatticeData) (v : E_R D) :
     conjugateVector (complexify D v) = complexify D v := by
   ext i
-  simp [conjugateVector]
+  simp [complexify, conjugateVector]
 
 theorem conjugate_gram (D : LatticeData) (v w : E D) :
     star (g D v w) = g D (conjugateVector v) (conjugateVector w) := by
@@ -727,7 +728,7 @@ theorem hermitian_symmetry (D : LatticeData) (v w : E D) :
   rw [conjugate_gram, g_symm]
   have hv : conjugateVector (conjugateVector v) = v := by
     ext i
-    simp [conjugateVector]
+    simp [complexify, conjugateVector]
   rw [hv]
 
 /-- The real and imaginary Gram expansions establish the relevant Hermitian
