@@ -14,7 +14,7 @@ internal sealed class FourPathAggregateBudgetDocument : IScribeDocumentDefinitio
                 H("Certificate distance budget"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A pointwise certificate gap bounded by 1600 times the coordinatewise minimum sums to the same bound for the finite family."))),
+                Blocks(Paragraph(Text("A coordinatewise minimum bounded by 1600 times its certificate gap sums to the same bound over the finite family."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("four-path-quartic-distance-budget"),
@@ -30,6 +30,6 @@ internal sealed class FourPathAggregateBudgetDocument : IScribeDocumentDefinitio
                 H("Square-root budget"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The column estimate, certificate budget, and actual trace-defect identity propagate to the constant 480 times square root of 2 times square root of epsilon."))),
+                Blocks(Paragraph(Text("The supplied scalar inequalities propagate to the constant 480 times square root of 2 times square root of epsilon."))),
                 DescribeRole.Theorem))));
 }
