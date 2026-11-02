@@ -61,7 +61,7 @@ private theorem weight_bridge (D : V →L[ℝ] V) (hD : D.IsSymmetric) (u v : V)
     rw [real_inner_comm, hD u v]
   simp only [weight, map_smul, map_add, inner_smul_left, inner_smul_right,
     inner_add_left, inner_add_right, RCLike.conj_to_real, hs]
-  nlinarith only [hc]
+  linear_combination (⟪u, D u⟫_ℝ + ⟪v, D v⟫_ℝ + 2 * ⟪u, D v⟫_ℝ) * hc
 
 private theorem norm_le_of_quadratic (D : V →L[ℝ] V) (hD : D.IsSymmetric)
     (R : ℝ) (hR : 0 ≤ R) (hq : ∀ x, |weight D x| ≤ R * ‖x‖ ^ 2) : ‖D‖ ≤ R := by
@@ -95,7 +95,8 @@ private theorem norm_le_of_rows {ι : Type*} [Fintype ι]
     _ ≤ ∑ i, ⟪b i, x⟫_ℝ ^ 2 * ∑ j, |⟪b i, D (b j)⟫_ℝ| :=
       LongGapsBetweenPrimes.abs_quadratic_form_le_rows _ _ (by
         intro i j
-        rw [real_inner_comm (b i), hD, real_inner_comm (b j)])
+        congr 1
+        rw [real_inner_comm, hD])
     _ ≤ ∑ i, ⟪b i, x⟫_ℝ ^ 2 * R :=
       Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hr i) (sq_nonneg _)
     _ = R * ‖x‖ ^ 2 := by rw [← Finset.sum_mul, b.sum_sq_inner_right]; ring
@@ -176,5 +177,148 @@ private theorem anchor_rows {d : ℕ} (hd : 1 ≤ d)
   | inr i =>
     simp only [Fintype.sum_sum_type, hfe, hff, abs_neg]
     linarith [hSr i, hTr i]
+
+private theorem effect_repair {d : ℕ} (hd : 1 ≤ d)
+    (b : OrthonormalBasis (Fin d ⊕ Fin d) ℝ V)
+    (J : V →L[ℝ] V) (hJ2 : ∀ x, J (J x) = -x)
+    (hJstar : J.adjoint = -J) (hJe : ∀ i, J (b (.inl i)) = b (.inr i))
+    (A : V →L[ℝ] V) (hA : A.IsPositive) (hAc : (1 - A).IsPositive)
+    (ε : ℝ) (ha : AnchorErrors b J A ε) :
+    (repair J A).IsPositive ∧ (1 - repair J A).IsPositive ∧ ‖repair J A‖ ≤ 1 ∧
+    (∀ x, repair J A (J x) = J (repair J A x)) ∧
+    ‖A - repair J A‖ ≤ min (1 / 2) ((2 * (d : ℝ) - 1) * ε) ∧
+    (∀ x, ⟪J x, repair J A x⟫_ℝ = 0) ∧
+    (∀ x, |weight A x - weight (repair J A) x| ≤
+      min (1 / 2) ((2 * (d : ℝ) - 1) * ε) * ‖x‖ ^ 2) := by
+  classical
+  let C := phaseConjugate J A
+  let D := A - C
+  have hC : C.IsPositive := hA.adjoint_conj J
+  have hunit : J.adjoint ∘L J = 1 := by
+    ext x
+    simp [hJstar, hJ2]
+  have hCc : (1 - C).IsPositive := by
+    have h := hAc.adjoint_conj J
+    convert h using 1
+    ext x
+    simp only [C, phaseConjugate, comp_apply, sub_apply, one_apply, map_sub]
+    have hu := congrArg (fun T : V →L[ℝ] V => T x) hunit
+    simp only [comp_apply, one_apply] at hu
+    rw [hu]
+  have hD : D.IsSymmetric := hA.isSymmetric.sub hC.isSymmetric
+  have hconj (x y : V) : ⟪x, C y⟫_ℝ = ⟪J x, A (J y)⟫_ℝ := by
+    simp [C, phaseConjugate, adjoint_inner_right]
+  have hanti (x y : V) : ⟪J x, D (J y)⟫_ℝ = -⟪x, D y⟫_ℝ := by
+    simp only [D, sub_apply, inner_sub_right, hconj, hJ2, map_neg,
+      inner_neg_left, inner_neg_right]
+    ring
+  have hJf (i : Fin d) : J (b (.inr i)) = -b (.inl i) := by
+    rw [← hJe, hJ2]
+  have hff (i j : Fin d) : ⟪b (.inr i), D (b (.inr j))⟫_ℝ =
+      -⟪b (.inl i), D (b (.inl j))⟫_ℝ := by
+    simpa [hJe] using hanti (b (.inl i)) (b (.inl j))
+  have hfe (i j : Fin d) : ⟪b (.inr i), D (b (.inl j))⟫_ℝ =
+      ⟪b (.inl i), D (b (.inr j))⟫_ℝ := by
+    have h := hanti (b (.inl i)) (b (.inr j))
+    simpa [hJe, hJf] using congrArg Neg.neg h
+  have hq (x : V) : weight D x = weight A x - weight A (J x) := by
+    simp [weight, D, hconj]
+  have rows := anchor_rows hd b D hD ε
+    (by intro i; rw [hq]; exact ha.1 i)
+    (by intro i j hij; rw [hq]; exact ha.2.1 i j hij)
+    (by intro i j hij; rw [hq]; exact ha.2.2 i j hij) hff hfe
+  have hdR : 1 ≤ (d : ℝ) := by exact_mod_cast hd
+  have hnorm : ‖D‖ ≤ (4 * (d : ℝ) - 2) * ε :=
+    norm_le_of_rows b D hD _ (mul_nonneg (by linarith) rows.1) rows.2
+  have hcap : ‖D‖ ≤ 1 := by
+    apply norm_le_of_quadratic D hD 1 (by norm_num)
+    intro x
+    have h0 := hA.re_inner_nonneg_right x
+    have h1 := hAc.re_inner_nonneg_right x
+    have hc0 := hC.re_inner_nonneg_right x
+    have hc1 := hCc.re_inner_nonneg_right x
+    simp only [RCLike.re_to_real, sub_apply, one_apply, inner_sub_right,
+      real_inner_self_eq_norm_sq] at h0 h1 hc0 hc1
+    simp only [weight, D, sub_apply, inner_sub_right, one_mul]
+    exact abs_le.mpr ⟨by linarith, by linarith⟩
+  have hdiff : A - repair J A = (1 / 2 : ℝ) • D := by
+    dsimp [repair, D, C]
+    module
+  have herror : ‖A - repair J A‖ ≤ min (1 / 2) ((2 * (d : ℝ) - 1) * ε) := by
+    rw [hdiff, norm_smul, Real.norm_eq_abs]
+    norm_num
+    exact le_min (by linarith) (by linarith)
+  have hE : (repair J A).IsPositive :=
+    (hA.add hC).smul_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2)
+  have hEc : (1 - repair J A).IsPositive := by
+    have h := (hAc.add hCc).smul_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2)
+    convert h using 1
+    dsimp [repair, C]
+    module
+  have hcomm (x : V) : repair J A (J x) = J (repair J A x) := by
+    simp [repair, phaseConjugate, hJstar, hJ2] <;> module
+  have hEnorm : ‖repair J A‖ ≤ 1 := by
+    apply norm_le_of_quadratic _ hE.isSymmetric 1 (by norm_num)
+    intro x
+    have h0 := hE.re_inner_nonneg_right x
+    have h1 := hEc.re_inner_nonneg_right x
+    simp only [RCLike.re_to_real, sub_apply, one_apply, inner_sub_right,
+      real_inner_self_eq_norm_sq] at h0 h1
+    simp only [weight, abs_of_nonneg h0, one_mul]
+    linarith
+  have him (x : V) : ⟪J x, repair J A x⟫_ℝ = 0 := by
+    have hs := hE.isSymmetric x (J x)
+    rw [hcomm, ← adjoint_inner_right, hJstar] at hs
+    simp only [neg_apply, inner_neg_left] at hs
+    rw [real_inner_comm (repair J A x)] at hs
+    linarith
+  refine ⟨hE, hEc, hEnorm, hcomm, herror, him, ?_⟩
+  intro x
+  calc
+    _ = |⟪x, (A - repair J A) x⟫_ℝ| := by simp [weight, inner_sub_right]
+    _ ≤ ‖x‖ * ‖(A - repair J A) x‖ := abs_real_inner_le_norm _ _
+    _ ≤ ‖x‖ * (‖A - repair J A‖ * ‖x‖) :=
+      mul_le_mul_of_nonneg_left (le_opNorm _ _) (norm_nonneg _)
+    _ ≤ _ := by nlinarith [mul_le_mul_of_nonneg_right herror (sq_nonneg ‖x‖)]
+
+/-- Literal finite anchors give the Euclidean operator estimate for every real
+effect. The same averaging map simultaneously preserves every finite menu.
+Complex linearity is expressed by commutation with the supplied common J;
+the vanishing imaginary readout identifies the source complex expectation.
+-/
+theorem finite_phase_anchor_repair {d : ℕ} (hd : 1 ≤ d)
+    (b : OrthonormalBasis (Fin d ⊕ Fin d) ℝ V)
+    (J : V →L[ℝ] V) (hJ2 : ∀ x, J (J x) = -x)
+    (hJstar : J.adjoint = -J) (hJe : ∀ i, J (b (.inl i)) = b (.inr i)) :
+    (∀ (A : V →L[ℝ] V), A.IsPositive → (1 - A).IsPositive →
+      ∀ ε : ℝ, AnchorErrors b J A ε →
+      (repair J A).IsPositive ∧ (1 - repair J A).IsPositive ∧ ‖repair J A‖ ≤ 1 ∧
+      (∀ x, repair J A (J x) = J (repair J A x)) ∧
+      ‖A - repair J A‖ ≤ min (1 / 2) ((2 * (d : ℝ) - 1) * ε) ∧
+      (∀ x, ⟪J x, repair J A x⟫_ℝ = 0) ∧
+      (∀ x, |weight A x - weight (repair J A) x| ≤
+        min (1 / 2) ((2 * (d : ℝ) - 1) * ε) * ‖x‖ ^ 2)) ∧
+    (∀ (ι : Type) [Fintype ι] (menu : ι → V →L[ℝ] V),
+      (∑ i, menu i) = 1 → (∑ i, repair J (menu i)) = 1) := by
+  refine ⟨effect_repair hd b J hJ2 hJstar hJe, ?_⟩
+  intro ι _ menu hm
+  have hunit : J.adjoint ∘L J = 1 := by
+    ext x
+    simp [hJstar, hJ2]
+  have hs : (∑ i, phaseConjugate J (menu i)) = 1 := by
+    ext x
+    simp only [sum_apply, phaseConjugate, comp_apply]
+    rw [← map_sum]
+    have h := congrArg (fun T : V →L[ℝ] V => T (J x)) hm
+    simp only [sum_apply, one_apply] at h
+    rw [h]
+    change (J.adjoint ∘L J) x = x
+    rw [hunit]
+    rfl
+  simp only [repair, ← Finset.smul_sum, Finset.sum_add_distrib,
+    hm, hs]
+  module
+
+#print axioms finite_phase_anchor_repair
 
 end D5.S3.Quantum.Analysis.FinitePhaseAnchorStability
