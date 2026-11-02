@@ -1939,3 +1939,313 @@ The fixed-record envelope asymptotic and its rank-changing comparison are repo-d
 For the external mathematical correspondence, Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1, Proposition 8 and (15)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), supply the fixed-Kraus correction-fidelity bound and polar recovery used in the source volume: $t_j=\operatorname{diag}(R_0b_j)$ and the input dimension is four. Buscemi--Chiribella--D'Ariano, [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5, Theorem 2 and (9)](https://arxiv.org/html/quant-ph/0504195v5), supply the correlation-record context; their Heisenberg matrix (9) is entrywise conjugate to this fixed Schrödinger record. The prescribed-unitary-diagonal input of source Theorem 23.2 is Thompson's theorem, in [Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3), with all four singular values equal to one. The upper feedbacks (33.22) are realized directly. These source statements concern the correction context and diagonal realization; the producer distance, determinant remainder and exact-level asymptotic are the source-specific correspondence proved above.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. The exact small-distance envelope and all original minimizing pairs
+
+**Definition 34.1 (an unsquared selecting equation).** Retain $m,f,\mathcal K$ from Definition 33.1 and $a,B,J,C$ from (33.2), with the unchanged constants $h,c,s,d,e,\kappa$ of source Sections 21--23. The vectors $b_\pm$ and feedback $U_+$ are exactly those of source (6.7) and (6.3). In particular $aB=d^2$, $a,B,C>0$. Put
+
+$$
+ z_* = \frac{B}{B+2a},\qquad
+ \eta=\frac14\min\{z_*,1-z_*\},\qquad
+ I=(z_*-\eta,z_*+\eta).
+\tag{34.1}
+$$
+
+Thus $\overline I\subset(0,1)$. For $0\le t<\min\{\delta_*,1/2\}$ and $0\le z\le1$, where $\delta_*$ is source (24.1), define
+
+$$
+\begin{aligned}
+ \mathcal A(t,z)
+ &=\left(2az-\frac{tz^2}{2}\right)(1-t+tz)
+   +\left(B-2(1+\kappa)tz+\frac{t^2z^2}{2}\right)(1-z),\\
+ \mathcal R(t,z)
+ &=z(1-z)\left(2-\frac{tz}{2}\right)(1-t+tz),\\
+ \Phi(t,z)
+ &=\mathcal A(t,z)-2(d-htz)\sqrt{\mathcal R(t,z)}.
+\end{aligned}
+\tag{34.2}
+$$
+
+Every square root in this section is the nonnegative real square root. On $\overline I$ the radicand is strictly positive, also for all sufficiently small signed $t$. The selecting equation is
+
+$$
+ \mathcal E(t,z):=
+ \sqrt{\mathcal R(t,z)}\,\partial_z\mathcal A(t,z)
+ +2ht\mathcal R(t,z)
+ -(d-htz)\partial_z\mathcal R(t,z)=0,
+ \qquad z\in I.
+\tag{34.3}
+$$
+
+Here $\mathcal A,\mathcal R$ are the displayed polynomials, so (34.3) is an explicit equation using polynomial operations and one specified square root. It is not replaced by its square. The interval $I$ is part of the root selection.
+
+**Lemma 34.2 (unique selection and strict increase of the scalar value).** There is $t_0>0$ such that, for every $0\le t<t_0$, equation (34.3) has exactly one root $z(t)$ in $I$. It has $z(0)=z_*$ and extends real analytically across $t=0$. Define
+
+$$
+ n(t)=t\Phi(t,z(t)),\qquad n(0)=0.
+\tag{34.4}
+$$
+
+For $0<t<t_0$ one has the exact identity
+
+$$
+ n(t)=\min_{0\le\delta\le t}H_\delta(t-\delta),
+\tag{34.5}
+$$
+
+where $H$ is the supplied expression (33.12). The minimum is unique, at $\delta=tz(t)$. After reducing $t_0$ if necessary, $n$ is strictly increasing on $[0,t_0)$.
+
+**Proof.** Substitution of $\delta=tz$, $q=t(1-z)$ into (33.12) gives, for $t>0$,
+
+$$
+ H_{tz}(t(1-z))=t\Phi(t,z).
+\tag{34.6}
+$$
+
+Indeed the cross term divided by $t$ is
+$-2(d-htz)\sqrt{z(1-z)(2-tz/2)(1-t+tz)}$; the two diagonal terms give $\mathcal A$. At $t=0$ the continuous extension is
+
+$$
+\begin{aligned}
+ L(z):=\Phi(0,z)
+ &=2az+B(1-z)-2d\sqrt{2z(1-z)}\\
+ &=\left(\sqrt{2az}-\sqrt{B(1-z)}\right)^2.
+\end{aligned}
+\tag{34.7}
+$$
+
+The second identity uses $aB=d^2$. Thus $L$ has its unique minimum zero on $[0,1]$ at $z_*$. In the open interval,
+
+$$
+ L''(z)=\frac{d}{\sqrt2\,[z(1-z)]^{3/2}}>0.
+\tag{34.8}
+$$
+
+In particular $L'(z_*-\eta)<0<L'(z_*+\eta)$ and $L''$ has a positive minimum on $\overline I$. The function $\Phi$ is real analytic in a neighborhood of $\{0\}\times\overline I$. Continuity of its first two $z$ derivatives therefore gives, for all sufficiently small signed $t$,
+
+$$
+ \partial_z\Phi(t,z_*-\eta)<0<
+ \partial_z\Phi(t,z_*+\eta),\qquad
+ \partial_z^2\Phi(t,z)>0\quad(z\in\overline I).
+\tag{34.9}
+$$
+
+There is exactly one zero of $\partial_z\Phi(t,\cdot)$ in $I$. Direct differentiation gives
+
+$$
+ \mathcal E(t,z)=\sqrt{\mathcal R(t,z)}\,
+                         \partial_z\Phi(t,z),
+\tag{34.10}
+$$
+
+so it is exactly the root specified in (34.3). Its $z$ derivative as a zero of $\partial_z\Phi$ is nonzero by (34.9). The real analytic implicit function theorem gives the asserted analytic function $z(t)$, without assuming a minimizing curve.
+
+It remains to exclude other scalar minima, including the two endpoints. The expressions (34.2) are continuous on $[0,t_1]\times[0,1]$ for some $t_1>0$, and $\Phi(t,\cdot)\to L$ uniformly on $[0,1]$. Since $L$ is strictly positive on the compact complement of $I$ and vanishes at $z_*$, every global minimum of $\Phi(t,\cdot)$ belongs to $I$ when $t\ge0$ is sufficiently small. Its derivative vanishes there, and (34.9) makes it the unique root $z(t)$. This proves (34.5) and its uniqueness, including the exclusion of $\delta=0,t$ when $t>0$.
+
+For the last assertion, first realize every scalar competitor in (34.5) by the original pair. For $\delta,q\ge0$ with $\delta+q=t$, put
+
+$$
+\begin{aligned}
+ x&=1-\delta/2,& y&=\sqrt{\delta-\delta^2/4},\\
+ w&=(x+iy,x-iy,1,1),&
+ U&=\operatorname{diag}(w)U_+,\\
+ \psi&=\sqrt{1-q}\,b_+-i\sqrt q\,b_-,&
+ E&=\bar\psi\bar\psi^\dagger.
+\end{aligned}
+\tag{34.11}
+$$
+
+These are actual original normalized effects and unitaries: $x^2+y^2=1$, and $b_\pm$ are orthonormal. Source (24.9), (24.15) and (23.12)--(23.13) give, with this same $U$,
+
+$$
+ \rho(E,U)=2(\delta+q)=2t,\qquad
+ f(E,U)=H_\delta(q).
+\tag{34.12}
+$$
+
+In particular $m(2t)\le n(t)$. Conversely the actual exact-level upper witnesses (33.22)--(33.27) have precisely the form (34.11), with $q+\delta=t$. Their supplied estimate (33.28) and Theorem 33.2 consequently give
+
+$$
+ 4Ct^2+o(t^2)=m(2t)\le n(t)
+                 \le4Ct^2+O(t^3).
+\tag{34.13}
+$$
+
+The expression (34.4) is real analytic across zero. The limit in (34.13) determines its Taylor coefficients through degree two, and hence
+
+$$
+ n(t)=4Ct^2+O(t^3),\qquad n'(t)=8Ct+O(t^2).
+\tag{34.14}
+$$
+
+Since $C>0$, its derivative is positive for all sufficiently small positive $t$. Its value at zero is zero, proving strict increase on the claimed interval. This use of the supplied asymptotic establishes monotonicity of the scalar value; it does not assume equality between that value and the original envelope. $\square$
+
+**Theorem 34.3 (exact original envelope and necessary-and-sufficient minimizing realizations).** There is $\xi_1>0$ such that the following statements hold for every $0<\xi<\xi_1$. Set $t=\xi/2$ and let $z(t)$ be the unique root (34.3) in the fixed interval (34.1). Then
+
+$$
+ \boxed{\quad
+ m(\xi)=t\left[
+ \mathcal A(t,z(t))
+ -2(d-htz(t))\sqrt{\mathcal R(t,z(t))}\right].
+ \quad}
+\tag{34.15}
+$$
+
+This is a directly determining selected-root value: (34.1)--(34.3) contain no infimum and have exactly one admitted root at each such $t$.
+
+All minimizing original pairs are as follows. Define
+
+$$
+\begin{aligned}
+ \delta&=tz(t),& q&=t(1-z(t)),\\
+ x&=1-\delta/2,& y&=\sqrt{\delta-\delta^2/4},\\
+ w_\sigma&=(x+\sigma iy,x-\sigma iy,1,1),&
+ \psi_\sigma&=\sqrt{1-q}\,b_+-\sigma i\sqrt q\,b_-,
+ \qquad \sigma\in\{+1,-1\}.
+\end{aligned}
+\tag{34.16}
+$$
+
+An original pair with $\rho(E,U)=\xi$ satisfies $f(E,U)=m(\xi)$ if and only if, for one of these two signs and one scalar $|\lambda|=1$,
+
+$$
+ \boxed{\qquad
+ E=\overline{\psi_\sigma}\,
+                  \overline{\psi_\sigma}^{\dagger},\qquad
+ U=\lambda\operatorname{diag}(w_\sigma)U_+.
+ \qquad}
+\tag{34.17}
+$$
+
+Thus all minimizing effects on this interval have rank one, and all their actual feedbacks have the displayed diagonal form. There are exactly two minimizing pairs modulo the original common scalar feedback phase. These restrictions are conclusions on the entire $\operatorname{Dens}_2\times U(4)$ domain.
+
+**Proof.** Fix $M>C$. Reduce the positive interval in Lemma 34.2 as needed. By (34.14), for all sufficiently small $\xi>0$,
+
+$$
+ n(\xi/2)<M\xi^2.
+\tag{34.18}
+$$
+
+We prove a matching lower bound for every original pair of distance $\xi$. Pairs with $f\ge M\xi^2$ already satisfy a strict lower bound by (34.18). Consider any remaining pair, with $f<M\xi^2$, without any rank or feedback restriction. Write its actual data as
+
+$$
+ w=\operatorname{diag}(UU_+^\dagger),\qquad
+ p=b_+^\dagger E^{\mathsf T}b_+,\qquad
+ q=1-p,\qquad
+ \epsilon=1-\operatorname{Tr}(E^2)\ge0.
+\tag{34.19}
+$$
+
+The supplied localization (33.7)--(33.8) places every such pair in the positive cap for all sufficiently small $\xi$. Explicitly, the minimizing sign of the original distance gives $A(w)\ge4-\xi/2$ or $B(w)\ge4-\xi/2$. If $\xi<\min\{2\delta_*,1/3\}$, this lies in the positive cap $A\ge A_0$ or the opposite cap $B(w)\ge23/6$. In the opposite cap, source Theorem 25.3 gives $f\ge(1/25-\kappa)\xi$. This contradicts $f<M\xi^2$ when $\xi<(1/25-\kappa)/M$. The given actual pair therefore belongs to the positive cap.
+
+On that cap put $\delta=4-A(w)$. Source Lemma 24.2 and (33.11) give the exact distance and the one-sided bound
+
+$$
+ \xi=2(q+\delta)-\epsilon,\qquad
+ f\ge H_\delta(q)+\kappa\epsilon.
+\tag{34.20}
+$$
+
+The scalar $H_\delta(q)$ is nonnegative by source Lemma 24.3 applied to the simultaneous-envelope realization (24.15). Therefore
+
+$$
+ 0\le\epsilon\le\frac{M}{\kappa}\xi^2,\qquad
+ T:=q+\delta=\frac{\xi+\epsilon}{2}
+ \le\frac\xi2+\frac{M}{2\kappa}\xi^2.
+\tag{34.21}
+$$
+
+Choose $\xi_1>0$ small enough to satisfy all preceding conditions and to make the last upper bound smaller than $t_0$. Every such choice exists because the constants are positive and fixed. Since $0\le\delta\le T$ and $q=T-\delta$, Lemma 34.2 now applies at this actual value $T$. It yields the lower certificate
+
+$$
+ \boxed{\quad
+ f(E,U)\ge n(T)+\kappa\epsilon
+       \ge n(\xi/2)+\kappa\epsilon
+       \ge n(\xi/2).
+ \quad}
+\tag{34.22}
+$$
+
+The middle inequality is precisely the proved strict increase of $n$, with $T=(\xi+\epsilon)/2$. It compares scalar values in a bound on the unchanged pair; it does not replace a mixed effect by a pure effect at the wrong prescribed level. Together with (34.18), this proves $f\ge n(\xi/2)$ for every original competitor, including singular and mixed effects and arbitrary actual nondiagonal lifts.
+
+For the upper bound use (34.16)--(34.17), with either sign and any $\lambda$. Here $0<z(t)<1$ makes $\delta,q>0$; both are small, and $q<1$. All diagonal entries of $w_\sigma$ have modulus one, and $\psi_\sigma$ has norm one. Substitution gives
+
+$$
+\begin{aligned}
+ A(w_\sigma)&=4-\delta,&
+ P(w_\sigma)&=d-h\delta=u_\delta,\\
+ Q(w_\sigma)&=\sigma i\sqrt{2\delta-\delta^2/2}
+                 =\sigma i v_\delta.
+\end{aligned}
+\tag{34.23}
+$$
+
+The relative phase $-\sigma i$ in $\psi_\sigma$ aligns the two amplitudes for this same actual $U$. Source (23.12)--(23.13) and Lemma 24.2 consequently give
+
+$$
+ \rho(E,U)=2(q+\delta)=\xi,\qquad
+ f(E,U)=H_\delta(q)=n(t).
+\tag{34.24}
+$$
+
+Thus the lower bound is attained and proves (34.15). In particular each admitted exact level has an actual same-feedback witness.
+
+It remains to prove that these are all the original minimizers. If $f=n(t)$ at distance $\xi$, (34.18) puts the pair in the preceding low-value case. Equation (34.22), with $\kappa>0$, forces $\epsilon=0$. A positive trace-one two-by-two effect with $1-\operatorname{Tr}(E^2)=0$ has eigenvalues $1,0$, so it has rank one. Now $T=t$, and equality in (34.20)--(34.22) forces $H_\delta(q)=n(t)$. The uniqueness in (34.5) forces exactly the $\delta,q$ of (34.16). In particular $p=1-q>0$, $q>0$, and $\delta>0$.
+
+Both comparisons underlying (34.20) must also be equalities. Indeed they are the nonnegative differences $g-G(w,p)$ from source (23.12) and $G(w,p)-G(w^{(4-\delta)},p)$ from (24.16). Since $u\le u_\delta$, $v\le v_\delta$ and both population square roots are positive, equality in the second comparison gives
+
+$$
+ u(w)=u_\delta,\qquad v(w)=v_\delta.
+\tag{34.25}
+$$
+
+To recover the actual feedback from these equalities, use just one common scalar phase to normalize $\sum_jw_j=A(w)>0$. Set $Y=w_3+w_4$. The source bound (24.10) is
+
+$$
+ |hA+(c-h)Y|\le hA+(c-h)|Y|
+                       \le hA+2(c-h)=u_\delta.
+\tag{34.26}
+$$
+
+Here $hA>0$ and $c-h>0$. Equality forces $|Y|=2$ and $Y$ positive real, hence $Y=2$. Because $|w_3|,|w_4|\le1$, it follows that $w_3=w_4=1$. Thus $w_1+w_2=A-2=2x$, with the $x>0$ of (34.16). Write
+
+$$
+ w_1=x+\zeta,\qquad w_2=x-\zeta.
+\tag{34.27}
+$$
+
+Now $Q=2h\zeta$, and the second equality of (34.25) gives $|\zeta|^2=1-x^2=y^2$. The two disk constraints $|x\pm\zeta|\le1$ imply
+
+$$
+ |x+\zeta|^2+|x-\zeta|^2
+      =2x^2+2|\zeta|^2=2.
+\tag{34.28}
+$$
+
+Each summand is at most one, so both equal one. Their difference gives $4x\operatorname{Re}\zeta=0$. Since $x>0$ and $y>0$, this means $\zeta=\sigma iy$ for exactly one $\sigma\in\{+1,-1\}$. The normalized diagonal is therefore $w_\sigma$.
+
+In the original phase convention, all four diagonal entries of the actual unitary $V=UU_+^\dagger$ consequently have modulus one. The norm of each row of $V$ is one; its diagonal entry already has that norm. Every off-diagonal entry in that row must vanish. Hence $V=\lambda\operatorname{diag}(w_\sigma)$ for the single scalar undone above, proving the feedback assertion of (34.17) for the actual lift itself.
+
+Finally write the rank-one effect as $E=\bar\psi\bar\psi^\dagger$. Since $p,q>0$, its representing vector can be chosen as
+
+$$
+ \psi=\sqrt p\,b_++e^{i\varphi}\sqrt q\,b_-.
+\tag{34.29}
+$$
+
+Equality in source (23.12), with the nonzero amplitudes in (34.23), requires
+
+$$
+ e^{i\varphi}=\frac{P\bar Q}{|P||Q|}=-\sigma i.
+\tag{34.30}
+$$
+
+The common feedback scalar cancels from this ratio. Thus $\psi$ is exactly $\psi_\sigma$, proving necessity of the effect assertion. Sufficiency was proved in (34.24). The two choices are distinct because $p,q,y>0$, and a common feedback scalar cannot interchange them while preserving the last two normalized diagonal entries. This completes the necessary-and-sufficient classification. $\square$
+
+The selected-root value and equality classification are repo-derived deductions for the fixed record and original metric. Their inputs are source Definition 11.1, the actual same-feedback identity (22.1), the normalized-effect and distance identities (23.9)--(23.12), the simultaneous cap envelopes and joint-sign conclusion of Lemma 24.2, the cap positivity of Lemma 24.3, the opposite-cap estimate of Theorem 25.3, and the supplied asymptotic and actual exact-level upper family of Section 33. Scalar regularity is derived by the implicit function theorem from (34.8)--(34.10); purity, feedback diagonality and phase orientation follow from equality in the all-original-pair lower bound. No regularity, branch choice or rank of an original minimizer is assumed.
+
+For the external source correspondence, Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1, Proposition 8 and (15)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), supply the fixed-Kraus fidelity bound and polar-correction context: their $t_j$ is $\operatorname{diag}(R_0b_j)$ and their input dimension is four. Buscemi--Chiribella--D'Ariano, [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5, Theorem 2 and (9)](https://arxiv.org/html/quant-ph/0504195v5), supply the correlation-record context; their Heisenberg matrix (9) is entrywise conjugate to this fixed Schrödinger record. The prescribed-diagonal theorem used in source Theorem 23.2 is Thompson's theorem as stated by [Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3), with all four singular values equal to one. These are intermediate source correspondences, not a formula for Definition 33.1's producer metric. The witnesses here are directly realized, and the equality proof concerns the actual unitary, rather than an auxiliary control.
+
+The interval in Theorem 34.3 is existentially positive; its maximal endpoint is not specified. All its prescribed positive levels and all their original minimizing pairs are determined by (34.1)--(34.3) and (34.15)--(34.17). The joint optimizer sign is the positive sign because of the proved cap localization and source (24.14). The sign $\sigma$ in (34.16) is a phase orientation inside that cap, not a separately chosen optimizer sign. Only the original one common scalar feedback phase is quotiented. The conclusions concern the fixed record and this local distance interval; they make no literature-priority claim or assertion about the finite-distance envelope outside it.
+
+## 追加锚（本行以下为增补区）
