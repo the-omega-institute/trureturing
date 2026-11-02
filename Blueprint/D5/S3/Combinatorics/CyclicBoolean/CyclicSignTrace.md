@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The cyclic Boolean map has an explicit inverse at every positive odd length. Integer Walsh inversion supplies nonempty spectral support.
+The ordered integer sign-matrix trace equals its cyclic Boolean phase sum at every positive length. The cyclic Boolean map has an explicit inverse at every positive odd length, where integer Walsh inversion supplies nonempty trace support.
 
 **Definition 1.1 (Binary words on a cyclic index set).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.claim`
 
 *Commentary.*
 
-For every natural m and every nonzero b of length 2m+1, the direction of the affine span over ZMod 2 of the trace support has dimension at least 2m. The parameter m runs from zero, so this is exactly all positive odd lengths, including length one. The inequality is a lower bound, not an equality. This definition states the question; the inverse and Walsh results below do not prove it.
+For every natural m and every nonzero b of length 2m+1, the direction of the affine span over ZMod 2 of the trace support has dimension at least 2m. The parameter m runs from zero, so this is exactly all positive odd lengths, including length one. The inequality is a lower bound, not an equality. This definition states the question; the trace, inverse and Walsh results below do not prove its dimension bound.
 
 **Definition 1.8 (Alternating products).**
 
@@ -210,7 +210,7 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 
 *Commentary.*
 
-For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. It is a statement about the phase sum; identification with the literal source trace remains a separate requirement.
+For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. The trace identity below therefore also makes the literal source trace support nonempty, without any assumption on b.
 
 **Theorem 1.18 (Constant Boolean derivatives and Walsh support).**
 
@@ -222,11 +222,27 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 
 *Commentary.*
 
-For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; it does not yet identify the affine-span dimension or the trace support.
+For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; identifying the affine-span dimension still requires a separate argument.
+
+**Theorem 1.19 (The ordered trace is the exact Boolean phase sum).**
+
+$$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall b \in \mathrm{Word}\left(n\right),\; \forall a \in \mathrm{Word}\left(n\right),\; \mathrm{sourceTrace}\left(b, a\right) = \sum_{x \in \mathrm{Word}\left(n\right)} \mathrm{sign}\left({\mathrm{dot}\left(b, x\right)} + {\mathrm{dot}\left(a, \mathrm{chi}\left(x\right)\right)}\right)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace_eq_phase_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At every positive length n and for all words b,a, the literal ordered matrix trace is the sum over every x of sign(dot(b,x)+dot(a,chi(x))). Length one and all coincident cyclic indices are included. This identity also applies to even lengths; oddness is needed only for the inverse construction.
+
+For a list of r+1 matrices, expand its (i,j) entry over all r intermediate states. The row tuple is i followed by the intermediate states; the column tuple is those states followed by j. Induction uses the first matrix factor and the ordinary Matrix.mul entry formula, preserving the complete list order. Taking the trace identifies j with i. Joining the initial state to the intermediate tuple gives every cyclic path exactly once; the final column is the initial state, including for a one-factor product.
+
+The path product is the sign of the sum of its entry exponents. Reindex the a_(k-2)x_k term by k=i+2 and the a_(k-1)x_k x_(k+1) term by k=i+1. The coefficient of a_i becomes x_i+x_(i+2)+x_(i+1)x_(i+2), exactly chi(x)_i. These are bijections of the actual cyclic index set, so repeated indices need no separate independence assumption. Combining this identity with the inverse phase formula identifies traceSupport(b) with the nonzero Walsh support of inverseComponent(m,b) at every odd length. The established phase nonemptiness thus supplies trace nonemptiness.
 
 The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.
 
-The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the corresponding affine-span dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. The constant-derivative/Walsh-support equivalence above does not by itself identify the trace support or settle the dimension bound.
+The affine-support assertion still requires the affine-span dimension identity and the complete coefficient classification for every nonzero inverse-component mask. The trace identity and the constant-derivative/Walsh-support equivalence identify the relevant support and its constant characters, but do not by themselves settle the dimension bound.
 
 ## References
 
@@ -243,6 +259,7 @@ The affine-support assertion still requires the equality of the ordered matrix t
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sign`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceMatrix`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace_eq_phase_sum`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.traceSupport`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_constant_derivative_iff`

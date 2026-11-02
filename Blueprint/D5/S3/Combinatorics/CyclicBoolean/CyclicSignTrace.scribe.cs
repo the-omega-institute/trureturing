@@ -120,7 +120,7 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
         return Disp(All("n", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, n),
             All("b", w, All("a", w,
                 Eq(Call("sourceTrace", b, a),
-                    Sum("x", w, Call("sign", Plus(Call("dot", b, x), Call("dot", a, Call("chi", x))))))))));
+                    Sum("x", w, Call("sign", Plus(Call("dot", b, x), Call("dot", a, Call("chi", x)))))))))));
     }
     private static Formula WalshDerivativeFormula()
     {
