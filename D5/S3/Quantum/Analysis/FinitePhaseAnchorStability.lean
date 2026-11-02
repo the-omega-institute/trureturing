@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Literal finite phase anchors control real Hilbert operator error and preserve effect menus. -/
+   digest: Finite phase anchors bound real operator error and preserve effect menus. -/
 
 import D5.S3.PrimeGaps.GreedyResidues
 import Mathlib.Analysis.InnerProductSpace.Positive
@@ -51,6 +51,7 @@ def AnchorErrors {d : ℕ} (b : OrthonormalBasis (Fin d ⊕ Fin d) ℝ V)
     let v := (Real.sqrt 2)⁻¹ • (b (.inl i) + b (.inr j))
     |weight A v - weight A (J v)| ≤ ε)
 
+omit [CompleteSpace V] in
 private theorem weight_bridge (D : V →L[ℝ] V) (hD : D.IsSymmetric) (u v : V) :
     weight D ((Real.sqrt 2)⁻¹ • (u + v)) =
       (weight D u + weight D v) / 2 + ⟪u, D v⟫_ℝ := by
@@ -58,11 +59,13 @@ private theorem weight_bridge (D : V →L[ℝ] V) (hD : D.IsSymmetric) (u v : V)
     rw [← mul_inv, ← sq, Real.sq_sqrt (by norm_num)]
     norm_num
   have hs : ⟪v, D u⟫_ℝ = ⟪u, D v⟫_ℝ := by
-    rw [real_inner_comm, hD u v]
+    rw [real_inner_comm]
+    exact hD u v
   simp only [weight, map_smul, map_add, inner_smul_left, inner_smul_right,
     inner_add_left, inner_add_right, RCLike.conj_to_real, hs]
   linear_combination (⟪u, D u⟫_ℝ + ⟪v, D v⟫_ℝ + 2 * ⟪u, D v⟫_ℝ) * hc
 
+omit [CompleteSpace V] in
 private theorem norm_le_of_quadratic (D : V →L[ℝ] V) (hD : D.IsSymmetric)
     (R : ℝ) (hR : 0 ≤ R) (hq : ∀ x, |weight D x| ≤ R * ‖x‖ ^ 2) : ‖D‖ ≤ R := by
   rw [D.norm_eq_iSup_rayleighQuotient hD]
@@ -74,6 +77,7 @@ private theorem norm_le_of_quadratic (D : V →L[ℝ] V) (hD : D.IsSymmetric)
     simpa [rayleighQuotient, reApplyInnerSelf, abs_div, abs_of_nonneg hn.le,
       real_inner_comm, weight] using (div_le_iff₀ hn).mpr (hq x)
 
+omit [CompleteSpace V] in
 private theorem norm_le_of_rows {ι : Type*} [Fintype ι]
     (b : OrthonormalBasis ι ℝ V) (D : V →L[ℝ] V) (hD : D.IsSymmetric)
     (R : ℝ) (hR : 0 ≤ R)
@@ -87,8 +91,13 @@ private theorem norm_le_of_rows {ι : Type*} [Fintype ι]
       inner_smul_right, RCLike.conj_to_real]
     apply Finset.sum_congr rfl
     intro i _
+    rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro j _
+    have hs : ⟪b j, D (b i)⟫_ℝ = ⟪b i, D (b j)⟫_ℝ := by
+      rw [real_inner_comm]
+      exact hD (b i) (b j)
+    rw [hs]
     ring
   rw [hex]
   calc
@@ -96,11 +105,13 @@ private theorem norm_le_of_rows {ι : Type*} [Fintype ι]
       LongGapsBetweenPrimes.abs_quadratic_form_le_rows _ _ (by
         intro i j
         congr 1
-        rw [real_inner_comm, hD])
+        rw [real_inner_comm]
+        exact hD (b j) (b i))
     _ ≤ ∑ i, ⟪b i, x⟫_ℝ ^ 2 * R :=
       Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hr i) (sq_nonneg _)
     _ = R * ‖x‖ ^ 2 := by rw [← Finset.sum_mul, b.sum_sq_inner_right]; ring
 
+omit [CompleteSpace V] in
 private theorem anchor_rows {d : ℕ} (hd : 1 ≤ d)
     (b : OrthonormalBasis (Fin d ⊕ Fin d) ℝ V)
     (D : V →L[ℝ] V) (hD : D.IsSymmetric) (ε : ℝ)
@@ -117,9 +128,13 @@ private theorem anchor_rows {d : ℕ} (hd : 1 ≤ d)
   classical
   have hε : 0 ≤ ε := (abs_nonneg _).trans (haxis ⟨0, by omega⟩)
   have hs (i j : Fin d) : ⟪b (.inl j), D (b (.inl i))⟫_ℝ =
-      ⟪b (.inl i), D (b (.inl j))⟫_ℝ := by rw [real_inner_comm, hD]
+      ⟪b (.inl i), D (b (.inl j))⟫_ℝ := by
+    rw [real_inner_comm]
+    exact hD _ _
   have ht (i j : Fin d) : ⟪b (.inl j), D (b (.inr i))⟫_ℝ =
-      ⟪b (.inl i), D (b (.inr j))⟫_ℝ := by rw [← hfe, real_inner_comm, hD]
+      ⟪b (.inl i), D (b (.inr j))⟫_ℝ := by
+    rw [← hfe, real_inner_comm]
+    exact hD _ _
   have hS (i j : Fin d) (hij : i ≠ j) :
       |⟪b (.inl i), D (b (.inl j))⟫_ℝ| ≤ 2 * ε := by
     have ordered (i j : Fin d) (hij : i < j) :
@@ -155,7 +170,7 @@ private theorem anchor_rows {d : ℕ} (hd : 1 ≤ d)
       (∑ j, |a j|) ≤ ε + ((d : ℝ) - 1) * (2 * ε) := by
     calc
       _ = |a i| + ∑ j ∈ Finset.univ.erase i, |a j| := by
-        rw [Finset.add_sum_erase _ _ (Finset.mem_univ i)]
+        exact (Finset.add_sum_erase Finset.univ (fun j => |a j|) (Finset.mem_univ i)).symm
       _ ≤ ε + ∑ j ∈ Finset.univ.erase i, 2 * ε := by
         apply add_le_add hi
         exact Finset.sum_le_sum fun j hj => ho j (Finset.mem_erase.mp hj).1
@@ -201,9 +216,10 @@ private theorem effect_repair {d : ℕ} (hd : 1 ≤ d)
     have h := hAc.adjoint_conj J
     convert h using 1
     ext x
-    simp only [C, phaseConjugate, comp_apply, sub_apply, one_apply, map_sub]
+    simp only [C, phaseConjugate, comp_apply, sub_apply,
+      one_apply_eq_self, map_sub]
     have hu := congrArg (fun T : V →L[ℝ] V => T x) hunit
-    simp only [comp_apply, one_apply] at hu
+    simp only [comp_apply, one_apply_eq_self] at hu
     rw [hu]
   have hD : D.IsSymmetric := hA.isSymmetric.sub hC.isSymmetric
   have hconj (x y : V) : ⟪x, C y⟫_ℝ = ⟪J x, A (J y)⟫_ℝ := by
@@ -222,7 +238,7 @@ private theorem effect_repair {d : ℕ} (hd : 1 ≤ d)
     have h := hanti (b (.inl i)) (b (.inr j))
     simpa [hJe, hJf] using congrArg Neg.neg h
   have hq (x : V) : weight D x = weight A x - weight A (J x) := by
-    simp [weight, D, hconj]
+    simp only [weight, D, sub_apply, inner_sub_right, hconj]
   have rows := anchor_rows hd b D hD ε
     (by intro i; rw [hq]; exact ha.1 i)
     (by intro i j hij; rw [hq]; exact ha.2.1 i j hij)
@@ -237,7 +253,7 @@ private theorem effect_repair {d : ℕ} (hd : 1 ≤ d)
     have h1 := hAc.re_inner_nonneg_right x
     have hc0 := hC.re_inner_nonneg_right x
     have hc1 := hCc.re_inner_nonneg_right x
-    simp only [RCLike.re_to_real, sub_apply, one_apply, inner_sub_right,
+    simp only [RCLike.re_to_real, sub_apply, one_apply_eq_self, inner_sub_right,
       real_inner_self_eq_norm_sq] at h0 h1 hc0 hc1
     simp only [weight, D, sub_apply, inner_sub_right, one_mul]
     exact abs_le.mpr ⟨by linarith, by linarith⟩
@@ -245,9 +261,9 @@ private theorem effect_repair {d : ℕ} (hd : 1 ≤ d)
     dsimp [repair, D, C]
     module
   have herror : ‖A - repair J A‖ ≤ min (1 / 2) ((2 * (d : ℝ) - 1) * ε) := by
-    rw [hdiff, norm_smul, Real.norm_eq_abs]
-    norm_num
-    exact le_min (by linarith) (by linarith)
+    rw [hdiff, norm_smul, Real.norm_eq_abs,
+      abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2)]
+    exact le_min (by linarith only [hcap]) (by nlinarith only [hnorm])
   have hE : (repair J A).IsPositive :=
     (hA.add hC).smul_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2)
   have hEc : (1 - repair J A).IsPositive := by
@@ -262,16 +278,16 @@ private theorem effect_repair {d : ℕ} (hd : 1 ≤ d)
     intro x
     have h0 := hE.re_inner_nonneg_right x
     have h1 := hEc.re_inner_nonneg_right x
-    simp only [RCLike.re_to_real, sub_apply, one_apply, inner_sub_right,
+    simp only [RCLike.re_to_real, sub_apply, one_apply_eq_self, inner_sub_right,
       real_inner_self_eq_norm_sq] at h0 h1
     simp only [weight, abs_of_nonneg h0, one_mul]
     linarith
   have him (x : V) : ⟪J x, repair J A x⟫_ℝ = 0 := by
     have hs := hE.isSymmetric x (J x)
-    rw [hcomm, ← adjoint_inner_right, hJstar] at hs
+    change ⟪repair J A x, J x⟫_ℝ = ⟪x, repair J A (J x)⟫_ℝ at hs
+    rw [hcomm, ← adjoint_inner_left J (repair J A x) x, hJstar] at hs
     simp only [neg_apply, inner_neg_left] at hs
-    rw [real_inner_comm (repair J A x)] at hs
-    linarith
+    linarith only [hs, real_inner_comm (repair J A x) (J x)]
   refine ⟨hE, hEc, hEnorm, hcomm, herror, him, ?_⟩
   intro x
   calc
@@ -298,7 +314,7 @@ theorem finite_phase_anchor_repair {d : ℕ} (hd : 1 ≤ d)
       (∀ x, ⟪J x, repair J A x⟫_ℝ = 0) ∧
       (∀ x, |weight A x - weight (repair J A) x| ≤
         min (1 / 2) ((2 * (d : ℝ) - 1) * ε) * ‖x‖ ^ 2)) ∧
-    (∀ (ι : Type) [Fintype ι] (menu : ι → V →L[ℝ] V),
+    (∀ (ι : Type*) [Fintype ι] (menu : ι → V →L[ℝ] V),
       (∑ i, menu i) = 1 → (∑ i, repair J (menu i)) = 1) := by
   refine ⟨effect_repair hd b J hJ2 hJstar hJe, ?_⟩
   intro ι _ menu hm
@@ -310,7 +326,7 @@ theorem finite_phase_anchor_repair {d : ℕ} (hd : 1 ≤ d)
     simp only [sum_apply, phaseConjugate, comp_apply]
     rw [← map_sum]
     have h := congrArg (fun T : V →L[ℝ] V => T (J x)) hm
-    simp only [sum_apply, one_apply] at h
+    simp only [sum_apply, one_apply_eq_self] at h
     rw [h]
     change (J.adjoint ∘L J) x = x
     rw [hunit]

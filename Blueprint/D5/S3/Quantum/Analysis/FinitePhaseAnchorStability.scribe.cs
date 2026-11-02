@@ -14,22 +14,23 @@ internal sealed class FinitePhaseAnchorStabilityDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("real-readout"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/FinitePhaseAnchorStability.weight"),
                 H("Real effect readout"), StatementSource.FromAuthor(Disp(
-                    Eqn(W(a,x), Inn(x,At(a,x))))), AssessedProvenance.FromRepo(),
+                    Space(All("A",Op,All("x",v,Eqn(W(a,x), Inn(x,At(a,x))))),false))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every continuous real linear operator A and every x in V, weight(A,x) is the source real quadratic readout g(x,Ax)."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("adjoint-phase-conjugation"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/FinitePhaseAnchorStability.phaseConjugate"),
                 H("True adjoint conjugation"), StatementSource.FromAuthor(Disp(
-                    Eqn(Call("phaseConjugate",j,a),Seq(StarOf(j),Circ,a,Circ,j)))),
+                    Space(All("J",Op,All("A",Op,Eqn(Call("phaseConjugate",j,a),Seq(StarOf(j),Circ,Sp,a,Circ,Sp,j))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The conjugation is J* composed with A composed with J. Since J*=-J, replacing J* by J would reverse the required sign."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("average-repair"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/FinitePhaseAnchorStability.repair"),
                 H("Common-complex effect repair"), StatementSource.FromAuthor(Disp(
-                    Eqn(E(a),Mul(Half,Add(a,Call("phaseConjugate",j,a)))))),
+                    Space(All("J",Op,All("A",Op,Eqn(E(a),Mul(Half,Add(a,Call("phaseConjugate",j,a))))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The real-linear map E(A)=repair(J,A) is the average (A+J*AJ)/2. Complex linearity is a conclusion of the theorem."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("literal-anchor-errors"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/FinitePhaseAnchorStability.AnchorErrors"),
                 H("Literal ordered unit probes"), StatementSource.FromAuthor(Disp(
-                    new Formula.Logic(Call("AnchorErrors",b,j,a,eps),FormulaLogicOperator.Iff,AnchorFormula()))),
+                    Space(All("d",Nat,All("b",Call("OrthonormalBasis",Call("Sum",FinD,FinD),Real,v),All("J",Op,All("A",Op,All("epsilon",Real,
+                        new Formula.Logic(Call("AnchorErrors",b,j,a,eps),FormulaLogicOperator.Iff,AnchorFormula())))))),false))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The families are the axis probes e(i), the real bridges (e(i)+e(k))/sqrt(2) for i<k, and the mixed bridges (e(i)+f(k))/sqrt(2) for i<=k. They are all unit vectors by orthonormality. In particular, the diagonal mixed probes are present. The real bridge family and off-diagonal mixed family are empty for d=1. No upper small-error assumption is imposed. The axis family is nonempty because d>=1 and implies epsilon>=0."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("finite-anchor-operator-and-menu-repair"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/FinitePhaseAnchorStability.finite_phase_anchor_repair"),
@@ -65,7 +66,7 @@ internal sealed class FinitePhaseAnchorStabilityDocument : IScribeDocumentDefini
     private static Formula Imp(Formula p, Formula q) => new Formula.Logic(p,FormulaLogicOperator.Implies,q);
     private static Formula Negate(Formula p) => new Formula.Negate(p);
     private static Formula Abs(Formula p) => Seq(Lvert,p,Rvert);
-    private static Formula Inn(Formula p,Formula q) => Seq(Langle,p,Comma,q,Rangle,Underscore,Grp(Mathbb,Grp(F.Id("R"))));
+    private static Formula Inn(Formula p,Formula q) => Seq(Langle,Sp,p,Comma,q,Rangle,Underscore,Grp(Mathbb,Grp(F.Id("R"))));
     private static Formula StarOf(Formula p) => new Formula.Power(p,Star);
     private static Formula Axis(Formula t) => At(b,Call("inl",t));
     private static Formula ImagAxis(Formula t) => At(b,Call("inr",t));
@@ -74,12 +75,16 @@ internal sealed class FinitePhaseAnchorStabilityDocument : IScribeDocumentDefini
     private static Formula E(Formula p) => Call("repair",j,p);
     private static Formula Error(Formula p) => Abs(Sub(W(a,p),W(a,At(j,p))));
     private static Formula Positive(Formula p) => Call("IsPositive",p);
-    private static Formula Budget => Call("min",Half,Mul(Sub(Mul(Two,Call("Real",d)),One),eps));
+    private static Formula Budget => Call("min",Half,Mul(Sub(Mul(Two,d),One),eps));
     private static Formula SumI(Formula p) => Seq(Sum,Underscore,Grp(i),p);
     private static Formula AnchorFormula() =>
         And(All("i",FinD,Leq(Error(Axis(i)),eps)),
             And(All("i",FinD,All("k",FinD,Imp(Lt(i,k),Leq(Error(Bridge(Axis(i),Axis(k))),eps)))),
                 All("i",FinD,All("k",FinD,Imp(Leq(i,k),Leq(Error(Bridge(Axis(i),ImagAxis(k))),eps))))));
+    private static Formula Space(Formula body,bool complete=true) =>
+        All("V",Call("Type",F.Id("u")),Seq(OpenBracket,Call("NormedAddCommGroup",v),CloseBracket,
+            OpenBracket,Call("InnerProductSpace",Real,v),CloseBracket,
+            complete ? Seq(OpenBracket,Call("CompleteSpace",v),CloseBracket,body) : body));
     private static Formula MainFormula()
     {
         Formula effect=All("A",Op,Imp(And(Positive(a),Positive(Sub(One,a))),
@@ -90,14 +95,13 @@ internal sealed class FinitePhaseAnchorStabilityDocument : IScribeDocumentDefini
                             And(All("x",v,Eqn(Inn(At(j,x),At(E(a),x)),Zero)),
                                 All("x",v,Leq(Abs(Sub(W(a,x),W(E(a),x))),Mul(Budget,new Formula.Power(new Formula.Norm(x),Two))))))))))))));
         Formula iota=F.Id("iota"), menu=F.Id("menu");
-        Formula menus=All("iota",Call("Type"),Imp(Call("Fintype",iota),
+        Formula menus=All("iota",Call("Type",F.Id("w")),Seq(OpenBracket,Call("Fintype",iota),CloseBracket,
             All("menu",Seq(iota,To,Op),Imp(Eqn(SumI(At(menu,i)),One),
                 Eqn(SumI(E(At(menu,i))),One)))));
         Formula assumptions=And(All("x",v,Eqn(At(j,At(j,x)),Negate(x))),
             And(Eqn(StarOf(j),Negate(j)),All("i",FinD,Eqn(At(j,Axis(i)),ImagAxis(i)))));
-        Formula structure=And(Call("NormedAddCommGroup",v),And(Call("InnerProductSpace",Real,v),Call("CompleteSpace",v)));
-        return All("V",Call("Type",F.Id("u")),Imp(structure,
+        return Space(
             All("d",Nat,Imp(Leq(One,d),All("b",Call("OrthonormalBasis",Call("Sum",FinD,FinD),Real,v),
-                All("J",Op,Imp(assumptions,And(effect,menus))))))));
+                All("J",Op,Imp(assumptions,And(effect,menus)))))));
     }
 }
