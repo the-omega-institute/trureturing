@@ -184,9 +184,44 @@ private theorem totalCorrelation_entropy (p : A × B × C → ℝ)
   simp only [neg_mul, Finset.sum_neg_distrib]
   ring
 
+private theorem totalCorrelation_dual_balance (p : A × B × C → ℝ)
+    (hp : ∀ s, 0 ≤ p s) :
+    2 * totalCorrelation p = mutualInformation (xyProjection p) +
+      mutualInformation (xzProjection p) + mutualInformation (yz p) + dual p := by
+  classical
+  have hm₁₂ : marginal (xyProjection p) = marginal p := by
+    funext a
+    simp only [marginal, xyProjection, Fintype.sum_prod_type]
+  have hm₁₃ : marginal (xzProjection p) = marginal p := by
+    funext a
+    simp only [marginal, xzProjection, Fintype.sum_prod_type]
+    exact Finset.sum_comm
+  have hm₂ : marginal (fun z : B × A => xyProjection p (z.2, z.1)) =
+      marginal (yz p) := by
+    funext b
+    simp only [marginal, xyProjection, yz]
+    exact Finset.sum_comm
+  have hm₃ : marginal (fun z : C × A => xzProjection p (z.2, z.1)) =
+      marginal (fun z : C × B => yz p (z.2, z.1)) := by
+    funext c
+    simp only [marginal, xzProjection, yz]
+    exact Finset.sum_comm
+  have h₁₂ := mutual_information_eq_entropy_sub (xyProjection p)
+    (fun z => Finset.sum_nonneg fun c _ => hp (z.1, z.2, c))
+  have h₁₃ := mutual_information_eq_entropy_sub (xzProjection p)
+    (fun z => Finset.sum_nonneg fun b _ => hp (z.1, b, z.2))
+  have h₂₃ := mutual_information_eq_entropy_sub (yz p)
+    (fun z => Finset.sum_nonneg fun a _ => hp (a, z))
+  rw [hm₁₂, hm₂] at h₁₂
+  rw [hm₁₃, hm₃] at h₁₃
+  rw [totalCorrelation_entropy p hp, h₁₂, h₁₃, h₂₃, dual]
+  ring
+
 end FiniteEntropy
 
 namespace IncidentLaw
+
+open Classical
 
 /-- The six-variable law, with the original three source slots retained. -/
 noncomputable def responseLaw (L : IncidentLaw S₁ S₂ S₃ O)
@@ -555,6 +590,76 @@ private theorem record_pair_entropies (L : IncidentLaw S₁ S₂ S₃ O)
     exact entropy_deterministic_extension _ (fun z => L.readoutB z.2 z.1)
   · rw [show L.recordPair₂₃ = _ from funext h₂₃]
     exact entropy_deterministic_extension _ (fun z => L.readoutA z.1 z.2)
+
+private theorem record_marginals (L : IncidentLaw S₁ S₂ S₃ O) :
+    marginal L.recordJoint = L.outputLaw ∧
+    marginal L.recordPair₁₂ = L.outputLaw ∧
+    marginal L.recordPair₁₃ = L.outputLaw ∧
+    marginal L.recordPair₂₃ = L.outputLaw := by
+  classical
+  refine ⟨rfl, ?_, ?_, ?_⟩
+  · funext x
+    simp only [marginal, recordPair₁₂, outputLaw, Fintype.sum_prod_type]
+  · funext x
+    simp only [marginal, recordPair₁₃, outputLaw, Fintype.sum_prod_type]
+    apply Finset.sum_congr rfl
+    intro s₁ _
+    exact Finset.sum_comm
+  · funext x
+    simp only [marginal, recordPair₂₃, outputLaw, Fintype.sum_prod_type]
+    rw [Finset.sum_comm]
+
+private theorem record_conditionals (L : IncidentLaw S₁ S₂ S₃ O) (x : O) :
+    conditional L.recordPair₁₂ x = xyProjection (conditional L.recordJoint x) ∧
+    conditional L.recordPair₁₃ x = xzProjection (conditional L.recordJoint x) ∧
+    conditional L.recordPair₂₃ x = FiniteEntropy.yz (conditional L.recordJoint x) := by
+  obtain ⟨h₀, h₁₂, h₁₃, h₂₃⟩ := L.record_marginals
+  constructor
+  · funext z
+    simp only [conditional, h₁₂, h₀, recordPair₁₂, recordJoint, xyProjection,
+      Finset.sum_div]
+  constructor
+  · funext z
+    simp only [conditional, h₁₃, h₀, recordPair₁₃, recordJoint, xzProjection,
+      Finset.sum_div]
+  · funext z
+    simp only [conditional, h₂₃, h₀, recordPair₂₃, recordJoint, FiniteEntropy.yz,
+      marginal, Finset.sum_div]
+
+private theorem record_dual_balance (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    FiniteEntropy.dual L.nu - shannonEntropy L.outputLaw =
+      ∑ x, L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) := by
+  classical
+  obtain ⟨hm₀, hm₁₂, hm₁₃, hm₂₃⟩ := L.record_marginals
+  have hc₀ := entropy_chain_rule L.recordJoint (fun z => L.record_nonneg _ _)
+  have hc₁₂ := entropy_chain_rule L.recordPair₁₂
+    (fun z => Finset.sum_nonneg fun s₃ _ => L.record_nonneg _ _)
+  have hc₁₃ := entropy_chain_rule L.recordPair₁₃
+    (fun z => Finset.sum_nonneg fun s₂ _ => L.record_nonneg _ _)
+  have hc₂₃ := entropy_chain_rule L.recordPair₂₃
+    (fun z => Finset.sum_nonneg fun s₁ _ => L.record_nonneg _ _)
+  obtain ⟨he₁₂, he₁₃, he₂₃⟩ := L.record_pair_entropies hagree
+  rw [L.record_joint_entropy hagree, hm₀] at hc₀
+  rw [he₁₂, hm₁₂] at hc₁₂
+  rw [he₁₃, hm₁₃] at hc₁₃
+  rw [he₂₃, hm₂₃] at hc₂₃
+  simp only [conditionalEntropy, hm₀] at hc₀
+  simp only [conditionalEntropy, hm₁₂] at hc₁₂
+  simp only [conditionalEntropy, hm₁₃] at hc₁₃
+  simp only [conditionalEntropy, hm₂₃] at hc₂₃
+  simp_rw [(L.record_conditionals _).1] at hc₁₂
+  simp_rw [(L.record_conditionals _).2.1] at hc₁₃
+  simp_rw [(L.record_conditionals _).2.2] at hc₂₃
+  change shannonEntropy (fun z : S₁ × S₂ => L.pair₁₂ z.1 z.2) +
+    shannonEntropy (fun z : S₁ × S₃ => L.pair₁₃ z.1 z.2) +
+    shannonEntropy (fun z : S₂ × S₃ => L.pair₂₃ z.1 z.2) -
+      2 * shannonEntropy L.nu - shannonEntropy L.outputLaw = _
+  simp only [FiniteEntropy.dual, mul_sub, mul_add, Finset.sum_sub_distrib,
+    Finset.sum_add_distrib]
+  simp_rw [← mul_assoc, mul_comm (L.outputLaw _) (2 : ℝ), mul_assoc]
+  rw [← Finset.mul_sum]
+  linarith
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
