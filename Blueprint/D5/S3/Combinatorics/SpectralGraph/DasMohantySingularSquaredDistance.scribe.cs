@@ -10,7 +10,7 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
         "D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDistance.";
 
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/dasmohanty2024inverse");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/dasmohanty2024inverse");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The singular multipartite source Laplacian has exactly the stated positive spectrum "

@@ -12,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-The single target is the complete two-clause concluding conjecture identified by `D5/L/GraphInvariants/dasmohanty2024inverse`. The Library note owns the bibliography, equation (3.6), omitted-list locators and source qualifications. The exact proposition is `DasMohantySingularSquaredDistance.completeConjecture`; the theorem `DasMohantySingularSquaredDistance.result` has that proposition as its type. Issue https://github.com/the-omega-institute/trureturing/issues/25619 and immutable preregistration comment 6574192179 identify the external event.
+The single target is the complete two-clause concluding conjecture identified by `D5/L/QuadraticForms/dasmohanty2024inverse`. The Library note owns the bibliography, equation (3.6), omitted-list locators and source qualifications. The exact proposition is `DasMohantySingularSquaredDistance.completeConjecture`; the theorem `DasMohantySingularSquaredDistance.result` has that proposition as its type. Issue https://github.com/the-omega-institute/trureturing/issues/25619 and immutable preregistration comment 6574192179 identify the external event.
 
 For every finite number t of parts with t at least two, and every positive integer part-size function n on Fin t, let N be the sum of the sizes, s the number of parts of size at least two and h the number of singleton parts. Vertices are pairs consisting of a part and a vertex in that part. The real squared-distance matrix delta has diagonal zero, same-part off-diagonal four and between-part one. Assume delta is singular and the sum of all its cofactors is nonzero. The latter is the sum of all adjugate entries, not a principal cofactor.
 

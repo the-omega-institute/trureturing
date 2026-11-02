@@ -4,7 +4,7 @@
 
 The singular multipartite source Laplacian has exactly the stated positive spectrum and inertia on every original part-size domain.
 
-The source definitions and complete concluding conjecture are from `D5/L/GraphInvariants/dasmohanty2024inverse`, equation (3.6) and the concluding conjecture. The author-defined omitted-list equalities determine the hats. The inconsistent expanded hatted Psi products are not substituted for those definitions. No publisher correction, priority or worldwide literature-completeness claim is made.
+The source definitions and complete concluding conjecture are from `D5/L/QuadraticForms/dasmohanty2024inverse`, equation (3.6) and the concluding conjecture. The author-defined omitted-list equalities determine the hats. The inconsistent expanded hatted Psi products are not substituted for those definitions. No publisher correction, priority or worldwide literature-completeness claim is made.
 
 For any natural t and n:Fin(t) to Nat, the vertex carrier is the dependent sum of Fin(n(i)). Set d(i)=3n(i)-4. For a finite parameter set S, phi(n,S) is the product of d(i) over S, psi(n,S) is the sum of n(i)phi(n,S without i), and theta=phi+psi. Empty products are one and empty sums zero. Restricting S therefore removes exactly the indicated parameters, including for double hats. ratio(n) is the sum of n(i)/d(i).
 
