@@ -43,12 +43,9 @@ internal sealed class CausalKernelDocument : IScribeDocumentDefinition
                         + "global integrability; the primitive derivative identifies rSlope "
                         + "with deriv r almost everywhere before the derivative budget is used.")),
                     Paragraph(Text(
-                        "This is the repository-derived Describe source for the compiled causal owner. "
-                        + "Registration binding remains unfinished under issue #25738. The arithmetic "
-                        + "source preserves supplier and Terence Tao / Apache-2.0 attribution; "
-                        + "Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 and Lean 4.35.0 "
-                        + "are the intended pins. Source audit mirrors retain the exact full "
-                        + "law but leave actual observational dependence and source binding "
-                        + "unproved. No RH result or sublinear sufficient moment order is claimed."))),
+                        "The arithmetic suppliers retain their Terence Tao / Apache-2.0 attribution. "
+                        + "Harmonic, divisor, Abel and integral APIs come from "
+                        + "Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 with Lean 4.35.0. "
+                        + "No RH result or sublinear sufficient moment order is claimed."))),
                 DescribeRole.Theorem))));
 }

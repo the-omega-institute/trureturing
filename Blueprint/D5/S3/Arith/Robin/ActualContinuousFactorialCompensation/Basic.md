@@ -4,7 +4,7 @@
 
 The literal factorial and complete von Mangoldt dilation sum admits continuous compensation, exact finite smoothing and an identified almost-everywhere derivative with global logarithmic bounds.
 
-Repository-derived Describe source for the compiled arithmetic owner. Registration binding remains unfinished under issue #25738. Here gamma is Euler's constant, L=log(2*pi), and eta is the existing actual factorial error log(floor(x)!)-x*log(x)+x. The function B retains every von Mangoldt term for 2<=n<=floor(x), weighted by 1-fract(x/n), and subtracts gamma*x. Set h=eta-L-B, h1=1+gamma-L, Z_h(x)=sum over 1<=k<=floor(x) of h(x/k), ceta=integral over y>1 of eta(y)/y^2, alpha=gamma^2+2*ceta-2, and G(x)=Z_h(x)-h1*floor(x)-alpha*(x-1). These are literal arithmetic objects; no supplier identity or regularity is a theorem hypothesis.
+Here gamma is Euler's constant, L=log(2*pi), and eta is the existing actual factorial error log(floor(x)!)-x*log(x)+x. The function B retains every von Mangoldt term for 2<=n<=floor(x), weighted by 1-fract(x/n), and subtracts gamma*x. Set h=eta-L-B, h1=1+gamma-L, Z_h(x)=sum over 1<=k<=floor(x) of h(x/k), ceta=integral over y>1 of eta(y)/y^2, alpha=gamma^2+2*ceta-2, and G(x)=Z_h(x)-h1*floor(x)-alpha*(x-1). These are literal arithmetic objects; no supplier identity or regularity is a theorem hypothesis.
 
 **Theorem 1.1 (Exact finite smoothing at every real cutoff).**
 

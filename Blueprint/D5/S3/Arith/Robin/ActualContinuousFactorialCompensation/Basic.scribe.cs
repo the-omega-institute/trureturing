@@ -9,9 +9,7 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
         H("Actual Continuous Factorial Compensation"),
         Blocks(
             Paragraph(Text(
-                "Repository-derived Describe source for the compiled arithmetic owner. "
-                + "Registration binding remains unfinished under issue #25738. "
-                + "Here gamma is Euler's constant, L=log(2*pi), and eta is the existing actual "
+                "Here gamma is Euler's constant, L=log(2*pi), and eta is the existing actual "
                 + "factorial error log(floor(x)!)-x*log(x)+x. The function B retains every "
                 + "von Mangoldt term for 2<=n<=floor(x), weighted by 1-fract(x/n), and subtracts gamma*x. "
                 + "Set h=eta-L-B, h1=1+gamma-L, Z_h(x)=sum over 1<=k<=floor(x) of h(x/k), "
