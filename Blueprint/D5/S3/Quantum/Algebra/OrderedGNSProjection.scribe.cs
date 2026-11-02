@@ -72,11 +72,11 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
         Formula q = F.Id("q");
         Formula a = F.Id("A");
         return Disp(Seq(
-            Forall, Sp, y, InMacro, a, Comma, Sp,
+            Forall, Sp, y, InMacro, Sp, a, Comma, Sp,
             StarOf(y), Eq, y, Implies,
-            Open, Forall, Sp, q, InMacro, a, Comma, Sp,
+            Open, Forall, Sp, q, InMacro, Sp, a, Comma, Sp,
                 Re, StateOf(Seq(StarOf(q), y, q)), Geq, D(0), Close,
-            Implies, y, Geq, D(0)));
+            Implies, Sp, y, Geq, D(0)));
     }
 
     private static Formula CharacterizationFormula()
@@ -87,7 +87,7 @@ internal sealed class OrderedGNSProjectionDocument : IScribeDocumentDefinition
         Formula algebra = F.Id("A");
         Formula Apply(Formula value) => Seq(e, Open, value, Close);
         Formula right = Seq(Open, Forall, Sp, x, Comma, Sp,
-            Forall, Sp, a, InMacro, algebra, Comma, Sp,
+            Forall, Sp, a, InMacro, Sp, algebra, Comma, Sp,
             StateOf(Seq(Apply(x), a)), Eq, StateOf(Seq(x, a)), Close);
         return Disp(Seq(
             right, Iff,
