@@ -283,16 +283,4 @@ theorem complex_legendre_primitive_gap (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → �
       simp only [eigenvalue, div_eq_mul_inv, mul_inv_rev]
       ring
 
-run_cmd do
-  let env ← Lean.getEnv
-  for (name, info) in env.constants.toList do
-    if name.toString.startsWith "D5.S3.Analytic.LegendrePrimitiveGap." ||
-        name.toString.startsWith "_private.D5.S3.Analytic.LegendrePrimitiveGap." then
-      let deps := info.type.getUsedConstants ++
-        (((info.value? true).map Lean.Expr.getUsedConstants).getD #[])
-      let deps := deps.filter fun n => n.toString.startsWith "D5.S3.Analytic.PolynomialL2Derivative." ||
-        n.toString.startsWith "_private.D5.S3.Analytic.PolynomialL2Derivative."
-      unless deps.isEmpty do
-        Lean.logInfo m!"LAYOUT_DEP {name}: {deps}"
-
 end D5.S3.Analytic.LegendrePrimitiveGap
