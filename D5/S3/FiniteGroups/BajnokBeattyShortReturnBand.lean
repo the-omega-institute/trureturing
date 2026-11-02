@@ -27,7 +27,7 @@ namespace D5.S3.FiniteGroups.BajnokBeattyShortReturnBand
 open NearSquareLatticeRigidity BajnokBeattyAsymmetricGrowth
 open BajnokBeattyFirstReturnDefect
 
-private theorem short_span (p m a b : ℤ)
+theorem short_span (p m a b : ℤ)
     (hp3 : 3 ≤ p) (hpo : Odd p) (hmo : Odd m) (hao : Odd a) (hbo : Odd b)
     (ha : 0 < a) (ham : a < m) (hb : 0 < b) (hbm : b < m) :
     let v1 : Plane := ![p*(m-a)/2, p*(m+a)/2]
