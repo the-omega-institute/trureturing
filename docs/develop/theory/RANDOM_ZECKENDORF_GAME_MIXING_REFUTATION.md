@@ -542,7 +542,7 @@ $$
  \xrightarrow{C_1}(a-1,b-1,c+1).
 $$
 
-Thus both routes are legal exactly when $a\ge1$ and $b\ge2$, and they have the same endpoint. The pattern $S_2,C_1$ cannot overlap itself. Replacing it by $C_2$ cannot create a new such pattern across either boundary, because the new symbol is $C_2$ and the old second symbol was $C_1$. Consequently every subset of the eligible slots of a representative $R_2$ expands to a legal complete word with contraction $R_2$. Conversely, each word with this contraction is recovered by expanding exactly the slots created by its removed pairs. These operations are inverse. In particular,
+Thus both routes are legal exactly when $a\ge1$ and $b\ge2$, and they have the same endpoint. The pattern $S_2,C_1$ cannot overlap itself. Replacing it by $C_2$ cannot create a new such pattern across either boundary, because the new symbol is $C_2$ and the old second symbol was $C_1$. Consequently every subset of the eligible slots of a representative $R_2$ expands to a legal complete word with contraction $R_2$. Conversely, each word with this contraction is recovered by expanding exactly the slots created by its removed pairs. An expansion starts with $S_2$ and ends with $C_1$, so no extra $S_2,C_1$ occurs across an expansion boundary, including between two expanded slots. These operations are inverse. In particular,
 
 $$
  \rho_2^{-1}(R_2)\cong\{0,1\}^{T(R_2)}.                         \tag{9.1}
@@ -573,7 +573,7 @@ The representative weights in (9.2) and (9.4) are different pushforward laws. Th
 
 ### 9.2. Uniform deterministic bounds needed for all integer inputs
 
-The deterministic inputs are [1, Theorems 1.1, 1.3, 1.6 and §2]. The following potential calculation records their correspondence to the present move labels within the proof. The terminal configuration has distinct nonconsecutive Fibonacci summands: the lexicographically decreasing potential $(U,h_2)$, with $U=\sum_i(i+2)h_i$, decreases under every move (under $S_2$ it preserves $U$ and decreases $h_2$). Write its terminal digits as $z_i\in\{0,1\}$ and put
+The deterministic inputs are [1, Theorems 1.1, 1.3, 1.6 and §2]. The following potential calculation records their correspondence to the present move labels within the proof. The terminal configuration has distinct nonconsecutive Fibonacci summands: the lexicographically decreasing potential $(U,h_2)$, with $U=\sum_i(i+2)h_i$, decreases under every move (under $S_2$ it preserves $U$ and decreases $h_2$). Write its terminal digits as $z_i\in\{0,1\}$. For a complete word $g$, let $c_k(g)$ and $s_k(g)$ count its $C_k$ and $S_k$ moves, respectively, suppressing $g$ in these counts when convenient, and put
 
 $$
  D_N=2N-\sum_iF_{i+1}z_i,\qquad
@@ -595,7 +595,7 @@ $$
  \le3N-\sum_i(i+2)z_i<3N.                                          \tag{9.6}
 $$
 
-Thus every complete word has $L<3N$. A configuration of weight $N$ has no bin $i\ge n+1$; moreover $C_n$ would consume $F_{n+1}>N$ and $S_n$ would consume $2F_n>F_{n+1}>N$. Hence
+Thus every complete word has $L<3N$. A configuration of weight $N$ has no occupied bin $i\ge n+1$. For $n\ge2$, $C_n$ would consume $F_{n+1}>N$ and $S_n$ would consume $2F_n>F_{n+1}>N$, leaving only $C_1,\ldots,C_{n-1}$ and $S_2,\ldots,S_{n-1}$. At $N=1$, there are no legal labels. Hence
 
 $$
  d(s)\le\max\{0,2n-3\},\qquad d_j+1\le2n=:b.                                \tag{9.7}
@@ -638,8 +638,10 @@ A successful block contributes a distinct $C_2$ which is not contracted and whos
 Let $D(R_2)=\sum_jd_j$. For the original word define, with zero padding after termination up to the endpoint $3N$ from (9.6),
 
 $$
- Y_i={\bf1}_{\{\text{the $i$th move is an eligible }C_2\}}
-       \bigl(d(S_2s_{i-1})+1\bigr),\qquad
+ Y_i=\begin{cases}
+       d(S_2s_{i-1})+1,&\text{if the $i$th move is an eligible }C_2,\\
+       0,&\text{otherwise},
+      \end{cases}\qquad
  W_*:=\sum_{i=1}^{3N}Y_i.                                           \tag{9.9}
 $$
 
@@ -700,7 +702,7 @@ $$
        =\sum_jp_j(1-p_j)=\sum_j\frac{d_j}{(1+d_j)^2}.               \tag{9.15}
 $$
 
-For every $d_j\ge1$,
+For every $d_j\ge1$, the inequality $1+d_j\le2d_j$ gives the first bound below. When $T(R_2)>0$, Cauchy–Schwarz applied to $T(R_2)=\sum_j\sqrt{d_j}\sqrt{1/d_j}$ gives the second:
 
 $$
  \frac{d_j}{(1+d_j)^2}\ge\frac1{4d_j},\qquad
@@ -753,6 +755,6 @@ $$
  K:=1+24\,128\sqrt{768}\,K_0.                                     \tag{9.20}
 $$
 
-Equations (9.18)--(9.20) prove Theorem 9.2, with $a,c,b_0=12$ as specified above and $K$ as in (9.20), through every integer $N\ge N_0$. The exact $\mu_N$ fibre law remains (9.4); no $P_N$ degree or tail estimate is transferred to it. The exchange, conditional product calculation, deterministic bounds, adapted lower-tail inequality, and independent-trial point bound are reused inputs [1, Lemmas 4.1–4.2, Corollary 4.3 and Theorem 1.6; 2, Theorem 1; Lemmas 4.1 and 4.3 above]. The game-specific additions are the four-label observed-block estimate (9.8), the representative-degree estimate (9.14), and their consequences (9.18)--(9.20). ∎
+Equations (9.18)--(9.20) prove Theorem 9.2, with $a,c$ as specified above, $b_0=12$, and $K$ as in (9.20), through every integer $N\ge N_0$. The exact $\mu_N$ fibre law remains (9.4); no $P_N$ degree or tail estimate is transferred to it. The exchange, conditional product calculation, deterministic bounds, adapted lower-tail inequality, and independent-trial point bound are reused inputs [1, Lemmas 4.1–4.2, Corollary 4.3 and Theorem 1.6; 2, Theorem 1; Lemmas 4.1 and 4.3 above]. The game-specific additions are the four-label observed-block estimate (9.8), the representative-degree estimate (9.14), and their consequences (9.18)--(9.20). ∎
 
 ## 追加锚（本行以下为增补区）
