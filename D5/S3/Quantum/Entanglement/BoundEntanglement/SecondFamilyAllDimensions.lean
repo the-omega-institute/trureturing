@@ -156,8 +156,9 @@ private theorem cyclic_shield_transport (d : ℕ) [NeZero d]
       · change -z p.2 = z p.1 + -z m
         rw [← hz]
         abel
-  simp only [fourierVector, zero_mul, AddChar.map_zero_eq_one, mul_one, hsector,
-    cyclicShield]
+  delta fourierVector cyclicShield
+  refine if_congr hsector ?_ rfl
+  rw [zero_mul, AddChar.map_zero_eq_one, mul_one]
 
 private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
     ∀ m n, ∑ x, star (cyclicShield d m x) * cyclicShield d n x = if m = n then 1 else 0 := by
@@ -186,7 +187,10 @@ private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
       Equiv.sum_comp (cyclicShieldIndexEquiv d) (fun i =>
         star (fourierVector 0 (cyclicShieldSector d m) i) *
           fourierVector 0 (cyclicShieldSector d n) i)
-    _ = _ := by simpa only [eq_self, true_and, hlabels] using hb
+    _ = _ := by
+      exact hb.trans (if_congr
+        ⟨fun hh => (hlabels m n).mp hh.2,
+          fun hmn => ⟨rfl, (hlabels m n).mpr hmn⟩⟩ rfl rfl)
 
 private theorem cyclic_partial_transpose (d : ℕ) :
     D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
