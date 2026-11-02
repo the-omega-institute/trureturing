@@ -151,34 +151,32 @@ private lemma phases_unit (t : ℝ) (ht : -(3 : ℝ) / 4 ≤ t ∧ t ≤ -(1 : �
   let k : ℝ := Real.sqrt ((4 - q) / q)
   let z : ℂ := (t : ℂ) + Complex.I * (s : ℂ)
   let w : ℂ := -2 - z
-  have ht2 : 0 ≤ 1 - t ^ 2 := by nlinarith [ht.1, ht.2]
-  have hs : s ^ 2 = 1 - t ^ 2 := Real.sq_sqrt ht2
   have hq : 0 < q := by dsimp [q]; linarith [ht.1]
   have hq4 : q ≤ 4 := by dsimp [q]; linarith [ht.2]
   have hk : k ^ 2 = (4 - q) / q := Real.sq_sqrt (div_nonneg (by linarith) (le_of_lt hq))
   have hz : Complex.normSq z = 1 := by
-    simp only [z, Complex.normSq_apply, Complex.add_re, Complex.add_im,
-      Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
-      Complex.I_re, Complex.I_im]
-    nlinarith
+    exact Complex.normSq_ofReal_add_I_mul_sqrt_one_sub (by
+      rw [Real.norm_eq_abs, abs_le]
+      constructor <;> linarith [ht.1, ht.2])
   have hw : Complex.normSq w = q := by
-    simp only [w, z, Complex.normSq_apply, Complex.sub_re, Complex.sub_im,
-      Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
-      Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im]
-    norm_num
-    dsimp [q]
-    nlinarith
+    dsimp only [w, q]
+    rw [Complex.normSq_sub, hz]
+    dsimp only [z]
+    norm_num [Complex.mul_re, Complex.mul_im]
+    ring
   have hp : Complex.normSq (1 + Complex.I * (k : ℂ)) = 1 + k ^ 2 := by
-    simp [Complex.normSq_apply, pow_two]
+    simpa only [Complex.ofReal_one, one_pow, mul_comm Complex.I] using
+      Complex.normSq_add_mul_I 1 k
   have hm : Complex.normSq (1 - Complex.I * (k : ℂ)) = 1 + k ^ 2 := by
-    simp [Complex.normSq_apply, pow_two]
+    simpa only [Complex.ofReal_one, Complex.ofReal_neg, neg_mul, ← sub_eq_add_neg,
+      neg_sq, one_pow, mul_comm Complex.I] using Complex.normSq_add_mul_I 1 (-k)
   have hcalc : q * (1 + k ^ 2) / 4 = 1 := by
     rw [hk]
     field_simp [ne_of_gt hq]
     ring
   have hn (a : ℂ) (ha : Complex.normSq a = 1) : ‖a‖ = 1 := by
-    rw [Complex.normSq_eq_norm_sq] at ha
-    nlinarith [norm_nonneg a]
+    exact (sq_eq_sq₀ (norm_nonneg a) zero_le_one).mp
+      (by simpa only [Complex.sq_norm, one_pow] using ha)
   constructor
   · intro j
     fin_cases j
