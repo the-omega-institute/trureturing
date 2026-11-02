@@ -12,10 +12,6 @@ open scoped Interval ComplexConjugate
 
 namespace Reg.D5.S3.Analytic.LegendrePrimitiveGap
 
-private lemma legendre_zero : legendreC 0 = (1 : ℂ[X]) := by
-  ext k
-  cases k <;> simp [legendreC, Polynomial.coeff_shiftedLegendre, Polynomial.coeff_one]
-
 namespace Mixed
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
@@ -36,7 +32,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨1, (fun _ => 1)⟩, (fun _ => 0), (fun _ => 1), ?_⟩
-  norm_num [actual, realize, moment, expansion, legendre_zero]
+  norm_num [actual, realize, moment, expansion, legendreC, Polynomial.shiftedLegendre]
 def family : Registration arena (type_of% (@mixed_expansion)) where
   actual := actual
   bridge := Iff.rfl

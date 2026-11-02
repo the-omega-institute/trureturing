@@ -289,7 +289,7 @@ run_cmd do
     if name.toString.startsWith "D5.S3.Analytic.LegendrePrimitiveGap." ||
         name.toString.startsWith "_private.D5.S3.Analytic.LegendrePrimitiveGap." then
       let deps := info.type.getUsedConstants ++
-        ((info.value?.map Lean.Expr.getUsedConstants).getD #[])
+        (((info.value? true).map Lean.Expr.getUsedConstants).getD #[])
       let deps := deps.filter fun n => n.toString.startsWith "D5.S3.Analytic.PolynomialL2Derivative." ||
         n.toString.startsWith "_private.D5.S3.Analytic.PolynomialL2Derivative."
       unless deps.isEmpty do
