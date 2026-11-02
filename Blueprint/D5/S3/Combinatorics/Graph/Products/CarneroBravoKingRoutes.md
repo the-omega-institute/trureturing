@@ -246,7 +246,7 @@ $$\operatorname{card}\left(\operatorname{edgeFinset}\left(\operatorname{induce}\
 
 The range isomorphism transfers the exact edge cardinality to rectangle.induce(selected).
 
-Separate obligations remain: replay of the supplied 40 graph moves from the Adamaszek seed with the actual ambient edges, identification of prescribed subdivisions with genuine suspension moves, transport of the torsion class through those moves, and application of the finite-chain/singular-homology comparison and sphere-wedge torsion obstruction. The large routing certificate supplies none of those homology conclusions as an assumption.
+The routing module leaves separate homological obligations: replay of the supplied 40 graph moves from the Adamaszek seed with the actual ambient edges, identification of prescribed subdivisions with genuine suspension moves, transport of the torsion class through those moves, and application of the finite-chain/singular-homology comparison and sphere-wedge torsion obstruction. KingFinalComposition discharges these obligations. The large routing certificate supplies none of those homology conclusions as an assumption.
 
 ## References
 

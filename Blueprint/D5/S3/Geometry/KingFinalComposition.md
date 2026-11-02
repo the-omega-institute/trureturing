@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Geometry/KingFinalComposition.result`
 
 *Commentary.*
 
-The claim quantifies over every pair of positive path orders and every nonempty induced set, with the original sourceSP alternatives. The actual selected nonempty graph refutes that universal statement.
+The claim quantifies over every pair of positive path orders and every nonempty induced set, with the original sourceSP alternatives. The actual selected nonempty graph refutes that universal statement. The claim and result retain their arbitrary sphere-index universe parameter. The utility header separately enrolls their closed universe-zero instance as utilityClaim and utilityRefutation; that administrative enrollment adds no mathematical contribution and does not establish the full arbitrary-family scope, which is supplied by the unchanged polymorphic result.
 
 **Theorem 1.8 (Question 32).**
 
