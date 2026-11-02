@@ -6,7 +6,8 @@
    utility: none
    digest: Cyclic shifts give the second family in every dimension. -/
 
-import Mathlib
+import Mathlib.Data.ZMod.Basic
+import Mathlib.LinearAlgebra.Matrix.Permutation
 
 /-! The cyclic construction and its defining certificate. -/
 
@@ -14,38 +15,38 @@ set_option autoImplicit false
 open scoped BigOperators ComplexConjugate
 open Matrix
 
-namespace D5.S3.Quantum.Entanglement.BoundEntanglement
+namespace D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
 
 noncomputable section
 
-def multiplicity {d : ℕ} (S : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
+def multiplicity {d : ℕ} (a : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
     (m : Fin d) : ℕ :=
-  Fintype.card {p : Fin d × Fin d // S p.1 p.2 ≠ 0 ∧ μ p.1 p.2 = m}
+  Fintype.card {p : Fin d × Fin d // a p.1 p.2 ≠ 0 ∧ μ p.1 p.2 = m}
 
-def tVec {d : ℕ} (S : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
+def tVec {d : ℕ} (a : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
     (m : Fin d) : Fin d × Fin d → ℂ := fun p =>
-  if S p.1 p.2 ≠ 0 ∧ μ p.1 p.2 = m then
-    (S p.1 p.2 : ℂ) / Real.sqrt d
+  if a p.1 p.2 ≠ 0 ∧ μ p.1 p.2 = m then
+    (a p.1 p.2 : ℂ) / Real.sqrt d
   else 0
 
 def partialTransposeB {d : ℕ}
-    (M : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
+    (a : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
     Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
-  fun p q => M (p.1, q.2) (q.1, p.2)
+  fun p q => a (p.1, q.2) (q.1, p.2)
 
-def IsSecondFamilyData (d : ℕ) (Q : Fin d → Matrix (Fin d) (Fin d) ℝ)
+def IsSecondFamilyData (d : ℕ) (q : Fin d → Matrix (Fin d) (Fin d) ℝ)
     (qbar : Fin d → Fin d → ℝ) (μ : Fin d → Fin d → Fin d)
-    (S : Fin d → Fin d → ℝ) (s : Fin d → Fin d × Fin d → ℂ) : Prop :=
-  (∀ j, (Q j)ᵀ * Q j = 1) ∧
+    (a : Fin d → Fin d → ℝ) (s : Fin d → Fin d × Fin d → ℂ) : Prop :=
+  (∀ j, (q j)ᵀ * q j = 1) ∧
   (∀ m n, ∑ k, qbar m k * qbar n k = if m = n then 1 else 0) ∧
-  (∀ i j k, Q k i j = S i j * qbar (μ i j) k) ∧
-  (∀ i j, S i j ≠ 0 → S i j ^ 2 = (d : ℝ) / multiplicity S μ (μ i j)) ∧
+  (∀ i j k, q k i j = a i j * qbar (μ i j) k) ∧
+  (∀ i j, a i j ≠ 0 → a i j ^ 2 = (d : ℝ) / multiplicity a μ (μ i j)) ∧
   (∀ m n, ∑ x, star (s m x) * s n x = if m = n then 1 else 0) ∧
   partialTransposeB (∑ m, Matrix.vecMulVec (s m) (star (s m))) =
-    ∑ m, Matrix.vecMulVec (tVec S μ m) (star (tVec S μ m))
+    ∑ m, Matrix.vecMulVec (tVec a μ m) (star (tVec a μ m))
 
 def claim : Prop :=
-  ∀ d : ℕ, 2 ≤ d → ∃ Q qbar μ S s, IsSecondFamilyData d Q qbar μ S s
+  ∀ d : ℕ, 2 ≤ d → ∃ q qbar μ a s, IsSecondFamilyData d q qbar μ a s
 
 private def cyclicShift (d : ℕ) (k i : Fin d) : Fin d :=
   if h : 0 < d then
@@ -161,12 +162,48 @@ private theorem cyclic_qbar_orthonormal (d : ℕ) :
     simp [cyclicQbar, hmn, hnm]
 
 private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
-    ∀ m n, ∑ x, star (cyclicShield d m x) * cyclicShield d n x = if m = n then 1 else 0 := by sorry
+    ∀ m n, ∑ x, star (cyclicShield d m x) * cyclicShield d n x = if m = n then 1 else 0 := by
+  classical
+  have hp : 0 < d := by omega
+  letI : NeZero d := ⟨Nat.ne_of_gt hp⟩
+  intro m n
+  have hi (i : Fin d) :
+      (∑ j : Fin d, star (cyclicShield d m (i, j)) * cyclicShield d n (i, j)) =
+        if m = n then ((Real.sqrt d : ℂ)⁻¹) ^ 2 else 0 := by
+    change (∑ j : Fin d,
+      star (if i + j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
+        (if i + j = n then (Real.sqrt d : ℂ)⁻¹ else 0)) = _
+    rw [(Equiv.addLeft i).sum_comp (fun j : Fin d =>
+      star (if j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
+        (if j = n then (Real.sqrt d : ℂ)⁻¹ else 0))]
+    by_cases hmn : m = n
+    · subst n
+      simp [← pow_two]
+    · simp [hmn, Ne.symm hmn]
+  rw [Fintype.sum_prod_type]
+  simp_rw [hi]
+  have hs : (Real.sqrt d : ℂ) ^ 2 = (d : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg d)
+  have hd : (d : ℂ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hp
+  by_cases hmn : m = n <;> simp [hmn, ← inv_pow, hs, hd]
 
 private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
     partialTransposeB (∑ m, Matrix.vecMulVec (cyclicShield d m) (star (cyclicShield d m))) =
       ∑ m, Matrix.vecMulVec (tVec (cyclicS d) (cyclicMu d) m)
-        (star (tVec (cyclicS d) (cyclicMu d) m)) := by sorry
+        (star (tVec (cyclicS d) (cyclicMu d) m)) := by
+  classical
+  have hp : 0 < d := by omega
+  letI : NeZero d := ⟨Nat.ne_of_gt hp⟩
+  have hmu (i j : Fin d) : cyclicMu d i j = j - i := by
+    apply (ZMod.finEquiv d).injective
+    simp [cyclicMu, hp]
+  apply Matrix.ext
+  intro p q
+  have heq : q.1 + p.2 = p.1 + q.2 ↔ q.2 - q.1 = p.2 - p.1 := by
+    rw [sub_eq_sub_iff_add_eq_add]
+    constructor <;> intro hh <;> simpa only [add_comm] using hh.symm
+  simp [partialTransposeB, Matrix.sum_apply, Matrix.vecMulVec_apply,
+    cyclicShield, tVec, cyclicS, hmu, ite_mul, mul_ite, heq]
 
 private theorem cyclic_data (d : ℕ) (h : 2 ≤ d) :
     IsSecondFamilyData d (cyclicQ d) (cyclicQbar d) (cyclicMu d) (cyclicS d)
@@ -184,4 +221,4 @@ theorem result : claim := by
     cyclic_data d hd⟩
 
 end
-end D5.S3.Quantum.Entanglement.BoundEntanglement
+end D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
