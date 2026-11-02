@@ -713,9 +713,8 @@ private theorem pure_twirl {d : ℕ} [NeZero d] :
   · subst d
     have hy : (Matrix.single (0, 0) (0, 0) (1 : ℂ) :
         Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) = 1 := by
-      ext a b
-      simp [Matrix.single, Matrix.one_apply, Subsingleton.elim a (0, 0),
-        Subsingleton.elim b (0, 0)]
+      simpa only [Fintype.sum_prod_type, Fin.sum_univ_one] using
+        (Matrix.sum_single_one (m := Fin 1 × Fin 1) (α := ℂ))
     rw [hy, haarAverage_identity_fixed]
     ext r
     simp [Matrix.vec, Matrix.one_apply, Equiv.Perm.permMatrix, Subsingleton.elim r.1 (0, 0),
@@ -739,7 +738,7 @@ private theorem pure_twirl {d : ℕ} [NeZero d] :
       eq_comm, and_comm]
   have hss : s * s = 1 := by
     have hh : Equiv.prodComm (Fin d) (Fin d) * Equiv.prodComm (Fin d) (Fin d) =
-        (1 : Equiv.Perm (Fin d × Fin d)) := by ext r <;> rfl
+        (1 : Equiv.Perm (Fin d × Fin d)) := Equiv.prodComm_trans_prodComm _ _
     simp [s, ← Matrix.permMatrix_mul, hh]
   have hts : s.trace = (d : ℂ) := by
     simp only [s, Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
