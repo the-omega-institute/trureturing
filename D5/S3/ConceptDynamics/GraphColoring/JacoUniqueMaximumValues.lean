@@ -4,10 +4,12 @@
    mirror-E: none(waiver:structural-proof)
    anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree]
    utility: none
-   digest: Positive maximum-degree values unique across all recursive Jaco orders and their infinite realizing family. -/
+   digest: Unique positive Jaco degree values and one infinite realizing family. -/
 
 import D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree
 import Mathlib.NumberTheory.Rayleigh
+
+/-! All-order degree fibers, positive Beatty complements, and the complete indexed family. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -39,7 +41,8 @@ private theorem split (q : ℤ) : B q = q + C q := by
     rw [one_div, Real.inv_goldenRatio]
     linarith [Real.goldenRatio_add_goldenConj]
   have he : (q : ℝ) * Real.goldenRatio = (q : ℝ) / Real.goldenRatio + q := by
-    rw [hp]; ring
+    conv_lhs => rw [hp]
+    ring
   unfold B C
   rw [he, Int.floor_add_intCast]
   omega
@@ -62,13 +65,16 @@ private theorem B_lower (q : ℤ) (hq : 2 ≤ q) : 3 ≤ B q := by
     have hn := Real.sqrt_nonneg 5
     rw [Real.goldenRatio]
     nlinarith
-  nlinarith [Real.one_lt_goldenRatio]
+  have hm := mul_le_mul_of_nonneg_right hq' Real.goldenRatio_pos.le
+  exact hp.le.trans hm
 
 private theorem degree_floor (n : ℕ) (hn : 2 ≤ n) :
     ((jaco n).maxDegree : ℤ) = ⌊((n : ℝ) + 2) / Real.goldenRatio⌋ - 1 := by
   have h := ((D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree.result).1 n hn).1
   have he : 2 * ((n : ℝ) + 2) / (1 + Real.sqrt 5) =
-      ((n : ℝ) + 2) / Real.goldenRatio := by rw [Real.goldenRatio]; ring
+      ((n : ℝ) + 2) / Real.goldenRatio := by
+    simp only [Real.goldenRatio, div_eq_mul_inv, mul_inv_rev, inv_inv]
+    ring
   rw [he] at h
   have hf : 1 ≤ ⌊((n : ℝ) + 2) / Real.goldenRatio⌋₊ := by
     apply (Nat.le_floor_iff (by positivity)).mpr
@@ -111,14 +117,18 @@ private theorem fiber (k : ℤ) (hk : 1 ≤ k) (n : ℕ) (hn : 2 ≤ n) :
     ((jaco n).maxDegree : ℤ) = k ↔
       B (k + 1) - 1 ≤ (n : ℤ) ∧ (n : ℤ) ≤ B (k + 2) - 2 := by
   rw [degree_floor n hn]
-  have := inverse_floor (k + 1) (by omega) n
-  convert this using 1 <;> omega
+  have hi := inverse_floor (k + 1) (by omega) n
+  rw [show k + 1 + 1 = k + 2 by ring] at hi
+  constructor
+  · intro h; exact hi.mp (by omega)
+  · intro h; have := hi.mpr h; omega
 
 private theorem unique_iff_jump (k : ℤ) (hk : 1 ≤ k) :
     UniqueValue k ↔ C (k + 2) = C (k + 1) := by
   have hb := B_lower (k + 1) (by omega)
   have hs := B_step (k + 1)
-  have hs' : B (k + 1) + 1 ≤ B (k + 2) := by convert hs using 1 <;> ring
+  have hs' : B (k + 1) + 1 ≤ B (k + 2) := by
+    simpa only [add_assoc, show (1 : ℤ) + 1 = 2 by norm_num] using hs
   let n := (B (k + 1) - 1).toNat
   have hn : (n : ℤ) = B (k + 1) - 1 := Int.toNat_of_nonneg (by omega)
   have hn2 : 2 ≤ n := by omega
@@ -144,8 +154,6 @@ private theorem unique_iff_jump (k : ℤ) (hk : 1 ≤ k) :
 private theorem lower_hit (q : ℤ) (hq : 2 ≤ q) :
     (∃ t : ℤ, 0 < t ∧ beattySeq Real.goldenRatio t = q) ↔ C q < C (q + 1) := by
   have hp := Real.goldenRatio_pos
-  have hi : (q : ℝ) / Real.goldenRatio ≠ (C q : ℝ) :=
-    (Real.goldenRatio_irrational.intCast_div (by omega : q ≠ 0)).ne_int _
   constructor
   · rintro ⟨t, ht, he⟩
     have hf := Int.floor_eq_iff.mp he
@@ -163,6 +171,7 @@ private theorem lower_hit (q : ℤ) (hq : 2 ≤ q) :
   · intro h
     let t := C (q + 1)
     have htpos : 0 < t := by
+      have hqr : (0 : ℝ) ≤ q := by exact_mod_cast (by omega : 0 ≤ q)
       have h0 : 0 ≤ C q := Int.floor_nonneg.mpr (by positivity)
       dsimp [t]; omega
     refine ⟨t, htpos, ?_⟩
@@ -182,14 +191,14 @@ private theorem upper_complement (q : ℤ) (hq : 2 ≤ q) :
     refine ⟨Real.one_lt_goldenRatio, ?_⟩
     have hp := Real.goldenRatio_pos.ne'
     have hs := Real.goldenRatio_sq
-    field_simp
-    nlinarith
+    field_simp [hp]
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
   have partition := Irrational.beattySeq_symmDiff_beattySeq_pos hc Real.goldenRatio_irrational
   have hmem : q ∈ {beattySeq Real.goldenRatio t | t > 0} ∆
         {beattySeq (Real.goldenRatio ^ 2) t | t > 0} := by
     rw [partition]
     exact (by omega : 0 < q)
-  simp only [Set.mem_symmDiff, Set.mem_setOf_eq] at hmem
+  simp only [Set.mem_symmDiff, Set.mem_ofPred_eq] at hmem
   have hm := C_mono (show q ≤ q + 1 by omega)
   have hh := lower_hit q hq
   rcases hmem with ⟨hl, hnu⟩ | ⟨hu, hnl⟩
@@ -209,7 +218,7 @@ private theorem classification (k : ℤ) (hk : 1 ≤ k) :
   have h := upper_complement (k + 1) (by omega)
   constructor
   · intro hc
-    obtain ⟨t, ht, he⟩ := h.mp (by simpa using hc)
+    obtain ⟨t, ht, he⟩ := h.mp (by simpa only [add_assoc, show (1 : ℤ) + 1 = 2 by norm_num] using hc)
     refine ⟨t.toNat, by omega, ?_⟩
     have htcast : ((t.toNat : ℕ) : ℤ) = t := Int.toNat_of_nonneg (by omega)
     have hr : (t.toNat : ℝ) = t := by exact_mod_cast htcast
@@ -222,15 +231,17 @@ private theorem classification (k : ℤ) (hk : 1 ≤ k) :
       dsimp [beattySeq, sequenceValue] at *
       push_cast
       omega⟩
-    simpa using this
+    simpa only [add_assoc, show (1 : ℤ) + 1 = 2 by norm_num] using this
 
 private theorem sequence_positive (t : ℕ) (ht : 1 ≤ t) : 1 ≤ sequenceValue t := by
   have hf : 2 ≤ ⌊(t : ℝ) * Real.goldenRatio ^ 2⌋ := by
     apply Int.le_floor.mpr
     have htr : (1 : ℝ) ≤ t := by exact_mod_cast ht
-    have hp := Real.one_lt_goldenRatio
-    have hs := Real.goldenRatio_sq
-    nlinarith
+    have hm := mul_le_mul_of_nonneg_right htr (sq_nonneg Real.goldenRatio)
+    have htwo : (2 : ℝ) ≤ Real.goldenRatio ^ 2 := by
+      rw [Real.goldenRatio_sq]
+      linarith [Real.one_lt_goldenRatio]
+    exact htwo.trans (by simpa only [one_mul] using hm)
   dsimp [sequenceValue]
   omega
 
@@ -250,7 +261,7 @@ private theorem realizing (t : ℕ) (ht : 1 ≤ t) :
   have hn2 : 2 ≤ realizingOrder t := by omega
   have hs := B_step (sequenceValue t + 1)
   have hs' : B (sequenceValue t + 1) + 1 ≤ B (sequenceValue t + 2) := by
-    convert hs using 1 <;> ring
+    simpa only [add_assoc, show (1 : ℤ) + 1 = 2 by norm_num] using hs
   have hd : ((jaco (realizingOrder t)).maxDegree : ℤ) = sequenceValue t :=
     (fiber _ hk _ hn2).mpr (by omega)
   refine ⟨hn2, hk, hd, ?_⟩
@@ -267,7 +278,7 @@ private theorem realizing (t : ℕ) (ht : 1 ≤ t) :
         have ha := Finset.mem_Icc.mp a.2
         have hb := Finset.mem_Icc.mp b.2
         omega⟩
-      exact SimpleGraph.maxDegree_of_subsingleton
+      exact SimpleGraph.maxDegree_of_subsingleton (jaco 1)
     rw [hzero] at hdm
     omega
 
