@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff5fc6a86433ca293d6b1baf71ba4a18bd7e1ee85c6e3f05bcbe7c210cad8dbd
+  normalized_sha256: sha256:ff5fc6a86433ca293d6b1baf71ba4a18bd7e1ee85c6e3f05bcbe7c210cad8dbd
+cas_ref: sha256:ff5fc6a86433ca293d6b1baf71ba4a18bd7e1ee85c6e3f05bcbe7c210cad8dbd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic record B1/R1/R2/K1/B2/G1 with pinned versions and stated applicability. External-paper statements remain cited inputs rather than Lean proof. K1 includes nonnegative modular weights with a nonnegative constant at the empty set; B2 scalar transforms requiring g(0)=0 have their separate boundary; G1 retains dimension and orthogonal-additivity hypotheses.
+    previous_atom_id: b4df526f92ede1b58d79c0b916f28f78e956afffe6afc0ea185e95885da8c93e
+    next_atom_id: null
