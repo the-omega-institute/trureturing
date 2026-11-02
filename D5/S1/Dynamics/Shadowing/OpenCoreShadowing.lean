@@ -129,11 +129,6 @@ theorem sourceDynamics_semiconj {T : Type*} (p : T → OnePoint ℕ) (a : Binary
   intro z
   cases z <;> rfl
 
-theorem sourceDynamics_core_image {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName)
-    (z : FibrePullback p (firstDifference a) ⊕ BinaryName) :
-    sourceDynamics p a z = Sum.inr (sourceObservation p a z) := by
-  cases z <;> rfl
-
 theorem sourceObservation_surjective {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName) :
     Function.Surjective (sourceObservation p a) := by
   intro s
