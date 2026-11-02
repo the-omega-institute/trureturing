@@ -16,10 +16,16 @@ proof_shape: localPermutation_gram: bind-only; consumer: gate_mixed_rule.
 proof_shape: local_identity_fixed: bind-only; consumer: gate_mixed_rule.
 proof_shape: local_swap_fixed: bind-only; consumer: gate_mixed_rule.
 proof_shape: gate_mixed_rule: content.
-proof_shape: haarAverage_identity_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
-proof_shape: haarAverage_swap_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlSwapTrace.
-proof_shape: haarAverage_image_span: bind-only; consumer: CHaarConcatenationNonmonotone.twirlFormula.
-proof_shape: hermitian_fixed_pairing: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
+proof_shape: haarAverage_identity_fixed: bind-only; consumer: twirlTrace.
+proof_shape: haarAverage_swap_fixed: bind-only; consumer: twirlSwapTrace.
+proof_shape: haarAverage_image_span: bind-only; consumer: twirlFormula.
+proof_shape: hermitian_fixed_pairing: bind-only; consumer: twirlTrace.
+proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace, WernerTesterIncompleteness.swap_projection.
+proof_shape: swapSquare: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.swap_projection.
+proof_shape: traceSwap: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.
+proof_shape: twirlTrace: bind-only; consumer: twirlFormula.
+proof_shape: twirlSwapTrace: bind-only; consumer: twirlFormula.
+proof_shape: twirlFormula: bind-only; consumers: pure_twirl, CHaarConcatenationNonmonotone.haarAverageEntry.
 proof_shape: literalMoment_integrable: bind-only; consumer: CHaarConcatenationNonmonotone.momentOp2HaarEntries.
 proof_shape: literalMoment_vectorize: bind-only; consumer: haarAverage_identity_fixed.
 proof_shape: Commutant.replicaSwap_apply: bind-only; consumer: CHaarConcatenationNonmonotone.moment22Reindex.
@@ -702,6 +708,80 @@ theorem trace_one_sandwich {d : ℕ} (p x : Matrix (Fin d) (Fin d) ℂ)
     exact ht.symm
   simpa only [hcval] using hmat
 
+section
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
+  ext ⟨a,b⟩ ⟨c,d⟩
+  simp only [Matrix.conjTranspose_apply, Prod.swap_prod_mk, Prod.mk.injEq]
+  simp [and_comm, eq_comm]
+
+theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
+  have h : Equiv.prodComm n n * Equiv.prodComm n n = (1 : Equiv.Perm (n×n)) := by
+    ext x <;> rfl
+  simp [← Matrix.permMatrix_mul, h]
+
+theorem traceSwap : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) = (Fintype.card n : ℂ) := by
+  simp only [Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
+  simp [Prod.ext_iff, eq_comm]
+
+private theorem twirlTrace (Y : Matrix (n×n) (n×n) ℂ) :
+    Matrix.trace (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = Matrix.trace Y := by
+  have h := hermitian_fixed_pairing (haarAverage n) haarAverage_hermitian
+    (Matrix.vec (1 : Matrix (n×n) (n×n) ℂ)) (Matrix.vec Y) haarAverage_identity_fixed
+  have hv : Matrix.vec (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = (haarAverage n).mulVec (Matrix.vec Y) := by rfl
+  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec] at h
+  simpa using h
+
+private theorem twirlSwapTrace (Y : Matrix (n×n) (n×n) ℂ) :
+    Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) := by
+  have h := hermitian_fixed_pairing (haarAverage n) haarAverage_hermitian
+    (Matrix.vec ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)))) (Matrix.vec Y) haarAverage_swap_fixed
+  have hv : Matrix.vec (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = (haarAverage n).mulVec (Matrix.vec Y) := by rfl
+  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec,
+      swapHermitian.eq] at h
+  exact h
+
+theorem twirlFormula (Y : Matrix (n×n) (n×n) ℂ) (hN : 2 ≤ Fintype.card n) :
+    Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap)) =
+      ((Matrix.trace Y - Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) / (Fintype.card n : ℂ)) /
+        ((Fintype.card n : ℂ)^2 - 1)) • (1 : Matrix (n×n) (n×n) ℂ) +
+      ((Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) - Matrix.trace Y / (Fintype.card n : ℂ)) /
+        ((Fintype.card n : ℂ)^2 - 1)) • (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
+  letI : Nontrivial n := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  obtain ⟨a,b,hab⟩ := exists_pair_ne n
+  obtain ⟨x,y,hxy⟩ := haarAverage_image_span (Matrix.vec Y) a b hab
+  have hv : Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap)) = x • (1 : Matrix (n×n) (n×n) ℂ) + y • (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
+    ext r c
+    change ((haarAverage n).mulVec (Matrix.vec Y)) (c,r) = _
+    exact congrFun hxy (c,r)
+  have h0 := twirlTrace Y
+  have h1 := twirlSwapTrace Y
+  rw [hv, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
+      Matrix.trace_one, traceSwap] at h0
+  rw [hv, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
+      swapSquare, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
+      traceSwap, Matrix.trace_one] at h1
+  simp only [Fintype.card_prod, Nat.cast_mul, smul_eq_mul] at h0 h1
+  have hn : (Fintype.card n : ℂ) ≠ 0 := by exact_mod_cast (show Fintype.card n ≠ 0 by omega)
+  have hden : (Fintype.card n : ℂ)^2 - 1 ≠ 0 := by
+    have hi : (2 : ℤ) ≤ Fintype.card n := by exact_mod_cast hN
+    have hz : (Fintype.card n : ℤ)^2 - 1 ≠ 0 := by nlinarith
+    exact_mod_cast hz
+  have hx : x = (Matrix.trace Y - Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) / (Fintype.card n : ℂ)) /
+      ((Fintype.card n : ℂ)^2 - 1) := by
+    rw [← h0, ← h1]
+    field_simp [hn, hden]
+    <;> ring
+  have hy : y = (Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) - Matrix.trace Y / (Fintype.card n : ℂ)) /
+      ((Fintype.card n : ℂ)^2 - 1) := by
+    rw [← h0, ← h1]
+    field_simp [hn, hden]
+    <;> ring
+  rw [hv, hx, hy]
+
+end
+
 private theorem pure_twirl {d : ℕ} [NeZero d] :
     (haarAverage (Fin d)).mulVec
         (Matrix.vec (Matrix.single (0, 0) (0, 0) (1 : ℂ))) =
@@ -720,61 +800,27 @@ private theorem pure_twirl {d : ℕ} [NeZero d] :
     simp [Matrix.vec, Matrix.one_apply, Equiv.Perm.permMatrix, Subsingleton.elim r.1 (0, 0),
       Subsingleton.elim r.2 (0, 0)]
   have hd2 : 2 ≤ d := by have := NeZero.ne d; omega
-  let a : Fin d := ⟨0, by omega⟩
-  let b : Fin d := ⟨1, by omega⟩
-  have hab : a ≠ b := by intro h; have := congrArg Fin.val h; simp [a, b] at this
-  let y : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
-    Matrix.single (0, 0) (0, 0) 1
-  let s := Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))
-  let w : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
-    Matrix.of (Function.curry (((haarAverage (Fin d)).mulVec (Matrix.vec y)) ∘ Prod.swap))
-  obtain ⟨α, β, hspan⟩ := haarAverage_image_span (Matrix.vec y) a b hab
-  have hw : w = α • 1 + β • s := by
-    ext r c
-    exact congrFun hspan (c, r)
-  have hs : s.IsHermitian := by
-    ext r c
-    simp [s, Matrix.conjTranspose_apply, Equiv.Perm.permMatrix, Prod.ext_iff,
-      eq_comm, and_comm]
-  have hss : s * s = 1 := by
-    have hh : Equiv.prodComm (Fin d) (Fin d) * Equiv.prodComm (Fin d) (Fin d) =
-        (1 : Equiv.Perm (Fin d × Fin d)) := Equiv.prodComm_trans_prodComm _ _
-    simp [s, ← Matrix.permMatrix_mul, hh]
-  have hts : s.trace = (d : ℂ) := by
-    simp only [s, Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
-    simp [Equiv.Perm.permMatrix, Prod.ext_iff, eq_comm]
-  have hv : Matrix.vec w = (haarAverage (Fin d)).mulVec (Matrix.vec y) :=
-    vec_unvectorize _
-  have ht := hermitian_fixed_pairing (haarAverage (Fin d)) haarAverage_hermitian
-    (Matrix.vec (1 : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ))
-    (Matrix.vec y) haarAverage_identity_fixed
-  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec] at ht
-  have ht0 : w.trace = 1 := by simpa [y] using ht
-  have ht' := hermitian_fixed_pairing (haarAverage (Fin d)) haarAverage_hermitian
-    (Matrix.vec s) (Matrix.vec y) haarAverage_swap_fixed
-  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec,
-    hs.eq] at ht'
-  have ht1 : (s * w).trace = 1 := by
-    simpa [y, s, Matrix.trace_mul_single, Equiv.Perm.permMatrix] using ht'
-  rw [hw, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
-    Matrix.trace_one, hts] at ht0
-  rw [hw, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
-    hss, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, hts,
-    Matrix.trace_one] at ht1
-  simp only [Fintype.card_prod, Fintype.card_fin, Nat.cast_mul, smul_eq_mul] at ht0 ht1
+  have h := twirlFormula (Matrix.single (0, 0) (0, 0) (1 : ℂ) :
+    Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (by simpa only [Fintype.card_fin] using hd2)
   have hn : (d : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne d
-  have hn1 : (d + 1 : ℂ) ≠ 0 := by exact_mod_cast (show d + 1 ≠ 0 by omega)
   have hnm1 : (d - 1 : ℂ) ≠ 0 := by
     exact_mod_cast (show (d : ℤ) - 1 ≠ 0 by omega)
-  have hα : α = 1 / ((d : ℂ) * (d + 1)) := by
-    field_simp
-    apply mul_left_cancel₀ hnm1
-    linear_combination ht0 * (d : ℂ) - ht1
-  have hβ : β = 1 / ((d : ℂ) * (d + 1)) := by
-    field_simp
-    apply mul_left_cancel₀ hnm1
-    linear_combination ht1 * (d : ℂ) - ht0
-  rw [hspan, hα, hβ, smul_add]
+  have hn1 : (d + 1 : ℂ) ≠ 0 := by exact_mod_cast (show d + 1 ≠ 0 by omega)
+  have hden : (d : ℂ) ^ 2 - 1 ≠ 0 := by
+    have he : (d : ℂ) ^ 2 - 1 = (d - 1) * (d + 1) := by ring
+    rw [he]
+    exact mul_ne_zero hnm1 hn1
+  have hc : (1 - 1 / (d : ℂ)) / ((d : ℂ) ^ 2 - 1) =
+      1 / ((d : ℂ) * (d + 1)) := by
+    field_simp [hn, hn1, hden]
+    <;> ring
+  have ht : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))) *
+      (Matrix.single (0, 0) (0, 0) (1 : ℂ))) = 1 := by
+    simp [Matrix.trace_mul_single, Equiv.Perm.permMatrix]
+  simp only [Matrix.trace_single_eq_same, ht, Fintype.card_fin, hc] at h
+  have hv := congrArg Matrix.vec h
+  rw [Matrix.vec_add, Matrix.vec_smul, Matrix.vec_smul, ← smul_add] at hv
+  exact hv
 
 private theorem pure_tensor_integral {d : ℕ} [NeZero d] :
     (∫ u : Matrix.unitaryGroup (Fin d) ℂ,

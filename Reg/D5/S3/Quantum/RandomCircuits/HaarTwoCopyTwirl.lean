@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the trace of the tensor-factor swap. -/
 
-namespace Reg.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
+namespace Reg.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
-open _root_.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
+open _root_.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
@@ -65,11 +65,11 @@ def source_registration : Registration arena.{u} (type_of% @traceSwap.{u}) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap.{u})
+      (@_root_.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.traceSwap.{u})
       (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap.unit
+  unitName := `Reg.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.traceSwap.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.source_registration
+    `Reg.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -85,7 +85,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
+    owner := `D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -102,4 +102,4 @@ def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
+end Reg.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
