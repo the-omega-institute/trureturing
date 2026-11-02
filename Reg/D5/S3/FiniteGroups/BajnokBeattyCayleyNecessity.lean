@@ -349,4 +349,152 @@ def squareRegistration :
   familyRecord := none
   options := #[] }
 
+
+abbrev sumDiffInjectionSignature : Signature where
+  Params := Unit
+  State _ := Plane
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Plane
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def sumDiffInjectionActual : Realization sumDiffInjectionSignature := realize sumDiffInjectionSignature
+  (fun _ _ z => sumDiff z) (fun e => nomatch e)
+noncomputable def sumDiffInjectionRejected : Realization sumDiffInjectionSignature := realize sumDiffInjectionSignature
+  (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sumDiffInjectionArena : Arena where
+  signature := sumDiffInjectionSignature
+  Law R := Function.Injective (fun z => R.readout () () z)
+private theorem sumDiffInjectionRejected_law : ¬ sumDiffInjectionArena.Law sumDiffInjectionRejected := by
+  intro h
+  have hh := h (a₁ := (0 : Plane)) (a₂ := ![1,0]) rfl
+  have hh0 := congrFun hh 0
+  norm_num at hh0
+noncomputable def sumDiffInjectionSource : Registration sumDiffInjectionArena (type_of% (@sumDiff_injective)) where
+  actual := sumDiffInjectionActual
+  bridge := Iff.rfl
+  variation := ⟨sumDiff_injective, sumDiffInjectionRejected, sumDiffInjectionRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨sumDiffInjectionRejected, ?_, rfl, sumDiffInjectionRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(),0,![1,0],?_⟩
+    intro h
+    have he := sumDiff_injective h
+    have hh := congrFun he 0
+    change (0 : ℤ) = 1 at hh
+    norm_num at hh
+noncomputable def sumDiffInjectionRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@sumDiff_injective) (Realization sumDiffInjectionSignature) Unit Unit := {
+  unitName := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.sumDiff_injective.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.sumDiffInjectionSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sumDiffInjectionArena⟩
+  objectArena := .source ⟨sumDiffInjectionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sumDiffInjectionArena ⟨sumDiffInjectionSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sumDiffInjectionSignature (fun _ _ z => sumDiff z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+abbrev sumDiffRangeIndexSignature : Signature where
+  Params := Unit
+  State _ := Submodule ℤ Plane
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def sumDiffRangeIndexActual : Realization sumDiffRangeIndexSignature := realize sumDiffRangeIndexSignature
+  (fun _ _ K => K.toAddSubgroup.index) (fun e => nomatch e)
+noncomputable def sumDiffRangeIndexRejected : Realization sumDiffRangeIndexSignature := realize sumDiffRangeIndexSignature
+  (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sumDiffRangeIndexArena : Arena where
+  signature := sumDiffRangeIndexSignature
+  Law R := R.readout () () sumDiff.range = 2
+private theorem sumDiffRangeIndexRejected_law : ¬ sumDiffRangeIndexArena.Law sumDiffRangeIndexRejected := by
+  intro h
+  norm_num [sumDiffRangeIndexRejected,realize] at h
+noncomputable def sumDiffRangeIndexSource : Registration sumDiffRangeIndexArena (type_of% (@sumDiff_index)) where
+  actual := sumDiffRangeIndexActual
+  bridge := Iff.rfl
+  variation := ⟨sumDiff_index, sumDiffRangeIndexRejected, sumDiffRangeIndexRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨sumDiffRangeIndexRejected, ?_, rfl, sumDiffRangeIndexRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(),⊤,sumDiff.range,?_⟩
+    change (⊤ : Submodule ℤ Plane).toAddSubgroup.index ≠ sumDiff.range.toAddSubgroup.index
+    rw [sumDiff_index]
+    change (⊤ : AddSubgroup Plane).index ≠ 2
+    simp
+noncomputable def sumDiffRangeIndexRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@sumDiff_index) (Realization sumDiffRangeIndexSignature) Unit Unit := {
+  unitName := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.sumDiff_index.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity.sumDiffRangeIndexSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sumDiffRangeIndexArena⟩
+  objectArena := .source ⟨sumDiffRangeIndexArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sumDiffRangeIndexArena ⟨sumDiffRangeIndexSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sumDiffRangeIndexSignature (fun _ _ K => K.toAddSubgroup.index) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn","arg","arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyNecessity
