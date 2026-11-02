@@ -2746,3 +2746,274 @@ the literature. These are conditional paper deductions, without Lean compilation
 or physical verification.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 50. Original-interval anchoring outside a three-direction short core
+
+**定义 50.1（Successive minima and fixed reduction constants）。** Retain exactly the single dimension-four original table, all labelled binary and ternary menus, zero and repeated effects, and its original tomography matrix $H$ from [Part I, Definition 16.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md). Write $R=\mathbb Z[i]$ and $e(X)=p(X)-\operatorname{Tr}(HX)$. Let $\mathcal S_4$ denote the integral matrices expressible as finite sums of $vv^*$ with $v\in R^4$, including the empty sum. For $B\succ0$ integral, define the squared complex successive minima
+
+$$
+\mu_j(B)=\min\left\{t:\text{there are }j\text{ complex-linearly independent }v_a\in R^4
+\text{ with }v_a^*Bv_a\le t\right\},\qquad 1\le j\le4.
+\tag{50.1}
+$$
+
+Fix an integer $\tau\ge5$ at least the threshold $G_{\mathbb Q(i)}(4)$ in Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1). Thus $\mu_1(F)\ge\tau$ implies $F\in\mathcal S_4$ for every positive-definite integral $F$. Their Proposition 2.3, Lemma 3.3 and equations (3.1)--(3.2), in the fixed field and rank, also give constants $\alpha,c\ge1$ such that every $B$ has a basis $V\in\operatorname{GL}_4(R)$ with
+
+$$
+ V^*BV=X^*\operatorname{diag}(h_1,h_2,h_3,h_4)X,
+ \quad h_1=\mu_1(B),\quad
+ h_i\le\alpha h_j\ (i<j),
+ \quad |X_{ij}|,|(X^{-1})_{ij}|\le c.
+\tag{50.2}
+$$
+
+Here $X$ is upper triangular unipotent and $h_i>0$. Only this established fixed-rank reduction and the established large-minimum representation theorem are used from that paper. Set
+
+$$
+\begin{aligned}
+ L&=64\alpha c^2\tau,& K&=2c^2L,& M&=3c^2L,\\
+ N_c&=4\tau^2L^2+1,&
+ A_*&=1+\max\{44,(\tau+K)^2,2K(\tau+2K),N_c^2\},\\
+ S&=902826,& C_*&=2S+2=1805654.
+\end{aligned}
+\tag{50.3}
+$$
+
+All these constants are fixed independently of $N,p,\epsilon$ and the target. No numerical value of the reduction constants is needed.
+
+**定理 50.2（A third-minimum anchor and a necessary three-dimensional obstruction）。** Let $N=2^m\ge2048$. Let $G\in\operatorname{Herm}_4(R)$ be a positive-definite integral interval atom, with
+
+$$
+ 0\prec G\prec NI_4,\qquad d=\det G\le11,
+ \qquad \lambda_{\max}(G)\le N-A_*/N,
+ \qquad B=NI_4-G.
+$$
+
+For every original table in Definition 50.1,
+
+$$
+ \mu_3(B)>M
+ \quad\Longrightarrow\quad
+ |e(G/N)|\le C_*\epsilon.
+\tag{50.4}
+$$
+
+More generally, if $|e(G/N)|>C_*\epsilon$, there is a unimodular basis $V=(v_1,v_2,v_3,v_4)$ such that the saturated submodule $\Lambda=Rv_1+Rv_2+Rv_3$ and the integral vector $q=V^{-*}e_4$ satisfy
+
+$$
+\begin{gathered}
+ v_j^*Bv_j\le M\quad(1\le j\le3),\qquad
+ 0\ne\tau qq^*\succeq0,\qquad \tau qq^*\preceq B/4,\\
+ \text{there is }0\ne z\in\Lambda\text{ with }2\le z^*Gz<\tau,\\
+ \mu_4(B)\ge(N+d)^{1/4}.
+\end{gathered}
+\tag{50.5}
+$$
+
+Every matrix $\tau qq^*/N$ and $(G+\tau qq^*)/N$ occurring here is an effect on the original grid. Conditions (50.5) are necessary for failure of this absolute anchor, not a converse or a full-event counterexample.
+
+**证明。** The trace grouping in the proof of [Part I, Theorem 57.4](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md), applied to a supplied Gram decomposition rather than to an arbitrary extraction order, gives
+
+$$
+ F\in\mathcal S_4,\quad 0\preceq F\prec NI_4
+ \quad\Longrightarrow\quad |e(F/N)|\le S\epsilon.
+\tag{50.6}
+$$
+
+Indeed each Gram summand is a strict rank-one effect; Part I, Lemma 57.2 applies to it. There are at most eleven summands of trace greater than $1/3$ and at most twelve remaining trace groups of norm below $2/3$. The same legal additions and the zero bound $p(0)\le2\epsilon$ give $902824\epsilon+2\epsilon$. This is a reuse of those estimates, not an assertion that an arbitrary extraction residual vanishes whenever a Gram representation exists.
+
+Consequently it suffices to construct an integral $W\in\mathcal S_4$ with
+
+$$
+ 0\preceq W\preceq B/4,\qquad G+W\in\mathcal S_4.
+\tag{50.7}
+$$
+
+Both $W$ and $G+W$ are strictly below $NI_4$. Comparing the actual menus $(G/N,W/N,I_4-(G+W)/N)$ and $((G+W)/N,I_4-(G+W)/N)$ gives
+
+$$
+ |e(G/N)+e(W/N)-e((G+W)/N)|\le2\epsilon.
+\tag{50.8}
+$$
+
+Together with (50.6), this proves the bound $C_*\epsilon$. If instead $B\in\mathcal S_4$, (50.6) and the original complementary binary menu give the stronger bound $(S+10)\epsilon$. The $10\epsilon$ is the binary defect plus the original $|\operatorname{Tr}H-1|\le9\epsilon$.
+
+Choose (50.2) for $B$. If $h_1\ge\tau$, Proposition 5.3 supplies $B\in\mathcal S_4$. Hence assume $h_1<\tau$. First suppose either $h_2>L$, or $h_2\le L<h_3$. Put $k=1$ in the former case and $k=2$ in the latter, and write $V_k=(v_1,\ldots,v_k)$. Then
+
+$$
+ v_j^*Bv_j\le K\quad(j\le k),\qquad
+ h_j>L/\alpha\quad(j>k).
+\tag{50.9}
+$$
+
+The first assertion follows by expanding the corresponding diagonal entries of (50.2), and the second from $h_{k+1}>L$ and $h_{k+1}\le\alpha h_j$.
+
+For $i>k$, let $q_i=V^{-*}e_i\in R^4$. Upper triangularity of $X^{-1}$ gives
+
+$$
+ q_i^*B^{-1}q_i
+ =\sum_{j\ge i}\frac{|(X^{-1})_{ij}|^2}{h_j}
+ <\frac{4\alpha c^2}{L}.
+\tag{50.10}
+$$
+
+Cauchy--Schwarz gives $q_iq_i^*\preceq(q_i^*B^{-1}q_i)B$. Therefore
+
+$$
+ W=\tau\sum_{i>k}q_iq_i^*\in\mathcal S_4,
+ \qquad W\preceq\frac{3}{16}B\preceq B/4.
+\tag{50.11}
+$$
+
+No values of $p$ in the reduced coordinates have been introduced: the $q_i$ and $W$ in (50.10)--(50.11) are integral vectors and matrices in the original coordinates.
+
+We next prove $\mu_1(G+W)\ge\tau$. If $z\in R^4$ lies outside $V_k\mathbb C^k$, some coordinate $(V^{-1}z)_i=q_i^*z$, $i>k$, is a nonzero Gaussian integer. Thus $z^*Wz\ge\tau$. If $z\in V_k\mathbb C^k$, unimodularity gives $z=V_ku$ with $u\in R^k$. Put
+
+$$
+ P=V_k^*V_k,\qquad B_k=V_k^*BV_k,
+ \qquad V_k^*GV_k=NP-B_k.
+\tag{50.12}
+$$
+
+The entries of $P$ are Gaussian integral, so $\det P$ is a positive integer. Also $B\succeq(A_*/N)I_4$ and (50.9) imply
+
+$$
+ \operatorname{Tr}P\le\frac{kKN}{A_*},\qquad
+ \|B_k\|_{\rm op}\le kK.
+\tag{50.13}
+$$
+
+For $k=1$, $P\ge1$ and hence $NP-B_k\succeq(N-K)I_k\succ\tau I_k$. Here $B\prec NI_4$ and $B\succeq(A_*/N)I_4$ force $N^2>A_*>(\tau+K)^2$. For $k=2$, positivity and integrality of $\det P$ give
+
+$$
+ \lambda_{\min}(P)\ge\frac{1}{\operatorname{Tr}P}
+ \ge\frac{A_*}{2KN},\qquad
+ NP-B_k\succeq\left(\frac{A_*}{2K}-2K\right)I_k
+ \succ\tau I_k.
+\tag{50.14}
+$$
+
+Thus every nonzero integral $z$ in this submodule has $z^*Gz>\tau$. In both cases $\mu_1(G+W)\ge\tau$, so Proposition 5.3 supplies the second membership in (50.7). This proves the anchor whenever $h_2>L$ or $h_3>L$. If neither holds, the first three basis vectors have $B$-norm at most $3c^2L=M$. Hence $\mu_3(B)>M$ forces one of the already anchored cases, proving (50.4).
+
+It remains to prove the additional necessary structure. Suppose the anchor bound fails. The preceding argument leaves
+
+$$
+ h_1<\tau,\qquad h_2\le L,\qquad h_3\le L.
+\tag{50.15}
+$$
+
+The small determinant, exact complement relation and the margin $A_*>44$ now have a separate role. [Part II, Theorem 164.2](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_II.md) gives
+
+$$
+ D=\det B\ge N+d.
+\tag{50.16}
+$$
+
+Since $D=h_1h_2h_3h_4$, (50.15) yields $h_4>N/(\tau L^2)$. Put $q=V^{-*}e_4$. The last row of $X^{-1}$ is $e_4^*$, so
+
+$$
+ q^*B^{-1}q=h_4^{-1},\qquad
+ \tau qq^*\preceq\frac{\tau}{h_4}B
+ \prec\frac{\tau^2L^2}{N}B\preceq B/4.
+\tag{50.17}
+$$
+
+The last inequality follows from $N>\sqrt{A_*}>N_c$. The first three columns of $V$ span a saturated rank-three submodule $\Lambda$. If every nonzero $z\in\Lambda$ had $z^*Gz\ge\tau$, the matrix $G+\tau qq^*$ would have arithmetic minimum at least $\tau$: outside $\Lambda$, $|q^*z|^2\ge1$. Equation (50.17), Proposition 5.3 and (50.8) would then prove the anchor, a contradiction. Thus some nonzero $z\in\Lambda$ has $z^*Gz<\tau$.
+
+Atomicity supplies the lower bound in (50.5). If $z^*Gz=1$, Cauchy--Schwarz gives the nonzero integral rank-one matrix $(Gz)(Gz)^*\preceq G$. A positive-definite rank-four interval atom cannot equal this matrix and cannot contain it properly. Since integral Hermitian values are positive integers, $z^*Gz\ge2$ for every nonzero integral $z$.
+
+Finally, for four independent integral vectors $u_j$ with $u_j^*Bu_j\le t$, their column matrix $U$ satisfies
+
+$$
+ D\le|\det U|^2D=\det(U^*BU)\le t^4.
+$$
+
+The first inequality uses the nonzero Gaussian integer $\det U$, and the last is Hadamard's inequality. Taking $t=\mu_4(B)$ and using (50.16) proves the final assertion of (50.5). All additions in (50.8), (50.11) and (50.17) lie in the original interval. $\square$
+
+**命题 50.3（The anchored bounded-minimum branch contains qualifying atoms at arbitrarily large dyadic scales）。** For every dyadic $N\ge8$ there is a positive-definite integral interval atom $G_N$ of determinant one such that, with $B_N=NI_4-G_N$, there is a fixed $\eta>0$ independent of $N$ satisfying
+
+$$
+ B_N\succeq\eta\operatorname{diag}(1,N,N,N),\qquad
+ \mu_1(B_N)\le4,\qquad \mu_2(B_N)\ge\eta N.
+\tag{50.18}
+$$
+
+In particular, for each fixed finite $A>44$, all sufficiently large members satisfy $0\prec G_N\prec NI_4$ and $\lambda_{\max}(G_N)\le N-A/N$. For $A=A_*$ they eventually satisfy (50.4), while their first arithmetic minimum remains below $\tau$.
+
+**证明。** Reuse the even unimodular atom from Part I, Theorem 32.1 at $N=4$:
+
+$$
+ F=\begin{pmatrix}
+ 2&0&\pi&1\\
+ 0&2&-1&\overline\pi\\
+ \overline\pi&-1&2&0\\
+ 1&\pi&0&2
+ \end{pmatrix},\qquad \pi=1+i.
+\tag{50.19}
+$$
+
+Its positivity, determinant one and full integral interval atomicity are supplied there. Lagrange's four-square theorem gives a representation of $2N-9$. This integer is $7$ modulo $8$. In every four-square representation of such an integer exactly three entries are odd and the remaining entry is even. Permute them to write
+
+$$
+ 2N-9=a^2+b^2+c_0^2+d_0^2,
+ \qquad a,b,c_0\text{ odd},\quad d_0\text{ even}.
+$$
+
+Set $x=(a-1)/2+i(b+1)/2$, $y=(c_0-1)/2+id_0/2$, and
+
+$$
+ U=I_4+xe_3e_1^*+ye_4e_1^*,\qquad G_N=U^*FU.
+\tag{50.20}
+$$
+
+The matrix $U$ is Gaussian unimodular. Hence $G_N$ is still positive definite, determinant one and an integral interval atom; this is an order congruence of integral forms, not a covariance assertion about the table. The four-square identity gives
+
+$$
+ 2+2(|x|^2+|y|^2)+2\operatorname{Re}(\pi x+y)=N-4.
+$$
+
+Therefore, for a column $b_N$,
+
+$$
+ G_N=\begin{pmatrix}N-4&b_N^*\\b_N&C\end{pmatrix},
+ \quad
+ C=\begin{pmatrix}2&-1&\overline\pi\\-1&2&0\\\pi&0&2\end{pmatrix},
+ \quad \|C\|_{\rm op}=2+\sqrt3=:c_0'<4.
+\tag{50.21}
+$$
+
+The Schur complement of the first entry gives $b_Nb_N^*\preceq(N-4)C$. In the coordinates scaled by $\operatorname{diag}(1,\sqrt N I_3)$, the complementary form is
+
+$$
+ \begin{pmatrix}4&-b_N^*/\sqrt N\\-b_N/\sqrt N&I_3-C/N\end{pmatrix}.
+$$
+
+Its Schur complement after the first entry is at least
+
+$$
+ I_3-C/N-\frac{b_Nb_N^*}{4N}
+ \succeq I_3-C/4\succeq\beta I_3,
+ \qquad \beta=1-c_0'/4>0.
+$$
+
+Moreover $\|b_N\|/(4\sqrt N)\le\sqrt{c_0'}/4<1/2$. For a scalar $u$ and column $v$, put $a_0=u-b_N^*v/(4\sqrt N)$. Then
+
+$$
+ |u|^2+\|v\|^2\le2(|a_0|^2+\|v\|^2),\qquad
+ 4|a_0|^2+\beta\|v\|^2\ge\frac{\beta}{2}(|u|^2+\|v\|^2).
+$$
+
+Thus (50.18) holds with $\eta=\beta/2$. Also $e_1^*B_Ne_1=4$. Every two independent integral vectors include one with a nonzero last-three-coordinate column, whose $B_N$-norm is at least $\eta N$. This proves the two successive-minimum assertions. Finally $\lambda_{\min}(B_N)\ge\eta$ implies the displayed margin whenever $N\ge A/\eta$, and $\mu_3(B_N)\ge\mu_2(B_N)\to\infty$. This family verifies that the anchored branch includes actual original qualifying atoms with bounded first minimum. $\square$
+
+## 51. The remaining three-direction inference and its parent consumer
+
+**定义 51.1（Unresolved core obligation）。** Retain the full original atom quantifiers and the same table and tomography, without imposing (50.5) as a new premise on that event. Theorem 50.2 supplies a uniform original-interval absolute anchor for the whole branch $\mu_3(B)>M$, including bounded first minima. For the remaining branch, it supplies a saturated rank-three short $B$ submodule, a legal rank-one capacity in its annihilator, and an integral vector in that submodule with $G$-norm in $[2,\tau)$ whenever its displayed error bound fails. It does not assert that these simultaneous conditions are impossible or that the capacity necessarily raises this short $G$ value.
+
+The missing inference is an absolute original-table anchor on this three-direction core, or a different argument covering it. Neither the existence of $q$ in (50.17) nor the bounded list of possible scalar values $z^*Gz$ proves that inference. No parity lift $R\preceq B$, $R\equiv B\pmod2$ has been assumed or proved for the core.
+
+The parent consumer is the unchanged positive-definite determinant-at-most-eleven atom estimate in Part I, (57.15), with the complement-first lower-side transfer in Part II, (164.11). The proved branch can be used directly inside that consumer. The full existence of constants $A>44$ and $C_{\rm atom}$ for every original qualifying atom, and its faithful negation, remain unproved here; (50.4) is not substituted for the full event.
+
+The established balanced HKZ and large-minimum results of Beli--Chan--Icaza--Liu, the original rank-one and trace-group estimates of Part I, and the determinant quantization of Part II are credited intermediate tools. The dual-coordinate thickening, the integral one- and two-dimensional compression bounds, their three-direction obstruction consequence and the qualifying bounded-minimum realization above are repo-derived ordinary mathematical deductions. No global literature priority claim is made.
+
+## 追加锚（本行以下为增补区）
