@@ -40,9 +40,7 @@ variable {V : Type*} {d : ℕ}
 @[expose] def translationMotion (t : EuclideanSpace ℝ (Fin d)) : Framework V d :=
   fun _ => t
 
-@[simp]
-theorem translationMotion_apply (t : EuclideanSpace ℝ (Fin d)) (v : V) :
-    (translationMotion t : Framework V d) v = t := rfl
+
 
 theorem translationMotion_mem_ker (G : SimpleGraph V) (p : Framework V d)
     (t : EuclideanSpace ℝ (Fin d)) :
@@ -63,10 +61,7 @@ $d + d(d - 1)/2 = d(d+1)/2$ for the trivial-motions dimension. -/
     (A : EuclideanSpace ℝ (Fin d) →ₗ[ℝ] EuclideanSpace ℝ (Fin d)) (p : Framework V d) :
     Framework V d := fun v => A (p v)
 
-@[simp]
-theorem infinitesimalRotation_apply
-    (A : EuclideanSpace ℝ (Fin d) →ₗ[ℝ] EuclideanSpace ℝ (Fin d)) (p : Framework V d) (v : V) :
-    infinitesimalRotation A p v = A (p v) := rfl
+
 
 theorem infinitesimalRotation_mem_ker (G : SimpleGraph V) (p : Framework V d)
     {A : EuclideanSpace ℝ (Fin d) →ₗ[ℝ] EuclideanSpace ℝ (Fin d)}
@@ -211,12 +206,9 @@ using `elemSkewMap i ⟨j.val, _⟩` for the skew generator. Each value lies in 
   | .inr ⟨i, j⟩ =>
       infinitesimalRotation (elemSkewMap i ⟨j.val, j.isLt.trans i.isLt⟩) p
 
-@[simp] theorem trivialMotionFamily_inl (p : Framework V d) (i : Fin d) :
-    trivialMotionFamily p (.inl i) = translationMotion (PiLp.single 2 i (1 : ℝ)) := rfl
 
-@[simp] theorem trivialMotionFamily_inr (p : Framework V d) (i : Fin d) (j : Fin i.val) :
-    trivialMotionFamily p (.inr ⟨i, j⟩) =
-      infinitesimalRotation (elemSkewMap i ⟨j.val, j.isLt.trans i.isLt⟩) p := rfl
+
+
 
 theorem trivialMotionFamily_mem_trivialMotions (p : Framework V d)
     (s : Fin d ⊕ Σ i : Fin d, Fin i.val) :

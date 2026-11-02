@@ -152,11 +152,6 @@ def EdgeSetRowIndependent (G : SimpleGraph V) (p : Framework V d) (I : Set G.edg
     G.edgeSet → Module.Dual ℝ (Framework V d) :=
   fun e => (LinearMap.proj e).comp (G.RigidityMap p)
 
-@[simp]
-theorem rigidityRow_apply (G : SimpleGraph V) (p : Framework V d) (e : G.edgeSet)
-    (motion : Framework V d) : G.rigidityRow p e motion = G.RigidityMap p motion e := rfl
-
-
 theorem edgeSetRowIndependent_iff_linearIndepOn_rigidityRow
     (G : SimpleGraph V) (p : Framework V d) (I : Set G.edgeSet) :
     G.EdgeSetRowIndependent p I ↔ LinearIndepOn ℝ (G.rigidityRow p) I := by
@@ -178,7 +173,7 @@ theorem rigidityRow_lift_eq_funLeft_dualMap
   refine LinearMap.ext fun x => ?_
   obtain ⟨e, he⟩ := e'
   induction e with
-  | h u v => simp [rigidityRow_apply, rigidityMap_apply, hcompat]
+  | h u v => simp [rigidityRow, rigidityMap_apply, hcompat]
 
 
 theorem linearIndependent_rigidityRow_of_lift

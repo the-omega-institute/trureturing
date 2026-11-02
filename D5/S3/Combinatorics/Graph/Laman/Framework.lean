@@ -136,15 +136,6 @@ theorem rigidityMap_ker_mono {G G' : SimpleGraph V} (h : G ≤ G') (p : Framewor
   funext ⟨e, he⟩
   exact congr_fun hp' ⟨e, edgeSet_mono h he⟩
 
-/-- The rank of the rigidity map is bounded by the number of edges. -/
-theorem rigidityMap_finrank_range_le [Finite V] (G : SimpleGraph V) (p : Framework V d) :
-    Module.finrank ℝ (LinearMap.range (G.RigidityMap p)) ≤ G.edgeSet.ncard := by
-  have : Fintype G.edgeSet := Set.Finite.fintype G.edgeSet.toFinite
-  calc Module.finrank ℝ (LinearMap.range (G.RigidityMap p))
-      ≤ Module.finrank ℝ (G.edgeSet → ℝ) := Submodule.finrank_le _
-    _ = Fintype.card G.edgeSet := Module.finrank_pi ℝ
-    _ = G.edgeSet.ncard := Set.fintypeCard_eq_ncard G.edgeSet
-
 /-- A framework `p` is **infinitesimally rigid** for `G` if the kernel of the
 rigidity map has dimension at most `d (d+1) / 2`, the dimension of the space of trivial
 Euclidean motions (translations and infinitesimal rotations).
@@ -155,17 +146,9 @@ Jordán's definition (2016, p. 36). In general it says that the rigidity map has
 `d|V| − d(d+1)/2`, where Jordán's equivalent rank form (pp. 36–37) asks for his bound
 `S(|V|, d)`. The two agree when `|V| ≥ d` or `|V| ≤ 1`, so always at `d = 2`; when
 `2 ≤ |V| ≤ d − 1` this definition is weaker (two vertices with no edge, anywhere in `ℝ³`,
-satisfy it). The blueprint's `fmlnote:infinitesimal-rigidity` gives the comparison. The kernel
+satisfy it). The kernel
 bound is the form the rank–nullity arguments downstream use. -/
--- The `[Finite V]` instance is semantically required (otherwise `Module.finrank`
--- of the kernel is vacuously `0` and the definition is meaningless), but is not
--- consumed by elaboration of the body. The instance acts as a contract guard so
--- callers cannot accidentally apply this with infinite `V`. The
--- `unusedFintypeInType` syntax linter does not yet extend to `def`s
--- (planned upstream improvement, per Thomas Murrills's Dec-2025 Zulip message),
--- so the env-linter's `unusedArguments` rule is what fires today; once the
--- syntax linter extends, this site would migrate to
--- `set_option linter.unusedFintypeInType false` instead.
+-- Finiteness ensures that finrank measures the actual kernel dimension.
 @[nolint unusedArguments]
 def IsInfinitesimallyRigid [Finite V] (G : SimpleGraph V) (p : Framework V d) : Prop :=
   Module.finrank ℝ (LinearMap.ker (G.RigidityMap p)) ≤ d * (d + 1) / 2
@@ -175,8 +158,7 @@ infinitesimally rigid.
 
 Defining it through a single placement avoids generic placements (those whose coordinates are
 algebraically independent over `ℚ`), which neither direction of Laman's theorem
-(`LamanTheorem.lean`) needs. No declaration relates it to rigidity at generic placements; the
-blueprint's remark after `def:isGenericallyRigid` compares it with Jordán's definition. -/
+needs. No declaration relates it to rigidity at generic placements; the existential predicate alone is used here. -/
 def IsGenericallyRigid [Finite V] (G : SimpleGraph V) (d : ℕ) : Prop :=
   ∃ p : Framework V d, G.IsInfinitesimallyRigid p
 
@@ -234,13 +216,6 @@ theorem IsInfinitesimallyRigid.iso {V W : Type*} [Finite V] [Finite W]
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   exact kerEquiv.finrank_eq.le.trans h
-
-/-- Iso transport for generic rigidity: a graph iso preserves generic rigidity. -/
-theorem IsGenericallyRigid.iso {V W : Type*} [Finite V] [Finite W]
-    {G : SimpleGraph V} {H : SimpleGraph W} (φ : G ≃g H)
-    (h : G.IsGenericallyRigid d) : H.IsGenericallyRigid d := by
-  obtain ⟨p, hp⟩ := h
-  exact ⟨p ∘ φ.symm, hp.iso φ⟩
 
 /-- **Openness of infinitesimal rigidity in the placement.** If `p₀` is infinitesimally rigid for
 `G`, then every placement `p` in some neighborhood of `p₀` is also infinitesimally rigid.
@@ -311,11 +286,6 @@ theorem IsGenericallyRigidInj.toIsGenericallyRigid [Finite V] {G : SimpleGraph V
     (h : G.IsGenericallyRigidInj d) : G.IsGenericallyRigid d :=
   h.imp fun _ hp => hp.1
 
-/-- Adding edges preserves injective generic rigidity at the same placement. -/
-theorem IsGenericallyRigidInj.mono [Finite V] {G G' : SimpleGraph V} (h : G ≤ G')
-    (hG : G.IsGenericallyRigidInj d) : G'.IsGenericallyRigidInj d :=
-  hG.imp fun _ hp => ⟨hp.1.mono h, hp.2⟩
-
 /-- Iso transport for injective generic rigidity: a graph iso preserves injective generic
 rigidity. Injectivity of `p ∘ φ.symm` follows from injectivity of `p` since `φ.symm` is a
 bijection. -/
@@ -324,22 +294,6 @@ theorem IsGenericallyRigidInj.iso {V W : Type*} [Finite V] [Finite W]
     (h : G.IsGenericallyRigidInj d) : H.IsGenericallyRigidInj d := by
   obtain ⟨p, hp_rig, hp_inj⟩ := h
   exact ⟨p ∘ φ.symm, hp_rig.iso φ, hp_inj.comp φ.symm.toEquiv.injective⟩
-
-/-- A generically rigid graph in dimension `d` on `n` vertices has at least
-`d * n − d(d+1)/2` edges. Phrased additively, to avoid `ℕ` subtraction.
-
-The proof is rank-nullity: pick an infinitesimally rigid placement `p`; then
-`d * n = dim Framework = dim range + dim ker ≤ #E + d(d+1)/2`. -/
-theorem IsGenericallyRigid.card_mul_le [Fintype V] {G : SimpleGraph V}
-    (hG : G.IsGenericallyRigid d) :
-    d * Fintype.card V ≤ G.edgeSet.ncard + d * (d + 1) / 2 := by
-  obtain ⟨p, h_ker⟩ := hG
-  have h_ker : Module.finrank ℝ (LinearMap.ker (G.RigidityMap p)) ≤ d * (d + 1) / 2 := h_ker
-  have h_total : Module.finrank ℝ (Framework V d) = d * Fintype.card V := by
-    rw [Framework.finrank, mul_comm]
-  have h_rn := LinearMap.finrank_range_add_finrank_ker (G.RigidityMap p)
-  have h_range := G.rigidityMap_finrank_range_le p
-  omega
 
 /-- The K₂ worked example, *injective* form: the complete graph on two vertices is generically
 rigid with an injective placement in every positive dimension `d + 1`. Witnessed by `p 0 = 0`,
@@ -376,19 +330,5 @@ theorem top_fin_two_isGenericallyRigidInj (d : ℕ) :
     intro i j hij
     have h_norm : ‖p i‖ = ‖p j‖ := congrArg _ hij
     fin_cases i <;> fin_cases j <;> revert h_norm <;> simp [hp_def]
-
-/-- The K₂ worked example: the complete graph on two vertices is generically
-rigid in any dimension `d`. For `d ≥ 1`, weakened from the injective form
-`top_fin_two_isGenericallyRigidInj`; for `d = 0` the framework space is
-zero-dimensional, so the kernel is, and any placement is rigid. -/
-theorem top_fin_two_isGenericallyRigid (d : ℕ) :
-    (⊤ : SimpleGraph (Fin 2)).IsGenericallyRigid d := by
-  rcases d with _ | d
-  · -- d = 0: framework space is zero-dimensional, so any placement is rigid.
-    refine ⟨0, ?_⟩
-    have h_total : Module.finrank ℝ (Framework (Fin 2) 0) = 0 := by
-      rw [Framework.finrank]; simp
-    exact (Submodule.finrank_le _).trans_eq h_total
-  · exact (top_fin_two_isGenericallyRigidInj d).toIsGenericallyRigid
 
 end SimpleGraph
