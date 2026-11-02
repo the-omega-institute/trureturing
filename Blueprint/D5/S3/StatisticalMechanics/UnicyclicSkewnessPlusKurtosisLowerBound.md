@@ -42,7 +42,7 @@ $$(\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorn
 
 *Commentary.*
 
-Write Rⱼ = ∑ᵢ(kᵢ)⁻ʲ and xᵢ = (kᵢ)⁻¹/R₁, and put p = ∑ᵢxᵢ², q = ∑ᵢxᵢ³ and r = ∑ᵢxᵢ⁴. The normalized kurtosis identity, together with the inverse-rate formula for skewness, gives S + K = 18p² − 22q + 6r/p by factoring the powers of R₁ out of the sums. For n ≥ 2 and positive k, R₁ > 0: each summand is positive, including the one at i = 0. Thus x is positive. The moment inequalities give p > 0, q ≥ 0, q² ≤ pr and r < p². Here q² ≤ pr is Cauchy-Schwarz applied to x and its coordinatewise square, and r < p² follows from the strict square-sum inequality for the at least two positive coordinates xᵢ².
+Write Rⱼ = ∑ᵢ(kᵢ)⁻ʲ and xᵢ = (kᵢ)⁻¹/R₁, and put p = ∑ᵢxᵢ², q = ∑ᵢxᵢ³ and r = ∑ᵢxᵢ⁴. The skewness normalization identity gives S = 3p² − 2q, and the kurtosis normalization identity gives K = 15p² − 20q + 6r/p. Adding these identities gives S + K = 18p² − 22q + 6r/p. For n ≥ 2 and positive k, R₁ > 0: each summand is positive, including the one at i = 0. Thus x is positive. The moment inequalities give p > 0, q ≥ 0, q² ≤ pr and r < p². Here q² ≤ pr is Cauchy-Schwarz applied to x and its coordinatewise square, and r < p² follows from the strict square-sum inequality for the at least two positive coordinates xᵢ².
 
 Set t = q/p, e = r/p − t² and d = p − t². Then t ≥ 0, q = pt and e ≥ 0 by q² ≤ pr. Since q² ≤ pr < p³, one has t² < p and d > 0. Also r = p(t² + e), so S + K + 8/27 = 18p² − 22pt + 6t² + 6e + 8/27. If t ≤ 11/18, this equals 6e + 18(p − (11/18)t)² + (13/18)((11/18)² − t²) + 155/5832. All terms except the positive last constant are nonnegative, since 0 ≤ t ≤ 11/18. Hence the sum is strictly positive.
 
