@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth
 import Reg.Support.DependentFamily
 
+set_option maxRecDepth 4000
+
 namespace Reg.D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth
 
 open _root_.D5.S3.FiniteGroups.BajnokBeattySameGroupGrowth
@@ -153,17 +155,19 @@ noncomputable def growthSource : Registration growthArena
     obtain ⟨e19, e33, he19, he33, hn, hd19, hd33, ho, hfull, rest⟩ :=
       same_group_different_growth 3 2 (by norm_num) (by decide) (by norm_num)
     have hb := hfull 16 (by norm_num)
-    norm_num at hb
+    norm_num only at hb
     refine ⟨⟨3,2⟩, 0, 16, ?_⟩
     fin_cases i
-    · change growth19 3 2 0 ≠ growth19 3 2 16
-      have hz : growth19 3 2 0 = 1 := by simp [growth19, leeDiamond]
+    · simp [actualGrowth, realize]
+      have hz : growth19 3 2 0 = 1 := by simp [growth19, leeDiamond, Finset.filter_singleton]
       have hs : growth19 3 2 16 = 504 := by exact_mod_cast hb.1
-      omega
-    · change growth33 3 2 0 ≠ growth33 3 2 16
-      have hz : growth33 3 2 0 = 1 := by simp [growth33, leeDiamond]
+      rw [hz, hs]
+      norm_num
+    · simp [actualGrowth, realize]
+      have hz : growth33 3 2 0 = 1 := by simp [growth33, leeDiamond, Finset.filter_singleton]
       have hs : growth33 3 2 16 = 504 := by exact_mod_cast hb.2
-      omega
+      rw [hz, hs]
+      norm_num
 
 noncomputable def growthRegistration :
     Contract.Registration same_group_different_growth
