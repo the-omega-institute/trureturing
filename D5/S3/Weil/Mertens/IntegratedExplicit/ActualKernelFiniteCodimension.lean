@@ -217,7 +217,7 @@ private theorem prefix_zero_of_ae {I : Type u} [Fintype I]
   have hm : volume (Ioo t (t + δ)) ≠ 0 := by
     rw [Real.volume_Ioo]
     exact ne_of_gt (ENNReal.ofReal_pos.mpr (by linarith))
-  obtain ⟨v, hv, hvzero⟩ := exists_mem_of_measure_ne_zero_of_ae hm
+  obtain ⟨v, hv, hvzero⟩ := Measure.exists_mem_of_measure_ne_zero_of_ae hm
     (ae_restrict_of_ae hzero)
   have heq := prefix_right x a t δ v hg ⟨hv.1.le, hv.2⟩
   have hnorm : ‖«prefix» x a v‖ = 0 := by
