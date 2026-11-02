@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum
   - D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound
+  - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound
 license: citation-only
 triage: anchor
 ---
@@ -51,3 +52,36 @@ Source: https://arxiv.org/abs/2204.08421v4
   - the winding-number cumulants and the waiting-time cumulants, Appendix, l. 768–790;
   - the numerically conjectured extremal topology, Appendix, l. 792.
 - The author and the arXiv dates are from the arXiv metadata.
+
+## Exact skewness-minus-kurtosis upper endpoint and source sign
+
+The primary v4 source `main.tex`, SHA-256
+`0d8f9bf311a07990b64d4746e9ec4fb1e164deec23b270503642b94766baf84e`,
+line 432, states
+
+> $\max(\mathcal S-\mathcal K)=3(107+51\sqrt{17})/2048$
+> for $A=(5-\sqrt{17})/4$.
+
+Figure 6 also concerns $\mathcal S-\mathcal K$. In contrast, the summary
+at line 133 prints $\mathcal K-\mathcal S\in[-0.15,0.465]$.
+These signs conflict. The difference endpoint formalization follows the
+detailed display and figure; it does not silently read the summary as the
+same formula. Line 424 uses $a=A/N$ in the infinite-size limit, and line 792
+labels the general extremal-topology assertion numerical/conjectural. The
+source's analytic evaluation on that topology is credited input; the
+universal inference over arbitrary positive rate vectors requires proof.
+
+The explicit finite realization with inverse rates $u$ and $N-1$ copies of
+$(1-u)/(N-1)$, where $u=(9+\sqrt{17})/16$, has relative exceptional rate
+$A/(N-1)$, not $A/N$, with $A=(1-u)/u=(5-\sqrt{17})/4$.
+The ratio of the two relative rates is $N/(N-1)$ and tends to one.
+Both finite families have positive rates; equality of their asymptotic
+scaling does not identify their finite members.
+
+The formal domain retains arbitrary positive real coordinates and repeated
+rates. At $N=2$ its current interpretation uses two oriented phase stages
+and a marked winding crossing. The formal expressions do not construct the
+process, prove renewal asymptotics, or assert a physical $N=1$ case.
+The independently inspected literature scopes found no exact supplier;
+this is not a worldwide priority claim. The journal body and some
+citation-list memberships remain unverified.

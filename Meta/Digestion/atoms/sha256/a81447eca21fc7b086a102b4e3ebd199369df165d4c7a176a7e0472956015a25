@@ -1,0 +1,57 @@
+### 定理 4.2（C94 的完整分类与唯一性）
+
+<a id="thm-c94-main"></a>
+
+对上述有限 $(H,\mathcal S,\tau)$，以下条件等价：
+
+1. 存在满足 C94 的映射 $R$；
+
+2. $\mathcal A=\mathcal S+i\mathcal S$ 是通常矩阵乘法下的含单位
+    $C^*$ 子代数，且
+
+
+   <a id="eq-c94-modular-condition"></a>
+
+   $$
+   \tau^{it}\mathcal A\tau^{-it}=\mathcal A
+     \qquad(t\in\mathbb R);
+   \tag{4.2}
+   $$
+
+3. 在某个共同酉坐标下，存在有限直和分解
+
+
+   $$
+   H=\bigoplus_k(H_{L,k}\otimes H_{R,k}),\qquad
+     \mathcal A=\bigoplus_k\bigl(B(H_{L,k})\otimes I_{R,k}\bigr),
+   $$
+
+
+    且忠实参照具有块乘积形式
+
+
+   $$
+   \tau=\bigoplus_kq_k\tau_{L,k}\otimes\tau_{R,k},
+     \qquad q_k>0,\quad\sum_kq_k=1,
+   $$
+
+
+    其中各 $\tau_{L,k},\tau_{R,k}$ 都为忠实密度态。
+
+一旦存在，满足 C94 的 $R$ 唯一，且自动完全正、保迹、幂等。
+它由式 [(9.2)](#eq-c94-reset) 的块重置给出，
+并且对每份资料都等于 v93 的唯一 C93 相对熵规范补全。
+
+**证明。**
+定理 [7.2](#thm-c94-algebra) 从条件 1 推出通常乘法的代数闭合；
+定理 [9.1](#thm-c94-block-reset) 随后推出唯一块重置和参照块乘积，给条件 3，
+并用显式 Kraus 算符证明反向及完全正性。
+定理 [10.1](#thm-c94-modular) 证明条件 2 与条件 3 等价。
+定理 [11.1](#thm-c94-c93-implementation) 证明该唯一映射与全部 C93 规范补全相同。
+下面逐步给出这些证明。
+
+这是一条存在且唯一的分类：如果先任意给定某个 $R$，
+仅知道条件 2 或 3 并不能说那个任意映射自动满足 C94；
+它还必须等于所分类的唯一块重置。
+二正性升级为完全正性也依赖 C94 的整组条件，不能推广成任意二正映射都完全正。
+

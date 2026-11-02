@@ -1516,3 +1516,473 @@ $$
 式 (20.2)、(20.13) 的任意有限辅助矩阵是完全有界范数的数学量词，不赋予可访问辅助系统、独立准备、初始环境、控制精度、额外记忆、门编译深度或原生记录器。Finite3 在这里仍是二元关系几何，不是全局维数三的假设。本推论也没有从一个切口的替代分辨率推出 V81 的全程返回／原生记录构造；该目标所需的历史、全部保留记录及控制实现不能由终端校准相近或式 (22.3) 的前后处理界替代。式 (20.6) 因而是声明前件下的解析关系，不承担经验性的量子起源或宇宙本体判定。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 固定原生历史、已得事件与同一个校准
+
+**定义 23.1（十六位菜单上的资源与切口）。** 本节至 §27 只使用 [Setting-Source 定义 8.1–8.3、式 (8.5)、(8.7a)](AURIC_SINGLE_PURE_WHOLE_SETTING_SOURCE_RELATIONS_V78_CONTINUATION.md) 的原生载体、根和记录语义。位置是 $-1,0,\ldots,14$，
+
+$$
+\mathcal H_{\mathcal N}=(\mathbb C^2)^{\otimes16},\qquad
+\mathcal L=\operatorname{span}\{|b\rangle:b_jb_{j+1}=0\},\qquad
+\dim\mathcal L=2584.
+$$
+
+唯一根为
+
+$$
+\Omega_0=|1,0,0,0,1,0,0,0,1,0\rangle_{-1,\ldots,8}
+                 \otimes|000\rangle_{9,10,11}
+                 \otimes|000\rangle_{12,13,14}.
+\tag{23.1}
+$$
+
+记 $\varphi=(1+\sqrt5)/2$、$\zeta=e^{3\pi i/5}$、$\beta=\varphi^{-1/2}$、$t=\beta^2=\varphi^{-1}$。实际门始终是 [V15 §3](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md) 的完整矩阵
+
+$$
+\begin{aligned}
+Q_j&=t(I-n_j)+t^2n_j+\beta^3X_j,\\
+\mathcal P_j&=n_{j-1}n_{j+1}+(I-n_{j-1})(I-n_{j+1})Q_j,\\
+K_j&=\zeta[I+(\zeta-1)\mathcal P_j],\qquad 0\le j\le13.
+\end{aligned}
+\tag{23.2}
+$$
+
+源空间仍是 Setting-Source 式 (8.3) 的 $\mathcal S$：$b_{-1}b_0=10$、$b_6b_7b_8=010$、$(b_1,\ldots,b_5)$ 无相邻 $11$，维数为十三；其原编码 $J|q_Aq_B\rangle=|1,0,q_A,0,1,0,q_B,0,1,0\rangle$ 仅指定四维逻辑子空间。实际运行不重选式 (23.1) 的根。
+
+源准备的地址字只取 $0,\ldots,6$；完整原生菜单另允许 $0,\ldots,13$ 上的门、计算基正交投影及按已得结果选择地址的有限确定表。门保持 $\mathcal L$，但矩阵和以下张量切口都在完整 $\mathcal H_{\mathcal N}$ 上解释。没有任意旋转、自由输入态、自由测量基、外来随机权重、复位或额外相干受控门。
+
+一个具体协议给定有限根树 $\mathcal T$。门节点是一个实际正向 $K_j$；测量节点 $v$ 是计算基对角零一投影的完整分解 $\{\Pi_{v,o}:o\in O_v\}$，包括所有结果，且 $\sum_o\Pi_{v,o}=I$；后续节点可依赖已得报告。失败、拒绝、提前停止和正常停止都有明确终叶，零质量标签也不删除。未调用门的调度槽为恒等。若字表写了逆调用，先按 $K_j^{-1}=K_j^9$ 展开：正向调用成本为一，逆调用成本为九。对展开后的整棵树声明实际资源
+
+$$
+L=\max_{h\ \mathrm{terminal}}\#\{h\text{ 上的正向 }K\text{ 调用}\},\qquad
+m=\max_h\#\{h\text{ 上的测量节点}\},\qquad
+b=\max\bigl(\{1\}\cup\{|O_v|:v\text{ 为测量节点}\}\bigr).
+\tag{23.3}
+$$
+
+另声明全部有限节点及停止标签、反馈地址表、控制器与实际档案的有限状态集 $\mathcal C$。$L$ 计完整协议全部分支，不能只计成功分支；截在一个已声明切口的前缀也可以独立作为这样的有限树。$m,b,|\mathcal C|$ 是适用域的一部分；以下界不另乘叶数，并不把这些资源当作不存在。档案只记录菜单定义的调用、报告和停止，不添加隐藏的计算基微轨迹。
+
+固定一个实际共同切口 $t_*$，每条完整历史恰穿过它一次；必要时用恒等槽对齐提前停止叶，所得前缀叶仍为完整分解。$\mathcal H_R=H_I$ 由预先指定的原生位置子集 $I$ 构成，$\mathcal H_Z=H_{I^c}$，设
+
+$$
+q=|I|,\qquad d=2^q,\qquad e=2^{16-q},\qquad
+\mathcal H_{\mathcal N}\cong\mathcal H_R\otimes\mathcal H_Z.
+\tag{23.4}
+$$
+
+因此 $de=65536$；控制器及报告的其他实际记录仍保留在各自已声明因子或经典记录代数中。$\mathcal L$ 在此只是一个受约束子空间，不被假定为 $\mathcal H_R\otimes\mathcal H_Z$ 内的张量子空间。若把额外控制寄存器纳入待校准因子，须另给其维数及矩阵来源，不能直接沿用这里的 $d,e$。
+
+**定义 23.2（完整事件律与忠实校准域）。** 对切口处完整已得历史 $h$，令 $M_h$ 是沿该分支按实际顺序相乘的门与投影，$v_h=M_h\Omega_0$，$c_h(i,z)=\langle i,z|v_h\rangle$。分支不归一化。若切口后还有延续，$N_{\ell|h}$ 是原表指定的完整后继分支乘积；完整 Born 律为
+
+$$
+\Pr(h,\ell,y)=|\langle y|N_{\ell|h}M_h\Omega_0\rangle|^2,
+\qquad
+\sum_{h,\ell,y}\Pr(h,\ell,y)=1.
+\tag{23.5}
+$$
+
+$y$ 是完整终端计算基结果，所有失败、停止及实际报告都包含在 $(h,\ell,y)$ 的样本空间中。没有后继时取 $N=I$。由已得报告决定的事件 $\mathcal E$ 必须在 $t_*$ 已经可判；不能把未来才测得的标签事后当作同一切口的已得事件。其未归一原生约化、质量及条件校准分别为
+
+$$
+\begin{aligned}
+\Xi_{\mathcal E}&=\sum_{h\in\mathcal E}\operatorname{Tr}_Z(v_hv_h^\dagger),
+& (\Xi_{\mathcal E})_{ij}&=\sum_{h\in\mathcal E,z}c_h(i,z)\overline{c_h(j,z)},\\
+p_{\mathcal E}&=\operatorname{Tr}\Xi_{\mathcal E}
+             =\sum_{h\in\mathcal E}\|v_h\|^2,
+& \rho&=\Xi_{\mathcal E}/p_{\mathcal E}\quad(p_{\mathcal E}>0).
+\end{aligned}
+\tag{23.6}
+$$
+
+对历史求和是保留完整经典记录律后选择原生因子的数学约化，不是相干叠加不同报告，也不是物理擦除或复制档案；已由原生单元 $X,Y$ 承载的报告不再增加一份返回量子副本。特别采用原设置读出时，$X=b_{10},Y=b_{13}$ 的非选择语义仍是 $\sum_{xy}P_{xy}DP_{xy}$，不是一个新增全局酉门。
+
+这里应用命题 20.2 的精确域是
+
+$$
+\mathfrak F=\{(\mathcal T,t_*,I,\mathcal E):\ p_{\mathcal E}>0,
+                         \ \operatorname{rank}\Xi_{\mathcal E}=d\}.
+\tag{23.7}
+$$
+
+命题 20.2 的原校准在此量化域内明确就是式 (23.6) 的同一个 $\rho$。给定 $A\subseteq M_d$ 后仍取原 $E_{\rho,A}$；不把另一个固定而无关的校准替换成原生边际。存在正质量事件并不保证式 (23.7)。若一个事件只含 $n_{\mathcal E}$ 个非零分支，则 $\operatorname{rank}\Xi_{\mathcal E}\le\min(d,e n_{\mathcal E})$；纯根本身不保证任何指定切口忠实。该秩上界由每个 $d\times e$ 系数矩阵的秩及有限求和直接得到，不是忠实切口的存在性定理。
+
+## 24. 完整投影树上的黄金资源谱下界
+
+**定理 24.1（固定根的已得事件与二次域行列式）。** 在定义 23.1–23.2 下，置
+
+$$
+\kappa=1+2\varphi^3,\qquad \Xi=\Xi_{\mathcal E},\quad p=p_{\mathcal E}.
+$$
+
+若 $p>0$，则
+
+$$
+ p\ge\kappa^{-2L}.
+\tag{24.1}
+$$
+
+若另有 $\operatorname{rank}\Xi=d$，则
+
+$$
+\det\Xi\ge\kappa^{-2Ld},\qquad
+\lambda_{\min}(\Xi)\ge\kappa^{-2Ld},\qquad
+\lambda_{\min}(\rho)\ge\frac{\kappa^{-2Ld}}p.
+\tag{24.2}
+$$
+
+这些界使用实际最大正向调用数 $L$、指定的 $d,e$、完整测量树和无分母原始概率。它们也蕴含较粗的 $\kappa^{-14Ld}$ 行列式界；不主张常数最优、与资源无关的谱隙，或所有量子态都属于此族。
+
+证明。数域和整性先固定为
+
+$$
+F_0=\mathbb Q(\zeta),\quad R_0=\mathbb Z[\zeta],\quad
+\mathbb K=F_0(\beta),\quad \mathcal R=\mathbb Z[\zeta,\beta],\quad
+k=\mathbb Q(\sqrt5).
+\tag{24.3}
+$$
+
+$\zeta$ 为本原十次单位根，$t=-(\zeta+\zeta^{-1})$，$t^2+t=1$，$\beta^4+\beta^2-1=0$。因此 $\mathcal R$ 中各数均为代数整数；式 (23.2) 没有有理分母。有限投影、矩阵乘法、记录求和和原生偏迹只作有限加乘，故 $c_h(i,z),\Xi_{ij},p,\det\Xi$ 都是 $\mathbb K$ 中代数整数。这里不要求 $\mathcal R$ 等于全整数环。条件化 $\rho=\Xi/p$ 才引入除法，$\rho$ 的各项不被断言仍为代数整数。
+
+复共轭在 $\mathbb K$ 上记为 $c$，由 $c(\zeta)=\zeta^{-1},c(\beta)=\beta$ 给出。$[F_0:\mathbb Q]=4$。按 V15 引理 9.4 的论证，若实数 $\beta$ 属于 $F_0$，它必属于 $F_0\cap\mathbb R=k$；但 $N_{k/\mathbb Q}(t)=-1$ 不可能等于 $N_{k/\mathbb Q}(\beta)^2$，所以 $\beta\notin F_0$，$[\mathbb K:\mathbb Q]=8$。全部八个嵌入正是
+
+$$
+\begin{array}{c|c|c}
+a&\sigma(\zeta)&\sigma(\beta)\\ \hline
+1,9&\zeta^a&+\beta\ \text{或}\ -\beta\\
+3,7&\zeta^a&+i\sqrt\varphi\ \text{或}\ -i\sqrt\varphi
+\end{array}
+\tag{24.4}
+$$
+
+每个 $a$ 有两个独立平方根选择。前一行 $\sigma(t)=t$，后一行 $\sigma(t)=-\varphi$。对任一这样的 $\sigma$，$\sigma\circ c$ 也是八个嵌入之一，但一般
+$\sigma(c(x))\ne\overline{\sigma(x)}$：例如后一行取 $x=\beta$。以下估计始终分别使用 $\sigma$ 与 $\sigma\circ c$。
+
+先复用 V15 命题 8.3 证明中逐门的实际矩阵估计。活跃块 $Q=uu^{\mathsf T}$、$u=(\beta,\beta^2)^{\mathsf T}$，满足
+
+$$
+\|\sigma(Q)\|_{\rm op}\le |\sigma(\beta)|^2+|\sigma(\beta)|^4
+          \le\varphi+\varphi^2=\varphi^3.
+$$
+
+完整 $\mathcal P_j$ 的其他控制块为零或单位，$|\sigma(\zeta)|=1$，所以
+
+$$
+\|\sigma(K_j)\|_{\rm op}\le1+2\varphi^3=\kappa.
+\tag{24.5}
+$$
+
+张量单位、地址重排和所有完整计算投影不改变该估计。这里仅复用逐门界；V15 命题 8.3 的酉字事件结论不被直接套给自适应树。
+
+对树中节点 $v$，令 $\ell_v$ 是从该节点开始到任一终叶的最大剩余正向调用数。对任意复向量 $w$，从节点 $v$ 继续所得所有终叶的嵌入分支向量平方范数之和至多为 $\kappa^{2\ell_v}\|w\|^2$。这是有限树上的逆向归纳：终叶为等号；门节点利用式 (24.5) 并消耗一个调用；测量节点各子树的 $\ell$ 至多为 $\ell_v$，而投影仍是原来的正交零一矩阵，因此
+
+$$
+\sum_{o\in O_v}\|\Pi_{v,o}w\|^2=\|w\|^2.
+$$
+
+此等式覆盖完整结果分解，允许各结果后采用不同门字和不同停止深度。于是对全部叶和任意事件子集都有
+
+$$
+\sum_{h\in\mathcal E}\|\sigma(v_h)\|^2
+\le\sum_{h\ \mathrm{all}}\|\sigma(v_h)\|^2
+\le\kappa^{2L}.
+\tag{24.6}
+$$
+
+同一归纳也适用于停在 $t_*$ 的完整前缀树。它不逐叶分别放大再求和，因而没有 $b^m$、叶数或报告数惩罚；完整性、有限深度、投影的有理零一性和没有中途条件归一化都是此步的前件。
+
+将各 $c_h(i,z)$ 按 $(h,z)$ 合并成一个 $d\times(e|\mathcal E|)$ 系数矩阵 $V$。逐项施加嵌入，精确等式为
+
+$$
+\sigma(\Xi)=\sigma(V)\big((\sigma\circ c)(V)\big)^{\mathsf T}.
+\tag{24.7}
+$$
+
+这不是 $\sigma(V)\sigma(V)^\dagger$。由式 (24.6)，两个矩阵的 Frobenius 范数分别至多 $\kappa^L$；Cauchy–Schwarz 和算符范数的次乘性给
+
+$$
+|\sigma(p)|\le\kappa^{2L},\qquad
+\|\sigma(\Xi)\|_{\rm op}\le\kappa^{2L},\qquad
+|\sigma(\det\Xi)|\le\kappa^{2Ld}.
+\tag{24.8}
+$$
+
+第一式直接对 $p=\sum_{h,i,z}c_h(i,z)c(c_h(i,z))$ 配对；第三式用 $d$ 个奇异值的乘积。不假设非物理嵌入后的 $\Xi$ 正或 Hermitian。至此，若只使用八次数域的整数范数，已可得 $p\ge\kappa^{-14L}$、$\det\Xi\ge\kappa^{-14Ld}$。更强指数来自实际奇偶分级，不能从“八次”本身取得。
+
+令 $\tau$ 是 $\mathbb K/F_0$ 的非平凡自同构，$\tau(\beta)=-\beta$、$\tau(\zeta)=\zeta$。它与这里明确给出的物理共轭 $c$ 交换。由 V15 引理 9.1，每条含计算投影的分支仍有
+
+$$
+c_h(i,z)\in
+\begin{cases}
+R_0,&\pi(i)+\pi(z)=\pi(\Omega_0)\pmod2,\\
+\beta R_0,&\pi(i)+\pi(z)\ne\pi(\Omega_0)\pmod2,
+\end{cases}
+$$
+
+其中 $\pi$ 为实际计算基词的 Hamming 奇偶。乘积中的共同输入和共同补词 $z$ 的奇偶各出现两次，因而
+
+$$
+\tau(\Xi)=J_R\Xi J_R,
+\qquad J_R=\operatorname{diag}_{i}((-1)^{\pi(i)}),
+\qquad \tau(p)=p,\quad\tau(\det\Xi)=\det\Xi.
+\tag{24.9}
+$$
+
+有限事件求和、反馈和停止均不改变这个逐项等式。$\mathbb K^\tau=F_0$，而物理 $\Xi$ 为正半定，所以 $p$ 和 $D=\det\Xi$ 是实数；再取 $F_0$ 内物理复共轭的不动域，得到
+
+$$
+p,D\in\mathcal O_k,\qquad k=\mathbb Q(\sqrt5).
+\tag{24.10}
+$$
+
+这里只对特定的 $\tau,c$ 使用已验证的交换关系；未将任意嵌入与物理共轭交换。$k$ 的另一个实嵌入 $\nu$ 由 $t\mapsto-\varphi$ 给出，可用式 (24.4) 后一行任意嵌入延拓。$p\ne0$ 时，其二次域范数为非零整数；$D>0$ 时同样如此。标准整数范数事实见 [Milne, *Algebraic Number Theory*, v3.08, Proposition 2.19、Corollaries 2.20–2.21](https://www.jmilne.org/math/CourseNotes/ANT.pdf)。于是式 (24.8) 给
+
+$$
+1\le|p\nu(p)|\le p\kappa^{2L},\qquad
+1\le|D\nu(D)|\le D\kappa^{2Ld},
+\tag{24.11}
+$$
+
+分别证明式 (24.1) 及行列式界。物理 $\operatorname{Tr}\Xi=p\le1$，所以 $\Xi$ 的每个特征值至多为一。满秩时其最小特征值不小于全部特征值的乘积 $D$；最后除以同一个 $p$，即得式 (24.2)。没有对 $\rho$ 的分母另作一次整数范数估计。证毕。
+
+## 25. 资源界进入原左 GNS 修复的同校准应用
+
+**命题 25.1（原生事件供给命题 20.2 的谱条件）。** 固定 $(\mathcal T,t_*,I,\mathcal E)\in\mathfrak F$，令 $\rho=\Xi/p$，并给定含同一单位的 $*$-子代数 $A\subseteq M_d$。$E=E_{\rho,A}$ 必须仍是定义 6.2 的实际左 GNS 投影，不加正性或 CP 前件。$P_A$ 为定义 20.1 的普通迹条件期望，置
+
+$$
+h=P_A(\rho),\quad \lambda=\lambda_{\min}(h),\quad
+\mu=\lambda_{\min}(P_A(\Xi))=p\lambda,\quad
+\Lambda_{L,d}=\kappa^{-2Ld}.
+\tag{25.1}
+$$
+
+缺陷完整保留原式 (20.1) 的全部复输入量词：
+
+$$
+\begin{aligned}
+\epsilon&=\sup_{\substack{x\in M_d,\ \|x\|_{\rm op}\le1\\
+a\in A,\ \|a\|_{\rm op}\le1}}
+ |\operatorname{Tr}(\rho(E(x)a-xa))|,\\
+\delta_{\rm raw}&=\sup_{\substack{x\in M_d,\ \|x\|_{\rm op}\le1\\
+a\in A,\ \|a\|_{\rm op}\le1}}
+ |\operatorname{Tr}(\Xi(E(x)a-xa))|=p\epsilon.
+\end{aligned}
+\tag{25.2}
+$$
+
+原命题 20.2 所定义的同一 $\sigma,F$ 满足
+
+$$
+\begin{aligned}
+\mu&\ge\Lambda_{L,d},&
+\lambda&\ge\Lambda_{L,d}/p,\\
+\|E-F\|_{\rm cb}
+&\le\frac\epsilon\lambda
+ =\frac{p\epsilon}{\mu}
+ =\frac{\delta_{\rm raw}}\mu
+ \le\kappa^{2Ld}\delta_{\rm raw},\\
+\|\rho-\sigma\|_1&\le\epsilon=\delta_{\rm raw}/p,&
+p\|\rho-\sigma\|_1&\le\delta_{\rm raw}.
+\end{aligned}
+\tag{25.3}
+$$
+
+例如原始量纲的充分条件 $\delta_{\rm raw}\le\eta_0\Lambda_{L,d}$ 保证 $\|E-F\|_{\rm cb}\le\eta_0$。若只有 $\delta_{\rm raw}$ 而不知实际 $p$，式 (24.1) 另给态界 $\|\rho-\sigma\|_1\le\kappa^{2L}\delta_{\rm raw}$；这一态界不再作为映射界的额外乘子。
+
+证明。由定理 24.1，$\Xi\ge\Lambda_{L,d}I$。$P_A$ 正且保单位元，故 $P_A(\Xi)\ge\Lambda_{L,d}I$；线性和 $p>0$ 给 $\mu=p\lambda$。在同一 $\rho,A,E$ 上直接应用命题 20.2 得余式。以 $\Xi$ 定义左内积只将原内积整体乘以 $p$，不会改变正交投影 $E$，所以式 (25.2) 没有暗换代表。归一化因子在 $\epsilon=\delta_{\rm raw}/p$ 和 $\lambda=\mu/p$ 中精确抵消；若在此之外再乘一个独立的 $p^{-1}$，便不是式 (25.3) 的推导。证毕。
+
+由同一命题 20.2 及推论 22.2，$P_A(\sigma)=P_A(\rho)$，$F$ 是到恰好 $A$ 的 UCP 回缩并有 CPTP 对偶；原 $E$ 在 $\epsilon>0$ 时仍未被证明为正。对所有 $a,b\in A$，$\operatorname{Tr}(\rho a^\dagger b)=\operatorname{Tr}(\sigma a^\dagger b)$，所以原保强度的二元 Gram／Finite3 几何不变。式 (25.3) 仅给这些既有结论补上实际原生族的谱参数，不重证量子表示或重建原则，也不把有限门菜单升级为完整复比较球的认证菜单。
+
+**命题 25.2（已有原接口的更便宜谱供应）。** Setting-Source 式 (9.7)–(9.9) 的设置报告边际为 $\operatorname{diag}(r,s)$，其中 $r=\varphi^{-2}$、$s=\varphi^{-1}$，故单个原设置接口的谱底直接为 $r$，两个设置合起来为 $r^2$。原式 (9.5) 所选近 Bell 字若满足其 $\varepsilon_*=10^{-3}$ 向量比较界，则共同切口处的原生 $b_1$ 边际满足
+
+$$
+\lambda_{\min}(\rho_{b_1})>\tfrac12-\varepsilon_*=0.499.
+\tag{25.4}
+$$
+
+证明。设置谱从原来的两个质量直接读取，不需要字长。近 Bell 比较目标 $e=J(|00\rangle+|11\rangle)/\sqrt2$ 在 $b_1$ 的边际是 $I_2/2$；允许整体相位的纯向量距离小于 $\varepsilon_*$，故纯态半迹距离及约化半迹距离均小于 $\varepsilon_*$。二维迹零 Hermitian 差的算符范数等于其半迹范数，因此最小特征值严格大于 $1/2-\varepsilon_*$。设置提取不操作源，故此界也适用于 $t_*$；正质量设置事件不改变该源边际。证毕。
+
+这两个原接口有现成比较，使用其直接界即可。原来选定的 $w,u_x,v_y$ 只有有限存在性，原文没有给出已计算字长；不能给它们杜撰数值资源。在实际字一旦给定时，原共同切口前缀的 $L=|w|+2$，整段协议的最大调用数为 $|w|+2+\max_x|u_x|+\max_y|v_y|$，两个二值设置测量后再作一次完整计算基终端测量；若某字含逆字母，长度先按九次代换。定理 24.1 与命题 25.1 的用途是没有上述参考态比较的其他实际有限历史、事件及忠实切口，而非把这些较便宜的既有估计重新计为成果。
+
+## 26. 受限源字和原报告单元中的显式忠实实例
+
+**命题 26.1（三个源调用、两个原设置调用与实际校准）。** 从式 (23.1) 的同一个根出发，选择备选源字按时间依次调用 $K_3,K_2,K_1$，即
+
+$$
+\psi_{\rm alt}=K_1K_2K_3J|00\rangle.
+\tag{26.1}
+$$
+
+再依原表调用 $K_{10},K_{13}$，依次计算投影读取 $X=b_{10},Y=b_{13}$，在局部结果路由前的原共同切口 $t_*$ 取已得事件 $\mathcal E_{00}=\{X=0,Y=0\}$。令待校准的原生因子恰为 $R=H_{\{1\}}$，于是 $d=2$，原生补因子 $Z=H_{\{-1,0,\ldots,14\}\setminus\{1\}}$ 的维数为 $e=32768$。该事件的同一校准为
+
+$$
+\begin{gathered}
+p=r^2=\varphi^{-4},\qquad \Xi=p\chi,\qquad \rho=\chi,\\
+\chi=
+\begin{pmatrix}
+s&r\beta\zeta^{-4}\\
+r\beta\zeta^4&r
+\end{pmatrix},\qquad
+\det\chi=r^2=\varphi^{-4}>0,
+\qquad r=t^2,\quad s=t.
+\end{gathered}
+\tag{26.2}
+$$
+
+若 $A$ 为该原生位的计算基对角代数，则原始可见校准和精确系数为
+
+$$
+h=P_A(\chi)=\operatorname{diag}(s,r),\qquad
+\lambda=r,\qquad \mu=pr=r^3,\qquad
+\epsilon=4r\beta,\qquad \delta_{\rm raw}=4r^3\beta.
+\tag{26.3}
+$$
+
+这些是同一 $\rho$ 上命题 25.1 的实例，未把可任意准备的数学态当作输入。
+
+证明。活跃黄金块记作
+
+$$
+K_Q=\begin{pmatrix}a&b\\b&c\end{pmatrix},\qquad
+ a=\zeta[1+(\zeta-1)t]=-t,\quad
+ b=\zeta(\zeta-1)\beta^3=-\beta\zeta^4,\quad
+ c=\zeta[1+(\zeta-1)t^2]=-t\zeta^3.
+\tag{26.4}
+$$
+
+由 $\zeta^4-\zeta^3+\zeta^2-\zeta+1=0$ 可得 $t\zeta(\zeta-1)=-\zeta^4$，再用 $\zeta^5=-1$ 分别化简对角项和 $\beta^3=\beta t$ 的非对角项，即得这些等式；特别 $|a|^2=|c|^2=r$、$|b|^2=s$、$r+s=1$。根上 $(b_1,b_2,b_3)=(0,0,1)$，其两外邻 $b_0=b_4=0$；其他源位不变。第一次 $K_3$ 给 $b|000\rangle+c|001\rangle$；第二次 $K_2$ 只在 $b_3=0$ 的分支活跃，在 $b_3=1$ 时是标量 $\zeta$，所以给
+
+$$
+ab|000\rangle+b^2|010\rangle+\zeta c|001\rangle.
+$$
+
+第三次 $K_1$ 在 $b_2=0$ 时活跃，在 $b_2=1$ 时是 $\zeta$，故得到精确的五项向量
+
+$$
+\begin{aligned}
+\psi_{123}={}&a^2b|000\rangle+ab^2|100\rangle
+       +\zeta ac|001\rangle+\zeta bc|101\rangle
+       +\zeta b^2|010\rangle\\
+={}&(a|0\rangle+b|1\rangle)_{b_1}
+       \otimes(ab|00\rangle+\zeta c|01\rangle)_{b_2b_3}
+       +|0\rangle_{b_1}\otimes\zeta b^2|10\rangle_{b_2b_3}.
+\end{aligned}
+\tag{26.5}
+$$
+
+全部五个基词合法且系数非零。右边两个补向量正交，平方范数分别为
+
+$$
+|ab|^2+|c|^2=rs+r=s,\qquad |b|^4=s^2=r.
+$$
+
+第一因子的 $f=a|0\rangle+b|1\rangle$ 已归一。因此实际偏迹为
+
+$$
+\chi=s|f\rangle\langle f|+r|0\rangle\langle0|.
+\tag{26.6}
+$$
+
+这两个权重由同一原生向量中的正交补项算出，不是外加校准混合。其对角元为 $sr+r=s$、$s^2=r$，非对角元为 $sa\overline b=r\beta\zeta^{-4}$。又 $sr-r^2\beta^2=t^3-t^5=t^4=r^2$，证明式 (26.2) 的满秩。实际特征值为
+
+$$
+\lambda_\pm(\chi)=\frac{1\pm\sqrt{1-4r^2}}2>0.
+\tag{26.7}
+$$
+
+原来四个设置邻位 $b_9,b_{11},b_{12},b_{14}$ 始终为零，所以两个设置调用都作用于原来的 $000$ 块，输出同一个 $f$。两个计算投影报告的完整分支原生密度正是
+
+$$
+D_{xy}=p_xp_y\,|xy\rangle\langle xy|_{XY}
+       \otimes|\psi_{\rm alt}\rangle\langle\psi_{\rm alt}|
+       \otimes|0000\rangle\langle0000|_{9,11,12,14},
+\qquad p_0=r,\quad p_1=s.
+\tag{26.8}
+$$
+
+非设置控制在此切口为原规定的固定 $c_*$。这是 Setting-Source 式 (9.8)–(9.10) 在允许备选字上的直接基向量对应，未加 ready 条件。将 $x=y=0$ 的已得分支约化到 $b_1$ 就是 $\Xi=r^2\chi$；除以实际质量 $r^2$ 才得到 $\rho=\chi$。因此 $\det\Xi=r^6=\varphi^{-12}$，不是 $\det\chi$。
+
+为明确完整终端律，可取原控制表中的 $u_0=u_1=v_0=v_1$ 全为空字，随后作一次全部十六位的计算基终端投影。此时
+
+$$
+\Pr(x,y,z,h)=p_xp_y\,
+ |\langle z|(|xy\rangle\otimes\psi_{\rm alt}\otimes|0000\rangle)|^2
+ \mathbf1_{\{h=h_{xy}(z)\}}.
+\tag{26.9}
+$$
+
+因子按原式 (8.7) 排列，$h$ 保留五次实际调用、两次设置报告、终端词及停止。每条路径恰有五次正向门调用，没有逆门；到 $t_*$ 有两次二值投影和四个设置历史，之后是一次 $2^{16}$ 结果的完整计算投影。等价地，终端可逐位读，最大十八次二值投影。最大调用数 $L=5$ 在每个设置分支相同；非设置控制表可取阶段 $0,\ldots,8$：阶段 $0,\ldots,4$ 依次执行这五个门，阶段 $5,6$ 依次读 $X,Y$，阶段 $7$ 是 $t_*$ 并执行终端投影，阶段 $8$ 为正常停止；再保留三个零质量失败、拒绝、提前停止吸收标签，共十二个控制标签。固定程序只有一个已选值，前缀调用档案由阶段唯一决定，报告仍留在原 $X,Y$ 单元；没有结果依赖地址或额外读表副本。正常终止质量为一，失败、拒绝及提前停止质量为零而标签保留。终端标签域有 $4\cdot2^{16}$ 个 $(x,y,z)$ 位置；式 (26.5) 的五个非零源词与四个设置值给出二十个正质量位置，其余原生离码及非法标签仍有定义并赋零质量。事件 $\mathcal E_{00}$ 在终端测量前已经获得，不依赖这些未来结果。
+
+最后计算实际 GNS 对应。记 $\gamma=r\beta\zeta^{-4}$。由原式 (20.7)，
+
+$$
+E(x)=\operatorname{diag}\left(x_{00}+x_{01}\overline\gamma/s,
+                              x_{11}+x_{10}\gamma/r\right).
+\tag{26.10}
+$$
+
+对角 $A$ 下，$a=\operatorname{diag}(a_0,a_1)$ 与 $h$ 交换，原式 (20.8) 中的矩阵为
+
+$$
+\chi a-a\chi=(a_1-a_0)
+\begin{pmatrix}0&\gamma\\-\overline\gamma&0\end{pmatrix}.
+$$
+
+其两个奇异值均为 $|\gamma||a_1-a_0|$，故普通迹范数为 $2|\gamma||a_1-a_0|$。完整复收缩球上 $|a_1-a_0|\le2$，并在 $a=\operatorname{diag}(1,-1)$ 取等，因此 $\epsilon=4|\gamma|=4r\beta$，由式 (25.2) 得 $\delta_{\rm raw}=p\epsilon=4r^3\beta$。也可直接取
+
+$$
+u=\gamma/|\gamma|,\qquad
+x=\begin{pmatrix}0&u\\-\overline u&0\end{pmatrix},\qquad
+a=\operatorname{diag}(1,-1).
+$$
+
+此时 $x^\dagger x=I$、$\|a\|_{\rm op}=1$，且式 (20.8) 给出 $\operatorname{Tr}(\chi(E(x)a-xa))=\operatorname{Tr}((\chi a-a\chi)x)=4|\gamma|$。这是原数学比较域中达到缺陷的收缩对，不增加任何原生取得或控制权限。原命题 20.2 的 $q=I$，故 $\sigma=h$、$F=P_A$；态的迹范数误差 $\|\chi-h\|_1=2|\gamma|=\epsilon/2$ 与上述完整复比较缺陷不同。每个有限放大上的两个非对角块压缩给
+
+$$
+\|E-F\|_{\rm cb}=|\gamma|/r=\beta,
+\qquad
+\frac\epsilon\lambda=\frac{\delta_{\rm raw}}\mu=4\beta.
+\tag{26.11}
+$$
+
+上界取两个输入块的范数，较大系数为 $|\gamma|/r$；取相应矩阵单位达到它。式 (26.11) 的充分界不被冒称最优。由于 $\gamma\ne0$，原 $E$ 也不保持所有 Hermitian 输入的伴随，不能当作正映射。这里并未要求缺陷很小；它提供确切、非零缺陷、实际忠实校准的源对应。证毕。
+
+**命题 26.2（同报告律中的忠实切口与正质量失秩）。** 在式 (26.8) 的同一个 $t_*$，另预先声明原生因子 $R'=H_{\{1,10,13\}}$，则 $d'=8$、$e'=8192$。全事件的约化是
+
+$$
+\rho'=\chi\otimes D_X\otimes D_Y>0,
+\qquad D_X=D_Y=\operatorname{diag}(r,s),\qquad
+\lambda_{\min}(\rho')=\lambda_-(\chi)r^2.
+\tag{26.12}
+$$
+
+但在不改变 $R'$ 的条件下，已得事件 $X=0$ 的质量是 $r>0$，未归一约化及秩为
+
+$$
+\Xi'_{X=0}=r\,\chi\otimes|0\rangle\langle0|_X\otimes D_Y,
+\qquad\operatorname{rank}\Xi'_{X=0}=4<8.
+\tag{26.13}
+$$
+
+事件 $X=Y=0$ 的质量为 $r^2>0$，秩更降至二。证明直接将式 (26.8) 对指定因子求和或选块。故全事件在 $R'$ 上属于 $\mathfrak F$，正质量的指定报告事件在同一 $R'$ 上却不属于。命题 26.1 使用完整原生位 $b_1$ 的二维张量因子，式 (26.13) 使用八维张量因子；二者是明确不同的因子选择，不是对奇异八维校准作支撑压缩。数学偏迹没有物理删除报告，也没有复制设置记录。证毕。
+
+源字 $K_1K_2K_3$ 是原 $0,\ldots,6$ 准备域内的一个明确备选字，不替换原式 (9.5) 选定的近 Bell 字。其 $b_1$ 边际式 (26.7) 及 $h$ 与近 Bell 的式 (25.4) 是不同对象；不把该备选字称为原非经典相关协议。它只见证源族、事件和谱应用确实有共同实例，不单独计为新的重建结论。
+
+## 27. 供应关系与未覆盖的域
+
+定理 24.1 和命题 25.1 的 `repo-derived` 增量是：对同一固定十六位根、实际黄金矩阵、完整有限投影反馈树及已得事件，用完整树的嵌入能量估计和实际奇偶分级，将未归一原生约化的行列式降到二次整数域，供给原命题 20.2 的同校准谱参数。标准整数范数和矩阵范数不等式为成熟供应，不主张世界范围新颖性。
+
+| 来源 | 在此使用的准确范围 |
+| --- | --- |
+| [V15 §§3、8.1–8.3、9.1、引理 9.4](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md) | 完整实际门、有限记录菜单、无分母整性、所有嵌入的逐门范数、分支奇偶分级及八次域。完整自适应树的式 (24.6) 和约化行列式的二次域应用不由其酉字界直接代入取得。 |
+| [Setting-Source 定义 8.1–8.3、式 (8.5)、(8.7a)、(9.8)–(9.12)](AURIC_SINGLE_PURE_WHOLE_SETTING_SOURCE_RELATIONS_V78_CONTINUATION.md) | 唯一根、受限源字、原报告单元、非选择投影语义、共同切口及完整返回律。其设置谱与近 Bell 比较已经足够的接口按命题 25.2 直接消费。 |
+| [Milne, *Algebraic Number Theory*, v3.08, Proposition 2.19、Corollaries 2.20–2.21](https://www.jmilne.org/math/CourseNotes/ANT.pdf) | `literature-attested`：有限数域范数为嵌入乘积，整元的范数为整数，非零整元范数非零。它不提供本原生树的共轭大小、奇偶约化或忠实切口。 |
+| [Remscrim, *The Power of a Single Qubit: Two-way Quantum Finite Automata and the Word Problem*, arXiv:2003.09879v2, Lemma 3.6](https://arxiv.org/abs/2003.09879v2) | `literature-attested` 的相邻方法是有限代数酉生成元的指数型字分离及整数范数论证；其迹与中心分离结论不是自适应投影树或切口谱定理，不借用其提取指数。 |
+| 本卷定义 6.1、20.1、命题 20.2、§§21–22 | 原完整复缺陷、未知正性的实际左 GNS $E$、有条件数的 $\sigma,F$ 及可见 Gram／Finite3 结论全部复用。这里没有缩小输入比较球或修改修复目标。 |
+| [V38 §§5、10](AURIC_COMPLETE_QUANTUM_PROCESSES_INTERNAL_MEMORY_AND_RANK_BOUNDARY_STABILITY_V38.md)；[Native Terminal Certification §§18–23](RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md) | 已有条件质量、秩边界稳定、实际纯源面上的终端区分范数及字典条件数。它们不供应本 $\rho=\Xi/p$ 的黄金资源谱底，也不被重复计作此应用。 |
+| [V94 定理 4.2、17.1、20.1](AURIC_BINARY_REFERENCE_ENDOGENOUS_SUFFICIENT_REDUCTION_AND_QUANTUM_VISIBLE_ALGEBRA_V94.md) | 条件可见代数／CP 分类、内部记录等距及逐分支自治插入；不从其抽象等距取得原生黄金门编译、同一 $\rho$ 的制备或此资源界。 |
+
+式 (24.2) 不覆盖自由选定的任意校准权重、任意输入态、任意代数基或任意测量菜单；尤其不能只因某校准忠实就断言它有此 $L$。其他切口必须重新声明原生位置、补因子及满秩条件。奇异事件、支撑压缩、无限重试、非完整结果树、未计价的相干控制、外来分母和随机币都没有进入此结论。对固定 $d$，$L$ 增大时此谱底可以趋零，故不与 §21 的坏条件数现象冲突，也不是资源无关的下界。
+
+在原共同切口，完整返回源 $Q$ 包括全部非设置原生位、固定非设置控制和档案；Setting-Source 式 (9.9) 的条件 $Q$ 态是纯态，秩为一。此处较小原生因子的忠实性不使整个 $Q$ 忠实。原生报告边际的数学选择也不实现任何档案复制、擦除或共同全历史取得。完整复比较访问、$F$ 或 $\sigma$ 的原生实现、V81 的原共同分支／全程返回取得仍需各自的实际历史与返回合同；终端诊断投影、抽象范数或一般复制障碍不能替代它们。唯一 $\Omega$ 的内部读出解释保持定义 22.1 的合法联合域；共同起源不增添独立性和自由访问。Finite3 仍为保尺度的二元 Gram 几何，不限制整体 Hilbert 维数为三。本节组是上述模型中的解析条件推导，不推出经验性的量子起源或整体本体真实性。
+
+## 追加锚（本行以下为增补区）

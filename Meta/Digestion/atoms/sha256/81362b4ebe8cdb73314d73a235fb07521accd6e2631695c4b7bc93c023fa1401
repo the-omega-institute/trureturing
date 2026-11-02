@@ -1,0 +1,19 @@
+### 定义 3.2（二值参考保正）
+
+称 $R$ 满足二值参考保正，如果
+
+<a id="eq-c94-two-positive"></a>
+
+$$
+(\operatorname{id}_2\otimes R)(T)\ge0
+ \qquad\bigl(T\ge0\text{ 于 }\mathbb C^2\otimes H\bigr).
+\tag{3.1}
+$$
+
+这正是二正性。参考只有二维，但量词包括其与 $H$ 的全部正联合输入，
+包括纠缠输入；它不是只检查某一份选定 Bell 态或有限个试样。
+
+式 [(3.1)](#eq-c94-two-positive) 蕴含 $R$ 在单份输入上为正：
+把 $X\ge0$ 放到 $\lvert 0\rangle\langle 0\rvert\otimes X$ 即可。
+结合保迹性，$R$ 把每份密度态送到密度态。
+

@@ -1,0 +1,55 @@
+### 定理 19.1（酉变化与规范整理交换的充要条件）
+
+<a id="thm-c94-unitary-reference-gauge"></a>
+
+设 $U$ 为酉矩阵，且 $U^\dagger\mathcal AU=\mathcal A$。
+记 $\kappa=U\tau U^\dagger$。则
+
+<a id="eq-c94-unitary-reference-gauge"></a>
+
+$$
+R_\tau\operatorname{Ad}_U
+ =\operatorname{Ad}_U R_\tau
+ \quad\Longleftrightarrow\quad
+ \log\tau-\log\kappa\in\mathcal A.
+\tag{19.1}
+$$
+
+特别地，$U\tau U^\dagger=\tau$ 是充分条件，但一般比必要条件更强。
+
+**证明。**
+由定理 [11.1](#thm-c94-c93-implementation)，$R_\tau$ 是全部资料纤维的 C93 选择器。
+$U$ 规范化 $\mathcal A$，故共轭把每份 $\mathcal A$ 资料纤维双射到另一份这样的纤维。
+相对熵酉不变性与唯一最优给
+
+$$
+R_\kappa\operatorname{Ad}_U
+ =\operatorname{Ad}_U R_\tau.
+$$
+
+这里 $\kappa$ 仍有相应块乘积形式，所以同一实现定理适用。
+因此式 [(19.1)](#eq-c94-unitary-reference-gauge) 的左侧
+等价于两个全域选择器 $R_\tau=R_\kappa$。
+
+若 $\log\tau-\log\kappa\in\mathcal A$，
+则 $D(\rho\Vert\tau)-D(\rho\Vert\kappa)$
+在每份资料纤维上均为常数，故唯一最优点相同。
+反过来，取包含 $I/d$ 的那份资料纤维。
+它的最小共同支撑是 $I$，两种最优点均忠实。
+若选择器相同，记共同最优为 $\sigma$，C93 平衡给
+
+$$
+\log\sigma-\log\tau\in\mathcal A,
+ \qquad
+ \log\sigma-\log\kappa\in\mathcal A.
+$$
+
+两式相减便得右侧条件。这也正是 v93 的参照等价判据在满支撑纤维上的应用 [8](#ref-v93)。
+
+在块表示中，酉规范化子只在匹配的中心扇区间作置换，
+并在对应左右因子上分别作用；这是 Atlas 的既有有限代数正规化子定理 [3](#ref-atlas)。
+式 [(19.1)](#eq-c94-unitary-reference-gauge) 只要求隐藏参照
+$\eta_\alpha$ 被送到目标扇区的隐藏参照。
+只改变可见参照因子时，对数参照差属于 $\mathcal A$，
+可以改变已知读数而不改变整理规则。
+
