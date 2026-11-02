@@ -2556,12 +2556,12 @@ continuation $v$ of exactly $m$ actual promotions ends at $Q_d(m)$ and
 satisfies
 
 $$
-T_R(h_0v)-T_R(h_0)\ge A_d,
-\qquad A_d=\frac{dm}{2}-m+1.
+T_R(h_0v)-T_R(h_0)\ge \Lambda_d,
+\qquad \Lambda_d=\frac{dm}{2}-m+1.
 \tag{IV.84}
 $$
 
-Here $A_0=A_1=0$; strict growth is an asymptotic conclusion, not a claim
+Here $\Lambda_0=\Lambda_1=0$; strict growth is an asymptotic conclusion, not a claim
 at those two depths. For every $R$ and every integer $N\ge63$, there is
 a legal history of **exactly** $N$ events with
 
@@ -2622,11 +2622,11 @@ $$
 For $d=0$ the sum and the displayed expression are both zero. At the
 end Theorem 28.2 forces the common ordered term $Q_d(m)$, whose grade
 is $4m-1$. Additivity of actual edit counts proves (IV.84). It does not
-assert that the final record has length $A_d$; erasure can remove it.
+assert that the final record has length $\Lambda_d$; erasure can remove it.
 
 For a prescribed $N\ge63$, take the largest power of two
 $m=2^d\le(N+1)/4$. Reach $Q_d(0)$ by any legal prefix and then use
-(IV.84). Here $d\ge4$, so $A_d\ge dm/4$, and
+(IV.84). Here $d\ge4$, so $\Lambda_d\ge dm/4$, and
 $m>(N+1)/8$. If $r=N-(4m-1)$ is positive, append the $r$ actual splits
 at $L^{d+1},L^{d+2},\ldots,L^{d+r}$, as in Corollary 29.1. The first
 operand is beta in $Q_d(m)$ and each split creates the next left beta,
@@ -2659,9 +2659,9 @@ coding novelty.
 For each integer $j\ge0$, put
 
 $$
-M_j=2^j,\qquad B_j=\max\left(1,
+M_j=2^j,\qquad \Delta_j=\max\left(1,
 \left\lfloor\frac{2^j}{j+1}\right\rfloor\right),\qquad
-\mathcal S_j=\{M_j+qB_j:q\ge0,\ M_j+qB_j<2M_j\}.
+\mathcal S_j=\{M_j+q\Delta_j:q\ge0,\ M_j+q\Delta_j<2M_j\}.
 \tag{IV.90}
 $$
 
@@ -2747,12 +2747,12 @@ elsewhere after rewriting. Thus neither the construction nor its inverse
 uses a hidden persistent clock, tree copy or auxiliary advice.
 
 For the resource bounds fix a current grade $M=2^j\le n<2M$.
-Its last snapshot grade $b$ is in this same epoch, and $0\le n-b<B_j$.
+Its last snapshot grade $b$ is in this same epoch, and $0\le n-b<\Delta_j$.
 Before event $i\le n$ the leaf count is at most $i\le n<2^{j+1}$,
 so each chunk has at most $j+1$ bits. Hence
 
 $$
-|J_*(h)|\le4b+2+(B_j-1)(j+1)
+|J_*(h)|\le4b+2+(\Delta_j-1)(j+1)
 \le8M+2+M\le11n.
 \tag{IV.93}
 $$
@@ -2767,8 +2767,8 @@ record channel at a settled cut.
 
 There are exactly $M$ new event grades in $[M,2M)$. The non-snapshot
 appends there cost at most $M(j+1)$ altogether. Since $2^j\ge j+1$,
-$B_j\ge M/(2(j+1))$, and the number of snapshot grades is
-$\lceil M/B_j\rceil\le2(j+1)+1$. At a snapshot grade $s$ the actual
+$\Delta_j\ge M/(2(j+1))$, and the number of snapshot grades is
+$\lceil M/\Delta_j\rceil\le2(j+1)+1$. At a snapshot grade $s$ the actual
 rewrite costs
 
 $$
@@ -2863,7 +2863,7 @@ the two different right alpha leaves in opposite orders, reaching in
 both cases
 $\langle\langle\beta,\beta\rangle,\langle\beta,\beta\rangle\rangle
 =Q_1(2)$. They are distinct addressed histories. Grade seven belongs to
-$\mathcal S_2$, since $M_2=4$ and $B_2=1$. At that cut (IV.91) is
+$\mathcal S_2$, since $M_2=4$ and $\Delta_2=1$. At that cut (IV.91) is
 just the serialization of the common current term, with no journal
 suffix. The pair $(U,J_*)$ is therefore identical for these histories,
 so it cannot recover their different chronologies. On the other hand,
