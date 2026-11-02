@@ -74,7 +74,7 @@ internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
     private static Formula LessEqual(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
     private static Formula Add(Formula a, Formula b) => Seq(a, Plus, b);
     private static Formula Sub(Formula a, Formula b) => Seq(a, Minus, b);
-    private static Formula Mul(Formula a, Formula b) => Seq(a, Cdot, b);
+    private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
     private static Formula Or(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
     private static Formula Arrow(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
