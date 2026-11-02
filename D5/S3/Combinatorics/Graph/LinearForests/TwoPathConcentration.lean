@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 import D5.S3.Combinatorics.Graph.LinearForests.FiniteForestCatalan
 import D5.S3.StatisticalMechanics.HardCore.PartitionRelabeling
 import Mathlib.Combinatorics.SimpleGraph.Sum
+import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -330,14 +331,64 @@ structure ActualTwoPaths {α : Type*} [Fintype α] [DecidableEq α]
   adjacency : ∀ x y, G.Adj x y ↔
     (((pathGraph (2 * p + 1)) ⊕g (pathGraph (2 * q + 1))) ⊕g
       (G.induce (R : Set α))).Adj (labels x) (labels y)
-  left_A : ∀ i, labels.symm (.inl (.inl i)) ∈ A ↔ Odd i.val
-  left_B : ∀ i, labels.symm (.inl (.inl i)) ∈ B ↔ Even i.val
-  right_A : ∀ i, labels.symm (.inl (.inr i)) ∈ A ↔ Odd i.val
-  right_B : ∀ i, labels.symm (.inl (.inr i)) ∈ B ↔ Even i.val
+  left_start : labels.symm (.inl (.inl 0)) ∈ B
+  right_start : labels.symm (.inl (.inr 0)) ∈ B
 
 namespace ActualTwoPaths
 variable {α : Type*} [Fintype α] [DecidableEq α]
   {G : SimpleGraph α} {A B R : Finset α} {p q : ℕ}
+
+private lemma path_colours (n : ℕ) (f : Fin (n + 1) → α)
+    (hf : ∀ i j, (pathGraph (n + 1)).Adj i j → G.Adj (f i) (f j))
+    (hA : G.IsIndepSet (A : Set α)) (hB : G.IsIndepSet (B : Set α))
+    (hAB : Disjoint A B) (hcover : A ∪ B = univ) (hzero : f 0 ∈ B)
+    (i : Fin (n + 1)) : (f i ∈ A ↔ Odd i.val) ∧ (f i ∈ B ↔ Even i.val) := by
+  have cover (x : α) : x ∈ A ∨ x ∈ B := by simpa [← hcover] using mem_univ x
+  let beta : (pathGraph (n + 1)).Coloring Bool := Coloring.mk
+    (fun i => decide (f i ∈ B)) (by
+      intro i j hij
+      have hadj := hf i j hij
+      have hne : f i ≠ f j := hadj.ne
+      by_cases hi : f i ∈ B
+      · have hj : f j ∉ B := fun hj => hB hi hj hne hadj
+        simp [hi, hj]
+      · have hiA := (cover (f i)).resolve_right hi
+        have hj : f j ∈ B := by
+          by_contra hj
+          exact hA hiA ((cover (f j)).resolve_right hj) hne hadj
+        simp [hi, hj])
+  have hbzero : beta 0 = true := by exact decide_eq_true hzero
+  have hpzero : (pathGraph.bicoloring (n + 1)) 0 = true := by rfl
+  obtain ⟨walk⟩ := (connected_pathGraph_add_one n) 0 i
+  have hb := beta.even_length_iff_congr walk
+  have ht := (pathGraph.bicoloring (n + 1)).even_length_iff_congr walk
+  have hbi : f i ∈ B ↔ Even i.val := by
+    have hsame : (beta i : Prop) ↔ ((pathGraph.bicoloring (n + 1)) i : Prop) := by
+      simpa only [hbzero, hpzero, Bool.true_eq, true_iff] using hb.symm.trans ht
+    change (decide (f i ∈ B) = true) ↔ (decide (i.val % 2 = 0) = true) at hsame
+    simpa only [decide_eq_true_eq, ← Nat.even_iff] using hsame
+  refine ⟨?_, hbi⟩
+  have hab : f i ∈ A ↔ f i ∉ B := by
+    constructor
+    · intro hi hj; exact disjoint_left.mp hAB hi hj
+    · intro hi; exact (cover (f i)).resolve_right hi
+  rw [hab, hbi, Nat.not_even_iff_odd]
+
+private lemma left_colours (w : ActualTwoPaths G A B R p q)
+    (hA : G.IsIndepSet (A : Set α)) (hB : G.IsIndepSet (B : Set α))
+    (hAB : Disjoint A B) (hc : A ∪ B = univ) (i : Fin (2 * p + 1)) :
+    (w.labels.symm (.inl (.inl i)) ∈ A ↔ Odd i.val) ∧
+    (w.labels.symm (.inl (.inl i)) ∈ B ↔ Even i.val) := by
+  apply path_colours (2 * p) (fun j => w.labels.symm (.inl (.inl j)))
+    (fun j k hjk => (w.adjacency _ _).mpr (by simpa using hjk)) hA hB hAB hc w.left_start
+
+private lemma right_colours (w : ActualTwoPaths G A B R p q)
+    (hA : G.IsIndepSet (A : Set α)) (hB : G.IsIndepSet (B : Set α))
+    (hAB : Disjoint A B) (hc : A ∪ B = univ) (i : Fin (2 * q + 1)) :
+    (w.labels.symm (.inl (.inr i)) ∈ A ↔ Odd i.val) ∧
+    (w.labels.symm (.inl (.inr i)) ∈ B ↔ Even i.val) := by
+  apply path_colours (2 * q) (fun j => w.labels.symm (.inl (.inr j)))
+    (fun j k hjk => (w.adjacency _ _).mpr (by simpa using hjk)) hA hB hAB hc w.right_start
 
 /-- Coordinates of the new long path, the B isolate, and the untouched R. -/
 def afterLabels (w : ActualTwoPaths G A B R p q) :
@@ -399,6 +450,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
   {G : SimpleGraph α} {A B R : Finset α} {p q : ℕ}
 
 private lemma after_colours (w : ActualTwoPaths G A B R p q)
+    (hA : G.IsIndepSet (A : Set α)) (hB : G.IsIndepSet (B : Set α))
+    (hAB : Disjoint A B) (hc : A ∪ B = univ)
     (i : Fin (2 * p + (2 * q + 1))) :
     (w.afterLabels.symm (.inl (.inl i)) ∈ A ↔ Odd i.val) ∧
     (w.afterLabels.symm (.inl (.inl i)) ∈ B ↔ Even i.val) := by
@@ -407,16 +460,18 @@ private lemma after_colours (w : ActualTwoPaths G A B R p q)
         w.labels.symm (.inl (.inl (j.castAdd 1))) := by
       apply w.afterLabels.symm_apply_eq.mpr
       simp [afterLabels, join_left]
-    rw [he, w.left_A, w.left_B]
+    rw [he, (w.left_colours hA hB hAB hc _).1, (w.left_colours hA hB hAB hc _).2]
     simp
   · have he : w.afterLabels.symm (.inl (.inl (j.natAdd (2 * p)))) =
         w.labels.symm (.inl (.inr j)) := by
       apply w.afterLabels.symm_apply_eq.mpr
       simp [afterLabels, join_right]
-    rw [he, w.right_A, w.right_B]
+    rw [he, (w.right_colours hA hB hAB hc _).1, (w.right_colours hA hB hAB hc _).2]
     simp [Nat.odd_iff, Nat.even_iff, Nat.add_mod, Nat.mul_mod]
 
-private lemma after_isolate (w : ActualTwoPaths G A B R p q) (i : Fin 1) :
+private lemma after_isolate (w : ActualTwoPaths G A B R p q)
+    (hA : G.IsIndepSet (A : Set α)) (hB : G.IsIndepSet (B : Set α))
+    (hAB : Disjoint A B) (hc : A ∪ B = univ) (i : Fin 1) :
     w.afterLabels.symm (.inl (.inr i)) ∈ B := by
   have hi : i = 0 := Subsingleton.elim _ _
   subst i
@@ -424,7 +479,7 @@ private lemma after_isolate (w : ActualTwoPaths G A B R p q) (i : Fin 1) :
       w.labels.symm (.inl (.inl (Fin.last (2 * p)))) := by
     apply w.afterLabels.symm_apply_eq.mpr
     simp [afterLabels, join_isolate]
-  rw [he, w.left_B]
+  rw [he, (w.left_colours hA hB hAB hc _).2]
   simp [Nat.even_iff]
 
 private lemma after_rest_label (w : ActualTwoPaths G A B R p q) (r : (R : Set α)) :
@@ -584,14 +639,14 @@ theorem actual_two_path_concentration {α : Type*} [Fintype α] [DecidableEq α]
       (∀ x : (w.residual : Set α), (G.induce (w.residual : Set α)).degree x ≤ 2) →
       0 ≤ phi G univ m - phi w.after univ m) := by
   have hdiff := w.phi_difference hp hq m hm
-  refine ⟨fun _ _ => Iff.rfl, w.after_rest_label, w.after_colours, w.after_isolate,
+  refine ⟨fun _ _ => Iff.rfl, w.after_rest_label, w.after_colours hA hB hAB hcover, w.after_isolate hA hB hAB hcover,
     w.after_independent A hA 1 ?_, w.after_independent B hB 0 ?_,
     w.after_rest, w.residual_card hp hq, w.residual_rest, w.residual_adjacency,
     ?_, ?_, hdiff, ?_⟩
   · intro i hi
-    exact Nat.odd_iff.mp ((w.after_colours i).1.mp hi)
+    exact Nat.odd_iff.mp ((w.after_colours hA hB hAB hcover i).1.mp hi)
   · intro i hi
-    exact Nat.even_iff.mp ((w.after_colours i).2.mp hi)
+    exact Nat.even_iff.mp ((w.after_colours hA hB hAB hcover i).2.mp hi)
   · have h := configurations_relabel
       (((pathGraph (2 * p + 1)) ⊕g (pathGraph (2 * q + 1))) ⊕g
         (G.induce (R : Set α))) G w.labels.symm
