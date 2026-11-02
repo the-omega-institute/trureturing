@@ -133,7 +133,6 @@ private theorem second_cutoff_log_ratio :
       Real.log (second_cutoff_root t) ≤ (Real.log 2 + Real.log t) / 2 := h
       _ = ((Real.log 2 / Real.log t + 1) / 2) * Real.log t := by
         field_simp [ne_of_gt hlogt]
-        <;> ring
 
 /-- The root equation, rather than the crude root bracket, determines this limit. -/
 private theorem second_cutoff_root_ratio :
@@ -185,8 +184,8 @@ private theorem second_cutoff_root_second_order :
       atTop (𝓝 (-Real.log 2 / 2)) := by
     have hconst : Tendsto (fun _ : ℝ => Real.log 2) atTop (𝓝 (Real.log 2)) :=
       tendsto_const_nhds
-    simpa using (hsq.neg.mul (hconst.add (hslog.const_mul 2))).div
-        (hs.add_const 1) (by norm_num : (1 : ℝ) + 1 ≠ 0)
+    convert (hsq.neg.mul (hconst.add (hslog.const_mul 2))).div
+        (hs.add_const 1) (by norm_num : (1 : ℝ) + 1 ≠ 0) using 1 <;> norm_num
   have hLs : Tendsto (fun t : ℝ => Real.log t * (s t - 1))
       atTop (𝓝 (-Real.log 2 / 2)) := by
     apply hrhs.congr'
@@ -272,7 +271,6 @@ private theorem theta_sub_id_log_small :
         mul_le_mul_of_nonneg_left (div_le_div_of_nonneg_right hbound hx0.le) hlog
       _ = C * (Real.log x * Real.exp (-c * Real.log x ^ (1 / 10 : ℝ))) := by
         field_simp [ne_of_gt hx0]
-        <;> ring
   have hgaplog : Tendsto
       (fun x : ℝ => Real.log x * ((Chebyshev.psi x - Chebyshev.theta x) / x))
       atTop (𝓝 0) := by
@@ -324,7 +322,6 @@ private theorem psi_after_sqrt_small :
     rw [Real.sqrt_eq_rpow, Real.rpow_sub ht]
     field_simp [ne_of_gt (Real.rpow_pos_of_pos ht r),
       ne_of_gt (Real.rpow_pos_of_pos ht (1 / 2 : ℝ))]
-    <;> ring
   have hsmall (r : ℝ) (hr : r < 1 / 2) :
       Tendsto (fun t : ℝ => Real.log t *
         (Chebyshev.psi (t ^ r) / Real.sqrt t)) atTop (𝓝 0) := by
@@ -455,11 +452,11 @@ private theorem second_layer_cutoff_bracket :
       apply (div_eq_iff hden).mpr
       dsimp [A]
       field_simp [ne_of_gt hq0, ne_of_gt hA]
-      <;> ring
+      ring
     have hlogL : 1 / (A + 1) ≤ Real.log (1 + 1 / A) := by
       have hid : 1 - (1 + 1 / A)⁻¹ = 1 / (A + 1) := by
         field_simp [ne_of_gt hA, ne_of_gt hA1]
-        <;> ring
+        ring
       simpa only [hid] using Real.one_sub_inv_le_log_of_pos harg0
     have hlogU : Real.log (1 + 1 / A) < 1 / A := by
       have h := Real.log_lt_sub_one_of_pos harg0 (ne_of_gt harg1)
@@ -626,7 +623,6 @@ private theorem strict_inventory_third_layer_log_vanishing :
         rw [hpower]
         field_simp [ne_of_gt (Real.rpow_pos_of_pos ht0 (1 / 3 : ℝ)),
           ne_of_gt (Real.rpow_pos_of_pos ht0 (1 / 6 : ℝ))]
-        <;> ring
   have hlimit : Tendsto
       (fun t : ℝ => 12 * (Real.log t ^ 2 / t ^ (1 / 6 : ℝ))) atTop (𝓝 0) := by
     simpa only [mul_zero] using hlogpow.const_mul 12
@@ -672,7 +668,7 @@ private theorem theta_endpoint_second_order (x : ℝ → ℝ)
     rw [Real.log_div (ne_of_gt (lt_trans zero_lt_one hxt))
       (ne_of_gt (Real.sqrt_pos.mpr ht0)), Real.log_sqrt ht0.le]
     field_simp [ne_of_gt (Real.log_pos (show 1 < t by linarith))]
-    <;> ring
+    ring
   have hinv : Tendsto (fun t : ℝ => Real.log t / Real.log (x t)) atTop (𝓝 2) := by
     simpa only [inv_div, div_one] using
       hlogratio.inv₀ (by norm_num : (1 / 2 : ℝ) ≠ 0)
@@ -686,7 +682,6 @@ private theorem theta_endpoint_second_order (x : ℝ → ℝ)
     have ht0 : 0 < t := by linarith
     field_simp [ne_of_gt (lt_trans zero_lt_one hxt), ne_of_gt (Real.log_pos hxt),
       ne_of_gt (Real.sqrt_pos.mpr ht0)]
-    <;> ring
   have h := herror.add hsecond
   simp only [zero_add] at h
   apply h.congr'
@@ -839,7 +834,7 @@ theorem strict_inventory_root_second_order :
           Chebyshev.theta (Real.sqrt t)) / Real.sqrt t) := by
       rw [hsplit]
       field_simp [ne_of_gt hsqrt]
-      <;> ring
+      ring
     rw [htelescope]
     have h1 := abs_lt.mp hfirst'
     have h2 := abs_lt.mp hsecond'
