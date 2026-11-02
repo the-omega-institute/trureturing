@@ -482,65 +482,91 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
           | cons c p => exact shifted c (.split p) rfl
 
 
+/-- Membership conditions for the actual addressed leaf required by a call. -/
+private def AncestorReady (b : Bool) (I : Set Call) (v : Source) : Call → Prop
+  | .promote p => Created I p ∧ birthAt b p = true ∧ .promote p ∉ I ∧
+      (∀ l r, v = .mul l r → .split p ∉ I)
+  | .split p => Created I p ∧ (birthAt b p = false ∨ .promote p ∈ I) ∧
+      (∀ l r, v = .mul l r → .split p ∉ I)
+
+private theorem event_target (b : Bool) (t : Source) (e : Call) (he : e ∈ events b t) :
+    ∃ v, subtree (address e) t = some v ∧ v ≠ .of true := by
+  induction t generalizing b e with
+  | of a => cases a <;> cases b <;> simp_all [events, address, subtree]
+  | mul l r il ir =>
+      have shifted : ∀ (c : Bool) (d : Call), e = d.shift [c] →
+          ∃ v, subtree (address e) (.mul l r) = some v ∧ v ≠ .of true := by
+        intro c d hed
+        subst e
+        have hm := (shift_mem b c l r d).mp he
+        cases c
+        · simpa [address, Call.shift, subtree] using il false d hm
+        · simpa [address, Call.shift, subtree] using ir true d hm
+      cases e with
+      | promote p => cases p with
+        | nil => exact ⟨.mul l r, rfl, by simp⟩
+        | cons c p => exact shifted c (.promote p) rfl
+      | split p => cases p with
+        | nil => exact ⟨.mul l r, rfl, by simp⟩
+        | cons c p => exact shifted c (.split p) rfl
+
+private theorem enabled_ancestor (b : Bool) (t : Source) (I : Set Call)
+    (hI : Ideal b t I) (e : Call) (he : e ∈ events b t) (v : Source)
+    (hv : subtree (address e) t = some v) :
+    Enabled b t I e ↔ AncestorReady b I v e := by
+  induction t generalizing b I e with
+  | of a =>
+      cases a <;> cases b <;> simp_all [events, address, subtree, AncestorReady,
+        Created, birthAt, Enabled]
+  | mul l r il ir =>
+      have shifted : ∀ (c : Bool) (d : Call), e = d.shift [c] →
+          (Enabled b (.mul l r) I e ↔ AncestorReady b I v e) := by
+        intro c d hed
+        subst e
+        have hm := (shift_mem b c l r d).mp he
+        have hp : subtree (address d) (if c then r else l) = some v := by
+          cases c <;> cases d <;> simpa [address, Call.shift, subtree] using hv
+        have ih : Enabled c (if c then r else l) (sectionAt I [c]) d ↔
+            AncestorReady c (sectionAt I [c]) v d := by
+          cases c
+          · exact il false _ (ideal_section b false l r I hI) d hm hp
+          · exact ir true _ (ideal_section b true l r I hI) d hm hp
+        rw [enabled_shift b c l r I hI d]
+        cases d <;> simpa [AncestorReady, Created, birthAt, Call.shift, sectionAt,
+          and_assoc] using and_congr_right (fun _ : Call.split [] ∈ I => ih)
+      cases e with
+      | promote p => cases p with
+        | nil =>
+            have hb : b = true := ((promote_root_mem b (.mul l r)).mp he).1
+            have hv' : v = .mul l r := by simpa [address, subtree] using hv.symm
+            subst v
+            subst b
+            rw [enabled_promote_root]
+            constructor
+            · intro hp
+              refine ⟨trivial, rfl, hp, ?_⟩
+              intro x y _ hs
+              exact hp (ideal_split_promotion true l r I hI hs rfl)
+            · exact fun h => h.2.2.1
+        | cons c p => exact shifted c (.promote p) rfl
+      | split p => cases p with
+        | nil =>
+            have hv' : v = .mul l r := by simpa [address, subtree] using hv.symm
+            subst v
+            cases b <;> simp [AncestorReady, Created, birthAt, enabled_split_root]
+        | cons c p => exact shifted c (.split p) rfl
+
 /-- On every supported downclosed membership cut, the actual guard is exactly
-freshness plus predecessor enabling. No native simulation is a hypothesis. -/
+freshness plus predecessor enabling. The guard/ancestor witness is applied at
+the actual event address, with no native simulation hypothesis. -/
 theorem guard_enabled (b : Bool) (t : Source) (I : Set Call)
     (hb : Born b t) (hI : Ideal b t I) (e : Call) (he : e ∈ events b t) :
     Guard e (cutTerm b t I) ↔ Enabled b t I e := by
-  classical
-  induction t generalizing b I e with
-  | of a =>
-      cases a <;> cases b <;> simp_all [events]
-      subst e
-      simp [Guard, cutTerm, subtree, Enabled]
-  | mul l r il ir =>
-      have hc := born_children b l r hb
-      have shifted : ∀ (c : Bool) (d : Call), e = d.shift [c] →
-          (Guard e (cutTerm b (.mul l r) I) ↔ Enabled b (.mul l r) I e) := by
-        intro c d hed
-        subst e
-        rw [enabled_shift b c l r I hI d]
-        by_cases hs : Call.split [] ∈ I
-        · simp only [hs, true_and]
-          have hi := ideal_section b c l r I hI
-          have hm := (shift_mem b c l r d).mp he
-          cases c
-          · cases d <;>
-              simpa [Guard, cutTerm, hs, Call.shift, subtree] using
-                il false (sectionAt I [false]) hc.1 hi _ hm
-          · cases d <;>
-              simpa [Guard, cutTerm, hs, Call.shift, subtree] using
-                ir true (sectionAt I [true]) hc.2 hi _ hm
-        · simp only [hs, false_and, iff_false]
-          cases d <;> cases c <;> cases b <;>
-            simp [Guard, Call.shift, cutTerm, hs, subtree]
-          all_goals split_ifs <;> simp [subtree]
-      cases e with
-      | promote p =>
-          cases p with
-          | nil =>
-              have hb' := ((promote_root_mem b (.mul l r)).mp he).1
-              subst b
-              rw [enabled_promote_root]
-              have hh := (guard_ancestor (.mul l r) [] (.mul l r) rfl (by simp) true I).1
-              simp only [Created, birthAt, true_and] at hh
-              constructor
-              · exact fun h => (hh.mp h).1
-              · intro hp
-                apply hh.mpr
-                refine ⟨hp, ?_⟩
-                intro x y _ hs
-                exact hp (ideal_split_promotion true l r I hI hs rfl)
-          | cons c p => exact shifted c (.promote p) rfl
-      | split p =>
-          cases p with
-          | nil =>
-              rw [enabled_split_root]
-              have hh := (guard_ancestor (.mul l r) [] (.mul l r) rfl (by simp) b I).2
-              simp only [Created, birthAt, true_and] at hh
-              rw [hh]
-              cases b <;> simp <;> tauto
-          | cons c p => exact shifted c (.split p) rfl
+  obtain ⟨v, hv, hn⟩ := event_target b t e he
+  have ha := enabled_ancestor b t I hI e he v hv
+  cases e with
+  | promote p => exact (guard_ancestor t p v hv hn b I).1.trans ha.symm
+  | split p => exact (guard_ancestor t p v hv hn b I).2.trans ha.symm
 
 /-- Reading the event roster of a membership cut gives that very ideal.
 This invariant makes the cut independent of any chosen execution. -/

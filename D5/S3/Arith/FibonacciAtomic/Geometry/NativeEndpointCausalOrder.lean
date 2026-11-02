@@ -78,18 +78,14 @@ private theorem edge_lt (b : Bool) (t : Source) (c d : Call) (h : Edge b t c d) 
 private theorem lift_left (b : Bool) (l r : Source) {c d : Call}
     (h : Relation.TransGen (Edge false l) c d) :
     Relation.TransGen (Edge b (.mul l r)) (c.shift [false]) (d.shift [false]) := by
-  induction h with
-  | single h => exact .single (Or.inr (Or.inr (Or.inr (Or.inl ⟨_, _, rfl, rfl, h⟩))))
-  | tail h hlast ih =>
-      exact .tail ih (Or.inr (Or.inr (Or.inr (Or.inl ⟨_, _, rfl, rfl, hlast⟩))))
+  exact Relation.TransGen.lift (Call.shift [false])
+    (fun e f hef => Or.inr (Or.inr (Or.inr (Or.inl ⟨e, f, rfl, rfl, hef⟩)))) c d h
 
 private theorem lift_right (b : Bool) (l r : Source) {c d : Call}
     (h : Relation.TransGen (Edge true r) c d) :
     Relation.TransGen (Edge b (.mul l r)) (c.shift [true]) (d.shift [true]) := by
-  induction h with
-  | single h => exact .single (Or.inr (Or.inr (Or.inr (Or.inr ⟨_, _, rfl, rfl, h⟩))))
-  | tail h hlast ih =>
-      exact .tail ih (Or.inr (Or.inr (Or.inr (Or.inr ⟨_, _, rfl, rfl, hlast⟩))))
+  exact Relation.TransGen.lift (Call.shift [true])
+    (fun e f hef => Or.inr (Or.inr (Or.inr (Or.inr ⟨e, f, rfl, rfl, hef⟩)))) c d h
 
 private theorem complete (b : Bool) (t : Source) (c d : Call)
     (hc : c ∈ events b t) (hd : d ∈ events b t) (hcd : c < d) :
