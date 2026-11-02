@@ -48,8 +48,10 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                 "For every m and all masks b,a, the sum over x of sign(dot(b,x)+dot(a,chi(x))) is the Walsh coefficient at a of the inverse component associated with b. Reindex by the proved bijection chi and use its left inverse identity. Zero and all-one masks are included.", DescribeRole.Theorem),
             Node("inverse_phase_support_nonempty", "The cyclic Boolean phase support is nonempty", StatementSource.FromAuthor(PhaseNonemptyFormula()),
                 "For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. It is a statement about the phase sum; identification with the literal source trace remains a separate requirement.", DescribeRole.Theorem),
+            Node("walsh_constant_derivative_iff", "Constant Boolean derivatives and Walsh support", StatementSource.FromAuthor(WalshDerivativeFormula()),
+                "For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; it does not yet identify the affine-span dimension or the trace support.", DescribeRole.Theorem),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
-            Paragraph(Text("The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the equivalence between constant derivatives and affine constraints on Walsh support, the corresponding dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. None of these remaining statements is an assumption of the inverse or Walsh theorems above."))
+            Paragraph(Text("The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the corresponding affine-span dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. The constant-derivative/Walsh-support equivalence above does not by itself identify the trace support or settle the dimension bound."))
         ), []));
 
     private static DocumentBlock Node(string name, string title, StatementSource statement, string prose, DescribeRole role) =>
@@ -107,5 +109,20 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
         return Disp(All("m", Named("Nat"), All("b", w, All("a", w,
             Eq(Sum("x", w, Call("sign", Plus(Call("dot", b, x), Call("dot", a, Call("chi", x))))),
                 Call("walsh", Call("inverseComponent", m, b), a))))));
+    }
+    private static Formula WalshDerivativeFormula()
+    {
+        Formula n = F.Id("n"), f = F.Id("f"), u = F.Id("u"), c = F.Id("c"),
+            y = F.Id("y"), a = F.Id("a"), w = Word(n), bit = Call("ZMod", D(2));
+        Formula derivative = All("y", w,
+            Eq(Plus(Call("f", Plus(y, u)), Call("f", y)), c));
+        Formula support = All("a", w,
+            Imp(new Formula.Relation(Call("walsh", f, a), FormulaRelationOperator.NotEqual, D(0)),
+                Eq(Call("dot", a, u), c)));
+        return Disp(All("n", Named("Nat"),
+            Imp(Rel(D(0), FormulaRelationOperator.LessThan, n),
+                All("f", Arrow(w, bit), All("u", w, All("c", bit,
+                    new Formula.Logic(Grp(derivative), FormulaLogicOperator.Iff,
+                        Grp(support))))))));
     }
 }

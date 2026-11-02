@@ -212,9 +212,21 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 
 For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. It is a statement about the phase sum; identification with the literal source trace remains a separate requirement.
 
+**Theorem 1.18 (Constant Boolean derivatives and Walsh support).**
+
+$$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}\left(n\right) \to \mathrm{ZMod}\left(2\right),\; \forall u \in \mathrm{Word}\left(n\right),\; \forall c \in \mathrm{ZMod}\left(2\right),\; {\forall y \in \mathrm{Word}\left(n\right),\; {\mathrm{f}\left({y} + {u}\right)} + {\mathrm{f}\left(y\right)} = c} \Leftrightarrow {\forall a \in \mathrm{Word}\left(n\right),\; {\mathrm{walsh}\left(f, a\right) \ne 0} \Rightarrow {\mathrm{dot}\left(a, u\right) = c}}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_constant_derivative_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; it does not yet identify the affine-span dimension or the trace support.
+
 The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.
 
-The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the equivalence between constant derivatives and affine constraints on Walsh support, the corresponding dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. None of these remaining statements is an assumption of the inverse or Walsh theorems above.
+The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the corresponding affine-span dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. The constant-derivative/Walsh-support equivalence above does not by itself identify the trace support or settle the dimension bound.
 
 ## References
 
@@ -233,6 +245,7 @@ The affine-support assertion still requires the equality of the ordered matrix t
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.traceSupport`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_constant_derivative_iff`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_inversion`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_support_nonempty`
 - Dependency: [D5/S3/QuantumBounds/MerminMeasurementDependence/Coordinates](../../QuantumBounds/MerminMeasurementDependence/Coordinates.md)
