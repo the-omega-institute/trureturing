@@ -65,40 +65,13 @@ internal sealed class CyclicTriangleDiskDocument : IScribeDocumentDefinition
                 + "vanish, and successive zero seams connect all sector origins. Joining these "
                 + "actual paths gives the converse."),
             Definition("angle", "The sector angle", Positive(X(
-                Eq(Call("angle", F.Id("x")), F.Seq(
-                    F.Begin, F.Grp(F.Id("cases")),
-                    Multiply(Divide(Multiply(F.D(2), F.Id("pi")), F.Id("n")),
-                        Call("sector", F.Id("x"))), F.Amp, Eq(Radius(), F.D(0)), F.RowBreak,
-                    Multiply(Divide(Multiply(F.D(2), F.Id("pi")), F.Id("n")),
-                        Add(Call("sector", F.Id("x")), Divide(A(), Radius()))),
-                    F.Amp, Lt(F.D(0), Radius()),
-                    F.End, F.Grp(F.Id("cases")))))),
-                "At positive radius the fraction a/(a+b) subdivides the angular interval "
-                + "of the chosen sector. For a positive canonical representative it lies in [0,1). "
-                + "The auxiliary angle extends to the origin of sector i with value (2*pi/n)*i. "
-                + "The radius is nonnegative, so the zero and positive cases exhaust all points. "
-                + "The radial map has its own zero-radius value zero, independently of this angle extension."),
+                Eq(Call("angle", F.Id("x")), Multiply(Divide(Multiply(F.D(2), F.Id("pi")),
+                    F.Id("n")), Add(Call("sector", F.Id("x")), Divide(A(), Radius())))))),
+                "The fraction a/(a+b) subdivides the angular interval of the chosen sector. "
+                + "For a positive canonical representative it lies in [0,1)."),
             Definition("radial", "The complex radial expression", RadialFormula(),
                 "At radius zero the value is zero. At positive radius the complex "
                 + "exponential gives the prescribed angle and preserves the radius."),
-            Theorem("radial_norm", "The original exact radial norm", Positive(X(
-                Eq(Call("norm", Call("radial", F.Id("x"))), Radius()))),
-                "This is the existing radius identity, now public with its statement and proof unchanged. "
-                + "The actual affine-link strict chart consumes it to identify the preimage of the open unit disk with a+b<1. "
-                + "This API exposure is not a new mathematical theorem."),
-            Describe.Lean(DescribeId.Create("cyclic-triangle-positive-circle-angle"),
-                DeclarationHandle.Create(Prefix + "positive_circle_angle"), H("A polar angle in a half-open period"),
-                StatementSource.FromAuthor(F.Disp(All("z", F.Seq(F.Mathbb, F.Grp(F.Id("C"))),
-                    new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("theta"),
-                        F.Seq(F.Mathbb, F.Grp(F.Id("R"))),
-                        And(In(F.Id("theta"), new Formula.Apply(F.Seq(F.Operatorname, F.Grp(F.Id("Set")), F.Dot,
-                                F.Operatorname, F.Grp(F.Id("Ico"))),
-                            [F.D(0), Multiply(F.D(2), F.Seq(F.Operatorname, F.Grp(F.Id("Real")), F.Dot,
-                                F.Operatorname, F.Grp(F.Id("pi"))))])),
-                            Eq(Call("circleMap", F.D(0), new Formula.Norm(F.Id("z")), F.Id("theta")), F.Id("z"))))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Every complex number has a polar angle in [0, 2π), including zero."))),
-                DescribeRole.Theorem),
             Theorem("radial_eq_iff_related", "Exact fibers of the radial map", Positive(XY(
                 Iff(Eq(Call("radial", F.Id("x")), Call("radial", F.Id("y"))),
                     Call("Related", F.Id("x"), F.Id("y"))))),
@@ -143,17 +116,7 @@ internal sealed class CyclicTriangleDiskDocument : IScribeDocumentDefinition
                 "The bundled homeomorphism has exactly the induced radial map as its "
                 + "forward function. Restricting it to the inverse image of the open unit "
                 + "disk gives a homeomorphism to that open disk. This inverse image is "
-                + "an open neighborhood of the common apex class. Its inverse image under "
-                + "the class projection is exactly a+b < 1, and a+b=1 maps to the "
-                + "unit circle. For a return orbit of length r >= 1 the parameter "
-                + "n=3*r satisfies the source range n >= 3. Applying this fan model "
-                + "to an actual link still requires an ordered enumeration of all "
-                + "3*r corner occurrences, a biconditional between the original "
-                + "pairing closure and these seams, and the saturated openness and "
-                + "subspace quotient topology of the strict corner neighborhoods. "
-                + "The standalone fan homeomorphism establishes none of those "
-                + "correspondences or the orientability and genus of the full link. "
-                + "The fan-disk model and compact-to-Hausdorff criterion are classical."))));
+                + "an open neighborhood of the common apex class."))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string body) =>
         Node(name, title, formula, body, DescribeRole.Definition);

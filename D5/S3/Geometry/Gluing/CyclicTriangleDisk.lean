@@ -4,7 +4,7 @@
    mirror-E: none(waiver:explicit-cyclic-triangle-topology)
    anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Complex.CircleMap]
    utility: none
-   digest: Cyclic triangle seams carry an explicit radial disk homeomorphism. -/
+   digest: Actual cyclic triangle seams admit normal forms and an explicit radial disk homeomorphism. -/
 
 import Mathlib.Algebra.Group.Fin.Basic
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleMap
@@ -156,8 +156,8 @@ def radial {n : ℕ} [NeZero n] (x : Point n) : ℂ := by
 private theorem radius_nonneg {n : ℕ} (x : Point n) : 0 ≤ radius x :=
   add_nonneg x.2.property.1 x.2.property.2.1
 
-/-- The radial image norm is the sum of the triangle coordinates. -/
-theorem radial_norm {n : ℕ} [NeZero n] (x : Point n) :
+-- Consumed by the open-radius restriction client as well as this draft.
+private theorem radial_norm {n : ℕ} [NeZero n] (x : Point n) :
     ‖radial x‖ = radius x := by
   classical
   by_cases hr : radius x = 0
@@ -357,7 +357,7 @@ abbrev Disk := {z : ℂ // ‖z‖ ≤ 1}
 def diskRadial {n : ℕ} [NeZero n] (x : Point n) : Disk :=
   ⟨radial x, by rw [radial_norm]; exact x.2.property.2.2⟩
 
-theorem positive_circle_angle {z : ℂ} :
+private theorem positive_circle_angle {z : ℂ} :
     ∃ θ ∈ Set.Ico (0 : ℝ) (2 * Real.pi), circleMap 0 ‖z‖ θ = z := by
   have hz : z ∈ Metric.sphere (0 : ℂ) |‖z‖| := by simp
   rw [← image_circleMap_Ioc (0 : ℂ) ‖z‖] at hz

@@ -402,6 +402,7 @@ noncomputable section
 
 open CategoryTheory CategoryTheory.Limits Simplicial
 
+universe u
 
 namespace D5.S3.Geometry.FiniteSimplicialCellInduction
 
