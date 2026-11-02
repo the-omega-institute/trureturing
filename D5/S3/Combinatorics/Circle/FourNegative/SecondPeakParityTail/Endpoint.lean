@@ -515,6 +515,8 @@ theorem actualSource_second_peak_parity_tail_joint_lift (a b c d : ℕ)
     physical_selection a b c d h
   obtain ⟨hp,hold,hnew⟩ := physical_prefixes a b c d alpha S delta h
     hAlpha hS2 hSh hS4 hd0 hdJ hid hB
+  dsimp only [oldValue] at hold
+  dsimp only [newValue] at hnew
   let k := a+b+c+d
   let A := 1+2^a+2^(a+b)+2^(a+b+c)
   let word := physicalWord a b c d alpha S
