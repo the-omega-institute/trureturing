@@ -6,10 +6,8 @@
    utility: none
    digest: Shared partial transpose, all-unitary APPT and orthonormal cyclic Fourier sectors. -/
 
-import Mathlib.Analysis.Complex.Order
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.UnitaryGroup
 
 /-!
 Second-factor partial transpose and all-unitary APPT on product-indexed matrices.
