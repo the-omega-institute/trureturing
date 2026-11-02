@@ -4713,3 +4713,261 @@ counterexample. Assertion (26.28) remains unresolved; neither global
 sharpness nor literature priority is asserted. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Radial contraction, an interior margin and the remaining realizable boundary
+
+**Definition 27.1 (feedback radial functional).** Keep the original record,
+ordinary transpose and producer quantities of Sections 21–26, including
+$A_0=2+\sqrt{8/3}$, $\kappa$ of Theorem 21.3 and $\mathcal O$ of (26.27).
+For $w\in\mathbb C^4$ define the scalar functional
+
+$$
+m(w)=\max\left\{\max_j|w_j|,
+ \frac{\sum_j|w_j|-2\min_j|w_j|}{2}\right\}.
+\tag{27.1}
+$$
+
+This $m$ is a functional of feedback diagonal data, not a protocol measure.
+No triangle inequality or norm property is assumed.
+
+**Lemma 27.2 (exact radial boundary).** The set (23.1) is
+$\mathcal W=\{m\le1\}$, its interior is $\{m<1\}$, and
+
+$$
+\begin{aligned}
+\partial\mathcal W=\{m=1\}
+=\{z\in\mathcal W:\ &\max_j|z_j|=1\ \text{or}\\
+ &\sum_j|z_j|-2\min_j|z_j|=2\}.
+\end{aligned}
+\tag{27.2}
+$$
+
+Every nonzero $w\in\mathcal W$ has the unique radial representation
+$w=tz$ with $t=m(w)\in(0,1]$ and $m(z)=1$.
+
+Proof. Formula (27.1) is continuous, $m(w)=0$ exactly when $w=0$,
+and $m(tw)=t m(w)$ for every real $t\ge0$. Its two inequalities are
+exactly (23.1). Continuity makes $\{m<1\}$ open. If $m(z)=1$, the
+points $(1+\eta)z$, $\eta>0$, lie outside $\mathcal W$ and approach $z$;
+thus such a point is on the boundary. These observations prove (27.2)
+and the radial representation, without division at $w=0$.
+The first boundary type requires only one saturated coordinate; the
+second can have all coordinates strictly below one, as at
+$z=(2/3,2/3,2/3,0)$. This example has $m(z)=1$ and is realizable by
+Theorem 23.2. The full boundary is therefore not the coordinate torus.
+$\square$
+
+**Theorem 27.3 (radial inheritance with its sign conditions).** For every
+real $\gamma\ge0$, every $z\in\mathcal W$ and $t\in[0,1]$,
+
+$$
+\nu_\gamma(tz)\ge t^2\nu_\gamma(z)
+ +(1-t^2)(e^2-10\gamma),
+\tag{27.3}
+$$
+
+where $\nu_\gamma$ is precisely (23.20). Nonnegativity, respectively
+positivity, of the right side is sufficient for the corresponding sign
+of $\nu_\gamma(tz)$. In particular, if $0\le\gamma\le e^2/10$ and
+$\nu_\gamma(z)\ge0$, all $tz$ inherit nonnegativity. Under these hypotheses,
+$\nu_\gamma(tz)>0$ whenever $t<1$ and $\gamma<e^2/10$, or whenever
+$t>0$ and $\nu_\gamma(z)>0$. These are sufficient strictness conditions, not
+necessary ones. For $\gamma>e^2/10$, nonnegativity at $z$ alone is
+not asserted to propagate; the quantitative right side remains valid.
+
+Proof. Put $D(p)=d^2p+e^2(1-p)\ge e^2$ for $p\in[0,1]$.
+The exact amplitudes (23.2) give
+
+$$
+G(tz,p)=t^2G(z,p)+(1-t^2)D(p).
+\tag{27.4}
+$$
+
+For the positive distance branch, direct subtraction gives
+
+$$
+\begin{aligned}
+r_+(tz,p)-t^2r_+(z,p)
+ &=(1-t^2)(10-2p)-2t(1-t)A(z)\\
+ &\le10(1-t^2).
+\end{aligned}
+\tag{27.5}
+$$
+
+The negative branch obeys the same bound, replacing $10-2p,A(z)$
+by $8+2p,B(z)$. Taking the minimum of these two inequalities yields
+$r(tz,p)\le t^2r(z,p)+10(1-t^2)$, without requiring the minimizing
+sign at $tz$ to agree with that at $z$. Since $\gamma\ge0$,
+
+$$
+G(tz,p)-\gamma r(tz,p)
+\ge t^2\bigl(G(z,p)-\gamma r(z,p)\bigr)
+ +(1-t^2)(e^2-10\gamma).
+\tag{27.6}
+$$
+
+Minimize over the same full population interval and use Theorem 23.4
+to obtain (27.3). The stated sign conclusions follow from its right side.
+At $t=1$ it is an identity; at $t=0$ it gives
+$\nu_\gamma(0)\ge e^2-10\gamma$, with no normalization or division.
+No step divides by a trace or amplitude, so zeros, endpoint populations,
+sign changes and sign ties are included. $\square$
+
+**Theorem 27.4 (an unconditional original-effect margin).** For every
+normalized effect $E\in\operatorname{Dens}_2$ and every actual shared
+$U\in U(4)$, write $w=\operatorname{diag}(UU_+^\dagger)$. Then
+
+$$
+\boxed{\quad g(E,U)-\kappa\rho(E,U)
+\ge e^2(1-m(w)^2)-\kappa(9-A(w)-B(w))
+ +\kappa\bigl(1-\operatorname{Tr}(E^2)\bigr).\quad}
+\tag{27.7}
+$$
+
+Consequently the sufficient safe domain inside (26.27) is
+
+$$
+\mathcal O_{\rm rad}
+=\{w\in\mathcal O:
+ e^2(1-m(w)^2)\ge\kappa(9-A(w)-B(w))\}.
+\tag{27.8}
+$$
+
+Every actual lift of any $w$ in this domain satisfies the endpoint for
+all normalized effects. It is strict if the inequality defining this
+domain is strict or if $1-\operatorname{Tr}(E^2)>0$.
+In particular, throughout the nonempty interior domain
+
+$$
+w\in\mathcal O,\qquad m(w)\le\sqrt{1-5\kappa/e^2},
+\tag{27.9}
+$$
+
+all normalized effects satisfy the strict uniform-in-effect estimate
+
+$$
+g(E,U)-\kappa\rho(E,U)
+\ge\kappa(A(w)+B(w)-4)
+ +\kappa\bigl(1-\operatorname{Tr}(E^2)\bigr)>0.
+\tag{27.10}
+$$
+
+The smaller domain $w\in\mathcal O$, $m(w)\le4/5$ even has the
+constant margin $g(E,U)-\kappa\rho(E,U)>31/25$.
+
+Proof. If $w\ne0$, use Lemma 27.2 with $t=m(w)$ and $z=w/t$.
+The already proved $G(z,p)\ge0$ of Theorem 23.2 and (27.4) imply
+$G(w,p)\ge e^2(1-m(w)^2)$ for every $p$. At $w=0$, the same
+conclusion follows from $G(0,p)=d^2p+e^2(1-p)\ge e^2$.
+The two original joint-sign branches satisfy
+
+$$
+r(w,p)\le\frac{r_+(w,p)+r_-(w,p)}2=9-A(w)-B(w).
+\tag{27.11}
+$$
+
+Apply (23.14) at precisely $p=b_+^\dagger E^{\mathsf T}b_+$ and
+$\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0$ to obtain (27.7).
+This uses only the established $G\ge0$, not a boundary endpoint
+hypothesis. On $\mathcal O$, $1\le9-A-B<5$, since $A,B\le4$ and
+$A+B>4$. Thus (27.8) has the stated consequences. Section 22 gives
+$0<\kappa<1/25$ and (22.13) gives $d^2>e^2>4$; hence
+$0<5\kappa/e^2<1/20$, so the radius in (27.9) is real and below one.
+Substitution in (27.7) proves (27.10). If $m\le4/5$, its right side
+is greater than $9\cdot4/25-5/25=31/25$, uniformly over all effects.
+The next proposition proves nonemptiness. $\square$
+
+**Proposition 27.5 (an actual nondiagonal increment with $A<3$).** Set
+
+$$
+\begin{aligned}
+R&=\frac15\begin{pmatrix}
+4&3&0&0\\-3&4&0&0\\0&0&4&3\\0&0&-3&4
+\end{pmatrix},\qquad
+D_0=\operatorname{diag}(1,i,e^{-i\pi/4},e^{i\pi/4}),\\
+U&=D_0 R U_+,\qquad
+w=\frac45(1,i,e^{-i\pi/4},e^{i\pi/4}).
+\end{aligned}
+\tag{27.12}
+$$
+
+This $U$ is an actual nondiagonal shared unitary with
+$\operatorname{diag}(UU_+^\dagger)=w\in\mathcal O_{\rm rad}$,
+$m(w)=4/5$ and $A(w)=B(w)<3$. For this one fixed feedback,
+every normalized effect satisfies $g(E,U)-\kappa\rho(E,U)>31/25$.
+
+Proof. Each rotation block in $R$ is orthogonal, $D_0$ is unitary,
+and $U_+$ is the diagonal unitary (6.3). Thus $U$ is unitary and
+has nonzero off-diagonal entries; its indicated diagonal is exact.
+All four moduli of $w$ are $4/5$, so (27.1) gives $m=4/5$.
+The two complex trace sums are $\frac45(1+\sqrt2+i)$ and
+$\frac45(1+\sqrt2-i)$, respectively. Hence
+$A=B=\frac45\sqrt{4+2\sqrt2}$. The inequalities
+$\sqrt2>9/8$ and $\sqrt2<3/2$ give $2<A=B<3$.
+Thus $A<A_0$, $B<23/6$, and $A+B>4$. Finally
+$m^2=16/25<19/20<1-5\kappa/e^2$, so (27.9) and the constant
+margin in Theorem 27.4 apply. This realizes the increment by an original
+feedback, rather than by independent amplitude or sign optimizers.
+$\square$
+
+**Theorem 27.6 (equivalent residual on the full realizable radial boundary).**
+Put
+
+$$
+\mathcal B_{\mathcal O}
+=\{z\in\mathcal W:m(z)=1,\ A(z)<A_0,\ B(z)<23/6,\ A(z)+B(z)>4\}.
+\tag{27.13}
+$$
+
+The original global endpoint $g\ge\kappa\rho$ for all normalized effects
+and actual shared feedback, equivalently $C_{\rm opt}=R_*$, holds if
+and only if $\nu_\kappa(z)\ge0$ for every $z\in\mathcal B_{\mathcal O}$.
+Every original strict endpoint violation yields an original strict
+violation at a realizable datum in $\mathcal B_{\mathcal O}$.
+
+Proof. Necessity follows from Theorems 23.2–23.4. For sufficiency,
+Corollary 26.6 already gives $\nu_\kappa\ge0$ outside $\mathcal O$.
+Assume the boundary assertion. For any $w\ne0$ in $\mathcal W$, write
+$w=tz$ as in Lemma 27.2. If $z\notin\mathcal O$, use Corollary 26.6;
+otherwise $z\in\mathcal B_{\mathcal O}$ and use the assumption.
+Thus $\nu_\kappa(z)\ge0$ in either case. Since
+$e^2-10\kappa>4-10/25>0$, (27.3) proves $\nu_\kappa(w)\ge0$,
+and is strict for $t<1$. At $w=0$ it is strictly positive by the
+$t=0$ case. Theorem 23.4 proves the original endpoint, including mixed
+effects. These interior strictness conclusions are conditional on the
+boundary assertion; (27.7)–(27.10) have no such assumption.
+
+More explicitly, suppose an original $E,U$ has $g(E,U)-\kappa\rho(E,U)<0$.
+At its actual population, (23.14) forces $G(w,p)-\kappa r(w,p)<0$.
+Corollary 26.6 forces $w\in\mathcal O$, and $w\ne0$ by Theorem 27.4.
+Let $t=m(w)>0$ and $z=w/t$. Inequality (27.6), with its positive
+constant $e^2-10\kappa$, forces $G(z,p)-\kappa r(z,p)<0$.
+It follows that $\nu_\kappa(z)<0$ and hence $z\in\mathcal O$ by
+Corollary 26.6. In particular radial expansion cannot take a violation
+into either already proved cap; $z$ satisfies all of (27.13).
+Theorem 23.2 supplies an actual unitary $U_z$ with this diagonal.
+For that one $U_z$ and the same population, choose the original pure
+effect (23.13), with its attaining relative phase, including arbitrary
+phase when $P$ or $Q$ vanishes. Equations (23.6) give the strict
+original violation; Lemma 11.2 then ensures $g>0$, $\rho>0$ and
+$\rho/g>R_*$. This also covers $t=1$, without any radial division at zero.
+
+The comparison is between different realizable data, not a protocol
+operation: $U_z$ is a new unitary realization, not $U/m(w)$. All
+calculations within each original effect use one actual shared unitary,
+the ordinary transpose, all populations and singular or mixed normalized
+effects. The joint optimizer sign and the one common scalar phase
+quotient are those of Section 23; neither is independently optimized
+with an amplitude. Arbitrary nondiagonal lifts remain included.
+The remaining assertion on (27.13) is unresolved on both boundary types
+of (27.2), with their overlap retained. Failure of the sufficient
+certificate (27.8) does not produce a counterexample. The radial
+comparison and margin are repo-derived consequences of (23.1)–(23.3),
+the exact realization/population bridge and Sections 24–26. The
+homogeneity in Section 8 concerns refinement of effect columns and
+does not supply this feedback-diagonal comparison. The global endpoint
+still requires a uniform proof on (27.13) or an original feasible
+violation; this reduction makes no complete quantum reconstruction or
+literature-priority assertion. $\square$
+
+## 追加锚（本行以下为增补区）

@@ -3239,3 +3239,297 @@ This proves the asserted finite ranges. The short-vector obstruction in (50.5) s
 The new capacity in (52.13)--(52.15) uses a ternary dual short vector and a rounded fourth coordinate; (52.16)--(52.19) prove the required rank-two compression for its actual common kernel. These constructions supply the additional branch of the original atom estimate (57.15) of Part I, with the original complementary-menu transfer (164.11) of Part II. The Hermite and large-minimum representation results are credited intermediate tools. No claim of global literature priority is made for this deduction. The cases remaining in (52.7), including their short $G$ vectors from (50.5), have not acquired an absolute error bound here. Neither existence nor nonexistence of uniform constants for the full original event follows from these necessary conditions. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 53. Transverse extraction closes the original upper-margin atom estimate
+
+**定义 53.1（Uniform constants and the unchanged table）。** Retain the single original dimension-four table, all labelled binary and ternary menus including zeros and repetitions, the original tomography matrix $H$, and $e(E)=p(E)-\operatorname{Tr}(HE)$ from Definition 50.1. Retain $\tau$, $A_\dagger$ and $C_*$ from Definitions 50.1 and 52.1. Define the finite constants
+
+$$
+\begin{aligned}
+ D_0&=64\tau^3,&
+ T&=4\tau(D_0+1),&
+ \lambda&=1+\frac1{4\tau},\\
+ K_{\mathrm{tr}}&=53142+2+902824=955968,\\
+ N_0&=1+\max\{2048,\ D_0+64,\ (4\tau+2)D_0,\ 2TD_0\},\\
+ A_0&=2A_\dagger,&
+ C_0&=\max\{C_*+TK_{\mathrm{tr}},\ 33N_0\}.
+\end{aligned}
+\tag{53.1}
+$$
+
+Here $D_0,T,N_0$ are positive integers. None of these constants depends on the scale, table, tolerance, target or reduced basis.
+
+**引理 53.2（A transverse rank-one extraction with determinant growth）。** Let $N=2^m>N_0$. Let $G$ be a positive-definite Gaussian integral interval atom with $0\prec G\prec NI_4$ and $d=\det G\le11$. Put $B=NI_4-G$ and $D=\det B$. Let $V=(V_3,v_4)\in\operatorname{GL}_4(R)$, and set
+
+$$
+ C=V_3^*BV_3,\qquad
+ \Delta=\det C,\qquad
+ q=V^{-*}e_4,\qquad
+ \nu(C)=\min_{0\ne a\in R^3}a^*C^{-1}a.
+$$
+
+Suppose
+
+$$
+ D\ge N,\qquad 1\le\Delta<D_0,\qquad
+ \nu(C)>\frac1{2\tau}.
+\tag{53.2}
+$$
+
+There is an integral matrix $G'$ that is either zero or a positive-definite interval atom with determinant at most $11$, such that, writing $B'=NI_4-G'$,
+
+$$
+\begin{aligned}
+ 0&\preceq G'\prec NI_4,\\
+ B'&\succeq\left(1-\frac{D_0}{N}\right)B,\\
+ \det B'&>\lambda D,\\
+ |e(G'/N)-e(G/N)|&\le K_{\mathrm{tr}}\epsilon.
+\end{aligned}
+\tag{53.3}
+$$
+
+The convention at $G'=0$ is $e(0)=p(0)$. All table evaluations in this conclusion are on the original grid.
+
+**证明。** Cofactors under a Gaussian unimodular change of basis give
+
+$$
+ q^*B^{-1}q=\frac{\Delta}{D}.
+\tag{53.4}
+$$
+
+Indeed the bottom-right entry of $(V^*BV)^{-1}$ is $\Delta/D$, and $\det(V^*BV)=D$. Consequently, for $Q=qq^*$,
+
+$$
+ 0\preceq Q\preceq\frac{\Delta}{D}B
+ \prec\frac{D_0}{N}B\prec B.
+\tag{53.5}
+$$
+
+Thus $F=G+Q\prec NI_4$, and both $Q/N$ and $F/N$ are original-grid effects.
+
+A second cofactor identity, now for $G$, gives the positive integer
+
+$$
+ a_G:=q^*\operatorname{adj}(G)q
+     =\det(V_3^*GV_3).
+\tag{53.6}
+$$
+
+Entrywise reduction modulo $N$ gives $B\equiv-G$ and hence
+
+$$
+ \operatorname{adj}(B)\equiv-\operatorname{adj}(G)\pmod N,
+ \qquad \Delta+a_G\in N\mathbb Z_{>0}.
+\tag{53.7}
+$$
+
+The minus sign is because the cofactors have degree three. The scalar cofactor identity for $B$ is $q^*\operatorname{adj}(B)q=\Delta$. Both scalars in (53.7) are positive real integers, so
+
+$$
+ a_G\ge N-\Delta>N-D_0>64.
+\tag{53.8}
+$$
+
+Write
+
+$$
+ V^*GV=\begin{pmatrix}C_G&b\\b^*&\beta\end{pmatrix},
+ \qquad C_G=V_3^*GV_3.
+$$
+
+Since $V^*q=e_4$, the corresponding block matrix for $F$ has the same $C_G,b$ and bottom-right entry $\beta+1$. Its last Schur complement is
+
+$$
+ h_F=\beta+1-b^*C_G^{-1}b
+     =1+\frac{d}{a_G}>1.
+\tag{53.9}
+$$
+
+Apply the ordinary real six-dimensional Hermite bound, with the dual-lattice normalization of Part I, (57.2), to $C_G$. It supplies $0\ne\eta\in R^3$ such that
+
+$$
+ \rho_G:=\eta^*C_G^{-1}\eta
+ \le\gamma_6a_G^{-1/3}
+ <2a_G^{-1/3}<\frac12.
+\tag{53.10}
+$$
+
+Here $\gamma_6=2/3^{1/6}<2$ is the ordinary-lattice constant recorded by Vance, [*A Mordell Inequality for Lattices over Maximal Orders*, §4.2, Table 3 and the paragraph preceding it](https://arxiv.org/html/0810.2336v5#S4.T3). As in (52.11), no Eisenstein-module hypothesis is used.
+
+Choose a nearest Gaussian integer $s$ to $b^*C_G^{-1}\eta$, and define the original-coordinate vector
+
+$$
+ u=V^{-*}\binom{\eta}{s}\in R^4.
+\tag{53.11}
+$$
+
+It is independent of $q$, because $\eta\ne0$. The block inverse formula and Gaussian rounding give
+
+$$
+ u^*F^{-1}u
+ =\rho_G+\frac{|s-b^*C_G^{-1}\eta|^2}{h_F}
+ \le\rho_G+\frac1{2h_F}<1.
+\tag{53.12}
+$$
+
+Cauchy--Schwarz in the $F$ inner product therefore implies $uu^*\preceq cF$ for $c=u^*F^{-1}u<1$. In particular $F-uu^*\succ0$.
+
+Apply Part I, Theorem 57.3 to $F-uu^*$, and prepend $uu^*$ to its Gram summands. This produces a decomposition
+
+$$
+ F=uu^*+\sum_j w_jw_j^*+G',
+\tag{53.13}
+$$
+
+with $G'$ zero or an atom of the asserted kind. The trace grouping in the proof of Part I, Theorem 57.4 applies to this supplied decomposition: every summand and every partial sum is below $F\prec NI_4$. Hence
+
+$$
+ |e(F/N)-e(G'/N)|\le902824\epsilon.
+\tag{53.14}
+$$
+
+The strict rank-one estimate of Part I, Lemma 57.2 gives $|e(Q/N)|\le53142\epsilon$. Comparing the original menus $(G/N,Q/N,I_4-F/N)$ and $(F/N,I_4-F/N)$ gives
+
+$$
+ |e(F/N)-e(G/N)-e(Q/N)|\le2\epsilon.
+\tag{53.15}
+$$
+
+Equations (53.14)--(53.15) prove the error bound in (53.3). They do not accumulate an error for each individual extracted vector.
+
+It remains to prove the determinant increase. Put $B_-=B-Q\succ0$. By (53.13),
+
+$$
+ B'=B_-+uu^*+\sum_jw_jw_j^*\succeq B_-+uu^*.
+\tag{53.16}
+$$
+
+The matrix determinant lemma and (53.4) give $\det B_-=D-\Delta$. Moreover $B_-^{-1}\succeq B^{-1}$. In the block inverse formula for $V^*BV$, the first three coordinates of $V^*u$ are $\eta$, so
+
+$$
+ u^*B_-^{-1}u\ge u^*B^{-1}u
+ \ge\eta^*C^{-1}\eta
+ \ge\nu(C)>\frac1{2\tau}.
+\tag{53.17}
+$$
+
+Monotonicity of the determinant on positive-definite matrices and another application of the determinant lemma now imply
+
+$$
+ \det B'
+ \ge(D-\Delta)(1+u^*B_-^{-1}u)
+ >(D-\Delta)\left(1+\frac1{2\tau}\right).
+\tag{53.18}
+$$
+
+Since $\Delta/D<D_0/N<1/(4\tau+2)$,
+
+$$
+ \det B'>
+ D\left(1-\frac1{4\tau+2}\right)
+  \left(1+\frac1{2\tau}\right)
+ =\left(1+\frac1{4\tau}\right)D.
+\tag{53.19}
+$$
+
+Finally, (53.5) and (53.16) give $B'\succeq B_-\succeq(1-D_0/N)B$. This proves all of (53.3). Only integral vectors constructed in the original coordinates were added or removed; no transformed probability table or congruence covariance has been used. $\square$
+
+**定理 53.3（Absolute original-table bound for the entire upper-margin atom class）。** Let $N=2^m\ge2048$ and let the single table satisfy Definition 50.1, with its original $H$ and $\epsilon\in[0,1/10]$. For every positive-definite Gaussian integral interval atom $G$ with
+
+$$
+ 0\prec G\prec NI_4,\qquad
+ \det G\le11,\qquad
+ \lambda_{\max}(G/N)\le1-\frac{A_0}{N^2},
+\tag{53.20}
+$$
+
+one has
+
+$$
+ \boxed{\ |p(G/N)-\operatorname{Tr}(HG/N)|
+          \le C_0\left(\epsilon+\frac1N\right).\ }
+\tag{53.21}
+$$
+
+For $N>N_0$, the stronger bound $(C_*+TK_{\mathrm{tr}})\epsilon$ holds. In particular (53.21) covers the entire residual class (52.7), for every residual basis satisfying its stated conditions. No short-$G$-vector condition is an additional premise.
+
+**证明。** First suppose $N\le N_0$. Part I, Theorem 16.2 gives $\|H\|_{\mathrm{op}}\le8$. Since $0\preceq G/N\preceq I_4$ and $p(G/N)\in[0,1]$,
+
+$$
+ |e(G/N)|\le1+8\operatorname{Tr}(G/N)\le33
+ \le\frac{33N_0}{N}\le\frac{C_0}{N}.
+\tag{53.22}
+$$
+
+This accounts for every allowed coarse scale.
+
+Now let $N>N_0$, and suppose for contradiction that $G_0=G$ satisfies
+
+$$
+ |e(G_0/N)|>(C_*+TK_{\mathrm{tr}})\epsilon.
+\tag{53.23}
+$$
+
+We construct $G_0,\ldots,G_T$ using Lemma 53.2. Put $B_k=NI_4-G_k$ and $\mathcal D_k=\det B_k$. At each stage the error transfer gives
+
+$$
+ |e(G_k/N)|>
+   \bigl(C_*+(T-k)K_{\mathrm{tr}}\bigr)\epsilon
+ \ge C_*\epsilon.
+\tag{53.24}
+$$
+
+In particular $G_k\ne0$: the menu hypotheses give $p(0)\le2\epsilon$, while $C_*>2$.
+
+The margin needed to apply Theorems 50.2 and 52.2 persists throughout these $T$ steps. Indeed, the margin part of (53.3), Bernoulli's inequality, $N>2TD_0$, and (53.20) give, for $0\le k\le T$,
+
+$$
+\begin{aligned}
+ B_k
+ &\succeq\left(1-\frac{D_0}{N}\right)^k B_0\\
+ &\succeq\left(1-\frac{kD_0}{N}\right)B_0
+ \succeq\frac12B_0
+ \succeq\frac{A_\dagger}{N}I_4.
+\end{aligned}
+\tag{53.25}
+$$
+
+This is an inductive estimate: the initial inequality holds at $k=0$, and Lemma 53.2 supplies its next step once the current stage has the stated margin and residual conditions.
+
+At every current stage, (53.24)--(53.25) allow the failure implication (52.7) to be applied to $G_k$. It supplies a balanced basis, with its associated $C_k,\Delta_k,q_k$, such that
+
+$$
+ \nu(C_k)>\frac1{2\tau},\qquad
+ 1\le\Delta_k<D_0,\qquad
+ \mathcal D_k=d_k+j_kN,\qquad
+ j_k\ge1,\qquad
+ j_k\|q_k\|^2<\Delta_k.
+\tag{53.26}
+$$
+
+Here $d_k=\det G_k\le11$. Since $q_k$ is a nonzero integral vector, $\|q_k\|^2\ge1$. Thus each such stage satisfies
+
+$$
+ N\le \mathcal D_k<D_0N+11.
+\tag{53.27}
+$$
+
+Equations (53.26)--(53.27) are exactly the input needed for Lemma 53.2. For $k<T$ it produces the next atom $G_{k+1}$ with (53.24), (53.25), and $\mathcal D_{k+1}>\lambda \mathcal D_k$. The zero alternative would contradict (53.24), so the construction reaches $G_T$. The same failure implication at $k=T$ gives the upper bound in (53.27).
+
+On the other hand, the determinant growth and the integer choice of $T$ give
+
+$$
+ \mathcal D_T>\lambda^T\mathcal D_0
+ \ge\lambda^TN
+ \ge\left(1+\frac{T}{4\tau}\right)N
+ =(D_0+2)N>D_0N+11,
+\tag{53.28}
+$$
+
+The initial lower bound $\mathcal D_0\ge N$ follows from (53.27), and the last inequality uses $N\ge2048$. This contradicts (53.27). Consequently (53.23) is impossible, proving the asserted stronger fine-scale bound and, with (53.22), (53.21).
+
+The construction uses only one supplied table at one scale. The constants in (53.1) are independent of every target and every basis; the residual bases may change at successive stages. Theorem 52.2 supplies necessary conditions only when its own bound fails, and those conditions are used here to continue the contradiction, not as a sufficient anchor or as a replacement event. In particular no extra hypothesis from the short-vector consequence (50.5) enters the proof.
+
+The new deduction is the combination of the cofactor congruence (53.7), the transverse extraction (53.10)--(53.12), and the strict determinant increase (53.18)--(53.28). The original rank-one and trace-group estimates of Part I and the failure implication of Theorem 52.2 are reused with their stated hypotheses. The ordinary Hermite bound is credited above; the balanced reduction and large-minimum representation theorem of Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1), enter through Theorems 50.2 and 52.2. This is a repo-derived ordinary mathematical conclusion, with no global literature-priority assertion. It establishes the upper-margin atom estimate with $A=A_0\ge A_\dagger$, including the entire residual class, and does not assert an unrestricted estimate for the complementary boundary band. $\square$
+
+## 追加锚（本行以下为增补区）
