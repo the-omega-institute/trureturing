@@ -8,12 +8,9 @@
 
 import D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
-import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
-import D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan
 import D5.S3.Quantum.Measurements.HaarPureProjectorMoment
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
 
 /-! DeBrota--Stacey's saturation implication for Lüders MIC channels. -/
@@ -62,11 +59,12 @@ private theorem base_projector_psd {d : ℕ} [NeZero d] :
   rw [← Matrix.diagonal_single]
   apply Matrix.PosSemidef.diagonal
   intro j
-  by_cases hj : j = 0 <;> simp [baseProjector, Matrix.single, hj]
+  by_cases hj : j = 0 <;> simp (config := { congrConsts := false }) [hj]
 
 private theorem base_projector_trace {d : ℕ} [NeZero d] :
     (baseProjector : Matrix (Fin d) (Fin d) ℂ).trace = 1 := by
-  simp [baseProjector]
+  change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).trace = 1
+  simp (config := { congrConsts := false })
 
 private theorem input_projector_psd {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
@@ -78,7 +76,7 @@ private theorem input_projector_trace {d : ℕ} [NeZero d]
     (inputProjector u).trace = 1 := by
   rw [inputProjector, Matrix.trace_mul_cycle]
   have hu : u.1ᴴ * u.1 = 1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
+    simpa (config := { congrConsts := false }) only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
   rw [hu, Matrix.one_mul]
   exact base_projector_trace
 
@@ -86,10 +84,12 @@ private theorem input_projector_idempotent {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
     inputProjector u * inputProjector u = inputProjector u := by
   have hu : u.1ᴴ * u.1 = 1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
+    simpa (config := { congrConsts := false }) only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
   have hb : (baseProjector : Matrix (Fin d) (Fin d) ℂ) * baseProjector = baseProjector := by
-    simp [baseProjector, Matrix.single_mul_single_same]
-  simp only [inputProjector, Matrix.mul_assoc, ← Matrix.mul_assoc u.1ᴴ u.1, hu,
+    change (Matrix.single (0 : Fin d) 0 (1 : ℂ)) * Matrix.single 0 0 1 =
+      Matrix.single 0 0 1
+    simp (config := { congrConsts := false }) [Matrix.single_mul_single_same]
+  simp (config := { congrConsts := false }) only [inputProjector, Matrix.mul_assoc, ← Matrix.mul_assoc u.1ᴴ u.1, hu,
     Matrix.one_mul, ← Matrix.mul_assoc baseProjector baseProjector, hb]
 
 private noncomputable def ludersState {d : ℕ} [NeZero d]
@@ -108,9 +108,9 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
       have hx : (inputProjector u).PosSemidef := input_projector_psd u
       have hterm := hx.conjTranspose_mul_mul_same (B := CFC.sqrt (e i))
       have hs : (CFC.sqrt (e i))ᴴ = CFC.sqrt (e i) := by
-        simpa [Matrix.star_eq_conjTranspose] using
+        simpa (config := { congrConsts := false }) [Matrix.star_eq_conjTranspose] using
           (CFC.sqrt_nonneg (e i)).isSelfAdjoint.star_eq
-      simpa [hs, Matrix.mul_assoc] using hterm
+      simpa (config := { congrConsts := false }) [hs, Matrix.mul_assoc] using hterm
     · change Matrix.trace (ludersChannel e (inputProjector u)) = 1
       rw [show ludersChannel e (inputProjector u) =
           ∑ i, CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i) by rfl,
@@ -127,7 +127,7 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
         _ = Matrix.trace (inputProjector u * ∑ i, e i) := by
           rw [← Matrix.trace_sum, Matrix.mul_sum]
         _ = Matrix.trace (inputProjector u * 1) := by rw [he.2.1]
-        _ = 1 := by simpa [Matrix.mul_one] using input_projector_trace u
+        _ = 1 := by simpa (config := { congrConsts := false }) [Matrix.mul_one] using input_projector_trace u
   · refine ⟨baseProjector, ?_, ?_⟩
     · change 0 ≤ CStarMatrix.ofMatrix baseProjector
       exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv base_projector_psd.nonneg
@@ -148,7 +148,7 @@ private noncomputable def sigmaState {d : ℕ} [NeZero d]
   change Matrix.trace q = 1
   dsimp [q, p]
   rw [Matrix.trace_smul, Matrix.trace_add, input_projector_trace]
-  simp [Matrix.trace, Finset.sum_const]
+  simp (config := { congrConsts := false }) [Matrix.trace, Finset.sum_const]
   field_simp
 
 noncomputable def typicalEntropy (d : ℕ) [NeZero d]
@@ -162,7 +162,8 @@ private theorem luders_state_density {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
     (u : Matrix.unitaryGroup (Fin d) ℂ) (he : IsMIC d e) :
     (ludersState e u).1 = ludersChannel e (inputProjector u) := by
-  simp [ludersState, he]
+  rw [ludersState]
+  simp (config := { congrConsts := false }) [he]
   rfl
 
 private theorem sigma_log {d : ℕ} [NeZero d]
@@ -179,11 +180,11 @@ private theorem sigma_log {d : ℕ} [NeZero d]
   have hp : p.IsHermitian := (input_projector_psd u).isHermitian
   have hpp : p * p = p := input_projector_idempotent u
   have hh : IsSelfAdjoint h :=
-    (hp.smul (isSelfAdjoint_iff.mpr (by simp) : IsSelfAdjoint (2 : ℝ))).sub
+    (hp.smul (isSelfAdjoint_iff.mpr (by simp (config := { congrConsts := false })) : IsSelfAdjoint (2 : ℝ))).sub
       Matrix.isHermitian_one
   have hhh : h * h = 1 := by
     dsimp [h]
-    simp only [sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, mul_one, one_mul,
+    simp (config := { congrConsts := false }) only [sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, mul_one, one_mul,
       hpp, smul_smul]
     module
   have hk : 0 < k := by dsimp [k]; positivity
@@ -196,9 +197,9 @@ private theorem sigma_log {d : ℕ} [NeZero d]
   rw [harg, show 3 * k / 2 + k / 2 = 2 * k by ring,
     show 3 * k / 2 - k / 2 = k by ring,
     Real.log_mul (by norm_num) (ne_of_gt hk)] at hcalc
-  have hlog : Real.log k = -Real.log (d + 1) := by simp [k]
+  have hlog : Real.log k = -Real.log (d + 1) := by simp (config := { congrConsts := false }) [k]
   have hq : (k • (1 + p) : Matrix (Fin d) (Fin d) ℂ).IsHermitian := by
-    exact (Matrix.isHermitian_one.add hp).smul (by simp [isSelfAdjoint_iff])
+    exact (Matrix.isHermitian_one.add hp).smul (by simp (config := { congrConsts := false }) [isSelfAdjoint_iff])
   have hmap := StarAlgHomClass.map_cfc (p := IsSelfAdjoint) (q := IsSelfAdjoint)
     CStarMatrix.ofMatrixStarAlgEquiv Real.log
     (k • (1 + p) : Matrix (Fin d) (Fin d) ℂ)
@@ -227,7 +228,7 @@ private theorem entropy_gap {d : ℕ} [NeZero d]
         Real.log 2 • inputProjector u))).re + _
   rw [Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
     Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, hr]
-  simp only [Complex.add_re, Complex.real_smul, Complex.mul_re,
+  simp (config := { congrConsts := false }) only [Complex.add_re, Complex.real_smul, Complex.mul_re,
     Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, Complex.one_re,
     Complex.one_im, mul_one]
   have hv : CStarMatrix.ofMatrix.symm (ludersState e u).1 =
@@ -260,9 +261,9 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
           ∂mu) = ((CFC.sqrt (e i)).trace.re ^ 2 + (e i).trace.re) / (d * (d + 1)) := by
     have ha := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i))
     have ht : ((CFC.sqrt (e i)).trace.re : ℂ) = (CFC.sqrt (e i)).trace :=
-      Complex.ext rfl (by simpa using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
+      Complex.ext rfl (by simpa (config := { congrConsts := false }) using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
     have het : ((e i).trace.re : ℂ) = (e i).trace :=
-      Complex.ext rfl (by simpa using (Complex.nonneg_iff.mp (he.1 i).trace_nonneg).2)
+      Complex.ext rfl (by simpa (config := { congrConsts := false }) using (Complex.nonneg_iff.mp (he.1 i).trace_nonneg).2)
     have hh := HaarPureProjectorMoment.pure_quadratic (CFC.sqrt (e i))
     change (∫ u, (inputProjector u * CFC.sqrt (e i) * inputProjector u *
       CFC.sqrt (e i)).trace ∂mu) = _ at hh
@@ -279,18 +280,18 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
           CFC.sqrt (e i)).trace ∂mu) := integral_re (hi i)
       _ = _ := congrArg Complex.re hr
   change (∫ u, _ ∂mu) = _
-  simp only [ludersChannel, Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum,
+  simp (config := { congrConsts := false }) only [ludersChannel, Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum,
     ← Matrix.mul_assoc]
   have hir (i : Fin (d ^ 2)) : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       (inputProjector u * CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i)).trace.re) mu :=
     (Complex.continuous_re.comp (hc i)).integrable_of_hasCompactSupport
       (μ := mu) (HasCompactSupport.of_compactSpace _)
   rw [integral_finsetSum Finset.univ (fun i _ => hir i)]
-  simp_rw [hm]
+  simp_rw (config := { congrConsts := false }) [hm]
   rw [← Finset.sum_div, Finset.sum_add_distrib]
   have ht : ∑ i, (e i).trace.re = (d : ℝ) := by
     rw [← Complex.re_sum, ← Matrix.trace_sum, he.2.1]
-    simp
+    simp (config := { congrConsts := false })
   rw [ht]
 
 private theorem rank_one_forcing {d : ℕ}
@@ -301,7 +302,7 @@ private theorem rank_one_forcing {d : ℕ}
   have hi := HermitianMat.inner_le_mul_trace hh hh
   rw [HermitianMat.inner_eq_re_trace, HermitianMat.trace_eq_re_trace] at hi
   change (a * a).trace.re ≤ a.trace.re * a.trace.re at hi
-  simpa [pow_two] using hi
+  simpa (config := { congrConsts := false }) [pow_two] using hi
 
 private theorem rank_one_from_equality {d : ℕ}
     (a : Matrix (Fin d) (Fin d) ℂ) (ha : a.PosSemidef) (ha0 : a ≠ 0)
@@ -311,7 +312,7 @@ private theorem rank_one_from_equality {d : ℕ}
   let h : HermitianMat (Fin d) ℂ := ⟨a, ha.isHermitian⟩
   have hh : 0 ≤ h := HermitianMat.zero_le_iff.mpr ha
   have ht : (a.trace.re : ℂ) = a.trace :=
-    Complex.ext rfl (by simpa using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
+    Complex.ext rfl (by simpa (config := { congrConsts := false }) using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
   have ht0 : a.trace.re ≠ 0 := by
     intro hz
     apply ha0
@@ -332,15 +333,17 @@ private theorem rank_one_from_equality {d : ℕ}
       _ = Matrix.toEuclideanLin (h.trace • (1 : HermitianMat (Fin d) ℂ) - h).mat ∘ₗ
           Matrix.toEuclideanLin a := by
         ext v
-        simp [Matrix.toLpLin_apply, Matrix.mulVec_mulVec, Matrix.toEuclideanLin]
+        simp (config := { congrConsts := false }) [Matrix.toLpLin_apply, Matrix.mulVec_mulVec, Matrix.toEuclideanLin]
       _ = 0 := hc
       _ = Matrix.toEuclideanLin 0 := (map_zero Matrix.toEuclideanLin).symm
   have hsquare : a * a = (a.trace.re : ℂ) • a := by
     change ((a.trace.re : ℝ) • (1 : Matrix (Fin d) (Fin d) ℂ) - a) * a = 0 at hmul
     rw [Matrix.sub_mul, Matrix.smul_mul, Matrix.one_mul, sub_eq_zero] at hmul
-    simpa only [← Complex.coe_smul] using hmul.symm
+    calc
+      a * a = (a.trace.re : ℝ) • a := hmul.symm
+      _ = (a.trace.re : ℂ) • a := (Complex.coe_smul _ _).symm
   refine ⟨a.trace.re, (a.trace.re : ℂ)⁻¹ • a, ?_, ?_, ?_, ?_⟩
-  · exact ha.isHermitian.smul (by simp [isSelfAdjoint_iff])
+  · exact ha.isHermitian.smul (by simp (config := { congrConsts := false }) [isSelfAdjoint_iff])
   · rw [Matrix.smul_mul, Matrix.mul_smul, hsquare, smul_smul, smul_smul]
     congr 1
     field_simp
@@ -366,7 +369,7 @@ private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
       CStarMatrix.ofMatrix.symm s.1 ≤ (1 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
     have heig : ∑ i, (hpsd s).1.eigenvalues i = 1 := by
       have ht := congrArg Complex.re (hpsd s).1.trace_eq_sum_eigenvalues
-      simpa [htrace s] using ht.symm
+      simpa (config := { congrConsts := false }) [htrace s] using ht.symm
     apply (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff (hpsd s).1 (1 : ℝ)).mp
     intro i
     rw [← heig]
@@ -374,7 +377,7 @@ private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
   have hsupport : ∀ v, CStarMatrix.ofMatrix.symm sigma.1 *ᵥ v = 0 →
       CStarMatrix.ofMatrix.symm rho.1 *ᵥ v = 0 := by
     intro v hv
-    have hv0 : v = 0 := hsigma.mulVec_injective (by simpa using hv)
+    have hv0 : v = 0 := hsigma.mulVec_injective (by simpa (config := { congrConsts := false }) using hv)
     rw [hv0, Matrix.mulVec_zero]
   have h := actual_matrix_spectral_ceiling_strong_klein
       _ _ (hpsd rho) (hpsd sigma) 1 (by norm_num) (hceiling rho) (hceiling sigma) hsupport
@@ -393,7 +396,7 @@ private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
     rw [← hlog rho, ← hlog sigma]
     rfl
   rw [hcross] at h
-  simpa using h
+  simpa (config := { congrConsts := false }) using h
 
 private theorem continuous_luders_state {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) (he : IsMIC d e) :
@@ -420,7 +423,7 @@ private theorem continuous_output_entropy {d : ℕ} [NeZero d]
     IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
   have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       cfc (fun x : ℝ => x * Real.log x) (ludersState e u).1) :=
-    Continuous.cfc_of_mem_nhdsSet _ (s := Set.univ) (by simp)
+    Continuous.cfc_of_mem_nhdsSet _ (s := Set.univ) (by simp (config := { congrConsts := false }))
       (continuous_luders_state e he) (fun u => (ludersState e u).2.1.isSelfAdjoint)
       Real.continuous_mul_log.continuousOn
   have hid (s : DensityState (Fin d)) :
@@ -446,7 +449,7 @@ private theorem continuous_output_entropy {d : ℕ} [NeZero d]
       exact (cfc_mul id Real.log m (m.finite_real_spectrum.continuousOn _)
         (m.finite_real_spectrum.continuousOn _)).symm
     rw [hmprod]
-  simp_rw [hid]
+  simp_rw (config := { congrConsts := false }) [hid]
   exact (Complex.continuous_re.comp
     (CStarMatrix.ofMatrixL.symm.continuous.comp hc).matrix_trace).neg
 
@@ -472,7 +475,7 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
     have hv (u : Matrix.unitaryGroup (Fin d) ℂ) :
         CStarMatrix.ofMatrix.symm (ludersState e u).1 = ludersChannel e (inputProjector u) :=
       luders_state_density e u he
-    simpa only [Function.comp_def, hv] using hl
+    simpa (config := { congrConsts := false }) only [Function.comp_def, hv] using hl
   have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
       (inputProjector u * ludersChannel e (inputProjector u)).trace.re) :=
     Complex.continuous_re.comp (hp.matrix_mul hlv).matrix_trace
@@ -486,7 +489,7 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
       (continuous_const.sub hs).sub ((hc.sub continuous_const).mul continuous_const)
     convert hc0 using 1
     funext u
-    linarith [entropy_gap e u he]
+    exact eq_sub_of_add_eq (entropy_gap e u he).symm
   have hsi := hs.integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
   have hci := hc.integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
   have hdi := hdc.integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
@@ -500,14 +503,14 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
     have hn := (Complex.nonneg_iff.mp (Matrix.posSemidef_conjTranspose_mul_self
       (CStarMatrix.ofMatrix.symm (ludersState e u).1 -
         CStarMatrix.ofMatrix.symm (sigmaState u).1)).trace_nonneg).1
-    linarith
+    exact (div_nonneg hn (by norm_num)).trans hk
   have hdn : 0 ≤ ∫ u, quantumRelativeEntropy (ludersState e u) (sigmaState u) ∂mu :=
     integral_nonneg hnonneg
   have hsum : (d : ℝ) ≤ t := by
     calc
       (d : ℝ) = ∑ i, (e i).trace.re := by
         rw [← Complex.re_sum, ← Matrix.trace_sum, he.2.1]
-        simp
+        simp (config := { congrConsts := false })
       _ ≤ t := by
         apply Finset.sum_le_sum
         intro i hi
@@ -520,7 +523,7 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
     rw [ha]
     apply (le_div_iff₀ (by positivity)).mpr
     field_simp
-    nlinarith
+    nlinarith only [hsum]
   have heq : 0 = (∫ u, quantumRelativeEntropy (ludersState e u) (sigmaState u) ∂mu) +
       (a - 2 / (d + 1)) * Real.log 2 := by
     have hki : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
@@ -532,18 +535,20 @@ private theorem saturation_remainders {d : ℕ} [NeZero d]
     rw [integral_sub (integrable_const b) hsi,
       integral_add hdi hki, integral_mul_const,
       integral_sub hci (integrable_const (2 / (d + 1 : ℝ)))] at hid
-    simp only [integral_const, probReal_univ, one_smul] at hid
+    simp (config := { congrConsts := false }) only [integral_const, probReal_univ, one_smul] at hid
     change b - typicalEntropy d e = _ at hid
     rw [hsat, sub_self] at hid
     exact hid
   have haeq : a = 2 / (d + 1 : ℝ) := by
     have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-    nlinarith
+    have hz := ((add_eq_zero_iff_of_nonneg hdn
+      (mul_nonneg (sub_nonneg.mpr hac) hlog.le)).mp heq.symm).2
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hz).resolve_right (ne_of_gt hlog))
   constructor
   · have hnum := (div_eq_iff (by positivity : (d : ℝ) * (d + 1) ≠ 0)).mp
       (ha.symm.trans haeq)
     field_simp at hnum
-    nlinarith
+    nlinarith only [hnum, hd]
   · rw [haeq, sub_self, zero_mul, add_zero] at heq
     exact (integral_eq_zero_iff_of_nonneg hnonneg hdi).mp heq.symm
 
@@ -557,13 +562,13 @@ private theorem saturation_forces_rank_one {d : ℕ} [NeZero d]
   have ht := (saturation_remainders e he hsat).1
   have hsumtrace : ∑ i, (e i).trace.re = (d : ℝ) := by
     rw [← Complex.re_sum, ← Matrix.trace_sum, he.2.1]
-    simp
+    simp (config := { congrConsts := false })
   have hgap (i : Fin (d ^ 2)) : 0 ≤
       (CFC.sqrt (e i)).trace.re ^ 2 - (e i).trace.re := by
     have h := rank_one_forcing (CFC.sqrt (e i))
       (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i)))
     rw [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg] at h
-    linarith
+    exact sub_nonneg.mpr h
   have hzero : ∑ i, ((CFC.sqrt (e i)).trace.re ^ 2 - (e i).trace.re) = 0 := by
     rw [Finset.sum_sub_distrib, ht, hsumtrace, sub_self]
   intro i
@@ -577,13 +582,13 @@ private theorem saturation_forces_rank_one {d : ℕ} [NeZero d]
   have haeq : (CFC.sqrt (e i)).trace.re ^ 2 =
       (CFC.sqrt (e i) * CFC.sqrt (e i)).trace.re := by
     rw [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg]
-    linarith
+    exact sub_eq_zero.mp hi
   obtain ⟨c, p, hp, hpp, htr, hmat⟩ := rank_one_from_equality (CFC.sqrt (e i))
     (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i))) ha0 haeq
   refine ⟨c ^ 2, p, hp, hpp, htr, ?_⟩
   rw [← CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg, hmat,
     Matrix.smul_mul, Matrix.mul_smul, hpp, smul_smul]
-  simp [pow_two]
+  simp (config := { congrConsts := false }) [pow_two]
 
 private theorem saturation_ae_luders_eq_sigma {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
@@ -603,8 +608,12 @@ private theorem saturation_ae_luders_eq_sigma {d : ℕ} [NeZero d]
   let x := CStarMatrix.ofMatrix.symm (ludersState e u).1 -
     CStarMatrix.ofMatrix.symm (sigmaState u).1
   have hn := Complex.nonneg_iff.mp (Matrix.posSemidef_conjTranspose_mul_self x).trace_nonneg
+  have hle : (xᴴ * x).trace.re ≤ 0 := by
+    have hhk : (xᴴ * x).trace.re / 2 ≤ 0 := hk
+    have hle0 := (div_le_iff₀ (by norm_num : (0 : ℝ) < 2)).mp hhk
+    simpa (config := { congrConsts := false }) only [zero_mul] using hle0
   have htr : (xᴴ * x).trace = 0 :=
-    Complex.ext (by dsimp [x]; linarith) (by simpa using hn.2.symm)
+    Complex.ext (le_antisymm hle hn.1) hn.2.symm
   have hx : x = 0 := Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp htr
   have heq := sub_eq_zero.mp hx
   have hv : CStarMatrix.ofMatrix.symm (ludersState e u).1 =
@@ -647,10 +656,10 @@ private theorem depolarizing_identity {d : ℕ} [NeZero d]
     { toFun := ludersChannel e
       map_add' := by
         intro x y
-        simp only [ludersChannel, Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
+        simp (config := { congrConsts := false }) only [ludersChannel, Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
       map_smul' := by
         intro c x
-        simp only [ludersChannel, Matrix.mul_smul, Matrix.smul_mul, Finset.smul_sum,
+        simp (config := { congrConsts := false }) only [ludersChannel, Matrix.mul_smul, Matrix.smul_mul, Finset.smul_sum,
           RingHom.id_apply] }
   let g : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ :=
     (1 / (d + 1 : ℂ)) •
@@ -663,7 +672,7 @@ private theorem depolarizing_identity {d : ℕ} [NeZero d]
     rw [saturation_everywhere_luders_eq_sigma e he hsat u, input_projector_trace]
     change (1 / (d + 1 : ℝ)) • (1 + inputProjector u) = _
     rw [← Complex.coe_smul]
-    simp [add_comm]
+    simp (config := { congrConsts := false }) [add_comm]
   intro x
   exact LinearMap.congr_fun hfg x
 
@@ -681,7 +690,7 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
   choose c p hp hpp htr heq using hrank
   have hc (i : Fin (d ^ 2)) : 0 ≤ c i := by
     have ht := Complex.nonneg_iff.mp (he.1 i).trace_nonneg
-    simpa [heq i, Matrix.trace_smul, htr i] using ht.1
+    simpa (config := { congrConsts := false }) [heq i, Matrix.trace_smul, htr i] using ht.1
   have hpsd (i : Fin (d ^ 2)) : (p i).PosSemidef := by
     have hh := Matrix.posSemidef_conjTranspose_mul_self (p i)
     rwa [(hp i).eq, hpp i] at hh
@@ -698,7 +707,7 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
     unfold ludersChannel
     apply Finset.sum_congr rfl
     intro i hi
-    simp only [hsqrt, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    simp (config := { congrConsts := false }) only [hsqrt, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
     rw [D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan.trace_one_sandwich
         (p i) x (hpp i) (htr i), heq i, smul_smul, smul_smul]
     congr 1
@@ -716,14 +725,14 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
     have hrhs : (1 / (d + 1 : ℂ)) • (e j + (c j : ℂ) • 1) =
         ∑ k, ((1 / (d + 1 : ℂ)) *
           ((if k = j then 1 else 0) + (c j : ℂ))) • e k := by
-      simp only [add_smul, mul_smul, Finset.sum_add_distrib,
+      simp (config := { congrConsts := false }) only [add_smul, mul_smul, Finset.sum_add_distrib,
         ← Finset.smul_sum, ← he.2.1]
       congr 1
-      simp
+      simp (config := { congrConsts := false })
     rw [hrhs] at hsum
     have hz : ∑ k, ((p k * e j).trace - (1 / (d + 1 : ℂ)) *
         ((if k = j then 1 else 0) + (c j : ℂ))) • e k = 0 := by
-      simp only [sub_smul, Finset.sum_sub_distrib, hsum, sub_self]
+      simp (config := { congrConsts := false }) only [sub_smul, Finset.sum_sub_distrib, hsum, sub_self]
     exact sub_eq_zero.mp ((Fintype.linearIndependent_iff.mp he.2.2) _ hz i)
   have hd : (d : ℂ) ≠ 0 := by exact_mod_cast (NeZero.ne d)
   have hden : (d + 1 : ℂ) ≠ 0 := by
@@ -731,7 +740,7 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
   have hcval (j : Fin (d ^ 2)) : (c j : ℂ) = 1 / (d : ℂ) := by
     have hdiag := hcoeff j j
     rw [heq j, Matrix.mul_smul, hpp j, Matrix.trace_smul, htr j] at hdiag
-    simp at hdiag
+    simp (config := { congrConsts := false }) at hdiag
     field_simp at hdiag ⊢
     linear_combination hdiag
   refine ⟨he, hrank0, (1 / (d : ℂ)) ^ 2,
@@ -741,10 +750,10 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
     hcval j]
   by_cases hij : i = j
   · subst j
-    simp
+    simp (config := { congrConsts := false })
     <;> field_simp [hd, hden]
     <;> ring
-  · simp only [if_neg hij]
+  · simp (config := { congrConsts := false }) only [if_neg hij]
     ring
 
 
@@ -756,47 +765,11 @@ def claim : Prop :=
     ∃ f : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ, IsSIC d f
 
 private theorem route_result_from
-    (_hstate : ∀ {d : ℕ} [NeZero d]
-      (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
-      (u : Matrix.unitaryGroup (Fin d) ℂ), IsMIC d e →
-      (ludersState e u).1 = ludersChannel e (inputProjector u))
-    (_hgap : ∀ {d : ℕ} [NeZero d]
-      (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
-      (u : Matrix.unitaryGroup (Fin d) ℂ), IsMIC d e →
-      Real.log (d + 1) - 2 / (d + 1) * Real.log 2 -
-          vonNeumannEntropy (ludersState e u) =
-        quantumRelativeEntropy (ludersState e u) (sigmaState u) +
-          ((Matrix.trace (inputProjector u * ludersChannel e (inputProjector u))).re -
-            2 / (d + 1)) * Real.log 2)
-    (_hmoment : ∀ {d : ℕ} [NeZero d]
-      (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
-      (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
-          (Matrix.trace (inputProjector u * ludersChannel e (inputProjector u))).re ∂(Measure.haarMeasure
-              (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
-        ((∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2) + d) /
-          (d * (d + 1)))
-    (_hforce : ∀ {d : ℕ} (a : Matrix (Fin d) (Fin d) ℂ), a.PosSemidef →
-      (a.trace.re) ^ 2 ≥ (a * a).trace.re)
-    (_hequality : ∀ {d : ℕ} (a : Matrix (Fin d) (Fin d) ℂ), a.PosSemidef →
-      a ≠ 0 → (a.trace.re) ^ 2 = (a * a).trace.re →
-      ∃ c : ℝ, ∃ p : Matrix (Fin d) (Fin d) ℂ,
-        p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ a = (c : ℂ) • p)
     (hrank : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
       typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
       ∀ i, ∃ c : ℝ, ∃ p : Matrix (Fin d) (Fin d) ℂ,
         p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ e i = (c : ℂ) • p)
-    (_hae : ∀ {d : ℕ} [NeZero d]
-      (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
-      typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
-      ∀ᵐ u ∂(Measure.haarMeasure
-        (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))),
-        ludersChannel e (inputProjector u) = (sigmaState u).1)
-    (_hevery : ∀ {d : ℕ} [NeZero d]
-      (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
-      typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
-      ∀ u : Matrix.unitaryGroup (Fin d) ℂ,
-        ludersChannel e (inputProjector u) = (sigmaState u).1)
     (hdepol : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
       typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
@@ -817,10 +790,7 @@ private theorem route_result_from
   exact ⟨e, hsic e he hrank' hdepol'⟩
 
 private theorem route_result : claim :=
-  route_result_from luders_state_density entropy_gap haar_second_moment
-    rank_one_forcing rank_one_from_equality saturation_forces_rank_one
-    saturation_ae_luders_eq_sigma saturation_everywhere_luders_eq_sigma
-    depolarizing_identity sic_coefficients
+  route_result_from saturation_forces_rank_one depolarizing_identity sic_coefficients
 
 theorem result : claim := route_result
 

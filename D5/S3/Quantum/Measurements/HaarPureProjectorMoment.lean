@@ -10,7 +10,6 @@ import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Tactic
 
 /-! The pure-projector specialization of the two-copy Haar twirl. -/
 

@@ -13,7 +13,6 @@ import Mathlib.Data.Matrix.Basis
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.LinearAlgebra.Projection
 import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.Tactic
 
 /-! Unitary pure projectors determine complex linear maps on all matrices. -/
 
