@@ -7,6 +7,7 @@
    digest: Full orthonormal qudit tomography has NHCRB at most d+1 times HCRB. -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-! The source bounds use uncentered LUB operators and subtract the parameter square. -/
 
@@ -94,16 +95,138 @@ private lemma basis_is_lub {d : ℕ}
   simp [model, add_mul, smul_mul, Finset.sum_mul, trace_add, trace_sum,
     trace_smul, hb.2.1, hb.2.2]
 
+private lemma matrix_expansion {d : ℕ} (hd : 2 ≤ d)
+    {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
+    (a : Matrix (Fin d) (Fin d) ℂ) :
+    a = (a.trace / (d : ℂ)) • 1 + ∑ j, (b j * a).trace • b j := by
+  classical
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  let f : Option (Fin (d ^ 2 - 1)) → Matrix (Fin d) (Fin d) ℂ :=
+    fun i => i.elim 1 b
+  have hli : LinearIndependent ℂ f := by
+    rw [Fintype.linearIndependent_iff]
+    intro c hc i
+    rw [Fintype.sum_option] at hc
+    change c none • 1 + ∑ j, c (some j) • b j = 0 at hc
+    have ht := congrArg Matrix.trace hc
+    simp only [trace_add, trace_smul, trace_one, Fintype.card_fin, trace_sum,
+      hb.2.1, smul_eq_mul, mul_zero, Finset.sum_const_zero, add_zero, trace_zero] at ht
+    have hn : c none = 0 := (mul_eq_zero.mp ht).resolve_right hd0
+    have hs (j : Fin (d ^ 2 - 1)) : c (some j) = 0 := by
+      have he := congrArg (fun m => (b j * m).trace) hc
+      simp only [hn, zero_smul, zero_add, Matrix.mul_sum, Matrix.mul_smul,
+        trace_sum, trace_smul, hb.2.2, mul_zero, trace_zero, smul_eq_mul] at he
+      simpa using he
+    cases i with
+    | none => exact hn
+    | some j => exact hs j
+  have hdim : Fintype.card (Option (Fin (d ^ 2 - 1))) =
+      Module.finrank ℂ (Matrix (Fin d) (Fin d) ℂ) := by
+    simp only [Fintype.card_option, Fintype.card_fin, Module.finrank_matrix,
+      Module.finrank_self, mul_one]
+    have hsq : 1 ≤ d ^ 2 := by nlinarith
+    simpa only [pow_two] using Nat.sub_add_cancel hsq
+  let v := basisOfLinearIndependentOfCardEqFinrank hli hdim
+  have hv (i) : v i = f i := coe_basisOfLinearIndependentOfCardEqFinrank hli hdim ▸ rfl
+  have he := v.sum_repr a
+  simp only [hv, Fintype.sum_option] at he
+  change v.repr a none • 1 + ∑ j, v.repr a (some j) • b j = a at he
+  have ht := congrArg Matrix.trace he
+  simp only [trace_add, trace_smul, trace_one, Fintype.card_fin, trace_sum,
+    hb.2.1, smul_eq_mul, mul_zero, Finset.sum_const_zero, add_zero] at ht
+  have hn : v.repr a none = a.trace / (d : ℂ) := (eq_div_iff hd0).mpr ht
+  have hs (j : Fin (d ^ 2 - 1)) : v.repr a (some j) = (b j * a).trace := by
+    have hk := congrArg (fun m => (b j * m).trace) he
+    simpa [mul_add, Matrix.mul_smul, Matrix.mul_sum, trace_add, trace_smul,
+      trace_sum, hb.2.1, hb.2.2] using hk
+  rw [hn] at he
+  simp_rw [hs] at he
+  exact he.symm
+
+private lemma basis_tensor {d : ℕ} (hd : 2 ≤ d)
+    {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
+    (i j k l : Fin d) :
+    ∑ q, b q i j * b q k l =
+      (if i = l then if j = k then 1 else 0 else 0) -
+        (1 / (d : ℂ)) * (if i = j then 1 else 0) * (if k = l then 1 else 0) := by
+  classical
+  have he := congrArg (fun a : Matrix (Fin d) (Fin d) ℂ => a k l)
+    (matrix_expansion hd hb (Matrix.single j i 1))
+  have ht : (Matrix.single j i (1 : ℂ)).trace = if i = j then 1 else 0 := by
+    by_cases hij : i = j
+    · subst j; simp
+    · simp [Matrix.trace_single_eq_of_ne, Ne.symm hij, hij]
+  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.sum_apply, Matrix.trace_mul_single,
+    MulOpposite.op_one, one_smul, smul_eq_mul, ht] at he
+  have heq : (Matrix.single j i (1 : ℂ)) k l =
+      if i = l then if j = k then 1 else 0 else 0 := by
+    by_cases hil : i = l <;> by_cases hjk : j = k <;>
+      simp [Matrix.single_apply, hil, hjk, eq_comm]
+  rw [heq, Matrix.one_apply] at he
+  by_cases hij : i = j <;> by_cases hkl : k = l <;>
+    simp only [hij, hkl, ↓reduceIte, zero_div, zero_mul, one_mul, div_one] at he ⊢ <;>
+    linear_combination -he
+
+private lemma fierz {d : ℕ} (hd : 2 ≤ d)
+    {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
+    (a : Matrix (Fin d) (Fin d) ℂ) :
+    ∑ q, b q * a * b q = a.trace • 1 - (1 / (d : ℂ)) • a := by
+  classical
+  ext i l
+  simp only [Matrix.sum_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.mul_apply,
+    smul_eq_mul]
+  change (∑ q, ∑ m, (∑ k, b q i k * a k m) * b q m l) =
+    a.trace * (1 : Matrix (Fin d) (Fin d) ℂ) i l - (1 / (d : ℂ)) * a i l
+  calc
+    _ = ∑ k, ∑ m, a k m * ∑ q, b q i k * b q m l := by
+      simp only [Finset.sum_mul, Finset.mul_sum]
+      conv_rhs => rw [Finset.sum_comm]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro m _
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro k _
+      apply Finset.sum_congr rfl
+      intro q _
+      ring
+    _ = _ := by
+      simp_rw [basis_tensor hd hb]
+      simp only [mul_sub, Finset.sum_sub_distrib, mul_ite, mul_zero, mul_one,
+        Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte,
+        Matrix.one_apply]
+      split_ifs <;> simp_all [Matrix.trace, Matrix.diag_apply, Finset.mul_sum,
+        Finset.sum_mul, mul_assoc, mul_comm]
+
 private lemma unique_lub {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
     {θ : Fin (d ^ 2 - 1) → ℝ}
     {x : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hx : IsLUB d b θ x) : x = b := by
-  sorry
+  classical
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  funext k
+  have he := matrix_expansion hd hb (x k)
+  have ht := hx.2.1 k
+  have ht0 : (x k).trace = 0 := by
+    have heq : (model d b θ * x k).trace =
+        (1 / (d : ℂ)) * (x k).trace + (θ k : ℂ) := by
+      simp [model, add_mul, Matrix.smul_mul, Matrix.sum_mul, trace_add,
+        trace_smul, trace_sum, hx.2.2]
+    rw [heq] at ht
+    have hz : (1 / (d : ℂ)) * (x k).trace = 0 := by linear_combination ht
+    exact (mul_eq_zero.mp hz).resolve_left (one_div_ne_zero hd0)
+  simpa [ht0, hx.2.2] using he
 
 private lemma casimir {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b) :
     ∑ j, b j * b j = (((d : ℂ) ^ 2 - 1) / (d : ℂ)) • 1 := by
-  sorry
+  have he := fierz hd hb (1 : Matrix (Fin d) (Fin d) ℂ)
+  simp only [mul_one, trace_one, Fintype.card_fin] at he
+  rw [he, ← sub_smul]
+  congr 1
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  field_simp
+  <;> ring
 
 private lemma purity_expansion {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
@@ -196,14 +319,46 @@ private lemma primal_cost {d : ℕ} (hd : 2 ≤ d)
       (((d : ℝ) ^ 2 - 1) * ((d : ℝ) + 1)) / d := by
   have hc := casimir hd hb
   have ht := model_trace hd hb θ
-  sorry
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  have hd2 : (d : ℂ) + 2 ≠ 0 := by
+    have hn : (0 : ℝ) < d + 2 := by positivity
+    exact_mod_cast ne_of_gt hn
+  have hn : ((d ^ 2 - 1 : ℕ) : ℂ) = (d : ℂ) ^ 2 - 1 := by
+    rw [Nat.cast_sub (by nlinarith : 1 ≤ d ^ 2)]
+    simp
+  have hs : ∑ j, primal d b j j =
+      ((((d : ℂ) ^ 2 - 1) * ((d : ℂ) + 1)) / d) • 1 := by
+    simp only [primal, ↓reduceIte, ← Finset.smul_sum, Finset.sum_add_distrib, hc,
+      Finset.sum_const, Finset.card_univ, Fintype.card_fin]
+    rw [← add_smul, ← Nat.cast_smul_eq_nsmul ℂ,
+      hn, ← add_smul, smul_smul]
+    congr 1
+    field_simp
+    <;> ring
+  have he : (∑ j, (model d b θ * primal d b j j).trace) =
+      (((d : ℂ) ^ 2 - 1) * ((d : ℂ) + 1)) / d := by
+    rw [← trace_sum, ← Matrix.mul_sum, hs, Matrix.mul_smul, mul_one, trace_smul, ht]
+    simp
+  rw [he]
+  have hh : (((d : ℂ) ^ 2 - 1) * ((d : ℂ) + 1)) / d =
+      (((((d : ℝ) ^ 2 - 1) * ((d : ℝ) + 1)) / d : ℝ) : ℂ) := by push_cast; rfl
+  rw [hh, Complex.ofReal_re]
 
 private lemma admissible_cost_nonneg {d n : ℕ}
     {ρ : Matrix (Fin d) (Fin d) ℂ} (hρ : ρ.PosSemidef)
     {x : Fin n → Matrix (Fin d) (Fin d) ℂ} (hx : ∀ j, (x j).IsHermitian)
     {l : Fin n → Fin n → Matrix (Fin d) (Fin d) ℂ} (hl : IsAdmissible x l) :
     0 ≤ (∑ j, (ρ * l j j).trace).re := by
-  sorry
+  classical
+  rw [Complex.re_sum]
+  apply Finset.sum_nonneg
+  intro j _
+  have hd : (l j j - x j * x j).PosSemidef := hl.2.2.submatrix (fun i => (j, i))
+  have hs : (x j * x j).PosSemidef := by
+    simpa only [(hx j).eq] using posSemidef_conjTranspose_mul_self (x j)
+  have hp : (l j j).PosSemidef := by
+    simpa only [sub_add_cancel] using hd.add hs
+  exact RHLinalg.trace_mul_nonneg_of_posSemidef hρ hp
 
 private lemma nagaoka_upper {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
