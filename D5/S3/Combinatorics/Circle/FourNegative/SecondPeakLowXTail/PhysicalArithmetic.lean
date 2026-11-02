@@ -7,7 +7,7 @@
    digest: Exact natural exponents for the low-X physical reservations. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
 import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -61,9 +61,11 @@ private theorem reservation_choices (a b c d : ℕ) (h : physicalDomain a b c d)
   · by_cases hr : rOn b c d
     · have hn : ¬ b-d ≤ 2*c-1 := by dsimp [rOn] at hr; omega
       by_cases hx : collide a b c d
-      · simp [rWeight,rExponent,hr,hn,hx,show eOn a b ∧ d+2*c+1=2*a from hx,
-          pow_succ,mul_comm]
-      · simp [rWeight,rExponent,hr,hn,hx,show ¬ (eOn a b ∧ d+2*c+1=2*a) from hx]
+      · simp only [rWeight,ite_eq_left hr,ite_eq_right hn,rExponent,ite_eq_left hx,
+          pow_succ]
+        ring
+      · simp only [rWeight,ite_eq_left hr,ite_eq_right hn,rExponent,ite_eq_right hx,
+          Nat.add_zero]
     · have hn : b-d ≤ 2*c-1 := by dsimp [rOn] at hr; omega
       simp [rWeight,hr,hn]
 
@@ -92,11 +94,11 @@ private theorem physical_coordinates (a b c d : ℕ) (h : physicalDomain a b c d
   · have hden : 2*((2:ℚ)^c)^2 = 2^(2*c+1) := by
       rw [← pow_mul,show c*2=2*c by omega,pow_succ]; ring
     rw [hden,dyadic_quotient a (2*c+1) ha]
-    congr 1; omega
+    congr 1
   · simpa only [show (2:ℚ)^2=4 by norm_num] using dyadic_quotient a 2 (by omega)
   · simpa only [show (2:ℚ)^2=4 by norm_num] using dyadic_quotient c 2 hc
   · rw [hw,← pow_succ',dyadic_quotient d (c+1) (by omega)]
-    congr 1; omega
+    congr 1
   · rw [hw]
     simpa using dyadic_quotient d 1 (by omega)
 
