@@ -7,7 +7,7 @@
    digest: Cyclic shifts give the second family in every dimension. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
-import Mathlib.LinearAlgebra.Matrix.Permutation
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
 
 /-! Cyclic shifts give difference labels, while sum-indexed shield vectors supply the
 partial-transpose certificate. -/
@@ -17,6 +17,8 @@ open scoped BigOperators
 open Matrix
 
 namespace D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
+
+open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
 
 noncomputable section
 
@@ -66,10 +68,9 @@ private theorem cyclic_shift_factor (d : ℕ) (i j k : Fin d) :
 
 private theorem cyclic_q_orthogonal (d : ℕ) (k : Fin d) :
     (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by
-  change (Equiv.Perm.permMatrix ℝ (finCycle k))ᵀ *
-    Equiv.Perm.permMatrix ℝ (finCycle k) = 1
-  rw [Matrix.transpose_permMatrix, ← Matrix.permMatrix_mul]
-  simp
+  simpa only [cyclicQ, Matrix.star_eq_conjTranspose,
+    Matrix.conjTranspose_eq_transpose_of_trivial] using
+    (Matrix.mem_unitaryGroup_iff'.mp ((finCycle k).permMatrix_mem_unitaryGroup (R := ℝ)))
 
 private theorem cyclic_q_factorization (d : ℕ) :
     ∀ i j k, cyclicQ d k i j = cyclicS d i j * cyclicQbar d (cyclicMu d i j) k := by
@@ -118,33 +119,74 @@ private theorem cyclic_qbar_orthonormal (d : ℕ) :
   · have hnm : n ≠ m := Ne.symm hmn
     simp [hmn, hnm]
 
+private def cyclicShieldIndexEquiv (d : ℕ) [NeZero d] :
+    (Fin d × Fin d) ≃ (Fin 2 → ZMod d) :=
+  (Equiv.prodCongr (ZMod.finEquiv d).toEquiv
+    ((ZMod.finEquiv d).toEquiv.trans (Equiv.neg (ZMod d)))).trans
+      (finTwoArrowEquiv (ZMod d)).symm
+
+private def cyclicShieldSector (d : ℕ) [NeZero d] (m : Fin d) : Fin 2 → ZMod d :=
+  ![0, -(ZMod.finEquiv d) m]
+
+private theorem cyclic_shield_transport (d : ℕ) [NeZero d]
+    (m : Fin d) (p : Fin d × Fin d) :
+    fourierVector 0 (cyclicShieldSector d m) (cyclicShieldIndexEquiv d p) =
+      cyclicShield d m p := by
+  classical
+  let z := ZMod.finEquiv d
+  have hsector :
+      cyclicShieldIndexEquiv d p =
+        sectorPoint (cyclicShieldIndexEquiv d p 0) (cyclicShieldSector d m) ↔
+      p.1 + p.2 = m := by
+    constructor
+    · intro hh
+      have h1 := congrFun hh 1
+      change -z p.2 = z p.1 + -z m at h1
+      rw [← sub_eq_add_neg] at h1
+      have h2 : -z p.2 + z m = z p.1 := (eq_sub_iff_add_eq).mp h1
+      apply z.injective
+      rw [map_add, ← h2]
+      abel
+    · intro hp
+      have hz : z p.1 + z p.2 = z m := by rw [← map_add, hp]
+      apply (finTwoArrowEquiv (ZMod d)).injective
+      apply Prod.ext
+      · change z p.1 = z p.1 + 0
+        simp
+      · change -z p.2 = z p.1 + -z m
+        rw [← hz]
+        abel
+  simp only [fourierVector, zero_mul, AddChar.map_zero_eq_one, mul_one, hsector,
+    cyclicShield]
+
 private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
     ∀ m n, ∑ x, star (cyclicShield d m x) * cyclicShield d n x = if m = n then 1 else 0 := by
   classical
-  have hp : 0 < d := by omega
-  let : NeZero d := ⟨Nat.ne_of_gt hp⟩
+  let : NeZero d := ⟨by omega⟩
+  have hlabels (m n : Fin d) : cyclicShieldSector d m = cyclicShieldSector d n ↔ m = n := by
+    constructor
+    · intro hh
+      exact (ZMod.finEquiv d).injective (neg_injective (congrFun hh 1))
+    · rintro rfl
+      rfl
   intro m n
-  have hi (i : Fin d) :
-      (∑ j : Fin d, star (cyclicShield d m (i, j)) * cyclicShield d n (i, j)) =
-        if m = n then ((Real.sqrt d : ℂ)⁻¹) ^ 2 else 0 := by
-    change (∑ j : Fin d,
-      star (if i + j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
-        (if i + j = n then (Real.sqrt d : ℂ)⁻¹ else 0)) = _
-    have he := Equiv.sum_comp (Equiv.addLeft i) (fun j : Fin d =>
-      star (if j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
-        (if j = n then (Real.sqrt d : ℂ)⁻¹ else 0))
-    simp only [Equiv.coe_addLeft] at he
-    refine he.trans ?_
-    by_cases hmn : m = n
-    · subst n
-      simp [← pow_two]
-    · simp [hmn, Ne.symm hmn]
-  rw [Fintype.sum_prod_type]
-  simp_rw [hi]
-  have hs : (Real.sqrt d : ℂ) ^ 2 = (d : ℂ) := by
-    exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg d)
-  have hd : (d : ℂ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hp
-  by_cases hmn : m = n <;> simp [hmn, inv_pow, hs, hd]
+  have hb := sector_basis 2 d (by decide) h 0 0
+    (cyclicShieldSector d m) (cyclicShieldSector d n) rfl rfl
+  change (∑ i : Fin 2 → ZMod d,
+    star (fourierVector 0 (cyclicShieldSector d m) i) *
+      fourierVector 0 (cyclicShieldSector d n) i) = _ at hb
+  calc
+    _ = ∑ p, star (fourierVector 0 (cyclicShieldSector d m) (cyclicShieldIndexEquiv d p)) *
+        fourierVector 0 (cyclicShieldSector d n) (cyclicShieldIndexEquiv d p) := by
+      apply Finset.sum_congr rfl
+      intro p _
+      rw [cyclic_shield_transport, cyclic_shield_transport]
+    _ = ∑ i : Fin 2 → ZMod d, star (fourierVector 0 (cyclicShieldSector d m) i) *
+        fourierVector 0 (cyclicShieldSector d n) i :=
+      Equiv.sum_comp (cyclicShieldIndexEquiv d) (fun i =>
+        star (fourierVector 0 (cyclicShieldSector d m) i) *
+          fourierVector 0 (cyclicShieldSector d n) i)
+    _ = _ := by simpa only [eq_self, true_and, hlabels] using hb
 
 private theorem cyclic_partial_transpose (d : ℕ) :
     D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
