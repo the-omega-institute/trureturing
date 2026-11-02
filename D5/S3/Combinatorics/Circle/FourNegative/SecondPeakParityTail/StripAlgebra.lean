@@ -107,7 +107,7 @@ private theorem strip_corners (U Z H T : ℚ)
       (if highS then 7*(16+Z)/4 else 2)
       (if highDelta then 2*((4+U)-1) else 0) i := by
   cases highS <;> cases highDelta <;> fin_cases i <;>
-    norm_num [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
+    norm_num only [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
       qHead,qNewHead,qModulus,qTerminal] <;> ring_nf <;> positivity
 
 -- Exact joint affinity in S and delta. In particular no S*delta term is hidden.
