@@ -8,9 +8,9 @@ Assume only that H is a two-sided inverse of the complex lattice Gram matrix. Th
 
 **Definition 1.1 (The shifted original-operator action family).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.paired`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance.paired`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.paired` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance.paired` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For every D,H and integers r,k, paired D H r k is the tensor map sugawaraMode D 
 
 **Theorem 1.2 (Original-operator covariance with the rank anomaly).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.covariance`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance.covariance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.covariance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance.covariance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,6 +32,6 @@ For every D,H with H G=G H=1 and every integer r, [T,M_r+G_r]=-(rank(D)/12)(r^3-
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.covariance`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeMatterGhostCovariance.paired`
-- Dependency: [D5/S3/VertexAlgebra/LatticeMatterGhostCoupling](LatticeMatterGhostCoupling.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance.covariance`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCovariance.paired`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostCoupling](LatticeMatterGhostCoupling.md)
