@@ -7,7 +7,6 @@
    digest: Two continuous invariant parity-odd variables vanish on a chiral event. -/
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.Analysis.Convex.Contractible
 import Mathlib.Topology.Homotopy.Lifting
