@@ -2,8 +2,14 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments
 import Reg.Support.DependentFamily
 
-/-! Original-telescope dependent-family audit attempt for the actual group-order readout.
-The entire rooted-walk and trace conclusion is preserved in the closed law. -/
+/-! Complete original-telescope DependentFamily proof evidence for
+`D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments.first_return_moment_defect`.
+The typed outer Contract.Registration compiled, but actual scoped discovery failed
+with contract.discovery:rigid_universes. The four-slot audit is UNFINISHED:
+https://github.com/the-omega-institute/trureturing/issues/24448#issuecomment-6586650727
+Only genuine kernel-checked family proof terms are retained here; no
+`declared_validated` status is claimed. The full rooted-walk and trace conclusion
+is preserved in the closed law, observing the actual group-order family. -/
 
 namespace Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments
 open _root_.D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments
@@ -102,37 +108,5 @@ noncomputable def momentSource : Registration momentArena
     change groupOrder (5,2) = 1400 at h5
     change groupOrder (3,2) ≠ groupOrder (5,2)
     omega
-
-noncomputable def momentRegistration :
-    Contract.Registration first_return_moment_defect (Realization momentSignature) Type Unit := {
-  unitName := `D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments.first_return_moment_defect.__information_unit
-  realizationName := `Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments.momentSource
-  realizationSource := none
-  generated := false
-  arena := .source ⟨momentArena⟩
-  objectArena := .source ⟨momentArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source momentArena ⟨momentSource⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize momentSignature (fun _ _ pt => groupOrder pt) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℤ
-  sourceSelection := some {
-    owner := `D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments
-    definition := none
-    coordinates := #[0,1]
-    readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-        stateBinder := 0
-        functionOperand := false
-        stateOperand := some #["arg"]
-        booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end Reg.D5.S3.FiniteGroups.BajnokBeattyCayleyReturnMoments
