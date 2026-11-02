@@ -118,4 +118,5 @@ noncomputable def registration :
   familyRecord := none
   options := #[]
 
+end
 end Reg.D5.S3.Combinatorics.Graph.Laman.PlanarLaman

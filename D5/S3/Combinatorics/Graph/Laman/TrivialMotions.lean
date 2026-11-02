@@ -48,7 +48,7 @@ theorem translationMotion_mem_ker (G : SimpleGraph V) (p : Framework V d)
   rw [LinearMap.mem_ker]
   funext ⟨e, he⟩
   induction e with
-  | h u v => simp [rigidityMap_apply]
+  | h u v => simp [rigidityMap_apply, translationMotion]
 
 /-! ### Infinitesimal rotations -/
 
@@ -237,7 +237,8 @@ theorem trivialMotionFamily_linearIndependent {p : Framework V d}
     simp [ht_def, Pi.single_apply]
   -- Step 1: at every `v`, `t + S (p v) = 0`. Evaluate `hc` at `v` and split the index sum.
   have h_combine : ∀ v : V, t + S (p v) = 0 := fun v => by
-    simpa [hS_def, ht_def, trivialMotionFamily, Fintype.sum_sum_type,
+    simpa [hS_def, ht_def, trivialMotionFamily, translationMotion, infinitesimalRotation,
+      Fintype.sum_sum_type,
       LinearMap.sum_apply] using congrFun hc v
   -- Step 2: `S` vanishes on differences `p v - p w`.
   have h_S_diff : ∀ v w : V, S (p v - p w) = 0 := fun v w => by
