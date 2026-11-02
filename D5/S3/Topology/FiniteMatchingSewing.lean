@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/FiniteMatchingSewing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Topology/FiniteMatchingClosure]
+   anchors: [mathlib/module/Mathlib.Logic.Relation]
    utility: none
    digest: Sewing partitions actual components and computes closed matching stacks. -/
 import D5.S3.Topology.FiniteMatchingComposition
