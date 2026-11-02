@@ -52,10 +52,12 @@ theorem endpointCodes_vertical (P : Parameters) (p : ℕ) (hp : p < 2)
       ((i.val,if i.val = 0 then 0 else t),
        (i.val+2,if i.val+1 < P.n then t-1 else 0)) := by
   have hi := i.isLt
+  have hn := P.hn
+  have hn1 : 1 < P.n := by omega
   by_cases hl : i.val = 0 <;> by_cases hr : i.val+1 < P.n
-  · simp [endpointCodes,edgeEnds,code,h,hl,hr]
+  · simp [endpointCodes,edgeEnds,code,h,hl,hr,hn1]
   · omega
-  · simp [endpointCodes,edgeEnds,code,h,hl,hr]
+  · simp [endpointCodes,edgeEnds,code,h,hl,hr,hn1]
   · have he : i.val+2 = P.n+1 := by omega
     simp [endpointCodes,edgeEnds,code,h,hl,hr,he]
 
@@ -133,7 +135,7 @@ theorem crossingEdge_injective (P : Parameters) (p : ℕ) (hp : p < 2) :
 def crossingEdgeEquiv (P : Parameters) (p : ℕ) (hp : p < 2) :
     Crossing P ≃ (referenceGraph P p hp Finset.univ).edgeSet :=
   Equiv.ofBijective
-    (fun a => ⟨crossingEdge P p a,SimpleGraph.mem_edgeSet.mpr
+    (fun a => ⟨crossingEdge P p a,(referenceGraph P p hp Finset.univ).mem_edgeSet.mpr
       ⟨a,Finset.mem_univ _,Or.inl ⟨rfl,rfl⟩⟩⟩)
     ⟨by
       intro a b h
@@ -141,7 +143,7 @@ def crossingEdgeEquiv (P : Parameters) (p : ℕ) (hp : p < 2) :
       rintro ⟨e,he⟩
       induction e using Sym2.inductionOn with
       | hf u v =>
-        obtain ⟨a,ha,h⟩ := SimpleGraph.mem_edgeSet.mp he
+        obtain ⟨a,ha,h⟩ := (referenceGraph P p hp Finset.univ).mem_edgeSet.mp he
         refine ⟨a,Subtype.ext ?_⟩
         rcases h with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
         · rfl

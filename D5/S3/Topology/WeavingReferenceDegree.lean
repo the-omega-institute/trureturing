@@ -58,8 +58,8 @@ theorem interval_incident_shape (P : Parameters) (p : ℕ) (hp : p < 2)
       have hright := congrArg Prod.snd hc
       change vertexCode P p hp (edgeEnds P p u j).2 = (j.val+1,u) at hright
       rw [hv,hright] at he
-      exact Or.inl ⟨Fin.ext (by have := congrArg Prod.fst he; omega),
-        Or.inl (congrArg Prod.snd he).symm⟩
+      have hij : j = i := Fin.ext (by have := congrArg Prod.fst he; omega)
+      exact Or.inl ⟨hij,Or.inl (congrArg Prod.snd he).symm⟩
   · have hc := endpointCodes_vertical P p hp u j hj
     rcases ha with ha | ha
     · have he := congrArg (vertexCode P p hp) ha
@@ -154,12 +154,14 @@ theorem hubs_independent (P : Parameters) (p : ℕ) (hp : p < 2)
       dsimp [IsHub] at hu hv <;>
       have h₁ := congrArg (fun x => x.1.1) hc <;>
       have h₂ := congrArg (fun x => x.2.1) hc <;>
+      dsimp only [endpointCodes] at h₁ h₂ <;>
       rcases hu with hu | hu <;> rcases hv with hv | hv <;> have := i.isLt <;> omega
   · have hc := endpointCodes_vertical P p hp t i hi
     rcases h with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;>
       dsimp [IsHub] at hu hv <;>
       have h₁ := congrArg (fun x => x.1.1) hc <;>
       have h₂ := congrArg (fun x => x.2.1) hc <;>
+      dsimp only [endpointCodes] at h₁ h₂ <;>
       rcases hu with hu | hu <;> rcases hv with hv | hv <;>
       have := i.isLt <;> have := P.hn <;> omega
 
@@ -186,6 +188,12 @@ def orderedGraphIso (P : Parameters) (p : ℕ) (hp : p < 2) :
   toEquiv := vertexOrder P p hp
   map_rel_iff' := by simp [orderedGraph]
 
+theorem vertexCount_eq_circle_card (P : Parameters) (p : ℕ) (hp : p < 2) :
+    vertexCount P p = Nat.card (Circle P p) := by
+  calc
+    vertexCount P p = Nat.card (Fin (vertexCount P p)) := by simp
+    _ = Nat.card (Circle P p) := (Nat.card_congr (vertexOrder P p hp)).symm
+
 theorem orderedGraph_connected (P : Parameters) (p : ℕ) (hp : p < 2) :
     (orderedGraph P p hp).Connected :=
   (orderedGraphIso P p hp).connected_iff.mp (referenceGraph_connected P p hp)
@@ -204,10 +212,12 @@ theorem hub_inverse_isHub (P : Parameters) (p : ℕ) (hp : p < 2)
     (b : Hub P p) : IsHub P p hp ((circleEquiv P p hp).symm (.inr b)) := by
   rcases b with ⟨b,hb⟩
   cases b
-  · left
+  · simp only [Bool.false_eq_true, ↓reduceIte] at hb
+    left
     change (code P p (0,(⟨0,by have := P.hn; omega⟩ : Fin P.n),.tl)).1 = 0
     simp [code,hb]
-  · right
+  · simp only [↓reduceIte] at hb
+    right
     change (code P p (0,(⟨P.n-1,by have := P.hn; omega⟩ : Fin P.n),.tr)).1 = P.n+1
     have hr : ¬ P.n-1+1 < P.n := by have := P.hn; omega
     simp [code,hb,hr]

@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Topology.ColoredMatchingSwitch
 
+/-! A dependent-family audit of the actual finite colored matching count law. -/
+
 set_option autoImplicit false
 namespace Reg.D5.S3.Topology.ColoredMatchingSwitch
 open _root_.D5.S3.Topology.ColoredMatchingSwitch
@@ -141,7 +143,7 @@ def familyRegistration : Registration arena.{u} sourceScope.{u} where
 
 noncomputable def countRegistration :
     LeanInformationAudit.Contract.Registration
-      (@colored_switch_circle_count.{u}) (Realization signature.{u}) Type Unit where
+      (@colored_switch_circle_count.{u}) (Realization signature.{u}) (Type (u+1)) Unit where
   unitName := `D5.S3.Topology.ColoredMatchingSwitch.colored_switch_circle_count.__information_unit
   realizationName := `Reg.D5.S3.Topology.ColoredMatchingSwitch.familyRegistration
   realizationSource := none

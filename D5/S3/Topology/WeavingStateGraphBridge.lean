@@ -7,7 +7,7 @@
    digest: The canonical graph state polynomial is the actual mixed-circle state sum, -/
 
 import D5.S3.Topology.WeavingEulerDefect
-import D5.S3.Topology.WeavingCoefficientConsumer
+import D5.S3.Topology.WeavingReferenceDegree
 
 /-! The canonical graph state polynomial is the actual mixed-circle state sum,
 via the full spanning-graph isomorphism and finite-state reindexing. -/
@@ -25,7 +25,6 @@ open D5.S3.Topology.WeavingMixedComponents
 open D5.S3.Topology.WeavingReferenceIncidence
 open D5.S3.Topology.WeavingReferenceDegree
 open D5.S3.Topology.WeavingEulerDefect
-open D5.S3.Topology.WeavingCoefficientConsumer
 open D5.S3.Combinatorics.Graph.Polynomials.CyclicRankEstimate
 
 private def edgeSetGraphEdgeEquiv {v : ℕ} (G : SimpleGraph (Fin v)) :
@@ -39,7 +38,7 @@ and the graph supplier's precise edge-subtype identification. -/
 def crossingGraphEdgeEquiv (P : Parameters) (p : ℕ) (hp : p < 2) :
     Crossing P ≃ graphEdge (orderedGraph P p hp) :=
   (crossingEdgeEquiv P p hp).trans
-    ((edgeEquiv (orderedGraphIso P p hp)).trans
+    (((orderedGraphIso P p hp).mapEdgeSet).trans
       (edgeSetGraphEdgeEquiv (orderedGraph P p hp)))
 
 @[simp] theorem crossingGraphEdgeEquiv_val (P : Parameters) (p : ℕ) (hp : p < 2)
@@ -71,6 +70,7 @@ theorem stateGraph_adj_iff (P : Parameters) (p : ℕ) (hp : p < 2)
   · rintro ⟨he, _⟩
     obtain ⟨e, he, heq⟩ := Finset.mem_image.mp he
     obtain ⟨z, hz, rfl⟩ := Finset.mem_map.mp he
+    change (crossingGraphEdgeEquiv P p hp z).val = _ at heq
     rw [crossingGraphEdgeEquiv_val] at heq
     refine ⟨z, hz, ?_⟩
     rcases Sym2.eq_iff.mp heq with heq | heq

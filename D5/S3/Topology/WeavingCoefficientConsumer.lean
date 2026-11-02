@@ -6,10 +6,10 @@
    utility: none
    digest: Uniform graph coefficient estimates on the actual ordered weaving reference graphs. -/
 
-import D5.S3.Topology.WeavingReferenceDegree
+import D5.S3.Topology.WeavingStateGraphBridge
 import D5.S3.Combinatorics.Graph.Polynomials.TutteCoefficientAsymptotics
 import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-! Uniform graph coefficient estimates on the actual ordered weaving reference graphs. -/
 
@@ -22,43 +22,14 @@ open D5.S3.Topology.WeavingDiagramPorts
 open D5.S3.Topology.WeavingMixedComponents
 open D5.S3.Topology.WeavingReferenceIncidence
 open D5.S3.Topology.WeavingReferenceDegree
+open D5.S3.Topology.WeavingStateGraphBridge
 open D5.S3.Combinatorics.Graph.Polynomials.CyclicRankEstimate
 open D5.S3.Combinatorics.Graph.Polynomials.TutteCoefficientAsymptotics
 
-private def edgeMap {V W : Type*} {A : SimpleGraph V} {B : SimpleGraph W}
-    (e : A ≃g B) (a : A.edgeSet) : B.edgeSet :=
-  ⟨Sym2.map e a.val,by
-    rcases a with ⟨a,ha⟩
-    induction a using Sym2.inductionOn with
-    | hf u v => exact SimpleGraph.mem_edgeSet.mpr
-        (e.toHom.map_adj (SimpleGraph.mem_edgeSet.mp ha))⟩
-
-/-- Edge cardinality is transported through an actual graph isomorphism. -/
-def edgeEquiv {V W : Type*} {A : SimpleGraph V} {B : SimpleGraph W}
-    (e : A ≃g B) : A.edgeSet ≃ B.edgeSet where
-  toFun := edgeMap e
-  invFun := edgeMap e.symm
-  left_inv a := by
-    apply Subtype.ext
-    change Sym2.map e.symm (Sym2.map e a.val) = a.val
-    induction a.val using Sym2.inductionOn with
-    | hf u v => simp only [Sym2.map_mk,e.symm_apply_apply]
-  right_inv a := by
-    apply Subtype.ext
-    change Sym2.map e (Sym2.map e.symm a.val) = a.val
-    induction a.val using Sym2.inductionOn with
-    | hf u v => simp only [Sym2.map_mk,e.apply_symm_apply]
-
 theorem ordered_edge_card (P : Parameters) (p : ℕ) (hp : p < 2) :
     Nat.card (orderedGraph P p hp).edgeSet = P.n*P.m := by
-  rw [← Nat.card_congr (edgeEquiv (orderedGraphIso P p hp))]
+  rw [← Nat.card_congr ((orderedGraphIso P p hp).mapEdgeSet)]
   exact referenceGraph_edge_card P p hp
-
-theorem vertexCount_eq_circle_card (P : Parameters) (p : ℕ) (hp : p < 2) :
-    vertexCount P p = Nat.card (Circle P p) := by
-  calc
-    vertexCount P p = Nat.card (Fin (vertexCount P p)) := by simp
-    _ = Nat.card (Circle P p) := (Nat.card_congr (vertexOrder P p hp)).symm
 
 def d (n : ℕ) : ℕ := n%2
 def r (n : ℕ) : ℕ := (n-n%2)/2
@@ -90,7 +61,7 @@ theorem exact_cycle_ranks (P : Parameters) :
     omega
 
 def H (P : Parameters) (p : ℕ) (hp : p < 2) : Polynomial ℤ :=
-  graphStatePolynomial (vertexCount_pos P p hp) (orderedGraph P p hp)
+  mixedStatePolynomial P p hp
 
 theorem actual_signed_estimate (P : Parameters) (p : ℕ) (hp : p < 2)
     (k : ℕ) (hk : 1 ≤ k) :
@@ -101,6 +72,7 @@ theorem actual_signed_estimate (P : Parameters) (p : ℕ) (hp : p < 2)
     (orderedGraph P p hp) (orderedGraph_connected P p hp)
     (orderedGraph_forward_degree P p hp) k hk
   rw [ordered_edge_card] at h
+  rw [graphStatePolynomial_eq_mixed] at h
   exact h
 
 /-- Reverse triangle inequality removes the sign without assuming an eventual
@@ -140,12 +112,12 @@ theorem two_reference_unsigned_error (P : Parameters) (k : ℕ) (hk : 1 ≤ k) :
     (actual_signed_estimate P 0 (by omega) k hk)
   rw [(exact_cycle_ranks P).1] at h₁
   rw [(exact_cycle_ranks P).2] at h₀
+  generalize ha : ((H P 1 (by omega)).coeff k).natAbs = A at *
+  generalize hb : ((H P 0 (by omega)).coeff k).natAbs = B at *
   calc
-    _ = ((((H P 1 (by omega)).coeff k).natAbs : ℤ) -
-          (((((r P.n+d P.n)*P.m-d P.n)+k-1).choose k : ℕ) : ℤ) +
-        ((((H P 0 (by omega)).coeff k).natAbs : ℤ) -
-          ((((r P.n*P.m+d P.n)+k-1).choose k : ℕ) : ℤ))).natAbs := by
-      congr 1
+    _ = (((A : ℤ) - (((((r P.n+d P.n)*P.m-d P.n)+k-1).choose k : ℕ) : ℤ)) +
+      ((B : ℤ) - ((((r P.n*P.m+d P.n)+k-1).choose k : ℕ) : ℤ))).natAbs := by
+      apply congrArg Int.natAbs
       push_cast
       ring
     _ ≤ _ := Int.natAbs_add_le _ _
@@ -207,12 +179,12 @@ theorem binomial_leading_error (b k : ℕ) :
     apply sub_nonneg.mpr
     exact (div_le_iff₀ hf).mpr (by nlinarith)
   rw [abs_of_nonneg hn]
-  apply (mul_le_mul_right hf).mp
+  apply (mul_le_mul_iff_right₀ hf).mp
   calc
     _ = (k.factorial : ℝ)*((b+k-1).choose k : ℝ)-(b : ℝ)^k := by
       field_simp [ne_of_gt hf]
       <;> ring
     _ ≤ (risingErrorConstant k : ℝ)*(b+1 : ℝ)^(k-1) := by linarith
-    _ = _ := by field_simp [ne_of_gt hf]; ring
+    _ = _ := by field_simp [ne_of_gt hf]
 
 end D5.S3.Topology.WeavingCoefficientConsumer
