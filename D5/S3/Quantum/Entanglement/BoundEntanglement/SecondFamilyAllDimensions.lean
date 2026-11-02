@@ -74,10 +74,11 @@ private def cyclicShiftEquiv (d : ℕ) (k : Fin d) : Fin d ≃ Fin d :=
 private def cyclicQ (d : ℕ) (k : Fin d) : Matrix (Fin d) (Fin d) ℝ :=
   Equiv.Perm.permMatrix ℝ (cyclicShiftEquiv d k)
 
-private def cyclicMu (d : ℕ) : Fin d → Fin d → Fin d :=
-  fun i j => ⟨(j.val + d - i.val) % d, by
-    exact Nat.mod_lt _ (Nat.zero_lt_of_lt i.isLt)
-  ⟩
+private def cyclicMu (d : ℕ) : Fin d → Fin d → Fin d := fun i j =>
+  if h : 0 < d then
+    letI : NeZero d := ⟨Nat.ne_of_gt h⟩
+    (ZMod.finEquiv d).symm ((ZMod.finEquiv d j) - (ZMod.finEquiv d i))
+  else i
 
 private def cyclicS (d : ℕ) : Fin d → Fin d → ℝ := fun _ _ => 1
 
@@ -87,6 +88,27 @@ private def cyclicQbar (d : ℕ) : Fin d → Fin d → ℝ :=
 private def cyclicShield (d : ℕ) : Fin d → Fin d × Fin d → ℂ :=
   fun m p => if p.1 + p.2 = m then (Real.sqrt d : ℂ)⁻¹ else 0
 
+private theorem cyclic_shift_factor (d : ℕ) (h : 2 ≤ d) (i j k : Fin d) :
+    cyclicShiftEquiv d k i = j ↔ k = cyclicMu d i j := by
+  have hp : 0 < d := lt_of_lt_of_le (by omega) h
+  letI : NeZero d := ⟨Nat.ne_of_gt hp⟩
+  constructor
+  · intro hk
+    apply (ZMod.finEquiv d).injective
+    have hk' := congrArg (ZMod.finEquiv d) hk
+    have hsum : (ZMod.finEquiv d i) + (ZMod.finEquiv d k) =
+        ZMod.finEquiv d j := by
+      simpa [cyclicShiftEquiv, cyclicShift, hp] using hk'
+    simp [cyclicMu, hp]
+    exact (eq_sub_iff_add_eq).2 (by simpa [add_comm] using hsum)
+  · intro hk
+    apply (ZMod.finEquiv d).injective
+    have hk' := congrArg (ZMod.finEquiv d) hk
+    have hsub : (ZMod.finEquiv d k) = ZMod.finEquiv d j - ZMod.finEquiv d i := by
+      simpa [cyclicMu, hp] using hk'
+    simpa [cyclicShiftEquiv, cyclicShift, hp] using
+      (by simpa [add_comm] using (eq_sub_iff_add_eq.1 hsub))
+
 private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
     (cyclicQ d k)ᵀ * cyclicQ d k = 1 := by
   change (Equiv.Perm.permMatrix ℝ (cyclicShiftEquiv d k))ᵀ *
@@ -95,7 +117,10 @@ private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
   simp
 
 private theorem cyclic_q_factorization (d : ℕ) (h : 2 ≤ d) :
-    ∀ i j k, cyclicQ d k i j = cyclicS d i j * cyclicQbar d (cyclicMu d i j) k := by sorry
+    ∀ i j k, cyclicQ d k i j = cyclicS d i j * cyclicQbar d (cyclicMu d i j) k := by
+  intro i j k
+  simp [cyclicQ, cyclicS, cyclicQbar, Equiv.Perm.permMatrix,
+    cyclic_shift_factor d h i j k]
 
 private theorem cyclic_multiplicity (d : ℕ) (h : 2 ≤ d) (i j : Fin d) :
     (cyclicS d i j) ^ 2 = (d : ℝ) / multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) := by sorry
