@@ -7,10 +7,10 @@
    digest: A positive nonconstant solution on a cubic tree refutes the tEoM conjecture. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.Order.GroupWithZero.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring.RingNF
 
 /-! The tree equations of motion of Huang, Stoica, Xia and Zhong, arXiv:2006.06716v1,
 admit a positive nonconstant setting on a bi-infinite spine with binary branches. -/
@@ -64,7 +64,7 @@ private lemma parent_rank (i : Sum ℤ (ℤ × List Bool)) :
     rank (parent i) = rank i - 1 := by
   rcases i with n | ⟨n, w⟩
   · rfl
-  · cases w <;> simp [parent, rank]
+  · cases w <;> simp [parent.eq_1, rank.eq_1]
     omega
 
 private def graph : SimpleGraph (Sum ℤ (ℤ × List Bool)) where
@@ -84,11 +84,11 @@ private def neighbors (i : Sum ℤ (ℤ × List Bool)) : Finset (Sum ℤ (ℤ ×
 private lemma mem_neighbors (i j : Sum ℤ (ℤ × List Bool)) :
     j ∈ neighbors i ↔ graph.Adj i j := by
   rcases i with n | ⟨n, w⟩ <;> rcases j with m | ⟨m, z⟩
-  · simp [neighbors, graph, parent]
+  · simp [neighbors.eq_1, graph.eq_1, parent.eq_1]
     omega
-  · cases z <;> simp [neighbors, graph, parent, eq_comm]
-  · cases w <;> simp [neighbors, graph, parent, eq_comm]
-  · cases w <;> cases z <;> simp [neighbors, graph, parent]
+  · cases z <;> simp [neighbors.eq_1, graph.eq_1, parent.eq_1, eq_comm]
+  · cases w <;> simp [neighbors.eq_1, graph.eq_1, parent.eq_1, eq_comm]
+  · cases w <;> cases z <;> simp [neighbors.eq_1, graph.eq_1, parent.eq_1]
     all_goals aesop
 
 private instance graph_finite : graph.LocallyFinite :=
@@ -104,14 +104,14 @@ private lemma parent_child_ne (n : ℤ) (w : List Bool) (b : Bool) :
   intro h
   have hr := parent_rank (Sum.inr (n, w))
   rw [h] at hr
-  simp [rank] at hr
+  simp [rank.eq_1] at hr
   omega
 
 private lemma graph_degree (i : Sum ℤ (ℤ × List Bool)) : graph.degree i = 3 := by
   rw [← graph.card_neighborFinset_eq_degree, neighbor_eq]
   rcases i with n | ⟨n, w⟩
-  · simp [neighbors, show n - 1 ≠ n + 1 by omega]
-  · simp [neighbors, parent_child_ne]
+  · simp [neighbors.eq_1, show n - 1 ≠ n + 1 by omega]
+  · simp [neighbors.eq_1, parent_child_ne]
 
 private lemma graph_connected : graph.Connected := by
   have hs : ∀ n : ℤ, graph.Reachable (Sum.inl n) (Sum.inl 0) := by
@@ -120,7 +120,7 @@ private lemma graph_connected : graph.Connected := by
     | zero => exact .rfl
     | succ n ih =>
       exact (show graph.Adj (Sum.inl ((n : ℤ) + 1)) (Sum.inl n) from
-        Or.inl (by simp [parent])).reachable.trans ih
+        Or.inl (by simp [parent.eq_1])).reachable.trans ih
     | pred n ih =>
       exact (show graph.Adj (Sum.inl (-(n : ℤ) - 1)) (Sum.inl (-n)) from
         Or.inr rfl).reachable.trans ih
@@ -170,7 +170,7 @@ private lemma scale_positive (n : ℤ) : 0 < scale n := by
   exact zpow_pos (by norm_num) n
 
 private lemma scale_next (n : ℤ) : scale (n + 1) = 2 * scale n := by
-  unfold scale
+  simp only [scale.eq_1]
   rw [zpow_add₀ (by norm_num : (2 : ℝ) ≠ 0)]
   simp [mul_comm]
 
@@ -189,19 +189,21 @@ private lemma lengths_symmetric (i j : Sum ℤ (ℤ × List Bool)) :
     graph.Adj i j → lengths i j = lengths j i := by
   intro _
   rcases i with n | ⟨n, w⟩ <;> rcases j with m | ⟨m, z⟩ <;>
-    simp [lengths, min_comm]
+    simp [lengths.eq_1, min_comm]
 
 private lemma lengths_positive (i j : Sum ℤ (ℤ × List Bool)) :
     graph.Adj i j → 0 < lengths i j := by
   intro _
   rcases i with n | ⟨n, w⟩ <;> rcases j with m | ⟨m, z⟩ <;>
-    simp only [lengths, Sum.elim_inl, Sum.elim_inr]
+    simp only [lengths.eq_1, Sum.elim_inl, Sum.elim_inr]
   · exact mul_pos (by norm_num) (scale_positive _)
   all_goals exact scale_positive _
 
 private lemma ratio_spine (n : ℤ) : ratio graph lengths (Sum.inl n) = scale n := by
   have hn := (scale_positive n).ne'
-  simp [ratio, cVal, dVal, neighbor_eq, neighbors, lengths,
+  change (∑ j ∈ graph.neighborFinset (Sum.inl n), 1 / lengths (Sum.inl n) j) /
+    (∑ j ∈ graph.neighborFinset (Sum.inl n), 1 / lengths (Sum.inl n) j ^ 2) = scale n
+  simp [neighbor_eq, neighbors.eq_1, lengths.eq_1,
     show n - 1 ≠ n + 1 by omega, scale_previous]
   field_simp
   ring
@@ -210,23 +212,30 @@ private lemma ratio_branch (n : ℤ) (w : List Bool) :
     ratio graph lengths (Sum.inr (n, w)) = scale n := by
   have hn := (scale_positive n).ne'
   have hp : lengths (Sum.inr (n, w)) (parent (Sum.inr (n, w))) = scale n := by
-    cases w <;> simp [lengths, parent]
-  simp [ratio, cVal, dVal, neighbor_eq, neighbors, parent_child_ne, hp]
-  simp [lengths]
+    cases w <;> simp [lengths.eq_1, parent.eq_1]
+  change (∑ j ∈ graph.neighborFinset (Sum.inr (n, w)), 1 / lengths (Sum.inr (n, w)) j) /
+    (∑ j ∈ graph.neighborFinset (Sum.inr (n, w)),
+      1 / lengths (Sum.inr (n, w)) j ^ 2) = scale n
+  simp [neighbor_eq, neighbors.eq_1, parent_child_ne, hp]
+  simp [lengths.eq_1]
   field_simp
 
 private lemma residuals (i j : Sum ℤ (ℤ × List Bool)) :
     graph.Adj i j → tEoM graph lengths i j = 0 := by
   have hp : ∀ x, tEoM graph lengths x (parent x) = 0 := by
-    rintro (n | ⟨n, w⟩)
+    intro x
+    change (1 / lengths x (parent x)) *
+      (ratio graph lengths x ^ 2 + ratio graph lengths (parent x) ^ 2) -
+      ratio graph lengths x - ratio graph lengths (parent x) = 0
+    rcases x with n | ⟨n, w⟩
     · have hn := (scale_positive n).ne'
-      simp only [tEoM, parent, Sum.elim_inl, ratio_spine]
-      simp [lengths, scale_previous]
+      simp only [parent.eq_1, Sum.elim_inl, ratio_spine]
+      simp [lengths.eq_1, scale_previous]
       field_simp
       ring
     · have hn := (scale_positive n).ne'
-      cases w <;> simp only [tEoM, parent, Sum.elim_inr, ratio_spine, ratio_branch]
-      all_goals simp [lengths]
+      cases w <;> simp only [parent.eq_1, Sum.elim_inr, ratio_spine, ratio_branch]
+      all_goals simp [lengths.eq_1]
       all_goals field_simp; ring
   intro h
   rcases h with h | h
@@ -236,7 +245,10 @@ private lemma residuals (i j : Sum ℤ (ℤ × List Bool)) :
     have hs := lengths_symmetric i j he
     have hz := hp j
     rw [h] at hz
-    unfold tEoM at hz ⊢
+    change (1 / lengths j i) * (ratio graph lengths j ^ 2 + ratio graph lengths i ^ 2) -
+      ratio graph lengths j - ratio graph lengths i = 0 at hz
+    change (1 / lengths i j) * (ratio graph lengths i ^ 2 + ratio graph lengths j ^ 2) -
+      ratio graph lengths i - ratio graph lengths j = 0
     rw [hs]
     nlinarith
 
@@ -244,8 +256,8 @@ private lemma nonconstant :
     ¬ ∃ c, ∀ i j, graph.Adj i j → lengths i j = c := by
   rintro ⟨c, h⟩
   have hb := h (Sum.inl 0) (Sum.inr (0, [])) (Or.inr rfl)
-  have hs := h (Sum.inl 0) (Sum.inl 1) (Or.inr (by norm_num [parent]))
-  norm_num [lengths, scale] at hb hs
+  have hs := h (Sum.inl 0) (Sum.inl 1) (Or.inr (by norm_num [parent.eq_1]))
+  norm_num [lengths.eq_1, scale.eq_1] at hb hs
   linarith
 
 /-- The preregistered cubic tree carries a positive nonconstant tEoM solution. -/
