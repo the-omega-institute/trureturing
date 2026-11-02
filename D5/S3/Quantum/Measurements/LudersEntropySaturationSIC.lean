@@ -11,6 +11,7 @@ import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
+import D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
 
@@ -592,8 +593,30 @@ private theorem depolarizing_identity {d : ℕ} [NeZero d]
       2 / (d + 1) * Real.log 2) :
     ∀ x : Matrix (Fin d) (Fin d) ℂ,
       ludersChannel e x =
-        (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ)) / (d + 1) := by
-  sorry
+        (1 / (d + 1 : ℂ)) • (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ)) := by
+  let f : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ :=
+    { toFun := ludersChannel e
+      map_add' := by
+        intro x y
+        simp only [ludersChannel, Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
+      map_smul' := by
+        intro c x
+        simp only [ludersChannel, Matrix.mul_smul, Matrix.smul_mul, Finset.smul_sum,
+          RingHom.id_apply] }
+  let g : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ :=
+    (1 / (d + 1 : ℂ)) •
+      (LinearMap.id + (Matrix.traceLinearMap (Fin d) ℂ ℂ).smulRight 1)
+  have hfg : f = g := by
+    apply D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan.unitary_pure_ext
+    intro u
+    change ludersChannel e (inputProjector u) =
+      (1 / (d + 1 : ℂ)) • (inputProjector u + (inputProjector u).trace • 1)
+    rw [saturation_everywhere_luders_eq_sigma e he hsat u, input_projector_trace]
+    change (1 / (d + 1 : ℝ)) • (1 + inputProjector u) = _
+    rw [← Complex.coe_smul]
+    simp [add_comm]
+  intro x
+  exact LinearMap.congr_fun hfg x
 
 private theorem sic_coefficients {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
@@ -602,9 +625,79 @@ private theorem sic_coefficients {d : ℕ} [NeZero d]
       p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ e i = (c : ℂ) • p)
     (hdepol : ∀ x : Matrix (Fin d) (Fin d) ℂ,
       ludersChannel e x =
-        (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ)) / (d + 1)) :
+        (1 / (d + 1 : ℂ)) • (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ))) :
     IsSIC d e := by
-  sorry
+  classical
+  have hrank0 := hrank
+  choose c p hp hpp htr heq using hrank
+  have hc (i : Fin (d ^ 2)) : 0 ≤ c i := by
+    have ht := Complex.nonneg_iff.mp (he.1 i).trace_nonneg
+    simpa [heq i, Matrix.trace_smul, htr i] using ht.1
+  have hpsd (i : Fin (d ^ 2)) : (p i).PosSemidef := by
+    have hh := Matrix.posSemidef_conjTranspose_mul_self (p i)
+    rwa [(hp i).eq, hpp i] at hh
+  have hsqrt (i : Fin (d ^ 2)) :
+      CFC.sqrt (e i) = (Real.sqrt (c i) : ℂ) • p i := by
+    apply (CFC.sqrt_eq_iff _ _ (he.1 i).nonneg
+      (by exact_mod_cast (hpsd i).smul (Real.sqrt_nonneg (c i)) |>.nonneg)).mpr
+    rw [Matrix.smul_mul, Matrix.mul_smul, hpp i, smul_smul, heq i]
+    congr 1
+    norm_cast
+    exact Real.mul_self_sqrt (hc i)
+  have hexp (x : Matrix (Fin d) (Fin d) ℂ) :
+      ludersChannel e x = ∑ i, (p i * x).trace • e i := by
+    unfold ludersChannel
+    apply Finset.sum_congr rfl
+    intro i hi
+    simp only [hsqrt, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    rw [D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan.trace_one_sandwich
+        (p i) x (hpp i) (htr i), heq i, smul_smul, smul_smul]
+    congr 1
+    have hsq : (Real.sqrt (c i) : ℂ) * (Real.sqrt (c i) : ℂ) = (c i : ℂ) := by
+      norm_cast
+      exact Real.mul_self_sqrt (hc i)
+    rw [hsq]
+    ring
+  have hcoeff (j i : Fin (d ^ 2)) :
+      (p i * e j).trace = (1 / (d + 1 : ℂ)) *
+        ((if i = j then 1 else 0) + (c j : ℂ)) := by
+    have hsum := hdepol (e j)
+    rw [hexp, heq j, Matrix.trace_smul, htr j, smul_eq_mul, mul_one] at hsum
+    rw [← heq j] at hsum
+    have hrhs : (1 / (d + 1 : ℂ)) • (e j + (c j : ℂ) • 1) =
+        ∑ k, ((1 / (d + 1 : ℂ)) *
+          ((if k = j then 1 else 0) + (c j : ℂ))) • e k := by
+      simp only [add_smul, mul_smul, Finset.sum_add_distrib,
+        ← Finset.smul_sum, ← he.2.1]
+      congr 1
+      simp
+    rw [hrhs] at hsum
+    have hz : ∑ k, ((p k * e j).trace - (1 / (d + 1 : ℂ)) *
+        ((if k = j then 1 else 0) + (c j : ℂ))) • e k = 0 := by
+      simp only [sub_smul, Finset.sum_sub_distrib, hsum, sub_self]
+    exact sub_eq_zero.mp ((Fintype.linearIndependent_iff.mp he.2.2) _ hz i)
+  have hd : (d : ℂ) ≠ 0 := by exact_mod_cast (NeZero.ne d)
+  have hden : (d + 1 : ℂ) ≠ 0 := by
+    exact_mod_cast (show d + 1 ≠ 0 by omega)
+  have hcval (j : Fin (d ^ 2)) : (c j : ℂ) = 1 / (d : ℂ) := by
+    have hdiag := hcoeff j j
+    rw [heq j, Matrix.mul_smul, hpp j, Matrix.trace_smul, htr j] at hdiag
+    simp at hdiag
+    field_simp at hdiag ⊢
+    linear_combination hdiag
+  refine ⟨he, hrank0, (1 / (d : ℂ)) ^ 2,
+    (1 / (d : ℂ)) ^ 2 / (d + 1 : ℂ), ?_⟩
+  intro i j
+  rw [heq i, Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul, hcoeff, hcval i,
+    hcval j]
+  by_cases hij : i = j
+  · subst j
+    simp
+    <;> field_simp [hd, hden]
+    <;> ring
+  · simp only [if_neg hij]
+    ring
+
 
 def claim : Prop :=
   ∀ (d : ℕ) [NeZero d]
@@ -660,14 +753,14 @@ private theorem route_result_from
       typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2 →
       ∀ x : Matrix (Fin d) (Fin d) ℂ,
         ludersChannel e x =
-          (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ)) / (d + 1))
+          (1 / (d + 1 : ℂ)) • (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ)))
     (hsic : ∀ {d : ℕ} [NeZero d]
       (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ), IsMIC d e →
       (∀ i, ∃ c : ℝ, ∃ p : Matrix (Fin d) (Fin d) ℂ,
         p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ e i = (c : ℂ) • p) →
       (∀ x : Matrix (Fin d) (Fin d) ℂ,
         ludersChannel e x =
-          (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ)) / (d + 1)) →
+          (1 / (d + 1 : ℂ)) • (x + Matrix.trace x • (1 : Matrix (Fin d) (Fin d) ℂ))) →
       IsSIC d e) : claim := by
   intro d inst e he hsat
   have hrank' := hrank e he hsat
