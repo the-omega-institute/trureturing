@@ -29,6 +29,21 @@ circuit_support_card_le: proof_shape: bind-only; escape_witness: none;
 Escape audit unfinished for circuit_deleted_cols_linearIndependent:
 https://github.com/the-omega-institute/trureturing/issues/17856.
 The complete deleted-support observation and source binding remain missing.
+
+OrderedField.signConformalGlobalKernelCircuit: proof_shape: content;
+  escape_witness: same-p nonnegative feasible strict-support erasure in compress_conic;
+  live path: erasure contradiction -> independent active columns -> signed residual
+    d - d e * z vanishes -> every nonzero supported kernel has equal support;
+  admission_basis: escape-witness.
+OrderedField.compress_conic: proof_shape: content;
+  escape_witness: same-p feasible strict-support erasure;
+  consumer: OrderedField.signConformalGlobalKernelCircuit.
+OrderedField.subtract_to_boundary and OrderedField.mem_support: proof_shape: bind-only;
+  their consumers are OrderedField.compress_conic and the global circuit proof.
+The Real subtract_to_boundary retains its Finite-only telescope and delegates to
+  the single ordered-field minimum-ratio proof.
+utility: not-applicable(kind=none): these are general existence and linear-algebra
+  theorems, not bounded enumeration, certified instances or numerical reductions.
 -/
 
 set_option autoImplicit false
@@ -36,6 +51,37 @@ set_option autoImplicit false
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 open Finset
 open scoped BigOperators
+
+namespace OrderedField
+
+variable {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F]
+variable {E : Type*} [Fintype E]
+
+/-- The finite minimum-ratio boundary step over an arbitrary ordered field. -/
+private theorem subtract_to_boundary (v d : E → F)
+    (hv : ∀ i, 0 ≤ v i) (hdv : ∀ i, d i ≠ 0 → 0 < v i)
+    (hd : ∃ i, 0 < d i) :
+    ∃ a : F, 0 < a ∧ (∀ i, 0 ≤ v i - a * d i) ∧
+      ∃ k, 0 < d k ∧ v k - a * d k = 0 := by
+  classical
+  let s := univ.filter (fun i => 0 < d i)
+  have hs : s.Nonempty := by
+    obtain ⟨i, hi⟩ := hd
+    exact ⟨i, mem_filter.mpr ⟨mem_univ _, hi⟩⟩
+  obtain ⟨k, hk, hmin⟩ := s.exists_min_image (fun i => v i / d i) hs
+  have hdk : 0 < d k := (mem_filter.mp hk).2
+  refine ⟨v k / d k, div_pos (hdv k hdk.ne') hdk, ?_, k, hdk, ?_⟩
+  · intro i
+    by_cases hi : 0 < d i
+    · have hle := hmin i (mem_filter.mpr ⟨mem_univ _, hi⟩)
+      exact sub_nonneg.mpr ((le_div_iff₀ hi).mp hle)
+    · have hmul : v k / d k * d i ≤ 0 :=
+        mul_nonpos_of_nonneg_of_nonpos
+          (le_of_lt (div_pos (hdv k hdk.ne') hdk)) (le_of_not_gt hi)
+      linarith [hv i]
+  · rw [div_mul_cancel₀ _ hdk.ne', sub_self]
+
+end OrderedField
 
 variable {J : Type*} [Fintype J] {m : ℕ}
 
@@ -67,22 +113,7 @@ private theorem subtract_to_boundary [Finite J] (v d : J → ℝ)
       ∃ k, 0 < d k ∧ v k - a * d k = 0 := by
   classical
   let := Fintype.ofFinite J
-  let s := univ.filter (fun j => 0 < d j)
-  have hs : s.Nonempty := by
-    obtain ⟨j, hj⟩ := hd
-    exact ⟨j, mem_filter.mpr ⟨mem_univ _, hj⟩⟩
-  obtain ⟨k, hk, hmin⟩ := s.exists_min_image (fun j => v j / d j) hs
-  have hdk : 0 < d k := (mem_filter.mp hk).2
-  refine ⟨v k / d k, div_pos (hdv k hdk.ne') hdk, ?_, k, hdk, ?_⟩
-  · intro j
-    by_cases hj : 0 < d j
-    · have hle := hmin j (mem_filter.mpr ⟨mem_univ _, hj⟩)
-      exact sub_nonneg.mpr ((le_div_iff₀ hj).mp hle)
-    · have hmul : v k / d k * d j ≤ 0 :=
-        mul_nonpos_of_nonneg_of_nonpos (le_of_lt (div_pos (hdv k hdk.ne') hdk))
-          (le_of_not_gt hj)
-      linarith [hv j]
-  · rw [div_mul_cancel₀ _ hdk.ne', sub_self]
+  exact OrderedField.subtract_to_boundary v d hv hdv hd
 
 private theorem kernel_sub {B : Fin m → J → ℝ} {v d : J → ℝ} (hv : InKernel B v)
     (hd : ∀ r, ∑ j, B r j * d j = 0) (a : ℝ)
@@ -250,13 +281,15 @@ theorem circuit_support_card_le {B : Fin m → J → ℝ} {v : J → ℝ}
   have hpos : 0 < (nzSupport v).card := card_pos.mpr ⟨i, his⟩
   omega
 
+#print axioms nonnegKernel_mem_hull_circuit
+#print axioms circuit_deleted_cols_linearIndependent
+#print axioms circuit_support_card_le
 end D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 
-/-!  The following endpoint keeps the original labels and is deliberately
-    independent of the Real-valued circuit API above.  Its only scalar
-    assumptions are those needed by the finite minimum-ratio argument. -/
+/-! The ordered-field endpoint uses the same minimum-ratio boundary step as the
+Real circuit API. No Archimedean, rank or nonzero-column assumption is used. -/
 
 namespace OrderedField
 
@@ -269,33 +302,12 @@ variable {E : Type*} [Fintype E] {m : ℕ}
 noncomputable def support (v : E → F) : Finset E :=
   Finset.univ.filter (fun i => v i ≠ 0)
 
+omit [IsStrictOrderedRing F] in
 private theorem mem_support {v : E → F} {i : E} : i ∈ support v ↔ v i ≠ 0 := by
   classical
   simp [support]
 
-private theorem subtract_to_boundary (v d : E → F)
-    (hv : ∀ i, 0 ≤ v i) (hdv : ∀ i, d i ≠ 0 → 0 < v i)
-    (hd : ∃ i, 0 < d i) :
-    ∃ a : F, 0 < a ∧ (∀ i, 0 ≤ v i - a * d i) ∧
-      ∃ k, 0 < d k ∧ v k - a * d k = 0 := by
-  classical
-  let s := univ.filter (fun i => 0 < d i)
-  have hs : s.Nonempty := by
-    obtain ⟨i, hi⟩ := hd
-    exact ⟨i, mem_filter.mpr ⟨mem_univ _, hi⟩⟩
-  obtain ⟨k, hk, hmin⟩ := s.exists_min_image (fun i => v i / d i) hs
-  have hdk : 0 < d k := (mem_filter.mp hk).2
-  refine ⟨v k / d k, div_pos (hdv k hdk.ne') hdk, ?_, k, hdk, ?_⟩
-  · intro i
-    by_cases hi : 0 < d i
-    · have hle := hmin i (mem_filter.mpr ⟨mem_univ _, hi⟩)
-      exact sub_nonneg.mpr ((le_div_iff₀ hi).mp hle)
-    · have hmul : v k / d k * d i ≤ 0 :=
-        mul_nonpos_of_nonneg_of_nonpos
-          (le_of_lt (div_pos (hdv k hdk.ne') hdk)) (le_of_not_gt hi)
-      linarith [hv i]
-  · rw [div_mul_cancel₀ _ hdk.ne', sub_self]
-
+-- Dependence permits strict support erasure while preserving the same p.
 private theorem compress_conic
     {I : Type*} [Fintype I] (b : I → (Fin m → F)) (a : I → F) (p : Fin m → F)
     (ha : ∀ i, 0 ≤ a i) (hp : ∑ i, a i • b i = p) :
@@ -422,6 +434,8 @@ variable {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F]
 variable {E : Type*} [Fintype E] {m : ℕ}
 
 set_option maxHeartbeats 1000000 in
+/-- A prescribed nonzero coordinate belongs to a sign-conformal global kernel circuit.
+Competitors may have arbitrary signs and need not participate at the prescribed coordinate. -/
 theorem signConformalGlobalKernelCircuit
     (A : Matrix (Fin m) E F) (x : E → F) (e : E)
     (hx : A *ᵥ x = 0) (hxe : x e ≠ 0) :

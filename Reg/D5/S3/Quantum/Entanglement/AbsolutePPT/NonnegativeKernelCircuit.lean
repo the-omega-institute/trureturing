@@ -1,6 +1,9 @@
 import D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Mathlib.Algebra.Field.ULift
+import Mathlib.Order.ULift
+import Mathlib.Algebra.Order.Ring.InjSurj
 
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
@@ -213,5 +216,130 @@ noncomputable def registration :
   options := #[]
 
 end Support
+
+namespace Conformal
+
+universe v
+open scoped Matrix
+
+private noncomputable instance liftedRealStrict : IsStrictOrderedRing (ULift.{u} ℝ) :=
+  Function.Injective.isStrictOrderedRing
+    ULift.down rfl rfl (fun _ _ => rfl) (fun _ _ => rfl) .rfl .rfl
+
+/-- All varying scalar, label and matrix parameters stay in the source family. -/
+structure Parameters where
+  F : Type u
+  field : Field F
+  order : LinearOrder F
+  strict : @IsStrictOrderedRing F field.toSemiring order.toPartialOrder
+  E : Type v
+  finite : Fintype E
+  m : ℕ
+  A : Matrix (Fin m) E F
+
+attribute [local instance] Parameters.field Parameters.order Parameters.strict Parameters.finite
+
+abbrev signature : Signature where
+  Params := Parameters.{u,v}
+  State p := p.E → p.F
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Fin p.m → p.F
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u,v} :=
+  realize signature (fun _ p c => p.A *ᵥ c) (fun e => nomatch e)
+
+def rejected : Realization signature.{u,v} :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u,v}
+  Law O := ∀ {F : Type u} [Field F] [LinearOrder F] [IsStrictOrderedRing F]
+    {E : Type v} [Fintype E] {m : ℕ}
+    (A : Matrix (Fin m) E F) (x : E → F) (e : E),
+    A *ᵥ x = 0 → x e ≠ 0 →
+    ∃ c : E → F,
+      O.readout () ⟨F, inferInstance, inferInstance, inferInstance, E, inferInstance, m, A⟩ c = 0 ∧
+      c e ≠ 0 ∧
+      (∀ i, c i = 0 ∨ SignType.sign (c i) = SignType.sign (x i)) ∧
+      (∀ w : E → F, A *ᵥ w = 0 → w ≠ 0 →
+        Function.support w ⊆ Function.support c →
+        Function.support w = Function.support c)
+
+abbrev sourceScope := type_of% (@OrderedField.signConformalGlobalKernelCircuit.{u,v})
+
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  let A : Matrix (Fin 1) (ULift.{v} Unit) (ULift.{u} ℝ) := 0
+  let x : ULift.{v} Unit → ULift.{u} ℝ := 1
+  obtain ⟨c, hc, _⟩ := h A x (ULift.up ()) (by simp [A]) (by simp [x])
+  have he := congrFun hc (0 : Fin 1)
+  exact one_ne_zero he
+
+private theorem dependence : ObservationalDependence signature.{u,v} actual := by
+  intro _
+  let A : Matrix (Fin 1) (ULift.{v} Unit) (ULift.{u} ℝ) := fun _ _ => 1
+  let p : Parameters.{u,v} :=
+    ⟨ULift.{u} ℝ, inferInstance, inferInstance, inferInstance,
+      ULift.{v} Unit, inferInstance, 1, A⟩
+  refine ⟨p, 0, 1, ?_⟩
+  intro he
+  have he' := congrFun he (0 : Fin 1)
+  norm_num [actual, realize, p, A, Matrix.mulVec, dotProduct] at he'
+  exact zero_ne_one he'
+
+def family : Registration arena.{u,v} sourceScope.{u,v} where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@OrderedField.signConformalGlobalKernelCircuit.{u,v}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+noncomputable def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@OrderedField.signConformalGlobalKernelCircuit.{u,v})
+      (Realization signature.{u,v}) Unit Unit where
+  unitName :=
+    `D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit.OrderedField.signConformalGlobalKernelCircuit.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit.Conformal.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p c => p.A *ᵥ c) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Conformal
 end
 end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
