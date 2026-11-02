@@ -1,0 +1,41 @@
+**推论 24.3（A qualitative gap at the same actual minimum）。** For
+every $H\in\mathcal C_{\diamond}$ and every integer $S\geq1$,
+the original space $\mathcal N_s=\ker P_s$ is nonzero and reduces
+$K_s$. With exactly the $E_s$ of (24.1),
+
+$$
+\begin{aligned}
+g_s&=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s>0,\\
+K_s-E_sI&\succeq g_s(I-P_s),\\
+\|(I-P_s)\phi\|^2
+ &\leq\frac{\langle\phi,K_s\phi\rangle-E_s}{g_s}
+ \qquad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{24.8}
+$$
+
+In particular energy excess at most any $\delta\geq0$ bounds the
+same mass by $\delta/g_s$. Positivity is qualitative; no numerical
+value or uniform-in-$S$ lower bound for $g_s$ is asserted.
+
+Proof. Each original fibre permutation commutes with $K_s$, so its
+invariant projection $P_i$, their commuting product $P_s$ and
+$I-P_s$ commute with $K_s$. Their ranges are reducing. Choose a
+nonzero one-particle vector orthogonal to constants in one fibre;
+this is possible because $2S\geq2$. Tensor it with an
+occupancy-$(2S-1)$ vector in a second fibre and occupancy-$S$
+vectors in all remaining fibres. This nonzero product is killed
+by $P_s$ and has total occupancy
+$1+(2S-1)+(m-2)S=mS$. Thus $\mathcal N_s\ne\{0\}$, including
+$m=2,S=1$.
+
+Its finite nonempty spectrum has every eigenvalue at least $E_s$.
+Theorem 24.2 excludes equality for every eigenvector in
+$\mathcal N_s$, so its least eigenvalue exceeds this same $E_s$.
+On $\operatorname{ran}P_s$, $K_s-E_sI\succeq0$; on
+$\mathcal N_s$, $K_s-E_sI\succeq g_sI$. Add the two reducing
+quadratic forms to obtain the operator inequality in (24.8).
+Its expectation in any unit complex vector gives the displayed
+mass estimate. No symmetric-space substitute for $E_s$ enters
+this argument. $\square$
+

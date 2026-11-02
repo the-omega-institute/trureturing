@@ -1,0 +1,131 @@
+**命题 25.2（An actual consumer outside every prior sufficient domain）。**
+The graph $Q$ is finite, connected, simple and of even order six.
+It belongs to $\mathcal C_{\diamond}$. At every integer $S\geq1$,
+all conclusions (24.2) and (24.8) hold for the entire original
+complex $6S$-subset carrier of $Q[\mathrm{empty}_{2S}]$, with
+its original $K_s,P_s,E_s$. At every one of these even scales it
+is outside every sufficient whole-graph confinement domain in the
+nine sources specified in the proof of Theorem 24.2.
+
+Proof. The core is connected, and $\ell$ is attached to $a$.
+The complete induced neighborhoods, with no omitted edges or
+components, are
+
+$$
+\begin{aligned}
+Q[N_Q(a)]&=K_3[W]\sqcup\{\ell\},\\
+Q[N_Q(b)]&=K_3[W],\\
+Q[N_Q(x)]&=K_4[\{a,b\}\cup(W\setminus\{x\})]-ab
+                    &&(x\in W),\\
+Q[N_Q(\ell)]&=\{a\}.
+\end{aligned}
+\tag{25.1}
+$$
+
+At $a$ the leaf is an isolated neighborhood component because it
+has no other neighbor. At $b$ the whole neighborhood is the simple
+odd cycle $C_3$. At $x\in W$ the sole component is a diamond,
+with the two vertices of $W\setminus\{x\}$ central and $a,b$
+the tips. At $\ell$ the neighborhood is a singleton. These
+actual components verify Definition 24.1. Theorem 24.2 and
+Corollary 24.3 apply at every $S\geq1$, with $N=12S$ and
+$k=6S$. There is no separately imposed neighborhood filling.
+
+We check the prior domains on this same graph. At any $x\in W$,
+its diamond neighborhood is connected, contains a triangle and
+has two vertices of degree three. It is nonbipartite and is not
+a simple cycle of any length. Thus it has no bipartite component.
+This excludes the owning volume's wholly bipartite-neighborhood
+domain in §7, its bipartite-component domain in §14, its
+bipartite-or-$C_5$ domain in Definition 15.1(a), the whole
+bipartite-or-odd-cycle domain in Definition 17.1 here and the
+actual-component class $\mathcal C$ of Definition 21.1. In
+particular this excludes all their specific consumers, including
+the corona families in §14, the shared-wheel family in §18 and
+the family in §22. Theorem 21.2 cannot be applied to $Q$.
+
+For the other neighborhood condition, the diamond has no complex
+flat least mode. Label its two central coordinates by a common
+value $c$ and its two tip coordinates by a common value $d$.
+The central-antisymmetric subspace has eigenvalue $-1$, and the
+tip-antisymmetric subspace has eigenvalue zero. On the remaining
+constant-on-pairs subspace, adjacency acts by
+
+$$
+\begin{pmatrix}1&2\\2&0\end{pmatrix}
+\begin{pmatrix}c\\d\end{pmatrix},
+\qquad
+\lambda_\pm=\frac{1\pm\sqrt{17}}2.
+\tag{25.2}
+$$
+
+These four dimensions exhaust its adjacency space. Its least
+eigenvalue is the simple $\lambda_-\in(-2,-1)$, so every least
+eigenvector is of this constant-on-pairs form and satisfies
+$\lambda_-d=2c$. If all four coordinates had modulus one,
+this equation would force $|\lambda_-|=2$, a contradiction.
+Thus the nonbipartite neighborhood at $x$ fails the precise
+whole-neighborhood least-eigenvector condition in the owning
+volume's Definition 15.1(b). Its theorem supplies no scale
+$S\geq2$ for $Q$, and asserts no $S=1$ conclusion from that
+condition.
+
+The global flat least-mode hypothesis also fails. On the induced
+diamond at $N_Q(x)$ take values $+1$ at its two central vertices
+and $-1$ at its two tips, and extend by zero at the other two
+vertices of $Q$. The central edge contributes $2$ and the four
+central-tip edges contribute $-8$ to its adjacency quadratic form;
+the squared norm is $4$. All other edges contribute zero. Hence
+
+$$
+\lambda_Q=\min\operatorname{spec}A(Q)\leq-\frac32<-1.
+\tag{25.3}
+$$
+
+If $z$ were a modulus-one eigenvector for $\lambda_Q$, the leaf
+equation would be $\lambda_Qz_\ell=z_a$. Its moduli would give
+$|\lambda_Q|=1$, contrary to (25.3). This excludes Assumption
+3.1 and all flat-global-mode sufficient gap regimes in the owning
+volume's §6, at every even scale. Its general §2 defect identity
+is a lower-bound certificate and supplies no separate sufficient
+every-ground confinement domain for this graph.
+
+The core $Q[\{a,b,u,v,w\}]=K_5-ab$ is a nonclique maximal
+two-connected block. Deleting $a$ or $b$ leaves $K_4$; deleting
+one of $u,v,w$ leaves $K_4-ab$, which is connected. Thus no
+single core vertex separates the core. The only outside vertex
+has degree one and cannot belong to any larger two-connected
+subgraph. Since $a,b$ are nonadjacent, this block is not a
+clique. The block-graph domains of the owning volume's §§12–13
+therefore fail, including their spin-one endpoint conclusion and
+clique-with-pendant-leaves consumers.
+
+The graph is not complete multipartite. Its vertex $\ell$ is
+nonadjacent to both $b$ and $u$, whereas $bu$ is an edge. In a
+complete multipartite graph, distinct nonadjacent vertices must
+lie in the same independent part. Those two nonadjacencies
+would put $b$ and $u$ in the part containing $\ell$, contradicting
+their edge. This excludes the balanced, dominant-part and combined
+complete-multipartite domains in §§10–11, for every part-size
+endpoint and every $S$.
+
+The individual odd-rim wheels in Proposition 15.4 and §16 have
+no degree-one vertices; $Q$ has exactly one. The five-rim wheel
+with $2t$ rim leaves in Proposition 15.3 has a six-vertex core
+after all degree-one vertices are removed, whereas removing the
+unique leaf of $Q$ leaves a five-vertex core. Thus $Q$ is not
+any graph in those specific families, including $t=0$. The
+odd-fibre theorems in §§8–9 have a different fibre parity and
+supply none of the present even scales.
+
+The collective-oscillator volume and the three Lean/Scribe pairs
+supply the algebra, word normalization, token conventions,
+phase counts and refutations mapped in Theorem 24.2; none states
+an additional sufficient whole-graph ground-confinement domain.
+Together with the graph and scale exclusions above, this exhausts
+the sufficient domains in all nine supplied sources. These are
+failures of their exact hypotheses, not counterexamples to their
+conclusions. The new conclusion on $Q$ is precisely the
+original-model conclusion already obtained from its actual
+diamond components. $\square$
+
