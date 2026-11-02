@@ -14,6 +14,7 @@ IntegralSeries is reused from HannaLogarithmicPowerClosure.
 admission_basis: open-problem-resolution (#21407; Proved)
 No escape witness is claimed for admission.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21518
+The public integral_input_ledger and divisor_ghost_gauss audit is unfinished: https://github.com/the-omega-institute/trureturing/issues/25058
 Direct frozen dependencies are identified below by declaration, not module pins.
 Published owners retain their original private baseline identities here;
 their current public declaration identities require the canonical scope report.
@@ -238,7 +239,7 @@ private theorem coeff_factor_ghost (n : ℕ) (hn : n ≠ 0) (c : ℤ) (k : ℕ) 
 private def finiteGhost (b : ℕ → ℤ) (N : ℕ) : PowerSeries ℤ :=
   ∑ i ∈ range N, factorGhost (i + 1) (b i)
 
-private def divisorGhost (b : ℕ → ℤ) (n : ℕ) : ℤ :=
+def divisorGhost (b : ℕ → ℤ) (n : ℕ) : ℤ :=
   ∑ d ∈ n.divisors, (d : ℤ) * b d
 
 private def ghostSeries (b : ℕ → ℤ) : PowerSeries ℤ :=
@@ -348,11 +349,11 @@ private theorem prime_power_dvd_new_divisor (p s m d : ℕ) (hp : p.Prime) (hm :
     simpa [Nat.factorization_mul hm.ne' (pow_ne_zero _ hp.ne_zero),
       Nat.factorization_pow, hp.factorization, hqp] using hqle
 
-private def GaussCondition (a : ℕ → ℤ) : Prop :=
+def GaussCondition (a : ℕ → ℤ) : Prop :=
   ∀ p : ℕ, p.Prime → ∀ s m : ℕ, 0 < m →
     (p : ℤ) ^ (s + 1) ∣ a (m * p ^ (s + 1)) - a (m * p ^ s)
 
-private theorem divisor_ghost_gauss (b : ℕ → ℤ) : GaussCondition (divisorGhost b) := by
+theorem divisor_ghost_gauss (b : ℕ → ℤ) : GaussCondition (divisorGhost b) := by
   intro p hp s m hm
   have hn0 : m * p ^ (s + 1) ≠ 0 := mul_ne_zero hm.ne' (pow_ne_zero _ hp.ne_zero)
   have hk0 : m * p ^ s ≠ 0 := mul_ne_zero hm.ne' (pow_ne_zero _ hp.ne_zero)
@@ -544,7 +545,7 @@ private theorem gauss_has_ledger (a : ℕ → ℤ) (ha : GaussCondition a) :
   rw [Nat.sum_divisorsAntidiagonal (fun i j => ArithmeticFunction.moebius i * a j)]
   exact (Int.mul_ediv_cancel' (gauss_moebius_divisible a ha n hn)).symm
 
-private theorem integral_input_ledger {K : Type*} [Field K] [CharZero K]
+theorem integral_input_ledger {K : Type*} [Field K] [CharZero K]
     (a : ℕ → K) (ha : IntegralSeries (exponentialSum a)) :
     ∃ b : ℕ → ℤ, ∀ n : ℕ, 0 < n → a n = (divisorGhost b n : K) := by
   classical
