@@ -6,7 +6,6 @@
    utility: none
    digest: Cyclic shifts give the second family in every dimension. -/
 
-import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.Permutation
 
 /-! Cyclic shifts give difference labels, while sum-indexed shield vectors supply the
