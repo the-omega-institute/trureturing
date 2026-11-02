@@ -9,7 +9,7 @@ internal sealed class CubicThetaProductTwistDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Three genuine root-twisted Jacobi products are factored at finite cutoff, then passed to the coefficientwise limit.", H("CubicThetaProductTwist"), Blocks(
             Paragraph(Text("Three genuine root-twisted Jacobi products are factored at finite cutoff, then passed to the coefficientwise limit.")),
-            Node("0", "finiteFactor", "One exact Jacobi factor, including its Euler factor and both Laurent directions.", DescribeRole.Definition),
+            Node("0", "finiteFactor", "The single finite product of shifted factors 1-C(z)X^(j+shift), for j below the cutoff.", DescribeRole.Definition),
             Node("1", "finiteEuler", "The finite product of actual Euler factors from one through the cutoff.", DescribeRole.Definition),
             Node("2", "finiteJacobi", "The finite Jacobi product with its degree-zero factor retained.", DescribeRole.Definition),
             Node("3", "jacobiEvaluation", "The genuine Jacobi series evaluated at a Laurent unit.", DescribeRole.Definition),

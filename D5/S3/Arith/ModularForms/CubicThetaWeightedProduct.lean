@@ -159,4 +159,3 @@ theorem norm_dissection_mul_euler :
   simpa only [map_mul, map_pow, PowerSeries.map_expand, map_pentagonal] using h
 
 end D5.S3.Arith.ModularForms.CubicThetaWeightedProduct
-
