@@ -9,7 +9,7 @@
 import D5.S3.Arith.Lattices.Golay.RealLeech
 import D5.S3.VertexAlgebra.Lattice.OrderedHyperbolicExtension
 
-/- Source proposal only. The single choice below is from the actual accepted
+/-! The single choice below is from the actual accepted
 Golay-Leech theorem. It is used for ALL charge, determinant, signature and
 inverse statements. This is the Leech/fake-Monster lattice dependency;
 V-natural and the physical cohomology assertions are separate obligations. -/
@@ -43,7 +43,7 @@ theorem leech_spec :
     (Classical.choose_spec RealLeech.exists_positive_even_unimodular_gram)
 
 /-- The original ordered extension of the same actual Leech witness. -/
-def rank26Data : LatticeData := extend leechData
+abbrev rank26Data : LatticeData := extend leechData
 
 /-- The complete product charge coordinates, on the original charge carrier. -/
 def productCoordinates (D : LatticeData) (e : Charge D ≃ₗ[ℤ] RealLeech.lattice) :
@@ -76,21 +76,26 @@ def productPairing : LinearMap.BilinForm ℝ ProductSpace where
         intro c y
         change RealLeech.pairing x.1 (c • y.1) +
           x.2.1 * (c * y.2.2) + x.2.2 * (c * y.2.1) = _
-        simp only [map_smul, smul_eq_mul]
+        simp only [map_smul, smul_eq_mul, RingHom.id_apply]
         ring }
   map_add' := by
     intro x y
-    ext z
+    apply LinearMap.ext
+    intro z
     change RealLeech.pairing (x.1 + y.1) z.1 +
-      (x.2.1 + y.2.1) * z.2.2 + (x.2.2 + y.2.2) * z.2.1 = _
+      (x.2.1 + y.2.1) * z.2.2 + (x.2.2 + y.2.2) * z.2.1 =
+        (RealLeech.pairing x.1 z.1 + x.2.1 * z.2.2 + x.2.2 * z.2.1) +
+        (RealLeech.pairing y.1 z.1 + y.2.1 * z.2.2 + y.2.2 * z.2.1)
     simp only [map_add, LinearMap.add_apply]
     ring
   map_smul' := by
     intro c x
-    ext z
+    apply LinearMap.ext
+    intro z
     change RealLeech.pairing (c • x.1) z.1 +
-      (c * x.2.1) * z.2.2 + (c * x.2.2) * z.2.1 = _
-    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
+      (c * x.2.1) * z.2.2 + (c * x.2.2) * z.2.1 =
+        c * (RealLeech.pairing x.1 z.1 + x.2.1 * z.2.2 + x.2.2 * z.2.1)
+    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]
     ring
 
 @[simp] theorem productPairing_apply (x y : ProductSpace) :
@@ -101,9 +106,46 @@ def productPairing : LinearMap.BilinForm ℝ ProductSpace where
 def productLattice : Submodule ℤ ProductSpace :=
   RealLeech.lattice.prod ((1 : Submodule ℤ ℝ).prod (1 : Submodule ℤ ℝ))
 
-@[simp] theorem mem_productLattice (x : ProductSpace) :
-    x ∈ productLattice ↔ x.1 ∈ RealLeech.lattice ∧
-      x.2.1 ∈ (1 : Submodule ℤ ℝ) ∧ x.2.2 ∈ (1 : Submodule ℤ ℝ) := Iff.rfl
+/-- Discreteness comes from the actual Leech factor and the integer axes. -/
+instance : DiscreteTopology productLattice := by
+  let J := Submodule.span ℤ (Set.range (Module.Basis.singleton Unit ℝ))
+  have hJ : J = (1 : Submodule ℤ ℝ) := by
+    simp [J, Submodule.one_eq_span]
+  have : DiscreteTopology (1 : Submodule ℤ ℝ) := by
+    rw [← hJ]
+    infer_instance
+  let f : productLattice → RealLeech.lattice ×
+      ((1 : Submodule ℤ ℝ) × (1 : Submodule ℤ ℝ)) := fun x =>
+    (⟨x.val.1, x.property.1⟩,
+      (⟨x.val.2.1, x.property.2.1⟩, ⟨x.val.2.2, x.property.2.2⟩))
+  have hf : Continuous f := by
+    exact (continuous_fst.comp continuous_subtype_val).subtype_mk _ |>.prodMk
+      (((continuous_fst.comp (continuous_snd.comp continuous_subtype_val)).subtype_mk _).prodMk
+        ((continuous_snd.comp (continuous_snd.comp continuous_subtype_val)).subtype_mk _))
+  have hinj : Function.Injective f := by
+    intro x y h
+    apply Subtype.ext
+    have h1 := congrArg (fun z => (z.1 : RealLeech.Space)) h
+    have h2 := congrArg (fun z => ((z.2.1 : ℝ), (z.2.2 : ℝ))) h
+    exact Prod.ext h1 h2
+  exact DiscreteTopology.of_continuous_injective hf hinj
+
+/-- The actual indefinite product spans its real ambient space. -/
+instance : IsZLattice ℝ productLattice where
+  span_top := by
+    have haxis : Submodule.span ℝ ((1 : Submodule ℤ ℝ) : Set ℝ) = ⊤ := by
+      simp [Submodule.one_eq_span]
+    change Submodule.span ℝ ((RealLeech.lattice : Set RealLeech.Space) ×ˢ
+      (((1 : Submodule ℤ ℝ) : Set ℝ) ×ˢ ((1 : Submodule ℤ ℝ) : Set ℝ))) = ⊤
+    rw [Submodule.span_prod_eq ℝ
+      (s := (RealLeech.lattice : Set RealLeech.Space))
+      (t := (((1 : Submodule ℤ ℝ) : Set ℝ) ×ˢ ((1 : Submodule ℤ ℝ) : Set ℝ)))
+      (zero_mem _) ⟨zero_mem _, zero_mem _⟩]
+    rw [Submodule.span_prod_eq ℝ
+      (s := ((1 : Submodule ℤ ℝ) : Set ℝ))
+      (t := ((1 : Submodule ℤ ℝ) : Set ℝ)) (zero_mem _) (zero_mem _), haxis,
+      IsZLattice.span_top]
+    simp
 
 /-- Actual ambient inclusion of the charge-product coordinates. -/
 def productInclusion : (RealLeech.lattice × (ℤ × ℤ)) →ₗ[ℤ] ProductSpace where

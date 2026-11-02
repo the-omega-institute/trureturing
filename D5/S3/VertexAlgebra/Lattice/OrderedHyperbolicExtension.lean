@@ -17,9 +17,8 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Algebra.Ring.Int.Units
 import Mathlib.Tactic
 
-/- Source proposal only: no elaboration or kernel acceptance is asserted.
-The integral plane below is U, in the order m,n. The real subspaces used to
-compute its signature do not replace or change these integral coordinates. -/
+/-! The integral plane is the literal U in the order m,n, after the old
+coordinates. Explicit real signature subspaces preserve these integral coordinates. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -43,9 +42,6 @@ def new (D : LatticeData) (i : Fin 2) : Fin (D.rank + 2) := Fin.natAdd D.rank i
     indexEquiv D (Sum.inl i) = old D i := rfl
 @[simp] theorem index_new (D : LatticeData) (i : Fin 2) :
     indexEquiv D (Sum.inr i) = new D i := rfl
-@[simp] theorem old_val (D : LatticeData) (i : Fin D.rank) : (old D i).val = i.val := rfl
-@[simp] theorem new_val (D : LatticeData) (i : Fin 2) :
-    (new D i).val = D.rank + i.val := rfl
 @[simp] theorem old_lt_old (D : LatticeData) (i j : Fin D.rank) :
     old D i < old D j ↔ i < j := Iff.rfl
 @[simp] theorem old_lt_new (D : LatticeData) (i : Fin D.rank) (j : Fin 2) :
@@ -114,14 +110,11 @@ theorem gram_even_diagonal (D : LatticeData) (i : Fin (D.rank + 2)) :
   · simp
 
 /-- The original LatticeData structure, extended by the ordered integral U. -/
-def extend (D : LatticeData) : LatticeData where
+abbrev extend (D : LatticeData) : LatticeData where
   rank := D.rank + 2
   G := gram D
   symmetric := gram_symmetric D
   even_diagonal := gram_even_diagonal D
-
-@[simp] theorem extend_rank (D : LatticeData) : (extend D).rank = D.rank + 2 := rfl
-@[simp] theorem extend_G (D : LatticeData) : (extend D).G = gram D := rfl
 
 /-- Splicing works over both the original integer carrier and scalar extensions. -/
 def splice {A : Type*} (D : LatticeData) (a : Fin D.rank → A) (m n : A) :
@@ -168,7 +161,8 @@ def splitEquiv (D : LatticeData) {R : Type*} [CommRing R] :
 @[simp] theorem splice_zero (D : LatticeData) {R : Type*} [CommRing R] :
     splice D (0 : Fin D.rank → R) 0 0 = 0 := by
   apply (splitEquiv D).injective
-  simpa only [split_splice, map_zero]
+  simp only [split_splice, map_zero]
+  rfl
 
 /-- This sum formula remembers the actual Fin order. -/
 theorem sum_ordered (D : LatticeData) {A : Type*} [AddCommMonoid A]
@@ -181,7 +175,7 @@ theorem sum_ordered (D : LatticeData) {A : Type*} [AddCommMonoid A]
 theorem bilinear_splice (D : LatticeData) (a b : Charge D) (m n r s : ℤ) :
     bilinear (extend D) (splice D a m n) (splice D b r s) =
       bilinear D a b + m * s + n * r := by
-  simp [bilinear, sum_ordered D, Finset.sum_add_distrib]
+  simp [bilinear, sum_ordered D]
 
 /-- Integer division is handled through the already proved even-norm identity. -/
 theorem chargeEnergy_splice (D : LatticeData) (a : Charge D) (m n : ℤ) :
@@ -198,8 +192,8 @@ theorem lowerCocycleExponent_splice (D : LatticeData)
       lowerCocycleExponent D a b + n * r := by
   classical
   simp only [lowerCocycleExponent, Finset.sum_filter]
-  simp [sum_ordered D, halfDiagonal, Finset.sum_add_distrib]
-  <;> ring
+  simp [sum_ordered D, halfDiagonal]
+  ring
 
 theorem epsilon_splice (D : LatticeData) (a b : Charge D) (m n r s : ℤ) :
     epsilon (extend D) (splice D a m n) (splice D b r s) =
@@ -262,7 +256,7 @@ theorem complexInverse_right (D : LatticeData) (hD : IsUnit D.G.det) :
 theorem g_R_splice (D : LatticeData) (a b : E_R D) (m n r s : ℝ) :
     g_R (extend D) (splice D a m n) (splice D b r s) =
       g_R D a b + m * s + n * r := by
-  simp [g_R_apply, sum_ordered D, Finset.sum_add_distrib]
+  simp [g_R_apply, sum_ordered D]
 
 theorem Q_R_splice (D : LatticeData) (a : E_R D) (m n : ℝ) :
     Q_R (extend D) (splice D a m n) = Q_R D a + 2 * m * n := by
@@ -274,20 +268,24 @@ def positiveMap (D : LatticeData) : (E_R D × ℝ) →ₗ[ℝ] E_R (extend D) wh
   toFun v := splice D v.1 v.2 v.2
   map_add' v w := by
     apply (splitEquiv D).injective
-    simpa only [map_add, split_splice]
+    simp only [map_add, split_splice]
+    rfl
   map_smul' c v := by
     apply (splitEquiv D).injective
-    simpa only [map_smul, split_splice]
+    simp only [map_smul, split_splice]
+    rfl
 
 /-- The map parametrizing the actual subspace (0,t,-t). -/
 def negativeMap (D : LatticeData) : ℝ →ₗ[ℝ] E_R (extend D) where
   toFun t := splice D 0 t (-t)
   map_add' t s := by
     apply (splitEquiv D).injective
-    simp only [map_add, split_splice] <;> simp [neg_add]
+    simp only [map_add, split_splice]
+    simp [add_comm]
   map_smul' c t := by
     apply (splitEquiv D).injective
-    simp only [map_smul, split_splice] <;> simp
+    simp only [map_smul, split_splice]
+    simp
 
 @[simp] theorem positiveMap_apply (D : LatticeData) (v : E_R D × ℝ) :
     positiveMap D v = splice D v.1 v.2 v.2 := rfl
@@ -386,7 +384,8 @@ theorem signature_extend (D : LatticeData)
         linarith)
   rw [finrank_positiveSubspace] at hp hun
   rw [finrank_negativeSubspace] at hn hup
-  rw [finrank_E_R, extend_rank] at hup hun
+  rw [finrank_E_R] at hup hun
+  change sigPos (Q_R (extend D)) + 1 ≤ D.rank + 2 at hup
   change sigNeg (Q_R (extend D)) + (D.rank + 1) ≤ D.rank + 2 at hun
   omega
 
