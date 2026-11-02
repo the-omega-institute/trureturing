@@ -102,7 +102,7 @@ The exact original signed charge is contragredient under the derived partner inv
 
 **Theorem 1.9 (Ambient charge selection).**
 
-$$ambientChargeSelection$$
+$$(\forall g: Int, (\forall h: Int, (\forall x: Fock, (\forall y: Fock, (\operatorname{Homogeneous}\left(g, x\right)) \land ((\operatorname{Homogeneous}\left(h, y\right)) \land (\operatorname{add}\left(g, h\right) \ne 3)) \implies \operatorname{Hg}\left(x, y\right) = 0))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_charge_selection` (`✓ std3`). ∎
 
@@ -174,7 +174,7 @@ Removing the forced c0 site changes the exact charge selection from three to two
 
 **Theorem 1.15 (Relative charge selection).**
 
-$$relativeChargeSelection$$
+$$(\forall g: Int, (\forall h: Int, (\forall x: Relative, (\forall y: Relative, (\operatorname{Homogeneous}\left(g, x\right)) \land ((\operatorname{Homogeneous}\left(h, y\right)) \land (\operatorname{add}\left(g, h\right) \ne 2)) \implies \operatorname{Hrel}\left(x, y\right) = 0))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hrel_charge_selection` (`✓ std3`). ∎
 
