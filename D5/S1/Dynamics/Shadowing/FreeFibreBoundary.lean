@@ -7,14 +7,17 @@
    digest: Marked finite observations of shadowing systems have exact finite-initial graph languages. -/
 
 import D5.S1.Dynamics.Shadowing.FiniteObservationSofic
+import D5.S1.Dynamics.Shadowing.MetricTracing
+import D5.S3.Topology.AlmostDisjoint.AdaptiveRefinementCounterexample
 import Mathlib.Topology.Baire.LocallyCompactRegular
 import Mathlib.Topology.Compactness.Compact
 import Mathlib.Topology.Compactification.OnePoint.Basic
+import Mathlib.Topology.Instances.Nat
 
 /-! Marked finite observations, generic binary names, and the first-disagreement
 map used by the free-fibre boundary construction. -/
 
-open TopologicalSpace Set Function
+open TopologicalSpace Set Function Filter
 open scoped Topology
 
 namespace D5.S1.Dynamics.Shadowing.FreeFibreBoundary
@@ -307,6 +310,224 @@ theorem continuous_firstDifference (a : BinaryName) :
       (hpre ▸ (firstDifferenceFiber_isClopen a n).2.mem_nhds
         ((firstDifference_eq_coe_iff a s n).mp hval))
     exact preimage_mono hsingletonV
+
+def flipBit (b : Bool) : Bool := if b then false else true
+
+theorem flipBit_ne (b : Bool) : flipBit b ≠ b := by
+  cases b <;> simp [flipBit]
+
+def convergentSectionName (a : BinaryName) (n : ℕ) : BinaryName :=
+  fun k => if k = n then flipBit (a k) else a k
+
+theorem convergentSectionName_mem_fiber (a : BinaryName) (n : ℕ) :
+    convergentSectionName a n ∈ firstDifferenceFiber a n := by
+  constructor
+  · intro k hk
+    simp [convergentSectionName, Nat.ne_of_lt hk]
+  · simp [convergentSectionName, flipBit_ne]
+
+theorem convergentSectionName_firstDifference (a : BinaryName) (n : ℕ) :
+    firstDifference a (convergentSectionName a n) = (n : OnePoint ℕ) :=
+  (firstDifference_eq_coe_iff a (convergentSectionName a n) n).2
+    (convergentSectionName_mem_fiber a n)
+
+theorem convergentSectionName_tendsto (a : BinaryName) :
+    Filter.Tendsto (convergentSectionName a) atTop (𝓝 a) := by
+  apply tendsto_pi_nhds.mpr
+  intro i
+  apply Filter.tendsto_def.mpr
+  intro V hV
+  have hai : a i ∈ V := mem_of_mem_nhds hV
+  filter_upwards [eventually_gt_atTop i] with n hin
+  have hne : i ≠ n := Nat.ne_of_lt hin
+  simpa [convergentSectionName, hne] using hai
+
+def convergentSectionSet (a : BinaryName) : Set BinaryName :=
+  insert a (range (convergentSectionName a))
+
+theorem convergentSectionSet_isCompact (a : BinaryName) :
+    IsCompact (convergentSectionSet a) := by
+  exact (convergentSectionName_tendsto a).isCompact_insert_range
+
+theorem convergentSectionSet_mem_or_eq (a : BinaryName) (s : BinaryName)
+    (hs : s ∈ convergentSectionSet a) :
+    s = a ∨ ∃ n, s = convergentSectionName a n := by
+  have hs' : s = a ∨ s ∈ range (convergentSectionName a) := by
+    simpa [convergentSectionSet, mem_insert_iff] using hs
+  rcases hs' with hs' | ⟨n, hn⟩
+  · exact Or.inl hs'
+  · exact Or.inr ⟨n, hn.symm⟩
+
+theorem convergentSectionSet_firstDifference_finite (a : BinaryName) (s : BinaryName)
+    (hs : s ∈ convergentSectionSet a) (hsa : s ≠ a) :
+    ∃ n, firstDifference a s = (n : OnePoint ℕ) := by
+  rcases (convergentSectionSet_mem_or_eq a s hs) with rfl | ⟨n, rfl⟩
+  · exact False.elim (hsa rfl)
+  · exact ⟨n, convergentSectionName_firstDifference a n⟩
+
+def firstDifferenceOnSection (a : BinaryName) :
+    convergentSectionSet a → OnePoint ℕ := fun s => firstDifference a s.val
+
+theorem firstDifferenceOnSection_bijective (a : BinaryName) :
+    Function.Bijective (firstDifferenceOnSection a) := by
+  have hfinite_unique : ∀ (n : ℕ) (s : convergentSectionSet a),
+      firstDifferenceOnSection a s = (n : OnePoint ℕ) →
+        s = ⟨convergentSectionName a n,
+          Or.inr ⟨n, rfl⟩⟩ := by
+    intro n s hs
+    rcases convergentSectionSet_mem_or_eq a s.val s.property with hsa | ⟨m, hsm⟩
+    · exfalso
+      have hInf : firstDifference a s.val = ∞ :=
+        (firstDifference_eq_infty_iff a s.val).2 hsa
+      apply OnePoint.infty_ne_coe n
+      calc
+        (∞ : OnePoint ℕ) = firstDifference a s.val := hInf.symm
+        _ = (n : OnePoint ℕ) := hs
+    · have hmn : (m : OnePoint ℕ) = (n : OnePoint ℕ) := by
+        calc
+          (m : OnePoint ℕ) = firstDifference a (convergentSectionName a m) :=
+            (convergentSectionName_firstDifference a m).symm
+          _ = firstDifference a s.val := by rw [hsm]
+          _ = (n : OnePoint ℕ) := hs
+      have hmn' : m = n := OnePoint.coe_injective hmn
+      apply Subtype.ext
+      rw [hsm, hmn']
+  constructor
+  · intro s t hst
+    cases hfs : firstDifferenceOnSection a s using OnePoint.rec with
+    | infty =>
+        have hsA : s.val = a :=
+          (firstDifference_eq_infty_iff a s.val).1 hfs
+        have htA : t.val = a := by
+          apply (firstDifference_eq_infty_iff a t.val).1
+          calc
+            firstDifference a t.val = firstDifferenceOnSection a t := rfl
+            _ = firstDifferenceOnSection a s := hst.symm
+            _ = ∞ := hfs
+        exact Subtype.ext (hsA.trans htA.symm)
+    | coe n =>
+        have hft : firstDifferenceOnSection a t = (n : OnePoint ℕ) := by
+          calc
+            firstDifferenceOnSection a t = firstDifferenceOnSection a s := hst.symm
+            _ = (n : OnePoint ℕ) := hfs
+        exact (hfinite_unique n s hfs).trans (hfinite_unique n t hft).symm
+  · intro z
+    cases z using OnePoint.rec with
+    | infty =>
+        refine ⟨⟨a, Or.inl rfl⟩, ?_⟩
+        exact (firstDifference_eq_infty_iff a a).2 rfl
+    | coe n =>
+        refine ⟨⟨convergentSectionName a n, Or.inr ⟨n, rfl⟩⟩, ?_⟩
+        exact convergentSectionName_firstDifference a n
+
+theorem exists_firstDifference_section_homeomorph (a : BinaryName) :
+    ∃ e : convergentSectionSet a ≃ₜ OnePoint ℕ,
+      ∀ s, e s = firstDifferenceOnSection a s := by
+  letI : CompactSpace (convergentSectionSet a) :=
+    (convergentSectionSet_isCompact a).isClosed.isClosedEmbedding_subtypeVal.compactSpace
+  let g : convergentSectionSet a → OnePoint ℕ := firstDifferenceOnSection a
+  have hg : Continuous g := by
+    change Continuous (firstDifference a ∘ Subtype.val)
+    exact (continuous_firstDifference a).comp continuous_subtype_val
+  have hgc : IsClosedMap g := hg.isClosedMap
+  let e : convergentSectionSet a ≃ OnePoint ℕ :=
+    Equiv.ofBijective g (firstDifferenceOnSection_bijective a)
+  exact ⟨e.toHomeomorphOfContinuousClosed hg hgc, fun s => rfl⟩
+
+abbrev FibrePullback {T S B : Type*} (p : T → B) (rho : S → B) :=
+  {z : T × S // p z.1 = rho z.2}
+
+def fibrePullbackSecond {T S B : Type*} (p : T → B) (rho : S → B) :
+    FibrePullback p rho → S := fun z => z.val.2
+
+theorem fibrePullbackSecond_continuous {T S B : Type*}
+    [TopologicalSpace T] [TopologicalSpace S] [TopologicalSpace B]
+    (p : T → B) (rho : S → B) :
+    Continuous (fibrePullbackSecond p rho) := by
+  exact continuous_snd.comp continuous_subtype_val
+
+theorem fibrePullbackSecond_surjective {T S B : Type*}
+    [TopologicalSpace T] [TopologicalSpace S] [TopologicalSpace B]
+    (p : T → B) (rho : S → B) (hp : Function.Surjective p) :
+    Function.Surjective (fibrePullbackSecond p rho) := by
+  intro s
+  obtain ⟨t, ht⟩ := hp (rho s)
+  exact ⟨⟨(t, s), ht⟩, rfl⟩
+
+theorem fibrePullbackSecond_isOpenMap {T S B : Type*}
+    [TopologicalSpace T] [TopologicalSpace S] [TopologicalSpace B]
+    (p : T → B) (rho : S → B) (hp : IsOpenMap p) (hrho : Continuous rho) :
+    IsOpenMap (fibrePullbackSecond p rho) := by
+  apply IsOpenMap.of_nhds_le
+  intro z
+  apply le_map_iff.2
+  intro N hN
+  obtain ⟨u, hu, hsub⟩ :=
+    (mem_nhds_subtype ({z : T × S | p z.1 = rho z.2}) z N).mp hN
+  obtain ⟨A, hA, C, hC, hAC⟩ := mem_nhds_prod_iff.mp hu
+  have hpa : p '' A ∈ 𝓝 (p z.val.1) := hp.image_mem_nhds hA
+  have hpa' : p '' A ∈ 𝓝 (rho z.val.2) := by
+    rw [← z.property]
+    exact hpa
+  have hpre : rho ⁻¹' (p '' A) ∈ 𝓝 z.val.2 :=
+    hrho.continuousAt.preimage_mem_nhds hpa'
+  apply Filter.mem_of_superset (inter_mem hC hpre)
+  intro s hs
+  rcases hs.2 with ⟨t, htA, hpt⟩
+  let z' : FibrePullback p rho := ⟨(t, s), hpt⟩
+  refine ⟨z', ?_, rfl⟩
+  apply hsub
+  exact hAC ⟨htA, hs.1⟩
+
+theorem firstDifference_surjective (a : BinaryName) :
+    Function.Surjective (firstDifference a) := by
+  obtain ⟨e, he⟩ := exists_firstDifference_section_homeomorph a
+  intro b
+  obtain ⟨s, hs⟩ := e.surjective b
+  exact ⟨s.val, (he s).symm.trans hs⟩
+
+abbrev CoreShift : BinaryName → BinaryName :=
+  SymbolicDynamics.FullShift.shift (1 : ℕ)
+
+def sourceDynamics {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName)
+    (z : FibrePullback p (firstDifference a) ⊕ BinaryName) :
+    FibrePullback p (firstDifference a) ⊕ BinaryName :=
+  Sum.elim (fun z => Sum.inr z.val.2) (fun s => Sum.inr (CoreShift s)) z
+
+def sourceObservation {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName)
+    (z : FibrePullback p (firstDifference a) ⊕ BinaryName) : BinaryName :=
+  Sum.elim (fun z => z.val.2) CoreShift z
+
+theorem sourceDynamics_continuous {T : Type*} [TopologicalSpace T]
+    (p : T → OnePoint ℕ) (a : BinaryName) :
+    Continuous (sourceDynamics p a) := by
+  exact (continuous_inr.comp (continuous_snd.comp continuous_subtype_val)).sumElim
+    (continuous_inr.comp (SymbolicDynamics.FullShift.continuous_shift 1))
+
+theorem sourceObservation_continuous {T : Type*} [TopologicalSpace T]
+    (p : T → OnePoint ℕ) (a : BinaryName)
+    (hH : Continuous (fibrePullbackSecond p (firstDifference a))) :
+    Continuous (sourceObservation p a) := by
+  exact hH.sumElim (SymbolicDynamics.FullShift.continuous_shift 1)
+
+theorem sourceDynamics_semiconj {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName) :
+    Semiconj (sourceObservation p a) (sourceDynamics p a) CoreShift := by
+  intro z
+  cases z <;> rfl
+
+theorem sourceDynamics_core_image {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName)
+    (z : FibrePullback p (firstDifference a) ⊕ BinaryName) :
+    sourceDynamics p a z = Sum.inr (sourceObservation p a z) := by
+  cases z <;> rfl
+
+theorem sourceObservation_surjective {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName) :
+    Function.Surjective (sourceObservation p a) := by
+  intro s
+  refine ⟨Sum.inr (fun n => if n = 0 then false else s (n - 1)), ?_⟩
+  funext n
+  cases n with
+  | zero => rfl
+  | succ n => simp [sourceObservation, CoreShift, SymbolicDynamics.FullShift.shift_apply]
 
 /- Restricting the initial marker in the complete joint graph language gives
 an exact presentation.  No surjectivity or invariance of the dynamics is
