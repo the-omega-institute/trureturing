@@ -21,8 +21,8 @@ subtracting h strictly lowers it. Integer Lee-norm interpolation forces any
 other fiber point into the oriented cap. The sum/difference map identifies
 the cap with a parity rectangle; the existing residue-count and
 filtered-product suppliers count that rectangle.
-The old axial theorem consumes this generic balance, and the actual-pair proof
-below it is unchanged. No literature novelty or publication priority is claimed.
+The axial theorem consumes this generic balance and supplies the counting
+step in the actual maximum-pair growth theorem. No literature novelty or publication priority is claimed.
 -/
 
 set_option autoImplicit false
@@ -438,9 +438,8 @@ theorem lee_ball_image_card_of_displacement {G : Type u} [AddCommGroup G]
   rw [hcard, upperCap_card, leeDiamond_card] at hbalance
   exact hbalance
 
-/-- The original axial API, with its original radius premise retained.
-Its proof specializes the arbitrary-displacement balance; no axial cap-counting
-or axial transversal proof is retained. -/
+/-- The axial API specializes the displacement balance. Its radius premise
+is supplied by the actual maximum-pair consumer. -/
 theorem lee_ball_image_card_of_short_kernel {G : Type u} [AddCommGroup G]
     (f : (ℤ × ℤ) →+ G) {B r : ℕ} (hB : 0 < B) (hBr : r < 2*B)
     (hh : f (0,2*(B : ℤ)) = 0)
