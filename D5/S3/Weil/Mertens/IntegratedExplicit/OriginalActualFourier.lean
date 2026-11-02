@@ -1,3 +1,11 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualFourier
+   generality: G
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/OriginalActualFourier
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Every finite zero-mass complex prefix has an integrable actual Fourier density. -/
+
 /-
 Copyright (c) 2026. Released under Apache 2.0.
 

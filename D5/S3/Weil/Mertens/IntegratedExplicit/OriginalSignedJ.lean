@@ -1,3 +1,11 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/OriginalSignedJ
+   generality: G
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/OriginalSignedJ
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Inclusive finite Abel summation identifies the independent original signed J integral. -/
+
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.SpecialFunctions.Exp
@@ -6,7 +14,6 @@ import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.Tactic
 
 /-!
-Source candidate only; never compiled in the preparing run.
 The signed J below is defined by its original integral. No finite-expression
 identity is a hypothesis. The only test-function assumptions are AC and a.e.
 agreement of the supplied derivative with an actual derivative.

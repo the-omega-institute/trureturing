@@ -1,3 +1,11 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity
+   generality: G
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual prefix correlation and finite-measure spectral resolvents are absolutely continuous. -/
+
 import D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
 import Mathlib.Analysis.Calculus.ParametricIntegral
@@ -6,10 +14,9 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic
 
 /-!
-Uncompiled source ingredients for the genuine original test. No definition of
-c, S or J is replaced. The original correlation integral uses the pinned
-AtomicPrefixEnergy supplier, avoiding a duplicate interval-intersection proof.
-spectralS is exactly the cosine resolvent of its input measure, with no evenness.
+The original correlation integral uses AtomicPrefixEnergy and its finite
+interval-intersection identity. The spectralS function is the cosine resolvent
+of its input measure, with no evenness assumption.
 -/
 
 noncomputable section

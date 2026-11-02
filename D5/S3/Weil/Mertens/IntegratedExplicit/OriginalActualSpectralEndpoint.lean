@@ -1,3 +1,11 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualSpectralEndpoint
+   generality: G
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/OriginalActualSpectralEndpoint
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Absolute Fourier Fubini and the actual endpoint close the original signed J identity. -/
+
 /-
 Copyright (c) 2026. Released under Apache 2.0.
 

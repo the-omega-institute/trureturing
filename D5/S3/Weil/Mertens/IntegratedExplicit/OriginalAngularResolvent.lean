@@ -1,21 +1,26 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/OriginalAngularResolvent
+   generality: G
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/OriginalAngularResolvent
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The angular inverse resolvent has exact exponential quarter normalization at every real lag. -/
+
 import Mathlib.Analysis.Fourier.Inversion
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Tactic
 
 /-!
-Source-only candidate, NOT compiled in the preparing run.
-
-This is the missing angular-resolvent ingredient for the unchanged original
-signed-J test. It neither defines nor changes the original J, S, Ahat or rho.
-All auxiliary declarations below are consumed by the final integral theorems.
+The angular-resolvent formula uses the Fourier convention of Mathlib.
+Its auxiliary declarations are consumed by the final integral theorems.
 
 Upstream suppliers: Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679,
 Analysis/Fourier/Inversion.lean (Sebastien Gouezel, copyright 2024),
 Analysis/Fourier/FourierTransform.lean and
 Analysis/SpecialFunctions/ImproperIntegrals.lean (David Loeffler, copyright 2023).
 Those upstream files are released under Apache 2.0; their proofs are imported,
-not copied. This proposed source is also offered under Apache 2.0.
+not copied. This source is also offered under Apache 2.0.
 
 Mathlib's forward phase is exp(-2*pi*i*t*xi). The transform of
 exp(-abs(t)/2) is 4/(1+4*(2*pi*xi)^2). Inversion followed by w=2*pi*xi
