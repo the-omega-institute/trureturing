@@ -44,7 +44,7 @@ def claim : Prop :=
 private def simplexFunctional {n : ℕ} (x : Fin n → ℝ) : ℝ :=
   3 * powerSum n 2 x ^ 2 - 2 * powerSum n 3 x
 
-lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
+private lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) :
     (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) ∈ stdSimplex ℝ (Fin n) := by
   have : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp hn
@@ -58,7 +58,7 @@ lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
     (fun i => le_of_lt (inv_pos.mpr (hk i)))
     (Pi.ne_zero_of_pos fun i => inv_pos.mpr (hk i))
 
-lemma skewness_normalized {n : ℕ} (k : Fin n → ℝ) :
+private lemma skewness_normalized {n : ℕ} (k : Fin n → ℝ) :
     skewness k = simplexFunctional
       (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) := by
   delta skewness simplexFunctional powerSum
