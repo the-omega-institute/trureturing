@@ -2625,3 +2625,300 @@ For the primary-source condition correspondence, Gregoratti--Werner, [*Quantum L
 Theorem 35.5 excludes the enlarged feedback shape on a terminal interval and supplies original competitors at its actual distance levels. It does not locate the first loss of the two-orientation minimizing family supplied by Theorem 34.3. The first boundary, the maximal connected initial interval on which that family exhausts original minimizers, its boundary inclusion or exclusion, and the first competing minimizing family remain undetermined. The root-selection interval (34.1) is not identified with any geometric boundary by these results, and no global minimizing claim on the intermediate levels follows from the comparison family (35.21).
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Prescribed-distance effect elimination with the actual feedback fixed
+
+**Definition 36.1 (the two admissible effect arcs).** Retain the original $\mathcal K,\rho,g,f,m$, the ordinary transpose and the constants of source Definition 23.1 and Definition 33.1. Fix an actual $U\in U(4)$, and evaluate $w,A,B,P,Q,u,v$ on $w=\operatorname{diag}(UU_+^\dagger)$. Put
+
+$$
+ \Delta_+=d^2-u^2,\qquad \Delta_-=e^2-v^2,\qquad
+ \omega=uv,\qquad S_+=A,\qquad S_-=B.
+\tag{36.1}
+$$
+
+Both $\Delta_\pm$ are nonnegative, by source (23.12) at the two population endpoints. For a prescribed $\xi\ge0$ and $\sigma\in\{+,-\}$ define
+
+$$
+ t_\sigma=\frac{\xi-8+2S_\sigma}{2},\qquad
+ J_\sigma=\frac{1+S_\sigma-S_{-\sigma}}2,\qquad
+ b_\sigma=\Delta_{-\sigma}-\Delta_\sigma.
+\tag{36.2}
+$$
+
+The sign is called admissible when $0\le t_\sigma\le1$ and
+
+$$
+ Q_\sigma:=\min\{\sqrt{t_\sigma},J_\sigma\}\ge t_\sigma.
+\tag{36.3}
+$$
+
+For an admissible sign put $I_\sigma=[t_\sigma,Q_\sigma]$ and
+
+$$
+ R_\sigma=\sqrt{b_\sigma^2+4\omega^2}.
+\tag{36.4}
+$$
+
+If $R_\sigma>0$, set
+
+$$
+\begin{aligned}
+ q_\sigma^\circ
+   &=\frac{\sqrt{t_\sigma}\,(-b_\sigma)_+}{R_\sigma},
+       &&(-b_\sigma)_+=\max\{-b_\sigma,0\},\\
+ q_\sigma^\sharp
+   &=\min\{Q_\sigma,\max\{t_\sigma,q_\sigma^\circ\}\},\\
+ M_\sigma(w,\xi)
+   &=\Delta_\sigma+b_\sigma q_\sigma^\sharp
+       -2\omega\sqrt{t_\sigma-(q_\sigma^\sharp)^2},\\
+ Z_\sigma(w,\xi)&=\{q_\sigma^\sharp\}.
+\end{aligned}
+\tag{36.5}
+$$
+
+If $R_\sigma=0$, instead put $M_\sigma(w,\xi)=\Delta_\sigma$ and $Z_\sigma(w,\xi)=I_\sigma$. Set $M_\sigma=+\infty$ for an inadmissible sign. All square roots are the nonnegative real square roots. The letters $Q_\sigma$ in (36.3) are real interval endpoints, whereas $Q=Q(w)$ remains the complex amplitude of source (23.2).
+
+**Theorem 36.2 (exact fixed-feedback level comparison and its full equality preimage).** For every actual $U$ and every $\xi\ge0$,
+
+$$
+ \boxed{\quad
+ \min_{\substack{E\in\operatorname{Dens}_2\\\rho(E,U)=\xi}}g(E,U)
+       =\min_{\sigma\in\{+,-\}}M_\sigma(w,\xi).
+ \quad}
+\tag{36.6}
+$$
+
+An empty level on the left has value $+\infty$. When it is nonempty, an effect minimizes the left side if and only if there are an admissible sign $\sigma$ attaining the right side, a $q\in Z_\sigma(w,\xi)$ and a complex $z$ such that
+
+$$
+\begin{aligned}
+ |z|^2&=t_\sigma-q^2,\\
+ \operatorname{Re}(Pz\bar Q)&=uv|z|,\\
+ E&=\bigl(TF_\sigma(q,z)T^\dagger\bigr)^{\mathsf T},\\
+ F_+(q,z)&=\begin{pmatrix}1-q&z\\\bar z&q\end{pmatrix},\qquad
+ F_-(q,z)=\begin{pmatrix}q&z\\\bar z&1-q\end{pmatrix}.
+\end{aligned}
+\tag{36.7}
+$$
+
+In particular, if $uv|z|=0$ the phase condition imposes no restriction. A sign tie is retained by taking the union of the two sets in (36.7), with coincident effects counted once. The impurity of each such effect is exactly $2(q-t_\sigma)$. Thus the formula includes mixed effects, both population endpoints and all rank changes.
+
+Consequently the full original envelope has the exact reduction
+
+$$
+ \boxed{\quad
+ m(\xi)=
+ \min_{\substack{w\in\mathcal W,\ \sigma\in\{+,-\}\\
+                         \sigma\ \mathrm{admissible}}}
+            M_\sigma(w,\xi)-\kappa\xi,
+       \qquad 0<\xi\le9.
+ \quad}
+\tag{36.8}
+$$
+
+For a feedback diagonal attaining (36.8), every actual unitary lift of that diagonal has exactly the minimizing effect preimage (36.7). No restriction on its off-diagonal entries is implicit in this assertion.
+
+**Proof.** For the given original effect write
+
+$$
+ T^\dagger E^{\mathsf T}T
+  =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},\qquad
+ 0\le p\le1,\qquad |z|^2\le p(1-p).
+\tag{36.9}
+$$
+
+Use $q=1-p$ for $\sigma=+$ and $q=p$ for $\sigma=-$. Source (23.10)--(23.11) show that the corresponding original sign distance is
+
+$$
+ \rho_\sigma(E,U)=8-2S_\sigma+2(q^2+|z|^2).
+\tag{36.10}
+$$
+
+The positive sign attains the joint minimum precisely when
+
+$$
+ 10-2p-2A\le8+2p-2B
+ \quad\Longleftrightarrow\quad 1-p\le J_+.
+\tag{36.11}
+$$
+
+The negative sign attains it precisely when $p\le J_-$. These conditions include equality; the impurity term cancels when comparing the two branches.
+
+It follows that $\rho(E,U)=\xi$ with $\sigma$ a minimizing sign is equivalent to
+
+$$
+ q^2+|z|^2=t_\sigma,\qquad
+ 0\le q\le1,\qquad |z|^2\le q(1-q),\qquad q\le J_\sigma.
+\tag{36.12}
+$$
+
+The first and third conditions imply $t_\sigma\le q$, while nonnegativity of $|z|^2$ implies $q\le\sqrt{t_\sigma}$. Conversely these two inequalities give both the nonnegativity of $t_\sigma-q^2$ and its upper bound by $q(1-q)$. Hence (36.12) holds exactly when the sign is admissible, $q\in I_\sigma$ and $|z|^2=t_\sigma-q^2$. This proves exact feasibility in both directions, rather than a relaxation of the positive-effect constraint. It also gives
+
+$$
+ \epsilon=2\bigl(q(1-q)-|z|^2\bigr)
+         =2(q-t_\sigma).
+\tag{36.13}
+$$
+
+The same-feedback identity (23.12), without discarding its coherence term, now reads
+
+$$
+\begin{aligned}
+ g(E,U)
+ &=\Delta_\sigma+b_\sigma q
+                   -2\operatorname{Re}(Pz\bar Q)\\
+ &\ge\Delta_\sigma+b_\sigma q
+                   -2\omega\sqrt{t_\sigma-q^2}
+       =:\mathcal H_\sigma(q).
+\end{aligned}
+\tag{36.14}
+$$
+
+For each feasible $q$ the inequality is attained: if $PQ\ne0$, choose $z$ with the specified modulus and phase $\bar P Q/(uv)$; if $PQ=0$, choose any phase. This choice leaves the distance and sign inequalities unchanged, because those depend on $p$ and $|z|$ only. Equality in (36.14) is precisely the phase condition in (36.7), including zero coherence or zero amplitudes.
+
+It remains to minimize the displayed function on its explicit closed interval. Suppose first $\omega>0$ and $t_\sigma>0$. In the interior of the circular arc,
+
+$$
+ \mathcal H_\sigma'(q)
+   =b_\sigma+\frac{2\omega q}{\sqrt{t_\sigma-q^2}},\qquad
+ \mathcal H_\sigma''(q)
+   =\frac{2\omega t_\sigma}{(t_\sigma-q^2)^{3/2}}>0.
+\tag{36.15}
+$$
+
+If $b_\sigma\ge0$, the function increases on the nonnegative arc, and its minimum on $I_\sigma$ is at $q=t_\sigma$. If $b_\sigma<0$, its unique minimum on the full nonnegative arc is at
+
+$$
+ q=\frac{\sqrt{t_\sigma}(-b_\sigma)}
+              {\sqrt{b_\sigma^2+4\omega^2}}.
+\tag{36.16}
+$$
+
+The derivative is negative below this point and positive above it. Restriction to $I_\sigma$ therefore gives exactly the truncation in (36.5), with a unique minimizing $q$. Continuity covers the endpoint $q=\sqrt{t_\sigma}$. If $t_\sigma=0$, the admissible interval is the singleton $\{0\}$, and the same conclusion follows directly.
+
+If $\omega=0$ and $b_\sigma\ne0$, the function is strictly affine. Its minimizing endpoint is $t_\sigma$ for $b_\sigma>0$ and $Q_\sigma$ for $b_\sigma<0$, again exactly (36.5). If both vanish, it is constant and every point of $I_\sigma$ minimizes. This is precisely the $R_\sigma=0$ case. Thus (36.5) and $Z_\sigma$ give the exact value and all scalar equality cases, without omitting a zero denominator.
+
+Every effect at level $\xi$ has at least one minimizing sign and hence belongs to an arc just analyzed. Conversely (36.7) constructs an original normalized positive effect at the specified level, using the fixed original $U$. Taking the minimum over admissible signs proves (36.6) and its necessary-and-sufficient equality statement.
+
+Finally source Theorem 23.2 identifies $\mathcal W$ with exactly the diagonals of $UU_+^\dagger$. Every expression in (36.1)--(36.7) depends on the actual $U$ only through that diagonal. Therefore minimizing (36.6) over the original unitaries proves (36.8). The attained-level and compactness result of Theorem 35.2 ensures attainment for $0<\xi\le9$. For each $w$ every actual lift gives the same distances, defect and effect preimage; such lifts are retained, rather than replaced by diagonal feedbacks. The original common scalar action $w\mapsto\lambda w$ preserves these expressions, including $Pz\bar Q$, and no additional scalar quotient is used. $\square$
+
+**Theorem 36.3 (a strict same-distance purification comparison).** Let $(E,U)$ be any original pair, let $\sigma$ attain its original joint distance, and put $q=1-p$ for $\sigma=+$ or $q=p$ for $\sigma=-$, with the actual coordinates (36.9). If $b_\sigma\ge0$, there is a normalized rank-one effect $\widehat E$, using the unchanged actual $U$, such that
+
+$$
+ \rho(\widehat E,U)=\rho(E,U),\qquad
+ g(E,U)-g(\widehat E,U)
+       \ge\frac{b_\sigma}{2}\bigl(1-\operatorname{Tr}(E^2)\bigr).
+\tag{36.17}
+$$
+
+For every original pair with $0<\rho(E,U)\le1$, this has the uniform strengthening
+
+$$
+ \boxed{\quad
+ f(E,U)\ge f(\widehat E,U)
+                 +\frac14\bigl(1-\operatorname{Tr}(E^2)\bigr).
+ \quad}
+\tag{36.18}
+$$
+
+In particular, at every level $0<\xi\le1$, the original minimum equals the minimum restricted to rank-one effects, and every original minimizing effect has rank one. This statement imposes no diagonality condition on $U$.
+
+**Proof.** Put $\epsilon=1-\operatorname{Tr}(E^2)$ and $t=q-\epsilon/2$. By (36.12)--(36.13), $t=t_\sigma$ and $t\le q\le\sqrt t$, with $q\le J_\sigma$. Thus $q'=t$ also belongs to $I_\sigma$. Choose $\widehat E$ from (36.7) using $q'=t$ and
+
+$$
+ |z'|=\sqrt{t(1-t)},\qquad
+ \operatorname{Re}(Pz'\bar Q)=uv|z'|.
+\tag{36.19}
+$$
+
+It is positive, trace one and rank one, including $t=0,1$. Its sign $\sigma$ still attains the joint minimum because $q'\le q\le J_\sigma$. Equation (36.10) gives the same original distance. Moreover $|z|^2=t-q^2\le t-t^2=|z'|^2$. Applying the exact defect identity at the same $U$ gives
+
+$$
+\begin{aligned}
+ g(E,U)-g(\widehat E,U)
+ &=b_\sigma(q-t)
+       +2\bigl(uv\sqrt{t(1-t)}
+                        -\operatorname{Re}(Pz\bar Q)\bigr)\\
+ &\ge\frac{b_\sigma\epsilon}{2}
+       +2uv\bigl(\sqrt{t(1-t)}-|z|\bigr)
+ \ge\frac{b_\sigma\epsilon}{2}.
+\end{aligned}
+\tag{36.20}
+$$
+
+This proves (36.17), with no phase division when $P$ or $Q$ vanishes.
+
+For the uniform claim fix any minimizing sign at a level $0<\xi\le1$, and set $\delta=4-S_\sigma$. The nonnegative effect-distance summand and (23.11) give
+
+$$
+ 0\le\delta\le\frac\xi2\le\frac12.
+\tag{36.21}
+$$
+
+First take $\sigma=+$. Normalize the one common feedback scalar so that $\sum_jw_j=A=4-\delta>0$, and put $Y=w_3+w_4$. The disk constraints on the actual diagonal imply $\operatorname{Re}Y\ge A-2$ and
+
+$$
+ \sum_j|w_j-1|^2\le8-2A=2\delta.
+\tag{36.22}
+$$
+
+Since $P=hA+(c-h)Y$ and $c>h$, it follows that
+
+$$
+ u\ge\operatorname{Re}P
+     \ge cA-2(c-h)=d-c\delta
+     \ge d-c/2>0.
+\tag{36.23}
+$$
+
+The coefficients $(h,-h,is,-is)$ of $Q$ sum to zero and have squared norm $2(h^2+s^2)$. Cauchy--Schwarz and (36.22) therefore give
+
+$$
+ v^2\le4(h^2+s^2)\delta\le2(h^2+s^2).
+\tag{36.24}
+$$
+
+Write $D_0=d^2-e^2$ as in Definition 35.1. Equations (36.23)--(36.24) yield
+
+$$
+\begin{aligned}
+ b_+=u^2-v^2-D_0
+ &\ge(d-c/2)^2-2(h^2+s^2)-D_0\\
+ &=-\frac34+3c-5s+\frac{15}{4}s^2
+ >\frac{15}{28}>\frac12.
+\end{aligned}
+\tag{36.25}
+$$
+
+Here the identity uses $2hc=c+s$, $2hs=c-s$ and $c^2+s^2=1$. For the strict rational comparison, $7/5<\sqrt2<10/7$ gives $c>11/12$, $s<2/5$ and $s^2>1/7$: indeed $c^2>17/20>121/144$ and $s^2<3/20<4/25$, while $s^2=(2-\sqrt2)/4>1/7$. Substitution in the preceding line gives the stated lower bound $15/28$.
+
+For $\sigma=-$, use the fixed coordinates $\widetilde w=(w_1,-w_2,iw_3,-iw_4)$ of source (25.3), followed by one common scalar normalization so that $\sum_j\widetilde w_j=B=4-\delta$. Then
+
+$$
+ \sum_j|\widetilde w_j-1|^2\le2\delta,\qquad
+ P=h(\widetilde w_1-\widetilde w_2)
+                  -ic(\widetilde w_3-\widetilde w_4).
+\tag{36.26}
+$$
+
+The coefficients in this last expression sum to zero and have squared norm $2(h^2+c^2)$. Hence
+
+$$
+ u^2\le4(h^2+c^2)\delta\le2(h^2+c^2)<3.
+\tag{36.27}
+$$
+
+The fixed constants satisfy $D_0=4h+8s>4$, since $h>1/2$ and $s>1/4$. Therefore
+
+$$
+ b_-=D_0-u^2+v^2>1>\frac12.
+\tag{36.28}
+$$
+
+Thus either minimizing sign has $b_\sigma>1/2$. Equation (36.20), and equality of the two original distances, prove (36.18). Every mixed normalized effect has $\epsilon>0$, so it has a strictly better rank-one competitor at the same prescribed level with the same actual feedback. Conversely rank-one effects are original competitors. Attainment from Theorem 35.2 proves the equality of minima and the rank assertion for all original minimizers. The argument covers sign ties and arbitrary actual nondiagonal feedbacks; their diagonal disk constraints are consequences of unitarity. $\square$
+
+The fixed-level effect comparison (36.6)--(36.7) and the strict purification estimate (36.18) are repo-derived consequences of the original normalized-effect, distance and same-feedback identities (23.9)--(23.12). Source (23.7) minimizes $g-\gamma\rho$ without prescribing $\rho$; here the arc equation retains the original prescribed level, including the impurity subtraction. The parameter $q$ is the population away from the chosen distance optimizer, rather than an eigenvalue of the effect. Formula (36.13) retains its exact relation to effect rank. The passage to (36.8) uses the finite prescribed-diagonal theorem stated by [Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3): take dimension four and all four prescribed singular values equal to one. Its partial-sum inequalities become $|w_j|\le1$, and its final inequality becomes $\sum_j|w_j|-2\min_j|w_j|\le2$, exactly source (23.1). A square matrix with these four singular values is unitary, giving the actual lift used in (36.8). The circular-arc minimization and Cauchy--Schwarz estimates are intermediate elementary tools; no literature-priority assertion is attached to the fixed-record comparison.
+
+For the first-loss question, (36.18) removes mixed-effect competitors throughout $0<\xi\le1$, and (36.6)--(36.7) remove the effect optimization for each actual feedback at every level. For any actual geometric continuation of the Section 34 family, write $N(\xi)$ for its candidate value of $f$; on the supplied local interval this is $n(\xi/2)$. The comparison still required is $M_\sigma(w,\xi)\ge N(\xi)+\kappa\xi$ for every admissible $(w,\sigma)$, together with equality only at that family's two original pairs. Neither that global feedback inequality nor the exclusion of extra tied feedbacks is established here beyond the supplied local interval. A directly selected first boundary, its endpoint inclusion or exclusion, and the actual minimizing set at that transition remain undetermined. The number $1$ in Theorem 36.3 is only the domain of its uniform purification estimate, not a proposed first-loss value; no continuation past the root-selection interval (34.1), first competitor, or immediate right-hand loss is inferred from (36.8).
+
+## 追加锚（本行以下为增补区）
