@@ -12,6 +12,7 @@ import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
 
 /-! DeBrota--Stacey's saturation implication for Lüders MIC channels. -/
 
@@ -24,6 +25,7 @@ namespace D5.S3.Quantum.Measurements.LudersEntropySaturationSIC
 
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
+open D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -296,6 +298,205 @@ private theorem rank_one_from_equality {d : ℕ}
     exact inv_mul_cancel₀ (by exact_mod_cast ht0)
   · rw [smul_smul, mul_inv_cancel₀ (by exact_mod_cast ht0), one_smul]
 
+private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
+    (rho sigma : DensityState (Fin d))
+    (hsigma : (CStarMatrix.ofMatrix.symm sigma.1).PosDef) :
+    ((CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)ᴴ *
+      (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)).trace.re / 2 ≤
+        quantumRelativeEntropy rho sigma := by
+  haveI : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
+    IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
+  have hpsd (s : DensityState (Fin d)) : (CStarMatrix.ofMatrix.symm s.1).PosSemidef :=
+    Matrix.nonneg_iff_posSemidef.mp
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm s.2.1)
+  have htrace (s : DensityState (Fin d)) :
+      (CStarMatrix.ofMatrix.symm s.1).trace.re = 1 := by
+    exact congrArg Complex.re s.2.2
+  have hceiling (s : DensityState (Fin d)) :
+      CStarMatrix.ofMatrix.symm s.1 ≤ (1 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
+    have heig : ∑ i, (hpsd s).1.eigenvalues i = 1 := by
+      have ht := congrArg Complex.re (hpsd s).1.trace_eq_sum_eigenvalues
+      simpa [htrace s] using ht.symm
+    apply (Matrix.PosSemidef.le_smul_one_of_eigenvalues_iff (hpsd s).1 (1 : ℝ)).mp
+    intro i
+    rw [← heig]
+    exact Finset.single_le_sum (fun j _ => (hpsd s).eigenvalues_nonneg j) (Finset.mem_univ i)
+  have hsupport : ∀ v, CStarMatrix.ofMatrix.symm sigma.1 *ᵥ v = 0 →
+      CStarMatrix.ofMatrix.symm rho.1 *ᵥ v = 0 := by
+    intro v hv
+    have hv0 : v = 0 := hsigma.mulVec_injective (by simpa using hv)
+    rw [hv0, Matrix.mulVec_zero]
+  have h := actual_matrix_spectral_ceiling_strong_klein
+      _ _ (hpsd rho) (hpsd sigma) 1 (by norm_num) (hceiling rho) (hceiling sigma) hsupport
+  have hlog (s : DensityState (Fin d)) :
+      CStarMatrix.ofMatrix (cfc Real.log (CStarMatrix.ofMatrix.symm s.1)) = CFC.log s.1 :=
+    StarAlgHomClass.map_cfc (p := IsSelfAdjoint) (q := IsSelfAdjoint)
+      CStarMatrix.ofMatrixStarAlgEquiv Real.log _
+      ((CStarMatrix.ofMatrix.symm s.1).finite_real_spectrum.continuousOn _)
+      CStarMatrix.ofMatrixL.continuous (hpsd s).1 (by exact (hpsd s).1)
+  rw [htrace rho, htrace sigma] at h
+  have hcross : (CStarMatrix.ofMatrix.symm rho.1 *
+      (cfc Real.log (CStarMatrix.ofMatrix.symm rho.1) -
+        cfc Real.log (CStarMatrix.ofMatrix.symm sigma.1))).trace.re =
+      quantumRelativeEntropy rho sigma := by
+    unfold quantumRelativeEntropy
+    rw [← hlog rho, ← hlog sigma]
+    rfl
+  rw [hcross] at h
+  simpa using h
+
+private theorem continuous_luders_state {d : ℕ} [NeZero d]
+    (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) (he : IsMIC d e) :
+    Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => (ludersState e u).1) := by
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hl : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      ludersChannel e (inputProjector u)) := by
+    apply continuous_finsetSum
+    intro i hi
+    exact (continuous_const.matrix_mul hp).matrix_mul continuous_const
+  have hv : (fun u : Matrix.unitaryGroup (Fin d) ℂ => (ludersState e u).1) =
+      (fun u => CStarMatrix.ofMatrix (ludersChannel e (inputProjector u))) :=
+    funext (fun u => luders_state_density e u he)
+  rw [hv]
+  exact CStarMatrix.ofMatrixL.continuous.comp hl
+
+private theorem continuous_output_entropy {d : ℕ} [NeZero d]
+    (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) (he : IsMIC d e) :
+    Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      vonNeumannEntropy (ludersState e u)) := by
+  haveI : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
+    IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
+  have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      cfc (fun x : ℝ => x * Real.log x) (ludersState e u).1) :=
+    Continuous.cfc_of_mem_nhdsSet _ (s := Set.univ) (by simp)
+      (continuous_luders_state e he) (fun u => (ludersState e u).2.1.isSelfAdjoint)
+      Real.continuous_mul_log.continuousOn
+  have hid (s : DensityState (Fin d)) :
+      vonNeumannEntropy s =
+        -(Matrix.trace (CStarMatrix.ofMatrix.symm
+          (cfc (fun x : ℝ => x * Real.log x) s.1))).re := by
+    let m := CStarMatrix.ofMatrix.symm s.1
+    have hm : m.IsHermitian := (Matrix.nonneg_iff_posSemidef.mp
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm s.2.1)).1
+    have hmap (f : ℝ → ℝ) : CStarMatrix.ofMatrix (cfc f m) = cfc f s.1 :=
+      StarAlgHomClass.map_cfc (p := IsSelfAdjoint) (q := IsSelfAdjoint)
+        CStarMatrix.ofMatrixStarAlgEquiv f m (m.finite_real_spectrum.continuousOn _)
+        CStarMatrix.ofMatrixL.continuous hm (by exact hm)
+    have hlog : CStarMatrix.ofMatrix (cfc Real.log m) = CFC.log s.1 := by
+      exact StarAlgHomClass.map_cfc CStarMatrix.ofMatrixStarAlgEquiv Real.log m
+        (m.finite_real_spectrum.continuousOn _) CStarMatrix.ofMatrixL.continuous hm
+        (by exact hm)
+    unfold vonNeumannEntropy
+    rw [← hlog, ← hmap (fun x : ℝ => x * Real.log x)]
+    change -(Matrix.trace (m * cfc Real.log m)).re = -(cfc (fun x : ℝ => x * Real.log x) m).trace.re
+    have hmprod : m * cfc Real.log m = cfc (fun x : ℝ => x * Real.log x) m := by
+      conv_lhs => lhs; rw [← cfc_id ℝ m hm]
+      exact (cfc_mul id Real.log m (m.finite_real_spectrum.continuousOn _)
+        (m.finite_real_spectrum.continuousOn _)).symm
+    rw [hmprod]
+  simp_rw [hid]
+  exact (Complex.continuous_re.comp
+    (CStarMatrix.ofMatrixL.symm.continuous.comp hc).matrix_trace).neg
+
+private theorem saturation_remainders {d : ℕ} [NeZero d]
+    (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) (he : IsMIC d e)
+    (hsat : typicalEntropy d e = Real.log (d + 1) - 2 / (d + 1) * Real.log 2) :
+    (∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2) = d ∧
+      ∀ᵐ u ∂(Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))),
+        quantumRelativeEntropy (ludersState e u) (sigmaState u) = 0 := by
+  let mu := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
+  let t := ∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2
+  let a := ∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+    (inputProjector u * ludersChannel e (inputProjector u)).trace.re ∂mu
+  let b := Real.log (d + 1) - 2 / (d + 1) * Real.log 2
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hl := CStarMatrix.ofMatrixL.symm.continuous.comp (continuous_luders_state e he)
+  change Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+    CStarMatrix.ofMatrix.symm (ludersState e u).1) at hl
+  have hlv : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      ludersChannel e (inputProjector u)) := by
+    have hv (u : Matrix.unitaryGroup (Fin d) ℂ) :
+        CStarMatrix.ofMatrix.symm (ludersState e u).1 = ludersChannel e (inputProjector u) :=
+      luders_state_density e u he
+    simpa only [Function.comp_def, hv] using hl
+  have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      (inputProjector u * ludersChannel e (inputProjector u)).trace.re) :=
+    Complex.continuous_re.comp (hp.matrix_mul hlv).matrix_trace
+  have hs := continuous_output_entropy e he
+  have hdc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      quantumRelativeEntropy (ludersState e u) (sigmaState u)) := by
+    have hc0 : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        b - vonNeumannEntropy (ludersState e u) -
+          ((inputProjector u * ludersChannel e (inputProjector u)).trace.re -
+            2 / (d + 1)) * Real.log 2) :=
+      (continuous_const.sub hs).sub ((hc.sub continuous_const).mul continuous_const)
+    convert hc0 using 1
+    funext u
+    linarith [entropy_gap e u he]
+  have hsi := hs.integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
+  have hci := hc.integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
+  have hdi := hdc.integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
+  have hnonneg (u : Matrix.unitaryGroup (Fin d) ℂ) :
+      0 ≤ quantumRelativeEntropy (ludersState e u) (sigmaState u) := by
+    have hpd : (CStarMatrix.ofMatrix.symm (sigmaState u).1).PosDef := by
+      change ((1 / (d + 1 : ℝ)) • (1 + inputProjector u)).PosDef
+      exact (Matrix.PosDef.one.add_posSemidef (input_projector_psd u)).smul
+        (by positivity : (0 : ℝ) < 1 / (d + 1 : ℝ))
+    have hk := relative_entropy_hs_bound (ludersState e u) (sigmaState u) hpd
+    have hn := (Complex.nonneg_iff.mp (Matrix.posSemidef_conjTranspose_mul_self
+      (CStarMatrix.ofMatrix.symm (ludersState e u).1 -
+        CStarMatrix.ofMatrix.symm (sigmaState u).1)).trace_nonneg).1
+    linarith
+  have hdn : 0 ≤ ∫ u, quantumRelativeEntropy (ludersState e u) (sigmaState u) ∂mu :=
+    integral_nonneg hnonneg
+  have hsum : (d : ℝ) ≤ t := by
+    calc
+      (d : ℝ) = ∑ i, (e i).trace.re := by
+        rw [← Complex.re_sum, ← Matrix.trace_sum, he.2.1]
+        simp
+      _ ≤ t := by
+        apply Finset.sum_le_sum
+        intro i hi
+        have h := rank_one_forcing (CFC.sqrt (e i))
+          (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i)))
+        rwa [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg] at h
+  have ha : a = (t + d) / (d * (d + 1)) := haar_second_moment e he
+  have hd : (0 : ℝ) < d := by exact_mod_cast NeZero.pos d
+  have hac : 2 / (d + 1 : ℝ) ≤ a := by
+    rw [ha]
+    apply (le_div_iff₀ (by positivity)).mpr
+    field_simp
+    nlinarith
+  have heq : 0 = (∫ u, quantumRelativeEntropy (ludersState e u) (sigmaState u) ∂mu) +
+      (a - 2 / (d + 1)) * Real.log 2 := by
+    have hki : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        ((inputProjector u * ludersChannel e (inputProjector u)).trace.re -
+          2 / (d + 1)) * Real.log 2) mu :=
+      (hci.sub (integrable_const (2 / (d + 1 : ℝ)))).mul_const (Real.log 2)
+    have hid := integral_congr_ae (μ := mu)
+      (Filter.Eventually.of_forall (fun u => entropy_gap e u he))
+    rw [integral_sub (integrable_const b) hsi,
+      integral_add hdi hki, integral_mul_const,
+      integral_sub hci (integrable_const (2 / (d + 1 : ℝ)))] at hid
+    simp only [integral_const, probReal_univ, one_smul] at hid
+    change b - typicalEntropy d e = _ at hid
+    rw [hsat, sub_self] at hid
+    exact hid
+  have haeq : a = 2 / (d + 1 : ℝ) := by
+    have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
+    nlinarith
+  constructor
+  · have hnum := (div_eq_iff (by positivity : (d : ℝ) * (d + 1) ≠ 0)).mp
+      (ha.symm.trans haeq)
+    field_simp at hnum
+    nlinarith
+  · rw [haeq, sub_self, zero_mul, add_zero] at heq
+    exact (integral_eq_zero_iff_of_nonneg hnonneg hdi).mp heq.symm
+
 private theorem saturation_forces_rank_one {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
     (he : IsMIC d e)
@@ -303,7 +504,36 @@ private theorem saturation_forces_rank_one {d : ℕ} [NeZero d]
       2 / (d + 1) * Real.log 2) :
     ∀ i, ∃ c : ℝ, ∃ p : Matrix (Fin d) (Fin d) ℂ,
       p.IsHermitian ∧ p * p = p ∧ p.trace = 1 ∧ e i = (c : ℂ) • p := by
-  sorry
+  have ht := (saturation_remainders e he hsat).1
+  have hsumtrace : ∑ i, (e i).trace.re = (d : ℝ) := by
+    rw [← Complex.re_sum, ← Matrix.trace_sum, he.2.1]
+    simp
+  have hgap (i : Fin (d ^ 2)) : 0 ≤
+      (CFC.sqrt (e i)).trace.re ^ 2 - (e i).trace.re := by
+    have h := rank_one_forcing (CFC.sqrt (e i))
+      (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i)))
+    rw [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg] at h
+    linarith
+  have hzero : ∑ i, ((CFC.sqrt (e i)).trace.re ^ 2 - (e i).trace.re) = 0 := by
+    rw [Finset.sum_sub_distrib, ht, hsumtrace, sub_self]
+  intro i
+  have hi := (Finset.sum_eq_zero_iff_of_nonneg (fun j _ => hgap j)).mp hzero i
+    (Finset.mem_univ i)
+  have ha0 : CFC.sqrt (e i) ≠ 0 := by
+    intro hz
+    have hei := CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg
+    rw [hz, zero_mul] at hei
+    exact he.2.2.ne_zero i hei.symm
+  have haeq : (CFC.sqrt (e i)).trace.re ^ 2 =
+      (CFC.sqrt (e i) * CFC.sqrt (e i)).trace.re := by
+    rw [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg]
+    linarith
+  obtain ⟨c, p, hp, hpp, htr, hmat⟩ := rank_one_from_equality (CFC.sqrt (e i))
+    (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i))) ha0 haeq
+  refine ⟨c ^ 2, p, hp, hpp, htr, ?_⟩
+  rw [← CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg, hmat,
+    Matrix.smul_mul, Matrix.mul_smul, hpp, smul_smul]
+  simp [pow_two]
 
 private theorem saturation_ae_luders_eq_sigma {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
@@ -313,7 +543,24 @@ private theorem saturation_ae_luders_eq_sigma {d : ℕ} [NeZero d]
     ∀ᵐ u ∂(Measure.haarMeasure
       (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))),
       ludersChannel e (inputProjector u) = (sigmaState u).1 := by
-  sorry
+  filter_upwards [(saturation_remainders e he hsat).2] with u hu
+  have hpd : (CStarMatrix.ofMatrix.symm (sigmaState u).1).PosDef := by
+    change ((1 / (d + 1 : ℝ)) • (1 + inputProjector u)).PosDef
+    exact (Matrix.PosDef.one.add_posSemidef (input_projector_psd u)).smul
+      (by positivity : (0 : ℝ) < 1 / (d + 1 : ℝ))
+  have hk := relative_entropy_hs_bound (ludersState e u) (sigmaState u) hpd
+  rw [hu] at hk
+  let x := CStarMatrix.ofMatrix.symm (ludersState e u).1 -
+    CStarMatrix.ofMatrix.symm (sigmaState u).1
+  have hn := Complex.nonneg_iff.mp (Matrix.posSemidef_conjTranspose_mul_self x).trace_nonneg
+  have htr : (xᴴ * x).trace = 0 :=
+    Complex.ext (by dsimp [x]; linarith) (by simpa using hn.2.symm)
+  have hx : x = 0 := Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp htr
+  have heq := sub_eq_zero.mp hx
+  have hv : CStarMatrix.ofMatrix.symm (ludersState e u).1 =
+      ludersChannel e (inputProjector u) := luders_state_density e u he
+  rw [hv] at heq
+  exact heq
 
 private theorem saturation_everywhere_luders_eq_sigma {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
