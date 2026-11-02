@@ -24,18 +24,9 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Parameters
     (fun p => Fin p.1 → Fin p.1 × Fin p.1 → ℂ) (fun _ => Bool)
 
-private def nextFin {n : ℕ} (i : Fin n) : Fin (Nat.succ n) :=
-  ⟨Nat.succ i.val, Nat.succ_lt_succ i.isLt⟩
-
 private theorem forall_nextFin {n : ℕ} (P : Fin (Nat.succ n) → Prop) :
-    (∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P (nextFin i) := by
-  constructor
-  · intro h
-    exact ⟨h _, fun i => h _⟩
-  · rintro ⟨hzero, hnext⟩ ⟨i, hi⟩
-    cases i with
-    | zero => exact hzero
-    | succ i => exact hnext ⟨i, Nat.lt_of_succ_lt_succ hi⟩
+    (∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ := by
+  exact Fin.forall_fin_succ
 
 private def finForallDecision : (n : ℕ) → (P : Fin n → Prop) →
     (∀ i, Decidable (P i)) → Decidable (∀ i, P i) :=
@@ -44,9 +35,9 @@ private def finForallDecision : (n : ℕ) → (P : Fin n → Prop) →
     (fun _ _ => isTrue (fun i => Fin.elim0 i))
     (fun n ih P h =>
       letI : Decidable (P ⟨0, Nat.zero_lt_succ n⟩) := h _
-      letI : Decidable (∀ i : Fin n, P (nextFin i)) :=
-        ih (fun i => P (nextFin i)) (fun i => h (nextFin i))
-      decidable_of_iff (P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P (nextFin i))
+      letI : Decidable (∀ i : Fin n, P i.succ) :=
+        ih (fun i => P i.succ) (fun i => h i.succ)
+      decidable_of_iff (P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ)
         (forall_nextFin P).symm)
 
 private def finProductDecision (n m : ℕ) (P : Fin n × Fin m → Prop)
