@@ -33,8 +33,8 @@ private theorem shift_pow (m : ℕ) (i j : ZMod n) :
   | succ m ih =>
     rw [pow_succ', Matrix.mul_apply]
     simp only [shift, ite_mul, one_mul, zero_mul]
-    simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
-    simp only [Finset.mem_univ, if_true, ih]
+    simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    simp only [ih]
     congr 1
     push_cast
     ring_nf
@@ -131,7 +131,7 @@ private theorem normalized_residue (m : ℕ) (c r : ℝ) (j : ZMod n) :
   have hp : (c+r)^(m-k) * (c+r)^k = (c+r)^m := by
     rw [← pow_add, Nat.sub_add_cancel hkm]
   simp only [zero_add, div_pow]
-  rw [mul_div_assoc, div_mul_div_comm, hp, div_mul_eq_mul_div]
+  rw [← mul_div_assoc, div_mul_div_comm, hp, div_mul_eq_mul_div]
 
 private theorem residue_limit (c r : ℝ) (hc : 0 < c) (hr : 0 < r) (j : ZMod n) :
     Tendsto (fun m : ℕ => residue m c r j / (c+r)^m) atTop (𝓝 (1 / (n : ℝ))) := by
@@ -150,9 +150,67 @@ private theorem residue_ratio_limit (c r : ℝ) (hc : 0 < c) (hr : 0 < r)
   have heq (m : ℕ) :
       (residue m c r i / (c+r)^m) / (residue m c r j / (c+r)^m) =
         residue m c r i / residue m c r j := by
-    exact div_div_div_cancel_right₀ (pow_ne_zero m (add_pos hc hr).ne')
+    exact div_div_div_cancel_right₀ (pow_ne_zero m (add_pos hc hr).ne') _ _
   have h1 : Tendsto (fun m : ℕ => residue m c r i / residue m c r j) atTop (𝓝 1) := by
-    simpa only [heq, div_self (one_div_ne_zero hn)] using hlim
+    simpa only [Pi.div_apply, heq, div_self (one_div_ne_zero hn)] using hlim
   simpa [mul_div_assoc] using h1.const_mul r
+
+/-- The exact rational ceiling used in the original source. -/
+def ceiling (m n : ℕ) : ℕ := ⌈(m : ℚ) / (n : ℚ)⌉₊
+
+/-- Original inclusive numerator, with signed integer exponents. -/
+def numerator (x c : ℝ) (n m : ℕ) : ℝ :=
+  ∑ k ∈ Finset.range (ceiling m n + 1),
+    x^k * c^((m : ℤ) - (n : ℤ)*k) * (m.choose (n*k) : ℝ)
+
+/-- Original inclusive denominator, with signed integer exponents. -/
+def denominator (x c : ℝ) (n m : ℕ) : ℝ :=
+  ∑ k ∈ Finset.range ((ceiling m n - 1) + 1),
+    x^k * c^((m : ℤ) - (n : ℤ)*k - 1) * (m.choose (n*k+1) : ℝ)
+
+/-- The source quotient on positive indices, explicitly totalized at zero. -/
+def beta (x c : ℝ) (n m : ℕ) : ℝ :=
+  if m = 0 then 0 else numerator x c n m / denominator x c n m
+
+private theorem ceiling_bound (m : ℕ) : m ≤ n * ceiling m n := by
+  have hn : (0 : ℚ) < n := by exact_mod_cast NeZero.pos n
+  have h := (Nat.le_ceil ((m : ℚ) / n))
+  have h' : (m : ℚ) ≤ (n : ℚ) * (ceiling m n : ℚ) := by
+    dsimp [ceiling]
+    exact (div_le_iff₀ hn).mp h |>.trans_eq (mul_comm _ _)
+  exact_mod_cast h'
+
+private theorem multisection (m d K : ℕ) (hd : d < n) (f : ℕ → ℝ)
+    (hf : ∀ l, m < l → f l = 0)
+    (hK : ∀ l, l ≤ m → l % n = d → l / n < K) :
+    (∑ k ∈ Finset.range K, f (n*k+d)) =
+      ∑ l ∈ Finset.range (m+1), f l *
+        (if (l : ZMod n) = (d : ZMod n) then 1 else 0) := by
+  classical
+  apply Finset.sum_bij_ne_zero (fun k _ _ => n*k+d)
+  · intro k hk hne
+    apply Finset.mem_range.mpr
+    by_contra h
+    have hz := hf (n*k+d) (by omega)
+    exact hne hz
+  · intro k hk hne k' hk' hne' heq
+    exact Nat.eq_of_mul_eq_mul_left (NeZero.pos n) (Nat.add_right_cancel heq)
+  · intro l hl hne
+    have he : (l : ZMod n) = (d : ZMod n) := by
+      by_contra h
+      simp [h] at hne
+    have hm : l % n = d := by
+      have ht := (ZMod.natCast_eq_natCast_iff' l d n).mp he
+      simpa [Nat.mod_eq_of_lt hd] using ht
+    have heq : n*(l/n)+d = l := by
+      have ht := Nat.mod_add_div l n
+      omega
+    refine ⟨l/n, Finset.mem_range.mpr (hK l (by have := Finset.mem_range.mp hl; omega) hm), ?_, heq⟩
+    rw [heq]
+    intro hz
+    simp [hz] at hne
+  · intro k hk hne
+    have he : ((n*k+d : ℕ) : ZMod n) = (d : ZMod n) := by simp
+    simp [he]
 
 end D5.S3.ArithSums.WolfordBinomialBiroot
