@@ -23,8 +23,9 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "Sort the finite support of the integer polynomial f by increasing natural degree, "
-                    + "and list its coefficients in that order. IsAlmostPalindromic means that reversing "
-                    + "this list leaves it unchanged. The coercion DFunLike.coe turns the finitely "
+                    + "and list its coefficients in that order. IsAlmostPalindromic applies "
+                    + "List.Palindrome to this list. By List.Palindrome.iff_reverse_eq, this is "
+                    + "equivalent to equality with its reverse. The coercion DFunLike.coe turns the finitely "
                     + "supported coefficient map into a function from natural degrees to integers. "
                     + "The empty list makes the zero polynomial almost palindromic. "
                     + "This is the integer-coefficient form of the definition for rational polynomials "
@@ -69,9 +70,9 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "Fix μ, a and b satisfying the hypotheses. The Gaussian recurrence gives "
-                        + "diagonal value one and constant coefficient one whenever the lower index "
-                        + "does not exceed the upper index. Its linear coefficient is one when "
+                        "Fix μ, a and b satisfying the hypotheses. Gaussian symmetry gives diagonal "
+                        + "value one. The Gaussian recurrence gives constant coefficient one whenever "
+                        + "the lower index does not exceed the upper index. Its linear coefficient is one when "
                         + "the lower index is positive and strictly smaller than the upper index.")),
                     Paragraph(Text(
                         "For a natural n, write (X)ₙ for the product of 1 − Xʰ over 1 ≤ h ≤ n. "
@@ -83,8 +84,8 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                         + "All these differences are natural subtraction.")),
                     Paragraph(Text(
                         "Write a0 and b0 for the original and reversed Gaussian products, respectively. "
-                        + "Multiplying the factorial identity over the indices and cancelling the "
-                        + "equal products of the a-factorials gives "
+                        + "Multiplying the factorial identity over the indices, reindexing the "
+                        + "a-factorials by Equiv.prod_comp with Fin.revPerm, and cancelling gives "
                         + "a0 ∏ᵢ (X)ᵦ₍ᵢ₎₋ₐ₍ᵢ₎ = b0 ∏ᵢ (X)ᵦ₍ᵢ₎₋ₐ₍Fin.rev i₎. "
                         + "The cancelled polynomial is nonzero because its constant coefficient is one.")),
                     Paragraph(Text(
@@ -100,7 +101,9 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                         "Put p = preMerged(a,b), r = t + 1, and let the natural number c be μ "
                         + "if a(0) > 0 and μ − 1 otherwise. The constant coefficient of a0 is one. "
                         + "The coefficient of degree one in a product of factors with constant "
-                        + "coefficient one is the sum of their linear coefficients, so that of a0 "
+                        + "coefficient one is the sum of their linear coefficients: apply the "
+                        + "finite-product derivative identity derivative_prod_finset and take the "
+                        + "constant coefficient. Thus the linear coefficient of a0 "
                         + "is (c : ℤ). If a(0) = 0, precisely the first factor contributes zero "
                         + "instead of one. The quotient identity now gives p.coeff(r) = 1, "
                         + "p.coeff(r + 1) = (c : ℤ) + 1, and p.coeff(n) = 0 for every n < r.")),
@@ -108,15 +111,19 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                         "Next, induction on the Gaussian recurrence proves that gauss(n,k) is "
                         + "monic, has natural degree k(n − k), and equals its polynomial reverse "
                         + "when k ≤ n. The dual Gaussian recurrence identifies the reflected sum "
-                        + "in the induction step. Products preserve these properties. Thus a0 "
+                        + "in the induction step. The library's monic-product and degree identities, "
+                        + "and reverse_mul_of_domain via Finset.prod_induction, extend these "
+                        + "properties to products. Thus a0 "
                         + "has natural degree d = ∑ᵢ a(i)(b(i) − a(i)), and b0 has natural degree "
                         + "e = ∑ᵢ a(Fin.rev i)(b(i) − a(Fin.rev i)).")),
                     Paragraph(Text(
                         "To compare these degrees, cast every tuple entry from ℕ to ℤ. "
                         + "For each i, the product of the integer differences "
                         + "((a(i) : ℤ) − (a(Fin.rev i) : ℤ)) and "
-                        + "((b(i) : ℤ) − (b(Fin.rev i) : ℤ)) is nonnegative, by monotonicity. "
-                        + "Summing and reindexing by Fin.rev gives 2((d : ℤ) − (e : ℤ)). "
+                        + "((b(i) : ℤ) − (b(Fin.rev i) : ℤ)) is nonnegative: the two cast tuples "
+                        + "are monotone, so the library's monovariation inequality applies. "
+                        + "Summing and reindexing by Equiv.sum_comp with Fin.revPerm gives "
+                        + "2((d : ℤ) − (e : ℤ)). "
                         + "At index zero both differences are at most −2, so this sum is at least "
                         + "four. Consequently e + 2 ≤ d in ℕ.")),
                     Paragraph(Text(
@@ -131,8 +138,10 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                         + "degrees in the support of p, the first two entries must be r and r + 1, "
                         + "and the last two must be d − 1 and d. Indeed, the coefficients at these "
                         + "four degrees are nonzero, none occur below r or above d, and the pairs "
-                        + "are adjacent natural degrees. Reversing the coefficient list would "
-                        + "therefore equate its second entry (c : ℤ) + 1 with its penultimate "
+                        + "are adjacent natural degrees. If the coefficient list satisfied "
+                        + "List.Palindrome, List.Palindrome.iff_reverse_eq would identify its "
+                        + "reverse with itself. Comparing index one with List.getElem?_reverse "
+                        + "would then equate its second entry (c : ℤ) + 1 with its penultimate "
                         + "entry (c : ℤ). This is impossible, so p is not almost palindromic."))),
                 DescribeRole.Theorem))));
 
@@ -148,7 +157,7 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
             new Formula.TypeArrow(Naturals(), Integers()));
         var values = At(Qualified("List", "map"), coefficients, sorted);
         return All("f", Polynomials(), Iff(LocalCall("IsAlmostPalindromic", f),
-            Eq(At(Qualified("List", "reverse"), values), values)));
+            At(Qualified("List", "Palindrome"), values)));
     }
 
     private static Formula PreMergedDefinition() => All("μ", Naturals(),
