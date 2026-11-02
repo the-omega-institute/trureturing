@@ -20,8 +20,8 @@ proof_shape: haarAverage_identity_fixed: bind-only; consumer: twirlTrace.
 proof_shape: haarAverage_swap_fixed: bind-only; consumer: twirlSwapTrace.
 proof_shape: haarAverage_image_span: bind-only; consumer: twirlFormula.
 proof_shape: hermitian_fixed_pairing: bind-only; consumer: twirlTrace.
-proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace, WernerTesterIncompleteness.swap_projection.
-proof_shape: swapSquare: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.swap_projection.
+proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace, WernerTesterIncompleteness.flip_facts.
+proof_shape: swapSquare: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.flip_facts.
 proof_shape: traceSwap: bind-only; consumers: twirlFormula, WernerTesterIncompleteness.
 proof_shape: twirlTrace: bind-only; consumer: twirlFormula.
 proof_shape: twirlSwapTrace: bind-only; consumer: twirlFormula.
