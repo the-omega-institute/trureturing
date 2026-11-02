@@ -1,4 +1,4 @@
-/-!
+/-
 The fixed-momentum kinematic component on the ORIGINAL
 `LatticeMatterGhostCoupling.State D = Carrier D ⊗ Fock`.  This module proves
 the literal kernel/support/basis and finite-dimensional endpoints needed by
@@ -8,6 +8,7 @@ the relative shell.  It does not assert a no-ghost theorem or positivity.
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
+import D5.S3.VertexAlgebra.Lattice.LatticeBRSTSquare
 import D5.S3.Quantum.Fermionic.BcGhostRelativeEnergy
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.LinearAlgebra.Finsupp.Supported
@@ -25,6 +26,7 @@ namespace D5.S3.VertexAlgebra.LatticeRelativeMassShell
 
 open LatticeGeneratingFieldLocality LatticePositiveEnergy
 open LatticeSugawaraCurrents LatticeMatterGhostCoupling
+open LatticeSugawaraVirasoro
 open D5.S3.VertexAlgebra.LatticeBRST
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostRelativeEnergy
@@ -59,15 +61,22 @@ def coeff (D : LatticeData) (x : State D) (i : TensorLabel D) : ℂ :=
 
 @[simp] private theorem coeff_zero (D : LatticeData) (i : TensorLabel D) :
     coeff D 0 i = 0 := by
-  simp [coeff]
+  change (tensorCoeffEquiv D 0) i = 0
+  rw [(tensorCoeffEquiv D).map_zero]
+  exact Finsupp.zero_apply
 
 @[simp] private theorem coeff_add (D : LatticeData) (x y : State D)
     (i : TensorLabel D) : coeff D (x + y) i = coeff D x i + coeff D y i := by
-  simp [coeff]
+  change (tensorCoeffEquiv D (x + y)) i =
+    (tensorCoeffEquiv D x) i + (tensorCoeffEquiv D y) i
+  rw [(tensorCoeffEquiv D).map_add]
+  exact Finsupp.add_apply _ _ _
 
 @[simp] private theorem coeff_smul (D : LatticeData) (z : ℂ) (x : State D)
     (i : TensorLabel D) : coeff D (z • x) i = z * coeff D x i := by
-  simp [coeff, smul_eq_mul]
+  change (tensorCoeffEquiv D (z • x)) i = z * (tensorCoeffEquiv D x) i
+  rw [(tensorCoeffEquiv D).map_smul]
+  rfl
 
 /-- These coordinates are exactly the ORIGINAL charge-polynomial coefficients. -/
 theorem coeff_tmul (D : LatticeData) (v : Carrier D) (w : Fock)
@@ -130,7 +139,8 @@ theorem ghostB_zero_iff (D : LatticeData) (x : State D) :
       (D5.S3.Quantum.Fermionic.BcGhostQuartetCount.b0_eq_zero_iff_coefficients _).mp hs i.2 hi
   · intro hx
     apply (ghostSlices D).injective
-    rw [map_zero]
+    have hzero : ghostSlices D (0 : State D) = 0 := (ghostSlices D).map_zero
+    rw [hzero]
     ext l S
     change ghostSlice D l (ghostB D 0 x) S = (0 : Fock) S
     rw [ghostSlice_ghostB]
@@ -202,7 +212,9 @@ theorem totalL0_zero_iff (D : LatticeData)
     exact_mod_cast he
   · intro hx
     apply (tensorCoeffEquiv D).injective
-    rw [map_zero]
+    have hzero : tensorCoeffEquiv D (0 : State D) = 0 :=
+      (tensorCoeffEquiv D).map_zero
+    rw [hzero]
     ext i
     change coeff D (totalL0 D H x) i = 0
     rw [totalL0_coeff D H hHG hGH]
@@ -222,6 +234,69 @@ theorem mem_fixedMomentum_iff (D : LatticeData) (a : Charge D) (x : State D) :
   change tensorCoeffEquiv D x ∈ Finsupp.supported ℂ ℂ _ ↔ _
   rw [Finsupp.mem_supported']
   rfl
+
+private theorem summand_mem_fixedMomentum (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (a : Charge D)
+    (d : Exponent D) (S : Finset ℕ) (m : ℤ) :
+    summand D H m (tensorBasis D ((a,d),S)) ∈ fixedMomentum D a := by
+  apply (mem_fixedMomentum_iff D a _).mpr
+  intro i hi
+  rcases i with ⟨⟨q,e⟩,T⟩
+  simp only [summand, tensorBasis_apply, TensorProduct.map_tmul, LinearMap.id_apply]
+  rw [sugawaraMode_single_sector]
+  rw [coeff_tmul_original]
+  simp [hi]
+
+private theorem ghostCharge_mem_fixedMomentum (D : LatticeData)
+    (a : Charge D) (d : Exponent D) (S : Finset ℕ) :
+    ghostCharge D (tensorBasis D ((a,d),S)) ∈ fixedMomentum D a := by
+  apply (mem_fixedMomentum_iff D a _).mpr
+  intro i hi
+  rcases i with ⟨⟨q,e⟩,T⟩
+  simp only [ghostCharge, tensorBasis_apply, TensorProduct.map_tmul, LinearMap.id_apply]
+  rw [coeff_tmul_original]
+  simp [hi]
+
+theorem fixedMomentum_eq_span (D : LatticeData) (a : Charge D) :
+    fixedMomentum D a =
+      Submodule.span ℂ (tensorBasis D '' {i : TensorLabel D | i.1.1 = a}) := by
+  ext x
+  change tensorCoeffEquiv D x ∈ Finsupp.supported ℂ ℂ _ ↔ _
+  rw [Finsupp.mem_supported]
+  change ((tensorCoeffEquiv D x).support : Set (TensorLabel D)) ⊆
+    {i : TensorLabel D | i.1.1 = a} ↔ _
+  exact (tensorBasis D).mem_span_image.symm
+
+private theorem T_mem_fixedMomentum (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (a : Charge D) (d : Exponent D) (S : Finset ℕ) :
+    T D H (tensorBasis D ((a,d),S)) ∈ fixedMomentum D a := by
+  change (∑ᶠ m : ℤ, summand D H m (tensorBasis D ((a,d),S))) ∈
+    fixedMomentum D a
+  apply finsum_induction _ (fixedMomentum D a).zero_mem
+    (fun _ _ => (fixedMomentum D a).add_mem)
+  intro m
+  exact summand_mem_fixedMomentum D H a d S m
+
+theorem totalCharge_mem_fixedMomentum (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (a : Charge D)
+    {x : State D} (hx : x ∈ fixedMomentum D a) :
+    totalCharge D H x ∈ fixedMomentum D a := by
+  rw [fixedMomentum_eq_span D a] at hx
+  induction hx using Submodule.span_induction with
+  | mem y hy =>
+      rcases hy with ⟨i, hi, rfl⟩
+      rcases i with ⟨⟨q,e⟩,S⟩
+      have hqa : q = a := hi
+      subst q
+      apply (fixedMomentum D a).add_mem
+      · exact T_mem_fixedMomentum D H a e S
+      · exact ghostCharge_mem_fixedMomentum D a e S
+  | zero => simpa using (fixedMomentum D a).zero_mem
+  | add x y _ _ hx hy =>
+      simpa only [map_add] using (fixedMomentum D a).add_mem hx hy
+  | smul z x _ hx =>
+      simpa only [map_smul] using (fixedMomentum D a).smul_mem z hx
 
 /-- DEFINITION by fixed charge and the TWO LITERAL actual-operator kernels. -/
 def relativeMassShell (D : LatticeData)
@@ -269,6 +344,37 @@ theorem mem_relativeMassShell_iff (D : LatticeData)
     · apply (totalL0_zero_iff D H hHG hGH x).mpr
       intro i hi
       exact (totalEnergy_eq_zero_iff D a i (hx i hi).1).mpr (hx i hi).2.2
+
+/- The original total BRST charge preserves the literal fixed-momentum,
+   b₀-kernel, total-L₀ kernel intersection.  The two kernel steps consume the
+   native Ward and covariance identities at r = 0. -/
+theorem totalCharge_mem_relativeMassShell (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (a : Charge D) {x : State D} (hx : x ∈ relativeMassShell D H a) :
+    totalCharge D H x ∈ relativeMassShell D H a := by
+  rcases hx with ⟨⟨hfixed, hb⟩, hL⟩
+  change ghostB D 0 x = 0 at hb
+  change matterMode D H 0 x + ghostVirasoro D 0 x = 0 at hL
+  have hL' : (matterMode D H 0 + ghostVirasoro D 0) x = 0 := by
+    simpa only [LinearMap.add_apply] using hL
+  refine ⟨⟨totalCharge_mem_fixedMomentum D H a hfixed, ?_⟩, ?_⟩
+  · have hw := LinearMap.congr_fun (total_ward_b D H 0) x
+    simp only [LinearMap.add_apply, Module.End.mul_apply] at hw
+    change totalCharge D H (ghostB D 0 x) +
+      ghostB D 0 (totalCharge D H x) =
+      matterMode D H 0 x + ghostVirasoro D 0 x at hw
+    rw [hb, map_zero, hL] at hw
+    change ghostB D 0 (totalCharge D H x) = 0
+    simpa using hw
+  · have hc := LinearMap.congr_fun (total_covariance D H hHG hGH 0) x
+    simp only [LinearMap.sub_apply, Module.End.mul_apply] at hc
+    have hc' : totalCharge D H ((matterMode D H 0 + ghostVirasoro D 0) x) -
+        (matterMode D H 0 + ghostVirasoro D 0) (totalCharge D H x) = 0 := by
+      simpa using hc
+    rw [hL', map_zero, zero_sub] at hc'
+    change (matterMode D H 0 + ghostVirasoro D 0) (totalCharge D H x) = 0
+    exact neg_eq_zero.mp hc'
 
 /-- Exact allowed indices; finiteness is PROVED below, not part of this definition. -/
 def allowedLabels (D : LatticeData) (a : Charge D) : Set (TensorLabel D) :=
@@ -414,7 +520,9 @@ theorem relativeMassShell_eq_bot_of_one_lt (D : LatticeData)
   intro x hx
   rw [Submodule.mem_bot]
   apply (tensorCoeffEquiv D).injective
-  rw [map_zero]
+  have hzero : tensorCoeffEquiv D (0 : State D) = 0 :=
+    (tensorCoeffEquiv D).map_zero
+  rw [hzero]
   ext i
   change coeff D x i = 0
   by_contra hi
@@ -484,6 +592,12 @@ example (D : LatticeData) : massShellCutoff D 0 = 1 := by
 
 example (D : LatticeData) (a : Charge D) : Finite (ShellIndex D a) :=
   shellIndex_finite D a
+
+example (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hrank : D.rank = 26) : totalCharge D H ^ 2 = 0 := by
+  rw [LatticeBRST.total_square_anomaly D H hHG hGH]
+  simp [hrank]
 
 end
 end D5.S3.VertexAlgebra.LatticeRelativeMassShell

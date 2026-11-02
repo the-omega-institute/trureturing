@@ -13,6 +13,7 @@ import D5.S3.Quantum.Fermionic.BcGhostCharge
 import D5.S3.Quantum.Fermionic.BcGhostQuartetCount
 import Mathlib.LinearAlgebra.Finsupp.VectorSpace
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+import Mathlib.LinearAlgebra.Basis.Basic
 
 open scoped BigOperators
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
@@ -57,7 +58,9 @@ private theorem weighted_normal_ket (S : Finset ℕ) :
   have hsupport : Function.support
       (fun q : ℤ => ((-q : ℤ) : ℂ) • normalTerm q (ket S)) ⊆
       (activeModes (ket S) : Set ℤ) := by
-    simpa only [summand_zero] using summand_zero_support (ket S)
+    intro q hq
+    apply summand_zero_support (ket S)
+    simpa only [summand_zero, LinearMap.smul_apply] using hq
   rw [finsum_eq_sum_of_support_subset _ hsupport]
   have hactive : activeModes (ket S) = S.image siteMode := by
     ext q
@@ -100,6 +103,7 @@ theorem siteEnergy_even (k : ℕ) : siteEnergy (2*k) = (k : ℤ) + 2 := by
 
 theorem siteEnergy_odd (k : ℕ) : siteEnergy (2*k+1) = (k : ℤ) - 1 := by
   simp [siteEnergy, siteMode, siteSign]
+  omega
 
 theorem siteEnergy_one : siteEnergy 1 = -1 := by norm_num [siteEnergy, siteMode, siteSign]
 
@@ -177,10 +181,10 @@ theorem relativeEnergy_split (S : Finset ℕ) :
     · have hm3 : 3 ∉ S.erase 1 := by simpa using h3
       unfold relativeEnergy energy
       rw [← Finset.sum_erase_add S siteEnergy h1,
-        Finset.erase_eq_of_not_mem hm3, siteEnergy_one]
+        Finset.erase_eq_of_notMem hm3, siteEnergy_one]
       ring
   · simp only [h1, not_false_eq_true, if_true]
-    have hm1 : S.erase 1 = S := Finset.erase_eq_of_not_mem h1
+    have hm1 : S.erase 1 = S := Finset.erase_eq_of_notMem h1
     have h3' : 3 ∈ S.erase 1 ↔ 3 ∈ S := by simp [hm1]
     by_cases h3 : 3 ∈ S
     · have hm3 : 3 ∈ S.erase 1 := h3'.mpr h3
@@ -189,7 +193,7 @@ theorem relativeEnergy_split (S : Finset ℕ) :
       ring
     · have hm3 : 3 ∉ S.erase 1 := by simpa using h3
       unfold relativeEnergy energy
-      rw [hm1, Finset.erase_eq_of_not_mem h3]
+      rw [hm1, Finset.erase_eq_of_notMem h3]
       ring
 
 theorem relativeEnergy_nonneg (S : Finset ℕ) : 0 ≤ relativeEnergy S := by
@@ -233,7 +237,9 @@ theorem relativeOperator_invariant (v : Fock) (hb : RelativeKernel v) :
   calc
     b 0 (L 0 v + v) = b 0 (L 0 v) + b 0 v := map_add _ _ _
     _ = L 0 (b 0 v) + b 0 v := by
-      rw [← LinearMap.congr_fun hcomm v]
+      have hc : b 0 (L 0 v) = L 0 (b 0 v) := by
+        simpa only [Module.End.mul_apply] using (LinearMap.congr_fun hcomm v).symm
+      rw [hc]
     _ = 0 := by rw [hb, map_zero, add_zero]
 
 theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) :
@@ -390,7 +396,11 @@ theorem relative_level_expansion (ell : ℕ) (v : Fock) (hv : RelativeLevel ell 
   classical
   ext T
   by_cases hT : T ∈ levelOccupationSets ell
-  · simp [hT, ket]
+  · rw [Finset.sum_apply']
+    rw [Finset.sum_eq_single_of_mem T hT]
+    · simp [ket]
+    · intro b hb hne
+      simp [ket, hne]
   · have hzero : v T = 0 := by
       by_contra hn
       have hsub := relative_level_support ell v hv T hn
@@ -401,17 +411,25 @@ theorem relative_level_expansion (ell : ℕ) (v : Fock) (hv : RelativeLevel ell 
       apply hT
       rw [mem_levelOccupationSets_iff]
       exact ⟨hsub, h3, hE⟩
-    simp [hzero, ket, hT]
+    rw [hzero, Finset.sum_apply']
+    symm
+    apply Finset.sum_eq_zero
+    intro b hb
+    have hne : b ≠ T := by
+      intro h
+      exact hT (h ▸ hb)
+    simp [ket, hne]
 
 def levelKets (ell : ℕ) : Set Fock :=
   ket '' (levelOccupationSets ell : Set (Finset ℕ))
 
 theorem level_ket_linearIndependent (ell : ℕ) :
     LinearIndependent ℂ (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => ket S) := by
-  simpa [ket] using
-    (Finsupp.linearIndependent_single_one (Finset ℕ) ℂ).comp
-      (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => S.1)
-      Subtype.val_injective
+  change LinearIndependent ℂ
+    (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => Finsupp.single S.1 1)
+  exact (Finsupp.linearIndependent_single_one ℂ (Finset ℕ)).comp
+    (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => S.1)
+    Subtype.val_injective
 
 theorem relative_level_mem_span (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) :
     v ∈ Submodule.span ℂ (levelKets ell) := by
@@ -470,8 +488,8 @@ theorem relative_level_space_eq_span (ell : ℕ) :
     exact level_ket_mem_space ell hS
 
 def relativeLevelBasis (ell : ℕ) :
-    Basis {S : Finset ℕ // S ∈ levelOccupationSets ell} ℂ (relativeLevelSpace ell) :=
-  (Basis.span (level_ket_linearIndependent ell)).map (LinearEquiv.ofEq _ _ (by
+    Module.Basis {S : Finset ℕ // S ∈ levelOccupationSets ell} ℂ (relativeLevelSpace ell) :=
+  (Module.Basis.span (level_ket_linearIndependent ell)).map (LinearEquiv.ofEq _ _ (by
     rw [relative_level_space_eq_span]
     congr 1
     ext v
