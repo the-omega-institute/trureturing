@@ -12,7 +12,7 @@ $$claim = ((\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \opera
 
 *Formalization.* `D5/S1/Recurrence/Invariants/HannaA378258ModSix.claim` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2024). *OEIS A378258, compositional square roots, dyadic parity and modulo-six exclusion*. URL: <https://oeis.org/A378258>.
+*Citation.* Paul D. Hanna (2024). *OEIS A378258, a compositional square root and dyadic parity*. URL: <https://oeis.org/A378258>.
 
 *Commentary.*
 
@@ -30,7 +30,7 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2024). *OEIS A378258, compositional square roots, dyadic parity and modulo-six exclusion*. URL: <https://oeis.org/A378258>.
+*Acknowledgement.* Paul D. Hanna (2024). *OEIS A378258, a compositional square root and dyadic parity*. URL: <https://oeis.org/A378258>.
 
 *Commentary.*
 
