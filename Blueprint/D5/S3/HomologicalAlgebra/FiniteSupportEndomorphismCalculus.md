@@ -4,6 +4,8 @@
 
 FiniteSupportEndomorphismCalculus
 
+Escape audit remains unfinished for the 39 public calculus and original-quartet targets: 37 compiled typed attempts are declared_unresolved (IE-C050 ClosedTruthReadout, reason=unclassified_form, rule=source.selection_missing; certificate null), and kernel_number_iff and literal_relative_ground have only full-telescope source bridges. No target is declared_validated. Exact source selection and whole-statement reconstruction remain missing; the two source-bridge-only targets also lack complete whole-family variation, slot sensitivity, actual observational dependence and Contract registration. The current-target limitation is linked at https://github.com/the-omega-institute/trureturing/issues/25604 under CLAUDE section 3.9. This issue supplies neither mathematical proof nor validated registration.
+
 This module supplies statewise finite endomorphism sums and algebraic functional calculus for an arbitrary genuine complex basis. Family includes a bound and a proved vanishing assertion. No support or spectral conclusion is assumed by the quartet application. Existing finitary Mathlib sums and basis constructors are reused; the missing composition capture and natural-count coefficient arguments are proved here. These are repository derivations, without a claim of literature novelty. The scalar field is Complex, with arbitrary algebraic modules and arbitrary basis index types.
 
 **Theorem 1.1 (ac_add_left).**

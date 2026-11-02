@@ -4,6 +4,8 @@
 
 LatticeQuartetOperators
 
+Escape audit remains unfinished for the 39 public calculus and original-quartet targets: 37 compiled typed attempts are declared_unresolved (IE-C050 ClosedTruthReadout, reason=unclassified_form, rule=source.selection_missing; certificate null), and kernel_number_iff and literal_relative_ground have only full-telescope source bridges. No target is declared_validated. Exact source selection and whole-statement reconstruction remain missing; the two source-bridge-only targets also lack complete whole-family variation, slot sensitivity, actual observational dependence and Contract registration. The current-target limitation is linked at https://github.com/the-omega-institute/trureturing/issues/25604 under CLAUDE section 3.9. This issue supplies neither mathematical proof nor validated registration.
+
 The carrier is exactly the original all-integral-charge lattice Carrier D tensor the original CountableOccupationFock.Fock. The operators a, b and c are the accepted original modes, with the original ghost cuts and signs. For k=r+1, dTerm pairs a(eMinus,k)c(-k) with a(eMinus,-k)c(k); rTerm pairs a(ePlus,-k)b(k) with a(ePlus,k)b(-k), both weighted by inverse k. Actual polynomial and ghost capture bounds prove local finiteness. d0=pPlus(p) times the unscaled sum, R=inverse pPlus(p) times its paired reciprocal-frequency sum, and M is the actual local number sum. No new mode relation, support, contraction or commutation premise is introduced. Original-current context is Bakalov and Kac, arXiv math/0402315v1, section 4.1. The concrete repository derivation reuses accepted LatticeLightConeCoordinates and BcGhostQuartetCount; no literature novelty is asserted.
 
 **Theorem 1.1 (tp_tmul).**
