@@ -376,8 +376,7 @@ private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
   haveI : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
     IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
   have hpsd (s : DensityState (Fin d)) : (CStarMatrix.ofMatrix.symm s.1).PosSemidef :=
-    Matrix.nonneg_iff_posSemidef.mp
-      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm s.2.1)
+    D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef s
   have htrace (s : DensityState (Fin d)) :
       (CStarMatrix.ofMatrix.symm s.1).trace.re = 1 := by
     exact congrArg Complex.re s.2.2

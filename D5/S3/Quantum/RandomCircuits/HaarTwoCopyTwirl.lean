@@ -43,6 +43,7 @@ import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Topology.Algebra.Star.Unitary
 import Mathlib.LinearAlgebra.Matrix.Vec
 import Mathlib.LinearAlgebra.Matrix.Permutation
+import Mathlib.MeasureTheory.SpecificCodomains.Pi
 
 open Matrix MeasureTheory TopologicalSpace
 open scoped Kronecker ComplexOrder Matrix.Norms.Elementwise
@@ -850,14 +851,10 @@ private theorem pure_tensor_integral {d : ℕ} [NeZero d] :
     (μ := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))
     (HasCompactSupport.of_compactSpace z)
   ext r c
-  let ev : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →L[ℂ] ℂ :=
-    ({ toFun := fun x => x r c
-       map_add' := fun x y => rfl
-       map_smul' := fun k x => rfl } :
-      Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →ₗ[ℂ] ℂ).toContinuousLinearMap
-  have heval := ev.integral_comp_comm hi
-  change (∫ u, z u r c ∂_) = (∫ u, z u ∂_) r c at heval
-  rw [← heval]
+  have heval : (∫ u, z u ∂_) r c = ∫ u, z u r c ∂_ :=
+    (congrFun (eval_integral (fun r => hi.eval r) r) c).trans
+      (eval_integral (fun c => (hi.eval r).eval c) c)
+  rw [heval]
   have h := congrFun (pure_twirl (d := d)) (c, r)
   simp only [Matrix.vec_single, Matrix.mulVec_single_one] at h
   change (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
@@ -887,8 +884,7 @@ theorem pure_quadratic {d : ℕ} [NeZero d] (a : Matrix (Fin d) (Fin d) ℂ) :
     intro r
     apply continuous_pi
     intro c
-    exact (((continuous_apply c.1).comp ((continuous_apply r.1).comp hp)).mul
-      ((continuous_apply c.2).comp ((continuous_apply r.2).comp hp)))
+    exact (hp.matrix_elem r.1 c.1).mul (hp.matrix_elem r.2 c.2)
   have hi := hz.integrable_of_hasCompactSupport
     (μ := Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))
     (HasCompactSupport.of_compactSpace z)
