@@ -81,6 +81,13 @@ bounded search report; no claim of exhaustive coverage or priority is made.
 
 ## Maximum degree and canonical digit deletion
 
+The verified source locator for the resolved question is [Conjecture 2.2,
+section 2.2](https://arxiv.org/html/2507.16500v1#S2.Thmtheorem2) of Johan
+Kok's version 1 preprint. The sequence attribution is the Online Encyclopedia
+of Integer Sequences entries [A319433](https://oeis.org/A319433) and
+[A014417](https://oeis.org/A014417), including their offset-zero and
+Zeckendorf conventions.
+
 Section 2.2, Conjecture 2.2 of arXiv:2507.16500v1 states:
 
 > For the finite linear Jaco graphs J_n(x), n=2,3,4,... the respective maximum degrees Delta(J_n(x)) are yielded by the sequence A319433 with closed formula Delta(J_n(x))=floor(2(n+2)/(1+sqrt(5)))-1, n=2,3,4,...

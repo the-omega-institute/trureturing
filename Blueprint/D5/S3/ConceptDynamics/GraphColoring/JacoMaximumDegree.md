@@ -38,6 +38,10 @@ $$(\forall n \in \mathrm{Nat},\; (2 \le n) \Rightarrow ((\operatorname{maxDegree
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kok-linear-jaco-maximum-degree` (proved) by `D5/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kok-linear-jaco-maximum-degree","declaration_gid":"D5/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johan Kok (2025). *Integer sequences with conjectured relation with certain graph parameters of the family of linear Jaco graphs*. DOI: [10.48550/arXiv.2507.16500](https://doi.org/10.48550/arXiv.2507.16500).
