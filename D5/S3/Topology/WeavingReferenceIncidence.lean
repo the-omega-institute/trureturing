@@ -22,9 +22,6 @@ open D5.S3.Topology.WeavingMixedComponents
 def vertexCode (P : Parameters) (p : ℕ) (hp : p < 2) : Circle P p → ℕ × ZMod P.m :=
   Quotient.lift (code P p) (fun x y h => (reach_iff_code P p hp x y).mp h)
 
-@[simp] theorem vertexCode_circle (P : Parameters) (p : ℕ) (hp : p < 2)
-    (x : Dart P) : vertexCode P p hp (circle P p x) = code P p x := rfl
-
 def endpointCodes (P : Parameters) (p : ℕ) (hp : p < 2) (a : Crossing P) :=
   (vertexCode P p hp (edgeEnds P p a.1 a.2).1,
    vertexCode P p hp (edgeEnds P p a.1 a.2).2)
@@ -32,7 +29,7 @@ def endpointCodes (P : Parameters) (p : ℕ) (hp : p < 2) (a : Crossing P) :=
 theorem endpointCodes_cup (P : Parameters) (p : ℕ) (hp : p < 2)
     (t : ZMod P.m) (i : Fin P.n) (h : cup p i) :
     endpointCodes P p hp (t,i) = ((i.val+1,t-1),(i.val+1,t)) := by
-  simp [endpointCodes,edgeEnds,code,h]
+  simp [endpointCodes,edgeEnds,vertexCode,circle,code,h]
 
 /-- Even at a boundary, the two COLUMN codes of a vertical edge are i and i+2.
 Only its hub time is replaced by zero. -/
@@ -45,11 +42,11 @@ theorem endpointCodes_vertical (P : Parameters) (p : ℕ) (hp : p < 2)
   have hn := P.hn
   have hn1 : 1 < P.n := by omega
   by_cases hl : i.val = 0 <;> by_cases hr : i.val+1 < P.n
-  · simp [endpointCodes,edgeEnds,code,h,hl,hr,hn1]
+  · simp [endpointCodes,edgeEnds,vertexCode,circle,code,h,hl,hr,hn1]
   · omega
-  · simp [endpointCodes,edgeEnds,code,h,hl,hr,hn1]
+  · simp [endpointCodes,edgeEnds,vertexCode,circle,code,h,hl,hr,hn1]
   · have he : i.val+2 = P.n+1 := by omega
-    simp [endpointCodes,edgeEnds,code,h,hl,hr,he]
+    simp [endpointCodes,edgeEnds,vertexCode,circle,code,h,hl,hr,he]
 
 private theorem two_ne_zero (P : Parameters) : (2 : ZMod P.m) ≠ 0 := by
   intro h

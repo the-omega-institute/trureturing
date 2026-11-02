@@ -41,7 +41,7 @@ theorem interval_incident_shape (P : Parameters) (p : ℕ) (hp : p < 2)
     (i.val+1 = a.val.2.val ∧ a.val.1 = t) := by
   rcases a with ⟨⟨u,j⟩,ha⟩
   have hv : vertexCode P p hp (circle P p (t,i,.bl)) = (i.val+1,t) := by
-    simp [code,hi]
+    simp [vertexCode,circle,code,hi]
   by_cases hj : cup p j
   · have hc := endpointCodes_cup P p hp u j hj
     rcases ha with ha | ha
