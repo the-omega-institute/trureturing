@@ -9,17 +9,19 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
     private const string Owner =
         "D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDistance.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/dasmohanty2024inverse");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The singular multipartite source Laplacian has exactly the stated positive spectrum "
         + "and inertia on every original part-size domain.",
         H("Singular multipartite squared-distance Laplacian"), Blocks(
-            Paragraph(Text(
-                "The source is Joyentanuj Das and Sumit Mohanty, Inverse of the Squared Distance "
-                + "Matrix of a Complete Multipartite Graph, arXiv:2311.01069v2, equation (3.6) "
-                + "and the concluding conjecture; DOI 10.13001/ela.2024.8283. The author-defined "
-                + "omitted-list equalities determine the hats. The inconsistent expanded hatted "
-                + "Psi products are not substituted for those definitions. No publisher correction, "
-                + "priority or worldwide literature-completeness claim is made.")),
+            Paragraph(Text("The source definitions and complete concluding conjecture are from "),
+                Ref(Source.Value), Text(
+                    ", equation (3.6) and the concluding conjecture. The author-defined "
+                    + "omitted-list equalities determine the hats. The inconsistent expanded hatted "
+                    + "Psi products are not substituted for those definitions. No publisher correction, "
+                    + "priority or worldwide literature-completeness claim is made.")),
             Paragraph(Text(
                 "For any natural t and n:Fin(t) to Nat, the vertex carrier is the dependent sum "
                 + "of Fin(n(i)). Set d(i)=3n(i)-4. For a finite parameter set S, phi(n,S) is the "
@@ -35,6 +37,23 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
                 + "diagonal numerator is (n(i)-1)theta(hat i)/2+(n(i)-3)psi(hat i), divided by "
                 + "2psi; its within-part off-diagonal entry is -(theta(hat i)/2+psi(hat i))/(2psi); "
                 + "its between-part entry is phi(hat i,hat j)/psi.")),
+            SourceDefinition("phi", "Source product with omitted parameters",
+                "The source product definition, restricted to a finite set of parameters. "
+                + "Erasure realizes the original single and double omitted-list equalities."),
+            SourceDefinition("psi", "Source cofactor polynomial with omitted parameters",
+                "The source sum definition applies the same function to the retained parameter list. "
+                + "The inconsistent expanded hatted-Psi display is not used."),
+            SourceDefinition("theta", "Source sum of the two parameter functions",
+                "The source defines Theta as Phi plus Psi, also on each omitted list."),
+            SourceDefinition("delta", "Squared-distance matrix of the source graph",
+                "The source squared-distance matrix on the complete multipartite vertex carrier. "
+                + "Its graph interpretation uses at least two positive parts."),
+            SourceDefinition("cofactorSum", "Source sum of all cofactors",
+                "The nonzero-cofactor domain preceding equation (3.6) means the sum of all "
+                + "cofactors. Summing the transposed cofactor matrix, the adjugate, gives the same sum."),
+            SourceDefinition("sourceL", "The source Laplacian-like matrix",
+                "Equation (3.6), with precisely its diagonal, same-part off-diagonal and "
+                + "between-part cases, and the original omitted-list convention."),
             Paragraph(Text(
                 "blockBase=3 times the partwise all-ones matrix minus 4I. Its explicit inverse "
                 + "has same-part coefficient 3/(4d(i)) and diagonal subtraction 1/4. A is the "
@@ -69,7 +88,7 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
             Describe.Lean(DescribeId.Create("das-mohanty-complete-target"),
                 DeclarationHandle.Create(Owner + "completeConjecture"),
                 H("The complete target"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
                     "completeConjecture retains every t at least two, all positive integer sizes, "
                     + "nonzero sum of all cofactors and singular delta. Let N be the sum of sizes, "
                     + "s the number of sizes at least two and h the number equal to one. Its "
@@ -109,8 +128,14 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
         Describe.Lean(DescribeId.Create("das-mohanty-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Owner + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock SourceDefinition(string name, string title, string prose) =>
+        Describe.Lean(DescribeId.Create("das-mohanty-source-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Owner + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromLiterature(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula N => F.Id("n");
     private static Formula C(string s) => Seq(Operatorname, Grp(F.Id(s)));
