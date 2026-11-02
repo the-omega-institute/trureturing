@@ -6,7 +6,6 @@
    utility: none
    digest: Sectorwise computational/Fourier projectors attain every n-partite partial bound. -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions
 import D5.S3.Observer.MatrixUnitCertificate

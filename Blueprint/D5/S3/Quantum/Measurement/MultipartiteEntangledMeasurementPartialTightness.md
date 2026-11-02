@@ -122,7 +122,6 @@ Reindex y by its zeroth coordinate and its sector label. Exactly d times the car
 - Truth anchor: `D5/S3/Quantum/Measurement/MultipartiteEntangledMeasurementPartialTightness.score`
 - Truth anchor: `D5/S3/Quantum/Measurement/MultipartiteEntangledMeasurementPartialTightness.winningOutcome`
 - Dependency: [D5/S3/Observer/MatrixUnitCertificate](../../Observer/MatrixUnitCertificate.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite](../Entanglement/AbsolutePPT/Bipartite.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions](../Entanglement/Witness/AbsolutelyEntangledAllPartitions.md)
 - Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction](../Information/SeparableStateLocalUnitaryStabilizerObstruction.md)
