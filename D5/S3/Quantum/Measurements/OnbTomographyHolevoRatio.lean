@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Matrix.LinGProperty.ArithmeticBound
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+import D5.S3.Resource.LogDet.PathSpectralClassical
 import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-!
@@ -176,8 +177,7 @@ private lemma basis_tensor {d : ℕ} (hd : 2 ≤ d)
     MulOpposite.op_one, one_smul, smul_eq_mul, ht] at he
   have heq : (Matrix.single j i (1 : ℂ)) k l =
       if i = l then if j = k then 1 else 0 else 0 := by
-    by_cases hil : i = l <;> by_cases hjk : j = k <;>
-      simp [hil, hjk]
+    simp only [Matrix.single_apply, ← ite_and, and_comm]
   rw [heq, Matrix.one_apply] at he
   by_cases hij : i = j <;> by_cases hkl : k = l <;>
     simp only [hij, hkl, ↓reduceIte, zero_div, zero_mul] at he ⊢ <;>
@@ -332,7 +332,8 @@ private lemma norm_contraction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℂ)
   have hbound (j : Fin n) : |ha.eigenvalues j| ≤ 1 / 2 := by
     have hv : star ⇑(ha.eigenvectorBasis j) ⬝ᵥ ⇑(ha.eigenvectorBasis j) = 1 := by
       rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
-      simp [inner_self_eq_norm_sq_to_K, ha.eigenvectorBasis.orthonormal.1 j]
+      simpa only [ite_true] using
+        (orthonormal_iff_ite.mp ha.eigenvectorBasis.orthonormal j j)
     have hplus := hp.re_dotProduct_nonneg ⇑(ha.eigenvectorBasis j)
     have hminus := hm.re_dotProduct_nonneg ⇑(ha.eigenvectorBasis j)
     simp [add_mulVec, sub_mulVec, Matrix.smul_mulVec, dotProduct_add, dotProduct_sub,
@@ -340,8 +341,9 @@ private lemma norm_contraction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℂ)
     exact abs_le.mpr ⟨by linarith, by linarith⟩
   have hn : traceNorm a = ∑ j, |ha.eigenvalues j| := by
     change (CFC.abs a).trace.re = _
-    rw [CFC.abs_eq_cfc_norm a ha.isSelfAdjoint, ha.cfc_eq, Matrix.IsHermitian.cfc]
-    simp [Matrix.trace_mul_comm, Matrix.mul_assoc, Real.norm_eq_abs]
+    rw [CFC.abs_eq_cfc_norm a ha.isSelfAdjoint]
+    simpa only [Real.norm_eq_abs] using
+      D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum a ha (fun t : ℝ => ‖t‖)
   have hs : (a * a).trace.re = ∑ j, (ha.eigenvalues j) ^ 2 := by
     have h := RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues ha
     rw [RHLinalg.frobSq, ha.eq] at h
@@ -401,7 +403,7 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
   have hzp : z.PosSemidef := covariance_psd hρ hb.1
   have haz : a = (1 / (2 : ℂ)) • (z - zᵀ) := by
     ext j k
-    have hjk : z k j = star (z j k) := by rw [← hzh.apply j k, star_star]
+    have hjk : z k j = star (z j k) := (hzh.apply k j).symm
     change Complex.I * ((z j k).im : ℂ) = (1 / (2 : ℂ)) * (z j k - z k j)
     rw [hjk]
     apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
@@ -431,7 +433,7 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
   let c := fun j => ρ * b j - b j * ρ
   have hc (j) : (c j).trace = 0 := by
     change (ρ * b j - b j * ρ).trace = 0
-    rw [trace_sub, trace_mul_comm ρ (b j), sub_self]
+    exact LieAlgebra.matrix_trace_commutator_zero (Fin d) ℂ ρ (b j)
   have hae (j k) : a j k = (1 / (2 : ℂ)) * (c j * b k).trace := by
     rw [haz]
     change (1 / (2 : ℂ)) * ((ρ * b j * b k).trace - (ρ * b k * b j).trace) = _
@@ -466,9 +468,8 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
       _ = _ := by rw [show (∑ j, (c j * c j).trace) =
           2 - 2 * (d : ℂ) * (ρ * ρ).trace from commutator_square_sum hd hb ρ ht]; ring
   have hn : traceNorm a = traceNorm (imPart z) := by
-    dsimp [a]
-    simp only [traceNorm, conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
-      smul_smul, Complex.star_def, Complex.conj_I, mul_neg, Complex.I_mul_I, neg_neg, one_smul]
+    change (CFC.abs (Complex.I • imPart z)).trace.re = (CFC.abs (imPart z)).trace.re
+    rw [CFC.abs_smul, Complex.norm_I, one_smul]
   have h := norm_contraction a hah hp hm
   rw [hsq, hn] at h
   have he : (((d : ℂ) * (ρ * ρ).trace - 1) / 2).re =
@@ -510,7 +511,7 @@ private lemma holevo_lower {d : ℕ} (hd : 2 ≤ d)
   have hs : 0 ≤ ∑ j, θ j ^ 2 := Finset.sum_nonneg (fun j _ => sq_nonneg (θ j))
   have hd1 : (1 : ℝ) ≤ d := by exact_mod_cast (by omega : 1 ≤ d)
   have hd0 : (d : ℝ) ≠ 0 := by positivity
-  have hdiv : (d : ℝ) * (1 / (d : ℝ)) = 1 := by field_simp
+  have hdiv : (d : ℝ) * (1 / (d : ℝ)) = 1 := mul_one_div_cancel hd0
   rw [he, hr]
   nlinarith
 
@@ -597,7 +598,8 @@ private lemma primal_admissible {d : ℕ} (hd : 2 ≤ d)
     ext a c
     have hi : (1 : Matrix (Fin (d ^ 2 - 1) × Fin d) _ ℂ) a c =
         (if a.1 = c.1 then (1 : Matrix (Fin d) (Fin d) ℂ) else 0) a.2 c.2 := by
-      by_cases he : a.1 = c.1 <;> simp [he, Matrix.one_apply, Prod.ext_iff]
+      exact (congrArg (fun m : Matrix (Fin (d ^ 2 - 1) × Fin d) _ ℂ => m a c)
+        (Matrix.compRingEquiv (Fin (d ^ 2 - 1)) (Fin d) ℂ |>.map_one)).symm
     change (primal d b a.1 c.1 - b a.1 * b c.1) a.2 c.2 =
       (((d : ℂ) + 1) / ((d : ℂ) + 2)) * ((1 : Matrix _ _ ℂ) a c + s a c)
     rw [hblock, hi]
