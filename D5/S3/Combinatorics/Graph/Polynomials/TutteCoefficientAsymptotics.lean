@@ -1,6 +1,3 @@
-import D5.S3.Combinatorics.Graph.Polynomials.CyclicRankEstimate
-import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
-
 /-! GID: D5/S3/Combinatorics/Graph/Polynomials/TutteCoefficientAsymptotics
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Polynomials/TutteCoefficientAsymptotics
@@ -9,6 +6,9 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
    utility: none
    digest: Fixed-rank cyclic state counts control the signed graph coefficient error.
 -/
+
+import D5.S3.Combinatorics.Graph.Polynomials.CyclicRankEstimate
+import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

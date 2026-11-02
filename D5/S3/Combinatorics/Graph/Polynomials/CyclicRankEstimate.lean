@@ -1,12 +1,3 @@
-import D5.S3.Combinatorics.Graph.Jacobi.LeafPruningRanks
-import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
-import Mathlib.RingTheory.Binomial
-import Mathlib.Tactic
-
 /-! GID: D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate
@@ -17,6 +8,15 @@ import Mathlib.Tactic
    digest: The signed rank-state coefficient splits into forest and cyclic states,
      and graph ranks control the support and the individual coefficient growth.
 -/
+
+import D5.S3.Combinatorics.Graph.Jacobi.LeafPruningRanks
+import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Data.Nat.Choose.Bounds
+import Mathlib.Algebra.Polynomial.Coeff
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+import Mathlib.RingTheory.Binomial
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
