@@ -49,7 +49,7 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("Strict finite-cycle inequality and greatest lower bound"),
                 StatementSource.FromAuthor(Disp(Equivalence(Local("claim"), ClaimBody()))),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every natural n at least two and every strictly positive vector k indexed by "
                     + "Fin n, kurtosis k strictly exceeds lowerBound. The same lowerBound is the greatest "
