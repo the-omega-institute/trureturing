@@ -41,7 +41,7 @@ $$ (F-5F^2)\circ(F-F^2)=X. $$
 
 Modulo three this is $(F+F^2)\circ(F-F^2)=X$. Both factors have constant coefficient zero and linear coefficient one, so they are mutual compositional inverses.
 
-The normalized inverse-pair system has a unique solution over any commutative domain where two is nonzero. To compare F and G, set $H=F\circ(F+F^2)$ and $K=G\circ(G+G^2)$. The reverse inverse equations give $H-H^2=K-K^2=X$. The unit $1-H-K$ gives $H=K$. Consequently $F+F^2$ and $G+G^2$ have the same compositional square, and the existing `HannaHalfIterateCubicModThree.half_unique` identifies them. The unit $1+F+G$ then gives $F=G$.
+The normalized inverse-pair system has a unique solution over any commutative domain where two is nonzero. To compare F and G, set $H=F\circ(F+F^2)$ and $K=G\circ(G+G^2)$. The reverse inverse equations give $H-H^2=K-K^2=X$. Mathlib uniqueness of the compositional inverse of $X-X^2$ gives $H=K$. Consequently $F+F^2$ and $G+G^2$ have the same compositional square, and the existing `HannaHalfIterateCubicModThree.half_unique` identifies them. The unit $1+F+G$ then gives $F=G$.
 
 Swapping the inverse factors and conjugating by $X\mapsto-X$ shows that $-F(-X)$ solves the same normalized system. Uniqueness proves $F=-F(-X)$. Over $\mathbb F_3$ every even-degree coefficient therefore vanishes. For n>1, an odd integer coefficient must, by frozen parity, occur at $n=2^k$ with k>0; this is an even degree, so three divides the coefficient. Even coefficients and odd multiples of three both exclude remainders one and five modulo six.
 

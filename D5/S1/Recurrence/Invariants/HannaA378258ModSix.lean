@@ -6,6 +6,17 @@
    utility: none
    digest: Modulo-three reflection and dyadic parity exclude Hanna's two residues. -/
 
+/-
+admission_basis: open-problem-resolution (#25601; Proved).
+All new declarations have proof_shape: bind-only and escape_witness: none.
+claim is consumed by result. plus_minus_unique is consumed by plus_minus_odd;
+plus_minus_odd is consumed by integral_even_three; integral_even_three is consumed
+by result. The external preregistered settlement supplies admission for result.
+The original IsGF, existence, integrality and parity are reused without alteration.
+Mathlib compositional-inverse uniqueness and the frozen half_unique supply uniqueness;
+no square-root or Catalan coefficient proof is repeated.
+-/
+
 import D5.S1.Recurrence.Invariants.HannaA378258SquareRootParity
 
 /-! # Hanna's modulo-six conjecture -/
@@ -45,13 +56,19 @@ private theorem plus_minus_unique {R : Type*} [CommRing R] [NoZeroDivisors R]
     constantCoeff_subst_eq_zero vf0 f hf0
   have hcg : constantCoeff (g.subst (g + g ^ 2)) = 0 :=
     constantCoeff_subst_eq_zero vg0 g hg0
-  have hu : IsUnit (1 - f.subst (f + f ^ 2) - g.subst (g + g ^ 2)) := by
-    apply isUnit_iff_constantCoeff.mpr
-    simp [hcf, hcg]
-  have he : f.subst (f + f ^ 2) = g.subst (g + g ^ 2) := by
-    apply sub_eq_zero.mp
-    apply hu.mul_left_cancel
-    linear_combination ef - eg
+  have hp0 : constantCoeff (X - X ^ 2 : PowerSeries R) = 0 := by simp
+  have hp1 : IsUnit (coeff 1 (X - X ^ 2 : PowerSeries R)) := by simp [coeff_X]
+  have hpf : (X - X ^ 2 : PowerSeries R).subst (f.subst (f + f ^ 2)) = X := by
+    rw [subst_sub (.of_constantCoeff_zero hcf), subst_X (.of_constantCoeff_zero hcf),
+      subst_pow (.of_constantCoeff_zero hcf), subst_X (.of_constantCoeff_zero hcf)]
+    exact ef
+  have hpg : (X - X ^ 2 : PowerSeries R).subst (g.subst (g + g ^ 2)) = X := by
+    rw [subst_sub (.of_constantCoeff_zero hcg), subst_X (.of_constantCoeff_zero hcg),
+      subst_pow (.of_constantCoeff_zero hcg), subst_X (.of_constantCoeff_zero hcg)]
+    exact eg
+  have he : f.subst (f + f ^ 2) = g.subst (g + g ^ 2) :=
+    (eq_substInvOfIsUnit_of_subst_eq_X _ hp0 hp1 (.of_constantCoeff_zero hcf) hpf).trans
+      (eq_substInvOfIsUnit_of_subst_eq_X _ hp0 hp1 (.of_constantCoeff_zero hcg) hpg).symm
   have hs : (f + f ^ 2).subst (f + f ^ 2) = (g + g ^ 2).subst (g + g ^ 2) := by
     simp only [subst_add vf, subst_pow vf, subst_add vg, subst_pow vg, he]
   have hv := HannaHalfIterateCubicModThree.half_unique h2 vf0 vg0 vf1 vg1 hs rfl
@@ -71,7 +88,8 @@ private theorem plus_minus_odd {R : Type*} [CommRing R] [NoZeroDivisors R]
   have hn : HasSubst (-X : PowerSeries R) := .of_constantCoeff_zero hn0
   let g : PowerSeries R := -(f.subst (-X : PowerSeries R))
   have hg0 : constantCoeff g = 0 := by
-    have hc : constantCoeff (f.subst (-X : PowerSeries R)) = 0 := constantCoeff_subst_eq_zero hn0 f hf0
+    have hc : constantCoeff (f.subst (-X : PowerSeries R)) = 0 :=
+      constantCoeff_subst_eq_zero hn0 f hf0
     simp only [g, map_neg, hc, neg_zero]
   have hg1 : coeff 1 g = 1 := by
     have he := congrArg (coeff 1) (rescale_eq_subst (-1 : R) f)
@@ -102,7 +120,6 @@ private theorem plus_minus_odd {R : Type*} [CommRing R] [NoZeroDivisors R]
   rw [hneg _ hb _, subst_X hb, neg_neg]
   rw [← subst_comp_subst_apply (.of_constantCoeff_zero hv0) hn, hf']
   rw [subst_X hn, neg_neg]
-
 
 
 private theorem integral_even_three (f : PowerSeries ℤ)
@@ -166,7 +183,7 @@ theorem result : claim := by
     change ((coeff 1 f : ℤ) : ℚ) = 1 at he
     exact_mod_cast he
   have hf : (f - 5 * f ^ 2).subst (f - f ^ 2) = X := by
-    apply PowerSeries.map_injective (Int.castRingHom ℚ) (by exact Int.cast_injective) 
+    apply PowerSeries.map_injective (Int.castRingHom ℚ) (by exact Int.cast_injective)
     have harg : constantCoeff (f - f ^ 2) = 0 := by simp [hf0]
     have hm : PowerSeries.map (Int.castRingHom ℚ) ((f - 5 * f ^ 2).subst (f - f ^ 2)) =
         ((f - 5 * f ^ 2).map (Int.castRingHom ℚ)).subst

@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.Invariants.HannaA378258ModSix
 import Reg.Support.DependentFamily
 
+/-! # Source-family audit for Hanna's modulo-six theorem -/
+
 namespace Reg.D5.S1.Recurrence.Invariants.HannaA378258ModSix
 open PowerSeries
 open _root_.D5.S1.Recurrence.Invariants.HannaA378258ModSix
@@ -39,7 +41,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨z, hz, hne, _⟩ := h.2 A hA 2 (by omega)
   change (1 : ℚ) = (z : ℚ) at hz
   have he : z = 1 := by exact_mod_cast hz.symm
-  exact hne (by rw [he])
+  exact hne (by rw [he]; norm_num)
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -55,9 +57,24 @@ def source_registration : Registration arena claim where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨X, 0, 1, ?_⟩
-    change coeff 0 (X : PowerSeries ℚ) ≠ coeff 1 X
-    simp
+    obtain ⟨A, hA⟩ := _root_.D5.S1.Recurrence.Invariants.HannaA378258SquareRootParity.result.1
+    obtain ⟨z₂, hz₂, hp₂⟩ :=
+      _root_.D5.S1.Recurrence.Invariants.HannaA378258SquareRootParity.result.2 A hA 2 (by omega)
+    obtain ⟨z₃, hz₃, hp₃⟩ :=
+      _root_.D5.S1.Recurrence.Invariants.HannaA378258SquareRootParity.result.2 A hA 3 (by omega)
+    have ho₂ : Odd z₂ := hp₂.mpr ⟨1, by norm_num⟩
+    have ho₃ : ¬ Odd z₃ := by
+      intro h
+      obtain ⟨k, hk⟩ := hp₃.mp h
+      cases k with
+      | zero => norm_num at hk
+      | succ k => rw [pow_succ] at hk; omega
+    refine ⟨A, 2, 3, ?_⟩
+    change coeff 2 A ≠ coeff 3 A
+    intro he
+    rw [hz₂, hz₃] at he
+    have hz : z₂ = z₃ := by exact_mod_cast he
+    exact ho₃ (hz ▸ ho₂)
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
