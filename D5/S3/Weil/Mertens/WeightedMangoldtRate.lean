@@ -15,8 +15,7 @@ Euler-normalized tail identity. No stronger external PNT is imported. The new
 estimate extracts half of the exponential decay uniformly over the whole tail;
 the other half is integrable after logarithmic substitution.
 
-All private helpers are consumed by E1Lambda_stretched_exponential. The public
-conclusion uses the original E₁Λ, not a supplied or abstract error function.
+The conclusion uses the original E₁Λ, not a supplied or abstract error function.
 Its sum is over 0 < n <= floorNat(x); it retains every prime power and equality
 at integer cutoffs. This endpoint alone proves neither N(D)=o(D) nor RH.
 -/

@@ -3,9 +3,8 @@ import D5.S3.Weil.Mertens.WeightedMangoldtRate
 import Reg.Support.SingleDependentReadout
 
 /-!
-The source realization retains the entire arithmetic rate telescope.
-The existing DependentFamily.realize enrollment is imported through
-Reg.Support.SingleDependentReadout; no judge or template is modified.
+The source realization retains the entire arithmetic rate telescope, with a
+constant normalized error as the rejected realization.
 -/
 
 namespace Reg.D5.S3.Weil.Mertens.WeightedMangoldtRate
