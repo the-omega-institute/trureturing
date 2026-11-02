@@ -122,7 +122,7 @@ internal sealed class UnicyclicSkewnessPlusKurtosisLowerBoundDocument : IScribeD
                     ProblemSlugRef.Create("ptaszynski-2022-unidirectional-skewness-plus-kurtosis-lower-bound"),
                     ResolutionKind.Proved)))));
 
-    private static ScribeNode MomentDefinition(string name, byte degree) => Describe.Lean(
+    private static DocumentBlock.Describe MomentDefinition(string name, byte degree) => Describe.Lean(
         DescribeId.Create(name), DeclarationHandle.Create(Prefix + name), H("Normalized inverse-rate moment " + name),
         StatementSource.FromAuthor(Disp(All("n", Naturals(), All("k", RateType(),
             Equal(Typed(At(Local(name), X("k")), Reals()), PowerSum(Natural(degree), At(Local("normalizedRates"), X("k")))))))),
