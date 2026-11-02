@@ -25,12 +25,13 @@ abbrev signature : Signature :=
     (fun p => Fin p.1 → Fin p.1 × Fin p.1 → ℂ) (fun _ => Bool)
 
 private theorem forall_nextFin {n : ℕ} (P : Fin (Nat.succ n) → Prop) :
-    (∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ := by
+    dsimp% only [Fin.succ, Nat.add]
+      ((∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ) := by
   exact Fin.forall_fin_succ
 
 private def finForallDecision : (n : ℕ) → (P : Fin n → Prop) →
     (∀ i, Decidable (P i)) → Decidable (∀ i, P i) :=
-  Nat.rec (motive := fun n => (P : Fin n → Prop) →
+  dsimp% only [Fin.succ, Nat.add] (Nat.rec (motive := fun n => (P : Fin n → Prop) →
     (∀ i, Decidable (P i)) → Decidable (∀ i, P i))
     (fun _ _ => isTrue (fun i => Fin.elim0 i))
     (fun n ih P h =>
@@ -38,7 +39,7 @@ private def finForallDecision : (n : ℕ) → (P : Fin n → Prop) →
       letI : Decidable (∀ i : Fin n, P i.succ) :=
         ih (fun i => P i.succ) (fun i => h i.succ)
       decidable_of_iff (P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ)
-        (forall_nextFin P).symm)
+        (forall_nextFin P).symm))
 
 private def finProductDecision (n m : ℕ) (P : Fin n × Fin m → Prop)
     (h : ∀ p, Decidable (P p)) : Decidable (∀ p, P p) :=
