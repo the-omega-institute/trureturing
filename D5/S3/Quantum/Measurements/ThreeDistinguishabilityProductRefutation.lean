@@ -7,6 +7,7 @@
    digest: Three orthogonal pure states exclude every labelling of the product ansatz. -/
 
 import D5.S0.Carrier.GoldenRatio
+import D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction
 import D5.S3.Quantum.PureState.PureStateHandshake
 
 /-! Korzekwa, Czachórski, Puchała and Życzkowski, arXiv:1812.09083v3,
@@ -21,6 +22,7 @@ noncomputable section
 open scoped BigOperators ComplexConjugate ComplexOrder
 
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction (weightedFrame)
 
 namespace D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation
 
@@ -56,7 +58,8 @@ private def phases : Fin 3 → Fin 4 → ℂ :=
   ![![1, 1, 1, 1], ![1, ζ ^ 2, ζ ^ 4, ζ ^ 7], ![-1, ζ ^ 9, ζ ^ 3, ζ ^ 9]]
 
 private def state (i : Fin 3) (k : Fin 4) : ℂ :=
-  (Real.sqrt (point k) : ℂ) * phases i k
+  weightedFrame (Finset.univ : Finset (Fin 4)) point
+    (fun k _ => phases i k) 0 ⟨k, Finset.mem_univ k⟩
 
 private lemma radical_bounds : 2 < Real.sqrt 5 ∧ Real.sqrt 5 < 9 / 4 := by
   exact ⟨(Real.lt_sqrt (by norm_num)).2 (by norm_num),
@@ -164,7 +167,7 @@ private lemma state_diagonal (i : Fin 3) (k : Fin 4) :
   have hs : (Real.sqrt (point k) : ℂ) ^ 2 = (point k : ℂ) := by
     exact_mod_cast Real.sq_sqrt (point_simplex.1 k)
   have hp := phases_unit i k
-  dsimp only [state]
+  dsimp only [state, weightedFrame]
   rw [map_mul, Complex.conj_ofReal]
   calc
     _ = (Real.sqrt (point k) : ℂ) ^ 2 *
@@ -179,7 +182,7 @@ private lemma state_orthogonality (i j : Fin 3) (h : i ≠ j) :
   intro k _
   have hs : (Real.sqrt (point k) : ℂ) ^ 2 = (point k : ℂ) := by
     exact_mod_cast Real.sq_sqrt (point_simplex.1 k)
-  dsimp only [state]
+  dsimp only [state, weightedFrame]
   rw [map_mul, Complex.conj_ofReal]
   calc
     _ = (Real.sqrt (point k) : ℂ) ^ 2 *
