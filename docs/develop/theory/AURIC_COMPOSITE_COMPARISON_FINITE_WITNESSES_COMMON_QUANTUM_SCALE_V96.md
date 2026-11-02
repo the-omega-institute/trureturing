@@ -2476,9 +2476,9 @@ $$
 对运动，明列另供 $\Phi_t\in\mathscr P$、$t\in\mathbb R$，满足 $\Phi_0=\operatorname{id}$、$\Phi_{t+s}=\Phi_t\circ\Phi_s$ 及连续性。$\Phi_t$ 与 $\Phi_{-t}$ 均由推论 40.2 为幺完全正。两方向的 Schwarz 不等式给
 
 $$
-a^*a\ \ge\
+a^*a\ge
 \Phi_{-t}\bigl(\Phi_t(a)^*\Phi_t(a)\bigr)
-\ \ge\ a^*a.
+\ge a^*a.
 $$
 
 于是等号成立，应用逆映射得 $\Phi_t(a^*a)=\Phi_t(a)^*\Phi_t(a)$；复极化给乘法保持，故每个 $\Phi_t$ 是 $*$ 自同构。连续群不能连续置换有限中心块；定理 32.1 的有限矩阵内导子表示遂给逐块 Heisenberg 形式 $\Phi_t(b)=e^{itH}be^{-itH}$，以及其迹对偶的 Hamilton 演化。$H$ 可差一个中心元，具体 $H$ 和经验时间单位不由 C102 选定。这里从另供的可逆过程关系推出自同构，没有把一般不可逆过程当成可逆群。
