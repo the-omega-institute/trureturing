@@ -142,8 +142,8 @@ private partial def ownJson : Json → Json
   | .null => .null
   | .bool value => .bool value
   | .num value => .num {
-      mantissa := value.mantissa.toString.toInt!
-      exponent := value.exponent.toString.toNat! }
+      mantissa := (toString value.mantissa).toInt!
+      exponent := (toString value.exponent).toNat! }
   | .str value => .str (String.ofList value.toList)
   | .arr values => .arr (values.map ownJson)
   | .obj values => Json.mkObj (values.toArray.toList.map fun (key, value) =>
