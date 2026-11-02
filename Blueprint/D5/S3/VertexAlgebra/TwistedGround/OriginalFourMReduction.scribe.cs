@@ -8,6 +8,7 @@ internal sealed class OriginalFourMReductionDocument : IScribeDocumentDefinition
         "Original lattice twisted-sector coefficient reduction, preserving the original carriers and operators.",
         H("OriginalFourMReduction"),
         Blocks(
+            Paragraph(Text("Audit remains incomplete for the 24 new public theorems in OriginalFourMInputs, OriginalFourMCoefficients, OriginalFourMChargeCoset and OriginalFourMReduction: declared_validated=0, with no new Reg mirrors or faithful four-slot attempts supplied. Source-owner disposition https://github.com/the-omega-institute/trureturing/issues/25603 lists every exact source, statement and type identity, the absent dependent-family realization/readout bridge and whole-family intervention/sensitivity evidence. This linked-issue exception permits delivery under CLAUDE 3.9 and supplies no validation. Universal identityK remains unproved.")),
             Describe.Lean(DescribeId.Create("originalfourmreduction-homogeneous-jacobi-iff-identityk"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalFourMReduction.homogeneous_jacobi_iff_identityK"),
                 H("Quantified original tensor reduction"), StatementSource.WithoutFormula(),
