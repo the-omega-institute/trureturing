@@ -4,7 +4,33 @@
 
 The complete actual arithmetic remainder has a uniform finite atomic prefix-energy cost on every fixed window.
 
-**Theorem 1.1 (Uniform actual remainder bound).**
+**Definition 1.1 (Explicit finite component-curvature cost).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.finite_curvature_cost`
+
+*Formalization.* `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.finite_curvature_cost` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real D and natural N, finite_curvature_cost(D,N) is cost(B',B'',0,D) plus the sum over n<N with 2<=n and log(n)<=D of cost(g_n',g_n'',log(n),D), where cost(f1,f2,ell,D)=2(abs(f1(ell))+the Lebesgue integral over Icc(ell,D) of abs(f2(s))). The functions B and g_n and their derivatives are given below. This is a finite sum of component costs. Cancellations can make the total variation of the combined distributional second derivative smaller.
+
+**Theorem 1.2 (Constructive bound with the exact finite cost).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real D>0 and every natural N with exp(D)<N, finite_curvature_cost(D,N)>=0 and, for every universe-polymorphic finite I, x:I to R in [0,D] and a:I to C with sum_i a(i)=0, the norm of sum_i sum_j conjugate(a(i))a(j)(K(x(i)-x(j))-exp(-abs(x(i)-x(j))/2)trivialT(abs(x(i)-x(j)))) is bounded by finite_curvature_cost(D,N) times integral_R norm(prefix(x,a,v))^2 dv. D and N precede all atomic data; the literal complete K-P and endpoint-inclusive prefix are retained. No further moments, positivity, RH, node-dependent constant or division by the energy is used.
+
+Finite arithmetic localization, the exact Volterra identities and the shifted-hinge estimate prove this constructive bound. The original existential theorem chooses N by the Archimedean property and directly uses this bound. The explicit cost is the finite-window intermediate in Appendix H of the owning theory. The total-variation formulation of equation (19), Fourier Appendix C and finite-codimension coercivity remain separate mathematical questions.
+
+**Theorem 1.3 (Uniform actual remainder bound).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound`
 
@@ -31,5 +57,7 @@ This is the finite perturbation estimate for the complete actual kernel. It prov
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.finite_curvature_cost`
 - Dependency: [D5/S3/Analytic/Interpolation/AtomicPrefixEnergy](../../../Analytic/Interpolation/AtomicPrefixEnergy.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity](ActualKernelLocalPositivity.md)
