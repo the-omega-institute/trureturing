@@ -62,7 +62,7 @@ private theorem weight_pos (n r : ℕ) (hr : 2 * r ≤ n) : 0 < weight n r := by
   have he : 2 * r / 2 = r := by omega
   simp [weight, signedCoeff, hs, he, show (2 * r) % 2 = 0 by omega,
     show n - 2 * r ≤ n by omega, abs_mul, abs_div, abs_pow]
-  positivity
+  <;> positivity
 
 private theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
     weight n (r + 1) * (4 * (r + 1)) =
@@ -78,6 +78,7 @@ private theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
     show 2 * (r + 1) % 2 = 0 by omega, show (2 * r) % 2 = 0 by omega,
     and_self, if_true, abs_div, abs_mul, abs_pow, abs_neg, abs_one,
     one_pow, one_mul, Nat.abs_cast, abs_of_nonneg (by norm_num : (0 : ℚ) ≤ 2)]
+  rw [hj]
   change (↑n.factorial * 2^j / (↑(r + 1).factorial * ↑j.factorial)) *
       ↑(4 * (r + 1)) =
     (↑n.factorial * 2^(j + 2) / (↑r.factorial * ↑(j + 2).factorial)) *
