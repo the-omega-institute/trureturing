@@ -80,7 +80,7 @@ def registration : Registration arena (arena.Law actual) where
     have hh := congrArg (fun z : Mat × Polynomial ℝ × ℝ => z.2.2) h
     exact zero_ne_one hh
 
-def entry : Contract.Registration (@complete_recovery)
+def entry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@complete_recovery)
     (type_of% (realize signature (fun _ p h => recoveryAnswer p.1 p.2 h)
       (fun e => nomatch e))) ((w : List Bool) → Type) Unit := {
   unitName := `Reg.D5.S3.Observer.Linear.GainRayCompleteRecovery.completeUnit,
@@ -156,7 +156,7 @@ def identificationRegistration : Registration identificationArena
     intro h
     exact zero_ne_one ((recovery_identifies 1 (fixture 0) (fixture 1) h).2.2)
 
-def identificationEntry : Contract.Registration (@recovery_identifies)
+def identificationEntry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@recovery_identifies)
     (type_of% (realize identificationSignature
       (fun _ d W => readings W (recoveryWord d)) (fun e => nomatch e))) (ℕ → Type) Unit := {
   unitName := `Reg.D5.S3.Observer.Linear.GainRayCompleteRecovery.identificationUnit,
