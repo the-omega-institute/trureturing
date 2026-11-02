@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class TriangleFourSymbolNecessityDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Entropy/TriangleFourSymbolNecessity.IncidentLaw.";
+    private const string Module = "D5/S3/Entropy/TriangleFourSymbolNecessity.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original finite stochastic triangle laws at the entropy-cost equality have a binary block form when their positive output support has size two to four.",
