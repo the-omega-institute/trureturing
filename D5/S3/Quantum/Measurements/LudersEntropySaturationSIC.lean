@@ -12,6 +12,7 @@ import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan
+import D5.S3.Quantum.Measurements.HaarPureProjectorMoment
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
 
@@ -242,7 +243,55 @@ private theorem haar_second_moment {d : ℕ} [NeZero d]
             (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
       ((∑ i, (Matrix.trace (CFC.sqrt (e i))).re ^ 2) + d) /
         (d * (d + 1)) := by
-  sorry
+  classical
+  let mu := Measure.haarMeasure
+    (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hc (i : Fin (d ^ 2)) : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      (inputProjector u * CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i)).trace) :=
+    (((hp.matrix_mul continuous_const).matrix_mul hp).matrix_mul continuous_const).matrix_trace
+  have hi (i : Fin (d ^ 2)) :=
+    (hc i).integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
+  have hm (i : Fin (d ^ 2)) :
+      (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+        (inputProjector u * CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i)).trace.re
+          ∂mu) = ((CFC.sqrt (e i)).trace.re ^ 2 + (e i).trace.re) / (d * (d + 1)) := by
+    have ha := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (e i))
+    have ht : ((CFC.sqrt (e i)).trace.re : ℂ) = (CFC.sqrt (e i)).trace :=
+      Complex.ext rfl (by simpa using (Complex.nonneg_iff.mp ha.trace_nonneg).2)
+    have het : ((e i).trace.re : ℂ) = (e i).trace :=
+      Complex.ext rfl (by simpa using (Complex.nonneg_iff.mp (he.1 i).trace_nonneg).2)
+    have hh := HaarPureProjectorMoment.pure_quadratic (CFC.sqrt (e i))
+    change (∫ u, (inputProjector u * CFC.sqrt (e i) * inputProjector u *
+      CFC.sqrt (e i)).trace ∂mu) = _ at hh
+    rw [CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg, ← ht, ← het] at hh
+    have hr : (∫ u, (inputProjector u * CFC.sqrt (e i) * inputProjector u *
+        CFC.sqrt (e i)).trace ∂mu) =
+        ((((CFC.sqrt (e i)).trace.re ^ 2 + (e i).trace.re) /
+          (d * (d + 1) : ℝ) : ℝ) : ℂ) := by
+      rw [hh]
+      push_cast
+      rfl
+    calc
+      _ = Complex.re (∫ u, (inputProjector u * CFC.sqrt (e i) * inputProjector u *
+          CFC.sqrt (e i)).trace ∂mu) := integral_re (hi i)
+      _ = _ := congrArg Complex.re hr
+  change (∫ u, _ ∂mu) = _
+  simp only [ludersChannel, Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum,
+    ← Matrix.mul_assoc]
+  have hir (i : Fin (d ^ 2)) : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      (inputProjector u * CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i)).trace.re) mu :=
+    (Complex.continuous_re.comp (hc i)).integrable_of_hasCompactSupport
+      (μ := mu) (HasCompactSupport.of_compactSpace _)
+  rw [integral_finsetSum Finset.univ (fun i _ => hir i)]
+  simp_rw [hm]
+  rw [← Finset.sum_div, Finset.sum_add_distrib]
+  have ht : ∑ i, (e i).trace.re = (d : ℝ) := by
+    rw [← Complex.re_sum, ← Matrix.trace_sum, he.2.1]
+    simp
+  rw [ht]
 
 private theorem rank_one_forcing {d : ℕ}
     (a : Matrix (Fin d) (Fin d) ℂ) (ha : a.PosSemidef) :
