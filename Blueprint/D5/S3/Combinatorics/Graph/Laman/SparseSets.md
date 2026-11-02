@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Laman/SparseSets.union_with_bonus`
 
 *Commentary.*
 
-For arbitrary k and ell, tight sets S and T have tight union if a set F of actual edges in their union is disjoint from the edges internal to S or T and its size closes the intersection deficit: e(S intersection T)+ell <= card(F)+k card(S intersection T). The proof counts the disjoint extra edges before applying sparsity.
+For arbitrary k and ell and a finite (k,ell)-sparse graph G, tight sets S and T have tight union if a set F of actual edges in their union is disjoint from the edges internal to S or T and its size closes the intersection deficit: e(S intersection T)+ell <= card(F)+k card(S intersection T). The proof counts the disjoint extra edges before applying sparsity.
 
 **Theorem 1.9 (Tight extension by one vertex).**
 
