@@ -1,10 +1,10 @@
 /- GID: D5/S1/Dynamics/Shadowing/FreeFibreBoundary
    generality: G
-   mirror-B: none
+   mirror-B: D5/B/S1/Dynamics/Shadowing/FreeFibreBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
-   digest: Marked finite observations of shadowing systems have exact finite-initial graph languages. -/
+   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim; result=D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result; claim=D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim
+   digest: A compact Hausdorff shadowing system admits no zero-dimensional compact Hausdorff shadowing cover. -/
 
 import D5.S1.Dynamics.Shadowing.FiniteObservationSofic
 import D5.S1.Dynamics.Shadowing.MetricTracing
