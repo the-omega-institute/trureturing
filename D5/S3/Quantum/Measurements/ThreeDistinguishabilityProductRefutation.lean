@@ -8,6 +8,7 @@
 
 import D5.S0.Carrier.GoldenRatio
 import D5.S3.Constants.PentagonCosines
+import D5.S3.Quantum.PureState.PureStateHandshake
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.LinearAlgebra.Matrix.PosDef
 
@@ -21,6 +22,8 @@ set_option linter.style.longLine false
 noncomputable section
 
 open scoped BigOperators ComplexConjugate ComplexOrder
+
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 namespace D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation
 
@@ -58,13 +61,9 @@ private def phases : Fin 3 → Fin 4 → ℂ :=
 private def state (i : Fin 3) (k : Fin 4) : ℂ :=
   (Real.sqrt (point k) : ℂ) * phases i k
 
-private def density (i : Fin 3) : Matrix (Fin 4) (Fin 4) ℂ :=
-  Matrix.vecMulVec (state i) (star (state i))
-
 private lemma radical_bounds : 2 < Real.sqrt 5 ∧ Real.sqrt 5 < 9 / 4 := by
-  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  have hn := Real.sqrt_nonneg (5 : ℝ)
-  constructor <;> nlinarith
+  exact ⟨(Real.lt_sqrt (by norm_num)).2 (by norm_num),
+    (Real.sqrt_lt' (by norm_num)).2 (by norm_num)⟩
 
 private lemma point_simplex : point ∈ stdSimplex ℝ (Fin 4) := by
   change (∀ k, 0 ≤ point k) ∧ ∑ k, point k = 1
@@ -88,15 +87,11 @@ private lemma phase_fifth : ζ ^ 5 = -1 := by
 
 private lemma phase_quadratic : ζ ^ 2 = ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ) * ζ - 1 := by
   have hr : ζ.re = (1 + Real.sqrt 5) / 4 := by
-    have hcos := D5.S3.Constants.PentagonCosines.pentagon_golden_cosines.1
-    have hre : ζ.re = Real.cos (Real.pi / 5) := by simp [ζ, Complex.exp_re]
-    rw [hre]
-    change 2 * Real.cos (Real.pi / 5) = (1 + Real.sqrt 5) / 2 at hcos
-    linarith
+    simpa only [ζ, Complex.exp_ofReal_mul_I_re] using Real.cos_pi_div_five
   have hs : conj ζ + ζ = ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ) := by
-    apply Complex.ext
-    · simp [hr]; ring
-    · simp
+    rw [add_comm, Complex.add_conj, hr]
+    push_cast
+    ring
   linear_combination ζ * hs - phase_unit
 
 private lemma phases_unit (i : Fin 3) (k : Fin 4) :
@@ -127,9 +122,7 @@ private lemma phase_powers :
       ζ ^ 9 = ζ ^ 5 * ζ ^ 4 := by ring
       _ = t - ζ := by rw [phase_fifth, h4]; ring
   have hc : conj ζ = t - ζ := by
-    have hz : ζ ≠ 0 := by
-      intro h
-      simpa only [h, mul_zero, zero_ne_one] using phase_unit
+    have hz : ζ ≠ 0 := Complex.exp_ne_zero _
     apply mul_right_cancel₀ hz
     linear_combination phase_unit + h2
   exact ⟨h3, h4, h7, h9, hc⟩
@@ -157,9 +150,11 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
     ring_nf
   all_goals
     have hr3 : (Real.sqrt 5 : ℂ) ^ 3 = 5 * (Real.sqrt 5 : ℂ) := by
-      linear_combination (Real.sqrt 5 : ℂ) * hr
+      rw [pow_succ, hr]
     have hr4 : (Real.sqrt 5 : ℂ) ^ 4 = 25 := by
-      linear_combination ((Real.sqrt 5 : ℂ) ^ 2 + 5) * hr
+      calc
+        (Real.sqrt 5 : ℂ) ^ 4 = ((Real.sqrt 5 : ℂ) ^ 2) ^ 2 := pow_mul _ 2 2
+        _ = 25 := by rw [hr]; norm_num
     simp only [hr, hr3, hr4]
     ring_nf
   all_goals
@@ -195,14 +190,15 @@ private lemma state_orthogonality (i j : Fin 3) (h : i ≠ j) :
     _ = _ := by rw [hs]
 
 private lemma density_region : InRegion point := by
-  refine ⟨point_simplex, density, ?_, ?_, ?_⟩
+  refine ⟨point_simplex, fun i => rankOneDensity (state i), ?_, ?_, ?_⟩
   · intro i
     refine ⟨Matrix.posSemidef_vecMulVec_self_star (state i), ?_⟩
-    rw [density, Matrix.trace_vecMulVec]
+    change Matrix.trace (Matrix.vecMulVec (state i) (star (state i))) = 1
+    rw [Matrix.trace_vecMulVec]
     change ∑ k, state i k * conj (state i k) = 1
     simp only [state_diagonal, ← Complex.ofReal_sum, point_simplex.2, Complex.ofReal_one]
   · intro i j h
-    dsimp only [density]
+    dsimp only [rankOneDensity]
     rw [Matrix.vecMulVec_mul_vecMulVec, state_orthogonality i j h, zero_smul]
     exact Matrix.vecMulVec_zero _
   · intro i k
@@ -253,8 +249,8 @@ private lemma permutation_pairing (σ : Equiv.Perm (Fin 4)) (q : Fin 4 → ℝ)
   obtain ⟨i, hi⟩ := σ.surjective 0
   have hn (a b : Fin 4) (hab : a ≠ b) : σ a ≠ σ b := σ.injective.ne hab
   have hn0 (a : Fin 4) (ha : a ≠ i) : σ a ≠ 0 := by
-    intro hh
-    exact ha (σ.injective (hh.trans hi.symm))
+    rw [← hi]
+    exact σ.injective.ne ha
   have hi_cases : i = 0 ∨ i = 1 ∨ i = 2 ∨ i = 3 := by omega
   rcases hi_cases with rfl | rfl | rfl | rfl
   · apply aux (σ 3) (σ 1) (σ 2)
