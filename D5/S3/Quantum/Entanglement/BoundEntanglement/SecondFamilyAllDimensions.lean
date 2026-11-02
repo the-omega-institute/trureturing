@@ -4,9 +4,11 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: A cyclic-shift construction supplies the second bound-entangled singlet-like family in every dimension. -/
+   digest: Cyclic shifts give the second family in every dimension. -/
 
 import Mathlib
+
+/-! The cyclic construction and its defining certificate. -/
 
 set_option autoImplicit false
 open scoped BigOperators ComplexConjugate
@@ -96,7 +98,13 @@ private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
 
 private theorem cyclic_data (d : ℕ) (h : 2 ≤ d) :
     IsSecondFamilyData d (cyclicQ d) (cyclicQbar d) (cyclicMu d) (cyclicS d)
-      (cyclicShield d) := by sorry
+      (cyclicShield d) := by
+  refine ⟨?_, cyclic_qbar_orthonormal d, cyclic_q_factorization d h, ?_,
+    cyclic_shield_orthonormal d h, cyclic_partial_transpose d h⟩
+  · intro j
+    exact cyclic_q_orthogonal d h j
+  · intro i j hij
+    exact cyclic_multiplicity d h i j
 
 theorem result : claim := by
   intro d hd
