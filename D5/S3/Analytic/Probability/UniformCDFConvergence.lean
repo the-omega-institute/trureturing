@@ -162,7 +162,7 @@ lemma monotone_cdf_pointwise_to_uniform {F : ℕ → ℝ → ℝ} {G : ℝ → �
       constructor <;> linarith [hF1 n x,hG1 x]
     · exact hnm x ⟨le_of_not_gt hxa,le_of_not_gt hbx⟩
 
-private lemma continuous_cdf_of_noAtoms (μ : Measure ℝ) [IsProbabilityMeasure μ]
+lemma continuous_cdf_of_noAtoms (μ : Measure ℝ) [IsProbabilityMeasure μ]
     [NullSingletonClass μ] : Continuous (cdf μ : ℝ → ℝ) := by
   apply continuous_iff_continuousAt.2
   intro t
