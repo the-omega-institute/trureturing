@@ -587,6 +587,103 @@ private theorem three_codes (F : A → Finset X) (G : B → Finset X)
 
 end CrossSupport
 
+namespace BlockAlgebra
+
+variable {A : Type*} [Fintype A]
+
+noncomputable def extendLabel (mu : A → ℝ) (b : {a // 0 < mu a} → Bool) (a : A) : Bool :=
+  if h : 0 < mu a then b ⟨a, h⟩ else false
+
+noncomputable def mass (mu : A → ℝ) (b : A → Bool) (u : Bool) : ℝ :=
+  ∑ a, if b a = u then mu a else 0
+
+private theorem mass_pos (mu : A → ℝ) (b : {a // 0 < mu a} → Bool)
+    (hmu : ∀ a, 0 ≤ mu a) (hb : Function.Surjective b) (u : Bool) :
+    0 < mass mu (extendLabel mu b) u := by
+  classical
+  obtain ⟨a, ha⟩ := hb u
+  apply lt_of_lt_of_le a.property
+  have hterm : (if extendLabel mu b a.val = u then mu a.val else 0) = mu a.val := by
+    simp [extendLabel, a.property, ha]
+  rw [← hterm]
+  exact Finset.single_le_sum (fun a _ => by split_ifs <;> simp_all [hmu a])
+    (Finset.mem_univ a.val)
+
+private theorem mass_sum (mu : A → ℝ) (b : A → Bool) (hnorm : ∑ a, mu a = 1) :
+    mass mu b false + mass mu b true = 1 := by
+  classical
+  unfold mass
+  rw [← Finset.sum_add_distrib]
+  calc
+    _ = ∑ a, mu a := by
+      apply Finset.sum_congr rfl
+      intro a _
+      cases b a <;> simp
+    _ = 1 := hnorm
+
+private theorem cell_from_support (mu nu p r s t : ℝ) (u v a b : Bool)
+    (hmu : 0 ≤ mu) (hnu : 0 ≤ nu) (hp : 0 < p) (hr : 0 ≤ r) (hs : 0 ≤ s)
+    (ht : t = p * r * s) (hselector : t = 0 ∨ t = mu * nu)
+    (activeR : 0 < r → 0 < mu) (activeS : 0 < s → 0 < nu)
+    (codeR : 0 < mu → (0 < r ↔ u = a))
+    (codeS : 0 < nu → (0 < s ↔ v = b)) :
+    t = (if a = u then mu else 0) * (if b = v then nu else 0) := by
+  classical
+  by_cases hmass : mu * nu = 0
+  · have htz : t = 0 := hselector.elim id (fun h => h.trans hmass)
+    rw [htz]
+    split_ifs <;> simp_all
+  have hmupos : 0 < mu := lt_of_le_of_ne hmu
+    (Ne.symm fun he => hmass (by rw [he, zero_mul]))
+  have hnupos : 0 < nu := lt_of_le_of_ne hnu
+    (Ne.symm fun he => hmass (by rw [he, mul_zero]))
+  by_cases hcodes : a = u ∧ b = v
+  · have hpos : 0 < t := by
+      rw [ht]
+      exact mul_pos (mul_pos hp ((codeR hmupos).mpr hcodes.1.symm))
+        ((codeS hnupos).mpr hcodes.2.symm)
+    have htv : t = mu * nu := hselector.resolve_left (ne_of_gt hpos)
+    simp [hcodes.1, hcodes.2, htv]
+  · have htz : t = 0 := by
+      by_contra hn
+      have htpos : 0 < t := lt_of_le_of_ne
+        (by rw [ht]; positivity) (Ne.symm hn)
+      have hrs : 0 < r ∧ 0 < s := by
+        constructor
+        · by_contra! hn; have hz : r = 0 := le_antisymm hn hr
+          simp [ht, hz] at htpos
+        · by_contra! hn; have hz : s = 0 := le_antisymm hn hs
+          simp [ht, hz] at htpos
+      exact hcodes ⟨((codeR (activeR hrs.1)).mp hrs.1).symm,
+        ((codeS (activeS hrs.2)).mp hrs.2).symm⟩
+    rw [htz]
+    split_ifs <;> simp_all
+
+private theorem fair_weights (f g k : Bool → ℝ)
+    (hf : ∀ u, 0 < f u) (hg : ∀ v, 0 < g v)
+    (hnf : f false + f true = 1) (hng : g false + g true = 1)
+    (hnk : k false + k true = 1)
+    (hfgk : ∀ u v, f u * g v = f u * k (u ^^ v))
+    (hgkf : ∀ u v, f u * g v = g v * k (u ^^ v)) :
+    (∀ b, f b = 1 / 2) ∧ (∀ b, g b = 1 / 2) ∧ (∀ b, k b = 1 / 2) := by
+  have h₀ : g false = k false := by
+    simpa using (mul_left_cancel₀ (ne_of_gt (hf false)) (hfgk false false))
+  have h₁ : g false = k true := by
+    simpa using (mul_left_cancel₀ (ne_of_gt (hf true)) (hfgk true false))
+  have hk₀ : k false = 1 / 2 := by linarith
+  have hk₁ : k true = 1 / 2 := by linarith
+  have hg₀ : g false = 1 / 2 := h₀.trans hk₀
+  have hg₁ : g true = 1 / 2 := by linarith
+  have hf₀ : f false = 1 / 2 := by
+    have hh := hgkf false false
+    simp only [Bool.false_xor, hg₀, hk₀] at hh
+    linarith
+  have hf₁ : f true = 1 / 2 := by linarith
+  exact ⟨(fun b => by cases b <;> assumption),
+    (fun b => by cases b <;> assumption), (fun b => by cases b <;> assumption)⟩
+
+end BlockAlgebra
+
 namespace IncidentLaw
 
 open Classical
@@ -1474,6 +1571,89 @@ theorem original_binary_supports (L : IncidentLaw S₁ S₂ S₃ O)
     cover₁ cover₂ cover₃ cross₁₂ cross₁₃ cross₂₃ hmin hmax
   simpa only [support₁, support₂, support₃, Finset.mem_filter,
     Finset.mem_univ, true_and] using hh
+
+private theorem original_block_pair_tables (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2)
+    (b₁ : L.Active₁ → Bool) (b₂ : L.Active₂ → Bool) (b₃ : L.Active₃ → Bool)
+    (h : (Bool × Bool) ≃ L.PositiveOutput)
+    (code₁ : ∀ s u v, 0 < L.posterior₁ (h (u, v)).val s.val ↔ u = b₁ s)
+    (code₂ : ∀ s u v, 0 < L.posterior₂ (h (u, v)).val s.val ↔ v = b₂ s)
+    (code₃ : ∀ s u v, 0 < L.posterior₃ (h (u, v)).val s.val ↔ (u ^^ v) = b₃ s) :
+    let l₁ := BlockAlgebra.extendLabel L.marginal₁ b₁
+    let l₂ := BlockAlgebra.extendLabel L.marginal₂ b₂
+    let l₃ := BlockAlgebra.extendLabel L.marginal₃ b₃
+    ∀ u v,
+      (∀ a b, L.recordPair₁₂ ((h (u, v)).val, a, b) =
+        (if l₁ a = u then L.marginal₁ a else 0) *
+        (if l₂ b = v then L.marginal₂ b else 0)) ∧
+      (∀ a c, L.recordPair₁₃ ((h (u, v)).val, a, c) =
+        (if l₁ a = u then L.marginal₁ a else 0) *
+        (if l₃ c = (u ^^ v) then L.marginal₃ c else 0)) ∧
+      (∀ b c, L.recordPair₂₃ ((h (u, v)).val, b, c) =
+        (if l₂ b = v then L.marginal₂ b else 0) *
+        (if l₃ c = (u ^^ v) then L.marginal₃ c else 0)) := by
+  classical
+  intro l₁ l₂ l₃ u v
+  obtain ⟨ind₁₂, ind₁₃, ind₂₃, _⟩ := L.original_equality_fibers hagree heq
+  obtain ⟨tab₁₂, tab₁₃, tab₂₃⟩ := L.record_pair_tables hagree
+  obtain ⟨prod₁₂, prod₁₃, prod₂₃⟩ :=
+    L.original_product_pairs hagree heq (h (u, v)).val (h (u, v)).property
+  obtain ⟨hp₁, hp₂, hp₃⟩ := L.posterior_probabilities (h (u, v)).val (h (u, v)).property
+  have hc₁ (a : S₁) (ha : 0 < L.marginal₁ a) :
+      0 < L.posterior₁ (h (u, v)).val a ↔ u = l₁ a := by
+    simpa only [l₁, BlockAlgebra.extendLabel, dif_pos ha] using code₁ ⟨a, ha⟩ u v
+  have hc₂ (b : S₂) (hb : 0 < L.marginal₂ b) :
+      0 < L.posterior₂ (h (u, v)).val b ↔ v = l₂ b := by
+    simpa only [l₂, BlockAlgebra.extendLabel, dif_pos hb] using code₂ ⟨b, hb⟩ u v
+  have hc₃ (c : S₃) (hc : 0 < L.marginal₃ c) :
+      0 < L.posterior₃ (h (u, v)).val c ↔ (u ^^ v) = l₃ c := by
+    simpa only [l₃, BlockAlgebra.extendLabel, dif_pos hc] using code₃ ⟨c, hc⟩ u v
+  refine ⟨?_, ?_, ?_⟩
+  · intro a b
+    apply BlockAlgebra.cell_from_support (L.marginal₁ a) (L.marginal₂ b)
+      (L.outputLaw (h (u, v)).val) (L.posterior₁ (h (u, v)).val a)
+      (L.posterior₂ (h (u, v)).val b) _ u v (l₁ a) (l₂ b)
+      (Finset.sum_nonneg fun b _ => Finset.sum_nonneg fun c _ => L.nu_nonneg (a, b, c))
+      (Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun c _ => L.nu_nonneg (a, b, c))
+      (h (u, v)).property (hp₁.1 a) (hp₂.1 b) (prod₁₂ a b)
+    · rw [tab₁₂]
+      split_ifs
+      · exact Or.inr (ind₁₂ a b)
+      · exact Or.inl rfl
+    · exact L.posterior_active₁ _ (h (u, v)).property a
+    · exact L.posterior_active₂ _ (h (u, v)).property b
+    · exact hc₁ a
+    · exact hc₂ b
+  · intro a c
+    apply BlockAlgebra.cell_from_support (L.marginal₁ a) (L.marginal₃ c)
+      (L.outputLaw (h (u, v)).val) (L.posterior₁ (h (u, v)).val a)
+      (L.posterior₃ (h (u, v)).val c) _ u (u ^^ v) (l₁ a) (l₃ c)
+      (Finset.sum_nonneg fun b _ => Finset.sum_nonneg fun c _ => L.nu_nonneg (a, b, c))
+      (Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun b _ => L.nu_nonneg (a, b, c))
+      (h (u, v)).property (hp₁.1 a) (hp₃.1 c) (prod₁₃ a c)
+    · rw [tab₁₃]
+      split_ifs
+      · exact Or.inr (ind₁₃ a c)
+      · exact Or.inl rfl
+    · exact L.posterior_active₁ _ (h (u, v)).property a
+    · exact L.posterior_active₃ _ (h (u, v)).property c
+    · exact hc₁ a
+    · exact hc₃ c
+  · intro b c
+    apply BlockAlgebra.cell_from_support (L.marginal₂ b) (L.marginal₃ c)
+      (L.outputLaw (h (u, v)).val) (L.posterior₂ (h (u, v)).val b)
+      (L.posterior₃ (h (u, v)).val c) _ v (u ^^ v) (l₂ b) (l₃ c)
+      (Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun c _ => L.nu_nonneg (a, b, c))
+      (Finset.sum_nonneg fun a _ => Finset.sum_nonneg fun b _ => L.nu_nonneg (a, b, c))
+      (h (u, v)).property (hp₂.1 b) (hp₃.1 c) (prod₂₃ b c)
+    · rw [tab₂₃]
+      split_ifs
+      · exact Or.inr (ind₂₃ b c)
+      · exact Or.inl rfl
+    · exact L.posterior_active₂ _ (h (u, v)).property b
+    · exact L.posterior_active₃ _ (h (u, v)).property c
+    · exact hc₂ b
+    · exact hc₃ c
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
