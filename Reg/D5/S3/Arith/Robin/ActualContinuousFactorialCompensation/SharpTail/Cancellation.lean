@@ -19,32 +19,6 @@ sensitivity, actual observational dependence, and faithful source selectors
 with current binding evidence. The residual continuation is unknown.
 No Contract.Registration or declared_validated record is asserted. -/
 
-namespace epsilonDensity_integrable
-
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ _ => epsilonDensity) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law V := IntegrableOn (V.readout () ()) (Ioi (1 : ℝ))
-
-private theorem actual_law : arena.Law actual := @epsilonDensity_integrable
-
-private theorem sourceBridge :
-    (type_of% (@epsilonDensity_integrable)) ↔ arena.Law actual := Iff.rfl
-
-end epsilonDensity_integrable
-
 namespace T_epsilon_quadratic_bound
 
 abbrev signature : Signature where

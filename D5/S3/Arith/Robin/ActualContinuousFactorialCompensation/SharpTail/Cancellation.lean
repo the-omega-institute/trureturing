@@ -24,30 +24,9 @@ namespace D5.S3.Arith.Robin.ActualContinuousFactorialCompensation
 private def phaseDensity (t : ℝ) : ℝ := (1 / 2 - Int.fract t) / t ^ 2
 private def primitiveDensity (t : ℝ) : ℝ := harmonicPrimitive t / t ^ 2
 
-private lemma inv_sq_integrable {x : ℝ} (hx : 0 < x) :
-    IntegrableOn (fun t : ℝ => 1 / t ^ 2) (Ioi x) := by
-  refine (integrableOn_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx).congr_fun
-    ?_ measurableSet_Ioi
-  intro t ht
-  change t ^ (-(2 : ℝ)) = 1 / t ^ 2
-  rw [Real.rpow_neg (hx.trans ht).le, Real.rpow_two, one_div]
-
-private lemma inv_sq_integral {x : ℝ} (hx : 0 < x) :
-    (∫ t : ℝ in Ioi x, 1 / t ^ 2) = 1 / x := by
-  calc
-    _ = ∫ t : ℝ in Ioi x, t ^ (-(2 : ℝ)) := by
-      apply setIntegral_congr_fun measurableSet_Ioi
-      intro t ht
-      change 1 / t ^ 2 = t ^ (-(2 : ℝ))
-      rw [Real.rpow_neg (hx.trans ht).le, Real.rpow_two, one_div]
-    _ = 1 / x := by
-      have h := integral_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx
-      norm_num only [show -(2 : ℝ) + 1 = -1 by norm_num, Real.rpow_neg_one] at h
-      simpa only [one_div, neg_div_neg_eq, div_one] using h
-
 private lemma primitive_measurable : Measurable harmonicPrimitive := by
   have hH : Measurable H := by
-    have he : H = fun x => (harmonic ⌊x⌋₊ : ℝ) := funext H_eq_harmonic
+    have he : H = fun x => (harmonic ⌊x⌋₊ : ℝ) := funext H_harmonic
     rw [he]
     exact (measurable_of_countable (fun n : ℕ => (harmonic n : ℝ))).comp Nat.measurable_floor
   change Measurable (fun x : ℝ => x * (H x - Real.log x - gamma) +
@@ -94,13 +73,6 @@ private lemma epsilon_density_split (t : ℝ) :
   · simp [ht]
   · field_simp
     ring
-
-lemma epsilonDensity_integrable :
-    IntegrableOn epsilonDensity (Ioi (1 : ℝ)) := by
-  have he : epsilonDensity = fun t => primitiveDensity t + phaseDensity t :=
-    funext epsilon_density_split
-  rw [he]
-  exact primitive_integrable.add phase_integrable
 
 private lemma floor_inverse_integral {x : ℝ} (hx : 1 ≤ x) :
     (∫ t in (1 : ℝ)..x, (⌊t⌋₊ : ℝ) / t ^ 2) = H x - (⌊x⌋₊ : ℝ) / x := by
@@ -193,7 +165,7 @@ private lemma phase_interval_identity {x : ℝ} (hx : 1 ≤ x) :
     div_one, h2]
   have hf : Int.fract x = x - (⌊x⌋₊ : ℝ) := by
     rw [Int.fract, ← natCast_floor_eq_intCast_floor hx0.le]
-  have hH1 : H 1 = 1 := by rw [H_eq_harmonic]; norm_num [harmonic]
+  have hH1 : H 1 = 1 := by rw [H_harmonic]; norm_num [harmonic]
   dsimp [harmonicPrimitive, epsilon]
   rw [hf, hH1]
   norm_num

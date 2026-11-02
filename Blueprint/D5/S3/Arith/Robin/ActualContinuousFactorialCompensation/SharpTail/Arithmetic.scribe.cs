@@ -26,14 +26,6 @@ internal sealed class SharpArithmeticDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every real x>=1, G(x)=alpha+(1+gamma)*fract(x)-eta(x)+x*(1+gamma+log(x))*epsilon(x)+2*x*T_epsilon(x). The proof consumes finite_smoothing and the public slope identity; it adds no arithmetic premise."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-factorial-sharp-h-eq-harmonic"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.H_eq_harmonic"),
-                H("The literal harmonic prefix"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real x, H(x) is harmonic(floor(x)), cast to the reals. This normalization is consumed by the real-floor harmonic bound and by the cancellation proof."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-factorial-sharp-harmonicprimitive-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.harmonicPrimitive_bound"),
                 H("A bounded compensated harmonic primitive"),

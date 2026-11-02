@@ -13,7 +13,7 @@ import Mathlib.Analysis.SpecialFunctions.Stirling
 /-!
 The public finite smoothing and slope contract belong to Basic. The harmonic
 bracket is reused from RobinRationalBasis; the factorial estimate uses Mathlib
-Stirling. No private supplier declaration or proof is used. The real floor
+Stirling. The original Basic harmonic supplier is reused directly. The real floor
 phase is retained throughout.
 -/
 
@@ -52,13 +52,6 @@ lemma G_tail_decomposition {x : ℝ} (hx : 1 ≤ x) :
   rw [hj, hH, show eta x = Real.log (⌊x⌋₊.factorial : ℝ) -
     (x * Real.log x - x) from he, hf]
   ring
-
-lemma H_eq_harmonic (x : ℝ) : H x = (harmonic ⌊x⌋₊ : ℝ) := by
-  simp only [H, prefixSum, harmonic_eq_sum_Icc, Rat.cast_sum, Rat.cast_inv,
-    Rat.cast_natCast]
-  rw [Finset.Icc_eq_cons_Ioc (Nat.zero_le _), Finset.sum_cons]
-  rw [← Finset.Icc_add_one_left_eq_Ioc]
-  simp
 
 /-- Elementary real-floor bounds, including the entire first cell. -/
 lemma harmonicPrimitive_bound {x : ℝ} (hx : 1 ≤ x) :
@@ -110,7 +103,7 @@ lemma harmonicPrimitive_bound {x : ℝ} (hx : 1 ≤ x) :
     field_simp at h'
     nlinarith only [mul_le_mul_of_nonneg_left h' hx0.le, hu2]
   have he : harmonicPrimitive x = (x * d - 1 / 2) - (x * l - u) := by
-    rw [harmonicPrimitive, epsilon, H_eq_harmonic, hfrac]
+    rw [harmonicPrimitive, epsilon, H_harmonic, hfrac]
     dsimp [d, l, u, n]
     ring
   have hf : |harmonicPrimitive x| ≤ 2 / n := by

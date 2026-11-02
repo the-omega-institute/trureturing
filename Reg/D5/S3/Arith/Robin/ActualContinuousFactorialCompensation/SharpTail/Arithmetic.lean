@@ -75,33 +75,6 @@ private theorem sourceBridge :
 
 end G_tail_decomposition
 
-namespace H_eq_harmonic
-
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ _ => H) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law V := ∀ (x : ℝ),
-    (V.readout () ()) x = (harmonic ⌊x⌋₊ : ℝ)
-
-private theorem actual_law : arena.Law actual := @H_eq_harmonic
-
-private theorem sourceBridge :
-    (type_of% (@H_eq_harmonic)) ↔ arena.Law actual := Iff.rfl
-
-end H_eq_harmonic
-
 namespace harmonicPrimitive_bound
 
 abbrev signature : Signature where
