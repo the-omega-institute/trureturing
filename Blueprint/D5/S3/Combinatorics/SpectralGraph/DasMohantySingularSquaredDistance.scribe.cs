@@ -78,7 +78,7 @@ internal sealed class DasMohantySingularSquaredDistanceDocument : IScribeDocumen
                     + "positive, zero, negative indices equal N-s-1, one, s. Multisets preserve "
                     + "algebraic multiplicity, and Hermitian symmetry connects them to the "
                     + "indexed eigenvalues. The theorem result proves this complete conjunction. "
-                    + "The boundary cases remain in the quantified domain."))), DescribeRole.Definition)),
+                    + "The boundary cases remain in the quantified domain."))), DescribeRole.Definition),
             Entry("result", "Complete singular positive spectrum and inertia", null,
                 "For every finite t at least two and every positive integer part-size function, "
                 + "assume the sum of all cofactors is nonzero and the literal squared-distance "
