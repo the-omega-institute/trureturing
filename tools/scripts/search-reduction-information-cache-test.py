@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+"""Exercise ordinary compiled optional information across authenticated probe replay."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+import time
+
+ROOT = Path(__file__).resolve().parents[2]
+MODULE = "LeanInformationAuditRegTests.SearchReduction.InformationCacheApplication"
+SOURCE = ROOT / "tools/lean-inspector" / (MODULE.replace(".", "/") + ".lean")
+APPLICATION = "LeanInformationAudit.Tests.SearchReduction.InformationCacheApplication.application"
+FIXTURE_MODULE = "LeanInformationAuditRegTests.SearchReduction.InformationCache.LawFixture"
+FIXTURE = ROOT / "tools/lean-inspector" / (FIXTURE_MODULE.replace(".", "/") + ".lean")
+TARGET = FIXTURE_MODULE + ".RegisteredPos.target"
+B0 = "b02b98342945a1a724a227db4fa38e376640e573"
+FIELDS = ("information_face", "information_application", "information_registration",
+          "information_ordinary_records")
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    directory = Path(tempfile.mkdtemp(prefix="information-cache-", dir=ROOT / "build/lean-inspector"))
+    print("INFORMATION_CACHE_ARTIFACTS " + str(directory), flush=True)
+    env = dict(os.environ, SEARCH_REDUCTION_PROBE_CACHE=str(directory / "cache"),
+               SEARCH_REDUCTION_RESUME="", SEARCH_REDUCTION_QUERY_CACHE="",
+               SEARCH_REDUCTION_WORKERS="1", SEARCH_REDUCTION_PROFILE=str(directory / "phases.log"))
+    observations = {}
+    checks = []
+
+    def run(label, command, overrides=None):
+        started = time.monotonic()
+        result = subprocess.run(command, cwd=ROOT, env=dict(env, **(overrides or {})),
+                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        (directory / (label + ".log")).write_text(result.stdout)
+        record = dict(label=label, command=command, exit=result.returncode,
+                      seconds=round(time.monotonic() - started, 3))
+        checks.append(record)
+        print("INFORMATION_CACHE_CHECK " + json.dumps(record), flush=True)
+        if result.returncode:
+            raise RuntimeError(label + ": nonzero exit; see " + str(directory / (label + ".log")))
+        return result.stdout
+
+    request = directory / "request.lean"
+    request.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
+        "set_option Elab.async false\nset_option maxHeartbeats 0\n"
+        "run_cmd LeanInformationAudit.SearchReduction.executeProbe "
+        f'{{ target := `{TARGET}, «baseline» := #[], baselineCommit := "{B0}" }} '
+        f"#[`LeanInformationAuditRegAnalysis.SearchReduction.Commands, `{MODULE}] "
+        "`informationCacheReading (fixture := true)\n")
+    # The optional application is an ordinary Request field; fixture mode only
+    # permits the finite test index, without installing a production index.
+    request.write_text(request.read_text().replace(f'baselineCommit := "{B0}"',
+        f'baselineCommit := "{B0}", informationApplication := some `{APPLICATION}'))
+    current = directory / "current.lean"
+    current.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
+        "set_option maxHeartbeats 0\nopen Lean Elab Command LeanInformationAudit.SearchReduction\n"
+        f"run_cmd do\n  let reading ← acquireInformation (← getEnv) `{TARGET} #[] (some `{APPLICATION})\n"
+        f"  logInfo (observationJson (withInformation {{target := `{TARGET}}} reading)).compress\n")
+    if SOURCE.exists() or FIXTURE.exists():
+        raise RuntimeError("temporary fixture paths already exist; refusing to overwrite")
+    fixture_original = ROOT / "tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/LawFixture.lean"
+    FIXTURE.parent.mkdir(parents=True, exist_ok=True)
+    FIXTURE.write_text(fixture_original.read_text().replace(
+        "LeanInformationAuditFibTests.AuricFib.LawFixture", FIXTURE_MODULE))
+    original = (f"import {FIXTURE_MODULE}\n"
+        "namespace LeanInformationAudit.Tests.SearchReduction.InformationCacheApplication\n"
+        "open LeanInformationAudit.AuricFib.Contract\n"
+        f"open {FIXTURE_MODULE}\n"
+        "noncomputable def application : Application.{0,0,0,0,0,0} RegisteredPos.target :=\n"
+        "  RegisteredPos.strict\n"
+        "end LeanInformationAudit.Tests.SearchReduction.InformationCacheApplication\n").encode()
+    SOURCE.write_bytes(original)
+    expected_source = sha(SOURCE)
+    identities = []
+
+    def build(label):
+        run(label, ["make", "lean", "LEAN_TARGETS=" + MODULE])
+        base = ROOT / ".lake/build/lean-inspector/reg/lib/lean" / MODULE.replace(".", "/")
+        identities.append(dict(label=label, source_sha256=sha(SOURCE), compiled={
+            str(path.relative_to(ROOT)): sha(path) for path in
+            (base.with_suffix(".olean"), base.with_suffix(".olean.server"),
+             base.with_suffix(".olean.private")) if path.exists()}))
+
+    def observation(label, path, cached=True):
+        text = run(label, ["make", "search-reduction-run", "REQUESTS=" + str(path)],
+                   None if cached else {"SEARCH_REDUCTION_PROBE_CACHE": "0"})
+        rows = []
+        for line in text.splitlines():
+            try:
+                value = json.loads(line[line.index("{"):])
+            except (ValueError, json.JSONDecodeError):
+                continue
+            if isinstance(value, dict) and "information_face" in value:
+                rows.append(value)
+        if len(rows) != 1:
+            raise RuntimeError(label + ": expected one executed ordinary information reading")
+        observations[label] = rows[0]
+        return rows[0], text
+
+    def metadata(value):
+        return {field: value[field] for field in FIELDS}
+
+    def hot(label, expected):
+        value, text = observation(label, request)
+        if "PROBE_CACHE hit=authenticated" not in text or "PROBE_CACHE_ENTRY selected=authenticated" not in text:
+            raise RuntimeError(label + ": unchanged computational inputs did not reuse authenticated entry")
+        if "PROBE_CACHE miss" in text or 'query/strategy-start' in text:
+            raise RuntimeError(label + ": hot replay recomputed R")
+        if metadata(value) != metadata(expected):
+            raise RuntimeError(label + ": stale optional information: " + json.dumps({
+                "cached": metadata(value), "current": metadata(expected)}, sort_keys=True))
+        return value
+
+    try:
+        build("strict-build")
+        cold, _ = observation("strict-cold", request)
+        fresh, _ = observation("strict-current", current, False)
+        if fresh["information_face"] != "strict-bound" or not fresh["information_ordinary_records"]:
+            raise RuntimeError("strict positive ordinary registration was not acquired")
+        if metadata(cold) != metadata(fresh):
+            raise RuntimeError("cold optional reading differs from current ordinary assessor")
+        hot("strict-hot", fresh)
+        replacement = "{ evidence := .law RegisteredPos.client RegisteredPos.family none [] none }"
+        text = original.decode()
+        if text.count("  RegisteredPos.strict\n") != 1:
+            raise RuntimeError("application fixture mutation anchor is not unique")
+        SOURCE.write_text(text.replace("  RegisteredPos.strict\n", "  " + replacement + "\n"))
+        build("unknown-build")
+        fresh, _ = observation("unknown-current", current, False)
+        if fresh["information_face"] != "unknown-bound" or not fresh["information_ordinary_records"]:
+            raise RuntimeError("valid unknown ordinary registration was not acquired")
+        hot("unknown-hot", fresh)
+        SOURCE.write_text(text.replace("noncomputable def application", "unsafe def application").replace(
+            "  RegisteredPos.strict\n", "  unsafeCast (0 : Nat)\n"))
+        build("unsafe-build")
+        fresh, _ = observation("unsafe-current", current, False)
+        if (fresh["information_face"] != "not-bound(application_not_safe_definition)" or
+                fresh["information_registration"] is not None or fresh["information_ordinary_records"]):
+            raise RuntimeError("invalid application did not yield typed not-bound with empty metadata")
+        hot("unsafe-hot", fresh)
+    finally:
+        SOURCE.write_bytes(original)
+        if sha(SOURCE) != expected_source:
+            raise RuntimeError("application fixture source restoration failed")
+        build("restored-build")
+        (directory / "application.lean").write_bytes(original)
+        (directory / "target.lean").write_bytes(FIXTURE.read_bytes())
+        SOURCE.unlink()
+        FIXTURE.unlink()
+        FIXTURE.parent.rmdir()
+        (directory / "result.json").write_text(json.dumps(dict(checks=checks,
+            identities=identities, observations=observations, request_sha256=sha(request),
+            restored_source_sha256=expected_source), indent=2) + "\n")
+    fresh, _ = observation("restored-current", current, False)
+    hot("restored-hot", fresh)
+    (directory / "result.json").write_text(json.dumps(dict(checks=checks, identities=identities,
+        observations=observations, request_sha256=sha(request), restored_source_sha256=expected_source), indent=2) + "\n")
+    print("INFORMATION_CACHE_ACCEPTED authenticated_reuse=true new_R=0 current_optional_reading=true "
+          "controls=strict,unknown,unsafe,restored source=restored", flush=True)
+
+
+if __name__ == "__main__":
+    main()
