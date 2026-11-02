@@ -17,11 +17,6 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Source preparation only: the proposed module is unelaborated, "
-                        + "including the eigenvalue, corrected density, primitive and dilation joins. The theorem "
-                        + "and registration have no kernel acceptance, current binding evidence, "
-                        + "or declared_validated status. The following argument describes the "
-                        + "mathematical construction and the proof scripts being prepared.")),
                     Paragraph(Text("For every real D>0, every natural q>=1, and every function "
                         + "A from the reals to the complex numbers that belongs to L2 for volume "
                         + "restricted to the closed interval [0,D], assume that the integral of "
@@ -34,11 +29,12 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "real-valuedness or assumed spectral-expansion hypothesis.")),
                     Paragraph(Text("On [0,1], reuse PolynomialL2Derivative.legendreC, its actual "
                         + "coefficient formula, finite expansion and expansion_parseval. The "
-                        + "existing normalization is integral norm(L_n)^2=1/(2n+1). Removing "
-                        + "private from only the consumed original declarations leaves their "
-                        + "types and proof bodies unchanged. No Rodrigues, orthogonality, "
-                        + "normalization or finite Parseval proof is duplicated here.")),
-                    Paragraph(Text("Set w=x(1-x) and T(p)=-(w p')'. The prepared coefficient "
+                        + "existing normalization is integral norm(L_n)^2=1/(2n+1). The finite inverse "
+                        + "Sturm construction is co-located with these private proofs in their "
+                        + "original owner. Only the consumed spanning and mixed expansion "
+                        + "interfaces and the finite primitive estimate are public; no Rodrigues, "
+                        + "orthogonality, normalization or Parseval proof is duplicated.")),
+                    Paragraph(Text("Set w=x(1-x) and T(p)=-(w p')'. The coefficient "
                         + "calculation gives coeff_k(Tp)=k(k+1) coeff_k(p)-(k+1)^2 coeff_(k+1)(p). "
                         + "The two binomial recurrences in Mathlib imply T(L_n)=n(n+1)L_n, "
                         + "including n=0 and coefficients outside the degree range. For a finite "
@@ -54,23 +50,23 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "n(n+1)>=q(q+1) on high modes and the reused Parseval identity "
                         + "give the claimed unit-interval constant. Conjugation is retained "
                         + "throughout this calculation.")),
-                    Paragraph(Text("For a general L2 input, the prepared raw density argument "
+                    Paragraph(Text("For a general L2 input, the raw density argument "
                         + "first uses MemLp.exists_boundedContinuous_integral_rpow_sub_le and "
                         + "then applies real Weierstrass approximation separately to the real "
-                        + "and imaginary parts. The corrected-density proof script removes "
+                        + "and imaginary parts. Corrected density removes "
                         + "the first q Legendre coordinates and shows that this correction does "
                         + "not increase the error from A: the vanished moments make A orthogonal "
                         + "to that span, so the removed terms are its finite orthogonal projection. "
                         + "Finite Parseval for polynomials alone does not establish this join.")),
-                    Paragraph(Text("The prepared integration-operator join constructs the bounded "
+                    Paragraph(Text("The integration operator is a bounded "
                         + "complex-linear primitive operator on the actual L2 quotient. "
-                        + "Cauchy-Schwarz bounds norm(integral_0^x f)^2 by x integral_0^x norm(f)^2. "
-                        + "Its script supplies measurability, square integrability, linearity and "
+                        + "Indicator inner-product Cauchy-Schwarz bounds norm(integral_0^x f) "
+                        + "by norm(f) in L2([0,1]) for every x in [0,1]. "
+                        + "The construction supplies measurability, square integrability, linearity and "
                         + "independence of representatives, using L2 indicator inner products. Continuity of the "
                         + "operator and squared L2 norm passes the finite inequality to A. "
-                        + "The unit-limit proof script explicitly consumes both joins. None of "
-                        + "these scripts has yet been elaborated.")),
-                    Paragraph(Text("The prepared dilation proof uses B(t)=A(Dt), interval "
+                        + "The limit proof consumes both corrected density and primitive continuity.")),
+                    Paragraph(Text("Dilation uses B(t)=A(Dt), interval "
                         + "substitution and integrability of A and norm(A)^2. Its moment factor "
                         + "is D^(-(r+1)); E(B)=D^(-1)E(A); and E(primitive B)=D^(-3)E(V). "
                         + "These exact factors yield D^2 in the final bound. There is no "
@@ -80,9 +76,7 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "source telescope. Replacing that observation by constant one, with "
                         + "D=q=1 and A=0, demands 1<=1/8; norm(0)!=norm(1) supplies actual "
                         + "observational dependence. The dependent-family enrolled template "
-                        + "provides the readout; continuation is unknown. Its candidate raw "
-                        + "paths and all proof terms still need canonical elaboration and binding "
-                        + "inspection. This is a classical analytic estimate, with no novelty, "
+                        + "provides the readout; continuation is unknown. This is a classical analytic estimate, with no literature novelty, "
                         + "scalar subexponential remainder, R-bound or RH claim."))),
                 DescribeRole.Theorem))));
 }

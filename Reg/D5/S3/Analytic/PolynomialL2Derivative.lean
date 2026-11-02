@@ -5,7 +5,7 @@ import Reg.Support.SingleDependentReadout
 
 open _root_.D5.S3.Analytic.PolynomialL2Derivative
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Polynomial MeasureTheory
+open LeanInformationAudit Polynomial MeasureTheory Set
 open scoped Interval ComplexConjugate
 
 namespace Reg.D5.S3.Analytic.PolynomialL2Derivative
@@ -224,6 +224,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 
+private lemma legendre_zero : legendreC 0 = (1 : ℂ[X]) := by
+  ext k
+  cases k <;> simp [legendreC, Polynomial.coeff_shiftedLegendre, Polynomial.coeff_one]
+
 namespace Expansion
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ → ℂ) (fun _ => ℂ[X])
@@ -243,7 +247,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
-  norm_num [actual, realize, expansion, legendreC]
+  norm_num [actual, realize, expansion, legendre_zero]
 def family : Registration arena (type_of% (@exists_expansion)) where
   actual := actual
   bridge := Iff.rfl
@@ -304,7 +308,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨1, (fun _ => 1)⟩, (fun _ => 0), (fun _ => 1), ?_⟩
-  norm_num [actual, realize, moment, expansion, legendreC]
+  norm_num [actual, realize, moment, expansion, legendre_zero]
 def family : Registration arena (type_of% (@mixed_expansion)) where
   actual := actual
   bridge := Iff.rfl
@@ -355,9 +359,8 @@ def actual : Realization signature :=
 private def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
-/-- All seven original binders, with merely L2, all low moments, arbitrary
-complex functions, and the zero function retained. The observation changes
-only the two literal norm operations, using one common norm family. -/
+/-- The complete finite telescope, with arbitrary complex coefficients and
+the empty expansion. One common family varies both native norm operations. -/
 def arena : Arena where
   signature := signature
   Law R := ∀ (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → ℂ)
@@ -368,7 +371,7 @@ def arena : Arena where
         (∫ x in Icc (0 : ℝ) 1, (R.readout () () ((expansion d a).eval (x : ℂ))) ^ 2)
 
 
-/-- At D=q=1 and A=0 the constant-one observation demands 1≤1/8. -/
+/-- At d=0,q=1,a=0 the constant-one observation demands 1≤1/8. -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hf := h 0 1 (by norm_num) (fun _ => 0) (by intro n hn; rfl)
@@ -389,9 +392,7 @@ def family : Registration arena (type_of% @complex_legendre_primitive_gap) where
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-/-- Candidate raw occurrence paths are source-derived and still require
-canonical binding inspection. Both paths select the native norm function;
-neither selects the entire goal nor inserts an assumed analytic budget. -/
+/-- Both source occurrences select the native norm function. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@complex_legendre_primitive_gap) (Realization signature) Unit Unit where
   unitName :=

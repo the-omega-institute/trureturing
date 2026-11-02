@@ -14,15 +14,14 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-!
-SOURCE PREPARATION ONLY. This complete proof-script attempt has not been
-elaborated. No kernel acceptance or successful binding audit is claimed.
-The public telescope below has no extra hypotheses.
+# Complex L2 moment-orthogonal primitive energy
 
-The finite argument uses the actual complex shifted Legendre polynomials
-and Parseval in PolynomialL2Derivative. No finite expansion of a general
-L2 function is postulated. Corrected polynomial approximation, primitive
-continuity and dilation have explicit proof scripts using pinned APIs.
-Every proof script remains unelaborated, including these analytic joins.
+The finite inverse Sturm estimate in `PolynomialL2Derivative` extends to
+arbitrary complex L2 functions by corrected polynomial approximation.
+The correction removes the first q Legendre coordinates and does not
+increase the approximation error. A bounded linear map on the actual
+L2 quotient represents the interval primitive. Passing to the limit and
+then dilating the interval gives the quantitative constant D²/(4q(q+1)).
 -/
 
 noncomputable section
@@ -77,11 +76,11 @@ private lemma complex_polynomial_uniform_approximation (g : ℝ → ℂ)
   refine ⟨p, ?_⟩
   intro x hx
   have he (r : ℝ[X]) : pv (r.map Complex.ofRealHom) x = ((r.eval x : ℝ) : ℂ) := by
-    simpa only [pv] using Polynomial.eval_map_apply (p := r) Complex.ofRealHom x
+    simpa only [pv, Complex.ofRealHom_eq_coe] using Polynomial.eval_map_apply (p := r) Complex.ofRealHom x
   have hval : pv p x = ((pr.eval x : ℝ) : ℂ) + Complex.I * ((pi.eval x : ℝ) : ℂ) := by
-    change pv (pr.map Complex.ofRealHom) x + Complex.I *
-      pv (pi.map Complex.ofRealHom) x = _
-    rw [he pr, he pi]
+    dsimp only [p, pv]
+    rw [eval_add, eval_mul, eval_C]
+    exact congrArg₂ (fun z w : ℂ => z + Complex.I * w) (he pr) (he pi)
   have hre : (pv p x - g x).re = pr.eval x - (g x).re := by rw [hval]; simp
   have him : (pv p x - g x).im = pi.eval x - (g x).im := by rw [hval]; simp
   have h := Complex.norm_le_abs_re_add_abs_im (pv p x - g x)
@@ -140,6 +139,7 @@ private lemma raw_polynomial_L2_approximation (A : ℝ → ℂ) (hA : MemLp A 2 
           _ ≤ _ := norm_add_le _ _
       have hs := (sq_le_sq₀ (norm_nonneg (A x - pv p x))
         (add_nonneg (norm_nonneg _) (norm_nonneg _))).mpr ht
+      change ‖A x - pv p x‖ ^ 2 ≤ 2 * ‖A x - g x‖ ^ 2 + 2 * ‖g x - pv p x‖ ^ 2
       nlinarith [sq_nonneg (‖A x - g x‖ - ‖g x - pv p x‖)]
     _ ≤ ε := by linarith
 
@@ -252,7 +252,8 @@ private lemma correction_nonexpansive (d q : ℕ) (a : ℕ → ℂ) (A : ℝ →
   rw [hs] at hpy
   change E 1 (A - pv v) ≤ E 1 (A - pv p)
   rw [energy_eq_norm_sq (hA.sub (polynomial_memLp 1 v)),
-    energy_eq_norm_sq (hA.sub (polynomial_memLp 1 p)), MemLp.toLp_sub, MemLp.toLp_sub]
+    energy_eq_norm_sq (hA.sub (polynomial_memLp 1 p)),
+    MemLp.toLp_sub hA (polynomial_memLp 1 v), MemLp.toLp_sub hA (polynomial_memLp 1 p)]
   have hh : ‖polyLp v - hA.toLp A‖ ^ 2 ≤ ‖polyLp p - hA.toLp A‖ ^ 2 := by
     simp only [map_zero, mul_zero, add_zero] at hpy
     nlinarith [sq_nonneg ‖polyLp u‖]
@@ -290,7 +291,8 @@ private lemma corrected_polynomial_approximation (q : ℕ) (hq : 1 ≤ q)
       have h := (correction_nonexpansive (d j) q (a j) A hA hm).trans (by
         simpa only [d, ha j] using hp j)
       change E 1 (A - pv (PolynomialL2Derivative.expansion (d j) (high q (a j)))) ≤ _ at h
-      rw [energy_eq_norm_sq (hA.sub (polynomial_memLp 1 _)), MemLp.toLp_sub] at h
+      rw [energy_eq_norm_sq (hA.sub (polynomial_memLp 1 _)),
+        MemLp.toLp_sub hA (polynomial_memLp 1 _)] at h
       rw [dist_eq_norm, norm_sub_rev]
       exact (sq_le_sq₀ (norm_nonneg _) (by positivity)).mp h
     exact squeeze_zero (fun j => dist_nonneg) hbound
@@ -315,8 +317,9 @@ private lemma primitive_L2_continuity :
       ((Lp.memLp f).integrable (by norm_num))
   have hcont (f : Lp ℂ 2 (μ 1)) : ContinuousOn (primitive (fun x => f x)) (Icc (0 : ℝ) 1) := by
     have hi : IntegrableOn (fun x => f x) (uIcc (0 : ℝ) 1) := by
-      simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1), μ] using
-        ((Lp.memLp f).integrable (by norm_num))
+      change Integrable (fun x : ℝ => f x) (volume.restrict (uIcc (0 : ℝ) 1))
+      rw [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+      exact (Lp.memLp f).integrable (by norm_num)
     simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1), primitive] using
       intervalIntegral.continuousOn_primitive_interval hi
   have hbound (f : Lp ℂ 2 (μ 1)) {x : ℝ} (hx : x ∈ Icc (0 : ℝ) 1) :
@@ -352,7 +355,10 @@ private lemma primitive_L2_continuity :
         Lp.coeFn_add ((hmem f).toLp _) ((hmem g).toLp _),
         (hmem f).coeFn_toLp, (hmem g).coeFn_toLp,
         ae_restrict_mem measurableSet_Icc] with x hfg hadd hf hg hx
-      rw [hfg, hadd, hf, hg]
+      rw [hfg, hadd]
+      change primitive (fun t => (f + g) t) x =
+        (hmem f).toLp _ x + (hmem g).toLp _ x
+      rw [hf, hg]
       calc
         primitive (fun t => (f + g) t) x = primitive (fun t => f t + g t) x :=
           hcongr (Lp.coeFn_add f g) hx
@@ -370,7 +376,11 @@ private lemma primitive_L2_continuity :
       filter_upwards [(hmem (c • f)).coeFn_toLp,
         Lp.coeFn_smul c ((hmem f).toLp _), (hmem f).coeFn_toLp,
         ae_restrict_mem measurableSet_Icc] with x hcf hsmul hf hx
-      rw [hcf, hsmul, Pi.smul_apply, hf]
+      rw [hcf]
+      change primitive (fun t => (c • f) t) x = (c • (hmem f).toLp _) x
+      rw [hsmul]
+      change primitive (fun t => (c • f) t) x = c • ((hmem f).toLp _ x)
+      rw [hf]
       calc
         primitive (fun t => (c • f) t) x = primitive (fun t => c • f t) x :=
           hcongr (Lp.coeFn_smul c f) hx
@@ -503,6 +513,5 @@ theorem complex_L2_moment_primitive_gap
       mul_le_mul_of_nonneg_left hu hp.le
     _ = D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)) * E D A := by
       field_simp [hD0, hq0, hq1]
-      <;> ring
 
 end D5.S3.Analytic.MomentOrthogonalPrimitiveGap

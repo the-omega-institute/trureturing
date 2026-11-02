@@ -2,10 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.MomentOrthogonalPrimitiveGap
 import Reg.Support.SingleDependentReadout
 
-/-! SOURCE PREPARATION ONLY. The owner and this mirror are unelaborated.
-No binding evidence or
-declared_validated status is asserted. The native norm is observed at both
-energy operands. The entire original telescope is reconstructed literally. -/
+/-! The native complex norm is observed at both energy operands.
+The complete original telescope is reconstructed literally. -/
 
 noncomputable section
 
@@ -59,9 +57,7 @@ def family : Registration arena (type_of% @complex_L2_moment_primitive_gap) wher
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-/-- Candidate raw occurrence paths are source-derived and still require
-canonical binding inspection. Both paths select the native norm function;
-neither selects the entire goal nor inserts an assumed analytic budget. -/
+/-- Both source occurrences select the native norm function. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@complex_L2_moment_primitive_gap) (Realization signature) Unit Unit where
   unitName :=

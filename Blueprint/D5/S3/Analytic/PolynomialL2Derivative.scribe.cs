@@ -11,6 +11,36 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
         H("Complex Polynomial L2 Derivative Energy"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("complex-shifted-legendre-polynomials"),
+                DeclarationHandle.Create(Prefix + "legendreC"),
+                H("The actual shifted Legendre family"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, legendreC(n) is Mathlib's integer "
+                    + "shifted Legendre polynomial mapped by the integer cast ring homomorphism "
+                    + "to complex coefficients. This is the existing family, now consumed "
+                    + "by both derivative energy and moment-orthogonal approximation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("complex-polynomial-bilinear-moment"),
+                DeclarationHandle.Create(Prefix + "moment"),
+                H("Bilinear polynomial integration"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every pair of complex polynomials p,q, moment(p,q) "
+                    + "is the integral from zero to one of p(x)q(x), with real inputs cast "
+                    + "to the complex numbers. The operation is bilinear; Hermitian pairing "
+                    + "is obtained by explicitly conjugating the second polynomial's coefficients."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("complex-legendre-finite-expansion"),
+                DeclarationHandle.Create(Prefix + "expansion"),
+                H("Finite expansion with an arbitrary coefficient sequence"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and every sequence a from the "
+                    + "naturals to the complex numbers, expansion(d,a) is the polynomial "
+                    + "sum_(n<d) C(a_n) legendreC(n). The sequence remains unrestricted "
+                    + "outside the finite sum; at d=0 the expansion is the zero polynomial."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("complex-polynomial-derivative-l2-of-degree"),
                 DeclarationHandle.Create(Prefix + "complex_polynomial_derivative_l2_of_degree"),
                 H("The degree formulation includes the zero-dimensional space"),
@@ -56,9 +86,10 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                     Paragraph(Text("This source combines classical Rodrigues orthogonality, beta "
                         + "normalization, polynomial spanning and Cauchy-Schwarz, reusing the "
                         + "pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. "
-                        + "No literature originality claim is made. The supporting Legendre "
-                        + "identities and sharper intermediate budget are private proof steps; "
-                        + "these identities also support the finite primitive estimate below."))),
+                        + "No literature originality claim is made. Rodrigues, orthogonality, "
+                        + "normalization and derivative energies remain private proof steps. "
+                        + "The consumed spanning and mixed expansion interfaces are public, "
+                        + "and support the finite primitive estimate below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("complex-polynomial-derivative-l2"),
