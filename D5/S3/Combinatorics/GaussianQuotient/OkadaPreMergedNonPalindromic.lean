@@ -210,8 +210,9 @@ private theorem qFactorial_image_stable
   | base => rfl
   | succ n hn ih =>
       have hz : φ (X ^ (n + 1)) = 0 := by
-        have he : n + 1 = (m + 1) + (n - m) := by omega
-        rw [he, pow_add, map_mul, hx, zero_mul]
+        simpa only [map_pow] using
+          pow_eq_zero_of_le (Nat.add_le_add_right hn 1)
+            (show φ X ^ (m + 1) = 0 by simpa only [map_pow] using hx)
       rw [qFactorial_succ, map_mul, ih, map_sub, map_one, hz, sub_zero, mul_one]
 
 private theorem qFactorial_image_unit
