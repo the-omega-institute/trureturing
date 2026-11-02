@@ -9,8 +9,6 @@
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Data.Finset.Sort
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Tactic
 
@@ -105,22 +103,26 @@ private def selectedCols (k : Fin 4) : {s : Finset (Fin 16) // s.card = 3} :=
   ⟨![{0, 1, 2}, {0, 1, 3}, {0, 2, 3}, {1, 2, 3}] k, by fin_cases k <;> decide⟩
 
 private lemma projectors_density (j : Fin 3) : IsDensity (projectors j) := by
+  rw [projectors]
   fin_cases j
   · constructor
-    · convert posSemidef_vecMulVec_self_star ![(1 : ℂ), 0] using 1 <;>
-        ext i j <;> fin_cases i <;> fin_cases j <;>
+    · convert posSemidef_vecMulVec_self_star ![(1 : ℂ), 0] using 1
+      ext i j
+      fin_cases i <;> fin_cases j <;>
         norm_num [projectors, Matrix.vecMulVec, Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
     · norm_num [projectors, Matrix.trace, Fin.sum_univ_two]
   · constructor
     · convert (posSemidef_vecMulVec_self_star ![(1 : ℂ), 2]).smul
-        (show (0 : ℝ) ≤ 1/5 by norm_num) using 1 <;>
-        ext i j <;> fin_cases i <;> fin_cases j <;>
+        (show (0 : ℝ) ≤ 1/5 by norm_num) using 1
+      ext i j
+      fin_cases i <;> fin_cases j <;>
         norm_num [projectors, Matrix.vecMulVec, Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
     · norm_num [projectors, Matrix.trace, Fin.sum_univ_two]
   · constructor
     · convert (posSemidef_vecMulVec_self_star ![(1 : ℂ), -2]).smul
-        (show (0 : ℝ) ≤ 1/5 by norm_num) using 1 <;>
-        ext i j <;> fin_cases i <;> fin_cases j <;>
+        (show (0 : ℝ) ≤ 1/5 by norm_num) using 1
+      ext i j
+      fin_cases i <;> fin_cases j <;>
         norm_num [projectors, Matrix.vecMulVec, Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
     · norm_num [projectors, Matrix.trace, Fin.sum_univ_two]
 
@@ -158,11 +160,11 @@ private lemma normalizer_square : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
 private lemma alice_basis : IsHermBasis alice := by
   refine ⟨?_, by decide, ?_⟩
   · intro i
+    rw [alice]
     change (alice i)ᴴ = alice i
     fin_cases i <;> ext j k <;> fin_cases j <;> fin_cases k <;>
       simp [alice, pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
-        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.conjTranspose_apply,
-        Matrix.mul_apply, Fin.sum_univ_two, Complex.star_def]
+        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.conjTranspose_apply]
   · intro i j
     fin_cases i <;> fin_cases j <;>
       norm_num [alice, pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
@@ -172,137 +174,128 @@ private lemma alice_basis : IsHermBasis alice := by
 private lemma bob_pairing_0 (j : Fin 16) :
     (bob 0 * bob j).trace = if (0 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
-    simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+    simp [bob, symUnit, skewUnit, Matrix.mul_add]
 
 private lemma bob_pairing_1 (j : Fin 16) :
     (bob 1 * bob j).trace = if (1 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
-    simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+    simp [bob, symUnit, skewUnit, Matrix.mul_add]
 
 private lemma bob_pairing_2 (j : Fin 16) :
     (bob 2 * bob j).trace = if (2 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
-    simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+    simp [bob, symUnit, skewUnit, Matrix.mul_add]
 
 private lemma bob_pairing_3 (j : Fin 16) :
     (bob 3 * bob j).trace = if (3 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
-    simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+    simp [bob, symUnit, skewUnit, Matrix.mul_add]
 
 private lemma bob_pairing_4 (j : Fin 16) :
     (bob 4 * bob j).trace = if (4 : Fin 16) = j then 1 else 0 := by
+  rw [bob, symUnit]
   fin_cases j <;>
-    simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+    simp [symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_5 (j : Fin 16) :
     (bob 5 * bob j).trace = if (5 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_6 (j : Fin 16) :
     (bob 6 * bob j).trace = if (6 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_7 (j : Fin 16) :
     (bob 7 * bob j).trace = if (7 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_8 (j : Fin 16) :
     (bob 8 * bob j).trace = if (8 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_9 (j : Fin 16) :
     (bob 9 * bob j).trace = if (9 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_10 (j : Fin 16) :
     (bob 10 * bob j).trace = if (10 : Fin 16) = j then 1 else 0 := by
+  rw [bob, skewUnit]
   fin_cases j <;>
-    simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+    simp [symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_11 (j : Fin 16) :
     (bob 11 * bob j).trace = if (11 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_12 (j : Fin 16) :
     (bob 12 * bob j).trace = if (12 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_13 (j : Fin 16) :
     (bob 13 * bob j).trace = if (13 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_14 (j : Fin 16) :
     (bob 14 * bob j).trace = if (14 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_pairing_15 (j : Fin 16) :
     (bob 15 * bob j).trace = if (15 : Fin 16) = j then 1 else 0 := by
   fin_cases j <;>
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
-      Matrix.trace_single_mul, Matrix.single_apply] <;>
-    ring_nf <;> norm_num [normalizer_square]
+      Matrix.trace_add]
+  ring_nf
+  norm_num [normalizer_square]
 
 private lemma bob_basis : IsHermBasis bob := by
+  rw [bob]
   refine ⟨?_, by decide, ?_⟩
   · intro i
     change (bob i)ᴴ = bob i
-    fin_cases i <;> simp [bob, symUnit, skewUnit, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_add, Matrix.conjTranspose_single, Complex.star_def, Matrix.single_neg, add_comm]
+    fin_cases i <;> simp [bob, symUnit, skewUnit,
+      Matrix.conjTranspose_add, Matrix.conjTranspose_single, Matrix.single_neg, add_comm]
   · intro i j
     fin_cases i
     · exact bob_pairing_0 j
@@ -324,7 +317,8 @@ private lemma bob_basis : IsHermBasis bob := by
 
 private lemma correlation_row_0 (j : Fin 16) :
     corr rho alice bob 0 j = coefficients 0 j := by
-  simp only [corr, rho, Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
+  rw [corr, rho]
+  simp only [Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
     ← Matrix.mul_kronecker_mul, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sum,
     Matrix.trace_kronecker, Matrix.one_mul]
   fin_cases j <;>
@@ -339,7 +333,8 @@ private lemma correlation_row_0 (j : Fin 16) :
 
 private lemma correlation_row_1 (j : Fin 16) :
     corr rho alice bob 1 j = coefficients 1 j := by
-  simp only [corr, rho, Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
+  rw [corr, rho]
+  simp only [Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
     ← Matrix.mul_kronecker_mul, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sum,
     Matrix.trace_kronecker, Matrix.one_mul]
   fin_cases j <;>
@@ -354,7 +349,8 @@ private lemma correlation_row_1 (j : Fin 16) :
 
 private lemma correlation_row_2 (j : Fin 16) :
     corr rho alice bob 2 j = coefficients 2 j := by
-  simp only [corr, rho, Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
+  rw [corr, rho]
+  simp only [Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
     ← Matrix.mul_kronecker_mul, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sum,
     Matrix.trace_kronecker, Matrix.one_mul]
   fin_cases j <;>
@@ -369,7 +365,8 @@ private lemma correlation_row_2 (j : Fin 16) :
 
 private lemma correlation_row_3 (j : Fin 16) :
     corr rho alice bob 3 j = coefficients 3 j := by
-  simp only [corr, rho, Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
+  rw [corr, rho]
+  simp only [Matrix.add_mul, Matrix.smul_mul, Matrix.sum_mul,
     ← Matrix.mul_kronecker_mul, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sum,
     Matrix.trace_kronecker, Matrix.one_mul]
   fin_cases j <;>
@@ -380,10 +377,11 @@ private lemma correlation_row_3 (j : Fin 16) :
       Matrix.trace_add, Matrix.trace_smul, Matrix.trace_single_mul,
       Matrix.trace_single_eq_same, Matrix.trace_single_eq_of_ne, Matrix.single_apply,
       Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Complex.mul_re,
-      Complex.mul_im, ← Complex.ofReal_inv] <;> ring
+      Complex.mul_im, ← Complex.ofReal_inv]
 
 private lemma correlation_eq : corr rho alice bob = coefficients := by
   ext i j
+  rw [coefficients]
   fin_cases i
   · exact correlation_row_0 j
   · exact correlation_row_1 j
@@ -409,8 +407,9 @@ private lemma minor_value (k : Fin 4) :
       (f := (!![0, 1, 2; 0, 1, 3; 0, 2, 3; 1, 2, 3] : Matrix (Fin 4) (Fin 3) (Fin 16)) k)
       (by fin_cases k <;> decide) (by fin_cases k <;> decide)).symm i
   have hn : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
+  rw [compound]
   fin_cases k <;>
-    simp only [compound, Matrix.det_fin_three, Matrix.submatrix_apply, hr, hc] <;>
+    simp only [Matrix.det_fin_three, Matrix.submatrix_apply, hr, hc] <;>
     norm_num [coefficients] <;> field_simp <;> ring
 
 private lemma minor_energy :
@@ -455,10 +454,11 @@ private lemma witness_lower :
   exact row_lower (compound 3 coefficients) selectedRow selectedCols selectedCols_injective
 
 private lemma bound_value : bound 2 4 3 = 3 / (64 * Real.sqrt 2) := by
+  rw [bound]
   have h8 : Real.sqrt 8 = 2 * Real.sqrt 2 := by
     rw [show (8 : ℝ) = 4 * 2 by norm_num, Real.sqrt_mul (by norm_num)]
     norm_num
-  norm_num [bound, h8]
+  norm_num [h8]
   ring
 
 private lemma numerical_gap :
