@@ -4,9 +4,9 @@
    mirror-E: none(waiver:algebraic-original-relative-mass-shell)
    anchors: []
    utility: none
-   digest: The literal original fixed-momentum relative mass shell has a finite tensor basis and is preserved by the actual total BRST charge.
+   digest: The literal original fixed-momentum relative mass shell has a finite tensor basis and is preserved by the actual total BRST charge. -/
 
-The fixed-momentum kinematic component on the ORIGINAL
+/- The fixed-momentum kinematic component on the ORIGINAL
 `LatticeMatterGhostCoupling.State D = Carrier D ⊗ Fock`.  This module proves
 the literal kernel/support/basis and finite-dimensional endpoints needed by
 the relative shell.  It does not assert a no-ghost theorem or positivity.

@@ -4,8 +4,7 @@
    mirror-E: none(waiver:algebraic-relative-ghost-energy)
    anchors: []
    utility: none
-   digest: The actual bc ghost Virasoro zero mode is diagonal on the original finite-occupation carrier.
- -/
+   digest: The actual bc ghost Virasoro zero mode is diagonal on the original finite-occupation carrier. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Fermionic.BcGhostVirasoro
