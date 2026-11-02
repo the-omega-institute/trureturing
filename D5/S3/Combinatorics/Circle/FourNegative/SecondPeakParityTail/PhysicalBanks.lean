@@ -393,7 +393,7 @@ private theorem local_chain (a b c d : ℕ) (chain : Fin 4) (e : ℕ)
     (he : e < chainLength a b c d chain-1) :
     chainOf b c d (chainStart b c d chain+e) = chain := by
   apply Fin.ext
-  fin_cases chain <;> dsimp only [chainOf,chainStart,chainLength,
+  fin_cases chain <;> simp [chainOf,chainStart,chainLength,apply_ite,
     Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
     Matrix.vecHead,Matrix.vecTail,Function.comp_apply] at he ⊢ <;>

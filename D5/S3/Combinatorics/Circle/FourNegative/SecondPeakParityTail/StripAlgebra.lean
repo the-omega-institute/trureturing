@@ -96,6 +96,44 @@ private theorem scaled_peak_eq (u z h t alpha S delta : ℚ)
       Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,
       Function.comp_apply] <;> ring
 
+-- Exact polynomial forms remove cancellations before the four corner substitutions.
+private def polynomialGate (u z h t S delta : ℚ) : Fin 6 → ℚ :=
+  ![
+    (16*S*h*t*u^3*z^4 + 16*S*h*t*u^3*z^3 + 16*S*h*t*u^2*z^3 + 16*S*h*t*u^2*z^2 + 8*S*u^2*z^2 +
+    16*S*u*z + 8*S + 16*delta*h*t*u^2*z^3 + 16*delta*h*t*u^2*z^2 + 8*delta*u*z + 8*delta +
+    16*h^2*t*u^4*z^4 + 16*h^2*t*u^4*z^3 - 16*h^2*t*u^3*z^4 - 32*h^2*t*u^3*z^3 - 16*h^2*t*u^3*z^2
+    - 16*h^2*t*u^2*z^3 - 16*h^2*t*u^2*z^2 - 30*h*t*u^3*z^4 - 30*h*t*u^3*z^3 + 16*h*t*u^2*z^3 +
+    16*h*t*u^2*z^2 - 16*h*t*u^2*z - 16*h*t*u^2 - 32*h*t*u*z^2 - 64*h*t*u*z - 32*h*t*u +
+    8*h*u^3*z^3 + 16*h*u^3*z^2 + 8*h*u^2*z^2 + 16*h*u^2*z + 8*h*u*z + 8*h - 15*u^2*z^2 + u*z +
+    16*u)/2,
+    (-16*S*t*u*z^2 - 32*S*t*u*z - 16*S*t*u + 8*S*u^2*z^2 + 16*S*u*z + 8*S + 16*delta*h*t*u^2*z^3 +
+    16*delta*h*t*u^2*z^2 + 8*delta*u*z + 8*delta + 2*h*t*u^3*z^4 + 2*h*t*u^3*z^3 -
+    32*h*t*u^3*z^2 - 32*h*t*u^3*z + 16*h*t*u^2*z^3 + 32*h*t*u^2*z^2 + 16*h*t*u^2*z -
+    16*h*t*u*z^2 - 32*h*t*u*z - 16*h*t*u + 8*h*u^3*z^3 + 16*h*u^3*z^2 + 8*h*u^2*z^2 + 16*h*u^2*z
+    + 8*h*u*z + 8*h + u^2*z^2 - 16*u^2 + 17*u*z + 32*u)/2,
+    8*u*(z + 1)*(-S*h*t*u^2*z^3 - S*h*t*u*z^2 - S*t*z - S*t + h^2*t*u^2*z^3 - h^2*t*u*z^2 -
+    2*h*t*u^2*z^2 - 2*h*t*u^2*z + 2*h*t*u*z^2 + 2*h*t*u*z - h*t*z - h*t + h*u^2*z^2 + h*u*z - u
+    + 2),
+    -16*S*h*t*u^3*z^4 - 16*S*h*t*u^3*z^3 - 16*S*h*t*u^2*z^3 - 16*S*h*t*u^2*z^2 - 8*S*u^2*z^2 -
+    16*S*u*z - 8*S - 16*delta*h*t*u^2*z^3 - 16*delta*h*t*u^2*z^2 - 8*delta*u*z - 8*delta +
+    16*h^2*t*u^3*z^4 + 32*h^2*t*u^3*z^3 + 16*h^2*t*u^3*z^2 + 16*h^2*t*u^2*z^3 + 16*h^2*t*u^2*z^2
+    + 14*h*t*u^3*z^4 - 2*h*t*u^3*z^3 - 16*h*t*u^3*z^2 - 8*h*t*u^2*z^3 - 8*h*t*u^2*z^2 +
+    8*h*t*u^2*z + 8*h*t*u^2 + 16*h*t*u*z^2 + 32*h*t*u*z + 16*h*t*u - 8*h*u^3*z^2 - 8*h*u^2*z -
+    8*h*u*z - 8*h + 7*u^2*z^2 - 8*u^2*z - u*z - 16*u,
+    8*S*t*u*z^2 + 16*S*t*u*z + 8*S*t*u - 8*S*u^2*z^2 - 16*S*u*z - 8*S - 16*delta*h*t*u^2*z^3 -
+    16*delta*h*t*u^2*z^2 - 8*delta*u*z - 8*delta + 6*h*t*u^3*z^4 - 2*h*t*u^3*z^3 + 8*h*t*u^3*z^2
+    + 16*h*t*u^3*z - 8*h*t*u^2*z^3 - 16*h*t*u^2*z^2 - 8*h*t*u^2*z + 8*h*t*u*z^2 + 16*h*t*u*z +
+    8*h*t*u - 8*h*u^3*z^3 - 16*h*u^3*z^2 - 8*h*u^2*z^2 - 16*h*u^2*z - 8*h*u*z - 8*h + 3*u^2*z^2
+    - 4*u^2*z + 8*u^2 - 9*u*z - 24*u,
+    8*u*(z + 1)*(2*S*h*t*u^2*z^3 + 2*S*h*t*u*z^2 + S*t*z + S*t + 2*h^2*t*u*z^2 + 2*h*t*u^2*z^2 +
+    2*h*t*u^2*z - h*t*u*z^2 - h*t*u*z + h*t*z + h*t - 2*h*u^2*z^2 - 2*h*u*z + u - 2)]
+
+private theorem strip_gate_polynomial_eq (u z h t S delta : ℚ) (i : Fin 6) :
+    stripGate u z h t S delta i = polynomialGate u z h t S delta i := by
+  fin_cases i <;>
+    norm_num [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
+      qHead,qNewHead,qModulus,qTerminal,polynomialGate] <;> ring
+
 -- Four corners for exactly the six sides consumed by physical_prefixes.
 -- ring_nf computes the positive polynomial in the four nonnegative increments.
 -- This retains the full unbounded cone, without exporting coefficient tables.
@@ -107,9 +145,9 @@ private theorem strip_corners (U Z H T : ℚ)
     0 ≤ stripGate (4+U) (16+Z) (2*(16+Z)+H) (1+T)
       (if highS then 7*(16+Z)/4 else 2)
       (if highDelta then 2*((4+U)-1) else 0) i := by
+  rw [strip_gate_polynomial_eq]
   cases highS <;> cases highDelta <;> fin_cases i <;>
-    dsimp only [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
-      qHead,qNewHead,qModulus,qTerminal] <;> ring_nf <;> positivity
+    norm_num only [polynomialGate] <;> ring_nf <;> positivity
 
 -- Exact joint affinity in S and delta. In particular no S*delta term is hidden.
 private theorem strip_rectangle_identity (u z h t S delta : ℚ) (i : Fin 6) :
