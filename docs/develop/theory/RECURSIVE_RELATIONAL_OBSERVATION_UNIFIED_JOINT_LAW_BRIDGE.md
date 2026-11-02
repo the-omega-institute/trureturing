@@ -2299,3 +2299,660 @@ time, boundary, memory and recursive observation remains unresolved
 by this finite result.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Nine invocations preserve the decision optimum but not the next-read law
+
+### 7.1 The nine-call experiment and its signed cylinders
+
+**Definition 7.1 (one more invocation of the same prepared endpoint).**
+Retain Definition 5.1, Assumption 5.2 and §6.1 in full, including the
+actual graphs (UJB.7502), all three $w$ coordinates, iid edge sampling
+with replacement, and the once-sampled full injections into $128$ and
+$256$ words. The installation and arbitrary measurable seed remain
+independent of the joint hidden preparation. Replace only the pathwise
+cap of eight actual original-root Read invocations by nine. Define
+$\mathcal A_9(N)$ and $V_9(N)$ by this replacement in (UJB.7801).
+Constants, repeats, absences, stopping and arbitrary finite original-root
+operands retain their original meanings and charges. No operation on
+an endpoint handle or on an injection table is added.
+
+A bit position is a triple of sample index, endpoint type and coordinate
+in its word. Distinct positions can have equal values because their
+actual endpoints or labels agree; their bits are not assumed independent.
+For a fixed list of $d$ distinct positions let $Z$ be its bit vector
+and set $D_Z(z)=\Pr_1(Z=z)-\Pr_0(Z=z)$.
+
+**Lemma 7.2 (at most one surviving character on nine positions).**
+For every public $N\ge4$ and every such fixed list,
+
+$$
+\begin{array}{ll}
+d\le7:&D_Z=0,\\
+d=8:&|D_Z(z)|\le\Delta,\\
+d=9:&|D_Z(z)|\le\Delta/2,
+\end{array}
+\qquad\Delta=\frac{56}{158731093125}.
+\tag{UJB.7901}
+$$
+
+For $d=9$, either $D_Z=0$ or there exist an eight-element subset $S$
+of the nine positions and $|c|\le\Delta$ such that
+
+$$
+D_Z(z)=\frac c2(-1)^{\sum_{a\in S}z_a}.
+\tag{UJB.7902}
+$$
+
+This does not assert that the remaining bit is conditionally fair under
+either source.
+
+Proof. The first line is Theorem 5.4. More generally the selected-field
+argument of §5.3 applies whenever at most three sample indices are
+touched on both types, even if more than seven coordinates are read:
+the paired equality core has at most three edges, all other selected
+endpoints are independent one-sided uniform vertices, and (UJB.7708)
+is the common full-injection channel. Thus its whole selected-bit law
+is common. A nonzero eight-position law must consequently touch four
+paired indices, exactly once in each of their eight endpoint roles.
+Lemma 6.1 gives its full-parity form with coefficient bounded by
+$\Delta$. Its coordinate-flip argument also supplies the necessary
+condition that each coordinate occurs evenly on each type separately.
+
+Apply finite Boolean Fourier expansion to the signed mass on nine bits.
+For $S\subseteq[9]$ its coefficient is
+
+$$
+\widehat D_Z(S)=2^{-9}\left(
+ \mathbb E_1(-1)^{\sum_{a\in S}Z_a}
+ -\mathbb E_0(-1)^{\sum_{a\in S}Z_a}\right).
+\tag{UJB.7903}
+$$
+
+All coefficients with $|S|\le7$ vanish by the common marginals. The
+full nine-position coefficient vanishes too: some coordinate on one
+endpoint type has odd multiplicity among nine total occurrences.
+Complementing that coordinate in every word of that type preserves
+each uniform full-injection law and negates the character. Each of
+its source expectations is therefore zero. The Fourier expansion and
+its uniform cube normalization are [O'Donnell, *Analysis of Boolean
+Functions*, Theorem 1.1 and Proposition 1.8](https://arxiv.org/abs/2105.10386v1).
+They apply to this real signed mass function, without requiring a
+uniform or independent observation law.
+
+It remains to count nonzero eight-position marginals. If there are at
+most three paired indices, none is nonzero. Otherwise there are exactly
+four, since five pairs require ten positions. Their eight endpoint
+roles leave one extra position. If this is a new one-sided sample,
+only its deletion can leave four complete pairs. If it is a second
+coordinate in an existing role, only deletion of one of that role's
+two positions can do so. Those two coordinates are distinct. On that
+type let $u$ be the sum in $\mathbb F_2^d$ of the coordinate basis
+vectors of the other three roles. Retaining coordinate $h$ satisfies
+the necessary even-multiplicity condition only when $u+e_h=0$.
+At most one of the two distinct coordinates can satisfy it. Thus at
+most one eight-position marginal survives in either case.
+
+For that marginal, if present, Lemma 6.1 gives signed mass
+$c(-1)^{\sum_{a\in S}z_a}$ with $|c|\le\Delta$. Its full character
+moment difference is $2^8c$, so (UJB.7903) gives nine-cube coefficient
+$c/2$. Fourier reconstruction now proves (UJB.7902). $\square$
+
+### 7.2 The adaptive plateau with actual invocation accounting
+
+**Theorem 7.3 (sharp nine-invocation plateau).** For every public
+$N\ge4$, under Definition 7.1,
+
+$$
+V_9(N)=V_8(N)=128\Delta=\frac{7168}{158731093125}.
+\tag{UJB.7904}
+$$
+
+The bound also holds with the independent installation and seed retained
+jointly with the complete stopped record. The original eight operands
+(UJB.7814) attain this at-most-nine maximum. The optimal equal-prior
+success and error are consequently still (UJB.7815).
+
+Proof. Fix $\omega=(J,U)$. Each control-consistent leaf has the single
+unconditional cylinder of its fixed operands and replies, as in
+(UJB.7812). Proposition 5.3 makes every operand constant on the whole
+promise or an invertible two-reply function of one bit position.
+Different operands can reveal the same bit; every invocation remains
+paid. Once a bit has been acquired, every later read of it is
+determined on the current promise cylinder.
+
+For counting cylinders only, suppress constant nodes and subsequent
+reads of previously acquired positions. Keep their original operands,
+replies and invocation charges as deterministic data on the path.
+This describes the same record; it does not grant a free operation.
+A leaf now has depth $d$ equal to its number of distinct acquired
+positions, at most its actual invocation count and hence at most nine.
+The tree is binary, with zero-mass branches optionally omitted, and
+the leaf cylinders are unchanged. Truncating at nine invocations also
+defines it on unsupported promise paths without changing any attained
+record. Stopping, retained state and operand choice add no source
+condition beyond the acquired path.
+
+For any binary tree with leaf depths $d_\ell$,
+$\sum_\ell2^{-d_\ell}\le1$: assign the root weight one and each
+child half its parent's weight, then sum terminal weights. Lemma 7.2
+gives on each leaf
+
+$$
+|\mu_1^N(C_\ell)-\mu_0^N(C_\ell)|
+ \le256\Delta\,2^{-d_\ell}.
+\tag{UJB.7905}
+$$
+
+At depths at most seven the left side is zero, at depth eight the
+right side is $\Delta$, and at depth nine it is $\Delta/2$. Hence
+
+$$
+\operatorname{TV}(\text{leaf law}_0,\text{leaf law}_1)
+ \le128\Delta\sum_\ell2^{-d_\ell}\le128\Delta.
+\tag{UJB.7906}
+$$
+
+The original complete record, including all suppressed paid calls,
+states and output, is a common function of the leaf and fixed seed.
+It has the same event bound. This covers unary nodes, zero calls,
+early stops, repeated coordinates, constants, absences and designs
+that differ between adaptive leaves.
+
+To include every admitted seed, put $\Theta=\mathcal C_N$,
+$p_i(t)=\mu_i^N(\{t\})$ and let $\Psi(\omega,t)$ be the complete
+record. This is measurable by finite induction through nine steps,
+padding stopped runs with a stop marker. Read is measurable on the
+countable discrete word space and finite discrete term space; all
+controller maps are measurable by hypothesis. For each measurable
+joint seed/record event $E$, joint independence gives
+
+$$
+\Pr_1((\omega,\Psi)\in E)-\Pr_0((\omega,\Psi)\in E)
+ =\int_\Omega\sum_{t\in\Theta}(p_1(t)-p_0(t))
+    \mathbf1_E(\omega,\Psi(\omega,t))\,d\nu(\omega).
+\tag{UJB.7907}
+$$
+
+The inner signed mass has absolute value at most $128\Delta$ for
+every $\omega$ by (UJB.7906). Integrating gives the joint TV bound.
+This finite-source argument needs no regular conditional distribution,
+standard-Borel assumption or completeness assumption on the seed
+space. Independence from the entire hidden preparation is essential;
+independence from $i$ alone would not give this product formula.
+Common measurable decoders preserve the event bound by inverse images.
+
+Finally $\mathcal A_8(N)\subseteq\mathcal A_9(N)$ and Theorem 6.2's
+eight-call protocol attains $128\Delta$. This proves equality, also
+for $N=4$, where a fifth sample is not available. The equal-prior
+formula follows exactly as in Corollary 6.3. The correspondence with
+[Maurer, *Indistinguishability of Random Systems*, Definitions 9–10
+and Lemma 4](https://crypto.ethz.ch/publications/files/Maurer02.pdf)
+is a stationary random Read function inside a common adaptive
+controller; it does not supply this source-specific ceiling. $\square$
+
+### 7.3 Positive equal-posterior histories with different ninth-read laws
+
+**Proposition 7.4 (the actual continuation obstruction).** Under the
+same contract, now with $N\ge5$, acquire the first coordinates in
+samples $1,\ldots,4$ by (UJB.7814). In endpoint-type block order write
+$Y=(L_1,L_2,L_3,L_4,R_1,R_2,R_3,R_4)$, and put
+
+$$
+B_+=\{Y=(0000,0000)\},\qquad
+B_-=\{Y=(1111,0000)\}.
+\tag{UJB.7908}
+$$
+
+Both histories are positive under both actual laws, have even parity
+and signed source discrepancy $+\Delta$, and satisfy
+$\Pr_i(B_+)=\Pr_i(B_-)$ for each $i=0,1$. Thus their source
+posteriors agree for every common prior $\theta=\Pr(i=1)\in[0,1]$,
+including $0$ and $1$. Nevertheless the actual ninth operand
+$R^{60}LL$, of length $62$, reads $L_5$ from the already prepared
+fifth sample and satisfies
+
+$$
+\Pr_i(L_5=0\mid B_+)=q_i>\frac12,\qquad
+\Pr_i(L_5=0\mid B_-)=1-q_i<\frac12,\qquad
+2q_i-1\ge\frac7{1143},
+\tag{UJB.7909}
+$$
+
+with exact values
+
+$$
+q_0=\frac{4405844809873481}{8604951131412990},\qquad
+q_1=\frac{4405845183168137}{8604951878002302}.
+\tag{UJB.7910}
+$$
+
+The mixed-prior continuation probabilities also differ by at least
+$7/1143$ for every $\theta\in[0,1]$. Neither terminal parity nor the
+complete posterior on $i$ therefore supplies this next-read kernel.
+
+Proof. Repeating one fixed actual edge on the first four draws has
+positive probability; assigning its left label first bit zero or one
+and its right label first bit zero has probability $1/4$. Thus both
+histories have positive actual probability, not just promise membership.
+Complementing the first coordinate in every left label is a
+probability-preserving bijection of full injections under each source.
+It sends $B_+$ to $B_-$ and complements $L_5$, giving equal event
+probabilities and complementary continuation probabilities. Lemma 6.1
+gives discrepancy $+\Delta$ because both parities are even.
+
+Let $K$ be the number of distinct actual left endpoints among the
+first four draws. On $B_+$, the $K=k$ labels all have first bit zero,
+leaving $64-k$ zero-bit labels among the $128-k$ unused labels. The
+fifth left endpoint is uniform on $72$ vertices and independent of the
+first four draws and injections. Given the first endpoints and labels,
+it hits their $k$ distinct vertices with probability $k/72$; otherwise
+the uniform full-injection extension supplies a zero bit with probability
+$(64-k)/(128-k)$. Past right-bit conditioning can change the law of
+$K$ but not this extension law, since the full injections are independent.
+Consequently
+
+$$
+\begin{aligned}
+g(k)&=\frac{k}{72}+\frac{(72-k)(64-k)}{72(128-k)}
+ =\frac12+\frac{56k}{144(128-k)},\\
+q_i&=\mathbb E_i[g(K)\mid B_+].
+\end{aligned}
+\tag{UJB.7911}
+$$
+
+Since $1\le K\le4$ and $k/(128-k)\ge1/127$, this gives
+$2q_i-1\ge56/(72\cdot127)=7/1143>0$.
+
+For a finite specification of the exact arithmetic, reuse
+$N_i(p,s)$ in (UJB.7603) and $f_Q(k)=(Q/2)_k/(Q)_k$. Put
+$W_i(p,s)=N_i(p,s)f_{128}(|p|)f_{256}(|s|)$. Then
+
+$$
+\Pr_i(B_+)=1944^{-4}\sum_{p,s}W_i(p,s),\qquad
+q_i=\frac{\sum_{p,s}W_i(p,s)g(|p|)}{\sum_{p,s}W_i(p,s)}.
+\tag{UJB.7912}
+$$
+
+The prescribed-equality counts in (UJB.7603) are products, over tree
+components with $u$ left and $v$ right vertices, of
+$1944\,8^{u-1}27^{v-1}$, except for the four-cycle with count
+$H_i$; here $H_0=209952$ and $H_1=419904$. Partition inversion uses
+$\mu(p,r)=\prod_{B\in r}(-1)^{k_B-1}(k_B-1)!$, where $k_B$ counts
+$p$-blocks in $B$. The resulting sums over the $15$ partitions per
+side give (UJB.7910) and
+
+$$
+\Pr_0(B_+)=\frac{5624151066283}{1383134192451000},\qquad
+\Pr_1(B_+)=\frac{478052882111239}{117566406358335000}.
+\tag{UJB.7913}
+$$
+
+Their difference is $\Delta$. All third $w$ coordinates and free
+$z$ multiplicities remain in these actual graph counts.
+
+Writing these positive event probabilities as $b_0,b_1$, the common
+source posterior is
+$r_\theta=\theta b_1/((1-\theta)b_0+\theta b_1)$. The two mixed
+continuation probabilities are $(1-r_\theta)q_0+r_\theta q_1$ and
+its complement. Their difference is a convex combination of the two
+positive gaps, proving the assertion also for known-source priors.
+
+This does not conflict with Theorem 7.3: source discrimination and
+next-read prediction are different tasks, and (UJB.7902) asserts no
+fair-bit condition under either individual source. Nor does it
+contradict
+[`posterior_future_policy_universal_sufficiency`](../../../D5/S3/Estimation/DecisionRisk/PosteriorFuturePolicySufficiency.lean)
+or [`PosteriorHistoryCompression`](../../../D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.lean).
+Those suppliers require a future kernel indexed by the chosen latent
+state and policy/experiment, independent of history once that state
+is fixed. Taking the state to be $i$ alone omits the shared injections
+and fails that premise here, even when $i$ is known. A full hidden
+state can supply the premise but is not an observer port. $\square$
+
+## 8. The exact thirty-five-class boundary for four future coordinate pairs
+
+### 8.1 The predictive task uses the actual prepared source
+
+**Definition 8.1 (fixed-coordinate histories and future laws).**
+Retain Definition 5.1, Assumption 5.2 and §6.1, now with public
+$N\ge8$, and fix the first coordinate on both endpoint types.
+For sample $j$ let $X_j=(\lambda(a_j)_1,\varrho(t_j)_1)$, in cell
+order $00,01,10,11$. Its two actual original-root operands are
+
+$$
+w_{A,j}=R^{15(j-1)}LL,\qquad
+w_{T,j}=R^{15(j-1)+7}LL.
+\tag{UJB.8001}
+$$
+
+Future indices are distinct already prepared but unread indices;
+there is no new draw, reset, rerooting, map access or fresh injection.
+Fix a public prior $\theta=\Pr(i=1)\in[0,1]$. For a particular
+ordered acquired history $h=(X_1,\ldots,X_4)$ let $n_c(h)$ count
+cell $c$, so $\sum_cn_c=4$. The target law is
+$K_\theta(h)=\mathcal L_\theta(X_5,\ldots,X_8\mid h)$.
+A deterministic predictive summary $S$ supplies this exact law if
+$K_\theta$ is a function of $S(h)$ at every positive acquired history.
+
+For realized full injections define
+$A_0=\{a:\lambda(a)_1=0\}$, $T_0=\{t:\varrho(t)_1=0\}$,
+$L=|A_0|$, $D=|T_0|$, $C=|E_i\cap(A_0\times T_0)|$, and
+
+$$
+q=\frac1{1944}(C,\ 27L-C,\ 8D-C,\ 1944-27L-8D+C).
+\tag{UJB.8002}
+$$
+
+These are the four edge proportions by the actual degrees in
+(UJB.7503). Conditional on $i$ and the full injections, the $X_j$
+are iid categorical with parameter $q$ because the original edge
+draws are independent uniform draws with replacement. This is a
+conditional representation, not a new categorical sampling port.
+Let $\nu_i$ be the finite pushforward law of $q$ under the original
+full injections and put $\nu_\theta=(1-\theta)\nu_0+\theta\nu_1$.
+For each nonnegative integer vector $n$ define
+
+$$
+Z_\theta(n)=\int q^n\,d\nu_\theta(q),\qquad
+q^n=\prod_cq_c^{n_c},\qquad 0^0=1.
+\tag{UJB.8003}
+$$
+
+These finite sums treat arbitrary real $\theta$ as a fixed mathematical
+parameter; they do not supply an effective exact-real oracle.
+
+### 8.2 A common positive support in both actual graph laws
+
+**Lemma 8.2 (a nonsingular grid of actual cuts).** For each actual
+source separately, $\operatorname{supp}\nu_i$ contains these $125$
+distinct, strictly positive-cell vectors of (UJB.8002):
+
+$$
+L=36+x+y,\qquad D=120+z,\qquad C=480+12x+15y+4z,
+\qquad x,y,z\in\{0,1,2,3,4\}.
+\tag{UJB.8004}
+$$
+
+The affine map to $(L,D,C)$ has determinant $-3$, and its subsequent
+map to $\sum_cq_c=1$ is invertible. The support is consequently
+present under every $\theta\in[0,1]$, including $0$ and $1$.
+
+Proof. Use the actual sets
+$A=(\mathbb F_3^2\setminus\{0\})\times\mathbb F_3^2$ and
+$T=\mathbb F_3^3\times\mathbb F_3^2$. Set $v_+=(1,0)$ and
+$v_-=(2,0)=-v_+$. Both actual bilinear maps satisfy
+
+$$
+B_i(v_+,w)=(w_1,w_2),\qquad
+B_i(v_-,w)=-(w_1,w_2),\qquad i=0,1.
+\tag{UJB.8005}
+$$
+
+The base left cut comprises all nine $s$ values for each
+$v\in\{(0,1),(0,2),(1,1),(1,2)\}$. It has size $36$ and exactly
+four neighbors at each right vertex, one $s=B_i(v,w)$ for each of
+those four $v$. This holds in both graphs, without identifying their
+other incidences.
+
+Partition $\mathbb F_3^2$ into
+
+$$
+\begin{aligned}
+P&=\{(0,1),(0,2),(1,0),(1,1)\},\\
+Q&=\{(1,2),(2,0),(2,1),(2,2)\},\qquad\{(0,0)\}.
+\end{aligned}
+$$
+
+For each $s$, the right fiber
+$T_s=\{(w,z):(w_1,w_2)=s\}$ has $27$ vertices: three choices of
+$w_3$ and nine of $z$. Order each fiber and let the base right cut
+contain its first $12$ vertices for $s\in P$, first $15$ for $s\in Q$,
+and first $12$ for $s=(0,0)$. Its size is $120$. Fix four reserved
+vertices among the $15$ unused vertices in $T_{(0,0)}$.
+
+Add the first $x$ vertices of $\{(v_+,s):s\in P\}$ and first $y$
+vertices of $\{(v_-,-s):s\in Q\}$ to the base left cut. Add the
+first $z$ reserved vertices to the base right cut. Each new left
+vertex has respectively $12$ or $15$ neighbors in the base right cut,
+by (UJB.8005). None is adjacent to a reserved vertex, since neither
+$P$ nor $Q$ contains zero. Every reserved right vertex has four
+neighbors in the base left cut. Thus the three sizes and the cut
+count are exactly (UJB.8004), with no $xz$ or $yz$ terms.
+
+These cuts are actual possible zero-bit preimages of full injections.
+Here $36\le L\le44$, so both $L$ and $72-L$ are at most $64$;
+$120\le D\le124$, so $D$ and $243-D$ are at most $128$. For a
+specified left cut its probability of being exactly the zero-bit
+preimage is
+
+$$
+\frac{(64)_L(64)_{72-L}}{(128)_{72}}>0;
+$$
+
+for a specified right cut the probability is
+$(128)_D(128)_{243-D}/(256)_{243}>0$. The full maps are independent,
+so each cut pair and its $q$ have positive actual probability under
+each source. No unused label coordinate has been deleted or redrawn.
+
+The four cell numerators are
+
+$$
+\begin{aligned}
+1944q_{00}&=480+12x+15y+4z,\\
+1944q_{01}&=492+15x+12y-4z,\\
+1944q_{10}&=480-12x-15y+4z,\\
+1944q_{11}&=492-15x-12y-4z.
+\end{aligned}
+\tag{UJB.8006}
+$$
+
+Their grid minima are respectively $480,476,372,368$, hence positive.
+Also
+
+$$
+\det\begin{pmatrix}1&1&0\\0&0&1\\12&15&4\end{pmatrix}=-3.
+\tag{UJB.8007}
+$$
+
+The inverse from $q$ is $C=1944q_{00}$,
+$L=72(q_{00}+q_{01})$ and $D=243(q_{00}+q_{10})$.
+It proves nonsingularity and distinctness. Every mixture of the two
+laws retains these positive support masses, including either unmixed
+endpoint. $\square$
+
+### 8.3 Exact conditional-law separation and minimality
+
+**Theorem 8.3 (exactly thirty-five predictive classes).** Under
+Definition 8.1, for every fixed public $N\ge8$ and fixed public prior
+$\theta\in[0,1]$, all $256$ ordered acquired histories are positive,
+and
+
+$$
+K_\theta(h)=K_\theta(h')\quad\Longleftrightarrow\quad n(h)=n(h').
+\tag{UJB.8008}
+$$
+
+The next-four-pair conditional law therefore has exactly $35$ values.
+The count is sufficient for every remaining fixed-coordinate sample
+sequence through $N$. At the completed-four-pair boundary, $35$ is
+the minimum number of values of a deterministic summary supplying
+those exact laws. Count and future-law value determine one another
+on their realized images.
+
+Proof. For a particular ordered acquired word with counts $n$, the
+conditional iid representation gives probability $Z_\theta(n)$.
+Its joint probability with a particular ordered future word on distinct
+unread indices, with counts $m$, is $Z_\theta(n+m)$. Hence
+
+$$
+\Pr_\theta(\text{that ordered future word}\mid h)
+ =\frac{Z_\theta(n+m)}{Z_\theta(n)}.
+\tag{UJB.8009}
+$$
+
+There is no multinomial factor for a particular ordered word. If only
+future counts are requested, multiply by $|m|!/\prod_cm_c!$.
+Lemma 8.2 gives positive mass at positive-cell $q$, so
+$Z_\theta(n)>0$ for every $n$. Thus every ordered history is positive.
+Formula (UJB.8009) proves sufficiency for every remaining length at
+most $N-4$, and equality of counts implies equality of future laws.
+All indices in this formula are originally prepared draws.
+
+Conversely suppose two next-four-pair laws agree. Write $Z=Z_\theta$
+and $n=n(h)$, $n'=n(h')$. The polynomial
+
+$$
+f(q)=\frac{q^n}{Z(n)}-\frac{q^{n'}}{Z(n')}
+\tag{UJB.8010}
+$$
+
+is homogeneous of degree four. For every $|m|=4$, choose one ordered
+future word with counts $m$. Equality in (UJB.8009) gives
+$\int q^mf(q)\,d\nu_\theta(q)=0$. In particular this holds for
+$m=n$ and $m=n'$, so
+
+$$
+\int f(q)^2\,d\nu_\theta(q)
+ =\frac1{Z(n)}\int q^nf(q)\,d\nu_\theta(q)
+ -\frac1{Z(n')}\int q^{n'}f(q)\,d\nu_\theta(q)=0.
+\tag{UJB.8011}
+$$
+
+This finite nonnegative sum forces $f$ to vanish at every positive
+support point, in particular all $125$ points of Lemma 8.2. The
+positive Gram/moment argument and finite interpolation are mature
+algebraic tools; compare [Laurent, *Sums of Squares, Moment Matrices
+and Polynomial Optimization*, Lemma 2.3](https://homepages.cwi.nl/~monique/files/moment-ima-update-new.pdf).
+The degree bound for this actual support can be verified directly.
+
+Compose $f$ with the affine map (UJB.8004)–(UJB.8006), obtaining a
+polynomial $g(x,y,z)$ of total degree at most four, vanishing on
+$\{0,1,2,3,4\}^3$. Fixing grid values of $(y,z)$ gives a polynomial
+of degree at most four in $x$ with five roots, hence identically zero.
+Its coefficients in $x$ vanish on all grid pairs $(y,z)$. Repeating
+the five-root argument first in $y$ and then in $z$ forces every
+coefficient to vanish. Thus $g$ vanishes on $\mathbb R^3$.
+Nonsingularity from Lemma 8.2 implies $f=0$ on the whole hyperplane
+$\sum_cq_c=1$. For any $r\in(0,\infty)^4$ and $s=\sum_cr_c$,
+homogeneity gives $f(r)=s^4f(r/s)=0$. A polynomial vanishing on the
+positive open orthant is identically zero, by successively applying
+the univariate root identity to each coordinate. Distinct monomials
+$q^n$ and $q^{n'}$ are linearly independent, and both denominators
+are positive, so (UJB.8010) is identically zero only if $n=n'$.
+This proves (UJB.8008) in both directions.
+
+There are $\binom{4+4-1}{4-1}=35$ nonnegative four-cell counts of total
+four. Each is realized by a positive ordered word, and (UJB.8008)
+makes their laws distinct. Any deterministic summary supplying those
+laws must separate every pair of different counts, requiring $35$
+values. The count attains that bound. Its induced map to the
+future-law image is a bijection, proving the mutual-recovery assertion.
+
+The separation principle is the existing
+[`causal_state_factorization`](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean):
+unequal future laws force unequal sufficient-summary values. The
+conditional-future equivalence corresponds to [Shalizi and Crutchfield,
+*Computational Mechanics: Pattern and Prediction, Structure and
+Simplicity*, Definition 5, equation (16), Lemma 7 and Theorem 2](https://arxiv.org/abs/cond-mat/9907176v2).
+Their stationary entire-past, almost-sure entropy minimality is not
+transferred as this finite cardinality theorem. The actual-source
+support and degree-four separation establish the exact $35$ here;
+general factorization alone supplies no such count. $\square$
+
+### 8.4 Dynamic updates, paid acquisition and the recovery boundary
+
+**Proposition 8.4 (task-specific memory and native costs).** At each
+completed-pair boundary in Definition 8.1 the count updates by
+
+$$
+n\longmapsto n+e_c\quad\text{on acquiring the next pair }c.
+\tag{UJB.8012}
+$$
+
+At the completed-four-pair boundary its exact deterministic predictive
+name needs and admits six fixed-width bits. This is a naming payload,
+not total observer memory. Acquiring the past four pairs costs eight
+invocations, total literal operand length $224$, maximum $54$.
+The ninth-read witness adds one length-$62$ invocation, for nine
+invocations and length sum $286$. The next four pairs cost eight
+further invocations, length sum $704$, maximum $114$; all eight pairs
+therefore cost sixteen invocations and length sum $928$. Native
+preparation still requires exactly $75N+4$ events, with its original
+separate external costs.
+
+Proof. The next completed cell multiplies the hidden likelihood
+$q^n$ by $q_c$, yielding $q^{n+e_c}$ and (UJB.8012). After $j$
+completed pairs there are at most $\binom{j+3}{3}$ count values,
+giving a naming upper bound $\lceil\log_2\binom{j+3}{3}\rceil$
+bits when $j$ is separately known. No minimality assertion at other
+boundaries is needed. At $j=4$, Theorem 8.3 requires all $35$ names,
+and $2^5<35\le2^6$ proves the exact fixed-width bound. Enumerating
+those $35$ vectors gives an encoding; their finite conditional laws
+give a mathematical decoder for fixed $\theta$, not an efficient
+exact-real computation theorem for arbitrary priors.
+
+Pair halves are acquired in separate paid invocations. An unmatched
+reply, its type and the public query cursor are separate state. The
+completed-pair count does not specify them or predict a partly matched
+continuation. Packed-name updates, operand construction and evaluation
+of finite sums can need further workspace. The bound includes none
+of that workspace, the installed controller, law descriptions, seed,
+output representation or preparer memory.
+
+The past operand lengths are $2,9,17,24,32,39,47,54$. Sample five's
+first left bit is at slot $61$, giving $R^{60}LL$ of length $62$.
+For samples five through eight the lengths are
+$62,69,77,84,92,99,107,114$, summing to $704$. Every word is read from
+the same original root. Invocation charges are not replaced by distinct
+field counts or word lengths; they also do not pay for constructing,
+storing or navigating operands. Proposition 5.3's preparation events,
+external iid edge sampling, both full injection tables, installation,
+isolated handoff, computation, decoding and all other memory keep their
+separate costs. Theorem 7.3 covers the full native menu, including paid
+repeats, constants and absences; this fixed schedule concerns only the
+named predictive task. $\square$
+
+**Proposition 8.5 (the exact recovered relation and its exclusions).**
+For each fixed prior in Theorem 8.3, the four-cell count, the next-four
+fixed-coordinate pair law, and the laws of all remaining fixed-coordinate
+sequences are mutually recoverable on their realized images. Proposition
+7.4's two actual histories lie in different classes despite their equal
+source posteriors and terminal parity. These equivalences do not give
+historical reconstruction or full native-menu sufficiency.
+
+Proof. The count determines every remaining law by (UJB.8009). Their
+collection includes the next-four law because $N\ge8$, and that law
+determines the count by (UJB.8008). For $B_+$ and $B_-$ the counts are
+respectively $(4,0,0,0)$ and $(0,0,4,0)$. Proposition 7.4 gives their
+equal source posteriors and parity but unequal actual future marginal.
+The ordered words $(00,00,01,01)$ and $(00,01,00,01)$ have the same
+count and are both positive, but distinct ordered histories. This
+explicitly prevents historical reconstruction from that count.
+
+Those last two histories also have different acquired right bits at
+sample two. Rereading that original-root slot with one paid invocation
+returns different deterministic bits. Their full native continuation
+laws therefore differ, despite equal laws for unread fixed-coordinate
+pairs. Thus the count is not sufficient for the full native menu.
+No factorization for other coordinates, matched old slots or unmatched
+pair halves is inferred. The $35$-value bound concerns deterministic
+summaries returning the history-specific exact law; it is not a lower
+bound for randomized generation of an averaged future law. Forgetting
+the realized history changes the prediction task.
+
+All recovery maps here are finite mathematical maps for a fixed prior,
+not operations obtaining the hidden injections, free endpoint handles
+or an exact real prior. The common full-tree overlap of Definition 5.1
+and §§5–6's resource boundaries still apply. The source-specific
+additions are the odd-character nine-call ceiling, the positive
+same-posterior continuation obstruction, and the actual cut-support
+separation yielding $35$ classes. The Fourier, random-system,
+Bayesian-mixture, interpolation and causal-state principles are reused;
+no new general theorem in those subjects or worldwide novelty is
+asserted. These are ordinary conditional mathematical proofs, not
+Lean-verified declarations. They identify a particular predictive
+boundary and its memory expression; mutual recovery of space, time,
+boundary, memory and recursive observation under the full original
+operations remains unresolved. $\square$
+
+## 追加锚（本行以下为增补区）
