@@ -212,14 +212,6 @@ def mixedComponentMap (P : Parameters) (p : ℕ) (hp : p < 2)
   Quotient.lift (dartComponent P p hp S)
     (fun _ _ h => mixedReach_component P p hp S h)
 
-theorem mixedComponentMap_surjective (P : Parameters) (p : ℕ) (hp : p < 2)
-    (S : Finset (Crossing P)) : Function.Surjective (mixedComponentMap P p hp S) := by
-  intro c
-  induction c using SimpleGraph.ConnectedComponent.ind with
-  | h v =>
-    induction v using Quotient.inductionOn with
-    | h x => exact ⟨mixedCircle P p S x,rfl⟩
-
 /-- This is the implication needed in the rank-increasing surgery case. -/
 theorem distinct_reference_components_force_distinct_mixed_circles
     (P : Parameters) (p : ℕ) (hp : p < 2) (S : Finset (Crossing P))

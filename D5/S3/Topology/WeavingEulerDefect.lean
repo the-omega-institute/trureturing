@@ -379,28 +379,12 @@ theorem mixed_circle_exponent (P : Parameters) (p : ℕ) (hp : p < 2)
     0 ≤ (Nat.card (Circle P p) : ℤ) - 1 + (S.card : ℤ) - 2 * (q P p hp S : ℤ) ∧
     (Nat.card (MixedCircle P p S) : ℤ) - 1 =
       (Nat.card (Circle P p) : ℤ) - 1 + (S.card : ℤ) - 2 * (q P p hp S : ℤ) := by
-  have h := mixed_circle_count P p hp S
-  have hc := mixed_card_pos P p S
-  constructor <;> omega
-
-/-- Only after saturation do we conclude that a weaving switch is nonzero. -/
-theorem mixed_insert_exact (P : Parameters) (p : ℕ) (hp : p < 2)
-    (S : Finset (Crossing P)) (z : Crossing P) (hz : z ∉ S) :
-    (Nat.card (MixedCircle P p (insert z S)) : ℤ) -
-        (Nat.card (MixedCircle P p S) : ℤ) =
-      1 - 2 * ((q P p hp (insert z S) : ℤ) - (q P p hp S : ℤ)) ∧
-    ((Nat.card (MixedCircle P p (insert z S)) : ℤ) -
-      (Nat.card (MixedCircle P p S) : ℤ) = 1 ∨
-     (Nat.card (MixedCircle P p (insert z S)) : ℤ) -
-      (Nat.card (MixedCircle P p S) : ℤ) = -1) := by
-  have hold := mixed_circle_count P p hp S
-  have hnew := mixed_circle_count P p hp (insert z S)
-  rw [Finset.card_insert_of_notMem hz, Nat.cast_add, Nat.cast_one] at hnew
   constructor
-  · omega
-  · rcases q_insert_eq_or P p hp S z with hq | hq
-    · left; omega
-    · right; omega
+  · have h := mixed_circle_count_nat P p hp S
+    have hc := mixed_card_pos P p S
+    omega
+  · have h := mixed_circle_count P p hp S
+    omega
 
 end
 end D5.S3.Topology.WeavingEulerDefect

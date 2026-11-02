@@ -142,7 +142,7 @@ def familyRegistration : Registration arena.{u} sourceScope.{u} where
     exact law_forces_dependence actual actual_positive
 
 noncomputable def countRegistration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
       (@colored_switch_circle_count.{u}) (Realization signature.{u}) (Type (u+1)) Unit where
   unitName := `D5.S3.Topology.ColoredMatchingSwitch.colored_switch_circle_count.__information_unit
   realizationName := `Reg.D5.S3.Topology.ColoredMatchingSwitch.familyRegistration

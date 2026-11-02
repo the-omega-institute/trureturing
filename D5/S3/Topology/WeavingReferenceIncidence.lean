@@ -25,16 +25,6 @@ def vertexCode (P : Parameters) (p : ℕ) (hp : p < 2) : Circle P p → ℕ × Z
 @[simp] theorem vertexCode_circle (P : Parameters) (p : ℕ) (hp : p < 2)
     (x : Dart P) : vertexCode P p hp (circle P p x) = code P p x := rfl
 
-theorem vertexCode_injective (P : Parameters) (p : ℕ) (hp : p < 2) :
-    Function.Injective (vertexCode P p hp) := by
-  intro x y
-  induction x using Quotient.inductionOn with
-  | h a =>
-    induction y using Quotient.inductionOn with
-    | h b =>
-      intro h
-      exact Quotient.sound ((reach_iff_code P p hp a b).mpr h)
-
 def endpointCodes (P : Parameters) (p : ℕ) (hp : p < 2) (a : Crossing P) :=
   (vertexCode P p hp (edgeEnds P p a.1 a.2).1,
    vertexCode P p hp (edgeEnds P p a.1 a.2).2)
