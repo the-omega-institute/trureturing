@@ -2499,3 +2499,427 @@ makes no exhaustive novelty claim; these are ordinary mathematical
 arguments, not Lean validation.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. Paid tail editing for current-term recovery
+
+**Definition 30.1 (settled record and actual edit resources).** Retain
+Definition 23.1's known initial alpha and **every** finite legal history
+of the actual addressed operations
+$P_p:\alpha\to\beta$ and
+$S_p:\beta\to\langle\beta,\alpha\rangle$, with beta on the left.
+Only the record interface changes. A deterministic recorder $R$ starts
+with $J_R(\varepsilon)=\varepsilon$. After an actual enabled event $e$
+it transforms $J_R(h)$ to $J_R(he)$ by a finite sequence of unit-cost
+operations: POP deletes the last bit of a nonempty word, and
+APPEND$(b)$ appends one bit $b\in\{0,1\}$. It must satisfy, at every
+settled cut,
+
+$$
+\operatorname{Dec}_R(U(t(h)),J_R(h))=t(h).
+\tag{IV.82}
+$$
+
+The whole finite word and its end are visible. Intermediate words need
+not decode. Fixed code is common to all histories. Update uses only
+$(U(t(h)),J_R(h),e)$, with finite separately paid transient scratch
+cleared before the next settled cut. There is no other retained variable
+channel: no controller register, event counter, old output, address
+roster, allocation chronology, archived word, or advice available to
+update or decoding. In particular scratch capacity cannot encode usable
+advice between cuts. The observation $U$ is the same unordered coloured
+rooted input as before, not a newly acquired physical port. Its leaf
+counts supply the grade $n=a+2c-1=|h|$ by Proposition 23.2.
+
+Let $c_R(h,e)$ be the number of **actual** POPs and APPENDs in this
+update, including any detours. For $h=e_1\cdots e_N$ put
+
+$$
+T_R(h)=\sum_{i=1}^N c_R(e_1\cdots e_{i-1},e_i),\qquad
+T_R^{\max}(N)=\max_{|h|=N}T_R(h).
+\tag{IV.83}
+$$
+
+Let $p_R(h)$ be the maximum record length at any settled cut or
+intermediate record edit along $h$, including the initial empty word,
+and put $P_R^{\max}(N)=\max_{|h|=N}p_R(h)$. These maxima exist: at a
+fixed grade there are finitely many legal addressed histories, each with
+finitely many record edits. Scratch, source access, source edits,
+arithmetic, execution time and cleared allocated capacity are separately
+paid; neither (IV.83) nor $p_R$ measures their total cost. No old-cut or
+full-history inverse is required. The literal-prefix contract (IV.70)
+and all earlier full-history problems retain their own definitions.
+
+**Theorem 30.2 (balanced promotion forces cumulative actual edits).**
+For every admissible deterministic recorder $R$, every integer $d\ge0$,
+$m=2^d$, and every legal prefix $h_0$ ending at $Q_d(0)$, some legal
+continuation $v$ of exactly $m$ actual promotions ends at $Q_d(m)$ and
+satisfies
+
+$$
+T_R(h_0v)-T_R(h_0)\ge A_d,
+\qquad A_d=\frac{dm}{2}-m+1.
+\tag{IV.84}
+$$
+
+Here $A_0=A_1=0$; strict growth is an asymptotic conclusion, not a claim
+at those two depths. For every $R$ and every integer $N\ge63$, there is
+a legal history of **exactly** $N$ events with
+
+$$
+T_R(h)\ge\frac{N+1}{32}\log_2\frac{N+1}{8}.
+\tag{IV.85}
+$$
+
+Thus $T_R^{\max}(N)=\Omega(N\log N)$ uniformly over recorders, even
+though a paid POP can shorten the retained word.
+
+**Proof.** The graph of finite binary words, with an edge from $x$ to
+$x0$ and $x1$, is a tree of maximum degree three. Its graph distance is
+
+$$
+\delta(x,y)=|x|+|y|-2|\operatorname{lcp}(x,y)|.
+\tag{IV.86}
+$$
+
+Indeed every route must first delete to the longest common prefix and
+then reach the other word; that route attains the displayed length.
+Consequently every actual editing sequence costs at least $\delta$.
+For integer $r\ge0$ a distance ball about any word contains at most
+
+$$
+1+\sum_{i=1}^r3\cdot2^{i-1}=3\cdot2^r-2
+\tag{IV.87}
+$$
+
+words: at most three first edges and at most two forward edges at each
+subsequent shell. This is the usual finite-degree metric counting
+argument; no prefix-free coding premise is involved.
+
+Suppose a selected prefix $h_k$ has quotient $U_{d,k}$, with $k<m$,
+and write $\ell_k=d-\operatorname{pop}(k)$. Theorem 28.2 applies to
+**every** current ordered representative, not only to $Q_d(k)$. It gives
+$2^{\ell_k}$ actual enabled promotions with distinct ordered outputs and
+the same next quotient $U_{d,k+1}$. Their settled record words are
+pairwise distinct by (IV.82). If $\ell_k\ge2$, the ball of radius
+$\ell_k-2$ about the one current word contains at most
+$3\cdot2^{\ell_k-2}-2<2^{\ell_k}$ words. Some successor therefore has
+distance at least $\ell_k-1$, and its actual update costs at least that
+much. If $\ell_k=1$ or $0$, nonnegativity supplies the weaker bound
+$\max(\ell_k-1,0)$. Select a successor satisfying this bound and repeat.
+The uniform outgoing lemma permits all $m$ choices on one nested
+history, with no change of the previously selected prefix.
+
+Only $k=m-1$ has $\ell_k=0$. For $d\ge1$, the popcount sum (IV.78)
+therefore gives
+
+$$
+\sum_{k=0}^{m-1}\max(\ell_k-1,0)
+=\sum_{k=0}^{m-1}\ell_k-(m-1)
+=\frac{dm}{2}-m+1.
+\tag{IV.88}
+$$
+
+For $d=0$ the sum and the displayed expression are both zero. At the
+end Theorem 28.2 forces the common ordered term $Q_d(m)$, whose grade
+is $4m-1$. Additivity of actual edit counts proves (IV.84). It does not
+assert that the final record has length $A_d$; erasure can remove it.
+
+For a prescribed $N\ge63$, take the largest power of two
+$m=2^d\le(N+1)/4$. Reach $Q_d(0)$ by any legal prefix and then use
+(IV.84). Here $d\ge4$, so $A_d\ge dm/4$, and
+$m>(N+1)/8$. If $r=N-(4m-1)$ is positive, append the $r$ actual splits
+at $L^{d+1},L^{d+2},\ldots,L^{d+r}$, as in Corollary 29.1. The first
+operand is beta in $Q_d(m)$ and each split creates the next left beta,
+so this is legal padding to exactly $N$. Cumulative cost cannot decrease
+under padding, regardless of subsequent POPs. Comparing the nonnegative
+logarithms yields (IV.85). The selected promotion history may depend on
+$R$; the unpadded terminal term does not. $\square$
+
+## 31. A uniform recorder with linear peak payload
+
+**Definition 31.1 (grade-determined snapshot blocks).** Reuse the
+constructor serialization of
+[AAII Definition 54.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#54-a-destructive-probe-acquires-both-the-entry-and-its-real-endpoint):
+$\sigma(\alpha)=00$, $\sigma(\beta)=01$, and
+$\sigma(\langle v,w\rangle)=10\sigma(v)\sigma(w)$.
+The tags are parsed in preorder. One pending subtree slot is replaced
+by two at a branch and filled at a leaf, so the first return to zero
+pending slots uniquely ends the serialized tree. A tree with $L$ leaves
+has $2L-1$ vertices. In particular a grade-$b$ native term has
+
+$$
+|\sigma(t)|=4L-2\le4b+2,
+\tag{IV.89}
+$$
+
+since each split adds one leaf and hence $L\le b+1$. These serialization
+and parsing facts are existing suppliers, not additional claims of
+coding novelty.
+
+For each integer $j\ge0$, put
+
+$$
+M_j=2^j,\qquad B_j=\max\left(1,
+\left\lfloor\frac{2^j}{j+1}\right\rfloor\right),\qquad
+\mathcal S_j=\{M_j+qB_j:q\ge0,\ M_j+qB_j<2M_j\}.
+\tag{IV.90}
+$$
+
+The positive snapshot grades are $\mathcal S=\bigcup_{j\ge0}\mathcal S_j$.
+For $n\ge1$, $b(n)$ is the largest snapshot grade at most $n$; set
+$b(0)=0$. All these quantities are computed from the current grade,
+without a retained schedule index or a supplied horizon.
+
+At grade $n\ge1$ the maintained word consists of
+$\sigma(t(h_{b(n)}))$ followed by the AAII94 ordinal chunks for just
+the events after that prefix. Here $h_i$ denotes the length-$i$ prefix
+of the actual history. Precisely,
+
+$$
+J_*(h)=\sigma(t(h_{b(n)}))
+\prod_{i=b(n)+1}^{n}\operatorname{bin}_{w_i}(r_i),
+\qquad w_i=\lceil\log_2L_i\rceil,
+\quad J_*(\varepsilon)=\varepsilon,
+\tag{IV.91}
+$$
+
+where concatenation is chronological, and $r_i,L_i$ are the actual
+pre-event logical leaf rank and leaf count of AAII Definition 94.1.
+There is no stored block header, width, event kind or historical cut
+marker. The empty initial word is treated separately at grade zero.
+
+**Theorem 31.2 (computable attainment on all histories).** There is one
+computable, horizon-independent recorder $R_*$ realizing (IV.91), with
+update from exactly $(U,J,e)$ and cleared finite paid scratch, such that
+(IV.82) holds for every legal finite history. There are absolute
+constants $C_T,C_P$ such that, for every integer $N\ge1$ and every
+legal history $h$ of exactly $N$ events,
+
+$$
+T_*(h)\le C_T N\log_2(N+2),\qquad p_*(h)\le C_P N.
+\tag{IV.92}
+$$
+
+The peak includes every intermediate word during snapshot rewriting.
+The assertion bounds cumulative edits, not the maximum individual
+update by $O(\log N)$.
+
+**Proof.** Given $(U,J)$ at a settled cut, first compute $n=a+2c-1$.
+If $n=0$, return the known alpha from the empty word. Otherwise compute
+$b=b(n)$ and parse the first complete $\sigma$ tree from the head of
+$J$. On the actual image this is precisely the grade-$b$ snapshot in
+(IV.91); parsing supplies its end without an extra delimiter. Starting
+from that ordered tree in scratch, replay exactly $n-b$ ordinal chunks.
+At each iteration the scratch tree determines its ordered logical leaves,
+$L_i$, the width $w_i$, and the leaf of the encoded rank. That leaf has
+exactly one enabled kind, $P$ at alpha and $S$ at beta, and its ordered
+position gives the address. Apply that edit in scratch. The induction in
+[AAII Theorem 94.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#94-a-raw-ordinal-stream-and-its-source-conditioned-inverse)
+uses only equality of the starting scratch tree and the actual starting
+tree. With the snapshot as its base, it therefore recovers each actual
+subsequent tree and consumes exactly the suffix in (IV.91). Zero-width
+iterations still advance the known replay count. It ends at the actual
+current term, proving (IV.82). In particular this use of replay does not
+assume an ordered current-source input: $U$ supplies only the stopping
+grade, just as in the adapter of Theorem 29.2.
+
+For update, decode the old ordered term from $(U,J)$ in scratch and
+locate the supplied actual event $e=(\mathrm{kind},p)$. Its guard is
+satisfied because it is an actual enabled event. Compute its pre-event
+rank, width and new term in scratch. If $n+1\notin\mathcal S$, append
+exactly its padded ordinal chunk. Then $b(n+1)=b(n)$, so (IV.91) is
+preserved. If $n+1\in\mathcal S$, prepare $\sigma(t(he))$ in scratch,
+POP every bit of the old word, and APPEND every bit of that serialization
+in order. The new word is the snapshot with empty suffix required by
+$b(n+1)=n+1$. Every POP and APPEND is charged; neither deletion of the
+old snapshot nor copying of the new one is free. This includes the first
+event: grade one is a snapshot grade and its word is $\sigma(\beta)$.
+The actual source event is supplied, not selected by the recorder.
+
+The input tree and word are finite. Parsing, addressed lookup,
+simulation, rank calculation, schedule arithmetic, and each finite replay
+therefore terminate with finite backing. The prepared snapshot and all
+replay trees, cursors, ranks, counters, event data and schedule data are
+transient paid scratch, cleared before the next settled cut. During the
+busy update only scratch supports the finite discrepancy; intermediate
+records need not satisfy (IV.82). No earlier snapshot is retained
+elsewhere after rewriting. Thus neither the construction nor its inverse
+uses a hidden persistent clock, tree copy or auxiliary advice.
+
+For the resource bounds fix a current grade $M=2^j\le n<2M$.
+Its last snapshot grade $b$ is in this same epoch, and $0\le n-b<B_j$.
+Before event $i\le n$ the leaf count is at most $i\le n<2^{j+1}$,
+so each chunk has at most $j+1$ bits. Hence
+
+$$
+|J_*(h)|\le4b+2+(B_j-1)(j+1)
+\le8M+2+M\le11n.
+\tag{IV.93}
+$$
+
+At a snapshot rewrite, the record first decreases to empty and then
+grows to the new serialization. Its length never exceeds the larger of
+the old and new settled lengths. A non-snapshot append is monotone in
+length. Applying (IV.93) also to earlier settled grades proves
+$p_*(h)\le11N$, including the initial word and all busy intermediates.
+An output buffer in scratch is separately paid, not an extra uncounted
+record channel at a settled cut.
+
+There are exactly $M$ new event grades in $[M,2M)$. The non-snapshot
+appends there cost at most $M(j+1)$ altogether. Since $2^j\ge j+1$,
+$B_j\ge M/(2(j+1))$, and the number of snapshot grades is
+$\lceil M/B_j\rceil\le2(j+1)+1$. At a snapshot grade $s$ the actual
+rewrite costs
+
+$$
+|J_*(h_{s-1})|+|\sigma(t(h_s))|
+\le11(s-1)+4s+2\le17s<34M.
+\tag{IV.94}
+$$
+
+Thus the entire epoch, or any partial epoch starting at $M$, costs at
+most a fixed constant times $M(j+1)$. If $2^K\le N<2^{K+1}$,
+
+$$
+\sum_{j=0}^K 2^j(j+1)
+\le(K+1)(2^{K+1}-1)\le2N(K+1)
+=O(N\log_2(N+2)).
+\tag{IV.95}
+$$
+
+This proves (IV.92) with constants independent of $N$, the history and
+any future horizon. It proves no bound on all separately paid resources.
+$\square$
+
+## 32. Optimal orders and the chronology boundary
+
+**Theorem 32.1 (linear necessary peak and joint attainment of orders).**
+For every admissible deterministic recorder $R$ and every integer
+$N\ge4$,
+
+$$
+P_R^{\max}(N)\ge m_N>\frac{N+1}{10},\qquad
+m_N=\max\{2^k:5\cdot2^k-1\le N\}.
+\tag{IV.96}
+$$
+
+Together with Theorems 30.2 and 31.2, this says explicitly
+
+$$
+\begin{aligned}
+&\exists c_T,c_P>0\ \exists N_0\ \forall R\ \forall N\ge N_0:\quad
+T_R^{\max}(N)\ge c_TN\log_2N,\quad P_R^{\max}(N)\ge c_PN,\\
+&\exists\text{ one computable }R_*\ \exists C_T,C_P>0\
+\forall N\ge1\ \forall h\ (|h|=N):\quad
+T_*(h)\le C_TN\log_2(N+2),\quad p_*(h)\le C_PN.
+\end{aligned}
+\tag{IV.97}
+$$
+
+Thus the same recorder attains the optimal asymptotic orders in the two
+coordinates. The two maxima in the first line are separate: their
+witness histories need not coincide.
+
+**Proof.** Use $A_0,A_1$ and $B_k$ from (IV.71), with $m=2^k$.
+The existing current-orientation count (IV.64), as applied in Theorem
+27.2, gives exactly $2^m$ reachable ordered terms over
+$U(B_k(A_0))$, independently choosing $A_0$ or $A_1$ at each bottom
+block. They have $a=m,c=2m$, hence all have grade $5m-1$. Choose one
+legal history for each ordered term. By (IV.82) their settled record
+words must be distinct. Words of lengths zero through $m-1$ number
+only $2^m-1$. At least one of these histories therefore has a settled
+record of length at least $m$, without any prefix-free assumption.
+
+Take $m=m_N$. Extend that witnessing history by exactly
+$N-(5m-1)$ further events, if needed, by repeatedly splitting its current
+leftmost beta leaf. Such a leaf exists and every split creates the next
+left beta, so any required finite extension is legal. The earlier
+length-$m$ word remains in the **peak** even if later updates erase it.
+Maximality of the power of two gives $2m>(N+1)/5$, proving (IV.96).
+The lower uses the orientation fibre, not the much larger full-history
+fibre. Apply (IV.85) for the other coordinate and (IV.92) for the one
+common upper recorder to obtain (IV.97). This compares orders of these
+two worst-case resources; it supplies no sharp constants, full Pareto
+frontier or total-resource optimum. $\square$
+
+**Proposition 32.2 (current recovery can discard full native history).**
+The recorder $R_*$ need not determine the full addressed history from
+$(U,J_*)$. There are two distinct legal histories of grade seven with
+the same ordered endpoint and the same $J_*$. In contrast $Q_0(1)$ has
+a unique full history.
+
+**Proof.** Start with the legal five-event prefix
+
+$$
+h_0=P_\varepsilon S_\varepsilon S_L P_R S_R.
+\tag{IV.98}
+$$
+
+Its successive terms are $\alpha$, $\beta$, $C$,
+$\langle C,\alpha\rangle$, $\langle C,\beta\rangle$, and
+$\langle C,C\rangle$. Thus all guards use the actual beta-left native
+rules. The two continuations $P_{LR}P_{RR}$ and $P_{RR}P_{LR}$ promote
+the two different right alpha leaves in opposite orders, reaching in
+both cases
+$\langle\langle\beta,\beta\rangle,\langle\beta,\beta\rangle\rangle
+=Q_1(2)$. They are distinct addressed histories. Grade seven belongs to
+$\mathcal S_2$, since $M_2=4$ and $B_2=1$. At that cut (IV.91) is
+just the serialization of the common current term, with no journal
+suffix. The pair $(U,J_*)$ is therefore identical for these histories,
+so it cannot recover their different chronologies. On the other hand,
+the only history of $Q_0(1)=\langle\beta,\beta\rangle$ is
+$P_\varepsilon S_\varepsilon P_R$, as also checked in Theorem 28.3.
+Consequently a singleton ordered endpoint must not be described as
+having nonunique histories without an additional native instance.
+$\square$
+
+## 33. Suppliers and the extent of the paid-tail conclusion
+
+**Definition 33.1 (source correspondence and literature scope).**
+The native domain, source-derived grade and orientation fibres are
+[AA17/19](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md)
+and §§23–26; Theorem 28.2 is the uniform outgoing balanced-promotion
+supplier used in (IV.84). The literal-prefix accumulation of Theorem
+28.3 is not a paid-tail lower bound: (IV.86)–(IV.88) replace that step.
+AAII Definition 54.1 supplies constructor serialization; AAII Definition
+94.1 and Theorem 94.2 supply the ordinal journal and replay induction,
+with Theorem 29.2's weaker $U$-input correspondence. Here their replay
+base is an explicitly retained current-term snapshot, so histories before
+that base are not reconstructed.
+
+Finite-degree ball counting, finite-word capacity, serialization,
+finite-set ranking, and balancing snapshot cost against short journals
+are general methods. Cover,
+[*Enumerative Source Encoding*, §§I–II, Proposition 1 and its inverse](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+supplies the classical ranking perspective already used for the static
+fibres. The recorder (IV.91) uses the existing constructor and ordinal
+serializations rather than claiming a new enumerative coding theorem.
+
+Varshney–Kusuma–Goyal,
+[*Malleable Coding: Compressed Palimpsests*, §§IV, VI–VII](https://arxiv.org/abs/0806.4722v1),
+formulate correlated random blocks and costs in a codeword edit metric;
+their general metric formulation and coding results are relevant prior
+work. Their
+[*Malleable Coding with Fixed Reuse*, §III and Theorem 1](https://arxiv.org/abs/0809.0737v2),
+uses independent drawings of correlated symbol pairs, block codes with
+vanishing error, and a fixed reused prefix portion. Neither stochastic
+block contract supplies the exact deterministic all-history native
+quantifiers, the uniform actual addressed successors, or the grade-based
+snapshot/replay construction in (IV.97). Conversely (IV.97) makes no
+claim about their stochastic rate regions. The additional deduction is
+the source-specific uniform synthesis under (IV.82), not the general
+coding suppliers or an exhaustive originality claim.
+
+The result concerns present ordered contents, cumulative actual tail
+edits, and maximum retained word length, with all busy word lengths
+counted. It neither strengthens the original append-only record contract
+nor solves a full-history task. Actual physical acquisition of $U$,
+source-bound operand authority, acknowledgements and return, separately
+paid computation and work backing retain their original premises. In
+particular a mathematical address supplies no new physical port. The
+exact all-$k$ worst-individual-update question remains unresolved here:
+the amortized estimate (IV.95) is not an every-step logarithmic bound.
+No sharp constants, complete Pareto frontier, total resource optimality
+or Lean verification is asserted by these ordinary arguments.
+
+## 追加锚（本行以下为增补区）
