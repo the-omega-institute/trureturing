@@ -6,11 +6,10 @@
    utility: none
    digest: Full orthonormal qudit tomography has NHCRB at most d+1 times HCRB. -/
 
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import D5.S3.Quantum.Matrix.LinGProperty.ArithmeticBound
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 import D5.S3.Resource.LogDet.PathSpectralClassical
-import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-!
 For a full Hilbert–Schmidt orthonormal basis of traceless Hermitian matrices,
@@ -305,24 +304,12 @@ private lemma covariance_hermitian {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
 private lemma covariance_psd {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
     (hρ : ρ.PosSemidef) {b : Fin n → Matrix (Fin d) (Fin d) ℂ}
     (hb : ∀ j, (b j).IsHermitian) : (zMatrix ρ b).PosSemidef := by
-  classical
-  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (covariance_hermitian hρ.1 hb)
-  intro v
-  let a := ∑ j, v j • b j
-  have he : star v ⬝ᵥ (zMatrix ρ b *ᵥ v) = (a * ρ * aᴴ).trace := by
-    simp only [a, conjTranspose_sum, conjTranspose_smul, (hb _).eq,
-      Matrix.sum_mul, Matrix.smul_mul, Matrix.mul_smul,
-      trace_sum, trace_smul, smul_eq_mul, dotProduct, mulVec, zMatrix,
-      Pi.star_apply, Finset.mul_sum, Matrix.mul_assoc]
-    apply Finset.sum_congr rfl
-    intro j _
-    apply Finset.sum_congr rfl
-    intro k _
-    rw [trace_mul_comm (b k) (ρ * b j)]
-    simp only [mul_assoc]
-    ring
-  rw [he]
-  exact (hρ.mul_mul_conjTranspose_same a).trace_nonneg
+  letI := ρ.toMatrixSeminormedAddCommGroup hρ
+  letI := ρ.toMatrixInnerProductSpace hρ
+  convert Matrix.posSemidef_gram ℂ b using 1
+  ext j k
+  change (ρ * b j * b k).trace = (b k * ρ * (b j)ᴴ).trace
+  rw [(hb j).eq, trace_mul_cycle]
 
 private lemma norm_contraction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℂ)
     (ha : a.IsHermitian) (hp : (1 + (2 : ℂ) • a).PosSemidef)
