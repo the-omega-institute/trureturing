@@ -1,0 +1,45 @@
+### 定理 13.1（精确内部噪声阈值）
+
+上述修订资料具有共同密度态，当且仅当
+
+<a id="eq-c92-noise-criterion"></a>
+
+$$
+1-\eta+\eta\alpha\ge0.
+\tag{13.2}
+$$
+
+因此最大保留比例及最小噪声比例分别为
+
+<a id="eq-c92-noise-threshold"></a>
+
+$$
+\eta_*=
+ \begin{cases}
+ 1,&\alpha\ge0,\\[2pt]
+ \dfrac1{1-\alpha},&\alpha<0,
+ \end{cases}
+ \qquad
+ \varepsilon_*=1-\eta_*=
+ \begin{cases}
+ 0,&\alpha\ge0,\\[2pt]
+ \dfrac{-\alpha}{1-\alpha},&\alpha<0.
+ \end{cases}
+\tag{13.3}
+$$
+
+**证明。**
+修订后的响应为
+$\ell_\eta=\eta\ell+(1-\eta)\operatorname{Tr}(\tau\,\cdot)$。
+对任意非零 $W\in\mathcal S_+$，令
+$\widehat W=W/\operatorname{Tr}(\tau W)\in\mathcal B_\tau$，则
+
+$$
+\ell_\eta(W)
+ =\operatorname{Tr}(\tau W)\bigl[1-\eta+\eta\ell(\widehat W)\bigr].
+$$
+
+所以它对所有正关系非负，当且仅当式 [(13.2)](#eq-c92-noise-criterion) 成立。
+调用 C92 正延拓定理，并解这一个线性不等式，得到阈值公式。
+最优值的存在由 $\alpha$ 的极值达到与正延拓共同保证，未使用未经说明的强对偶假设。
+
