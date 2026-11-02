@@ -1026,8 +1026,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   -- an ordinary assessment of current compiled artifacts, even on hot replay.
   let result ← if request.informationApplication.isSome then do
     profilePhase "probe/information-start"
-    let (current, _, _) ← importSource (owners.map fun owner => {module := owner})
-    let information ← acquireInformation current request.target request.additions
+    let information ← acquireInformationFromOwners owners request.target request.additions
       request.informationApplication
     profilePhase "probe/information-end"
     pure (withInformation result information)

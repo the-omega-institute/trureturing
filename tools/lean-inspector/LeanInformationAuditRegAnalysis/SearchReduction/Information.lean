@@ -139,17 +139,16 @@ private def readFace (store : RawArtifacts.Store) (state : ArtifactRegistration.
 
 /-- The ordinary assessor is rerun on this exact compiled request. Its typed
 records accompany the optional reading; no receipt or JSON is read as evidence. -/
-unsafe def acquireInformation (source : Environment) (target : Name)
+unsafe def acquireInformationFromOwners (owners : Array Name) (target : Name)
     (structures : Array Name) (application : Option Name) : IO InformationReading := do
   let some name := application | return {}
   let reader ← IO.mkRef ({} : RawArtifacts.Store)
   try
-    let some index := source.getModuleIdxFor? name
-      | throw <| IO.userError "application_owner_missing"
-    let owner := source.header.moduleNames[index.toNat]!
-    RawArtifacts.loadModule owner reader
+    for owner in owners do RawArtifacts.loadModule owner reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     let store ← reader.get
+    let some owner := store.owners.find? name
+      | throw <| IO.userError "application_owner_missing"
     let some info := store.constants.find? name
       | throw <| IO.userError "application_missing"
     -- Reject unregistered sources before paying for ordinary reassessment.
@@ -180,5 +179,15 @@ unsafe def acquireInformation (source : Environment) (target : Name)
       ordinaryRecords := records}
   catch error => return {face := .notBound error.toString, application := some name}
   finally RawArtifacts.release reader
+
+/-- The ordinary environment supplies ownership only. Assessment always reads
+current compiled artifacts through the same extension-free reader. -/
+unsafe def acquireInformation (source : Environment) (target : Name)
+    (structures : Array Name) (application : Option Name) : IO InformationReading := do
+  let some name := application | return {}
+  let some index := source.getModuleIdxFor? name
+    | return {face := .notBound "application_owner_missing", application := some name}
+  acquireInformationFromOwners #[source.header.moduleNames[index.toNat]!]
+    target structures application
 
 end LeanInformationAudit.SearchReduction
