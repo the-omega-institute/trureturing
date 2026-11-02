@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus]
    utility: none
-   digest: A finite causal square identity transports actual primitive energy to exponential atomic coercivity. -/
+   digest: Finite causal squares control exponential atomic energy by actual primitive moments. -/
 
 import D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 import D5.S3.Analytic.MomentOrthogonalPrimitiveGap
@@ -143,7 +143,7 @@ private lemma prefix_moments (x : I → ℝ) (a : I → ℂ) (D : ℝ)
     calc
       _ = ((∫ t in l..D, t ^ r : ℝ) : ℂ) := by
         simp only [← Complex.ofReal_pow, intervalIntegral.integral_ofReal]
-      _ = _ := by rw [integral_pow]; push_cast
+      _ = _ := by rw [integral_pow]; push_cast; rfl
   calc
     _ = ∫ t in Icc 0 D, «prefix» x a t * (t : ℂ) ^ r := by
       apply integral_congr_ae
@@ -185,11 +185,11 @@ private lemma response_eq (lam : ℝ) (hlam : lam ≠ 0)
   apply Finset.sum_congr rfl
   intro i _
   by_cases hi : x i ≤ t
-  · rw [if_pos hi, if_pos hi, max_eq_left (sub_nonneg.mpr hi)]
+  · rw [ite_eq_left hi, ite_eq_left hi, max_eq_left (sub_nonneg.mpr hi)]
     push_cast
     field_simp [hlam, hlc]
     <;> ring
-  · rw [if_neg hi, if_neg hi, max_eq_right (by linarith : t - x i ≤ 0)]
+  · rw [ite_eq_right hi, ite_eq_right hi, max_eq_right (by linarith : t - x i ≤ 0)]
     simp
 
 /-- Right derivatives include atoms at the evaluation point, matching the
@@ -203,15 +203,16 @@ private lemma ramp_right (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
   by_cases hi : x i ≤ t
   · have hd : HasDerivWithinAt (fun y : ℝ => a i * ((y - x i : ℝ) : ℂ))
         (a i) (Ioi t) t := by
-      simpa using (((hasDerivAt_id t).sub_const (x i)).ofReal_comp.const_mul (a i)).hasDerivWithinAt (s := Ioi t)
+      simpa using (((hasDerivAt_id t).sub_const (x i)).ofReal_comp.const_mul (a i)).hasDerivWithinAt
+        (s := Ioi t)
     have ht : max (t - x i) 0 = t - x i := max_eq_left (sub_nonneg.mpr hi)
-    simpa only [if_pos hi, mul_one] using hd.congr
+    simpa only [ite_eq_left hi, mul_one] using hd.congr
       (fun y hy => by rw [max_eq_left (by linarith [show t < y from hy] : 0 ≤ y - x i)])
       (by rw [ht])
   · have hit : t < x i := lt_of_not_ge hi
     have hd : HasDerivWithinAt (fun _ : ℝ => (0 : ℂ)) 0 (Ioi t) t :=
       (hasDerivAt_const t (0 : ℂ)).hasDerivWithinAt
-    simp only [if_neg hi]
+    simp only [ite_eq_right hi]
     apply hd.congr_of_eventuallyEq
     · filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hit)] with y hy
       rw [max_eq_right (by linarith [show y < x i from hy] : y - x i ≤ 0)]
@@ -228,19 +229,20 @@ private lemma resolvent_right (lam : ℝ) (hlam : lam ≠ 0)
   intro i _
   by_cases hi : x i ≤ t
   · have hd := (((hasDerivAt_const t (1 : ℝ)).sub
-        ((((hasDerivAt_id t).sub_const (x i)).const_mul (-lam)).exp)).div_const lam).ofReal_comp.const_mul (a i)
+        ((((hasDerivAt_id t).sub_const (x i)).const_mul (-lam)).exp)).div_const lam)
+        .ofReal_comp.const_mul (a i)
     have hd' : HasDerivWithinAt
         (fun y : ℝ => a i * (((1 - Real.exp (-lam * (y - x i))) / lam : ℝ) : ℂ))
         (a i * (Real.exp (-lam * (t - x i)) : ℂ)) (Ioi t) t := by
       have he : (0 - Real.exp (-lam * (t - x i)) * (-lam * 1)) / lam =
           Real.exp (-lam * (t - x i)) := by field_simp; ring
       simpa only [Pi.sub_apply, id_eq, he] using hd.hasDerivWithinAt (s := Ioi t)
-    simp only [if_pos hi]
+    simp only [ite_eq_left hi]
     exact hd'.congr
       (fun y hy => by rw [max_eq_left (by linarith [show t < y from hy] : 0 ≤ y - x i)])
       (by rw [max_eq_left (sub_nonneg.mpr hi)])
   · have hit : t < x i := lt_of_not_ge hi
-    simp only [if_neg hi]
+    simp only [ite_eq_right hi]
     apply ((hasDerivAt_const t (0 : ℂ)).hasDerivWithinAt).congr_of_eventuallyEq
     · filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hit)] with y hy
       rw [max_eq_right (by linarith [show y < x i from hy] : y - x i ≤ 0)]
@@ -345,7 +347,7 @@ private lemma causal_pair (lam D l r : ℝ) (hlam : 0 < lam)
       (if r ≤ t then Real.exp (-lam * (t - r)) else 0)) = (Ici m).indicator F := by
     ext t
     by_cases hl' : l ≤ t <;> by_cases hr' : r ≤ t <;>
-      simp [Set.indicator, F, m, hl', hr', max_le_iff]
+      simp [Set.indicator, F, m, hl', hr']
   have hm : m ∈ Icc (0 : ℝ) D := ⟨le_max_of_le_left hl.1, max_le hl.2 hr.2⟩
   have hint : (∫ t in Icc 0 D, (Ici m).indicator F t) = ∫ t in m..D, F t := by
     rw [setIntegral_indicator measurableSet_Ici]
@@ -418,7 +420,7 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
       integrable_finsetSum Finset.univ (fun i _ =>
         integrable_finsetSum Finset.univ (fun j _ => hi i j))
     have h' := h.congr (ae_of_all _ (fun t => (hs t).symm))
-    simpa using h'.re
+    simpa only [← Complex.ofReal_pow, Complex.ofReal_re] using h'.re
   have hint : ((∫ t in Icc 0 D, ‖response lam x a t‖ ^ 2 : ℝ) : ℂ) =
       ∑ i, ∑ j, star (a i) * a j * ((∫ t in Icc 0 D, p i t * p j t : ℝ) : ℂ) := by
     rw [← integral_complex_ofReal]
@@ -433,7 +435,7 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
         (p i D : ℂ) * (p j D : ℂ) := by
     have h := congrArg Complex.ofReal
       (causal_pair lam D (x i) (x j) hlam (hx i) (hx j)).2
-    simpa only [p, if_pos (hx i).2, if_pos (hx j).2, Complex.ofReal_add,
+    simpa only [p, ite_eq_left (hx i).2, ite_eq_left (hx j).2, Complex.ofReal_add,
       Complex.ofReal_mul, Complex.ofReal_ofNat] using h.symm
   have hid : (∑ i, ∑ j, star (a i) * a j * (Real.exp (-lam * |x i - x j|) : ℂ)) =
       (2 * lam : ℂ) * ((∫ t in Icc 0 D, ‖response lam x a t‖ ^ 2 : ℝ) : ℂ) +
@@ -447,7 +449,9 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
     intro j _
     ring
   refine ⟨hsq, ?_⟩
-  simpa using congrArg Complex.re hid
+  simpa only [← Complex.ofReal_pow, Complex.add_re, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, Complex.ofNat_re, Complex.ofNat_im,
+    mul_zero, zero_mul, add_zero, sub_zero] using congrArg Complex.re hid
 
 /-- The finite-interval analytic bridge, with both nonnegative error terms
 explicit. Every integral and endpoint is derived from the actual atoms. -/
@@ -524,8 +528,9 @@ private lemma primitive_exponential_identity (lam D : ℝ) (hlam : 0 < lam)
     simp_rw [hZ, square_sub]
     change (∫ t in Icc 0 D, ((fun t => ‖A t‖ ^ 2) -
       (fun t => 2 * lam * (star (g t) * A t).re)) t + lam ^ 2 * ‖g t‖ ^ 2) = _
-    rw [integral_add (hA2.sub (hJ.const_mul (2 * lam))) (hg2.const_mul (lam ^ 2)),
-      integral_sub hA2 (hJ.const_mul (2 * lam)), integral_const_mul, integral_const_mul]
+    rw [integral_add (hA2.sub (hJ.const_mul (2 * lam))) (hg2.const_mul (lam ^ 2))]
+    simp only [Pi.sub_apply]
+    rw [integral_sub hA2 (hJ.const_mul (2 * lam)), integral_const_mul, integral_const_mul]
   have hEB : EB = Eg + 2 * lam * L + lam ^ 2 * Eh := by
     have he (t : ℝ) : ‖B t‖ ^ 2 = ‖g t‖ ^ 2 +
         2 * lam * (star (h t) * g t).re + lam ^ 2 * ‖h t‖ ^ 2 := by
@@ -539,8 +544,9 @@ private lemma primitive_exponential_identity (lam D : ℝ) (hlam : 0 < lam)
     simp_rw [he]
     change (∫ t in Icc 0 D, ((fun t => ‖g t‖ ^ 2) +
       (fun t => 2 * lam * (star (h t) * g t).re)) t + lam ^ 2 * ‖h t‖ ^ 2) = _
-    rw [integral_add (hg2.add (hL.const_mul (2 * lam))) (hh2.const_mul (lam ^ 2)),
-      integral_add hg2 (hL.const_mul (2 * lam)), integral_const_mul, integral_const_mul]
+    rw [integral_add (hg2.add (hL.const_mul (2 * lam))) (hh2.const_mul (lam ^ 2))]
+    simp only [Pi.add_apply]
+    rw [integral_add hg2 (hL.const_mul (2 * lam)), integral_const_mul, integral_const_mul]
   have hZD : ‖Z D‖ ^ 2 = lam ^ 2 * ‖g D‖ ^ 2 := by
     rw [hZ, show A D = 0 from prefix_above x a ha D (fun i => (hx i).2),
       zero_sub, norm_neg, norm_mul, Complex.norm_real, Real.norm_eq_abs, mul_pow, sq_abs]
