@@ -1,0 +1,37 @@
+**定义 30.1（The preserved scale-dependent union）。** In the common
+domain of Definition 26.1, retain its sets $\mathcal M$,
+$\mathcal B$, $\mathcal C$, $\mathcal L_S$, $\mathcal F_s$ and
+$\mathcal C_{\diamond}$ without altering any of their graph
+or scale hypotheses. In particular $\mathcal L_1=\varnothing$
+and $\mathcal L_S=\mathcal L$ for $S\geq2$. For the global
+flat-least-mode graph in $\mathcal F_s$, write
+$\ell=-\lambda_{\min}(A(H))$, $\Delta=\max_i\deg_H(i)$,
+$T=m+2$, and
+
+$$
+s_H=2\left\lceil2^{18}(\Delta/\ell)^2T^3\right\rceil.
+$$
+
+Both original scale alternatives remain: either $s\geq s_H$,
+or simultaneously
+
+$$
+s\geq4T,\qquad
+\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2>0.
+\tag{30.1}
+$$
+
+With $\mathcal C_{\mathrm{mp}}$ exactly as in Definition 28.1,
+put
+
+$$
+\begin{aligned}
+\mathcal U_s^{\rm mp}
+ &=\mathcal U_s^{\rm diamond}\cup\mathcal C_{\mathrm{mp}}\\
+ &=\mathcal M\cup\mathcal B\cup\mathcal C\cup\mathcal L_S
+    \cup\mathcal F_s\cup\mathcal C_{\diamond}
+    \cup\mathcal C_{\mathrm{mp}},\qquad s=2S\geq2.
+\end{aligned}
+\tag{30.2}
+$$
+

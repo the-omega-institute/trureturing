@@ -114,7 +114,7 @@ internal sealed class MultipartiteEntangledMeasurementPartialTightnessDocument :
                         + "The clock and shift matrices are unitary; closure under powers and "
                         + "products makes every local encoding unitary.")),
                     Paragraph(Text(
-                        "The Fourier vectors in distinct sectors have disjoint support. Within one sector, their inner "
+                        "The shared Fourier vectors and sector_basis theorem of AbsolutePPT.Bipartite give orthonormality. Distinct sectors have disjoint support. Within one sector, their inner "
                         + "product is d⁻¹ times the sum of χ(t(c − a)) over t. Character orthogonality makes this one "
                         + "when a = c and zero otherwise. In particular g(0,0) is normalized, and its outer product "
                         + "is a positive semidefinite density matrix of trace one, the generalized GHZ state. "
