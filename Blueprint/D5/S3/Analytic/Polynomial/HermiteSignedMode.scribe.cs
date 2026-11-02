@@ -67,7 +67,7 @@ internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("hermite-signed-mode-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("hermite-signed-mode-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));

@@ -7,8 +7,10 @@
    digest: Absolute coefficient modes of physicists Hermite polynomials. -/
 
 /-
-Intended admission_basis: open-problem-resolution, OEIS A381524 revision 18.
-Stage A is unfrozen. No escape witness or delivered resolution is asserted here.
+admission_basis: open-problem-resolution (#25789), OEIS A381524 revision 18.
+escape_witness: none. The complete external assertion is the admission basis.
+proof_shape: content for weight_le_mode, weight_lt_mode, b_spec and result;
+all other theorem helpers are bind-only, with live consumers in these proofs.
 The original physicists polynomial and signed coefficient supplier are reused.
 -/
 
