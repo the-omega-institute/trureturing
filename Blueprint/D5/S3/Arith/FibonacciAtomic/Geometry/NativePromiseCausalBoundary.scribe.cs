@@ -8,6 +8,11 @@ internal sealed class NativePromiseCausalBoundaryDocument : IScribeDocumentDefin
         "Every all-assignment promised comb has native causal histories and distinct legal serial orders.",
         H("Native promise causal boundary"), Blocks(
         Paragraph(Text("C is the original ActualImageSevenLeafSeparation.E=(beta,alpha). D0 is the original FourExitRawEndpointSpectrum.z=(beta,C), and D1 is ActualImageSevenLeafSeparation.A=(C,beta). The marker is ((C,alpha),alpha), using NativeFreshSensorGrowth.cone false. promise N z is the unchanged right comb with 15N slots and that marker. Every assignment z from Fin(15N) to Bool is included; no sampled-support, group, sampler, controller or independence premise restricts the family.")),
+        Paragraph(Text("Original Lean suppliers: "),
+            Ref("D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation"), Text(" (E and A); "),
+            Ref("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum"), Text(" (z and comb); "),
+            Ref("D5/S3/Arith/FibonacciAtomic/Geometry/NativeFreshSensorGrowth"), Text(" (cone and original run_append); "),
+            Ref("D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair"), Text(" (original context_run and D_mul).")),
         Describe.Lean(DescribeId.Create("native-promise-causal-boundary"),
             DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Geometry/NativePromiseCausalBoundary.result"),
             H("All promised assignments and the causal versus serial boundary"),
