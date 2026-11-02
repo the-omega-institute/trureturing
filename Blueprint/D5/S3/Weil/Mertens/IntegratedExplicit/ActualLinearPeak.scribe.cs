@@ -135,11 +135,11 @@ internal sealed class ActualLinearPeakDocument : IScribeDocumentDefinition
         var bound = new Formula.Relation(new Formula.Absolute(Call("K", t)),
             FormulaRelationOperator.LessThanOrEqual,
             Multiply(c, Call("exp", Multiply(beta, new Formula.Absolute(t)))));
-        var growth = new Formula.Bind(FormulaQuantifier.Forall, FormulaIdentifier.Create("beta"), real,
+        var growth = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("beta"), real,
             new Formula.Logic(positiveBeta, FormulaLogicOperator.Implies,
                 new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("C"), real,
                     new Formula.Logic(positiveC, FormulaLogicOperator.And,
-                        new Formula.Bind(FormulaQuantifier.Forall, FormulaIdentifier.Create("t"), real, bound)))));
+                        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("t"), real, bound)))));
         return Disp(new Formula.Logic(growth, FormulaLogicOperator.Implies,
             Seq(Operatorname, Grp(F.Id("RiemannHypothesis")))));
     }

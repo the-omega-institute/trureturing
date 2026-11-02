@@ -79,8 +79,7 @@ is not used to justify dependence of the actual observation. -/
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro role
   obtain ⟨n, x, y, hxy⟩ :=
-    _root_.Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
-      .actual_dependence ()
+    _root_.Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.actual_dependence ()
   by_contra hh
   push Not at hh
   apply hxy
