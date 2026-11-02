@@ -15,16 +15,25 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
         "Cyclic translations supply the orthogonal matrices, difference labels, and sum-indexed shield vectors required for the second family in every dimension.",
         H("Second-family data in every dimension"),
         Blocks(
-            Node("multiplicity", "The nonzero difference-fiber multiplicity", MultiplicityFormula(),
+            Node("multiplicity", "The nonzero label-fiber multiplicity", MultiplicityFormula(),
                 "For a natural dimension d, a real array a on pairs of Fin d and a label array μ on the same pairs, multiplicity a μ m is the finite cardinality of the subtype of pairs p whose value a p.1 p.2 is nonzero and whose label μ p.1 p.2 equals m. This is the number N_m of nonzero pairs in the m-th label fiber. The source introduces these fibers in TeX lines 606–614."),
-            Node("tVec", "The difference-indexed shield vector", TVecFormula(),
-                "For each label m, tVec a μ m is the complex-valued vector on pairs that equals the real coefficient a p.1 p.2 divided by the square root of d when the pair is nonzero and has label m, and is zero otherwise. This is the coordinate form of the vectors t_m in Definition 2, TeX lines 627–631."),
-            Node("partialTransposeB", "Partial transpose on the second pair coordinate", PartialTransposeFormula(),
-                "The map partialTransposeB sends a matrix indexed by pairs (i,j) to the matrix whose entry at (p,q) is the original entry at ((p.1,q.2),(q.1,p.2)). It is the partial transpose on the second factor of each pair, written entrywise."),
-            Node("IsSecondFamilyData", "The requirements for second-family data", IsSecondFamilyDataFormula(),
-                "IsSecondFamilyData d q qbar μ a s collects the formal requirements of Definition 2. Every q j is orthogonal, the rows qbar m are orthonormal, and q k i j factors as a i j times qbar at the label μ i j. Every nonzero coefficient satisfies the prescribed square law d divided by its fiber multiplicity. The vectors s m are orthonormal in the complex pair space, and the partial transpose of their projector sum equals the projector sum formed from tVec. These are the orthogonality, factorization, normalization, and shield requirements stated at TeX lines 567–571, 594–640."),
+            Node("tVec", "The label-indexed vector", TVecFormula(),
+                "For each label m, tVec a μ m is the complex-valued vector on pairs whose coordinate at p equals a p.1 p.2 divided by the square root of d, with both real quantities coerced to complex numbers, when that coefficient is nonzero and μ p.1 p.2=m; the coordinate is zero otherwise. This is the coordinate form of the vectors t_m in Definition 2, TeX lines 627–631."),
+            Describe.Lean(
+                DescribeId.Create("second-family-all-dimensions-issecondfamilydata"),
+                DeclarationHandle.Create(Prefix + "IsSecondFamilyData"),
+                H("The requirements for second-family data"),
+                StatementSource.FromAuthor(Disp(IsSecondFamilyDataFormula())),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "IsSecondFamilyData d q qbar μ a s collects the formal requirements of Definition 2. Every q j is orthogonal, the rows qbar m are orthonormal, and q k i j equals a i j times qbar (μ i j) k. Every nonzero coefficient has square d divided by the multiplicity of its label fiber. The vectors s m are orthonormal in the complex pair space, and the partial transpose of their projector sum equals the projector sum formed from tVec. These are the orthogonality, factorization, normalization, and shield requirements stated at TeX lines 567–571, 594–640.")),
+                    Paragraph(Text("The shield identity uses "),
+                        Ref("D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite.partialTranspose"),
+                        Text(", the second-factor partial transpose: its entry at (p,q) is the input entry at ((p.1,q.2),(q.1,p.2))."))),
+                DescribeRole.Definition),
             Node("claim", "Existence of second-family data", ClaimFormula(),
-                "The preregistered formal reading of the source's question at TeX line 674 asks for such data for every natural d at least two. The witnesses are d real matrix-valued functions q, d real orthonormal coordinate functions qbar, a label function μ, a real coefficient function a, and d complex shield vectors s; they satisfy IsSecondFamilyData."),
+                "The claim asks for second-family data for every natural dimension d at least two, as in the source's question at TeX line 674. Its five witnesses are a family q of d real d-by-d matrices, a family qbar of d real vectors on Fin d, a label function μ on pairs, a real coefficient function a on pairs, and a family s of d complex vectors on pairs. The witnesses satisfy all six requirements of IsSecondFamilyData."),
             Describe.Lean(
                 DescribeId.Create("second-family-all-dimensions-result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -37,8 +46,10 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
                             + "The shift is bijective because Fin d is identified with ZMod d; the permutation-matrix multiplication identity then gives (Qᵏ)ᵀQᵏ=1.")),
                     Paragraph(Text(
                         "Set μ i j to be the cyclic difference j−i in ZMod d, transported back to Fin d, set a i j=1, and let qbar m be the m-th coordinate vector. "
-                            + "The shift factorization says Qᵏ i j = a i j qbar (μ i j) k. Each nonzero label fiber is parametrized bijectively by its first coordinate, so its multiplicity is d and the square law for a is d/d=1. "
+                            + "Thus Qᵏ i j is one exactly when j=i+k, equivalently k=μ i j, and the shift factorization says Qᵏ i j = a i j qbar (μ i j) k. The map i ↦ (i,i+m) parametrizes the m-th label fiber bijectively, so its multiplicity is d and the square law for a is d/d=1. "
                             + "The coordinate vectors qbar are orthonormal by a finite case split on their labels.")),
+                    Paragraph(Text(
+                        "For these witnesses, tVec at label m has coefficient (sqrt d)⁻¹ on pairs with j−i=m and zero elsewhere. All sums and differences of pair coordinates are taken modulo d.")),
                     Paragraph(Text(
                         "Define the shield vector at label m by the constant coefficient (sqrt d)⁻¹ on pairs with i+j=m in the cyclic group and zero elsewhere. "
                             + "Changing the second coordinate by a fixed first coordinate reindexes the finite sum, proving the shield vectors are orthonormal; the identity (sqrt d)²=d supplies the normalization.")),
@@ -92,22 +103,6 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
                     All("m", FinOf(d), All("p", PairType(d), body)))));
     }
 
-    private static Formula PartialTransposeFormula()
-    {
-        Formula d = X("d");
-        Formula p = X("p");
-        Formula q = X("q");
-        Formula matrix = MatrixType(PairType(d), Complexes());
-        Formula entry = At(X("a"),
-            Pair(Fst(p), Snd(q)),
-            Pair(Fst(q), Snd(p)));
-        Formula body = Equal(
-            At(Local("partialTransposeB"), X("a")),
-            LambdaOf("p", PairType(d),
-                LambdaOf("q", PairType(d), entry)));
-        return All("d", Naturals(), All("a", matrix, body));
-    }
-
     private static Formula IsSecondFamilyDataFormula()
     {
         Formula d = X("d");
@@ -152,7 +147,8 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
                     At(s, X("n"), X("x")))),
                 If(Equal(X("m"), X("n")), Typed(D(1), Complexes()), Typed(D(0), Complexes())))));
         Formula transposeIdentity = Equal(
-            At(Local("partialTransposeB"),
+            At(Qualified("D5", "S3", "Quantum", "Entanglement", "AbsolutePPT",
+                    "Bipartite", "partialTranspose"),
                 SumOver("m", fin, Outer(At(s, X("m"))))),
             SumOver("m", fin, Outer(At(Local("tVec"), a, mu, X("m")))));
         Formula body = Conjunction(orthogonal,
@@ -235,9 +231,6 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
 
     private static Formula Pow(Formula value, Formula exponent) =>
         new Formula.Power(Parenthesized(value), exponent);
-
-    private static Formula Pair(Formula first, Formula second) =>
-        Parenthesized(Seq(first, Comma, Sp, second));
 
     private static Formula Fst(Formula value) => At(Qualified("Prod", "fst"), value);
     private static Formula Snd(Formula value) => At(Qualified("Prod", "snd"), value);
