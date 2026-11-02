@@ -22,8 +22,9 @@ internal sealed class HyperdiskRegularSubsetCoverDocument : IScribeDocumentDefin
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "A hyperdisk is the full set of unit vectors with specified strictly positive "
-                    + "coefficient moduli in an orthonormal basis of its complex linear span. "
-                    + "The basis has m elements, and r assigns their real coefficient moduli. "
+                    + "coefficient moduli in a finite orthonormal family spanning its complex linear span. "
+                    + "The family has m elements, and r assigns their real coefficient moduli; the span "
+                    + "equality makes this family a basis of the displayed span. "
                     + "This is Definition 1 of Ding and Hu, arXiv:1909.11256v3, masking.tex lines 110–125. "
                     + "Pure states are represented by unit vectors, so all global phases remain in the set. "
                     + "The equality of spans and the equality with the entire modulus level set are both required."))),
@@ -63,7 +64,7 @@ internal sealed class HyperdiskRegularSubsetCoverDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "In complex Euclidean four-space, set ρ = (1,2,3,4)/√30 and let S consist "
                         + "of the unit vectors x with |xⱼ| = ρⱼ. Let V be the kernel of the complex "
-                        + "linear functional x ↦ 6x₀ + 3x₁ + 2x₂ + 3x₃, and set C = V ∩ S. "
+                        + "coordinate-projection linear map x ↦ 6x₀ + 3x₁ + 2x₂ + 3x₃, and set C = V ∩ S. "
                         + "The squared coordinate moduli sum to one. To see that S spans the whole space, "
                         + "compare the vector with positive real coordinates ρⱼ to the vector obtained "
                         + "by reversing the sign of just coordinate j. Their difference is 2ρⱼ times "
@@ -96,8 +97,9 @@ internal sealed class HyperdiskRegularSubsetCoverDocument : IScribeDocumentDefin
                         + "second coefficient zero. Hence at most one coefficient is nonzero.")),
                     Paragraph(Text(
                         "For an orthonormal system φ spanning a vector x, orthonormal expansion "
-                        + "reconstructs x from its inner-product coefficients. The squared norm of "
-                        + "a linear combination of the φ p is the sum of the squared coefficient "
+                        + "reconstructs x from its inner-product coefficients. The orthogonal-family "
+                        + "norm identity gives the squared norm of a linear combination of the φ p "
+                        + "as the sum of the squared coefficient "
                         + "moduli. Therefore, if x belongs to a hyperdisk with positive coefficient "
                         + "moduli r p, those moduli have squared sum one, and every vector "
                         + "Σₚ (r p)uₚ φ p with independent unit phases uₚ belongs to the same hyperdisk; "
@@ -136,7 +138,9 @@ internal sealed class HyperdiskRegularSubsetCoverDocument : IScribeDocumentDefin
                         + "vectors x and y in that basis shows that x is the scalar multiple of y "
                         + "given by the ratio of their inner-product coefficients; the denominator "
                         + "is nonzero because its modulus is strictly positive. Hence any two vectors "
-                        + "in such a hyperdisk lie on the same complex ray.")),
+                        + "in such a hyperdisk lie on the same complex ray. The proof uses that a "
+                        + "nonempty Fin m with m ≤ 1 is subsingleton, so the single surviving basis "
+                        + "index supports the reconstruction.")),
                     Paragraph(Text(
                         "Assume a finite cover of C by hyperdisks h i indexed by Fin k. For each "
                         + "natural a choose f(a) with xₐ in h(f(a)). If f(a) = f(b), the preceding "
