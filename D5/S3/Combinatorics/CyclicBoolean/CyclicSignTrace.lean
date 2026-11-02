@@ -1242,4 +1242,349 @@ private theorem inverse_component_interior_constraint (m : ℕ) (hm : 0 < m)
   simp_rw [hterm] at hcoeff
   simpa [mul_ite] using hcoeff
 
+private theorem prefix_injective (m : ℕ) :
+    Function.Injective (fun i : ZMod (2 * m + 1) => prefixVariables i m) := by
+  intro i k hik
+  have hsum (j : ZMod (2 * m + 1)) :
+      (∑ a ∈ prefixVariables j m, a) = (m : ZMod (2 * m + 1)) * j +
+        ∑ r ∈ Finset.range m, ((2 * r + 1 : ℕ) : ZMod (2 * m + 1)) := by
+    classical
+    unfold prefixVariables
+    rw [Finset.sum_image (prefix_index_injective m m le_rfl j)]
+    simp [Finset.sum_add_distrib, nsmul_eq_mul]
+  have he := congrArg (fun s : Finset (ZMod (2 * m + 1)) => ∑ a ∈ s, a) hik
+  rw [hsum, hsum] at he
+  have he' := congrArg (fun z : ZMod (2 * m + 1) => 2 * z) (add_right_cancel he)
+  have hz := ZMod.natCast_self (2 * m + 1)
+  push_cast at hz
+  linear_combination (i - k) * hz - he'
+
+private theorem top_shift (m : ℕ) (hm : 0 < m) (i : ZMod (2 * m + 1)) :
+    topVariables m (i + 2) = insert i (prefixVariables i m) := by
+  classical
+  have hz := ZMod.natCast_self (2 * m + 1)
+  have he : i + 2 + (2 * m : ℕ) = i + 1 := by
+    push_cast at hz ⊢
+    linear_combination hz
+  have hw : i + 2 + (2 * (m - 1) + 1 : ℕ) = i := by
+    have hn : 2 * (m - 1) + 1 + 2 = 2 * m + 1 := by omega
+    have hx := congrArg (fun r : ℕ => i + (r : ZMod (2 * m + 1))) hn
+    push_cast at hx hz ⊢
+    linear_combination hx + hz
+  ext a
+  simp only [topVariables, Finset.mem_insert, prefixVariables, Finset.mem_image,
+    Finset.mem_range]
+  constructor
+  · rintro (rfl | ⟨r, hr, rfl⟩)
+    · exact Or.inr ⟨0, hm, by simpa using he.symm⟩
+    · by_cases hlast : r = m - 1
+      · left
+        simpa [hlast] using hw
+      · right
+        refine ⟨r + 1, by omega, ?_⟩
+        push_cast
+        ring
+  · rintro (rfl | ⟨r, hr, rfl⟩)
+    · right
+      exact ⟨m - 1, by omega, hw⟩
+    · by_cases hr0 : r = 0
+      · left
+        simpa [hr0] using he.symm
+      · right
+        refine ⟨r - 1, by omega, ?_⟩
+        have hn : 2 * (r - 1) + 1 + 2 = 2 * r + 1 := by omega
+        have hx := congrArg (fun t : ℕ => i + (t : ZMod (2 * m + 1))) hn
+        push_cast at hx ⊢
+        linear_combination hx
+
+private theorem endpoint_deletion_overlap (m : ℕ) (hm : 0 < m)
+    (i k : ZMod (2 * m + 1)) :
+    prefixVariables i m ⊆ topVariables m k ↔ k = i ∨ k = i + 2 := by
+  classical
+  constructor
+  · intro hsub
+    by_cases he : k + (2 * m : ℕ) ∈ prefixVariables i m
+    · have hn : k - 2 + 1 = k + (2 * m : ℕ) := by
+        have hz := ZMod.natCast_self (2 * m + 1)
+        push_cast at hz ⊢
+        linear_combination -hz
+      have hnot : k - 2 ∉ prefixVariables i m := by
+        intro h
+        exact prefix_no_adjacent m i (k - 2) h (hn.symm ▸ he)
+      have ht : topVariables m k = insert (k - 2) (prefixVariables (k - 2) m) := by
+        simpa using top_shift m hm (k - 2)
+      have hs : prefixVariables i m ⊆ prefixVariables (k - 2) m := by
+        intro a ha
+        have ha' := hsub ha
+        rw [ht] at ha'
+        rcases Finset.mem_insert.mp ha' with rfl | ha'
+        · exact (hnot ha).elim
+        · exact ha'
+      have heq := Finset.eq_of_subset_of_card_le hs
+        (by rw [prefix_card m m le_rfl, prefix_card m m le_rfl])
+      have hi := prefix_injective m heq
+      right
+      linear_combination -hi
+    · have hs : prefixVariables i m ⊆ prefixVariables k m := by
+        intro a ha
+        rcases Finset.mem_insert.mp (hsub ha) with rfl | ha'
+        · exact (he ha).elim
+        · exact ha'
+      have heq := Finset.eq_of_subset_of_card_le hs
+        (by rw [prefix_card m m le_rfl, prefix_card m m le_rfl])
+      exact Or.inl (prefix_injective m heq).symm
+  · rintro (rfl | rfl)
+    · exact Finset.subset_insert _ _
+    · rw [top_shift m hm]
+      exact Finset.subset_insert _ _
+
+private theorem inverse_component_endpoint_constraint (m : ℕ) (hm : 0 < m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (i : ZMod (2 * m + 1)) :
+    b i * u (i + (2 * m : ℕ)) = b (i + 2) * u i := by
+  classical
+  let s := prefixVariables i m
+  have hs : s.card = m := prefix_card m m le_rfl i
+  have hc := inverse_component_top_derivative m hm b u hu s hs
+  have hi : i ∉ prefixVariables i m := by
+    intro h
+    obtain ⟨r, hr, he⟩ := Finset.mem_image.mp h
+    have hr' := Finset.mem_range.mp hr
+    have he' : ((2 * r + 1 : ℕ) : ZMod (2 * m + 1)) = 0 := by
+      exact add_left_cancel (he.trans (add_zero i).symm)
+    have hn := (ZMod.natCast_eq_natCast_iff' (2 * r + 1) 0 (2 * m + 1)).mp he'
+    rw [Nat.mod_eq_of_lt (by omega), Nat.zero_mod] at hn
+    omega
+  have hterm (k : ZMod (2 * m + 1)) :
+      (if s ⊆ topVariables m k then booleanMonomial (topVariables m k \ s) u else 0) =
+      (if k = i then u (i + (2 * m : ℕ)) else 0) +
+        (if k = i + 2 then u i else 0) := by
+    have hne : i + 2 ≠ i := by
+      intro h
+      have he : (2 : ZMod (2 * m + 1)) = 0 := by linear_combination h
+      have hn := (ZMod.natCast_eq_zero_iff 2 (2 * m + 1)).mp he
+      have := Nat.le_of_dvd (by omega : 0 < 2) hn
+      omega
+    by_cases hk : k = i
+    · subst k
+      have hd : topVariables m i \ s = {i + (2 * m : ℕ)} := by
+        dsimp [topVariables, s]
+        ext a
+        simp only [Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton]
+        have he := endpoint_not_prefix m m le_rfl i
+        aesop
+      have hsub : s ⊆ topVariables m i := Finset.subset_insert _ _
+      simp [hsub, Ne.symm hne, hd, booleanMonomial]
+    · by_cases hk' : k = i + 2
+      · subst k
+        have hd : topVariables m (i + 2) \ s = {i} := by
+          rw [top_shift m hm]
+          dsimp [s]
+          simp [hi]
+        have hsub : s ⊆ topVariables m (i + 2) :=
+          (endpoint_deletion_overlap m hm i (i + 2)).mpr (Or.inr rfl)
+        simp [hsub, hk, hd, booleanMonomial]
+      · have hsub : ¬s ⊆ topVariables m k := by
+          simpa only [s, endpoint_deletion_overlap m hm i k, not_or] using ⟨hk, hk'⟩
+        simp [hsub, hk, hk']
+  simp_rw [hterm, mul_add, mul_ite, mul_zero] at hc
+  simp only [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true] at hc
+  exact eq_of_sub_eq_zero (by simpa only [ZModModule.sub_eq_add] using hc)
+
+private theorem prefix_start_injective (m r : ℕ) (hr : 0 < r) (hrm : r ≤ m) :
+    Function.Injective (fun i : ZMod (2 * m + 1) => prefixVariables i r) := by
+  intro i k hik
+  change prefixVariables i r = prefixVariables k r at hik
+  have hfirst : i + 1 ∈ prefixVariables k r := by
+    rw [← hik]
+    exact Finset.mem_image.mpr ⟨0, Finset.mem_range.mpr hr, by simp⟩
+  obtain ⟨t, ht, he⟩ := Finset.mem_image.mp hfirst
+  have ht' := Finset.mem_range.mp ht
+  have hprev : i - 1 ∉ prefixVariables i r := by
+    intro h
+    obtain ⟨a, ha, hea⟩ := Finset.mem_image.mp h
+    have ha' := Finset.mem_range.mp ha
+    have hx : ((2 * a + 2 : ℕ) : ZMod (2 * m + 1)) = 0 := by
+      push_cast at hea ⊢
+      linear_combination hea
+    have hx' := (ZMod.natCast_eq_zero_iff (2 * a + 2) (2 * m + 1)).mp hx
+    have hle := Nat.le_of_dvd (by omega : 0 < 2 * a + 2) hx'
+    omega
+  have ht0 : t = 0 := by
+    by_contra h
+    apply hprev
+    rw [hik]
+    refine Finset.mem_image.mpr ⟨t - 1, Finset.mem_range.mpr (by omega), ?_⟩
+    have hn : 2 * (t - 1) + 1 + 2 = 2 * t + 1 := by omega
+    have hx := congrArg (fun a : ℕ => k + (a : ZMod (2 * m + 1))) hn
+    push_cast at he hx ⊢
+    linear_combination he + hx
+  simpa [ht0] using he.symm
+
+private theorem inverse_component_prefix_fixed (m : ℕ) (hm : 0 < m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (i : ZMod (2 * m + 1)) (hb : b i ≠ 0)
+    (r : ℕ) (hr : r < m) (z : Word (2 * m + 1)) :
+    booleanMonomial (prefixVariables i r) (z + u) =
+      booleanMonomial (prefixVariables i r) z := by
+  classical
+  apply Finset.prod_congr rfl
+  intro a ha
+  obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp ha
+  have ht' := Finset.mem_range.mp ht
+  have hmem : i + (2 * t + 1 : ℕ) ∈ topVariables m i :=
+    Finset.mem_insert_of_mem (Finset.mem_image.mpr
+      ⟨t, Finset.mem_range.mpr (by omega), rfl⟩)
+  have hne : i + (2 * t + 1 : ℕ) ≠ i + (2 * m - 1 : ℕ) := by
+    intro h
+    have he := (ZMod.natCast_eq_natCast_iff' (2 * t + 1) (2 * m - 1)
+      (2 * m + 1)).mp (add_left_cancel h)
+    rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at he
+    omega
+  have hne' : i + (2 * t + 1 : ℕ) ≠ i + (2 * m : ℕ) := by
+    intro h
+    have he := (ZMod.natCast_eq_natCast_iff' (2 * t + 1) (2 * m)
+      (2 * m + 1)).mp (add_left_cancel h)
+    rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at he
+    omega
+  have hz := inverse_component_interior_constraint m hm b u hu i _ hmem hne hne'
+  have hzero := (mul_eq_zero.mp hz).resolve_left hb
+  change z (i + (2 * t + 1 : ℕ)) + u (i + (2 * t + 1 : ℕ)) = _
+  rw [hzero, add_zero]
+
+private theorem monomial_prefix_succ {n : ℕ} (i : ZMod n) (r : ℕ) (z : Word n) :
+    booleanMonomial (prefixVariables i (r + 1)) z =
+      z (i + (2 * r + 1 : ℕ)) * booleanMonomial (prefixVariables i r) z := by
+  classical
+  have hs : prefixVariables i (r + 1) =
+      insert (i + (2 * r + 1 : ℕ)) (prefixVariables i r) := by
+    simp only [prefixVariables, Finset.range_add_one, Finset.image_insert]
+  rw [hs, monomial_insert]
+
+private theorem monomial_prefix_cons {n : ℕ} (i : ZMod n) (r : ℕ) (z : Word n) :
+    booleanMonomial (prefixVariables (i - 2) (r + 1)) z =
+      z (i - 1) * booleanMonomial (prefixVariables i r) z := by
+  classical
+  have hs : prefixVariables (i - 2) (r + 1) =
+      insert (i - 1) (prefixVariables i r) := by
+    ext a
+    simp only [prefixVariables, Finset.mem_image, Finset.mem_range, Finset.mem_insert]
+    constructor
+    · rintro ⟨t, ht, rfl⟩
+      by_cases ht0 : t = 0
+      · left
+        simp only [ht0, Nat.mul_zero, Nat.zero_add, Nat.cast_one]
+        ring
+      · right
+        refine ⟨t - 1, by omega, ?_⟩
+        have hn : 2 * (t - 1) + 1 + 2 = 2 * t + 1 := by omega
+        have hx := congrArg (fun a : ℕ => (a : ZMod n)) hn
+        push_cast at hx ⊢
+        linear_combination hx
+    · rintro (rfl | ⟨t, ht, rfl⟩)
+      · exact ⟨0, by omega, by push_cast; ring⟩
+      · refine ⟨t + 1, by omega, ?_⟩
+        push_cast
+        ring
+  rw [hs, monomial_insert]
+
+set_option maxHeartbeats 1000000 in
+private theorem shifted_inverse_derivative_expansion (m : ℕ) (hm : 0 < m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (z : Word (2 * m + 1)) :
+    inverseComponent m b (1 + (z + u)) + inverseComponent m b (1 + z) =
+      (∑ i, ∑ r ∈ Finset.range m,
+        b i * u (i + (2 * r : ℕ)) * booleanMonomial (prefixVariables i r) z) +
+      ∑ i, b i * (u (i + (2 * m - 1 : ℕ)) *
+          (1 + u (i + (2 * m : ℕ)))) *
+        booleanMonomial (prefixVariables i (m - 1)) z := by
+  classical
+  have hlast : ∀ i : ZMod (2 * m + 1),
+      i + (2 * m - 1 : ℕ) = i - 2 := by
+    intro i
+    have hn : 2 * m - 1 + 2 = 2 * m + 1 := by omega
+    have hx := congrArg (fun a : ℕ => (a : ZMod (2 * m + 1))) hn
+    have hz := ZMod.natCast_self (2 * m + 1)
+    push_cast at hx hz
+    linear_combination hx + hz
+  have hend : ∀ i : ZMod (2 * m + 1), i + (2 * m : ℕ) = i - 1 := by
+    intro i
+    have hz := ZMod.natCast_self (2 * m + 1)
+    push_cast at hz ⊢
+    linear_combination hz
+  have hlocal (i : ZMod (2 * m + 1)) :
+      (∑ r ∈ Finset.range (m + 1), b i *
+        (booleanMonomial (prefixVariables i r) (z + u) +
+          booleanMonomial (insert (i + (2 * r : ℕ)) (prefixVariables i r)) (z + u))) +
+      (∑ r ∈ Finset.range (m + 1), b i *
+        (booleanMonomial (prefixVariables i r) z +
+          booleanMonomial (insert (i + (2 * r : ℕ)) (prefixVariables i r)) z)) =
+      (∑ r ∈ Finset.range m,
+        b i * u (i + (2 * r : ℕ)) * booleanMonomial (prefixVariables i r) z) +
+      b i * (u (i - 2) * (1 + u (i - 1))) *
+        booleanMonomial (prefixVariables i (m - 1)) z +
+      b i * u (i - 1) * booleanMonomial (prefixVariables i m) z +
+      b i * u (i - 2) * booleanMonomial (prefixVariables (i - 2) m) z := by
+    by_cases hb : b i = 0
+    · simp [hb]
+    · have hfixed := inverse_component_prefix_fixed m hm b u hu i hb
+      rw [Finset.sum_range_succ, Finset.sum_range_succ]
+      have hsmall :
+          (∑ r ∈ Finset.range m, b i *
+            (booleanMonomial (prefixVariables i r) (z + u) +
+              booleanMonomial (insert (i + (2 * r : ℕ)) (prefixVariables i r)) (z + u))) +
+          (∑ r ∈ Finset.range m, b i *
+            (booleanMonomial (prefixVariables i r) z +
+              booleanMonomial (insert (i + (2 * r : ℕ)) (prefixVariables i r)) z)) =
+          ∑ r ∈ Finset.range m,
+            b i * u (i + (2 * r : ℕ)) * booleanMonomial (prefixVariables i r) z := by
+        rw [← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro r hr
+        rw [monomial_insert, monomial_insert,
+          hfixed r (Finset.mem_range.mp hr) z]
+        simp only [Pi.add_apply]
+        ring_nf
+        simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero, zero_add]
+      have hmp : m - 1 + 1 = m := by omega
+      have hpz := monomial_prefix_succ i (m - 1) z
+      have hpu := monomial_prefix_succ i (m - 1) (z + u)
+      have hpc := monomial_prefix_cons i (m - 1) z
+      have hn : 2 * (m - 1) + 1 = 2 * m - 1 := by omega
+      rw [hmp, hn, hlast] at hpz hpu
+      rw [hmp] at hpc
+      rw [monomial_insert, monomial_insert, hpz, hpu,
+        hfixed (m - 1) (by omega) z]
+      simp only [Pi.add_apply, hend, hlast]
+      rw [hpc]
+      have htwo : (2 : ZMod 2) = 0 := by decide
+      linear_combination (norm := (ring_nf; simp only [htwo, mul_zero, add_zero, zero_add]))
+        hsmall
+  rw [shifted_inverse_expansion, shifted_inverse_expansion, ← Finset.sum_add_distrib]
+  simp_rw [hlocal]
+  simp only [Finset.sum_add_distrib, hlast, hend]
+  have hcancel :
+      (∑ i, b i * u (i - 1) * booleanMonomial (prefixVariables i m) z) +
+      (∑ i, b i * u (i - 2) * booleanMonomial (prefixVariables (i - 2) m) z) = 0 := by
+    have hreindex := Equiv.sum_comp (Equiv.addRight (2 : ZMod (2 * m + 1)))
+      (fun i => b i * u (i - 2) * booleanMonomial (prefixVariables (i - 2) m) z)
+    change (∑ i, _) = _ at hreindex
+    conv_lhs => rhs; rw [← hreindex]
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_eq_zero
+    intro i _
+    have hb := inverse_component_endpoint_constraint m hm b u hu i
+    rw [hend] at hb
+    simp only [Equiv.coe_addRight]
+    change b i * u (i - 1) * booleanMonomial (prefixVariables i m) z +
+      b (i + 2) * u (i + 2 - 2) *
+        booleanMonomial (prefixVariables (i + 2 - 2) m) z = 0
+    have hi : i + 2 - 2 = i := by ring
+    rw [hi, ← hb]
+    exact CharTwo.add_self_eq_zero _
+  linear_combination hcancel
+
 end D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
