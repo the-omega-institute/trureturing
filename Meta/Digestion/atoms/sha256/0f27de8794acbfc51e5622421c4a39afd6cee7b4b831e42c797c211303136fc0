@@ -1,0 +1,59 @@
+**定理 5.1（Two adjacent low-tail labels）。** For every $Q\ge2$ and $m\ge4$, choose distinct $A,B,C,R$ and set
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge k-3,\\
+B,&s<k-3,\ j=1,\\
+C,&s<k-3,\ j=2,\\
+A,&s<k-3,\ j\notin\{1,2\}.
+\end{cases}
+\tag{5.1}
+$$
+
+Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=
+\begin{cases}
+Q+1,&m\text{ odd},\\
+Q+2,&m\text{ even}.
+\end{cases}
+\tag{5.2}
+$$
+
+For odd $m$ a literal attaining stream is
+
+$$
+111(01)^{(m-3)/2}\mid
+\underbrace{(10)^{(m-1)/2}1\mid\cdots\mid(10)^{(m-1)/2}1}_{Q-1\text{ blocks}}\mid
+01\,0^{m-2}.
+\tag{5.3}
+$$
+
+For even $m$ an attaining stream is
+
+$$
+1110(10)^{(m-4)/2}\mid
+\underbrace{(01)^{m/2}\mid\cdots\mid(01)^{m/2}}_{Q-1\text{ blocks}}\mid
+01\,0^{m-2}\mid1\,0^{m-1}.
+\tag{5.4}
+$$
+
+Proof. Set $a=3$, $N=2$, $L=1$ in Theorem 3.1. Its guard is $1\le m-2$ and $a<m$ holds. The root and middle words in (5.3)–(5.4) are (2.8)–(2.9). After their $Q$ zero differences the exact support is $\{1,2\}$ for odd $m$ and $\{1,2,m\}$ for even $m$. Every earlier positive difference returns $A$; root rejection returns $R$.
+
+At $Q$, the isolated one at local position one in $01\,0^{m-2}$ gives full mask $\{0,1\}$. Phase zero was actually excluded, so difference one returns $B$. In the odd case difference zero returns $C$. In the even case the zero child contains exactly phase two with label $C$ and phase $m$ with label $A$; the final mask $\{m-1,m\}$ returns $A$ on one and $C$ on zero. The predecessor tail is zero, and the final block has a single leading one followed by zeros. No clearing block or unpaid displacement is needed. Both free values, all initial tails, and the free initial $\bot$ branch follow Definition 1.2.
+
+The smallest even and odd parameter cases are literal:
+
+$$
+\begin{array}{c|c|c}
+(Q,m)&\text{stream}&\text{worst cost}\\\hline
+(2,4)&1110\mid0101\mid0100\mid1000&4\\
+(2,5)&11101\mid10101\mid01000&3.
+\end{array}
+\tag{5.5}
+$$
+
+Their lower bounds are the all-root lower bounds already proved, rather than a comparison only with these particular streams. ∎
+
