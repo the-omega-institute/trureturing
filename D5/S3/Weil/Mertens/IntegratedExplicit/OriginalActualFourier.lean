@@ -51,7 +51,6 @@ lemma phase_conj (w u : ℝ) : conj (phase w u) = phase (-w) u := by
   rw [← Complex.exp_conj]
   congr 1
   simp
-  <;> ring
 
 lemma phase_re (w u : ℝ) : (phase w u).re = Real.cos (w * u) := by
   have he : Complex.I * (w : ℂ) * (u : ℂ) = ((w * u : ℝ) : ℂ) * Complex.I := by
@@ -164,10 +163,11 @@ private lemma step_transform (l D : ℝ) (hl : l ≤ D) (b : ℂ) (w : ℝ) (hw 
     by_cases hu : u ∈ Icc l D <;> simp [hu, phase]
   rw [hind, integral_indicator measurableSet_Icc, integral_const_mul,
     integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hl,
-    intervalIntegral.integral_exp_mul_complex hc]
+    integral_exp_mul_complex hc]
   have he (u : ℝ) : (-Complex.I * (w : ℂ)) * (u : ℂ) =
       Complex.I * ((-w : ℝ) : ℂ) * (u : ℂ) := by push_cast; ring
-  simp only [he, ← phase]
+  simp only [he]
+  unfold phase
   field_simp [hc, Complex.I_ne_zero, Complex.ofReal_ne_zero.mpr hw]
   <;> ring
 
@@ -224,8 +224,9 @@ theorem normSq_Ahat_integrable (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a 
     ((∫ u : ℝ, ‖«prefix» x a u‖) ^ 2 + (∑ i, ‖a i‖) ^ 2)
   apply hb.mono' hm.aestronglyMeasurable
   exact ae_of_all _ fun w => by
-    simpa only [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _), div_eq_mul_inv] using
-      normSq_Ahat_bound x a ha D hx w
+    change ‖‖Ahat («prefix» x a) w‖ ^ 2‖ ≤ _
+    rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg ‖Ahat («prefix» x a) w‖)]
+    simpa only [div_eq_mul_inv] using normSq_Ahat_bound x a ha D hx w
 
 /-- Exactly the original density and positive Lebesgue `withDensity` measure. -/
 def density (A : ℝ → ℂ) (w : ℝ) : ℝ := ‖Ahat A w‖ ^ 2 / (2 * Real.pi)
@@ -256,6 +257,7 @@ theorem zero_window_Ahat (x : ι → ℝ) (a : ι → ℂ) (ha : ∑ i, a i = 0)
       simp [«prefix», hi, ha]
     · have hi : ∀ i, ¬x i ≤ u := fun i h => hu ((hx i).1.trans h)
       simp [«prefix», hi]
+  funext w
   simp [hp, Ahat]
 
 end OriginalActualFourier
