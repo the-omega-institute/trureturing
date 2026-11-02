@@ -200,7 +200,7 @@ Sharpness for every real parameter. On b = a and c = (a−1)(2a−1), already sh
 
 For every real 2 ≤ a < κ, the displayed prefactor is positive and a²−4a+1 = (a−2)²−3 < 0. Thus χ_C(a) < 0 and no root equals a. The same weak-sign pair subspace still gives 2 ≤ N(a) ≤ 3, because zero and one are below a. Negative determinant forces odd N(a), so N(a) = 3 with multiplicity. Removing the unique zero and just one occurrence of one leaves at least one residual root below a. This establishes the universal sharpness claim without invoking the strict-cutoff isolation outside its hypotheses.
 
-Supplier correspondence and limits. The actual geometry and balanced specialization come from SixSupportLaplacianLowRoot; the real positive-subspace and compression bounds from RHLinalg in Sylvester and Inertia, with the existing invertible-congruence inertia supplier for the spectral count transport. They are cited at repository revision 6b24b302e37ea2ead041655259d42ef4866d3249. The characteristic-root multiset, sorting, polynomial division and finite-dimensional disjointness suppliers are from Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679; the source note gives direct locators. No complex-only Courant–Fischer specialization or extra third-party import is needed. Existing positive_real_low_eigenvalue supplies an actual low eigenpair but does not certify this sorted-spectrum application. The exact determinant at one is shared with the fixed-gap application below; that application's eventual fixed-gap analytic argument does not replace these all-real counts, equalities or the gap-zero sharpness family. Divisor windows, off-surface generic residual positivity, equality-curve/genus and the separate equality-spectrum locus c = b(b+2)−a remain outside this application. Ideal-graph realization and full three-prime classification retain their separate obligations.
+Supplier correspondence and limits. The actual geometry and balanced specialization come from SixSupportLaplacianLowRoot; the real positive-subspace and compression bounds from RHLinalg in Sylvester and Inertia, with the existing invertible-congruence inertia supplier for the spectral count transport. They are cited at repository revision 6b24b302e37ea2ead041655259d42ef4866d3249. The characteristic-root multiset, sorting, polynomial division and finite-dimensional disjointness suppliers are from Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679; the source note gives direct locators. No complex-only Courant–Fischer specialization or extra third-party import is needed. Existing positive_real_low_eigenvalue supplies an actual low eigenpair but does not certify this sorted-spectrum application. The exact determinant at one is shared with the fixed-gap application below; that application's eventual fixed-gap analytic argument does not replace these all-real counts, equalities or the gap-zero sharpness family. Divisor windows, off-surface generic residual positivity, and equality-curve/genus remain outside this application. The separate equality-spectrum locus c = b(b+2)−a is supplied by the exact matrix-polynomial correspondence below; it does not add ordered-root, simplicity or positivity conclusions. Ideal-graph realization and full three-prime classification retain their separate obligations.
 
 Fixed real gaps at endpoint one. The public proposition prop:fixed-gap-expansion in paper/sections/proof-structure.tex, with the coefficients in lem:endpoint-one-small-gaps in paper/sections/three-prime-classification.tex, concerns this same quotient. Both locators are at the public revision cited above. For every fixed real d ≥ 1, there exist real A_d ≥ 2 and K_d ≥ 0 such that, for every real a ≥ A_d and b = a+d, exactly one real c > b satisfies h_C(1) = 0, where h_C(x) = det(xI−C)/x. Write this root as c*. Its full expansion, with one bound valid for all these a, is
 
@@ -263,6 +263,176 @@ Global uniqueness above b. At these same parameters a ≥ 2 and b ≥ 3, the coe
 Finally divide |Y(t)−P(t)| ≤ (M_d/4)|t|⁵ by t² > 0. Since a²P(1/a) is exactly 2a²+(2d−3)a−(d+2)(2d−1)/2+d²/(2a)+d²(d+1)(2d−3)/(4a²), this gives the stated bound K_d/a³ for every real a ≥ A_d. Equivalently Asymptotics.isBigO_iff expresses the remainder as O_d(a^(−3)) at plus infinity. The construction has the quantifier order: for every fixed real d ≥ 1, choose A_d and K_d once, then the existence, global uniqueness and bound hold for every real a above that threshold.
 
 Supplier correspondence and scope. The quotient, weights and permutation are reused from the owning D5 module, and the quantitative inequality from CayleyCoverAnalysis, at repository revision 6b24b302e37ea2ead041655259d42ef4866d3249. The analytic, polynomial, continuity, intermediate-value and root-count statements used here are from Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; the source note gives their direct locators. The proof uses only real parameters and establishes no uniformity for growing d. At d = 1 the full expansion is 2a²−a−3/2+1/(2a)−1/(2a²)+O(a^(−3)); the valid small-gap bracket anchor 2a²−a−2 is a different expression. At d = 2 it is 2a²+a−6+2/a+3/a²+O(a^(−3)). The application concerns the existing weighted quotient. Realization by an ideal graph and the whole graph classification require their separate hypotheses and arguments; this supplementary consequence supplies neither a classification nor a literature novelty claim.
+
+## Exact actual matrix and characteristic-polynomial correspondence
+
+The complete matrix correspondence is for the existing LowRoot carrier itself. In support order 1,2,3,12,13,23, C = SixSupportLaplacianLowRoot.quotient a b c is the literal six-by-six matrix with diagonal entries b+c+bc, a+c+ac, a+b+ab, c, b, a and off-diagonal entries −b, −c, −bc, −a, −ac, −ab in the displayed support positions. This is the D−A sign convention: each edge interaction is the negative of its target weight. Its support weights are a,b,c,ab,ac,bc. No symmetric surrogate is substituted for this carrier.
+
+The same literal matrix is defined over every commutative ring R. The universal integer model uses Z[x₀,x₁,x₂] and the rational model uses Q[x₀,x₁,x₂]; coefficientwise specialization to any commutative ring, and to every Q-algebra for the rational model, returns the actual matrix. The maps commute with the matrix, its characteristic polynomial and exact divX operation. Thus the integer, rational and arbitrary-parameter readings are coefficient extensions of one matrix definition, not separate named matrices.
+
+Write χ_C(X) for the characteristic polynomial and h_C(X) for χ_C.divX. The constant coefficient of χ_C is zero because the all-one vector is an exact kernel vector over every commutative ring. Polynomial X_mul_divX_add therefore gives the literal identity χ_C(X) = X h_C(X), with zero remainder; divX is exact polynomial division and does not mean pointwise division at X=0. Over a nontrivial coefficient ring the six-by-six characteristic polynomial has degree six and h_C has degree five. These degree statements are ring-theoretic and make no positivity, ordering or root-simplicity assumption.
+
+For every parameter triple, evaluation at one is tied to the same carrier by h_C(1) = det(I−C). On the endpoint substitution c = t−a with t = b(b+2), put q = a(t−a), A = 3b−1, B = b(b²+4b−1), and C₀ = −(b²+2b−1)(b²+3b−1)(b³+3b²+3b−1). Define G(a,b) = A q² + B q + C₀. The literal determinant calculation over the universal ring, followed by coefficient extension, gives for all commutative-ring parameters h_C(a,b,t−a)(1) = −(b−1)G(a,b). The factor b−1 is retained; it is not canceled.
+
+Regard G as a polynomial in a over Q[b]. Its a-degree is exactly four. Regard the same expression as a polynomial in independent a,b; its total degree is exactly seven and the coefficient of a⁰b⁷ is −1. These are coefficient identities for the actual endpoint polynomial, not degree estimates for a reduced or canceled expression.
+
+For real a,b, the actual matrix spectrum has value one exactly when b = 1 or G(a,b) = 0: (1 ∈ spectrum ℝ (SixSupportLaplacianLowRoot.quotient a b (t−a))) ↔ (b = 1 ∨ G(a,b) = 0). The b = 1 component is a genuine component of the actual spectrum locus and remains present for every real a. This equivalence is algebraic and carries no ordered-root, simplicity, positivity, or endpoint-domain hypothesis.
+
+Literal bridge to the quartic tower. The endpoint polynomial just defined is coefficientwise the actualQuartic used in the characteristic-zero tower. After mapping Q[b] into k[b] and then K = RatFunc k, the resulting polynomial in the fresh quartic parameter variable X, representing a, is the literal g(X) = A X⁴ − 2At X³ + (At²−B)X² + BtX + C₀. In the actual fields H = K(y) with y² = D and F = H(z) with z² = f, the chosen a = (t+z)/2 satisfies q = a(t−a), y = 2Aq+B and z = 2a−t. Those recovery identities prove that the endpoint polynomial evaluated at the tower generator is zero and that the tower generator is the same root of the literal g. The quartic quotient K[X]/(g) ≃ F and the coefficient extension are therefore bridges between the actual matrix endpoint expression and the actual field tower, rather than identifications made from declaration names.
+
+Authority and limits. The matrix identities, universal/rational specializations, degree facts, endpoint factor, coefficient and spectrum assertions are supplied by the complete matrix proof source and its source-bound actual result. This section is readable application exposition; it adds no retained Lean, Reg, Describe, freeze or positive-certificate declaration. The existing real global spectral theorem and fixed-gap argument remain in force, while the separately owed smooth models, local branches, genus, Riemann–Hurwitz, geometric finiteness interfaces, graph realization and full classification remain outside this source preparation.
+
+## The exact quartic algebra over characteristic-zero fields
+
+The equality-curve remark rem:endpoint-one-equality-curve in paper/sections/endpoint-one-spectrum.tex at public revision b93becea662a746badeadba42fdc3d3eb3db9382 supplies the polynomial used here. Its linked curve note at revision 8ed4f9014f6142949e6af40fd16e18ca304f629a supplies the displayed discriminant and norm numerator. The polynomial and those parameters are attributed to that source. The following derivation is an application of existing integral-closure, quadratic-algebra, Kummer, minimal-polynomial and Gauss results, not a novelty claim. The existing Describe statements retain their stated quotient geometry, low-root and balanced scope; this application adds no Lean declaration or Describe theorem.
+
+Let k be any field of characteristic zero, let b be an indeterminate, and put K = k(b), represented by RatFunc k. Map rational coefficients into k[b] and then into K; these maps are injective. We keep the same letters for the images. No algebraic-closedness assumption on k is needed for the field-tower argument. In this section C₀ is the scalar constant coefficient, distinct from the six-support matrix C; the next integer-finiteness section denotes this same scalar by C. Define the literal polynomials
+
+$$
+t = b \cdot \left(b + 2\right)
+$$
+
+$$
+A = 3 \cdot b - 1
+$$
+
+$$
+B = b \cdot \left(b^{2} + 4 \cdot b - 1\right)
+$$
+
+$$
+C_{0} = -\left(\left(b^{2} + 2 \cdot b - 1\right) \cdot \left(b^{2} + 3 \cdot b - 1\right) \cdot \left(b^{3} + 3 \cdot b^{2} + 3 \cdot b - 1\right)\right)
+$$
+
+$$
+D = 12 \cdot b^{8} + 92 \cdot b^{7} + 233 \cdot b^{6} + 172 \cdot b^{5} + -154 \cdot b^{4} + -172 \cdot b^{3} + 161 \cdot b^{2} + -44 \cdot b + 4
+$$
+
+$$
+N = \left(b^{3} + 5 \cdot b^{2} + 6 \cdot b - 2\right) \cdot \left(3 \cdot b^{6} + 8 \cdot b^{5} + -6 \cdot b^{4} + -36 \cdot b^{3} + -28 \cdot b^{2} + 40 \cdot b + -8\right)
+$$
+
+For the plane variable a, write q = a(t−a). The polynomial is quartic in a, with coefficients in k[b]:
+
+$$
+\operatorname{G}\left(a, b\right) = A \cdot \left(a \cdot \left(t - a\right)\right)^{2} + B \cdot a \cdot \left(t - a\right) + C_{0}
+$$
+
+Exact polynomial identities and branch prerequisites. Polynomial normalization gives both identities below. The degrees of D and N are eight and nine; a prime denotes differentiation in b. Explicit rational Bézout identities for (D,D′), (N,N′) and (N,D) give their normalized gcds equal to one; mapping each Bézout equality into k[b] preserves coprimality. Thus D and N are squarefree, and their root sets are disjoint in an algebraic closure. These are exact identities for these polynomials, rather than assumed squarefreeness or norm certificates.
+
+$$
+B^{2} - 4 \cdot A \cdot C_{0} = D
+$$
+
+$$
+A \cdot t^{4} + 4 \cdot B \cdot t^{2} + 16 \cdot C_{0} = N
+$$
+
+$$
+\operatorname{gcd}\left(D, \operatorname{derivative}\left(D\right)\right) = 1
+$$
+
+$$
+\operatorname{gcd}\left(N, \operatorname{derivative}\left(N\right)\right) = 1
+$$
+
+$$
+\operatorname{gcd}\left(N, D\right) = 1
+$$
+
+For explicit Bézout witnesses, a coefficient list (c₀,…,cₘ) denotes the polynomial Σᵢ cᵢbⁱ, in ascending powers of b. The following rational coefficient lists satisfy U_D D+V_D D′ = 1, U_N N+V_N N′ = 1 and U_ND N+V_ND D = 1, respectively. These identities can be read as polynomial equalities before mapping to k[b].
+
+U_D = (15077458503622003/12603918688, -54128905348874963/12603918688, -6246087705771407/3150979672, 117940112961877943/12603918688, 145006858328612117/12603918688, 30779539539563445/6301959344, 551481433980327/787744918).
+
+V_D = (1370677759331121/12603918688, -19934798047738501/25207837376, 36019683710933693/25207837376, 8204653143188935/12603918688, -44366105575549787/25207837376, -47526676857220537/25207837376, -1093986370835811/1575489836, -551481433980327/6301959344).
+
+U_N = (-1551720656793517/69254786592, 290115890479151/46169857728, 6813283610138383/92339715456, 34122483667637429/554038292736, 3370077294694969/2216153170944, -86652849207243331/4432306341888, -39894848329397747/4432306341888, -417181352926057/328318988288).
+
+V_N = (-1551724985217679/554038292736, 13284078298392293/1108076585472, -27151801510553/123119620608, -13019587671423695/738717723648, -1608792935985931/130361951232, -192340276236565/492478482432, 2030298571254023/738717723648, 9931651975121645/8864612683776, 417181352926057/2954870894592).
+
+U_ND = (-3559310030328403/471932176, 6462996085656055/117983044, -46657822536661549/471932176, -21303192533434097/471932176, 14356909865819141/117983044, 61549445215520121/471932176, 5667971824526075/117983044, 714366125043951/117983044).
+
+V_ND = (889827514956041/29495761, -3793513481796410/29495761, 61458663986279/29495761, 22274907297181941/117983044, 15611438025308693/117983044, 249440883003581/58991522, -13899098543371799/471932176, -5667971824526075/471932176, -714366125043951/471932176).
+
+At r = 1/3 the exact values are A(r) = 0, A′(r) = 3, B(r) = 4/27, D(r) = 16/729 and N(r) = 368/729. The nonzero rational values remain nonzero in every characteristic-zero k. The gcds and these values are prerequisites for the later branch analysis; they do not identify any local ring or ramification point on a model.
+
+The first actual quadratic field. Coprimality with D′ makes D separable, hence squarefree, after coefficient extension. If x² = D in K, the integral-closure result IsIntegrallyClosed.exists_algebraMap_eq_of_isIntegral_pow, applied to the polynomial ring k[b] and its fraction field K, supplies a polynomial w whose image is x. Injectivity then gives D = w² in k[b]. Squarefreeness forces w to be a unit, which would make D a unit of degree zero, contrary to degree eight. Thus D is nonsquare in K, with this premise proved for the displayed D.
+
+The existing QuadraticAlgebra field instance therefore constructs the field H = QuadraticAlgebra K D 0, with generator y = omega satisfying y² = D. Its basis 1,y and finrank_eq_two give [H:K] = 2, and adjoin_omega_eq_top gives H = K(y). The prime-two instance of Polynomial.X_pow_sub_C_irreducible_iff_of_prime shows X²−D is irreducible; minpoly.eq_of_irreducible_of_monic identifies it as minpoly_K(y). The polynomial A has leading coefficient 3 ≠ 0, so its image in K and then H is nonzero and invertible. Define
+
+$$
+q = \frac{y - B}{2 \cdot A}
+$$
+
+$$
+f = t^{2} - 4 \cdot q
+$$
+
+$$
+f = t^{2} + \frac{2 \cdot B}{A} - \frac{2 \cdot y}{A}
+$$
+
+Using y² = D and B²−4AC₀ = D gives Aq²+Bq+C₀ = 0 and y = 2Aq+B. Here q is an actual element of H, and y = 2Aq+B puts its generator in K(q), so H = K(q). The first quadratic conjugation fixes K and sends y to −y. Its norm calculation is
+
+$$
+\operatorname{Norm}\left(H, K, f\right) = \left(t^{2} + \frac{2 \cdot B}{A}\right)^{2} - \frac{4 \cdot D}{A^{2}}
+$$
+
+$$
+\operatorname{Norm}\left(H, K, f\right) = \frac{A \cdot t^{4} + 4 \cdot B \cdot t^{2} + 16 \cdot C_{0}}{A}
+$$
+
+$$
+\operatorname{Norm}\left(H, K, f\right) = \frac{N}{A}
+$$
+
+QuadraticAlgebra.norm_def supplies the expression u²−Dv² for u+vy. QuadraticAlgebra.det_toLinearMap_eq_norm, together with Algebra.norm_apply, identifies that expression with the actual field norm Algebra.norm K on H. Therefore its multiplicativity is available for the nonsquare inference, rather than being an unproved norm interpretation.
+
+A proved simple rational-field pole. Since A = 3(b−r) and N(r) ≠ 0, the reduced monic RatFunc denominator of N/A is exactly b−r, with root multiplicity one. The denominator-divisibility, cross-multiplication and monicity results for RatFunc give this reduced-denominator statement. N/A is nonsquare by a direct algebraic obstruction: if x² = N/A in K, then (Ax)² = AN. The same integral-closure supplier gives w in k[b] with w² = AN. Evaluation at r forces w(r) = 0. Differentiating the polynomial identity and evaluating at r would force 0 = A′(r)N(r) = 3·368/729, which is nonzero in characteristic zero. This proves the simple-pole nonsquare without assuming a valuation certificate. It concerns the rational base field; it does not yet prove orders at either of the two places of H over r.
+
+The second actual quadratic field. If f were a square in H, multiplicativity of the actual field norm would make N/A a square in K. Thus f is nonsquare. The existing field instance now constructs F = QuadraticAlgebra H f 0 = H(z), with z = omega, z² = f, [F:H] = 2 and minpoly_H(z) = X²−f. The Kummer irreducibility and generation suppliers apply with the proved f-nonsquare premise, just as at the first step. Module.finrank_mul_finrank on the actual scalar tower gives [F:K] = 4. Both quadratic steps and F/K are finite separable extensions: all the fields have characteristic zero, and their finite algebraic extensions are separable. No smooth model or full constant-field assertion is used to obtain these field-level statements.
+
+The actual quartic generator. In F choose a = (t+z)/2, using the embeddings K → H → F consistently. The sign of y is fixed by q = (y−B)/(2A). The equations z² = f and Aq²+Bq+C₀ = 0 give the recovery identities
+
+$$
+q = a \cdot \left(t - a\right)
+$$
+
+$$
+y = 2 \cdot A \cdot a \cdot \left(t - a\right) + B
+$$
+
+$$
+z = 2 \cdot a - t
+$$
+
+Every element of H is h₀+h₁y with h₀,h₁ in K, and every element of F is u+vz with u,v in H, by QuadraticAlgebra.re_smul_add_im_smul. The recovery formulas put y and z in K(a); these decompositions then put all of H and F in K(a). Hence F = K(a) = k(b,a), with a genuinely generating the field already constructed. Field.primitive_element_iff_minpoly_natDegree_eq gives degree four for minpoly_K(a).
+
+To bind that generator to the literal polynomial, let X be a fresh polynomial variable and put g(X) = A[X(t−X)]²+B[X(t−X)]+C₀ in K[X]. Its expansion is
+
+$$
+\operatorname{g}\left(X\right) = A \cdot X^{4} + -2 \cdot A \cdot t \cdot X^{3} + \left(A \cdot t^{2} - B\right) \cdot X^{2} + B \cdot t \cdot X + C_{0}
+$$
+
+Thus g has degree four and leading coefficient A ≠ 0, and the actual a satisfies g(a) = 0. Its monic normalization A⁻¹g has the same degree and vanishes at a, so minpoly.unique_of_degree_le_degree_minpoly gives A⁻¹g = minpoly_K(a). Irreducibility of the minimal polynomial and multiplication by the nonzero constant A give irreducibility of g in K[X]. The argument uses this original g throughout.
+
+The root-preserving polynomial quotient. Because g and A⁻¹g are associated, AdjoinRoot.algEquivOfAssociated identifies their quotients; AdjoinRoot.algEquivOfEq then uses A⁻¹g = minpoly_K(a). The existing minpoly.equivAdjoin and the proved generation identify the latter quotient with all of F. The composite is a K-algebra equivalence K[X]/(g) = AdjoinRoot(g) ≃ F, sending the residue root to the chosen a. The recovery formulas above identify y and z in its image as well. This supplies the actual quartic-polynomial/field correspondence, separately from the matrix/characteristic-polynomial correspondence.
+
+Primitivity and absolute polynomial irreducibility. Work first in k[b][X], before passing to its fraction field in b. The polynomial A is a nonzero scalar multiple of b−1/3, while B(1/3) = 4/27 ≠ 0, so A and B are coprime in k[b]. A divisor common to all coefficients of G divides the coefficients A of X⁴ and At²−B of X²; it therefore divides B and is a unit. This proves that the literal quartic is primitive. Polynomial.IsPrimitive.irreducible_iff_irreducible_map_fraction_map now transfers the proved irreducibility in K[X] back to k[b][X].
+
+For coefficient extension, let G_ℚ denote precisely A[X(t−X)]²+B[X(t−X)]+C₀ in ℚ[b][X]. The coefficientwise homomorphism pk : ℚ[b] → k[b], induced by ℚ → k, sends G_ℚ to exactly the plane polynomial just used; its further map to K[X] is g. Consequently the original rational polynomial remains irreducible after this coefficient extension for every characteristic-zero k. In particular, taking k = AlgebraicClosure ℚ proves irreducibility of map(pk)(G_ℚ) in (AlgebraicClosure ℚ)[b][X]. This is the actual absolute polynomial irreducibility statement, rather than only irreducibility over ℚ(b). It supplies no smooth projective model or genus computation.
+
+Second conjugation and fixed elements. The involution of the second quadratic algebra fixes H and sends z to −z, so it sends a to t−a and fixes q = a(t−a) and y = 2Aq+B. For u = u₀+u₁z with u₀,u₁ in H, conjugation gives u₀−u₁z. Since 2 ≠ 0 and 1,z are independent, it fixes u exactly when u₁ = 0, exactly when u is in the image of H in F. This identifies the field fixed elements with H. It does not construct a quotient morphism between smooth models.
+
+Supplier correspondence. The applications above use Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679: IsIntegrallyClosed.exists_algebraMap_eq_of_isIntegral_pow for both nonsquare obstructions; QuadraticAlgebra's field instance, finrank_eq_two, omega_mul_omega_eq_algebraMap, re_smul_add_im_smul, adjoin_omega_eq_top, norm_def and det_toLinearMap_eq_norm for the actual fields, generators, degrees, norm and conjugation; Polynomial.X_pow_sub_C_irreducible_iff_of_prime and minpoly.eq_of_irreducible_of_monic for the two quadratic minimal polynomials; Module.finrank_mul_finrank and Field.primitive_element_iff_minpoly_natDegree_eq for the degree-four generator; minpoly.unique_of_degree_le_degree_minpoly, minpoly.equivAdjoin and AdjoinRoot.algEquivOfAssociated/algEquivOfEq for its minimal polynomial and quotient; and Polynomial.IsPrimitive.irreducible_iff_irreducible_map_fraction_map for Gauss transfer. The owning Library note gives direct public source locators. These are existing suppliers applied to the displayed parameters; this exposition retains no named transient checking wrappers or positive-instance declarations.
+
+Remaining E3 boundary. The exact E3.00 universal six-support polynomial/characteristic-polynomial bridge, exact X division, substitution c = b(b+2)−a, identity h_C(1) = −(b−1)G, and faithful matrix correspondence are supplied in the “Exact actual matrix and characteristic-polynomial correspondence” section. The literal quartic quotient equivalence is separately tied to the bridge in that same section. The algebra portions of E3.01–E3.02 and E3.06–E3.08 are the discriminant, both actual fields, norm, nonsquares, degrees, separability, primitive generator and absolute polynomial irreducibility established above; their actual curve/model identifications remain separate.
+
+E3.03 still requires actual smooth proper models, full constant fields, identification of their function fields and actual finite separable b-maps. E3.04 must identify the eight finite D-branch places and both infinity places with local rings, uniformizers, ramification and different hypotheses. E3.05 must apply Riemann–Hurwitz on that quotient model to obtain 2g(H)−2 = 2(−2)+8 = 4 and genus three. Squarefree degree eight alone is not that model-level proof.
+
+E3.09 still requires nine actual simple f-zero places above roots of N, with regularity of both conjugate factors, a nonzero companion and order one. E3.10 must identify both H-places over 1/3, proving q and f have order −1 at one and that the other has q regular and f nonzero, with the local norm/order bridge. E3.11 must supply the two actual infinity points and coordinates giving ord(q) = −3 and ord(f) = −4 at each. E3.12 must exclude all other odd valuations, discharge local Kummer parity and tame different hypotheses, and prove exactly ten branches. The rational-field simple pole above is not a substitute for these local assertions.
+
+E3.13 still requires the actual smooth projective normalization, its full constants and model morphism, and matched Riemann–Hurwitz with 2g(X)−2 = 2(2·3−2)+10 = 18, giving geometric genus ten. Arithmetic genus fifteen is not substituted. For E3.14 the elementary all-integer finiteness application in the following section already supplies finiteness of G(a,b) = 0, including A(b) ≠ 0 on integer b and finite a-fibers; this algebra section does not erase or reprove that result. The separate geometric route still owes an actual integer map to the constructed smooth affine quotient, its at-most-two fibers, and a Siegel or complete hyperelliptic finiteness theorem with all hypotheses matched. The F1–F3, G1–G5, E1–E4 and original 21+5 obligations are unchanged. No complete E3, effective point list, emptiness or graph classification follows from the algebra application alone.
 
 ## Integer points on the endpoint equality polynomial
 
