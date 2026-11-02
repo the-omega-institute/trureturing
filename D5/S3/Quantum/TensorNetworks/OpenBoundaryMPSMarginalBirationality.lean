@@ -6,11 +6,6 @@
    utility: none
    digest: Rational reconstruction of open-boundary binary bond-two matrix product states. -/
 
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Algebra.CharZero.Infinite
 import D5.S3.Analytic.Hunter.NCHunterPositivity
 
 /-! The affine model and its Cramer reconstruction on a principal open chart. -/
