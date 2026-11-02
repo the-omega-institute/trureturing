@@ -41,11 +41,11 @@ abbrev arena : Arena where
   signature := Original.signature
   Law R := ∀ (m : ℕ), 3 ≤ m → observedClaim m (R.readout () m)
 
-abbrev source := type_of% (@result)
+abbrev source := type_of% (@_root_.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum.result)
 
 theorem source_bridge : source ↔ arena.Law Original.actual := Iff.rfl
 
-theorem actual_positive : arena.Law Original.actual := @result
+theorem actual_positive : arena.Law Original.actual := @_root_.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum.result
 
 theorem rejected_law : ¬ arena.Law Original.rejected := by
   intro h
@@ -72,10 +72,11 @@ def family : Registration arena source where
     refine ⟨3, (0 : Original.Weights 3), (1 : Original.Weights 3), ?_⟩
     intro he
     have hh := congrFun he s((0 : Fin (2+3)), (2 : Fin (2+3)))
-    norm_num [Original.actual, realize] at hh
+    change (0 : ℝ) = 1 at hh
+    norm_num at hh
 
 noncomputable def sourceRegistration :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0} (@result)
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0} (@_root_.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum.result)
       (Realization Original.signature) Unit Unit where
   unitName := `D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum.result.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum.family
