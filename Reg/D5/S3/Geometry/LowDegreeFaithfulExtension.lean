@@ -98,38 +98,4 @@ def family : Registration arena.{u} (type_of% (@exists_faithful_extension.{u})) 
     fun e => nomatch e⟩
   dependence := dependence
 
-def registration : Contract.Registration (@exists_faithful_extension.{u})
-    (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Geometry.LowDegreeFaithfulExtension.__information_unit
-  realizationName := `Reg.D5.S3.Geometry.LowDegreeFaithfulExtension.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => dist x) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some E₅
-  sourceSelection := some {
-    owner := `D5.S3.Geometry.LowDegreeFaithfulExtension
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "arg", "body",
-        "arg", "fn", "arg", "body", "body", "arg", "fn", "arg", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
 end Reg.D5.S3.Geometry.LowDegreeFaithfulExtension
