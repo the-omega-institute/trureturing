@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.Word`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 A word of length n is a function from ZMod n to the binary field ZMod 2. All additions in an index are modulo n; all additions in a word value are modulo two.
@@ -23,6 +25,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.chi`
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.chi` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -36,6 +40,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sign`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 The sign of a binary field element z is the integer (-1) raised to its representative z.val, which is zero or one.
@@ -47,6 +53,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceMatrix`
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceMatrix` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -60,6 +68,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 Form the list of source matrices at representatives zero through n-1 in that order, multiply the list, and take its integer matrix trace. No commutation of matrix factors is used.
@@ -71,6 +81,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.traceSupport`
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.traceSupport` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -84,6 +96,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.claim`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For every natural m and every nonzero b of length 2m+1, the direction of the affine span over ZMod 2 of the trace support has dimension at least 2m. The parameter m runs from zero, so this is exactly all positive odd lengths, including length one. The inequality is a lower bound, not an equality. The final theorem proves this assertion through the exact trace and Walsh identities and a bound on constant-derivative directions.
@@ -95,6 +109,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.alternatingPr
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.alternatingPrefix` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -108,6 +124,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 At length 2m+1, the inverse coordinate at i is the sum, for r from zero through m, of y_(i+2r) times the alternating prefix at i of length r. Thus its first term is y_i.
@@ -119,6 +137,8 @@ $$\forall m \in \mathrm{Nat},\; {\forall x \in \mathrm{Word}\left({{2} \cdot {m}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_spec` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -136,6 +156,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dot`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 The dot product of a and x is the sum over all cyclic indices of a_i x_i in ZMod 2.
@@ -147,6 +169,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh`
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -160,6 +184,8 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For every positive length n, every Boolean f and every word y, summing walsh(f,a) sign(dot(a,y)) over all a gives the number of binary words times sign(f(y)). Character orthogonality is applied to an actual AddChar into the integers; this is an integer identity without a choice of normalization.
@@ -171,6 +197,8 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_support_nonempty` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -184,6 +212,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverseCompon
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For arbitrary mask b at length 2m+1, the inverse component at y is dot(b,inverse(m,y)). The mask is unrestricted in this definition.
@@ -195,6 +225,8 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_phase_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -208,6 +240,8 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. The trace identity below therefore also makes the literal source trace support nonempty, without any assumption on b.
@@ -219,6 +253,8 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_constant_derivative_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -232,6 +268,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDual`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 Send a direction u to the linear functional a ↦ dot(a,u) on the binary word space.
@@ -243,6 +281,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDualEquiv`
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDualEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -256,6 +296,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walshSupportD
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 Take the direction of the affine span over ZMod 2 of the nonzero Walsh support.
@@ -267,6 +309,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDeriv
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivativeSubmodule` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -280,6 +324,8 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For every positive length and Boolean function, membership in the canonical constant-derivative submodule is equivalent to having a constant Boolean derivative. Its finrank plus the finrank of the Walsh-support affine direction equals the finrank of the full word space. The proof uses a nonzero Walsh coefficient as an affine base point, identifies the direction with the span of support differences, applies walsh_constant_derivative_iff, and transports the dual-annihilator finrank identity through the nondegenerate dot pairing. Length one is included by the same statement.
@@ -291,6 +337,8 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall b \in \mathrm{Word}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace_eq_phase_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -308,6 +356,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanMonomi
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For a finite set s of actual cyclic coordinates, booleanMonomial(s,z) is the product of z_i over i in s. Repeated cyclic coordinates are represented only once; the empty monomial is one.
@@ -319,6 +369,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.indicatorWord
 *Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.indicatorWord` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -332,6 +384,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanCoeff`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 The coefficient of a Boolean function f at s is the sum in ZMod 2 of f(indicatorWord(t)) over every subset t of s. Thus equal actual functions have equal coefficients. Subset cancellation proves that extraction applied to the monomial at t is one exactly when s=t and zero otherwise; this establishes uniqueness for finite sums of squarefree monomials without assuming injectivity of polynomial evaluation.
@@ -344,6 +398,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.prefixVariabl
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 The finite set prefixVariables(i,r) is the image of t=0,...,r-1 under t ↦ i+2t+1 in the actual cyclic index type.
@@ -355,6 +411,8 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_boolean_coefficient` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -370,6 +428,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.monomialDeriv
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 At variable sets t,s and direction u, this is the product of u on t minus s when s is a subset of t, plus one when s=t; absent contributions are zero. Product expansion and coefficient extraction prove that this is the coefficient at s of z ↦ booleanMonomial(t,z+u)+booleanMonomial(t,z).
@@ -381,6 +441,8 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_derivative_coefficients` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -394,6 +456,8 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.topVariables`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 The set topVariables(m,i) is prefixVariables(i,m) with coordinate i+2m inserted. It has m+1 elements. Its coordinate sum has slope m+1 as a function of i; multiplication by two in the odd cycle inverts that slope, so the sets for distinct i are distinct.
@@ -406,6 +470,8 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
+
 *Commentary.*
 
 For every m, b and cyclic coordinate i, the coefficient of the shifted inverse component at topVariables(m,i) is exactly b_i. Cardinality excludes every shorter prefix and endpoint term; injectivity of the highest-degree variable sets leaves exactly the term indexed by i. Length one and zero masks are included.
@@ -417,6 +483,8 @@ $$\forall m \in \mathrm{Nat},\; {0 < m} \Rightarrow {\forall b \in \mathrm{Word}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_top_derivative` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
@@ -437,6 +505,8 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.affine_trace_support_dimension` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
 
 *Commentary.*
 
