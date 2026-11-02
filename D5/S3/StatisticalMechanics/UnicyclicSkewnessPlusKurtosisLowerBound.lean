@@ -127,11 +127,11 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     apply sub_nonneg.mpr
     apply (le_div_iff₀ hpp).2
     have hq2 : qq ^ 2 = pp ^ 2 * (qq / pp) ^ 2 := by
-      field_simp
+      field_simp (disch := positivity)
     nlinarith [hqr, hq2]
   have hqt : qq = pp * t := by
     dsimp [t]
-    field_simp
+    field_simp (disch := positivity)
   have htr : t ^ 2 < pp := by
     dsimp [t]
     rw [div_pow]
@@ -144,7 +144,7 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     exact sub_pos.mpr htr
   have hre : rr = pp * (t ^ 2 + e) := by
     dsimp [e]
-    field_simp
+    field_simp (disch := positivity)
     ring
   have hred := reduced_form pp qq rr t e hpp.ne' hqt hre
   have hmain : 0 <
@@ -200,7 +200,8 @@ private lemma source_value_asymptotic (m : ℕ) (hm : 1 ≤ m) :
       sourceApproximation (1 / (m : ℝ)) := by
   rw [source_value m hm]
   dsimp [sourceApproximation]
-  field_simp
+  have hm0 : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+  field_simp (disch := positivity)
 
 private lemma source_limit :
     Tendsto (fun m : ℕ => skewness (sourceRates (m + 1)) +
