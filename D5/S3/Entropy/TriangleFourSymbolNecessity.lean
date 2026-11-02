@@ -458,6 +458,133 @@ private theorem two_blocks (F : A → Finset X) (G : B → Finset X)
   · exact False.elim ((Finset.mem_sdiff.mp hx).2 (he ▸ ha₁))
   · exact ⟨a₁, he⟩
 
+private theorem binary_codes (F : A → Finset X)
+    (hblocks : ∃ u : Finset X, u.card = 2 ∧ (Finset.univ \ u).card = 2 ∧
+      (∀ a, F a = u ∨ F a = Finset.univ \ u) ∧
+      (∃ a, F a = u) ∧ (∃ a, F a = Finset.univ \ u)) :
+    ∃ b : A → Bool, ∃ d : X → Bool,
+      Function.Surjective b ∧ (∀ a x, x ∈ F a ↔ d x = b a) := by
+  classical
+  obtain ⟨u, hu, huc, hcases, ⟨a₀, ha₀⟩, ⟨a₁, ha₁⟩⟩ := hblocks
+  let b : A → Bool := fun a => if F a = u then false else true
+  let d : X → Bool := fun x => if x ∈ u then false else true
+  have hne : Finset.univ \ u ≠ u := by
+    intro he
+    obtain ⟨x, hx⟩ := Finset.card_pos.mp (show 0 < u.card by omega)
+    have hx' : x ∈ Finset.univ \ u := he.symm ▸ hx
+    exact (Finset.mem_sdiff.mp hx').2 hx
+  refine ⟨b, d, ?_, ?_⟩
+  · intro t
+    cases t
+    · exact ⟨a₀, by simp [b, ha₀]⟩
+    · exact ⟨a₁, by simp [b, ha₁, hne]⟩
+  · intro a x
+    rcases hcases a with ha | ha
+    · simp [d, b, ha]
+    · simp [d, b, ha, hne]
+
+private theorem pair_codes_bijective (F : A → Finset X) (G : B → Finset X)
+    (cross : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (bF : A → Bool) (bG : B → Bool) (dF dG : X → Bool)
+    (surjF : Function.Surjective bF) (surjG : Function.Surjective bG)
+    (codeF : ∀ a x, x ∈ F a ↔ dF x = bF a)
+    (codeG : ∀ b x, x ∈ G b ↔ dG x = bG b) :
+    Function.Bijective (fun x => (dF x, dG x)) := by
+  constructor
+  · intro x y he
+    obtain ⟨a, ha⟩ := surjF (dF x)
+    obtain ⟨b, hb⟩ := surjG (dG x)
+    obtain ⟨z, hz, hu⟩ := cross a b
+    have hyF : dF y = bF a := (congrArg Prod.fst he).symm.trans ha.symm
+    have hyG : dG y = bG b := (congrArg Prod.snd he).symm.trans hb.symm
+    exact (hu x ⟨(codeF a x).mpr ha.symm, (codeG b x).mpr hb.symm⟩).trans
+      (hu y ⟨(codeF a y).mpr hyF, (codeG b y).mpr hyG⟩).symm
+  · rintro ⟨u, v⟩
+    obtain ⟨a, ha⟩ := surjF u
+    obtain ⟨b, hb⟩ := surjG v
+    obtain ⟨x, hx, _⟩ := cross a b
+    exact ⟨x, Prod.ext ((codeF a x).mp hx.1 |>.trans ha)
+      ((codeG b x).mp hx.2 |>.trans hb)⟩
+
+private theorem latin_bool_parity (g : Bool × Bool → Bool)
+    (rows : ∀ u, g (u, false) ≠ g (u, true))
+    (cols : ∀ v, g (false, v) ≠ g (true, v)) :
+    ∀ u v, (g (u, v) ^^ g (false, false)) = (u ^^ v) := by
+  have r₀ := rows false
+  have r₁ := rows true
+  have c₀ := cols false
+  have c₁ := cols true
+  intro u v
+  cases u <;> cases v <;>
+    cases h₀ : g (false, false) <;> cases h₁ : g (false, true) <;>
+    cases h₂ : g (true, false) <;> cases h₃ : g (true, true) <;>
+    simp_all
+
+private theorem three_codes (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverF : ∀ x, ∃ a, x ∈ F a)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hm : 2 ≤ Fintype.card X) (hmax : Fintype.card X ≤ 4) :
+    ∃ bF : A → Bool, ∃ bG : B → Bool, ∃ bH : C → Bool,
+    ∃ h : (Bool × Bool) ≃ X,
+      Function.Surjective bF ∧ Function.Surjective bG ∧ Function.Surjective bH ∧
+      (∀ a u v, h (u, v) ∈ F a ↔ u = bF a) ∧
+      (∀ b u v, h (u, v) ∈ G b ↔ v = bG b) ∧
+      (∀ c u v, h (u, v) ∈ H c ↔ (u ^^ v) = bH c) := by
+  classical
+  have swapFG : ∀ b a, ∃! x, x ∈ G b ∧ x ∈ F a := by
+    intro b a; simpa only [and_comm] using crossFG a b
+  have swapFH : ∀ c a, ∃! x, x ∈ H c ∧ x ∈ F a := by
+    intro c a; simpa only [and_comm] using crossFH a c
+  have swapGH : ∀ c b, ∃! x, x ∈ H c ∧ x ∈ G b := by
+    intro c b; simpa only [and_comm] using crossGH b c
+  obtain ⟨bF, dF, sF, cF⟩ := binary_codes F
+    (two_blocks F G H coverF coverG coverH crossFG crossFH crossGH hm hmax)
+  obtain ⟨bG, dG, sG, cG⟩ := binary_codes G
+    (two_blocks G F H coverG coverF coverH swapFG crossGH crossFH hm hmax)
+  obtain ⟨bH, dH, sH, cH⟩ := binary_codes H
+    (two_blocks H F G coverH coverF coverG swapFH swapGH crossFG hm hmax)
+  have bijFG := pair_codes_bijective F G crossFG bF bG dF dG sF sG cF cG
+  have bijFH := pair_codes_bijective F H crossFH bF bH dF dH sF sH cF cH
+  have bijGH := pair_codes_bijective G H crossGH bG bH dG dH sG sH cG cH
+  let h : (Bool × Bool) ≃ X := (Equiv.ofBijective (fun x => (dF x, dG x)) bijFG).symm
+  have hF (u v : Bool) : dF (h (u, v)) = u :=
+    congrArg Prod.fst ((Equiv.ofBijective (fun x => (dF x, dG x)) bijFG).apply_symm_apply (u, v))
+  have hG (u v : Bool) : dG (h (u, v)) = v :=
+    congrArg Prod.snd ((Equiv.ofBijective (fun x => (dF x, dG x)) bijFG).apply_symm_apply (u, v))
+  let g : Bool × Bool → Bool := fun z => dH (h z)
+  have rows (u : Bool) : g (u, false) ≠ g (u, true) := by
+    intro he
+    have hh := bijFH.1 (show (dF (h (u, false)), dH (h (u, false))) =
+        (dF (h (u, true)), dH (h (u, true))) from Prod.ext (by rw [hF, hF]) he)
+    have hn : false = true := congrArg Prod.snd (h.injective hh)
+    cases hn
+  have cols (v : Bool) : g (false, v) ≠ g (true, v) := by
+    intro he
+    have hh := bijGH.1 (show (dG (h (false, v)), dH (h (false, v))) =
+        (dG (h (true, v)), dH (h (true, v))) from Prod.ext (by rw [hG, hG]) he)
+    have hn : false = true := congrArg Prod.fst (h.injective hh)
+    cases hn
+  let k := g (false, false)
+  have parity := latin_bool_parity g rows cols
+  refine ⟨bF, bG, (fun c => bH c ^^ k), h, sF, sG, ?_, ?_, ?_, ?_⟩
+  · intro t
+    obtain ⟨c, hc⟩ := sH (t ^^ k)
+    refine ⟨c, ?_⟩
+    simp only [hc]
+    cases t <;> cases k <;> rfl
+  · intro a u v
+    rw [cF, hF]
+  · intro b u v
+    rw [cG, hG]
+  · intro c u v
+    rw [cH]
+    change g (u, v) = bH c ↔ _
+    rw [← Bool.xor_left_inj (z := k), parity]
+
 end CrossSupport
 
 namespace IncidentLaw
@@ -810,7 +937,7 @@ private theorem record_pair_tables (L : IncidentLaw S₁ S₂ S₃ O)
 private theorem record_joint_entropy (L : IncidentLaw S₁ S₂ S₃ O)
     (hagree : L.Agreement) :
     shannonEntropy L.recordJoint = shannonEntropy L.nu := by
-  have he := (L.original_law_recoverability hagree).2.2.2.2
+  have he := (L.original_law_common_record hagree).2.2.2.1
   have ht : L.recordJoint = fun z : O × (S₁ × S₂ × S₃) =>
       if z.1 = L.readoutA z.2.2.1 z.2.2.2 then L.nu z.2 else 0 := by
     funext z
@@ -1323,6 +1450,30 @@ theorem original_output_cardinality (L : IncidentLaw S₁ S₂ S₃ O)
   obtain ⟨cross₁₂, cross₁₃, cross₂₃⟩ := L.support_cross hagree heq
   exact CrossSupport.cardinal_lower_bound L.support₁ L.support₂ L.support₃
     cover₁ cover₂ cover₃ cross₁₂ cross₁₃ cross₂₃ hmin
+
+/-- The binary source blocks and the parity-labelled output bijection are
+constructed from the actual conditional supports, with no replacement law. -/
+theorem original_binary_supports (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (heq : L.sourceCost = shannonEntropy L.outputLaw / 2)
+    (hmin : 2 ≤ Fintype.card L.PositiveOutput)
+    (hmax : Fintype.card L.PositiveOutput ≤ 4) :
+    Fintype.card L.PositiveOutput = 4 ∧
+    ∃ b₁ : L.Active₁ → Bool, ∃ b₂ : L.Active₂ → Bool, ∃ b₃ : L.Active₃ → Bool,
+    ∃ h : (Bool × Bool) ≃ L.PositiveOutput,
+      Function.Surjective b₁ ∧ Function.Surjective b₂ ∧ Function.Surjective b₃ ∧
+      (∀ s u v, 0 < L.posterior₁ (h (u, v)).val s.val ↔ u = b₁ s) ∧
+      (∀ s u v, 0 < L.posterior₂ (h (u, v)).val s.val ↔ v = b₂ s) ∧
+      (∀ s u v, 0 < L.posterior₃ (h (u, v)).val s.val ↔ (u ^^ v) = b₃ s) := by
+  classical
+  have hcard : Fintype.card L.PositiveOutput = 4 :=
+    le_antisymm hmax (L.original_output_cardinality hagree heq hmin)
+  refine ⟨hcard, ?_⟩
+  obtain ⟨cover₁, cover₂, cover₃⟩ := L.support_cover
+  obtain ⟨cross₁₂, cross₁₃, cross₂₃⟩ := L.support_cross hagree heq
+  have hh := CrossSupport.three_codes L.support₁ L.support₂ L.support₃
+    cover₁ cover₂ cover₃ cross₁₂ cross₁₃ cross₂₃ hmin hmax
+  simpa only [support₁, support₂, support₃, Finset.mem_filter,
+    Finset.mem_univ, true_and] using hh
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
