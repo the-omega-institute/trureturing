@@ -855,8 +855,14 @@ theorem pure_quadratic {d : ℕ} [NeZero d] (a : Matrix (Fin d) (Fin d) ℂ) :
     have hu : u.1ᴴ * u.1 = 1 := by
       simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
     have hpp : p u * p u = p u := by
-      simp only [p, Matrix.mul_assoc, ← Matrix.mul_assoc u.1ᴴ u.1, hu,
-        Matrix.one_mul, ← Matrix.mul_assoc q q, q, Matrix.single_mul_single_same, one_mul]
+      have hb : IsIdempotentElem (Matrix.single (0 : Fin d) (0 : Fin d) (1 : ℂ)) := by
+        change Matrix.single (0 : Fin d) 0 (1 : ℂ) * Matrix.single 0 0 1 = Matrix.single 0 0 1
+        simpa only [mul_one] using
+          Matrix.single_mul_single_same (1 : ℂ) (0 : Fin d) (0 : Fin d) (0 : Fin d) 1
+      change (u.1 * Matrix.single 0 0 1 * u.1ᴴ) * (u.1 * Matrix.single 0 0 1 * u.1ᴴ) =
+        u.1 * Matrix.single 0 0 1 * u.1ᴴ
+      simpa only [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose] using
+        (hb.map (Unitary.conjStarAlgAut ℂ _ u)).eq
     have hpt : (p u).trace = 1 := by
       dsimp only [p]
       rw [Matrix.trace_mul_cycle, hu, Matrix.one_mul]

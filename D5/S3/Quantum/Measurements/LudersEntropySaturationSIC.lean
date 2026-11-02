@@ -113,13 +113,14 @@ private theorem input_projector_trace {d : ℕ} [NeZero d]
 private theorem input_projector_idempotent {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
     inputProjector u * inputProjector u = inputProjector u := by
-  have hu : u.1ᴴ * u.1 = 1 := by
-    simpa (config := { congrConsts := false }) only [Matrix.star_eq_conjTranspose]
-      using Matrix.mem_unitaryGroup_iff'.mp u.2
-  simp (config := { congrConsts := false }) only [inputProjector, Matrix.mul_assoc,
-    ← Matrix.mul_assoc u.1ᴴ u.1, hu, Matrix.one_mul]
-  rw [← Matrix.mul_assoc baseProjector baseProjector u.1ᴴ]
-  simp [baseProjector, Matrix.single_mul_single_same]
+  have hb : IsIdempotentElem (Matrix.single (0 : Fin d) (0 : Fin d) (1 : ℂ)) := by
+    change Matrix.single (0 : Fin d) 0 (1 : ℂ) * Matrix.single 0 0 1 = Matrix.single 0 0 1
+    simpa only [mul_one] using
+      Matrix.single_mul_single_same (1 : ℂ) (0 : Fin d) (0 : Fin d) (0 : Fin d) 1
+  change (u.1 * Matrix.single 0 0 1 * u.1ᴴ) * (u.1 * Matrix.single 0 0 1 * u.1ᴴ) =
+    u.1 * Matrix.single 0 0 1 * u.1ᴴ
+  simpa only [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose] using
+    (hb.map (Unitary.conjStarAlgAut ℂ _ u)).eq
 
 private noncomputable def ludersState {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
