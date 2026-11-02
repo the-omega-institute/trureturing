@@ -11,7 +11,7 @@ module
 public import Mathlib.Data.List.Basic
 public import Mathlib.Data.Nat.Bits
 public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Data.Nat.Totient
+public import Mathlib.Data.Nat.Totient
 import Mathlib.Tactic
 import Lean.Elab.Tactic.Omega
 
@@ -214,7 +214,7 @@ private theorem mass_prime_pow (p k : ℕ) (hp : p.Prime) (hk : 0 < k) :
       moebius_apply_prime_pow hp (by omega : j + 1 ≠ 0)]
     by_cases hj : j = 0
     · simp [hj]
-    · simp [hj, show j + 1 ≠ 1 by omega]
+    · simp [hj]
   simp_rw [hterm]
   simp [signedMu, Finset.sum_ite_eq', hk, sub_eq_add_neg, add_comm]
 
@@ -248,8 +248,11 @@ private theorem cost_odd (n : ℕ) (hn : Odd n) : cost n = 1 := by
     have hp2 : p ≠ 2 := by
       intro h
       subst p
-      have : Even (2 ^ k) := (even_two).pow hk
-      exact this.not_odd hn
+      have hd : 2 ∣ 2 ^ k := dvd_pow_self 2 hk
+      have ho := hn
+      rw [Nat.odd_iff] at ho
+      have hz := Nat.mod_eq_zero_of_dvd hd
+      omega
     exact cost_odd_prime_pow p k hp hp2
   | coprime a b ha hb hab iha ihb =>
     rw [cost_mult.map_mul_of_coprime hab, iha (Nat.odd_mul.mp hn).1,
@@ -273,8 +276,8 @@ private theorem cost_binary_block (n : ℕ) (hn : 0 < n) :
         have hm0 : m ≠ 0 := by intro h; simpa using hb h
         obtain ⟨k, q, hq, he, hs⟩ := ih hm0
         refine ⟨k + 1, q, hq, ?_, ?_⟩
-        · simp only [Nat.bit, Bool.false_eq_true, ↓reduceIte, Nat.pow_succ]
-          rw [he]
+        · change 2 * m = 2 ^ (k + 1) * q
+          rw [he, Nat.pow_succ]
           ring
         · rw [Nat.bits_append_bit m false hb, hs]
           simp [block, List.replicate_succ]
@@ -283,15 +286,32 @@ private theorem cost_binary_block (n : ℕ) (hn : 0 < n) :
   rw [he, cost_mult.map_mul_of_coprime (hq.coprime_two_left.pow_left k), cost_odd q hq,
     mul_one, cost_two_pow]
 
+private theorem block_prefix_unique (k l : ℕ) (higher rest : List Bool)
+    (h : block k higher = block l rest) : k = l := by
+  induction k generalizing l with
+  | zero =>
+    cases l with
+    | zero => rfl
+    | succ l => simp [block, List.replicate_succ] at h
+  | succ k ih =>
+    cases l with
+    | zero => simp [block, List.replicate_succ] at h
+    | succ l =>
+      have he : block k higher = block l rest := by
+        simpa [block, List.replicate_succ] using h
+      exact congrArg Nat.succ (ih l he)
+
 /-- The exact registered signed-Moebius/totient formula counts actual transitions,
 including the first move across the fixed right boundary, for every positive input. -/
 theorem result (n : ℕ) (hn : 0 < n) :
     ∃ t : ℕ, Trace t (initial n) none ∧
       (t : ℤ) = ∑ d ∈ n.divisors,
         (∑ e ∈ d.divisors, (-1 : ℤ) ^ (e + 1) * moebius e) ^ 2 * (Nat.totient d : ℤ) := by
-  obtain ⟨k, higher, hs, hc⟩ := cost_binary_block n hn
-  refine ⟨4 * 2 ^ k - 3, ?_, ?_⟩
-  · simpa only [initial, hs] using block_first_crossing k higher
+  obtain ⟨k, higher, hs, ht⟩ := positive_input_first_crossing n hn
+  obtain ⟨l, rest, hl, hc⟩ := cost_binary_block n hn
+  have hkl := block_prefix_unique k l higher rest (hs.symm.trans hl)
+  subst l
+  refine ⟨4 * 2 ^ k - 3, ht, ?_⟩
   have hpow : 3 ≤ 4 * 2 ^ k := by have := Nat.one_le_pow k 2 (by omega); omega
   have he : ((4 * 2 ^ k - 3 : ℕ) : ℤ) = cost n := by
     rw [Nat.cast_sub hpow, Nat.cast_mul, Nat.cast_pow, hc]
