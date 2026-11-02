@@ -27,7 +27,7 @@ internal sealed class WeightedWordDefectDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula x, Formula i) => Seq(x, Underscore, Grp(i));
     private static Formula At(Formula f, Formula x) => Seq(f, Open, x, Close);
     private static Formula Adj(Formula x) => Seq(x, Caret, Grp(Star));
-    private static Formula Norm(Formula x) => Seq(Vert, x, Vert, Underscore, Grp(F.Id("op")));
+    private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Sp, Vert, Underscore, Grp(F.Id("op")));
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Inst(string name, Formula type) =>
@@ -42,12 +42,12 @@ internal sealed class WeightedWordDefectDocument : IScribeDocumentDefinition
         Formula ai = Sub(a, i), aj = Sub(a, j), ar = Sub(a, r);
         Formula Error(Formula x) => Seq(Sqrt, Grp(Norm(Seq(
             At(f, Seq(Adj(x), x)), Minus, Adj(At(f, x)), At(f, x)))));
-        Formula orderedProduct = Seq(Prod, Underscore, Grp(D(0), Le, r, Lt, l));
+        Formula orderedProduct = Seq(Prod, Underscore, Grp(D(0), Le, Sp, r, Lt, l));
         Formula conclusion = Seq(
             Norm(Seq(At(f, Seq(orderedProduct, ar)), Minus, orderedProduct, At(f, ar))),
-            Sp, Le, Sp, Sum, Underscore, Grp(D(0), Le, i, Lt, j, Lt, l),
+            Sp, Le, Sp, Sum, Underscore, Grp(D(0), Le, Sp, i, Lt, j, Lt, l),
             Error(ai), Error(aj), Sp, Prod, Underscore,
-            Grp(D(0), Le, r, Lt, l, Comma, r, Neq, Sp, i, Comma, r, Neq, Sp, j), Norm(ar));
+            Grp(D(0), Le, Sp, r, Lt, l, Comma, r, Neq, Sp, i, Comma, r, Neq, Sp, j), Norm(ar));
         Formula body = Seq(
             Open, Forall, Sp, i, InMacro, Sp, fin, Comma, Sp, Adj(ai), Eq, ai, Close,
             Sp, Implies, Sp, conclusion);

@@ -68,10 +68,17 @@ private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
     rw [hT]
     ext ⟨i⟩ ⟨j⟩
     simp only [Matrix.sum_apply, Fin.sum_univ_two]
-    change (∑ t : d, (∑ q : d, K 0 ⟨i⟩ q * X q t) * star (K 0 ⟨j⟩ t)) +
-      (∑ t : d, (∑ q : d, K 1 ⟨i⟩ q * X q t) * star (K 1 ⟨j⟩ t)) = _
-    simp only [sum_ulift_two]
-    fin_cases i <;> fin_cases j <;> norm_num [K, Matrix.diagonal_apply]
+    change (∑ t : d, (∑ q : d,
+      (if i = 0 ∧ q.down = 0 then (1 : ℂ) else 0) * X q t) *
+        star (if j = 0 ∧ t.down = 0 then (1 : ℂ) else 0)) +
+      (∑ t : d, (∑ q : d,
+        (if i = 1 ∧ q.down = 1 then (1 : ℂ) else 0) * X q t) *
+          star (if j = 1 ∧ t.down = 1 then (1 : ℂ) else 0)) =
+      if (⟨i⟩ : k) = ⟨j⟩ then X ⟨i⟩ ⟨i⟩ else 0
+    change (d → d → ℂ) at X
+    dsimp only [d] at X ⊢
+    repeat' rw [sum_ulift_two]
+    fin_cases i <;> fin_cases j <;> norm_num
   have hΦ : Φ 1 = 1 := by
     apply CStarMatrix.ofMatrix.symm.injective
     change CStarMatrix.ofMatrix.symm (Φ (CStarMatrix.ofMatrix (1 : Matrix d d ℂ))) = 1
@@ -101,7 +108,8 @@ private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
     rw [hΦ]
     rfl
   rw [hm1] at hh
-  simpa [rejected, realize, pairSum] using hh
+  have hc : (1 : ℝ) ≤ 0 := by simpa [rejected, realize, pairSum] using hh
+  exact (not_le_of_gt (zero_lt_one : (0 : ℝ) < 1)) hc
 
 def source_registration : Registration arena.{u,v} (type_of% @ucp_word_pair_bound.{u,v}) where
   actual := actual
@@ -141,7 +149,8 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "arg", "arg", "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
