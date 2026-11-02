@@ -6,10 +6,7 @@
    utility: none
    digest: Two continuous invariant parity-odd variables vanish on a chiral event. -/
 
-import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Analysis.Convex.Contractible
-import Mathlib.Topology.Homotopy.Lifting
+import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
 import D5.S3.Combinatorics.PerfectMatchings.SerialEndpointPairing
 import D5.S3.Topology.TauCeti.Analysis.Normed.Module.Normalize
 
@@ -34,18 +31,27 @@ private theorem hemisphere_continuous : Continuous hemisphere := by
 
 private theorem hemisphere_mem (z : ℂ) (hz : z ∈ Metric.closedBall (0 : ℂ) 1) :
     hemisphere z ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1 := by
-  have hzle : ‖z‖ ≤ 1 := mem_closedBall_zero_iff.mp hz
-  have hs : 0 ≤ 1 - ‖z‖ ^ 2 := by nlinarith [norm_nonneg z]
-  have hnorm := EuclideanSpace.real_norm_sq_eq (hemisphere z)
-  have hzsq : z.re ^ 2 + z.im ^ 2 = ‖z‖ ^ 2 := by
-    rw [← Complex.normSq_eq_norm_sq]
-    simp [Complex.normSq_apply, pow_two]
-  rw [Fin.sum_univ_three] at hnorm
-  change ‖hemisphere z‖ ^ 2 = z.re ^ 2 + z.im ^ 2 +
-    (Real.sqrt (1 - ‖z‖ ^ 2)) ^ 2 at hnorm
-  rw [Real.sq_sqrt hs, hzsq] at hnorm
+  let w : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 ![z.re, z.im, 0]
+  let e : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 ![0, 0, 1]
+  have hw : ‖w‖ = ‖z‖ := by
+    apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+    rw [EuclideanSpace.real_norm_sq_eq]
+    simpa [w, Fin.sum_univ_three, Complex.normSq_apply, pow_two] using
+      Complex.normSq_eq_norm_sq z
+  have he : ‖e‖ = 1 := by
+    apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)).mp
+    rw [EuclideanSpace.real_norm_sq_eq]
+    norm_num [e, Fin.sum_univ_three]
+  have horth : inner ℝ w e = 0 := by
+    simp [w, e, PiLp.inner_apply, Fin.sum_univ_three]
+  have hpad : hemisphere z = w + Real.sqrt (1 - ‖w‖ ^ 2) • e := by
+    rw [hw]
+    ext i
+    fin_cases i <;> simp [hemisphere.eq_1, w, e]
   apply mem_sphere_zero_iff_norm.mpr
-  nlinarith [norm_nonneg (hemisphere z)]
+  rw [hpad]
+  exact D5.S3.Arith.Lattices.Klartag.norm_padUnit
+    (by rw [hw]; exact mem_closedBall_zero_iff.mp hz) he horth
 
 private def diskBoundary (z : Circle) : Metric.closedBall (0 : ℂ) 1 :=
   ⟨z, Metric.sphere_subset_closedBall z.property⟩
