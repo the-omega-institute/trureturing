@@ -34,7 +34,7 @@ internal sealed class BajnokBeattyCayleySufficiencyDocument : IScribeDocumentDef
                 Paragraph(Text(
                     "The lattice relations are twice (t−j,−t−j) and twice (t−1,t+1). "
                     + "Explicit surjective additive maps into Z/2 × Z/(4(t²−j)) annihilate both relations. "
-                    + "For even t the coordinate change has determinant one. For odd t and even j, "
+                    + "For even t the coordinate change has determinant −1. For odd t and even j, "
                     + "d=t²−j is odd and a Bézout identity for 4 and d lifts every group element. "
                     + "The two coordinate images are distinct because their first coordinates sum to one "
                     + "in Z/2. Translation by the group identifies this signed coefficient ball with "
