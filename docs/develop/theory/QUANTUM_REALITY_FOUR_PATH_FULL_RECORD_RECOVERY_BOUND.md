@@ -2851,3 +2851,395 @@ $$
 定理 21.3 只覆盖本节指定的 rank-one 效果与对角共享反馈族；它不覆盖任意 $U\in U(4)$，也不把一般非 rank-one 效果的全局最优常数判为已定。当前全局下界为 $R_*=29.3209568043\ldots$，一般生产者对的最佳 $C_{\mathrm{prod}}$ 仍为 open。
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Sharp uniform local producer rigidity for arbitrary shared unitary feedback
+
+Keep exactly the record $R_0$ of Definition 1.1, the ordinary transpose in (1.4), and the actual producer distance $\rho$ and defect $g=a+\tau$ of Definition 11.1. In particular, one original effect has one feedback matrix $U\in U(4)$, shared by all its columns. Put
+
+$$
+h=\frac1{\sqrt2},\qquad c=\cos(\pi/8),\qquad s=\sin(\pi/8),
+\qquad d=\sqrt2+2c,\qquad e=\sqrt2+2s.
+$$
+
+The constants $\kappa$ and $R_*=\kappa^{-1}$ are those of Theorem 21.3; that theorem's restricted finite-scale result and sharpness path are reused here. The new domain is a uniform neighborhood of both optimizer classes with unrestricted unitary feedback. The local conclusion also extends to positive effects through the same-feedback calculation below.
+
+### 22.1. An exact cancellation before taking local coordinates
+
+Write $H_0$ for the certificate matrix denoted by $H$ in (3.9), and define the row vector
+
+$$
+\ell(U)=\sum_{i=1}^4U_{ii}(R_0)_{i,:}\in M_{1,2}(\mathbb C).
+$$
+
+For the positive-square-root columns $b_j=(E^{\mathsf T})^{1/2}e_j$ used in (9.12), the two occurrences of $\|R_0b_j\|_{\ell^1}^2$ in $a+\tau$ cancel. Consequently,
+
+$$
+\begin{aligned}
+g(E,U)
+&=\sum_{j=1}^2\left(b_j^\dagger H_0b_j-|\ell(U)b_j|^2\right)\\
+&=\operatorname{Tr}\!\left((H_0-\ell(U)^\dagger\ell(U))E^{\mathsf T}\right).
+\end{aligned}
+\tag{22.1}
+$$
+
+Here $\sum_jb_jb_j^\dagger=E^{\mathsf T}$. Thus (22.1) is linear in $E$ at fixed actual $U$, including at singular effects. It does not assert separate linearity of $a$ or $\tau$. It is invariant under multiplication of $U$ by one scalar unit phase. In particular, for a unit vector $b$ and $E=\bar b\bar b^\dagger$,
+
+$$
+g(E,U)=b^\dagger H_0b
+-\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b)\right)\right|^2.
+\tag{22.2}
+$$
+
+Every feedback matrix in these identities is the same original $U$.
+
+### 22.2. The complete unitary quadratic form
+
+Fix $\sigma\in\{+,-\}$. The vectors $b_\sigma$ and matrices $U_\sigma$ are exactly (6.7) and (6.3), and $E_\sigma=\bar b_\sigma\bar b_\sigma^\dagger$. Define the row weights and certificate eigenvalues by
+
+| $\sigma$ | $u$ | $v$ | $\chi$ | $L$ | $M$ |
+| --- | --- | --- | --- | --- | --- |
+| $+$ | $c$ | $s$ | $1$ | $d$ | $e$ |
+| $-$ | $s$ | $c$ | $-1$ | $e$ | $d$ |
+
+Thus $L=2(h+u)$ and $M=2(h+v)$. Direct multiplication of the fixed source matrices gives
+
+$$
+\begin{aligned}
+W_\sigma&:=U_\sigma\operatorname{diag}(R_0b_\sigma)
+          =\operatorname{diag}(h,h,u,u),\\
+V_\sigma&:=U_\sigma\operatorname{diag}(R_0b_{-\sigma})
+          =\operatorname{diag}(h,-h,i\chi v,-i\chi v).
+\end{aligned}
+\tag{22.3}
+$$
+
+In particular, $\operatorname{Tr}W_\sigma=L$ and $\operatorname{Tr}V_\sigma=0$. These products preserve the conjugation convention: the vector entering $R_0$ is $b$, whereas the measured effect is the projection onto $\bar b$.
+
+Near $\mathcal S_\sigma$, every rank-one effect has the unique local ray coordinate
+
+$$
+b(z)=\frac{b_\sigma+zb_{-\sigma}}{\sqrt{1+|z|^2}},
+\qquad E(z)=\overline{b(z)}\,\overline{b(z)}^\dagger,
+\qquad z=x+iy.
+\tag{22.4}
+$$
+
+After taking the scalar feedback phase quotient, every nearby $U$ can be written
+
+$$
+U=e^{i\varphi}e^{iX}U_\sigma,
+\qquad X=X^\dagger,\qquad\operatorname{Tr}X=0,
+\qquad \|X\|_{\mathrm F}\ \text{small}.
+\tag{22.5}
+$$
+
+Indeed, choose a representative of $UU_\sigma^\dagger$ near $I_4$, take its small Hermitian logarithm, and subtract one quarter of its trace; the subtracted scalar is absorbed in $\varphi$. This permits every off-diagonal entry of $X$.
+
+For sufficiently small coordinates, the minimizing sign in Definition 11.1 is $\sigma$. The effect projections of the two classes have Frobenius distance $\sqrt2$, so disjoint sufficiently small neighborhoods select that sign. The scalar phase minimum has the exact expression
+
+$$
+\begin{aligned}
+\rho(E(z),U)
+&=\frac{2|z|^2}{1+|z|^2}+8-2|\operatorname{Tr}e^{iX}|,\\
+g(E(z),U)
+&=\frac{L^2+M^2|z|^2
+ -|\operatorname{Tr}(e^{iX}(W_\sigma+zV_\sigma))|^2}
+ {1+|z|^2}.
+\end{aligned}
+\tag{22.6}
+$$
+
+The first identity follows from
+$\min_{|\lambda|=1}\|A-\lambda B\|_{\mathrm F}^2
+=8-2|\operatorname{Tr}(B^\dagger A)|$ for $A,B\in U(4)$; the second follows from (22.2) and the eigenbasis of $H_0$ in (3.9).
+
+Set $r^2=|z|^2+\|X\|_{\mathrm F}^2$. Taylor expansion of these exact identities gives, with constants uniform over the two signs,
+
+$$
+\rho=N+O(r^4),\qquad g=Q_\sigma+O(r^3),
+\qquad N=2|z|^2+\operatorname{Tr}X^2,
+\tag{22.7}
+$$
+
+where the full quadratic form is
+
+$$
+Q_\sigma=M^2|z|^2+L\operatorname{Tr}(W_\sigma X^2)
+ -(\operatorname{Tr}(W_\sigma X))^2
+ -2L\operatorname{Re}\!\left(iz\operatorname{Tr}(XV_\sigma)\right).
+\tag{22.8}
+$$
+
+To see every second-order term, expand the trace in (22.6) as
+
+$$
+L+i\operatorname{Tr}(XW_\sigma)
+ +iz\operatorname{Tr}(XV_\sigma)
+ -\tfrac12\operatorname{Tr}(X^2W_\sigma)+O(r^3).
+$$
+
+Its linear term is purely imaginary. Squaring its modulus and subtracting from the certificate numerator gives (22.8). The numerator has zero constant and linear terms, so division by $1+|z|^2$ leaves its quadratic term unchanged. Similarly, $\operatorname{Tr}X=0$ implies
+$|\operatorname{Tr}e^{iX}|=4-\tfrac12\operatorname{Tr}X^2+O(\|X\|_{\mathrm F}^4)$, which proves the distance expansion. These are Taylor bounds on an entire coordinate ball; no direction is fixed in their remainders.
+
+Write the diagonal of $X$ as
+
+$$
+(X_{11},X_{22},X_{33},X_{44})
+=(\gamma+p,\gamma-p,-\gamma+q,-\gamma-q),
+\qquad \gamma,p,q\in\mathbb R,
+$$
+
+and put $w=(h,h,u,u)$. Then
+
+$$
+N=2(x^2+y^2)+4\gamma^2+2p^2+2q^2
+  +2\sum_{i<j}|X_{ij}|^2,
+\tag{22.9}
+$$
+
+$$
+\begin{aligned}
+Q_\sigma={}&M^2(x^2+y^2)+2Lh\,p^2+2Lu\,q^2
+ +4Lh\,yp+4\chi Lv\,xq+16hu\,\gamma^2\\
+&+L\sum_{i<j}(w_i+w_j)|X_{ij}|^2.
+\end{aligned}
+\tag{22.10}
+$$
+
+For example, $\operatorname{Tr}(XV_\sigma)=2hp+2i\chi vq$,
+$\operatorname{Tr}(XW_\sigma)=2(h-u)\gamma$, and
+
+$$
+\operatorname{Tr}(W_\sigma X^2)
+=2(h+u)\gamma^2+2hp^2+2uq^2
+ +\sum_{i<j}(w_i+w_j)|X_{ij}|^2.
+$$
+
+Substitution proves (22.10), including all twelve real off-diagonal variables. Relative to the corresponding summands of $N$, the two remaining blocks are
+
+$$
+A_\sigma=
+\begin{pmatrix}M^2/2&Lh\\Lh&Lh\end{pmatrix}
+\quad\text{on }(y,p),
+\qquad
+B_\sigma=
+\begin{pmatrix}M^2/2&\chi Lv\\\chi Lv&Lu\end{pmatrix}
+\quad\text{on }(x,q).
+\tag{22.11}
+$$
+
+The factor of two in both block contributions agrees with (22.9).
+
+The smaller eigenvalue of $A_+$ is exactly $\kappa$, since
+
+$$
+4\det(A_+-zI_2)
+=4z^2-2(\sqrt2d+e^2)z+\sqrt2de^2-2d^2=f(z).
+\tag{22.12}
+$$
+
+Here $f$ is the polynomial of Theorem 21.3. For completeness, all other blocks admit a strict comparison using only rational certificates. The half-angle formulas give
+
+$$
+\frac{7071}{10000}<h<\frac{7072}{10000},\qquad
+\frac{9238}{10000}<c<\frac{9239}{10000},\qquad
+\frac{3826}{10000}<s<\frac{3827}{10000}.
+\tag{22.13}
+$$
+
+Substituting these bounds into $f(1/25)$ gives $f(1/25)<-9/100<0$. Since $f(0)>0$ and its smaller positive root is $\kappa$, as established in Theorem 21.3, this proves $0<\kappa<1/25$. For each matrix $D$ in the following table, the same rational bounds give the indicated strict lower bounds for the leading entry and determinant of $D-I_2/20$:
+
+| $D$ | $(D-I_2/20)_{11}$ | $\det(D-I_2/20)$ |
+| --- | --- | --- |
+| $B_+$ | $>2$ | $>5$ |
+| $A_-$ | $>5$ | $>5$ |
+| $B_-$ | $>5$ | $>7/100$ |
+
+These follow directly from the determinant expressions
+
+$$
+\begin{aligned}
+\det(B_\sigma-I_2/20)
+&=(M^2/2-1/20)(Lu-1/20)-L^2v^2,\\
+\det(A_--I_2/20)
+&=(d^2/2-1/20)(eh-1/20)-e^2h^2.
+\end{aligned}
+$$
+
+For instance, interval substitution in the smallest of these certificates, the $B_-$ determinant, gives the lower bound
+
+$$
+\frac{186767613109161}{2500000000000000}>\frac7{100}.
+$$
+
+Thus all three matrices exceed $I_2/20$ as quadratic forms. The coefficient of $4\gamma^2$ is $4hu>1$, and every off-diagonal coefficient relative to $2|X_{ij}|^2$ is
+$L(w_i+w_j)/2\ge es>4/5$. It follows that
+
+$$
+\boxed{\qquad Q_\sigma\ge\kappa N
+\quad\text{for both }\sigma\in\{+,-\}.
+\qquad}
+\tag{22.14}
+$$
+
+Equality for a nonzero tangent vector is possible only in the positive-class $(y,p)$ block. Within that block it requires $p=-x_*y$, where
+
+$$
+x_*=\frac{\sqrt2d}{\sqrt2d-2\kappa}
+$$
+
+is exactly the parameter of Theorem 21.3. All other coordinates then vanish. In particular, adding off-diagonal unitary tangent components cannot improve this quadratic quotient.
+
+### 22.3. Uniformity over rank-one effects and all actual feedback
+
+**Theorem 22.1 (sharp uniform local rank-one quotient).** For the unchanged $\rho$ and $g$ of Definition 11.1,
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\ \sup\left\{
+\frac{\rho(E,U)}{g(E,U)}:
+E\in\operatorname{Dens}_2,\ \operatorname{rank}E=1,\ U\in U(4),\
+0<\rho(E,U)\le\delta\right\}
+=R_*=29.3209568042764999367\ldots .
+}
+\tag{22.15}
+$$
+
+Both optimizer classes and the common scalar feedback phase are included in this limit. Equivalently, for every $\eta>0$ there is a $\delta_\eta>0$ such that every rank-one pair with $0<\rho\le\delta_\eta$ satisfies $\rho\le(R_*+\eta)g$, and the constant in this limiting statement cannot be decreased.
+
+**Proof.** A pair with $\rho\to0$ approaches one of the two optimizer circles in exactly the product metric of Definition 11.1. After a scalar phase choice it therefore enters one of the charts (22.4)–(22.5), with $r\to0$. Conversely, in these charts, $r^2\le N\le2r^2$, and (22.7) implies $\rho\ge r^2/2$ for sufficiently small $r$. The constants can be chosen the same in the two charts, and scalar phase invariance removes dependence on the location on either optimizer circle.
+
+There are constants $C,C'>0$ on these neighborhoods such that (22.7) and (22.14) imply
+
+$$
+g\ge\kappa N-Cr^3\ge\kappa\rho-C'r^3
+\ge(\kappa-2C'r)\rho.
+\tag{22.16}
+$$
+
+Thus $g/\rho$ has uniform lower limit at least $\kappa$. This estimate uses the size of the actual coordinates, not the first derivative of a chosen curve. It consequently includes sequences with changing directions, different relative perturbation scales, zero first velocity, and arbitrarily flat parametrizations. For positive $\rho$, the denominator $g$ is positive by Lemma 11.2, so (22.16) gives the required upper limit for $\rho/g$.
+
+For the reverse inequality, reuse the actual shared-feedback path from Theorem 21.3:
+
+$$
+E=E(t,\pi/2),\qquad
+U=\operatorname{diag}(e^{-ix_*t},e^{ix_*t},1,1)U_+,
+\qquad t\downarrow0.
+$$
+
+It has positive $\rho\to0$ and $\rho/g\to\kappa^{-1}$. Its coordinates satisfy $z=i\tan t$ and $X=\operatorname{diag}(-x_*t,x_*t,0,0)$, so it also realizes the equality direction identified after (22.14). Every sufficiently small distance constraint contains a tail of this path. This proves (22.15) without reproving the finite-scale theorem. $\square$
+
+### 22.4. Rank change with the same shared feedback
+
+**Corollary 22.2 (sharp uniform local quotient for all normalized positive effects).** With the same record, distance, defect and feedback domain,
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\ \sup\left\{
+\frac{\rho(E,U)}{g(E,U)}:
+E\in\operatorname{Dens}_2,\ U\in U(4),\
+0<\rho(E,U)\le\delta\right\}
+=R_*.
+}
+\tag{22.17}
+$$
+
+**Proof.** Near $E_\sigma$, the two eigenvalues of $E^{\mathsf T}$ are $1-\varepsilon$ and $\varepsilon$, where $0\le\varepsilon<1/2$. The dominant eigenspace has a coordinate $b(z)$ as in (22.4). Put
+
+$$
+b^\perp(z)=\frac{b_{-\sigma}-\bar z b_\sigma}{\sqrt{1+|z|^2}},
+\qquad
+F=\overline{b(z)}\,\overline{b(z)}^\dagger,
+\qquad
+G=\overline{b^\perp(z)}\,\overline{b^\perp(z)}^\dagger.
+$$
+
+Then $E=(1-\varepsilon)F+\varepsilon G$. Formula (22.1), evaluated at the same $U$ in both terms, gives the exact identity
+
+$$
+g(E,U)=(1-\varepsilon)g(F,U)+\varepsilon g(G,U).
+\tag{22.18}
+$$
+
+As $(E,U)$ approaches $\mathcal S_\sigma$, the triple $(\varepsilon,F,U)$ approaches $(0,E_\sigma,e^{i\varphi}U_\sigma)$ and $G$ approaches $E_{-\sigma}$. By (22.3),
+
+$$
+g(E_{-\sigma},U_\sigma)=M^2>0.
+$$
+
+Continuity and scalar phase invariance therefore give $g(G,U)\ge\beta>0$ on sufficiently small neighborhoods of both classes; one may take $\beta=e^2/2$ after shrinking them. The spectral decomposition here is an identity for evaluating the original pair, with one unchanged feedback; no additional independently controlled outcomes are introduced.
+
+Both $(E,U)$ and $(F,U)$ select the sign $\sigma$ on those neighborhoods. Put $t_z=|z|^2/(1+|z|^2)$. Direct calculation in the basis $(b_\sigma,b_{-\sigma})$ gives
+
+$$
+\begin{aligned}
+\|E-E_\sigma\|_{\mathrm F}^2
+ &=2\varepsilon^2+2(1-2\varepsilon)t_z,\\
+\rho(E,U)&=\rho(F,U)-4\varepsilon t_z+2\varepsilon^2
+ \le\rho(F,U)+2\varepsilon^2.
+\end{aligned}
+\tag{22.19}
+$$
+
+These formulas also show $\varepsilon\to0$ and $z\to0$ uniformly as $\rho(E,U)\to0$: the two nonnegative effect terms tend to zero, and $1-2\varepsilon\to1$. The unitary part of $\rho$ supplies $X\to0$ in (22.5). Thus Theorem 22.1 applies uniformly to $(F,U)$, including when that pair is exactly optimal.
+
+Fix $0<\zeta<\kappa$. On a sufficiently small neighborhood, its upper-limit estimate is $g(F,U)\ge(\kappa-\zeta)\rho(F,U)$. Define $c_\varepsilon=(1-\varepsilon)(\kappa-\zeta)>0$. Shrinking the neighborhood further ensures $\beta\ge2c_\varepsilon\varepsilon$. Equations (22.18)–(22.19) now give
+
+$$
+\begin{aligned}
+g(E,U)
+&\ge c_\varepsilon\rho(F,U)+\beta\varepsilon\\
+&\ge c_\varepsilon\bigl(\rho(F,U)+2\varepsilon^2\bigr)
+ \ge c_\varepsilon\rho(E,U).
+\end{aligned}
+$$
+
+Letting the neighborhood shrink and then $\zeta\downarrow0$ proves the uniform upper limit $R_*$. This includes the case $F=E_\sigma$ and $U$ on its optimizer circle: a small positive secondary eigenvalue contributes order $\varepsilon$ to $g$ and only order $\varepsilon^2$ to the effect distance. The rank-one path of Theorem 21.3 belongs to the larger domain and proves the matching lower limit. $\square$
+
+### 22.5. The Section 18 feedback coefficient
+
+The Section 18 feedback coefficient, for $\lambda=17000$, $\delta=1/16$ and the negative-branch coordinate lower bound $m_-^2=s^2$, is exactly
+
+$$
+K=\frac{2(17000+2)}{s^2(1-1/16)}
+ =\frac{1088128}{15}(2+\sqrt2).
+$$
+
+It satisfies
+
+$$
+247673.4250131940<K<247673.4250131941.
+$$
+
+An exact rational certificate is obtained by setting
+$L_K=2476734250131940/10^{10}$ and $U_K=2476734250131941/10^{10}$: the positive rational numbers
+$15L_K/1088128-2$ and $15U_K/1088128-2$ have squares respectively below and above $2$. Consequently the four-decimal display of this coefficient in Section 18 is $247673.4250$, replacing the displayed $247673.4251\ldots$.
+
+The tighter intermediate upper fraction in that section has the following explicit witness. Let
+
+$$
+q_0=\frac{1767767}{1250000},\qquad
+q_0^2-2=\frac{166289}{1562500000000}>0.
+$$
+
+Then
+
+$$
+K<\frac{1088128}{15}(2+q_0)
+ =\frac{96747432712}{390625}
+ <\frac{58048466428}{234375}<255616,
+$$
+
+where the difference between the middle two fractions is exactly $34004/1171875>0$. This supplies the witness for the earlier intermediate fraction. The correction concerns the displayed decimal and the exposition of this rational witness; the Section 18 integer bound and its other rational certificate retain their conclusions.
+
+### 22.6. Source correspondence and scope
+
+The record correspondence is Buscemi, Chiribella and D’Ariano, *Inverting Quantum Decoherence by Classical Feedback from the Environment*, [quant-ph/0504195v5, equation (9) and Theorem 2](https://arxiv.org/html/quant-ph/0504195v5). Their Heisenberg correlation matrix is the entrywise conjugate of the Schrödinger $C_0$ here: their $(2,4)$ and $(3,4)$ entries are $i/\sqrt2$ and $(1+i)/2$, whereas ours are $-i/\sqrt2$ and $(1-i)/2$. Neither the record nor that conjugation is varied in (22.15) or (22.17).
+
+Gregoratti and Werner, *Quantum Lost and Found*, [quant-ph/0209025v1, Proposition 8 and equations (15)–(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), give the fixed-Kraus correction-fidelity estimate and polar recovery. In that correspondence, $t_j=\operatorname{diag}(R_0b_j)$, input dimension is four, and unitary recovery uses the original outcome's $U$. Their general recovery estimate and its polar equality construction do not assert this producer-distance quotient, nor do they permit assigning different physical feedback to columns of an unchanged original outcome. Identity (22.1) retains that distinction before any spectral calculation.
+
+The full quadratic form (22.10), its comparison (22.14), and the uniform rank-change argument are source-specific deductions for Definition 11.1. Hermitian spectral decomposition, the exponential Taylor formula and the two-by-two positive-matrix criterion are standard tools. The attaining sequence is an existing result of Theorem 21.3, rather than new finite-scale content. These source correspondences make no exhaustive literature-priority claim.
+
+The conclusions are uniform local suprema. They give an arbitrarily small excess over $R_*$ on sufficiently small neighborhoods, and do not assert the exact pointwise inequality $\rho\le R_*g$ on any fixed positive-radius neighborhood. They do not give a finite-scale theorem for arbitrary $U(4)$, a globally optimal $C_{\mathrm{prod}}$, or a conclusion for a different recovery problem or a changed record. All effects in (22.17) have trace one and one actual shared unitary; both optimizer classes and their scalar phase quotients remain part of the same metric.
+
+## 追加锚（本行以下为增补区）
