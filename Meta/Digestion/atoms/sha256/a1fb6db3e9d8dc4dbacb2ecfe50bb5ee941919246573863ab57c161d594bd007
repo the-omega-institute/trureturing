@@ -1,0 +1,42 @@
+### 定理 7.3（主定理前三项的解析证明）
+
+右序相容推出保持伴随。将左比较用于 $x^\dagger$ 并取复共轭，得
+
+$$
+\phi_\rho(E(x^\dagger)^\dagger a)=\phi_\rho(xa).
+$$
+
+若右比较也成立，令 $z=E(x)-E(x^\dagger)^\dagger\in A$，便有 $\phi_\rho(za)=0$ 对全部 $a$ 成立，取 $a=z^\dagger$ 并用忠实性得 $z=0$。反过来，保持伴随时上式的取共轭直接给出右比较。
+
+保持伴随与左模性结合给出右模性：
+
+$$
+E(xb)=E((b^\dagger x^\dagger)^\dagger)=E(b^\dagger x^\dagger)^\dagger=E(x)b.
+$$
+
+**正性。**若 $x\ge0$，则 $y=E(x)$ 为 Hermitian。若 $y$ 有负谱，取其负谱投影 $p\in A$，则 $pyp\le0$ 且非零，忠实性给 $\phi_\rho(pyp)<0$。另一方面双模性和保校准性给
+
+$$
+\phi_\rho(pyp)=\phi_\rho(E(pxp))=\phi_\rho(pxp)\ge0,
+$$
+
+矛盾，故 $E(x)\ge0$。
+
+**完全正性。**对任意 $k$，定义 $E^{(k)}=\operatorname{id}_{M_k}\otimes E$。放大后的映射保持伴随、单位元、放大态
+
+$$
+\Phi_k(X)=\frac1k\sum_{j=1}^k\phi_\rho(X_{jj}),
+$$
+
+以及 $M_k(A)$-双模性。若 $X\ge0$ 而 $Y=E^{(k)}(X)$ 有负谱，负谱投影 $Q\in M_k(A)$ 给出 $\Phi_k(QYQ)<0$，但
+
+$$
+\Phi_k(QYQ)=\Phi_k(E^{(k)}(QXQ))=\Phi_k(QXQ)\ge0,
+$$
+
+矛盾。因此所有矩阵放大都正，$E$ 完全正。反向由第三项的双模性与保校准性立即得右序比较。
+
+**白话图景。**一个方向的比较先把代表定下来；另一个方向再检查它能否作为同一个内容使用。这次检查锁住了取伴随和两侧组合，于是负读数没有藏身之处。把接口放大到任意有限辅助系统后，同一论证仍然成立，完全正性因此出现。
+
+<a id="section-8"></a>
+
