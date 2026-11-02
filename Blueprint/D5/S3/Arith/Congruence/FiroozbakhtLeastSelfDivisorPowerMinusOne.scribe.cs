@@ -80,7 +80,9 @@ internal sealed class FiroozbakhtLeastSelfDivisorPowerMinusOneDocument : IScribe
                 + "finite-field order argument itself, with N=15 and m=k, and the named "
                 + "Mathlib order and coprimality facts. The same argument appears in the "
                 + "solution to Problem 3 of Parvardi's Lifting The Exponent Lemma, version 6; "
-                + "its Theorem 4 gives the two-adic identity used above.")),
+                + "its Theorem 4 in section 4 (page 4) gives the two-adic identity used above, "
+                + "and the solution to Problem 3 is in section 6 (page 7): "
+                + "https://s3.amazonaws.com/aops-cdn.artofproblemsolving.com/resources/articles/lifting-the-exponent.pdf.")),
             Paragraph(Text("If a qualifying k>7 were prime, every divisor three, five or seven "
                 + "supplied by the alternative would have to equal k. Each equality contradicts "
                 + "k>7. Thus k>1 and k is not prime, the usual composite condition. "
@@ -94,8 +96,7 @@ internal sealed class FiroozbakhtLeastSelfDivisorPowerMinusOneDocument : IScribe
                 + "The recurrence and thresholds are those of OEIS A014865, revision 18, "
                 + "whose entry authors are N. J. A. Sloane and Olivier Gérard and whose "
                 + "conjectural clauses are attributed to Harvey P. Dale: "
-                + "https://oeis.org/A014865/internal. The source proof and citations are "
-                + "docs/develop/theory/DALE_A014865_RECURRENCE_DIVISIBILITY.md. "
+                + "https://oeis.org/A014865/internal. "
                 + "These are applications of recurrence uniqueness, LTE and finite-field "
                 + "order facts; they imply no claim about the current literature status "
                 + "or originality of the historical clauses.")))));
