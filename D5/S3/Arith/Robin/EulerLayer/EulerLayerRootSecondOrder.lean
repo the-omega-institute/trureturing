@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Robin/EulerLayer/EulerLayerRootSecondOrder
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/EulerLayerRootSecondOrder
+   mirror-B: D5/B/S3/Arith/Robin/EulerLayer/EulerLayerRootSecondOrder
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
