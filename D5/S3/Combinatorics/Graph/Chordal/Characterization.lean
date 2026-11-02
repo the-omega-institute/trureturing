@@ -154,3 +154,89 @@ theorem isChordal_iff_exists_isPEO [Finite V] :
   ⟨fun hG => hG.exists_isPEO, fun ⟨_, h⟩ => h.isChordal⟩
 
 end SimpleGraph
+
+namespace D5.S3.Combinatorics.Graph.Chordal
+
+open SimpleGraph
+open D5.S3.Combinatorics.Graph.CliquePolynomial
+
+/-- Positional chords and supported off-cycle edges describe the same chordal graphs. -/
+theorem native_chordal_iff_isChordal {V : Type} (G : SimpleGraph V) :
+    FaalNonStable.Chordal G ↔ G.IsChordal := by
+  constructor
+  · intro h v c hc hn
+    obtain ⟨i, j, hij, hwrap, hadj⟩ := h v c hc hn
+    refine ⟨c.getVert i, c.getVert j, c.getVert_mem_support i,
+      c.getVert_mem_support j, hadj, ?_⟩
+    intro he
+    obtain ⟨k, hk, hke⟩ := (Walk.mk_mem_edges_iff_exists c).mp he
+    have hinj : ∀ {a b : ℕ}, a < c.length → b < c.length →
+        c.getVert a = c.getVert b → a = b := by
+      intro a b ha hb hab
+      exact hc.getVert_injOn' (by change a ≤ c.length - 1; omega)
+        (by change b ≤ c.length - 1; omega) hab
+    rcases Sym2.eq_iff.mp hke with ⟨hki, hkj⟩ | ⟨hkj, hki⟩
+    · have hki' : k = i.val := hinj hk i.isLt hki
+      by_cases hlast : k + 1 < c.length
+      · have hkj' : k + 1 = j.val := hinj hlast j.isLt hkj
+        omega
+      · have hlen : k + 1 = c.length := by omega
+        have heq : c.getVert 0 = c.getVert j := by simpa [hlen] using hkj
+        have hj0 : 0 = j.val := hinj (by omega) j.isLt heq
+        omega
+    · have hkj' : k = j.val := hinj hk j.isLt hkj
+      by_cases hlast : k + 1 < c.length
+      · have hki' : k + 1 = i.val := hinj hlast i.isLt hki
+        omega
+      · have hlen : k + 1 = c.length := by omega
+        have heq : c.getVert 0 = c.getVert i := by simpa [hlen] using hki
+        have hi0 : 0 = i.val := hinj (by omega) i.isLt heq
+        exact hwrap ⟨hi0.symm, by omega⟩
+  · intro h v c hc hn
+    obtain ⟨x, y, hx, hy, hxy, hoff⟩ := h c hc hn
+    have canonical : ∀ w, w ∈ c.support →
+        ∃ i : Fin c.length, c.getVert i = w := by
+      intro w hw
+      obtain ⟨i, hiw, hi⟩ := Walk.mem_support_iff_exists_getVert.mp hw
+      by_cases hil : i < c.length
+      · exact ⟨⟨i, hil⟩, hiw⟩
+      · have hi' : i = c.length := by omega
+        refine ⟨⟨0, by omega⟩, ?_⟩
+        simpa [hi'] using hiw
+    obtain ⟨i, hi⟩ := canonical x hx
+    obtain ⟨j, hj⟩ := canonical y hy
+    have hadj : G.Adj (c.getVert i) (c.getVert j) := by rwa [hi, hj]
+    have hoff' : s(c.getVert i, c.getVert j) ∉ c.edges := by rwa [hi, hj]
+    have hne : i.val ≠ j.val := by
+      intro heq
+      exact hadj.ne (congrArg c.getVert heq)
+    have toChord : ∀ i j : Fin c.length, i.val < j.val →
+        G.Adj (c.getVert i) (c.getVert j) →
+        s(c.getVert i, c.getVert j) ∉ c.edges → FaalNonStable.HasChord c := by
+      intro i j hij hadj hoff
+      refine ⟨i, j, ?_, ?_, hadj⟩
+      · have hneq : i.val + 1 ≠ j.val := by
+          intro heq
+          apply hoff
+          exact (Walk.mk_mem_edges_iff_exists c).mpr ⟨i, i.isLt, by rw [heq]⟩
+        omega
+      · rintro ⟨hi0, hjlast⟩
+        apply hoff
+        refine (Walk.mk_mem_edges_iff_exists c).mpr ⟨j, j.isLt, ?_⟩
+        have hiG : c.getVert i = v := by simpa [hi0] using c.getVert_zero
+        rw [hjlast, Walk.getVert_length, hiG, Sym2.eq_swap]
+    rcases lt_or_gt_of_ne hne with hlt | hgt
+    · exact toChord i j hlt hadj hoff'
+    · apply toChord j i hgt hadj.symm
+      simpa only [Sym2.eq_swap] using hoff'
+
+/-- A finite graph is natively chordal exactly when it has an injective elimination ranking. -/
+theorem chordal_iff_exists_order {V : Type} [Finite V] (G : SimpleGraph V) :
+    FaalNonStable.Chordal G ↔
+      ∃ ord : V → ℕ, Function.Injective ord ∧
+        ∀ v, G.IsClique {u | ord v < ord u ∧ G.Adj v u} := by
+  rw [native_chordal_iff_isChordal G, SimpleGraph.isChordal_iff_exists_isPEO]
+  exact ⟨fun ⟨ord, h⟩ => ⟨ord, h.injective, h.isClique_later⟩,
+    fun ⟨ord, hinj, hcl⟩ => ⟨ord, ⟨hinj, hcl⟩⟩⟩
+
+end D5.S3.Combinatorics.Graph.Chordal
