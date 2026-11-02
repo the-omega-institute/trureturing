@@ -103,14 +103,14 @@ lemma exists_weak_limit_of_supportsOn_Icc_prod (a b : ℝ)
 /-- Marginal pushforward is continuous in the weak-* topology on probability measures. -/
 lemma ProbabilityMeasure.continuous_map_fst :
     Continuous (fun π : ProbabilityMeasure (ℝ × ℝ) =>
-      ProbabilityMeasure.map π measurable_fst.aemeasurable) :=
+      ProbabilityMeasure.map π (Prod.fst : ℝ × ℝ → ℝ)) :=
   MeasureTheory.ProbabilityMeasure.continuous_map (f := (Prod.fst : ℝ × ℝ → ℝ))
     continuous_fst
 
 /-- Marginal pushforward is continuous in the weak-* topology on probability measures. -/
 lemma ProbabilityMeasure.continuous_map_snd :
     Continuous (fun π : ProbabilityMeasure (ℝ × ℝ) =>
-      ProbabilityMeasure.map π measurable_snd.aemeasurable) :=
+      ProbabilityMeasure.map π (Prod.snd : ℝ × ℝ → ℝ)) :=
   MeasureTheory.ProbabilityMeasure.continuous_map (f := (Prod.snd : ℝ × ℝ → ℝ))
     continuous_snd
 
@@ -126,24 +126,24 @@ lemma IsCoupling.of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → P
   -- Use continuity of the marginal pushforward composed with convergence of `πₙ → πInf`.
   have hfst_lim : Tendsto
       (fun n => ProbabilityMeasure.map (π_seq n : ProbabilityMeasure (ℝ × ℝ))
-        measurable_fst.aemeasurable) atTop
+        (Prod.fst : ℝ × ℝ → ℝ)) atTop
       (𝓝 (ProbabilityMeasure.map (πInf : ProbabilityMeasure (ℝ × ℝ))
-        measurable_fst.aemeasurable)) :=
+        (Prod.fst : ℝ × ℝ → ℝ))) :=
     (ProbabilityMeasure.continuous_map_fst.tendsto _).comp hπlim
   have hsnd_lim : Tendsto
       (fun n => ProbabilityMeasure.map (π_seq n : ProbabilityMeasure (ℝ × ℝ))
-        measurable_snd.aemeasurable) atTop
+        (Prod.snd : ℝ × ℝ → ℝ)) atTop
       (𝓝 (ProbabilityMeasure.map (πInf : ProbabilityMeasure (ℝ × ℝ))
-        measurable_snd.aemeasurable)) :=
+        (Prod.snd : ℝ × ℝ → ℝ))) :=
     (ProbabilityMeasure.continuous_map_snd.tendsto _).comp hπlim
   -- Each `ProbabilityMeasure.map (π_seq n) ... = μ_seq n` by the coupling hypothesis.
   -- `ProbDist.map (π_seq n) Prod.fst/.snd = μ_seq n / ν_seq n`, and `ProbDist.map` is
   -- definitionally `ProbabilityMeasure.map ... aemeasurable`.
   have hfst_eq : ∀ n, ProbabilityMeasure.map (π_seq n : ProbabilityMeasure (ℝ × ℝ))
-      measurable_fst.aemeasurable = (μ_seq n : ProbabilityMeasure ℝ) :=
+      (Prod.fst : ℝ × ℝ → ℝ) = (μ_seq n : ProbabilityMeasure ℝ) :=
     fun n => (hπcoup n).fst_marginal
   have hsnd_eq : ∀ n, ProbabilityMeasure.map (π_seq n : ProbabilityMeasure (ℝ × ℝ))
-      measurable_snd.aemeasurable = (ν_seq n : ProbabilityMeasure ℝ) :=
+      (Prod.snd : ℝ × ℝ → ℝ) = (ν_seq n : ProbabilityMeasure ℝ) :=
     fun n => (hπcoup n).snd_marginal
   -- Substitute into the convergence.
   rw [funext hfst_eq] at hfst_lim

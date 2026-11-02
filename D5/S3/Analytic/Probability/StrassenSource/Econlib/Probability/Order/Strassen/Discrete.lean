@@ -159,8 +159,7 @@ noncomputable def uniform (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ) : DiscreteL
 /-- The mean of a uniform-weight discrete law is the arithmetic mean of its atoms. -/
 lemma uniform_mean {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) :
     (uniform n hn x).mean = (∑ i, x i) / n := by
-  unfold mean
-  simp only [uniform_weight, uniform_atom]
+  simp only [mean, uniform]
   rw [Finset.sum_div]
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
@@ -432,7 +431,7 @@ lemma isMartingaleCoupling (M : BistochasticMartingaleMatrix p q) :
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [MeasureTheory.measure_map_finset_sum measurable_fst]
     -- Each summand: `Measure.map fst (c • δ_{(xᵢ,yⱼ)}) = c • δ_{xᵢ}`.
-    simp_rw [Measure.map_smul, Measure.map_dirac' measurable_fst]
+    simp_rw [Measure.map_smul _ measurable_fst.aemeasurable, Measure.map_dirac' measurable_fst]
     -- Combine the inner sum: `∑ⱼ ofReal (pᵢ Tᵢⱼ) • δ_{xᵢ} = ofReal pᵢ • δ_{xᵢ}`.
     rw [← Finset.sum_smul]
     congr 1
@@ -443,7 +442,7 @@ lemma isMartingaleCoupling (M : BistochasticMartingaleMatrix p q) :
     rw [toProbDist_toMeasure, DiscreteLaw.toProbDist_toMeasure]
     rw [MeasureTheory.measure_map_finset_sum measurable_snd]
     simp_rw [MeasureTheory.measure_map_finset_sum measurable_snd,
-      Measure.map_smul, Measure.map_dirac' measurable_snd]
+      Measure.map_smul _ measurable_snd.aemeasurable, Measure.map_dirac' measurable_snd]
     -- Swap sums to group by `j` first.
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
