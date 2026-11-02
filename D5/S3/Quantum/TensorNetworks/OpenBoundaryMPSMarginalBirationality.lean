@@ -413,10 +413,10 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
   have hlt (i : Fin 2) : reconstructedLeft t ᵥ* Matrix.of (fun j k => t ![j, i, k]) =
       fun k => reconstructedBasis t i k := by
     funext k
-    simp only [Matrix.vecMul, reconstructedLeft, reconstructedBasis, basisNumerator,
-      dotProduct, Fin.sum_univ_two, map_add, map_mul, coordinate, MvPolynomial.eval_X,
-      Matrix.of_apply]
-    ring
+    simp only [Matrix.vecMul, reconstructedBasis, basisNumerator,
+      RingHom.map_dotProduct, Function.comp_def, coordinate, MvPolynomial.eval_X]
+    simp only [dotProduct, reconstructedLeft, Matrix.of_apply, div_eq_mul_inv,
+      Finset.sum_mul, mul_right_comm]
   have hl (i : Fin 2) : reconstructedLeft t ᵥ* reconstructedMatrix t i = Pi.single i 1 := by
     rw [reconstructedMatrix, ← Matrix.vecMul_vecMul, hlt]
     change (reconstructedBasis t).row i ᵥ* (reconstructedBasis t)⁻¹ = _
@@ -695,9 +695,11 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
   let v : Matrix (Fin 2) (Fin 2) ℂ := Matrix.of fun j k => (m k *ᵥ r) j
   have ht (j : Fin 2) : Matrix.of (fun i k => t ![i, j, k]) = u * m j * v := by
     ext i k
-    norm_num [t, mpsState, List.ofFn_succ, u, v, Matrix.mul_apply,
-      Matrix.vecMul, Matrix.mulVec, dotProduct, Fin.sum_univ_two, m]
-    ring
+    simp only [t, mpsState, List.ofFn_succ, List.ofFn_zero, List.prod_cons,
+      List.prod_nil, Matrix.cons_val_zero, mul_one, u, v, Matrix.of_apply]
+    rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec,
+      Matrix.dotProduct_mulVec]
+    rfl
   have hdet : (u * m 0 * v).det ≠ 0 := by
     rw [← ht 0, Matrix.det_fin_two]
     intro he
@@ -766,9 +768,10 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     ext i j
     have hli : (reconstructedLeft t ᵥ* Matrix.of (fun p q => t ![p, i, q])) j =
         reconstructedBasis t i j := by
-      rw [reconstructedBasis, basisNumerator]
-      norm_num [reconstructedLeft, reconstructedBasis, basisNumerator, leftNumerator,
-        coordinate, Matrix.vecMul, dotProduct, Fin.sum_univ_two]; ring
+      simp only [Matrix.vecMul, reconstructedBasis, basisNumerator,
+        RingHom.map_dotProduct, Function.comp_def, coordinate, MvPolynomial.eval_X]
+      simp only [dotProduct, reconstructedLeft, Matrix.of_apply, div_eq_mul_inv,
+        Finset.sum_mul, mul_right_comm]
     rw [← hli, hl, ht, Matrix.smul_vecMul, ← Matrix.vecMul_vecMul,
       ← Matrix.vecMul_vecMul, he]
     rfl
