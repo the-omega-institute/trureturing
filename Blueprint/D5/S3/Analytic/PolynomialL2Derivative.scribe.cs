@@ -17,8 +17,8 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural n, legendreC(n) is Mathlib's integer "
                     + "shifted Legendre polynomial mapped by the integer cast ring homomorphism "
-                    + "to complex coefficients. This is the existing family, now consumed "
-                    + "by both derivative energy and moment-orthogonal approximation."))),
+                    + "to complex coefficients. Both derivative energy and moment-orthogonal "
+                    + "approximation use this same family."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("complex-polynomial-bilinear-moment"),
@@ -86,10 +86,8 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                     Paragraph(Text("This source combines classical Rodrigues orthogonality, beta "
                         + "normalization, polynomial spanning and Cauchy-Schwarz, reusing the "
                         + "pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. "
-                        + "No literature originality claim is made. Rodrigues, orthogonality, "
-                        + "normalization and derivative energies remain private proof steps. "
-                        + "The consumed spanning and mixed expansion interfaces are public, "
-                        + "and support the finite primitive estimate below."))),
+                        + "No literature originality claim is made. The spanning and mixed "
+                        + "expansion identities also support the finite primitive estimate below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("complex-polynomial-derivative-l2"),

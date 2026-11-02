@@ -68,12 +68,10 @@ internal sealed class MomentOrthogonalPrimitiveGapDocument : IScribeDocumentDefi
                         + "is D^(-(r+1)); E(B)=D^(-1)E(A); and E(primitive B)=D^(-3)E(V). "
                         + "These exact factors yield D^2 in the final bound. There is no "
                         + "measure-preservation assumption for the dilation.")),
-                    Paragraph(Text("The same-unit four-slot Reg source observes the native "
-                        + "complex norm at the primitive energy operand and reconstructs the complete "
-                        + "source telescope. Replacing that observation by constant one, with "
-                        + "D=q=1 and A=0, demands 1<=0; norm(0)!=norm(1) supplies actual "
-                        + "observational dependence. The dependent-family enrolled template "
-                        + "provides the readout; continuation is unknown. This is a classical analytic estimate, with no literature novelty, "
-                        + "scalar subexponential remainder, R-bound or RH claim."))),
+                    Paragraph(Text("This classical analytic estimate quantifies low-moment "
+                        + "cancellation through the energy of the actual primitive. A sublinear "
+                        + "m(D)=o(D) supplier and fixed-window coercivity for a specific kernel "
+                        + "require further results. No literature novelty, scalar subexponential "
+                        + "remainder, R-bound or RH claim follows from this estimate alone."))),
                 DescribeRole.Theorem))));
 }

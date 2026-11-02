@@ -4,7 +4,43 @@
 
 Shifted Legendre orthogonality bounds complex polynomial derivative energy by a fourth power of the dimension.
 
-**Theorem 1.1 (The degree formulation includes the zero-dimensional space).**
+**Definition 1.1 (The actual shifted Legendre family).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.legendreC`
+
+*Formalization.* `D5/S3/Analytic/PolynomialL2Derivative.legendreC` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, legendreC(n) is Mathlib's integer shifted Legendre polynomial mapped by the integer cast ring homomorphism to complex coefficients. This is the existing family, now consumed by both derivative energy and moment-orthogonal approximation.
+
+**Definition 1.2 (Bilinear polynomial integration).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.moment`
+
+*Formalization.* `D5/S3/Analytic/PolynomialL2Derivative.moment` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every pair of complex polynomials p,q, moment(p,q) is the integral from zero to one of p(x)q(x), with real inputs cast to the complex numbers. The operation is bilinear; Hermitian pairing is obtained by explicitly conjugating the second polynomial's coefficients.
+
+**Definition 1.3 (Finite expansion with an arbitrary coefficient sequence).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.expansion`
+
+*Formalization.* `D5/S3/Analytic/PolynomialL2Derivative.expansion` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d and every sequence a from the naturals to the complex numbers, expansion(d,a) is the polynomial sum_(n<d) C(a_n) legendreC(n). The sequence remains unrestricted outside the finite sum; at d=0 the expansion is the zero polynomial.
+
+**Theorem 1.4 (The degree formulation includes the zero-dimensional space).**
 
 Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.complex_polynomial_derivative_l2_of_degree`
 
@@ -24,9 +60,9 @@ One more integration by parts expresses the derivative energy through endpoint v
 
 The polynomial-sequence spanning theorem supplies an expansion p=sum_(n<d) a_n L_n for every polynomial of degree below d, including the empty expansion at d=0. Explicit conjugation gives Parseval: E(p)=integral norm(p)^2=sum_(n<d) norm(a_n)^2/(2n+1). Weighted finite Cauchy-Schwarz bounds norm(p'(x))^2 by E(p) times sum_(n<d) (2n+1) norm(L_n'(x))^2. Integrating that finite density gives sum_(n<d) (2n+1)2n(n+1)=d^2(d^2-1), at most d^4. Continuity supplies each integrability premise. No exponential coefficient estimate or assumed analytic budget enters this proof.
 
-This source combines classical Rodrigues orthogonality, beta normalization, polynomial spanning and Cauchy-Schwarz, reusing the pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. No literature originality claim is made. The supporting Legendre identities and sharper intermediate budget are private proof steps; the public assertion here is the displayed d^4 inequality.
+This source combines classical Rodrigues orthogonality, beta normalization, polynomial spanning and Cauchy-Schwarz, reusing the pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. No literature originality claim is made. Rodrigues, orthogonality, normalization and derivative energies remain private proof steps. The consumed spanning and mixed expansion interfaces are public, and support the finite primitive estimate below.
 
-**Theorem 1.2 (The dimension-bounded form and the pending reciprocal-tail use).**
+**Theorem 1.5 (The dimension-bounded form and the pending reciprocal-tail use).**
 
 Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.complex_polynomial_derivative_l2`
 
@@ -44,7 +80,51 @@ If the actual reciprocal factor r in that consumer is continuously differentiabl
 
 The substantive actual reciprocal consumer remains uncompiled and pending. Its exact definitions, nonvanishing hypotheses, tail bounds, endpoint costs and final enclosure still require native verification in the consuming development. This Reg/Scribe component is intended for integration with that actual consumer. No formal Riemann-hypothesis or Robin implication is established here.
 
+**Theorem 1.6 (Polynomial spanning).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.exists_expansion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.exists_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d and every complex polynomial p with degree(p)<d, there exists a full complex coefficient sequence a such that sum_(n<d) a_n L_n=p. This spanning identity is used by the derivative estimate and corrected polynomial approximation.
+
+**Theorem 1.7 (Hermitian pairing of finite expansions).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.mixed_expansion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.mixed_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d and arbitrary complex coefficient sequences a,b, the bilinear moment of expansion(d,a) and the coefficient conjugate of expansion(d,b) equals sum_(n<d) a_n conjugate(b_n)/(2n+1). This finite moment identity is used both in inverse weighted energy and in the low/high orthogonality of corrected approximation.
+
+**Theorem 1.8 (The finite inverse Sturm energy estimate).**
+
+Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.complex_legendre_primitive_gap`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/PolynomialL2Derivative.complex_legendre_primitive_gap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d,q with q>=1 and every complex coefficient sequence a satisfying a_n=0 for all n<q, let p be sum_(n<d) a_n L_n. The integral over [0,1] of the squared norm of the actual interval primitive of p is at most 1/(4q(q+1)) times the squared L2 norm of p. No relation between d and q is imposed, and the empty expansion is included.
+
+For w=x(1-x), the coefficient recurrence proves -(w L_n')'=n(n+1)L_n. Dividing each high coefficient by this positive eigenvalue constructs F with -(w F')'=p. Both flux endpoints vanish. Integration by parts gives integral w norm(F')^2 equal to sum norm(a_n)^2/((2n+1)n(n+1)). The bound 0<=w<=1/4 then bounds primitive energy. Eigenvalue monotonicity and the existing exact finite Parseval identity finish the estimate. The infinite-dimensional extension is proved in MomentOrthogonalPrimitiveGap. There is no sublinear supplier or RH claim.
+
 ## References
 
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.complex_legendre_primitive_gap`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.complex_polynomial_derivative_l2`
 - Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.complex_polynomial_derivative_l2_of_degree`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.exists_expansion`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.expansion`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.legendreC`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.mixed_expansion`
+- Truth anchor: `D5/S3/Analytic/PolynomialL2Derivative.moment`
