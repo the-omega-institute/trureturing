@@ -80,7 +80,7 @@ Pushing Lebesgue probability on the open unit interval through the generalized i
 
 **Theorem 1.7 (integral_eq_integral_quantile).**
 
-$$\forall  \{\mu  : \operatorname{MeasureTheory}.\operatorname{Measure} \mathbb{R} \} [\operatorname{MeasureTheory}.\operatorname{IsProbabilityMeasure} \mu ] \{\operatorname{E} : \operatorname{Type} \operatorname{u1}\} [\operatorname{inst} : \operatorname{NormedAddCommGroup} \operatorname{E}] [\operatorname{inst1} : \operatorname{NormedSpace} \mathbb{R}  \operatorname{E}] (\varphi  : \mathbb{R}  \to  \operatorname{E}), \operatorname{MeasureTheory}.\operatorname{AEStronglyMeasurable} \varphi  \mu  \to  \int  (\operatorname{x} : \mathbb{R} ), \varphi  \operatorname{x} \operatorname{dmu} \mu  = \int  (\operatorname{t} : \mathbb{R} ) \operatorname{in} \operatorname{Set}.\operatorname{Ioo} 0 1, \varphi  (\mu .\operatorname{quantile} \operatorname{t})$$
+$$\forall  \{\mu  : \operatorname{MeasureTheory}.\operatorname{Measure} \mathbb{R} \} [\operatorname{MeasureTheory}.\operatorname{IsProbabilityMeasure} \mu ] \{\operatorname{E} : \operatorname{Type} \operatorname{u1}\} [\operatorname{NormedAddCommGroup} \operatorname{E}] [\operatorname{NormedSpace} \mathbb{R}  \operatorname{E}] (\varphi  : \mathbb{R}  \to  \operatorname{E}), \operatorname{MeasureTheory}.\operatorname{AEStronglyMeasurable} \varphi  \mu  \to  \int  (\operatorname{x} : \mathbb{R} ), \varphi  \operatorname{x} \operatorname{dmu} \mu  = \int  (\operatorname{t} : \mathbb{R} ) \operatorname{in} \operatorname{Set}.\operatorname{Ioo} 0 1, \varphi  (\mu .\operatorname{quantile} \operatorname{t})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/CompactQuantile.integral_eq_integral_quantile` (`✓ std3`). ∎
 

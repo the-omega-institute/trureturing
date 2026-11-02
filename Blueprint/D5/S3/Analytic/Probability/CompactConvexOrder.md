@@ -44,7 +44,7 @@ A measurable map transports the native probability law by pushforward.
 
 **Lemma 1.4 (map_toMeasure).**
 
-$$\forall  \{\alpha  : \operatorname{Type} \operatorname{u1}\} \{\beta  : \operatorname{Type} \operatorname{u2}\} [\operatorname{inst} : \operatorname{MeasurableSpace} \alpha ] [\operatorname{inst1} : \operatorname{MeasurableSpace} \beta ] (\operatorname{d} : \operatorname{Econlib}.\operatorname{Probability}.\operatorname{ProbDist} \alpha ) (\operatorname{f} : \alpha  \to  \beta ) (\operatorname{hf} : \operatorname{Measurable} \operatorname{f}), \operatorname{coe} (\operatorname{d}.\operatorname{map} \operatorname{f} \operatorname{hf}) = \operatorname{MeasureTheory}.\operatorname{Measure}.\operatorname{map} \operatorname{f} \operatorname{coe} \operatorname{d}$$
+$$\forall  \{\alpha  : \operatorname{Type} \operatorname{u1}\} \{\beta  : \operatorname{Type} \operatorname{u2}\} [\operatorname{MeasurableSpace} \alpha ] [\operatorname{MeasurableSpace} \beta ] (\operatorname{d} : \operatorname{Econlib}.\operatorname{Probability}.\operatorname{ProbDist} \alpha ) (\operatorname{f} : \alpha  \to  \beta ) (\operatorname{hf} : \operatorname{Measurable} \operatorname{f}), \operatorname{coe} (\operatorname{d}.\operatorname{map} \operatorname{f} \operatorname{hf}) = \operatorname{MeasureTheory}.\operatorname{Measure}.\operatorname{map} \operatorname{f} \operatorname{coe} \operatorname{d}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/CompactConvexOrder.map_toMeasure` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ The underlying measure of a transported probability law is the ordinary measure 
 
 **Lemma 1.5 (expect_map).**
 
-$$\forall  \{\alpha  : \operatorname{Type} \operatorname{u1}\} \{\beta  : \operatorname{Type} \operatorname{u2}\} [\operatorname{inst} : \operatorname{MeasurableSpace} \alpha ] [\operatorname{inst1} : \operatorname{MeasurableSpace} \beta ] (\operatorname{d} : \operatorname{Econlib}.\operatorname{Probability}.\operatorname{ProbDist} \alpha ) (\operatorname{f} : \alpha  \to  \beta ) (\operatorname{hf} : \operatorname{Measurable} \operatorname{f}) (\operatorname{g} : \beta  \to  \mathbb{R} ), \operatorname{MeasureTheory}.\operatorname{AEStronglyMeasurable} \operatorname{g} \operatorname{coe} (\operatorname{d}.\operatorname{map} \operatorname{f} \operatorname{hf}) \to  (\operatorname{d}.\operatorname{map} \operatorname{f} \operatorname{hf}).\operatorname{expect} \operatorname{g} = \operatorname{d}.\operatorname{expect} \operatorname{fun} \operatorname{x} \mapsto  \operatorname{g} (\operatorname{f} \operatorname{x})$$
+$$\forall  \{\alpha  : \operatorname{Type} \operatorname{u1}\} \{\beta  : \operatorname{Type} \operatorname{u2}\} [\operatorname{MeasurableSpace} \alpha ] [\operatorname{MeasurableSpace} \beta ] (\operatorname{d} : \operatorname{Econlib}.\operatorname{Probability}.\operatorname{ProbDist} \alpha ) (\operatorname{f} : \alpha  \to  \beta ) (\operatorname{hf} : \operatorname{Measurable} \operatorname{f}) (\operatorname{g} : \beta  \to  \mathbb{R} ), \operatorname{MeasureTheory}.\operatorname{AEStronglyMeasurable} \operatorname{g} \operatorname{coe} (\operatorname{d}.\operatorname{map} \operatorname{f} \operatorname{hf}) \to  (\operatorname{d}.\operatorname{map} \operatorname{f} \operatorname{hf}).\operatorname{expect} \operatorname{g} = \operatorname{d}.\operatorname{expect} \operatorname{fun} \operatorname{x} \mapsto  \operatorname{g} (\operatorname{f} \operatorname{x})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/CompactConvexOrder.expect_map` (`✓ std3`). ∎
 
