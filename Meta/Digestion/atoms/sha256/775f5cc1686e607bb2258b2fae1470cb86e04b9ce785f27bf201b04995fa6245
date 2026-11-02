@@ -1,0 +1,58 @@
+## 四、这怎样分类素数、斐波那契项与斐波那契素数项？
+
+令
+
+
+<a id="display-43"></a>
+
+$$
+t_i=\log m_i,
+$$
+
+
+其中 $m_i$ 是互异正整数。那么式 (9) 的条件变为
+
+
+<a id="display-44"></a><a id="eq-14"></a>
+
+$$
+\boxed{
+\frac{\max(m_i,m_j)}{\min(m_i,m_j)}
+\text{ 是整数素数幂。}
+}
+$$
+
+<p align="center" data-equation-number="14"><a href="#eq-14">(14)</a></p>
+
+
+因此，最初的 $<5040$ 分类问题现在具有一个统一的解析解释。以下结论也适用于任意其他有限上界。
+
+| 取样标签 | $\mathsf A$ 中的关系 | 差分关系的首项 |
+|---|---|---|
+| 两个不同素数 $p,q$ | 比值不是整数，故无边 | $W_h(i,j)=O(h^4)$ |
+| 两个不同斐波那契素数 | 同样无边 | $W_h(i,j)=O(h^4)$ |
+| 两个不同的正斐波那契值 | 较大值除以较小值为 $p^r$ 时有边 | $-2h\,\log p/p^{r/2}$ |
+| $1$ 与正整数 $m>1$ | 恰当 $m$ 为素数幂时有边 | $-2h\,\Lambda(m)/\sqrt m$ |
+
+这里的斐波那契值按数值去重，避免把相同的 $1$ 当成两个不同节点。
+
+于是我们得到了一个明确区别：
+
+**素数之间的乘法原子关系，主要通过它们与 $1$、素数幂及合数的联系显现；两个不同素数本身，在上述差分读出的首项中没有直接耦合。**
+
+对于项目已经证明的 A370630 贪心排列，可以把它作为这些整数顶点进入关系矩阵的顺序。项目的[Zeckendorf 贪心排列定理](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md)保证所有正整数最终都进入；进入后，实际乘法耦合按式 (14) 填写。
+
+这使三个环节有了各自严格的作用：
+
+
+<a id="display-45"></a>
+
+$$
+\text{Zeckendorf 贪心遍历}
+\;\longrightarrow\;
+\text{实际整数取样}
+\;\longrightarrow\;
+\text{素数幂比值关系}.
+$$
+
+

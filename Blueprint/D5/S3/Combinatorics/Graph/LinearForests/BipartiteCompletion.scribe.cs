@@ -1,0 +1,67 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LinearForests;
+
+internal sealed class BipartiteCompletionDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Combinatorics/Graph/LinearForests/BipartiteCompletion.";
+
+    private static Formula Name(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Exists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Instance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Comma, Sp, body);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+    private static Formula Imp(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+    private static Formula Le(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula Eq(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula DegreeBound(string graph) =>
+        All("x", F.Id("alpha"), Le(Call("degree", F.Id(graph), F.Id("x")), D(2)));
+    private static Formula Independent(string graph, string part) =>
+        Call("IsIndepSet", F.Id(graph), F.Id(part));
+    private static Formula Hypotheses() =>
+        And(Independent("G", "A"), And(Independent("G", "B"),
+            And(Call("Disjoint", F.Id("A"), F.Id("B")),
+                And(Eq(Call("union", F.Id("A"), F.Id("B")), Call("univ", F.Id("alpha"))),
+                    And(Call("IsAcyclic", F.Id("G")),
+                        And(DegreeBound("G"), Lt(Call("card", F.Id("A")), Call("card", F.Id("B")))))))));
+    private static Formula Conclusion() =>
+        Exists("H", Call("SimpleGraph", F.Id("alpha")),
+            And(Le(F.Id("G"), F.Id("H")), And(Call("IsAcyclic", F.Id("H")),
+                And(DegreeBound("H"), And(Independent("H", "A"), And(Independent("H", "B"),
+                    All("u", F.Id("alpha"), Imp(Call("mem", F.Id("u"), F.Id("A")),
+                        Eq(Call("degree", F.Id("H"), F.Id("u")), D(2))))))))));
+    private static Formula Statement() =>
+        All("alpha", Name("Type"),
+            Instance(Call("Fintype", F.Id("alpha")),
+                Instance(Call("DecidableEq", F.Id("alpha")),
+                    All("G", Call("SimpleGraph", F.Id("alpha")),
+                        All("A", Call("Finset", F.Id("alpha")),
+                            All("B", Call("Finset", F.Id("alpha")), Imp(Hypotheses(), Conclusion())))))));
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Every finite bipartite linear forest with a strictly larger B part admits a color-preserving supergraph on the same full vertex type, still a linear forest, in which every A vertex has degree two.",
+        H("Bipartite linear-forest completion"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("saturating-extension"),
+                DeclarationHandle.Create(Prefix + "exists_saturating_extension"),
+                H("Saturation on the full original carrier"),
+                StatementSource.FromAuthor(Disp(Statement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let alpha be any finite type with decidable equality, G an actual simple graph on alpha, and A and B actual finite sets. Assume that each part is independent in G, the parts are disjoint and cover every vertex, G is acyclic, every degree is at most two, and card(A) is strictly less than card(B). There exists an actual graph H on exactly alpha containing every edge of G. The graph H is acyclic, every degree is at most two, both original parts remain independent, and every vertex of A has degree exactly two. No decomposition, matching, completion or saturability witness is assumed.")),
+                    Paragraph(Text("Choose a maximal acyclic, degree-at-most-two, color-preserving extension. If u in A has degree less than two, let C be its actual connected component. The induced graph on C is a tree. Its edge count plus one is its vertex count; its edge count is also the sum of A degrees in C. That sum is strictly less than twice card(A intersect C), so card(B intersect C) is at most card(A intersect C). The full strict B surplus therefore persists outside C. Component closure preserves original degrees under induction. The bipartite degree sums outside C are equal, while the A sum is at most twice its outside cardinality. Consequently some B vertex v outside C has degree less than two. Adding uv preserves both colors and maximum degree, and it cannot form a cycle because its endpoints were unreachable. This contradicts maximality.")),
+                    Paragraph(Text("All vertices, including all original isolated vertices, remain in the carrier. Original isolates may acquire edges. The empty A case, arbitrary disconnected inputs, and the smallest surplus card(B)=card(A)+1 are included. Already saturated inputs satisfy the conclusion with H=G. The strict inequality is necessary in general: a single edge with one vertex in each part cannot give its A vertex degree two on the same two-vertex carrier.")),
+                    Paragraph(Text("This is a finite structural extension theorem. It gives no concentration of path components, no signed Catalan comparison with one odd path and isolated vertices, no native triangulation-count identity or numerical extremum, and no resource bound for obtaining a completion. Those require their own mathematical bridges. The proof reuses Mathlib finite maximality, tree edge cardinality, bipartite degree sums, induced degree transport and acyclicity under an edge between unreachable vertices. No literature priority claim is made."))),
+                DescribeRole.Theorem)), []));
+}

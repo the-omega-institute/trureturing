@@ -227,7 +227,7 @@ xz=yz=0.
 
 底面点属于四底角凸包，故该均值点属于五点凸包。若 $`r=0`$，约束强制 $`X=Y=0`$，得到顶点 $`A=(0,0,1)`$。反向包含成立。四点 $`(0,0,0),(1,0,0),(0,1,0),A`$ 仿射独立，因此凸体三维。∎
 
-纯模式的 $`xz=yz=0`$ 不能改写为混合均值的 $`XZ=YZ=0`$：例如均匀五律给 $`X=Y=2/5,Z=1/5`$。$`\mathcal{𝒫}`$ 是四维概率单纯形的三维均值像，不是全部来源律本身。它也是三元偏序 $`a\lt b\gt c`$ 的 chain polytope，坐标对应 $`(u_a,u_b,u_c)=(X,Z,Y)`$；这一经典归属见 [Stanley 的既有文献注](../../../Library/Words/stanley1986posetpolytopes.md)，不重新计作 FIB 的原创构造。
+纯模式的 $`xz=yz=0`$ 不能改写为混合均值的 $`XZ=YZ=0`$：例如均匀五律给 $`X=Y=2/5,Z=1/5`$。$`\mathcal{𝒫}`$ 是四维概率单纯形的三维均值像，不是全部来源律本身。它也是三元偏序 $`a\lt b\gt c`$ 的 chain polytope，坐标对应 $`(u_a,u_b,u_c)=(X,Z,Y)`$；这一经典归属见 [Stanley 的既有文献注](../../../Library/Geometry/stanley1986posetpolytopes.md)，不重新计作 FIB 的原创构造。
 
 **命题 4.3（全部面、棱和顶点关联）。** 指定 $`(X,Y,Z)`$ 标准欧氏内积后，$`\mathcal{𝒫}`$ 的五个面为
 
@@ -982,7 +982,7 @@ b_Q=(1,5/2,-1/4),\qquad
 
 | 直接消费的来源 | 版本、条款及精确边界 |
 | --- | --- |
-| Richard P. Stanley，[*Two Poset Polytopes*](https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf)，Discrete & Computational Geometry 1，9–23；[既有 Library 注](../../../Library/Words/stanley1986posetpolytopes.md) | `literature-attested`：定义 2.1、定理 2.2、Example 4.3 的 chain polytope 与反链指示顶点；仅消费三元偏序占位对应，不据此宣称原生接缝或概率取得 |
+| Richard P. Stanley，[*Two Poset Polytopes*](https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf)，Discrete & Computational Geometry 1，9–23；[既有 Library 注](../../../Library/Geometry/stanley1986posetpolytopes.md) | `literature-attested`：定义 2.1、定理 2.2、Example 4.3 的 chain polytope 与反链指示顶点；仅消费三元偏序占位对应，不据此宣称原生接缝或概率取得 |
 | Stephen Boyd、Lieven Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，§2.6.1，式 (2.19)，印刷页 51–53 | `literature-attested`：采用非负内积的对偶锥和支撑法向符号；本文负极锥明确换号，二维互补角宽由第二节自证 |
 | Komei Fukuda，[*What is a dual of a convex polytope?*](https://people.inf.ethz.ch/fukudak/polyfaq/node7.html)，Theorem 1 | `literature-attested`：反序面格意义的组合对偶，原点内点下的极性构造和顶点测试；不把极性与欧氏等距认同 |
 | Alathea Jensen，[*Self-polar polytopes*](https://arxiv.org/abs/1902.00784v1)，arXiv:1902.00784v1，§§2.4–2.6，Lemmas 2.1–2.4，§3 | `literature-attested`：阈值一极性、双极、逆转置运输及面格对偶；其 self-polar 要求正交像，非正交的本卷 $`L`$ 不冒领该性质 |
