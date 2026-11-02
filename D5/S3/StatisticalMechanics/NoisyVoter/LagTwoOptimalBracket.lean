@@ -11,7 +11,9 @@ proof_shape: result: content
 escape_witness: input_time_vertex; innovation_history_law
 admission_basis: escape-witness
 literature_status: inherited source consequence; no novelty claim
-The actual native innovation law is used by native_variance, upper_member and bracket.
+The native innovation law supplies the full-horizon native_variance and native_binomial clauses.
+Scalar helpers are consumed bind-only declarations and receive no escape credit.
+Theorem inventory: 12 content; 23 consumed bind-only; 34 private; 1 public.
 The causal-support induction proves a time-and-vertex restriction absent from the suppliers.
 The horizon induction proves the joint law of the actual synchronous agreement variables.
 Initial and positive-time laws are the only coordinate premises on the original P.
@@ -45,12 +47,12 @@ bit_variance | bind-only | none | native_variance
 native_variance | content | innovation_history_law | native_conclusions, upper_member
 bit_count_law | bind-only | none | native_binomial
 original_lower | bind-only | none | bracket
-upper_member | content | innovation_history_law | bracket
-bracket | content | innovation_history_law | asymptotic_bounds, scalar_bounds
-scalar_bounds | content | innovation_history_law | result, asymptotic_bounds
+upper_member | bind-only | none | bracket
+bracket | bind-only | none | asymptotic_bounds, scalar_bounds
+scalar_bounds | bind-only | none | result, asymptotic_bounds
 native_binomial | content | innovation_history_law | native_conclusions
 near_zero | bind-only | none | asymptotic_bounds
-asymptotic_bounds | content | innovation_history_law | result
+asymptotic_bounds | bind-only | none | result
 native_conclusions | content | innovation_history_law | result
 result | content | innovation_history_law | terminal complete Theorem 3.2
 Frozen module pins and directly used original suppliers:
