@@ -9,6 +9,8 @@
 import D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum
 import D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound
 
+/-! Ptaszyński's sharp finite-cycle lower bound for the sum of skewness and kurtosis. -/
+
 noncomputable section
 
 open scoped BigOperators
@@ -42,21 +44,20 @@ private lemma normalized_sum {n : ℕ} (k : Fin n → ℝ) :
   rw [D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.normalized]
   delta D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness
     p q r normalizedRates
+  simp only [powerSum, div_pow, ← Finset.sum_div]
   ring
 
 private lemma normalized_moments {n : ℕ} (hn : 2 ≤ n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) :
     0 < p k ∧ 0 ≤ q k ∧ q k ^ 2 ≤ p k * r k ∧ r k < p k ^ 2 := by
-  have hx := D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.normalized_simplex
-    (show 0 < n by omega) k hk
-  have hsum : powerSum n 1 (normalizedRates k) = 1 := by
-    simpa only [normalizedRates, powerSum, pow_one] using hx.2
-  have hsum' : (∑ j, (k j)⁻¹) = 1 := by
-    simpa only [powerSum, pow_one] using hsum
+  have hs : 0 < powerSum n 1 (fun j => (k j)⁻¹) := by
+    let i : Fin n := ⟨0, by omega⟩
+    simp only [powerSum, pow_one]
+    exact Finset.sum_pos' (fun j _ => (inv_pos.mpr (hk j)).le)
+      ⟨i, Finset.mem_univ i, inv_pos.mpr (hk i)⟩
   have hpos : ∀ i, 0 < normalizedRates k i := by
     intro i
-    rw [normalizedRates, hsum']
-    exact inv_pos.mpr (hk i)
+    exact div_pos (inv_pos.mpr (hk i)) hs
   simpa only [p, q, r] using
     (D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.moments hn
       (normalizedRates k) hpos)
@@ -125,7 +126,9 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     dsimp [e, t]
     apply sub_nonneg.mpr
     apply (le_div_iff₀ hpp).2
-    nlinarith [hqr]
+    have hq2 : qq ^ 2 = pp ^ 2 * (qq / pp) ^ 2 := by
+      field_simp
+    nlinarith [hqr, hq2]
   have hqt : qq = pp * t := by
     dsimp [t]
     field_simp
@@ -175,7 +178,7 @@ private lemma source_power_sum (m j : ℕ) (hm : 1 ≤ m) :
   simp only [powerSum, sourceRates, inv_pow, ite_pow, one_pow,
     Fin.sum_univ_succ, ↓reduceIte, Fin.succ_ne_zero, inv_one,
     Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-    Nat.cast_one, mul_one]
+    Nat.cast_one, mul_one, inv_inv]
 
 private lemma source_value (m : ℕ) (hm : 1 ≤ m) :
     skewness (sourceRates m) + kurtosis (sourceRates m) + 8 / 27 =
@@ -204,10 +207,11 @@ private lemma source_limit :
       kurtosis (sourceRates (m + 1))) atTop (nhds lowerBound) := by
   have hc : ContinuousAt sourceApproximation 0 := by
     unfold sourceApproximation
-    fun_prop (disch := (norm_num; positivity))
+    fun_prop (disch := norm_num)
   have hz : Tendsto (fun m : ℕ => 1 / ((m + 1 : ℕ) : ℝ)) atTop (nhds (0 : ℝ)) :=
     (tendsto_add_atTop_iff_nat 1).mpr tendsto_one_div_atTop_nhds_zero_nat
-  have ha : Tendsto (fun m : ℕ => sourceApproximation (1 / (m : ℝ))) atTop
+  have ha : Tendsto (fun m : ℕ =>
+      sourceApproximation (1 / ((m + 1 : ℕ) : ℝ))) atTop
       (nhds (0 : ℝ)) := by
     have hzero : sourceApproximation 0 = 0 := by norm_num [sourceApproximation]
     simpa only [Function.comp_def, hzero] using hc.tendsto.comp hz
@@ -216,8 +220,8 @@ private lemma source_limit :
       atTop (nhds ((0 : ℝ) - 8 / 27)) := ha.sub tendsto_const_nhds
   convert hf using 1
   · funext m
-    rw [source_value_asymptotic (m + 1) (by omega)]
-    ring_nf
+    have hval := source_value_asymptotic (m + 1) (by omega)
+    linarith
   · dsimp [lowerBound]
     ring_nf
 
