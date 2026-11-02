@@ -119,7 +119,8 @@ private lemma prefix_mul_integral (x : I → ℝ) (a : I → ℂ) (D : ℝ)
     intro i _
     by_cases hi : x i ≤ t <;> simp [Set.indicator, hi]
   simp_rw [he]
-  rw [integral_finsetSum _ (fun i _ =>
+  rw [integral_finsetSum (f := fun i t =>
+    (Ici (x i)).indicator (fun t => a i * f t) t) Finset.univ (fun i _ =>
     ((continuous_const.mul hf).integrableOn_Icc).indicator measurableSet_Ici)]
   apply Finset.sum_congr rfl
   intro i _
@@ -142,7 +143,7 @@ private lemma prefix_moments (x : I → ℝ) (a : I → ℂ) (D : ℝ)
     calc
       _ = ((∫ t in l..D, t ^ r : ℝ) : ℂ) := by
         simp only [← Complex.ofReal_pow, intervalIntegral.integral_ofReal]
-      _ = _ := by rw [intervalIntegral.integral_pow]; push_cast
+      _ = _ := by rw [integral_pow]; push_cast
   calc
     _ = ∫ t in Icc 0 D, «prefix» x a t * (t : ℂ) ^ r := by
       apply integral_congr_ae
@@ -200,10 +201,12 @@ private lemma ramp_right (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
   apply HasDerivWithinAt.fun_sum
   intro i _
   by_cases hi : x i ≤ t
-  · have hd := (((hasDerivAt_id t).sub_const (x i)).ofReal_comp.const_mul (a i)).hasDerivWithinAt
+  · have hd : HasDerivWithinAt (fun y : ℝ => a i * ((y - x i : ℝ) : ℂ))
+        (a i) (Ioi t) t := by
+      simpa using (((hasDerivAt_id t).sub_const (x i)).ofReal_comp.const_mul (a i)).hasDerivWithinAt (s := Ioi t)
     have ht : max (t - x i) 0 = t - x i := max_eq_left (sub_nonneg.mpr hi)
     simpa only [if_pos hi, mul_one] using hd.congr
-      (fun y hy => by rw [max_eq_left (by linarith [hy] : 0 ≤ y - x i)])
+      (fun y hy => by rw [max_eq_left (by linarith [show t < y from hy] : 0 ≤ y - x i)])
       (by rw [ht])
   · have hit : t < x i := lt_of_not_ge hi
     have hd : HasDerivWithinAt (fun _ : ℝ => (0 : ℂ)) 0 (Ioi t) t :=
@@ -211,7 +214,7 @@ private lemma ramp_right (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
     simp only [if_neg hi]
     apply hd.congr_of_eventuallyEq
     · filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hit)] with y hy
-      rw [max_eq_right (by linarith : y - x i ≤ 0)]
+      rw [max_eq_right (by linarith [show y < x i from hy] : y - x i ≤ 0)]
       simp
     · rw [max_eq_right (by linarith : t - x i ≤ 0)]
       simp
@@ -229,16 +232,18 @@ private lemma resolvent_right (lam : ℝ) (hlam : lam ≠ 0)
     have hd' : HasDerivWithinAt
         (fun y : ℝ => a i * (((1 - Real.exp (-lam * (y - x i))) / lam : ℝ) : ℂ))
         (a i * (Real.exp (-lam * (t - x i)) : ℂ)) (Ioi t) t := by
-      convert hd.hasDerivWithinAt using 1 <;> push_cast <;> field_simp [hlam] <;> ring
+      have he : (0 - Real.exp (-lam * (t - x i)) * (-lam * 1)) / lam =
+          Real.exp (-lam * (t - x i)) := by field_simp; ring
+      simpa only [Pi.sub_apply, id_eq, he] using hd.hasDerivWithinAt (s := Ioi t)
     simp only [if_pos hi]
     exact hd'.congr
-      (fun y hy => by rw [max_eq_left (by linarith [hy] : 0 ≤ y - x i)])
+      (fun y hy => by rw [max_eq_left (by linarith [show t < y from hy] : 0 ≤ y - x i)])
       (by rw [max_eq_left (sub_nonneg.mpr hi)])
   · have hit : t < x i := lt_of_not_ge hi
     simp only [if_neg hi]
     apply ((hasDerivAt_const t (0 : ℂ)).hasDerivWithinAt).congr_of_eventuallyEq
     · filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hit)] with y hy
-      rw [max_eq_right (by linarith : y - x i ≤ 0)]
+      rw [max_eq_right (by linarith [show y < x i from hy] : y - x i ≤ 0)]
       simp
     · rw [max_eq_right (by linarith : t - x i ≤ 0)]
       simp
@@ -248,7 +253,9 @@ private lemma second_right (lam : ℝ) (hlam : lam ≠ 0)
     HasDerivWithinAt (secondResolvent lam x a) (resolvent lam x a t) (Ioi t) t := by
   have hlc : (lam : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hlam
   have hd := ((ramp_right x a t).sub (resolvent_right lam hlam x a t)).div_const (lam : ℂ)
-  convert hd using 1
+  change HasDerivWithinAt (fun y => (ramp x a y - resolvent lam x a y) / (lam : ℂ))
+    (resolvent lam x a t) (Ioi t) t
+  apply hd.congr_deriv
   rw [response_eq lam hlam]
   field_simp [hlc]
   <;> ring
@@ -256,7 +263,7 @@ private lemma second_right (lam : ℝ) (hlam : lam ≠ 0)
 private lemma initial_values (lam : ℝ) (x : I → ℝ) (a : I → ℂ)
     (hx : ∀ i, 0 ≤ x i) :
     ramp x a 0 = 0 ∧ resolvent lam x a 0 = 0 ∧ secondResolvent lam x a 0 = 0 := by
-  have hz (i : I) : max (0 - x i) 0 = 0 := max_eq_right (by linarith [hx i])
+  have hz (i : I) : max (-x i) 0 = 0 := max_eq_right (by linarith [hx i])
   simp [ramp, resolvent, secondResolvent, hz]
 
 private lemma ramp_is_primitive (x : I → ℝ) (a : I → ℂ) (D : ℝ)
@@ -283,14 +290,15 @@ private lemma square_right {f : ℝ → ℂ} {v : ℂ} {t : ℝ}
     HasDerivWithinAt (fun y => ‖f y‖ ^ 2)
       (2 * (star (f t) * v).re) (Ioi t) t := by
   have hre : HasDerivWithinAt (fun y => (f y).re) v.re (Ioi t) t := by
-    simpa only [Complex.reCLM_apply] using
+    simpa only [Function.comp_def, Complex.reCLM_apply] using!
       Complex.reCLM.hasFDerivAt.comp_hasDerivWithinAt t hd
   have him : HasDerivWithinAt (fun y => (f y).im) v.im (Ioi t) t := by
-    simpa only [Complex.imCLM_apply] using
+    simpa only [Function.comp_def, Complex.imCLM_apply] using!
       Complex.imCLM.hasFDerivAt.comp_hasDerivWithinAt t hd
   have hs := (hre.pow 2).add (him.pow 2)
   convert hs using 1
   · ext y
+    change ‖f y‖ ^ 2 = (f y).re ^ 2 + (f y).im ^ 2
     rw [← Complex.normSq_eq_norm_sq, Complex.normSq_apply]
     ring
   · simp only [Complex.mul_re, Complex.star_def, Complex.conj_re, Complex.conj_im]
@@ -352,7 +360,8 @@ private lemma causal_pair (lam D l r : ℝ) (hlam : 0 < lam)
     have hd (t : ℝ) : HasDerivAt (fun t => -(F t / (2 * lam))) (F t) t := by
       have h := (((((hasDerivAt_id t).sub_const l).const_mul (-lam)).exp.mul
         ((((hasDerivAt_id t).sub_const r).const_mul (-lam)).exp)).div_const (2 * lam)).neg
-      convert h using 1 <;> dsimp [F] <;> field_simp [hlam.ne'] <;> ring
+      dsimp only [F, Pi.neg_apply, Pi.mul_apply, id_eq] at h ⊢
+      convert h using 1 <;> field_simp [hlam.ne'] <;> ring
     have h := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       (hc.intervalIntegrable m D)
     linarith
@@ -405,7 +414,9 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
     simp only [f, star_mul, Complex.star_def, Complex.conj_ofReal, Complex.ofReal_mul]
     ring
   have hsq : IntegrableOn (fun t => ‖response lam x a t‖ ^ 2) (Icc 0 D) := by
-    have h := integrable_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hi i j))
+    have h : IntegrableOn (fun t => ∑ i, ∑ j, f i j t) (Icc 0 D) :=
+      integrable_finsetSum Finset.univ (fun i _ =>
+        integrable_finsetSum Finset.univ (fun j _ => hi i j))
     have h' := h.congr (ae_of_all _ (fun t => (hs t).symm))
     simpa using h'.re
   have hint : ((∫ t in Icc 0 D, ‖response lam x a t‖ ^ 2 : ℝ) : ℂ) =
@@ -423,7 +434,7 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
     have h := congrArg Complex.ofReal
       (causal_pair lam D (x i) (x j) hlam (hx i) (hx j)).2
     simpa only [p, if_pos (hx i).2, if_pos (hx j).2, Complex.ofReal_add,
-      Complex.ofReal_mul] using h.symm
+      Complex.ofReal_mul, Complex.ofReal_ofNat] using h.symm
   have hid : (∑ i, ∑ j, star (a i) * a j * (Real.exp (-lam * |x i - x j|) : ℂ)) =
       (2 * lam : ℂ) * ((∫ t in Icc 0 D, ‖response lam x a t‖ ^ 2 : ℝ) : ℂ) +
         ((‖response lam x a D‖ ^ 2 : ℝ) : ℂ) := by
@@ -436,8 +447,7 @@ private lemma causal_gram (lam D : ℝ) (hlam : 0 < lam)
     intro j _
     ring
   refine ⟨hsq, ?_⟩
-  simpa only [Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-    zero_mul, sub_zero] using congrArg Complex.re hid
+  simpa using congrArg Complex.re hid
 
 /-- The finite-interval analytic bridge, with both nonnegative error terms
 explicit. Every integral and endpoint is derived from the actual atoms. -/
@@ -466,13 +476,15 @@ private lemma primitive_exponential_identity (lam D : ℝ) (hlam : 0 < lam)
   have hB := ramp_continuous x a
   have hg2 : IntegrableOn (fun t => ‖g t‖ ^ 2) (Icc 0 D) := (hg.norm.pow 2).integrableOn_Icc
   have hh2 : IntegrableOn (fun t => ‖h t‖ ^ 2) (Icc 0 D) := (hh.norm.pow 2).integrableOn_Icc
-  have hA2 := (shifted_hinge_prefix_energy x a ha 0).2.1.integrableOn (s := Icc 0 D)
+  have hA2 : IntegrableOn (fun t => ‖A t‖ ^ 2) (Icc 0 D) :=
+    (shifted_hinge_prefix_energy x a ha 0).2.1.integrableOn
   have hJ : IntegrableOn (fun t => (star (g t) * A t).re) (Icc 0 D) := by
     have hf := prefix_mul_integrable x a D (fun t => star (g t)) (by fun_prop)
     exact (hf.congr (ae_of_all _ (fun t => mul_comm _ _))).re
   have hL : IntegrableOn (fun t => (star (h t) * g t).re) (Icc 0 D) :=
     (by fun_prop : Continuous (fun t => (star (h t) * g t).re)).integrableOn_Icc
-  have hzero := initial_values lam x a (fun i => (hx i).1)
+  have hzero : B 0 = 0 ∧ g 0 = 0 ∧ h 0 = 0 :=
+    initial_values lam x a (fun i => (hx i).1)
   have hBD : B D = 0 := ramp_terminal x a D (fun i => (hx i).2) ha hfirst
   have hZ (t : ℝ) : Z t = A t - (lam : ℂ) * g t := response_eq lam hlam.ne' x a t
   have hBg (t : ℝ) : B t - (lam : ℂ) * h t = g t := by
@@ -510,6 +522,8 @@ private lemma primitive_exponential_identity (lam D : ℝ) (hlam : 0 < lam)
     simpa only [norm_zero, zero_pow (by decide : 2 ≠ 0), sub_zero] using hf
   have hEZ : (∫ t in Icc 0 D, ‖Z t‖ ^ 2) = EA - 2 * lam * J + lam ^ 2 * Eg := by
     simp_rw [hZ, square_sub]
+    change (∫ t in Icc 0 D, ((fun t => ‖A t‖ ^ 2) -
+      (fun t => 2 * lam * (star (g t) * A t).re)) t + lam ^ 2 * ‖g t‖ ^ 2) = _
     rw [integral_add (hA2.sub (hJ.const_mul (2 * lam))) (hg2.const_mul (lam ^ 2)),
       integral_sub hA2 (hJ.const_mul (2 * lam)), integral_const_mul, integral_const_mul]
   have hEB : EB = Eg + 2 * lam * L + lam ^ 2 * Eh := by
@@ -523,6 +537,8 @@ private lemma primitive_exponential_identity (lam D : ℝ) (hlam : 0 < lam)
       ring
     dsimp only [EB]
     simp_rw [he]
+    change (∫ t in Icc 0 D, ((fun t => ‖g t‖ ^ 2) +
+      (fun t => 2 * lam * (star (h t) * g t).re)) t + lam ^ 2 * ‖h t‖ ^ 2) = _
     rw [integral_add (hg2.add (hL.const_mul (2 * lam))) (hh2.const_mul (lam ^ 2)),
       integral_add hg2 (hL.const_mul (2 * lam)), integral_const_mul, integral_const_mul]
   have hZD : ‖Z D‖ ^ 2 = lam ^ 2 * ‖g D‖ ^ 2 := by
@@ -533,6 +549,7 @@ private lemma primitive_exponential_identity (lam D : ℝ) (hlam : 0 < lam)
   have hprim : (∫ t in Icc 0 D, ‖∫ s in (0 : ℝ)..t, «prefix» x a s‖ ^ 2) = EB := by
     apply setIntegral_congr_fun measurableSet_Icc
     intro t ht
+    change ‖∫ s in (0 : ℝ)..t, «prefix» x a s‖ ^ 2 = ‖ramp x a t‖ ^ 2
     rw [← ramp_is_primitive x a t (fun i => (hx i).1) ht.1]
   rw [prefix_energy_window x a D hx ha, hprim]
   change _ = 2 * lam * EA - 2 * lam ^ 3 * EB + 2 * lam ^ 5 * Eh + lam ^ 4 * ‖h D‖ ^ 2
@@ -582,7 +599,7 @@ private lemma primitive_correlation_bound (lam D : ℝ) (hlam : 0 < lam)
       lam ^ 2 * (2 * lam *
         (∫ t in Icc 0 D, ‖∫ v in (0 : ℝ)..t, «prefix» x a v‖ ^ 2)) := by
     nlinarith only [hreal, hnew, hrem]
-  exact (mul_le_mul_left (sq_pos_of_pos hlam)).mp hscaled
+  exact le_of_mul_le_mul_left hscaled (sq_pos_of_pos hlam)
 
 /-- Atomic moments through q give the exact explicit moment-sensitive
 exponential prefix lower bound, uniformly over arbitrary finite complex
