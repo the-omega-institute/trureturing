@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f6069958d00fdc2266e598ecdb01cd22a91ba3eb3d934f9ea6bb95c6350a247a
+  normalized_sha256: sha256:f6069958d00fdc2266e598ecdb01cd22a91ba3eb3d934f9ea6bb95c6350a247a
+cas_ref: sha256:f6069958d00fdc2266e598ecdb01cd22a91ba3eb3d934f9ea6bb95c6350a247a
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Hypercube/EdgeExpansion.edge_expansion
+    target_statement_id: sha256:4fff62a3a3537ad488af135d6a28b603b54747f4bce8e4aae8ab926ece051bff
+receipts:
+  unresolved_subitems: []

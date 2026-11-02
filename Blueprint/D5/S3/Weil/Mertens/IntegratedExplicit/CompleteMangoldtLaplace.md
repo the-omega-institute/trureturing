@@ -66,7 +66,19 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.6 (U continuousAt pos).**
+**Theorem 1.6 (Exact finite arithmetic localization).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_eq_range`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_eq_range` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real t>=0 and natural N with t<N, mangoldtPart(t) is exactly the sum of mangoldtRamp(n,t) over n<N. The ActualKernelPrefixPerturbation proof applies this identity only on its fixed compact window. Each ramp vanishes at entry, and the terms at zero and one vanish. No global arithmetic truncation is asserted.
+
+**Theorem 1.7 (U continuousAt pos).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U_continuousAt_pos`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.7 (U exp continuous).**
+**Theorem 1.8 (U exp continuous).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U_exp_continuous`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.8 (complete mangoldt endpoint).**
+**Theorem 1.9 (complete mangoldt endpoint).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.complete_mangoldt_endpoint`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.c
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.9 (transformLine re).**
+**Theorem 1.10 (transformLine re).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.transformLine_re`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.t
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.10 (mangoldtRamp laplace).**
+**Theorem 1.11 (mangoldtRamp laplace).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtRamp_laplace`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.m
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.11 (mangoldtRamp laplace integrable).**
+**Theorem 1.12 (mangoldtRamp laplace integrable).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtRamp_laplace_integrable`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.m
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.12 (mangoldtRamp laplace norm).**
+**Theorem 1.13 (mangoldtRamp laplace norm).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtRamp_laplace_norm`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.m
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.13 (mangoldtRamp norm integrals summable).**
+**Theorem 1.14 (mangoldtRamp norm integrals summable).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtRamp_norm_integrals_summable`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.m
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.14 (mangoldtPart line integrable).**
+**Theorem 1.15 (mangoldtPart line integrable).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_line_integrable`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.m
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.15 (mangoldtPart line laplace).**
+**Theorem 1.16 (mangoldtPart line laplace).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_line_laplace`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.m
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.16 (first exp moment).**
+**Theorem 1.17 (first exp moment).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.first_exp_moment`
 
@@ -198,7 +210,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.f
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.17 (U line integrable).**
+**Theorem 1.18 (U line integrable).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U_line_integrable`
 
@@ -210,7 +222,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.18 (U line laplace).**
+**Theorem 1.19 (U line laplace).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U_line_laplace`
 
@@ -231,6 +243,7 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.U_line_laplace`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.complete_mangoldt_endpoint`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.first_exp_moment`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_eq_range`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_line_integrable`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_line_laplace`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaplace.mangoldtPart_summable`

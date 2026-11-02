@@ -1,0 +1,63 @@
+### 一个完全不用数值估计的明确选择
+
+可以直接选
+
+$$
+\boxed{\varepsilon_*=\frac18.}
+$$
+
+确实，由
+
+$$
+\sqrt2>\frac75,\qquad
+\gamma<\frac34,\qquad
+\log(4\pi)>2,
+$$
+
+得到
+
+$$
+2\sqrt2-4-\gamma+\log(4\pi)>\frac1{20}.
+$$
+
+又因为 $\log2>2/3$，
+
+$$
+\varepsilon_*(1-\log2)<\frac1{24}.
+$$
+
+因此至少保留
+
+$$
+\frac1{20}-\frac1{24}
+=\frac1{120}>0
+$$
+
+的主裕量。
+
+于是得到本轮的具体推进：
+
+$$
+\boxed{
+\begin{gathered}
+D=A(\log\log n)^2,\\[2mm]
+\mathcal S_k
+-c_D\mathcal U_{k,J,\Omega}
++\frac18G_*
+\succeq0
+\\[2mm]
+\Longrightarrow
+\frac{\sigma(n)}
+{e^\gamma n\log\log n}<1
+\qquad(n\text{ 充分大}).
+\end{gathered}
+}
+$$
+<a id="eq-34"></a>
+<div class="equation-caption">Equation (34).</div>
+
+这里的前提只涉及一个有限实际矩阵和有限积分误差上界。没有把原整数换成别的对象，也没有删去高素数层。
+
+---
+
+<a id="section-8-zeckendorf-ordering"></a>
