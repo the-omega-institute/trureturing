@@ -338,7 +338,7 @@ theorem dependence : ObservationalDependence signature actual := by
   exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
 
 
-def source_registration : Registration arena (type_of% (@twirlFormula.{u})) where
+def source_registration : Registration arena.{u} (type_of% (@twirlFormula.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@twirlFormula.{u}, rejected, rejected_law⟩
@@ -357,11 +357,11 @@ def registration :
   realizationName := ``source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ k => (k : ℂ)) (fun e => nomatch e))
@@ -457,19 +457,19 @@ def source_registration : Registration arena.{u} (type_of% (@swapHermitian.{u}))
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@swapHermitian.{u}) (Realization signature) Unit Unit := {
+      (@swapHermitian.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := .str ``source_registration "unit"
   realizationName := ``source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize signature.{u}
     (fun _ _ M => @decide M.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -543,7 +543,7 @@ theorem dependence : ObservationalDependence signature.{u} actual := by
   exact zero_ne_one
 
 
-def source_registration : Registration arena (type_of% (@swapSquare.{u})) where
+def source_registration : Registration arena.{u} (type_of% (@swapSquare.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@swapSquare.{u}, rejected, rejected_law⟩
@@ -557,19 +557,19 @@ def source_registration : Registration arena (type_of% (@swapSquare.{u})) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@swapSquare.{u}) (Realization signature) Unit Unit := {
+      (@swapSquare.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := .str ``source_registration "unit"
   realizationName := ``source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p M =>
+  readout := some (realize signature.{u} (fun _ p M =>
     letI := p.2.1
     letI := p.2.2
     Equiv.Perm.permMatrix ℂ (Equiv.prodComm p.1 p.1) * M) (fun e => nomatch e))
