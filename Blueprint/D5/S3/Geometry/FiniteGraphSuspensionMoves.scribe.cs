@@ -11,12 +11,12 @@ internal sealed class FiniteGraphSuspensionMovesDocument : IScribeDocumentDefini
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite chains of suspension moves", H("Finite chains of suspension moves"), Blocks(
             Node("n0", "MoveChain", "Literal operation chains",
-                "A chain is built from identity, triple-subdivision, matching and Lozin constructors. Every constructor contains its chosen vertices, adjacency or neighborhood-partition proofs, and an actual relabeling equivalence."),
+                "A chain is built from identity, triple-subdivision, matching and Lozin constructors. Every constructor contains its chosen vertices, adjacency or neighborhood-partition proofs, and an actual relabeling equivalence.", DescribeRole.Definition),
             Node("n1", "reducedHomologyIso", "The iterated shift",
                 "A chain of n moves from G to F gives reduced integral singular homology of the actual F-independence realization in degree q+n isomorphic to that of G in degree q, for q at least one."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

@@ -21,8 +21,8 @@ internal sealed class FiniteGraphSuspensionMovesModelsDocument : IScribeDocument
             Node("n4", "starMaxEquiv", "A nonempty star",
                 "A star with a finite nonempty leaf set has exactly two maximal independent sets: its center and its entire leaf set."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

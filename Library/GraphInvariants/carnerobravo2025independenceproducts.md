@@ -336,3 +336,13 @@ The original-statement evidence pins arXiv v2 and distinguishes Questions
 resolution; it does not certify priority or uniqueness. Lean verification
 of this construction does not itself constitute independent fidelity review,
 required CI, publication acceptance or a priority certificate.
+
+The 378 new public theorem audit targets remain unfinished under
+[issue #25577](https://github.com/the-omega-institute/trureturing/issues/25577).
+The typed dependent-family attempt for `KingFiniteReplay.rowBits_spec` has a
+compiled equivalence bridge, rejected whole-family intervention, sensitivity
+and actual observational dependence. Its native binding is
+`declared_unresolved` at `source.state_binder`, with no certificate. The
+remaining targets lack completed per-target registrations. No
+`declared_validated` registration is claimed. Earlier supporting audit
+issues above remain separate.

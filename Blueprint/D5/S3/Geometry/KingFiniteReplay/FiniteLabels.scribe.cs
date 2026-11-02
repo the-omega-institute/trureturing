@@ -21,8 +21,8 @@ internal sealed class KingFiniteReplayFiniteLabelsDocument : IScribeDocumentDefi
             Node("n4", "map_eq_of_forward", "Graph equality after relabeling",
                 "An adjacency equivalence checked in the forward direction identifies the relabeled graph with the given target graph."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

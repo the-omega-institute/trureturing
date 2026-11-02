@@ -19,8 +19,8 @@ internal sealed class FiniteGraphSuspensionMovesLozinDocument : IScribeDocumentD
             Node("n3", "lozinSuspensionReducedHomologyIso", "Reduced singular homology transport",
                 "For finite graphs and every q at least one, the replacement shifts actual reduced integral singular homology by one degree. The graph operation, rather than a homology premise, supplies the transport."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

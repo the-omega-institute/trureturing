@@ -27,8 +27,8 @@ internal sealed class KingFinalCompositionDocument : IScribeDocumentDefinition
             Node("n6", "question32_counterexample", "Question 32",
                 "The actual selected induced graph has 93999 vertices and 94036 edges and fails sourceSP. It gives the hereditary obstruction asked in Question 32 of Carnero Bravo. Question 35 concerns the entire rectangle and has a different conclusion. The seed and suspension mechanisms retain their classical attribution; no priority or exhaustive later-literature claim follows from these mathematical statements."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

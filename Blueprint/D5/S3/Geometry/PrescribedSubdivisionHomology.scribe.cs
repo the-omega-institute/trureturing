@@ -21,8 +21,8 @@ internal sealed class PrescribedSubdivisionHomologyDocument : IScribeDocumentDef
             Node("n4", "reducedHomologyIsoOfAdjacency", "The total homology shift",
                 "For finite original vertex and edge types, injective unordered endpoint pairs, an exact endpoint adjacency inventory for G and q at least one, the actual prescribed graph has reduced integral singular homology in degree q plus the sum of multiplicities isomorphic to that of G in degree q. Well-founded recursion on the total multiplicity proves the iteration without a nested expanded carrier."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

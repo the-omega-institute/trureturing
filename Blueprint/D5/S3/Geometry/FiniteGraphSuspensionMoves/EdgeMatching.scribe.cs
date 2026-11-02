@@ -21,8 +21,8 @@ internal sealed class FiniteGraphSuspensionMovesEdgeMatchingDocument : IScribeDo
             Node("n4", "crossingSuspensionReducedHomologyIso", "The matching homology shift",
                 "For every injective choice of the four endpoints of two edges and every q at least one, the actual matching gadget gives the same one-degree reduced integral singular homology shift."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }

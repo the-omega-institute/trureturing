@@ -15,8 +15,8 @@ internal sealed class KingFiniteReplayDocument : IScribeDocumentDefinition
             Node("n2", "reducedHomologyIso", "The complete finite-replay shift",
                 "For every q at least one, reduced integral singular homology of the final independence realization in degree q+40 is isomorphic to that of the seed realization in degree q."))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole? role = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), role);
 }
