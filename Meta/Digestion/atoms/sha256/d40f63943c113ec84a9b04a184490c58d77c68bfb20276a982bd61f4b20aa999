@@ -1,0 +1,55 @@
+**Definition 38.1 (source-relative contribution and evidence boundary).**
+AA17/19 supply the local guards, all legal histories and grade;
+§§23–26 supply the quotient and orientation distinction, including
+$C,D_0,D_1$. Proposition 37.1 spells out the source-relative preparation
+bridge and its four-leaf positional separation. Definition 30.1 supplies
+the native paid-tail interface; AAII94 and Theorem 31.2 supply journal
+and snapshot methods for cumulative edits, not a logarithmic bound for
+each update. The existing
+[Hypercube](../../../D5/S3/Combinatorics/Graph/Hypercube.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/Hypercube.scribe.cs)
+supply the cube graph, degree and edge count. The existing
+[EnabledPathSwapConnectivity](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean)
+is about legal execution histories, while
+[MinimumRollbackAlphabet](../../../D5/S0/History/Coding/MinimumRollbackAlphabet.lean)
+is about static injective fibre labels. These inspected suppliers do
+not establish connectivity of the present record images.
+
+Weighted centroids, cube expansion and separator methods are classical.
+For connected fibres the sets are disjoint connected branch sets in
+$T^{2D}$ with touching pairs for cube edges, the standard minor-mapping
+setting discussed by Marx,
+[*Can You Beat Treewidth?*, pp. 88, 91](https://theoryofcomputing.org/articles/v006a005/v006a005.pdf).
+The inspected introduction, Definition 2.1, Proposition 2.4 and §3 of
+[Wang–Cao–Lv–Lu, *Treewidth of generalized Hamming graph, bipartite Kneser graph and generalized Petersen graph*, v2](https://arxiv.org/html/2403.12549v2)
+provide separator/tree-decomposition context, including references to
+[Chandran–Kavitha's hypercube treewidth work](https://doi.org/10.1016/j.disc.2005.12.011)
+and [Harper's isoperimetric work](https://doi.org/10.1016/S0021-9800(66)80059-5).
+For these last two references only publication metadata and the cited
+context were checked, not their full theorem texts; no sharper constant
+from them is used. The balance here is relative to the original $N$,
+and the complete weak expansion and separator proofs are given in
+Theorem 35.1. The connected-fibre mechanism is classical, not a new
+general graph principle.
+
+The added source-relative deduction retains every history-dependent
+representative, counts ball-avoiding fibres across original branches
+at one cut, separates this necessity from the terminal-only construction,
+and transfers precisely the native payload interfaces. Bounded inspection
+of these sources and the completed literature intake found no exact
+statement of that combined application; it does not certify exhaustive
+absence or research priority. The finite witness is supplied finite
+executable evidence, not an asymptotic result or a formal proof. The
+appendix contains ordinary proofs and source applications; no fresh
+Lean/kernel verification is claimed.
+
+No new physical $U$ acquisition service, hidden retained memory,
+source-bound authority, navigation/scratch bound, total-service optimum
+or all-native update algorithm follows. The result imposes no
+superlinear peak lower bound. The unrestricted all-$k$ exact causal
+$O(k)$-peak/$O(\log k)$-worst-update problem, and its native worst-event
+counterpart, remain unresolved: (IV.105) and (IV.110) require their
+explicit connected-fibre hypotheses. Hard histories may depend on the
+recorder and $k$; no common infinite hard history or completion of the
+persistent RRO goal is asserted.
+
