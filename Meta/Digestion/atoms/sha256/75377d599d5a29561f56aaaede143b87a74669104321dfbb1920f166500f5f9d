@@ -1,0 +1,56 @@
+**定义 31.2（Regional ground spaces and real ladder relations）。**
+Fix $p$ and set
+
+$$
+A=N_H(p),\qquad R=V(H)\setminus(\{p\}\cup A).
+\tag{31.3}
+$$
+
+All factors in $A$ and $R$ are the actual maximal-spin-$S$
+factors. For $X\subseteq A\cup R$ use the operators $K_X,Z_X$
+and $B_X^\pm$ of (19.3). For every integer $q$ with
+$\mathcal V_R(q):=\ker(Z_R-qI)\ne0$, define
+
+$$
+\begin{aligned}
+e_A&=\min\operatorname{spec}(K_A|_{\ker Z_A}),&
+U&=\mathcal G_A(0),\\
+e_R(q)&=\min\operatorname{spec}(K_R|_{\mathcal V_R(q)}),&
+W_q&=\ker(K_R-e_R(q)I)\cap\mathcal V_R(q),\\
+\mathcal Q_t&=\{q\in\mathbb Z:\mathcal V_R(q)\ne0,\ |q|\leq t\},&
+\eta&=\min_{q\in\mathcal Q_{S-1}}e_R(q),\\
+M_{ir}&=\mathbf1_{\{i,r\}\in E(H)}\quad(i\in A,r\in R),&
+V_{AR}&=\sum_{i\in A,r\in R}M_{ir}
+ (J_i^+J_r^-+J_i^-J_r^+).
+\end{aligned}
+\tag{31.4}
+$$
+
+Here $U$ and each $W_q$ are their entire complex eigenspaces.
+The set $\mathcal Q_{S-1}$ is nonempty since it contains zero.
+For $R=\varnothing$ there is only $q=0$, with
+$\mathcal V_R(0)=W_0=\mathbb C$, $K_R=Z_R=0$ and
+$e_R(0)=\eta=0$; $M$ then has no columns and $V_{AR}=0$.
+A regional weight slice reduces its own regional operator,
+because $[K_X,Z_X]=0$. No invariance of a regional weight
+slice under the coupled operator $K_s$ is part of this definition.
+
+For any finite set $X$ of positive-spin-$S$ factors and any
+nonzero complex subspace $W\subseteq V_S^{\otimes X}$, put
+
+$$
+\begin{aligned}
+T_X^\pm(c)&=\sum_{x\in X}c_xJ_x^\pm,\\
+L(W)&=\{c\in\mathbb R^X:T_X^+(c)W=T_X^-(c)W=0\}.
+\end{aligned}
+\tag{31.5}
+$$
+
+The equality to zero means annihilation of every vector of $W$.
+A coordinate is active if some element of $L(W)$ is nonzero
+there; otherwise it is inactive. A signed indicator on a set
+$B\subseteq X$ is a vector $\sigma\in\mathbb R^X$ with
+$\sigma_x\in\{1,-1\}$ on $B$ and zero outside $B$.
+For $X=\varnothing$ use $\mathbb R^X=\{0\}$ and the same
+empty-tensor convention as above.
+

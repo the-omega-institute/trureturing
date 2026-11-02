@@ -1,0 +1,121 @@
+**命题 33.2（All-scale confinement and exclusion of every old class）。**
+The graphs $Y_n$ form an infinite family of connected interacting
+simple graphs of even order $m=2n+6$. For every $n\geq1$,
+
+$$
+Y_n\in\mathcal D,\qquad
+Y_n\notin\mathcal U_s^{\rm mp}quad\text{for every }s=2S\geq2.
+\tag{33.1}
+$$
+
+All conclusions (32.19)–(32.20) consequently hold on their
+original entire complex occupancy-$(2n+6)S$ carriers.
+
+Proof. The clique has $r+2$ vertices and all its vertices
+interact in the same connected component. The vertex $z$ is
+attached to two clique vertices and the leaves to one.
+Thus the graph is simple and connected, has $r+5=2n+6$
+vertices and $\binom{r+2}{2}+4$ edges, and has no disconnected
+spectator factors. The orders increase strictly with $n$.
+Its complete induced open neighborhoods are
+
+$$
+\begin{aligned}
+Y_n[N(u)]
+ &=\bigl(K_{r+1}[Q\sqcup\{v\}]\text{ with a leaf }z
+                      \text{ at }v\bigr)
+               \sqcup\{\ell_1\}\sqcup\{\ell_2\},\\
+Y_n[N(v)]
+ &=K_{r+1}[Q\sqcup\{u\}]\text{ with a leaf }z
+                      \text{ at }u,\\
+Y_n[N(x)]&=K_{r+1}[(Q\setminus\{x\})\sqcup\{u,v\}]
+                                      &&(x\in Q),\\
+Y_n[N(z)]&=K_2[\{u,v\}],&
+Y_n[N(\ell_i)]&=\{u\}\quad(i=1,2).
+\end{aligned}
+\tag{33.2}
+$$
+
+Every vertex and edge of every neighborhood is listed. The
+nontrivial component at $u$ has dominating vertex $v$; the
+component at $v$ has dominating vertex $u$. The clique
+neighborhoods and $K_2$ have dominating vertices, and the
+singleton neighborhoods qualify as well. This proves membership
+in $\mathcal D$ using actual components.
+
+Write $T=Y_n[N(v)]$. This neighborhood is connected, so it
+has no alternative component for any component-based condition.
+It contains a triangle in its clique, and therefore is not
+bipartite. Its vertex $u$ has degree $r+1\geq4$, so $T$ is
+not a simple odd cycle. Its order is $r+2\geq5$, so it is
+not a diamond or singleton. Finally choose distinct
+$x,y\in Q$. In $T$, the vertex $z$ is nonadjacent to both
+$x,y$ while $xy$ is an edge. In a complete multipartite graph,
+nonadjacency of distinct vertices means membership in a common
+independent part. The indicated three relations are impossible.
+Thus $T$ is not complete multipartite. Its sole component
+excludes $Y_n$ from each of
+$\mathcal C$, $\mathcal C_\diamond$ and $\mathcal C_{\rm mp}$.
+
+This same $T$ excludes the entire-neighborhood class
+$\mathcal L$. Its vertices $z,u,x$, for any $x\in Q$,
+induce the path $z-u-x$. The vector equal to $1,-1,1$
+on these three vertices and zero elsewhere has squared norm
+$3$ and adjacency quadratic form $-4$. Hence
+
+$$
+\lambda_{\min}(A(T))\leq-\frac43<-1.
+\tag{33.3}
+$$
+
+If a complex least eigenvector $b$ of $T$ had $|b_i|=1$
+at every coordinate, its equation at the leaf $z$ would be
+$\lambda_{\min}(A(T))b_z=b_u$. Absolute values would imply
+$|\lambda_{\min}(A(T))|=1$, contrary to (33.3).
+The nonbipartite $T$ therefore has no flat complex least mode.
+This excludes $\mathcal L_S$ for every $S\geq2$;
+$\mathcal L_1=\varnothing$ is already empty.
+
+The global flatness hypothesis fails separately. The vertices
+$\ell_1,u,z$ induce a path, so the same vector with entries
+$1,-1,1$ gives
+
+$$
+\lambda_{\min}(A(Y_n))\leq-\frac43<-1.
+\tag{33.4}
+$$
+
+At the global leaf $\ell_1$, any modulus-one complex
+eigenvector for this least eigenvalue would force its absolute
+value to be one. This contradicts (33.4). Thus $Y_n$ fails
+the actual global complex-flat least-mode requirement of
+$\mathcal F_s$ independently of scale. It is excluded before
+either of the two positive-gap alternatives in Definition
+30.1 is considered, so neither alternative restores membership.
+
+The whole graph is not complete multipartite either: the leaf
+$\ell_1$ is nonadjacent to $v$ and to $x\in Q$, whereas
+$vx$ is an edge. The same independent-part argument excludes
+all of $\mathcal M$, including every balanced or dominant-part
+regime and every allowed number of parts.
+
+To exclude $\mathcal B$, let $B=Q\sqcup\{u,v,z\}$.
+The induced graph on $B$ is two-connected: deleting $u$ leaves
+$z$ attached to $v$ and a connected clique; deleting $v$ is
+the symmetric assertion; deleting $z$ leaves the clique;
+deleting a vertex of $Q$ leaves that clique connected and
+$z$ attached to both $u,v$. These exhaust all possible deletions,
+and $|B|\geq5$. A leaf cannot lie in any two-connected
+enlargement of $B$, so this is a maximal two-connected block
+of $Y_n$. It is not a clique because $zx$ is absent for
+$x\in Q$. Hence $Y_n$ is not a block graph.
+
+These arguments exclude every term of (30.2), with their exact
+graph and scale hypotheses, and prove (33.1). Theorem 32.2
+and Corollary 32.3 now give the original-model conclusions
+at every integer $S\geq1$. The use of zero-extended adjacency
+vectors in (33.3)–(33.4) is a direct finite-dimensional Rayleigh
+comparison; it makes no claim that the path is an actual
+neighborhood component or that a regional energy is $E_s$.
+$\square$
+

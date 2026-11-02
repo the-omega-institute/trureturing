@@ -1,0 +1,148 @@
+**定理 23.2（The diamond has no singlet zero-weight ground vector）。**
+For every integer $S\geq1$ in Definition 23.1,
+
+$$
+\langle v,K_Dv\rangle\geq L_S
+\quad(v\in\mathcal S_D,\ \|v\|=1),\qquad
+ e_D(0)<L_S,\qquad
+\mathcal G_D(0)\cap\mathcal S_D=\{0\}.
+\tag{23.2}
+$$
+
+Proof. Use the classical addition of two angular momenta. Its triangle
+range and normalization are
+[DLMF (34.2.1)](https://dlmf.nist.gov/34.2.E1),
+[(34.1.1)](https://dlmf.nist.gov/34.1.E1) and the orthogonality and
+completeness relations
+[(34.3.16)](https://dlmf.nist.gov/34.3.E16) and
+[(34.3.17)](https://dlmf.nist.gov/34.3.E17).
+For $S\otimes S$ the coupled spins are exactly $q=0,1,\ldots,2S$;
+the pair Casimir on spin $q$ is $q(q+1)$. These are classical
+intermediates, used with both endpoints included.
+
+Write $c=S(S+1)$, $B=\boldsymbol J_1+\boldsymbol J_2$ and
+$A=\boldsymbol J_3+\boldsymbol J_4$. The five actual diamond edges
+give
+
+$$
+I_D=\boldsymbol J_1\cdot\boldsymbol J_2+B\cdot A,
+\qquad
+\boldsymbol J_1\cdot\boldsymbol J_2=\tfrac12(B^2-2cI).
+\tag{23.3}
+$$
+
+A total singlet $v$ satisfies $(A+B)_\alpha v=0$ for every
+Cartesian component $\alpha$. Since each $A_\alpha$ commutes with
+each $B_\beta$, this gives $B\cdot Av=-B^2v$ and hence
+$I_Dv=-cv-\tfrac12B^2v$. Simultaneous rotations of all four spins
+fix every vector in every singlet copy. Such rotations interchange
+the same-axis products, so
+$\langle v,T_xv\rangle=\langle v,T_yv\rangle
+=\langle v,T_zv\rangle$. Consequently, for every unit singlet,
+
+$$
+\begin{aligned}
+\langle v,K_Dv\rangle
+ &=\frac43\langle v,I_Dv\rangle
+ =-\frac43c-\frac23\langle v,B^2v\rangle\\
+ &\geq-\frac43S(S+1)-\frac23(2S)(2S+1)
+ =L_S.
+\end{aligned}
+\tag{23.4}
+$$
+
+This bound uses the entire pair-spin spectrum. It imposes no
+particular pair coupling on the singlet being bounded and applies
+to arbitrary complex superpositions of its multiplicity copies.
+
+For a competing vector, take the actual maximal-spin subspace
+$q=2S$ of each pair $12$ and $34$. Couple these two spin-$q$
+spaces to their normalized singlet
+
+$$
+w=\frac1{\sqrt{2q+1}}
+ \sum_{M=-q}^{q}(-1)^{q-M}|q,M\rangle_{12}|q,-M\rangle_{34},
+\qquad q=2S.
+\tag{23.5}
+$$
+
+The coefficient is precisely
+[DLMF (34.3.1)](https://dlmf.nist.gov/34.3.E1), with
+$j_1=j_2=q$, total spin zero and weights $M,-M$, in the convention
+of (34.1.1). Thus $w$ is a unit total singlet and belongs to the
+same $\mathcal V_D(0)$. Also $B^2w=q(q+1)w$, so (23.4) is an
+equality for this vector:
+
+$$
+\langle w,K_Dw\rangle=L_S<0.
+\tag{23.6}
+$$
+
+We show that this Rayleigh value is not an eigenvalue attained by
+$w$. If a total singlet $u$ satisfies $K_Du=e u$, rotate that
+vector equation to interchange the coordinate axes. Since each
+rotation fixes $u$, the resulting three equations are
+
+$$
+2(T_x+T_y)u=e u,\qquad
+2(T_y+T_z)u=e u,\qquad
+2(T_x+T_z)u=e u.
+\tag{23.7}
+$$
+
+Adding the last two and subtracting the first gives
+$T_zu=(e/4)u$. In the original four-site weight basis,
+
+$$
+T_z|x_1,x_2,x_3,x_4\rangle
+=\{x_1x_2+(x_1+x_2)(x_3+x_4)\}
+ |x_1,x_2,x_3,x_4\rangle.
+\tag{23.8}
+$$
+
+Its diagonal value at $(0,0,0,0)$ is zero. This coordinate exists
+for every integer $S\geq1$ and has a nonzero coefficient in $w$.
+To see the coefficient without any cancellation assumption, realize
+each spin $S$ as the symmetric space on $2S$ Boolean coordinates.
+The maximal pair spin $2S$ is the symmetric space on their $4S$
+coordinates. The normalized weight-zero vectors therefore satisfy
+
+$$
+\langle S,0;S,0\mid 2S,0\rangle
+ =\frac{\binom{2S}{S}}{\sqrt{\binom{4S}{2S}}}>0.
+\tag{23.9}
+$$
+
+This is the normalized Dicke count: the product of the two
+weight-zero vectors has $\binom{2S}{S}^2$ Boolean terms, and the
+weight-zero vector on $4S$ coordinates has $\binom{4S}{2S}$ terms.
+The Boolean normalization is the classical symmetric-chain
+normalization of Srinivasan,
+[Theorem 1.2](https://arxiv.org/html/1001.0280v2), and Feinsilver,
+[§3.1, (10), and §4.2.2](https://arxiv.org/html/1102.0368v2).
+Only $M=0$ in (23.5) contributes to the four-site zero coordinate.
+Since $q=2S$ is even, its coefficient is
+
+$$
+\langle0,0,0,0\mid w\rangle
+=\frac1{\sqrt{4S+1}}
+ \frac{\binom{2S}{S}^{\!2}}{\binom{4S}{2S}}>0.
+\tag{23.10}
+$$
+
+Here each zero in the bra denotes the weight of an entire spin-$S$
+site. If $K_Dw=L_Sw$, (23.7)–(23.8) at this coordinate would give
+$0=(L_S/4)\langle0,0,0,0\mid w\rangle$, contradicting
+(23.6) and (23.10). Thus $w$ is not an eigenvector.
+
+The operator $K_D$ preserves total weight. Its finite Hermitian
+restriction to $\mathcal V_D(0)$ has minimum at most $L_S$ by
+(23.6). If that minimum equalled $L_S$, expand $w$ in an
+orthonormal eigenbasis of this restriction. The equality
+$\sum_\theta(\theta-L_S)|w_\theta|^2=0$, with all summands
+nonnegative, would force $K_Dw=L_Sw$. This has just been excluded.
+Therefore $e_D(0)<L_S$. The lower bound for every singlet in
+(23.4) now excludes every nonzero singlet from its ground space.
+The argument includes $S=1$ and uses no limiting spin estimate.
+$\square$
+

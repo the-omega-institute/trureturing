@@ -1,0 +1,36 @@
+**定义 34.1（The preserved union with dominating components）。**
+In the common domain of Definition 32.1, retain every set in
+Definition 30.1 unchanged and put
+
+$$
+\begin{aligned}
+\mathcal V_s
+ &=\mathcal U_s^{\rm mp}\cup\mathcal D\\
+ &=\mathcal M\cup\mathcal B\cup\mathcal C\cup\mathcal L_S
+   \cup\mathcal F_s\cup\mathcal C_\diamond
+   \cup\mathcal C_{\rm mp}\cup\mathcal D,
+\qquad s=2S,\ S\geq1.
+\end{aligned}
+\tag{34.1}
+$$
+
+In particular $\mathcal M$ still contains all complete
+multipartite graphs with at least two nonempty parts, including
+all part-size regimes. The endpoint is still
+$\mathcal L_1=\varnothing$ and $\mathcal L_S=\mathcal L$
+for $S\geq2$. The set $\mathcal F_s$ still requires a global
+least adjacency eigenvector with every complex coordinate
+of modulus one. With
+$\ell=-\lambda_{\min}(A(H))$, $\Delta=\max_i\deg_H(i)$,
+$T=m+2$ and
+$s_H=2\lceil2^{18}(\Delta/\ell)^2T^3\rceil$,
+its scale requirement is still either $s\geq s_H$, or both
+
+$$
+s\geq4T,\qquad
+\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2>0.
+\tag{34.2}
+$$
+
+None of these sets is intersected with $\mathcal D$.
+

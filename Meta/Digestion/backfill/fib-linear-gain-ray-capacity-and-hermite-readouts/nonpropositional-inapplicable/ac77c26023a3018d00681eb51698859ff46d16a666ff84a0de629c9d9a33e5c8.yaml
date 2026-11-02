@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac77c26023a3018d00681eb51698859ff46d16a666ff84a0de629c9d9a33e5c8
+  normalized_sha256: sha256:ac77c26023a3018d00681eb51698859ff46d16a666ff84a0de629c9d9a33e5c8
+cas_ref: sha256:ac77c26023a3018d00681eb51698859ff46d16a666ff84a0de629c9d9a33e5c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope clarification of universal versus actual-branch success and the fixed-entry palette definition; no additional proposition or unresolved question is discharged.
+    previous_atom_id: 903371334b2b36844f43234a6e34bfce8487aacf24215607480ba1bd6b69fbd6
+    next_atom_id: df3f4e36b7825c86006509f1c6bb5737201748040992f071d45ab1298c1e98e6
