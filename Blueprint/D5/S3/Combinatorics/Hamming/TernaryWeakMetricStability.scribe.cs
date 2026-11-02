@@ -6,9 +6,9 @@ internal sealed class TernaryWeakMetricStabilityDocument : IScribeDocumentDefini
 {
     private const string Prefix = "D5/S3/Combinatorics/Hamming/TernaryWeakMetricStability.";
     private static readonly LibraryNoteRef Kumar =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/kumar2026weakmetric");
+        LibraryNoteRef.Create("D5/L/Hamming/kumar2026weakmetric");
     private static readonly LibraryNoteRef Boundary =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/fernandezetal2025weakmetric");
+        LibraryNoteRef.Create("D5/L/Hamming/fernandezetal2025weakmetric");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ternary near-maximum weak metric dimensions at deficits four and five stabilize exactly in dimension three.",
