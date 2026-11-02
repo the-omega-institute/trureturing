@@ -75,9 +75,9 @@ internal sealed class RelativeFrattiniKernelDocument : IScribeDocumentDefinition
                     Paragraph(Text("Assume Q is finite and P is a normal p-subgroup. The result is proved for every natural p satisfying IsPGroup p P; in particular it applies to every prime p. It includes P trivial, P equal to Q, trivial Frattini subgroup, noncharacteristic P, nonabelian P, nonsplit extensions and nontrivial conjugation actions.")),
                     Paragraph(Text("Restrict B to P. Its image lies in the ordinary Frattini automorphism kernel of P: triviality modulo the image F inside Q pulls back to triviality modulo Frattini(P). The ordinary finite Frattini kernel theorem therefore makes this image a p-group.")),
                     Paragraph(Text("Let K be the restriction kernel. Every a in K fixes P pointwise and satisfies x inverse times a(x) in F, hence in P. Define its displacement as the function d(a) from Q to P. Pointwise fixation makes displacement multiplicative under composition, even when P is nonabelian.")),
-                    Disp(All("a", Call("K"), All("b", Call("K"), All("x", Q,
+                    Paragraph(Math(Disp(All("a", F.Id("K"), All("b", F.Id("K"), All("x", Q,
                         Eq(Call("d", Call("mul", F.Id("a"), F.Id("b")), F.Id("x")),
-                            Call("mul", Call("d", F.Id("a"), F.Id("x")), Call("d", F.Id("b"), F.Id("x")))))))),
+                            Call("mul", Call("d", F.Id("a"), F.Id("x")), Call("d", F.Id("b"), F.Id("x")))))))))),
                     Paragraph(Text("The displacement is injective because its values recover a(x) for every x. A single p-power annihilates every element of finite P, so it also annihilates every function Q to P. Thus K is a p-group. The kernel-image extension argument proves that B is a p-group. This displacement method adapts the characteristic-subgroup argument in the cited CFSG source to the actual subgroup A preserving P; the ordinary Frattini theorem is reused directly."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("relative-outer-group"),
@@ -104,7 +104,7 @@ internal sealed class RelativeFrattiniKernelDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let H be any subgroup of the relative outer group. Its restricted map to OuterAut(Q/F) has a p-group kernel. To prove this, represent an element of the full outer kernel by a in A. The induced automorphism rho(a) is conjugation by some y in Q/F. Lift y to q in Q and multiply a by the inverse of conjugation by q.")),
-                    Disp(Eq(Call("b"), Call("mul", F.Id("a"), Call("inv", Call("innerLift", P, F.Id("q")))))),
+                    Paragraph(Math(Disp(Eq(F.Id("b"), Call("mul", F.Id("a"), Call("inv", Call("innerLift", P, F.Id("q")))))))),
                     Paragraph(Text("The resulting automorphism b belongs to B and has the same relative outer class as a. Thus the full outer kernel lies in the image of B under the relative quotient map, and is a p-group. Passing to H takes a subgroup of that kernel. No lift of a group extension or compatible choice of conjugators is assumed: only the individual quotient representative is lifted."))),
                 DescribeRole.Theorem))));
 }
