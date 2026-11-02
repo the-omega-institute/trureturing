@@ -7,6 +7,7 @@
    digest: Full orthonormal qudit tomography has NHCRB at most d+1 times HCRB. -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import D5.S3.Quantum.Matrix.LinGProperty.ArithmeticBound
 import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-!
@@ -351,30 +352,6 @@ private lemma norm_contraction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℂ)
   have hh : |ha.eigenvalues j| ^ 2 = (ha.eigenvalues j) ^ 2 := sq_abs _
   nlinarith [abs_nonneg (ha.eigenvalues j)]
 
-private lemma density_complement {d : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
-    (hρ : ρ.PosSemidef) (ht : ρ.trace = 1) : (1 - ρ).PosSemidef := by
-  classical
-  have he : ∑ j, hρ.1.eigenvalues j = 1 := by
-    have h := congrArg Complex.re hρ.1.trace_eq_sum_eigenvalues
-    simpa [ht] using h.symm
-  have hle (j) : hρ.1.eigenvalues j ≤ 1 := by
-    rw [← he]
-    exact Finset.single_le_sum (fun k _ => hρ.eigenvalues_nonneg k) (Finset.mem_univ j)
-  let u := hρ.1.eigenvectorUnitary
-  have hd : (diagonal (fun j => ((1 - hρ.1.eigenvalues j : ℝ) : ℂ))).PosSemidef :=
-    Matrix.PosSemidef.diagonal (fun j => Complex.zero_le_real.mpr (sub_nonneg.mpr (hle j)))
-  have hid : diagonal (fun j => ((1 - hρ.1.eigenvalues j : ℝ) : ℂ)) =
-      1 - diagonal (fun j => (hρ.1.eigenvalues j : ℂ)) := by
-    ext i j
-    by_cases hij : i = j <;> simp [hij]
-  have hspec : ρ = (u : Matrix (Fin d) (Fin d) ℂ) *
-      diagonal (fun j => (hρ.1.eigenvalues j : ℂ)) * (u : Matrix _ _ ℂ)ᴴ :=
-    hρ.1.spectral_theorem
-  have h := hd.mul_mul_conjTranspose_same (u : Matrix (Fin d) (Fin d) ℂ)
-  rw [hid, mul_sub, sub_mul, mul_one, ← hspec] at h
-  rw [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff.mp u.prop] at h
-  exact h
-
 private lemma commutator_square_sum {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
     (ρ : Matrix (Fin d) (Fin d) ℂ) (ht : ρ.trace = 1) :
@@ -431,7 +408,10 @@ private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
     rw [haz]
     exact (hzh.sub hzh.transpose).smul (by simp)
   have hcomp : (1 - z).PosSemidef := by
-    have h := covariance_psd (density_complement hρ ht) hb.1
+    have hρc : (1 - ρ).PosSemidef := by
+      simpa only [ht, Complex.one_re, Complex.ofReal_one, one_smul] using
+        D5.S3.Quantum.Matrix.LinGProperty.trace_identity_sub_posSemidef ρ hρ
+    have h := covariance_psd hρc hb.1
     have he : zMatrix (1 - ρ) b = 1 - z := by
       ext j k
       simp only [zMatrix, sub_mul, one_mul, trace_sub, hb.2.2, Matrix.sub_apply,
