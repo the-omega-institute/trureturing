@@ -40,6 +40,7 @@ def family : Registration arena (type_of% (@result)) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     refine ⟨⟨1, ⟨1, 2⟩⟩, 0, 1, ?_⟩
     norm_num [actual, realize, beta, numerator, denominator, ceiling, Finset.sum_range_succ]
