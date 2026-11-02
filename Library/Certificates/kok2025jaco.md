@@ -106,7 +106,7 @@ Encyclopedia of Integer Sequences. The article and OEIS content are licensed
 under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); the
 plain-text mathematical transcription above adapts their notation.
 
-The source packet's bounded comparison includes arXiv:1404.0484v1,
+The bounded source comparison includes arXiv:1404.0484v1,
 arXiv:1404.1714v1, and arXiv:1506.06538v1. Bettina's theorem in those sources
 concerns infinite outdegrees and is prior mathematical content, not an axiom
 for the Lean graph. No exact Lean maximum-degree or A319433 supplier was found
