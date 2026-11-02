@@ -1,0 +1,27 @@
+#### 定义 3.1（继承的相干接口）
+
+取有限复 Hilbert 空间 $H$，$\dim_\mathbb C  H=d\ge1$，
+内积对第二变量线性，共同方向为 $J=i$。
+正比较、相干组合及共同 $J$ 使用项目 Q1 的既有供应[7](#ref-synthesis)、[6](#ref-closure)。
+有限维限制作用在本次截口，不限制整个 $\Omega$。
+
+对有限结果集 $\mathcal E$，给带共同相干参考的有限复 Hilbert 输出空间 $W_e$，
+并给*已经指定的实际映射*
+
+$$
+F_e:H\longrightarrow W_e.
+$$
+
+目前不假定任何 $F_e$ 连续、可加、齐次或线性。
+所有实际输入采用同一协议；会返回并改变输出的记忆必须包含在输入中。
+令
+
+$$
+F=\bigoplus_eF_e,\qquad
+D_F(x,y)=\sum_e\left\lVert F_e(x)-F_e(y)\right\rVert ^2.
+$$
+
+直和只是对同标签比较求和，不授予跨结果标签相干合并的控制。
+
+<a id="statement-3-2"></a>
+

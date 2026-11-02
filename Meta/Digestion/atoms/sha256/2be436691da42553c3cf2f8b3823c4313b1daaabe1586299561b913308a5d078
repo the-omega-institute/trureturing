@@ -1,0 +1,23 @@
+### 16.1 状态空间：由内部比较核得到复 Hilbert 表示
+
+令 $\mathcal H$ 为声明的历史集合，
+$K(h,k)$ 为共同相干比较，使用既有 Q1 的正核供应：
+
+$$
+\sum_{j,k}\bar c_jc_kK(h_j,h_k)\ge0
+\quad\text{对任意有限相干组合。}
+$$
+
+共同 $J$ 已固定复方向。
+在有限形式历史空间上定义
+
+$$
+\left\langle\sum_jc_j[h_j],\sum_kd_k[k_k]\right\rangle
+=\sum_{j,k}\bar c_jd_kK(h_j,k_k).
+$$
+
+把零强度空间 $N$ 商掉，得到 $H=\mathbb C ^{(\mathcal H)}/N$；
+在本稿有限秩截口上它已经完备。
+
+<a id="statement-16-1"></a>
+

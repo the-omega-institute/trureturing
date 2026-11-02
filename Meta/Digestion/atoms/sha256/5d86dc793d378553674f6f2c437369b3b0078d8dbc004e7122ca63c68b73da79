@@ -1,0 +1,14 @@
+## 13. 允许地址携带不同相位或幅度：共同签名版
+
+同幅要求有明确物理含义，但有时希望保留每个地址的已知系数。
+令 $\lambda=(\lambda_1,\ldots,\lambda_n)\ne0$ 为已声明签名，要求
+
+$$
+Mx_j=\lambda_j\xi\quad(1\le j\le n),\qquad t=\left\lVert \xi\right\rVert ^2.
+$$
+
+这里成功后共同的是方向与完整记录，系数仍随地址变化。
+概率也随系数变化；对单位输入为 $t|\lambda_j|^2$。
+
+<a id="statement-13-1"></a>
+

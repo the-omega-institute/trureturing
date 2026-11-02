@@ -26,6 +26,8 @@ open D5.S3.Observer.WindowRegister
 
 namespace D5.S3.Quantum.Measurement.MultipartiteEntangledMeasurementPartialTightness
 
+open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
+
 abbrev jointIndex (n d : ℕ) := Fin n → ZMod d
 
 /-- The winning outcome of the n-partite sum-and-difference game. -/
@@ -80,18 +82,6 @@ def claim : Prop := by
       ((Finset.univ.filter (fun b => IsFullySeparable (p b))).card = d * m) ∧
       score ρ u p = ((d : ℝ) ^ n - d * m + m) / (d : ℝ) ^ n
 
-private def sectorPoint {n d : ℕ} (t : ZMod d) (r : jointIndex n d) : jointIndex n d :=
-  fun k => t + r k
-
-private def sectorCoordinate {n d : ℕ} [NeZero n] (i : jointIndex n d) : jointIndex n d :=
-  fun k => i k - i 0
-
-private def fourierVector {n d : ℕ} [NeZero n] [NeZero d]
-    (a : ZMod d) (r : jointIndex n d) : jointIndex n d → ℂ := by
-  classical
-  exact fun i => if i = sectorPoint (i 0) r then
-    (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * i 0) else 0
-
 private def selectedVector {n d : ℕ} [NeZero n] [NeZero d]
     (r : Finset (jointIndex n d)) (b : jointIndex n d) : jointIndex n d → ℂ := by
   classical
@@ -113,29 +103,6 @@ private def localEncoding (n d : ℕ) [NeZero d] :
     Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ :=
   fun _ x y => D5.S3.Observer.WindowRegister.clockMatrix d ^ x.val *
     D5.S3.Observer.WindowRegister.shiftMatrix d ^ y.val
-
-private theorem sector_coordinates {n d : ℕ} [NeZero n] (i : jointIndex n d) :
-    sectorCoordinate i 0 = 0 ∧ sectorPoint (i 0) (sectorCoordinate i) = i := by
-  constructor
-  · change i 0 - i 0 = 0
-    exact sub_self _
-  · funext k
-    change i 0 + (i k - i 0) = i k
-    abel
-
-private theorem sectorPoint_injective {n d : ℕ} [NeZero n]
-    (r s : jointIndex n d) (hr : r 0 = 0) (hs : s 0 = 0) (t u : ZMod d)
-    (h : sectorPoint t r = sectorPoint u s) : t = u ∧ r = s := by
-  have ht : t = u := by
-    have h0 := congrFun h 0
-    change t + r 0 = u + s 0 at h0
-    simpa only [hr, hs, add_zero] using h0
-  refine ⟨ht, ?_⟩
-  funext k
-  have hk := congrFun h k
-  change t + r k = u + s k at hk
-  rw [ht] at hk
-  exact add_left_cancel hk
 
 private theorem computational_projector_separable {n d : ℕ} [NeZero d]
     (t : ZMod d) (r : jointIndex n d) :
@@ -206,96 +173,6 @@ private theorem encodings_unitary (n d : ℕ) [NeZero d] :
   exact (Matrix.unitaryGroup _ _).mul_mem
     ((Matrix.unitaryGroup _ _).pow_mem hzmem x.val)
     ((Matrix.unitaryGroup _ _).pow_mem hxmem y.val)
-
-private theorem fourier_at_point {n d : ℕ} [NeZero n] [NeZero d]
-    (a t : ZMod d) (r : jointIndex n d) (hr : r 0 = 0) :
-    fourierVector a r (sectorPoint t r) =
-      (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * t) := by
-  classical
-  change (if sectorPoint t r = sectorPoint (t + r 0) r then
-    (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * (t + r 0)) else 0) = _
-  rw [hr, add_zero, ite_eq_left rfl]
-
-private theorem fourier_off_sector {n d : ℕ} [NeZero n] [NeZero d]
-    (a : ZMod d) (r i : jointIndex n d) (hi : i ≠ sectorPoint (i 0) r) :
-    fourierVector a r i = 0 := by
-  classical
-  exact ite_eq_right hi
-
-private theorem sector_sum {n d : ℕ} [NeZero n] [NeZero d]
-    (r : jointIndex n d) (hr : r 0 = 0) (f : jointIndex n d → ℂ)
-    (hf : ∀ i, i ≠ sectorPoint (i 0) r → f i = 0) :
-    ∑ i, f i = ∑ t, f (sectorPoint t r) := by
-  classical
-  symm
-  apply Fintype.sum_of_injective (sectorPoint · r)
-    (fun t u h => (sectorPoint_injective r r hr hr t u h).1) _ _
-  · intro i hi
-    apply hf i
-    intro h
-    exact hi ⟨i 0, h.symm⟩
-  · intro t
-    rfl
-
-private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
-    (_hn : 2 ≤ n) (hd : 2 ≤ d) (a c : ZMod d) (r s : jointIndex n d)
-    (hr : r 0 = 0) (hs : s 0 = 0) :
-    star (fourierVector a r) ⬝ᵥ fourierVector c s =
-      if a = c ∧ r = s then 1 else 0 := by
-  classical
-  by_cases hrs : r = s
-  · subst s
-    change (∑ i, star (fourierVector a r i) * fourierVector c r i) = _
-    rw [sector_sum r hr _ (by
-      intro i hi
-      rw [fourier_off_sector a r i hi, star_zero, zero_mul])]
-    have heach (t : ZMod d) :
-        star (fourierVector a r (sectorPoint t r)) *
-          fourierVector c r (sectorPoint t r) =
-        ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
-          ZMod.stdAddChar (t * (c - a)) := by
-      rw [fourier_at_point a t r hr, fourier_at_point c t r hr]
-      simp only [star_mul, star_inv₀]
-      have hstar : star (Real.sqrt d : ℂ) = (Real.sqrt d : ℂ) :=
-        Complex.conj_ofReal _
-      rw [hstar]
-      have hchar : star (ZMod.stdAddChar (a * t)) =
-          ZMod.stdAddChar (-(a * t)) :=
-        (AddChar.map_neg_eq_conj _ _).symm
-      rw [hchar]
-      calc
-        _ = ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
-            (ZMod.stdAddChar (-(a * t)) * ZMod.stdAddChar (c * t)) := by ring
-        _ = _ := by
-          rw [← AddChar.map_add_eq_mul]
-          congr 2
-          ring
-    rw [Finset.sum_congr rfl (fun t _ => heach t)]
-    rw [← Finset.mul_sum,
-      AddChar.sum_mulShift (c - a) (ZMod.isPrimitive_stdAddChar d), ZMod.card]
-    by_cases hac : a = c
-    · subst c
-      simp only [sub_self, and_true, ↓reduceIte]
-      have hsqrt : (Real.sqrt d : ℂ) ≠ 0 := by
-        apply Complex.ofReal_ne_zero.mpr
-        apply Real.sqrt_ne_zero'.mpr
-        exact_mod_cast (show 0 < d by omega)
-      have hsq : (Real.sqrt d : ℂ) * (Real.sqrt d : ℂ) = (d : ℂ) := by
-        exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d : (0 : ℝ) ≤ d)
-      rw [← hsq]
-      field_simp [hsqrt]
-    · rw [ite_eq_right (sub_ne_zero.mpr (Ne.symm hac)), ite_eq_right (by tauto)]
-      simp only [Nat.cast_zero, mul_zero]
-  · rw [ite_eq_right (fun h => hrs h.2)]
-    change (∑ i, star (fourierVector a r i) * fourierVector c s i) = 0
-    apply Finset.sum_eq_zero
-    intro i _
-    by_cases hi : i = sectorPoint (i 0) r
-    · have his : i ≠ sectorPoint (i 0) s := by
-        intro his
-        exact hrs (sectorPoint_injective r s hr hs (i 0) (i 0) (hi.symm.trans his)).2
-      rw [fourier_off_sector c s i his, mul_zero]
-    · rw [fourier_off_sector a r i hi, star_zero, zero_mul]
 
 private theorem ghz_density (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) : IsDensity (ghzDensity n d) := by
