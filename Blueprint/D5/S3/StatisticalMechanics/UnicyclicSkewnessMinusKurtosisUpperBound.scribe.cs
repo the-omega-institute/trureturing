@@ -46,7 +46,7 @@ internal sealed class UnicyclicSkewnessMinusKurtosisUpperBoundDocument : IScribe
                 DescribeId.Create("normalized-difference"),
                 DeclarationHandle.Create(Prefix + "normalized_difference"),
                 H("The common normalized difference"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(NormalizedDifferenceFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every finite real rate vector, S − K equals −12p² + 18q − 6r/p, "
@@ -123,6 +123,20 @@ internal sealed class UnicyclicSkewnessMinusKurtosisUpperBoundDocument : IScribe
                 Some("k", RateType(), Conjunction(PositiveRates(), Equal(X("s"), DifferenceValue()))))),
             CloseBrace);
         return Conjunction(bound, At(Qualified("IsLUB"), values, Local("upperBound")));
+    }
+
+    private static Formula NormalizedDifferenceFormula()
+    {
+        Formula p = At(Qualified("D5", "S3", "StatisticalMechanics",
+            "UnicyclicSkewnessPlusKurtosisLowerBound", "p"), X("k"));
+        Formula q = At(Qualified("D5", "S3", "StatisticalMechanics",
+            "UnicyclicSkewnessPlusKurtosisLowerBound", "q"), X("k"));
+        Formula r = At(Qualified("D5", "S3", "StatisticalMechanics",
+            "UnicyclicSkewnessPlusKurtosisLowerBound", "r"), X("k"));
+        return All("n", Naturals(), All("k", RateType(), Equal(DifferenceValue(),
+            Subtract(Add(Multiply(new Formula.Negate(Real(1, 2)),
+                    new Formula.Power(Parenthesized(p), Natural(2))), Multiply(Real(1, 8), q)),
+                Divide(Multiply(Real(6), r), p)))));
     }
 
     private static Formula DifferenceValue() => Subtract(
