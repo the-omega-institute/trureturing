@@ -3,6 +3,8 @@ fingerprints:
   normalized_sha256: sha256:254273d81fe3bfa87055740c952a85cdcb5c1aee19ecb71e2c62783bd6656828
 cas_ref: sha256:254273d81fe3bfa87055740c952a85cdcb5c1aee19ecb71e2c62783bd6656828
 coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonCompressionTrace.cross_ear_iff_adjacent
+    target_statement_id: sha256:e231798eba83bfee4df9383fba23534043512c3c8a95701d0fcdd6017d9ed2e5
   - gid: D5/S3/Geometry/Polygons/PolygonCyclicCrossing.cross_iff_properCross
     target_statement_id: sha256:a7707ddafb184bbbca0b6c02adb852073be2551fb4c62ebaf60b76e5bc564fa9
   - gid: D5/S3/Geometry/Polygons/PolygonFilledBoundary.boundaryModel_of_filled
