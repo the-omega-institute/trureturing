@@ -78,7 +78,7 @@ internal sealed class LudersEntropySaturationSICDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
-                H("Entropy saturation forces the MIC itself to be a SIC"),
+                H("Entropy saturation forces SIC existence"),
                 StatementSource.FromAuthor(Disp(ClaimProposition())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
@@ -103,10 +103,11 @@ internal sealed class LudersEntropySaturationSICDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "For a positive matrix A, its squared trace is at least the trace of A². "
                         + "Applied to the Aᵢ, this gives t at least d and a at least c. The equality case "
-                        + "also identifies the rank. If A is nonzero and the two traces agree, its Hermitian "
-                        + "inner product with (tr A) I − A vanishes. Both matrices are positive, so "
-                        + "their product vanishes and A² = (tr A) A. Dividing A by its positive trace "
-                        + "produces a Hermitian, idempotent, trace-one matrix p. Consequently, equality "
+                        + "also identifies the rank. If A is nonzero and the two traces agree, dividing A "
+                        + "by its positive trace produces a mixed state with purity one. By "
+                        + "MState.pure_iff_purity_one this state is pure, and MState.pure_mul_self "
+                        + "makes its matrix p idempotent. The matrix p is Hermitian and has trace one. "
+                        + "Multiplying p by tr A recovers A. Consequently, equality "
                         + "for Aᵢ makes e i a real scalar multiple of such a p. Linear independence "
                         + "of the MIC effects ensures that no Aᵢ is zero.")),
                     Paragraph(Text(

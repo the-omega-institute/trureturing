@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Mixed.MState.Basic
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
@@ -336,36 +337,24 @@ private theorem rank_one_from_equality {d : ℕ}
     apply ha0
     apply ha.trace_eq_zero_iff.mp
     rw [← ht, hz, Complex.ofReal_zero]
-  have hinner : inner ℝ h (h.trace • 1 - h) = 0 := by
-    rw [inner_sub_right, inner_smul_right, HermitianMat.inner_one,
-      HermitianMat.inner_eq_re_trace, HermitianMat.trace_eq_re_trace]
-    change a.trace.re * a.trace.re - (a * a).trace.re = 0
-    nlinarith [heq]
-  have hker := (HermitianMat.inner_zero_iff hh
-    (sub_nonneg.mpr (HermitianMat.le_trace_smul_one hh))).mp hinner
-  have hmul : (h.trace • (1 : HermitianMat (Fin d) ℂ) - h).mat * a = 0 := by
-    apply Matrix.toEuclideanLin.injective
-    have hc := LinearMap.range_le_ker_iff.mp hker
-    change Matrix.toEuclideanLin _ ∘ₗ Matrix.toEuclideanLin a = 0 at hc
-    calc
-      _ = Matrix.toEuclideanLin (h.trace • (1 : HermitianMat (Fin d) ℂ) - h).mat ∘ₗ
-          Matrix.toEuclideanLin a := Matrix.toLpLin_mul 2 2 2 _ _
-      _ = 0 := hc
-      _ = Matrix.toEuclideanLin 0 := (map_zero Matrix.toEuclideanLin).symm
-  have hsquare : a * a = (a.trace.re : ℂ) • a := by
-    change ((a.trace.re : ℝ) • (1 : Matrix (Fin d) (Fin d) ℂ) - a) * a = 0 at hmul
-    rw [Matrix.sub_mul, Matrix.smul_mul, Matrix.one_mul, sub_eq_zero] at hmul
-    calc
-      a * a = (a.trace.re : ℝ) • a := hmul.symm
-      _ = (a.trace.re : ℂ) • a := (Complex.coe_smul _ _).symm
-  refine ⟨a.trace.re, (a.trace.re : ℂ)⁻¹ • a, ?_, ?_, ?_, ?_⟩
-  · exact ha.isHermitian.smul (by simp (config := { congrConsts := false }) [isSelfAdjoint_iff])
-  · rw [Matrix.smul_mul, Matrix.mul_smul, hsquare, smul_smul, smul_smul]
-    congr 1
+  let rho : MState (Fin d) := ⟨a.trace.re⁻¹ • h,
+    smul_nonneg (inv_nonneg.mpr (HermitianMat.trace_nonneg hh)) hh, by
+      rw [HermitianMat.trace_smul, HermitianMat.trace_eq_re_trace]
+      exact inv_mul_cancel₀ ht0⟩
+  have hpurity : rho.purity = 1 := by
+    apply Subtype.ext
+    change inner ℝ (a.trace.re⁻¹ • h) (a.trace.re⁻¹ • h) = (1 : ℝ)
+    rw [HermitianMat.inner_smul_left, HermitianMat.inner_smul_right,
+      HermitianMat.inner_eq_re_trace]
+    change a.trace.re⁻¹ * (a.trace.re⁻¹ * (a * a).trace.re) = 1
+    rw [← heq]
     field_simp
-  · rw [Matrix.trace_smul, ← ht]
-    exact inv_mul_cancel₀ (by exact_mod_cast ht0)
-  · rw [smul_smul, mul_inv_cancel₀ (by exact_mod_cast ht0), one_smul]
+  obtain ⟨ψ, hψ⟩ := (MState.pure_iff_purity_one rho).mpr hpurity
+  refine ⟨a.trace.re, rho.m, rho.Hermitian, ?_, rho.tr', ?_⟩
+  · rw [hψ]
+    exact MState.pure_mul_self ψ
+  · change a = (a.trace.re : ℂ) • (a.trace.re⁻¹ • a)
+    rw [Complex.coe_smul, smul_smul, mul_inv_cancel₀ ht0, one_smul]
 
 private theorem relative_entropy_hs_bound {d : ℕ} [NeZero d]
     (rho sigma : DensityState (Fin d))
