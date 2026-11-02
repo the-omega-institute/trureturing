@@ -41,10 +41,10 @@ private def r {n : ℕ} (k : Fin n → ℝ) : ℝ := powerSum n 4 (normalizedRat
 
 private lemma normalized_sum {n : ℕ} (k : Fin n → ℝ) :
     skewness k + kurtosis k = 18 * p k ^ 2 - 22 * q k + 6 * r k / p k := by
-  rw [D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.normalized]
-  delta D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness
+  rw [D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness_normalized,
+    D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.normalized]
+  delta D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.simplexFunctional
     p q r normalizedRates
-  simp only [powerSum, div_pow, ← Finset.sum_div]
   ring
 
 private lemma normalized_moments {n : ℕ} (hn : 2 ≤ n) (k : Fin n → ℝ)

@@ -54,9 +54,10 @@ internal sealed class UnicyclicSkewnessPlusKurtosisLowerBoundDocument : IScribeD
                     Paragraph(Text(
                         "Write Rⱼ = ∑ᵢ(kᵢ)⁻ʲ and xᵢ = (kᵢ)⁻¹/R₁, and put "
                         + "p = ∑ᵢxᵢ², q = ∑ᵢxᵢ³ and r = ∑ᵢxᵢ⁴. "
-                        + "The normalized kurtosis identity, together with the inverse-rate formula "
-                        + "for skewness, gives S + K = 18p² − 22q + 6r/p by factoring "
-                        + "the powers of R₁ out of the sums. For n ≥ 2 and positive k, "
+                        + "The skewness normalization identity gives S = 3p² − 2q, and the "
+                        + "kurtosis normalization identity gives K = 15p² − 20q + 6r/p. "
+                        + "Adding these identities gives S + K = 18p² − 22q + 6r/p. "
+                        + "For n ≥ 2 and positive k, "
                         + "R₁ > 0: each summand is positive, including the one at i = 0. "
                         + "Thus x is positive. The moment inequalities give "
                         + "p > 0, q ≥ 0, q² ≤ pr and r < p². "
