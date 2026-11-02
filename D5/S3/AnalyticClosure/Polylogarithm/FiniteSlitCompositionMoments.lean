@@ -51,10 +51,10 @@ private theorem outer_bound (A upper lower : ℂ → ℂ) (R0 ρ R : ℝ)
     have hzreal : z = (z.re : ℂ) := by
       apply Complex.ext <;> simp [hzim]
     have hnorm : ‖z‖ = z.re := by
-      rw [hzreal, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)]
+      rw [hzreal, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by linarith)] <;> simp
     have hnorm1 : ‖z - 1‖ = z.re - 1 := by
       rw [hzreal, ← Complex.ofReal_one, ← Complex.ofReal_sub, Complex.norm_real,
-        Real.norm_eq_abs, abs_of_nonneg (by linarith)]
+        Real.norm_eq_abs, abs_of_nonneg (by linarith)] <;> simp
     have hzR : z.re = R := hnorm.symm.trans hz.1
     have hzδ := hz.2
     rw [hnorm1, hzR] at hzδ
@@ -144,14 +144,17 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
     intro x hx
     refine ⟨?_, by simp⟩
     rw [← Complex.ofReal_one, ← Complex.ofReal_sub, Complex.norm_real,
-      Real.norm_eq_abs, abs_of_nonneg (by linarith : 0 ≤ x - 1)]
+      Real.norm_eq_abs, abs_of_nonneg (by linarith [hx.1] : 0 ≤ x - 1)]
     linarith [hx.2]
   have hn : ∀ x ∈ Icc (1 : ℝ) R, 0 ≤ -(upper (x : ℂ)).im := by
     intro x hx
     by_cases hx1 : x = 1
     · subst x
       rw [Complex.ofReal_one, hupperOne]
-      split <;> simp
+      split
+      · rw [← Complex.ofReal_inv, ← Complex.ofReal_pow]
+        simp
+      · simp
     · have hpos : 0 < x - 1 := by
         have : 1 < x := lt_of_le_of_ne hx.1 (Ne.symm hx1)
         linarith
