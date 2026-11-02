@@ -31,7 +31,7 @@ theorem r_centered_decay {t : ℝ} (ht : 0 ≤ t) :
     rw [← Real.exp_sub]
     congr 1
     ring
-  rw [r, if_pos ht, show Real.exp (-t / 2) * G (Real.exp t) -
+  rw [r, ite_eq_left ht, show Real.exp (-t / 2) * G (Real.exp t) -
     ell * Real.exp (-t / 2) = Real.exp (-t / 2) * (G (Real.exp t) - ell) by ring,
     abs_mul, abs_of_pos (Real.exp_pos _)]
   calc
@@ -57,7 +57,6 @@ private lemma weighted_majorant_integrable {a : ℝ} (ha : a < 3 / 2) :
   have h1 : IntegrableOn (fun t : ℝ => Real.exp ((a - 3 / 2) * t) * t) (Ioi 0) := by
     apply (hscale.div_const b).congr
     filter_upwards with t
-    dsimp
     have he : -(b * t) = (a - 3 / 2) * t := by dsimp [b]; ring
     rw [he]
     field_simp
