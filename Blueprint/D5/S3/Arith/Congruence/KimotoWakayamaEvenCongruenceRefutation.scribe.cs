@@ -72,7 +72,7 @@ internal sealed class KimotoWakayamaEvenCongruenceRefutationDocument
                             + "Nat.Prime p and p≠2. It is therefore a weaker assertion than "
                             + "the source assertion allowing all primes, and its failure "
                             + "also refutes that assertion. The source subsequently assumes "
-                            + "odd primes in the subsection (TeX line 1633). The two "
+                            + "odd primes in the subsection (TeX line 1635). The two "
                             + "conclusions are congruence of the displayed ratios and "
                             + "noncongruence of the right ratio to zero. All divisions are "
                             + "rational divisions, including the total value zero for division "

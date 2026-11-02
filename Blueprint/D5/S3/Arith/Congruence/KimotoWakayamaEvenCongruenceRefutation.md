@@ -46,7 +46,7 @@ $$
 \frac{(p)^{2 \cdot s \cdot n} \cdot \left(\widetilde{J}_{2 \cdot s + 2}\right)\left(m \cdot (p)^{n}\right)}{(p)^{2 \cdot s} \cdot \left(\widetilde{J}_{2 \cdot s + 2}\right)\left(m \cdot p\right)} \equiv \frac{(p)^{2 \cdot s \cdot \left(n - 1\right)} \cdot \left(\widetilde{J}_{2 \cdot s + 2}\right)\left(m \cdot (p)^{n - 1}\right)}{(p)^{2 \cdot s} \cdot \left(\widetilde{J}_{2 \cdot s + 2}\right)\left(m \cdot p\right)} (\neg\equiv0) \pmod{(p)^{n}}
 $$
 
-” Here claim quantifies only over odd primes p, expressed by Nat.Prime p and p≠2. It is therefore a weaker assertion than the source assertion allowing all primes, and its failure also refutes that assertion. The source subsequently assumes odd primes in the subsection (TeX line 1633). The two conclusions are congruence of the displayed ratios and noncongruence of the right ratio to zero. All divisions are rational divisions, including the total value zero for division by zero; no additional nonzero-denominator hypothesis is imposed.
+” Here claim quantifies only over odd primes p, expressed by Nat.Prime p and p≠2. It is therefore a weaker assertion than the source assertion allowing all primes, and its failure also refutes that assertion. The source subsequently assumes odd primes in the subsection (TeX line 1635). The two conclusions are congruence of the displayed ratios and noncongruence of the right ratio to zero. All divisions are rational divisions, including the total value zero for division by zero; no additional nonzero-denominator hypothesis is imposed.
 
 **Theorem 1.4 (The assertion fails at p=3, m=5, n=2, s=7).**
 
