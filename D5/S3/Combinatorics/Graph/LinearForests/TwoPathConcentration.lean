@@ -25,33 +25,87 @@ attribute [local instance] Classical.propDecidable
 
 local instance : DecidableRel (SimpleGraph.hasse ℕ).Adj := Classical.decRel _
 
-private lemma path_two : pathSeries 2 = 1 - 2 * X := by
-  rw [show 2 = 0 + 2 by omega, path_rec, path_one, path_zero]
+private lemma localPathAdj (u v : ℕ) :
+    (SimpleGraph.hasse ℕ).Adj u v ↔ u + 1 = v ∨ v + 1 = u := by
+  simp [SimpleGraph.hasse_adj, ← Order.succ_eq_iff_covBy]
+
+private def localPathSeries (v : ℕ) : PowerSeries ℤ :=
+  partition (SimpleGraph.hasse ℕ) (range v) (fun _ => -X)
+
+private lemma localPathZero : localPathSeries 0 = 1 := by
+  simp [localPathSeries, partition_empty]
+
+private lemma localPathRec (v : ℕ) :
+    localPathSeries (v + 2) = localPathSeries (v + 1) - X * localPathSeries v := by
+  have he : (range (v + 2)).erase (v + 1) = range (v + 1) := by
+    ext x
+    simp only [mem_erase, mem_range]
+    omega
+  have hc : closedComplement (SimpleGraph.hasse ℕ) (range (v + 2)) (v + 1) =
+      range v := by
+    ext x
+    simp only [closedComplement, mem_filter, mem_erase, mem_range, localPathAdj]
+    omega
+  simpa [localPathSeries, he, hc, sub_eq_add_neg] using
+    partition_delete (SimpleGraph.hasse ℕ) (range (v + 2)) (v + 1)
+      (by simp) (fun _ => (-X : PowerSeries ℤ))
+
+private lemma localPathOne : localPathSeries 1 = 1 - X := by
+  have he : (range 1).erase 0 = ∅ := by decide
+  have hc : closedComplement (SimpleGraph.hasse ℕ) (range 1) 0 = ∅ := by
+    simp [closedComplement]
+  have hh := partition_delete (SimpleGraph.hasse ℕ) (range 1) 0
+    (by simp) (fun _ => (-X : PowerSeries ℤ))
+  rw [he, hc, partition_empty] at hh
+  simpa [localPathSeries, partition_empty, sub_eq_add_neg] using hh
+
+private def localCatalanIntegerSeries : PowerSeries ℤ :=
+  PowerSeries.catalanSeries.map (Nat.castRingHom ℤ)
+
+private lemma localCoeffPartitionPhi {α : Type*} [DecidableEq α]
+    (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (m : ℕ) (hm : V.card ≤ m) :
+    PowerSeries.coeff m (partition G V (fun _ => -PowerSeries.X) * localCatalanIntegerSeries) =
+      phi G V m := by
+  open PowerSeries in
+    unfold partition phi
+    rw [Finset.sum_mul, map_sum]
+    apply Finset.sum_congr rfl
+    intro S hS
+    have hsm : S.card ≤ m := (Finset.card_le_card
+      (Finset.mem_powerset.mp (Finset.mem_filter.mp hS).1)).trans hm
+    have he : (-X : PowerSeries ℤ) ^ S.card = C ((-1 : ℤ) ^ S.card) * X ^ S.card := by
+      rw [neg_eq_neg_one_mul, mul_pow]
+      simp
+    rw [Finset.prod_const, he, mul_assoc, coeff_C_mul, coeff_X_pow_mul', ite_eq_left hsm]
+    simp [localCatalanIntegerSeries]
+
+private lemma path_two : localPathSeries 2 = 1 - 2 * X := by
+  rw [show 2 = 0 + 2 by omega, localPathRec, localPathOne, localPathZero]
   ring
 
-private lemma path_three : pathSeries 3 = 1 - 3 * X + X ^ 2 := by
-  rw [show 3 = 1 + 2 by omega, path_rec, path_two, path_one]
+private lemma path_three : localPathSeries 3 = 1 - 3 * X + X ^ 2 := by
+  rw [show 3 = 1 + 2 by omega, localPathRec, path_two, localPathOne]
   ring
 
-private lemma path_four : pathSeries 4 = 1 - 4 * X + 3 * X ^ 2 := by
-  rw [show 4 = 2 + 2 by omega, path_rec, path_three, path_two]
+private lemma path_four : localPathSeries 4 = 1 - 4 * X + 3 * X ^ 2 := by
+  rw [show 4 = 2 + 2 by omega, localPathRec, path_three, path_two]
   ring
 
-private lemma path_five : pathSeries 5 = 1 - 5 * X + 6 * X ^ 2 - X ^ 3 := by
-  rw [path_rec 3, path_four, path_three]
+private lemma path_five : localPathSeries 5 = 1 - 5 * X + 6 * X ^ 2 - X ^ 3 := by
+  rw [localPathRec 3, path_four, path_three]
   ring
 
-private lemma path_six : pathSeries 6 = 1 - 6 * X + 10 * X ^ 2 - 4 * X ^ 3 := by
-  rw [path_rec 4, path_five, path_four]
+private lemma path_six : localPathSeries 6 = 1 - 6 * X + 10 * X ^ 2 - 4 * X ^ 3 := by
+  rw [localPathRec 4, path_five, path_four]
   ring
 
-private lemma path_seven : pathSeries 7 = 1 - 7 * X + 15 * X ^ 2 - 10 * X ^ 3 + X ^ 4 := by
-  rw [path_rec 5, path_six, path_five]
+private lemma path_seven : localPathSeries 7 = 1 - 7 * X + 15 * X ^ 2 - 10 * X ^ 3 + X ^ 4 := by
+  rw [localPathRec 5, path_six, path_five]
   ring
 
 private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
-    (pathSeries n * pathSeries k - pathSeries (n + k - 1) * pathSeries 1) =
-      X ^ 3 * pathSeries (n - 3) * pathSeries (k - 3) := by
+    (localPathSeries n * localPathSeries k - localPathSeries (n + k - 1) * localPathSeries 1) =
+      X ^ 3 * localPathSeries (n - 3) * localPathSeries (k - 3) := by
   induction hs : n + k using Nat.strong_induction_on generalizing n k with
   | h t ih =>
       subst t
@@ -63,10 +117,10 @@ private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
         have h₂ := ih ((n - 2) + k) hsum2 (n - 2) k hn2 hk rfl
         have h₁ := ih ((n - 1) + k) hsum1 (n - 1) k hn1 hk rfl
         have hna : n - 2 + 2 = n := by omega
-        rw [← hna, path_rec (n - 2), hna,
+        rw [← hna, localPathRec (n - 2), hna,
           show n + k - 1 = (n + k - 3) + 2 by omega,
-          path_rec (n + k - 3), show n - 3 = (n - 5) + 2 by omega,
-          path_rec (n - 5)] at ⊢
+          localPathRec (n + k - 3), show n - 3 = (n - 5) + 2 by omega,
+          localPathRec (n - 5)] at ⊢
         have hi₁ : n - 2 + 1 = n - 1 := by omega
         have hi₂ : n + k - 3 + 1 = n - 1 + k - 1 := by omega
         have hi₃ : n - 5 + 1 = n - 4 := by omega
@@ -87,10 +141,10 @@ private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
             have h₂ := ih (3 + (k - 2)) hsum2 3 (k - 2) (by omega) hk2 rfl
             have h₁ := ih (3 + (k - 1)) hsum1 3 (k - 1) (by omega) hk1 rfl
             have hka : k - 2 + 2 = k := by omega
-            rw [← hka, path_rec (k - 2), hka,
+            rw [← hka, localPathRec (k - 2), hka,
               show 3 + k - 1 = k + 2 by omega,
-              path_rec k, show k - 3 = (k - 5) + 2 by omega,
-              path_rec (k - 5)] at ⊢
+              localPathRec k, show k - 3 = (k - 5) + 2 by omega,
+              localPathRec (k - 5)] at ⊢
             have hi₁ : k - 2 + 1 = k - 1 := by omega
             have hi₂ : k - 1 - 3 = k - 5 + 1 := by omega
             have hi₃ : k - 2 - 3 = k - 5 := by omega
@@ -103,10 +157,10 @@ private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
           · have hk34 : k = 3 ∨ k = 4 := by omega
             rcases hk34 with rfl | rfl
             · simp only [Nat.reduceAdd, Nat.reduceSub]
-              rw [path_three, path_five, path_one, path_zero]
+              rw [path_three, path_five, localPathOne, localPathZero]
               ring_nf
             · simp only [Nat.reduceAdd, Nat.reduceSub]
-              rw [path_three, path_four, path_one, path_six, path_zero]
+              rw [path_three, path_four, localPathOne, path_six, localPathZero]
               ring_nf
         · by_cases hk5 : 5 ≤ k
           · have hk2 : 3 ≤ k - 2 := by omega
@@ -116,10 +170,10 @@ private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
             have h₂ := ih (4 + (k - 2)) hsum2 4 (k - 2) (by omega) hk2 rfl
             have h₁ := ih (4 + (k - 1)) hsum1 4 (k - 1) (by omega) hk1 rfl
             have hka : k - 2 + 2 = k := by omega
-            rw [← hka, path_rec (k - 2), hka,
+            rw [← hka, localPathRec (k - 2), hka,
               show 4 + k - 1 = (k + 1) + 2 by omega,
-              path_rec (k + 1), show k - 3 = (k - 5) + 2 by omega,
-              path_rec (k - 5)] at ⊢
+              localPathRec (k + 1), show k - 3 = (k - 5) + 2 by omega,
+              localPathRec (k - 5)] at ⊢
             have hi₁ : k - 2 + 1 = k - 1 := by omega
             have hi₂ : k + 1 + 1 = k + 2 := by omega
             have hi₃ : k - 1 - 3 = k - 5 + 1 := by omega
@@ -135,10 +189,10 @@ private lemma two_path_series (n k : ℕ) (hn : 3 ≤ n) (hk : 3 ≤ k) :
           · have hk34 : k = 3 ∨ k = 4 := by omega
             rcases hk34 with rfl | rfl
             · simp only [Nat.reduceAdd, Nat.reduceSub]
-              rw [path_four, path_three, path_one, path_six, path_zero]
+              rw [path_four, path_three, localPathOne, path_six, localPathZero]
               ring_nf
             · simp only [Nat.reduceAdd, Nat.reduceSub]
-              rw [path_four, path_one, path_seven]
+              rw [path_four, localPathOne, path_seven]
               ring_nf
 
 /-- The exact series law behind the two-path concentration move.
@@ -146,9 +200,9 @@ The factor `R` is arbitrary, so it may be the actual partition series of any
 untouched finite residual graph. -/
 private theorem two_path_series_concentration (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q)
     (R : PowerSeries ℤ) :
-    (pathSeries (2 * p + 1) * pathSeries (2 * q + 1) * R -
-      pathSeries (2 * p + 2 * q + 1) * pathSeries 1 * R) =
-      X ^ 3 * pathSeries (2 * p - 2) * pathSeries (2 * q - 2) * R := by
+    (localPathSeries (2 * p + 1) * localPathSeries (2 * q + 1) * R -
+      localPathSeries (2 * p + 2 * q + 1) * localPathSeries 1 * R) =
+      X ^ 3 * localPathSeries (2 * p - 2) * localPathSeries (2 * q - 2) * R := by
   have h := two_path_series (2 * p + 1) (2 * q + 1) (by omega) (by omega)
   have h' := congrArg (fun t : PowerSeries ℤ => t * R) h
   have hp' : 2 * p + 1 - 3 = 2 * p - 2 := by omega
@@ -261,7 +315,7 @@ private lemma partition_subtype {α K : Type*} [DecidableEq α] [CommSemiring K]
     exact (Finset.prod_image (fun x _ y _ h => Subtype.ext h)).symm
 
 private lemma partition_path (n : ℕ) :
-    partition (pathGraph n) univ (fun _ => (-X : PowerSeries ℤ)) = pathSeries n := by
+    partition (pathGraph n) univ (fun _ => (-X : PowerSeries ℤ)) = localPathSeries n := by
   classical
   let e : Fin n ≃ (range n : Set ℕ) :=
     { toFun := fun i => ⟨i.val, by simpa using i.isLt⟩
@@ -272,7 +326,7 @@ private lemma partition_path (n : ℕ) :
       (pathGraph n).Adj i j := by
     intro i j
     change (SimpleGraph.hasse ℕ).Adj i.val j.val ↔ (pathGraph n).Adj i j
-    rw [path_adj, pathGraph_adj]
+    rw [localPathAdj, pathGraph_adj]
   have hh := partition_relabel (pathGraph n) ((SimpleGraph.hasse ℕ).induce (range n : Set ℕ))
     e he univ (fun _ => (-X : PowerSeries ℤ))
   rw [Finset.image_univ_equiv] at hh
@@ -527,7 +581,7 @@ private lemma partition_paths {ρ : Type*} [Fintype ρ] [DecidableEq ρ]
     (a b : ℕ) (T : SimpleGraph ρ) [DecidableRel T.Adj] :
     partition (((pathGraph a) ⊕g (pathGraph b)) ⊕g T) univ
         (fun _ => (-X : PowerSeries ℤ)) =
-      pathSeries a * pathSeries b * partition T univ (fun _ => -X) := by
+      localPathSeries a * localPathSeries b * partition T univ (fun _ => -X) := by
   have hu : (univ : Finset ((Fin a ⊕ Fin b) ⊕ ρ)) =
       (univ : Finset (Fin a ⊕ Fin b)).disjSum (univ : Finset ρ) := by
     ext (x | x) <;> simp
@@ -542,7 +596,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 
 private lemma before_partition (w : ActualTwoPaths G A B R p q) :
     partition G univ (fun _ => (-X : PowerSeries ℤ)) =
-      pathSeries (2 * p + 1) * pathSeries (2 * q + 1) *
+      localPathSeries (2 * p + 1) * localPathSeries (2 * q + 1) *
         partition G R (fun _ => -X) := by
   have h := partition_relabel
     (((pathGraph (2 * p + 1)) ⊕g (pathGraph (2 * q + 1))) ⊕g
@@ -554,7 +608,7 @@ private lemma before_partition (w : ActualTwoPaths G A B R p q) :
 
 private lemma after_partition (w : ActualTwoPaths G A B R p q) :
     partition w.after univ (fun _ => (-X : PowerSeries ℤ)) =
-      pathSeries (2 * p + (2 * q + 1)) * pathSeries 1 *
+      localPathSeries (2 * p + (2 * q + 1)) * localPathSeries 1 *
         partition G R (fun _ => -X) := by
   have h := partition_relabel
     (((pathGraph (2 * p + (2 * q + 1))) ⊕g (pathGraph 1)) ⊕g
@@ -566,7 +620,7 @@ private lemma after_partition (w : ActualTwoPaths G A B R p q) :
 
 private lemma residual_partition (w : ActualTwoPaths G A B R p q) :
     partition G w.residual (fun _ => (-X : PowerSeries ℤ)) =
-      pathSeries (2 * p - 2) * pathSeries (2 * q - 2) *
+      localPathSeries (2 * p - 2) * localPathSeries (2 * q - 2) *
         partition G R (fun _ => -X) := by
   have h := partition_embedding
     (((pathGraph (2 * p - 2)) ⊕g (pathGraph (2 * q - 2))) ⊕g
@@ -594,12 +648,12 @@ private lemma phi_difference (w : ActualTwoPaths G A B R p q)
       rw [w.before_partition, w.after_partition, w.residual_partition]
       simpa only [Nat.add_assoc, mul_assoc] using
         two_path_series_concentration p q hp hq (partition G R (fun _ => (-X : PowerSeries ℤ)))
-    have ht := congrArg (fun F : PowerSeries ℤ => coeff m (F * catalanIntegerSeries)) hs
+    have ht := congrArg (fun F : PowerSeries ℤ => coeff m (F * localCatalanIntegerSeries)) hs
     rw [sub_mul, map_sub,
-      coeff_partition_phi G univ m (by simpa using hm),
-      coeff_partition_phi w.after univ m (by simpa using hm)] at ht
+      localCoeffPartitionPhi G univ m (by simpa using hm),
+      localCoeffPartitionPhi w.after univ m (by simpa using hm)] at ht
     rw [mul_assoc, coeff_X_pow_mul', if_pos hm3,
-      coeff_partition_phi G w.residual (m - 3) hr] at ht
+      localCoeffPartitionPhi G w.residual (m - 3) hr] at ht
     exact ht
 
 end ActualTwoPaths
