@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude
    generality: G
-   mirror-B: none(waiver:capacity-split-support)
+   mirror-B: D5/B/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude
    mirror-E: none(waiver:capacity-split-support)
    anchors: []
    utility: none
@@ -331,12 +331,6 @@ theorem inverse_phase_sum (m : ℕ) (b a : Word (2 * m + 1)) :
   simp [e, (inverse_spec m).1 x]
 
 
-
-/-- Nonemptiness of the exact cyclic Boolean phase support for every odd length and mask. -/
-theorem inverse_phase_support_nonempty (m : ℕ) (b : Word (2 * m + 1)) :
-    ∃ a : Word (2 * m + 1), (∑ x, sign (dot b x + dot a (chi x))) ≠ 0 := by
-  obtain ⟨a, ha⟩ := walsh_support_nonempty (inverseComponent m b)
-  exact ⟨a, by simpa only [inverse_phase_sum] using ha⟩
 
 private theorem sign_mul_eq_self_iff {z : ZMod 2} {q : ℤ} (hq : q ≠ 0) :
     sign z * q = q ↔ z = 0 := by

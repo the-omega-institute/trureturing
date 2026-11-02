@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoefficients
    generality: G
-   mirror-B: none(waiver:capacity-split-support)
+   mirror-B: D5/B/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoefficients
    mirror-E: none(waiver:capacity-split-support)
    anchors: []
    utility: none
