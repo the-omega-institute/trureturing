@@ -22,17 +22,17 @@ internal sealed class TriangleFourSymbolNecessityDocument : IScribeDocumentDefin
                 + "The source cost is KL(nu || mu1 times mu2 times mu3), where each mui is "
                 + "the marginal of that same source law. Entropy uses natural logarithms.")),
             Node("original_law_recoverability", "Agreement forces the active original rows",
-                "At each positive source cell, the product response law and agreement force "
+                "Assume agreement. At each positive source cell, the product response law and agreement force "
                 + "all three response vectors to be point masses at one common symbol. "
                 + "Every positive incident-pair marginal has a positive extension. Thus its "
                 + "fixed kernel row is a point mass. The incident readouts agree on every "
                 + "positive source cell, and the record-cell identity also covers zero source cells."),
             Node("original_law_common_record", "The common record belongs to the same law",
-                "Summing the six-variable law over the other two outputs gives recordLaw. "
+                "Assume agreement. Summing the six-variable law over the other two outputs gives recordLaw. "
                 + "The output weights are a probability vector. Replacing the first response "
                 + "by either other incident response gives the same record/source joint law."),
             Node("original_equality_fibers", "The KL equality forces source-pair and fiber products",
-                "Under sourceCost = H(outputLaw)/2, all three unconditional source pairs "
+                "Assume agreement and sourceCost = H(outputLaw)/2. Then all three unconditional source pairs "
                 + "are products of the original marginals. For each positive original output "
                 + "symbol, the entire conditional source law is a threefold product, including "
                 + "its zero cells. The proof uses the exact balance of twice the source cost "
@@ -41,7 +41,8 @@ internal sealed class TriangleFourSymbolNecessityDocument : IScribeDocumentDefin
                 + "chain rule, zero mutual-information product characterization and strong "
                 + "subadditivity equality theorem apply to these explicitly linked finite laws."),
             Node("original_output_cardinality", "A nonconstant equality record has at least four symbols",
-                "For a positive source symbol, take the support of its conditional distribution "
+                "Assume agreement, sourceCost = H(outputLaw)/2 and at least two positive outputs. "
+                + "For a positive source symbol, take the support of its conditional distribution "
                 + "over positive output symbols. Each of the three support families covers every "
                 + "positive output. A support row from either of two different families meets "
                 + "the other row in exactly one symbol. No coordinate can occur in every row of "
@@ -49,7 +50,8 @@ internal sealed class TriangleFourSymbolNecessityDocument : IScribeDocumentDefin
                 + "intersection. Consequently each row and its complement contain at least two "
                 + "symbols. This proves the four-symbol lower bound without a full-support assumption."),
             Node("original_binary_supports", "Original posterior supports determine binary parity labels",
-                "With at most four positive outputs, every support row and its complement "
+                "Assume agreement, sourceCost = H(outputLaw)/2 and two to four positive outputs. "
+                + "Then every support row and its complement "
                 + "have size two. Two distinct rows from one family are disjoint: if they shared "
                 + "one symbol, rows in each other family containing that symbol would also have "
                 + "to contain the single remaining coordinate, contradicting unique intersection. "
@@ -88,7 +90,7 @@ internal sealed class TriangleFourSymbolNecessityDocument : IScribeDocumentDefin
 
     private static DocumentBlock Node(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("triangle-original-" + name.Replace('_', '-')),
-        DeclarationHandle.Create(Module + name), H(title), StatementSource.FromLean(),
+        DeclarationHandle.Create(Module + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula Q(byte i, Formula bit) => Seq(F.Id("q"), Underscore, Grp(D(i)),
