@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Subentropy;
 
@@ -8,6 +10,20 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
         "Finite positive operator-valued measurements define an honest supremum guessing probability.",
         H("Guessing probability"),
         Blocks(
+            Describe.Lean(DescribeId.Create("measurement-total-trace"),
+                DeclarationHandle.Create("D5/S3/Quantum/Subentropy/GuessingProbability.measurement_trace_sum"),
+                H("Identity-summing measurements preserve total trace pairing"),
+                StatementSource.FromAuthor(MeasurementTraceSumFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite label and matrix index types, a trace-one complex matrix has total real trace pairing one with any matrix family whose sum is the identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("measurement-success-bounds"),
+                DeclarationHandle.Create("D5/S3/Quantum/Subentropy/GuessingProbability.success_bounds"),
+                H("Every POVM success probability lies between zero and one"),
+                StatementSource.FromAuthor(SuccessBoundsFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite label and matrix index types, nonnegative weights summing to one, density states, and positive semidefinite measurement effects summing to the identity, the success probability lies in the closed unit interval."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("measurement-success-probability"),
                 DeclarationHandle.Create("D5/S3/Quantum/Subentropy/GuessingProbability.successProbability"),
                 H("The success probability of a labelled measurement"), StatementSource.WithoutFormula(),
@@ -32,4 +48,71 @@ internal sealed class GuessingProbabilityDocument : IScribeDocumentDefinition
                 H("Bounded positive guessing probability and supremum transfer"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/datta2014subentropy")),
                 Blocks(Paragraph(Text("For every finite nonnegative normalized ensemble, the genuine POVM success set is nonempty and bounded above, and its supremum lies in (0,1]. The logarithmic comparison 1-pGuess<=-log pGuess follows from log p<=p-1. Every bound q<=1-successProbability valid for all finite POVMs transfers to q<=1-pGuess by the defining least-upper-bound property. No optimal measurement or supremum attainment is assumed."))), DescribeRole.Theorem))));
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula FiniteTypes(Formula body) => Seq(Forall, Sp,
+        Parenthesized(Seq(F.Id("X"), Sp, F.Id("B"), Colon, Sp, F.Id("Type"))), Sp,
+        OpenBracket, Call("Fintype", F.Id("X")), CloseBracket, Sp,
+        OpenBracket, Call("Fintype", F.Id("B")), CloseBracket, Sp,
+        OpenBracket, Call("DecidableEq", F.Id("B")), CloseBracket, Comma, Sp, body);
+
+    private static Formula MeasurementTraceSumFormula()
+    {
+        Formula xType = F.Id("X");
+        Formula bType = F.Id("B");
+        Formula r = F.Id("R");
+        Formula m = F.Id("M");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula matrix = Call("Matrix", bType, bType, complex);
+        Formula summand = Seq(Call("M", F.Id("x")), Sp, r);
+        Formula total = Seq(new Formula.Subscript(Sum,
+                new Formula.Relation(F.Id("x"), FormulaRelationOperator.MemberOf, xType)),
+            Sp, Call("Re", Call("trace", summand)));
+        return Disp(FiniteTypes(new Formula.BindMany(FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("R"), matrix),
+                new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, Sp, To, Sp, matrix)),
+            ],
+            Seq(Call("trace", r), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+                Call("sum", m), Sp, Eq, Sp, D(1), Sp, Rightarrow, Sp,
+                total, Sp, Eq, Sp, D(1)))));
+    }
+
+    private static Formula SuccessBoundsFormula()
+    {
+        Formula xType = F.Id("X");
+        Formula bType = F.Id("B");
+        Formula p = F.Id("p");
+        Formula rho = F.Id("rho");
+        Formula m = F.Id("M");
+        Formula x = F.Id("x");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula matrix = Call("Matrix", bType, bType, complex);
+        Formula sumP = Call("sum", p);
+        Formula sumM = Call("sum", m);
+        Formula allWeights = new Formula.BindMany(FormulaQuantifier.ForAll,
+            [new Formula.BoundVariable(FormulaIdentifier.Create("x"), xType)],
+            Seq(D(0), Sp, Le, Sp, Call("p", x)));
+        Formula allEffects = new Formula.BindMany(FormulaQuantifier.ForAll,
+            [new Formula.BoundVariable(FormulaIdentifier.Create("x"), xType)],
+            Call("PosSemidef", Call("M", x)));
+        Formula hypotheses = Seq(Parenthesized(allWeights), Sp, Land, Sp,
+            sumP, Sp, Eq, Sp, D(1), Sp, Land, Sp, Parenthesized(allEffects),
+            Sp, Land, Sp, sumM, Sp, Eq, Sp, D(1));
+        Formula success = Call("successProbability", p, rho, m);
+        Formula conclusion = Seq(D(0), Sp, Le, Sp, success,
+            Sp, Land, Sp, success, Sp, Le, Sp, D(1));
+        return Disp(FiniteTypes(new Formula.BindMany(FormulaQuantifier.ForAll,
+            [
+                new Formula.BoundVariable(FormulaIdentifier.Create("p"), Seq(xType, Sp, To, Sp, real)),
+                new Formula.BoundVariable(FormulaIdentifier.Create("rho"),
+                    Seq(xType, Sp, To, Sp, Call("DensityState", bType))),
+                new Formula.BoundVariable(FormulaIdentifier.Create("M"), Seq(xType, Sp, To, Sp, matrix)),
+            ],
+            Seq(Parenthesized(hypotheses), Sp, Rightarrow, Sp, Parenthesized(conclusion)))));
+    }
 }
