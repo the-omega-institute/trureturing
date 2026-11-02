@@ -91,7 +91,7 @@ def family : Registration arena source where
     norm_num [actual, realize] at hh
 
 noncomputable def sourceRegistration :
-    Contract.Registration (@result) (Realization signature) Unit Unit where
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0} (@result) (Realization signature) Unit Unit where
   unitName := `D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.result.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.family
   realizationSource := none
