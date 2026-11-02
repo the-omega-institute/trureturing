@@ -99,13 +99,6 @@ def pathVertex (e : E) (i : Fin (3 * D.k e + 2)) : D.Vertex :=
   else if hL : i.val = 3 * D.k e + 1 then .inl (D.right e)
   else .inr ⟨e, ⟨i.val - 1, by omega⟩⟩
 
-@[simp] theorem pathVertex_zero (e : E) :
-    D.pathVertex e ⟨0, by omega⟩ = .inl (D.left e) := by simp [pathVertex]
-
-@[simp] theorem pathVertex_last (e : E) :
-    D.pathVertex e ⟨3 * D.k e + 1, by omega⟩ = .inl (D.right e) := by
-  simp [pathVertex]
-
 @[simp] theorem pathVertex_inner (e : E) (i : Fin (3 * D.k e)) :
     D.pathVertex e ⟨i.val + 1, by omega⟩ = .inr ⟨e, i⟩ := by
   have hi := i.isLt
