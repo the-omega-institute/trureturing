@@ -695,7 +695,6 @@ theorem causal_prefix_deficit (D : ℝ) (hD : 0 ≤ D)
   rw [prefix_energy_window x a D hx ha]
   have heq (t : ℝ) : -(1 / 2 : ℝ) * |t| = -|t| / 2 := by ring
   simp_rw [heq] at hc
-  dsimp only [J, Eg] at *
   linarith only [hc, hs]
 
 /-- Exact nonnegative deficit, consumed by the translated causal-square
