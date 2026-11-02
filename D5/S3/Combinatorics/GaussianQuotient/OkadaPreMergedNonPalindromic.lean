@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.CylindricPartition.LiUncuGaussian
 import Mathlib.Algebra.Order.Monovary
+import Mathlib.Data.List.Palindrome
 
 /-! Okada's width-three pre-merged determinant conjecture. -/
 
@@ -75,8 +76,7 @@ private theorem gauss_coeff_one (n k : ℕ) (hk : 0 < k) (hkn : k < n) :
             simp [hnot]
 
 def IsAlmostPalindromic (f : ℤ[X]) : Prop :=
-  ((f.support.sort (· ≤ ·)).map f.coeff).reverse =
-    (f.support.sort (· ≤ ·)).map f.coeff
+  ((f.support.sort (· ≤ ·)).map f.coeff).Palindrome
 
 noncomputable def preMerged {μ : ℕ} (a b : Fin μ → ℕ) : ℤ[X] :=
   (∏ i, gauss (b i) (a i)) - ∏ i, gauss (b i) (a (Fin.rev i))
@@ -619,8 +619,9 @@ private theorem palindrome_contradiction
       (hi := (by omega : l.length - 2 < l.length))
       (hj := (by omega : l.length - 1 < l.length)) (by omega : l.length - 2 < l.length - 1)
     omega
-  change (l.map p.coeff).reverse = l.map p.coeff at hpal
-  have heq := congrArg (fun xs : List ℤ => xs[1]?) hpal
+  change (l.map p.coeff).Palindrome at hpal
+  have heq := congrArg (fun xs : List ℤ => xs[1]?)
+    (List.Palindrome.iff_reverse_eq.mp hpal)
   have hidx : l.length - 1 - 1 = l.length - 2 := Nat.sub_sub l.length 1 1
   rw [List.getElem?_reverse (l := l.map p.coeff) (i := 1) (by simpa using hn2)] at heq
   simp only [List.length_map, hidx,
