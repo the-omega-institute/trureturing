@@ -1,0 +1,13 @@
+## 10. 共同核预算：Gram 条件、闭式与奇异边界
+
+定义合成算符及 Gram 矩阵
+
+$$
+X:\mathbb C ^n\to H,\qquad Xc=\sum_jc_jx_j,\qquad
+G=X^*X,\quad G_{jk}=\langle x_j,x_k\rangle .
+$$
+
+记 $\mathbf1=(1,\ldots,1)^\mathsf T$。
+
+<a id="statement-10-1"></a>
+
