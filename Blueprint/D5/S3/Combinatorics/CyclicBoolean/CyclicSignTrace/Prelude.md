@@ -274,21 +274,7 @@ $$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}}
 
 For every m and all masks b,a, the sum over x of sign(dot(b,x)+dot(a,chi(x))) is the Walsh coefficient at a of the inverse component associated with b. Reindex by the proved bijection chi and use its left inverse identity. Zero and all-one masks are included.
 
-**Theorem 1.20 (The cyclic Boolean phase support is nonempty).**
-
-$$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; \exists a \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; \sum_{x \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right)} \mathrm{sign}\left({\mathrm{dot}\left(b, x\right)} + {\mathrm{dot}\left(a, \mathrm{chi}\left(x\right)\right)}\right) \ne 0$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.inverse_phase_support_nonempty` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* ricardorr (MathOverflow user 49534; real-name attribution unverified) (2026). *Does the support of a cyclic trace of 2x2 sign matrices always span a hyperplane in Z_2^n?*. URL: <https://mathoverflow.net/questions/512655>.
-
-*Commentary.*
-
-For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. The trace identity below therefore also makes the literal source trace support nonempty, without any assumption on b.
-
-**Theorem 1.21 (Constant Boolean derivatives and Walsh support).**
+**Theorem 1.20 (Constant Boolean derivatives and Walsh support).**
 
 $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}\left(n\right) \to \mathrm{ZMod}\left(2\right),\; \forall u \in \mathrm{Word}\left(n\right),\; \forall c \in \mathrm{ZMod}\left(2\right),\; {\forall y \in \mathrm{Word}\left(n\right),\; {\mathrm{f}\left({y} + {u}\right)} + {\mathrm{f}\left(y\right)} = c} \Leftrightarrow {\forall a \in \mathrm{Word}\left(n\right),\; {\mathrm{walsh}\left(f, a\right) \ne 0} \Rightarrow {\mathrm{dot}\left(a, u\right) = c}}}$$
 
@@ -302,7 +288,7 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 
 For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; identifying the affine-span dimension still requires a separate argument.
 
-**Definition 1.22 (The dot-product dual map).**
+**Definition 1.21 (The dot-product dual map).**
 
 Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.dotDual`
 
@@ -316,7 +302,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.dotDu
 
 Send a direction u to the linear functional a ↦ dot(a,u) on the binary word space.
 
-**Definition 1.23 (Nondegenerate binary dot pairing).**
+**Definition 1.22 (Nondegenerate binary dot pairing).**
 
 Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.dotDualEquiv`
 
@@ -330,7 +316,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.dotDu
 
 The dot-product map is a linear equivalence between the word space and its algebraic dual. Injectivity is checked on every coordinate vector and finite-dimensionality supplies surjectivity; this is the nondegenerate pairing used by the affine bridge.
 
-**Definition 1.24 (Affine direction of Walsh support).**
+**Definition 1.23 (Affine direction of Walsh support).**
 
 Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.walshSupportDirection`
 
@@ -344,7 +330,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.walsh
 
 Take the direction of the affine span over ZMod 2 of the nonzero Walsh support.
 
-**Definition 1.25 (Constant-derivative submodule).**
+**Definition 1.24 (Constant-derivative submodule).**
 
 Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.constantDerivativeSubmodule`
 
@@ -358,7 +344,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.const
 
 Define the derivative directions as the comap of the dual annihilator of the Walsh-support affine direction along the dot-product dual map.
 
-**Theorem 1.26 (Affine-span and dual-annihilator bridge).**
+**Theorem 1.25 (Affine-span and dual-annihilator bridge).**
 
 $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}\left(n\right) \to \mathrm{ZMod}\left(2\right),\; {\forall u \in \mathrm{Word}\left(n\right),\; {\mathrm{mem}\left(u, \mathrm{constantDerivativeSubmodule}\left(f\right)\right)} \Leftrightarrow {\exists c \in \mathrm{ZMod}\left(2\right),\; \forall y \in \mathrm{Word}\left(n\right),\; {\mathrm{f}\left({y} + {u}\right)} + {\mathrm{f}\left(y\right)} = c}} \land {{\mathrm{finrank}\left(\mathrm{ZMod}\left(2\right), \mathrm{constantDerivativeSubmodule}\left(f\right)\right)} + {\mathrm{finrank}\left(\mathrm{ZMod}\left(2\right), \mathrm{walshSupportDirection}\left(f\right)\right)} = \mathrm{finrank}\left(\mathrm{ZMod}\left(2\right), \mathrm{Word}\left(n\right)\right)}}$$
 
@@ -386,7 +372,6 @@ For every positive length and Boolean function, membership in the canonical cons
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.inverse`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.inverseComponent`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.inverse_phase_sum`
-- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.inverse_phase_support_nonempty`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.inverse_spec`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.sign`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude.sign_add`

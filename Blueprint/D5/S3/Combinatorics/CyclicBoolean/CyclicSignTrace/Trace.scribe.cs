@@ -9,7 +9,7 @@ internal sealed class CyclicSignTraceTraceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Trace.";
     private static readonly LibraryNoteRef SourceNote =
-        LibraryNoteRef.Create("D5/L/Combinatorics/ricardorr2026mo512655");
+        LibraryNoteRef.Create("D5/L/Fourier/ricardorr2026mo512655");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ordered integer matrix trace is exactly the Boolean phase sum for every positive length.",

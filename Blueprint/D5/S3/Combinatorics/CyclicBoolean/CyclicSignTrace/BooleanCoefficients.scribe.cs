@@ -9,7 +9,7 @@ internal sealed class CyclicSignTraceBooleanCoefficientsDocument : IScribeDocume
 {
     private const string Prefix = "D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoefficients.";
     private static readonly LibraryNoteRef SourceNote =
-        LibraryNoteRef.Create("D5/L/Combinatorics/ricardorr2026mo512655");
+        LibraryNoteRef.Create("D5/L/Fourier/ricardorr2026mo512655");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual Boolean coefficient extraction supplies the exact top-degree equations used by the rank assembly.",

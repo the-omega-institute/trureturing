@@ -9,7 +9,7 @@ internal sealed class CyclicSignTraceRankAssemblyDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/RankAssembly.";
     private static readonly LibraryNoteRef SourceNote =
-        LibraryNoteRef.Create("D5/L/Combinatorics/ricardorr2026mo512655");
+        LibraryNoteRef.Create("D5/L/Fourier/ricardorr2026mo512655");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cyclic overlap constraints bound the constant-derivative space and assemble the complete odd-length affine-support theorem.",

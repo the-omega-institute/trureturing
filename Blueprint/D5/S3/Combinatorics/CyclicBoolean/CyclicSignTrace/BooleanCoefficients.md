@@ -114,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoeffi
 
 *Commentary.*
 
-The coefficient of a constant Boolean function is one at the empty coordinate set and zero at every nonempty set.
+For every binary scalar a and every nonempty finite coordinate set s, the coefficient at s of the constant function with value a is zero.
 
 **Definition 1.9 (Cyclic prefix variable sets).**
 
@@ -216,7 +216,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoeffi
 
 The set topVariables(m,i) is prefixVariables(i,m) with coordinate i+2m inserted. It has m+1 elements. Its coordinate sum has slope m+1 as a function of i; multiplication by two in the odd cycle inverts that slope, so the sets for distinct i are distinct.
 
-**Lemma 1.16 (Prefix start indexing is injective).**
+**Lemma 1.16 (The indices within a prefix are distinct).**
 
 Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoefficients.prefix_index_injective`
 
@@ -228,7 +228,7 @@ Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoeffi
 
 *Commentary.*
 
-For a prefix length at most m, distinct starts give distinct actual cyclic coordinate sets.
+For r at most m and a fixed starting coordinate i on the cycle of length 2m+1, the map t ↦ i+2t+1 is injective on t=0,...,r-1.
 
 **Lemma 1.17 (Prefix cardinality).**
 

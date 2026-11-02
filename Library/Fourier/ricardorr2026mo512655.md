@@ -8,6 +8,10 @@ url: https://mathoverflow.net/questions/512655
 claim: "For every positive odd n and every nonzero b in F_2^n, the affine hull over F_2 of the nonzero support of the specified cyclic integer sign-matrix trace has dimension at least n-1."
 strata_touched:
   - D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace
+  - D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Prelude
+  - D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/Trace
+  - D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/BooleanCoefficients
+  - D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace/RankAssembly
 license: CC-BY-SA-4.0
 triage: anchor
 ---
