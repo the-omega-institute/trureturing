@@ -6,9 +6,11 @@
    utility: none
    digest: Finite incident stochastic laws and support-exact common-record recovery on the original sources. -/
 
-import Mathlib
+import Mathlib.Tactic
 import D5.S3.Divergence.ClassicalDPI
 import D5.S3.Entropy.MaxEntropy
+
+/-! Finite incident laws retain structural zeros and all original source symbols. -/
 
 namespace D5.S3.Entropy.TriangleFourSymbolNecessity
 
@@ -78,9 +80,9 @@ def PositiveOutput (L : IncidentLaw S₁ S₂ S₃ O) := {x : O // 0 < L.outputL
 def IsProbability {S : Type*} [Fintype S] (q : S → ℝ) : Prop :=
   (∀ s, 0 ≤ q s) ∧ ∑ s, q s = 1
 
+open Classical in
 /-- The complete necessity conclusion, including exact active response rows.
 Its existence is not assumed by `IncidentLaw`. -/
-open Classical in
 noncomputable def BinaryBlockConclusion (L : IncidentLaw S₁ S₂ S₃ O) : Prop :=
   Nonempty (L.PositiveOutput ≃ Bool × Bool) ∧
   ∃ h : (Bool × Bool) ≃ L.PositiveOutput,
@@ -106,10 +108,10 @@ private theorem positive_entry {I : Type*} [Fintype I] (p : I → ℝ)
   by_contra! h
   exact (not_lt_of_ge (Finset.sum_nonpos fun i _ => h i)) hsum
 
+open Classical in
 /-- A positive source cell admits one common output and forces every coordinate
 of each of its three original stochastic rows. -/
-open Classical in
- theorem rows_at_positive_source (L : IncidentLaw S₁ S₂ S₃ O)
+private theorem rows_at_positive_source (L : IncidentLaw S₁ S₂ S₃ O)
     (hagree : L.Agreement) (s : S₁ × S₂ × S₃) (hs : 0 < L.nu s) :
     ∃ x : O,
       (∀ y, L.KA s.2.1 s.2.2 y = if y = x then 1 else 0) ∧
@@ -145,15 +147,15 @@ open Classical in
     exact hy (common ha hb hp).2.symm
   have hAa : L.KA s.2.1 s.2.2 a = 1 := by
     calc
-      _ = ∑ y, L.KA s.2.1 s.2.2 y := (Finset.sum_eq_single a (by simpa using hAz)).symm
+      _ = ∑ y, L.KA s.2.1 s.2.2 y := (Finset.sum_eq_single a (fun y _ hy => hAz y hy) (by simp)).symm
       _ = 1 := L.KA_sum _ _
   have hBa : L.KB s.2.2 s.1 a = 1 := by
     calc
-      _ = ∑ y, L.KB s.2.2 s.1 y := (Finset.sum_eq_single a (by simpa using hBz)).symm
+      _ = ∑ y, L.KB s.2.2 s.1 y := (Finset.sum_eq_single a (fun y _ hy => hBz y hy) (by simp)).symm
       _ = 1 := L.KB_sum _ _
   have hCa : L.KC s.1 s.2.1 a = 1 := by
     calc
-      _ = ∑ y, L.KC s.1 s.2.1 y := (Finset.sum_eq_single a (by simpa using hCz)).symm
+      _ = ∑ y, L.KC s.1 s.2.1 y := (Finset.sum_eq_single a (fun y _ hy => hCz y hy) (by simp)).symm
       _ = 1 := L.KC_sum _ _
   refine ⟨a, ?_, ?_, ?_⟩
   · intro y; split_ifs with hy
@@ -165,6 +167,98 @@ open Classical in
   · intro y; split_ifs with hy
     · subst y; exact hCa
     · exact hCz y hy
+
+/-- Incident maps selected directly from normalized original kernel rows. -/
+noncomputable def readoutA (L : IncidentLaw S₁ S₂ S₃ O) (s₂ : S₂) (s₃ : S₃) : O :=
+  Classical.choose (positive_entry (L.KA s₂ s₃) (by rw [L.KA_sum]; norm_num))
+noncomputable def readoutB (L : IncidentLaw S₁ S₂ S₃ O) (s₃ : S₃) (s₁ : S₁) : O :=
+  Classical.choose (positive_entry (L.KB s₃ s₁) (by rw [L.KB_sum]; norm_num))
+noncomputable def readoutC (L : IncidentLaw S₁ S₂ S₃ O) (s₁ : S₁) (s₂ : S₂) : O :=
+  Classical.choose (positive_entry (L.KC s₁ s₂) (by rw [L.KC_sum]; norm_num))
+
+private theorem readoutA_pos (L : IncidentLaw S₁ S₂ S₃ O) (s₂ : S₂) (s₃ : S₃) :
+    0 < L.KA s₂ s₃ (L.readoutA s₂ s₃) :=
+  Classical.choose_spec (positive_entry (L.KA s₂ s₃) (by rw [L.KA_sum]; norm_num))
+private theorem readoutB_pos (L : IncidentLaw S₁ S₂ S₃ O) (s₃ : S₃) (s₁ : S₁) :
+    0 < L.KB s₃ s₁ (L.readoutB s₃ s₁) :=
+  Classical.choose_spec (positive_entry (L.KB s₃ s₁) (by rw [L.KB_sum]; norm_num))
+private theorem readoutC_pos (L : IncidentLaw S₁ S₂ S₃ O) (s₁ : S₁) (s₂ : S₂) :
+    0 < L.KC s₁ s₂ (L.readoutC s₁ s₂) :=
+  Classical.choose_spec (positive_entry (L.KC s₁ s₂) (by rw [L.KC_sum]; norm_num))
+
+open Classical in
+private theorem point_at_readout (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) (s : S₁ × S₂ × S₃) (hs : 0 < L.nu s) :
+    (∀ y, L.KA s.2.1 s.2.2 y = if y = L.readoutA s.2.1 s.2.2 then 1 else 0) ∧
+    (∀ y, L.KB s.2.2 s.1 y = if y = L.readoutB s.2.2 s.1 then 1 else 0) ∧
+    (∀ y, L.KC s.1 s.2.1 y = if y = L.readoutC s.1 s.2.1 then 1 else 0) ∧
+    L.readoutA s.2.1 s.2.2 = L.readoutB s.2.2 s.1 ∧
+    L.readoutB s.2.2 s.1 = L.readoutC s.1 s.2.1 := by
+  obtain ⟨x, ha, hb, hc⟩ := L.rows_at_positive_source hagree s hs
+  have ea : L.readoutA s.2.1 s.2.2 = x := by
+    have hp := L.readoutA_pos s.2.1 s.2.2
+    rw [ha] at hp
+    split_ifs at hp with h
+    · exact h
+    · linarith
+  have eb : L.readoutB s.2.2 s.1 = x := by
+    have hp := L.readoutB_pos s.2.2 s.1
+    rw [hb] at hp
+    split_ifs at hp with h
+    · exact h
+    · linarith
+  have ec : L.readoutC s.1 s.2.1 = x := by
+    have hp := L.readoutC_pos s.1 s.2.1
+    rw [hc] at hp
+    split_ifs at hp with h
+    · exact h
+    · linarith
+  exact ⟨by simpa only [ea] using ha, by simpa only [eb] using hb,
+    by simpa only [ec] using hc, ea.trans eb.symm, eb.trans ec.symm⟩
+
+open Classical in
+/-- Agreement forces exactly the active incident rows and yields incident
+readouts of the same record on every positive original source cell.
+No conclusion about an inactive row is included. -/
+theorem original_law_recoverability (L : IncidentLaw S₁ S₂ S₃ O)
+    (hagree : L.Agreement) :
+    (∀ s₂ s₃, 0 < L.pair₂₃ s₂ s₃ →
+      ∀ y, L.KA s₂ s₃ y = if y = L.readoutA s₂ s₃ then 1 else 0) ∧
+    (∀ s₃ s₁, 0 < L.pair₁₃ s₁ s₃ →
+      ∀ y, L.KB s₃ s₁ y = if y = L.readoutB s₃ s₁ then 1 else 0) ∧
+    (∀ s₁ s₂, 0 < L.pair₁₂ s₁ s₂ →
+      ∀ y, L.KC s₁ s₂ y = if y = L.readoutC s₁ s₂ then 1 else 0) ∧
+    (∀ s, 0 < L.nu s →
+      L.readoutA s.2.1 s.2.2 = L.readoutB s.2.2 s.1 ∧
+      L.readoutB s.2.2 s.1 = L.readoutC s.1 s.2.1) ∧
+    (∀ x s, L.recordLaw x s =
+      if x = L.readoutA s.2.1 s.2.2 then L.nu s else 0) := by
+  classical
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · intro s₂ s₃ hpair
+    obtain ⟨s₁, hs⟩ := positive_entry (fun s₁ => L.nu (s₁, s₂, s₃)) hpair
+    exact (L.point_at_readout hagree (s₁, s₂, s₃) hs).1
+  · intro s₃ s₁ hpair
+    obtain ⟨s₂, hs⟩ := positive_entry (fun s₂ => L.nu (s₁, s₂, s₃)) hpair
+    exact (L.point_at_readout hagree (s₁, s₂, s₃) hs).2.1
+  · intro s₁ s₂ hpair
+    obtain ⟨s₃, hs⟩ := positive_entry (fun s₃ => L.nu (s₁, s₂, s₃)) hpair
+    exact (L.point_at_readout hagree (s₁, s₂, s₃) hs).2.2.1
+  · intro s hs
+    exact (L.point_at_readout hagree s hs).2.2.2
+  · intro x s
+    by_cases hs : L.nu s = 0
+    · simp [recordLaw, hs]
+    · have hp := (L.point_at_readout hagree s (lt_of_le_of_ne (L.nu_nonneg s) (Ne.symm hs))).1 x
+      simp only [recordLaw, hp, mul_ite, mul_one, mul_zero]
+
+/-- Summing over the two unobserved outputs gives exactly `recordLaw`. -/
+private theorem response_marginal_is_record (L : IncidentLaw S₁ S₂ S₃ O)
+    (s : S₁ × S₂ × S₃) (x : O) :
+    (∑ b, ∑ c, L.responseLaw s x b c) = L.recordLaw x s := by
+  classical
+  simp only [responseLaw, recordLaw, ← Finset.mul_sum, L.KC_sum, mul_one,
+    L.KB_sum]
 
 end IncidentLaw
 end D5.S3.Entropy.TriangleFourSymbolNecessity
