@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Matrix.LinGProperty.ArithmeticBound
+import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 import D5.S3.Weil.ZetaLinear.RankTrace
 
 /-!
@@ -561,16 +562,9 @@ private lemma primal_admissible {d : ℕ} (hd : 2 ≤ d)
   have hs2 : s * s = 1 := by
     change Matrix.compRingEquiv _ _ ℂ t * Matrix.compRingEquiv _ _ ℂ t = 1
     rw [← map_mul, ht2, map_one]
-  have hg : (1 + s)ᴴ * (1 + s) = (2 : ℂ) • (1 + s) := by
-    rw [conjTranspose_add, conjTranspose_one, hs.eq, add_mul, mul_add, mul_add, hs2]
-    simp only [one_mul, mul_one]
-    module
-  have hp : ((1 / (2 : ℂ)) • ((1 + s)ᴴ * (1 + s))).PosSemidef :=
-    (posSemidef_conjTranspose_mul_self (1 + s)).smul
-      (by rw [Complex.nonneg_iff]; norm_num)
-  have hps : (1 + s).PosSemidef := by
-    simpa only [hg, smul_smul, one_div_mul_cancel (by norm_num : (2 : ℂ) ≠ 0),
-      one_smul] using hp
+  have hps : (1 + s).PosSemidef :=
+    (D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Upper.involution_binary s hs
+      (by simpa only [pow_two] using hs2)).2
   refine ⟨?_, ?_, ?_⟩
   · intro j k
     rw [IsHermitian, primal]
