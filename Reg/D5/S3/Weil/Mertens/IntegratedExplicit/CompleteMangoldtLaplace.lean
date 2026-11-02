@@ -51,10 +51,11 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
   have hthree : 0 < mangoldtPart 3 := by
     rw [@mangoldtPart_eq_range (t := 3) (by norm_num) (N := 4) (by norm_num)]
-    norm_num [mangoldtRamp,
-      ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two,
-      ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_three] <;>
-      positivity
+    have hterm : 0 < mangoldtRamp 2 3 := by
+      rw [mangoldtRamp, ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two]
+      exact mul_pos hlog (by norm_num)
+    exact hterm.trans_le (Finset.single_le_sum
+      (fun n _ => mangoldtRamp_nonneg n 3) (by norm_num : 2 ∈ Finset.range 4))
   rw [hzero]
   exact hthree.ne
 
