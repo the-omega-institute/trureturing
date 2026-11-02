@@ -43,9 +43,9 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text(
                         "Fix d at least two. For each k in Fin d, let Qᵏ be the real permutation matrix of the cyclic shift i ↦ i+k on Fin d. "
-                            + "The shift is bijective because Fin d is identified with ZMod d; the permutation-matrix multiplication identity then gives (Qᵏ)ᵀQᵏ=1.")),
+                            + "The shift is Mathlib's permutation finCycle k; the permutation-matrix multiplication identity then gives (Qᵏ)ᵀQᵏ=1.")),
                     Paragraph(Text(
-                        "Set μ i j to be the cyclic difference j−i in ZMod d, transported back to Fin d, set a i j=1, and let qbar m be the m-th coordinate vector. "
+                        "Set μ i j to be the cyclic difference j−i in Fin d, set a i j=1, and let qbar m be the m-th coordinate vector. "
                             + "Thus Qᵏ i j is one exactly when j=i+k, equivalently k=μ i j, and the shift factorization says Qᵏ i j = a i j qbar (μ i j) k. The map i ↦ (i,i+m) parametrizes the m-th label fiber bijectively, so its multiplicity is d and the square law for a is d/d=1. "
                             + "The coordinate vectors qbar are orthonormal by a finite case split on their labels.")),
                     Paragraph(Text(
@@ -59,7 +59,7 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
                             + "That is exactly equality of the difference labels, so the resulting entry agrees with the sum of the tVec projectors. "
                             + "These constructions give the five witnesses and IsSecondFamilyData, proving the full quantified claim."))),
                 DescribeRole.Theorem))));
-    
+
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("second-family-all-dimensions-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
