@@ -48,10 +48,25 @@ def claim : Prop :=
   ∀ d : ℕ, 2 ≤ d → ∃ Q qbar μ S s, IsSecondFamilyData d Q qbar μ S s
 
 private def cyclicShift (d : ℕ) (k i : Fin d) : Fin d :=
-  if h : 0 < d then ⟨(i.val + k.val) % d, Nat.mod_lt _ h⟩ else i
+  if h : 0 < d then
+    letI : NeZero d := ⟨Nat.ne_of_gt h⟩
+    (ZMod.finEquiv d).symm ((ZMod.finEquiv d i) + (ZMod.finEquiv d k))
+  else i
 
 private theorem cyclic_shift_bijective0 (d : ℕ) (k : Fin d) :
-    Function.Bijective (cyclicShift d k) := by sorry
+    Function.Bijective (cyclicShift d k) := by
+  by_cases h : 0 < d
+  · letI : NeZero d := ⟨Nat.ne_of_gt h⟩
+    let e : Fin d ≃ Fin d := (ZMod.finEquiv d).toEquiv.trans
+      ((Equiv.addRight (ZMod.finEquiv d k)).trans (ZMod.finEquiv d).symm.toEquiv)
+    have hfun : cyclicShift d k = e := by
+      funext i
+      simp [cyclicShift, h, e]
+    rw [hfun]
+    exact e.bijective
+  · have hd : d = 0 := Nat.eq_zero_of_not_pos h
+    subst d
+    exact ⟨fun i => Fin.elim0 i, fun i => Fin.elim0 i⟩
 
 private def cyclicShiftEquiv (d : ℕ) (k : Fin d) : Fin d ≃ Fin d :=
   Equiv.ofBijective (cyclicShift d k) (cyclic_shift_bijective0 d k)
