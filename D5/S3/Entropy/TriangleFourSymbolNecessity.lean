@@ -325,6 +325,139 @@ private theorem cardinal_lower_bound (F : A → Finset X) (G : B → Finset X)
   rw [Finset.card_univ] at hsum
   omega
 
+private theorem row_card_eq_two (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverF : ∀ x, ∃ a, x ∈ F a)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hm : 2 ≤ Fintype.card X) (hmax : Fintype.card X ≤ 4) (a : A) :
+    (F a).card = 2 := by
+  have h₁ := row_card_two F G H coverG coverH crossFG crossFH crossGH hm a
+  have h₂ := row_complement_card_two F G H coverF coverG coverH
+    crossFG crossFH crossGH hm a
+  have hsum := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ (F a))
+  rw [Finset.card_univ] at hsum
+  omega
+
+private theorem equal_or_disjoint (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hF : ∀ a, (F a).card = 2) (hG : ∀ b, (G b).card = 2)
+    (hH : ∀ c, (H c).card = 2) (hmax : Fintype.card X ≤ 4)
+    (a a' : A) : F a = F a' ∨ Disjoint (F a) (F a') := by
+  classical
+  by_cases he : F a = F a'
+  · exact Or.inl he
+  right
+  by_contra hn
+  obtain ⟨x, hx, hx'⟩ := Finset.not_disjoint_iff.mp hn
+  have hd₁ : ∃ y, y ∈ F a ∧ y ∉ F a' := by
+    by_contra! hsub
+    exact he (Finset.eq_of_subset_of_card_le hsub (by rw [hF, hF]))
+  have hd₂ : ∃ z, z ∈ F a' ∧ z ∉ F a := by
+    by_contra! hsub
+    exact he (Finset.eq_of_subset_of_card_le hsub (by rw [hF, hF])).symm
+  obtain ⟨y, hy, hy'⟩ := hd₁
+  obtain ⟨z, hz', hz⟩ := hd₂
+  have hxy : x ≠ y := by rintro rfl; exact hy' hx'
+  have hxz : x ≠ z := by rintro rfl; exact hz hx
+  have hyz : y ≠ z := by rintro rfl; exact hy' hz'
+  have hthree : 3 ≤ (F a ∪ F a').card := by
+    have hsub : ({x, y, z} : Finset X) ⊆ F a ∪ F a' := by
+      intro t ht
+      simp only [Finset.mem_insert, Finset.mem_singleton] at ht
+      rcases ht with rfl | rfl | rfl
+      · exact Finset.mem_union_left _ hx
+      · exact Finset.mem_union_left _ hy
+      · exact Finset.mem_union_right _ hz'
+    have hc : ({x, y, z} : Finset X).card = 3 := by simp [hxy, hxz, hyz]
+    simpa only [hc] using Finset.card_le_card hsub
+  have hsmall : (Finset.univ \ (F a ∪ F a')).card ≤ 1 := by
+    have hs := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ (F a ∪ F a'))
+    rw [Finset.card_univ] at hs
+    omega
+  obtain ⟨b, hb⟩ := coverG x
+  obtain ⟨c, hc⟩ := coverH x
+  obtain ⟨v, hv, hvx⟩ := Finset.exists_mem_notMem_of_card_lt_card
+    (show ({x} : Finset X).card < (G b).card by rw [Finset.card_singleton, hG]; omega)
+  obtain ⟨w, hw, hwx⟩ := Finset.exists_mem_notMem_of_card_lt_card
+    (show ({x} : Finset X).card < (H c).card by rw [Finset.card_singleton, hH]; omega)
+  have hvne : v ≠ x := by simpa only [Finset.mem_singleton] using hvx
+  have hwne : w ≠ x := by simpa only [Finset.mem_singleton] using hwx
+  have hvout : v ∈ Finset.univ \ (F a ∪ F a') := by
+    have h₁ : v ∉ F a := by
+      intro hv'
+      obtain ⟨q, hq, hu⟩ := crossFG a b
+      exact hvne ((hu v ⟨hv', hv⟩).trans (hu x ⟨hx, hb⟩).symm)
+    have h₂ : v ∉ F a' := by
+      intro hv'
+      obtain ⟨q, hq, hu⟩ := crossFG a' b
+      exact hvne ((hu v ⟨hv', hv⟩).trans (hu x ⟨hx', hb⟩).symm)
+    simp [h₁, h₂]
+  have hwout : w ∈ Finset.univ \ (F a ∪ F a') := by
+    have h₁ : w ∉ F a := by
+      intro hw'
+      obtain ⟨q, hq, hu⟩ := crossFH a c
+      exact hwne ((hu w ⟨hw', hw⟩).trans (hu x ⟨hx, hc⟩).symm)
+    have h₂ : w ∉ F a' := by
+      intro hw'
+      obtain ⟨q, hq, hu⟩ := crossFH a' c
+      exact hwne ((hu w ⟨hw', hw⟩).trans (hu x ⟨hx', hc⟩).symm)
+    simp [h₁, h₂]
+  have hvw := Finset.card_le_one.mp hsmall v hvout w hwout
+  obtain ⟨q, hq, hu⟩ := crossGH b c
+  exact hvne ((hu v ⟨hv, hvw ▸ hw⟩).trans (hu x ⟨hb, hc⟩).symm)
+
+private theorem two_blocks (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverF : ∀ x, ∃ a, x ∈ F a)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hm : 2 ≤ Fintype.card X) (hmax : Fintype.card X ≤ 4) :
+    ∃ u : Finset X, u.card = 2 ∧ (Finset.univ \ u).card = 2 ∧
+      (∀ a, F a = u ∨ F a = Finset.univ \ u) ∧
+      (∃ a, F a = u) ∧ (∃ a, F a = Finset.univ \ u) := by
+  classical
+  have swapFG : ∀ b a, ∃! x, x ∈ G b ∧ x ∈ F a := by
+    intro b a; simpa only [and_comm] using crossFG a b
+  have swapFH : ∀ c a, ∃! x, x ∈ H c ∧ x ∈ F a := by
+    intro c a; simpa only [and_comm] using crossFH a c
+  have swapGH : ∀ c b, ∃! x, x ∈ H c ∧ x ∈ G b := by
+    intro c b; simpa only [and_comm] using crossGH b c
+  have hF := row_card_eq_two F G H coverF coverG coverH crossFG crossFH crossGH hm hmax
+  have hG := row_card_eq_two G F H coverG coverF coverH swapFG crossGH crossFH hm hmax
+  have hH := row_card_eq_two H F G coverH coverF coverG swapFH swapGH crossFG hm hmax
+  haveI : Nonempty X := Fintype.card_pos_iff.mp (by omega)
+  obtain ⟨a₀, _⟩ := coverF (Classical.choice inferInstance)
+  have hcomp : (Finset.univ \ F a₀).card = 2 := by
+    have hs := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ (F a₀))
+    rw [Finset.card_univ, hF] at hs
+    have hl := row_complement_card_two F G H coverF coverG coverH
+      crossFG crossFH crossGH hm a₀
+    omega
+  have hcases (a : A) : F a = F a₀ ∨ F a = Finset.univ \ F a₀ := by
+    rcases equal_or_disjoint F G H coverG coverH crossFG crossFH crossGH
+      hF hG hH hmax a a₀ with he | hd
+    · exact Or.inl he
+    · right
+      apply Finset.eq_of_subset_of_card_le
+      · intro x hx
+        exact Finset.mem_sdiff.mpr ⟨Finset.mem_univ _, Finset.disjoint_left.mp hd hx⟩
+      · rw [hcomp, hF]
+  refine ⟨F a₀, hF a₀, hcomp, hcases, ⟨a₀, rfl⟩, ?_⟩
+  obtain ⟨x, hx⟩ := Finset.card_pos.mp (show 0 < (Finset.univ \ F a₀).card by omega)
+  obtain ⟨a₁, ha₁⟩ := coverF x
+  rcases hcases a₁ with he | he
+  · exact False.elim ((Finset.mem_sdiff.mp hx).2 (he ▸ ha₁))
+  · exact ⟨a₁, he⟩
+
 end CrossSupport
 
 namespace IncidentLaw
@@ -367,7 +500,7 @@ noncomputable def sourceCost (L : IncidentLaw S₁ S₂ S₃ O) : ℝ :=
     (fun s => L.marginal₁ s.1 * L.marginal₂ s.2.1 * L.marginal₃ s.2.2)
 
 /-- Positive output symbols; unused symbols of the original output type remain present in `L`. -/
-def PositiveOutput (L : IncidentLaw S₁ S₂ S₃ O) := {x : O // 0 < L.outputLaw x}
+abbrev PositiveOutput (L : IncidentLaw S₁ S₂ S₃ O) := {x : O // 0 < L.outputLaw x}
 
 /-- A probability vector on an original source alphabet. -/
 def IsProbability {S : Type*} [Fintype S] (q : S → ℝ) : Prop :=
@@ -983,14 +1116,14 @@ private theorem original_product_pairs (L : IncidentLaw S₁ S₂ S₃ O)
     simp only [recordPair₁₃, L.original_product_cells hagree heq x hx]
     calc
       _ = (L.outputLaw x * L.posterior₁ x a) * (∑ b, L.posterior₂ x b) *
-          L.posterior₃ x c := by rw [Finset.sum_mul, Finset.mul_sum]
+          L.posterior₃ x c := by simp only [Finset.sum_mul, Finset.mul_sum]
       _ = _ := by rw [hp₂.2, mul_one]
   · intro b c
     simp only [recordPair₂₃, L.original_product_cells hagree heq x hx]
     calc
       _ = L.outputLaw x * (∑ a, L.posterior₁ x a) *
           L.posterior₂ x b * L.posterior₃ x c := by
-        rw [Finset.sum_mul, Finset.sum_mul, Finset.mul_sum]
+        simp only [Finset.sum_mul, Finset.mul_sum]
       _ = _ := by rw [hp₁.2, mul_one]
 
 private theorem positive_factors_of_cell {x : O} (L : IncidentLaw S₁ S₂ S₃ O)
@@ -1005,9 +1138,9 @@ private theorem positive_factors_of_cell {x : O} (L : IncidentLaw S₁ S₂ S₃
     simp [hz] at hpos
 
 /-- Positive source symbols are retained as subtypes of the original alphabets. -/
-def Active₁ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₁ // 0 < L.marginal₁ s}
-def Active₂ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₂ // 0 < L.marginal₂ s}
-def Active₃ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₃ // 0 < L.marginal₃ s}
+abbrev Active₁ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₁ // 0 < L.marginal₁ s}
+abbrev Active₂ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₂ // 0 < L.marginal₂ s}
+abbrev Active₃ (L : IncidentLaw S₁ S₂ S₃ O) := {s : S₃ // 0 < L.marginal₃ s}
 
 noncomputable def support₁ (L : IncidentLaw S₁ S₂ S₃ O) (s : L.Active₁) :
     Finset L.PositiveOutput := Finset.univ.filter (fun x => 0 < L.posterior₁ x.val s.val)
@@ -1055,8 +1188,8 @@ private theorem posterior_active₂ (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
     _ ≤ ∑ c', L.nu (a, s, c') :=
       Finset.single_le_sum (fun c' _ => L.nu_nonneg _) (Finset.mem_univ c)
     _ ≤ L.marginal₂ s :=
-      Finset.single_le_sum (fun a' _ => Finset.sum_nonneg fun c' _ => L.nu_nonneg _)
-        (Finset.mem_univ a)
+      Finset.single_le_sum (fun a' _ => Finset.sum_nonneg fun c' _ =>
+        L.nu_nonneg (a', s, c')) (Finset.mem_univ a)
 
 private theorem posterior_active₃ (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
     (hx : 0 < L.outputLaw x) (s : S₃) (hs : 0 < L.posterior₃ x s) :
@@ -1078,8 +1211,8 @@ private theorem posterior_active₃ (L : IncidentLaw S₁ S₂ S₃ O) (x : O)
     _ ≤ ∑ b', L.nu (a, b', s) :=
       Finset.single_le_sum (fun b' _ => L.nu_nonneg _) (Finset.mem_univ b)
     _ ≤ L.marginal₃ s :=
-      Finset.single_le_sum (fun a' _ => Finset.sum_nonneg fun b' _ => L.nu_nonneg _)
-        (Finset.mem_univ a)
+      Finset.single_le_sum (fun a' _ => Finset.sum_nonneg fun b' _ =>
+        L.nu_nonneg (a', b', s)) (Finset.mem_univ a)
 
 private theorem support_cover (L : IncidentLaw S₁ S₂ S₃ O) :
     (∀ x, ∃ s, x ∈ L.support₁ s) ∧
