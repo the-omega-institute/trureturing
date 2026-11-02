@@ -1,5 +1,4 @@
 using StrataLint.Scribe;
-using StrataLint.Scribe.Dsl;
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
