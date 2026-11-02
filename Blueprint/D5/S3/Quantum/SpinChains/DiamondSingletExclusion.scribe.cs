@@ -78,7 +78,9 @@ internal sealed class DiamondSingletExclusionDocument : IScribeDocumentDefinitio
         Describe.Lean(DescribeId.Create("diamond-singlet-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
-    private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula Call(string name, params Formula[] args) =>
+        args.Length == 0 ? Seq(Operatorname, Grp(F.Id(name))) :
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
