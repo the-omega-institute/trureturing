@@ -157,10 +157,6 @@ def frameEquiv : E D ≃ₗ[ℂ] ℂ × ℂ × F.K where
   map_add' v w := by simp [g_add_right, map_add]
   map_smul' c v := by simp [g_smul_right, map_smul, smul_eq_mul]
 
-theorem decomposition (v : E D) :
-    v = g D F.eMinus v • F.ePlus + g D F.ePlus v • F.eMinus +
-      (F.projK v : E D) := (F.frameEquiv.symm_apply_apply v).symm
-
 /-- Finite index for a genuine transverse basis; t is NOT asserted to be rank-2. -/
 abbrev Label (t : ℕ) := Unit ⊕ (Unit ⊕ Fin t)
 
@@ -299,10 +295,6 @@ def polynomialEquiv : Oscillator D ≃ₐ[ℂ] PolynomialCoordinates ι where
   map_mul' := (forwardHom b).map_mul
   map_add' := (forwardHom b).map_add
   commutes' := (forwardHom b).commutes
-
-@[simp] private theorem polynomialEquiv_X (i : Fin D.rank) (r : ℕ) :
-    polynomialEquiv b (X (i,r)) = lin r (b.equivFun (standardBasis D i)) :=
-  MvPolynomial.aeval_X _ _
 
 @[simp] private theorem polynomialEquiv_symm_X (c : ι) (r : ℕ) :
     (polynomialEquiv b).symm (X (c,r)) = lin r (b c) :=
@@ -472,10 +464,6 @@ def carrierEquiv : Carrier D ≃ₗ[ℂ] (Charge D →₀ PolynomialCoordinates 
 
 @[simp] theorem carrierEquiv_apply (v : Carrier D) (p : Charge D) :
     carrierEquiv b v p = polynomialEquiv b (v p) := rfl
-
-@[simp] theorem carrierEquiv_symm_apply (v : Charge D →₀ PolynomialCoordinates ι)
-    (p : Charge D) :
-    (carrierEquiv b).symm v p = (polynomialEquiv b).symm (v p) := rfl
 
 @[simp] theorem carrierEquiv_single (p : Charge D) (P : Oscillator D) :
     carrierEquiv b (Finsupp.single p P) = Finsupp.single p (polynomialEquiv b P) := by
