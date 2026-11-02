@@ -960,3 +960,535 @@ $$
 (30.15) 是完整共同相位核上的相关相位不等式；本节没有把它替换为独立幅度最大值、独立符号分支或另一充分截面。它仍是原全局端点的开放数学义务；若在该集合找到负的有限判据值，源卷 (23.13) 及定理 23.2 会给出同一共享酉下的原始可行严格反例。
 
 ## 追加锚（本行以下为增补区）
+
+## 31. A shifted support comparison and the uniform sharp endpoint
+
+**Definition 31.1 (population and support notation).** Retain the fixed record, constants and reduced quantities of source Definition 23.1 and (30.2). Put
+
+$$
+ D(p)=d^2p+e^2(1-p),\qquad \gamma=1/25.
+\tag{31.1}
+$$
+
+For nonnegative $a,b$ and $0\le x\le1$, write
+
+$$
+ \Phi_{a,b}(x)=
+ \sqrt{2(a^2+b^2)+2\sqrt{(a^2+b^2)^2-4a^2b^2x}}.
+\tag{31.2}
+$$
+
+Thus $\Phi_{a,b}(\cos^2\phi)=|a+be^{i\phi}|+|a-be^{i\phi}|$. The shifted support below uses the same scalar shift in all four coordinates.
+
+**Lemma 31.2 (two uniform shifted support comparisons).** Let $\alpha,\beta\ge0$ with $\alpha^2+\beta^2=1$.
+
+If $\alpha^2\ge1/2$ and $0\le\varepsilon\le1/50$, then, for every real $\phi$,
+
+$$
+\begin{aligned}
+&|h\alpha-\varepsilon+h\beta e^{i\phi}|
+ +|h\alpha-\varepsilon-h\beta e^{i\phi}|\\
+&\quad+|c\alpha-\varepsilon+is\beta e^{i\phi}|
+ +|c\alpha-\varepsilon-is\beta e^{i\phi}|\\
+&\le2\sqrt{(h\alpha-\varepsilon)^2+h^2\beta^2}
+       +2c\alpha-2\varepsilon.
+\end{aligned}
+\tag{31.3}
+$$
+
+If $\alpha^2\ge8/9$ and $0\le\varepsilon\le7/400$, then
+
+$$
+\begin{aligned}
+&|h\alpha-\varepsilon+h\beta e^{i\phi}|
+ +|h\alpha-\varepsilon-h\beta e^{i\phi}|\\
+&\quad+|s\alpha-\varepsilon-ic\beta e^{i\phi}|
+ +|s\alpha-\varepsilon+ic\beta e^{i\phi}|\\
+&\le2h\alpha-2\varepsilon
+       +2\sqrt{(s\alpha-\varepsilon)^2+c^2\beta^2}.
+\end{aligned}
+\tag{31.4}
+$$
+
+**Proof.** For positive $a,b$, differentiating (31.2) on its differentiability interval gives
+
+$$
+ \Phi'_{a,b}(x)=
+ -\frac{2a^2b^2}
+ {\Phi_{a,b}(x)\sqrt{(a^2+b^2)^2-4a^2b^2x}}.
+\tag{31.5}
+$$
+
+Both factors in the denominator decrease with $x$, so this derivative is nonincreasing. In particular,
+
+$$
+ \Phi'_{a,b}(0)=-\frac{a^2b^2}{(a^2+b^2)^{3/2}},\qquad
+ \Phi'_{a,b}(1)=-\frac{ab^2}{a^2-b^2}\quad(a>b).
+\tag{31.6}
+$$
+
+An endpoint at which $a=b$ is treated by continuity. When $b=0$, the pair is constant.
+
+For (31.3), set $A=h\alpha-\varepsilon$, $B=c\alpha-\varepsilon$ and $k=24/25$. Then
+
+$$
+ A\ge kh\alpha>0,\qquad B\ge kc\alpha>s\beta,
+ \qquad A^2+h^2\beta^2\le h^2.
+\tag{31.7}
+$$
+
+The first two bounds use $h\alpha\ge1/2$ and $c\alpha>1/2$. The support sum is
+$\Phi_{A,h\beta}(x)+\Phi_{B,s\beta}(1-x)$, where $x=\cos^2\phi$. Its derivative is nonpositive if
+
+$$
+ \frac{A^2h^2}{(A^2+h^2\beta^2)^{3/2}}
+ \ge\frac{Bs^2}{B^2-s^2\beta^2}.
+\tag{31.8}
+$$
+
+Indeed, (31.5)--(31.6) bound the derivative above by $\beta^2$ times the right side of (31.8) minus its left side. The left side of (31.8) is at least $k^2h\alpha^2$. Since $x/(x^2-r^2)$ decreases for $x>r$, its right side is at most
+
+$$
+ \frac{kc s^2}{(k^2c^2-s^2)\alpha}.
+$$
+
+Now $\alpha\ge h$, $c<1$, $c^2>17/20$ and $s^2<3/20$ give
+
+$$
+ k^2h\alpha^3\ge\frac{144}{625}
+ >\frac{1800}{7917}
+ >\frac{kc s^2}{k^2c^2-s^2}.
+\tag{31.9}
+$$
+
+The last rational bound replaces $c$ and $s^2$ in the numerator by $1$ and $3/20$, and the denominator by $k^2(17/20)-3/20$. Thus the maximum is at $x=0$. At that point the second pair is $2B$ by (31.7), proving (31.3).
+
+For (31.4), set $A=h\alpha-\varepsilon$, $B=s\alpha-\varepsilon$. Here
+
+$$
+ A\ge\frac{779}{1200}>h\beta,\qquad
+ B\ge\frac{189}{200}s\alpha>c\beta.
+\tag{31.10}
+$$
+
+For the first inequality, $h\alpha\ge2/3$. For the second, $s\alpha>1/3$ implies
+$(11/200)s\alpha>7/400$; the final strict inequality follows from
+$s>3826/10000$, $\alpha>47/50$, $c<924/1000$ and $\beta\le1/3$.
+The support sum is now $\Phi_{A,h\beta}(x)+\Phi_{B,c\beta}(1-x)$. Its derivative is nonnegative if
+
+$$
+ \frac{B^2c^2}{(B^2+c^2\beta^2)^{3/2}}
+ \ge\frac{Ah^2}{A^2-h^2\beta^2}.
+\tag{31.11}
+$$
+
+In fact, (31.5)--(31.6) bound the derivative below by $\beta^2$ times the left side minus the right side. Using $c^2/s^2=3+2\sqrt2$, $\sqrt2<99/70$ and (31.10),
+
+$$
+ \left(\frac{c\beta}{B}\right)^2
+ \le\frac{3+2\sqrt2}{8(189/200)^2}<\frac{41}{50},
+ \qquad
+ \left(\frac{91}{50}\right)^3<\left(\frac{123}{50}\right)^2.
+$$
+
+Consequently, since $B\le s$,
+
+$$
+ \frac{B^2c^2}{(B^2+c^2\beta^2)^{3/2}}
+ >\frac{853/1000}{(383/1000)(123/50)}
+ =\frac{42650}{47109}>\frac9{10}.
+\tag{31.12}
+$$
+
+On the other hand, $h^2\beta^2\le1/18$, and monotonicity in $A$ gives
+
+$$
+ \frac{Ah^2}{A^2-h^2\beta^2}
+ \le\frac{779/1200}{2((779/1200)^2-1/18)}<\frac9{10}.
+\tag{31.13}
+$$
+
+This proves (31.11), so the maximum is at $x=1$. The first pair there is $2A$, proving (31.4). If $\beta=0$, both conclusions are equalities directly. All half-angle bounds used here follow from source (22.13). $\square$
+
+**Theorem 31.3 (global branch comparisons at the two population ends).** For every $w\in\mathcal W$,
+
+$$
+\begin{aligned}
+ G(w,p)&\ge\kappa r_+(w,p)&& (1/2\le p\le1),\\
+ G(w,p)&\ge\kappa r_-(w,p)&& (0\le p\le1/9).
+\end{aligned}
+\tag{31.14}
+$$
+
+**Proof.** First, the slightly stronger rational bound
+
+$$
+ 0<\kappa<\frac7{200}
+\tag{31.15}
+$$
+
+follows from the defining polynomial of source Theorem 21.3. Indeed, that polynomial is twice
+$(dh-z)(e^2-2z)-d^2$. At $z=7/200$, source (22.13) gives
+
+$$
+\begin{aligned}
+ &(dh-7/200)(e^2-7/100)-d^2\\
+ &<\left(\frac{16311}{5000}\frac{442}{625}-\frac7{200}\right)
+    \left(\left(\frac{10899}{5000}\right)^2-\frac7{100}\right)
+       -\left(\frac{16309}{5000}\right)^2\\
+ &=-\frac{216968701513}{78125000000000}<0.
+\end{aligned}
+\tag{31.16}
+$$
+
+The polynomial is positive at zero, so its smaller positive root satisfies (31.15).
+
+We shall use two actual scalar families. For $0\le y\le\pi/2$, put $\delta=2(1-\cos y)\in[0,2]$ and
+
+$$
+ w^+(y)=(e^{-iy},e^{iy},1,1),\qquad
+ w^-(y)=(1,-1,-ie^{iy},ie^{-iy}).
+\tag{31.17}
+$$
+
+Their actual feedback realizations are $\operatorname{diag}(w^\pm(y))U_+$. The required family comparisons are
+
+$$
+\begin{aligned}
+ G(w^+(y),p)&\ge\kappa(10-2p-2A(w^+(y))),\\
+ G(w^-(y),p)&\ge\gamma(8+2p-2B(w^-(y)))
+ \qquad(0\le p\le1).
+\end{aligned}
+\tag{31.18}
+$$
+
+Here is the extension of the existing scalar identities needed for this range of $y$. For the first family,
+
+$$
+ u=d-h\delta,\quad v^2=2\delta-\delta^2/2,\quad A=4-\delta.
+$$
+
+Use the matrix (24.17) with these exact amplitudes. The polynomial identity (24.23) holds for every $\delta$, and its determinant is $J\delta^2$, with the already established $J>21/10$. Its upper-left entry is
+$\delta(2(dh-\kappa)-\delta/2)>0$ for $0<\delta\le2$; both denominators $D_\delta,F_\delta$ of (24.17) are positive on $[0,2]$, using $d>3$, $e^2>4$ and $\kappa<1/25$. At $\delta=0$ the matrix is $\operatorname{diag}(0,e^2-2\kappa)$. Thus it is positive semidefinite on this full interval. Evaluating on $(\sqrt p,\sqrt{1-p})$ proves the first line of (31.18). This uses the source determinant identity without assuming the high-trace cap or its branch selection.
+
+For the second family,
+
+$$
+ u^2=c^2(4\delta-\delta^2),\quad v=e-s\delta,\quad B=4-\delta.
+$$
+
+Use the exact matrix (25.14), still with $\gamma=1/25$. Write
+
+$$
+\begin{aligned}
+ K_1&=2(es-\gamma)(d^2-2\gamma)-4c^2e^2,\\
+ K_2&=2(h+c-s)+2\gamma s^2-4\gamma es+4\gamma^2+8\gamma c^2.
+\end{aligned}
+$$
+
+Expansion of its determinant gives
+
+$$
+ \det K=\delta\{K_1+\delta(K_2-2\gamma h\delta)\}.
+\tag{31.19}
+$$
+
+In this expansion $e^2c^2-d^2s^2=2(h+c-s)$. The rational bounds (25.17) yield
+
+$$
+ K_1>
+ 2\left(\frac56-\frac1{25}\right)
+   \left(\frac{53}{5}-\frac2{25}\right)
+ -4\frac{171}{200}\frac{119}{25}
+ =\frac{1547}{3750}>0.
+$$
+
+Since $h+c-s>1$, $es<1$, $h<1$ and $\delta\le2$,
+
+$$
+ K_2-2\gamma h\delta
+ >2(h+c-s)-4\gamma(es+h)>\frac{42}{25}>0.
+$$
+
+Its lower-right entry is
+$\delta(2(es-\gamma)-s^2\delta)>0$ for $\delta>0$, by $es>5/6$ and $s^2<3/20$. At zero the matrix is $\operatorname{diag}(d^2-2\gamma,0)$. This proves its positive semidefiniteness and the second line of (31.18), now on all of $[0,2]$. Since its displayed branch distance is nonnegative and $\gamma>\kappa$, the same family comparison holds with $\kappa$.
+
+We next transfer these scalar comparisons to arbitrary correlated phases. Suppose $p\ge1/2$, put $\alpha=\sqrt p$, $\beta=\sqrt{1-p}$ and
+
+$$
+ t=\alpha u(w)+\beta v(w).
+$$
+
+If $t\le2$, then $G\ge e^2-4>2/5>10\kappa\ge\kappa r_+$, using (22.13) and $r_+\le10$. Otherwise put $z=t>2$ and $\varepsilon=\kappa/z<1/50$. There is a real $\phi$ such that
+
+$$
+ t=\left|\sum_{j=1}^4a_j(\phi)w_j\right|,\qquad
+ a(\phi)=\bigl(h(\alpha+\beta e^{i\phi}),
+ h(\alpha-\beta e^{i\phi}),c\alpha+is\beta e^{i\phi},
+ c\alpha-is\beta e^{i\phi}\bigr).
+\tag{31.20}
+$$
+
+This also holds if one of $P,Q$ is zero. Use one common scalar rotation of $w$ to make this sum equal to the real number $t$. Then $A(w)\ge\operatorname{Re}\sum_jw_j$, and the coordinate support of $|w_j|\le1$ gives
+
+$$
+\begin{aligned}
+ t^2-2\kappa A(w)
+ &\le2\operatorname{Re}\sum_j(za_j(\phi)-\kappa)w_j-z^2\\
+ &\le2\sum_j|za_j(\phi)-\kappa|-z^2\\
+ &\le2\sum_j|za_j(\pi/2)-\kappa|-z^2.
+\end{aligned}
+\tag{31.21}
+$$
+
+The last inequality is precisely (31.3). Define $y\in[0,\pi/2)$ by
+
+$$
+ e^{iy}=\frac{h\alpha-\varepsilon+ih\beta}
+                  {|h\alpha-\varepsilon+ih\beta|}.
+$$
+
+The support in the last line of (31.21) is attained by the single actual datum $w^+(y)$: its third and fourth shifted coefficients are positive real because $c\alpha-\varepsilon>s\beta$. Write
+
+$$
+ t_0=\sum_j a_j(\pi/2)w_j^+(y)
+ =\alpha(2h\cos y+2c)+2h\beta\sin y\ge0.
+$$
+
+Since $A(w^+(y))=2+2\cos y$, (31.21), a real square, and (31.18) give
+
+$$
+\begin{aligned}
+ t^2-2\kappa A(w)
+ &\le2zt_0-z^2-2\kappa A(w^+(y))\\
+ &\le t_0^2-2\kappa A(w^+(y))
+ \le D(p)-\kappa(10-2p).
+\end{aligned}
+\tag{31.22}
+$$
+
+This proves the first line of (31.14).
+
+For $p\le1/9$, instead set $\alpha=\sqrt{1-p}$, $\beta=\sqrt p$ and express the same data in the fixed coordinates
+
+$$
+ \widetilde w=(w_1,-w_2,iw_3,-iw_4).
+$$
+
+The identities (25.4) give
+
+$$
+ t=\alpha v(w)+\beta u(w)
+   =\left|\sum_j a^-_j(\phi)\widetilde w_j\right|,
+$$
+
+for a suitable $\phi$, where
+
+$$
+ a^-(\phi)=\bigl(h(\alpha+\beta e^{i\phi}),
+ h(\alpha-\beta e^{i\phi}),s\alpha-ic\beta e^{i\phi},
+ s\alpha+ic\beta e^{i\phi}\bigr).
+\tag{31.23}
+$$
+
+Again $t\le2$ is immediate. If $z=t>2$, then (31.15) ensures $\varepsilon=\kappa/z<7/400$. Rotate by one common scalar phase so the sum is real. Replace $A$ by $B=|\sum_j\widetilde w_j|$ in the support calculation (31.21), and apply (31.4). The maximizing phase for that support sum is now $\phi=0$. Its coordinate support is attained by
+
+$$
+ \widetilde w_0=(1,1,e^{iy},e^{-iy}),\qquad
+ e^{iy}=\frac{s\alpha-\varepsilon+ic\beta}
+                  {|s\alpha-\varepsilon+ic\beta|}.
+$$
+
+Here $0\le y<\pi/2$ and the first two shifted coefficients are positive. Undoing the fixed coordinate transformation gives exactly $w^-(y)$ in (31.17). The corresponding real amplitude is
+
+$$
+ t_0=\alpha(2h+2s\cos y)+2c\beta\sin y.
+$$
+
+The same square as in (31.22), followed by the second family comparison of (31.18), therefore yields
+
+$$
+ t^2-2\kappa B(w)
+ \le t_0^2-2\kappa B(w^-(y))
+ \le D(p)-\kappa(8+2p).
+\tag{31.24}
+$$
+
+This proves the second line of (31.14). The auxiliary families enter a support inequality; all quantities on the left of (31.22) or (31.24) continue to be calculated from the same original $w$. Neither family assigns separate controls to columns of an original effect. $\square$
+
+**Lemma 31.4 (a uniform gap on the intervening population interval).** For every $w\in\mathcal W$ and every $1/9\le p\le1/2$,
+
+$$
+ G(w,p)>\frac7{40}.
+\tag{31.25}
+$$
+
+**Proof.** Write $q=1-p$, $\tau=pq$ and
+
+$$
+ a=\sqrt{c^2p+s^2q}=\sqrt{s^2+hp},\quad
+ m=cp+sq,\quad I=\sqrt2+2a,\quad
+ R=\frac{4\sqrt2(c-s)^2}{a+m}.
+\tag{31.26}
+$$
+
+All denominators are positive. The source identity $a^2-m^2=(c-s)^2\tau$ gives
+
+$$
+ D(p)=I^2-R\tau.
+\tag{31.27}
+$$
+
+For $|x|\le1$, the elementary square-root estimate with its next even term is
+
+$$
+ \sqrt{1+x}+\sqrt{1-x}
+ \le2-\frac{x^2}{4}-\frac{5x^4}{64}.
+\tag{31.28}
+$$
+
+For example, use $\sqrt{1-y}\le1-y/2-y^2/8$ first with $y=x^2$ in the square of the left side, then with $y=x^2/4+x^4/16$ in the resulting square root. The omitted terms have nonpositive sign; continuity includes $|x|=1$.
+
+For the coefficients in (31.20), the triangle inequality gives $\sqrt p\,u+\sqrt q\,v\le\max_\phi\sum_j|a_j(\phi)|$. Apply (31.28) to both opposite pairs, and put $x=\cos^2\phi$. Their sum is at most $I-\mathcal L(x)$, where
+
+$$
+\begin{aligned}
+ \mathcal L(x)
+ &=\tau\left(hx+\frac{1-x}{8a^3}\right)
+  +\tau^2\left(\frac{5h}{4}x^2
+                   +\frac{5}{256a^7}(1-x)^2\right).
+\end{aligned}
+\tag{31.29}
+$$
+
+Both square-root arguments used in (31.28) belong to $[-1,1]$, since they come from the squared moduli of each pair. No phase has been optimized independently between the pairs: the same $x$ occurs throughout (31.29).
+
+We record explicit rational bounds that suffice for the whole interval. In the table, $K,E$ mean $\mathcal L(x)\ge K\tau+E$ for all $0\le x\le1$; entries for $a,m,I$ are strict lower bounds and entries for $R$ are strict upper bounds.
+
+| Population interval | $a>$ | $m>$ | $I>$ | $R<$ | $K$ | $E$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| $[1/9,1/8]$ | $237/500$ | $221/500$ | $59/25$ | $91/50$ | $h$ | $5h\tau^2/4$ |
+| $[1/8,3/16]$ | $969/2000$ | $9/20$ | $119/50$ | $16/9$ | $h$ | $5h\tau^2/8$ |
+| $[3/16,1/4]$ | $66/125$ | $121/250$ | $247/100$ | $33/20$ | $2/3$ | $0$ |
+| $[1/4,5/16]$ | $71/125$ | $517/1000$ | $51/20$ | $77/50$ | $5/9$ | $0$ |
+| $[5/16,3/8]$ | $303/500$ | $11/20$ | $21/8$ | $36/25$ | $15/32$ | $0$ |
+| $[3/8,7/16]$ | $641/1000$ | $117/200$ | $269/100$ | $34/25$ | $2/5$ | $0$ |
+| $[7/16,1/2]$ | $27/40$ | $619/1000$ | $69/25$ | $257/200$ | $7/20$ | $5h\tau^2/32$ |
+
+Here are the verifications of the table and of the gap, including the tightest rows. For a row with left endpoint $\ell$, source (22.13) gives
+
+$$
+ a^2>\left(\frac{3826}{10000}\right)^2
+                 +\frac{7071}{10000}\ell,\qquad
+ m>\frac{9238\ell+3826(1-\ell)}{10000}.
+\tag{31.30}
+$$
+
+Squaring the positive entries in the $a$ column verifies them from the first bound. Substitution verifies the $m$ column. Since $\sqrt2>7071/5000$, these $a$ bounds give the stated $I$ bounds. Also
+
+$$
+ 4\sqrt2(c-s)^2<\frac{83}{50},
+$$
+
+so the $a,m$ columns bound $R$ above respectively by
+
+$$
+ \frac{415}{229},\quad\frac{3320}{1869},\quad
+ \frac{415}{253},\quad\frac{332}{217},\quad
+ \frac{415}{289},\quad\frac{830}{613},\quad\frac{830}{647}.
+$$
+
+Each is strictly below the corresponding $R$ entry by cross multiplication.
+
+On the first row $a<1/2$, $\tau\le7/64$ and
+
+$$
+ \frac{d}{dx}\frac{\mathcal L(x)}\tau
+ \le h-1+\frac{35h}{128}<0.
+$$
+
+Thus its minimum is at $x=1$, giving exactly $K=h$, $E=5h\tau^2/4$. On the second row $a<11/20$; the inequalities
+
+$$
+ 8h(11/20)^3<1,\qquad 64h(11/20)^7<1
+$$
+
+follow already from $h<3/4$. Hence $1/(8a^3)>h$ and $5/(256a^7)>5h/4$; use $x^2+(1-x)^2\ge1/2$ to obtain its entries.
+
+On the next four rows, upper bounds for $a$ are respectively
+$57/100$, $607/1000$, $642/1000$, $676/1000$. They follow by squaring from $a^2=s^2+hp$ and (22.13). For each such upper bound $b$ and the listed $K$, $8Kb^3<1$ and $K<h$, proving $\mathcal L(x)\ge K\tau$. On the last row $a\le h$ exactly, because $p\le1/2$. Thus $1/(8a^3)\ge h/2>7/20$ and
+$5/(256a^7)\ge5h/16$, proving its $E$ entry. These arguments establish the table for every population in its closed intervals.
+
+In every row $I-K\tau-E>0$. Squaring the bound for the amplitude and using (31.27) now gives
+
+$$
+ G\ge\tau(2IK-R-K^2\tau)+2(I-K\tau)E-E^2.
+\tag{31.31}
+$$
+
+For the first two rows, $I-K\tau>9/4$, $E<1/80$, so the last two terms exceed $4E$. For the last row $I-K\tau>8/3$, $E<1/100$, so they exceed $5E$. When $E=0$ they vanish. With $h>7/10$, the seven rows of (31.31) are therefore strictly bounded below, in order, by
+
+$$
+\begin{aligned}
+ &\frac8{81}\left(\frac{10}3-\frac{91}{50}-\frac7{128}\right)
+                +\frac{224}{6561},\\
+ &\frac7{64}\left(\frac{84}{25}-\frac{16}9-\frac{39}{512}\right)
+                +\frac{343}{16384},\\
+ &\frac{39}{256}\left(\frac{247}{75}-\frac{33}{20}-\frac18\right),\\
+ &\frac3{16}\left(\frac{17}6-\frac{77}{50}-\frac18\right),\\
+ &\frac{55}{256}\left(\frac{315}{128}-\frac{36}{25}-\frac18\right),\\
+ &\frac{15}{64}\left(\frac{269}{125}-\frac{34}{25}-\frac1{25}\right)
+                       =\frac{141}{800},\\
+ &\frac{63}{256}\left(\frac{483}{250}-\frac{257}{200}-\frac{49}{1600}\right)
+                +\frac{138915}{4194304}.
+\end{aligned}
+\tag{31.32}
+$$
+
+Every displayed rational number is greater than $7/40$. For the first row one uses $2Ih>10/3$, and for the second $2Ih>84/25$, both from the table and (22.13). In the four middle rows the bound $K^2\tau\le1/8$ suffices for the first three, while the fourth uses $K^2\tau\le1/25$. The last row uses $K^2\tau\le49/1600$. The lower bounds for $\tau$ used in (31.32) are
+$8/81,7/64,39/256,3/16,55/256,15/64,63/256$. This proves (31.25) on the entire closed population interval. $\square$
+
+**Theorem 31.5 (the uniform sharp original producer endpoint).** For the unchanged four-path producer problem,
+
+$$
+ \boxed{\quad
+ g(E,U)\ge\kappa\rho(E,U)
+ \quad\text{for every }E\in\operatorname{Dens}_2,
+                         \ U\in U(4),\qquad
+ C_{\mathrm{opt}}=\kappa^{-1}=R_*.
+ \quad}
+\tag{31.33}
+$$
+
+In particular $\nu_\kappa(\theta)\ge0$ for every datum of (30.15), with all of its correlated scalar phases and populations. For every $w\in\mathcal W$ one also has the inherited quantitative bound
+
+$$
+ F_\kappa(w,p)\ge(1-\mu(w))\eta_\kappa
+ \qquad(0\le p\le1).
+\tag{31.34}
+$$
+
+**Proof.** Take any phase class in (30.15) and any $p\in[0,1]$. If $p\ge1/2$, the first branch comparison of (31.14) and $r\le r_+$ imply $F_\kappa\ge0$. If $p\le1/9$, its second branch comparison and $r\le r_-$ give the same conclusion. On the intervening interval, (31.15), (31.25) and the original joint-sign average bound give
+
+$$
+ \kappa r(w,p)
+ \le\kappa(9-A(w)-B(w))<5\kappa<\frac7{40}<G(w,p),
+\tag{31.35}
+$$
+
+because the residual requires $A+B>4$. Thus $F_\kappa\ge0$ for every population, including both interval junctions, on every correlated phase datum of (30.15). Source Theorem 23.4 gives precisely the required $\nu_\kappa\ge0$. Proposition 30.7 and Theorem 30.6 then establish the full common-phase assertion and its original all-effect, all-actual-unitary consumer. Theorem 30.5 gives (31.34). The lower sharpness sequence and the equivalence with $C_{\mathrm{opt}}=R_*$ are source Theorem 21.3 and (23.22); no new attainability argument is needed.
+
+More explicitly, for any given original $U$, take its actual diagonal $w=\operatorname{diag}(UU_+^\dagger)$ and its actual population $p=b_+^\dagger E^{\mathsf T}b_+$. The same-$U$ comparison (23.14) and (31.34) give
+
+$$
+ g(E,U)-\kappa\rho(E,U)
+ \ge(1-\mu(w))\eta_\kappa
+            +\kappa(1-\operatorname{Tr}(E^2))\ge0.
+\tag{31.36}
+$$
+
+The proof retains the ordinary transpose, singular and mixed normalized effects, all zero amplitudes or traces, and every actual nondiagonal lift. The two branch comparisons are sufficient inequalities for the original minimum; they never replace that minimum by independently attained optimizer signs. The common rotations in (31.21) and (31.24) each fix the single common scalar phase of a calculation, and introduce no extra coordinate phase quotient.
+
+The shifted support comparisons, their transfer to the two original distance branches, and the uniform intervening gap are deductions for this fixed producer problem (`repo-derived`). Coordinate-disk support, differentiation, the square-root Taylor inequality, completing a real square and the two-by-two positive-matrix criterion are mature intermediate tools. The source identities in Sections 21, 23--26 and 30 are reused with their stated parameter correspondence. Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1, Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8), supply the fixed-Kraus fidelity estimate and polar correction, with $t_j=\operatorname{diag}(R_0b_j)$ and input dimension four; their proposition does not assert (31.33)'s producer-distance bound. Buscemi--Chiribella--D'Ariano, [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5, Theorem 2 and (9)](https://arxiv.org/html/quant-ph/0504195v5), supply the rank-two four-dimensional correlation example, entrywise conjugate to the Schrödinger record here. Their random-unitary and perfect-correction conclusions do not supply the shifted support or population-gap estimates. These source distinctions assert no exhaustive literature-priority claim. $\square$
+
+## 追加锚（本行以下为增补区）
