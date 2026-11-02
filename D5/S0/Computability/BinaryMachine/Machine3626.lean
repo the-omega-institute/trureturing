@@ -2,14 +2,23 @@
    generality: G
    mirror-B: D5/B/S0/Computability/BinaryMachine/Machine3626
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.List.Basic]
+   anchors: [mathlib/module/Mathlib.Data.List.Basic, mathlib/module/Mathlib.Data.Nat.Bits]
    utility: none
-   digest: One-sided machine 3626 restores a zero block and crosses its right boundary in exact time. -/
+   digest: Exact restoring block traces for one-sided machine 3626. -/
 
-import Mathlib.Data.List.Basic
-import Mathlib.Tactic.Omega
+module
+
+public import Mathlib.Data.List.Basic
+public import Mathlib.Data.Nat.Bits
+import Lean.Elab.Tactic.Omega
+
+/-!
+# Exact block traces for the one-sided two-state machine
+-/
 
 set_option autoImplicit false
+
+@[expose] public section
 
 namespace D5.S0.Computability.BinaryMachine.Machine3626
 
@@ -49,12 +58,21 @@ inductive Trace : ℕ → Cfg → Option Cfg → Prop
       Trace (t + 1) c result
   | crossing {c : Cfg} (transition : step c = none) : Trace 1 c none
 
-private theorem trace_trans {s t : ℕ} {c d : Cfg} {result : Option Cfg}
-    (h : Trace s c (some d)) (j : Trace t d result) : Trace (s + t) c result := by
+private theorem trace_trans {s t : ℕ} {c : Cfg} {endpoint result : Option Cfg}
+    (h : Trace s c endpoint) :
+    ∀ {d : Cfg}, endpoint = some d → Trace t d result → Trace (s + t) c result := by
   induction h with
-  | zero => simpa using j
+  | zero c =>
+    intro d he j
+    cases he
+    simpa using j
   | cons transition rest ih =>
-    simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using Trace.cons transition ih
+    intro d he j
+    simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
+      Trace.cons transition (ih he j)
+  | crossing transition =>
+    intro d he
+    cases he
 
 /-- A zero block followed by its first one and arbitrary higher cells. -/
 def block (k : ℕ) (higher : List Bool) : List Bool :=
@@ -84,12 +102,11 @@ private theorem block_trace (k : ℕ) (higher right : List Bool) :
       cases right with
       | nil => exact Trace.crossing rfl
       | cons b rest => exact Trace.cons rfl (Trace.zero _)
-    have hmiddle := trace_trans hleft
-      (Trace.cons (by rfl) (trace_trans hright hlast))
+    have hmiddle := trace_trans hleft rfl
+      (Trace.cons (by rfl) (trace_trans hright rfl hlast))
     have hfull := Trace.cons (c := ⟨.A, false :: block k higher, right⟩)
       (by rfl) hmiddle
-    convert hfull using 1 <;>
-      simp [blockTime, block, List.replicate_succ] <;> omega
+    simpa [blockTime, block, List.replicate_succ, Nat.two_mul, Nat.add_assoc] using hfull
 
 /-- Every zero block followed by one crosses the actual right boundary for the first time
 in exactly the stated number of transitions, independently of all higher cells. -/
@@ -99,10 +116,43 @@ theorem block_first_crossing (k : ℕ) (higher : List Bool) :
     intro j
     induction j with
     | zero => rfl
-    | succ j ih => simp only [blockTime, pow_succ]; omega
+    | succ j ih => simp only [blockTime, Nat.pow_succ]; omega
   have ht : blockTime k = 4 * 2 ^ k - 3 := by have := htime k; omega
   simpa only [ht, exitRight] using block_trace k higher []
 
+/-- Binary input is least-significant-bit first, with the head at the right edge. -/
+def initial (n : ℕ) : Cfg := ⟨.A, n.bits, []⟩
+
+/-- Every positive binary input has a first one. Its distance from the edge determines
+an actual first-crossing trace, with no bound on the input or the tape. -/
+theorem positive_input_first_crossing (n : ℕ) (hn : 0 < n) :
+    ∃ (k : ℕ) (higher : List Bool), n.bits = block k higher ∧
+      Trace (4 * 2 ^ k - 3) (initial n) none := by
+  have hshape : ∀ m : ℕ, m ≠ 0 → ∃ (k : ℕ) (higher : List Bool),
+      m.bits = block k higher := by
+    intro m
+    induction m using Nat.binaryRec' with
+    | zero =>
+      intro h
+      exact (h rfl).elim
+    | bit b m hb ih =>
+      intro hm
+      cases b with
+      | true =>
+        exact ⟨0, m.bits, by simp [block]⟩
+      | false =>
+        have hm0 : m ≠ 0 := by
+          intro h
+          simpa using hb h
+        obtain ⟨k, higher, hk⟩ := ih hm0
+        refine ⟨k + 1, higher, ?_⟩
+        rw [Nat.bits_append_bit m false hb, hk]
+        simp [block, List.replicate_succ]
+  obtain ⟨k, higher, hk⟩ := hshape n (Nat.ne_of_gt hn)
+  refine ⟨k, higher, hk, ?_⟩
+  simpa only [initial, hk] using block_first_crossing k higher
+
 #print axioms block_first_crossing
+#print axioms positive_input_first_crossing
 
 end D5.S0.Computability.BinaryMachine.Machine3626
