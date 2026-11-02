@@ -126,8 +126,14 @@ private theorem diagonal_windows (w t q : ℤ) (hw : 4≤w) (ht : 1≤t) (hq : 1
       constructor <;> nlinarith only [htK,hs,hA,ha]
   · by_cases hs : (Values.D V)<alpha
     · simp only [decide_eq_true hs,ite_true]
-      convert hn 3 (by norm_num) (by omega) using 1 <;> congr 1 <;> nlinarith only [htSW]
+      have he : (Values.Dp V)+(Values.A V)-3*t*(Values.SW V)+2*(Values.A V)=
+          (Values.Dp V)+3*g := by nlinarith only [htSW]
+      rw [he]
+      exact hn 3 (by norm_num) (by omega)
     · simp only [decide_eq_false hs,Bool.false_eq_true,ite_false]
-      convert hn 2 (by norm_num) (by omega) using 1 <;> congr 1 <;> nlinarith only [htSW]
+      have he : (Values.Dp V)+(Values.A V)-2*t*(Values.SW V)+(Values.A V)=
+          (Values.Dp V)+2*g := by nlinarith only [htSW]
+      rw [he]
+      exact hn 2 (by norm_num) (by omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum

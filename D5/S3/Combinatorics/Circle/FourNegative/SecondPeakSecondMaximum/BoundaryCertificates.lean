@@ -241,6 +241,7 @@ private theorem boundary_certificate (a b c d : ℕ) (hc : 2≤c) (hd : 2≤d)
   · change [T 0,T 1,T 2,T 3].Perm (negatives a b c d)
     have he : negatives a b c d=[T 2,T 3,T 0,T 1] := by dsimp [negatives,T,broadTerminals,size]
     rw [he]
+    change ([T 0,T 1]++[T 2,T 3]).Perm ([T 2,T 3]++[T 0,T 1])
     exact List.perm_append_comm
   · intro pkt hpkt i hi
     simp only [ps,List.mem_cons,List.mem_nil_iff,or_false] at hpkt
@@ -274,7 +275,8 @@ private theorem boundary_certificate (a b c d : ℕ) (hc : 2≤c) (hd : 2≤d)
     rcases k1n with ⟨k10,k11⟩
     rcases k2n with ⟨k20,k21⟩
     cases swap <;> dsimp [earX,earU] at pxn pun zn
-    all_goals simp only [ps,finiteEarChecks,finiteChecks,zero_add]
+    all_goals simp only [Bool.false_eq_true,ite_false,ite_true,ps,finiteEarChecks,finiteChecks,zero_add]
+    all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at k10 k11
     all_goals change 0≤G 0+g (T 0) ∧ G 0≤N ∧ _
     all_goals exact ⟨by linarith only [g0,k00],by linarith only [g0,k01],
       by linarith only [pxn,k10],by linarith only [pxn,k11],
@@ -287,9 +289,13 @@ private theorem adjacent_certificate_exists (a b c d : ℕ) (hc : 2≤c)
   have hz : (4:ℤ)≤2^c := by
     simpa using pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) hc
   have hw : (2:ℤ)^d=2*2^c := by rw [hcd,pow_succ];ring
-  simpa only [hw,Bool.false_eq_true,ite_false,add_zero] using
-    adjacent_windows (2^c) (2^(a-d-1)) (2^(b-a)) hz
-      (one_le_pow₀ (by norm_num)) (one_le_pow₀ (by norm_num))
+  have hh := adjacent_windows (2^c) (2^(a-d-1)) (2^(b-a)) hz
+    (one_le_pow₀ (by norm_num)) (one_le_pow₀ (by norm_num))
+  simp only [hw,Bool.false_eq_true,ite_false,add_zero]
+  dsimp only at hh
+  unfold window at hh ⊢
+  ring_nf at hh ⊢
+  exact hh
 
 private theorem diagonal_certificate_exists (a b d : ℕ) (hd : 2≤d)
     (hda : d<a) (hab : a≤b) : Nonempty (Certificate a b d d) := by
