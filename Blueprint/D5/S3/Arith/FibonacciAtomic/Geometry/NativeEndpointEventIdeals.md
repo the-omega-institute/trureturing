@@ -6,6 +6,8 @@ Membership-defined native event ideals supply actual guarded execution adequacy.
 
 Source is the unchanged Bool free magma, alpha is true and beta is false. Events consist of one split at each target branch and one promotion at each root or right-born position whose target subtree is not alpha. EventLe uses address prefix ancestry and promotion before split at one address. Ideal is supported lower closure. cutTerm is defined solely by membership: without a local split it is the initial or promoted leaf; after splitting it recursively combines the two child cuts. Created records strict ancestor creating splits. The original NativeGuardedLeafRepair.run, Call.shift, ActualLeafHistoryRigidity.subtree and ActualImageAddressCertificate.replace are retained. NativePostClockInverse supplies only its original address/kind/replacement/edited definitions; no clock inverse or serial-clock data is used.
 
+Original Lean suppliers: `D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport` (Source); `D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity` (subtree); `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate` (replace); `D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition` (D); `D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair` (Call.shift, run, D_mul, run_preserves_D); `D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativePostClockInverse` (address, kind, replacement, edited only); `D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity` (Enabled, Exec, ExtensionList, result).
+
 **Theorem 1.1 (Creating root split precedence).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.root_before`
@@ -136,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.
 
 *Commentary.*
 
-For every compatible target, supported lower set and endpoint event, the actual native leaf guard is equivalent to freshness and membership of every strict causal predecessor. The proof uses structural descent, the guard/ancestor correspondence and lower closure. It assumes neither simulation nor reachability.
+For every compatible target, supported lower set and endpoint event, the actual native leaf guard is equivalent to freshness and membership of every strict causal predecessor. The proof locates the actual non-alpha target subtree of each event, characterizes enabling by creating-ancestor and local membership conditions, and applies guard_ancestor at that event address. This consumes the full addressed-subtree correspondence, with no simulation or reachability premise.
 
 **Theorem 1.12 (History-independent inventory).**
 
@@ -220,3 +222,10 @@ The owning source clauses are Unified Joint Law Bridge Proposition 5.3 legal gen
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointEventIdeals.subtree_partial`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativePostClockInverse](../Observer/OriginalVector/NativePostClockInverse.md)
 - Dependency: [D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity](../../../ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate](../ActualImageAddressCertificate.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity](../ActualLeafHistoryRigidity.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport](../GenealogicalFiberTransport.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair](NativeGuardedLeafRepair.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition](NativeMaterialRootRecognition.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativePostClockInverse](../Observer/OriginalVector/NativePostClockInverse.md)
+- Narrative reference: [D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity](../../../ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.md)

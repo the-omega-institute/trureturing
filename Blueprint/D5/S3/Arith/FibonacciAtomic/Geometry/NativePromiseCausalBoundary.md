@@ -6,6 +6,8 @@ Every all-assignment promised comb has native causal histories and distinct lega
 
 C is the original ActualImageSevenLeafSeparation.E=(beta,alpha). D0 is the original FourExitRawEndpointSpectrum.z=(beta,C), and D1 is ActualImageSevenLeafSeparation.A=(C,beta). The marker is ((C,alpha),alpha), using NativeFreshSensorGrowth.cone false. promise N z is the unchanged right comb with 15N slots and that marker. Every assignment z from Fin(15N) to Bool is included; no sampled-support, group, sampler, controller or independence premise restricts the family.
 
+Original Lean suppliers: `D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation` (E and A); `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum` (z and comb); `D5/S3/Arith/FibonacciAtomic/Geometry/NativeFreshSensorGrowth` (cone and original run_append); `D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair` (original context_run and D_mul).
+
 **Theorem 1.1 (All promised assignments and the causal versus serial boundary).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativePromiseCausalBoundary.result`
@@ -29,3 +31,7 @@ This is the native structural prerequisite for Unified Joint Law Bridge 5.3 and 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativePromiseCausalBoundary.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum](../FourExitRawEndpointSpectrum.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/NativeEndpointCausalOrder](NativeEndpointCausalOrder.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation](../ActualImageSevenLeafSeparation.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum](../FourExitRawEndpointSpectrum.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/Geometry/NativeFreshSensorGrowth](NativeFreshSensorGrowth.md)
+- Narrative reference: [D5/S3/Arith/FibonacciAtomic/Geometry/NativeGuardedLeafRepair](NativeGuardedLeafRepair.md)
