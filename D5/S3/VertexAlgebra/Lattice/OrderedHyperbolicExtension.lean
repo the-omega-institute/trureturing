@@ -64,7 +64,6 @@ def U : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; 1, 0]
 theorem U_symmetric (i j : Fin 2) : U i j = U j i := by
   fin_cases i <;> fin_cases j <;> rfl
 
-@[simp] theorem U_det : U.det = -1 := by norm_num [Matrix.det_fin_two, U]
 @[simp] theorem U_mul_U : U * U = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;> norm_num [Matrix.mul_apply, Fin.sum_univ_two, U]
@@ -195,19 +194,6 @@ theorem lowerCocycleExponent_splice (D : LatticeData)
   simp [sum_ordered D, halfDiagonal]
   ring
 
-theorem epsilon_splice (D : LatticeData) (a b : Charge D) (m n r s : ℤ) :
-    epsilon (extend D) (splice D a m n) (splice D b r s) =
-      epsilon D a b * paritySign (n * r) := by
-  unfold epsilon
-  rw [lowerCocycleExponent_splice, LatticeActualGeneratorLocality.paritySign_add]
-
-/-- Determinant is derived from the block construction. -/
-theorem det_extend (D : LatticeData) : (extend D).G.det = -D.G.det := by
-  change (Matrix.reindex (indexEquiv D) (indexEquiv D)
-    (Matrix.fromBlocks D.G 0 0 U)).det = _
-  rw [Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁, U_det]
-  ring
-
 /-- Literal integral inverse: old inverse followed by the SAME U block. -/
 def integerInverse (D : LatticeData) :
     Matrix (Fin (D.rank + 2)) (Fin (D.rank + 2)) ℤ :=
@@ -233,24 +219,6 @@ theorem integerInverse_right (D : LatticeData) (hD : IsUnit D.G.det) :
 def complexInverse (D : LatticeData) :
     Matrix (Fin (D.rank + 2)) (Fin (D.rank + 2)) ℂ :=
   (integerInverse D).map (Int.castRingHom ℂ)
-
-theorem complexInverse_left (D : LatticeData) (hD : IsUnit D.G.det) :
-    complexInverse D * gramComplex (extend D) = 1 := by
-  ext i j
-  have h := congrArg (fun M : Matrix (Fin (D.rank + 2)) (Fin (D.rank + 2)) ℤ => M i j)
-    (integerInverse_left D hD)
-  simp only [Matrix.mul_apply, Matrix.one_apply] at h ⊢
-  change (∑ k, (integerInverse D i k : ℂ) * ((extend D).G k j : ℂ)) = _
-  exact_mod_cast h
-
-theorem complexInverse_right (D : LatticeData) (hD : IsUnit D.G.det) :
-    gramComplex (extend D) * complexInverse D = 1 := by
-  ext i j
-  have h := congrArg (fun M : Matrix (Fin (D.rank + 2)) (Fin (D.rank + 2)) ℤ => M i j)
-    (integerInverse_right D hD)
-  simp only [Matrix.mul_apply, Matrix.one_apply] at h ⊢
-  change (∑ k, ((extend D).G i k : ℂ) * (integerInverse D k j : ℂ)) = _
-  exact_mod_cast h
 
 /-- The original supplier's full bilinear normalization, over the reals. -/
 theorem g_R_splice (D : LatticeData) (a b : E_R D) (m n r s : ℝ) :
