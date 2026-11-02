@@ -334,7 +334,7 @@ noncomputable def registration :
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 12
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg", "fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -345,7 +345,7 @@ end Conformal
 namespace Decomposition
 
 universe v
-open scoped Matrix
+open scoped BigOperators Matrix
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit.OrderedField
 
 private noncomputable instance liftedRealStrict : IsStrictOrderedRing (ULift.{u} ℝ) :=
@@ -464,14 +464,14 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
     definition := none
-    coordinates := #[0, 4, 6, 7]
-    readouts := [{
+    coordinates := #[0, 4, 6, 7, 10, 12]
+    readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "body",
         "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 11
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg", "fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
