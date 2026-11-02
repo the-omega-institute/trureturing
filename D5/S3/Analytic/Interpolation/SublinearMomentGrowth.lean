@@ -1,15 +1,10 @@
 /- GID: D5/S3/Analytic/Interpolation/SublinearMomentGrowth
-   owner: D5/S3/Analytic/Interpolation/SublinearMomentGrowth
-   scribe: Blueprint/D5/S3/Analytic/Interpolation/SublinearMomentGrowth.scribe.cs
-
-   Source candidate, without an elaboration or validation claim. The finite
-   truncated Newton identity and the translated-stencil Gram estimate have
-   proof bodies below and feed the finite Newton envelope bound. Uniform
-   variable-order binomial growth and finite real-radius dyadic lifting have
-   proof bodies too. The sole public theorem, `sublinear_moment_growth`, keeps
-   the full original telescope. The separate Reg owner imports this source
-   and the existing enrolled support for its unelaborated typed audit attempt.
--/
+   generality: I
+   mirror-B: D5/B/S3/Analytic/Interpolation/SublinearMomentGrowth
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Algebra.Group.ForwardDiff, mathlib/module/Mathlib.Topology.Order.Compact]
+   utility: none
+   digest: Subexponential growth from sublinear-order finite atomic moment positivity. -/
 
 import D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
 import Mathlib.Algebra.Group.ForwardDiff
@@ -23,6 +18,8 @@ import Mathlib.Topology.Order.Compact
 import Mathlib.Tactic.Positivity
 import Mathlib.Algebra.Order.Archimedean.Basic
 
+/-! Truncated Newton remainders, translated Gram bounds and finite dyadic lifting. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -32,6 +29,8 @@ open Finset Filter Function Real
 open scoped BigOperators ComplexConjugate Topology fwdDiff
 
 namespace D5.S3.Analytic.Interpolation.SublinearMomentGrowth
+
+open D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
 
 /-- Finite summation by parts, including the empty sum. -/
 private lemma finite_summation_by_parts (w a : ℕ → ℝ) (N : ℕ) :
@@ -70,7 +69,7 @@ private lemma binomial_remainder_step (a : ℕ → ℝ) (n p : ℕ)
   have hz : ((n - (n - p + 1)).choose p : ℝ) = 0 := by
     rw [show n - (n - p + 1) = p - 1 by omega,
       Nat.choose_eq_zero_of_lt (by omega)]
-    rfl
+    simp
   calc
     _ = ∑ j ∈ range (n - p + 1),
         (((n - j).choose p : ℝ) - ((n - (j + 1)).choose p : ℝ)) * a j := by
@@ -171,72 +170,10 @@ private lemma truncated_newton_abs_le (f : ℝ → ℝ) (n p : ℕ) (r : ℝ)
       _ = (n.choose p : ℝ) * B := by
         rw [← sum_mul, remainder_coefficient_sum n p hp hpn]
 
-/-- The binomial coefficient of the translated `k`-stencil. -/
-private def stencilWeight (k j : ℕ) : ℝ := (-1 : ℝ) ^ j * k.choose j
-
-/--
-The signed binomial stencil is the `k`-fold forward difference.  This is the
-single-stencil identity used for every translated moment cancellation below.
--/
-private lemma weighted_shift (k : ℕ) (g : ℝ → ℝ) (x : ℝ) :
-    ∑ j ∈ range (k + 1), stencilWeight k j * g (x + j) =
-      (-1 : ℝ) ^ k * (fwdDiff (1 : ℝ))^[k] g x := by
-  rw [fwdDiff_iter_eq_sum_shift, mul_sum]
-  apply sum_congr rfl
-  intro j hj
-  have hjk : j ≤ k := by simpa using hj
-  have hs : (-1 : ℝ) ^ k * (-1 : ℝ) ^ (k - j) = (-1 : ℝ) ^ j := by
-    have he : k + (k - j) = j + 2 * (k - j) := by omega
-    rw [← pow_add, he, pow_add, pow_mul]
-    norm_num
-  simp only [stencilWeight, zsmul_eq_mul, Int.cast_mul, Int.cast_pow,
-    Int.cast_neg, Int.cast_one, Int.cast_natCast, nsmul_eq_mul, mul_one]
-  rw [← mul_assoc, ← mul_assoc, hs]
-
-/--
-The two-stencil convolution is an exact `2k`-fold difference.  The reflected
-inner index is intentional: it handles overlaps and repeated nodes without a
-separation assumption.
--/
-private lemma double_weighted_shift (k : ℕ) (g : ℝ → ℝ) :
-    ∑ i ∈ range (k + 1), ∑ j ∈ range (k + 1),
-      stencilWeight k i * stencilWeight k j * g ((i : ℝ) - j) =
-      (-1 : ℝ) ^ k * (fwdDiff (1 : ℝ))^[2 * k] g (-(k : ℝ)) := by
-  have hi (i : ℕ) :
-      ∑ j ∈ range (k + 1), stencilWeight k j * g ((i : ℝ) - j) =
-        (fwdDiff (1 : ℝ))^[k] g ((i : ℝ) - k) := by
-    rw [← sum_range_reflect]
-    have he : ∀ j ∈ range (k + 1),
-        stencilWeight k (k + 1 - 1 - j) *
-            g ((i : ℝ) - ((k + 1 - 1 - j : ℕ) : ℝ)) =
-          ((-1 : ℤ) ^ (k - j) * k.choose j) •
-            g ((i : ℝ) - k + j • (1 : ℝ)) := by
-      intro j hj
-      have hjk : j ≤ k := by simpa using hj
-      simp only [Nat.add_sub_cancel, stencilWeight, Nat.choose_symm hjk,
-        zsmul_eq_mul, Int.cast_mul, Int.cast_pow, Int.cast_neg,
-        Int.cast_one, Int.cast_natCast, nsmul_eq_mul, mul_one]
-      rw [Nat.cast_sub hjk]
-      congr 2
-      ring
-    rw [sum_congr rfl he]
-    exact (fwdDiff_iter_eq_sum_shift 1 g k ((i : ℝ) - k)).symm
-  simp_rw [mul_assoc, ← mul_sum, hi]
-  have he : (fun i : ℕ => stencilWeight k i *
-      (fwdDiff (1 : ℝ))^[k] g ((i : ℝ) - k)) =
-      (fun i => stencilWeight k i *
-        (fwdDiff (1 : ℝ))^[k] g (-(k : ℝ) + i)) := by
-    ext i
-    congr 1
-    ring
-  rw [he, weighted_shift]
-  congr 1
-  rw [show 2 * k = k + k by omega, Function.iterate_add_apply]
-
 /-- The translated version of the convolution identity. -/
 private lemma double_weighted_shift_translate (k : ℕ) (g : ℝ → ℝ) (u : ℝ) :
     ∑ i ∈ range (k + 1), ∑ j ∈ range (k + 1),
-      stencilWeight k i * stencilWeight k j * g (u + (i : ℝ) - j) =
+      weight k i * weight k j * g (u + (i : ℝ) - j) =
       (-1 : ℝ) ^ k * (fwdDiff (1 : ℝ))^[2 * k] g (u - k) := by
   have h := double_weighted_shift k (fun x : ℝ => g (x + u))
   rw [fwdDiff_iter_comp_add] at h
@@ -244,17 +181,18 @@ private lemma double_weighted_shift_translate (k : ℕ) (g : ℝ → ℝ) (u : �
 
 /-- Every translated power of degree below `k` is killed by the stencil. -/
 private lemma stencil_moment_zero (k r : ℕ) (x : ℝ) (hr : r < k) :
-    ∑ j ∈ range (k + 1), stencilWeight k j * (x + j) ^ r = 0 := by
+    ∑ j ∈ range (k + 1), weight k j * (x + j) ^ r = 0 := by
+  change (∑ j ∈ range (k + 1), weight k j * (fun y : ℝ => y ^ r) (x + j)) = 0
   rw [weighted_shift, fwdDiff_iter_pow_eq_zero_of_lt hr]
   simp
 
 private lemma stencil_weight_abs (k j : ℕ) :
-    |stencilWeight k j| = (k.choose j : ℝ) := by
-  rw [stencilWeight, abs_mul, abs_pow, abs_neg, abs_one, one_pow, one_mul,
+    |weight k j| = (k.choose j : ℝ) := by
+  rw [weight, abs_mul, abs_pow, abs_neg, abs_one, one_pow, one_mul,
     abs_of_nonneg (Nat.cast_nonneg _)]
 
 private lemma stencil_weight_abs_sum (k : ℕ) :
-    (∑ j ∈ range (k + 1), |stencilWeight k j|) = (2 : ℝ) ^ k := by
+    (∑ j ∈ range (k + 1), |weight k j|) = (2 : ℝ) ^ k := by
   simp_rw [stencil_weight_abs]
   rw [← Nat.cast_sum, Nat.sum_range_choose, Nat.cast_pow, Nat.cast_ofNat]
 
@@ -310,26 +248,32 @@ private lemma real_quadratic_nonneg {F : ℝ → ℝ} {D : ℝ} {k : ℕ}
   have hm (r : ℕ) (hr : r < k) :
       ∑ i : Fin (Fintype.card ι),
         (a (e.symm i) : ℂ) * (x (e.symm i) : ℂ) ^ r = 0 := by
-    rw [e.symm.sum_comp]
+    rw [e.symm.sum_comp (fun i : ι => (a i : ℂ) * (x i : ℂ) ^ r)]
     have h := congrArg (fun y : ℝ => (y : ℂ)) (ha r hr)
     simpa only [Complex.ofReal_sum, Complex.ofReal_mul,
       Complex.ofReal_pow, Complex.ofReal_zero] using h
   have h := hD (Fintype.card ι) (fun i => x (e.symm i))
     (fun i => (a (e.symm i) : ℂ)) (fun i => hx (e.symm i)) hm
-  simpa only [Equiv.sum_comp, Complex.conj_ofReal, ← Complex.ofReal_mul,
-    ← Complex.ofReal_sum, Complex.ofReal_re] using h
+  simp only [Complex.conj_ofReal, ← Complex.ofReal_mul,
+    ← Complex.ofReal_sum, Complex.ofReal_re] at h
+  have hsum : (∑ i : Fin (Fintype.card ι), ∑ j : Fin (Fintype.card ι),
+      a (e.symm i) * a (e.symm j) * F (x (e.symm i) - x (e.symm j))) =
+      ∑ i : ι, ∑ j : ι, a i * a j * F (x i - x j) := by
+    apply Fintype.sum_equiv e.symm
+    intro i
+    exact Fintype.sum_equiv e.symm _ _ (fun j => rfl)
+  rwa [hsum] at h
 
 /-- The convolution retains the individual stencil indices. -/
 private def stencilConvolution (F : ℝ → ℝ) (k : ℕ) (u : ℝ) : ℝ :=
   ∑ i : Fin (k + 1), ∑ j : Fin (k + 1),
-    stencilWeight k i * stencilWeight k j * F (u + (i : ℝ) - j)
+    weight k i * weight k j * F (u + (i : ℝ) - j)
 
 private lemma stencil_convolution_difference (F : ℝ → ℝ) (k : ℕ) (u : ℝ) :
     stencilConvolution F k u =
       (-1 : ℝ) ^ k * (fwdDiff (1 : ℝ))^[2 * k] F (u - k) := by
   unfold stencilConvolution
-  simp_rw [Fin.sum_univ_eq_sum_range]
-  exact double_weighted_shift_translate k F u
+  simpa only [Finset.sum_range] using double_weighted_shift_translate k F u
 
 private lemma stencil_convolution_neg (F : ℝ → ℝ)
     (heven : ∀ t : ℝ, F (-t) = F t) (k : ℕ) (u : ℝ) :
@@ -345,7 +289,7 @@ private lemma stencil_convolution_neg (F : ℝ → ℝ)
 
 private lemma scaled_stencil_pair (F : ℝ → ℝ) (k : ℕ) (s t u v : ℝ) :
     (∑ i : Fin (k + 1), ∑ j : Fin (k + 1),
-      (s * stencilWeight k i) * (t * stencilWeight k j) *
+      (s * weight k i) * (t * weight k j) *
         F ((u + (i : ℝ)) - (v + (j : ℝ)))) =
       (s * t) * stencilConvolution F k (u - v) := by
   unfold stencilConvolution
@@ -390,13 +334,12 @@ private lemma stencil_gram_bound {F : ℝ → ℝ} {D : ℝ} (k : ℕ)
       0 ≤ (1 + s * s) * stencilConvolution F k 0 +
         2 * s * stencilConvolution F k u := by
     let a : Fin (k + 1) ⊕ Fin (k + 1) → ℝ :=
-      Sum.elim (fun i => 1 * stencilWeight k i) (fun i => s * stencilWeight k i)
+      Sum.elim (fun i => 1 * weight k i) (fun i => s * weight k i)
     have ha : ∀ r : ℕ, r < k → ∑ i, a i * (x i) ^ r = 0 := by
       intro r hr
       have hzero (v : ℝ) :
-          (∑ i : Fin (k + 1), stencilWeight k i * (v + (i : ℝ)) ^ r) = 0 := by
-        rw [Fin.sum_univ_eq_sum_range]
-        exact stencil_moment_zero k r v hr
+          (∑ i : Fin (k + 1), weight k i * (v + (i : ℝ)) ^ r) = 0 := by
+        simpa only [Finset.sum_range] using stencil_moment_zero k r v hr
       simp only [a, x, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, one_mul]
       simp_rw [mul_assoc, ← mul_sum]
       rw [hzero 0, hzero u, mul_zero, add_zero]
@@ -416,17 +359,16 @@ private lemma stencil_gram_bound {F : ℝ → ℝ} {D : ℝ} (k : ℕ)
 private lemma stencil_diagonal_le {F : ℝ → ℝ} (hF : Continuous F)
     (heven : ∀ t : ℝ, F (-t) = F t) (k : ℕ) :
     |stencilConvolution F k 0| ≤ (2 : ℝ) ^ (2 * k) * envelope F k := by
-  have hw : (∑ i : Fin (k + 1), |stencilWeight k i|) = (2 : ℝ) ^ k := by
-    rw [Fin.sum_univ_eq_sum_range]
-    exact stencil_weight_abs_sum k
+  have hw : (∑ i : Fin (k + 1), |weight k i|) = (2 : ℝ) ^ k := by
+    simpa only [Finset.sum_range] using stencil_weight_abs_sum k
   calc
     _ ≤ ∑ i : Fin (k + 1), ∑ j : Fin (k + 1),
-        |stencilWeight k i * stencilWeight k j * F (0 + (i : ℝ) - j)| := by
+        |weight k i * weight k j * F (0 + (i : ℝ) - j)| := by
       unfold stencilConvolution
       exact (abs_sum_le_sum_abs _ _).trans
         (sum_le_sum fun i hi => abs_sum_le_sum_abs _ _)
     _ ≤ ∑ i : Fin (k + 1), ∑ j : Fin (k + 1),
-        |stencilWeight k i| * |stencilWeight k j| * envelope F k := by
+        |weight k i| * |weight k j| * envelope F k := by
       apply sum_le_sum
       intro i hi
       apply sum_le_sum
@@ -441,9 +383,9 @@ private lemma stencil_diagonal_le {F : ℝ → ℝ} (hF : Continuous F)
       rw [abs_mul, abs_mul]
       exact mul_le_mul_of_nonneg_left (abs_le_envelope_of_even hF heven harg)
         (mul_nonneg (abs_nonneg _) (abs_nonneg _))
-    _ = (∑ i : Fin (k + 1), |stencilWeight k i|) *
-        (∑ j : Fin (k + 1), |stencilWeight k j|) * envelope F k := by
-      simp only [sum_mul, mul_sum, mul_assoc]
+    _ = (∑ i : Fin (k + 1), |weight k i|) *
+        (∑ j : Fin (k + 1), |weight k j|) * envelope F k := by
+      simp only [sum_mul, mul_sum, mul_assoc, mul_left_comm]
     _ = (2 : ℝ) ^ (2 * k) * envelope F k := by
       rw [hw, ← pow_add, show k + k = 2 * k by omega]
 
@@ -469,28 +411,15 @@ private lemma finite_stencil_bound {F : ℝ → ℝ} (hF : Continuous F)
     _ ≤ |stencilConvolution F k 0| := le_abs_self _
     _ ≤ (2 : ℝ) ^ (2 * k) * envelope F k := stencil_diagonal_le hF heven k
 
-/--
-Corrected eventual order: `k` is exactly `m D`, rather than an arbitrary natural
-number admitted by the unrelated assertion `1 ≤ m D`.
--/
-private lemma stencil_bound {F : ℝ → ℝ} {m : ℝ → ℕ} (hF : Continuous F)
-    (heven : ∀ t : ℝ, F (-t) = F t) (hpos : momentPositive F m) :
-    ∀ᶠ D : ℝ in atTop, ∀ v : ℝ, 0 ≤ v → v + 2 * m D ≤ D →
-      |(fwdDiff (1 : ℝ))^[2 * m D] F v| ≤
-        (2 : ℝ) ^ (2 * m D) * envelope F (m D) := by
-  filter_upwards [hpos] with D hD
-  intro v hv hvD
-  exact finite_stencil_bound hF heven (m D) hD hv hvD
-
 private lemma difference_le_envelope {F : ℝ → ℝ} (hF : Continuous F)
     (q : ℕ) {r R : ℝ} (hr : 0 ≤ r) (hrq : r + q ≤ R) :
     |(fwdDiff (1 : ℝ))^[q] F r| ≤ (2 : ℝ) ^ q * envelope F R := by
   calc
-    _ = |∑ j ∈ range (q + 1), stencilWeight q j * F (r + j)| := by
+    _ = |∑ j ∈ range (q + 1), weight q j * F (r + j)| := by
       rw [weighted_shift, abs_mul, abs_pow, abs_neg, abs_one, one_pow, one_mul]
-    _ ≤ ∑ j ∈ range (q + 1), |stencilWeight q j * F (r + j)| :=
+    _ ≤ ∑ j ∈ range (q + 1), |weight q j * F (r + j)| :=
       abs_sum_le_sum_abs _ _
-    _ ≤ ∑ j ∈ range (q + 1), |stencilWeight q j| * envelope F R := by
+    _ ≤ ∑ j ∈ range (q + 1), |weight q j| * envelope F R := by
       apply sum_le_sum
       intro j hj
       have hjq : (j : ℝ) ≤ q := by exact_mod_cast (Nat.le_of_lt_succ (mem_range.mp hj))
