@@ -17,7 +17,7 @@ open private Values values
   Values.z Values.w Values.r Values.q Values.x Values.y Values.H Values.S
   Values.A Values.B Values.L Values.K Values.SU Values.SV Values.SW Values.D Values.Dp
   broadTerminals
-  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.Broad
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.BroadData
 open private boundaryBanks boundaryWord boundary_inventory boundary_good boundary_masses
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.Boundaries
 open private window adjacent_windows diagonal_windows

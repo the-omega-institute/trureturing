@@ -13,7 +13,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum
 open private Values values
   Values.z Values.w Values.r Values.q Values.x Values.y Values.H Values.S
   Values.A Values.B Values.L Values.K Values.SU Values.SV Values.SW Values.D Values.Dp
-  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.Broad
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.BroadData
 
 private def window (e S : ℤ) : Prop := 0≤e ∧ 2*e≤S-1
 

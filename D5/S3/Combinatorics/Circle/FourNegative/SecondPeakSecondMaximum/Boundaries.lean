@@ -17,7 +17,7 @@ open private Values values
   Values.z Values.w Values.r Values.q Values.x Values.y Values.H Values.S
   Values.A Values.B Values.L Values.K Values.SU Values.SV Values.SW
   Values.D Values.Dp Values.E Values.F Values.J broadTerminals
-  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.Broad
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.BroadData
 open private size sourceMod base newBase charge oldValue newValue negatives chainLength chainStart
   nextBase nextNewBase weightedMask packet_masses chain_values new_base_bounds
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
