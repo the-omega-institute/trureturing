@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/Quandles/SixRelationObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [lit/gupta2025biorderability]
-   utility: kind=none
+   utility: none
    digest: Six relations force collapse in a biordered idempotent magma. -/
 
 /- proof_shape: content (strict-order cycle and order duality).

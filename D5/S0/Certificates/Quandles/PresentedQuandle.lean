@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/Quandles/PresentedQuandle
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Quandle, mathlib/module/Mathlib.Data.Quot]
-   utility: kind=none
+   utility: none
    digest: Term presentation of quandles with inverse action and its universal evaluation map. -/
 
 /- proof_shape: content (term congruence, quotient quandle and universal map).
