@@ -616,14 +616,14 @@ theorem condMeanAtomize_convexOrder {a b : ℝ} {μ ν : ProbDist ℝ}
     condMeanAtomize_mean_eq hν_int n hn
   have h_sum_x : ∑ i, x i = (n : ℝ) * μ.expect id := by
     have h_mean_eq : (condMeanAtomize μ n hn).mean = (∑ i, x i) / n := by
-      simpa [hx_def] using
+      simpa only [hx_def, condMeanAtomize] using
         DiscreteLaw.uniform_mean hn (fun k => condMeanAtom μ n hn k)
     rw [hμ_mean] at h_mean_eq
     field_simp at h_mean_eq
     linarith
   have h_sum_y : ∑ i, y i = (n : ℝ) * ν.expect id := by
     have h_mean_eq : (condMeanAtomize ν n hn).mean = (∑ i, y i) / n := by
-      simpa [hy_def] using
+      simpa only [hy_def, condMeanAtomize] using
         DiscreteLaw.uniform_mean hn (fun k => condMeanAtom ν n hn k)
     rw [hν_mean] at h_mean_eq
     field_simp at h_mean_eq

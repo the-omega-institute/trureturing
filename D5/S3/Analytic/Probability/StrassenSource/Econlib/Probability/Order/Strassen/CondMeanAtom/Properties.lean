@@ -127,7 +127,7 @@ lemma quantile_mem_Icc_of_supportsOn_Icc {a b : ℝ} {μ : ProbDist ℝ}
     have h_Iic_zero : μ.toMeasure (Iic x) = 0 := by
       have : μ.toMeasure (Iic x) ≤ μ.toMeasure (Icc a b)ᶜ := measure_mono h_sub_compl
       rw [h_compl_zero] at this
-      exact le_antisymm this (zero_le _)
+      exact le_antisymm this bot_le
     rw [hS_def] at hx
     simp only [Set.mem_setOf_eq, h_Iic_zero, ENNReal.toReal_zero] at hx
     linarith

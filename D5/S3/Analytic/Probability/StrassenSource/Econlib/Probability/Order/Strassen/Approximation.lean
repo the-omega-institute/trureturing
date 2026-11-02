@@ -71,9 +71,9 @@ theorem exists_discrete_approximation {a b : ℝ} {μ ν : ProbDist ℝ}
   · intro n
     simp [DiscreteLaw.condMeanAtomize_n]
   · intro n i
-    simp [DiscreteLaw.condMeanAtomize_weight, DiscreteLaw.condMeanAtomize_n]
+    rfl
   · intro n j
-    simp [DiscreteLaw.condMeanAtomize_weight, DiscreteLaw.condMeanAtomize_n]
+    rfl
   · exact fun n i =>
       DiscreteLaw.condMeanAtom_mem_Icc h.support_left (n + 1) (Nat.succ_pos n) i
   · exact fun n j =>
