@@ -1,6 +1,6 @@
-/- GID: D5 / S3 / Combinatorics / SpectralGraph / FiedlerResistanceK2mSharpSpectrum
+/- GID: D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mSharpSpectrum
    generality: I
-   mirror-B: D5 / B / S3 / Combinatorics / SpectralGraph / FiedlerResistanceK2mSharpSpectrum
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mSharpSpectrum
    mirror-E: none(waiver:noncomputational)
    anchors: []
    utility: none
