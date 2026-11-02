@@ -3,6 +3,7 @@ import D5.S3.FiniteGroups.BajnokBeattyExtremalGrowth
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Group.ULift
 
+/-! The complete source telescopes with their actual finite-image cardinality observations. -/
 namespace Reg.D5.S3.FiniteGroups.BajnokBeattyExtremalGrowth
 
 open _root_.D5.S3.FiniteGroups.BajnokBeattyExtremalGrowth
@@ -72,7 +73,10 @@ noncomputable def shortKernelSource : Registration shortKernelArena.{u}
       exact nomatch e
   dependence := by
     intro i
-    exact ⟨ULift.{u} (ZMod 1),∅,{0},by norm_num [actualCard,realize]⟩
+    refine ⟨ULift.{u} (ZMod 1),
+      (∅ : Finset (ULift.{u} (ZMod 1))), ({0} : Finset (ULift.{u} (ZMod 1))), ?_⟩
+    change (0 : ℕ) ≠ 1
+    decide
 
 noncomputable def shortKernelRegistration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@lee_ball_image_card_of_short_kernel.{u})
@@ -138,7 +142,7 @@ private theorem rejected_sharp_law : ¬ sharpArena.{u}.Law rejectedCard := by
     obtain ⟨x,y,hxy,he⟩ := hcover (e g)
     refine ⟨x,y,hxy,?_⟩
     apply e.injective
-    simpa using he
+    simpa only [map_add, map_zsmul, AddEquiv.apply_symm_apply] using he
   have hord : Nat.card G = BajnokBeattySharpMaximum.MaximumOrder 4 :=
     (Nat.card_congr e.toEquiv).trans horder
   have hh := h (s := 4) (by norm_num) (by norm_num) hnon
@@ -160,7 +164,10 @@ noncomputable def sharpSource : Registration sharpArena.{u}
       exact nomatch e
   dependence := by
     intro i
-    exact ⟨ULift.{u} (ZMod 1),∅,{0},by norm_num [actualCard,realize]⟩
+    refine ⟨ULift.{u} (ZMod 1),
+      (∅ : Finset (ULift.{u} (ZMod 1))), ({0} : Finset (ULift.{u} (ZMod 1))), ?_⟩
+    change (0 : ℕ) ≠ 1
+    decide
 
 noncomputable def sharpRegistration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@sharp_pair_growth.{u})
