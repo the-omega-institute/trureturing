@@ -346,7 +346,7 @@ private theorem born_children (b : Bool) (l r : Source) (h : Born b (.mul l r)) 
   obtain ⟨hl, hr, hn⟩ := (NativeGuardedLeafRepair.D_mul l r).mp h.1
   exact ⟨⟨hl, fun _ he => hn (by simp [he, readout])⟩, ⟨hr, by simp⟩⟩
 
-private theorem partial_empty (b : Bool) (t : Source) (h : Born b t) :
+theorem partial_empty (b : Bool) (t : Source) (h : Born b t) :
     cutTerm b t ∅ = .of b := by
   classical
   cases t with
@@ -611,7 +611,7 @@ private theorem run_cons_guard (e : Call) (u : Source) (w : List Call) (hg : Gua
     run u (e :: w) = run (edited u e) w := by
   cases e <;> simp only [Guard] at hg <;> simp [run, hg, edited, kind, replacement, address]
 
-private theorem cut_full (b : Bool) (t : Source) (hb : Born b t) :
+theorem cut_full (b : Bool) (t : Source) (hb : Born b t) :
     cutTerm b t (events b t : Set Call) = t := by
   classical
   induction t generalizing b with
@@ -876,9 +876,7 @@ theorem all_histories (t : Source) (ht : D t) (w : List Call) :
         ∅ Set.univ l := by
   constructor
   · intro hw
-    have hb : Born true (.of true) := ⟨by
-      intro p
-      cases p <;> simp [readout], by simp⟩
+    have hb : Born true (.of true) := ⟨NativeGuardedLeafRepair.alphaRHistory.domain, by simp⟩
     have hm := (history_events true (.of true) t hb w hw).2
     let l : List (Event true t) := w.attach.map (fun e => ⟨e.1, hm e.1 e.2⟩)
     have hl : l.map Subtype.val = w := by simp [l]
