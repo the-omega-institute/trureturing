@@ -37,11 +37,14 @@ private lemma finite_summation_by_parts (w a : ℕ → ℝ) (N : ℕ) :
     (∑ j ∈ range N, (w j - w (j + 1)) * a j) =
       w 0 * a 0 - w N * a N +
         ∑ j ∈ range N, w (j + 1) * (a (j + 1) - a j) := by
-  induction N with
-  | zero => simp
-  | succ N ih =>
-      rw [sum_range_succ, sum_range_succ, ih]
+  calc
+    _ = (∑ j ∈ range N, (w j * a j - w (j + 1) * a (j + 1))) +
+        ∑ j ∈ range N, w (j + 1) * (a (j + 1) - a j) := by
+      rw [← sum_add_distrib]
+      apply sum_congr rfl
+      intro j hj
       ring
+    _ = _ := by rw [sum_range_sub' (fun j => w j * a j) N]
 
 /--
 One finite summation-by-parts step for the exact remainder. The terminal
