@@ -40,8 +40,7 @@ private theorem chi_psd (η : M2) (hη : η.PosSemidef) : (chi η).PosSemidef :=
   exact (hη.mul_mul_conjTranspose_same (V b)).smul (by norm_num : (0:ℝ) ≤ 1/2)
 
 private theorem sqrt_two_sq : (Real.sqrt 2 : ℂ)^2 = 2 := by
-  norm_cast
-  exact Real.sq_sqrt (by norm_num)
+  exact D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_sq
 private theorem sqrt_three_sq : (Real.sqrt 3 : ℂ)^2 = 3 := by
   norm_cast
   exact Real.sq_sqrt (by norm_num)
@@ -144,6 +143,23 @@ def support : M8 := ∑ b : Q, V b * (V b)ᴴ
 def compression (ρ : M8) : M2 := ∑ b : Q, (V b)ᴴ * ρ * V b
 def rightReadout (M : M2) : ℂ :=
   M 0 0 / 4 + (Real.sqrt 3 : ℂ) / 4 * (M 0 1 + M 1 0) + 3 * M 1 1 / 4
+def PiL : M8 := fun p q =>
+  bell (p.1,p.2.1) (q.1,q.2.1) * if p.2.2=q.2.2 then 1 else 0
+def PiR : M8 := fun p q =>
+  (if p.1=q.1 then 1 else 0) * bell p.2 q.2
+def WB : M8 := PiL + PiR
+def PL : M2 := !![1,0;0,0]
+def PR : M2 := !![1/4,(Real.sqrt 3 : ℂ)/4;(Real.sqrt 3 : ℂ)/4,3/4]
+
+private theorem bell_entries (p q : Pair) :
+    bell p q = if p.1=p.2 ∧ q.1=q.2 then 1/2 else 0 := by
+  rcases p with ⟨i,j⟩
+  rcases q with ⟨k,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [bell, D5.S3.QuantumBounds.CHSHWitness.bellDensity,
+      D5.S3.QuantumBounds.CHSHWitness.bellVector,
+      D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self]
 
 private theorem kernel_psd : kernel.PosSemidef := by
   apply Matrix.posSemidef_sum
@@ -167,6 +183,47 @@ private theorem orthoblocks (b c : Q) : (V b)ᴴ * V c = if b=c then 1 else 0 :=
       Fintype.sum_prod_type, Fin.sum_univ_two] <;>
     field_simp <;> ring_nf <;>
     simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+
+set_option maxHeartbeats 2000000 in
+private theorem projection_blocks (b : Q) :
+    PiL * V b = V b * PL ∧ PiR * V b = V b * PR := by
+  have hs2 : (Real.sqrt 2 : ℂ) ≠ 0 :=
+    D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_ne_zero
+  have hs3 : (Real.sqrt 3 : ℂ) ≠ 0 := by
+    exact_mod_cast (ne_of_gt (Real.sqrt_pos.2 (by norm_num : (0:ℝ)<3)))
+  fin_cases b <;> constructor <;> ext ⟨i,j,k⟩ l <;>
+    fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [PiL, PiR, PL, PR, bell_entries, V, g, h, f,
+      Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two] <;>
+    field_simp <;> ring_nf <;>
+    simp [sqrt_two_sq, sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+
+set_option maxHeartbeats 2000000 in
+private theorem common_kernel : PiL * kernel = 0 ∧ PiR * kernel = 0 := by
+  have hs3 : (Real.sqrt 3 : ℂ) ≠ 0 := by
+    exact_mod_cast (ne_of_gt (Real.sqrt_pos.2 (by norm_num : (0:ℝ)<3)))
+  constructor <;> ext ⟨a,b,c⟩ ⟨d,e,f'⟩ <;>
+    fin_cases a <;> fin_cases b <;> fin_cases c <;>
+    fin_cases d <;> fin_cases e <;> fin_cases f' <;>
+    norm_num [PiL, PiR, bell_entries, kernel, kernelVector,
+      Matrix.mul_apply, Matrix.vecMulVec_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_succ] <;>
+    field_simp <;> ring_nf <;>
+    simp [sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
+
+set_option maxHeartbeats 2000000 in
+private theorem source_tau0 :
+    tau0 = (1/4 : ℝ) • (1 - (8/3 : ℝ) • WB + (4/3 : ℝ) • (WB*WB)) := by
+  have hs3 : (Real.sqrt 3 : ℂ) ≠ 0 := by
+    exact_mod_cast (ne_of_gt (Real.sqrt_pos.2 (by norm_num : (0:ℝ)<3)))
+  ext ⟨a,b,c⟩ ⟨d,e,f'⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;>
+    fin_cases d <;> fin_cases e <;> fin_cases f' <;>
+    norm_num [tau0, kernel, kernelVector, WB, PiL, PiR, bell_entries,
+      Matrix.mul_apply, Matrix.vecMulVec_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_succ, Complex.real_smul] <;>
+    field_simp <;> ring_nf <;>
+    simp [sqrt_three_sq] <;> norm_num [map_ofNat] <;> ring
 
 set_option maxHeartbeats 2000000 in
 private theorem support_kernel : support + kernel = 1 := by
@@ -423,5 +480,87 @@ private theorem full_compatibility (v w : ℝ) :
   ⟨hull_necessity (v,w), hull_sufficiency (v,w)⟩
 
 #print axioms full_compatibility
+
+private theorem hull_nonnegative (v w : ℝ) (hv : 0 ≤ v) (hw : 0 ≤ w)
+    (hHull : (v,w) ∈ convexHull ℝ (insert pminus ellipse)) :
+    v^2+w^2+v*w ≤ v+w := by
+  by_contra h
+  have hF : 0 < v^2+w^2+v*w-v-w := by linarith
+  have hsum : 1 < v+w := by
+    by_contra hn
+    have hle : v+w ≤ 1 := le_of_not_gt hn
+    have hh := mul_nonneg (add_nonneg hv hw) (sub_nonneg.mpr hle)
+    nlinarith [mul_nonneg hv hw]
+  let u := 2*v+w-1
+  let s := v+2*w-1
+  let B := v^2+w^2+v*w
+  let H : Set (ℝ × ℝ) := {q | u*q.1+s*q.2 ≤ B}
+  have hc : Convex ℝ H := by
+    apply convex_halfSpace_le
+    constructor
+    · intro p q
+      dsimp
+      ring
+    · intro a p
+      dsimp
+      simp only [smul_eq_mul]
+      ring
+  have hsub : insert pminus ellipse ⊆ H := by
+    intro q hq
+    rcases Set.mem_insert_iff.mp hq with hq | hq
+    · subst q
+      change u*(-1/3)+s*(-1/3) ≤ B
+      dsimp [u,s,B]
+      nlinarith [sq_nonneg v, sq_nonneg w, mul_nonneg hv hw]
+    · change q.1^2+q.2^2+q.1*q.2 ≤ q.1+q.2 at hq
+      change u*q.1+s*q.2 ≤ B
+      have hd : 0 ≤ (q.1-v)^2+(q.2-w)^2+(q.1-v)*(q.2-w) := by
+        nlinarith [sq_nonneg (q.1-v), sq_nonneg (q.2-w),
+          sq_nonneg ((q.1-v)+(q.2-w))]
+      dsimp [u,s,B]
+      nlinarith
+  have hp := convexHull_min hsub hc hHull
+  change u*v+s*w ≤ B at hp
+  dsimp [u,s,B] at hp
+  linarith
+
+private theorem nonnegative_compatibility (v w : ℝ) (hv : 0 ≤ v) (hw : 0 ≤ w) :
+    (∃ ρ : M8, ρ.PosSemidef ∧ Matrix.trace ρ = 1 ∧ ab ρ = sigma v ∧ bc ρ = sigma w) ↔
+      v^2+w^2+v*w ≤ v+w := by
+  constructor
+  · intro h
+    exact hull_nonnegative v w hv hw ((full_compatibility v w).mp h)
+  · exact ellipse_construction v w
+
+#print axioms nonnegative_compatibility
+#print axioms orthoblocks
+#print axioms projection_blocks
+#print axioms common_kernel
+#print axioms source_tau0
+
+example : Compatible (-1/3,-1/3) := ⟨tau0, corner_construction⟩
+example : Compatible (-1/3,2/3) := ellipse_construction _ _ (by norm_num)
+example : Compatible (2/3,2/3) := ellipse_construction _ _ (by norm_num)
+example : Compatible (1,0) := ellipse_construction _ _ (by norm_num)
+example : ¬ Compatible (1,1/100) := by
+  intro h
+  have hh := (nonnegative_compatibility 1 (1/100) (by norm_num) (by norm_num)).mp h
+  norm_num at hh
+example (v : ℝ) (hv : 0 ≤ v) : Compatible (v,v) ↔ v ≤ 2/3 := by
+  rw [show Compatible (v,v) ↔ v^2+v^2+v*v ≤ v+v from
+    nonnegative_compatibility v v hv hv]
+  constructor
+  · intro h
+    nlinarith
+  · intro h
+    nlinarith [mul_nonneg hv (sub_nonneg.mpr h)]
+example (w : ℝ) (hw : 0 ≤ w) : Compatible (1,w) ↔ w=0 := by
+  rw [show Compatible (1,w) ↔ (1:ℝ)^2+w^2+1*w ≤ 1+w from
+    nonnegative_compatibility 1 w (by norm_num) hw]
+  constructor
+  · intro h
+    nlinarith [sq_nonneg w]
+  · intro h
+    simp [h]
 
 end V92IsotropicExactCheck
