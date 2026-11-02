@@ -46,12 +46,14 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                 "For arbitrary mask b at length 2m+1, the inverse component at y is dot(b,inverse(m,y)). The mask is unrestricted in this definition.", DescribeRole.Definition),
             Node("inverse_phase_sum", "The exact inverse-component orientation", StatementSource.FromAuthor(PhaseFormula()),
                 "For every m and all masks b,a, the sum over x of sign(dot(b,x)+dot(a,chi(x))) is the Walsh coefficient at a of the inverse component associated with b. Reindex by the proved bijection chi and use its left inverse identity. Zero and all-one masks are included.", DescribeRole.Theorem),
+            Node("inverse_phase_support_nonempty", "The cyclic Boolean phase support is nonempty", StatementSource.FromAuthor(PhaseNonemptyFormula()),
+                "For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. It is a statement about the phase sum; identification with the literal source trace remains a separate requirement.", DescribeRole.Theorem),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
             Paragraph(Text("The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the equivalence between constant derivatives and affine constraints on Walsh support, the corresponding dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. None of these remaining statements is an assumption of the inverse or Walsh theorems above."))
         ), []));
 
     private static DocumentBlock Node(string name, string title, StatementSource statement, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("cyclic-sign-trace-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("cyclic-sign-trace-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title), statement, AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
     private static Formula Named(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
@@ -91,6 +93,13 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
         return Disp(All("n", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, n),
             All("f", Arrow(w, Call("ZMod", D(2))), Some("a", w,
                 Rel(Call("walsh", F.Id("f"), F.Id("a")), FormulaRelationOperator.NotEqual, D(0)))))));
+    }
+    private static Formula PhaseNonemptyFormula()
+    {
+        Formula m = F.Id("m"), b = F.Id("b"), a = F.Id("a"), x = F.Id("x"), w = Word(OddLength(m));
+        return Disp(All("m", Named("Nat"), All("b", w, Some("a", w,
+            Rel(Sum("x", w, Call("sign", Plus(Call("dot", b, x), Call("dot", a, Call("chi", x))))),
+                FormulaRelationOperator.NotEqual, D(0))))));
     }
     private static Formula PhaseFormula()
     {
