@@ -100,7 +100,7 @@ theorem U_eq_complete_ramps {t : ℝ} (ht : 0 ≤ t) :
     ring
   rw [hs]
 
-private theorem mangoldtPart_eq_range {t : ℝ} (ht : 0 ≤ t) {N : ℕ}
+theorem mangoldtPart_eq_range {t : ℝ} (ht : 0 ≤ t) {N : ℕ}
     (hN : t < N) : mangoldtPart t = ∑ n ∈ Finset.range N, mangoldtRamp n t := by
   apply tsum_eq_sum
   intro n hn

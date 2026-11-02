@@ -14,7 +14,10 @@ import Mathlib.Data.ZMod.Basic
 /- proof_shape: top_strip_necessity: content.
    escape_witness: oddLattice_cover (every affine odd coset has an exact square
    representative), and kernel_not_four (the full relation kernel is not divisible by four).
-   admission_basis: escape-witness. Direct frozen dependencies: none.
+   admission_basis: escape-witness. Direct frozen dependencies:
+   NearSquareLatticeRigidity.near_square_rigidity and NearSquareLatticeRigidity.span_pair_index.
+   The public helpers kernel_even, oddLattice_index and oddLattice_cover are
+   consumed by BajnokBeattyAllRegimes.result.
    This proves only the top-strip necessary direction, for arbitrary pairs. -/
 
 set_option autoImplicit false
@@ -58,7 +61,7 @@ private theorem modTwo_surjective (k : ℕ) : Function.Surjective (modTwo k) := 
   · rfl
   · exact ha
 
-private theorem kernel_even {k : ℕ} (f : Plane →+ Target k)
+theorem kernel_even {k : ℕ} (f : Plane →+ Target k)
     (hf : Function.Surjective f) {z : Plane} (hz : f z = 0) :
     2 ∣ z 0 ∧ 2 ∣ z 1 := by
   let g := (modTwo k).comp f
@@ -115,7 +118,7 @@ private theorem kernel_not_four {k : ℕ} (f : Plane →+ Target k)
   rw [htwo, zero_mul] at hh
   exact zero_ne_one hh
 
-private theorem sumDiff_injective : Function.Injective sumDiff := by
+theorem sumDiff_injective : Function.Injective sumDiff := by
   intro x y h
   have h0 := congrFun h 0
   have h1 := congrFun h 1
@@ -144,7 +147,7 @@ private theorem sumDiff_range : sumDiff.range =
     · exact ⟨![1, 0], by ext j; fin_cases j <;> norm_num [sumDiff]⟩
     · exact ⟨![0, 1], by ext j; fin_cases j <;> norm_num [sumDiff]⟩
 
-private theorem sumDiff_index : sumDiff.range.toAddSubgroup.index = 2 := by
+theorem sumDiff_index : sumDiff.range.toAddSubgroup.index = 2 := by
   rw [sumDiff_range, span_pair_index _ _ (by norm_num)]
   norm_num
 
@@ -163,7 +166,7 @@ private theorem oddLattice_map {k : ℕ} (f : Plane →+ Target k)
       fin_cases i <;> simp [sumDiff] <;> omega
     exact ⟨![x+y, x-y], by change f (sumDiff _) = 0; rw [he]; exact hz, he⟩
 
-private theorem oddLattice_index {k : ℕ} (hk : 0 < k) (f : Plane →+ Target k)
+theorem oddLattice_index {k : ℕ} (hk : 0 < k) (f : Plane →+ Target k)
     (hf : Function.Surjective f) : (oddLattice f).toAddSubgroup.index = 2 * k := by
   have hi := AddSubgroup.index_map_of_injective
     (H := (oddLattice f).toAddSubgroup) (f := sumDiff.toAddMonoidHom) sumDiff_injective
@@ -183,7 +186,7 @@ private theorem oddLattice_parity {k : ℕ} (f : Plane →+ Target k)
   have he := (kernel_even f hf hz).1
   simpa [sumDiff] using he
 
-private theorem oddLattice_cover {k : ℕ} (f : Plane →+ Target k) {t : ℤ}
+theorem oddLattice_cover {k : ℕ} (f : Plane →+ Target k) {t : ℤ}
     (hcover : LeeCovers f (2 * t)) : RectangleCovers (oddLattice f) (2*t) (2*t) := by
   have hf : Function.Surjective f := fun g => by obtain ⟨z, _, hz⟩ := hcover g; exact ⟨z, hz⟩
   intro z
