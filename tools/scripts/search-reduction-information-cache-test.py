@@ -54,7 +54,7 @@ def main():
     request = directory / "request.lean"
     request.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
         "set_option Elab.async false\nset_option maxHeartbeats 0\n"
-        "run_cmd modifyEnv fun env => env.setMainModule "
+        "open Lean\nrun_cmd modifyEnv fun env => env.setMainModule "
         "`LeanInformationAuditRegTests.SearchReduction.InformationCacheRequest\n"
         f'#search_reduction {TARGET} at "{B0}" baseline [] using [] '
         f"information {APPLICATION} as informationCacheReading\n")
