@@ -1,0 +1,31 @@
+## 10. 两份 Bell 关系：精确共享阈值与最小修复
+
+<a id="sec-c92-bell"></a>
+
+本节的相容阈值与后面的椭圆，属于已知的各向同性边际和非对称量子克隆结构。
+Nechita–Pellegrini–Rochette 给出了包括负可见度在内的完整椭圆描述
+ [2](#ref-npr2021)。这里给 qubit 情形的直接分块证明，
+用来展示 C92 的二元见证、三轴提升和精确修复，不重新主张这些边界的数学优先权。
+
+记 $\lvert \Phi\rangle=(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$、$\Phi=\lvert \Phi\rangle\langle \Phi\rvert$，
+并定义两比特各向同性态
+
+<a id="eq-c92-isotropic"></a>
+
+$$
+\sigma_v=v\Phi+(1-v)\frac{I_4}{4},
+ \qquad -\frac13\le v\le1.
+\tag{10.1}
+$$
+
+参数 $v$ 称为可见度；Bell 投影的实际概率是
+$F_v=\operatorname{Tr}(\sigma_v\Phi)=(1+3v)/4$，两者不混同。
+所给参数区间恰好使 Bell 方向与其三维正交补上的特征值均非负。
+
+在 $ABC$ 上定义两个重叠投影
+
+$$
+\Pi_L=\Phi_{AB}\otimes I_C,\qquad
+ \Pi_R=I_A\otimes\Phi_{BC},\qquad W_B=\Pi_L+\Pi_R.
+$$
+
