@@ -42,13 +42,13 @@ internal sealed class AbelianExtensionH1Document : IScribeDocumentDefinition
         Formula aa = F.Id("A"), z = F.Id("Z"), ii = F.Id("I"), hh = F.Id("H");
         Formula defect = Seq(Open, Forall, Sp, Bind("a", aa), Sp, Bind("y", q), Comma, Sp,
             Call("i", Call("u", Call("D", Call("ofMul", a), Call("p", y)))), Eq,
-            Call("a", y), Cdot, Inv(y), Close);
+            Call("a", y), Cdot, Sp, Inv(y), Close);
         Formula twist = Seq(Open, Forall, Sp, Bind("d", z), Sp, Bind("y", q), Comma, Sp,
-            Call("T", d, y), Eq, Call("i", Call("u", Call("d", Call("p", y)))), Cdot, y, Close);
+            Call("T", d, y), Eq, Call("i", Call("u", Call("d", Call("p", y)))), Cdot, Sp, y, Close);
         Formula inner = Seq(Open, Forall, Sp, Bind("a", Call("Additive", aa)), Comma, Sp,
-            a, InMacro, ii, Sp, Leftrightarrow, Sp, Exists, Sp, Bind("b", n), Comma, Sp,
+            a, InMacro, Sp, ii, Sp, Leftrightarrow, Sp, Exists, Sp, Bind("b", n), Comma, Sp,
             Forall, Sp, Bind("y", q), Comma, Sp, Call("U", a, y), Eq,
-            Call("i", b), Cdot, y, Cdot, Inv(Call("i", b)), Close);
+            Call("i", b), Cdot, Sp, y, Cdot, Sp, Inv(Call("i", b)), Close);
         Formula quotient = Call("Nonempty", Call("AddEquiv",
             Seq(Open, Call("Additive", aa), Slash, ii, Close), hh));
         return Disp(Seq(Begin, Grp(F.Id("gathered")),
