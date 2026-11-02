@@ -4,9 +4,13 @@
 
 Native signed Hermitian and literal c0-relative pairings on the original finite-support bc occupation Fock space.
 
+Here actualFock denotes exactly CountableOccupationFock.Fock, the Finsupp space (Finset Nat) →₀ Complex, and FinsetNat denotes Finset Nat. Relative is the subtype of actualFock in relativeSpace = ker(b 0). The notation (x : actualFock) is the subtype coercion. The support is the finite Finsupp support, star is complex conjugation, eps is the original sorted-word sign, and relativeEps(S) = eps(S) * phase(3, partner(S)). The relative pairing is exactly Hrel(x,y) = Hg((x : actualFock), c(0,(y : actualFock))).
+
+The four-slot escape audit of all 96 remaining public theorem targets in this module is unfinished. The current compiled report has empty inventory, records and registered arrays, and the source-owned Reg mirror is absent. The exact full telescopes, existing enrolled-template contract and missing source reconstruction, bridge, readout, variation, sensitivity and observational dependence evidence are tracked in https://github.com/the-omega-institute/trureturing/issues/25743. This issue supplies the permitted missing-evidence disclosure; it is not a registration certificate or a judge-failure claim.
+
 **Theorem 1.1 (Finite-support signed coefficient expansion).**
 
-$$\operatorname{Hg}\left(x, y\right) = \operatorname{FinsuppSum}\left(x, starCoeffTimesSignedRow\right)$$
+$$(\forall x: actualFock, (\forall y: actualFock, \operatorname{Hg}\left(x, y\right) = \sum_{S\in\operatorname{support}\left(x\right)} \operatorname{star}\left(x(S)\right) \cdot \operatorname{eps}\left(S\right) \cdot y(\operatorname{partner}\left(S\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_signed_coefficient` (`✓ std3`). ∎
 
@@ -18,7 +22,7 @@ The ambient pairing is the actual finite Finsupp sum over the support of x, with
 
 **Theorem 1.2 (Ordinary Hermitian symmetry).**
 
-$$(\forall x: Fock, (\forall y: Fock, \operatorname{Hg}\left(x, y\right) = \operatorname{star}\left(\operatorname{Hg}\left(y, x\right)\right)))$$
+$$(\forall x: actualFock, (\forall y: actualFock, \operatorname{Hg}\left(x, y\right) = \operatorname{star}\left(\operatorname{Hg}\left(y, x\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_hermitian` (`✓ std3`). ∎
 
@@ -30,7 +34,7 @@ Hermitian symmetry is proved from the vacuum base, creator and annihilator adjoi
 
 **Theorem 1.3 (Zero left radical).**
 
-$$(\forall x: Fock, \operatorname{forallZeroRight}\left(x\right) \implies x = 0)$$
+$$(\forall x: actualFock, (\forall y: actualFock, \operatorname{Hg}\left(x, y\right) = 0) \implies x = 0)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_left_radical` (`✓ std3`). ∎
 
@@ -42,7 +46,7 @@ The involutive partner row and nonzero derived epsilon force every coefficient o
 
 **Theorem 1.4 (Zero right radical).**
 
-$$(\forall y: Fock, \operatorname{forallZeroLeft}\left(y\right) \implies y = 0)$$
+$$(\forall y: actualFock, (\forall x: actualFock, \operatorname{Hg}\left(x, y\right) = 0) \implies y = 0)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_right_radical` (`✓ std3`). ∎
 
@@ -54,7 +58,7 @@ The same finite-support coefficient argument proves the right radical is zero.
 
 **Theorem 1.5 (Literal reversed dagger word).**
 
-$$(\forall S: FinsetNatFock, (\forall y: FinsetNatFock, \operatorname{Hg}\left(\operatorname{ket}\left(S\right), y\right) = \operatorname{rho}\left(\operatorname{daggerWord}\left(S, y\right)\right)))$$
+$$(\forall S: FinsetNat, (\forall y: actualFock, \operatorname{Hg}\left(\operatorname{ket}\left(S\right), y\right) = \operatorname{rho}\left(\operatorname{daggerWord}\left(S.\operatorname{sort}\left(\leq\right), y\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_literal_dagger` (`✓ std3`). ∎
 
@@ -66,7 +70,7 @@ The row is represented by the literal reverse-ordered dagger word on the origina
 
 **Theorem 1.6 (All-integer b adjoint).**
 
-$$(\forall m: Int, (\forall x: Fock, (\forall y: Fock, \operatorname{Hg}\left(\operatorname{b}\left(m, x\right), y\right) = \operatorname{Hg}\left(x, \operatorname{b}\left(\operatorname{neg}\left(m\right), y\right)\right))))$$
+$$(\forall m: Int, (\forall x: actualFock, (\forall y: actualFock, \operatorname{Hg}\left(\operatorname{b}\left(m, x\right), y\right) = \operatorname{Hg}\left(x, \operatorname{b}\left(\operatorname{neg}\left(m\right), y\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_b` (`✓ std3`). ∎
 
@@ -78,7 +82,7 @@ Both b cuts and every exceptional and bulk integer mode are covered by one deriv
 
 **Theorem 1.7 (All-integer c adjoint).**
 
-$$(\forall n: Int, (\forall x: Fock, (\forall y: Fock, \operatorname{Hg}\left(\operatorname{c}\left(n, x\right), y\right) = \operatorname{Hg}\left(x, \operatorname{c}\left(\operatorname{neg}\left(n\right), y\right)\right))))$$
+$$(\forall n: Int, (\forall x: actualFock, (\forall y: actualFock, \operatorname{Hg}\left(\operatorname{c}\left(n, x\right), y\right) = \operatorname{Hg}\left(x, \operatorname{c}\left(\operatorname{neg}\left(n\right), y\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_c` (`✓ std3`). ∎
 
@@ -102,7 +106,7 @@ The exact original signed charge is contragredient under the derived partner inv
 
 **Theorem 1.9 (Ambient charge selection).**
 
-$$(\forall g: Int, (\forall h: Int, (\forall x: Fock, (\forall y: Fock, (\operatorname{Homogeneous}\left(g, x\right)) \land ((\operatorname{Homogeneous}\left(h, y\right)) \land (\operatorname{add}\left(g, h\right) \ne 3)) \implies \operatorname{Hg}\left(x, y\right) = 0))))$$
+$$(\forall g: Int, (\forall h: Int, (\forall x: actualFock, (\forall y: actualFock, (\operatorname{Homogeneous}\left(g, x\right)) \land ((\operatorname{Homogeneous}\left(h, y\right)) \land (\operatorname{add}\left(g, h\right) \ne 3)) \implies \operatorname{Hg}\left(x, y\right) = 0))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hg_charge_selection` (`✓ std3`). ∎
 
@@ -126,7 +130,7 @@ The relative form is Hg(x,c0 y) on the actual kernel of b0; its symmetry follows
 
 **Theorem 1.11 (Relative finite-support signed expansion).**
 
-$$\operatorname{Hrel}\left(x, y\right) = \operatorname{FinsuppSum}\left(x, relativeSignedCoefficient\right)$$
+$$(\forall x: Relative, (\forall y: Relative, \operatorname{Hrel}\left(x, y\right) = \sum_{S\in\operatorname{support}\left((x: actualFock)\right)} \operatorname{star}\left((x: actualFock)(S)\right) \cdot \operatorname{relativeEps}\left(S\right) \cdot (y: actualFock)(\operatorname{relativePartner}\left(S\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hrel_signed_coefficient` (`✓ std3`). ∎
 
@@ -138,7 +142,7 @@ The c0 insertion produces the exact relative partner and lowerCount sign on ever
 
 **Theorem 1.12 (Zero relative left radical).**
 
-$$(\forall x: Relative, \operatorname{forallZeroRightRelative}\left(x\right) \implies x = 0)$$
+$$(\forall x: Relative, (\forall y: Relative, \operatorname{Hrel}\left(x, y\right) = 0) \implies x = 0)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hrel_left_radical` (`✓ std3`). ∎
 
@@ -150,7 +154,7 @@ The relative pairing has no left radical on the actual ker(b0) carrier.
 
 **Theorem 1.13 (Zero relative right radical).**
 
-$$(\forall y: Relative, \operatorname{forallZeroLeftRelative}\left(y\right) \implies y = 0)$$
+$$(\forall y: Relative, (\forall x: Relative, \operatorname{Hrel}\left(x, y\right) = 0) \implies y = 0)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hrel_right_radical` (`✓ std3`). ∎
 
@@ -174,7 +178,7 @@ Removing the forced c0 site changes the exact charge selection from three to two
 
 **Theorem 1.15 (Relative charge selection).**
 
-$$(\forall g: Int, (\forall h: Int, (\forall x: Relative, (\forall y: Relative, (\operatorname{Homogeneous}\left(g, x\right)) \land ((\operatorname{Homogeneous}\left(h, y\right)) \land (\operatorname{add}\left(g, h\right) \ne 2)) \implies \operatorname{Hrel}\left(x, y\right) = 0))))$$
+$$(\forall g: Int, (\forall h: Int, (\forall x: Relative, (\forall y: Relative, (\operatorname{Homogeneous}\left(g, (x: actualFock)\right)) \land ((\operatorname{Homogeneous}\left(h, (y: actualFock)\right)) \land (\operatorname{add}\left(g, h\right) \ne 2)) \implies \operatorname{Hrel}\left(x, y\right) = 0))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostHermitian.Hrel_charge_selection` (`✓ std3`). ∎
 
