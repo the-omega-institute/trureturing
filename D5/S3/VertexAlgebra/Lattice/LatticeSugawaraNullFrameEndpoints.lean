@@ -72,14 +72,6 @@ def weightedNormal (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
   ∑ i : Fin D.rank, ∑ j : Fin D.rank,
     H i j • normalSummand D i j k (n-k)
 
-theorem a_above_bound (u : LatticeLightConeCoordinates.E D) (v : Carrier D)
-    (n : ℤ) (hn : (vectorFrequencyBound D v : ℤ) < n) : a u n v = 0 := by
-  classical
-  simp only [a, LinearMap.sum_apply, LinearMap.smul_apply]
-  apply Finset.sum_eq_zero
-  intro i hi
-  rw [neutralMode_vanish D i v n hn, smul_zero]
-
 /-- An absent k=n endpoint is actually zero: the positive n current is the
 rightmost factor of the nonnegative normal-ordering branch. -/
 theorem absent_endpoint_zero (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -333,26 +325,6 @@ theorem remainder_eq_interior_on_sector
   · simp only [LinearMap.sub_apply, endpoint, if_neg hn]
     rw [nonzero_mode_split H hHG hGH p n hn P]
     exact add_sub_cancel_left _ _
-
-/- Explicit charge preservation from the accepted original supplier and a_single.
-No charge-preservation hypothesis is supplied to the raising theorem. -/
-def polynomialEndpoint (p : Charge D) (n : ℤ) : Module.End ℂ (Oscillator D) :=
-  if n = 0 then (LatticePositiveEnergy.chargeEnergy D p : ℂ) • 1
-  else polynomialCurrent (chargeVector p) p n
-
-theorem endpoint_single (p : Charge D) (n : ℤ) (P : Oscillator D) :
-    endpoint p n (Finsupp.single p P) = Finsupp.single p (polynomialEndpoint p n P) := by
-  by_cases hn : n = 0
-  · simp [endpoint, polynomialEndpoint, hn, Finsupp.smul_single]
-  · simpa [endpoint, polynomialEndpoint, hn] using a_single (chargeVector p) n p P
-
-theorem remainder_single_sector
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (p : Charge D) (n : ℤ)
-    (P : Oscillator D) :
-    (sugawaraMode D H n - endpoint p n) (Finsupp.single p P) =
-      Finsupp.single p ((sectorSugawaraMode D H p n - polynomialEndpoint p n) P) := by
-  simp only [LinearMap.sub_apply, sugawaraMode_single_sector, endpoint_single,
-    Finsupp.single_sub]
 
 private theorem tp_add_left (A C : Module.End ℂ (Carrier D)) (G : Module.End ℂ Fock) :
     tp (A+C) G = tp A G + tp C G := by
@@ -610,8 +582,9 @@ theorem h_finiteRemainder_fixed_charge_raises
 and ghost cubic finite captures and their assembly into Q-d0; zero-mode b0/c0
 cancellation with the actual matter-plus-ghost constant; preservation of the
 literal physical shell by d0,h,delta; full h(Q-d0) strict raising; shell bounds,
-rank-26 Q^2, HPL, cohomology/no-ghost/string/AdS conclusions. The terminal raw
-loweringTerm counterexample is unchanged and is not used as a raising term.
+rank-26 Q^2, HPL, cohomology/no-ghost/string/AdS conclusions. Raw same-sign lowering summands require inverse-Gram cancellation; their
+counterexample is explained in the owning filtration Scribe, not retained as a
+separate theorem branch.
 -/
 
 end D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints

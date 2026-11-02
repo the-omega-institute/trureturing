@@ -111,18 +111,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebr
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.weight_transverse.unit,
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.weight_transverse.diagnosticFamily, diagnosticFamily)
 end weight_transverse
-namespace exponentDegree_zero
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero))) (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero)) (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero)), (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_zero),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.exponentDegree_zero.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.exponentDegree_zero.diagnosticFamily, diagnosticFamily)
-end exponentDegree_zero
 namespace exponentDegree_add
 /-- The whole native theorem telescope, without dropping any hypotheses. -/
 theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.exponentDegree_add)) ↔
@@ -963,64 +951,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebr
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.momentumRemainder_strictRaises.unit,
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.momentumRemainder_strictRaises.diagnosticFamily, diagnosticFamily)
 end momentumRemainder_strictRaises
-namespace minus_creation_sector
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector))) (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector)) (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector)), (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.minus_creation_sector),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.minus_creation_sector.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.minus_creation_sector.diagnosticFamily, diagnosticFamily)
-end minus_creation_sector
-namespace loweringTerm_basis
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis))) (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis)) (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis)), (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_basis),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_basis.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_basis.diagnosticFamily, diagnosticFamily)
-end loweringTerm_basis
-namespace loweringTerm_coefficient
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient))) (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient)) (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient)), (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_coefficient),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_coefficient.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_coefficient.diagnosticFamily, diagnosticFamily)
-end loweringTerm_coefficient
-namespace loweringTerm_exact_degree
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree))) (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree)) (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree)), (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_exact_degree),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_exact_degree.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_exact_degree.diagnosticFamily, diagnosticFamily)
-end loweringTerm_exact_degree
-namespace loweringTerm_not_strictRaises
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises))) (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises)) (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises)), (@D5.S3.VertexAlgebra.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration.loweringTerm_not_strictRaises.diagnosticFamily, diagnosticFamily)
-end loweringTerm_not_strictRaises
 end Reg.D5.S3.VertexAlgebra.Lattice.LatticeBRSTModeFiltration

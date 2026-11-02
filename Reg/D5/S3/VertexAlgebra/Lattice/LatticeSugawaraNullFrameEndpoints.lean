@@ -41,18 +41,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebr
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.mem_interior.unit,
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.mem_interior.diagnosticFamily, diagnosticFamily)
 end mem_interior
-namespace a_above_bound
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound))) (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound)) (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound)), (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.a_above_bound),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.a_above_bound.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.a_above_bound.diagnosticFamily, diagnosticFamily)
-end a_above_bound
 namespace absent_endpoint_zero
 /-- The whole native theorem telescope, without dropping any hypotheses. -/
 theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.absent_endpoint_zero)) ↔
@@ -185,30 +173,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebr
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.remainder_eq_interior_on_sector.unit,
     `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.remainder_eq_interior_on_sector.diagnosticFamily, diagnosticFamily)
 end remainder_eq_interior_on_sector
-namespace endpoint_single
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single))) (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single)) (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single)), (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.endpoint_single),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.endpoint_single.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.endpoint_single.diagnosticFamily, diagnosticFamily)
-end endpoint_single
-namespace remainder_single_sector
-/-- The whole native theorem telescope, without dropping any hypotheses. -/
-theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector)) ↔
-    (arena (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector))).Law actual := full_source_bridge _
-def diagnosticFamily : Registration (arena (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector))) (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector)) := family (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector)) (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector)
-/-- Diagnostic only: assertion-valued readout and no source-selection certificate.
-This is not a faithful operand-family registration and must not be called validated. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector) (Realization signature) Unit Unit :=
-  original_diagnostic_attempt%((type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector)), (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.remainder_single_sector),
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.remainder_single_sector.unit,
-    `Reg.D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints.remainder_single_sector.diagnosticFamily, diagnosticFamily)
-end remainder_single_sector
 namespace weighted_interior_c_shift
 /-- The whole native theorem telescope, without dropping any hypotheses. -/
 theorem source_bridge : (type_of% (@D5.S3.VertexAlgebra.LatticeSugawaraNullFrameEndpoints.weighted_interior_c_shift)) ↔

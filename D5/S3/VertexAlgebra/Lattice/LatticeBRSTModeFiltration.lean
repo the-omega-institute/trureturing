@@ -54,9 +54,6 @@ def exponentDegree {t : ℕ} (m : Exponents t) : ℤ :=
     variableWeight (transverse t j,r) = 0 := by
   simp [variableWeight, plus, minus, transverse]
 
-@[simp] theorem exponentDegree_zero {t : ℕ} : exponentDegree (0 : Exponents t) = 0 := by
-  simp [exponentDegree]
-
 theorem exponentDegree_add {t : ℕ} (m n : Exponents t) :
     exponentDegree (m+n) = exponentDegree m + exponentDegree n := by
   classical
@@ -753,63 +750,6 @@ theorem momentumRemainder_strictRaises (p : Charge D) (n : ℤ) (hn : n≠0) :
     exact strictRaises_of_shift _ _ (original_plus_c_shift F B n (-n) hn) (by omega)
   · exact strictRaises_of_shift _ _
       (original_transverse_c_shift F B (F.projK (chargeVector p)) n (-n)) (by omega)
-
-def loweringTerm : Module.End ℂ (State D) :=
-  tp (a F.eMinus (-1) * a F.eMinus (-1)) (c 2)
-
-def loweringInput (p : Charge D) : StateIndex D t := (⟨p,0⟩,{0})
-def loweringOutput (p : Charge D) : StateIndex D t :=
-  (⟨p,Finsupp.single (minus t,0) 2⟩,∅)
-
-theorem minus_creation_sector (p : Charge D) (r : ℕ)
-    (Q : PolynomialCoordinates (Label t)) (w : Fock) (G : Module.End ℂ Fock) :
-    tp (a F.eMinus (-(r : ℤ)-1)) G (sector F B p Q w)=
-      sector F B p (X (minus t,r)*Q) (G w) := by
-  rw [sector_current, F.creation_minus B, AlgEquiv.apply_symm_apply]
-
-theorem loweringTerm_basis (p : Charge D) :
-    loweringTerm F (actualBasis F B (loweringInput (t := t) p))=
-      actualBasis F B (loweringOutput (t := t) p) := by
-  have he : loweringTerm F=tp (a F.eMinus (-1)) 1 * tp (a F.eMinus (-1)) (c 2) := by
-    simp only [loweringTerm, tp, ← TensorProduct.map_mul, one_mul]
-  have hexp : Finsupp.single (minus t,0) 1 +
-      (Finsupp.single (minus t,0) 1 + 0 : Exponents t)=Finsupp.single (minus t,0) 2 := by
-    ext x
-    by_cases hx : (minus t,0)=x <;> simp [Finsupp.single_apply, hx]
-  rw [he, Module.End.mul_apply]
-  change tp (a F.eMinus (-1)) 1
-    (tp (a F.eMinus (-1)) (c 2)
-      (actualBasis F B (⟨p,0⟩,{0})))=
-        actualBasis F B (⟨p,Finsupp.single (minus t,0) 2⟩,∅)
-  rw [actualBasis_apply, actualBasis_apply]
-  have hc (Q : PolynomialCoordinates (Label t)) (w : Fock) (G : Module.End ℂ Fock) :
-      tp (a F.eMinus (-1)) G (sector F B p Q w) =
-        sector F B p (X (minus t,0) * Q) (G w) := by
-    simpa using minus_creation_sector F B p 0 Q w G
-  rw [hc, hc]
-  simp only [X_mul_monomial, hexp]
-  norm_num [c, annihilate_ket, phase, lowerCount]
-
-theorem loweringTerm_coefficient (p : Charge D) :
-    (actualBasis F B).repr
-      (loweringTerm F (actualBasis F B (loweringInput (t := t) p)))
-      (loweringOutput (t := t) p)=1 := by
-  rw [loweringTerm_basis]
-  simp
-
-theorem loweringTerm_exact_degree (p : Charge D) :
-    degree (loweringOutput (t := t) p)=degree (loweringInput (t := t) p)-1 := by
-  norm_num [degree, loweringInput, loweringOutput, charge, Finset.filter_singleton]
-
-theorem loweringTerm_not_strictRaises (p : Charge D) :
-    ¬ StrictRaises (actualBasis F B) degree (loweringTerm F) := by
-  intro hh
-  have hc : (actualBasis F B).repr
-      (loweringTerm F (actualBasis F B (loweringInput (t := t) p)))
-      (loweringOutput (t := t) p)≠0 := by rw [loweringTerm_coefficient]; norm_num
-  have he := hh (loweringInput p) (loweringOutput p) hc
-  have hd := loweringTerm_exact_degree (t := t) p
-  omega
 
 /- The companion NullFrame and Endpoints modules prove the finite original
 Sugawara regrouping and both endpoint cases. They also prove strict raising for
