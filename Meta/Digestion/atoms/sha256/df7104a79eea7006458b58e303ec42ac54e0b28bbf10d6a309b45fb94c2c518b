@@ -1,0 +1,60 @@
+**命题 26.2（Preserved old domains and a strict addition）。** The
+sufficient graph/scale domains of the nine sources in Theorem
+24.2, including the direct positive-bound consequence (26.2),
+have union $\mathcal U_s^{\rm old}$ within this common even-scale
+domain. Every $H\in\mathcal U_s^{\rm diamond}$ satisfies
+(24.2) and (24.8) on its full original carrier at that scale.
+The graph $Q$ of Definition 25.1 belongs to
+$\mathcal U_s^{\rm diamond}\setminus\mathcal U_s^{\rm old}$
+for every even $s\geq2$. The new component class does not contain
+all the old sufficient classes.
+
+Proof. The owning volume's Corollary 11.3 covers exactly the
+complete-multipartite domain $\mathcal M$ at every even scale,
+including both the balanced and dominant-part regimes and the
+two- and three-part cases. Corollary 13.3 supplies all of
+$\mathcal B$, including $S=1$. Definition 15.1(b) and Theorem
+15.2 supply $\mathcal L_S$ with exactly the endpoint $S\geq2$.
+The global flat-mode sufficient regimes in Theorem 6.2 are those
+in $\mathcal F_s$, with (26.2) read directly from (6.3).
+
+The remaining all-even neighborhood domains are contained in
+$\mathcal C$: this includes wholly bipartite neighborhoods,
+a bipartite actual component at every vertex, whole
+bipartite-or-$C_5$ neighborhoods and whole
+bipartite-or-odd-cycle neighborhoods. These inclusions are the
+ones proved in Proposition 21.3 or follow by selecting their
+stated actual component. The individual odd-rim wheels and all
+the particular consumers in §§15–18 and §22 satisfy these
+conditions; the pendant-core consumers of §§12 and 14 are already
+in $\mathcal B$ or $\mathcal C$. Theorem 21.2 supplies all of
+$\mathcal C$. The odd-fibre statements supply no even scale.
+The representation and refutation suppliers have no further
+whole-graph confinement domain. This proves the asserted old
+union while preserving each graph and scale hypothesis.
+
+Every member of $\mathcal C$ is in $\mathcal C_{\diamond}$.
+Theorem 24.2 and Corollary 24.3 therefore supply the new domain,
+and the cited old conclusions supply each other member of the
+union. Proposition 25.2 proves $Q\in\mathcal C_{\diamond}$ and
+excludes it from every old member at every stated scale.
+For noncontainment in the other direction, $K_6$ belongs to
+$\mathcal M$ and $\mathcal B$ and has all-even confinement by
+the cited results. Its neighborhood at every vertex is $K_5$,
+one connected component which is nonbipartite, not a simple odd
+cycle and not a diamond. Thus $K_6\notin\mathcal C_{\diamond}$.
+
+The additional mathematical inference is the all-integer-spin
+diamond obstruction of Theorem 23.2 and its insertion into the
+actual-component conclusion of Theorem 19.2. Angular-momentum
+addition, Boolean-chain representation, nonstrict spin comparison,
+the bipartite and odd-cycle obstructions, and the finite-spectrum
+gap implication are the cited intermediates. The statements
+preserve positive coefficient-one adjacency, equal even fibres,
+the entire complex globally half-filled carrier and the same
+actual $E_s$. They give neither an exact $E_s$ nor a numerical or
+scale-uniform gap, and make no extension to other signs,
+weights, fibre sizes or fillings, physical realization or
+worldwide priority. The question in Definition 26.1 outside the
+stated scale-dependent union remains unresolved here. $\square$
+
