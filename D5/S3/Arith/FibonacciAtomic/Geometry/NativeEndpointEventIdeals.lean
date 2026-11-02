@@ -173,11 +173,21 @@ def events : Bool → Source → Finset Call
   | of a => cases a <;> cases b <;> simp [events]
   | mul l r => cases b <;> simp [events]
 
+@[simp] private theorem promote_ne_shift (b : Bool) (c : Call) :
+    Call.promote [] ≠ c.shift [b] := Ne.symm (shift_ne_promote b c)
+
+@[simp] private theorem split_ne_shift (b : Bool) (c : Call) :
+    Call.split [] ≠ c.shift [b] := Ne.symm (shift_ne_split b c)
+
+@[simp] private theorem false_true_shift (c d : Call) :
+    c.shift [false] ≠ d.shift [true] := by cases c <;> cases d <;> simp [Call.shift]
+
+@[simp] private theorem true_false_shift (c d : Call) :
+    c.shift [true] ≠ d.shift [false] := by cases c <;> cases d <;> simp [Call.shift]
+
 @[simp] private theorem shift_mem (b c : Bool) (l r : Source) (e : Call) :
     e.shift [c] ∈ events b (.mul l r) ↔ e ∈ events c (if c then r else l) := by
-  cases b <;> cases c <;>
-    simp [events, Finset.mem_image, Call.shift] <;>
-      aesop (add simp [Call.shift])
+  cases b <;> cases c <;> simp [events, Finset.mem_image]
 
 /-- The original no-left-alpha domain, including the specified local birth type. -/
 def Born (b : Bool) (t : Source) : Prop := D t ∧ (b = false → t ≠ .of true)
@@ -421,9 +431,13 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
         have hr := child_dormant b true l r I hb hI hs
         have hp : cutTerm b (.mul l r) I = .of false := by
           exact Option.some.inj hg
-        simp only [edited, kind, replacement, address, hp, replace, cutTerm, Set.mem_insert_iff, true_or, ↓reduceIte]
-        rw [section_insert_root I false (.split []) rfl,
-          section_insert_root I true (.split []) rfl, hl, hr]
+        have hx : edited (cutTerm b (.mul l r) I) (.split []) =
+            .mul (.of false) (.of true) := by rw [hp]; rfl
+        rw [hx, cutTerm, if_pos (Set.mem_insert_self (.split []) I),
+          section_insert_root I false (.split []) rfl,
+          section_insert_root I true (.split []) rfl]
+        simpa only [Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte] using
+          (congrArg₂ FreeMagma.mul hl hr).symm
       have shifted : ∀ (c : Bool) (d : Call), e = d.shift [c] →
           edited (cutTerm b (.mul l r) I) e = cutTerm b (.mul l r) (insert e I) := by
         intro c d hed
@@ -440,17 +454,19 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
         · have hguard : Guard d (cutTerm false l (sectionAt I [false])) := by
             cases d <;> simpa [Guard, cutTerm, hs, Call.shift, subtree] using hg
           have hi' := il false (sectionAt I [false]) hc.1 hi d hmem hguard
-          cases d <;>
-            simpa [edited, kind, replacement, address, cutTerm, hs, Call.shift, replace,
-              section_insert_same, section_insert_other, address] using
-              congrArg (fun x => FreeMagma.mul x (cutTerm true r (sectionAt I [true]))) hi'
+          have hs' : Call.split [] ∈ insert (d.shift [false]) I := Or.inr hs
+          simp only [cutTerm, hs, hs', ↓reduceIte]
+          rw [section_insert_same, section_insert_other I true d]
+          cases d <;> simpa [edited, kind, replacement, address, Call.shift, replace] using
+            congrArg (fun x => FreeMagma.mul x (cutTerm true r (sectionAt I [true]))) hi'
         · have hguard : Guard d (cutTerm true r (sectionAt I [true])) := by
             cases d <;> simpa [Guard, cutTerm, hs, Call.shift, subtree] using hg
           have hi' := ir true (sectionAt I [true]) hc.2 hi d hmem hguard
-          cases d <;>
-            simpa [edited, kind, replacement, address, cutTerm, hs, Call.shift, replace,
-              section_insert_same, section_insert_other, address] using
-              congrArg (fun x => FreeMagma.mul (cutTerm false l (sectionAt I [false])) x) hi'
+          have hs' : Call.split [] ∈ insert (d.shift [true]) I := Or.inr hs
+          simp only [cutTerm, hs, hs', ↓reduceIte]
+          rw [section_insert_other I false d, section_insert_same]
+          cases d <;> simpa [edited, kind, replacement, address, Call.shift, replace] using
+            congrArg (fun x => FreeMagma.mul (cutTerm false l (sectionAt I [false])) x) hi'
       cases e with
       | promote p =>
           cases p with
@@ -578,7 +594,7 @@ theorem cut_events (b : Bool) (t : Source) (I : Set Call)
             cases p with
             | nil =>
                 simp only [Finset.mem_coe, promote_root_mem, ne_eq,
-                  node_leaf, not_false_eq_true, and_true]
+                  FreeMagma.mul_eq, node_leaf, not_false_eq_true, and_true]
                 constructor
                 · exact ideal_split_promotion b l r I hI hs
                 · exact fun hp => ((promote_root_mem b _).mp (hI.1 hp)).1
@@ -587,7 +603,11 @@ theorem cut_events (b : Bool) (t : Source) (I : Set Call)
             cases p with
             | nil => simp [hs]
             | cons c p => exact shifted c (.split p) rfl
-      · have hchild : ∀ (c : Bool) (d : Call), d.shift [c] ∉ I := by
+      · have hp0 : b = false → Call.promote [] ∉ I := by
+          intro hb hp
+          have hm := ((promote_root_mem b (.mul l r)).mp (hI.1 hp)).1
+          simp [hb] at hm
+        have hchild : ∀ (c : Bool) (d : Call), d.shift [c] ∉ I := by
           intro c d hd
           exact hs (ideal_child_split b c l r I hI d hd)
         ext e
@@ -595,17 +615,21 @@ theorem cut_events (b : Bool) (t : Source) (I : Set Call)
         | promote p =>
             cases p with
             | nil => cases b <;> by_cases hp : Call.promote [] ∈ I <;>
-                simp [cutTerm, hs, hp, promote_root_mem]
+                simp_all [cutTerm, hs, hp, promote_root_mem]
             | cons c p =>
+                have hn : Call.promote (c :: p) ∉ I := by
+                  simpa [Call.shift] using hchild c (.promote p)
                 cases b <;> by_cases hp : Call.promote [] ∈ I <;>
-                  simp [cutTerm, hs, hp, events, Call.shift, hchild c (.promote p)]
+                  simp [cutTerm, hs, hp, events, hn]
         | split p =>
             cases p with
             | nil => cases b <;> by_cases hp : Call.promote [] ∈ I <;>
                 simp [cutTerm, hs, hp, events]
             | cons c p =>
+                have hn : Call.split (c :: p) ∉ I := by
+                  simpa [Call.shift] using hchild c (.split p)
                 cases b <;> by_cases hp : Call.promote [] ∈ I <;>
-                  simp [cutTerm, hs, hp, events, Call.shift, hchild c (.split p)]
+                  simp [cutTerm, hs, hp, events, hn]
 
 private theorem run_cons_guard (e : Call) (u : Source) (w : List Call) (hg : Guard e u) :
     run u (e :: w) = run (edited u e) w := by
@@ -827,17 +851,21 @@ private theorem event_step (b : Bool) (u : Source) (e : Call)
         · have hg' : Guard d l := by cases d <;> simpa [Guard, Call.shift, subtree] using hg
           obtain ⟨hi, hf⟩ := il false d hc.1 hg'
           constructor
-          · cases d <;> cases b <;>
-              simp [edited, kind, replacement, address, Call.shift, replace, events, hi, Finset.image_insert,
-                Finset.union_assoc, Finset.union_left_comm, Finset.union_comm]
-          · simpa using hf
+          · have hed : edited (.mul l r) (d.shift [false]) = .mul (edited l d) r := by
+              cases d <;> rfl
+            rw [hed, events, hi]
+            cases b <;> simp [events, Finset.image_insert, Finset.insert_union,
+              Finset.union_insert, Finset.insert_comm]
+          · exact fun hm => hf ((shift_mem b false l r d).mp hm)
         · have hg' : Guard d r := by cases d <;> simpa [Guard, Call.shift, subtree] using hg
           obtain ⟨hi, hf⟩ := ir true d hc.2 hg'
           constructor
-          · cases d <;> cases b <;>
-              simp [edited, kind, replacement, address, Call.shift, replace, events, hi, Finset.image_insert,
-                Finset.union_assoc, Finset.union_left_comm, Finset.union_comm]
-          · simpa using hf
+          · have hed : edited (.mul l r) (d.shift [true]) = .mul l (edited r d) := by
+              cases d <;> rfl
+            rw [hed, events, hi]
+            cases b <;> simp [events, Finset.image_insert, Finset.insert_union,
+              Finset.union_insert, Finset.insert_comm]
+          · exact fun hm => hf ((shift_mem b true l r d).mp hm)
       cases e with
       | promote p => cases p with
         | nil => simp [Guard, subtree] at hg
