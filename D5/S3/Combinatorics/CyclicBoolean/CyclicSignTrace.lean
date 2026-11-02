@@ -333,4 +333,118 @@ theorem inverse_phase_support_nonempty (m : ℕ) (b : Word (2 * m + 1)) :
   obtain ⟨a, ha⟩ := walsh_support_nonempty (inverseComponent m b)
   exact ⟨a, by simpa only [inverse_phase_sum] using ha⟩
 
+private theorem sign_mul_eq_self_iff {z : ZMod 2} {q : ℤ} (hq : q ≠ 0) :
+    sign z * q = q ↔ z = 0 := by
+  constructor
+  · intro h
+    rcases bit_cases z with rfl | rfl
+    · rfl
+    · norm_num [sign, ZMod.val_one_eq_one_mod] at h
+      have hq0 : q = 0 := by
+        linarith
+      exact (hq hq0).elim
+  · intro hz
+    simp [hz, sign]
+
+/-- A Boolean derivative is constant exactly when its Walsh support lies in the
+corresponding character level set.  This is the Fourier bridge used before any
+affine-hull dimension argument. -/
+theorem walsh_constant_derivative_iff {n : ℕ} [NeZero n] (f : Word n → ZMod 2)
+    (u : Word n) (c : ZMod 2) :
+    (∀ y, f (y + u) + f y = c) ↔
+      ∀ a, walsh f a ≠ 0 → dot a u = c := by
+  classical
+  let e : Word n ≃ Word n :=
+    { toFun := fun y => y + u
+      invFun := fun y => y + u
+      left_inv := by
+        intro y
+        change (y + u) + u = y
+        ext i
+        change y i + u i + u i = y i
+        rw [add_assoc, CharTwo.add_self_eq_zero, add_zero]
+      right_inv := by
+        intro y
+        change (y + u) + u = y
+        ext i
+        change y i + u i + u i = y i
+        rw [add_assoc, CharTwo.add_self_eq_zero, add_zero] }
+  constructor
+  · intro hderiv a hwa
+    have hsum : walsh f a = sign (c + dot a u) * walsh f a := by
+      have hreindex :
+          (∑ y, sign (f y + dot a y)) =
+            ∑ y, sign (f (e y) + dot a (e y)) := by
+        rw [← Equiv.sum_comp e]
+      calc
+        walsh f a = ∑ y, sign (f (e y) + dot a (e y)) := by
+          unfold walsh
+          exact hreindex
+        _ =
+            ∑ y, sign (c + dot a u) * sign (f y + dot a y) := by
+          apply Finset.sum_congr rfl
+          intro y hy
+          dsimp [e]
+          have hxy : f (y + u) + dot a (y + u) =
+              (c + dot a u) + (f y + dot a y) := by
+            calc
+              f (y + u) + dot a (y + u) =
+                  (f (y + u) + f y) + (f y + dot a (y + u)) := by
+                    ring_nf
+                    have htwo : (2 : ZMod 2) = 0 := by decide
+                    rw [htwo, mul_zero, add_zero]
+              _ = c + (f y + dot a (y + u)) := by rw [hderiv y]
+              _ = (c + dot a u) + (f y + dot a y) := by
+                rw [dot_add_right]
+                ring
+          rw [hxy, sign_add]
+        _ = sign (c + dot a u) * walsh f a := by
+          unfold walsh
+          exact (Finset.mul_sum (s := Finset.univ)
+            (f := fun y : Word n => sign (f y + dot a y)) (sign (c + dot a u))).symm
+    have hs : sign (c + dot a u) * walsh f a = walsh f a := hsum.symm
+    have hz : c + dot a u = 0 := (sign_mul_eq_self_iff hwa).mp hs
+    apply add_left_cancel (a := c)
+    calc
+      c + dot a u = 0 := hz
+      _ = c + c := (CharTwo.add_self_eq_zero c).symm
+  · intro hsupport y
+    have hinv := walsh_inversion f (y + u)
+    have hinv' := walsh_inversion f y
+    have hterms (a : Word n) :
+        walsh f a * sign (dot a (y + u)) =
+          sign c * (walsh f a * sign (dot a y)) := by
+      by_cases hwa : walsh f a = 0
+      · simp [hwa]
+      · rw [dot_add_right, sign_add]
+        rw [hsupport a hwa]
+        simp [sign_add, mul_assoc, mul_left_comm, mul_comm]
+    simp_rw [hterms] at hinv
+    have hfac :
+        (∑ a, sign c * (walsh f a * sign (dot a y))) =
+          sign c * (∑ a, walsh f a * sign (dot a y)) := by
+      exact (Finset.mul_sum (s := Finset.univ)
+        (f := fun a : Word n => walsh f a * sign (dot a y)) (sign c)).symm
+    rw [hfac, hinv'] at hinv
+    have hcard : (Fintype.card (Word n) : ℤ) ≠ 0 :=
+      Nat.cast_ne_zero.mpr Fintype.card_ne_zero
+    have hinvEq :
+        (Fintype.card (Word n) : ℤ) * sign (f (y + u)) =
+          (Fintype.card (Word n) : ℤ) * (sign c * sign (f y)) := by
+      calc
+        (Fintype.card (Word n) : ℤ) * sign (f (y + u)) =
+            sign c * ((Fintype.card (Word n) : ℤ) * sign (f y)) := by
+          simpa only [hinv]
+        _ = (Fintype.card (Word n) : ℤ) * (sign c * sign (f y)) := by ring
+    have hsign : sign (f (y + u)) = sign c * sign (f y) :=
+      mul_left_cancel₀ hcard hinvEq
+    apply sign_injective
+    calc
+      sign (f (y + u) + f y) = sign (f (y + u)) * sign (f y) := by
+        rw [sign_add]
+      _ = (sign c * sign (f y)) * sign (f y) := by rw [hsign]
+      _ = sign c := by
+        rw [mul_assoc, ← sign_add, CharTwo.add_self_eq_zero]
+        simp [sign]
+
 end D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
