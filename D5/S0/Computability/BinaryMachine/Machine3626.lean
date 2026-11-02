@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/BinaryMachine/Machine3626
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Bits, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Moebius, mathlib/module/Mathlib.Data.Nat.Totient]
+   anchors: [mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Moebius, mathlib/module/Mathlib.Data.Nat.Totient]
    utility: none
    digest: The signed Moebius divisor sum counts actual transitions of machine 3626. -/
 

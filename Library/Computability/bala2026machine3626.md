@@ -14,6 +14,13 @@ triage: anchor
 
 # Exact halting time of machine 3626
 
+## Verified locator
+
+https://oeis.org/A393210, revision 18, conjecture line in the comments.
+The alias record is https://oeis.org/A069517, revision 31. No DOI is declared.
+
+## Exact question
+
 OEIS A393210, revision 18, records Peter Bala's conjecture of September 11,
 2026. The sequence has offset 1 and names Wolfram's two-state two-symbol
 machine 3626. A069517, revision 31, records the same question with the two
