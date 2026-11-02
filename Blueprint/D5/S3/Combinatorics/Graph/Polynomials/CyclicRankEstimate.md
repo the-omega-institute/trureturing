@@ -184,31 +184,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.coeff_
 
 Under the rank upper bound, every state belongs to exactly one of the forest and cyclic filters, so the full coefficient splits into the two contributions.
 
-**Theorem 1.16 (Cyclic absolute coefficient bound).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.natAbs_cyclicCoefficient_le`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.natAbs_cyclicCoefficient_le` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A uniform per-state NatAbs bound B implies the cyclic coefficient is bounded by the cyclic-state cardinality times B.
-
-**Theorem 1.17 (Conditional finite-sum bound).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.conditional_signed_coefficient_bound`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.conditional_signed_coefficient_bound` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-This bookkeeping implication assumes exact forest equality, an all-state cardinality bound, and a term bound. It is not the uniform graph theorem; its forest-equality premise fails on the triangle at degree three.
-
-**Definition 1.18 (Actual simple-graph edge predicate).**
+**Definition 1.16 (Actual simple-graph edge predicate).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphEdgePredicate`
 
@@ -220,7 +196,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphE
 
 The graph wrapper lifts SimpleGraph adjacency to the unordered edge type Sym2(Fin n).
 
-**Definition 1.19 (Actual graph edge type).**
+**Definition 1.17 (Actual graph edge type).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphEdge`
 
@@ -232,7 +208,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphE
 
 The graph wrapper restricts the finite edge index type to the actual adjacency predicate, so nonedges are not duplicated in the subset state sum.
 
-**Definition 1.20 (Actual graph rank state).**
+**Definition 1.18 (Actual graph rank state).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphRank`
 
@@ -244,7 +220,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphR
 
 The graph wrapper computes rank from the connected-component count of the image of the actual edge subset, including isolated vertices.
 
-**Definition 1.21 (Actual graph state polynomial).**
+**Definition 1.19 (Actual graph state polynomial).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphStatePolynomial`
 
@@ -256,7 +232,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphS
 
 For any positive vertex count, the polynomial sums over actual graph edge subsets. Exponent nonnegativity is proved from the component rank, rather than supplied as an extra premise.
 
-**Definition 1.22 (Spanning graph of a state).**
+**Definition 1.20 (Spanning graph of a state).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphOfState`
 
@@ -268,7 +244,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graphO
 
 The graph consists of the selected actual edges and retains every isolated vertex.
 
-**Theorem 1.23 (Support bound from graph rank).**
+**Theorem 1.21 (Support bound from graph rank).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.support_card_le_twice_rank`
 
@@ -280,7 +256,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.suppor
 
 A finite graph has at most twice its graph rank in nonisolated vertices. The proof uses a spanning forest with the same reachability relation and the degree-sum formula.
 
-**Theorem 1.24 (Actual rank inequalities).**
+**Theorem 1.22 (Actual rank inequalities).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graph_rank_bounds`
 
@@ -292,7 +268,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graph_
 
 For a graph with a positive number of vertices, every state has rank at most its edge count and at most v minus one; the integer state exponent is nonnegative.
 
-**Theorem 1.25 (State support bound).**
+**Theorem 1.23 (State support bound).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graph_state_support_bound`
 
@@ -304,7 +280,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graph_
 
 The actual rank-j state graph has at most 2j nonisolated vertices.
 
-**Definition 1.26 (Sources of an ordered pattern).**
+**Definition 1.24 (Sources of an ordered pattern).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.orderedSources`
 
@@ -316,7 +292,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.ordere
 
 A source has no adjacent vertex earlier in the specified finite vertex order.
 
-**Definition 1.27 (Forward neighbor carrier).**
+**Definition 1.25 (Forward neighbor carrier).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.forwardNeighbors`
 
@@ -328,7 +304,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.forwar
 
 This carrier contains the actual later adjacent vertices of a vertex.
 
-**Definition 1.28 (Bounded forward degree).**
+**Definition 1.26 (Bounded forward degree).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.boundedForwardDegree`
 
@@ -340,7 +316,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.bounde
 
 The supplied ordering has at most D later neighbors at every vertex. This is a graph property, not an assumed subset-count estimate.
 
-**Definition 1.29 (Increasing graph embeddings).**
+**Definition 1.27 (Increasing graph embeddings).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.orderedEmbeddings`
 
@@ -352,7 +328,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.ordere
 
 Increasing vertex maps preserve all edges of the support pattern.
 
-**Theorem 1.30 (Cyclic ordered embedding bound).**
+**Theorem 1.28 (Cyclic ordered embedding bound).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic_ordered_embedding_count`
 
@@ -364,7 +340,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 A cyclic simple pattern without isolated vertices has at most rank minus one source choices. A finite injection records source images and one bounded forward-neighbor slot for each remaining vertex, yielding the stated uniform embedding bound.
 
-**Definition 1.31 (Finite cyclic support patterns).**
+**Definition 1.29 (Finite cyclic support patterns).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclicPatterns`
 
@@ -376,7 +352,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 The finite carrier contains all simple patterns of the specified graph rank, with no isolated vertices and with an actual cycle.
 
-**Definition 1.32 (Cyclic states of one rank).**
+**Definition 1.30 (Cyclic states of one rank).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclicRankStates`
 
@@ -388,7 +364,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 Only subsets with graph rank exactly j and more than j edges belong to this filter.
 
-**Theorem 1.33 (Cyclic graph rank is at least two).**
+**Theorem 1.31 (Cyclic graph rank is at least two).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic_graph_rank_ge_two`
 
@@ -400,7 +376,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 An actual cyclic edge subset of a simple graph has rank at least two; this excludes rank zero and makes the first coefficient exact.
 
-**Definition 1.34 (Uniform pattern constant).**
+**Definition 1.32 (Uniform pattern constant).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclicPatternConstant`
 
@@ -412,7 +388,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 The constant depends only on D and j through finite carriers of simple support graphs on at most 2j vertices.
 
-**Theorem 1.35 (Rank-specific subset count).**
+**Theorem 1.33 (Rank-specific subset count).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic_rank_state_count_vertices`
 
@@ -424,7 +400,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 Actual rank-j cyclic edge subsets inject into finitely many increasing support-pattern embeddings. The exponent of the vertex-count factor is j minus one.
 
-**Theorem 1.36 (Uniform connected-graph cyclic count).**
+**Theorem 1.34 (Uniform connected-graph cyclic count).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic_rank_state_count`
 
@@ -436,7 +412,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclic
 
 Connectedness replaces the vertex factor by an edge-count factor. The bound is uniform over all carrier sizes and graphs with forward degree at most D.
 
-**Theorem 1.37 (Rank-dependent state term growth).**
+**Theorem 1.35 (Rank-dependent state term growth).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graph_term_coefficient_bound`
 
@@ -454,7 +430,6 @@ A rank-j state contributes at most 2 to the k times (e plus one) to the k minus 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.coeff_split`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.coeff_statePolynomial`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.coeff_stateTerm`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.conditional_signed_coefficient_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclicCoefficient`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclicPatternConstant`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.cyclicPatterns`
@@ -477,7 +452,6 @@ A rank-j state contributes at most 2 to the k times (e plus one) to the k minus 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.graph_term_coefficient_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.idealCoefficient`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.idealCoefficient_formula`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.natAbs_cyclicCoefficient_le`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.orderedEmbeddings`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.orderedSources`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/CyclicRankEstimate.stateExponent`
