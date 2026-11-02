@@ -9,9 +9,10 @@ open _root_.D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
 open LatticeLightConeCoordinates
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-/- Faithful source-family attempts. The conditional assemblies do not supply
+/- Faithful source-family attempts. The archived conditional assemblies did not supply
 whole-family variation, role sensitivity, observational dependence or native
-source-selection evidence. They are not declared_validated registrations. -/
+source-selection evidence. Their native report decoding failed with computed_type;
+only the actual source bridges are retained. No declared_validated registration is claimed. -/
 namespace Reg.D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates
 namespace OriginalCurrent
 structure Params where
@@ -49,36 +50,6 @@ theorem source_bridge : (type_of% (@NullFrame.original_carrier_all_charges)) ↔
 theorem source_actual : arena.Law actual :=
   source_bridge.mp (@NullFrame.original_carrier_all_charges)
 
-def registrationAttempt (variation : Variation arena actual)
-    (sensitivity : Sensitivity arena actual)
-    (dependence : ObservationalDependence signature actual) :
-    Contract.Registration (@NullFrame.original_carrier_all_charges) (Realization signature) Params Bool := {
-  unitName := `Reg.D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates.OriginalCurrent.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates.OriginalCurrent.registrationAttempt
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨{
-    actual := actual
-    bridge := source_bridge
-    variation := variation
-    sensitivity := sensitivity
-    dependence := dependence }⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
 end OriginalCurrent
 namespace Frequency
 structure Params where
@@ -113,36 +84,6 @@ theorem source_bridge : (type_of% (@NullFrame.frequency_grading)) ↔
     arena.Law actual := Iff.rfl
 
 theorem source_actual : arena.Law actual := source_bridge.mp (@NullFrame.frequency_grading)
-
-def registrationAttempt (variation : Variation arena actual)
-    (sensitivity : Sensitivity arena actual)
-    (dependence : ObservationalDependence signature actual) :
-    Contract.Registration (@NullFrame.frequency_grading) (Realization signature) Params Bool := {
-  unitName := `Reg.D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates.Frequency.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates.Frequency.registrationAttempt
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨{
-    actual := actual
-    bridge := source_bridge
-    variation := variation
-    sensitivity := sensitivity
-    dependence := dependence }⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end Frequency
 end Reg.D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates

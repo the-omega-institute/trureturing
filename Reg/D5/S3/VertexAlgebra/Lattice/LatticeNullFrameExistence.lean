@@ -9,9 +9,10 @@ open _root_.D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
 open LatticeLightConeCoordinates
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-/- Faithful source-family attempts. The conditional assemblies do not supply
+/- Faithful source-family attempts. The archived conditional assemblies did not supply
 whole-family variation, role sensitivity, observational dependence or native
-source-selection evidence. They are not declared_validated registrations. -/
+source-selection evidence. Their native report decoding failed with computed_type;
+only the actual source bridges are retained. No declared_validated registration is claimed. -/
 namespace Reg.D5.S3.VertexAlgebra.Lattice.LatticeNullFrameExistence
 open _root_.D5.S3.VertexAlgebra.LatticeNullFrameExistence
 namespace ChargeDetectedFrame
@@ -55,36 +56,6 @@ theorem source_bridge : (type_of% (@exists_nullFrame_pPlus_ne_zero)) ↔
 
 theorem source_actual : arena.Law actual :=
   source_bridge.mp (@exists_nullFrame_pPlus_ne_zero)
-
-def registrationAttempt (variation : Variation arena actual)
-    (sensitivity : Sensitivity arena actual)
-    (dependence : ObservationalDependence signature actual) :
-    Contract.Registration (@exists_nullFrame_pPlus_ne_zero) (Realization signature) Params (Fin 4) := {
-  unitName := `Reg.D5.S3.VertexAlgebra.Lattice.LatticeNullFrameExistence.ChargeDetectedFrame.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.LatticeNullFrameExistence.ChargeDetectedFrame.registrationAttempt
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨{
-    actual := actual
-    bridge := source_bridge
-    variation := variation
-    sensitivity := sensitivity
-    dependence := dependence }⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 end ChargeDetectedFrame
 end Reg.D5.S3.VertexAlgebra.Lattice.LatticeNullFrameExistence
