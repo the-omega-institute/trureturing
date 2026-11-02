@@ -1316,7 +1316,6 @@ theorem asymmetric_quotient_growth (p m a b : ℤ)
     letI : IsAddCyclic G := hc
     have hprod := isAddCyclic_of_surjective qred hqred
     have hcop := (AddGroup.isAddCyclic_prod_iff.mp hprod).2.2
-    rw [Nat.card_zmod, Nat.card_zmod] at hcop
     have hone : p.natAbs = 1 := by simpa [Nat.Coprime] using hcop
     have honeZ : (p.natAbs : ℤ) = 1 := by exact_mod_cast hone
     omega
