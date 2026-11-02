@@ -8,13 +8,12 @@
 
 import D5.S3.VertexAlgebra.Lattice.LatticeSugawaraNullFrameEndpoints
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
-import Mathlib.Tactic
 
-/-! SOURCE ONLY / UNCOMPILED.
+/-! Native construction for the original full BRST remainder.
 
-This file uses the three immutable supplied native providers, with their canonical
-imports. It has not been elaborated, compiled, kernel checked, escape-audited or
-admitted. Full proof bodies below are proposals for a later native check.
+The original 412-line source was an uncompiled proposal. Kernel status is given
+by the actual current build and scoped report. Independent source-fidelity
+review, escape audits and canonical admission are separate pending obligations.
 
 Q means the literal LatticeBRST.totalCharge = T + id tensor original Qg. No
 relative Qhat, intercept, vacuum, ghost cutoff, shell or uniform mode bound is
@@ -66,9 +65,11 @@ private theorem commonModes_spec
   classical
   refine ⟨by simp [commonModes], ?_, ?_⟩
   · intro n hn
-    exact Finset.mem_insert_of_mem (Finset.mem_union_left _ (by simpa using hn))
+    exact Finset.mem_insert_of_mem (Finset.mem_union_left _
+      ((LatticeMatterGhostCoupling.summand_finite D H x).mem_toFinset.mpr hn))
   · intro n hn
-    exact Finset.mem_insert_of_mem (Finset.mem_union_right _ (by simpa using hn))
+    exact Finset.mem_insert_of_mem (Finset.mem_union_right _
+      ((signed_support F x).1.mem_toFinset.mpr hn))
 
 private theorem d0_common_capture
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (p : Charge D) (x : State D) :
@@ -128,8 +129,11 @@ theorem totalCharge_sub_d0_finite_capture
   have hzero : tp (endpoint p 0) (c 0) x =
       (LatticePositiveEnergy.chargeEnergy D p : ℂ) •
         tp (1 : Module.End ℂ (Carrier D)) (c 0) x := by
-    simp only [endpoint, if_pos rfl, tp, TensorProduct.map_smul_left,
-      LinearMap.smul_apply]
+    change (TensorProduct.map
+      ((LatticePositiveEnergy.chargeEnergy D p : ℂ) • (1 : Module.End ℂ (Carrier D)))
+      (c 0)) x = _
+    rw [TensorProduct.map_smul_left, LinearMap.smul_apply]
+    rfl
   change LatticeBRST.totalCharge D H x - d0 F p x =
     finiteRemainder F H p s x + _
   rw [hfinite, hzero]
@@ -218,7 +222,7 @@ private theorem current_off_charge (u : LatticeLightConeCoordinates.E D)
   classical
   rcases i with ⟨⟨p,m⟩,S⟩
   rw [actualBasis_apply, sector_current, sector_coefficient]
-  exact if_neg (Ne.symm hne)
+  exact ite_eq_right (Ne.symm hne)
 
 private theorem ghost_off_charge (G : Module.End ℂ Fock) (i j : StateIndex D t)
     (hne : j.1.1 ≠ i.1.1) :
@@ -227,7 +231,7 @@ private theorem ghost_off_charge (G : Module.End ℂ Fock) (i j : StateIndex D t
   classical
   rcases i with ⟨⟨p,m⟩,S⟩
   rw [actualBasis_apply, ghost_sector, sector_coefficient]
-  exact if_neg (Ne.symm hne)
+  exact ite_eq_right (Ne.symm hne)
 
 private theorem matter_off_charge
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (n : ℤ)
@@ -244,7 +248,7 @@ private theorem matter_off_charge
     simp only [sector, tp_tmul, sugawaraMode_single_sector,
       AlgEquiv.symm_apply_apply]
   rw [actualBasis_apply, haction, sector_coefficient]
-  exact if_neg (Ne.symm hne)
+  exact ite_eq_right (Ne.symm hne)
 
 private theorem totalCharge_off_charge
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
