@@ -140,6 +140,106 @@ $$\left(\forall m \in \mathrm{Real},\; 1 \le m \Rightarrow \left(\left(\exists z
 
 The factorization gives zero, m squared plus m, and the two quadratic roots, each quadratic root counted twice. For q_m(x)=x squared minus (m squared plus 4m)x plus 3m squared, q_m(0)=3m squared is positive, q_m(m)=minus m cubed is negative, and q_m(3)=9−12m is negative when m is at least one. The smaller quadratic root lies between zero and m; the larger root exceeds m squared plus m. A nonzero real symmetric eigenvector is constructed and transported by the proved similarity to C. Rationalization gives the strict lower bound 3m/(m+4), while the upper bound is three. The lower bound tends to three, so squeezing proves the real limit and the positive-integer subsequence limit. For every K below three there is a positive integer m whose smallest positive quotient eigenvalue exceeds K; every other positive real quotient eigenvalue then also exceeds K. Thus no constant smaller than three bounds the smallest positive quotient eigenvalues uniformly. The positive-real theorem supplies the same uniform bound for unequal ordered weights; the integer consequence follows by specializing its parameters.
 
+## Integer points on the endpoint equality polynomial
+
+The equality-curve remark in paper/sections/endpoint-one-spectrum.tex, label rem:endpoint-one-equality-curve, at the same public revision b93becea662a746badeadba42fdc3d3eb3db9382 supplies the polynomial below. The scalar C in this section denotes its constant term in q, distinct from the quotient matrix above. We give an elementary arithmetic derivation of finiteness by applying the existing facts that a nonzero polynomial over the integers has finitely many roots, a finite union of finite sets is finite, and a set with finite projection and finite fibers is finite. These are supplied by Polynomial.finite_setOfPred_isRoot, Set.Finite.biUnion and Set.Finite.of_finite_fibers. The parameter domain is all integer pairs (a,b), with no positivity or spectral-ordering assumption.
+
+$$
+t = b \cdot \left(b + 2\right)
+$$
+
+$$
+q = a \cdot \left(t - a\right)
+$$
+
+$$
+A = 3 \cdot b - 1
+$$
+
+$$
+B = b \cdot \left(b^{2} + 4 \cdot b - 1\right)
+$$
+
+$$
+C = -\left(\left(b^{2} + 2 \cdot b - 1\right) \cdot \left(b^{2} + 3 \cdot b - 1\right) \cdot \left(b^{3} + 3 \cdot b^{2} + 3 \cdot b - 1\right)\right)
+$$
+
+$$
+\operatorname{G}\left(a, b\right) = A \cdot q^{2} + B \cdot q + C
+$$
+
+Let n=|b| be at least four. The triangle inequality gives |A|≥2n and |B|≤3n³. The three factors in |C| are bounded respectively by 2n², 2n² and 3n³, so |C|≤18n⁷. If G(a,b)=0 and x=|q|, then 2nx²≤3n³x+18n⁷. Were x>4n³, we would have 24n³x<6nx² and 144n⁷<9nx². Multiplying the preceding weak inequality by eight would then give 16nx²<15nx², a contradiction. Thus |q|≤4n³.
+
+The involution a↦t−a preserves q and G. Choose u from a and t−a with |u|≤|t−u|, and put v=t−u. Since |b+2|≥n−2 and n≥4, n²≤2|t|≤2(|u|+|v|)≤4|v|. Multiplication by |u|, together with |uv|=|q|≤4n³, gives |u|n²≤16n³, hence |u|≤16n. The chosen pair (u,b) is still a solution. This choice preserves b and works for both signs of b; it is used only to bound the projection, so both original involution partners remain in the final set.
+
+In the following identities write q=u(t−u). Define the auxiliary integer F and the following polynomials. All displayed polynomial identities hold over the integers without division.
+
+$$
+\operatorname{F}\left(u, b\right) = 9 \cdot u^{2} - 3 \cdot u - 3 \cdot b^{2} - 13 \cdot b
+$$
+
+$$
+Q = \left(27 \cdot b - 9\right) \cdot u^{2} + \left(-54 \cdot b^{3} + -90 \cdot b^{2} + 45 \cdot b + -3\right) \cdot u + 27 \cdot b^{5} + 99 \cdot b^{4} + 54 \cdot b^{3} + -66 \cdot b^{2} + 11 \cdot b + -1
+$$
+
+$$
+L_{0} = 3 \cdot \left(3 \cdot b^{2} + 6 \cdot b - 1\right) \cdot \left(-21 \cdot b^{2} + 8 \cdot b + 1\right)
+$$
+
+$$
+M_{0} = -333 \cdot b^{5} + -1197 \cdot b^{4} + -258 \cdot b^{3} + 1436 \cdot b^{2} + -661 \cdot b + 81
+$$
+
+$$
+81 \cdot \operatorname{G}\left(u, b\right) = \operatorname{F}\left(u, b\right) \cdot Q + u \cdot L_{0} + M_{0}
+$$
+
+For n≥1 and |u|≤16n, summing absolute monomials and using nʲ≤nᵏ for j≤k gives |Q−27b⁵|≤12519n⁴, |L₀|≤900n⁴ and |M₀|≤3966n⁵. The first constant is 36·256+192·16+231=12519; the second is 3·10·30=900; the third is 333+1197+258+1436+661+81=3966. For n≥1000, 12519n⁴≤26n⁵, and hence |Q|≥27n⁵−12519n⁴≥n⁵. On a solution the identity gives |F|n⁵≤|FQ|=|uL₀+M₀|≤(16·900+3966)n⁵=18366n⁵. Cancelling the positive n⁵ yields |F(u,b)|≤18366. Thus every solution with |b|≥1000 has a representative with the same b and an integer r=F(u,b) in [−18366,18366].
+
+For each fixed integer r, define the following polynomials in b. Here A, B and C retain their definitions above.
+
+$$
+D_{0} = 3 \cdot b^{2} + 6 \cdot b - 1
+$$
+
+$$
+T_{r} = 3 \cdot b^{2} + 13 \cdot b + r
+$$
+
+$$
+L_{r} = 3 \cdot D_{0} \cdot \left(A \cdot D_{0} + -2 \cdot A \cdot T_{r} + 9 \cdot B\right)
+$$
+
+$$
+M_{r} = A \cdot T_{r} \cdot \left(\left(D_{0}\right)^{2} + T_{r}\right) + -9 \cdot B \cdot T_{r} + 81 \cdot C
+$$
+
+When F(u,b)=r, the identities 9q=3uD₀−Tᵣ and 9u²=3u+Tᵣ reduce 81G(u,b) to uLᵣ+Mᵣ. For a solution Mᵣ=−uLᵣ, so the eliminant below vanishes. No division by Lᵣ occurs, including when Lᵣ=0.
+
+$$
+H_{r} = 9 \cdot \left(M_{r}\right)^{2} + 3 \cdot M_{r} \cdot L_{r} - T_{r} \cdot \left(L_{r}\right)^{2}
+$$
+
+$$
+H_{r} = \left(9 \cdot u^{2} - 3 \cdot u - T_{r}\right) \cdot \left(L_{r}\right)^{2}
+$$
+
+The second equality holds under the two equations F(u,b)=r and G(u,b)=0; its right side is zero. Expanding the defining polynomials gives:
+
+$$
+L_{r} = -189 \cdot b^{4} + \left(-306 - 54 \cdot r\right) \cdot b^{3} + \left(216 - 90 \cdot r\right) \cdot b^{2} + \left(54 \cdot r - 6\right) \cdot b + -3 + -6 \cdot r
+$$
+
+$$
+M_{r} = \left(27 \cdot r - 333\right) \cdot b^{5} + \left(99 \cdot r - 1197\right) \cdot b^{4} + \left(63 \cdot r - 258\right) \cdot b^{3} + \left(1436 - 30 \cdot r\right) \cdot b^{2} + \left(3 \cdot r^{2} + -2 \cdot r + -661\right) \cdot b + 81 + -r^{2} + -r
+$$
+
+These expansions show that Hᵣ has degree at most ten. Its coefficient of b¹⁰ is 9(27r−333)²−3·189²=729((3r−37)²−147). For any integer r, (3r−37)² is congruent to one modulo three, whereas 147 is congruent to zero. The coefficient is therefore nonzero. Hᵣ is a nonzero polynomial of degree exactly ten and has finitely many integer roots.
+
+The b-projection of G(a,b)=0 is contained in [−999,999] together with the union of the root sets of Hᵣ for integers r in [−18366,18366]. Both intervals are finite, and each root set is finite, so the projection is finite. For every fixed integer b, the polynomial G(a,b) in a has quartic coefficient 3b−1. It is nonzero because 3b=1 has no integer solution; its integer root set, and hence each a-fiber, is finite. Applying finiteness from finite projection and finite fibers proves that the set of all (a,b) in ℤ² with G(a,b)=0 is finite. This includes zero and negative coordinates, every small-b fiber, and both involution partners.
+
+This application establishes finiteness of the stated polynomial zero set. An effective list of points, emptiness and classification require further arguments. Relating the polynomial to admissible graph or matrix parameters is a separate mathematical step. The arithmetic argument does not establish geometric irreducibility, Kummer models, full constant fields or separability, local orders or ramification, or genus-three and genus-ten calculations. The public source's geometric discussion is separate from the polynomial and elementary finiteness argument given here.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianLowRoot.balancedLow`
