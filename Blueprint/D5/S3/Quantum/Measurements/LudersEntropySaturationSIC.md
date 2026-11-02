@@ -58,7 +58,7 @@ $$\left(\operatorname{D5.S3.Quantum.Measurements.LudersEntropySaturationSIC.clai
 
 For every positive natural dimension and every MIC, equality with the stated Haar-averaged entropy bound implies that a SIC exists in that dimension. This is Conjecture 1 in lmc.tex, lines 416–420, with the Haar average taken over unitary conjugates of the fixed coordinate projector. All logarithms are natural. The premise requires entropy saturation; the conclusion does not assert SIC existence in dimensions where that premise is unavailable.
 
-**Theorem 1.5 (Entropy saturation forces the MIC itself to be a SIC).**
+**Theorem 1.5 (Entropy saturation forces SIC existence).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\left(\operatorname{NeZero}\left(d\right)\right) \to \left(\forall \left(e: \operatorname{Fin}\left(d^{2}\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.LudersEntropySaturationSIC.IsMIC}\left(d, e\right)\right) \to \left(\left(\operatorname{D5.S3.Quantum.Measurements.LudersEntropySaturationSIC.typicalEntropy}\left(d, e\right) = \operatorname{Real.log}\left(\left(\operatorname{Nat.cast}\left(d\right): \mathbb{R}\right) + 1\right) - \frac{2}{\left(\operatorname{Nat.cast}\left(d\right): \mathbb{R}\right) + 1} \cdot \operatorname{Real.log}\left(2\right)\right) \to \left(\exists \left(f: \operatorname{Fin}\left(d^{2}\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\operatorname{D5.S3.Quantum.Measurements.LudersEntropySaturationSIC.IsSIC}\left(d, f\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -82,7 +82,7 @@ $$
 a = \frac{t + \left(\operatorname{Nat.cast}\left(d\right): \mathbb{R}\right)}{\left(\operatorname{Nat.cast}\left(d\right): \mathbb{R}\right) \cdot \left(\left(\operatorname{Nat.cast}\left(d\right): \mathbb{R}\right) + 1\right)}
 $$
 
-For a positive matrix A, its squared trace is at least the trace of A². Applied to the Aᵢ, this gives t at least d and a at least c. The equality case also identifies the rank. If A is nonzero and the two traces agree, its Hermitian inner product with (tr A) I − A vanishes. Both matrices are positive, so their product vanishes and A² = (tr A) A. Dividing A by its positive trace produces a Hermitian, idempotent, trace-one matrix p. Consequently, equality for Aᵢ makes e i a real scalar multiple of such a p. Linear independence of the MIC effects ensures that no Aᵢ is zero.
+For a positive matrix A, its squared trace is at least the trace of A². Applied to the Aᵢ, this gives t at least d and a at least c. The equality case also identifies the rank. If A is nonzero and the two traces agree, dividing A by its positive trace produces a mixed state with purity one. By MState.pure_iff_purity_one this state is pure, and MState.pure_mul_self makes its matrix p idempotent. The matrix p is Hermitian and has trace one. Multiplying p by tr A recovers A. Consequently, equality for Aᵢ makes e i a real scalar multiple of such a p. Linear independence of the MIC effects ensures that no Aᵢ is zero.
 
 The strong Klein bound supplies nonnegativity and rigidity of relative entropy. Every density matrix is bounded above by I, and strict positivity of σₚ supplies the support condition. The bound with spectral ceiling one is:
 
