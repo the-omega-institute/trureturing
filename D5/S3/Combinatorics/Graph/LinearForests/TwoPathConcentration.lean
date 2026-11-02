@@ -1,10 +1,10 @@
 /- GID: D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration
-   mirror-E: none(waiver:actual-carrier-transport-pending)
-   anchors: [D5/S3/Combinatorics/Graph/LinearForests/PathCatalanFunctional]
+   mirror-E: none(waiver:exact-symbolic-configuration-correspondence)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Sum]
    utility: none
-   digest: An exact two-path configuration-series identity with an arbitrary residual factor. -/
+   digest: Two actual B-ended paths concentrate on their original labelled bipartition with an exact six-vertex residual and Catalan shift. -/
 
 import D5.S3.Combinatorics.Graph.LinearForests.PathCatalanFunctional
 import D5.S3.Combinatorics.Graph.LinearForests.FiniteForestCatalan
