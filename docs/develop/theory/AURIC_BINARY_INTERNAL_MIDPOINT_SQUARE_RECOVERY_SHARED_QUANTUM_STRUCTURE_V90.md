@@ -1103,7 +1103,7 @@ $p(0)=1/2$、$\operatorname{Var}_{\rho_1}(P_0)=1/4$。
 
 以下例子采用本轮的内生中点
 $\sigma=(\rho_0+\rho_1)/2$、半差 $d=(\rho_0-\rho_1)/2$。
-记 $\mathsf X=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}$、
+记 $\mathsf X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$、
 $\mathsf Z=\operatorname{diag}(1,-1)$ 为自伴 Pauli 统计算符；
 它们不是密度态。记 $P_0=\lvert 0\rangle\langle 0\rvert$、$P_1=\lvert 1\rangle\langle 1\rvert$、
 $P_+=\lvert +\rangle\langle +\rvert$，其中 $\lvert +\rangle=(\lvert 0\rangle+\lvert 1\rangle)/\sqrt2$。
