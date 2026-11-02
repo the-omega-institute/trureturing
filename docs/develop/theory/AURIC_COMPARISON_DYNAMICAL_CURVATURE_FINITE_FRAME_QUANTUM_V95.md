@@ -375,7 +375,14 @@ $$
 \sum_\mu K_\mu^*K_\mu=I.
 $$
 
-直和情形按输入输出块分别给这样的 Kraus 族。保留结果标签 $j$ 时，同一论证给完全正分支 $\Phi_j$，总和保迹，联合记录为
+直和情形按输入输出块给 Kraus 族，保迹归一跨全部输出块求和：
+
+$$
+\Phi(\rho)_t=\sum_{s,\mu}K_{ts\mu}\rho_sK_{ts\mu}^*,\qquad
+\sum_{t,\mu}K_{ts\mu}^*K_{ts\mu}=I_{d_s}\quad\text{对每个输入块 }s.
+$$
+
+保留结果标签 $j$ 时，同一论证给完全正分支 $\Phi_j$，总和保迹，联合记录为
 
 $$
 \rho\longmapsto\sum_j\Phi_j(\rho)\otimes|j\rangle\langle j|.
