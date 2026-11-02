@@ -83,6 +83,17 @@ The formal inverse-limit shadowing bridge is
 `D5/S1/Dynamics/Shadowing/MittagLefflerInverseLimit`. It assumes a genuine
 coherent ML diagram and therefore does not settle the construction question.
 
+The generic binary graph coding, Baire decision, and first-disagreement
+convergent section are in
+`D5/S1/Dynamics/Shadowing/GenericBinarySection`. Open pullbacks, binary-shift
+shadowing, and the finite-control one-step extension theorem are in
+`D5/S1/Dynamics/Shadowing/OpenCoreShadowing`. Their declarations retain the
+`D5.S1.Dynamics.Shadowing.FreeFibreBoundary` Lean namespace.
+`D5/S1/Dynamics/Shadowing/FreeFibreBoundary` combines these with marked
+complete graph languages to derive the open resolution contradiction;
+its source-shadowing theorem, resolution-transfer theorem, literal `claim`,
+and `result` remain in that endpoint module.
+
 ## Verified locator
 
 Versioned primary source: https://arxiv.org/abs/2606.14435v3.

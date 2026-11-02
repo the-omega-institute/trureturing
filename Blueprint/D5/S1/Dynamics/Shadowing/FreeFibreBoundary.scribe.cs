@@ -14,8 +14,6 @@ internal sealed class FreeFibreBoundaryDocument : IScribeDocumentDefinition
         "A generic binary-shift source refutes the unrestricted compact Hausdorff zero-dimensional shadowing-cover assertion.",
         H("Peng Question 5.1: the free-fibre obstruction"),
         Blocks(
-            Node("generic-name", "Locally deciding binary name", "exists_binary_name_locally_deciding",
-                "For every countable family of closed subsets of the binary name space, there is a binary name a such that each family member has an open neighborhood of a contained in it or in its complement. The countability is over the closed family itself.", DescribeRole.Theorem),
             Node("finite-initial-language", "Finite initial graph presentation", "finite_initial_presentation_to_graphLanguage",
                 "Every set of binary names presented by a finite directed graph, a vertex label, and an arbitrary initial vertex set is exactly a finite graph language with Boolean coded edge, label, and initial data.", DescribeRole.Theorem),
             Node("marked-observation", "Marked clopen image language", "semiconj_clopen_image_is_finiteGraphLanguage",
