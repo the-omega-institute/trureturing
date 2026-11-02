@@ -170,6 +170,7 @@ private theorem palindrome_contradiction
     (p : ℤ[X]) (r d c : ℕ)
     (hfirst : p.coeff r = 1 ∧ p.coeff (r + 1) = c + 1)
     (hlast : p.natDegree = d ∧ p.coeff d = 1 ∧ p.coeff (d - 1) = c)
+    (hbelow : ∀ n, n < r → p.coeff n = 0) (hcpos : 0 < c)
     (hgap : r + 1 < d - 1) (hc : c + 1 ≠ c)
     (hpal : IsAlmostPalindromic p) : False := by
   sorry
@@ -185,6 +186,9 @@ theorem result : claim := by
   apply palindrome_contradiction (preMerged a b) r (∑ i, a i * (b i - a i)) c
   · simpa [r, t, c] using And.intro hlo.1 hlo.2.1
   · simpa [c] using And.intro hhi.1 (And.intro hhi.2.1 hhi.2.2.1)
+  · simpa [r, t] using hlo.2.2
+  · dsimp [c]
+    split <;> omega
   · dsimp [r, t]
     omega
   · dsimp [c]
