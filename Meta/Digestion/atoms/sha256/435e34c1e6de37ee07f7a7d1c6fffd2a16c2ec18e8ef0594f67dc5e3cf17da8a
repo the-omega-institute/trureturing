@@ -1,0 +1,23 @@
+### 命题 17.2（固定参照支撑是不变载体）
+
+<a id="prop-c94-reference-support-invariant"></a>
+
+若 $R$ 正、保迹，且 $R\tau=\tau$，令 $P=\operatorname{supp}\tau$。
+那么支撑在 $PH$ 上的状态经 $R$ 后仍支撑在 $PH$。
+若其余 C94 条件也成立，则压缩到 $PH$ 后可应用主定理，
+得到 $\mathcal S_P+i\mathcal S_P$ 的普通代数闭合。
+
+**证明。**
+$\tau|_{PH}>0$。任意支撑在 $PH$ 的密度态都满足 $\rho\le c\tau$，
+例如取 $c\ge1/\lambda_{\min}(\tau|_{PH})$。
+正性给 $R\rho\le cR\tau=c\tau$，故输出支撑也在 $P$。
+压缩后的 $R$ 仍保迹和 $2$-positive；原读数保持与同读数融合在该输入子域上继续成立。
+$\tau$ 在此载体上忠实，故可应用定理 [4.2](#thm-c94-main)。
+
+命题 [13.2](#prop-c94-nonfaithful-qutrit) 表明，压缩后的结论不能升级为原载体的结论。
+此外，$R^2=R$ 时 $\tau_R=R(I/d)$ 自动固定。
+由 $\rho\le I=d(I/d)$ 可知 $R\rho\le d\tau_R$，
+故 $\operatorname{supp}\tau_R$ 容纳全部输出。
+如果把输入任务也限制到这个输出支撑，必须明确改变了比较范围，
+不能用它替代原全域的忠实参照前件。
+

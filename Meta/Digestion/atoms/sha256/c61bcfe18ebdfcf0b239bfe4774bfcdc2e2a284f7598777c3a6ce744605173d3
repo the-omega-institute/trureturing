@@ -1,0 +1,16 @@
+## 11. 哪些 C93 规范补全可以成为同一全域量子门
+
+<a id="sec-c94-information-projection"></a>
+
+先回到任意 $\mathcal S$ 与忠实 $\tau$。
+v93 已证明每份资料的非空纤维具有唯一相对熵规范补全 [8](#ref-v93)。
+因此可定义态集合上的选择器
+
+$$
+\mathfrak m_{\mathcal S,\tau}(\rho)
+ =\operatorname*{arg\,min}_{\omega\sim_{\mathcal S}\rho}D(\omega\Vert\tau).
+$$
+
+这一定义本身不保证对未知输入线性，更不保证带参考保正。
+它自动保留当前资料、同资料同输出，并固定 $\tau$。
+
