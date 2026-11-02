@@ -46,10 +46,6 @@ private lemma polynomial_upper_bound (t : ℝ) (ht : 0 ≤ t) :
     -12 * t ^ 4 + 18 * t ^ 3 - 6 * t ^ 2 ≤ upperBound := by
   have hs : Real.sqrt 17 ^ 2 = 17 := Real.sq_sqrt (by norm_num)
   have hs3 : Real.sqrt 17 ^ 3 = 17 * Real.sqrt 17 := by rw [pow_succ, hs]
-  have hs4 : Real.sqrt 17 ^ 4 = 289 := by
-    calc
-      _ = (Real.sqrt 17 ^ 2) ^ 2 := pow_mul _ 2 2
-      _ = _ := by rw [hs]; norm_num
   have h3 : 3 ≤ Real.sqrt 17 := Real.le_sqrt_of_sq_le (by norm_num)
   have hid : upperBound - (-12 * t ^ 4 + 18 * t ^ 3 - 6 * t ^ 2) =
       (t - (9 + Real.sqrt 17) / 16) ^ 2 *
@@ -57,7 +53,7 @@ private lemma polynomial_upper_bound (t : ℝ) (ht : 0 ≤ t) :
           (9 * Real.sqrt 17 - 15) / 32) := by
     dsimp [upperBound]
     ring_nf
-    simp only [hs, hs3, hs4]
+    simp only [hs, hs3]
     ring
   have hc : 0 ≤ (3 * Real.sqrt 17 - 9) / 2 := by linarith
   have hd : 0 ≤ (9 * Real.sqrt 17 - 15) / 32 := by linarith
@@ -90,7 +86,6 @@ private lemma moment_upper_bound (a b c : ℝ) (ha : 0 < a) (hb : 0 ≤ b)
       nlinarith [mul_nonneg ht (by linarith : 0 ≤ 3 / 4 - t)]
     have hsmall : -12 * a ^ 2 + 18 * a * t - 6 * t ^ 2 ≤ 27 / 64 := by
       nlinarith [sq_nonneg (a - 3 / 4 * t)]
-    have hs : 3 ≤ Real.sqrt 17 := Real.le_sqrt_of_sq_le (by norm_num)
     have hbnd : (27 / 64 : ℝ) ≤ upperBound := by
       dsimp [upperBound]
       have h4 : 4 ≤ Real.sqrt 17 := Real.le_sqrt_of_sq_le (by norm_num)
@@ -140,26 +135,22 @@ private lemma sharp_value (m : ℕ) :
   have hm : 0 < (m : ℝ) + 1 := by positivity
   have hs (j : ℕ) : powerSum (m + 2) j (fun i => (sharpRates m i)⁻¹) =
       endpointMass ^ j + ((m : ℝ) + 1) * ((1 - endpointMass) / ((m : ℝ) + 1)) ^ j := by
-    simp [powerSum, sharpRates, Fin.sum_univ_succ, inv_div]
+    simp [powerSum, sharpRates, Fin.sum_univ_succ, ← inv_pow, inv_div]
   have h1 : powerSum (m + 2) 1 (fun i => (sharpRates m i)⁻¹) = 1 := by
     rw [hs]
-    field_simp
-    ring
+    field_simp <;> ring
   have h2 : endpointMass ^ 2 + ((m : ℝ) + 1) *
       ((1 - endpointMass) / ((m : ℝ) + 1)) ^ 2 =
       endpointMass ^ 2 + (1 - endpointMass) ^ 2 * (1 / ((m : ℝ) + 1)) := by
-    field_simp
-    ring
+    field_simp <;> ring
   have h3 : endpointMass ^ 3 + ((m : ℝ) + 1) *
       ((1 - endpointMass) / ((m : ℝ) + 1)) ^ 3 =
       endpointMass ^ 3 + (1 - endpointMass) ^ 3 * (1 / ((m : ℝ) + 1)) ^ 2 := by
-    field_simp
-    ring
+    field_simp <;> ring
   have h4 : endpointMass ^ 4 + ((m : ℝ) + 1) *
       ((1 - endpointMass) / ((m : ℝ) + 1)) ^ 4 =
       endpointMass ^ 4 + (1 - endpointMass) ^ 4 * (1 / ((m : ℝ) + 1)) ^ 3 := by
-    field_simp
-    ring
+    field_simp <;> ring
   rw [skewness, kurtosis, h1, hs 2, hs 3, hs 4, h2, h3, h4]
   dsimp [approximation]
   ring
