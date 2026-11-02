@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite terminated graphical histories coincide exactly when their native source labels agree.
+Finite terminated graphical histories meet exactly when their native source labels agree.
 
 Fix a simple graph G on an arbitrary vertex type V, a sample type O, the native coordinate family x, and one sample z. A choice coordinate at v takes values in the actual neighbour set of v. The function step(x,z) sends (k+1,v) to (k,J(k+1,v)) when its refresh control is false, and returns none at time zero or at a true refresh control. The list history(x,n,v,z) starts with (n,v), follows precisely these selected edges, and stops at the first refresh or time zero, including that terminal vertex. Its recursion is on the natural starting time, so the list is finite without any finiteness assumption on V.
 
@@ -24,7 +24,7 @@ All n and m are arbitrary finite natural starting times, and v and w are arbitra
 
 The suffix extraction law proves, at every actual offset i, that dropping the first i vertices gives the full history started at the vertex read there. It is established by induction on the native starting time: a stopped singleton permits only offset zero, while a nonrefreshing successor reduces every positive offset to the selected predecessor. This law is used to compare the terminal coordinates of the original history and every visited history. Consequently, histories that meet have the same source; equality of sources puts their common terminal vertex in both lists. A meeting at any intermediate vertex also identifies the entire remaining ordered lists, including the stopping vertex.
 
-The last vertex is exactly labelVertex(source(x,n,v,z)), and step is none there. Thus initial and positive fresh terminals have their original disjoint interpretation. The frozen native_source theorem reconstructs the opinion as the coin at that source. Equality of the two Boolean opinion values is a different event: different initial vertices can carry the same initial opinion while their singleton histories and their labels remain distinct.
+The last vertex is exactly labelVertex(source(x,n,v,z)), and step is none there. Thus initial and positive fresh terminals have their original disjoint interpretation. The native_source theorem reconstructs the opinion as the coin at that source. Equality of the two Boolean opinion values is a different event: different initial vertices can carry the same initial opinion while their singleton histories and their labels remain distinct.
 
 For the synchronous noisy voter law, take the same G, x and z used by its native recursion: I(v)=x(initial(v),z), F(k,v)=x(fresh(k,v),z), R(k,v)=x(refresh(k,v),z), and J(k,v)=x(choice(k,v),z), with k positive in the auxiliary coordinates. No time-zero auxiliary coordinate is read. Every connected locally finite simple graph with nonempty actual neighbour sets, finite or infinite, is within this statement. No graph cardinality, common horizon, additional probability law, coupling or terminal-correctness premise is required. The original independence, measurability and marginal-law assumptions may be retained; this correspondence holds for every individual realization.
 
