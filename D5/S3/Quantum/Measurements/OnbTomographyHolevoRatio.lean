@@ -12,7 +12,7 @@ import D5.S3.Weil.ZetaLinear.RankTrace
 /-! The source bounds use uncentered LUB operators and subtract the parameter square. -/
 
 set_option autoImplicit false
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 
@@ -264,12 +264,224 @@ private lemma real_cost {d : ℕ} (hd : 2 ≤ d)
       ((((d : ℝ) ^ 2 - 1) / d : ℝ) : ℂ) := by push_cast; rfl
   rw [hh, Complex.ofReal_re]
 
+private lemma trace_pairing {d : ℕ} (hd : 2 ≤ d)
+    {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
+    (a c : Matrix (Fin d) (Fin d) ℂ) :
+    ∑ j, (a * b j).trace * (b j * c).trace =
+      (a * c).trace - a.trace * c.trace / (d : ℂ) := by
+  have he := congrArg (fun m => (a * m).trace) (matrix_expansion hd hb c)
+  simp only [mul_add, Matrix.mul_smul, Matrix.mul_sum, trace_add, trace_smul,
+    trace_sum, mul_one, smul_eq_mul] at he
+  simp_rw [mul_comm (a * b _).trace] at ⊢
+  linear_combination -he
+
+private lemma covariance_hermitian {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
+    (hρ : ρ.IsHermitian) {b : Fin n → Matrix (Fin d) (Fin d) ℂ}
+    (hb : ∀ j, (b j).IsHermitian) : (zMatrix ρ b).IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro j k
+  change star (ρ * b k * b j).trace = _
+  rw [← trace_conjTranspose, conjTranspose_mul, conjTranspose_mul,
+    (hb j).eq, (hb k).eq, hρ.eq, trace_mul_comm]
+  rw [mul_assoc, trace_mul_comm (b k) (ρ * b j)]
+  simp only [zMatrix, mul_assoc]
+
+private lemma covariance_psd {d n : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
+    (hρ : ρ.PosSemidef) {b : Fin n → Matrix (Fin d) (Fin d) ℂ}
+    (hb : ∀ j, (b j).IsHermitian) : (zMatrix ρ b).PosSemidef := by
+  classical
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (covariance_hermitian hρ.1 hb)
+  intro v
+  let a := ∑ j, v j • b j
+  have he : star v ⬝ᵥ (zMatrix ρ b *ᵥ v) = (a * ρ * aᴴ).trace := by
+    simp only [a, conjTranspose_sum, conjTranspose_smul, (hb _).eq,
+      Matrix.sum_mul, Matrix.smul_mul, Matrix.mul_sum, Matrix.mul_smul,
+      trace_sum, trace_smul, smul_eq_mul, dotProduct, mulVec, zMatrix,
+      Pi.star_apply, Finset.mul_sum, Matrix.mul_assoc]
+    apply Finset.sum_congr rfl
+    intro j _
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [trace_mul_comm (b k) (ρ * b j)]
+    simp only [mul_assoc]
+    ring
+  rw [he]
+  exact (hρ.mul_mul_conjTranspose_same a).trace_nonneg
+
+private lemma norm_contraction {n : ℕ} (a : Matrix (Fin n) (Fin n) ℂ)
+    (ha : a.IsHermitian) (hp : (1 + (2 : ℂ) • a).PosSemidef)
+    (hm : (1 - (2 : ℂ) • a).PosSemidef) :
+    2 * (a * a).trace.re ≤ traceNorm a := by
+  classical
+  have hbound (j : Fin n) : |ha.eigenvalues j| ≤ 1 / 2 := by
+    have hv : star ⇑(ha.eigenvectorBasis j) ⬝ᵥ ⇑(ha.eigenvectorBasis j) = 1 := by
+      rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
+      simp [inner_self_eq_norm_sq_to_K, ha.eigenvectorBasis.orthonormal.1 j]
+    have hplus := hp.re_dotProduct_nonneg ⇑(ha.eigenvectorBasis j)
+    have hminus := hm.re_dotProduct_nonneg ⇑(ha.eigenvectorBasis j)
+    simp [add_mulVec, sub_mulVec, Matrix.smul_mulVec, dotProduct_add, dotProduct_sub,
+      dotProduct_smul, ha.mulVec_eigenvectorBasis, hv, RCLike.real_smul_eq_coe_mul,
+      RCLike.re_eq_complex_re] at hplus hminus
+    exact abs_le.mpr ⟨by linarith, by linarith⟩
+  have hn : traceNorm a = ∑ j, |ha.eigenvalues j| := by
+    change (CFC.abs a).trace.re = _
+    rw [CFC.abs_eq_cfc_norm a ha.isSelfAdjoint, ha.cfc_eq, Matrix.IsHermitian.cfc]
+    simp [Matrix.trace_mul_comm, Matrix.mul_assoc, Real.norm_eq_abs]
+  have hs : (a * a).trace.re = ∑ j, (ha.eigenvalues j) ^ 2 := by
+    simpa only [RHLinalg.frobSq, ha.eq, RCLike.re_eq_complex_re] using
+      RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues ha
+  rw [hn, hs, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro j _
+  have h := hbound j
+  have hh : |ha.eigenvalues j| ^ 2 = (ha.eigenvalues j) ^ 2 := sq_abs _
+  nlinarith [abs_nonneg (ha.eigenvalues j)]
+
+private lemma density_complement {d : ℕ} {ρ : Matrix (Fin d) (Fin d) ℂ}
+    (hρ : ρ.PosSemidef) (ht : ρ.trace = 1) : (1 - ρ).PosSemidef := by
+  classical
+  have he : ∑ j, hρ.1.eigenvalues j = 1 := by
+    have h := congrArg Complex.re hρ.1.trace_eq_sum_eigenvalues
+    simpa [ht] using h.symm
+  have hle (j) : hρ.1.eigenvalues j ≤ 1 := by
+    rw [← he]
+    exact Finset.single_le_sum (fun k _ => hρ.eigenvalues_nonneg k) (Finset.mem_univ j)
+  let u := hρ.1.eigenvectorUnitary
+  have hd : (diagonal (fun j => ((1 - hρ.1.eigenvalues j : ℝ) : ℂ))).PosSemidef :=
+    Matrix.PosSemidef.diagonal (fun j => Complex.zero_le_real.mpr (sub_nonneg.mpr (hle j)))
+  have hid : diagonal (fun j => ((1 - hρ.1.eigenvalues j : ℝ) : ℂ)) =
+      1 - diagonal (fun j => (hρ.1.eigenvalues j : ℂ)) := by
+    ext i j
+    by_cases hij : i = j <;> simp [Matrix.diagonal_apply, hij]
+  have hspec : ρ = (u : Matrix (Fin d) (Fin d) ℂ) *
+      diagonal (fun j => (hρ.1.eigenvalues j : ℂ)) * (u : Matrix _ _ ℂ)ᴴ :=
+    hρ.1.spectral_theorem
+  have h := hd.mul_mul_conjTranspose_same (u : Matrix (Fin d) (Fin d) ℂ)
+  rw [hid, mul_sub, sub_mul, mul_one, ← hspec] at h
+  rw [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff.mp u.prop] at h
+  exact h
+
+private lemma commutator_square_sum {d : ℕ} (hd : 2 ≤ d)
+    {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
+    (ρ : Matrix (Fin d) (Fin d) ℂ) (ht : ρ.trace = 1) :
+    (∑ j, ((ρ * b j - b j * ρ) * (ρ * b j - b j * ρ)).trace) =
+      2 - 2 * (d : ℂ) * (ρ * ρ).trace := by
+  have hex (j) : ((ρ * b j - b j * ρ) * (ρ * b j - b j * ρ)).trace =
+      2 * (ρ * b j * ρ * b j).trace - 2 * (ρ * ρ * b j * b j).trace := by
+    have h1 := trace_mul_comm (b j) (ρ * b j * ρ)
+    have h2 := trace_mul_cycle (ρ * b j) (b j) ρ
+    have h3 := trace_mul_comm (b j) (ρ * ρ * b j)
+    simp only [mul_assoc] at h1 h2 h3
+    simp only [sub_mul, mul_sub, trace_sub, mul_assoc]
+    linear_combination h1 - h2 - h3
+  have h1 : (∑ j, (ρ * b j * ρ * b j).trace) = 1 - (ρ * ρ).trace / (d : ℂ) := by
+    calc
+      _ = (ρ * ∑ j, b j * ρ * b j).trace := by
+        simp only [Matrix.mul_sum, trace_sum, mul_assoc]
+      _ = _ := by
+        rw [fierz hd hb]
+        simp only [mul_sub, Matrix.mul_smul, trace_sub, trace_smul, mul_one, ht,
+          smul_eq_mul]
+        ring
+  have h2 : (∑ j, (ρ * ρ * b j * b j).trace) =
+      (((d : ℂ) ^ 2 - 1) / d) * (ρ * ρ).trace := by
+    calc
+      _ = ((ρ * ρ) * ∑ j, b j * b j).trace := by
+        simp only [Matrix.mul_sum, trace_sum, mul_assoc]
+      _ = _ := by rw [casimir hd hb, Matrix.mul_smul, mul_one, trace_smul]; rfl
+  simp_rw [hex]
+  rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum, h1, h2]
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  field_simp
+  <;> ring
+
 private lemma imaginary_bound {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
     (θ : Fin (d ^ 2 - 1) → ℝ) (hρ : (model d b θ).PosSemidef) :
     (d : ℝ) * (model d b θ * model d b θ).trace.re - 1 ≤
       traceNorm (imPart (zMatrix (model d b θ) b)) := by
-  sorry
+  classical
+  let ρ := model d b θ
+  let z := zMatrix ρ b
+  let a := Complex.I • imPart z
+  have ht : ρ.trace = 1 := model_trace hd hb θ
+  have hzh : z.IsHermitian := covariance_hermitian hρ.1 hb.1
+  have hzp : z.PosSemidef := covariance_psd hρ hb.1
+  have haz : a = (1 / (2 : ℂ)) • (z - zᵀ) := by
+    ext j k
+    have hjk : z k j = star (z j k) := by rw [← hzh.apply j k, star_star]
+    simp only [a, Matrix.smul_apply, imPart, Matrix.sub_apply, Matrix.transpose_apply,
+      hjk, smul_eq_mul]
+    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
+  have hah : a.IsHermitian := by
+    rw [haz]
+    exact (hzh.sub hzh.transpose).smul (by simp)
+  have hcomp : (1 - z).PosSemidef := by
+    have h := covariance_psd (density_complement hρ ht) hb.1
+    have he : zMatrix (1 - ρ) b = 1 - z := by
+      ext j k
+      simp only [zMatrix, sub_mul, one_mul, trace_sub, hb.2.2, Matrix.sub_apply,
+        Matrix.one_apply, z]
+    rwa [he] at h
+  have htwo : (2 : ℂ) • a = z - zᵀ := by rw [haz, smul_smul]; norm_num
+  have hp : (1 + (2 : ℂ) • a).PosSemidef := by
+    rw [htwo]
+    convert hzp.add hcomp.transpose using 1
+    simp only [transpose_sub, transpose_one]
+    abel
+  have hm : (1 - (2 : ℂ) • a).PosSemidef := by
+    rw [htwo]
+    convert hcomp.add hzp.transpose using 1
+    abel
+  let c := fun j => ρ * b j - b j * ρ
+  have hc (j) : (c j).trace = 0 := by
+    change (ρ * b j - b j * ρ).trace = 0
+    rw [trace_sub, trace_mul_comm ρ (b j), sub_self]
+  have hae (j k) : a j k = (1 / (2 : ℂ)) * (c j * b k).trace := by
+    rw [haz]
+    change (1 / (2 : ℂ)) * ((ρ * b j * b k).trace - (ρ * b k * b j).trace) = _
+    simp only [c, sub_mul, trace_sub, mul_assoc]
+    rw [trace_mul_comm (b j) (ρ * b k)]
+    simp only [mul_assoc]
+  have has (j k) : a k j = -a j k := by
+    rw [haz]
+    change (1 / (2 : ℂ)) * (z k j - z j k) = -((1 / (2 : ℂ)) * (z j k - z k j))
+    ring
+  have hparse (j) : (∑ k, (c j * b k).trace ^ 2) = (c j * c j).trace := by
+    calc
+      _ = ∑ k, (c j * b k).trace * (b k * c j).trace := by
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [trace_mul_comm (b k) (c j)]
+        ring
+      _ = _ := by rw [trace_pairing hd hb, hc]; simp
+  have hsq : (a * a).trace = ((d : ℂ) * (ρ * ρ).trace - 1) / 2 := by
+    calc
+      _ = ∑ j, -(1 / (4 : ℂ)) * (c j * c j).trace := by
+        change (∑ j, ∑ k, a j k * a k j) =
+          ∑ j, -(1 / (4 : ℂ)) * (c j * c j).trace
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [← hparse j, Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [has j k, hae j k]
+        ring
+      _ = -(1 / (4 : ℂ)) * ∑ j, (c j * c j).trace := by rw [Finset.mul_sum]
+      _ = _ := by rw [show (∑ j, (c j * c j).trace) =
+          2 - 2 * (d : ℂ) * (ρ * ρ).trace from commutator_square_sum hd hb ρ ht]; ring
+  have hn : traceNorm a = traceNorm (imPart z) := by
+    dsimp [a]
+    simp only [traceNorm, conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+      smul_smul, Complex.star_def, Complex.conj_I, mul_neg, Complex.I_mul_I, neg_neg, one_smul]
+  have h := norm_contraction a hah hp hm
+  rw [hsq, hn] at h
+  have he : (((d : ℂ) * (ρ * ρ).trace - 1) / 2).re =
+      ((d : ℝ) * (ρ * ρ).trace.re - 1) / 2 := by
+    simp [Complex.div_re, Complex.mul_re]
+  rw [he] at h
+  change (d : ℝ) * (ρ * ρ).trace.re - 1 ≤ traceNorm (imPart z)
+  linarith
 
 private lemma holevo_exact {d : ℕ} (hd : 2 ≤ d)
     {b : Fin (d ^ 2 - 1) → Matrix (Fin d) (Fin d) ℂ} (hb : IsTracelessONB d b)
