@@ -8,7 +8,7 @@ internal sealed class FourGridCollinearTriplesDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/Arith/Lattices/FourGridCollinearTriples.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/mathar2010a178294");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/mathar2010a178294");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Collinear triples in every finite Cartesian power of the four-point grid have an exact count.",

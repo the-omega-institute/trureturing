@@ -1,0 +1,27 @@
+#### 命题 8.4（单点反向箭头不认证整个逆门）
+
+取 $\psi=|0\rangle$，
+
+$$
+K=i\sigma_x,\qquad
+L=-i\sigma_x+i\lambda|1\rangle \langle 1|,\quad\lambda\in\mathbb R \setminus\{0\}.
+$$
+
+则 $L\psi=-K\psi$，但两族 $e^{tL}$、$e^{tK}$ 不在零点邻域互为完整逆族。
+
+**证明。**
+
+最后一项消去 $\psi$，故单点切向相反。
+若两族互逆，微分矩阵等式 $e^{tL}e^{tK}=I$ 于零点，就必须有 $L=-K$，
+与定义矛盾。
+更具体地，二阶展开在该点给
+
+$$
+e^{tL}e^{tK}\psi
+=\psi-\frac{\lambda t^2}{2}|1\rangle +O(t^3).
+$$
+
+一阶抵消并没有消去二阶偏离。
+
+□
+

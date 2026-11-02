@@ -1,0 +1,52 @@
+**定义 19.1（The original carrier and the local component spaces）。**
+Let $H$ be finite, connected, simple and unit-weight, with even order
+$m\geq2$. Fix any integer $S\geq1$ and put $s=2S$,
+$B_i=\{i\}\times[2S]$ and $\Omega_s=\bigsqcup_i B_i$.
+Use the entire complex Boolean space
+
+$$
+\mathcal H_{mS}=\operatorname{span}_{\mathbb C}
+ \{|T\rangle:T\subseteq\Omega_s,\ |T|=mS\}.
+\tag{19.1}
+$$
+
+Its orthonormal basis is indexed by actual subsets. The operator $K_s$
+is positive ordinary token adjacency on $H[\overline{K_{2S}}]$:
+its entry is one exactly for a single token moved along an actual
+blow-up edge. Let $P_i$ be the orthogonal projection invariant under
+all original permutations of $B_i$, and put
+
+$$
+P_s=\prod_iP_i,\qquad E_s=\min\operatorname{spec}K_s.
+\tag{19.2}
+$$
+
+These are the definitions of the
+[owning volume, Definitions 1.1–1.2](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+Only the global occupancy $mS$ is imposed.
+
+For a subset $U\subseteq V(H)$, write $V_S^{\otimes U}$ for the tensor
+product of the actual symmetric spin-$S$ fibre spaces, and define
+
+$$
+\begin{aligned}
+Z_U&=\sum_{i\in U}Z_i,& B_U^\pm&=\sum_{i\in U}J_i^\pm,\\
+K_U&=\sum_{\{i,j\}\in E(H[U])}
+ (J_i^+J_j^-+J_i^-J_j^+),&
+\mathcal V_U(0)&=\ker Z_U\subseteq V_S^{\otimes U},\\
+e_U(0)&=\min\operatorname{spec}(K_U|_{\mathcal V_U(0)}),&
+\mathcal G_U(0)&=\ker(K_U-e_U(0)I)\cap\mathcal V_U(0),\\
+\mathcal S_U&=\ker B_U^+\cap\ker B_U^-.
+\end{aligned}
+\tag{19.3}
+$$
+
+Here $Z_i=n_i-SI$, $J_i^+=L_i^\ast$ and $J_i^-=L_i$ on a symmetric
+fibre. The common ladder kernel $\mathcal S_U$ is the entire total-spin
+singlet space, with all its multiplicities. Each $\mathcal V_U(0)$
+is nonempty: it contains $\bigotimes_{i\in U}|S,0\rangle_i$.
+For an empty tensor product use $\mathbb C$, zero operators and minimum
+zero. A reduced density on $U$ is the actual partial trace over the
+complementary original coordinates; no independent filling is part of
+this definition.
+

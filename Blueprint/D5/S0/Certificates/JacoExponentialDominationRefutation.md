@@ -4,7 +4,31 @@
 
 The A000149 vertices fail the domination clause of Kok's Conjecture 2.12.
 
-**Definition 1.1 (Right endpoints in the infinite linear Jaco graph).**
+**Definition 1.1 (Append one recursive endpoint).**
+
+Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.extendEndpoints`
+
+*Formalization.* `D5/S0/Certificates/JacoExponentialDominationRefutation.extendEndpoints` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Count the earlier positive table entries reaching the new index and append twice that index minus the count.
+
+**Definition 1.2 (The recursive endpoint array).**
+
+Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.endpointTable`
+
+*Formalization.* `D5/S0/Certificates/JacoExponentialDominationRefutation.endpointTable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Start with the unused zero entry and append the endpoint at each successive positive index. Every prefix retains its earlier entries.
+
+**Definition 1.3 (Right endpoints in the infinite linear Jaco graph).**
 
 Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.jacoRight`
 
@@ -16,7 +40,7 @@ Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.jacoRigh
 
 For vertex n, the right endpoint is 2n minus the number of earlier positive vertices whose right endpoints reach n. The recursive table evaluates these endpoints from left to right.
 
-**Theorem 1.2 (Strict growth of right endpoints).**
+**Theorem 1.4 (Strict growth of right endpoints).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{jacoRight}\left(n\right) + 1 \le \operatorname{jacoRight}\left(n + 1\right)$$
 
@@ -30,7 +54,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{jacoRight}\left(n\right) + 1 \le \op
 
 Every earlier endpoint counted at level n+1 is also counted at level n. Only vertex n itself can be the additional index, so the indegree count rises by at most one while the doubled vertex index rises by two. Therefore the right endpoint rises by at least one.
 
-**Definition 1.3 (Undirected Jaco adjacency).**
+**Definition 1.5 (Undirected Jaco adjacency).**
 
 Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.Adj`
 
@@ -42,7 +66,7 @@ Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.Adj`
 
 For two distinct indices, the lower vertex is adjacent to the higher exactly when its right endpoint reaches the higher index.
 
-**Definition 1.4 (The A000149 vertex indices).**
+**Definition 1.6 (The A000149 vertex indices).**
 
 Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.exponentialVertices`
 
@@ -54,7 +78,7 @@ Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.exponent
 
 The selected indices are the natural floors of e to a natural-number power. Exponent zero supplies the artificial first term 1 used in the source statement.
 
-**Definition 1.5 (Domination of positive vertices).**
+**Definition 1.7 (Domination of positive vertices).**
 
 Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.Dominates`
 
@@ -66,7 +90,7 @@ Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.Dominate
 
 A set dominates when each positive vertex either belongs to the set or is adjacent to one of its members.
 
-**Definition 1.6 (The domination clause).**
+**Definition 1.8 (The domination clause).**
 
 Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.dominationClause`
 
@@ -78,7 +102,7 @@ Lean statement: `D5/S0/Certificates/JacoExponentialDominationRefutation.dominati
 
 The first clause of Conjecture 2.12 says that A000149 indexes a gamma-set of the infinite linear Jaco graph. Every gamma-set is dominating, so this definition records that necessary domination assertion. The minimum-cardinality and p-graphical assertions are not included.
 
-**Theorem 1.7 (Vertex 88 is not dominated).**
+**Theorem 1.9 (Vertex 88 is not dominated).**
 
 $$\neg dominationClause$$
 
@@ -103,7 +127,9 @@ Certified bounds for e put every A000149 term either at most 54 or at least 144.
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.Adj`
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.Dominates`
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.dominationClause`
+- Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.endpointTable`
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.exponentialVertices`
+- Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.extendEndpoints`
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.jacoRight`
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.jacoRight_succ_ge`
 - Truth anchor: `D5/S0/Certificates/JacoExponentialDominationRefutation.result`

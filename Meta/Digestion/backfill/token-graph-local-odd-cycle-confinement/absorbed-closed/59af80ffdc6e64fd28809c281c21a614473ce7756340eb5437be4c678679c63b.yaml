@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:59af80ffdc6e64fd28809c281c21a614473ce7756340eb5437be4c678679c63b
+  normalized_sha256: sha256:59af80ffdc6e64fd28809c281c21a614473ce7756340eb5437be4c678679c63b
+cas_ref: sha256:59af80ffdc6e64fd28809c281c21a614473ce7756340eb5437be4c678679c63b
+coverage_gids:
+  - gid: D5/S3/Quantum/SpinChains/DiamondSpinBounds.native_relations
+    target_statement_id: sha256:abb99ebdfb48f42ab9afbd5236a39efb72885e05e72dfe5ffdc8cf23bc0de48b
+receipts:
+  unresolved_subitems: []

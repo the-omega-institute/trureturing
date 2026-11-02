@@ -1,0 +1,28 @@
+**Definition 5.2 (returned word layout and invariant).** Install one fixed
+root-bound owned header with head and tail fields; at alpha both are null.
+For $\ell=|J(h)|>0$, they bind a chain of exactly $\ell$ owned bit/next
+cells carrying $J(h)$ in order; the last next field is null. For
+$\ell=0$ there is no data cell. All other source auxiliary-reference
+fields are null. The header and every reference/link field are charged
+material, separate from $\ell$. Only data-bit values are immutable;
+head, tail and next links may change to append and move the observable
+end. A zero-bit extension creates no per-event marker or event header.
+
+The returned invariant is
+
+$$
+\mathsf{Ready}(h)=
+\bigl(t(h),\ \text{bound chain with complete contents }J(h),\
+       \text{current source/record/input/output rights}\bigr),
+\tag{IV.12}
+$$
+
+where $h$ is the actual successful-generation word from that alpha.
+The cursor is at the same root. Acquired input, pending result, suffix,
+reservation, occupied decoder/work contents and output are empty, with
+no unfinished edit or append. Retained cleared capacity is paid but is
+not a second semantic history observation. The header/chain shape is
+fixed by the complete word up to unexposed fresh-name spelling, rather
+than selecting an independent history value. Ready is a completed return
+cut, not a name for an intermediate source/word discrepancy.
+

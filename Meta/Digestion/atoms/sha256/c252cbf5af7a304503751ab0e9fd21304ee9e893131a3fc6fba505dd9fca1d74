@@ -1,0 +1,57 @@
+#### 定理 9.2（最优共同幅度与强度）
+
+所有满足定义[9.1](#statement-9-1)的收缩均有
+
+<a id="eq-optgeom"></a>
+
+$$
+\boxed{\left\lVert Mx_j\right\rVert ^2\le t_*:=\left\lVert q\right\rVert ^2.}\tag{9.1}
+$$
+
+在允许该投影或等价分支的完整矩阵模型中，上界可达。
+规范共同分量 $q$ 是仿射空间 $x_1+D$ 中唯一的最小范数点。
+
+**证明。**
+
+相同输出要求 $M(x_j-x_1)=0$，故 $M$ 消去 $D$，即 $M=MP$。
+于是 $\left\lVert Mx_j\right\rVert =\left\lVert Mq\right\rVert \le\left\lVert q\right\rVert$。
+取 $M=P$ 即达到。
+若需要固定输出单位方向 $s_0$，在 $q\ne0$ 时取
+
+$$
+M=|s_0\rangle \langle q/\left\lVert q\right\rVert|.
+$$
+
+因为 $\langle q,x_j\rangle =\left\lVert q\right\rVert ^2$，得到 $Mx_j=\left\lVert q\right\rVert \,s_0$。
+若 $q=0$，零分支达到。
+最后 $x_1+D=q+D$，且 $q\perp D$；
+任意 $q+d$ 的范数平方为 $\left\lVert q\right\rVert ^2+\left\lVert d\right\rVert ^2$，
+故唯一最小点为 $q$。
+
+□
+
+由此得到规范正交分解
+
+<a id="eq-qr"></a>
+
+$$
+\boxed{x_j=q+r_j,\qquad r_j\in D,\qquad q\perp r_j.}\tag{9.2}
+$$
+
+把投影及其补投影都保留，得到完整等距
+
+$$
+V_Px=Px\oplus(I-P)x.
+$$
+
+在该地址族上，输出是 $q\oplus r_j$。
+共同分支相同，但
+
+$$
+\boxed{r_j-r_k=x_j-x_k}
+$$
+
+说明全部差异留在剩余分支中。
+
+<a id="statement-9-3"></a>
+

@@ -12,6 +12,30 @@ internal sealed class PrimeValuationGapDocument : IScribeDocumentDefinition
         H("Fixed Prime Valuation Gap"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("retention-positive"),
+                DeclarationHandle.Create(Prefix + "retention_pos"),
+                H("Positive retained local factor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every natural prime p and every natural exponent a give a strictly positive factor 1-p^(-(a+1)), including a=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("normalized-prime-part"),
+                DeclarationHandle.Create(Prefix + "normalized_sigma_pow_mul"),
+                H("Normalized divisor sum after adjoining a prime power"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime p, every natural m coprime to p, and every natural exponent a, sigma one of p^a m divided by p^a m equals the exact geometric local factor times sigma one m divided by m. The case a=0 is retained."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("fixed-loglog-scale"),
+                DeclarationHandle.Create(Prefix + "tendsto_loglog_scale"),
+                H("A fixed positive scale preserves log-log asymptotics"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive real c, log(log(c n)) divided by log(log n) tends to one along natural n. The scale is fixed before the limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("prime-layer-ratio"),
                 DeclarationHandle.Create(Prefix + "prime_power_abundancy_ratio"),
                 H("Exact prime layer gain"),

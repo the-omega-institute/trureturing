@@ -1,0 +1,78 @@
+## 五、把误差递归写成严格的酉守恒
+
+现在回应你反复强调的核心结构：
+
+> 结果、误差及总量守恒，能否继续作为二元关系归一化，并递归放进 AURIC 三轴？
+
+在这里，可以给出明确的肯定定理。
+
+由
+
+$$
+\mathcal A=I-\mathcal V,
+\qquad \|\mathcal V\|\leq\theta,
+$$
+
+定义
+
+$$
+\mathcal T=
+\frac{\theta I+\mathcal V}{1+\theta}.
+$$
+
+则
+
+$$
+\boxed{
+0\preceq\mathcal T\preceq\rho I,
+\qquad
+\rho=\frac{2\theta}{1+\theta}<1,
+}
+$$
+<a id="eq-17"></a>
+<div class="equation-caption">Equation (17).</div>
+
+并且
+
+$$
+\mathcal A=(1+\theta)(I-\mathcal T).
+$$
+
+于是
+
+$$
+\boxed{
+\mathcal A^{-1}
+=
+\frac1{1+\theta}\sum_{j=0}^{\infty}\mathcal T^j.
+}
+$$
+<a id="eq-18"></a>
+<div class="equation-caption">Equation (18).</div>
+
+这里每项都是正算子，余项有显式几何界。
+
+令 $\mathcal R_0$ 表示初始粗读出与整个细节空间的耦合。实际核心满足
+
+$$
+\mathcal S_D
+=
+\mathcal S_0-
+\mathcal R_0^*\mathcal A^{-1}\mathcal R_0.
+$$
+
+所以
+
+$$
+\boxed{
+\mathcal S_D
+=
+\mathcal S_0-
+\frac1{1+\theta}
+\sum_{j=0}^{\infty}
+\mathcal R_0^*\mathcal T^j\mathcal R_0.
+}
+$$
+<a id="eq-19"></a>
+<div class="equation-caption">Equation (19).</div>
+
