@@ -50,6 +50,32 @@ private def inputProjector {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) : Matrix (Fin d) (Fin d) ℂ :=
   u.1 * baseProjector * u.1ᴴ
 
+private theorem base_projector_psd {d : ℕ} [NeZero d] :
+    (baseProjector : Matrix (Fin d) (Fin d) ℂ).PosSemidef := by
+  change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).PosSemidef
+  rw [← Matrix.diagonal_single]
+  apply Matrix.PosSemidef.diagonal
+  intro j
+  by_cases hj : j = 0 <;> simp [baseProjector, Matrix.single, hj]
+
+private theorem base_projector_trace {d : ℕ} [NeZero d] :
+    (baseProjector : Matrix (Fin d) (Fin d) ℂ).trace = 1 := by
+  simp [baseProjector]
+
+private theorem input_projector_psd {d : ℕ} [NeZero d]
+    (u : Matrix.unitaryGroup (Fin d) ℂ) :
+    (inputProjector u).PosSemidef := by
+  exact base_projector_psd.mul_mul_conjTranspose_same u.1
+
+private theorem input_projector_trace {d : ℕ} [NeZero d]
+    (u : Matrix.unitaryGroup (Fin d) ℂ) :
+    (inputProjector u).trace = 1 := by
+  rw [inputProjector, Matrix.trace_mul_cycle]
+  have hu : u.1ᴴ * u.1 = 1 := by
+    simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp u.2
+  rw [hu, Matrix.one_mul]
+  exact base_projector_trace
+
 private noncomputable def ludersState {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
@@ -57,15 +83,57 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
   classical
   by_cases he : IsMIC d e
   · refine ⟨ludersChannel e (inputProjector u), ?_, ?_⟩
-    · sorry
-    · sorry
+    · change 0 ≤ CStarMatrix.ofMatrix (ludersChannel e (inputProjector u))
+      refine map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+        (Matrix.nonneg_iff_posSemidef.mpr ?_)
+      rw [ludersChannel]
+      apply Matrix.posSemidef_sum Finset.univ
+      intro i hi
+      have hx : (inputProjector u).PosSemidef := input_projector_psd u
+      have hterm := hx.conjTranspose_mul_mul_same (B := CFC.sqrt (e i))
+      have hs : (CFC.sqrt (e i))ᴴ = CFC.sqrt (e i) := by
+        simpa [Matrix.star_eq_conjTranspose] using
+          (CFC.sqrt_nonneg (e i)).isSelfAdjoint.star_eq
+      simpa [hs, Matrix.mul_assoc] using hterm
+    · change Matrix.trace (ludersChannel e (inputProjector u)) = 1
+      rw [show ludersChannel e (inputProjector u) =
+          ∑ i, CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i) by rfl,
+        Matrix.trace_sum]
+      calc
+        (∑ i, Matrix.trace
+            (CFC.sqrt (e i) * inputProjector u * CFC.sqrt (e i))) =
+            ∑ i, Matrix.trace (inputProjector u * e i) := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          rw [Matrix.trace_mul_cycle,
+            CFC.sqrt_mul_sqrt_self (e i) (he.1 i).nonneg]
+          exact Matrix.trace_mul_comm _ _
+        _ = Matrix.trace (inputProjector u * ∑ i, e i) := by
+          rw [← Matrix.trace_sum, Matrix.mul_sum]
+        _ = Matrix.trace (inputProjector u * 1) := by rw [he.2.1]
+        _ = 1 := by simpa [Matrix.mul_one] using input_projector_trace u
   · refine ⟨baseProjector, ?_, ?_⟩
-    · sorry
-    · sorry
+    · change 0 ≤ CStarMatrix.ofMatrix baseProjector
+      exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv base_projector_psd.nonneg
+    · change Matrix.trace baseProjector = 1
+      exact base_projector_trace
 
 private noncomputable def sigmaState {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) : DensityState (Fin d) := by
-  sorry
+  let p : Matrix (Fin d) (Fin d) ℂ := inputProjector u
+  let q : Matrix (Fin d) (Fin d) ℂ :=
+    ((1 / (d + 1 : ℝ)) : ℝ) • ((1 : Matrix (Fin d) (Fin d) ℂ) + p)
+  have hp : p.PosSemidef := input_projector_psd u
+  have hq0 : q.PosSemidef := by
+    apply Matrix.PosSemidef.smul
+    · exact Matrix.PosSemidef.add Matrix.PosSemidef.one hp
+    · positivity
+  refine ⟨CStarMatrix.ofMatrix q, map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hq0.nonneg, ?_⟩
+  change Matrix.trace q = 1
+  dsimp [q, p]
+  rw [Matrix.trace_smul, Matrix.trace_add, input_projector_trace]
+  simp [Matrix.trace, Finset.sum_const]
+  field_simp
 
 noncomputable def typicalEntropy (d : ℕ) [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ) : ℝ :=
@@ -78,7 +146,8 @@ private theorem luders_state_density {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
     (u : Matrix.unitaryGroup (Fin d) ℂ) (he : IsMIC d e) :
     (ludersState e u).1 = ludersChannel e (inputProjector u) := by
-  sorry
+  simp [ludersState, he]
+  rfl
 
 private theorem entropy_gap {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
