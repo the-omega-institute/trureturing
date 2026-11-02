@@ -469,14 +469,17 @@ private lemma after_independent (w : ActualTwoPaths G A B R p q)
 end ActualTwoPaths
 
 private lemma partition_paths {ρ : Type*} [Fintype ρ] [DecidableEq ρ]
-    (a b : ℕ) (T : SimpleGraph ρ) :
+    (a b : ℕ) (T : SimpleGraph ρ) [DecidableRel T.Adj] :
     partition (((pathGraph a) ⊕g (pathGraph b)) ⊕g T) univ
         (fun _ => (-X : PowerSeries ℤ)) =
       pathSeries a * pathSeries b * partition T univ (fun _ => -X) := by
-  have hu {ι κ : Type*} [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ] :
-      (univ : Finset (ι ⊕ κ)) = (univ : Finset ι).disjSum (univ : Finset κ) := by
+  have hu : (univ : Finset ((Fin a ⊕ Fin b) ⊕ ρ)) =
+      (univ : Finset (Fin a ⊕ Fin b)).disjSum (univ : Finset ρ) := by
     ext (x | x) <;> simp
-  rw [hu, partition_sum, hu, partition_sum, partition_path, partition_path]
+  have hu' : (univ : Finset (Fin a ⊕ Fin b)) =
+      (univ : Finset (Fin a)).disjSum (univ : Finset (Fin b)) := by
+    ext (x | x) <;> simp
+  rw [hu, partition_sum, hu', partition_sum, partition_path, partition_path]
 
 namespace ActualTwoPaths
 variable {α : Type*} [Fintype α] [DecidableEq α]
@@ -530,10 +533,12 @@ private lemma phi_difference (w : ActualTwoPaths G A B R p q)
     have hc := w.residual_card hp hq
     have hm3 : 3 ≤ m := by omega
     have hr : w.residual.card ≤ m - 3 := by omega
-    have hs := two_path_series_concentration p q hp hq
-      (partition G R (fun _ => (-X : PowerSeries ℤ)))
-    rw [show 2 * p + 2 * q + 1 = 2 * p + (2 * q + 1) by omega,
-      ← w.before_partition, ← w.after_partition, ← w.residual_partition] at hs
+    have hs : partition G univ (fun _ => (-X : PowerSeries ℤ)) -
+        partition w.after univ (fun _ => (-X : PowerSeries ℤ)) =
+        X ^ 3 * partition G w.residual (fun _ => (-X : PowerSeries ℤ)) := by
+      rw [w.before_partition, w.after_partition, w.residual_partition]
+      simpa only [Nat.add_assoc, mul_assoc] using
+        two_path_series_concentration p q hp hq (partition G R (fun _ => (-X : PowerSeries ℤ)))
     have ht := congrArg (fun F : PowerSeries ℤ => coeff m (F * catalanIntegerSeries)) hs
     rw [sub_mul, map_sub,
       coeff_partition_phi G univ m (by simpa using hm),
@@ -602,8 +607,8 @@ theorem actual_two_path_concentration {α : Type*} [Fintype α] [DecidableEq α]
     apply D5.S3.Combinatorics.Graph.LinearForests.FiniteForestCatalan.finite_forest_phi_nonnegative
       (G.induce (w.residual : Set α)) ha hd (m - 3)
     have hc := w.residual_card hp hq
-    simp only [Fintype.card_coe]
-    omega
+    simpa only [SetLike.coe_sort_coe, Fintype.card_coe] using
+      (show w.residual.card ≤ m - 3 by omega)
 
 #print axioms actual_two_path_concentration
 
