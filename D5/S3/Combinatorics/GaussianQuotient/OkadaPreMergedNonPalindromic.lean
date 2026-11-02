@@ -35,6 +35,29 @@ private theorem gauss_diagonal (n : ℕ) : gauss n n = 1 := by
         Nat.sub_self]
       simpa using ih
 
+private theorem gauss_coeff_zero (n k : ℕ) (hkn : k ≤ n) :
+    (gauss n k).coeff 0 = 1 := by
+  induction n generalizing k with
+  | zero =>
+      have : k = 0 := by omega
+      subst k
+      simp [gauss]
+  | succ n ih =>
+      cases k with
+      | zero => simp [gauss]
+      | succ k =>
+          by_cases hk : k = n
+          · subst k
+            rw [gauss, D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1)
+              (by omega), gauss_diagonal]
+            simp
+          · have hkn' : k + 1 ≤ n := by omega
+            have hnk : 0 < n - k := by omega
+            rw [gauss]
+            rw [coeff_add, ih (k + 1) hkn']
+            rw [coeff_X_pow_mul']
+            simp [hnk.ne']
+
 def IsAlmostPalindromic (f : ℤ[X]) : Prop :=
   ((f.support.sort (· ≤ ·)).map f.coeff).reverse =
     (f.support.sort (· ≤ ·)).map f.coeff
