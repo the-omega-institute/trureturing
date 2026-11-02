@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7f1a0ac6a2df81261cbf282aefe0458c0ff9a0d7cd7d8a2cc63e5f4103310fab
+  normalized_sha256: sha256:7f1a0ac6a2df81261cbf282aefe0458c0ff9a0d7cd7d8a2cc63e5f4103310fab
+cas_ref: sha256:7f1a0ac6a2df81261cbf282aefe0458c0ff9a0d7cd7d8a2cc63e5f4103310fab
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/NamedPathDurationReconstruction.branching_collision_inventory
+    target_statement_id: sha256:95dbefab09861a881420f2dcd5b3b69e9c4e1b0bb3820f5400593f216c9da7fe
+receipts:
+  unresolved_subitems: []

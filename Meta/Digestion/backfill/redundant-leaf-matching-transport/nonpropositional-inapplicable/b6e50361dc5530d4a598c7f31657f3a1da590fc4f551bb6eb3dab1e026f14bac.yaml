@@ -5,3 +5,7 @@ cas_ref: sha256:b6e50361dc5530d4a598c7f31657f3a1da590fc4f551bb6eb3dab1e026f14bac
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Definitions of the graph, matching, induced subtype, fold and finite-set transport maps; this atom fixes data and hypotheses, rather than asserting the transport theorem.
+    previous_atom_id: null
+    next_atom_id: d592013a0d60f2ff1c0e912bcc45cf129143c80ea9cd11883799b53a05dad234

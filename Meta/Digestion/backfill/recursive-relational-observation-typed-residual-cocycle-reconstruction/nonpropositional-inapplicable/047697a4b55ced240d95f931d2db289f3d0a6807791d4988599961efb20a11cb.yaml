@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:047697a4b55ced240d95f931d2db289f3d0a6807791d4988599961efb20a11cb
+  normalized_sha256: sha256:047697a4b55ced240d95f931d2db289f3d0a6807791d4988599961efb20a11cb
+cas_ref: sha256:047697a4b55ced240d95f931d2db289f3d0a6807791d4988599961efb20a11cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Typed actual-source, legal-operation, failure, terminal and complete-response conventions. These are mathematical data and modeling hypotheses; no physical source or implementation is inferred.
+    previous_atom_id: 1a9f9da18f7b5dc2394cd45e39650a4f653bf78a1e117d09882772d2a79e2568
+    next_atom_id: 056304e62f608890b05a5e23ac9b724ac559b27d82b510cd066f0dc7e773d2ab
