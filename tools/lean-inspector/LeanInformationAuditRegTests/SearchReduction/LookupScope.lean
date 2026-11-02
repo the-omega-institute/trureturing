@@ -1,0 +1,92 @@
+import LeanInformationAuditRegAnalysis.SearchReduction.Commands
+import LeanInformationAuditRegTests.SearchReduction.LookupBaseline
+
+/-! Implication stays in B_T while exact membership can certify an external
+B0 statement. Both checks use the original candidate module identity. -/
+open Lean Meta Elab Command LeanInformationAudit.SearchReduction
+set_option Elab.async false
+set_option maxHeartbeats 0
+
+run_cmd do
+  enableInitializersExecution
+  let base ← importModules #[{module := `Lean}] {} 0
+    (leakEnv := false) (loadExts := true)
+  let index ← DiskLookup.openFixtureIndex "build/lean-inspector/search-reduction-test-index/lookup-fixture"
+    "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
+  liftTermElabM do
+    let source ← getEnv
+    let type ← Term.elabType
+      (← `(LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Mark 9))
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let type ← instantiateMVars type
+    let calls ← IO.mkRef 0
+    let table : LookupTable := {
+      environment := base, disk? := some index
+      load? := some fun _ _ _ => do
+        calls.modify (· + 1)
+        throwError "external implication loader was invoked"}
+    withEnv base do
+      let type ← copyStatement source .anonymous type
+      let result ← localRebuild type [] (some table)
+      unless result.cost == .one && result.lookup.complete &&
+          result.lookup.unloaded == 0 && (← calls.get) == 0 do
+        throwError "B_T exclusion failed: {result.detail}"
+      emitLookupRecord "LOOKUP_SCOPE implication_external_loads=0 nohit=true"
+    enableInitializersExecution
+    let fixtureBase ← importModules
+      #[{module := `LeanInformationAuditRegTests.SearchReduction.LookupBaseline}] {} 0
+      (leakEnv := false) (loadExts := true)
+    withEnv fixtureBase do
+      let result ← localRebuild type [] (some {
+        environment := fixtureBase, disk? := some index, implicationModules? := some #[]})
+      unless result.cost == .one && result.lookup.complete do
+        throwError "incidental imports enlarged the explicit B_T scope"
+      emitLookupRecord "LOOKUP_SCOPE incidental_imports_excluded=true"
+      let graph : ProofGraph := {root := 0, vertices := [{id := 0, type}]}
+      let nominations : Array CertificateNomination := #[⟨
+        .lookup ``LeanInformationAudit.Tests.SearchReduction.LookupBaseline.pair, "fixture"⟩]
+      let normal ← evaluateGraph graph (some {environment := fixtureBase, disk? := some index})
+        nominations
+      unless normal.baselineProbe.outcome == .found do
+        throwError "normal basis did not supply the fixture implication"
+      let excluded := {index with
+        excluded := #[`LeanInformationAuditRegTests.SearchReduction.LookupBaseline]}
+      let restricted ← evaluateGraph graph
+        (some {environment := fixtureBase, disk? := some excluded}) nominations
+      unless restricted.baselineProbe.outcome != .found && restricted.negativeCalls == 0 do
+        throwError "cache ignored changed B0 exclusions"
+      emitLookupRecord "LOOKUP_SCOPE cache_exclusions_bound=true"
+    let table ← onDemandLookup {environment := base, disk? := some index}
+    let type ← Term.elabType
+      (← `(∀ renamed : Nat,
+        LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Mark renamed ∧
+        LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Side))
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let type ← instantiateMVars type
+    withEnv base do
+      let type ← copyStatement source .anonymous type
+      let result ← localRebuild type [] (some table)
+      unless result.cost == .zero && result.proof?.isSome &&
+          result.lookup.source? ==
+            some ``LeanInformationAudit.Tests.SearchReduction.LookupBaseline.pair do
+        throwError "external B0 membership was lost: {result.detail}"
+      unless result.lookup.unloaded ≤ 1 do
+        throwError "membership replay loaded unrelated external candidates"
+      checkLocalProof type result.proof?.get!
+      emitLookupRecord "LOOKUP_SCOPE membership_B0=true replay_external_candidates_at_most=1 kernel=true std3=true"
+    let privateType ← Term.elabType
+      (← `(∀ n : Nat,
+        LeanInformationAudit.Tests.SearchReduction.LookupBaseline.PrivateMark n))
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let privateType ← instantiateMVars privateType
+    withEnv base do
+      let privateType ← copyStatement source .anonymous privateType
+      let result ← localRebuild privateType [] (some table)
+      unless result.cost == .zero && result.proof?.isSome &&
+          result.lookup.source?.any (·.toString.endsWith ".hiddenMember") do
+        throwError "author-written private membership was lost: {result.detail}"
+      -- localRebuild has already closed its temporary environment. Consumers
+      -- must still be able to traverse and kernel-check the exported term.
+      unless !result.proof?.get!.hasSorry do throwError "private certificate contains sorry"
+      checkLocalProof privateType result.proof?.get!
+      emitLookupRecord "LOOKUP_SCOPE private_membership_B0=true after_close_kernel=true std3=true"
