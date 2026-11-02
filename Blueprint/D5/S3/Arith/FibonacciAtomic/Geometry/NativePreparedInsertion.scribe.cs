@@ -37,7 +37,8 @@ internal sealed class NativePreparedInsertionDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "For every k, every bit assignment on Fin k, and every duplicate-free "
                         + "list of labels, the fixed preparation followed by the flattened "
-                        + "two-call insertions succeeds on the original native runner. A zero bit "
+                        + "two-call insertions succeeds on the original native runner, with total "
+                        + "call count 3*k+4+2*length(order). A zero bit "
                         + "promotes then splits the right leaf of C, through (beta,beta), ending "
                         + "at D(false). A one bit splits the left leaf then promotes the right "
                         + "leaf, through (C,alpha), ending at D(true). The addressed slot for "

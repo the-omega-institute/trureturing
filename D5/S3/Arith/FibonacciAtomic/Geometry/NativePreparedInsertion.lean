@@ -9,6 +9,8 @@
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth
 import D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
 
+/-! Source-relative preparation and literal slot insertion on the existing native runner. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -68,7 +70,7 @@ private theorem comb_run : ∀ (k : ℕ) (f : Fin k → Source) (tail u : Source
         have h' := NativeGuardedLeafRepair.context_run (.right (f 0) .hole) h
         simpa [comb, slotAddress, OutputContext.plug, OutputContext.holeAddress,
           List.map_map, Function.comp_def, shift_shift, List.replicate_succ,
-          Function.update, Fin.succ_inj, Fin.zero_ne_succ] using h'
+          Function.update, Fin.succ_inj, Ne.symm (Fin.succ_ne_zero i)] using h'
 
 /-- The source-relative preparation executes every native guard and ends in the prepared comb. -/
 theorem prepares (k : ℕ) :
@@ -113,9 +115,9 @@ private theorem inserts_from (k : ℕ) (x : Fin k → Bool) (todo : List (Fin k)
       have ht := ih hn.tail (j :: active) (by
         intro i hi
         simp only [List.mem_cons, not_or]
-        exact ⟨fun he => hn.not_mem (he ▸ hi), hf i (by simp [hi])⟩)
+        exact ⟨fun he => (List.nodup_cons.mp hn).1 (he ▸ hi), hf i (by simp [hi])⟩)
       have joined :=
-        _private.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.0.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.run_append hj ht
+        (private_decl% NativeFreshSensorGrowth.run_append) hj ht
       have he : endpoint k x (todo ++ j :: active) =
           endpoint k x ((j :: todo) ++ active) := by
         unfold endpoint
@@ -130,12 +132,26 @@ private theorem inserts_from (k : ℕ) (x : Fin k → Bool) (todo : List (Fin k)
 theorem prepared_insertion (k : ℕ) (x : Fin k → Bool) (order : List (Fin k))
     (hn : order.Nodup) :
     run (.of true) (preparation k ++ order.flatMap (insertion x)) =
-      some (endpoint k x order) := by
+      some (endpoint k x order) ∧
+    (preparation k ++ order.flatMap (insertion x)).length =
+      3 * k + 4 + 2 * order.length := by
   have h := inserts_from k x order hn [] (by simp)
   have h0 : endpoint k x [] = comb k (fun _ => C) M := by simp [endpoint]
   rw [h0, List.append_nil] at h
-  exact
-    _private.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.0.D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth.run_append
+  constructor
+  · exact
+    (private_decl% NativeFreshSensorGrowth.run_append)
       (prepares k).1 h
+  · have hi (j : Fin k) : (insertion x j).length = 2 := by
+      simp only [insertion, List.length_map]
+      cases x j <;> rfl
+    have ht : (order.flatMap (insertion x)).length = 2 * order.length := by
+      induction order with
+      | nil => rfl
+      | cons j order ih =>
+          simp only [List.flatMap_cons, List.length_append, hi,
+            List.length_cons, ih]
+          omega
+    rw [List.length_append, (prepares k).2, ht]
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativePreparedInsertion
