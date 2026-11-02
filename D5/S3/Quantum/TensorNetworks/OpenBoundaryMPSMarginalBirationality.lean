@@ -166,81 +166,60 @@ private lemma image_subset_closure (n : ℕ) : openBoundaryMPS n ⊆ closure n :
 
 private def coordinate (i j k : Fin 2) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   MvPolynomial.X ![i, j, k]
-
 private def kernelMatrix : Matrix (Fin 4) (Fin 4) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   !![coordinate 0 0 0, coordinate 0 0 1, -coordinate 0 0 0, -coordinate 1 0 0;
      coordinate 0 1 0, coordinate 0 1 1, -coordinate 0 0 1, -coordinate 1 0 1;
      coordinate 1 0 0, coordinate 1 0 1, -coordinate 0 1 0, -coordinate 1 1 0;
      coordinate 1 1 0, coordinate 1 1 1, -coordinate 0 1 1, -coordinate 1 1 1]
-
 private def kernelMinor : Matrix (Fin 3) (Fin 3) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   kernelMatrix.submatrix (Fin.castLE (by omega)) (Fin.castLE (by omega))
-
 private def minorPoly : MvPolynomial (Fin 3 → Fin 2) ℂ := kernelMinor.det
-
 private def cramerNumerator : Fin 3 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   kernelMinor.cramer (fun i => -kernelMatrix (Fin.castLE (by omega) i) 3)
-
 private def leftNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   ![cramerNumerator 2, minorPoly]
-
 private def rightKernelNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   ![cramerNumerator 0, cramerNumerator 1]
-
 private def slicePoly (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   fun i k => coordinate i j k
-
 private def basisNumerator :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   fun i k => dotProduct leftNumerator (fun j => coordinate j i k)
-
 private def matrixNumerator (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   slicePoly j * basisNumerator.adjugate
-
 private def sumNumerator :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   matrixNumerator 0 + matrixNumerator 1
-
 private def boundaryNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   basisNumerator *ᵥ rightKernelNumerator
-
 private def chartPoly : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   minorPoly * basisNumerator.det * sumNumerator.det *
     (coordinate 0 0 0 * coordinate 1 0 1 - coordinate 0 0 1 * coordinate 1 0 0) *
     (coordinate 0 0 0 * coordinate 0 1 1 - coordinate 0 0 1 * coordinate 0 1 0)
-
 private def denominator (n : ℕ) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   basisNumerator.det ^ 3 * sumNumerator.det ^ (n - 3)
-
 private def numerator (n a : ℕ) (w : Fin n → Fin 2) :
     MvPolynomial (Fin 3 → Fin 2) ℂ :=
   dotProduct leftNumerator
     ((sumNumerator.adjugate ^ a *
       (List.ofFn fun j => matrixNumerator (w j)).prod *
       sumNumerator.adjugate ^ (n - 3 - a)) *ᵥ boundaryNumerator)
-
 private def rationalInverse (n a : ℕ) (t : (Fin 3 → Fin 2) → ℂ) :
     (Fin n → Fin 2) → ℂ :=
   fun w => MvPolynomial.eval t (numerator n a w) / MvPolynomial.eval t (denominator n)
-
 private def reconstructedLeft (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   fun i => MvPolynomial.eval t (leftNumerator i) / MvPolynomial.eval t minorPoly
-
 private def reconstructedKernel (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   fun i => MvPolynomial.eval t (rightKernelNumerator i) / MvPolynomial.eval t minorPoly
-
 private def reconstructedBasis (t : (Fin 3 → Fin 2) → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   fun i k => MvPolynomial.eval t (basisNumerator i k) / MvPolynomial.eval t minorPoly
-
 private def reconstructedMatrix (t : (Fin 3 → Fin 2) → ℂ) (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.of (fun i k => t ![i, j, k]) * (reconstructedBasis t)⁻¹
-
 private def reconstructedRight (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   reconstructedBasis t *ᵥ reconstructedKernel t
-
 private def reconstructedSum (t : (Fin 3 → Fin 2) → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   reconstructedMatrix t 0 + reconstructedMatrix t 1
 
@@ -297,11 +276,29 @@ private lemma quartic_closure (t : (Fin 3 → Fin 2) → ℂ) (ht : t ∈ closur
 private lemma kernel_cramer_identity :
     kernelMatrix *ᵥ ![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] =
       ![0, 0, 0, kernelMatrix.det] := by
-  rw [kernelMatrix]; funext i
-  fin_cases i <;>
+  have hc : kernelMinor *ᵥ cramerNumerator =
+      minorPoly • (fun i => -kernelMatrix (Fin.castSucc i) 3) := Matrix.mulVec_cramer _ _
+  have hf (j : Fin 3) :
+      (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
+        (Fin.castSucc j) = cramerNumerator j := by fin_cases j <;> rfl
+  funext i
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · rw [kernelMatrix]
     norm_num [kernelMatrix, kernelMinor, minorPoly, cramerNumerator, Matrix.cramer_apply,
       Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix_apply,
       Matrix.mulVec, dotProduct, Matrix.updateCol_apply, Fin.succAbove] <;> ring
+  · have hz : (![0, 0, 0, kernelMatrix.det] : Fin 4 → _) (Fin.castSucc j) = 0 := by
+      fin_cases j <;> rfl
+    rw [hz]
+    change (∑ q : Fin 4, kernelMatrix (Fin.castSucc j) q *
+        (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _) q) = 0
+    rw [Fin.sum_univ_castSucc]
+    simp only [hf]
+    change (kernelMinor *ᵥ cramerNumerator) j + kernelMatrix (Fin.castSucc j) 3 * minorPoly = 0
+    rw [hc]
+    change minorPoly * (-kernelMatrix (Fin.castSucc j) 3) +
+      kernelMatrix (Fin.castSucc j) 3 * minorPoly = 0
+    ring
 
 private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
@@ -725,7 +722,6 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     intro he
     apply hg
     change t ![0, 0, 0] * t ![1, 0, 1] - t ![0, 0, 1] * t ![1, 0, 0] = 0 at he
-    change MvPolynomial.eval t chartPoly = 0
     simp only [chartPoly, map_mul, map_sub, coordinate, MvPolynomial.eval_X, he, mul_zero, zero_mul]
   have hu : IsUnit u.det := isUnit_iff_ne_zero.mpr
     (fun he => hdet (by rw [Matrix.det_mul, Matrix.det_mul, he, zero_mul, zero_mul]))
@@ -734,8 +730,10 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
   let z := v⁻¹ *ᵥ r
   let e := l ᵥ* u⁻¹
   let k : Fin 4 → ℂ := ![z 0, z 1, e 0, e 1]
-  have hz : v *ᵥ z = r := by rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hv, Matrix.one_mulVec]
-  have he : e ᵥ* u = l := by rw [Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hu, Matrix.vecMul_one]
+  have hz : v *ᵥ z = r := by
+    rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hv, Matrix.one_mulVec]
+  have he : e ᵥ* u = l := by
+    rw [Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hu, Matrix.vecMul_one]
   have hrow (i j : Fin 2) : dotProduct (fun k => t ![i, j, k]) z =
       dotProduct e (fun k => t ![k, i, j]) := by
     change ((Matrix.of (fun p q => t ![p, j, q])) *ᵥ z) i =
@@ -751,8 +749,11 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     norm_num [dotProduct, Fin.sum_univ_two] at h00 h01 h10 h11
     funext i
     fin_cases i <;> norm_num [kernelMatrix, coordinate, k, Matrix.mulVec, dotProduct,
-      Fin.sum_univ_succ] <;>
-      (first | linear_combination h00 | linear_combination h01 | linear_combination h10 | linear_combination h11)
+      Fin.sum_univ_succ]
+    · linear_combination h00
+    · linear_combination h01
+    · linear_combination h10
+    · linear_combination h11
   have hd : MvPolynomial.eval t minorPoly ≠ 0 := by
     intro he; apply hg; simp only [chartPoly, map_mul, he, zero_mul]
   have huniq := kernel_vector_unique t hd k hk
@@ -771,12 +772,14 @@ private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2
     have hh := congrFun huniq 2; have hh3 := congrFun huniq 3
     funext i; rw [reconstructedLeft, leftNumerator]; fin_cases i <;>
       norm_num [k, reconstructedLeft, leftNumerator, Function.comp_def] at hh hh3 ⊢ <;>
-      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs0, hd]) at hh hh3 ⊢ <;> linear_combination -hh
+      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs0, hd]) at hh hh3 ⊢ <;>
+        linear_combination -hh
   have hzr : reconstructedKernel t = (k 3)⁻¹ • z := by
     have hh := congrFun huniq 0; have hh1 := congrFun huniq 1
     funext i; rw [reconstructedKernel, rightKernelNumerator]; fin_cases i <;>
       norm_num [k, reconstructedKernel, rightKernelNumerator, Function.comp_def] at hh hh1 ⊢ <;>
-      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs0, hd]) at hh hh1 ⊢ <;>
+      field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs0, hd])
+        at hh hh1 ⊢ <;>
       (first | linear_combination -hh | linear_combination -hh1)
   have hbase : reconstructedBasis t = (k 3)⁻¹ • (u * v) := by
     ext i j
@@ -870,7 +873,8 @@ private lemma gauge_uniqueness_image (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n
   have hnb : n = a + b + 3 := by dsimp [b]; omega
   rw [show s ^ n = s ^ a * s ^ b * s ^ 3 from by rw [hnb, pow_add, pow_add]]
   simp only [inv_pow]
-  field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs]) <;> simp only [mul_one, m]
+  field_simp (disch := apply_rules [mul_ne_zero, pow_ne_zero, inv_ne_zero, hs])
+  simp only [mul_one, m]
 
 private def marginalCoordinate (n a : ℕ) (h : a + 3 ≤ n) (t : Fin 3 → Fin 2) :
     MvPolynomial (Fin n → Fin 2) ℂ :=
@@ -898,7 +902,7 @@ private lemma marginal_pullback_eval (n a : ℕ) (h : a + 3 ≤ n)
   funext t
   exact marginal_coordinate_eval n a h ψ t
 
-private lemma uniqueness_closure (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
+private lemma uniqueness_closure (n a : ℕ) (h : a + 3 ≤ n)
     (himage : ∀ ψ ∈ openBoundaryMPS n,
       MvPolynomial.eval (improperMarginal n a h ψ) chartPoly ≠ 0 →
       rationalInverse n a (improperMarginal n a h ψ) = ψ)
@@ -944,11 +948,13 @@ private lemma explicit_chart_nonempty :
       norm_num [coordinate, explicitTriple, mpsState, List.ofFn_succ,
         Matrix.mul_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   have hd : MvPolynomial.eval explicitTriple minorPoly = 387072 := by
-    rw [minorPoly, kernelMinor]; norm_num [minorPoly, Matrix.det_fin_three, kernelMinor, kernelMatrix,
+    rw [minorPoly, kernelMinor]
+    norm_num [minorPoly, Matrix.det_fin_three, kernelMinor, kernelMatrix,
       Matrix.submatrix_apply, hx]
   have hc (i : Fin 3) : MvPolynomial.eval explicitTriple (cramerNumerator i) =
       ![118272, 10752, -1161216] i := by
-    rw [cramerNumerator]; fin_cases i <;> norm_num [cramerNumerator, Matrix.cramer_apply, Matrix.det_fin_three,
+    rw [cramerNumerator]; fin_cases i <;>
+      norm_num [cramerNumerator, Matrix.cramer_apply, Matrix.det_fin_three,
       kernelMinor, kernelMatrix, Matrix.submatrix_apply, Matrix.updateCol_apply, hx]
   rw [chartPoly]; norm_num [chartPoly, Matrix.det_fin_two, sumNumerator, matrixNumerator,
     slicePoly, Matrix.adjugate_fin_two, basisNumerator, leftNumerator,
@@ -970,7 +976,7 @@ theorem result : claim := by
     change MvPolynomial.eval (improperMarginal n a h (rationalInverse n a t)) chartPoly ≠ 0
     rw [hm]
     exact hg
-  · exact uniqueness_closure n a hn h (gauge_uniqueness_image n a hn h)
+  · exact uniqueness_closure n a h (gauge_uniqueness_image n a hn h)
 
 end
 
