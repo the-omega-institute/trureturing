@@ -130,6 +130,10 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDist
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDistance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/das-mohanty-singular-squared-distance-laplacian` (proved) by `D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDistance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"das-mohanty-singular-squared-distance-laplacian","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/DasMohantySingularSquaredDistance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joyentanuj Das; Sumit Mohanty (2024). *Inverse of the Squared Distance Matrix of a Complete Multipartite Graph*. DOI: [10.13001/ela.2024.8283](https://doi.org/10.13001/ela.2024.8283). URL: <https://arxiv.org/abs/2311.01069v2>.
