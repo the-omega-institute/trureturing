@@ -3243,3 +3243,347 @@ The full quadratic form (22.10), its comparison (22.14), and the uniform rank-ch
 The conclusions are uniform local suprema. They give an arbitrarily small excess over $R_*$ on sufficiently small neighborhoods, and do not assert the exact pointwise inequality $\rho\le R_*g$ on any fixed positive-radius neighborhood. They do not give a finite-scale theorem for arbitrary $U(4)$, a globally optimal $C_{\mathrm{prod}}$, or a conclusion for a different recovery problem or a changed record. All effects in (22.17) have trace one and one actual shared unitary; both optimizer classes and their scalar phase quotients remain part of the same metric.
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Exact global reduction to realizable feedback diagonals
+
+**Definition 23.1 (reduced producer data).** Keep Definitions 1.1, 6.1 and 11.1, including the ordinary transpose, the joint optimizer-sign minimum and the common scalar feedback phase. Write
+
+$$
+h=1/\sqrt2,\qquad c=\cos(\pi/8),\qquad s=\sin(\pi/8),
+\qquad d=\sqrt2+2c,\qquad e=\sqrt2+2s,
+\qquad T=(b_+\ \ b_-),
+$$
+
+with $b_\pm$ as in (6.7), so that the certificate matrix of (3.9) is
+$H_0=T\operatorname{diag}(d^2,e^2)T^\dagger$. Define the compact set
+
+$$
+\mathcal W=
+\left\{w\in\mathbb C^4:
+ |w_i|\le1\ (1\le i\le4),\quad
+ \sum_{i=1}^4|w_i|-2\min_{1\le i\le4}|w_i|\le2\right\}.
+\tag{23.1}
+$$
+
+For $w\in\mathcal W$, put
+
+$$
+\begin{aligned}
+A(w)&=|w_1+w_2+w_3+w_4|,\\
+B(w)&=|w_1-w_2+i(w_3-w_4)|,\\
+P(w)&=h(w_1+w_2)+c(w_3+w_4),\\
+Q(w)&=h(w_1-w_2)+is(w_3-w_4),\\
+u(w)&=|P(w)|,\qquad v(w)=|Q(w)|.
+\end{aligned}
+\tag{23.2}
+$$
+
+For $0\le p\le1$, define
+
+$$
+\begin{aligned}
+r_+(w,p)&=10-2p-2A(w),\\
+r_-(w,p)&=8+2p-2B(w),\\
+r(w,p)&=\min\{r_+(w,p),r_-(w,p)\},\\
+G(w,p)&=d^2p+e^2(1-p)
+       -\bigl(u(w)\sqrt p+v(w)\sqrt{1-p}\bigr)^2.
+\end{aligned}
+\tag{23.3}
+$$
+
+The common phase action is $w\mapsto\lambda w$, $|\lambda|=1$.
+It preserves $\mathcal W$, $A,B,u,v,r,G$; no representative of this action is chosen. Define the original sharp constant by
+
+$$
+C_{\mathrm{opt}}=
+\sup_{\substack{E\in\operatorname{Dens}_2,\ U\in U(4)\\g(E,U)>0}}
+\frac{\rho(E,U)}{g(E,U)}.
+\tag{23.4}
+$$
+
+**Theorem 23.2 (exact elimination of mixed effects and unobserved feedback entries).** The following statements hold for the unchanged producer problem.
+
+1. The diagonals of $UU_+^\dagger$, as $U$ ranges over $U(4)$, are exactly $\mathcal W$. In particular, every reduced datum has an actual shared-unitary realization.
+2. For every $E\in\operatorname{Dens}_2$ and every actual $U\in U(4)$, set
+   $w=\operatorname{diag}(UU_+^\dagger)$,
+   $p=b_+^\dagger E^{\mathsf T}b_+$ and
+   $\epsilon(E)=1-\operatorname{Tr}(E^2)$. Then
+
+$$
+\begin{aligned}
+0&\le\epsilon(E),\\
+\rho(E,U)&=r(w,p)-\epsilon(E),\\
+g(E,U)&\ge G(w,p)\ge0.
+\end{aligned}
+\tag{23.5}
+$$
+
+For every $w\in\mathcal W$, every actual $U$ with this diagonal, and every $p\in[0,1]$, there is a rank-one normalized effect $E_{w,p}$ with that population for which both comparisons are equalities:
+
+$$
+\rho(E_{w,p},U)=r(w,p),\qquad
+g(E_{w,p},U)=G(w,p).
+\tag{23.6}
+$$
+
+3. For every real $\gamma\ge0$ and every such actual $U$,
+
+$$
+\min_{E\in\operatorname{Dens}_2}
+ \bigl(g(E,U)-\gamma\rho(E,U)\bigr)
+=
+\min_{0\le p\le1}\bigl(G(w,p)-\gamma r(w,p)\bigr).
+\tag{23.7}
+$$
+
+Consequently,
+
+$$
+\begin{aligned}
+\min_{\substack{E\in\operatorname{Dens}_2\\U\in U(4)}}
+ (g-\gamma\rho)
+&=\min_{\substack{w\in\mathcal W\\0\le p\le1}}
+ (G-\gamma r),\\
+C_{\mathrm{opt}}
+&=\sup_{\substack{w\in\mathcal W,\ 0\le p\le1\\G(w,p)>0}}
+ \frac{r(w,p)}{G(w,p)}.
+\end{aligned}
+\tag{23.8}
+$$
+
+Thus the original supremum is unchanged by restriction to rank-one effects, followed by elimination of their relative phase. No feedback matrix is replaced by independent column controls.
+
+Proof. The finite matrix theorem of R. C. Thompson, *Singular values, diagonal elements, and convexity*, SIAM J. Appl. Math. **32** (1977), 39–63, [DOI 10.1137/0132003](https://doi.org/10.1137/0132003), is used here in the formulation of Jasper–Loreaux–Weiss, *Thompson's theorem for compact operators and diagonals of unitary operators*, [arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3). That formulation characterizes a prescribed complex diagonal and a prescribed singular-value sequence, rather than an eigenvalue sequence. If $t_1\ge t_2\ge t_3\ge t_4$ rearranges the moduli $|w_i|$ and all four prescribed singular values are $1$, its conditions become
+
+$$
+\sum_{i=1}^kt_i\le k\quad(1\le k\le4),
+\qquad t_1+t_2+t_3-t_4\le2.
+$$
+
+The first group is equivalent to $|w_i|\le1$, and the last condition is the second inequality of (23.1). A square matrix with all singular values equal to $1$ satisfies $V^\dagger V=I_4$, hence is unitary. This proves that $\mathcal W$ is precisely the set of unitary diagonals, including all complex phases and zero entries. Taking $U=VU_+$ proves both directions in statement 1. The cited matrix theorem is an intermediate realization result; the producer comparison below also uses the particular $R_0$, the two distinct optimizers and their joint metric.
+
+For statement 2, write the original effect in the certificate basis:
+
+$$
+F:=T^\dagger E^{\mathsf T}T
+ =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},
+\qquad
+0\le p\le1,\qquad |z|^2\le p(1-p).
+\tag{23.9}
+$$
+
+These conditions are equivalent to positivity and trace one in this basis. They give
+
+$$
+\epsilon(E)=2\bigl(p(1-p)-|z|^2\bigr),\qquad
+\begin{aligned}
+\|E-E_+\|_{\mathrm F}^2&=2(1-p)-\epsilon(E),\\
+\|E-E_-\|_{\mathrm F}^2&=2p-\epsilon(E).
+\end{aligned}
+\tag{23.10}
+$$
+
+Transpose and unitary conjugation preserve the Frobenius norm, so these are distances to precisely the original effects $E_\pm=\bar b_\pm\bar b_\pm^\dagger$.
+
+For any $U,V\in U(4)$, expansion of the squared norm and maximization over the single unit scalar give
+
+$$
+\min_{|\lambda|=1}\|U-\lambda V\|_{\mathrm F}^2
+ =8-2|\operatorname{Tr}(V^\dagger U)|.
+\tag{23.11}
+$$
+
+This formula remains valid when the trace is zero, in which case every scalar phase attains the minimum. Since
+$U_-=\operatorname{diag}(1,-1,-i,i)U_+$, the two trace moduli in (23.11) are $A(w)$ and $B(w)$ respectively. Substitution of (23.10) proves the exact formula for $\rho$ in (23.5). In particular, the same impurity term is subtracted from both sign branches; taking their minimum does not change its sign or replace the joint sign choice by two independent choices.
+
+In (9.12), the two copies of $\|R_0b_j(E)\|_{\ell^1}^2$ cancel between $a$ and $\tau$. With the same original $U$ on both positive-square-root columns, $\sum_jb_j(E)b_j(E)^\dagger=E^{\mathsf T}$ therefore gives the identity (22.1):
+
+$$
+g(E,U)=\operatorname{Tr}
+ \bigl((H_0-\ell(U)^\dagger\ell(U))E^{\mathsf T}\bigr),
+\qquad
+\ell(U)=\sum_{i=1}^4U_{ii}(R_0)_{i,:}.
+$$
+
+Using the fixed row products (3.7) gives $\ell(U)T=(P(w),Q(w))$, hence
+
+$$
+\begin{aligned}
+g(E,U)
+&=d^2p+e^2(1-p)
+  -\bigl(pu^2+(1-p)v^2+2\operatorname{Re}(Pz\bar Q)\bigr)\\
+&\ge d^2p+e^2(1-p)
+  -\bigl(pu^2+(1-p)v^2+2uv\sqrt{p(1-p)}\bigr)\\
+&=G(w,p).
+\end{aligned}
+\tag{23.12}
+$$
+
+The inequality follows from (23.9), with the direction needed for a lower bound on $g$. Its simultaneous attainment with the maximal distance at that population is important. Choose
+
+$$
+b=\sqrt p\,b_++e^{i\varphi}\sqrt{1-p}\,b_-,
+\qquad E_{w,p}=\bar b\bar b^\dagger.
+\tag{23.13}
+$$
+
+When $P,Q\ne0$, take
+$e^{i\varphi}=P\bar Q/(|P||Q|)$. Then the two summands of
+$\ell(U)b=\sqrt p\,P+e^{i\varphi}\sqrt{1-p}\,Q$ have a common phase, so (23.12) is an equality. When $P=0$ or $Q=0$, any $\varphi$ attains it. At $p=0$ or $p=1$, the effect is independent of that relative phase and the same equality holds. Every effect (23.13) has trace one and impurity zero. This proves (23.6); nonnegativity of the original defect in Lemma 9.3 proves $G\ge0$ without a relaxation of the domain.
+
+For $\gamma\ge0$, (23.5) gives the stronger comparison
+
+$$
+g(E,U)-\gamma\rho(E,U)
+ \ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E).
+\tag{23.14}
+$$
+
+For each $p$ the effect (23.13), using the same $U$, attains the right side with $\epsilon=0$. Thus taking minima proves (23.7), and the realization in statement 1 proves the first equality of (23.8). All these minima exist by compactness and continuity.
+
+For completeness, the zero denominators of the reduced quotient are exactly
+
+$$
+\begin{aligned}
+G(w,p)=0\quad\Longleftrightarrow\quad r(w,p)=0
+\quad\Longleftrightarrow\quad&
+ \bigl[p=1,\quad w=\lambda(1,1,1,1)\bigr]\\
+&\text{or }\bigl[p=0,\quad w=\lambda(1,-1,-i,i)\bigr],
+\qquad |\lambda|=1.
+\end{aligned}
+\tag{23.15}
+$$
+
+Indeed, realize $w$ by an actual $U$ and use (23.6) and Lemma 11.2. An optimizer effect forces $p=1$ or $p=0$, and its optimizer feedback gives the displayed diagonal. Conversely, a unitary with either displayed diagonal has every diagonal entry of modulus one; each row's norm then forces all its off-diagonal entries to vanish. The realized $U$ is the corresponding scalar multiple of $U_+$ or $U_-$, and (23.15) follows. This also proves that a reduced point with $r>0$ has $G>0$.
+
+Every reduced quotient with $G>0$ is consequently an original quotient, realized by (23.13). Conversely, if an original pair has $\rho>0$, then $r\ge\rho>0$, so (23.5) and (23.15) give
+$\rho/g\le r/G$; pairs with $\rho=0$ do not enlarge the supremum. This proves the second equality of (23.8).
+
+The calculation includes the singular boundary of $\operatorname{Dens}_2$ and its interior, with no inversion of an effect. A trace-one effect cannot be the zero matrix. For an unnormalized zero original outcome, the convention of Definition 9.1 still omits its zero contribution and imposes no constraint on its feedback. No formula here normalizes that zero matrix. $\square$
+
+**Definition 23.3 (finite feedback criterion).** Fix a real $\gamma\ge0$ and $w\in\mathcal W$, and abbreviate $A=A(w)$, $B=B(w)$, $u=u(w)$, $v=v(w)$. Put
+
+$$
+\begin{aligned}
+p_0&=\frac{1-A+B}{2},\qquad \omega=uv,\\
+\alpha_+&=d^2-u^2-\gamma(8-2A),&
+\beta_+&=e^2-v^2-\gamma(10-2A),\\
+\alpha_-&=d^2-u^2-\gamma(10-2B),&
+\beta_-&=e^2-v^2-\gamma(8-2B).
+\end{aligned}
+\tag{23.16}
+$$
+
+Use the closed intervals
+
+$$
+\begin{aligned}
+I_+&=[\max\{0,p_0\},1]\quad\text{if }p_0\le1,
+ & I_+&=\varnothing\quad\text{if }p_0>1,\\
+I_-&=[0,\min\{1,p_0\}]\quad\text{if }p_0\ge0,
+ & I_-&=\varnothing\quad\text{if }p_0<0.
+\end{aligned}
+\tag{23.17}
+$$
+
+For $\sigma\in\{+,-\}$ set
+
+$$
+q_\sigma(p)=\alpha_\sigma p+\beta_\sigma(1-p)
+                   -2\omega\sqrt{p(1-p)}.
+\tag{23.18}
+$$
+
+Form a finite set $\mathcal V_\gamma(w)$ as follows. For each nonempty interval $I_\sigma=[a,b]$, include the two values $q_\sigma(a),q_\sigma(b)$; they may coincide. If $\omega>0$, also define
+
+$$
+\begin{aligned}
+D_\sigma&=\sqrt{(\alpha_\sigma-\beta_\sigma)^2+4\omega^2},\\
+p_\sigma^*&=\frac12\left(1-
+                    \frac{\alpha_\sigma-\beta_\sigma}{D_\sigma}\right),
+\end{aligned}
+\tag{23.19}
+$$
+
+and include $(\alpha_\sigma+\beta_\sigma-D_\sigma)/2$ exactly when
+$p_\sigma^*\in I_\sigma$. If $\omega=0$, include no stationary value and do not use (23.19). Define
+
+$$
+\nu_\gamma(w)=\min\mathcal V_\gamma(w).
+\tag{23.20}
+$$
+
+At least one interval is nonempty, so this is a minimum of a nonempty set of at most six explicit real values. The intervals may be singletons. When $p_0\in[0,1]$, both intervals contain their common endpoint $p_0$.
+
+**Theorem 23.4 (equivalent sharp-endpoint criterion).** For every real $\gamma\ge0$, every $w\in\mathcal W$ and every actual $U$ with
+$\operatorname{diag}(UU_+^\dagger)=w$,
+
+$$
+\min_{E\in\operatorname{Dens}_2}
+ \bigl(g(E,U)-\gamma\rho(E,U)\bigr)
+ =\nu_\gamma(w).
+\tag{23.21}
+$$
+
+In particular, if $\kappa$ and $R_*=\kappa^{-1}$ are the exact constants of Theorem 21.3, then
+
+$$
+\boxed{
+\begin{aligned}
+&g(E,U)\ge\kappa\rho(E,U)
+ \quad\text{for every }E\in\operatorname{Dens}_2,\ U\in U(4)\\
+&\qquad\Longleftrightarrow\
+ \nu_\kappa(w)\ge0\quad\text{for every }w\in\mathcal W\\
+&\qquad\Longleftrightarrow\ C_{\mathrm{opt}}=R_*.
+\end{aligned}}
+\tag{23.22}
+$$
+
+For any $\gamma>0$, the same criterion with $\nu_\gamma$ is equivalent to $C_{\mathrm{opt}}\le\gamma^{-1}$. If one of the included values in $\mathcal V_\kappa(w)$ is strictly negative at a feasible $w$, its associated population and (23.13), together with any unitary realization of $w$, give an original shared-feedback pair with $\rho/g>R_*$.
+
+Proof. The exact difference between the two distance branches is
+
+$$
+r_+(w,p)-r_-(w,p)=4(p_0-p).
+$$
+
+Thus the joint minimum is $r_+$ on $I_+$ and $r_-$ on $I_-$. Direct substitution of (23.16) gives
+
+$$
+G(w,p)-\gamma r(w,p)=q_\sigma(p)\qquad(p\in I_\sigma).
+\tag{23.23}
+$$
+
+The intervals cover $[0,1]$, and at a sign tie their two expressions agree. In particular, this splitting never selects a feedback sign independently of the effect sign.
+
+If $\omega=0$, $q_\sigma$ is affine, including when both its coefficients coincide, and its minimum on a closed interval is an endpoint value. If $\omega>0$, then on $0<p<1$,
+
+$$
+\begin{aligned}
+q_\sigma'(p)
+ &=\alpha_\sigma-\beta_\sigma
+       -\omega\frac{1-2p}{\sqrt{p(1-p)}},\\
+q_\sigma''(p)
+ &=\frac{\omega}{2[p(1-p)]^{3/2}}>0.
+\end{aligned}
+$$
+
+The unique unconstrained minimizer is $p_\sigma^*$ of (23.19), which belongs to $(0,1)$, and its value is
+$(\alpha_\sigma+\beta_\sigma-D_\sigma)/2$. This follows either by substitution, using
+$\sqrt{p_\sigma^*(1-p_\sigma^*)}=\omega/D_\sigma$, or by the smaller eigenvalue of
+$\left(\begin{smallmatrix}\alpha_\sigma&-\omega\\-\omega&\beta_\sigma\end{smallmatrix}\right)$ and its positive eigenvector. Strict convexity shows that on any subinterval the minimum is this value if its population lies in that interval, and otherwise an endpoint value. Continuity supplies the endpoints $0,1$. This proves
+
+$$
+\min_{0\le p\le1}\bigl(G(w,p)-\gamma r(w,p)\bigr)
+ =\min\mathcal V_\gamma(w)=\nu_\gamma(w),
+$$
+
+including singleton intervals and every zero of $P$ or $Q$. Theorem 23.2 now gives (23.21) and the equivalence of the first two lines of (23.22).
+
+For $\gamma>0$, Lemma 11.2 supplies $g=\rho=0$ on the optimizer classes and $g>0$ everywhere else; consequently the universal inequality is equivalent to $C_{\mathrm{opt}}\le\gamma^{-1}$. Theorem 21.3 already supplies $C_{\mathrm{opt}}\ge R_*$ by an actual shared-feedback sequence, so at $\gamma=\kappa$ this upper bound is equivalent to equality. Its sharpness sequence is reused without another extremum calculation.
+
+Finally, every included value has the stated actual population, and every feasible $w$ has an actual unitary realization by Theorem 23.2. A negative value therefore gives $g-\kappa\rho<0$ for the pure effect (23.13), using that one realized $U$. Nonnegativity of $g$ forces $\rho>0$, and Lemma 11.2 then gives $g>0$, proving the asserted quotient inequality.
+
+All reduced formulas are invariant under the common scalar phase, even at a zero trace or at $w=0$; the proof never divides by $A$, $B$, $P$ or $Q$. The only division in (23.19) is made when $\omega>0$, so $D_\sigma>0$. The realization condition (23.1) retains all boundary diagonals and excludes diagonals not belonging to any actual unitary. The remaining universal assertion is precisely the nonnegativity of these finite expressions over that entire set, modulo its common scalar phase. Neither the restricted-family theorem nor the local limits of Section 22 settle that assertion. Thus the sharp global endpoint remains unresolved, with the established bounds $R_*\le C_{\mathrm{opt}}<135580$ of Sections 20–21. $\square$
+
+## 追加锚（本行以下为增补区）
