@@ -326,7 +326,7 @@ private lemma lap_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     · rw [if_pos h, if_pos h, hw _ (by simpa only [SimpleGraph.mem_edgeSet] using h)]
     · rw [if_neg h, if_neg h]
 
-private lemma invariants_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+lemma invariants_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (w w' : Sym2 (Fin n) → Real) (hw : ∀ e ∈ G.edgeSet, w e = w' e) :
     lambda2 G w = lambda2 G w' ∧ totalRes G w = totalRes G w' := by
   have hL := lap_congr G w w' hw
