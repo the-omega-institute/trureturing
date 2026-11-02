@@ -1587,4 +1587,295 @@ private theorem shifted_inverse_derivative_expansion (m : ℕ) (hm : 0 < m)
     exact CharTwo.add_self_eq_zero _
   linear_combination hcancel
 
+private theorem inverse_component_lower_constraint (m : ℕ) (hm : 2 ≤ m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (i : ZMod (2 * m + 1)) (r : ℕ) (hr : 0 < r) (hrm : r < m) :
+    b i * (u (i + (2 * r : ℕ)) +
+      if r = m - 1 then u (i + (2 * m - 1 : ℕ)) *
+        (1 + u (i + (2 * m : ℕ))) else 0) = 0 := by
+  classical
+  let s := prefixVariables i r
+  have hs : s.Nonempty := Finset.card_pos.mp (by
+    change 0 < (prefixVariables i r).card
+    rw [prefix_card m r (by omega)]
+    exact hr)
+  have hiff (k : ZMod (2 * m + 1)) (q : ℕ) (hq : q ≤ m) :
+      s = prefixVariables k q ↔ q = r ∧ k = i := by
+    constructor
+    · intro h
+      have hc := congrArg Finset.card h
+      dsimp [s] at hc
+      rw [prefix_card m r (by omega), prefix_card m q hq] at hc
+      subst q
+      exact ⟨rfl, (prefix_start_injective m r hr (by omega) h).symm⟩
+    · rintro ⟨rfl, rfl⟩
+      rfl
+  have hc : booleanCoeff (fun z =>
+      (∑ k, ∑ q ∈ Finset.range m,
+        b k * u (k + (2 * q : ℕ)) * booleanMonomial (prefixVariables k q) z) +
+      ∑ k, b k * (u (k + (2 * m - 1 : ℕ)) *
+        (1 + u (k + (2 * m : ℕ)))) *
+        booleanMonomial (prefixVariables k (m - 1)) z) s = 0 := by
+    have he := funext (shifted_inverse_derivative_expansion m (by omega) b u hu)
+    rw [← he]
+    obtain ⟨c, hc⟩ := (constantDerivative_affineSpan_duality (inverseComponent m b)).1 u |>.mp hu
+    have hconst : (fun z => inverseComponent m b (1 + (z + u)) +
+        inverseComponent m b (1 + z)) = fun _ => c := by
+      funext z
+      simpa only [add_assoc] using hc (1 + z)
+    rw [hconst]
+    exact coeff_constant c s hs
+  rw [coeff_add, coeff_sum, coeff_sum] at hc
+  simp_rw [coeff_sum, coeff_mul, coeff_monomial] at hc
+  have hinner (k : ZMod (2 * m + 1)) :
+      (∑ q ∈ Finset.range m, b k * u (k + (2 * q : ℕ)) *
+        (if s = prefixVariables k q then 1 else 0)) =
+      if k = i then b k * u (k + (2 * r : ℕ)) else 0 := by
+    rw [Finset.sum_eq_single r]
+    · simp only [hiff k r (by omega)]
+      by_cases hk : k = i <;> simp [hk]
+    · intro q hq hqr
+      have hq' := Finset.mem_range.mp hq
+      simp only [hiff k q (by omega), hqr, false_and, ite_false, mul_zero]
+    · simp [Finset.mem_range.mpr hrm]
+  simp_rw [hinner, hiff _ (m - 1) (by omega)] at hc
+  by_cases hr' : r = m - 1
+  · simp only [hr', eq_self_iff_true, true_and, ite_true, mul_ite, mul_one, mul_zero,
+      Finset.sum_ite_eq', Finset.mem_univ, ite_true] at hc
+    simp only [hr', ite_true]
+    convert hc using 1 <;> push_cast <;> ring
+  · have hr'' : m - 1 ≠ r := Ne.symm hr'
+    simp only [hr'', false_and, ite_false, mul_zero, Finset.sum_const_zero, add_zero,
+      Finset.sum_ite_eq', Finset.mem_univ, ite_true] at hc
+    simp only [if_neg hr', add_zero]
+    simpa only [Nat.cast_mul] using hc
+
+private theorem inverse_component_annihilation (m : ℕ) (hm : 2 ≤ m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (i : ZMod (2 * m + 1)) (r : ℕ) (hr : 0 < r) (hrm : r ≤ 2 * m - 3) :
+    b i * u (i + (r : ℕ)) = 0 := by
+  have hmod : r % 2 = 0 ∨ r % 2 = 1 := by omega
+  rcases hmod with he | ho
+  · have hr' : r = 2 * (r / 2) := by omega
+    have hc := inverse_component_lower_constraint m hm b u hu i (r / 2)
+      (by omega) (by omega)
+    have hne : r / 2 ≠ m - 1 := by omega
+    simpa only [if_neg hne, add_zero, ← hr'] using hc
+  · have hr' : r = 2 * (r / 2) + 1 := by omega
+    have hmem : i + (r : ℕ) ∈ topVariables m i := by
+      apply Finset.mem_insert_of_mem
+      exact Finset.mem_image.mpr ⟨r / 2, Finset.mem_range.mpr (by omega), by rw [← hr']⟩
+    apply inverse_component_interior_constraint m (by omega) b u hu i _ hmem
+    · intro h
+      have he := (ZMod.natCast_eq_natCast_iff' r (2 * m - 1) (2 * m + 1)).mp
+        (add_left_cancel h)
+      rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at he
+      omega
+    · intro h
+      have he := (ZMod.natCast_eq_natCast_iff' r (2 * m) (2 * m + 1)).mp
+        (add_left_cancel h)
+      rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at he
+      omega
+
+private theorem inverse_component_last_constraint (m : ℕ) (hm : 2 ≤ m)
+    (b u : Word (2 * m + 1))
+    (hu : u ∈ constantDerivativeSubmodule (inverseComponent m b))
+    (i : ZMod (2 * m + 1)) :
+    b i * (u (i - 3) + u (i - 2) * (1 + u (i - 1))) = 0 := by
+  have hc := inverse_component_lower_constraint m hm b u hu i (m - 1)
+    (by omega) (by omega)
+  have hz := ZMod.natCast_self (2 * m + 1)
+  have h₁ : i + (2 * (m - 1) : ℕ) = i - 3 := by
+    have hn : 2 * (m - 1) + 3 = 2 * m + 1 := by omega
+    have hx := congrArg (fun a : ℕ => (a : ZMod (2 * m + 1))) hn
+    push_cast at hx hz ⊢
+    linear_combination hx + hz
+  have h₂ : i + (2 * m - 1 : ℕ) = i - 2 := by
+    have hn : 2 * m - 1 + 2 = 2 * m + 1 := by omega
+    have hx := congrArg (fun a : ℕ => (a : ZMod (2 * m + 1))) hn
+    push_cast at hx hz ⊢
+    linear_combination hx + hz
+  have h₃ : i + (2 * m : ℕ) = i - 1 := by
+    push_cast at hz ⊢
+    linear_combination hz
+  simpa only [ite_true, h₁, h₂, h₃] using hc
+
+private theorem mask_boundary (m : ℕ) (b : Word (2 * m + 1)) (hb : b ≠ 0) :
+    b = 1 ∨ ∃ i, b i = 1 ∧ b (i - 2) = 0 := by
+  classical
+  by_cases hone : b = 1
+  · exact Or.inl hone
+  right
+  by_contra h
+  have hstep (i : ZMod (2 * m + 1)) (hi : b i = 1) : b (i - 2) = 1 := by
+    rcases bit_cases (b (i - 2)) with he | he
+    · exact (h ⟨i, hi, he⟩).elim
+    · exact he
+  obtain ⟨i, hi⟩ : ∃ i, b i ≠ 0 := by
+    by_contra hzero
+    apply hb
+    funext i
+    exact not_ne_iff.mp (not_exists.mp hzero i)
+  have hi' : b i = 1 := (bit_cases (b i)).resolve_left hi
+  have hp (r : ℕ) : b (i - (2 * r : ℕ)) = 1 := by
+    induction r with
+    | zero => simpa using hi'
+    | succ r ih =>
+      have hs := hstep (i - (2 * r : ℕ)) ih
+      convert hs using 1 <;> congr 1 <;> push_cast <;> ring
+  apply hone
+  funext k
+  obtain ⟨r, hr⟩ := step_two_reaches m k i
+  have hk : i - (2 * r : ℕ) = k := by linear_combination -hr
+  simpa only [hk, Pi.one_apply] using hp r
+
+private theorem coordinate_rank_bound {n : ℕ} [NeZero n]
+    (D : Subspace (ZMod 2) (Word n)) (i : ZMod n)
+    (hzero : ∀ u ∈ D, u i = 0 → u = 0) : Module.finrank (ZMod 2) D ≤ 1 := by
+  let e : D →ₗ[ZMod 2] ZMod 2 :=
+    { toFun := fun u => u.1 i
+      map_add' := by intros; rfl
+      map_smul' := by intros; rfl }
+  have hi : Function.Injective e := by
+    intro u v huv
+    apply Subtype.ext
+    apply sub_eq_zero.mp
+    apply hzero (u.1 - v.1) (D.sub_mem u.2 v.2)
+    change u.1 i - v.1 i = 0
+    exact sub_eq_zero.mpr huv
+  simpa using (LinearMap.finrank_le_finrank_of_injective hi)
+
+private theorem inverse_component_three_rank (b : Word 3) (hb : b ≠ 0) :
+    Module.finrank (ZMod 2) (constantDerivativeSubmodule (inverseComponent 1 b)) ≤ 1 := by
+  classical
+  obtain ⟨i, hi⟩ : ∃ i, b i ≠ 0 := by
+    by_contra hzero
+    apply hb
+    funext i
+    exact not_ne_iff.mp (not_exists.mp hzero i)
+  have hbi : b i = 1 := (bit_cases (b i)).resolve_left hi
+  apply coordinate_rank_bound _ i
+  intro u hu hzero
+  have h₂ : u (i + 2) = 0 := by
+    have hc := inverse_component_endpoint_constraint 1 (by decide) b u hu i
+    simpa [hbi, hzero] using hc
+  have h₁ : u (i + 1) = 0 := by
+    have hc := inverse_component_endpoint_constraint 1 (by decide) b u hu (i + 1)
+    change b (i + 1) * u (i + 1 + 2) = b (i + 1 + 2) * u (i + 1) at hc
+    have he : i + 1 + 2 = i := by
+      have hz : (3 : ZMod 3) = 0 := by decide
+      linear_combination hz
+    rw [he, hbi, hzero, mul_zero, one_mul] at hc
+    exact hc.symm
+  funext k
+  change u k = 0
+  have hval := ZMod.val_lt (k - i)
+  have hcast : (((k - i).val : ℕ) : ZMod 3) = k - i := ZMod.natCast_zmod_val _
+  have hcases : k = i ∨ k = i + 1 ∨ k = i + 2 := by
+    rcases (show (k - i).val = 0 ∨ (k - i).val = 1 ∨ (k - i).val = 2 by omega)
+      with h | h | h
+    · left
+      rw [h] at hcast
+      linear_combination -hcast
+    · right; left
+      rw [h] at hcast
+      linear_combination -hcast
+    · right; right
+      rw [h] at hcast
+      linear_combination -hcast
+  rcases hcases with rfl | rfl | rfl
+  · exact hzero
+  · exact h₁
+  · exact h₂
+
+private theorem inverse_component_large_rank (m : ℕ) (hm : 2 ≤ m)
+    (b : Word (2 * m + 1)) (hb : b ≠ 0) :
+    Module.finrank (ZMod 2) (constantDerivativeSubmodule (inverseComponent m b)) ≤ 1 := by
+  classical
+  rcases mask_boundary m b hb with hone | ⟨i, hbi, hbprev⟩
+  · apply coordinate_rank_bound _ 0
+    intro u hu _
+    funext k
+    have hc := inverse_component_annihilation m hm b u hu (k - 1) 1 (by decide) (by omega)
+    have hk : k - 1 + (1 : ℕ) = k := by ring
+    simpa [hone, hk] using hc
+  · apply coordinate_rank_bound _ i
+    intro u hu hzero
+    have hwrap (a : ℕ) (ha : a ≤ 2 * m + 1) :
+        i + (2 * m + 1 - a : ℕ) = i - (a : ZMod (2 * m + 1)) := by
+      rw [Nat.cast_sub ha, ZMod.natCast_self]
+      ring
+    have hend : i + (2 * m : ℕ) = i - 1 := by
+      convert hwrap 1 (by omega) using 1 <;> congr 1 <;> omega
+    have h₁ : u (i - 1) = 0 := by
+      have hc := inverse_component_endpoint_constraint m (by omega) b u hu i
+      simpa only [hend, hbi, hzero, one_mul, mul_zero] using hc
+    have h₂ : u (i - 2) = 0 := by
+      have hc := inverse_component_endpoint_constraint m (by omega) b u hu (i - 2)
+      have hi : i - 2 + 2 = i := by ring
+      rw [hi, hbprev, hbi, zero_mul, one_mul] at hc
+      exact hc.symm
+    have h₃ : u (i - 3) = 0 := by
+      have hc := inverse_component_last_constraint m hm b u hu i
+      simpa only [hbi, h₂, one_mul, zero_mul, add_zero] using hc
+    funext k
+    change u k = 0
+    let r := (k - i).val
+    have hr : r < 2 * m + 1 := ZMod.val_lt _
+    have hk : i + (r : ZMod (2 * m + 1)) = k := by
+      dsimp [r]
+      rw [ZMod.natCast_zmod_val]
+      ring
+    by_cases hr0 : r = 0
+    · have he : k = i := by simpa only [hr0, Nat.cast_zero, add_zero] using hk.symm
+      simpa only [he] using hzero
+    by_cases hr₁ : r = 2 * m
+    · rw [hr₁, hend] at hk
+      simpa only [← hk] using h₁
+    by_cases hr₂ : r = 2 * m - 1
+    · have he : r = 2 * m + 1 - 2 := by omega
+      rw [he, hwrap 2 (by omega)] at hk
+      simpa only [← hk, Nat.cast_ofNat] using h₂
+    by_cases hr₃ : r = 2 * m - 2
+    · have he : r = 2 * m + 1 - 3 := by omega
+      rw [he, hwrap 3 (by omega)] at hk
+      simpa only [← hk, Nat.cast_ofNat] using h₃
+    have hc := inverse_component_annihilation m hm b u hu i r (by omega) (by omega)
+    simpa only [hbi, hk, one_mul] using hc
+
+/-- The literal ordered integer trace has affine support of codimension at most
+one for every nonzero mask at every positive odd length. -/
+theorem affine_trace_support_dimension (m : ℕ) (b : Word (2 * m + 1)) (hb : b ≠ 0) :
+    2 * m ≤ Module.finrank (ZMod 2)
+      (affineSpan (ZMod 2) (traceSupport b)).direction := by
+  classical
+  by_cases hm0 : m = 0
+  · subst m
+    exact Nat.zero_le _
+  have hrank : Module.finrank (ZMod 2)
+      (constantDerivativeSubmodule (inverseComponent m b)) ≤ 1 := by
+    by_cases hm1 : m = 1
+    · subst m
+      exact inverse_component_three_rank b hb
+    · exact inverse_component_large_rank m (by omega) b hb
+  have hdual := (constantDerivative_affineSpan_duality (inverseComponent m b)).2
+  have hfull : Module.finrank (ZMod 2) (Word (2 * m + 1)) = 2 * m + 1 := by
+    rw [Module.finrank_fintype_fun_eq_card, ZMod.card]
+  rw [hfull] at hdual
+  have hs : traceSupport b = {a | walsh (inverseComponent m b) a ≠ 0} := by
+    ext a
+    simp only [traceSupport, Set.mem_setOf_eq, sourceTrace_eq_phase_sum, inverse_phase_sum]
+  have hdir : (affineSpan (ZMod 2) (traceSupport b)).direction =
+      walshSupportDirection (inverseComponent m b) := by
+    rw [hs]
+    rfl
+  have hdim : Module.finrank (ZMod 2) (affineSpan (ZMod 2) (traceSupport b)).direction =
+      Module.finrank (ZMod 2) (walshSupportDirection (inverseComponent m b)) :=
+    congrArg (fun D : Subspace (ZMod 2) (Word (2 * m + 1)) =>
+      Module.finrank (ZMod 2) D) hdir
+  rw [hdim]
+  omega
+
 end D5.S3.Combinatorics.CyclicBoolean.CyclicSignTrace
