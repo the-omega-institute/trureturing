@@ -31,13 +31,18 @@ def main():
                SEARCH_REDUCTION_RESUME="", SEARCH_REDUCTION_QUERY_CACHE="",
                SEARCH_REDUCTION_WORKERS="1", SEARCH_REDUCTION_PROFILE=str(directory / "phases.log"))
     observations = {}
+    phases = {}
     checks = []
 
     def run(label, command, overrides=None):
+        profile = Path(env["SEARCH_REDUCTION_PROFILE"])
+        offset = profile.stat().st_size if profile.exists() else 0
         started = time.monotonic()
         result = subprocess.run(command, cwd=ROOT, env=dict(env, **(overrides or {})),
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         (directory / (label + ".log")).write_text(result.stdout)
+        phases[label] = profile.read_bytes()[offset:].decode() if profile.exists() else ""
+        (directory / (label + ".phases.log")).write_text(phases[label])
         record = dict(label=label, command=command, exit=result.returncode,
                       seconds=round(time.monotonic() - started, 3))
         checks.append(record)
@@ -50,39 +55,42 @@ def main():
     request.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
         "set_option Elab.async false\nset_option maxHeartbeats 0\n"
         "run_cmd LeanInformationAudit.SearchReduction.executeProbe "
-        f'{{ target := `{TARGET}, «baseline» := #[], baselineCommit := "{B0}" }} '
+        f'{{ target := `{TARGET}, «baseline» := #[], baselineCommit := "{B0}", '
+        f'informationApplication := some `{APPLICATION} }} '
         f"#[`LeanInformationAuditRegAnalysis.SearchReduction.Commands, `{MODULE}] "
         "`informationCacheReading (fixture := true)\n")
-    # The optional application is an ordinary Request field; fixture mode only
-    # permits the finite test index, without installing a production index.
-    request.write_text(request.read_text().replace(f'baselineCommit := "{B0}"',
-        f'baselineCommit := "{B0}", informationApplication := some `{APPLICATION}'))
+    # Fixture mode permits the existing test-index fallback; it installs no
+    # production index. Request and compiled ordinary assessment stay real.
+
     current = directory / "current.lean"
     current.write_text(f"import {MODULE}\nimport LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
         "set_option maxHeartbeats 0\nopen Lean Elab Command LeanInformationAudit.SearchReduction\n"
         f"run_cmd do\n  let reading ← acquireInformation (← getEnv) `{TARGET} #[] (some `{APPLICATION})\n"
-        f"  logInfo (observationJson (withInformation {{target := `{TARGET}}} reading)).compress\n")
+        f"  logInfo (observationJson (withInformation {{target := `{TARGET}, base := .found, paired := .found, verdict := .bindOnly}} reading)).compress\n")
     if SOURCE.exists() or FIXTURE.exists():
         raise RuntimeError("temporary fixture paths already exist; refusing to overwrite")
     fixture_original = ROOT / "tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/LawFixture.lean"
     FIXTURE.parent.mkdir(parents=True, exist_ok=True)
     FIXTURE.write_text(fixture_original.read_text().replace(
         "LeanInformationAuditFibTests.AuricFib.LawFixture", FIXTURE_MODULE))
-    original = (f"import {FIXTURE_MODULE}\n"
+    original = (f"module\npublic import {FIXTURE_MODULE}\npublic section\n"
         "namespace LeanInformationAudit.Tests.SearchReduction.InformationCacheApplication\n"
         "open LeanInformationAudit.AuricFib.Contract\n"
         f"open {FIXTURE_MODULE}\n"
-        "noncomputable def application : Application.{0,0,0,0,0,0} RegisteredPos.target :=\n"
+        "private noncomputable def currentApplication : Application.{0,0,0,0,0,0} RegisteredPos.target :=\n"
         "  RegisteredPos.strict\n"
+        "noncomputable def application : Application.{0,0,0,0,0,0} RegisteredPos.target :=\n"
+        "  currentApplication\n"
         "end LeanInformationAudit.Tests.SearchReduction.InformationCacheApplication\n").encode()
     SOURCE.write_bytes(original)
     expected_source = sha(SOURCE)
     identities = []
 
     def build(label):
-        run(label, ["make", "lean", "LEAN_TARGETS=" + MODULE])
+        run(label, ["make", "lean", "LEAN_TARGETS=LeanInformationAuditRegAnalysis.SearchReduction.Commands " + MODULE])
         base = ROOT / ".lake/build/lean-inspector/reg/lib/lean" / MODULE.replace(".", "/")
-        identities.append(dict(label=label, source_sha256=sha(SOURCE), compiled={
+        target_base = ROOT / ".lake/build/lean-inspector/reg/lib/lean" / FIXTURE_MODULE.replace(".", "/")
+        identities.append(dict(label=label, source_sha256=sha(SOURCE), target_sha256=sha(target_base.with_suffix(".olean")), compiled={
             str(path.relative_to(ROOT)): sha(path) for path in
             (base.with_suffix(".olean"), base.with_suffix(".olean.server"),
              base.with_suffix(".olean.private")) if path.exists()}))
@@ -110,8 +118,10 @@ def main():
         value, text = observation(label, request)
         if "PROBE_CACHE hit=authenticated" not in text or "PROBE_CACHE_ENTRY selected=authenticated" not in text:
             raise RuntimeError(label + ": unchanged computational inputs did not reuse authenticated entry")
-        if "PROBE_CACHE miss" in text or 'query/strategy-start' in text:
+        if "PROBE_CACHE miss" in text or " query/" in phases[label]:
             raise RuntimeError(label + ": hot replay recomputed R")
+        if "probe/cache-kernel-end" not in phases[label]:
+            raise RuntimeError(label + ": missing executed hot kernel phase")
         if metadata(value) != metadata(expected):
             raise RuntimeError(label + ": stale optional information: " + json.dumps({
                 "cached": metadata(value), "current": metadata(expected)}, sort_keys=True))
@@ -137,7 +147,7 @@ def main():
             raise RuntimeError("valid unknown ordinary registration was not acquired")
         hot("unknown-hot", fresh)
         SOURCE.write_text(text.replace("noncomputable def application", "unsafe def application").replace(
-            "  RegisteredPos.strict\n", "  unsafeCast (0 : Nat)\n"))
+            "  currentApplication\n", "  unsafeCast (0 : Nat)\n"))
         build("unsafe-build")
         fresh, _ = observation("unsafe-current", current, False)
         if (fresh["information_face"] != "not-bound(application_not_safe_definition)" or
@@ -149,6 +159,10 @@ def main():
         if sha(SOURCE) != expected_source:
             raise RuntimeError("application fixture source restoration failed")
         build("restored-build")
+        if identities[-1]["compiled"] != identities[0]["compiled"]:
+            raise RuntimeError("compiled application restoration changed bytes")
+        if len({row["target_sha256"] for row in identities}) != 1:
+            raise RuntimeError("application mutation changed the mathematical target artifact")
         (directory / "application.lean").write_bytes(original)
         (directory / "target.lean").write_bytes(FIXTURE.read_bytes())
         SOURCE.unlink()
