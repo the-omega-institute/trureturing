@@ -120,6 +120,10 @@ $$\forall (d: \mathbb{N}), ((2 \le d) \Rightarrow (\forall (b: (\operatorname{Fi
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/OnbTomographyHolevoRatio.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/das-et-al-2025-onb-tomography-holevo-ratio` (proved) by `D5/S3/Quantum/Measurements/OnbTomographyHolevoRatio.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"das-et-al-2025-onb-tomography-holevo-ratio","declaration_gid":"D5/S3/Quantum/Measurements/OnbTomographyHolevoRatio.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Das, Aritra; Conlon, Lorcán O.; Suzuki, Jun; Yung, Simon K.; Lam, Ping K.; Assad, Syed M. (2025). *Holevo Cramér-Rao bound: How close can we get without entangling measurements?*. DOI: [10.22331/q-2025-09-30-1867](https://doi.org/10.22331/q-2025-09-30-1867). URL: <https://arxiv.org/abs/2405.09622v2>.

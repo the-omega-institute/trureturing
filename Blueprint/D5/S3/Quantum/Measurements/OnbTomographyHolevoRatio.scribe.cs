@@ -145,7 +145,10 @@ internal sealed class OnbTomographyHolevoRatioDocument : IScribeDocumentDefiniti
                         + "upper bound, factor out d + 1, and multiply the Holevo lower "
                         + "bound by the nonnegative number d + 1. This yields "
                         + "NHCRB ≤ (d + 1)((d squared − 1)/d) ≤ (d + 1) HCRB."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("das-et-al-2025-onb-tomography-holevo-ratio"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) =>
