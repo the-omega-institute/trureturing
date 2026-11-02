@@ -662,12 +662,12 @@ theorem complex_spanning (z : P.complexFrame.K) :
   apply Complex.ext
   · have h := congrArg (fun v : P.K_R => (v : E_R D) i)
       (P.realBasis_expansion (P.realK z))
-    simpa [complexify, basisVector, includeK, realK, realPart, Complex.mul_re, Complex.mul_im,
-      smul_eq_mul] using h
+    simp [basisVector, includeK, realK, realPart, Complex.mul_re, Complex.mul_im, smul_eq_mul]
+    simpa [complexify, realK, realPart, smul_eq_mul] using h
   · have h := congrArg (fun v : P.K_R => (v : E_R D) i)
       (P.realBasis_expansion (P.imagK z))
-    simpa [complexify, basisVector, includeK, imagK, imagPart, Complex.mul_re, Complex.mul_im,
-      smul_eq_mul] using h
+    simp [basisVector, includeK, imagK, imagPart, Complex.mul_re, Complex.mul_im, smul_eq_mul]
+    simpa [complexify, imagK, imagPart, smul_eq_mul] using h
 
 /-- Coordinates are actual original Gram pairings, with a proved inverse. -/
 def complexCoordinates : P.complexFrame.K ≃ₗ[ℂ] (Fin (D.rank - 2) → ℂ) where
