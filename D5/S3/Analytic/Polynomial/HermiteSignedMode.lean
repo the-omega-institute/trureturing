@@ -1,10 +1,21 @@
 /- GID: D5/S3/Analytic/Polynomial/HermiteSignedMode
    generality: G
    mirror - B: D5/B/S3/Analytic/Polynomial/HermiteSignedMode
-   mirror - E: none(waiver:external - open - problem - resolution)
+   mirror - E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Signed coefficient modes of physicists Hermite polynomials. -/
+
+/-
+admission_basis: open-problem-resolution (#25634; Proved).
+escape_witness: none. The independent external assertion is the admission basis.
+proof_shape: content for weight_le_mode, weight_lt_mode, a_spec and result;
+all other theorem helpers are bind-only, with live consumers in these proofs.
+Utility is none: the result is universal, not a finite computation or instance.
+Source: OEIS A381423 revision 8; physicists normalization is DLMF 18.5.13.
+The polynomial uses the literal finite physicists coefficient formula over ℚ.
+No uniqueness of the maximizing coefficient is assumed or concluded.
+-/
 
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Data.Finset.Max
