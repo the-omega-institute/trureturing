@@ -61,8 +61,8 @@ $$
 The constant depends only on $D,k$. Integer binomial coefficients retain
 negative comparison exponents, so the theorem includes small graphs, trees,
 and the one-vertex case without truncating the comparison series. The first
-coefficient is proved exactly equal to $-b$. The explicit weaving incidences, signed Jones--Tutte convention,
-and all-width asymptotic also remain unproved here.
+coefficient is proved exactly equal to $-b$. The mixed-state transfer, signed Jones--Tutte convention,
+and all-width asymptotic remain unproved here.
 
 WeavingDiagramPorts derives the finite chronological matching from the
 repeated generator sequence and proves the two uniform-smoothing component
