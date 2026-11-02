@@ -26,7 +26,10 @@ internal sealed class NearSquareLatticeRigidityDocument : IScribeDocumentDefinit
                         + "the integer span of (n,−εb) and (−a,εn). The strict deficit bound is part "
                         + "of the hypothesis.")),
                     Paragraph(Text(
-                        "The least positive and negative vertical displacements between adjacent "
+                        "If L contains a horizontal vector (p,0) with 0<p≤n, square coverage and "
+                        + "the index bound force p=n and δ=0 and give the displayed basis "
+                        + "directly, with b=0 and ε=1. If L contains no such horizontal vector, "
+                        + "the least positive and negative vertical displacements between adjacent "
                         + "columns give vectors (p,−b) and (q,c). Square coverage forces b+c ≤ n. "
                         + "Their positive determinant is divisible by the actual quotient index and "
                         + "is at most n². Since δ<n, the determinant must equal n²−δ; the same "
