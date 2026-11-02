@@ -1,0 +1,26 @@
+### 定义 3：实际二次型与矩约束
+
+固定任意 $D>0$，取有限原子复测度
+
+
+<a id="display-53"></a>
+
+$$
+\mu=\sum_{i=1}^{m}a_i\delta_{t_i},
+\qquad t_i\in[0,D].
+$$
+
+
+定义
+
+
+<a id="display-54"></a>
+
+$$
+Q_{\mathscr K}(\mu)
+=
+\sum_{i,j}\overline{a_i}a_j
+\mathscr K(t_i-t_j).
+$$
+
+

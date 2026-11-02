@@ -1,0 +1,17 @@
+若总质量为零，即 $\sum_i a_i=0$，定义其原函数
+
+
+<a id="display-55"></a>
+
+$$
+F_\mu(t)=\mu((-\infty,t]).
+$$
+
+
+它是紧支撑的阶梯函数，并满足
+
+
+<a id="display-56"></a>
+
+$$
+F_\mu\in L^2(\mathbb R)
