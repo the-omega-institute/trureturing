@@ -2,9 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Interpolation.SublinearMomentGrowth
 import Reg.Support.SingleDependentReadout
 
-/-! Separate owner for the full source theorem's typed audit attempt.
-The existing support supplies enrollment of DependentFamily.realize.
-All terms and source coordinates below remain unelaborated and unassessed. -/
+/-! Full-function source realization through the enrolled dependent-family template. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -70,7 +68,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     congr 1
     ring
   rw [he] at hh
-  have hle : exp (C + 1) ≤ C := (mul_le_mul_iff_right₀ (exp_pos _)).mp hh
+  have hle : exp (C + 1) ≤ C := (mul_le_mul_iff_left₀ (exp_pos (C + 1))).mp hh
   linarith [add_one_le_exp (C + 1)]
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
@@ -112,7 +110,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
      body steps cross F, m, hF, heven, hm, hsub, hpos, epsilon and its proof.
      Then enter Exists C, its body, the right conjunct, and forall t.
      F is lexical binder 0: both its state and output are the whole function.
-     This authored raw path still requires compiled source reconstruction. -/
+     The selected operand is the complete function F. -/
   sourceSelection := some {
     owner := `D5.S3.Analytic.Interpolation.SublinearMomentGrowth
     definition := none

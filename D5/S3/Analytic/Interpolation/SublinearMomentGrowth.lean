@@ -183,7 +183,7 @@ private lemma double_weighted_shift_translate (k : ℕ) (g : ℝ → ℝ) (u : �
 private lemma stencil_moment_zero (k r : ℕ) (x : ℝ) (hr : r < k) :
     ∑ j ∈ range (k + 1), weight k j * (x + j) ^ r = 0 := by
   change (∑ j ∈ range (k + 1), weight k j * (fun y : ℝ => y ^ r) (x + j)) = 0
-  rw [weighted_shift, fwdDiff_iter_pow_eq_zero_of_lt hr]
+  rw [weighted_shift k (fun y : ℝ => y ^ r) x, fwdDiff_iter_pow_eq_zero_of_lt hr]
   simp
 
 private lemma stencil_weight_abs (k j : ℕ) :
@@ -691,7 +691,7 @@ private lemma envelope_dyadic {F : ℝ → ℝ} (hF : Continuous F)
   exact hfinite N R hR0 hbound
 
 /-- The original all-real subexponential conclusion, with every original
-hypothesis retained. This proof body is source-only and unelaborated. -/
+hypothesis retained. -/
 theorem sublinear_moment_growth (F : ℝ → ℝ) (m : ℝ → ℕ)
     (hF : Continuous F) (heven : ∀ t : ℝ, F (-t) = F t)
     (hm : ∀ᶠ D : ℝ in atTop, 1 ≤ m D)
