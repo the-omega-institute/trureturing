@@ -6,12 +6,15 @@ title: CombinatorialRigidity, source revision 021c2284bc387efee3c3b20a18eb5f7696
 doi: null
 url: https://github.com/bryangingechen/CombinatorialRigidity/tree/021c2284bc387efee3c3b20a18eb5f769638b578
 claim: Credited Lean proofs of tight-set closure, safe reverse Henneberg repair, forward move preservation, and reconstruction.
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Combinatorics/Graph/Laman/SparseSets
+  - D5/S3/Combinatorics/Graph/Laman/SafeRepair
+  - D5/S3/Combinatorics/Graph/Laman/Moves
 license: Apache-2.0
 triage: anchor
 ---
 
-<!-- GID: D5/L/Combinatorics/Laman/chen2026combinatorialrigidity -->
+<!-- GID: D5/L/Geometry/chen2026combinatorialrigidity -->
 
 # Combinatorial rigidity proof source
 

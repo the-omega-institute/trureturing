@@ -41,17 +41,6 @@ lemma mul_card_union_add_mul_card_inter [DecidableEq α] (s t : Finset α) (k : 
     k * s.card + k * t.card = k * (s ∪ t).card + k * (s ∩ t).card := by
   rw [← Nat.mul_add, ← Nat.mul_add, Finset.card_union_add_card_inter]
 
-lemma three_le_card_of_three_distinct_mem {s : Finset α} {a b c : α}
-    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c)
-    (ha : a ∈ s) (hb : b ∈ s) (hc : c ∈ s) : 3 ≤ s.card := by
-  classical
-  have h3 : ({a, b, c} : Finset α).card = 3 := by
-    simp [Finset.card_insert_of_notMem, hab, hac, hbc]
-  have hsub : ({a, b, c} : Finset α) ⊆ s := by
-    intro x hx
-    simp only [Finset.mem_insert, Finset.mem_singleton] at hx
-    rcases hx with rfl | rfl | rfl <;> assumption
-  exact h3 ▸ Finset.card_le_card hsub
 
 end Finset
 
@@ -114,8 +103,6 @@ lemma edgesIn_mono {s t : Set V} (h : s ⊆ t) : G.edgesIn s ⊆ G.edgesIn t :=
 @[simp] lemma edgesIn_univ : G.edgesIn Set.univ = G.edgeSet := by
   simp [edgesIn]
 
-@[simp] lemma edgesIn_empty : G.edgesIn (∅ : Set V) = ∅ := by
-  simp [edgesIn]
 
 @[simp] lemma edgesIn_singleton (G : SimpleGraph V) (v : V) : G.edgesIn ({v} : Set V) = ∅ := by
   ext e

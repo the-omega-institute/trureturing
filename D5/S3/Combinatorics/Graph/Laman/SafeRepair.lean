@@ -75,7 +75,7 @@ theorem IsSparse.no_isTightOn_excluding_three_neighbors
       _ ≤ (G.edgesIn (↑T' : Set V)).ncard :=
           Set.ncard_le_ncard (Set.union_subset h_edgesIn_sub h_E3_in) (G.edgesIn_finite T')
   have hT_card_ge : 3 ≤ T.card :=
-    Finset.three_le_card_of_three_distinct_mem hab hac hbc haT hbT hcT
+    Finset.two_lt_card_iff.mpr ⟨a, b, c, haT, hbT, hcT, hab, hac, hbc⟩
   have hT'_sparse := h T' (by rw [hT'_card]; omega)
   grind only [IsTightOn]
 
@@ -293,7 +293,7 @@ theorem IsSparse.contradiction_three_pair
   have hbT : b ∈ T := Finset.mem_union_left _ (Finset.mem_union_left _ hbSab)
   have hcT : c ∈ T := Finset.mem_union_left _ (Finset.mem_union_right _ hcSac)
   have hT_card_ge : 3 ≤ T.card :=
-    Finset.three_le_card_of_three_distinct_mem hab hac hbc haT hbT hcT
+    Finset.two_lt_card_iff.mpr ⟨a, b, c, haT, hbT, hcT, hab, hac, hbc⟩
   have hT_tight : G.IsTightOn 2 3 T := h.isTightOn_of_le (by omega) (by
     grind only [IsTightOn])
   exact IsSparse.no_isTightOn_excluding_three_neighbors h ha hb hc hab hac hbc

@@ -8,7 +8,7 @@ internal sealed class HistoryDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Laman/History.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/Laman/haas2003henneberg");
+        LibraryNoteRef.Create("D5/L/Geometry/haas2003henneberg");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Let V be any finite vertex type in any universe and G a simple graph on V. The additive Laman counts characterize an actual finite list of legal Henneberg moves starting with K2. No embedding or geometric placement is required.",

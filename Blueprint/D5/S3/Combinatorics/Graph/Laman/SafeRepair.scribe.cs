@@ -6,7 +6,7 @@ internal sealed class SafeRepairDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Laman/SafeRepair.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/Laman/chen2026combinatorialrigidity");
+        LibraryNoteRef.Create("D5/L/Geometry/chen2026combinatorialrigidity");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite simple graph counts, tight subsets, and exact Henneberg operations over arbitrary vertex types.",

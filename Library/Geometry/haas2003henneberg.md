@@ -6,12 +6,13 @@ title: Planar Minimally Rigid Graphs and Pseudo-Triangulations
 doi: 10.1016/j.comgeo.2004.07.003
 url: https://arxiv.org/abs/math/0307347v1
 claim: Section 2 Lemma 2.1 characterizes Laman graphs by Henneberg constructions starting from an edge; planarity is not required for that lemma.
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Combinatorics/Graph/Laman/History
 license: citation-only
 triage: anchor
 ---
 
-<!-- GID: D5/L/Combinatorics/Laman/haas2003henneberg -->
+<!-- GID: D5/L/Geometry/haas2003henneberg -->
 
 # Henneberg characterization of Laman graphs
 
