@@ -14,6 +14,10 @@ triage: anchor
 
 # Frattini automorphism kernel
 
+## Locator
+
+https://github.com/Qiuzhen-CFSG/CFSG/blob/0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7/Theory/GroupTheory/PGroup/FrattiniAutomorphismKernel.lean
+
 The immutable Lean source proves `Subgroup.isPGroup_quotientAut_frattini_kernel`
 for every finite group G and every natural p satisfying `IsPGroup p G`.
 Its `quotientAut` construction is in
