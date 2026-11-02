@@ -94,6 +94,10 @@ $$\exists (N: \mathbb{N}), ((3 \le N) \land (\forall (n: \mathbb{N}), ((N \le n)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PolynomialTrees/BallotKimberlingMosesDoubleRootGeneration.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bkm-double-root` (proved) by `D5/S3/Combinatorics/PolynomialTrees/BallotKimberlingMosesDoubleRootGeneration.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bkm-double-root","declaration_gid":"D5/S3/Combinatorics/PolynomialTrees/BallotKimberlingMosesDoubleRootGeneration.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christian Ballot, Clark Kimberling and Peter J. C. Moses (2017). *Linear Recurrences Originating From Polynomial Trees*. DOI: [10.1080/00150517.2017.12427731](https://doi.org/10.1080/00150517.2017.12427731). URL: <https://www.fq.math.ca/Papers1/55-5/BallotKimberlingMoses.pdf>.

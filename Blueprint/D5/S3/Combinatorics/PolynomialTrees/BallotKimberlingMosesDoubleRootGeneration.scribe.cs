@@ -49,12 +49,13 @@ internal sealed class BallotKimberlingMosesDoubleRootGenerationDocument : IScrib
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The recurrence holds from index three", ClaimBody(),
                 "Write each reached remainder uniquely as C(a) + C(b) * (X − 1), where a and b are natural numbers. The two children change the coordinates to (a + 1,b) and (a,b + a). After at most n operations the pairs are exactly (0,0), together with 0 < a ≤ n and b ≤ a(n − a). This follows by induction: subtract a from b when b ≥ a, and otherwise decrease a by one. In generation n + 1, the top row consists of (n + 1,0). For each a ≤ n the remaining row is a(n − a) < b ≤ a(n + 1 − a), an interval of exactly a integers. Injectivity of the polynomial labels therefore gives G(n) = 1 + the sum of a over a < n, including the separate zero-root case. Its consecutive differences equal n, so its third finite difference vanishes. Taking N = 3 proves the assertion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bkm-double-root"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name switch { "addChild" => "add-child", "mulChild" => "mul-child", "G" => "cardinality", _ => name }), DeclarationHandle.Create(Module + "." + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClaimBody()
     {
