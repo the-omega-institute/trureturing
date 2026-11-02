@@ -1,0 +1,35 @@
+**Proposition 3.5 (historical sufficiency does not give kernel descent).**
+$H_n$ retains all past equality answers up to independent renaming of
+attained endpoint values. It need not make the next-observation kernel
+constant on actual-history fibers, even within $S_0$.
+
+Proof. Two endpoint lists have the same partition pair exactly when
+bijections between their attained left values and between their attained
+right values match every indexed occurrence. These bijections extend to
+the respective finite endpoint sets of the same sizes. Thus every
+function of acquired equalities factors through $H_n$, with no claim
+that these arbitrary renamings preserve $E_i$ or future behavior.
+
+For the actual failure of predictive descent in $G_0$, take
+
+$$
+\begin{aligned}
+a&=((1,0),(0,0)),& b&=((0,1),(0,1)),\\
+t_0&=((0,0,0),(0,0)),& t_+&=((0,0,1),(0,0)),&
+t_-&=((1,0,1),(0,0)).
+\end{aligned}
+$$
+
+The histories $[(a,t_0),(b,t_+)]$ and $[(a,t_0),(b,t_-)]$ consist of
+legal edges: $B_0((1,0),0)=0$ and
+$B_0((0,1),(0,0,1))=B_0((0,1),(1,0,1))=(0,1)$.
+Both histories have two singleton blocks in each chart. But
+$B_0((1,0),(0,0,1))=(0,0)$ whereas
+$B_0((1,0),(1,0,1))=(1,0)$. Conditioned on these actual histories,
+$\Pr(a_3=a_1,t_3=t_2)$ is respectively $1/1944$ and $0$.
+Both conditioning events have positive mass. Therefore a pointwise
+predictive quotient cannot be inferred from historical sufficiency.
+Averaging over compatible embeddings when conditioning only on the
+observed $H_2$ is a different operation; it does not contradict
+Theorem 3.3 or prove the joint-kernel descent of (UJB.7313). $\square$
+
