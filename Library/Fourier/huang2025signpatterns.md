@@ -1,0 +1,60 @@
+---
+bibkey: huang2025signpatterns
+authors: "Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye"
+year: 2025
+title: "Sign-patterns of Certain Infinite Products"
+doi: 10.48550/arXiv.2507.16644
+url: https://arxiv.org/abs/2507.16644v1
+claim: "Classical cubic theta definitions, Euler product identities, and the three-core lattice exponent used in the study of infinite-product signs."
+strata_touched:
+  - D5/S3/Arith/ModularForms/CubicThetaLattice
+license: citation-only
+triage: anchor
+---
+
+# Cubic theta lattices and their product interpretation
+
+## Verified locator
+
+DOI: 10.48550/arXiv.2507.16644
+
+URL: https://arxiv.org/abs/2507.16644v1
+
+The inspected v1 source is `signpatternsaoc.tex`, extracted text SHA256
+`e870441977cf9615a6e7a32daba63a7843bf668e7196c42087e4355a4cd780b6`.
+The subsection titled “The Borwein cubic theta functions” defines the
+norm theta series with exponent `x^2+x*y+y^2` and records the classical
+identities in the display labelled `abc1`. The proof of the lemma labelled
+`lem9` quotes Cooper, *Ramanujan's Theta Functions* (2017), Theorem 3.15,
+for the three-core product and the sum over integer triples of sum zero.
+The substitution `(m1,m2,m3)=(x,y,-x-y)` gives the exponent
+`3*(x^2+x*y+y^2)-2*x-y`. Cooper's book was not independently inspected
+for this note; its theorem is attributed as quoted by the inspected source.
+
+## Formal anchors and scope
+
+`D5/S3/Arith/ModularForms/CubicThetaLattice.norm_theta_dissection` proves
+the all-index lattice identity `A(X)=A(X^3)+6*X*T_lattice(X^3)`.
+The proof constructs a norm-tripling equivalence on the residue-zero
+fibres and six disjoint rotated copies of the shifted lattice on the
+residue-one fibres. Residue-two fibres are empty. The construction and
+the finite-fibre bounds are repository proofs of classical lattice
+mathematics, with no mathematical novelty claim.
+
+`D5/S3/Arith/ModularForms/CubicThetaLattice.hasSum_lattice_theta` identifies
+the coefficient-cardinality series with the full integer lattice sums.
+The positivity and constant terms refer to these lattice series.
+
+This module does not identify `T_lattice` with `E(X^3)^3/E(X)` and does
+not prove the other two cubic product identities in `abc1`. Consequently
+it does not establish any complete sign pattern for an Euler quotient.
+In particular the selected full k6 table entry in Bringmann--Han--Heim--Kane
+remains a separate formalization obligation. No finite coefficient check
+is used as an infinite identity.
+
+The printed progressions in the proof of `lem9` omit a factor `-9` in
+residue one and retain an undilated denominator after extraction. They
+are not used in this lattice proof. Any later product-sign deduction
+must use the corrected factors and rescaled denominator explicitly.
+
+Citation and implementation scope only; no source text or PDF is vendored.
