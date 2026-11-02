@@ -57,7 +57,7 @@ private lemma inclusive_abel_half (D : ℝ) (hD : 0 ≤ D) :
     rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hl.2]
     have hd (t : ℝ) : HasDerivAt (fun t => -2 * Real.exp (-t / 2))
         (Real.exp (-t / 2)) t := by
-      convert (((hasDerivAt_id t).neg.div_const 2).exp.const_mul (-2)) using 1 <;> ring
+      convert (((hasDerivAt_id t).neg.div_const 2).exp.const_mul (-2)) using 1 <;> (try funext y) <;> (try dsimp only [id, Pi.neg_apply]) <;> ring
     have he := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
       ((by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2))).intervalIntegrable _ _)
     rw [intervalIntegral.integral_const_mul, he]
@@ -73,8 +73,8 @@ private lemma inclusive_abel_half (D : ℝ) (hD : 0 ≤ D) :
       _ = ∑ n ∈ primes D, ∫ t in Icc (0 : ℝ) D, f n t :=
         integral_finsetSum _ (fun n _ => hi n)
       _ = _ := by
-        simp_rw [Finset.sum_congr rfl hint, Finset.mul_sum, Finset.sum_sub_distrib]
-        rw [← Finset.sum_mul, cumulative]
+        rw [Finset.sum_congr rfl hint, ← Finset.mul_sum, Finset.sum_sub_distrib,
+          ← Finset.sum_mul, cumulative]
         ring
   linarith only [htotal]
 
@@ -101,7 +101,8 @@ private lemma inclusive_weight_bound (p : PNTConstants) (D : ℝ) (hD : 0 ≤ D)
       rw [← Real.exp_add]; congr 1; ring
     calc
       _ ≤ Real.exp (-t / 2) * ((1 + p.C) * Real.exp t) := h
-      _ = _ := by rw [mul_left_comm, ← mul_assoc, he]
+      _ = (1 + p.C) * (Real.exp (-t / 2) * Real.exp t) := by ring
+      _ = _ := by rw [he]
   have hi : IntegrableOn (fun t => Real.exp (-t / 2) * Chebyshev.psi (Real.exp t))
       (Icc 0 D) := by
     let f (n : ℕ) (t : ℝ) :=
@@ -114,16 +115,16 @@ private lemma inclusive_weight_bound (p : PNTConstants) (D : ℝ) (hD : 0 ≤ D)
     apply (integrable_finsetSum (primes D) (fun n _ => hf n)).congr
     filter_upwards [ae_restrict_mem measurableSet_Icc] with t ht
     have he : (∑ n ∈ primes D, f n t) =
-        (∑ n ∈ (primes D).filter (fun n => Real.log n ≤ t),
+        (∑ n ∈ (primes D).filter (fun (n : ℕ) => Real.log (n : ℝ) ≤ t),
           ArithmeticFunction.vonMangoldt n) * Real.exp (-t / 2) := by
-      simp only [f, Set.indicator, ht.2, and_true, ← Finset.sum_filter, Finset.sum_mul]
+      simp only [f, Set.indicator, Set.mem_Icc, ht.2, and_true, ← Finset.sum_filter, Finset.sum_mul]
     rw [he, indices D t ht.2, cumulative]
     ring
   have hI := setIntegral_mono_on hi
     ((by fun_prop : Continuous (fun t : ℝ => (1 + p.C) * Real.exp (t / 2))).integrableOn_Icc)
     measurableSet_Icc hpoint
   have he (t : ℝ) : HasDerivAt (fun t => 2 * Real.exp (t / 2)) (Real.exp (t / 2)) t := by
-    convert (((hasDerivAt_id t).div_const 2).exp.const_mul 2) using 1 <;> ring
+    convert (((hasDerivAt_id t).div_const 2).exp.const_mul 2) using 1 <;> (try funext y) <;> (try dsimp only [id, Pi.neg_apply]) <;> ring
   have hexp : (∫ t in Icc (0 : ℝ) D, Real.exp (t / 2)) = 2 * (M D - 1) := by
     rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hD,
       intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => he t)
@@ -175,17 +176,18 @@ theorem actual_cutoff_resolvent_payment (p : PNTConstants)
       apply continuous_const.mul
       apply continuous_parametric_integral_of_continuous _ isCompact_Icc
       dsimp [pairedResolvent]
-      exact (by fun_prop).mul ((correlation_continuous x a ha).comp continuous_snd)
-    exact ((by fun_prop).mul hs).integrableOn_Icc
+      exact (by fun_prop : Continuous (fun z : ℝ × ℝ => pairedResolvent z.1 z.2)).mul
+        ((correlation_continuous x a ha).comp continuous_snd)
+    exact ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2))).mul hs).integrableOn_Icc
   have hc : |∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * S D x a t| ≤
       2 * (M D - 1) * W D x a := by
     have he (t : ℝ) : HasDerivAt (fun t => 2 * Real.exp (t / 2)) (Real.exp (t / 2)) t := by
-      convert (((hasDerivAt_id t).div_const 2).exp.const_mul 2) using 1 <;> ring
+      convert (((hasDerivAt_id t).div_const 2).exp.const_mul 2) using 1 <;> (try funext y) <;> (try dsimp only [id, Pi.neg_apply]) <;> ring
     calc
       _ ≤ ∫ t in Icc (0 : ℝ) D, |Real.exp (t / 2) * S D x a t| :=
         abs_integral_le_integral_abs
       _ ≤ ∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * W D x a := by
-        apply setIntegral_mono_on hSi.abs ((by fun_prop).integrableOn_Icc)
+        apply setIntegral_mono_on hSi.abs ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2) * W D x a)).integrableOn_Icc)
           measurableSet_Icc
         intro t ht
         rw [abs_mul, abs_of_nonneg (Real.exp_nonneg _)]
@@ -194,11 +196,11 @@ theorem actual_cutoff_resolvent_payment (p : PNTConstants)
         rw [integral_mul_const, integral_Icc_eq_integral_Ioc,
           ← intervalIntegral.integral_of_le hD.le,
           intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => he t)
-            ((by fun_prop).intervalIntegrable 0 D)]
+            ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2))).intervalIntegrable 0 D)]
         simp [M]
         ring
   have hb : |b D / 2 * Z D x a| ≤ 2 * B p * M D * W D x a := by
-    rw [abs_mul, abs_div, abs_ofNat]
+    rw [abs_mul, abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
     have h := mul_le_mul (div_le_div_of_nonneg_right (b_bound p D hD.le) (by norm_num))
       hZ (abs_nonneg _) (by have := B_ge_C p; linarith [p.one_le_C])
     nlinarith only [h]
@@ -207,15 +209,15 @@ theorem actual_cutoff_resolvent_payment (p : PNTConstants)
       ArithmeticFunction.vonMangoldt n / Real.sqrt n * S D x a (Real.log n)) -
       2 * ∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * S D x a t)
     (b D / 2 * Z D x a)).trans
-    (add_le_add_right (abs_sub (2 * (∑ n ∈ primes D,
+    (add_le_add (abs_sub (2 * (∑ n ∈ primes D,
       ArithmeticFunction.vonMangoldt n / Real.sqrt n * S D x a (Real.log n)))
-      (2 * ∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * S D x a t)) _)
+      (2 * ∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * S D x a t)) (le_refl _))
   dsimp only [V]
   calc
     _ ≤ 2 * |∑ n ∈ primes D,
           ArithmeticFunction.vonMangoldt n / Real.sqrt n * S D x a (Real.log n)| +
         2 * |∫ t in Icc (0 : ℝ) D, Real.exp (t / 2) * S D x a t| + |b D / 2 * Z D x a| := by
-      simpa only [abs_mul, abs_ofNat] using htri
+      simpa only [abs_mul, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)] using htri
     _ ≤ 2 * (2 * (1 + p.C) * M D * W D x a) +
         2 * (2 * (M D - 1) * W D x a) + 2 * B p * M D * W D x a := by
       linarith only [hp, hc, hb]
@@ -249,7 +251,7 @@ private lemma growingForm_causal (D : ℝ) (hD : 0 ≤ D)
     Real.exp (|u - v| / 2) * (star (f u) * f v).re
   let L : ℝ → ℝ → ℝ := fun u v => if v ≤ u then K u v else 0
   have hK : Continuous (Function.uncurry K) := by
-    exact (by fun_prop).mul (((hf.comp continuous_fst).star.mul
+    exact (by fun_prop : Continuous (fun z : ℝ × ℝ => Real.exp (|z.1 - z.2| / 2))).mul (((hf.comp continuous_fst).star.mul
       (hf.comp continuous_snd)).re)
   have hsymm (u v : ℝ) : K u v = K v u := by
     dsimp [K]
@@ -277,7 +279,7 @@ private lemma growingForm_causal (D : ℝ) (hD : 0 ≤ D)
         measurableSet_Ici
     rw [← integral_add h1 h2]
     apply integral_congr_ae
-    filter_upwards [ae_restrict_of_ae (show ∀ᵐ v : ℝ ∂volume, v ≠ u by simp)] with v hv
+    filter_upwards [ae_restrict_of_ae ((volume : Measure ℝ).ae_ne u)] with v hv
     dsimp only [L]
     rcases lt_or_gt_of_ne hv with hv | hv
     · rw [if_pos hv.le, if_neg (not_le.mpr hv)]
@@ -298,10 +300,13 @@ private lemma growingForm_causal (D : ℝ) (hD : 0 ≤ D)
         exact ⟨⟨hv0, hvu.trans hu.2⟩, hvu⟩
     have hi : IntegrableOn (fun v : ℝ => star (f u) *
         ((Real.exp ((u - v) / 2) : ℂ) * f v)) (Icc (0 : ℝ) u) :=
-      (continuous_const.mul ((by fun_prop).mul hf)).integrableOn_Icc
+      (continuous_const.mul ((by fun_prop : Continuous (fun v : ℝ => (Real.exp ((u - v) / 2) : ℂ))).mul hf)).integrableOn_Icc
     rw [he, setIntegral_indicator measurableSet_Iic, hinter,
       intervalIntegral.integral_of_le hu.1, ← integral_Icc_eq_integral_Ioc,
-      ← integral_const_mul, ← integral_re hi]
+      ← integral_const_mul]
+    have hre := integral_re hi
+    simp only [RCLike.re_to_complex] at hre
+    rw [← hre]
     apply setIntegral_congr_fun measurableSet_Icc
     intro v hv
     dsimp [K]
@@ -314,8 +319,9 @@ private lemma growingForm_causal (D : ℝ) (hD : 0 ≤ D)
     dsimp only [growingForm]
     change (∫ u in Icc (0 : ℝ) D, ∫ v in Icc (0 : ℝ) D, K u v) = _
     simp_rw [hslice]
-    rw [integral_add hLi.integral_prod_left hLi.integral_prod_right,
-      ← integral_integral_swap hLi]
+    have hadd := integral_add hLi.integral_prod_left hLi.integral_prod_right
+    dsimp only [Function.uncurry] at hadd
+    rw [hadd, ← integral_integral_swap hLi]
     ring
   rw [he]
   congr 1
@@ -349,7 +355,7 @@ private lemma growing_weight_row (D u : ℝ) (hu : u ∈ Icc (0 : ℝ) D) :
         exact hl v (by simpa only [uIcc_of_le hu.1] using hv)
       _ = _ := by
         rw [intervalIntegral.integral_add (continuous_const.intervalIntegrable _ _)
-          ((by fun_prop).intervalIntegrable _ _), intervalIntegral.integral_const,
+          ((by fun_prop : Continuous (fun v : ℝ => Real.exp ((D + u) / 2) * Real.exp (-v))).intervalIntegrable _ _), intervalIntegral.integral_const,
           intervalIntegral.integral_const_mul,
           intervalIntegral.integral_comp_neg, integral_exp]
         simp
@@ -363,9 +369,10 @@ private lemma growing_weight_row (D u : ℝ) (hu : u ∈ Icc (0 : ℝ) D) :
         intro v hv
         exact hr v (by simpa only [uIcc_of_le hu.2] using hv)
       _ = _ := by
-        rw [intervalIntegral.integral_add ((by fun_prop).intervalIntegrable _ _)
+        rw [intervalIntegral.integral_add ((by fun_prop : Continuous (fun v : ℝ => Real.exp (-u / 2) * Real.exp v)).intervalIntegrable _ _)
           (continuous_const.intervalIntegrable _ _), intervalIntegral.integral_const_mul,
           integral_exp, intervalIntegral.integral_const]
+        rfl
   have he1 : Real.exp ((D + u) / 2) = M D * Real.exp (u / 2) := by
     rw [M, ← Real.exp_add]; congr 1; ring
   have he2 : Real.exp ((D + u) / 2) * Real.exp (-u) = Real.exp ((D - u) / 2) := by
@@ -388,7 +395,8 @@ private lemma growingForm_upper (D : ℝ) (hD : 0 ≤ D)
   let F (u v : ℝ) : ℝ := k u v * (g D v / g D u * ‖f u‖ ^ 2)
   have hF : Continuous (Function.uncurry F) := by
     apply Continuous.mul (by dsimp [k]; fun_prop)
-    exact ((by dsimp [g]; fun_prop).div (by dsimp [g]; fun_prop)
+    exact ((by dsimp [g]; fun_prop : Continuous (fun z : ℝ × ℝ => g D z.2)).div
+      (by dsimp [g]; fun_prop : Continuous (fun z : ℝ × ℝ => g D z.1))
       (fun z => (g_pos D z.1).ne')).mul ((hf.comp continuous_fst).norm.pow 2)
   have hFi : Integrable (Function.uncurry F)
       ((volume.restrict (Icc (0 : ℝ) D)).prod (volume.restrict (Icc (0 : ℝ) D))) := by
@@ -413,6 +421,7 @@ private lemma growingForm_upper (D : ℝ) (hD : 0 ≤ D)
     exact hK.continuousOn.integrableOn_compact (isCompact_Icc.prod isCompact_Icc)
   have hmono := integral_mono hKi (hFi.add hFi.swap)
     (fun z => hlocal z.1 z.2)
+  simp only [Pi.add_apply] at hmono
   rw [integral_add hFi hFi.swap, integral_prod _ hKi, integral_prod _ hFi,
     integral_prod _ hFi.swap, ← integral_integral_swap hFi] at hmono
   have hleft : (∫ u in Icc (0 : ℝ) D, ∫ v in Icc (0 : ℝ) D,
@@ -458,7 +467,9 @@ theorem actual_continuum_moment_payment (D : ℝ) (hD : 0 < D)
   have ha : ∑ i, a i = 0 := by simpa using hm 0 (Nat.zero_le q)
   have hfirst : ∑ i, a i * (x i : ℂ) = 0 := by simpa using hm 1 hq
   let R := primitiveRamp x a
-  have hR : Continuous R := by dsimp [R, primitiveRamp]; fun_prop
+  have hR : Continuous R := by
+    change Continuous (fun t : ℝ => ∑ i, a i * (max (t - x i) 0 : ℝ))
+    fun_prop
   have hG (t : ℝ) (ht : 0 ≤ t) : G x a t = R t :=
     G_eq_ramp x a (fun i => (hx i).1) t ht
   have hid := D5.S3.Analytic.Interpolation.MomentExponentialCoercivity.growing_primitive_identity
@@ -473,6 +484,7 @@ theorem actual_continuum_moment_payment (D : ℝ) (hD : 0 < D)
     congr 1
     apply setIntegral_congr_fun measurableSet_Icc
     intro t ht
+    dsimp only
     rw [hG t ht.1]
     congr 2
     apply intervalIntegral.integral_congr
