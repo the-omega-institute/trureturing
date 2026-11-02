@@ -1,0 +1,11 @@
+#### 推论 10.2（共同酉演化不能把不同完整内容渐近合成同一点）
+
+若 $x\ne y$，共同酉演化始终满足
+$\left\lVert U(t)x-U(t)y\right\rVert =\left\lVert x-y\right\rVert >0$，
+故两者不可能同时在范数意义趋向同一个单位向量。
+若讨论射线，须改要求 $[x]\ne[y]$；此时
+$d_{\mathrm{FS}}([U(t)x],[U(t)y])=d_{\mathrm{FS}}([x],[y])>0$，
+故二者不能同时趋向同一射线。
+
+<a id="statement-10-3"></a>
+

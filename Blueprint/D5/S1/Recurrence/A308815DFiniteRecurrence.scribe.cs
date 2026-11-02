@@ -60,7 +60,7 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("a308815-" + name),
+        Describe.Lean(DescribeId.Create("a308815-" + (name == "euler_coeff" ? "euler-coeff" : name)),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -92,6 +92,17 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
                 + "Here a is a308815. The assertion ranges over every natural n ≥ 3; lagged indices "
                 + "use natural subtraction, and the factors n-1 and n-2 outside a308815 use integer subtraction.",
                 DescribeRole.Definition),
+            Node("euler_coeff", "Coefficients of the Euler derivative",
+                Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("f"),
+                    Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Q")))),
+                    new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("d"), Nat,
+                        Equal(Call("coeff", F.Id("d"), Multiply(F.Id("X"), Call("derivative", F.Id("f")))),
+                            Multiply(Parenthesized(Seq(F.Id("d"), Colon, Seq(Mathbb, Grp(F.Id("Q"))))),
+                                Call("coeff", F.Id("d"), F.Id("f"))))))),
+                AssessedProvenance.FromRepo(Oeis),
+                "For every rational power series f and natural index d, multiplication of its "
+                + "formal derivative by X multiplies the coefficient of degree d by d.",
+                DescribeRole.Theorem),
             Node("result", "The recurrence holds", Disp(Recurrence()),
                 AssessedProvenance.FromRepo(Oeis),
                 "The ordinary Catalan series satisfies X C(X)^2-C(X)+1=0. Differentiation and elimination "

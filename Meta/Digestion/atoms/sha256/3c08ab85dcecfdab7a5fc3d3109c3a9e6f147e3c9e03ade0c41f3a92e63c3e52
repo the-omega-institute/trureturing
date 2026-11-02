@@ -1,0 +1,38 @@
+#### 定义 4.3（唯一候选 C83）
+
+完整相干续接满足以下同一组二元相容关系：
+
+<a id="equation-N"></a>
+
+$$
+\begin{aligned}
+\left\lVert F(x)-F(y)\right\rVert &\le\left\lVert x-y\right\rVert
+&& (x,y\in S(H)),
+\end{aligned}\tag{N}
+$$
+
+<a id="equation-A"></a>
+
+$$
+\begin{aligned}
+\forall x\in S(H)\quad\exists y\in S(H):\quad
+F(y)&=-F(x).
+\end{aligned}\tag{A}
+$$
+
+N 是二元差分不扩张；A 是输出像对反向内容闭合，
+等价于 $-F(S(H))\subseteq F(S(H))$。
+
+A 没有预先指定 $y=-x$，也没有要求输出先覆盖整个单位球。
+它只要求每个已输出内容的相干反向版本仍属于同一个完整门的输出像。
+全域可逆或满射会供应 A，但 A 比这些前件弱。
+相反幅度相对于内部参考定义；它们在无参考的射线商中相同，
+因此不能先忘掉参考再原样使用 A 的弦差证明。
+
+**白话图景。**不用先假定最后有一个 $\Omega$ 等着所有内容归并。
+先要求完整门没有丢掉自己输出的反向相干版本，
+并且同一门不能放大两份内容的差别。下面会证明：
+这已经足以把反向输入、完整比较和逆门逐步锁出来。
+
+<a id="section-5"></a>
+

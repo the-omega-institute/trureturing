@@ -1,0 +1,27 @@
+#### 定理 13.1（共同正核的有限 Hilbert 表示）
+
+给内容集合上的复核 $k$，假定每个有限 Gram 矩阵正半定。
+在形式有限和上定义
+
+$$
+\left\langle\sum_ic_i\delta_{x_i},
+\sum_jd_j\delta_{y_j}\right\rangle
+=\sum_{i,j}\bar c_i k(x_i,y_j)d_j.
+$$
+
+商去零范数元后得到内积空间；若截口秩有限，得到有限维复 Hilbert 空间，
+且 $k(x,y)=\langle \iota(x),\iota(y)\rangle$。
+
+**证明。**
+
+正性给半内积，复参数二次式的非负性给 Cauchy--Schwarz。
+零范数元因而与全部向量正交，商内积良定义。
+有限秩给有限维，有限维自动完备。
+
+□
+
+实际相干组合的可用性仍由声明的操作闭包供应；
+表示空间中某个向量的数学存在不自动成为原生准备协议。
+
+<a id="statement-13-2"></a>
+
