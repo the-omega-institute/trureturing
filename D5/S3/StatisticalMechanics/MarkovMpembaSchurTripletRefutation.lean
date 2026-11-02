@@ -8,6 +8,14 @@
 
 import D5.S3.StatisticalMechanics.MarkovMpembaTripletRefutation
 
+/-!
+# Static Schur-reduced Mpemba triplets
+
+The frozen four-level witness of `MarkovMpembaTripletRefutation` also fails condition (3) in
+every triplet obtained by statically eliminating the remaining level, while its slow mode shows
+the Mpemba effect. This refutes the static Schur-reduced form of the triplet implication.
+-/
+
 set_option autoImplicit false
 set_option linter.style.longLine false
 
@@ -48,7 +56,8 @@ private theorem schur_margins :
   intro s i j k hij hjk hsi hsj hsk
   change i.val < j.val at hij
   change j.val < k.val at hjk
-  fin_cases i <;> fin_cases j <;> fin_cases k <;> try omega
+  fin_cases i <;> fin_cases j <;> fin_cases k <;>
+    first | omega | (dsimp only at hij hjk <;> omega) | (simp at hij hjk <;> omega) | skip
   all_goals fin_cases s <;>
     first | exact absurd rfl hsi | exact absurd rfl hsj | exact absurd rfl hsk | skip
   all_goals
