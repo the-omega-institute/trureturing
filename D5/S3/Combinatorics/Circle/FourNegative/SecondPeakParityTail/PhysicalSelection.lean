@@ -146,10 +146,10 @@ private theorem selected_arithmetic (a b c d : ℕ) (hd : physicalDomain a b c d
   have hh : 2*z ≤ h := by
     have hm := dyadic_lower (d-a) (c+1) (by omega)
     simpa only [pow_succ',z] using hm
-  have hue : (2 : ℤ) ∣ u := by simpa using dyadic_dvd (a-c) 1 (by omega)
+  have hue : (2 : ℤ) ∣ u := by simpa only [pow_one, u] using dyadic_dvd (a-c) 1 (by omega)
   have hze : (8 : ℤ) ∣ z := by
     simpa only [show (2 : ℤ)^3=8 by norm_num] using dyadic_dvd c 3 (by omega)
-  have hhe : (2 : ℤ) ∣ h := by simpa using dyadic_dvd (d-a) 1 (by omega)
+  have hhe : (2 : ℤ) ∣ h := by simpa only [pow_one, h] using dyadic_dvd (d-a) 1 (by omega)
   obtain ⟨hB,alpha,S,delta,p,K,r,hp,hK,hmin,hr,hS,hAlpha,hDelta,
     hgap0,hgapWidth,hzero,hS2,hS4,hSdiv,hR0,hRh,hd0,hdJ,hstrict,hid⟩ :=
     integer_tail_selector u z h hu hz hh hue hze hhe
