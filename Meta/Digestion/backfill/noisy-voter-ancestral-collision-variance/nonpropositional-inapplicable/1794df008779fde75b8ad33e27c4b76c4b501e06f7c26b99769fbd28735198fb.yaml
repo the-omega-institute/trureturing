@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1794df008779fde75b8ad33e27c4b76c4b501e06f7c26b99769fbd28735198fb
+  normalized_sha256: sha256:1794df008779fde75b8ad33e27c4b76c4b501e06f7c26b99769fbd28735198fb
+cas_ref: sha256:1794df008779fde75b8ad33e27c4b76c4b501e06f7c26b99769fbd28735198fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Model hypotheses and the synchronous recursion are assumptions and definitions. The only ensuing assertion, the probability of a finite cylinder, is the direct application of pinned Mathlib ProbabilityTheory.iIndepFun.meas_biInter to the original family indexed by initial and strictly positive-time coordinates, with measurable singleton sets and the stated Bernoulli and actual-neighbour marginals. Different constructors and positive-time indices keep all prescribed coordinates distinct. No auxiliary time-zero law or independence on the original probability space is assumed. No variance or history-meeting assertion is settled by this record.
+    previous_atom_id: null
+    next_atom_id: 01da43417478eacceedc4c90d79987ef2d0cfaaee53c0e06b82b10391ba11ad2

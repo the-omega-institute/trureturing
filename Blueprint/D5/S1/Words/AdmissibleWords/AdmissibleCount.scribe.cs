@@ -38,6 +38,11 @@ internal sealed class AdmissibleCountDocument : IScribeDocumentDefinition
                     "A final window does not determine total length: for every n the all-zero word of length "
                     + "n+3 ends in the same three zeros. Different values of n give different complete words. A "
                     + "window records a local pattern, not an erased prefix or a free clock.")))),
+            Describe.Lean(DescribeId.Create("adm-iff-no-adjacent-true"), DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_iff_no_adjacent_true"),
+                H("Admissibility as exclusion"), StatementSource.FromAuthor(AdmissibilityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("AdmissibleCount.Adm owns the configuration predicate, with its existing decAdm instance. Coordinates are zero-based; a true Boolean means occupied. This characterization gives the adjacency reading used by reversal and quantum normalization."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zeckendorf-admissible-word-count-is-fibonacci"),
                 DeclarationHandle.Create(
@@ -70,4 +75,25 @@ internal sealed class AdmissibleCountDocument : IScribeDocumentDefinition
                         + "Identifying its cardinality with the dimension of another space requires "
                         + "an additional bijection or basis theorem for that space."))),
                 DescribeRole.Theorem))));
+
+    private static Formula AdmissibilityFormula()
+    {
+        Formula Call(string name, params Formula[] values) => Seq(
+            Operatorname, Grp(F.Id(name)), Open, Seq(values.SelectMany((v, i) =>
+                i == 0 ? new[] { v } : new[] { Comma, Sp, v }).ToArray()), Close);
+        Formula All(string name, Formula domain, Formula body) =>
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+        Formula Equal(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
+        Formula At(Formula b, Formula i) => Seq(b, Open, i, Close);
+        Formula n = F.Id("n"), b = F.Id("b"), i = F.Id("i"), j = F.Id("j");
+        Formula fin = Call("Fin", n);
+        Formula exclusion = All("i", fin, All("j", fin,
+            new Formula.Logic(Equal(Seq(Call("val", i), Sp, Plus, Sp, D(1)), Call("val", j)),
+                FormulaLogicOperator.Implies,
+                new Formula.Logic(Equal(At(b, i), Seq(Operatorname, Grp(F.Id("false")))),
+                    FormulaLogicOperator.Or, Equal(At(b, j), Seq(Operatorname, Grp(F.Id("false"))))))));
+        return Disp(All("n", Seq(Mathbb, Grp(F.Id("N"))),
+            All("b", new Formula.TypeArrow(fin, Seq(Operatorname, Grp(F.Id("Bool")))),
+                new Formula.Logic(Call("Adm", n, b), FormulaLogicOperator.Iff, exclusion))));
+    }
 }

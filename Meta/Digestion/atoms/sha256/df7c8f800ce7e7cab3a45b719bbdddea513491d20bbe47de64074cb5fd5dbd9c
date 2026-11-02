@@ -1,0 +1,29 @@
+**Definition 23.1 (the native quotient and its two fibres).** Use exactly
+[AA Definitions 17.1 and 19.1 and Theorems 17.2 and 19.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md):
+the known initial $\alpha$, all finite successful addressed words, and
+$P_p:\alpha\to\beta$, $S_p:\beta\to\langle\beta,\alpha\rangle$ at a
+current leaf, with $\beta$ on the **left**. Write $[t]$ for the finite
+rooted unordered full binary tree retaining branch incidence and leaf
+colours but forgetting sibling order. Isomorphisms preserve the root and
+colours; no vertex identities, clock or physical frames are added. For
+such a coloured tree $U$, define
+
+$$
+\mathcal O(U)=\{t\in\mathcal D:[t]=U\},\qquad
+\mathcal J(U)=\{(t,w):t\in\mathcal O(U),\ w\in\mathcal H(t)\},
+\qquad E(U)=|\mathcal O(U)|,\quad J(U)=|\mathcal J(U)|.
+\tag{IV.61}
+$$
+
+Here $\mathcal D$ and $\mathcal H(t)$ are AA17's exact native domain and
+complete $P/S$ histories. Let $K(U)$ be obtained by deleting every
+$\alpha$ leaf and its incident edge, retaining the other vertices and
+edges, with $K(\alpha)=\varnothing$. Write $n(U)=|K(U)|$. For a rooted
+unary/binary tree $K$, let $b(K)$ count its binary vertices, $s(K)$ those
+binary vertices with isomorphic rooted child subtrees, $A(K)$ the order
+of its rooted automorphism group, and $h_v$ its inclusive descendant
+count at $v$. Empty products and $A(\varnothing)$ are one. An increasing
+labelling is a bijection $\lambda:V(K)\to\{1,\ldots,|K|\}$ strictly
+increasing from parent to child. Write $\mathcal L(K)$ for these
+labellings modulo rooted automorphisms, including one empty labelling.
+

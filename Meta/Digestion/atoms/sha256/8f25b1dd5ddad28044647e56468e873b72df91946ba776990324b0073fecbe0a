@@ -1,0 +1,38 @@
+**every** current ordered representative, not only to $Q_d(k)$. It gives
+$2^{\ell_k}$ actual enabled promotions with distinct ordered outputs and
+the same next quotient $U_{d,k+1}$. Their settled record words are
+pairwise distinct by (IV.82). If $\ell_k\ge2$, the ball of radius
+$\ell_k-2$ about the one current word contains at most
+$3\cdot2^{\ell_k-2}-2<2^{\ell_k}$ words. Some successor therefore has
+distance at least $\ell_k-1$, and its actual update costs at least that
+much. If $\ell_k=1$ or $0$, nonnegativity supplies the weaker bound
+$\max(\ell_k-1,0)$. Select a successor satisfying this bound and repeat.
+The uniform outgoing lemma permits all $m$ choices on one nested
+history, with no change of the previously selected prefix.
+
+Only $k=m-1$ has $\ell_k=0$. For $d\ge1$, the popcount sum (IV.78)
+therefore gives
+
+$$
+\sum_{k=0}^{m-1}\max(\ell_k-1,0)
+=\sum_{k=0}^{m-1}\ell_k-(m-1)
+=\frac{dm}{2}-m+1.
+\tag{IV.88}
+$$
+
+For $d=0$ the sum and the displayed expression are both zero. At the
+end Theorem 28.2 forces the common ordered term $Q_d(m)$, whose grade
+is $4m-1$. Additivity of actual edit counts proves (IV.84). It does not
+assert that the final record has length $\Lambda_d$; erasure can remove it.
+
+For a prescribed $N\ge63$, take the largest power of two
+$m=2^d\le(N+1)/4$. Reach $Q_d(0)$ by any legal prefix and then use
+(IV.84). Here $d\ge4$, so $\Lambda_d\ge dm/4$, and
+$m>(N+1)/8$. If $r=N-(4m-1)$ is positive, append the $r$ actual splits
+at $L^{d+1},L^{d+2},\ldots,L^{d+r}$, as in Corollary 29.1. The first
+operand is beta in $Q_d(m)$ and each split creates the next left beta,
+so this is legal padding to exactly $N$. Cumulative cost cannot decrease
+under padding, regardless of subsequent POPs. Comparing the nonnegative
+logarithms yields (IV.85). The selected promotion history may depend on
+$R$; the unpadded terminal term does not. $\square$
+

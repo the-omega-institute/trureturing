@@ -1,0 +1,33 @@
+**Proposition 4.1 (one declared codeword pair and its real consumption).**
+Let
+
+$$
+\begin{aligned}
+t_*&=\langle\langle\beta,\alpha\rangle,\beta\rangle,\\
+h_A&=P_\varepsilon S_\varepsilon P_RS_L,\\
+h_B&=P_\varepsilon S_\varepsilon S_LP_R.
+\end{aligned}
+\tag{IV.11}
+$$
+
+These are exactly the two histories at $t_*$. Convention 1.3 gives
+$J(h_A)=\varepsilon$ and $J(h_B)=0$. On this same current source the
+original FetchGrowth$(3)$ returns $P_R$ and $S_L$, respectively. Original
+current-source Next$(3)$ then executes $S_R$ and $S_{LL}$, respectively,
+and returns the corresponding old/new pairs and different real successors.
+Thus observable word length supplies a distinction actually consumed by
+the original service.
+
+Proof. Root promotion and root split are forced. The remaining two events
+$P_R$ and $S_L$ are incomparable and enabled in either order, giving
+precisely the two histories by AA Theorem 17.2. Each of the two immediate
+predecessor endpoints has a singleton history fibre, so its lower-bound
+word is empty. At $t_*$, $F=2$, $c_0=2$ and $c_1=1$. History $h_A$ comes
+first because $P<S$; allocation first occupies $\varepsilon$ and then,
+from that occupied node, chooses the free slack child $0$. FetchGrowth's
+third full event is as displayed. The historical address $R$ is a current
+beta leaf, whereas historical address $L$ is a current branch whose left
+logical child $LL$ is beta. Definition 20.4 of AA therefore gives exactly
+the two split operations. The actual source binding and rights are those
+of §5, not manufactured by the two binary descriptions. $\square$
+
