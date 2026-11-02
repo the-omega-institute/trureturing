@@ -12,6 +12,8 @@ All variables and premises of each declaration are included in its exact Lean te
 
 These are algebraic statements on finite-excitation vectors. Nonnegative relative energy is not positivity of a Hermitian form. No quartet contraction, no-ghost theorem, full BRST/string theory, Monster moonshine, complete VOA/CFT, anomaly/fusion completion or AdS/CFT completion follows here. These precise original-carrier statements are repo-derived; no literature novelty is claimed.
 
+Registration audit is unfinished for all 43 retained public theorems: https://github.com/the-omega-institute/trureturing/issues/25750. Completed registrations: 0; no declared_validated registration is claimed. The three excluded unconsumed research companions retain their exact statements and proofs in the pinned pre-repair native evidence linked by that issue.
+
 **Definition 1.1 (siteEnergy).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.siteEnergy`
@@ -250,21 +252,7 @@ This endomorphism is the original L(0) plus the identity on the original Fock ca
 
 Exact Lean telescope: def relativeOperator : Module.End ℂ Fock
 
-**Definition 1.18 (N).**
-
-Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.N`
-
-*Formalization.* `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.N` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-N is only an abbreviation for relativeOperator.
-
-Exact Lean telescope: abbrev N : Module.End ℂ Fock
-
-**Theorem 1.19 (relativeOperator_coefficient).**
+**Theorem 1.18 (relativeOperator_coefficient).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeOperator_coefficient`
 
@@ -278,7 +266,7 @@ The shifted original operator multiplies each original coefficient by relativeEn
 
 Exact Lean telescope: theorem relativeOperator_coefficient (v : Fock) (S : Finset ℕ) : (relativeOperator v) S = (relativeEnergy S : ℂ) * v S
 
-**Definition 1.20 (RelativeKernel).**
+**Definition 1.19 (RelativeKernel).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.RelativeKernel`
 
@@ -292,7 +280,7 @@ This predicate means literally b(0)(v)=0.
 
 Exact Lean telescope: def RelativeKernel (v : Fock) : Prop
 
-**Definition 1.21 (RelativeLevel).**
+**Definition 1.20 (RelativeLevel).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.RelativeLevel`
 
@@ -306,21 +294,7 @@ This predicate is the conjunction of the literal b(0) kernel and the ell eigen-e
 
 Exact Lean telescope: def RelativeLevel (ell : ℕ) (v : Fock) : Prop
 
-**Theorem 1.22 (relativeOperator_invariant).**
-
-Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeOperator_invariant`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeOperator_invariant` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The original Ward commutator at zero proves that L(0)+id preserves ker b(0); invariance is a conclusion, not a hypothesis.
-
-Exact Lean telescope: theorem relativeOperator_invariant (v : Fock) (hb : RelativeKernel v) : RelativeKernel (relativeOperator v)
-
-**Theorem 1.23 (relative_level_coeff_iff).**
+**Theorem 1.21 (relative_level_coeff_iff).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_coeff_iff`
 
@@ -334,7 +308,7 @@ Both directions hold for any Fock vector: coefficients on occupations containing
 
 Exact Lean telescope: theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) : RelativeLevel ell v ↔ (∀ S : Finset ℕ, 3 ∈ S → v S = 0) ∧ (∀ S : Finset ℕ, v S ≠ 0 → relativeEnergy S = (ell : ℤ))
 
-**Theorem 1.24 (relative_ground_line).**
+**Theorem 1.22 (relative_ground_line).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_ground_line`
 
@@ -348,7 +322,7 @@ The joint kernel of b(0) and L(0)+id is exactly the complex line through the act
 
 Exact Lean telescope: theorem relative_ground_line (v : Fock) : (RelativeKernel v ∧ relativeOperator v = 0) ↔ ∃ α : ℂ, v = α • ket {1}
 
-**Theorem 1.25 (relative_level_support).**
+**Theorem 1.23 (relative_level_support).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_support`
 
@@ -362,7 +336,7 @@ For a vector in RelativeLevel ell, each occupation with nonzero original coeffic
 
 Exact Lean telescope: theorem relative_level_support (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) : ∀ S : Finset ℕ, v S ≠ 0 → S ⊆ Finset.range (2*ell+4)
 
-**Definition 1.26 (levelOccupationSets).**
+**Definition 1.24 (levelOccupationSets).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.levelOccupationSets`
 
@@ -376,7 +350,7 @@ This finite set filters the powerset of range(2*ell+4) by exclusion of site 3 an
 
 Exact Lean telescope: def levelOccupationSets (ell : ℕ) : Finset (Finset ℕ)
 
-**Theorem 1.27 (mem_levelOccupationSets_iff).**
+**Theorem 1.25 (mem_levelOccupationSets_iff).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.mem_levelOccupationSets_iff`
 
@@ -390,7 +364,7 @@ This is the complete membership criterion, including the finite range bound, sit
 
 Exact Lean telescope: theorem mem_levelOccupationSets_iff (ell : ℕ) (S : Finset ℕ) : S ∈ levelOccupationSets ell ↔ S ⊆ Finset.range (2*ell+4) ∧ 3 ∉ S ∧ relativeEnergy S = (ell : ℤ)
 
-**Theorem 1.28 (relative_level_expansion).**
+**Theorem 1.26 (relative_level_expansion).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_expansion`
 
@@ -404,7 +378,7 @@ Every actual relative-level vector is the finite sum of its original coefficient
 
 Exact Lean telescope: theorem relative_level_expansion (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) : v = ∑ S ∈ levelOccupationSets ell, v S • ket S
 
-**Definition 1.29 (levelKets).**
+**Definition 1.27 (levelKets).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.levelKets`
 
@@ -418,7 +392,7 @@ The spanning set is the image of the finite allowed occupation set under the ori
 
 Exact Lean telescope: def levelKets (ell : ℕ) : Set Fock
 
-**Theorem 1.30 (level_ket_linearIndependent).**
+**Theorem 1.28 (level_ket_linearIndependent).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.level_ket_linearIndependent`
 
@@ -432,7 +406,7 @@ Independence is inherited from the full original Finsupp unit basis after restri
 
 Exact Lean telescope: theorem level_ket_linearIndependent (ell : ℕ) : LinearIndependent ℂ (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => ket S)
 
-**Theorem 1.31 (relative_level_mem_span).**
+**Theorem 1.29 (relative_level_mem_span).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_mem_span`
 
@@ -446,7 +420,7 @@ The finite coefficient expansion places every actual relative-level vector in th
 
 Exact Lean telescope: theorem relative_level_mem_span (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) : v ∈ Submodule.span ℂ (levelKets ell)
 
-**Definition 1.32 (relativeLevelSpace).**
+**Definition 1.30 (relativeLevelSpace).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeLevelSpace`
 
@@ -460,7 +434,7 @@ The actual simultaneous kernel/eigenspace is a complex submodule, closed under z
 
 Exact Lean telescope: def relativeLevelSpace (ell : ℕ) : Submodule ℂ Fock where carrier
 
-**Theorem 1.33 (mem_relativeLevelSpace_iff).**
+**Theorem 1.31 (mem_relativeLevelSpace_iff).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.mem_relativeLevelSpace_iff`
 
@@ -474,7 +448,7 @@ Membership unfolds to the full RelativeLevel predicate; this bridge is used to p
 
 Exact Lean telescope: theorem mem_relativeLevelSpace_iff (ell : ℕ) (v : Fock) : v ∈ relativeLevelSpace ell ↔ RelativeLevel ell v
 
-**Theorem 1.34 (relative_level_space_eq_span).**
+**Theorem 1.32 (relative_level_space_eq_span).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_space_eq_span`
 
@@ -488,7 +462,7 @@ Both submodule inclusions are proved: the actual relative-level space equals the
 
 Exact Lean telescope: theorem relative_level_space_eq_span (ell : ℕ) : relativeLevelSpace ell = Submodule.span ℂ (levelKets ell)
 
-**Definition 1.35 (relativeLevelBasis).**
+**Definition 1.33 (relativeLevelBasis).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeLevelBasis`
 
@@ -502,7 +476,7 @@ A genuine basis of the actual submodule is constructed by transporting the basis
 
 Exact Lean telescope: def relativeLevelBasis (ell : ℕ) : Module.Basis {S : Finset ℕ // S ∈ levelOccupationSets ell} ℂ (relativeLevelSpace ell)
 
-**Theorem 1.36 (relative_level_finite_dimensional).**
+**Theorem 1.34 (relative_level_finite_dimensional).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_finite_dimensional`
 
@@ -521,7 +495,6 @@ Exact Lean telescope: theorem relative_level_finite_dimensional (ell : ℕ) : Fi
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.L_zero_coefficient`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.L_zero_down`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.L_zero_ket`
-- Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.N`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.RelativeKernel`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.RelativeLevel`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.b_zero_down`
@@ -540,7 +513,6 @@ Exact Lean telescope: theorem relative_level_finite_dimensional (ell : ℕ) : Fi
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeLevelSpace`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeOperator`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeOperator_coefficient`
-- Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relativeOperator_invariant`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_ground_line`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_coeff_iff`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.relative_level_expansion`

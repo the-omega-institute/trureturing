@@ -18,6 +18,8 @@ The actual totalCharge preserves fixed momentum by sector preservation of the or
 
 No isometry or stability conclusion is assumed. There is no positivity or positive-Gram claim, including at zero charge, and no full no-ghost, BRST/string, Monster/moonshine, VOA/CFT, anomalies/fusion or AdS completion claim. The exact original-carrier identifications and finite-shell deductions are repo-derived and make no claim of literature novelty.
 
+Registration audit is unfinished for all 43 retained public theorems: https://github.com/the-omega-institute/trureturing/issues/25750. Completed registrations: 0; no declared_validated registration is claimed. The three excluded unconsumed research companions retain their exact statements and proofs in the pinned pre-repair native evidence linked by that issue.
+
 **Definition 1.1 (TensorLabel).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.TensorLabel`
@@ -368,21 +370,7 @@ A genuine linear equivalence identifies the actual kernel intersection with fini
 
 Exact Lean telescope: def shellCoeffEquiv (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (a : Charge D) : relativeMassShell D H a ≃ₗ[ℂ] (ShellIndex D a →₀ ℂ)
 
-**Theorem 1.26 (shellCoeffEquiv_apply).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellCoeffEquiv_apply`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellCoeffEquiv_apply` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Evaluating this equivalence recovers exactly the original tensor coefficient of the underlying state.
-
-Exact Lean telescope: @[simp] theorem shellCoeffEquiv_apply (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (a : Charge D) (x : relativeMassShell D H a) (i : ShellIndex D a) : shellCoeffEquiv D H hHG hGH a x i = coeff D (x : State D) i.1
-
-**Definition 1.27 (shellBasis).**
+**Definition 1.26 (shellBasis).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellBasis`
 
@@ -396,7 +384,7 @@ The coefficient equivalence constructs an actual basis of the original relative 
 
 Exact Lean telescope: def shellBasis (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (a : Charge D) : Module.Basis (ShellIndex D a) ℂ (relativeMassShell D H a)
 
-**Theorem 1.28 (shellBasis_coe).**
+**Theorem 1.27 (shellBasis_coe).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellBasis_coe`
 
@@ -410,21 +398,7 @@ Every shell basis vector, when coerced into the original State D, is exactly the
 
 Exact Lean telescope: theorem shellBasis_coe (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (a : Charge D) (i : ShellIndex D a) : (shellBasis D H hHG hGH a i : State D) = tensorBasis D i.1
 
-**Theorem 1.29 (allowed_tensor_linearIndependent).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.allowed_tensor_linearIndependent`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.allowed_tensor_linearIndependent` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The allowed original tensor vectors are linearly independent by restriction of the full original tensor basis.
-
-Exact Lean telescope: theorem allowed_tensor_linearIndependent (D : LatticeData) (a : Charge D) : LinearIndependent ℂ (fun i : ShellIndex D a => tensorBasis D i.1)
-
-**Definition 1.30 (massShellCutoff).**
+**Definition 1.28 (massShellCutoff).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.massShellCutoff`
 
@@ -438,7 +412,7 @@ The natural cutoff is exactly (1-chargeEnergy D a).toNat, for every integer char
 
 Exact Lean telescope: def massShellCutoff (D : LatticeData) (a : Charge D) : ℕ
 
-**Theorem 1.31 (massShellCutoff_cast).**
+**Theorem 1.29 (massShellCutoff_cast).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.massShellCutoff_cast`
 
@@ -452,7 +426,7 @@ When chargeEnergy D a is at most one, the natural cutoff casts back to precisely
 
 Exact Lean telescope: theorem massShellCutoff_cast (D : LatticeData) (a : Charge D) (ha : chargeEnergy D a ≤ 1) : (massShellCutoff D a : ℤ) = 1 - chargeEnergy D a
 
-**Theorem 1.32 (relativeMassShell_eq_bot_of_one_lt).**
+**Theorem 1.30 (relativeMassShell_eq_bot_of_one_lt).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.relativeMassShell_eq_bot_of_one_lt`
 
@@ -466,7 +440,7 @@ If chargeEnergy D a is greater than one, nonnegative oscillator and relative gho
 
 Exact Lean telescope: theorem relativeMassShell_eq_bot_of_one_lt (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (a : Charge D) (ha : 1 < chargeEnergy D a) : relativeMassShell D H a = ⊥
 
-**Theorem 1.33 (coefficient_support_bound).**
+**Theorem 1.31 (coefficient_support_bound).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.coefficient_support_bound`
 
@@ -480,7 +454,7 @@ Every nonzero original coefficient of a shell state has charge a, oscillatorEner
 
 Exact Lean telescope: theorem coefficient_support_bound (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (a : Charge D) (x : State D) (hx : x ∈ relativeMassShell D H a) (i : TensorLabel D) (hi : coeff D x i ≠ 0) : i.1.1 = a ∧ oscillatorEnergy i.1.2 ≤ massShellCutoff D a ∧ i.2 ⊆ Finset.range (2 * massShellCutoff D a + 4)
 
-**Theorem 1.34 (shellIndex_finite).**
+**Theorem 1.32 (shellIndex_finite).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellIndex_finite`
 
@@ -494,7 +468,7 @@ Finiteness is proved without H or a sign condition on the Gram form: allowed lab
 
 Exact Lean telescope: theorem shellIndex_finite (D : LatticeData) (a : Charge D) : Finite (ShellIndex D a)
 
-**Theorem 1.35 (relativeMassShell_finiteDimensional).**
+**Theorem 1.33 (relativeMassShell_finiteDimensional).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.relativeMassShell_finiteDimensional`
 
@@ -513,7 +487,6 @@ Exact Lean telescope: theorem relativeMassShell_finiteDimensional (D : LatticeDa
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.ShellIndex`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.TensorLabel`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.allowedLabels`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.allowed_tensor_linearIndependent`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.coeff`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.coeff_tmul`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.coeff_tmul_original`
@@ -533,7 +506,6 @@ Exact Lean telescope: theorem relativeMassShell_finiteDimensional (D : LatticeDa
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellBasis`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellBasis_coe`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellCoeffEquiv`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellCoeffEquiv_apply`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.shellIndex_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.tensorBasis`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell.tensorBasis_apply`
