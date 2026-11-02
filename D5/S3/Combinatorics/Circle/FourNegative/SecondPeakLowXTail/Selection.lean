@@ -10,9 +10,9 @@ set_option maxHeartbeats 4000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail
 
 open private physicalDomain eOn rOn collide eExponent rExponent eWeight rWeight
-  reservation_bounds reservation_choices physical_coordinates physical_regimes
+  reservation_bounds reservation_choices physical_coordinates physical_regimes dyadic_quotient
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalArithmetic
-open private margin
+open private margin smallTZero smallTPositive largeTZero largeTPositive cap
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
 open private small_t_small_e small_t_large_e large_t_small_e large_t_large_e
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Intervals
@@ -34,8 +34,8 @@ private theorem qpow_cutoff_of_not_e_general (a b c d : ℕ)
     dsimp [eOn] at hne
     omega
   have hp := qpow_mono (b-a-1+3) a (by omega : b-a-1+3 ≤ a)
-  rw [show (8 : ℚ) * 2^(b-a-1) = 2^(b-a-1+3) by
-    rw [show (8 : ℚ) = 2^3 by norm_num, ← pow_add]; ring] at hp
+  rw [← show (8 : ℚ) * 2^(b-a-1) = 2^(b-a-1+3) by
+    rw [← show (8 : ℚ) = 2^3 by norm_num, ← pow_add]; ring] at hp
   exact hp
 
 private theorem qpow_t_upper_of_not_r (a b c d : ℕ)
@@ -46,14 +46,14 @@ private theorem qpow_t_upper_of_not_r (a b c d : ℕ)
     dsimp [rOn] at hnr
     omega
   have hp := qpow_mono (b-d-1+2) (2*c) (by omega : b-d-1+2 ≤ 2*c)
-  rw [show (4 : ℚ) * 2^(b-d-1) = 2^(b-d-1+2) by
+  rw [← show (4 : ℚ) * 2^(b-d-1) = 2^(b-d-1+2) by
     rw [show (4 : ℚ) = 2^2 by norm_num, ← pow_add]; ring] at hp
   have hzsq : ((2 : ℚ)^c)^2 = 2^(2*c) := by
     rw [← pow_mul]
     congr 1
     omega
   rw [hzsq]
-  exact (le_div_iff₀ (by norm_num : (0 : ℚ) < 4)).2 hp
+  exact (le_div_iff₀ (by norm_num : (0 : ℚ) < 4)).2 (by nlinarith only [hp])
 
 private theorem qpow_h_lower_of_not_r (a b c d : ℕ)
     (h : physicalDomain a b c d) (hnr : ¬ rOn b c d) (he : eOn a b) :
@@ -75,7 +75,7 @@ private theorem qpow_h_lower_of_not_r (a b c d : ℕ)
   have hsum : 2*c ≤ a + (b+1-2*a) := by omega
   have hident : (2 : ℚ)^a * 2^(b+1-2*a) / 2^(2*c) =
       2^(b+1-a-2*c) := by
-    rw [← pow_add, qpow_sub_div (a + (b+1-2*a)) (2*c) hsum]
+    rw [← pow_add, ← qpow_sub_div (a + (b+1-2*a)) (2*c) hsum]
     congr 1
     omega
   rw [hident]
@@ -94,7 +94,7 @@ private theorem qpow_h_upper_of_domain (a b c d : ℕ)
   have hident : (2 : ℚ)^a * 2^(b+1-2*a) / 4 =
       2^(b-a-1) := by
     rw [show (4 : ℚ) = 2^2 by norm_num, ← pow_add,
-      qpow_sub_div (a + (b+1-2*a)) 2 hsum]
+      ← qpow_sub_div (a + (b+1-2*a)) 2 hsum]
     congr 1
     omega
   rw [hident]
@@ -121,8 +121,8 @@ private theorem qpow_h_cap_of_r (a b c d : ℕ)
   have hident : (2 : ℚ)^a * 2^(b+1-2*a) /
       (2 * 2^(2*c)) = 2^(b-a-2*c) := by
     rw [show (2 : ℚ) * 2^(2*c) = 2^(2*c+1) by
-      rw [← pow_succ']; ring]
-    rw [← pow_add, qpow_sub_div (a + (b+1-2*a)) (2*c+1) hsum]
+      rw [← pow_succ']]
+    rw [← pow_add, ← qpow_sub_div (a + (b+1-2*a)) (2*c+1) hsum]
     congr 1
     omega
   rw [hident]
@@ -138,8 +138,7 @@ private theorem rweight_as_beta (a b c d : ℕ) (h : physicalDomain a b c d)
     (hr : rOn b c d) :
     rWeight a b c d =
       (if collide a b c d then (2 : ℚ) else 1) * (2 : ℚ)^(b-d-2*c) := by
-  simp [rWeight, rExponent, hr]
-  by_cases hc : collide a b c d <;> simp [hc, pow_succ]
+  by_cases hc : collide a b c d <;> simp [rWeight, rExponent, hr, hc, pow_succ] <;> ring
 
 private theorem rweight_large_formula (a b c d : ℕ) (h : physicalDomain a b c d)
     (hr : rOn b c d) (he : eOn a b) :
@@ -151,23 +150,16 @@ private theorem rweight_large_formula (a b c d : ℕ) (h : physicalDomain a b c 
   have hq := (physical_regimes a b c d h).2.2 hr
   have heq := (physical_regimes a b c d h).2.1 he
   rw [hru]
-  have hzsq : ((2 : ℚ)^c)^2 = 2^(2*c) := by
-    rw [← pow_mul]
-    congr 1
-    omega
   have hh : (2 : ℚ)^(d-a) ≠ 0 := by positivity
   have hzs : (2 : ℚ)^c ≠ 0 := by positivity
-  have hx : (2 : ℚ)^a ≠ 0 := by positivity
   have hpow : (2 : ℚ)^(b-d-2*c) =
       ((2 : ℚ)^a * eWeight a b) /
         (2 * (2 : ℚ)^(d-a) * ((2 : ℚ)^c)^2) := by
     rw [heq] at hq
-    field_simp [hh, hzs, hx]
-    rw [hzsq]
-    rw [← pow_add]
-    congr 1
-    omega
+    field_simp [hh, hzs]
+    nlinarith only [hq]
   rw [hpow]
+  ring
 
 private theorem qweight_large_formula (a b c d : ℕ) (h : physicalDomain a b c d)
     (he : eOn a b) :
@@ -176,7 +168,7 @@ private theorem qweight_large_formula (a b c d : ℕ) (h : physicalDomain a b c 
 
 private theorem qweight_small_formula (a b c d : ℕ) (h : physicalDomain a b c d) :
     (2 : ℚ)^(b-a-1) = (2 : ℚ)^(d-a) * (2 : ℚ)^(b-d-1) :=
-  (physical_regimes a b c d h).1
+  (physical_regimes a b c d h).1.symm
 
 private theorem rweight_zero_of_not_r (a b c d : ℕ) (hnr : ¬ rOn b c d) :
     rWeight a b c d = 0 := by
@@ -201,7 +193,8 @@ private theorem physical_margins (a b c d : ℕ) (h : physicalDomain a b c d) :
     dsimp [z]
     have hc : 2 ≤ c := h.1
     have hp := qpow_mono 2 c hc
-    simpa using hp
+    norm_num only [show (2:ℚ)^2=4 by norm_num] at hp
+    exact hp
   have hZ : 0 ≤ z-4 := by linarith
   have hT : 0 ≤ EE-1 := by
     dsimp [EE]
@@ -222,19 +215,16 @@ private theorem physical_margins (a b c d : ℕ) (h : physicalDomain a b c d) :
       rw [← pow_mul]
       congr 1
       omega
-    rw [hzsq]
-    rw [← pow_add]
+    rw [hzsq, ← pow_succ', ← pow_add]
     congr 1
+    have ha := h.2.1
     omega
   have hnotEcut : ¬ eOn a b → 0 ≤ x-8*hh*tt := by
     intro hne
     have hc := qpow_cutoff_of_not_e_general a b c d h hne
-    rw [show x = (2 : ℚ)^a by rfl, show hh*tt = (2 : ℚ)^(b-a-1) by
-      dsimp [hh,tt]
-      rw [← pow_add]
-      congr 1
-      omega]
-    linarith
+    rw [hqsmall] at hc
+    change 0 ≤ (2:ℚ)^a - 8*hh*tt
+    nlinarith only [hc]
   have hsmallT : ¬ rOn b c d → tt ≤ z^2/4 := by
     intro hnr
     exact qpow_t_upper_of_not_r a b c d h hnr
@@ -251,86 +241,58 @@ private theorem physical_margins (a b c d : ℕ) (h : physicalDomain a b c d) :
     exact sub_nonneg.mpr (qpow_mono 0 _ heexp)
   have hz : z ≠ 0 := by positivity
   intro i
+  change 0 ≤ margin z x hh ((2:ℚ)^(b-a-1)) (rWeight a b c d) (eWeight a b) i
   by_cases he : eOn a b
-  · by_cases hr : rOn b c d
-    · have hbeta : beta = 1 ∨ beta = 2 := by
-        dsimp [beta]
-        exact beta_spec a b c d h hr
+  · have hew := hlargeE he
+    have hq : (2 : ℚ)^(b-a-1) = x*ee/4 := by
+      simpa only [hew] using qweight_large_formula a b c d h he
+    by_cases hr : rOn b c d
+    · have hbeta : beta = 1 ∨ beta = 2 := beta_spec a b c d h hr
       have hcap : hh ≤ x * ee / (2*z^2) := by
-        have hc := qpow_h_cap_of_r a b c d h hr he
-        rw [show x = (2 : ℚ)^a by rfl, show ee = eWeight a b by
-          symm; exact hlargeE he]
-        exact hc
+        simpa only [hew] using qpow_h_cap_of_r a b c d h hr he
       have hi := large_t_large_e (z-4) (EE-1) (ee-1) (hh-1) beta
         hZ hT (hEe he) hH hbeta (by
-          dsimp [beta]
-          simpa [sub_add_cancel, cap, hxcoord] using hcap)
-      have hq : (2 : ℚ)^(b-a-1) = x*ee/4 := by
-        rw [show x = (2 : ℚ)^a by rfl, show ee = eWeight a b by
-          symm; exact hlargeE he]
-        exact qweight_large_formula a b c d h he
-      have hrw : rWeight a b c d = beta*x*ee/(2*(hh)*z^2) := by
-        dsimp [beta,z,x,hh,ee]
-        rw [rweight_large_formula a b c d h hr he]
-        ring
-      simpa [z,x,hh,tt,EE,ee,uu,beta,hxcoord,hq,hrw,hlargeE he] using hi i
+          simpa only [sub_add_cancel, ← hxcoord, cap] using hcap)
+      have hrw : rWeight a b c d = beta*x*ee/(2*hh*z^2) := by
+        simpa only [hew, mul_assoc] using rweight_large_formula a b c d h hr he
+      rw [hq,hrw,hew]
+      simpa only [sub_add_cancel, ← hxcoord, largeTPositive] using hi i
     · have hlow : x*ee/z^2 ≤ hh := by
-        have hc := qpow_h_lower_of_not_r a b c d h hnr he
-        rw [show x = (2 : ℚ)^a by rfl, show ee = eWeight a b by
-          symm; exact hlargeE he]
-        exact hc
+        simpa only [hew] using qpow_h_lower_of_not_r a b c d h hr he
       have hhigh : hh ≤ x*ee/4 := by
-        have hc := qpow_h_upper_of_domain a b c d h he
-        rw [show x = (2 : ℚ)^a by rfl, show ee = eWeight a b by
-          symm; exact hlargeE he]
-        exact hc
+        simpa only [hew] using qpow_h_upper_of_domain a b c d h he
       have hi := small_t_large_e (z-4) (EE-1) (ee-1) hh
         hZ hT (hEe he) (by
-          simpa [sub_add_cancel, hxcoord] using hlow) (by
-          simpa [sub_add_cancel, hxcoord] using hhigh)
-      have hq : (2 : ℚ)^(b-a-1) = x*ee/4 := by
-        rw [show x = (2 : ℚ)^a by rfl, show ee = eWeight a b by
-          symm; exact hlargeE he]
-        exact qweight_large_formula a b c d h he
-      simpa [z,x,hh,tt,EE,ee,uu,beta,hxcoord,hq,hlargeE he] using hi i
+          simpa only [sub_add_cancel, ← hxcoord] using hlow) (by
+          simpa only [sub_add_cancel, ← hxcoord] using hhigh)
+      rw [hq,rweight_zero_of_not_r a b c d hr,hew]
+      simpa only [sub_add_cancel, ← hxcoord, smallTPositive] using hi i
   · have hew : eWeight a b = 0 := hsmallE he
     by_cases hr : rOn b c d
-    · have hbeta : beta = 1 ∨ beta = 2 := by
-        dsimp [beta]
-        exact beta_spec a b c d h hr
-      have hsmall : 0 ≤ x-8*((hh)*z^2*(uu)/2) := by
+    · have hbeta : beta = 1 ∨ beta = 2 := beta_spec a b c d h hr
+      have hq : (2 : ℚ)^(b-a-1) = hh*z^2*uu/2 :=
+        (physical_regimes a b c d h).2.2 hr
+      have hsmall : 0 ≤ x-8*(hh*z^2*uu/2) := by
         have hc := hnotEcut he
-        have hqt : hh*tt = hh*z^2*uu/2 := by
-          calc
-            hh*tt = (2 : ℚ)^(b-a-1) := hqsmall.symm
-            _ = hh*z^2*uu/2 := by
-              have hq0 := (physical_regimes a b c d h).2.2 hr
-              simpa [hh,z,uu] using hq0
-        rw [hqt] at hc
-        exact hc
+        have hqt : hh*tt = hh*z^2*uu/2 := hqsmall.symm.trans hq
+        calc
+          0 ≤ x-8*(hh*tt) := by nlinarith only [hc]
+          _ = x-8*(hh*z^2*uu/2) := by rw [hqt]
       have hU : 0 ≤ uu-1 := by
-        dsimp [uu]
-        have hu : 0 ≤ b-d-2*c := by
-          dsimp [rOn] at hr
-          omega
-        exact sub_nonneg.mpr (qpow_mono 0 _ hu)
+        exact sub_nonneg.mpr (qpow_mono 0 (b-d-2*c) (Nat.zero_le _))
       have hi := large_t_small_e (z-4) (EE-1) (uu-1) (hh-1) beta
         hZ hT hU hH hbeta (by
-          simpa [sub_add_cancel, hxcoord] using hsmall)
-      have hq : (2 : ℚ)^(b-a-1) = hh*z^2*uu/2 := by
-        have hq0 := (physical_regimes a b c d h).2.2 hr
-        simpa [hh,z,uu] using hq0
-      have hrw : rWeight a b c d = beta*uu := by
-        dsimp [beta,uu]
-        exact rweight_as_beta a b c d h hr
-      simpa [z,x,hh,tt,EE,ee,uu,beta,hxcoord,hq,hrw,hew] using hi i
-    · have htop : tt ≤ z^2/4 := hsmallT hnr
+          simpa only [sub_add_cancel, ← hxcoord] using hsmall)
+      have hrw : rWeight a b c d = beta*uu := rweight_as_beta a b c d h hr
+      rw [hq,hrw,hew]
+      simpa only [sub_add_cancel, ← hxcoord, largeTZero] using hi i
+    · have htop : tt ≤ z^2/4 := hsmallT hr
       have hsmall := hnotEcut he
       have hi := small_t_small_e (z-4) (EE-1) (hh-1) tt
-        hZ hT hH (by dsimp [tt]; positivity) (by
-          simpa [sub_add_cancel] using htop) (by
-          simpa [sub_add_cancel, hxcoord] using hsmall)
-      have hq : (2 : ℚ)^(b-a-1) = hh*tt := hqsmall
-      simpa [z,x,hh,tt,EE,ee,uu,beta,hxcoord,hq,hew] using hi i
+        hZ hT hH (qpow_mono 0 (b-d-1) (Nat.zero_le _)) (by
+          simpa only [sub_add_cancel] using htop) (by
+          simpa only [sub_add_cancel, ← hxcoord] using hsmall)
+      rw [hqsmall,rweight_zero_of_not_r a b c d hr,hew]
+      simpa only [sub_add_cancel, ← hxcoord, smallTZero] using hi i
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail
