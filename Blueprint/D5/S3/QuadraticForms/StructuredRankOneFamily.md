@@ -52,6 +52,10 @@ $$(((\forall (n : \mathbb{N}), (\forall (d : (\operatorname{Fin}\left(n\right) \
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneFamily.mo513954_revision2` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathoverflow-513954-singular-diagonal-downdate-inertia` (proved) by `D5/S3/QuadraticForms/StructuredRankOneFamily.mo513954_revision2`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathoverflow-513954-singular-diagonal-downdate-inertia","declaration_gid":"D5/S3/QuadraticForms/StructuredRankOneFamily.mo513954_revision2","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lucid (MathOverflow user 596445) (2026). *Inertia of a singular diagonal matrix after a structured rank-one downdate, revision 2*. URL: <https://mathoverflow.net/revisions/513954/2>.
