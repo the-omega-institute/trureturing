@@ -126,8 +126,10 @@ private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
     ext i k
     change MvPolynomial.eval x (MvPolynomial.X (Sum.inl (w j, i, k))) = _
     rw [MvPolynomial.eval_X]
-    generalize w j = b
-    fin_cases b <;> rfl
+    change _ = FinVec.etaExpand (fun b : Fin 2 =>
+      Matrix.of (fun i k => x (Sum.inl (b, i, k)))) (w j) i k
+    rw [FinVec.etaExpand_eq]
+    rfl
   change MvPolynomial.eval x (dotProduct _ _) = dotProduct _ _
   rw [RingHom.map_dotProduct]
   apply congrArg₂ dotProduct
@@ -277,7 +279,10 @@ private lemma kernel_cramer_identity :
       minorPoly • (fun i => -kernelMatrix (Fin.castSucc i) 3) := Matrix.mulVec_cramer _ _
   have hf (j : Fin 3) :
       (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
-        (Fin.castSucc j) = cramerNumerator j := by fin_cases j <;> rfl
+        (Fin.castSucc j) = cramerNumerator j :=
+    (congrFun (FinVec.etaExpand_eq
+      (Fin.snoc (α := fun _ => _) cramerNumerator minorPoly)) (Fin.castSucc j)).trans
+        (Fin.snoc_castSucc _ _ _)
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
   · rw [kernelMatrix]
@@ -430,16 +435,15 @@ private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
   refine ⟨hk, hl, hr, ?_, hc⟩
   funext w
   have hm (j : Fin 2) : (![reconstructedMatrix t 0, reconstructedMatrix t 1] :
-      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) j = reconstructedMatrix t j := by
-    fin_cases j <;> rfl
+      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) j = reconstructedMatrix t j :=
+    congrFun (FinVec.etaExpand_eq (reconstructedMatrix t)) j
   simp only [mpsState, List.ofFn_succ, List.ofFn_zero, List.prod_cons, List.prod_nil,
     mul_one, hm, ← Matrix.mulVec_mulVec]
   rw [Matrix.dotProduct_mulVec, hl, hr, single_one_dotProduct]
   change (reconstructedMatrix t (w 1) * reconstructedBasis t) (w 0) (w 2) = t w
   rw [reconstructedMatrix, Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hunit, Matrix.mul_one]
   apply congrArg t
-  funext j
-  fin_cases j <;> rfl
+  exact FinVec.etaExpand_eq w
 
 private lemma chart_denominator (n : ℕ) (t : (Fin 3 → Fin 2) → ℂ)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
@@ -497,9 +501,8 @@ private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
         j ^ a * u * j ^ (n - 3 - a) from by
       rw [map_mul, map_mul, map_pow, map_pow, hprod]]
   have hm : (![reconstructedMatrix t 0, reconstructedMatrix t 1] :
-      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) = reconstructedMatrix t := by
-    funext i
-    fin_cases i <;> rfl
+      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) = reconstructedMatrix t :=
+    FinVec.etaExpand_eq (reconstructedMatrix t)
   have hword : (List.ofFn fun i => reconstructedMatrix t (w i)).prod = (d / v) ^ n • u := by
     rw [show (fun i => reconstructedMatrix t (w i)) =
       (fun i => (d / v) • ε.mapMatrix (matrixNumerator (w i))) from
@@ -656,7 +659,10 @@ private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
       ε (cramerNumerator j)) = -d * ε (kernelMatrix (Fin.castSucc i) 3)
     have heq (j : Fin 3) :
         (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
-          (Fin.castSucc j) = cramerNumerator j := by fin_cases j <;> rfl
+          (Fin.castSucc j) = cramerNumerator j :=
+      (congrFun (FinVec.etaExpand_eq
+        (Fin.snoc (α := fun _ => _) cramerNumerator minorPoly)) (Fin.castSucc j)).trans
+          (Fin.snoc_castSucc _ _ _)
     simp only [heq] at he
     change (∑ j : Fin 3, ε (kernelMatrix (Fin.castSucc i) (Fin.castSucc j)) *
       ε (cramerNumerator j)) + ε (kernelMatrix (Fin.castSucc i) 3) * d = 0 at he
@@ -677,7 +683,10 @@ private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
       ((![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
         (Fin.castSucc j))
     have heq : (![cramerNumerator 0, cramerNumerator 1, cramerNumerator 2, minorPoly] : Fin 4 → _)
-        (Fin.castSucc j) = cramerNumerator j := by fin_cases j <;> rfl
+        (Fin.castSucc j) = cramerNumerator j :=
+      (congrFun (FinVec.etaExpand_eq
+        (Fin.snoc (α := fun _ => _) cramerNumerator minorPoly)) (Fin.castSucc j)).trans
+          (Fin.snoc_castSucc _ _ _)
     rw [heq]
     exact congrFun hxy j
 
@@ -849,7 +858,8 @@ private lemma gauge_uniqueness_image (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n
     exact (show φ (List.ofFn fun i => m (w i)).prod = _ from
       by rw [map_list_prod, List.map_ofFn]; rfl).symm
   have he : (![reconstructedMatrix t 0, reconstructedMatrix t 1] :
-      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) = reconstructedMatrix t := by funext j; fin_cases j <;> rfl
+      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) = reconstructedMatrix t :=
+    FinVec.etaExpand_eq (reconstructedMatrix t)
   simp only [mpsState, he]
   rw [hword, hleft, hright]
   simp only [Matrix.smul_mulVec, Matrix.mulVec_smul, smul_smul,
