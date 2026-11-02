@@ -526,10 +526,7 @@ private lemma hyperdisk_single_ray (h : Set (EuclideanSpace ℂ (Fin 4)))
     norm_num at he
   let p : Fin m := ⟨0, hmpos⟩
   have hp (q : Fin m) : q = p := by
-    apply Fin.ext
-    have hq := q.isLt
-    change q.val = 0
-    omega
+    exact @Subsingleton.elim (Fin m) (Fin.subsingleton_iff_le_one.mpr hm) q p
   have reduce (v : EuclideanSpace ℂ (Fin 4)) :
       (∑ q, ⟪φ q, v⟫_ℂ • φ q) = ⟪φ p, v⟫_ℂ • φ p := by
     apply Finset.sum_eq_single p
