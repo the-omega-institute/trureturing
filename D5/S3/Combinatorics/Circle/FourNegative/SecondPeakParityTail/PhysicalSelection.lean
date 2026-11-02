@@ -8,9 +8,9 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.IntegerSelector
 
 /-!
-UNCOMPILED candidate. No kernel, admission, freeze or endpoint claim.
-Private arithmetic consumed by PhysicalBanks.physical_selection below.
-The approved domain and the exact selector identity are retained literally.
+Private dyadic arithmetic supplies the physical bank selector.
+The strict U-mask capacities follow from the exact integer selector identity
+on the full four-gap domain.
 -/
 
 set_option autoImplicit false
