@@ -387,6 +387,14 @@ private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     change ((d / v) ^ 2 * c)⁻¹ * (d / v) = v / (d * c)
     field_simp
 
+private lemma matrix_word_scale (n : ℕ) (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ)
+    (s : ℂ) (w : Fin n → Fin 2) :
+    (List.ofFn fun j => s • m (w j)).prod =
+      s ^ n • (List.ofFn fun j => m (w j)).prod := by
+  rw [show (List.ofFn fun j => s • m (w j)) =
+    (List.ofFn fun j => m (w j)).map (s • ·) from List.map_ofFn.symm,
+    ← List.smul_prod, List.length_ofFn]
+
 private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     (hquartic : MvPolynomial.eval t kernelMatrix.det = 0)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
@@ -474,7 +482,73 @@ private lemma inverse_formula (n a : ℕ) (hn : 4 ≤ n) (h : a + 3 ≤ n)
         ((reconstructedLeft t) ᵥ* ((reconstructedSum t)⁻¹ ^ a))
         (((reconstructedSum t)⁻¹ ^ (n - 3 - a)) *ᵥ reconstructedRight t) := by
   refine ⟨chart_denominator n t hg, ?_⟩
-  sorry
+  obtain ⟨_, hB, hl, hr, _, hC⟩ := chart_scalars t hg
+  let ε := MvPolynomial.eval t
+  let d := ε minorPoly
+  let v := ε basisNumerator.det
+  let c := ε sumNumerator.det
+  have hparts := hg
+  simp only [chartPoly, map_mul, mul_ne_zero_iff] at hparts
+  have hd : d ≠ 0 := hparts.1.1.1.1
+  have hv : v ≠ 0 := hparts.1.1.1.2
+  have hc : c ≠ 0 := hparts.1.1.2
+  funext w
+  let j := ε.mapMatrix sumNumerator.adjugate
+  let u := (List.ofFn fun i => ε.mapMatrix (matrixNumerator (w i))).prod
+  let l := ε ∘ leftNumerator
+  let r := ε ∘ boundaryNumerator
+  have hp : ε (numerator n a w) =
+      dotProduct l ((j ^ a * u * j ^ (n - 3 - a)) *ᵥ r) := by
+    have hprod : ε.mapMatrix (List.ofFn fun i => matrixNumerator (w i)).prod = u := by
+      rw [map_list_prod, List.map_ofFn]
+      rfl
+    rw [numerator, ε.map_dotProduct]
+    change dotProduct l _ = _
+    apply congrArg (dotProduct l)
+    funext i
+    rw [Function.comp_apply, ε.map_mulVec]
+    change (ε.mapMatrix (sumNumerator.adjugate ^ a *
+      (List.ofFn fun i => matrixNumerator (w i)).prod *
+        sumNumerator.adjugate ^ (n - 3 - a)) *ᵥ r) i = _
+    rw [show ε.mapMatrix (sumNumerator.adjugate ^ a *
+        (List.ofFn fun i => matrixNumerator (w i)).prod *
+          sumNumerator.adjugate ^ (n - 3 - a)) =
+        j ^ a * u * j ^ (n - 3 - a) from by
+      rw [map_mul, map_mul, map_pow, map_pow, hprod]]
+  have hm : (![reconstructedMatrix t 0, reconstructedMatrix t 1] :
+      Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) = reconstructedMatrix t := by
+    funext i
+    fin_cases i <;> rfl
+  have hword : (List.ofFn fun i => reconstructedMatrix t (w i)).prod = (d / v) ^ n • u := by
+    rw [show (fun i => reconstructedMatrix t (w i)) =
+      (fun i => (d / v) • ε.mapMatrix (matrixNumerator (w i))) from
+        funext (fun i => hB (w i))]
+    exact matrix_word_scale n (fun i => ε.mapMatrix (matrixNumerator i)) (d / v) w
+  have hstate : mpsState n (reconstructedMatrix t 0) (reconstructedMatrix t 1)
+      (reconstructedLeft t ᵥ* ((reconstructedSum t)⁻¹ ^ a))
+      (((reconstructedSum t)⁻¹ ^ (n - 3 - a)) *ᵥ reconstructedRight t) w =
+      (d⁻¹ * (v / (d * c)) ^ a * (d / v) ^ n *
+        (v / (d * c)) ^ (n - 3 - a) * d⁻¹ ^ 2) * ε (numerator n a w) := by
+    rw [hp]
+    simp only [mpsState, hm]
+    rw [hword, hl, hr, hC]
+    simp only [smul_pow,
+      Matrix.smul_vecMul, Matrix.vecMul_smul, Matrix.smul_mulVec, Matrix.mulVec_smul,
+      smul_smul, smul_dotProduct, dotProduct_smul, smul_eq_mul,
+      ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec]
+    dsimp only [d, v, c, ε, j, u, l, r]
+    ring
+  change ε (numerator n a w) / ε (denominator n) = _
+  rw [hstate]
+  have hb : n - 3 = a + (n - 3 - a) := by omega
+  have hn : n = a + (n - 3 - a) + 3 := by omega
+  rw [denominator, map_mul, map_pow, map_pow]
+  change ε (numerator n a w) / (v ^ 3 * c ^ (n - 3)) = _
+  generalize hx : ε (numerator n a w) = x
+  generalize he : n - 3 - a = b at *
+  rw [hb, hn]
+  simp only [pow_add, mul_pow, div_pow, inv_pow]
+  field_simp [hd, hv, hc]
 
 private def splitWordEquiv (a b : ℕ) :
     ((Fin a → Fin 2) × (Fin b → Fin 2)) ≃ (Fin (a + b) → Fin 2) where
