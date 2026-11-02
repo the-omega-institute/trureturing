@@ -231,7 +231,7 @@ private lemma norm_pos {n : Nat} (x : Fin n → Real) (hx : x ≠ 0) :
     0 < dotProduct x x := by
   simpa only [star_trivial] using (dotProduct_star_self_pos_iff (v := x)).mpr hx
 
-private lemma lambda2_eq_of_rayleigh {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+lemma lambda2_eq_of_rayleigh {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (w : Sym2 (Fin n) → Real) (r : Real)
     (hlower : ∀ x : Fin n → Real, ∑ i, x i = 0 →
       r * dotProduct x x ≤ dotProduct x (wLap G w *ᵥ x))
