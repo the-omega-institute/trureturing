@@ -293,7 +293,7 @@ theorem totalL0_b_zero (D : LatticeData)
       noncomm_ring
     _ = 0 := by rw [hm, hg', add_zero]
 
-/-- The original charge after subtracting its two literal zero Ward terms. -/ 
+/-- The original charge after subtracting its two literal zero Ward terms. -/
 def Qhat (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) : Module.End ℂ (State D) :=
   totalCharge D H - ghostC D 0 * L0 D H - ghostB D 0 * ghostR D 0
