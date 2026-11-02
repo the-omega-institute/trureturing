@@ -1,0 +1,46 @@
+**Definition 29.3 (resource and supplier boundary).** The claim concerns
+only retained binary content under the declared $U$ input. Finite
+replay and rank computation may consume paid time, arithmetic,
+transient backing and retained cleared capacity. Physical acquisition
+of $U$, genuine operand bindings, rights, source edits, acknowledgements
+and return to Ready remain separate AA20 premises; a symbolic address
+does not grant them. Neither reset retention nor a callable service
+is established by this adapter. The original services and the
+full-history tasks keep their own interfaces and resource accounts.
+
+AA17/19 supply the native guards, realizability and event counts;
+§§23–26 supply the exact native quotient; AAII94 supplies the journal,
+replay induction and upper. GPO22–23's global-substitution originals
+have a different domain. The existing
+[ImmutableExtension](../../../D5/S0/Computability/Coding/ImmutableExtension.lean)
+and its [owning Scribe](../../../Blueprint/D5/S0/Computability/Coding/ImmutableExtension.scribe.cs)
+require prefix-incomparable code extensions.
+[MinimumRollbackAlphabet](../../../D5/S0/History/Coding/MinimumRollbackAlphabet.lean)
+and its [Scribe](../../../Blueprint/D5/S0/History/Coding/MinimumRollbackAlphabet.scribe.cs)
+concern static injective fibre labels.
+[AppendOnlyAnswerabilityMonotonicity](../../../D5/S3/ConceptDynamics/History/AppendOnlyAnswerabilityMonotonicity.lean)
+and its [Scribe](../../../Blueprint/D5/S3/ConceptDynamics/History/AppendOnlyAnswerabilityMonotonicity.scribe.cs)
+assume an old-log projection, which literal word extension without the
+old cut's length does not supply.
+[StateRecordReadoutDistinguishability](../../../D5/S3/ObserverMemory/Trajectories/StateRecordReadoutDistinguishability.lean)
+and its [Scribe](../../../Blueprint/D5/S3/ObserverMemory/Trajectories/StateRecordReadoutDistinguishability.scribe.cs)
+give conditional separation of certified record readouts, not these
+quantitative native bounds. None of those premises is silently added
+to (IV.70).
+
+Finite-word counting, online adversaries, ranking and rooted-tree
+symmetry are classical suppliers. Relevant comparisons are Cover,
+[*Enumerative Source Encoding*, §§I–II](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+for ranking; Bennett,
+[*Logical Reversibility of Computation*](https://doi.org/10.1147/rd.176.0525),
+for history and replay; Rivest–Shamir,
+*How to Reuse a Write-Once Memory*, §§I–II,
+whose fixed-cell coordinatewise write order differs from literal word
+prefix; and Kersting–Fischer,
+[*Measuring tree balance using symmetry nodes*, §2 and Lemma 3.2](https://arxiv.org/pdf/2105.00719v2),
+for rooted symmetry. The source-specific contribution is the uniform
+actual native transition/retention bridge and the explicit weaker-input
+adapter, not those general methods. This source-relative synthesis
+makes no exhaustive novelty claim; these are ordinary mathematical
+arguments, not Lean validation.
+

@@ -1,0 +1,19 @@
+**Question 12.2 (uniform redundancy).** For the coherent fibrewise
+prefix-free class put
+
+$$
+\Delta(J)=\sup_{t\in\mathcal D}\bigl(M_J(t)-G(t)\bigr).
+\tag{IV.25}
+$$
+
+Theorem 10.1 gives $M_J(T)-G(T)\ge1$ for every member, hence
+$\inf_J\Delta(J)\ge1$; this remains true if the infimum is restricted to
+computable members. Whether one computable horizon-independent recorder
+has $\Delta(J)\le1$, or even $\Delta(J)\le C$ for some universal finite
+constant $C$, remains unresolved here. The ordinal upper (IV.23) is not
+such a bound. Its own large comb redundancy does not prove unbounded
+necessary redundancy for all recorders. Neither a seven-bit attaining
+recorder at $T$, a minimum witness horizon nor a sharp general redundancy
+law is asserted. The broader mutual-recovery and minimal-generator
+programme is not settled by this finite native obstruction.
+
