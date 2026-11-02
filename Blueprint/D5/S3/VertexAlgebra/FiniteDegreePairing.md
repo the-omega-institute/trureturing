@@ -2,45 +2,63 @@
 
 ## Abstract
 
-Finite support in a genuine complex basis gives a native algebraic HPL inclusion-isometry calculation. The carrier is an arbitrary complex module with a `Module.Basis`; the sesquilinear form is arbitrary. A signed-integer degree map supplies the selection rule, and an operator is assumed to preserve a chosen sector while raising degree by at least one on every nonzero basis transition.
+Finite degree support makes a raising-power geometric inclusion an isometry for a sesquilinear basis pairing.
 
-The module proves the finite double expansion with conjugation in the first slot, support preservation and contribution extraction, the degree bound for every signed raising power, actual cancellation of every positive geometric cross term, and the finite geometric-sum isometry
+The full-telescope escape audit remains unfinished for every public theorem in this source, including its support and expansion helpers. The missing realization, exact reconstruction, lawful template application, whole-family variation, sensitivity and observational-dependence evidence is disclosed at https://github.com/the-omega-institute/trureturing/issues/25857. The issue is not a validated registration. The original BRST operators have not been shown here to satisfy hH or hA; cohomology, no-ghost and the full programme remain outside this result.
 
-$$H\left(\left(\sum_{r<n}(-A)^r\right)x,\left(\sum_{s<n}(-A)^s\right)y\right)=H(x,y).$$
-
-The hypotheses are algebraic inputs. They do not prove a BRST realization, HPL identity, cohomology statement, VOA/CFT construction, anomaly cancellation, string completion or AdS/CFT claim. No positivity, nondegeneracy, rank, momentum, inverse or nilpotence assumption is used.
+Let b be a genuine basis of a complex module V. Supported b P x means that every nonzero basis coefficient of x satisfies P. A sesquilinear form is expanded over the finite supports of both arguments, with conjugation in its first coefficient. The degree map d is integer-valued, so the selection rule d i + d j = 0 remains valid for signed degrees.
 
 **Theorem 1.1 (Finite double expansion).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion`.
+Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion`
 
-The finite supports of the two basis representations give the exact sesquilinear double sum; the first coefficient is conjugated.
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion` (`✓ std3`). ∎
 
-**Theorem 1.2 (Sector-preserving raising support).**
+*Source.* Repository-derived.
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support`.
+*Commentary.*
 
-An operator with sector-preserving transitions and `d i + 1 ≤ d j` sends a degree-zero sector-supported vector under `(-A)^r` to degree at least `r` in that sector.
+The form of two arbitrary vectors is the finite double sum of basis coefficients and basis pairings. The first coefficient is conjugated by the semilinear map.
 
-**Theorem 1.3 (Positive cross-term cancellation).**
+**Theorem 1.2 (Sector-preserving degree growth).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal`.
+Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support`
 
-For `r+s>0`, the selection rule `d i+d j ≠ 0 → H (b i) (b j)=0` and the two degree lower bounds make the whole pairing zero. This is a finite support proof, with no desired-isometry certificate or assumed conclusion.
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support` (`✓ std3`). ∎
 
-**Theorem 1.4 (Finite inclusion isometry).**
+*Source.* Repository-derived.
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry`.
+*Commentary.*
 
-For every positive truncation length, expanding both finite sums leaves only the `(0,0)` term, which is `H x y`.
+An operator whose basis transitions preserve the sector and raise d by at least one sends a d=0 sector-supported vector through (-A)^r into the same sector with degree at least r. This is an algebraic support statement and does not construct the operator from BRST data.
 
-## Boundary
+**Theorem 1.3 (All positive cross terms vanish).**
 
-The theorem is a generic native algebraic unit. The sector, degree selection rule and raising transition law must be supplied by an application. The source does not establish those hypotheses for the original lattice BRST/HPL operators and does not claim an infinite geometric-series limit.
+Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The signed degree selection rule and the two lower degree bounds force every pairing H ((-A)^r x) ((-A)^s y) to vanish when r+s is positive. The proof expands the finite supports and cancels every basis cross term individually.
+
+**Theorem 1.4 (Finite geometric inclusion isometry).**
+
+Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For n at least one, the finite geometric sum from r=0 through n-1 has the same pairing as its r=0 inclusion on d=0 sector-supported vectors. The preceding cross-term theorem removes every summand except (0,0); no positivity, nondegeneracy, inverse, nilpotence or analytic completion is assumed.
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion`
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support`
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal`
 - Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry`
+- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion`
+- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal`
+- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support`

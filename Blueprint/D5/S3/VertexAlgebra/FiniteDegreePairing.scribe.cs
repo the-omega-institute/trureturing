@@ -10,6 +10,7 @@ internal sealed class FiniteDegreePairingDocument : IScribeDocumentDefinition
         "Finite degree support makes a raising-power geometric inclusion an isometry for a sesquilinear basis pairing.",
         H("Finite-degree sesquilinear pairing"),
         Blocks(
+            Paragraph(Text("The full-telescope escape audit remains unfinished for every public theorem in this source, including its support and expansion helpers. The missing realization, exact reconstruction, lawful template application, whole-family variation, sensitivity and observational-dependence evidence is disclosed at https://github.com/the-omega-institute/trureturing/issues/25857. The issue is not a validated registration. The original BRST operators have not been shown here to satisfy hH or hA; cohomology, no-ghost and the full programme remain outside this result.")),
             Paragraph(Text("Let b be a genuine basis of a complex module V. Supported b P x means that every nonzero basis coefficient of x satisfies P. A sesquilinear form is expanded over the finite supports of both arguments, with conjugation in its first coefficient. The degree map d is integer-valued, so the selection rule d i + d j = 0 remains valid for signed degrees.")),
             Describe.Lean(DescribeId.Create("finite-double-expansion"), Handle("form_expansion"),
                 H("Finite double expansion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

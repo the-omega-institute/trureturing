@@ -10,7 +10,11 @@ import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.SesquilinearForm.Basic
 import Mathlib.Tactic
 
-/-! Finite-support sesquilinear pairing and geometric inclusion isometry. -/
+/-! Finite-support sesquilinear pairing and geometric inclusion isometry.
+
+The full-telescope escape audit for every public theorem remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/25857
+The issue is disclosure, not a validated registration or a BRST realization. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -33,30 +37,6 @@ theorem supported_mono (b : Module.Basis ι ℂ V) {P Q : ι → Prop}
     {x : V} (hx : Supported b P x) (hPQ : ∀ i, P i → Q i) : Supported b Q x :=
   fun i hi => hPQ i (hx i hi)
 
-theorem supported_zero (b : Module.Basis ι ℂ V) (P : ι → Prop) :
-    Supported b P 0 := by
-  intro i hi
-  exact False.elim (hi (by simp))
-
-theorem supported_basis (b : Module.Basis ι ℂ V) {P : ι → Prop}
-    (i : ι) (hi : P i) : Supported b P (b i) := by
-  classical
-  intro j hj
-  have he : i = j := by
-    by_contra he
-    exact hj (by simp [b.repr_self, he])
-  simpa [← he] using hi
-
-theorem supported_add (b : Module.Basis ι ℂ V) {P : ι → Prop}
-    {x y : V} (hx : Supported b P x) (hy : Supported b P y) :
-    Supported b P (x + y) := by
-  intro i hi
-  by_cases hxi : b.repr x i = 0
-  · apply hy i
-    intro hyi
-    exact hi (by simp [hxi, hyi])
-  · exact hx i hxi
-
 theorem supported_smul (b : Module.Basis ι ℂ V) {P : ι → Prop}
     (c : ℂ) {x : V} (hx : Supported b P x) : Supported b P (c • x) := by
   intro i hi
@@ -67,18 +47,6 @@ theorem supported_smul (b : Module.Basis ι ℂ V) {P : ι → Prop}
 theorem supported_neg (b : Module.Basis ι ℂ V) {P : ι → Prop}
     {x : V} (hx : Supported b P x) : Supported b P (-x) := by
   simpa using supported_smul b (-1) hx
-
-theorem supported_sum {J : Type*} (b : Module.Basis ι ℂ V) {P : ι → Prop}
-    (s : Finset J) (x : J → V) (hx : ∀ j ∈ s, Supported b P (x j)) :
-    Supported b P (∑ j ∈ s, x j) := by
-  classical
-  revert hx
-  induction s using Finset.induction_on with
-  | empty => intro hx; simpa using supported_zero b P
-  | @insert j s hj ih =>
-    intro hx
-    rw [Finset.sum_insert hj]
-    exact supported_add b (hx j (by simp)) (ih (fun k hk => hx k (by simp [hk])))
 
 /-- A finite coefficient must come from an actual nonzero input coefficient. -/
 theorem map_contribution (b : Module.Basis ι ℂ V) (A : Module.End ℂ V)
@@ -134,8 +102,8 @@ theorem supported_orthogonal (b : Module.Basis ι ℂ V)
   rw [hPQ i j (hx i (Finsupp.mem_support_iff.mp hi))
     (hy j (Finsupp.mem_support_iff.mp hj)), mul_zero]
 
-/-- The selection input here is algebraic. The original application PROVES it
-from the retuned Wick recursion and the literal signed occupation form. -/
+/-- An application must supply the signed-degree selection law.
+No realization of this hypothesis for the original BRST operators is asserted. -/
 theorem lower_bounds_orthogonal (b : Module.Basis ι ℂ V) (d : ι → ℤ)
     (H : V →ₗ⋆[ℂ] V →ₗ[ℂ] ℂ)
     (hH : ∀ i j, d i + d j ≠ 0 → H (b i) (b j) = 0)
