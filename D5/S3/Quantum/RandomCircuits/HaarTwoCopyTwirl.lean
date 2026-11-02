@@ -36,7 +36,6 @@ import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Topology.Algebra.Star.Unitary
 import Mathlib.LinearAlgebra.Matrix.Vec
-import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.Permutation
 
 open Matrix MeasureTheory TopologicalSpace
