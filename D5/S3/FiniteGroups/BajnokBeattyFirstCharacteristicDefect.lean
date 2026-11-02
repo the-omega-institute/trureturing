@@ -11,9 +11,6 @@ import D5.S0.Observation.MatrixFirstMomentCoefficientBridge
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 
 /-!
-SOURCE-ONLY DRAFT: not elaborated or compiled. The imported graph/moment
-consumer is itself an uncompiled draft at preparation time.
-
 proof_shape: first_characteristic_defect: content.
 admission_basis: escape-witness.
 escape_witness: the actual q19/q33 graphs supply every trace equality and the

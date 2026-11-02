@@ -12,8 +12,6 @@ import Mathlib.RingTheory.Polynomial.Vieta
 import Mathlib.Tactic
 
 /-!
-SOURCE-ONLY DRAFT: not elaborated or compiled.
-
 proof_shape: matrix_first_moment_coefficient_bridge: content.
 admission_basis: escape-witness.
 escape_witness: actual unitary diagonalization supplies the matrix power sums;
@@ -50,7 +48,8 @@ private theorem trace_pow_eq_eval_psum
       conv_lhs => rw [hA.spectral_theorem, ← map_pow]
       simpa only [Unitary.conjStarAlgAut_apply, Matrix.trace_mul_cycle,
         Unitary.coe_star_mul_self, Matrix.one_mul, Matrix.diagonal_pow,
-        Matrix.trace_diagonal, Function.comp_apply, Pi.pow_apply]
+        Matrix.trace_diagonal, Function.comp_apply, Pi.pow_apply,
+        RCLike.ofReal_eq_complex_ofReal]
     _ = _ := by simp [MvPolynomial.psum]
 
 private theorem descending_coeff_eq_eval_esymm
@@ -68,7 +67,8 @@ private theorem descending_coeff_eq_eval_esymm
     one_mul, hsub, hA.roots_charpoly_eq_eigenvalues,
     ← MvPolynomial.aeval_esymm_eq_multiset_esymm ι ℂ k
       (RCLike.ofReal ∘ hA.eigenvalues)] at hVieta
-  simpa only [MvPolynomial.aeval_eq_eval, Function.comp_apply] using hVieta
+  simpa only [MvPolynomial.aeval_eq_eval, Function.comp_def,
+    RCLike.ofReal_eq_complex_ofReal] using hVieta
 
 -- Derive the recurrence for actual matrix characteristic coefficients.
 -- It is private and used by the coefficient comparison below.
