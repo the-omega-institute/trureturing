@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A nonnegative solution of finitely many homogeneous real equations decomposes into support-minimal solutions, each using at most one more coordinate than equations.
+Finite nonnegative real kernels decompose into circuits; over any ordered field a prescribed nonzero coordinate belongs to a sign-conformal globally minimal kernel circuit.
 
 **Definition 1.1 (Nonzero support).**
 
@@ -76,6 +76,34 @@ $$\forall (J:Type), [Fintype\left(J\right)] \forall (m:\mathbb{N}), \forall (B:F
 
 A circuit has support cardinality at most the number of rows plus one. Delete one supported coordinate, apply deleted-column independence, and bound the size of that independent family by the dimension of the row-coordinate space. The deleted-column theorem contains the minimum-ratio contradiction once. Every denominator in that argument is positive where used. The statement includes zero rows, dependent rows, zero columns and zero coordinates; with no rows, circuits have at most one supported coordinate.
 
+**Definition 1.7 (Finite support over a field).**
+
+$$\forall (F:Type), [Field\left(F\right)] [LinearOrder\left(F\right)] \forall (E:Type), [Fintype\left(E\right)] \forall (v:E\to F), support\left(v\right)=\{ i:E\mid v\left(i\right)\neq 0\}$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.support` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This finite support records exactly the nonzero coordinates. Its scalar field and finite label type have independent universes. The conic compression proof uses its cardinality.
+
+**Theorem 1.8 (A global circuit retaining a prescribed coordinate).**
+
+$$\forall (F:Type), [Field\left(F\right)] [LinearOrder\left(F\right)] [IsStrictOrderedRing\left(F\right)] \forall (E:Type), [Fintype\left(E\right)] \forall (m:\mathbb{N}), \forall (A:Fin\left(m\right)\to E\to F), \forall (x:E\to F), \forall (e:E), ((mulVec\left(A, x\right)=0)\land (x\left(e\right)\neq 0))\Rightarrow \exists (c:E\to F), (mulVec\left(A, c\right)=0)\land ((c\left(e\right)\neq 0)\land ((\forall (i:E), (c\left(i\right)=0)\lor sign\left(c\left(i\right)\right)=sign\left(x\left(i\right)\right))\land (\forall (w:E\to F), ((mulVec\left(A, w\right)=0)\land ((w\neq 0)\land (supp\left(w\right)\subseteq supp\left(c\right))))\Rightarrow supp\left(w\right)=supp\left(c\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.signConformalGlobalKernelCircuit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The scalar field F and finite label type E have independent universes. The only scalar instances are Field F, LinearOrder F and IsStrictOrderedRing F. The matrix has any natural row count m. The notation supp denotes Function.support. Every nonzero signed kernel vector supported in the output has exactly that support: competitors have no sign restriction and need not be nonzero at e. Zero rows, repeated or zero columns and non-Archimedean ordered fields are included.
+
+Normalize the input orthant by signs ±1. The negative signed e-column is a nonnegative combination of the other original columns. Minimize support among nonnegative representations of this same point p, permitting p = 0 and empty support. An active signed dependence, oriented to have a positive coordinate, permits minimum-ratio subtraction that preserves p and nonnegativity while erasing an active coordinate. The contradiction proves independence of the compressed active columns. Restore coefficient one at e. For every signed supported kernel d, subtract d e times this normalized relation. The residual vanishes at e and on its independent remaining columns, so d is a scalar multiple of the relation. Nonzero d has a nonzero scalar and equal support. Undo the orthant signs. The same-p feasibility and strict erasure is the new reusable inference in this proof; sign transport and finite-sum normalization alone do not supply it. The finite minimum-ratio proof is shared with the original Real API, whose statements and cofactor consumers are preserved. This is the classical elementary-vector method, without a claim of mathematical novelty.
+
+For arbitrary same-field points q : E → (Fin d → F), an affine relation x with sum x i = 0, sum x i • q i = 0 and x e ≠ 0 gives the application A r i = (1, q i) r with d + 1 homogeneous rows. The output c satisfies both affine equations, retains e, and has its positive labels contained in the positive labels of x and its negative labels contained in the negative labels of x. Every nonzero signed affine competitor supported in c has equal support, including competitors zero at e. The positive coefficient sum is strictly positive, and the negative coefficient sum is its opposite. Delete the zero coefficients, normalize the two sides and use their zero vector sum: both center masses equal one point p. Thus p lies in the convex hull of each strict sign side of c and, by containment, in each corresponding strict sign-side hull of x. The construction keeps the original labels, permits repeated points and d = 0, and uses no Archimedean assumption. This complete universally parameterized application is checked transiently; no separate thin Radon theorem is retained.
+
 For a system of three homogeneous inequalities on nonnegative variables, append three nonnegative slack coordinates and use the augmented matrix with a negative identity block. Its nonnegative kernel projects onto the original feasible cone, and each circuit projects to a feasible vector supported on at most four original coordinates. This supplies a general reduction for the three-row spectral relaxation. Identifying the resulting small-support spectral cases and obtaining a final APPT purity bound require further arguments.
 
 ## References
@@ -86,3 +114,5 @@ For a system of three homogeneous inequalities on nonnegative variables, append 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.circuit_support_card_le`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.nonnegKernel_mem_hull_circuit`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.nzSupport`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.signConformalGlobalKernelCircuit`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit.support`
