@@ -4,6 +4,8 @@ import Reg.Support.DependentFamily
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.Group.ULift
 
+/-! Original-telescope dependent-family evidence for extension cohomology. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.HomologicalAlgebra.AbelianExtensionH1
@@ -28,7 +30,7 @@ structure SourceData where
     letI := groupN
     letI := groupQ
     letI := groupS
-    exact automorphisms extension
+    exact ↥(automorphisms extension)
 
 abbrev signature : Signature where
   Params := SourceData
@@ -51,13 +53,13 @@ abbrev arena : Arena where
   Law R := ∀ {N : Type} {Q : Type} {S : Type}
     [hN : CommGroup N] [hQ : Group Q] [hS : Group S] (E : GroupExtension N Q S),
     (∀ (a : automorphisms E) (y : Q),
-      E.inl ((defectEquiv E (Additive.ofMul a)) (E.rightHom y)).toMul =
+      E.inl (@Additive.toMul N ((defectEquiv E (Additive.ofMul a)) (E.rightHom y))) =
         R.readout () ⟨N,Q,S,hN,hQ,hS,E,a⟩ y * y⁻¹) ∧
     (∀ (d : cocycles₁ (coefficients E)) (y : Q),
-      ((defectEquiv E).symm d).toMul.val y = E.inl (d (E.rightHom y)).toMul * y) ∧
+      ((defectEquiv E).symm d).toMul.val y = E.inl (@Additive.toMul N (d (E.rightHom y))) * y) ∧
     (∀ a : Additive (automorphisms E), a ∈ innerKernel E ↔
       ∃ b : N, ∀ y : Q,
-        R.readout () ⟨N,Q,S,hN,hQ,hS,E,a.toMul⟩ y = E.inl b * y * (E.inl b)⁻¹) ∧
+        a.toMul.val y = E.inl b * y * (E.inl b)⁻¹) ∧
     Nonempty ((Additive (automorphisms E) ⧸ innerKernel E) ≃+ H1 (coefficients E))
 
 abbrev statement : Prop := type_of% @classification
@@ -72,7 +74,7 @@ private def testExtension : GroupExtension (ULift C) (ULift C) Unit where
     map_one' := rfl
     map_mul' := fun _ _ => rfl }
   rightHom := 1
-  inl_injective := fun _ _ h => by simpa using congrArg (fun x => ULift.up x.down : ULift C → ULift C) h
+  inl_injective := fun _ _ h => h
   range_inl_eq_ker_rightHom := by
     ext y
     constructor
@@ -89,7 +91,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := (classification E).1 a y
   have he : (1 : ULift C) = y⁻¹ := by
     calc
-      _ = E.inl ((defectEquiv E (Additive.ofMul a)) (E.rightHom y)).toMul := by
+      _ = E.inl (@Additive.toMul (ULift C) ((defectEquiv E (Additive.ofMul a)) (E.rightHom y))) := by
         simpa only [a, OneMemClass.coe_one, MulAut.one_apply, mul_inv_cancel] using ha.symm
       _ = _ := by simpa only [rejected, realize, one_mul] using hb
   have hy : y = 1 := by simpa only [inv_eq_one] using he.symm
@@ -115,7 +117,7 @@ def family : Registration arena statement where
   dependence := dependence
 
 /-- The family evidence retains the original theorem telescope. Source occurrence
-selection for the nested automorphism evaluations remains unspecified. -/
+selection addresses the first defect formula in its original lexical scope. -/
 def entry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@classification)
     (type_of% (realize signature (fun _ p y => p.automorphism.val y) (fun e => nomatch e)))
@@ -136,9 +138,19 @@ def entry : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.HomologicalAlgebra.AbelianExtensionH1
+    definition := none
+    coordinates := #[0,1,2,6,7]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","fn","arg","body","body","arg","fn","arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
 
+end
 end Reg.D5.S3.HomologicalAlgebra.AbelianExtensionH1

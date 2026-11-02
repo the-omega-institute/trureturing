@@ -10,6 +10,11 @@ import Mathlib.GroupTheory.GroupExtension.Basic
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
 import Mathlib.Tactic.Group
 
+/-!
+The actual conjugation action, lift-independent defects and cocycle twists for an
+abelian extension give a composition-compatible first-cohomology classification.
+-/
+
 set_option autoImplicit false
 noncomputable section
 namespace D5.S3.HomologicalAlgebra.AbelianExtensionH1
@@ -42,7 +47,7 @@ private theorem inl_action (y : Q) (n : N) :
 /-- Integral coefficients with the actual, potentially nontrivial quotient action. -/
 abbrev coefficients : Rep ℤ S :=
   letI := MulDistribMulAction.compHom N (action E)
-  Rep.ofMulDistribMulAction S N
+  Rep.of (Representation.ofMulDistribMulAction S N)
 
 /-- Automorphisms of the actual middle group fixing both endpoints pointwise. -/
 def automorphisms : Subgroup (MulAut Q) where
@@ -115,49 +120,48 @@ private theorem defect_cocycle (a : automorphisms E) (s t : S) :
 
 /-- Defects as pinned Mathlib one-cocycles. -/
 def cocycle (a : automorphisms E) : cocycles₁ (coefficients E) :=
-    ⟨(fun s => Additive.ofMul (defect E a s)), (mem_cocycles₁_iff _).2 (defect_cocycle E a)⟩
+    ⟨(fun s => @Additive.ofMul N (defect E a s)), (mem_cocycles₁_iff _).2 (defect_cocycle E a)⟩
 
 private theorem twist_map_mul (d : cocycles₁ (coefficients E)) (x y : Q) :
-    E.inl (d (E.rightHom (x * y))).toMul * (x * y) =
-      (E.inl (d (E.rightHom x)).toMul * x) * (E.inl (d (E.rightHom y)).toMul * y) := by
+    E.inl (@Additive.toMul N (d (E.rightHom (x * y)))) * (x * y) =
+      (E.inl (@Additive.toMul N (d (E.rightHom x))) * x) * (E.inl (@Additive.toMul N (d (E.rightHom y))) * y) := by
   have hd := (mem_cocycles₁_iff _).1 d.property (E.rightHom x) (E.rightHom y)
-  change (d (E.rightHom x * E.rightHom y)).toMul =
-    action E (E.rightHom x) (d (E.rightHom y)).toMul * (d (E.rightHom x)).toMul at hd
+  change (@Additive.toMul N (d (E.rightHom x * E.rightHom y))) =
+    action E (E.rightHom x) (@Additive.toMul N (d (E.rightHom y))) * (@Additive.toMul N (d (E.rightHom x))) at hd
   rw [map_mul E.rightHom, hd, mul_comm (action E _ _), map_mul, inl_action]
   group
 
 /-- A cocycle twists the given middle group, without a group section. -/
 def twist (d : cocycles₁ (coefficients E)) : automorphisms E := by
   let f : Q →* Q := {
-    toFun := fun y => E.inl (d (E.rightHom y)).toMul * y
+    toFun := fun y => E.inl (@Additive.toMul N (d (E.rightHom y))) * y
     map_one' := by
-      change E.inl (d 1).toMul * 1 = 1
-      rw [cocycles₁_map_one, mul_one]
+      rw [map_one E.rightHom, cocycles₁_map_one, mul_one]
       exact E.inl.map_one
     map_mul' := twist_map_mul E d }
   let e : E.Equiv E := GroupExtension.Equiv.ofMonoidHom f
     (by
       ext n
-      change E.inl (d (E.rightHom (E.inl n))).toMul * E.inl n = E.inl n
+      change E.inl (@Additive.toMul N (d (E.rightHom (E.inl n)))) * E.inl n = E.inl n
       rw [E.rightHom_inl, cocycles₁_map_one]
       change E.inl 1 * E.inl n = E.inl n
       rw [map_one, one_mul]) (by
       ext y
-      change E.rightHom (E.inl (d (E.rightHom y)).toMul * y) = E.rightHom y
+      change E.rightHom (E.inl (@Additive.toMul N (d (E.rightHom y))) * y) = E.rightHom y
       rw [map_mul, E.rightHom_inl, one_mul])
   exact ⟨e.toMulEquiv, e.map_inl, e.rightHom_map⟩
 
 private theorem twist_apply (d : cocycles₁ (coefficients E)) (y : Q) :
-    (twist E d).val y = E.inl (d (E.rightHom y)).toMul * y := rfl
+    (twist E d).val y = E.inl (@Additive.toMul N (d (E.rightHom y))) * y := rfl
 
 private theorem cocycle_twist (d : cocycles₁ (coefficients E)) : cocycle E (twist E d) = d := by
   apply cocycles₁_ext
   intro s
   obtain ⟨y, rfl⟩ := E.rightHom_surjective s
-  change Additive.ofMul (defect E (twist E d) (E.rightHom y)) = d (E.rightHom y)
-  apply Additive.toMul.injective
+  change @Additive.ofMul N (defect E (twist E d) (E.rightHom y)) = d (E.rightHom y)
+  apply (@Additive.toMul N).injective
   apply E.inl_injective
-  rw [defect_spec, twist_apply]
+  rw [toMul_ofMul, defect_spec, twist_apply]
   group
 
 private theorem twist_cocycle (a : automorphisms E) : twist E (cocycle E a) = a := by
@@ -172,8 +176,8 @@ private theorem cocycle_mul (a b : automorphisms E) : cocycle E (a * b) = cocycl
   apply cocycles₁_ext
   intro s
   obtain ⟨y, rfl⟩ := E.rightHom_surjective s
-  change Additive.ofMul (defect E (a * b) (E.rightHom y)) =
-    Additive.ofMul (defect E a (E.rightHom y) * defect E b (E.rightHom y))
+  change @Additive.ofMul N (defect E (a * b) (E.rightHom y)) =
+    @Additive.ofMul N (defect E a (E.rightHom y) * defect E b (E.rightHom y))
   congr 1
   apply E.inl_injective
   rw [map_mul, defect_spec, defect_spec, defect_spec]
@@ -185,7 +189,7 @@ private theorem cocycle_mul (a b : automorphisms E) : cocycle E (a * b) = cocycl
   simp only [map_mul, defect_spec] at hc
   calc
     _ = E.inl (defect E b (E.rightHom y)) * (a.val y * y⁻¹) := by group
-    _ = _ := by rw [defect_spec] at hc; exact hc.symm
+    _ = _ := by simpa only [defect_spec, mul_inv_cancel_right] using hc.symm
 
 /-- Automorphism composition is addition of actual general-action cocycles. -/
 def defectEquiv : Additive (automorphisms E) ≃+ cocycles₁ (coefficients E) where
@@ -209,41 +213,54 @@ private theorem classMap_zero_iff (a : Additive (automorphisms E)) :
       a.toMul.val y = E.inl b * y * (E.inl b)⁻¹ := by
   rw [show classMap E a = H1π (coefficients E) (cocycle E a.toMul) from rfl,
     H1π_eq_zero_iff]
-  change (Additive.ofMul ∘ defect E a.toMul) ∈ coboundaries₁ (coefficients E) ↔ _
+  change ((@Additive.ofMul N) ∘ defect E a.toMul) ∈ coboundaries₁ (coefficients E) ↔ _
+  letI := MulDistribMulAction.compHom N (action E)
+  have hr (s : S) (b : Additive N) :
+      (coefficients E).ρ s b = @Additive.ofMul N (action E s (@Additive.toMul N b)) :=
+    Representation.ofMulDistribMulAction_apply_apply S N s b
   constructor
   · rintro ⟨b, hb⟩
-    refine ⟨b.toMul⁻¹, ?_⟩
+    refine ⟨(@Additive.toMul N b)⁻¹, ?_⟩
     intro y
     have h := congrFun hb (E.rightHom y)
-    change Additive.ofMul (action E (E.rightHom y) b.toMul * b.toMul⁻¹) =
-      Additive.ofMul (defect E a.toMul (E.rightHom y)) at h
-    have hi := congrArg E.inl (Additive.ofMul.injective h)
+    rw [d₀₁_hom_apply, hr] at h
+    have hm := congrArg (@Additive.toMul N) h
+    simp only [toMul_sub, toMul_ofMul, Function.comp_apply, div_eq_mul_inv] at hm
+    have hi := congrArg E.inl hm
     rw [map_mul, map_inv, inl_action, defect_spec] at hi
+    have hc : y * E.inl (@Additive.toMul N b) * y⁻¹ * (E.inl (@Additive.toMul N b))⁻¹ =
+        (E.inl (@Additive.toMul N b))⁻¹ * (y * E.inl (@Additive.toMul N b) * y⁻¹) := by
+      rw [← inl_action, ← map_inv, ← map_mul, ← map_mul, mul_comm]
     rw [map_inv]
     calc
       _ = (a.toMul.val y * y⁻¹) * y := by group
-      _ = _ := by rw [← hi]; group
+      _ = _ := by rw [← hi, hc]; group
   · rintro ⟨b, hb⟩
-    refine ⟨Additive.ofMul b⁻¹, ?_⟩
+    refine ⟨@Additive.ofMul N b⁻¹, ?_⟩
     funext s
     obtain ⟨y, rfl⟩ := E.rightHom_surjective s
-    change Additive.ofMul (action E (E.rightHom y) b⁻¹ * (b⁻¹)⁻¹) =
-      Additive.ofMul (defect E a.toMul (E.rightHom y))
-    congr 1
+    rw [d₀₁_hom_apply, hr]
+    apply (@Additive.toMul N).injective
+    simp only [toMul_sub, toMul_ofMul, Function.comp_apply, div_eq_mul_inv]
     apply E.inl_injective
     rw [map_mul, inl_action, map_inv, inv_inv, defect_spec, hb]
-    group
+    have hc : y * E.inl b⁻¹ * y⁻¹ * E.inl b = E.inl b * (y * E.inl b⁻¹ * y⁻¹) := by
+      rw [← inl_action, ← map_mul, ← map_mul, mul_comm]
+    simpa only [map_inv, mul_assoc] using hc
 
 /-- Actual inner-kernel automorphisms, identified by the vanishing defect class. -/
 def innerKernel : AddSubgroup (Additive (automorphisms E)) := (classMap E).ker
+
+instance innerKernel_normal : (innerKernel E).Normal :=
+  inferInstanceAs (classMap E).ker.Normal
 
 /-- Classification for arbitrary abelian extensions, including nonsplit extensions,
 nontrivial quotient actions and the zero coefficient group. -/
 theorem classification :
     (∀ (a : automorphisms E) (y : Q),
-      E.inl ((defectEquiv E (Additive.ofMul a)) (E.rightHom y)).toMul = a.val y * y⁻¹) ∧
+      E.inl (@Additive.toMul N ((defectEquiv E (Additive.ofMul a)) (E.rightHom y))) = a.val y * y⁻¹) ∧
     (∀ (d : cocycles₁ (coefficients E)) (y : Q),
-      ((defectEquiv E).symm d).toMul.val y = E.inl (d (E.rightHom y)).toMul * y) ∧
+      ((defectEquiv E).symm d).toMul.val y = E.inl (@Additive.toMul N (d (E.rightHom y))) * y) ∧
     (∀ a : Additive (automorphisms E), a ∈ innerKernel E ↔
       ∃ b : N, ∀ y : Q, a.toMul.val y = E.inl b * y * (E.inl b)⁻¹) ∧
     Nonempty ((Additive (automorphisms E) ⧸ innerKernel E) ≃+ H1 (coefficients E)) := by
