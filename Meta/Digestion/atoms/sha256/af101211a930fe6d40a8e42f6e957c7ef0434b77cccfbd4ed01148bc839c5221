@@ -1,0 +1,101 @@
+### 证明第二步：选取有明确正贡献的实际素数层
+
+置
+
+
+<a id="display-110"></a>
+
+$$
+y=\sqrt{2T},\qquad X=T-1.
+$$
+
+
+当 $T\ge2^{19}$ 时，
+
+
+<a id="display-111"></a>
+
+$$
+y\ge2^{10},\qquad X\ge8y.
+$$
+
+
+对实际素数 $y<p\le X$，有
+
+
+<a id="display-112"></a>
+
+$$
+z_p>\frac1{p^2}.
+$$
+
+
+同时，
+
+
+<a id="display-113"></a>
+
+$$
+\lambda_{p,1}
+=
+\log(1+p^{-1})
+>
+\frac1{p+1}\ge\frac1T>z_p,
+$$
+
+
+所以第一层的两个截断项恰好相消。
+
+第二层满足
+
+
+<a id="display-114"></a>
+
+$$
+\lambda_{p,2}
+=
+\log\left(1+\frac1{p(p+1)}\right)
+>
+\frac1{p^2+p+1}.
+$$
+
+
+因为这些素数都大于 $4$，
+
+
+<a id="display-115"></a>
+
+$$
+\frac1{p^2+p+1}\ge\frac3{4p^2}.
+$$
+
+
+所有后续层的真实贡献也为正，因此
+
+
+<a id="display-116"></a><a id="eq-33"></a>
+
+$$
+\boxed{
+\mathcal B_p(T)>\frac1{4p^2}.
+}
+$$
+
+<p align="center" data-equation-number="33"><a href="#eq-33">(33)</a></p>
+
+
+于是，只要该区间非空，
+
+
+<a id="display-117"></a><a id="eq-34"></a>
+
+$$
+\mathcal B(T)>
+\frac14\sum_{y<p\le X}\frac1{p^2}.
+$$
+
+<p align="center" data-equation-number="34"><a href="#eq-34">(34)</a></p>
+
+
+下一步同时证明区间内确实存在素数。
+

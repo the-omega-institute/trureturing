@@ -1,0 +1,64 @@
+## 六、将全部未知符号精确压缩到低矩 Schur 核心
+
+取任意互异节点
+
+
+<a id="display-78"></a>
+
+$$
+t_1,\ldots,t_m\in[0,D],
+$$
+
+
+并令
+
+
+<a id="display-79"></a>
+
+$$
+H=[\mathscr K(t_i-t_j)].
+$$
+
+
+定义矩矩阵
+
+
+<a id="display-80"></a>
+
+$$
+V=
+\begin{pmatrix}
+1&\cdots&1\\
+t_1&\cdots&t_m\\
+\vdots&&\vdots\\
+t_1^N&\cdots&t_m^N
+\end{pmatrix}.
+$$
+
+
+定理 2 表明
+
+
+<a id="display-81"></a><a id="eq-24"></a>
+
+$$
+\boxed{
+a^*Ha>0
+\quad
+(a\in\ker V,\ a\ne0).
+}
+$$
+
+<p align="center" data-equation-number="24"><a href="#eq-24">(24)</a></p>
+
+
+由于节点互异，
+
+
+<a id="display-82"></a>
+
+$$
+\operatorname{rank}V=\min(m,N+1).
+$$
+
+

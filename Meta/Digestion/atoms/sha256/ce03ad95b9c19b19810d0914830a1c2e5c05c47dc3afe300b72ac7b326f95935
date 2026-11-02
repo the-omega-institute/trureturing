@@ -1,0 +1,90 @@
+### 证明第二步：正核的高频权重趋于无穷
+
+采用 Fourier 变换
+
+
+<a id="display-64"></a>
+
+$$
+\widehat F(\xi)=\int F(t)e^{-i\xi t}\,dt.
+$$
+
+
+由于
+
+
+<a id="display-65"></a>
+
+$$
+\widehat{e^{-\lambda|\cdot|}}(\xi)
+=
+\frac{2\lambda}{\lambda^2+\xi^2},
+$$
+
+
+有
+
+
+<a id="display-66"></a><a id="eq-20"></a>
+
+$$
+Q_P(\mu)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+m(\xi)|\widehat F_\mu(\xi)|^2\,d\xi,
+$$
+
+<p align="center" data-equation-number="20"><a href="#eq-20">(20)</a></p>
+
+
+其中
+
+
+<a id="display-67"></a>
+
+$$
+m(\xi)
+=
+2\sum_{k\ge1}
+c_k\lambda_k
+\frac{\xi^2}{\lambda_k^2+\xi^2}.
+$$
+
+
+若 $|\xi|\ge\lambda_J$，则
+
+
+<a id="display-68"></a>
+
+$$
+m(\xi)\ge\sum_{k=1}^{J}c_k\lambda_k
+\ge\frac14\sum_{k=1}^{J}\frac1k.
+$$
+
+
+因此
+
+
+<a id="display-69"></a><a id="eq-21"></a>
+
+$$
+\boxed{m(\xi)\longrightarrow+\infty.}
+$$
+
+<p align="center" data-equation-number="21"><a href="#eq-21">(21)</a></p>
+
+
+可以选择有限的 $R_0>0$，使
+
+
+<a id="display-70"></a><a id="eq-22"></a>
+
+$$
+m(\xi)\ge2(M_D+\kappa)
+\qquad(|\xi|\ge R_0).
+$$
+
+<p align="center" data-equation-number="22"><a href="#eq-22">(22)</a></p>
+
+

@@ -1,0 +1,30 @@
+## 三、定理：跨任意固定有限尺度的差分关系趋于正交
+
+取任意固定的互异中心
+
+
+<a id="display-27"></a>
+
+$$
+t_1,\ldots,t_m.
+$$
+
+
+它们之间的距离可以任意大。定义差分关系矩阵
+
+
+<a id="display-28"></a><a id="eq-8"></a>
+
+$$
+\boxed{
+W_h(i,j)
+=
+\Delta_h^2\mathscr K(t_i-t_j).
+}
+$$
+
+<p align="center" data-equation-number="8"><a href="#eq-8">(8)</a></p>
+
+
+这就是对每个中心采用 $\omega_{t_i,h}$ 后，由原实际核得到的二次型矩阵。
+

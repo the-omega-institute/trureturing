@@ -1,0 +1,65 @@
+### E. 完整逐素数预算的前缀证明与同一整数恒等式
+
+[式 (29)](#eq-29)的实对数定义域取整数 $n\ge3$，所以 $T=\log n>1$、$\log T>0$。第八节只使用更窄的 $T\ge2^{19}$，并没有把 $T$ 与另一个整数的参数混用。补足原稿省略的定义，令 $(x)_+=\max(x,0)$、$q=1/(T\log T)$、$\alpha_p=v_p(n)$，并写
+
+$$
+L(n)=\log\frac{\sigma(n)}n
+=\sum_p\sum_{j=1}^{\alpha_p}\lambda_{p,j},\qquad
+\mathcal P(q)=\sum_{p,j\ge1}(\lambda_{p,j}-q\log p)_+,
+$$
+
+$$
+\mathcal D(n)=\mathcal P(q)-\bigl(L(n)-qT\bigr).
+$$
+
+这里 $\mathcal P(q)$ 就是原定义中记作 $P(q)$ 的价格包络；用不同字体避免与第一节的核 $P(t)$ 混淆。这不是新选的松弛量。$\lambda_{p,j}$ 随 $j$ 严格递减且 $\lambda_{p,j}<p^{-j}$，所以包络只有有限项；对每个 $p$ 的实际前 $\alpha_p$ 项，逐项有 $\lambda_{p,j}-q\log p\le(\lambda_{p,j}-q\log p)_+$。又 $\sum_p\alpha_p\log p=\log n=T$，从而 $\mathcal D(n)\ge0$。
+
+先完整检查 $\mathcal B_p$，不能只看其第一层。固定 $p$，$\lambda_j,\nu_j$ 是递减的正序列，且
+
+$$
+\sum_{j\ge1}\lambda_j=\sum_{j\ge1}\nu_j=-\log(1-p^{-1})=:L_p.
+$$
+
+对每个有限 $r\ge1$，令 $\Lambda_r=\sum_{j=1}^r\lambda_j$、$U_r=\sum_{j=1}^r\nu_j$。望远镜求和及几何尾界给
+
+$$
+U_r-\Lambda_r
+=-\log(1-p^{-(r+1)})-\sum_{j\ge r+1}\frac{p^{-j}}j>0,
+$$
+
+因为后一个尾和至多为 $p^{-(r+1)}/[(r+1)(1-p^{-1})]\le p^{-(r+1)}$，而前一项严格大于 $p^{-(r+1)}$。两条完整总和相同。对任意 $z>0$，只有有限项大于 $z$，故
+
+$$
+\sum_j(\lambda_j-z)_+=\max_{r\ge0}(\Lambda_r-rz)
+\le\max_{r\ge0}(U_r-rz)=\sum_j(\nu_j-z)_+.
+$$
+
+用 $\min(z,a)=a-(a-z)_+$ 和相同总和，得 $\mathcal B_p\ge0$。$z=0$ 时两侧截断和都为零，可直接约定。对 $p\ge T>1$，$p\log p\ge T\log T$ 给 $z_p\ge1/p$，每个 $\nu_{p,j}\le1/p$，每个 $\lambda_{p,j}\le\lambda_{p,1}=\log(1+1/p)<1/p$。因此两列的全部截断项都未被截短，完整相减恰为 $L_p-L_p=0$。第一层确为负，恰由更高层抵消；它不反驳原稿的 $\mathcal B_p=0$。这也证明 $\mathcal B(T)$ 只有有限多个非零逐素数项。总和相等的消去先在每个素数内部完成；不把遍及所有素数的两列未截断总和分别求和后作无穷减无穷。
+
+再定义仅用于核对的有限 Euler 包络
+
+$$
+\mathcal E(q)=\sum_{p,j\ge1}(\nu_{p,j}-q\log p)_+.
+$$
+
+因 $u\mapsto u\log u$ 在 $u>1$ 严格递增，$\nu_{p,j}\ge q\log p$ 当且仅当 $p^j\le T$。等号项的正部为零，所以使用 $\le T$ 的原稿端点约定给出同一个和：
+
+$$
+\mathcal E(q)=\sum_{p^j\le T}\frac1{jp^j}-q\psi(T),\qquad
+\mathcal B(T)=\mathcal E(q)-\mathcal P(q).
+$$
+
+将这两个有限包络与 $\mathcal D(n)$ 代入，所有包络和 $q\psi(T),qT$ 项逐一消去：
+
+$$
+\begin{aligned}
+\mathcal D(n)+I_\psi(T)+\mathcal B(T)
+&=\gamma+\log\log T-L(n)\\
+&=-\log\frac{\sigma(n)}{e^\gamma n\log\log n}.
+\end{aligned}
+$$
+
+这证明的正是同一个 $n$、同一个 $T$ 的式 (29)，不以 EulerLayerRootCorrection 的根尺度极限代替缺失的恒等式证明。该固定来源保留全部实际指数层，提供结构背景；它既不替代这里的前缀论证，也不证明最终带符号尾项不等式。
+
+<a id="note-f"></a>
+

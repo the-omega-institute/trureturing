@@ -1,0 +1,80 @@
+### 证明第三步：加权分部积分
+
+定义
+
+
+<a id="display-118"></a>
+
+$$
+A(u)=\vartheta(u)-\vartheta(y).
+$$
+
+
+由式 (31)—(32)，
+
+
+<a id="display-119"></a>
+
+$$
+A(u)\ge\frac c2(u-4y)_+.
+$$
+
+
+Stieltjes 分部积分给出
+
+
+<a id="display-120"></a>
+
+$$
+\begin{aligned}
+\sum_{y<p\le X}\frac{\log p}{p^2}
+&=
+\frac{A(X)}{X^2}
++2\int_y^X\frac{A(u)}{u^3}\,du\\
+&\ge
+\frac c2
+\left[
+\frac{X-4y}{X^2}
++2\int_{4y}^X\frac{u-4y}{u^3}\,du
+\right]\\
+&=
+\frac c{8y}-\frac c{2X}>0.
+\end{aligned}
+$$
+
+
+所以区间确实含有素数。又因为 $\log p\le\log T$，
+
+
+<a id="display-121"></a>
+
+$$
+\sum_{y<p\le X}\frac1{p^2}
+\ge
+\frac1{\log T}
+\left(\frac c{8y}-\frac c{2X}\right).
+$$
+
+
+结合式 (34)，得到更精确的下界
+
+
+<a id="display-122"></a><a id="eq-35"></a>
+
+$$
+\boxed{
+\mathcal B(T)>
+\frac{c}{32y\log T}
+\left(1-\frac{4y}{X}\right).
+}
+$$
+
+<p align="center" data-equation-number="35"><a href="#eq-35">(35)</a></p>
+
+
+最后 $X\ge8y$，故括号至少为 $1/2$。代入 $y=\sqrt{2T}$，式 (30) 成立。证毕。
+
+---
+
+<a id="section-8"></a>
+

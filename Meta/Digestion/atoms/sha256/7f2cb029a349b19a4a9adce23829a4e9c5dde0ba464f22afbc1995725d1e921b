@@ -1,0 +1,36 @@
+### 定理 2：任意固定窗口的有限余维正性
+
+对任意 $D>0$ 和任意 $\kappa>0$，存在有限整数 $N=N(D,\kappa)$，使得
+
+
+<a id="display-57"></a><a id="eq-17"></a>
+
+$$
+\boxed{
+\int t^j\,d\mu(t)=0,
+\qquad j=0,\ldots,N
+}
+$$
+
+<p align="center" data-equation-number="17"><a href="#eq-17">(17)</a></p>
+
+
+必然推出
+
+
+<a id="display-58"></a><a id="eq-18"></a>
+
+$$
+\boxed{
+Q_{\mathscr K}(\mu)
+\ge\kappa\|F_\mu\|_2^2.
+}
+$$
+
+<p align="center" data-equation-number="18"><a href="#eq-18">(18)</a></p>
+
+
+若 $\mu\ne0$，则右端严格为正。
+
+这里不要求 $D$ 小于上一轮的局部正定半径。
+
