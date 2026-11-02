@@ -207,7 +207,7 @@ under issue #25149.
 `CarneroBravoKingRoutes` specifies the actual 141 natural-labelled vertices,
 178 original edges and 178 integer polylines with 1,283 corners. The prescribed
 subdivision inserts `3*k(e)` distinct fresh vertices on each edge, with
-`sum k(e) = 31286`, giving 93,999 vertices and 94,036 edges. Its intended
+`sum k(e) = 31286`, giving 93,999 vertices and 94,036 edges. Its
 induced embedding has target `P_9337` strong `P_9061`. The literal transform
 `T(x,y) = (x+y+25,x-y+1705)` has inclusive one-based bounds; the map into
 `Fin 9337` times `Fin 9061` subtracts one from both coordinates.
@@ -217,8 +217,17 @@ Lean-verified tagged paths, corner-expansion semantics, occupancy-checker
 soundness and strong-product conversion. The computational tags retain the
 actual edge numbers and natural positions; their injection and exact graph
 correspondence with the dependent fresh vertices are proved. The concrete
-large routing reduction and finite embedding remain uncompiled, so this
-entry does not claim a verified embedding of the literal routes.
+kernel-checked occupancy reduction proves coordinate injection and both
+directions of adjacency for the literal routes. `inducedEmbedding` maps into
+the stated finite strong product, and `inducedIso` identifies the routed graph
+with the induced graph on its range. `endpoint_inventory`,
+`endpoint_pair_injective` and `baseGraph_iff_endpoints` identify the route
+endpoints with all original edges. `sum_subdivisions`, `actual_vertex_count`,
+`actual_edge_count`, `selected_vertex_count` and `selected_edge_count` give
+the exact multiplicity and graph counts. The evaluator proposes occupancy
+trees and proof blocks; Lean's kernel checks the exact fill equations and
+every block. No native-evaluation axiom or assumed certificate correctness
+is used.
 
 The seed is Adamaszek's; the supplied graph-move route uses the Barmak/Lozin
 approach. The explicit coordinate construction is local proof content, not a

@@ -60,7 +60,8 @@ def family : Registration arena (type_of% rotation_identity) where
   dependence := actual_dependence
 
 def rotationRegistration :
-    Contract.Registration rotation_identity (Realization signature) Type Unit where
+    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+      rotation_identity (Realization signature) Type Unit where
   unitName := `D5.S3.Combinatorics.Graph.Products.LatticeRouting.rotation_identity.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Products.LatticeRouting.Rotation.family
   realizationSource := none
