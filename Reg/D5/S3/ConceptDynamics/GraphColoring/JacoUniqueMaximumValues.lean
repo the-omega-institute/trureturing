@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! The complete source telescope with one dependent readout and whole-family variation. -/
+
 namespace Reg.D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues
 
 open _root_.D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues
@@ -37,15 +39,15 @@ private theorem depends : ObservationalDependence sig actual := by
   intro i
   exact ⟨(), 0, 1, by change (0 : ℕ) ≠ 1; omega⟩
 
-def evidence : Registration arena (type_of% @result) where
+def evidence : Registration arena (type_of% @_root_.D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues.result) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨result, rejected, bad⟩
+  variation := ⟨_root_.D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues.result, rejected, bad⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad
   dependence := depends
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@result) (Realization sig) Unit Unit where
+    (@_root_.D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues.result) (Realization sig) Unit Unit where
   unitName := `D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues.result.__information_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues.evidence
   realizationSource := none
