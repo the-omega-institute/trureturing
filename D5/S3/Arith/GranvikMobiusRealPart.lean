@@ -8,6 +8,9 @@
 
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Mathlib.Basic.Complex.Basic
+import Mathlib.Tactic.IntervalCases
+
+/-! The exact arithmetic real-part conjecture in OEIS A292273. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
