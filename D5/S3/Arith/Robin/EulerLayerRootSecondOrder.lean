@@ -183,8 +183,9 @@ private theorem second_cutoff_root_second_order :
   have hrhs : Tendsto (fun t : ℝ =>
       -(s t) ^ 2 * (Real.log 2 + 2 * Real.log (s t)) / (s t + 1))
       atTop (𝓝 (-Real.log 2 / 2)) := by
-    simpa using (hsq.neg.mul
-      (tendsto_const_nhds.add (hslog.const_mul 2))).div
+    have hconst : Tendsto (fun _ : ℝ => Real.log 2) atTop (𝓝 (Real.log 2)) :=
+      tendsto_const_nhds
+    simpa using (hsq.neg.mul (hconst.add (hslog.const_mul 2))).div
         (hs.add_const 1) (by norm_num : (1 : ℝ) + 1 ≠ 0)
   have hLs : Tendsto (fun t : ℝ => Real.log t * (s t - 1))
       atTop (𝓝 (-Real.log 2 / 2)) := by
