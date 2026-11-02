@@ -53,7 +53,14 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
     DensityState (Fin d) := by
-  sorry
+  classical
+  by_cases he : IsMIC d e
+  · refine ⟨ludersChannel e (inputProjector u), ?_, ?_⟩
+    · sorry
+    · sorry
+  · refine ⟨baseProjector, ?_, ?_⟩
+    · sorry
+    · sorry
 
 private noncomputable def sigmaState {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) : DensityState (Fin d) := by
@@ -68,13 +75,13 @@ noncomputable def typicalEntropy (d : ℕ) [NeZero d]
 
 private theorem luders_state_density {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
-    (u : Matrix.unitaryGroup (Fin d) ℂ) :
+    (u : Matrix.unitaryGroup (Fin d) ℂ) (he : IsMIC d e) :
     (ludersState e u).1 = ludersChannel e (inputProjector u) := by
   sorry
 
 private theorem entropy_gap {d : ℕ} [NeZero d]
     (e : Fin (d ^ 2) → Matrix (Fin d) (Fin d) ℂ)
-    (u : Matrix.unitaryGroup (Fin d) ℂ) :
+    (u : Matrix.unitaryGroup (Fin d) ℂ) (he : IsMIC d e) :
     Real.log (d + 1) - 2 / (d + 1) * Real.log 2 -
         vonNeumannEntropy (ludersState e u) =
       quantumRelativeEntropy (ludersState e u) (sigmaState u) +
