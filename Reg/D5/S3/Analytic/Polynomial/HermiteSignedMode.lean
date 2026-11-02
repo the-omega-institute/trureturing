@@ -56,8 +56,10 @@ def source_registration : Registration arena claim where
     intro i
     refine ⟨(), 0, 1, ?_⟩
     change a 0 ≠ a 1
-    have hzero := (result.1 0).1
+    intro he
     have hstep := result.2 0
+    change (a 1 : ℤ) - (a 0 : ℤ) = 1 ∨ (a 1 : ℤ) - (a 0 : ℤ) = -3 at hstep
+    rw [← he] at hstep
     omega
 
 def registration :
