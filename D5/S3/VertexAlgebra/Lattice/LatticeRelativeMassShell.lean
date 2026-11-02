@@ -429,12 +429,6 @@ def shellCoeffEquiv (D : LatticeData)
       (Finsupp.supported ℂ ℂ (allowedLabels D a))).trans
         (Finsupp.supportedEquivFinsupp (allowedLabels D a)))
 
-@[simp] theorem shellCoeffEquiv_apply (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (a : Charge D) (x : relativeMassShell D H a) (i : ShellIndex D a) :
-    shellCoeffEquiv D H hHG hGH a x i = coeff D (x : State D) i.1 := rfl
-
 def shellBasis (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
@@ -455,12 +449,6 @@ theorem shellBasis_coe (D : LatticeData)
         (tensorBasis D).repr (tensorBasis D i.1)
   rw [LinearEquiv.apply_symm_apply, Module.Basis.repr_self]
   exact Finsupp.supportedEquivFinsupp_symm_single (allowedLabels D a) i 1
-
-/-- Independence is restricted from the full original tensor basis. -/
-theorem allowed_tensor_linearIndependent (D : LatticeData) (a : Charge D) :
-    LinearIndependent ℂ (fun i : ShellIndex D a => tensorBasis D i.1) :=
-  (tensorBasis D).linearIndependent.comp (fun i : ShellIndex D a => i.1)
-    Subtype.val_injective
 
 /-- The prescribed nonnegative cutoff, including the empty-space case. -/
 def massShellCutoff (D : LatticeData) (a : Charge D) : ℕ :=

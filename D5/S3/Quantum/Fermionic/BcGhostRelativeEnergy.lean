@@ -213,8 +213,6 @@ theorem level_cast (S : Finset ℕ) :
 
 def relativeOperator : Module.End ℂ Fock := L 0 + (1 : Module.End ℂ Fock)
 
-abbrev N : Module.End ℂ Fock := relativeOperator
-
 theorem relativeOperator_coefficient (v : Fock) (S : Finset ℕ) :
     (relativeOperator v) S = (relativeEnergy S : ℂ) * v S := by
   change (L 0 v) S + v S = _
@@ -226,19 +224,6 @@ def RelativeKernel (v : Fock) : Prop := b 0 v = 0
 
 def RelativeLevel (ell : ℕ) (v : Fock) : Prop :=
     RelativeKernel v ∧ relativeOperator v = (ell : ℂ) • v
-
-theorem relativeOperator_invariant (v : Fock) (hb : RelativeKernel v) :
-    RelativeKernel (relativeOperator v) := by
-  have hzero : L 0 * b 0 - b 0 * L 0 = 0 := by simpa using ward_b 0 0
-  have hcomm : L 0 * b 0 = b 0 * L 0 := sub_eq_zero.mp hzero
-  unfold RelativeKernel relativeOperator at *
-  calc
-    b 0 (L 0 v + v) = b 0 (L 0 v) + b 0 v := map_add _ _ _
-    _ = L 0 (b 0 v) + b 0 v := by
-      have hc : b 0 (L 0 v) = L 0 (b 0 v) := by
-        simpa only [Module.End.mul_apply] using (LinearMap.congr_fun hcomm v).symm
-      rw [hc]
-    _ = 0 := by rw [hb, map_zero, add_zero]
 
 theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) :
     RelativeLevel ell v ↔
