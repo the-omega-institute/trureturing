@@ -12,8 +12,7 @@ import Mathlib.LinearAlgebra.Matrix.Permutation
 /-! The cyclic construction and its defining certificate. -/
 
 set_option autoImplicit false
-open scoped BigOperators ComplexConjugate
-open Matrix
+open scoped BigOperators
 
 namespace D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
 
@@ -62,7 +61,8 @@ private theorem cyclic_shift_bijective0 (d : ℕ) (k : Fin d) :
       ((Equiv.addRight (ZMod.finEquiv d k)).trans (ZMod.finEquiv d).symm.toEquiv)
     have hfun : cyclicShift d k = e := by
       funext i
-      simp [cyclicShift, h, e]
+      delta cyclicShift
+      simp [h, e]
     rw [hfun]
     exact e.bijective
   · have hd : d = 0 := Nat.eq_zero_of_not_pos h
@@ -99,15 +99,19 @@ private theorem cyclic_shift_factor (d : ℕ) (h : 2 ≤ d) (i j k : Fin d) :
     have hk' := congrArg (ZMod.finEquiv d) hk
     have hsum : (ZMod.finEquiv d i) + (ZMod.finEquiv d k) =
         ZMod.finEquiv d j := by
-      simpa [cyclicShiftEquiv, cyclicShift, hp] using hk'
-    simp [cyclicMu, hp]
+      delta cyclicShiftEquiv cyclicShift at hk'
+      simpa [hp] using hk'
+    delta cyclicMu
+    simp [hp]
     exact (eq_sub_iff_add_eq).2 (by simpa [add_comm] using hsum)
   · intro hk
     apply (ZMod.finEquiv d).injective
     have hk' := congrArg (ZMod.finEquiv d) hk
     have hsub : (ZMod.finEquiv d k) = ZMod.finEquiv d j - ZMod.finEquiv d i := by
-      simpa [cyclicMu, hp] using hk'
-    simpa [cyclicShiftEquiv, cyclicShift, hp] using
+      delta cyclicMu at hk'
+      simpa [hp] using hk'
+    delta cyclicShiftEquiv cyclicShift
+    simpa [hp] using
       (by simpa [add_comm] using (eq_sub_iff_add_eq.1 hsub))
 
 private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
@@ -120,16 +124,16 @@ private theorem cyclic_q_orthogonal (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
 private theorem cyclic_q_factorization (d : ℕ) (h : 2 ≤ d) :
     ∀ i j k, cyclicQ d k i j = cyclicS d i j * cyclicQbar d (cyclicMu d i j) k := by
   intro i j k
-  simp [cyclicQ, cyclicS, cyclicQbar, Equiv.Perm.permMatrix,
-    cyclic_shift_factor d h i j k]
+  delta cyclicQ cyclicS cyclicQbar
+  simp [Equiv.Perm.permMatrix, cyclic_shift_factor d h i j k]
 
 private def cyclicFiberEquiv (d : ℕ) (h : 2 ≤ d) (m : Fin d) :
     {p : Fin d × Fin d // cyclicS d p.1 p.2 ≠ 0 ∧ cyclicMu d p.1 p.2 = m} ≃ Fin d :=
   { toFun := fun p => p.1.1
     invFun := fun i => ⟨(i, cyclicShift d m i), by
-      refine ⟨by simp [cyclicS], ?_⟩
+      refine ⟨by change (1 : ℝ) ≠ 0; simp, ?_⟩
       have hm := (cyclic_shift_factor d h i (cyclicShift d m i) m).mp ?_
-      · simpa [cyclicShiftEquiv] using hm.symm
+      · exact hm.symm
       · rfl⟩
     left_inv := by
       intro p
@@ -138,28 +142,31 @@ private def cyclicFiberEquiv (d : ℕ) (h : 2 ≤ d) (m : Fin d) :
       · rfl
       · have hm : m = cyclicMu d p.1.1 p.1.2 := p.2.2.symm
         have hs := (cyclic_shift_factor d h p.1.1 p.1.2 m).mpr hm
-        simpa [cyclicShiftEquiv] using hs
+        exact hs
     right_inv := by intro i; rfl }
 
 private theorem cyclic_multiplicity (d : ℕ) (h : 2 ≤ d) (i j : Fin d) :
     (cyclicS d i j) ^ 2 = (d : ℝ) / multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) := by
   have hc : multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) = d := by
-    unfold multiplicity
-    simpa [cyclicS] using Fintype.card_congr
+    delta multiplicity
+    simpa only [Fintype.card_fin] using Fintype.card_congr
       (cyclicFiberEquiv d h (cyclicMu d i j))
   have hd : (d : ℝ) ≠ 0 := by
     exact_mod_cast (Nat.ne_of_gt (lt_of_lt_of_le (by omega) h))
-  simp [cyclicS, hc, hd]
+  change (1 : ℝ) ^ 2 =
+    (d : ℝ) / multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j)
+  simp [hc, hd]
 
 private theorem cyclic_qbar_orthonormal (d : ℕ) :
     ∀ m n, ∑ k, cyclicQbar d m k * cyclicQbar d n k = if m = n then 1 else 0 := by
   classical
   intro m n
+  delta cyclicQbar
   by_cases hmn : m = n
   · subst n
-    simp [cyclicQbar]
+    simp
   · have hnm : n ≠ m := Ne.symm hmn
-    simp [cyclicQbar, hmn, hnm]
+    simp [hmn, hnm]
 
 private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
     ∀ m n, ∑ x, star (cyclicShield d m x) * cyclicShield d n x = if m = n then 1 else 0 := by
@@ -173,7 +180,7 @@ private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
     change (∑ j : Fin d,
       star (if i + j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
         (if i + j = n then (Real.sqrt d : ℂ)⁻¹ else 0)) = _
-    rw [(Equiv.addLeft i).sum_comp (fun j : Fin d =>
+    rw [Equiv.sum_comp (Equiv.addLeft i) (fun j : Fin d =>
       star (if j = m then (Real.sqrt d : ℂ)⁻¹ else 0) *
         (if j = n then (Real.sqrt d : ℂ)⁻¹ else 0))]
     by_cases hmn : m = n
@@ -185,7 +192,7 @@ private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
   have hs : (Real.sqrt d : ℂ) ^ 2 = (d : ℂ) := by
     exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg d)
   have hd : (d : ℂ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hp
-  by_cases hmn : m = n <;> simp [hmn, ← inv_pow, hs, hd]
+  by_cases hmn : m = n <;> simp [hmn, inv_pow, hs, hd]
 
 private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
     partialTransposeB (∑ m, Matrix.vecMulVec (cyclicShield d m) (star (cyclicShield d m))) =
@@ -196,14 +203,17 @@ private theorem cyclic_partial_transpose (d : ℕ) (h : 2 ≤ d) :
   letI : NeZero d := ⟨Nat.ne_of_gt hp⟩
   have hmu (i j : Fin d) : cyclicMu d i j = j - i := by
     apply (ZMod.finEquiv d).injective
-    simp [cyclicMu, hp]
+    delta cyclicMu
+    simp [hp]
   apply Matrix.ext
   intro p q
   have heq : q.1 + p.2 = p.1 + q.2 ↔ q.2 - q.1 = p.2 - p.1 := by
     rw [sub_eq_sub_iff_add_eq_add]
     constructor <;> intro hh <;> simpa only [add_comm] using hh.symm
-  simp [partialTransposeB, Matrix.sum_apply, Matrix.vecMulVec_apply,
-    cyclicShield, tVec, cyclicS, hmu, ite_mul, mul_ite, heq]
+  delta partialTransposeB
+  simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply]
+  delta cyclicShield tVec cyclicS
+  simp [hmu, ite_mul, heq]
 
 private theorem cyclic_data (d : ℕ) (h : 2 ≤ d) :
     IsSecondFamilyData d (cyclicQ d) (cyclicQbar d) (cyclicMu d) (cyclicS d)
@@ -219,6 +229,7 @@ theorem result : claim := by
   intro d hd
   exact ⟨cyclicQ d, cyclicQbar d, cyclicMu d, cyclicS d, cyclicShield d,
     cyclic_data d hd⟩
+
 
 end
 end D5.S3.Quantum.Entanglement.BoundEntanglement.SecondFamilyAllDimensions
