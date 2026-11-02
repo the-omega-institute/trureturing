@@ -1,0 +1,11 @@
+**定理 6.2（Guard removal changes the exact fee）。** Extending the formula $Q\lceil\log_2N\rceil+1$ without the calendar guard to the family of Theorem 6.1 gives the wrong value $3Q+1$, exceeding the exact optimum by $Q-1$.
+
+Proof. Here $N=5$, so $L=3$, whereas $m-a+1=2$. The guard (2.3) is violated. At index $2Q+1$ the window starts at $m-2=5$, which is a band phase, so the non-band exclusion used in (3.2) fails at precisely the returning frontier. Theorem 6.1 gives the actual optimum $2Q+2$ and an explicit legal stream. For $Q=2$, that stream is
+
+$$
+1111110\mid1010101\mid0000100\mid0000000\mid0000110\mid1000000,
+\tag{6.4}
+$$
+
+of cost six, rather than seven. This falsifies an unguarded exact-cost extrapolation; it does not claim that (2.3) is necessary for every target to have the numerical value $QL+1$. ∎
+
