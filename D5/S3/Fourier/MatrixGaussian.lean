@@ -174,5 +174,127 @@ theorem integral_fourier_gaussian (A : Matrix n n ℝ) (hA : A.PosDef)
 
 #print axioms integral_fourier_gaussian
 
+/-- Complex bilinear extension of the real Gram quadratic form (no conjugation). -/
+def complexQuadratic (A : Matrix n n ℝ) (z : n → ℂ) : ℂ :=
+  z ⬝ᵥ (A.map Complex.ofRealHom) *ᵥ z
+
+private lemma cast_mulVec (M : Matrix n n ℝ) (x : n → ℝ) :
+    (fun i => ((M *ᵥ x) i : ℂ)) = M.map Complex.ofRealHom *ᵥ (fun i => (x i : ℂ)) := by
+  ext i
+  exact RingHom.map_mulVec Complex.ofRealHom M x i
+
+private lemma complex_sqrt_linear (A : Matrix n n ℝ) (hA : A.PosDef)
+    (z : n → ℂ) (x : n → ℝ) :
+    (((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z) ⬝ᵥ
+      (fun i => ((CFC.sqrt A *ᵥ x) i : ℂ)) = z ⬝ᵥ (fun i => (x i : ℂ)) := by
+  rw [cast_mulVec, ← dotProduct_transpose_mulVec,
+    ← Matrix.transpose_map, sqrt_transpose, mulVec_mulVec, ← Matrix.map_mul,
+    mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr (sqrt_det_ne_zero A hA))]
+  simp
+
+private lemma complex_sqrt_quadratic (A : Matrix n n ℝ) (hA : A.PosDef)
+    (z : n → ℂ) :
+    ∑ i, ((((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z) i)^2 =
+      complexQuadratic A⁻¹ z := by
+  have hR : ((CFC.sqrt A)⁻¹)ᵀ = (CFC.sqrt A)⁻¹ := by
+    simp only [hA.posSemidef.inv_sqrt, sqrt_transpose]
+  have hRR : (CFC.sqrt A)⁻¹ * (CFC.sqrt A)⁻¹ = A⁻¹ := by
+    simp only [hA.posSemidef.inv_sqrt,
+      CFC.sqrt_mul_sqrt_self A⁻¹ hA.inv.posSemidef.nonneg]
+  rw [show (∑ i, ((((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z) i)^2) =
+    (((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z) ⬝ᵥ
+      (((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z) by simp [dotProduct, pow_two]]
+  rw [← dotProduct_transpose_mulVec, ← Matrix.transpose_map, hR,
+    mulVec_mulVec, ← Matrix.map_mul, hRR]
+  rfl
+
+private lemma gaussian_complex_sqrt_coordinates (A : Matrix n n ℝ) (hA : A.PosDef)
+    (b : ℂ) (z : n → ℂ) (x : n → ℝ) :
+    -b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ) =
+      -b * ∑ i, ((CFC.sqrt A *ᵥ x) i : ℂ)^2 +
+        ∑ i, ((((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z) i) *
+          ((CFC.sqrt A *ᵥ x) i : ℂ) := by
+  simp_rw [← Complex.ofReal_pow, ← Complex.ofReal_sum, sqrt_quadratic A hA]
+  congr 1
+  exact (complex_sqrt_linear A hA z x).symm
+
+/-- Every coordinate of the linear source may be complex and independent. -/
+theorem integrable_gaussian_source (A : Matrix n n ℝ) (hA : A.PosDef)
+    (b : ℂ) (hb : 0 < b.re) (z : n → ℂ) :
+    Integrable (fun x : n → ℝ =>
+      Complex.exp (-b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ))) := by
+  let d := ((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z
+  have hi := GaussianFourier.integrable_cexp_neg_mul_sum_add hb d
+  have ht := (integrable_mulVec_iff (CFC.sqrt A) (sqrt_det_ne_zero A hA)
+    (fun y : n → ℝ => Complex.exp (-b * ∑ i, (y i : ℂ)^2 +
+      ∑ i, d i * (y i : ℂ)))).2 hi
+  convert ht using 1
+  funext x
+  congr 1
+  exact gaussian_complex_sqrt_coordinates A hA b z x
+
+/-- The arbitrary complex-source integral in coordinate volume, including rank zero.
+The source square is bilinear, not Hermitian. -/
+theorem integral_gaussian_source (A : Matrix n n ℝ) (hA : A.PosDef)
+    (b : ℂ) (hb : 0 < b.re) (z : n → ℂ) :
+    (∫ x : n → ℝ, Complex.exp
+      (-b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ))) =
+      (Real.sqrt A.det : ℂ)⁻¹ * (Real.pi / b) ^ ((Fintype.card n : ℂ) / 2) *
+        Complex.exp (complexQuadratic A⁻¹ z / (4 * b)) := by
+  let d := ((CFC.sqrt A)⁻¹).map Complex.ofRealHom *ᵥ z
+  let f := fun y : n → ℝ => Complex.exp
+    (-b * ∑ i, (y i : ℂ)^2 + ∑ i, d i * (y i : ℂ))
+  have he (x : n → ℝ) : Complex.exp
+      (-b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ)) = f (CFC.sqrt A *ᵥ x) := by
+    congr 1
+    exact gaussian_complex_sqrt_coordinates A hA b z x
+  simp_rw [he]
+  rw [integral_mulVec (CFC.sqrt A) (sqrt_det_ne_zero A hA) f]
+  dsimp [f]
+  rw [GaussianFourier.integral_cexp_neg_mul_sum_add hb,
+    sqrt_det A hA, abs_of_pos (Real.sqrt_pos.2 hA.det_pos)]
+  simp only [Complex.real_smul, Complex.ofReal_inv, mul_assoc]
+  rw [show (∑ i, d i ^ 2) = complexQuadratic A⁻¹ z from complex_sqrt_quadratic A hA z]
+
+/-- Actual Fourier transform of a positive matrix Gaussian with an independent
+complex source in every coordinate. -/
+theorem integral_fourier_gaussian_source (A : Matrix n n ℝ) (hA : A.PosDef)
+    (b : ℂ) (hb : 0 < b.re) (z : n → ℂ) (w : n → ℝ) :
+    (∫ x : n → ℝ, Complex.exp (-2 * Real.pi * Complex.I * (w ⬝ᵥ x : ℝ)) *
+      Complex.exp (-Real.pi * b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ))) =
+      (Real.sqrt A.det : ℂ)⁻¹ * b ^ (-(Fintype.card n : ℂ) / 2) *
+        Complex.exp (complexQuadratic A⁻¹
+          (fun i => z i - 2 * Real.pi * Complex.I * (w i : ℂ)) / (4 * Real.pi * b)) := by
+  have hb0 : b ≠ 0 := by intro h; simpa [h] using hb
+  have hp : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
+  have harg : b.arg ≠ Real.pi := by
+    intro h
+    have := (Complex.arg_eq_pi_iff.mp h).1
+    linarith
+  have he (x : n → ℝ) :
+      Complex.exp (-2 * Real.pi * Complex.I * (w ⬝ᵥ x : ℝ)) *
+        Complex.exp (-Real.pi * b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ)) =
+      Complex.exp (-((Real.pi : ℂ) * b) * (quadratic A x : ℂ) +
+        ∑ i, (z i - 2 * Real.pi * Complex.I * (w i : ℂ)) * (x i : ℂ)) := by
+    rw [← Complex.exp_add]
+    congr 1
+    simp only [dotProduct, Complex.ofReal_sum, Complex.ofReal_mul,
+      sub_mul, Finset.sum_sub_distrib, ← Finset.mul_sum, mul_assoc]
+    ring
+  simp_rw [he]
+  rw [integral_gaussian_source A hA ((Real.pi : ℂ) * b)
+      (by simpa using mul_pos Real.pi_pos hb),
+    show (Real.pi : ℂ) / (Real.pi * b) = b⁻¹ by field_simp,
+    Complex.inv_cpow _ _ harg, ← Complex.cpow_neg]
+  congr 2
+  · congr 1
+    ring
+  · congr 1
+    ring
+
+#print axioms integrable_gaussian_source
+#print axioms integral_gaussian_source
+#print axioms integral_fourier_gaussian_source
+
 end
 end D5.S3.Fourier.MatrixGaussian

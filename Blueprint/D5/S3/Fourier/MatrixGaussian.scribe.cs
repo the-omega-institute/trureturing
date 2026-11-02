@@ -41,7 +41,54 @@ internal sealed class MatrixGaussianDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(FourierFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every finite coordinate type n, real positive definite A, complex b with positive real part and real frequency w, the integral of exp(-2 pi i w dot x) exp(-pi b Q_A(x)) is sqrt(det A)^(-1) b^(-card(n)/2) exp(-pi Q_(A^(-1))(w)/b). The right half-plane excludes the inverse-power branch cut."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("matrixgaussian-complex-quadratic"),
+                DeclarationHandle.Create("D5/S3/Fourier/MatrixGaussian.complexQuadratic"),
+                H("Complex bilinear Gram square"),
+                StatementSource.FromAuthor(Disp(FiniteType(All("A", Mat(V("n"), R),
+                    All("z", Arr(V("n"), C), Equal(Call("complexQuadratic", V("A"), V("z")),
+                        Call("dotProduct", V("z"), Call("mulVec", Call("map", V("A"), V("ofReal")), V("z"))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This is the complex bilinear extension z dot A z. It contains no complex conjugation."))),
+                DescribeRole.Definition),
+            SourceEntry("integrable-gaussian-source", "integrable_gaussian_source", "Independent complex-source integrability",
+                SourceIntegralFormula(true), "Every coordinate of z is independently complex. The proof uses Mathlib's arbitrary-coefficient Gaussian product and the existing real positive square-root change of variables. Rank zero is included."),
+            SourceEntry("integral-gaussian-source", "integral_gaussian_source", "Independent complex-source Gaussian integral",
+                SourceIntegralFormula(false), "The integral is sqrt(det A)^(-1) (pi/b)^(card(n)/2) exp(Q_(A inverse)(z)/(4b)). Coordinate volume fixes the determinant factor; the exponent uses the complex bilinear square."),
+            SourceEntry("integral-fourier-gaussian-source", "integral_fourier_gaussian_source", "Independent complex-source Fourier transform",
+                SourceFourierFormula(), "The actual real-coordinate Fourier integral shifts z to z-2 pi i w inside the inverse bilinear quadratic form. The principal complex power is b^(-card(n)/2); the right half-plane supplies its branch condition."))));
+
+    private static ScribeNode SourceEntry(string id, string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create("matrixgaussian-" + id),
+            DeclarationHandle.Create("D5/S3/Fourier/MatrixGaussian." + name), H(title),
+            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula SourceTerm(Formula b, Formula z) => ExpF(Add(
+        Mul(NegF(b), Cast(Q(V("A"), V("x")), C)),
+        Call("dotProduct", z, Lam("i",V("n"),Cast(Call("x",V("i")),C)))));
+    private static Formula SourceParameters(Formula p) => FiniteType(PositiveMatrix(V("n"),
+        RightParameter(All("z", Arr(V("n"), C), p))));
+    private static Formula SourceIntegralFormula(bool integrability)
+    {
+        var term = SourceTerm(V("b"), V("z"));
+        Formula result = integrability
+            ? Call("Integrable", Lam("x", Arr(V("n"), R), term), Call("volume", Arr(V("n"), R)))
+            : Equal(Integral("x", Arr(V("n"), R), term),
+                Mul(Mul(DetFactor(V("A")), Pow(Div(Pi,V("b")),Div(Cast(Call("card",V("n")),C),D(2)))),
+                    ExpF(Div(Call("complexQuadratic",Inv(V("A")),V("z")),Mul(D(4),V("b"))))));
+        return Disp(SourceParameters(result));
+    }
+    private static Formula SourceFourierFormula()
+    {
+        var phase = ExpF(Mul(Mul(Mul(NegF(D(2)),Pi),Imag),Cast(Call("dotProduct",V("w"),V("x")),C)));
+        var shifted = Lam("i",V("n"), Subtract(Call("z",V("i")),Mul(Mul(Mul(D(2),Pi),Imag),Cast(Call("w",V("i")),C))));
+        var rhs = Mul(Mul(DetFactor(V("A")),Pow(V("b"),Div(NegF(Cast(Call("card",V("n")),C)),D(2)))),
+            ExpF(Div(Call("complexQuadratic",Inv(V("A")),shifted),Mul(Mul(D(4),Pi),V("b")))));
+        var lhs = Integral("x",Arr(V("n"),R),Mul(phase,SourceTerm(Mul(Pi,V("b")),V("z"))));
+        return Disp(SourceParameters(All("w",Arr(V("n"),R),Equal(lhs,rhs))));
+    }
 
     private static Formula V(string s) => F.Id(s);
     private static Formula R => Seq(Mathbb, Grp(V("R")));

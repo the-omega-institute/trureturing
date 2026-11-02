@@ -3,6 +3,7 @@ import Reg.Support.DependentFamily
 import D5.S3.Fourier.MatrixGaussian
 
 open MeasureTheory Matrix
+open scoped BigOperators
 open D5.S3.Fourier.MatrixGaussian
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -113,6 +114,89 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
+/-- Source-owned all-complex-vector arena. Source-selection binding remains
+unfinished under issue 20151; this is not declared_validated. -/
+def sourceIntegrableArena : Arena where
+  signature := expSignature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ), A.PosDef → ∀ (b : ℂ), 0 < b.re → ∀ (z : n → ℂ),
+      Integrable (fun x : n → ℝ => R.readout () ()
+        (-b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ)))
+
+def sourceIntegralArena : Arena where
+  signature := expSignature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ), A.PosDef → ∀ (b : ℂ), 0 < b.re → ∀ (z : n → ℂ),
+      (∫ x : n → ℝ, R.readout () ()
+        (-b * (quadratic A x : ℂ) + ∑ i, z i * (x i : ℂ))) =
+      (Real.sqrt A.det : ℂ)⁻¹ * (Real.pi / b) ^ ((Fintype.card n : ℂ) / 2) *
+        R.readout () () (complexQuadratic A⁻¹ z / (4*b))
+
+def sourceFourierArena : Arena where
+  signature := expSignature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ), A.PosDef → ∀ (b : ℂ), 0 < b.re → ∀ (z : n → ℂ) (w : n → ℝ),
+      (∫ x : n → ℝ, R.readout () () (-2*Real.pi*Complex.I*(w ⬝ᵥ x : ℝ)) *
+        R.readout () () (-Real.pi*b*(quadratic A x : ℂ) + ∑ i, z i*(x i : ℂ))) =
+      (Real.sqrt A.det : ℂ)⁻¹ * b^(-(Fintype.card n : ℂ)/2) *
+        R.readout () () (complexQuadratic A⁻¹
+          (fun i => z i - 2*Real.pi*Complex.I*(w i : ℂ))/(4*Real.pi*b))
+
+theorem source_integrable_bridge : (type_of% (@integrable_gaussian_source.{u})) ↔
+    sourceIntegrableArena.{u}.Law actual := Iff.rfl
+
+theorem source_integral_bridge : (type_of% (@integral_gaussian_source.{u})) ↔
+    sourceIntegralArena.{u}.Law actual := Iff.rfl
+
+theorem source_fourier_bridge : (type_of% (@integral_fourier_gaussian_source.{u})) ↔
+    sourceFourierArena.{u}.Law actual := Iff.rfl
+
+theorem source_integral_rejected : ¬ sourceIntegralArena.{u}.Law rejected := by
+  intro h
+  have hh := h (n := ULift.{u} (Fin 1)) 1 Matrix.PosDef.one (Real.pi : ℂ)
+    (by simpa using Real.pi_pos) 0
+  simpa [rejected, realize, MeasureTheory.integral_const, measureReal_def,
+    MeasureTheory.Measure.pi_univ] using hh
+
+def sourceIntegralRegistration : Registration sourceIntegralArena.{u}
+    (type_of% (@integral_gaussian_source.{u})) where
+  actual := actual
+  bridge := source_integral_bridge
+  variation := ⟨@integral_gaussian_source, rejected, source_integral_rejected⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim,
+      rfl, source_integral_rejected⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+/-- Four-slot attempt with the missing faithful source selection left explicit.
+The current source-binding gap is linked to issue 20151, not claimed validated. -/
+noncomputable def source_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@integral_gaussian_source.{u})
+    (type_of% (realize expSignature (fun _ _ z => Complex.exp z) (fun e => nomatch e)))
+    Unit Unit := {
+  unitName := `D5.S3.Fourier.MatrixGaussian.integral_gaussian_source.information_unit,
+  realizationName := `Reg.D5.S3.Fourier.MatrixGaussian.sourceIntegralRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨sourceIntegralArena.{u}⟩,
+  objectArena := .source ⟨sourceIntegralArena.{u}⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source sourceIntegralArena.{u} ⟨sourceIntegralRegistration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize expSignature (fun _ _ z => Complex.exp z) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms sourceIntegralRegistration
+#print axioms source_registration
 #print axioms integralRegistration
 #print axioms registration_1
 end
