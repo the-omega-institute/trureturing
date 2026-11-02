@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualSpectralEnd
 
 *Commentary.*
 
-The test is literally f=c-S for the original prefix and actual Fourier density. The compiled regularity supplier gives c(D)=0; the actual spectral endpoint therefore gives f(D)=-exp(-D/2)*Z/4. No endpoint hypothesis is supplied by the caller.
+The test is literally f=c-S for the original prefix and actual Fourier density. The correlation endpoint theorem gives c(D)=0; the actual spectral endpoint therefore gives f(D)=-exp(-D/2)*Z/4. No endpoint hypothesis is supplied by the caller.
 
 **Theorem 1.6 (Absolute continuity of the actual test).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualSpectralEnd
 
 *Commentary.*
 
-The actual finite-measure proof instantiates the compiled spectralS_ac theorem. Combining it with c_ac proves absolute continuity of f on [0,D], including the zero-length interval.
+The actual finite-measure proof instantiates the spectralS_ac theorem. Combining it with c_ac proves absolute continuity of f on [0,D], including the zero-length interval.
 
 **Theorem 1.7 (The complete original J identity).**
 
@@ -98,3 +98,6 @@ For every finite atom type, arbitrary complex coefficients with zero total mass,
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualSpectralEndpoint.original_test_endpoint`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualSpectralEndpoint.triple_integrable`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualFourier](OriginalActualFourier.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/OriginalAngularResolvent](OriginalAngularResolvent.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/OriginalSignedJ](OriginalSignedJ.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity](OriginalTestRegularity.md)
