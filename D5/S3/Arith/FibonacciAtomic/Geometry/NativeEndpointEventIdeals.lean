@@ -500,8 +500,8 @@ private theorem event_target (b : Bool) (t : Source) (e : Call) (he : e ∈ even
         subst e
         have hm := (shift_mem b c l r d).mp he
         cases c
-        · simpa [address, Call.shift, subtree] using il false d hm
-        · simpa [address, Call.shift, subtree] using ir true d hm
+        · cases d <;> simpa [address, Call.shift, subtree] using il false _ hm
+        · cases d <;> simpa [address, Call.shift, subtree] using ir true _ hm
       cases e with
       | promote p => cases p with
         | nil => exact ⟨.mul l r, rfl, by simp⟩
@@ -516,8 +516,11 @@ private theorem enabled_ancestor (b : Bool) (t : Source) (I : Set Call)
     Enabled b t I e ↔ AncestorReady b I v e := by
   induction t generalizing b I e with
   | of a =>
-      cases a <;> cases b <;> simp_all [events, address, subtree, AncestorReady,
-        Created, birthAt, Enabled]
+      cases a <;> cases b <;> simp [events] at he
+      subst e
+      have hv' : v = .of false := by simpa [address, subtree] using hv.symm
+      subst v
+      simp [AncestorReady, Created, birthAt, Enabled]
   | mul l r il ir =>
       have shifted : ∀ (c : Bool) (d : Call), e = d.shift [c] →
           (Enabled b (.mul l r) I e ↔ AncestorReady b I v e) := by
@@ -553,7 +556,8 @@ private theorem enabled_ancestor (b : Bool) (t : Source) (I : Set Call)
         | nil =>
             have hv' : v = .mul l r := by simpa [address, subtree] using hv.symm
             subst v
-            cases b <;> simp [AncestorReady, Created, birthAt, enabled_split_root]
+            rw [enabled_split_root]
+            cases b <;> simp [AncestorReady, Created, birthAt, and_comm]
         | cons c p => exact shifted c (.split p) rfl
 
 /-- On every supported downclosed membership cut, the actual guard is exactly
