@@ -229,9 +229,10 @@ private theorem physical_perm (a b c d alpha S : ℕ) (h : physicalDomain a b c 
   have ph : (physicalWord a b c d alpha S).Perm
       ((B 0).toList ++ t 0 :: (B 1).toList ++ t 1 ::
         (B 2).toList ++ t 2 :: (B 3).toList ++ [t 3]) := by
-    exact (hl 0).append (List.Perm.cons (t 0) ((hl 1).append
-      (List.Perm.cons (t 1) ((hl 2).append
-        (List.Perm.cons (t 2) ((hl 3).append_right [t 3]))))))
+    simpa only [physicalWord,B,t,List.append_assoc,List.cons_append] using
+      (hl 0).append (List.Perm.cons (t 0) ((hl 1).append
+        (List.Perm.cons (t 1) ((hl 2).append
+          (List.Perm.cons (t 2) ((hl 3).append_right [t 3]))))))
   exact ph.trans hp
 
 private theorem matched_data (a b c d : ℕ) (h : physicalDomain a b c d) :
@@ -529,12 +530,12 @@ theorem actualSource_second_peak_parity_tail_joint_lift (a b c d : ℕ)
       (modulus k/2) 0 word := by
     apply strip_of_prefix
     intro n
-    simpa only [hmod,hseed,oldValue,zero_add] using hold n
+    simpa only [hmod,hseed,oldValue,zero_add,word] using hold n
   have newstrip : InStrip (fun i => centered (modulus (k+1)) ((2:ℤ)^i*(2*A)))
       (modulus (k+1)/2) 0 (k::word) := by
     apply strip_of_prefix
     intro n
-    simpa only [hmod',hhalf,hseed',newValue,zero_add] using hnew n
+    simpa only [hmod',hhalf,hseed,hseed',newValue,zero_add,word,k,size] using hnew n
   let sigma := word.map (label k hk)
   have ho : OriginalOrder k A sigma := by
     apply lift_order k A hk word hp oldstrip
@@ -543,7 +544,7 @@ theorem actualSource_second_peak_parity_tail_joint_lift (a b c d : ℕ)
     have hp' : (k::word).Perm (List.range (k+1)) := by
       have hpappend := hp.append_right [k]
       exact (List.perm_append_singleton k word).symm.trans
-        (by simpa only [List.range_succ] using hpappend)
+        (by simpa only [List.range_succ,word,k,size] using hpappend)
     have horder : OriginalOrder (k+1) (2*A)
         ((k::word).map (label (k+1) (by omega))) := by
       apply lift_order (k+1) (2*A) (by omega) (k::word) hp' newstrip

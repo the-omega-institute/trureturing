@@ -9,9 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.PhysicalBank
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.StripAlgebra
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
-/-! UNCOMPILED. Exact casts of the selected physical masks and terminals.
-No integer quotient is identified with rational division without an exact identity.
-Circle J OPEN; no kernel/freeze/acceptance claim. -/
+/-! Exact casts of the selected physical masks and terminals.
+Integer quotients enter rational identities through their exact divisibility equations. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
