@@ -4,8 +4,7 @@
    mirror-E: none(waiver:qualitative-asymptotic-estimate)
    anchors: []
    utility: none
-   digest: Joint finite-prime Robin upper envelope under bounded valuations.
- -/
+   digest: Joint finite-prime Robin upper envelope under bounded valuations. -/
 
 import D5.S3.Weil.PrimeValuationGap
 import D5.S3.Weil.GronwallUpperEnvelope
