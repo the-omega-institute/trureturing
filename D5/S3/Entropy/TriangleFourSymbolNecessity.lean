@@ -219,6 +219,114 @@ private theorem totalCorrelation_dual_balance (p : A × B × C → ℝ)
 
 end FiniteEntropy
 
+namespace CrossSupport
+
+variable {X A B C : Type*} [Fintype X] [DecidableEq X]
+
+private theorem no_common_coordinate (F : A → Finset X) (G : B → Finset X)
+    (coverF : ∀ x, ∃ a, x ∈ F a) (coverG : ∀ x, ∃ b, x ∈ G b)
+    (cross : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (hm : 2 ≤ Fintype.card X) (x : X) :
+    ¬ ((∀ a, x ∈ F a) ∧ (∀ b, x ∈ G b)) := by
+  rintro ⟨hxF, hxG⟩
+  haveI : Nontrivial X := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  obtain ⟨y, hy⟩ := exists_ne x
+  obtain ⟨a, ha⟩ := coverF y
+  obtain ⟨b, hb⟩ := coverG y
+  obtain ⟨z, hz, hu⟩ := cross a b
+  exact hy ((hu y ⟨ha, hb⟩).trans (hu x ⟨hxF a, hxG b⟩).symm)
+
+private theorem row_card_two (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hm : 2 ≤ Fintype.card X) (a : A) : 2 ≤ (F a).card := by
+  by_contra hn
+  have hsmall : (F a).card ≤ 1 := by omega
+  haveI : Nonempty X := Fintype.card_pos_iff.mp (by omega)
+  obtain ⟨b, _⟩ := coverG (Classical.choice inferInstance)
+  obtain ⟨x, hx, _⟩ := crossFG a b
+  apply no_common_coordinate G H coverG coverH crossGH hm x
+  constructor
+  · intro b'
+    obtain ⟨y, hy, _⟩ := crossFG a b'
+    have he := Finset.card_le_one.mp hsmall y hy.1 x hx.1
+    exact he ▸ hy.2
+  · intro c
+    obtain ⟨y, hy, _⟩ := crossFH a c
+    have he := Finset.card_le_one.mp hsmall y hy.1 x hx.1
+    exact he ▸ hy.2
+
+private theorem has_outside (u v : Finset X) (hv : 2 ≤ v.card)
+    (cross : ∃! x, x ∈ u ∧ x ∈ v) : ∃ x, x ∈ v ∧ x ∉ u := by
+  by_contra! hn
+  obtain ⟨z, hz, hu⟩ := cross
+  have hs : v.card ≤ 1 := Finset.card_le_one.mpr (by
+    intro x hx y hy
+    exact (hu x ⟨hn x hx, hx⟩).trans (hu y ⟨hn y hy, hy⟩).symm)
+  omega
+
+private theorem row_complement_card_two (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverF : ∀ x, ∃ a, x ∈ F a)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hm : 2 ≤ Fintype.card X) (a : A) :
+    2 ≤ (Finset.univ \ F a).card := by
+  classical
+  have crossGF : ∀ b a, ∃! x, x ∈ G b ∧ x ∈ F a := by
+    intro b a
+    simpa only [and_comm] using crossFG a b
+  have crossHF : ∀ c a, ∃! x, x ∈ H c ∧ x ∈ F a := by
+    intro c a
+    simpa only [and_comm] using crossFH a c
+  have crossHG : ∀ c b, ∃! x, x ∈ H c ∧ x ∈ G b := by
+    intro c b
+    simpa only [and_comm] using crossGH b c
+  have hG := row_card_two G F H coverF coverH crossGF crossGH crossFH hm
+  have hH := row_card_two H F G coverF coverG crossHF crossHG crossFG hm
+  by_contra hn
+  have hsmall : (Finset.univ \ F a).card ≤ 1 := by omega
+  haveI : Nonempty X := Fintype.card_pos_iff.mp (by omega)
+  obtain ⟨b, _⟩ := coverG (Classical.choice inferInstance)
+  obtain ⟨x, hx, hxu⟩ := has_outside (F a) (G b) (hG b) (crossFG a b)
+  have hxc : x ∈ Finset.univ \ F a := by simp [hxu]
+  apply no_common_coordinate G H coverG coverH crossGH hm x
+  constructor
+  · intro b'
+    obtain ⟨y, hy, hyu⟩ := has_outside (F a) (G b') (hG b') (crossFG a b')
+    have hyc : y ∈ Finset.univ \ F a := by simp [hyu]
+    have he := Finset.card_le_one.mp hsmall y hyc x hxc
+    exact he ▸ hy
+  · intro c
+    obtain ⟨y, hy, hyu⟩ := has_outside (F a) (H c) (hH c) (crossFH a c)
+    have hyc : y ∈ Finset.univ \ F a := by simp [hyu]
+    have he := Finset.card_le_one.mp hsmall y hyc x hxc
+    exact he ▸ hy
+
+private theorem cardinal_lower_bound (F : A → Finset X) (G : B → Finset X)
+    (H : C → Finset X)
+    (coverF : ∀ x, ∃ a, x ∈ F a)
+    (coverG : ∀ x, ∃ b, x ∈ G b) (coverH : ∀ x, ∃ c, x ∈ H c)
+    (crossFG : ∀ a b, ∃! x, x ∈ F a ∧ x ∈ G b)
+    (crossFH : ∀ a c, ∃! x, x ∈ F a ∧ x ∈ H c)
+    (crossGH : ∀ b c, ∃! x, x ∈ G b ∧ x ∈ H c)
+    (hm : 2 ≤ Fintype.card X) : 4 ≤ Fintype.card X := by
+  haveI : Nonempty X := Fintype.card_pos_iff.mp (by omega)
+  obtain ⟨a, _⟩ := coverF (Classical.choice inferInstance)
+  have h₁ := row_card_two F G H coverG coverH crossFG crossFH crossGH hm a
+  have h₂ := row_complement_card_two F G H coverF coverG coverH
+    crossFG crossFH crossGH hm a
+  have hsum := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ (F a))
+  rw [Finset.card_univ] at hsum
+  omega
+
+end CrossSupport
+
 namespace IncidentLaw
 
 open Classical
@@ -750,7 +858,9 @@ theorem original_equality_fibers (L : IncidentLaw S₁ S₂ S₃ O)
   have h₁₂ := mutual_information_nonneg _ hp₁₂
   have h₁₃ := mutual_information_nonneg _ hp₁₃
   have h₂₃ := mutual_information_nonneg _ hp₂₃
-  have hsum := Finset.sum_nonneg (fun x _ => hweighted x)
+  have hsum : 0 ≤ ∑ x, L.outputLaw x *
+      FiniteEntropy.dual (conditional L.recordJoint x) :=
+    Finset.sum_nonneg (fun x _ => hweighted x)
   have hz : mutualInformation (xyProjection L.nu) + mutualInformation (xzProjection L.nu) +
       mutualInformation (FiniteEntropy.yz L.nu) +
         ∑ x, L.outputLaw x * FiniteEntropy.dual (conditional L.recordJoint x) = 0 := by
