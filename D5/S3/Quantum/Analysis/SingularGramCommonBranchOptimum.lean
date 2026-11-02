@@ -36,7 +36,8 @@ private theorem constrained_minimizer (V : E →L[ℂ] H) (b : E) (hb : b ≠ 0)
     let a := (inner ℂ b p).re
     ∃ c : E, inner ℂ b c = 1 ∧
       (∀ d : E, inner ℂ b d = 1 → ‖V c‖ ^ 2 ≤ ‖V d‖ ^ 2) ∧
-      (b ∈ G.range → 0 < a ∧ c = (a⁻¹ : ℂ) • p ∧ ‖V c‖ ^ 2 = a⁻¹) ∧
+      (b ∈ G.range → inner ℂ b p = (a : ℂ) ∧
+        0 < a ∧ c = (a⁻¹ : ℂ) • p ∧ ‖V c‖ ^ 2 = a⁻¹) ∧
       (b ∉ G.range → c ∈ G.ker ∧ V c = 0) := by
   dsimp only
   let G := gram V
@@ -94,7 +95,7 @@ private theorem constrained_minimizer (V : E →L[ℂ] H) (b : E) (hb : b ≠ 0)
       rw [hsplit] at he
       nlinarith [sq_nonneg ‖V d - V c‖]
     · intro _
-      exact ⟨ha, rfl, hcenergy⟩
+      exact ⟨hinner, ha, rfl, hcenergy⟩
     · exact fun hn => (hn ⟨u, hu⟩).elim
   · have hn : b ∉ V.kerᗮ := by rwa [← hrange]
     rw [Submodule.mem_orthogonal'] at hn
@@ -115,7 +116,7 @@ private theorem constrained_minimizer (V : E →L[ℂ] H) (b : E) (hb : b ≠ 0)
       change V.adjoint (V c) = 0
       rw [hv, map_zero]
 
-variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι : Type*} [Fintype ι]
 
 /-- Synthesis of the actual complex amplitudes; the coefficient space has its Euclidean norm. -/
 def synthesis (x : ι → H) : EuclideanSpace ℂ ι →L[ℂ] H :=
@@ -128,6 +129,7 @@ def ones : EuclideanSpace ℂ ι := WithLp.toLp 2 (fun _ => 1)
 def differenceSpace (x : ι → H) (i₀ : ι) : Submodule ℂ H :=
   Submodule.span ℂ (Set.range (fun j => x j - x i₀))
 
+omit [FiniteDimensional ℂ H] in
 private theorem synthesis_apply (x : ι → H) (c : EuclideanSpace ℂ ι) :
     synthesis x c = ∑ j, c j • x j := by
   simp [synthesis]
@@ -139,10 +141,12 @@ private theorem ones_inner (c : EuclideanSpace ℂ ι) :
 private theorem feasible_image (x : ι → H) (i₀ : ι) (z : H) :
     (∃ c : EuclideanSpace ℂ ι, ∑ j, c j = 1 ∧ synthesis x c = z) ↔
       z - x i₀ ∈ differenceSpace x i₀ := by
+  classical
   constructor
   · rintro ⟨c, hc, rfl⟩
     have he : synthesis x c - x i₀ = ∑ j, c j • (x j - x i₀) := by
-      rw [Finset.sum_smul_sub, ← Finset.sum_smul, hc, one_smul, synthesis_apply]
+      simp only [smul_sub, Finset.sum_sub_distrib, ← Finset.sum_smul, hc,
+        one_smul, synthesis_apply]
     rw [he]
     exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _
       (Submodule.subset_span (Set.mem_range_self j))
@@ -151,17 +155,19 @@ private theorem feasible_image (x : ι → H) (i₀ : ι) (z : H) :
     let c : EuclideanSpace ℂ ι := WithLp.toLp 2
       (fun j => d j + if j = i₀ then 1 - ∑ k, d k else 0)
     have hc : ∑ j, c j = 1 := by
-      simp only [c, WithLp.toLp_apply, Finset.sum_add_distrib]
-      simp
+      change (∑ j, (d j + if j = i₀ then 1 - ∑ k, d k else 0)) = 1
+      simp [Finset.sum_add_distrib]
     refine ⟨c, hc, ?_⟩
     rw [synthesis_apply]
     have he : ∑ j, c j • x j = (∑ j, d j • x j) + (1 - ∑ k, d k) • x i₀ := by
       simp [c, add_smul, Finset.sum_add_distrib, ite_smul]
     rw [he]
     have hd' : (∑ j, d j • x j) - (∑ j, d j) • x i₀ = z - x i₀ := by
-      simpa only [Finset.sum_smul_sub, ← Finset.sum_smul] using hd
+      simpa only [smul_sub, Finset.sum_sub_distrib, ← Finset.sum_smul] using hd
     rw [sub_smul, one_smul]
-    linear_combination hd'
+    calc
+      _ = ((∑ j, d j • x j) - (∑ j, d j) • x i₀) + x i₀ := by abel
+      _ = z := by rw [hd']; abel
 
 /-- The attained coherent minimum, its geometric interpretation, and both singular cases.
 The Moore-Penrose inverse is the constructed finite inverse, with its four Penrose laws. -/
@@ -178,7 +184,7 @@ theorem singular_gram_common_branch_optimum (x : ι → H) (i₀ : ι) :
       z - x i₀ ∈ D) ∧
     IsLeast {t : ℝ | ∃ c : EuclideanSpace ℂ ι,
       ∑ j, c j = 1 ∧ (inner ℂ c (G c)).re = t} (‖q‖ ^ 2) ∧
-    (b ∈ G.range → 0 < a ∧ ‖q‖ ^ 2 = a⁻¹ ∧
+    (b ∈ G.range → inner ℂ b p = (a : ℂ) ∧ 0 < a ∧ ‖q‖ ^ 2 = a⁻¹ ∧
       (∑ j, ((a⁻¹ : ℂ) • p) j) = 1 ∧ ‖X ((a⁻¹ : ℂ) • p)‖ ^ 2 = ‖q‖ ^ 2) ∧
     (b ∉ G.range → ‖q‖ ^ 2 = 0 ∧
       ∃ c : EuclideanSpace ℂ ι, c ∈ G.ker ∧ ∑ j, c j = 1 ∧ X c = 0) := by
@@ -200,6 +206,7 @@ theorem singular_gram_common_branch_optimum (x : ι → H) (i₀ : ι) :
     have hh' : x i₀ - q ∈ D := by simpa only [Submodule.orthogonal_orthogonal] using hh
     simpa only [neg_sub] using D.neg_mem hh'
   obtain ⟨cq, hcq, hXcq⟩ := (feasible_image x i₀ q).mpr hqD
+  change X cq = q at hXcq
   have hqmin (d : EuclideanSpace ℂ ι) (hd : ∑ j, d j = 1) :
       ‖q‖ ^ 2 ≤ ‖X d‖ ^ 2 := by
     have hdD := (feasible_image x i₀ (X d)).mp ⟨d, hd, rfl⟩
@@ -226,8 +233,8 @@ theorem singular_gram_common_branch_optimum (x : ι → H) (i₀ : ι) :
     rw [hquadre]
     exact hqmin d hd
   · intro hr
-    obtain ⟨ha, hcp, hcv⟩ := hcrange hr
-    refine ⟨ha, hcval.symm.trans hcv, ?_, ?_⟩
+    obtain ⟨hreal, ha, hcp, hcv⟩ := hcrange hr
+    refine ⟨hreal, ha, hcval.symm.trans hcv, ?_, ?_⟩
     · rwa [← hcp]
     · rwa [← hcp]
   · intro hn
@@ -236,5 +243,46 @@ theorem singular_gram_common_branch_optimum (x : ι → H) (i₀ : ι) :
     rw [← hcval, hz, norm_zero, zero_pow (by decide : 2 ≠ 0)]
 
 #print axioms singular_gram_common_branch_optimum
+
+example :
+    let x : Fin 2 → ℂ := fun _ => 1
+    (∃ k : EuclideanSpace ℂ (Fin 2), k ≠ 0 ∧ gram (synthesis x) k = 0) ∧
+    (ones : EuclideanSpace ℂ (Fin 2)) ∈ (gram (synthesis x)).range := by
+  dsimp only
+  have hkernel : synthesis (fun _ : Fin 2 => (1 : ℂ))
+      (WithLp.toLp 2 ![1, -1]) = 0 := by
+    simp [synthesis_apply, Fin.sum_univ_two]
+  constructor
+  · refine ⟨WithLp.toLp 2 ![1, -1], ?_, ?_⟩
+    · intro h
+      have hi := congrArg (fun c : EuclideanSpace ℂ (Fin 2) => c 0) h
+      norm_num at hi
+    · change (synthesis (fun _ : Fin 2 => (1 : ℂ))).adjoint
+        (synthesis (fun _ : Fin 2 => (1 : ℂ)) (WithLp.toLp 2 ![1, -1])) = 0
+      rw [hkernel, map_zero]
+  · by_contra hn
+    have hz := (singular_gram_common_branch_optimum (fun _ : Fin 2 => (1 : ℂ)) 0).2.2.2.2 hn
+    norm_num [differenceSpace, Submodule.starProjection_top] at hz
+
+example :
+    let x : Fin 2 → ℂ := ![1, 0]
+    (ones : EuclideanSpace ℂ (Fin 2)) ∉ (gram (synthesis x)).range ∧
+    ∃ k : EuclideanSpace ℂ (Fin 2), k ∈ (gram (synthesis x)).ker ∧
+      (∑ j, k j) = 1 ∧ synthesis x k = 0 := by
+  dsimp only
+  let X := synthesis (![1, 0] : Fin 2 → ℂ)
+  let k : EuclideanSpace ℂ (Fin 2) := EuclideanSpace.single 1 1
+  have hsum : (∑ j, k j) = 1 := by simp [k, PiLp.single_apply, Fin.sum_univ_two]
+  have hk : X k = 0 := by simp [X, synthesis_apply, k, PiLp.single_apply, Fin.sum_univ_two]
+  have hrange : (gram X).range = X.kerᗮ := by
+    change (X.toLinearMap.adjoint ∘ₗ X.toLinearMap).range = _
+    rw [X.toLinearMap.range_adjoint_comp_self, ← X.toLinearMap.orthogonal_ker]
+  have hn : (ones : EuclideanSpace ℂ (Fin 2)) ∉ (gram X).range := by
+    intro h
+    rw [hrange, Submodule.mem_orthogonal'] at h
+    have hz := h k hk
+    rw [ones_inner, hsum] at hz
+    exact one_ne_zero hz
+  exact ⟨hn, (singular_gram_common_branch_optimum (![1, 0] : Fin 2 → ℂ) 0).2.2.2.2 hn |>.2⟩
 
 end D5.S3.Quantum.Analysis.SingularGramCommonBranchOptimum
