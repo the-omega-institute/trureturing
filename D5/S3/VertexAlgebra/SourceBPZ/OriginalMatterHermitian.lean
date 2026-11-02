@@ -1,6 +1,10 @@
 /- GID: D5/S3/VertexAlgebra/SourceBPZ/OriginalMatterHermitian
-   digest: Frame-free Hermitian form and all-integer matter current/Sugawara adjoints.
--/
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/OriginalMatterHermitian
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Frame-free Hermitian form and all-integer matter current/Sugawara adjoints. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
 import D5.S3.VertexAlgebra.LatticeSugawaraCurrents
