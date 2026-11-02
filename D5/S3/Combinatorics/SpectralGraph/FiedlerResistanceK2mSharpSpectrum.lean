@@ -84,4 +84,95 @@ private lemma reciprocal_rigidity {ι : Type*} [Fintype ι] (m : ℕ) (hm : 1 < 
     have hh := (div_eq_iff ht.ne').mp (show r i/t = 1 from by linarith)
     simpa using hh
 
+/-- Multiplicities of the actual native Hermitian Laplacian, without an ordering convention. -/
+def FullSpectrum (m : ℕ) (w : Sym2 (Fin (2+m)) → ℝ) (t : ℝ) : Prop :=
+  let e := (lap_hermitian (K2m m) w).eigenvalues
+  (Finset.univ.filter (fun i => e i = 0)).card = 1 ∧
+  (Finset.univ.filter (fun i => e i = t)).card = m ∧
+  (Finset.univ.filter (fun i => e i = m*t)).card = 1 ∧
+  ∀ i, e i = 0 ∨ e i = t ∨ e i = m*t
+
+private lemma spectrum_at_equality {m : ℕ} (hm : 3 ≤ m)
+    (w : Sym2 (Fin (2+m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e)
+    (heq : lambda2 (K2m m) w * totalRes (K2m m) w = sharpConstant m) :
+    FullSpectrum m w (lambda2 (K2m m) w) := by
+  classical
+  let hL := lap_hermitian (K2m m) w
+  let e := hL.eigenvalues
+  let J := {i : Fin (2+m) // e i ≠ 0}
+  let t := lambda2 (K2m m) w
+  have hs := lambda2_spectral (by omega) w hw
+  have hz := zero_eigenvalue_count (by omega) w hw
+  have hc : (Finset.univ.filter (fun i => e i ≠ 0)).card = m+1 := by
+    have hh := Finset.card_filter_add_card_filter_not (s := Finset.univ) (fun i => e i = 0)
+    rw [hz] at hh
+    simp only [Finset.card_univ,Fintype.card_fin] at hh
+    simpa only [ne_eq] using (show (Finset.univ.filter (fun i => ¬ e i = 0)).card = m+1 by omega)
+  have hcard : Fintype.card J = m+1 := by simpa [J,Fintype.card_subtype] using hc
+  have hsum : (∑ i : J, e i) = (wLap (K2m m) w).trace := by
+    rw [hL.trace_eq_sum_eigenvalues]
+    change (∑ i : J, e i) = ∑ i,e i
+    rw [← Finset.sum_subtype (Finset.univ.filter (fun i => e i ≠ 0)) (by simp) e]
+    exact Finset.sum_filter_ne_zero e
+  have hinverse : (∑ i : J, (e i)⁻¹) = ∑ i,(e i)⁻¹ := by
+    rw [← Finset.sum_subtype (Finset.univ.filter (fun i => e i ≠ 0)) (by simp) (fun i => (e i)⁻¹)]
+    simp only [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro i hi
+    by_cases he : e i = 0 <;> simp [he]
+  have htrace : (∑ i : J,e i) = 2*m*t := by
+    rw [hsum,lap_trace,(product_bound_trace hm w hw).2 heq]
+    ring
+  have hinv : t*(∑ i : J,(e i)⁻¹) = m+1/m := by
+    have hR := resistance_spectral (by omega) w hw
+    rw [← hinverse] at hR
+    change totalRes (K2m m) w = (2+m : ℕ)*∑ i : J,(e i)⁻¹ at hR
+    rw [hR] at heq
+    dsimp [sharpConstant] at heq
+    have hn : (0 : ℝ) < m+2 := by positivity
+    dsimp [t]
+    push_cast at heq
+    nlinarith
+  obtain ⟨j,hj,hother⟩ := reciprocal_rigidity m (by omega) hcard (fun i : J => e i) t hs.1
+    (fun i => hs.2.2 i i.2) htrace hinv
+  have ht : 0 < t := hs.1
+  have hmt0 : m*t ≠ 0 := by positivity
+  have hmtt : m*t ≠ t := by
+    have hm1 : (1 : ℝ) < m := by exact_mod_cast (show 1 < m by omega)
+    nlinarith
+  have hall (i : Fin (2+m)) : e i = 0 ∨ e i = t ∨ e i = m*t := by
+    by_cases hi0 : e i = 0
+    · exact Or.inl hi0
+    · by_cases hij : i = j
+      · exact Or.inr (Or.inr (hij ▸ hj))
+      · exact Or.inr (Or.inl (hother ⟨i,hi0⟩ (by intro h; exact hij (congrArg Subtype.val h))))
+  have hmax : Finset.univ.filter (fun i => e i = m*t) = {j.val} := by
+    ext i
+    simp only [Finset.mem_filter,Finset.mem_univ,true_and,Finset.mem_singleton]
+    constructor
+    · intro hi
+      by_contra hij
+      have hi0 : e i ≠ 0 := by rw [hi]; exact hmt0
+      have hh := hother ⟨i,hi0⟩ (by intro h; exact hij (congrArg Subtype.val h))
+      exact hmtt (hi.symm.trans hh)
+    · intro hij; subst i; exact hj
+  have hsmall : Finset.univ.filter (fun i => e i = t) =
+      (Finset.univ.filter (fun i => e i ≠ 0)).erase j.val := by
+    ext i
+    simp only [Finset.mem_filter,Finset.mem_univ,true_and,Finset.mem_erase]
+    constructor
+    · intro hi
+      refine ⟨?_,?_⟩
+      · intro hij
+        have hh : e i = m*t := hij ▸ hj
+        exact hmtt (hh.symm.trans hi)
+      · rw [hi]; exact ht.ne'
+    · rintro ⟨hij,hi0⟩
+      exact hother ⟨i,hi0⟩ (by intro h; exact hij (congrArg Subtype.val h))
+  change _ ∧ _ ∧ _ ∧ _
+  refine ⟨hz,?_,?_,hall⟩
+  · rw [hsmall,Finset.card_erase_of_mem (by simp only [Finset.mem_filter,Finset.mem_univ,true_and]; exact j.2),hc]
+    omega
+  · rw [hmax,Finset.card_singleton]
+
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mSharpSpectrum
