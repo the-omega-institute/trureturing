@@ -7,8 +7,13 @@
    digest: No order on the full eight-crossing presented quandle is strictly increasing in both variables. -/
 
 /- proof_shape: content (full term quotient, universal coloring and order obstruction).
-   admission_basis: open-problem-resolution (#25645; candidate, source fidelity review pending).
-   Direct dependencies: PresentedQuandle and SixRelationObstruction (internal, not external anchors).
+   admission_basis: escape-witness
+   escape_witness: d_ne_g separates actual quotient classes through lift and eval_rel;
+   result consumes sixRelation_forces_eq, whose live proof constructs a strict-order cycle.
+   Direct project dependencies: PresentedQuandle (quotient Quandle, lift, lift_of,
+   relation_eq) and SixRelationObstruction.sixRelation_forces_eq.
+   lift_unique completes arbitrary-target uniqueness, including inverse terms;
+   it is retained general content, not a dependency of result.
    The diagram-to-knot identification is an external source map from arXiv:2505.19573v1,
    fig8_20 and relations 8_20_1--8_20_8; no ambient-isotopy theorem is asserted.
    Repo-prior-exposed implementation; predecessor proof is an attributed input.
