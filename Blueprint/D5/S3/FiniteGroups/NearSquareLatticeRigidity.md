@@ -20,21 +20,10 @@ Let L be an integer submodule of Z², n and δ integers with n ≥ 2 and 0 ≤ �
 
 The least positive and negative vertical displacements between adjacent columns give vectors (p,−b) and (q,c). Square coverage forces b+c ≤ n. Their positive determinant is divisible by the actual quotient index and is at most n². Since δ<n, the determinant must equal n²−δ; the same bounds then force b+c=n and p=n or q=n. Taking a difference of vectors produces the displayed basis, up to a vertical reflection, and the missing area factors as ab. Equality of indices upgrades containment to equality of lattices.
 
-This controls every lattice satisfying the covering and index hypotheses. It supplies the rigidity needed to exclude arbitrary Cayley generating pairs, rather than testing only a proposed construction.
+This controls every lattice satisfying the covering and index hypotheses. It supplies the rigidity needed to exclude arbitrary Cayley generating pairs.
 
-**Theorem 1.2 (The determinant measures quotient order).**
-
-Lean statement: `D5/S3/FiniteGroups/NearSquareLatticeRigidity.span_pair_index`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NearSquareLatticeRigidity.span_pair_index` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For integer vectors u,v with nonzero determinant, the index of their integer span is the natural absolute value of u₀v₁−u₁v₀. This is an application of pinned Mathlib's Submodule.natAbs_det_basis_change, with linear independence from Matrix.linearIndependent_rows_of_det_ne_zero. It is reused in the rigidity proof and in the index calculation for the sum-and-difference map; the determinant-index identity is credited to Mathlib.
+For integer vectors u,v with nonzero determinant, the index of their integer span is the natural absolute value of u₀v₁−u₁v₀. The helper span_pair_index applies pinned Mathlib's Submodule.natAbs_det_basis_change, with linear independence from Matrix.linearIndependent_rows_of_det_ne_zero. It is reused in the rigidity proof and in the index calculation for the sum-and-difference map; the determinant-index identity is credited to Mathlib.
 
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/NearSquareLatticeRigidity.near_square_rigidity`
-- Truth anchor: `D5/S3/FiniteGroups/NearSquareLatticeRigidity.span_pair_index`
