@@ -235,7 +235,7 @@ private theorem upper_rectangle (A upper : ℂ → ℂ) (R0 ρ R : ℝ)
     (by simpa only [uIcc_of_le hl, uIcc_of_le Real.pi_pos.le] using hc)
     (by simpa only [min_eq_left hl, max_eq_right hl,
       min_eq_left Real.pi_pos.le, max_eq_right Real.pi_pos.le] using hd)
-  simpa only [upperRectangleBalance, f, Complex.zero_mul, add_zero, smul_eq_mul] using h
+  simpa only [upperRectangleBalance, f, P, Complex.ofReal_zero, zero_mul, add_zero, smul_eq_mul] using h
 
 /-- The literal all-composition outer integral is integrable, and the very same source B
 bounds every coefficient error. The finite-slit coefficient identity is a separate obligation. -/
