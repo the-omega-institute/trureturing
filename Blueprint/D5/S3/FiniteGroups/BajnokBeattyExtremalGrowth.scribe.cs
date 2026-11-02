@@ -8,9 +8,24 @@ internal sealed class BajnokBeattyExtremalGrowthDocument : IScribeDocumentDefini
         LibraryNoteRef.Create("D5/L/FiniteGroups/bajnokbeatty2024cayleydiameteroriginal");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A transversal of the short relation fibers determines every in-range ball of an actual composite maximum pair.",
-        H("Exact growth from the upper overlap cap"),
+        "Finite rank-one relation fibers determine Lee-ball images in arbitrary additive targets and every in-range ball of an actual composite maximum pair.",
+        H("Exact growth from finite rank-one fibers"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("lee-image-rank-one-displacement-growth"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/BajnokBeattyExtremalGrowth.lee_ball_image_card_of_displacement"),
+                H("A nonzero displacement controls arbitrarily long finite fibers"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "Write Dᵣ={(x,y)∈Z²: |x|+|y|≤r}. Let f:Z²→G be additive for an arbitrary additive commutative group G, and let h=(h₁,h₂)≠0 satisfy f(h)=0. Assume every kernel vector of Lee norm at most 2r is an integer multiple of h. Set A=max(0,2r+1−|h₁+h₂|) and B=max(0,2r+1−|h₁−h₂|). Then |f(Dᵣ)|+⌊(AB+1)/2⌋=2r²+2r+1. The integer positive parts in A and B are taken before converting to natural numbers. Either width may vanish. There is no finiteness or surjectivity condition on G or f, no primitivity or sign condition on h, and no additional radius restriction.")),
+                    Paragraph(Text(
+                        "All points in a fiber inside Dᵣ differ by integer multiples of h, because the difference of two diamond points has Lee norm at most 2r. Integer norm interpolation shows that the admissible multiples form a finite interval: if y−x=k h with k>0, then k(y−h)=(k−1)y+x, so the triangle inequality and homogeneity force y−h back into Dᵣ. Remove Cᵣ=Dᵣ∩(Dᵣ+h), retaining Rᵣ=Dᵣ∖Cᵣ. A retained point is the bottom of its fiber in the h direction. If two retained points share an image, a positive multiple forces the later one into Cᵣ; a negative multiple swaps their roles. Thus f is injective on Rᵣ even when a fiber has many points.")),
+                    Paragraph(Text(
+                        "For surjectivity choose, in each nonempty finite fiber, a point w minimizing w·h. A point of Cᵣ has w−h in the same fiber, with dot product lower by h₁²+h₂²>0. A minimizer therefore survives the trimming. This finite minimum replaces a one-step deletion argument and requires neither a primitive displacement nor a bound on fiber length. Consequently Rᵣ maps bijectively onto f(Dᵣ), and |f(Dᵣ)|+|Cᵣ|=|Dᵣ|.")),
+                    Paragraph(Text(
+                        "Under S(x,y)=(x+y,x−y), Cᵣ is the equal-parity part of the product of two integer intervals. The interval for t=h₁+h₂ or h₁−h₂ is [max(−r,t−r),min(r,t+r)], with width max(0,2r+1−|t|). Equal-parity coordinates have the integral inverse ((u+v)/2,(u−v)/2). In each interval the parity of r occurs ⌈width/2⌉ times and the other parity ⌊width/2⌋ times; for odd positive widths the initial endpoint has the parity of r, for either sign of t. The existing residue-count and filtered-product cardinality suppliers give |Cᵣ|=⌈A/2⌉⌈B/2⌉+⌊A/2⌋⌊B/2⌋=⌊(AB+1)/2⌋, including empty intervals. The inherited two-parity LeeCode gives |Dᵣ|=(r+1)²+r². These counts combined with the fiber bijection prove the balance."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("lee-image-short-kernel-growth"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/BajnokBeattyExtremalGrowth.lee_ball_image_card_of_short_kernel"),
@@ -20,9 +35,7 @@ internal sealed class BajnokBeattyExtremalGrowthDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "Write Dᵣ={(x,y)∈Z²: |x|+|y|≤r}. Let f:Z²→G be additive, where G is any additive commutative group, let B>0 and r<2B be natural numbers, and set h=(0,2B). Assume f(h)=0 and every relation z of Lee norm at most 2r is 0, h or −h. Then the finite image f(Dᵣ) has cardinality 2r²+2r+1 for r<B and 2B(2r−B+1) for B≤r. The target need not be finite and f need not be surjective.")),
                     Paragraph(Text(
-                        "The overlap Cᵣ=Dᵣ∩(Dᵣ+h) is the upper cap: its points z have both z and z−h in Dᵣ. Remove exactly Cᵣ and retain Rᵣ=Dᵣ∖Cᵣ. Every deleted point has the same image as z−h. This lower point survives, because a second deletion would put z and z−2h in Dᵣ, although their distance 4B exceeds 2r. Thus Rᵣ still maps onto f(Dᵣ). If two retained points have the same image, their difference is 0 or ±h. The two nonzero possibilities force the higher point into the deleted cap. Hence f is injective on Rᵣ and gives a bijection Rᵣ→f(Dᵣ).")),
-                    Paragraph(Text(
-                        "The identity max(|y|,|y−2B|)=B+|y−B| identifies Cᵣ with the empty set when r<B and with (0,B)+Dᵣ₋ᴮ otherwise. The existing two-parity LeeCode and decodeLee representation supplies |D_q|=(q+1)²+q². The bijection gives |f(Dᵣ)|=|Dᵣ|−|Cᵣ| by ordinary finite-set cardinality laws. Subtracting the translated smaller diamond gives the displayed second branch. The encoding and the finite-cardinality identities are inherited suppliers; the retained-domain injection and surjection are the fiber argument used here."))),
+                        "This axial API is a specialization of the preceding balance, with h=(0,2B). Its three allowed short relations 0,h,−h are mapped to the multiples 0•h,1•h,(−1)•h. Both rectangle widths are max(0,2r+1−2B). For r<B the cap is empty. Otherwise its cardinality is 2(r−B)²+2(r−B)+1, and the balance gives 2B(2r−B+1). Geometrically max(|y|,|y−2B|)=B+|y−B| also identifies the overlap with (0,B)+Dᵣ₋ᴮ. The shared finite-fiber theorem supplies the actual proof; no separate axial trimming argument is needed. The original radius premise is retained in this public API and supplied by the actual maximum-pair consumer below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("bajnok-beatty-actual-maximum-growth"),
