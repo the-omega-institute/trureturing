@@ -64,7 +64,9 @@ lemma resolvent_norm (s w : ℝ) : ‖resolvent s w‖ = weight w := by
     abs_of_pos (denominator_pos w), one_div, weight]
 
 lemma resolvent_integrable (s : ℝ) : Integrable (resolvent s) := by
-  simpa only [resolvent, phase] using (OriginalAngularResolvent.angular_resolvent s).1
+  change Integrable (fun w : ℝ =>
+    Complex.exp (Complex.I * (w : ℂ) * (s : ℂ)) / ((1 + 4 * w ^ 2 : ℝ) : ℂ))
+  exact (OriginalAngularResolvent.angular_resolvent s).1
 
 lemma normalized_resolvent (s : ℝ) :
     (((1 / (2 * Real.pi) : ℝ) : ℂ)) * (∫ w : ℝ, resolvent s w) =
@@ -74,7 +76,7 @@ lemma normalized_resolvent (s : ℝ) :
 lemma conjugate_integrable {μ : Measure ℝ} {A : ℝ → ℂ}
     (hAm : Measurable A) (hA : Integrable A μ) : Integrable (fun u => conj (A u)) μ := by
   apply hA.norm.mono' (Complex.continuous_conj.measurable.comp hAm).aestronglyMeasurable
-  exact ae_of_all _ fun u => by simp only [Complex.norm_conj, le_refl]
+  exact ae_of_all _ fun u => (Complex.norm_conj (A u)).le
 
 lemma coefficient_integrable {A : ℝ → ℂ} (hAm : Measurable A) (hA : Integrable A) :
     Integrable (coefficient A) pairMeasure :=
@@ -114,9 +116,10 @@ lemma Ahat_normSq_eq_pair (A : ℝ → ℂ) (w : ℝ) :
     ((‖Ahat A w‖ ^ 2 : ℝ) : ℂ) =
       ∫ p : ℝ × ℝ, fourierPair A w p ∂pairMeasure := by
   simp_rw [fourierPair_eq_product]
-  rw [integral_prod_mul, integral_conj]
+  rw [integral_prod_mul (fun u : ℝ => A u * phase (-w) u)
+    (fun v : ℝ => conj (A v * phase (-w) v)), integral_conj]
   change ((‖Ahat A w‖ ^ 2 : ℝ) : ℂ) = Ahat A w * conj (Ahat A w)
-  exact (Complex.mul_conj' _).symm
+  simpa only [Complex.ofReal_pow] using (Complex.mul_conj' (Ahat A w)).symm
 
 lemma triple_norm (A : ℝ → ℂ) (t w : ℝ) (p : ℝ × ℝ) :
     ‖triple A t w p‖ = weight w * (‖A p.1‖ * ‖A p.2‖) := by
@@ -142,7 +145,8 @@ theorem triple_absolute_integral {A : ℝ → ℂ} (_hAm : Measurable A)
       ∂((volume : Measure ℝ).prod pairMeasure)) =
       (∫ w : ℝ, weight w) * (∫ u : ℝ, ‖A u‖) ^ 2 := by
   simp_rw [triple_norm]
-  rw [integral_prod_mul, integral_prod_mul]
+  rw [integral_prod_mul weight (fun p : ℝ × ℝ => ‖A p.1‖ * ‖A p.2‖),
+    integral_prod_mul (fun u : ℝ => ‖A u‖) (fun v : ℝ => ‖A v‖)]
   ring
 
 /-- Expansion of the literal modulus square of the literal L1 transform.
@@ -173,7 +177,8 @@ lemma frequencyIntegrand_integrable {A : ℝ → ℂ} (hA : Integrable A) (t : �
     exact hc.aestronglyMeasurable
   apply (resolvent_integrable t).mul_bdd hm
   exact ae_of_all _ fun w => by
-    simp only [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+    change ‖((‖Ahat A w‖ ^ 2 : ℝ) : ℂ)‖ ≤ _
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (sq_nonneg ‖Ahat A w‖)]
     have hb := Ahat_bound hA w
     simpa only [pow_two] using mul_self_le_mul_self (norm_nonneg _) hb
 
@@ -214,6 +219,7 @@ theorem complex_resolvent_identity {A : ℝ → ℂ} (hAm : Measurable A)
         (decay (t - p.1 + p.2) : ℂ) / 4 ∂pairMeasure := by
       apply integral_congr_ae
       exact ae_of_all _ fun p => by
+        dsimp only
         unfold triple
         rw [integral_const_mul]
         calc
@@ -237,10 +243,14 @@ lemma spectralS_eq_complex_real {A : ℝ → ℂ} (hA : Integrable A) (t : ℝ) 
     OriginalTestRegularity.spectralS (rho A) t =
       ((((1 / (2 * Real.pi) : ℝ) : ℂ)) *
         (∫ w : ℝ, frequencyIntegrand A t w)).re := by
-  rw [spectralS_density hA t, ← integral_const_mul,
-    ← integral_re ((frequencyIntegrand_integrable hA t).const_mul _)]
+  have hre := Complex.reCLM.integral_comp_comm
+    ((frequencyIntegrand_integrable hA t).const_mul (((1 / (2 * Real.pi) : ℝ) : ℂ)))
+  simp only [Complex.reCLM_apply] at hre
+  rw [spectralS_density hA t, ← integral_const_mul, ← hre]
   apply integral_congr_ae
   exact ae_of_all _ fun w => by
+    change density A w * OriginalTestRegularity.spectralKernel t w =
+      ((((1 / (2 * Real.pi) : ℝ) : ℂ)) * frequencyIntegrand A t w).re
     have he : (((1 / (2 * Real.pi) : ℝ) : ℂ)) * frequencyIntegrand A t w =
         phase w t * ((density A w / (1 + 4 * w ^ 2) : ℝ) : ℂ) := by
       unfold frequencyIntegrand resolvent density
@@ -256,7 +266,11 @@ lemma spatial_real {A : ℝ → ℂ} (hAm : Measurable A) (hA : Integrable A) (t
     (∫ p : ℝ × ℝ, coefficient A p * (decay (t - p.1 + p.2) : ℂ)
       ∂pairMeasure).re =
     ∫ p : ℝ × ℝ, (coefficient A p).re * decay (t - p.1 + p.2) ∂pairMeasure := by
-  rw [← integral_re (spatial_integrable hAm hA t)]
+  have hre := Complex.reCLM.integral_comp_comm (spatial_integrable hAm hA t)
+  simp only [Complex.reCLM_apply] at hre
+  rw [← hre]
+  change (∫ p : ℝ × ℝ, (coefficient A p * (decay (t - p.1 + p.2) : ℂ)).re
+    ∂pairMeasure) = _
   simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
 
 /-- Real part plus the u/v swap supplies the requested sign of the lag.
@@ -267,12 +281,14 @@ theorem spectral_convolution {A : ℝ → ℂ} (hAm : Measurable A)
       (∫ p : ℝ × ℝ, (coefficient A p).re * decay (t + p.1 - p.2)
         ∂pairMeasure) / 4 := by
   rw [spectralS_eq_complex_real hA t, complex_resolvent_identity hAm hA t,
+    show (4 : ℂ) = ((4 : ℝ) : ℂ) from rfl,
     Complex.div_ofReal_re, spatial_real hAm hA t]
   congr 1
   rw [← integral_prod_swap
     (fun p : ℝ × ℝ => (coefficient A p).re * decay (t - p.1 + p.2))]
   apply integral_congr_ae
   exact ae_of_all _ fun p => by
+    dsimp only
     rw [coefficient_re_swap]
     congr 2
     change t - p.2 + p.1 = t + p.1 - p.2
@@ -284,7 +300,8 @@ lemma spatial_real_integrable {A : ℝ → ℂ} (hAm : Measurable A)
   have hs := (spatial_integrable hAm hA t).re.swap
   apply hs.congr
   exact ae_of_all _ fun p => by
-    simp only [Function.comp_apply, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+    change (coefficient A p.swap * (decay (t - p.2 + p.1) : ℂ)).re = _
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
       mul_zero, sub_zero, coefficient_re_swap]
     congr 2
     change t - p.2 + p.1 = t + p.1 - p.2
@@ -380,7 +397,7 @@ lemma endpoint_square_factor {A : ℝ → ℂ} (hAm : Measurable A) (hA : Integr
   have hplus : IntegrableOn (fun u : ℝ => (Real.exp (u / 2) : ℂ) * A u) (Icc 0 D) := by
     simpa only [div_eq_mul_inv, one_mul, mul_comm] using weighted_integrableOn hA D (1 / 2)
   have hminus : IntegrableOn (fun u : ℝ => (Real.exp (-u / 2) : ℂ) * A u) (Icc 0 D) := by
-    simpa only [div_eq_mul_inv, neg_mul, one_mul, mul_comm] using
+    simpa only [div_eq_mul_inv, neg_mul, mul_neg, one_mul, mul_comm] using
       weighted_integrableOn hA D (-1 / 2)
   have hpm : Measurable (fun u : ℝ => (Real.exp (u / 2) : ℂ) * A u) := by fun_prop
   have hproduct := hminus.mul_prod (conjugate_integrable hpm hplus)
@@ -414,7 +431,10 @@ lemma endpoint_square_factor {A : ℝ → ℂ} (hAm : Measurable A) (hA : Integr
   have hr : (∫ p : ℝ × ℝ in square, H p ∂pairMeasure).re =
       ∫ p : ℝ × ℝ in square,
         (conj (A p.2) * A p.1).re * Real.exp (-|D + p.1 - p.2| / 2) ∂pairMeasure := by
-    rw [← integral_re hH'.integrableOn]
+    have hre := Complex.reCLM.integral_comp_comm (hH'.integrableOn (s := square))
+    simp only [Complex.reCLM_apply] at hre
+    rw [← hre]
+    change (∫ p : ℝ × ℝ in square, (H p).re ∂pairMeasure) = _
     apply setIntegral_congr_fun (measurableSet_Icc.prod measurableSet_Icc)
     intro p _
     dsimp [H, coefficient, decay]
