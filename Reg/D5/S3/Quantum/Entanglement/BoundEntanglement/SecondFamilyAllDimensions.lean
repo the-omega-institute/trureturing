@@ -25,21 +25,26 @@ abbrev signature : Signature :=
     (fun p => Fin p.1 → Fin p.1 × Fin p.1 → ℂ) (fun _ => Bool)
 
 private theorem forall_nextFin {n : ℕ} (P : Fin (Nat.succ n) → Prop) :
-    dsimp% only [Fin.succ, Nat.add]
-      ((∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ) := by
+    (∀ i, P i) ↔ P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n,
+      P (dsimp% only [Fin.succ, HAdd.hAdd, instHAdd, Add.add, instAddNat, Nat.add] i.succ) := by
   exact Fin.forall_fin_succ
 
 private def finForallDecision : (n : ℕ) → (P : Fin n → Prop) →
     (∀ i, Decidable (P i)) → Decidable (∀ i, P i) :=
-  dsimp% only [Fin.succ, Nat.add] (Nat.rec (motive := fun n => (P : Fin n → Prop) →
+  Nat.rec (motive := fun n => (P : Fin n → Prop) →
     (∀ i, Decidable (P i)) → Decidable (∀ i, P i))
     (fun _ _ => isTrue (fun i => Fin.elim0 i))
     (fun n ih P h =>
       letI : Decidable (P ⟨0, Nat.zero_lt_succ n⟩) := h _
-      letI : Decidable (∀ i : Fin n, P i.succ) :=
-        ih (fun i => P i.succ) (fun i => h i.succ)
-      decidable_of_iff (P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n, P i.succ)
-        (forall_nextFin P).symm))
+      letI : Decidable (∀ i : Fin n,
+          P (dsimp% only [Fin.succ, HAdd.hAdd, instHAdd, Add.add, instAddNat, Nat.add] i.succ)) :=
+        ih (fun i => P
+          (dsimp% only [Fin.succ, HAdd.hAdd, instHAdd, Add.add, instAddNat, Nat.add] i.succ))
+          (fun i => h
+            (dsimp% only [Fin.succ, HAdd.hAdd, instHAdd, Add.add, instAddNat, Nat.add] i.succ))
+      decidable_of_iff (P ⟨0, Nat.zero_lt_succ n⟩ ∧ ∀ i : Fin n,
+        P (dsimp% only [Fin.succ, HAdd.hAdd, instHAdd, Add.add, instAddNat, Nat.add] i.succ))
+        (forall_nextFin P).symm)
 
 private def finProductDecision (n m : ℕ) (P : Fin n × Fin m → Prop)
     (h : ∀ p, Decidable (P p)) : Decidable (∀ p, P p) :=
