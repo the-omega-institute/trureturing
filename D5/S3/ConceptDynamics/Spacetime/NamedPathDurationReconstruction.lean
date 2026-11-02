@@ -172,22 +172,23 @@ theorem branching_collision_inventory
     simp only [duration_comp, add_assoc]
   have hequal : readout d r ⟨z, p.comp (U.comp W)⟩ =
       readout d r ⟨z, p.comp (W.comp U)⟩ := by
-    apply Prod.ext rfl
-    change duration d (p.comp (U.comp W)) = duration d (p.comp (W.comp U))
-    rw [hleft, hright]
-    ring
+    have htime : duration d (p.comp (U.comp W)) =
+        duration d (p.comp (W.comp U)) := by
+      rw [hleft, hright]
+      ring
+    exact Prod.ext rfl htime
   have hnoninjective : ¬ Function.Injective (readout d r) := by
     intro hinj
     exact hdistinct (eq_of_heq (Sigma.mk.inj (hinj hequal)).2)
   refine ⟨p, A, B, ?_, ?_, ?_, ?_, hfirst, hdistinct, hleft, hright, hequal,
     hnoninjective⟩
-  · simp only [U, Quiver.Path.length_comp, Quiver.Path.length_toPath]
+  · simp only [Quiver.Path.length_comp, Quiver.Path.length_toPath]
     omega
-  · simp only [W, Quiver.Path.length_comp, Quiver.Path.length_toPath]
+  · simp only [Quiver.Path.length_comp, Quiver.Path.length_toPath]
     omega
-  · simp only [U, edgeWord_comp, Quiver.Hom.toPath, edgeWord, List.nil_append,
+  · simp only [edgeWord_comp, Quiver.Hom.toPath, edgeWord, List.nil_append,
       List.cons_append]
-  · simp only [W, edgeWord_comp, Quiver.Hom.toPath, edgeWord, List.nil_append,
+  · simp only [edgeWord_comp, Quiver.Hom.toPath, edgeWord, List.nil_append,
       List.cons_append]
 
 /-- On a recurrent named graph, a positive additive clock and the endpoint recover

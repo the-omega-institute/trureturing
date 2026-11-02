@@ -144,6 +144,41 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[] }
 
+/-- The complete specified-arrow inventory, with only its readout operand varied. -/
+abbrev inventoryArena : Arena where
+  signature := signature.{u,v}
+  Law q := ∀ c : Params.{u,v},
+    (∀ x y : c.V, Nonempty (Quiver.Path x y)) →
+    ∀ (z : c.V) (a b : Σ t : c.V, z ⟶ t), a ≠ b →
+    ∃ (p : Quiver.Path c.root z) (A : Quiver.Path a.1 z) (B : Quiver.Path b.1 z),
+      let U := a.2.toPath.comp A
+      let W := b.2.toPath.comp B
+      0 < U.length ∧ 0 < W.length ∧
+      edgeWord U = ⟨z, a.1, a.2⟩ :: edgeWord A ∧
+      edgeWord W = ⟨z, b.1, b.2⟩ :: edgeWord B ∧
+      (⟨z, a.1, a.2⟩ : NamedEdge c.V) ≠ ⟨z, b.1, b.2⟩ ∧
+      p.comp (U.comp W) ≠ p.comp (W.comp U) ∧
+      duration c.d (p.comp (U.comp W)) =
+        duration c.d p + duration c.d U + duration c.d W ∧
+      duration c.d (p.comp (W.comp U)) =
+        duration c.d p + duration c.d W + duration c.d U ∧
+      q.readout () c ⟨z, p.comp (U.comp W)⟩ =
+        q.readout () c ⟨z, p.comp (W.comp U)⟩ ∧
+      ¬ Function.Injective (q.readout () c)
+
+theorem inventory_bridge :
+    (type_of% (@branching_collision_inventory.{u,v})) ↔ inventoryArena.Law actual := by
+  constructor
+  · intro h c hc z a b hab
+    exact h c.d c.root hc z a b hab
+  · intro h V q d r hc z a b hab
+    exact h ⟨V, q, d, r⟩ hc z a b hab
+
+theorem inventory_actual_law : inventoryArena.{u,v}.Law actual :=
+  inventory_bridge.mp (@branching_collision_inventory.{u,v})
+
+#print axioms inventory_bridge
+#print axioms inventory_actual_law
 #print axioms family
 #print axioms registration
 end Reg.D5.S3.ConceptDynamics.Spacetime.NamedPathDurationReconstruction
