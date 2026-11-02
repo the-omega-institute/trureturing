@@ -17,3 +17,8 @@ triage: anchor
 Section 2.1, pp. 2–3, defines automorphisms fixing both endpoints, their equivalence modulo kernel conjugations, and the cocycle twist action. It states simple transitivity, assigning its verification to HW10. No splitting or trivial-action hypothesis is imposed. The year denotes the PDF creation metadata rather than a claimed first publication.
 
 The corresponding Lean construction uses the given extension, descends its actual conjugation action, and proves lift independence and the mutually inverse defect and twist operations. Compatibility with automorphism composition and the resulting group isomorphism are proved in the repository; the handout literally states a simply transitive action on the quotient set. Mathlib supplies the general-action cohomology quotient. Its coboundary convention is the negative of the parameter convention used for kernel conjugation.
+
+## Verified locator
+
+- URL: https://virtualmath1.stanford.edu/~conrad/210BPage/handouts/gpext.pdf
+- Locator: Section 2.1, pp. 2–3.
