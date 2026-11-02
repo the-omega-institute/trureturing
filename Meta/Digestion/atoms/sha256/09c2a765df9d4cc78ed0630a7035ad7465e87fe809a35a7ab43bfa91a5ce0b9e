@@ -1,0 +1,43 @@
+### 定理 3.2（所声明比较类中的唯一对称权）
+
+在上述谱比类中，两式对全部忠实参照成立，当且仅当
+
+<a id="eq-c90-weight-selection"></a>
+
+$$
+\boxed{\quad \kappa(x)=x^{-1/2},\qquad
+ \Omega_\sigma(X)=\sigma^{-1/2}X\sigma^{-1/2}.\quad}
+\tag{3.3}
+$$
+
+因此
+
+$$
+g_\sigma(X,X)
+ =\operatorname{Tr}(X^\dagger\sigma^{-1/2}X\sigma^{-1/2})
+ =\left\lVert \sigma^{-1/4}X\sigma^{-1/4}\right\rVert_2^2.
+$$
+
+**证明。**
+将伴随相容用于 $E_{ij}$，得到
+
+$$
+\kappa(x^{-1})=x\kappa(x).
+$$
+
+任意正数 $x$ 均可用一个忠实 qubit 参照的两谱值之比实现。
+将张量相容用于 $E_{ij}\otimes E_{kl}$，两端公共分母相同，故
+
+$$
+\kappa(xy)=\kappa(x)\kappa(y)\qquad(x,y>0).
+$$
+
+取 $y=x^{-1}$ 并利用 $\kappa(1)=1$，得到
+$1=x\kappa(x)^2$。正性唯一给出 $\kappa(x)=x^{-1/2}$。
+反向代入即可核对归一、伴随与张量相容。
+最后以迹的循环性得到四分之一次幂的平方范数表示。
+
+这是标准量子 $\chi^2$ 权算子张量刻画的有限证明；相关结果见 Cao–Lu 的 Lemma7(ii) [11](#ref-caolu)。
+这里甚至不需要先在整个候选类上使用算符单调性；
+选出的比较在全部 CPTP 通道下收缩，将由下一节独立证明。
+
