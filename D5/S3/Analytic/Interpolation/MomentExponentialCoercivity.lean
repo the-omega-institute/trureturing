@@ -672,8 +672,8 @@ theorem causal_prefix_deficit (D : ℝ) (hD : 0 ≤ D)
     (resolvent_right (1 / 2) (by norm_num) x a)
     ((hJ.sub (hg2.div_const 2)).congr (ae_of_all _ (fun t => (he t).symm)))
   simp_rw [he] at hs
-  rw [integral_sub hJ (hg2.div_const 2), integral_div,
-    (initial_values (1 / 2) x a (fun i => (hx i).1)).2.1] at hs
+  have hg0 : g 0 = 0 := (initial_values (1 / 2) x a (fun i => (hx i).1)).2.1
+  rw [integral_sub hJ (hg2.div_const 2), integral_div, hg0] at hs
   simp only [norm_zero, zero_pow (by decide : 2 ≠ 0), sub_zero] at hs
   have hresponse (t : ℝ) : ‖response (1 / 2) x a t‖ ^ 2 =
       ‖A t‖ ^ 2 - (star (g t) * A t).re + ‖g t‖ ^ 2 / 4 := by
@@ -776,6 +776,7 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
     have hf := intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le ht
       ((hc.mul hh).continuousOn) (fun u _ => hintegrating u) hi
     have hh0 : h 0 = 0 := hzero.2.2
+    simp only [Pi.mul_apply] at hf
     rw [hh0, mul_zero, sub_zero] at hf
     have hexp : (Real.exp (t / 2) : ℂ) * (Real.exp (-t / 2) : ℂ) = 1 := by
       rw [← Complex.ofReal_mul, ← Real.exp_add]
@@ -803,11 +804,13 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
       Complex.star_def, Complex.add_re, Complex.add_im, Complex.mul_re,
       Complex.mul_im, Complex.conj_re, Complex.conj_im, Complex.ofReal_re,
       Complex.ofReal_im]
+    norm_num
     ring
   have hFTC := square_FTC D hD h g hh hderiv
     ((hJ.add (hh2.div_const 2)).congr (ae_of_all _ (fun t => (he t).symm)))
   simp_rw [he] at hFTC
-  rw [integral_add hJ (hh2.div_const 2), integral_div, hzero.2.2] at hFTC
+  have hh0 : h 0 = 0 := hzero.2.2
+  rw [integral_add hJ (hh2.div_const 2), integral_div, hh0] at hFTC
   simp only [norm_zero, zero_pow (by decide : 2 ≠ 0), sub_zero] at hFTC
   have hid := primitive_exponential_identity (-1 / 2) D (by norm_num) hD x a hx ha hfirst
   have hGint : (∫ t in Icc (0 : ℝ) D,
@@ -815,6 +818,7 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
         ∫ t in Icc (0 : ℝ) D, ‖G t‖ ^ 2 := by
     apply setIntegral_congr_fun measurableSet_Icc
     intro t ht
+    dsimp only
     rw [← hprimitive t ht.1]
   have hJint : (∫ t in Icc (0 : ℝ) D,
       (star (∫ u in (0 : ℝ)..t, «prefix» x a u) *
@@ -823,6 +827,7 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
       ∫ t in Icc (0 : ℝ) D, (star (h t) * G t).re := by
     apply setIntegral_congr_fun measurableSet_Icc
     intro t ht
+    dsimp only
     rw [← hprimitive t ht.1]
     have hinner : (∫ u in (0 : ℝ)..t, (Real.exp ((t - u) / 2) : ℂ) *
         (∫ v in (0 : ℝ)..u, «prefix» x a v)) = h t := by

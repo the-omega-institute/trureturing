@@ -607,7 +607,7 @@ private lemma base_corr (D : ℝ) (hD : 0 ≤ D)
       _ = _ := by rw [Q_add, Q_constant x a ha, zero_add]
   rw [hrep, clipped_corr x a ha D hx f base₁ base₂
     (fun r => (base_deriv r).sub_const _) base₁_deriv
-    (by fun_prop) 0 le_rfl hD (by simp [f]), corr_at_zero x a ha]
+    (by unfold base₂ base; fun_prop) 0 le_rfl hD (by simp [f]), corr_at_zero x a ha]
   norm_num [base₁]
   ring
 
@@ -651,7 +651,7 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
   have hi (n : ℕ) : IntegrableOn (w n) (Icc 0 D) := by
     apply IntegrableOn.indicator
     · apply Continuous.integrableOn_Icc
-      exact (show Continuous (smooth₂ n) by fun_prop).mul (corr_continuous x a ha)
+      exact (show Continuous (smooth₂ n) by unfold smooth₂ smooth; fun_prop).mul (corr_continuous x a ha)
     · exact measurableSet_Icc
   have hw (n : ℕ) (hn : n ∈ active D N) :
       (∫ s in Icc 0 D, w n s) = ∫ s in Icc (Real.log n) D, smooth₂ n s * actualCorr x a s := by
@@ -662,7 +662,7 @@ private lemma complete_curvature_integral (D : ℝ) (hD : 0 ≤ D)
       Set.inter_eq_right.mpr (Icc_subset_Icc_left hln)]
   have hbase : IntegrableOn (fun s : ℝ => base₂ s * actualCorr x a s) (Icc 0 D) := by
     apply Continuous.integrableOn_Icc
-    exact (show Continuous base₂ by fun_prop).mul (corr_continuous x a ha)
+    exact (show Continuous base₂ by unfold base₂ base; fun_prop).mul (corr_continuous x a ha)
   have hcomb : (fun s : ℝ => base₂ s * actualCorr x a s + ∑ n ∈ active D N, w n s) =ᵐ[
       volume.restrict (Icc 0 D)] (fun s => (remainder s / 4 - Real.exp (s / 2)) * actualCorr x a s) := by
     filter_upwards [ae_restrict_mem measurableSet_Icc] with s hs
@@ -734,7 +734,7 @@ theorem actual_remainder_correlation_identity (D : ℝ) (hD : 0 ≤ D)
     have hn2 := (Finset.mem_filter.mp hn).2.1
     have hln : 0 ≤ Real.log (n : ℝ) := Real.log_nonneg (by exact_mod_cast (by omega : 1 ≤ n))
     rw [clipped_corr x a ha D hdiam (smooth n) (smooth₁ n) (smooth₂ n)
-      (smooth_deriv n) (smooth₁_deriv n) (by fun_prop)
+      (smooth_deriv n) (smooth₁_deriv n) (by unfold smooth₂ smooth; fun_prop)
       (Real.log n) hln (Finset.mem_filter.mp hn).2.2 (smooth_entry n hn2), smooth₁_entry n hn2]
   have hsum : (Q x a remainder).re =
       -(Real.eulerMascheroniConstant - 1 + Real.log (2 * Real.pi)) * E x a -
@@ -745,7 +745,8 @@ theorem actual_remainder_correlation_identity (D : ℝ) (hD : 0 ≤ D)
     rw [hrep, Complex.add_re, show (∑ n ∈ active D N, Q x a (clipped (Real.log n) (smooth n))).re =
       ∑ n ∈ active D N, (Q x a (clipped (Real.log n) (smooth n))).re from
         map_sum Complex.reCLM _ _, base_corr D hD x a ha hdiam]
-    simp_rw [Finset.sum_congr rfl hterm, Finset.sum_sub_distrib, ← Finset.mul_sum]
+    simp_rw [Finset.sum_congr rfl hterm, Finset.sum_sub_distrib, mul_assoc]
+    rw [← Finset.mul_sum, ← Finset.mul_sum]
     ring
   rw [complete_curvature_integral D hD N hN x a ha, active_eq_Icc D N hN] at hsum
   dsimp [Q, remainder, E, actualCorr] at hsum
