@@ -74,10 +74,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
