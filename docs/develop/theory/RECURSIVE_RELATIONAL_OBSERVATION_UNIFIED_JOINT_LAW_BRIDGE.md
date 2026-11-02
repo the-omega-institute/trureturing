@@ -577,3 +577,385 @@ Bian--Abate 的 [Theorem 6 and Figure 1](https://arxiv.org/html/1701.04547v3)
 和精确常数；它不声称解决该文的一般近似模型问题。
 
 ## 2.99 追加锚
+
+## 3. Joint square/cube acquisition for the published finite groups
+
+### 3.1 The conditional source interface and its actual relation
+
+**Definition 3.1 (one source and total paid samples).** Fix one hidden
+$i\in\{0,1\}$ throughout a run and use exactly the groups $S_i$ of
+[FINITE_GROUP_POWER_MAP_SEPARATION, Definition 1.2 and Theorem 1.3](FINITE_GROUP_POWER_MAP_SEPARATION.md).
+Write $O_6(S_i)$ for their order-six elements. Each paid draw satisfies
+
+$$
+\Pr(x_j=x\mid i,\text{actual past})=\frac1{1944}
+\quad(x\in O_6(S_i)).
+\tag{UJB.7501}
+$$
+
+A supplied legal, nondestructive same-source fork/read returns opaque
+references $a_j=x_j^2$ and $t_j=x_j^3$ from that very draw. The observer
+may retain these references and compare stable equality within each
+endpoint type, including against old references. Coordinates, names,
+cross-type comparisons, multiplication, inverse, conditioning the sampler
+and reset are unavailable. Initialization, control, private randomness,
+permissions and any refusal or timing information are source-blind;
+permission to draw and compare persists. The only source-dependent
+observations are the stated typed equalities. Any old source-dependent
+records must come from this same contract and their draws count in the
+total $n$; changing the current batch does not erase their cost.
+
+The complete equality record is $H_n=(\pi_A,\pi_T)$, two partitions of
+the same ordered index set $[n]$, with $j\sim_A k$ iff $a_j=a_k$ and
+$j\sim_T k$ iff $t_j=t_k$. Thus $n$ counts all acquired samples, not
+live storage, comparisons, elementary native actions or elapsed time.
+
+**Proposition 3.2 (the actual witnessed-relation adapter).** Put
+$F=\mathbb F_3$, $V=F^2$, $W=F^3$, $Z=F^2$, and retain the source maps
+
+$$
+\begin{aligned}
+B_0(v,w)&=(v_1w_1+v_2w_2,\ v_1w_2+v_2w_3),\\
+B_1(v,w)&=(v_1w_1-v_2w_2,\ v_2w_1+v_1w_2).
+\end{aligned}
+$$
+
+Let $A=(V\setminus\{0\})\times Z$ and $T=W\times Z$, interpreted in
+$S_i$ as $a=(v,0,s;0)$ and $t=(0,w,z;1)$. The endpoint map is a bijection
+
+$$
+\begin{aligned}
+O_6(S_i)&\longrightarrow E_i\subseteq A\times T,\\
+x&\longmapsto(x^2,x^3),\\
+E_i&=\{((v,s),(w,z)):v\ne0,\ B_i(v,w)=s\}.
+\end{aligned}
+\tag{UJB.7502}
+$$
+
+The simple typed incidence graph $G_i=(A,T,E_i)$ has
+
+$$
+|A|=72,\quad |T|=243,\quad d_A=27,\quad d_T=8,\quad M:=|E_i|=1944.
+\tag{UJB.7503}
+$$
+
+Consequently (UJB.7501) becomes conditionally iid uniform edge sampling
+from $G_i$, with every witness and edge having mass $1/M$.
+
+Proof. The group construction and order classification are those of the
+cited source, §§2–3; no new group construction is needed. Substitution
+in its multiplication gives, for $x=(u,w,c;1)$ with $u\ne0$,
+
+$$
+x^2=(2u,0,-B_i(u,w);0),\qquad
+x^3=(0,w,c+B_i(u,w);1).
+$$
+
+Set $v=2u$, $s=-B_i(u,w)$, $z=c+B_i(u,w)$. Bilinearity gives
+$B_i(v,w)=s$. Conversely every pair in (UJB.7502) has the unique preimage
+$x=(2v,w,z+s;1)$: here $B_i(2v,w)=2s=-s$, so substitution returns both
+specified endpoints. Mathematically the same inverse is $x=a^2t$; it
+is used only to prove the bijection and grants no observer operation.
+For each nonzero $v$, the source proves $B_i(v,-):W\to Z$ has rank two,
+hence exactly three solutions for every $s$. There are nine free $z$
+values, giving degree $27$ on $A$; every $(w,z)$ has exactly one neighbor
+for each of the eight nonzero $v$, giving degree $8$. This proves
+(UJB.7503) and the uniform pushforward. In particular all three $w$
+coordinates remain: $w_3$ is free for $B_1$, not deleted.
+
+In the [base witnessed relation, Definition 1.2](RECURSIVE_RELATIONAL_OBSERVATION.md),
+the witness set is $O_6(S_i)$ and its two endpoint maps are these powers.
+Here each endpoint pair has exactly one witness; passing to the support
+therefore loses no witness multiplicity. Repeated draws still give
+indexed edge occurrences, each of mass $1/M$, and must not be collapsed
+when computing sample probabilities. $\square$
+
+### 3.2 Complete law equality through three and the first difference
+
+**Theorem 3.3 (exact first total sample horizon).** Under Definition 3.1,
+the complete laws of $H_n$ for $S_0,S_1$ agree for every $0\le n\le3$
+and differ for every $n\ge4$. The same equality through three holds for
+any common adaptive comparison, retention and stopping protocol with
+that total sample cap. At four define
+
+$$
+\begin{aligned}
+R&=\{a_1=a_2,\ a_3=a_4,\ t_1=t_4,\ t_2=t_3\},\\
+R_{\mathrm{str}}&=R\cap\{a_1\ne a_3,\ t_1\ne t_2\}.
+\end{aligned}
+$$
+
+Their exact probabilities are
+
+$$
+\begin{aligned}
+\Pr_0(R)&=\frac1{68024448},&
+\Pr_1(R)&=\frac1{34012224},\\
+\Pr_0(R_{\mathrm{str}})&=\frac{37}{3673320192},&
+\Pr_1(R_{\mathrm{str}})&=\frac{91}{3673320192}.
+\end{aligned}
+\tag{UJB.7504}
+$$
+
+Proof. For prescribed within-type equalities on $[n]$, make a typed
+bipartite multigraph $F$ whose vertices are the required equality blocks
+and whose edge $j$ joins its two blocks. Satisfying edge sequences are
+exactly type-preserving homomorphisms $F\to G_i$, so the probability is
+$\operatorname{hom}_{\mathrm{type}}(F,G_i)/M^n$. Parallel edges impose
+the same incidence constraint and can be collapsed in the numerator;
+the denominator retains the original exponent $n$. For $n\le3$ the
+resulting simple bipartite graph is a forest without isolated vertices.
+A connected tree with $\ell$ left and $r$ right vertices has exactly
+
+$$
+M\,8^{\ell-1}27^{r-1}
+\tag{UJB.7505}
+$$
+
+typed homomorphisms: choose one root edge in $M$ ways, then extend
+outward, with eight choices for each new left vertex and $27$ for each
+new right vertex. Collisions are permitted in a homomorphism, so no
+additional exclusions arise. Multiply over components. These counts
+are the same for both sources. An exact atom $H_n=(\pi_A,\pi_T)$ also
+excludes every equality between different blocks within each type.
+Expand the product of these inequality indicators by finite
+inclusion-exclusion. Each term merely coarsens the equality blocks and
+still has at most $n$ edges, so every term has equal probability for the
+two sources. This proves equality of every atom and hence the whole law;
+$n=0$ is immediate. This is the finite typed specialization of the
+homomorphism/injectivity counting method of Lovász–Szegedy, §§2.1, 2.4
+[LS](https://arxiv.org/abs/math/0408173v2); absent cross-edges are not
+required, so these are not induced-subgraph counts.
+
+For the four-edge cycle, let $c_i(t,t')$ count common left neighbors.
+For $t=(w,z)$, $t'=(w',z')$, and $d=w-w'$, (UJB.7502) gives
+
+$$
+c_i(t,t')=|\{v\ne0:B_i(v,d)=0\}|=3^{2-\operatorname{rank}L_i(d)}-1,
+$$
+
+where the matrices of $L_i(d):v\mapsto B_i(v,d)$ are
+
+$$
+L_0(d)=\begin{pmatrix}d_1&d_2\\d_2&d_3\end{pmatrix},\qquad
+L_1(d)=\begin{pmatrix}d_1&-d_2\\d_2&d_1\end{pmatrix}.
+$$
+
+For $L_0$, rank zero occurs only at $d=0$. Among nonzero $d$, rank one
+occurs in six cases with $d_1\ne0$, where $d_3=d_2^2/d_1$, and in two
+cases with $d_1=d_2=0$, $d_3\ne0$. Thus the rank multiplicities are
+$(1,8,18)$. For $L_1$, $d_1^2+d_2^2$ vanishes in $F$ exactly when
+$d_1=d_2=0$. Retaining all three values of $d_3$ gives rank
+multiplicities $(3,0,24)$. For each $d$, ordered $(t,t')$ have
+$27\cdot9^2=2187$ realizations, including any diagonal pairs. Therefore
+
+$$
+\begin{array}{c|rrr}
+ &c=0&c=2&c=8\\ \hline
+G_0&39366&17496&2187\\
+G_1&52488&0&6561
+\end{array}
+\tag{UJB.7506}
+$$
+
+counts all $243^2$ ordered pairs. The two left neighbors in $R$ may be
+chosen independently, giving
+$H_i:=\sum_{t,t'}c_i(t,t')^2$, with $(H_0,H_1)=(209952,419904)$.
+For the strict event use
+$Q_i:=\sum_{t\ne t'}c_i(t,t')(c_i(t,t')-1)$.
+Now $\sum_{t,t'}c_i(t,t')=72\cdot27^2=52488$, while each of the
+$243$ diagonal pairs has $c_i(t,t)=8$. Hence
+
+$$
+Q_i=H_i-52488-243\cdot8\cdot7,\qquad
+(Q_0,Q_1)=(143856,353808).
+\tag{UJB.7507}
+$$
+
+Divide these ordered counts by $M^4$, without an automorphism divisor,
+to obtain (UJB.7504). Projection to the first four draws proves
+inequality for every $n\ge4$.
+
+Finally every allowed protocol capped at $n$ is a common randomized
+function of $H_n$: retain only its requested comparisons and records,
+and follow its source-blind control and coins. For this mathematical
+coupling one can pre-generate $n$ edges and expose the requested prefix;
+unexposed draws supply no free observations or reset. Equal full laws
+therefore imply equal bounded adaptive transcript laws. $\square$
+
+### 3.3 Which acquired information can be recovered
+
+**Proposition 3.4 (single charts and an actual pairing-erasure boundary).**
+Either single chart has the same equality law under both sources for
+all $n$. Nevertheless, erasing the matching of the two charts need not
+erase every distinction: at $n=4$, retain only the two occupancy counts
+$k_A=|\{a_1,\ldots,a_4\}|$, $k_T=|\{t_1,\ldots,t_4\}|$. Then
+
+$$
+\Pr_0(k_A=k_T=2)=\frac{10183}{3673320192},\qquad
+\Pr_1(k_A=k_T=2)=\frac{10507}{3673320192}.
+\tag{UJB.7508}
+$$
+
+Proof. Biregularity makes the $a_j$ iid uniform on $72$ points and the
+$t_j$ iid uniform on $243$ points. For either chart on $m$ points, any
+specified exact partition with $k$ blocks has probability $(m)_k/m^n$,
+where $(m)_k=m(m-1)\cdots(m-k+1)$, or zero if $k>m$.
+This proves the single-chart assertion at every horizon.
+
+For the joint occupancy event, the actual used edge support must be
+two disjoint edges, a three-edge path, or a four-edge $K_{2,2}$. The
+numbers of the first two support types are common:
+
+$$
+D=\frac{M(M-34)}2=1856520,\qquad
+P=M\cdot26\cdot7=353808.
+$$
+
+Indeed from one edge remove itself, its $26$ other left-incident edges
+and its seven other right-incident edges to count disjoint pairs, then
+divide by two. A three-edge path has a unique middle edge; choose its
+two extensions in $26$ and seven ways. This counts the chosen support
+even if a fourth, unused edge exists in $G_i$. Each two-edge support
+has $2^4-2=14$ length-four sequences using both edges; each three-edge
+support has $3^4-3\cdot2^4+3=36$ using all three; each four-edge support
+has $4!=24$. By (UJB.7507) there are $Q_i/4$ such $K_{2,2}$ supports
+(the factor four chooses the ordered two left and two right vertices).
+Thus the occupancy numerator is
+
+$$
+14D+36P+6Q_i=
+\begin{cases}39591504&i=0,\\40851216&i=1.\end{cases}
+$$
+
+Division by $1944^4$ proves (UJB.7508). The separate occupancy laws
+agree, but their joint law differs even without index matching. $\square$
+
+**Proposition 3.5 (historical sufficiency does not give kernel descent).**
+$H_n$ retains all past equality answers up to independent renaming of
+attained endpoint values. It need not make the next-observation kernel
+constant on actual-history fibers, even within $S_0$.
+
+Proof. Two endpoint lists have the same partition pair exactly when
+bijections between their attained left values and between their attained
+right values match every indexed occurrence. These bijections extend to
+the respective finite endpoint sets of the same sizes. Thus every
+function of acquired equalities factors through $H_n$, with no claim
+that these arbitrary renamings preserve $E_i$ or future behavior.
+
+For the actual failure of predictive descent in $G_0$, take
+
+$$
+\begin{aligned}
+a&=((1,0),(0,0)),& b&=((0,1),(0,1)),\\
+t_0&=((0,0,0),(0,0)),& t_+&=((0,0,1),(0,0)),&
+t_-&=((1,0,1),(0,0)).
+\end{aligned}
+$$
+
+The histories $[(a,t_0),(b,t_+)]$ and $[(a,t_0),(b,t_-)]$ consist of
+legal edges: $B_0((1,0),0)=0$ and
+$B_0((0,1),(0,0,1))=B_0((0,1),(1,0,1))=(0,1)$.
+Both histories have two singleton blocks in each chart. But
+$B_0((1,0),(0,0,1))=(0,0)$ whereas
+$B_0((1,0),(1,0,1))=(1,0)$. Conditioned on these actual histories,
+$\Pr(a_3=a_1,t_3=t_2)$ is respectively $1/1944$ and $0$.
+Both conditioning events have positive mass. Therefore a pointwise
+predictive quotient cannot be inferred from historical sufficiency.
+Averaging over compatible embeddings when conditioning only on the
+observed $H_2$ is a different operation; it does not contradict
+Theorem 3.3 or prove the joint-kernel descent of (UJB.7313). $\square$
+
+**Proposition 3.6 (blocks and finite certainty).** For fixed $i$, internal
+partition patterns of disjoint consecutive four-draw blocks are iid
+with law $H_4$, conditionally on every actual past before those blocks.
+Each block costs four further samples. Equality-history increments
+need not be iid. No deterministic finite total sample cap permits
+zero-error identification of $i$; known support size $M$, persistent
+permissions and unbounded paid sampling with retention do permit
+almost-surely finite zero-error identification.
+
+Proof. Repeated conditioning in (UJB.7501) gives the product uniform
+law for any finite future edge sequence given its actual past. Applying
+the internal-partition map separately to disjoint blocks gives the
+claimed conditional product law. This is conditional on the fixed
+source; mixing over an unknown $i$ need not preserve independence.
+For a simple failure of iid equality increments, the event that a new
+square has appeared is certain at draw one and has probability $71/72$
+at draw two. Comparisons against old blocks also depend on retained
+history. Proposition 3.5 gives a further predictive obstruction.
+
+For any deterministic cap $N\ge1$, the full transcript in which all
+$N$ edges repeat one edge is common to both sources and has probability
+$M^{1-N}>0$ under each. On it a common bounded protocol has the same
+coin and output law under both sources, so cannot identify both
+correctly with probability one. The empty transcript handles $N=0$.
+
+Conversely let $\tau$ be the first paid draw at which $M$ distinct
+endpoint pairs have been recorded. Equality of two pairs is recognized by two typed
+equality comparisons; no names or multiplication are required. A union
+bound over the $M$ edges gives
+
+$$
+\Pr_i(\tau>n)\le M(1-1/M)^n\longrightarrow0.
+$$
+
+Thus $\tau$ is finite almost surely, with no deterministic finite upper
+bound. Since the support size is known, at $\tau$ the retained typed
+graph is exactly $G_i$; every endpoint occurs because its degree is
+positive. Counting its $\sum c(t,t')^2$ identifies $i$ by (UJB.7506).
+This procedure has zero error on every terminating run. $\square$
+
+### 3.4 Mathematical scope and source correspondences
+
+**Assumptions and interpretation 3.7.** Theorem 3.3 is a source-specific
+operational application of the existing group construction. The old
+Theorem 1.3 separates simultaneous square/cube structure despite every
+individual power graph being isomorphic; the new horizon concerns the
+particular anonymous uniform order-six experiment (UJB.7501). It does
+not reprove the old theorem or assert a new general graph framework.
+The [native correlation-order results, Theorems 1.3 and 4.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATION_ORDER_ACQUISITION.md)
+already distinguish bounded joint laws from optimized acquisition; their
+native source family, legal Reads and cost objective are different.
+Here Theorem 3.3 supplies the complete four-sample specialization,
+while (UJB.7301)–(UJB.7305) keep law equivalence separate from pointwise
+joint-kernel descent.
+
+The finite graph, its two boundary maps, its retained indexed edges
+and its sample index order are compatible relational encodings of
+acquired data. These recover equality history as in Proposition 3.5;
+they do not recover physical elapsed time, erased chronology, named
+group elements, multiplication or arbitrary permissions. In particular
+the single bit $\mathbf1_R$ already separates the four-sample laws, so
+the full history is not asserted to be minimal for that narrower task.
+Neither an optimal storage bound, a fixed-confidence optimum nor a
+native action count follows from the first differing horizon.
+
+The witnessed-relation adapter (UJB.7502) is conditional mathematical
+progress. An operation-, joint-law- and resource-preserving realization
+of its iid uniform sampler, same-source fork, stable typed equality,
+legal permissions and retained references using the original $\alpha/\beta$
+operations remains **unproved**. Encoding group elements in trees or
+using the mathematical inverse $a^2t$ supplies none of those operational
+bridges. The full recovery problem for the original atomic generation
+model remains unresolved by this conditional application.
+
+The counting method used inside Theorem 3.3 is classical [LS](https://arxiv.org/abs/math/0408173v2).
+For the interaction formulation, Crane–Dempsey,
+[Edge exchangeable models for network data, §2.3 and §4.1](https://arxiv.org/abs/1603.04571v4),
+uses iid interactions modulo vertex renaming. The present specialization
+has disjoint left/right types, mass $1/1944$ on each allowed ordered
+pair, type-preserving renaming and retained sample indices and repeated
+occurrences. Levin–Chandrasekaran,
+[Limits of Weighted Graphs via Random Quotients, Proposition 2.6 and §4.1](https://arxiv.org/abs/2512.23149v3),
+likewise provides the mature edge-sampling and homomorphism/injectivity
+setting; no general limit or representation theorem is needed for the
+finite counts above. First-occurrence naming of equality classes also
+appears in Ivanov–Burnaev,
+[Anonymous Walk Embeddings, §2](https://proceedings.mlr.press/v80/ivanov18a.html),
+but their samples follow dependent walks, so their walk results are not
+transferred to this iid edge law. These correspondences attribute the
+methods, not the specific rank counts and probabilities for $S_0,S_1$;
+the contribution is the stated source-specific operational application.
+
+## 追加锚（本行以下为增补区）
