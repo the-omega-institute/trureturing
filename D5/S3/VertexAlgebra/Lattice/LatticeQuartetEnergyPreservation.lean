@@ -124,7 +124,7 @@ private theorem originalEnergy_dm
             (D5.S3.Quantum.Fermionic.BcGhostVirasoro.L 0)) = 0
   rw [tensor_commutator_sum,
     sugawaraMode_a_commutator D H hHG hGH F.eMinus 0 n, ghost_zero_c]
-  simpa only [zero_add] using
+  simpa only [tp, zero_add] using
     (tensor_scalar_cancel (n : ℂ) (a F.eMinus n) (c (-n)))
 
 private theorem originalEnergy_rr
@@ -143,7 +143,7 @@ private theorem originalEnergy_rr
             (D5.S3.Quantum.Fermionic.BcGhostVirasoro.L 0)) = 0
   rw [tensor_commutator_sum,
     sugawaraMode_a_commutator D H hHG hGH F.ePlus 0 (-n), ghost_zero_b]
-  simpa only [zero_add, Int.cast_neg, neg_neg] using
+  simpa only [tp, zero_add, Int.cast_neg, neg_neg] using
     (tensor_scalar_cancel (-(n : ℂ)) (a F.ePlus (-n)) (b n))
 
 private theorem originalEnergy_dTerm

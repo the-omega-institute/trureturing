@@ -35,9 +35,15 @@ def rejected : Realization signature := realize signature
 
 private theorem inverse_hyperbolic :
     gramComplex hyperbolic * gramComplex hyperbolic = 1 := by
+  have hg : gramComplex hyperbolic = (!![0,1;1,0] : Matrix (Fin 2) (Fin 2) ℂ) := by
+    ext i j
+    change (((!![0,1;1,0] : Matrix (Fin 2) (Fin 2) ℤ) i j : ℤ) : ℂ) =
+      (!![0,1;1,0] : Matrix (Fin 2) (Fin 2) ℂ) i j
+    fin_cases i <;> fin_cases j <;> norm_num
+  rw [hg]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [gramComplex, hyperbolic, Matrix.mul_apply, Fin.sum_univ_two]
+    norm_num [Matrix.mul_apply, Fin.sum_univ_two]
 
 private theorem actual_dependence (role : Unit) :
     ∃ (D : LatticeData) (x y : signature.State D),
