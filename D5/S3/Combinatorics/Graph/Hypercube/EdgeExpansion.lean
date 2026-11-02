@@ -87,6 +87,19 @@ The opposite orientation cannot belong to this set. -/
 def boundaryEdges (n : ℕ) (W : Finset (Vertex n)) : Finset (Vertex n × Vertex n) :=
   Finset.univ.filter fun p => (cubeGraph n).Adj p.1 p.2 ∧ p.1 ∈ W ∧ p.2 ∉ W
 
+private theorem mem_boundaryEdges (n : ℕ) (W : Finset (Vertex n))
+    (p : Vertex n × Vertex n) :
+    p ∈ boundaryEdges n W ↔ Adjacent n p.1 p.2 ∧ p.1 ∈ W ∧ p.2 ∉ W := by
+  change p ∈ Finset.univ.filter _ ↔ _
+  rw [Finset.mem_filter]
+  exact and_iff_right (Finset.mem_univ p)
+
+private theorem mem_slice (n : ℕ) (b : Bool) (W : Finset (Vertex (n + 1)))
+    (x : Vertex n) : x ∈ slice n b W ↔ (b, x) ∈ W := by
+  change x ∈ Finset.univ.filter _ ↔ _
+  rw [Finset.mem_filter]
+  exact and_iff_right (Finset.mem_univ x)
+
 private theorem vertex_card (n : ℕ) : Fintype.card (Vertex n) = 2 ^ n := by
   induction n with
   | zero =>
@@ -178,10 +191,14 @@ private theorem boundary_edges_succ (n : ℕ) (W : Finset (Vertex (n + 1))) :
       (boundaryEdges n A).image (lift false) ∪
       (boundaryEdges n B).image (lift true) ∪ (A ∆ B).image matching := by
     ext p
+    rw [mem_boundaryEdges (n + 1) W]
     rcases p with ⟨⟨b, x⟩, ⟨c, y⟩⟩
     cases b <;> cases c <;>
-      simp [boundaryEdges, cubeGraph, Adjacent, lift, matching, A, B, slice,
-        Finset.mem_union, Finset.mem_image, Finset.mem_symmDiff, Prod.mk.injEq] <;> aesop
+      simp only [Finset.mem_union, Finset.mem_image,
+        mem_boundaryEdges n A, mem_boundaryEdges n B]
+    all_goals
+      simp [Adjacent, lift, matching, A, B, mem_slice,
+        Finset.mem_symmDiff, Prod.mk.injEq] <;> aesop
   calc
     (boundaryEdges (n + 1) W).card =
         ((boundaryEdges n A).image (lift false) ∪
