@@ -111,6 +111,10 @@ run_cmd do
         configuration := localConfiguration}
       logInfo s!"DECL_FIXTURE {observationJson observation |>.compress}"
       unless graph.complete do throwError "incomplete declaration fixture {name}: {graph.issues}"
+      -- Dedicated native-event controls remain fixture observations, not admission.
+      if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.scopedApply then
+        assertDeclPrediction "trigger-allow-scopedApply" (verdict == .bindOnly)
+        logInfo s!"SEARCH_REDUCTION_TRIGGER allow-scopedApply {(observationJson observation "b02b98342945a1a724a227db4fa38e376640e573").compress}"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.dead then
         unless reading.noAuxiliary && verdict != .nonBindOnly do
           throwError "dead helper acquired a positive verdict"
@@ -128,6 +132,9 @@ run_cmd do
           reading.paired == ⟨.finite 0, .finite 0⟩ && verdict == .nonBindOnly &&
           classifyClosure certified == some .zero
         assertDeclPrediction "squareVia" predicted
+        assertDeclPrediction "trigger-observe-squareVia-disposition"
+          (classifyDisposition certified == .reductionR)
+        logInfo s!"SEARCH_REDUCTION_TRIGGER observe-squareVia {(observationJson observation "b02b98342945a1a724a227db4fa38e376640e573").compress}"
         unless reading.graph.vertices.any (fun v =>
             v.origin.constName? == some square && !v.targetPart) do
           throwError "independently routine squareFact excluded as target-part"
@@ -168,6 +175,35 @@ run_cmd do
           reading.paired.upper ≤ .finite 1) && verdict == .insufficient &&
           (classifyClosure certified).isNone
         assertDeclPrediction "sharedWitness" predicted
+        assertDeclPrediction "trigger-observe-sharedWitness-disposition"
+          (classifyDisposition certified == .incomplete)
+        logInfo s!"SEARCH_REDUCTION_TRIGGER observe-sharedWitness {(observationJson observation "b02b98342945a1a724a227db4fa38e376640e573").compress}"
+        -- Publish the unchanged reading first; only its asserted verdict changes
+        -- in the negative control. Both temporary environments are discarded.
+        let publicationEnvironment ← getEnv
+        withEnv publicationEnvironment do
+          publish `integrationTriggerSharedWitness observation (some source)
+          unless standardAxioms (← collectAxioms `integrationTriggerSharedWitness.verdictProof) do
+            throwError "trigger publication used nonstandard axioms"
+        let rejection ← withEnv publicationEnvironment do
+          try
+            publish `integrationTriggerSharedWitness
+              {observation with verdict := .nonBindOnly} (some source)
+            pure none
+          catch error => pure (some (← error.toMessageData.toString))
+        let some message := rejection
+          | throwError "trigger rejected-verdict control was accepted"
+        let normalized := String.intercalate " " <|
+          ((message.replace "\n" " ").splitOn " ").filter (· != "")
+        let expected := "Tactic `decide` proved that the proposition " ++
+          "LeanInformationAudit.SearchReduction.classifyGraph " ++
+          "integrationTriggerSharedWitness.graphReading = " ++
+          "LeanInformationAudit.SearchReduction.Verdict.nonBindOnly is false"
+        unless normalized == expected do
+          throwError "trigger rejected-verdict control failed for another reason: {message}"
+        if (← getEnv).contains `integrationTriggerSharedWitness then
+          throwError "trigger temporary publication escaped its environment"
+        logInfo s!"SEARCH_REDUCTION_TRIGGER reject-sharedWitness-verdict {message}"
     logInfo s!"DECL_CALIBRATION non_bind_only={positives} bind_only={bindings}"
     let table := Json.mkObj [
       ("configuration", toJson localConfiguration),
