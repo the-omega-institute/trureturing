@@ -24,20 +24,23 @@ private def primitiveDensity (t : ℝ) : ℝ := harmonicPrimitive t / t ^ 2
 
 private lemma inv_sq_integrable {x : ℝ} (hx : 0 < x) :
     IntegrableOn (fun t : ℝ => 1 / t ^ 2) (Ioi x) := by
-  simpa only [Real.rpow_neg, Real.rpow_natCast, one_div] using
+  simpa only [Real.rpow_neg_natCast, zpow_neg, zpow_natCast, one_div] using
     (integrableOn_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx)
 
 private lemma inv_sq_integral {x : ℝ} (hx : 0 < x) :
     (∫ t : ℝ in Ioi x, 1 / t ^ 2) = 1 / x := by
   have h := integral_Ioi_rpow_of_lt (a := -(2 : ℝ)) (by norm_num) hx
-  simpa [Real.rpow_neg, Real.rpow_natCast, Real.rpow_neg_one] using h
+  norm_num only [show -(2 : ℝ) + 1 = -1 by norm_num, Real.rpow_neg_one] at h
+  simpa only [Real.rpow_neg_natCast, zpow_neg, zpow_natCast,
+    one_div, neg_div_neg_eq, div_one] using h
 
 private lemma primitive_measurable : Measurable harmonicPrimitive := by
   have hH : Measurable H := by
     have he : H = fun x => (harmonic ⌊x⌋₊ : ℝ) := funext H_eq_harmonic
     rw [he]
     exact (measurable_of_countable (fun n : ℕ => (harmonic n : ℝ))).comp Nat.measurable_floor
-  dsimp [harmonicPrimitive, epsilon]
+  change Measurable (fun x : ℝ => x * (H x - Real.log x - gamma) +
+    Int.fract x - 1 / 2)
   fun_prop
 
 private lemma phase_bound {t : ℝ} (ht : 1 ≤ t) :
@@ -50,7 +53,9 @@ private lemma phase_bound {t : ℝ} (ht : 1 ≤ t) :
   constructor <;> linarith
 
 private lemma phase_integrable : IntegrableOn phaseDensity (Ioi (1 : ℝ)) := by
-  have hm : Measurable phaseDensity := by dsimp [phaseDensity]; fun_prop
+  have hm : Measurable phaseDensity := by
+    change Measurable (fun t : ℝ => (1 / 2 - Int.fract t) / t ^ 2)
+    fun_prop
   apply (inv_sq_integrable zero_lt_one).mono' hm.aestronglyMeasurable
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
   simpa only [Real.norm_eq_abs] using phase_bound ht.le
@@ -60,14 +65,15 @@ private lemma primitive_integrable : IntegrableOn primitiveDensity (Ioi (1 : ℝ
   apply ((inv_sq_integrable zero_lt_one).const_mul 4).mono' hm.aestronglyMeasurable
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
   rw [Real.norm_eq_abs, primitiveDensity, abs_div, abs_of_nonneg (sq_nonneg t)]
+  have ht1 : 1 < t := ht
   have h := harmonicPrimitive_bound ht.le
-  have hi : 1 / t ≤ (1 : ℝ) := (div_le_one (by linarith)).mpr ht.le
+  have hi : 1 / t ≤ (1 : ℝ) := (div_le_one (by linarith [ht1])).mpr ht.le
   calc
     _ ≤ (4 / t) / t ^ 2 := by gcongr
     _ ≤ 4 * (1 / t ^ 2) := by
       rw [mul_one_div]
       gcongr
-      linarith
+      simpa only [div_eq_mul_inv, mul_one] using mul_le_mul_of_nonneg_left hi (by norm_num : (0 : ℝ) ≤ 4)
 
 private lemma epsilon_density_split (t : ℝ) :
     epsilonDensity t = primitiveDensity t + phaseDensity t := by
@@ -79,7 +85,10 @@ private lemma epsilon_density_split (t : ℝ) :
 
 lemma epsilonDensity_integrable :
     IntegrableOn epsilonDensity (Ioi (1 : ℝ)) := by
-  simpa only [epsilon_density_split] using primitive_integrable.add phase_integrable
+  have he : epsilonDensity = fun t => primitiveDensity t + phaseDensity t :=
+    funext epsilon_density_split
+  rw [he]
+  exact primitive_integrable.add phase_integrable
 
 private lemma floor_inverse_integral {x : ℝ} (hx : 1 ≤ x) :
     (∫ t in (1 : ℝ)..x, (⌊t⌋₊ : ℝ) / t ^ 2) = H x - (⌊x⌋₊ : ℝ) / x := by
@@ -95,7 +104,7 @@ private lemma floor_inverse_integral {x : ℝ} (hx : 1 ≤ x) :
     simp
   have hd (t : ℝ) (ht : t ∈ Icc (1 : ℝ) x) :
       HasDerivAt (fun u : ℝ => u⁻¹) (-(1 / t ^ 2)) t := by
-    convert (hasDerivAt_id t).inv (by linarith : t ≠ 0) using 1 <;> simp [one_div]
+    convert (hasDerivAt_id t).inv (by linarith [ht.1] : t ≠ 0) using 1 <;> ring
   have hi : IntegrableOn (deriv (fun u : ℝ => u⁻¹)) (Icc (1 : ℝ) x) := by
     have hc : ContinuousOn (fun t : ℝ => -(1 / t ^ 2)) (Icc (1 : ℝ) x) := by
       fun_prop (disch := intro t ht; nlinarith [ht.1])
@@ -112,6 +121,7 @@ private lemma floor_inverse_integral {x : ℝ} (hx : 1 ≤ x) :
     rw [intervalIntegral.integral_of_le hx, ← integral_neg]
     apply setIntegral_congr_fun measurableSet_Ioc
     intro t ht
+    change deriv (fun u : ℝ => u⁻¹) t * (⌊t⌋₊ : ℝ) = -((⌊t⌋₊ : ℝ) / t ^ 2)
     rw [(hd t ⟨ht.1.le, ht.2⟩).deriv]
     ring
   rw [he] at ha
@@ -162,10 +172,10 @@ private lemma phase_interval_identity {x : ℝ} (hx : 1 ≤ x) :
     have hd (t : ℝ) (ht : t ∈ uIcc (1 : ℝ) x) :
         HasDerivAt (fun u : ℝ => -u⁻¹) (1 / t ^ 2) t := by
       have ht0 : t ≠ 0 := by rw [uIcc_of_le hx] at ht; linarith [ht.1]
-      convert ((hasDerivAt_id t).inv ht0).neg using 1 <;> simp [one_div]
-    simpa only [inv_one, neg_neg, sub_neg_eq_add, one_div] using
+      convert ((hasDerivAt_id t).inv ht0).neg using 1 <;> ring
+    simpa only [inv_one, neg_neg, sub_neg_eq_add, one_div, sub_eq_add_neg, add_comm] using
       (intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi2)
-  rw [he, floor_inverse_integral hx, intervalIntegral.integral_inv_of_pos zero_lt_one hx0,
+  rw [he, floor_inverse_integral hx, integral_inv_of_pos zero_lt_one hx0,
     div_one, h2]
   have hf : Int.fract x = x - (⌊x⌋₊ : ℝ) := by
     rw [Int.fract, ← natCast_floor_eq_intCast_floor hx0.le]
@@ -178,13 +188,13 @@ private lemma phase_interval_identity {x : ℝ} (hx : 1 ≤ x) :
 
 private lemma primitive_ratio_tendsto :
     Tendsto (fun x : ℝ => harmonicPrimitive x / x) atTop (𝓝 0) := by
-  apply squeeze_zero_norm' (g := fun x : ℝ => 4 / x ^ 2)
+  apply squeeze_zero_norm' (a := fun x : ℝ => 4 / x ^ 2)
   · filter_upwards [eventually_ge_atTop (1 : ℝ)] with x hx
     rw [Real.norm_eq_abs, abs_div, abs_of_pos (by linarith : 0 < x)]
     calc
       _ ≤ (4 / x) / x := by gcongr; exact harmonicPrimitive_bound hx
       _ = 4 / x ^ 2 := by ring
-  · simpa only [div_eq_mul_inv, mul_zero] using
+  · simpa only [div_eq_mul_inv, inv_pow, mul_zero] using
       (tendsto_inv_atTop_zero.pow 2).const_mul (4 : ℝ)
 
 private lemma phase_tail_identity {x : ℝ} (hx : 1 ≤ x) :
@@ -198,6 +208,7 @@ private lemma phase_tail_identity {x : ℝ} (hx : 1 ≤ x) :
     exact (phase_interval_identity hy).symm
   have hsplit := intervalIntegral.integral_Ioi_sub_Ioi phase_integrable hx
   rw [htotal, phase_interval_identity hx] at hsplit
+  rw [neg_div]
   linarith
 
 /-- The actual harmonic tail gains a full power by cancellation, uniformly in x. -/
@@ -218,7 +229,7 @@ theorem T_epsilon_quadratic_bound {x : ℝ} (hx : 1 ≤ x) :
     intro t ht
     rw [primitiveDensity, abs_div, abs_of_nonneg (sq_nonneg t)]
     have h := harmonicPrimitive_bound (hx.trans ht.le)
-    have hi : 4 / t ≤ 4 / x := by gcongr
+    have hi : 4 / t ≤ 4 / x := by gcongr; exact ht.le
     calc
       _ ≤ (4 / x) / t ^ 2 := by gcongr; exact h.trans hi
       _ = _ := by ring
@@ -235,6 +246,7 @@ theorem T_epsilon_quadratic_bound {x : ℝ} (hx : 1 ≤ x) :
     _ ≤ 8 / x ^ 2 := by
       have he : (4 / x) * (1 / x) = 4 / x ^ 2 := by ring
       rw [he] at hm
+      simp only [div_eq_mul_inv] at hm ⊢
       linarith
 
 end D5.S3.Arith.Robin.ActualContinuousFactorialCompensation

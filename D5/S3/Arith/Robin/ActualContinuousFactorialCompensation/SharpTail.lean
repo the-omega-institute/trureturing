@@ -53,9 +53,8 @@ theorem G_sharp_tail_bound {x : ℝ} (hx : 1 ≤ x) :
         (2 * x) * (8 / x ^ 2) := by
       rw [abs_mul, abs_of_nonneg hc, abs_mul, abs_of_pos (by positivity : 0 < 2 * x)]
       gcongr
+    _ = (4 * gamma + 24 + 4 * Real.log x) / x := by field_simp; ring
     _ ≤ (4 * gamma + 24) * (1 + Real.log x) / x := by
-      apply (le_of_eq_of_le (by field_simp; ring) ?_ :
-        ((1 + gamma + Real.log x) * (4 / x) + 4 / x) + (2 * x) * (8 / x ^ 2) ≤ _)
       apply (div_le_div_iff_of_pos_right hx0).mpr
       nlinarith [mul_nonneg gamma_nonneg hl]
 
@@ -76,7 +75,7 @@ theorem tendsto_G_ell : Tendsto G atTop (𝓝 (alpha + h1 / 2)) := by
     · norm_num
   have hbound := hz.const_mul (4 * gamma + 24)
   have hc : Tendsto (fun x : ℝ => G x - ell) atTop (𝓝 0) := by
-    apply squeeze_zero_norm' (g := fun x : ℝ => (4 * gamma + 24) * ((1 + Real.log x) / x))
+    apply squeeze_zero_norm' (a := fun x : ℝ => (4 * gamma + 24) * ((1 + Real.log x) / x))
     · filter_upwards [eventually_ge_atTop (1 : ℝ)] with x hx
       simpa only [Real.norm_eq_abs, mul_div_assoc] using G_sharp_tail_bound hx
     · simpa only [mul_zero] using hbound

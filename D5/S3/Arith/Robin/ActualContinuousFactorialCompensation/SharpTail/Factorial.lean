@@ -57,7 +57,7 @@ lemma log_factorial_remainder {n : ℕ} (hn : 0 < n) :
     have hi := (tendsto_inv_atTop_zero.comp
       (tendsto_natCast_atTop_atTop.comp hnlim) : Tendsto
         (fun k : ℕ => ((n + k : ℕ) : ℝ)⁻¹) atTop (𝓝 0))
-    simpa only [Function.comp_def, one_div, mul_inv_rev, mul_zero, mul_comm] using hi.const_mul (12 : ℝ)⁻¹
+    simpa only [Function.comp_def, one_div, mul_inv_rev, mul_zero, zero_mul, mul_comm] using hi.const_mul (12 : ℝ)⁻¹
   have hlim := le_of_tendsto_of_tendsto
     (tendsto_const_nhds.sub hloglim) (tendsto_const_nhds.sub hinvlim)
     (Eventually.of_forall hfinite)
@@ -111,7 +111,7 @@ lemma eta_phase_bound {x : ℝ} (hx : 1 ≤ x) :
   have hlow : -(1 / n : ℝ) ≤ ((n : ℝ) + 1 / 2) * l - u := by
     have h := mul_le_mul_of_nonneg_left hlo hx0.le
     have huL : u * l ≤ 1 / n := by
-      nlinarith [mul_nonneg (1 - u) hl]
+      nlinarith [mul_nonneg (sub_nonneg.mpr hu.2) hl]
     dsimp [l, u] at *
     field_simp at h
     nlinarith only [h, huL, hl]
