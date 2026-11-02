@@ -75,6 +75,8 @@ internal sealed class BajnokBeattyExtremalGrowthDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "At r=s the widths are pa,pb, both positive and odd. Substituting their half-product cap count into the growth identity gives |f(Dₛ)|=|G|, hence actual coverage. At r=s−1 the widths are pa−2,pb−2, again positive and odd. The same count gives the exact deficit |G|−|f(Dₛ₋₁)|=p(2m−a−b)>0. This proves failure of coverage one step below s; monotonicity of the Lee bound then proves the covering equivalence for every natural R. The growth formula is asserted only through s, whereas the covering equivalence has no upper radius restriction.")),
                     Paragraph(Text(
+                        "For p=3,m=11,a=b=9, the basis is (3,30),(3,−30), the group has order 180 and the diameter is 16. At radius 15 both widths equal 25, so the cap has 313 points and the image has 481−313=168 points. Here 2min(a,b)=18>11, and h=(6,0) permits long fibers. This instance illustrates why the full rank-one fiber statement is needed.")),
+                    Paragraph(Text(
                         "Bajnok–Beatty arXiv:2406.04045v1 provides the Cayley-diameter context and known lower constructions. The asymmetric quotient family, its coefficient-separation argument and its deduction of exact diameter from the full growth identity are repository derivations from the finite-fiber and determinant-index results. They are not attributed to that paper, and no novelty or open-problem claim is made."))),
                 DescribeRole.Theorem))));
 }
