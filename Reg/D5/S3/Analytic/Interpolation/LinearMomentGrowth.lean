@@ -61,7 +61,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       simpa only [one_div] using
         (tendsto_inv_atTop_zero : Tendsto (fun D : ℝ => D⁻¹) atTop (𝓝 0))
     filter_upwards [hlim.eventually_lt_const hη] with D hD
-    exact hD.le
+    simpa only [Nat.cast_one, zero_add] using hD.le
   have hpos : momentPositive (fun _ : ℝ => 0) (fun _ : ℝ => 1) := by
     apply Filter.Eventually.of_forall
     intro D n x a hx ha
@@ -98,7 +98,8 @@ def evidence : Registration arena (type_of% (@linear_moment_growth)) where
 From/Residual carriers. Unknown is an honest residual, not an audit verdict. -/
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@linear_moment_growth) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Analytic.Interpolation.LinearMomentGrowth.linear_moment_growth.__information_unit
+  unitName :=
+    `D5.S3.Analytic.Interpolation.LinearMomentGrowth.linear_moment_growth.__information_unit
   realizationName := `Reg.D5.S3.Analytic.Interpolation.LinearMomentGrowth.evidence
   realizationSource := none
   generated := false
@@ -122,7 +123,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "arg", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

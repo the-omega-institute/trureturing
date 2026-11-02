@@ -7,9 +7,8 @@
    digest: Quantitative exponential growth from a linear upper rate for finite atomic moment positivity. -/
 
 import D5.S3.Analytic.Interpolation.SublinearMomentGrowth
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Topology.Order.Compact
-import Mathlib.Tactic.Positivity
+
+/-! Dilation, finite Newton envelopes and quantitative all-real growth. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -32,27 +31,29 @@ private lemma scaled_momentPositive (F : ℝ → ℝ) (m : ℝ → ℕ) (h : ℝ
   obtain ⟨D₀, hD₀⟩ := eventually_atTop.mp hpos
   filter_upwards [eventually_ge_atTop (D₀ / h)] with D hD
   have hDscaled : D₀ ≤ h * D := by
-    nlinarith [hh, hD]
+    simpa only [mul_comm] using (div_le_iff₀ hh).mp hD
   intro n x a hx ha
   let y : Fin n → ℝ := fun i => h * x i
   have hy : ∀ i, 0 ≤ y i ∧ y i ≤ h * D := by
     intro i
     constructor
     · dsimp [y]
-      positivity
+      exact mul_nonneg hh.le (hx i).1
     · dsimp [y]
       exact mul_le_mul_of_nonneg_left (hx i).2 (le_of_lt hh)
-  apply hD₀ (h * D) hDscaled n y a hy
-  intro r hr
-  calc
-    ∑ i, a i * ((y i : ℂ) ^ r) =
-        (h : ℂ) ^ r * ∑ i, a i * ((x i : ℂ) ^ r) := by
-      simp only [y, Complex.ofReal_mul, mul_pow]
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro i hi
-      ring
-    _ = 0 := by rw [ha r hr, mul_zero]
+  have hya : ∀ r : ℕ, r < m (h * D) →
+      ∑ i, a i * ((y i : ℂ) ^ r) = 0 := by
+    intro r hr
+    calc
+      ∑ i, a i * ((y i : ℂ) ^ r) =
+          (h : ℂ) ^ r * ∑ i, a i * ((x i : ℂ) ^ r) := by
+        simp only [y, Complex.ofReal_mul, mul_pow]
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i hi
+        ring
+      _ = 0 := by rw [ha r hr, mul_zero]
+  simpa only [y, ← mul_sub] using hD₀ (h * D) hDscaled n y a hy hya
 
 /-- The eventual lower-order premise is preserved by the same positive dilation. -/
 private lemma scaled_eventually_one (m : ℝ → ℕ) (h : ℝ) (hh : 0 < h)
@@ -61,7 +62,7 @@ private lemma scaled_eventually_one (m : ℝ → ℕ) (h : ℝ) (hh : 0 < h)
   obtain ⟨D₀, hD₀⟩ := eventually_atTop.mp hm
   filter_upwards [eventually_ge_atTop (D₀ / h)] with D hD
   apply hD₀ (h * D)
-  nlinarith [hh, hD]
+  simpa only [mul_comm] using (div_le_iff₀ hh).mp hD
 
 /-- A strict fixed-window slope follows from the supplied eventual rate bound. -/
 private lemma scaled_rate_lt (m : ℝ → ℕ) (c h : ℝ) (hh : 0 < h)
@@ -84,12 +85,11 @@ private lemma scaled_rate_lt (m : ℝ → ℕ) (c h : ℝ) (hh : 0 < h)
     linarith
   have hscaled : S₀ ≤ h * D := by
     have hDh : S₀ / h ≤ D := le_trans (le_max_left _ _) hD
-    exact (le_div_iff₀ hh).mp hDh
+    simpa only [mul_comm] using (div_le_iff₀ hh).mp hDh
   have hbound := hS₀ (h * D) hscaled
   have hrewrite : (m (h * D) : ℝ) / D =
       h * ((m (h * D) : ℝ) / (h * D)) := by
     field_simp [ne_of_gt hh, ne_of_gt hDpos]
-    ring
   rw [hrewrite]
   have hnonneg : 0 ≤ h := le_of_lt hh
   have hupper : h * ((m (h * D) : ℝ) / (h * D)) ≤ h * (c + η) :=
@@ -191,7 +191,8 @@ theorem linear_moment_growth (F : ℝ → ℝ) (m : ℝ → ℕ) (c : ℝ)
     positivity
   have hgap : h * c < (1 / 16 : ℝ) := by
     dsimp [h]
-    have : 0 < β := hβ0
+    rw [div_mul_eq_mul_div]
+    apply (div_lt_iff₀ hβ0).2
     nlinarith
   let G : ℝ → ℝ := fun s => F (h * s)
   let k : ℝ → ℕ := fun D => m (h * D)
@@ -217,19 +218,20 @@ theorem linear_moment_growth (F : ℝ → ℝ) (m : ℝ → ℕ) (c : ℝ)
   have htail (t : ℝ) (ht : T ≤ t) :
       |G t| ≤ envelope G (t / 2) * exp t :=
     hT₀ t ((le_max_right _ _).trans ht)
-  have hstep := envelope_half_step hG (η := 1) (by norm_num) hT htail
+  have hstep := envelope_half_step hG (η := 1) (by norm_num) hT
+    (by simpa only [one_mul] using htail)
   refine ⟨envelope G (2 * T), envelope_pos G (2 * T), ?_⟩
   intro t
   have hbound := envelope_dyadic hG (η := 1) (by norm_num) hT hstep |(t / h)| (abs_nonneg (t / h))
   have hscaled : |G (t / h)| ≤ envelope G (2 * T) * exp (2 * |t / h|) := by
-    exact (abs_le_envelope_of_even hG hGeven (R := |t / h|) le_rfl).trans hbound
+    exact (abs_le_envelope_of_even hG hGeven (R := |t / h|) le_rfl).trans
+      (by simpa only [mul_one] using hbound)
   have hth : h * (t / h) = t := by
     field_simp [ne_of_gt hh]
   have hexp : 2 * |t / h| = β * |t| := by
     rw [abs_div, abs_of_pos hh]
     dsimp [h]
     field_simp [ne_of_gt hβ0]
-    ring
   dsimp [G] at hscaled
   rw [hth, hexp] at hscaled
   exact hscaled
