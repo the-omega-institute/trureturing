@@ -1,7 +1,7 @@
 /- GID: D5/S3/FiniteGroups/BajnokBeattyCayleySufficiency
    generality: G
-   mirror - B: D5/B/S3/FiniteGroups/BajnokBeattyCayleySufficiency
-   mirror - E: none
+   mirror-B: D5/B/S3/FiniteGroups/BajnokBeattyCayleySufficiency
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
    digest: A uniform sufficient family of signed Cayley radius bounds. -/
