@@ -132,6 +132,8 @@ run_cmd do
           reading.paired == ⟨.finite 0, .finite 0⟩ && verdict == .nonBindOnly &&
           classifyClosure certified == some .zero
         assertDeclPrediction "squareVia" predicted
+        assertDeclPrediction "trigger-observe-squareVia-disposition"
+          (classifyDisposition certified == .reductionR)
         logInfo s!"SEARCH_REDUCTION_TRIGGER observe-squareVia {(observationJson observation "b02b98342945a1a724a227db4fa38e376640e573").compress}"
         unless reading.graph.vertices.any (fun v =>
             v.origin.constName? == some square && !v.targetPart) do
@@ -173,6 +175,8 @@ run_cmd do
           reading.paired.upper ≤ .finite 1) && verdict == .insufficient &&
           (classifyClosure certified).isNone
         assertDeclPrediction "sharedWitness" predicted
+        assertDeclPrediction "trigger-observe-sharedWitness-disposition"
+          (classifyDisposition certified == .incomplete)
         logInfo s!"SEARCH_REDUCTION_TRIGGER observe-sharedWitness {(observationJson observation "b02b98342945a1a724a227db4fa38e376640e573").compress}"
         -- Publish the unchanged reading first; only its asserted verdict changes
         -- in the negative control. Both temporary environments are discarded.
