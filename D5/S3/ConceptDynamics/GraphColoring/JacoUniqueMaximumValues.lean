@@ -16,6 +16,7 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoUniqueMaximumValues
 
 open D5.S3.ConceptDynamics.GraphColoring.JacoDomPathDiameterRefutation
 open D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree
+open scoped symmDiff
 
 /-- Uniqueness of a positive degree value across graph orders, excluding zero. -/
 def UniqueValue (k : ℤ) : Prop :=
@@ -89,7 +90,7 @@ private theorem inverse_floor (q : ℤ) (hq : 2 ≤ q) (n : ℕ) :
     simpa only [B, Int.cast_add, Int.cast_natCast, Int.cast_ofNat] using
       (Int.floor_lt (a := (q : ℝ) * Real.goldenRatio) (z := (n : ℤ) + 2))
   have hhi : (n : ℤ) + 2 ≤ B (q + 1) ↔
-      ((n : ℤ) + 2 : ℤ) ≤ ((q : ℝ) + 1) * Real.goldenRatio := by
+      (((n : ℤ) + 2 : ℤ) : ℝ) ≤ ((q : ℝ) + 1) * Real.goldenRatio := by
     simpa only [B, Int.cast_add, Int.cast_one] using
       (Int.le_floor (a := ((q + 1 : ℤ) : ℝ) * Real.goldenRatio) (z := (n : ℤ) + 2))
   have hirr2 := (Real.goldenRatio_irrational.intCast_mul (by omega : q + 1 ≠ 0)).ne_int (n + 2)
@@ -184,15 +185,23 @@ private theorem upper_complement (q : ℤ) (hq : 2 ≤ q) :
     field_simp
     nlinarith
   have partition := Irrational.beattySeq_symmDiff_beattySeq_pos hc Real.goldenRatio_irrational
-  open scoped symmDiff in
-    have hmem : q ∈ {beattySeq Real.goldenRatio t | t > 0} ∆
+  have hmem : q ∈ {beattySeq Real.goldenRatio t | t > 0} ∆
         {beattySeq (Real.goldenRatio ^ 2) t | t > 0} := by
-      rw [partition]
-      exact (by omega : 0 < q)
+    rw [partition]
+    exact (by omega : 0 < q)
   simp only [Set.mem_symmDiff, Set.mem_setOf_eq] at hmem
   have hm := C_mono (show q ≤ q + 1 by omega)
   have hh := lower_hit q hq
-  rcases hmem with h | h <;> simp_all only [not_exists, not_and, not_lt] <;> omega
+  rcases hmem with ⟨hl, hnu⟩ | ⟨hu, hnl⟩
+  · have hj := hh.mp hl
+    constructor
+    · intro he; omega
+    · intro hu; exact (hnu hu).elim
+  · constructor
+    · intro _; exact hu
+    · intro _
+      have hn : ¬ C q < C (q + 1) := fun hj => hnl (hh.mpr hj)
+      omega
 
 private theorem classification (k : ℤ) (hk : 1 ≤ k) :
     UniqueValue k ↔ ∃ t : ℕ, 1 ≤ t ∧ k = sequenceValue t := by
@@ -233,13 +242,17 @@ private theorem realizing (t : ℕ) (ht : 1 ≤ t) :
   have hu := (classification (sequenceValue t) hk).mpr ⟨t, ht, rfl⟩
   have hb := B_lower (sequenceValue t + 1) (by omega)
   have hn : ((realizingOrder t : ℕ) : ℤ) = B (sequenceValue t + 1) - 1 := by
-    dsimp [realizingOrder, sequenceValue]
-    simp only [sub_add_cancel]
-    exact Int.toNat_of_nonneg (by simpa [sequenceValue] using (by omega : 0 ≤ B (sequenceValue t + 1) - 1))
+    unfold realizingOrder
+    have he : ⌊(t : ℝ) * Real.goldenRatio ^ 2⌋ = sequenceValue t + 1 := by
+      simp [sequenceValue]
+    rw [he]
+    exact Int.toNat_of_nonneg (by omega)
   have hn2 : 2 ≤ realizingOrder t := by omega
   have hs := B_step (sequenceValue t + 1)
+  have hs' : B (sequenceValue t + 1) + 1 ≤ B (sequenceValue t + 2) := by
+    convert hs using 1 <;> ring
   have hd : ((jaco (realizingOrder t)).maxDegree : ℤ) = sequenceValue t :=
-    (fiber _ hk _ hn2).mpr (by convert hs using 1 <;> omega)
+    (fiber _ hk _ hn2).mpr (by omega)
   refine ⟨hn2, hk, hd, ?_⟩
   intro m hm hdm
   by_cases hm2 : 2 ≤ m
