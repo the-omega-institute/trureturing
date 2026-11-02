@@ -6,7 +6,7 @@
    utility: none
    digest: Every native promised comb has the causal history inverse and opposite legal slot orders. -/
 
-import D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointEventIdeals
+import D5.S3.Arith.FibonacciAtomic.Geometry.NativeEndpointCausalOrder
 import D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
 
 /-! All-assignment native promise and the causal versus serial history boundary. -/
@@ -116,6 +116,26 @@ private theorem two_slot_histories (n : ℕ) (hn : 2 ≤ n) (z : Fin n → Bool)
   · rw [hp]
     exact run_append hprep hv
 
+private theorem prefix_run (s t : Source) (p q : List Call)
+    (h : run s (p ++ q) = some t) : ∃ u, run s p = some u := by
+  induction p generalizing s with
+  | nil => exact ⟨s, rfl⟩
+  | cons e p ih =>
+      simp only [List.cons_append] at h
+      cases e with
+      | promote a =>
+          unfold run at h
+          split at h <;> try contradiction
+          next hg =>
+            obtain ⟨u, hu⟩ := ih _ h
+            exact ⟨u, by simpa [run, hg] using hu⟩
+      | split a =>
+          unfold run at h
+          split at h <;> try contradiction
+          next hg =>
+            obtain ⟨u, hu⟩ := ih _ h
+            exact ⟨u, by simpa [run, hg] using hu⟩
+
 /-- On the full promised family the bare endpoint determines the labelled
 causal order and its exact successful histories, while opposite complete slot
 insertion orders give different successful serial words at that same endpoint. -/
@@ -125,9 +145,16 @@ theorem result (N : ℕ) (hN : 4 ≤ N) (z : Fin (15 * N) → Bool) :
       ∃ l : List (Event true (promise N z)), l.map Subtype.val = w ∧
         D5.S3.ConceptDynamics.PartialIdentification.EnabledPathSwapConnectivity.ExtensionList
           ∅ Set.univ l) ∧
+    (∀ p q : List Call, run (.of true) (p ++ q) = some (promise N z) →
+      ∃ u, run (.of true) p = some u) ∧
+    (∀ c d : Event true (promise N z),
+      Relation.TransGen (NativeEndpointCausalOrder.Edge true (promise N z)) c.1 d.1 ↔ c < d) ∧
     (∃ w v : List Call, w ≠ v ∧
       run (.of true) w = some (promise N z) ∧ run (.of true) v = some (promise N z)) := by
   have hd := domain_comb (15 * N) z
-  exact ⟨hd, all_histories (promise N z) hd, two_slot_histories (15 * N) (by omega) z⟩
+  exact ⟨hd, all_histories (promise N z) hd,
+    fun p q h => prefix_run _ _ p q h,
+    NativeEndpointCausalOrder.result true (promise N z),
+    two_slot_histories (15 * N) (by omega) z⟩
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativePromiseCausalBoundary

@@ -77,25 +77,25 @@ private theorem shift_order (b : Bool) (c d : Call) :
     c.shift [b] ≤ d.shift [b] ↔ c ≤ d := by
   cases c <;> cases d <;> simp [call_le_iff, EventLe, address, phase, Call.shift]
 
-private theorem root_before (b : Bool) (c : Call) :
+theorem root_before (b : Bool) (c : Call) :
     Call.split [] < c.shift [b] := by
   cases c <;> simp [lt_iff_le_not_ge, call_le_iff, EventLe, address, phase, Call.shift]
 
-private theorem shift_lt (b : Bool) (c d : Call) :
+theorem shift_lt (b : Bool) (c d : Call) :
     c.shift [b] < d.shift [b] ↔ c < d := by
   simp only [lt_iff_le_not_ge, shift_order]
 
-@[simp] private theorem lt_promote_root (c : Call) : ¬ c < .promote [] := by
+@[simp] theorem lt_promote_root (c : Call) : ¬ c < .promote [] := by
   cases c with
   | promote p => cases p <;> simp [lt_iff_le_not_ge, call_le_iff, EventLe, address, phase]
   | split p => cases p <;> simp [lt_iff_le_not_ge, call_le_iff, EventLe, address, phase]
 
-@[simp] private theorem lt_split_root (c : Call) : c < .split [] ↔ c = .promote [] := by
+@[simp] theorem lt_split_root (c : Call) : c < .split [] ↔ c = .promote [] := by
   cases c with
   | promote p => cases p <;> simp [lt_iff_le_not_ge, call_le_iff, EventLe, address, phase]
   | split p => cases p <;> simp [lt_iff_le_not_ge, call_le_iff, EventLe, address, phase]
 
-private theorem lt_shift (b : Bool) (c d : Call) :
+theorem lt_shift (b : Bool) (c d : Call) :
     d < c.shift [b] ↔ d = .promote [] ∨ d = .split [] ∨
       ∃ f, d = f.shift [b] ∧ f < c := by
   have shifted : ∀ (a : Bool) (f : Call),
@@ -436,7 +436,7 @@ theorem partial_insert (b : Bool) (t : Source) (I : Set Call)
         rw [hx, cutTerm, if_pos (show Call.split [] ∈ insert (Call.split []) I from Or.inl rfl),
           section_insert_root I false (.split []) rfl,
           section_insert_root I true (.split []) rfl]
-        simpa only [Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte] using
+        simpa only [Bool.false_eq_true, ↓reduceIte] using
           (congrArg₂ FreeMagma.mul hl hr).symm
       have shifted : ∀ (c : Bool) (d : Call), e = d.shift [c] →
           edited (cutTerm b (.mul l r) I) e = cutTerm b (.mul l r) (insert e I) := by
