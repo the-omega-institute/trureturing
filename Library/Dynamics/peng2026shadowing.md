@@ -27,7 +27,24 @@ Question 5.1, PDF and printed p.21, reads:
 The factor map is continuous, onto, and satisfies πg=fπ. There is no
 metrizability, countability, invertibility, or surjectivity assumption on f,
 and no nonempty-space guard. For empty X, empty Y gives the vacuous case.
-The nonempty general case remains unresolved here.
+The unrestricted assertion is refuted by the kernel-checked result recorded
+below.
+
+## Repository formal status
+
+`D5/S1/Dynamics/Shadowing/FreeFibreBoundary` defines the literal universal
+claim as `claim` and proves `result : ¬ claim`. The witness is a compact
+Hausdorff forward-shadowing source built from the supplied compact open map
+with no zero-dimensional open resolution, a first-disagreement pullback, and
+a binary full-shift core. The proof derives an open zero-dimensional
+resolution from any hypothetical cover by finite initial graph languages and
+the convergent Cantor section, contradicting that supplied static witness.
+The formal result keeps arbitrary upstairs fibres and transients, continuous
+onto semiconjugacy, and all natural times including zero. The new generic
+shift amplification is authored in the cited D5 module; the static compact
+map and finite-observation suppliers are reused repository mathematics. This
+records kernel status and attribution only; it makes no priority, uniqueness,
+publication, or official-acceptance claim.
 
 Definition 1.10, p.6, uses exactly the Mittag-Leffler condition
 
