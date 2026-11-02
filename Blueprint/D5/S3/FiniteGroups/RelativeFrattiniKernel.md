@@ -70,9 +70,11 @@ Restrict B to P. Its image lies in the ordinary Frattini automorphism kernel of 
 
 Let K be the restriction kernel. Every a in K fixes P pointwise and satisfies x inverse times a(x) in F, hence in P. Define its displacement as the function d(a) from Q to P. Pointwise fixation makes displacement multiplicative under composition, even when P is nonabelian.
 
-$\forall a \in K,\; \forall b \in K,\; \forall x \in Q,\; \operatorname{d}\left(\operatorname{mul}\left(a, b\right), x\right) = \operatorname{mul}\left(\operatorname{d}\left(a, x\right), \operatorname{d}\left(b, x\right)\right)$
+$$
+\forall a \in K,\; \forall b \in K,\; \forall x \in Q,\; \operatorname{d}\left(\operatorname{mul}\left(a, b\right), x\right) = \operatorname{mul}\left(\operatorname{d}\left(a, x\right), \operatorname{d}\left(b, x\right)\right)
+$$
 
-The displacement is injective because its values recover a(x) for every x. A single p-power annihilates every element of finite P, so it also annihilates every function Q to P. Thus K is a p-group. The kernel-image extension argument proves that B is a p-group. This displacement method adapts the characteristic-subgroup argument in the cited CFSG source to the actual subgroup A preserving P; the ordinary Frattini theorem is reused directly.
+The displacement is injective because its values recover a(x) for every x. A single p-power annihilates every element of finite P, so it also annihilates every function Q to P. Thus K is a p-group. The kernel-image extension argument proves that B is a p-group. The displacement method follows Theory/GroupTheory/CentralCharacteristicAutomorphisms.lean of Qiuzhen-CFSG/CFSG at revision 0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7, under Apache-2.0, with the ambient automorphism group restricted to A. The ordinary Frattini theorem is reused directly.
 
 **Definition 1.6 (The actual relative outer automorphism group).**
 
@@ -110,7 +112,9 @@ $$\forall Q \in Type,\; \forall group \in \operatorname{Group}\left(Q\right),\; 
 
 Let H be any subgroup of the relative outer group. Its restricted map to OuterAut(Q/F) has a p-group kernel. To prove this, represent an element of the full outer kernel by a in A. The induced automorphism rho(a) is conjugation by some y in Q/F. Lift y to q in Q and multiply a by the inverse of conjugation by q.
 
-$b = \operatorname{mul}\left(a, \operatorname{inv}\left(\operatorname{innerLift}\left(P, q\right)\right)\right)$
+$$
+b = \operatorname{mul}\left(a, \operatorname{inv}\left(\operatorname{innerLift}\left(P, q\right)\right)\right)
+$$
 
 The resulting automorphism b belongs to B and has the same relative outer class as a. Thus the full outer kernel lies in the image of B under the relative quotient map, and is a p-group. Passing to H takes a subgroup of that kernel. No lift of a group extension or compatible choice of conjugators is assumed: only the individual quotient representative is lifted.
 
