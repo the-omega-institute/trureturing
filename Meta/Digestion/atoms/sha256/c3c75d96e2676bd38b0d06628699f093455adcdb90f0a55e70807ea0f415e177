@@ -1,0 +1,41 @@
+**Proposition 18.4 (nonuniform fibres and the separate leaf-split model).**
+Let $t=\langle\langle\beta,\alpha\rangle,
+\langle\beta,\alpha\rangle\rangle$. After the common prefix
+$P_\varepsilon S_\varepsilon$, its three possible words are
+
+$$
+S_LP_RS_R,\qquad P_RS_LS_R,\qquad P_RS_RS_L.
+\tag{AA.72}
+$$
+
+The fibres over split words $(\varepsilon,L,R)$ and
+$(\varepsilon,R,L)$ have sizes two and one. In particular there is no
+finite set $K_t$ and bijection
+$\mathcal H(t)\simeq\Sigma(t)\times K_t$ whose first coordinate is $\pi$.
+
+Proof. The remaining required events are $S_L,P_R,S_R$, with the sole
+precedence $P_R\prec S_R$. These give exactly (AA.72). A product over
+$\Sigma(t)$ would have constant fibre size $|K_t|$, a contradiction.
+$\square$
+
+For comparison, define the separate growing leaf-split source by one
+initial uncoloured leaf and the sole local operation
+$*\mapsto\langle *,*\rangle$. At the ordered skeleton of this $t$, its
+histories are exactly the two branch-ancestor orders in $\Sigma(t)$.
+Its local left/right records count descendant splits only. Projection
+$\pi$ is onto, but is not a bijection and has no uniform independent
+complement here. Split-only records are sufficient for the split-recall
+task, not for LAB's complete $P/S$ recall. This comparison fixes the LAB
+endpoint and admitted schedules; it does not replace them by the leaf-split
+model or impose a deterministic schedule.
+
+The comparison also holds for genuinely acquired split records: start
+empty and, whenever an actual $S_p$ occurs, initialize its own empty tape
+and append its side at every proper branch ancestor, ignoring all $P$
+events. Each split appends exactly the
+new split to those local projections. By the same recursive child-shuffle
+interpretation, the tapes and current skeleton recover exactly $\sigma$.
+Thus actual online retention of the complete split chronology still leaves
+precisely the fibre (AA.69); the obstruction does not depend on treating
+$\sigma$ as an unacquired symbolic input.
+

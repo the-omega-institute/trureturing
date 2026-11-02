@@ -1,0 +1,36 @@
+For a successful addressed growth, or one chosen by NextSelected, retain
+its actual kind, target reference/address, old selection state and
+continuation in pending backing. Reserve the source-template material,
+a possible new branch descriptor and at most one selected cell per proper
+logical ancestor before source editing; any further finite computation
+workspace is supplied under Assumption 32.1. No next request is admitted
+during the following phases.
+
+1. Edit performs exactly the $P$ or $S$ source template of Definition
+   20.2. A promotion preserves its logical root marks and attaches its
+   unary material marker. A split preserves the old root's marks, makes
+   its old marker the new left logical $\beta$ root, attaches that child's
+   fresh marker and the new right logical $\alpha$ root, and initializes
+   the two new logical positions' marks to zero. It constructs and binds
+   an empty selected descriptor at the newly split root. Earlier local
+   events there remain root events, not entries of this new strict-
+   descendant tape. Parent references are the actual source parents.
+2. Evaluate applies the installed $C$ exactly once to the old retained
+   state and this acquired successful event. It retains the resulting
+   $(q',b)$ and an evaluation-complete flag. Its internal work consists
+   of finite charged steps on backed operands. No later phase reevaluates
+   the event using $q'$ as if it were a new receipt.
+3. Mark writes $b$ to the field for this actual event at its logical
+   root, preserving the other local field. Maintain, when $b=1$, walks
+   the target's actual parent chain and appends its actual side at each
+   proper logical ancestor's selected tape. For $b=0$ it appends nothing.
+   Each append initializes its cell before linking it and advancing its
+   tail; pending fields retain unfinished references, append subphases
+   and the remaining ancestor cursor. Newly created branch descriptors
+   remain empty until a later strict-descendant selected event occurs.
+4. Commit installs $q'$ only after source, marks, descriptors and selected
+   appends are complete. BuildAnswer constructs and seals the actual
+   finite reply. Print emits precisely its backing bits, then End. The
+   supplied local acknowledgement enables root Return and finite scratch
+   clearing/reuse. Only after these finish does MarkedReady resume.
+

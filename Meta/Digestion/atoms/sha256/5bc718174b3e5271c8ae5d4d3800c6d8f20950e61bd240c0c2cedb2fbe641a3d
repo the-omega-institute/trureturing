@@ -1,0 +1,31 @@
+### 定理 10.1（保忠实态的稳定关系代数）
+
+设 $\Phi:M_d\to M_d$ 为 UCP 映射，存在忠实态 $\rho>0$，满足 $\phi_\rho\circ\Phi=\phi_\rho$。则 $\mathcal F=\operatorname{Fix}\Phi$ 是一个含单位 $*$-子代数，且其中每一对 Hermitian 元均满足 $C_{89}$。此外 Cesàro 平均
+
+$$
+E_N=\frac1N\sum_{j=0}^{N-1}\Phi^j\longrightarrow E
+$$
+
+在有限维映射范数下收敛，极限 $E$ 是保 $\rho$ 的 UCP 条件期望，值域正是 $\mathcal F$。
+
+**证明。**用 $\|x\|_\rho^2=\phi_\rho(x^\dagger x)$。平方不等式与保态性给
+
+$$
+\|\Phi(x)\|_\rho^2\le\phi_\rho(\Phi(x^\dagger x))=\|x\|_\rho^2.
+$$
+
+若 $\Phi(x)=x$，则 $\phi_\rho(\Delta_\Phi(x))=0$；缺额正且 $\rho$ 忠实，故 $\Delta_\Phi(x)=0$。对 $x^\dagger$ 同理，故 $x$ 在乘法域中；两个不动元的乘积、伴随、线性组合和单位元仍不动，所以 $\mathcal F$ 是子代数。
+
+每个 $\Phi^n$ 在 GNS 范数下收缩，故其幂一致有界。有限维谱位于闭单位圆内，单位圆上没有非平凡 Jordan 块，否则幂会多项式增长。对 $|\lambda|<1$ 的 Jordan 块，幂平均趋于零；对 $|\lambda|=1,\lambda\ne1$ 的特征方向，几何和平均也趋于零；只有 $\lambda=1$ 部分留下。因此 $E_N$ 收敛到投影 $E$，值域为 $\mathcal F$。有限维正锥闭合，极限仍 UCP、保单位元且保 $\rho$。
+
+对 $c,d\in\mathcal F$，乘法域给 $\Phi(cxd)=c\Phi(x)d$，迭代后同样成立。取平均和极限得 $E(cxd)=cE(x)d$，于是 $E$ 是所述保态条件期望。
+
+对任意 $c\in\mathcal F$，双模性与保态性还给出
+
+$$
+\phi_\rho(cE(x))=\phi_\rho(cx),\qquad
+\phi_\rho(E(x)c)=\phi_\rho(xc),
+$$
+
+左式给出 v88 的 GNS 正交比较，右式正是反向有序相容。这提供了从具体递归过程得到 C88 条件期望的机制，并包含 Schur 记录通道不动代数作为特例 [4](#ref-foundations)、[6](#ref-v88)。
+

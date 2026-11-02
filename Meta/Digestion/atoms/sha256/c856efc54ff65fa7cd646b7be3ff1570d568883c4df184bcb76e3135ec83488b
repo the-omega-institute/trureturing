@@ -1,0 +1,11 @@
+### 定义 15.2（双向开放的局部关系模型）
+
+以整数 $j\in\mathbb Z$ 标记内部端口，每个端口具有矩阵代数 $M_2$。取固定忠实单端口态 $\tau$，在每个有限端口集合 $F$ 上使用
+
+$$
+\mathcal M_F=\bigotimes_{j\in F}M_2,
+\qquad \phi_F=\bigotimes_{j\in F}\phi_\tau.
+$$
+
+不同有限集合通过补单位元嵌入，状态限制相容。记所有有限支撑算符组成的代数为 $\mathcal M_{\rm loc}$，$\mathcal A_n$ 为其中仅支撑在 $j\le n$ 端口上的子代数。
+
