@@ -4,7 +4,7 @@
 
 Original real Lorentzian lattice geometry
 
-Classical real quadratic-form geometry on the original integral-lattice coordinates, using pinned Mathlib Sylvester signature and positive-form results. The corrected coordinate supplier is PR #25556, merge 835f8774, with exact source pins and first-dev acceptance preserved in the delivery evidence. This local geometry proves no BPZ polynomial positivity, full no-ghost or BRST theorem, or string/Monster/AdS completion.
+Classical real quadratic-form geometry on the original integral-lattice coordinates, using pinned Mathlib Sylvester signature and positive-form results. This local geometry proves no BPZ polynomial positivity, full no-ghost or BRST theorem, or string/Monster/AdS completion.
 
 **Theorem 1.1 (Signature normal form).**
 
