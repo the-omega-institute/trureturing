@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.euler_coefficient_fin
 
 *Commentary.*
 
-Every coefficient of the supplied Euler construction agrees with every sufficiently long actual finite product.
+The supplied Euler construction agrees with every sufficiently long finite product, not just with a chosen numerical truncation.
 
 **Definition 1.3 (finiteEulerEvaluation).**
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.finiteEulerEvaluation
 
 *Commentary.*
 
-A polynomial evaluation at a Laurent coefficient times a nonnegative power of X.
+Evaluation in the Laurent variable is performed only on finite polynomials. The growing cutoff is subsequently justified coefficientwise.
 
 **Theorem 1.4 (finiteEulerEvaluation_eq_prod).**
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finiteEulerEv
 
 *Commentary.*
 
-The genuine finite products converge to the evaluation at every nonnegative shift.
+The formal Euler evaluation is the coefficientwise limit of its actual finite products. No unrestricted power-series substitution is used.
 
 **Theorem 1.7 (formalTheta_eq_eulerEvaluations).**
 
@@ -102,7 +102,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.formalTheta_eq_eulerE
 
 *Commentary.*
 
-The supplied Laurent product is the product of the two separately justified evaluations.
+The actual Laurent product supplier equals two separately justified Euler evaluations.
 
 **Definition 1.8 (jacobiSeries).**
 
@@ -116,7 +116,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.jacobiSeries`
 
 *Commentary.*
 
-The supplied formalTheta normalized by the actual pentagonal Euler series.
+The Jacobi series is normalized by the actual pentagonal Euler product.
 
 **Theorem 1.9 (tendsto_finite_jacobi).**
 
@@ -130,7 +130,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finite_jacobi
 
 *Commentary.*
 
-The actual three Jacobi product factors converge to jacobiSeries.
+The normalized Laurent series is a limit of the actual three Jacobi factors.
 
 **Theorem 1.10 (jacobiSeries_column).**
 
@@ -144,9 +144,23 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.jacobiSeries_column`
 
 *Commentary.*
 
-Every integer Laurent column is the exact signed triangular Jacobi monomial, by the repository supplier.
+Every Laurent column of the actual product is the corresponding single Jacobi monomial.
 
-This is classical intermediate mathematics. The product-to-core lattice identity and the complete original k6 sign theorem are separate remaining obligations; no original-problem completion or novelty credit is asserted.
+**Theorem 1.11 (tendsto_finite_jacobi_successor).**
+
+Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finite_jacobi_successor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finite_jacobi_successor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Commentary.*
+
+Keeping one additional zero-shift factor has the same genuine Jacobi limit.
+
+This is classical intermediate mathematics. CubicThetaCoreProduct supplies the downstream product-to-core lattice identity and EtaSignK6 supplies the exact all-index sign theorem. Independent formal acceptance and publication remain separate; no literature priority or novelty credit is asserted.
 
 ## References
 
@@ -160,4 +174,5 @@ This is classical intermediate mathematics. The product-to-core lattice identity
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobi.jacobiSeries_column`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finiteEulerEvaluation`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finite_jacobi`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobi.tendsto_finite_jacobi_successor`
 - Dependency: [D5/S3/Combinatorics/InversionSeq/InversionSeq207TripleProduct](../../Combinatorics/InversionSeq/InversionSeq207TripleProduct.md)

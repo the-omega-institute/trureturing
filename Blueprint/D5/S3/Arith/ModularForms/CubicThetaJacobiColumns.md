@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.hasSum_cube_co
 
 *Commentary.*
 
-Every integer column is the full pair sum with third index fixed by the total; no bounded truncation replaces the lattice.
+Each Laurent column of the genuine cube is the full sum over two free integers.
 
 **Theorem 1.3 (triangular_zero_sum).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.cube_column_ze
 
 *Commentary.*
 
-The Laurent index-zero column of the actual Jacobi cube equals the complete norm theta series.
+The index-zero column of the actual Jacobi cube is the complete norm theta.
 
 **Theorem 1.6 (cube_column_one).**
 
@@ -88,9 +88,23 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.cube_column_on
 
 *Commentary.*
 
-The Laurent index-one column of the actual Jacobi cube is exactly negative three times the complete core lattice theta.
+The index-one column includes all three affine cosets, with the exact negative sign.
 
-This classical intermediate does not prove the full original k6 Euler-quotient sign theorem. The cubic product-to-lattice identities remain separate obligations.
+**Theorem 1.7 (signs_add).**
+
+Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.signs_add`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.signs_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Commentary.*
+
+The three triangular monomial signs multiply to the sign of their full integer index sum.
+
+This classical intermediate supplies complete Jacobi columns. CubicThetaCoreProduct and CubicThetaIdentities prove the downstream product-to-lattice identities; EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate.
 
 ## References
 
@@ -98,6 +112,7 @@ This classical intermediate does not prove the full original k6 Euler-quotient s
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.cube_column_one`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.cube_column_zero`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.hasSum_cube_column`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.signs_add`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.triangular_one_sum`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiColumns.triangular_zero_sum`
 - Dependency: [D5/S3/Arith/ModularForms/CubicThetaJacobiCube](CubicThetaJacobiCube.md)

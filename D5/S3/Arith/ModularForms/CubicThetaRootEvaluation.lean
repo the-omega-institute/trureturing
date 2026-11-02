@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaRootEvaluation
    mirror-E: none(waiver:formal-cubic-root-evaluation)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: Complete Laurent-column grouping evaluates the Jacobi cube at a cubic root. -/
 

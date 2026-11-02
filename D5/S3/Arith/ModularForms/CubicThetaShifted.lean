@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaShifted
    mirror-E: none(waiver:formal-affine-lattice-cosets)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Expand]
    utility: none
    digest: Three affine cosets identify the shifted norm theta with three core fibres. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaLattice
    mirror-E: none(waiver:formal-lattice-generating-series)
-   anchors: [lit/huang2025signpatterns, mathlib/module/Mathlib.RingTheory.PowerSeries.Expand]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Expand]
    utility: none
    digest: Finite Eisenstein norm fibres and explicit cubic theta residue bijections. -/
 
@@ -192,7 +192,7 @@ theorem hasSum_lattice_theta [TopologicalSpace ℚ] :
   exact ⟨hasSum_counted_fibers eisensteinNorm norm_nonneg normFiber_finite,
     hasSum_counted_fibers coreExponent core_exponent_nonneg coreFiber_finite⟩
 
-private theorem norm_mod_three (p : ℤ × ℤ) :
+theorem norm_mod_three (p : ℤ × ℤ) :
     eisensteinNorm p % 3 = if p.1 % 3 = p.2 % 3 then 0 else 1 := by
   have hx0 := Int.emod_nonneg p.1 (by norm_num : (3 : ℤ) ≠ 0)
   have hx3 := Int.emod_lt_of_pos p.1 (by norm_num : (0 : ℤ) < 3)
@@ -349,6 +349,15 @@ noncomputable def normCoreEquiv (n : ℕ) :
         intro p
         obtain ⟨c, hc⟩ := shift_orbit_surjective n p
         exact ⟨c, Subtype.ext hc⟩⟩
+
+/-- The six complete rotated core cosets have alternating nontrivial cubic phases. -/
+theorem normCoreEquiv_coordinate_residue (n : ℕ) (p : Fin 6 × CoreFiber n) :
+    ((normCoreEquiv n p).1.1 - (normCoreEquiv n p).1.2) % 3 =
+      if p.1.val % 2 = 0 then 2 else 1 := by
+  rcases p with ⟨i, p⟩
+  change ((rotate i (coreShift p.1)).1 - (rotate i (coreShift p.1)).2) % 3 =
+    if i.val % 2 = 0 then 2 else 1
+  fin_cases i <;> norm_num [rotate, coreShift] <;> omega
 
 theorem norm_fiber_residue_counts (n : ℕ) :
     Nat.card (NormFiber (3 * n)) = Nat.card (NormFiber n) ∧

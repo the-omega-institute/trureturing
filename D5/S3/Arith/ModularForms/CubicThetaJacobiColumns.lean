@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaJacobiColumns
    mirror-E: none(waiver:formal-jacobi-cube-columns)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: Exact integer lattice sums for the Laurent columns of the actual Jacobi cube. -/
 
@@ -22,7 +22,7 @@ open scoped PowerSeries.WithPiTopology MvPowerSeries.WithPiTopology
 noncomputable def cubeColumn (index : ℤ) : PowerSeries ℚ :=
   PowerSeries.mk fun degree => (PowerSeries.coeff degree (jacobiSeries ^ 3)).coeff index
 
-private theorem signs_add (a b c : ℤ) :
+theorem signs_add (a b c : ℤ) :
     (-1 : ℚ) ^ a.natAbs * (-1 : ℚ) ^ b.natAbs * (-1 : ℚ) ^ c.natAbs =
       (-1 : ℚ) ^ (a + b + c).natAbs := by
   have h : a.negOnePow * b.negOnePow * c.negOnePow = (a + b + c).negOnePow := by

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaRootProduct
    mirror-E: none(waiver:formal-cubic-root-jacobi-product)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: The actual Jacobi product at a cubic root reduces to a dilated Euler product. -/
 
@@ -19,7 +19,7 @@ namespace D5.S3.Arith.ModularForms.CubicThetaRootProduct
 open CubicThetaJacobi
 open scoped PowerSeries.WithPiTopology MvPowerSeries.WithPiTopology
 
-private theorem cubic_factor {R : Type*} [CommRing R] (w t : R)
+theorem cubic_factor {R : Type*} [CommRing R] (w t : R)
     (hw : w ^ 2 + w + 1 = 0) :
     (1 - t) * (1 - w * t) * (1 - w ^ 2 * t) = 1 - t ^ 3 := by
   have h3 : w ^ 3 = 1 := by linear_combination (w - 1) * hw
@@ -87,7 +87,7 @@ theorem finite_cubic_root_product {R : Type*} [CommRing R]
       rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
       simp_rw [hf]
 
-private theorem map_tendsto {R S : Type*} [CommRing R] [CommRing S]
+theorem map_tendsto {R S : Type*} [CommRing R] [CommRing S]
     [TopologicalSpace R] [DiscreteTopology R] [TopologicalSpace S]
     (f : R →+* S) {g : ℕ → PowerSeries R} {a : PowerSeries R}
     (hg : Filter.Tendsto g Filter.atTop (nhds a)) :
@@ -98,7 +98,7 @@ private theorem map_tendsto {R S : Type*} [CommRing R] [CommRing S]
   have hf : Continuous f := continuous_of_discreteTopology
   simpa only [PowerSeries.coeff_map, Function.comp_def] using (hf.tendsto _).comp (hg degree)
 
-private theorem tendsto_expand_three {R : Type*} [CommRing R] [TopologicalSpace R]
+theorem tendsto_expand_three {R : Type*} [CommRing R] [TopologicalSpace R]
     {g : ℕ → PowerSeries R} {a : PowerSeries R}
     (hg : Filter.Tendsto g Filter.atTop (nhds a)) :
     Filter.Tendsto (fun n => PowerSeries.expand 3 (by decide) (g n)) Filter.atTop
@@ -122,21 +122,7 @@ theorem jacobi_cubic_root_product {R : Type*} [CommRing R]
         PowerSeries.expand 3 (by decide) (PowerSeries.pentagonalSeries R) := by
   letI : TopologicalSpace (LaurentPolynomial ℚ) := ⊥
   letI : DiscreteTopology (LaurentPolynomial ℚ) := ⟨rfl⟩
-  have hE := (PowerSeries.WithPiTopology.hasProd_one_sub_X_pow
-    (LaurentPolynomial ℚ)).tendsto_prod_nat
-  have hshift := (tendsto_finiteEulerEvaluation 0 (LaurentPolynomial.T 1)).comp
-    (Filter.tendsto_add_atTop_nat 1)
-  have hJ := (hE.mul hshift).mul
-    (tendsto_finiteEulerEvaluation 1 (LaurentPolynomial.T (-1)))
-  have hJ' : Filter.Tendsto (fun cutoff =>
-      (∏ earlier ∈ Finset.range cutoff,
-        (1 - PowerSeries.X ^ (earlier + 1) : PowerSeries (LaurentPolynomial ℚ))) *
-      finiteEulerEvaluation (cutoff + 1) 0 (LaurentPolynomial.T 1) *
-      finiteEulerEvaluation cutoff 1 (LaurentPolynomial.T (-1))) Filter.atTop
-      (nhds jacobiSeries) := by
-    simpa only [jacobiSeries, CubicThetaJacobi.map_euler,
-      formalTheta_eq_eulerEvaluations, mul_assoc, Function.comp_def] using hJ
-  have hleft := map_tendsto f hJ'
+  have hleft := map_tendsto f tendsto_finite_jacobi_successor
   simp_rw [finite_cubic_root_product f hw] at hleft
   have hright := (tendsto_expand_three
     (PowerSeries.WithPiTopology.hasProd_one_sub_X_pow R).tendsto_prod_nat).const_mul

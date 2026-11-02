@@ -326,7 +326,39 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_theta_dissectio
 
 The complete formal power-series identity A(X)=A(X^3)+6X T_lattice(X^3) follows from the fibre equivalences and exact PowerSeries.expand coefficients. It includes degree zero.
 
-The product-to-lattice equality T_lattice=E(X^3)^3/E(X), the cubic Borwein relation and the full normalized Euler k6 coefficient sign theorem are not proved here. This classical lattice intermediate carries no original-problem resolution, priority, unique or KPI claim.
+**Theorem 1.21 (Norm residues).**
+
+Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_mod_three`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_mod_three` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Acknowledgement.* Kathrin Bringmann, Guoniu Han, Bernhard Heim and Ben Kane (2024). *Periodic sign changes for weakly holomorphic eta-quotients*. DOI: [10.48550/arXiv.2409.07164](https://doi.org/10.48550/arXiv.2409.07164). URL: <https://arxiv.org/abs/2409.07164v1>.
+
+*Commentary.*
+
+The Eisenstein norm has only residues zero and one modulo three, detected by the coordinate difference.
+
+**Theorem 1.22 (Cubic phases of the six cosets).**
+
+Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv_coordinate_residue`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv_coordinate_residue` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Acknowledgement.* Kathrin Bringmann, Guoniu Han, Bernhard Heim and Ben Kane (2024). *Periodic sign changes for weakly holomorphic eta-quotients*. DOI: [10.48550/arXiv.2409.07164](https://doi.org/10.48550/arXiv.2409.07164). URL: <https://arxiv.org/abs/2409.07164v1>.
+
+*Commentary.*
+
+The six complete rotated core cosets have alternating nontrivial cubic phases.
+
+This module supplies complete lattice counts. CubicThetaCoreProduct identifies the actual Euler quotient, CubicThetaIdentities proves the two other classical relations, and EtaSignK6 proves the full normalized sign theorem. This classical lattice mathematics carries no literature priority, unique, independent acceptance or KPI claim.
 
 ## References
 
@@ -342,11 +374,13 @@ The product-to-lattice equality T_lattice=E(X^3)^3/E(X), the cubic Borwein relat
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.hasSum_counted_fibers`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.hasSum_lattice_theta`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv_coordinate_residue`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normFiber_finite`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTheta`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTripleEquiv`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_coercive`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_fiber_residue_counts`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_mod_three`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_nonneg`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_theta_dissection`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.theta_nonnegative_and_normalized`

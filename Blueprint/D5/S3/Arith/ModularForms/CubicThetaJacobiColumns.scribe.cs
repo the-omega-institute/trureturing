@@ -10,12 +10,13 @@ internal sealed class CubicThetaJacobiColumnsDocument : IScribeDocumentDefinitio
         "Every Laurent column of the actual Jacobi cube is obtained from a complete integer-pair lattice sum. The index-zero column is the norm theta series; no product-to-core identity is assumed.", H("CubicThetaJacobiColumns"), Blocks(
             Paragraph(Text("Every Laurent column of the actual Jacobi cube is obtained from a complete integer-pair lattice sum. The index-zero column is the norm theta series; no product-to-core identity is assumed.")),
             Node("0", "cubeColumn", "The exact Laurent coefficient column of the actual normalized Jacobi cube.", DescribeRole.Definition),
-            Node("1", "hasSum_cube_column", "Every integer column is the full pair sum with third index fixed by the total; no bounded truncation replaces the lattice.", DescribeRole.Theorem),
+            Node("1", "hasSum_cube_column", "Each Laurent column of the genuine cube is the full sum over two free integers.", DescribeRole.Theorem),
             Node("2", "triangular_zero_sum", "The zero-total triangular exponent is exactly Q(x,y).", DescribeRole.Theorem),
             Node("3", "triangular_one_sum", "The one-total triangular exponent is exactly Q(x,y)-x-y.", DescribeRole.Theorem),
-            Node("4", "cube_column_zero", "The Laurent index-zero column of the actual Jacobi cube equals the complete norm theta series.", DescribeRole.Theorem),
-            Node("one", "cube_column_one", "The Laurent index-one column of the actual Jacobi cube is exactly negative three times the complete core lattice theta.", DescribeRole.Theorem),
-            Paragraph(Text("This classical intermediate does not prove the full original k6 Euler-quotient sign theorem. The cubic product-to-lattice identities remain separate obligations."))
+            Node("4", "cube_column_zero", "The index-zero column of the actual Jacobi cube is the complete norm theta.", DescribeRole.Theorem),
+            Node("one", "cube_column_one", "The index-one column includes all three affine cosets, with the exact negative sign.", DescribeRole.Theorem),
+            Node("extra-0", "signs_add", "The three triangular monomial signs multiply to the sign of their full integer index sum.", DescribeRole.Theorem),
+            Paragraph(Text("This classical intermediate supplies complete Jacobi columns. CubicThetaCoreProduct and CubicThetaIdentities prove the downstream product-to-lattice identities; EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate."))
         ), []));
     private static DocumentBlock Node(string id, string declaration, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("cubic-theta-jacobi-columns-" + id), DeclarationHandle.Create(Prefix + declaration),

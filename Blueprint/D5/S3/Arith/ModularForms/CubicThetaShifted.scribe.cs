@@ -15,11 +15,11 @@ internal sealed class CubicThetaShiftedEncodedDocument : IScribeDocumentDefiniti
             Node("2", "shifted_norm", "Q(3x-1,3y-1)=9(Q(x,y)-x-y)+3.", DescribeRole.Theorem),
             Node("3", "shifted_exponent_nonneg", "The shifted exponent is nonnegative at every integer pair.", DescribeRole.Theorem),
             Node("4", "shiftedFiber_finite", "Every shifted exponent fibre is finite.", DescribeRole.Definition),
-            Node("5", "shiftedCoreEquiv", "A disjoint exhaustive equivalence from Fin 3 times a core fibre to the shifted fibre.", DescribeRole.Definition),
+            Node("5", "shiftedCoreEquiv", "The three affine cosets are disjoint and exhaust every shifted norm fibre.", DescribeRole.Definition),
             Node("6", "shiftedTheta", "The rational series counting the full shifted fibres.", DescribeRole.Definition),
             Node("lattice-sum", "hasSum_shifted_theta", "The shifted fibre series is the full monomial sum over all integer pairs.", DescribeRole.Theorem),
-            Node("7", "shifted_theta_eq_three_core", "The full shifted theta equals three times the core lattice theta in every coefficient.", DescribeRole.Theorem),
-            Paragraph(Text("This is classical intermediate mathematics. The product-to-core lattice identity and the complete original k6 sign theorem are separate remaining obligations; no original-problem completion or novelty credit is asserted."))
+            Node("7", "shifted_theta_eq_three_core", "This exact all-index identity supplies the multiplicity three in the Jacobi cube.", DescribeRole.Theorem),
+            Paragraph(Text("This is classical intermediate mathematics. CubicThetaCoreProduct supplies the downstream product-to-core lattice identity and EtaSignK6 supplies the exact all-index sign theorem. Independent formal acceptance and publication remain separate; no literature priority or novelty credit is asserted."))
         ), []));
 
     private static DocumentBlock Node(string id, string declaration, string text, DescribeRole role) =>

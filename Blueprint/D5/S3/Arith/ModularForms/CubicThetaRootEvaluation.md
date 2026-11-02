@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaRootEvaluation.hasSum_evalua
 
 *Commentary.*
 
-Every evaluated Laurent column sums to the genuine Jacobi cube, proved using finite support at each power-series coefficient.
+Evaluation of every Laurent column reconstructs the actual Jacobi cube.
 
 **Theorem 1.4 (hasSum_map).**
 
@@ -74,9 +74,9 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaRootEvaluation.evaluated_jac
 
 *Commentary.*
 
-The complete evaluated Jacobi cube equals 3*(w^2-w) times the mapped core theta and Euler product; no theta-product identity is assumed.
+The full evaluated cube uses all three residue sums, with their exact phases and signs.
 
-These are attributed classical intermediate identities. The remaining Borwein identities and the complete original k6 sign theorem are separate obligations. No priority or unique claim is made.
+These are attributed classical intermediate identities. CubicThetaIdentities proves the downstream Borwein relations and EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate. No priority or unique claim is made.
 
 ## References
 

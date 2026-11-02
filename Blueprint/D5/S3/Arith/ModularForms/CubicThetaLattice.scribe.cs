@@ -35,7 +35,9 @@ internal sealed class CubicThetaLatticeDocument : IScribeDocumentDefinition
             Node("core-equiv", "Six rotated core fibres", "normCoreEquiv", "All norm-(3n+1) points are uniquely obtained by one of six rotations of (3x-1,3y), with e(x,y)=n. Coordinate residues make the six images disjoint and exhaustive.", DescribeRole.Definition),
             Node("residue-counts", "All-index residue counts", "norm_fiber_residue_counts", "The norm-fibre counts at 3n, 3n+1 and 3n+2 are respectively the norm-n count, six times the shifted-n count, and zero. The variable n is unrestricted.", DescribeRole.Theorem),
             Node("dissection", "Cubic lattice dissection", "norm_theta_dissection", "The complete formal power-series identity A(X)=A(X^3)+6X T_lattice(X^3) follows from the fibre equivalences and exact PowerSeries.expand coefficients. It includes degree zero.", DescribeRole.Theorem),
-            Paragraph(Text("The product-to-lattice equality T_lattice=E(X^3)^3/E(X), the cubic Borwein relation and the full normalized Euler k6 coefficient sign theorem are not proved here. This classical lattice intermediate carries no original-problem resolution, priority, unique or KPI claim."))
+            Node("extra-0", "Norm residues", "norm_mod_three", "The Eisenstein norm has only residues zero and one modulo three, detected by the coordinate difference.", DescribeRole.Theorem),
+            Node("extra-1", "Cubic phases of the six cosets", "normCoreEquiv_coordinate_residue", "The six complete rotated core cosets have alternating nontrivial cubic phases.", DescribeRole.Theorem),
+            Paragraph(Text("This module supplies complete lattice counts. CubicThetaCoreProduct identifies the actual Euler quotient, CubicThetaIdentities proves the two other classical relations, and EtaSignK6 proves the full normalized sign theorem. This classical lattice mathematics carries no literature priority, unique, independent acceptance or KPI claim."))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,

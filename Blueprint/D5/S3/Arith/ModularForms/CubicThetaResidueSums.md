@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaResidueSums.hasSum_residue_z
 
 *Commentary.*
 
-The complete zero-residue sum vanishes by a finite-support sign-reversing involution at every coefficient.
+The zero-residue sum vanishes by a complete integer involution, including both zero exponents.
 
 **Theorem 1.6 (hasSum_residue_one).**
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaResidueSums.hasSum_residue_o
 
 *Commentary.*
 
-The complete first residue sum is the actual pentagonal Euler series.
+The first residue is exactly Euler's actual pentagonal series.
 
 **Theorem 1.7 (hasSum_residue_two).**
 
@@ -102,9 +102,9 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaResidueSums.hasSum_residue_t
 
 *Commentary.*
 
-Integer negation identifies the complete second residue sum with the same actual Euler series.
+The second residue is the same Euler series by integer negation.
 
-These are attributed classical intermediate identities. The remaining Borwein identities and the complete original k6 sign theorem are separate obligations. No priority or unique claim is made.
+These are attributed classical intermediate identities. CubicThetaIdentities proves the downstream Borwein relations and EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate. No priority or unique claim is made.
 
 ## References
 

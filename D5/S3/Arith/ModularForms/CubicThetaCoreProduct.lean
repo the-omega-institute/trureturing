@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaCoreProduct
    mirror-E: none(waiver:formal-three-core-product)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: The actual Euler quotient is the complete nonnegative three-core lattice theta. -/
 
@@ -21,44 +21,44 @@ namespace D5.S3.Arith.ModularForms.CubicThetaCoreProduct
 open CubicThetaJacobi CubicThetaRootProduct CubicThetaRootEvaluation CubicThetaLattice
 open scoped PowerSeries.WithPiTopology MvPowerSeries.WithPiTopology
 
-theorem map_pentagonal {R : Type*} [CommRing R] (g : ℚ →+* R) :
-    PowerSeries.map g (PowerSeries.pentagonalSeries ℚ) = PowerSeries.pentagonalSeries R := by
+theorem map_pentagonal {S R : Type*} [CommRing S] [CommRing R] (g : S →+* R) :
+    PowerSeries.map g (PowerSeries.pentagonalSeries S) = PowerSeries.pentagonalSeries R := by
   ext degree
   simp only [PowerSeries.coeff_map, PowerSeries.pentagonalSeries, PowerSeries.coeff_mk]
   split_ifs <;> simp only [Int.coe_negOnePow, map_pow, map_neg, map_one, map_zero]
 
-private abbrev RootRing := QuadraticAlgebra ℚ (-1) (-1)
-private abbrev w : RootRing := QuadraticAlgebra.omega
+abbrev RootRing := QuadraticAlgebra ℚ (-1) (-1)
+abbrev w : RootRing := QuadraticAlgebra.omega
 
-private theorem root_equation : w ^ 2 + w + 1 = 0 := by
+theorem root_equation : w ^ 2 + w + 1 = 0 := by
   rw [QuadraticAlgebra.omega_pow_two_eq_add]
   simp only [neg_smul, one_smul]
   ring
 
-private theorem root_cube : w ^ 3 = 1 := by
+theorem root_cube : w ^ 3 = 1 := by
   calc
     w ^ 3 = (w - 1) * (w ^ 2 + w + 1) + 1 := by ring
     _ = 1 := by rw [root_equation]; ring
 
-private def rootUnit : RootRingˣ where
+def rootUnit : RootRingˣ where
   val := w
   inv := w ^ 2
   val_inv := by simpa only [← pow_succ'] using root_cube
   inv_val := by simpa only [← pow_succ] using root_cube
 
-private noncomputable def rootEvaluation : LaurentPolynomial ℚ →+* RootRing :=
+noncomputable def rootEvaluation : LaurentPolynomial ℚ →+* RootRing :=
   LaurentPolynomial.eval₂ (algebraMap ℚ RootRing) rootUnit
 
-private theorem eval_T_one : rootEvaluation (LaurentPolynomial.T 1) = w := by
+theorem eval_T_one : rootEvaluation (LaurentPolynomial.T 1) = w := by
   simp only [rootEvaluation, LaurentPolynomial.eval₂_T, zpow_one]
   rfl
 
-private theorem eval_T_two : rootEvaluation (LaurentPolynomial.T 2) = w ^ 2 := by
+theorem eval_T_two : rootEvaluation (LaurentPolynomial.T 2) = w ^ 2 := by
   rw [show (LaurentPolynomial.T 2 : LaurentPolynomial ℚ) =
     LaurentPolynomial.T 1 ^ 2 by rw [LaurentPolynomial.T_pow]; norm_num]
   rw [map_pow, eval_T_one]
 
-private theorem eval_T_three : rootEvaluation (LaurentPolynomial.T 3) = 1 := by
+theorem eval_T_three : rootEvaluation (LaurentPolynomial.T 3) = 1 := by
   rw [show (LaurentPolynomial.T 3 : LaurentPolynomial ℚ) =
     LaurentPolynomial.T 1 ^ 3 by rw [LaurentPolynomial.T_pow]; norm_num]
   rw [map_pow, eval_T_one, root_cube]

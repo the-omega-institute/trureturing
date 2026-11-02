@@ -9,6 +9,8 @@ claim: "Appendix A Table 1 asks for the period-nine signs of the normalized Eule
 strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaLattice
   - D5/S3/Arith/ModularForms/CubicThetaCoreProduct
+  - D5/S3/Arith/ModularForms/CubicThetaIdentities
+  - D5/S3/Arith/ModularForms/EtaSignK6
 license: citation-only
 triage: anchor
 ---
@@ -46,13 +48,31 @@ is a classical lattice intermediate motivated by this question. It is
 not the original sign theorem. The later anchor
 `D5/S3/Arith/ModularForms/CubicThetaCoreProduct.coeff_core_product`
 identifies the full core lattice coefficients with the actual Euler
-quotient `E(X^3)^3/E(X)` for every natural index. The remaining two
-Borwein cubic identities and the full k6 sign deduction remain unpaid
-formal obligations.
+quotient `E(X^3)^3/E(X)` for every natural index.
+
+`D5/S3/Arith/ModularForms/CubicThetaIdentities.B_dissection` and
+`D5/S3/Arith/ModularForms/CubicThetaIdentities.cubic_identity` prove the
+two remaining classical Borwein identities from actual products and
+complete lattice sums. They are proved in Lean, not premises of the
+sign theorem.
+
+`D5/S3/Arith/ModularForms/EtaSignK6.F6` is the actual normalized quotient:
+the ninth power of Mathlib's pentagonal Euler series times the sixth
+power of the unit inverse of its expansion by three. Its `C6` is the
+coefficient at the original natural index.
+`D5/S3/Arith/ModularForms/EtaSignK6.five_coefficient_formulas` gives the
+two progressions modulo three and the three remaining progressions
+modulo nine, with factors `-9`, `27`, `1`, `-6`, and `9`.
+`D5/S3/Arith/ModularForms/EtaSignK6.all_index_signs` proves both exact
+modulo-nine sign biconditionals and nonvanishing for every natural
+index. Ordinary partition positivity, including the empty partition,
+supplies strictness at every index. No separate analytic eta bridge is
+needed for these source-defined normalized Euler coefficients.
 
 The supplied bounded literature review found no inspected theorem stating
 the complete k6 entry. This note asserts no worldwide absence, priority,
-unique status or original-problem resolution. The separate k10 entry is
-outside this formalization scope.
+unique status, independent formal acceptance, CI success, or publication
+of the original-problem resolution. The separate k10 entry is outside
+this formalization scope.
 
 Citation and question boundary only; no source text or PDF is vendored.

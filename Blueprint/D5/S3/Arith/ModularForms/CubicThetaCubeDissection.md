@@ -60,7 +60,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaCubeDissection.cube_column_t
 
 *Commentary.*
 
-Every index 3*m column equals the norm theta times its exact signed monomial.
+All columns in residue zero are translated complete norm lattices.
 
 **Theorem 1.5 (cube_column_three_mul_add_one).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaCubeDissection.cube_column_t
 
 *Commentary.*
 
-Every index 3*m+1 column equals negative three times the core theta times its exact signed monomial.
+All columns in residue one are translated shifted lattices, with the exact sign.
 
 **Theorem 1.6 (cube_column_three_mul_add_two).**
 
@@ -88,9 +88,9 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaCubeDissection.cube_column_t
 
 *Commentary.*
 
-Every index 3*m+2 column equals positive three times the core theta times its exact signed monomial.
+Complementing the three integer indices gives every residue-two column.
 
-These are attributed classical intermediate identities. The remaining Borwein identities and the complete original k6 sign theorem are separate obligations. No priority or unique claim is made.
+These are attributed classical intermediate identities. CubicThetaIdentities proves the downstream Borwein relations and EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate. No priority or unique claim is made.
 
 ## References
 

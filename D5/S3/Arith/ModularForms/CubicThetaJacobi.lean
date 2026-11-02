@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaJacobi
    mirror-E: none(waiver:formal-jacobi-product-specialization)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: Finite product realizations of the repository Jacobi construction. -/
 
@@ -229,6 +229,24 @@ theorem tendsto_finite_jacobi
   have hlimit := (hE.mul (tendsto_finiteEulerEvaluation 0 (LaurentPolynomial.T 1))).mul
     (tendsto_finiteEulerEvaluation 1 (LaurentPolynomial.T (-1)))
   simpa only [jacobiSeries, map_euler, formalTheta_eq_eulerEvaluations, mul_assoc] using hlimit
+
+/-- Keeping one additional zero-shift factor has the same genuine Jacobi limit. -/
+theorem tendsto_finite_jacobi_successor [TopologicalSpace (LaurentPolynomial ℚ)]
+    [T2Space (LaurentPolynomial ℚ)] [IsTopologicalRing (LaurentPolynomial ℚ)] :
+    Filter.Tendsto (fun cutoff =>
+      (∏ earlier ∈ Finset.range cutoff,
+        (1 - PowerSeries.X ^ (earlier + 1) : PowerSeries (LaurentPolynomial ℚ))) *
+      finiteEulerEvaluation (cutoff + 1) 0 (LaurentPolynomial.T 1) *
+      finiteEulerEvaluation cutoff 1 (LaurentPolynomial.T (-1)))
+      Filter.atTop (nhds jacobiSeries) := by
+  have hE := (PowerSeries.WithPiTopology.hasProd_one_sub_X_pow
+    (LaurentPolynomial ℚ)).tendsto_prod_nat
+  have hshift := (tendsto_finiteEulerEvaluation 0 (LaurentPolynomial.T 1)).comp
+    (Filter.tendsto_add_atTop_nat 1)
+  have hJ := (hE.mul hshift).mul
+    (tendsto_finiteEulerEvaluation 1 (LaurentPolynomial.T (-1)))
+  simpa only [jacobiSeries, map_euler, formalTheta_eq_eulerEvaluations,
+    mul_assoc, Function.comp_def] using hJ
 
 /-- Every Laurent column of the actual product is the corresponding single Jacobi monomial. -/
 theorem jacobiSeries_column (index : ℤ) :

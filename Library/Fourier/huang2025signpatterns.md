@@ -17,6 +17,12 @@ strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaResidueSums
   - D5/S3/Arith/ModularForms/CubicThetaRootEvaluation
   - D5/S3/Arith/ModularForms/CubicThetaCoreProduct
+  - D5/S3/Arith/ModularForms/CubicThetaProductTwist
+  - D5/S3/Arith/ModularForms/CubicThetaWeightedNorm
+  - D5/S3/Arith/ModularForms/CubicThetaTwistedColumns
+  - D5/S3/Arith/ModularForms/CubicThetaWeightedProduct
+  - D5/S3/Arith/ModularForms/CubicThetaIdentities
+  - D5/S3/Arith/ModularForms/EtaSignK6
 license: citation-only
 triage: anchor
 ---
@@ -101,14 +107,37 @@ then cancels a proven unit. This is a formal proof of the attributed
 classical three-core identity, not an assumed theta identity or a
 finite coefficient test.
 
-The other two cubic product identities in `abc1` remain unproved here.
-These intermediates do not establish any complete sign pattern for an
-Euler quotient. In particular the selected full k6 table entry in
-Bringmann--Han--Heim--Kane remains a separate formalization obligation.
+`D5/S3/Arith/ModularForms/CubicThetaProductTwist.three_jacobi_product`
+proves the product of three root-twisted Jacobi factors by finite
+factorization and coefficientwise limits, without division.
+`D5/S3/Arith/ModularForms/CubicThetaWeightedNorm.weighted_norm_dissection`
+counts the full phase-weighted norm fibres using the same six core
+cosets. The complete Laurent constant column is identified by
+`D5/S3/Arith/ModularForms/CubicThetaTwistedColumns.twisted_column_zero`.
+Together these prove
+`D5/S3/Arith/ModularForms/CubicThetaWeightedProduct.norm_dissection_mul_euler`.
+
+`D5/S3/Arith/ModularForms/CubicThetaIdentities.B_dissection` proves
+`B=A(X^3)-3*X*T(X^3)` for the actual quotient `B=E(X)^3/E(X^3)`.
+Its `cubic_identity` proves `A^3=B^3+27*X*T^3`. The cubic defect satisfies
+a homogeneous recurrence; the generic coefficient-induction theorem
+`D5/S3/Combinatorics/PowerSeries/ExpandingRecurrence.eq_zero_of_mul_eq_X_expand`
+closes every degree. Thus all three classical identities are derived
+from product and lattice mathematics, with no theta identity assumed.
+
+`D5/S3/Arith/ModularForms/EtaSignK6.first_dissection` and
+`D5/S3/Arith/ModularForms/EtaSignK6.second_dissection` prove the two
+finite polynomial expansions for the actual normalized k6 quotient.
+The all-index strict signs are in
+`D5/S3/Arith/ModularForms/EtaSignK6.all_index_signs`. The nonzero-modulo-three
+argument and general reduction are reused mathematics from `lem9`;
+the second dissection completes the selected k6 table entry. No claim
+of literature priority, worldwide absence, unique status, independent
+formal acceptance, CI or publication follows from these formal anchors.
 
 The printed progressions in the proof of `lem9` omit a factor `-9` in
 residue one and retain an undilated denominator after extraction. They
-are not used in this lattice proof. Any later product-sign deduction
-must use the corrected factors and rescaled denominator explicitly.
+are not used as stated. The formal first dissection retains the correct
+factors `-9` and `27` and uses the rescaled reciprocal `1/E(X)^3`.
 
 Citation and implementation scope only; no source text or PDF is vendored.

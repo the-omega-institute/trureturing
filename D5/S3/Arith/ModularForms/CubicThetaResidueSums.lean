@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaResidueSums
    mirror-E: none(waiver:formal-cubic-residue-sums)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: The three scalar residue sums for the Jacobi cube at a cubic root. -/
 

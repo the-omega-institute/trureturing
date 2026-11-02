@@ -12,9 +12,11 @@ internal sealed class CubicThetaJacobiCubeDocument : IScribeDocumentDefinition
             Node("0", "twice_triangular", "The natural triangular exponent has twice its value equal to k(k-1) for every integer k.", DescribeRole.Theorem),
             Node("1", "triangular_bound", "A bound on the triangular exponent bounds the integer index in an explicit finite interval.", DescribeRole.Theorem),
             Node("2", "jacobiTerm", "The signed triangular monomial at the integer Laurent index.", DescribeRole.Definition),
-            Node("3", "hasSum_jacobi", "The actual normalized Jacobi product is the sum of all integer-index monomials.", DescribeRole.Theorem),
-            Node("4", "hasSum_jacobi_cube", "The cube is the sum over all integer triples, with local finiteness proved before multiplying the sums.", DescribeRole.Theorem),
-            Paragraph(Text("This classical intermediate does not prove the full original k6 Euler-quotient sign theorem. The cubic product-to-lattice identities remain separate obligations."))
+            Node("3", "hasSum_jacobi", "The genuine normalized product is the locally finite sum over every integer index.", DescribeRole.Theorem),
+            Node("4", "hasSum_jacobi_cube", "The cube includes all triples; local finiteness justifies the Cauchy products.", DescribeRole.Theorem),
+            Node("extra-0", "hasSum_map_jacobi", "Coefficient maps preserve the complete locally finite Jacobi sum.", DescribeRole.Theorem),
+            Node("extra-1", "hasSum_mapped_triple", "Distinct coefficient evaluations retain every triple in the Cauchy product.", DescribeRole.Theorem),
+            Paragraph(Text("This classical intermediate supplies complete Jacobi columns. CubicThetaCoreProduct and CubicThetaIdentities prove the downstream product-to-lattice identities; EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate."))
         ), []));
     private static DocumentBlock Node(string id, string declaration, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("cubic-theta-jacobi-cube-" + id), DeclarationHandle.Create(Prefix + declaration),

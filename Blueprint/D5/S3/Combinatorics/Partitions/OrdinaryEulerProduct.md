@@ -114,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/OrdinaryEulerProduct.coeff_euler
 
 Every positive natural power of the actual reciprocal Euler series has every coefficient at least one.
 
-The finite convolution bounds include every natural degree and every positive power. They provide positive partition factors; they do not establish any signed eta-quotient pattern without the remaining exact theta identities.
+The finite convolution bounds include every natural degree and every positive power. They provide positive partition factors; they do not establish any signed eta-quotient pattern without the exact theta identities, proved separately in CubicThetaCoreProduct and CubicThetaIdentities.
 
 ## References
 

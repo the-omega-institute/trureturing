@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaCubeDissection
    mirror-E: none(waiver:formal-jacobi-cube-dissection)
-   anchors: [lit/huang2025signpatterns]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: Complete Jacobi cube columns by exact affine lattice reindexing. -/
 

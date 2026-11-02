@@ -60,7 +60,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_jacobi`
 
 *Commentary.*
 
-The actual normalized Jacobi product is the sum of all integer-index monomials.
+The genuine normalized product is the locally finite sum over every integer index.
 
 **Theorem 1.5 (hasSum_jacobi_cube).**
 
@@ -74,14 +74,44 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_jacobi_cub
 
 *Commentary.*
 
-The cube is the sum over all integer triples, with local finiteness proved before multiplying the sums.
+The cube includes all triples; local finiteness justifies the Cauchy products.
 
-This classical intermediate does not prove the full original k6 Euler-quotient sign theorem. The cubic product-to-lattice identities remain separate obligations.
+**Theorem 1.6 (hasSum_map_jacobi).**
+
+Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_map_jacobi`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_map_jacobi` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Commentary.*
+
+Coefficient maps preserve the complete locally finite Jacobi sum.
+
+**Theorem 1.7 (hasSum_mapped_triple).**
+
+Lean statement: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_mapped_triple`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_mapped_triple` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Commentary.*
+
+Distinct coefficient evaluations retain every triple in the Cauchy product.
+
+This classical intermediate supplies complete Jacobi columns. CubicThetaCoreProduct and CubicThetaIdentities prove the downstream product-to-lattice identities; EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_jacobi`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_jacobi_cube`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_map_jacobi`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.hasSum_mapped_triple`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.jacobiTerm`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.triangular_bound`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaJacobiCube.twice_triangular`

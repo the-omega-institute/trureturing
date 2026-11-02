@@ -13,10 +13,10 @@ internal sealed class CubicThetaResidueSumsDocument : IScribeDocumentDefinition
             Node("1", "residue_exponent_one", "The first residue exponent is precisely the generalized pentagonal number.", DescribeRole.Theorem),
             Node("2", "residue_exponent_two", "The second residue exponent is the pentagonal number of the negative integer index.", DescribeRole.Theorem),
             Node("3", "residue_exponent_reflection", "The zero-residue exponent is preserved by the integer involution m to 1-m.", DescribeRole.Theorem),
-            Node("4", "hasSum_residue_zero", "The complete zero-residue sum vanishes by a finite-support sign-reversing involution at every coefficient.", DescribeRole.Theorem),
-            Node("5", "hasSum_residue_one", "The complete first residue sum is the actual pentagonal Euler series.", DescribeRole.Theorem),
-            Node("6", "hasSum_residue_two", "Integer negation identifies the complete second residue sum with the same actual Euler series.", DescribeRole.Theorem),
-            Paragraph(Text("These are attributed classical intermediate identities. The remaining Borwein identities and the complete original k6 sign theorem are separate obligations. No priority or unique claim is made."))
+            Node("4", "hasSum_residue_zero", "The zero-residue sum vanishes by a complete integer involution, including both zero exponents.", DescribeRole.Theorem),
+            Node("5", "hasSum_residue_one", "The first residue is exactly Euler's actual pentagonal series.", DescribeRole.Theorem),
+            Node("6", "hasSum_residue_two", "The second residue is the same Euler series by integer negation.", DescribeRole.Theorem),
+            Paragraph(Text("These are attributed classical intermediate identities. CubicThetaIdentities proves the downstream Borwein relations and EtaSignK6 proves the exact all-index sign theorem. Independent formal acceptance and publication remain separate. No priority or unique claim is made."))
         ), []));
     private static DocumentBlock Node(string id, string declaration, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("cubic-theta-residue-sums-" + id), DeclarationHandle.Create(Prefix + declaration),

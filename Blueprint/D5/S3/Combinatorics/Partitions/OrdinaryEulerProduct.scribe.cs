@@ -17,7 +17,7 @@ internal sealed class OrdinaryEulerProductDocument : IScribeDocumentDefinition
             Node("6", "coeff_pow_nonnegative", "Every natural power of a coefficientwise nonnegative rational power series has nonnegative coefficients.", DescribeRole.Theorem),
             Node("7", "coeff_mul_ge_right", "A nonnegative series with constant coefficient one preserves a coefficientwise lower bound under complete finite convolution.", DescribeRole.Theorem),
             Node("8", "coeff_euler_inverse_pow_ge_one", "Every positive natural power of the actual reciprocal Euler series has every coefficient at least one.", DescribeRole.Theorem),
-            Paragraph(Text("The finite convolution bounds include every natural degree and every positive power. They provide positive partition factors; they do not establish any signed eta-quotient pattern without the remaining exact theta identities."))
+            Paragraph(Text("The finite convolution bounds include every natural degree and every positive power. They provide positive partition factors; they do not establish any signed eta-quotient pattern without the exact theta identities, proved separately in CubicThetaCoreProduct and CubicThetaIdentities."))
         ), []));
     private static DocumentBlock Node(string id, string declaration, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("ordinary-euler-product-" + id), DeclarationHandle.Create(Prefix + declaration),

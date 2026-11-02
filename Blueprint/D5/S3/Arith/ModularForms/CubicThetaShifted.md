@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaShifted.shiftedCoreEquiv`
 
 *Commentary.*
 
-A disjoint exhaustive equivalence from Fin 3 times a core fibre to the shifted fibre.
+The three affine cosets are disjoint and exhaust every shifted norm fibre.
 
 **Definition 1.7 (shiftedTheta).**
 
@@ -130,9 +130,9 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaShifted.shifted_theta_eq_thr
 
 *Commentary.*
 
-The full shifted theta equals three times the core lattice theta in every coefficient.
+This exact all-index identity supplies the multiplicity three in the Jacobi cube.
 
-This is classical intermediate mathematics. The product-to-core lattice identity and the complete original k6 sign theorem are separate remaining obligations; no original-problem completion or novelty credit is asserted.
+This is classical intermediate mathematics. CubicThetaCoreProduct supplies the downstream product-to-core lattice identity and EtaSignK6 supplies the exact all-index sign theorem. Independent formal acceptance and publication remain separate; no literature priority or novelty credit is asserted.
 
 ## References
 

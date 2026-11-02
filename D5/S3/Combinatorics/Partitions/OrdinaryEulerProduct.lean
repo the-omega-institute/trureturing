@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/OrdinaryEulerProduct
    mirror-E: none(waiver:ordinary-partition-euler-positivity)
-   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Partition.Glaisher,
-     mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Partition.Glaisher, mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
    utility: none
    digest: Ordinary partition Euler products and strict positive convolutions. -/
 
