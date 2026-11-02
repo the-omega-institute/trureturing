@@ -93,14 +93,15 @@ private lemma ambient_span : Submodule.span ℂ ambient = ⊤ := by
       exact ⟨coordinate_norm a hn, hn⟩
     have hb : b ∈ ambient := by
       have hn (k : Fin 4) : ‖b k‖ = radii k := by
-        by_cases hk : k = j <;>
-          simp [b, hk, Complex.norm_real, abs_of_pos (radii_pos k)]
+        change ‖if k = j then -(radii k : ℂ) else (radii k : ℂ)‖ = radii k
+        split_ifs <;> simp only [norm_neg, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_pos (radii_pos k)]
       exact ⟨coordinate_norm b hn, hn⟩
     have he : a - b = (2 * (radii j : ℂ)) • EuclideanSpace.single j 1 := by
       ext k
       by_cases hk : k = j
-      · subst k; simp [a, b, PiLp.single_apply]; ring
-      · simp [a, b, hk, PiLp.single_apply]
+      · subst k; simp [a, b]; ring
+      · simp [a, b, hk]
     have hz : (2 * (radii j : ℂ)) ≠ 0 :=
       mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr (ne_of_gt (radii_pos j)))
     have hm := (Submodule.span ℂ ambient).smul_mem ((2 * (radii j : ℂ))⁻¹)
@@ -120,10 +121,14 @@ private lemma ambient_hyperdisk : IsHyperdisk ambient := by
   refine ⟨4, fun j => EuclideanSpace.single j 1, radii,
     EuclideanSpace.orthonormal_single, ?_, radii_pos, ?_⟩
   · rw [ambient_span]
-    simpa only [OrthonormalBasis.coe_toBasis, EuclideanSpace.basisFun_apply] using
+    have he : (fun j : Fin 4 => EuclideanSpace.single j (1 : ℂ)) =
+        ⇑(EuclideanSpace.basisFun (Fin 4) ℂ) := by
+      funext j; exact (EuclideanSpace.basisFun_apply j).symm
+    rw [he]
+    simpa only [OrthonormalBasis.coe_toBasis] using
       (EuclideanSpace.basisFun (Fin 4) ℂ).toBasis.span_eq
   · ext x
-    simp only [ambient, Set.mem_setOf_eq, EuclideanSpace.inner_single_left,
+    simp only [ambient, Set.mem_ofPred_eq, EuclideanSpace.inner_single_left,
       map_one, one_mul]
 
 private lemma regular : IsRegularSubset counterexample ambient := by
@@ -203,11 +208,10 @@ private lemma phases_unit (t : ℝ) (ht : -(3 : ℝ) / 4 ≤ t ∧ t ≤ -(1 : �
 private lemma family_mem (a : ℕ) : family a ∈ counterexample := by
   obtain ⟨hn, hs⟩ := phases_unit (parameter a) (parameter_bounds a)
   have hc (j : Fin 4) : ‖family a j‖ = radii j := by
-    simp [family, norm_mul, hn j, Complex.norm_real, abs_of_pos (radii_pos j)]
+    simp [family, hn j, Complex.norm_real, abs_of_pos (radii_pos j)]
   refine ⟨?_, coordinate_norm (family a) hc, hc⟩
   change 6 * family a 0 + 3 * family a 1 + 2 * family a 2 + 3 * family a 3 = 0
-  dsimp only [family, PiLp.toLp_apply, radii, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.cons_val_two]
+  dsimp [family, radii, Matrix.vecHead, Matrix.vecTail]
   push_cast
   linear_combination (6 / (Real.sqrt 30 : ℂ)) * hs
 
@@ -241,7 +245,7 @@ private lemma four_phase_zero (a b : ℂ)
   have hi2 := congrArg (fun r : ℝ => r ^ 2) hi
   simp only [Complex.sq_norm, Complex.normSq_apply, Complex.add_re, Complex.add_im,
     Complex.neg_re, Complex.neg_im, Complex.mul_re, Complex.mul_im, Complex.I_re,
-    Complex.I_im, zero_mul, one_mul, zero_sub, add_zero] at hm2 hi2
+    Complex.I_im, zero_mul, one_mul, zero_sub] at hm2 hi2
   have he : a * conj b = 0 := by
     apply Complex.ext
     · simp only [Complex.mul_re, Complex.conj_re, Complex.conj_im, Complex.zero_re]
@@ -258,7 +262,7 @@ private lemma constant_modulus {m : ℕ} (a : Fin m → ℂ) (r : ℝ)
   by_cases hp : a p = 0
   · exact Or.inl hp
   right
-  have partial (u : Fin m → ℂ) (hu : ∀ i, ‖u i‖ = 1) :
+  have hpartial (u : Fin m → ℂ) (hu : ∀ i, ‖u i‖ = 1) :
       ∑ i ∈ Finset.univ.erase p, a i * u i = 0 := by
     have hn (v : ℂ) (hv : ‖v‖ = 1) :
         ‖a p * v + ∑ i ∈ Finset.univ.erase p, a i * u i‖ = r := by
@@ -278,8 +282,8 @@ private lemma constant_modulus {m : ℕ} (a : Fin m → ℂ) (r : ℝ)
       (by simpa using (hn (-1) (by simp)).trans (hn 1 (by simp)).symm)
       (by simpa [mul_comm] using
         (hn Complex.I (by simp)).trans (hn 1 (by simp)).symm)).resolve_left hp
-  have hbase := partial (fun _ => 1) (by simp)
-  have hflip := partial (fun i => if i = q then -1 else 1) (by intro i; split_ifs <;> simp)
+  have hbase := hpartial (fun _ => 1) (by simp)
+  have hflip := hpartial (fun i => if i = q then -1 else 1) (by intro i; split_ifs <;> simp)
   have hqmem : q ∈ Finset.univ.erase p := Finset.mem_erase.mpr ⟨Ne.symm hpq, by simp⟩
   rw [← Finset.add_sum_erase _ _ hqmem] at hbase hflip
   simp only [mul_one] at hbase
@@ -299,11 +303,15 @@ private lemma span_reconstruction {m : ℕ} (φ : Fin m → EuclideanSpace ℂ (
     ∑ p, ⟪φ p, x⟫_ℂ • φ p = x := by
   classical
   let b : OrthonormalBasis (Fin m) ℂ (Submodule.span ℂ (Set.range φ)) :=
-    (Basis.span ho.linearIndependent).toOrthonormalBasis (by
-      simpa only [Basis.span_apply] using orthonormal_span ho)
+    (Module.Basis.span ho.linearIndependent).toOrthonormalBasis (by
+      have he : ⇑(Module.Basis.span ho.linearIndependent) =
+          fun i => ⟨φ i, Submodule.subset_span (Set.mem_range_self i)⟩ := by
+        funext i; exact Module.Basis.span_apply ho.linearIndependent i
+      rw [he]
+      exact orthonormal_span ho)
   have he := congrArg (fun z : Submodule.span ℂ (Set.range φ) =>
     (z : EuclideanSpace ℂ (Fin 4))) (b.sum_repr' ⟨x, hx⟩)
-  simpa [b, Module.Basis.coe_toOrthonormalBasis, Basis.span_apply] using he
+  simpa [b, Module.Basis.coe_toOrthonormalBasis, Module.Basis.span_apply] using he
 
 private lemma phase_state {m : ℕ} (φ : Fin m → EuclideanSpace ℂ (Fin 4))
     (r : Fin m → ℝ) (ho : Orthonormal ℂ φ) (hr : ∀ p, 0 < r p)
@@ -319,14 +327,14 @@ private lemma phase_state {m : ℕ} (φ : Fin m → EuclideanSpace ℂ (Fin 4))
       simpa using ho.inner_sum c c Finset.univ
     rw [inner_self_eq_norm_sq_to_K] at he
     simp only [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq,
-      ← Complex.ofReal_pow, ← Complex.ofReal_sum] at he
-    exact_mod_cast he
+      ← Complex.ofReal_sum] at he
+    exact Complex.ofReal_injective (by simpa only [Complex.ofReal_pow] using he)
   have hsum : ∑ p, (r p) ^ 2 = 1 := by
     have he := energy (fun p => ⟪φ p, x⟫_ℂ)
     rw [span_reconstruction φ ho x hspan, hx] at he
     simpa only [hcoeff, one_pow] using he.symm
   have hnorm (p : Fin m) : ‖(r p : ℂ) * u p‖ = r p := by
-    rw [norm_mul, hu, mul_one, Complex.norm_real, abs_of_pos (hr p)]
+    rw [norm_mul, hu, mul_one, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (hr p)]
   constructor
   · have he := energy (fun p => (r p : ℂ) * u p)
     simp only [hnorm, hsum] at he
@@ -358,7 +366,8 @@ private lemma disjoint_generators {m : ℕ}
   have he := constant_modulus (fun p => (r p : ℂ) * φ p j) (radii j) hn p q hpq
   have hrp : (r p : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt (hr p))
   have hrq : (r q : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt (hr q))
-  exact he.imp ((mul_eq_zero.mp ·).resolve_left hrp) ((mul_eq_zero.mp ·).resolve_left hrq)
+  exact he.imp (fun h => (mul_eq_zero.mp h).resolve_left hrp)
+    (fun h => (mul_eq_zero.mp h).resolve_left hrq)
 
 private lemma weighted_block (a b : Fin 4 → ℂ)
     (ha : a 0 + a 1 + a 2 + a 3 = 0) (hb : b 0 + b 1 + b 2 + b 3 = 0)
@@ -376,13 +385,13 @@ private lemma weighted_block (a b : Fin 4 → ℂ)
   · exfalso
     apply ha3
     simpa only [h0, h1, h2, zero_add] using ha
-  · exact (hsingle 2 (by linear_combination ha - h0 - h1) h2).elim
-  · exact (hsingle 1 (by linear_combination ha - h0 - h2) h1).elim
+  · exact (hsingle 2 (by change a 3 = -a 2; linear_combination ha - h0 - h1) h2).elim
+  · exact (hsingle 1 (by change a 3 = -a 1; linear_combination ha - h0 - h2) h1).elim
   · have hb1 := (hd 1).resolve_left h1
     have hb2 := (hd 2).resolve_left h2
     have hb0 : b 0 = 0 := by simpa [hb1, hb2, hb3] using hb
     funext j; fin_cases j <;> assumption
-  · exact (hsingle 0 (by linear_combination ha - h1 - h2) h0).elim
+  · exact (hsingle 0 (by change a 3 = -a 0; linear_combination ha - h1 - h2) h0).elim
   · have hb0 := (hd 0).resolve_left h0
     have hb2 := (hd 2).resolve_left h2
     have hb1 : b 1 = 0 := by simpa [hb0, hb2, hb3] using hb
@@ -410,7 +419,7 @@ private lemma phase_coefficient_zero {m : ℕ} (a : Fin m → ℂ)
     · simp [hq]
   simp_rw [he] at hflip
   simp only [Finset.sum_sub_distrib, Finset.sum_ite_eq', Finset.mem_univ,
-    if_true] at hflip
+    ite_true] at hflip
   simp only [mul_one] at hbase
   have hz : 2 * a p = 0 := by linear_combination hbase - hflip
   exact (mul_eq_zero.mp hz).resolve_left (by norm_num)
@@ -439,7 +448,6 @@ private lemma block_obstruction {m : ℕ}
     have he := hker p
     change 6 * φ p 0 + 3 * φ p 1 + 2 * φ p 2 + 3 * φ p 3 = 0 at he
     dsimp [b]
-    norm_num
     linear_combination (r p : ℂ) * (Real.sqrt 30 : ℂ) / 6 * he
   have hbnorm (p : Fin m) (j : Fin 4) (hpj : φ p j ≠ 0) :
       ‖b p j‖ = ![1, 1, 1, 2] j := by
@@ -453,7 +461,7 @@ private lemma block_obstruction {m : ℕ}
     rw [he] at hc
     have hsqrt : 0 < Real.sqrt (30 : ℝ) := Real.sqrt_pos.mpr (by norm_num)
     simp only [b, norm_div, norm_mul, Complex.norm_real,
-      abs_of_pos hsqrt, Complex.norm_ofNat, hc]
+      Complex.norm_ofNat, hc]
     fin_cases j <;> norm_num [radii, abs_of_pos hsqrt] <;> field_simp <;> ring
   have hbd (p q : Fin m) (hpq : p ≠ q) (j : Fin 4) : b p j = 0 ∨ b q j = 0 := by
     rcases hd j p q hpq with hp | hq
@@ -500,8 +508,10 @@ private lemma hyperdisk_single_ray (h : Set (EuclideanSpace ℂ (Fin 4)))
     rw [hspan]; exact Submodule.subset_span hx
   have hyspan : y ∈ Submodule.span ℂ (Set.range φ) := by
     rw [hspan]; exact Submodule.subset_span hy
-  have hxdata : ‖x‖ = 1 ∧ ∀ p, ‖⟪φ p, x⟫_ℂ‖ = r p := by simpa only [hset] using hx
-  have hydata : ‖y‖ = 1 ∧ ∀ p, ‖⟪φ p, y⟫_ℂ‖ = r p := by simpa only [hset] using hy
+  have hxdata : ‖x‖ = 1 ∧ ∀ p, ‖⟪φ p, x⟫_ℂ‖ = r p := by
+    simpa only [hset, Set.mem_ofPred_eq] using hx
+  have hydata : ‖y‖ = 1 ∧ ∀ p, ‖⟪φ p, y⟫_ℂ‖ = r p := by
+    simpa only [hset, Set.mem_ofPred_eq] using hy
   have hs : ∀ u : Fin m → ℂ, (∀ p, ‖u p‖ = 1) →
       (∑ p, ((r p : ℂ) * u p) • φ p) ∈ counterexample := by
     intro u hu
@@ -520,7 +530,8 @@ private lemma hyperdisk_single_ray (h : Set (EuclideanSpace ℂ (Fin 4)))
   | succ m =>
     have hm0 : m = 0 := by omega
     subst m
-    simp only [Fin.sum_univ_one] at hxr hyr
+    have hxr1 : ⟪φ 0, x⟫_ℂ • φ 0 = x := by simpa only [Fin.sum_univ_one] using hxr
+    have hyr1 : ⟪φ 0, y⟫_ℂ • φ 0 = y := by simpa only [Fin.sum_univ_one] using hyr
     have hy0 : ⟪φ 0, y⟫_ℂ ≠ 0 := by
       intro he
       have hn := hydata.2 0
@@ -528,10 +539,10 @@ private lemma hyperdisk_single_ray (h : Set (EuclideanSpace ℂ (Fin 4)))
       linarith [hr 0]
     refine ⟨⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ, ?_⟩
     calc
-      x = ⟪φ 0, x⟫_ℂ • φ 0 := hxr.symm
+      x = ⟪φ 0, x⟫_ℂ • φ 0 := hxr1.symm
       _ = (⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ) • (⟪φ 0, y⟫_ℂ • φ 0) := by
         rw [smul_smul, div_mul_cancel₀ _ hy0]
-      _ = (⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ) • y := by rw [hyr]
+      _ = (⟪φ 0, x⟫_ℂ / ⟪φ 0, y⟫_ℂ) • y := by rw [hyr1]
 
 /-- The registered four-coordinate regular subset refutes the finite-cover question. -/
 theorem result : ¬ claim := by
@@ -547,7 +558,7 @@ theorem result : ¬ claim := by
     obtain ⟨u, hu⟩ := hyperdisk_single_ray (h (f a)) (hh (f a)).1 (hh (f a)).2
       (family a) (hf a) (family b) (hab ▸ hf b)
     exact family_ray_injective a b u hu
-  haveI : Finite ℕ := Finite.of_injective f hinj
+  have : Finite ℕ := Finite.of_injective f hinj
   exact (Set.infinite_univ : (Set.univ : Set ℕ).Infinite) Set.finite_univ
 
 end D5.S3.Quantum.Masking.HyperdiskRegularSubsetCover
