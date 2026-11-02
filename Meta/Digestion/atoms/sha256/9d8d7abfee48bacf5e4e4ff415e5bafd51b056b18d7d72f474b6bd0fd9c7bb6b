@@ -1,0 +1,58 @@
+**Theorem 37.2 (restricted and full native fibre applications).** Fix
+an admissible deterministic native recorder and $k\ge1$, and take $d$
+as in (IV.108). For the selected full-assignment endpoints $t_x=F_1(x)$,
+define two different families
+
+$$
+R_x^{\mathrm{prep}}=\{J_R(h):h\text{ is a prepared insertion history ending at }t_x\},
+\qquad
+R_x^{\mathrm{all}}=\{J_R(h):h\in\mathcal H(t_x)\}.
+\tag{IV.109}
+$$
+
+Each family separately satisfies Theorem 35.1 with $D=2d$, using its
+own centroid and ball. Thus (IV.102) and (IV.106) apply with that radius.
+If all fibres of either one of these families are word-tree connected,
+then
+
+$$
+3\cdot2^{2d}-2\ge\left\lceil\frac{2^k}{k+1}\right\rceil,
+\qquad d\ge\tfrac12\bigl(k-\log_2(12k)\bigr).
+\tag{IV.110}
+$$
+
+In particular logarithmic native payload updates force exponentially
+many branch-crossing assignments in each family's own common cut.
+
+**Proof.** The prepared family is the all-history terminal family of
+Proposition 37.1's coding restriction. Equation (IV.108) and Lemma 34.2
+give edge witnesses at distance at most $4d$. Finiteness follows from
+the finitely many orders and bits and finite deterministic runs.
+Nonemptiness follows from the preparation. All $t_x$ have the same
+$U_{k,[k]}$ and distinct ordered slots, so exact native decoding makes
+their record sets disjoint. This verifies all premises for that family.
+
+For the full family prove the premises again. Every $t_x$ has grade
+$5k+4$. At every finite grade a finite term has finitely many enabled
+addressed events, so induction on grade gives finitely many legal
+histories of that length. Hence each $R_x^{\mathrm{all}}$ is finite;
+it is nonempty because it contains its prepared histories. If a word
+belonged to two such fibres, the same native decoder input
+$(U_{k,[k]},J)$ would return the two distinct $t_x$, a contradiction.
+Finally the prepared edge witnesses are themselves legal full native
+histories, so they belong to these full sets and still have distance
+at most $4d$. Theorem 35.1 therefore applies directly to the full sets.
+Corollary 35.2 gives (IV.110) under the stated connectivity hypothesis,
+and its logarithmic consequence with $D=2d$ gives the claimed count.
+The bound $d$ is attained on some prepared suffix event, since that
+family of deterministic runs is finite. $\square$
+
+Connectivity is not inherited by restriction: $\{\varepsilon,0,1\}$
+is connected but its subset $\{0,1\}$ is not. Nor must restricted
+fragmentation persist on enlargement; extra words may enter the ball
+and join the branches. The two applications above establish their
+premises independently and do not identify their cuts. Taking connected
+hulls would add possibly unreachable words and can destroy disjointness.
+Connectivity of legal histories under adjacent swaps likewise supplies
+no word-tree connectivity without a path-preserving record map.
+

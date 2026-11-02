@@ -1,0 +1,28 @@
+**Proposition 25.2 (two endpoints, three histories, different guards).**
+For $U=\{\beta,\{\beta,\alpha\}\}$ the complete native endpoint and
+history fibres are
+
+$$
+\begin{aligned}
+t_1&=\langle\beta,\langle\beta,\alpha\rangle\rangle,
+&\mathcal H(t_1)&=\{P_\varepsilon S_\varepsilon P_R S_R\},\\
+t_2&=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+&\mathcal H(t_2)&=\{P_\varepsilon S_\varepsilon S_L P_R,
+                    P_\varepsilon S_\varepsilon P_R S_L\}.
+\end{aligned}
+\tag{IV.68}
+$$
+
+Thus $E(U)=2$, $J(U)=3$, and the endpoint projection has fibre sizes one
+and two. At $t_1$ the original action $S_L$ is enabled, while at $t_2$
+it is refused because $L$ is a branch.
+
+**Proof.** The root prefix is $P_\varepsilon S_\varepsilon$. For $t_1$
+the remaining right child must execute $P_R$ before $S_R$. For $t_2$,
+$S_L$ and $P_R$ are both enabled immediately after the root prefix and
+can occur in either order. AA17.2 excludes any other events, proving the
+complete lists. The two child masses are one and two, so (IV.66) also
+gives the ratio $1/2$. The final tags at $L$ are beta and branch,
+respectively, proving the guard distinction under the original $S$.
+$\square$
+
