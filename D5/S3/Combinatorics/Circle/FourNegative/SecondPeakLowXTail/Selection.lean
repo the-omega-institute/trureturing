@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-implementation)
    mirror-E: none(waiver:physical-source-family-registration)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   anchors: [mathlib/module/Mathlib.Data.Rat.Defs]
    utility: none
    digest: All six rational low-X margins hold at the actual physical dyadic reservations. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Intervals

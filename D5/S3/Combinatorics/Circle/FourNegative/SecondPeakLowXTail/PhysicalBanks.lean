@@ -2,8 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-implementation-for-later-endpoint)
    mirror-E: none(waiver:private-implementation-for-later-endpoint)
-   anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum,
-     mathlib/module/Mathlib.Data.Finset.Union]
+   anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum, mathlib/module/Mathlib.Data.Finset.Union]
    utility: none
    digest: Constructive four-bank exponent inventory and actual old/new source masses. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalArithmetic

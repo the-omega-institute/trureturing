@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-endpoint-bridge)
    mirror-E: none(waiver:private-consumed-endpoint-bridge)
-   anchors: [mathlib/module/Mathlib.Data.Int.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Rat.Defs]
    utility: none
    digest: Actual centered terminal values agree with the rational four-bank model. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalBanks
