@@ -11,6 +11,8 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Polynomial.Coeff
 import Mathlib.Tactic
 
+/-! Okada's width-three pre-merged determinant conjecture. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -114,7 +116,8 @@ private theorem factorial_identity
       have hhook :
           (1 - X ^ (n + 1 - k)) * gauss (n + 1) k =
             (1 - X ^ (n + 1)) * gauss n k := by
-        simpa using D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_hook (n + 1) k (by omega)
+        simpa using
+          D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_hook (n + 1) k (by omega)
       rw [hsub, qFactorial_succ (n - k)]
       calc
         gauss (n + 1) k * qFactorial k *
