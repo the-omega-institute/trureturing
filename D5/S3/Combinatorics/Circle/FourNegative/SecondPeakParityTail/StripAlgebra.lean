@@ -100,6 +100,7 @@ private theorem scaled_peak_eq (u z h t alpha S delta : ℚ)
 -- ring_nf computes the positive polynomial in the four nonnegative increments.
 -- This retains the full unbounded cone, without exporting coefficient tables.
 set_option maxRecDepth 8192 in
+set_option maxHeartbeats 16000000 in
 private theorem strip_corners (U Z H T : ℚ)
     (hU : 0 ≤ U) (hZ : 0 ≤ Z) (hH : 0 ≤ H) (hT : 0 ≤ T)
     (highS highDelta : Bool) (i : Fin 6) :
@@ -107,7 +108,7 @@ private theorem strip_corners (U Z H T : ℚ)
       (if highS then 7*(16+Z)/4 else 2)
       (if highDelta then 2*((4+U)-1) else 0) i := by
   cases highS <;> cases highDelta <;> fin_cases i <;>
-    norm_num only [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
+    dsimp only [stripGate,scaledPeak,scaledMass,selectorNumerator,stripScale,
       qHead,qNewHead,qModulus,qTerminal] <;> ring_nf <;> positivity
 
 -- Exact joint affinity in S and delta. In particular no S*delta term is hidden.

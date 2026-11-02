@@ -78,7 +78,7 @@ private theorem low_split (a b c d S : ℕ) (h : physicalDomain a b c d)
   have hsplit : lowWeight a b d S + S*2^(b-d-1) = 2^(b-a-1) := by
     dsimp [lowWeight]
     rw [←Nat.add_mul,Nat.sub_add_cancel hSh.le,hq]
-  have ht : 1 ≤ (2 : ℕ)^(b-d-1) := by positivity
+  have ht : 1 ≤ (2 : ℕ)^(b-d-1) := by have := Nat.two_pow_pos (b-d-1); omega
   have hSt : 2 ≤ S*2^(b-d-1) :=
     le_trans (by omega : 2 ≤ 2*2^(b-d-1)) (Nat.mul_le_mul_right _ hS2)
   have hlow : lowWeight a b d S + 2 ≤ 2^(b-a-1) := by omega
@@ -160,7 +160,10 @@ private theorem local_disjoint (a b c d alpha S : ℕ) (h : physicalDomain a b c
     Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
     Function.comp_apply,Finset.notMem_empty,Finset.mem_range,Finset.mem_Ico,
     Finset.mem_insert,high_mem,hiL,hiC,false_or,or_false,true_or,or_true] at hi hj
-  all_goals omega
+  all_goals first
+    | exact (hUC' ⟨hi,hj⟩).elim
+    | exact (hUC' ⟨hj,hi⟩).elim
+    | omega
 
 private theorem local_cover (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     (hAlpha : alpha < 2^(d-1)-1) (hS2 : 2 ≤ S) (hSh : S < 2^(d-a))
@@ -199,8 +202,7 @@ private theorem local_cover (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
       exact Finset.mem_union.mp hm
     · exact hi'
     · by_cases hil : i < b-a-1
-      · have hh := hlow hil
-        omega
+      · rcases hlow hil with hh|hh <;> simp only [hh,or_true,true_or]
       · omega
     · omega
 
@@ -271,6 +273,7 @@ private theorem terminal_inventory (a b c d : ℕ) (h : physicalDomain a b c d) 
       · exact ⟨2,by simpa [terminal] using hi.symm⟩
       · exact ⟨1,by simpa [terminal] using hi.symm⟩
 
+set_option maxHeartbeats 4000000 in
 private theorem local_sums (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     (hAlpha : alpha < 2^(d-1)-1) (hS2 : 2 ≤ S) (hSh : S < 2^(d-a))
     (chain bank : Fin 4) :
@@ -341,8 +344,15 @@ private theorem local_sums (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',
     Matrix.cons_val_succ',Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
     Function.comp_apply,Finset.sum_empty]
-  all_goals first | rfl | exact bits _ | exact hs _ | exact ht _ _ (by omega)
-    | exact hhU | exact hhW | exact hhWX | exact hhWV
+  all_goals first
+    | rfl
+    | exact hhU
+    | exact hhW
+    | exact hhWX
+    | exact hhWV
+    | exact bits _
+    | exact hs _
+    | exact ht _ _ (by omega)
 
 private theorem mask_capacities (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     (hAlpha : alpha < 2^(d-1)-1) (hS2 : 2 ≤ S) (hSh : S < 2^(d-a))
@@ -382,7 +392,8 @@ private theorem physical_mem (a b c d alpha S i : ℕ) (bank : Fin 4) :
 private theorem local_chain (a b c d : ℕ) (chain : Fin 4) (e : ℕ)
     (he : e < chainLength a b c d chain-1) :
     chainOf b c d (chainStart b c d chain+e) = chain := by
-  fin_cases chain <;> simp only [chainOf,chainStart,chainLength,
+  apply Fin.ext
+  fin_cases chain <;> dsimp only [chainOf,chainStart,chainLength,
     Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.cons_val_succ,
     Matrix.vecHead,Matrix.vecTail,Function.comp_apply] at he ⊢ <;>
@@ -417,7 +428,7 @@ private theorem physical_disjoint (a b c d alpha S : ℕ) (h : physicalDomain a 
   rw [hei] at hr
   rw [hfi] at hs
   have hrs : r=s := hr.symm.trans hs
-  subst s
+  cases hrs
   have hef : e=f := Nat.add_left_cancel (hei.trans hfi.symm)
   subst f
   exact Finset.disjoint_left.mp (local_disjoint a b c d alpha S h hAlpha hS2 hSh r bank other hne) he hf
