@@ -118,7 +118,7 @@ private theorem kernel_not_four {k : ℕ} (f : Plane →+ Target k)
   rw [htwo, zero_mul] at hh
   exact zero_ne_one hh
 
-private theorem sumDiff_injective : Function.Injective sumDiff := by
+theorem sumDiff_injective : Function.Injective sumDiff := by
   intro x y h
   have h0 := congrFun h 0
   have h1 := congrFun h 1
@@ -147,7 +147,7 @@ private theorem sumDiff_range : sumDiff.range =
     · exact ⟨![1, 0], by ext j; fin_cases j <;> norm_num [sumDiff]⟩
     · exact ⟨![0, 1], by ext j; fin_cases j <;> norm_num [sumDiff]⟩
 
-private theorem sumDiff_index : sumDiff.range.toAddSubgroup.index = 2 := by
+theorem sumDiff_index : sumDiff.range.toAddSubgroup.index = 2 := by
   rw [sumDiff_range, span_pair_index _ _ (by norm_num)]
   norm_num
 
