@@ -58,7 +58,10 @@ internal sealed class SecondFamilyAllDimensionsDocument : IScribeDocumentDefinit
                             + "After the pair-coordinate substitution, the shield side is nonzero exactly when q.1+p.2=p.1+q.2, which is equivalent in the cyclic group to q.2−q.1=p.2−p.1. "
                             + "That is exactly equality of the difference labels, so the resulting entry agrees with the sum of the tVec projectors. "
                             + "These constructions give the five witnesses and IsSecondFamilyData, proving the full quantified claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pal-toth-bene-vertesi-2021-second-family-all-dimensions"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("second-family-all-dimensions-" + name.ToLowerInvariant()),
