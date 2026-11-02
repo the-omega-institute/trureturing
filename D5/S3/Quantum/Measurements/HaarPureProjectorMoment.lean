@@ -8,8 +8,6 @@
 
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Measurements.UnitaryPureProjectorSpan
-import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
-import Mathlib.Analysis.Normed.Module.FiniteDimension
 
 /-! The pure-projector specialization of the two-copy Haar twirl. -/
 
@@ -110,7 +108,8 @@ theorem pure_tensor_integral {d : ℕ} [NeZero d] :
   let z := fun u : Matrix.unitaryGroup (Fin d) ℂ =>
     (u.1 * Matrix.single 0 0 1 * u.1ᴴ) ⊗ₖ (u.1 * Matrix.single 0 0 1 * u.1ᴴ)
   have hp (u : Matrix.unitaryGroup (Fin d) ℂ) (i j : Fin d) :
-      ((u.1 * Matrix.single 0 0 1 * u.1ᴴ) : Matrix (Fin d) (Fin d) ℂ) i j = u.1 i 0 * star (u.1 j 0) := by
+      ((u.1 * Matrix.single 0 0 1 * u.1ᴴ) : Matrix (Fin d) (Fin d) ℂ) i j =
+        u.1 i 0 * star (u.1 j 0) := by
     simp [Matrix.mul_apply, Matrix.single, Matrix.conjTranspose_apply,
       Finset.sum_mul, Finset.mul_sum, ite_and]
   have hz : Continuous z := by
