@@ -686,9 +686,12 @@ theorem causal_prefix_deficit (D : ℝ) (hD : 0 ≤ D)
     norm_num
     ring
   have hc := (causal_gram (1 / 2) D (by norm_num) x a hx).2
+  rw [hDresponse] at hc
   simp_rw [hresponse] at hc
-  rw [integral_add (hA2.sub hJ) (hg2.div_const 4), integral_sub hA2 hJ,
-    integral_div, hDresponse] at hc
+  change IntegrableOn (fun t => ‖A t‖ ^ 2) (Icc 0 D) at hA2
+  have hiadd := integral_add (hA2.sub hJ) (hg2.div_const 4)
+  simp only [Pi.sub_apply] at hiadd
+  rw [hiadd, integral_sub hA2 hJ, integral_div] at hc
   rw [prefix_energy_window x a D hx ha]
   have heq (t : ℝ) : -(1 / 2 : ℝ) * |t| = -|t| / 2 := by ring
   simp_rw [heq] at hc
@@ -780,7 +783,7 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
     rw [hh0, mul_zero, sub_zero] at hf
     have hexp : (Real.exp (t / 2) : ℂ) * (Real.exp (-t / 2) : ℂ) = 1 := by
       rw [← Complex.ofReal_mul, ← Real.exp_add]
-      simp
+      rw [show t / 2 + -t / 2 = 0 by ring, Real.exp_zero, Complex.ofReal_one]
     calc
       h t = (Real.exp (t / 2) : ℂ) *
           ((Real.exp (-t / 2) : ℂ) * h t) := by rw [← mul_assoc, hexp, one_mul]
@@ -790,6 +793,7 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
         rw [← intervalIntegral.integral_const_mul]
         apply intervalIntegral.integral_congr
         intro u _
+        dsimp only
         rw [← mul_assoc, ← Complex.ofReal_mul, ← Real.exp_add]
         congr 2
         ring
@@ -835,6 +839,7 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
       apply intervalIntegral.integral_congr
       intro u hu
       rw [uIcc_of_le ht.1] at hu
+      dsimp only
       rw [← hprimitive u hu.1]
     rw [hinner]
     simp only [Complex.star_def, Complex.mul_re, Complex.conj_re, Complex.conj_im]
@@ -848,7 +853,8 @@ theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
       (1 / 4) * (∫ t in Icc (0 : ℝ) D, ‖G t‖ ^ 2) +
       (1 / 16) * (2 * ∫ t in Icc (0 : ℝ) D, (star (h t) * G t).re)
     dsimp only [h] at hFTC ⊢
-    norm_num at hid
+    rw [hGint] at hid
+    norm_num only at hid
     linarith only [hid, hFTC]
 
 
