@@ -1,64 +1,102 @@
-# Triangle Four-Symbol Necessity
+# Four-Symbol Necessity on the Original Triangle Law
 
 ## Abstract
 
-The source-faithful four-symbol necessity core for the finite triangle equality fiber.
+Original finite stochastic triangle laws at the entropy-cost equality have a binary block form when their positive output support has size two to four.
 
-**Theorem 1.1 (Three weighted likelihood directions require four outputs).**
+The carrier has arbitrary finite original source and output alphabets. Its source law nu is nonnegative and normalized. The incident kernels KA(s2,s3), KB(s3,s1), KC(s1,s2) are nonnegative and each row sums to one. The six-variable response law is nu times the three response probabilities. Agreement means that every off-diagonal response cell has zero mass. The record law is the actual marginal of the first output and all three sources. The source cost is KL(nu || mu1 times mu2 times mu3), where each mui is the marginal of that same source law. Entropy uses natural logarithms.
 
-$$\forall O, \operatorname{Fintype}\left(O\right) \Rightarrow \forall F:\operatorname{TriangleLikelihoodFrame}\left(O\right), 4 \le \operatorname{card}\left(O\right).$$
+**Theorem 1.1 (Agreement forces the active original rows).**
 
-*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.weighted_likelihood_frame_card_ge_four` (`✓ std3`). ∎
+Lean statement: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_recoverability`
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The frame is the actual equality-fiber likelihood data: a strictly positive output law, three centered likelihood directions, pairwise weighted orthogonality, and one nonzero direction for each source. The proof makes 1 and the three directions linearly independent in the finite output function space, so the output support has cardinality at least four.
-
-This is the dimension part of the source theorem. The stochastic-kernel derivation of the frame is deliberately a separate bridge obligation.
-
-**Theorem 1.2 (Binary pair-readout tables are parity up to relabelling).**
-
-$$\forall g:Bool\to Bool\to Bool, \operatorname{RowsInjective}\left(g\right) \land \operatorname{ColumnsInjective}\left(g\right) \Rightarrow \exists c:Bool, \forall u, v, \operatorname{g}\left(u, v\right) = \operatorname{xor}\left(c, \operatorname{xor}\left(u, v\right)\right).$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.binary_latin_square_is_xor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_recoverability` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Injectivity of every binary row and column is the exact four-cell recoverability condition. Exhaustive kernel reduction proves that the third block bit is the XOR of the first two, up to one global bit relabeling.
+Assume agreement. At each positive source cell, the product response law and agreement force all three response vectors to be point masses at one common symbol. Every positive incident-pair marginal has a positive extension. Thus its fixed kernel row is a point mass. The incident readouts agree on every positive source cell, and the record-cell identity also covers zero source cells.
 
-The hypotheses describe the actual block table obtained from the original source law; they do not assert conditional pairwise independence as a substitute for the full law.
+**Theorem 1.2 (The common record belongs to the same law).**
 
-**Definition 1.3 (Original-source binary block cell law).**
+Lean statement: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_common_record`
 
-$$\forall S1, S2, S3, O, \forall h:\operatorname{Bijection}\left(\operatorname{prod}\left(Bool, Bool\right), O\right), \forall q1:\operatorname{prod}\left(Bool, S1\right)\to \mathbb{R}, \forall q2:\operatorname{prod}\left(Bool, S2\right)\to \mathbb{R}, \forall q3:\operatorname{prod}\left(Bool, S3\right)\to \mathbb{R}, \forall x:O, \forall s:\operatorname{prod}\left(S1, \operatorname{prod}\left(S2, S3\right)\right), \operatorname{binaryBlockCell}\left(h, q1, q2, q3, x, s\right) = \sum_{u\in Bool} \sum_{v\in Bool} \operatorname{if}\left(x = h(\operatorname{pair}\left(u, v\right)), \frac{1}{4} q1(\operatorname{pair}\left(u, \operatorname{fst}\left(s\right)\right)) q2(\operatorname{pair}\left(v, \operatorname{fst}\left(\operatorname{snd}\left(s\right)\right)\right)) q3(\operatorname{pair}\left(\operatorname{xor}\left(u, v\right), \operatorname{snd}\left(\operatorname{snd}\left(s\right)\right)\right))0\right).$$
-
-*Formalization.* `D5/S3/Entropy/TriangleFourSymbolNecessity.binaryBlockCell` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_common_record` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The cell law is indexed by the original source alphabets. It retains arbitrary within-block source noise and all structural zeros; q_i are not collapsed to source alphabets of size two.
+Assume agreement. Summing the six-variable law over the other two outputs gives recordLaw. The output weights are a probability vector. Replacing the first response by either other incident response gives the same record/source joint law.
 
-**Theorem 1.4 (The reconstructed original source has independent pair marginals).**
+**Theorem 1.3 (The KL equality forces source-pair and fiber products).**
 
-$$\forall S1, S2, S3, \operatorname{Fintype}\left(S3\right) \Rightarrow \forall q1:\operatorname{prod}\left(Bool, S1\right)\to \mathbb{R}, \forall q2:\operatorname{prod}\left(Bool, S2\right)\to \mathbb{R}, \forall q3:\operatorname{prod}\left(Bool, S3\right)\to \mathbb{R}, \forall s1:S1, \forall s2:S2, \operatorname{normalized}\left(q3\right) \Rightarrow \sum_{u\in Bool} \sum_{v\in Bool} \sum_{s3\in S3} \frac{1}{4} q1(\operatorname{pair}\left(u, s1\right)) q2(\operatorname{pair}\left(v, s2\right)) q3(\operatorname{pair}\left(\operatorname{xor}\left(u, v\right), s3\right)) = (\frac{1}{2}) (q1(\operatorname{pair}\left(false, s1\right)) + q1(\operatorname{pair}\left(true, s1\right))) (\frac{1}{2}) (q2(\operatorname{pair}\left(false, s2\right)) + q2(\operatorname{pair}\left(true, s2\right))).$$
+Lean statement: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_equality_fibers`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.binary_block_source_pair_marginal` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.original_equality_fibers` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Summing the full original three-source cell law over the third source gives the product of the two averaged block laws. This is the exact source-pair consequence used by the necessity reconstruction and keeps the original source alphabets and zeros visible.
+Assume agreement and sourceCost = H(outputLaw)/2. Then all three unconditional source pairs are products of the original marginals. For each positive original output symbol, the entire conditional source law is a threefold product, including its zero cells. The proof uses the exact balance of twice the source cost minus output entropy into three pair mutual informations and the weighted conditional dual total correlations. Every term is nonnegative. The entropy chain rule, zero mutual-information product characterization and strong subadditivity equality theorem apply to these explicitly linked finite laws.
+
+**Theorem 1.4 (A nonconstant equality record has at least four symbols).**
+
+Lean statement: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_output_cardinality`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.original_output_cardinality` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume agreement, sourceCost = H(outputLaw)/2 and at least two positive outputs. For a positive source symbol, take the support of its conditional distribution over positive output symbols. Each of the three support families covers every positive output. A support row from either of two different families meets the other row in exactly one symbol. No coordinate can occur in every row of two families: coverage of a second coordinate would contradict their unique intersection. Consequently each row and its complement contain at least two symbols. This proves the four-symbol lower bound without a full-support assumption.
+
+**Theorem 1.5 (Original posterior supports determine binary parity labels).**
+
+Lean statement: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_binary_supports`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.original_binary_supports` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume agreement, sourceCost = H(outputLaw)/2 and two to four positive outputs. Then every support row and its complement have size two. Two distinct rows from one family are disjoint: if they shared one symbol, rows in each other family containing that symbol would also have to contain the single remaining coordinate, contradicting unique intersection. Each family therefore consists of two complementary support sets, both occurring on actual positive source symbols. Two family labels give a bijection h from Bool times Bool onto the positive original output support. The third label is their exclusive-or after relabelling its two blocks. Distinct original symbols with the same posterior remain distinct source symbols.
+
+**Theorem 1.6 (Complete necessity for the original source and response laws).**
+
+Lean statement: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_necessity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_necessity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume agreement, the original KL equality and two to four positive output symbols. Then there are exactly four positive outputs and an output bijection h. On every original source alphabet there are two nonnegative normalized probability vectors qi(0), qi(1) with disjoint supports. Their full original record/source law is the displayed cell formula. The source-block masses are forced to one half and every positive output mass to one quarter: the three pair-product identities, combined with parity, force these values. The conditional source distribution on each block is twice its original marginal there, and zero elsewhere. Arbitrary unequal masses inside a block and any further zero coordinates are preserved.
+
+$P(X=\operatorname{h}\left(u, v\right), S=s)=\frac{1}{4} q_{1}^{u}(s_{1}) q_{2}^{v}(s_{2}) q_{3}^{u+v}(s_{3})$
+
+Here u and v are Boolean labels, addition in the third exponent is modulo two, and the formula holds for every original source triple. For each original source symbol s, qi(0)(s) times qi(1)(s) is zero. Each qi(b) sums to one on the whole original alphabet. The bijection lands in the positive output subtype, so unused symbols of the original output alphabet remain outside its image.
+
+On a positive incident pair with block labels v,w, KA is the point mass at h(v xor w,v). On labels w,u, KB is the point mass at h(u,u xor w). On labels u,v, KC is the point mass at h(u,v). These are equalities of every coordinate of the actual original kernel rows. Inactive normalized rows are unrestricted.
+
+The converse construction and the separate entropy formulas are not part of this necessity theorem. No classification for more than four positive outputs or claim of publication priority is made.
 
 ## References
 
-- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.binaryBlockCell`
-- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.binary_block_source_pair_marginal`
-- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.binary_latin_square_is_xor`
-- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.weighted_likelihood_frame_card_ge_four`
+- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_binary_supports`
+- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_equality_fibers`
+- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_common_record`
+- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_necessity`
+- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_recoverability`
+- Truth anchor: `D5/S3/Entropy/TriangleFourSymbolNecessity.original_output_cardinality`
+- Dependency: [D5/S3/Divergence/ClassicalDPI](../Divergence/ClassicalDPI.md)
+- Dependency: [D5/S3/Entropy/ConditionalEntropy](ConditionalEntropy.md)
+- Dependency: [D5/S3/Entropy/MaxEntropy](MaxEntropy.md)
+- Dependency: [D5/S3/Entropy/MutualInformationIndependence](MutualInformationIndependence.md)
+- Dependency: [D5/S3/Entropy/Relabeling/InjectiveInvariance](Relabeling/InjectiveInvariance.md)
+- Dependency: [D5/S3/Entropy/Submodularity/StrongSubadditivity](Submodularity/StrongSubadditivity.md)
