@@ -1,6 +1,8 @@
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
-import Mathlib.Tactic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Push
 
 open Finset
 open scoped BigOperators Matrix
@@ -38,7 +40,7 @@ private theorem box_improvement
   · rw [Matrix.mulVec_add, hx, (hc j).2.1, add_zero]
   · intro i
     have hsi : (∑ k, c k i) = y i - x i := by
-      simpa only [sum_apply, Pi.sub_apply] using congrFun hs i
+      simpa only [Finset.sum_apply, Pi.sub_apply] using congrFun hs i
     by_cases hdpos : 0 ≤ y i - x i
     · have hnn (k : Fin n) : 0 ≤ c k i := by
         rcases (hc k).2.2.1 i with hk | hk
@@ -63,7 +65,7 @@ private theorem box_improvement
       change l i ≤ x i + c j i ∧ x i + c j i ≤ u i
       constructor <;> linarith [hnp j, hyl i, hxu i]
   · rw [map_add]
-    exact add_lt_of_neg_right hj
+    linarith
 
 private theorem box_optimality
     (A : Matrix (Fin m) E F) (rhs : Fin m → F) (l u x : E → F)
@@ -86,7 +88,7 @@ private theorem box_optimality
 
 private theorem affine_decomposition {d : ℕ} (q : E → (Fin d → F)) (x : E → F)
     (hxsum : ∑ i, x i = 0) (hxq : ∑ i, x i • q i = 0) :
-    let A : Matrix (Fin (d + 1)) E F := fun r i => Fin.cons 1 (q i) r
+    let A : Matrix (Fin (d + 1)) E F := fun r i => (Fin.cons (1 : F) (q i) : Fin (d + 1) → F) r
     ∃ (n : ℕ) (c : Fin n → (E → F)),
       (∑ j, c j) = x ∧ LinearIndependent F c ∧
       n ≤ (support x).card ∧ n ≤ Module.finrank F (LinearMap.ker (Matrix.mulVecLin A)) ∧
@@ -97,7 +99,7 @@ private theorem affine_decomposition {d : ℕ} (q : E → (Fin d → F)) (x : E 
           Function.support w = Function.support (c j)) := by
   classical
   dsimp only
-  let A : Matrix (Fin (d + 1)) E F := fun r i => Fin.cons 1 (q i) r
+  let A : Matrix (Fin (d + 1)) E F := fun r i => (Fin.cons (1 : F) (q i) : Fin (d + 1) → F) r
   have hker (z : E → F) :
       A *ᵥ z = 0 ↔ (∑ i, z i) = 0 ∧ (∑ i, z i • q i) = 0 := by
     constructor

@@ -43,6 +43,12 @@ OrderedField.subtract_to_boundary and OrderedField.mem_support: proof_shape: bin
   their consumers are OrderedField.compress_conic and the global circuit proof.
 The Real subtract_to_boundary retains its Finite-only telescope and delegates to
   the single ordered-field minimum-ratio proof.
+OrderedField.signConformalGlobalKernelCircuitDecomposition: proof_shape: content;
+  escape_witness: terminating residual-support construction with a one-sided
+    nonzero pivot outside the span of the later conformal summands;
+  live path: boundary erasure -> smaller-support induction -> Fin.cons independence
+    -> independent family in the kernel -> nullity bound;
+  admission_basis: escape-witness.
 utility: not-applicable(kind=none): these are general existence and linear-algebra
   theorems, not bounded enumeration, certified instances or numerical reductions.
 -/
@@ -749,6 +755,7 @@ theorem signConformalGlobalKernelCircuit
     simp [d, hwi]
 
 
+-- The induction carries signed circuit minimality and the one-sided span invariant.
 set_option maxHeartbeats 1000000 in
 /-- Every finite signed kernel vector is an independent conformal sum of global circuits.
 Positive coefficients are absorbed in the summands; the empty sum represents zero. -/
