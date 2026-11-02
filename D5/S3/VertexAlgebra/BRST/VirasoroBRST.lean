@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/VirasoroBRST
+/- GID: D5/S3/VertexAlgebra/BRST/VirasoroBRST
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/VirasoroBRST
+   mirror-B: D5/B/S3/VertexAlgebra/BRST/VirasoroBRST
    mirror-E: none(waiver:algebraic-virasoro-brst-anomaly)
    anchors: []
    utility: none

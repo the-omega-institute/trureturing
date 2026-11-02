@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.BRST;
 
 internal sealed class VirasoroBRSTDocument : IScribeDocumentDefinition
 {
     private static DocumentBlock Node(string name, string prose) => Describe.Lean(
         DescribeId.Create("virasoro-brst-" + name.Replace("_", "-").ToLowerInvariant()),
-        DeclarationHandle.Create("D5/S3/VertexAlgebra/VirasoroBRST." + name),
+        DeclarationHandle.Create("D5/S3/VertexAlgebra/BRST/VirasoroBRST." + name),
         H(name.Replace("_", " ")), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
