@@ -2,9 +2,9 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Laman;
 
-internal sealed class TypeIDocument : IScribeDocumentDefinition
+internal sealed class HennebergRigidityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/Laman/TypeI.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Laman/HennebergRigidity.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Geometry/chen2026combinatorialrigidity");
 

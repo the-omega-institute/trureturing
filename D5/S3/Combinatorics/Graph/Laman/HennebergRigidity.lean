@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/Laman/TypeI
+/- GID: D5/S3/Combinatorics/Graph/Laman/HennebergRigidity
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/Laman/TypeI
+   mirror-B: D5/B/S3/Combinatorics/Graph/Laman/HennebergRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.GroupTheory.CosetCover, mathlib/module/Mathlib.Analysis.InnerProductSpace.PiL2]
    utility: none
