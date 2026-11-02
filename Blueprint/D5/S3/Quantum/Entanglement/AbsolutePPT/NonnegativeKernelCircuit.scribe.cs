@@ -28,6 +28,8 @@ internal sealed class NonnegativeKernelCircuitDocument : IScribeDocumentDefiniti
     private static Formula Ne(Formula p, Formula q) => Seq(p, Neq, Sp, q);
     private static Formula All(string n, Formula t, Formula p) =>
         Seq(Forall, Sp, Par(Seq(F.Id(n), Colon, t)), Comma, Sp, p);
+    private static Formula Some(string n, Formula t, Formula p) =>
+        Seq(Exists, Sp, Par(Seq(F.Id(n), Colon, t)), Comma, Sp, p);
     private static Formula Set(string n, Formula t, Formula p) =>
         Seq(OpenBrace, Sp, F.Id(n), Colon, t, Mid, Sp, p, CloseBrace);
     private static Formula Supp(Formula v) => Call("nzSupport", v);
@@ -42,9 +44,29 @@ internal sealed class NonnegativeKernelCircuitDocument : IScribeDocumentDefiniti
     private static Formula RowEquation(Formula v) => All("r", Rows,
         Eq(Seq(new Formula.Subscript(F.Sum, Seq(F.Id("j"), Colon, J)), Sp,
             Call("B", F.Id("r"), F.Id("j")), Cdot, Sp, Call("v", F.Id("j"))), D(0)));
+    private static Formula Scalar => F.Id("F");
+    private static Formula Labels => F.Id("E");
+    private static Formula FieldVec => Arrow(Labels, Scalar);
+    private static Formula FieldParameters(Formula p, bool ordered) =>
+        All("F", F.Id("Type"), ordered
+            ? Seq(OpenBracket, Call("Field", Scalar), CloseBracket, Sp,
+                OpenBracket, Call("LinearOrder", Scalar), CloseBracket, Sp,
+                OpenBracket, Call("IsStrictOrderedRing", Scalar), CloseBracket, Sp,
+                All("E", F.Id("Type"), Seq(OpenBracket, Call("Fintype", Labels), CloseBracket, Sp, p)))
+            : Seq(OpenBracket, Call("Field", Scalar), CloseBracket, Sp,
+                OpenBracket, Call("LinearOrder", Scalar), CloseBracket, Sp,
+                All("E", F.Id("Type"), Seq(OpenBracket, Call("Fintype", Labels), CloseBracket, Sp, p))));
+    private static Formula KernelEquation(Formula v) => Eq(Call("mulVec", F.Id("A"), v), D(0));
+    private static Formula SignClause => All("i", Labels,
+        Seq(Par(Eq(Call("c", F.Id("i")), D(0))), Lor, Sp,
+            Eq(Call("sign", Call("c", F.Id("i"))), Call("sign", Call("x", F.Id("i"))))));
+    private static Formula GlobalMinimality => All("w", FieldVec,
+        Imp(And(KernelEquation(W), And(Ne(W, D(0)),
+            Subset(Call("supp", W), Call("supp", F.Id("c"))))),
+            Eq(Call("supp", W), Call("supp", F.Id("c")))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A nonnegative solution of finitely many homogeneous real equations decomposes into support-minimal solutions, each using at most one more coordinate than equations.",
+        "Finite nonnegative real kernels decompose into circuits; over any ordered field a prescribed nonzero coordinate belongs to a sign-conformal globally minimal kernel circuit.",
         H("Circuits of a finite nonnegative kernel"), Blocks(
             Describe.Lean(DescribeId.Create("nonnegative-kernel-support"),
                 DeclarationHandle.Create(Root + "nzSupport"), H("Nonzero support"),
@@ -94,5 +116,25 @@ internal sealed class NonnegativeKernelCircuitDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A circuit has support cardinality at most the number of rows plus one. Delete one supported coordinate, apply deleted-column independence, and bound the size of that independent family by the dimension of the row-coordinate space. The deleted-column theorem contains the minimum-ratio contradiction once. Every denominator in that argument is positive where used. The statement includes zero rows, dependent rows, zero columns and zero coordinates; with no rows, circuits have at most one supported coordinate."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-field-kernel-support"),
+                DeclarationHandle.Create(Root + "support"), H("Finite support over a field"),
+                StatementSource.FromAuthor(Disp(FieldParameters(All("v", FieldVec,
+                    Eq(Call("support", V), Set("i", Labels, Ne(Call("v", F.Id("i")), D(0))))), false))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This finite support records exactly the nonzero coordinates. Its scalar field and finite label type have independent universes. The conic compression proof uses its cardinality."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordered-field-sign-conformal-global-circuit"),
+                DeclarationHandle.Create(Root + "signConformalGlobalKernelCircuit"),
+                H("A global circuit retaining a prescribed coordinate"),
+                StatementSource.FromAuthor(Disp(FieldParameters(All("m", N,
+                    All("A", Arrow(Rows, Arrow(Labels, Scalar)), All("x", FieldVec,
+                    All("e", Labels, Imp(And(KernelEquation(X), Ne(Call("x", F.Id("e")), D(0))),
+                        Some("c", FieldVec, And(KernelEquation(F.Id("c")),
+                            And(Ne(Call("c", F.Id("e")), D(0)), And(SignClause, GlobalMinimality))))))))), true))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The scalar field F and finite label type E have independent universes. The only scalar instances are Field F, LinearOrder F and IsStrictOrderedRing F. The matrix has any natural row count m. The notation supp denotes Function.support. Every nonzero signed kernel vector supported in the output has exactly that support: competitors have no sign restriction and need not be nonzero at e. Zero rows, repeated or zero columns and non-Archimedean ordered fields are included.")),
+                    Paragraph(Text("Normalize the input orthant by signs ±1. The negative signed e-column is a nonnegative combination of the other original columns. Minimize support among nonnegative representations of this same point p, permitting p = 0 and empty support. An active signed dependence, oriented to have a positive coordinate, permits minimum-ratio subtraction that preserves p and nonnegativity while erasing an active coordinate. The contradiction proves independence of the compressed active columns. Restore coefficient one at e. For every signed supported kernel d, subtract d e times this normalized relation. The residual vanishes at e and on its independent remaining columns, so d is a scalar multiple of the relation. Nonzero d has a nonzero scalar and equal support. Undo the orthant signs. The same-p feasibility and strict erasure is the new reusable inference in this proof; sign transport and finite-sum normalization alone do not supply it. The finite minimum-ratio proof is shared with the original Real API, whose statements and cofactor consumers are preserved. This is the classical elementary-vector method, without a claim of mathematical novelty."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("For arbitrary same-field points q : E → (Fin d → F), an affine relation x with sum x i = 0, sum x i • q i = 0 and x e ≠ 0 gives the application A r i = (1, q i) r with d + 1 homogeneous rows. The output c satisfies both affine equations, retains e, and has its positive labels contained in the positive labels of x and its negative labels contained in the negative labels of x. Every nonzero signed affine competitor supported in c has equal support, including competitors zero at e. The positive coefficient sum is strictly positive, and the negative coefficient sum is its opposite. Delete the zero coefficients, normalize the two sides and use their zero vector sum: both center masses equal one point p. Thus p lies in the convex hull of each strict sign side of c and, by containment, in each corresponding strict sign-side hull of x. The construction keeps the original labels, permits repeated points and d = 0, and uses no Archimedean assumption. This complete universally parameterized application is checked transiently; no separate thin Radon theorem is retained.")),
             Paragraph(Text("For a system of three homogeneous inequalities on nonnegative variables, append three nonnegative slack coordinates and use the augmented matrix with a negative identity block. Its nonnegative kernel projects onto the original feasible cone, and each circuit projects to a feasible vector supported on at most four original coordinates. This supplies a general reduction for the three-row spectral relaxation. Identifying the resulting small-support spectral cases and obtaining a final APPT purity bound require further arguments.")))));
 }
