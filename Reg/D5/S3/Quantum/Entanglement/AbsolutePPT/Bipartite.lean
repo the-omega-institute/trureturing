@@ -398,8 +398,6 @@ def registration :
 
 end Basis
 
-set_option pp.proofs false
-
 #print sector_coordinates
 #print sectorPoint_injective
 #print fourier_at_point
