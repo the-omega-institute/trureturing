@@ -7,8 +7,8 @@
    digest: A separable qubit-ququart state violates the correlation-minor bound without FNF. -/
 
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.CotfasDVGS
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 /-! The operator-norm conjecture following Theorem 3 of Peled, Te'eni, Carmi
 and Cohen, arXiv:2005.12079v2. Hermitian bases have trace-product normalization one. -/
@@ -103,39 +103,45 @@ private def selectedCols (k : Fin 4) : {s : Finset (Fin 16) // s.card = 3} :=
 private lemma projectors_density (j : Fin 3) : IsDensity (projectors j) := by
   rw [projectors]
   fin_cases j
-  · constructor
-    · convert posSemidef_vecMulVec_self_star ![(1 : ℂ), 0] using 1
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [projectors, Matrix.vecMulVec, Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
-    · norm_num [projectors, Matrix.trace, Fin.sum_univ_two]
-  · constructor
-    · convert (posSemidef_vecMulVec_self_star ![(1 : ℂ), 2]).smul
-        (show (0 : ℝ) ≤ 1/5 by norm_num) using 1
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [projectors, Matrix.vecMulVec, Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
-    · norm_num [projectors, Matrix.trace, Fin.sum_univ_two]
-  · constructor
-    · convert (posSemidef_vecMulVec_self_star ![(1 : ℂ), -2]).smul
-        (show (0 : ℝ) ≤ 1/5 by norm_num) using 1
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [projectors, Matrix.vecMulVec, Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
-    · norm_num [projectors, Matrix.trace, Fin.sum_univ_two]
+  · convert D5.S3.Quantum.CotfasDVGS.normalization_isDensity
+      (vecMulVec ![(1 : ℂ), 0] (star ![(1 : ℂ), 0]))
+      (posSemidef_vecMulVec_self_star _) (by
+        norm_num [Matrix.trace, Matrix.vecMulVec, Fin.sum_univ_two,
+          Pi.star_apply, Complex.star_def, map_ofNat]) using 1
+    ext i k
+    fin_cases i <;> fin_cases k <;>
+      norm_num [Matrix.vecMulVec, Matrix.trace, Fin.sum_univ_two,
+        Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
+  · convert D5.S3.Quantum.CotfasDVGS.normalization_isDensity
+      (vecMulVec ![(1 : ℂ), 2] (star ![(1 : ℂ), 2]))
+      (posSemidef_vecMulVec_self_star _) (by
+        norm_num [Matrix.trace, Matrix.vecMulVec, Fin.sum_univ_two,
+          Pi.star_apply, Complex.star_def, map_ofNat]) using 1
+    ext i k
+    fin_cases i <;> fin_cases k <;>
+      norm_num [Matrix.vecMulVec, Matrix.trace, Fin.sum_univ_two,
+        Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
+  · convert D5.S3.Quantum.CotfasDVGS.normalization_isDensity
+      (vecMulVec ![(1 : ℂ), -2] (star ![(1 : ℂ), -2]))
+      (posSemidef_vecMulVec_self_star _) (by
+        norm_num [Matrix.trace, Matrix.vecMulVec, Fin.sum_univ_two,
+          Pi.star_apply, Complex.star_def, map_ofNat]) using 1
+    ext i k
+    fin_cases i <;> fin_cases k <;>
+      norm_num [Matrix.vecMulVec, Matrix.trace, Fin.sum_univ_two,
+        Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
 
 private lemma rho_separable : IsSeparable rho := by
   classical
   have hflag (j : Fin 4) : IsDensity (single j j (1 : ℂ)) := by
-    constructor
-    · simpa only [← Pi.single_star, star_one,
-        ← Matrix.single_eq_single_vecMulVec_single] using
-        posSemidef_vecMulVec_self_star (Pi.single j (1 : ℂ))
-    · simp [Matrix.trace_single_eq_same]
+    simpa only [Matrix.trace_single_eq_same, inv_one, one_smul] using
+      D5.S3.Quantum.CotfasDVGS.normalization_isDensity (single j j (1 : ℂ))
+        (by simpa only [← Pi.single_star, star_one,
+            ← Matrix.single_eq_single_vecMulVec_single] using
+            posSemidef_vecMulVec_self_star (Pi.single j (1 : ℂ))) (by simp)
   have hmixed (n : ℕ) [NeZero n] : IsDensity ((1 / n : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ)) := by
-    constructor
-    · exact PosSemidef.one.smul (by positivity)
-    · simp [Matrix.trace_smul, Matrix.trace_one, NeZero.ne n]
+    simpa [Matrix.trace_one] using D5.S3.Quantum.CotfasDVGS.normalization_isDensity
+      (1 : Matrix (Fin n) (Fin n) ℂ) PosSemidef.one (by simp [NeZero.ne n])
   refine ⟨4, ![333/1000, 333/1000, 333/1000, 1/1000],
     ![projectors 0, projectors 1, projectors 2, (1/2 : ℂ) • 1],
     ![single 0 0 1, single 1 1 1, single 2 2 1, (1/4 : ℂ) • 1], ?_, ?_, ?_, ?_⟩
@@ -151,23 +157,20 @@ private lemma rho_separable : IsSeparable rho := by
       one_kronecker_one, smul_smul, smul_add]
     module
 
-private lemma normalizer_square : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
-  norm_cast
-  exact Real.sq_sqrt (by norm_num)
-
 private lemma alice_basis : IsHermBasis alice := by
   refine ⟨?_, by decide, ?_⟩
   · intro i
     rw [alice]
     change (alice i)ᴴ = alice i
-    fin_cases i <;> ext j k <;> fin_cases j <;> fin_cases k <;>
-      simp [alice, pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
-        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.conjTranspose_apply]
+    fin_cases i <;>
+      simp [alice, Matrix.conjTranspose_smul,
+        D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_hermitian]
   · intro i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [alice, pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
-        D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.trace, Matrix.mul_apply,
-        Fin.sum_univ_two] <;> ring_nf <;> norm_num [normalizer_square]
+      simp [alice, Matrix.trace_smul,
+        D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair] <;>
+      ring_nf <;>
+      norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_0 (j : Fin 16) :
     (bob 0 * bob j).trace = if (0 : Fin 16) = j then 1 else 0 := by
@@ -196,7 +199,7 @@ private lemma bob_pairing_4 (j : Fin 16) :
     simp [symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_5 (j : Fin 16) :
     (bob 5 * bob j).trace = if (5 : Fin 16) = j then 1 else 0 := by
@@ -204,7 +207,7 @@ private lemma bob_pairing_5 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_6 (j : Fin 16) :
     (bob 6 * bob j).trace = if (6 : Fin 16) = j then 1 else 0 := by
@@ -212,7 +215,7 @@ private lemma bob_pairing_6 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_7 (j : Fin 16) :
     (bob 7 * bob j).trace = if (7 : Fin 16) = j then 1 else 0 := by
@@ -220,7 +223,7 @@ private lemma bob_pairing_7 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_8 (j : Fin 16) :
     (bob 8 * bob j).trace = if (8 : Fin 16) = j then 1 else 0 := by
@@ -228,7 +231,7 @@ private lemma bob_pairing_8 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_9 (j : Fin 16) :
     (bob 9 * bob j).trace = if (9 : Fin 16) = j then 1 else 0 := by
@@ -236,7 +239,7 @@ private lemma bob_pairing_9 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_10 (j : Fin 16) :
     (bob 10 * bob j).trace = if (10 : Fin 16) = j then 1 else 0 := by
@@ -245,7 +248,7 @@ private lemma bob_pairing_10 (j : Fin 16) :
     simp [symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_11 (j : Fin 16) :
     (bob 11 * bob j).trace = if (11 : Fin 16) = j then 1 else 0 := by
@@ -253,7 +256,7 @@ private lemma bob_pairing_11 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_12 (j : Fin 16) :
     (bob 12 * bob j).trace = if (12 : Fin 16) = j then 1 else 0 := by
@@ -261,7 +264,7 @@ private lemma bob_pairing_12 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_13 (j : Fin 16) :
     (bob 13 * bob j).trace = if (13 : Fin 16) = j then 1 else 0 := by
@@ -269,7 +272,7 @@ private lemma bob_pairing_13 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_14 (j : Fin 16) :
     (bob 14 * bob j).trace = if (14 : Fin 16) = j then 1 else 0 := by
@@ -277,7 +280,7 @@ private lemma bob_pairing_14 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_pairing_15 (j : Fin 16) :
     (bob 15 * bob j).trace = if (15 : Fin 16) = j then 1 else 0 := by
@@ -285,7 +288,7 @@ private lemma bob_pairing_15 (j : Fin 16) :
     simp [bob, symUnit, skewUnit, Matrix.add_mul, Matrix.mul_add,
       Matrix.trace_add]
   ring_nf
-  norm_num [normalizer_square]
+  norm_num [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 private lemma bob_basis : IsHermBasis bob := by
   rw [bob]
@@ -413,11 +416,10 @@ private lemma minor_value (k : Fin 4) :
 private lemma minor_energy :
     (∑ k : Fin 4, (compound 3 coefficients selectedRow (selectedCols k)) ^ 2) =
       559341805929555807 / 500000000000000000000 := by
-  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have h6 : Real.sqrt 2 ^ 6 = 8 := by
     calc
-      Real.sqrt 2 ^ 6 = (Real.sqrt 2 ^ 2) ^ 3 := by ring
-      _ = 8 := by rw [h2]; norm_num
+      Real.sqrt 2 ^ 6 = (Real.sqrt 2 ^ 2) ^ 3 := pow_mul _ 2 3
+      _ = 8 := by norm_num [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
   simp only [minor_value, div_pow, ← pow_mul]
   norm_num [Fin.sum_univ_succ, h6]
 
