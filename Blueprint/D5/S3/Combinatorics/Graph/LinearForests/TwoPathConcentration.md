@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.ac
 
 *Commentary.*
 
-The finite carrier is arbitrary. Its original disjoint independent parts A and B cover every vertex. ActualTwoPaths gives a complete adjacency correspondence with paths of orders 2p+1 and 2q+1 and the given induced graph on R. It fixes every R label and identifies the original A vertices with odd path positions and the B vertices with even positions. Both p and q are at least one.
+The finite carrier is arbitrary. Its original disjoint independent parts A and B cover every vertex. ActualTwoPaths gives a complete adjacency correspondence with paths of orders 2p+1 and 2q+1 and the given induced graph on R. It fixes every R label and gives one original B endpoint of each path. A compiled path-colouring argument derives that the original A vertices occupy odd positions and the B vertices occupy even positions from independence, disjointness, and coverage. Both p and q are at least one.
 
 The move isolates the last B vertex of the first path. Its remaining prefix has 2p vertices and is concatenated with the whole second path. The resulting path has 2p+2q+1 vertices. The new graph has the same full carrier and the same pointwise A and B labels. Its coordinates describe every edge, including the absence of edges between these path components and R; all R relations are unchanged.
 
