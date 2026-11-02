@@ -320,11 +320,8 @@ private lemma phase_state {m : ℕ} (φ : Fin m → EuclideanSpace ℂ (Fin 4))
       ∀ p, ‖⟪φ p, ∑ q, ((r q : ℂ) * u q) • φ q⟫_ℂ‖ = r p := by
   have energy (c : Fin m → ℂ) :
       ‖∑ p, c p • φ p‖ ^ 2 = ∑ p, ‖c p‖ ^ 2 := by
-    have he : ⟪∑ p, c p • φ p, ∑ p, c p • φ p⟫_ℂ = ∑ p, conj (c p) * c p := by
-      simpa using ho.inner_sum c c Finset.univ
-    have hreal := congrArg (RCLike.re : ℂ → ℝ) he
-    rw [inner_self_eq_norm_sq] at hreal
-    simpa only [map_sum, RCLike.conj_mul, RCLike.re_ofReal_pow] using hreal
+    simpa only [LinearIsometry.toSpanSingleton_apply] using
+      ho.orthogonalFamily.norm_sum c Finset.univ
   have hsum : ∑ p, (r p) ^ 2 = 1 := by
     have he := energy (fun p => ⟪φ p, x⟫_ℂ)
     rw [span_reconstruction φ ho x hspan, hx] at he
