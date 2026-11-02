@@ -46,6 +46,10 @@ $$(\forall k \in \mathbb{Z},\; (1 \le k) \Rightarrow ((\operatorname{UniqueValue
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoUniqueMaximumValues.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kok-jaco-unique-maximum-values` (proved) by `D5/S3/ConceptDynamics/GraphColoring/JacoUniqueMaximumValues.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kok-jaco-unique-maximum-values","declaration_gid":"D5/S3/ConceptDynamics/GraphColoring/JacoUniqueMaximumValues.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johan Kok (2025). *Integer sequences with conjectured relation with certain graph parameters of the family of linear Jaco graphs*. DOI: [10.48550/arXiv.2507.16500](https://doi.org/10.48550/arXiv.2507.16500).
