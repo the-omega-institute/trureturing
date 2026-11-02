@@ -3952,3 +3952,345 @@ $\nu_\kappa(w)\ge0$ for every $w\in\mathcal W$ with $A(w)<A_0$;
 the full sharp global constant is unresolved outside the proved cap.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. A finite-scale cap around the opposite optimizer
+
+Keep the fixed record $R_0$ of (1.1), the original producer quantities
+of Definition 11.1, and all reduced data of Definition 23.1. Put
+
+$$
+\gamma=\frac1{25},\qquad
+\mathcal C_-=\{w\in\mathcal W:B(w)\ge23/6\}.
+\tag{25.1}
+$$
+
+**Lemma 25.1 (simultaneous opposite-cap envelopes).** For every
+$w\in\mathcal C_-$, set $\delta=4-B(w)\in[0,1/6]$. Then
+
+$$
+\begin{aligned}
+u(w)^2&\le c^2(4\delta-\delta^2),&
+v(w)&\le e-s\delta,\\
+A(w)^2&\le8\delta,&
+r(w,p)&=r_-(w,p)=2(p+\delta)\quad(0\le p\le1).
+\end{aligned}
+\tag{25.2}
+$$
+
+For each fixed $\delta\in[0,1/6]$, both amplitude bounds in (25.2)
+are attained simultaneously by one actual shared-unitary datum.
+
+Proof. Since $B>0$, use one common scalar phase and the fixed
+coordinate transformation
+
+$$
+z=(w_1,-w_2,iw_3,-iw_4)
+\tag{25.3}
+$$
+
+to arrange $\sum_jz_j=B$ real and positive. Multiplying the original
+$w$ by this scalar preserves all quantities in the statement. The
+coordinate transformation in (25.3) expresses displacement from the
+negative optimizer; it imposes no additional phase quotient. In these
+coordinates, the original amplitudes are exactly
+
+$$
+P=h(z_1-z_2)-ic(z_3-z_4),\qquad
+Q=h(z_1+z_2)+s(z_3+z_4).
+\tag{25.4}
+$$
+
+Consequently,
+
+$$
+v=|sB+(h-s)(z_1+z_2)|
+\le sB+2(h-s)=e-s\delta.
+\tag{25.5}
+$$
+
+For the other amplitude, first establish the following support
+inequality for every $\lambda\ge2$ and every $|z_j|\le1$:
+
+$$
+|h(z_1-z_2)-ic(z_3-z_4)|
++\lambda\operatorname{Re}\sum_jz_j
+\le2\sqrt{\lambda^2+c^2}+2\lambda.
+\tag{25.6}
+$$
+
+Indeed, the coordinate-disk support calculation (24.3), now with
+$q=(h,-h,-ic,ic)$, bounds its left side by
+$\sum_j|\lambda+e^{-i\phi}q_j|$ for a phase $\phi$ aligning the
+amplitude. Use the functions $F_a,D_a$ of (24.4) with $a=c,h$.
+They are differentiable on $[0,1]$ since $\lambda\ge2>c>h$.
+With $t=\sin^2\phi$, the support sum equals $F_c(t)+F_h(1-t)$.
+The derivative formula (24.5) and its monotonicity give
+
+$$
+\frac{d}{dt}\bigl(F_c(t)+F_h(1-t)\bigr)
+\le-\frac{\lambda^2c^2}{(\lambda^2+c^2)^{3/2}}
+    +\frac{\lambda h^2}{\lambda^2-h^2}<0.
+\tag{25.7}
+$$
+
+To verify the strict sign, $h^2=1/2$ and $5/6<c^2<1$ imply
+
+$$
+\begin{aligned}
+c^2\left(1-\frac{h^2}{\lambda^2}\right)
+&>\frac{35}{48},\\
+h^2\left(1+\frac{c^2}{\lambda^2}\right)^{3/2}
+&<\frac12\left(\frac54\right)^{3/2}
+ <\frac7{10}<\frac{35}{48}.
+\end{aligned}
+\tag{25.8}
+$$
+
+Here $(5/4)^{3/2}<7/5$ follows by squaring, since
+$125/64<49/25$. Multiplication by the positive denominators in
+(25.7) shows that (25.8) is precisely the sufficient comparison.
+Thus the maximum support sum occurs at $t=0$, with value
+$2\sqrt{\lambda^2+c^2}+2\lambda$, proving (25.6).
+
+If $\delta>0$, put
+
+$$
+x=1-\frac\delta2\in[11/12,1),\qquad
+\lambda=\frac{cx}{\sqrt{1-x^2}}.
+\tag{25.9}
+$$
+
+Then $\lambda^2\ge121c^2/23>605/138>4$, so (25.6) applies to the
+same normalized $z$. It yields
+
+$$
+u\le2\sqrt{\lambda^2+c^2}-\lambda(B-2)
+  =2c\sqrt{1-x^2},\qquad
+u^2\le c^2(4\delta-\delta^2).
+\tag{25.10}
+$$
+
+When $\delta=0$, all normalized $z_j=1$ because their real parts
+are at most $1$ and sum to $4$. Then $u=0$ and $v=e$, so (25.2)
+holds at that boundary as well.
+
+For the trace and the joint sign, $|z_j|\le1$ gives
+
+$$
+\sum_j|z_j-1|^2\le8-2B=2\delta,\qquad
+A=|(z_1-1)-(z_2-1)-i(z_3-1)+i(z_4-1)|,
+\qquad A^2\le8\delta\le\frac43.
+\tag{25.11}
+$$
+
+In particular $A<2$ and $B-A-1>23/6-2-1=5/6$. Hence, for
+every population,
+
+$$
+r_+(w,p)-r_-(w,p)
+=2(1-A+B-2p)\ge2(B-A-1)>0,
+\tag{25.12}
+$$
+
+which proves the exact branch formula in (25.2).
+
+Finally, let $x=1-\delta/2$, $y=\sqrt{1-x^2}$, and choose
+
+$$
+z^{(\delta)}=(1,1,x+iy,x-iy),\qquad
+w^{(\delta)}=(1,-1,-i(x+iy),i(x-iy)).
+\tag{25.13}
+$$
+
+All four coordinates have modulus one. Thus
+$U=\operatorname{diag}(w^{(\delta)})U_+$ is an actual unitary
+with reduced diagonal $w^{(\delta)}\in\mathcal W$. Equations
+(25.4) give $P=2cy$ and $Q=e-s\delta$, while $B=4-\delta$.
+This proves simultaneous attainment with the same $U$.
+The construction supplies an attaining datum for the envelopes;
+the inequalities above apply to every unitary lift. $\square$
+
+**Lemma 25.2 (a uniform matrix bound with a rational margin).**
+For $w\in\mathcal C_-$, abbreviate $u=u(w)$, $v=v(w)$,
+$\delta=4-B(w)$, and define
+
+$$
+\begin{aligned}
+L_\delta&=d^2-2\gamma(1+\delta),&
+N_\delta&=e^2-2\gamma\delta,\\
+K(w)&=
+\begin{pmatrix}
+L_\delta-u^2&-uv\\
+-uv&N_\delta-v^2
+\end{pmatrix}.
+\end{aligned}
+\tag{25.14}
+$$
+
+Then $K(w)$ is positive semidefinite. For $\delta>0$ it is positive
+definite and satisfies
+
+$$
+N_\delta-v^2>\frac{937}{600}\delta,\qquad
+\det K(w)>\frac{724}{5625}\delta>\frac{\delta}{8}.
+\tag{25.15}
+$$
+
+At $\delta=0$, it is exactly
+$\operatorname{diag}(d^2-2/25,0)$. For all $p\in[0,1]$,
+
+$$
+G(w,p)-\gamma r(w,p)
+=
+\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+K(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{25.16}
+$$
+
+Proof. The half-angle bounds (22.13), with
+$d=2(h+c)$ and $e=2(h+s)$, give the following rational consequences:
+
+$$
+d^2>\frac{53}{5},\qquad
+e^2<\frac{119}{25},\qquad
+es>\frac56,\qquad
+c^2<\frac{171}{200},\qquad
+s^2<\frac3{20}.
+\tag{25.17}
+$$
+
+For $\gamma=1/25$ and $0\le\delta\le1/6$, these imply
+
+$$
+L_\delta>\frac{53}{5}-\frac7{75}=\frac{788}{75},
+\qquad 0<N_\delta<\frac{119}{25}.
+\tag{25.18}
+$$
+
+The positivity of $N_\delta$ also follows from $e^2>4$ in
+(24.19) and $2\gamma\delta\le1/75$. If $\delta>0$,
+
+$$
+\begin{aligned}
+N_\delta-(e-s\delta)^2
+&=\delta\bigl(2(es-\gamma)-s^2\delta\bigr)\\
+&>\delta\left(2\left(\frac56-\frac1{25}\right)
+                       -\frac3{20}\frac16\right)
+=\frac{937}{600}\delta.
+\end{aligned}
+\tag{25.19}
+$$
+
+The envelope for $v$ proves the first inequality in (25.15).
+Expanding the determinant and applying both simultaneous bounds
+of Lemma 25.1 gives
+
+$$
+\begin{aligned}
+\det K(w)
+&=L_\delta(N_\delta-v^2)-N_\delta u^2\\
+&\ge L_\delta\bigl(N_\delta-(e-s\delta)^2\bigr)
+       -N_\delta c^2(4\delta-\delta^2)\\
+&\ge L_\delta\bigl(N_\delta-(e-s\delta)^2\bigr)
+       -4N_\delta c^2\delta\\
+&>\delta\left(\frac{788}{75}\frac{937}{600}
+          -4\frac{119}{25}\frac{171}{200}\right)
+=\frac{724}{5625}\delta>\frac{\delta}{8}.
+\end{aligned}
+\tag{25.20}
+$$
+
+Thus the lower-right entry and determinant are positive whenever
+$\delta>0$, proving positive definiteness. At $\delta=0$, Lemma 25.1
+gives $u=0$, $v=e$, and the stated boundary matrix has
+$d^2-2/25>0$. Finally, (23.3) and $r=2(p+\delta)$ give
+
+$$
+G-\gamma r
+=L_\delta p+N_\delta(1-p)
+ -(u\sqrt p+v\sqrt{1-p})^2,
+\tag{25.21}
+$$
+
+which is (25.16), including both endpoint populations. $\square$
+
+**Theorem 25.3 (the original producer inequality on the opposite cap).**
+For every $E\in\operatorname{Dens}_2$ and every actual $U\in U(4)$,
+
+$$
+B\bigl(\operatorname{diag}(UU_+^\dagger)\bigr)\ge\frac{23}{6}
+\quad\Longrightarrow\quad
+g(E,U)\ge\frac1{25}\rho(E,U).
+\tag{25.22}
+$$
+
+Equality holds exactly when $E=E_-$ and $U=\lambda U_-$ for one
+common scalar $\lambda$ with $|\lambda|=1$. In particular, on
+this entire cap $g(E,U)\ge\kappa\rho(E,U)$; this latter inequality
+is strict at every pair outside the negative optimizer class.
+
+Proof. For the original $E,U$, take
+$w=\operatorname{diag}(UU_+^\dagger)$,
+$p=b_+^\dagger E^{\mathsf T}b_+$ and
+$\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0$.
+The exact same-feedback comparison (23.14) gives
+
+$$
+g(E,U)-\gamma\rho(E,U)
+\ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E).
+\tag{25.23}
+$$
+
+Lemma 25.2 makes the right side nonnegative. If $\delta>0$,
+its quadratic-form term is strictly positive, since
+$(\sqrt p,\sqrt{1-p})$ is nonzero. If $\delta=0$, that term is
+$(d^2-2/25)p$; equality therefore forces $p=0$. Positivity of
+(23.9) then forces its off-diagonal entry to be zero and
+$E=E_-$. At $B=4$, (25.3) gives
+$w=\lambda(1,-1,-i,i)$. The unitary $UU_+^\dagger$ has all four
+diagonal entries of modulus one, so its row norms force all
+off-diagonal entries to vanish. As
+$U_-=\operatorname{diag}(1,-1,-i,i)U_+$, this yields
+$U=\lambda U_-$. Conversely, these original optimizer pairs
+have $g=\rho=0$ by Lemma 11.2.
+
+Section 22 proves $0<\kappa<1/25$. Outside this optimizer class,
+$\rho>0$ by Lemma 11.2, and (25.22) consequently implies
+$g-\kappa\rho\ge(1/25-\kappa)\rho>0$.
+
+The ordinary transpose in $p$ and (25.23) is the one fixed by
+the original record convention. The proof retains one actual
+shared $U$, the joint optimizer sign, and just the common
+scalar feedback phase. Equation (25.23) includes the impurity
+term with its nonnegative sign, so both singular and mixed
+normalized effects and every population are included. No
+spectral component is assigned a different feedback. $\square$
+
+The new cap is wholly in the complement of Section 24: (25.11)
+gives $A\le2/\sqrt3<2<A_0$ throughout $\mathcal C_-$.
+It contains the negative optimizer $B=4$ and every datum
+(25.13) with $0<\delta\le1/6$, for which $r=2(p+\delta)>0$.
+Combining Theorems 24.4 and 25.3, the remaining global
+sharp-endpoint obligation is exactly
+
+$$
+\nu_\kappa(w)\ge0
+\quad\text{for every }w\in\mathcal W
+\text{ with }A(w)<2+\sqrt{8/3}\text{ and }B(w)<23/6.
+\tag{25.24}
+$$
+
+The fixed-source implication (25.22) is repo-derived.
+Its exact source correspondence and mixed-effect transfer are
+Theorem 23.2, including the Thompson realization theorem in the
+Jasper--Loreaux--Weiss formulation cited there. The disk support
+and monotonicity calculation reuses (24.3)--(24.5), with the
+opposite coefficient pair and the range $\lambda\ge2$ justified
+in (25.7)--(25.9). The substantive uniform increment is the
+simultaneous opposite-cap bound (25.2) and its positive rational
+matrix margin (25.15). Neither optimality of the coefficient
+$1/25$ or the cutoff $23/6$, nor a global sharp constant outside
+the union of these two caps, is asserted.
+
+## 追加锚（本行以下为增补区）
