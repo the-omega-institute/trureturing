@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Analytic/PolynomialL2Derivative.legendreC`
 
 *Commentary.*
 
-For every natural n, legendreC(n) is Mathlib's integer shifted Legendre polynomial mapped by the integer cast ring homomorphism to complex coefficients. This is the existing family, now consumed by both derivative energy and moment-orthogonal approximation.
+For every natural n, legendreC(n) is Mathlib's integer shifted Legendre polynomial mapped by the integer cast ring homomorphism to complex coefficients. Both derivative energy and moment-orthogonal approximation use this same family.
 
 **Definition 1.2 (Bilinear polynomial integration).**
 
@@ -60,7 +60,7 @@ One more integration by parts expresses the derivative energy through endpoint v
 
 The polynomial-sequence spanning theorem supplies an expansion p=sum_(n<d) a_n L_n for every polynomial of degree below d, including the empty expansion at d=0. Explicit conjugation gives Parseval: E(p)=integral norm(p)^2=sum_(n<d) norm(a_n)^2/(2n+1). Weighted finite Cauchy-Schwarz bounds norm(p'(x))^2 by E(p) times sum_(n<d) (2n+1) norm(L_n'(x))^2. Integrating that finite density gives sum_(n<d) (2n+1)2n(n+1)=d^2(d^2-1), at most d^4. Continuity supplies each integrability premise. No exponential coefficient estimate or assumed analytic budget enters this proof.
 
-This source combines classical Rodrigues orthogonality, beta normalization, polynomial spanning and Cauchy-Schwarz, reusing the pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. No literature originality claim is made. Rodrigues, orthogonality, normalization and derivative energies remain private proof steps. The consumed spanning and mixed expansion interfaces are public, and support the finite primitive estimate below.
+This source combines classical Rodrigues orthogonality, beta normalization, polynomial spanning and Cauchy-Schwarz, reusing the pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. No literature originality claim is made. The spanning and mixed expansion identities also support the finite primitive estimate below.
 
 **Theorem 1.5 (The dimension-bounded form and the pending reciprocal-tail use).**
 
