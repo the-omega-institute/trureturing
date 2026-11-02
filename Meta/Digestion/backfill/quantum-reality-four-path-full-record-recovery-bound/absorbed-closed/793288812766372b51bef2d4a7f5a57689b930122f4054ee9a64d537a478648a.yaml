@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:793288812766372b51bef2d4a7f5a57689b930122f4054ee9a64d537a478648a
+  normalized_sha256: sha256:793288812766372b51bef2d4a7f5a57689b930122f4054ee9a64d537a478648a
+cas_ref: sha256:793288812766372b51bef2d4a7f5a57689b930122f4054ee9a64d537a478648a
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FourPathNearestRayComparison.finite_family_error_aggregation
+    target_statement_id: sha256:8a5cf41ab87d80f53b99875995e5beeff2526979b4fc30b5e4937534dc9311fb
+  - gid: D5/S3/Quantum/Recovery/FourPathNearestRayComparison.selected_mass_bounds_and_defect
+    target_statement_id: sha256:bb044f479deaedbdd6c050f18b3a2b6c97609681ca5ba98c9c98135b19354fd7
+receipts:
+  unresolved_subitems: []
