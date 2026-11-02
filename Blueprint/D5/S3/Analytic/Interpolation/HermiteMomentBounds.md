@@ -4,7 +4,19 @@
 
 The mean and total squared deviation of positive finite coordinates determine a positive lower Hermite node and an upper node bounding all coordinates.
 
-**Theorem 1.1 (Positive lower node and coordinate upper bound).**
+**Theorem 1.1 (Strict square-sum inequality).**
+
+$$\forall k: \operatorname{Nat}\left(\right), \forall x: \operatorname{Fin}\left(k\right) \to \operatorname{Real}\left(\right), (2 \le k \land (\forall i: \operatorname{Fin}\left(k\right), 0 < \operatorname{x}\left(i\right))) \implies \sum_{i \in \operatorname{Fin}\left(k\right)} \operatorname{x}\left(i\right)^{2} < (\sum_{i \in \operatorname{Fin}\left(k\right)} \operatorname{x}\left(i\right))^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/HermiteMomentBounds.sum_sq_lt_sq_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For at least two positive real coordinates, the sum of their squares is strictly less than the square of their sum.
+
+**Theorem 1.2 (Positive lower node and coordinate upper bound).**
 
 $$\forall k: \operatorname{Nat}\left(\right), \forall x: \operatorname{Fin}\left(k\right) \to \operatorname{Real}\left(\right), (2 \le k \land (\forall i: \operatorname{Fin}\left(k\right), 0 < \operatorname{x}\left(i\right))) \implies (0 < m-r \land (\forall i: \operatorname{Fin}\left(k\right), \operatorname{x}\left(i\right) \le m+(k-1)r))$$
 
@@ -23,3 +35,4 @@ Strict positivity gives a sum of squares strictly smaller than the square of the
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Interpolation/HermiteMomentBounds.hermite_moment_bounds`
+- Truth anchor: `D5/S3/Analytic/Interpolation/HermiteMomentBounds.sum_sq_lt_sq_sum`
