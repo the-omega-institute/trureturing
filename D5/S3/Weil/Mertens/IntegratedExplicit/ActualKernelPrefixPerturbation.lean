@@ -10,10 +10,7 @@ import D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
 
 /-!
-SOURCE PREPARATION ONLY: this file has not been elaborated or compiled.
-Requires the accompanying visibility-only patch for `mangoldtPart_eq_range`.
-
-Source clause: AURIC_PRIME_POWER_DIFFERENCE_COUPLING_FINITE_CODIMENSION_POSITIVITY_AND_ROOT_ROBIN_BUDGET,
+Source clause: the AURIC prime-power difference coupling and root Robin budget volume,
 Section 5, Theorem 2, first step, equation (19), and Appendix C.
 The proof replaces the signed-measure argument there by finitely many ordinary
 FTC identities and the published shifted-hinge/prefix theorem. No cutoff of the
@@ -100,7 +97,8 @@ private lemma reverse_hinge (x : I → ℝ) (a : I → ℂ) (s : ℝ) :
   classical
   unfold Q
   rw [Finset.sum_comm]
-  simp only [star_sum, star_mul, star_star, Complex.star_def, Complex.conj_ofReal]
+  simp only [star_sum, star_mul, Complex.star_def,
+    Complex.conj_ofReal, starRingEnd_self_apply]
   apply Finset.sum_congr rfl
   intro i _
   apply Finset.sum_congr rfl
@@ -135,7 +133,10 @@ private lemma taylor_integral (f f₁ f₂ : ℝ → ℝ)
   have hd (s : ℝ) : HasDerivAt
       (fun v => (r - v) * f₁ v + f v) ((r - s) * f₂ s) s := by
     convert ((((hasDerivAt_const s r).sub (hasDerivAt_id s)).mul
-      (hf₁ s)).add (hf s)) using 1 <;> dsimp <;> ring
+      (hf₁ s)).add (hf s)) using 1
+    · rfl
+    · dsimp
+      ring
   have hi : IntervalIntegrable (fun s => (r - s) * f₂ s) volume l r :=
     ((continuous_const.sub continuous_id).mul hc).intervalIntegrable l r
   have ht := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun s _ => hd s) hi
@@ -167,7 +168,7 @@ private lemma clipped_representation (f f₁ f₂ : ℝ → ℝ)
           rw [max_eq_right (by linarith [hs.1] : |t| - s ≤ 0), zero_mul]
         _ = 0 := by simp
     have htrunc : (∫ s in l..D, g s) = ∫ s in l..|t|, g s := by
-      have h := intervalIntegral.integral_add_adjacent_intervals
+      have h := intervalIntegral.integral_add_adjacent_intervals (μ := volume)
         (hg.intervalIntegrable l |t|) (hg.intervalIntegrable |t| D)
       rw [htail, add_zero] at h
       exact h.symm
@@ -178,7 +179,7 @@ private lemma clipped_representation (f f₁ f₂ : ℝ → ℝ)
       dsimp [g, H]
       rw [max_eq_left (by linarith [hs.2] : 0 ≤ |t| - s)]
     change clipped l f t = f₁ l * H l t + ∫ s in Icc l D, g s
-    rw [clipped, if_pos hlt, H, max_eq_left (sub_nonneg.mpr hlt),
+    rw [clipped, ite_eq_left hlt, H, max_eq_left (sub_nonneg.mpr hlt),
       hw, htrunc, hleft, taylor_integral f f₁ f₂ hf hf₁ hc l |t|, hzero]
     ring
   · have hz : (∫ s in Icc l D, g s) = 0 := by
@@ -187,7 +188,7 @@ private lemma clipped_representation (f f₁ f₂ : ℝ → ℝ)
       dsimp [g, H]
       rw [max_eq_right (by linarith [hs.1] : |t| - s ≤ 0), zero_mul]
     change clipped l f t = f₁ l * H l t + ∫ s in Icc l D, g s
-    rw [clipped, if_neg hlt, H, max_eq_right (by linarith : |t| - l ≤ 0),
+    rw [clipped, ite_eq_right hlt, H, max_eq_right (by linarith : |t| - l ≤ 0),
       mul_zero, hz, add_zero]
 
 private lemma Q_integral (x : I → ℝ) (a : I → ℂ)
@@ -256,7 +257,9 @@ private lemma clipped_bound (x : I → ℝ) (a : I → ℂ)
     (l : ℝ) (hl : 0 ≤ l) (hlD : l ≤ D) (hzero : f l = 0) :
     ‖Q x a (clipped l f)‖ ≤
       (2 * (|f₁ l| + ∫ s in Icc l D, |f₂ s|)) * E x a := by
-  have hr := Q_congr x a (fun i j =>
+  have hr : Q x a (clipped l f) =
+      Q x a (fun t => f₁ l * H l t + ∫ s in Icc l D, H s t * f₂ s) :=
+    Q_congr x a (fun i j =>
     clipped_representation f f₁ f₂ hf hf₁ hc l D hlD hzero (hx i j))
   rw [hr, Q_add, Q_scale]
   calc
@@ -283,15 +286,20 @@ private lemma base_deriv (r : ℝ) : HasDerivAt base (base₁ r) r := by
   convert ((((hasDerivAt_id r).div_const 2).exp.mul
     ((hasDerivAt_const r (1 + Real.eulerMascheroniConstant)).sub (hasDerivAt_id r))).sub
       ((((hasDerivAt_id r).neg.div_const 2).exp).const_mul (Real.log (2 * Real.pi))))
-    using 1 <;> dsimp [base, base₁] <;> ring
+    using 1
+  · rfl
+  · dsimp [base₁]
+    ring
 
 private lemma base₁_deriv (r : ℝ) : HasDerivAt base₁ (base₂ r) r := by
   convert ((((hasDerivAt_id r).div_const 2).exp.mul
     ((((hasDerivAt_const r (1 + Real.eulerMascheroniConstant)).sub
       (hasDerivAt_id r)).div_const 2).sub_const 1)).add
       (((((hasDerivAt_id r).neg.div_const 2).exp).const_mul
-        (Real.log (2 * Real.pi))).div_const 2)) using 1 <;>
-    dsimp [base₁, base₂, base] <;> ring
+        (Real.log (2 * Real.pi))).div_const 2)) using 1
+  · rfl
+  · dsimp [base₁, base₂, base]
+    ring
 
 private def smooth (n : ℕ) (r : ℝ) : ℝ :=
   ArithmeticFunction.vonMangoldt n *
@@ -307,14 +315,19 @@ private lemma smooth_deriv (n : ℕ) (r : ℝ) :
     HasDerivAt (smooth n) (smooth₁ n r) r := by
   convert (((((hasDerivAt_id r).div_const 2).exp).div_const (n : ℝ)).sub
     (((hasDerivAt_id r).neg.div_const 2).exp)).const_mul
-      (ArithmeticFunction.vonMangoldt n) using 1 <;> dsimp [smooth, smooth₁] <;> ring
+      (ArithmeticFunction.vonMangoldt n) using 1
+  · rfl
+  · dsimp [smooth₁]
+    ring
 
 private lemma smooth₁_deriv (n : ℕ) (r : ℝ) :
     HasDerivAt (smooth₁ n) (smooth₂ n r) r := by
   convert (((((((hasDerivAt_id r).div_const 2).exp).div_const (n : ℝ)).add
     (((hasDerivAt_id r).neg.div_const 2).exp)).const_mul
-      (ArithmeticFunction.vonMangoldt n)).div_const 2) using 1 <;>
-    dsimp [smooth₁, smooth₂, smooth] <;> ring
+      (ArithmeticFunction.vonMangoldt n)).div_const 2) using 1
+  · rfl
+  · dsimp [smooth₁, smooth₂, smooth]
+    ring
 
 private lemma damping (n : ℕ) (r : ℝ) :
     Real.exp (-r / 2) *
@@ -342,13 +355,13 @@ private lemma damped_ramp (n : ℕ) (hn : 2 ≤ n) (t : ℝ) :
   · have he : (n : ℝ) ≤ Real.exp |t| := by
       rw [← Real.exp_log hp]
       exact Real.exp_le_exp.mpr h
-    rw [clipped, if_pos h, mangoldtRamp,
+    rw [clipped, ite_eq_left h, mangoldtRamp,
       max_eq_left (by have := (one_le_div hp).mpr he; linarith)]
     exact damping n |t|
   · have he : Real.exp |t| < (n : ℝ) := by
       rw [← Real.exp_log hp]
       exact Real.exp_lt_exp.mpr (lt_of_not_ge h)
-    rw [clipped, if_neg h, mangoldtRamp,
+    rw [clipped, ite_eq_right h, mangoldtRamp,
       max_eq_right (by have := (div_lt_one hp).mpr he; linarith), mul_zero, mul_zero]
 
 private def active (D : ℝ) (N : ℕ) : Finset ℕ :=
@@ -371,9 +384,9 @@ private lemma local_remainder (D : ℝ) (N : ℕ) (hN : Real.exp D < N)
     by_cases hn : 2 ≤ n
     · rw [damped_ramp n hn]
       by_cases hlog : Real.log (n : ℝ) ≤ D
-      · rw [if_pos ⟨hn, hlog⟩]
-      · rw [if_neg (by simp [hlog]), clipped,
-          if_neg (by intro h; exact hlog (h.trans ht))]
+      · rw [ite_eq_left ⟨hn, hlog⟩]
+      · rw [ite_eq_right (by simp [hlog]), clipped,
+          ite_eq_right (by intro h; exact hlog (h.trans ht))]
     · have hn01 : n = 0 ∨ n = 1 := by omega
       rcases hn01 with rfl | rfl <;> simp [mangoldtRamp]
   have hexp : Real.exp (-|t| / 2) * Real.exp |t| = Real.exp (|t| / 2) := by
@@ -408,14 +421,18 @@ private lemma base_bound (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
       _ = Q x a (fun t => base 0 + clipped 0 f t) := by
         apply Q_congr x a
         intro i j
-        rw [clipped, if_pos (abs_nonneg (x i - x j))]
+        rw [clipped, ite_eq_left (abs_nonneg (x i - x j))]
         dsimp [f]
         ring
       _ = _ := by rw [Q_add, Q_constant x a ha, zero_add]
   rw [hrep]
   exact clipped_bound x a ha D hx f base₁ base₂
     (fun r => (base_deriv r).sub_const _) base₁_deriv
-    (by dsimp [base₂, base]; fun_prop) 0 le_rfl hD (by simp [f])
+    (by
+      change Continuous (fun r : ℝ =>
+        (Real.exp (r / 2) * (1 + Real.eulerMascheroniConstant - r) -
+          Real.log (2 * Real.pi) * Real.exp (-r / 2)) / 4 - Real.exp (r / 2))
+      fun_prop) 0 le_rfl hD (by simp [f])
 
 /-- For every real D>0, a finite nonnegative real M is chosen BEFORE the finite
 index type, its universe-polymorphic atoms, nodes and coefficients. The literal
@@ -453,7 +470,10 @@ theorem actual_remainder_prefix_bound (D : ℝ) (hD : 0 < D) :
     have hm : 2 ≤ n ∧ Real.log (n : ℝ) ≤ D := (Finset.mem_filter.mp hn).2
     have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast (by omega : 1 ≤ n)
     exact clipped_bound x a ha D hdiam (smooth n) (smooth₁ n) (smooth₂ n)
-      (smooth_deriv n) (smooth₁_deriv n) (by dsimp [smooth₂, smooth]; fun_prop)
+      (smooth_deriv n) (smooth₁_deriv n) (by
+        change Continuous (fun r : ℝ => ArithmeticFunction.vonMangoldt n *
+          (Real.exp (r / 2) / (n : ℝ) - Real.exp (-r / 2)) / 4)
+        fun_prop)
       (Real.log n) (Real.log_nonneg hn1) hm.2 (smooth_entry n hm.1)
   change ‖Q x a remainder‖ ≤ M * E x a
   rw [hsplit]
@@ -464,7 +484,7 @@ theorem actual_remainder_prefix_bound (D : ℝ) (hD : 0 < D) :
         ∑ n ∈ S, cost (smooth₁ n) (smooth₂ n) (Real.log n) D * E x a := by
       apply add_le_add (base_bound x a ha D hD.le hdiam)
       exact (norm_sum_le _ _).trans (Finset.sum_le_sum hterms)
-    _ = M * E x a := by dsimp [M]; rw [Finset.sum_mul]; ring
+    _ = M * E x a := by dsimp only [M]; rw [add_mul, Finset.sum_mul]
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation
 end

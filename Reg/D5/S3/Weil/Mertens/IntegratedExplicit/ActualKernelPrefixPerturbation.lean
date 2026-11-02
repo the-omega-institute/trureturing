@@ -3,7 +3,6 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelPrefixPerturbation
 import Reg.Support.SingleDependentReadout
 
 /-!
-SOURCE OWNER ATTEMPT, NOT AN ASSESSED REGISTRATION.
 The original theorem's whole telescope is retained: D, positivity of D,
 existential M, its nonnegativity, arbitrary universe-polymorphic finite I,
 the whole node and coefficient functions, all node bounds, and zero total mass.
@@ -16,8 +15,7 @@ The constant-one intervention fails on the empty atom type for every candidate M
 Sensitivity is for the entire readout family. Actual observational dependence
 is witnessed separately at complex inputs zero and one.
 
-The sourceSelection path below is a source-derived candidate. It and all typed
-bridges, template joins, universe choices and assessment remain UNELABORATED.
+The source selection locates precisely the outer complex norm.
 -/
 
 noncomputable section
