@@ -1,23 +1,31 @@
-/-
-SOURCE ONLY, UNCOMPILED. Native integration and kernel/official acceptance pending.
+/- GID: D5/S3/VertexAlgebra/Lattice/LatticeRealNullFrame
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeRealNullFrame
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Original real Lorentzian signature geometry and positive transverse complexification. -/
 
-Original integral lattice, real Lorentzian geometry, and its faithful passage
-to LatticeLightConeCoordinates. No determinant, inverse Gram, frame, splitting,
-or positive-complement assumption enters the signature existence theorem.
-
-Provenance: original-carrier definitions and complex coordinate APIs are the
-supplied immutable snapshots at 4dfd4102 (review pending). The supplied Pro
-proposal was read as mathematical advice. The real Sylvester/signature APIs
-were read from the exact pinned Mathlib sources. These are classical real
-quadratic-form arguments, not an independent-model validation or a physics
-claim. No BPZ-Wick polynomial positivity is claimed here.
--/
+/- Original integral-lattice real Gram coordinates. The source-only draft at
+ba3cb869 was fallible input, repaired against Lean 4.35 and pinned Mathlib.
+The immutable cbbea638 coordinate supplier is preserved; its official release
+remains pending. Classical Sylvester signature theory supplies the normal
+form; the charge-adapted plane, projection inverse, positive real complement
+and faithful conjugation-fixed complex basis are proved here.
+proof_shape: content
+admission_basis: escape-witness
+escape_witness: The signature-derived real charge-adapted plane contains the
+selected nonzero integral charge, has a detecting null orientation, and its
+actual Gram complement admits a positive real orthonormal complexification.
+No BPZ polynomial, full no-ghost/BRST/string/Monster/AdS claim is made. -/
 import D5.S3.VertexAlgebra.Lattice.LatticeNullFrameExistence
 import Mathlib.LinearAlgebra.QuadraticForm.Real
 import Mathlib.LinearAlgebra.QuadraticForm.Signature
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.Basic.Complex.BigOperators
 import Mathlib.Tactic
+
+/-! Real Lorentzian geometry on the original integral-lattice coordinates. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -57,9 +65,6 @@ theorem g_R_symm (D : LatticeData) (v w : E_R D) : g_R D v w = g_R D w v := by
 @[simp] theorem g_R_zero_right (D : LatticeData) (v : E_R D) : g_R D v 0 = 0 := by
   exact map_zero (B_R D v)
 
-@[simp] theorem g_R_zero_left (D : LatticeData) (v : E_R D) : g_R D 0 v = 0 := by
-  rw [g_R_symm, g_R_zero_right]
-
 @[simp] theorem g_R_add_right (D : LatticeData) (v w x : E_R D) :
     g_R D v (w + x) = g_R D v w + g_R D v x := by
   exact map_add (B_R D v) w x
@@ -84,18 +89,10 @@ theorem g_R_symm (D : LatticeData) (v w : E_R D) : g_R D v w = g_R D w v := by
     g_R D (v - w) x = g_R D v x - g_R D w x := by
   rw [g_R_symm, g_R_sub_right, g_R_symm D x v, g_R_symm D x w]
 
-@[simp] theorem g_R_sum_right {ι : Type*} (D : LatticeData) (s : Finset ι)
-    (v : E_R D) (w : ι → E_R D) :
-    g_R D v (∑ i ∈ s, w i) = ∑ i ∈ s, g_R D v (w i) := by
-  exact map_sum (B_R D v) _ _
 
 def Q_R (D : LatticeData) : QuadraticForm ℝ (E_R D) := (B_R D).toQuadraticMap
 
 @[simp] theorem Q_R_apply (D : LatticeData) (v : E_R D) : Q_R D v = g_R D v v := rfl
-
-/-- In particular, the associated form is g_R, not twice or half g_R. -/
-theorem associated_Q_R (D : LatticeData) : QuadraticMap.associated (Q_R D) = B_R D := by
-  exact QuadraticMap.associated_left_inverse ℝ (g_R_symm D)
 
 theorem real_polarization (D : LatticeData) (v w : E_R D) :
     Q_R D (v + w) - Q_R D v - Q_R D w = 2 * g_R D v w := by
@@ -131,18 +128,11 @@ def complexify (D : LatticeData) : E_R D →ₗ[ℝ] E D where
 def realPart {D : LatticeData} (z : E D) : E_R D := fun i => (z i).re
 def imagPart {D : LatticeData} (z : E D) : E_R D := fun i => (z i).im
 
-@[simp] theorem complexify_apply (D : LatticeData) (v : E_R D) (i : Fin D.rank) :
-    complexify D v i = (v i : ℂ) := rfl
-
 @[simp] theorem realPart_complexify (D : LatticeData) (v : E_R D) :
     realPart (complexify D v) = v := by ext i; simp [realPart]
 
 @[simp] theorem imagPart_complexify (D : LatticeData) (v : E_R D) :
     imagPart (complexify D v) = 0 := by ext i; simp [imagPart]
-
-theorem complexify_injective (D : LatticeData) : Function.Injective (complexify D) := by
-  intro v w h
-  simpa using congrArg realPart h
 
 @[simp] theorem complexify_charge {D : LatticeData} (p : Charge D) :
     complexify D (realCharge p) = chargeVector p := by
@@ -183,8 +173,9 @@ theorem exists_lorentzNormalForm (D : LatticeData)
   have hsyl : ∃ w : Fin D.rank → ℝ,
       (∀ i, w i = -1 ∨ w i = 0 ∨ w i = 1) ∧
         QuadraticMap.Equivalent (Q_R D) (QuadraticMap.weightedSumSquares ℝ w) := by
-    simpa only [finrank_E_R] using
-      QuadraticForm.equivalent_one_zero_neg_one_weighted_sum_squared (Q_R D)
+    have h := QuadraticForm.equivalent_one_zero_neg_one_weighted_sum_squared (Q_R D)
+    rw [finrank_E_R D] at h
+    exact h
   obtain ⟨w, hw, he⟩ := hsyl
   have hn : {i | w i < 0}.ncard = 1 := by
     rw [← QuadraticForm.sigNeg_of_equiv_weightedSumSquares he, hneg]
@@ -200,7 +191,8 @@ theorem exists_lorentzNormalForm (D : LatticeData)
   have hsub : {i | 0 < w i} ⊆ {i | w i < 0}ᶜ := by
     intro i hi
     change ¬ w i < 0
-    linarith [hi]
+    change 0 < w i at hi
+    linarith
   have hcard : ({i | w i < 0}ᶜ : Set (Fin D.rank)).ncard = D.rank - 1 := by
     rw [Set.ncard_compl, hn, Nat.card_fin]
   have hcover : {i | 0 < w i} = {i | w i < 0}ᶜ :=
@@ -240,24 +232,6 @@ theorem bilinear_coordinates (v w : E_R D) :
     simp only [map_add, Pi.add_apply]
     ring
   linarith
-
-theorem weights_ne_zero (i : Fin D.rank) : N.weights i ≠ 0 := by
-  by_cases h : i = N.negativeIndex
-  · simp [h, N.negative_weight]
-  · simp [N.other_weight i h]
-
-/-- Nondegeneracy is derived from signatures through the nonzero weights. -/
-theorem separatingLeft : (B_R D).SeparatingLeft := by
-  intro v hv
-  apply N.iso.injective
-  funext i
-  have h := hv (N.iso.symm (Pi.single i 1))
-  change g_R D v (N.iso.symm (Pi.single i 1)) = 0 at h
-  rw [N.bilinear_coordinates] at h
-  have hcoord : N.weights i * N.iso v i = 0 := by
-    simpa [Pi.single_apply] using h
-  have hi := (mul_eq_zero.mp hcoord).resolve_left (N.weights_ne_zero i)
-  simpa using hi
 
 def time : E_R D := N.iso.symm (Pi.single N.negativeIndex 1)
 
@@ -315,7 +289,7 @@ theorem exists_spatial_unit (hrank : 2 ≤ D.rank) :
   obtain ⟨j, hj⟩ := hex
   refine ⟨N.iso.symm (Pi.single j 1), ?_, ?_⟩
   · rw [N.time_pairing]
-    simp [Pi.single_apply, Ne.symm hj]
+    simp [Ne.symm hj]
   · rw [N.bilinear_coordinates]
     simp [Pi.single_apply, N.other_weight j hj]
 
@@ -386,12 +360,12 @@ theorem exists_charge_plane (D : LatticeData) (hrank : 2 ≤ D.rank)
     split_ifs <;> norm_num
   have hdetect : -a + eps * b ≠ 0 := by
     by_cases h : a ≠ b
-    · simp only [eps, if_pos h, one_mul]
+    · simp only [eps, ite_eq_left h, one_mul]
       intro hz
       exact h (by linarith)
     · have hab' : a = b := not_ne_iff.mp h
       have hb0 : b ≠ 0 := by intro hz; exact hab ⟨hab'.trans hz, hz⟩
-      simp only [eps, if_neg h, neg_mul, one_mul]
+      simp only [eps, ite_eq_right h, neg_mul, one_mul]
       intro hz
       exact hb0 (by linarith)
   let u := eps • u0
@@ -446,11 +420,6 @@ theorem mem_K_R_iff (v : E_R D) :
   simp only [ePlus, eMinus, g_R_add_left, g_R_smul_left, g_R_sub_left]
   constructor <;> rintro ⟨h1, h2⟩ <;> constructor <;> linarith
 
-theorem K_R_eq : P.K_R =
-    (pairingR D P.time).ker ⊓ (pairingR D P.space).ker := by
-  ext v
-  exact P.mem_K_R_iff v
-
 @[simp] theorem time_K (k : P.K_R) : g_R D P.time (k : E_R D) = 0 :=
   (P.mem_K_R_iff k).mp k.property |>.1
 
@@ -461,23 +430,16 @@ def projectionVector : E_R D →ₗ[ℝ] E_R D :=
   LinearMap.id + (pairingR D P.time).smulRight P.time -
     (pairingR D P.space).smulRight P.space
 
-@[simp] theorem projectionVector_apply (v : E_R D) :
-    P.projectionVector v = v + g_R D P.time v • P.time - g_R D P.space v • P.space := rfl
-
 def projection : E_R D →ₗ[ℝ] P.K_R :=
   P.projectionVector.codRestrict P.K_R (by
     intro v
     rw [P.mem_K_R_iff]
     constructor <;>
-      simp [P.time_norm, P.space_norm, P.time_space, P.space_time])
+      simp [projectionVector, pairingR, P.time_norm, P.space_norm, P.time_space, P.space_time])
 
 @[simp] theorem coe_projection (v : E_R D) :
     (P.projection v : E_R D) =
       v + g_R D P.time v • P.time - g_R D P.space v • P.space := rfl
-
-@[simp] theorem projection_coe (k : P.K_R) : P.projection (k : E_R D) = k := by
-  apply Subtype.ext
-  simp
 
 /-- The real direct sum, with proved inverse; only the complex counterpart
 is delegated to the existing coordinate machinery. -/
@@ -503,8 +465,8 @@ def splitting : E_R D ≃ₗ[ℝ] ℝ × ℝ × P.K_R where
       g_R D P.space (a • P.time + b • P.space + (k : E_R D)) • P.space = _
     rw [ht, hu, neg_smul]
     abel
-  map_add' v w := by simp [neg_add, map_add]
-  map_smul' c v := by simp [map_smul, smul_eq_mul] <;> ring
+  map_add' v w := by simp [map_add, add_comm]
+  map_smul' c v := by simp [map_smul, smul_eq_mul]
 
 theorem finrank_K_R_add_two : Module.finrank ℝ P.K_R + 2 = D.rank := by
   have h := P.splitting.finrank_eq
@@ -524,6 +486,7 @@ theorem projection_charge_zero (p : Charge D) (a c : ℝ)
     (hp : realCharge p = a • P.time + c • P.space) :
     P.projection (realCharge p) = 0 := by
   apply Subtype.ext
+  simp only [Submodule.coe_zero]
   simp only [coe_projection, hp, g_R_add_right, g_R_smul_right,
     P.time_norm, P.space_norm, P.time_space, P.space_time, mul_zero, add_zero,
     zero_add, mul_one, mul_neg_one]
@@ -554,28 +517,6 @@ theorem mem_complex_K_iff (z : E D) :
     Complex.zero_re, Complex.zero_im]
   tauto
 
-/-- The complex transverse space is exactly the real/imaginary extension,
-not merely a space with the same dimension. -/
-theorem mem_complex_K_iff_exists (z : E D) :
-    z ∈ P.complexFrame.K ↔ ∃ x y : P.K_R,
-      z = complexify D (x : E_R D) + Complex.I • complexify D (y : E_R D) := by
-  constructor
-  · intro hz
-    have h := (P.mem_complex_K_iff z).mp hz
-    exact ⟨⟨realPart z, h.1⟩, ⟨imagPart z, h.2⟩, (complexify_decomposition z).symm⟩
-  · rintro ⟨x, y, rfl⟩
-    rw [P.mem_complex_K_iff]
-    have hr : realPart (complexify D (x : E_R D) +
-        Complex.I • complexify D (y : E_R D)) = (x : E_R D) := by
-      ext i
-      simp [realPart, smul_eq_mul]
-    have hi : imagPart (complexify D (x : E_R D) +
-        Complex.I • complexify D (y : E_R D)) = (y : E_R D) := by
-      ext i
-      simp [imagPart, smul_eq_mul]
-    rw [hr, hi]
-    exact ⟨x.property, y.property⟩
-
 def realK (z : P.complexFrame.K) : P.K_R :=
   ⟨realPart (z : E D), ((P.mem_complex_K_iff z).mp z.property).1⟩
 
@@ -586,12 +527,6 @@ def includeK (v : P.K_R) : P.complexFrame.K :=
   ⟨complexify D (v : E_R D), by
     rw [P.mem_complex_K_iff, realPart_complexify, imagPart_complexify]
     exact ⟨v.property, P.K_R.zero_mem⟩⟩
-
-theorem includeK_injective : Function.Injective P.includeK := by
-  intro v w h
-  apply Subtype.ext
-  apply complexify_injective D
-  exact congrArg Subtype.val h
 
 theorem complex_projection_bridge (v : E_R D) :
     (P.complexFrame.projK (complexify D v) : E D) =
@@ -615,20 +550,6 @@ theorem complex_projection_charge_zero (p : Charge D) (a c : ℝ)
 
 end PositivePlane
 
-/-- Both sides of nondegeneracy follow from the two signature equalities.
-No inverse matrix is a premise or is manufactured for downstream consumers. -/
-theorem nondegenerate_of_signature (D : LatticeData)
-    (hneg : sigNeg (Q_R D) = 1) (hpos : sigPos (Q_R D) = D.rank - 1) :
-    (B_R D).Nondegenerate := by
-  obtain ⟨N⟩ := exists_lorentzNormalForm D hneg hpos
-  refine ⟨N.separatingLeft, ?_⟩
-  intro v hv
-  apply N.separatingLeft v
-  intro w
-  change g_R D v w = 0
-  rw [g_R_symm]
-  exact hv w
-
 namespace PositivePlane
 
 variable {D : LatticeData} (P : PositivePlane D)
@@ -644,29 +565,31 @@ theorem exists_real_orthonormalBasis :
       (∀ i, w i = -1 ∨ w i = 0 ∨ w i = 1) ∧
       QuadraticMap.Equivalent ((Q_R D).restrict P.K_R)
         (QuadraticMap.weightedSumSquares ℝ w) := by
-    simpa only [P.finrank_K_R] using
-      QuadraticForm.equivalent_one_zero_neg_one_weighted_sum_squared
-        ((Q_R D).restrict P.K_R)
+    have h := QuadraticForm.equivalent_one_zero_neg_one_weighted_sum_squared
+      ((Q_R D).restrict P.K_R)
+    rw [P.finrank_K_R] at h
+    exact h
   obtain ⟨w, hw, ⟨e⟩⟩ := hsyl
   have hw1 (i : Fin (D.rank - 2)) : w i = 1 := by
     have hunit : (Pi.single i (1 : ℝ) : Fin (D.rank - 2) → ℝ) ≠ 0 := by
       intro h
       have hi := congrFun h i
-      simpa using hi
+      simp at hi
     have hv : e.symm (Pi.single i 1) ≠ 0 := by
       intro h
       apply hunit
       have := congrArg e h
-      simpa using this
+      simp at this
     have hval : ((Q_R D).restrict P.K_R) (e.symm (Pi.single i 1)) = w i := by
       have := e.map_app (e.symm (Pi.single i 1))
-      simpa [QuadraticMap.weightedSumSquares_apply, Pi.single_apply] using this.symm
+      simp [QuadraticMap.weightedSumSquares_apply, Pi.single_apply]
     have hpos : 0 < w i := by
       rw [← hval]
       exact P.positive_K_R _ hv
     rcases hw i with h | h | h <;> linarith
   have hquad (v : P.K_R) : Q_R D (v : E_R D) = ∑ i, (e v i) ^ 2 := by
-    simpa [QuadraticMap.weightedSumSquares_apply, hw1, pow_two] using (e.map_app v).symm
+    simpa only [QuadraticMap.restrict_apply, QuadraticMap.weightedSumSquares_apply,
+      hw1, smul_eq_mul, one_mul, pow_two] using (e.map_app v).symm
   have hbilin (v x : P.K_R) :
       g_R D (v : E_R D) (x : E_R D) = ∑ i, e v i * e x i := by
     have hpolar := real_polarization D (v : E_R D) (x : E_R D)
@@ -701,9 +624,16 @@ theorem realBasis_gram (i j : Fin (D.rank - 2)) :
 theorem realBasis_coeff (v : P.K_R) (j : Fin (D.rank - 2)) :
     P.realBasis.repr v j = g_R D (P.realBasis j : E_R D) (v : E_R D) := by
   classical
-  have h := congrArg (fun x : P.K_R =>
-    g_R D (P.realBasis j : E_R D) (x : E_R D)) (P.realBasis.sum_repr v)
-  simpa [g_R_sum_right, g_R_smul_right, P.realBasis_gram, eq_comm] using h
+  let f : P.K_R →ₗ[ℝ] ℝ :=
+    (B_R D (P.realBasis j : E_R D)).comp P.K_R.subtype
+  have h := congrArg f (P.realBasis.sum_repr v)
+  rw [map_sum] at h
+  simp only [map_smul] at h
+  change (∑ i, P.realBasis.repr v i *
+    g_R D (P.realBasis j : E_R D) (P.realBasis i : E_R D)) =
+      g_R D (P.realBasis j : E_R D) (v : E_R D) at h
+  simpa only [P.realBasis_gram, mul_ite, mul_one, mul_zero,
+    Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true] using h
 
 theorem realBasis_expansion (v : P.K_R) :
     ∑ j, g_R D (P.realBasis j : E_R D) (v : E_R D) • P.realBasis j = v := by
@@ -750,7 +680,10 @@ def complexCoordinates : P.complexFrame.K ≃ₗ[ℂ] (Fin (D.rank - 2) → ℂ)
     have hcoe : ((∑ k, c k • P.basisVector k : P.complexFrame.K) : E D) =
         ∑ k, c k • (P.basisVector k : E D) := by simp
     rw [hcoe, map_sum]
-    simp [pairing, g_smul_right, P.basisVector_gram, eq_comm]
+    simp only [map_smul]
+    change (∑ k, c k * g D (P.basisVector j : E D) (P.basisVector k : E D)) = c j
+    simp only [P.basisVector_gram]
+    simp
   map_add' z w := by ext j; simp [g_add_right]
   map_smul' c z := by ext j; simp [g_smul_right, smul_eq_mul]
 
@@ -763,7 +696,7 @@ theorem complexBasis_apply (j : Fin (D.rank - 2)) : P.complexBasis j = P.basisVe
   classical
   change Module.Basis.ofEquivFun P.complexCoordinates j = _
   rw [Module.Basis.coe_ofEquivFun]
-  change (∑ k, (Pi.single j (1 : ℂ)) k • P.basisVector k) = _
+  change (∑ k, (Pi.single j (1 : ℂ) : Fin (D.rank - 2) → ℂ) k • P.basisVector k) = _
   simp [Pi.single_apply]
 
 theorem complexBasis_gram (i j : Fin (D.rank - 2)) :
@@ -774,17 +707,6 @@ theorem complexBasis_gram (i j : Fin (D.rank - 2)) :
 theorem complexBasis_real (j : Fin (D.rank - 2)) :
     (P.complexBasis j : E D) = complexify D (P.realBasis j : E_R D) := by
   rw [P.complexBasis_apply, P.basisVector_coe]
-
-theorem rank_two_real_transverse_zero (hrank : D.rank = 2) (v : P.K_R) : v = 0 := by
-  letI : IsEmpty (Fin (D.rank - 2)) := by
-    simpa [hrank] using (inferInstance : IsEmpty (Fin 0))
-  simpa using (P.realBasis.sum_repr v).symm
-
-theorem rank_two_complex_transverse_zero (hrank : D.rank = 2)
-    (v : P.complexFrame.K) : v = 0 := by
-  letI : IsEmpty (Fin (D.rank - 2)) := by
-    simpa [hrank] using (inferInstance : IsEmpty (Fin 0))
-  simpa using (P.complexBasis.sum_repr v).symm
 
 end PositivePlane
 
@@ -798,7 +720,7 @@ theorem complexify_conjugate (D : LatticeData) (v : E_R D) :
 
 theorem conjugate_gram (D : LatticeData) (v w : E D) :
     star (g D v w) = g D (conjugateVector v) (conjugateVector w) := by
-  simp [g, conjugateVector, map_sum, star_mul]
+  simp [g, conjugateVector, mul_comm, mul_left_comm]
 
 theorem hermitian_symmetry (D : LatticeData) (v w : E D) :
     star (g D (conjugateVector v) w) = g D (conjugateVector w) v := by
@@ -817,22 +739,15 @@ theorem hermitian_realPart (D : LatticeData) (z : E D) :
       (star (z i) * (D.G i j : ℂ) * z j).re =
         (z i).re * (D.G i j : ℝ) * (z j).re +
         (z i).im * (D.G i j : ℝ) * (z j).im := by
-    simp [Complex.mul_re, Complex.mul_im] <;> ring
+    simp [Complex.mul_re, Complex.mul_im]
   simp only [g, conjugateVector, Complex.re_sum, hterm, Q_R_apply,
     g_R_apply, realPart, imagPart, Finset.sum_add_distrib]
 
 theorem hermitian_imagPart (D : LatticeData) (z : E D) :
     (g D (conjugateVector z) z).im = 0 := by
-  have hexpand : (g D (conjugateVector z) z).im =
-      g_R D (realPart z) (imagPart z) - g_R D (imagPart z) (realPart z) := by
-    have hterm (i j : Fin D.rank) :
-        (star (z i) * (D.G i j : ℂ) * z j).im =
-          (z i).re * (D.G i j : ℝ) * (z j).im -
-          (z i).im * (D.G i j : ℝ) * (z j).re := by
-      simp [Complex.mul_re, Complex.mul_im] <;> ring
-    simp only [g, conjugateVector, Complex.im_sum, hterm, g_R_apply,
-      realPart, imagPart, Finset.sum_sub_distrib]
-  rw [hexpand, g_R_symm D (imagPart z) (realPart z), sub_self]
+  have h := congrArg Complex.im (hermitian_symmetry D z z)
+  simp only [Complex.star_def, Complex.conj_im] at h
+  linarith
 
 theorem hermitian_diagonal (D : LatticeData) (z : E D) :
     g D (conjugateVector z) z =
@@ -851,7 +766,8 @@ theorem complexBasis_conjugation_fixed (j : Fin (D.rank - 2)) :
 
 theorem hermitian_positive (z : P.complexFrame.K) (hz : z ≠ 0) :
     0 < (g D (conjugateVector (z : E D)) (z : E D)).re := by
-  rw [hermitian_realPart]
+  rw [hermitian_diagonal]
+  change 0 < Q_R D (realPart (z : E D)) + Q_R D (imagPart (z : E D))
   have hxnonneg : 0 ≤ Q_R D (realPart (z : E D)) :=
     P.positive_K_R.nonneg (P.realK z)
   have hynonneg : 0 ≤ Q_R D (imagPart (z : E D)) :=
@@ -861,6 +777,7 @@ theorem hermitian_positive (z : P.complexFrame.K) (hz : z ≠ 0) :
       intro hy
       apply hz
       apply Subtype.ext
+      simp only [Submodule.coe_zero]
       have hx' : realPart (z : E D) = 0 := congrArg Subtype.val hx
       have hy' : imagPart (z : E D) = 0 := congrArg Subtype.val hy
       have h := complexify_decomposition (z : E D)
