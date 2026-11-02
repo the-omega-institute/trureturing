@@ -10,6 +10,7 @@ import D5.S3.Quantum.Fermionic.BcGhostBRSTDegree
 import D5.S3.Quantum.Fermionic.BcGhostChargeTensor
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCoupling
 
+/-! Ghost-number degrees of the original matter coupling, cubic lift and total square residual. -/
 
 
 set_option backward.isDefEq.respectTransparency false
@@ -105,7 +106,9 @@ private theorem square_degree (D : LatticeData) (A : Module.End ℂ (State D))
   simp only [pow_two]
   calc
     _ = (tensorNumber D * A - A * tensorNumber D) * A +
-        A * (tensorNumber D * A - A * tensorNumber D) := by noncomm_ring
+        A * (tensorNumber D * A - A * tensorNumber D) := by
+      simp only [sub_mul, mul_sub, mul_assoc]
+      abel
     _ = _ := by simp only [hA, two_smul]
 
 theorem tensorNumber_E (D : LatticeData)

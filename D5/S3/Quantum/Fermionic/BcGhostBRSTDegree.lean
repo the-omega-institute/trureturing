@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Fermionic.BcGhostCubic
 import D5.S3.Quantum.Fermionic.BcGhostCharge
 
+/-! The original locally finite cubic BRST charge has ghost degree one. -/
 
 
 set_option backward.isDefEq.respectTransparency false

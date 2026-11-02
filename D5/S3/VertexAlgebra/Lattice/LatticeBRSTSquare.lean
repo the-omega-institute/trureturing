@@ -9,6 +9,7 @@
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostDegree
 
+/-! The exact rank-dependent square of the original total matter and cubic BRST charge. -/
 
 
 set_option autoImplicit false
@@ -94,13 +95,10 @@ private def liftedSquareTerm (D : LatticeData) (n : ℤ) :
 private theorem liftedSquareTerm_finite (D : LatticeData) (x : State D) :
     Function.HasFiniteSupport (fun n : ℤ => liftedSquareTerm D n x) := by
   classical
-  induction x using TensorProduct.induction_on with
-  | zero =>
-    apply (Set.finite_empty : (∅ : Set ℤ).Finite).subset
-    intro n hn
-    exact False.elim (hn (map_zero (liftedSquareTerm D n)))
+  induction x using TensorProduct.inductionOn with
   | tmul v w =>
-    simpa only [liftedSquareTerm, TensorProduct.map_tmul, LinearMap.id_apply] using
+    simpa only [liftedSquareTerm, TensorProduct.map_tmul, LinearMap.id_apply,
+      TensorProduct.mk_apply] using
       (BcGhostBRST.squareTerm_finite w).fun_comp
         (map_zero (TensorProduct.mk ℂ (Carrier D) Fock v))
   | add x y hx hy =>
@@ -113,7 +111,7 @@ private theorem liftedSquareTerm_finite (D : LatticeData) (x : State D) :
     have hy0 : liftedSquareTerm D n y = 0 := by
       by_contra hz
       exact hnot (Or.inr hz)
-    exact hn (by rw [map_add, hx0, hy0, add_zero])
+    exact hn (by simp only [map_add, hx0, hy0, add_zero])
 
 private theorem liftedSquareTerm_eq (D : LatticeData) (n : ℤ) :
     liftedSquareTerm D n =
@@ -127,13 +125,13 @@ private theorem liftedSquareTerm_eq (D : LatticeData) (n : ℤ) :
 
 private theorem ghostSquareAnomaly_apply (D : LatticeData) (x : State D) :
     ghostSquareAnomaly D x = ∑ᶠ n : ℤ, liftedSquareTerm D n x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul v w =>
     simp only [ghostSquareAnomaly, TensorProduct.map_tmul, LinearMap.id_apply]
     change v ⊗ₜ[ℂ] (∑ᶠ n : ℤ, BcGhostBRST.squareTerm n w) =
       ∑ᶠ n : ℤ, liftedSquareTerm D n (v ⊗ₜ[ℂ] w)
-    simpa only [liftedSquareTerm, TensorProduct.map_tmul, LinearMap.id_apply] using
+    simpa only [liftedSquareTerm, TensorProduct.map_tmul, LinearMap.id_apply,
+      TensorProduct.mk_apply] using
       (map_finsum (TensorProduct.mk ℂ (Carrier D) Fock v)
         (BcGhostBRST.squareTerm_finite w))
   | add x y hx hy =>
@@ -180,12 +178,12 @@ theorem total_square_apply (D : LatticeData)
   have hsg : Function.support (fun n : ℤ => liftedSquareTerm D n x) ⊆
       (s : Set ℤ) := by
     intro n hn
-    exact Finset.mem_union_left _ (by simpa using hn)
+    exact Finset.mem_union_left _ (hg.mem_toFinset.mpr hn)
   have hsf : Function.support (fun n : ℤ =>
       (((D.rank : ℂ) - 26) / 24 * ((n : ℂ) ^ 3 - n)) •
         ((ghostC D (-n) * ghostC D n) x)) ⊆ (s : Set ℤ) := by
     intro n hn
-    exact Finset.mem_union_right _ (by simpa using hn)
+    exact Finset.mem_union_right _ (hf.mem_toFinset.mpr hn)
   rw [total_square_anomaly D H hHG hGH, LinearMap.smul_apply,
     ghostSquareAnomaly_apply D x,
     finsum_eq_sum_of_support_subset _ hsg,

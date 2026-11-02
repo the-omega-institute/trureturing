@@ -10,6 +10,7 @@ import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostCovariance
 import D5.S3.Quantum.Fermionic.BcGhostSquare
 import D5.S3.Quantum.Fermionic.BcGhostChargeTensor
 
+/-! All-integer Ward identities and square commutators of the original total charge. -/
 
 
 set_option autoImplicit false
@@ -198,7 +199,8 @@ private theorem ghostCharge_matterMode (D : LatticeData)
     ghostCharge D * matterMode D H r - matterMode D H r * ghostCharge D = 0 := by
   apply TensorProduct.ext'
   intro v w
-  simp [ghostCharge, matterMode, Module.End.mul_apply]
+  simp only [ghostCharge, matterMode, Module.End.mul_apply, LinearMap.sub_apply,
+    TensorProduct.map_tmul, LinearMap.id_apply, LinearMap.zero_apply, sub_self]
 
 private theorem ghost_mixed_anomaly (D : LatticeData) (r : ℤ) :
     ghostCharge D * ghostVirasoro D r - ghostVirasoro D r * ghostCharge D =
@@ -265,6 +267,13 @@ def squareResidual (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) 
   totalCharge D H * totalCharge D H -
     ((26-(D.rank : ℂ))/26) • ghostSquareAnomaly D
 
+private theorem residual_commutator (D : LatticeData)
+    (A S C : Module.End ℂ (State D)) (a : ℂ) :
+    (A - a • S) * C - C * (A - a • S) =
+      (A * C - C * A) - a • (S * C - C * S) := by
+  simp only [sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_sub]
+  abel
+
 /-- The concrete scaled residual commutes with every actual tensor b mode. -/
 theorem squareResidual_b (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -276,10 +285,8 @@ theorem squareResidual_b (D : LatticeData)
       ((26-(D.rank : ℂ))/26) • ghostSquareAnomaly D) * ghostB D r -
     ghostB D r * (totalCharge D H * totalCharge D H -
       ((26-(D.rank : ℂ))/26) • ghostSquareAnomaly D) = 0
-  rw [show ∀ A B C : Module.End ℂ (State D),
-    (A-B)*C-C*(A-B) = (A*C-C*A)-(B*C-C*B) by intros; noncomm_ring]
-  rw [smul_mul_assoc, mul_smul_comm, ← smul_sub,
-    total_square_b D H hHG hGH r, ghostSquareAnomaly_b, smul_smul]
+  rw [residual_commutator, total_square_b D H hHG hGH r,
+    ghostSquareAnomaly_b, smul_smul]
   have hcoeff : (((26-(D.rank : ℂ))/26) * BcGhostBRST.anomalyCoefficient r) =
       (((26-(D.rank : ℂ))/12) * ((r : ℂ)^3-r)) := by
     unfold BcGhostBRST.anomalyCoefficient
@@ -295,9 +302,6 @@ theorem squareResidual_c (D : LatticeData)
       ((26-(D.rank : ℂ))/26) • ghostSquareAnomaly D) * ghostC D r -
     ghostC D r * (totalCharge D H * totalCharge D H -
       ((26-(D.rank : ℂ))/26) • ghostSquareAnomaly D) = 0
-  rw [show ∀ A B C : Module.End ℂ (State D),
-    (A-B)*C-C*(A-B) = (A*C-C*A)-(B*C-C*B) by intros; noncomm_ring]
-  rw [smul_mul_assoc, mul_smul_comm, ← smul_sub,
-    total_square_c, ghostSquareAnomaly_c, smul_zero, sub_self]
+  rw [residual_commutator, total_square_c, ghostSquareAnomaly_c, smul_zero, sub_self]
 
 end D5.S3.VertexAlgebra.LatticeBRST
