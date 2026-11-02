@@ -25,7 +25,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators Classical
+open scoped BigOperators
 
 namespace D5.S3.FiniteGroups.PlaneWordEndpointCount
 
@@ -57,15 +57,23 @@ private def wordSubsetEquiv (L : ℕ) :
   right_inv := by
     rintro ⟨s, t⟩
     change (negativeU (decodeWord s t), negativeV (decodeWord s t)) = (s, t)
-    apply Prod.ext <;> ext i <;>
+    apply Prod.ext
+    · apply Finset.ext
+      intro i
+      simp only [negativeU, Finset.mem_filter, Finset.mem_univ, true_and]
       by_cases hs : i ∈ s <;> by_cases ht : i ∈ t <;>
-      simp [negativeU, negativeV, decodeWord, hs, ht]
+        simp [decodeWord, hs, ht]
+    · apply Finset.ext
+      intro i
+      simp only [negativeV, Finset.mem_filter, Finset.mem_univ, true_and]
+      by_cases hs : i ∈ s <;> by_cases ht : i ∈ t <;>
+        simp [decodeWord, hs, ht]
 
 private lemma sum_signs {L : ℕ} (s : Finset (Fin L)) :
     (∑ i : Fin L, (1 - 2 * (if i ∈ s then 1 else 0) : ℤ)) =
       (L : ℤ) - 2 * (s.card : ℤ) := by
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
-  simp [Finset.sum_boole, Finset.filter_univ_mem]
+  simp
 
 private lemma decoded_rotated_endpoint {L : ℕ} (s t : Finset (Fin L)) :
     endpoint (decodeWord s t) 0 + endpoint (decodeWord s t) 1 =
@@ -124,7 +132,11 @@ private def endpointFiberEquiv (L a b : ℕ) (x y : ℤ)
       constructor <;> omega
     · rintro ⟨ha, hb⟩
       ext i
-      fin_cases i <;> simp only [Matrix.cons_val_zero, Matrix.cons_val_one] <;> omega
+      fin_cases i
+      · change endpoint w 0 = x
+        omega
+      · change endpoint w 1 = y
+        omega
   exact ((wordSubsetEquiv L).subtypeEquiv hpred).trans
     Equiv.subtypeProdEquivProd
 

@@ -26,7 +26,6 @@ namespace D5.S3.FiniteGroups.BajnokBeattyShortReturnBand
 
 open NearSquareLatticeRigidity BajnokBeattyAsymmetricGrowth
 open BajnokBeattyFirstReturnDefect
-open scoped Classical
 
 private theorem short_span (p m a b : ℤ)
     (hp3 : 3 ≤ p) (hpo : Odd p) (hmo : Odd m) (hao : Odd a) (hbo : Odd b)
@@ -39,6 +38,7 @@ private theorem short_span (p m a b : ℤ)
   have hp : 0 < p := by omega
   obtain ⟨hs, hv1, hv2, hh, hmem, hne, hshort⟩ :=
     asymmetric_rank_one_actual_data p m a b hp hpo hmo hao hbo ha ham hb hbm
+  dsimp only
   intro z hz hn
   exact hshort ((p*m-1)/2) le_rfl z hz (by omega)
 
@@ -107,13 +107,11 @@ private theorem short_kernels (p t : ℤ)
     obtain ⟨k,hk⟩ := short_span p m 1 9 hp3 hpo hmo odd_one
       (by decide) (by norm_num) (by omega) (by norm_num) (by omega) z hz (by nlinarith)
     rw [hsum19] at hk
-    have hzNorm : |z 0|+|z 1| = |k|*(p*(m-1)) := by
+    have hzNorm : |z 0|+|z 1| = |k| * (p*(m-1)) := by
       rw [hk]
       simp only [Pi.smul_apply, smul_eq_mul, Matrix.cons_val_zero,
         Matrix.cons_val_one, abs_mul]
-      rw [abs_of_pos (show 0 < p*(m-5) from mul_pos hp (by omega)),
-        abs_of_neg (show -4*p < 0 by nlinarith)]
-      ring
+      norm_num [abs_of_pos hp, abs_of_nonneg (show 0 ≤ m-5 by omega)] <;> ring
     have hk0 : k = 0 := by
       by_contra hk0
       have hka := Int.one_le_abs hk0
@@ -124,18 +122,21 @@ private theorem short_kernels (p t : ℤ)
     obtain ⟨k,hk⟩ := short_span p m 3 3 hp3 hpo hmo (by decide)
       (by decide) (by norm_num) (by omega) (by norm_num) (by omega) z hz (by nlinarith)
     rw [hsum33] at hk
-    have hzNorm : |z 0|+|z 1| = |k|*n := by
+    have hzNorm : |z 0|+|z 1| = |k| * n := by
       rw [hk]
       simp only [Pi.smul_apply, smul_eq_mul, Matrix.cons_val_zero,
         Matrix.cons_val_one, abs_mul, abs_of_pos hn, mul_zero, abs_zero, add_zero]
     have hka : |k| < 2 := by nlinarith
-    have hkcases : k=0 ∨ k=1 ∨ k= -1 := by omega
+    have hkcases : k=0 ∨ k=1 ∨ k= -1 := by
+      have hkb := abs_lt.mp hka
+      omega
     rcases hkcases with rfl | rfl | rfl
     · left; simpa using hk
     · right; left; simpa using hk
     · right; right
-      simpa only [neg_smul, one_smul, Pi.neg_apply, Matrix.neg_cons,
-        neg_zero, neg_neg] using hk
+      rw [hk]
+      ext i
+      fin_cases i <;> simp
   · have hneg := K33.neg_mem hposmem
     simpa using hneg
 
@@ -204,7 +205,7 @@ theorem short_return_band (p t : ℤ)
   have hnZ : (n : ℤ) = p*(m-3) := Int.toNat_of_nonneg (by
     exact le_of_lt (mul_pos hp (by omega)))
   have hn : (0:ℤ) < n := by rw [hnZ]; exact mul_pos hp (by omega)
-  have hl : (l : ℤ) < p*(m-1) := by dsimp [l]; push_cast; nlinarith
+  have hl : (l : ℤ) < p*(m-1) := by dsimp [l]; nlinarith
   obtain ⟨h19,h33,hpos,hneg⟩ := short_kernels p t hp3 hpo ht
   have hmem19 (w : Fin l → Fin 4) : F19 (endpoint w) = 0 ↔ endpoint w = 0 := by
     constructor
@@ -217,9 +218,11 @@ theorem short_return_band (p t : ℤ)
       endpoint w = 0 ∨ endpoint w = ![(n : ℤ),0] ∨ endpoint w = ![-(n : ℤ),0] := by
     constructor
     · intro hw
-      simpa only [← hnZ] using h33 (endpoint w)
+      have hresult : endpoint w = 0 ∨ endpoint w = ![p*(m-3),0] ∨
+          endpoint w = ![-(p*(m-3)),0] := h33 (endpoint w)
         ((Submodule.Quotient.mk_eq_zero K33).mp hw)
         ((endpoint_lee_bound w).trans_lt hl)
+      simpa only [← hnZ] using hresult
     · intro hw
       apply (Submodule.Quotient.mk_eq_zero K33).mpr
       rcases hw with hw | hw | hw
@@ -235,12 +238,12 @@ theorem short_return_band (p t : ℤ)
   have hcpos : Nat.card {w : Fin l → Fin 4 // endpoint w = ![(n : ℤ),0]} =
       (Nat.choose l r)^2 := by
     rw [PlaneWordEndpointCount.endpoint_card l r r (n : ℤ) 0
-      (by dsimp [l]; push_cast; ring) (by dsimp [l]; push_cast; ring)]
+      (by dsimp [l]; ring) (by dsimp [l]; ring)]
     ring
   have hcneg : Nat.card {w : Fin l → Fin 4 // endpoint w = ![-(n : ℤ),0]} =
       (Nat.choose l r)^2 := by
     rw [PlaneWordEndpointCount.endpoint_card l (n+r) (n+r) (-(n : ℤ)) 0
-      (by dsimp [l]; push_cast; ring) (by dsimp [l]; push_cast; ring)]
+      (by dsimp [l]; ring) (by dsimp [l]; ring)]
     have hchoose : Nat.choose l (n+r) = Nat.choose l r := by
       have h := Nat.choose_symm (show n+r ≤ l by dsimp [l]; omega)
       simpa only [show l-(n+r)=r by dsimp [l]; omega] using h.symm
