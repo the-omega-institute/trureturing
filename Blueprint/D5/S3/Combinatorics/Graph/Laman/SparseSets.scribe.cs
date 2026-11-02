@@ -42,7 +42,7 @@ internal sealed class SparseSetsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("sparsesets-7"), DeclarationHandle.Create(Prefix + "union_with_bonus"),
                 H("Tight union with extra edges"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("For arbitrary k and ell, tight sets S and T have tight union if a set F of actual edges in their union is disjoint from the edges internal to S or T and its size closes the intersection deficit: e(S intersection T)+ell <= card(F)+k card(S intersection T). The proof counts the disjoint extra edges before applying sparsity."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For arbitrary k and ell and a finite (k,ell)-sparse graph G, tight sets S and T have tight union if a set F of actual edges in their union is disjoint from the edges internal to S or T and its size closes the intersection deficit: e(S intersection T)+ell <= card(F)+k card(S intersection T). The proof counts the disjoint extra edges before applying sparsity."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("sparsesets-8"), DeclarationHandle.Create(Prefix + "insert_vertex_with_edges"),
                 H("Tight extension by one vertex"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
