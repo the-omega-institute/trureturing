@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; \exists m \in \mathbb{N},\; (\operatorname{a}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/BalaA295462Parity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala295462` (proved) by `D5/S3/Arith/FactorialRatio/BalaA295462Parity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala295462","declaration_gid":"D5/S3/Arith/FactorialRatio/BalaA295462Parity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2026). *OEIS A295462: binary-spacing parity conjecture*. URL: <https://oeis.org/A295462>.
