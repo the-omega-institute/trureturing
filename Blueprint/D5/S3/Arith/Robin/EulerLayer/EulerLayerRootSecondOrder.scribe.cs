@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.EulerLayer;
 
 internal sealed class EulerLayerRootSecondOrderDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Robin/EulerLayerRootSecondOrder.";
+    private const string Prefix = "D5/S3/Arith/Robin/EulerLayer/EulerLayerRootSecondOrder.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The strict Euler inventory has a uniform next logarithmic root coefficient.",

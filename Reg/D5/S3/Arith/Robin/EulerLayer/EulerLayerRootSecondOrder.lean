@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.EulerLayerRootSecondOrder
+import D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
 import Reg.Support.DependentFamily
 
 /-! Faithful source telescope for the strict Euler second-order root law. -/
 
 set_option autoImplicit false
 
-namespace Reg.D5.S3.Arith.Robin.EulerLayerRootSecondOrder
+namespace Reg.D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
 
 open _root_.D5.S3.Arith.Robin.EulerLayerRootSecondOrder
 open _root_.D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
@@ -96,7 +96,7 @@ def rootSecondOrderFamily : Registration rootSecondOrderArena rootSecondOrderSco
 def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@strict_inventory_root_second_order) (Realization rootSecondOrderSignature) Type Unit where
   unitName := `D5.S3.Arith.Robin.EulerLayerRootSecondOrder.strict_inventory_root_second_order.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayerRootSecondOrder.rootSecondOrderFamily
+  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder.rootSecondOrderFamily
   realizationSource := none
   generated := false
   arena := .source ⟨rootSecondOrderArena⟩
@@ -113,7 +113,7 @@ def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.EulerLayerRootSecondOrder
+    owner := `D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
     definition := none
     coordinates := #[3]
     readouts := #[{
@@ -131,4 +131,4 @@ def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0
 
 end
 
-end Reg.D5.S3.Arith.Robin.EulerLayerRootSecondOrder
+end Reg.D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
