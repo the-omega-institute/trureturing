@@ -469,15 +469,15 @@ end MomentDerivative
 
 namespace ConjugateEvaluation
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℂ[X]) (fun _ => ℂ) (fun _ => ℂ)
+  _root_.Reg.Support.SingleDependentReadout.signature (ℂ[X]) (fun _ => ℝ) (fun _ => ℂ)
 def actual : Realization signature :=
-  realize signature (fun _ p z => (p.map (starRingEnd ℂ)).eval z) (fun e => nomatch e)
+  realize signature (fun _ p x => (p.map (starRingEnd ℂ)).eval (x : ℂ)) (fun e => nomatch e)
 private def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 /-- The original telescope; only the selected native function occurrence varies. -/
 def arena : Arena where
   signature := signature
-  Law R := ∀ (p : ℂ[X]) (x : ℝ), R.readout () p (x : ℂ) = conj (p.eval (x : ℂ))
+  Law R := ∀ (p : ℂ[X]) (x : ℝ), R.readout () p x = conj (p.eval (x : ℂ))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hf := h 0 0
@@ -505,7 +505,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p z => (p.map (starRingEnd ℂ)).eval z) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p x => (p.map (starRingEnd ℂ)).eval (x : ℂ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -515,9 +515,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
@@ -574,9 +574,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
@@ -704,9 +704,9 @@ end ExpansionConjugation
 
 namespace ExpansionRow
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Unit) (fun _ => ℂ) (fun _ => ℂ)
+  _root_.Reg.Support.SingleDependentReadout.signature (ℕ) (fun _ => ℕ → ℂ) (fun _ => ℂ)
 def actual : Realization signature :=
-  realize signature (fun _ _ z => conj z) (fun e => nomatch e)
+  realize signature (fun _ i a => conj (a i) / (2 * (i : ℂ) + 1)) (fun e => nomatch e)
 private def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 /-- The original telescope; only the selected native function occurrence varies. -/
@@ -714,14 +714,14 @@ def arena : Arena where
   signature := signature
   Law R := ∀ (d i : ℕ) (a : ℕ → ℂ) (_hi : i ∈ Finset.range d),
       moment (legendreC i) (expansion d (fun j => conj (a j))) =
-        R.readout () () (a i) / (2 * (i : ℂ) + 1)
+        R.readout () i a
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hf := h 1 0 (fun _ => 0) (by simp)
   norm_num [rejected, realize, moment, expansion] at hf
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+  exact ⟨0, (fun _ => 0), (fun _ => 1), by norm_num [actual, realize]⟩
 def family : Registration arena (type_of% (@moment_expansion_row)) where
   actual := actual
   bridge := Iff.rfl
@@ -742,7 +742,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => conj z) (fun e => nomatch e))
+  readout := some (realize signature (fun _ i a => conj (a i) / (2 * (i : ℂ) + 1)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -750,11 +750,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.PolynomialL2Derivative
     definition := none
-    coordinates := #[]
+    coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
