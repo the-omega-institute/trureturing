@@ -27,13 +27,8 @@ private theorem qFactorial_succ (n : ℕ) :
   simp [qFactorial, Finset.prod_range_succ, mul_comm]
 
 private theorem gauss_diagonal (n : ℕ) : gauss n n = 1 := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-      rw [gauss,
-        D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_zero_of_lt n (n + 1) (by omega),
-        Nat.sub_self]
-      simpa using ih
+  simpa only [Nat.sub_self, gauss] using
+    D5.S3.Combinatorics.CylindricPartition.LiUncu.gauss_symmetry n n le_rfl
 
 private theorem gauss_coeff_zero (n k : ℕ) (hkn : k ≤ n) :
     (gauss n k).coeff 0 = 1 := by
