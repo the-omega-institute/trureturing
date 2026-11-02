@@ -1,0 +1,40 @@
+### 命题 3.3（谱区间条件与归一正泛函等价）
+
+<a id="prop-c92-positive-functional"></a>
+
+C92 等价于以下整项声明：式 [(3.2)](#eq-c92-local-functional) 定义良好，且
+
+$$
+\ell_R(I)=1,\qquad
+ \ell_R(W)\ge0\quad(W\in\mathcal S,\ W\ge0).
+$$
+
+此时对全部 $W\in\mathcal S$ 都有
+
+<a id="eq-c92-two-sided-spectrum"></a>
+
+$$
+\lambda_{\min}(W)\le\ell_R(W)\le\lambda_{\max}(W).
+\tag{3.3}
+$$
+
+**证明。**
+在 C92 下，代表无关和归一已经证明。
+对 $-h$ 使用同一上界，得到
+$\ell_R(W)\ge\lambda_{\min}(W)$；若 $W\ge0$，这就给出正性。
+反过来，若该泛函归一且为正，则
+$\lambda_{\max}(W)I-W$ 属于 $\mathcal S$ 的正锥，故
+
+$$
+0\le\ell_R(\lambda_{\max}(W)I-W)
+ =\lambda_{\max}(W)-\ell_R(W).
+$$
+
+这正是 C92；对负算符再用一次便得下界。
+
+这里的零关系处理具有实质内容：同一个算符可由不同局部项相加得到，
+这些表达可能沿不同重叠路径出现。C92 同时要求它们读出一致，
+并要求所有整体正组合具有非负读数。
+仅要求每一局部正项的读数非负，不能检查跨块相容；这点在兼容见证研究中已有明确说明
+ [1](#ref-hall2007)。
+

@@ -1,0 +1,33 @@
+### 定理 5.3（二元平方闭合的完整等价）
+
+对上述 Hermitian 的 $A,B$，下列条件等价：
+
+1. $C_{89}$ 成立。
+2. $D(A)=D(B)=0$。
+3. $[P,\pi(A)]=[P,\pi(B)]=0$。
+4. $A,B\in\operatorname{MD}(\Phi)$。
+5. $\mathfrak A\subseteq\operatorname{MD}(\Phi)$。
+6. $\Phi|_{\mathfrak A}$ 是保单位元的 $*$-同态。
+7. 全部非交换多项式满足 $\Phi(p(A,B))=p(\Phi(A),\Phi(B))$。
+
+**证明。**平方缺额分解立即给出前两项等价。因为 $A=A^\dagger$，$D(A)=0$ 给出 $Q\pi(A)P=D(A)V^\dagger=0$；取伴随还得到 $P\pi(A)Q=0$，所以 $[P,\pi(A)]=0$，$B$ 同理，反向显然。
+
+若 $P$ 与两个生成元的表示对易，它就与所有 $\pi(c)$、$c\in\mathfrak A$ 对易。于是对任意 $x\in M_d$，
+
+$$
+\begin{aligned}
+\Phi(cx)-\Phi(c)\Phi(x)&=V^\dagger\pi(c)Q\pi(x)V=0,\\
+\Phi(xc)-\Phi(x)\Phi(c)&=V^\dagger\pi(x)Q\pi(c)V=0.
+\end{aligned}
+$$
+
+这给出第五项及第六项；逐次相乘和线性组合给出所有多项式等式。反过来只取多项式 $p(X,Y)=X^2,Y^2$ 即回到第一项。第四项由第五项推出，也通过取 $x=A,B$ 推出第一项。
+
+对一般非 Hermitian 元 $x$，需要同时要求
+
+$$
+\Delta_\Phi(x)=0,\qquad\Delta_\Phi(x^\dagger)=0,
+$$
+
+分别消去 $Q\pi(x)P$ 和 $P\pi(x)Q$，从而等价于 $x\in\operatorname{MD}(\Phi)$；选取 Hermitian 生成元正是将两个方向合并为最简平方条件。
+

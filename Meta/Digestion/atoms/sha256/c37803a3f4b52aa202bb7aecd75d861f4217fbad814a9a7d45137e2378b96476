@@ -1,0 +1,10 @@
+## 6. 一个忠实标定与二元三维证书：形状之外还要保留尺度
+
+取输出空间上的忠实校准 $\eta>0$、$\operatorname{tr}\eta=1$，并定义输入校准 $\rho=\Phi_*(\eta)$。它自动归一，但不必忠实。对 $A_1=A,A_2=B$，令
+
+$$
+\delta A_i=A_i-\phi_\rho(A_i)I,\qquad \phi_\rho(x)=\operatorname{tr}(\rho x).
+$$
+
+保单位元保证 $\phi_\eta(\Phi(\delta A_i))=0$。
+
