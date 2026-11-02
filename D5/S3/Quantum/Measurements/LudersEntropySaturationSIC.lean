@@ -58,7 +58,9 @@ private theorem unitary_pure_ext {d : ℕ} [NeZero d]
       let a : HermitianMat (Fin d) ℂ := ⟨x, hx⟩
       have hs := a.cfc_toMat_eq_sum_smul_proj id
       rw [HermitianMat.cfc_id] at hs
-      simpa only [a, HermitianMat.mat, id_eq, Complex.coe_smul] using hs
+      change x = ∑ i, hx.eigenvalues i •
+        (hx.eigenvectorUnitary.val * Matrix.single i i 1 * hx.eigenvectorUnitary.valᴴ) at hs
+      simpa only [id_eq, Complex.coe_smul] using hs
     rw [hdec, map_sum, map_sum]
     apply Finset.sum_congr rfl
     intro i hi
