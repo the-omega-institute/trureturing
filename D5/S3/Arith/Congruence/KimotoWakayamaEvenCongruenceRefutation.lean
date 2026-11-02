@@ -654,6 +654,7 @@ private lemma left_value :
 private lemma right_value :
     (3 : ℚ) ^ 14 * normalizedEven 7 15 / ((3 : ℚ) ^ 14 * normalizedEven 7 15) = 1 := by
   rw [value_fifteen]
+  apply div_self
   norm_num
 
 private lemma ratio_not_congruent : ¬ RatCongr 3 2
