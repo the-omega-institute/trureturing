@@ -96,7 +96,10 @@ internal sealed class UnicyclicSkewnessMinusKurtosisUpperBoundDocument : IScribe
                         + "no-hit claims are restricted to the independently inspected scopes; the "
                         + "unread journal body, unchecked citation-list memberships and global "
                         + "theorem-equivalence search remain limitations."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ptaszynski-2022-unidirectional-skewness-minus-kurtosis-upper-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
