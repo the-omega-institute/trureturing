@@ -14,7 +14,8 @@ internal sealed class SolidResolvingTournamentDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("result"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Walks/SolidResolvingTournament.result"), H("result"),
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The six lower bounds hold for every tournament at the indicated orders. A solid set with three, four or five landmarks forces total order at most four, six or ten. Outside vertices give mutually incomparable distance profiles. Chain covers of the profiles for each induced landmark tournament bound their number; terminal components also cover infinite distances."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The six lower bounds hold for every tournament at the indicated orders. A solid set with three, four or five landmarks forces total order at most four, six or ten. Outside vertices give mutually incomparable distance profiles. Chain covers of the profiles for each induced landmark tournament bound their number; terminal components also cover infinite distances."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("solid-resolving-tournament"), ResolutionKind.Proved)))));
     private static Formula X(string n) => F.Id(n);
 
     private static Formula N(int n) => new Formula.Number(n);

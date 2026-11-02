@@ -22,6 +22,10 @@ $$\left(\forall R \in \left(\operatorname{Fin}\left(6\right)\right) \to \left(\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/SolidResolvingTournament.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/solid-resolving-tournament` (proved) by `D5/S3/Combinatorics/Graph/Walks/SolidResolvingTournament.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"solid-resolving-tournament","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/SolidResolvingTournament.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anni Hakanen and Pavan P D (2026). *Solid-Resolving Sets on Directed Graphs*. URL: <https://arxiv.org/abs/2610.35041v1>.
