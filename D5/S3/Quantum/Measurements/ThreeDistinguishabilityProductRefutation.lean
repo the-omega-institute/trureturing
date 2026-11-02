@@ -80,8 +80,7 @@ private lemma phase_unit : conj ζ * ζ = 1 := by
   simp only [ζ, Complex.norm_exp_ofReal_mul_I, one_pow, Complex.ofReal_one]
 
 private lemma phase_fifth : ζ ^ 5 = -1 := by
-  dsimp only [ζ]
-  rw [← Complex.exp_nat_mul]
+  rw [ζ.eq_1, ← Complex.exp_nat_mul]
   convert Complex.exp_pi_mul_I using 1
   congr 1
   push_cast
@@ -146,7 +145,8 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
   rcases hi with rfl | rfl | rfl <;> rcases hj with rfl | rfl | rfl
   all_goals try exact (h rfl).elim
   all_goals
-    simp only [Fin.sum_univ_succ, phases, point, Matrix.cons_val_zero,
+    rw [point.eq_1, phases.eq_1]
+    simp only [Fin.sum_univ_succ, Matrix.cons_val_zero,
       Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.cons_val_succ, Matrix.cons_val_fin_one, Matrix.vecHead, Matrix.vecTail,
       Function.comp_apply]
@@ -219,7 +219,7 @@ private lemma product_pairing (σ : Equiv.Perm (Fin 4)) (p : Fin 4 → ℝ)
   have hv1 := hv 1
   have hv2 := hv 2
   have hv3 := hv 3
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, faceCentre,
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, faceCentre.eq_1,
     Equiv.apply_eq_iff_eq, Fin.isValue, ite_true, Fin.zero_eq_one_iff,
     Fin.reduceEq, ite_false, mul_zero, zero_add, add_zero] at hv0 hv1 hv2 hv3
   norm_num only at hv0 hv1 hv2 hv3
