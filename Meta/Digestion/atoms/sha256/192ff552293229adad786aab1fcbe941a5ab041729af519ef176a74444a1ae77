@@ -1,0 +1,68 @@
+**Proposition 37.1 (prepared restriction and actual interfaces).** Use
+AA17/19's native rules and Definition 30.1's current-term recorder.
+For each $k\ge1$ the source-relative preparation bridge uses
+
+$$
+C=\langle\beta,\alpha\rangle,\quad
+D_0=\langle\beta,C\rangle,\quad D_1=\langle C,\beta\rangle,\quad
+M=\langle\langle C,\alpha\rangle,\alpha\rangle.
+\tag{IV.107}
+$$
+
+The marker $M$ has **four** leaves. After a fixed preparation of
+$g_0=3k+4$ events, any distinct-label insertion history is simulated
+with exactly two actual native events per insertion. Its endpoint is
+$F_1$, where $F_{k+1}=M$ and $F_j=\langle B_j,F_{j+1}\rangle$,
+with $B_j=C$ if $j\notin A$ and $B_j=D_{x_j}$ otherwise. Its grade is
+$3k+4+2|A|$, hence $5k+4$ at full assignment. The unordered coloured
+quotient $U_{k,A}$ depends only on $k,A$ at these macro-cuts, while the
+ordered endpoint determines all inserted labelled bits.
+
+**Proof.** At $r=R^{j-1}$, for $j=1,\ldots,k$, the preparation executes
+$P_r,S_r,S_{rL}$. It changes the current alpha continuation into
+$\langle C,\alpha\rangle$ and proceeds into its right alpha. At
+$r=R^k$ execute $P_r,S_r,S_{rL},S_{rLL}$, producing exactly the
+bracketed four-leaf $M$ in (IV.107). Each promotion sees alpha and each
+split sees beta. This accounts for $3k+4$ events. An inactive slot at
+$q_j=R^{j-1}L$ is $C$. For insertion zero,
+$P_{q_jR},S_{q_jR}$ changes it through
+$\langle\beta,\beta\rangle$ to $D_0$; for insertion one,
+$S_{q_jL},P_{q_jR}$ changes it through
+$\langle C,\alpha\rangle$ to $D_1$. All guards hold, and different
+slots are disjoint, so every insertion order is legal and the asserted
+endpoint follows by induction.
+
+Each slot has two or three leaves; every continuation has at least four.
+Consequently even in the unordered quotient the continuation is the
+unique larger child at each comb position. These positions identify the
+labels and active subset without tags or allocation identities. Since
+$[D_0]=[D_1]$, this quotient is independent of the bits at macro-cuts.
+The ordered slots distinguish $C,D_0,D_1$ and recover their bits. The
+intermediate quotient during a two-event insertion need not be
+bit-independent. Event counting gives the stated grades. $\square$
+
+For a native recorder $R$ put $K_0=J_R(\mathrm{prep}_k)$ and
+$K_i=J_R(\mathrm{prep}_k\,\mathrm{insertions}_{1:i})$ at macro-cuts.
+This $K_0$ is fixed independently of the unknown bits and order. A
+coding decoder first forms $U_{k,A}$, applies the native decoder to
+$(U_{k,A},K)$, and reads the ordered slots. Update reconstructs that
+same current term, performs the two guarded native events through the
+native recorder interface, and clears all additional scratch. No old
+term or history is retained. With $e_r$ denoting the actual native
+record edits on event $r$, on every induced run
+
+$$
+c_i=e_{g_0+2i-1}+e_{g_0+2i},\qquad
+\sum_{i=1}^m c_i=\sum_{r=g_0+1}^{g_0+2m}e_r,\qquad
+\max_i c_i\le2d,
+\tag{IV.108}
+$$
+
+where $d$ is the maximum single-event payload cost over all prepared
+insertion runs for this $k$. Their true induced payload peak equals the
+native peak from the prepared cut through these events, including $K_0$,
+both subevent cuts and every edit word. Preparation cost remains charged
+on the native side; it is not part of the insertion suffix sum. Extra
+parsing, reconstruction, addresses, navigation and scratch remain
+separately paid, with no constant overhead or workspace bound asserted.
+

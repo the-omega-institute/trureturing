@@ -1,0 +1,63 @@
+**Theorem 20.1 (base-4 coefficient for every coherent head recorder).** For $r\ge1$, use the native block terms of Definition 13.1 with
+
+$$
+ s_i=4^{r-i+1}+1,\qquad T_r=t_r,\qquad B_r=r(r+1).
+\tag{IV.47}
+$$
+
+Then, for every recorder satisfying Definition 9.1 on the entire native domain,
+
+$$
+M_J(T_r)-G(T_r)>r\log_2(3/2)-2.
+\tag{IV.48}
+$$
+
+Consequently, if some such recorder satisfied
+$M_J(t)\le G(t)+c\log_2(N(t)+2)$ for all actual endpoints, then necessarily
+
+$$
+ c\ge\kappa:=\frac12\log_2(3/2).
+\tag{IV.49}
+$$
+This is a necessary coefficient only; it supplies neither logarithmic sufficiency nor sharpness.
+
+**Proof.** The complete native product in Proposition 13.2, reindexed by $m=r-i+1$, is
+
+$$
+F(T_r)=\prod_{m=1}^r f_m,\qquad
+ f_m=\sum_{k=1}^m4^k+2m-1
+ =\frac43\,4^m+2m-\frac73.
+\tag{IV.50}
+$$
+At the $i$th selected cut, every old history has $s_i$ actual suffixes: perform the left-spine splits at $p,pL,\ldots,pL^{s_i-1}$ and promote the right child born at the first split at $pR$. The promotion can be inserted after any one of the $s_i$ splits. These are legal native $S$ and $P$ events, and the full endpoint fibre still includes every delayed interleaving. The cylinder argument (IV.22), iterated as in Theorem 14.1, gives
+
+$$
+M_J(T_r)\ge\sum_{m=1}^r\left\lceil\log_2(4^m+1)\right\rceil
+=B_r+r.
+\tag{IV.51}
+$$
+For every $m\ge1$,
+
+$$
+ f_m\le\frac43\,4^m\left(1+\frac{3m}{2}4^{-m}\right).
+\tag{IV.52}
+$$
+Using $\ln(1+u)\le u$ and $\sum_{m\ge1}m4^{-m}=4/9$ gives
+
+$$
+\log_2F(T_r)
+ \le B_r+r\log_2(4/3)+\frac{2}{3\ln2}
+ <B_r+r\log_2(4/3)+1,
+\tag{IV.53}
+$$
+where $\ln2>2/3$. Since $G=\lceil\log_2F\rceil$, (IV.53) implies
+$G(T_r)<B_r+r\log_2(4/3)+2$. Combining this with (IV.51) proves (IV.48).
+
+The endpoint has
+
+$$
+N(T_r)=\frac{4^{r+1}-4}{3}+2r+1,
+\tag{IV.54}
+$$
+so $\log_2(N(T_r)+2)/r\to2$. Divide (IV.48) by this quantity and let $r\to\infty$ to obtain (IV.49). Every displayed continuation is an actual addressed operation of (IV.1); no deletion, graft, restricted schedule, extra observation or fixed finite-capacity device is used. $\square$
+
