@@ -106,18 +106,15 @@ private lemma universal_upper_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
 
 private def endpointMass : ℝ := (9 + Real.sqrt 17) / 16
 
-private lemma endpoint_mass_bounds : 0 < endpointMass ∧ endpointMass < 1 := by
-  have hs0 := Real.sqrt_nonneg (17 : ℝ)
-  have hs7 : Real.sqrt 17 < 7 := (Real.sqrt_lt' (by norm_num)).mpr (by norm_num)
-  dsimp [endpointMass]
-  constructor <;> linarith
-
 /-- Reciprocals of one fixed mass and m + 1 equal positive tail masses. -/
 private def sharpRates (m : ℕ) : Fin (m + 2) → ℝ :=
   fun i => if i = 0 then endpointMass⁻¹ else ((m : ℝ) + 1) / (1 - endpointMass)
 
 private lemma sharp_rates_positive (m : ℕ) : ∀ i, 0 < sharpRates m i := by
-  obtain ⟨hu, hu1⟩ := endpoint_mass_bounds
+  have hs0 := Real.sqrt_nonneg (17 : ℝ)
+  have hs7 : Real.sqrt 17 < 7 := (Real.sqrt_lt' (by norm_num)).mpr (by norm_num)
+  have hu : 0 < endpointMass := by dsimp [endpointMass]; linarith
+  have hu1 : endpointMass < 1 := by dsimp [endpointMass]; linarith
   intro i
   dsimp [sharpRates]
   split_ifs <;> positivity
@@ -131,7 +128,6 @@ private def approximation (t : ℝ) : ℝ :=
 private lemma sharp_value (m : ℕ) :
     skewness (sharpRates m) - kurtosis (sharpRates m) =
       approximation (1 / ((m : ℝ) + 1)) := by
-  obtain ⟨hu, hu1⟩ := endpoint_mass_bounds
   have hm : 0 < (m : ℝ) + 1 := by positivity
   have hs (j : ℕ) : powerSum (m + 2) j (fun i => (sharpRates m i)⁻¹) =
       endpointMass ^ j + ((m : ℝ) + 1) * ((1 - endpointMass) / ((m : ℝ) + 1)) ^ j := by
@@ -158,7 +154,10 @@ private lemma sharp_value (m : ℕ) :
 private lemma sharp_limit :
     Tendsto (fun m : ℕ => skewness (sharpRates m) - kurtosis (sharpRates m))
       atTop (nhds upperBound) := by
-  obtain ⟨hu, hu1⟩ := endpoint_mass_bounds
+  have hu : 0 < endpointMass := by
+    have h := sharp_rates_positive 0 0
+    simp only [sharpRates, ↓reduceIte, inv_pos] at h
+    exact h
   have hc : ContinuousAt approximation 0 := by
     unfold approximation
     fun_prop (disch := positivity)
