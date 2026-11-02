@@ -39,11 +39,11 @@ internal sealed class WolfordBinomialBirootDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create()
     {
-        var positive = Seq(D(0), Lt, x, Land, D(0), Lt, c, Land, D(1), Le, n);
-        var domain = All("m", Nat, Seq(D(0), Lt, m, Implies, D(0), Lt, V));
+        var positive = Seq(D(0), Lt, x, Land, Sp, D(0), Lt, c, Land, Sp, D(1), Le, Sp, n);
+        var domain = All("m", Nat, Seq(D(0), Lt, m, Implies, Sp, D(0), Lt, V));
         var limit = Call("Tendsto", Call("positiveIndexQuotientSequence", x, c, n), Call("atTop"),
             Call("nhds", Pow(x, new Formula.Fraction(D(1), n))));
-        var statement = All("x", Real, All("c", Real, All("n", Nat, Seq(Par(positive), Implies, Par(Seq(domain, Land, limit))))));
+        var statement = All("x", Real, All("c", Real, All("n", Nat, Seq(Par(positive), Implies, Sp, Par(Seq(domain, Land, Sp, limit))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The original generalized binomial biroot converges for all positive real parameters and every positive root index.",
             H("Wolford's generalized binomial biroot"), Blocks(
@@ -54,14 +54,14 @@ internal sealed class WolfordBinomialBirootDocument : IScribeDocumentDefinition
                 "The numerator includes k=0 and k=ceiling(m,n). An out-of-range binomial factor makes a padded term zero even when its signed c exponent is negative. Natural subtraction does not define the source exponent.", DescribeRole.Definition),
             Node("denominator", "Inclusive source denominator", Inputs(Seq(V, Eq, SumFormula(true))),
                 "The denominator includes k=0 through ceiling(m,n)-1. For positive m and n this ceiling is positive, so the Lean range with length (ceiling-1)+1 has exactly the source indices. denominator_pos proves positivity using its k=0 term m*c^(m-1) and nonnegativity of every other term.", DescribeRole.Definition),
-            Node("beta", "Positive-index quotient", Inputs(Seq(Par(Seq(D(0), Lt, m, Implies, Beta, Eq, new Formula.Fraction(U, V))), Land,
+            Node("beta", "Positive-index quotient", Inputs(Seq(Par(Seq(D(0), Lt, m, Implies, Sp, Beta, Eq, new Formula.Fraction(U, V))), Land, Sp,
                 Call("beta", x, c, n, D(0)), Eq, D(0))),
                 "beta is exactly numerator/denominator at every positive m and is totalized to zero at m=0. This isolated value does not affect atTop convergence.", DescribeRole.Definition),
             Node("result", "Full convergence and denominator domain", statement,
                 "For every positive real x,c and natural n>=1, all positive-index denominators are strictly positive and beta tends to x raised to the reciprocal real n. Real.rpow_pos_of_pos and Real.rpow_inv_natCast_pow identify this as the positive real nth root.", DescribeRole.Theorem, true),
-            Paragraph(Text("The finite state type is ZMod n. shift moves each state to its successor, and walk(a,b)=a*I+b*shift. shift_pow and walk_pow identify every power entry with the complete weighted binomial multisection. matrix_mul_nat is the scalar matrix identity used by walk_pow. walk_nonneg and walk_stochastic establish the actual stochastic hypotheses. walk_primitive selects the positive binomial summand indexed by the least nonnegative representative of j-i in the nth matrix power; it applies to arbitrary n, including composite n. walk_column identifies the uniform stationary row. walk_limit directly applies the frozen FiniteStochasticMixing.primitive_convergence theorem and its uniqueness conclusion. The generic convergence proof is reused.")),
+            Paragraph(Text("The finite state type is ZMod n. shift moves each state to its successor, and walk(a,b)=a*I+b*shift. shift_pow and walk_pow identify every power entry with the complete weighted binomial multisection. matrix_mul_nat is the scalar matrix identity used by walk_pow. walk_nonneg and walk_stochastic establish the stochastic hypotheses. walk_primitive selects the positive binomial summand indexed by the least nonnegative representative of j-i in the nth matrix power; it applies to arbitrary n, including composite n. walk_column identifies the uniform stationary row. walk_limit applies FiniteStochasticMixing.primitive_convergence and its uniqueness conclusion.")),
             Paragraph(Text("residue is the unnormalized weighted multisection. normalized_residue proves its exact scaling to a walk entry, residue_limit transfers entry convergence to 1/n, and residue_ratio_limit takes the ratio using the nonzero limit 1/n. weight, weight_zero and multisection give a finite bijection between source indices and all admissible binomial indices. numerator_residue and denominator_residue prove the literal source reconstruction for n>=2, including padded zero terms and signed exponents. limit_ge_two then transfers the exact quotient limit.")),
             Paragraph(Text("The source denominator for n=1 omits the constant binomial term. denominator_one proves the exact correction x*denominator=residue-c^m. limit_one divides by (c+x)^m and uses geometric decay of (c/(c+x))^m. Thus n=1 is proved from its original indices, without identifying it with the uncorrected residue ratio. result combines this case with limit_ge_two and consumes denominator_pos.")),
-            Paragraph(Text("The source contains the assertion and the square-root proof, and explicitly leaves its general proof unattempted. The finite mixing supplier is literature-attested in its own source. The source-to-walk reconstruction and its use here are repository derivations. The checked nearby integer-root paper does not state this full positive-real result. These bounded comparisons establish no worldwide priority. This document carries no final open-problem resolution claim or delivery credit.")))));
+            Paragraph(Text("The generalized binomial biroot and convergence conjecture are due to Wolford, whose source proves the square-root case. The source-to-walk reconstruction above derives the general quotient limit from finite stochastic mixing.")))));
     }
 }
