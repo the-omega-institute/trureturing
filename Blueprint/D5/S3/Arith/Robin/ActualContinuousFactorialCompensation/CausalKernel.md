@@ -27,4 +27,4 @@ This is the repository-derived Describe source for the compiled causal owner. Re
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/CausalKernel.causal_kernel`
-- Dependency: [D5/S3/Arith/Robin/ActualContinuousFactorialCompensation](../ActualContinuousFactorialCompensation.md)
+- Dependency: [D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic](Basic.md)

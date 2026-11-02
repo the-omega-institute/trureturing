@@ -8,9 +8,9 @@ Repository-derived Describe source for the compiled arithmetic owner. Registrati
 
 **Theorem 1.1 (Exact finite smoothing at every real cutoff).**
 
-Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.finite_smoothing`
+Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.finite_smoothing`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.finite_smoothing` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.finite_smoothing` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For every real x>=1, Z_h(x)=x*((1+gamma-log(x))*H(x)+2*J(x)) -log(floor(x)!)-L*f
 
 **Theorem 1.2 (The literal G is the slope primitive).**
 
-Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.G_eq_integral`
+Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.G_eq_integral`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.G_eq_integral` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.G_eq_integral` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ For every real x>=1, G(x)=integral from 1 to x of slope(t). The slope is (gamma-
 
 **Theorem 1.3 (Measurability of the actual arithmetic slope).**
 
-Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.slope_measurable`
+Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.slope_measurable`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.slope_measurable` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.slope_measurable` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ The actual slope is measurable by the measurable floor prefixes and log. This ex
 
 **Theorem 1.4 (Complete compensation and actual restricted-ae derivative).**
 
-Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.compensation`
+Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.compensation`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.compensation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.compensation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -62,9 +62,9 @@ The factorial and envelope suppliers remain at ActualFactorialRobinHighDerivativ
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.G_eq_integral`
-- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.compensation`
-- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.finite_smoothing`
-- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation.slope_measurable`
-- Dependency: [D5/S3/Arith/Robin/ActualFactorialRobinHighDerivative](ActualFactorialRobinHighDerivative.md)
-- Dependency: [D5/S3/Weil/Mertens/Estimates](../../Weil/Mertens/Estimates.md)
+- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.G_eq_integral`
+- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.compensation`
+- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.finite_smoothing`
+- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.slope_measurable`
+- Dependency: [D5/S3/Arith/Robin/ActualFactorialRobinHighDerivative](../ActualFactorialRobinHighDerivative.md)
+- Dependency: [D5/S3/Weil/Mertens/Estimates](../../../Weil/Mertens/Estimates.md)
