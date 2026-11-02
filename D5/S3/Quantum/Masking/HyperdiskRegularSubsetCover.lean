@@ -240,15 +240,15 @@ private lemma four_phase_zero (a b : ℂ)
     a = 0 ∨ b = 0 := by
   have hm2 := congrArg (fun r : ℝ => r ^ 2) hm
   have hi2 := congrArg (fun r : ℝ => r ^ 2) hi
-  simp only [Complex.sq_norm, Complex.normSq_apply, Complex.add_re, Complex.add_im,
-    Complex.neg_re, Complex.neg_im, Complex.mul_re, Complex.mul_im, Complex.I_re,
-    Complex.I_im, zero_mul, one_mul, zero_sub] at hm2 hi2
+  simp only [Complex.sq_norm, Complex.normSq_add, Complex.normSq_neg, neg_mul,
+    Complex.neg_re, map_mul, Complex.normSq_I, one_mul, mul_assoc,
+    Complex.I_mul_re] at hm2 hi2
   have he : a * conj b = 0 := by
     apply Complex.ext
-    · simp only [Complex.mul_re, Complex.conj_re, Complex.conj_im, Complex.zero_re]
-      nlinarith
-    · simp only [Complex.mul_im, Complex.conj_re, Complex.conj_im, Complex.zero_im]
-      nlinarith
+    · change (a * conj b).re = 0
+      linarith
+    · change (a * conj b).im = 0
+      linarith
   simpa only [map_eq_zero] using (mul_eq_zero.mp he)
 
 private lemma constant_modulus {m : ℕ} (a : Fin m → ℂ) (r : ℝ)
