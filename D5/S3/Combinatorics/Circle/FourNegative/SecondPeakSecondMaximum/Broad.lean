@@ -26,7 +26,11 @@ open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNorma
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
-open private Values values broad_windows range_mass broadBanks broadTerminals broadWord
+open private Values values
+  Values.z Values.w Values.r Values.q Values.x Values.y Values.H Values.S
+  Values.A Values.B Values.L Values.K Values.SU Values.SV Values.SW
+  Values.D Values.Dp Values.E Values.F Values.J
+  broad_windows range_mass broadBanks broadTerminals broadWord
   broadBanks_inventory broadBanks_good
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.BroadData
 
