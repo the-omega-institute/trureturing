@@ -128,11 +128,6 @@ private theorem base_projector_psd {d : ℕ} [NeZero d] :
   intro j
   by_cases hj : j = 0 <;> simp (config := { congrConsts := false }) [hj]
 
-private theorem base_projector_trace {d : ℕ} [NeZero d] :
-    (baseProjector : Matrix (Fin d) (Fin d) ℂ).trace = 1 := by
-  change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).trace = 1
-  simp (config := { congrConsts := false })
-
 private theorem input_projector_psd {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
     (inputProjector u).PosSemidef := by
@@ -146,7 +141,8 @@ private theorem input_projector_trace {d : ℕ} [NeZero d]
     simpa (config := { congrConsts := false }) only [Matrix.star_eq_conjTranspose]
       using Matrix.mem_unitaryGroup_iff'.mp u.2
   rw [hu, Matrix.one_mul]
-  exact base_projector_trace
+  change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).trace = 1
+  exact Matrix.trace_single_eq_same _ _
 
 private theorem input_projector_idempotent {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) :
@@ -202,7 +198,8 @@ private noncomputable def ludersState {d : ℕ} [NeZero d]
   · refine ⟨baseProjector, ?_, ?_⟩
     · change 0 ≤ CStarMatrix.ofMatrix baseProjector
       exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv base_projector_psd.nonneg
-    · exact base_projector_trace
+    · change (Matrix.single (0 : Fin d) 0 (1 : ℂ)).trace = 1
+      exact Matrix.trace_single_eq_same _ _
 
 private noncomputable def sigmaState {d : ℕ} [NeZero d]
     (u : Matrix.unitaryGroup (Fin d) ℂ) : DensityState (Fin d) := by
