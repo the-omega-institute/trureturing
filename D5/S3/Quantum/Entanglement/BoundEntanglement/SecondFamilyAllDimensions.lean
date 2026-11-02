@@ -62,7 +62,7 @@ private def cyclicQbar (d : ℕ) : Fin d → Fin d → ℝ :=
   fun m k => if k = m then 1 else 0
 
 private def cyclicShield (d : ℕ) : Fin d → Fin d × Fin d → ℂ :=
-  fun m p => if p.2 = cyclicShift d m p.1 then (Real.sqrt d : ℂ)⁻¹ else 0
+  fun m p => if p.1 + p.2 = m then (Real.sqrt d : ℂ)⁻¹ else 0
 
 private theorem cyclic_shift_bijective (d : ℕ) (h : 2 ≤ d) (k : Fin d) :
     Function.Bijective (cyclicShift d k) := by sorry
@@ -77,7 +77,14 @@ private theorem cyclic_multiplicity (d : ℕ) (h : 2 ≤ d) (i j : Fin d) :
     (cyclicS d i j) ^ 2 = (d : ℝ) / multiplicity (cyclicS d) (cyclicMu d) (cyclicMu d i j) := by sorry
 
 private theorem cyclic_qbar_orthonormal (d : ℕ) :
-    ∀ m n, ∑ k, cyclicQbar d m k * cyclicQbar d n k = if m = n then 1 else 0 := by sorry
+    ∀ m n, ∑ k, cyclicQbar d m k * cyclicQbar d n k = if m = n then 1 else 0 := by
+  classical
+  intro m n
+  by_cases hmn : m = n
+  · subst n
+    simp [cyclicQbar]
+  · have hnm : n ≠ m := Ne.symm hmn
+    simp [cyclicQbar, hmn, hnm]
 
 private theorem cyclic_shield_orthonormal (d : ℕ) (h : 2 ≤ d) :
     ∀ m n, ∑ x, star (cyclicShield d m x) * cyclicShield d n x = if m = n then 1 else 0 := by sorry
