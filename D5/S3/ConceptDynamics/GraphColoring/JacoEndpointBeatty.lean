@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/ConceptDynamics/GraphColoring/JacoEndpointBeatty
    mirror-E: none(waiver:structural-proof)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [lake/module/D5.S0.Certificates.JacoExponentialDominationRefutation]
    utility: none
    digest: The recursive Jaco endpoint array satisfies its all-order source recurrence. -/
 

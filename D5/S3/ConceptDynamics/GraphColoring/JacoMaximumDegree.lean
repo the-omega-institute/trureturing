@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree
    mirror-E: none(waiver:structural-proof)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoEndpointBeatty]
    utility: none
    digest: Recursive finite Jaco maximum degrees equal literal same-index Zeckendorf deletion. -/
 
