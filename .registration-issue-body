@@ -1,6 +1,0 @@
-The compiled D5 theorem `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelFiniteCodimension.actual_kernel_finite_codimension_coercivity` has a same-unit Reg attempt at `Reg/D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelFiniteCodimension.lean`.
-
-The scoped Lean report is green, but the audit record is `declared_unresolved` with:
-`IE-C050 ClosedTruthReadout key=Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelFiniteCodimension/Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelFiniteCodimension.arena/D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelFiniteCodimension.actual_kernel_finite_codimension_coercivity reason=unclassified_form rule=source.absent_occurrence template_key=D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize`.
-
-The concrete missing evidence is the source binding/readout occurrence classification for the dependent-family realization; the source-selection paths remain raw proposals. This issue records the unfinished four-slot audit under the linked-issue exception. It does not weaken or replace the D5 theorem, which remains the exact full actual-kernel finite-codimension coercivity statement with inclusive moments and grouped-mass strictness.
