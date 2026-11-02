@@ -23,20 +23,6 @@ open D5.S3.Weil.GronwallUpperEnvelope
 
 local notation "Z" => (fun n : ℕ => (ArithmeticFunction.sigma 1 n : ℝ) / n)
 
-private theorem local_reciprocal_prime_bounds {p : ℕ} (hp : p.Prime) :
-    0 < (p : ℝ)⁻¹ ∧ (p : ℝ)⁻¹ < 1 := by
-  exact ⟨inv_pos.mpr (Nat.cast_pos.mpr hp.pos),
-    inv_lt_one_of_one_lt₀ (by exact_mod_cast hp.one_lt)⟩
-
-private theorem local_retention_pos {p : ℕ} (hp : p.Prime) (a : ℕ) :
-    0 < 1 - (p : ℝ)⁻¹ ^ (a + 1) :=
-  sub_pos.mpr (pow_lt_one₀ (local_reciprocal_prime_bounds hp).1.le
-    (local_reciprocal_prime_bounds hp).2 (by omega))
-
-private theorem local_abundancy_pos {n : ℕ} (hn : n ≠ 0) : 0 < Z n :=
-  div_pos (Nat.cast_pos.mpr (ArithmeticFunction.sigma_pos 1 n hn))
-    (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn))
-
 /-- Raising every selected prime by the same number of layers gives the
 actual sigma/n inequality used by the joint envelope. At an insert step,
 factorization_mul and factorization_pow show that all other selected
@@ -61,17 +47,18 @@ private theorem finite_boost_abundancy (S : Finset ℕ) (A : ℕ → ℕ) (b : �
       let k := (1 - (p : ℝ)⁻¹ ^ (A p + 1)) /
         (1 - (p : ℝ)⁻¹ ^ (A p + b + 1))
       have hk : 0 < k :=
-        div_pos (local_retention_pos hp (A p))
-          (local_retention_pos hp (A p + b))
+        div_pos (D5.S3.Weil.PrimeValuationGap.retention_pos hp (A p))
+          (D5.S3.Weil.PrimeValuationGap.retention_pos hp (A p + b))
       have hgain := D5.S3.Weil.PrimeValuationGap.prime_power_abundancy_gain hp hn
         (ha p (Finset.mem_insert_self p S)) b
-      have hcross := (div_le_div_iff₀ (local_retention_pos hp (A p))
-        (local_abundancy_pos hn)).mp hgain
+      have hcross := (div_le_div_iff₀ (D5.S3.Weil.PrimeValuationGap.retention_pos hp (A p))
+        (div_pos (Nat.cast_pos.mpr (ArithmeticFunction.sigma_pos 1 n hn))
+          (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)))).mp hgain
       have hlocal : Z n ≤ k * Z (p ^ b * n) := by
         calc
           Z n ≤ Z (p ^ b * n) * (1 - (p : ℝ)⁻¹ ^ (A p + 1)) /
               (1 - (p : ℝ)⁻¹ ^ (A p + b + 1)) :=
-            (le_div_iff₀ (local_retention_pos hp (A p + b))).mpr
+            (le_div_iff₀ (D5.S3.Weil.PrimeValuationGap.retention_pos hp (A p + b))).mpr
               (by simpa only [mul_comm] using hcross)
           _ = k * Z (p ^ b * n) := by dsimp only [k]; ring
       have hother : ∀ q ∈ S, (p ^ b * n).factorization q ≤ A q := by
@@ -101,10 +88,11 @@ private theorem tendsto_finite_boost_coefficient (S : Finset ℕ)
       (𝓝 (∏ p ∈ S, (1 - (p : ℝ)⁻¹ ^ (A p + 1)))) := by
   apply tendsto_finsetProd S
   intro p hp
-  have hr := local_reciprocal_prime_bounds (hS p hp)
   have hpow : Tendsto (fun b : ℕ => (p : ℝ)⁻¹ ^ (A p + b + 1))
       atTop (𝓝 0) := by
-    have h := (tendsto_pow_atTop_nhds_zero_of_lt_one hr.1.le hr.2).const_mul
+    have h := (tendsto_pow_atTop_nhds_zero_of_lt_one
+      (inv_nonneg.mpr (Nat.cast_nonneg p))
+      (inv_lt_one_of_one_lt₀ (by exact_mod_cast (hS p hp).one_lt))).const_mul
       ((p : ℝ)⁻¹ ^ (A p + 1))
     simpa only [mul_zero, ← pow_add, Nat.add_right_comm (A p) 1] using h
   have h : Tendsto (fun b : ℕ =>
@@ -127,8 +115,8 @@ private theorem fixed_finite_boost_envelope (S : Finset ℕ)
       (1 - (p : ℝ)⁻¹ ^ (A p + b + 1))
   have hc : 0 < c := Finset.prod_pos (fun p hp => pow_pos (hS p hp).pos b)
   have hk : 0 < k := Finset.prod_pos (fun p hp =>
-    div_pos (local_retention_pos (hS p hp) (A p))
-      (local_retention_pos (hS p hp) (A p + b)))
+    div_pos (D5.S3.Weil.PrimeValuationGap.retention_pos (hS p hp) (A p))
+      (D5.S3.Weil.PrimeValuationGap.retention_pos (hS p hp) (A p + b)))
   change k < q at hq
   let η := (q / k - 1) / 2
   have hη : 0 < η := div_pos

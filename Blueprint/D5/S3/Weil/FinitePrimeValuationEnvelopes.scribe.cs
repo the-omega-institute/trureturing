@@ -25,7 +25,11 @@ internal sealed class FinitePrimeValuationEnvelopesDocument : IScribeDocumentDef
                     + "whose selected valuations are bounded. The proof multiplies "
                     + "the public prime-layer gain over S, takes the common layer "
                     + "count before the threshold, and then applies the existing "
-                    + "Gronwall upper envelope."))),
+                    + "Gronwall upper envelope. The exact-fibre lower construction in "
+                    + "ExactPrimeValuationLowerEnvelope matches this endpoint for each "
+                    + "fixed set and exponent function. For the 5040 profile "
+                    + "S={2,3,5,7} with A=(4,2,1,1), the exact retained product is "
+                    + "(31/32)(26/27)(24/25)(48/49)=3224/3675"))),
                 DescribeRole.Theorem))));
 }
 
