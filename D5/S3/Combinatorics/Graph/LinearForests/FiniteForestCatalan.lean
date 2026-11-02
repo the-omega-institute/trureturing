@@ -208,10 +208,10 @@ private lemma partition_add_edge {α R : Type*} [DecidableEq α] [CommRing R]
   dsimp only [H, N] at hH hN
   linear_combination hG - hH + w u * hN
 
-private def catalanIntegerSeries : PowerSeries ℤ :=
+def catalanIntegerSeries : PowerSeries ℤ :=
   PowerSeries.catalanSeries.map (Nat.castRingHom ℤ)
 
-private lemma coeff_partition_phi {α : Type*} [DecidableEq α]
+lemma coeff_partition_phi {α : Type*} [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (m : ℕ) (hm : V.card ≤ m) :
     PowerSeries.coeff m (partition G V (fun _ => -PowerSeries.X) * catalanIntegerSeries) =
       phi G V m := by
@@ -294,7 +294,7 @@ private lemma phi_map {α β : Type*} [DecidableEq α] [DecidableEq β]
   rw [he, Finset.sum_map]
   simp
 
-private lemma phi_subtype {α : Type*} [DecidableEq α]
+lemma phi_subtype {α : Type*} [DecidableEq α]
     (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (m : ℕ) :
     phi (G.induce (V : Set α)) univ m = phi G V m := by
   classical
