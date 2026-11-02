@@ -198,7 +198,7 @@ theorem actual_cutoff_resolvent_payment (p : PNTConstants)
           ← intervalIntegral.integral_of_le hD.le,
           intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => he t)
             ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2))).intervalIntegrable 0 D)]
-        simp only [M, Real.exp_zero, smul_eq_mul]
+        simp only [M, zero_div, Real.exp_zero, smul_eq_mul]
         ring
   have hb : |b D / 2 * Z D x a| ≤ 2 * B p * M D * W D x a := by
     rw [abs_mul, abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
@@ -445,9 +445,9 @@ private lemma growingForm_upper (D : ℝ) (hD : 0 ≤ D)
       simp_rw [div_eq_mul_inv]
       rw [← integral_mul_const, ← integral_mul_const]
       congr 1
-      apply setIntegral_congr_fun measurableSet_Icc
-      intro v _
+      funext v
       ring
+    dsimp only [Function.uncurry, Pi.pow_apply]
     rw [hinner]
     apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
     apply (div_le_iff₀ (g_pos D u)).mpr
