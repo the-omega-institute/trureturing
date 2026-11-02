@@ -32,10 +32,11 @@ internal sealed class WolfordBinomialBirootDocument : IScribeDocumentDefinition
         Call("choose", m, denominator ? Add(Mul(n, k), D(1)) : Mul(n, k)));
     private static Formula SumFormula(bool denominator) => Seq(Sum, Underscore, Grp(Seq(k, Eq, D(0))), Caret,
         Grp(denominator ? Sub(C, D(1)) : C), Sp, Summand(denominator));
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, bool derived = false) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, bool derived = false,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("wolford-" + name), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     public DocumentDefinition Create()
     {
@@ -58,7 +59,10 @@ internal sealed class WolfordBinomialBirootDocument : IScribeDocumentDefinition
                 Call("beta", x, c, n, D(0)), Eq, D(0))),
                 "beta is exactly numerator/denominator at every positive m and is totalized to zero at m=0. This isolated value does not affect atTop convergence.", DescribeRole.Definition),
             Node("result", "Full convergence and denominator domain", statement,
-                "For every positive real x,c and natural n>=1, all positive-index denominators are strictly positive and beta tends to x raised to the reciprocal real n. Real.rpow_pos_of_pos and Real.rpow_inv_natCast_pow identify this as the positive real nth root.", DescribeRole.Theorem, true),
+                "For every positive real x,c and natural n>=1, all positive-index denominators are strictly positive and beta tends to x raised to the reciprocal real n. Real.rpow_pos_of_pos and Real.rpow_inv_natCast_pow identify this as the positive real nth root.", DescribeRole.Theorem, true,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wolford-2025-generalized-binomial-biroot-conjecture-3-4"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The finite state type is ZMod n. shift moves each state to its successor, and walk(a,b)=a*I+b*shift. shift_pow and walk_pow identify every power entry with the complete weighted binomial multisection. matrix_mul_nat is the scalar matrix identity used by walk_pow. walk_nonneg and walk_stochastic establish the stochastic hypotheses. walk_primitive selects the positive binomial summand indexed by the least nonnegative representative of j-i in the nth matrix power; it applies to arbitrary n, including composite n. walk_column identifies the uniform stationary row. walk_limit applies FiniteStochasticMixing.primitive_convergence and its uniqueness conclusion.")),
             Paragraph(Text("residue is the unnormalized weighted multisection. normalized_residue proves its exact scaling to a walk entry, residue_limit transfers entry convergence to 1/n, and residue_ratio_limit takes the ratio using the nonzero limit 1/n. weight, weight_zero and multisection give a finite bijection between source indices and all admissible binomial indices. numerator_residue and denominator_residue prove the literal source reconstruction for n>=2, including padded zero terms and signed exponents. limit_ge_two then transfers the exact quotient limit.")),
             Paragraph(Text("The source denominator for n=1 omits the constant binomial term. denominator_one proves the exact correction x*denominator=residue-c^m. limit_one divides by (c+x)^m and uses geometric decay of (c/(c+x))^m. Thus n=1 is proved from its original indices, without identifying it with the uncorrected residue ratio. result combines this case with limit_ge_two and consumes denominator_pos.")),
