@@ -394,45 +394,5 @@ private theorem physical_mass (a b c d : ℕ) (h : physicalDomain a b c d)
     _ = _ := by
       rw [← Finset.sum_mul,local_sums a b c d h bank chain,model_masks a b c d h bank chain]
 
--- One private, consumed certificate for the future endpoint: complete/disjoint
--- inventory, the four terminal labels, literal rational masses, positivity,
--- and the exact branch choices/parameter identities needed by the sealed model.
-private theorem physical_certificate (a b c d : ℕ) (h : physicalDomain a b c d) :
-    (∀ bank : Fin 4, ∀ i ∈ physicalBank a b c d bank,
-      i < size a b c d ∧ i ∉ negatives a b c d) ∧
-    (∀ bank other : Fin 4, bank ≠ other →
-      Disjoint (physicalBank a b c d bank) (physicalBank a b c d other)) ∧
-    ((Finset.univ : Finset (Fin 4)).biUnion (physicalBank a b c d) =
-      Finset.range (size a b c d) \ (negatives a b c d).toFinset) ∧
-    Function.Injective (terminal a b c d) ∧
-    (∀ r : Fin 4, terminal a b c d r < size a b c d) ∧
-    (Finset.univ.image (terminal a b c d) = (negatives a b c d).toFinset) ∧
-    (∀ (isNew : Bool) (bank : Fin 4),
-      (∑ i ∈ physicalBank a b c d bank, physicalValue a b c d isNew i) =
-        qMass ((2:ℚ)^c) (2^a) (2^(d-a)) (2^(b-a-1))
-          (rWeight a b c d) (eWeight a b) isNew bank) ∧
-    (∀ bank : Fin 4, ∀ i ∈ physicalBank a b c d bank,
-      0 < oldValue a b c d i ∧ 0 < newValue a b c d i) ∧
-    (eWeight a b = (if b ≤ 2*a-2 then 0 else (2:ℚ)^(b+1-2*a))) ∧
-    (rWeight a b c d = (if b-d ≤ 2*c-1 then 0 else
-      if eOn a b ∧ d+2*c+1=2*a then 2*(2:ℚ)^(b-d-2*c)
-      else (2:ℚ)^(b-d-2*c))) ∧
-    ((2:ℚ)^(d-a)*2^(b-d-1) = 2^(b-a-1)) ∧
-    (eOn a b → (2:ℚ)^(b-a-1) = (2:ℚ)^a*eWeight a b/4) ∧
-    (rOn b c d → (2:ℚ)^(b-a-1) =
-      (2:ℚ)^(d-a)*((2:ℚ)^c)^2*2^(b-d-2*c)/2) := by
-  obtain ⟨htinj,htbound,htset⟩ := terminal_inventory a b c d h
-  obtain ⟨he,hr⟩ := reservation_choices a b c d h
-  obtain ⟨hqt,hqe,hqr⟩ := physical_regimes a b c d h
-  refine ⟨physical_internal a b c d h,physical_disjoint a b c d h,
-    physical_cover a b c d h,htinj,htbound,htset,physical_mass a b c d h,
-    ?_,he,hr,hqt,hqe,hqr⟩
-  intro bank i hi
-  obtain ⟨hbound,hn⟩ := physical_internal a b c d h bank i hi
-  have ha : 2 ≤ a := by rcases h with ⟨hc,ha,hd,hb⟩; omega
-  have hb : 2 ≤ b := by rcases h with ⟨hc,ha,hd,hb⟩; omega
-  have hc : 2 ≤ c := h.1
-  have hd : 2 ≤ d := by rcases h with ⟨hc,ha,hd,hb⟩; omega
-  simpa only [if_neg hn] using source_signs a b c d ha hb hc hd i hbound
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail
