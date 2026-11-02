@@ -75,6 +75,16 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
             Node("inverse_component_boolean_coefficient", "Exact coefficients of the shifted inverse component", StatementSource.FromAuthor(BooleanCoefficientFormula()),
                 "For every m, mask b and finite cyclic-coordinate set s, extract the coefficient of z ↦ inverseComponent(m,b)(1+z). Each inverse term contributes the prefix monomial and the prefix with its endpoint i+2r inserted, weighted by b_i. Equality of finite sets decides whether each contributes at s. This statement includes all masks and length one, with no distinct-index premise.", DescribeRole.Theorem),
             Paragraph(Text("Binary idempotence identifies a product over repeated coordinates with its squarefree monomial. After y=1+z the alternating prefix becomes the monomial on prefixVariables(i,r), and its endpoint factor is 1+z_(i+2r). The coefficient formula follows by linearity of extraction and the subset-cancellation identity. No Boolean normal-form uniqueness or coefficient vanishing is assumed.")),
+            Node("monomialDerivativeCoeff", "Exact monomial derivative coefficients", StatementSource.WithoutFormula(),
+                "At variable sets t,s and direction u, this is the product of u on t minus s when s is a subset of t, plus one when s=t; absent contributions are zero. Product expansion and coefficient extraction prove that this is the coefficient at s of z ↦ booleanMonomial(t,z+u)+booleanMonomial(t,z).", DescribeRole.Definition),
+            Node("inverse_component_derivative_coefficients", "Necessary coefficient equations for a constant inverse derivative", StatementSource.FromAuthor(DerivativeCoefficientFormula()),
+                "For every m, b,u and nonempty finite set s, if the derivative of the actual inverse component in direction u is constant on all words, the displayed sum of its monomial derivative coefficients is zero. The proof translates by the all-one word and extracts the coefficient from actual functions. It assumes neither a degree argument nor the intended mask classification.", DescribeRole.Theorem),
+            Node("topVariables", "Highest-degree cyclic variable sets", StatementSource.WithoutFormula(),
+                "The set topVariables(m,i) is prefixVariables(i,m) with coordinate i+2m inserted. It has m+1 elements. Its coordinate sum has slope m+1 as a function of i; multiplication by two in the odd cycle inverts that slope, so the sets for distinct i are distinct.", DescribeRole.Definition),
+            Node("inverse_component_top_coefficient", "Highest-degree coefficients recover every mask bit", StatementSource.FromAuthor(TopCoefficientFormula()),
+                "For every m, b and cyclic coordinate i, the coefficient of the shifted inverse component at topVariables(m,i) is exactly b_i. Cardinality excludes every shorter prefix and endpoint term; injectivity of the highest-degree variable sets leaves exactly the term indexed by i. Length one and zero masks are included.", DescribeRole.Theorem),
+            Node("inverse_component_top_derivative", "The degree-m derivative equation", StatementSource.FromAuthor(TopDerivativeFormula()),
+                "For every positive m and constant derivative direction u of the inverse component, and every finite coordinate set s of cardinality m, the sum over i of b_i times the product of u on topVariables(m,i) minus s, with zero contribution unless s is a subset, vanishes. A derivative of a monomial of degree at most m has zero degree-m coefficient; hence only the degree-(m+1) endpoint terms survive. The statement includes m=1 but does not claim the subsequent overlap classification.", DescribeRole.Theorem),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
             Paragraph(Text("The affine-span duality is proved above. The affine-support assertion still requires the complete classification of constant derivative directions for every nonzero inverse-component mask, including the cyclic top-overlap and lower-coefficient arguments for lengths at least five, the length-three polar case and assembly with length one. The coefficient formula alone does not establish that classification or settle the dimension bound."))
         ), []));
@@ -183,9 +193,43 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
         Formula endpoint = Plus(i, Times(D(2), r));
         Formula rhs = Sum("i", Call("ZMod", n), Sum("r", Call("range", Plus(m, D(1))),
             Times(Call("b", i), Plus(delta(p), delta(Call("insert", endpoint, p))))));
-        Formula shifted = new Formula.Bind(FormulaQuantifier.Lambda, FormulaIdentifier.Create("z"), Word(n),
+        Formula shifted = Seq(Grp(F.Id("z"), F.Colon, Word(n)), F.Mapsto,
             Call("inverseComponent", m, b, Plus(D(1), F.Id("z"))));
         return Disp(All("m", Named("Nat"), All("b", Word(n),
             All("s", Call("Finset", Call("ZMod", n)), Eq(Call("booleanCoeff", shifted, s), rhs)))));
+    }
+    private static Formula DerivativeCoefficientFormula()
+    {
+        Formula m = F.Id("m"), b = F.Id("b"), u = F.Id("u"), s = F.Id("s"),
+            i = F.Id("i"), r = F.Id("r"), y = F.Id("y"), n = OddLength(m), p = Call("prefixVariables", i, r);
+        Formula constant = Some("c", Call("ZMod", D(2)), All("y", Word(n),
+            Eq(Plus(Call("inverseComponent", m, b, Plus(y, u)), Call("inverseComponent", m, b, y)), F.Id("c"))));
+        Formula rhs = Sum("i", Call("ZMod", n), Sum("r", Call("range", Plus(m, D(1))),
+            Times(Call("b", i), Plus(Call("monomialDerivativeCoeff", p, s, u),
+                Call("monomialDerivativeCoeff", Call("insert", Plus(i, Times(D(2), r)), p), s, u)))));
+        return Disp(All("m", Named("Nat"), All("b", Word(n), All("u", Word(n),
+            Imp(constant, All("s", Call("Finset", Call("ZMod", n)),
+                Imp(Call("Nonempty", s), Eq(rhs, D(0)))))))));
+    }
+    private static Formula TopCoefficientFormula()
+    {
+        Formula m = F.Id("m"), b = F.Id("b"), i = F.Id("i"), n = OddLength(m);
+        Formula shifted = Seq(Grp(F.Id("z"), F.Colon, Word(n)), F.Mapsto,
+            Call("inverseComponent", m, b, Plus(D(1), F.Id("z"))));
+        return Disp(All("m", Named("Nat"), All("b", Word(n), All("i", Call("ZMod", n),
+            Eq(Call("booleanCoeff", shifted, Call("topVariables", m, i)), Call("b", i))))));
+    }
+    private static Formula TopDerivativeFormula()
+    {
+        Formula m = F.Id("m"), b = F.Id("b"), u = F.Id("u"), s = F.Id("s"),
+            i = F.Id("i"), y = F.Id("y"), n = OddLength(m), t = Call("topVariables", m, i);
+        Formula constant = Some("c", Call("ZMod", D(2)), All("y", Word(n),
+            Eq(Plus(Call("inverseComponent", m, b, Plus(y, u)), Call("inverseComponent", m, b, y)), F.Id("c"))));
+        Formula summand = Times(Call("b", i), Call("ite", Call("subset", s, t),
+            Call("booleanMonomial", Call("sdiff", t, s), u), D(0)));
+        return Disp(All("m", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, m),
+            All("b", Word(n), All("u", Word(n), Imp(constant,
+                All("s", Call("Finset", Call("ZMod", n)), Imp(Eq(Call("card", s), m),
+                    Eq(Sum("i", Call("ZMod", n), summand), D(0)))))))));
     }
 }
