@@ -5,8 +5,6 @@ import Reg.D5.S3.Arith.Robin.GA2ForcedPrimeSource
 
 set_option autoImplicit false
 
-/- Candidate audit source for the new owner; this file is intentionally unelaborated
-and carries no declared_validated or binding claim. -/
 set_option relaxedAutoImplicit false
 
 noncomputable section
@@ -36,10 +34,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨N, _, hN⟩ := h ∅ (by simp) (fun _ => 0) (1 / 2) (by norm_num)
   have hbad := hN N le_rfl (by simp)
-  norm_num [rejected, realize] at hbad
+  change (2 : ℝ) ≤ 1 + (1 / 2 : ℝ) at hbad
+  norm_num at hbad
 
 def family : Registration arena
-    (type_of% @_root_.D5.S3.Weil.FinitePrimeValuationEnvelopes.bounded_finite_prime_valuation_robin_ratio) where
+    (type_of%
+      @_root_.D5.S3.Weil.FinitePrimeValuationEnvelopes.bounded_finite_prime_valuation_robin_ratio) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨
@@ -50,7 +50,8 @@ def family : Registration arena
   dependence := _root_.Reg.D5.S3.Arith.Robin.GA2ForcedPrimeSource.actual_dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@_root_.D5.S3.Weil.FinitePrimeValuationEnvelopes.bounded_finite_prime_valuation_robin_ratio)
+    (@_root_.D5.S3.Weil.FinitePrimeValuationEnvelopes.bounded_finite_prime_valuation_robin_ratio
+    )
     (Realization signature) Unit Unit where
   unitName :=
     `D5.S3.Weil.FinitePrimeValuationEnvelopes.bounded_finite_prime_valuation_robin_ratio.__information_unit
@@ -82,7 +83,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[] }
+  options := #[]
 
 #print axioms rejected_law
 #print axioms family

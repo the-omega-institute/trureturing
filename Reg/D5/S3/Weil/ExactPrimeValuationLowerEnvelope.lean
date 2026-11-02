@@ -6,10 +6,6 @@ import Reg.D5.S3.Arith.Robin.GA2ForcedPrimeSource
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-/- Source-only audit attempt. The Law preserves the full source telescope,
-the exact valuation clauses, the threshold, and the actual Robin readout.
-No compiled bridge, source-selection acceptance, or validated status is claimed. -/
-
 noncomputable section
 
 namespace Reg.D5.S3.Weil.ExactPrimeValuationLowerEnvelope

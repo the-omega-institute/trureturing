@@ -25,7 +25,7 @@ internal sealed class PrimeValuationGapDocument : IScribeDocumentDefinition
                 H("Normalized divisor sum after adjoining a prime power"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every prime p, every natural m coprime to p, and every natural exponent a, sigma one of p^a m divided by p^a m equals the exact geometric local factor times sigma one m divided by m. The case m=0 is retained."))),
+                Blocks(Paragraph(Text("For every prime p, every natural m coprime to p, and every natural exponent a, sigma one of p^a m divided by p^a m equals the exact geometric local factor times sigma one m divided by m. The case a=0 is retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("fixed-loglog-scale"),
