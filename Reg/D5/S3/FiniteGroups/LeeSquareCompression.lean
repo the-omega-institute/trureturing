@@ -385,4 +385,65 @@ noncomputable def upperRegistration :
   familyRecord := none
   options := #[] }
 
+abbrev latticeArena : Arena where
+  signature := liftSignature
+  Law R := ∀ (K : Submodule ℤ Plane) {c s : ℤ} (_ : 2 ≤ c) (_ : 3 ≤ s)
+    (_ : ∀ z ∈ K, c ∣ z 0 ∧ c ∣ z 1)
+    (_ : ∀ z : Plane, ∃ r : Plane, |r 0|+|r 1| ≤ s ∧ z-r ∈ K),
+    R.readout () () K ≤ 2*s^2 ∨
+      (Odd c ∧ c ∣ 2*s+1 ∧ 2*R.readout () () K ≤ (2*s+1)^2-c^2)
+private theorem latticeRejected_law : ¬ latticeArena.Law liftRejected := by
+  intro h
+  have hh := h (grid 3) (c := 3) (s := 3) (by norm_num) (by norm_num)
+    (fun _ hz => grid_div 3 hz) (by
+      intro z
+      obtain ⟨r,hr,hmem⟩ := grid_cover 1 z
+      exact ⟨r, by norm_num at hr ⊢; omega, hmem⟩)
+  norm_num [liftRejected,realize] at hh
+noncomputable def latticeSource : Registration latticeArena (type_of% (@lattice_upper_bound)) where
+  actual := liftActual
+  bridge := Iff.rfl
+  variation := ⟨lattice_upper_bound, liftRejected, latticeRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨liftRejected, ?_, rfl, latticeRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := liftSource.dependence
+noncomputable def latticeRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@lattice_upper_bound) (Realization liftSignature) Unit Unit := {
+  unitName := `D5.S3.FiniteGroups.LeeSquareCompression.lattice_upper_bound.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.LeeSquareCompression.latticeSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨latticeArena⟩
+  objectArena := .source ⟨latticeArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source latticeArena ⟨latticeSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize liftSignature
+    (fun _ _ K => (K.toAddSubgroup.index : ℤ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.LeeSquareCompression
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","fn","arg","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end Reg.D5.S3.FiniteGroups.LeeSquareCompression
