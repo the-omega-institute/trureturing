@@ -39,7 +39,7 @@ internal sealed class TerminatedHistoriesDocument : IScribeDocumentDefinition
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Nat() => Seq(Mathbb, Grp(X("N")));
     private static Formula Pair(Formula a, Formula b) => Seq(Open, a, Comma, b, Close);
-    private static Formula Point() => Seq(Nat(), Times, X("V"));
+    private static Formula Point() => Seq(Nat(), Times, Sp, X("V"));
     private static Formula Some(Formula a) => Call("some", a);
     private static Formula Hist(Formula n, Formula v) => Call("history", X("x"), n, v, X("z"));
     private static Formula Src(Formula n, Formula v) => Call("source", X("x"), n, v, X("z"));
