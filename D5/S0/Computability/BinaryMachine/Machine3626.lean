@@ -51,7 +51,6 @@ namespace D5.S0.Computability.BinaryMachine.Machine3626
 
 inductive State
   | A | B
-  deriving DecidableEq
 
 /-- The left list starts at the scanned cell; absent cells are blank zero.
 The right list ends at the fixed right boundary. Both lists have unbounded length. -/

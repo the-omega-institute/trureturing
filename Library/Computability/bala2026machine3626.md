@@ -19,6 +19,10 @@ OEIS A393210, revision 18, records Peter Bala's conjecture of September 11,
 machine 3626. A069517, revision 31, records the same question with the two
 sides interchanged. These records describe one question.
 
+The source conjecture line in A393210 is:
+
+> Conjecture: a(n) = Sum_{d | n} m(d)^2 * phi(d), where m(n) = Sum_{d | n} (-1)^(d+1) * moebius(d) = A069517(n) and phi(n) denotes Euler's totient function A000010(n). Cf. A296306.
+
 The arithmetic prerequisites are published in A069517: multiplicativity
 and the values 2 on positive powers of 2 and 0 on positive powers of odd
 primes. The signed sum has value 1 at 1. These are reused arithmetic
