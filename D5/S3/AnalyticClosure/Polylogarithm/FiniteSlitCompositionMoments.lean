@@ -157,7 +157,7 @@ theorem result (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
               (((CompositionBoundary.zeta head tail)⁻¹ ^ (ell : ℕ) : ℝ) : ℂ) := by
           rw [Complex.ofReal_pow, Complex.ofReal_inv]
         rw [hreal]
-        simp
+        simpa only [Complex.ofReal_im, neg_zero] using (le_rfl : (0 : ℝ) ≤ 0)
       · simp
     · have hpos : 0 < x - 1 := by
         have : 1 < x := lt_of_le_of_ne hx.1 (Ne.symm hx1)
