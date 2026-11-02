@@ -60,6 +60,8 @@ private theorem max_iff_weight (k j : ℕ) :
 private theorem strict_before (k r : ℕ) (hr : r + 1 < mode k) :
     weight k r < weight k (r + 1) := by
   have hm := mode_rises k
+  have hmd := hm.1
+  have hmc := hm.2
   have hdom : 2 * (r + 1) ≤ k := by omega
   have hcomp := second_mono (show k - 2 * mode k ≤ k - 2 * (r + 1) by omega)
   have ht : 4 * (r + 1) < second (k - 2 * (r + 1)) := by omega
@@ -98,10 +100,12 @@ private theorem adjacent_equal (k r : ℕ) (hr : 2 * (r + 1) ≤ k) :
     rw [this] at he
     nlinarith
 
-private theorem tie_is_mode (k r : ℕ) (hr : 1 ≤ r) (hk : 2 * r ≤ k)
+private theorem tie_is_mode (k r : ℕ) (hk : 2 * r ≤ k)
     (he : second (k - 2 * r) = 4 * r) : r = mode k := by
   have hle : r ≤ mode k := le_mode ⟨hk, he.ge⟩
   have hm := mode_rises k
+  have hmd := hm.1
+  have hmc := hm.2
   have hc := second_mono (show k - 2 * mode k ≤ k - 2 * r by omega)
   omega
 
@@ -122,7 +126,7 @@ private theorem tie_characterization (k : ℕ) :
     have ht := (adjacent_equal k s (by omega)).mp heq
     simpa only [hss] using ht
   · rintro ⟨r, hr, hk, he⟩
-    have hm := tie_is_mode k r hr hk he
+    have hm := tie_is_mode k r hk he
     have heq : weight k (r - 1) = weight k r := by
       have hh : r - 1 + 1 = r := by omega
       simpa only [hh] using (adjacent_equal k (r - 1) (by omega)).mpr (by simpa only [hh] using he)
@@ -138,5 +142,103 @@ private theorem tie_characterization (k : ℕ) :
     · rintro (rfl | rfl)
       · exact ⟨r, hk, rfl, by rw [← hm]⟩
       · exact ⟨r - 1, by omega, rfl, by rw [← hm]; exact heq⟩
+
+private theorem a_odd (t : ℕ) :
+    a (2 * t + 1) = 8 * (t : ℤ) ^ 2 + 18 * (t : ℤ) + 8 := by
+  unfold a
+  rw [show 2 * t + 1 + 1 = 2 * (t + 1) by omega, pow_mul]
+  norm_num
+  ring
+
+private theorem a_even (t : ℕ) :
+    a (2 * t + 2) = 8 * (t : ℤ) ^ 2 + 22 * (t : ℤ) + 13 := by
+  unfold a
+  rw [show 2 * t + 2 + 1 = 2 * (t + 1) + 1 by omega, pow_add, pow_mul]
+  norm_num
+  ring
+
+private theorem a_strictMono : StrictMono a := by
+  apply strictMono_nat_of_lt_succ
+  intro n
+  have hpow : (-1 : ℤ) ^ (n + 1 + 1) = -((-1 : ℤ) ^ (n + 1)) := by
+    rw [pow_succ]; ring
+  unfold a
+  rw [hpow]
+  push_cast
+  rcases neg_one_pow_eq_or ℤ (n + 1) with h | h <;> rw [h] <;> nlinarith
+
+private theorem a_positive (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
+  have hone : a 1 = 8 := by norm_num [a]
+  have hh := a_strictMono.monotone hn
+  rw [hone] at hh
+  omega
+
+private theorem tie_orders (k : ℕ) :
+    (∃ r : ℕ, 1 ≤ r ∧ 2 * r ≤ k ∧ second (k - 2 * r) = 4 * r) ↔
+      ∃ n : ℕ, 1 ≤ n ∧ (k : ℤ) = a n := by
+  constructor
+  · rintro ⟨r, hr, hk, he⟩
+    let j := k - 2 * r
+    have hjk : k = j + 2 * r := by dsimp [j]; omega
+    have he' : (j + 1) * (j + 2) = 4 * r := he
+    have hmod := congrArg (fun x : ℕ => x % 4) he'
+    have hrem : j % 4 = 0 ∨ j % 4 = 1 ∨ j % 4 = 2 ∨ j % 4 = 3 := by omega
+    have hrem' : j % 4 = 2 ∨ j % 4 = 3 := by
+      rcases hrem with h | h | h | h
+      · norm_num [Nat.add_mod, Nat.mul_mod, h] at hmod
+      · norm_num [Nat.add_mod, Nat.mul_mod, h] at hmod
+      · exact Or.inl h
+      · exact Or.inr h
+    let t := j / 4
+    rcases hrem' with h | h
+    · have hj : j = 4 * t + 2 := by dsimp [t]; omega
+      rw [hj] at hjk he'
+      have hv : k = 8 * t ^ 2 + 18 * t + 8 := by nlinarith [he']
+      refine ⟨2 * t + 1, by omega, ?_⟩
+      rw [a_odd, hv]
+      push_cast
+      ring
+    · have hj : j = 4 * t + 3 := by dsimp [t]; omega
+      rw [hj] at hjk he'
+      have hv : k = 8 * t ^ 2 + 22 * t + 13 := by nlinarith [he']
+      refine ⟨2 * t + 2, by omega, ?_⟩
+      rw [a_even, hv]
+      push_cast
+      ring
+  · rintro ⟨n, hn, he⟩
+    let t := (n - 1) / 2
+    have hsplit : n = 2 * t + 1 ∨ n = 2 * t + 2 := by dsimp [t]; omega
+    rcases hsplit with h | h
+    · rw [h, a_odd] at he
+      have hv : k = 8 * t ^ 2 + 18 * t + 8 := by exact_mod_cast he
+      refine ⟨(4 * t + 3) * (t + 1), by nlinarith, ?_, ?_⟩
+      · nlinarith [hv]
+      · have hsum : k = 2 * ((4 * t + 3) * (t + 1)) + (4 * t + 2) := by nlinarith [hv]
+        have hj : k - 2 * ((4 * t + 3) * (t + 1)) = 4 * t + 2 := by omega
+        rw [hj]
+        unfold second
+        ring
+    · rw [h, a_even] at he
+      have hv : k = 8 * t ^ 2 + 22 * t + 13 := by exact_mod_cast he
+      refine ⟨(4 * t + 5) * (t + 1), by nlinarith, ?_, ?_⟩
+      · nlinarith [hv]
+      · have hsum : k = 2 * ((4 * t + 5) * (t + 1)) + (4 * t + 3) := by nlinarith [hv]
+        have hj : k - 2 * ((4 * t + 5) * (t + 1)) = 4 * t + 3 := by omega
+        rw [hj]
+        unfold second
+        ring
+
+/-- The complete original A381737 assertion, including exhaustion and unique indexing. -/
+theorem result : claim := by
+  refine ⟨a_positive, fun n m _ h => a_strictMono h, ?_⟩
+  intro k
+  rw [tie_characterization, tie_orders]
+  constructor
+  · rintro ⟨n, hn, he⟩
+    refine ⟨n, ⟨hn, he⟩, ?_⟩
+    rintro m ⟨hm, hem⟩
+    exact a_strictMono.injective (hem.symm.trans he)
+  · rintro ⟨n, hn, _⟩
+    exact ⟨n, hn⟩
 
 end D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders
