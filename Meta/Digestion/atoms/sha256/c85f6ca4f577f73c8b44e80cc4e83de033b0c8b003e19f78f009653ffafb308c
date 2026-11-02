@@ -1,0 +1,50 @@
+### 引理 2：这个有限矩阵保留了实际正能量尺度
+
+对所有窗口内读出，
+
+$$
+\boxed{
+Q_P(\mu)\geq(C\mu)^*G_*(C\mu).
+}
+$$
+<a id="eq-26"></a>
+<div class="equation-caption">Equation (26).</div>
+
+**证明。**
+
+$P$ 的第一项为
+
+$$
+\frac16e^{-\lambda|t|},
+$$
+
+其余各项仍是正核，所以
+
+$$
+Q_P(\mu)\geq\frac16Q_{e^{-\lambda|\cdot|}}(\mu).
+$$
+
+指数核的 Fourier 变换为
+
+$$
+\frac{2\lambda}{\lambda^2+\xi^2}.
+$$
+
+将帽函数在窗口外以端点指数函数延拓，其对偶能量正好是式 (24)。Fourier Cauchy–Schwarz 给出
+
+$$
+|z^*C\mu|^2
+\leq
+Q_{e^{-\lambda|\cdot|}}(\mu)\,z^*Mz.
+$$
+
+对 $z$ 取上确界，
+
+$$
+Q_{e^{-\lambda|\cdot|}}(\mu)
+\geq
+(C\mu)^*M^{-1}(C\mu).
+$$
+
+乘以 $1/6$ 即得。证毕。
+
