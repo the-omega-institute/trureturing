@@ -46,6 +46,10 @@ $$\neg (\forall a: Real, \operatorname{D5}.\operatorname{S3}.\operatorname{Analy
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/YangChuZhangPsiCM/Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ycz2015-psicm` (refuted) by `D5/S3/Analytic/YangChuZhangPsiCM/Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ycz2015-psicm","declaration_gid":"D5/S3/Analytic/YangChuZhangPsiCM/Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhen-Hang Yang, Yu-Ming Chu and Xiao-Hui Zhang (2015). *Necessary and sufficient conditions for functions involving the psi function to be completely monotonic*. DOI: [10.1186/s13660-015-0674-8](https://doi.org/10.1186/s13660-015-0674-8). URL: <https://arxiv.org/abs/1409.6411v1>.

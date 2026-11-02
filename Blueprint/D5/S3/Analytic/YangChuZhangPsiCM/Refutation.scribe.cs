@@ -32,7 +32,9 @@ internal sealed class RefutationDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("ycz2015-psicm"), ResolutionKind.Refuted) : null);
 
     private static Formula RFormula()
     {
