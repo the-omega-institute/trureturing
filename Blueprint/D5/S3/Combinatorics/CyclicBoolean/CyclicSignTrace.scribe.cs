@@ -9,7 +9,7 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The cyclic Boolean map has an explicit inverse at every positive odd length. Integer Walsh inversion supplies nonempty spectral support.",
+        "The ordered integer sign-matrix trace equals its cyclic Boolean phase sum at every positive length. The cyclic Boolean map has an explicit inverse at every positive odd length, where integer Walsh inversion supplies nonempty trace support.",
         H("Odd cyclic Boolean inversion and the sign-matrix trace"),
         Blocks(
             Node("Word", "Binary words on a cyclic index set", StatementSource.WithoutFormula(),
@@ -25,7 +25,7 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
             Node("traceSupport", "Nonzero trace support", StatementSource.WithoutFormula(),
                 "The trace support consists of every a for which the literal ordered integer trace is nonzero. No word a is excluded.", DescribeRole.Definition),
             Node("claim", "The full affine-support question", StatementSource.WithoutFormula(),
-                "For every natural m and every nonzero b of length 2m+1, the direction of the affine span over ZMod 2 of the trace support has dimension at least 2m. The parameter m runs from zero, so this is exactly all positive odd lengths, including length one. The inequality is a lower bound, not an equality. This definition states the question; the inverse and Walsh results below do not prove it.", DescribeRole.Definition),
+                "For every natural m and every nonzero b of length 2m+1, the direction of the affine span over ZMod 2 of the trace support has dimension at least 2m. The parameter m runs from zero, so this is exactly all positive odd lengths, including length one. The inequality is a lower bound, not an equality. This definition states the question; the trace, inverse and Walsh results below do not prove its dimension bound.", DescribeRole.Definition),
             Node("alternatingPrefix", "Alternating products", StatementSource.WithoutFormula(),
                 "The alternating prefix at i of length t is the product, for r from zero through t-1, of 1+y_(i+2r+1). The empty product is one.", DescribeRole.Definition),
             Node("inverse", "The inverse polynomial", StatementSource.WithoutFormula(),
@@ -47,11 +47,15 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
             Node("inverse_phase_sum", "The exact inverse-component orientation", StatementSource.FromAuthor(PhaseFormula()),
                 "For every m and all masks b,a, the sum over x of sign(dot(b,x)+dot(a,chi(x))) is the Walsh coefficient at a of the inverse component associated with b. Reindex by the proved bijection chi and use its left inverse identity. Zero and all-one masks are included.", DescribeRole.Theorem),
             Node("inverse_phase_support_nonempty", "The cyclic Boolean phase support is nonempty", StatementSource.FromAuthor(PhaseNonemptyFormula()),
-                "For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. It is a statement about the phase sum; identification with the literal source trace remains a separate requirement.", DescribeRole.Theorem),
+                "For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. The trace identity below therefore also makes the literal source trace support nonempty, without any assumption on b.", DescribeRole.Theorem),
             Node("walsh_constant_derivative_iff", "Constant Boolean derivatives and Walsh support", StatementSource.FromAuthor(WalshDerivativeFormula()),
-                "For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; it does not yet identify the affine-span dimension or the trace support.", DescribeRole.Theorem),
+                "For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; identifying the affine-span dimension still requires a separate argument.", DescribeRole.Theorem),
+            Node("sourceTrace_eq_phase_sum", "The ordered trace is the exact Boolean phase sum", StatementSource.FromAuthor(TracePhaseFormula()),
+                "At every positive length n and for all words b,a, the literal ordered matrix trace is the sum over every x of sign(dot(b,x)+dot(a,chi(x))). Length one and all coincident cyclic indices are included. This identity also applies to even lengths; oddness is needed only for the inverse construction.", DescribeRole.Theorem),
+            Paragraph(Text("For a list of r+1 matrices, expand its (i,j) entry over all r intermediate states. The row tuple is i followed by the intermediate states; the column tuple is those states followed by j. Induction uses the first matrix factor and the ordinary Matrix.mul entry formula, preserving the complete list order. Taking the trace identifies j with i. Joining the initial state to the intermediate tuple gives every cyclic path exactly once; the final column is the initial state, including for a one-factor product.")),
+            Paragraph(Text("The path product is the sign of the sum of its entry exponents. Reindex the a_(k-2)x_k term by k=i+2 and the a_(k-1)x_k x_(k+1) term by k=i+1. The coefficient of a_i becomes x_i+x_(i+2)+x_(i+1)x_(i+2), exactly chi(x)_i. These are bijections of the actual cyclic index set, so repeated indices need no separate independence assumption. Combining this identity with the inverse phase formula identifies traceSupport(b) with the nonzero Walsh support of inverseComponent(m,b) at every odd length. The established phase nonemptiness thus supplies trace nonemptiness.")),
             Paragraph(Text("The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.")),
-            Paragraph(Text("The affine-support assertion still requires the equality of the ordered matrix trace with the Boolean phase sum, the corresponding affine-span dimension identity, and the complete coefficient classification for every nonzero inverse-component mask. The constant-derivative/Walsh-support equivalence above does not by itself identify the trace support or settle the dimension bound."))
+            Paragraph(Text("The affine-support assertion still requires the affine-span dimension identity and the complete coefficient classification for every nonzero inverse-component mask. The trace identity and the constant-derivative/Walsh-support equivalence identify the relevant support and its constant characters, but do not by themselves settle the dimension bound."))
         ), []));
 
     private static DocumentBlock Node(string name, string title, StatementSource statement, string prose, DescribeRole role) =>
@@ -109,6 +113,14 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
         return Disp(All("m", Named("Nat"), All("b", w, All("a", w,
             Eq(Sum("x", w, Call("sign", Plus(Call("dot", b, x), Call("dot", a, Call("chi", x))))),
                 Call("walsh", Call("inverseComponent", m, b), a))))));
+    }
+    private static Formula TracePhaseFormula()
+    {
+        Formula n = F.Id("n"), b = F.Id("b"), a = F.Id("a"), x = F.Id("x"), w = Word(n);
+        return Disp(All("n", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, n),
+            All("b", w, All("a", w,
+                Eq(Call("sourceTrace", b, a),
+                    Sum("x", w, Call("sign", Plus(Call("dot", b, x), Call("dot", a, Call("chi", x))))))))));
     }
     private static Formula WalshDerivativeFormula()
     {
