@@ -19,7 +19,7 @@ internal sealed class PrescribedSubdivisionHomologyDocument : IScribeDocumentDef
             Node("n3", "positiveIso", "The final path carrier",
                 "At the prescribed positive multiplicities, the partial graph is isomorphic to the actual prescribed-subdivision graph on original vertices and indexed internal path vertices."),
             Node("n4", "reducedHomologyIsoOfAdjacency", "The total homology shift",
-                "For finite nonempty original vertices, finite edge indices, injective unordered endpoint pairs, an exact endpoint adjacency inventory for G and q at least one, the actual prescribed graph has reduced integral singular homology in degree q plus the sum of multiplicities isomorphic to that of G in degree q. Well-founded recursion on the total multiplicity proves the iteration without a nested expanded carrier."))));
+                "For finite original vertex and edge types, injective unordered endpoint pairs, an exact endpoint adjacency inventory for G and q at least one, the actual prescribed graph has reduced integral singular homology in degree q plus the sum of multiplicities isomorphic to that of G in degree q. Well-founded recursion on the total multiplicity proves the iteration without a nested expanded carrier."))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),

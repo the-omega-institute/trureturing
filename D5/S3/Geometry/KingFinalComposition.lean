@@ -4,10 +4,7 @@
    mirror-E: none(waiver:finite-graph-singular-homology)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Geometry/KingFinalComposition.claim; result=D5/S3/Geometry/KingFinalComposition.result; claim=D5/S3/Geometry/KingFinalComposition.claim
-   digest: The actual selected king-grid graph has an integral singular class
-     of order two in degree 31327, via canonical prescribed-path induction
-     and the retained seed class; arbitrary-family sourceSP is contradicted.
--/
+   digest: The selected induced king-grid graph has nonzero integral singular 2-torsion in degree 31327 and refutes arbitrary-family sourceSP. -/
 
 import D5.S3.Geometry.FiniteGraphSuspensionMoves
 import D5.S3.Geometry.PrescribedSubdivisionHomology
@@ -40,7 +37,6 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 1000000
-set_option maxHeartbeats 0
 
 open CategoryTheory
 open scoped BigOperators
@@ -87,10 +83,33 @@ def replayToRouteVertex : ConcreteSubcubicVertex ≃ Original :=
 
 /-- The literal endpoint adjacency tables agree. Every edge is checked in the
 actual finite list data; no size-only identification is used. -/
+set_option maxHeartbeats 8000000 in
 theorem replayToRouteAdjacency : ∀ x y : ConcreteSubcubicVertex,
     baseGraph.Adj (replayToRouteVertex x) (replayToRouteVertex y) ↔
       concreteSubcubicGraph.Adj x y := by
-  decide
+  have inventory :
+      (concreteSubcubicEdges.map (fun z => s(z.1, z.2))).toFinset = constructionEdges := by
+    decide
+  intro x y
+  change s(x.val, y.val) ∈ constructionEdges ↔
+    x ≠ y ∧ ((x.val, y.val) ∈ concreteSubcubicEdges ∨
+      (y.val, x.val) ∈ concreteSubcubicEdges)
+  constructor
+  · intro h
+    refine ⟨?_, ?_⟩
+    · intro hxy
+      subst y
+      exact construction_no_diagonals _ h (by simp)
+    · rw [← inventory, List.mem_toFinset, List.mem_map] at h
+      obtain ⟨⟨a, b⟩, hab, heq⟩ := h
+      rcases Sym2.eq_iff.mp heq with ⟨ha, hb⟩ | ⟨ha, hb⟩
+      · exact Or.inl (by simpa only [ha, hb] using hab)
+      · exact Or.inr (by simpa only [ha, hb] using hab)
+  · rintro ⟨_, h | h⟩
+    · rw [← inventory, List.mem_toFinset, List.mem_map]
+      exact ⟨(x.val, y.val), h, rfl⟩
+    · rw [← inventory, List.mem_toFinset, List.mem_map]
+      exact ⟨(y.val, x.val), h, Sym2.eq_swap⟩
 
 /-- Actual graph isomorphism from the 141-vertex replay endpoint to the
 `PrescribedSubdivision` base graph used by the routing core. -/
@@ -125,7 +144,7 @@ theorem routeEndpointPairInjective :
   apply endpoint_pair_injective
   change s((route e).left, (route e).right) =
     s((route f).left, (route f).right)
-  simpa only [Sym2.map_mk] using congrArg
+  simpa only [Sym2.map_mk, subdivision] using congrArg
     (Sym2.map (fun x : Original => x.val)) h
 
 /-- The formerly unpaid simultaneous bridge, now consumed from the actual
@@ -148,7 +167,6 @@ def selectedReducedHomologyIso (q : ℕ) (hq : 1 ≤ q) :
   have hdegree : q + 31326 =
       (q + 40) + ∑ e : Edge, subdivision.k e := by
     rw [sum_subdivisions]
-    omega
   rw [hdegree]
   exact selectedToRoutedReducedIso _ ≪≫
     prescribedSubdivisionReducedHomologyIso (q + 40) (by omega) ≪≫
@@ -232,7 +250,7 @@ theorem selected_not_sourceSP :
       (FiniteGraphVertexSubstitution.independenceComplex
         (rectangle.induce selected)).toPreAbstractSimplicialComplex
   have hz : (2 : ℤ) • selectedSingularClass = 0 := by
-    simpa only [two_smul] using selectedSingularClass_nonzero_killed_by_two.2
+    simpa only [two_zsmul, two_nsmul] using selectedSingularClass_nonzero_killed_by_two.2
   exact selectedSingularClass_nonzero_killed_by_two.1
     (SphereBouquetHomology.compact_sourceSP_smul_eq_zero h 31327 (by decide)
       2 (by decide) selectedSingularClass hz)

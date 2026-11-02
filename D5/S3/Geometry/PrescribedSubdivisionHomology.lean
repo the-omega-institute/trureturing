@@ -186,17 +186,11 @@ def labels (n : E → ℕ) (e : E) : (Vertex D n ⊕ Fin 3) ≃ Vertex D (bump n
           simp only [bump_self] at hib
           refine ⟨.inr ⟨i.val - 3 * n e, by omega⟩, ?_⟩
           dsimp only [Sum.elim, fresh]
-          apply (inner_eq_iff D _ _ _ _ _).mpr
-          exact ⟨rfl, by omega⟩
+          apply (inner_eq_iff D (bump n e) e e _ _).mpr
+          exact ⟨rfl, by change 3 * n e + (i.val - 3 * n e) = i.val; omega⟩
       · have hi : i.val < 3 * n f := by simpa [bump, hf] using i.isLt
         refine ⟨.inl (.inr ⟨f, ⟨i.val, hi⟩⟩), ?_⟩
         exact (inner_eq_iff D _ _ _ _ _).mpr ⟨rfl, rfl⟩⟩
-
-@[simp] theorem labels_old (n : E → ℕ) (e : E) (x : Vertex D n) :
-    labels D n e (.inl x) = old D n e x := rfl
-
-@[simp] theorem labels_fresh (n : E → ℕ) (e : E) (i : Fin 3) :
-    labels D n e (.inr i) = fresh D n e i := rfl
 
 /-- The last old vertex before the right endpoint, or the left endpoint at zero. -/
 def tip (n : E → ℕ) (e : E) : Vertex D n :=
@@ -286,13 +280,23 @@ private theorem old_old_adj
         (graph D n).Adj (.inl a) (.inr ⟨f, i⟩) ∧
           ¬ Tail D n e (.inl a) (.inr ⟨f, i⟩) := by
     dsimp only [old]
+    rw [adj_old_inner D (bump n e), adj_old_inner D n]
     by_cases hf : f = e
     · subst f
       have hi := i.isLt
-      simp only [old, adj_old_inner D, bump_self, Tail, Sum.inr_ne_inl,
+      simp only [bump_self, Tail, Sum.inr_ne_inl,
         and_false, false_or, Sum.inl.injEq, inner_eq_tip D, eq_self, true_and]
-      omega
-    · simp [old, adj_old_inner D, bump, hf, Tail, inner_eq_tip D]
+      have hnew : ¬ i.val + 1 = 3 * (n e + 1) := by omega
+      have hfirst : i.val = 0 → ¬ i.val + 1 = 3 * n e := by omega
+      simp only [hnew, and_false, or_false]
+      constructor
+      · rintro ⟨ha, hi0⟩
+        refine ⟨Or.inl ⟨ha, hi0⟩, ?_⟩
+        rintro ⟨_, ht⟩
+        exact hfirst hi0 ht
+      · rintro ⟨h, ht⟩
+        exact h.resolve_right ht
+    · simp [bump, hf, Tail, inner_eq_tip D]
   cases x with
   | inl a =>
     cases y with
@@ -315,9 +319,14 @@ private theorem old_fresh_adj (n : E → ℕ) (e : E) (x : Vertex D n) (i : Fin 
   cases x with
   | inl a =>
     dsimp only [old, fresh]
-    simp only [old, fresh, adj_old_inner D, bump_self, old_eq_tip D,
-      Sum.inl.injEq, Fin.ext_iff, Fin.val_zero, Fin.val_ofNat]
-    omega
+    rw [adj_old_inner D (bump n e)]
+    simp only [bump_self, old_eq_tip D,
+      Sum.inl.injEq, Fin.ext_iff, Fin.val_zero]
+    rw [show (2 : Fin 3).val = 2 from rfl]
+    have hleft : 3 * n e + i.val = 0 ↔ i.val = 0 ∧ n e = 0 := by omega
+    have hright : 3 * n e + i.val + 1 = 3 * (n e + 1) ↔ i.val = 2 := by omega
+    rw [hleft, hright]
+    tauto
   | inr x =>
     rcases x with ⟨f, j⟩
     have hj := j.isLt
@@ -396,7 +405,6 @@ def reducedHomologyIso
     (hinj : Function.Injective (fun e : E => s(D.left e, D.right e)))
     (n : E → ℕ) (q : ℕ) (hq : 1 ≤ q) :
     Reduced (graph D n) (q + ∑ e, n e) ≅ Reduced (baseGraph D) q := by
-  classical
   by_cases hz : ∀ e, n e = 0
   · have hn : n = fun _ => 0 := funext hz
     subst n
@@ -408,7 +416,7 @@ def reducedHomologyIso
       funext f
       by_cases hf : f = e
       · subst f
-        simp only [bump_self, p, if_pos rfl, ite_true]
+        simp only [bump_self, p, ite_true]
         omega
       · simp [bump, p, hf]
     have hs : (∑ f, n f) = (∑ f, p f) + 1 := by
@@ -420,7 +428,8 @@ def reducedHomologyIso
       (graphReducedIso (stepIso D hinj p e) _).symm ≪≫
         tripleSubdivisionReducedHomologyIso (graph D p) (tip_adjacent D p e)
           (q + ∑ f, p f) (by omega)
-    simpa only [hp, hs, Nat.add_assoc] using step ≪≫ ih
+    rw [hp] at step
+    simpa only [hs, Nat.add_assoc] using step ≪≫ ih
 termination_by ∑ e, n e
 decreasing_by omega
 
