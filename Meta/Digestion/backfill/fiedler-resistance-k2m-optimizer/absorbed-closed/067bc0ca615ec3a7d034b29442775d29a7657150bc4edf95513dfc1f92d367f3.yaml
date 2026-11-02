@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:067bc0ca615ec3a7d034b29442775d29a7657150bc4edf95513dfc1f92d367f3
+  normalized_sha256: sha256:067bc0ca615ec3a7d034b29442775d29a7657150bc4edf95513dfc1f92d367f3
+cas_ref: sha256:067bc0ca615ec3a7d034b29442775d29a7657150bc4edf95513dfc1f92d367f3
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.result
+    target_statement_id: sha256:fb850765c0c912f32578278e150f85ca73e73dce91140d2bf350114aacc6c70d
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,118 @@
+**Theorem 5.3 (completion-conditional unchanged full service).** Under
+Assumption 5.1 there is one fixed finite driver, initialized as in
+Definition 5.2, maintaining (IV.12) for every finite adaptive sequence
+of complete original requests with sufficient backing and supplied
+progress. Each complete request has its exact original full reply,
+local acknowledgement, return to the same root and original semantic
+successor. All seven kinds are included: Tag, addressed $P/S$,
+HasPromotion, HasSplit, FetchGrowth and internally continued Next.
+The unused tag returns BadFrame. Every finite legal native growth word
+can occur. A proper incomplete frame retains its actual acquired prefix
+and returns under a supplied finite completion. Old record data bits
+are preserved through every successful extension.
+
+Proof. The finite driver uses the original request and reply grammar of
+AA Definition 20.2. Each request tag is three bits. Tag, $P$, $S$,
+HasPromotion and HasSplit take $A(p)=1^{|p|}0p$; FetchGrowth and Next take
+$U(k)=1^k0$. Reply tags are the original eight disjoint three-bit tags:
+Tag carries its two-bit constructor/absence result, Boolean one bit,
+Refusal its two-bit reason, Growth and Recall each a kind bit and full
+$A(p)$, Next two such kind/address pairs, and OutOfRange and BadFrame
+no payload. We specify the phases and their preserved data.
+
+Receive copies each occupied input-latch bit into backed request storage
+before releasing the latch or admitting the next bit. Actual length/index
+marks, remaining-address marks, tag and parser subphase retain precisely
+the acquired frame prefix. A proper prefix waits; it neither reads an
+unsupplied bit nor seals an answer. The prefix-free complete-frame
+grammar supplies a unique finite completed request. An acquired address
+is navigated on the actual current source, testing logical arity before
+each child; a unary beta marker is not a logical child. The retained
+root, current operand and remaining path are genuine bindings.
+
+For an enabled $P/S$, Guard has acquired its actual kind, target and
+full logical address. With already backed workspace, traverse the
+licensed source and apply Theorem 3.1 to decode $h$ and compute the
+prospective term $u$, its table and the exact suffix $s$ for $he$.
+Workspace is supplied before each finite calculation uses it. Reserve
+the exact $|s|$ fresh cells, the original finite source template, and
+sufficient pending/reply backing **before** the actual source edit.
+Serialization ensures that $u$ is the result of that guarded edit.
+Retain the event identity, actual target, suffix, remaining suffix count,
+append cursor, references and subphase throughout the transaction.
+
+Execute the original material source template: $P$ attaches one new
+terminal left marker; $S$ reuses the old unary marker as the new left
+logical beta root, attaches that child's new left marker, and attaches
+a new right alpha root to the old target. Initialize the genuine parent
+and other fields. These are precisely the beta-left edits (IV.1), without
+source deletion. The global header remains bound to the retained root;
+new source auxiliary fields are null. No local routing tape is needed
+for this alternative recorder.
+
+Maintain appends only $s$. For each bit, initialize a reserved cell's
+bit and null next field, link it from the old tail or empty head, and
+then advance the header tail. Explicit pending references and subphases
+record a linked-but-not-yet-advanced cell and the remaining suffix.
+No input or query is admitted while reservation, editing, append or
+pending maintenance is incomplete. Every loop has a finite backed
+remaining list or count. When $s$ is empty, maintenance makes no data
+cell or event marker. Before answering, the actual source is $u$ and
+the complete chain is $J(h)s=J(he)$. Earlier data bits have not changed.
+A busy cut can precede this equality; (IV.12) is not asserted there.
+
+For the nongrowth cases, Tag returns the actual logical alpha, beta,
+branch or absence result. HasPromotion is true exactly at present
+root/right-born addresses whose current subtree is not alpha;
+HasSplit is true exactly at branches. Both return false absent.
+Addressed $P/S$ at an absent address, branch or wrong-type leaf returns
+exactly its original Refusal reason, without changing source or record.
+These cases use current source predicates, not a prospective endpoint.
+Queries, refusals and BadFrame append no bits and add no generation
+event. The unassigned three-bit request tag produces exactly BadFrame.
+
+For FetchGrowth, acquire $N(t)$ from the actual finite source.
+Indices $k=0$ and $k>N(t)$ give OutOfRange. For
+$1\le k\le N(t)$, Theorem 3.1 recovers the full word and returns its
+literal $k$th kind and entire logical address, including at $k=N(t)$.
+All enumeration, comparisons and index marks have finite backed storage.
+The complete current end, not a presumed chunk boundary, is read.
+
+Next invokes this same retained decoder **internally**, preserving its
+index, old pair, continuation and references. OutOfRange gives the
+original no-growth result. Otherwise let the acquired pair be $(e,p)$.
+The historical logical position $p$ persists on the same current source:
+a split preserves its root position and no source position is deleted.
+Navigate from the retained root to $p$, then follow actual logical left
+children while the current subtree is a branch. Finite descent reaches
+a current leaf $q$. Its current tag selects $P_q$ for alpha or $S_q$
+for beta. Execute that genuine enabled edit using the preceding suffix
+transaction for this actual new event. Seal **one** Next reply containing
+the acquired old pair and the actual new kind/address pair. There is
+no extra external Fetch reply, intermediate outer return or extra ACK.
+This is current-source continuation, not replay on a reconstructed old tree.
+
+Every complete outer request constructs and seals its entire original
+reply in backing before Print traverses it. Supplied finite output
+progress emits all its bits followed by End. The supplied local ACK
+then enables Return to the same retained root. Clear occupied request,
+index, traversal, decoder-table, suffix, pending-continuation and output
+contents, discharge reservations, and only then admit Ready. Cleanup
+is finite on the actually occupied finite work; allocated cleared
+capacity may remain and is charged. No cleared scratch is used as advice
+for a later request. All cases therefore restore (IV.12).
+
+At alpha the history and word are empty, the source is the known alpha,
+and initialization satisfies (IV.12). Induction on received bits proves
+the partial-ingress assertion; induction on completed adaptive requests
+proves the exact replies, invariants and semantic successors. Successful
+edits append the actual event to $h$; other requests leave it unchanged.
+Earlier FetchGrowth answers persist because decoding returns $h$ or its
+actual extension. Supplying the original addressed $P/S$ frames of any
+finite legal word makes each guard accept by AA Theorem 17.2. The fixed
+driver thus admits the entire native domain, not a chosen set of schedules.
+Every computation and phase above has a finite description and uses only
+finite loops, charged primitive operations and backed data. Completion
+is conditional on the stated supplies, not an assertion of an infinite
+run on one finite device. $\square$
+
