@@ -3,6 +3,7 @@ bibkey: kumar2026weakmetric
 authors: Aryan Kumar
 year: 2026
 title: Weak k-metric dimension of Hamming graphs: rectangular products and near-maximum parameters
+doi: 10.48550/arXiv.2609.32161
 url: https://arxiv.org/abs/2609.32161
 claim: "Section 6 proves an eventual near-maximum formula with an explicit sufficient cutoff; Section 7 asks for the sharp nonbinary threshold."
 strata_touched:

@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Exact retained ternary near-maximum weak metric dimensions.
--/
+   digest: Exact retained ternary near-maximum weak metric dimensions. -/
 
 /-
 admission_basis: escape-witness (candidate; native admission not yet established).
