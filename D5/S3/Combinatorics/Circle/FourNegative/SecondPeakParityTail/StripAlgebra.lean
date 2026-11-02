@@ -9,9 +9,9 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
 import Lean.Elab.Tactic.Omega
 
 /-!
-UNCOMPILED candidate. Circle J OPEN. No kernel/freeze/acceptance claim.
-The heads, moduli and terminal order are reused from the pinned LowX model;
-only the parity-tail masks and the six consumed strip sides are new.
+The rational heads, moduli and terminal order come from the LowX model.
+The parity-tail masks determine the six consumed strip sides through exact
+polynomial identities and nonnegative corner interpolation.
 The ordinary source is uxwv-parity-lattice-linear-tail-20261102.py,
 SHA256 babbd52e84602a942b9aa943cf4ebeea4c3937450fc71f87bae3f031c558e275.
 -/

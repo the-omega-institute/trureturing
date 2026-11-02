@@ -404,7 +404,8 @@ private theorem local_chain (a b c d : ℕ) (chain : Fin 4) (e : ℕ)
     rw [chainOf,if_neg (by omega),if_neg (by omega),if_pos (by omega)]
   · change chainOf b c d (d+c+b+e) = 3
     rw [chainOf,if_neg (by omega),if_neg (by omega),if_neg (by omega)]
-\nprivate theorem physical_internal (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
+
+private theorem physical_internal (a b c d alpha S : ℕ) (h : physicalDomain a b c d)
     (hAlpha : alpha < 2^(d-1)-1) (hS2 : 2 ≤ S) (hSh : S < 2^(d-a))
     (bank : Fin 4) (i : ℕ) (hi : i ∈ physicalBank a b c d alpha S bank) :
     i < size a b c d ∧ i ∉ negatives a b c d := by
