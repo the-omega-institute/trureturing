@@ -75,19 +75,19 @@ private theorem subset_parity {n : ℕ} (s t : Finset (ZMod n)) :
         rw [CharTwo.add_self_eq_zero]
         simp [show insert i s ≠ t from fun h => hit (h ▸ Finset.mem_insert_self i s)]
 
-private theorem coeff_monomial {n : ℕ} (s t : Finset (ZMod n)) :
+theorem coeff_monomial {n : ℕ} (s t : Finset (ZMod n)) :
     booleanCoeff (booleanMonomial t) s = if s = t then 1 else 0 := by
   classical
   simp only [booleanCoeff, monomial_indicator]
   exact subset_parity s t
 
-private theorem coeff_add {n : ℕ} (f g : Word n → ZMod 2)
+theorem coeff_add {n : ℕ} (f g : Word n → ZMod 2)
     (s : Finset (ZMod n)) :
     booleanCoeff (fun z => f z + g z) s = booleanCoeff f s + booleanCoeff g s := by
   classical
   simp [booleanCoeff, Finset.sum_add_distrib]
 
-private theorem coeff_sum {n : ℕ} {ι : Type*} (v : Finset ι)
+theorem coeff_sum {n : ℕ} {ι : Type*} (v : Finset ι)
     (f : ι → Word n → ZMod 2) (s : Finset (ZMod n)) :
     booleanCoeff (fun z => ∑ i ∈ v, f i z) s =
       ∑ i ∈ v, booleanCoeff (f i) s := by
@@ -95,13 +95,13 @@ private theorem coeff_sum {n : ℕ} {ι : Type*} (v : Finset ι)
   simp only [booleanCoeff]
   exact Finset.sum_comm
 
-private theorem coeff_mul {n : ℕ} (a : ZMod 2) (f : Word n → ZMod 2)
+theorem coeff_mul {n : ℕ} (a : ZMod 2) (f : Word n → ZMod 2)
     (s : Finset (ZMod n)) :
     booleanCoeff (fun z => a * f z) s = a * booleanCoeff f s := by
   classical
   simp [booleanCoeff, Finset.mul_sum]
 
-private theorem coeff_constant {n : ℕ} (a : ZMod 2) (s : Finset (ZMod n))
+theorem coeff_constant {n : ℕ} (a : ZMod 2) (s : Finset (ZMod n))
     (hs : s.Nonempty) : booleanCoeff (fun _ : Word n => a) s = 0 := by
   have he : (fun _ : Word n => a) = fun z => a * booleanMonomial ∅ z := by
     funext z
@@ -116,7 +116,7 @@ def prefixVariables {n : ℕ} (i : ZMod n) (r : ℕ) : Finset (ZMod n) :=
 private theorem bit_square (a : ZMod 2) : a * a = a := by
   rcases bit_cases a with rfl | rfl <;> decide
 
-private theorem monomial_insert {n : ℕ} (s : Finset (ZMod n))
+theorem monomial_insert {n : ℕ} (s : Finset (ZMod n))
     (i : ZMod n) (z : Word n) :
     booleanMonomial (insert i s) z = z i * booleanMonomial s z := by
   classical
@@ -144,7 +144,7 @@ private theorem prefix_monomial {n : ℕ} (z : Word n) (i : ZMod n) (r : ℕ) :
         rw [← add_assoc, CharTwo.add_self_eq_zero, zero_add]
       rw [hz, mul_comm]
 
-private theorem shifted_inverse_expansion (m : ℕ) (b z : Word (2 * m + 1)) :
+theorem shifted_inverse_expansion (m : ℕ) (b z : Word (2 * m + 1)) :
     inverseComponent m b (1 + z) =
       ∑ i, ∑ r ∈ Finset.range (m + 1), b i *
         (booleanMonomial (prefixVariables i r) z +
@@ -252,7 +252,7 @@ theorem inverse_component_derivative_coefficients (m : ℕ)
 def topVariables (m : ℕ) (i : ZMod (2 * m + 1)) : Finset (ZMod (2 * m + 1)) :=
   insert (i + (2 * m : ℕ)) (prefixVariables i m)
 
-private theorem prefix_index_injective (m r : ℕ) (hr : r ≤ m)
+theorem prefix_index_injective (m r : ℕ) (hr : r ≤ m)
     (i : ZMod (2 * m + 1)) :
     Set.InjOn (fun t : ℕ => i + (2 * t + 1 : ℕ)) (Finset.range r) := by
   intro a ha b hb hab
@@ -263,12 +263,12 @@ private theorem prefix_index_injective (m r : ℕ) (hr : r ≤ m)
   rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at he
   omega
 
-private theorem prefix_card (m r : ℕ) (hr : r ≤ m) (i : ZMod (2 * m + 1)) :
+theorem prefix_card (m r : ℕ) (hr : r ≤ m) (i : ZMod (2 * m + 1)) :
     (prefixVariables i r).card = r := by
   rw [prefixVariables, Finset.card_image_of_injOn (prefix_index_injective m r hr i),
     Finset.card_range]
 
-private theorem endpoint_not_prefix (m r : ℕ) (hr : r ≤ m)
+theorem endpoint_not_prefix (m r : ℕ) (hr : r ≤ m)
     (i : ZMod (2 * m + 1)) : i + (2 * r : ℕ) ∉ prefixVariables i r := by
   classical
   intro h
@@ -279,7 +279,7 @@ private theorem endpoint_not_prefix (m r : ℕ) (hr : r ≤ m)
   rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at he'
   omega
 
-private theorem top_card (m : ℕ) (i : ZMod (2 * m + 1)) :
+theorem top_card (m : ℕ) (i : ZMod (2 * m + 1)) :
     (topVariables m i).card = m + 1 := by
   classical
   rw [topVariables, Finset.card_insert_of_notMem (endpoint_not_prefix m m le_rfl i),

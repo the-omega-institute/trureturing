@@ -102,7 +102,7 @@ theorem twice_half (m : ℕ) :
   push_cast at h ⊢
   linear_combination h
 
-private theorem step_two_reaches (m : ℕ) (i k : ZMod (2 * m + 1)) :
+theorem step_two_reaches (m : ℕ) (i k : ZMod (2 * m + 1)) :
     ∃ r : ℕ, i + (2 * r : ℕ) = k := by
   let a : ZMod (2 * m + 1) := (m + 1 : ℕ) * (k - i)
   refine ⟨a.val, ?_⟩
