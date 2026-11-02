@@ -138,7 +138,7 @@ internal sealed class FiniteSynthesisGramDistanceDocument : IScribeDocumentDefin
             Display(Seq(Forall, Sp, F.Id("z"), InMacro, Sp, F.Id("H"), Comma, Sp,
                 Open, Exists, Sp, C, InMacro, Sp, Coeff, Comma, Sp,
                 SumC, Eq, D(1), Land, Sp, F.Id("X"), C, Eq, F.Id("z"), Close,
-                Leftrightarrow, F.Id("z"), Minus, XRef, InMacro, Sp, F.Id("D"))),
+                Leftrightarrow, Sp, F.Id("z"), Minus, XRef, InMacro, Sp, F.Id("D"))),
             Paragraph(Text(
                 "For the forward affine-image inclusion, subtract x_i₀ and distribute "
                 + "the coefficient sum. For the reverse inclusion, write z − x_i₀ as "
