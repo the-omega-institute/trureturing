@@ -1,0 +1,14 @@
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=1 declarations=43
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": [], "compiled_modules": 0, "extracted_module_names": ["D5.S3.Weil.Mertens.IntegratedExplicit.ActualMomentOrderArithmetic"], "extracted_modules": 1, "selected_modules": 1}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-rh-actual-k-order-tmp-20261103/.lake/build/stratalint/scoped-lean-report.json sha256=9d91a758a284bccca6650c0396bbc177800bf70cb2dcdc7e54a34fce095b63fc
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=157323072 fd_soft_limit=4096 fd_peak=271 rss_peak_kb=4039056
