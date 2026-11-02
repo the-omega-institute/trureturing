@@ -118,6 +118,9 @@ def main():
         value, text = observation(label, request)
         if "PROBE_CACHE hit=authenticated" not in text or "PROBE_CACHE_ENTRY selected=authenticated" not in text:
             raise RuntimeError(label + ": unchanged computational inputs did not reuse authenticated entry")
+        if any(marker in text for marker in ("PROBE_CACHE_REJECTED", "PANIC",
+                "search.probe_compile_failed")):
+            raise RuntimeError(label + ": hot replay panicked or fell back")
         if "PROBE_CACHE miss" in text or " query/" in phases[label]:
             raise RuntimeError(label + ": hot replay recomputed R")
         if "probe/cache-kernel-end" not in phases[label]:
