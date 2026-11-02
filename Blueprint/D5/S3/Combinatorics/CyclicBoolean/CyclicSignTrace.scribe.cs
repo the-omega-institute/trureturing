@@ -50,6 +50,16 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                 "For every natural m and every mask b, some a has a nonzero phase sum over x of sign(dot(b,x)+dot(a,chi(x))). This uses Walsh nonemptiness and the proved inverse reindexing. The trace identity below therefore also makes the literal source trace support nonempty, without any assumption on b.", DescribeRole.Theorem),
             Node("walsh_constant_derivative_iff", "Constant Boolean derivatives and Walsh support", StatementSource.FromAuthor(WalshDerivativeFormula()),
                 "For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; identifying the affine-span dimension still requires a separate argument.", DescribeRole.Theorem),
+            Node("dotDual", "The dot-product dual map", StatementSource.WithoutFormula(),
+                "Send a direction u to the linear functional a ↦ dot(a,u) on the binary word space.", DescribeRole.Definition),
+            Node("dotDualEquiv", "Nondegenerate binary dot pairing", StatementSource.WithoutFormula(),
+                "The dot-product map is a linear equivalence between the word space and its algebraic dual. Injectivity is checked on every coordinate vector and finite-dimensionality supplies surjectivity; this is the nondegenerate pairing used by the affine bridge.", DescribeRole.Definition),
+            Node("walshSupportDirection", "Affine direction of Walsh support", StatementSource.WithoutFormula(),
+                "Take the direction of the affine span over ZMod 2 of the nonzero Walsh support.", DescribeRole.Definition),
+            Node("constantDerivativeSubmodule", "Constant-derivative submodule", StatementSource.WithoutFormula(),
+                "Define the derivative directions as the comap of the dual annihilator of the Walsh-support affine direction along the dot-product dual map.", DescribeRole.Definition),
+            Node("constantDerivative_affineSpan_duality", "Affine-span and dual-annihilator bridge", StatementSource.FromAuthor(AffineDualityFormula()),
+                "For every positive length and Boolean function, membership in the canonical constant-derivative submodule is equivalent to having a constant Boolean derivative. Its finrank plus the finrank of the Walsh-support affine direction equals the finrank of the full word space. The proof uses a nonzero Walsh coefficient as an affine base point, identifies the direction with the span of support differences, applies walsh_constant_derivative_iff, and transports the dual-annihilator finrank identity through the nondegenerate dot pairing. Length one is included by the same statement.", DescribeRole.Theorem),
             Node("sourceTrace_eq_phase_sum", "The ordered trace is the exact Boolean phase sum", StatementSource.FromAuthor(TracePhaseFormula()),
                 "At every positive length n and for all words b,a, the literal ordered matrix trace is the sum over every x of sign(dot(b,x)+dot(a,chi(x))). Length one and all coincident cyclic indices are included. This identity also applies to even lengths; oddness is needed only for the inverse construction.", DescribeRole.Theorem),
             Paragraph(Text("For a list of r+1 matrices, expand its (i,j) entry over all r intermediate states. The row tuple is i followed by the intermediate states; the column tuple is those states followed by j. Induction uses the first matrix factor and the ordinary Matrix.mul entry formula, preserving the complete list order. Taking the trace identifies j with i. Joining the initial state to the intermediate tuple gives every cyclic path exactly once; the final column is the initial state, including for a one-factor product.")),
@@ -136,5 +146,22 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
                 All("f", Arrow(w, bit), All("u", w, All("c", bit,
                     new Formula.Logic(Grp(derivative), FormulaLogicOperator.Iff,
                         Grp(support))))))));
+    }
+    private static Formula AffineDualityFormula()
+    {
+        Formula n = F.Id("n"), f = F.Id("f"), u = F.Id("u"), c = F.Id("c"), y = F.Id("y"),
+            w = Word(n), bit = Call("ZMod", D(2));
+        Formula derivative = Some("c", bit,
+            All("y", w, Eq(Plus(Call("f", Plus(y, u)), Call("f", y)), c)));
+        Formula membership = Call("mem", u, Call("constantDerivativeSubmodule", f));
+        Formula finrankD = Call("finrank", bit, Call("constantDerivativeSubmodule", f));
+        Formula finrankA = Call("finrank", bit, Call("walshSupportDirection", f));
+        Formula finrankV = Call("finrank", bit, w);
+        return Disp(All("n", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, n),
+            All("f", Arrow(w, bit),
+                And(All("u", w,
+                        new Formula.Logic(Grp(membership), FormulaLogicOperator.Iff,
+                            Grp(derivative))),
+                    Eq(Plus(finrankD, finrankA), finrankV))))));
     }
 }

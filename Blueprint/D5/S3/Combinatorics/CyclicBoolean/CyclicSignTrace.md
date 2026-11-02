@@ -224,7 +224,67 @@ $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}
 
 For every positive length, a Boolean derivative in direction u is the constant c exactly when every nonzero Walsh coefficient is supported on the character level dot(a,u)=c. This is the exact two-way character statement; identifying the affine-span dimension still requires a separate argument.
 
-**Theorem 1.19 (The ordered trace is the exact Boolean phase sum).**
+**Definition 1.19 (The dot-product dual map).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDual`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Send a direction u to the linear functional a ↦ dot(a,u) on the binary word space.
+
+**Definition 1.20 (Nondegenerate binary dot pairing).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDualEquiv`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDualEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The dot-product map is a linear equivalence between the word space and its algebraic dual. Injectivity is checked on every coordinate vector and finite-dimensionality supplies surjectivity; this is the nondegenerate pairing used by the affine bridge.
+
+**Definition 1.21 (Affine direction of Walsh support).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walshSupportDirection`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walshSupportDirection` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take the direction of the affine span over ZMod 2 of the nonzero Walsh support.
+
+**Definition 1.22 (Constant-derivative submodule).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivativeSubmodule`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivativeSubmodule` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Define the derivative directions as the comap of the dual annihilator of the Walsh-support affine direction along the dot-product dual map.
+
+**Theorem 1.23 (Affine-span and dual-annihilator bridge).**
+
+$$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall f \in \mathrm{Word}\left(n\right) \to \mathrm{ZMod}\left(2\right),\; {\forall u \in \mathrm{Word}\left(n\right),\; {\mathrm{mem}\left(u, \mathrm{constantDerivativeSubmodule}\left(f\right)\right)} \Leftrightarrow {\exists c \in \mathrm{ZMod}\left(2\right),\; \forall y \in \mathrm{Word}\left(n\right),\; {\mathrm{f}\left({y} + {u}\right)} + {\mathrm{f}\left(y\right)} = c}} \land {{\mathrm{finrank}\left(\mathrm{ZMod}\left(2\right), \mathrm{constantDerivativeSubmodule}\left(f\right)\right)} + {\mathrm{finrank}\left(\mathrm{ZMod}\left(2\right), \mathrm{walshSupportDirection}\left(f\right)\right)} = \mathrm{finrank}\left(\mathrm{ZMod}\left(2\right), \mathrm{Word}\left(n\right)\right)}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivative_affineSpan_duality` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive length and Boolean function, membership in the canonical constant-derivative submodule is equivalent to having a constant Boolean derivative. Its finrank plus the finrank of the Walsh-support affine direction equals the finrank of the full word space. The proof uses a nonzero Walsh coefficient as an affine base point, identifies the direction with the span of support differences, applies walsh_constant_derivative_iff, and transports the dual-annihilator finrank identity through the nondegenerate dot pairing. Length one is included by the same statement.
+
+**Theorem 1.24 (The ordered trace is the exact Boolean phase sum).**
 
 $$\forall n \in \mathrm{Nat},\; {0 < n} \Rightarrow {\forall b \in \mathrm{Word}\left(n\right),\; \forall a \in \mathrm{Word}\left(n\right),\; \mathrm{sourceTrace}\left(b, a\right) = \sum_{x \in \mathrm{Word}\left(n\right)} \mathrm{sign}\left({\mathrm{dot}\left(b, x\right)} + {\mathrm{dot}\left(a, \mathrm{chi}\left(x\right)\right)}\right)}$$
 
@@ -250,7 +310,11 @@ The affine-support assertion still requires the affine-span dimension identity a
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.alternatingPrefix`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.chi`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.claim`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivativeSubmodule`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivative_affineSpan_duality`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dot`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDual`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDualEquiv`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverseComponent`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_phase_sum`
@@ -262,6 +326,7 @@ The affine-support assertion still requires the affine-span dimension identity a
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace_eq_phase_sum`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.traceSupport`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walshSupportDirection`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_constant_derivative_iff`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_inversion`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh_support_nonempty`
