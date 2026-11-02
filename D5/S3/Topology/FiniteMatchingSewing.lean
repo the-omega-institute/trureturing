@@ -400,8 +400,4 @@ theorem closedCount_identity (N : ℕ) : closedCount (identityMatching N) = N :=
   unfold closedCount
   rw [Nat.card_congr (identityClosureEquiv N), Nat.card_fin]
 
-theorem closedCount_empty (d : Matching (Boundary 0)) : closedCount d = 0 := by
-  have h : d = identityMatching 0 := matching_ext (fun a => Fin.elim0 a.2)
-  rw [h, closedCount_identity]
-
 end D5.S3.Topology.FiniteMatchingSewing

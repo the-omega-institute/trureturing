@@ -149,14 +149,6 @@ theorem overlay_component_card {V : Type*} (s t : V → V) :
     Nat.card (Component (overlayStep s t)) = Nat.card (Component (twoStep s t)) :=
   Nat.card_congr (overlayEquiv s t)
 
-def loopValue {V K : Type*} [Monoid K] (r : V → V → Prop) (δ : K) : K :=
-  δ ^ Nat.card (Component r)
-
-theorem overlay_loopValue {V K : Type*} [Monoid K] (s t : V → V) (δ : K) :
-    loopValue (overlayStep s t) δ = loopValue (twoStep s t) δ := by
-  unfold loopValue
-  rw [overlay_component_card]
-
 abbrev Boundary (N : ℕ) := Bool × Fin N
 
 def identityMatching (N : ℕ) : Matching (Boundary N) where
@@ -215,10 +207,5 @@ def gluingStep {N : ℕ} (d e : Matching (Boundary N))
 def InternalComponent {N : ℕ} (d e : Matching (Boundary N)) :=
   {c : Component (gluingStep d e) //
     ∀ a, component (gluingStep d e) (outer a) ≠ c}
-
-def composedBoundaryRel {N : ℕ} (d e : Matching (Boundary N))
-    (a b : Boundary N) : Prop :=
-  a ≠ b ∧ component (gluingStep d e) (outer a) =
-    component (gluingStep d e) (outer b)
 
 end D5.S3.Topology.FiniteMatchingClosure

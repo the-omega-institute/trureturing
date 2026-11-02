@@ -33,11 +33,7 @@ internal sealed class FiniteMatchingSewingDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("identity-closure"), Handle("closedCount_identity"),
                 H("The identity has exactly N closure circles"), StatementSource.FromAuthor(Disp(
                     All("N", Id("Nat"), Equal(Call("closedCount", Call("identityMatching", Id("N"))), Id("N"))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The index projection identifies each closed identity component with its Fin N label. In particular N=0 contributes zero circles, without an extra empty-diagram circle."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("empty-closure"), Handle("closedCount_empty"),
-                H("The empty boundary has no closure component"), StatementSource.FromAuthor(Disp(
-                    All("d", Call("Matching", Call("Boundary", D(0))), Equal(Call("closedCount", Id("d")), D(0))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("There is only one matching on the empty boundary. Its closed count is the N=0 identity count."))), DescribeRole.Theorem),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The index projection identifies each closed identity component with its Fin N label. In particular N=0 contributes zero circles, without an extra empty-diagram circle. Every matching on Boundary(0) equals identityMatching(0) by extensionality on the empty boundary, so the same count applies to every empty matching."))), DescribeRole.Theorem),
             Paragraph(Text("Straight matchings are also proved to be left and right units for the actual composite, with zero internal loops. The unit contractions retain every outer boundary vertex. This is the classical Brauer pairing and circle-removal construction. Associative multiplication on the free module, the tower inclusion, the local Temperley--Lieb relations and Jones identification are separate assertions.")))));
 
     private static Formula Weight(Formula d, Formula e) => Call("add", Call("internalLoopCount", d, e), Call("closedCount", Call("composite", d, e)));

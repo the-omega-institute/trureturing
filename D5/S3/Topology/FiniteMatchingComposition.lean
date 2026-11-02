@@ -291,17 +291,6 @@ theorem triple_component_iff {N : ℕ} (d e : Matching (Boundary N)) (a b : Boun
     (halfToTripleEquiv d e).injective.eq_iff]
   exact composite_component_iff d e a b
 
-/-- Every exposed endpoint has exactly one distinct partner in its glued component. -/
-theorem composedBoundaryRel_existsUnique {N : ℕ} (d e : Matching (Boundary N))
-    (a : Boundary N) : ∃! b, composedBoundaryRel d e a b := by
-  refine ⟨(composite d e).mate a, ?_, ?_⟩
-  · exact ⟨Ne.symm ((composite d e).fixedPointFree a),
-      (triple_component_iff d e a _).mpr (Or.inr rfl)⟩
-  · intro b hb
-    rcases (triple_component_iff d e a b).mp hb.2 with h | h
-    · exact (hb.1 h.symm).elim
-    · exact h
-
 def internalComponentEquiv {N : ℕ} (d e : Matching (Boundary N)) :
     halfEdgeInternalComponent d e ≃ InternalComponent d e where
   toFun c := ⟨halfToTripleEquiv d e c.1,by
