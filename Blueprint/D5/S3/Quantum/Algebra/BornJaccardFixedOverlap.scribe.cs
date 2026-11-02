@@ -64,9 +64,9 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
                 + "and T throughout. Write S=R+T and E(L)=R+L, with orthogonal sums. "
                 + "For y in T the actual compression is Ky=P(T)(rho y), and a(L) is "
                 + "the real quadratic form of K on any unit generator of L. In the notation "
-                + "of the theorem, M=lam(0), m=lam(1). Put"),
-                Math(Disp(BoundaryParameters())),
-                Text("Choose one orthonormal eigenbasis e,f of K with eigenvalues M,m, "
+                + "of the theorem, M=lam(0), m=lam(1). Put")),
+                new DocumentBlock.DisplayFormula(Disp(BoundaryParameters())),
+                Paragraph(Text("Choose one orthonormal eigenbasis e,f of K with eigenvalues M,m, "
                 + "once for the entire family, also when M=m. For any unit x in T, "
                 + "compression_inner and compression_quadratic identify a(L) with "
                 + "M times the squared modulus of its e coordinate plus m times that of "
@@ -75,22 +75,22 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
             Paragraph(Text("For every line L in T, distance_properties gives the zero diagonal "
                 + "and symmetry. Since E(L) is contained in S, the actual meet and join "
                 + "in its distance to S are E(L) and S. The projection and weight identities "
-                + "projection_orthogonal_sup, weight_orthogonal_sup and weight_unit_line give"),
-                Math(Disp(CoincidentValue())),
-                Text("Thus this statement covers every coincident pair, not just an eigenline. "
+                + "projection_orthogonal_sup, weight_orthogonal_sup and weight_unit_line give")),
+                new DocumentBlock.DisplayFormula(Disp(CoincidentValue())),
+                Paragraph(Text("Thus this statement covers every coincident pair, not just an eigenline. "
                 + "The disjoint-line hypotheses of interval_inf and interval_defect hold only "
                 + "for distinct lines and are not used at coincidence.")),
-            Paragraph(Text("Use the actual simultaneous source family (2.7), with e and f fixed:"),
-                Math(Disp(BoundaryFamily())),
-                Text("For every 0<=r<1 both coefficients are positive, the vectors are unit "
+            Paragraph(Text("Use the actual simultaneous source family (2.7), with e and f fixed:")),
+                new DocumentBlock.DisplayFormula(Disp(BoundaryFamily())),
+                Paragraph(Text("For every 0<=r<1 both coefficients are positive, the vectors are unit "
                 + "and their inner product is r. Their lines L(r) and N(r) are distinct, "
                 + "have zero intersection, and span T. These are the explicit vectors in "
                 + "pair_construction used by fixed_overlap_attainment; the choice of "
                 + "eigenbasis does not depend on r. Merely choosing an unrelated maximizer "
                 + "for each r would not identify this limiting line. For either "
-                + "w(r)=u(r) or w(r)=v(r), orthonormality gives"),
-                Math(Disp(VectorConvergence())),
-                Text("The limits are taken through 0<=r<1 as r tends to one. The continuity "
+                + "w(r)=u(r) or w(r)=v(r), orthonormality gives")),
+                new DocumentBlock.DisplayFormula(Disp(VectorConvergence())),
+                Paragraph(Text("The limits are taken through 0<=r<1 as r tends to one. The continuity "
                 + "of Real.sqrt, scalar multiplication and addition gives these vector limits "
                 + "in the ambient H, using the actual inclusion of T into H.")),
             Paragraph(Text("To identify the topology on lines, let Q(x,y) be the ambient rank-one "
@@ -98,9 +98,9 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
                 + "projector onto L. For a unit w, starProjection_unit_singleton and "
                 + "InnerProductSpace.rankOne_apply identify P(C w) with Q(w,w). "
                 + "Additivity and conjugate additivity in the two rankOne arguments, "
-                + "the triangle inequality and InnerProductSpace.norm_rankOne give"),
-                Math(Disp(ProjectorConvergence())),
-                Text("Consequently both actual line projectors converge in operator norm "
+                + "the triangle inequality and InnerProductSpace.norm_rankOne give")),
+                new DocumentBlock.DisplayFormula(Disp(ProjectorConvergence())),
+                Paragraph(Text("Consequently both actual line projectors converge in operator norm "
                 + "to P(C e). This proves convergence in the topology of ambient orthogonal "
                 + "projectors, with the same M-eigenline for both families. Also "
                 + "P(E(L(r)))=P(R)+P(L(r)) and likewise for N(r), so both interval "
@@ -115,9 +115,9 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
                 + "a(L(r))=a(N(r))=(s+r(M-m))/2. unit_pair_geometry and interval_defect "
                 + "therefore compute the distinct-pair defect; fixed_overlap_maximum "
                 + "identifies it as the maximum at that overlap. At r=1 both actual "
-                + "lines are C e and a(C e)=M. The preceding coincident calculation gives"),
-                Math(Disp(BoundaryJump())),
-                Text("For every r<1 the meet of E(L(r)) and E(N(r)) is R and their join "
+                + "lines are C e and a(C e)=M. The preceding coincident calculation gives")),
+                new DocumentBlock.DisplayFormula(Disp(BoundaryJump())),
+                Paragraph(Text("For every r<1 the meet of E(L(r)) and E(N(r)) is R and their join "
                 + "is S. At r=1 the meet and join are both E(C e). Thus the distance "
                 + "between the distinct endpoints is s/(b+s), while its actual coincident "
                 + "value is zero. The two distances to S converge to m/(b+s). "
