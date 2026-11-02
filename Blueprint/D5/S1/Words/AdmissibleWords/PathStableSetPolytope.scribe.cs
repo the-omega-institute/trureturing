@@ -21,7 +21,7 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
                     + "For a single vertex, the coordinate upper bound is essential.",
                 Eqn(Call("conv", Sub(F.Id("W"), F.Id("n"))), Sub(F.Id("P"), F.Id("n"))),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Words/chvatal1975polytopes"))),
+                    LibraryNoteRef.Create("D5/L/Geometry/chvatal1975polytopes"))),
             Result("pyramid", "convexHull_three_pyramid", "The three-coordinate pyramid",
                 "For three coordinates, nonnegativity and the two adjacent-sum inequalities "
                     + "already imply the coordinate upper bounds. Every point is a mixture "
@@ -49,7 +49,7 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
                     + "indexed by Fin k. Repeated words and empty layers are allowed. "
                     + "This is a derived application of the coordinate inequalities, "
                     + "convexHull_vertices, the public no-adjacent-true characterization "
-                    + "ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true, and finite "
+                    + "AdmissibleCount.adm_iff_no_adjacent_true, and finite "
                     + "prefix and complement counting.")),
             Paragraph(Text(
                 "For positive k, scalar-image membership is equivalent to the integer "
