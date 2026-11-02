@@ -300,14 +300,140 @@ For a list of r+1 matrices, expand its (i,j) entry over all r intermediate state
 
 The path product is the sign of the sum of its entry exponents. Reindex the a_(k-2)x_k term by k=i+2 and the a_(k-1)x_k x_(k+1) term by k=i+1. The coefficient of a_i becomes x_i+x_(i+2)+x_(i+1)x_(i+2), exactly chi(x)_i. These are bijections of the actual cyclic index set, so repeated indices need no separate independence assumption. Combining this identity with the inverse phase formula identifies traceSupport(b) with the nonzero Walsh support of inverseComponent(m,b) at every odd length. The established phase nonemptiness thus supplies trace nonemptiness.
 
+**Definition 1.25 (Squarefree Boolean monomials).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanMonomial`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanMonomial` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite set s of actual cyclic coordinates, booleanMonomial(s,z) is the product of z_i over i in s. Repeated cyclic coordinates are represented only once; the empty monomial is one.
+
+**Definition 1.26 (Indicator words).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.indicatorWord`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.indicatorWord` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The word indicatorWord(s) is one at coordinates in s and zero elsewhere.
+
+**Definition 1.27 (Coefficients from actual function values).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanCoeff`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanCoeff` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The coefficient of a Boolean function f at s is the sum in ZMod 2 of f(indicatorWord(t)) over every subset t of s. Thus equal actual functions have equal coefficients. Subset cancellation proves that extraction applied to the monomial at t is one exactly when s=t and zero otherwise; this establishes uniqueness for finite sums of squarefree monomials without assuming injectivity of polynomial evaluation.
+
+**Definition 1.28 (Cyclic prefix variable sets).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.prefixVariables`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.prefixVariables` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite set prefixVariables(i,r) is the image of t=0,...,r-1 under t ↦ i+2t+1 in the actual cyclic index type.
+
+**Theorem 1.29 (Exact coefficients of the shifted inverse component).**
+
+$$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; \forall s \in \mathrm{Finset}\left(\mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right)\right),\; \mathrm{booleanCoeff}\left({z:\mathrm{Word}\left({{2} \cdot {m}} + {1}\right)}\mapsto\mathrm{inverseComponent}\left(m, b, {1} + {z}\right), s\right) = \sum_{i \in \mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right)} \sum_{r \in \mathrm{range}\left({m} + {1}\right)} {\mathrm{b}\left(i\right)} \cdot {{\mathrm{ite}\left(s = \mathrm{prefixVariables}\left(i, r\right), 1, 0\right)} + {\mathrm{ite}\left(s = \mathrm{insert}\left({i} + {{2} \cdot {r}}, \mathrm{prefixVariables}\left(i, r\right)\right), 1, 0\right)}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_boolean_coefficient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m, mask b and finite cyclic-coordinate set s, extract the coefficient of z ↦ inverseComponent(m,b)(1+z). Each inverse term contributes the prefix monomial and the prefix with its endpoint i+2r inserted, weighted by b_i. Equality of finite sets decides whether each contributes at s. This statement includes all masks and length one, with no distinct-index premise.
+
+Binary idempotence identifies a product over repeated coordinates with its squarefree monomial. After y=1+z the alternating prefix becomes the monomial on prefixVariables(i,r), and its endpoint factor is 1+z_(i+2r). The coefficient formula follows by linearity of extraction and the subset-cancellation identity. No Boolean normal-form uniqueness or coefficient vanishing is assumed.
+
+**Definition 1.30 (Exact monomial derivative coefficients).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.monomialDerivativeCoeff`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.monomialDerivativeCoeff` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At variable sets t,s and direction u, this is the product of u on t minus s when s is a subset of t, plus one when s=t; absent contributions are zero. Product expansion and coefficient extraction prove that this is the coefficient at s of z ↦ booleanMonomial(t,z+u)+booleanMonomial(t,z).
+
+**Theorem 1.31 (Necessary coefficient equations for a constant inverse derivative).**
+
+$$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; \forall u \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; {\exists c \in \mathrm{ZMod}\left(2\right),\; \forall y \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; {\mathrm{inverseComponent}\left(m, b, {y} + {u}\right)} + {\mathrm{inverseComponent}\left(m, b, y\right)} = c} \Rightarrow {\forall s \in \mathrm{Finset}\left(\mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right)\right),\; {\mathrm{Nonempty}\left(s\right)} \Rightarrow {\sum_{i \in \mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right)} \sum_{r \in \mathrm{range}\left({m} + {1}\right)} {\mathrm{b}\left(i\right)} \cdot {{\mathrm{monomialDerivativeCoeff}\left(\mathrm{prefixVariables}\left(i, r\right), s, u\right)} + {\mathrm{monomialDerivativeCoeff}\left(\mathrm{insert}\left({i} + {{2} \cdot {r}}, \mathrm{prefixVariables}\left(i, r\right)\right), s, u\right)}} = 0}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_derivative_coefficients` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m, b,u and nonempty finite set s, if the derivative of the actual inverse component in direction u is constant on all words, the displayed sum of its monomial derivative coefficients is zero. The proof translates by the all-one word and extracts the coefficient from actual functions. It assumes neither a degree argument nor the intended mask classification.
+
+**Definition 1.32 (Highest-degree cyclic variable sets).**
+
+Lean statement: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.topVariables`
+
+*Formalization.* `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.topVariables` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The set topVariables(m,i) is prefixVariables(i,m) with coordinate i+2m inserted. It has m+1 elements. Its coordinate sum has slope m+1 as a function of i; multiplication by two in the odd cycle inverts that slope, so the sets for distinct i are distinct.
+
+**Theorem 1.33 (Highest-degree coefficients recover every mask bit).**
+
+$$\forall m \in \mathrm{Nat},\; \forall b \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; \forall i \in \mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right),\; \mathrm{booleanCoeff}\left({z:\mathrm{Word}\left({{2} \cdot {m}} + {1}\right)}\mapsto\mathrm{inverseComponent}\left(m, b, {1} + {z}\right), \mathrm{topVariables}\left(m, i\right)\right) = \mathrm{b}\left(i\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_top_coefficient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m, b and cyclic coordinate i, the coefficient of the shifted inverse component at topVariables(m,i) is exactly b_i. Cardinality excludes every shorter prefix and endpoint term; injectivity of the highest-degree variable sets leaves exactly the term indexed by i. Length one and zero masks are included.
+
+**Theorem 1.34 (The degree-m derivative equation).**
+
+$$\forall m \in \mathrm{Nat},\; {0 < m} \Rightarrow {\forall b \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; \forall u \in \mathrm{Word}\left({{2} \cdot {m}} + {1}\right),\; {\mathrm{mem}\left(u, \mathrm{constantDerivativeSubmodule}\left(\mathrm{inverseComponent}\left(m, b\right)\right)\right)} \Rightarrow {\forall s \in \mathrm{Finset}\left(\mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right)\right),\; {\mathrm{card}\left(s\right) = m} \Rightarrow {\sum_{i \in \mathrm{ZMod}\left({{2} \cdot {m}} + {1}\right)} {\mathrm{b}\left(i\right)} \cdot {\mathrm{ite}\left(\mathrm{subset}\left(s, \mathrm{topVariables}\left(m, i\right)\right), \mathrm{booleanMonomial}\left(\mathrm{sdiff}\left(\mathrm{topVariables}\left(m, i\right), s\right), u\right), 0\right)} = 0}}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_top_derivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive m and constant derivative direction u of the inverse component, and every finite coordinate set s of cardinality m, the sum over i of b_i times the product of u on topVariables(m,i) minus s, with zero contribution unless s is a subset, vanishes. A derivative of a monomial of degree at most m has zero degree-m coefficient; hence only the degree-(m+1) endpoint terms survive. The statement includes m=1 but does not claim the subsequent overlap classification.
+
+For positive m, each topVariables(m,i) has exactly one adjacent cyclic pair, at i+2m-1 and i+2m. The prefix itself contains no adjacent pair, including across the cyclic boundary. Deleting any other coordinate a leaves this pair intact, so any top variable set containing the deletion must have the same index i. Applying the degree-m derivative equation at that deletion therefore proves b_i u_a=0. This establishes the interior-deletion constraints for every odd length at least five, and the same implication at length three where there is no interior coordinate. The endpoint deletions, their shared coefficient equation and the lower-degree equations remain unproved here.
+
 The literal trace model follows ricardorr, MathOverflow question 512655, original revision E06A6743-2C15-41CD-9390-04D1862ABA02, https://mathoverflow.net/questions/512655, attributed under CC-BY-SA 4.0. The inverse argument above is a direct derivation for this cyclic map.
 
-The affine-support assertion still requires the affine-span dimension identity and the complete coefficient classification for every nonzero inverse-component mask. The trace identity and the constant-derivative/Walsh-support equivalence identify the relevant support and its constant characters, but do not by themselves settle the dimension bound.
+The affine-span duality is proved above. The affine-support assertion still requires the complete classification of constant derivative directions for every nonzero inverse-component mask, including the cyclic top-overlap and lower-coefficient arguments for lengths at least five, the length-three polar case and assembly with length one. The coefficient formula alone does not establish that classification or settle the dimension bound.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.Word`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.alternatingPrefix`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanCoeff`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.booleanMonomial`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.chi`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.claim`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.constantDerivativeSubmodule`
@@ -315,15 +441,23 @@ The affine-support assertion still requires the affine-span dimension identity a
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dot`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDual`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.dotDualEquiv`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.indicatorWord`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverseComponent`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_boolean_coefficient`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_derivative_coefficients`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_top_coefficient`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_component_top_derivative`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_phase_sum`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_phase_support_nonempty`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.inverse_spec`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.monomialDerivativeCoeff`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.prefixVariables`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sign`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceMatrix`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.sourceTrace_eq_phase_sum`
+- Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.topVariables`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.traceSupport`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walsh`
 - Truth anchor: `D5/S3/Combinatorics/CyclicBoolean/CyclicSignTrace.walshSupportDirection`

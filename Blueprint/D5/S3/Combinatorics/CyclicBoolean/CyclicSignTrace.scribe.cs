@@ -226,10 +226,11 @@ internal sealed class CyclicSignTraceDocument : IScribeDocumentDefinition
             i = F.Id("i"), y = F.Id("y"), n = OddLength(m), t = Call("topVariables", m, i);
         Formula summand = Times(Call("b", i), Call("ite", Call("subset", s, t),
             Call("booleanMonomial", Call("sdiff", t, s), u), D(0)));
-        return Disp(All("m", Named("Nat"), Imp(Rel(D(0), FormulaRelationOperator.LessThan, m),
-            All("b", Word(n), All("u", Word(n), Imp(
-                Call("mem", u, Call("constantDerivativeSubmodule", Call("inverseComponent", m, b))),
-                All("s", Call("Finset", Call("ZMod", n)), Imp(Eq(Call("card", s), m),
-                    Eq(Sum("i", Call("ZMod", n), summand), D(0)))))))));
+        Formula sets = All("s", Call("Finset", Call("ZMod", n)),
+            Imp(Eq(Call("card", s), m), Eq(Sum("i", Call("ZMod", n), summand), D(0))));
+        Formula directions = All("b", Word(n), All("u", Word(n), Imp(
+            Call("mem", u, Call("constantDerivativeSubmodule", Call("inverseComponent", m, b))), sets)));
+        return Disp(All("m", Named("Nat"),
+            Imp(Rel(D(0), FormulaRelationOperator.LessThan, m), directions)));
     }
 }
