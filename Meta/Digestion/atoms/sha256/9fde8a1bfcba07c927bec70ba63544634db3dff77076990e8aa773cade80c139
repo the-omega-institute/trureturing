@@ -1,0 +1,32 @@
+#### 推论 6.2（v79 及完整相干闭合成为推论）
+
+令 $C_e(u,v)=w_e(u+v)-w_e(u)-w_e(v)$。
+则
+
+$$
+C_e(u,v)=2\operatorname{Re} \langle u,E_ev\rangle ,\qquad
+C_e(u,-v)=-C_e(u,v).
+$$
+
+此外
+
+$$
+C_e(u+v,z)=C_e(u,z)+C_e(v,z),
+$$
+
+$$
+w_e\!\left(\sum_jx_j\right)
+=\sum_jw_e(x_j)+\sum_{j<k}C_e(x_j,x_k).
+$$
+
+所有全相干三阶及更高阶差分为零。
+
+**证明。**
+
+由式[(6.1)](#eq-branches)作二次展开。
+每个有限合成只有单项与二元交叉项，因此三阶以上包含--排除差分逐项抵消。
+
+□
+
+<a id="statement-6-3"></a>
+

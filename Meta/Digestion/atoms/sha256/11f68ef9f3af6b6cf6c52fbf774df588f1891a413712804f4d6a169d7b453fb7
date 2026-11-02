@@ -1,0 +1,17 @@
+#### 推论 5.2（全部二元关系成为等号）
+
+对任意 $u,v\in H$，
+
+$$
+\langle F(u),F(v)\rangle =\langle u,v\rangle ,\qquad
+\left\lVert F(u)-F(v)\right\rVert ^2=\left\lVert u-v\right\rVert ^2.
+$$
+
+所有原来的锚不等式均取等号。
+并且 $\dim_{\mathbb C }W\ge d$，完整输出的张成空间恰有维数 $d$。
+
+输出的整个载体可以更大；后一个维数说的是当前输入像的张成空间，
+不是所有记录寄存器的最小维数。
+
+<a id="statement-5-3"></a>
+

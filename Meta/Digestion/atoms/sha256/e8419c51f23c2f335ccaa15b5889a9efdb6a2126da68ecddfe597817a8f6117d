@@ -1,0 +1,46 @@
+#### 定义 2.3（完整强度标定）
+
+用同一内部标尺读取结果强度，定义
+
+$$
+w_e(x)=\left\lVert F_e(x)\right\rVert ^2.
+$$
+
+要求包含全部成功、失败、停止及声明结果的菜单满足
+
+<a id="eq-mass"></a>
+
+$$
+\boxed{\sum_{e\in\mathcal E}\left\lVert F_e(x)\right\rVert ^2=\left\lVert x\right\rVert ^2.}\tag{2.1}
+$$
+
+因此 $F_e(0)=0$。
+此时尚未要求 $w_e$ 关于输入 $x$ 为二次函数。
+
+平方范数的概率意义使用已有的同根标定：
+全部效果上的非负、归一、合法细分可加读出，纯根校准及声明准备协变[2](#ref-closure)。
+本轮要推出的是事件对输入的二次依赖，而不是重新把未标定范数称为实验频率。
+
+为记账，令
+
+$$
+W=\bigoplus_eW_e,\qquad F(x)=\bigoplus_eF_e(x).
+$$
+
+于是式[(2.1)](#eq-mass)写成 $\left\lVert F(x)\right\rVert =\left\lVert x\right\rVert$。
+后文的差分比较实际为
+
+$$
+\left\lVert F(x)-F(a)\right\rVert ^2
+=\sum_e\left\lVert F_e(x)-F_e(a)\right\rVert ^2.
+$$
+
+它不比较不同结果标签之间的交叉相位。
+这个直和作为数学表示，不自动授予跨标签相干重合的实际控制。
+
+**白话图景。**每个结果都有自己的后继记录，但同一结果里，不同输入留下的记录必须能用同一参考比较。
+先把所有结果的强度都保留下来，再谈差分是否增加。
+如果把失败记录丢掉，或者暗中换了设置，就已经换了要证明的对象。
+
+<a id="section-3"></a>
+

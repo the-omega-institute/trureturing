@@ -1,0 +1,31 @@
+#### 定理 12.1（完整效果区间的极端点就是投影）
+
+在 $[0,I]$ 中，不能非平凡地写成不同效果凸组合的元素恰为正交投影。
+若一组投影满足 $\sum_jP_j=I$，则它们两两正交。
+给各结果标定实数 $a_j$，得到
+
+$$
+A=\sum_ja_jP_j=A^*,\qquad
+\mathbb E_\rho[a]=\operatorname{Tr} (\rho A).
+$$
+
+**证明。**
+
+若效果有本征值 $0<\lambda<1$，沿对应秩一投影作足够小的正负扰动，
+仍为两个不同效果，且其平均为原效果，故它不极端。
+反向，设 $P=tE+(1-t)F$、$0<t<1$。
+在 $\ker P$ 上非负性迫使 $E,F$ 消去该空间；
+在 $\operatorname{ran}  P$ 上对 $I-P=t(I-E)+(1-t)(I-F)$ 作同样论证，
+使 $E,F$ 均为恒等，故 $E=F=P$。
+若 $x\in\operatorname{ran}  P_k$，
+$0=\sum_{j\ne k}\langle x,P_jx\rangle =\sum_{j\ne k}\left\lVert P_jx\right\rVert ^2$，
+所以不同投影的像正交。其余由实线性组合及 Born 读出得到。
+
+□
+
+有限维谱定理反向把自伴矩阵分解为这种锐菜单。
+一般 POVM 的一阶矩也可自伴，但其平方通常不等于测量的二阶矩，
+因此不能用一个自伴矩阵替代任意带标签 POVM 的全部统计[1](#ref-synthesis)。
+
+<a id="statement-12-2"></a>
+

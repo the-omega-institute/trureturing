@@ -1,0 +1,84 @@
+## 来源与证明归属
+
+<a id="ref-synthesis"></a>
+
+**[1]**
+项目公开 v78 综合稿，24 节版本。
+[Endogenous Relational Quantum Theory: Unified Relational Axioms v78 Synthesis](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_ENDOGENOUS_RELATIONAL_QUANTUM_THEORY_UNIFIED_RELATIONAL_AXIOMS_V78_SYNTHESIS.md)。
+重点对应第 3--4、8--13 节及动力学部分。
+
+<a id="ref-closure"></a>
+
+**[2]**
+项目 v78 闭包稿。
+[Endogenous Closure, Finite Root Certificates and Outcome Kernel Recursion](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_ENDOGENOUS_CLOSURE_FINITE_ROOT_CERTIFICATES_AND_OUTCOME_KERNEL_RECURSION_V78_CONTINUATION.md)。
+重点对应第 7--10 节。
+
+<a id="ref-whole"></a>
+
+**[3]**
+项目设置--源关系稿。
+[Single Pure Whole: Setting--Source Relations](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_SINGLE_PURE_WHOLE_SETTING_SOURCE_RELATIONS_V78_CONTINUATION.md)。
+重点对应假设 1.2、定义 2.1、定理 2.3 及其协议限定。
+
+<a id="ref-atlas3"></a>
+
+**[4]**
+项目截口图册 III。
+[Quantum Origin: Endogenous Cut Atlas and Discrete Reconstruction Boundaries III](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md)。
+重点对应第 12--16 节的可见代数与未来闭合条件。
+
+<a id="ref-arcs"></a>
+
+**[5]**
+项目历史轨迹稿。
+[History Arcs, Elliptic Readout and Endogenous Relational Closure](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_HISTORY_ARCS_ELLIPTIC_READOUT_AND_ENDOGENOUS_RELATIONAL_CLOSURE_V78_CONTINUATION.md)。
+
+<a id="ref-periods"></a>
+
+**[6]**
+项目周期稿。
+[Circles, Periods and Endogenous Clocks](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_CIRCLES_PERIODS_AND_ENDOGENOUS_CLOCKS_V78_CONTINUATION.md)。
+
+<a id="ref-v78"></a>
+
+**[7]**
+项目 v78 门流形稿。
+[Gate Manifolds, Integrable Relations, Tangent Kernels and Recursive Error](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_GATE_MANIFOLDS_INTEGRABLE_RELATIONS_TANGENT_KERNELS_AND_RECURSIVE_ERROR_V78.md)。
+
+<a id="ref-n1"></a>
+
+**[8]**
+项目 N1。
+[Coherent Bridges, Lossless Compatibility and Effective Resistance](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_COHERENT_BRIDGES_LOSSLESS_COMPATIBILITY_AND_EFFECTIVE_RESISTANCE_N1_V78_CONTINUATION.md)。
+
+<a id="ref-n2"></a>
+
+**[9]**
+项目 N2。
+[Shared History Sufficiency, Minimal Internal Completion and Dimension Budget](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_SHARED_HISTORY_SUFFICIENCY_MINIMAL_INTERNAL_COMPLETION_AND_DIMENSION_BUDGET_N2_V78_CONTINUATION.md)。
+
+<a id="ref-v49"></a>
+
+**[10]**
+项目 V49。
+[Sum--Product Powers, Quadratic Relation Closure and Normalized Lifting](https://github.com/the-omega-institute/trureturing/blob/9bf2db5e96b1e6b9c96fdf9665ff9ec3ae0cf252/docs/develop/theory/AURIC_SUM_PRODUCT_POWERS_QUADRATIC_RELATION_CLOSURE_AND_NORMALIZED_LIFTING_V49.md)。
+第 20 节所附文献包含下项。
+
+<a id="ref-lax"></a>
+
+**[11]**
+Aaron Lax.
+[The Born Rule for Projective Measurements from Metric Non-Expansion and Calibration](https://arxiv.org/abs/2604.27339).
+arXiv:2604.27339，v2，2026 年 7 月 23 日，24 页。
+本文比较其概率度量接口与本稿的实际相干幅度接口，不主张两套假设等强。
+
+<a id="ref-watrous"></a>
+
+**[12]**
+John Watrous.
+[The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/).
+作者公开版第 2 章，尤其定理 2.22、推论 2.27 及量子仪器部分。
+[第 2 章原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。
+用于标准 CP、Choi、Kraus、Stinespring 表示的归属与对照。
+

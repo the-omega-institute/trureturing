@@ -1,0 +1,38 @@
+#### 推论 14.2（输出锚已正交时的简界）
+
+若还精确满足 $\langle b_j,b_k\rangle =\delta_{jk}$，令 $Va_j=b_j$，则
+
+<a id="eq-exactanchorbound"></a>
+
+$$
+\boxed{\left\lVert F(x)-Vx\right\rVert
+\le\min\{2,(2d)^{1/4}\sqrt\delta\}.}\tag{14.4}
+$$
+
+**证明。**
+
+此时 $G=I$，式[(14.3)](#eq-coorderr)及上式展开给
+$\left\lVert F(x)-Vx\right\rVert ^2\le2\eta=\sqrt{2d}\,\delta$。
+
+□
+
+上述等距 $U$ 还给一个相同标签的合法量子结果族
+$\widetilde M_e=P_eU$，且
+$\sum_e\widetilde M_e^*\widetilde M_e=I$。
+若 $p_e(x)=\left\lVert F_e(x)\right\rVert ^2$、
+$q_e(x)=\left\lVert P_eUx\right\rVert ^2$，则
+
+<a id="eq-TV"></a>
+
+$$
+\frac12\sum_e|p_e(x)-q_e(x)|
+\le\min\{1,\left\lVert F(x)-Ux\right\rVert \}\le\min\{1,L\}.\tag{14.5}
+$$
+
+证明只需记 $r_e=\left\lVert F_e(x)\right\rVert$、$s_e=\left\lVert P_eUx\right\rVert$，
+用
+$\sum_e|r_e^2-s_e^2| \le(\sum_e(r_e-s_e)^2)^{1/2}(\sum_e(r_e+s_e)^2)^{1/2}$，
+以及第一因子不超过 $\left\lVert F(x)-Ux\right\rVert$、第二因子不超过 $2$。
+这是存在一个邻近合法表示的数学结论，
+不自动给出装置能够实施该修复的内部控制。
+

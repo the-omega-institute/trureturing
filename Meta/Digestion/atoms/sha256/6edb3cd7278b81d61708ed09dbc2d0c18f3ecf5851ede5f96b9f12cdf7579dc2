@@ -1,0 +1,20 @@
+### 15.2 选择一个稀有结果以后，状态可以更容易区分
+
+取 $H=\mathbb C ^3$，$0<\epsilon<1$，令
+
+$$
+\psi_0=\sqrt{1-\epsilon}|2\rangle +\sqrt\epsilon|0\rangle ,\qquad
+\psi_1=\sqrt{1-\epsilon}|2\rangle +\sqrt\epsilon|1\rangle .
+$$
+
+其内积为 $1-\epsilon$。
+令 $P=|0\rangle \langle 0|+|1\rangle \langle 1|$、$Q=|2\rangle \langle 2|$。
+完整输出
+$F(\psi)=P\psi\oplus Q\psi$
+是等距，满足本轮候选。
+未归一的 $P$ 分支差分平方仍为 $2\epsilon$，与输入差分相同。
+但若只保留概率为 $\epsilon$ 的 $P$ 结果并重新归一，
+两个条件态变成 $|0\rangle$、$|1\rangle$，其差分平方为 $2$，射线夹角为 $\pi/2$。
+条件归一引入了另一个非线性步骤，
+因此“条件态更容易区分”与本轮的完整幅度条件相容。
+

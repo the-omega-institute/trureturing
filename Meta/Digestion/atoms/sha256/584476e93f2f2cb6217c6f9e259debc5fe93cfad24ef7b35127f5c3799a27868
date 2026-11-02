@@ -1,0 +1,30 @@
+## 7. 二元三维提升：四个半空间锁住同一个关系点
+
+对两个非同时为零的输入 $u,v$，记
+
+$$
+a=\left\lVert u\right\rVert ^2,\quad b=\left\lVert v\right\rVert ^2,\quad z=\langle u,v\rangle ,\quad s=a+b>0.
+$$
+
+将二元关系写成
+
+<a id="eq-bloch"></a>
+
+$$
+R=\frac1s
+\begin{pmatrix}a&\overline z\\z&b\end{pmatrix}
+=\frac12(I+\mathbf r\cdot\boldsymbol\sigma),
+\qquad
+\mathbf r=\left(\frac{2\operatorname{Re}  z}{s},\frac{2\operatorname{Im}  z}{s},\frac{a-b}{s}\right).\tag{7.1}
+$$
+
+该矩阵是 Gram 矩阵的转置，仍然为正，且
+
+$$
+1-\left\lVert \mathbf r\right\rVert ^2=\frac{4(ab-|z|^2)}{s^2}\ge0.
+$$
+
+完整二元数据是 $(s,\mathbf r)$。球是每个二元截面的表示，不限制全局 $H$ 只有三维。
+
+<a id="statement-7-1"></a>
+

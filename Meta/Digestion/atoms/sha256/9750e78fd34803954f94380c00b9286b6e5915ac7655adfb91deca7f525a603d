@@ -1,0 +1,56 @@
+#### 定理 8.1（圆在完整输出中保形，在事件分支中成为椭圆）
+
+完整输出 $Vx(t)$ 仍为单位正圆。
+每个未归一事件轨迹
+
+$$
+y_e(t)=M_eu\cos t+M_ev\sin t
+$$
+
+位于一个实维数至多为 $2$ 的子空间；非退化时为椭圆，
+允许退化为线段或点。
+令
+
+$$
+G_e=
+\begin{pmatrix}
+a_e&c_e\\c_e&b_e
+\end{pmatrix},
+\quad
+a_e=\langle u,E_eu\rangle ,\quad b_e=\langle v,E_ev\rangle ,
+\quad c_e=\operatorname{Re} \langle u,E_ev\rangle .
+$$
+
+则
+
+<a id="eq-ellipsebudget"></a>
+
+$$
+\boxed{0\le G_e\le I_2,\qquad \sum_eG_e=I_2.}\tag{8.1}
+$$
+
+椭圆半轴长度的平方为
+
+<a id="eq-axes"></a>
+
+$$
+\lambda_{e,\pm}=
+\frac{a_e+b_e\pm\sqrt{(a_e-b_e)^2+4c_e^2}}2.\tag{8.2}
+$$
+
+**证明。**
+
+$V$ 保持实内积，所以 $Vu,Vv$ 仍实正交单位。
+将事件映射限制到 $\operatorname{span} _{\mathbb R }\{u,v\}$，得实线性映射
+$T_e:\mathbb R ^2\to W_e$，
+$T_e(\alpha,\beta)=\alpha M_eu+\beta M_ev$。
+它的实 Gram 矩阵为 $T_e^*T_e=G_e$。
+对 $G_e$ 作实正交对角化后，两个输出轴正交，长度分别为
+$\sqrt{\lambda_{e,+}},\sqrt{\lambda_{e,-}}$，故单位圆的像为所述椭圆。
+$0\le E_e\le I$ 给 $0\le G_e\le I_2$，
+完备性给 $\sum_eG_e=I_2$。二阶特征方程直接给式[(8.2)](#eq-axes)。
+
+□
+
+<a id="statement-8-2"></a>
+
