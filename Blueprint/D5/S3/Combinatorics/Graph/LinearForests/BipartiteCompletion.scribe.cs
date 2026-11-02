@@ -13,6 +13,8 @@ internal sealed class BipartiteCompletionDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Exists(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Instance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Comma, Sp, body);
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
     private static Formula Imp(Formula left, Formula right) =>
@@ -41,10 +43,11 @@ internal sealed class BipartiteCompletionDocument : IScribeDocumentDefinition
                         Eq(Call("degree", F.Id("H"), F.Id("u")), D(2))))))))));
     private static Formula Statement() =>
         All("alpha", Name("Type"),
-            Imp(And(Call("Fintype", F.Id("alpha")), Call("DecidableEq", F.Id("alpha"))),
-                All("G", Call("SimpleGraph", F.Id("alpha")),
-                    All("A", Call("Finset", F.Id("alpha")),
-                        All("B", Call("Finset", F.Id("alpha")), Imp(Hypotheses(), Conclusion()))))));
+            Instance(Call("Fintype", F.Id("alpha")),
+                Instance(Call("DecidableEq", F.Id("alpha")),
+                    All("G", Call("SimpleGraph", F.Id("alpha")),
+                        All("A", Call("Finset", F.Id("alpha")),
+                            All("B", Call("Finset", F.Id("alpha")), Imp(Hypotheses(), Conclusion())))))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every finite bipartite linear forest with a strictly larger B part admits a color-preserving supergraph on the same full vertex type, still a linear forest, in which every A vertex has degree two.",
