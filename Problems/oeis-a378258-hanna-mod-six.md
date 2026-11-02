@@ -51,9 +51,9 @@ A normalized source solution and degree n>1 with an integer coefficient congruen
 
 ## Evidence
 
-The intended exact settlement is `HannaA378258ModSix.result : claim`. This implementation is returned for independent review before freeze/deposit, publication or KPI counting. Scoped compilation and axiom evidence are supplied with the implementation handoff.
+`HannaA378258ModSix.result : claim` proves the exact quantified target. This implementation is returned for independent review before freeze/deposit, publication or KPI counting. The source and its Reg mirror compile through the cache-guarded scoped entry. Their axiom closures are contained in `{propext, Classical.choice, Quot.sound}`. The current scoped evidence is supplied with the implementation handoff.
 
-The required four-slot registration remains unfinished; its concrete linked issue and missing evidence are disclosed in the handoff. No `declared_validated` status is asserted.
+The source-owner mirror `Reg/D5/S1/Recurrence/Invariants/HannaA378258ModSix.lean` enrolls the existing dependent-family template. Its law preserves existence, the original `IsGF`, every degree, the integer witness and both excluded residues. The equivalence bridge is exact. A constant-one family violates the law at degree two, giving whole-family variation and one-role sensitivity. Observation dependence uses degrees two and three of an actual normalized solution: frozen parity makes one coefficient odd and the other even. The current report binds the original `claim` definition and its exact coefficient occurrence. The continuation is `.unknown`; this proves neither undecidability nor inexhaustibility.
 
 ## Triage
 
@@ -63,4 +63,4 @@ The final exclusion covers every normalized rational solution and every natural 
 
 ## ASSUMED-UNVERIFIED
 
-The literature screen is bounded, and no global priority is asserted. Source correspondence uses the original OEIS equations and normalization. Independent review, freezing, required checks, merge and synchronization remain caller-owned. The escape audit is unfinished.
+The literature screen is bounded, and no global priority is asserted. Source correspondence uses the original OEIS equations and normalization. Independent review, freezing, required checks, merge and synchronization remain caller-owned. The residual continuation is unknown; the four-slot evidence is supplied in the source-owner Reg mirror.

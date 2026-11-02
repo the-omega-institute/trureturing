@@ -41,8 +41,10 @@ internal sealed class HannaA378258ModSixDocument : IScribeDocumentDefinition
                 + "by three. An even integer, or an odd integer divisible by three, cannot have remainder one or five "
                 + "modulo six. Degree zero enters the coefficient lift via normalization; degree one is excluded by "
                 + "the source conjecture. No finite truncation is used. The derivation reuses existing algebraic "
-                + "interfaces; it claims no global priority. Escape registration is unfinished under the linked issue "
-                + "in the problem dossier, and this delivery awaits independent review and freezing.",
+                + "interfaces; it claims no global priority. The source-family registration reconstructs the complete original "
+                + "claim, proves whole-family variation and sensitivity, and witnesses coefficient dependence at "
+                + "degrees two and three of an actual normalized solution. Its continuation is unknown; no claim "
+                + "of undecidability or inexhaustibility follows. This delivery awaits independent review and freezing.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a378258-hanna-mod-six"),
                     ResolutionKind.Proved)))));
