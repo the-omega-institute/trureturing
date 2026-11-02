@@ -43,6 +43,18 @@ internal sealed class UnicyclicSkewnessMinusKurtosisUpperBoundDocument : IScribe
                     + "assumption, rational-rate restriction or finite dimension cutoff is imposed."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("normalized-difference"),
+                DeclarationHandle.Create(Prefix + "normalized_difference"),
+                H("The common normalized difference"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every finite real rate vector, S − K equals −12p² + 18q − 6r/p, "
+                    + "where p, q and r are the second, third and fourth power sums of the same "
+                    + "normalized inverse-rate vector. The identity uses total real division; "
+                    + "positivity is required by the extremal bounds, not by this identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The universal upper bound and sharpness"),
                 StatementSource.FromAuthor(Disp(ClaimBody())),

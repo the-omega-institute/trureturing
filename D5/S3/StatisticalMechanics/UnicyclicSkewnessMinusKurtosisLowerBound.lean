@@ -160,4 +160,94 @@ private lemma universal_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
   rw [normalized_difference]
   exact simplex_lower_bound _ hx (normalized_moments hn k hk).1
 
+private def endpointMass : ℝ := (9 - Real.sqrt 17) / 16
+
+/-- Reciprocals of one fixed mass and m + 1 equal positive tail masses. -/
+private def sharpRates (m : ℕ) : Fin (m + 2) → ℝ :=
+  fun i => if i = 0 then endpointMass⁻¹ else ((m : ℝ) + 1) / (1 - endpointMass)
+
+private lemma sharp_rates_positive (m : ℕ) : ∀ i, 0 < sharpRates m i := by
+  have hs0 := Real.sqrt_nonneg (17 : ℝ)
+  have hs7 : Real.sqrt 17 < 7 := (Real.sqrt_lt' (by norm_num)).mpr (by norm_num)
+  have hu : 0 < endpointMass := by dsimp [endpointMass]; linarith
+  have hu1 : endpointMass < 1 := by dsimp [endpointMass]; linarith
+  intro i
+  dsimp [sharpRates]
+  split_ifs <;> positivity
+
+private def approximation (t : ℝ) : ℝ :=
+  -12 * (endpointMass ^ 2 + (1 - endpointMass) ^ 2 * t) ^ 2 +
+    18 * (endpointMass ^ 3 + (1 - endpointMass) ^ 3 * t ^ 2) -
+    6 * (endpointMass ^ 4 + (1 - endpointMass) ^ 4 * t ^ 3) /
+      (endpointMass ^ 2 + (1 - endpointMass) ^ 2 * t)
+
+private lemma sharp_value (m : ℕ) :
+    skewness (sharpRates m) - kurtosis (sharpRates m) =
+      approximation (1 / ((m : ℝ) + 1)) := by
+  have hm : 0 < (m : ℝ) + 1 := by positivity
+  have hs (j : ℕ) : powerSum (m + 2) j (fun i => (sharpRates m i)⁻¹) =
+      endpointMass ^ j + ((m : ℝ) + 1) * ((1 - endpointMass) / ((m : ℝ) + 1)) ^ j := by
+    simp [powerSum, sharpRates, Fin.sum_univ_succ, ← inv_pow, inv_div]
+  have h1 : powerSum (m + 2) 1 (fun i => (sharpRates m i)⁻¹) = 1 := by
+    rw [hs]
+    field_simp <;> ring
+  have h2 : endpointMass ^ 2 + ((m : ℝ) + 1) *
+      ((1 - endpointMass) / ((m : ℝ) + 1)) ^ 2 =
+      endpointMass ^ 2 + (1 - endpointMass) ^ 2 * (1 / ((m : ℝ) + 1)) := by
+    field_simp <;> ring
+  have h3 : endpointMass ^ 3 + ((m : ℝ) + 1) *
+      ((1 - endpointMass) / ((m : ℝ) + 1)) ^ 3 =
+      endpointMass ^ 3 + (1 - endpointMass) ^ 3 * (1 / ((m : ℝ) + 1)) ^ 2 := by
+    field_simp <;> ring
+  have h4 : endpointMass ^ 4 + ((m : ℝ) + 1) *
+      ((1 - endpointMass) / ((m : ℝ) + 1)) ^ 4 =
+      endpointMass ^ 4 + (1 - endpointMass) ^ 4 * (1 / ((m : ℝ) + 1)) ^ 3 := by
+    field_simp <;> ring
+  rw [skewness, kurtosis, h1, hs 2, hs 3, hs 4, h2, h3, h4]
+  dsimp [approximation]
+  ring
+
+private lemma sharp_limit :
+    Tendsto (fun m : ℕ => skewness (sharpRates m) - kurtosis (sharpRates m))
+      atTop (nhds lowerBound) := by
+  have hu : 0 < endpointMass := by
+    have h := sharp_rates_positive 0 0
+    simp only [sharpRates, ↓reduceIte, inv_pos] at h
+    exact h
+  have hc : ContinuousAt approximation 0 := by
+    unfold approximation
+    fun_prop (disch := positivity)
+  have hz : Tendsto (fun m : ℕ => 1 / ((m + 1 : ℕ) : ℝ)) atTop (nhds (0 : ℝ)) :=
+    (tendsto_add_atTop_iff_nat 1).mpr tendsto_one_div_atTop_nhds_zero_nat
+  have he : approximation 0 = lowerBound := by
+    have hs : Real.sqrt 17 ^ 2 = 17 := Real.sq_sqrt (by norm_num)
+    have hs3 : Real.sqrt 17 ^ 3 = 17 * Real.sqrt 17 := by rw [pow_succ, hs]
+    have hs4 : Real.sqrt 17 ^ 4 = 289 := by
+      calc
+        _ = (Real.sqrt 17 ^ 2) ^ 2 := pow_mul _ 2 2
+        _ = _ := by rw [hs]; norm_num
+    have hid : approximation 0 =
+        -12 * endpointMass ^ 4 + 18 * endpointMass ^ 3 - 6 * endpointMass ^ 2 := by
+      dsimp [approximation]
+      field_simp
+      ring
+    rw [hid]
+    dsimp [endpointMass, lowerBound]
+    ring_nf
+    simp only [hs, hs3, hs4]
+    ring
+  simpa only [Function.comp_def, ← sharp_value, Nat.cast_add, Nat.cast_one, he] using
+    hc.tendsto.comp hz
+
+/-- The exact universal lower endpoint, with sharpness over actual positive finite rates. -/
+theorem result : claim := by
+  refine ⟨universal_lower_bound, ?_⟩
+  refine ⟨?_, ?_⟩
+  · rintro s ⟨n, hn, k, hk, rfl⟩
+    exact universal_lower_bound n hn k hk
+  · intro b hb
+    apply ge_of_tendsto' sharp_limit
+    intro m
+    exact hb ⟨m + 2, by omega, sharpRates m, sharp_rates_positive m, rfl⟩
+
 end D5.S3.StatisticalMechanics.UnicyclicSkewnessMinusKurtosisLowerBound

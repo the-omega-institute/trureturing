@@ -66,6 +66,18 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
                     + "Its definition requires neither positivity nor membership in the simplex."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("normalized-simplex"),
+                DeclarationHandle.Create(Prefix + "normalized_simplex"),
+                H("Positive inverse rates normalize to the simplex"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every positive natural n and every strictly positive real vector k, "
+                    + "the inverse rates divided by their first power sum form a nonnegative vector "
+                    + "whose coordinates sum to one. This normalization is shared by the coupled "
+                    + "skewness and kurtosis bounds."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("skewness-normalized"),
                 DeclarationHandle.Create(Prefix + "skewness_normalized"),
                 H("Skewness as a functional of normalized inverse rates"),
