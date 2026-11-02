@@ -28,7 +28,7 @@ Every proof script remains unelaborated, including these analytic joins.
 noncomputable section
 
 open Polynomial MeasureTheory Set Filter
-open scoped Interval ComplexConjugate Topology
+open scoped Interval ComplexConjugate Topology ENNReal
 
 namespace D5.S3.Analytic.MomentOrthogonalPrimitiveGap
 
@@ -54,15 +54,17 @@ private lemma energy_eq_norm_sq {D : ℝ} {f : ℝ → ℂ} (hf : MemLp f 2 (μ 
     E D f = ‖hf.toLp f‖ ^ 2 := by
   have h := inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (hf.toLp f)
   rw [L2.inner_def] at h
-  apply Complex.ofReal_injective
-  calc
-    ((E D f : ℝ) : ℂ) = ∫ x, ((‖f x‖ ^ 2 : ℝ) : ℂ) ∂μ D :=
-      (integral_ofReal (f := fun x => ‖f x‖ ^ 2)).symm
-    _ = ∫ x, inner ℂ (hf.toLp f x) (hf.toLp f x) ∂μ D := by
-      apply integral_congr_ae
-      filter_upwards [hf.coeFn_toLp] with x hx
-      simp only [hx, inner_self_eq_norm_sq_to_K, Complex.ofReal_pow]
-    _ = _ := by simpa only [Complex.ofReal_pow] using h
+  have he : ((E D f : ℝ) : ℂ) = (‖hf.toLp f‖ : ℂ) ^ 2 := by
+    calc
+      ((E D f : ℝ) : ℂ) = ∫ x, ((‖f x‖ ^ 2 : ℝ) : ℂ) ∂μ D :=
+        (integral_ofReal (f := fun x => ‖f x‖ ^ 2)).symm
+      _ = ∫ x, inner ℂ (hf.toLp f x) (hf.toLp f x) ∂μ D := by
+        apply integral_congr_ae
+        filter_upwards [hf.coeFn_toLp] with x hx
+        rw [hx, inner_self_eq_norm_sq_to_K]
+        norm_cast
+      _ = _ := by convert h using 1
+  exact_mod_cast he
 
 private lemma complex_polynomial_uniform_approximation (g : ℝ → ℂ)
     (hg : ContinuousOn g (Icc (0 : ℝ) 1)) (ε : ℝ) (hε : 0 < ε) :
@@ -74,9 +76,9 @@ private lemma complex_polynomial_uniform_approximation (g : ℝ → ℂ)
   let p : ℂ[X] := pr.map Complex.ofRealHom + C Complex.I * pi.map Complex.ofRealHom
   refine ⟨p, ?_⟩
   intro x hx
-  have he (r : ℝ[X]) : pv (r.map Complex.ofRealHom) x = (r.eval x : ℂ) := by
+  have he (r : ℝ[X]) : pv (r.map Complex.ofRealHom) x = ((r.eval x : ℝ) : ℂ) := by
     simpa only [pv] using Polynomial.eval_map_apply (p := r) Complex.ofRealHom x
-  have hval : pv p x = (pr.eval x : ℂ) + Complex.I * (pi.eval x : ℂ) := by
+  have hval : pv p x = ((pr.eval x : ℝ) : ℂ) + Complex.I * ((pi.eval x : ℝ) : ℂ) := by
     change pv (pr.map Complex.ofRealHom) x + Complex.I *
       pv (pi.map Complex.ofRealHom) x = _
     rw [he pr, he pi]
@@ -115,6 +117,7 @@ private lemma raw_polynomial_L2_approximation (A : ℝ → ℂ) (hA : MemLp A 2 
         have hs := Real.sq_sqrt hε.le
         have hsq := (sq_le_sq₀ (norm_nonneg (g x - pv p x))
           (show 0 ≤ Real.sqrt ε / 2 by positivity)).mpr hb
+        change ‖g x - pv p x‖ ^ 2 ≤ ε / 4
         nlinarith
       _ = ε / 4 := by
         change (∫ _x in Icc (0 : ℝ) 1, ε / 4) = ε / 4
@@ -124,6 +127,9 @@ private lemma raw_polynomial_L2_approximation (A : ℝ → ℂ) (hA : MemLp A 2 
   calc
     E 1 (fun x => A x - pv p x) ≤
         2 * E 1 (fun x => A x - g x) + 2 * E 1 (fun x => g x - pv p x) := by
+      change (∫ x, ‖(A - pv p) x‖ ^ 2 ∂μ 1) ≤
+        2 * (∫ x, ‖(A - fun x => g x) x‖ ^ 2 ∂μ 1) +
+        2 * (∫ x, ‖((fun x => g x) - pv p) x‖ ^ 2 ∂μ 1)
       rw [← integral_const_mul, ← integral_const_mul,
         ← integral_add (hagInt.const_mul 2) (hgpInt.const_mul 2)]
       apply integral_mono_ae hapInt ((hagInt.const_mul 2).add (hgpInt.const_mul 2))
@@ -147,7 +153,8 @@ private lemma poly_inner (p r : ℂ[X]) :
   apply integral_congr_ae
   filter_upwards [(polynomial_memLp 1 p).coeFn_toLp,
     (polynomial_memLp 1 r).coeFn_toLp] with x hp hr
-  rw [hp, hr, RCLike.inner_apply, Polynomial.eval_map_apply]
+  rw [hp, hr, RCLike.inner_apply]
+  simp only [pv, ← Polynomial.eval_map_apply (starRingEnd ℂ), Complex.conj_ofReal]
 
 private lemma low_polynomial_inner_zero (q : ℕ) (A : ℝ → ℂ)
     (hA : MemLp A 2 (μ 1))
@@ -157,7 +164,7 @@ private lemma low_polynomial_inner_zero (q : ℕ) (A : ℝ → ℂ)
   have hp' : (p.map (starRingEnd ℂ)).degree < (q : WithBot ℕ) :=
     Polynomial.degree_map_le.trans_lt hp
   let r := p.map (starRingEnd ℂ)
-  have hmInt (n : ℕ) : Integrable (fun x => (x : ℂ) ^ n * A x) (μ 1) :=
+  have hmInt (n : ℕ) : Integrable (fun x : ℝ => (x : ℂ) ^ n * A x) (μ 1) :=
     IntegrableOn.continuousOn_mul
       (Complex.continuous_ofReal.pow n).continuousOn
       (hA.integrable (by norm_num)) isCompact_Icc
@@ -166,7 +173,8 @@ private lemma low_polynomial_inner_zero (q : ℕ) (A : ℝ → ℂ)
       rw [L2.inner_def]
       apply integral_congr_ae
       filter_upwards [(polynomial_memLp 1 p).coeFn_toLp, hA.coeFn_toLp] with x he hf
-      rw [he, hf, RCLike.inner_apply', ← Polynomial.eval_map_apply]
+      rw [he, hf, RCLike.inner_apply']
+      simp only [r, pv, ← Polynomial.eval_map_apply (starRingEnd ℂ), Complex.conj_ofReal]
     _ = ∫ x, ∑ n ∈ Finset.range (r.natDegree + 1),
         r.coeff n * ((x : ℂ) ^ n * A x) ∂μ 1 := by
       apply integral_congr_ae
@@ -200,7 +208,7 @@ private lemma low_degree (d q : ℕ) (a : ℕ → ℂ) :
         rw [PolynomialL2Derivative.legendreC, Polynomial.degree_map_eq_of_injective
           (show Function.Injective (Int.castRingHom ℂ) from Int.cast_injective),
           Polynomial.degree_shiftedLegendre]
-        exact WithBot.coe_lt_coe.mpr (by omega))
+        exact_mod_cast (lt_of_lt_of_le hnq hk))
     rw [hc, mul_zero]
   · simp [low, hnq]
 
@@ -223,7 +231,9 @@ private lemma correction_nonexpansive (d q : ℕ) (a : ℕ → ℂ) (A : ℝ →
     filter_upwards [(polynomial_memLp 1 p).coeFn_toLp,
       (polynomial_memLp 1 u).coeFn_toLp, (polynomial_memLp 1 v).coeFn_toLp,
       Lp.coeFn_add (polyLp u) (polyLp v)] with x hp hu hv huv
-    rw [hp, huv, hu, hv]
+    rw [hp, huv]
+    change pv p x = polyLp u x + polyLp v x
+    rw [hu, hv]
     simp only [pv, he, eval_add]
   have huv : inner ℂ (polyLp u) (polyLp v) = 0 := by
     rw [poly_inner, PolynomialL2Derivative.mixed_expansion]
@@ -240,6 +250,7 @@ private lemma correction_nonexpansive (d q : ℕ) (a : ℕ → ℂ) (A : ℝ →
     rw [heLp]
     abel
   rw [hs] at hpy
+  change E 1 (A - pv v) ≤ E 1 (A - pv p)
   rw [energy_eq_norm_sq (hA.sub (polynomial_memLp 1 v)),
     energy_eq_norm_sq (hA.sub (polynomial_memLp 1 p)), MemLp.toLp_sub, MemLp.toLp_sub]
   have hh : ‖polyLp v - hA.toLp A‖ ^ 2 ≤ ‖polyLp p - hA.toLp A‖ ^ 2 := by
@@ -261,7 +272,8 @@ private lemma corrected_polynomial_approximation (q : ℕ) (hq : 1 ≤ q)
       PolynomialL2Derivative.expansion (max q (p.natDegree + 1)) a = p := by
     apply PolynomialL2Derivative.exists_expansion
     exact Polynomial.degree_le_natDegree.trans_lt
-      (WithBot.coe_lt_coe.mpr (by omega))
+      (by exact_mod_cast (Nat.lt_of_lt_of_le (Nat.lt_succ_self p.natDegree)
+        (le_max_right q (p.natDegree + 1))))
   have hraw (j : ℕ) : ∃ p : ℂ[X],
       E 1 (fun x => A x - pv p x) ≤ (1 / ((j : ℝ) + 1)) ^ 2 :=
     raw_polynomial_L2_approximation A hA _ (by positivity)
@@ -277,6 +289,7 @@ private lemma corrected_polynomial_approximation (q : ℕ) (hq : 1 ≤ q)
           (hA.toLp A) ≤ 1 / ((j : ℝ) + 1) := by
       have h := (correction_nonexpansive (d j) q (a j) A hA hm).trans (by
         simpa only [d, ha j] using hp j)
+      change E 1 (A - pv (PolynomialL2Derivative.expansion (d j) (high q (a j)))) ≤ _ at h
       rw [energy_eq_norm_sq (hA.sub (polynomial_memLp 1 _)), MemLp.toLp_sub] at h
       rw [dist_eq_norm, norm_sub_rev]
       exact (sq_le_sq₀ (norm_nonneg _) (by positivity)).mp h
@@ -302,10 +315,10 @@ private lemma primitive_L2_continuity :
       ((Lp.memLp f).integrable (by norm_num))
   have hcont (f : Lp ℂ 2 (μ 1)) : ContinuousOn (primitive (fun x => f x)) (Icc (0 : ℝ) 1) := by
     have hi : IntegrableOn (fun x => f x) (uIcc (0 : ℝ) 1) := by
-      simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] using
+      simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1), μ] using
         ((Lp.memLp f).integrable (by norm_num))
     simpa only [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1), primitive] using
-      continuousOn_primitive_interval hi
+      intervalIntegral.continuousOn_primitive_interval hi
   have hbound (f : Lp ℂ 2 (μ 1)) {x : ℝ} (hx : x ∈ Icc (0 : ℝ) 1) :
       ‖primitive (fun x => f x) x‖ ≤ ‖f‖ := by
     let I : Lp ℂ 2 (μ 1) := indicatorConstLp (s := Ioc (0 : ℝ) x) 2 measurableSet_Ioc (by finiteness) (1 : ℂ)

@@ -810,13 +810,14 @@ private lemma sturm_C_mul (a : ℂ) (p : ℂ[X]) :
   have h : flux (C a * p) = C a * flux p := by
     simp only [flux, Polynomial.derivative_C_mul]
     ring
-  rw [sturm, h, Polynomial.derivative_C_mul]
+  change (flux (C a * p)).derivative = C a * (flux p).derivative
+  rw [h, Polynomial.derivative_C_mul]
 
 private lemma sturm_sum (s : Finset ℕ) (p : ℕ → ℂ[X]) :
     sturm (∑ n ∈ s, p n) = ∑ n ∈ s, sturm (p n) := by
   have h : flux (∑ n ∈ s, p n) = ∑ n ∈ s, flux (p n) := by
     simp only [flux, Polynomial.derivative_sum, Finset.mul_sum]
-    exact (Finset.sum_neg_distrib).symm
+    exact (Finset.sum_neg_distrib _).symm
   rw [sturm, h, Polynomial.derivative_sum]
   rfl
 
@@ -859,10 +860,14 @@ private lemma weighted_energy (p : ℂ[X]) :
   rw [← intervalIntegral.integral_neg, ← intervalIntegral.integral_ofReal]
   apply intervalIntegral.integral_congr
   intro x hx
+  dsimp only
   rw [eval_map_conj]
   simp only [pv, flux, eval_neg, eval_mul, eval_X, eval_sub, eval_one,
-    Complex.ofReal_mul, Complex.ofReal_sub, Complex.ofReal_one, Complex.sq_norm,
-    Complex.mul_conj]
+    Complex.ofReal_mul, Complex.ofReal_sub, Complex.ofReal_one]
+  have hn : (↑(‖p.derivative.eval (x : ℂ)‖ ^ 2) : ℂ) =
+      p.derivative.eval (x : ℂ) * conj (p.derivative.eval (x : ℂ)) := by
+    rw [Complex.sq_norm, Complex.mul_conj]
+  rw [hn]
   ring
 
 lemma mixed_expansion (d : ℕ) (a b : ℕ → ℂ) :
@@ -870,7 +875,8 @@ lemma mixed_expansion (d : ℕ) (a b : ℕ → ℂ) :
       ((expansion d b).map (starRingEnd ℂ)) =
       ∑ n ∈ Finset.range d, a n * conj (b n) / (2 * (n : ℂ) + 1) := by
   rw [expansion_map_conj]
-  unfold expansion at 1
+  change moment (∑ n ∈ Finset.range d, C (a n) * legendreC n)
+    (expansion d (fun n => conj (b n))) = _
   rw [moment_sum_left]
   apply Finset.sum_congr rfl
   intro n hn
@@ -891,8 +897,14 @@ private lemma inverse_weighted_energy (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → �
   simp only [inverseCoefficients, map_div₀, Complex.conj_ofReal,
     weight, Complex.ofReal_div, Complex.ofReal_mul,
     Complex.ofReal_add, Complex.ofReal_one, Complex.ofReal_ofNat,
-    Complex.ofReal_natCast, Complex.sq_norm, ← Complex.mul_conj]
-  ring
+    Complex.ofReal_natCast]
+  have he : a n * conj (a n) = (‖a n‖ : ℂ) ^ 2 := by
+    rw [Complex.mul_conj, ← Complex.sq_norm, Complex.ofReal_pow]
+  calc
+    _ = (a n * conj (a n)) /
+        ((2 * (n : ℂ) + 1) * (eigenvalue n : ℂ)) := by
+          simp only [div_eq_mul_inv, mul_inv_rev]; ring
+    _ = _ := by rw [he]; simp only [div_eq_mul_inv, mul_inv_rev]; ring
 
 private lemma weight_bound {x : ℝ} (hx : x ∈ Icc (0 : ℝ) 1) :
     0 ≤ x * (1 - x) ∧ x * (1 - x) ≤ 1 / 4 := by
@@ -912,9 +924,12 @@ private lemma flux_energy_bound (p : ℂ[X]) :
   have hw := weight_bound hx
   have he : pv (flux p) x = -(↑(x * (1 - x)) * pv p.derivative x) := by
     simp [flux, pv]
+  change ‖pv (flux p) x‖ ^ 2 ≤ _
   rw [he, norm_neg, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hw.1,
     mul_pow]
-  nlinarith [sq_nonneg ‖pv p.derivative x‖]
+  have hw2 := mul_le_mul_of_nonneg_right hw.2 hw.1
+  have hb := mul_le_mul_of_nonneg_right hw2 (sq_nonneg ‖pv p.derivative x‖)
+  simpa only [pow_two, mul_assoc] using hb
 
 private lemma coefficient_gap (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → ℂ)
     (ha : ∀ n < q, a n = 0) :
@@ -939,9 +954,10 @@ private lemma coefficient_gap (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → ℂ)
 /-- Complete finite high-mode argument; all coefficients are complex. -/
 theorem complex_legendre_primitive_gap (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → ℂ)
     (ha : ∀ n < q, a n = 0) :
-    E 1 (primitive (pv (expansion d a))) ≤
+    (∫ x in Icc (0 : ℝ) 1, ‖∫ t in (0 : ℝ)..x, (expansion d a).eval (t : ℂ)‖ ^ 2) ≤
       (1 / (4 * (q : ℝ) * ((q : ℝ) + 1))) *
-        E 1 (pv (expansion d a)) := by
+        (∫ x in Icc (0 : ℝ) 1, ‖(expansion d a).eval (x : ℂ)‖ ^ 2) := by
+  change E 1 (primitive (pv (expansion d a))) ≤ _
   let F := expansion d (inverseCoefficients a)
   have hF : sturm F = expansion d a :=
     sturm_inverse_expansion d q hq a ha
@@ -961,8 +977,9 @@ theorem complex_legendre_primitive_gap (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → �
       gcongr
       exact coefficient_gap d q hq a ha
     _ = _ := by
-      rw [energy_eq_intervalIntegral (by norm_num), expansion_parseval]
-      unfold eigenvalue
+      rw [integral_Icc_eq_integral_Ioc,
+        ← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1), expansion_parseval]
+      simp only [eigenvalue, div_eq_mul_inv, mul_inv_rev]
       ring
 
 

@@ -58,7 +58,7 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                         + "pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. "
                         + "No literature originality claim is made. The supporting Legendre "
                         + "identities and sharper intermediate budget are private proof steps; "
-                        + "the public assertion here is the displayed d^4 inequality."))),
+                        + "these identities also support the finite primitive estimate below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("complex-polynomial-derivative-l2"),
@@ -99,5 +99,52 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                         + "verification in the consuming development. This Reg/Scribe component "
                         + "is intended for integration with that actual consumer. No formal "
                         + "Riemann-hypothesis or Robin implication is established here."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-polynomial-expansion"),
+                DeclarationHandle.Create(Prefix + "exists_expansion"),
+                H("The consumed polynomial spanning interface"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and every complex polynomial p "
+                    + "with degree(p)<d, there exists a full complex coefficient sequence a "
+                    + "such that sum_(n<d) a_n L_n=p. This exposes the existing spanning "
+                    + "proof without changing its statement or proof. It is a consumed "
+                    + "binding interface, used by the derivative estimate and corrected "
+                    + "polynomial approximation; it supplies no new mathematical content."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-mixed-expansion"),
+                DeclarationHandle.Create(Prefix + "mixed_expansion"),
+                H("The consumed Hermitian expansion interface"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and arbitrary complex coefficient "
+                    + "sequences a,b, the bilinear moment of expansion(d,a) and the "
+                    + "coefficient conjugate of expansion(d,b) equals "
+                    + "sum_(n<d) a_n conjugate(b_n)/(2n+1). This consumed binding of the "
+                    + "existing finite moment identities is used both in inverse weighted "
+                    + "energy and in the low/high orthogonality of corrected approximation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-finite-primitive-gap"),
+                DeclarationHandle.Create(Prefix + "complex_legendre_primitive_gap"),
+                H("The finite inverse Sturm energy estimate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d,q with q>=1 and every complex "
+                    + "coefficient sequence a satisfying a_n=0 for all n<q, let p be "
+                    + "sum_(n<d) a_n L_n. The integral over [0,1] of the squared norm of "
+                    + "the actual interval primitive of p is at most "
+                    + "1/(4q(q+1)) times the squared L2 norm of p. No relation between "
+                    + "d and q is imposed, and the empty expansion is included.")),
+                    Paragraph(Text("For w=x(1-x), the coefficient recurrence proves "
+                    + "-(w L_n')'=n(n+1)L_n. Dividing each high coefficient by this "
+                    + "positive eigenvalue constructs F with -(w F')'=p. Both flux "
+                    + "endpoints vanish. Integration by parts gives integral w norm(F')^2 "
+                    + "equal to sum norm(a_n)^2/((2n+1)n(n+1)). The bound 0<=w<=1/4 "
+                    + "then bounds primitive energy. Eigenvalue monotonicity and the "
+                    + "existing exact finite Parseval identity finish the estimate. "
+                    + "This new inverse spectral energy construction is the content; "
+                    + "the exposed spanning and mixed-moment interfaces are bind-only. "
+                    + "The infinite-dimensional extension is owned by "
+                    + "MomentOrthogonalPrimitiveGap. There is no sublinear supplier or RH claim."))),
                 DescribeRole.Theorem))));
 }

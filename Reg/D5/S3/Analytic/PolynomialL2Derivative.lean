@@ -1,11 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.PolynomialL2Derivative
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 open _root_.D5.S3.Analytic.PolynomialL2Derivative
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Polynomial MeasureTheory
-open scoped Interval
+open scoped Interval ComplexConjugate
 
 namespace Reg.D5.S3.Analytic.PolynomialL2Derivative
 noncomputable section
@@ -221,6 +222,217 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+
+namespace Expansion
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ → ℂ) (fun _ => ℂ[X])
+def actual : Realization signature :=
+  realize signature (fun _ d a => expansion d a) (fun e => nomatch e)
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (d : ℕ) (p : ℂ[X]) (_hp : p.degree < (d : WithBot ℕ)),
+    ∃ a : ℕ → ℂ, R.readout () d a = p
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 1 (1 : ℂ[X]) (by norm_num)
+  obtain ⟨a, ha⟩ := hf
+  exact zero_ne_one (show (0 : ℂ[X]) = 1 from ha)
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [actual, realize, expansion, legendreC]
+def family : Registration arena (type_of% (@exists_expansion)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exists_expansion, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@exists_expansion) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Analytic.PolynomialL2Derivative.exists_expansion.audit
+  realizationName := `Reg.D5.S3.Analytic.PolynomialL2Derivative.Expansion.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ d a => expansion d a) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.PolynomialL2Derivative
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Expansion
+
+namespace Mixed
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    (Σ _d : ℕ, ℕ → ℂ) (fun _ => ℕ → ℂ) (fun _ => ℂ)
+def actual : Realization signature :=
+  realize signature (fun _ p b => moment (expansion p.1 p.2) ((expansion p.1 b).map (starRingEnd ℂ))) (fun e => nomatch e)
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (d : ℕ) (a b : ℕ → ℂ),
+    R.readout () ⟨d, a⟩ b =
+      ∑ n ∈ Finset.range d, a n * conj (b n) / (2 * (n : ℂ) + 1)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 0 (fun _ => 0) (fun _ => 0)
+  norm_num [rejected, realize] at hf
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, (fun _ => 1)⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [actual, realize, moment, expansion, legendreC]
+def family : Registration arena (type_of% (@mixed_expansion)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@mixed_expansion, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mixed_expansion) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Analytic.PolynomialL2Derivative.mixed_expansion.audit
+  realizationName := `Reg.D5.S3.Analytic.PolynomialL2Derivative.Mixed.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p b => moment (expansion p.1 p.2) ((expansion p.1 b).map (starRingEnd ℂ))) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.PolynomialL2Derivative
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Mixed
+
+namespace Primitive
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- All seven original binders, with merely L2, all low moments, arbitrary
+complex functions, and the zero function retained. The observation changes
+only the two literal norm operations, using one common norm family. -/
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (d q : ℕ) (hq : 1 ≤ q) (a : ℕ → ℂ)
+    (ha : ∀ n < q, a n = 0),
+    (∫ x in Icc (0 : ℝ) 1,
+      (R.readout () () (∫ t in (0 : ℝ)..x, (expansion d a).eval (t : ℂ))) ^ 2) ≤
+      (1 / (4 * (q : ℝ) * ((q : ℝ) + 1))) *
+        (∫ x in Icc (0 : ℝ) 1, (R.readout () () ((expansion d a).eval (x : ℂ))) ^ 2)
+
+
+/-- At D=q=1 and A=0 the constant-one observation demands 1≤1/8. -/
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hf := h 0 1 (by norm_num) (fun _ => 0) (by intro n hn; rfl)
+  norm_num [rejected, realize, integral_Icc_eq_integral_Ioc,
+    ← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hf
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change ‖(0 : ℂ)‖ ≠ ‖(1 : ℂ)‖
+  norm_num
+
+def family : Registration arena (type_of% @complex_legendre_primitive_gap) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@complex_legendre_primitive_gap, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+/-- Candidate raw occurrence paths are source-derived and still require
+canonical binding inspection. Both paths select the native norm function;
+neither selects the entire goal nor inserts an assumed analytic budget. -/
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@complex_legendre_primitive_gap) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Analytic.PolynomialL2Derivative.complex_legendre_primitive_gap.audit
+  realizationName := `Reg.D5.S3.Analytic.PolynomialL2Derivative.Primitive.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.PolynomialL2Derivative
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Primitive
 
 end
 end Reg.D5.S3.Analytic.PolynomialL2Derivative
