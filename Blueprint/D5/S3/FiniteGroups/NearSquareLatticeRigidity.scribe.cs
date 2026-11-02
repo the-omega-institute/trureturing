@@ -37,20 +37,14 @@ internal sealed class NearSquareLatticeRigidityDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "This controls every lattice satisfying the covering and index hypotheses. "
                         + "It supplies the rigidity needed to exclude arbitrary Cayley generating "
-                        + "pairs, rather than testing only a proposed construction."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("two-vector-quotient-index"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NearSquareLatticeRigidity.span_pair_index"),
-                H("The determinant measures quotient order"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For integer vectors u,v with nonzero determinant, the index of their integer "
-                    + "span is the natural absolute value of u₀v₁−u₁v₀. This is an application of "
-                    + "pinned Mathlib's Submodule.natAbs_det_basis_change, with linear independence "
-                    + "from Matrix.linearIndependent_rows_of_det_ne_zero. It is reused in the "
-                    + "rigidity proof and in the index calculation for the sum-and-difference map; "
-                    + "the determinant-index identity is credited to Mathlib."))),
+                        + "pairs.")),
+                    Paragraph(Text(
+                        "For integer vectors u,v with nonzero determinant, the index of their integer "
+                        + "span is the natural absolute value of u₀v₁−u₁v₀. The helper span_pair_index "
+                        + "applies pinned Mathlib's Submodule.natAbs_det_basis_change, with linear "
+                        + "independence from Matrix.linearIndependent_rows_of_det_ne_zero. It is "
+                        + "reused in the rigidity proof and in the index calculation for the "
+                        + "sum-and-difference map; the determinant-index identity is credited to "
+                        + "Mathlib."))),
                 DescribeRole.Theorem))));
 }
