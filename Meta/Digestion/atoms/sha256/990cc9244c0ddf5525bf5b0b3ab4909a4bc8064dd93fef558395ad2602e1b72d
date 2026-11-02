@@ -1,0 +1,56 @@
+**Editorial note — finite envelope versus finite certification.** Equation (14) is a pointwise/Loewner estimate only after the denominator replacement and tail comparison are proved with the stated Fourier convention. Choosing $J_k,\Omega_k$ requires a diagonal argument that uses the actual finite value of $\mathcal E_k^{(0)}$ at each $k$, even if those values grow without bound. Thus (16) is a conditional finite-envelope statement. A finite interval integral and a finite sum are mathematical finite objects; they are not, by themselves, a finite certified arithmetic computation or an algorithmic sign check.
+
+式 (6) 仍有一个全频率积分。这个无穷尾也可以严格控制。
+
+定义有限和
+
+$$
+m_J(\xi)
+=
+2\sum_{j=1}^{J}
+c_j\lambda_j
+\frac{\xi^2}{\lambda_j^2+\xi^2}.
+$$
+
+由级数逐项估计，
+
+$$
+\boxed{
+0\leq m(\xi)-m_J(\xi)
+\leq\frac{\xi^2}{8J^2}.
+}
+$$
+<a id="eq-12"></a>
+<div class="equation-caption">Equation (12).</div>
+
+再定义
+
+$$
+\mathcal E_k^{(0)}(i,j)
+=
+\int_I
+\overline{g_{k,i}(t)}g_{k,j}(t)\,dt.
+$$
+
+给定有限频率截止 $\Omega>0$，令
+
+$$
+\begin{aligned}
+\mathcal U_{k,J,\Omega}(i,j)
+={}&
+\frac1{2\pi}
+\int_{-\Omega}^{\Omega}
+\frac{
+\overline{\widehat g_{k,i}(\xi)}
+\widehat g_{k,j}(\xi)
+}{
+1+m_J(\xi)
+}\,d\xi\\
+&+
+\frac{\mathcal E_k^{(0)}(i,j)}
+{1+m_J(\Omega)}.
+\end{aligned}
+$$
+<a id="eq-13"></a>
+<div class="equation-caption">Equation (13).</div>
+

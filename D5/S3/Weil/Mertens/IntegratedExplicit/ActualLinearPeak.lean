@@ -630,6 +630,7 @@ private theorem exponential_moment {b : ℝ} (hb : b < 0) (n : ℕ) :
   have hi : b ∈ interior (integrableExpSet id (volume.restrict (Ioi (0 : ℝ)))) := by
     apply mem_interior.mpr
     exact ⟨Iio 0, fun c hc => integrableOn_exp_mul_Ioi hc 0, isOpen_Iio, hb⟩
+  change Integrable _ (volume.restrict (Ioi (0 : ℝ)))
   simpa only [id_eq] using
     integrable_pow_mul_exp_of_mem_interior_integrableExpSet hi n
 
@@ -640,7 +641,7 @@ private theorem integrand_continuous (z : ℂ) :
 
 private theorem integrand_norm (z : ℂ) (t : ℝ) :
     ‖Complex.exp (-z * t) * (K t : ℂ)‖ = Real.exp (-z.re * t) * |K t| := by
-  simp [norm_mul, Complex.norm_exp, Complex.norm_real, Real.norm_eq_abs]
+  simp [Complex.norm_exp, Complex.norm_real, Real.norm_eq_abs]
 
 private theorem laplace_integrable
     (hsub : ∀ β : ℝ, 0 < β → ∃ C : ℝ, 0 < C ∧
@@ -661,7 +662,7 @@ private theorem laplace_integrable
     calc
       Real.exp (-z.re * t) * |K t| ≤
           Real.exp (-z.re * t) * (C * Real.exp ((z.re / 2) * t)) :=
-        mul_le_mul_of_nonneg_left (by simpa only [abs_of_pos ht] using hC t)
+        mul_le_mul_of_nonneg_left (by simpa only [abs_of_pos (show 0 < t from ht)] using hC t)
           (Real.exp_nonneg _)
       _ = C * Real.exp ((-(z.re / 2)) * t) := by
         rw [mul_left_comm, ← Real.exp_add]
@@ -676,13 +677,15 @@ private theorem laplace_analytic
     isOpen_lt continuous_const Complex.continuous_re
   have hd : DifferentiableOn ℂ L {z | 0 < z.re} := by
     intro z₀ hz₀
+    change 0 < z₀.re at hz₀
     let F : ℂ → ℝ → ℂ := fun z t => Complex.exp (-z * t) * (K t : ℂ)
     let F' : ℂ → ℝ → ℂ := fun z t =>
       (-(t : ℂ) * Complex.exp (-z * t)) * (K t : ℂ)
     obtain ⟨C, _, hC⟩ := hsub (z₀.re / 4) (by linarith)
     let bound : ℝ → ℝ := fun t => C * (t * Real.exp ((-(z₀.re / 4)) * t))
     have hb : IntegrableOn bound (Ioi 0) := by
-      simpa only [bound, pow_one] using
+      change Integrable bound (volume.restrict (Ioi (0 : ℝ)))
+      simpa only [bound, pow_one, IntegrableOn] using
         (exponential_moment (by linarith : -(z₀.re / 4) < 0) 1).const_mul C
     have hF'c : Continuous (F' z₀) := by
       exact ((show Continuous (fun t : ℝ => -(t : ℂ)) by fun_prop).mul
@@ -696,7 +699,7 @@ private theorem laplace_analytic
         apply Real.exp_le_exp.mpr
         exact mul_le_mul_of_nonneg_right (by linarith) ht0
       have hk : |K t| ≤ C * Real.exp ((z₀.re / 4) * t) := by
-        simpa only [abs_of_pos ht] using hC t
+        simpa only [abs_of_pos (show 0 < t from ht)] using hC t
       dsimp only [F', bound]
       simp only [norm_mul, norm_neg, Complex.norm_real, Real.norm_eq_abs,
         abs_of_nonneg ht0, Complex.norm_exp, Complex.mul_re, Complex.neg_re,
@@ -814,7 +817,7 @@ theorem actual_kernel_subexponential_implies_rh :
     intro z hz
     have hc := cross_identity hsub hz
     dsimp only [G]
-    linear_combination -hc
+    linear_combination hc
   have hfree :=
     D5.S3.Weil.Probability.AnalyticLogarithmicContinuation.analytic_linear_ode_zero_free
       (isOpen_lt continuous_const Complex.continuous_re)
