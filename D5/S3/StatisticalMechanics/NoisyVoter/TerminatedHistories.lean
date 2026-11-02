@@ -55,11 +55,11 @@ private theorem labelVertex_injective : Function.Injective (labelVertex (V := V)
       exact False.elim ((Nat.ne_of_gt p.1.property) hzero)
     | inr q =>
       have ht : p.1 = q.1 := Subtype.ext (congrArg Prod.fst h)
-      have hv : p.2 = q.2 := congrArg Prod.snd h
+      have hv : p.2 = q.2 := congrArg (fun z : ℕ × V => z.2) h
       exact congrArg Sum.inr (Prod.ext ht hv)
 
 private theorem history_head (x : (c : Coord V) → Ω → Value G c) (n : ℕ) (v : V) (ω : Ω) :
-    (history x n v ω).head? = some (n, v) := by
+    (history x n v ω)[0]? = some (n, v) := by
   cases n with
   | zero => rfl
   | succ n => simp only [history]; split <;> rfl
@@ -86,15 +86,15 @@ private theorem history_suffix (x : (c : Coord V) → Ω → Value G c) :
     intro v ω i p hi
     by_cases h : x (.refresh (n+1) v) ω = true
     · cases i with
-      | zero => simp only [history, h, if_true, List.getElem?_cons_zero, Option.some.injEq] at hi
+      | zero => simp only [history, h, Bool.false_eq_true, ite_true, List.getElem?_cons_zero, Option.some.injEq] at hi
                 subst p; rfl
       | succ i => simp [history, h] at hi
     · cases i with
-      | zero => simp only [history, h, if_false, List.getElem?_cons_zero, Option.some.injEq] at hi
+      | zero => simp only [history, h, Bool.false_eq_true, ite_false, List.getElem?_cons_zero, Option.some.injEq] at hi
                 subst p; rfl
       | succ i =>
-        simp only [history, h, if_false, List.getElem?_cons_succ] at hi
-        simpa only [history, h, if_false, List.drop_succ_cons] using ih _ ω i p hi
+        simp only [history, h, Bool.false_eq_true, ite_false, List.getElem?_cons_succ] at hi
+        simpa only [history, h, Bool.false_eq_true, ite_false, List.drop_succ_cons] using ih _ ω i p hi
 
 private theorem history_end (x : (c : Coord V) → Ω → Value G c) :
     ∀ n v ω, (history x n v ω).getLast? = some (labelVertex (source x n v ω)) ∧
@@ -107,9 +107,7 @@ private theorem history_end (x : (c : Coord V) → Ω → Value G c) :
     by_cases h : x (.refresh (n+1) v) ω = true
     · simp [history, source, labelVertex, step, h]
     · have ht := ih (x (.choice (n+1) v) ω).val ω
-      simp only [history, source, h, if_false]
-      rw [List.getLast?_cons_of_ne_nil (history_ne_nil x n _ ω)]
-      exact ht
+      simpa [history, source, h, List.getLast?_cons_of_ne_nil (history_ne_nil x n _ ω)] using ht
 
 private theorem history_source (x : (c : Coord V) → Ω → Value G c)
     (n : ℕ) (v : V) (ω : Ω) (i : ℕ) (p : ℕ × V)
@@ -135,16 +133,16 @@ private theorem history_edge (x : (c : Coord V) → Ω → Value G c)
   | succ k =>
     by_cases h : x (.refresh (k+1) a) ω = true
     · simp [history, h] at hq'
-    · simp only [history, h, if_false, List.getElem?_cons_succ] at hq'
+    · simp only [history, h, Bool.false_eq_true, ite_false, List.getElem?_cons_succ] at hq'
       rw [show (history x k (x (.choice (k+1) a) ω).val ω)[0]? =
         some (k, (x (.choice (k+1) a) ω).val) from history_head x k _ ω] at hq'
-      simpa only [step, h, if_false] using hq'
+      simpa only [step, h, Bool.false_eq_true, ite_false] using hq'
 
 /-- Complete native source correspondence, ordered common suffixes, and both directions
 of coalescence, with arbitrary starting times and the terminal vertex included. -/
 theorem terminated_history_source_correspondence
     (x : (c : Coord V) → Ω → Value G c) (ω : Ω) (n m : ℕ) (v w : V) :
-    (history x n v ω).head? = some (n, v) ∧
+    (history x n v ω)[0]? = some (n, v) ∧
     (∀ i p q, (history x n v ω)[i]? = some p →
       (history x n v ω)[i+1]? = some q → step x ω p = some q) ∧
     (history x n v ω).getLast? = some (labelVertex (source x n v ω)) ∧
