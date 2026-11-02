@@ -17,7 +17,7 @@ def actual : Realization sig := realize sig (fun _ _ n => n) (fun e => nomatch e
 def rejected : Realization sig := realize sig (fun _ _ _ => 0) (fun e => nomatch e)
 private theorem depends : ObservationalDependence sig actual := by
   intro i
-  exact ⟨(), 0, 1, by decide⟩
+  exact ⟨(), 0, 1, by change (0 : ℕ) ≠ 1; omega⟩
 
 namespace Target0
 abbrev arena : Arena where
@@ -26,7 +26,10 @@ abbrev arena : Arena where
 private theorem bad : ¬ arena.Law rejected := by
   intro h
   have h1 := h 1 (by decide)
-  norm_num [rejected, realize, jacoRight, endpointTable, extendEndpoints] at h1
+  change jacoRight 0 = 2 * 1 -
+    ((Finset.range 1).filter fun i => 1 ≤ i ∧ 1 ≤ jacoRight i).card at h1
+  rw [← endpoint_recurrence 1 (by decide)] at h1
+  exact (by decide +kernel : jacoRight 0 ≠ jacoRight 1) h1
 def evidence : Registration arena (type_of% @endpoint_recurrence) where
   actual := actual
   bridge := Iff.rfl
@@ -217,5 +220,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 #print axioms evidence
 end Target3
+
+end
 
 end Reg.D5.S3.ConceptDynamics.GraphColoring.JacoEndpointBeatty

@@ -71,6 +71,8 @@ theorem degree_formula (n : ℕ) (v : Vertex n) :
       Finset.mem_Ico, Finset.mem_Icc]
     constructor
     · rintro ⟨w, hw, rfl⟩
+      change (beattyOut i ≤ w.1 ∧ w.1 < i) ∨
+        (i + 1 ≤ w.1 ∧ w.1 ≤ min n (jacoRight i))
       have hw1 := (Finset.mem_Icc.mp w.2).1
       have hwn := (Finset.mem_Icc.mp w.2).2
       change Adj i w.1 at hw
@@ -111,8 +113,8 @@ theorem degree_formula (n : ℕ) (v : Vertex n) :
 private theorem deletion_floor (n : ℕ) :
     deleteLeast n = beattyOut (n + 1) - 1 := by
   obtain ⟨hlo, hhi⟩ := deletion_block n
-  rw [← endpoint_start, ← endpoint_start] at hlo hhi
-  rw [endpoint_eq_beatty, endpoint_eq_beatty] at hlo hhi
+  rw [← endpoint_start] at hlo hhi
+  rw [endpoint_eq_beatty] at hlo hhi
   have h1 : ¬ n + 1 ≤ deleteLeast n + beattyOut (deleteLeast n) := by omega
   have h2 : n + 1 ≤ (deleteLeast n + 1) + beattyOut (deleteLeast n + 1) := by omega
   rw [beatty_threshold] at h1 h2
@@ -140,7 +142,7 @@ theorem max_degree_eq_deletion (n : ℕ) (hn : 1 ≤ n) :
   · have hn2 : 2 ≤ n := by omega
     let k := deleteLeast n
     obtain ⟨hlo, hhi⟩ := deletion_block n
-    rw [← endpoint_start, ← endpoint_start] at hlo hhi
+    rw [← endpoint_start] at hlo hhi
     change jacoRight k ≤ n at hlo
     change n < jacoRight (k + 1) at hhi
     have hk1 : 1 ≤ k := by

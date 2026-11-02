@@ -42,17 +42,11 @@ internal sealed class JacoMaximumDegreeDocument : IScribeDocumentDefinition
     private static Formula Naturals() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Bound(string n, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), type, body);
-    private static Formula Less(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula LessEqual(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
-    private static Formula Iff(Formula a, Formula b) =>
-        new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
     private static Formula Implies(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
-    private static Formula Typed(Formula a, Formula b) => Seq(a, Colon, Sp, b);
-    private static Formula SetBuilder(Formula a, Formula b) => Seq(OpenBrace, a, Sp, Mid, Sp, b, CloseBrace);
 }

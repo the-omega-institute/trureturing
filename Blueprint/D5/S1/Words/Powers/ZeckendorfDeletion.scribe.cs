@@ -35,10 +35,4 @@ internal sealed class ZeckendorfDeletionDocument : IScribeDocumentDefinition
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
-    private static Formula Iff(Formula a, Formula b) =>
-        new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
-    private static Formula Implies(Formula a, Formula b) =>
-        new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
-    private static Formula Typed(Formula a, Formula b) => Seq(a, Colon, Sp, b);
-    private static Formula SetBuilder(Formula a, Formula b) => Seq(OpenBrace, a, Sp, Mid, Sp, b, CloseBrace);
 }
