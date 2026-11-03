@@ -977,7 +977,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ t s => vlen (centre (tightState t s))) (fun e => nomatch e))
+  readout := some
+    (realize signature (fun _ t s => vlen (centre (tightState t s))) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -1000,3 +1001,102 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.TightCentre
+
+namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.BellTrace
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (vlen vlen_e3 blochA blochB corr centre pauli)
+open _root_.D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+open scoped ComplexOrder Kronecker
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature
+    (Σ _ : TwoQubit, Σ _ : Fin 3 → ℝ, Σ _ : Fin 3 → ℝ, Fin 3 → ℝ)
+    (fun _ => Fin 3 → ℝ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p b' =>
+    trace (Sigma.fst p *
+      bell (Sigma.fst (Sigma.snd p)) (Sigma.fst (Sigma.snd (Sigma.snd p)))
+        (Sigma.snd (Sigma.snd (Sigma.snd p))) b')) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (ρ : TwoQubit) (_hρ : ρ.IsHermitian) (a a' b b' : Fin 3 → ℝ),
+    R.readout () ⟨ρ, ⟨a, ⟨a', b⟩⟩⟩ b' =
+      ((a ⬝ᵥ (corr ρ *ᵥ (b + b')) + a' ⬝ᵥ (corr ρ *ᵥ (b - b')) : ℝ) : ℂ)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h 0 (by simp) 0 0 0 0
+  change (1 : ℂ) = _ at he
+  norm_num at he
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨tightState 0 0, ⟨![0, 0, 1], ⟨0, 0⟩⟩⟩, 0, ![0, 0, 1], ?_⟩
+  change trace (tightState 0 0 * bell ![0, 0, 1] 0 0 0) ≠
+    trace (tightState 0 0 * bell ![0, 0, 1] 0 0 ![0, 0, 1])
+  rw [bell_trace_real_expansion _ (tight_psd 0 0 (by norm_num) (by norm_num)).isHermitian,
+    bell_trace_real_expansion _ (tight_psd 0 0 (by norm_num) (by norm_num)).isHermitian,
+    (tight_readouts 0 0 (by norm_num) (by norm_num) (by norm_num)).2.2.2]
+  norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, diagonal]
+
+def source_registration : Registration arena (type_of% @bell_trace_real_expansion) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨bell_trace_real_expansion, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@bell_trace_real_expansion) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.BellTrace.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.BellTrace.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p b' =>
+    trace (Sigma.fst p *
+      bell (Sigma.fst (Sigma.snd p)) (Sigma.fst (Sigma.snd (Sigma.snd p)))
+        (Sigma.snd (Sigma.snd (Sigma.snd p))) b')) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+    definition := none
+    coordinates := #[0, 2, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.BellTrace
