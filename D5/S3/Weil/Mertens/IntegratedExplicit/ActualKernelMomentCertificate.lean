@@ -1051,6 +1051,7 @@ theorem actual_kernel_q6_small_window (D : ℝ) (hD0 : 0 ≤ D)
   · have hD : 0 < D := lt_of_le_of_ne hD0 (Ne.symm hzero)
     have ha : ∑ i, a i = 0 := by simpa using hm 0 (Nat.zero_le q)
     have hprime := prime_quadratic_small_bound D hD0 hD3 x a hx ha
+    have hP := q6_mixture_head_lower D hD hD3 q hq x a hx hm
     have hK := actual_K_lower_of_prime_bound D hD hD3 q (by omega) x a hx hm hprime
     have hqR : (6 : ℝ) ≤ q := by exact_mod_cast hq
     have hden : 0 < 4 * (q : ℝ) * ((q : ℝ) + 1) := by positivity
@@ -1082,6 +1083,7 @@ theorem actual_kernel_q22_small_window (D : ℝ) (hD0 : 0 ≤ D)
   · have hD : 0 < D := lt_of_le_of_ne hD0 (Ne.symm hzero)
     have ha : ∑ i, a i = 0 := by simpa using hm 0 (Nat.zero_le q)
     have hprime := prime_quadratic_small_bound D hD0 hD3 x a hx ha
+    have hP := q22_mixture_head_lower D hD hD3 q hq x a hx hm
     have hK := actual_K_lower_of_prime_bound D hD hD3 q (by omega) x a hx hm hprime
     have hqR : (22 : ℝ) ≤ q := by exact_mod_cast hq
     have hden : 0 < 4 * (q : ℝ) * ((q : ℝ) + 1) := by positivity

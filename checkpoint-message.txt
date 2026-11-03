@@ -1,1 +1,1 @@
-WIP: complete actual-K q6/q22 small-window endpoints and consumed proof suppliers
+WIP: include finite positive mixture heads in exact q6/q22 endpoint assembly
