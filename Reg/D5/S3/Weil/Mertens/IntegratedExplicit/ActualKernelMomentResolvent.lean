@@ -495,4 +495,60 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Balance
 
 
+namespace LiteralEnergy
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (q : ℕ) (hq : 1 ≤ q) (D : ℝ) (hD : Real.log 2 + 1 / 16 ≤ D),
+    ∃ (x : Fin q × Fin 3 × Bool → ℝ) (a : Fin q × Fin 3 × Bool → ℂ),
+      (∀ i, x i ∈ Icc (0 : ℝ) (1 / 16) ∪ Icc (Real.log 2) (Real.log 2 + 1 / 16)) ∧
+      (∀ i, x i ∈ Icc (0 : ℝ) D) ∧
+      (∀ m : ℕ, m ≤ q → ∑ i, a i * (x i : ℂ) ^ m = 0) ∧
+      (∑ i, a i * (Real.exp (x i / 2) : ℂ) = 0) ∧
+      (∑ i, a i * (x i : ℂ) ^ (q + 1)) ≠ 0 ∧
+      (∑ i, a i * (x i : ℂ) * (Real.exp (x i / 2) : ℂ)) ≠ 0 ∧
+      0 < R.readout () () (energy x a) ∧
+        V D x a / energy x a ≤ -1 / (65536 * (q : ℝ) ^ 2)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨x, a, _, _, _, _, _, _, hp, _⟩ :=
+    h 1 (by norm_num) (Real.log 2 + 1 / 16) le_rfl
+  change (0 : ℝ) < 0 at hp
+  exact (lt_irrefl (0 : ℝ)) hp
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+def family : Registration arena (type_of% @literal_V_energy_moment_obstruction) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@literal_V_energy_moment_obstruction, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@literal_V_energy_moment_obstruction) (Realization signature) (Type) Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.literal_V_energy_moment_obstruction.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent.LiteralEnergy.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℝ
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end LiteralEnergy
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent

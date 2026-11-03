@@ -1724,22 +1724,21 @@ private lemma literal_continuum_identity (h L D : ℝ) (hh : 0 ≤ h) (hL : h �
       zero_sub, hwindow]
   have hreflect : (∫ t in (-h)..0, J t) =
       ∫ t in (0 : ℝ)..h, Real.exp (-t / 2) * F t := by
-    have ht := intervalIntegral.integral_comp_neg (f := J) (a := (0 : ℝ)) (b := h)
+    have ht := intervalIntegral.integral_comp_neg
+      (f := J) (a := (0 : ℝ)) (b := h)
     simp only [neg_zero] at ht
-    rw [intervalIntegral.integral_symm] at ht
-    have hn := intervalIntegral.integral_symm (a := -h) (b := (0 : ℝ)) (f := J)
     have heq : (fun t => J (-t)) = fun t => Real.exp (-t / 2) * F t := by
       ext t
       simp only [J, he]
     rw [heq] at ht
-    linarith only [ht, hn]
+    exact ht.symm
   have heven : (∫ t in (-h)..h, J t) =
       ∫ t in (0 : ℝ)..h, (Real.exp (t / 2) + Real.exp (-t / 2)) * F t := by
     rw [← intervalIntegral.integral_add_adjacent_intervals
       (hJ.intervalIntegrable (-h) 0) (hJ.intervalIntegrable 0 h), hreflect]
-    rw [← intervalIntegral.integral_add
-      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2) * F t))).intervalIntegrable 0 h
-      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2) * F t))).intervalIntegrable 0 h]
+    have hnint : IntervalIntegrable (fun t : ℝ => Real.exp (-t / 2) * F t) volume 0 h :=
+      (by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2) * F t)).intervalIntegrable 0 h
+    rw [← intervalIntegral.integral_add hnint (hJ.intervalIntegrable 0 h)]
     apply intervalIntegral.integral_congr
     intro t _
     dsimp [J]
@@ -1755,9 +1754,12 @@ private lemma literal_continuum_identity (h L D : ℝ) (hh : 0 ≤ h) (hL : h �
     simp_rw [heq]
     have hp : Continuous (fun t : ℝ => Real.exp (t / 2) * F (t + L)) := by fun_prop
     have hm : Continuous (fun t : ℝ => Real.exp (t / 2) * F (t - L)) := by fun_prop
-    rw [intervalIntegral.integral_sub (((hJ.const_mul 2).sub hp).intervalIntegrable 0 D)
-      (hm.intervalIntegrable 0 D),
-      intervalIntegral.integral_sub ((hJ.const_mul 2).intervalIntegrable 0 D)
+    have h2J : Continuous (fun t => 2 * J t) := hJ.const_mul 2
+    have hfirst : IntervalIntegrable
+        (fun t => 2 * J t - Real.exp (t / 2) * F (t + L)) volume 0 D :=
+      (h2J.sub hp).intervalIntegrable 0 D
+    rw [intervalIntegral.integral_sub (μ := volume) hfirst (hm.intervalIntegrable 0 D),
+      intervalIntegral.integral_sub (μ := volume) (h2J.intervalIntegrable 0 D)
         (hp.intervalIntegrable 0 D), intervalIntegral.integral_const_mul]
   have hbracket : (∫ t in (0 : ℝ)..h,
       (Real.exp (t / 2) - Real.exp (L / 2) *
@@ -1769,9 +1771,10 @@ private lemma literal_continuum_identity (h L D : ℝ) (hh : 0 ≤ h) (hL : h �
         J t - Real.exp (L / 2) / 2 * ((Real.exp (t / 2) + Real.exp (-t / 2)) * F t) := by
       dsimp [J]; ring
     simp_rw [heq]
-    rw [intervalIntegral.integral_sub (hJ.intervalIntegrable 0 h)
-      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (L / 2) / 2 *
-        ((Real.exp (t / 2) + Real.exp (-t / 2)) * F t)))).intervalIntegrable 0 h),
+    have hbcont : Continuous (fun t : ℝ => Real.exp (L / 2) / 2 *
+        ((Real.exp (t / 2) + Real.exp (-t / 2)) * F t)) := by fun_prop
+    rw [intervalIntegral.integral_sub (μ := volume)
+      (hJ.intervalIntegrable 0 h) (hbcont.intervalIntegrable 0 h),
       intervalIntegral.integral_const_mul]
   rw [hsplit, hcut, hplus, hminus, heven, hbracket]
   ring
@@ -1915,7 +1918,9 @@ private lemma literal_V_upper (q : ℕ) (hq : 1 ≤ q) (D : ℝ)
     rwa [Real.exp_log (by norm_num : (0 : ℝ) < 3)]
   have h2 : 2 ∈ primes D := by
     apply Finset.mem_Icc.mpr
-    exact ⟨le_rfl, (log_cut_iff 2 (by norm_num) D).mp (by linarith)⟩
+    refine ⟨le_rfl, (log_cut_iff 2 (by norm_num) D).mp ?_⟩
+    norm_num only [Nat.cast_ofNat]
+    linarith
   have hsqrt : 2 / Real.sqrt (2 : ℝ) = Real.sqrt 2 := by
     apply (div_eq_iff (ne_of_gt (Real.sqrt_pos.mpr (by norm_num)))).mpr
     nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
@@ -1923,8 +1928,9 @@ private lemma literal_V_upper (q : ℕ) (hq : 1 ≤ q) (D : ℝ)
       S D (literalNodes q) (literalCoeffs q) (Real.log n)) =
       -Real.sqrt 2 * Real.log 2 * B := by
     rw [Finset.sum_eq_single 2]
-    · rw [ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two, hSL]
+    · rw [ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two]
       norm_num only [Nat.cast_ofNat]
+      rw [hSL]
       calc
         _ = -(2 / Real.sqrt (2 : ℝ)) * Real.log 2 * B := by ring
         _ = _ := by rw [hsqrt]
@@ -1994,7 +2000,8 @@ theorem literal_V_energy_moment_obstruction (q : ℕ) (hq : 1 ≤ q) (D : ℝ)
     rw [literal_exp_residual q hq]
     exact_mod_cast hRexp
   let Eg := literalStep q * (1 + Real.exp (-literalStep q / 4) ^ 2) / 2
-  have hEg : 0 < Eg := by dsimp [Eg]; positivity
+  have hEg : 0 < Eg := by
+    exact div_pos (mul_pos hl.1 (by positivity)) (by norm_num)
   have hEg' : Eg ≤ literalStep q := by
     have he : Real.exp (-literalStep q / 4) ≤ 1 := Real.exp_le_one_iff.mpr (by linarith [hl.1])
     have hp := Real.exp_pos (-literalStep q / 4)
