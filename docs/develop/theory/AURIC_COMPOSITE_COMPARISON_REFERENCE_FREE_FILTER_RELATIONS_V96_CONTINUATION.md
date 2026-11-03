@@ -1224,3 +1224,431 @@ $$
 白话说：先把一次过程留下更细的记录，要求忘掉记录后正好回到原来的同一个过程。每条非零细记录只搬运一块有效支撑，并能接上实际补偿往返；这会把它限制成正锥之间的伸缩与搬运，但还可能夹着镜像。把同一组三个有向比较量沿两条顺序搬过去，要求得到同一关系，就能辨出镜像的反号。排掉镜像后，每条细支都是通常量子振幅的搬运；忘掉细记录便得到一般完全正过程，再由已有滤片关系得到平方根测量更新。三维 Choi 例子说明，不是每个局部合法过程都允许这种可返回细化；两色模型则说明，过程形式已经量子，也不等于两个区域已有共同空间伙伴或同一只钟。
 
 ## 追加锚（本行以下为增补区）
+
+## 127. 两个平方层级控制原分支的对易缺陷
+
+**定义 127.1（原关系族与范数约定）。** 沿用定义 77.1 的同一全效果、全框架实际分支供应，以及定义 84.1、99.1–99.2 的范数和缺陷约定；不继承定义 84.1 所施加的精确 S、H，也不继承定理 85.1 的正常形。每个已有对象是有限复矩阵直和
+
+$$
+\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C),
+\qquad \tau=\sum_\alpha\operatorname{Tr}_\alpha.
+$$
+
+对每个原效果 $0\le E\le I$ 及所选细谱框架 $F$，原实际分支 $T_{E,F}:\mathcal A\to\mathcal A$ 完全正且满足 $T_{E,F}^\dagger(I)=E$。实际互补标签及允许的有限接续沿用原供应。这里的映射伴随相对于 $\tau$，不是另供的实际逆过程。对非零效果置
+
+$$
+P_E=\operatorname{supp}E,\qquad
+q_E=\min(\sigma(E)\setminus\{0\}),\qquad
+E^\vee=q_EE^+,
+\qquad \mathcal C_E=P_E\mathcal AP_E,
+\tag{127.1}
+$$
+
+其中 $E^+$ 是 Moore–Penrose 逆。效果、开根、平方、四次方和倒数效果始终使用原同一框架。$\mathcal C_E$ 只是数学角；下文的压缩、归一映射和参考矩阵均不另供实际操作或准备。
+
+对保自伴复线性映射 $N$，仍取
+
+$$
+\nu(N)=\max_{\rho\ge0,\ \tau\rho=1}\|N(\rho)\|_1,
+\qquad
+\|N\|_\diamond=
+\sup_{k\ge1}\sup_{Z\ne0}
+\frac{\|(N\otimes\operatorname{id}_{M_k})(Z)\|_1}{\|Z\|_1}.
+\tag{127.2}
+$$
+
+前式只使用原代数正输入；后式使用任意数学矩阵参考及任意输入。两式均不除以二。令 $\mathcal L_E(X)=\sqrt E X\sqrt E$，并沿用
+
+$$
+\begin{aligned}
+\bar s(E,F)&=\nu(T_{E,F}-T_{E,F}^\dagger)/\|E\|,\\
+\bar h(E,F)&=\nu(T_{E,F}-T_{\sqrt E,F}^{\,2})/\|E\|,\\
+b(E,F)&=\max_{\rho\in\mathcal C_E,\ \rho\ge0,\ \tau\rho=1}
+\|q_E^{-1}T_{E^\vee,F}T_{E,F}(\rho)-\rho\|_1.
+\end{aligned}
+\tag{127.3}
+$$
+
+返回残差在完整原输出代数中比较，不先压回角。$\bar S,\bar H,B_*$ 是这些量跨全部原对象、非零效果及框架的上确界；$D=\sup_{E\ne0,F}\|T_{E,F}-\mathcal L_E\|_\diamond/\|E\|$。这些全称量词不自动供应全部实际准备、层析、证书或有限认证程序。
+
+**定理 127.2（原半程缺陷的算子范数对易界）。** 设原同一指定族满足 $\bar H\le h$，其中 $h\ge0$。固定非零 $E,F$，置
+
+$$
+M=\|E\|,\qquad e=E/M,\qquad \mathcal T=T_{E,F}/M.
+$$
+
+在 $\mathscr H=\bigoplus_\alpha\mathbb C^{d_\alpha}$ 上，把每条输入中心块到输出中心块的矩形 Kraus 算子填零，写成
+
+$$
+\mathcal T(X)=\sum_jV_jXV_j^\dagger,
+\qquad \sum_jV_j^\dagger V_j=e.
+$$
+
+则
+
+$$
+\left\|\sum_j[e,V_j]^\dagger[e,V_j]\right\|
+\le\kappa(h):=\sqrt{\frac{7h}{2}}+2h.
+\tag{127.4}
+$$
+
+对一条 $\alpha\to\beta$ 的矩形箭头，$[e,V_j]$ 的非零块正是 $e_\beta V_j-V_je_\alpha$。因此本式保留中心之间的转移，不要求中心逐一不动。估计不使用互易、返回、双随机性、最小正谱值下界或近似正常形。$\mathcal T$ 只是原分支的数学归一；没有使用未经证明的共同调暗关系 $T_{E/M}=T_E/M$。
+
+证明。对保自伴映射，正负谱分解给
+
+$$
+\nu(N)=\|N\|_{1,\mathrm{sa}\to1,\mathrm{sa}}
+=\|N^\dagger\|_{\infty,\mathrm{sa}\to\infty,\mathrm{sa}}.
+\tag{127.5}
+$$
+
+这里第二个等号是自伴实空间上的有限迹对偶。特别地，这些范数对可接续的保自伴映射次乘；对完全正 $N$，$\nu(N)=\|N^\dagger(I)\|$。
+
+在原同框架效果 $E^2,E^4$ 处应用半程缺陷，得到
+
+$$
+\nu(T_{E^2}-T_E^2)\le hM^2,
+\qquad
+\nu(T_{E^4}-T_{E^2}^{\,2})\le hM^4.
+$$
+
+原成功效果给 $\nu(T_E)=M$、$\nu(T_{E^2})=M^2$，且 $\nu(T_E^2)\le M^2$。恒等式
+
+$$
+T_{E^2}^{\,2}-T_E^4
+=(T_{E^2}-T_E^2)T_{E^2}
++T_E^2(T_{E^2}-T_E^2)
+$$
+
+于是给出 $\nu(T_{E^4}-T_E^4)\le3hM^4$。置 $A=\mathcal T^\dagger$。它完全正，$A(I)=e$，且在自伴算子范数上收缩。成功效果和 (127.5) 给
+
+$$
+\|A^2(I)-e^2\|\le h,
+\qquad
+\|A^4(I)-e^4\|\le3h.
+\tag{127.6}
+$$
+
+以下在这个同一代数上计算。记
+
+$$
+B=A^2(I)-e^2,\qquad Z=A^4(I)-e^4,
+\qquad C=A(e^2)-e^3,
+$$
+
+并暂设 $\|B\|\le u$、$\|Z\|\le v$。对任意完全正自映射 $F$ 和自伴 $x$，Kraus 平方和给
+
+$$
+Q_F(x):=F(x^2)-F(x)x-xF(x)+xF(I)x\ge0.
+\tag{127.7}
+$$
+
+确实，若 $F(Y)=\sum_jR_j^\dagger YR_j$，则右端等于 $\sum_j(xR_j-R_jx)^\dagger(xR_j-R_jx)$。矩形箭头填零后同样成立；所用的 $x$ 和各次乘积都在原代数中。
+
+因 $A(e)=e^2+B$，式 (127.7) 首先给
+
+$$
+Q_A(e)=C-Be-eB\ge0.
+\tag{127.8}
+$$
+
+又有
+
+$$
+A^2(e)=e^3+C+A(B),\qquad
+A^2(e^2)=e^4+Z-A^2(B),\qquad A^2(I)=e^2+B.
+$$
+
+把这三式代入 $Q_{A^2}(e)\ge0$，可得
+
+$$
+Ce+eC
+\le Z-A^2(B)-A(B)e-eA(B)+eBe
+\le(v+4u)I.
+\tag{127.9}
+$$
+
+最后一个序不等式逐项使用 $A$ 的自伴收缩性及 $0\le e\le I$，不要求右端各项分别为正。
+
+由 $0\le A(e^2)\le A(I)=e$，有 $C\le e-e^3\le e$。若 $C$ 的最大特征值 $\lambda$ 非负，取其单位特征向量 $z$，则 $\lambda\le\langle z,ez\rangle$，从而
+
+$$
+2\lambda^2
+\le2\lambda\langle z,ez\rangle
+=\langle z,(Ce+eC)z\rangle
+\le v+4u.
+$$
+
+若最大特征值为负，以下上界也直接成立。因此
+
+$$
+C\le\sqrt{(v+4u)/2}\,I,
+\qquad
+0\le Q_A(e)\le\bigl(\sqrt{(v+4u)/2}+2u\bigr)I.
+\tag{127.10}
+$$
+
+取 $u=h,v=3h$。由于 $A(Y)=\sum_jV_j^\dagger YV_j$，$Q_A(e)$ 就是 (127.4) 中的平方和，结论成立。证明没有取归一化迹，也没有使用逆矩阵。∎
+
+## 128. 同一原分支的明暗谱泄漏
+
+**推论 128.1（有间隔谱角的完整参考界）。** 在定理 127.2 的范围内，取 $0\le a<b\le1$，并令
+
+$$
+P=\mathbf1_{[b,1]}(e),\qquad Q=\mathbf1_{[0,a]}(e).
+$$
+
+同一原分支的数学输入、输出压缩满足
+
+$$
+\left\|X\longmapsto Q\,\frac{T_E(PXP)}{M}\,Q\right\|_\diamond
+\le\frac{\kappa(h)}{(b-a)^2}.
+\tag{128.1}
+$$
+
+这里没有改用另行指定的 $T_{PEP}$，也没有要求这些谱压缩是实际供应的操作。
+
+证明。对定理 127.2 的同一矩形 Kraus 家族，定义
+
+$$
+Wz=\sum_jV_jz\otimes|j\rangle,
+\qquad Y_0=(e\otimes I)W-We.
+$$
+
+则 $Y_0^\dagger Y_0=\sum_j[e,V_j]^\dagger[e,V_j]$，故 $\|Y_0\|\le\sqrt{\kappa(h)}$。若 $P$ 或 $Q$ 为零，结论直接成立。否则令 $Z_0=(Q\otimes I)WP$，并在其值域及定义域上分别记
+
+$$
+A_0=(e|_{Q\mathscr H})\otimes I,\qquad B_0=e|_{P\mathscr H}.
+$$
+
+它们自伴且 $A_0\le aI$、$B_0\ge bI$。有
+
+$$
+A_0Z_0-Z_0B_0=(Q\otimes I)Y_0P=:Y.
+$$
+
+成熟的 Sylvester 分离估计在此可直接由积分验证：$e^{tA_0}Z_0e^{-tB_0}\to0$，对其求导并从零积分到无穷，得到
+
+$$
+Z_0=-\int_0^\infty e^{tA_0}Ye^{-tB_0}\,dt,
+\qquad
+\|Z_0\|\le\frac{\|Y\|}{b-a}
+\le\frac{\sqrt{\kappa(h)}}{b-a}.
+$$
+
+原压缩映射完全正，其成功效果是
+
+$$
+P\left(\sum_jV_j^\dagger QV_j\right)P=Z_0^\dagger Z_0\in\mathcal A.
+$$
+
+完全正映射的完整 diamond 范数等于伴随作用于单位后的算子范数，故该范数为 $\|Z_0\|^2$，即得 (128.1)。中心箭头始终留在同一个 $W$ 中。∎
+
+## 129. 精确半程与严格返回余量下的带噪互易
+
+**定理 129.1（精确半程边界的原输入线性控制）。** 保留定义 127.1 的原完整菜单。若
+
+$$
+\bar H=0,\qquad B_*\le c<1,
+\tag{129.1}
+$$
+
+则每条非零效果的原分支具有
+
+$$
+T_E=\mathcal L_E\alpha_E,
+\qquad \alpha_E:\mathcal C_E\to\mathcal C_E
+\text{ 为保迹保星自同构},\qquad \alpha_E(E)=E,
+\tag{129.2}
+$$
+
+并按输入支撑压缩延拓到原代数。允许角中等阶中心块的置换。此外，逐效果及全族有
+
+$$
+\frac{\|T_{E,F}-\mathcal L_E\|_\diamond}{\|E\|}
+\le\min\{2,\bar s(\sqrt E,F)\},
+\qquad
+D\le\min\{2,\bar S\}.
+\tag{129.3}
+$$
+
+本定理没有假设精确互易或精确返回，也没有把归一化映射宣布为实际可执行通道。
+
+证明。先只使用 $\bar H=0$。由定理 127.2，每个原分支的填零矩形 Kraus 算子 $K_j$ 都与其效果 $E$ 对易。成功效果 $\sum_jK_j^\dagger K_j=E$ 又使 $K_j(1-P_E)=0$；对易性于是也给 $(1-P_E)K_j=0$。因此原分支既不读支撑外输入，也不向支撑外输出。
+
+在 $\mathcal C_E$ 中置
+
+$$
+L_j=E^{-1/2}K_j,\qquad
+\Phi_E(X)=\sum_jL_jXL_j^\dagger.
+$$
+
+逆仅在这一固定正支撑中取。对易性给 $\sum_jL_j^\dagger L_j=P_E$，所以 $\Phi_E$ 完全正且保迹。此时尚未假设它幺、自伴或可逆。各 $L_j$ 与 $E$ 的函数演算对易，故
+
+$$
+T_E=\mathcal L_E\Phi_E=\Phi_E\mathcal L_E,
+\qquad \Phi_E^\dagger(f(E))=f(E)
+\tag{129.4}
+$$
+
+对正支撑上的任意函数 $f$ 成立。中心之间相同数值谱的交织并未被删去。
+
+正输入张成自伴空间及其复化，故 $\bar H=0$ 给精确映射关系 $T_{E^2}=T_E^2$。在同一支撑角内消去可逆的 $\mathcal L_{E^2}$，得到
+
+$$
+\Phi_{E^2}=\Phi_E^2.
+\tag{129.5}
+$$
+
+对实际倒数效果也作上述分解。其 Kraus 算子与 $E^\vee$ 对易，在支撑中因而与 $E$ 对易。于是原实际接续恰为
+
+$$
+q_E^{-1}T_{E^\vee}T_E|_{\mathcal C_E}
+=\Phi_{E^\vee}\Phi_E.
+\tag{129.6}
+$$
+
+没有把实际补偿替换成数学伴随或新恢复通道。
+
+现在固定 $E,F$ 和有限维角 $\mathcal C=\mathcal C_E$。对同框架原效果 $E_n=E^{2^n}$，支撑角相同，且
+
+$$
+\Phi_{E_n}=\Phi_E^{2^n},\qquad
+q_{E_n}=q_E^{2^n},\qquad
+(E_n)^\vee=(E^\vee)^{2^n}.
+$$
+
+记 $\Psi_n=\Phi_{(E_n)^\vee}$，它是同角的 CPTP 映射。由原返回条件、正负谱分解以及 (129.6)，对全部自伴 $X\in\mathcal C$ 有
+
+$$
+\|\Psi_n\Phi_E^{2^n}(X)-X\|_1\le c\|X\|_1.
+$$
+
+$\Psi_n$ 在自伴迹范数上收缩，故
+
+$$
+\|\Phi_E^{2^n}(X)\|_1\ge(1-c)\|X\|_1.
+\tag{129.7}
+$$
+
+对任意整数 $k\ge1$，取 $2^n\ge k$，再用 $\Phi_E^{2^n-k}$ 的收缩性，得到同一个下界
+
+$$
+\|\Phi_E^k(X)\|_1\ge(1-c)\|X\|_1.
+\tag{129.8}
+$$
+
+这里的返回估计只在已识别的选定效果 $E_n$ 及其实际补偿上使用；没有向一般复合过程另加重复返回合同。
+
+令 $\Phi=\Phi_E$。CPTP 性使 $\Phi$ 的全部正整数幂有界。式 (129.8) 排除模小于一的复特征值：若相应复特征元的幂趋零，其非零实部或虚部也趋零，与 (129.8) 矛盾。幂有界性排除模大于一的特征值及单位圆上的非平凡 Jordan 块。因此 $\Phi$ 在复空间上可对角化，其特征值 $\lambda_1,\ldots,\lambda_m$ 全在单位圆上。
+
+为明确所用的有限维递归，取紧环面中收敛的子列 $(\lambda_1^{n_j},\ldots,\lambda_m^{n_j})$，其中 $n_j$ 严格递增。置 $k_j=n_{2j}-n_j\to\infty$，则每个 $\lambda_i^{k_j}\to1$，所以 $\Phi^{k_j}\to\operatorname{id}$。$\Phi$ 可逆，并且
+
+$$
+\Phi^{k_j-1}\longrightarrow\Phi^{-1}.
+\tag{129.9}
+$$
+
+同一个有限维角上的完全正性及保迹性在映射极限下封闭，故 $\Phi^{-1}$ 也 CPTP。此处只对已经固定的有限维角取极限，不取跨对象的紧性极限，不需要统一维数或谱隙。
+
+以下使用成熟的可逆 CPTP 结构，其同角证明可由 Schwarz 等号直接完成。令 $U=\Phi^\dagger$、$V=(\Phi^{-1})^\dagger$，二者互逆且幺完全正。对任意 $Z\in\mathcal C$，两次 Schwarz 不等式给
+
+$$
+Z^\dagger Z
+\ge V\bigl(U(Z)^\dagger U(Z)\bigr)
+\ge VU(Z)^\dagger VU(Z)=Z^\dagger Z.
+$$
+
+两端相等，$V$ 又单射，所以 $U(Z^\dagger Z)=U(Z)^\dagger U(Z)$；对所有 $Z$ 极化，$U$ 是保星自同构。有限复矩阵直和的此类自同构只置换等阶角块并在块内作酉共轭，因此保留通常迹之和。故 $\Phi=U^\dagger=U^{-1}$ 也是保迹保星自同构。再由 (129.4) 的 $\Phi^\dagger(E)=E$，得到 $\Phi(E)=E$，即 (129.2)。没有预先使用双随机性。
+
+在 $P_E\mathscr H$ 上，此自同构由一个酉 $U_E$ 实现，允许置换等阶角块。它固定 $E$，故 $U_E$ 与 $E$ 对易。作为原代数上的映射，$T_E$ 因而是单 Kraus 映射
+
+$$
+T_E=\operatorname{Ad}_{K_E},\qquad
+K_E=\sqrt E\,U_EP_E,\qquad
+K_E^\dagger K_E=K_EK_E^\dagger=E.
+\tag{129.10}
+$$
+
+这里一个角块可以位于与其目标角块不同阶的原中心块中；实现算子在原输入、输出空间上的相应部分是矩形的。只要求被置换的角块等阶，不要求原中心块全部固定或等阶。
+
+最后令 $R=\sqrt E$、$m=\|R\|$，并写 $S=T_R$。由 (129.10)，在完整原代数上有 $SS^\dagger=\operatorname{Ad}_R=\mathcal L_E$；精确半程给 $S^2=T_E$。所以
+
+$$
+T_E-\mathcal L_E=S(S-S^\dagger),
+\qquad
+\nu(T_E-\mathcal L_E)
+\le m\,\nu(S-S^\dagger)
+=\|E\|\bar s(R,F).
+\tag{129.11}
+$$
+
+这里仅使用 $\nu(S)=\|S^\dagger(I)\|=m$ 及自伴迹范数上的次乘性。
+
+$T_E$ 与 $\mathcal L_E$ 都已被证明为单 Kraus CP 映射，故此时才可使用本卷 (100.4) 的成熟纯映射范数等式，将 (129.11) 升级为 diamond 界。其前提在矩形及中心情形仍精确满足：对每个原输入中心块，分别限制 $K_E$ 和 $\sqrt E$，把输出视为同一个总 Hilbert 空间中的矩阵；两者的输出本来就在原输出代数中。Magajna 定理 1.1 经 (100.2) 的参数代入、矩形角嵌入和迹对偶，给该块上的 $\|\operatorname{Ad}_{K_E}-\operatorname{Ad}_{\sqrt E}\|_\diamond=\nu(\operatorname{Ad}_{K_E}-\operatorname{Ad}_{\sqrt E})$。任意参考输入的迹范数是各输入中心块迹范数之和，所以两种映射范数在原直和上均取这些块的最大值。由此得到 (129.3) 的非平凡部分。两条原 CP 映射各有 diamond 范数 $\|E\|$，另给平凡上界二。对全部原对象、效果及框架取上确界即得结论。零效果分支由正确成功效果恒为零。∎
+
+## 130. 固定返回余量问题与已有归一坐标
+
+**定义 130.1（尚需控制的归一接续）。** 对固定 $0<c<1$，原问题仍是：在同一完整族 $B_*\le c$ 下，是否存在不依赖维数的 $w_c(s,h)$，使
+
+$$
+D\le w_c(\bar S,\bar H),\qquad
+w_c(s,h)\longrightarrow0\quad((s,h)\to(0,0)).
+\tag{130.1}
+$$
+
+定理 129.1 只处理 $\bar H=0$ 的边界，不断言 (130.1) 在 $\bar H>0$ 时成立。
+
+原卷 (93.4) 的归一坐标可直接用于这里，并非新加的返回假设。固定 $E\ne0$，写 $P=P_E,q=q_E$，定义数学 CP 映射
+
+$$
+\begin{aligned}
+\Phi_E^{\mathrm{out}}(X)
+&=E^{-1/2}PT_E(X)PE^{-1/2},\qquad X\in\mathcal C_E,\\
+\Psi_E(Y)
+&=q^{-1}T_{E^\vee}(\sqrt E\,Y\sqrt E),\qquad Y\in\mathcal C_E.
+\end{aligned}
+\tag{130.2}
+$$
+
+逆仅在支撑上取，$\Psi_E:\mathcal C_E\to\mathcal A$ 恰好保迹，因为 $q^{-1}\sqrt E E^\vee\sqrt E=P$。成功效果还使 $T_{E^\vee}$ 只读取 $P$，所以
+
+$$
+\Psi_E\Phi_E^{\mathrm{out}}
+=q^{-1}T_{E^\vee}T_E|_{\mathcal C_E},
+\qquad
+(\Phi_E^{\mathrm{out}})^\dagger(P)=T_E^\dagger(E^+).
+\tag{130.3}
+$$
+
+对原返回残差取迹，再在自伴极值态上取值，直接复用原卷 (93.4) 后的质量估计，得到
+
+$$
+(1-b(E,F))P
+\le T_E^\dagger(E^+)
+\le(1+b(E,F))P.
+\tag{130.4}
+$$
+
+因此 $B_*\le c$ 给同一式的 $1\pm c$ 界。这个界只控制白化映射的输入质量，不使它幺，不使 $\Phi_E^{\mathrm{out}}$ 等于定理 129.1 的自同构，也不将带噪半程关系变成归一映射的精确平方关系。
+
+推论 128.1 控制的是原分支的未白化明暗输出。一般有 $\|E^{-1/2}\|_{P\mathscr H}=q_E^{-1/2}$ 及
+
+$$
+\|q_E^{-1}T_{E^\vee}\|_\diamond=q_E^{-1},
+\tag{130.5}
+$$
+
+因为 $\|E^\vee\|=1$。虽然完整配对的 $\Psi_E$ 本身保迹且有 diamond 范数一，原泄漏的小量仍不能不经证明就穿过 $\Phi_E^{\mathrm{out}}$ 中的白化因子。对 (130.1) 尚需一个在原平方链上、与同一实际补偿相容的统一估计：它必须同时控制白化后的暗输出贡献和同一谱层内部的耗散。定理 127.2 的对易界在标量效果上不限制谱层内噪声，故单凭该界和未白化泄漏界不提供这个估计。
+
+## 131. 数学来源与适用范围
+
+**定义 131.1（承重综合与复用边界）。** Kraus／Stinespring 表示、正映射范数公式、Sylvester 谱分离积分、有限维 Jordan 分解、紧环面递归和可逆 CPTP 分类均为成熟工具。Schwarz 等号的乘法域依据可参见 [Choi–Johnston–Kribs，The multiplicative domain in quantum error correction，定理 8](https://arxiv.org/pdf/0811.0947v1)；(129.9) 之后的同角证明也明确给出本节所需的保星结论。可逆 CPTP 的一般编码分类参见 [Nayak–Sen，Invertible Quantum Operations and Perfect Encryption of Quantum States](https://arxiv.org/abs/quant-ph/0605041)，此处没有在取得精确 CPTP 逆之前调用该结论。
+
+一般单 Kraus 差映射的范数等式直接沿用本卷 (100.4) 及其成熟来源 [Magajna，The norm of a symmetric elementary operator，定理 1.1](https://users.fmf.uni-lj.si/magajna/Articles/NormSymmetricElOp.pdf)，不把该等式或矩形嵌入另计为新增理论。Sylvester 分离界也可与仓内 `D5/S3/HilbertOperators/DavisKahanProjector.lean` 的 `TauCeti.ContinuousLinearMap.opNorm_le_div_of_comp_sub_comp_eq` 对应；推论 128.1 在正文中给出了所需积分证明。
+
+本节本仓推导的承重接口是：从原 $E^2,E^4$ 两层正输入半程缺陷取得 (127.4) 的算子范数界；将其用于同一原分支的有间隔谱角；以及在精确半程边界上，由各选定效果平方链的严格返回余量先取得可逆正常形，再以原根效果的弱互易控制完整参考更新。原卷定理 85.1 在精确互易、半程下的正常形和定理 87.1 的精确选择仍按原假设复用；本节不把它们另行认领。
+
+原卷定理 97.1 及本卷定理 103.2 的完整对数障碍族仍有 $D\to0$，只限制 (130.1) 若存在时的收敛率。本卷定理 102.1 要求返回误差也趋零；它不解决固定任意 $c<1$ 的问题。§§106–112 使用精确返回及同向读数，§§113–119 另给正分支的合同，均不代替本节所需的原 CP 及带噪返回前提。不作穷尽文献、原创优先权、物理实现或最优常数主张。
+
+## 追加锚（本行以下为增补区）
