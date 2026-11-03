@@ -1100,3 +1100,109 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.BellTrace
+
+namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.FlipPurity
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (vlen vlen_e3 blochA blochB corr centre pauli)
+open _root_.D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+open scoped ComplexOrder Kronecker
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+open _root_.D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spin)
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (pauli_one pauli_two)
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature TwoQubit (fun _ => Fin 3 → ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ ρ n => (trace (ρ * flipped ρ n)).re) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (ρ : TwoQubit) (_hρ : ρ.IsHermitian) (_htr : trace ρ = 1)
+    (n : Fin 3 → ℝ) (_hn : vlen n = 1),
+    2 * R.readout () ρ n + (∑ i, ∑ j, corr ρ i j ^ 2) -
+      vlen ((corr ρ) *ᵥ n) ^ 2 + (blochB ρ ⬝ᵥ n) ^ 2 = 1 + 2 * delta ρ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hpρ := tight_psd 0 0 (by norm_num) (by norm_num)
+  have htr := (tight_readouts 0 0 (by norm_num) (by norm_num) (by norm_num)).1
+  have hn : vlen (![0, 0, 1] : Fin 3 → ℝ) = 1 := by norm_num [vlen_e3]
+  have ht := flip_purity_identity (tightState 0 0) hpρ.isHermitian htr ![0, 0, 1] hn
+  have hb := h (tightState 0 0) hpρ.isHermitian htr ![0, 0, 1] hn
+  change 2 * (-1 : ℝ) + _ - _ + _ = _ at hb
+  have hpf : (flipped (tightState 0 0) ![0, 0, 1]).PosSemidef :=
+    hpρ.transpose.mul_mul_conjTranspose_same _
+  have hp := RHLinalg.trace_mul_nonneg_of_posSemidef hpρ hpf
+  change 0 ≤ (trace (tightState 0 0 * flipped (tightState 0 0) ![0, 0, 1])).re at hp
+  linarith
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, ![0, 0, 1], ?_⟩
+  change (trace ((1 : TwoQubit) * flipped 1 (0 : Fin 3 → ℝ))).re ≠
+    (trace ((1 : TwoQubit) * flipped 1 ![0, 0, 1])).re
+  norm_num [flipped, flipMatrix, spin, sigma_succ, Fin.sum_univ_three,
+    pauli_one, pauli_two, trace, diag, Matrix.mul_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_two, kronecker_apply,
+    conjTranspose_apply, transpose_apply]
+
+def source_registration : Registration arena (type_of% @flip_purity_identity) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨flip_purity_identity, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@flip_purity_identity) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.FlipPurity.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.FlipPurity.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some
+    (realize signature (fun _ ρ n => (trace (ρ * flipped ρ n)).re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body",
+        "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.FlipPurity
