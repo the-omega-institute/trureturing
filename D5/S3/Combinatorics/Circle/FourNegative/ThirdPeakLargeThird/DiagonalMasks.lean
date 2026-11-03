@@ -93,7 +93,10 @@ private theorem paid_submask (a c : ℕ) (ha : 2≤a) (hc : a+4≤c) :
       have hh' : qn<p := by exact_mod_cast hh
       rwa [hp] at hh'
     let xn : ℕ:=2^a
-    have xn4 : 4≤xn := by exact_mod_cast hx
+    have xn4 : 4≤xn := by
+      dsimp [x] at hx
+      dsimp [xn]
+      exact_mod_cast hx
     have coeffpos : 1≤2*xn^2 := by
       have hh : 0<xn^2 := by positivity
       omega
@@ -112,6 +115,7 @@ private theorem paid_submask (a c : ℕ) (ha : 2≤a) (hc : a+4≤c) :
       have hm : (2*xn^2-1)%2=1 := by omega
       simp [hm]
     intro e he hbit
+    change p.testBit e=true at hbit
     have hr : r=e := of_decide_eq_true (by simpa only [hp,Nat.testBit_two_pow] using hbit)
     subst e
     rw [vnat,Nat.testBit_two_pow_mul_add (2*xn^2-1) qsmall r]

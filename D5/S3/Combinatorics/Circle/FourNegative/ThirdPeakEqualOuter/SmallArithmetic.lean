@@ -106,6 +106,8 @@ private theorem small_selector (i : Fin 3) (s : ℤ) (hs : threshold i ≤ s) :
   let ε := 2*r*AA-v*U
   let δ := r*AA-v*BB
   obtain ⟨hr,hrlo,hrhi,hv,he0,hemax,heq,hrcap,hvcap⟩ := residue_bounds i s hs
+  change 1 ≤ r at hr
+  change 1 ≤ v at hv
   obtain ⟨hDn,hUD,hident,hslack,hfirst,hAsecond⟩ := small_certificates i s hs
   have hh : 0 < h := by fin_cases i <;> norm_num [h,denominator]
   have hn : 0 < n := by fin_cases i <;> norm_num [n,numerator]
@@ -130,6 +132,7 @@ private theorem small_selector (i : Fin 3) (s : ℤ) (hs : threshold i ≤ s) :
     by_contra hn'
     have hnonpos := mul_nonpos_of_nonneg_of_nonpos hh.le (show ε-v ≤ 0 by omega)
     omega
+  have hε : 0 < ε := by omega
   have hδ : 0 < δ := by omega
   have heupper : 2*ε ≤ AA-1 := by
     have hE := mul_le_mul_of_nonneg_right (show e ≤ residueCap i from hemax) hU.le
@@ -170,7 +173,8 @@ private theorem small_selector (i : Fin 3) (s : ℤ) (hs : threshold i ≤ s) :
     (by fin_cases i <;> norm_num [y,smallY])
     (by have hm : 2 ≤ m := by fin_cases i <;> norm_num [m,smallM]
         have hx : 0 ≤ x := by dsimp [x,y]; fin_cases i <;> norm_num [smallY,threshold] at * <;> omega
-        dsimp [z,x] at *; nlinarith [mul_nonneg (m-2) hx])
+        change 2*x ≤ m*x
+        nlinarith [mul_nonneg (show 0 ≤ m-2 by omega) hx])
     hrhi (by omega) hδ heupper hfirstv hsecond
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter

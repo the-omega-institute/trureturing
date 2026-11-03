@@ -95,7 +95,7 @@ private theorem moderate_high_selector (x y m : ℤ)
     dsimp [R,J,A,B,L]
     nlinarith only [he]
   have hρterm : 0 ≤ m*x*x*ρ := by positivity
-  have hmterm : 2*x*x ≤ m*x*x := by nlinarith [mul_nonneg (m-2) (sq_nonneg x)]
+  have hmterm : 2*x*x ≤ m*x*x := by nlinarith [mul_nonneg (show 0 ≤ m-2 by omega) (sq_nonneg x)]
   have hRlo : m*x < R := by
     have hpoly : 0 < 6*x*x-5*x := by nlinarith [sq_nonneg (x-1)]
     nlinarith only [hRidentity,hρterm,hmterm,hxy,hhm',hpoly]
@@ -108,7 +108,9 @@ private theorem moderate_high_selector (x y m : ℤ)
     have hxy0 : 0 < x*y := by positivity
     nlinarith only [hRminus,hneg,hextra,hxy0,hm,hx0]
   obtain ⟨hE,hEp,hEup,hLJ⟩ := moderate_high_slacks x y m hy hx hm hmy
-  have hLJ' : 2*J < L x (m*x) := by change 0 < L x (m*x)-2*J at hLJ; omega
+  have hLJ' : 2*J < L x (m*x) := by
+    dsimp [J]
+    nlinarith only [hLJ]
   have hmhcap : 2*m*h < m*x := by
     have := mul_lt_mul_of_pos_left hhcap (show 0 < m by omega)
     nlinarith only [this]
@@ -184,7 +186,9 @@ private theorem moderate_near_selector (y m : ℤ) (hy : 8 ≤ y) (hm : 2 ≤ m)
   have hr : 1 ≤ r := by
     have := Int.ediv_nonneg (show 0 ≤ BB-1 by omega) hE.le
     dsimp [r]; omega
-  have he : E ≤ e ∧ e < 2*E := by dsimp [e]; nlinarith only [hf.1,hf.2]
+  have he : E ≤ e ∧ e < 2*E := by
+    dsimp [e]
+    constructor <;> nlinarith only [hf.1,hf.2]
   have hry : r < y := by
     apply (mul_lt_mul_iff_of_pos_right hE).mp
     nlinarith only [hf.1,hrcap,hE]
