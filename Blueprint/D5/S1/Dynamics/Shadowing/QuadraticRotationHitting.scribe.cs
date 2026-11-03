@@ -46,8 +46,8 @@ internal sealed class QuadraticRotationHittingDocument : IScribeDocumentDefiniti
                 Forall, Sp, Theta, Comma, Id("a"), Sp, InMacro, Sp, Mathbb, Grp(Id("R")), Comma, Sp,
                 D(0), Le, Sp, Id("a"), Sp, Rightarrow, Sp, Id("a"), Le, Frac, Grp(D(3)), Grp(D(4)), Sp, Rightarrow),
             Seq(Exists, Sp, Id("j"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
-                Id("j"), Le, Frac, Grp(D(2,5,6), Cdot, Id("p")), Grp(Kappa), Sp, Land, Sp,
-                Call("fract", Seq(Theta, Plus, Id("j"), Cdot, Id("p"), Cdot, Alpha)), Sp, InMacro, Sp,
+                Id("j"), Le, Frac, Grp(D(2,5,6), Cdot, Sp, Id("p")), Grp(Kappa), Sp, Land, Sp,
+                Call("fract", Seq(Theta, Plus, Id("j"), Cdot, Sp, Id("p"), Cdot, Alpha)), Sp, InMacro, Sp,
                 OpenBracket, Id("a"), Comma, Id("a"), Plus, Frac, Grp(D(1)), Grp(D(4)), CloseBracket)),
             "Natural numbers and rounded integers in real expressions denote their canonical real coercions. Dirichlet at n=16 supplies 1<=q<=16 with beta=|qp alpha-round(qp alpha)|<=1/17. The lower approximation bound gives beta>=kappa/(qp)>0. "
             + "Aim the signed mesh at a+1/8. Its error beta stays strictly inside the quarter interval, and its integer lift identifies the correct fractional representative. "
