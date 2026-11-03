@@ -322,7 +322,8 @@ private theorem integer_binomial_gaussian_upper_envelope (p t : ℤ) (hp5 : 5 �
   have hh := binomial_gaussian_upper_envelope P T hP5 hT2 hTP hbandP
   dsimp only at hh ⊢
   rw [hN, hI1, hI3, hI9]
-  simpa only [hs, hPR] using hh
+  rw [hs, hPR] at hh
+  exact hh
 
 private theorem actual_ratio_eq_binomial (p t : ℤ) (hp3 : 3 ≤ p) (hpo : Odd p)
     (ht2 : 2 ≤ t) :
