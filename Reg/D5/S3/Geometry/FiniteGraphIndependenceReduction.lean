@@ -176,6 +176,7 @@ private theorem first_ne_second : first.{u} ≠ second.{u} := by
   intro h
   have hh := congrArg (fun y => y.val ⟨⟨false⟩, by simp⟩) h
   norm_num [first, second, FiniteCoordinateTruncation.vertex, Pi.single_apply] at hh
+  exact Bool.false_ne_true (congrArg ULift.down hh)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h

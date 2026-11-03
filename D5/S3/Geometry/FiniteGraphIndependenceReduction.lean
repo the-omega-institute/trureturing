@@ -122,7 +122,7 @@ def inclusion (G : SimpleGraph V) (D : Finset V) :
     C(Ispace (G.induce {b | b ∉ D}), Ispace G) :=
   (realizationInclusion (induced_faces_le G D)).comp
     (mapHomeomorph (independenceComplex (G.induce {b | b ∉ D})).toPreAbstractSimplicialComplex
-      (embedding D)).toContinuousMap
+      (embedding D) : C(_, _))
 
 private theorem inclusion_at (G : SimpleGraph V) (D : Finset V)
     (y : Ispace (G.induce {b | b ∉ D})) (b : Retained D) :
@@ -148,8 +148,10 @@ private theorem restrict_transfer (G : SimpleGraph V) (a : V) (D : Finset V)
     · exact push_at (embedding D) _ ⟨b, hb⟩
   apply (realization_iff _ _).mpr
   refine ⟨⟨fun b => hp.1 b, ?_⟩, ?_⟩
-  · rw [← sum_push (embedding D), he]
-    exact hp.2
+  · calc
+      _ = ∑ b, push (embedding D) (fun b => transfer a D x.val b) b :=
+        (sum_push (embedding D) (fun b => transfer a D x.val b)).symm
+      _ = 1 := by rw [he]; exact hp.2
   · intro p q hpq
     exact (transfer_common_zero G a D hdom (avoid G x) p q hpq).elim
       (fun h => Or.inl h.2) (fun h => Or.inr h.2)
@@ -159,7 +161,7 @@ def retraction (G : SimpleGraph V) (a : V) (D : Finset V) (ha : a ∉ D)
     (hdom : ∀ d ∈ D, G.neighborSet a ⊆ G.neighborSet d) :
     C(Ispace G, Ispace (G.induce {b | b ∉ D})) where
   toFun x := ⟨fun b => transfer a D x.val b, restrict_transfer G a D ha hdom x⟩
-  continuous_toFun := (continuous_pi fun b =>
+  continuous_toFun := (continuous_pi fun b : Retained D =>
     ((continuous_apply b.val).comp (continuous_transfer a D)).comp
       continuous_subtype_val).subtype_mk _
 
@@ -215,9 +217,9 @@ def foldEquiv (G : SimpleGraph V) (a : V) (D : Finset V) (ha : a ∉ D)
   right_inv := by
     have he : (retraction G a D ha hdom).comp (inclusion G D) =
         ContinuousMap.id _ := by
-      ext y
+      apply ContinuousMap.ext
+      intro y
       exact retraction_inclusion G a D ha hdom y
     rw [he]
-    exact .refl _
 
 end D5.S3.Geometry.FiniteGraphIndependenceReduction
