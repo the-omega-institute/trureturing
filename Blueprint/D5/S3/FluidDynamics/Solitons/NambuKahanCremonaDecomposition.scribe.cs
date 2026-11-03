@@ -133,7 +133,10 @@ internal sealed class NambuKahanCremonaDecompositionDocument : IScribeDocumentDe
                             + "gives the asserted factorisation with l₁ and l₂. All identities "
                             + "are polynomial identities in X, so no exclusion of a zero "
                             + "coordinate or a singular KHK matrix is needed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("graffeo-gubbiotti-2024-nambu-kahan-cremona-decomposition"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(

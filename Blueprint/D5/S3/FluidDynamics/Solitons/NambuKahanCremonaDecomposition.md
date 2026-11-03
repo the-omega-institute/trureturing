@@ -78,6 +78,10 @@ $$\forall \left(A: \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), 
 
 *Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Solitons/NambuKahanCremonaDecomposition.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/graffeo-gubbiotti-2024-nambu-kahan-cremona-decomposition` (proved) by `D5/S3/FluidDynamics/Solitons/NambuKahanCremonaDecomposition.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"graffeo-gubbiotti-2024-nambu-kahan-cremona-decomposition","declaration_gid":"D5/S3/FluidDynamics/Solitons/NambuKahanCremonaDecomposition.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michele Graffeo, Giorgio Gubbiotti (2024). *Growth and Integrability of Some Birational Maps in Dimension Three*. DOI: [10.1007/s00023-023-01339-5](https://doi.org/10.1007/s00023-023-01339-5). URL: <https://arxiv.org/abs/2301.09129v2>.
