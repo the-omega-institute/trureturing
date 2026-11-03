@@ -75,14 +75,4 @@ theorem residue_submask (i : Fin 24) (R : ℕ) :
   · exact residue_submask_22 R
   · exact residue_submask_23 R
 
-theorem fixed_bounds (i : Fin 16) :
-    let row:=fixedRows i
-    rowBounds row.x row.p row.q row.h row.v row.m row.M row.before := by
-  fin_cases i <;>
-    norm_num [fixedRows,rowBounds,oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T]
-    <;> intro r <;> fin_cases r <;> norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T]
-
-theorem fixed_submask (i : Fin 16) : Submask (fixedRows i).m (fixedRows i).M := by
-  fin_cases i <;> apply submask_of_land <;> decide
-
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD

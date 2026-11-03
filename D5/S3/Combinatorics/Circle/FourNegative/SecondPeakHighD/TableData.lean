@@ -4,24 +4,14 @@
    mirror-E: none(waiver:exact-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
-   digest: Exact paired row bounds and finite row type. -/
+   digest: Exact paired row bounds and mod-72 residue families. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 
-/-! Exact paired row bounds and finite row type. -/
+/-! Exact paired row bounds and mod-72 residue families. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD
-
-structure FixedRow where
-  x : ℕ
-  p : ℕ
-  q : ℕ
-  h : ℕ
-  v : ℕ
-  m : ℕ
-  M : ℕ
-  before : Bool
 
 def rowBounds (x p q h v m M : ℤ) (before : Bool) : Prop :=
   (∀ r : Fin 3,
@@ -66,24 +56,6 @@ def residueRows : Fin 24 → ResidueRow :=
     ⟨8,2,64,2048,1,1,1793,true⟩,
     ⟨8,2,56,2048,1,1,1565,true⟩,
     ⟨8,2,40,2048,1,1,1111,true⟩]
-
-def fixedRows : Fin 16 → FixedRow :=
-  ![⟨8,4,2,1,3,9,9,true⟩,
-    ⟨8,4,2,2,7,3,15,true⟩,
-    ⟨8,4,4,1,13,5,23,true⟩,
-    ⟨8,4,4,2,15,3,47,true⟩,
-    ⟨8,8,2,1,11,8,15,true⟩,
-    ⟨8,8,2,2,15,1,29,true⟩,
-    ⟨8,8,4,1,29,4,44,true⟩,
-    ⟨8,8,4,2,31,1,87,true⟩,
-    ⟨8,16,2,1,25,10,30,true⟩,
-    ⟨8,16,2,2,30,1,59,true⟩,
-    ⟨16,8,2,1,7,17,17,true⟩,
-    ⟨16,8,2,2,15,3,31,true⟩,
-    ⟨16,8,4,1,29,5,47,true⟩,
-    ⟨16,8,4,2,31,3,91,true⟩,
-    ⟨16,16,2,1,27,8,31,true⟩,
-    ⟨16,16,2,2,31,1,61,true⟩]
 
 /-- The only late-fresh entry is exactly p=4,h=1,r=56. -/
 theorem residue_fresh_exact (i : Fin 24) :

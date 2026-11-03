@@ -7,12 +7,15 @@
    digest: Convert the ceiling/remainder construction into genuine bounded natural submasks. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SmallAAllHSelection
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.TableCertificates
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
 
-/-! Literal h=1,2 residue and fixed selectors. -/
+/-! Unbounded dyadic dilation and literal h=1,2 residue selectors. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 3000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD
+open private submask_shift
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
 
 private theorem residue_selection (p h q : ℕ)
     (hp : p=4 ∨ p=8) (hh : h=1 ∨ h=2)
@@ -82,37 +85,63 @@ private theorem residue_selection (p h q : ℕ)
   rw [←hp',←hh',←hr']
   simpa only [hvcast,hMcast,Nat.cast_add,Nat.cast_mul,Nat.cast_ofNat] using hb
 
-private theorem fixed_selection (x p q h : ℕ)
+/-- The eight boundary sectors dilate at every dyadic scale. -/
+private theorem dilation_selection (x p q H : ℕ)
     (ht : (x=8 ∧ p=4 ∧ q=2) ∨ (x=8 ∧ p=4 ∧ q=4) ∨
       (x=8 ∧ p=8 ∧ q=2) ∨ (x=8 ∧ p=8 ∧ q=4) ∨ (x=8 ∧ p=16 ∧ q=2) ∨
-      (x=16 ∧ p=8 ∧ q=2) ∨ (x=16 ∧ p=8 ∧ q=4) ∨ (x=16 ∧ p=16 ∧ q=2))
-    (hh : h=1 ∨ h=2) :
-    ∃ v m M : ℕ, ∃ before : Bool, Submask m M ∧ rowBounds x p q h v m M before := by
-  have pick : ∃ i : Fin 16,
-      (fixedRows i).x=x ∧ (fixedRows i).p=p ∧ (fixedRows i).q=q ∧ (fixedRows i).h=h := by
-    rcases ht with ⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|
-      ⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩
-    all_goals rcases hh with rfl|rfl
-    · exact ⟨0,by norm_num [fixedRows]⟩
-    · exact ⟨1,by norm_num [fixedRows]⟩
-    · exact ⟨2,by norm_num [fixedRows]⟩
-    · exact ⟨3,by norm_num [fixedRows]⟩
-    · exact ⟨4,by norm_num [fixedRows]⟩
-    · exact ⟨5,by norm_num [fixedRows]⟩
-    · exact ⟨6,by norm_num [fixedRows]⟩
-    · exact ⟨7,by norm_num [fixedRows]⟩
-    · exact ⟨8,by norm_num [fixedRows]⟩
-    · exact ⟨9,by norm_num [fixedRows]⟩
-    · exact ⟨10,by norm_num [fixedRows]⟩
-    · exact ⟨11,by norm_num [fixedRows]⟩
-    · exact ⟨12,by norm_num [fixedRows]⟩
-    · exact ⟨13,by norm_num [fixedRows]⟩
-    · exact ⟨14,by norm_num [fixedRows]⟩
-    · exact ⟨15,by norm_num [fixedRows]⟩
-  obtain ⟨i,hx,hp,hq,hh⟩:=pick
-  refine ⟨(fixedRows i).v,(fixedRows i).m,(fixedRows i).M,(fixedRows i).before,
-    fixed_submask i,?_⟩
-  rw [←hx,←hp,←hq,←hh]
-  exact fixed_bounds i
+      (x=16 ∧ p=8 ∧ q=2) ∨ (x=16 ∧ p=8 ∧ q=4) ∨ (x=16 ∧ p=16 ∧ q=2)) :
+    ∃ v m M : ℕ, ∃ before : Bool,
+      Submask m M ∧ rowBounds x p q (2^H) v m M before := by
+  have hh : (1:ℤ)≤2^H := by exact_mod_cast (Nat.one_le_two_pow (n:=H))
+  rcases ht with ⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|
+    ⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩|⟨rfl,rfl,rfl⟩
+  · refine ⟨3,2^H*9,2^H*9,true,submask_shift 9 9 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨6,2^H*18,2^H*22,true,submask_shift 18 22 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨9,2^H*12,2^H*15,true,submask_shift 12 15 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨5,2^H*48,2^H*49,true,submask_shift 48 49 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨15,2^H*29,2^H*31,true,submask_shift 29 31 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨7,2^H*17,2^H*19,true,submask_shift 17 19 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨6,2^H*49,2^H*51,true,submask_shift 49 51 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
+  · refine ⟨10,2^H*41,2^H*43,true,submask_shift 41 43 H (submask_of_land _ _ (by decide)),?_⟩
+    refine ⟨?_,?_,?_,?_,?_⟩
+    · intro r
+      fin_cases r <;>
+        norm_num [oldEnds,newEnds,oldHeads,newHeads,A,B,L,K,SU,SV,SW,Y,Z,T] <;> omega
+    all_goals norm_num [Y,T] <;> omega
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD
