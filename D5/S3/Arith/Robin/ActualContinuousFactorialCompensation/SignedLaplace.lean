@@ -7,6 +7,7 @@
    digest: An explicit negative signed Laplace average of the literal factorial G. -/
 
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.SharpTail.Cancellation
+import D5.S3.Arith.Robin.PrimorialFirstOrderConcentrationCounterexample
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 
 /-!
@@ -33,10 +34,7 @@ private def laplaceCell (d y : ℝ) : ℝ := d * (y - 1) - y * Real.log y
 private lemma two_cells {x : ℝ} (hx : 1 ≤ x) (hx3 : x < 3) :
     G x = laplaceCell (1 + gamma - alpha) x +
       (if 2 ≤ x then laplaceCell (1 + gamma + Real.log 2) (x / 2) else 0) := by
-  have he : G x = x * ((1 + gamma - Real.log x) * H x + 2 * J x) -
-      Real.log (⌊x⌋₊.factorial : ℝ) - (1 + gamma) * ⌊x⌋₊ - alpha * (x - 1) := by
-    rw [G, finite_smoothing hx, h1]
-    ring
+  have he := G_formula hx
   by_cases hx2 : 2 ≤ x
   · have hn : ⌊x⌋₊ = 2 := (Nat.floor_eq_iff (by linarith : 0 ≤ x)).mpr
       ⟨hx2, by norm_num; exact hx3⟩
@@ -193,20 +191,10 @@ private lemma moment_zero (b : ℝ) (hb : 0 < b) (n : ℕ) :
     IntegrableOn (fun t : ℝ => Real.exp (-b * t) * t ^ n) (Ioi 0) ∧
       (∫ t in Ioi (0 : ℝ), Real.exp (-b * t) * t ^ n) =
         (n.factorial : ℝ) / b ^ (n + 1) := by
-  have hΓ : IntegrableOn (fun u : ℝ => Real.exp (-u) * u ^ n) (Ioi 0) := by
-    simpa only [add_sub_cancel_right, Real.rpow_natCast] using
-      Real.GammaIntegral_convergent (s := (n : ℝ) + 1) (by positivity)
-  have hscale : IntegrableOn
-      (fun t : ℝ => Real.exp (-(b * t)) * (b * t) ^ n) (Ioi 0) := by
-    apply (integrableOn_Ioi_comp_mul_left_iff
-      (fun u : ℝ => Real.exp (-u) * u ^ n) 0 hb).mpr
-    simpa using hΓ
   constructor
-  · refine (hscale.div_const (b ^ n)).congr (Eventually.of_forall ?_)
-    intro t
-    dsimp
-    rw [mul_pow]
-    field_simp
+  · have hsource :=
+      D5.S3.Arith.Robin.PrimorialFirstOrderConcentrationCounterexample.exp_moment_integrable hb n
+    simpa only [mul_comm] using hsource
   · have he := Real.integral_rpow_mul_exp_neg_mul_Ioi
       (a := (n : ℝ) + 1) (r := b) (by positivity) hb
     convert he using 1

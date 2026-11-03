@@ -16,6 +16,10 @@ catalogue. Whole-family intervention, variation/sensitivity, observational
 dependence and a lawful source selection are still missing. Consequently this
 is neither a Contract.Registration nor a declared_validated registration. -/
 
+/- The source law reuses Basic.G_formula and the arbitrary-rate
+PrimorialFirstOrderConcentrationCounterexample.exp_moment_integrable supplier;
+the mirror retains the exact existing law and source bridge. -/
+
 namespace G_signed_laplace_negative
 
 abbrev signature : Signature where

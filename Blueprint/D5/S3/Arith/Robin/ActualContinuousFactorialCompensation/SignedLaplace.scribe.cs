@@ -8,7 +8,7 @@ internal sealed class SignedLaplaceDocument : IScribeDocumentDefinition
         "A negative signed Laplace average of the actual factorial compensation.",
         H("A negative signed Laplace average"),
         Blocks(
-            Paragraph(Text("G is the literal factorial compensation of Basic, with its complete von Mangoldt dilation sum, integral-defined alpha, and right-closed real-floor sums. The inherited arithmetic suppliers preserve the Terence Tao / Apache-2.0 attribution at LogConvolutionMassExpansion. Gamma convergence and exponential moments are reused from pinned Mathlib; the Euler and logarithm brackets are reused from RobinRationalBasis. This is a repository deduction, with no literature novelty claim.")),
+            Paragraph(Text("G is the literal factorial compensation of Basic, with its complete von Mangoldt dilation sum, integral-defined alpha, and right-closed real-floor sums. The inherited arithmetic suppliers preserve the Terence Tao / Apache-2.0 attribution at LogConvolutionMassExpansion. The exact G_formula is reused from Basic, arbitrary-rate exponential moment integrability is reused from PrimorialFirstOrderConcentrationCounterexample, and Gamma integral evaluation remains from pinned Mathlib; the Euler and logarithm brackets are reused from RobinRationalBasis. This is a repository deduction, with no literature novelty claim.")),
             Describe.Lean(
                 DescribeId.Create("actual-factorial-signed-laplace-negative"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SignedLaplace.G_signed_laplace_negative"),

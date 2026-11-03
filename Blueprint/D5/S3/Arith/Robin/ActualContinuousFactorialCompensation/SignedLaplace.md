@@ -4,7 +4,7 @@
 
 A negative signed Laplace average of the actual factorial compensation.
 
-G is the literal factorial compensation of Basic, with its complete von Mangoldt dilation sum, integral-defined alpha, and right-closed real-floor sums. The inherited arithmetic suppliers preserve the Terence Tao / Apache-2.0 attribution at LogConvolutionMassExpansion. Gamma convergence and exponential moments are reused from pinned Mathlib; the Euler and logarithm brackets are reused from RobinRationalBasis. This is a repository deduction, with no literature novelty claim.
+G is the literal factorial compensation of Basic, with its complete von Mangoldt dilation sum, integral-defined alpha, and right-closed real-floor sums. The inherited arithmetic suppliers preserve the Terence Tao / Apache-2.0 attribution at LogConvolutionMassExpansion. The exact G_formula is reused from Basic, arbitrary-rate exponential moment integrability is reused from PrimorialFirstOrderConcentrationCounterexample, and Gamma integral evaluation remains from pinned Mathlib; the Euler and logarithm brackets are reused from RobinRationalBasis. This is a repository deduction, with no literature novelty claim.
 
 **Theorem 1.1 (The strict negative average).**
 
@@ -32,3 +32,4 @@ The Reg mirror retains the exact source law and equivalence bridge. Whole-family
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SignedLaplace.G_signed_laplace_negative`
 - Dependency: [D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation](SharpTail/Cancellation.md)
+- Dependency: [D5/S3/Arith/Robin/PrimorialFirstOrderConcentrationCounterexample](../PrimorialFirstOrderConcentrationCounterexample.md)
