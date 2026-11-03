@@ -8,7 +8,8 @@
 
 import D5.S3.ConceptDynamics.GraphColoring.JacoEndpointBeatty
 import Mathlib.Combinatorics.Quiver.Path.Vertices
-import Mathlib.Data.Fintype.List
+
+/-! Directed edge sequences, minimum edge lengths, and finite truncations. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,7 +20,7 @@ open D5.S0.Certificates.JacoExponentialDominationRefutation
 open D5.S3.ConceptDynamics.GraphColoring.JacoEndpointBeatty
 
 /-- Positive source labels, with precisely the original forward arcs. -/
-def directed : Quiver ℕ+ where
+@[instance_reducible] def directed : Quiver ℕ+ where
   Hom a b := PLift (a.val < b.val ∧ b.val ≤ jacoRight a.val)
 
 attribute [local instance] directed
@@ -61,9 +62,10 @@ private theorem vertices_bounds {a b : ℕ+} (p : Quiver.Path a b) :
 
 private def splitLast {a b : ℕ+} (p : Quiver.Path a b) :
     Option (Σ c : {c : ℕ+ // c.val < b.val}, Quiver.Path a c.val) :=
-  match p with
-  | .nil => none
-  | @Quiver.Path.cons _ _ _ c _ q e => some ⟨⟨c, e.down.1⟩, q⟩
+  by
+    cases p with
+    | nil => exact none
+    | @cons c d q e => exact some ⟨⟨c, e.down.1⟩, q⟩
 
 private theorem splitLast_injective (a b : ℕ+) :
     Function.Injective (@splitLast a b) := by
@@ -73,10 +75,10 @@ private theorem splitLast_injective (a b : ℕ+) :
       cases q with
       | nil => rfl
       | cons q e => simp [splitLast] at h
-  | @cons c p e =>
+  | @cons c b p e =>
       cases q with
       | nil => simp [splitLast] at h
-      | @cons d q f =>
+      | @cons d b q f =>
           simp only [splitLast, Option.some.injEq] at h
           have hc : c = d := congrArg (fun s => s.fst.val) h
           subst d
@@ -86,7 +88,7 @@ private theorem splitLast_injective (a b : ℕ+) :
           exact Subsingleton.elim _ _
 
 private theorem path_finite (a b : ℕ+) : Finite (Quiver.Path a b) := by
-  induction b using (measure (fun b : ℕ+ => b.val)).induction with
+  induction b using (measure (fun b : ℕ+ => b.val)).wf.induction with
   | h b ih =>
       letI : Finite {c : ℕ+ // c.val < b.val} :=
         Finite.of_injective (fun c => (⟨c.val.val, c.property⟩ : Fin b.val)) (by
@@ -124,9 +126,10 @@ private theorem path_nonempty (n : ℕ+) : Nonempty (Quiver.Path (1 : ℕ+) n) :
       · subst n
         exact ⟨.nil⟩
       · obtain ⟨p⟩ := ih (by omega)
-        exact ⟨p.cons (PLift.up ⟨by simp; omega, consecutive_arc ⟨n, by omega⟩⟩)⟩
+        exact ⟨p.cons (PLift.up ⟨by exact Nat.lt_succ_self n, consecutive_arc ⟨n, by omega⟩⟩)⟩
 
 private theorem shortest_nonempty (n : ℕ+) : Nonempty (Shortest n) := by
+  classical
   obtain ⟨p⟩ := path_nonempty n
   let P : ℕ → Prop := fun l => ∃ p : TruncatedPath n.val 1 n, p.val.length = l
   have hex : ∃ l, P l := ⟨p.length, truncate n.val le_rfl p, rfl⟩
@@ -143,15 +146,110 @@ theorem path_count_foundations (n : ℕ+) :
     (∀ r : ℕ, n.val ≤ r → ∃ e : TruncatedPath r 1 n ≃ TruncatedPath n.val 1 n,
       ∀ p, (e p).val.length = p.val.length) := by
   letI := path_finite (1 : ℕ+) n
-  haveI : Finite (TruncatedPath n.val 1 n) := inferInstance
-  haveI : Finite (Shortest n) := inferInstance
+  haveI : Finite (TruncatedPath n.val 1 n) := by unfold TruncatedPath; infer_instance
+  haveI : Finite (Shortest n) := by unfold Shortest; infer_instance
   haveI := shortest_nonempty n
   refine ⟨inferInstance, inferInstance, ?_, ?_⟩
-  · simpa [psi, n.property] using Nat.card_pos (α := Shortest n)
+  · simpa only [psi, dif_pos n.property] using (Nat.card_pos (α := Shortest n))
   · intro r hr
     exact ⟨(truncationEquiv r 1 n hr).trans (truncationEquiv n.val 1 n le_rfl).symm,
       fun _ => rfl⟩
 
 #print axioms path_count_foundations
+
+private theorem endpoint_strict : StrictMono jacoRight :=
+  strictMono_nat_of_lt_succ fun n => by
+    have := jacoRight_succ_ge n
+    omega
+
+private theorem out_at_endpoint (m : ℕ) : beattyOut (jacoRight m) = m := by
+  have hle : beattyOut (jacoRight m) ≤ m := by
+    apply (beatty_threshold _ _).mp
+    rw [← endpoint_eq_beatty]
+  apply Nat.le_antisymm hle
+  by_contra h
+  have hlt : beattyOut (jacoRight m) < m := by omega
+  have hreach : jacoRight m ≤ jacoRight (beattyOut (jacoRight m)) := by
+    rw [endpoint_eq_beatty (beattyOut (jacoRight m))]
+    exact (beatty_threshold _ _).mpr le_rfl
+  exact (not_lt_of_ge hreach) (endpoint_strict hlt)
+
+private theorem endpoint_fib (l : ℕ) :
+    jacoRight (Nat.fib (l + 2)) = Nat.fib (l + 3) := by
+  induction l with
+  | zero => change jacoRight 1 = 2; decide +kernel
+  | succ l ih =>
+      have h := out_at_endpoint (Nat.fib (l + 2))
+      rw [ih] at h
+      rw [show l + 1 + 2 = l + 3 by omega, endpoint_eq_beatty, h]
+      have hf := Nat.fib_add_two (l + 2)
+      omega
+
+private theorem reachable_prefix (l : ℕ) (n : ℕ+) :
+    (∃ p : Quiver.Path (1 : ℕ+) n, p.length ≤ l) ↔ n.val ≤ Nat.fib (l + 2) := by
+  induction l generalizing n with
+  | zero =>
+      constructor
+      · rintro ⟨p, hp⟩
+        have he := p.eq_of_length_zero (by omega)
+        subst n
+        decide
+      · intro hn
+        have hn1 : n = 1 := by
+          apply Subtype.ext
+          have hpos := n.property
+          norm_num at hn ⊢
+          omega
+        subst n
+        exact ⟨.nil, le_rfl⟩
+  | succ l ih =>
+      constructor
+      · rintro ⟨p, hp⟩
+        cases p with
+        | nil =>
+            exact Nat.fib_pos.mpr (by omega)
+        | @cons c n p e =>
+            have hlen : p.length ≤ l := by
+              change p.length + 1 ≤ l + 1 at hp
+              omega
+            have hc := (ih c).mp ⟨p, hlen⟩
+            calc
+              n.val ≤ jacoRight c.val := e.down.2
+              _ ≤ jacoRight (Nat.fib (l + 2)) := endpoint_strict.monotone hc
+              _ = Nat.fib (l + 1 + 2) := by simpa [Nat.add_assoc] using endpoint_fib l
+      · intro hn
+        by_cases hold : n.val ≤ Nat.fib (l + 2)
+        · obtain ⟨p, hp⟩ := (ih n).mpr hold
+          exact ⟨p, by omega⟩
+        · let M : ℕ+ := ⟨Nat.fib (l + 2), Nat.fib_pos.mpr (by omega)⟩
+          obtain ⟨p, hp⟩ := (ih M).mpr le_rfl
+          have e : M ⟶ n := PLift.up ⟨by dsimp [M]; omega, by
+            change n.val ≤ jacoRight (Nat.fib (l + 2))
+            rw [endpoint_fib]
+            simpa [Nat.add_assoc] using hn⟩
+          exact ⟨p.cons e, Nat.add_le_add_right hp 1⟩
+
+/-- The vertices reachable in at most l directed edges are exactly the positive
+prefix ending at F_(l+2), and this is the same threshold for every shortest path. -/
+theorem fibonacci_distance (l : ℕ) (n : ℕ+) :
+    ((∃ p : TruncatedPath n.val 1 n, p.val.length ≤ l) ↔
+      n.val ≤ Nat.fib (l + 2)) ∧
+    (∀ p : Shortest n, p.val.val.length ≤ l ↔ n.val ≤ Nat.fib (l + 2)) := by
+  constructor
+  · constructor
+    · rintro ⟨p, hp⟩
+      exact (reachable_prefix l n).mp ⟨p.val, hp⟩
+    · intro hn
+      obtain ⟨p, hp⟩ := (reachable_prefix l n).mpr hn
+      exact ⟨truncate n.val le_rfl p, hp⟩
+  · intro p
+    constructor
+    · intro hp
+      exact (reachable_prefix l n).mp ⟨p.val.val, hp⟩
+    · intro hn
+      obtain ⟨q, hq⟩ := (reachable_prefix l n).mpr hn
+      exact le_trans (p.property (truncate n.val le_rfl q)) hq
+
+#print axioms fibonacci_distance
 
 end D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount
