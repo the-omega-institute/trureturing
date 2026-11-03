@@ -8,6 +8,7 @@ from functools import lru_cache
 import io
 import os
 from pathlib import Path
+import re
 import shutil
 import stat
 import struct
@@ -28,6 +29,14 @@ ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
+
+
+def batch_modules():
+    """Runtime capacity only: keep report identities and reusable rows unchanged."""
+    value = os.environ.get('STRATALINT_NATIVE_BATCH_MODULES', str(NATIVE_BATCH_MODULES))
+    if not re.fullmatch(r'[1-9][0-9]{0,2}', value) or int(value) > NATIVE_BATCH_MODULES:
+        raise ValueError(f'STRATALINT_NATIVE_BATCH_MODULES requires an integer from 1 to {NATIVE_BATCH_MODULES}')
+    return int(value)
 
 
 def activity(kind, count):
@@ -497,6 +506,7 @@ def produce_batch_chunk(requests):
 
 
 def produce_batch(requests):
+    size = batch_modules()
     requests = sorted(requests, key=lambda row: row[1])
     if not requests:
         return
@@ -507,8 +517,8 @@ def produce_batch(requests):
         raise ValueError('duplicate native batch module')
     # Chunks bound per-process memory; each chunk validates its modules
     # before writing their artifacts.
-    for start in range(0, len(requests), NATIVE_BATCH_MODULES):
-        chunk = requests[start:start + NATIVE_BATCH_MODULES]
+    for start in range(0, len(requests), size):
+        chunk = requests[start:start + size]
         raw, judged = [], []
         for row in chunk:
             (judged if input_projection(root, row[1])['inputs'] else raw).append(row)
@@ -674,6 +684,9 @@ def _publish(root, destination):
 
 
 def main():
+    if sys.argv[1:] == ['batch-size']:
+        print(f'LEAN_INSPECTOR_BATCH_MODULES {batch_modules()}')
+        return
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
                'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,

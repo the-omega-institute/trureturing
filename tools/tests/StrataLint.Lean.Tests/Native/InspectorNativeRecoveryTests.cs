@@ -5,4 +5,7 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
     // Recovery shares dependencies; each case still builds a private cold project.
     [Fact]
     public void InspectorArtifactBehavior() => InspectorNativeTestRunner.Run(compiler, "test_native.NativeRecoveryTests");
+
+    [Fact]
+    public void RuntimeBatchCapacity() => InspectorNativeTestRunner.Run(compiler, "test_native.NativeBatchCapacityTests");
 }
