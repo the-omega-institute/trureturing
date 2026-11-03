@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Reduction/PositiveRefinementCorner
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Reduction/PositiveRefinementCorner
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
@@ -58,7 +58,8 @@ private theorem projection_frame (P : Matrix n n ℂ) (hP : Pᴴ = P) (hPP : P *
         · intro k
           simp only [k.property, Complex.ofReal_one, one_mul]
       _ = (U * diagonal (fun k => (hp.eigenvalues k : ℂ)) * Uᴴ) i j := by
-        simp only [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.conjTranspose_apply]
+        rw [Matrix.mul_apply]
+        simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
         apply Finset.sum_congr rfl
         intro k hk
         ring
@@ -83,8 +84,8 @@ theorem corner_dominated_scalar
   have hin := positive_map_projection_compression Φ hpos P hP hPP hzero
   let out : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ := {
     toFun X := P * Φ X * P
-    map_add' X Y := by simp [mul_add, add_mul]
-    map_smul' c X := by simp [mul_smul_comm, smul_mul_assoc] }
+    map_add' X Y := by simp [Matrix.mul_add, Matrix.add_mul]
+    map_smul' c X := by simp [Matrix.mul_smul, Matrix.smul_mul] }
   have hout : out = Φ := by
     apply eq_of_projection_eq
     intro Q hQ hQQ
@@ -111,14 +112,14 @@ theorem corner_dominated_scalar
         (hpos Q hq).nonneg
     intro X
     simp [heq]
-  have hPV : P * V = V := by rw [← hVP, Matrix.mul_assoc, hV, mul_one]
+  have hPV : P * V = V := by rw [← hVP, Matrix.mul_assoc, hV, Matrix.mul_one]
   have hVP' : Vᴴ * P = Vᴴ := by
     simpa only [Matrix.conjTranspose_mul, hP, Matrix.conjTranspose_conjTranspose] using
       congrArg Matrix.conjTranspose hPV
   let T : Matrix (Fin r) (Fin r) ℂ →ₗ[ℂ] Matrix (Fin r) (Fin r) ℂ := {
     toFun X := Vᴴ * Φ (V * X * Vᴴ) * V
-    map_add' X Y := by simp [mul_add, add_mul]
-    map_smul' c X := by simp [mul_smul_comm, smul_mul_assoc] }
+    map_add' X Y := by simp [Matrix.mul_add, Matrix.add_mul]
+    map_smul' c X := by simp [Matrix.mul_smul, Matrix.smul_mul] }
   have hTpos (X : Matrix (Fin r) (Fin r) ℂ) (hX : X.PosSemidef) : (T X).PosSemidef :=
     (hpos _ (hX.mul_mul_conjTranspose_same V)).conjTranspose_mul_mul_same V
   have hTdom (X : Matrix (Fin r) (Fin r) ℂ) (hX : X.PosSemidef) : T X ≤ X := by

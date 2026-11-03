@@ -21,5 +21,5 @@ internal sealed class SingularPositiveRefinementDocument : IScribeDocumentDefini
                 H("Positivity-only scalar rigidity for singular filters"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("With exactly the same finite coordinate type, PSD E, complex linear Phi, positivity and domination assumptions, there is a real c between zero and one such that Phi(X)=c sqrt(E) X sqrt(E) for every complex matrix X. No invertibility is assumed. The supported inverse-square-root conjugation is dominated by projection compression; corner scalar rigidity and exact reconstruction give the formula, including a zero effect."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }

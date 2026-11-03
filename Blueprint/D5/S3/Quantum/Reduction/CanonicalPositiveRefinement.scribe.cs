@@ -21,5 +21,5 @@ internal sealed class CanonicalPositiveRefinementDocument : IScribeDocumentDefin
                 H("All finite amplifications of the actual records are positive"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Under precisely the preceding assumptions, for each original a, every natural k, and every componentwise PSD input Z(b) indexed by d(b) times Fin(k), the matrix with (i,j) entry S(a)(z maps to the matrix (r,s) maps to Z(z)((r,i.second),(s,j.second)))(b)(i.first,j.first) is PSD in every output block b. This is the literal finite-ancilla amplification of each actual original direct-sum map. The scalar formula identifies it with c(a,b) times congruence by sqrt(E(b)) tensor I_k. Positivity follows without introducing a CP or Kraus premise. Zero ancillas, zero effects and unequal dimensions are included."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }

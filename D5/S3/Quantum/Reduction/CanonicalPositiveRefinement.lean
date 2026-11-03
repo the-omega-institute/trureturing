@@ -102,13 +102,14 @@ theorem canonical_refinement_completely_positive
     simp only [Matrix.smul_apply, smul_eq_mul]
     congr 1
     change (R * (fun r s => Z b (r, i.2) (s, j.2)) * R) i.1 j.1 = _
-    rw [← hR]
-    simp [W, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kroneckerMap_apply,
+    calc
+      _ = (R * (fun r s => Z b (r, i.2) (s, j.2)) * Rᴴ) i.1 j.1 := by rw [hR]
+      _ = _ := by simp [W, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kroneckerMap_apply,
       Matrix.one_apply, Matrix.conjTranspose_apply, Finset.sum_mul, mul_assoc,
       mul_ite, ite_mul]
   rw [heq]
   exact ((hZ b).mul_mul_conjTranspose_same W).smul
-    (show (0 : ℂ) ≤ (c a b : ℂ) from Complex.ofReal_nonneg.mpr (hc a b).1)
+    (show (0 : ℂ) ≤ (c a b : ℂ) from Complex.ofReal_nonneg (hc a b).1)
 
 #print axioms canonical_refinement_completely_positive
 

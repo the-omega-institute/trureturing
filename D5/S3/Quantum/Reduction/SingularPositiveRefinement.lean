@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Reduction/SingularPositiveRefinement
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Reduction/SingularPositiveRefinement
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
