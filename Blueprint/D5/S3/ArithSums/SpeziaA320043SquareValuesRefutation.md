@@ -34,6 +34,10 @@ $$\neg (\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall m \in \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/SpeziaA320043SquareValuesRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/a320043-square-values-refutation` (refuted) by `D5/S3/ArithSums/SpeziaA320043SquareValuesRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"a320043-square-values-refutation","declaration_gid":"D5/S3/ArithSums/SpeziaA320043SquareValuesRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stefano Spezia; OEIS Foundation Inc. (2018). *OEIS A320043: Row sums of the triangle A322550*. URL: <https://oeis.org/A320043/internal>.
