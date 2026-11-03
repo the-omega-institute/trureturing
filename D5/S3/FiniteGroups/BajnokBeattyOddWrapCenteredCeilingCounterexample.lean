@@ -20,6 +20,7 @@ namespace D5.S3.FiniteGroups.BajnokBeattyOddWrapCenteredCeilingCounterexample
 open D5.S3.FiniteGroups.BajnokBeattyOddWrapGaussianRoot
 open D5.S3.FiniteGroups.BajnokBeattyOddWrapThresholdBracket
 open D5.S3.FiniteGroups.BajnokBeattyOddWrapReturnCounts
+open D5.S3.FiniteGroups.BajnokBeattyOddWrapSingleCrossing
 
 private noncomputable def P17 (x : ℝ) : ℝ :=
   ∑ m ∈ Finset.range 17, x ^ m / (Nat.factorial m : ℝ)
@@ -37,7 +38,8 @@ private theorem exp_interval17 {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x ≤ 1) :
           (fun m _ => by positivity) (show 0 ∈ Finset.range 17 by norm_num)
   refine ⟨lt_of_lt_of_le zero_lt_one hone, ?_, ?_⟩
   · exact Real.sum_le_exp_of_nonneg hx0 17
-  · simpa [U17, P17] using
+  · simpa only [U17, P17, Nat.cast_ofNat,
+      show (17 : ℝ) + 1 = 18 by norm_num] using
       (Real.exp_bound' hx0 hx1 (n := 17) (by norm_num))
 
 private theorem exp_neg_nine_mul (x : ℝ) :
@@ -206,8 +208,10 @@ theorem result : ¬ claim := by
         simpa only [Int.cast_ofNat] using hceil
       _ = 55311 := hc.2.2.2.2
   have hT : T = 55311 := by exact_mod_cast hTZ
-  have hclaimed := hbefore 55310 (by decide) (by omega)
+  have hclaimed : (original_return_pair 57425 55310).2 <
+      (original_return_pair 57425 55310).1 := by
+    simpa only [Nat.cast_ofNat] using (hbefore 55310 (by decide) (by omega))
   have hactual := hc.2.2.1
-  omega
+  exact (not_lt_of_ge hactual) hclaimed
 
 end D5.S3.FiniteGroups.BajnokBeattyOddWrapCenteredCeilingCounterexample

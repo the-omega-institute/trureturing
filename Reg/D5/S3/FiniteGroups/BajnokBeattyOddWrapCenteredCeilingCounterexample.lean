@@ -16,6 +16,7 @@ open _root_.D5.S3.FiniteGroups.BajnokBeattyOddWrapCenteredCeilingCounterexample
 open _root_.D5.S3.FiniteGroups.BajnokBeattyOddWrapGaussianRoot
 open _root_.D5.S3.FiniteGroups.BajnokBeattyOddWrapSingleCrossing
 open _root_.D5.S3.FiniteGroups.BajnokBeattyOddWrapReturnCounts
+open _root_.Reg.D5.S3.FiniteGroups.BajnokBeattyFirstReturnDefect
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped Classical
