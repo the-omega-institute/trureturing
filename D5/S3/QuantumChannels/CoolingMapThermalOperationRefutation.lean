@@ -113,15 +113,19 @@ private lemma instance_cooling : IsCoolingMap Pm sigma := by
     left
     fin_cases i <;> exact Matrix.isDiag_diagonal _
   · change (∑ a, kraus a * Pm * (kraus a)ᴴ) = sigma
-    rw [Fin.sum_univ_two]
-    simp only [kraus.eq_1, Matrix.diagonal_conjTranspose]
     ext i j
-    simp only [Matrix.add_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, Pi.star_apply]
-    fin_cases i <;> fin_cases j <;>
-      norm_num [Pm, sigma, factor, Matrix.mul_apply,
-        Fin.sum_univ_two, Matrix.conjTranspose_apply, Pi.star_apply,
-        Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat, map_div₀, map_mul]
-      <;> ring
+    calc
+      (∑ a, kraus a * Pm * (kraus a)ᴴ) i j =
+          (∑ a, star (factor j a) * factor i a) * Pm i j := by
+        simpa [kraus] using
+          (D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry
+            (record := factor) (rho := Pm) i j)
+      _ = sigma i j := by
+        fin_cases i <;> fin_cases j <;>
+          norm_num [Pm, sigma, factor, Matrix.mul_apply,
+            Fin.sum_univ_two, Matrix.conjTranspose_apply, Pi.star_apply,
+            Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat, map_div₀, map_mul]
+        <;> ring
 
 private lemma ground_nonempty {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ) :
     (groundSet e).Nonempty := by

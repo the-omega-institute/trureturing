@@ -18,34 +18,40 @@ internal sealed class CoolingMapThermalOperationRefutationDocument : IScribeDocu
                 Blocks(Paragraph(Text(
                     "In the increasing energy basis, an allowed Kraus operator is diagonal or a complex multiple of the matrix unit with row j and column k, where j < k. "
                     + "The latter sends the kth energy coordinate to the lower jth coordinate. Zero operators are allowed. "
-                    + "This expresses the two classes in LTT_arXiv.tex, arXiv:1409.7740v3, lines 693–700.")))),
+                    + "This expresses the two classes in LTT_arXiv.tex, arXiv:1409.7740v3, lines 693–700."))),
+                AssessedProvenance.FromLiterature(Source)),
             Definition("cooling-map", "IsCoolingMap", "Transitions through cooling maps", CoolingMapFormula(),
                 Blocks(Paragraph(Text(
                     "There is a finite Kraus family K, each member of which has one of the two allowed forms, whose adjoint products sum to the identity and whose channel sends ρ to σ. "
                     + "This is the state-transition reading of the cooling-map definition in LTT_arXiv.tex, lines 693–700. The completeness identity makes the Kraus channel trace preserving; its Kraus form makes it completely positive. "),
                     Ref("D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus"),
-                    Text(" applies the two families by summing K i times ρ times the adjoint of K i. The two family arguments are both K.")))),
+                    Text(" applies the two families by summing K i times ρ times the adjoint of K i. The two family arguments are both K."))),
+                AssessedProvenance.FromLiterature(Source)),
             Definition("ground-set", "groundSet", "All ground-energy coordinates", GroundSetFormula(),
                 Blocks(Paragraph(Text(
                     "For the diagonal ancilla Hamiltonian with real energies e, take every coordinate a whose energy is no greater than the energy of any coordinate b. "
-                    + "All degeneracies are retained. This describes the ground eigenspace used in LTT_arXiv.tex, lines 137–141. If m is positive this finite set is nonempty; for m = 0 it is empty.")))),
+                    + "All degeneracies are retained. This describes the ground eigenspace used in LTT_arXiv.tex, lines 137–141. If m is positive this finite set is nonempty; for m = 0 it is empty."))),
+                AssessedProvenance.FromLiterature(Source)),
             Definition("ground-state", "groundState", "The normalized ground-space projector", GroundStateFormula(),
                 Blocks(Paragraph(Text(
                     "The diagonal entry at a ground coordinate is the inverse of the number of ground coordinates, explicitly cast from a natural number to a complex number; every other entry is zero. "
                     + "For positive m this is the normalized projector onto the entire ground eigenspace. "
                     + "It encodes the idealized state in LTT_arXiv.tex, lines 137–141; line 648 fixes the paper's subsequent low-temperature convention. "
-                    + "The definition also permits m = 0, when the matrix has no entries.")))),
+                    + "The definition also permits m = 0, when the matrix has no entries."))),
+                AssessedProvenance.FromLiterature(Source)),
             Definition("energy-conserving", "IsEnergyConserving", "Commutation with total energy", EnergyConservingFormula(),
                 Blocks(Paragraph(Text(
                     "The total Hamiltonian is diagonal on pairs x, with energy E x.1 + e x.2. Each real sum is included in the complex scalars. "
                     + "Energy conservation means that U commutes with this matrix, as in LTT_arXiv.tex, lines 121–134. "
-                    + "The predicate accepts an arbitrary complex matrix; unitarity is required separately in the transition assertion.")))),
+                    + "The predicate accepts an arbitrary complex matrix; unitarity is required separately in the transition assertion."))),
+                AssessedProvenance.FromLiterature(Source)),
             Definition("thermal-output", "thermalOutput", "The ground-space thermal output", ThermalOutputFormula(),
                 Blocks(Paragraph(Text(
                     "Tensor ρ with the ancilla's normalized ground-space projector, conjugate by U, and trace out the ancilla. "
                     + "This combines LTT_arXiv.tex, lines 126–128 and 137–141, with the idealized ground-space convention of line 648. "),
                     Ref("D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight"),
-                    Text(" retains the system coordinate and sums the diagonal ancilla coordinates. The definition itself imposes neither unitarity nor energy conservation.")))),
+                    Text(" retains the system coordinate and sums the diagonal ancilla coordinates. The definition itself imposes neither unitarity nor energy conservation."))),
+                AssessedProvenance.FromLiterature(Source)),
             Definition("claim", "claim", "The state-transition direction of Conjecture 1",
                 Equivalence(Local("claim"), ClaimBody()),
                 Blocks(Paragraph(Text(
@@ -57,7 +63,8 @@ internal sealed class CoolingMapThermalOperationRefutationDocument : IScribeDocu
                     Text(
                         ", meaning positive semidefiniteness and trace one. The ancilla has positive finite dimension, arbitrary real diagonal energies and its full normalized ground-space state. "
                         + "The unitary is explicitly coerced to a matrix in both occurrences. A change of ancilla energy basis can be absorbed into the unitary. "
-                        + "The assertion uses the exact idealized state; it makes no assertion about positive-temperature or approximate transitions.")))),
+                        + "The assertion uses the exact idealized state; it makes no assertion about positive-temperature or approximate transitions."))),
+                AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -112,9 +119,9 @@ internal sealed class CoolingMapThermalOperationRefutationDocument : IScribeDocu
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
-        Formula formula, BlockSequence prose) => Describe.Lean(
+        Formula formula, BlockSequence prose, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            StatementSource.FromAuthor(Disp(formula)), provenance,
             prose, DescribeRole.Definition);
 
     private static Formula CoolingKrausFormula()

@@ -133,5 +133,118 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
+namespace DiagonalKrausEntry
+
+universe u_3 u_4
+
+abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_3, 0, 0, 0} where
+  Params := Σ ι : Type u_3, Σ ε : Type u_4, Σ record : ι → ε → ℂ,
+    Matrix ι ι ℂ
+  State p := p.1 × p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u_3, u_4} :=
+  realize signature
+    (fun _ p ij =>
+      (∑ a, star (p.2.2.1 ij.2 a) * p.2.2.1 ij.1 a) *
+        p.2.2.2 ij.1 ij.2)
+    (fun e _ => Empty.elim e)
+
+def rejected : Realization signature.{u_3, u_4} :=
+  realize signature (fun _ _ _ => 0) (fun e _ => Empty.elim e)
+
+abbrev arena : Arena where
+  signature := signature.{u_3, u_4}
+  Law R := ∀ {ι : Type u_3} {ε : Type u_4}
+    [Fintype ι] [DecidableEq ι] [Fintype ε]
+    (record : ι → ε → ℂ) (rho : Matrix ι ι ℂ) (i j : ι),
+    (∑ a, Matrix.diagonal (fun i => record i a) * rho *
+      (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
+      R.readout () ⟨ι, ⟨ε, ⟨record, rho⟩⟩⟩ (i, j)
+
+theorem actual_law : arena.{u_3, u_4}.Law actual := by
+  intro ι ε _ _ _ record rho i j
+  change (∑ a, Matrix.diagonal (fun i => record i a) * rho *
+      (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
+    (∑ a, star (record j a) * record i a) * rho i j
+  exact diagonal_kraus_entry record rho i j
+
+theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
+  intro h
+  have hbad := @h (Fin 1) Unit inferInstance inferInstance inferInstance
+    (fun _ _ => (1 : ℂ)) (1 : Matrix (Fin 1) (Fin 1) ℂ) 0 0
+  norm_num [rejected, realize, Matrix.diagonal, Matrix.mul_apply,
+    Matrix.one_apply, Matrix.conjTranspose_apply, Pi.star_apply] at hbad
+
+theorem dependence : ObservationalDependence signature.{u_3, u_4} actual := by
+  intro _
+  let p : signature.{u_3, u_4}.Params :=
+    ⟨Fin 2, ⟨Unit, ⟨(fun _ _ => (1 : ℂ)),
+      Matrix.diagonal (fun i : Fin 2 => if i = 0 then 1 else 0)⟩⟩⟩
+  refine ⟨p, (0, 0), (1, 1), ?_⟩
+  norm_num [actual, realize, p]
+
+def source_registration : Registration arena.{u_3, u_4}
+    (type_of% @diagonal_kraus_entry.{u_3, u_4}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@diagonal_kraus_entry, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl,
+        rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.{u_3, u_4})
+      (Realization signature.{u_3, u_4}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.DiagonalKrausEntry.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u_3, u_4}⟩
+  objectArena := .source ⟨arena.{u_3, u_4}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u_3, u_4} ⟨source_registration.{u_3, u_4}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u_3, u_4}
+    (fun _ p ij =>
+      (∑ a, star (p.2.2.1 ij.2 a) * p.2.2.1 ij.1 a) *
+        p.2.2.2 ij.1 ij.2) (fun e _ => Empty.elim e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #[]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end DiagonalKrausEntry
+
 end
 end Reg.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
