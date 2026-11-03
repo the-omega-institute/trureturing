@@ -674,3 +674,253 @@ $$
 **注记 8.22（项目结果与外部定理的精确接回）。** V95 定理 2.1 提供 C95 下的结合复乘法，V95 定理 5.2 提供其完整有限 $C^*$ 解释及有限张量—Kraus 接口；C120 只消费这些数学结论，并另外量化原准备、原效果和实际事件。C118 定义 120.1–120.2 给出原过程、原标签和 F，定理 122.1 给出实际细支的 CP 正常形，定义 140.1–141.2 给出原支撑返回、固定控制和有限校准，定理 143.1–143.2 给出有限闭行走的相容取向，定理 144.1 给出透明 CP 满足族，推论 147.1 给出在这些前件下的量子接口；C120 不把它们改写成新的分类定理。结构存储图册 [Native structural storage, support, and the terminal-boundary atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md) 的命题 2.1 和定理 2.2 只消费保留材料上的原端口、历史和实现身份提取。BBKM15 Proposition 3.1 的有限 projectivity、Proposition 5.1 的有限谱展开、Theorem 6.1/Appendix B 的同一效果空间原子映射，分别对应定义 8.2(2)、8.2(3)、8.3；BMU14 Definitions 13–14 和 Theorem 16 只在其逐项 purity 前件满足时消费；Watrous Definition 1.124、Theorem 2.22 只在定义 8.8 的全部有限参考正性和序生成准备锥满足时消费。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. C120 的完整原生合同：几何、参考与原实现
+
+**定义 9.1（联合候选及第八节的条件范围）。** 本章至第十三章的 C120 指以下 A–F 的一个联合条件，量化同一整体 $\Omega$ 的全部原对象、原准备、原效果、原事件、原实现身份、原记录端口和全部合法有限历史。其起点是原响应，不是已经满足定义 1.1 的矩阵或比较场。定义 1.1 的全部条件将在同一原效果空间上取得后才调用定理 2.1。
+
+第八节的载体、参考、原记录和滤波简写在这里分别具有以下确切条件：Jordan 桥必须消费纯射线保持；规范配对必须与原单位一起运输；参考正性作用于完整联合锥而非仅可分锥；一 Kraus 结论由原 F 的双侧支撑返回推出，不能把式 (8.5) 再当前提；平方根更新由第十一章的原词供应，不先假定它已在菜单内。第八节的唯一性只在固定原 Jordan 运算及原 $D$ 后成立，不由记录身份或 $J,u$ 单独决定。所谓准备的有限正组合不要求原准备集合有限；非经典矩阵锥不能由预选的有限条射线生成。非法接续不因有矩阵公式而成为原历史，也不自动成为实际失败事件。
+
+**定义 9.2（A：原响应商、实际锥与合法性）。** 每个非零原对象 $o$ 的准备以其对全部原合法未来上下文的响应等价作商；未来上下文包括原读口、记录、控制、失败及可用性。设这个商的实线性包为有限维 $V_o$，原准备 $p$ 的未归一化响应为 $v_p$。要求
+
+$$
+C_o=\operatorname{cone}_{\rm fin}\{v_p:p\in\mathsf P_o\}
+=\left\{\sum_{j=1}^m c_jv_{p_j}:m<\infty,\ c_j\ge0\right\}
+\tag{9.1}
+$$
+
+是闭、尖、生成的凸锥。原确定终端效果延拓为严格正的 $u_o\in V_o^*$；$K_o=\{v\in C_o:u_o(v)=1\}$ 是数学归一化基。原效果给出的泛函分离 $V_o$，故张成 $E_o:=V_o^*$；$C_o^*$ 是其全对偶锥。原实际效果菜单只是一组有名字、有实现和读口的 $\mathsf E_o\subseteq[0,u_o]$，不把整个数学区间声明为一个实际测量菜单。
+
+每个原事件 $x:o\to p$ 保持响应等价、凸混合与强度，诱导正线性映射 $T_x:V_o\to V_p$，满足 $u_pT_x\le u_o$；原确定事件取等号。每条原记录分支也满足这些条件。同一原设备的互斥分支求和、原标签遗忘和原合法复合在这些映射下保持。原合法有限历史集合 $\mathsf H$ 及各实现身份 $\iota$ 仍独立保留，映射相等不产生身份等式、端口或新合法接续。若操作依赖历史，历史与控制状态属于原事件的索引；不能把不同上下文压成一个无条件箭头。
+
+式 (9.1) 是实质的完备响应假设：不以加上极限准备使锥闭合。数学上把一个非零响应除以其强度，只定义 $K_o$ 中的点，不宣称该归一化点已有系数一的实际准备。每个实际终止设备的全部失败分支、输出类型、标签和原终端效果留在签名中。只有原设备确实含拒绝分支时，拒绝才是一条实际历史。
+
+**定义 9.3（B：实际双侧面滤子）。** 对 $C_o$ 的每个面 $F$，包括零面与全面，选择同一原系统中的实际成功事件 $\mathsf p_F$，其响应映射为 $P_F$。存在正幂等映射 $Q_F$，使
+
+$$
+\begin{gathered}
+P_F^2=P_F,\quad Q_F^2=Q_F,\quad
+\operatorname{im}_+P_F=F=\ker_+Q_F,\qquad
+\operatorname{im}_+Q_F=\ker_+P_F,\\
+\operatorname{im}_+P_F^*=\ker_+Q_F^*,\qquad
+\operatorname{im}_+Q_F^*=\ker_+P_F^*,\\
+u_oP_F\le u_o,\quad u_oQ_F\le u_o,\quad
+P_F^*u_o+Q_F^*u_o=u_o.
+\end{gathered}
+\tag{9.2}
+$$
+
+这里 $\operatorname{im}_+P=\operatorname{im}P\cap C_o$，$\ker_+P=\ker P\cap C_o$，对偶式在 $C_o^*$ 上解释；$P^*e=e\circ P$。每个 $P_F$ 把纯态射线送到纯态射线或零。要求的是纯射线保持，不是把 $P_F$ 作为过程锥的极射线；特别不排除跨多个中心扇区的面。
+
+$\mathsf p_F$ 是一个实际可调用、已终止设备的成功分支，设备的所有失败叶均有原记录。其两种使用——单独调用及下文指定的参考接续——在 $\mathsf H$ 中。式 (9.2) 不要求 $P_F+Q_F=I$，也不声称两个分别可调用的面分支已经装在同一个实际测试中。原参考旁的行动在未归一化层面按张量恒等解释，不把相关旁观系统替换为乘积态。
+
+**定义 9.4（C：原子互易）。** 对数学归一化纯态 $\omega$，令 $F_\omega=\mathbb R_+\omega$。幂等性给
+
+$$
+P_{F_\omega}v=e_\omega(v)\omega,\qquad
+ e_\omega=P_{F_\omega}^*u_o,\qquad e_\omega(\omega)=1.
+$$
+
+要求所有纯态对满足 $e_\omega(\nu)=e_\nu(\omega)$。这里的纯态与原子效果属于原响应商与全数学对偶；不增加强对称、跨不等扇区的传递性或独立 signed spectrality。
+
+**命题 9.5（选定 B 恰好覆盖源定理的滤子量词）。** A–C 满足 [Barnum–Müller–Ududec，arXiv:1403.4147v4，Definitions 13–14 及 Theorem 16](https://arxiv.org/html/1403.4147v4) 的有限 projectivity、对称转移概率及全部滤子的纯性保持。
+
+证明。有限维闭尖生成锥及严格正单位给出该文的 base-norm state space。对正幂等 $P$，$P(C_o)=\operatorname{im}_+P$：一个方向由正性，反向由 $Py=y$。式 (9.2) 的前两行正是 Definition 13 的互补与 dual-complemented；第三行给 Definition 14 的 normalization，因而每个 $P_F$ 都是该定义的 filter，每个面由它覆盖，得到 projectivity。
+
+现在直接消费 [Barnum–Barrett–Krumm–Müller，arXiv:1508.03107v2，§3.1 Proposition 3.1](https://arxiv.org/html/1508.03107v2)：有限 projective 系统的面、滤子及 projective unit 一一对应。故任何源定义下的 filter 都等于它的面上已选的 $P_F$，不是另有一族未经 B 约束的滤子。B 的纯射线保持已覆盖它们全部，无须再添一个全称纯性前件。该双射也把纯态 $\omega$ 与原子 projective unit $e_\omega$ 配对，C 就是 BMU16 的 STP。零输出符合 BMU16 中“非负倍纯态”的定义。BMU16 因而适用；不调用其 Theorem 17 的强对称路线。∎
+
+**定义 9.6（D：原效果上的有向三元相容）。** 由命题 9.5 的 Jordan 桥及定理 10.1 的规范运输，在原效果空间 $E_o$ 上记单位为 $u_o$、Jordan 乘法为 $\circ_o$。原有向关系另供实线性指派
+
+$$
+D^o:E_o\longrightarrow\operatorname{Der}(E_o,\circ_o),\qquad
+([L_a,L_c]+[D_a,D_c])b=0\quad(a,b,c\in E_o).
+\tag{9.3}
+$$
+
+这是对尚未选择矩阵坐标的原关系之条件。$D$ 不是从重构后的矩阵交换子回填。导子性质与式 (9.3) 是独立输入；反对称、自守及正 Frobenius 配对不是另加输入。
+
+**定义 9.7（E：原复合、原产品作用与两类参考资源）。** 每个已声明原独立复合 $op$ 及其有限迭代自身满足 A–D。原局部效果的嵌入延拓为含幺实 Jordan 嵌入 $j_o:E_o\to E_{op}$、$j_p:E_p\to E_{op}$，在局部保留 $D$，且
+
+$$
+D_{j_o(a)}j_p(b)=D_{j_p(b)}j_o(a)=0.
+\tag{9.4}
+$$
+
+局部 Jordan 乘积 $j_o(a)\circ j_p(b)$ 实线性张成 $E_{op}$。原产品准备与产品读口保留其名字和强度，双线性延拓为 $v\boxtimes w$，满足
+
+$$
+\langle j_o(a)\circ j_p(b),v\boxtimes w\rangle
+=\langle a,v\rangle\langle b,w\rangle.
+\tag{9.5}
+$$
+
+产品准备的存在首先对原准备给定，再由有限正组合延拓；联合准备锥自身仍为式 (9.1)，一般严格包含产品准备生成的可分锥。不同括号及置换的实际比较若已声明，必须保留同名产品统计和原端口。
+
+正性测试资源为一个原不可约秩二非经典参考 $R$ 及任意有限多个独立副本 $R^{\boxtimes n}$。每个原事件——包括复合对象事件、标签分支、原遗忘及指定返回——均有原实现的实际旁置延伸 $x\parallel\operatorname{id}_{R^{\boxtimes n}}$。它保留全部原记录及原产品输入作用：
+
+$$
+T_{x\parallel\mathrm{id}}(v\boxtimes w)=T_x(v)\boxtimes w.
+\tag{9.6}
+$$
+
+延伸在整个实际联合准备锥 $C_{oR^{\boxtimes n}}=\operatorname{cone}_{\rm fin}\mathsf P_{oR^{\boxtimes n}}$ 上保正；不只在可分输入上保正。此条件对每个有限 $n$ 成立，绝非只检验一个 qubit。
+
+滤波词资源另要求 $R$ 有原确定性纯准备 $b_0$，$u_R(b_0)=1$，及原确定性丢弃。对任意目标对象，接入 $b_0$、调用 B 在目标与 $R$ 上的两次指定面设备、再丢弃参考及原条件分支控制，均为实际合法接续；对已声明旁观系统也有保持原产品作用的局部延伸。系数一准备与前段的全锥正性资源是不同要求，不能用一个仅有非零成功率的参考准备替代。
+
+**定义 9.8（F：同一实现的原细记录与指定双返回）。** 在定理 10.2 的载体上，支撑、中心及角均按同一原效果空间的运输解释。每个原实际成功箭头 $x:o\to p$ 有同一实现的原有限细标签端口及实际遗忘
+
+$$
+\widehat T_x(v)=(S_{x,\lambda}v)_{\lambda\in\Lambda_x},\qquad
+ d_p\widehat T_x=T_x=\sum_{\lambda\in\Lambda_x}S_{x,\lambda}.
+\tag{9.7}
+$$
+
+每个非零 $S=S_{x,\lambda}$ 有原指定实际返回 $U$、原正数 $q$ 以及位于单一原中心块内的非零支撑 $P,Q$，与 [C118，定义 140.1，式 (140.2)–(140.5)](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md) 完全相同：
+
+$$
+\begin{gathered}
+P=\operatorname{supp}S^\dagger(I),\quad
+Q=\operatorname{supp}S(I),\quad
+S(X)=QS(PXP)Q,\quad U(Y)=PU(QYQ)P,\\
+US(X)=qX\ (X\in P\mathcal A_oP),\qquad
+SU(Y)=qY\ (Y\in Q\mathcal A_pQ).
+\end{gathered}
+\tag{9.8}
+$$
+
+$U$ 是原 TNI 事件；反向资料也留在指定族中。F 量化原标签箭头、遗忘、返回及全部合法有限接续。零支不需返回。它没有预设 Kraus 秩，也不把数学 Kraus 指标当作原记录。
+
+所有继承的指定返回、准确校准、控制词及有限回路资料连同其原实现、原成功因素和读口均保留。它们原来声明的等式或统计条件仍按同一原词解释；不能用另一台同效果设备顶替。新构造词拥有自己的实现身份。这个保留条件不由“两个矩阵相等”产生新的原端口，也不要求原先未供应的 C118 校准包已经存在。
+
+## 10. 规范运输、原张量与全原事件
+
+**定理 10.1（原单位及规范 Frobenius 配对）。** A–C 在同一个原效果空间 $E_o$ 上给出 Euclidean Jordan 代数结构，单位恰为 $u_o$，平方锥恰为 $C_o^*$。存在规范序同构 $\phi_o:E_o\to V_o$，使
+
+$$
+\phi_o(e_\omega)=\omega,\qquad
+g_o(a,b)=\langle a,\phi_o(b)\rangle
+=\tau_J(a\circ b),\qquad \tau_J(a)=g_o(u_o,a),
+\tag{10.1}
+$$
+
+其中 $\tau_J$ 是每个原始幂等元迹为一的 Jordan 迹。$g_o$ 正定，并满足 $g_o(a\circ b,c)=g_o(b,a\circ c)$。对原准备 $v$，其 Jordan 密度为 $r_v=\phi_o^{-1}v$，且
+
+$$
+r_v\in C_o^*,\quad u_o(v)=\tau_J(r_v),\qquad
+\langle a,v\rangle=\tau_J(a\circ r_v).
+\tag{10.2}
+$$
+
+证明。命题 9.5 逐项满足 BMU16 的 (a) projectivity、(b) STP、(c) purity preservation，直接得到 formally real Jordan state space。取其保归一化基的序表示，对偶为含幺序表示 $\theta:E_o\to J$，把原 $u_o$ 送到 $1_J$，把全对偶锥送到 Jordan 平方锥。Jordan 的规范谱理论把 projective units 送到幂等元；原滤子的唯一性来自 BBKM Proposition 3.1，因而原子 $e_\omega$ 送到原始幂等元 $p$。该原子的唯一归一化支持态就是 $a\mapsto\tau_J(\theta(a)\circ p)$。这准确对应原 $\omega$，没有扇区权重的自由缩放。
+
+BBKM Proposition 5.1 在有限 projectivity 下给效果的正交 projective-unit 谱展开；把每个单位有限细分为原子，原子张成 $E_o$。BBKM Theorem 6.1 及其 Appendix B 给唯一线性正映射 $\phi_o(e_\omega)=\omega$，并证明它是序同构、$g_o$ 为正定对称内积、全部 compressions 对它自伴随。其假设只是有限 projectivity 与 STP，不需要额外 state spectrality。令 $R_J$ 为规范 Jordan 迹的 Riesz 映射，刚才的原子对应表明
+
+$$
+\phi_o=\theta^*R_J\theta.
+$$
+
+等式在原子上成立，故在整个 $E_o$ 成立。这给出 (10.1)，而非只取得一个任意自对偶内积。特别 $\phi_o(u_o)$ 对应未归一化的 Jordan 单位，$u_o(\phi_o(u_o))=\tau_J(1_J)$ 为总秩。原归一化泛函仍是原 $u_o$，不是把此总秩误当作准备成功率。Jordan 迹的结合性给 Frobenius 恒等式，(10.2) 随之成立。
+
+此处的乘法可通过幂等谱平方与极化在 $E_o$ 上运输：$a=\sum_i\lambda_ip_i$ 时 $a^2=\sum_i\lambda_i^2p_i$，再取 $a\circ b=((a+b)^2-a^2-b^2)/2$。保幺序表示保持这些谱投影，故结构不依赖 $\theta$ 的选择。这里的谱展开与 Jordan 分类均直接消费所引成熟定理，不另立强对称或 signed spectrality。∎
+
+**定理 10.2（同一原响应的有限复载体）。** A–D 对每个非零原对象给出
+
+$$
+\mathcal A_o=\bigoplus_{s\in S_o}M_{d_s}(\mathbb C),\qquad
+\kappa_o:E_o\longrightarrow(\mathcal A_o)_{\rm sa},\qquad
+\sigma_o=\kappa_o\phi_o^{-1}:V_o\longrightarrow(\mathcal A_o)_{\rm sa}.
+\tag{10.3}
+$$
+
+$\kappa_o$ 保单位与锥，$\sigma_o$ 保准备锥，$\tau_o=\sum_s\operatorname{Tr}_{d_s}$ 满足
+
+$$
+\begin{gathered}
+\kappa_o(u_o)=I_o,\quad \sigma_o(C_o)=(\mathcal A_o)_+,\quad
+\kappa_o([0,u_o])=[0,I_o],\\
+u_o(v)=\tau_o(\sigma_o v),\qquad
+\langle a,v\rangle=\tau_o\bigl(\kappa_o(a)\sigma_o(v)\bigr).
+\end{gathered}
+\tag{10.4}
+$$
+
+任意有限个不等阶非经典块均被允许。固定 $E_o,\circ_o,u_o,D^o$ 后载体唯一到其保资料 $*$-同构；表示同构不认同任何两个原实现。
+
+证明。把定理 10.1 的 $(E_o,u_o,g_o,\circ_o)$ 和原 $D^o$ 逐项代入本卷定义 1.1：非零、有限维、含幺、正定、Frobenius、线性导子指派全部已满足。定义 9.6 正是 C95，故直接消费本卷定理 2.1，得到
+
+$$
+a\cdot b=a\circ b-iD_ab,\qquad D_ab=-D_ba,
+$$
+
+以及忠实有限维正 $*$ 表示。有限维复 $C^*$ 结构定理给 (10.3)。其自伴随平方就是 Jordan 平方，故同一个 $C_o^*$ 成为矩阵正锥。原始 Jordan 幂等元在每个矩阵块中为秩一投影，所以定理 10.1 的规范迹正是未加扇区权重的 $\sum_s\operatorname{Tr}_{d_s}$；(10.4) 从 (10.2) 运输而来。没有用一个任意 Frobenius 配对来猜原单位或 Born 评价。本卷定理 2.1 的乘法与表示结论在这里直接应用，不重新证明其曲率论证。∎
+
+**命题 10.3（每个原选面设备的运输）。** A–D 下，令 $p_F=\kappa_o(P_F^*u_o)$，则 $p_F$ 是投影，且
+
+$$
+\sigma_oP_F\sigma_o^{-1}(X)=p_FXp_F.
+\tag{10.5}
+$$
+
+$Q_F$ 对应 $(I-p_F)X(I-p_F)$。这包括跨中心的面、零面和全面；原实现仍分别为指定的 $\mathsf p_F$ 及其原失败设备。
+
+证明。BBKM Theorem 6.1/Appendix B 的 compression 对规范配对自伴随，给 $P_F\phi_o=\phi_oP_F^*$。Jordan 表示中的面滤子为 Peirce 二次压缩 $2L_{p_F}^2-L_{p_F}$，由 Proposition 3.1 的双射它恰是原选中的滤子，而非另一个同面过程。在定理 10.2 的 special Jordan 代数中该二次压缩就是 $X\mapsto p_FXp_F$。这是标准 Jordan compression calculus，亦见 [原生切分 Atlas，定义 28.1、定理 28.2 的 slit 合同](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md)。这里只消费其压缩公式，不消费该定理的强对称与简单性分类。∎
+
+**定理 10.4（原空间复合及统计相干性）。** A–E 下，每条已声明原空间边有保持原单位、原产品统计与全中心的 $*$-同构
+
+$$
+\mathcal A_{op}\simeq\mathcal A_o\otimes_{\mathbb C}\mathcal A_p
+=\bigoplus_{s,t}M_{d_sd_t}(\mathbb C),\quad
+\sigma_{op}(v\boxtimes w)=\sigma_o(v)\otimes\sigma_p(w).
+\tag{10.6}
+$$
+
+原产品事件的延伸在整个联合空间上是同一个 $\mathcal T_x\otimes\mathrm{id}$，其中 $\mathcal T_x=\sigma_pT_x\sigma_o^{-1}$。原记录、产品输入作用及既有括号比较都被保留。
+
+证明。E 的局部 Jordan 嵌入保留 $D$，所以由定理 10.2 的乘法公式延拓成复含幺 $*$-嵌入；式 (9.4) 使两像交换。E 的张成性和式 (9.5) 正好是本卷定义 1.3、定理 5.2 张量论证的“交换、生成、产品态分离”三项前件。对数学局部态，式 (9.1) 将原产品准备有限线性延拓为相应产品正泛函，足以消费该分离论证，取得 (10.6)，不另重证分类或复张量唯一性。规范迹及 (9.5) 给密度的产品公式。
+
+产品密度线性张成联合自伴部，因此原延伸式 (9.6) 唯一确定整个延伸，而非仅给一个任意的局部兼容映射。迭代复合的产品效果仍按同一因子表标记；既有括号比较保持这些统计。直接消费 [Atlas 命题 30.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md)，它的局部 tomography 在此由 E 的张成性给出，故全部已给比较相干，包括五边形。维数相等不替代这一条件，也不凭同构创造实际比较设备。∎
+
+**定理 10.5（全部原事件的 CP、TNI 与数学 Kraus）。** A–E 下，每个原事件及其原标签分支在 (10.3) 的同一取向中完全正且迹不增：
+
+$$
+\mathcal T_x(X)_t=\sum_{s,\mu}K^x_{ts\mu}X_sK^{x*}_{ts\mu},\qquad
+\sum_{t,\mu}K^{x*}_{ts\mu}K^x_{ts\mu}\le I_{d_s}.
+\tag{10.7}
+$$
+
+原确定事件取等号。$\mu$ 是数学指标，其可访问性尚未由本定理给出。
+
+证明。不可约秩二参考在定理 10.2 下为 $M_2(\mathbb C)$；定理 10.4 把 $n$ 个原副本送到 $M_{2^n}(\mathbb C)$。给定任一输入块维数 $d_s$，选有限 $n$ 使 $2^n\ge d_s$。原延伸在整个实际联合锥上正，(9.1)、(10.4) 把该锥精确送到全矩阵正锥，所以 $\mathcal T_x\otimes\mathrm{id}_{2^n}$ 保正；限制到参考的一个 $d_s$ 维角，便得每个输入输出块的 $d_s$-positive 映射。
+
+这恰满足 [Watrous，*The Theory of Quantum Information*，§1.1.2 式 (1.124) 的 CP 定义及 Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf) 的有限输入维判据。原文 (1.124) 是定义中的公式号，不是独立编号 Definition 1.124。Theorem 2.22 对每个非零块给 CP、Choi 正性和有限 Kraus 表示；零块用空和。A 的 $u_pT_x\le u_o$ 经 (10.4) 给式 (10.7) 的效果不等式。本证明需要任意有限多个参考及全联合锥；仅产品准备正性，或只一份二阶参考，不满足这个判据。∎
+
+**定理 10.6（由原 F 返回导出的原标签一 Kraus）。** A–F 下，每个非零原细标签有一个从原单一输入块到原单一输出块的算子 $K_{x,\lambda}$，使
+
+$$
+S_{x,\lambda}(X)=K_{x,\lambda}XK_{x,\lambda}^*,\qquad
+U(Y)=qK_{x,\lambda}^{+}Y K_{x,\lambda}^{+*}.
+\tag{10.8}
+$$
+
+在支撑外均补零，$P=K^+K$、$Q=KK^+$，原 $q$ 满足 $0<q\le\lambda_{\min}^+(KK^*)$。原同一设备的遗忘仍为式 (9.7)，没有增加不可读的数学标签。
+
+证明。定理 10.5 适用于 $S$ 和原 $U$。式 (9.8) 完全是 C118 定义 140.1 的指定单中心双侧返回资料，故直接消费该卷定理 121.1、式 (140.4) 的支撑正常形：两角同阶，$G=S(I)$ 在输出角内正定，$S=\operatorname{Ad}_{G^{1/2}}\beta$，$\beta$ 是两角间的含幺 Jordan 保星同构。CP 的 $S$ 使 $\beta$ CP；阶数至少二的反乘法方向含转置，其 Choi 算子在反对称子空间为负，因而被 Watrous Theorem 2.22 排除。一阶无可分方向。因此 $\beta$ 是矩阵保星同构，由支撑间酉算子 $W$ 实现，$K=G^{1/2}W$ 给第一式。此处消费 C118 的正常形，不重做其正逆分类。
+
+式 (9.8) 把原 $U$ 唯一固定为第二式；它的 TNI 条件是 $q(K^+)^*K^+\le Q$，等价于上述特征值界。原记录 $\lambda$ 在调用 F 时已给，(10.8) 只是其响应表示，故式 (9.7) 保持同一实现、同一细标签与原分组。原 $q$ 不被换成某个较方便的缩放数。∎
+
+**定理 10.7（全部原词、记录与原始成功的运输）。** 在 A–F 下，对每条原合法有限历史 $h$、每组原标签 $\boldsymbol\lambda$、每个原终端效果 $e$，包括成功和失败，均有
+
+$$
+p_\Omega(h,\boldsymbol\lambda,e\mid v)
+=\tau_{o_n}\!\left[\kappa_{o_n}(e)\,
+\mathcal T_{x_n,\lambda_n}\cdots\mathcal T_{x_1,\lambda_1}\sigma_{o_0}(v)\right].
+\tag{10.9}
+$$
+
+命名原支持、返回因素、校准、控制词及有限回路的原概率也保持。原词是否合法、哪个设备产生记录，仍由 $\Omega$ 给定。
+
+证明。每个运输映射定义为 $\mathcal T_x=\sigma_{\rm out}T_x\sigma_{\rm in}^{-1}$，合法接续的中间 $\sigma^{-1}\sigma$ 消去，末端用 (10.4)。这就是 C118 定理 143.1、147.1 的原记录与有限词运输论证在同一个原响应实现中的直接应用；对原标签求和与遗忘由 A、F 保持。它适用于任意有限长度及所有原失败叶，不按长度截断。正概率下的条件概率可事后相除，但不改变式 (10.9) 的原始成功系数；零概率不定义条件态。
+
+这里没有重新选择各箭头的相容取向。原 $D$ 与 E 的嵌入已经固定同一复乘法，参考合同使原事件在这个乘法中 CP。所有指定返回因此为保乘法方向，有限闭行走的符号积为正；若一个原 C118 包已实际满足其定义 141.1–141.2，便可直接消费 C118 定理 143.1 及 142.2 的相应回路结论。CP 表示自身不供应未给的校准准备、控制词、端口或包；已经命名的同效果设备仍需其原校准。∎
+
+## 追加锚（本行以下为增补区）
