@@ -7,6 +7,7 @@
    digest: Uniform prime reciprocal-square asymptotics with two unrestricted real cutoffs. -/
 
 import D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
+import D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
 
 /-! The lower endpoint is strict, including at prime integers. The upper
 cutoff is arbitrary once it exceeds a sufficiently large fixed multiple of
@@ -228,5 +229,87 @@ theorem prime_square_tail_uniform (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     exact hprod.trans (hr.trans (hf.trans hmono))
   apply abs_lt.mpr
   constructor <;> linarith
+
+private def logKernel (k : ℕ) (t : ℝ) : ℝ := 1 / (t ^ 2 * Real.log t ^ k)
+private def logEndpoint (k : ℕ) (t : ℝ) : ℝ := 1 / (t * Real.log t ^ k)
+
+private theorem logKernel_continuous {y z : ℝ} (hy : 1 < y) (k : ℕ) :
+    ContinuousOn (logKernel k) (Set.Icc y z) := by
+  apply continuousOn_const.div
+    ((continuousOn_id.pow 2).mul ((Real.continuousOn_log.mono ?_).pow k))
+  · intro t ht
+    exact mul_ne_zero (pow_ne_zero _ (by linarith [ht.1]))
+      (pow_ne_zero _ (Real.log_pos (hy.trans_le ht.1)).ne')
+  · intro t ht
+    exact ne_of_gt (lt_trans (by norm_num : (0 : ℝ) < 1) (hy.trans_le ht.1))
+
+private theorem logEndpoint_deriv {t : ℝ} (ht : 1 < t) (k : ℕ) :
+    HasDerivAt (logEndpoint k) (-logKernel k t - k * logKernel (k + 1) t) t := by
+  have ht0 : t ≠ 0 := by linarith
+  have hL : Real.log t ≠ 0 := (Real.log_pos ht).ne'
+  convert (hasDerivAt_const t (1 : ℝ)).fun_div
+    ((hasDerivAt_id t).mul ((Real.hasDerivAt_log ht0).pow k))
+    (mul_ne_zero ht0 (pow_ne_zero _ hL)) using 1
+  dsimp [logEndpoint, logKernel]
+  cases k with
+  | zero => simp; field_simp; ring
+  | succ k => simp only [pow_succ, Nat.cast_add, Nat.cast_one]; field_simp; ring
+
+private theorem logKernel_integral_bounds {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z)
+    (k : ℕ) :
+    0 ≤ (∫ t in y..z, logKernel k t) ∧
+      (∫ t in y..z, logKernel k t) ≤ logEndpoint k y := by
+  have hy0 : 0 < y := by linarith
+  have hLy : 0 < Real.log y := Real.log_pos hy
+  have hkint := (logKernel_continuous hy k).intervalIntegrable_of_Icc
+    (μ := MeasureTheory.volume) hyz
+  let B : ℝ := 1 / Real.log y ^ k
+  have hB : 0 ≤ B := by dsimp [B]; positivity
+  have hc : ContinuousOn (fun t : ℝ => B / t ^ 2) (Set.Icc y z) :=
+    continuousOn_const.div (continuousOn_id.pow 2)
+      (fun t ht => pow_ne_zero _ (hy0.trans_le ht.1).ne')
+  have hci := hc.intervalIntegrable_of_Icc (μ := MeasureTheory.volume) hyz
+  have hFTC : (∫ t in y..z, B / t ^ 2) = B / y - B / z := by
+    have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (f := fun t : ℝ => -B / t) (f' := fun t => B / t ^ 2) (a := y) (b := z)
+      (fun t ht => by
+        rw [Set.uIcc_of_le hyz] at ht
+        convert (hasDerivAt_const t (-B)).fun_div (hasDerivAt_id t)
+          (hy0.trans_le ht.1).ne' using 1 <;> simp <;> ring) hci
+    simpa only [neg_div, neg_sub_neg] using h
+  refine ⟨intervalIntegral.integral_nonneg hyz (fun t ht => by
+    dsimp [logKernel]; positivity), ?_⟩
+  have hmono := intervalIntegral.integral_mono_on hyz hkint hci
+    (fun t ht => by
+      have ht0 : 0 < t := hy0.trans_le ht.1
+      have hlog := Real.log_le_log hy0 ht.1
+      have hp := pow_le_pow_left₀ hLy.le hlog k
+      dsimp [logKernel, B]
+      rw [one_div_mul_eq_div, div_div]
+      exact div_le_div_of_nonneg_right
+        (one_div_le_one_div_of_le (pow_pos hLy k) hp) (sq_nonneg t))
+  rw [hFTC] at hmono
+  have hBz : 0 ≤ B / z := div_nonneg hB (hy0.le.trans hyz)
+  have heq : B / y = logEndpoint k y := by dsimp [B, logEndpoint]; ring
+  linarith
+
+private theorem logKernel_integral_step {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z)
+    (k : ℕ) :
+    (∫ t in y..z, logKernel k t) + k * (∫ t in y..z, logKernel (k + 1) t) =
+      logEndpoint k y - logEndpoint k z := by
+  have hi (n : ℕ) := (logKernel_continuous hy n).intervalIntegrable_of_Icc
+    (μ := MeasureTheory.volume) hyz
+  have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (f := logEndpoint k) (f' := fun t => -logKernel k t - k * logKernel (k + 1) t)
+    (a := y) (b := z)
+    (fun t ht => by
+      rw [Set.uIcc_of_le hyz] at ht
+      exact logEndpoint_deriv (hy.trans_le ht.1) k)
+    ((hi k).neg.sub ((hi (k + 1)).const_mul (k : ℝ)))
+  rw [intervalIntegral.integral_sub (hi k).neg
+    ((hi (k + 1)).const_mul (k : ℝ)), intervalIntegral.integral_neg,
+    intervalIntegral.integral_const_mul] at h
+  linarith
+
 
 end D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail
