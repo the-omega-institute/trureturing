@@ -1,5 +1,5 @@
 /- GID: D5/S3/FiniteGroups/BajnokBeattyOddWrapGaussianRoot
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/FiniteGroups/BajnokBeattyOddWrapGaussianRoot
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -15,6 +15,8 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
 
 
+
+/-! The scale is fixed by the existing order-nine Perron instance. -/
 
 set_option autoImplicit false
 

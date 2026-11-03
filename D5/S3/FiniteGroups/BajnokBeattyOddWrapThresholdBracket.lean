@@ -1,5 +1,5 @@
 /- GID: D5/S3/FiniteGroups/BajnokBeattyOddWrapThresholdBracket
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/FiniteGroups/BajnokBeattyOddWrapThresholdBracket
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -10,6 +10,8 @@
 
 import D5.S3.FiniteGroups.BajnokBeattyOddWrapGaussianUpperEnvelope
 import D5.S3.FiniteGroups.BajnokBeattyOddWrapGaussianRoot
+
+/-! The scale is fixed by the existing order-nine Perron instance. -/
 
 set_option autoImplicit false
 
