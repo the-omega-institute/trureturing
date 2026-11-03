@@ -196,6 +196,7 @@ class NativeBatchCompatibilityConsumerTests:
                      STRATALINT_ACCEPT_COLD_BUILD='1', LEAN_NUM_THREADS='1'))
         self.record_result(f'capacity-{size}-{getattr(self, "capacity_sequence", 0)}',
             dict(exit=result.returncode, expected_success=success,
+                 stdout=result.stdout, stderr=result.stderr,
                  oleans={path.name: path.is_file() for path in
                      [self.root / f'.lake/build/lib/lean/D5/Capacity{name}.olean'
                       for name in ('Left', 'Right')]}))
