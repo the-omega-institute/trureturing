@@ -153,11 +153,6 @@ theorem W_positive_decomposition :
   rw [W, restricted_cubic_relation, lowerProduct]
   ring
 
-theorem coeff_W_nonnegative (n : ℕ) : 0 ≤ PowerSeries.coeff n W := by
-  rw [W_positive_decomposition, map_add]
-  exact add_nonneg (coeff_lowerProduct_nonnegative n)
-    (coeff_shift_nonnegative _ coeff_delta_nonnegative n)
-
 theorem W_initial : PowerSeries.constantCoeff W = 1 ∧ PowerSeries.coeff 1 W = 0 := by
   have hd : PowerSeries.constantCoeff (Q 4 * Q 1 - Q 1 * D) = 0 := by
     simp only [map_sub, map_mul, D, map_pow, Q, restricted_constant_one]
@@ -174,6 +169,13 @@ theorem coeff_W_ge_one (n : ℕ) (hn : n = 0 ∨ 2 ≤ n) : 1 ≤ PowerSeries.co
   have h1 := coeff_lowerProduct_ge_one n hn
   have h2 := coeff_shift_nonnegative _ coeff_delta_nonnegative n
   linarith
+
+theorem coeff_W_nonnegative (n : ℕ) : 0 ≤ PowerSeries.coeff n W := by
+  by_cases hn : n = 1
+  · rw [W_positive_decomposition, map_add]
+    exact add_nonneg (coeff_lowerProduct_nonnegative n)
+      (coeff_shift_nonnegative _ coeff_delta_nonnegative n)
+  · exact (by norm_num : (0 : ℚ) ≤ 1).trans (coeff_W_ge_one n (by omega))
 
 /-- The genuine squared Euler quotient has the U,-V,-W dissection. -/
 theorem R_square_dissection : R ^ 2 =

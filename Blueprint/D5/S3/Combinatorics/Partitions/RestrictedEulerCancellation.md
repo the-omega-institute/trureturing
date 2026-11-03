@@ -160,7 +160,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/RestrictedEulerCancellation.coef
 
 An injective finite family of allowed weights cancels to a nonnegative counting product.
 
-The exact Euler three-section identification with these restricted products, its cubic consequence and the full BHHK k10 endpoint are not supplied by these modules. No full-original result, independent-review approval, literature priority, unique status, CI or publication is asserted. The source's ordinary independent review remains separate from this implementation.
+These cancellation and comparison results have present mathematical consumers: EulerNineDissection identifies the actual quotient, EulerNineSquareDissection derives the cubic relation and squared coefficient bounds, and EtaSignK10 proves the complete source-defined denominator-ten endpoint. The separate ordinary manuscript is fallible input; independent formal review, original-problem acceptance, literature priority, unique status, CI and publication are not certified here.
 
 ## References
 
