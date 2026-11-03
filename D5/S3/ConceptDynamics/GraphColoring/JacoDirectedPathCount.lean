@@ -150,7 +150,10 @@ theorem path_count_foundations (n : ℕ+) :
   haveI : Finite (Shortest n) := by unfold Shortest; infer_instance
   haveI := shortest_nonempty n
   refine ⟨inferInstance, inferInstance, ?_, ?_⟩
-  · simpa only [psi, dif_pos n.property] using (Nat.card_pos (α := Shortest n))
+  · unfold psi
+    split_ifs with hn
+    · exact Nat.card_pos
+    · exact (hn n.property).elim
   · intro r hr
     exact ⟨(truncationEquiv r 1 n hr).trans (truncationEquiv n.val 1 n le_rfl).symm,
       fun _ => rfl⟩
@@ -182,7 +185,7 @@ private theorem endpoint_fib (l : ℕ) :
       have h := out_at_endpoint (Nat.fib (l + 2))
       rw [ih] at h
       rw [show l + 1 + 2 = l + 3 by omega, endpoint_eq_beatty, h]
-      have hf := Nat.fib_add_two (l + 2)
+      have hf := Nat.fib_add_two (n := l + 2)
       omega
 
 private theorem reachable_prefix (l : ℕ) (n : ℕ+) :
@@ -197,9 +200,10 @@ private theorem reachable_prefix (l : ℕ) (n : ℕ+) :
       · intro hn
         have hn1 : n = 1 := by
           apply Subtype.ext
-          have hpos := n.property
-          norm_num at hn ⊢
-          omega
+          change n.val = 1
+          apply Nat.le_antisymm
+          · simpa only [Nat.zero_add, Nat.fib_two] using hn
+          · exact n.property
         subst n
         exact ⟨.nil, le_rfl⟩
   | succ l ih =>
