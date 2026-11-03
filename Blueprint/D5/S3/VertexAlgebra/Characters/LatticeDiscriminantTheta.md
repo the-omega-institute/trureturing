@@ -148,7 +148,19 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.zero_se
 
 For every original positive even integral lattice and upper half-plane tau, Theta_0(-1/tau) is (-i tau) to the principal power d/2 divided by the positive real square root of det G, times the sum of all discriminant sectors at tau. This follows from exact inverse theta dissection and matrix Gaussian inversion.
 
-**Theorem 1.13 (Original class T law).**
+**Theorem 1.13 (Original all-sector S law).**
+
+Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantThetaS.sector_S`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantThetaS.sector_S` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original positive even integral lattice, every actual discriminant sector, every upper-half-plane tau and rank zero, the literal shifted sector at -1/tau equals the principal factor (-i tau)^(d/2) divided by the positive square root of det G times the finite sum over sectors weighted by the negative original inverse-Gram pairing character. The proof translates the real Gaussian, identifies the Fourier phase with the rational quotient pairing, and then consumes the existing inverse-theta Fourier resolution.
+
+**Theorem 1.14 (Original class T law).**
 
 Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.sector_T`
 
@@ -160,7 +172,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.sector_
 
 For every original positive even integral lattice, every discriminant class and upper half-plane tau, Theta_a(tau+1) = exp(2 pi i q(a)) Theta_a(tau). The original even charge energy removes the integral Gaussian phase.
 
-**Definition 1.14 (Perfect original pairing).**
+**Definition 1.15 (Perfect original pairing).**
 
 Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.characterEquiv`
 
@@ -172,7 +184,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.charact
 
 The nondegenerate inverse-Gram pairing and the faithful rational phase identify the actual finite discriminant carrier with its full complex character group.
 
-**Definition 1.15 (Actual character-weighted inverse coefficients).**
+**Definition 1.16 (Actual character-weighted inverse coefficients).**
 
 Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.inverseCoefficient`
 
@@ -184,7 +196,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.inverse
 
 For each discriminant class a, sum the original inverse-form integer Gaussian weighted by exp(-2 pi i b(a,[k])). The negative sign is part of this coefficient definition.
 
-**Theorem 1.16 (Finite resolution and reconstruction).**
+**Theorem 1.17 (Finite resolution and reconstruction).**
 
 Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.inverse_theta_fourier`
 
@@ -214,5 +226,6 @@ For every original positive even lattice and upper half-plane tau, all character
 - Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.sector_T`
 - Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.sector_summable_representative`
 - Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.zero_sector_S`
+- Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantThetaS.sector_S`
 - Dependency: [D5/S3/Fourier/MatrixGaussianTheta](../../Fourier/MatrixGaussianTheta.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticePositiveEnergy](../LatticePositiveEnergy.md)

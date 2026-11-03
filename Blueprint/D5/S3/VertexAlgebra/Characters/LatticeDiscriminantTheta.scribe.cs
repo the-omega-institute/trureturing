@@ -69,6 +69,11 @@ internal sealed class LatticeDiscriminantThetaDocument : IScribeDocumentDefiniti
                 H("Original zero-sector S row"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every original positive even integral lattice and upper half-plane tau, Theta_0(-1/tau) is (-i tau) to the principal power d/2 divided by the positive real square root of det G, times the sum of all discriminant sectors at tau. This follows from exact inverse theta dissection and matrix Gaussian inversion."))), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("latticediscriminanttheta-sector-s"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantThetaS.sector_S"),
+                H("Original all-sector S law"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every original positive even integral lattice, every actual discriminant sector, every upper-half-plane tau and rank zero, the literal shifted sector at -1/tau equals the principal factor (-i tau)^(d/2) divided by the positive square root of det G times the finite sum over sectors weighted by the negative original inverse-Gram pairing character. The proof translates the real Gaussian, identifies the Fourier phase with the rational quotient pairing, and then consumes the existing inverse-theta Fourier resolution."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("latticediscriminanttheta-sector-t"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.sector_T"),
                 H("Original class T law"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
