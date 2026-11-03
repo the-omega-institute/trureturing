@@ -580,6 +580,137 @@ class HostCleanupTests(unittest.TestCase):
         self.assertTrue(remnant.exists())
         self.assertEqual([], list(self.root.glob("main-residue-cleanup-*")))
 
+    def run_rollout_sweep(self, codex, activity, delete=True, registrations=None):
+        options = cleanup.argparse.Namespace(repository=self.root, base="base", codex_home=codex,
+            sshx_home=self.root / "sshx", tmp_root=[], min_age_hours=1,
+            delete=delete, verbose=True)
+        output = io.StringIO()
+        with patch.object(cleanup, "active_paths", side_effect=activity), \
+             patch.object(cleanup, "registered_worktrees", side_effect=registrations, return_value=[]), \
+             patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
+            self.assertEqual(0, cleanup.run_clean(options))
+        return [json.loads(line) for line in output.getvalue().splitlines()]
+
+    def test_old_rollout_directory_uses_one_fresh_activity_observation(self):
+        codex = self.root / "codex"
+        directory = codex / "sessions" / "2026" / "01" / "01"
+        rollouts = [self.old_file(directory / ("rollout-" + str(index) + ".jsonl")) for index in range(100)]
+        os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+        observations = []
+        def activity(root, scopes=(), **kwargs):
+            observations.append((root, scopes, kwargs))
+            return set()
+        for delete in (False, True):
+            observations.clear()
+            rows = self.run_rollout_sweep(codex, activity, delete)
+            items = [row for row in rows if row["event"] == "host_cleanup_item"]
+            self.assertEqual(1, len(items))
+            self.assertEqual(str(directory), items[0]["path"])
+            self.assertEqual("removed" if delete else "would_remove", items[0]["action"])
+            self.assertEqual(100 * len("artifact"), rows[-1]["candidate_apparent_bytes"])
+            expected = [(codex, (), {})]
+            if delete:
+                expected.append((codex, (directory,), {"include_sampler_argv": True}))
+            self.assertEqual(expected, observations)
+            self.assertEqual(not delete, directory.exists())
+        self.assertTrue((codex / "sessions").is_dir())
+        self.assertTrue(all(not path.exists() for path in rollouts))
+
+    def test_rollout_group_falls_back_for_recent_active_and_unknown_siblings(self):
+        for condition in ("recent", "active", "unknown", "subdirectory", "symlink"):
+            with self.subTest(condition=condition):
+                codex = self.root / condition / "codex"
+                directory = codex / "sessions" / "day"
+                old = [self.old_file(directory / ("rollout-old-" + str(index) + ".jsonl")) for index in range(2)]
+                if condition == "unknown":
+                    retained = self.old_file(directory / "private.txt")
+                elif condition == "subdirectory":
+                    retained = self.old_file(directory / "private" / "notes.txt")
+                elif condition == "symlink":
+                    retained = directory / "rollout-link.jsonl"
+                    retained.symlink_to(self.old_file(self.root / "outside"))
+                else:
+                    retained = self.old_file(directory / "rollout-retained.jsonl")
+                    if condition == "recent":
+                        os.utime(retained, None)
+                os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+                def activity(*args, **kwargs):
+                    return {retained} if condition == "active" else set()
+                rows = self.run_rollout_sweep(codex, activity)
+                self.assertTrue(retained.exists())
+                self.assertTrue(directory.is_dir())
+                self.assertTrue(all(not path.exists() for path in old))
+                self.assertEqual(2, rows[-1]["counts"]["codex:removed"])
+
+    def test_rollout_group_new_activity_falls_back_without_stranding_old_siblings(self):
+        codex = self.root / "codex"
+        directory = codex / "sessions" / "day"
+        active = self.old_file(directory / "rollout-active.jsonl")
+        old = self.old_file(directory / "rollout-old.jsonl")
+        os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+        def activity(root, scopes=(), **kwargs):
+            return {active} if scopes else set()
+        rows = self.run_rollout_sweep(codex, activity)
+        self.assertTrue(active.exists())
+        self.assertFalse(old.exists())
+        self.assertEqual(1, rows[-1]["counts"]["codex:removed"])
+        self.assertEqual(1, rows[-1]["counts"]["codex:kept"])
+
+    def test_rollout_group_and_fallback_preserve_newly_registered_ancestor(self):
+        codex = self.root / "codex"
+        directory = codex / "sessions" / "day"
+        rollouts = [self.old_file(directory / ("rollout-" + str(index) + ".jsonl")) for index in range(2)]
+        os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+        registered = False
+        def activity(root, scopes=(), **kwargs):
+            nonlocal registered
+            if scopes == (directory,):
+                registered = True
+            return set()
+        def registrations(repository):
+            return [codex] if registered else []
+        rows = self.run_rollout_sweep(codex, activity, registrations=registrations)
+        self.assertTrue(all(path.exists() for path in rollouts))
+        self.assertEqual({"codex:kept": 2}, rows[-1]["counts"])
+
+    def test_rollout_group_shape_rechecks_preserve_new_unknown_files(self):
+        for phase in ("before_inspection", "refresh"):
+            with self.subTest(phase=phase):
+                codex = self.root / phase / "codex"
+                directory = codex / "sessions" / "day"
+                old = [self.old_file(directory / ("rollout-" + str(index) + ".jsonl")) for index in range(2)]
+                os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+                unknown = directory / "private.txt"
+                group_files = cleanup.rollout_group_files
+                def add_unknown():
+                    self.old_file(unknown)
+                    os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+                def snapshot(path, root):
+                    files = group_files(path, root)
+                    if files is not None and phase == "before_inspection":
+                        add_unknown()
+                    return files
+                def activity(root, scopes=(), **kwargs):
+                    if phase == "refresh" and scopes == (directory,):
+                        add_unknown()
+                    return set()
+                with patch.object(cleanup, "rollout_group_files", side_effect=snapshot):
+                    rows = self.run_rollout_sweep(codex, activity)
+                self.assertEqual("artifact", unknown.read_text())
+                self.assertTrue(directory.is_dir())
+                self.assertTrue(all(not path.exists() for path in old))
+                self.assertEqual(2, rows[-1]["counts"]["codex:removed"])
+
+    def test_rollout_groups_preserve_session_and_archive_roots(self):
+        codex = self.root / "codex"
+        roots = [codex / "sessions", codex / "archived_sessions"]
+        for root in roots:
+            for index in range(2):
+                self.old_file(root / ("rollout-" + str(index) + ".jsonl"))
+            os.utime(root, (self.cutoff - 10, self.cutoff - 10))
+        self.run_rollout_sweep(codex, lambda *args, **kwargs: set())
+        self.assertTrue(all(root.is_dir() and not list(root.iterdir()) for root in roots))
+
     def test_activity_command_reuses_sampler_and_fails_closed(self):
         output = io.StringIO()
         with patch.object(cleanup, "active_paths", return_value={self.root}), contextlib.redirect_stdout(output):

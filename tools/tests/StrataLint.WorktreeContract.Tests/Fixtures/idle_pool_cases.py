@@ -317,11 +317,11 @@ class IdlePoolCases:
         return self.run_protocol("return", "--path", self.tree, "--pr", "42",
                                  *(["--writers-joined"] if joined else []), expect=expect, env=self.pool_env)
 
-    def pool_claim(self, branch="lane/math/next", path=None, base=None, expect=0):
+    def pool_claim(self, branch="lane/math/next", path=None, base=None, expect=0, timeout=30):
         args = ["claim", "--skip-restore", "--branch", branch, "--base", base or self.base]
         if path is not None:
             args += ["--path", path]
-        return self.run_protocol(*args, expect=expect)
+        return self.run_protocol(*args, expect=expect, timeout=timeout)
 
     def pool_return_preserves_post_merge_work_branch_and_cache(self):
         self.pool_github()
@@ -410,6 +410,9 @@ class IdlePoolCases:
         result = self.run_protocol("return", "--path", self.main, "--pr", "42", "--writers-joined", expect=73, env=self.pool_env)
         self.assertIn("main_worktree", result.stderr)
 
+    def dormant_claim(self, *args, **kwargs):
+        return self.pool_claim(*args, timeout=120, **kwargs)
+
     def age_task_head_log(self, age=5 * 3600):
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         timestamp = int(time.time()) - age
@@ -437,7 +440,7 @@ class IdlePoolCases:
         cache = self.tree / ".lake/build/cache"
         cache.parent.mkdir(parents=True)
         cache.write_bytes(b"warm cache\n")
-        result = json.loads(self.pool_claim().stdout)
+        result = json.loads(self.dormant_claim().stdout)
         self.assertEqual("claimed", result["status"])
         self.assertEqual("refs/heads/" + self.branch, result["previous_branch"])
         self.assertEqual("unchanged", result["checkpoint"]["status"])
@@ -447,7 +450,7 @@ class IdlePoolCases:
         self.assertEqual(b"warm cache\n", cache.read_bytes())
         self.assertLessEqual(result["previous_last_use"], time.time() - 4 * 3600)
         # The new allocation protects this same directory from another immediate claim.
-        self.assertEqual("no_idle", json.loads(self.pool_claim(branch="lane/math/again").stdout)["status"])
+        self.assertEqual("no_idle", json.loads(self.dormant_claim(branch="lane/math/again").stdout)["status"])
 
     def pool_claim_checkpoints_dormant_dirty_and_detached_work(self):
         for detached in (False, True):
@@ -470,7 +473,7 @@ class IdlePoolCases:
                 shutil.rmtree(self.tree / "dir")
                 for name in ("owned", "ordinary", "."):
                     os.utime(self.tree / name, (timestamp, timestamp))
-                result = json.loads(self.pool_claim(branch="lane/math/saved-" + str(detached)).stdout)
+                result = json.loads(self.dormant_claim(branch="lane/math/saved-" + str(detached)).stdout)
                 self.assertEqual("committed", result["checkpoint"]["status"])
                 retained = result["previous_branch"]
                 self.assertTrue(retained.startswith("refs/heads/lane/governance/recovery-") if detached
@@ -497,15 +500,15 @@ class IdlePoolCases:
                 self.assertTrue(select.select([job.stdout], [], [], 10)[0])
                 self.assertEqual("ready\n", job.stdout.readline())
                 try:
-                    self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
-                    self.assertIn("task_active_process", self.pool_claim(path=self.tree, expect=73).stderr)
+                    self.assertEqual("no_idle", json.loads(self.dormant_claim().stdout)["status"])
+                    self.assertIn("task_active_process", self.dormant_claim(path=self.tree, expect=73).stderr)
                     self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
                 finally:
                     job.communicate("joined\n", timeout=10)
-        self.assertEqual("claimed", json.loads(self.pool_claim().stdout)["status"])
+        self.assertEqual("claimed", json.loads(self.dormant_claim().stdout)["status"])
 
     def pool_claim_retains_active_idle_tree(self):
-        self.pool_return()
+        self.make_idle(self.tree, self.base)
         code = 'import sys; print("ready",flush=True); sys.stdin.readline()'
         job = subprocess.Popen([sys.executable, "-c", code], cwd=self.tree,
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -514,10 +517,10 @@ class IdlePoolCases:
         self.assertTrue(select.select([job.stdout], [], [], 10)[0])
         self.assertEqual("ready\n", job.stdout.readline())
         try:
-            self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
+            self.assertEqual("no_idle", json.loads(self.dormant_claim().stdout)["status"])
         finally:
             job.communicate("joined\n", timeout=10)
-        self.assertEqual("claimed", json.loads(self.pool_claim().stdout)["status"])
+        self.assertEqual("claimed", json.loads(self.dormant_claim().stdout)["status"])
 
     def pool_claim_retains_recent_checkout_allocation_and_source(self):
         import worktree_pool as pool
@@ -545,23 +548,28 @@ class IdlePoolCases:
 
     def pool_claim_keeps_task_identity_lock_and_operation_guards(self):
         self.dormant_task()
-        self.assertIn("main_worktree", self.pool_claim(path=self.main, expect=73).stderr)
+        self.assertIn("main_worktree", self.dormant_claim(path=self.main, expect=73).stderr)
         alias = self.root / "alias"
         alias.symlink_to(self.tree, target_is_directory=True)
-        self.assertIn("linked_tree", self.pool_claim(path=alias, expect=73).stderr)
+        self.assertIn("linked_tree", self.dormant_claim(path=alias, expect=73).stderr)
         holder = self.hold()
-        self.assertIn("busy_scope:tree:", self.pool_claim(path=self.tree, expect=73).stderr)
+        self.assertIn("busy_scope:tree:", self.dormant_claim(path=self.tree, expect=73).stderr)
         holder.communicate("joined\n", timeout=10)
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         for reason in ("intentional", "worktree-init:" + uuid.uuid4().hex):
             self.g(self.main, "worktree", "lock", "--reason", reason, self.tree)
-            self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
+            self.assertEqual("no_idle", json.loads(self.dormant_claim().stdout)["status"])
             self.g(self.main, "worktree", "unlock", self.tree)
         (metadata / "MERGE_HEAD").write_text(self.base + "\n")
-        self.assertIn("unfinished_operation:MERGE_HEAD", self.pool_claim(path=self.tree, expect=73).stderr)
+        self.assertIn("unfinished_operation:MERGE_HEAD", self.dormant_claim(path=self.tree, expect=73).stderr)
         (metadata / "MERGE_HEAD").unlink()
         (self.tree / ".lake").symlink_to(self.root, target_is_directory=True)
-        self.assertIn("linked_cache", self.pool_claim(path=self.tree, expect=73).stderr)
+        self.assertIn("linked_cache", self.dormant_claim(path=self.tree, expect=73).stderr)
+        (self.tree / ".lake").unlink()
+        shared = self.root / "shared-branch"
+        self.g(self.main, "worktree", "add", "--force", shared, self.branch)
+        self.assertIn("task_branch_shared", self.dormant_claim(path=self.tree, expect=73).stderr)
+        self.assertTrue(shared.is_dir())
         self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
 
     def pool_claim_dormant_task_updates_pins_and_rechecks_activity(self):
@@ -575,11 +583,13 @@ class IdlePoolCases:
         def becoming_active(paths):
             calls.append(paths)
             return set() if len(calls) == 1 else {self.tree / "owned"}
-        with patch.object(pool, "task_users", side_effect=becoming_active):
+        with patch.object(pool, "task_users", side_effect=becoming_active), \
+                patch.object(pool, "commit_snapshot") as checkpoint:
             self.assertEqual("no_idle", pool.claim(self.dormant_options())["status"])
+        checkpoint.assert_not_called()
         self.assertGreaterEqual(len(calls), 2)
         self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
-        result = json.loads(self.pool_claim(base=base).stdout)
+        result = json.loads(self.dormant_claim(base=base).stdout)
         self.assertEqual("claimed", result["status"])
         self.assertEqual("updated toolchain\n", (self.tree / "lean-toolchain").read_text())
         self.assertEqual("unmerged task\n", self.g(self.main, "show", self.branch + ":owned"))

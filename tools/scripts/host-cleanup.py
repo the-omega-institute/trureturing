@@ -262,7 +262,7 @@ class RefRecovery:
 
 
 def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None,
-                      verify_recovery=True):
+                      verify_recovery=True, rollout_files=None):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
     if path.name == ".git" and not reclaim:
@@ -281,6 +281,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
+    if rollout_files is not None and not stat.S_ISDIR(root_stat.st_mode):
+        return dict(reason="rollout_shape")
     if remnant and not stat.S_ISDIR(root_stat.st_mode):
         return dict(reason="not_directory")
     if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
@@ -298,6 +300,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
             return dict(reason="not_owned")
         if info.st_dev != root_stat.st_dev:
             return dict(reason="mount")
+        if rollout_files is not None and entry != path and not stat.S_ISREG(info.st_mode):
+            return dict(reason="rollout_shape")
         if remnant and stat.S_ISLNK(info.st_mode):
             return dict(reason="symlink")
         if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
@@ -332,6 +336,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
         elif stat.S_ISDIR(info.st_mode):
             with os.scandir(entry) as children:
                 names = sorted(child.name for child in children)
+            if rollout_files is not None and tuple(names) != rollout_files:
+                return dict(reason="rollout_shape")
             if not reclaim and ".git" in names:
                 return dict(reason="repository")
             if remnant:
@@ -389,7 +395,7 @@ def rename_exclusive(source, destination):
 
 
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False, remnant=False, recovery=None):
+                    reclaim=True, refresh_activity=False, remnant=False, recovery=None, rollout_files=None):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
@@ -404,6 +410,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             kwargs.update(remnant=True, recovery=recovery)
         if not reclaim:
             kwargs["reclaim"] = False
+        if rollout_files is not None:
+            kwargs["rollout_files"] = rollout_files
         def observe(protection, **options):
             return inspect_candidate(path, cutoff, protection, **kwargs, **options)
         before = observe(protected)
@@ -530,6 +538,26 @@ def candidates(codex, sshx, tmp_roots, on_error=None):
     for root in tmp_roots:
         for path in inventory("tmp", root, lambda: children(root)):
             yield "tmp", path
+
+
+def rollout_group_files(path, codex):
+    """Snapshot a session subdirectory containing only direct regular rollout files."""
+    parent, sessions = path.parent, codex / "sessions"
+    if sessions not in parent.parents:
+        return None
+    try:
+        if parent.resolve() != parent or not stat.S_ISDIR(parent.lstat().st_mode):
+            return None
+        with os.scandir(parent) as entries:
+            names = []
+            for entry in entries:
+                if (not entry.name.startswith("rollout-") or not entry.name.endswith(".jsonl")
+                        or not stat.S_ISREG(entry.stat(follow_symlinks=False).st_mode)):
+                    return None
+                names.append(entry.name)
+        return tuple(sorted(names)) if len(names) > 1 else None
+    except (OSError, RuntimeError):
+        return None
 
 
 def linux_observation_unavailable(process, boundary, error):
@@ -833,8 +861,11 @@ def clean_from_anchor(options, caller, disk_descriptor):
                                     apparent_bytes=0))
 
     def fresh_protection(path):
-        return (active_paths(codex, (path,), include_sampler_argv=True)
-                | set(registered_worktrees(main_checkout)) | {caller})
+        protection = active_paths(codex, (path,), include_sampler_argv=True)
+        registrations = set(registered_worktrees(main_checkout))
+        if any(tree == path or tree in path.parents or path in tree.parents for tree in registrations):
+            protection.add(path)
+        return protection | registrations | {caller}
 
     def inventory_failure(category, path, error):
         nonlocal inventory_error
@@ -870,9 +901,25 @@ def clean_from_anchor(options, caller, disk_descriptor):
                                          repository=main_checkout, activity=lambda: fresh_protection(path.parent),
                                          remnant=True, recovery=recovery)
                 record("worktree_remnant", result)
+        attempted_rollout_groups = set()
         for category, path in candidates(codex, sshx, roots, on_error=inventory_failure):
             if path in seen:
                 continue
+            if (category == "codex" and path.parent not in attempted_rollout_groups
+                    and not any(parent in worktrees for parent in path.parents)):
+                attempted_rollout_groups.add(path.parent)
+                rollout_files = rollout_group_files(path, codex)
+                if rollout_files is not None:
+                    group = path.parent
+                    result = clean_candidate(group, cutoff, protections["codex"], options.delete,
+                                             activity=lambda: fresh_protection(group),
+                                             reclaim=False, refresh_activity=True, rollout_files=rollout_files)
+                    if result["action"] in ("would_remove", "removed"):
+                        record("codex", result)
+                        seen.update(group / name for name in rollout_files)
+                        continue
+                    if result["action"] == "failed":
+                        record("codex", result)
             seen.add(path)
             if any(parent in worktrees for parent in path.parents):
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)

@@ -387,8 +387,9 @@ def no_task_users(path, paths):
 
 def dormant_state(source, path, metadata):
     """Inspect actual Git use, then ordinary changed paths; never scan ignored caches."""
-    item = qualify(source, path)
-    current, current_metadata = identity(source, path)
+    snapshot = (inventory(source), common(source))
+    item = qualify(source, path, snapshot=snapshot)
+    current, current_metadata = identity(source, path, snapshot=snapshot)
     if current != item or current_metadata != metadata:
         raise Refused("task_identity_changed")
     if "locked" in item:
@@ -398,6 +399,9 @@ def dormant_state(source, path, metadata):
         raise Refused("task_removal_pending")
     head = value(path, "rev-parse", "--verify", "HEAD^{commit}")
     branch = item.get("branch", "HEAD")
+    if branch != "HEAD" and any(row.get("branch") == branch and
+            Path(row["worktree"]).resolve() != path for row in snapshot[0]):
+        raise Refused("task_branch_shared")
     if item.get("HEAD") != head or (branch != "HEAD" and
             value(path, "rev-parse", "--verify", branch) != head):
         raise Refused("task_identity_changed")
