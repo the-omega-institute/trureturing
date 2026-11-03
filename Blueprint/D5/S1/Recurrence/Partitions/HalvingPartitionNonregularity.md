@@ -18,7 +18,19 @@ $$\forall p \in \mathrm{Nat},\; \forall q \in \mathrm{Nat},\; \operatorname{IsHa
 
 For every previous and next natural value, IsHalf is a disjunction of value equalities with the lower and upper integer halves. When previous is even the two values coincide; no choice label is stored and no object is doubled.
 
-**Definition 1.2 (Successive halving along a finite list).**
+**Definition 1.2 (Decidability of the half-value test).**
+
+$$instDecidableIsHalf: \forall previous \in \mathrm{Nat},\; \forall next \in \mathrm{Nat},\; \operatorname{Decidable}\left(\operatorname{IsHalf}\left(previous, next\right)\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instDecidableIsHalf` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every previous and next natural value, this instance decides IsHalf by deciding its disjunction of equalities.
+
+**Definition 1.3 (Successive halving along a finite list).**
 
 $$\left(\forall p \in \mathrm{Nat},\; \operatorname{Follows}\left(p, \operatorname{nil}\left(\right)\right)\right) \land \left(\forall p \in \mathrm{Nat},\; \forall q \in \mathrm{Nat},\; \forall t \in \operatorname{List}\left(\mathrm{Nat}\right),\; \operatorname{Follows}\left(p, \operatorname{cons}\left(q, t\right)\right) \Leftrightarrow \left(\operatorname{IsHalf}\left(p, q\right) \land \operatorname{Follows}\left(q, t\right)\right)\right)$$
 
@@ -30,7 +42,19 @@ $$\left(\forall p \in \mathrm{Nat},\; \operatorname{Follows}\left(p, \operatorna
 
 The empty list follows any predecessor. A nonempty list follows precisely when its first value is a half of the predecessor and its tail follows that first value. Positivity and the total are imposed separately. The recursive decider tests values and introduces no bound on the list length.
 
-**Definition 1.3 (The independently specified source carrier).**
+**Definition 1.4 (Decidability of finite-list halving).**
+
+$$instDecidableFollows: \forall previous \in \mathrm{Nat},\; \forall parts \in \operatorname{List}\left(\mathrm{Nat}\right),\; \operatorname{Decidable}\left(\operatorname{Follows}\left(previous, parts\right)\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instDecidableFollows` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every predecessor and finite natural list, this instance decides Follows by recursion on that list, with no length restriction.
+
+**Definition 1.5 (The independently specified source carrier).**
 
 $$\forall n \in \mathrm{Nat},\; \operatorname{SourceLists}\left(n\right) = \{p: \operatorname{List}\left(\mathrm{Nat}\right) \mid \left(\forall x \in \mathrm{Nat},\; x \in p \Rightarrow 0 < x\right) \land \left(\operatorname{sum}\left(p\right) = n \land \operatorname{Follows}\left(n, p\right)\right)\}$$
 
@@ -42,7 +66,7 @@ $$\forall n \in \mathrm{Nat},\; \operatorname{SourceLists}\left(n\right) = \{p: 
 
 SourceLists(n) contains exactly the positive lists with sum n satisfying Follows(n,p). There is no maximal-chain, sorting, distinctness or final-value condition. In particular, positivity and total zero force the empty list.
 
-**Definition 1.4 (The finite composition presentation).**
+**Definition 1.6 (The finite composition presentation).**
 
 $$\forall n \in \mathrm{Nat},\; \operatorname{HalvingCompositions}\left(n\right) = \{c: \operatorname{Composition}\left(n\right) \mid \operatorname{Follows}\left(n, \operatorname{blocks}\left(c\right)\right)\}$$
 
@@ -54,7 +78,7 @@ $$\forall n \in \mathrm{Nat},\; \operatorname{HalvingCompositions}\left(n\right)
 
 Mathlib's Composition n stores the same list, positivity and total. Filtering it by Follows preserves order and every repeated part. The existing finite Composition instance and the decidable filter supply a finite carrier at every n.
 
-**Definition 1.5 (List-preserving source correspondence).**
+**Definition 1.7 (List-preserving source correspondence).**
 
 $$\forall n \in \mathrm{Nat},\; \operatorname{sourceEquiv}\left(n\right): \operatorname{SourceLists}\left(n\right) \equiv \operatorname{HalvingCompositions}\left(n\right)$$
 
@@ -66,7 +90,31 @@ $$\forall n \in \mathrm{Nat},\; \operatorname{sourceEquiv}\left(n\right): \opera
 
 The forward map wraps the original list as a Composition and retains its Follows proof. The inverse projects that same list. Both inverse laws are proved by the constructors, so no source object is lost or identified. The transported Finite instance certifies finiteness of the independent source carrier.
 
-**Definition 1.6 (The exact source count).**
+**Definition 1.8 (Enumeration of halving compositions).**
+
+$$instFintypeHalvingCompositions: \forall n \in \mathrm{Nat},\; \operatorname{Fintype}\left(\operatorname{HalvingCompositions}\left(n\right)\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instFintypeHalvingCompositions` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural total n, the instance enumerates the subtype of Composition n satisfying Follows, using the decidable predicate.
+
+**Definition 1.9 (Finiteness of the source-list carrier).**
+
+$$instFiniteSourceLists: \forall n \in \mathrm{Nat},\; \operatorname{Finite}\left(\operatorname{SourceLists}\left(n\right)\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instFiniteSourceLists` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural total n, the source carrier is finite by transport along sourceEquiv(n) from HalvingCompositions(n).
+
+**Definition 1.10 (The exact source count).**
 
 $$\forall n \in \mathrm{Nat},\; \operatorname{count}\left(n\right) = \operatorname{card}\left(\operatorname{SourceLists}\left(n\right)\right)$$
 
@@ -78,7 +126,7 @@ $$\forall n \in \mathrm{Nat},\; \operatorname{count}\left(n\right) = \operatorna
 
 The function count(n) is Nat.card of SourceLists(n), defined independently of every recurrence and of the dyadic formula used in the proof. The final theorem also identifies it with Fintype.card of HalvingCompositions(n) for all n.
 
-**Definition 1.7 (An unrestricted integral matrix family).**
+**Definition 1.11 (An unrestricted integral matrix family).**
 
 $$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{MatrixFamily}\left(a\right) \Leftrightarrow \left(\exists d \in \mathrm{Nat},\; 0 < d \land \left(\exists F \in (\mathrm{Nat} \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \exists M0 \in (\operatorname{Fin}\left(d\right) \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \exists M1 \in (\operatorname{Fin}\left(d\right) \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \left(\forall n \in \mathrm{Nat},\; \operatorname{F}\left(n, 0\right) = \operatorname{a}\left(n\right)\right) \land \left(\left(\forall n \in \mathrm{Nat},\; \operatorname{F}\left(2 \cdot n\right) = \operatorname{mulVec}\left(M0, \operatorname{F}\left(n\right)\right)\right) \land \left(\forall n \in \mathrm{Nat},\; \operatorname{F}\left(2 \cdot n + 1\right) = \operatorname{mulVec}\left(M1, \operatorname{F}\left(n\right)\right)\right)\right)\right)\right)$$
 
@@ -90,9 +138,9 @@ $$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{MatrixFamily}\lef
 
 The dimension d ranges over every positive natural number. F is any sequence of d-dimensional integer vectors and M0,M1 are fixed integral d-by-d matrices. Every natural input, including zero, satisfies both displayed vector equalities. Coordinate zero is a. No independence, invertibility or dimension cutoff is assumed.
 
-**Definition 1.8 (A family indexed by Fin d).**
+**Definition 1.12 (A family indexed by Fin d).**
 
-$$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ClosedFamily}\left(a\right) \Leftrightarrow \left(\exists d \in \mathrm{Nat},\; 0 < d \land \left(\exists b \in (\operatorname{Fin}\left(d\right) \to (\mathrm{Nat} \to \mathbb{Z})),\; \exists c0 \in (\operatorname{Fin}\left(d\right) \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \exists c1 \in (\operatorname{Fin}\left(d\right) \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \left(\forall n \in \mathrm{Nat},\; \operatorname{b}\left(0, n\right) = \operatorname{a}\left(n\right)\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(d\right),\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n\right) = \sum_{j \in \operatorname{Fin}\left(d\right)}\operatorname{c0}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right) \land \left(\forall i \in \operatorname{Fin}\left(d\right),\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n + 1\right) = \sum_{j \in \operatorname{Fin}\left(d\right)}\operatorname{c1}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right)\right)\right)\right)$$
+$$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ClosedFamily}\left(a\right) \Leftrightarrow \left(\exists d \in \mathrm{Nat},\; 0 < d \land \left(\exists b \in (\operatorname{Fin}\left(d\right) \to (\mathrm{Nat} \to \mathbb{Z})),\; \exists c0 \in (\operatorname{Fin}\left(d\right) \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \exists c1 \in (\operatorname{Fin}\left(d\right) \to (\operatorname{Fin}\left(d\right) \to \mathbb{Z})),\; \left(\forall n \in \mathrm{Nat},\; \operatorname{b}\left(0, n\right) = \operatorname{a}\left(n\right)\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(d\right),\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n\right) = \sum_{j: \operatorname{Fin}\left(d\right)}\operatorname{c0}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right) \land \left(\forall i \in \operatorname{Fin}\left(d\right),\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n + 1\right) = \sum_{j: \operatorname{Fin}\left(d\right)}\operatorname{c1}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.ClosedFamily` (`✓ std3`).
 
@@ -102,9 +150,9 @@ $$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ClosedFamily}\lef
 
 The integer sequences b(i,n) contain a at index zero. Each even and odd subsequence is a fixed integer linear combination of the same family. The coefficient functions c0 and c1 are independent of n. Equal constituent sequences and linear dependence are allowed.
 
-**Definition 1.9 (An arbitrary finite indexed family).**
+**Definition 1.13 (An arbitrary finite indexed family).**
 
-$$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ArbitraryFamily}\left(a\right) \Leftrightarrow \left(\exists I \in \operatorname{FiniteTypes}\left(\right),\; \exists i0 \in I,\; \exists b \in (I \to (\mathrm{Nat} \to \mathbb{Z})),\; \exists c0 \in (I \to (I \to \mathbb{Z})),\; \exists c1 \in (I \to (I \to \mathbb{Z})),\; \left(\forall n \in \mathrm{Nat},\; \operatorname{b}\left(i0, n\right) = \operatorname{a}\left(n\right)\right) \land \left(\left(\forall i \in I,\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n\right) = \sum_{j \in I}\operatorname{c0}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right) \land \left(\forall i \in I,\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n + 1\right) = \sum_{j \in I}\operatorname{c1}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right)\right)\right)$$
+$$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ArbitraryFamily}\left(a\right) \Leftrightarrow \left(\exists I \in \mathrm{Type},\; \exists hI \in \operatorname{Fintype}\left(I\right),\; \exists b \in (I \to (\mathrm{Nat} \to \mathbb{Z})),\; \exists i0 \in I,\; \exists c0 \in (I \to (I \to \mathbb{Z})),\; \exists c1 \in (I \to (I \to \mathbb{Z})),\; \left(\forall n \in \mathrm{Nat},\; \operatorname{b}\left(i0, n\right) = \operatorname{a}\left(n\right)\right) \land \left(\left(\forall i \in I,\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n\right) = \sum_{j \in \operatorname{elems}\left(hI\right)}\operatorname{c0}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right) \land \left(\forall i \in I,\; \forall n \in \mathrm{Nat},\; \operatorname{b}\left(i, 2 \cdot n + 1\right) = \sum_{j \in \operatorname{elems}\left(hI\right)}\operatorname{c1}\left(i, j\right) \cdot \operatorname{b}\left(j, n\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.ArbitraryFamily` (`✓ std3`).
 
@@ -112,9 +160,9 @@ $$\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ArbitraryFamily}\
 
 *Commentary.*
 
-The index type I is any finite type, with a distinguished i0 carrying a. The Fintype witness merely enumerates I; it supplies no basis or algebraic independence. Different indices may carry equal sequences. The proof enumerates I by Fin(card I) and swaps i0 to zero, transporting both coefficient sums in full. Conversely every matrix family supplies such a finite family.
+The index type I is any finite type, with a distinguished i0 carrying a. Here I is the Lean indexing type and hI is its Fintype witness, installed as the local instance. The expression elems(hI) is Fintype.elems, the complete finite enumeration used in both sums. It supplies no basis or algebraic independence. Different indices may carry equal sequences. The proof enumerates I by Fin(card I) and swaps i0 to zero, transporting both coefficient sums in full. Conversely every matrix family supplies such a finite family.
 
-**Definition 1.10 (The exact negative matrix event).**
+**Definition 1.14 (The exact negative matrix event).**
 
 $$claim \Leftrightarrow \left(\neg \operatorname{MatrixFamily}\left((n: \mathrm{Nat} \mapsto \operatorname{Int}\left(\operatorname{count}\left(n\right)\right))\right)\right)$$
 
@@ -126,13 +174,15 @@ $$claim \Leftrightarrow \left(\neg \operatorname{MatrixFamily}\left((n: \mathrm{
 
 claim is the negation of MatrixFamily for the integer cast of the independent count, on its complete natural domain.
 
-**Theorem 1.11 (The whole source question has a negative answer).**
+**Theorem 1.15 (The whole source question has a negative answer).**
 
 $$claim \land \left(\left(\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ClosedFamily}\left(a\right) \Leftrightarrow \operatorname{MatrixFamily}\left(a\right)\right) \land \left(\left(\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operatorname{ArbitraryFamily}\left(a\right) \Leftrightarrow \operatorname{MatrixFamily}\left(a\right)\right) \land \left(\left(\neg \operatorname{ArbitraryFamily}\left((n: \mathrm{Nat} \mapsto \operatorname{Int}\left(\operatorname{count}\left(n\right)\right))\right)\right) \land \left(\left(\forall n \in \mathrm{Nat},\; \operatorname{count}\left(n\right) = \operatorname{card}\left(\operatorname{HalvingCompositions}\left(n\right)\right)\right) \land \operatorname{count}\left(0\right) = 1\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
 
 *Commentary.*
 
@@ -153,5 +203,9 @@ Between consecutive thresholds the dyadic count is constant. Its first differenc
 - Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.SourceLists`
 - Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.claim`
 - Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.count`
+- Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instDecidableFollows`
+- Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instDecidableIsHalf`
+- Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instFiniteSourceLists`
+- Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.instFintypeHalvingCompositions`
 - Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.result`
 - Truth anchor: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.sourceEquiv`
