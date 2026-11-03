@@ -44,7 +44,7 @@ private theorem upper_split (a c p : ℕ) :
 
 private theorem near_V_inventory (a b c : ℕ) (hc : 2 ≤ c) :
     [a]++upperV a c (2^(c-2)-1)=stock a b c a 1 (full a b c a 1) := by
-  simp only [upperV,stock,full,chainLength,chainStart,chamberLabels_full]
+  simp only [upperV,stock,full,chainLength,chainStart,chamberLabels_full,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons]
   have hh := List.range'_append_1 (s:=a) (m:=1) (n:=c-2)
   simpa only [List.range'_one,show 1+(c-2)=c-1 by omega] using hh
 
@@ -63,6 +63,7 @@ private theorem moderate_near_inventory (a b c r p : ℕ)
   dsimp [moderateNearBanks]
   simp only [←Multiset.coe_add,Multiset.coe_singleton]
   rw [←hu,←hall,←hv]
+  simp only [Multiset.coe_singleton]
   ac_rfl
 
 private theorem moderate_near_positive (a b c r p : ℕ)
@@ -73,12 +74,12 @@ private theorem moderate_near_positive (a b c r p : ℕ)
       i ∈ stock a b c a 1 (full a b c a 1) := by
     obtain ⟨e,he,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
     rw [stock,full,chamberLabels_full]
-    simp only [chainLength,chainStart]
+    simp only [chainLength,chainStart,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons]
     apply List.mem_range'_1.mpr
     omega
   have zero_good : a ∈ stock a b c a 1 (full a b c a 1) := by
     rw [stock,full,chamberLabels_full]
-    simp only [chainLength,chainStart]
+    simp only [chainLength,chainStart,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons]
     apply List.mem_range'_1.mpr
     omega
   fin_cases j <;> dsimp [moderateNearBanks,upperComplement] at hi
@@ -107,13 +108,13 @@ private theorem moderate_near_masses (a b c r p : ℕ) (hc : 2 ≤ c)
   have wf := stock_mass a b c a 2 _ (hfull 2) f H hf
   have xf := stock_mass a b c a 3 _ (hfull 3) f H hf
   have v0 : f a=H 1 := by
-    simpa only [chainStart,Nat.add_zero,pow_zero,one_mul] using hf 1 0 (by simp [chainLength]; omega)
+    simpa only [chainStart,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons,Nat.add_zero,pow_zero,one_mul] using hf 1 0 (by simp [chainLength]; omega)
   have upper_mass (q : ℕ) (hq : q < 2^(c-2)) :
       ((upperV a c q).map f).sum=2*(q:ℤ)*H 1 := by
     have hm := chamberLabels_sum (c-2) (a+1) q hq f (2*H 1) (by
       intro e he
       have hrow := hf 1 (e+1) (by simp [chainLength]; omega)
-      simpa only [chainStart,show a+(e+1)=a+1+e by omega,pow_succ,mul_assoc] using hrow)
+      simpa only [chainStart,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons,show a+(e+1)=a+1+e by omega,pow_succ,mul_assoc] using hrow)
     simpa only [upperV,mul_assoc,mul_comm,mul_left_comm] using hm
   have up := upper_mass p hp
   have ufull := upper_mass (2^(c-2)-1) (by have := Nat.two_pow_pos (c-2); omega)
@@ -123,17 +124,16 @@ private theorem moderate_near_masses (a b c r p : ℕ) (hc : 2 ≤ c)
     have hpw : (2:ℤ)^(c-1)=2*(2:ℤ)^(c-2) := by
       conv_lhs => rw [show c-1=(c-2)+1 by omega,pow_succ]
       ring
-    simp only [full,chainLength,Nat.cast_sub (show 1 ≤ 2^(c-2) by have := Nat.two_pow_pos (c-2); omega),
+    simp only [full,chainLength,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons,Nat.cast_sub (show 1 ≤ 2^(c-2) by have := Nat.two_pow_pos (c-2); omega),
       Nat.cast_sub (show 1 ≤ 2^(c-1) by have := Nat.two_pow_pos (c-1); omega),Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one]
     omega
   have ucV : ((upperComplement a c p).map f).sum=((full a b c a 1:ℤ)-1-2*(p:ℤ))*H 1 := by
-    dsimp only [upperComplement]
     have hmul := congrArg (fun t : ℤ => t*H 1) hC
     nlinarith only [usplit,hmul]
   dsimp only [moderateNearBanks]
-  simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,
+  simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,
     ur,uc,wf,xf,up,ucV,v0,Nat.cast_sub hr,Nat.cast_one]
-  exact ⟨rfl,rfl,rfl,rfl⟩
+  trivial
 
 set_option maxHeartbeats 1800000 in
 private theorem moderate_near_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : a=b+1)
@@ -150,7 +150,9 @@ private theorem moderate_near_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : a=b+1)
   have er : (rn:ℤ)=r := Int.toNat_of_nonneg (by omega)
   let p : ℤ := (r*m-2)/2
   have hmhalf : m=2*(2:ℤ)^(c-a-1) := by
-    dsimp [m]; conv_lhs => rw [show c-a=(c-a-1)+1 by omega,pow_succ]; ring
+    dsimp [m]
+    conv_lhs => rw [show c-a=(c-a-1)+1 by omega,pow_succ]
+    ring
   have hpar : r*m=2*(r*(2:ℤ)^(c-a-1)) := by rw [hmhalf]; ring
   have hpval : 2*p=r*m-2 := by dsimp [p]; omega
   have hp0 : 0 ≤ p := by have := mul_le_mul hr hm (by omega) (by omega); nlinarith only [this,hpval]
@@ -164,7 +166,10 @@ private theorem moderate_near_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : a=b+1)
   have hpcap : pn < 2^(c-2) := by
     have hrr := mul_lt_mul_of_pos_right hry (show 0 < m by omega)
     have hz4 : z=4*(2:ℤ)^(c-2) := by
-      dsimp [z]; conv_lhs => rw [show c=(c-2)+2 by omega,pow_add]; norm_num; ring
+      dsimp [z]
+      conv_lhs => rw [show c=(c-2)+2 by omega,pow_add]
+      norm_num
+      ring
     have hzy : z=2*m*y := by rw [hz,hx]; ring
     have : (pn:ℤ) < (2:ℤ)^(c-2) := by rw [ep]; nlinarith only [hrr,hpval,hz4,hzy]
     exact_mod_cast this
@@ -191,6 +196,15 @@ private theorem moderate_near_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : a=b+1)
   have nv := native_rows a b c (by omega) hb (by omega) 1
   have nw := native_rows a b c (by omega) hb (by omega) 2
   dsimp only [F,G,nextF,nextG,terminals] at mo mn nu nv nw
+  simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons] at mo mn nu nv nw
+  change ((P 0).map (oldValue a b c a)).sum=(C 0-(r-1))*A x y z+2*p*B x y ∧
+    ((P 1).map (oldValue a b c a)).sum=(r-1)*A x y z+(C 1-1-2*p)*B x y ∧
+    ((P 2).map (oldValue a b c a)).sum=C 2*L x z+B x y ∧
+    ((P 3).map (oldValue a b c a)).sum=C 3*K x y z at mo
+  change ((P 0).map (newValue a b c a)).sum=(C 0-(r-1))*(2*A x y z)+2*p*SU x y ∧
+    ((P 1).map (newValue a b c a)).sum=(r-1)*(2*A x y z)+(C 1-1-2*p)*SU x y ∧
+    ((P 2).map (newValue a b c a)).sum=C 2*SV x z+SU x y ∧
+    ((P 3).map (newValue a b c a)).sum=C 3*SW x y z at mn
   apply moderate_realize a b c (by omega) hb (by omega) P early E Ep R Rp
     (moderate_near_inventory a b c rn pn (by omega) hb (by omega))
     (moderate_near_positive a b c rn pn (by omega) hb (by omega))
