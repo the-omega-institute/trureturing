@@ -15,7 +15,7 @@ internal sealed class SharpFactorialDocument : IScribeDocumentDefinition
                 H("A quantitative logarithmic Stirling remainder"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every positive natural n, the difference between log(n!) and n*log(n)-n+log(n)/2+log(2*pi)/2 is between zero and 1/(12*n). The upper estimate telescopes Mathlib's Robbins step and uses its certified Stirling limit; the lower estimate is the public logarithmic Stirling inequality."))),
+                Blocks(Paragraph(Text("For every positive natural n, the difference between log(n!) and n*log(n)-n+log(n)/2+log(2*pi)/2 is between zero and 1/(12*n). The upper estimate is supplied by the reusable Grid logarithmic factorial envelope, whose proof telescopes Mathlib's Robbins step to its certified Stirling limit; the lower estimate is the public logarithmic Stirling inequality."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-factorial-sharp-eta-phase-bound"),

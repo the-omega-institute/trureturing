@@ -7,6 +7,7 @@
    digest: A quantitative factorial remainder retaining every real-floor phase. -/
 
 import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.Basic
+import D5.S3.Arith.FactorialRatio.GridAntidiagonalTrafficBound
 import Mathlib.Analysis.SpecialFunctions.Stirling
 
 /-! Robbins' public step bound is telescoped and its limit is supplied by
@@ -28,51 +29,13 @@ lemma log_factorial_remainder {n : ℕ} (hn : 0 < n) :
       ((n : ℝ) * Real.log n - n + Real.log n / 2 + L / 2) ∧
     Real.log (n.factorial : ℝ) -
       ((n : ℝ) * Real.log n - n + Real.log n / 2 + L / 2) ≤ 1 / (12 * n) := by
-  have hn0 : (0 : ℝ) < n := by exact_mod_cast hn
-  have hfinite (k : ℕ) :
-      Real.log (Stirling.stirlingSeq n) - Real.log (Stirling.stirlingSeq (n + k)) ≤
-        1 / (12 * n : ℝ) - 1 / (12 * (n + k : ℕ) : ℝ) := by
-    induction k with
-    | zero => simp
-    | succ k ih =>
-      have hstep := Stirling.log_stirlingSeq_sdiff_le (n + k)
-      have hnk : (0 : ℝ) < (n + k : ℕ) := by exact_mod_cast (show 0 < n + k by omega)
-      have ht : (1 : ℝ) / (12 * (n + k : ℕ) * ((n + k : ℕ) + 1)) =
-          1 / (12 * (n + k : ℕ) : ℝ) - 1 / (12 * ((n + k : ℕ) + 1)) := by
-        field_simp
-        ring
-      rw [ht] at hstep
-      simpa only [Nat.add_succ, Nat.cast_succ] using (by linarith only [ih, hstep] :
-        Real.log (Stirling.stirlingSeq n) -
-          Real.log (Stirling.stirlingSeq ((n + k) + 1)) ≤
-            1 / (12 * n : ℝ) - 1 / (12 * ((n + k : ℕ) + 1)))
-  have hnlim : Tendsto (fun k : ℕ => n + k) atTop atTop :=
-    by simpa only [Nat.add_comm] using tendsto_add_atTop_nat n
-  have hloglim : Tendsto (fun k : ℕ => Real.log (Stirling.stirlingSeq (n + k)))
-      atTop (𝓝 (Real.log (Real.sqrt Real.pi))) :=
-    (Real.continuousAt_log (by positivity : Real.sqrt Real.pi ≠ 0)).tendsto.comp
-      (Stirling.tendsto_stirlingSeq_sqrt_pi.comp hnlim)
-  have hinvlim : Tendsto (fun k : ℕ => 1 / (12 * (n + k : ℕ) : ℝ)) atTop (𝓝 0) := by
-    have hi := (tendsto_inv_atTop_zero.comp
-      (tendsto_natCast_atTop_atTop.comp hnlim) : Tendsto
-        (fun k : ℕ => ((n + k : ℕ) : ℝ)⁻¹) atTop (𝓝 0))
-    simpa only [Function.comp_def, one_div, mul_inv_rev, mul_zero, zero_mul, mul_comm] using hi.const_mul (12 : ℝ)⁻¹
-  have hlim := le_of_tendsto_of_tendsto
-    (tendsto_const_nhds.sub hloglim) (tendsto_const_nhds.sub hinvlim)
-    (Eventually.of_forall hfinite)
-  have he : Real.log (Stirling.stirlingSeq n) - Real.log (Real.sqrt Real.pi) =
-      Real.log (n.factorial : ℝ) -
-        ((n : ℝ) * Real.log n - n + Real.log n / 2 + L / 2) := by
-    rw [Stirling.log_stirlingSeq_formula,
-      Real.log_div hn0.ne' (Real.exp_ne_zero _), Real.log_exp,
-      Real.log_mul (by norm_num) hn0.ne', Real.log_sqrt Real.pi_pos.le,
-      L, Real.log_mul (by norm_num) Real.pi_pos.ne']
-    ring
+  have hup := D5.S3.Arith.FactorialRatio.GridAntidiagonalTrafficBound.log_factorial_upper_bound n hn
+  have hlow := Stirling.le_log_factorial_stirling (n := n) hn.ne'
   constructor
-  · have h := Stirling.le_log_factorial_stirling hn.ne'
-    dsimp [L]
+  · dsimp [L]
     linarith
-  · simpa only [sub_zero, he] using hlim
+  · dsimp [L] at hup ⊢
+    linarith
 
 /-- A first-order factorial expansion uniform in the complete floor cell. -/
 lemma eta_phase_bound {x : ℝ} (hx : 1 ≤ x) :
