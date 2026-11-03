@@ -277,30 +277,25 @@ private def scalarEmbedding : coeff →ₐ[ℚ] ℂ :=
     norm_num [smul_eq_mul, ← pow_two]
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)⟩
 
-private def matrixEmbedding : Matrix (Fin 9) (Fin 9) coeff →ₐ[ℚ]
-    Matrix (Fin 9) (Fin 9) ℂ := scalarEmbedding.mapMatrix
-
-private theorem embedding_smul (c : coeff) (m : Matrix (Fin 9) (Fin 9) coeff) :
-    matrixEmbedding (c • m) = scalarEmbedding c • matrixEmbedding m :=
-  Matrix.map_smul' scalarEmbedding c m (map_mul scalarEmbedding)
-
 private def modelGen (i : Fin 5) : Matrix (Fin 9) (Fin 9) ℂ :=
-  matrixEmbedding (exactGen i)
+  scalarEmbedding.mapMatrix (exactGen i)
 
 private def rho : TL 6 (-qzero - qzero⁻¹) →ₐ[ℂ] Matrix (Fin 9) (Fin 9) ℂ :=
   RingQuot.liftAlgHom ℂ ⟨FreeAlgebra.lift ℂ modelGen, by
     intro a b h
     rcases h with ⟨i, rfl, rfl⟩ | ⟨i, j, hij, rfl, rfl⟩ | ⟨i, j, hij, rfl, rfl⟩
     · simp only [map_mul, map_smul, FreeAlgebra.lift_ι_apply]
-      have h := congrArg matrixEmbedding (exactRelations.1 i)
-      rw [map_mul, embedding_smul] at h
+      have h := congrArg scalarEmbedding.mapMatrix (exactRelations.1 i)
+      rw [map_mul] at h
+      simp only [AlgHom.mapMatrix_apply,
+        Matrix.map_smul' scalarEmbedding _ _ (map_mul scalarEmbedding)] at h
       rw [parameter.2.2]
       convert h using 1 <;> simp [modelGen.eq_1, scalarEmbedding.eq_1, QuadraticAlgebra.lift_apply_apply]
     · simp only [map_mul, FreeAlgebra.lift_ι_apply]
-      have h := congrArg matrixEmbedding (exactRelations.2.1 i j hij)
+      have h := congrArg scalarEmbedding.mapMatrix (exactRelations.2.1 i j hij)
       simpa only [map_mul, modelGen.eq_1] using h
     · simp only [map_mul, FreeAlgebra.lift_ι_apply]
-      have h := congrArg matrixEmbedding (exactRelations.2.2 i j hij)
+      have h := congrArg scalarEmbedding.mapMatrix (exactRelations.2.2 i j hij)
       simpa only [map_mul, modelGen.eq_1] using h⟩
 
 private theorem rho_gen (i : Fin 5) :
@@ -317,7 +312,7 @@ private theorem rho_gens :
     rho (gen 6 (-qzero - qzero⁻¹) 5) = modelGen 4 :=
   ⟨rho_gen 0, rho_gen 1, rho_gen 2, rho_gen 3, rho_gen 4⟩
 
-private theorem rho_box : rho box = matrixEmbedding exactP := by
+private theorem rho_box : rho box = scalarEmbedding.mapMatrix exactP := by
   have hs : scalarEmbedding (⟨0, 1/3⟩ : coeff) = (Real.sqrt 3 : ℂ)⁻¹ := by
     have hr : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
       exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
@@ -327,13 +322,15 @@ private theorem rho_box : rho box = matrixEmbedding exactP := by
     norm_num [Algebra.smul_def]
     linear_combination hr / 3
   rw [exactP_eq]
-  simp only [map_mul, map_add, map_one, embedding_smul, hs]
+  simp only [map_mul, map_add, map_one, AlgHom.mapMatrix_apply,
+    Matrix.map_smul' scalarEmbedding _ _ (map_mul scalarEmbedding), hs]
   rw [box.eq_1]
   rw [map_mul, map_mul]
   have h1 : rho (gen 6 (-qzero - qzero⁻¹) 1) = modelGen 0 := rho_gen 0
   have h3 : rho (gen 6 (-qzero - qzero⁻¹) 3) = modelGen 2 := rho_gen 2
   have h5 : rho (gen 6 (-qzero - qzero⁻¹) 5) = modelGen 4 := rho_gen 4
-  simp only [map_add, map_one, map_smul, h1, h3, h5, modelGen.eq_1]
+  simp only [map_add, map_one, map_smul, h1, h3, h5, modelGen.eq_1,
+    AlgHom.mapMatrix_apply]
 
 private theorem exactWitness :
     (exactRow ᵥ* (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 *
@@ -354,7 +351,7 @@ private theorem exactWitness :
 private def row : Fin 9 → ℂ := scalarEmbedding ∘ exactRow
 
 private theorem embedding_row (v : Fin 9 → coeff) (m : Matrix (Fin 9) (Fin 9) coeff) :
-    scalarEmbedding ∘ (v ᵥ* m) = (scalarEmbedding ∘ v) ᵥ* matrixEmbedding m := by
+    scalarEmbedding ∘ (v ᵥ* m) = (scalarEmbedding ∘ v) ᵥ* scalarEmbedding.mapMatrix m := by
   funext j
   exact RingHom.map_vecMul scalarEmbedding.toRingHom m v j
 
@@ -363,14 +360,14 @@ private theorem embedding_row_smul (c : coeff) (v : Fin 9 → coeff) :
   funext j
   exact map_mul scalarEmbedding c (v j)
 
-private theorem row_projector : row ᵥ* matrixEmbedding exactP = row := by
+private theorem row_projector : row ᵥ* scalarEmbedding.mapMatrix exactP = row := by
   have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.1
   simpa only [embedding_row, row.eq_1] using h
 
 private theorem row_generators :
-    (row ᵥ* (matrixEmbedding exactP * modelGen 1 * matrixEmbedding exactP) =
+    (row ᵥ* (scalarEmbedding.mapMatrix exactP * modelGen 1 * scalarEmbedding.mapMatrix exactP) =
       scalarEmbedding (⟨0, -1/3⟩ : coeff) • row) ∧
-    (row ᵥ* (matrixEmbedding exactP * modelGen 3 * matrixEmbedding exactP) =
+    (row ᵥ* (scalarEmbedding.mapMatrix exactP * modelGen 3 * scalarEmbedding.mapMatrix exactP) =
       scalarEmbedding (⟨0, -1/3⟩ : coeff) • row) := by
   constructor
   · rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector]
@@ -381,7 +378,7 @@ private theorem row_generators :
     simpa only [embedding_row, embedding_row_smul, row.eq_1, modelGen.eq_1] using h
 
 private theorem row_witness : (row ᵥ* rho (box * middle * box)) 6 ≠ 0 := by
-  have hmid : rho middle = matrixEmbedding
+  have hmid : rho middle = scalarEmbedding.mapMatrix
       (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 *
         exactGen 1 * exactGen 4 * exactGen 3) := by
     unfold middle
@@ -391,7 +388,7 @@ private theorem row_witness : (row ᵥ* rho (box * middle * box)) 6 ≠ 0 := by
   rw [map_mul, map_mul, rho_box, hmid]
   rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector,
     Matrix.vecMul_vecMul, ← map_mul]
-  change ((scalarEmbedding ∘ exactRow) ᵥ* matrixEmbedding
+  change ((scalarEmbedding ∘ exactRow) ᵥ* scalarEmbedding.mapMatrix
     (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 * exactGen 1 * exactGen 4 *
       exactGen 3 * exactP)) 6 ≠ 0
   rw [← embedding_row]
