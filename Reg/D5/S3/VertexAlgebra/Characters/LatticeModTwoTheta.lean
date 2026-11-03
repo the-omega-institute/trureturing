@@ -64,10 +64,10 @@ abbrev arena : Arena where
       (∀ a : ModTwoCharge D, -(phi D hu a) = phi D hu a) ∧
       (∀ a b : ModTwoCharge D,
         pairingCharacter (Gram2G D) h2 (phi D hu a) (-(phi D hu b)) =
-          TwistedGround.OriginalFourMChargeCoset.fourierSign D a b) ∧
+          _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset.fourierSign D a b) ∧
       (∀ a : ModTwoCharge D,
         phase (quadraticClass (Gram2G D) (phi D hu a)) =
-          TwistedGround.OriginalFourMChargeCoset.quadraticSign D a) ∧
+          _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset.quadraticSign D a) ∧
       (∀ a : ModTwoCharge D,
         ∃ e : Charge D ≃ {p : Charge D // reduceCharge D p = a},
           ∀ n : Charge D, (e n).val = fun i => 2 * n i + chargeLift D a i) ∧
@@ -77,10 +77,10 @@ abbrev arena : Arena where
         parityTheta D a τ = sectorTheta (Gram2G D) (phi D hu a) τ ∧
         parityTheta D a (-1 / τ) = (-Complex.I * τ) ^ ((D.rank : ℂ) / 2) /
           (Real.sqrt ((2 : ℝ) ^ D.rank) : ℂ) * ∑ b : ModTwoCharge D,
-            TwistedGround.OriginalFourMChargeCoset.fourierSign D a b * parityTheta D b τ) ∧
+            _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset.fourierSign D a b * parityTheta D b τ) ∧
       (∀ (τ : ℂ), 0 < τ.im → ∀ a : ModTwoCharge D,
         parityTheta D a (τ + 1) =
-          TwistedGround.OriginalFourMChargeCoset.quadraticSign D a * parityTheta D a τ)
+          _root_.D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset.quadraticSign D a * parityTheta D a τ)
 
 private theorem sourceBridge :
     (type_of% (@_root_.D5.S3.VertexAlgebra.LatticeModTwoTheta.original_modTwo_theta_bridge)) ↔

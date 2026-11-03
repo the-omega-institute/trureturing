@@ -1,7 +1,9 @@
 /-
 Original mod-two charge fibres and the discriminant theta of 2G.
 
-SOURCE ONLY: this file has not been elaborated or kernel checked.
+Original source proposal: sha256
+a208a3d341c2ebe1735b7c3d68c9eb39bc0824995cfea2fed33450e93cfbb7d8.
+Native API repairs retain the complete original endpoint.
 Source base: 65a253616c22829023b8ff1c09cf1d5e6a221cf6.
 The S supplier is the existing LatticeDiscriminantWeil.sector_S, source
 sha256 c51ff733bdd1b782eac84229d59e0dc690090d52722647d2f4088ba400f560e8,
