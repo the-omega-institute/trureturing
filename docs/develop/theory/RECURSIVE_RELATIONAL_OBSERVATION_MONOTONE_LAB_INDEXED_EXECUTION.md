@@ -1344,3 +1344,490 @@ prefix results preserve their full domains without asserting any of
 these additional conclusions.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 10. A fixed word-stack evaluator and its scalar representation
+
+**Definition 10.1 (the finite evaluator network ML-S).** A register is a
+finite Boolean word with its first element at the top. The instruction
+algebra is precisely halt with a Boolean decision, goto, push of one
+constant bit, pop with empty/zero/one successors, and peek with those
+same successors. Pop of the empty word leaves it empty. Control labels
+and the register set are fixed finite sets. No instruction applies an
+arbitrary function to a word. ML-S is the network obtained by the
+following finite routine compositions; names in this definition identify
+entries of that network, rather than new atomic instructions.
+
+The scalar representation is the canonical little-endian word
+$\nu(0)=\varepsilon$, with no high zero in $\nu(n)$ for $n>0$.
+An arbitrary finite Boolean word $w=b_1\cdots b_k$ has the internal
+record
+
+$$
+\langle w\rangle=1b_1\cdots1b_k0.
+\tag{ML.17}
+$$
+
+A finite vector is the concatenation of these records, with no extra
+sentinel; its known length is retained separately when random access
+is needed. Thus an empty vector and a vector containing a zero are
+respectively $\varepsilon$ and $0$. Natural-number vectors use records
+of $\nu(n)$. Internal record lengths impose no bound on $N$, a scalar,
+a cylinder count or a subset-array size.
+
+There is one private argument/result bank for each routine. A call copies
+the actual argument words into that bank, pushes its fixed eight-bit
+return identifier onto that routine's initially empty return stack, and
+jumps to its entry. Return pops the identifier through its finite binary
+dispatch tree and copies the result words to the caller. Each routine
+has fewer than 256 call sites. The call graph is acyclic: word
+transfer and ripple arithmetic precede comparison, multiplication and
+division; these precede gcd and rational arithmetic; these precede
+vector access, framing and the combinatorial routines; normalizers and
+mixtures precede the outer evaluator. A loop is an ordinary graph cycle,
+not recursion in this call graph. Therefore another invocation cannot
+overwrite a still pending return identifier of the same routine.
+
+**Definition 10.2 (word and arithmetic entries).** The entries clear,
+reverse-transfer, copy, popword, prepend and concat respectively empty
+a stack, reverse its word into another stack, copy without changing
+the source, extract the first record of (ML.17), prefix such a record,
+and concatenate two finite words. Copy first transfers the source into
+an empty temporary, then pops that temporary while pushing each bit
+onto both the original and destination. Prepend reverses its payload,
+pushes its terminating zero onto the destination, then, at each payload
+bit in reverse order, pushes that bit followed by one. Popword removes
+successive leading one/bit pairs up to the terminating zero, collecting
+the payload through a reversing temporary.
+
+The scalar entries add and sub consume copied argument bits from low
+to high. Their finite states retain one carry or borrow bit; absent
+high bits are zero. When both words end, add appends its final carry,
+whereas sub returns its final borrow. Both trim high zero bits through
+a reversed temporary. The sub-result is used as a difference only when
+the borrow is zero. Comparison uses this borrow; equality additionally
+tests the zero difference. Multiplication consumes the second operand's
+low bits, conditionally adds the shifted first operand to an accumulator,
+and doubles that first operand at each iteration. Division reverses the
+dividend and processes it from high to low, replacing the remainder by
+$2r+b$, conditionally subtracting the positive divisor and recording the
+quotient bit. It normalizes the quotient at return. Gcd repeatedly calls
+division and replaces the pair by divisor/remainder. Reduce divides
+numerator and positive denominator by their gcd. Rational addition forms
+the two cross-products and the denominator product, adds the former and
+reduces. All these entries are compositions of the five instructions in
+Definition 10.1; the named entries are not host-arithmetic callbacks.
+
+**Theorem 10.3 (word and scalar contracts on all represented words).**
+For every finite represented word or vector, the word entries have
+Definition 10.2's meanings and terminate. For every pair of represented
+naturals, add and mul return their sum and product; sub returns borrow
+one exactly when the first is smaller, and otherwise their difference.
+The comparisons return their indicated Boolean naturals. On positive
+divisors, div returns the unique quotient and remainder, gcd terminates,
+and reduce and rational addition return reduced nonnegative fractions
+with positive denominator, including $0/1$.
+
+Proof. Induct on the finite source word for each transfer. In copy, the
+first transfer reverses the original, and the second reverses it again
+into each of the two destinations. The two pushes in prepend restore
+the order of every one/bit pair; its initial zero terminates exactly the
+payload, independently of the following records. Induct on the number
+of pairs for popword. These proofs apply to arbitrary words, not merely
+canonical naturals or bounded test cases.
+
+For ripple addition, after $k$ positions, the produced low part plus
+$2^k$ times the carry equals the low parts of the operands' sum. For
+subtraction, the corresponding identity has the borrow with the opposite
+sign. Exhausting both words gives the claimed final carry/borrow and,
+on zero borrow, the difference. Trimming high zeros preserves value and
+makes the representation canonical. Shift-add multiplication maintains
+accumulator plus shifted operand times the remaining multiplier equal
+to the original product. The multiplier loses one bit per iteration.
+For division, after processing a high prefix, that prefix equals divisor
+times quotient plus remainder, with remainder smaller than the positive
+divisor. The next bit and optional single subtraction preserve precisely
+this invariant. Each iteration consumes one dividend bit. Euclid has a
+strictly decreasing positive second member until it becomes zero.
+The gcd of zero and a positive denominator is that denominator, so zero
+fractions also reduce without division by zero. Cross-products preserve
+the ordinary rational sum. The call order of Definition 10.1 and these
+strict decreases prove termination of every stated contract. $\square$
+
+**Definition 10.4 (vector access and ML-F entries).** Get extracts and
+discards records until its copied nonnegative index is zero, then
+extracts that record. Put moves the preceding records into a temporary
+vector in reverse record order, removes the old selected record, prefixes
+the replacement onto the tail, then restores the temporary records one
+at a time. Zeros prefixes a zero record once per counter decrement.
+These entries require an in-range index; their callers establish it.
+
+ReadV counts the initial unary length marks in a finite temporary stack,
+then transfers exactly that many following bits. ReadU reverses the
+resulting canonical MSB-first unsigned payload and normalizes its zero.
+Readcache reads all $15N$ mask bits before any selected value, then
+rescans them in original order to read one actual selected value for
+each one. Its internal vector has $15N$ entries: zero means unknown,
+one means observed zero, and two means observed one. EncU reverses
+$\nu(n)$, supplies the one-bit payload zero when $n=0$, and applies V.
+EncQ reduces, concatenates the two U-words and prefixes zero sign.
+The outer output concatenates V of each rational word after U of its
+list length, and uses the ML-F positivity bit and conditional list.
+
+**Theorem 10.5 (accepted-frame correspondence).** Let $x$ be any accepted
+ML-F arithmetic frame, including an unreduced rational prior and either
+endpoint prior. Supply exactly its bits, in their original order, as
+register zero of ML-S, all other registers empty. ReadU and Readcache
+recover its $N$, numerator, positive denominator and all original-indexed
+cache entries; subsequent ReadV/Readcache calls recover precisely the
+stated cylinder list. A cylinder with flag one has no mask and denotes
+the empty event. A cylinder with flag zero retains its entire mask and
+all its selected bits. EncQ and the outer output recover ML-F's reduced
+output format. This transformation is defined on every accepted finite
+frame and loses none of its numerical or indexed meanings.
+
+Proof. In V, the unary marks fix the exact number of payload bits, so
+induction on this length proves ReadV. The canonical unsigned payload
+then gives ReadU, including its explicit zero payload. Positivity of the
+prior denominator and $0\le a\le b$ are the accepted-frame premises;
+no cancellation of $a/b$ is needed to read it. Readcache's first scan
+fixes the positions of the second scan. Its loop invariant after index
+$k$ is that precisely the selected values before $k$ have been consumed
+and the entire first $k$ entries agree with the received frame. This
+also retains unknown and repeated original slots. Induction on the
+stated list length gives every cylinder, with its independently framed
+finite word. The inverse claims for encoding follow by the same
+length induction and Theorem 10.3. Acceptedness here is a premise about
+the actual received bytes; a service must validate that premise before
+loading. This theorem supplies no validation or acceptance claim for
+other input words. $\square$
+
+## 11. The combinatorial entries and the full ordinary correspondence
+
+**Definition 11.1 (partition and label entries).** Blocks scans an RGS
+and returns one plus its largest entry. Nextpart scans from the right
+for the last position whose value is smaller than one plus the maximum
+of its strict prefix, increments that value and sets the later suffix
+to zero. If none exists it returns the exhausted flag. The first RGS
+is the length-$N$ zero vector. The partition iterator tests the original
+caps 72 and 243 before using a denominator.
+
+Countlabels first scans every original sample $j$ and each coordinate
+on the chosen side. It copies each known value into its proposed
+block/coordinate requirement; two different known values there set a
+conflict flag. For each alphabet label, an explicit bit scan of those
+requirements constructs the permitted-block indicator. A label that
+permits no block leaves the subset array unchanged. For other labels,
+new is initialized by copying old. At each nonempty subset $S$ its
+entry is initialized from old($S$); for each permitted member $b$ the
+entry old($S\setminus\{b\}$) is added. Membership and deletion use
+quotient/remainder by the iteratively doubled power of two. All reads
+in this addition are from old. Only after the full subset scan does
+new replace old. The final full-subset entry is returned.
+
+**Theorem 11.2 (partition and label correspondence).** Nextpart enumerates
+every partition in ML-A's order, once. Countlabels returns precisely
+$L_p(D)$ or $R_q(D)$ of UJB16.1, including empty and conflicting
+restrictions, on the full original index set.
+
+Proof. Increasing the rightmost position that can increase, followed
+by the least possible suffix, is exactly the next lexicographic RGS.
+Every RGS begins with zero; the first all-zero word and exhaustion
+therefore bracket the entire finite RGS set. Each member of an equality
+block visits the same requirement cell, so that cell is exactly the
+intersection of all its indexed coordinate restrictions. A conflicting
+cell allows no label. Otherwise a tested label passes exactly when it
+satisfies every required coordinate. UJB16.1's recurrence now applies:
+copying old accounts for not using the next label, and each added term
+assigns it to one permitted block of $S$. Distinct blocks cannot use it
+twice because all predecessor reads use old. The disjoint alternatives
+are complete. A label permitting no block has no added terms, justifying
+its skip. Induction over the alphabet gives the final full-subset count.
+No index is removed by a requirement intersection. $\square$
+
+**Proposition 11.3 (two zero-preserving evaluation shortcuts).** When
+all labels on one endpoint side are fully observed, injectivity of the
+once-shared label map forces the sole possible sample partition to be
+equality of those full observed words. Its compatible label count is
+one; every other partition has label count zero. Also, an injective
+embedding of $H_{p,q}$ into either literal source is impossible when a
+distinguished left vertex has more than 27 different required right
+neighbors, or a right vertex has more than eight different required
+left neighbors. Thus these tests may bypass only zero summands of
+(ML.7), for every $N$, without replacing its index set or denominator.
+
+Proof. Two sampled endpoints with equal full labels are the same
+endpoint by injectivity; unequal full labels cannot be the same endpoint.
+The equality partition is therefore forced in both directions. Its
+block label is already fixed, so its labeling assignment has exactly
+one choice. In $G_0$ each literal left endpoint meets three point types
+of capacity nine, and a literal right endpoint meets four line types
+of capacity two. In $G_1$ the corresponding degrees are 27 and eight.
+An embedding sends distinct required neighbors to distinct literal
+neighbors. Either excessive degree is impossible. Repeated original
+incidences are counted once for this necessary degree test, but still
+occur at every original $j$ in the incidence scan and $1944^N$.
+This establishes the zero tests, not a replacement law. $\square$
+
+**Definition 11.4 (literal-capacity entry).** Inject first performs
+Proposition 11.3's degree test. Otherwise it enumerates mixed-radix
+words of length $r+s$: radices $(36,27)$ for the first $r$ and last $s$
+positions in source zero, and $(9,9)$ in source one. A rightmost-digit
+odometer resets exhausted digits to zero. Each word starts with empty
+left/right occupancy vectors and weight one. At each distinguished
+vertex it multiplies by capacity minus previous occupancy, using zero
+if exhausted, then increments occupancy. The capacities are $(2,9)$
+and $(8,27)$. It scans every original $j$, selects the types at $p(j)$
+and $q(j)$, and sets weight to zero on failed incidence. It adds each
+word's final weight to J.
+
+The source-zero incidence code is the finite Boolean decision tree for
+membership of a point in a line of UJB15.2: first its six low line-index
+bits, then its five low point-index bits, with absent high bits zero.
+Lines use the four displayed directions in UJB15.2 followed by their
+lexicographically least point, and points use lexicographic ternary
+order. All 36 by 27 entries are public constants. A leaf is one exactly
+on membership, and otherwise zero. For source one the test is equality
+of the two field-value indices in their common lexicographic order.
+The decision tree supplies no source-dependent answers or runtime code.
+
+**Theorem 11.5 (capacity and normalizer entries).** Inject returns
+$J_i(H_{p,q})$ of UJB15.3. Normalizer, using Nextpart, Countlabels and
+Inject, returns exactly $Z_0^*(D),Z_1^*(D)$ of UJB16.2 for every indexed
+cache, including null caches. Its only skipped summands are those proved
+zero in Theorem 11.2 or Proposition 11.3, or by the original block caps.
+
+Proof. The odometer enumerates each pair of type maps exactly once.
+Within one type, multiplying each successive remaining capacity gives
+its falling factorial. A failed capacity makes the same product zero.
+The decision tree is the point-on-line relation on the stated finite
+sets; source one's common field ordering makes its test equality.
+Each original incidence therefore contributes precisely its UJB15.3
+indicator. Summing the weights is that existing theorem's $J_i$.
+The normalizer multiplies J by the two label counts and divides by
+$1944^N(128)_r(256)_s$. These denominators are positive after the block
+cap checks. It sums the two source accumulators by reduced rational
+addition. Theorem 11.2 and the two zero tests cover exactly the omitted
+terms. UJB16.2 identifies the resulting sum with the entire indexed
+cache evidence under the same two full maps, including their unobserved
+extension factors. No independent map is introduced per coordinate,
+block or sample. $\square$
+
+**Theorem 11.6 (all-input ordinary evaluator correspondence).** For
+all accepted arithmetic frames of Theorem 10.5, ML-S terminates and
+its register-zero output is exactly (ML.5) with ML-F framing, and with
+NullEvidence exactly when $Z^*(D)=0$. The other output case contains
+all and only the conditional ratios at a positive normalizer. The
+statement includes every source-permitted finite $N\ge4$, every
+represented rational prior including endpoints and unreduced values,
+every original-indexed mask and value, and every finite cylinder list.
+
+Proof. The parser establishes the indexed data of Theorem 10.5. For each
+cylinder, Conjoin scans all $15N$ positions. Unknown entries retain the
+other restriction; agreeing known entries are retained once; different
+known entries set a conflict flag. The flag-one cylinder also sets it.
+A flagged normalizer returns two zero fractions. Otherwise Theorem 11.5
+applies. Mixture forms $(b-a)Z_0/b+aZ_1/b$ by integer products and
+rational addition. It does not alter the represented prior or redraw a
+source. The output accumulator receives the three base fractions and
+the three fractions for each conjunction in their original list order.
+It tests the exact base numerator. Only on a nonzero numerator does it
+form the conjunction mixture times base denominator divided by base
+numerator times conjunction denominator. All these divisors are then
+positive. Theorem 10.5 gives the final framing; UJB17.1 supplies the
+conditional-law interpretation.
+
+For termination, every parser and vector scan consumes a finite number
+of actual bits or records. Theorem 10.3 covers scalar loops. An RGS
+iterator exhausts a finite ordered set; a type-map odometer exhausts its
+finite radix product. Each subset loop has exactly $2^r$ finite entries,
+and an alphabet loop has 128 or 256 iterations. Degree, occupancy,
+incidence and conjunction scans have finite supplied vector lengths.
+All vector indices are within the lengths just constructed: sample
+indices below $N$, coordinate indices below 15, block indices below
+$r,s$, occupancy indices below their type counts, and subset indices
+below $2^r$. Bit deletion uses a present subset member. No mathematical
+loop requires a host iteration or a numerical oracle. The acyclic
+routine calls and their finite return dispatch preserve these contracts,
+so their finite compositions terminate. This is an ordinary proof about
+the explicitly composed instruction network, not a new Lean client or a
+claim about its LAB resource acceptance. $\square$
+
+## 12. The supplied stack compiler and an aligned binary adapter
+
+**Definition 12.1 (serialized register boundary).** For a finite register
+family $(w_0,\ldots,w_{k-1})$, use the four-symbol tape
+
+$$
+\mathsf s\,\operatorname{bit}(w_0)\,
+\mathsf s\,\operatorname{bit}(w_1)\cdots
+\mathsf s\,\operatorname{bit}(w_{k-1})\,\mathsf s,
+\tag{ML.18}
+$$
+
+blank elsewhere, with head at its first separator. This is exactly
+StackEncoding.homeTape, with a harmless explicit blank at its left.
+Use the supplied StackSimulation.controller: main dispatch, separator
+seek, inspect, push/insert/rewind, delete/rewind, and finish. Control
+labels are enumerated injectively from the start under all four symbol
+successors. Discarding unused label representations changes no reachable
+local rule. This uses the licensed StackProgram.compile_run and
+StackSimulation.controller_simulates supply under their actual finite
+label and represented-register hypotheses. It does not apply a generic
+compiler theorem without first supplying ML-S's run of Theorem 11.6.
+
+**Theorem 12.2 (structural simulation for arbitrary finite stack words).**
+Starting at (ML.18), every ML-S instruction has the supplied finite
+four-symbol macro and decodes the exact successor register family and
+control. Every internal prefix has its source instruction, pending
+symbol/shift, saved continuation and current scan phase. At a successful
+ML-S halt, the four-symbol head is at the first symbol of register zero;
+its contiguous bit output is exactly that register, terminated by the
+next separator even when the output is empty.
+
+Proof. A separator seek decrements its finite separator counter exactly
+at separators, passing every intervening bit without changing it.
+Thus its current head is the intended register's first symbol; an empty
+register presents the following separator. Peek chooses its exact
+empty/zero/one branch and rewinds to the unique left boundary blank.
+Pop does the same on empty. On a bit it shifts the entire finite
+nonblank suffix one position left, writes the final blank and rewinds.
+No earlier register is altered. Push seeks the same position, retains
+a carried symbol in finite control, and shifts every following nonblank
+one place right until the first blank is filled; it then rewinds.
+This inserts exactly the desired bit. These are the supplied insertion,
+delete, seek and rewind contracts on arbitrary finite nonblank suffixes;
+explicit trailing blanks are equivalent tapes. Goto preserves the tape.
+The source halt advances once from the first separator and enters
+finish. These cases prove the boundary assertion by induction over any
+finite ML-S prefix. Each phase retains the information about an
+incomplete shift or seek, so it is not interpreted as another committed
+source instruction. The output assertion follows from (ML.18), including
+an immediately following separator for an empty word. $\square$
+
+**Definition 12.3 (two-bit tape and eleven-state adapter).** Encode
+blank, zero bit, one bit and separator by $00,01,10,11$, respectively.
+Encode a four-symbol head at integer $h$ by binary position $2h$.
+For each four-symbol state $q$ allocate eleven binary states: aligned
+entry 0, first-read alternatives 1–2, first-write alternatives 3–6 and
+movement alternatives 7–10. At entry, preserve the first bit and move
+right into its retained alternative. Reading the second bit identifies
+the symbol. On a source step $(w,d,q')$, write the second bit of $w$
+and move left into its first-write alternative; write its first bit and
+move left for $d=L$, right otherwise. The movement alternative preserves
+its bit and moves left for $d=L$ or stay, right for $d=R$, arriving at
+aligned entry $q'$. On a source halt, preserve the second bit and move
+left to the sole binary halt. Unreachable alternatives attached to a
+terminal read have defined preserving rules to halt. All rows have both
+binary read cases, and all destinations are allocated states or halt.
+
+**Theorem 12.4 (all-input compiled-state and output correspondence).**
+Each four-symbol step on any finite represented tape has exactly four
+binary transitions between aligned entries and preserves the pointwise
+two-bit encoding. A four-symbol halt has two preserving binary transitions
+and restores the aligned head. Therefore the fixed binary table for ML-S
+halts on every encoded accepted arithmetic frame, at the encoded first
+output symbol, with exactly Theorem 11.6's framed output under the
+reverse symbol decoding. Blanks outside the finite represented tape
+remain true $00$ blocks; both bilateral directions and stay are covered.
+
+Proof. After the two reads the old pair is known in control; the second
+bit has its intended new value and the first is pending. The next write
+finishes exactly that pair. For left movement the two final moves visit
+the preceding pair's second then first positions. For right they visit
+the current pair's second then the next first position. For stay they
+visit the current second then return to its first position. No other
+pair is changed. The two halt reads preserve both bits and return to
+the original first bit. Induction over four-symbol macro transitions,
+including this explicit pending interpretation, gives the claim. Apply
+Theorems 11.6 and 12.2. Actual output decoding reads pairs $01,10$ as
+output bits until the real $11$ separator; it never infers omitted output
+zeros from unrepresented tape. This is structural simulation over all
+represented words, not extrapolation from finite tests. $\square$
+
+## 13. A complete closed block representation of the Wang word
+
+**Definition 13.1 (literal templates and resolved destinations).** For
+each of the sixteen possibilities for the two source binary rules'
+write bits and movement directions, take the entire source-state block
+of the fixed ML-N copier. Its only external continuations are the
+source zero-read and one-read destination entries. This is a finite
+literal template $T_e$ with two explicit destination slots. If the
+materialized source binary table has rows $q<m$, put
+
+$$
+b_0=0,\qquad b_{q+1}=b_q+|T_{e(q)}|.
+\tag{ML.19}
+$$
+
+Store all $b_0,\ldots,b_m$ and, for every $q$, its template identifier
+and the resolved addresses $b_{\delta(q,0)},b_{\delta(q,1)}$, with
+$b_m$ the sole non-erasing halt. At local template state $u$, replace
+an internal destination $v$ by $b_q+v$ and an external slot by its
+stored resolved address. This gives every row, at both reads, of a
+complete non-erasing binary table with $b_m$ states. It is a finite
+block representation with no missing evaluator entry. Its inputs are
+public table bytes alone.
+
+The associated word $W_U$ has $13b_m+1$ B instructions. Its block at
+$13c$ is the NWMG thirteen-instruction block for non-erasing state $c$,
+with each transition destination $c'$ replaced by jump target $13c'$;
+its final instruction at $13b_m$ is M. The halted program counter is
+$13b_m+1$. The block representation stores literal templates, their
+finite sizes, every base and every resolved external continuation;
+fetch at any PC is thus fully determined. A flat expanded instruction
+array and this closed encoding represent the same finite word. The
+encoding does not assert that the expanded array has been installed.
+
+**Theorem 13.2 (block-image correspondence and ownership).** The table
+of Definition 13.1 is the ML-N copier on the materialized binary
+ML-S table, up to the explicit finite relabeling by (ML.19). Its Wang
+word therefore has the existing ML-N/NWMG correspondence on every
+finite input and every finite run prefix. In particular, on the accepted
+inputs of Theorem 12.4 it has the same finite framed result, subject to
+the actual input conversion and output decoding. This does not identify
+abstract B steps with paid LAB primitives or assert any installed code,
+controller, decoder or resource account.
+
+Proof. In the copier, all states internal to one source-state block
+use only the two selected write bits and directions, the internal
+phase and one of the two destination entries. They consult no other
+source-state row. Replacing that row's name by $q$, its local labels by
+$b_q+u$, and its two continuations by the stored bases therefore maps
+each local rule to exactly the corresponding generic copier rule.
+The intervals $[b_q,b_{q+1})$ are disjoint and exhaust all nonhalting
+states, so this is a complete graph isomorphism. Internal targets remain
+in their interval; the two external targets are allocated entries or
+the sole halt. The NWMG block construction then applies at every state
+and both reads; its final M implements the same halt convention.
+The ML-N copied-record invariant and Theorems 3.3–3.4 give the existing
+conditional lower-layer correspondence. The actual conversion starts
+from (ML.18)'s paired bits, wraps them by ML-N's initial record, then
+uses the NWMG $10/11$ encoding before ML-L. The inverse at halt first
+finds the active record and original coordinate offset, then decodes
+pairs and the real output separator. These are required concrete data
+conversions, not hidden numerical inputs. $\square$
+
+**Definition 13.3 (sealed consumer boundary).** The public immutable
+objects are ML-S, the four-symbol and binary tables, the literal copier
+templates and resolved block image. The variable numerical input is
+only the actually accepted ML-F word. The original port and its physical
+binding are separate retained session objects and are never arguments
+of a public numerical compiler. The output observation is the finite
+ML-F word read from the actual returned head and separator. A consumer
+must back table/image fetch, current PC and scan phase; actual work and
+source references; conversion, loader and decoder cursors and buffers;
+received bits, return phases, grants and cleanup. Selecting a compressed
+code representation additionally requires backing its address search
+and local-template selection. Supplying a flat expansion instead
+requires charging that expansion's actual installation. Neither choice
+permits a host evaluator or uncharged operational integers.
+
+Theorem 13.2 gives sufficiency of the stated representation for the
+specified mathematical computation. Actual same-port continuation,
+complete controller backing, a full evaluator LAB run and the
+simultaneous account of §6 remain separate premises/obligations of that
+execution; no short reference run or closed code image discharges them.
+The spatial and minimum-information limits of §7 are unaltered.
+
+## 追加锚（本行以下为增补区）

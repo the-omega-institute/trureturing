@@ -44,3 +44,28 @@ Their cursor flags and old copies must be retained and charged.
 The LAB realization and its indexed-law application have their separate
 installation and simultaneous-resource premises in
 [Monotone LAB Indexed Execution](../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MONOTONE_LAB_INDEXED_EXECUTION.md).
+
+
+## Finite stack compiler used before the Wang construction
+
+The Boolean-stack algebra and its four-symbol tape controller are a
+separate licensed supplier, RBarish-UTokyo/NPCompleteness-Lean4 revision
+`3e603e795b44fedcf7d6dd65b7d1e30547ead925`, under Apache-2.0. The exact
+repository content-port correspondence and full license are in
+[Binary machine supply](../../docs/reports/licenses/RBarishBinaryMachine.md).
+`StackProgram.compile_run` requires a finite injective label encoding;
+`StackSimulation.controller_simulates` requires an actual terminating
+stack run, finite represented registers and a sufficient finite room
+bound. `StackCompile.simulate` also includes its own input initializer;
+the selected ML-S route instead loads `StackEncoding.homeTape` explicitly
+and uses the controller theorem. Given a finite terminating run, initial
+maximum stack length plus its instruction count supplies the room bound.
+No polynomial bound is asserted for the UJB evaluator.
+
+The supplied alphabet is blank, bit-zero, bit-one and separator, with
+bilateral left/stay/right movement. The two-bit adapter, the complete
+ML-S client, its accepted ML-F correspondence and the closed copier/Wang
+block encoding are separate ordinary constructions in §§10–13 of the
+owning theory volume. The generic supplier does not prove an absent
+client, and the executable content port is not a fresh Lean client or
+an invocation of NWMG on a four-symbol machine without an alphabet bridge.
