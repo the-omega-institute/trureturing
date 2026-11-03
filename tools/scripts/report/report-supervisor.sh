@@ -507,7 +507,7 @@ resource_sampling_unavailable() {
 }
 
 sample_supervised_resources() {
-  local pid rss fd members
+  local pid fd members
   local rss_total=0
   local fd_total=0
   if members="$({
@@ -522,48 +522,75 @@ sample_supervised_resources() {
   # This is cleanup identity state, not optional resource telemetry: retain
   # its hard failure if it cannot be recorded.
   printf '%s\n' "$members" | record_process_candidates || return "$?"
+  # Resource values concern one already-discovered cohort. Query that cohort
+  # together; per-PID tool startup must not multiply the observer's work.
+  local members_csv=""
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
       && "$pid" != "$STDERR_RELAY_PID" ]] || continue
-    if rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } \
-      | awk '{sum += $1} END {print sum + 0}')"; then
-      :
-    else
-      resource_sampling_unavailable rss "$?"
-      return 0
-    fi
-    if [[ ! "$rss" =~ ^[0-9]+$ ]]; then
-      resource_sampling_unavailable rss-value 2
-      return 0
-    fi
-    rss_total=$((rss_total + rss))
-    if [[ -d "/proc/$pid/fd" ]]; then
-      if fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
-        | awk 'END {print NR + 0}')"; then
-        :
-      else
-        resource_sampling_unavailable fd "$?"
-        return 0
-      fi
-    elif command -v lsof >/dev/null 2>&1; then
-      if fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
-        | awk 'NR > 1 {count++} END {print count + 0}')"; then
-        :
-      else
-        resource_sampling_unavailable fd "$?"
-        return 0
-      fi
-    else
+    members_csv="${members_csv:+$members_csv,}$pid"
+  done < <(printf '%s\n' "$members")
+  [[ -n "$members_csv" ]] || return 0
+  if rss_total="$( { ps -o rss= -p "$members_csv" 2>/dev/null || true; } \
+    | awk '{sum += $1} END {print sum + 0}')"; then
+    :
+  else
+    resource_sampling_unavailable rss "$?"
+    return 0
+  fi
+  if [[ ! "$rss_total" =~ ^[0-9]+$ ]]; then
+    resource_sampling_unavailable rss-value 2
+    return 0
+  fi
+  if [[ ! -d /proc ]]; then
+    if ! command -v lsof >/dev/null 2>&1; then
       resource_sampling_unavailable fd-tool 127
       return 0
     fi
-    if [[ ! "$fd" =~ ^[0-9]+$ ]]; then
+    if fd_total="$( { lsof -a -p "$members_csv" -d 0-999999 2>/dev/null || true; } \
+      | awk 'NR > 1 {count++} END {print count + 0}')"; then
+      :
+    else
+      resource_sampling_unavailable fd "$?"
+      return 0
+    fi
+    if [[ ! "$fd_total" =~ ^[0-9]+$ ]]; then
       resource_sampling_unavailable fd-value 2
       return 0
     fi
-    fd_total=$((fd_total + fd))
-  done < <(printf '%s\n' "$members")
+  else
+    while IFS= read -r pid; do
+      [[ -n "$pid" \
+        && "$pid" != "$STDOUT_RELAY_PID" \
+        && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+      if [[ -d "/proc/$pid/fd" ]]; then
+        if fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
+          | awk 'END {print NR + 0}')"; then
+          :
+        else
+          resource_sampling_unavailable fd "$?"
+          return 0
+        fi
+      elif command -v lsof >/dev/null 2>&1; then
+        if fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
+          | awk 'NR > 1 {count++} END {print count + 0}')"; then
+          :
+        else
+          resource_sampling_unavailable fd "$?"
+          return 0
+        fi
+      else
+        resource_sampling_unavailable fd-tool 127
+        return 0
+      fi
+      if [[ ! "$fd" =~ ^[0-9]+$ ]]; then
+        resource_sampling_unavailable fd-value 2
+        return 0
+      fi
+      fd_total=$((fd_total + fd))
+    done < <(printf '%s\n' "$members")
+  fi
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }
