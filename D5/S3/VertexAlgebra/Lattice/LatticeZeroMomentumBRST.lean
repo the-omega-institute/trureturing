@@ -4,19 +4,18 @@
    mirror-E: none(waiver:algebraic-original-zero-momentum-shell)
    anchors: []
    utility: none
-   digest: Exhaustive original zero-momentum relative shell and actual BRST/number actions. -/
+   digest: Exhaustive original zero-momentum relative shell and actual total BRST charge. -/
 
 /- The carrier, total charge and unshifted shell are the original frozen suppliers.
 The two inverse-Gram equations are explicit; no rank, signature or nilpotence
 assumption is used. Repository suppliers retain their authorship.
-Basis reindexing and coordinate equivalences reuse Mathlib (Apache 2.0).
+Basis reindexing reuses Mathlib (Apache 2.0).
 This prerequisite asserts neither cohomology nor positivity. -/
 
 import D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
-import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostDegree
 
-/-! Exhaustion and actual operator actions on the original zero-momentum relative shell. -/
+/-! Exhaustion and actual total charge on the original zero-momentum relative shell. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -31,8 +30,6 @@ open LatticeMatterGhostCoupling LatticeRelativeMassShell
 open D5.S3.Quantum.Fermionic
 open CountableOccupationFock
 open BcGhostFock (b c)
-open LatticeMatterGhostDegree (tensorNumber)
-open private number_ket from D5.S3.Quantum.Fermionic.BcGhostCharge
 
 noncomputable section
 
@@ -286,53 +283,6 @@ theorem zeroBasis_coe (k : ZeroIndex D) :
   rw [zeroBasis, Module.Basis.reindex_apply, shellBasis_coe]
   exact (zeroVector_eq_tensorBasis D k).symm
 
-abbrev Coordinates := ℂ × ((Fin D.rank → ℂ) × ℂ)
-
-private def splitCoordinates : (ZeroIndex D → ℂ) ≃ₗ[ℂ] Coordinates D where
-  toFun f := (f (.inl ()), (fun i => f (.inr (.inl i)), f (.inr (.inr ()))))
-  invFun z := fun k => match k with
-    | .inl _ => z.1
-    | .inr (.inl i) => z.2.1 i
-    | .inr (.inr _) => z.2.2
-  left_inv f := by
-    funext k
-    rcases k with ⟨⟩ | (i | ⟨⟩) <;> rfl
-  right_inv z := by rcases z with ⟨A,v,C⟩; rfl
-  map_add' f g := rfl
-  map_smul' a f := rfl
-
-/-- Coefficients of the actual original shell, with inverse supplied by its basis. -/
-def shellEquiv : relativeMassShell D H 0 ≃ₗ[ℂ] Coordinates D :=
-  (zeroBasis D H hHG hGH).equivFun.trans (splitCoordinates D)
-
-/-- Psi lands in the original shell; no replacement carrier is introduced. -/
-def Psi : Coordinates D →ₗ[ℂ] State D :=
-  (relativeMassShell D H 0).subtype.comp (shellEquiv D H hHG hGH).symm.toLinearMap
-
-theorem Psi_formula (z : Coordinates D) :
-    Psi D H hHG hGH z = z.1 • (ground D ⊗ₜ[ℂ] ket ∅) +
-      (∑ i : Fin D.rank, z.2.1 i • current D i) ⊗ₜ[ℂ] ket {1} +
-      z.2.2 • (ground D ⊗ₜ[ℂ] ket {1,5}) := by
-  classical
-  have h := (zeroBasis D H hHG hGH).equivFun_symm_apply
-    ((splitCoordinates D).symm z)
-  have hc := congrArg (fun x : relativeMassShell D H 0 => (x : State D)) h
-  change Psi D H hHG hGH z = _ at hc
-  rw [hc]
-  change (relativeMassShell D H 0).subtype
-    (∑ k, (splitCoordinates D).symm z k • zeroBasis D H hHG hGH k) = _
-  rw [map_sum]
-  simp only [map_smul]
-  change (∑ k, (splitCoordinates D).symm z k •
-    (zeroBasis D H hHG hGH k : State D)) = _
-  simp only [zeroBasis_coe, Fintype.sum_sum_type, Fintype.sum_unique]
-  change z.1 • (ground D ⊗ₜ[ℂ] ket ∅) +
-    ((∑ i, z.2.1 i • (current D i ⊗ₜ[ℂ] ket {1})) +
-      z.2.2 • (ground D ⊗ₜ[ℂ] ket {1,5})) = _
-  rw [TensorProduct.sum_tmul]
-  simp only [TensorProduct.smul_tmul']
-  abel
-
 end Shell
 
 /- Actual ghost charge calculations. The all-integer R sum is captured by CAR. -/
@@ -532,62 +482,8 @@ theorem totalCharge_on_zero_shell (D : LatticeData)
     rw [zeroBasis_coe, totalCharge_zeroVector D H hHG hGH]
   exact LinearMap.congr_fun hlinear y
 
-/- Actual ghost number on the same original basis. -/
-
-def shellGhostDegree (D : LatticeData) : ZeroIndex D → ℕ
-  | .inl _ => 0
-  | .inr (.inl _) => 1
-  | .inr (.inr _) => 2
-
-theorem totalGhostNumber_zeroVector (D : LatticeData) (k : ZeroIndex D) :
-    tensorNumber D (zeroVector D k) =
-      (shellGhostDegree D k : ℂ) • zeroVector D k := by
-  rcases k with u | (i | u)
-  all_goals norm_num [tensorNumber, BcGhostChargeTensor.number, BcGhostChargeTensor.liftGhost,
-    zeroVector, shellGhostDegree,
-    TensorProduct.map_tmul, number_ket, BcGhostCharge.charge, Finset.filter_insert,
-      Finset.filter_singleton, TensorProduct.tmul_smul]
-
-/-- Exact requested action: G Psi(A,v,C) = Psi(0,v,2C). -/
-theorem totalGhostNumber_Psi (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (z : Coordinates D) :
-    tensorNumber D (Psi D H hHG hGH z) =
-      Psi D H hHG hGH (0,(z.2.1,2*z.2.2)) := by
-  classical
-  simp only [Psi_formula, map_add, map_smul, TensorProduct.sum_tmul,
-    ← TensorProduct.smul_tmul', map_sum]
-  have h0 := totalGhostNumber_zeroVector D (.inl ())
-  have h1 := fun i : Fin D.rank => totalGhostNumber_zeroVector D (.inr (.inl i))
-  have h2 := totalGhostNumber_zeroVector D (.inr (.inr ()))
-  simp only [zeroVector, shellGhostDegree, Nat.cast_zero, zero_smul,
-    Nat.cast_one, one_smul, Nat.cast_ofNat] at h0 h1 h2
-  simp only [h0, h1, h2, smul_zero, zero_add, smul_smul]
-  module
-
-/-- Both actual operators on any state of the literal original shell. -/
-theorem zero_shell_actions (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (x : relativeMassShell D H 0) :
-    LatticeBRST.totalCharge D H (x : State D) = 0 ∧
-      tensorNumber D (x : State D) =
-        Psi D H hHG hGH
-          (0, ((shellEquiv D H hHG hGH x).2.1,
-            2 * (shellEquiv D H hHG hGH x).2.2)) := by
-  constructor
-  · exact totalCharge_on_zero_shell D H hHG hGH x x.property
-  · have he : Psi D H hHG hGH (shellEquiv D H hHG hGH x) = (x : State D) :=
-      congrArg (fun y : relativeMassShell D H 0 => (y : State D))
-        ((shellEquiv D H hHG hGH).symm_apply_apply x)
-    simpa only [he] using
-      totalGhostNumber_Psi D H hHG hGH (shellEquiv D H hHG hGH x)
-
-/- Public output stops at the actual shell basis, Q action and G action.
-No restricted complex or homology object is substituted by a coordinate complex.
-An actual library kernel/range/homology construction is a separate remaining task.
--/
+/- The actual kernel/range/homology construction and its original ghost-number
+grading remain separate obligations; no coordinate complex is substituted. -/
 
 end
 end D5.S3.VertexAlgebra.LatticeZeroMomentumBRST
