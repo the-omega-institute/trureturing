@@ -68,7 +68,9 @@ internal sealed class HwangKimNearOrderRefutationDocument : IScribeDocumentDefin
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))), name == "result" ? DescribeRole.Theorem : DescribeRole.Definition,
-            null);
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hwang-kim-2024-near-order-log-euclidean-wasserstein"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

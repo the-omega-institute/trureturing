@@ -70,6 +70,10 @@ $$\neg (\forall m: \mathbb{N}, (1 \le m) \Rightarrow (\forall n: \mathbb{N}, (2 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HwangKimNearOrderRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hwang-kim-2024-near-order-log-euclidean-wasserstein` (refuted) by `D5/S3/Quantum/Matrix/HwangKimNearOrderRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hwang-kim-2024-near-order-log-euclidean-wasserstein","declaration_gid":"D5/S3/Quantum/Matrix/HwangKimNearOrderRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jinmi Hwang; Sejong Kim (2024). *Near-order relation of power means*. DOI: [10.1007/s11117-024-01099-4](https://doi.org/10.1007/s11117-024-01099-4). URL: <https://arxiv.org/abs/2407.07438v1>.
