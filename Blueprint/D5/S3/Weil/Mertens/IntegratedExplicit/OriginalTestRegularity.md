@@ -42,19 +42,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.c_
 
 If every node lies in [0,D], all ramps vanish at t=D. Thus c(D)=0, including the zero-length and empty cases.
 
-**Theorem 1.4 (The actual spectral derivative).**
-
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.spectralS_hasDerivAt`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.spectralS_hasDerivAt` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every finite Borel measure rho on the real line, spectralS(rho,t)=integral cos(w*t)/(1+4*w^2) d rho(w). Its actual derivative is integral -w*sin(w*t)/(1+4*w^2) d rho(w). The kernel has absolute value at most 1 and its derivative has absolute value at most 1/4. These uniform bounds justify differentiation under the integral without a frequency moment or parity assumption.
-
-**Theorem 1.5 (Absolute continuity of the spectral resolvent).**
+**Theorem 1.4 (Absolute continuity of the spectral resolvent).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.spectralS_ac`
 
@@ -72,5 +60,4 @@ The bounded derivative under a finite measure gives a globally Lipschitz spectra
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.c_at_D`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.c_eq_hinges`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.spectralS_ac`
-- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.spectralS_hasDerivAt`
 - Dependency: [D5/S3/Analytic/Interpolation/AtomicPrefixEnergy](../../../Analytic/Interpolation/AtomicPrefixEnergy.md)
