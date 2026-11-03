@@ -17,6 +17,22 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
                 + "G(x)=Z_h(x)-h1*floor(x)-alpha*(x-1). These are literal arithmetic objects; "
                 + "no supplier identity or regularity is a theorem hypothesis.")),
             Describe.Lean(
+                DescribeId.Create("actual-factorial-sharp-h-eq-harmonic"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.H_harmonic"),
+                H("The literal harmonic prefix"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real x, H(x) is harmonic(floor(x)), cast to the reals. This normalization is consumed by the real-floor harmonic bound and by the cancellation proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-factorial-sharp-epsilondensity-integrable"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.epsilonDensity_integrable"),
+                H("Integrability of the actual epsilon density"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual epsilonDensity(t)=epsilon(t)/t is integrable on the complete set t>1. The original Basic proof bounds its absolute value by the integrable inverse-square density; Basic uses it for the actual improper tail."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-continuous-factorial-finite-smoothing"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.finite_smoothing"),
                 H("Exact finite smoothing at every real cutoff"),
