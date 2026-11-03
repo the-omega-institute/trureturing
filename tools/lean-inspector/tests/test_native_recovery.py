@@ -190,6 +190,16 @@ class NativeBatchCompatibilityConsumerTests:
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.ensure()
         self.restore_compiler()
+        if not getattr(self, 'capacity_compiler_prepared', False):
+            # Keep cold compiler preparation separate from the rejection under
+            # test. Both commands retain the fixture's existing 120s guard.
+            prepared = self.guarded_command(['make', 'lean',
+                'LEAN_TARGETS=@leanInspector/reportInspector'],
+                env=dict(self.env, LEAN_NUM_THREADS='1'))
+            self.record_result('capacity-compiler', dict(exit=prepared.returncode,
+                stdout=prepared.stdout, stderr=prepared.stderr))
+            self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
+            self.capacity_compiler_prepared = True
         result = self.guarded_command(['make', 'lean-report',
             'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build', 'REGENERATE_REPORT_ARTIFACTS=1'],
             env=dict(self.env, STRATALINT_NATIVE_BATCH_MODULES=str(size),
