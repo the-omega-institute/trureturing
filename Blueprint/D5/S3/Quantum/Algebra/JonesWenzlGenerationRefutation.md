@@ -118,6 +118,10 @@ $$\neg \left(\forall \left(q: \mathbb{C}\right), \left(\left(q \ne \left(0: \mat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/JonesWenzlGenerationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/flores-peltola-2018-jones-wenzl-generation-refutation` (refuted) by `D5/S3/Quantum/Algebra/JonesWenzlGenerationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"flores-peltola-2018-jones-wenzl-generation-refutation","declaration_gid":"D5/S3/Quantum/Algebra/JonesWenzlGenerationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Steven M. Flores and Eveliina Peltola (2018). *Generators, projectors, and the Jones-Wenzl algebra*. DOI: [10.48550/arXiv.1811.12364](https://doi.org/10.48550/arXiv.1811.12364). URL: <https://arxiv.org/abs/1811.12364v2>.

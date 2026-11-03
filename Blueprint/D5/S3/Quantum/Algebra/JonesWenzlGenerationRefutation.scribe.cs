@@ -132,7 +132,10 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
                             + "Applying the asserted universal generation property to this q, this list and t = W "
                             + "would place Z in that generated subalgebra, a contradiction. "
                             + "The total size is 6, so this example does not contradict the source's theorem under its strict total-size bound."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("flores-peltola-2018-jones-wenzl-generation-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
