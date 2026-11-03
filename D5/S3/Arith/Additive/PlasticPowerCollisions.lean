@@ -11,6 +11,7 @@ import Mathlib.Tactic
 import Mathlib.Data.Finset.Card
 import Mathlib.Algebra.Group.Pointwise.Finset.Basic
 import Mathlib.Data.Finset.Prod
+import Mathlib.Data.Int.Interval
 
 /-! Integer-exponent difference equations and normalized equal sums for a plastic root. -/
 
@@ -330,8 +331,223 @@ theorem sumset_card_eq_reduced_pairs (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r +
             (by intro h; subst s; omega) he (he.trans he')
         exact Finset.mem_image.2 ⟨q,Finset.mem_filter.2 ⟨hqE,hq,hqn⟩,he.symm.trans hpx⟩
       · exact Finset.mem_image.2 ⟨p,Finset.mem_filter.2 ⟨hpE,hp,hb⟩,hpx⟩
-  change _ = P.card
-  rw [← himage]
-  exact Finset.card_image_of_injOn hi
+  have hh : (E.image (fun e => r ^ e) + E.image (fun e => r ^ e)).card = P.card := by
+    rw [← himage]
+    exact Finset.card_image_of_injOn hi
+  refine hh.trans ?_
+  apply congrArg Finset.card
+  ext p
+  constructor
+  · intro h
+    exact Finset.mem_filter.2 (Finset.mem_filter.1 h)
+  · intro h
+    exact Finset.mem_filter.2 (Finset.mem_filter.1 h)
+
+private def templatePairs (E : Finset ℤ) (d a b : ℤ) : Finset (ℤ × ℤ) :=
+  (E.filter (fun t => t+a ∈ E ∧ t+b ∈ E ∧ t+d ∈ E)).image (fun t => (t,t+d))
+
+private theorem templatePairs_mem (E : Finset ℤ) (d a b : ℤ) (p : ℤ × ℤ) :
+    p ∈ templatePairs E d a b ↔
+      p.1 ∈ E ∧ p.2 = p.1+d ∧ p.1+a ∈ E ∧ p.1+b ∈ E ∧ p.1+d ∈ E := by
+  simp only [templatePairs, Finset.mem_image, Finset.mem_filter]
+  constructor
+  · rintro ⟨t,⟨ht,ha,hb,hd⟩,rfl⟩
+    exact ⟨ht,rfl,ha,hb,hd⟩
+  · rintro ⟨hp,hd,ha,hb,hdE⟩
+    exact ⟨p.1,⟨hp,ha,hb,hdE⟩,Prod.ext rfl hd.symm⟩
+
+private theorem templatePairs_disjoint (E : Finset ℤ) (d a b d' a' b' : ℤ)
+    (h : d ≠ d') : Disjoint (templatePairs E d a b) (templatePairs E d' a' b') := by
+  apply Finset.disjoint_left.2
+  intro p hp hq
+  rw [templatePairs_mem] at hp hq
+  exact h (by omega)
+
+/-- The exact sumset identity for every finite integer exponent set. All four template
+counts refer to translates inside that same set; the additive form has no truncated subtraction. -/
+theorem sumset_card_add_template_counts (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (E : Finset ℤ) :
+    ((E.image (fun e => r ^ e)) + (E.image (fun e => r ^ e))).card +
+      (E.filter (fun t => t+2 ∈ E ∧ t+3 ∈ E ∧ t+4 ∈ E)).card +
+      (E.filter (fun t => t+3 ∈ E ∧ t+5 ∈ E ∧ t+6 ∈ E)).card +
+      (E.filter (fun t => t+5 ∈ E ∧ t+7 ∈ E)).card +
+      (E.filter (fun t => t+5 ∈ E ∧ t+8 ∈ E ∧ t+9 ∈ E)).card =
+      (E.card+1).choose 2 := by
+  classical
+  let P := (E ×ˢ E).filter (fun p => p.1 ≤ p.2)
+  let O := P.filter (outerCollision E)
+  let Q := P.filter (fun p => ¬ outerCollision E p)
+  have hsum : ((E.image (fun e => r ^ e)) + (E.image (fun e => r ^ e))).card = Q.card := by
+    have hh := sumset_card_eq_reduced_pairs r hr hroot E
+    refine hh.trans ?_
+    apply congrArg Finset.card
+    ext p
+    constructor
+    · intro h
+      obtain ⟨hp,hps,hpn⟩ := Finset.mem_filter.1 h
+      exact Finset.mem_filter.2 ⟨Finset.mem_filter.2 ⟨hp,hps⟩,hpn⟩
+    · intro h
+      obtain ⟨hp,hpn⟩ := Finset.mem_filter.1 h
+      obtain ⟨hp,hps⟩ := Finset.mem_filter.1 hp
+      exact Finset.mem_filter.2 ⟨hp,hps,hpn⟩
+  have hpartition : Q.card + O.card = P.card := by
+    simpa only [Q,O,Nat.add_comm] using
+      (Finset.card_filter_add_card_filter_not (s := P) (outerCollision E))
+  have hO : O = templatePairs E 4 2 3 ∪ templatePairs E 6 3 5 ∪
+      templatePairs E 7 5 5 ∪ templatePairs E 9 5 8 := by
+    ext p
+    simp only [O,P,Finset.mem_filter,Finset.mem_product,Finset.mem_union,
+      templatePairs_mem,outerCollision]
+    constructor
+    · rintro ⟨⟨⟨hp,hq⟩,hle⟩,h⟩
+      rcases h with ⟨hd,ha,hb⟩ | ⟨hd,ha,hb⟩ | ⟨hd,ha⟩ | ⟨hd,ha,hb⟩
+      · exact Or.inl (Or.inl (Or.inl ⟨hp,hd,ha,hb,hd ▸ hq⟩))
+      · exact Or.inl (Or.inl (Or.inr ⟨hp,hd,ha,hb,hd ▸ hq⟩))
+      · exact Or.inl (Or.inr ⟨hp,hd,ha,ha,hd ▸ hq⟩)
+      · exact Or.inr ⟨hp,hd,ha,hb,hd ▸ hq⟩
+    · rintro (((h | h) | h) | h)
+      · rcases h with ⟨hp,hd,ha,hb,hq⟩
+        exact ⟨⟨⟨hp,hd.symm ▸ hq⟩,by omega⟩,Or.inl ⟨hd,ha,hb⟩⟩
+      · rcases h with ⟨hp,hd,ha,hb,hq⟩
+        exact ⟨⟨⟨hp,hd.symm ▸ hq⟩,by omega⟩,Or.inr (Or.inl ⟨hd,ha,hb⟩)⟩
+      · rcases h with ⟨hp,hd,ha,hb,hq⟩
+        exact ⟨⟨⟨hp,hd.symm ▸ hq⟩,by omega⟩,Or.inr (Or.inr (Or.inl ⟨hd,ha⟩))⟩
+      · rcases h with ⟨hp,hd,ha,hb,hq⟩
+        exact ⟨⟨⟨hp,hd.symm ▸ hq⟩,by omega⟩,Or.inr (Or.inr (Or.inr ⟨hd,ha,hb⟩))⟩
+  have hcardO : O.card =
+      (E.filter (fun t => t+2 ∈ E ∧ t+3 ∈ E ∧ t+4 ∈ E)).card +
+      (E.filter (fun t => t+3 ∈ E ∧ t+5 ∈ E ∧ t+6 ∈ E)).card +
+      (E.filter (fun t => t+5 ∈ E ∧ t+7 ∈ E)).card +
+      (E.filter (fun t => t+5 ∈ E ∧ t+8 ∈ E ∧ t+9 ∈ E)).card := by
+    rw [hO]
+    rw [Finset.card_union_of_disjoint, Finset.card_union_of_disjoint,
+      Finset.card_union_of_disjoint]
+    · have hc (d a b : ℤ) : (templatePairs E d a b).card =
+          (E.filter (fun t => t+a ∈ E ∧ t+b ∈ E ∧ t+d ∈ E)).card := by
+        apply Finset.card_image_of_injective
+        intro x y h
+        exact congrArg (fun p : ℤ × ℤ => p.1) h
+      rw [hc, hc, hc, hc]
+      congr 2
+      apply congrArg Finset.card
+      ext t
+      simp only [Finset.mem_filter, and_self_left]
+    · exact templatePairs_disjoint E _ _ _ _ _ _ (by norm_num)
+    · exact Finset.disjoint_union_left.2 ⟨
+        templatePairs_disjoint E _ _ _ _ _ _ (by norm_num),
+        templatePairs_disjoint E _ _ _ _ _ _ (by norm_num)⟩
+    · exact Finset.disjoint_union_left.2 ⟨Finset.disjoint_union_left.2 ⟨
+        templatePairs_disjoint E _ _ _ _ _ _ (by norm_num),
+        templatePairs_disjoint E _ _ _ _ _ _ (by norm_num)⟩,
+        templatePairs_disjoint E _ _ _ _ _ _ (by norm_num)⟩
+  have hcardP : P.card = (E.card+1).choose 2 := by
+    have hP : P = ((E ×ˢ E).filter (fun p => p.1 < p.2)) ∪ E.diag := by
+      ext p
+      simp only [P,Finset.mem_filter,Finset.mem_product,Finset.mem_union,Finset.mem_diag]
+      constructor
+      · rintro ⟨⟨hp,hq⟩,hle⟩
+        by_cases he : p.1 = p.2
+        · exact Or.inr ⟨hp,he⟩
+        · exact Or.inl ⟨⟨hp,hq⟩,by omega⟩
+      · rintro (⟨⟨hp,hq⟩,hlt⟩ | ⟨hp,he⟩)
+        · exact ⟨⟨hp,hq⟩,le_of_lt hlt⟩
+        · exact ⟨⟨hp,he ▸ hp⟩,le_of_eq he⟩
+    rw [hP,Finset.card_union_of_disjoint]
+    · rw [Finset.card_product_filter_lt,Finset.diag_card]
+      simpa [Nat.add_comm] using (Nat.choose_succ_succ' E.card 1).symm
+    · apply Finset.disjoint_left.2
+      intro p hp hq
+      have hp' := (Finset.mem_filter.1 hp).2
+      have hq' := (Finset.mem_diag.1 hq).2
+      omega
+  omega
+
+/-- The source family's exact sumset count, in additive form to certify no truncation.
+Here the same E supplies every template count and every element of the real sumset. -/
+theorem nested_family_sum_card (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (n : ℕ) (hn : 7 ≤ n) :
+    let E : Finset ℤ := {0,3} ∪ Finset.Icc 5 ((n : ℤ)+2)
+    ((E.image (fun e => r ^ e)) + (E.image (fun e => r ^ e))).card +
+      (n-1 + (n-8) + (n-9) + (n-11) + (if 8 ≤ n then 1 else 0) +
+        (if 10 ≤ n then 1 else 0)) = n*(n+1)/2 := by
+  classical
+  dsimp only
+  let E : Finset ℤ := {0,3} ∪ Finset.Icc 5 ((n : ℤ)+2)
+  have hcard : E.card = n := by
+    dsimp [E]
+    rw [Finset.card_union_of_disjoint]
+    · norm_num only [Finset.card_insert_of_notMem (by norm_num : (0 : ℤ) ∉ ({3} : Finset ℤ)),
+        Finset.card_singleton, Int.card_Icc]
+      omega
+    · apply Finset.disjoint_left.2
+      intro t ht hi
+      simp only [Finset.mem_insert,Finset.mem_singleton] at ht
+      simp only [Finset.mem_Icc] at hi
+      omega
+  have h4 : (E.filter (fun t => t+2 ∈ E ∧ t+3 ∈ E ∧ t+4 ∈ E)).card = n-5 := by
+    have hs : E.filter (fun t => t+2 ∈ E ∧ t+3 ∈ E ∧ t+4 ∈ E) =
+        insert 3 (Finset.Icc 5 ((n : ℤ)-2)) := by
+      ext t
+      simp only [E,Finset.mem_filter,Finset.mem_union,Finset.mem_insert,
+        Finset.mem_singleton,Finset.mem_Icc]
+      omega
+    rw [hs,Finset.card_insert_of_notMem (by simp),Int.card_Icc]
+    omega
+  have h6 : (E.filter (fun t => t+3 ∈ E ∧ t+5 ∈ E ∧ t+6 ∈ E)).card = 2+(n-8) := by
+    have hs : E.filter (fun t => t+3 ∈ E ∧ t+5 ∈ E ∧ t+6 ∈ E) =
+        insert 0 (insert 3 (Finset.Icc 5 ((n : ℤ)-4))) := by
+      ext t
+      simp only [E,Finset.mem_filter,Finset.mem_union,Finset.mem_insert,
+        Finset.mem_singleton,Finset.mem_Icc]
+      omega
+    rw [hs,Finset.card_insert_of_notMem (by simp),
+      Finset.card_insert_of_notMem (by simp),Int.card_Icc]
+    omega
+  have h7 : (E.filter (fun t => t+5 ∈ E ∧ t+7 ∈ E)).card =
+      1+(if 8 ≤ n then 1 else 0)+(n-9) := by
+    by_cases hn8 : 8 ≤ n
+    · have hs : E.filter (fun t => t+5 ∈ E ∧ t+7 ∈ E) =
+          insert 0 (insert 3 (Finset.Icc 5 ((n : ℤ)-5))) := by
+        ext t
+        simp only [E,Finset.mem_filter,Finset.mem_union,Finset.mem_insert,
+          Finset.mem_singleton,Finset.mem_Icc]
+        omega
+      rw [hs,Finset.card_insert_of_notMem (by simp),
+        Finset.card_insert_of_notMem (by simp),Int.card_Icc,if_pos hn8]
+      omega
+    · have hs : E.filter (fun t => t+5 ∈ E ∧ t+7 ∈ E) = {0} := by
+        ext t
+        simp only [E,Finset.mem_filter,Finset.mem_union,Finset.mem_insert,
+          Finset.mem_singleton,Finset.mem_Icc]
+        omega
+      rw [hs,Finset.card_singleton,if_neg hn8]
+      omega
+  have h9 : (E.filter (fun t => t+5 ∈ E ∧ t+8 ∈ E ∧ t+9 ∈ E)).card =
+      1+(if 10 ≤ n then 1 else 0)+(n-11) := by
+    by_cases hn10 : 10 ≤ n
+    · have hs : E.filter (fun t => t+5 ∈ E ∧ t+8 ∈ E ∧ t+9 ∈ E) =
+          insert 0 (insert 3 (Finset.Icc 5 ((n : ℤ)-7))) := by
+        ext t
+        simp only [E,Finset.mem_filter,Finset.mem_union,Finset.mem_insert,
+          Finset.mem_singleton,Finset.mem_Icc]
+        omega
+      rw [hs,Finset.card_insert_of_notMem (by simp),
+        Finset.card_insert_of_notMem (by simp),Int.card_Icc,if_pos hn10]
+      omega
+    · have hs : E.filter (fun t => t+5 ∈ E ∧ t+8 ∈ E ∧ t+9 ∈ E) = {0} := by
+        ext t
+        simp only [E,Finset.mem_filter,Finset.mem_union,Finset.mem_insert,
+          Finset.mem_singleton,Finset.mem_Icc]
+        omega
+      rw [hs,Finset.card_singleton,if_neg hn10]
+      omega
+  have h := sumset_card_add_template_counts r hr hroot E
+  rw [hcard,h4,h6,h7,h9,Nat.choose_two_right] at h
+  have hn' : n+1-1 = n := by omega
+  rw [hn',Nat.mul_comm (n+1) n] at h
+  change (E.image (fun e => r ^ e) + E.image (fun e => r ^ e)).card +
+    (n-1 + (n-8) + (n-9) + (n-11) + (if 8 ≤ n then 1 else 0) +
+      (if 10 ≤ n then 1 else 0)) = n*(n+1)/2
+  omega
 
 end D5.S3.Arith.Additive.PlasticPowerCollisions
