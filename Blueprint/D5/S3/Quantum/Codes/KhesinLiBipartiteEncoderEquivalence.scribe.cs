@@ -100,7 +100,10 @@ internal sealed class KhesinLiBipartiteEncoderEquivalenceDocument : IScribeDocum
                         "Apply this to J and H. Their equal output cut ranks give equal ranks for every restricted input–output matrix, hence equal supported-kernel counts, equal kernels and equal row spaces. "
                             + "Choose R with the input–output matrix of H equal to R times that of J, and realize R by the finite row-addition sequence just described. "
                             + "Prepending the output permutation from G to J gives the asserted finite BipartiteStep sequence from G to H."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("khesin-li-2024-bipartite-encoder-equivalence"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula X(string name) => name switch
