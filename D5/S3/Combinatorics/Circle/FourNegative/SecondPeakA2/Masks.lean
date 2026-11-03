@@ -32,23 +32,23 @@ theorem dyadic_large_partition (s : ℕ) (hs : 2≤2^s) :
   by_cases h : 4≤s
   · right; right; right
     exact le_trans (by norm_num) (Nat.pow_le_pow_right (by decide) h)
-  · interval_cases s <;> norm_num at hs ⊢
+  · interval_cases s <;> norm_num at hs <;> norm_num
 
 theorem dyadic_small_partition (s : ℕ) (hs : 2≤2^s) (hsmall : 2^s<64) :
     2^s=2 ∨ 2^s=4 ∨ 2^s=8 ∨ 2^s=16 ∨ 2^s=32 := by
   have h : s<6 := by
     by_contra hn
-    have := Nat.pow_le_pow_right (a:=2) (by decide) (show 6≤s by omega)
+    have := Nat.pow_le_pow_right (n:=2) (by decide) (show 6≤s by omega)
     norm_num at this
     omega
-  interval_cases s <;> norm_num at hs ⊢
+  interval_cases s <;> norm_num at hs <;> norm_num
 
 theorem dyadic_p_partition (s : ℕ) (hs : 4≤2^s) :
     2^s=4 ∨ 2^s=8 ∨ 2^s=16 ∨ 2^s=32 ∨ 64≤2^s := by
   by_cases h : 6≤s
   · right; right; right; right
     exact le_trans (by norm_num) (Nat.pow_le_pow_right (by decide) h)
-  · interval_cases s <;> norm_num at hs ⊢
+  · interval_cases s <;> norm_num at hs <;> norm_num
 
 private theorem submask_six (M : ℕ) (hM : M%8=6 ∨ M%8=7) :
     SecondPeakHighD.Submask 6 M := by
@@ -94,7 +94,7 @@ theorem odd_mask (p q : ℕ) (hp : 4≤p) (hq : 64≤q) :
   let w := 16*p*(q-1)
   let n := (w+18)/10
   let M := 2*n-1
-  have hw : 100≤w := by dsimp [w]; nlinarith
+  have hw : 100≤w := by dsimp [w]; nlinarith [Nat.mul_le_mul hp (show 63≤q-1 by omega)]
   have hn : 1≤n := by dsimp [n]; omega
   have heq : (w:ℤ)=y p q 2-16*(p:ℤ) := by
     dsimp [w,y]
@@ -111,15 +111,15 @@ theorem odd_mask (p q : ℕ) (hp : 4≤p) (hq : 64≤q) :
 
 /-- The high/low exceptional mask is proved for every dyadic q in this sector. -/
 theorem exceptional_mask (s : ℕ) (hq : 64≤2^s) (hr : 2^s%5=1) :
-    let q := 2^s
-    let m := 2*q+1
-    let M := (32*q-27)/5
+    let q : ℕ := 2^s
+    let m : ℕ := 2*q+1
+    let M : ℕ := (32*q-27)/5
     m<M ∧ SecondPeakHighD.Submask m M ∧
       5*(M:ℤ)-(y 4 q 1-32)=5 := by
   dsimp only
-  let q := 2^s
+  let q : ℕ := 2^s
   let r := (2*q-27)/5
-  let M := (32*q-27)/5
+  let M : ℕ := (32*q-27)/5
   have hqpos : 0<q := by dsimp [q]; positivity
   have heq : M=6*q+r := by dsimp [M,r,q]; omega
   have hrlo : 0<r := by dsimp [r,q]; omega
@@ -132,8 +132,12 @@ theorem exceptional_mask (s : ℕ) (hq : 64≤2^s) (hr : 2^s%5=1) :
       2*q+1=1+2^(s+1) := by rw [hp]; omega
       _=1 ||| 2^(s+1) := (Nat.or_two_pow_eq_add_of_lt hsmall).symm
       _=2^(s+1) ||| 2^0 := by norm_num [Nat.or_comm]
+  change 2*q+1<M ∧ SecondPeakHighD.Submask (2*q+1) M ∧
+    5*(M:ℤ)-(y 4 q 1-32)=5
   refine ⟨by dsimp [M,q]; omega,?_,?_⟩
   · intro e he
+    change (2*q+1).testBit e=true at he
+    change M.testBit e=true
     rw [hbits,Nat.testBit_or] at he
     simp only [Nat.testBit_two_pow,Bool.or_eq_true,decide_eq_true_eq] at he
     rcases he with he|he
@@ -147,7 +151,10 @@ theorem exceptional_mask (s : ℕ) (hq : 64≤2^s) (hr : 2^s%5=1) :
       have ht := Nat.testBit_mod_two_pow M 1 0
       rw [hodd] at ht
       simpa using ht.symm
-  · dsimp [M,q,y]
+  · have hq64 : 64≤q := hq
+    have hME : 5*M=32*q-27 := by dsimp [M,q]; omega
+    have hi : (5:ℤ)*(M:ℤ)=32*(q:ℤ)-27 := by omega
+    dsimp [y]
     omega
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2

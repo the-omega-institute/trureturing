@@ -71,7 +71,7 @@ private theorem large_first_integer (p q h : ℤ) (hp : 64≤p) (hq : 16≤q)
       _=31*h := by ring
   have hQ : 0≤Q q := by dsimp [Q]; omega
   have hem : 1+4*(h*j)*Q q≤1+60*h*Q q := by
-    have := mul_nonneg (15-j) hQ
+    have := mul_nonneg (show 0≤15-j by omega) hQ
     rcases hh with rfl|rfl <;> nlinarith
   have hid : -8*K p q h+j*(5*A p q h-D p q h)+8*v*A p q h=
       8*R p q h v (h*j) := by dsimp [D,R]; ring
@@ -106,7 +106,7 @@ private theorem large_first_rational (p q h : ℤ) (hp : 64≤p)
       simpa only [one_mul] using (show (r:ℚ)≤8*(A p q h:ℚ) by exact_mod_cast hr'.le))
   let v := -n-s
   let m := h*j
-  have hm : 0≤m := by dsimp [m]; positivity
+  have hm : 0≤m := by dsimp [m]; exact mul_nonneg (by omega) (by positivity)
   have hm' : m≤31*h := by
     calc
       m=h*(j:ℤ) := rfl
@@ -127,26 +127,26 @@ private theorem large_first_rational (p q h : ℤ) (hp : 64≤p)
     rw [←hid] at hlo hhi
     cases hs : second
     · left
-      simp only [hs,ite_false] at hlo hhi
+      simp only [hs,Bool.false_eq_true,ite_false] at hlo hhi
       have hl : (e:ℚ)≤(8*R p q h v m:ℤ) := by
         change (e:ℚ)/(8*(A p q h:ℚ))≤_ at hlo
         exact (div_le_div_iff_of_pos_right hden).mp hlo
-      have hu : (8*R p q h v m:ℚ)≤(1/8-eta)*(8*(A p q h:ℚ)) :=
+      have hu : ((8*R p q h v m:ℤ):ℚ)≤(1/8-eta)*(8*(A p q h:ℚ)) :=
         (div_le_iff₀ hden).mp hhi
-      have hu' : (8*R p q h v m:ℚ)≤(A p q h:ℚ)-(e:ℚ) := by nlinarith [heta]
+      have hu' : ((8*R p q h v m:ℤ):ℚ)≤(A p q h:ℚ)-(e:ℚ) := by nlinarith [heta]
       exact ⟨by exact_mod_cast hl,by exact_mod_cast hu'⟩
     · right
-      simp only [hs,ite_true] at hlo hhi
-      have hl : (3/8+eta)*(8*(A p q h:ℚ))≤(8*R p q h v m:ℚ) :=
+      simp only [hs,Bool.false_eq_true,ite_true] at hlo hhi
+      have hl : (3/8+eta)*(8*(A p q h:ℚ))≤((8*R p q h v m:ℤ):ℚ) :=
         (le_div_iff₀ hden).mp hlo
-      have hu : (8*R p q h v m:ℚ)≤(1/2-eta)*(8*(A p q h:ℚ)) :=
+      have hu : ((8*R p q h v m:ℤ):ℚ)≤(1/2-eta)*(8*(A p q h:ℚ)) :=
         (div_le_iff₀ hden).mp hhi
-      have hl' : 3*(A p q h:ℚ)+(e:ℚ)≤(8*R p q h v m:ℚ) := by nlinarith [heta]
-      have hu' : (8*R p q h v m:ℚ)≤4*(A p q h:ℚ)-(e:ℚ) := by nlinarith [heta]
+      have hl' : 3*(A p q h:ℚ)+(e:ℚ)≤((8*R p q h v m:ℤ):ℚ) := by nlinarith [heta]
+      have hu' : ((8*R p q h v m:ℤ):ℚ)≤4*(A p q h:ℚ)-(e:ℚ) := by nlinarith [heta]
       exact ⟨by exact_mod_cast hl',by exact_mod_cast hu'⟩
   have hQ : 0≤Q q := by dsimp [Q]; omega
   have hem : 1+4*m*Q q≤e := by
-    have := mul_nonneg (31*h-m) hQ
+    have := mul_nonneg (show 0≤31*h-m by omega) hQ
     dsimp [e]
     nlinarith
   obtain ⟨before,hf⟩ := core_to_first p q h v m e hp hq2 hh hm hm'
@@ -159,7 +159,7 @@ private theorem v_stock (p q h v m : ℤ) (before : Bool)
     1≤v ∧ 2*v≤t p q := by
   obtain ⟨hKL,hTK,_⟩ := large_geometry p q h hp hq hh
   obtain ⟨hA,hL,_⟩ := basic_positive p q h (by omega) hq (by omega)
-  have hml := mul_nonneg (31*h-m) hL.le
+  have hml := mul_nonneg (show 0≤31*h-m by omega) hL.le
   have hml' := mul_nonneg hm hL.le
   dsimp [First,R] at hf
   constructor
@@ -216,8 +216,7 @@ theorem large_exists (p q h : ℕ) (hp : 64≤p) (hq : 2≤q)
   obtain ⟨M,hM,hlo,hhi',hsub⟩ := round_block h w hh hw
   have heq : (w:ℤ)=y p q h-8*(h:ℤ)*p := by
     dsimp [w,y]
-    rw [Nat.cast_mul,Nat.cast_mul,Nat.cast_mul,Nat.cast_sub (by omega)]
-    push_cast
+    push_cast [Nat.cast_sub (by omega : 1≤q)]
     ring
   rw [heq] at hlo hhi'
   have hupper : 5*(M:ℤ)-(y p q h-8*(h:ℤ)*p)≤4*(h:ℤ)*p := by nlinarith

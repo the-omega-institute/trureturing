@@ -19,7 +19,7 @@ private theorem small_odd_first (p q : ℤ)
   rcases hp with rfl|rfl|rfl|rfl
   all_goals dsimp [First]
   all_goals refine ⟨?_,?_,?_,?_⟩
-  all_goals simp only [ite_true]
+  all_goals try simp only [ite_true]
   all_goals apply le_of_sub_nonneg
   all_goals norm_num [R,A,L,K,y,Q,SecondPeakHighD.A,SecondPeakHighD.L,
     SecondPeakHighD.K,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y]
@@ -33,7 +33,7 @@ private theorem small_six_first (p q : ℤ)
   rcases hp with rfl|rfl|rfl|rfl
   all_goals dsimp [First]
   all_goals refine ⟨?_,?_,?_,?_⟩
-  all_goals simp only [Bool.false_eq_true,ite_false]
+  all_goals try simp only [Bool.false_eq_true,ite_false]
   all_goals apply le_of_sub_nonneg
   all_goals norm_num [R,A,L,K,y,Q,SecondPeakHighD.A,SecondPeakHighD.L,
     SecondPeakHighD.K,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y]
@@ -45,7 +45,7 @@ private theorem exceptional_first (u : ℤ) (hu : 16≤u) :
   obtain ⟨w,hw,rfl⟩ : ∃ w : ℤ, 0≤w ∧ u=w+16 := ⟨u-16,by omega,by ring⟩
   dsimp [First]
   refine ⟨?_,?_,?_,?_⟩
-  all_goals simp only [ite_true]
+  all_goals try simp only [ite_true]
   all_goals apply le_of_sub_nonneg
   all_goals norm_num [R,A,L,K,y,Q,SecondPeakHighD.A,SecondPeakHighD.L,
     SecondPeakHighD.K,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y]
@@ -61,7 +61,7 @@ private theorem small_odd_exists (p q : ℕ)
   have hv : 1≤v ∧ 2*v≤4*p*q := by
     rcases hp with rfl|rfl|rfl|rfl <;> dsimp [v] <;> omega
   have hcast : (v:ℤ)=(p:ℤ)*q-(p:ℤ)/4 := by
-    rcases hp with rfl|rfl|rfl <;> dsimp [v] <;> norm_num <;> omega
+    rcases hp with rfl|rfl|rfl|rfl <;> dsimp [v] <;> norm_num <;> omega
   have hpi : (p:ℤ)=4 ∨ (p:ℤ)=8 ∨ (p:ℤ)=16 ∨ (p:ℤ)=32 := by omega
   have hf := small_odd_first p q hpi (by exact_mod_cast hq)
   rw [←hcast] at hf
@@ -113,6 +113,7 @@ private theorem exceptional_exists (s : ℕ) (hq : 64≤2^s) (hr : 2^s%5=1) :
   let m := 2*q+1
   let M := (32*q-27)/5
   obtain ⟨hmM,hsub,hdelta⟩ := exceptional_mask s hq hr
+  change 5*(M:ℤ)-(y 4 q 1-32)=5 at hdelta
   have hq8 := dyadic_eight s hq
   have hq4 : q=4*(q/4) := by dsimp [q]; omega
   have hu : 16≤q/4 := by dsimp [q] at *; omega
