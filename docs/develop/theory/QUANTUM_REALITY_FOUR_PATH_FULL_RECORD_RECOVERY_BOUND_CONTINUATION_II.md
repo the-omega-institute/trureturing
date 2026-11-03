@@ -1170,3 +1170,724 @@ purity theorem evaluates the first loss. The full original first-loss
 and equality problem remains unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 42. A selected thirteen-fourths obstruction and all-effect phase transport
+
+**Definition 42.1 (actual phase levels).** Retain exactly the original
+$\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose,
+one shared actual feedback, constants, distances $\rho_\pm,\rho$,
+defect $g$, $f=g-\kappa\rho$, and sets of Definitions 39.1 and 41.1.
+In particular $N=N_{\mathrm{geo}}$, $V(\xi)=N(\xi)+\kappa\xi$,
+and $\mathcal G_\xi$ are the existing selected quantities, without
+an added assertion of global optimality. Put
+
+$$
+\begin{aligned}
+ R&=\frac{13}{4},&
+ L&=4(c+s),& \zeta&=9-L,&
+ \mathbb T&=\{z\in\mathbb C:|z|=1\},\\
+ \mathcal K_{\mathrm{ph}}
+   &=\{(E,\operatorname{diag}(v)U_+):
+                     E\in\operatorname{Dens}_2,\ v\in\mathbb T^4\},\\
+ \mathcal P_\xi&=\{X\in\mathcal K_{\mathrm{ph}}:\rho(X)=\xi\},\\
+ m_{\mathrm{ph}}(\xi)&=\min_{X\in\mathcal P_\xi}f(X),&
+ \mathcal A_{\mathrm{ph},\xi}
+   &=\{X\in\mathcal P_\xi:f(X)=m_{\mathrm{ph}}(\xi)\}.
+\end{aligned}
+\tag{42.1}
+$$
+
+For $0<\xi\le R$ the phase level is compact and nonempty, since it
+contains $\mathcal G_\xi$. Thus its displayed minimum is attained.
+Every common scalar representative remains in these sets. The four
+entries of $v$ are actual feedback parameters; only multiplication
+of the whole feedback by one common scalar has the identification
+already present in (39.1). Effects of every rank remain allowed.
+
+For each actual pair write $F=T^\dagger E^{\mathsf T}T$ as in (23.9)
+and let $a(U)=(P(w),Q(w))$, a row vector, where
+$w=\operatorname{diag}(UU_+^\dagger)$. All of $A,B,P,Q$ always refer
+to this same actual $w$.
+
+**Theorem 42.2 (strict obstruction at the selected original level
+$13/4$).** At $t_R=13/8$, let
+$x_R=1-\delta_\circ(t_R)/2$, and put
+
+$$
+ p_R=\frac{11}{8}-2x_R,\qquad
+ q_R=2x_R-\frac38,\qquad y_R=\sqrt{1-x_R^2}.
+$$
+
+For the determinant $\mathscr D$ of (36.43),
+
+$$
+ \frac13<x_R<\frac12,\qquad
+ \mathscr D(x_R,p_R)<-\frac{q_R}{56}<0,\qquad
+ m(R)<N(R).
+\tag{42.2}
+$$
+
+Every pair in $\mathcal G_R$ has arbitrarily close original pure
+effect and phase-feedback competitors at exactly the same joint
+distance $R$, with strictly smaller $g$ and $f$. There is
+$\varepsilon_R>0$ with $(R-\varepsilon_R,R]\subseteq\mathcal S$.
+Consequently the original first boundaries satisfy
+
+$$
+             0<\alpha\le\beta<\frac{13}{4}.
+\tag{42.3}
+$$
+
+*Proof.* Under $\delta=2(1-x)$, the scalar interval of Theorem 37.5
+at $t_R$ is $[3/16,11/16]$. On it set
+
+$$
+\begin{aligned}
+ p(x)&=\frac{11}{8}-2x,&q(x)&=2x-\frac38,&
+ y(x)&=\sqrt{1-x^2},\\
+ S(x)&=2(c+hx)\sqrt{p(x)}+2hy(x)\sqrt{q(x)},\\
+ W(x)&=d^2p(x)+e^2q(x)-S(x)^2,&D_0&=d^2-e^2=4h+8s.
+\end{aligned}
+\tag{42.4}
+$$
+
+Theorem 37.5 makes $W(x)-\kappa R$ exactly its strictly convex
+scalar objective, with the unique minimizer $x_R$. In the interior,
+
+$$
+\begin{aligned}
+ W'(x)&=-2[D_0+S(x)S'(x)],\\
+ S'(x)&=2h\sqrt p-\frac{2(c+hx)}{\sqrt p}
+                    -\frac{2hx\sqrt q}{y}+\frac{2hy}{\sqrt q}.
+\end{aligned}
+\tag{42.5}
+$$
+
+Use the positive-square and half-angle inequalities
+
+$$
+ \frac7{10}<h<\frac57<\frac34,\quad
+ \frac{11}{12}<c<1,\quad
+ \frac38<s<\frac25,\quad
+ 0<c-h<\frac14,\quad s^2>\frac17,\quad c+s>\frac{13}{10}.
+\tag{42.6}
+$$
+
+The bounds already in (39.11) give the corresponding weaker
+inequalities. For the strengthened ones, $h^2=1/2<25/49$,
+$c^2=(1+h)/2>17/20>121/144$, and
+$(c+s)^2=1+h>17/10>169/100$ suffice; also
+$s^2=(1-h)/2>1/7$.
+
+At $x=1/3$, one has $p=17/24$, $q=7/24$,
+$y=2\sqrt2/3>9/10$ and $hy=2/3$.
+The bounds $\sqrt p>5/6$, $\sqrt q<3/5$ and (42.6) give
+
+$$
+ S'(1/3)>
+       \frac76-3-\frac13+\frac{20}{9}=\frac1{18}>0.
+\tag{42.7}
+$$
+
+For the negative second term use $c+hx<5/4$; for the negative third
+term use $2hx<1/2$. Thus $W'(1/3)<0$.
+
+At $x=1/2$, $p=3/8$, $q=5/8$ and $y=\sqrt3/2$.
+Multiplication of the two expressions in (42.4)--(42.5), using
+$h^2=1/2$ and $2hc=c+s$, gives
+
+$$
+\begin{aligned}
+ 4[D_0+S(1/2)S'(1/2)]
+   &=8h+27s-5c-5+\frac{1-13(c+s)}{\sqrt5}\\
+   &<\frac{40}{7}+\frac{54}{5}-\frac{55}{12}
+                                  -5-\frac{106}{15}
+     =-\frac{19}{140}<0.
+\end{aligned}
+\tag{42.8}
+$$
+
+Here $\sqrt5<9/4$ and $1-13(c+s)<-159/10$ give the last negative
+fraction; its sign is retained when bounding its denominator.
+It follows that $W'(1/2)>0$. Strict convexity proves the asserted
+bracket for the actual selected $x_R$.
+
+We next bound (36.43) throughout $1/3\le x\le1/2$, with
+$p,q,y$ from (42.4) and $\alpha_0=c-h$. On this interval,
+
+$$
+\begin{gathered}
+ \sqrt p<\frac67,\qquad \sqrt q<\frac45,\qquad
+ hx+c>1,\qquad hy>\frac35,\\
+ \frac{x^2}{(1+x)q}\le\frac27,\qquad
+ \frac{x^2}{1+x}\le\frac16,\qquad qy^2\ge\frac7{27}>\frac14.
+\end{gathered}
+\tag{42.9}
+$$
+
+For the first ratio, clearing its positive denominator reduces the
+claim to $(3x-1)(4x-3)\le0$. The second ratio increases with $x$.
+For the last inequality, $(qy^2)'=2-6x^2+3x/4>0$ here, and its
+value at $x=1/3$ is $7/27$.
+The remaining bounds follow from the interval endpoints and (42.6);
+in particular $(hy)^2\ge3/8>9/25$.
+Substitution in the exact $L_a$ of (36.43) yields
+
+$$
+ 0<\frac{L_a}{q}
+   =\frac{h\alpha_0\sqrt p}{hx+c}\frac{x^2}{(1+x)q}
+       +\frac{hx^2}{1+x}\frac1{\sqrt q\,y}
+   <\frac9{196}+\frac14=\frac{29}{98}<\frac13.
+\tag{42.10}
+$$
+
+If $h^2x-s^2\le0$, then $L_b<3/14$. Otherwise
+$h^2x-s^2<1/4-1/7=3/28$, and
+
+$$
+ L_b<\frac3{14}+\frac3{28}\frac43
+                   =\frac5{14}<\frac38.
+\tag{42.11}
+$$
+
+If $L_b\le0$ its product with $L_a/q$ is nonpositive; if $L_b>0$,
+(42.10)--(42.11) bound that product by $1/8$. In both cases,
+
+$$
+ \frac{\mathscr D}{q}=\frac{L_a}{q}L_b-s^2
+                         <\frac18-\frac17=-\frac1{56}.
+\tag{42.12}
+$$
+
+All these estimates apply at the selected $x_R$.
+
+The original sign condition required by Theorem 36.5 holds strictly:
+
+$$
+ 1+2p_R+2x_R-2y_R
+       =\frac{15}{4}-2(x_R+y_R)>\frac34,
+\tag{42.13}
+$$
+
+since $x_R+y_R\le\sqrt2<3/2$. Its two original sign distances
+therefore have gap greater than $3/2$.
+Take the actual curve (36.47)--(36.50) through either selected
+orientation, and on that curve set
+$a=(s\sqrt{q_R}/L_a)b$. It consists of whole diagonal unitaries
+and normalized rank-one effects aligned with their own actual
+amplitudes. Equations (36.48) and (36.50) keep $A$, population and
+purity exactly fixed. The strict sign gap persists near zero, so
+the original joint distance is exactly $R$, including its common
+scalar minimization. The amplitude sum increases by
+
+$$
+       -\frac{\mathscr D}{L_a}b^2+o(b^2)>0
+\tag{42.14}
+$$
+
+for all sufficiently small nonzero $b$. Its base value is positive,
+so $g$ and then $f$ strictly decrease. Multiplication of the whole
+curve by the selected common scalar covers every representative.
+This proves the actual strict competitors and $m(R)<N(R)$.
+
+Left continuity of $m$ and continuity of $N$ in Theorem 39.2 give
+the asserted left interval of strict loss. Theorem 39.4 supplies
+$0<\alpha\le\beta$; the interval just obtained gives $\beta<R$.
+No first-boundary identification follows from the negative
+variation alone. $\square$
+
+**Theorem 42.3 (same-effect phase transport on every level through
+$13/4$).** For every original $X=(E,U)$ with
+$0<\rho(X)=\xi\le R$, its minimizing original sign $\sigma$ is unique.
+There are finitely many probabilities $\theta_j>0$ and actual
+unitaries $U_j$, each of phase-feedback form relative to $U_+$,
+such that
+
+$$
+\begin{aligned}
+ \sum_j\theta_j&=1,&
+ \operatorname{Tr}(U_jU_\sigma^\dagger)
+     &=\operatorname{Tr}(UU_\sigma^\dagger),\\
+ \rho_\sigma(E,U_j)&=\xi=\rho(E,U_j),&
+ \rho_{-\sigma}(E,U_j)&>\xi,\\
+ w&=\sum_j\theta_j w_j,&
+ a(U)&=\sum_j\theta_j a(U_j),&
+ w_j&=\operatorname{diag}(U_jU_+^\dagger).
+\end{aligned}
+\tag{42.15}
+$$
+
+The effect $E$, its ordinary transpose, positivity, trace, impurity
+and rank are all unchanged. With $a=a(U)$ and $a_j=a(U_j)$ one has
+the exact identity
+
+$$
+ \boxed{\quad
+ f(E,U)=\sum_j\theta_j f(E,U_j)
+               +\sum_j\theta_j\|(a_j-a)F^{1/2}\|_2^2 .
+ \quad}
+\tag{42.16}
+$$
+
+In particular at least one actual phase pair with this same effect
+and original distance has no larger value.
+
+*Proof.* First establish the two-sign budget on the original domain.
+For $d_{\mathrm{tr}}=(1,-1,i,-i)$ and any actual diagonal $w$,
+$|w_k|\le1$ and the identity
+$|a_0|+|b_0|=\max_{|\mu|=1}|a_0+\mu b_0|$ give
+
+$$
+\begin{aligned}
+ A(w)+B(w)
+ &\le\max_{\phi\in\mathbb R}
+                 \sum_{k=1}^4|1+e^{i\phi}d_{\mathrm{tr},k}|\\
+ &=\max_{\phi\in\mathbb R}
+        2\left(\sqrt{1+|\sin\phi|}+\sqrt{1+|\cos\phi|}\right)\\
+ &\le4\sqrt{1+h}=4(c+s)=L.
+\end{aligned}
+\tag{42.17}
+$$
+
+Pair the coefficients with $d_{\mathrm{tr},k}=\pm1$ and with
+$d_{\mathrm{tr},k}=\pm i$ to obtain the second line.
+Concavity of the square root and
+$|\sin\phi|+|\cos\phi|\le\sqrt2=2h$ give the last line.
+No condition on independently chosen amplitudes is used.
+
+The half-angle identities and $h<5/7$ imply
+
+$$
+ (c+s)^2=1+h<\frac{12}{7}<\left(\frac{21}{16}\right)^2,
+ \qquad \zeta>\frac{15}{4}.
+\tag{42.18}
+$$
+
+For every normalized positive two-by-two effect, (23.9)--(23.10)
+give $0\le\epsilon=2\det F\le1/2$. Hence throughout the claimed
+interval,
+
+$$
+             \xi+\epsilon\le\frac{13}{4}+\frac12
+                            =\frac{15}{4}<\zeta.
+\tag{42.19}
+$$
+
+For this same $E$ and any actual feedback $U'$,
+(41.3) and (42.17) imply
+
+$$
+ \rho_+(E,U')+\rho_-(E,U')
+      =18-2(A(w')+B(w'))-2\epsilon
+      \ge2(\zeta-\epsilon).
+\tag{42.20}
+$$
+
+If one branch equals $\xi$, (42.19) makes the other strictly larger
+than $\xi$. This proves uniqueness of the input minimizing sign
+and will also prove exact level preservation for each replacement.
+
+Spectrally decompose the actual unitary
+$V_\sigma=UU_\sigma^\dagger$:
+
+$$
+ V_\sigma=Z\operatorname{diag}(\lambda_1,\ldots,\lambda_4)Z^\dagger,
+ \qquad Z\in U(4),\qquad |\lambda_k|=1.
+\tag{42.21}
+$$
+
+The matrix $D_{ik}=|Z_{ik}|^2$ is doubly stochastic, since every row
+and column of $Z$ has squared norm one. Apply the finite
+Birkhoff--von Neumann theorem, in the form stated in
+[Vourdas, arXiv:2203.09468v1, Section II.1, (18)](https://arxiv.org/html/2203.09468v1):
+write $D=\sum_j\theta_j\Pi_j$, with permutation matrices $\Pi_j$
+and probabilities, discarding zero weights. Set
+
+$$
+               U_j=\operatorname{diag}(\Pi_j\lambda)U_\sigma,
+ \qquad \lambda=(\lambda_1,\ldots,\lambda_4)^{\mathsf T}.
+\tag{42.22}
+$$
+
+Every $U_j$ is a whole actual unitary.
+The matrix $C_\sigma=U_\sigma U_+^\dagger$ is diagonal and unitary:
+it is $I_4$ for $\sigma=+$ and
+$\operatorname{diag}(1,-1,-i,i)$ for $\sigma=-$.
+Thus $U_j$ is also of the form $\operatorname{diag}(v_j)U_+$
+with $v_j\in\mathbb T^4$.
+The permutation preserves $\sum_k\lambda_k$, proving the complex
+trace equality in (42.15). By (23.11), with $E$ unchanged, its
+$\sigma$ distance is exactly $\xi$. Equations (42.19)--(42.20)
+prove its other branch is strictly larger, so its true original
+joint distance is $\xi$.
+
+The diagonal of (42.21) is $D\lambda=\sum_j\theta_j\Pi_j\lambda$.
+Multiplication on the right by the fixed diagonal $C_\sigma$
+therefore gives $w=\sum_j\theta_jw_j$. The definitions of $P,Q$
+in (23.2) are complex linear in $w$, so $a=\sum_j\theta_ja_j$.
+This is a forward consequence of the spectral representation of
+the given actual matrix. It asserts no converse that every convex
+combination is a diagonal in a specified normal unitary orbit.
+
+Finally (23.12) gives, on every one of these actual pairs,
+
+$$
+ g(E,U)=d^2p+e^2(1-p)-aFa^\dagger.
+$$
+
+Expansion using $\sum_j\theta_j(a_j-a)=0$ yields
+
+$$
+ \sum_j\theta_j(a_j-a)F(a_j-a)^\dagger
+             =\sum_j\theta_j a_jFa_j^\dagger-aFa^\dagger\ge0.
+\tag{42.23}
+$$
+
+All the pairs have the same original level, so subtracting
+$\kappa\xi$ proves (42.16). A finite weighted average cannot be
+strictly below every one of its terms, proving the last assertion.
+
+The argument divides by no effect eigenvalue, feedback trace,
+amplitude or spectral gap. It includes singular $F$, the
+maximally mixed effect, $P=0$, $Q=0$, zero coherence, zero original
+diagonal entries, repeated unitary eigenvalues and nonunique
+Birkhoff decompositions. A zero active trace and a minimizing-sign
+tie are excluded here by the proved level bound, not by a discarded
+case: nonnegativity of the effect-distance term gives its active
+trace modulus at least $4-\xi/2\ge19/8$, and (42.20) excludes a tie.
+The inactive trace may vanish. The probabilities compare alternative
+whole original pairs, with the same $E$ and one shared $U_j$ per
+pair; they do not give different controls to columns or outcomes.
+$\square$
+
+**Theorem 42.4 (attained phase value and exact original minimizing
+preimage).** For every $0<\xi\le R$,
+
+$$
+          m(\xi)=m_{\mathrm{ph}}(\xi),\qquad
+          \mathcal A_{\mathrm{ph},\xi}
+                         =\mathcal A_\xi\cap\mathcal P_\xi.
+\tag{42.24}
+$$
+
+For any $X=(E,U)$ at that level and any spectral/Birkhoff
+decomposition in Theorem 42.3,
+
+$$
+\begin{aligned}
+ X\in\mathcal A_\xi
+ \quad\Longleftrightarrow\quad&
+  (E,U_j)\in\mathcal A_{\mathrm{ph},\xi}
+                          \quad\hbox{for every }j,\\
+ & (a_j-a)F^{1/2}=0\quad\hbox{for every }j.
+\end{aligned}
+\tag{42.25}
+$$
+
+This condition holds for every such decomposition when $X$ minimizes,
+and its validity for one such decomposition is sufficient.
+Moreover,
+
+$$
+       \mathcal A_\xi=\mathcal G_\xi
+       \quad\Longleftrightarrow\quad
+       \mathcal A_{\mathrm{ph},\xi}=\mathcal G_\xi.
+\tag{42.26}
+$$
+
+Every nongeometric original global minimizer has a nongeometric phase
+global replacement with exactly the same effect. In particular, a
+mixed original global minimizer exists at a level in this interval
+if and only if a mixed phase global minimizer exists there.
+
+*Proof.* Theorem 42.3 compares every original pair with a phase pair
+at the same original level, giving $m\ge m_{\mathrm{ph}}$.
+The reverse inequality is set inclusion. Both minima are attained
+by compactness, proving (42.24).
+Every summand $f(E,U_j)$ in (42.16) is at least their common
+minimum and every variance summand is nonnegative. All weights
+are positive. Equality to $m(\xi)$ is therefore equivalent to
+exactly the two conditions in (42.25).
+For positive definite $F$, the variance condition forces $a_j=a$.
+For rank-one $F$ it only forces the displayed seminorm condition,
+and is not replaced by equality of the two amplitude rows.
+
+Suppose now that every phase global minimizer belongs to
+$\mathcal G_\xi$, and let $X\in\mathcal A_\xi$.
+By (42.25), all its positive-weight replacements lie in
+$\mathcal G_\xi$. The selected effects for its two orientations
+are distinct because the selected $p,q$ are positive.
+Since $E$ is unchanged, it fixes one orientation $\tau$ for all
+these replacements. Every selected geometric pair has unique
+minimizing sign $+$ by (37.23), so the common sign in (42.15)
+must be $+$. Write their feedbacks as
+$\lambda_j\operatorname{diag}(w_\tau)U_+$, using exactly (39.2).
+The preserved complex active trace equals
+
+$$
+       \operatorname{Tr}(U_jU_+^\dagger)=2(1+x)\lambda_j,
+\tag{42.27}
+$$
+
+with the same selected $x>0$. It fixes $\lambda_j$, so all $U_j$
+coincide. Their averaged diagonal $w$ is consequently that same
+selected diagonal, with every coordinate of modulus one.
+For the actual unitary $UU_+^\dagger$, each row's entire squared
+norm is then already supplied by its diagonal entry. All its
+off-diagonal entries vanish. Thus $U$ is that selected feedback
+itself, and $X\in\mathcal G_\xi$.
+The phase assumption also gives $m=N$ and hence
+$\mathcal G_\xi\subseteq\mathcal A_\xi$, proving the forward
+rigidity needed in (42.26).
+Conversely, if $\mathcal A_\xi=\mathcal G_\xi$, (42.24) and
+$\mathcal G_\xi\subseteq\mathcal P_\xi$ prove its phase version.
+
+The same rigidity argument shows that a nongeometric original
+minimizer cannot have only geometric positive-weight replacements.
+At least one is nongeometric and keeps its exact original $E$.
+For a mixed original minimizer all replacements are mixed; in the
+opposite direction a phase mixed minimizer is already an original
+one by (42.24). No assertion that every original minimizer itself
+has phase feedback is made when the phase minimizing set is larger
+than $\mathcal G_\xi$. $\square$
+
+**Corollary 42.5 (the original bad sets and first boundaries are
+phase-domain questions).** Define subsets of $(0,R]$ by
+
+$$
+\begin{aligned}
+ \mathcal B_{\mathrm{ph}}
+   &=\{\xi:\exists X\in\mathcal P_\xi\setminus\mathcal G_\xi,\
+                                      f(X)\le N(\xi)\},\\
+ \mathcal S_{\mathrm{ph}}
+   &=\{\xi:m_{\mathrm{ph}}(\xi)<N(\xi)\}.
+\end{aligned}
+\tag{42.28}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ \mathcal B\cap(0,R]&=\mathcal B_{\mathrm{ph}},&
+ \mathcal S\cap(0,R]&=\mathcal S_{\mathrm{ph}},\\
+ \alpha&=\inf\mathcal B_{\mathrm{ph}},&
+ \beta&=\inf\mathcal S_{\mathrm{ph}}.
+\end{aligned}
+\tag{42.29}
+$$
+
+At both $b=\alpha,\beta$, the value is $m_{\mathrm{ph}}(b)=N(b)$,
+and every selected geometric pair is a phase and original global
+minimizer. The exhaustive-equality prefix includes $\alpha$
+exactly when
+$\mathcal A_{\mathrm{ph},\alpha}=\mathcal G_\alpha$.
+For every $0<\xi\le R$ the exact value formula is
+
+$$
+ m(\xi)=
+   \min_{\substack{w\in\mathbb T^4,\ \sigma\in\{+,-\}\\
+                              \sigma\ \mathrm{admissible}}}
+                    M_\sigma(w,\xi)-\kappa\xi .
+\tag{42.30}
+$$
+
+Consequently the full original value certificate $m(\xi)=N(\xi)$
+at such a level is equivalent to
+
+$$
+ M_\sigma(w,\xi)\ge V(\xi)
+ \quad\hbox{for every }w\in\mathbb T^4
+                       \hbox{ and every admissible }\sigma.
+\tag{42.31}
+$$
+
+All effects on both arcs of Theorem 36.2, including their mixed and
+singular endpoints, remain in this certificate.
+
+*Proof.* Equation (42.24) proves equality of the strict-loss sets.
+For either the original or phase domain, geometric feasibility
+gives a value at most $N$. If it is strictly less, an attained
+minimizer is nongeometric and witnesses the corresponding bad set.
+If it equals $N$, a bad-set witness is exactly an extra global
+minimizer outside $\mathcal G_\xi$. Thus membership in each bad set
+is exactly failure of exhaustive geometric equality.
+Equation (42.26) now proves equality of the bad sets, even though
+an arbitrary nonglobal witness need not transport to a
+nongeometric witness term by term.
+By (42.3), both original infima lie strictly below $R$; restricting
+either original set to $(0,R]$ therefore leaves its infimum
+unchanged. This proves (42.29).
+The endpoint value and prefix-inclusion statements are Theorem 39.5
+combined with (42.24)--(42.26).
+
+Every $w\in\mathbb T^4$ here has the explicit actual realization
+$U=\operatorname{diag}(w)U_+$. Applying the attained effect profile
+(36.6)--(36.7) at each such $U$ and then (42.24) proves (42.30).
+Its minimum is attained since $\mathcal P_\xi$ is compact.
+Geometric feasibility proves the equivalence with (42.31).
+The profile and its equality preimage are unchanged, including
+$uv=0$, zero coherence, degenerate arcs and rank changes.
+For a proposed boundary, (42.31) must still be proved on all the
+required preceding levels; the equivalence does not supply that
+inequality. $\square$
+
+**Corollary 42.6 (actual phase branches and mixed boundary contact).**
+For $b=\alpha$ or $b=\beta$, there is a sufficiently short interval
+$(b,b+\varepsilon)\subset(0,R)$ with a real analytic semialgebraic
+branch of actual phase global minimizers
+
+$$
+       \xi\longmapsto (E(\xi),U(\xi))
+                              \in\mathcal A_{\mathrm{ph},\xi},
+\tag{42.32}
+$$
+
+having an actual phase limit in $\mathcal A_{\mathrm{ph},b}$.
+At $\beta$ it is strictly below $N$ throughout that interval.
+Whenever every level in a right interval at $b$ has a nongeometric
+original global minimizer, (42.32) can be chosen nongeometric
+throughout a shorter interval. This applies at $\alpha$ when
+$\mathcal A_\alpha=\mathcal G_\alpha$, in which case the endpoint
+limit lies in $\mathcal G_\alpha$.
+
+A mixed original global minimizer at either boundary has a mixed
+phase global replacement with the identical effect. At such a phase
+contact $(E,U_{\mathrm{ph}})$, the family of Theorem 41.3 keeps
+that same actual phase feedback and, for
+$0<\theta\le\min\{\epsilon(E),4-b\}$, satisfies
+
+$$
+\begin{aligned}
+ \rho(E_\theta,U_{\mathrm{ph}})&=b+\theta,\\
+ f(E_\theta,U_{\mathrm{ph}})-N(b+\theta)
+                       &=V(b)-V(b+\theta)<0.
+\end{aligned}
+\tag{42.33}
+$$
+
+These are actual strict competitors, with no assertion of global
+minimality at their new levels. A mixed minimizer at $\alpha$
+still forces $\alpha=\beta$; one at $\beta$ does not exclude an
+earlier pure equality tie.
+
+*Proof.* The actual phase condition is semialgebraic and closed:
+in real and imaginary coordinates it is the condition that
+$UU_+^\dagger$ be diagonal unitary. Intersect the original
+semialgebraic minimizing graph of Theorem 39.4 with this condition.
+By (42.24) every level fiber on $(0,R)$ is nonempty and compact.
+Use the selection argument of Theorem 39.6 on this graph.
+Hardt triviality, in the form of
+[Drusvyatskiy--Lewis, arXiv:1004.0368v1, Theorem 2.25 and
+Corollary 2.27](https://arxiv.org/html/1004.0368v1), applies to its
+continuous semialgebraic coordinate projection, compatibly with
+the geometric subgraph. On a sufficiently short right interval,
+fixing one point of the trivialized fiber gives a continuous
+semialgebraic section. Theorem 3.4 of
+[Drusvyatskiy--Ioffe--Lewis, arXiv:1504.07694v1](https://arxiv.org/html/1504.07694v1)
+applied to this already selected single-valued map makes it
+analytic after shortening the interval. No finite-fiber or
+generic-minimizer assumption is required.
+Its bounded semialgebraic real coordinates have finite one-sided
+limits, by the monotonicity argument used in Theorem 39.6.
+Closedness of the phase condition and value continuity at $b$
+in Theorem 39.5 place the actual limit in
+$\mathcal A_{\mathrm{ph},b}$.
+
+If every original fiber has a nongeometric minimizer, Theorem 42.4
+gives such a phase minimizer in every fiber. Compatible
+trivialization then permits choosing the section outside the
+geometric subgraph. Theorem 39.5 supplies the asserted nongeometric
+right interval at $\alpha$ under its stated endpoint condition,
+and the strict-loss interval at $\beta$.
+If the endpoint has only geometric minimizers, the endpoint limit
+must be geometric. No nongeometric right interval at $\alpha$
+is inferred solely from an extra endpoint minimizer.
+
+For a mixed endpoint minimizer, use (42.25) and unchanged $E$ to
+obtain a mixed phase endpoint minimizer, whose $g$ equals $V(b)$.
+Theorem 41.3 changes only its effect and keeps both original
+distance branches, with their common increment $\theta$.
+Theorem 41.2 supplies the strict increase of $V$, giving (42.33)
+exactly as in Corollary 41.5.
+The coincidence statement at $\alpha$ and its stated limitation at
+$\beta$ are therefore the existing conclusions of that corollary,
+now realized with actual phase feedback. The separated mixed
+feedback alternative of (41.19) remains in force; the transport
+does not exclude it. $\square$
+
+**Mathematical source correspondence 42.7.** The selected scalar,
+its strict convexity and its actual geometric preimage are
+Theorem 37.5 and (39.2). The phase variation, fixed-level identities
+and its determinant are exactly Theorem 36.5; (42.4)--(42.14)
+place the selected point of level $13/4$ inside its strict region.
+The continuity and endpoint inputs are Theorems 39.2 and 39.5.
+The all-effect geometric ordering and selected-feedback margins
+of Section 40 retain their stated domains.
+
+The spectral/Birkhoff replacement, preservation of the complex
+active trace, the sufficient region $\xi+\epsilon<\zeta$, and the
+positive quadratic variance remainder are the inherited
+phase-feedback/mixed-tail transport argument. Its mathematical
+ingredients are used explicitly in (42.17)--(42.23).
+The additional fixed-record consequence is that
+$\zeta>15/4$ and the selected obstruction at $13/4$ put both first
+boundaries and right neighborhoods of them inside a region where
+that transport covers every effect without changing it. The
+complementary impurity region $\epsilon\ge\zeta-\xi$ is empty
+throughout $0<\xi\le R$, since $\epsilon\le1/2$.
+The exact original minimizing preimage, exhaustive-equality
+equivalence and bad-set consequences are (42.25)--(42.31).
+Theorem 41.2 and the exact motion of Theorem 41.3 are the supplied
+inputs to (42.33); the prefix purity of Theorem 41.4 is not used
+to establish the transport region or to certify a proposed $\beta$.
+
+The finite Birkhoff--von Neumann theorem recalled in Vourdas,
+Section II.1, (18), concerns a nonnegative matrix with every row
+and column sum one. Its sole matrix here is
+$D_{ik}=|Z_{ik}|^2$ for the actual four-dimensional spectral
+eigenbasis in (42.21). The finite weights give actual permutation
+unitaries in (42.22), rather than a presumed converse for normal
+diagonals. Thompson's prescribed singular-value theorem, as
+stated in
+[Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+with four singular values equal to one gives precisely the
+existing $\mathcal W$ in source Theorem 23.2.
+Its introduction distinguishes this class from a specified normal
+orbit, whose diagonals need not form the full convex hull of
+spectral permutations. The present proof needs only the forward
+spectral representation of its given $U$ and explicit actual
+replacement matrices; it uses no such converse.
+These standard matrix theorems and the semialgebraic selection
+theorems inside Corollary 42.6 are intermediate tools for the
+fixed-record deduction, with no literature-priority or exhaustive
+literature-absence assertion.
+
+**Unresolved mathematical obligations 42.8.** Equations
+(42.24)--(42.31) remove the arbitrary-feedback value comparison
+through $13/4$, but leave the all-effect phase-torus comparison
+(42.31) on the required preceding levels unproved.
+Every mixed and singular arc and both original signs must remain
+in that problem. The pre-$\beta$ purity in Theorem 41.4 cannot be
+used to discard mixed strict competitors while locating $\beta$.
+A strict witness at $R$ supplies only the strict upper bound
+(42.3), not the value of either first boundary.
+
+The exact $\alpha,\beta$, their coincidence or separation, the
+complete phase minimizing sets, and the evaluated original
+variance-zero preimages in (42.25) remain undetermined.
+In particular the endpoint inclusion of exhaustive equality,
+additional pure ties, pure coalescence, separated mixed contact
+at $\beta$, the identity and exhaustion of first competing global
+minimizing branches, and determinant-zero higher-order and global
+ordering are not supplied by these deductions.
+The branches (42.32) give existence and actual limits, and
+(42.33) gives strict competitors; neither identifies or exhausts
+the global minimizing branches.
+Beyond the proved interval the sufficient condition
+$\xi+\epsilon<\zeta$ need not cover every effect.
+All previously unresolved beyond-four geometric comparisons and
+core-attainment obligations retain their stated boundaries.
+The full original first-loss and equality problem remains open.
+
+## 追加锚（本行以下为增补区）
