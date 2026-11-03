@@ -85,19 +85,19 @@ private theorem before_threshold (i : Fin 9) (t : ℝ) (hτ : t < times i) (j : 
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) t) j := by
   delta times states coupling flow cut at *
   fin_cases i <;> fin_cases j <;>
-    norm_num [circulant, mulVec, vec3_dotProduct, vecHead, vecTail] at hτ ⊢ <;>
+    norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail] at hτ ⊢ <;>
     simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem at_threshold (i : Fin 9) :
     (coupling (4 / 5) *ᵥ flow (states i) (times i)) (labels i) ≤ (3 / 20 : ℝ) := by
   delta times states labels coupling flow cut
-  fin_cases i <;> norm_num [circulant, mulVec, vec3_dotProduct, vecHead, vecTail]
+  fin_cases i <;> norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail]
 
 private theorem other_above (i : Fin 9) (j : Fin 3) (hj : j ≠ labels i) :
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) (times i)) j := by
   delta times states labels coupling flow cut at *
   fin_cases i <;> fin_cases j <;>
-    norm_num [circulant, mulVec, vec3_dotProduct, vecHead, vecTail] at *
+    norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail] at *
 
 private theorem flow_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) :
     Function.Injective (flow (states i) t) := by
@@ -145,7 +145,7 @@ private theorem initial_verified : ∀ j,
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ orbit 0) j := by
   delta coupling orbit states
   intro j
-  fin_cases j <;> norm_num [circulant, mulVec, vec3_dotProduct, vecHead, vecTail]
+  fin_cases j <;> norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail]
 
 private theorem periodic_verified : IsPeriodic orbit := by
   refine ⟨9, by norm_num, ?_⟩
