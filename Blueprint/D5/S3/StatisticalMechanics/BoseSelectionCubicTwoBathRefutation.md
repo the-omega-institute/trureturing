@@ -44,7 +44,7 @@ For d and m, violating d m is the set of triples of m-component real vectors who
 
 **Definition 1.4 (The generic two-bath bound).**
 
-$$\operatorname{D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation.claim}\left(\right) = (\forall (d: \mathbb{R}), (((0: \mathbb{R}) < d) \Rightarrow (\forall (m: \mathbb{N}), (\operatorname{Set.interior}\left(\operatorname{D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation.violating}\left(d, m\right)\right) = \emptyset))))$$
+$$\operatorname{D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation.claim}\left(\right) = (\forall (d: \mathbb{R}), (((0: \mathbb{R}) < d) \Rightarrow (\forall (m: \mathbb{N}), (\operatorname{interior}\left(\operatorname{D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation.violating}\left(d, m\right)\right) = \emptyset))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.claim` (`✓ std3`).
 
@@ -56,7 +56,7 @@ The preregistered generic reading of the source's non-ohmic expectation asks tha
 
 **Theorem 1.5 (An open five-mode counterexample).**
 
-$$\neg (\forall (d: \mathbb{R}), (((0: \mathbb{R}) < d) \Rightarrow (\forall (m: \mathbb{N}), (\operatorname{Set.interior}\left(\operatorname{D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation.violating}\left(d, m\right)\right) = \emptyset))))$$
+$$\neg (\forall (d: \mathbb{R}), (((0: \mathbb{R}) < d) \Rightarrow (\forall (m: \mathbb{N}), (\operatorname{interior}\left(\operatorname{D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation.violating}\left(d, m\right)\right) = \emptyset))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.result` (`✓ std3`). ∎
 
@@ -66,9 +66,9 @@ $$\neg (\forall (d: \mathbb{R}), (((0: \mathbb{R}) < d) \Rightarrow (\forall (m:
 
 *Commentary.*
 
-At d = 3 and m = 5, the referenced odd power law reduces to the cubic map, so asym is skew-symmetric: swapping i and j changes the sign of εⱼ − εᵢ and of the product difference. For every skew-symmetric 5 by 5 matrix a, the signed Pfaffians of its 4 by 4 principal minors form an explicit vector, and direct expansion gives zero after multiplying a by that vector.
+At d = 3 and m = 5, the referenced odd power law reduces to the cubic map, so asym is skew-symmetric: swapping i and j changes the sign of εⱼ − εᵢ while the product difference is unchanged. For every skew-symmetric 5 by 5 matrix a, the signed Pfaffians of its 4 by 4 principal minors form an explicit vector, and direct expansion gives zero after multiplying a by that vector.
 
-On the positive coupling domain, each normalized coordinate is continuous because the denominator is a positive finite sum. The entries of asym and then every coordinate of the Pfaffian vector are therefore continuous. The finite intersection of the positive Pfaffian-coordinate conditions with the positive coupling domain is an open neighborhood.
+On the positive coupling domain, continuous_normalize supplies continuity of each normalized vector because its coordinate sum is positive. The entries of asym and then every coordinate of the Pfaffian vector are therefore continuous. The finite intersection of the positive Pfaffian-coordinate conditions with the positive coupling domain is an open neighborhood.
 
 The explicit base point ε = (1,2,3,4,5), F = (5,4,4,4,4), and G = (6,6,3,3,3) belongs to that neighborhood: the five Pfaffian coordinates are positive by exact finite calculation. Every point p in the neighborhood has positive coupling coordinates, and the Pfaffian vector is positive and lies in the kernel of asym 3 p.1 p.2.1 p.2.2. Taking s to be the universal five-element finset and w to be that vector satisfies IsSelected; its cardinality is five, so the neighborhood is contained in violating 3 5.
 
