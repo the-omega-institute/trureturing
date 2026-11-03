@@ -1,5 +1,22 @@
-/-
-SOURCE CANDIDATE -- UNCOMPILED. No kernel, independent or official acceptance.
+/- GID: D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField
+   mirror-E: none(waiver:algebraic-original-matter-ghost-field)
+   anchors: []
+   utility: none
+   digest: Locally finite original all-state tensor fields have signed locality and the actual total current. -/
+
+import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
+import D5.S3.VertexAlgebra.LatticeActualConformalState
+import D5.S3.VertexAlgebra.LatticeActualStateDerivative
+import D5.S3.Quantum.Fermionic.BcGhostConformalBRSTState
+import Mathlib.Algebra.BigOperators.Finprod
+import Mathlib.Algebra.FiniteSupport.Basic
+import Mathlib.Algebra.Group.Units.Equiv
+import Mathlib.LinearAlgebra.TensorProduct.Map
+
+/-!
+Original all-state matter/ghost tensor field and polynomial-cleared locality.
 
 The carrier, both state-field maps and all operators are the original ones.
 The only infinite-index sums below are sums of actions on a fixed vector.
@@ -21,17 +38,8 @@ The actual current is computed, not specified by its desired zero mode.
 
 All private lemmas in this file are organizational helpers consumed below.
 No Jacobi, total-charge derivation, ghost square-zero, no-ghost, or full
-string/AdS completion is asserted by this source candidate.
+string/AdS completion is asserted in this module.
 -/
-
-import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
-import D5.S3.VertexAlgebra.LatticeActualConformalState
-import D5.S3.VertexAlgebra.LatticeActualStateDerivative
-import D5.S3.Quantum.Fermionic.BcGhostConformalBRSTState
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Algebra.FiniteSupport.Basic
-import Mathlib.Algebra.Group.Units.Equiv
-import Mathlib.LinearAlgebra.TensorProduct.Map
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -83,6 +91,7 @@ private theorem term_support (D : LatticeData) (u v : Carrier D) (a b : Fock)
   have hd : k < n - G ∨ M - 1 < k := by
     simpa only [Set.mem_Icc, not_and_or, not_le] using h
   apply hk
+  dsimp only
   rw [term_tmul]
   rcases hd with hd | hd
   · rw [hg _ (by omega), TensorProduct.tmul_zero]
@@ -99,9 +108,9 @@ private theorem term_finite (D : LatticeData) (s x : State D) (n : ℤ) :
           (cut (LatticeAllStateField.Y D u) v) (cut (BcGhostStateField.Y a) b)
           (cut_kills _ _) (cut_kills _ _))
     | add x y hx hy =>
-      simpa only [map_add] using hx.add hy
+      simpa only [map_add, Pi.add_def] using hx.add hy
   | add s t hs ht =>
-    simpa only [map_add, LinearMap.add_apply] using hs.add ht
+    simpa only [map_add, LinearMap.add_apply, Pi.add_def] using hs.add ht
 
 private theorem term_truncation (D : LatticeData) (s x : State D) :
     ∃ N : ℤ, ∀ n : ℤ, N ≤ n → ∀ k : ℤ, term D n k s x = 0 := by
@@ -164,9 +173,7 @@ private def field (D : LatticeData) (s : State D) : VertexOperator ℂ (State D)
 
 private theorem field_modes (D : LatticeData) (s : State D) (n : ℤ) :
     (field D s)[[n]] = coefficient D n s := by
-  rw [field, VertexOperator.ncoeff_of_coeff]
-  congr 1
-  omega
+  rw [field, VertexOperator.ncoeff_of_coeff, show -(-n - 1) - 1 = n by omega]
 
 /-- The all-state linear tensor field on the original algebraic carrier. -/
 def Y (D : LatticeData) : State D →ₗ[ℂ] VertexOperator ℂ (State D) where
@@ -178,7 +185,7 @@ def Y (D : LatticeData) : State D →ₗ[ℂ] VertexOperator ℂ (State D) where
   map_smul' z s := by
     apply HVertexOperator.coeff_inj
     funext power
-    simp only [VertexOperator.coeff_eq_ncoeff, field_modes, map_smul, Pi.smul_apply]
+    simp only [VertexOperator.coeff_eq_ncoeff, field_modes, map_smul, Pi.smul_apply, RingHom.id_apply]
 
 private theorem Y_modes (D : LatticeData) (s x : State D) (n : ℤ) :
     ((Y D s)[[n]]) x = ∑ᶠ k : ℤ, term D n k s x := by
@@ -259,7 +266,7 @@ private theorem right_vacuum_modes (D : LatticeData) (u : Carrier D) (n : ℤ) :
   intro v b
   rw [Y_tmul, BcGhostStateField.stateField_creation.1]
   rw [finsum_eq_single _ n]
-  · rw [identity_modes, if_pos (show n - 1 - n = -1 by omega)]
+  · rw [identity_modes, ite_eq_left (show n - 1 - n = -1 by omega)]
     rfl
   · intro k hk
     simp [identity_modes, show n - 1 - k ≠ -1 by omega]
@@ -271,7 +278,7 @@ private theorem left_vacuum_modes (D : LatticeData) (a : Fock) (n : ℤ) :
   intro v b
   rw [Y_tmul, LatticeAllStateField.stateField_vacuum]
   rw [finsum_eq_single _ (-1)]
-  · rw [identity_modes, if_pos rfl, show n - 1 - -1 = n by omega]
+  · rw [identity_modes, ite_eq_left rfl, show n - 1 - -1 = n by omega]
     rfl
   · intro k hk
     simp [identity_modes, hk]
@@ -294,7 +301,7 @@ theorem stateField_vacuum_creation (D : LatticeData) :
       · rw [LatticeAllStateField.stateField_creativity D u k hk, TensorProduct.zero_tmul]
       · rw [BcGhostStateField.stateField_creation.2.2.1 a (n - 1 - k) (by omega),
           TensorProduct.tmul_zero]
-    | add s t hs ht => simpa [map_add, hs, ht]
+    | add s t hs ht => simp [map_add, hs, ht]
   refine ⟨?_, ?_, creative, ?_⟩
   · apply HVertexOperator.coeff_inj
     funext power
@@ -314,7 +321,7 @@ theorem stateField_vacuum_creation (D : LatticeData) :
         · rw [LatticeAllStateField.stateField_creativity D u k hp, TensorProduct.zero_tmul]
         · rw [BcGhostStateField.stateField_creation.2.2.1 a (-1 - 1 - k) (by omega),
             TensorProduct.tmul_zero]
-    | add s t hs ht => simpa [map_add, hs, ht]
+    | add s t hs ht => simp [map_add, hs, ht]
   · rw [vacuum, translation_tmul, LatticeAllStateField.translation_kills_vacuum,
       BcGhostStateField.stateField_translation.1]
     simp
@@ -369,7 +376,7 @@ theorem stateField_covariance (D : LatticeData) (s : State D) (n : ℤ) :
       _ = ∑ᶠ k : ℤ, g (e k) := by
         apply finsum_congr
         intro k
-        dsimp [g, e]
+        change -(k : ℂ) • f (k - 1) = -((k - 1 + 1 : ℤ) : ℂ) • f (k - 1)
         rw [show k - 1 + 1 = k by omega]
       _ = _ := finsum_comp_equiv e
   change translation D (((Y D s)[[n]]) x) -
@@ -385,7 +392,10 @@ theorem stateField_covariance (D : LatticeData) (s : State D) (n : ℤ) :
       exact LinearMap.congr_fun (term_covariance D s n k) x
     _ = _ := by
       rw [finsum_add_distrib hleft hright, shifted,
-        ← finsum_add_distrib (hf.smul_right (fun k : ℤ => -((k + 1 : ℤ) : ℂ))) hright]
+        ← finsum_add_distrib
+          (f := fun k : ℤ => -((k + 1 : ℤ) : ℂ) • f k)
+          (g := fun k : ℤ => -((n - 1 - k : ℤ) : ℂ) • f k)
+          (hf.smul_right (fun k : ℤ => -((k + 1 : ℤ) : ℂ))) hright]
       simp_rw [← add_smul, show ∀ k : ℤ,
         -((k + 1 : ℤ) : ℂ) + -((n - 1 - k : ℤ) : ℂ) = -(n : ℂ) by
           intro k; push_cast; ring]
@@ -456,7 +466,7 @@ theorem current_zero_mode (D : LatticeData)
         dsimp [e]
         rw [LatticeActualConformalState.omega_modes,
           BcGhostStateField.stateField_creation.2.2.2.2,
-          show (0 : ℤ) - 1 - (m + 1) + 2 = -m by omega]
+          show (-1 : ℤ) - (m + 1) + 2 = -m by omega]
         rfl
       _ = _ := rfl
   simp only [Jtot, map_add, Pi.add_apply, matterCurrent, left_vacuum_modes,
@@ -474,7 +484,17 @@ private def deltaLinear {E : Type*} [AddCommGroup E] [Module ℂ E] :
     Module.End ℂ (ℤ → ℤ → E) where
   toFun := delta
   map_add' f g := by funext p q; simp only [delta, Pi.add_apply]; abel
-  map_smul' z f := by funext p q; simp only [delta, Pi.smul_apply, smul_sub]
+  map_smul' z f := by funext p q; simp only [delta, Pi.smul_apply, smul_sub, RingHom.id_apply]
+
+private theorem deltaLinear_pow_apply {E : Type*} [AddCommGroup E] [Module ℂ E]
+    (N : ℕ) (f : ℤ → ℤ → E) :
+    (deltaLinear ^ N) f = delta^[N] f := by
+  induction N with
+  | zero => rfl
+  | succ N ih =>
+    rw [pow_succ', Module.End.mul_apply, Function.iterate_succ_apply']
+    change delta ((deltaLinear ^ N) f) = delta (delta^[N] f)
+    rw [ih]
 
 private theorem delta_evaluate {E : Type*} [AddCommGroup E] [Module ℂ E]
     (f : ℤ → ℤ → Module.End ℂ E) (x : E) (N : ℕ) :
@@ -526,7 +546,7 @@ private theorem pair_delta_left {E F : Type*} [AddCommGroup E] [Module ℂ E]
   intro r s
   have h1 := pair_shift_finite h r s 1 0 0 0
   have h2 := pair_shift_finite h r s 0 1 0 0
-  simpa only [delta, TensorProduct.sub_tmul, add_zero] using h1.sub h2
+  simpa only [delta, TensorProduct.sub_tmul, add_zero, Pi.sub_def] using h1.sub h2
 
 private theorem pair_delta_right {E F : Type*} [AddCommGroup E] [Module ℂ E]
     [AddCommGroup F] [Module ℂ F] {f : ℤ → ℤ → E} {g : ℤ → ℤ → F}
@@ -534,7 +554,7 @@ private theorem pair_delta_right {E F : Type*} [AddCommGroup E] [Module ℂ E]
   intro r s
   have h1 := pair_shift_finite h r s 0 0 1 0
   have h2 := pair_shift_finite h r s 0 0 0 1
-  simpa only [delta, TensorProduct.tmul_sub, add_zero] using h1.sub h2
+  simpa only [delta, TensorProduct.tmul_sub, add_zero, Pi.sub_def] using h1.sub h2
 
 private theorem pair_iterated {E F : Type*} [AddCommGroup E] [Module ℂ E]
     [AddCommGroup F] [Module ℂ F] {f : ℤ → ℤ → E} {g : ℤ → ℤ → F}
@@ -574,9 +594,9 @@ private theorem conv_delta_left {E F : Type*} [AddCommGroup E] [Module ℂ E]
   rw [finsum_sub_distrib
     (by simpa only [add_zero] using pair_shift_finite h r s 1 0 0 0)
     (by simpa only [add_zero] using pair_shift_finite h r s 0 1 0 0)]
-  rw [conv_shift f g r s 1 0, conv_shift f g r s 0 1]
-  simp only [add_zero]
-  rfl
+  have h1 := conv_shift f g r s 1 0
+  have h2 := conv_shift f g r s 0 1
+  simpa only [add_zero, conv] using congrArg₂ (· - ·) h1 h2
 
 private theorem conv_delta_right {E F : Type*} [AddCommGroup E] [Module ℂ E]
     [AddCommGroup F] [Module ℂ F] {f : ℤ → ℤ → E} {g : ℤ → ℤ → F}
@@ -625,6 +645,7 @@ private theorem same_order_finite {E F : Type*} [AddCommGroup E] [Module ℂ E]
     have hd : z.2 < s - cut G w ∨ cut C v - 1 < z.2 := by
       simpa only [I, Finset.mem_Icc, not_and_or, not_le] using h
     apply hz
+    dsimp only
     rcases hd with hd | hd
     · rw [cut_kills G w _ (by omega), map_zero, TensorProduct.tmul_zero]
     · rw [cut_kills C v _ (by omega), map_zero, TensorProduct.zero_tmul]
@@ -634,6 +655,7 @@ private theorem same_order_finite {E F : Type*} [AddCommGroup E] [Module ℂ E]
         cut A ((C[[z.2]]) v) - 1 < z.1 := by
       simpa only [K, Finset.mem_Icc, not_and_or, not_le] using h
     apply hz
+    dsimp only
     rcases hd with hd | hd
     · rw [cut_kills B _ _ (by omega), TensorProduct.tmul_zero]
     · rw [cut_kills A _ _ (by omega), TensorProduct.zero_tmul]
@@ -644,6 +666,7 @@ private theorem conv_flip {E F : Type*} [AddCommGroup E] [Module ℂ E]
     [AddCommGroup F] [Module ℂ F] (f : ℤ → ℤ → E) (g : ℤ → ℤ → F)
     (r s : ℤ) : conv (fun k l => f l k) (fun p q => g q p) r s = conv f g s r := by
   exact finsum_comp_equiv (Equiv.prodComm ℤ ℤ)
+    (f := fun z : ℤ × ℤ => f z.1 z.2 ⊗ₜ[ℂ] g (s - 1 - z.1) (r - 1 - z.2))
 
 private theorem conv_composition (D : LatticeData) (u v x : Carrier D)
     (a b w : Fock) (r s : ℤ) :
@@ -662,7 +685,7 @@ private theorem conv_composition (D : LatticeData) (u v x : Carrier D)
     calc
       _ = ∑ᶠ z : ℤ × ℤ, f (Equiv.prodComm ℤ ℤ z) :=
         (finsum_comp_equiv (Equiv.prodComm ℤ ℤ)).symm
-      _ = _ := finsum_curry _ (hf.comp_of_injective (Equiv.prodComm ℤ ℤ).injective)
+      _ = _ := finsum_curry _ (hf.fun_comp_of_injective (g := Equiv.prodComm ℤ ℤ) (Equiv.prodComm ℤ ℤ).injective)
   change ((Y D (u ⊗ₜ[ℂ] a))[[r]])
     (((Y D (v ⊗ₜ[ℂ] b))[[s]]) (x ⊗ₜ[ℂ] w)) = _
   rw [Y_tmul D v x b w s]
@@ -708,14 +731,14 @@ private theorem cleared_modes {E : Type*} [AddCommGroup E] [Module ℂ E]
     have hh := delta_evaluate
       (fun p q => (A[[p]]) * (C[[q]]) - sign • ((C[[q]]) * (A[[p]]))) v N
     rw [h] at hh
-    simpa only [f, rev, Module.End.mul_apply, LinearMap.sub_apply,
+    simpa only [f, rev, Pi.sub_def, Pi.smul_def, Pi.zero_def, Module.End.mul_apply, LinearMap.sub_apply,
       LinearMap.smul_apply, Pi.sub_apply, Pi.smul_apply, Pi.zero_apply,
       LinearMap.zero_apply] using hh
   have eqClear : delta^[N] f = sign • delta^[N] rev := by
     have hh : (deltaLinear ^ N) (f - sign • rev) = 0 := by
-      simpa only [Module.End.pow_apply] using he
+      simpa only [deltaLinear_pow_apply] using he
     rw [map_sub, map_smul] at hh
-    simpa only [Module.End.pow_apply] using sub_eq_zero.mp hh
+    simpa only [deltaLinear_pow_apply] using sub_eq_zero.mp hh
   refine ⟨eqClear, ?_⟩
   intro p q hpq
   rcases hpq with hp | hq
@@ -743,10 +766,11 @@ private theorem conv_rectangle {E F : Type*} [AddCommGroup E] [Module ℂ E]
   intro z hz
   by_contra h
   have hd : z.1 < r - B ∨ A - 1 < z.1 ∨ z.2 < s - G ∨ C - 1 < z.2 := by
-    simp only [Finset.mem_coe, Finset.mem_product, Finset.mem_Icc, not_and_or,
-      not_le] at h
-    tauto
+    change z ∉ (Finset.Icc (r - B) (A - 1)).product (Finset.Icc (s - G) (C - 1)) at h
+    simpa only [Finset.product_eq_sprod, Finset.mem_product, Finset.mem_Icc,
+      not_and_or, not_le, or_assoc] using h
   apply hz
+  dsimp only
   rcases hd with h | h | h | h
   · rw [hg _ _ (Or.inl (by omega)), TensorProduct.tmul_zero]
   · rw [hf _ _ (Or.inl (by omega)), TensorProduct.zero_tmul]
@@ -790,14 +814,16 @@ private theorem conv_cleared_locality {E F : Type*} [AddCommGroup E] [Module ℂ
   have reverse : PairFinite fr gr := by
     intro r s
     have h := same_order_finite C A G B v w s r
-    exact h.comp_of_injective (Equiv.prodComm ℤ ℤ).injective
+    simpa only [fr, gr, Equiv.prodComm_apply, Prod.swap] using
+      h.fun_comp_of_injective (g := Equiv.prodComm ℤ ℤ) (Equiv.prodComm ℤ ℤ).injective
   rw [conv_clear forward Nm Ng, conv_clear reverse Nm Ng]
   funext r s
+  simp only [Pi.smul_apply]
   rw [conv_rectangle (delta^[Nm] f) (delta^[Ng] g)
       (cut A v) (cut C v) (cut B w) (cut G w) r s hfm.2 hgg.2,
     conv_rectangle (delta^[Nm] fr) (delta^[Ng] gr)
       (cut A v) (cut C v) (cut B w) (cut G w) r s hfr hgr]
-  simp only [Pi.smul_apply, Finset.smul_sum]
+  simp only [Finset.smul_sum]
   apply Finset.sum_congr rfl
   intro z hz
   rw [ef, eg]
@@ -829,8 +855,8 @@ private theorem local_add_left {E : Type*} [AddCommGroup E] [Module ℂ E]
   have he : (deltaLinear ^ max p q)
       (signedComm sign A C + signedComm sign B C) = 0 := by
     rw [map_add]
-    simpa only [Module.End.pow_apply, hp', hq', add_zero]
-  simpa only [Module.End.pow_apply] using he
+    simp only [deltaLinear_pow_apply, hp', hq', add_zero]
+  simpa only [deltaLinear_pow_apply] using he
 
 private theorem local_add_right {E : Type*} [AddCommGroup E] [Module ℂ E]
     (sign : ℂ) (A B C : VertexOperator ℂ E)
@@ -850,17 +876,17 @@ private theorem local_add_right {E : Type*} [AddCommGroup E] [Module ℂ E]
   have he : (deltaLinear ^ max p q)
       (signedComm sign A B + signedComm sign A C) = 0 := by
     rw [map_add]
-    simpa only [Module.End.pow_apply, hp', hq', add_zero]
-  simpa only [Module.End.pow_apply] using he
+    simp only [deltaLinear_pow_apply, hp', hq', add_zero]
+  simpa only [deltaLinear_pow_apply] using he
 
 private theorem simple_locality (D : LatticeData) (u v : Carrier D) (a b : Fock)
     (p q : ℕ)
-    (ha : CountableOccupationFock.parity a = (-1 : ℂ)^p • a)
-    (hb : CountableOccupationFock.parity b = (-1 : ℂ)^q • b) :
-    Local ((-1 : ℂ)^(p*q)) (Y D (u ⊗ₜ[ℂ] a)) (Y D (v ⊗ₜ[ℂ] b)) := by
+    (ha : CountableOccupationFock.parity a = (-1 : ℂ) ^ p • a)
+    (hb : CountableOccupationFock.parity b = (-1 : ℂ) ^ q • b) :
+    Local ((-1 : ℂ) ^ (p*q)) (Y D (u ⊗ₜ[ℂ] a)) (Y D (v ⊗ₜ[ℂ] b)) := by
   obtain ⟨Nm, hm⟩ := LatticeAllStateLocality.stateField_locality D u v
   obtain ⟨Ng, hg⟩ := BcGhostStateFieldLocality.stateField_locality a b p q ha hb
-  let sign : ℂ := (-1 : ℂ)^(p*q)
+  let sign : ℂ := (-1 : ℂ) ^ (p*q)
   have hs : sign * sign = 1 := by
     dsimp [sign]
     rw [← mul_pow]
@@ -905,8 +931,8 @@ private theorem simple_locality (D : LatticeData) (u v : Carrier D) (a b : Fock)
     rw [einput]
     have he : (deltaLinear ^ (Nm + Ng)) (conv f g - sign • conv fr gr) = 0 := by
       rw [map_sub, map_smul]
-      simpa only [Module.End.pow_apply] using sub_eq_zero.mpr hclear
-    simpa only [Module.End.pow_apply] using he
+      simpa only [deltaLinear_pow_apply] using sub_eq_zero.mpr hclear
+    simpa only [deltaLinear_pow_apply] using he
   rw [delta_evaluate] at killed
   exact congrFun (congrFun killed r) s
 
@@ -915,12 +941,12 @@ law through the ACTUAL tensor relations. It changes neither carrier nor Y.
 The final theorem has arbitrary original algebraic homogeneous field states. -/
 
 private def ghostProjection (p : ℕ) : Module.End ℂ Fock :=
-  (2 : ℂ)⁻¹ • (LinearMap.id + (-1 : ℂ)^p • CountableOccupationFock.parity)
+  (2 : ℂ)⁻¹ • (LinearMap.id + (-1 : ℂ) ^ p • CountableOccupationFock.parity)
 
 private theorem ghostProjection_homogeneous (p : ℕ) (a : Fock) :
     CountableOccupationFock.parity (ghostProjection p a) =
-      (-1 : ℂ)^p • ghostProjection p a := by
-  let z : ℂ := (-1 : ℂ)^p
+      (-1 : ℂ) ^ p • ghostProjection p a := by
+  let z : ℂ := (-1 : ℂ) ^ p
   have hz : z * z = 1 := by
     dsimp [z]
     rw [← mul_pow]
@@ -939,7 +965,7 @@ private def project (D : LatticeData) (p : ℕ) : Module.End ℂ (State D) :=
   TensorProduct.map LinearMap.id (ghostProjection p)
 
 private theorem project_formula (D : LatticeData) (p : ℕ) (x : State D) :
-    project D p x = (2 : ℂ)⁻¹ • (x + (-1 : ℂ)^p • parity D x) := by
+    project D p x = (2 : ℂ)⁻¹ • (x + (-1 : ℂ) ^ p • parity D x) := by
   induction x using TensorProduct.inductionOn with
   | tmul v a =>
     simp only [project, ghostProjection, parity, TensorProduct.map_tmul,
@@ -950,23 +976,23 @@ private theorem project_formula (D : LatticeData) (p : ℕ) (x : State D) :
     module
 
 private theorem project_fixed (D : LatticeData) (p : ℕ) (x : State D)
-    (hx : parity D x = (-1 : ℂ)^p • x) : project D p x = x := by
-  have hz : (-1 : ℂ)^p * (-1 : ℂ)^p = 1 := by
+    (hx : parity D x = (-1 : ℂ) ^ p • x) : project D p x = x := by
+  have hz : (-1 : ℂ) ^ p * (-1 : ℂ) ^ p = 1 := by
     rw [← mul_pow]
     norm_num
-  rw [project_formula, hx, smul_smul, hz, one_smul, ← two_smul, smul_smul]
+  rw [project_formula, hx, smul_smul, hz, one_smul, ← two_smul ℂ x, smul_smul]
   norm_num
 
 /-- Genuine signed locality of the original all-state matter/ghost field.
 The exponent is uniform over all input tensor states. Only the original
 ghost parity of the two field states is assumed. No Jacobi law follows here. -/
 theorem stateField_locality (D : LatticeData) (x y : State D) (p q : ℕ)
-    (hx : parity D x = (-1 : ℂ)^p • x)
-    (hy : parity D y = (-1 : ℂ)^q • y) :
+    (hx : parity D x = (-1 : ℂ) ^ p • x)
+    (hy : parity D y = (-1 : ℂ) ^ q • y) :
     ∃ N : ℕ, delta^[N] (fun r s =>
-      ((Y D x)[[r]]) * ((Y D y)[[s]]) - (-1 : ℂ)^(p*q) •
+      ((Y D x)[[r]]) * ((Y D y)[[s]]) - (-1 : ℂ) ^ (p*q) •
         (((Y D y)[[s]]) * ((Y D x)[[r]]))) = 0 := by
-  let sign : ℂ := (-1 : ℂ)^(p*q)
+  let sign : ℂ := (-1 : ℂ) ^ (p*q)
   have allProjected (x y : State D) : Local sign
       (Y D (project D p x)) (Y D (project D q y)) := by
     induction x using TensorProduct.inductionOn with
