@@ -379,13 +379,7 @@ private theorem cert33 (x : ℤ) (hx : 8≤x) :
 
 -- Independent certificate 34: boundary_v>0.
 private theorem cert34 (x : ℤ) (hx : 8≤x) :
-    0 < 8 := by
-  let p := x-8
-  have hp : 0≤p := by dsimp [p]; omega
-  have he : 8 =
-      8 := by dsimp [p]; ring
-  rw [he]
-  positivity
+    0 < 8 := by norm_num
 
 -- Independent certificate 35: boundary_stockupper.
 private theorem cert35 (x : ℤ) (hx : 8≤x) :

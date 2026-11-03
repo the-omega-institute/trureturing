@@ -24,7 +24,7 @@ private theorem general_select (x y t : ℤ) (hy : 4≤y) (hx : 2*y≤x) (ht : 8
   have hz : 256≤z := by dsimp [z]; omega
   have hE : z<E := hEz
   have hstopZ : 28*B x y t+z<9*A x y t := hstop
-  have hEA : 3*B x y t<A x y t := by dsimp [E] at hEB; omega
+  have hEA : 3*B x y t<A x y t := by omega
   -- Positive-integer ceiling: ceil((L-B)/(2B)) = (L-B-1)/(2B)+1.
   let c := (L x y t-B x y t-1)/(2*B x y t)+1
   have hc : 1≤c := by
@@ -37,7 +37,7 @@ private theorem general_select (x y t : ℤ) (hy : 4≤y) (hx : 2*y≤x) (ht : 8
       (show 2*B x y t≠0 by omega)
     have hrem' := Int.emod_lt_of_pos (L x y t-B x y t-1)
       (show 0<2*B x y t by omega)
-    have hdiv := Int.ediv_add_emod (L x y t-B x y t-1) (2*B x y t)
+    have hdiv := Int.mul_ediv_add_emod (L x y t-B x y t-1) (2*B x y t)
     dsimp [d0,c]
     constructor <;> nlinarith only [hrem,hrem',hdiv]
   have hratio4 : 4*L x y t<z*B x y t := by
@@ -45,9 +45,11 @@ private theorem general_select (x y t : ℤ) (hy : 4≤y) (hx : 2*y≤x) (ht : 8
     dsimp [z]
     nlinarith only [hratio,hmul]
   have hcstock : 8*c<z+4 := by
-    apply (mul_lt_mul_right hB).mp
+    by_contra hh
+    have hs : (z+4)*B x y t≤8*c*B x y t :=
+      mul_le_mul_of_nonneg_right (by omega) hB.le
     dsimp [d0] at hd0
-    nlinarith only [hd0.2,hratio4]
+    nlinarith only [hd0.2,hratio4,hs]
   let d1 := d0+2*E-2*B x y t
   let d2 := d0+4*E-4*B x y t
   let v0 := c
@@ -56,7 +58,7 @@ private theorem general_select (x y t : ℤ) (hy : 4≤y) (hx : 2*y≤x) (ht : 8
   let T0 := 2*d0+z-2*v0
   let T1 := 2*d1+z-2*v1
   let T2 := 2*d2+z-2*v2
-  have hstock (i : ℤ) (hi : 0≤i ∧ i≤2) : 1≤c+3*i ∧ 4*(c+3*i)≤z := by
+  have hstock (i : ℤ) (hi : 0≤ i ∧ i≤2) : 1≤c+3*i ∧ 4*(c+3*i)≤z := by
     constructor <;> omega
   have hD1 : D x y t 1 v1=d1 := by dsimp [D,d1,d0,v1,E]; ring
   have hD2 : D x y t 2 v2=d2 := by dsimp [D,d2,d0,v2,E]; ring
@@ -332,6 +334,7 @@ private theorem boundary_select (a : ℕ) (ha : 3≤a) :
       5*(((8*2^a+n)/5:ℕ):ℤ)=8*x+n := by
     have hh := Nat.mod_add_div (8*2^a+n) 5
     rw [hn,zero_add] at hh
+    dsimp [x]
     exact_mod_cast hh
   rcases power_mod_five a with h|h|h|h
   · let v := (8*2^a+7)/5
@@ -369,7 +372,7 @@ private theorem original_select (a b d : ℕ) (hb : 2≤b) (hba : b<a)
       _=2^d := by congr 1; omega
   have hV : ((2^((d+2)-1):ℕ):ℤ)=2*(2:ℤ)^d := by
     push_cast
-    rw [show d+2-1=d+1 by omega,pow_succ]
+    simp only [show d+2-1=d+1 by omega,pow_succ]
     ring
   have hy : (4:ℤ)≤2^b := by
     simpa using pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) hb
