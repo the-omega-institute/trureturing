@@ -6,9 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/DegradeFireNonExhaustiveOrbitRefutation.claim; result=D5/S3/StatisticalMechanics/DegradeFireNonExhaustiveOrbitRefutation.result; claim=D5/S3/StatisticalMechanics/DegradeFireNonExhaustiveOrbitRefutation.claim
    digest: A nine-firing periodic orbit with repeated labels refutes exhaustive firing. -/
 
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.Linarith
+
+import D5.S3.Geometry.FiniteCoordinateTruncation
 
 /-! A saturated degrade-and-fire flow with a non-exhaustive periodic trajectory. -/
 
@@ -18,12 +17,13 @@ set_option linter.style.longLine false
 namespace D5.S3.StatisticalMechanics.DegradeFireNonExhaustiveOrbitRefutation
 
 open Matrix
+open D5.S3.Geometry.FiniteCoordinateTruncation (cut)
 
 noncomputable def coupling (ε : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   !![1 - ε, 0, ε; ε, 1 - ε, 0; 0, ε, 1 - ε]
 
 noncomputable def flow (s : Fin 3 → ℝ) (t : ℝ) : Fin 3 → ℝ :=
-  fun j => max 0 (s j - t)
+  cut t s
 
 noncomputable def reset (x : Fin 3 → ℝ) (i : Fin 3) : Fin 3 → ℝ :=
   Function.update x i 1
@@ -79,19 +79,19 @@ private theorem duration_positive (i : Fin 9) : 0 < times i := by
 
 private theorem before_threshold (i : Fin 9) (t : ℝ) (hτ : t < times i) (j : Fin 3) :
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) t) j := by
-  delta times states coupling flow at *
+  delta times states coupling flow cut at *
   fin_cases i <;> fin_cases j <;>
     norm_num [mulVec, dotProduct, Fin.sum_univ_succ] at hτ ⊢ <;>
     simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem at_threshold (i : Fin 9) :
     (coupling (4 / 5) *ᵥ flow (states i) (times i)) (labels i) ≤ (3 / 20 : ℝ) := by
-  delta times states labels coupling flow
+  delta times states labels coupling flow cut
   fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem other_above (i : Fin 9) (j : Fin 3) (hj : j ≠ labels i) :
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) (times i)) j := by
-  delta times states labels coupling flow at *
+  delta times states labels coupling flow cut at *
   fin_cases i <;> fin_cases j <;>
     norm_num [mulVec, dotProduct, Fin.sum_univ_succ] at *
 
@@ -99,7 +99,7 @@ private theorem flow_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) :
     Function.Injective (flow (states i) t) := by
   apply injective_three
   all_goals
-    delta times states flow at *
+    delta times states flow cut at *
     fin_cases i <;> norm_num at hτ ⊢ <;>
       simp only [max_def] <;> split_ifs <;> linarith
 
@@ -109,7 +109,7 @@ private theorem state_distinct (i : Fin 9) : Function.Injective (states i) := by
 
 private theorem reset_verified (i : Fin 9) :
     states (i + 1) = reset (flow (states i) (times i)) (labels i) := by
-  delta states times labels reset flow
+  delta states times labels reset flow cut
   ext j
   fin_cases i <;> fin_cases j <;> norm_num [Function.update]
 
