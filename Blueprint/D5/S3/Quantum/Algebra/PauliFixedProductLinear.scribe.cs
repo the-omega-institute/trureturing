@@ -9,7 +9,7 @@ internal sealed class PauliFixedProductLinearDocument : IScribeDocumentDefinitio
     private static Formula V(string x) => F.Id(x);
     private static Formula Root(Formula x) => Seq(Sqrt, Grp(x));
     private static Formula Fr(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
-    private static Formula Abs(Formula x) => Seq(Vert,x,Vert);
+    private static Formula Abs(Formula x) => Seq(Vert,Sp,x,Vert);
     private static Formula Call(string x, Formula t) => Seq(Operatorname,Grp(V(x)),Open,t,Close);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -64,6 +64,6 @@ internal sealed class PauliFixedProductLinearDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Half of the positive endpoint gives an actual parameter with a nonzero diagonal defect and a nonzero unit generator. "
                     + "Its attained defect maximum is dominated by the linear certificate, which is strictly smaller than the original capped root. "
-                    + "All these properties hold simultaneously for the same fixed-product realization."))),
+                    + "The same existential member includes the entire all-input realization contract, exact defect and local constants, actual action and label Grams, their spectra and the support gap. All these properties hold simultaneously for the same fixed-product realization."))),
                 DescribeRole.Theorem))));
 }

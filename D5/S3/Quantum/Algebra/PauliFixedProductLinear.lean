@@ -151,12 +151,19 @@ theorem actual_strict_improvement (t : ℝ) (ht : 0 < |t|) (hsmall : |t|<smallEn
 
 /-- An actual member of the literal interval has both nonzero defects and the strict certificate. -/
 theorem nonempty_improvement : ∃ t : ℝ,
+    (type_of% (family_contract t)) ∧
+    (type_of% (exact_defects t)) ∧
+    (type_of% (exact_constants t)) ∧
+    (type_of% (exact_action_data t)) ∧
+    (type_of% (exact_label_data t)) ∧
+    (type_of% (exact_support_gap t)) ∧
     0 < |t| ∧ |t|<smallEndpoint ∧
     (∃ a : J, D t a a≠0) ∧ D t (e 0)≠0 ∧
     |t|/2≤linear (epsilon t) (localBound t) ∧
     linear (epsilon t) (localBound t)<old (epsilon t) (localBound t) := by
   obtain ⟨t,ht,hs⟩ := small_interval_nonempty
   obtain ⟨_,hdiag,hunit,_,hdom,hstrict⟩ := actual_strict_improvement t ht hs
-  exact ⟨t,ht,hs,hdiag,hunit,hdom,hstrict⟩
+  exact ⟨t,family_contract t,exact_defects t,exact_constants t,exact_action_data t,
+    exact_label_data t,exact_support_gap t,ht,hs,hdiag,hunit,hdom,hstrict⟩
 
 end D5.S3.Quantum.Algebra.PauliFixedProductFamily

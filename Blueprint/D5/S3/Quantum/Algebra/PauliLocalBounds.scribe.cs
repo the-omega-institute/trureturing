@@ -9,7 +9,7 @@ internal sealed class PauliLocalBoundsDocument : IScribeDocumentDefinition
     private static Formula V(string x) => F.Id(x);
     private static Formula Root(Formula x) => Seq(Sqrt, Grp(x));
     private static Formula Pow(Formula x) => Seq(x, Caret, Grp(D(2)));
-    private static Formula Abs(Formula x) => Seq(Vert, x, Vert);
+    private static Formula Abs(Formula x) => Seq(Vert, Sp, x, Vert);
     private static Formula Call(string x, params Formula[] args) =>
         Seq(Operatorname, Grp(V(x)), Open,
             Seq(args.SelectMany((a,i) => i == 0 ? new[] { a } : new[] { Comma,a }).ToArray()), Close);
@@ -68,5 +68,5 @@ internal sealed class PauliLocalBoundsDocument : IScribeDocumentDefinition
                 + "For every nonzero t the diagonal defect is nonzero at (1+x)/sqrt(2), the unit generator is nonzero, "
                 + "and the label kernel differs from the common fixed kernel: the unit lies in the latter but not the former. "
                 + "At t=0 all diagonal defects vanish and the unit generator is zero. These are statements about this "
-                + "same action and same positive product, without an assumption of label alternation.")))));
+                + "same action and same positive product, without an assumption of label alternation."))));
 }
