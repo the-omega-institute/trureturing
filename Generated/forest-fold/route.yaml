@@ -1,0 +1,8 @@
+theory: D5
+plane: F
+domain: Geometry
+module: FiniteGraphIndependenceReduction
+generality: G
+selector: ""
+artifact: lean
+tag: ""
