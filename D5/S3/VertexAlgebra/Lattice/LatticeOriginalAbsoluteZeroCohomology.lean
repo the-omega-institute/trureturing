@@ -38,6 +38,7 @@ open D5.S3.Quantum.Fermionic CountableOccupationFock
 open private ghostSlice ghostSlice_coeff ghostSlice_tmul
   from D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
 open private R_odd_capture from D5.S3.VertexAlgebra.Lattice.LatticeZeroMomentumBRST
+open private totalL0_c_zero from D5.S3.VertexAlgebra.Lattice.LatticeBRSTRelativeZeroMode
 
 variable (D : LatticeData)
 
@@ -96,21 +97,8 @@ private theorem b_mem_absolute (x : State D) (hx : x ∈ Absolute D H) :
 
 private theorem c_mem_absolute (x : State D) (hx : x ∈ Absolute D H) :
     ghostC D 0 x ∈ Absolute D H := by
-  have hg : BcGhostVirasoro.L 0 * BcGhostFock.c 0 =
-      BcGhostFock.c 0 * BcGhostVirasoro.L 0 := by
-    apply sub_eq_zero.mp
-    simpa using BcGhostVirasoro.ward_c 0 0
-  have hc : totalL0 D H * ghostC D 0 = ghostC D 0 * totalL0 D H := by
-    apply TensorProduct.ext'
-    intro v w
-    have hw := LinearMap.congr_fun hg w
-    simp only [Module.End.mul_apply] at hw
-    simp only [totalL0, LinearMap.add_apply, Module.End.mul_apply, map_add,
-      matterMode, ghostVirasoro, ghostC,
-      TensorProduct.map_tmul, LinearMap.id_apply]
-    rw [hw]
   change totalL0 D H (ghostC D 0 x) = 0
-  have he := LinearMap.congr_fun hc x
+  have he := LinearMap.congr_fun (sub_eq_zero.mp (totalL0_c_zero D H)) x
   change totalL0 D H (ghostC D 0 x) = ghostC D 0 (totalL0 D H x) at he
   rw [he, hx, map_zero]
 
