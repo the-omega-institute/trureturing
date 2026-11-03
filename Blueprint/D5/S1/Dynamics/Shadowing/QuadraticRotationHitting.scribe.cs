@@ -23,10 +23,11 @@ internal sealed class QuadraticRotationHittingDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit badly-approximable estimates and uniform finite hitting for scaled square-root rotations.",
         H("Quantitative Rotation Hitting"), Blocks(
-        Paragraph(Text("All phases are real numbers with their integer lifts retained. Int.fract is the representative in [0,1). Mathlib supplies irrational_sqrt_two, nearest-integer rounding and the Dirichlet return theorem Real.exists_nat_abs_mul_sub_round_le. "
+        Paragraph(Text("All phases are real numbers with their integer lifts retained. Natural numbers and rounded integers in real expressions denote their canonical real coercions. Int.fract is the representative in [0,1). Mathlib supplies irrational_sqrt_two, nearest-integer rounding and the Dirichlet return theorem Real.exists_nat_abs_mul_sub_round_le. "
             + "The quantitative construction is attributed to Pro. The argument gives a uniform finite bound, including all integer lifts.")),
         Thm("scaled-sqrt-lower", "sqrt_two_scaled_round_lower", "An explicit lower approximation bound", St(
-            Seq(Forall, Sp, Seq(Id("M"), Comma, Sp, Id("k")), Gt, D(0), Comma),
+            Seq(Forall, Sp, Id("M"), Comma, Id("k"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                D(0), Lt, Id("M"), Sp, Rightarrow, Sp, D(0), Lt, Id("k"), Sp, Rightarrow),
             Seq(Seq(Frac, Grp(D(1)), Grp(Seq(Id("M"), Open, Id("M"), Plus, D(3), Close, Id("k")))), Sp, Le, Sp, Seq(Bar, Frac, Grp(Id("k"), Sqrt, Grp(D(2))), Grp(Id("M")), Minus, Call("round", Seq(Frac, Grp(Id("k"), Sqrt, Grp(D(2))), Grp(Id("M")))), Bar))),
             "Let m be the nearest integer to k sqrt(2)/M. It is nonnegative. Irrationality makes the integer 2k^2-M^2m^2 nonzero, so its absolute value is at least one. "
             + "Factor this integer as M(k sqrt(2)/M-m)(k sqrt(2)+Mm). The rounding error bounds Mm by k sqrt(2)+M/2; hence k sqrt(2)+Mm<=(M+3)k. Division yields the stated lower bound."),

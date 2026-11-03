@@ -29,7 +29,8 @@ internal sealed class ProgressionTwoShadowingDocument : IScribeDocumentDefinitio
         Paragraph(Text("Read c(n)=z(n)(0). Strict first-disagreement errors force edge equality through D. The existing MetricTracing.diagonal_splice_overlap gives c(i+j)=z(i)(j) for all i and j<=D+1. "
             + "For 1<=p<=P, the span p(p^2+2)<=P^3+2P fits in that overlap, so c satisfies every such progression constraint at every starting coordinate. The proof does not assume c itself is in the carrier.")),
         Thm("quarter-mask-separation", "quarter_masks_separated", "Quarter masks stay separated across wrap-around", St(
-            Seq(Call("fract", Id("u")), Sp, InMacro, Sp, Seq(OpenBracket, Frac, Grp(D(1)), Grp(D(8)), Comma, Frac, Grp(D(3)), Grp(D(8)), CloseBracket), Comma),
+            Seq(Forall, Sp, Id("u"), Comma, Id("v"), Sp, InMacro, Sp, Mathbb, Grp(Id("R")), Comma),
+            Seq(Call("fract", Id("u")), Sp, InMacro, Sp, Seq(OpenBracket, Frac, Grp(D(1)), Grp(D(8)), Comma, Frac, Grp(D(3)), Grp(D(8)), CloseBracket), Sp, Rightarrow),
             Seq(Call("fract", Id("v")), Sp, InMacro, Sp, Seq(OpenBracket, Frac, Grp(D(5)), Grp(D(8)), Comma, Frac, Grp(D(7)), Grp(D(8)), CloseBracket), Sp, Rightarrow,
                 Sp, Seq(Frac, Grp(D(1)), Grp(D(8))), Sp, Le, Sp, Seq(Bar, Id("v"), Minus, Id("u"), Bar))),
             "If the real phase difference were less than 1/8, the integer difference floor(v)-floor(u) would be strictly between -1 and 0. "

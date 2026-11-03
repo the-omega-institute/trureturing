@@ -47,10 +47,13 @@ internal sealed class ProgressionSubshiftDocument : IScribeDocumentDefinition
             + "At p>max(a,b), at most one progression term lies in each word; its first three terms cannot all be supported. A progression starting in the second word contradicts legality of y. "
             + "Thus every sufficiently large n connects any two prescribed prefix cylinders. Metric neighborhoods contain such cylinders, proving open-set mixing in progression_shift_mixing."),
         Thm("progression-periodic-obstruction", "progression_no_invariant_subset", "No nonempty forward invariant subset in the one cylinder", St(
-            Seq(Forall, Sp, Seq(Id("ell"), Comma, Id("p"), Comma, Id("B")), Comma, Sp, Id("p"), Gt, D(0), Comma),
-            Seq(Id("B"), Sp, Subseteq, Sp, Call("progressionOneCylinder", Id("ell")), Comma),
-            Seq(Call("MapsTo", Seq(Id("sigma"), Caret, Grp(Id("p"))), Id("B"), Id("B")), Sp, Rightarrow, Sp, Neg, Sp, Call("Nonempty", Id("B")))),
-            "Choose x in B. Forward invariance gives sigma^(jp)(x) in B for every natural j, so x(jp)=1 at every such coordinate, contradicting its p-progression condition. "
+            Seq(Forall, Sp, Id("ell"), Colon, Sp, Mathbb, Grp(Id("N")), Sp, To, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                Forall, Sp, Id("p"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp, D(0), Lt, Id("p"), Sp, Rightarrow),
+            Seq(Forall, Sp, Id("B"), Colon, Sp, Call("Set", Call("ProgressionPoint", Id("ell"))), Comma, Sp,
+                Id("B"), Sp, Subseteq, Sp, Call("progressionOneCylinder", Id("ell")), Sp, Rightarrow),
+            Seq(Call("MapsTo", Seq(Open, Call("progressionShift", Id("ell")), Close, Caret, Grp(Id("p"))), Id("B"), Id("B")),
+                Sp, Rightarrow, Sp, Neg, Sp, Call("Nonempty", Id("B")))),
+            "Here Set(T) denotes subsets of T, f^p denotes p-fold iteration, and MapsTo(f,B,B) means that f maps B into B. Choose x in B. Forward invariance gives (progressionShift(ell))^(jp)(x) in B for every natural j, so x(jp)=1 at every such coordinate, contradicting its p-progression condition. "
             + "The cylinder [1] is clopen, and nonempty when ell(p)>=2. Compactness and image equality are unnecessary for this obstruction.")
         )));
 }

@@ -40,11 +40,6 @@ theorem progression_legal_shift {ℓ : ℕ → ℕ} {x : ℕ → ReturnBit}
   obtain ⟨j, hj, hz⟩ := hx (n + s) p hp
   exact ⟨j, hj, by simpa [shift_apply, Nat.add_assoc] using hz⟩
 
-def progressionSubshift (ℓ : ℕ → ℕ) : Subshift ReturnBit ℕ where
-  carrier := {x | ProgressionLegal ℓ x}
-  isClosed := progression_legal_closed ℓ
-  mapsTo := fun n _ hx => progression_legal_shift hx n
-
 abbrev ProgressionPoint (ℓ : ℕ → ℕ) := {x : ℕ → ReturnBit // ProgressionLegal ℓ x}
 
 instance progressionPointCompact (ℓ : ℕ → ℕ) : CompactSpace (ProgressionPoint ℓ) :=

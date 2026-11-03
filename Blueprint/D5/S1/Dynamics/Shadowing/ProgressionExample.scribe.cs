@@ -30,12 +30,17 @@ internal sealed class ProgressionExampleDocument : IScribeDocumentDefinition
             + "No homeomorphism hypothesis is imposed by the source's compact metric system definition.")),
         Paragraph(Text("The arithmetic-progression construction, constants and rotation deletion method are attributed to Pro.")),
         Thm("progression-square-transitivity", "progression_shift_product_transitive", "Weak mixing on all nonempty product open sets", St(
-            Seq(Forall, Sp, Seq(Id("U"), Comma, Sp, Id("V")), Sp, Subseteq, Sp, Seq(Id("X"), Times, Sp, Id("X")), Comma),
-            Seq(Call("IsOpen", Id("U")), Sp, Land, Sp, Call("IsOpen", Id("V")), Sp, Land,
-                Sp, Call("Nonempty", Id("U")), Sp, Land, Sp, Call("Nonempty", Id("V")), Sp, Rightarrow),
-            Seq(Exists, Sp, Seq(Id("n"), Comma, Sp, Id("z")), Comma, Sp, Id("z"), Sp, InMacro, Sp, Id("U"), Sp, Land,
-                Sp, Seq(Open, Call("iterate", Id("sigma"), Id("n"), Call("fst", Id("z"))), Comma, Sp, Call("iterate", Id("sigma"), Id("n"), Call("snd", Id("z"))), Close), Sp, InMacro, Sp, Id("V"))),
-            "For arbitrary nonempty open U,V in X times X, choose contained nonempty open rectangles. Apply open-set mixing to each coordinate pair. "
+            Seq(Forall, Sp, Id("ell"), Colon, Sp, Mathbb, Grp(Id("N")), Sp, To, Sp, Mathbb, Grp(Id("N")), Comma),
+            Seq(Open, Forall, Sp, Id("p"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                D(0), Lt, Id("p"), Sp, Rightarrow, Sp, D(3), Le, Call("ell", Id("p")), Close, Sp, Rightarrow),
+            Seq(Forall, Sp, Id("U"), Comma, Id("V"), Colon, Sp,
+                Call("Set", Seq(Call("ProgressionPoint", Id("ell")), Times, Sp, Call("ProgressionPoint", Id("ell")))), Comma),
+            Seq(Call("IsOpen", Id("U")), Sp, Rightarrow, Sp, Call("IsOpen", Id("V")), Sp, Rightarrow,
+                Sp, Call("Nonempty", Id("U")), Sp, Rightarrow, Sp, Call("Nonempty", Id("V")), Sp, Rightarrow),
+            Seq(Exists, Sp, Id("n"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp, Exists, Sp, Id("z"), Sp, InMacro, Sp, Id("U"), Comma),
+            Seq(Open, Call("iterate", Call("progressionShift", Id("ell")), Id("n"), Call("fst", Id("z"))), Comma, Sp,
+                Call("iterate", Call("progressionShift", Id("ell")), Id("n"), Call("snd", Id("z"))), Close, Sp, InMacro, Sp, Id("V"))),
+            "For this generic statement ell is any natural-valued length function satisfying ell(p)>=3 for every positive p. Set(T) denotes subsets of T and iterate(f,n,x) denotes f^[n](x). For arbitrary nonempty open U,V in ProgressionPoint(ell) times ProgressionPoint(ell), choose contained nonempty open rectangles. Apply open-set mixing to each coordinate pair. "
             + "The maximum of their two thresholds supplies one common hitting time and two points, proving transitivity of the square map."),
         Paragraph(Text("In the endpoint formula, X is ProgressionPoint(quadraticProgressionLength) and sigma is progressionShift(quadraticProgressionLength). "
             + "Set(X) denotes all subsets of X; iterate(f,n,x) denotes f^[n](x), sigma^p denotes p-fold iteration, and image(f,B) denotes the direct image. MapsTo(f,B,B) means image(f,B) is a subset of B. "
