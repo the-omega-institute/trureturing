@@ -44,26 +44,29 @@ private theorem physical_selection (a b c d : ℕ)
     omega
   have hY : Y x p q h=(2:ℤ)^b := by
     dsimp [Y,h]
-    rw [hT,show (2:ℤ)=2^1 by norm_num,←pow_add,←pow_add]
-    congr 1
-    omega
+    rw [hT]
+    calc
+      2*2^(b-d-1)*2^d=(2:ℤ)^((b-d-1)+d+1) := by rw [pow_add,pow_add,pow_one]; ring
+      _=2^b := by congr 1; omega
   have bo : base a b c d=![A x p q h,B x p q h,L x p q,K x p q h] := by
     funext r
     fin_cases r <;> dsimp [base,A,B,L,K]
-    all_goals simp only [hY,hZ,hT] <;> dsimp [x] <;> ring
+    all_goals simp only [hY,hZ,hT] <;> (try dsimp [x]) <;> ring
   have bn : newBase a b c d=![2*A x p q h,SU x p q h,SV x p q,SW x p q h] := by
     funext r
-    fin_cases r <;> simp [newBase,charge,bo,SU,SV,SW,hY,hZ]
+    fin_cases r <;> simp [newBase,charge,bo,SU,SV,SW,hY,hZ] <;> ring
   obtain ⟨v,m,M,before,hsub,hbounds⟩:=dyadic_selection a (d-c) (c-a) (b-d-1)
     ha (by omega) (by omega)
   have hbounds' : rowBounds x p q h v m M before := hbounds
   have hv0 : 1≤v := by exact_mod_cast hbounds'.2.1
   have hdp : (2:ℤ)^d=2*2^(d-1) := by
-    rw [show d=(d-1)+1 by omega,pow_succ]
-    ring
+    calc
+      (2:ℤ)^d=2^((d-1)+1) := by congr 1; omega
+      _=2*2^(d-1) := by rw [pow_succ]; ring
   have hbp : (2:ℤ)^b=2*2^(b-1) := by
-    rw [show b=(b-1)+1 by omega,pow_succ]
-    ring
+    calc
+      (2:ℤ)^b=2^((b-1)+1) := by congr 1; omega
+      _=2*2^(b-1) := by rw [pow_succ]; ring
   have hv : v≤2^(d-1) := by
     have hh:=hbounds'.2.2.1
     rw [hT,hdp] at hh

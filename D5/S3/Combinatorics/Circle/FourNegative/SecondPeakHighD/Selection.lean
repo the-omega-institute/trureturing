@@ -56,6 +56,7 @@ private theorem residue_selection (p h q : ℕ)
   have ho : row.offset≤row.p*(72*R+row.r) := by
     have hz : (row.offset:ℤ)≤(row.p:ℤ)*(72*(R:ℤ)+row.r) := by
       have hv:=hb.2.1
+      change 1≤(row.p:ℤ)*(72*(R:ℤ)+row.r)-row.offset at hv
       omega
     exact_mod_cast hz
   have hvcast : (v:ℤ)=(row.p:ℤ)*(72*(R:ℤ)+row.r)-row.offset := by
@@ -63,7 +64,7 @@ private theorem residue_selection (p h q : ℕ)
     rw [Nat.cast_sub ho]
     push_cast
     ring
-  have hMcast : (M:ℤ)=(row.block:ℤ)*(R:ℤ)+row.constant := by dsimp [M]; push_cast; ring
+  have hMcast : (M:ℤ)=(row.block:ℤ)*(R:ℤ)+row.constant := by dsimp [M]
   let before : Bool:=if p=4 ∧ h=1 ∧ r=56 then false else true
   have timing : row.before=before := by
     have ht:=residue_fresh_exact i
@@ -72,7 +73,9 @@ private theorem residue_selection (p h q : ℕ)
     by_cases he : p=4 ∧ h=1 ∧ r=56
     · simpa [before,he] using ht.mpr he
     · have hn : row.before≠false := fun hf => he (ht.mp hf)
-      cases hb : row.before <;> simp_all [before]
+      cases hrow : row.before
+      · exact (hn hrow).elim
+      · simp only [hrow,before,if_neg he]
   refine ⟨v,row.m,M,before,residue_submask i R,?_⟩
   rw [←timing]
   rw [show (8*2^s:ℕ)=72*R+r from hr]

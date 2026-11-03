@@ -29,7 +29,9 @@ private theorem dyadic_selection (a P Q H : ℕ)
   · apply generic
     left
     have hp:=pow_mono_int (P+2) a hsmall
-    simpa [pow_add,pow_succ,mul_comm] using hp
+    have he : (2:ℤ)^(P+2)=4*2^P := by rw [pow_add]; ring
+    rw [he] at hp
+    exact hp
   have hexp : a≤P+1 := by omega
   by_cases hlarge : 5≤a
   · apply generic
@@ -58,8 +60,9 @@ private theorem dyadic_selection (a P Q H : ℕ)
     by_cases hQ3 : 3≤Q
     · have hres : ∃ s : ℕ, 2^Q=8*2^s := by
         refine ⟨Q-3,?_⟩
-        rw [show Q=(Q-3)+3 by omega,pow_add]
-        ring
+        calc
+          2^Q=2^((Q-3)+3) := by congr 1; omega
+          _=8*2^(Q-3) := by rw [pow_add]; ring
       have hpCases : P=2 ∨ P=3 ∨ P=4 := by omega
       rcases hpCases with rfl|rfl|rfl
       · simpa using residue_selection 4 (2^H) (2^Q) (by simp) hnear hres
@@ -73,12 +76,14 @@ private theorem dyadic_selection (a P Q H : ℕ)
     · have hpCases : P=2 ∨ P=3 ∨ P=4 := by omega
       have hqCases : Q=1 ∨ Q=2 := by omega
       rcases hpCases with rfl|rfl|rfl <;> rcases hqCases with rfl|rfl
-      all_goals first
-        | exact fixed_selection 8 _ _ (2^H) (by norm_num) hnear
-        | apply generic
-          right
-          refine ⟨by omega,?_⟩
-          norm_num [Tail]
+      · exact fixed_selection 8 4 2 (2^H) (by norm_num) hnear
+      · exact fixed_selection 8 4 4 (2^H) (by norm_num) hnear
+      · exact fixed_selection 8 8 2 (2^H) (by norm_num) hnear
+      · exact fixed_selection 8 8 4 (2^H) (by norm_num) hnear
+      · exact fixed_selection 8 16 2 (2^H) (by norm_num) hnear
+      · apply generic
+        right
+        exact ⟨by omega,by norm_num [Tail]⟩
   · by_cases hP5 : 5≤P
     · apply generic
       right
@@ -101,11 +106,11 @@ private theorem dyadic_selection (a P Q H : ℕ)
         exact ⟨by norm_num,by norm_num,by omega⟩
     · have hqCases : Q=1 ∨ Q=2 := by omega
       rcases hpCases with rfl|rfl <;> rcases hqCases with rfl|rfl
-      all_goals first
-        | exact fixed_selection 16 _ _ (2^H) (by norm_num) hnear
-        | apply generic
-          right
-          refine ⟨by omega,?_⟩
-          norm_num [Tail]
+      · exact fixed_selection 16 8 2 (2^H) (by norm_num) hnear
+      · exact fixed_selection 16 8 4 (2^H) (by norm_num) hnear
+      · exact fixed_selection 16 16 2 (2^H) (by norm_num) hnear
+      · apply generic
+        right
+        exact ⟨by omega,by norm_num [Tail]⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD
