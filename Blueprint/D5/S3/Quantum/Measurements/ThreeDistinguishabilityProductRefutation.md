@@ -46,6 +46,10 @@ $$\neg \left(\exists \left(\sigma: \operatorname{Equiv.Perm}\left(\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/korzekwa-et-al-2019-three-distinguishability-product-refutation` (refuted) by `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"korzekwa-et-al-2019-three-distinguishability-product-refutation","declaration_gid":"D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Korzekwa, Kamil; Czachórski, Stanisław; Puchała, Zbigniew; Życzkowski, Karol (2019). *Distinguishing classically indistinguishable states and channels*. DOI: [10.1088/1751-8121/ab30f7](https://doi.org/10.1088/1751-8121/ab30f7). URL: <https://arxiv.org/abs/1812.09083v3>.
@@ -71,5 +75,7 @@ Substituting the four coordinates of p and using (√5)² = 5 shows that all thr
 - Dependency: [D5/S0/Carrier/GoldenRatio](../../../S0/Carrier/GoldenRatio.md)
 - Dependency: [D5/S3/Analytic/Adelic/FiniteToroidalFrameReconstruction](../../Analytic/Adelic/FiniteToroidalFrameReconstruction.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch](../../Combinatorics/PerfectMatchings/FiniteBandSwitch.md)
+- Dependency: [D5/S3/Observer/WindowRegister](../../Observer/WindowRegister.md)
+- Dependency: [D5/S3/Quantum/Dynamics/PositivePauliClockOrder](../Dynamics/PositivePauliClockOrder.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
 - Dependency: [D5/S3/QuantumBounds/RebitExclusionDistance](../../QuantumBounds/RebitExclusionDistance.md)

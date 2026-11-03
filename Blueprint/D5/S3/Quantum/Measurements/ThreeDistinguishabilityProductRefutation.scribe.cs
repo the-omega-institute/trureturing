@@ -90,7 +90,10 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
                         + "pairing equalities are false. Hence p has no ProductForm representation for any "
                         + "permutation σ. Applying the asserted claim to p and its InRegion witness gives "
                         + "this impossible product representation, so the claim is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("korzekwa-et-al-2019-three-distinguishability-product-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula InRegionDefinition()
     {
