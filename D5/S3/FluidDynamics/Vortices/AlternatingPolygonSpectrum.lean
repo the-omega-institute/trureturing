@@ -10,6 +10,8 @@ import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import D5.S3.Quantum.Matrix.CirculantCharpoly
 
+/-! Formalization skeleton for the alternating vortex polygon spectrum. -/
+
 noncomputable section
 open scoped BigOperators
 open Matrix Polynomial
@@ -45,7 +47,7 @@ def polygon (N : ℕ) : Fin N ⊕ Fin N → ℝ := fun p =>
 
 /-- Cartesian Jacobian, defined by the partial derivative in each coordinate direction. -/
 def jacobian (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ :=
-  fun p q => deriv (fun t => field N (polygon N + t • Pi.single q 1) p) 0
+  fun p q => deriv (fun t : ℝ => field N (polygon N + t • Pi.single q 1) p) 0
 
 private lemma entry_formula (m : ℕ) (p q : Fin (2 * m) ⊕ Fin (2 * m)) :
     jacobian (2 * m) p q = jacobian (2 * m) p q := by sorry
