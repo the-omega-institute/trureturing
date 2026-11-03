@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
+import D5.S3.Arith.Lattices.Klartag.Walk.ChainEllipsoid
 
 /-! The three-setting steering bound and its exact centre-length threshold. -/
 
@@ -92,7 +93,10 @@ private lemma frame_energy (T : Matrix (Fin 3) (Fin 3) ℝ)
   have hrev : Oᵀ * O = 1 := mul_eq_one_comm.mp hOO
   have hr (r : Fin 3 → ℝ) : ∑ i, (r ⬝ᵥ β i) ^ 2 = ∑ j, r j ^ 2 := by
     have hh : (O *ᵥ r) ⬝ᵥ (O *ᵥ r) = r ⬝ᵥ r := by
-      rw [dotProduct_mulVec, ← mulVec_transpose, mulVec_mulVec, hrev, one_mulVec]
+      simpa only [one_mulVec] using
+        D5.S3.Arith.Lattices.Klartag.Walk.ChainEllipsoid.quad_congr_one
+          (A := (1 : Matrix (Fin 3) (Fin 3) ℝ)) (S := O)
+          (by simpa only [mul_one] using hrev) r
     simpa only [O, Matrix.mulVec, dotProduct, mul_comm, pow_two] using hh
   simp only [vlen_sq, dotProduct, Matrix.mulVec, ← pow_two]
   rw [Finset.sum_comm]
