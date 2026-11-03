@@ -130,6 +130,7 @@ class NativeBatchPartitionTests:
                 def extract(rows, *, generated_index):
                     indexes.append(generated_index)
                     self.assertTrue(generated_index.is_file())
+                    self.assertEqual(rows[0][7], str(root / (rows[0][1] + '.zip')))
                     self.assertEqual([Path(row[5]).read_bytes() for row in requests],
                                      [b'previous', b'previous'])
                     Path(rows[0][5]).write_bytes(rows[0][1].encode())
@@ -288,7 +289,8 @@ class NativeBatchCapacityConsumerTests:
                 path = Path(call['request_capture'])
                 request = json.loads(path.read_text())
                 # This is the captured argument vector used by the actual executable.
-                modules = request['arguments'][6::3]
+                arguments = request['arguments']
+                modules = arguments[arguments.index('--utility-input') + 2::3]
                 self.assertTrue(0 < len(modules) <= size)
                 names.extend(modules)
                 evidence.append(dict(modules=modules, executable_sha256=request['inspector_executable_sha256']))

@@ -421,9 +421,9 @@ def module(root, name, source, utility_path, executable, output, analyzer="", pr
         module_finish(*args)
 
 
-def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer=""):
+def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer="", previous=""):
     """Keep spooled rows, compacted rows and validation certificates target-local."""
-    produce_fib(row, output, analyzer)
+    produce_fib(row, output, analyzer, previous)
     name = row['module']
     row_dir = directory / name
     row_dir.mkdir()
@@ -468,13 +468,14 @@ def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None
         for request in requests:
             _, name, source, utility_path, _, output = request[:6]
             analyzer = request[6] if len(request) > 6 else ""
+            previous = request[7] if len(request) > 7 else ""
             if name in bindings:
                 raise ValueError('duplicate native batch module')
             record = public.read_json(Path(utility_path).read_bytes())
             utilities.extend(record['utilities'])
             triples.extend([name, record['source_path'], 'sha256:' + public.digest(source)])
             validate_dependency_paths(root, utility_path)
-            bindings[name] = (utility_path, Path(output), analyzer)
+            bindings[name] = (utility_path, Path(output), analyzer, previous)
         utility_file = directory / 'utility.json'
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
@@ -497,8 +498,8 @@ def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None
                 raise ValueError('incomplete native inspection batch')
             completed.append(row['module'])
             declarations += len(row['declarations'])
-            utility_path, output, analyzer = bindings[row['module']]
-            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer)
+            utility_path, output, analyzer, previous = bindings[row['module']]
+            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer, previous)
             del row
         if completed != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -530,6 +531,8 @@ def produce_split_batch(requests, size):
         staged = []
         for index, request in enumerate(requests):
             copy = list(request)
+            copy.extend([""] * max(0, 8 - len(copy)))
+            copy[7] = copy[7] or copy[5]
             copy[5] = str(directory / f'{index}.zip')
             staged.append(copy)
         for offset in range(0, len(staged), size):
