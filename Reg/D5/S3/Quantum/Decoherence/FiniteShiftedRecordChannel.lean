@@ -151,7 +151,10 @@ abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_4, 0, 0, 0} where
 def actual : Realization signature.{u_3, u_4} :=
   realize signature
     (fun _ p a =>
-      star (p.2.2.1 p.2.2.2.2.2 a) * p.2.2.1 p.2.2.2.2.1 a)
+      star (Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a) *
+      Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.fst (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a)
     (fun e _ => Empty.elim e)
 
 def rejected : Realization signature.{u_3, u_4} :=
@@ -225,7 +228,10 @@ def registration :
   bundleNonempty := .absent
   readout := some (realize signature.{u_3, u_4}
     (fun _ p a =>
-      star (p.2.2.1 p.2.2.2.2.2 a) * p.2.2.1 p.2.2.2.2.1 a)
+      star (Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a) *
+      Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.fst (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a)
       (fun e _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
