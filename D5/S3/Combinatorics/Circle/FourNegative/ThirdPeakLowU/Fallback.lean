@@ -1,5 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLowU/Fallback
+   generality: I
+   mirror-B: none(waiver:consumed-low-u-support)
+   mirror-E: none(waiver:physical-low-u-construction)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
+   utility: none
+   digest: Unbounded remainder selection and all six fallback physical windows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Arithmetic
 
+/-! Unbounded remainder selection and all six fallback physical windows. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU
@@ -35,6 +43,10 @@ private theorem fallback_selector (s : ℤ) (hs : 2≤s) :
     · apply (Int.ediv_lt_iff_lt_mul hM).mpr
       dsimp [AA,M] at *
       nlinarith [sq_nonneg (s-2)]
+  let r := if 4*s≤D₀ ∧ D₀≤(AA-1)/2 then s else s-1
+  change s-1≤r ∧ r≤s ∧ 4*s≤(2*r*AA)%M ∧ 2*((2*r*AA)%M)≤AA-1 ∧
+    1≤(2*r*AA)/M ∧ (2*r*AA)/M<4*s
+  dsimp only [r]
   by_cases good : 4*s≤D₀ ∧ D₀≤(AA-1)/2
   · simp only [if_pos good]
     exact ⟨by omega,le_rfl,good.1,by omega,quot s ⟨by omega,le_rfl⟩⟩

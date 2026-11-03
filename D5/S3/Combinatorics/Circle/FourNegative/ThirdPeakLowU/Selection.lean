@@ -1,5 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLowU/Selection
+   generality: I
+   mirror-B: none(waiver:consumed-low-u-support)
+   mirror-E: none(waiver:physical-low-u-construction)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
+   utility: none
+   digest: Integer ceiling selection and all six strict physical windows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Arithmetic
 
+/-! Integer ceiling selection and all six strict physical windows. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU
@@ -15,8 +23,8 @@ private theorem strict_w_select (x y s z : ℤ)
   have polys := strict_polynomials x y s z hx hy hs hz
   have wp := strict_w_polynomials x y s z hx hs hz
   rcases hgap with h|h|h
-  · exact ⟨1,by norm_num; omega,by simpa using (wp.1 h).1,by nlinarith [(wp.1 h).2]⟩
-  · exact ⟨2,by norm_num; omega,by simpa using (wp.2.1 h).1,by nlinarith [(wp.2.1 h).2]⟩
+  · exact ⟨1,by norm_num; omega,by simpa using (wp.1 h).1,by norm_num only [Nat.cast_one]; nlinarith [(wp.1 h).2]⟩
+  · exact ⟨2,by norm_num; omega,by simpa using (wp.2.1 h).1,by norm_num only [Nat.cast_ofNat]; nlinarith [(wp.2.1 h).2]⟩
   · have hy0 : 0≤y := by omega
     have hs0 : 0≤s := by omega
     have hz0 : 0≤z := by nlinarith
@@ -75,7 +83,7 @@ private theorem strict_select (x y s z : ℤ)
   have vpos : 1≤V := by
     apply (Int.le_ediv_iff_mul_le (show 0<2*SU x y s by omega)).mpr
     have hmul : 0≤(4*s-1)*A x y z := mul_nonneg (by omega) hA.le
-    dsimp [V]; nlinarith only [hmul]
+    nlinarith only [hmul]
   let E := 2*s*A x y z-V*SU x y s
   have Ebounds : A x y z-2*SU x y s≤2*E ∧ 2*E≤A x y z-1 := by
     dsimp [E]; constructor <;> nlinarith only [ceil.1,ceil.2]

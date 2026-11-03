@@ -1,16 +1,15 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLowU/Banks
    generality: I
-   mirror-B: none(waiver:third-peak-low-u-source-draft)
-   mirror-E: none(waiver:third-peak-low-u-source-draft)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise,
-     D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Certificate]
+   mirror-B: none(waiver:consumed-low-u-support)
+   mirror-E: none(waiver:physical-low-u-construction)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
    utility: none
-   digest: Physical low-U banks, label partition and exact masses -/
-
+   digest: Literal low-U label banks and their exact saturation-aware masses. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
+/-! Literal low-U label banks and their exact saturation-aware masses. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

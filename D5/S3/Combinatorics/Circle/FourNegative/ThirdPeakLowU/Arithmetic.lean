@@ -1,5 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLowU/Arithmetic
+   generality: I
+   mirror-B: none(waiver:consumed-low-u-support)
+   mirror-E: none(waiver:physical-low-u-construction)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
+   utility: none
+   digest: Polynomial inequalities for unbounded low-U selection. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Banks
 
+/-! Polynomial inequalities for unbounded low-U selection. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU
