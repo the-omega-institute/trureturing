@@ -102,12 +102,9 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
         DescribeRole role, bool literature = false) => Describe.Lean(
             DescribeId.Create("halving-partitions-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
-            name is "Follows" or "sourceEquiv" or "result"
-                ? StatementSource.FromAuthor(formula) : StatementSource.FromLean(),
+            StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            name is "Follows" or "sourceEquiv" or "result"
-                ? Blocks(Paragraph(Text(prose)))
-                : Blocks(Paragraph(Text(prose)), new DocumentBlock.DisplayFormula(formula)), role);
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula HalfFormula() => Disp(All("p", N(), All("q", N(),
         IffF(Call("IsHalf", F.Id("p"), F.Id("q")), OrF(

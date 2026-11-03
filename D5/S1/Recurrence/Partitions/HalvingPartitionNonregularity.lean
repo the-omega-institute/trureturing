@@ -1,7 +1,7 @@
 /- GID: D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity
    generality: I
    mirror-B: D5/B/S1/Recurrence/Partitions/HalvingPartitionNonregularity
-   mirror-E: none(waiver:unbounded-symbolic-question)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The exact halving-partition count admits no finite integral decimation family. -/
@@ -72,7 +72,7 @@ def ClosedFamily (a : ℕ → ℤ) : Prop :=
       (∀ i n, b i (2 * n) = ∑ j, c0 i j * b j n) ∧
       (∀ i n, b i (2 * n + 1) = ∑ j, c1 i j * b j n)
 
-/-- The registered negative event; no theorem asserting it is supplied here. -/
+/-- The registered negative event for the independently defined source count. -/
 def claim : Prop := ¬ MatrixFamily (fun n => (count n : ℤ))
 
 /-- The deterministic positive chain starting from a power of two. -/
