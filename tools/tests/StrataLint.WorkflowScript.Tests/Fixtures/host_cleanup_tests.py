@@ -184,6 +184,70 @@ class HostCleanupTests(unittest.TestCase):
                     packages / "app-server-daemon" / "releases" / "0.3"}
         self.assertEqual(expected, inventory, "[FAIL] codex_superseded_releases_selected")
 
+    def test_inventory_error_callback_continues_after_symlinked_artifact_root(self):
+        codex, sshx, temporary = (self.root / name for name in ("codex", "sshx", "tmp"))
+        outside = self.old_file(self.root / "outside" / "rollout-private.jsonl")
+        (codex / "sessions").parent.mkdir(parents=True)
+        (codex / "sessions").symlink_to(outside.parent, target_is_directory=True)
+        archived = self.old_file(codex / "archived_sessions" / "rollout-old.jsonl")
+        flight = self.old_file(sshx / ("a" * 24) / "output")
+        artifact = self.old_file(temporary / "old-output")
+        errors = []
+        inventory = list(cleanup.candidates(codex, sshx, [temporary],
+                                           on_error=lambda *error: errors.append(error)))
+        self.assertEqual({archived, flight.parent, artifact}, {path for _, path in inventory})
+        self.assertEqual(1, len(errors))
+        self.assertEqual(("codex", codex / "sessions"), errors[0][:2])
+        self.assertIsInstance(errors[0][2], OSError)
+        with self.assertRaises(OSError):
+            list(cleanup.candidates(codex, sshx, [temporary]))
+
+    def test_inventory_error_callback_continues_after_unreadable_package(self):
+        codex, sshx = self.root / "codex", self.root / "sshx"
+        packages = codex / "packages"
+        bad, good = packages / "bad", packages / "good"
+        for package in (bad, good):
+            for version in ("old", "current"):
+                self.old_file(package / "releases" / version / "bin" / "codex")
+            (package / "current").symlink_to("releases/current", target_is_directory=True)
+        flight = self.old_file(sshx / ("a" * 24) / "output")
+        children = cleanup.children
+        def unreadable(root):
+            if root == bad / "releases":
+                raise PermissionError("package unavailable")
+            yield from children(root)
+        errors = []
+        with patch.object(cleanup, "children", side_effect=unreadable):
+            inventory = list(cleanup.candidates(codex, sshx, [],
+                                               on_error=lambda *error: errors.append(error)))
+        self.assertEqual({good / "releases" / "old", flight.parent}, {path for _, path in inventory})
+        self.assertEqual(1, len(errors))
+        self.assertEqual("codex", errors[0][0])
+        self.assertTrue(errors[0][1] == bad or bad in errors[0][1].parents)
+        self.assertIsInstance(errors[0][2], PermissionError)
+
+    def test_inventory_error_reports_failure_and_continues_independent_cleanup(self):
+        codex, temporary = self.root / "codex", self.root / "tmp"
+        outside = self.old_file(self.root / "outside" / "rollout-private.jsonl")
+        codex.mkdir()
+        (codex / "sessions").symlink_to(outside.parent, target_is_directory=True)
+        artifact = self.old_file(temporary / "old-output")
+        options = cleanup.argparse.Namespace(repository=self.root, base="base", codex_home=codex,
+            sshx_home=self.root / "sshx", tmp_root=[temporary], min_age_hours=1,
+            delete=True, verbose=False)
+        output, warning = io.StringIO(), io.StringIO()
+        with patch.object(cleanup, "active_paths", return_value=set()), \
+             patch.object(cleanup, "registered_worktrees", return_value=[]), \
+             patch.object(cleanup, "clean_worktrees", return_value=0), \
+             contextlib.redirect_stdout(output), contextlib.redirect_stderr(warning):
+            self.assertEqual(1, cleanup.run_clean(options))
+        summary = json.loads(output.getvalue().splitlines()[-1])
+        self.assertEqual("failed", summary["status"])
+        self.assertTrue(summary["inventory_error"])
+        self.assertEqual(1, summary["counts"]["tmp:removed"])
+        self.assertFalse(artifact.exists())
+        self.assertTrue(outside.exists())
+
     def test_clean_lanes_failure_is_propagated(self):
         with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 2)) as run:
             self.assertEqual(2, cleanup.clean_worktrees(self.root, "base", True))
@@ -413,6 +477,75 @@ class HostCleanupTests(unittest.TestCase):
         self.assertIn(argument_physical, active)
         self.assertNotIn(alias, active)
 
+    def test_scoped_activity_preserves_argument_aliases_and_sampler_parent_ownership(self):
+        artifact = self.old_file(self.root / "flight" / "output")
+        alias = self.root / "argument-alias"
+        alias.symlink_to(artifact)
+        row = str(os.getuid()) + " " + str(os.getppid()) + " runner --output=" + json.dumps(str(alias)) + "\n"
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup, "macos_active_paths", return_value=set()), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, row, "")):
+            ordinary = cleanup.active_paths(self.root / "codex", (artifact,))
+            cleanup_activity = cleanup.active_paths(self.root / "codex", (artifact,),
+                                                    include_sampler_argv=True)
+        self.assertNotIn(artifact, ordinary)
+        self.assertIn(artifact, cleanup_activity)
+        self.assertNotIn(alias, cleanup_activity)
+
+    def test_scoped_activity_keeps_live_lock_identity_without_scanning_other_sessions(self):
+        codex = self.root / "codex"
+        identity = "active-thread"
+        artifact = self.old_file(codex / "sessions" / "rollout-active-thread.jsonl")
+        inactive = self.old_file(codex / "sessions" / "rollout-other.jsonl")
+        unrelated = self.old_file(codex / "archived_sessions" / "rollout-active-thread.jsonl")
+        lock = self.old_file(codex / "thread-writer-locks" / (identity + ".lock"))
+        with lock.open("rb") as writer:
+            cleanup.fcntl.flock(writer, cleanup.fcntl.LOCK_EX | cleanup.fcntl.LOCK_NB)
+            with patch.object(cleanup.sys, "platform", "darwin"), \
+                 patch.dict(cleanup.os.environ, {"CODEX_THREAD_ID": "", "CODEX_SESSION_ID": ""}), \
+                 patch.object(cleanup, "macos_active_paths", return_value=set()), \
+                 patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")), \
+                 patch.object(Path, "rglob", side_effect=AssertionError("unrelated session traversal")):
+                active = cleanup.active_paths(codex, (artifact,))
+                inactive_activity = cleanup.active_paths(codex, (inactive,))
+        self.assertIn(artifact, active)
+        self.assertNotIn(unrelated, active)
+        self.assertNotIn(inactive, inactive_activity)
+        self.assertEqual("would_remove", cleanup.clean_candidate(inactive, self.cutoff, inactive_activity)["action"])
+        self.assertEqual("protected", cleanup.clean_candidate(artifact, self.cutoff, active)["reason"])
+
+    def test_activity_outside_codex_skips_session_traversal(self):
+        codex = self.root / "codex"
+        artifact = self.old_file(codex / "sessions" / "rollout-active-thread.jsonl")
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.dict(cleanup.os.environ, {"CODEX_THREAD_ID": "active-thread"}), \
+             patch.object(cleanup, "macos_active_paths", return_value=set()), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")), \
+             patch.object(Path, "rglob", side_effect=AssertionError("unrelated session traversal")):
+            active = cleanup.active_paths(codex, (self.root / "flight",))
+        self.assertNotIn(artifact, active)
+
+    def test_codex_deletion_refreshes_scoped_activity_before_removal(self):
+        codex = self.root / "codex"
+        artifact = self.old_file(codex / "sessions" / "rollout-old.jsonl")
+        options = cleanup.argparse.Namespace(repository=self.root, base="base", codex_home=codex,
+            sshx_home=self.root / "sshx", tmp_root=[], min_age_hours=1,
+            delete=True, verbose=True)
+        observations = []
+        def activity(root, scopes=(), *, include_sampler_argv=False):
+            observations.append((root, scopes, include_sampler_argv))
+            return {artifact} if scopes else set()
+        output = io.StringIO()
+        with patch.object(cleanup, "active_paths", side_effect=activity), \
+             patch.object(cleanup, "registered_worktrees", return_value=[]), \
+             patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
+            self.assertEqual(0, cleanup.run_clean(options))
+        self.assertEqual([(codex, (), False), (codex, (artifact,), True)], observations)
+        items = [json.loads(line) for line in output.getvalue().splitlines()]
+        result = next(item for item in items if item.get("path") == str(artifact))
+        self.assertEqual(("kept", "changed"), (result["action"], result["reason"]))
+        self.assertTrue(artifact.exists())
+
     def test_activity_command_reuses_sampler_and_fails_closed(self):
         output = io.StringIO()
         with patch.object(cleanup, "active_paths", return_value={self.root}), contextlib.redirect_stdout(output):
@@ -561,7 +694,7 @@ class HostCleanupTests(unittest.TestCase):
             repository=self.root, base="base", codex_home=self.root / "codex",
             sshx_home=self.root / "sshx", tmp_root=[self.root / "tmp"],
             min_age_hours=1, delete=True, verbose=False)
-        def interrupted_inventory(*args):
+        def interrupted_inventory(*args, **kwargs):
             yield "tmp", artifact
             raise OSError("inventory unavailable")
         output = io.StringIO()

@@ -492,30 +492,43 @@ def superseded_releases(package):
             yield release
 
 
-def candidates(codex, sshx, tmp_roots):
+def candidates(codex, sshx, tmp_roots, on_error=None):
+    def inventory(category, root, entries):
+        try:
+            yield from entries()
+        except (OSError, RuntimeError) as error:
+            if on_error is None:
+                raise
+            on_error(category, root, error)
+
     for name in ("sessions", "archived_sessions"):
         root = codex / name
-        if root.is_symlink():
-            raise OSError("artifact root must not be a symlink: " + str(root))
-        for path in root.rglob("rollout-*.jsonl"):
+        def rollouts():
+            if root.is_symlink():
+                raise OSError("artifact root must not be a symlink: " + str(root))
+            yield from root.rglob("rollout-*.jsonl")
+        for path in inventory("codex", root, rollouts):
             yield "codex", path
     for name in ("shell_snapshots", "log"):
-        for path in children(codex / name):
+        root = codex / name
+        for path in inventory("codex", root, lambda: children(root)):
             yield "codex", path
-    for path in children(codex / "tmp"):
+    root = codex / "tmp"
+    for path in inventory("codex", root, lambda: children(root)):
         if path.name == "arg0" and path.is_dir() and not path.is_symlink():
-            for run in children(path):
+            for run in inventory("codex", path, lambda: children(path)):
                 yield "codex", run
         else:
             yield "codex", path
-    for package in children(codex / "packages"):
-        for release in superseded_releases(package):
+    root = codex / "packages"
+    for package in inventory("codex", root, lambda: children(root)):
+        for release in inventory("codex", package, lambda: superseded_releases(package)):
             yield "codex", release
-    for path in children(sshx):
+    for path in inventory("sshx", sshx, lambda: children(sshx)):
         if re.fullmatch(r"[0-9a-f]{24}", path.name):
             yield "sshx", path
     for root in tmp_roots:
-        for path in children(root):
+        for path in inventory("tmp", root, lambda: children(root)):
             yield "tmp", path
 
 
@@ -550,12 +563,17 @@ def linux_observation_unavailable(process, boundary, error):
         process=str(process), boundary=boundary, status=status, error=str(error)))) from error
 
 
-def active_paths(codex, scopes=()):
+def active_paths(codex, scopes=(), *, include_sampler_argv=False):
     """Read open files/cwds and process arguments for the current user only."""
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
-    scopes = tuple(str(Path(scope).resolve()) for scope in scopes)
+    scope_paths = tuple(Path(scope).resolve() for scope in scopes)
+    scopes = tuple(map(str, scope_paths))
 
     physical_parents = {}
+    argument_paths = {}
+
+    def relevant(path):
+        return not scope_paths or any(path == scope or scope in path.parents for scope in scope_paths)
 
     def open_path(raw):
         # Kernel observations already resolve the endpoint. Canonicalize parent
@@ -611,7 +629,7 @@ def active_paths(codex, scopes=()):
         if scopes:
             # The sampler and its inspecting caller name their target in argv.
             # Their real cwd/open handles remain inspected; argv is not a user.
-            if len(fields) != 3 or fields[1] in (str(os.getpid()), str(os.getppid())):
+            if len(fields) != 3 or (not include_sampler_argv and fields[1] in (str(os.getpid()), str(os.getppid()))):
                 continue
             fields = [fields[0], fields[2]]
         if len(fields) != 2 or fields[0] != str(os.getuid()):
@@ -624,7 +642,11 @@ def active_paths(codex, scopes=()):
         for token in tokens:
             value = token.split("=", 1)[-1] if token.startswith("--") else token
             if value.startswith("/"):
-                protected.add(Path(value).resolve())
+                if value not in argument_paths:
+                    argument_paths[value] = Path(value).resolve()
+                resolved = argument_paths[value]
+                if relevant(resolved):
+                    protected.add(resolved)
     active_ids = {os.environ.get("CODEX_THREAD_ID", ""), os.environ.get("CODEX_SESSION_ID", "")}
     for lock in children(codex / "thread-writer-locks"):
         if lock.is_symlink() or not lock.is_file():
@@ -635,10 +657,21 @@ def active_paths(codex, scopes=()):
                 fcntl.flock(handle, fcntl.LOCK_UN)
             except BlockingIOError:
                 active_ids.add(lock.stem)
-    for name in ("sessions", "archived_sessions", "shell_snapshots"):
-        for path in (codex / name).rglob("*"):
-            if path.is_file() and any(identity and identity in path.name for identity in active_ids):
-                protected.add(path.resolve())
+    active_ids.discard("")
+    if active_ids:
+        for name in ("sessions", "archived_sessions", "shell_snapshots"):
+            root = codex / name
+            if scope_paths:
+                scan_roots = {root if root == scope or scope in root.parents else scope
+                              for scope in scope_paths
+                              if root == scope or scope in root.parents or root in scope.parents}
+            else:
+                scan_roots = {root}
+            for scan_root in scan_roots:
+                paths = scan_root.rglob("*") if scan_root.is_dir() else (scan_root,)
+                for path in paths:
+                    if any(identity in path.name for identity in active_ids) and path.is_file():
+                        protected.add(path.resolve())
     return protected
 
 
@@ -799,8 +832,16 @@ def clean_from_anchor(options, caller, disk_descriptor):
         record("lean_staging", dict(path=str(path), action="kept", reason=reason, detail=str(error),
                                     apparent_bytes=0))
 
-    def fresh_protection():
-        return active_paths(codex) | set(registered_worktrees(main_checkout)) | {caller}
+    def fresh_protection(path):
+        return (active_paths(codex, (path,), include_sampler_argv=True)
+                | set(registered_worktrees(main_checkout)) | {caller})
+
+    def inventory_failure(category, path, error):
+        nonlocal inventory_error
+        detail = str(error)
+        inventory_error = detail if inventory_error is None else inventory_error + "; " + detail
+        record(category, dict(path=str(path), action="failed", reason="inventory_unavailable",
+                              detail=detail, apparent_bytes=0))
 
     def clean_staging(lake):
         if lake in seen_lakes:
@@ -808,7 +849,7 @@ def clean_from_anchor(options, caller, disk_descriptor):
         seen_lakes.add(lake)
         _, release = worktree_modules()
         def inspect(path):
-            protection = ProtectedPaths(active_paths(codex) | {caller}) if options.delete else ProtectedPaths(active | {caller})
+            protection = ProtectedPaths(active_paths(codex, (path,), include_sampler_argv=True) | {caller}) if options.delete else ProtectedPaths(active | {caller})
             return inspect_candidate(path, cutoff, protection)
         for result in release.clean_staging(lake, cutoff=cutoff, now=now,
                                           delete=options.delete, inspect=inspect):
@@ -826,10 +867,10 @@ def clean_from_anchor(options, caller, disk_descriptor):
                     remnant_stack.callback(recovery.close)
                 seen.add(path)
                 result = clean_candidate(path, cutoff, protections["sshx"], options.delete,
-                                         repository=main_checkout, activity=fresh_protection,
+                                         repository=main_checkout, activity=lambda: fresh_protection(path.parent),
                                          remnant=True, recovery=recovery)
                 record("worktree_remnant", result)
-        for category, path in candidates(codex, sshx, roots):
+        for category, path in candidates(codex, sshx, roots, on_error=inventory_failure):
             if path in seen:
                 continue
             seen.add(path)
@@ -844,7 +885,7 @@ def clean_from_anchor(options, caller, disk_descriptor):
                 refresh = category != "tmp"
                 result = clean_candidate(path, cutoff, protections[category], options.delete,
                                          repository=main_checkout if category == "sshx" else None,
-                                         activity=fresh_protection if refresh else None,
+                                         activity=(lambda: fresh_protection(path)) if refresh else None,
                                          reclaim=category != "codex", refresh_activity=refresh)
             record(category, result)
             if category != "codex" and result["action"] == "kept" and result["reason"] == "recent":
