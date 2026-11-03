@@ -81,7 +81,9 @@ private theorem generic_M_second (x p q h D : ℤ)
   refine ⟨hs0,by omega,hT0,?_⟩
   have heven : newEnds x p q h v m M before 1=
       2*(SU x p q h-SW x p q h+M*SV x p q) := by
-    dsimp only [newEnds]; ring
+    change 2*SU x p q h-2*SW x p q h+2*M*SV x p q=
+      2*(SU x p q h-SW x p q h+M*SV x p q)
+    ring
   rw [heven] at hTlt ⊢
   dsimp only [SU] at hTlt ⊢
   omega
@@ -260,7 +262,7 @@ private theorem tail_cap (x p q h e : ℤ)
       2*x*((p/2-1)*C x p q h-F) := by
     linear_combination 2*hFeq-x*(C x p q h)*hp2
   have hpos : 0<2*x*((p/2-1)*C x p q h-F) := by rw [←heq]; exact ht'
-  exact lt_of_sub_pos (pos_of_mul_pos_left hpos (by omega))
+  exact lt_of_sub_pos ((mul_pos_iff_of_pos_left (by omega : (0:ℤ)<2*x)).mp hpos)
 
 /-- The power exponents are unrestricted; the output is an actual native mask triple. -/
 private theorem generic_selection (a P Q H : ℕ) (ha : 3≤a) (hP : 2≤P) (hQ : 1≤Q)
