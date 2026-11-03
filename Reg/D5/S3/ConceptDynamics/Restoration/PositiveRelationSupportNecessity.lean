@@ -17,7 +17,7 @@ universe u v w z
 
 /-- Source parameters retain both full injections. The observed state is the source relation. -/
 abbrev Params := Σ A : Type u, Σ B : Type v, Σ L : Type w, Σ R : Type z,
-  Σ _ : A ↪ L, Σ _ : B ↪ R, Unit
+  Σ _ : A ↪ L, B ↪ R
 
 abbrev signature : Signature where
   Params := Params.{u,v,w,z}
@@ -30,7 +30,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u,v,w,z} := realize signature
-  (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2.1) (fun e => nomatch e)
+  (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e)
 
 def enlarged : Realization signature.{u,v,w,z} := realize signature
   (fun _ _ _ => Set.univ) (fun e => nomatch e)
@@ -40,7 +40,7 @@ abbrev leftArena : Arena where
   Law obs := ∀
     {A : Type u} {B : Type v} {L : Type w} {R : Type z}
     (E : SetRel A B) (left : A ↪ L) (right : B ↪ R)
-    (D : SetRel L R) (attained : D ⊆ obs.readout () ⟨A, B, L, R, left, right, ()⟩ E)
+    (D : SetRel L R) (attained : D ⊆ obs.readout () ⟨A, B, L, R, left, right⟩ E)
     (a : A) (incident : ∃ b, (a, b) ∈ E)
     (unexposed : left a ∉ D.dom) (fresh : L) (unused : fresh ∉ Set.range left),
     ∃ alternative : A ↪ L,
@@ -54,7 +54,7 @@ abbrev rightArena : Arena where
   Law obs := ∀
     {A : Type u} {B : Type v} {L : Type w} {R : Type z}
     (E : SetRel A B) (left : A ↪ L) (right : B ↪ R)
-    (D : SetRel L R) (attained : D ⊆ obs.readout () ⟨A, B, L, R, left, right, ()⟩ E)
+    (D : SetRel L R) (attained : D ⊆ obs.readout () ⟨A, B, L, R, left, right⟩ E)
     (b : B) (incident : ∃ a, (a, b) ∈ E)
     (unexposed : right b ∉ D.cod) (fresh : R) (unused : fresh ∉ Set.range right),
     ∃ alternative : B ↪ R,
@@ -71,7 +71,7 @@ abbrev supportArena : Arena where
     [DecidableEq L] [DecidableEq R]
     (E : SetRel A B) (left : A ↪ L) (right : B ↪ R)
     (D : Finset (L × R))
-    (attained : (D : SetRel L R) ⊆ obs.readout () ⟨A, B, L, R, left, right, ()⟩ E)
+    (attained : (D : SetRel L R) ⊆ obs.readout () ⟨A, B, L, R, left, right⟩ E)
     (left_incident : ∀ a, ∃ b, (a, b) ∈ E)
     (right_incident : ∀ b, ∃ a, (a, b) ∈ E)
     (left_slack : Fintype.card A < Fintype.card L)
@@ -96,7 +96,7 @@ def sampleRight : SB.{v} ↪ SR.{z} :=
   ⟨fun _ => ⟨false⟩, fun _ _ _ => Subsingleton.elim _ _⟩
 
 def sample : Params.{u,v,w,z} :=
-  ⟨SA, SB, SL, SR, sampleLeft, sampleRight, ()⟩
+  ⟨SA, SB, SL, SR, sampleLeft, sampleRight⟩
 
 private theorem actual_dependence : ObservationalDependence signature.{u,v,w,z} actual := by
   intro i
@@ -200,11 +200,11 @@ noncomputable def leftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
   readout := some (realize signature.{u,v,w,z}
-    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2.1) (fun e => nomatch e))
+    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
-  escapeFrom := some (@transport.{u,v,w,z})
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity
     definition := none
@@ -252,11 +252,11 @@ noncomputable def rightRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
   readout := some (realize signature.{u,v,w,z}
-    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2.1) (fun e => nomatch e))
+    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
-  escapeFrom := some (@transport.{u,v,w,z})
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity
     definition := none
@@ -304,11 +304,11 @@ noncomputable def supportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
   readout := some (realize signature.{u,v,w,z}
-    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2.1) (fun e => nomatch e))
+    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
-  escapeFrom := some (@transport.{u,v,w,z})
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity
     definition := none
