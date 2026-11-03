@@ -480,7 +480,7 @@ private theorem constant_diagonal_gram_bound {n : ℕ} (H : Matrix (Fin n) (Fin 
       simp only [Matrix.trace, Matrix.diag_apply, Complex.re_sum, hdiag, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul]
       ring
-private def d (n : ℕ) (c : ℝ) : ℝ :=
+def d (n : ℕ) (c : ℝ) : ℝ :=
   (Real.sqrt (1 + ((n : ℝ) - 1) * c) + ((n : ℝ) - 1) * Real.sqrt (1 - c)) / n
 private def H (n : ℕ) (c : ℝ) :=
   Real.sqrt (1 + ((n : ℝ) - 1) * c) • ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) + Real.sqrt (1-c) • (1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))))
@@ -545,7 +545,7 @@ private def moment {n : ℕ} (ψ : (Fin n → Bool) → ℂ) : ℝ :=
   ∑ x, Complex.normSq (ψ x) * (((Finset.univ.filter (fun j => x j = true)).card * (n-(Finset.univ.filter (fun j => x j = true)).card) : ℕ) : ℝ)
 private def overlap {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) : ℝ :=
   1 - 4 * Real.sin θ^2 * moment ψ / ((n : ℝ)*(n-1))
-private def cstar (n : ℕ) (θ : ℝ) : ℝ :=
+def cstar (n : ℕ) (θ : ℝ) : ℝ :=
   1 - 4 * (n^2/4 : ℕ) * Real.sin θ^2 / ((n : ℝ)*(n-1))
 private theorem moment_bounds {n : ℕ} (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) :     0 ≤ moment ψ ∧ moment ψ ≤ (n^2/4 : ℕ) := by
   constructor
@@ -816,7 +816,7 @@ private theorem ratio_minimizer_balanced (n : ℕ) (hn : 2 ≤ n) (θ : ℝ)    
     linarith
   have hhR : ((n^2/4 : ℕ) : ℝ) ≤ ((l*(n-l) : ℕ) : ℝ) := by nlinarith
   exact Nat.le_antisymm hup (by exact_mod_cast hhR)
-private theorem dicke_normalized {n : ℕ} (l : ℕ) (hl : l ≤ n)     (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0) :     ∑ x, Complex.normSq (φ x) = 1 := by
+theorem dicke_normalized {n : ℕ} (l : ℕ) (hl : l ≤ n)     (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0) :     ∑ x, Complex.normSq (φ x) = 1 := by
   have hC : (n.choose l : ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt (Nat.choose_pos hl)
   simp only [hφ, Finset.sum_ite, Finset.sum_const_zero, add_zero,
     Finset.sum_const, nsmul_eq_mul, weight_class_card]
@@ -829,7 +829,7 @@ private theorem dicke_gram_invariant {n : ℕ} (θ : ℝ) (l : ℕ)     (φ : (F
     rw [hφ, hφ, weight_permWord]
   simp only [hw] at he
   exact he
-private theorem global_success_upper_bound (n : ℕ) (hn : 3 ≤ n) (θ : ℝ)     (hθ : (0 < θ ∧ θ ≤ T n) ∨ (Real.pi-T n ≤ θ ∧ θ < Real.pi))     (ψ : (Fin n → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1)     (M : LocalPOVM (Fin n → Bool) (Fin n)) : isoSuccess θ ψ M ≤ d n (cstar n θ)^2 := by
+theorem global_success_upper_bound (n : ℕ) (hn : 3 ≤ n) (θ : ℝ)     (hθ : (0 < θ ∧ θ ≤ T n) ∨ (Real.pi-T n ≤ θ ∧ θ < Real.pi))     (ψ : (Fin n → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1)     (M : LocalPOVM (Fin n → Bool) (Fin n)) : isoSuccess θ ψ M ≤ d n (cstar n θ)^2 := by
   have ht := threshold_range n (by exact Nat.le_of_add_left_le hn) θ hθ
   have ho := overlap_bounds (by exact Nat.le_of_add_left_le hn) θ ψ hψ
   have hc : overlap θ ψ ∈ Set.Icc 0 1 := ⟨ht.2.2.trans ho.1, ho.2⟩
