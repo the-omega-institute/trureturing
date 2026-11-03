@@ -79,12 +79,12 @@ internal sealed class BoseSelectionCubicTwoBathRefutationDocument : IScribeDocum
                     Paragraph(Text(
                         "At d = 3 and m = 5, the referenced odd power law reduces to the cubic map, so "
                             + "asym is skew-symmetric: swapping i and j changes the sign of εⱼ − εᵢ "
-                            + "and of the product difference. For every skew-symmetric 5 by 5 matrix a, "
+                            + "while the product difference is unchanged. For every skew-symmetric 5 by 5 matrix a, "
                             + "the signed Pfaffians of its 4 by 4 principal minors form an explicit vector, "
                             + "and direct expansion gives zero after multiplying a by that vector.")),
                     Paragraph(Text(
-                        "On the positive coupling domain, each normalized coordinate is continuous because "
-                            + "the denominator is a positive finite sum. The entries of asym and then every "
+                        "On the positive coupling domain, continuous_normalize supplies continuity of each "
+                            + "normalized vector because its coordinate sum is positive. The entries of asym and then every "
                             + "coordinate of the Pfaffian vector are therefore continuous. The finite intersection "
                             + "of the positive Pfaffian-coordinate conditions with the positive coupling domain "
                             + "is an open neighborhood.")),
@@ -150,7 +150,7 @@ internal sealed class BoseSelectionCubicTwoBathRefutationDocument : IScribeDocum
 
     private static Formula ClaimBody() => All("d", Reals(), Imp(
         LT(RealZero(), V("d")), All("m", Naturals(),
-            Equal(At(Qualified("Set", "interior"), Call("violating", V("d"), V("m"))), Emptyset))));
+            Equal(At(Qualified("interior"), Call("violating", V("d"), V("m"))), Emptyset))));
 
     private static Formula Local(string name) => Qualified(
         "D5", "S3", "StatisticalMechanics", "BoseSelectionCubicTwoBathRefutation", name);

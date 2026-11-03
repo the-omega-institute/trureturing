@@ -95,16 +95,19 @@ private theorem couplingDomain_open : IsOpen couplingDomain := by
 private theorem asym_continuousOn (i j : Fin 5) :
     ContinuousOn (fun p : (Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ) =>
       asym 3 p.1 p.2.1 p.2.2 i j) couplingDomain := by
-  intro p hp
-  have hF : (∑ k, p.2.1 k) ≠ 0 :=
-    ne_of_gt (Finset.sum_pos (fun k _ => hp.1 k) Finset.univ_nonempty)
-  have hG : (∑ k, p.2.2 k) ≠ 0 :=
-    ne_of_gt (Finset.sum_pos (fun k _ => hp.2 k) Finset.univ_nonempty)
-  apply ContinuousAt.continuousWithinAt
-  unfold asym
-  simp_rw [spectral_three]
-  simp only [FiniteCoordinateTruncation.normalize]
-  fun_prop (disch := assumption)
+  rw [continuousOn_iff_continuous_domRestrict]
+  have hF := FiniteCoordinateTruncation.continuous_normalize
+    (f := fun p : couplingDomain => p.val.2.1) continuous_subtype_val.snd.fst
+    (fun p => ne_of_gt (Finset.sum_pos (fun k _ => p.property.1 k) Finset.univ_nonempty))
+  have hG := FiniteCoordinateTruncation.continuous_normalize
+    (f := fun p : couplingDomain => p.val.2.2) continuous_subtype_val.snd.snd
+    (fun p => ne_of_gt (Finset.sum_pos (fun k _ => p.property.2 k) Finset.univ_nonempty))
+  change Continuous (fun p : couplingDomain => asym 3 p.val.1 p.val.2.1 p.val.2.2 i j)
+  simp only [asym, spectral_three]
+  exact ((((continuous_apply j).comp continuous_subtype_val.fst).sub
+    ((continuous_apply i).comp continuous_subtype_val.fst)).pow 3).mul
+      ((((continuous_apply i).comp hF).mul ((continuous_apply j).comp hF)).sub
+        (((continuous_apply i).comp hG).mul ((continuous_apply j).comp hG)))
 
 private theorem pfaffian_continuousOn (i : Fin 5) :
     ContinuousOn (fun p : (Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ) =>
