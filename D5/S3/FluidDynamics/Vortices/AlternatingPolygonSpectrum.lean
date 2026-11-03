@@ -230,7 +230,7 @@ private lemma reflection_charge (m : ℕ) (j k : Fin (2 * m)) :
   obtain ⟨t, ht⟩ := reflection_index m j k
   have ht' : ((j+j-k).val : ℤ) = 2*((j.val : ℤ) + t*m) - k.val := by rw [ht]; ring
   have hp : ((j+j-k).val + 2) % 2 = (k.val + 2) % 2 := by omega
-  unfold charge
+  delta charge
   calc
     _ = (-1 : ℝ)^(((j+j-k).val + 2) % 2) := neg_one_pow_eq_pow_mod_two _
     _ = (-1 : ℝ)^((k.val + 2) % 2) := by rw [hp]
@@ -304,7 +304,7 @@ private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
   let d := fun j k : Fin (2 * m) =>
     (z (Sum.inl j)-z (Sum.inl k))^2 + (z (Sum.inr j)-z (Sum.inr k))^2
   have hcharge : ∑ k : Fin (2 * m), charge (2 * m) k = 0 := by
-    simp only [charge, pow_add, neg_one_sq, mul_one]
+    delta charge; simp only [pow_add, neg_one_sq, mul_one]
     rw [Fin.sum_neg_one_pow]; simp
   have hsum (j : Fin (2 * m)) (v : Fin (2 * m) → ℝ)
       (hp : ∀ k, k ≠ j →
@@ -378,17 +378,19 @@ private def rotation (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ 
 
 private lemma rotation_mul_transpose (N : ℕ) :
     rotation N * (rotation N).transpose = 1 := by
-  unfold rotation; rw [Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply]
+  delta rotation; rw [Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply]
   simp only [Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal]
+  have hu (j : Fin N) :
+      (polygon N (Sum.inl j))^2 + (polygon N (Sum.inr j))^2 = 1 :=
+    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(j.val+1:ℝ)/N))
   ext p q
   rcases p with j | j <;> rcases q with k | k
   all_goals
     by_cases h : j = k
     · subst k
       first
-      | simpa [Matrix.fromBlocks, polygon, pow_two, add_comm] using
-          Real.sin_sq_add_cos_sq (2 * Real.pi * (j.val + 1 : ℝ) / N)
-      | (simp [Matrix.fromBlocks, polygon]; ring)
+      | simpa [Matrix.fromBlocks, pow_two, add_comm] using hu j
+      | (simp [Matrix.fromBlocks]; ring)
     · simp [Matrix.fromBlocks, Matrix.diagonal, h]
 
 private lemma jacobian_off_diagonal (N : ℕ) (j k : Fin N) (hjk : j ≠ k) :
@@ -428,8 +430,9 @@ private lemma rotation_conjugation_entries (N : ℕ)
       x j * (-A (Sum.inr j) (Sum.inl k) * y k + A (Sum.inr j) (Sum.inr k) * x k) := by
   classical
   dsimp only
+  delta rotation
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
-    simp [rotation, Matrix.mul_apply, Fintype.sum_sum_type, Matrix.diagonal,
+    simp [Matrix.mul_apply, Fintype.sum_sum_type, Matrix.diagonal,
       Matrix.transpose_apply, mul_ite, ite_mul] <;> ring
 
 private lemma rotated_jacobian_off_diagonal (m : ℕ) (j k : Fin (2 * m)) (hjk : j ≠ k) :
@@ -441,12 +444,10 @@ private lemma rotated_jacobian_off_diagonal (m : ℕ) (j k : Fin (2 * m)) (hjk :
   let x := fun l => polygon (2*m) (Sum.inl l)
   let y := fun l => polygon (2*m) (Sum.inr l)
   let d := (x j-x k)^2 + (y j-y k)^2
-  have hj : (x j)^2 + (y j)^2 = 1 := by
-    simpa only [x, y, polygon, add_comm, Nat.cast_mul, Nat.cast_ofNat] using
-      Real.sin_sq_add_cos_sq (2 * Real.pi * (j.val + 1 : ℝ) / (2 * m))
-  have hk : (x k)^2 + (y k)^2 = 1 := by
-    simpa only [x, y, polygon, add_comm, Nat.cast_mul, Nat.cast_ofNat] using
-      Real.sin_sq_add_cos_sq (2 * Real.pi * (k.val + 1 : ℝ) / (2 * m))
+  have hj : (x j)^2 + (y j)^2 = 1 :=
+    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(j.val+1:ℝ)/((2*m:ℕ):ℝ)))
+  have hk : (x k)^2 + (y k)^2 = 1 :=
+    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ)))
   have hd : d ≠ 0 := chord_sq_ne_zero (2*m) j k hjk
   have hw : weights m j k = 1 / d := by
     rw [weights, ite_eq_right hjk]
@@ -471,8 +472,9 @@ private lemma rotated_jacobian_off_diagonal (m : ℕ) (j k : Fin (2 * m)) (hjk :
       charge (2*m) k*((x j-x k)^2-(y j-y k)^2)/d^2*y k) +
       y j * (charge (2*m) k*((x j-x k)^2-(y j-y k)^2)/d^2*x k +
         2*charge (2*m) k*(x j-x k)*(y j-y k)/d^2*y k) = 0 ∧ _
-  dsimp only [x, y, d] at *
-  refine ⟨?_, ?_, ?_, ?_⟩ <;> field_simp [hd]
+  dsimp only [x, y, d] at hr ha hd ⊢
+  refine ⟨?_, ?_, ?_, ?_⟩ <;>
+    field_simp (discharger := first | exact hd | norm_num | positivity)
   · linear_combination charge (2*m) k * hr
   · linear_combination charge (2*m) k * ha
   · linear_combination charge (2*m) k * ha
@@ -535,9 +537,8 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
   let sx := ∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k*(x j-x k)/d k
   let sy := ∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k*(y j-y k)/d k
   let w := ∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k/d k
-  have hu (k : Fin (2 * m)) : (x k)^2+(y k)^2 = 1 := by
-    simpa only [x, y, polygon, add_comm] using
-      Real.sin_sq_add_cos_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ))
+  have hu (k : Fin (2 * m)) : (x k)^2+(y k)^2 = 1 :=
+    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ)))
   have hA : ((x j)^2-(y j)^2)*T - 2*x j*y j*U = x j*sy-y j*sx := by
     dsimp only [T, U, sx, sy]
     simp_rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
@@ -546,7 +547,8 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
     · simp [hkj]
     · simp only [hkj, ite_false]
       have hd : d k ≠ 0 := chord_sq_ne_zero (2*m) j k (Ne.symm hkj)
-      dsimp only [d, x, y] at *; field_simp [hd]
+      dsimp only [d] at hd ⊢
+      field_simp (discharger := first | exact hd | norm_num | positivity)
       linear_combination
         -charge (2*m) k*(x j*y k-y j*x k)*hu j +
           charge (2*m) k*(x j*y k-y j*x k)*hu k
@@ -558,7 +560,8 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
     · simp [hkj]
     · simp only [hkj, ite_false]
       have hd : d k ≠ 0 := chord_sq_ne_zero (2*m) j k (Ne.symm hkj)
-      dsimp only [d, x, y] at *; field_simp [hd]
+      dsimp only [d] at hd ⊢
+      field_simp (discharger := first | exact hd | norm_num | positivity)
       linear_combination
         charge (2*m) k*((x k)^2+(y k)^2-x j*x k-y j*y k)*hu j +
           charge (2*m) k*((x j)^2+(y j)^2-x j*x k-y j*y k)*hu k
@@ -583,7 +586,6 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
   dsimp only at hxx hxy hyx hyy hrr hra har haa ⊢; rw [hrr, hra, har, haa, hxx, hxy, hyx, hyy, hw]
   change x j*(T*x j+(-charge (2*m) j/2-U)*y j) +
     y j*((charge (2*m) j/2-U)*x j+-T*y j) = 0 ∧ _
-  dsimp only [T, U, x, y] at *
   refine ⟨?_, ?_, ?_, ?_⟩
   · linear_combination hA0
   · linear_combination hBw - charge (2*m) j/2*hu j
@@ -623,7 +625,7 @@ private lemma spectrum_weights (m : ℕ) [NeZero (2 * m)] :
       push_cast; simp
     · have ha : Real.pi * ((j-k).val : ℝ) / (2 * m) =
           Real.pi * ((j.val : ℝ)-k.val) / (2 * m) + Real.pi := by
-        rw [hs]; field_simp
+        rw [hs]; field_simp (discharger := first | exact hmR | norm_num | positivity)
       push_cast; rw [ha, Real.sin_add_pi]; simp
 
 private lemma alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) :
@@ -633,7 +635,7 @@ private lemma alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) 
   let e := (ZMod.finEquiv (2 * m)).toEquiv
   have hsign (k : Fin (2 * m)) :
       charge (2*m) k = charge (2*m) j*(-1:ℝ)^(j-k).val := by
-    simp only [charge, ← pow_add]
+    delta charge; simp only [← pow_add]
     rw [neg_one_pow_eq_pow_mod_two (k.val+2),
       neg_one_pow_eq_pow_mod_two (j.val+2+(j-k).val)]
     congr 1
@@ -674,6 +676,7 @@ private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
     (rotation (2 * m)).transpose * jacobian (2*m) * rotation (2*m) =
       Matrix.fromBlocks 0 (blockB m) (blockC m) 0 := by
   classical
+  delta blockB blockC
   ext p q
   rcases p with j | j <;> rcases q with k | k
   all_goals
@@ -683,15 +686,14 @@ private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
       rw [alternating_weight_sum m hm j] at hra har
       first
       | simpa only [Matrix.fromBlocks_apply₁₁, Matrix.zero_apply] using hrr
-      | simpa [blockB, chargeMatrix, Matrix.mul_diagonal, weights, mul_comm] using hra
-      | change _ = blockC m j j
-        rw [har]; simp [blockC, chargeMatrix, Matrix.mul_diagonal, weights]; ring
+      | simpa [chargeMatrix, Matrix.mul_diagonal, weights, mul_comm] using hra
+      | rw [har]; simp [chargeMatrix, Matrix.mul_diagonal, weights]; ring
       | simpa only [Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using haa
     · rcases rotated_jacobian_off_diagonal m j k h with ⟨hrr, hra, har, haa⟩
       first
       | simpa only [Matrix.fromBlocks_apply₁₁, Matrix.zero_apply] using hrr
-      | simpa [blockB, chargeMatrix, Matrix.mul_diagonal, h, mul_comm] using hra
-      | simpa [blockC, chargeMatrix, Matrix.mul_diagonal, h, mul_comm] using har
+      | simpa [chargeMatrix, Matrix.mul_diagonal, h, mul_comm] using hra
+      | simpa [chargeMatrix, Matrix.mul_diagonal, h, mul_comm] using har
       | simpa only [Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using haa
 
 private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
@@ -745,14 +747,14 @@ private lemma spectrum_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m)
     have hr : min (k+m).val (2 * m-(k+m).val) = m-k.val := by rw [hv]; omega
     have hc : ((m-k.val : ℕ) : ℝ) = (m : ℝ)-k.val :=
       Nat.cast_sub (by omega)
-    dsimp only [gamma]; rw [hr, hv, hc]
+    delta gamma; dsimp only; rw [hr, hv, hc]
     unfold diagonalWeight; push_cast; ring
   · have hv : (k+m).val = k.val-m := by
       rw [ZMod.val_add_of_le (by rw [hmv]; omega), hmv]; omega
     have hr : min (k+m).val (2 * m-(k+m).val) = k.val-m := by rw [hv]; omega
     have hc : ((k.val-m : ℕ) : ℝ) = (k.val : ℝ)-m :=
       Nat.cast_sub (by omega)
-    dsimp only [gamma]; rw [hr, hv, hc]
+    delta gamma; dsimp only; rw [hr, hv, hc]
     unfold diagonalWeight; push_cast; ring
 
 private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
@@ -787,7 +789,7 @@ private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : �
     have hs := Fin.intCast_val_sub_eq_sub_add_ite i j
     have hp : ((i.val+2)+(j.val+2)) % 2 = (i-j).val % 2 := by
       split_ifs at hs <;> push_cast at hs <;> omega
-    unfold charge; rw [← pow_add]
+    delta charge; rw [← pow_add]
     rw [neg_one_pow_eq_pow_mod_two _, neg_one_pow_eq_pow_mod_two (i-j).val, hp]
   have hU : F (chargeMatrix m * weights m * chargeMatrix m) = Matrix.circulant u := by
     ext i j
@@ -809,7 +811,7 @@ private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : �
     rw [chargeMatrix, Matrix.diagonal_mul_diagonal]
     apply congrArg Matrix.diagonal
     funext j
-    simp only [charge, ← pow_add]
+    delta charge; simp only [← pow_add]
     rw [show j.val+2+(j.val+2) = 2*(j.val+2) by omega, pow_mul]; simp
   have hCB : blockC m * blockB m =
       ((a+1) • 1 - weights m) * (a • 1 - chargeMatrix m * weights m * chargeMatrix m) := by
@@ -893,7 +895,7 @@ private lemma root_iff_mode (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
     refine ⟨(r : ZMod (2 * m)), ?_⟩
     have hv : (r : ZMod (2 * m)).val = r := ZMod.val_natCast_of_lt (by omega)
     have hf : min (r : ZMod (2 * m)).val (2*m - (r : ZMod (2 * m)).val) = r := by rw [hv]; omega
-    simpa only [gamma, hf] using hr
+    delta gamma; simpa only [hf] using hr
 
 private def positiveRoot (m r : ℕ) : ℝ :=
   ((m : ℝ) - r) * Real.sqrt ((r : ℝ)^2 - 2) / 2
