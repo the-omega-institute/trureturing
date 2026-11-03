@@ -68,7 +68,9 @@ For three sensors, take φ₁ and φ₂ to have amplitude 1/√3 on the words of
 
 For the selected sensor positions 0 and 1, the agreement counts at weights 0, 1, 2, 3 are all one, and the disagreement counts are 0, 2, 2, 0. The disagreement counting identity and the partition of each weight class give these values. Since cos(2θ) = 0, the overlap ratios are 1, 1/3, 1/3, 1. Both weights one and two therefore minimize the ratio. At the word whose only true coordinate is 0, the squared amplitudes of φ₁ and φ₂ are 1/3 and zero, so they differ.
 
-There is a three-outcome POVM with identity effect at outcome 0 and zero effects at the other outcomes. For any normalized probe, positivity makes every Born probability nonnegative. Completeness makes their sum, for each fixed fired state, equal to its squared norm, which is one. The probability of its correct outcome is therefore at most one. Averaging these three probabilities bounds isoSuccess by one and hence bounds its range above.
+There is a three-outcome POVM with identity effect at outcome 0 and zero effects at the other outcomes.
+
+For any normalized probe, `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.global_success_upper_bound` at n = 3 and θ = π/4 bounds every POVM success by d 3 (cstar 3 (π/4))². This bounds the range above without evaluating the bound.
 
 The `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result` applies to each minimizing weight. For every normalized competitor ψ and every POVM M it supplies a POVM M′ on φ₁, and likewise on φ₂, whose success is at least that of ψ with M. The weight-class normalization theorem gives unit norm for both proposed probes. The nonempty POVM type and the upper bounds on success allow this comparison to pass to suprema: every normalized competitor has optimal success at most that of either φ₁ or φ₂.
 
@@ -80,6 +82,7 @@ Finally, π/4 < π, both probes are normalized, their coefficient-squares differ
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/TriangleIndependentSourceNoise.LocalPOVM`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.fire`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.global_success_upper_bound`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.isoSuccess`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result`
 - Truth anchor: `D5/S3/Quantum/Measurements/DetectorSensorStrictAveragingRefutation.average`
