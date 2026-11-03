@@ -1,16 +1,60 @@
-# Fixed positive tensor product and the complete Pauli residual
+# Fixed positive products and the complete actual Pauli family
 
 ## Abstract
 
-Fixed spin products carry an actual real Pauli perturbation with sharp local data and a complete unaveraged residual.
+Fixed spin products, the actual real Pauli action and complete unaveraged residual with exact local data.
 
-The local space is real Euclidean four-space, ordered as scalar, x, y, z. Its spin multiplication sends (a,v),(b,w) to (ab+v dot w, aw+bv), and its fixed cross channel sends them to (0,v cross w). The action D(t) replaces the first cross label v by v+taz, for every real t. The local Euclidean inner product and multiplication are fixed. The joint carrier is the actual real Hilbert tensor product with its positive product inner product.
+Notation is shared by every display below. J is EuclideanSpace over the reals on Fin 4, identified with a scalar and a spatial vector in real three-space; V is its real Hilbert tensor product. T(a,b) denotes a tensor b. Coordinates a_i have i in Fin 4. All inner products and norms are the fixed Euclidean and positive tensor-product ones. Scalar juxtaposition denotes real scalar multiplication. The cross and dot operations are the usual real three-dimensional cross and dot products. An ordered pair (scalar, spatial triple) denotes its four-vector in J. The vectors e(i) are EuclideanSpace.single i 1; e(0) is the unit, e(1), e(2), e(3) are x, y, z. b is localBasis and B is jointBasis, the complete orthonormal bases. Every displayed parameter and vector is explicitly quantified.
 
-On pure tensors, the joint multiplication is spin tensor spin minus cross tensor cross. The cross channels in that multiplication remain fixed. The actual joint action on a simple label is D tensor left multiplication plus left multiplication tensor D. Bilinear maps and the tensor universal property extend the definitions to every joint input. The residual E is Gamma applied to the product minus the two terms obtained by applying Gamma to one product input. No arbitrary residual table or global derivation law is assumed.
+$$
+(J = \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(4\right)\right)) \land ((V = \operatorname{TensorProduct}\left(\mathbb{R}, J, J\right)) \land (\forall i \in \operatorname{Fin}\left(4\right),\; \operatorname{e}\left(i\right) = \operatorname{single}\left(i, 1\right)))
+$$
+
+$$
+\forall a \in J,\; \forall b \in J,\; (\operatorname{S}\left(a, b\right) = (a_{0} \cdot b_{0} + \operatorname{dot}\left((a_{1}, a_{2}, a_{3}), (b_{1}, b_{2}, b_{3})\right), a_{0} \cdot (b_{1}, b_{2}, b_{3}) + b_{0} \cdot (a_{1}, a_{2}, a_{3}))) \land (\operatorname{C}\left(a, b\right) = (0, \operatorname{cross}\left((a_{1}, a_{2}, a_{3}), (b_{1}, b_{2}, b_{3})\right)))
+$$
+
+$$
+\forall t \in \mathbb{R},\; \forall a \in J,\; \forall b \in J,\; \operatorname{D}\left(t, a, b\right) = (0, \operatorname{cross}\left((a_{1}, a_{2}, a_{3} + t \cdot a_{0}), (b_{1}, b_{2}, b_{3})\right))
+$$
+
+$$
+\forall a \in J,\; \forall b \in J,\; \forall c \in J,\; \forall d \in J,\; \operatorname{M}\left(\operatorname{T}\left(a, b\right), \operatorname{T}\left(c, d\right)\right) = \operatorname{T}\left(\operatorname{S}\left(a, c\right), \operatorname{S}\left(b, d\right)\right) - \operatorname{T}\left(\operatorname{C}\left(a, c\right), \operatorname{C}\left(b, d\right)\right)
+$$
+
+$$
+\forall t \in \mathbb{R},\; \forall a \in J,\; \forall b \in J,\; \forall c \in J,\; \forall d \in J,\; \operatorname{Gamma}\left(t, \operatorname{T}\left(a, b\right), \operatorname{T}\left(c, d\right)\right) = \operatorname{T}\left(\operatorname{D}\left(t, a, c\right), \operatorname{S}\left(b, d\right)\right) + \operatorname{T}\left(\operatorname{S}\left(a, c\right), \operatorname{D}\left(t, b, d\right)\right)
+$$
+
+S, C and D(t) denote the existing bilinear maps S, C, D t; M and Gamma(t) are the existing fixed joint product and actual joint action, extended linearly from pure tensors. E(t,H,X,Y) is E t H X Y. R(t) is reportSquared t, with all six basis indices summed independently. Each output norm includes every coordinate; there is no averaging.
+
+$$
+\forall t \in \mathbb{R},\; \forall H \in V,\; \forall X \in V,\; \forall Y \in V,\; \operatorname{E}\left(t, H, X, Y\right) = \operatorname{Gamma}\left(t, H, \operatorname{M}\left(X, Y\right)\right) - \operatorname{M}\left(\operatorname{Gamma}\left(t, H, X\right), Y\right) - \operatorname{M}\left(X, \operatorname{Gamma}\left(t, H, Y\right)\right)
+$$
+
+$$
+\forall t \in \mathbb{R},\; \operatorname{R}\left(t\right) = \sum_{i,j,k,l,m,n: \operatorname{Fin}\left(4\right)}(\Vert \operatorname{E}\left(t, \operatorname{T}\left(\operatorname{e}\left(i\right), \operatorname{e}\left(j\right)\right), \operatorname{T}\left(\operatorname{e}\left(k\right), \operatorname{e}\left(l\right)\right), \operatorname{T}\left(\operatorname{e}\left(m\right), \operatorname{e}\left(n\right)\right)\right)\Vert)^{2}
+$$
+
+U(t) means unitOperator t, the continuous linear map b mapped to D(t,e(0),b); its norm with subscript op is the operator norm. G(t) means actionGram t, H(t) means labelGram t. Adjoint is taken for the same Euclidean inner product. W(t) means actionSupport t, the real span of all actual D(t,e(i),e(j)); Z(t) means commonFixed t, the intersection of the four action kernels. ker D(t) is the kernel of the label-linear map a mapped to D(t,a), whereas D(t,a)=0 is equality of linear operators. Orthogonal complement always uses the fixed Euclidean inner product.
+
+$$
+\forall t \in \mathbb{R},\; (\forall b \in J,\; \operatorname{U}\left(t, b\right) = \operatorname{D}\left(t, \operatorname{e}\left(0\right), b\right)) \land ((\operatorname{G}\left(t\right) = \sum_{i: \operatorname{Fin}\left(4\right)}\operatorname{compose}\left(\operatorname{adj}\left(\operatorname{D}\left(t, \operatorname{e}\left(i\right)\right)\right), \operatorname{D}\left(t, \operatorname{e}\left(i\right)\right)\right)) \land ((\operatorname{H}\left(t\right) = \sum_{i: \operatorname{Fin}\left(4\right)}\operatorname{compose}\left(\operatorname{adj}\left(\operatorname{flipD}\left(t, \operatorname{e}\left(i\right)\right)\right), \operatorname{flipD}\left(t, \operatorname{e}\left(i\right)\right)\right)) \land ((\forall a \in J,\; \forall b \in J,\; \operatorname{flipD}\left(t, b, a\right) = \operatorname{D}\left(t, a, b\right)) \land ((\operatorname{W}\left(t\right) = \operatorname{span}\left(\mathbb{R}, \{ v: J \mid \exists i \in \operatorname{Fin}\left(4\right),\; \exists j \in \operatorname{Fin}\left(4\right),\; v = \operatorname{D}\left(t, \operatorname{e}\left(i\right), \operatorname{e}\left(j\right)\right) \}\right)) \land (\operatorname{Z}\left(t\right) = \{ a: J \mid \forall i \in \operatorname{Fin}\left(4\right),\; \operatorname{D}\left(t, \operatorname{e}\left(i\right), a\right) = 0 \})))))
+$$
+
+Lambda(t) is positiveActionSpectrum t; sigma(t) is actionGap t, the square root of the infimum of that set. Membership and universal inequalities are both displayed for every greatest or least value below, so attainment and the full domain are retained. kappa(i,j,k) is curvature i j k on precisely the original finite basis, not a redefined unit-ball maximum.
+
+$$
+\forall t \in \mathbb{R},\; (\operatorname{Lambda}\left(t\right) = \{ lambda: \mathbb{R} \mid (0 < lambda) \land (\exists a \in J,\; (a \ne 0) \land (\operatorname{G}\left(t, a\right) = lambda \cdot a)) \}) \land (\operatorname{sigma}\left(t\right) = \sqrt{\operatorname{inf}\left(\operatorname{Lambda}\left(t\right)\right)})
+$$
+
+$$
+\forall i \in \operatorname{Fin}\left(4\right),\; \forall j \in \operatorname{Fin}\left(4\right),\; \forall k \in \operatorname{Fin}\left(4\right),\; \operatorname{kappa}\left(i, j, k\right) = \operatorname{S}\left(\operatorname{e}\left(i\right), \operatorname{S}\left(\operatorname{e}\left(j\right), \operatorname{e}\left(k\right)\right)\right) - \operatorname{S}\left(\operatorname{e}\left(j\right), \operatorname{S}\left(\operatorname{e}\left(i\right), \operatorname{e}\left(k\right)\right)\right)
+$$
 
 **Theorem 1.1 (The actual residual scales on all joint inputs).**
 
-$$\forall t,H,X,Y, \operatorname{E}(t,H,X,Y)=t \operatorname{E}(1,H,X,Y)$$
+$$\forall t \in \mathbb{R},\; \forall H \in V,\; \forall X \in V,\; \forall Y \in V,\; \operatorname{E}\left(t, H, X, Y\right) = t \cdot \operatorname{E}\left(1, H, X, Y\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.residual_scaling` (`✓ std3`). ∎
 
@@ -18,11 +62,11 @@ $$\forall t,H,X,Y, \operatorname{E}(t,H,X,Y)=t \operatorname{E}(1,H,X,Y)$$
 
 *Commentary.*
 
-The local label action is affine in t, hence so are the actual joint action and its trilinear residual. At t=0 the residual vanishes on the entire joint carrier. This follows from its exact values on the complete product basis and trilinearity, extended through the basis span in each of the three slots. Therefore E(t,H,X,Y)=t E(1,H,X,Y) for arbitrary H,X,Y, including arbitrary sums of pure tensors.
+The actual action and residual are affine in the real parameter. The zero-parameter residual vanishes on the complete product basis, and multilinearity extends this equality through the basis span in every slot, including arbitrary sums of pure tensors.
 
 **Theorem 1.2 (All ordered labels and every output coordinate).**
 
-$$\forall t \in \mathbb{R}, \operatorname{reportSquared}(t)=288t^{2}$$
+$$\forall t \in \mathbb{R},\; \operatorname{R}\left(t\right) = 288 \cdot (t)^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.full_report` (`✓ std3`). ∎
 
@@ -30,11 +74,11 @@ $$\forall t \in \mathbb{R}, \operatorname{reportSquared}(t)=288t^{2}$$
 
 *Commentary.*
 
-The report sums squared output norms over all three copies of the complete sixteen-element product basis. There is no average over its 4096 ordered triples; each output norm includes every output coordinate in the fixed positive product metric. At parameter one, six first-input blocks contribute forty-eight each and all ten other first-input blocks vanish. The block with first label 1 tensor z has zero rows when both second-input factors are 1 or z, and squared row sum four otherwise. All block values are evaluated from the actual bilinear product and joint action, and all-input residual scaling gives 288t squared.
+The complete unaveraged report uses 4096 ordered triples of the sixteen-element joint basis. At parameter one, six complete first-label blocks contribute 48 each; the other ten blocks vanish. Each squared norm includes every output coordinate. All-input scaling gives the displayed identity for every real parameter.
 
-**Theorem 1.3 (The fixed realization satisfies all four original identities).**
+**Theorem 1.3 (The complete fixed realization and all four original identities).**
 
-$$\forall t, \operatorname{fixedRealization}(t)$$
+$$\forall t \in \mathbb{R},\; (\operatorname{dim}\left(\mathbb{R}, J\right) = 4) \land ((\operatorname{dim}\left(\mathbb{R}, V\right) = 16) \land ((\forall i \in \operatorname{Fin}\left(4\right),\; \operatorname{b}\left(i\right) = \operatorname{e}\left(i\right)) \land ((\forall i \in \operatorname{Fin}\left(4\right),\; \forall j \in \operatorname{Fin}\left(4\right),\; \operatorname{B}\left(i, j\right) = \operatorname{T}\left(\operatorname{e}\left(i\right), \operatorname{e}\left(j\right)\right)) \land ((\forall a \in J,\; \forall b \in J,\; \operatorname{S}\left(a, b\right) = \operatorname{S}\left(b, a\right)) \land ((\forall a \in J,\; \operatorname{S}\left(\operatorname{e}\left(0\right), a\right) = a) \land ((\forall a \in J,\; \forall b \in J,\; \forall c \in J,\; \langle \operatorname{S}\left(a, b\right),c\rangle = \langle a,\operatorname{S}\left(b, c\right)\rangle) \land ((\forall a \in J,\; \forall b \in J,\; \forall c \in J,\; \operatorname{D}\left(t, a, \operatorname{S}\left(b, c\right)\right) = \operatorname{S}\left(\operatorname{D}\left(t, a, b\right), c\right) + \operatorname{S}\left(b, \operatorname{D}\left(t, a, c\right)\right)) \land ((\operatorname{D}\left(t, \operatorname{e}\left(1\right), \operatorname{e}\left(2\right)\right) = \operatorname{e}\left(3\right)) \land ((\forall X \in V,\; \forall Y \in V,\; \operatorname{M}\left(X, Y\right) = \operatorname{M}\left(Y, X\right)) \land ((\forall X \in V,\; \operatorname{M}\left(\operatorname{T}\left(\operatorname{e}\left(0\right), \operatorname{e}\left(0\right)\right), X\right) = X) \land ((\forall X \in V,\; \forall Y \in V,\; \forall Z \in V,\; \langle \operatorname{M}\left(X, Y\right),Z\rangle = \langle X,\operatorname{M}\left(Y, Z\right)\rangle) \land ((\forall X \in V,\; (0 \le \langle X,X\rangle) \land ((\langle X,X\rangle = 0) \Leftrightarrow (X = 0))) \land ((\forall a \in J,\; \forall b \in J,\; \forall c \in J,\; \forall d \in J,\; (\operatorname{M}\left(\operatorname{T}\left(a, \operatorname{e}\left(0\right)\right), \operatorname{T}\left(c, d\right)\right) = \operatorname{T}\left(\operatorname{S}\left(a, c\right), d\right)) \land ((\operatorname{M}\left(\operatorname{T}\left(\operatorname{e}\left(0\right), b\right), \operatorname{T}\left(c, d\right)\right) = \operatorname{T}\left(c, \operatorname{S}\left(b, d\right)\right)) \land ((\operatorname{Gamma}\left(t, \operatorname{T}\left(a, b\right), \operatorname{T}\left(c, \operatorname{e}\left(0\right)\right)\right) = \operatorname{T}\left(\operatorname{D}\left(t, a, c\right), b\right)) \land (\operatorname{Gamma}\left(t, \operatorname{T}\left(a, b\right), \operatorname{T}\left(\operatorname{e}\left(0\right), d\right)\right) = \operatorname{T}\left(a, \operatorname{D}\left(t, b, d\right)\right))))) \land (\operatorname{R}\left(t\right) = 288 \cdot (t)^{2}))))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.family_contract` (`✓ std3`). ∎
 
@@ -42,15 +86,11 @@ $$\forall t, \operatorname{fixedRealization}(t)$$
 
 *Commentary.*
 
-The local dimension is four and the joint dimension is sixteen. The local basis is a complete orthonormal basis with elements 1,x,y,z, and its tensor product is the complete joint orthonormal basis used by the report. The spin multiplication is commutative, has unit 1, and is Frobenius. Every D(t,a) is an exact local derivation on all inputs, and D(t,x,y)=z shows activity for every t. The fixed M is commutative, has unit 1 tensor 1, and is Frobenius for the same positive product inner product; the squared self-inner-product is nonnegative and vanishes exactly at zero. For all local a,b,c,d, M(a tensor 1,c tensor d)=S(a,c) tensor d and M(1 tensor b,c tensor d)=c tensor S(b,d). For all the same inputs, Gamma(t,a tensor b,c tensor 1)=D(t,a,c) tensor b and Gamma(t,a tensor b,1 tensor d)=a tensor D(t,b,d). The theorem also retains the exact complete residual square 288t squared. These are identities of the actual maps, without alternation, Jacobi or vanishing of the unit generator as assumptions.
+These are the complete fifteen conjuncts of the realization contract. The fixed products and positive inner products serve every parameter. No alternation, Jacobi, vanishing unit generator or global joint derivation law is assumed.
 
-The direct spin-factor construction establishes the required algebraic realization without a physical supply conclusion. It proves no general stability theorem for arbitrary joint products, no acquisition procedure and no noisy reconstruction of physical objects.
+**Theorem 1.4 (Attained defects, all-input bounds and operator norm).**
 
-All vectors, products, basis elements and actions are those of PauliFixedProductFamily. Every assertion quantifies over every real t. A greatest value includes both a universal upper bound and an actual unit input attaining it. The local Euclidean norm and multiplication stay fixed as t varies.
-
-**Theorem 1.4 (Attained self-defect and unit-generator norm).**
-
-$$\operatorname{diagonalMaximum}(t)=\frac{\Vert t\Vert}{2}, \operatorname{unitMaximum}(t)=\Vert t\Vert$$
+$$\forall t \in \mathbb{R},\; ((\frac{\lvert t\rvert}{2} \in \{ s: \mathbb{R} \mid \exists a \in J,\; (\Vert a\Vert = 1) \land (s = \Vert \operatorname{D}\left(t, a, a\right)\Vert) \}) \land (\forall r \in \mathbb{R},\; (r \in \{ s: \mathbb{R} \mid \exists a \in J,\; (\Vert a\Vert = 1) \land (s = \Vert \operatorname{D}\left(t, a, a\right)\Vert) \}) \Rightarrow (r \le \frac{\lvert t\rvert}{2}))) \land (((\lvert t\rvert \in \{ s: \mathbb{R} \mid \exists b \in J,\; (\Vert b\Vert = 1) \land (s = \Vert \operatorname{D}\left(t, \operatorname{e}\left(0\right), b\right)\Vert) \}) \land (\forall r \in \mathbb{R},\; (r \in \{ s: \mathbb{R} \mid \exists b \in J,\; (\Vert b\Vert = 1) \land (s = \Vert \operatorname{D}\left(t, \operatorname{e}\left(0\right), b\right)\Vert) \}) \Rightarrow (r \le \lvert t\rvert))) \land ((\forall a \in J,\; \forall b \in J,\; \Vert \operatorname{S}\left(a, b\right)\Vert \le \sqrt{2} \cdot \Vert a\Vert \cdot \Vert b\Vert) \land ((\forall a \in J,\; \forall b \in J,\; \Vert \operatorname{D}\left(t, a, b\right)\Vert \le \sqrt{1 + (t)^{2}} \cdot \Vert a\Vert \cdot \Vert b\Vert) \land (\Vert \operatorname{U}\left(t\right)\Vert_{op} = \lvert t\rvert))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_defects` (`✓ std3`). ∎
 
@@ -58,11 +98,11 @@ $$\operatorname{diagonalMaximum}(t)=\frac{\Vert t\Vert}{2}, \operatorname{unitMa
 
 *Commentary.*
 
-The self-defect ranges over every local unit vector a and is the norm of D(t,a,a). Its greatest value is absolute t divided by two, attained at (1+x)/sqrt(2). The unit-generator range uses every unit b and the norm of D(t,1,b); its greatest value is absolute t, attained at x. For every a,b, the spin-product norm is at most sqrt(2) times norm(a) times norm(b), and the action norm is at most sqrt(1+t squared) times the same two norms. The proofs use exact nonnegative square decompositions in the original Euclidean coordinates.
+The diagonal maximum is attained at (e(0)+e(1))/sqrt(2); the unit-generator maximum is attained at e(1). The universal estimates follow from nonnegative square decompositions on arbitrary real coordinates, and the last conjunct is the norm of the actual continuous unit-generator operator.
 
-**Theorem 1.5 (All original local constants are sharp).**
+**Theorem 1.5 (Every original local constant is sharp).**
 
-$$u=1,ell=\sqrt{2},k=1,d=\sqrt{1+t^{2}}$$
+$$\forall t \in \mathbb{R},\; (\Vert \operatorname{e}\left(0\right)\Vert = 1) \land (((\sqrt{2} \in \{ s: \mathbb{R} \mid \exists a \in J,\; \exists b \in J,\; (\Vert a\Vert = 1) \land ((\Vert b\Vert = 1) \land (s = \Vert \operatorname{S}\left(a, b\right)\Vert)) \}) \land (\forall r \in \mathbb{R},\; (r \in \{ s: \mathbb{R} \mid \exists a \in J,\; \exists b \in J,\; (\Vert a\Vert = 1) \land ((\Vert b\Vert = 1) \land (s = \Vert \operatorname{S}\left(a, b\right)\Vert)) \}) \Rightarrow (r \le \sqrt{2}))) \land (((\sqrt{1 + (t)^{2}} \in \{ s: \mathbb{R} \mid \exists a \in J,\; \exists b \in J,\; (\Vert a\Vert = 1) \land ((\Vert b\Vert = 1) \land (s = \Vert \operatorname{D}\left(t, a, b\right)\Vert)) \}) \land (\forall r \in \mathbb{R},\; (r \in \{ s: \mathbb{R} \mid \exists a \in J,\; \exists b \in J,\; (\Vert a\Vert = 1) \land ((\Vert b\Vert = 1) \land (s = \Vert \operatorname{D}\left(t, a, b\right)\Vert)) \}) \Rightarrow (r \le \sqrt{1 + (t)^{2}}))) \land ((1 \in \{ s: \mathbb{R} \mid \exists i \in \operatorname{Fin}\left(4\right),\; \exists j \in \operatorname{Fin}\left(4\right),\; \exists k \in \operatorname{Fin}\left(4\right),\; s = \Vert \operatorname{kappa}\left(i, j, k\right)\Vert \}) \land (\forall r \in \mathbb{R},\; (r \in \{ s: \mathbb{R} \mid \exists i \in \operatorname{Fin}\left(4\right),\; \exists j \in \operatorname{Fin}\left(4\right),\; \exists k \in \operatorname{Fin}\left(4\right),\; s = \Vert \operatorname{kappa}\left(i, j, k\right)\Vert \}) \Rightarrow (r \le 1)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_constants` (`✓ std3`). ∎
 
@@ -70,11 +110,11 @@ $$u=1,ell=\sqrt{2},k=1,d=\sqrt{1+t^{2}}$$
 
 *Commentary.*
 
-The unit has norm one. The sharp spin-product constant sqrt(2) is attained with both arguments (1+x)/sqrt(2). The sharp action constant sqrt(1+t squared) is attained at the unit label (t1+z)/sqrt(1+t squared) and unit input x. Curvature means the norm of [L(e_i),L(e_j)]e_k on the full original four-element basis. Every such entry has norm at most one and [L(x),L(y)]y=x attains one. It is the specified finite-table maximum, without identifying it with a maximum over arbitrary unit labels.
+The unit length is one. The spin bound is attained with both inputs (e(0)+e(1))/sqrt(2), and the action bound at (t e(0)+e(3))/sqrt(1+t squared) and e(1). For arbitrary local a,b,c, the spin commutator is minus C(C(a,b),c), by the general vector triple-product identity. Two applications of the all-input cross-channel bound, obtained from the existing action estimate at parameter zero, give commutator norm at most norm(a) norm(b) norm(c). Specialization to the original unit basis gives the curvature upper bound without enumerating its entries. The same identity and orthonormal normalization give kappa(1,2,2)=e(1), attaining one on the original finite domain. This calibration supplies no new report escape or numeric consumer.
 
-**Theorem 1.6 (The actual action Gram and its kernels).**
+**Theorem 1.6 (The full action Gram, both kernels, support and eigenvalues).**
 
-$$\operatorname{G}(t)=\operatorname{diag}(0,2+t^{2},2+t^{2},2)$$
+$$\forall t \in \mathbb{R},\; (\forall a \in J,\; \operatorname{G}\left(t, a\right) = (0, \left(2 + (t)^{2}\right) \cdot a_{1}, \left(2 + (t)^{2}\right) \cdot a_{2}, 2 \cdot a_{3})) \land ((\forall a \in J,\; (\forall i \in \operatorname{Fin}\left(4\right),\; \operatorname{D}\left(t, \operatorname{e}\left(i\right), a\right) = 0) \Leftrightarrow (\exists r \in \mathbb{R},\; a = r \cdot \operatorname{e}\left(0\right))) \land ((\forall a \in J,\; (a \in \operatorname{W}\left(t\right)) \Leftrightarrow (a_{0} = 0)) \land ((\forall a \in J,\; (\operatorname{D}\left(t, a\right) = 0) \Leftrightarrow (\exists r \in \mathbb{R},\; a = r \cdot (\operatorname{e}\left(0\right) - t \cdot \operatorname{e}\left(3\right)))) \land (\forall lambda \in \mathbb{R},\; (\exists a \in J,\; (a \ne 0) \land (\operatorname{G}\left(t, a\right) = lambda \cdot a)) \Leftrightarrow ((lambda = 0) \lor ((lambda = 2 + (t)^{2}) \lor (lambda = 2)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_action_data` (`✓ std3`). ∎
 
@@ -82,11 +122,11 @@ $$\operatorname{G}(t)=\operatorname{diag}(0,2+t^{2},2+t^{2},2)$$
 
 *Commentary.*
 
-The action Gram is the sum of adjoint(D(t,e_i)) composed with D(t,e_i) over all four basis labels. Its displayed diagonal is an identity on every local vector. Its common fixed kernel is precisely the scalar axis. The span of every actual table output is the spatial subspace a(0)=0. The label kernel D(t,a)=0 is instead the line spanned by 1-tz. A real lambda is an eigenvalue exactly when it is zero, 2+t squared, or 2. The full diagonal also retains the multiplicities, including their collision at t=0.
+The coordinate identity holds on every vector. The label kernel and common fixed kernel are distinguished as actual operator statements. The exact coordinates retain eigenvalue multiplicities and their collision at zero parameter.
 
-**Theorem 1.7 (The distinct label Gram and exact positive spectral minimum).**
+**Theorem 1.7 (The label Gram and attained positive action minimum).**
 
-$$\operatorname{positiveMinimum}(\operatorname{G}(t))=2$$
+$$\forall t \in \mathbb{R},\; (\forall a \in J,\; \operatorname{H}\left(t, a\right) = (2 \cdot (t)^{2} \cdot a_{0} + 2 \cdot t \cdot a_{3}, 2 \cdot a_{1}, 2 \cdot a_{2}, 2 \cdot t \cdot a_{0} + 2 \cdot a_{3})) \land ((\forall lambda \in \mathbb{R},\; (\exists a \in J,\; (a \ne 0) \land (\operatorname{H}\left(t, a\right) = lambda \cdot a)) \Leftrightarrow ((lambda = 0) \lor ((lambda = 2) \lor (lambda = 2 \cdot (1 + (t)^{2}))))) \land (((2 \in \operatorname{Lambda}\left(t\right)) \land (\forall r \in \mathbb{R},\; (r \in \operatorname{Lambda}\left(t\right)) \Rightarrow (2 \le r))) \land (\operatorname{sigma}\left(t\right) = \sqrt{2})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_label_data` (`✓ std3`). ∎
 
@@ -94,11 +134,11 @@ $$\operatorname{positiveMinimum}(\operatorname{G}(t))=2$$
 
 *Commentary.*
 
-The label Gram is formed from the maps a maps to D(t,a,e_i), with adjoints in the same fixed Euclidean product. Its coordinates are (2t squared a0+2t a3, 2a1, 2a2, 2t a0+2a3), so it is twice the matrix with rows (t squared,0,0,t), (0,1,0,0), (0,0,1,0), (t,0,0,1). Its eigenvalues are exactly zero, 2, and 2(1+t squared), with the latter two coinciding at zero parameter. The least positive eigenvalue of the action Gram is exactly two and is attained in the z direction. Consequently its positive square-root gap is sqrt(2) throughout the whole real family.
+H is the label Gram, distinct from the action Gram G. The displayed eigenvalue equivalence includes all real eigenvalues, including collisions. The positive action eigenvalue minimum is attained at e(3), and its square-root gap is uniform.
 
-**Theorem 1.8 (Uniform attained support gap and actual nonzero defects).**
+**Theorem 1.8 (Complete support, uniform gap, activity and zero boundary).**
 
-$$\operatorname{outputSupport}(t)=\operatorname{fixedKernel}(t)^{perp}$$
+$$\forall t \in \mathbb{R},\; (\operatorname{W}\left(t\right) = (\operatorname{Z}\left(t\right))^{\perp}) \land ((\forall a \in J,\; (a \in \operatorname{W}\left(t\right)) \Rightarrow (2 \cdot (\Vert a\Vert)^{2} \le \langle a,\operatorname{G}\left(t, a\right)\rangle)) \land (((\operatorname{e}\left(3\right) \in \operatorname{W}\left(t\right)) \land ((\Vert \operatorname{e}\left(3\right)\Vert = 1) \land (\operatorname{G}\left(t, \operatorname{e}\left(3\right)\right) = 2 \cdot \operatorname{e}\left(3\right)))) \land ((\operatorname{D}\left(t\right) \ne 0) \land (((t \ne 0) \Rightarrow ((\exists a \in J,\; \operatorname{D}\left(t, a, a\right) \ne 0) \land ((\operatorname{D}\left(t, \operatorname{e}\left(0\right)\right) \ne 0) \land (\operatorname{ker}\left(\operatorname{D}\left(t\right)\right) \ne \operatorname{Z}\left(t\right))))) \land ((\forall a \in J,\; \operatorname{D}\left(0, a, a\right) = 0) \land (\operatorname{D}\left(0, \operatorname{e}\left(0\right)\right) = 0))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_support_gap` (`✓ std3`). ∎
 
@@ -106,7 +146,7 @@ $$\operatorname{outputSupport}(t)=\operatorname{fixedKernel}(t)^{perp}$$
 
 *Commentary.*
 
-The output support equals the orthogonal complement of the common fixed kernel. On that support, the quadratic form of the actual action Gram is at least twice the squared norm, with equality at the unit vector z. The label-linear assignment is nonzero for every t because D(t,x,y)=z. For every nonzero t the diagonal defect is nonzero at (1+x)/sqrt(2), the unit generator is nonzero, and the label kernel differs from the common fixed kernel: the unit lies in the latter but not the former. At t=0 all diagonal defects vanish and the unit generator is zero. These are statements about this same action and same positive product, without an assumption of label alternation.
+Every support and activity conjunct concerns the same actual maps. At parameter zero the diagonal and unit-generator defects vanish, while the spatial action remains nonzero and the positive support gap remains sqrt(2). These are algebraic conclusions for this realization; no physical acquisition or general reconstruction conclusion follows.
 
 ## References
 
