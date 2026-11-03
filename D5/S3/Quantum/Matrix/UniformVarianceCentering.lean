@@ -396,12 +396,10 @@ def blockInclusion (i : I) : E i →ₗᵢ[ℂ] PiLp 2 E where
 def blockProjection (i : I) : PiLp 2 E →ₗ[ℂ] PiLp 2 E :=
   (blockInclusion i).toLinearMap.comp (PiLp.projₗ (𝕜 := ℂ) 2 E i)
 
-private lemma projection_apply (i : I) (x : PiLp 2 E) :
-    blockProjection i x = PiLp.single 2 i (x i) := rfl
-
 private lemma projection_partition (x : PiLp 2 E) :
     ∑ i, ‖blockProjection i x‖^2 = ‖x‖^2 := by
-  simp only [projection_apply, PiLp.norm_single]
+  change (∑ i, ‖PiLp.single 2 i (x i)‖^2) = ‖x‖^2
+  simp only [PiLp.norm_single]
   exact (PiLp.norm_sq_eq_of_L2 E x).symm
 
 /-- Coordinatewise extension by an arbitrary finite reference. -/
@@ -422,12 +420,12 @@ private lemma centralMean_single {J : Type*}
   classical
   simp only [centralMean, LinearMap.sum_apply, LinearMap.smul_apply]
   rw [Finset.sum_eq_single i]
-  · simp only [projection_apply, blockInclusion, LinearIsometry.coe_mk,
-      LinearMap.coe_mk, AddHom.coe_mk, PiLp.single_eq_same]
+  · congr 1
+    change PiLp.single 2 i ((PiLp.single 2 i x) i) = PiLp.single 2 i x
+    simp only [PiLp.single_eq_same]
   · intro k _ hki
     have hz : blockProjection k (blockInclusion i x) = 0 := by
-      simp only [projection_apply, blockInclusion, LinearIsometry.coe_mk,
-        LinearMap.coe_mk, AddHom.coe_mk]
+      change PiLp.single 2 k ((PiLp.single 2 i x) k) = 0
       simp [hki]
     rw [hz, smul_zero]
   · simp
