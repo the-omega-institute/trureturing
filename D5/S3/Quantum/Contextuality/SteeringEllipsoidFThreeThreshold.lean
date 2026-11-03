@@ -251,12 +251,9 @@ private lemma balanced_setting (ρ : TwoQubit) (hρ : ρ.IsHermitian) (p q : ℝ
     (vlen (corr ρ *ᵥ β i))⁻¹ • (corr ρ *ᵥ β i)
   have hα (i : Fin 3) : vlen (α i) = 1 := (normalized_unit _ (hne i)).1
   have hv (i : Fin 3) : α i ⬝ᵥ (corr ρ *ᵥ β i) = L := by
-    have hu : α i ⬝ᵥ α i = 1 := by rw [← vlen_sq, hα]; norm_num
-    calc
-      α i ⬝ᵥ (corr ρ *ᵥ β i) = α i ⬝ᵥ (vlen (corr ρ *ᵥ β i) • α i) := by
-        rw [(normalized_unit _ (hne i)).2]
-      _ = vlen (corr ρ *ᵥ β i) := by rw [dotProduct_smul, hu, smul_eq_mul, mul_one]
-      _ = L := hx i
+    change ((vlen (corr ρ *ᵥ β i))⁻¹ • (corr ρ *ᵥ β i)) ⬝ᵥ (corr ρ *ᵥ β i) = L
+    rw [smul_dotProduct, smul_eq_mul, ← vlen_sq, hx i]
+    simpa only [pow_two] using inv_mul_cancel_left₀ (ne_of_gt hL) L
   have hvsum : (∑ i, trace (ρ * (spin (α i) ⊗ₖ spin (β i)))) = ((3 * L : ℝ) : ℂ) := by
     simp only [setting_trace ρ hρ, hv, Fin.sum_univ_three]
     push_cast
