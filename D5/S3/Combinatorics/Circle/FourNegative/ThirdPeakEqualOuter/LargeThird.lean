@@ -84,7 +84,7 @@ private theorem large_selector (s y m : ℤ) (hs : 2 ≤ s) (hy : 4 ≤ y) (hm :
     apply (mul_lt_mul_iff_of_pos_right hB).mp
     nlinarith only [hvB,hh]
   refine ⟨v,hv1,hvstock,?_⟩
-  apply afterW_windows s y z s v hs hy (by dsimp [z,x]; nlinarith [mul_nonneg (m-2) (s*y)])
+  apply afterW_windows s y z s v hs hy (by dsimp [z,x]; nlinarith [mul_nonneg (show 0 ≤ m-2 by omega) (show 0 ≤ s*y by positivity)])
     le_rfl (by omega) (by change 0 < s*AA-v*BB; omega) he
   · change 2*v*UU > 2*L x z+2
     change 2*L x z+1 < (4*s-1)*AA at hfirst
@@ -102,7 +102,7 @@ private theorem large_third_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : b < a)
   have hy : 4 ≤ y := by simpa [y] using pow_lower b 2 hb
   have hm : 8 ≤ m := by simpa [m] using pow_lower (c-a) 3 (by omega)
   have hx : (2:ℤ)^a=s*y := pow_split a b (by omega)
-  have hz : (2:ℤ)^c=m*(s*y) := by rw [pow_split c a (by omega),hx]; rfl
+  have hz : (2:ℤ)^c=m*(s*y) := by rw [pow_split c a (by omega),hx]
   obtain ⟨v,hv,hvm,hw⟩ := large_selector s y m hs hy hm
   let rn := 2^(a-b)
   let vn := v.toNat

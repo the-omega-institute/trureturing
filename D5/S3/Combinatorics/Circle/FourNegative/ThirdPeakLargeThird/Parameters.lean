@@ -97,7 +97,7 @@ private theorem selected_properties (a b c d : ℕ)
   have cap:=ceil_le (L x z t-B x y t) (2*B x y t) (full a b c d 1:ℤ)
     (by omega) inventory_bound
   change v≤(full a b c d 1:ℤ) at cap
-  have cast : (selectedV a b c d:ℤ)=v := Int.toNat_of_nonneg (by omega)
+  have cast : (selectedV a b c d:ℤ)=v := Int.toNat_of_nonneg (by change 0≤v; omega)
   have fullcast : (full a b c d 1:ℤ)=(2:ℤ)^(c-1)-1 := by
     simp [full,chainLength,Nat.cast_sub (show 1≤2^(c-1) by have := Nat.two_pow_pos (c-1);omega)]
   have half:=half_power c (by omega)
