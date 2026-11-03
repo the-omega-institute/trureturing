@@ -1670,3 +1670,257 @@ The weak-star compact stochastic class of Proposition 123.2 contains the limit $
 All these statements are conditional on the complete original endpoint and source suppliers retained in Definition 143.1. Every deterministic function is defined on the original $G$ and used at every original observation epoch, with the actual terminal $P\mathbf1_{D_w}$. The sequence is a mathematical family of common readouts. No additional randomness, controller, memory, stationary initial law, killed endpoint, time change, separate slot partition or postselection is introduced. A native source/evolution/readout correspondence remains the separate unresolved bridge specified in §§115–117. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 145. One odd sign for all three actual terminal forms
+
+**Definition 145.1 (the signed terminal family on an invariant support).** Retain the complete original telescope of Theorems 142.1 and 143.2. Write
+$\mathscr R=R_\pi$, let $E=(E_S,E_C,E_B)=(S,C,B)\in\mathscr E_\theta$, and put
+
+$$
+q_i=P\mathbf1_{E_i},\qquad
+Q_i(u,v)=\int_G g\,u\,P(q_i v)\,dm,
+\qquad i\in\{S,C,B\}.
+\tag{145.1}
+$$
+
+For a half-turn-invariant Borel set $A\subset S$ with $m(A)>0$, let
+
+$$
+\mathcal V_{A,-}=\{u\in L^\infty(G,m;\mathbb R):u=0\ \text{a.e. on }G\setminus A,
+\ u\circ\mathscr R=-u\ \ m\text{-a.e.}\}.
+\tag{145.2}
+$$
+
+The quadratic value of $Q_i$ is its symmetric value $Q_i(u,u)$. For
+$\lambda=(\lambda_S,\lambda_C,\lambda_B)\in\mathbb R^3$ write
+
+$$
+r_\lambda=\sum_i\lambda_i\mathbf1_{E_i},\qquad
+q_\lambda=Pr_\lambda,\qquad
+Q_\lambda=\sum_i\lambda_iQ_i.
+\tag{145.3}
+$$
+
+**Proposition 145.2 (the signed-pencil index on every invariant slack set).** For every nonzero $\lambda\in\mathbb R^3$, the symmetric quadratic form $u\mapsto Q_\lambda(u,u)$ has infinite negative index on $\mathcal V_{A,-}$. The same remains true after imposing any finite family of homogeneous real bounded linear constraints on $\mathcal V_{A,-}$.
+
+*Proof.* The functions $g$ and $q_i$ have the invariant analytic representatives on
+$\Omega=\{x^2+y^2>0\}$ supplied by Appendix II §§120, 122 and 133. Hence $q_\lambda$ is analytic and invariant there. It is not zero: if $q_\lambda=0$ almost everywhere, injectivity of $P$ gives $r_\lambda=0$ almost everywhere. Each of $S,C,B$ has positive measure from (136.1), so this forces $\lambda=0$.
+
+Let $Q_\lambda^{\rm sym}$ be the symmetric polarization. On the half-circle section $F$ of Theorem 137.1 its localized odd kernel is
+
+$$
+s_\lambda(x,y)=\frac{g(x)q_\lambda(y)+q_\lambda(x)g(y)}2\,k(x,y),
+\tag{145.4}
+$$
+
+where $k$ is the nonsingular odd heat kernel (137.3). If $q_\lambda$ is negative at a density point of $A\cap\Omega$, continuity gives arbitrarily many disjoint reflected neighborhoods in $A$ on which the matrices in (145.4) converge to a negative multiple of the positive definite Gram matrix of $k$. Their odd localized indicators give arbitrarily large negative subspaces of $\mathcal V_{A,-}$.
+
+It remains to treat the case in which $q_\lambda\geq0$ almost everywhere on $A$. Choose a positive-measure density subset $A_0\subset A\cap F$ and set
+
+$$
+\gamma=\frac{g-q_\lambda}{g+q_\lambda}\quad\text{on }A_0.
+\tag{145.5}
+$$
+
+Here $g>0$ and $|\gamma|\leq1$. If the negative index were finite, the exact Gram identity
+
+$$
+s_\lambda(x,y)=\frac{(g(x)+q_\lambda(x))(g(y)+q_\lambda(y))}{4}
+\bigl(1-\gamma(x)\gamma(y)\bigr)k(x,y)
+\tag{145.6}
+$$
+
+would give finitely many negative squares for the kernel on the density set $A_0^*$. Agler--Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1), applies with the actual odd heat space, its nonsingular kernel $k$, uniqueness domain $A_0^*$, real multiplier $\gamma$ and scalar parameter $1$. It supplies a finite-codimensional domain and a bounded multiplication operator $L$ satisfying
+
+$$
+(g+q_\lambda)Lu=(g-q_\lambda)u
+\tag{145.7}
+$$
+
+on $A_0^*$. Both sides are analytic on $\Omega$, so (145.7) holds on all of $\Omega$ by the same positive-measure uniqueness argument as in Theorem 137.1. The commutator argument there applies on any compact patch where $g+q_\lambda>0$: the actual principal symbol (137.12), high-frequency punctured-core tests, and the three-lines bound force the derivatives of $\gamma$ to vanish. Thus $\gamma$ is constant on a nonempty open patch, and analytic continuation in (145.7) gives
+
+$$
+q_\lambda=cg\quad\text{on }\Omega
+\tag{145.8}
+$$
+
+for a real constant $c$. Since $g=P\beta$ with the nonconstant positive representative $\beta$ of Proposition 136.2, injectivity of $P$ gives $r_\lambda=c\beta$ almost everywhere. The left side is constant on each of the three positive-measure cells, whereas the analytic function $\beta$ cannot be constant on a positive-measure subset without being constant on the connected $\Omega$. This is impossible; $c=0$ is already excluded by $r_\lambda\ne0$. Therefore the negative index is infinite in the nonnegative case as well.
+
+For any finite constraints, choose a negative-definite subspace of dimension larger than their number and intersect it with their common kernels. This proves the final assertion. The argument explicitly treats every real signed combination in (145.3); it uses no positivity of the three terminal weights. It also applies to every half-turn-invariant slack set $A$, which is the only support geometry used below. $\square$
+
+**Theorem 145.3 (one same sign cancels all three actual terminal forms).** For every original $\theta=(a,\eta,d,b)\in\Theta$, every fixed actual invariant coarse partition $E=(S,C,B)\in\mathscr E_\theta$, and every finite set $\Psi\subset L^1(G,m;\mathbb R)$, there is a bounded whole-$G$ Borel function $v$ such that
+
+$$
+\begin{gathered}
+v^2=\mathbf1_S\quad\text{everywhere},\qquad
+v\circ\mathscr R=-v\quad m\text{-a.e.},\\
+\int_G\psi v\,dm=0\quad(\psi\in\Psi),\\
+\mathcal C(v,v,\mathbf1_S)=\mathcal C(v,v,\mathbf1_C)
+=\mathcal C(v,v,\mathbf1_B)=0.
+\end{gathered}
+\tag{145.9}
+$$
+
+The three equalities use the same sign and the same actual cells and terminal heat images.
+
+*Proof.* Let $\mathcal V_{S,-}^{\Psi}$ be the subspace (145.2) with the moment equations in (145.9). Choose a basis of the finite-dimensional span of the three quadratic forms $Q_i(u,u)$. Proposition 145.2 and Lemma 125.3, applied to every real pencil in that basis, give a two-dimensional real subspace $U\subset\mathcal V_{S,-}^{\Psi}$ on which all three quadratic forms vanish identically. If the span is zero, any two-dimensional subspace of $\mathcal V_{S,-}^{\Psi}$ has this property. Choose a nonzero $u\in U$ and scale it so that $\|u\|_\infty\le1$.
+
+Let $\mathcal K$ be the set of real classes $w$ with support in $S$, $w\circ\mathscr R=-w$, $\|w\|_\infty\le1$, the moments in $\Psi$ equal to zero, and $Q_i(w,w)=0$ for $i=S,C,B$. It is nonempty by $u$. It is weak-star compact. Indeed the linear conditions are weak-star closed, and each quadratic form is weak-star continuous on the unit ball: its ordered kernel is
+
+$$
+a_i(x,y)=g(x)p_d(x,y)q_i(y)\ge0,qquad
+\|a_i\|_{L^1(m^2)}=\int_GgPq_i\,dm\le1,
+\tag{145.10}
+$$
+
+so finite rectangular-tensor approximation in $L^1(m^2)$ reduces continuity to finitely many scalar pairings.
+
+Choose a Borel representative of $w$ which is odd on $S\setminus N$ by using the half-circle section and reflection. Choose a countable separating family $(\psi_n)$ in the real unit ball of $L^1(m)$ and maximize on $\mathcal K$ the strictly convex function
+
+$$
+J(w)=\sum_{n\ge1}2^{-n}\left(\int_G\psi_nw\,dm\right)^2.
+\tag{145.11}
+$$
+
+Let $w$ be a maximizer. If the half-turn-invariant slack set
+
+$$
+A_n=S\cap\{|w|\le1-1/n\}
+\tag{145.12}
+$$
+
+has positive measure for some $n$. Replacing it by $A_n\cap\mathscr R A_n$ if necessary makes it exactly half-turn invariant without changing its positive measure. Use Proposition 145.2 on this invariant set with the finite constraints consisting of the moments $\int\psi\,\cdot\,dm$ and the three symmetric polar equations $Q_i^{\rm sym}(w,\cdot)=0$. Lemma 125.3 supplies a nonzero bounded $z$ supported in $A_n$ with
+
+$$
+Q_i(z,z)=Q_i^{\rm sym}(w,z)=0\qquad(i=S,C,B).
+\tag{145.13}
+$$
+
+For sufficiently small nonzero $\varepsilon$, both $w+\varepsilon z$ and $w-\varepsilon z$ remain in the unit ball, and (145.13) keeps them in $\mathcal K$. They are distinct, while strict convexity gives
+
+$$
+J(w)<\frac{J(w+\varepsilon z)+J(w-\varepsilon z)}2,
+$$
+
+contradicting maximality. Hence $|w|=1$ almost everywhere on $S$.
+
+Take a Borel representative, put $v=\operatorname{sgn}(w)$ on the full-measure set where $|w|=1$, assign either sign on the remaining null subset of $S$, and put $v=0$ off $S$. Then $v^2=\mathbf1_S$ pointwise, and all displayed integrals and quadratic values are unchanged. Since $Q_i(v,v)=\mathcal C(v,v,\mathbf1_{E_i})$, (145.9) follows. $\square$
+
+The signed-pencil step is source-specific because $q_\lambda=P(\lambda_S\mathbf1_S+\lambda_C\mathbf1_C+\lambda_B\mathbf1_B)$ is the actual terminal heat image in the original clock. Agler--Young is used only with the nonsingular odd heat kernel and the analytic uniqueness sets supplied in §137; Dvoretzky--Wald--Wolfowitz is not being used to turn nonlinear quadratic constraints into linear ones. The extremal argument instead uses the exact signed-pencil property on each half-turn-invariant slack set.
+
+## 146. The same-partition exact-contrast sequence
+
+**Theorem 146.1 (rank-two common partitions with four exact terminal contrasts).** For every original $\theta\in\Theta$, there is a sequence of whole-$G$ pointwise Borel partitions
+
+$$
+D_n=(D_{n,0},D_{n,1},D_{n,3},D_{n,B})
+\tag{146.1}
+$$
+
+such that
+
+$$
+\begin{gathered}
+D_n\in\mathscr D_{12}(\theta),\qquad \operatorname{rank}A^{D_n}=2,\\
+\mathcal C(v_n,v_n,\mathbf1_{D_{n,w}})=0
+\quad(w=0,1,3,B),\\
+\mathbf1_{D_{n,y}}\overset{*}{\rightharpoonup}f_y
+\quad\text{in }L^\infty(m)\quad(y=0,1,3,B),\\
+\|\nu_{D_n}^{(3)}-\nu_f^{(3)}\|_{\rm TV}\longrightarrow0,
+\end{gathered}
+\tag{146.2}
+$$
+
+where $v_n=\mathbf1_{D_{n,0}}-\mathbf1_{D_{n,1}}$. Each equality in the second line is an equality for the corresponding actual terminal $P\mathbf1_{D_{n,w}}$.
+
+*Proof.* The determinant-sign and proportional-subdivision construction in (143.7)--(143.15), applied with its exact original marginal measures, supplies invariant coarse partitions $E_n=(S_n,C_n,B_n)\in\mathscr E_\theta$ for which
+
+$$
+\operatorname{rank}A_{E_n}=2,qquad
+\mathbf1_{E_{n,i}}\overset{*}{\rightharpoonup}u_i^0
+\quad(i=S,C,B),qquad
+A_{E_n}\longrightarrow A(u^0).
+\tag{146.3}
+$$
+
+The positive principal minor in (143.15) is retained when the finite initial segment is discarded and the sequence is relabelled. This is a new choice of the coarse partitions; no sign identity is assumed from the sequence used in Theorem 143.2.
+
+Choose a countable dense family $(\psi_l)_{l\ge1}$ in the real unit ball of $L^1(m)$. Apply Theorem 145.3 to $E_n$ and $\Psi_n=\{\psi_1,\ldots,\psi_n\}$, and call the resulting sign $v_n$. Define
+
+$$
+D_{n,0}=\{v_n=1\},\quad D_{n,1}=\{v_n=-1\},\quad
+D_{n,3}=C_n,\quad D_{n,B}=B_n.
+\tag{146.4}
+$$
+
+Because the three source densities $g_{2d},g_{3d},g_{4d}$ are invariant under $\mathscr R$, oddness gives
+\(\int g_{jd}v_n\,dm=0\). Together with the nine equations for $E_n$, this proves all twelve original marginal equations for $D_n$.
+
+The half-turn commutation of $P$ gives $P v_n$ odd. Hence $v_nPv_n$ is invariant, $P(v_nPv_n)$ is invariant, and
+
+$$
+\mathcal C(v_n,v_n,v_n)=\int_Gg\,v_nP(v_nPv_n)\,dm=0.
+\tag{146.5}
+$$
+
+Theorem 145.3 gives the three coarse terminal equalities. Since
+
+$$
+\mathbf1_{D_{n,0}}=\frac{\mathbf1_{S_n}+v_n}{2},\qquad
+\mathbf1_{D_{n,1}}=\frac{\mathbf1_{S_n}-v_n}{2},
+\tag{146.6}
+$$
+
+(146.5) yields
+
+$$
+\mathcal C(v_n,v_n,\mathbf1_{D_{n,0}})=
+\mathcal C(v_n,v_n,\mathbf1_{D_{n,1}})=0.
+\tag{146.7}
+$$
+
+For the other two labels, (145.9) is exactly the same assertion, proving all four actual-terminal contrasts in (146.2).
+
+For any invariant bounded $u$, the two cross pairings with an odd $v_n$ vanish by the half-turn change of variables:
+
+$$
+Q_{E_n}(u,v_n)=Q_{E_n}(v_n,u)=0.
+\tag{146.8}
+$$
+
+The ordered congruence (138.7), with the actual terminal $P\mathbf1_{C_n}$, therefore gives
+
+$$
+\operatorname{rank}A^{D_n}=\operatorname{rank}A_{E_n}=2.
+\tag{146.9}
+$$
+
+The moments imposed in Theorem 145.3 imply $v_n\overset{*}{\rightharpoonup}0$. Equations (146.3) and (146.6) thus give the four weak-star limits in (146.2). The actual path density
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3)
+\tag{146.10}
+$$
+
+is nonnegative and integrable with mass one. Rectangular-tensor approximation in $L^1(m^3)$, as in Proposition 123.2, makes every one of the 64 trilinear coefficients continuous under these bounded componentwise weak-star limits. Their finite sum is the displayed total-variation convergence.
+
+In the restricted invariant coarse/odd construction, the exact full $F_{64}$ equations split as follows. There are the 27 coarse coefficients
+
+$$
+\mathcal C(\mathbf1_{E_i},\mathbf1_{E_j},\mathbf1_{E_k}),
+\qquad i,j,k\in\{S,C,B\},
+\tag{146.11}
+$$
+
+and, after the three equations in (145.9) and the automatic cubic identity (146.5), the six remaining ordered quadratic obligations
+
+$$
+\mathcal C(v,\mathbf1_{E_j},v)=0\quad(j=S,C,B),qquad
+\mathcal C(\mathbf1_{E_i},v,v)=0\quad(i=S,C,B).
+\tag{146.12}
+$$
+
+All terms with exactly one $v$ vanish by half-turn parity. Thus (146.11)--(146.12) describe the obligations left by this restricted construction; they do not exhaust all possible $F_{64}$ witnesses and do not establish the universal target (144.4). $\square$
+
+The source-specific content of Theorems 145.3 and 146.1 is the signed-pencil-to-extreme-sign composition and its insertion into the actual rank-two coarse sequence. The heat-image analyticity, odd kernel nonsingularity, source boundedness, exact coarse sequence, ordered congruence, and common path density are the supplied results of §§120, 133, 138, 143 and 123. Dvoretzky--Wald--Wolfowitz, [*Relations among certain ranges of vector measures*, §3 Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), is used only for the finite linear proportional subdivisions in the coarse construction. These results give a conditional actual three-terminal sign and its same-partition sequence consumer; they do not prove attainment of (144.4), nonattainment, a physical realization or the universal $\forall\theta\,F_{64}(\theta)$ statement.
+
+## 追加锚（本行以下为增补区）
