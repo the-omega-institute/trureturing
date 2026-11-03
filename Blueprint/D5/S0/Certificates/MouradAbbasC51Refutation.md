@@ -82,6 +82,10 @@ $$\neg (\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall a \in \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/MouradAbbasC51Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ma2013-dsspectral` (refuted) by `D5/S0/Certificates/MouradAbbasC51Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ma2013-dsspectral","declaration_gid":"D5/S0/Certificates/MouradAbbasC51Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bassam Mourad; Hassan Abbas (2013). *On the symmetric doubly stochastic matrices that are determined by their spectra*. DOI: [10.48550/arXiv.1310.1273](https://doi.org/10.48550/arXiv.1310.1273). URL: <https://arxiv.org/abs/1310.1273v1>.

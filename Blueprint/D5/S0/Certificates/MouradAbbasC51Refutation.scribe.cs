@@ -70,13 +70,16 @@ internal sealed class MouradAbbasC51RefutationDocument : IScribeDocumentDefiniti
                     + "The final contradiction takes k=4, r=2, t=1/40, hence order 8 and trace 1/5. "
                     + "The order-three classification and the two other questions in Section 5 "
                     + "are unaffected; the version restricted to irreducible matrices remains open.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ma2013-dsspectral"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula DeltaFormula()
     {
