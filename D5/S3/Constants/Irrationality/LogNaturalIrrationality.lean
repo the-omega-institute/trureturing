@@ -87,11 +87,12 @@ private theorem exp_pos_nat_irrational (a : ℕ) (ha : 0 < a) :
   have hpf : (f.eval 0).natAbs < p := by simpa [f] using hpa
   obtain ⟨z, hz, g, _hdegree, happrox⟩ := hc p hpf hprime
   have hb := happrox hroot
-  have heval : aeval (a : ℂ) g = (g.eval (a : ℤ) : ℂ) := by
-    simpa using
+  let gval : ℤ := g.eval (a : ℤ)
+  have heval : aeval (a : ℂ) g = (gval : ℂ) := by
+    simpa [gval] using
       (Polynomial.aeval_algebraMap_apply_eq_algebraMap_eval (A := ℂ) (a : ℤ) g)
 
-  let k : ℤ := z * q.num - (p : ℤ) * g.eval (a : ℤ) * (q.den : ℤ)
+  let k : ℤ := z * q.num - (p : ℤ) * gval * (q.den : ℤ)
   have hidentity : (k : ℂ) = (q.den : ℂ) *
       (z • Complex.exp (a : ℂ) - p • aeval (a : ℂ) g) := by
     simp only [k, Int.cast_sub, Int.cast_mul, Int.cast_natCast,
@@ -113,7 +114,7 @@ private theorem exp_pos_nat_irrational (a : ℕ) (ha : 0 < a) :
     have habsZ : |k| < 1 := by exact_mod_cast habsR
     exact Int.abs_lt_one_iff.mp habsZ
   have hdiv : (p : ℤ) ∣ z * q.num := by
-    have heq : z * q.num = (p : ℤ) * (g.eval (a : ℤ) * (q.den : ℤ)) := by
+    have heq : z * q.num = (p : ℤ) * (gval * (q.den : ℤ)) := by
       have h := sub_eq_zero.mp hkzero
       simpa only [mul_assoc] using h
     rw [heq]
@@ -143,7 +144,7 @@ theorem irrational_log_natCast (n : ℕ) (hn : 2 ≤ n) :
   have hnumCast : (a : ℝ) = (q.num : ℝ) := by
     have hZ : (q.num.natAbs : ℤ) = q.num := Int.natAbs_of_nonneg hnum_pos.le
     change (q.num.natAbs : ℝ) = (q.num : ℝ)
-    exact_mod_cast hZ
+    simpa only [Int.cast_natCast] using congrArg (fun z : ℤ => (z : ℝ)) hZ
   have hd : (q.den : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr q.den_nz
   have hmul : Real.log (n : ℝ) * (q.den : ℝ) = (q.num : ℝ) := by
     apply (eq_div_iff hd).mp
