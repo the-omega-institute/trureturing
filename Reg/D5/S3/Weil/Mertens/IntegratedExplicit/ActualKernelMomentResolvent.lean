@@ -497,9 +497,9 @@ end Balance
 
 namespace LiteralEnergy
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
-def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
-private def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Bool)
+def actual : Realization signature := realize signature (fun _ _ z => @decide (0 < z) (Classical.propDecidable _)) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law R := ∀ (q : ℕ) (hq : 1 ≤ q) (D : ℝ) (hD : Real.log 2 + 1 / 16 ≤ D),
@@ -510,21 +510,22 @@ def arena : Arena where
       (∑ i, a i * (Real.exp (x i / 2) : ℂ) = 0) ∧
       (∑ i, a i * (x i : ℂ) ^ (q + 1)) ≠ 0 ∧
       (∑ i, a i * (x i : ℂ) * (Real.exp (x i / 2) : ℂ)) ≠ 0 ∧
-      0 < R.readout () () (energy x a) ∧
+      R.readout () () (energy x a) = true ∧
         V D x a / energy x a ≤ -1 / (65536 * (q : ℝ) ^ 2)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨x, a, _, _, _, _, _, _, hp, _⟩ :=
     h 1 (by norm_num) (Real.log 2 + 1 / 16) le_rfl
-  change (0 : ℝ) < 0 at hp
-  exact (lt_irrefl (0 : ℝ)) hp
+  change false = true at hp
+  cases hp
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+  exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
 def family : Registration arena (type_of% @literal_V_energy_moment_obstruction) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@literal_V_energy_moment_obstruction, rejected, rejected_law⟩
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq]
+    using @literal_V_energy_moment_obstruction, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -540,12 +541,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ z => @decide (0 < z) (Classical.propDecidable _)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℝ
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
