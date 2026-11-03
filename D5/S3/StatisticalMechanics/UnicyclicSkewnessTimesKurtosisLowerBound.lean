@@ -43,7 +43,7 @@ private lemma source_bddBelow :
   refine ⟨-100, ?_⟩
   rintro y ⟨A, hA, rfl⟩
   have hA0 : 0 < A := hA
-  have h1 : 0 < 1 + A := by linarith
+  have h1 : 0 < 1 + A := add_pos zero_lt_one hA0
   have hden : 0 < (1 + A) ^ 8 := by positivity
   apply (le_div_iff₀ hden).2
   have hpoly : 0 ≤ 100 * (1 + A) ^ 8 +
@@ -114,11 +114,10 @@ private lemma product_skew_negative (p q r : ℝ) (hp : 0 < p) (hr : r < p ^ 2)
   have hdiv : r / p < p := by
     apply (div_lt_iff₀ hp).2
     simpa [pow_two] using hr
-  have hq : 3 * p ^ 2 < 2 * q := by linarith
+  have hq : 3 * p ^ 2 < 2 * q := sub_neg.mp hskew
   have hdiv6 : 6 * r / p < 6 * p := by
-    calc
-      6 * r / p = 6 * (r / p) := by ring
-      _ < 6 * p := by nlinarith [hdiv]
+    simpa only [mul_div_assoc] using
+      mul_lt_mul_of_pos_left hdiv (by norm_num : (0 : ℝ) < 6)
   have hkupper0 : 15 * p ^ 2 - 20 * q + 6 * r / p < 6 * p - 15 * p ^ 2 := by
     nlinarith [hdiv6]
   have hkupper : 15 * p ^ 2 - 20 * q + 6 * r / p < 3 / 5 := by
@@ -146,7 +145,7 @@ private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p)
   have hz : 0 < z := div_pos hp2 hqpos
   have hq2p3 : q ^ 2 < p ^ 3 := by
     have hpr : p * r < p ^ 3 := by
-      nlinarith [hr]
+      simpa only [pow_succ', mul_assoc] using mul_lt_mul_of_pos_left hr hp
     exact lt_of_le_of_lt hqr hpr
   have htz : t < z := by
     dsimp [t, z]
@@ -164,19 +163,15 @@ private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p)
     field_simp
   have ht2r : t ^ 2 ≤ r / p := by
     dsimp [t]
-    apply (le_div_iff₀ hp).2
-    have heq : (q / p) ^ 2 * p = q ^ 2 / p := by field_simp
-    rw [heq]
-    apply (div_le_iff₀ hp).2
-    simpa [mul_comm] using hqr
+    rw [div_pow]
+    apply (div_le_div_iff₀ (sq_pos_of_pos hp) hp).2
+    simpa only [pow_two, mul_assoc, mul_comm, mul_left_comm] using
+      mul_le_mul_of_nonneg_right hqr hp.le
   have hk0 : 15 * p ^ 2 - 20 * q + 6 * t ^ 2 ≤
       15 * p ^ 2 - 20 * q + 6 * r / p := by
-    have h6 := mul_le_mul_of_nonneg_left ht2r (by norm_num : (0 : ℝ) ≤ 6)
-    have h6' : 6 * t ^ 2 ≤ 6 * r / p := by
-      calc
-        6 * t ^ 2 ≤ 6 * (r / p) := h6
-        _ = 6 * r / p := by ring
-    linarith
+    apply add_le_add le_rfl
+    simpa only [mul_div_assoc] using
+      mul_le_mul_of_nonneg_left ht2r (by norm_num : (0 : ℝ) ≤ 6)
   have hk0neg : 15 * p ^ 2 - 20 * q + 6 * t ^ 2 < 0 :=
     lt_of_le_of_lt hk0 hkurt
   have hpolyneg : z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6) < 0 := by
@@ -194,11 +189,9 @@ private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p)
       (mul_pos_iff_of_pos_left htzpos).mp hskew
     have hqz : 0 < z * (3 * z - 2) := mul_pos hz hcoef
     rw [hid] at hk0neg
-    have hpoly : 15 * z ^ 2 - 20 * z + 6 < 0 := by
-      by_contra hn
-      have hnon : 0 ≤ 15 * z ^ 2 - 20 * z + 6 := le_of_not_gt hn
-      exact (not_lt_of_ge (mul_nonneg (sq_pos_of_pos ht).le hnon)) hk0neg
-    nlinarith [hqz, hpoly]
+    have hpoly : 15 * z ^ 2 - 20 * z + 6 < 0 :=
+      neg_of_mul_neg_right hk0neg ht2.le
+    exact mul_neg_of_pos_of_neg hqz hpoly
   have hzlt : z < 1 := by
     by_contra hn
     have hzeq : z = 1 := le_antisymm hz1 (le_of_not_gt hn)
@@ -263,25 +256,13 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
   have hneg : (3 * p k ^ 2 - 2 * q k) *
       (15 * p k ^ 2 - 20 * q k + 6 * r k / p k) < 0 := lt_of_not_ge hnonneg
   by_cases hsk : 3 * p k ^ 2 - 2 * q k < 0
-  · have hkpos : 0 < 15 * p k ^ 2 - 20 * q k + 6 * r k / p k := by
-      by_contra h
-      have hk0 : 15 * p k ^ 2 - 20 * q k + 6 * r k / p k ≤ 0 := le_of_not_gt h
-      exact (not_lt_of_ge (mul_nonneg_of_nonpos_of_nonpos hsk.le hk0)) hneg
+  · have hkpos : 0 < 15 * p k ^ 2 - 20 * q k + 6 * r k / p k :=
+      pos_of_mul_neg_right hneg hsk.le
     exact product_skew_negative (p k) (q k) (r k) hp hr hsk hkpos hskew_lower
   · have hsknonneg : 0 ≤ 3 * p k ^ 2 - 2 * q k := le_of_not_gt hsk
-    have hskpos : 0 < 3 * p k ^ 2 - 2 * q k := by
-      by_contra h
-      have hsk0 : 3 * p k ^ 2 - 2 * q k ≤ 0 := le_of_not_gt h
-      have hzero : 3 * p k ^ 2 - 2 * q k = 0 := le_antisymm hsk0 hsknonneg
-      rw [hzero] at hneg
-      norm_num at hneg
-    have hkneg : 15 * p k ^ 2 - 20 * q k + 6 * r k / p k < 0 := by
-      by_contra h
-      have hk0 : 0 ≤ 15 * p k ^ 2 - 20 * q k + 6 * r k / p k := le_of_not_gt h
-      have hnon : 0 ≤ (3 * p k ^ 2 - 2 * q k) *
-          (15 * p k ^ 2 - 20 * q k + 6 * r k / p k) :=
-        mul_nonneg hsknonneg hk0
-      exact (not_lt_of_ge hnon) hneg
+    have hkneg : 15 * p k ^ 2 - 20 * q k + 6 * r k / p k < 0 :=
+      neg_of_mul_neg_right hneg hsknonneg
+    have hskpos : 0 < 3 * p k ^ 2 - 2 * q k := pos_of_mul_neg_left hneg hkneg.le
     exact product_kurtosis_negative (p k) (q k) (r k) hp hqr hr hpq hskpos hkneg
 
 private def sourceRates (u : ℝ) (m : ℕ) : Fin (m + 1) → ℝ :=
@@ -373,12 +354,11 @@ private lemma constant_minimum :
   rintro y ⟨A, hA, rfl⟩
   have hA0 : 0 < A := hA
   let v : ℝ := 1 / (1 + A)
-  have hA1 : 0 < 1 + A := by linarith
+  have hA1 : 0 < 1 + A := add_pos zero_lt_one hA0
   have hv : 0 < v := by dsimp [v]; positivity
   have hv1 : v < 1 := by
     dsimp [v]
-    apply (div_lt_iff₀ hA1).2
-    linarith
+    exact (div_lt_one hA1).2 (lt_add_of_pos_right 1 hA0)
   have hAv : (1 - v) / v = A := by
     dsimp [v]
     field_simp
