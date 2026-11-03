@@ -237,5 +237,110 @@ def defect_registration :
 
 #print axioms source_registration
 #print axioms registration
+
+open _root_.D5.S3.Quantum.Matrix.UniformVarianceCentering
+open scoped Matrix.Norms.L2Operator
+
+abbrev globalArena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] [DecidableEq I]
+    {E : I → Type v} [∀ i, NormedAddCommGroup (E i)]
+    [∀ i, InnerProductSpace ℂ (E i)] [∀ i, FiniteDimensional ℂ (E i)]
+    {J : Type w} [Fintype J]
+    (h : J → PiLp 2 E →ₗ[ℂ] PiLp 2 E) (_hh : ∀ j, (h j).IsSymmetric)
+    (_hs : ∑ j, (h j).comp (h j) = LinearMap.id)
+    (δ : ℝ) (_hδ : 0 ≤ δ)
+    (_hv : ∀ i (x : E i), ‖x‖ = 1 →
+      ∑ j, ‖h j (blockInclusion i x) -
+        (inner ℂ (blockInclusion i x) (h j (blockInclusion i x))).re •
+          blockInclusion i x‖^2 ≤ δ)
+    (e : ∀ i, E i) (_he : ∀ i, (∃ x : E i, ‖x‖ = 1) → ‖e i‖ = 1),
+    ∀ n : ℕ,
+      let v := stdOrthonormalBasis ℂ (PiLp 2 (fun _ : Fin n => PiLp 2 E))
+      let P := fun i => LinearMap.toMatrix v.toBasis v.toBasis
+        (directSumReference n (blockProjection (E := E) i))
+      let H := fun j => LinearMap.toMatrix v.toBasis v.toBasis (directSumReference n (h j))
+      let M := fun j => LinearMap.toMatrix v.toBasis v.toBasis
+        (directSumReference n (h j - centralMean h e j))
+      let Q := centerPinching P (∑ j, M j * M j)
+      let A := fun t : J × I × I => P t.2.2 * H t.1 * P t.2.1
+      let B := fun t : J × I × I => P t.2.2 * M t.1 * P t.2.1
+      Q ≤ (5*δ : ℝ) • 1 ∧
+      (∑ t, (A t)ᴴ * A t = 1) ∧
+      (∑ t, (B t)ᴴ * B t = Q) ∧
+      (∀ Y, (centerPinching P Y).trace = Y.trace) ∧
+      (∀ X, (∀ i, P i * X = X * P i) →
+        let K := centerPinching P (∑ j, M j * X * M j)
+        let Phi := centerPinching P (∑ j, H j * X * H j)
+        (K = ∑ t, B t * X * (B t)ᴴ) ∧
+        (Phi = ∑ t, A t * X * (A t)ᴴ) ∧
+        (X - Phi = (1/2 : ℂ) • (Q*X+X*Q) - K) ∧
+        (R.readout () (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => PiLp 2 E)))
+          (X-Phi) ≤ min 2 (10*δ) * traceNorm X) ∧
+        (∀ Y, (K*Y).trace = (X*(∑ t, (B t)ᴴ * Y * B t)).trace))
+
+private theorem global_rejected_law : ¬ globalArena.{u,v,w}.Law rejected := by
+  intro h
+  let I := ULift.{u} Empty
+  let E := fun _ : I => EuclideanSpace ℂ (ULift.{v} Empty)
+  let H := PiLp 2 E
+  have hz := @h I inferInstance inferInstance E
+    (fun _ => inferInstance) (fun _ => inferInstance) (fun _ => inferInstance)
+    (ULift.{w} Empty) inferInstance (fun j => nomatch j.down)
+    (fun j => nomatch j.down) (Subsingleton.elim _ _) 0 (by norm_num)
+    (by intro i; exact nomatch i.down) (fun i => nomatch i.down)
+    (by intro i; exact nomatch i.down) 0
+  have hb := (hz.2.2.2.2 0 (by intro i; exact nomatch i.down)).2.2.2.1
+  change (1:ℝ) ≤ min 2 (10*0) * _ at hb
+  norm_num at hb
+
+private theorem global_sensitivity : Sensitivity globalArena.{u,v,w} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, ?_, global_rejected_law⟩
+    · intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def global_source_registration : Registration globalArena.{u,v,w}
+    (type_of% @hermitian_unital_direct_sum_defect_trace_bound.{u,v,w}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hermitian_unital_direct_sum_defect_trace_bound, rejected, global_rejected_law⟩
+  sensitivity := global_sensitivity
+  dependence := dependence
+
+def global_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@hermitian_unital_direct_sum_defect_trace_bound.{u,v,w})
+      (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound.hermitian_unital_direct_sum_defect_trace_bound.__information_unit
+  realizationName := ``global_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨globalArena.{u,v,w}⟩
+  objectArena := .source ⟨globalArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source globalArena.{u,v,w} ⟨global_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X => traceNorm X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound
+    definition := none
+    coordinates := #[1]
+    readouts := #[] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S3.Quantum.Matrix.UniformVarianceTraceBound

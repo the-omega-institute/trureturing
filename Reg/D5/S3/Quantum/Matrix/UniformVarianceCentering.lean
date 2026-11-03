@@ -157,5 +157,161 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
+
+abbrev directSumArena : Arena where
+  signature := signature.{max u v}
+  Law R := ∀ {I : Type u} [Fintype I] [DecidableEq I]
+    {E : I → Type v} [en : ∀ i, NormedAddCommGroup (E i)]
+    [ei : ∀ i, InnerProductSpace ℂ (E i)] [ef : ∀ i, FiniteDimensional ℂ (E i)]
+    {J : Type w} [Fintype J]
+    (h : J → PiLp 2 E →ₗ[ℂ] PiLp 2 E) (_hh : ∀ j, (h j).IsSymmetric)
+    (δ : ℝ) (_hδ : 0 ≤ δ)
+    (_hv : ∀ i (x : E i), ‖x‖ = 1 →
+      ∑ j, ‖h j (blockInclusion i x) -
+        (inner ℂ (blockInclusion i x) (h j (blockInclusion i x))).re •
+          blockInclusion i x‖^2 ≤ δ)
+    (e : ∀ i, E i) (_he : ∀ i, (∃ x : E i, ‖x‖ = 1) → ‖e i‖ = 1),
+    let ell := fun j => h j - centralMean h e j
+    ∀ n : ℕ,
+      let P := fun i => directSumReference n (blockProjection (E := E) i)
+      let L := fun j => directSumReference n (ell j)
+      let B := fun t : J × I × I => (P t.2.2).comp ((L t.1).comp (P t.2.1))
+      (∀ x, ∑ t, ‖B t x‖^2 ≤ (5*δ)*‖x‖^2) ∧
+      (∀ A : PiLp 2 (fun _ : Fin n => PiLp 2 E) →L[ℂ]
+          PiLp 2 (fun _ : Fin n => PiLp 2 E),
+        R.readout () ⟨PiLp 2 (fun _ : Fin n => PiLp 2 E),inferInstance,inferInstance,inferInstance⟩
+          (∑ t, (B t).adjoint.comp (A.toLinearMap.comp (B t)))
+          ≤ (5*δ)*‖A‖)
+
+private theorem directSum_rejected_law : ¬ directSumArena.{u,v,w}.Law rejected := by
+  intro h
+  let I := ULift.{u} Empty
+  let E := fun _ : I => EuclideanSpace ℂ (ULift.{v} Empty)
+  have hz := @h I inferInstance inferInstance E
+    (fun _ => inferInstance) (fun _ => inferInstance) (fun _ => inferInstance)
+    (ULift.{w} Empty) inferInstance (fun j => nomatch j.down)
+    (fun j => nomatch j.down) 0 (by norm_num)
+    (by intro i; exact nomatch i.down) (fun i => nomatch i.down)
+    (by intro i; exact nomatch i.down) 0
+  have hb := hz.2 0
+  change (1:ℝ) ≤ (5*0)*_ at hb
+  norm_num at hb
+
+private theorem directSum_sensitivity : Sensitivity directSumArena.{u,v,w} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, ?_, directSum_rejected_law⟩
+    · intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def directSum_source_registration : Registration directSumArena.{u,v,w}
+    (type_of% @hermitian_direct_sum_centering.{u,v,w}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hermitian_direct_sum_centering, rejected, directSum_rejected_law⟩
+  sensitivity := directSum_sensitivity
+  dependence := dependence
+
+def directSum_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@hermitian_direct_sum_centering.{u,v,w}) (Realization signature.{max u v}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Matrix.UniformVarianceCentering.hermitian_direct_sum_centering.__information_unit
+  realizationName := ``directSum_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨directSumArena.{u,v,w}⟩
+  objectArena := .source ⟨directSumArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source directSumArena.{u,v,w} ⟨directSum_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{max u v}
+    (fun _ _ Q => ‖Q.toContinuousLinearMap‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.UniformVarianceCentering
+    definition := none
+    coordinates := #[1]
+    readouts := #[] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+abbrev adjointArena : Arena where
+  signature := signature.{v}
+  Law R := ∀ {H : Type u} {G : Type v}
+    [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H]
+    [gn : NormedAddCommGroup G] [gi : InnerProductSpace ℂ G] [gf : FiniteDimensional ℂ G]
+    {J : Type w} [Fintype J] (L : J → G →ₗ[ℂ] H) (b : ℝ) (_hb : 0 ≤ b)
+    (_hv : ∀ x : G, ‖x‖ = 1 → ∑ j, ‖L j x‖^2 ≤ b) (A : H →L[ℂ] H),
+    R.readout () ⟨G,gn,gi,gf⟩ (∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j)))
+      ≤ b*‖A‖
+
+private theorem adjoint_rejected_law : ¬ adjointArena.{u,v,w}.Law rejected := by
+  intro h
+  let G := EuclideanSpace ℂ (ULift.{v} Empty)
+  let H := EuclideanSpace ℂ (ULift.{u} Empty)
+  have hz := @h H G inferInstance inferInstance inferInstance
+    inferInstance inferInstance inferInstance (ULift.{w} Empty) inferInstance
+    (fun j => nomatch j.down) 0 (by norm_num) (by intro x hx; simp) 0
+  change (1:ℝ) ≤ (0:ℝ)*_ at hz
+  norm_num at hz
+
+private theorem adjoint_sensitivity : Sensitivity adjointArena.{u,v,w} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, ?_, adjoint_rejected_law⟩
+    · intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def adjoint_source_registration : Registration adjointArena.{u,v,w}
+    (type_of% @kraus_adjoint_norm_le.{u,v,w}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@kraus_adjoint_norm_le, rejected, adjoint_rejected_law⟩
+  sensitivity := adjoint_sensitivity
+  dependence := dependence
+
+def adjoint_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@kraus_adjoint_norm_le.{u,v,w}) (Realization signature.{v}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Matrix.UniformVarianceCentering.kraus_adjoint_norm_le.__information_unit
+  realizationName := ``adjoint_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨adjointArena.{u,v,w}⟩
+  objectArena := .source ⟨adjointArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source adjointArena.{u,v,w} ⟨adjoint_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{v}
+    (fun _ _ Q => ‖Q.toContinuousLinearMap‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.UniformVarianceCentering
+    definition := none
+    coordinates := #[1]
+    readouts := #[] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S3.Quantum.Matrix.UniformVarianceCentering
