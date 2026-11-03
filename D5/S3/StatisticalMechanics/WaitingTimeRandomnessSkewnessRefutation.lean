@@ -112,19 +112,24 @@ private theorem network : IsNetwork rates 7 0 := by
 
 private theorem cemetery_eq : -(cemetery rates 7 0) = a := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [cemetery, rates, a, Fin.sum_univ_succ]
+  change -cemetery rates 7 0 i j = a i j
+  rw [cemetery.eq_1, rates.eq_1, a.eq_1]
+  fin_cases i <;> fin_cases j <;> norm_num [rates, Fin.sum_univ_succ]
 
 private theorem determinant_unit : IsUnit a.det := by
   have h : a.IsUpperTriangular := by
     intro i j h
-    fin_cases i <;> fin_cases j <;> norm_num [a] at *
+    fin_cases i <;> fin_cases j <;>
+      first | (solve | norm_num at h) | (solve | norm_num [a])
+  apply isUnit_iff_ne_zero.mpr
   rw [Matrix.det_of_isUpperTriangular h]
-  norm_num [a, Fin.prod_univ_succ, isUnit_iff_ne_zero]
+  norm_num [a, Fin.prod_univ_succ]
 
 private theorem moment_step (n : ℕ) (v : Fin 8 → ℝ)
     (h : a *ᵥ v = ((n + 1 : ℕ) : ℝ) • moment rates 7 0 n) :
     moment rates 7 0 (n + 1) = v := by
   cases (Matrix.isUnit_iff_isUnit_det a).2 determinant_unit |>.nonempty_invertible
+  rw [moment.eq_1]
   change ((n + 1 : ℕ) : ℝ) • ((-(cemetery rates 7 0))⁻¹ *ᵥ moment rates 7 0 n) = v
   rw [cemetery_eq, ← Matrix.mulVec_smul]
   exact Matrix.inv_mulVec_eq_vec h.symm
@@ -149,8 +154,8 @@ private theorem third_moment : moment rates 7 0 3 = v3 := by
 private theorem moment_values :
     moment rates 7 0 1 0 = 33/100 ∧ moment rates 7 0 2 0 = 1673/5000 ∧
       moment rates 7 0 3 0 = 234843/500000 := by
-  rw [first_moment, second_moment, third_moment]
-  norm_num [v1, v2, v3]
+  rw [first_moment, second_moment, third_moment, v1.eq_1, v2.eq_1, v3.eq_1]
+  norm_num
 
 private theorem variance_value : variance rates 7 0 = 2257/10000 := by
   obtain ⟨h1, h2, _⟩ := moment_values
