@@ -154,7 +154,8 @@ private lemma alpha_bounds :
       Finset.sum_range_succ]
   have hH : H 20 = (55835135 / 15519504 : ℝ) := by
     norm_num [H, prefixSum, Finset.sum_Icc_succ_top]
-  have hJ : (4488867670209 / 1000000000000 : ℝ) < J 20 ∧ J 20 < (4488867673063 / 1000000000000 : ℝ) := by
+  have hJ : (4488867670209 / 1000000000000 : ℝ) < J 20 ∧
+      J 20 < (4488867673063 / 1000000000000 : ℝ) := by
     norm_num [J, prefixSum, Finset.sum_Icc_succ_top]
     constructor <;> linarith only [
       h2.1, h2.2, h3.1, h3.2, h4.1, h4.2, h5.1, h5.2,
@@ -374,7 +375,7 @@ private lemma model_data :
       (Ioi (Real.log 2)).indicator (fun t => signedWeight t *
         cellExp (1 + gamma + Real.log 2) (t - Real.log 2)) t := by
     dsimp [modelSigned, modelValue, signedCell, signedWeight]
-    by_cases ht : t ∈ Ioi (Real.log 2) <;> simp [ht]
+    by_cases ht : t ∈ Ioi (Real.log 2) <;> simp [ht, mul_add]
   refine ⟨(hd.1.add hind).congr (Eventually.of_forall (fun t => (he t).symm)), ?_⟩
   simp_rw [he]
   rw [integral_add hd.1 hind, hd.2, setIntegral_indicator measurableSet_Ioi,
@@ -549,7 +550,7 @@ private lemma exp_three_bound :
     have hn := Real.exp_nat_mul (Real.log 3) 21
     norm_num only [Nat.cast_ofNat, Real.exp_log (by norm_num : (0 : ℝ) < 3)] at hn
     rw [Real.exp_neg, hn]
-    rfl
+    simp only [one_div]
   have hsmall : Real.exp (-(21 / 2 : ℝ) * Real.log 3) < (1 / 100000 : ℝ) :=
     (sq_lt_sq₀ (Real.exp_pos _).le (by norm_num)).mp (by rw [he]; norm_num)
   refine ⟨hsmall.le, ?_⟩
@@ -610,7 +611,7 @@ private lemma paid_tail :
   have h0' := hmul (19 / 2) _ _ _ hpb (by norm_num [tailPolynomial, Finset.sum_range_succ]) heB
   have h1' := hmul (19 / 2) _ _ _ hpb1 (by norm_num [tailPolynomial, Finset.sum_range_succ]) heB
   have h2' := hmul (19 / 2) _ _ _ hpb2 (by norm_num [tailPolynomial, Finset.sum_range_succ]) heB
-  norm_num [tailPolynomial, Finset.sum_range_succ] at h1 h2 h3 h0' h1' h2'
+  norm_num [tailPolynomial, Finset.sum_range_succ] at h1 h2 h3 h0' h1' h2' ⊢
   linarith only [h1, h2, h3, h0', h1', h2']
 
 /-- An explicitly negative signed average of the actual factorial G. Both
@@ -636,7 +637,8 @@ theorem G_signed_laplace_negative :
     apply setIntegral_mono_on (hi.sub hm.1) ht measurableSet_Ioi
     intro t ht0
     by_cases hAt : A ≤ t
-    · rw [show tail t = actualMajorant t + modelMajorant t from indicator_of_mem (show t ∈ Ici A from hAt) _]
+    · rw [show tail t = actualMajorant t + modelMajorant t from
+        indicator_of_mem (show t ∈ Ici A from hAt) _]
       exact (le_abs_self _).trans ((abs_sub _ _).trans
         (add_le_add (actual_signed_bound ht0.le) (model_signed_bound ht0.le)))
     · have he := model_matches ht0.le (lt_of_not_ge hAt)
