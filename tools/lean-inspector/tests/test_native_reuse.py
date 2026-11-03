@@ -163,6 +163,12 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
   IO.FS.writeFile (root / "compiler-registration-sync") reason
   return Job.nil
 ''')
+        # Like the other direct-entry consumers, restore only the supplied
+        # compiler material. Lake still builds every private project/report
+        # output from cold and validates the modified contract traces.
+        self.ensure()
+        self.restore_compiler()
+        self.check_cold_project(self)
         initial = entry('initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         sync = self.root / 'compiler-registration-sync'
         registrations = self.root / 'compiler-registrations'
