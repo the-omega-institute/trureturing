@@ -561,7 +561,7 @@ private lemma one_rate_spectral (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i
     apply Finset.sum_congr rfl
     intro j hj
     push_cast
-    field_simp
+    field_simp [Complex.ofReal_ne_zero.mpr hl.ne']
     <;> ring
   refine ⟨hi, ?_⟩
   simpa using (congrArg Complex.re he).symm
@@ -614,6 +614,11 @@ theorem complete_positive_mixture_spectral_identity
   · have h := integral_tsum_of_summable_integral_norm (fun n => (ht n).1) hs
     have hq := (Complex.hasSum_re (quadratic_mixture_hasSum x a)).tsum_eq
     rw [← hq]
-    simpa only [(ht _).2, pMultiplier, pTerm] using h
+    change (∑' n, (quadratic x a (mixtureTerm n)).re) =
+      ∫ ξ, (∑' n, pTerm n ξ) ∂OriginalActualFourier.rho («prefix» x a)
+    calc
+      _ = ∑' n, ∫ ξ, pTerm n ξ ∂OriginalActualFourier.rho («prefix» x a) :=
+        tsum_congr (fun n => (ht n).2.symm)
+      _ = _ := h
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
