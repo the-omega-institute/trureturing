@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.claim; result=D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.result; claim=D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.claim
    digest: Two cubic product-coupled baths admit an open set with five Bose-selected modes. -/
 
+import D5.S3.Analytic.SeriesInequalities.StampachWaclawekExpansionRefutation
 import D5.S3.Geometry.FiniteCoordinateTruncation
 import Mathlib.Basic.Real.Sign
 
@@ -18,14 +19,12 @@ namespace D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation
 open scoped BigOperators
 open Matrix Set
 open D5.S3.Geometry
-
-/-- The source's odd power-law spectrum, with its positive scale set to one. -/
-noncomputable def spectral (d x : ℝ) : ℝ := Real.sign x * |x| ^ d
+open D5.S3.Analytic.SeriesInequalities.StampachWaclawekExpansionRefutation (spow)
 
 /-- The source's two-bath rate asymmetry, with the positive factor `2π/ℏ` set to one. -/
 noncomputable def asym (d : ℝ) {m : ℕ} (ε F G : Fin m → ℝ) :
     Matrix (Fin m) (Fin m) ℝ :=
-  fun i j => spectral d (ε j - ε i) *
+  fun i j => spow d (ε j - ε i) *
     (FiniteCoordinateTruncation.normalize F i * FiniteCoordinateTruncation.normalize F j -
       FiniteCoordinateTruncation.normalize G i * FiniteCoordinateTruncation.normalize G j)
 
@@ -63,15 +62,11 @@ private noncomputable def neighborhood :
     Set ((Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ)) :=
   {p | p ∈ couplingDomain ∧ ∀ i, 0 < pfaffianVector (asym 3 p.1 p.2.1 p.2.2) i}
 
-private theorem spectral_three (x : ℝ) : spectral 3 x = x ^ 3 := by
-  change Real.sign x * |x| ^ ((3 : ℕ) : ℝ) = x ^ (3 : ℕ)
-  rw [Real.rpow_natCast]
-  rcases lt_trichotomy x 0 with h | h | h
-  · rw [Real.sign_of_neg h, abs_of_neg h]
-    ring
-  · subst x
-    norm_num [Real.sign]
-  · rw [Real.sign_of_pos h, abs_of_pos h, one_mul]
+private theorem spectral_three (x : ℝ) : spow 3 x = x ^ 3 := by
+  by_cases hx : x = 0
+  · simp [spow, hx]
+  · simp only [spow, ite_eq_right hx]
+    norm_num [Real.rpow_two, sq_abs, pow_succ]; ring
 
 private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
     asym 3 ε F G j i = -asym 3 ε F G i j := by
