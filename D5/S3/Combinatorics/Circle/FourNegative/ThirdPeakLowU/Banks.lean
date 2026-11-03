@@ -30,7 +30,7 @@ open private native_masses
 
 /-! The packet order is shared by I and II.  The four masks are literal
     complements in their own full physical banks; the fresh label is inserted
-    between the first and second packets by the endpoint theorem. -/
+    inside the second packet, after its positives and before the W negative. -/
 
 private def lowUBanks (a b c d u v w : ℕ) : Fin 4 → List ℕ :=
   let uf := 2^(d-1)-1
@@ -49,18 +49,6 @@ private def lowUWord (a b c d u v w : ℕ) : List ℕ :=
   let P := lowUBanks a b c d u v w
   let T := lowUTerminals a b c d
   P 0 ++ [T 0] ++ P 1 ++ [T 1] ++ P 2 ++ [T 2] ++ P 3 ++ [T 3]
-
-private theorem range_mass (f : ℕ → ℤ) (F : ℤ) (off len : ℕ)
-    (hs : ∀ i < len, f (off+i) = (2:ℤ)^i * F) :
-    ((List.range' off len).map f).sum = ((2:ℤ)^len-1)*F := by
-  rw [← chamberLabels_full]
-  have hpow : 0 < (2:ℕ)^len := Nat.two_pow_pos _
-  have hh := chamberLabels_sum len off (2^len-1) (by omega) f F (by
-    intro i hi
-    exact hs i hi)
-  rw [hh, Nat.cast_sub (by have := Nat.two_pow_pos len; omega)]
-  push_cast
-  ring
 
 private theorem lowU_inventory (a b c d u v w : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
