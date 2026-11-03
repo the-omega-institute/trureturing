@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.claim; result=D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result; claim=D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.claim
    digest: Three orthogonal pure states exclude every labelling of the product ansatz. -/
 
+import D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch
 import D5.S0.Carrier.GoldenRatio
 import D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction
 import D5.S3.Quantum.PureState.PureStateHandshake
@@ -23,6 +24,9 @@ open scoped BigOperators ComplexConjugate ComplexOrder
 
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction (weightedFrame)
+
+open D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.FourEndpoint
+  (J0 J1 thirdPairing pairing_three_forms)
 
 namespace D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation
 
@@ -137,11 +141,8 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
   all_goals try exact (h rfl).elim
   all_goals
     simp only [point.eq_1, phases.eq_1, Fin.sum_univ_succ, Matrix.cons_val_zero,
-      Matrix.cons_val_one, Matrix.cons_val_two,
-      Matrix.cons_val_succ, Matrix.cons_val_fin_one, Matrix.vecHead, Matrix.vecTail,
-      Function.comp_apply]
-    simp only [h2, h3, h4, h7, h9, map_one, map_neg, map_add, map_mul, map_sub, map_ofNat,
-      map_div₀, Complex.conj_ofReal, hc]
+      Matrix.cons_val_succ, Matrix.cons_val_fin_one]
+    simp only [h2, h3, h4, h7, h9]
     push_cast
     norm_num only [map_ofNat]
     ring_nf
@@ -152,16 +153,12 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
   all_goals
     have hr3 : (Real.sqrt 5 : ℂ) ^ 3 = 5 * (Real.sqrt 5 : ℂ) := by
       rw [pow_succ, hr]
-    have hr4 : (Real.sqrt 5 : ℂ) ^ 4 = 25 := by
-      calc
-        (Real.sqrt 5 : ℂ) ^ 4 = ((Real.sqrt 5 : ℂ) ^ 2) ^ 2 := pow_mul _ 2 2
-        _ = 25 := by rw [hr]; norm_num
-    simp only [hr, hr3, hr4]
+    simp only [hr, hr3]
     ring_nf
   all_goals
     rw [h2]
     push_cast
-    ring_nf <;> simp only [hr] <;> ring
+    ring_nf; simp only [hr]; ring
 
 private lemma state_diagonal (i : Fin 3) (k : Fin 4) :
     state i k * conj (state i k) = (point k : ℂ) := by
@@ -228,43 +225,44 @@ private lemma permutation_pairing (σ : Equiv.Perm (Fin 4)) (q : Fin 4 → ℝ)
     (h : q (σ 0) * q (σ 3) = q (σ 1) * q (σ 2)) :
     q 0 * q 1 = q 2 * q 3 ∨ q 0 * q 2 = q 1 * q 3 ∨
       q 0 * q 3 = q 1 * q 2 := by
-  have aux (a b c : Fin 4) (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0)
-      (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c)
-      (he : q 0 * q a = q b * q c) :
-      q 0 * q 1 = q 2 * q 3 ∨ q 0 * q 2 = q 1 * q 3 ∨
-        q 0 * q 3 = q 1 * q 2 := by
-    fin_cases a <;> fin_cases b <;> fin_cases c <;> simp_all [mul_comm]
-    all_goals exact Or.inl ((mul_comm (q 0) (q 1)).trans he)
-  obtain ⟨i, hi⟩ := σ.surjective 0
-  have hn (a b : Fin 4) (hab : a ≠ b) : σ a ≠ σ b := σ.injective.ne hab
-  have hn0 (a : Fin 4) (ha : a ≠ i) : σ a ≠ 0 := by
-    rw [← hi]
-    exact σ.injective.ne ha
-  fin_cases i
-  · change σ 0 = 0 at hi
-    apply aux (σ 3) (σ 1) (σ 2)
-    all_goals first
-      | exact hn0 _ (by decide)
-      | exact hn _ _ (by decide)
-      | simpa only [hi] using h
-  · change σ 1 = 0 at hi
-    apply aux (σ 2) (σ 0) (σ 3)
-    all_goals first
-      | exact hn0 _ (by decide)
-      | exact hn _ _ (by decide)
-      | simpa only [hi] using h.symm
-  · change σ 2 = 0 at hi
-    apply aux (σ 1) (σ 0) (σ 3)
-    all_goals first
-      | exact hn0 _ (by decide)
-      | exact hn _ _ (by decide)
-      | simpa only [hi, mul_comm] using h.symm
-  · change σ 3 = 0 at hi
-    apply aux (σ 0) (σ 1) (σ 2)
-    all_goals first
-      | exact hn0 _ (by decide)
-      | exact hn _ _ (by decide)
-      | simpa only [hi, mul_comm] using h
+  let P := σ.permCongr J1
+  have hJinv : J1⁻¹ = J1 := by
+    ext i
+    fin_cases i <;> rfl
+  have hfree : ∀ i : Fin 4, J1 i ≠ i := by
+    intro i
+    fin_cases i <;> decide
+  have hPinv : P⁻¹ = P := by
+    change (σ.permCongrHom J1)⁻¹ = σ.permCongrHom J1
+    rw [← map_inv, hJinv]
+  have hP : Function.Involutive P := by
+    intro i
+    simpa only [← Equiv.Perm.inv_def, hPinv] using P.symm_apply_apply i
+  have hPfree : ∀ i, P i ≠ i := by
+    intro i
+    simpa only [P, Equiv.permCongr_apply, Equiv.apply_symm_apply] using
+      σ.injective.ne (hfree (σ.symm i))
+  have hp (i : Fin 4) : q i * q (P i) = q (σ 0) * q (σ 3) := by
+    obtain ⟨j, rfl⟩ := σ.surjective i
+    fin_cases j
+    · simp [P, J1, Equiv.Perm.mul_apply,
+        Equiv.swap_apply_def]
+    · simpa [P, Equiv.permCongr_apply, J1, Equiv.Perm.mul_apply,
+        Equiv.swap_apply_def] using h.symm
+    · simpa [P, Equiv.permCongr_apply, J1, Equiv.Perm.mul_apply,
+        Equiv.swap_apply_def, mul_comm] using h.symm
+    · simp [P, J1, Equiv.Perm.mul_apply,
+        Equiv.swap_apply_def, mul_comm]
+  rcases pairing_three_forms P hP hPfree with h0 | h0 | h0
+  · right; left
+    simpa [h0, J0, Equiv.Perm.mul_apply, Equiv.swap_apply_def] using
+      (hp 0).trans (hp 1).symm
+  · left
+    simpa [h0, thirdPairing, Equiv.Perm.mul_apply, Equiv.swap_apply_def] using
+      (hp 0).trans (hp 2).symm
+  · right; right
+    simpa [h0, J1, Equiv.Perm.mul_apply, Equiv.swap_apply_def] using
+      (hp 0).trans (hp 1).symm
 
 private lemma point_pairings :
     let q := fun k => 1 - 3 * point k
