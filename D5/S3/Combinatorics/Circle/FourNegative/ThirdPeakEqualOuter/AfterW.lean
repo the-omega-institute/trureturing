@@ -80,9 +80,8 @@ private theorem afterW_masses (a b c r v : ℕ)
   have wf := stock_mass a b c a 2 _ (hfull 2) f H hf
   have xf := stock_mass a b c a 3 _ (hfull 3) f H hf
   dsimp only
-  simp only [afterWBanks,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,List.map_append,List.sum_append,ur,uc,vr,vc,wf,xf,
+  simp only [afterWBanks,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons,List.map_append,List.sum_append,ur,uc,vr,vc,wf,xf,
     Nat.cast_sub hr,Nat.cast_sub hv,Nat.cast_one]
-  exact ⟨rfl,rfl,rfl,rfl⟩
 
 set_option maxHeartbeats 1600000 in
 private theorem afterW_realize (a b c r v : ℕ)
