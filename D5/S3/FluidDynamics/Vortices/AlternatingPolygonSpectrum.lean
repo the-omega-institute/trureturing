@@ -426,8 +426,7 @@ private lemma rotation_conjugation_entries (N : ℕ)
   simp only [Matrix.diagonal_transpose]
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     simp only [Matrix.add_mul, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.add_apply,
-      Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
-      Matrix.toBlocks₂₁, Matrix.toBlocks₂₂, Matrix.of_apply] <;> ring
+      Matrix.diagonal_mul, Matrix.mul_diagonal] <;> ring
 
 
 private lemma rotated_jacobian_off_diagonal (m : ℕ) (j k : Fin (2 * m)) (hjk : j ≠ k) :

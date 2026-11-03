@@ -249,16 +249,15 @@ def weights (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
     1 / (4 * Real.sin (Real.pi * ((j.val : ℝ) - k.val) / (2 * m))^2)
 
 def chargeMatrix (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
-  match m with
-  | 0 => 0
-  | m + 1 => D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse.indexParity (2*m+1) 2
+  Nat.casesOn (motive := fun n => Matrix (Fin (2*n)) (Fin (2*n)) ℝ) m 0
+    (fun n => D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse.indexParity (2*n+1) 2)
 
 lemma chargeMatrix_diagonal (m : ℕ) :
     chargeMatrix m = Matrix.diagonal (fun j => (-1 : ℝ) ^ (j.val + 2)) := by
   cases m with
   | zero => ext i; exact Fin.elim0 i
   | succ m =>
-    simp only [chargeMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse.indexParity]
+    change Matrix.diagonal (fun j : Fin (2*(m+1)) => (-1 : ℝ) ^ (2+j.val)) = _
     congr 1
     funext i
     rw [Nat.add_comm 2]
