@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-question)
    anchors: []
    utility: none
-   digest: Exact ordered-list count and unrestricted binary matrix-family question. -/
+   digest: The exact halving-partition count admits no finite integral decimation family. -/
 
 import Mathlib.Combinatorics.Enumerative.Composition
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
@@ -359,7 +359,7 @@ private theorem code_total (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
     · simp [codeParams]
       have := powerWord_sum_long m (m + 2) (by omega)
       omega
-  · simp only [codeParams, Prod.fst, Prod.snd]
+  · simp only [codeParams]
     have hr : r.1.val ≤ m := by omega
     have hs := powerWord_sum_short m (m - r.1.val) (by omega)
     have he : m - (m - r.1.val) = r.1.val := by omega
@@ -381,7 +381,7 @@ private theorem codeParams_injective (m : ℕ) : Function.Injective (codeParams 
   intro c d he
   rcases c with i | r <;> rcases d with k | s
   · have h := congrArg Prod.fst he
-    fin_cases i <;> fin_cases k <;> simp [codeParams] at h ⊢ <;> omega
+    fin_cases i <;> fin_cases k <;> simp [codeParams] at h ⊢
   · have h := congrArg Prod.fst he
     have hs := s.2
     fin_cases i <;> simp [codeParams] at h <;> omega
@@ -630,8 +630,8 @@ private theorem arbitrary_matrix_iff (a : ℕ → ℤ) :
   classical
   constructor
   · rintro ⟨ι, hι, b, i0, c0, c1, ha, h0, h1⟩
-    letI : Fintype ι := hι
-    letI : Nonempty ι := ⟨i0⟩
+    let : Fintype ι := hι
+    let : Nonempty ι := ⟨i0⟩
     have hd : 0 < Fintype.card ι := Fintype.card_pos
     let z : Fin (Fintype.card ι) := ⟨0, hd⟩
     let e : ι ≃ Fin (Fintype.card ι) :=
@@ -664,18 +664,32 @@ private theorem arbitrary_matrix_iff (a : ℕ → ℤ) :
     · intro i n
       exact congrFun (h1 n) i
 
+
+private theorem source_zero : count 0 = 1 := by
+  let e : SourceLists 0 ≃ Unit := {
+    toFun := fun _ => ()
+    invFun := fun _ => ⟨[], by simp, rfl, trivial⟩
+    left_inv := fun p => by
+      apply Subtype.ext
+      exact ((Composition.blocks_eq_nil (sourceEquiv 0 p).1).mpr rfl).symm
+    right_inv := fun u => by cases u; rfl }
+  unfold count
+  rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_unit]
+
 /-- The exact negative answer and both finite-family interfaces, with independent count transport. -/
 theorem result :
-    claim ∧
+    (¬ MatrixFamily (fun n => (count n : ℤ))) ∧
     (∀ a : ℕ → ℤ, ClosedFamily a ↔ MatrixFamily a) ∧
     (∀ a : ℕ → ℤ, ArbitraryFamily a ↔ MatrixFamily a) ∧
     (¬ ArbitraryFamily (fun n => (count n : ℤ))) ∧
-    (∀ n, count n = Fintype.card (HalvingCompositions n)) := by
-  refine ⟨source_nonregularity, closed_matrix_iff, arbitrary_matrix_iff, ?_, ?_⟩
+    (∀ n, count n = Fintype.card (HalvingCompositions n)) ∧ count 0 = 1 := by
+  refine ⟨source_nonregularity, closed_matrix_iff, arbitrary_matrix_iff, ?_, ?_, source_zero⟩
   · intro h
     exact source_nonregularity ((arbitrary_matrix_iff _).mp h)
   · intro n
     unfold count
     rw [Nat.card_congr (sourceEquiv n), Nat.card_eq_fintype_card]
+
+#print axioms result
 
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
