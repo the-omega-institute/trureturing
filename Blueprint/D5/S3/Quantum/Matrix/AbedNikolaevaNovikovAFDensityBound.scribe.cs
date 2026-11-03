@@ -42,12 +42,16 @@ internal sealed class AbedNikolaevaNovikovAFDensityBoundDocument : IScribeDocume
                 + "The identity A=I, B=0 gives one. Nonempty bounded real sets have a genuine least upper bound. "
                 + "The density need not have trace one; its condition number never appears. Singular X, n=1 and arbitrary positive density scales are covered. "
                 + "The source's dimension-two result, condition-dependent estimates and separate sharpness or factor questions are not claimed as new consequences. Worldwide novelty and the original Alhasan–Fawwaz article remain unverified.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abed-nikolaeva-novikov-2026-af-density-bound"),
+                    ResolutionKind.Proved)))));
 
-    private static DocumentBlock Entry(string id, string name, string title, Formula formula, string text, DescribeRole role) =>
+    private static DocumentBlock Entry(string id, string name, string title, Formula formula, string text, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id),DeclarationHandle.Create(Prefix+name),H(title),
             StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(text))),role);
+            Blocks(Paragraph(Text(text))),role,resolution);
 
     private static Formula QuotientDefinition()
     {

@@ -12,6 +12,18 @@ license: citation-only
 triage: anchor
 ---
 
+## Verified locator
+
+- DOI: 10.48550/arXiv.2610.34388
+- Version: https://arxiv.org/abs/2610.34388v1
+- Section 3.1, page 8: trace, modulus, and positive definite density conventions.
+- Section 5.12, Proposition 5.44, pages 32–33: the quotient and existing bounds.
+- Section 11.2(5), page 59: the fixed-dimension boundedness question.
+
+This note is citation-only; it does not reproduce the source article or grant
+permission to redistribute it. The original Alhasan–Fawwaz article and
+worldwide novelty remain unverified.
+
 ## Source and domain
 
 The source is arXiv:2610.34388v1, Sections 3.1, 5.12 (Proposition 5.44), and
