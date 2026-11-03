@@ -69,7 +69,9 @@ private theorem moderate_high_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : b+2 ≤ 
   have eh : (hn:ℤ)=h := Int.toNat_of_nonneg hh
   have hcap : hn < 2^(a-1) := by
     have hp : x=2*(2:ℤ)^(a-1) := by
-      dsimp [x]; conv_lhs => rw [show a=(a-1)+1 by omega,pow_succ]; ring
+      dsimp [x]
+      conv_lhs => rw [show a=(a-1)+1 by omega,pow_succ]
+      ring
     have : (hn:ℤ) < (2:ℤ)^(a-1) := by rw [eh]; omega
     exact_mod_cast this
   let early := decide (m=2)
@@ -96,10 +98,13 @@ private theorem moderate_high_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : b+2 ≤ 
   have nv := native_rows a b c (by omega) hb (by omega) 1
   have nw := native_rows a b c (by omega) hb (by omega) 2
   dsimp only [F,G,nextF,nextG,terminals] at nu nv nw
+  simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+    Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons] at nu nv nw
   have hC : C 1=(m-1)+m*C 0 := by
     have ht := v_stock_masks c a (by omega) (by omega)
     have hh' := congrArg (fun t : ℕ => (t:ℤ)) ht
-    simpa only [C,full,chainLength,Nat.cast_add,Nat.cast_mul,
+    simpa only [C,full,chainLength,m,Matrix.cons_val_zero,Matrix.cons_val_one,
+      Matrix.head_cons,Matrix.tail_cons,Nat.cast_add,Nat.cast_mul,
       Nat.cast_sub (show 1 ≤ 2^(c-1) by have := Nat.two_pow_pos (c-1); omega),
       Nat.cast_sub (show 1 ≤ 2^(c-a) by have := Nat.two_pow_pos (c-a); omega),
       Nat.cast_sub (show 1 ≤ 2^(a-1) by have := Nat.two_pow_pos (a-1); omega),
