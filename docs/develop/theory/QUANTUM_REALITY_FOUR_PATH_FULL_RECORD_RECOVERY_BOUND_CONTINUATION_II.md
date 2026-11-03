@@ -3055,10 +3055,10 @@ therefore gives
 
 $$
 \begin{aligned}
- \sigma=+:quad v^2
+ \sigma=+\quad v^2
    &\le(2-h)\sum_i|x_i-\mu|^2
           <\frac{13}{10}\frac{13}{5}=\frac{169}{50},\\
- \sigma=-:quad u^2
+ \sigma=-\quad u^2
    &\le(2+h)\sum_i|x_i-\mu|^2
           <\frac{11}{4}\frac{13}{5}=\frac{143}{20}.
 \end{aligned}
@@ -3082,10 +3082,10 @@ actual feedback as in (45.5)--(45.7),
 
 $$
 \begin{aligned}
- \sigma=+:quad
+ \sigma=+\quad
  \Delta_--c_0&=\frac{3e^2}{4}-v^2
        >\frac{69}{20}-\frac{169}{50}=\frac7{100}>0,\\
- \sigma=-:quad
+ \sigma=-\quad
  \Delta_+&=d^2-u^2>10-\frac{143}{20}
                   =\frac{57}{20}>\frac32>c_0.
 \end{aligned}
@@ -3363,7 +3363,7 @@ $$
 \tag{45.23}
 $$
 
-For an arbitrary original pure pair $X=(E,U)$, write
+For an arbitrary original pure pair $X=(E,U)$ with $\rho(X)=\xi$, write
 $F=T^\dagger E^{\mathsf T}T=\psi\psi^\dagger$ with $\|\psi\|=1$.
 Its exact original minimizing-lift condition remains, for any
 spectral/Birkhoff decomposition of Theorem 42.3,
