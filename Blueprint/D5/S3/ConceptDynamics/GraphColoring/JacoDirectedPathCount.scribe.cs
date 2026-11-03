@@ -7,6 +7,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.GraphColoring;
 internal sealed class JacoDirectedPathCountDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Certificates/kok2014jaco");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual shortest directed paths in the finite Jaco truncations.",
         H("Directed paths and their cardinality"),
@@ -24,7 +27,7 @@ internal sealed class JacoDirectedPathCountDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("directed-path-count-original-claim"),
                 DeclarationHandle.Create(Prefix + "claim"), H("The original all-index question"),
                 StatementSource.FromAuthor(OriginalFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("This is Proposition 4.4 of Kok, Fisher, Wilkens, Mabula and Mukungunugwa, Characteristics of Jaco Graphs, arXiv:1404.1714v1, Section 4. Both chains mean the conjunction of the two adjacent inequalities. Every k at least seven and every Fibonacci bracket index remain quantified. The result below establishes this complete equivalence from actual directed path cardinalities. The original Proposition 4.3 converse is not used."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("directed-path-count-foundations"),
                 DeclarationHandle.Create(Prefix + "path_count_foundations"), H("Finite positive cardinality and truncation invariance"),
@@ -44,7 +47,7 @@ internal sealed class JacoDirectedPathCountDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every nonnegative edge budget l and every positive target n, a path in the target's own truncation has at most l edges exactly when n is at most Fibonacci(l+2). Every shortest path has the same threshold. Strict increase of the original endpoint sequence and beatty_threshold give beattyOut(jacoRight m)=m. Induction then gives jacoRight(Fibonacci(l+2))=Fibonacci(l+3). Another induction proves that the reachable set at edge budget l is precisely that positive prefix: one more edge cannot pass the endpoint of the prefix, and every new label in the next prefix is reached directly from the previous endpoint. No compressed distance claim from the source is assumed."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("directed-path-count-original-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Complete original Proposition 4.4"),
-                StatementSource.FromAuthor(OriginalFormula()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(OriginalFormula()), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("For every j at least three and every target n with Fibonacci(j) < n <= Fibonacci(j+1), removing the final edge of an actual shortest directed path gives precisely a predecessor h in the interval [beattyOut n, Fibonacci(j)] together with an actual shortest path to h. A shorter prefix would shorten the original path. The distance threshold excludes later predecessors, while the endpoint threshold excludes earlier ones. Appending the unique final edge is the inverse, including both proof-carrying truncations. The resulting dependent-sum equivalence gives psi n as the sum of the positive actual cardinalities psi h over that interval.")),
                     Paragraph(Text("The endpoint threshold and consecutive endpoint growth show that beattyOut(n+1) is either beattyOut n or beattyOut n plus one. Within one Fibonacci distance layer the suffix sums therefore agree exactly in the first case. In the second case the lower summand psi(beattyOut n), which is positive by the cardinality foundations, is removed, so the counts differ strictly.")),
