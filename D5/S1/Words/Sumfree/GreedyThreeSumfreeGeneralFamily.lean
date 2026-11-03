@@ -224,7 +224,7 @@ private theorem residue_gap {f g d s : Nat} (hf : 1 ≤ f) (hg : f < g) (hd : 2 
       Nat.mod_eq_of_lt hr]
     omega
 
-// The ordered residue cases require a larger arithmetic budget.
+-- The ordered residue cases require a larger arithmetic budget.
 set_option maxHeartbeats 2000000 in
 private theorem three_sum_excluded {f g d z : Nat} (hf : 1 ≤ f) (hg : f < g) (hd : 2 ≤ d)
     (hz : RestrictedThreeSum (Printed f g d) z) :
@@ -241,7 +241,7 @@ private theorem three_sum_excluded {f g d z : Nat} (hf : 1 ≤ f) (hg : f < g) (
     rcases sx with rfl | rfl | sx <;>
       rcases sy with rfl | rfl | sy <;>
       rcases sw with rfl | rfl | sw
-    all_goals simp only [h1, hgmod] at * 
+    all_goals simp only [h1, hgmod] at *
     all_goals omega
   have hm := residue_gap hf hg hd hb
   have he : (x + y + w) % ((3 * f + 5 * g + 2 * d - 3)) =
