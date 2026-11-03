@@ -103,7 +103,10 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
                             + "0 < 3/20 < 1 and 1/2 < 4/5 < 1 − 3/20. Applying the proposed universal "
                             + "assertion to these parameters and to s, lab and τ would therefore make "
                             + "this non-exhaustive sequence exhaustive, which is a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fernandez-2018-degrade-fire-non-exhaustive-orbit-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(

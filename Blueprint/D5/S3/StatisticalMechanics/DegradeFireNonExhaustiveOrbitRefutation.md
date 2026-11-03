@@ -84,6 +84,10 @@ $$\neg \left(\forall \left(\theta: \mathbb{R}\right), \left(\forall \left(\varep
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/DegradeFireNonExhaustiveOrbitRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fernandez-2018-degrade-fire-non-exhaustive-orbit-refutation` (refuted) by `D5/S3/StatisticalMechanics/DegradeFireNonExhaustiveOrbitRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fernandez-2018-degrade-fire-non-exhaustive-orbit-refutation","declaration_gid":"D5/S3/StatisticalMechanics/DegradeFireNonExhaustiveOrbitRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bastien Fernandez (2018). *Revisiting asymptotic periodicity in networks of degrade-and-fire oscillators*. DOI: [10.1140/epjst/e2018-800068-8](https://doi.org/10.1140/epjst/e2018-800068-8). URL: <https://arxiv.org/abs/1809.03228v1>.
