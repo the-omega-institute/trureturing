@@ -277,14 +277,32 @@ private theorem powerWord_positive (m l : ℕ) :
     ∀ x ∈ powerWord m l, 0 < x := by
   induction l generalizing m with
   | zero => simp [powerWord]
-  | succ l ih => cases m <;> simp [powerWord, ih, pow_pos]
+  | succ l ih =>
+    cases m with
+    | zero =>
+      rw [powerWord, List.forall_mem_cons]
+      exact ⟨by decide, ih 0⟩
+    | succ m =>
+      rw [powerWord, List.forall_mem_cons]
+      exact ⟨by positivity, ih m⟩
 
 private theorem oddWord_positive (m j l : ℕ) :
     ∀ x ∈ oddWord m j l, 0 < x := by
   induction l generalizing m j with
   | zero => simp [oddWord]
   | succ l ih =>
-    cases m <;> cases j <;> simp [oddWord, powerWord_positive, ih, pow_pos]
+    cases m with
+    | zero =>
+      rw [oddWord, List.forall_mem_cons]
+      exact ⟨by decide, powerWord_positive 0 l⟩
+    | succ m =>
+      cases j with
+      | zero =>
+        rw [oddWord, List.forall_mem_cons]
+        exact ⟨by positivity, powerWord_positive m l⟩
+      | succ j =>
+        rw [oddWord, List.forall_mem_cons]
+        exact ⟨by positivity, ih m j⟩
 
 private theorem oddWord_prefix_injective (m l j k : ℕ)
     (hjm : j ≤ m) (hjl : j ≤ l) (hkm : k ≤ m) (hkl : k ≤ l)
@@ -331,14 +349,14 @@ private theorem code_total (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
   rw [oddWord_sum m _ _ hb.1 hb.2]
   rcases c with i | r
   · fin_cases i
-    · simp only [codeParams, ↓reduceIte, Prod.fst, Prod.snd]
+    · simp [codeParams]
       have := powerWord_sum_short m m (by omega)
       simp only [Nat.sub_self, pow_zero] at this
       omega
-    · simp only [codeParams, ↓reduceIte, Prod.fst, Prod.snd]
+    · simp [codeParams]
       have := powerWord_sum_long m (m + 1) (by omega)
       omega
-    · simp only [codeParams, ↓reduceIte, Prod.fst, Prod.snd]
+    · simp [codeParams]
       have := powerWord_sum_long m (m + 2) (by omega)
       omega
   · simp only [codeParams, Prod.fst, Prod.snd]
@@ -402,7 +420,7 @@ private theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) :
       · have hshort := hs (by omega)
         have hr : m - p.1.length < m + 1 := by omega
         have ht' : 2 ^ (m - p.1.length) + (m - p.1.length) + 1 ≤ m := by omega
-        refine ⟨.inr ⟨⟨m - p.1.length, hr⟩, by omega, ht'⟩, ?_⟩
+        refine ⟨.inr ⟨⟨m - p.1.length, hr⟩, (show 1 ≤ m - p.1.length from by omega), ht'⟩, ?_⟩
         simp only [codeParams]
         exact Prod.ext (by omega) hshort.symm
       · have hlong := ht (by omega)
