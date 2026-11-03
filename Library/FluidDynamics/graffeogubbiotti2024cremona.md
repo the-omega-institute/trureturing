@@ -14,6 +14,14 @@ triage: anchor
 
 # Graffeo–Gubbiotti, growth and integrability of birational maps in dimension three
 
+## Verified locator
+
+DOI: 10.1007/s00023-023-01339-5
+
+Source: https://arxiv.org/abs/2301.09129v2
+
+Ann. Henri Poincaré 25 (2024), 1733–1793.
+
 M. Graffeo and G. Gubbiotti, arXiv:2301.09129v2 [math.AG] (3 June 2023, the latest version); Ann. Henri Poincaré 25 (2024), 1733–1793. Quotations are from the v2 TeX source `GG_cremona_v1_clean.tex`.
 
 The KHK discretisation (Definition `def:khk`):
