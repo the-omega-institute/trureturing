@@ -87,9 +87,7 @@ private lemma frame_energy (T : Matrix (Fin 3) (Fin 3) ℝ)
     (hβ : ∀ i j, β i ⬝ᵥ β j = if i = j then 1 else 0) :
     ∑ i, vlen (T *ᵥ β i) ^ 2 = ∑ i, ∑ j, T i j ^ 2 := by
   let O : Matrix (Fin 3) (Fin 3) ℝ := β
-  have hOO : O * Oᵀ = 1 := by
-    ext i j
-    exact hβ i j
+  have hOO : O * Oᵀ = 1 := Matrix.ext hβ
   have hrev : Oᵀ * O = 1 := mul_eq_one_comm.mp hOO
   have hr (r : Fin 3 → ℝ) : ∑ i, (r ⬝ᵥ β i) ^ 2 = ∑ j, r j ^ 2 := by
     have hh : (O *ᵥ r) ⬝ᵥ (O *ᵥ r) = r ⬝ᵥ r := by
