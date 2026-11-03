@@ -28,6 +28,10 @@ Lean statement: `D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitAdmissibleSmoothi
 
 *Proof.* Machine-checked in Lean as `D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitAdmissibleSmoothing.full_result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/xu-zhao-trivariate-cauchy-coefficient-signs` (proved) by `D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitAdmissibleSmoothing.full_result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"xu-zhao-trivariate-cauchy-coefficient-signs","declaration_gid":"D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitAdmissibleSmoothing.full_result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ce Xu and Jianqiang Zhao (2026). *Rational Approximations for Reciprocals of Multiple Zeta Values and Trivariate Cauchy Numbers*. DOI: [10.48550/arXiv.2609.11072](https://doi.org/10.48550/arXiv.2609.11072). URL: <https://arxiv.org/html/2609.11072v1>.
