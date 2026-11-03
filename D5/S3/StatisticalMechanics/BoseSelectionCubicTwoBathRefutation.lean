@@ -84,7 +84,7 @@ private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
 
 private theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
     (h : ∀ i j, a j i = -a i j) : a *ᵥ pfaffianVector a = 0 := by
-  have hd (i : Fin 5) : a i i = 0 := by linarith [h i i]
+  have hd (i : Fin 5) : a i i = 0 := CharZero.eq_neg_self_iff.mp (h i i)
   rw [pfaffianVector]
   ext i
   fin_cases i <;>
