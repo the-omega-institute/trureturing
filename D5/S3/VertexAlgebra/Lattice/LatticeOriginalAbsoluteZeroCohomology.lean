@@ -143,10 +143,6 @@ def stateEquiv : E0 D H ≃ₗ[ℂ] (Coordinates D × Coordinates D) :=
   (split0 D H).trans ((shellEquiv D H hHG hGH).prodCongr
     (shellEquiv D H hHG hGH))
 
-@[simp] theorem stateEquiv_symm_coe (z w : Coordinates D) :
-    ((stateEquiv D H hHG hGH).symm (z,w) : State D) =
-      Psi D H hHG hGH z + ghostC D 0 (Psi D H hHG hGH w) := rfl
-
 /-- Exhaustion of ALL original charge-zero absolute zero-energy states. -/
 theorem mem_E0_iff (x : State D) : x ∈ E0 D H ↔
     ∃ z w : Coordinates D,
@@ -241,14 +237,11 @@ def Q0 : Module.End ℂ (E0 D H) :=
   ((LatticeBRST.totalCharge D H).comp (E0 D H).subtype).codRestrict _
     (Q_mem_E0 D H hHG hGH)
 
-@[simp] theorem Q0_coe (x : E0 D H) :
-    (Q0 D H hHG hGH x : State D) = LatticeBRST.totalCharge D H (x : State D) := rfl
-
 theorem Q0_coordinates (z w : Coordinates D) :
     Q0 D H hHG hGH ((stateEquiv D H hHG hGH).symm (z,w)) =
       (stateEquiv D H hHG hGH).symm ((0,(0,2*w.1)),0) := by
   apply Subtype.ext
-  simpa only [Q0_coe,stateEquiv_symm_coe,map_zero,add_zero] using
+  simpa only [map_zero,add_zero] using
     Q_representative D H hHG hGH z w
 
 /-- Restricted square-zero at every rank, from the computed original image
