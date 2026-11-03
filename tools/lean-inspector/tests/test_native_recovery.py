@@ -195,7 +195,7 @@ class NativeBatchCompatibilityConsumerTests:
             # test. Both commands retain the fixture's existing 120s guard.
             prepared = self.guarded_command(['make', 'lean',
                 'LEAN_TARGETS=@leanInspector/reportInspector'],
-                env=dict(self.env, LEAN_NUM_THREADS='1'))
+                env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1', LEAN_NUM_THREADS='1'))
             self.record_result('capacity-compiler', dict(exit=prepared.returncode,
                 stdout=prepared.stdout, stderr=prepared.stderr))
             self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
