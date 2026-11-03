@@ -434,7 +434,10 @@ class NativeRecoveryConsumerTests:
         activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
         self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), len(remaining))
         self.assertEqual(sorted(row['module'] for row in self.report()[0]), sorted(names))
-        self.assertEqual({name: self.stamps()[name] for name in first}, refreshed)
+        # Every guarded command has joined before this observation. Read one
+        # settled snapshot; hashing every module again for each name is quadratic.
+        resumed_stamps = self.stamps()
+        self.assertEqual({name: resumed_stamps[name] for name in first}, refreshed)
         self.record_result('complete-resume', dict(mode=interruption, exit=resumed.returncode,
             changed_source_extractions=1, resumed_extractions=len(remaining),
             registered_modules=len(names), aggregate_modules=len(self.report()[0])))
