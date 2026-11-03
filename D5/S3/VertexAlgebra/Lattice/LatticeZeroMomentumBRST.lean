@@ -566,24 +566,6 @@ theorem totalGhostNumber_Psi (D : LatticeData)
   simp only [h0, h1, h2, smul_zero, zero_add, smul_smul]
   module
 
-/-- Both actual operators on any state of the literal original shell. -/
-theorem zero_shell_actions (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (x : relativeMassShell D H 0) :
-    LatticeBRST.totalCharge D H (x : State D) = 0 ∧
-      tensorNumber D (x : State D) =
-        Psi D H hHG hGH
-          (0, ((shellEquiv D H hHG hGH x).2.1,
-            2 * (shellEquiv D H hHG hGH x).2.2)) := by
-  constructor
-  · exact totalCharge_on_zero_shell D H hHG hGH x x.property
-  · have he : Psi D H hHG hGH (shellEquiv D H hHG hGH x) = (x : State D) :=
-      congrArg (fun y : relativeMassShell D H 0 => (y : State D))
-        ((shellEquiv D H hHG hGH).symm_apply_apply x)
-    simpa only [he] using
-      totalGhostNumber_Psi D H hHG hGH (shellEquiv D H hHG hGH x)
-
 /- Public output stops at the actual shell basis, Q action and G action.
 No restricted complex or homology object is substituted by a coordinate complex.
 An actual library kernel/range/homology construction is a separate remaining task.

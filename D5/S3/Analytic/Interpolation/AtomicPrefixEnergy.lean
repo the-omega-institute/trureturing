@@ -41,7 +41,7 @@ variable {I : Type*} [Fintype I]
 def «prefix» (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
   ∑ i, if x i ≤ t then a i else 0
 
-private def intervalStep (l b v : ℝ) : ℂ :=
+def intervalStep (l b v : ℝ) : ℂ :=
   (Icc l b).indicator (fun _ => 1) v
 
 private lemma intervalStep_star (l b v : ℝ) :
@@ -66,7 +66,7 @@ private lemma intervalStep_overlap (l r b : ℝ) (hl : l ≤ b) (hr : r ≤ b) :
     Real.volume_real_Icc_of_le (max_le hl hr), Complex.real_smul, mul_one]
 
 /-- The common upper endpoint disappears because the full mass is zero. -/
-private lemma prefix_interval_expansion (x : I → ℝ) (a : I → ℂ)
+lemma prefix_interval_expansion (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (b s : ℝ) (hb : ∀ i, x i - s ≤ b) (v : ℝ) :
     «prefix» x a (v + s) = ∑ i, intervalStep (x i - s) b v * a i := by
   classical
