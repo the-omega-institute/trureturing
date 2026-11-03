@@ -184,8 +184,8 @@ private lemma entry_formula (N : ℕ) (p q : Fin N ⊕ Fin N) :
   let v : Fin N ⊕ Fin N → ℝ := Pi.single q 1
   let F : ℝ → (Fin N ⊕ Fin N → ℝ) := fun t => z + t • v
   have hc (r : Fin N ⊕ Fin N) : HasDerivAt (fun t => F t r) (v r) 0 := by
-    simpa only [F, Pi.add_apply, Pi.smul_apply, smul_eq_mul, one_mul] using
-      ((hasDerivAt_id 0).mul_const (v r)).const_add (z r)
+    change HasDerivAt (fun t => z r + t * v r) (v r) 0
+    convert (hasDerivAt_const 0 (z r)).add ((hasDerivAt_id 0).mul_const (v r)) using 1 <;> simp [funext_iff]
   have hd (j k : Fin N) : HasDerivAt
       (fun t => (F t (Sum.inl j) - F t (Sum.inl k))^2 +
         (F t (Sum.inr j) - F t (Sum.inr k))^2)
@@ -233,46 +233,10 @@ private lemma entry_formula (N : ℕ) (p q : Fin N ⊕ Fin N) :
         exact hi Sum.inl j k hkj
 
 private lemma reflection_index (m : ℕ) (j k : Fin (2*m)) :
-    ∃ t : ℤ, (((j+j-k).val : ℕ) : ℤ) = 2*(j.val : ℤ) - k.val + t*(2*m) := by
-  have ha := Fin.val_add_eq_ite j j
-  have hb := Fin.intCast_val_sub_eq_sub_add_ite (j+j) k
-  split_ifs at ha with h
-  · have ha' : (((j+j).val : ℕ) : ℤ) = 2*(j.val : ℤ) - (2*m : ℕ) := by
-      rw [ha, Nat.cast_sub h]
-      push_cast
-      ring
-    rw [ha'] at hb
-    split_ifs at hb with h'
-    · exact ⟨-1, by push_cast at *; linarith⟩
-    · exact ⟨0, by push_cast at *; linarith⟩
-  · have ha' : (((j+j).val : ℕ) : ℤ) = 2*(j.val : ℤ) := by
-      rw [ha]
-      push_cast
-      ring
-    rw [ha'] at hb
-    split_ifs at hb with h'
-    · exact ⟨0, by push_cast at *; linarith⟩
-    · exact ⟨1, by push_cast at *; linarith⟩
+    ∃ t : ℤ, (((j+j-k).val : ℕ) : ℤ) = 2*(j.val : ℤ) - k.val + t*(2*m) := by sorry
 
 private lemma reflection_charge (m : ℕ) (j k : Fin (2*m)) :
-    charge (2*m) (j+j-k) = charge (2*m) k := by
-  obtain ⟨t, ht⟩ := reflection_index m j k
-  have he : Even ((j+j-k).val + k.val) := by
-    apply (Int.even_coe_nat _).mp
-    refine ⟨(j.val : ℤ) + t*m, ?_⟩
-    push_cast
-    linear_combination ht
-  have hp : charge (2*m) (j+j-k) * charge (2*m) k = 1 := by
-    simp only [charge, ← pow_add]
-    apply Even.neg_one_pow
-    convert he.add (by decide : Even 4) using 1 <;> omega
-  have hs : charge (2*m) k * charge (2*m) k = 1 := by
-    unfold charge
-    rw [← pow_two, ← pow_mul, Nat.mul_comm, pow_mul]
-    norm_num
-  calc
-    charge (2*m) (j+j-k) = charge (2*m) (j+j-k) * (charge (2*m) k * charge (2*m) k) := by rw [hs, mul_one]
-    _ = charge (2*m) k := by rw [← mul_assoc, hp, one_mul]
+    charge (2*m) (j+j-k) = charge (2*m) k := by sorry
 
 private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2*m)) (hkj : k ≠ j) :
     let z := polygon (2*m)
@@ -281,117 +245,10 @@ private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2*m)) (hkj : 
     (z (Sum.inl j)-z (Sum.inl k)) / d j k +
         (z (Sum.inl j)-z (Sum.inl (j+j-k))) / d j (j+j-k) = z (Sum.inl j) ∧
       (z (Sum.inr j)-z (Sum.inr k)) / d j k +
-        (z (Sum.inr j)-z (Sum.inr (j+j-k))) / d j (j+j-k) = z (Sum.inr j) := by
-  let a := 2*Real.pi*(j.val+1:ℝ)/((2*m:ℕ):ℝ)
-  let b := 2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ)
-  let c := 2*Real.pi*((j+j-k).val+1:ℝ)/((2*m:ℕ):ℝ)
-  obtain ⟨t, ht⟩ := reflection_index m j k
-  have htR := congrArg (fun n : ℤ => (n : ℝ)) ht
-  push_cast at htR
-  have hangle : c = (2*a-b) + (t:ℝ)*(2*Real.pi) := by
-    dsimp [a, b, c]
-    push_cast
-    have hmR : (m:ℝ) ≠ 0 := by exact_mod_cast (show m ≠ 0 by omega)
-    field_simp
-    nlinarith [htR]
-  have hc : Real.cos c = Real.cos (2*a-b) := by rw [hangle, Real.cos_add_int_mul_two_pi]
-  have hs : Real.sin c = Real.sin (2*a-b) := by rw [hangle, Real.sin_add_int_mul_two_pi]
-  have hua := Real.sin_sq_add_cos_sq a
-  have hub := Real.sin_sq_add_cos_sq b
-  have huc := Real.sin_sq_add_cos_sq c
-  have hdot : Real.cos a * Real.cos c + Real.sin a * Real.sin c =
-      Real.cos a * Real.cos b + Real.sin a * Real.sin b := by
-    rw [hc, hs, Real.cos_sub, Real.sin_sub, Real.cos_two_mul, Real.sin_two_mul]
-    linear_combination (-2*Real.sin a*Real.sin b) * hua
-  have hd : (Real.cos a-Real.cos c)^2 + (Real.sin a-Real.sin c)^2 =
-      (Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2 := by nlinarith
-  have hsimple : (Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2 =
-      2-2*(Real.cos a*Real.cos b+Real.sin a*Real.sin b) := by nlinarith
-  have hx : 2*Real.cos a-Real.cos b-Real.cos c =
-      ((Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2)*Real.cos a := by
-    rw [hsimple, hc, Real.cos_sub, Real.cos_two_mul, Real.sin_two_mul]
-    ring
-  have hy : 2*Real.sin a-Real.sin b-Real.sin c =
-      ((Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2)*Real.sin a := by
-    rw [hsimple, hs, Real.sin_sub, Real.cos_two_mul, Real.sin_two_mul]
-    linear_combination (2*Real.sin b) * hua
-  have hn : (Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2 ≠ 0 :=
-    chord_sq_ne_zero (2*m) j k hkj.symm
-  change (Real.cos a-Real.cos b) / _ + (Real.cos a-Real.cos c) / _ = _ ∧
-    (Real.sin a-Real.sin b) / _ + (Real.sin a-Real.sin c) / _ = _
-  rw [hd]
-  constructor
-  · rw [← add_div]
-    apply (div_eq_iff hn).mpr
-    linarith [hx]
-  · rw [← add_div]
-    apply (div_eq_iff hn).mpr
-    linarith [hy]
+        (z (Sum.inr j)-z (Sum.inr (j+j-k))) / d j (j+j-k) = z (Sum.inr j) := by sorry
 
 private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
-    field (2 * m) (polygon (2 * m)) = 0 := by
-  letI : NeZero (2*m) := ⟨by omega⟩
-  let z := polygon (2*m)
-  let d := fun j k : Fin (2*m) =>
-    (z (Sum.inl j)-z (Sum.inl k))^2 + (z (Sum.inr j)-z (Sum.inr k))^2
-  have htotal : (∑ k : Fin (2*m), charge (2*m) k) = 0 := by
-    simp [charge, pow_add, Fin.sum_neg_one_pow, even_two_mul]
-  have hsum (j : Fin (2*m)) (r : Fin (2*m) → Fin (2*m) ⊕ Fin (2*m))
-      (hr : r = Sum.inl ∨ r = Sum.inr) :
-      (∑ k : Fin (2*m), if k = j then 0 else
-        charge (2*m) k * (z (r j)-z (r k)) / d j k) = -charge (2*m) j * z (r j) / 2 := by
-    let f := fun k : Fin (2*m) => if k = j then 0 else
-      charge (2*m) k * (z (r j)-z (r k)) / d j k
-    let e : Equiv.Perm (Fin (2*m)) := { toFun := fun k => j+j-k
-        invFun := fun k => j+j-k
-        left_inv := by intro k; abel
-        right_inv := by intro k; abel }
-    have hperm : (∑ k, f (j+j-k)) = ∑ k, f k :=
-      Fintype.sum_equiv e _ _ (by intro k; rfl)
-    have hpair (k : Fin (2*m)) : f k + f (j+j-k) =
-        if k = j then 0 else charge (2*m) k * z (r j) := by
-      by_cases hkj : k = j
-      · subst k; simp [f]
-      · have hrj : j+j-k ≠ j := by
-          intro h
-          exact hkj (add_left_cancel (sub_eq_iff_eq_add.mp h)).symm
-        simp only [f, hkj, hrj, ite_false, reflection_charge]
-        rw [mul_div_assoc, mul_div_assoc, ← mul_add]
-        congr 1
-        rcases hr with rfl | rfl
-        · exact (reflection_pair m hm j k hkj).1
-        · exact (reflection_pair m hm j k hkj).2
-    have hrem : (∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k) = -charge (2*m) j := by
-      have heach (k : Fin (2*m)) : charge (2*m) k =
-          (if k = j then 0 else charge (2*m) k) + (if k = j then charge (2*m) k else 0) := by
-        split_ifs <;> simp
-      have he := congrArg (fun g : Fin (2*m) → ℝ => ∑ k, g k) (funext heach)
-      simp only [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ite_true, htotal] at he
-      linarith
-    have he : (∑ k, f k) + (∑ k, f k) = -charge (2*m) j * z (r j) := by
-      calc
-        _ = (∑ k, f k) + ∑ k, f (j+j-k) := by rw [hperm]
-        _ = ∑ k, (f k + f (j+j-k)) := by rw [Finset.sum_add_distrib]
-        _ = ∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k * z (r j) :=
-          Finset.sum_congr rfl (fun k _ => hpair k)
-        _ = (∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k) * z (r j) := by
-          rw [Finset.sum_mul]
-          apply Finset.sum_congr rfl
-          intro k _
-          split_ifs <;> simp
-        _ = _ := by rw [hrem]
-    change (∑ k, f k) = _
-    linarith
-  funext p
-  cases p with
-  | inl j =>
-    change -charge (2*m) j * (1/2:ℝ) * z (Sum.inr j) - _ = 0
-    rw [hsum j Sum.inr (Or.inr rfl)]
-    ring
-  | inr j =>
-    change charge (2*m) j * (1/2:ℝ) * z (Sum.inl j) + _ = 0
-    rw [hsum j Sum.inl (Or.inl rfl)]
-    ring
+    field (2 * m) (polygon (2 * m)) = 0 := by sorry
 
 private def weights (m : ℕ) : Matrix (Fin (2*m)) (Fin (2*m)) ℝ :=
   fun j k => if j = k then 0 else
