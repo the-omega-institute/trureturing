@@ -43,7 +43,9 @@ theorem gamma_norm_gt_one (n : ℕ) : 1 < ‖actualData.gamma n‖ := by
 
 theorem gamma_ne_zero (n : ℕ) : actualData.gamma n ≠ 0 := by
   intro h
-  simpa [h] using gamma_norm_gt_one n
+  have hn := gamma_norm_gt_one n
+  rw [h, norm_zero] at hn
+  norm_num at hn
 
 theorem node_ne_zero (n : PositiveZero) : node n ≠ 0 :=
   inv_ne_zero (pow_ne_zero _ (gamma_ne_zero n))
@@ -57,12 +59,13 @@ theorem node_norm_lt_one (n : PositiveZero) : ‖node n‖ < 1 := by
 
 theorem node_original (n : PositiveZero) :
     node n = -1 / (actualData.zero n - 1 / 2) ^ 2 := by
-  dsimp [node, ZeroData.gamma, spectralParameter, D5.S3.Weil.Convention.criticalAbscissa]
-  have h : (-I * (actualData.zero n - 1 / 2)) ^ 2 =
-      -(actualData.zero n - 1 / 2) ^ 2 := by
+  have h : (actualData.gamma n) ^ 2 = -(actualData.zero n - 1 / 2) ^ 2 := by
+    dsimp [ZeroData.gamma, spectralParameter, D5.S3.Weil.Convention.criticalAbscissa]
+    push_cast
     ring_nf
-    simp [I_sq]
-  rw [h]
+    norm_num [I_sq]
+    ring
+  rw [node, h]
   simp [div_eq_mul_inv]
 
 def tau (n : PositiveZero) : PositiveZero :=
@@ -82,7 +85,7 @@ theorem tau_involutive : Function.Involutive tau := by
     map_sub, map_one, Complex.conj_conj]
   ring
 
-def conjugation : Equiv.Perm PositiveZero := Equiv.ofInvolutive tau tau_involutive
+def conjugation : Equiv.Perm PositiveZero := tau_involutive.toPerm tau
 
 theorem node_conjugation (n : PositiveZero) : node (conjugation n) = conj (node n) := by
   change ((actualData.gamma (tau n)) ^ 2)⁻¹ = _
@@ -95,9 +98,12 @@ theorem multiplicity_conjugation (n : PositiveZero) :
 
 theorem weight_conjugation (n : PositiveZero) :
     weight (conjugation n) = conj (weight n) := by
-  simp [weight, node_conjugation, multiplicity_conjugation,
-    conjugation, Equiv.ofInvolutive, tau, actualData.zero_reflection,
-    actualData.zero_conjugation, mul_comm]
+  have hz : actualData.zero (conjugation n) = 1 - conj (actualData.zero n) := by
+    change actualData.zero (actualData.reflection (actualData.conjugation n)) = _
+    rw [actualData.zero_reflection, actualData.zero_conjugation]
+  simp only [weight, node_conjugation, multiplicity_conjugation, hz]
+  norm_num
+  <;> ring
 
 theorem node_injective : Function.Injective node := by
   intro n k h
@@ -181,7 +187,7 @@ theorem node_real_positive (n : PositiveZero) (h : (node n).im = 0) :
       simp [ZeroData.gamma, spectralParameter, D5.S3.Weil.Convention.criticalAbscissa, hx]
   have hn : node n = (((actualData.zero n).im ^ 2)⁻¹ : ℝ) := by
     simp [node, hg]
-  have hp : 0 < ((actualData.zero n).im ^ 2)⁻¹ := by positivity
+  have hp : 0 < ((actualData.zero n).im ^ 2)⁻¹ := inv_pos.mpr (sq_pos_of_pos n.property)
   have hw : weight n = ((2 * (actualData.multiplicity n : ℝ) *
       (((actualData.zero n).im ^ 2)⁻¹) ^ 2 /
         (1 + ((actualData.zero n).im ^ 2)⁻¹ / 4) : ℝ) : ℂ) := by
@@ -190,12 +196,12 @@ theorem node_real_positive (n : PositiveZero) (h : (node n).im = 0) :
     rfl
   rw [hn, hw]
   simp only [Complex.ofReal_re, Complex.ofReal_im]
-  exact ⟨hp, by have hm := actualData.multiplicity_pos n; positivity, rfl⟩
+  exact ⟨hp, by have hm := actualData.multiplicity_pos n; positivity, trivial⟩
 
 theorem node_large_finite (ε : ℝ) (hε : 0 < ε) :
     {n : PositiveZero | ε ≤ ‖node n‖}.Finite := by
   have hf : {n : PositiveZero | ‖actualData.gamma n‖ ≤ 1 / ε + 1}.Finite :=
-    (actualData.locallyFinite (1 / ε + 1)).preimage Subtype.val_injective
+    (actualData.locallyFinite (1 / ε + 1)).preimage (fun _ _ _ _ h => Subtype.ext h)
   apply hf.subset
   intro n hn
   change ε ≤ ‖node n‖ at hn
@@ -203,7 +209,7 @@ theorem node_large_finite (ε : ℝ) (hε : 0 < ε) :
   have hx := gamma_norm_gt_one n
   have hs : 0 < ‖actualData.gamma n‖ ^ 2 := by positivity
   have he : ε * ‖actualData.gamma n‖ ^ 2 ≤ 1 :=
-    (le_inv_iff₀ hs).mp hn
+    (le_div_iff₀ hs).mp (by simpa only [one_div] using hn)
   have hi : 0 < 1 / ε := one_div_pos.mpr hε
   have he' : ‖actualData.gamma n‖ ^ 2 ≤ 1 / ε :=
     (le_div_iff₀ hε).mpr (by nlinarith [he])

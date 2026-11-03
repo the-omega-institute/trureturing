@@ -1,0 +1,85 @@
+### 定理 3：误差是一个实际空间中的正投影能量
+
+令
+
+$$
+k=P_{K_J}I.
+$$
+
+则
+
+$$
+I=Jh+k,\qquad h\in H^2,\quad k\in K_J,
+$$
+
+并且
+
+$$
+\boxed{
+P_+g=h,\qquad P_-g=\bar Jk.
+}
+
+$$
+
+<a id="eq-3-3"></a>
+
+(3.3)
+
+因此
+
+$$
+\boxed{
+\varepsilon
+=\|P_{K_J}I\|^2,
+\qquad
+1=\|h\|^2+\varepsilon.
+}
+
+$$
+
+<a id="eq-3-4"></a>
+
+(3.4)
+
+#### 证明
+
+由于乘以内函数 $J$ 是等距映射，
+
+$$
+H^2=JH^2\oplus K_J.
+$$
+
+将 $I$ 按此分解，在边界乘以 $\bar J$，得到
+
+$$
+g=h+\bar Jk.
+$$
+
+而对每个 $n\ge0$，
+
+$$
+\langle\bar Jk,w^n\rangle
+=
+\langle k,Jw^n\rangle
+=0.
+$$
+
+所以 $\bar Jk$ 恰好是负频部分。再用 $|J|=1$ 和正交分解，即得式（3.4）。证毕。
+
+由互素性，
+
+$$
+\boxed{
+\varepsilon=0
+\iff
+J\text{ 为常数}.
+}
+
+$$
+
+<a id="eq-3-5"></a>
+
+(3.5)
+
+因为若 $P_{K_J}I=0$，则 $I\in JH^2$，即 $J$ 整除 $I$；互素性迫使 $J$ 为常数。
+

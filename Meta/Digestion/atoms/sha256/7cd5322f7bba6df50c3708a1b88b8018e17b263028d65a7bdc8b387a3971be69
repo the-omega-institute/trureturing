@@ -1,0 +1,40 @@
+### 引理 2.2：$E$ 的全部零点位于某个有限竖条
+
+令
+
+$$
+B=\sum_\rho|b_\rho|<\infty.
+$$
+
+当 $x=\Re z>\tfrac12$ 时，
+
+$$
+|F(z)|
+\le
+\sum_\rho\frac{|b_\rho|}{x-\Re a_\rho}
+\le
+\frac B{x-\frac12}.
+
+$$
+
+<a id="eq-2-5"></a>
+
+(2.5)
+
+取足够大的有限 $A$，使 $x>A$ 时右侧小于 $S/2$。这时 $\Xi(z)\ne0$，且 $S+F(z)\ne0$，因此 $E(z)\ne0$。
+
+利用 $F(-z)=-F(z)$，左半平面同理。故
+
+$$
+\boxed{
+E(\lambda)=0
+\Longrightarrow
+|\Re\lambda|\le A.
+}
+
+$$
+
+<a id="eq-2-6"></a>
+
+(2.6)
+
