@@ -8,7 +8,6 @@
 
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
 
 /-! An eight-state enzyme network violates the proposed waiting-time moment ordering. -/
