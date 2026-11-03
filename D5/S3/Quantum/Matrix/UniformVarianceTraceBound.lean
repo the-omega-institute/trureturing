@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Matrix.UniformVarianceCentering
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
 
 /-! Ordinary trace norms of the same amplified centered Kraus maps. -/
 
@@ -23,7 +24,7 @@ private lemma re_diag_le_norm {a : Type*} [Fintype a] [DecidableEq a]
   have he : ‖e‖ = 1 := (EuclideanSpace.basisFun a ℂ).orthonormal.1 i
   have hi : inner ℂ e (Matrix.toEuclideanCLM (n := a) (𝕜 := ℂ) B e) = B i i := by
     simp [e, EuclideanSpace.basisFun_apply, Matrix.toEuclideanCLM_toLp,
-      EuclideanSpace.inner_eq_star_dotProduct, Matrix.mulVec, dotProduct]
+      EuclideanSpace.inner_eq_star_dotProduct, Matrix.mulVec, dotProduct, Pi.single_apply]
   rw [← hi]
   exact (Complex.re_le_norm _).trans ((norm_inner_le_norm _ _).trans
     (by simpa [he, Matrix.l2_opNorm_toEuclideanCLM] using
