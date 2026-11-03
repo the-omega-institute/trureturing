@@ -48,6 +48,19 @@ internal sealed class MaityFuruichiDuttaOrderingRefutationDocument : IScribeDocu
                 + "satisfy the support condition and admit negative powers. The parameters r≠0 and z>0 "
                 + "come from Definitions 1–2. The function renyiRZ is precisely the source's B₁.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Export("rho", "Existing supporting declaration rho", "The original rho is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("sigma", "Existing supporting declaration sigma", "The original sigma is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("H", "Existing supporting declaration H", "The original H is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("K", "Existing supporting declaration K", "The original K is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("pair_states", "Existing supporting declaration pair_states", "The original pair_states is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("pair_cfc", "Existing supporting declaration pair_cfc", "The original pair_cfc is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("sandwich_trace", "Existing supporting declaration sandwich_trace", "The original sandwich_trace is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("B1_gt", "Existing supporting declaration B1_gt", "The original B1_gt is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("B2_lt", "Existing supporting declaration B2_lt", "The original B2_lt is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("A", "Existing supporting declaration A", "The original A is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("sandwich_A", "Existing supporting declaration sandwich_A", "The original sandwich_A is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("A_nonneg", "Existing supporting declaration A_nonneg", "The original A_nonneg is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
+            Export("A_sqrt", "Existing supporting declaration A_sqrt", "The original A_sqrt is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof."),
             Entry("refutation", "result", "A noncommuting qubit counterexample",
                 Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "Take rho = diag(4/5,1/5) and sigma = (1/125)[[28,6√6],[6√6,97]]. "
@@ -68,6 +81,10 @@ internal sealed class MaityFuruichiDuttaOrderingRefutationDocument : IScribeDocu
             name == "result" ? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("maity-furuichi-dutta-2026-tsallis-ordering-case-5"),
                 ResolutionKind.Refuted) : null);
+
+    private static DocumentBlock Export(string name, string title, string prose) => Describe.Lean(
+        DescribeId.Create("support-" + name), DeclarationHandle.Create(Prefix + name), H(title),
+        StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
