@@ -510,6 +510,76 @@ private lemma PUPoly_degree (d : ℕ) (b hb : ℂ) :
     (show (d : WithBot ℕ) < (d + 1 : ℕ) from
       WithBot.coe_lt_coe.mpr (Nat.lt_succ_self d))
 
+private lemma ut_denominator_coefficient {b : ℂ} (hb0 : b ≠ 0) (n : ℕ) :
+    (PowerSeries.coeff n
+      ((2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2 : AnnulusSeries)⁻¹)) =
+      HahnSeries.C ((n + 1 : ℂ) / (2 : ℂ)) *
+        (HahnSeries.single (-(n : ℤ) - 2) ((b ^ (n + 2))⁻¹)) := by
+  have hu : (HahnSeries.single 1 b : LaurentSeries ℂ) ≠ 0 :=
+    HahnSeries.single_ne_zero hb0
+  let u : (LaurentSeries ℂ)ˣ :=
+    Units.mk0 (HahnSeries.single 1 b) hu
+  have hJ : PowerSeries.invUnitsSub u *
+      (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) = 1 :=
+    PowerSeries.invUnitsSub_mul_sub u
+  have htwo : (2 : LaurentSeries ℂ) ≠ 0 := by
+    intro h
+    have hc := congrArg (fun f : LaurentSeries ℂ => f.coeff 0) h
+    change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : LaurentSeries ℂ).coeff 0 at hc
+    norm_num at hc
+  have hhalf : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) : AnnulusSeries) * 2 = 1 := by
+    calc
+      _ = PowerSeries.C ((1 / 2 : LaurentSeries ℂ) * 2) := by rw [map_mul]; rfl
+      _ = 1 := by rw [one_div, inv_mul_cancel₀ htwo, map_one]
+  have hconst : PowerSeries.constantCoeff
+      (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2 : AnnulusSeries) ≠ 0 := by
+    change PowerSeries.constantCoeff (PowerSeries.C (2 : LaurentSeries ℂ) *
+      (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) ≠ 0
+    simpa only [map_mul, map_pow, map_sub, PowerSeries.constantCoeff_C,
+      PowerSeries.constantCoeff_X, sub_zero] using mul_ne_zero htwo (pow_ne_zero 2 hu)
+  have hmul : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * PowerSeries.invUnitsSub u ^ 2) *
+      (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) = 1 := by
+    calc
+      _ = (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * 2) *
+          (PowerSeries.invUnitsSub u * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X)) ^ 2 := by ring
+      _ = 1 := by rw [hhalf, hJ]; simp
+  have hinv := ((PowerSeries.eq_inv_iff_mul_eq_one hconst).mpr hmul).symm
+  have hcoeff (m : ℕ) : PowerSeries.coeff m (PowerSeries.invUnitsSub u) =
+      HahnSeries.single (-((m + 1 : ℕ) : ℤ)) ((b ^ (m + 1))⁻¹) := by
+    rw [PowerSeries.coeff_invUnitsSub, one_divp, Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val]
+    change (((HahnSeries.single 1 b : LaurentSeries ℂ) ^ (m + 1))⁻¹) = _
+    rw [HahnSeries.single_pow, HahnSeries.inv_single]
+    simp only [nsmul_eq_mul, mul_one]
+  rw [hinv, PowerSeries.coeff_C_mul, pow_two, PowerSeries.coeff_mul,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+  have hs : (∑ k ∈ Finset.range (n + 1),
+      PowerSeries.coeff k (PowerSeries.invUnitsSub u) *
+        PowerSeries.coeff (n - k) (PowerSeries.invUnitsSub u)) =
+      (n + 1) • (HahnSeries.single (-((n + 2 : ℕ) : ℤ)) ((b ^ (n + 2))⁻¹) : LaurentSeries ℂ) := by
+    trans ∑ k ∈ Finset.range (n + 1),
+      (HahnSeries.single (-((n + 2 : ℕ) : ℤ)) ((b ^ (n + 2))⁻¹) : LaurentSeries ℂ)
+    · apply Finset.sum_congr rfl
+      intro k hk
+      have hk' : k ≤ n := by simpa only [Finset.mem_range, Nat.lt_succ_iff] using hk
+      rw [hcoeff, hcoeff, HahnSeries.single_mul_single, ← mul_inv, ← pow_add]
+      have hsum : k + 1 + (n - k + 1) = n + 2 := by omega
+      rw [hsum, ← neg_add, ← Nat.cast_add, hsum]
+    · simp only [Finset.sum_const, Finset.card_range]
+  rw [hs, nsmul_eq_mul]
+  have hhalfC : (1 / 2 : LaurentSeries ℂ) = HahnSeries.C (1 / 2 : ℂ) := by
+    rw [map_div₀, map_one, map_ofNat]
+  rw [hhalfC]
+  have hnC : (↑(n + 1) : LaurentSeries ℂ) = HahnSeries.C (↑(n + 1) : ℂ) := by rw [map_natCast]
+  rw [hnC, ← mul_assoc, ← map_mul]
+  congr 1
+  · congr 1
+    push_cast
+    ring
+  · congr 1
+    push_cast
+    simp only [neg_add, sub_eq_add_neg]
+
+set_option maxHeartbeats 800000 in
 private lemma literal_ut_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd : 1 ≤ d) :
     PowerSeries.coeff d (cubicUTSeries b hb) =
       HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) *
@@ -519,72 +589,7 @@ private lemma literal_ut_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd 
     simp [scalarCSeries]
   have hu : (HahnSeries.single 1 b : LaurentSeries ℂ) ≠ 0 :=
     HahnSeries.single_ne_zero hb0
-  have hunit (n : ℕ) :
-      (PowerSeries.coeff n
-        ((2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2 : AnnulusSeries)⁻¹)) =
-        HahnSeries.C ((n + 1 : ℂ) / (2 : ℂ)) *
-          (HahnSeries.single (-(n : ℤ) - 2) ((b ^ (n + 2))⁻¹)) := by
-    let u : (LaurentSeries ℂ)ˣ :=
-      Units.mk0 (HahnSeries.single 1 b) hu
-    have hJ : PowerSeries.invUnitsSub u *
-        (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) = 1 :=
-      PowerSeries.invUnitsSub_mul_sub u
-    have htwo : (2 : LaurentSeries ℂ) ≠ 0 := by
-      intro h
-      have hc := congrArg (fun f : LaurentSeries ℂ => f.coeff 0) h
-      change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : LaurentSeries ℂ).coeff 0 at hc
-      norm_num at hc
-    have hhalf : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) : AnnulusSeries) * 2 = 1 := by
-      calc
-        _ = PowerSeries.C ((1 / 2 : LaurentSeries ℂ) * 2) := by rw [map_mul]; rfl
-        _ = 1 := by rw [one_div, inv_mul_cancel₀ htwo, map_one]
-    have hconst : PowerSeries.constantCoeff
-        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2 : AnnulusSeries) ≠ 0 := by
-      change PowerSeries.constantCoeff (PowerSeries.C (2 : LaurentSeries ℂ) *
-        (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) ≠ 0
-      simpa only [map_mul, map_pow, map_sub, PowerSeries.constantCoeff_C,
-        PowerSeries.constantCoeff_X, sub_zero] using mul_ne_zero htwo (pow_ne_zero 2 hu)
-    have hmul : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * PowerSeries.invUnitsSub u ^ 2) *
-        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) = 1 := by
-      calc
-        _ = (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * 2) *
-            (PowerSeries.invUnitsSub u * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X)) ^ 2 := by ring
-        _ = 1 := by rw [hhalf, hJ]; simp
-    have hinv := ((PowerSeries.eq_inv_iff_mul_eq_one hconst).mpr hmul).symm
-    have hcoeff (m : ℕ) : PowerSeries.coeff m (PowerSeries.invUnitsSub u) =
-        HahnSeries.single (-((m + 1 : ℕ) : ℤ)) ((b ^ (m + 1))⁻¹) := by
-      rw [PowerSeries.coeff_invUnitsSub, one_divp, Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val]
-      change (((HahnSeries.single 1 b : LaurentSeries ℂ) ^ (m + 1))⁻¹) = _
-      rw [HahnSeries.single_pow, HahnSeries.inv_single]
-      simp only [nsmul_eq_mul, mul_one]
-    rw [hinv, PowerSeries.coeff_C_mul, pow_two, PowerSeries.coeff_mul,
-      Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-    have hs : (∑ k ∈ Finset.range (n + 1),
-        PowerSeries.coeff k (PowerSeries.invUnitsSub u) *
-          PowerSeries.coeff (n - k) (PowerSeries.invUnitsSub u)) =
-        (n + 1) • (HahnSeries.single (-((n + 2 : ℕ) : ℤ)) ((b ^ (n + 2))⁻¹) : LaurentSeries ℂ) := by
-      trans ∑ k ∈ Finset.range (n + 1),
-        (HahnSeries.single (-((n + 2 : ℕ) : ℤ)) ((b ^ (n + 2))⁻¹) : LaurentSeries ℂ)
-      · apply Finset.sum_congr rfl
-        intro k hk
-        have hk' : k ≤ n := by simpa only [Finset.mem_range, Nat.lt_succ_iff] using hk
-        rw [hcoeff, hcoeff, HahnSeries.single_mul_single, ← mul_inv, ← pow_add]
-        have hsum : k + 1 + (n - k + 1) = n + 2 := by omega
-        rw [hsum, ← neg_add, ← Nat.cast_add, hsum]
-      · simp only [Finset.sum_const, Finset.card_range]
-    rw [hs, nsmul_eq_mul]
-    have hhalfC : (1 / 2 : LaurentSeries ℂ) = HahnSeries.C (1 / 2 : ℂ) := by
-      rw [map_div₀, map_one, map_ofNat]
-    rw [hhalfC]
-    have hnC : (↑(n + 1) : LaurentSeries ℂ) = HahnSeries.C (↑(n + 1) : ℂ) := by rw [map_natCast]
-    rw [hnC, ← mul_assoc, ← map_mul]
-    congr 1
-    · congr 1
-      push_cast
-      ring
-    · congr 1
-      push_cast
-      simp only [neg_add, sub_eq_add_neg]
+  have hunit (n : ℕ) := ut_denominator_coefficient hb0 n
 
   change PowerSeries.coeff d
     (-(formalOmega * formalExternalOmega b hb) *
