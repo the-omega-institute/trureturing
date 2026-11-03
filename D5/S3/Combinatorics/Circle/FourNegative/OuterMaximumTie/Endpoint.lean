@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/OuterMaximumTie/Endpoint
    generality: I
-   mirror-B: none(waiver:uncompiled-source-stage)
-   mirror-E: none(waiver:uncompiled-source-stage)
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/OuterMaximumTie/Endpoint
+   mirror-E: none(waiver:complete-face-no-independent-encoding)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Exhaustive original outer-maximum-tie face, including every finite repeated take. -/
@@ -11,7 +11,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! Source draft only. The original seed, physical labels and both complete
+/-! The original seed, physical labels and both complete
 OriginalOrder predicates are retained. Library boundary cuts are existential;
 the new interior constructions use the literal front insertion. -/
 set_option autoImplicit false

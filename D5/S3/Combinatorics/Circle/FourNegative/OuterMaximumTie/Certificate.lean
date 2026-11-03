@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
 
+/-! The physical partition and both charged endpoint windows are constructed on the original labels. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie
@@ -166,13 +167,17 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
     have h2 := (packetPerm 2).append (h3.cons (T 2))
     have h1 := (packetPerm 1).append (h2.cons (T 1))
     simpa only [orderedPackets,packets,List.map_cons,List.map_nil,blocksWord,
-      List.append_nil,l,word,P,T] using (packetPerm 0).append (h1.cons (T 0))
-  have cert : Certificate a b c a := by
+      List.append_nil,List.append_assoc,List.cons_append,l,word,P,T] using (packetPerm 0).append (h1.cons (T 0))
+  let cert : Certificate a b c a := by
     refine DataCertificate.mk packets ?_ 0 ?_ ?_ ?_ ?_
     · apply Multiset.coe_eq_coe.mp
       cases asc <;> dsimp [packets,T,terminal,negatives,size]
-      all_goals simp only [List.map_cons,List.map_nil,Prod.snd,Multiset.coe_cons,Multiset.coe_nil]
-      all_goals ac_rfl
+      · change (({a+b+c+a-1}:Multiset ℕ)+{a+c-1}+{a-1}+{a+c+b-1}) =
+          {a-1}+{a+c-1}+{a+c+b-1}+{a+b+c+a-1}
+        ac_rfl
+      · change (({a+b+c+a-1}:Multiset ℕ)+{a-1}+{a+c-1}+{a+c+b-1}) =
+          {a-1}+{a+c-1}+{a+c+b-1}+{a+b+c+a-1}
+        ac_rfl
     · intro p hp i hi
       simp only [packets,List.mem_cons,List.mem_nil_iff,or_false] at hp
       rcases hp with rfl|rfl|rfl|rfl <;> exact good _ i (List.mem_toFinset.mp hi)
@@ -189,14 +194,14 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
       all_goals nlinarith only [ns0,ns1,ns2,ns3,t0.2,t1.2,t2.2,t3.2,
         g0.2.1,g0.2.2,g1.2.1,g1.2.2,g2.2.1,g2.2.2,g3.2.1,g3.2.2]
   have physicalInventory : l.Perm (List.range (size a b c a)) :=
-    packetWordPerm.symm.trans (Multiset.coe_eq_coe.mp cert.partition)
-  have packetMember (j : Fin 4) : ((P j).toFinset,T j)∈cert.packets := by
+    packetWordPerm.symm.trans (Multiset.coe_eq_coe.mp (DataCertificate.partition cert))
+  have packetMember (j : Fin 4) : ((P j).toFinset,T j)∈(DataCertificate.packets cert) := by
     change ((P j).toFinset,T j)∈packets
     fin_cases j <;> simp [packets]
   -- Consume the certificate's endpoint fields. Its first-slot placement is
   -- freely ordered within the positive packet, here literally fresh FIRST.
-  have oc := cert.oldEndpoints
-  have nc := cert.newEndpoints
+  have oc := (DataCertificate.oldEndpoints cert)
+  have nc := (DataCertificate.newEndpoints cert)
   change finiteChecks (oldMass a b c a) f (N/2) 0 packets at oc
   change finiteEarChecks (newMass a b c a) g N (base a b c a 0) 0 0 packets at nc
   rw [hbases] at nc
@@ -205,12 +210,12 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
   obtain ⟨ol0,op0,ol1,op1,ol2,op2,ol3,op3,_⟩ := oc
   obtain ⟨nl0,np0,nl1,np1,nl2,np2,nl3,np3,_⟩ := nc
   have pos (j : Fin 4) (i : ℕ) (hi : i∈P j) : 0≤f i ∧ 0≤g i := by
-    have hi' := cert.positiveLabels _ (packetMember j) i (List.mem_toFinset.mpr hi)
+    have hi' := (DataCertificate.positiveLabels cert) _ (packetMember j) i (List.mem_toFinset.mpr hi)
     have hs := source_signs a b c a ha hb hc ha i hi'.1
     rw [if_neg hi'.2] at hs
     exact ⟨hs.1.le,hs.2.le⟩
   have neg (j : Fin 4) : f (T j)<0 ∧ g (T j)<0 := by
-    have hn : T j∈negatives a b c a := cert.negativeOrder.mem_iff.mp
+    have hn : T j∈negatives a b c a := (DataCertificate.negativeOrder cert).mem_iff.mp
       (List.mem_map.mpr ⟨((P j).toFinset,T j),packetMember j,rfl⟩)
     have ht : T j<size a b c a := by
       simp only [negatives,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false,size] at hn
