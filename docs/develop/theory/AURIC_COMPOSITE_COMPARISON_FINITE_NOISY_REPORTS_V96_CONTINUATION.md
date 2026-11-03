@@ -1217,3 +1217,261 @@ $$
 这里仍只研究同一 C99 二元边的局部交替桥。C105、C106 的滤波边界与 C107 的完全正分支修复使用不同的实际输入和误差；源容量及有限记录的可取得性也不是 (9.3) 的认证。没有从这些对象到完整 (5.2) 的已证映射，就不能把相应预算换名代入本证书。第 8 节的全部模型、供应及物理边界继续保留：正残差时不推出 Jacobi 稳定性、公共标尺稳定性、精确第三方活动延伸、近邻复 $C^*$ 重构、无限维推广或物理实现；任意允许 $M,\Gamma$ 的结论来自定理 9.2 与定理 9.4 的显式前件，Pauli 族只是其中一个满足模型。本文的解析证明不作 Lean／kernel 验证声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 完整残差在两个不同输入槽上的平方和传递
+
+**定理 12.1（同一实际完整残差到作用支撑的无重复计数传递）。** 保持定义 5.1–5.2 的全部前件、原实际乘积内积、任意允许的 $M,\Gamma$ 和字面上的 (5.2)–(5.3)。$R,\mathcal A,\mathcal B$ 恰为 (6.5)、(6.11)，$c_A,c_B$ 恰为 (6.1)。对 $A$ 方的每个单位 $a$，置 $z=D^A_aa$，则
+
+$$
+\boxed{k_B\|\mathcal T_Az\|
+ \le\epsilon\bigl(c_A d_B+c_B\|z\|\bigr).}
+\tag{12.1}
+$$
+
+交换双方得到 $k_A\|\mathcal T_B(D^B_bb)\|\le\epsilon(c_Bd_A+c_A\|D^B_bb\|)$。即使伙伴曲率为零，未作除法的这些不等式仍成立。它们使用与 (9.12) 完全相同的残差和局部参数，右端不再有 $\sqrt{n_J}$。
+
+证明。以下所有有限 Hilbert 张量积和直和均使用原实际内积。将双线性 $R$ 线性化为 $\widetilde R:V\otimes V\to V$，其中 $\widetilde R(H\otimes Y)=R_HY$。由已经成立的 (6.6)–(6.7)，
+
+$$
+\|\widetilde R\|_{\rm HS}\le\rho,
+\qquad \rho=\epsilon u_Au_B.
+\tag{12.2}
+$$
+
+采用有限维 Hilbert–Schmidt 理想的标准不等式
+$\|UTV\|_{\rm HS}\le\|U\|_{\rm op}\|T\|_{\rm HS}\|V\|_{\rm op}$，不以 $\|V\|_{\rm HS}$ 代替最后的算子范数。该标准工具的平方和与右复合形式可参见 [physlib，HilbertSchmidt，`tsum_norm_sq_mul_right_le_of_opNorm_le_one` 及 `tsum_norm_sq_mul_right_le_of_selfAdjoint`](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/HilbertSchmidt.lean)；这里用的是实有限维形式，不需要给 $M,\Gamma$ 增加复矩阵表示。为明确其适用方向，若 $T:F_1\to F_2$、$V_0:F_0\to F_1$，$(q_i)$、$(p_j)$ 分别为 $F_0,F_2$ 的正交单位基，则
+
+$$
+\begin{aligned}
+\sum_i\|TV_0q_i\|^2
+ &=\sum_j\|V_0^\dagger T^\dagger p_j\|^2
+ \le\|V_0\|_{\rm op}^2\sum_j\|T^\dagger p_j\|^2
+ =\|V_0\|_{\rm op}^2\|T\|_{\rm HS}^2.
+\end{aligned}
+$$
+
+左复合的估计逐项成立。对三线性 $E$ 的任一槽排列也可使用这一有限平方和规则：固定的输入 $x$ 是从 $\mathbb R$ 到该槽的映射 $t\mapsto tx$，范数为 $\|x\|$；保留一槽则在该槽的正交单位基上求和。因而固定其他槽不会把每个保留基向量都重新收费一次。
+
+先保留 $\mathcal A$ 的最后输入槽。映射 $Y\mapsto H\otimes Y$ 的算子范数为 $\|H\|$，所以 (12.2) 给 $\|R_H\|_{\rm HS}\le\rho\|H\|$。同理，固定 $E$ 的前两个输入，保留全部最后输入，得到
+
+$$
+\|E(a\otimes b,c\otimes1_B,\,\cdot\,)\|_{\rm HS}
+ \le\epsilon u_B\|a\|\|b\|\|c\|.
+$$
+
+将 (6.11) 中的交换子作为两个复合算子估计，并用 $\|L^A_c\otimes I\|_{\rm op}\le\ell_A\|c\|$，有
+
+$$
+\begin{aligned}
+\|\mathcal A_{a,b,c}\|_{\rm HS}
+ &\le2\ell_A\|c\|\rho\|a\|\|b\|
+       +\epsilon u_B\|a\|\|b\|\|c\|\\
+ &=\epsilon c_A\|a\|\|b\|\|c\|.
+\end{aligned}
+\tag{12.3}
+$$
+
+对固定 $w\in J_B$，映射 $I_w:J_A\to V$、$I_wx=x\otimes w$ 的算子范数为 $\|w\|$。取 $c=a$ 后右复合这个映射，得
+
+$$
+\left(\sum_i\|\mathcal A_{a,b,a}(e_i\otimes w)\|^2\right)^{1/2}
+ \le\epsilon c_A\|a\|^2\|b\|\|w\|.
+\tag{12.4}
+$$
+
+即使 $w\ne0$ 时 $\|I_w\|_{\rm HS}=\sqrt{n_A}\|w\|$，这里所需也只是它的算子范数；(12.3) 已经对整个最后输入槽作了平方和。
+
+再保留 $\mathcal B$ 的第一个局部标签槽。对任意 $f\in J_B$、$v\in V$，映射 $x\mapsto(x\otimes f)\otimes v$ 的算子范数为 $\|f\|\|v\|$。由 (12.2)，
+
+$$
+\left(\sum_i\|R_{e_i\otimes f}v\|^2\right)^{1/2}
+ \le\rho\|f\|\|v\|.
+\tag{12.5}
+$$
+
+在 (6.11) 的 $\mathcal B_{e_i,f,g}v$ 中，将交换子两项分别写成
+$R_{e_i\otimes f}(I\otimes L^B_g)v$ 和
+$(I\otimes L^B_g)R_{e_i\otimes f}v$。对前者在 (12.5) 取输入 $(I\otimes L^B_g)v$，对后者逐输出左乘；两者的直和范数均不超过 $\rho\ell_B\|f\|\|g\|\|v\|$。对余下的 $E$ 项，固定第二槽 $1_A\otimes g$、第三槽 $v$，第一槽右复合 $x\mapsto x\otimes f$，得
+
+$$
+\left(\sum_i\|E(e_i\otimes f,1_A\otimes g,v)\|^2\right)^{1/2}
+ \le\epsilon u_A\|f\|\|g\|\|v\|.
+$$
+
+直和三角不等式因此给出
+
+$$
+\left(\sum_i\|\mathcal B_{e_i,f,g}v\|^2\right)^{1/2}
+ \le\epsilon c_B\|f\|\|g\|\|v\|.
+\tag{12.6}
+$$
+
+这里 $v$ 可为任意联合向量，并未从简单张量的逐点估计无条件延拓。
+
+现在复用精确的 (6.14)。对 $c=e_i$、$w=D^B_fg$，在 $V^{\oplus n_A}$ 中同时取范数，并分别使用 (12.4)、(12.6)，得到
+
+$$
+\begin{aligned}
+\|K^B_{fg}b\|\|\mathcal T_Az\|
+ &\le\epsilon c_A\|a\|^2\|b\|\|D^B_fg\|
+       +\epsilon c_B\|f\|\|g\|\|z\|\|b\|\\
+ &\le\epsilon\|b\|\|f\|\|g\|
+       (c_A d_B\|a\|^2+c_B\|z\|).
+\end{aligned}
+\tag{12.7}
+$$
+
+若 $k_B>0$，取原完整曲率表中达到 $k_B$ 的三个单位基向量 $f,g,b$，再取 $\|a\|=1$ 即得 (12.1)。$k_B=0$ 时 (12.1) 左端为零、右端非负。双方交换的证明相同；所用局部支撑、导子斜伴随性及耦合均仍是第 6、9 节的原结果，没有对实际 $\Gamma_H$ 使用伴随性或导子律。∎
+
+## 13. 改进的两方线性证书与原最终最小值的严格比较
+
+**定理 13.1（保留旧选项的全残差证书）。** 对 $J\in\{A,B\}$，以 $J'$ 表示另一方，$\delta_J^{\rm all}$ 仍按 (9.19) 原样定义。若 $W_J\ne\{0\}$、$k_{J'}>0$ 且已有独立认证的 $0<s_J\le\sigma_J$，定义
+
+$$
+\begin{aligned}
+\mu_J&=k_{J'}s_J,&p_J&=c_Jd_{J'},&q_J&=c_{J'},\\
+h_J^*&=\mu_J-\epsilon q_J,&
+K_J^*&=\frac{p_J+q_Jd_J}{\mu_J},&
+U_J^*&=K_J^*\epsilon.
+\end{aligned}
+\tag{13.1}
+$$
+
+$U_J^*$ 对每个 $\epsilon\ge0$ 均可用；只在 $h_J^*>0$ 时再定义
+
+$$
+L_J^*=\frac{\epsilon p_J}{h_J^*}.
+\tag{13.2}
+$$
+
+逐方令
+
+$$
+\delta_J^*=\begin{cases}
+0,&W_J=\{0\},\\
+\min\{\delta_J^{\rm all},U_J^*,L_J^*\},
+ &\text{(13.1) 的条件具备且 }h_J^*>0,\\
+\min\{\delta_J^{\rm all},U_J^*\},
+ &\text{(13.1) 的条件具备且 }h_J^*\le0,\\
+\delta_J^{\rm all},&\text{其余情形}.
+\end{cases}
+\tag{13.3}
+$$
+
+两方同时满足
+
+$$
+\boxed{\begin{aligned}
+\sup_{\|a\|=1}\|D^J_aa\|&\le\delta_J^*,\\
+\|D^J_ac+D^J_ca\|&\le2\delta_J^*\|a\|\|c\|,\\
+\|D^J_{1_J}\|_{\rm op}
+ &\le u_J\min\{d_J,2\delta_J^*\}.
+\end{aligned}}
+\tag{13.4}
+$$
+
+若另外给定 $0\le\vartheta<1$ 且 $\epsilon q_J\le\vartheta\mu_J$，则
+
+$$
+\delta_J^*\le
+\min\left\{\delta_J^{\rm all},
+ \frac{p_J}{(1-\vartheta)\mu_J}\epsilon\right\}.
+\tag{13.5}
+$$
+
+证明。由 (9.4) 的已证对应，$z=D^J_aa\in W_J$。对单位 $a$，(12.1) 和 (9.5) 给
+
+$$
+\mu_J\|z\|\le\epsilon(p_J+q_J\|z\|),
+\qquad \|z\|\le d_J.
+\tag{13.6}
+$$
+
+将第二个不等式代入第一个的右端，只除以正的 $\mu_J$，便得 $\|z\|\le U_J^*$，不需要 $h_J^*$ 有任何符号。若 $h_J^*>0$，移项后除以它另得 $L_J^*$。与原最终最小值取最小，得到 (13.3)；$W_J=0$ 时 (9.4) 已使 $D^J=0$，故即使给定的 $d_J$ 很松，该分支仍为零。再复用 (6.17) 的极化及原导子单位律 $D^J_a1_J=0$，得到全部 (13.4)。正余量假设给 $h_J^*\ge(1-\vartheta)\mu_J>0$，即得 (13.5)。∎
+
+**推论 13.2（系数、退化、维数与尺度）。** 在 (13.1) 的适用范围内，原全量系数 (9.17) 满足
+
+$$
+K_J^*\le\frac{\kappa_J}{\sqrt{n_J}}
+ =\frac{2\max\{p_J,q_Jd_J\}}{\mu_J}.
+\tag{13.7}
+$$
+
+若旧 $h_J=\mu_J-\epsilon\sqrt{n_J}q_J>0$，则 $h_J^*>0$ 且
+
+$$
+L_J^*\le\frac{L_J}{\sqrt{n_J}}.
+\tag{13.8}
+$$
+
+当 $n_J>1$ 且 $\epsilon p_J>0$ 时，$L_J^*<L_J$；因平凡截顶或其他旧选项仍可能更小，这本身不保证 (13.3) 严格改进 (9.19)。严格改进原最终最小值的同一实际实现由命题 13.3 给出。
+
+正谱为空、作用为零、伙伴曲率为零或尚无已认证正隙时，(13.3) 的相应分支保留，不形成 $0/0$。若只有吸收分母 $h_J^*\le0$，仍可用全量 $U_J^*$。若 $p_J=0$ 且 $h_J^*>0$，(13.2) 的零分子确实给零缺陷；分母不正时不能由这个零分子推出零缺陷。原始 $d_J$ 只须是合法上界，无须达到实际范数。活动合同中 $\epsilon=0$ 时，原推论 6.2 已给双方交替、$D^J_{1_J}=0$ 及同一实际 $\Gamma=Q$；若提供正隙，(13.1)–(13.3) 也给同一零值。扩大到静态伙伴时，$k_{J'}=0$ 的分支不因此变成零证书。
+
+仅移除了传递中的一个显式 $\sqrt{n_J}$；$c_J,d_J,k_J,s_J$ 随维数、单位和局部表的变化仍全部保留。若报告的是 (5.3) 的三元标签均方根 $\eta$，则 $\epsilon=N^{3/2}\eta$，$N=n_An_B$，所以全量线性界为
+
+$$
+U_J^*=\frac{c_Jd_{J'}+c_{J'}d_J}{k_{J'}s_J}
+             N^{3/2}\eta.
+\tag{13.9}
+$$
+
+例如控制 (13.9) 右端趋零是一个充分条件；正余量版本还要求 $N^{3/2}\eta q_J\le\vartheta\mu_J$。不将 $\eta$ 当作 $\epsilon$，也不由逐实现的正隙推断一个变化族上的统一正下界。
+
+证明。$p_J+q_Jd_J\le2\max\{p_J,q_Jd_J\}$ 给 (13.7)。$n_J\ge1$ 给 $h_J^*\ge h_J$，比较相同正分子的两分母得到 (13.8) 及所述严格性。所有退化由 (13.3)、(13.6) 和原精确端点分别判定；不存在对非正系数的除法。
+
+对共同时间变换 $D^J\mapsto\tau D^J$、$\Gamma\mapsto\tau\Gamma$，$\tau\ne0$ 时 $\epsilon,d_J,s_J$ 同乘 $|\tau|$，$p_J,\mu_J,h_J^*$ 同乘 $|\tau|$，$q_J,K_J^*$ 不变，$U_J^*,L_J^*,\delta_J^*$ 同乘 $|\tau|$。$\tau=0$ 使用零作用分支，不从消失的正谱作除法。对 (9.15) 的共同产品尺度 $s>0$，$\epsilon\mapsto s^3\epsilon$、$p_J,q_J\mapsto s^{-1}(p_J,q_J)$、$\mu_J,h_J^*\mapsto s^2(\mu_J,h_J^*)$，所以 $K_J^*\mapsto s^{-3}K_J^*$，$U_J^*,L_J^*,\delta_J^*$ 不变。单位生成元的界则随 $u_J\mapsto s^{-1}u_J$ 相应缩放。命题 7.1 的完整残差尺度障碍继续成立；$s=0$ 不属于含幺合同。∎
+
+**命题 13.3（原 Pauli 实现严格改进旧最终联合证书）。** 原样使用命题 10.1 的实际产品、指派、乘积内积和完整报告，不另构造见证。令
+
+$$
+C_*=1+2\sqrt2,\qquad d=\sqrt{1+t^2},\qquad
+\epsilon=12\sqrt2|t|,
+\qquad0<|t|<\frac1{192\sqrt2 C_*}.
+\tag{13.10}
+$$
+
+两方取同一实现的精确数据 $n_J=4$、$u_J=k_J=1$、$\ell_J=\sqrt2$、$d_J=d$、$s_J=\sigma_J=\sqrt2$。其字面完整残差仍为 $\epsilon^2=288t^2$。在这个非空区间，两方的旧最终 (9.19) 及新 (13.3) 恰为
+
+$$
+\begin{aligned}
+\delta_J^{\rm all}
+ &=\frac{2C_*d\epsilon}{\sqrt2-2C_*\epsilon},\\
+\delta_J^*
+ &=\frac{C_*d\epsilon}{\sqrt2-C_*\epsilon},\\
+0<\frac{|t|}{2}&\le\delta_J^*<\delta_J^{\rm all}.
+\end{aligned}
+\tag{13.11}
+$$
+
+因此严格比较的对象包含旧二次根、原 $d_J$ 截顶、旧正分母线性界和旧全量线性界，且新证书未把实际非零缺陷假设为零。两方完整对称缺陷与单位生成元分别满足 (13.4)，实际 $\|D^t_1\|_{\rm op}=|t|\ne0$。$t=0$ 保留为同一活动族的精确零残差端点。
+
+证明。所有实际对应均复用 (10.1)–(10.6) 与 (10.3) 的完整残差计算。区间 (13.10) 等价于 $0<\epsilon<1/(16C_*)$。按 (10.13)，旧正分母界 $L(t)$ 已严格小于二次根及 $d$。旧全量系数在本族为 $\kappa_J=4C_*d/\sqrt2$，并且
+
+$$
+\frac{L(t)}{\kappa_J\epsilon}
+ =\frac{\sqrt2}{2(\sqrt2-2C_*\epsilon)}<1,
+$$
+
+因为 $\epsilon<1/(16C_*)<\sqrt2/(4C_*)$。故旧最终最小值确实为 $L(t)$，而非只比较定理 6.1。
+
+新分母为 $\sqrt2-C_*\epsilon>0$，其正分母值严格小于 $L(t)$。新全量值为 $U_J^*=2C_*d\epsilon/\sqrt2$，且
+
+$$
+\frac{L_J^*}{U_J^*}
+ =\frac{\sqrt2}{2(\sqrt2-C_*\epsilon)}<1
+$$
+
+由同一区间保证。故新最终最小值就是所示 $L_J^*$。实际对角上确界 $|t|/2$ 已由 (10.4) 达到，定理 13.1 给其上界；(10.4) 同时给非零单位生成元。$t=0$ 时 (10.6) 的实际 $E$ 为零，作用正隙仍为 $\sqrt2$，双方新旧最小值皆为零。∎
+
+## 14. 完整平方和应用的数学归属与数据边界
+
+**定义 14.1（承重综合及不同报告域）。** 定理 12.1–13.1 的承重内容属于本仓推导（repo-derived）：在原 C99 二元边的同一实际三线性残差中，分别保留 $\mathcal A$ 的最后输入槽和 $\mathcal B$ 的局部标签槽，对精确耦合 (6.14) 作直和估计，再接入 (9.4)–(9.5) 的既有作用支撑。这给出 (12.1) 与不附加模型假设的 (13.3)，并由同一已构造实际实现得到相对旧最终最小值的严格区间。Hilbert–Schmidt 理想不等式、有限谱定理、直和三角不等式和极化均为标准中间工具；V95 定理 2.1 第一项、原卷 (20.1)–(20.2)、本卷第 6、9、10 节分别承担其原有输入，不重新认领为本节的新结果。不主张文献原创优先权、最优常数或最优维数指数。
+
+[Kapustin，arXiv:1303.6917v4，Axioms 4–7](https://arxiv.org/html/1303.6917v4) 的 Lie 观测量与精确组合前件，以及 [Moldoveanu，arXiv:1303.3935，式 (6)–(9)](https://arxiv.org/html/1303.3935) 的精确 Leibniz、单位条件与四通道复合，是精确复合路线的先例；它们不在此供应 (12.1) 的交替前、任意实际 $M,\Gamma$ 的噪声传递。第 1–4 节的 C98 报告仍不是 (5.3)。[同尺度乘积序稳定性续篇，定理 Q97.2、证明 Q97.10](AURIC_COMPOSITE_COMPARISON_SAME_SCALE_PRODUCT_ORDER_STABILITY_V96_CONTINUATION.md) 对原卷定义 8.1–8.4 的带标签报告与指定张量模板给同单位、同内积、同内生标尺修复；其报告 $\Gamma$ 不是这里的实际指派误差 $E$，其模板也不是任意另给的 $M$。要把该修复作为下游结论，仍须另证从这里实际运算到其报告及模板的误差映射。
+
+原卷 C109 的互易、半程与归一化返回余量，以及 C110 定义 92.1、定理 94.1 的联合容差，作用于已给复代数上的完全正成功分支，范数和量词分别由其效果、返回输出及 diamond 报告决定。它们没有提供到 (5.1)–(5.3) 的对象及误差映射，因而不向任意 Frobenius $M,\Gamma$ 转移其无维数结论。原卷定理 97.1 的固定返回余量障碍也不改变本节不同残差的界，或其自身尚未解决的收敛问题。
+
+(13.1) 的正隙仍须由同一实际局部有限表、实际零空间与支撑独立认证。带误差表的统计取得、真实支撑的认证、置信率与完整报告的操作供应均是另需的数据条件；不能删去小特征值后把剩余谱当作已经认证的 $s_J$。曲率与局部上界必须取各自正确方向，未供应正隙时仍用 (13.3) 的旧证书。该理论只控制局部对角、完整对称及单位生成元缺陷，保留原 (6.8) 的实际模板差；不把正残差解释为 Jacobi 稳定性、公共标尺稳定性、精确第三方活动延伸、近邻复 $C^*$ 重构、无限维结论或物理实现。存在数学态、效果、耦合或过程与实际取得它们仍是不同前件。
+
+## 追加锚（本行以下为增补区）
