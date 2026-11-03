@@ -13,10 +13,11 @@ result:
   admission_basis: open-problem-resolution (#23097; Proved)
   Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25579.
-The claim retains the source minimum condition and XOR fold literally, with the
-fold written inline rather than duplicating the private xs owner in
-D5.S0.Certificates.Games.EllisThanatipanondaCutFamilyA; proofs use List.foldr
-and Mathlib IsLeast, whose correspondence is definitional.
+The registered public xorFold and IsLeastEnder definitions are retained with
+their preregistered bodies. xorFold uses List.foldr directly and does not
+duplicate the private xs component in
+D5.S0.Certificates.Games.EllisThanatipanondaCutFamilyA; proofs use the
+registered definitions and Mathlib IsLeast through definitional correspondence.
 All declarations have Direct frozen dependencies: none.
 The exact-minimum proofs use the arbitrary-list invariant xorFold_span. The
 live proof of bounded_ender uses the exact-minimum witnesses, so bounded_ender
@@ -31,13 +32,13 @@ Private theorem proof_shape and consumer(s):
   regular_construction: bind-only; consumers: regular_least.
   power_construction: bind-only; consumers: power_least.
   xorFold_div: bind-only; consumers: regular_lower, power_lower.
-  xorFold_span: content; escape_witness: xorFold_span; consumers: regular_lower, power_lower.
+  xorFold_span: bind-only; consumers: regular_lower, power_lower.
   sequence_tail_bounds: bind-only; consumers: regular_lower, power_lower.
   div_between: bind-only; consumers: regular_lower.
-  regular_lower: content; escape_witness: xorFold_span; consumers: regular_least.
-  power_lower: content; escape_witness: xorFold_span; consumers: power_least.
-  regular_least: content; escape_witness: regular_lower; consumers: bounded_ender.
-  power_least: content; escape_witness: power_lower; consumers: bounded_ender.
+  regular_lower: bind-only; consumers: regular_least.
+  power_lower: bind-only; consumers: power_least.
+  regular_least: content; escape_witness: regular_least; consumers: bounded_ender.
+  power_least: content; escape_witness: power_least; consumers: bounded_ender.
   bounded_ender: content; escape_witness: bounded_ender; consumers: result.
 Utility none: arbitrary natural indices and finite lists of unrestricted length.
 -/
@@ -48,6 +49,9 @@ import Mathlib.Data.Nat.Bitwise
 
 namespace D5.S3.Arith.Additive.GreathouseA359506XorBound
 
+def xorFold : List ℕ → ℕ :=
+  List.foldr (fun a b => a ^^^ b) 0
+
 /-- A finite strictly increasing sequence starts at `n`, ends at `m`, and has XOR zero. -/
 def HasZeroXorSequence (n m : ℕ) : Prop :=
   ∃ bs : List ℕ,
@@ -55,13 +59,16 @@ def HasZeroXorSequence (n m : ℕ) : Prop :=
       bs ≠ [] ∧
       bs.headD 0 = n ∧
       bs.getLastD 0 = m ∧
-      (List.foldr (fun a b => a ^^^ b) 0 bs) = 0
+      xorFold bs = 0
+
+def IsLeastEnder (n m : ℕ) : Prop :=
+  HasZeroXorSequence n m ∧
+    ∀ m' : ℕ, HasZeroXorSequence n m' → m ≤ m'
 
 /-- The A359506 assertion, with existence of the implicitly defined minimum made explicit. -/
 def claim : Prop :=
   ∀ n : ℕ, ∃ m : ℕ,
-    (HasZeroXorSequence n m ∧
-      ∀ m' : ℕ, HasZeroXorSequence n m' → m ≤ m') ∧ 3 * m ≤ 5 * (n + 1)
+    IsLeastEnder n m ∧ 3 * m ≤ 5 * (n + 1)
 
 end D5.S3.Arith.Additive.GreathouseA359506XorBound
 
@@ -71,7 +78,7 @@ private theorem sequence_iff (n m : ℕ) :
     HasZeroXorSequence n m ↔ ∃ bs : List ℕ,
       bs.Pairwise (· < ·) ∧ bs.head? = some n ∧ bs.getLast? = some m ∧
         (List.foldr (fun a b => a ^^^ b) 0 bs) = 0 := by
-  unfold HasZeroXorSequence
+  unfold HasZeroXorSequence xorFold
   apply exists_congr
   intro bs
   cases bs with
@@ -141,18 +148,14 @@ private theorem xorFold_div (s : ℕ) (bs : List ℕ) :
 private theorem xorFold_span (a b : ℕ) (bs : List ℕ)
     (hbs : ∀ x ∈ bs, x = a ∨ x = b) :
     (List.foldr (fun a b => a ^^^ b) 0 bs) = 0 ∨ (List.foldr (fun a b => a ^^^ b) 0 bs) = a ∨ (List.foldr (fun a b => a ^^^ b) 0 bs) = b ∨ (List.foldr (fun a b => a ^^^ b) 0 bs) = a ^^^ b := by
-  induction bs with
-  | nil => exact Or.inl rfl
-  | cons x xs ih =>
-    have ht : ∀ y ∈ xs, y = a ∨ y = b := fun y hy => hbs y (List.mem_cons_of_mem _ hy)
-    change (x ^^^ (List.foldr (fun a b => a ^^^ b) 0 xs) = 0 ∨ x ^^^ (List.foldr (fun a b => a ^^^ b) 0 xs) = a ∨
-      x ^^^ (List.foldr (fun a b => a ^^^ b) 0 xs) = b ∨ x ^^^ (List.foldr (fun a b => a ^^^ b) 0 xs) = a ^^^ b)
-    rcases hbs x (by simp) with hx | hx
-    all_goals
-      rcases ih ht with h | h | h | h
-      all_goals
-        rw [hx, h]
-        simp [Nat.xor_comm, Nat.xor_left_comm]
+  refine List.foldr_rel (l := bs)
+    (f := fun x v : ℕ => x ^^^ v) (g := fun (_ _ : ℕ) => 0)
+    (r := fun v (_ : ℕ) => v = 0 ∨ v = a ∨ v = b ∨ v = a ^^^ b)
+    (a := 0) (b := 0) (Or.inl rfl) ?_
+  intro x hx v w hv
+  rcases hbs x hx with h | h <;>
+    rcases hv with hv | hv | hv | hv <;>
+      simp [h, hv, Nat.xor_comm, Nat.xor_left_comm]
 
 private theorem sequence_tail_bounds {n m : ℕ} {bs : List ℕ}
     (hpair : (n :: bs).Pairwise (· < ·)) (hlast : (n :: bs).getLast? = some m) :

@@ -18,8 +18,14 @@ internal sealed class GreathouseA359506XorBoundDocument : IScribeDocumentDefinit
         "Every least zero-XOR ender satisfies Greathouse's sharp five-thirds bound.",
         H("Greathouse's bound for zero-XOR enders"),
         Blocks(
+            Node("xorFold", "The XOR fold", XorFoldFormula(),
+                "The fold maps a finite list of natural numbers to its right fold under bitwise XOR, starting from zero.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("HasZeroXorSequence", "Increasing zero-XOR sequences", SequenceFormula(),
                 Sequence + "The carrier is the natural numbers, including zero. List.Pairwise with strict order states that every earlier entry is smaller. The list is nonempty, and List.headD and List.getLastD with default zero specify both endpoints. List.foldr of HXor.hXor, the natural bitwise XOR operation, starts at zero.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("IsLeastEnder", "The least ender predicate", IsLeastEnderFormula(),
+                "IsLeastEnder combines the zero-XOR endpoint predicate with the universal comparison that every other ender is at least the selected endpoint.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The five-thirds claim", Disp(Equal(Call("claim"), Parenthesized(ClaimBody()))),
                 Bound + "For every natural n, a least ender exists. Its inequality is written with integer coefficients: 3m ≤ 5(n+1). The universal comparison ranges over all possible natural enders, so minimum existence is explicit.",
@@ -68,24 +74,40 @@ internal sealed class GreathouseA359506XorBoundDocument : IScribeDocumentDefinit
         var bs = F.Id("bs");
         var order = Fun("a", Fun("b",
             new Formula.Relation(F.Id("a"), FormulaRelationOperator.LessThan, F.Id("b"))));
-        var xor = Fun("a", Fun("b", Qualified("HXor", "hXor", F.Id("a"), F.Id("b"))));
         var body = And(Qualified("List", "Pairwise", order, bs),
             And(new Formula.Relation(bs, FormulaRelationOperator.NotEqual, Seq(OpenBracket, CloseBracket)),
                 And(Equal(Qualified("List", "headD", bs, D(0)), n),
                     And(Equal(Qualified("List", "getLastD", bs, D(0)), m),
-                        Equal(Qualified("List", "foldr", xor, D(0), bs), D(0))))));
+                        Equal(Call("xorFold", bs), D(0))))));
         return Disp(All("n", Nat(), All("m", Nat(),
             Equal(Call("HasZeroXorSequence", n, m),
                 Parenthesized(Some("bs", Call("List", Nat()), body))))));
+    }
+
+    private static Formula XorFoldFormula()
+    {
+        var bs = F.Id("bs");
+        var xor = Fun("a", Fun("b", Qualified("HXor", "hXor", F.Id("a"), F.Id("b"))));
+        return Disp(All("bs", Call("List", Nat()),
+            Equal(Call("xorFold", bs), Qualified("List", "foldr", xor, D(0), bs))));
+    }
+
+    private static Formula IsLeastEnderFormula()
+    {
+        var n = F.Id("n");
+        var m = F.Id("m");
+        var other = Seq(F.Id("m"), Apos);
+        var least = And(Call("HasZeroXorSequence", n, m),
+            AllPrime("m", Nat(), Imp(Call("HasZeroXorSequence", n, other), Le(m, other))));
+        return Disp(All("n", Nat(), All("m", Nat(),
+            Equal(Call("IsLeastEnder", n, m), Parenthesized(least)))));
     }
 
     private static Formula ClaimBody()
     {
         var n = F.Id("n");
         var m = F.Id("m");
-        var other = Seq(F.Id("m"), Apos);
-        var minimum = And(Call("HasZeroXorSequence", n, m),
-            AllPrime("m", Nat(), Imp(Call("HasZeroXorSequence", n, other), Le(m, other))));
+        var minimum = Call("IsLeastEnder", n, m);
         var bound = Le(new Formula.Binary(D(3), FormulaBinaryOperator.Multiply, m),
             new Formula.Binary(D(5), FormulaBinaryOperator.Multiply,
                 Parenthesized(new Formula.Binary(n, FormulaBinaryOperator.Add, D(1)))));
