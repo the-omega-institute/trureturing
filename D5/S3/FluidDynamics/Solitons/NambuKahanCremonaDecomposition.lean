@@ -23,17 +23,13 @@ open scoped Matrix
 
 noncomputable section
 
-private def complexMatrix (A : Matrix (Fin 3) (Fin 3) ℝ) :
-    Matrix (Fin 3) (Fin 3) ℂ :=
-  A.map (algebraMap ℝ ℂ)
-
-private def nambuLinearPart (A B : Matrix (Fin 3) (Fin 3) ℝ) (x : Fin 3 → ℂ) :
+def nambuLinearPart (A B : Matrix (Fin 3) (Fin 3) ℝ) (x : Fin 3 → ℂ) :
     Matrix (Fin 3) (Fin 3) ℂ :=
   fun i j =>
-    crossProduct (complexMatrix A *ᵥ x)
-        (complexMatrix B *ᵥ (Pi.single j 1)) i +
-      crossProduct (complexMatrix A *ᵥ (Pi.single j 1))
-        (complexMatrix B *ᵥ x) i
+    crossProduct (A.map (algebraMap ℝ ℂ) *ᵥ x)
+        (B.map (algebraMap ℝ ℂ) *ᵥ (Pi.single j 1)) i +
+      crossProduct (A.map (algebraMap ℝ ℂ) *ᵥ (Pi.single j 1))
+        (B.map (algebraMap ℝ ℂ) *ᵥ x) i
 
 /-- The source KHK matrix, with its linear part written by cross-product columns. -/
 def kahanMatrix (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ) (X : Fin 4 → ℂ) :
@@ -197,21 +193,21 @@ private def liftP (P : Matrix (Fin 3) (Fin 3) ℝ) :
   fun i j =>
     if hi : i.val < 3 then
       if hj : j.val < 3 then
-        complexMatrix P ⟨i.val, hi⟩ ⟨j.val, hj⟩
+        P.map (algebraMap ℝ ℂ) ⟨i.val, hi⟩ ⟨j.val, hj⟩
       else 0
     else if j.val < 3 then 0 else 1
 
 private theorem liftP_unit (P : Matrix (Fin 3) (Fin 3) ℝ) (hP : IsUnit P.det) :
     IsUnit (liftP P).det := by
   have hd : (liftP P).det = (P.det : ℂ) := by
-    simp [liftP, complexMatrix, Matrix.det_succ_row_zero,
+    simp [liftP, Matrix.det_succ_row_zero,
       Fin.sum_univ_succ, Matrix.submatrix, Fin.succAbove]
   rw [hd]
   exact hP.map (algebraMap ℝ ℂ)
 
 private theorem liftP_action (P : Matrix (Fin 3) (Fin 3) ℝ) (X : Fin 4 → ℂ) :
     liftP P *ᵥ X =
-      Fin.snoc (complexMatrix P *ᵥ (fun i : Fin 3 => X i.castSucc)) (X 3) := by
+      Fin.snoc (P.map (algebraMap ℝ ℂ) *ᵥ (fun i : Fin 3 => X i.castSucc)) (X 3) := by
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
   · rw [Fin.snoc_last]
@@ -221,8 +217,8 @@ private theorem liftP_action (P : Matrix (Fin 3) (Fin 3) ℝ) (X : Fin 4 → ℂ
   · rw [Fin.snoc_castSucc]
     fin_cases j <;>
       simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
-      rw [liftP, complexMatrix] <;>
-      simp [liftP, complexMatrix]
+      rw [liftP] <;>
+      simp [liftP]
 
 private def eulerCoefficients (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ) :
     Fin 3 → ℂ :=
@@ -267,15 +263,13 @@ private theorem cross_inverse_transpose (Q : Matrix (Fin 3) (Fin 3) ℂ)
 private theorem nambu_action (A B : Matrix (Fin 3) (Fin 3) ℝ)
     (x v : Fin 3 → ℂ) :
     nambuLinearPart A B x *ᵥ v =
-      crossProduct (complexMatrix A *ᵥ x) (complexMatrix B *ᵥ v) +
-        crossProduct (complexMatrix A *ᵥ v) (complexMatrix B *ᵥ x) := by
-  conv_lhs =>
-    arg 1
-    ext i j
-    rw [nambuLinearPart]
-  funext i
-  fin_cases i <;>
-    simp [cross_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
+      crossProduct (A.map (algebraMap ℝ ℂ) *ᵥ x) (B.map (algebraMap ℝ ℂ) *ᵥ v) +
+        crossProduct (A.map (algebraMap ℝ ℂ) *ᵥ v) (B.map (algebraMap ℝ ℂ) *ᵥ x) := by
+  exact LinearMap.toMatrix'_mulVec
+    (((crossProduct (A.map (algebraMap ℝ ℂ) *ᵥ x)).comp
+      (B.map (algebraMap ℝ ℂ)).mulVecLin) +
+      ((crossProduct.flip (B.map (algebraMap ℝ ℂ) *ᵥ x)).comp
+        (A.map (algebraMap ℝ ℂ)).mulVecLin)) v
 
 private theorem covariance
     (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ)
@@ -287,7 +281,7 @@ private theorem covariance
         liftP P *ᵥ eulerPhi (eulerCoefficients P mu 0)
           (eulerCoefficients P mu 1) (eulerCoefficients P mu 2) (h : ℂ) Z := by
   intro Z
-  let Q := complexMatrix P
+  let Q := P.map (algebraMap ℝ ℂ)
   let D : Matrix (Fin 3) (Fin 3) ℂ := diagonal (fun i => (mu i : ℂ))
   let a := eulerCoefficients P mu
   have hdQ : Q.det = (P.det : ℂ) := (RingHom.map_det (algebraMap ℝ ℂ) P).symm
@@ -295,26 +289,26 @@ private theorem covariance
     rw [hdQ]
     exact hP.map (algebraMap ℝ ℂ)
   have hQt : IsUnit Qᵀ.det := by simpa only [Matrix.det_transpose] using hQ
-  have hcA : Qᵀ * complexMatrix A * Q = 1 := by
+  have hcA : Qᵀ * A.map (algebraMap ℝ ℂ) * Q = 1 := by
     change Pᵀ.map (algebraMap ℝ ℂ) * A.map (algebraMap ℝ ℂ) *
       P.map (algebraMap ℝ ℂ) = 1
     rw [← Matrix.map_mul, ← Matrix.map_mul, hA]
     exact Matrix.map_one _ (map_zero _) (map_one _)
-  have hcB : Qᵀ * complexMatrix B * Q = D := by
+  have hcB : Qᵀ * B.map (algebraMap ℝ ℂ) * Q = D := by
     change Pᵀ.map (algebraMap ℝ ℂ) * B.map (algebraMap ℝ ℂ) *
       P.map (algebraMap ℝ ℂ) = diagonal (fun i => (mu i : ℂ))
     rw [← Matrix.map_mul, ← Matrix.map_mul, hB,
       Matrix.diagonal_map (map_zero (algebraMap ℝ ℂ))]
     rfl
-  have hAP : complexMatrix A * Q = Qᵀ⁻¹ := by
+  have hAP : A.map (algebraMap ℝ ℂ) * Q = Qᵀ⁻¹ := by
     calc
-      _ = Qᵀ⁻¹ * (Qᵀ * complexMatrix A * Q) := by
+      _ = Qᵀ⁻¹ * (Qᵀ * A.map (algebraMap ℝ ℂ) * Q) := by
         rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hQt,
           Matrix.one_mul]
       _ = _ := by rw [hcA, Matrix.mul_one]
-  have hBP : complexMatrix B * Q = Qᵀ⁻¹ * D := by
+  have hBP : B.map (algebraMap ℝ ℂ) * Q = Qᵀ⁻¹ * D := by
     calc
-      _ = Qᵀ⁻¹ * (Qᵀ * complexMatrix B * Q) := by
+      _ = Qᵀ⁻¹ * (Qᵀ * B.map (algebraMap ℝ ℂ) * Q) := by
         rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hQt,
           Matrix.one_mul]
       _ = _ := by rw [hcB]
