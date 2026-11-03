@@ -41,14 +41,13 @@ private theorem rejected_law : ¬arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
-  refine ⟨⟨4,1,2⟩,5,0,?_⟩
+  obtain ⟨v,m,M,before,_,_,hgood⟩ :=
+    small_p_allh_selection 4 1 2 (by norm_num) (by norm_num) (by norm_num)
+  refine ⟨⟨4,1,2⟩,(v:ℤ),0,?_⟩
   intro he
-  have hgood : rowBounds 4 4 2 4 5 20 29 false := by
-    simpa [h4SmallRows] using h4_small_bounds 0
-  have he' := congrFun (congrFun (congrFun he 20) 29) false
-  change rowBounds 4 4 ((2:ℤ)^1) ((2:ℤ)^2) 5 20 29 false =
-    rowBounds 4 4 ((2:ℤ)^1) ((2:ℤ)^2) 0 20 29 false at he'
-  norm_num only [pow_one,show (2:ℤ)^2=4 by norm_num] at he'
+  have he' := congrFun (congrFun (congrFun he (m:ℤ)) (M:ℤ)) before
+  change rowBounds 4 4 ((2:ℤ)^1) ((2:ℤ)^2) v m M before =
+    rowBounds 4 4 ((2:ℤ)^1) ((2:ℤ)^2) 0 m M before at he'
   have hbad := he'.mp hgood
   have := hbad.2.1
   norm_num at this

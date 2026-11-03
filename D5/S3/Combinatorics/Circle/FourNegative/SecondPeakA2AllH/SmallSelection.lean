@@ -84,7 +84,7 @@ theorem small_p_allh_selection (p Q H : ℕ)
     rcases hqsmall with hq|hq|hq|hq|hq
     · rw [hq]
       by_cases hp4 : p=4
-      · subst p
+      · rw [hp4]
         exact ⟨5,5*2^H,8*2^H-1,false,q_two_boundary_good H⟩
       · have hP3 : 3≤P := by
           by_contra hn
