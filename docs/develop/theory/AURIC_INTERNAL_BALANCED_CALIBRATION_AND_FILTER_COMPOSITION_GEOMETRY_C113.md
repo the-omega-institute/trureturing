@@ -1333,3 +1333,384 @@ Stanisław J. Szarek, Elisabeth Werner and Karol Życzkowski, *Geometry of sets 
 固定源码 [GurvitsBarnumBall.lean](https://github.com/the-omega-institute/trureturing/blob/d5f7c3fd1d1e4fca459bafe6cbab5129bc1a9a90/D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.lean) 的 `frobSq_le_trace_sq_of_blockPositive` 与 `separableCone_one_sub_rankOne` 分别提供 (16.4) 和秩一投影补的可分性，前者已覆盖两因子维数不同的矩阵。源内应用是 (16.7)–(16.13) 的成功效果重加权及等号回接；这些公式的本附录证明为普通数学证明。
 
 ## 追加锚（本行以下为增补区）
+## 20. 仅保正有限校准的近饱和与目标支撑泄漏
+
+### 定义 20.1（同一正分支的误差坐标）
+
+完整保留定义 15.1 的原 $H=\mathbb C^d$、有限输出 $K$、指定等距 $J$、同一个正复线性 $T$、正确效果 $T^\dagger(I_K)=E\in[0,I_H]$、实际精确有限射影二阶设计及其指定读回。令
+
+$$
+\begin{aligned}
+A&=\sqrt E,& P&=\operatorname{supp}E,& r&=\operatorname{rank}E,& k&=\dim K,\\
+M&=\|E\|_{\mathrm{op}},&t&=\operatorname{Tr}E,&s&=\operatorname{Tr}A,\\
+L(X)&=JAXAJ^\dagger,&\delta&=Q_{\mathscr D}(E)-R_{\mathscr D,J}(T),&D&=d(d+1)\delta.
+\end{aligned}
+\tag{20.1}
+$$
+
+记 $\Pi=JJ^\dagger$、$F=JPJ^\dagger$、$F^\perp=I_K-F$，并定义
+
+$$
+\ell_0=\operatorname{Tr}[(I_K-\Pi)T(I_H)],\qquad
+\lambda=\operatorname{Tr}[F^\perp T(I_H)].
+\tag{20.2}
+$$
+
+$F$ 是目标平方根分支的输出支撑，不只是指定读回空间。恒等式
+
+$$
+F^\perp=(I_K-\Pi)+J(I_H-P)J^\dagger
+\tag{20.3}
+$$
+
+使 $\lambda$ 同时计入 $JH$ 外以及 $J(\ker E)$ 内的全部方向。
+
+对任意复线性映射，采用不带 $1/2$ 的范数约定
+
+$$
+\|\Phi\|_\diamond
+=\sup_{n\ge1}\ \sup_{\|X\|_1=1}
+\|(\Phi\otimes\operatorname{id}_{M_n})(X)\|_1.
+\tag{20.4}
+$$
+
+内层包括任意复矩阵输入。此处参考因子属于数学范数的量词，不要求放大后的 $T$ 保正，也不表示实际供应了参考系统。
+
+### 定理 20.2（无谱底的正分支稳定性与支撑秩界）
+
+在定义 20.1 的全部原前件下，$D\ge0$，且
+
+$$
+\boxed{
+\begin{aligned}
+\|T-L\|_\diamond&\le B(E,d,k,D),\\
+B(E,d,k,D)&:=\min\left\{
+ t+M,\ \sqrt{2kMD},\ 2\sqrt{dMD},
+ (\sqrt{2r}+3)\sqrt{MD}\right\}.
+\end{aligned}}
+\tag{20.5}
+$$
+
+$E=0$ 时 $T=L=0$。若 $E\ne0$，在定理 16.1 的支撑本征基中，沿用 (16.9) 的 $G,v$ 与 (16.10) 的 $z=\langle v,Gv\rangle$，令 $q=s^2-z$，则
+
+$$
+\boxed{
+D=\ell_0+q,\quad \ell_0,q\ge0,\quad
+\|C_T-C_L\|_{\mathrm{HS}}\le\sqrt{2Mq},\quad
+\lambda\le\frac{\sqrt M}{s}q,\quad t\lambda\le Mq.
+}
+\tag{20.6}
+$$
+
+其中 Choi 矩阵采用 (16.5) 的输入因子在前、未归一化约定。还可保留较细的估计
+
+$$
+\|T-L\|_\diamond
+\le\sqrt{2rMq}+2\sqrt{(t-\lambda)\lambda}+\lambda.
+\tag{20.7}
+$$
+
+这些结论包括奇异效果、矩形输出和 $r=1$；最终误差界不含最小正本征值的倒数。常数与维数阶不主张最优。零缺口的端点仍是 $R=Q\Longleftrightarrow T=L$。
+
+对任意通常输入态 $\rho\ge0$、$\operatorname{Tr}\rho=1$，若实际共同成功率 $p=\operatorname{Tr}(E\rho)>0$，则还有
+
+$$
+\left\|\frac{T(\rho)}p-\frac{L(\rho)}p\right\|_1
+\le\min\left\{2,\frac{B(E,d,k,D)}p\right\}.
+$$
+
+$p=0$ 时不定义这些条件态。
+
+**证明。** 首先直接复用 (16.3) 的输入支撑关系 $T(X)=T(PXP)$。若 $E=0$，则 $P=0$，全部结论成立。以下设 $E\ne0$，写 $Ae_i=a_ie_i$，其中 $i\le r$ 时 $a_i>0$，并令 $f_i=Je_i$。本征基只是证明坐标，不改变原设计或实际标签。
+
+(16.9)–(16.12) 已给出
+
+$$
+\begin{gathered}
+G=(A_P^{-1/2}\otimes I_K)C_T(A_P^{-1/2}\otimes I_K),\qquad
+v=\sum_{i\le r}\sqrt{a_i}\,e_i\otimes f_i,\\
+\operatorname{Tr}G=s,\qquad \|v\|^2=s,\qquad
+z=\langle v,Gv\rangle,\qquad D=\ell_0+s^2-z.
+\end{gathered}
+\tag{20.8}
+$$
+
+$G$ 自伴且块正，未被假设为正半定。直接使用成熟的矩形块正界 (16.4)，即 [Gurvits–Barnum 定理 1 的对偶形式](#ref-positive-gb)及 [Szarek–Werner–Życzkowski 推论 3 后的范数界](#ref-positive-swz)，有 $\|G\|_{\mathrm{HS}}\le s$。故 $z\le s^2$，并且
+
+$$
+\begin{aligned}
+\|G-|v\rangle\langle v|\|_{\mathrm{HS}}^2
+ &=\|G\|_{\mathrm{HS}}^2+s^2-2z\le2q,\\
+C_T-C_L
+ &=(A_P^{1/2}\otimes I_K)
+       (G-|v\rangle\langle v|)(A_P^{1/2}\otimes I_K).
+\end{aligned}
+\tag{20.9}
+$$
+
+由 $\|A_P^{1/2}\|_{\mathrm{op}}^2=\sqrt M$ 得 $\|C_T-C_L\|_{\mathrm{HS}}^2\le2Mq$。这一步只把支撑上的逆坐标乘回，未引入谱底损失。
+
+接着控制完整目标支撑外的泄漏。在 $PH\otimes K$ 上令 $\widehat F=I_{PH}\otimes F$，并置
+
+$$
+G_F=\widehat F G\widehat F,\qquad
+\nu=\operatorname{Tr}[(I-\widehat F)G].
+$$
+
+压缩到 $PH\otimes FK$ 及 $PH\otimes F^\perp K$ 均保留块正性。其迹是在积正交基上的非负对角项之和，故 $\nu\ge0$、$\operatorname{Tr}G_F=s-\nu\ge0$。若 $F^\perp K=0$，相应压缩及 $\nu$ 均为零。由于 $v\in PH\otimes FK$，再次对 $G_F$ 使用同一矩形块正界，得到
+
+$$
+z=\langle v,G_Fv\rangle
+\le s\|G_F\|_{\mathrm{HS}}
+\le s(s-\nu),\qquad q\ge s\nu.
+\tag{20.10}
+$$
+
+把 $G$ 的输入对角块记为 $G_{ii}$。块正性使每个 $G_{ii}$ 都为正矩阵，因此
+
+$$
+\begin{aligned}
+\lambda
+ &=\sum_{i\le r}a_i\operatorname{Tr}[F^\perp G_{ii}]\\
+ &\le\max_i a_i\sum_{i\le r}\operatorname{Tr}[F^\perp G_{ii}]
+ =\sqrt M\,\nu
+ \le\frac{\sqrt M}{s}q.
+\end{aligned}
+\tag{20.11}
+$$
+
+而 $t=\sum_i a_i^2\le\sqrt M\,s$，所以 $t\lambda\le Mq$。另由 $T(I_H)\ge0$ 得 $0\le\ell_0\le\lambda\le t$。这证明 (20.6)，同时说明 (20.11) 并未遗漏 $J(\ker E)$ 中的泄漏。
+
+以下把这些坐标估计转成完整范数估计。所用迹范数、Schatten Hölder、奇异值分解与 Choi 系数工具均为成熟工具，参见 [Watrous，*The Theory of Quantum Information* 第 3 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)；任意参考的系数矩阵论证也直接沿用 [V12 引理 7.1](AURIC_FINITE_RESOLUTION_AND_COMPLETE_RECURSIVE_OBSERVATION_THEORY_V12.md#71-归一化-choi-约定)。这里只在本证明中写出所需估计，不将它们另立为新增范数定理。
+
+先设 $\Psi$ 是任意正复线性映射，其效果为 $E_\Psi=\Psi^\dagger(I)$。取输入正交基，令 $e_{ij}=|e_i\rangle\langle e_j|$、$b_i=\langle e_i,E_\Psi e_i\rangle$。对任意输出酉矩阵 $U=\sum_a\zeta_a Q_a$ 的谱分解，正矩阵 $B_a=\Psi^\dagger(Q_a)$ 满足 $\sum_aB_a=E_\Psi$，且
+
+$$
+\begin{aligned}
+|\operatorname{Tr}[U\Psi(e_{ij})]|
+ &\le\sum_a|\langle e_j,B_ae_i\rangle|\\
+ &\le\sum_a\sqrt{\langle e_i,B_ae_i\rangle\langle e_j,B_ae_j\rangle}
+ \le\sqrt{b_ib_j}.
+\end{aligned}
+$$
+
+迹范数对酉矩阵的对偶性给 $\|\Psi(e_{ij})\|_1\le\sqrt{b_ib_j}$。这里用的是各 $B_a$ 的正矩阵不等式，没有对仅正映射使用二正 Schwarz 不等式。
+
+任取有限参考 $Z$ 及单位向量 $u=\sum_i e_i\otimes u_i$、$w=\sum_j e_j\otimes w_j$，有
+
+$$
+\begin{aligned}
+\|(\Psi\otimes\operatorname{id}_Z)(|u\rangle\langle w|)\|_1
+ &\le\sum_{i,j}\sqrt{b_ib_j}\,\|u_i\|\,\|w_j\|\\
+ &\le\operatorname{Tr}E_\Psi.
+\end{aligned}
+$$
+
+最后一步分别对两组系数用 Cauchy–Schwarz。任意矩阵的奇异值分解和三角不等式遂给出
+
+$$
+\|\Psi\|_\diamond\le\operatorname{Tr}E_\Psi.
+\tag{20.12}
+$$
+
+这不假设 $\Psi\otimes\operatorname{id}_Z$ 为正。
+
+再对任意复线性 $\Phi$，定义系数矩阵 $U_ue_i=u_i$、$U_we_i=w_i$。两者 Hilbert–Schmidt 范数为一，算符范数至多一。交换输出与参考的张量次序后，逐项展开给出
+
+$$
+(\Phi\otimes\operatorname{id}_Z)(|u\rangle\langle w|)
+\simeq(U_u\otimes I)C_\Phi(U_w^\dagger\otimes I).
+\tag{20.13}
+$$
+
+符号 $\simeq$ 只表示固定的张量因子置换。若输出空间维数为 $m$，Schatten Hölder 给
+
+$$
+\begin{aligned}
+\|(U_u\otimes I_m)C_\Phi(U_w^\dagger\otimes I_m)\|_1
+ &\le\|U_u\otimes I_m\|_{\mathrm{HS}}
+       \|C_\Phi(U_w^\dagger\otimes I_m)\|_{\mathrm{HS}}\\
+ &\le\sqrt m\,\|C_\Phi\|_{\mathrm{HS}}.
+\end{aligned}
+$$
+
+同样由奇异值分解，这对任意参考和全部矩阵输入成立。取 $\Phi=T-L$、$m=k$，即得 (20.5) 的 $\sqrt{2kMD}$ 项。另一方面，(20.12) 给 $\|T\|_\diamond\le t$，而左右乘子给 $\|L\|_\diamond=M$，上界由算符范数获得，最大效果本征向量达到该值。因此 $\|T-L\|_\diamond\le t+M$。
+
+为保留不含 $k$ 的输入维数界，令 $\Phi=T-L$、$S_0(X)=(I_K-\Pi)T(X)(I_K-\Pi)$。$S_0$ 为正，(20.12) 给 $\|S_0\|_\diamond\le\ell_0$。在完整 Choi 空间中置 $\widehat\Pi=I_H\otimes\Pi$，并分解
+
+$$
+C_1=\widehat\Pi C_\Phi,\qquad
+C_2=(I-\widehat\Pi)C_\Phi\widehat\Pi,\qquad
+C_{\Phi-S_0}=C_1+C_2.
+$$
+
+两项的行支撑正交，故
+
+$$
+\|C_1\|_{\mathrm{HS}}^2+\|C_2\|_{\mathrm{HS}}^2
+\le\|C_\Phi\|_{\mathrm{HS}}^2.
+$$
+
+$C_1$ 的左支撑和 $C_2$ 的右支撑分别落在 $H\otimes\Pi K$。在 (20.13) 中分别把左、右的 $I_K$ 换成 $\Pi$，使用 $\operatorname{rank}\Pi=d$，有
+
+$$
+\begin{aligned}
+\|(U_u\otimes I_K)C_1(U_w^\dagger\otimes I_K)\|_1
+ &\le\|U_u\otimes\Pi\|_{\mathrm{HS}}
+      \|C_1(U_w^\dagger\otimes I_K)\|_{\mathrm{HS}}
+ \le\sqrt d\,\|C_1\|_{\mathrm{HS}},\\
+\|(U_u\otimes I_K)C_2(U_w^\dagger\otimes I_K)\|_1
+ &\le\|(U_u\otimes I_K)C_2\|_{\mathrm{HS}}
+      \|U_w^\dagger\otimes\Pi\|_{\mathrm{HS}}
+ \le\sqrt d\,\|C_2\|_{\mathrm{HS}}.
+\end{aligned}
+$$
+
+于是
+
+$$
+\|T-L\|_\diamond
+\le\ell_0+\sqrt{2d}\,\|C_\Phi\|_{\mathrm{HS}}
+\le\ell_0+2\sqrt{dM(D-\ell_0)}.
+\tag{20.14}
+$$
+
+若 $0<D\le dM$，则
+
+$$
+2\sqrt{dMD}-2\sqrt{dM(D-\ell_0)}
+=\frac{2\sqrt{dM}\,\ell_0}{\sqrt D+\sqrt{D-\ell_0}}
+\ge\ell_0.
+$$
+
+故 (20.14) 至多 $2\sqrt{dMD}$。若 $D\ge dM$，则
+
+$$
+2\sqrt{dMD}\ge2dM\ge(d+1)M\ge t+M,
+$$
+
+由已证的迹上界取得同一结论。$D=0$ 时 (20.6) 使 (20.14) 为零。
+
+最后利用目标支撑秩。分解原分支而不改变其输出：
+
+$$
+T-L=(FT(\cdot)F-L)
+ +\bigl(FT(\cdot)F^\perp+F^\perp T(\cdot)F\bigr)
+ +F^\perp T(\cdot)F^\perp.
+\tag{20.15}
+$$
+
+第一项输出落在 $FK$，其 Choi 矩阵是 $C_T-C_L$ 的压缩，故 (20.13) 的 $m=r$ 估计给出 $\sqrt{2rMq}$。最后一项为正，由 (20.12) 得完整范数至多 $\lambda$。
+
+中间项记为 $\mathcal O$。对每个 $b>0$，令
+
+$$
+W_b=bF+b^{-1}F^\perp,\qquad
+\Psi_b(X)=W_bT(X)W_b.
+$$
+
+$\Psi_b$ 仍正，而
+
+$$
+\operatorname{Tr}\Psi_b(I_H)=b^2(t-\lambda)+b^{-2}\lambda.
+$$
+
+取输出酉矩阵 $Z_F=F-F^\perp$。映射 $\mathcal R(Y)=(Y-Z_FYZ_F)/2$ 的 diamond 范数至多一，因为它是两个等距酉共轭之差的一半。缩放在交叉块上相消，故 $\mathcal R\Psi_b=\mathcal O$。对每个参考和任意矩阵输入，范数次乘性及 (20.12) 给
+
+$$
+\|\mathcal O\|_\diamond
+\le\inf_{b>0}\{b^2(t-\lambda)+b^{-2}\lambda\}
+=2\sqrt{(t-\lambda)\lambda}.
+\tag{20.16}
+$$
+
+当任一系数为零时取 $b\to0$ 或 $b\to\infty$，等式仍成立。这一论证只对未放大的 $\Psi_b$ 使用正性。
+
+合并三项得到 (20.7)。由于 $\lambda\le t$、$t\lambda\le Mq$，有
+
+$$
+\begin{aligned}
+\|T-L\|_\diamond
+ &\le\sqrt{2rMq}+2\sqrt{t\lambda}+\lambda\\
+ &\le(\sqrt{2r}+3)\sqrt{Mq}
+ \le(\sqrt{2r}+3)\sqrt{MD}.
+\end{aligned}
+\tag{20.17}
+$$
+
+四个上界共同给出 (20.5)。零缺口迫使范数为零；反向将 $T=L$ 代入原设计读数即得 $R=Q$，与定理 16.1 一致。对所述通常态 $\rho$，两个正输出的迹都恰为 $p$；若 $p>0$，它们除以同一个 $p$ 后均为态，距离至多二，未归一化差由 (20.5) 控制，故条件态误差至多 $\min\{2,B(E,d,k,D)/p\}$。本卷第 6 节已有稀有成功例说明此分母不能普遍省去；这里不把仅正映射的参考放大输出当成态。$\square$
+
+本定理中的块正范数工具及范数比较为上述成熟结果。正映射的迹范数估计、完整输出分块及 $2\sqrt{dMD}$ 界也见同卷的[正分支稳定性稿，§§20–23](https://github.com/the-omega-institute/trureturing/blob/5274eeb2b0da10d4b5cc913fbfd75e181b7828d8/docs/develop/theory/AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md)。这里的源内新增推导是把加权接触缺口进一步用于目标支撑外的 (20.10)–(20.11)，并通过 $t\lambda\le Mq$ 与 (20.15)–(20.17) 取得支撑秩控制；迹上界 $t+M$、一般范数工具及已有输入维数界均作为已有工作复用。Barnum 与 Banaszek 的操作平均最优性仍按 [3](#ref-barnum)、[4](#ref-banaszek) 的原操作算子前件引用。
+
+## 21. 同一有限设计下的非完全正边界
+
+### 命题 21.1（支撑转置混合与完全正上限的失效）
+
+固定定义 15.1 的同一设计、原输出 $K$ 与指定 $J$。设 $P$ 为输入上秩 $r\ge2$ 的正交投影，$0<a\le1$，$E=a^2P$。在 $PH$ 的固定正交基中取转置 $\mathsf T_P$，转置后的算子仍按零延拓视为 $H$ 上算子。对 $0<\varepsilon\le1$ 定义
+
+$$
+T_\varepsilon(X)
+=a^2J\bigl((1-\varepsilon)PXP+\varepsilon\mathsf T_P(PXP)\bigr)J^\dagger.
+\tag{21.1}
+$$
+
+这是具有同一效果 $E$ 的正复线性分支，满足 $\lambda=\ell_0=0$，并且
+
+$$
+Q=\frac{a^2r(r+1)}{d(d+1)},\qquad
+D=a^2\varepsilon r(r-1),\qquad
+\delta=\frac{a^2\varepsilon r(r-1)}{d(d+1)}\longrightarrow0.
+\tag{21.2}
+$$
+
+每个 $\varepsilon>0$ 的 $T_\varepsilon$ 均非完全正。若 $r\ge3$，另有
+
+$$
+\|T_1-L\|_\diamond
+\ge a^2\left(r+1-\frac2r\right)>2M,\qquad M=a^2.
+\tag{21.3}
+$$
+
+因此正分支的任意小正缺陷不推出精确完全正性，定理 6.1 的 CP 上限 $2M$ 不能移用于全部正分支。
+
+**证明。** 压缩与转置都保正，后接指定等距也保正；转置保迹，所以 $T_\varepsilon^\dagger(I_K)=a^2P$。全部输出落在 $JPH$，故两种泄漏均为零。写 $\Omega_{P,J}=\sum_{i\le r}e_i\otimes Je_i$，并把 $PH\otimes JPH$ 上的交换算子记为 $\mathsf S_{P,J}$，即 $\mathsf S_{P,J}(e_i\otimes Je_j)=e_j\otimes Je_i$。Choi 矩阵为
+
+$$
+C_{T_\varepsilon}
+=a^2\bigl((1-\varepsilon)|\Omega_{P,J}\rangle\langle\Omega_{P,J}|
+          +\varepsilon\mathsf S_{P,J}\bigr),
+\tag{21.4}
+$$
+
+在该空间外为零。于是 $s=ar$、$t=a^2r$、
+
+$$
+z=a^2\bigl((1-\varepsilon)r^2+\varepsilon r\bigr).
+$$
+
+代入 (16.8) 与 (20.8) 即得 (21.2)，原有限设计没有被替换。反对称向量 $e_i\otimes Je_j-e_j\otimes Je_i$ 与 $\Omega_{P,J}$ 正交，是 (21.4) 本征值 $-a^2\varepsilon$ 的向量。因此 Choi 矩阵非正半定。完全正映射必有正半定 Choi 矩阵，故这些分支均非完全正。
+
+对 $\varepsilon=1$，取参考维数 $r$ 的归一化最大纠缠投影作为数学范数测试输入。误差输出等距于
+
+$$
+\frac{a^2}{r}
+ \bigl(\mathsf S_{P,J}-|\Omega_{P,J}\rangle\langle\Omega_{P,J}|\bigr).
+$$
+
+括号内沿 $\Omega_{P,J}$ 的本征值为 $1-r$，对称正交补上的本征值为一，反对称子空间上的本征值为负一；后二者维数分别为 $r(r+1)/2-1$ 和 $r(r-1)/2$。故其迹范数乘 $a^2/r$ 后为 $a^2(r+1-2/r)$，得到 (21.3)。这是 diamond 范数下界的数学证书，未声明原菜单实际供应了该参考输入。$\square$
+
+此处转置的 Choi 非正性与全支撑模型为标准边界，也见上述同卷正分支稳定性稿；(21.1) 保留奇异效果与指定 $J$。平方根误差阶、维数依赖及稀有成功的下界直接复用本卷命题 6.2 及其后条件化例，不再作为新下界另行重述。其 CP 子类已包含于定理 20.2 的正分支类，故这些原有障碍仍适用；它们不确定 (20.5) 的最优常数或最优秩依赖。
+
+## 22. 成功条件化与共同实现的适用域
+
+### 定义 22.1（近饱和合同保留的前件与边界）
+
+定理 20.2 的共同实现前件就是定义 15.1：有限复矩阵对象、通常迹与 Born 评价、全域复线性正性、同一原分支的精确成功效果、指定 $J$、实际精确有限二阶设计及读回。相对于定理 6.1 的预设 CP 路线，(20.5) 只需原分支的正性，并保留显式维数或支撑秩依赖；定理 6.1 的原界继续按其 CP 前件适用。(20.5) 控制到同一个 CP 平方根分支的距离，正缺陷时不取得原分支的精确 CP。支撑逆、输出分块、缩放与数学参考均只是证明操作，不供应新的准备、复位、反馈、独立副本或实际联合延伸。
+
+若真实缺陷已有可靠上界 $0\le\delta\le\eta$，则可在 (20.5) 中用 $d(d+1)\eta$ 代替 $D$，因为右侧每项关于 $D$ 非减。效果、设计或指定读回本身漂移的合同须另给共同误差模型，不能把它们默认为此单一 $\delta$。零缺口只选择同一已校准分支；全菜单 CP 仍要求覆盖全部实际箭头，保留 19.2 及续篇命题 119.2 的菜单边界。
+
+[C118 的有限闭环合同，§§140–149](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md)使用每个固定返回的二十四项控制；其定理 146.1 与定义 146.2 的确定性误差只扰动读数，并保留精确映射与校准。这里给出的单分支正映射近饱和界，不单独构成该闭环协议的联合映射误差界，也不供应定义 148.2 所需的原生准备、共同历史和联合取得性。全部设计与读口的实际供应、有限误差认证及共同实现仍是独立前件。
+
+本合同的量词不包含 FIB IX 同一历史的 JMMJM、原全网格目标或非零半程缺陷下的全效果固定返回 $H>0$ 问题，因而没有这些问题的结算结论。共同复结构、Born 形式、原唯一整体态 $\omega$、经验时间与原生全菜单的起源也不由 (20.5) 推出。这些适用边界沿用 19.2；(20.5) 增加的是原有限校准合同下的正分支近饱和控制。
+
+## 追加锚（本行以下为增补区）
