@@ -38,27 +38,6 @@ private def word (a b c d h : ℕ) : List ℕ :=
   let T:=terminals a b c d
   P 0++[T 0]++P 1++[T 1]++P 2++[T 2]++P 3++[T 3]
 
-/-- Exact physical support of the high mask m*h in original V coordinates.
-This is stronger than its later weighted-sum formula: every bit denotes one
-specified original occurrence, and all of these occurrences are available. -/
-private theorem high_mem (c d mask i : ℕ) :
-    i∈highV c d mask ↔
-      ∃ e<d-1, mask.testBit e=true ∧ d+(c-d+e)=i := by
-  simpa only [highV,Nat.add_assoc] using chamberLabels_mem (d-1) (d+(c-d)) mask i
-
-/-- The complementary mask m*(M XOR h) selects exactly the other actual
-high occurrences, including the empty-mask and full-mask boundary cases. -/
-private theorem high_complement_mem (c d h i : ℕ) :
-    i∈highComplement c d h ↔
-      ∃ e<d-1, h.testBit e=false ∧ d+(c-d+e)=i := by
-  constructor
-  · intro hi
-    obtain ⟨e,he,hb,hi'⟩:=(high_mem c d ((2^(d-1)-1) ^^^ h) i).mp hi
-    exact ⟨e,he,by simpa [Nat.testBit_xor,Nat.testBit_two_pow_sub_one,he] using hb,hi'⟩
-  · rintro ⟨e,he,hb,hi⟩
-    apply (high_mem c d ((2^(d-1)-1) ^^^ h) i).mpr
-    exact ⟨e,he,by simp [Nat.testBit_xor,Nat.testBit_two_pow_sub_one,he,hb],hi⟩
-
 private theorem stock_split (a b c d : ℕ) (r : Fin 4) (mask : ℕ) :
     (complement a b c d r mask++stock a b c d r mask).Perm
       (stock a b c d r (full a b c d r)) := by
@@ -81,25 +60,6 @@ private theorem v_inventory (a b c d : ℕ) (hcd : d≤c) (hd : 1≤d) :
     Matrix.cons_val_zero',Matrix.cons_val_succ',chamberLabels_full]
   have he : c-d+(d-1)=c-1 := by omega
   simpa only [he] using (List.range'_append_1 (s:=d) (m:=c-d) (n:=d-1))
-
-/-- The selected W bank is exactly one original occurrence W[b-a-1]. -/
-private theorem w_singleton (a b c d : ℕ) (ha : 2≤a) (hab : a<b) :
-    stock a b c d 2 (2^(b-a-1))=[d+c+(b-a-1)] := by
-  have he : b-a-1<b-1 := by omega
-  have hp : (stock a b c d 2 (2^(b-a-1))).Perm [d+c+(b-a-1)] := by
-    apply (List.perm_ext_iff_of_nodup (chamberLabels_nodup _ _ _) (by simp)).mpr
-    intro i
-    simp only [stock,chainLength,chainStart,Matrix.cons_val_two,
-      Matrix.cons_val_succ,Matrix.cons_val_zero,Matrix.vecHead,Matrix.vecTail,
-      Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',
-      chamberLabels_mem,List.mem_singleton]
-    constructor
-    · rintro ⟨e,_,hb,hi⟩
-      have hb' : e=b-a-1 := by simpa [Nat.testBit_two_pow,eq_comm] using hb
-      simpa [hb'] using hi.symm
-    · intro hi
-      exact ⟨b-a-1,he,by simp [Nat.testBit_two_pow],hi.symm⟩
-  simpa using hp
 
 private theorem canonical_inventory (a b c d : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d) :
@@ -220,22 +180,6 @@ private theorem v_stock_masks (c d : ℕ) (hcd : d≤c) (hd : 1≤d) :
   rw [Nat.mul_sub_left_distrib]
   simp only [Nat.mul_one]
   omega
-
-/-- Exact high stock in the ordinary proof's notation m*(t/2-1). -/
-private theorem high_stock_mass (a b c d : ℕ) (hcd : d≤c) (hd : 1≤d)
-    (f : ℕ→ℤ) (F : Fin 4→ℤ)
-    (hf : ∀ r : Fin 4, ∀ e<chainLength a b c d r-1,
-      f (chainStart b c d r+e)=2^e*F r) :
-    ((highV c d (2^(d-1)-1)).map f).sum=
-      (2^(c-d):ℤ)*((2:ℤ)^d/2-1)*F 1 := by
-  have hhalf : (2:ℤ)^d/2=(2:ℤ)^(d-1) := by
-    have he : (2:ℤ)^d=2*(2:ℤ)^(d-1) := by
-      conv_lhs => rw [show d=(d-1)+1 by omega,pow_succ]
-      ring
-    omega
-  have hm : 2^(d-1)-1<2^(d-1) := by have := Nat.two_pow_pos (d-1);omega
-  have hs:=high_mass a b c d (2^(d-1)-1) hcd hd hm f F hf
-  simpa [hhalf,Nat.cast_sub (show 1≤2^(d-1) by have := Nat.two_pow_pos (d-1);omega)] using hs
 
 private theorem banks_masses (a b c d h : ℕ)
     (ha : 2≤a) (hab : a<b) (hcd : d≤c) (hd : 2≤d) (hh : h<2^(d-1))
