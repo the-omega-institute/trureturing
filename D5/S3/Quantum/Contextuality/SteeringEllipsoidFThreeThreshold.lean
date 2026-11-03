@@ -121,24 +121,14 @@ private lemma setting_bound (ρ : TwoQubit) (hρ : ρ.IsHermitian)
   have hs : |∑ i, α i ⬝ᵥ (corr ρ *ᵥ β i)| ≤ ∑ i, vlen (corr ρ *ᵥ β i) :=
     (Finset.abs_sum_le_sum_abs _ _).trans
       (Finset.sum_le_sum fun i _ => unit_dot_le _ _ (hα i))
-  have hc := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
-    (fun _ : Fin 3 => (1 : ℝ)) (fun i => vlen (corr ρ *ᵥ β i))
-  simp only [one_mul, one_pow, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-    nsmul_eq_mul, mul_one] at hc
-  rw [frame_energy (corr ρ) β hβ] at hc
-  norm_num at hc
-  have hF : 0 ≤ ∑ i, ∑ j, corr ρ i j ^ 2 := by positivity
-  have hsF := Real.sq_sqrt hF
-  have hs3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hz3 : 0 < Real.sqrt 3 := Real.sqrt_pos.2 (by norm_num)
   apply (div_le_iff₀ hz3).2
-  have hsum : 0 ≤ ∑ i, vlen (corr ρ *ᵥ β i) :=
-    Finset.sum_nonneg fun i _ => vlen_nonneg _
   have hroot : ∑ i, vlen (corr ρ *ᵥ β i) ≤
       Real.sqrt (∑ i, ∑ j, corr ρ i j ^ 2) * Real.sqrt 3 := by
-    apply (sq_le_sq₀ hsum (mul_nonneg (Real.sqrt_nonneg _) hz3.le)).mp
-    rw [mul_pow, hsF, hs3]
-    linarith
+    simpa [mul_one, one_pow, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+      nsmul_eq_mul, frame_energy (corr ρ) β hβ] using
+      Real.sum_mul_le_sqrt_mul_sqrt Finset.univ
+        (fun i => vlen (corr ρ *ᵥ β i)) (fun _ : Fin 3 => (1 : ℝ))
   exact hs.trans hroot
 
 private lemma values_nonempty (ρ : TwoQubit) : (fThreeValues ρ).Nonempty := by
