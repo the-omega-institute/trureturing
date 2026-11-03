@@ -57,7 +57,7 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
                     + "uses the usual size and root-order restrictions.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("compProj", "The composite projector", CompositeFormula(),
-                "The list ς, written with the typographic variant sigma in the formulas, specifies consecutive box sizes. "
+                "The list σ specifies consecutive box sizes. "
                     + "For each zero-based list index i, the preceding sizes sum to the "
                     + "offset and List.getD reads the entry at i with zero as its default. "
                     + "List.prod multiplies these embedded projectors in list order and gives 1 for an empty list. "
@@ -65,13 +65,13 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
                 AssessedProvenance.FromLiterature(Source)),
             Node("jwGen", "Projected boundary generators", BoundaryFormula(),
                 "Sandwich the ambient generator at the sum of the first i box sizes between two copies of the composite projector. "
-                    + "For 1 <= i < the length of ς this is the source's one-indexed Jones-Wenzl generator "
+                    + "For 1 <= i < the length of σ this is the source's one-indexed Jones-Wenzl generator "
                     + "in equation EGenerators-00, lines 507–516. The function itself is defined for every natural i.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The generation assertion", Equal(Local("claim"), Parenthesized(ClaimProposition())),
                 "Conjecture 1.2, lines 544–545, extends item 1 of Theorem 1.1 from the total-size bound "
                     + "at line 502 to the maximum-box-size bound. The displayed proposition is its generation assertion: "
-                    + "for every nonzero complex q and every list ς of positive sizes individually below pbar q, "
+                    + "for every nonzero complex q and every list σ of positive sizes individually below pbar q, "
                     + "every sandwich of an arbitrary ambient element t belongs to the unital complex subalgebra generated "
                     + "by the composite projector and the projected boundary generators. Each size is cast from the natural "
                     + "numbers to ENat in the root-order comparison. Algebra.adjoin uses the ambient unit; the corner algebra "
@@ -87,7 +87,7 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
                 Blocks(
                     Paragraph(Text(
                         "Set r = sqrt 3 in the real numbers and include it in the complex numbers. "
-                            + "Take q = exp(pi i/6) and ς = [2,2,2]. The exponential gives q = r/2 + i/2, "
+                            + "Take q = exp(pi i/6) and σ = [2,2,2]. The exponential gives q = r/2 + i/2, "
                             + "q inverse = r/2 - i/2, q nonzero, and -q - q inverse = -r. "
                             + "The square of q is a primitive sixth root, so pbar q = 6. "
                             + "The Laurent sums give [0] = 0, [1] = 1, [2] = r. "
@@ -128,7 +128,7 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
                             + "But ell has sixth coordinate zero, so every matrix in this subalgebra has zero sixth coordinate "
                             + "after multiplication on the left by ell. The nonzero value for Z proves that Z is outside the generated subalgebra.")),
                     Paragraph(Text(
-                        "Finally, all three entries of ς are positive and 2 < 6 = pbar q. "
+                        "Finally, all three entries of σ are positive and 2 < 6 = pbar q. "
                             + "Applying the asserted universal generation property to this q, this list and t = W "
                             + "would place Z in that generated subalgebra, a contradiction. "
                             + "The total size is 6, so this example does not contradict the source's theorem under its strict total-size bound."))),
@@ -201,34 +201,34 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
 
     private static Formula CompositeFormula()
     {
-        Formula size = At(Qualified("List", "getD"), X("ς"), X("i"), D(0));
+        Formula size = At(Qualified("List", "getD"), X("σ"), X("i"), D(0));
         Formula boxes = At(Qualified("List", "map"), LambdaOf("i", Naturals(),
-            LocalCall("jw", X("q"), ListSum(X("ς")), ListSum(At(Qualified("List", "take"), X("i"), X("ς"))), size)),
+            LocalCall("jw", X("q"), ListSum(X("σ")), ListSum(At(Qualified("List", "take"), X("i"), X("σ"))), size)),
             At(Qualified("List", "range"), Length()));
         return ListBinders(Equal(Typed(Projector(), CornerAmbient()), At(Qualified("List", "prod"), boxes)));
     }
 
     private static Formula BoundaryFormula() => ListBinders(All("i", Naturals(),
-        Equal(Typed(LocalCall("jwGen", X("q"), X("ς"), X("i")), CornerAmbient()),
-            Multiply(Multiply(Projector(), LocalCall("gen", ListSum(X("ς")), Parameter(),
-                ListSum(At(Qualified("List", "take"), X("i"), X("ς"))))), Projector()))));
+        Equal(Typed(LocalCall("jwGen", X("q"), X("σ"), X("i")), CornerAmbient()),
+            Multiply(Multiply(Projector(), LocalCall("gen", ListSum(X("σ")), Parameter(),
+                ListSum(At(Qualified("List", "take"), X("i"), X("σ"))))), Projector()))));
 
     private static Formula ClaimProposition()
     {
-        Formula positive = All("s", Naturals(), Arrow(Member(X("s"), X("ς")), Less(D(0), X("s"))));
-        Formula admissible = All("s", Naturals(), Arrow(Member(X("s"), X("ς")),
+        Formula positive = All("s", Naturals(), Arrow(Member(X("s"), X("σ")), Less(D(0), X("s"))));
+        Formula admissible = All("s", Naturals(), Arrow(Member(X("s"), X("σ")),
             Less(Cast(X("s"), ENat()), LocalCall("pbar", X("q")))));
         Formula generators = Seq(OpenBrace, Typed(X("u"), CornerAmbient()), Sp, Mid, Sp,
             Some("i", Naturals(), And(LE(D(1), X("i")), And(Less(X("i"), Length()),
-                Equal(X("u"), LocalCall("jwGen", X("q"), X("ς"), X("i")))))), CloseBrace);
+                Equal(X("u"), LocalCall("jwGen", X("q"), X("σ"), X("i")))))), CloseBrace);
         Formula generated = At(Qualified("Algebra", "adjoin"), Complexes(),
             At(Qualified("insert"), Projector(), generators));
         return All("q", Complexes(), Arrow(NotEqual(X("q"), Typed(D(0), Complexes())),
-            All("ς", ListOfNaturals(), Arrow(positive, Arrow(admissible, All("t", CornerAmbient(),
+            All("σ", ListOfNaturals(), Arrow(positive, Arrow(admissible, All("t", CornerAmbient(),
                 Member(Multiply(Multiply(Projector(), X("t")), Projector()), generated)))))));
     }
 
-    private static Formula X(string name) => name switch { "ν" => Nu, "ς" => SigmaLower, _ => F.Id(name) };
+    private static Formula X(string name) => name switch { "ν" => Nu, "σ" => SigmaLower, _ => F.Id(name) };
     private static Formula Qualified(params string[] parts)
     {
         var items = new System.Collections.Generic.List<Formula>();
@@ -256,12 +256,12 @@ internal sealed class JonesWenzlGenerationRefutationDocument : IScribeDocumentDe
     private static Formula TL(Formula n, Formula nu) => LocalCall("TL", n, nu);
     private static Formula Parameter() => Subtract(new Formula.Negate(X("q")), new Formula.Power(X("q"), new Formula.Negate(D(1))));
     private static Formula ListSum(Formula list) => At(Qualified("List", "sum"), list);
-    private static Formula Length() => At(Qualified("List", "length"), X("ς"));
-    private static Formula CornerAmbient() => TL(ListSum(X("ς")), Parameter());
-    private static Formula Projector() => LocalCall("compProj", X("q"), X("ς"));
+    private static Formula Length() => At(Qualified("List", "length"), X("σ"));
+    private static Formula CornerAmbient() => TL(ListSum(X("σ")), Parameter());
+    private static Formula Projector() => LocalCall("compProj", X("q"), X("σ"));
     private static Formula Cast(Formula value, Formula type) => Typed(At(Qualified("Nat", "cast"), value), type);
     private static Formula AlgebraBinders(Formula body) => All("n", Naturals(), All("ν", Complexes(), body));
-    private static Formula ListBinders(Formula body) => All("q", Complexes(), All("ς", ListOfNaturals(), body));
+    private static Formula ListBinders(Formula body) => All("q", Complexes(), All("σ", ListOfNaturals(), body));
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
     private static Formula Some(string name, Formula type, Formula body) => Seq(Exists, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
     private static Formula LambdaOf(string name, Formula type, Formula body) => Parenthesized(Seq(LambdaLower, Sp, Typed(X(name), type), Sp, Mapsto, Sp, body));
