@@ -97,7 +97,10 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
         Formula p = X("p");
         Formula rho = X("ρ");
         Formula matrices = MatrixType(FinOf(D(4)), FinOf(D(4)), Complexes());
-        Formula simplex = At(Qualified("stdSimplex"), Reals(), FinOf(D(4)));
+        Formula simplex = And(
+            All("k", FinOf(D(4)), LessThanOrEqual(Typed(D(0), Reals()), At(p, X("k")))),
+            Equal(Seq(new Formula.Subscript(Sum, Typed(X("k"), FinOf(D(4)))),
+                Sp, Parenthesized(At(p, X("k")))), Typed(D(1), Reals())));
         Formula density = All("i", FinOf(D(3)), And(
             At(Qualified("Matrix", "PosSemidef"), At(rho, X("i"))),
             Equal(At(Qualified("Matrix", "trace"), At(rho, X("i"))), Typed(D(1), Complexes()))));
@@ -112,9 +115,7 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
         Formula witness = Some("ρ", Arrow(FinOf(D(3)), matrices),
             And(density, And(orthogonal, diagonal)));
         return All("p", Arrow(FinOf(D(4)), Reals()),
-            Equivalence(LocalCall("InRegion", p), And(
-                new Formula.Relation(p, FormulaRelationOperator.MemberOf, simplex),
-                witness)));
+            Equivalence(LocalCall("InRegion", p), And(simplex, witness)));
     }
 
     private static Formula ProductFormDefinition()

@@ -17,8 +17,6 @@ Equation (30). Classical versions are the real diagonals in the preferred basis;
 perfect distinguishability is pairwise orthogonality of density-matrix supports. -/
 
 set_option autoImplicit false
-set_option linter.style.longLine false
-set_option linter.deprecated false
 
 noncomputable section
 
@@ -34,7 +32,7 @@ namespace D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation
 
 /-- The source's three-distinguishability region, with classical version `diag ρ`. -/
 def InRegion (p : Fin 4 → ℝ) : Prop :=
-  p ∈ stdSimplex ℝ (Fin 4) ∧
+  ((∀ k, 0 ≤ p k) ∧ ∑ k, p k = 1) ∧
     ∃ ρ : Fin 3 → Matrix (Fin 4) (Fin 4) ℂ,
       (∀ i, (ρ i).PosSemidef ∧ Matrix.trace (ρ i) = 1) ∧
       (∀ i j, i ≠ j → ρ i * ρ j = 0) ∧
@@ -64,8 +62,7 @@ private def state (i : Fin 3) (k : Fin 4) : ℂ :=
   weightedFrame (Finset.univ : Finset (Fin 4)) point
     (fun k _ => phases i k) 0 ⟨k, Finset.mem_univ k⟩
 
-private lemma point_simplex : point ∈ stdSimplex ℝ (Fin 4) := by
-  change (∀ k, 0 ≤ point k) ∧ ∑ k, point k = 1
+private lemma point_simplex : (∀ k, 0 ≤ point k) ∧ ∑ k, point k = 1 := by
   constructor
   · intro k
     fin_cases k <;> norm_num [point] <;>
