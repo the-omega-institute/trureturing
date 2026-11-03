@@ -10,7 +10,7 @@ Hughes defines k-insertion by interleaving k source factors with k+1 base factor
 
 $$\forall alpha \in \operatorname{Type},\; Language\left(alpha\right) = Set\left(List\left(alpha\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.Language` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.Language` (`✓ std3`).
 
 *Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
@@ -22,7 +22,7 @@ A language over an alphabet is an arbitrary set of finite lists. No finiteness c
 
 $$\forall alpha \in \operatorname{Type},\; \forall k \in \mathbb{N},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall w \in List\left(alpha\right),\; w \in fixedDegreeInsertion\left(k, A, B\right) \Leftrightarrow \left(\exists pieces \in List\left(Prod\left(List\left(alpha\right), List\left(alpha\right)\right)\right),\; length\left(pieces\right) = k \land \left(\exists tail \in List\left(alpha\right),\; baseWord\left(pieces, tail\right) \in B \land \left(sourceWord\left(pieces\right) \in A \land pairOutput\left(pieces, tail\right) = w\right)\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.fixedDegreeInsertion` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.fixedDegreeInsertion` (`✓ std3`).
 
 *Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
@@ -34,7 +34,7 @@ A list of k pairs records x_i and y_i, and the final tail records x_(k+1). The x
 
 $$\forall alpha \in \operatorname{Type},\; \forall k \in \mathbb{N},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; fixedDegreeIterate\left(k, A, B, 0\right) = B \land \left(\forall m \in \mathbb{N},\; fixedDegreeIterate\left(k, A, B, m + 1\right) = fixedDegreeInsertion\left(k, A, fixedDegreeIterate\left(k, A, B, m\right)\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.fixedDegreeIterate` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.fixedDegreeIterate` (`✓ std3`).
 
 *Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
@@ -46,7 +46,7 @@ Stage zero is B. Every successor inserts A into the preceding stage using the sa
 
 $$\forall alpha \in \operatorname{Type},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall w \in List\left(alpha\right),\; \forall m \in \mathbb{N},\; appearsAt\left(A, B, w, m\right) \Leftrightarrow \left(\exists k \in \mathbb{N},\; 0 < k \land w \in fixedDegreeIterate\left(k, A, B, m\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.appearsAt` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.appearsAt` (`✓ std3`).
 
 *Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
@@ -58,7 +58,7 @@ A word appears at stage m when one positive degree k produces it at that stage. 
 
 $$\forall alpha \in \operatorname{Type},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall w \in List\left(alpha\right),\; \forall m \in \mathbb{N},\; hasIterationDepth\left(A, B, w, m\right) \Leftrightarrow \left(appearsAt\left(A, B, w, m\right) \land \left(\forall n \in \mathbb{N},\; n < m \Rightarrow \left(\neg appearsAt\left(A, B, w, n\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.hasIterationDepth` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.hasIterationDepth` (`✓ std3`).
 
 *Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
@@ -70,7 +70,7 @@ Depth m means appearance at m together with nonappearance at every smaller stage
 
 $$\forall alpha \in \operatorname{Type},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall m \in \mathbb{N},\; m \in iterationDepthSpectrum\left(A, B\right) \Leftrightarrow \left(\exists w \in List\left(alpha\right),\; hasIterationDepth\left(A, B, w, m\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.iterationDepthSpectrum` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.iterationDepthSpectrum` (`✓ std3`).
 
 *Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
@@ -82,7 +82,7 @@ The spectrum contains exactly those natural numbers realized as the minimum iter
 
 $$closedSourceZero = 0$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.closedSourceZero` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.closedSourceZero` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -94,7 +94,7 @@ The published minimum depth is zero-based. This Fin 2 value is the actual source
 
 $$\forall alpha \in \operatorname{Type},\; \forall origin \in Fin\left(2\right),\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall n \in \mathbb{N},\; n \in iterationDepthSpectrumAt\left(origin, A, B\right) \Leftrightarrow \left(\exists m \in \mathbb{N},\; m \in iterationDepthSpectrum\left(A, B\right) \land n = m + val\left(origin\right)\right)$$
 
-*Formalization.* `D5/S1/Words/HughesIterationDepthNoGap.iterationDepthSpectrumAt` (`✓ std3`).
+*Formalization.* `D5/S1/Words/IterationDepthNoGap.iterationDepthSpectrumAt` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -106,11 +106,11 @@ Changing the origin adds its natural coordinate to every actual minimum depth. A
 
 $$\forall alpha \in \operatorname{Type},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall r \in \mathbb{N},\; r \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right) \Rightarrow \left(\forall q \in \mathbb{N},\; q \le r \Rightarrow q \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/HughesIterationDepthNoGap.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/IterationDepthNoGap.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hughes-iteration-depth-no-gap` (proved) by `D5/S1/Words/HughesIterationDepthNoGap.result`.
+*Resolves.* `Problems/hughes-iteration-depth-no-gap` (proved) by `D5/S1/Words/IterationDepthNoGap.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hughes-iteration-depth-no-gap","declaration_gid":"D5/S1/Words/HughesIterationDepthNoGap.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hughes-iteration-depth-no-gap","declaration_gid":"D5/S1/Words/IterationDepthNoGap.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -122,12 +122,12 @@ For every alphabet and arbitrary languages A and B, any attained depth r forces 
 
 ## References
 
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.Language`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.appearsAt`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.closedSourceZero`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.fixedDegreeInsertion`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.fixedDegreeIterate`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.hasIterationDepth`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.iterationDepthSpectrum`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.iterationDepthSpectrumAt`
-- Truth anchor: `D5/S1/Words/HughesIterationDepthNoGap.result`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.Language`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.appearsAt`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.closedSourceZero`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.fixedDegreeInsertion`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.fixedDegreeIterate`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.hasIterationDepth`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.iterationDepthSpectrum`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.iterationDepthSpectrumAt`
+- Truth anchor: `D5/S1/Words/IterationDepthNoGap.result`

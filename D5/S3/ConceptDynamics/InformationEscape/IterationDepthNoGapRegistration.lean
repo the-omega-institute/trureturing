@@ -1,12 +1,12 @@
-/- GID: D5/S3/ConceptDynamics/InformationEscape/HughesIterationDepthNoGapRegistration
+/- GID: D5/S3/ConceptDynamics/InformationEscape/IterationDepthNoGapRegistration
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/InformationEscape/HughesIterationDepthNoGapRegistration
+   mirror-B: D5/B/S3/ConceptDynamics/InformationEscape/IterationDepthNoGapRegistration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A two-origin coordinate registers no-gap with a shifted counterfactual. -/
 
-import D5.S1.Words.HughesIterationDepthNoGap
+import D5.S1.Words.IterationDepthNoGap
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 
@@ -14,9 +14,9 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.InformationEscape.HughesIterationDepthNoGapRegistration
+namespace D5.S3.ConceptDynamics.InformationEscape.IterationDepthNoGapRegistration
 
-open D5.S1.Words.HughesIterationDepthNoGap
+open D5.S1.Words.IterationDepthNoGap
 open LeanInformationAudit
 open RegistrationTemplates
 
@@ -41,16 +41,16 @@ abbrev depthNoGapArena : PrimitiveLawArena where
   signature := cutSignature (Fin 2) (Fin 2)
   Law realization :=
     ∀ (α : Type)
-      (A B : D5.S1.Words.HughesIterationDepthNoGap.Language α) (r : Nat),
+      (A B : D5.S1.Words.IterationDepthNoGap.Language α) (r : Nat),
       r ∈ iterationDepthSpectrumAt
           (realization.readout () closedSourceZero) A B →
         ∀ q ≤ r,
           q ∈ iterationDepthSpectrumAt
             (realization.readout () closedSourceZero) A B
 
-private def emptyLanguage : D5.S1.Words.HughesIterationDepthNoGap.Language (Fin 0) := ∅
+private def emptyLanguage : D5.S1.Words.IterationDepthNoGap.Language (Fin 0) := ∅
 
-private def epsilonLanguage : D5.S1.Words.HughesIterationDepthNoGap.Language (Fin 0) := {[]}
+private def epsilonLanguage : D5.S1.Words.IterationDepthNoGap.Language (Fin 0) := {[]}
 
 theorem depth_law_variation : FiniteLawVariation depthNoGapArena :=
     by
@@ -111,4 +111,4 @@ theorem depth_slot_sensitivity : FiniteSlotSensitivity depthNoGapArena := by
 #print axioms depth_law_variation
 #print axioms depth_slot_sensitivity
 
-end D5.S3.ConceptDynamics.InformationEscape.HughesIterationDepthNoGapRegistration
+end D5.S3.ConceptDynamics.InformationEscape.IterationDepthNoGapRegistration

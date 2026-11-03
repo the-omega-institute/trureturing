@@ -4,9 +4,9 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 
-internal sealed class HughesIterationDepthNoGapDocument : IScribeDocumentDefinition
+internal sealed class IterationDepthNoGapDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Words/HughesIterationDepthNoGap.";
+    private const string Prefix = "D5/S1/Words/IterationDepthNoGap.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Words/hughes2026a27755");
 

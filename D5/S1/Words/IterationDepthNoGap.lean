@@ -1,6 +1,6 @@
-/- GID: D5/S1/Words/HughesIterationDepthNoGap
+/- GID: D5/S1/Words/IterationDepthNoGap
    generality: G
-   mirror-B: D5/B/S1/Words/HughesIterationDepthNoGap
+   mirror-B: D5/B/S1/Words/IterationDepthNoGap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -11,7 +11,7 @@ import Mathlib
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S1.Words.HughesIterationDepthNoGap
+namespace D5.S1.Words.IterationDepthNoGap
 
 abbrev Language (α : Type*) := Set (List α)
 
@@ -139,4 +139,4 @@ theorem result (α : Type)
     spectrum_downward_closure (A := A) (B := B) r (by
       simpa [iterationDepthSpectrumAt, closedSourceZero] using hr)
 
-end D5.S1.Words.HughesIterationDepthNoGap
+end D5.S1.Words.IterationDepthNoGap
