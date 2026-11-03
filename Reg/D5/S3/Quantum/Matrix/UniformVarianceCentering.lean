@@ -36,6 +36,15 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
+private def referenceLift {H G : Type*}
+    [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    [NormedAddCommGroup G] [InnerProductSpace ℂ G]
+    (n : ℕ) (L : G →ₗ[ℂ] H) :
+    PiLp 2 (fun _ : Fin n => G) →ₗ[ℂ] PiLp 2 (fun _ : Fin n => H) where
+  toFun x := WithLp.toLp 2 (fun r => L (x r))
+  map_add' x y := by ext r; exact L.map_add (x r) (y r)
+  map_smul' c x := by ext r; exact L.map_smul c (x r)
+
 abbrev arena : Arena where
   signature := signature.{v}
   Law R := ∀ {H : Type u} {G : Type v}
@@ -59,7 +68,13 @@ abbrev arena : Arena where
     R.readout () ⟨G,gn,gi,gf⟩ Q ≤ 5*δ ∧
     (∀ A : H →L[ℂ] H,
       ‖(∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap‖
-        ≤ (5*δ)*‖A‖)
+        ≤ (5*δ)*‖A‖) ∧
+    (∀ n : ℕ,
+      let R : J → PiLp 2 (fun _ : Fin n => G) →ₗ[ℂ]
+        PiLp 2 (fun _ : Fin n => H) := fun j => referenceLift n (L j)
+      ∀ A : PiLp 2 (fun _ : Fin n => H) →L[ℂ] PiLp 2 (fun _ : Fin n => H),
+        ‖(∑ j, (R j).adjoint.comp (A.toLinearMap.comp (R j))).toContinuousLinearMap‖
+          ≤ (5*δ)*‖A‖)
 
 private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   intro h

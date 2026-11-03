@@ -9,6 +9,7 @@
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Matrix.Hermitian
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-! Uniform variance bounds, simultaneous expectations, and ambient residuals. -/
 
@@ -236,6 +237,26 @@ private lemma complex_centering {J : Type*} [Fintype J]
     exact hv z hz
   exact uniform_block_centering W A hs δ hδ hv' e he x hx
 
+private def referenceLift (n : ℕ) (L : G →ₗ[ℂ] H) :
+    PiLp 2 (fun _ : Fin n => G) →ₗ[ℂ] PiLp 2 (fun _ : Fin n => H) where
+  toFun x := WithLp.toLp 2 (fun r => L (x r))
+  map_add' x y := by ext r; exact L.map_add (x r) (y r)
+  map_smul' c x := by ext r; exact L.map_smul c (x r)
+
+private lemma reference_energy_le {J : Type*} [Fintype J]
+    (L : J → G →ₗ[ℂ] H) (b : ℝ)
+    (hv : ∀ x : G, ∑ j, ‖L j x‖^2 ≤ b*‖x‖^2)
+    (n : ℕ) (x : PiLp 2 (fun _ : Fin n => G)) :
+    ∑ j, ‖referenceLift n (L j) x‖^2 ≤ b*‖x‖^2 := by
+  classical
+  have hn (j : J) : ‖referenceLift n (L j) x‖^2 = ∑ r, ‖L j (x r)‖^2 :=
+    PiLp.norm_sq_eq_of_L2 _ _
+  simp_rw [hn]
+  rw [Finset.sum_comm,PiLp.norm_sq_eq_of_L2]
+  calc
+    _ ≤ ∑ r : Fin n, b*‖x r‖^2 := Finset.sum_le_sum (fun r _ => hv (x r))
+    _ = _ := (Finset.mul_sum _ _ _).symm
+
 private lemma kraus_adjoint_norm_le {J : Type*} [Fintype J]
     (L : J → G →ₗ[ℂ] H) (b : ℝ) (hb : 0 ≤ b)
     (hv : ∀ x : G, ‖x‖ = 1 → ∑ j, ‖L j x‖^2 ≤ b)
@@ -288,7 +309,13 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
     ‖Q.toContinuousLinearMap‖ ≤ 5*δ ∧
     (∀ A : H →L[ℂ] H,
       ‖(∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap‖
-        ≤ (5*δ)*‖A‖) := by
+        ≤ (5*δ)*‖A‖) ∧
+    (∀ n : ℕ,
+      let R : J → PiLp 2 (fun _ : Fin n => G) →ₗ[ℂ]
+        PiLp 2 (fun _ : Fin n => H) := fun j => referenceLift n (L j)
+      ∀ A : PiLp 2 (fun _ : Fin n => H) →L[ℂ] PiLp 2 (fun _ : Fin n => H),
+        ‖(∑ j, (R j).adjoint.comp (A.toLinearMap.comp (R j))).toContinuousLinearMap‖
+          ≤ (5*δ)*‖A‖) := by
   classical
   dsimp only
   let c : J → ℝ := fun j => (inner ℂ (V e) (h j (V e))).re
@@ -320,7 +347,7 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
     calc
       _ ≤ ‖x‖^2 * (5*δ) := mul_le_mul_of_nonneg_left (hc z hz).2 (sq_nonneg _)
       _ = _ := mul_comm _ _
-  refine ⟨hc,fun x => ⟨hgram x,hb x⟩,?_,?_⟩
+  refine ⟨hc,fun x => ⟨hgram x,hb x⟩,?_,?_,?_⟩
   ·
     have hsym : Q.IsSymmetric := LinearMap.isSymmetric_sum _ (fun j _ =>
       LinearMap.isSymmetric_adjoint_comp_self (L j))
@@ -337,6 +364,12 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
     · exact (div_le_iff₀ (sq_pos_of_pos (norm_pos_iff.mpr hx))).mpr (hb x)
   · intro A
     exact kraus_adjoint_norm_le L (5*δ) (by positivity) (fun x hx => (hc x hx).2) A
+
+  · intro n A
+    apply kraus_adjoint_norm_le (fun j => referenceLift n (L j)) (5*δ) (by positivity)
+    intro x hx
+    have hh := reference_energy_le L (5*δ) (fun z => by rw [← hgram]; exact hb z) n x
+    simpa only [hx,one_pow,mul_one] using hh
 
 end Complex
 
