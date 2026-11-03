@@ -43,7 +43,8 @@ internal sealed class HermiteAbsoluteTieOrdersDocument : IScribeDocumentDefiniti
                 + "Conversely, any such equality forces r to be mode(k) and gives precisely those two maxima. "
                 + "The coefficient_cases and polynomial_coeff statements transfer the comparison to every exponent in the original polynomial row; "
                 + "zero parity coefficients cannot maximize because the mode weight is positive.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a381737-hermite-absolute-ties"), ResolutionKind.Proved)),
             Paragraph(Text("Put j=k-2r. The tie equation is (j+1)(j+2)=4r. Its reduction modulo four forces j to be 4t+2 or 4t+3. "
                 + "In the first case k=8t squared+18t+8=a(2t+1); in the second, k=8t squared+22t+13=a(2t+2). "
                 + "Conversely, these formulas provide r=(4t+3)(t+1) and r=(4t+5)(t+1), respectively, satisfying the tie equation and 2r at most k. "
@@ -53,10 +54,10 @@ internal sealed class HermiteAbsoluteTieOrdersDocument : IScribeDocumentDefiniti
                 + "No finite cutoff, rescaling of the coefficient row, or restriction to a subsequence is used.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hermite-absolute-tie-orders-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Ints() => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
