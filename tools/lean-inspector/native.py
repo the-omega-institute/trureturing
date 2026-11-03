@@ -447,7 +447,11 @@ def produce_row(row, directory, spool, root, origin, utility_path, output, templ
         os.replace(artifact, output)
 
 
-def produce_batch_chunk(requests):
+def produce_batch_chunk(requests, *, generated_index=None):
+    inspect_batch_chunk(requests, generated_index=generated_index)
+
+
+def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
@@ -475,11 +479,17 @@ def produce_batch_chunk(requests):
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
                      '--utility-input', str(utility_file), *triples]
+        if check_constants:
+            arguments.insert(0, '--check-batch-constants')
+        if generated_index is not None:
+            arguments[0:0] = ['--generated-index', str(generated_index)]
         argument_file = directory / 'arguments.json'
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)
-        with phase('native-inspect', request_capture=capture):
+        with phase('native-constant-check' if check_constants else 'native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments, argument_file)
+        if check_constants:
+            return
         declarations = 0
         completed = []
         for row in public.report_rows(directory / 'spool.json', materials.SPOOL_SCHEMA):
@@ -505,6 +515,30 @@ def produce_batch_chunk(requests):
         print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={declarations}')
 
 
+def produce_split_batch(requests, size):
+    """Keep the legacy generated-name index and publication boundary across caps.
+
+    The index contains the Inspector's existing identity strings, keyed by its
+    injective Name encoding. It is private to this partition, never a cache or
+    report input. ConstantInfo comparisons remain entirely in the raw reader.
+    """
+    root = Path(requests[0][0])
+    with tempfile.TemporaryDirectory(prefix='.partition.', dir=state(root)) as directory:
+        directory = Path(directory)
+        generated_index = directory / 'generated.json'
+        generated_index.write_text('[]')
+        staged = []
+        for index, request in enumerate(requests):
+            copy = list(request)
+            copy[5] = str(directory / f'{index}.zip')
+            staged.append(copy)
+        for offset in range(0, len(staged), size):
+            produce_batch_chunk(staged[offset:offset + size], generated_index=generated_index)
+        for request, copy in zip(requests, staged):
+            Path(request[5]).parent.mkdir(parents=True, exist_ok=True)
+            os.replace(copy[5], request[5])
+
+
 def produce_batch(requests):
     size = batch_modules()
     requests = sorted(requests, key=lambda row: row[1])
@@ -515,15 +549,20 @@ def produce_batch(requests):
         raise ValueError('mixed native batch owners')
     if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
         raise ValueError('duplicate native batch module')
-    # Chunks bound per-process memory; each chunk validates its modules
-    # before writing their artifacts.
-    for start in range(0, len(requests), size):
-        chunk = requests[start:start + size]
+    # Compatibility belongs to the original fixed windows and raw/judged
+    # partitions. A smaller extraction capacity must not shrink that scope.
+    for start in range(0, len(requests), NATIVE_BATCH_MODULES):
+        chunk = requests[start:start + NATIVE_BATCH_MODULES]
         raw, judged = [], []
         for row in chunk:
             (judged if input_projection(root, row[1])['inputs'] else raw).append(row)
         for group in (raw, judged):
-            if group:
+            if len(group) > size:
+                # Complete legacy comparison scope, with one target closure
+                # resident at a time and only detached owner/name state retained.
+                inspect_batch_chunk(group, check_constants=True)
+                produce_split_batch(group, size)
+            elif group:
                 produce_batch_chunk(group)
 
 

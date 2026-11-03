@@ -25,6 +25,11 @@ from test_native_support import *
 
 
 class NativeBatchPartitionTests:
+    @staticmethod
+    def _mock_split(consume):
+        return lambda rows, size: [consume(rows[offset:offset + size])
+                                   for offset in range(0, len(rows), size)]
+
     def test_runtime_capacity_bounds_each_raw_and_judged_group(self):
         requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
                     for index in range(11, -1, -1)]
@@ -33,6 +38,8 @@ class NativeBatchPartitionTests:
             with self.subTest(size=size), patch.dict(os.environ, STRATALINT_NATIVE_BATCH_MODULES=size), \
                     patch.object(native, 'input_projection', side_effect=lambda root, name:
                         {'inputs': ['registration'] if int(name.rsplit('.', 1)[1]) % 2 else []}), \
+                    patch.object(native, 'inspect_batch_chunk'), \
+                    patch.object(native, 'produce_split_batch', side_effect=self._mock_split(chunks.append)), \
                     patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
                 native.produce_batch(requests)
             self.assertTrue(all(0 < len(chunk) <= int(size) for chunk in chunks))
@@ -72,8 +79,137 @@ class NativeBatchPartitionTests:
                     native.produce_batch(requests + [replacement])
                 chunk.assert_not_called()
 
+    def test_split_compatibility_keeps_fixed_windows_and_raw_judged_boundaries(self):
+        requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
+                    for index in range(202)]
+        for size in (1, 7, 100):
+            calls = []
+            with self.subTest(size=size), \
+                    patch.dict(os.environ, STRATALINT_NATIVE_BATCH_MODULES=str(size)), \
+                    patch.object(native, 'input_projection', side_effect=lambda root, name:
+                        {'inputs': ['registration'] if int(name.rsplit('.', 1)[1]) % 2 else []}), \
+                    patch.object(native, 'inspect_batch_chunk', create=True, side_effect=lambda rows, **kw:
+                        calls.append(('check', [row[1] for row in rows], kw))), \
+                    patch.object(native, 'produce_split_batch', side_effect=self._mock_split(lambda rows:
+                        calls.append(('extract', [row[1] for row in rows], {})))), \
+                    patch.object(native, 'produce_batch_chunk', side_effect=lambda rows:
+                        calls.append(('extract', [row[1] for row in rows], {}))):
+                native.produce_batch(requests)
+            expected = []
+            for start in (0, 100, 200):
+                for parity in (0, 1):
+                    names = [row[1] for row in requests[start:start + 100]
+                             if int(row[1].rsplit('.', 1)[1]) % 2 == parity]
+                    if len(names) > size:
+                        expected.append(('check', names, {'check_constants': True}))
+                    expected.extend(('extract', names[offset:offset + size], {})
+                                    for offset in range(0, len(names), size))
+            self.assertEqual(calls, expected)
+
+    def test_failed_split_compatibility_prevents_extraction(self):
+        requests = [['/root', name, '', '', '/inspector', ''] for name in ('Left', 'Right')]
+        with patch.dict(os.environ, STRATALINT_NATIVE_BATCH_MODULES='1'), \
+                patch.object(native, 'input_projection', return_value={'inputs': []}), \
+                patch.object(native, 'inspect_batch_chunk', create=True, side_effect=ValueError('raw.reader_failed')), \
+                patch.object(native, 'produce_batch_chunk') as extract:
+            with self.assertRaisesRegex(ValueError, 'raw.reader_failed'):
+                native.produce_batch(requests)
+            extract.assert_not_called()
+
+    def test_compatibility_call_uses_raw_reader_without_publishing_rows(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            native.state(root).mkdir(parents=True)
+            requests = []
+            for name in ('Left', 'Right'):
+                source, utility, output = (root / (name + suffix) for suffix in ('.lean', '.json', '.zip'))
+                source.write_text('def value : Nat := 1\n')
+                utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
+                requests.append([str(root), name, str(source), str(utility), '/inspector', str(output)])
+            calls = []
+
+            def reader(owner, executable, arguments, argument_file):
+                self.assertEqual(owner, root)
+                self.assertEqual(executable, '/inspector')
+                self.assertEqual(json.loads(argument_file.read_text()), arguments)
+                self.assertEqual(arguments[0], '--check-batch-constants')
+                self.assertEqual(arguments[7::3], ['Left', 'Right'])
+                self.assertFalse(Path(arguments[2]).exists())
+                calls.append(arguments)
+
+            with patch.object(native.selection, 'Selection'), \
+                    patch.object(native.public, 'production_origin', return_value={}), \
+                    patch.object(native, 'validate_dependency_paths'), \
+                    patch.object(native, 'retain_request'), \
+                    patch.object(native, 'run_inspector', side_effect=reader), \
+                    patch.object(native, 'produce_row') as publish:
+                native.inspect_batch_chunk(requests, check_constants=True)
+                publish.assert_not_called()
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(list(native.state(root).iterdir()), [])
+            self.assertFalse(any(root.glob('*.zip')))
+
 
 class NativeBatchCapacityConsumerTests:
+    def _capacity_report(self, size, *, success=True):
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = json.loads((ROOT / 'lean-report-inputs.json').read_text())['report_execution']
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.ensure()
+        self.restore_compiler()
+        result = self.guarded_command(['make', 'lean-report',
+            'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build', 'REGENERATE_REPORT_ARTIFACTS=1'],
+            env=dict(self.env, STRATALINT_NATIVE_BATCH_MODULES=str(size),
+                     STRATALINT_ACCEPT_COLD_BUILD='1', LEAN_NUM_THREADS='1'))
+        self.record_result(f'capacity-{size}-{getattr(self, "capacity_sequence", 0)}',
+            dict(exit=result.returncode, expected_success=success,
+                 oleans={path.name: path.is_file() for path in
+                     [self.root / f'.lake/build/lib/lean/D5/Capacity{name}.olean'
+                      for name in ('Left', 'Right')]}))
+        self.capacity_sequence = getattr(self, 'capacity_sequence', 0) + 1
+        self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
+        return result
+
+    def test_runtime_capacity_rejects_incompatible_sibling_constants(self):
+        # Each sibling compiles alone. RawArtifacts must still compare the same
+        # name across targets, even when each extraction process has one target.
+        for right in (2, 1):
+            self.write('D5/CapacityLeft.lean', 'namespace CapacityConflict\ndef same : Nat := 1\nend CapacityConflict\n')
+            self.write('D5/CapacityRight.lean', f'namespace CapacityConflict\ndef same : Nat := {right}\nend CapacityConflict\n')
+            for size in (100, 1):
+                with self.subTest(right=right, size=size):
+                    result = self._capacity_report(size, success=False)
+                    self.assertIn('raw.conflicting_constant:', result.stdout + result.stderr)
+                    self.assertIn('CapacityConflict.same', result.stdout + result.stderr)
+                    for name in ('Left', 'Right'):
+                        self.assertTrue((self.root / f'.lake/build/lib/lean/D5/Capacity{name}.olean').is_file())
+                    self.record_result(f'conflict-{right}-{size}', dict(exit=result.returncode,
+                        batch_modules=size, diagnostic='raw.conflicting_constant:CapacityConflict.same'))
+
+    def test_runtime_capacity_accepts_compatible_duplicate_owners(self):
+        self.write('D5/CapacityShared.lean', 'namespace CapacityCompatible\ndef shared : Nat := 1\nend CapacityCompatible\n')
+        # Exercise the existing subsumes relation in both directions, plus the
+        # same owner's constants reached through multiple target import paths.
+        header = 'import D5.CapacityShared\nnamespace CapacityCompatible\n'
+        common = ('theorem duplicateTheorem : True := True.intro\n'
+                  'axiom duplicateAxiom : True\n')
+        self.write('D5/CapacityLeft.lean', header + common +
+            'theorem theoremThenAxiom : True := True.intro\naxiom axiomThenTheorem : True\nend CapacityCompatible\n')
+        self.write('D5/CapacityRight.lean', header + common +
+            'axiom theoremThenAxiom : True\ntheorem axiomThenTheorem : True := True.intro\nend CapacityCompatible\n')
+        baseline = None
+        for size in (100, 1):
+            with self.subTest(size=size):
+                self._capacity_report(size)
+                report = self.report()
+                if baseline is None:
+                    baseline = report
+                else:
+                    self.assertEqual(report, baseline)
+                self.record_result(f'compatible-{size}', dict(exit=0, batch_modules=size,
+                    report_sha256=hashlib.sha256(report[1]).hexdigest(),
+                    materials_sha256=hashlib.sha256(report[2]).hexdigest()))
+
     def test_runtime_capacity_through_report_entry(self):
         # Real pinned compiler/extractor, using the existing statement-only fixture.
         # No mathematical registration-assessment or Linux memory claim is made.
@@ -192,8 +328,8 @@ class NativeRecoveryConsumerTests:
         control.write_text(interruption)
         producer = self.root / 'tools/lean-inspector/native.py'
         source = producer.read_text()
-        source = source.replace('def produce_batch_chunk(requests):',
-            'def produce_batch_chunk(requests):\n'
+        source = source.replace('def produce_batch_chunk(requests, *, generated_index=None):',
+            'def produce_batch_chunk(requests, *, generated_index=None):\n'
             '    control = Path(requests[0][0]) / "chunk-interruption"\n'
             '    if control.exists() and any(row[1] == "Fixture" for row in requests):\n'
             '        mode = control.read_text()\n'
