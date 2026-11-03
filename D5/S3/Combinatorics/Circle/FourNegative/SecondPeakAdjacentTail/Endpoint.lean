@@ -96,9 +96,12 @@ private theorem adjacent_selector_domain (a b c : ℕ)
       linarith
     · simpa only [hvn,hmn] using hw
   · obtain ⟨m,hm0,hmb,hw⟩ := high_integer_selection a b c ha hac (by omega)
-    refine ⟨0,m.toNat,by omega,Int.toNat_le.mpr hmb,?_⟩
-    have hmn : ((m.toNat:ℕ):ℚ)=(m:ℚ) := by exact_mod_cast Int.toNat_of_nonneg hm0
-    simpa only [Nat.cast_zero,hmn] using hw
+    refine ⟨0,m.toNat,by omega,?_,?_⟩
+    · apply nat_stock_of_rational m b (by omega)
+      rw [dyadic_half b (by omega)]
+      exact_mod_cast hmb
+    · have hmn : ((m.toNat:ℕ):ℚ)=(m:ℚ) := by exact_mod_cast Int.toNat_of_nonneg hm0
+      simpa only [Nat.cast_zero,hmn] using hw
 
 private theorem selector_to_physical
     (a b c d : ℕ) (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -200,8 +203,8 @@ private theorem selector_to_physical
     · have hh := hwin.2.2.2.2.2
       rw [←hU,←hV,←hW] at hh
       exact_mod_cast hh
-  obtain ⟨w,hwperm,hdk,hold,hnew⟩ := physical_strips a b c d v m ha hb hc hd hv hm ho hn
-  exact ⟨w,hwperm,hdk,hold,hnew⟩
+  have ⟨hwperm,hdk,hold,hnew⟩ := physical_strips a b c d v m ha hb hc hd hv hm ho hn
+  exact ⟨_,hwperm,hdk,hold,hnew⟩
 
 /-- Once the arithmetic selector is consumed, the PacketNormalForm equivalence
 creates the literal fresh ear and the two complete one-period orders. -/
@@ -283,9 +286,9 @@ private theorem boundary_all_natural (r : Fin 3) :
   have hb : 2≤b := by fin_cases r <;> simp [b,boundaryB]
   have hc : 2≤c := by fin_cases r <;> simp [c,boundaryC]
   have hd : 2≤d := by dsimp [d]; omega
-  obtain ⟨w,hp,hdw,hold,hnew⟩ := boundary_strips r
+  have ⟨hp,hdw,hold,hnew⟩ := boundary_strips r
   have hh := (actual_nat_joint_iff 2 b c d ha hb hc hd).mpr
-    ⟨w,by simpa [size,b,c,d] using hp,hold,boundaryCut r,
+    ⟨boundaryWord r,by simpa [size,b,c,d] using hp,hold,boundaryCut r,
       by simpa [size,b,c,d] using hdw,hnew⟩
   obtain ⟨sigma,j,hj,ho,hn⟩ := hh
   have eo (q : ℕ) := zero_period_transport _ _ sigma ho.2.1 ho.2.2 q
@@ -330,13 +333,16 @@ theorem actualSource_second_peak_adjacent_tail_joint_lift
   have hd : 2≤d := by omega
   by_cases h1 : a=2 ∧ b=5 ∧ c=3
   · rcases h1 with ⟨rfl,rfl,rfl⟩
-    simpa [hdc] using (boundary_all_natural (0 : Fin 3))
+    subst d
+    exact boundary_all_natural (0 : Fin 3)
   by_cases h2 : a=2 ∧ b=7 ∧ c=5
   · rcases h2 with ⟨rfl,rfl,rfl⟩
-    simpa [hdc] using (boundary_all_natural (1 : Fin 3))
+    subst d
+    exact boundary_all_natural (1 : Fin 3)
   by_cases h3 : a=2 ∧ b=6 ∧ c=3
   · rcases h3 with ⟨rfl,rfl,rfl⟩
-    simpa [hdc] using (boundary_all_natural (2 : Fin 3))
+    subst d
+    exact boundary_all_natural (2 : Fin 3)
   have hs := adjacent_selector_domain a b c ha hac (by omega)
     (by intro hb2; omega) (by intro hb3; omega)
   exact adjacent_tail_all_natural a b c d ha hb hc hd hdc (by omega) (by simpa only [hdc] using hs)
