@@ -133,7 +133,8 @@ private lemma values_nonempty (ρ : TwoQubit) : (fThreeValues ρ).Nonempty := by
   rw [fThreeValues]
   refine ⟨_, (fun _ => ![0, 0, 1]), (fun i => Pi.single i 1), ?_, ?_, rfl⟩
   · intro i
-    norm_num [vlen, Fin.sum_univ_three]
+    simpa only [abs_one] using
+      D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.vlen_e3 (1 : ℝ)
   · intro i j
     simp only [dotProduct_single, Pi.single_apply, mul_one, eq_comm]
 
