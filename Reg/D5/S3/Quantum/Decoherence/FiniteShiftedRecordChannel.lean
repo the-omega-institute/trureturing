@@ -139,7 +139,7 @@ universe u_3 u_4
 
 abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_4, 0, 0, 0} where
   Params := Σ ι : Type u_3, Σ ε : Type u_4,
-    Σ record : ι → ε → ℂ, Σ rho : Matrix ι ι ℂ, Σ i : ι, ι
+    Σ _record : ι → ε → ℂ, Σ _rho : Matrix ι ι ℂ, Σ _i : ι, ι
   State p := p.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -177,8 +177,11 @@ theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
   let ε := ULift.{u_4} Unit
   have hbad := @h ι ε inferInstance inferInstance inferInstance
     (fun _ _ => (1 : ℂ)) (fun _ _ => (1 : ℂ)) (ULift.up 0) (ULift.up 0)
-  rw [diagonal_kraus_entry] at hbad
-  norm_num [rejected, realize] at hbad
+  have hentry := diagonal_kraus_entry (ι := ι) (ε := ε)
+    (fun _ _ => (1 : ℂ)) (fun _ _ => (1 : ℂ)) (ULift.up 0) (ULift.up 0)
+  have hcontradiction : (1 : ℂ) = 0 := by
+    simpa [ε, rejected, realize] using hentry.symm.trans hbad
+  exact one_ne_zero hcontradiction
 
 theorem dependence : ObservationalDependence signature.{u_3, u_4} actual := by
   intro _
@@ -207,7 +210,8 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.{u_3, u_4})
       (Realization signature.{u_3, u_4}) Unit Unit := {
-  unitName := `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.__information_unit
+  unitName :=
+    `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.__information_unit
   realizationName :=
     `Reg.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.DiagonalKrausEntry.source_registration
   realizationSource := none
