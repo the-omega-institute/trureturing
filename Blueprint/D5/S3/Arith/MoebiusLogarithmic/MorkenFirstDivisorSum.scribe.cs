@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.MoebiusLogarithmic;
 internal sealed class MorkenFirstDivisorSumDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/morken2026a112399first");
+        LibraryNoteRef.Create("D5/L/Factorization/morken2026a112399first");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coprime Moebius sum equals a double sum over squarefree divisors.",
@@ -26,8 +26,8 @@ internal sealed class MorkenFirstDivisorSumDocument : IScribeDocumentDefinition
                         + "The inner coprimality condition is gcd(m,d)=1, whereas the left condition "
                         + "is gcd(k,n)=1. No finite bound on n or assertion at n=0 is made.")),
                     Paragraph(Text("OEIS A112399, revision 41, FORMULA, attributes this first "
-                        + "conjecture to Jamie Morken. The source conjecture was supplied as "
-                        + "AI-assisted; that provenance supplies no proof. The second conjecture "
+                        + "conjecture to Jamie Morken. The conjecture has "
+                        + "AI-assisted provenance; that supplies no proof. The second conjecture "
                         + "in the entry and the product-parameter identity associated with A372706 "
                         + "are separate assertions.")),
                     Paragraph(Text("For positive d and m the filtered summand equals "

@@ -20,8 +20,8 @@ September 18, 2026. The first is the double sum stated above. The entry's
 NAME defines its left side using the signed integer Moebius function.
 All indices are positive, upper endpoints are inclusive, and d ranges over
 positive divisors, so n/d is exact. No squarefree restriction is placed on n.
-The conjecture was supplied for formalization as AI-assisted; this provenance
-is independent of the mathematical proof. The second conjecture and the
+The conjecture has AI-assisted provenance, which is independent of its
+mathematical proof. The second conjecture and the
 A372706 product-parameter identity are outside this result.
 
 The proof combines standard Moebius multiplicativity and squarefree vanishing,
