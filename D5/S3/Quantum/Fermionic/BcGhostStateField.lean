@@ -648,6 +648,8 @@ theorem stateField_creation :
 
 open private L_vacuum from D5.S3.Quantum.Fermionic.BcGhostVirasoro
 
+set_option maxHeartbeats 800000 in
+-- The finite-sum telescope and linear extension share this declaration's budget.
 /-- The translation is the original ghost Virasoro minus-one mode. -/
 theorem stateField_translation :
     BcGhostVirasoro.L (-1) vacuum = 0 ∧ ∀ (a : Fock) (n : ℤ),
@@ -730,18 +732,20 @@ theorem stateField_translation :
       map_smul' z A := by
         simp only [map_smul, RingHom.id_apply, Pi.smul_apply, Algebra.mul_smul_comm,
           Algebra.smul_mul_assoc, ← smul_sub, ← smul_add, smul_comm (n : ℂ) z] }
+    have defect_apply (A : VertexOperator ℂ Fock) : defect A =
+        BcGhostVirasoro.L (-1) * (A [[n]]) - (A [[n]]) * BcGhostVirasoro.L (-1) +
+          (n : ℂ) • (A [[n - 1]]) := rfl
     have heq : defect.comp Y = 0 := by
       apply Finsupp.lhom_ext
       intro S z
       have hs : Finsupp.single S z = z • ket S := by simp [ket]
       simp only [LinearMap.comp_apply, hs, map_smul, Y_ket, LinearMap.zero_apply]
       suffices hzero : defect (wordField S.sort) = 0 by rw [hzero, smul_zero]
-      dsimp only [defect]
-      rw [wordLaw]
-      exact neg_add_cancel _
+      rw [defect_apply, wordLaw]
+      simp only [neg_smul, neg_add_cancel]
     have hd (v : Fock) : defect (Y v) = 0 := LinearMap.congr_fun heq v
     have h := hd a
-    dsimp only [defect] at h
+    rw [defect_apply] at h
     simpa only [neg_smul] using eq_neg_iff_add_eq_zero.mpr h
 
 private theorem forward_finite (A B : VertexOperator ℂ Fock) (start finish : ℤ) (v : Fock) :

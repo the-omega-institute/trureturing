@@ -136,6 +136,7 @@ private theorem signedTriple_coefficients (x y z : ℂ) (A B C : VertexOperator 
   constructor <;>
     simp only [signedTriple, signedPairAC, signedPairBC, twistPair, Submodule.coe_add,
       Prod.fst_add, Prod.snd_add, Pi.add_apply, Pi.smul_apply, signedComm,
+      LinearMap.coe_mk, AddHom.coe_mk,
       LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sub,
       map_smul, smul_sub, smul_smul, one_smul] <;> module
 
@@ -260,9 +261,17 @@ private theorem signedTriple_residue (x y z : ℂ) (A B C : VertexOperator ℂ F
   unfold residue
   simp_rw [(signedTriple_coefficients x y z A B C v _ _ r).1,
     (signedTriple_coefficients x y z A B C v _ _ r).2]
-  rw [finsum_sub_distrib (hf ((C [[r]]) v)) (hmf.smul_right (fun _ => y * z)),
-    finsum_sub_distrib ((hr ((C [[r]]) v)).smul_right (fun _ => x))
-      (hmr.smul_right (fun _ => x * y * z))]
+  have hsf : Function.HasFiniteSupport (fun i : ℕ => (y * z) •
+      (C [[r]]) ((A [[-(i : ℤ) - 1]]) ((B [[l + i]]) v))) :=
+    hmf.smul_right (fun _ => y * z)
+  have hsr : Function.HasFiniteSupport (fun i : ℕ => (x * y * z) •
+      (C [[r]]) ((B [[l - i - 1]]) ((A [[i]]) v))) :=
+    hmr.smul_right (fun _ => x * y * z)
+  have hrx : Function.HasFiniteSupport (fun i : ℕ => x •
+      (B [[l - i - 1]]) ((A [[i]]) ((C [[r]]) v))) :=
+    (hr ((C [[r]]) v)).smul_right (fun _ => x)
+  rw [finsum_sub_distrib (hf ((C [[r]]) v)) hsf,
+    finsum_sub_distrib hrx hsr]
   rw [← smul_finsum' (y * z) hmf, ← smul_finsum' x (hr ((C [[r]]) v)),
     ← smul_finsum' (x * y * z) hmr]
   rw [← map_finsum (C [[r]]) (hf v), ← map_finsum (C [[r]]) (hr v)]
@@ -316,7 +325,7 @@ private theorem signedDerivative_locality (s : ℂ) (first second : VertexOperat
     have differentiated : signedComm s (dividedDerivative 1 first) second = weighted (signedComm s
       first second) := by
       funext left right
-      rw [signedComm s, modes, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
+      rw [signedComm, modes, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
       rfl
     rw [differentiated]
     have linearDelta (first second : ℤ → ℤ → Module.End ℂ Fock) :
@@ -392,8 +401,9 @@ private theorem signedDerivative_locality (s : ℂ) (first second : VertexOperat
   have scaled : signedComm s ((degree.factorial : ℂ) • dividedDerivative degree first) second =
       (degree.factorial : ℂ) • signedComm s (dividedDerivative degree first) second := by
     funext left right
-    simp only [signedComm s, map_smul, Pi.smul_apply, Algebra.smul_mul_assoc,
-      Algebra.mul_smul_comm, ← smul_sub]
+    simp only [signedComm, map_smul, Pi.smul_apply, Algebra.smul_mul_assoc,
+      Algebra.mul_smul_comm]
+    module
   have result := successive degree
   rw [identity, scaled] at result
   have linearity : delta^[order + degree]
@@ -430,7 +440,8 @@ private theorem local_symm (s : ℂ) (hs : s * s = 1) (A B : VertexOperator ℂ 
       module
   have reversed : signedComm s B A = (-s) • flipDistribution (signedComm s A B) := by
     funext l r
-    simp only [signedComm, flipDistribution, LinearMap.smul_apply, Pi.smul_apply,
+    simp only [signedComm, flipDistribution, LinearMap.coe_mk, AddHom.coe_mk,
+      LinearMap.smul_apply, Pi.smul_apply,
       smul_sub, smul_smul, neg_mul, hs, neg_one_smul]
     module
   refine ⟨N, ?_⟩
@@ -438,6 +449,7 @@ private theorem local_symm (s : ℂ) (hs : s * s = 1) (A B : VertexOperator ℂ 
   change (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock))^[N]
     ((-s) • flipDistribution (signedComm s A B)) = 0
   rw [← Module.End.pow_apply, map_smul, Module.End.pow_apply]
+  change (-s) • delta^[N] (flipDistribution (signedComm s A B)) = 0
   rw [flipIterate, hN, map_zero, smul_zero, smul_zero]
 
 private theorem identity_local (A : VertexOperator ℂ Fock) : Local 1 identityField A := by
@@ -463,9 +475,7 @@ private theorem generating_local (a b : Bool) : Local (-1) (generatingField a) (
       if l + r + 1 = 0 then (1 : Module.End ℂ Fock) else 0 := by
     simp only [signedComm, generating_modes, generatingMode, Bool.false_eq_true, ite_false,
       ite_true, neg_one_smul, sub_neg_eq_add]
-    rw [ghost_mixed_car]
-    congr 1
-    omega
+    rw [ghost_mixed_car, show (l - 1) + (r + 2) = l + r + 1 by omega]
   cases a <;> cases b
   · refine ⟨0, ?_⟩
     funext l r
@@ -534,17 +544,20 @@ private theorem word_local (w u : List ℕ) :
         (-1 : ℂ) ^ ((j :: tail).length * u.length) := by
       rw [← pow_add]
       congr 1
-      simp only [List.length_cons]
-      omega
+      simp only [List.length_cons, Nat.add_mul, Nat.one_mul, Nat.add_comm]
     simpa only [wordField, hout] using h
 
 /-- Every two actual occupation basis states have operator-uniform signed locality. -/
-theorem occupation_locality (S U : Finset ℕ) :
+private theorem occupation_locality (S U : Finset ℕ) :
     ∃ N : ℕ, delta^[N] (fun m n =>
       ((Y (ket S)) [[m]]) * ((Y (ket U)) [[n]]) -
         ((-1 : ℂ) ^ (S.card * U.card)) •
           (((Y (ket U)) [[n]]) * ((Y (ket S)) [[m]]))) = 0 := by
-  simpa only [Y_ket, Local, signedComm, Finset.length_sort] using word_local S.sort U.sort
+  have h := word_local S.sort U.sort
+  simp only [Finset.length_sort] at h
+  change Local ((-1 : ℂ) ^ (S.card * U.card)) (Y (ket S)) (Y (ket U))
+  rw [Y_ket, Y_ket]
+  exact h
 
 private theorem monotone (distribution : ℤ → ℤ → Module.End ℂ Fock) (small large : ℕ)
     (less : small ≤ large) (killed : delta^[small] distribution = 0) : delta^[large]
@@ -556,7 +569,7 @@ private theorem monotone (distribution : ℤ → ℤ → Module.End ℂ Fock) (s
   rw [Module.End.pow_apply] at result
   exact result
 private theorem localAdd (s : ℂ) (first second third : VertexOperator ℂ Fock)
-    (firstLocal s : Local s first third) (secondLocal s : Local s second third) : Local s (first +
+    (firstLocal : Local s first third) (secondLocal : Local s second third) : Local s (first +
       second) third := by
   obtain ⟨firstOrder, firstKilled⟩ := firstLocal
   obtain ⟨secondOrder, secondKilled⟩ := secondLocal
@@ -570,8 +583,8 @@ private theorem localAdd (s : ℂ) (first second third : VertexOperator ℂ Fock
     signedComm s first third + signedComm s
     second third := by
     funext left right
-    simp only [signedComm, map_add, Pi.add_apply, smul_add]
-    noncomm_ring
+    simp only [signedComm, map_add, Pi.add_apply, mul_add, add_mul, smul_add]
+    module
   rw [split]
   change (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock))^[order] _ = 0
   rw [← Module.End.pow_apply, map_add]
@@ -588,7 +601,8 @@ private theorem localSmul (s : ℂ) (scalar : ℂ) (first second : VertexOperato
     funext left right
     simp only [signedComm, map_smul, Pi.smul_apply,
       Algebra.smul_mul_assoc,
-      Algebra.mul_smul_comm, smul_smul, mul_comm s scalar, ← smul_smul, ← smul_sub]
+      Algebra.mul_smul_comm]
+    module
   rw [split]
   change (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock))^[order] _ = 0
   rw [← Module.End.pow_apply, map_smul]
@@ -599,11 +613,12 @@ private theorem localSum (s : ℂ) {Index : Type} (indices : Finset Index) (fiel
     (operator : VertexOperator ℂ Fock) (locality : ∀ index ∈ indices, Local s (fields index)
       operator) :
     Local s (∑ index ∈ indices, fields index) operator := by
+  classical
   induction indices using Finset.induction_on with
   | empty =>
     refine ⟨0, ?_⟩
     funext left right
-    simp [signedComm s]
+    simp [signedComm]
   | @insert index indices absent inductionHypothesis =>
     rw [Finset.sum_insert absent]
     exact localAdd s _ _ _ (locality index (Finset.mem_insert_self _ _))
@@ -640,8 +655,14 @@ theorem stateField_locality (a b : Fock) (p q : ℕ)
     simp only [parity_coefficient, Finsupp.smul_apply, smul_eq_mul] at he
     exact mul_right_cancel₀ (Finsupp.mem_support_iff.mp hS) he
   have expansion (v : Fock) : Y v = ∑ S ∈ v.support, (v S) • Y (ket S) := by
-    simp only [Y_ket, Y, Finsupp.lsum_apply, LinearMap.smulRight_apply,
-      LinearMap.id_apply, Finsupp.sum]
+    calc
+      Y v = ∑ S ∈ v.support, (v S) • wordField S.sort := by
+        simp only [Y, Finsupp.lsum_apply, LinearMap.smulRight_apply,
+          LinearMap.id_apply, Finsupp.sum]
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro S hS
+        rw [Y_ket]
   change Local s (Y a) (Y b)
   rw [expansion a]
   apply localSum s
