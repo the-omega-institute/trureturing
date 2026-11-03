@@ -190,35 +190,31 @@ private theorem whitening
 
 private def liftP (P : Matrix (Fin 3) (Fin 3) ℝ) :
     Matrix (Fin 4) (Fin 4) ℂ :=
-  fun i j =>
-    if hi : i.val < 3 then
-      if hj : j.val < 3 then
-        P.map (algebraMap ℝ ℂ) ⟨i.val, hi⟩ ⟨j.val, hj⟩
-      else 0
-    else if j.val < 3 then 0 else 1
+  (Matrix.fromBlocks (P.map (algebraMap ℝ ℂ)) 0 0
+    (1 : Matrix (Fin 1) (Fin 1) ℂ)).reindex finSumFinEquiv finSumFinEquiv
 
 private theorem liftP_unit (P : Matrix (Fin 3) (Fin 3) ℝ) (hP : IsUnit P.det) :
     IsUnit (liftP P).det := by
-  have hd : (liftP P).det = (P.det : ℂ) := by
-    simp [liftP, Matrix.det_succ_row_zero,
-      Fin.sum_univ_succ, Matrix.submatrix, Fin.succAbove]
-  rw [hd]
+  rw [liftP, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁, Matrix.det_one,
+    mul_one]
+  change IsUnit ((algebraMap ℝ ℂ).mapMatrix P).det
+  rw [← RingHom.map_det]
   exact hP.map (algebraMap ℝ ℂ)
 
 private theorem liftP_action (P : Matrix (Fin 3) (Fin 3) ℝ) (X : Fin 4 → ℂ) :
     liftP P *ᵥ X =
       Fin.snoc (P.map (algebraMap ℝ ℂ) *ᵥ (fun i : Fin 3 => X i.castSucc)) (X 3) := by
+  rw [liftP, Matrix.reindex_apply, Matrix.submatrix_mulVec_equiv,
+    Matrix.fromBlocks_mulVec]
+  simp only [Matrix.zero_mulVec, add_zero, zero_add, Matrix.one_mulVec]
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
-  · rw [Fin.snoc_last]
-    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
-    rw [liftP]
-    simp [liftP]
-  · rw [Fin.snoc_castSucc]
-    fin_cases j <;>
-      simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
-      rw [liftP] <;>
-      simp [liftP]
+  · change Sum.elim _ _ (finSumFinEquiv.symm (Fin.last 3)) = _
+    rw [finSumFinEquiv_symm_last, Sum.elim_inr, Fin.snoc_last]
+    rfl
+  · change Sum.elim _ _ (finSumFinEquiv.symm j.castSucc) = _
+    rw [finSumFinEquiv_symm_apply_castSucc, Sum.elim_inl, Fin.snoc_castSucc]
+    rfl
 
 private def eulerCoefficients (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ) :
     Fin 3 → ℂ :=
@@ -236,10 +232,8 @@ private theorem cross_matrix_adjugate (Q : Matrix (Fin 3) (Fin 3) ℂ)
 
 private theorem adjugate_scaled_inverse (Q : Matrix (Fin 3) (Fin 3) ℂ)
     (hQ : IsUnit Q.det) : Q.adjugate = Q.det • Q⁻¹ := by
-  apply Matrix.ext_of_mulVec_single
-  intro i
-  simpa only [Matrix.cramer_eq_adjugate_mulVec, Matrix.smul_mulVec] using
-    (Matrix.det_smul_inv_mulVec_eq_cramer Q (Pi.single i 1) hQ).symm
+  rw [Matrix.inv_def, Ring.inverse_eq_inv, smul_smul,
+    mul_inv_cancel₀ (isUnit_iff_ne_zero.mp hQ), one_smul]
 
 private theorem adjugate_conjugate (Q M : Matrix (Fin 3) (Fin 3) ℂ)
     (hQ : IsUnit Q.det) :
