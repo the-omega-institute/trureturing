@@ -233,23 +233,166 @@ private lemma entry_formula (N : ℕ) (p q : Fin N ⊕ Fin N) :
       · simp only [hkj, ite_false]
         exact hi Sum.inl j k hkj
 
-private lemma reflection_index (m : ℕ) (j k : Fin (2*m)) :
-    ∃ t : ℤ, (((j+j-k).val : ℕ) : ℤ) = 2*(j.val : ℤ) - k.val + t*(2*m) := by sorry
+private lemma reflection_index (m : ℕ) (j k : Fin (2 * m)) :
+    ∃ t : ℤ, (((j+j-k).val : ℕ) : ℤ) = 2*(j.val : ℤ) - k.val + t*(2 * m) := by
+  have ha : ((j+j).val : ℤ) = 2*(j.val : ℤ) -
+      (if 2 * m ≤ j.val+j.val then (2 * m : ℤ) else 0) := by
+    rw [Fin.val_add_eq_ite]
+    split_ifs with h
+    · rw [Nat.cast_sub h]
+      push_cast
+      ring
+    · push_cast
+      ring
+  rw [Fin.intCast_val_sub_eq_sub_add_ite, ha]
+  split_ifs
+  · exact ⟨-1, by push_cast; ring⟩
+  · exact ⟨0, by push_cast; ring⟩
+  · exact ⟨0, by push_cast; ring⟩
+  · exact ⟨1, by push_cast; ring⟩
 
-private lemma reflection_charge (m : ℕ) (j k : Fin (2*m)) :
-    charge (2*m) (j+j-k) = charge (2*m) k := by sorry
+private lemma reflection_charge (m : ℕ) (j k : Fin (2 * m)) :
+    charge (2 * m) (j+j-k) = charge (2 * m) k := by
+  obtain ⟨t, ht⟩ := reflection_index m j k
+  have ht' : ((j+j-k).val : ℤ) = 2*((j.val : ℤ) + t*m) - k.val := by
+    rw [ht]
+    ring
+  have hp : ((j+j-k).val + 2) % 2 = (k.val + 2) % 2 := by omega
+  unfold charge
+  calc
+    _ = (-1 : ℝ)^(((j+j-k).val + 2) % 2) := neg_one_pow_eq_pow_mod_two _
+    _ = (-1 : ℝ)^((k.val + 2) % 2) := by rw [hp]
+    _ = _ := (neg_one_pow_eq_pow_mod_two _).symm
 
-private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2*m)) (hkj : k ≠ j) :
-    let z := polygon (2*m)
-    let d := fun a b : Fin (2*m) =>
+private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj : k ≠ j) :
+    let z := polygon (2 * m)
+    let d := fun a b : Fin (2 * m) =>
       (z (Sum.inl a)-z (Sum.inl b))^2 + (z (Sum.inr a)-z (Sum.inr b))^2
     (z (Sum.inl j)-z (Sum.inl k)) / d j k +
         (z (Sum.inl j)-z (Sum.inl (j+j-k))) / d j (j+j-k) = z (Sum.inl j) ∧
       (z (Sum.inr j)-z (Sum.inr k)) / d j k +
-        (z (Sum.inr j)-z (Sum.inr (j+j-k))) / d j (j+j-k) = z (Sum.inr j) := by sorry
+        (z (Sum.inr j)-z (Sum.inr (j+j-k))) / d j (j+j-k) = z (Sum.inr j) := by
+  dsimp only
+  let a := 2 * Real.pi * (j.val + 1 : ℝ) / ((2 * m : ℕ) : ℝ)
+  let b := 2 * Real.pi * (k.val + 1 : ℝ) / ((2 * m : ℕ) : ℝ)
+  let c := 2 * Real.pi * ((j+j-k).val + 1 : ℝ) / ((2 * m : ℕ) : ℝ)
+  obtain ⟨t, ht⟩ := reflection_index m j k
+  have htR : ((j+j-k).val : ℝ) = 2*(j.val : ℝ) - k.val + (t : ℝ)*(2 * m) := by
+    exact_mod_cast ht
+  have hmR : (m : ℝ) ≠ 0 := by exact_mod_cast (show m ≠ 0 by omega)
+  have hc : c = a + (a-b) + (t : ℝ)*(2*Real.pi) := by
+    dsimp [a, b, c]
+    push_cast
+    field_simp
+    nlinarith [htR]
+  have hcb : Real.cos b = Real.cos a * Real.cos (a-b) +
+      Real.sin a * Real.sin (a-b) := by
+    simpa only [show a-(a-b) = b by ring] using Real.cos_sub a (a-b)
+  have hsb : Real.sin b = Real.sin a * Real.cos (a-b) -
+      Real.cos a * Real.sin (a-b) := by
+    simpa only [show a-(a-b) = b by ring] using Real.sin_sub a (a-b)
+  have hcc : Real.cos c = Real.cos a * Real.cos (a-b) -
+      Real.sin a * Real.sin (a-b) := by
+    rw [hc, Real.cos_add_int_mul_two_pi, Real.cos_add]
+  have hsc : Real.sin c = Real.sin a * Real.cos (a-b) +
+      Real.cos a * Real.sin (a-b) := by
+    rw [hc, Real.sin_add_int_mul_two_pi, Real.sin_add]
+  have hu := Real.sin_sq_add_cos_sq a
+  have hv := Real.sin_sq_add_cos_sq (a-b)
+  have hd : (Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2 =
+      2-2*Real.cos (a-b) := by
+    rw [hcb, hsb]
+    linear_combination
+      ((1-Real.cos (a-b))^2 + Real.sin (a-b)^2) * hu + hv
+  have hd' : (Real.cos a-Real.cos c)^2 + (Real.sin a-Real.sin c)^2 =
+      2-2*Real.cos (a-b) := by
+    rw [hcc, hsc]
+    linear_combination
+      ((1-Real.cos (a-b))^2 + Real.sin (a-b)^2) * hu + hv
+  have hne : 2-2*Real.cos (a-b) ≠ 0 := by
+    rw [← hd]
+    exact chord_sq_ne_zero (2 * m) j k hkj.symm
+  change
+    (Real.cos a-Real.cos b) /
+        ((Real.cos a-Real.cos b)^2+(Real.sin a-Real.sin b)^2) +
+      (Real.cos a-Real.cos c) /
+        ((Real.cos a-Real.cos c)^2+(Real.sin a-Real.sin c)^2) = Real.cos a ∧
+    (Real.sin a-Real.sin b) /
+        ((Real.cos a-Real.cos b)^2+(Real.sin a-Real.sin b)^2) +
+      (Real.sin a-Real.sin c) /
+        ((Real.cos a-Real.cos c)^2+(Real.sin a-Real.sin c)^2) = Real.sin a
+  rw [hd, hd']
+  constructor <;> rw [← add_div] <;>
+    apply (div_eq_iff hne).mpr
+  · rw [hcb, hcc]; ring
+  · rw [hsb, hsc]; ring
 
 private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
-    field (2 * m) (polygon (2 * m)) = 0 := by sorry
+    field (2 * m) (polygon (2 * m)) = 0 := by
+  classical
+  have : NeZero (2 * m) := ⟨by omega⟩
+  let z := polygon (2 * m)
+  let d := fun j k : Fin (2 * m) =>
+    (z (Sum.inl j)-z (Sum.inl k))^2 + (z (Sum.inr j)-z (Sum.inr k))^2
+  have hcharge : ∑ k : Fin (2 * m), charge (2 * m) k = 0 := by
+    simp only [charge, pow_add, neg_one_sq, mul_one]
+    rw [Fin.sum_neg_one_pow]
+    simp
+  have hsum (j : Fin (2 * m)) (v : Fin (2 * m) → ℝ)
+      (hp : ∀ k, k ≠ j →
+        (v j-v k)/d j k + (v j-v (j+j-k))/d j (j+j-k) = v j) :
+      (∑ k : Fin (2 * m), if k = j then 0 else
+        charge (2 * m) k * (v j-v k)/d j k) = -charge (2 * m) j * v j / 2 := by
+    let f := fun k : Fin (2 * m) =>
+      if k = j then 0 else charge (2 * m) k * (v j-v k)/d j k
+    have he : (∑ k, f (j+j-k)) = ∑ k, f k :=
+      (Equiv.subLeft (j+j)).sum_comp f
+    have hp' (k : Fin (2 * m)) : f k + f (j+j-k) =
+        if k = j then 0 else charge (2 * m) k * v j := by
+      by_cases hk : k = j
+      · subst k
+        simp [f, add_sub_cancel_right]
+      · have hr : j+j-k ≠ j := by
+          intro h
+          apply hk
+          have hh := congrArg (fun x : Fin (2 * m) => j+j-x) h
+          simpa only [sub_sub_cancel, add_sub_cancel_right] using hh
+        simp only [f, ite_eq_right hk, ite_eq_right hr, reflection_charge]
+        rw [mul_div_assoc, mul_div_assoc, ← mul_add, hp k hk]
+    have h2 : 2 * ∑ k, f k =
+        ∑ k : Fin (2 * m), if k = j then 0 else charge (2 * m) k * v j := by
+      calc
+        _ = (∑ k, f k) + ∑ k, f (j+j-k) := by rw [he, two_mul]
+        _ = ∑ k, (f k + f (j+j-k)) := Finset.sum_add_distrib.symm
+        _ = _ := Finset.sum_congr rfl (fun k _ => hp' k)
+    have htotal : (∑ k : Fin (2 * m),
+        if k = j then 0 else charge (2 * m) k * v j) + charge (2 * m) j * v j = 0 := by
+      calc
+        _ = ∑ k : Fin (2 * m), ((if k = j then 0 else charge (2 * m) k * v j) +
+            (if k = j then charge (2 * m) k * v j else 0)) := by
+          rw [Finset.sum_add_distrib]
+          simp
+        _ = ∑ k : Fin (2 * m), charge (2 * m) k * v j := by
+          apply Finset.sum_congr rfl
+          intro k _
+          split_ifs <;> simp
+        _ = 0 := by rw [← Finset.sum_mul, hcharge, zero_mul]
+    change (∑ k, f k) = _
+    linarith
+  funext p
+  cases p with
+  | inl j =>
+    have hs := hsum j (fun k => z (Sum.inr k))
+      (fun k hk => (reflection_pair m hm j k hk).2)
+    change -charge (2 * m) j * (1/2:ℝ) * z (Sum.inr j) - _ = 0
+    rw [hs]
+    ring
+  | inr j =>
+    have hs := hsum j (fun k => z (Sum.inl k))
+      (fun k hk => (reflection_pair m hm j k hk).1)
+    change charge (2 * m) j * (1/2:ℝ) * z (Sum.inl j) + _ = 0
+    rw [hs]
+    ring
 
 private def weights (m : ℕ) : Matrix (Fin (2*m)) (Fin (2*m)) ℝ :=
   fun j k => if j = k then 0 else
@@ -646,9 +789,192 @@ private def gamma (m : ℕ) (k : ZMod (2*m)) : ℝ :=
   let r := min k.val (2*m - k.val)
   ((m : ℝ) - r)^2 * ((r : ℝ)^2 - 2) / 4
 
-private lemma product_spectrum (m : ℕ) [NeZero (2*m)] (hm : 3 ≤ m) (y : ℝ) :
+private lemma spectrum_fin_val (N : ℕ) [NeZero N] (j : Fin N) :
+    ((ZMod.finEquiv N) j).val = j.val := by
+  cases N with
+  | zero => exact Fin.elim0 j
+  | succ N => rfl
+
+private lemma spectrum_weights (m : ℕ) [NeZero (2 * m)] :
+    weights m = Matrix.circulant (fun l : Fin (2 * m) =>
+      InverseChordCirculant.chordWeight (2 * m) ((ZMod.finEquiv (2 * m)) l)) := by
+  ext j k
+  have hz : (ZMod.finEquiv (2 * m)) (j-k) = 0 ↔ j = k := by
+    constructor
+    · intro h
+      apply sub_eq_zero.mp
+      exact (ZMod.finEquiv (2 * m)).injective (h.trans (map_zero _).symm)
+    · intro h
+      simp [h]
+  simp only [weights, Matrix.circulant_apply, InverseChordCirculant.chordWeight, hz,
+    spectrum_fin_val]
+  by_cases hjk : j = k
+  · simp [hjk]
+  · simp only [ite_eq_right hjk]
+    congr 2
+    have hs : ((j-k).val : ℝ) = (j.val : ℝ) - k.val +
+        (if k ≤ j then 0 else (2 * m : ℝ)) := by
+      exact_mod_cast Fin.intCast_val_sub_eq_sub_add_ite j k
+    have hmR : (m : ℝ) ≠ 0 := by
+      exact_mod_cast (show m ≠ 0 by intro h; exact NeZero.ne (2 * m) (by simp [h]))
+    split_ifs at hs with hle
+    · rw [hs]
+      push_cast
+      simp
+    · have ha : Real.pi * ((j-k).val : ℝ) / (2 * m) =
+          Real.pi * ((j.val : ℝ)-k.val) / (2 * m) + Real.pi := by
+        rw [hs]
+        field_simp
+      push_cast
+      rw [ha, Real.sin_add_pi]
+      simp
+
+private lemma spectrum_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m)
+    (k : ZMod (2 * m)) :
+    (diagonalWeight m + 1 -
+        ((((2 * m : ℕ) : ℝ)^2-1)/12 - (k.val : ℝ)*((2 * m : ℝ)-k.val)/2)) *
+      (diagonalWeight m -
+        ((((2 * m : ℕ) : ℝ)^2-1)/12 - ((k+m).val : ℝ)*((2 * m : ℝ)-(k+m).val)/2)) =
+      gamma m (k+m) := by
+  have hklt := ZMod.val_lt k
+  have hmv : (m : ZMod (2 * m)).val = m := ZMod.val_natCast_of_lt (by omega)
+  by_cases hk : k.val < m
+  · have hv : (k+m).val = k.val+m := by
+      rw [ZMod.val_add, hmv, Nat.mod_eq_of_lt (by omega)]
+    have hr : min (k+m).val (2 * m-(k+m).val) = m-k.val := by rw [hv]; omega
+    have hc : ((m-k.val : ℕ) : ℝ) = (m : ℝ)-k.val :=
+      Nat.cast_sub (by omega)
+    dsimp only [gamma]
+    rw [hr, hv, hc]
+    unfold diagonalWeight
+    push_cast
+    ring
+  · have hv : (k+m).val = k.val-m := by
+      rw [ZMod.val_add_of_le (by rw [hmv]; omega), hmv]
+      omega
+    have hr : min (k+m).val (2 * m-(k+m).val) = k.val-m := by rw [hv]; omega
+    have hc : ((k.val-m : ℕ) : ℝ) = (k.val : ℝ)-m :=
+      Nat.cast_sub (by omega)
+    dsimp only [gamma]
+    rw [hr, hv, hc]
+    unfold diagonalWeight
+    push_cast
+    ring
+
+private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
     (y • 1 - blockC m * blockB m).det =
-      ∏ k : ZMod (2*m), (y - gamma m k) := by sorry
+      ∏ k : ZMod (2 * m), (y - gamma m k) := by
+  classical
+  let e := ZMod.finEquiv (2 * m)
+  let R := Matrix.reindexRingEquiv ℝ e.toEquiv
+  let F := Complex.ofRealHom.mapMatrix.comp R.toRingHom
+  let w : ZMod (2 * m) → ℂ := fun l => (InverseChordCirculant.chordWeight (2 * m) l : ℂ)
+  let u : ZMod (2 * m) → ℂ := fun l =>
+    (((-1 : ℝ)^l.val * InverseChordCirculant.chordWeight (2 * m) l : ℝ) : ℂ)
+  let a := diagonalWeight m
+  have hscalar (r : ℝ) : F (r • 1) = (r : ℂ) • 1 := by
+    ext i j
+    change ((r * (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ)
+      (e.symm i) (e.symm j) : ℝ) : ℂ) = _
+    by_cases hij : i = j
+    · subst j
+      simp
+    · have hne : e.symm i ≠ e.symm j := fun h => hij (e.symm.injective h)
+      simp [hij, hne]
+  have hW : F (weights m) = Matrix.circulant w := by
+    ext i j
+    change ((weights m (e.symm i) (e.symm j) : ℝ) : ℂ) = w (i-j)
+    rw [spectrum_weights]
+    change (InverseChordCirculant.chordWeight (2 * m) (e (e.symm i-e.symm j)) : ℂ) = _
+    rw [map_sub]
+    simp only [RingEquiv.apply_symm_apply]
+    rfl
+  have hsign (i j : Fin (2 * m)) :
+      charge (2 * m) i * charge (2 * m) j = (-1 : ℝ)^(i-j).val := by
+    have hs := Fin.intCast_val_sub_eq_sub_add_ite i j
+    have hp : ((i.val+2)+(j.val+2)) % 2 = (i-j).val % 2 := by
+      split_ifs at hs <;> push_cast at hs <;> omega
+    unfold charge
+    rw [← pow_add]
+    calc
+      _ = (-1 : ℝ)^(((i.val+2)+(j.val+2)) % 2) := neg_one_pow_eq_pow_mod_two _
+      _ = (-1 : ℝ)^((i-j).val % 2) := by rw [hp]
+      _ = _ := (neg_one_pow_eq_pow_mod_two _).symm
+  have hU : F (chargeMatrix m * weights m * chargeMatrix m) = Matrix.circulant u := by
+    ext i j
+    change (((chargeMatrix m * weights m * chargeMatrix m)
+      (e.symm i) (e.symm j) : ℝ) : ℂ) = u (i-j)
+    simp only [chargeMatrix, Matrix.mul_diagonal, Matrix.diagonal_mul]
+    rw [show charge (2 * m) (e.symm i) * weights m (e.symm i) (e.symm j) *
+        charge (2 * m) (e.symm j) =
+        (charge (2 * m) (e.symm i) * charge (2 * m) (e.symm j)) *
+          weights m (e.symm i) (e.symm j) by ring, hsign, spectrum_weights]
+    change (((-1 : ℝ)^(e.symm i-e.symm j).val *
+      InverseChordCirculant.chordWeight (2 * m) (e (e.symm i-e.symm j)) : ℝ) : ℂ) = _
+    rw [← spectrum_fin_val (2 * m) (e.symm i-e.symm j), map_sub]
+    change (((-1 : ℝ)^(e (e.symm i)-e (e.symm j)).val *
+      InverseChordCirculant.chordWeight (2 * m) (e (e.symm i)-e (e.symm j)) : ℝ) : ℂ) = _
+    simp only [RingEquiv.apply_symm_apply]
+    rfl
+  have hD : chargeMatrix m * chargeMatrix m = 1 := by
+    rw [chargeMatrix, Matrix.diagonal_mul_diagonal]
+    apply congrArg Matrix.diagonal
+    funext j
+    simp only [charge, ← pow_add]
+    rw [show j.val+2+(j.val+2) = 2*(j.val+2) by omega, pow_mul]
+    simp
+  have hCB : blockC m * blockB m =
+      ((a+1) • 1 - weights m) * (a • 1 - chargeMatrix m * weights m * chargeMatrix m) := by
+    change (((a+1) • 1 - weights m) * chargeMatrix m) *
+      ((a • 1 - weights m) * chargeMatrix m) = _
+    have hmid : (chargeMatrix m * (a • 1 - weights m)) * chargeMatrix m =
+        a • 1 - chargeMatrix m * weights m * chargeMatrix m := by
+      rw [mul_sub, sub_mul, Matrix.mul_smul, mul_one, Matrix.smul_mul, hD]
+    calc
+      _ = ((a+1) • 1 - weights m) *
+          ((chargeMatrix m * (a • 1 - weights m)) * chargeMatrix m) := by
+        simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hmid]
+  let b : ZMod (2 * m) → ℂ := Pi.single 0 ((a+1 : ℝ) : ℂ) - w
+  let c : ZMod (2 * m) → ℂ := Pi.single 0 (a : ℂ) - u
+  have hb : F ((a+1) • 1 - weights m) = Matrix.circulant b := by
+    rw [map_sub, hscalar, hW]
+    rw [show b = Pi.single 0 (a+1 : ℂ) - w by simp only [b, Complex.ofReal_add,
+      Complex.ofReal_one], Matrix.circulant_sub, Matrix.circulant_single]
+    ext i j
+    simp [Matrix.scalar, Matrix.smul_apply, Matrix.one_apply, Matrix.diagonal_apply]
+  have hc : F (a • 1 - chargeMatrix m * weights m * chargeMatrix m) = Matrix.circulant c := by
+    rw [map_sub, hscalar, hU, show c = Pi.single 0 (a : ℂ) - u from rfl,
+      Matrix.circulant_sub, Matrix.circulant_single]
+    ext i j
+    simp [Matrix.scalar, Matrix.smul_apply, Matrix.one_apply, Matrix.diagonal_apply]
+  have hsingle (z : ℂ) (k : ZMod (2 * m)) : ZMod.dft (Pi.single 0 z) k = z := by
+    simp [ZMod.dft_apply, Pi.single_apply]
+  have hmode (k : ZMod (2 * m)) :
+      ZMod.dft b k * ZMod.dft c k = (gamma m (k+m) : ℂ) := by
+    simp only [b, c, map_sub, Pi.sub_apply]
+    rw [hsingle, hsingle]
+    change (((a+1 : ℝ) : ℂ) - ZMod.dft w k) * ((a : ℂ) - ZMod.dft u k) = _
+    rw [InverseChordCirculant.alternating_chord_dft,
+      InverseChordCirculant.chordWeight_dft, InverseChordCirculant.chordWeight_dft]
+    rw [← Complex.ofReal_sub, ← Complex.ofReal_sub, ← Complex.ofReal_mul]
+    simpa only [a, Nat.cast_mul, Nat.cast_ofNat] using
+      congrArg Complex.ofReal (spectrum_mode_product m hm k)
+  apply Complex.ofReal_injective
+  have hdet : ((y • 1 - blockC m * blockB m).det : ℂ) =
+      (F (y • 1 - blockC m * blockB m)).det := by
+    change _ = (Complex.ofRealHom.mapMatrix (R (y • 1 - blockC m * blockB m))).det
+    rw [← Complex.ofRealHom.map_det]
+    congr 1
+    exact (Matrix.det_reindex_self e.toEquiv _).symm
+  rw [hdet, map_sub, hscalar, hCB, map_mul, hb, hc,
+    InverseChordCirculant.circulant_product_det]
+  simp only [hmode]
+  change _ = Complex.ofRealHom (∏ k : ZMod (2 * m), (y - gamma m k))
+  rw [map_prod Complex.ofRealHom]
+  simp only [Complex.ofRealHom_eq_coe, Complex.ofReal_sub]
+  exact Equiv.prod_comp (Equiv.addRight (m : ZMod (2 * m)))
+    (fun k => (y : ℂ) - (gamma m k : ℂ))
 
 private lemma root_iff_mode (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
     (jacobian (2*m)).charpoly.IsRoot x ↔
