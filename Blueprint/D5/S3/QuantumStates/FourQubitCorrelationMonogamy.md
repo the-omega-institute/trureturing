@@ -50,6 +50,10 @@ $$\forall (\psi: ((\operatorname{Fin}\left(4\right)) \to (\operatorname{Fin}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumStates/FourQubitCorrelationMonogamy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cheng-milne-hall-wiseman-2016-four-qubit-correlation-monogamy` (proved) by `D5/S3/QuantumStates/FourQubitCorrelationMonogamy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cheng-milne-hall-wiseman-2016-four-qubit-correlation-monogamy","declaration_gid":"D5/S3/QuantumStates/FourQubitCorrelationMonogamy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shuming Cheng, Antony Milne, Michael J. W. Hall, Howard M. Wiseman (2016). *Volume monogamy of quantum steering ellipsoids for multi-qubit systems*. DOI: [10.1103/PhysRevA.94.042105](https://doi.org/10.1103/PhysRevA.94.042105). URL: <https://arxiv.org/abs/1606.02390v2>.

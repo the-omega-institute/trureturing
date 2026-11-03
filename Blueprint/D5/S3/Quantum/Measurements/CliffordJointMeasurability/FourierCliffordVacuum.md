@@ -20,7 +20,7 @@ In a complex algebra with compatible star, a vanishing self-anticommutator force
 
 **Lemma 1.2 (Anticommutator of linear combinations).**
 
-$$\begin{aligned}\forall \{R : \operatorname{Type}*\} \{iota : \operatorname{Type}*\},\\{}[\operatorname{Ring} R] [\operatorname{Algebra} \mathbb{C} R] [\operatorname{Fintype} iota] [\operatorname{DecidableEq} iota],\\\forall (g : iota \to R),\\(\forall j, g j \cdot g j = 1) \to\\(\forall j k, j \neq k \to g j \cdot g k = -(g k \cdot g j)) \to\\\forall (c d : iota \to \mathbb{C}),\\(\sum_{j} c j \cdot g j) \cdot (\sum_{j} d j \cdot g j) + (\sum_{j} d j \cdot g j) \cdot (\sum_{j} c j \cdot g j) = (2 \cdot \sum_{j} c j \cdot d j) \cdot (1 : R)\end{aligned}$$
+$$\forall \{R: \operatorname{Type} u_{1}\}, ([\operatorname{Ring}\left(R\right)], ([\operatorname{Algebra}\left(\mathbb{C}, R\right)], (\forall \{\iota: \operatorname{Type} u_{2}\}, ([\operatorname{Fintype}\left(\iota\right)], ([\operatorname{DecidableEq}\left(\iota\right)], (\forall (g: \iota \to R), ((\forall (j: \iota), ((g\left(j\right)) \cdot (g\left(j\right)) = (1: R))) \to ((\forall (j: \iota), (\forall (k: \iota), ((j \ne k) \to ((g\left(j\right)) \cdot (g\left(k\right)) = -((g\left(k\right)) \cdot (g\left(j\right))))))) \to (\forall (c: \iota \to \mathbb{C}), (\forall (d: \iota \to \mathbb{C}), ((\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, c\right)) \cdot (\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, d\right)) + (\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, d\right)) \cdot (\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, c\right)) = (\operatorname{algebraMap}\left(\mathbb{C}, R, (((2: \mathbb{C})) \cdot (\sum_{j: \iota} ((c\left(j\right)) \cdot (d\left(j\right)))): \mathbb{C})\right)) \cdot ((1: R)))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.cliffordLinear_anticommutator` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\begin{aligned}\forall \{R : \operatorname{Type}*\} \{iota : \operatorname{Typ
 
 *Commentary.*
 
-For pairwise anticommuting involutions in a complex algebra, the anticommutator of two linear combinations is twice the bilinear pairing of their coefficients times the identity.
+For pairwise anticommuting involutions in a complex algebra, the anticommutator of two linear combinations is twice the bilinear pairing of their coefficients times the identity. The algebra and the index type may lie in independent universes u₁ and u₂. Fintype.linearCombination uses the complex scalar action, and the displayed algebraMap explicitly maps the complex coefficient into R: z • x = algebraMap ℂ R z * x.
 
 **Definition 1.3 (averaging).**
 

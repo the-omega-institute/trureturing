@@ -112,7 +112,10 @@ internal sealed class FourQubitCorrelationMonogamyDocument : IScribeDocumentDefi
                             + "two-body words are exactly correlation ψ X i j. Substituting this density "
                             + "state into the preceding bound proves the displayed proposition for every "
                             + "normalized pure four-qubit vector."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cheng-milne-hall-wiseman-2016-four-qubit-correlation-monogamy"),
+                    ResolutionKind.Proved)))));
 
     private static Formula TwoBodyWordFormula()
     {
