@@ -10,6 +10,8 @@ import D5.S3.Quantum.Information.CovarianceSumBound
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
 
+/-! Squared two-body Pauli correlations of four qubits sum to at most three. -/
+
 noncomputable section
 
 open scoped BigOperators ComplexOrder MatrixOrder
@@ -40,7 +42,8 @@ def claim : Prop :=
 private lemma partition_sign (k : Fin 3) (u v : Fin 3 × Fin 3) (h : u ≠ v) :
     (∏ q : Fin 4, sgn (twoBodyWord u.1 (k + u.1) u.2 q)
       (twoBodyWord v.1 (k + v.1) v.2 q)) = -1 := by
-  sorry
+  revert k u v
+  decide +kernel
 
 private lemma group_relations (k : Fin 3) :
     (∀ u : Fin 3 × Fin 3,
@@ -53,16 +56,52 @@ private lemma group_relations (k : Fin 3) :
         wordOp (twoBodyWord v.1 (k + v.1) v.2) =
       -(wordOp (twoBodyWord v.1 (k + v.1) v.2) *
         wordOp (twoBodyWord u.1 (k + u.1) u.2))) := by
-  have hs := partition_sign k
-  sorry
+  refine ⟨fun u => word_hermitian _, fun u => (wordUnit _).val_inv, ?_⟩
+  intro u v h
+  rw [word_comm_sign]
+  have hs : (∏ q : Fin 4, (sgn (twoBodyWord u.1 (k + u.1) u.2 q)
+      (twoBodyWord v.1 (k + v.1) v.2 q) : ℂ)) = -1 := by
+    exact_mod_cast partition_sign k u v h
+  rw [hs, neg_one_smul]
 
 private lemma anticommuting_family_bound {n α : Type*}
-    [Fintype n] [DecidableEq n] [Fintype α] [DecidableEq α]
+    [Fintype n] [DecidableEq n] [Fintype α]
     (ρ : DensityState n) (P : α → Matrix n n ℂ)
     (hP : ∀ i, (P i).IsHermitian) (hsq : ∀ i, P i * P i = 1)
     (hanti : ∀ i j, i ≠ j → P i * P j = -(P j * P i)) :
     ∑ i, expectation ρ (P i) ^ 2 ≤ 1 := by
-  sorry
+  classical
+  let a : α → ℝ := fun i => expectation ρ (P i)
+  let H : Matrix n n ℂ := ∑ i, (a i : ℂ) • P i
+  let s : ℝ := ∑ i, a i ^ 2
+  have hH : H.IsHermitian := by
+    change Hᴴ = H
+    simp only [H, conjTranspose_sum, conjTranspose_smul, Complex.star_def,
+      Complex.conj_ofReal]
+    exact Finset.sum_congr rfl fun i _ => congrArg ((a i : ℂ) • ·) (hP i).eq
+  have hHsq : H * H = (s : ℂ) • (1 : Matrix n n ℂ) := by
+    simp only [H, Finset.sum_mul_sum, smul_mul_smul]
+    rw [majorana_quadratic_symmetrization P hsq hanti]
+    have hsym (i j : α) : (a i : ℂ) * (a j : ℂ) - (a j : ℂ) * (a i : ℂ) = 0 :=
+      sub_eq_zero.mpr (mul_comm _ _)
+    simp_rw [hsym]
+    simp only [zero_smul, Finset.sum_const_zero, smul_zero, add_zero]
+    congr 1
+    simp only [s, Complex.ofReal_sum, pow_two, Complex.ofReal_mul]
+  have hEH : expectation ρ H = s := by
+    simp only [expectation, H, Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum,
+      Matrix.trace_smul, Complex.re_sum, smul_eq_mul, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, s, a, pow_two]
+  have hEHsq : expectation ρ (H * H) = s := by
+    rw [hHsq]
+    simp only [expectation, Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul,
+      smul_eq_mul]
+    change ((s : ℂ) * trace ρ.1).re = s
+    rw [ρ.2.2, mul_one, Complex.ofReal_re]
+  have hv := variance_nonneg ρ hH
+  rw [variance, hEHsq, hEH] at hv
+  change s ≤ 1
+  nlinarith [sq_nonneg (s - 1)]
 
 private lemma group_bound (ρ : DensityState (Fin 4 → Fin 2)) (k : Fin 3) :
     ∑ X : Fin 3, ∑ j : Fin 3,
@@ -74,7 +113,9 @@ private lemma group_bound (ρ : DensityState (Fin 4 → Fin 2)) (k : Fin 3) :
 private lemma partition_sum (f : Fin 3 → Fin 3 → Fin 3 → ℝ) :
     (∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, f X i j) =
       ∑ k : Fin 3, ∑ X : Fin 3, ∑ j : Fin 3, f X (k + X) j := by
-  sorry
+  simp only [Fin.sum_univ_three]
+  norm_num
+  ring
 
 private lemma density_bound (ρ : DensityState (Fin 4 → Fin 2)) :
     ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3,
@@ -87,7 +128,14 @@ private lemma density_bound (ρ : DensityState (Fin 4 → Fin 2)) :
 private lemma pure_specialization (ψ : (Fin 4 → Fin 2) → ℂ)
     (hψ : star ψ ⬝ᵥ ψ = 1) :
     ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation ψ X i j ^ 2 ≤ 3 := by
-  sorry
+  let ρ : DensityState (Fin 4 → Fin 2) :=
+    ⟨CStarMatrix.ofMatrix (rankOneDensity ψ),
+      map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+        (posSemidef_vecMulVec_self_star ψ).nonneg, by
+      change trace (rankOneDensity ψ) = 1
+      rw [rankOneDensity, trace_vecMulVec, dotProduct_comm]
+      exact hψ⟩
+  exact density_bound ρ
 
 theorem result : claim := by
   intro ψ hψ
