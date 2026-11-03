@@ -44,6 +44,15 @@ uses its own finite truncation and path length counts edges. An undirected
 graph or a count defined by a recurrence would change the question.
 The formal result does not use the converse of Proposition 4.3.
 
+## Verified locator
+
+https://arxiv.org/abs/1404.1714v1, Section 4, Proposition 4.4, states the
+full all-index equivalence quoted above. Its proof is marked
+“(Conjectured)”. The authors list “[Open problem: Prove Proposition 4.4]”
+in the final open-problem list. This locator identifies the original
+author-posed question; it does not establish worldwide solution status
+or priority.
+
 ## Bounded literature scope
 
 The inspected material comprises arXiv:1404.0484v1, arXiv:1506.06538v1,
