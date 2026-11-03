@@ -105,10 +105,7 @@ theorem actual_xi_dictionary : Dictionary := by
     off_line_pair := ?_
     xi_identity := actual_xi_folded_hasSum
     folded_resolvent := ?_
-    folded_resolvent : ∀ w : ℂ, ‖w‖ < 1 / 4 →
-    Summable (fun n : PositiveZero => weight n / (1 - node n * w ^ 2)) ∧
-    xiOdd w = w * ∑' n : PositiveZero, weight n / (1 - node n * w ^ 2)
-  xi_analytic := actual_xi_analytic
+    xi_analytic := actual_xi_analytic
     moment_series := actual_xi_moment_hasSum
     taylor_moments := actual_xi_taylor_moment
     real_moments := moment_real

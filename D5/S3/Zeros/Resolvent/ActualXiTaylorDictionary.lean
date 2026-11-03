@@ -112,7 +112,8 @@ theorem actual_xi_moment_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
       (w * weight n / (1 - node n * w ^ 2)) := by
     have hnorm : ‖node n * w ^ 2‖ < 1 := by
       rw [norm_mul, norm_pow]
-      exact mul_lt_one₀ (node_norm_lt_one n) (norm_nonneg _) (by nlinarith [norm_nonneg w])
+      exact (mul_le_mul_of_nonneg_right (node_norm_lt_one n).le (sq_nonneg ‖w‖)).trans_lt
+        (by nlinarith [norm_nonneg w])
     convert (hasSum_geometric_of_norm_lt_one hnorm).mul_left (w * weight n) using 1
     · funext j
       rw [mul_pow, pow_add, pow_mul]
@@ -124,6 +125,7 @@ theorem actual_xi_moment_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
     simp_rw [(hrow _).tsum_eq]
     exact (actual_xi_folded_hasSum w hw).tsum_eq
   rw [← he]
+  apply Summable.hasSum
   convert hp.prod_symm.prod using 1
   funext j
   exact (tsum_mul_right).symm

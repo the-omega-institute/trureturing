@@ -20,6 +20,7 @@ open scoped Topology
 
 private theorem ratio_bounds (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4) :
     0 ≤ radius * r ^ 2 ∧ radius * r ^ 2 < 1 := by
+  have hΛ := radius_bounds.1
   have h := mul_le_mul_of_nonneg_right radius_bounds.2 (sq_nonneg r)
   constructor
   · positivity
@@ -27,6 +28,8 @@ private theorem ratio_bounds (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4) :
 
 private theorem power_term_bound (r : ℝ) (hr : 0 ≤ r) (w : ℂ) (hw : ‖w‖ ≤ r) (j : ℕ) :
     ‖moment j * w ^ (2 * j + 1)‖ ≤ totalWeight * r * (radius * r ^ 2) ^ j := by
+  have hW : 0 ≤ totalWeight := tsum_nonneg (fun _ => norm_nonneg _)
+  have hΛ := radius_bounds.1
   rw [norm_mul, norm_pow]
   calc
     ‖moment j‖ * ‖w‖ ^ (2 * j + 1) ≤

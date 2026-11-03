@@ -45,14 +45,15 @@ private theorem reflection_fold_hasSum (f : ℕ → ℂ) (a : ℂ)
       rw [hz] at h
       norm_num at h
     dsimp [p, Set.indicator]
-    rw [actualData.zero_reflection, Complex.sub_im, Complex.one_im, hr]
+    simp only [actualData.zero_reflection, Complex.sub_im, Complex.one_im, zero_sub, hr]
     by_cases h : 0 < (actualData.zero n).im
     · rw [if_pos h, if_neg (by linarith), add_zero]
     · rw [if_neg h, if_pos (by rcases lt_or_gt_of_ne hn with h | h <;> linarith), zero_add]
   have he : (2 : ℂ) * (∑' n, p n) = a := by
     simpa only [two_mul] using ((hp.hasSum.add hpr).congr_fun hpair).unique hf
   have hs : HasSum (fun n => 2 * p n) a := he ▸ hp.hasSum.mul_left 2
-  apply hasSum_subtype_iff_indicator.mpr
+  apply (hasSum_subtype_iff_indicator (s := {n : ℕ | 0 < (actualData.zero n).im})
+    (f := fun n => 2 * f n)).mpr
   convert hs using 1
   funext n
   by_cases h : 0 < (actualData.zero n).im <;> simp [p, h]
@@ -118,7 +119,8 @@ theorem resolvent_denominator_ne_zero (n : PositiveZero) (w : ℂ) (hw : ‖w‖
   rw [norm_one, norm_mul, norm_pow] at hn
   have hx := node_norm_lt_one n
   have hp : ‖node n‖ * ‖w‖ ^ 2 < 1 :=
-    mul_lt_one₀ hx (norm_nonneg _) (by nlinarith [norm_nonneg w])
+    (mul_le_mul_of_nonneg_right hx.le (sq_nonneg ‖w‖)).trans_lt
+      (by nlinarith [norm_nonneg w])
   linarith
 
 /-- The complete, multiplicity-faithful actual xi folded resolvent, including zero. -/
@@ -134,7 +136,9 @@ theorem actual_xi_folded_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
   have hs : HasSum (fun n : PositiveZero =>
       (actualData.multiplicity n : ℂ) / (w ^ 2 - (actualData.gamma n) ^ 2))
       (logDeriv xiSquareSource (w ^ 2)) := by
-    apply hasSum_subtype_iff_indicator.mpr
+    apply (hasSum_subtype_iff_indicator (s := {n : ℕ | 0 < (actualData.zero n).im})
+      (f := fun n => (actualData.multiplicity n : ℂ) /
+        (w ^ 2 - (actualData.gamma n) ^ 2))).mpr
     convert ha using 1
     funext n
     simp [positiveSquareResolvent, gamma_re, Set.indicator]
@@ -153,9 +157,16 @@ theorem actual_xi_folded_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
       apply hr
       rw [sub_eq_zero.mp hzero]
       simp [node, hg2]
-    rw [weight_node, pair_weight_node]
-    dsimp [node] at *
-    field_simp
-    <;> ring
+    have hgl : (actualData.gamma n) ^ 2 * node n = 1 := by simp [node, hg2]
+    have hres : (actualData.multiplicity n : ℂ) /
+        (w ^ 2 - (actualData.gamma n) ^ 2) =
+        -((actualData.multiplicity n : ℂ) * node n) / (1 - node n * w ^ 2) := by
+      apply (div_eq_div_iff hden hr).mpr
+      linear_combination (actualData.multiplicity n : ℂ) * hgl
+    rw [weight_node, pair_weight_node, hres]
+    conv_rhs => rw [← mul_div_assoc]
+    apply (div_eq_div_iff hr hd).mpr
+    field_simp only [hn, hr]
+    ring
 
 end D5.S3.Zeros.Resolvent.ActualXiFoldedResolvent
