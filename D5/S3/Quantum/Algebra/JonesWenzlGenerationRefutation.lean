@@ -323,7 +323,7 @@ private theorem rho_gens :
 private theorem rho_box : rho box = scalarEmbedding.mapMatrix exactP := by
   have hs : scalarEmbedding (⟨0, 1/3⟩ : coeff) = (Real.sqrt 3 : ℂ)⁻¹ := by
     change (0 : ℚ) • (1 : ℂ) + (1/3 : ℚ) • (Real.sqrt 3 : ℂ) = _
-    norm_num [Algebra.smul_def, ← Complex.ofReal_div, ← Complex.ofReal_inv,
+    norm_num [Algebra.smul_def, ← Complex.ofReal_inv,
       ← Real.sqrt_div_self]
     push_cast
     ring
