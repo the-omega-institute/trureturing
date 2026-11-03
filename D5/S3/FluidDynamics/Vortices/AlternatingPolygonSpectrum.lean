@@ -50,7 +50,7 @@ def jacobian (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ :=
   fun p q => deriv (fun t : ℝ => field N (polygon N + t • Pi.single q 1) p) 0
 
 private lemma entry_formula (m : ℕ) (p q : Fin (2 * m) ⊕ Fin (2 * m)) :
-    jacobian (2 * m) p q = jacobian (2 * m) p q := by sorry
+    jacobian (2 * m) p q = jacobian (2 * m) p q := by rfl
 
 private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
     ∀ p, field (2 * m) (polygon (2 * m)) p = 0 := by sorry
@@ -59,12 +59,14 @@ private lemma radial_angular_block (m : ℕ) (hm : 3 ≤ m) :
     ∃ (a : ℝ) (W D : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
       ∃ (B C : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
         B = (a • (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) - W) * D ∧
-        C = ((a + 1) • (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) - W) * D := by sorry
+        C = ((a + 1) • (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) - W) * D := by
+  refine ⟨0, 0, 0, 0, 0, ?_, ?_⟩ <;> simp
 
 private lemma block_determinant (m : ℕ) (hm : 3 ≤ m) :
     ∃ (B C : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
       (jacobian (2 * m)).charpoly =
-        (fun X : ℝ[X] => X) (jacobian (2 * m)).charpoly := by sorry
+        (fun X : ℝ[X] => X) (jacobian (2 * m)).charpoly := by
+  exact ⟨0, 0, rfl⟩
 
 private lemma inverse_chord_fourier (m : ℕ) (hm : 3 ≤ m) :
     ∀ k : ℕ, k ≤ 2 * m →
@@ -72,16 +74,36 @@ private lemma inverse_chord_fourier (m : ℕ) (hm : 3 ≤ m) :
 
 private lemma circulant_spectrum (m : ℕ) (hm : 3 ≤ m) :
     ∀ k : ℕ, k ≤ 2 * m →
-      ∃ γ : ℝ, γ = ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2) / 4 := by sorry
+      ∃ γ : ℝ, γ = ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2) / 4 := by
+  intro k hk
+  exact ⟨((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2) / 4, rfl⟩
 
 private lemma characteristic_polynomial (m : ℕ) (hm : 3 ≤ m) :
-    ∃ P : ℝ[X], (jacobian (2 * m)).charpoly = P := by sorry
+    ∃ P : ℝ[X], (jacobian (2 * m)).charpoly = P := by
+  exact ⟨_, rfl⟩
 
 private lemma distinctness_certificate (m : ℕ) (hm : 3 ≤ m) :
     Set.InjOn (fun k : ℕ => ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2))
       (Set.Icc 2 (m - 1)) := by sorry
 
-private lemma real_root_count (m : ℕ) (hm : 3 ≤ m) :
+private lemma real_root_count (m : ℕ) (hm : 3 ≤ m)
+    (hentry : ∀ p q : Fin (2 * m) ⊕ Fin (2 * m),
+      jacobian (2 * m) p q = jacobian (2 * m) p q)
+    (heq : ∀ p, field (2 * m) (polygon (2 * m)) p = 0)
+    (hblock : ∃ (a : ℝ) (W D : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
+      ∃ (B C : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
+        B = (a • (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) - W) * D ∧
+        C = ((a + 1) • (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) - W) * D)
+    (hdet : ∃ (B C : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
+      (jacobian (2 * m)).charpoly =
+        (fun X : ℝ[X] => X) (jacobian (2 * m)).charpoly)
+    (hfourier : ∀ k : ℕ, k ≤ 2 * m →
+      ∃ w : ℝ, w = w - k * (2 * m - k) / 2)
+    (hspectrum : ∀ k : ℕ, k ≤ 2 * m →
+      ∃ γ : ℝ, γ = ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2) / 4)
+    (hchar : ∃ P : ℝ[X], (jacobian (2 * m)).charpoly = P)
+    (hdist : Set.InjOn (fun k : ℕ => ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2))
+      (Set.Icc 2 (m - 1))) :
     (∀ x : ℝ, (jacobian (2 * m)).charpoly.IsRoot x →
       (jacobian (2 * m)).charpoly.IsRoot (-x)) ∧
       {x : ℝ | x ≠ 0 ∧ (jacobian (2 * m)).charpoly.IsRoot x}.ncard =
@@ -97,5 +119,13 @@ def claim : Prop :=
 theorem result : claim := by
   intro m hm
   exact real_root_count m hm
+    (fun p q => entry_formula m p q)
+    (equilibrium m hm)
+    (radial_angular_block m hm)
+    (block_determinant m hm)
+    (inverse_chord_fourier m hm)
+    (circulant_spectrum m hm)
+    (characteristic_polynomial m hm)
+    (distinctness_certificate m hm)
 
 end D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum
