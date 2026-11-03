@@ -475,7 +475,9 @@ private theorem suffix_sum {j n : ℕ} (hj : 3 ≤ j) (hn : 0 < n)
     (hlo : Nat.fib j < n) (hhi : n ≤ Nat.fib (j + 1)) :
     psi n = ∑ h ∈ Finset.Icc (beattyOut n) (Nat.fib j), psi h := by
   classical
-  rw [path_count_suffix hj (n := ⟨n, hn⟩) hlo hhi]
+  have hs : psi n = ∑ h : Pred ⟨n, hn⟩ j, psi h.val.val :=
+    path_count_suffix hj (n := ⟨n, hn⟩) hlo hhi
+  rw [hs]
   apply Finset.sum_bij (fun h _ => h.val.val)
   · intro h _
     exact Finset.mem_Icc.mpr h.property
@@ -513,8 +515,11 @@ private theorem within_layer {j n : ℕ} (hj : 3 ≤ j) (hn : 0 < n)
       apply (beatty_threshold n (Nat.fib j)).mp
       rw [← endpoint_eq_beatty]
       have he := endpoint_fib (j - 2)
-      simpa only [show j - 2 + 2 = j by omega,
-        show j - 2 + 3 = j + 1 by omega, he] using (show n ≤ Nat.fib (j + 1) by omega)
+      have he' : jacoRight (Nat.fib j) = Nat.fib (j + 1) := by
+        simpa only [show j - 2 + 2 = j by omega,
+          show j - 2 + 3 = j + 1 by omega] using he
+      rw [he']
+      omega
     have hsplit : Finset.Icc (beattyOut n) (Nat.fib j) =
         insert (beattyOut n) (Finset.Icc (beattyOut n + 1) (Nat.fib j)) := by
       ext h
@@ -544,7 +549,8 @@ private theorem psi_two : psi 2 = 1 := by
     have hp0 : p.val.val.length ≠ 0 := by
       intro hz
       have h := congrArg Subtype.val (p.val.val.eq_of_length_zero hz)
-      norm_num at h
+      change (1 : ℕ) = 2 at h
+      omega
     obtain ⟨c, f, q, hq, heq⟩ := p.val.val.eq_toPath_comp_of_length_eq_succ
       (show p.val.val.length = 0 + 1 by omega)
     have hc : c = (2 : ℕ+) := q.eq_of_length_zero hq
@@ -565,11 +571,11 @@ private theorem psi_two : psi 2 = 1 := by
 
 private theorem psi_fib (t : ℕ) : psi (Nat.fib (t + 3)) = 1 := by
   induction t with
-  | zero => simpa using psi_two
+  | zero => change psi 2 = 1; exact psi_two
   | succ t ih =>
       have h := suffix_sum (j := t + 3) (n := Nat.fib (t + 4))
         (by omega) (Nat.fib_pos.mpr (by omega))
-        (Nat.fib_lt_fib_succ (by omega)) (by omega)
+        (Nat.fib_lt_fib_succ (by omega)) (by exact le_rfl)
       rw [out_fib (t + 3) (by omega), Finset.Icc_self, Finset.sum_singleton] at h
       simpa only [show t + 1 + 3 = t + 4 by omega] using h.trans ih
 
