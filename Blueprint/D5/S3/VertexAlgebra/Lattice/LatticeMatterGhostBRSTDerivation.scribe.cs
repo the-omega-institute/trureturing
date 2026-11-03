@@ -5,14 +5,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice;
 internal sealed class LatticeMatterGhostBRSTDerivationDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Original coupled BRST field superderivation: uncompiled source candidate",
+        "Original coupled BRST field superderivation",
         H("The original total charge on all homogeneous coupled fields"),
         Blocks(
-            Paragraph(Text("SOURCE ONLY, UNCOMPILED. This owning Scribe accompanies a Lean "
-                + "proof candidate. Neither source has been compiled or emitted in this flight. "
-                + "No native/kernel, standard-axiom, Reg, independent-review, freeze, CI or "
-                + "official-acceptance result is asserted. The closed original coupled supplier "
-                + "also remains subject to its owner's released native API reconciliation.")),
+            Paragraph(Text("This owning Scribe accompanies the original all-state total-charge "
+                + "field superderivation, reconciled and natively compiled against released "
+                + "coupled source 9443abecae3e805d68a61bbcbb529117aa4c7d9a. "
+                + "Native compilation does not assert semantic audit validation, independent "
+                + "review, freeze, CI, official acceptance or physical realization.")),
             Paragraph(Text("Let D be an arbitrary original LatticeData, including rank zero, "
                 + "and H an arbitrary complex matrix indexed by Fin D.rank on both sides. "
                 + "State D is literally the original matter Carrier D tensored algebraically "
@@ -31,7 +31,7 @@ internal sealed class LatticeMatterGhostBRSTDerivationDocument : IScribeDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every original state s, natural p with P(s)=(-1)^p s, "
-                        + "and integer n, the candidate proves the equality of endomorphisms "
+                        + "and integer n, the theorem proves the equality of endomorphisms "
                         + "Q Y(s)[n] - (-1)^p Y(s)[n] Q = Y(Qs)[n]. Consequently it acts on "
                         + "every original input state, including inhomogeneous finite sums. "
                         + "When p is odd the left side is an anticommutator. There is no "
@@ -77,12 +77,12 @@ internal sealed class LatticeMatterGhostBRSTDerivationDocument : IScribeDocument
                         + "Scott Carnahan Apache-2.0 supplier. No new literature result "
                         + "or independent physical realization is claimed."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("Native elaboration of this exact candidate, released-source API "
-                + "reconciliation, the complete standard-axiom closure, faithful Reg "
-                + "registration and binding evidence, Scribe compilation/emission, "
-                + "independent review and required CI are unfinished and belong to later "
-                + "integration. No issue, PR, freeze or judge/configuration change is made "
-                + "by this source-only flight. No formal Reg status is asserted.")),
+            Paragraph(Text("The mirrored Reg source retains the full original telescope, "
+                + "a typed source-equivalence bridge, whole-family variation, role sensitivity "
+                + "and actual observational dependence. Its semantic binding verdict must be "
+                + "read separately from kernel compilation. Independent review, required CI, "
+                + "freeze and official delivery remain later integration obligations; no judge "
+                + "or configuration change is part of this mathematics.")),
             Paragraph(Text("This one algebraic derivation advances the same Monster, VOA/CFT, "
                 + "anomaly, fusion, string and AdS/CFT programme without completing it. "
                 + "It establishes no full coupled three-index Borcherds identity, BRST "

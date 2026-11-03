@@ -1,19 +1,20 @@
 /- GID: D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostBRSTDerivation
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeMatterGhostBRSTDerivation
-   mirror-E: none(waiver:source-only-original-coupled-BRST)
+   mirror-E: none(waiver:original-coupled-BRST)
    anchors: []
    utility: none
    digest: The original coupled BRST charge acts on every homogeneous field by superderivation. -/
 
 /-
-SOURCE CANDIDATE, UNCOMPILED. No native, kernel, Reg, independent-review,
-freeze, CI, official-acceptance or full-physics completion is claimed.
+Original all-state total-charge field superderivation. The saved source
+candidate has been reconciled against the released native coupled field at
+9443abecae3e805d68a61bbcbb529117aa4c7d9a. No independent review, freeze,
+CI, official acceptance or full-physics completion is claimed here.
 
 The ORIGINAL carrier, pointwise tensor field, vacuum, translation, parity,
-current and totalCharge are imported unchanged. The closed coupled supplier
-has SHA-256 bf3e7df7860e9559bb2856fb48138f8a080fc0446467d4ea1a089eeb4e6134a0.
-The precise remaining input bindings and API/source hashes are in result.json.
+current and totalCharge are imported unchanged. The coupled Lean supplier
+has SHA-256 eef48a71479219a7ede377f6f40ab4e8c46fa40fd2a8b5bf23c96680aba87292.
 
 Classical construction: signed zero-residue locality (Dong's argument) and
 creative vacuum uniqueness. The finite shift-polynomial proof is adapted
@@ -33,8 +34,8 @@ vacuum coefficient of the discrepancy. Extraction at second index -1 and
 ACTUAL even/odd decomposition kill its action on every original input.
 
 All auxiliary definitions/lemmas are private and consumed on that live path.
-They receive no independent content credit. Every source-level first-freeze
-classification remains subject to actual native expansion and semantic review.
+They receive no independent content credit. First-freeze semantic classification remains
+subject to independent review.
 No finite support of endomorphism families, infinite-sum interchange, full
 signed field Jacobi, charge square-zero, inverse Gram, rank or H condition
 occurs. This is only the zeroth-residue bridge needed by the original charge.
@@ -89,7 +90,10 @@ private def zeroResidue (e : ℂ) (A B : VertexOperator ℂ V) :
 private theorem zeroResidue_modes (e : ℂ) (A B : VertexOperator ℂ V) (n : ℤ) :
     ((zeroResidue e A B)[[n]]) =
       (A[[0]]) * (B[[n]]) - e • ((B[[n]]) * (A[[0]])) := by
-  rw [zeroResidue, VertexOperator.ncoeff_of_coeff]
+  apply LinearMap.ext
+  intro x
+  change ((A[[0]]) * (B[[-(-n - 1) - 1]]) -
+    e • ((B[[-(-n - 1) - 1]]) * (A[[0]]))) x = _
   rw [show -(-n - 1) - 1 = n by omega]
 
 /- An organizational linear intertwining fact, used only in the signed
@@ -380,7 +384,7 @@ private theorem creative_unique (D : LatticeData) (r : ℕ)
       rw [Function.iterate_succ_apply']
       change (delta^[N] d) (i + 1) (-1) - (delta^[N] d) i 0 = _
       rw [ih, rightTail d h N i 0 (by omega), sub_zero]
-      congr 2
+      apply congrArg (fun k : ℤ => d k (-1))
       omega
   have homogeneousModes (n : ℤ) (x : State D) (q : ℕ)
       (hx : LatticeMatterGhostStateField.parity D x = (-1 : ℂ)^q • x) :
@@ -489,8 +493,11 @@ theorem totalCharge_field_superderivation (D : LatticeData)
     have h := LatticeMatterGhostStateField.stateField_parity D
       (LatticeMatterGhostStateField.Jtot D H) 0
     rw [current_odd, map_smul] at h
-    simpa only [map_smul, Pi.smul_apply, LinearMap.smul_apply, pow_one, neg_one_smul,
-      neg_mul, LatticeMatterGhostStateField.current_zero_mode] using h
+    simp only [map_smul, Pi.smul_apply, LinearMap.smul_apply, pow_one, neg_one_smul,
+      map_neg, Pi.neg_apply, LatticeMatterGhostStateField.current_zero_mode] at h
+    change LatticeMatterGhostStateField.parity D * Q =
+      (-Q) * LatticeMatterGhostStateField.parity D at h
+    exact h.trans (neg_mul Q (LatticeMatterGhostStateField.parity D))
   have qsParity : LatticeMatterGhostStateField.parity D (Q s) =
       (-1 : ℂ)^(p + 1) • Q s := by
     have h := LinearMap.congr_fun qParity s
@@ -502,13 +509,13 @@ theorem totalCharge_field_superderivation (D : LatticeData)
       (R[[m]]) (LatticeMatterGhostStateField.vacuum D) = 0 := by
     change ((F[[m]]) - ((LatticeMatterGhostStateField.Y D (Q s))[[m]]))
       (LatticeMatterGhostStateField.vacuum D) = 0
-    simp only [fModes, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply,
+    simp only [fModes, B, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply,
       original.2.2.1 s m hm, original.2.2.1 (Q s) m hm,
       qVacuum, map_zero, smul_zero, sub_self]
   have rInitial : (R[[-1]]) (LatticeMatterGhostStateField.vacuum D) = 0 := by
     change ((F[[-1]]) - ((LatticeMatterGhostStateField.Y D (Q s))[[-1]]))
       (LatticeMatterGhostStateField.vacuum D) = 0
-    simp only [fModes, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply,
+    simp only [fModes, B, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply,
       original.2.1 s, original.2.1 (Q s), qVacuum, map_zero, smul_zero,
       sub_zero, sub_self]
   have rCovariant (m : ℤ) :
@@ -519,7 +526,9 @@ theorem totalCharge_field_superderivation (D : LatticeData)
     calc
       _ = (T * (F[[m]]) - (F[[m]]) * T) -
           (T * ((LatticeMatterGhostStateField.Y D (Q s))[[m]]) -
-            ((LatticeMatterGhostStateField.Y D (Q s))[[m]]) * T) := by noncomm_ring
+            ((LatticeMatterGhostStateField.Y D (Q s))[[m]]) * T) := by
+            simp only [mul_sub, sub_mul]
+            abel
       _ = _ := by
         rw [fCovariant, LatticeMatterGhostStateField.stateField_covariance]
         module
@@ -528,14 +537,16 @@ theorem totalCharge_field_superderivation (D : LatticeData)
       ∃ N : ℕ, delta^[N] (signedComm ((-1 : ℂ)^((p+1)*q)) R
         (LatticeMatterGhostStateField.Y D x)) = 0 := by
     have hab : ∃ N : ℕ, delta^[N] (signedComm e A B) = 0 := by
-      simpa only [signedComm, one_mul] using
-        LatticeMatterGhostStateField.stateField_locality D
-          (LatticeMatterGhostStateField.Jtot D H) s 1 p (current_odd D H) hs
+      have h := LatticeMatterGhostStateField.stateField_locality D
+        (LatticeMatterGhostStateField.Jtot D H) s 1 p (current_odd D H) hs
+      simp only [one_mul] at h
+      exact h
     have hac : ∃ N : ℕ, delta^[N] (signedComm ((-1 : ℂ)^q) A
         (LatticeMatterGhostStateField.Y D x)) = 0 := by
-      simpa only [signedComm, one_mul] using
-        LatticeMatterGhostStateField.stateField_locality D
-          (LatticeMatterGhostStateField.Jtot D H) x 1 q (current_odd D H) hx
+      have h := LatticeMatterGhostStateField.stateField_locality D
+        (LatticeMatterGhostStateField.Jtot D H) x 1 q (current_odd D H) hx
+      simp only [one_mul] at h
+      exact h
     have hbc : ∃ N : ℕ, delta^[N] (signedComm ((-1 : ℂ)^(p*q)) B
         (LatticeMatterGhostStateField.Y D x)) = 0 :=
       LatticeMatterGhostStateField.stateField_locality D s x p q hs hx
