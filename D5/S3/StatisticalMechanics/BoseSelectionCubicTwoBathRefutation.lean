@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.claim; result=D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.result; claim=D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.claim
    digest: Two cubic product-coupled baths admit an open set with five Bose-selected modes. -/
 
+import D5.S3.Geometry.FiniteCoordinateTruncation
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Basic.Real.Sign
 
@@ -17,19 +18,17 @@ namespace D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation
 
 open scoped BigOperators
 open Matrix Set
+open D5.S3.Geometry
 
 /-- The source's odd power-law spectrum, with its positive scale set to one. -/
 noncomputable def spectral (d x : ℝ) : ℝ := Real.sign x * |x| ^ d
-
-/-- Squared coupling amplitudes normalized to total weight one. -/
-noncomputable def weight {m : ℕ} (F : Fin m → ℝ) (i : Fin m) : ℝ :=
-  F i / (∑ k, F k)
 
 /-- The source's two-bath rate asymmetry, with the positive factor `2π/ℏ` set to one. -/
 noncomputable def asym (d : ℝ) {m : ℕ} (ε F G : Fin m → ℝ) :
     Matrix (Fin m) (Fin m) ℝ :=
   fun i j => spectral d (ε j - ε i) *
-    (weight F i * weight F j - weight G i * weight G j)
+    (FiniteCoordinateTruncation.normalize F i * FiniteCoordinateTruncation.normalize F j -
+      FiniteCoordinateTruncation.normalize G i * FiniteCoordinateTruncation.normalize G j)
 
 /-- Equation MS-problem; `w` denotes the source's vector of selected occupations. -/
 def IsSelected {m : ℕ} (a : Matrix (Fin m) (Fin m) ℝ) (s : Finset (Fin m))
@@ -79,8 +78,8 @@ private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
     asym 3 ε F G j i = -asym 3 ε F G i j := by
   rw [asym, asym]
   rw [spectral_three, spectral_three]
-  rw [weight]
-  simp only [weight]
+  rw [FiniteCoordinateTruncation.normalize]
+  simp only [FiniteCoordinateTruncation.normalize]
   ring
 
 private theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
@@ -111,7 +110,7 @@ private theorem asym_continuousOn (i j : Fin 5) :
   apply ContinuousAt.continuousWithinAt
   unfold asym
   simp_rw [spectral_three]
-  simp only [weight]
+  simp only [FiniteCoordinateTruncation.normalize]
   fun_prop (disch := assumption)
 
 private theorem pfaffian_continuousOn (i : Fin 5) :
@@ -134,7 +133,8 @@ private theorem neighborhood_open : IsOpen neighborhood := by
 private theorem base_mem : base ∈ neighborhood := by
   rw [neighborhood, base]
   refine ⟨⟨?_, ?_⟩, ?_⟩ <;> intro i <;> fin_cases i <;>
-    norm_num [base, pfaffianVector, asym, spectral_three, weight, Fin.sum_univ_succ]
+    norm_num [base, pfaffianVector, asym, spectral_three, FiniteCoordinateTruncation.normalize,
+      Fin.sum_univ_succ]
 
 private theorem neighborhood_subset : neighborhood ⊆ violating 3 5 := by
   intro p hp
