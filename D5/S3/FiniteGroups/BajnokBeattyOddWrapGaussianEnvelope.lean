@@ -367,15 +367,16 @@ theorem actual_gaussian_envelope (p t : ℤ) (hp3 : 3 ≤ p) (hpo : Odd p)
     omega
   have hW19 : (original_return_pair p t).1 =
       2*(Nat.choose N (3*p*t).toNat+Nat.choose N (3*p*t+4*p).toNat) := by
-    have hh := hc.1
-    dsimp only at hh
-    rw [hhalf1, hhalf9] at hh
-    exact hh
+    calc
+      (original_return_pair p t).1 =
+          2*(Nat.choose (p*(6*t-1)).toNat (p*((6*t-1)+1)/2).toNat +
+            Nat.choose (p*(6*t-1)).toNat (p*((6*t-1)+9)/2).toNat) := hc.1
+      _ = _ := by rw [hhalf1, hhalf9]
   have hW33 : (original_return_pair p t).2 = 4*Nat.choose N (3*p*t+p).toNat := by
-    have hh := hc.2
-    dsimp only at hh
-    rw [hhalf3] at hh
-    exact hh
+    calc
+      (original_return_pair p t).2 =
+          4*Nat.choose (p*(6*t-1)).toNat (p*((6*t-1)+3)/2).toNat := hc.2
+      _ = _ := by rw [hhalf3]
   have h19R : ((original_return_pair p t).1 : ℝ) = 2*(A+D) := by
     dsimp only [A, D]
     exact_mod_cast hW19

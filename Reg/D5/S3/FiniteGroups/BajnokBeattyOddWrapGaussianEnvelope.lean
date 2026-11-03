@@ -82,15 +82,10 @@ private theorem gaussianEnvelope_rejected_law (i : Fin 2) :
   have hh := h 5 2 (by norm_num) (by decide) (by norm_num) (by norm_num)
   let s : ℝ := 4*(5 : ℝ)^2/((5 : ℝ)*(6*(2 : ℝ)-1)+1)
   have hpos : 0 < Real.exp s+Real.exp (-9*s) := by positivity
-  fin_cases i
-  · change Real.exp s+Real.exp (-9*s) <
-        2*(0 : ℝ)/((original_return_pair 5 2).2 : ℝ) at hh
-    simp only [mul_zero, zero_div] at hh
-    linarith only [hh, hpos]
-  · change Real.exp s+Real.exp (-9*s) <
-        2*((original_return_pair 5 2).1 : ℝ)/(0 : ℝ) at hh
-    rw [div_zero] at hh
-    linarith only [hh, hpos]
+  have hneg : Real.exp s+Real.exp (-9*s) < 0 := by
+    fin_cases i <;>
+      simpa [gaussianEnvelopeRejected, gaussianEnvelopeActual, realize, s] using hh
+  linarith only [hneg,hpos]
 
 set_option maxRecDepth 10000 in
 private theorem gaussianEnvelope_actual_dependence :
