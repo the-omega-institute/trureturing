@@ -108,7 +108,7 @@ private theorem one_add_product_gt {ι : Type*} (s : Finset ι) (c : ι → ℝ)
     nlinarith only [hlog, hsum]
   exact exp_sixty_thirteenths_gt.trans_le ((Real.le_log_iff_exp_le hprod).mp hlarge)
 
-private theorem sum_linear (q : ℝ) (r : ℕ) :
+theorem sum_linear (q : ℝ) (r : ℕ) :
     (∑ i ∈ Finset.range r, (q+2*(i : ℝ)+1)) = (r : ℝ)*(q+r) := by
   induction r with
   | zero => simp
@@ -118,7 +118,7 @@ private theorem sum_linear (q : ℝ) (r : ℕ) :
     ring
 
 /-- Exact adjacent-index ratios multiplied over a finite block. -/
-private theorem choose_ratio_prod (n k r : ℕ) (hkr : k+r ≤ n) :
+theorem choose_ratio_prod (n k r : ℕ) (hkr : k+r ≤ n) :
     (Nat.choose n k : ℝ)/(Nat.choose n (k+r) : ℝ) =
       ∏ i ∈ Finset.range r, ((k : ℝ)+i+1)/((n : ℝ)-k-i) := by
   revert hkr
