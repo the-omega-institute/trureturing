@@ -7,7 +7,7 @@ namespace Reg.D5.S3.Quantum.Matrix.UniformVarianceTraceBound
 open _root_.D5.S3.Quantum.Matrix.UniformVarianceTraceBound
 open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Matrix
+open _root_.Matrix
 open scoped BigOperators ComplexOrder MatrixOrder
 noncomputable section
 universe u v w
@@ -141,6 +141,99 @@ def registration :
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+abbrev defectArena : Arena where
+  signature := signature
+  Law R := ∀ {E : Type u}
+    [en : NormedAddCommGroup E] [ei : InnerProductSpace ℂ E]
+    [ef : FiniteDimensional ℂ E] {J : Type w} [Fintype J]
+    (h : J → E →ₗ[ℂ] E) (_hh : ∀ j, (h j).IsSymmetric)
+    (_hs : ∑ j, (h j).comp (h j) = LinearMap.id)
+    (δ : ℝ) (_hδ : 0 ≤ δ)
+    (_hv : ∀ x : E, ‖x‖ = 1 →
+      ∑ j, ‖h j x - (inner ℂ x (h j x)).re • x‖^2 ≤ δ)
+    (e : E) (_he : (∃ x : E, ‖x‖ = 1) → ‖e‖ = 1),
+    let c : J → ℝ := fun j => (inner ℂ e (h j e)).re
+    ∀ n : ℕ,
+      let vb := stdOrthonormalBasis ℂ (PiLp 2 (fun _ : Fin n => E))
+      let H := fun j => LinearMap.toMatrix vb.toBasis vb.toBasis (referenceLift n (h j))
+      let M := fun j => H j - (c j : ℂ) • 1
+      let Q := ∑ j, (M j)ᴴ * M j
+      ∀ X : Matrix (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E))))
+        (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))) ℂ,
+        (X - ∑ j, H j * X * (H j)ᴴ =
+          (1/2 : ℂ) • (Q*X+X*Q) - ∑ j, M j * X * (M j)ᴴ) ∧
+        R.readout () (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))
+          (X - ∑ j, H j * X * (H j)ᴴ) ≤ (10*δ)*traceNorm X
+
+private theorem defect_rejected_law : ¬ defectArena.{u,w}.Law rejected := by
+  intro h
+  let E := EuclideanSpace ℂ (ULift.{u} Empty)
+  have he : (∃ x : E, ‖x‖ = 1) → ‖(0 : E)‖ = 1 := by
+    rintro ⟨x,hx⟩
+    simp [Subsingleton.elim x 0] at hx
+  have hh := @h E inferInstance inferInstance inferInstance
+    (ULift.{w} Empty) inferInstance
+    (fun j => nomatch j.down) (fun j => nomatch j.down)
+    (Subsingleton.elim _ _) 0 (by norm_num) (by intro x hx; simp) 0 he 0 0
+  have hn := hh.2
+  change (1 : ℝ) ≤ (10*0)*_ at hn
+  norm_num at hn
+
+private theorem defect_sensitivity : Sensitivity defectArena.{u,w} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, ?_, defect_rejected_law⟩
+    · intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def defect_source_registration : Registration defectArena.{u,w}
+    (type_of% @hermitian_unital_kraus_defect_trace_bound.{u,w}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hermitian_unital_kraus_defect_trace_bound, rejected, defect_rejected_law⟩
+  sensitivity := defect_sensitivity
+  dependence := dependence
+
+def defect_registration :
+    LeanInformationAudit.Contract.Registration
+      (@hermitian_unital_kraus_defect_trace_bound.{u,w}) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound.hermitian_unital_kraus_defect_trace_bound.__information_unit
+  realizationName := ``defect_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨defectArena.{u,w}⟩
+  objectArena := .source ⟨defectArena.{u,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source defectArena.{u,w} ⟨defect_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X => traceNorm X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms defect_source_registration
+#print axioms defect_registration
 
 #print axioms source_registration
 #print axioms registration

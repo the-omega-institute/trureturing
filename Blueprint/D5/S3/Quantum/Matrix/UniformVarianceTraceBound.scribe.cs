@@ -20,7 +20,55 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
                 Paragraph(Text("For each natural reference size n, amplify each same L(j) coordinatewise on the Hilbert L2 sum of n copies. Let v and w be the standard orthonormal bases chosen by stdOrthonormalBasis for these amplified input and output spaces, and M(j) the rectangular matrix of that amplified map. Every complex input matrix X satisfies traceNorm(sum(j) M(j) X M(j) adjoint) at most 5 delta traceNorm(X). The norm is Re Tr sqrt(X adjoint X), with ordinary trace and no factor of one half. Inputs may be non-Hermitian and reference coordinates may be coupled. The empty Kraus family, zero-dimensional spaces, and n=0 are included.")),
                 Paragraph(Text("The simultaneous block-centering theorem supplies the 4 delta expectation displacement and 5 delta ambient energy estimates through the coefficient direction and an equal superposition of extremal eigenvectors. Its actual amplified Kraus adjoint has operator norm at most 5 delta times the test operator norm. Unitary trace-norm duality and a singular-value expansion transfer that inequality to the actual matrix Kraus output. Orthonormal coordinates preserve the operator norm; no dimension comparison of matrix norms is used.")),
                 Paragraph(Text("Ltwo(Fin(n),E) denotes the Hilbert L2 sum, stdBasis denotes stdOrthonormalBasis, and Ref(n,L) is the complex linear map satisfying Ref(n,L)(x)(r)=L(x(r)). MatrixOf(v,w,R) is LinearMap.toMatrix in the indicated orthonormal bases. FiniteRank is the complex dimension. The anchor condition is vacuous in the zero input space. This result proves the complete-reference trace-norm bridge for one actual centered rectangular family. Constructing the global center-pinched map and its defect identity, obtaining the variance premise from the same S/H selected branches and unreferenced normalized return error, and proving the full local and whole-family bounds of original Theorem 86.1 remain separate obligations."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("uniform-variance-actual-factor-defect-trace-bound"),
+            DeclarationHandle.Create("D5/S3/Quantum/Matrix/UniformVarianceTraceBound.hermitian_unital_kraus_defect_trace_bound"),
+            H("The actual defect of a unital Hermitian factor family"),
+            StatementSource.FromAuthor(Disp(DefectStatement())),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("Let E be an arbitrary finite-dimensional complex Hilbert space and h(j) Hermitian endomorphisms with sum(j) h(j) composed with h(j) equal to the identity. Assume the same all-unit-vector variance budget delta and anchor condition as above. For every reference size n, H(j) is the matrix of the coordinatewise amplification of the same h(j). With c(j)=Re(inner(e,h(j)e)), M(j)=H(j)-c(j)I and Q=sum(j) M(j) adjoint M(j), the displayed centered defect identity holds for every complex input X.")),
+                Paragraph(Text("The identity follows by expanding the actual M(j): the scalar linear terms and quadratic scalar terms cancel in the anticommutator minus the Kraus output. Unitality replaces sum(j) H(j) squared by I. The centered Gram norm is at most 5 delta. Testing the exact defect against a maximizing unitary bounds its two anticommutator terms by 5 delta traceNorm(X) each and its centered Kraus term by 5 delta traceNorm(X); the factor one half gives the stated 10 delta bound. No state restriction, reference dimension, rank factor, or least eigenvalue occurs.")),
+                Paragraph(Text("This statement concerns a full matrix factor and includes zero E, empty J whenever its unitality premise holds, and n=0. It does not construct the source CP-TNI selected family or infer the variance premise from beta. Center-dependent scalars in a direct sum require the actual center pinching and its transfer terms; those are outside this factor statement."))),
+            DescribeRole.Theorem)
+)));
+
+    private static Formula DefectStatement()
+    {
+        var x=F.Id("x"); var e=F.Id("e"); var j=F.Id("j"); var n=F.Id("n");
+        var h=F.Id("h"); var hj=At(h,j); var d=Delta;
+        Formula Mean(Formula z) => RealPart(Inner(z,App(hj,z)));
+        var variance=All("x",F.Id("E"),Implies(Unit(x),Leq(
+            Sum("j",F.Id("J"),Sq(Norm(Sub(App(hj,x),Mul(Mean(x),x))))),d)));
+        var assumptions=And(All("j",F.Id("J"),Call("IsSymmetric",hj)),
+            And(Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),F.Id("I")),
+                And(Leq(D(0),d),And(variance,Implies(ExistsUnit(),Unit(e))))));
+        var re=Call("Ltwo",Call("Fin",n),F.Id("E"));
+        var a=Call("Fin",Call("FiniteRank",re));
+        var mat=Call("Matrix",a,a,ComplexType());
+        var hjm=At(F.Id("H"),j); var mj=At(F.Id("M"),j); var q=F.Id("Q"); var xx=F.Id("X");
+        var defH=All("j",F.Id("J"),Eqn(hjm,
+            Call("MatrixOf",Call("stdBasis",re),Call("stdBasis",re),Call("Ref",n,hj))));
+        var defM=All("j",F.Id("J"),Eqn(mj,Sub(hjm,Mul(Mean(e),F.Id("I")))));
+        var defQ=Eqn(q,Sum("j",F.Id("J"),Mul(Adj(mj),mj)));
+        var defect=Sub(xx,Sum("j",F.Id("J"),Mul(hjm,Mul(xx,Adj(hjm)))));
+        var identity=Eqn(defect,Sub(Mul(Frac(D(1),D(2)),
+            Seq(Open,Mul(q,xx),Sp,Plus,Sp,Mul(xx,q),Close)),
+            Sum("j",F.Id("J"),Mul(mj,Mul(xx,Adj(mj))))));
+        var conclusion=All("n",Seq(Mathbb,Grp(F.Id("N"))),
+            All("H",Call("Family",F.Id("J"),mat),
+            All("M",Call("Family",F.Id("J"),mat),All("Q",mat,
+                Implies(And(defH,And(defM,defQ)),All("X",mat,
+                    And(identity,Leq(Call("traceNorm",defect),
+                        Mul(Mul(D(10),d),Call("traceNorm",xx))))))))));
+        return All("E",F.Id("Type"),All("J",F.Id("Type"),
+            Seq(Instances("E"),Comma,Sp,OpenBracket,Call("Fintype",F.Id("J")),CloseBracket,
+                Comma,Sp,All("h",Call("Family",F.Id("J"),
+                    Call("LinearMap",ComplexType(),F.Id("E"),F.Id("E"))),
+                    Seq(Forall,Sp,d,Colon,Sp,RealType(),Comma,Sp,
+                        All("e",F.Id("E"),Implies(assumptions,conclusion)))))));
+    }
 
     private static Formula Statement()
     {
