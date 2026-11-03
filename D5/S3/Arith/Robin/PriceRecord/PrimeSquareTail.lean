@@ -238,7 +238,8 @@ private theorem logKernel_continuous {y z : ℝ} (hy : 1 < y) (k : ℕ) :
   apply continuousOn_const.div
     ((continuousOn_id.pow 2).mul ((Real.continuousOn_log.mono ?_).pow k))
   · intro t ht
-    exact mul_ne_zero (pow_ne_zero _ (show id t ≠ 0 from (lt_of_lt_of_le (by linarith : 0 < y) ht.1).ne'))
+    exact mul_ne_zero (pow_ne_zero _
+      (show id t ≠ 0 from (lt_of_lt_of_le (by linarith : 0 < y) ht.1).ne'))
       (pow_ne_zero _ (Real.log_pos (hy.trans_le ht.1)).ne')
   · intro t ht
     exact ne_of_gt (lt_trans (by norm_num : (0 : ℝ) < 1) (hy.trans_le ht.1))
@@ -253,8 +254,8 @@ private theorem logEndpoint_deriv {t : ℝ} (ht : 1 < t) (k : ℕ) :
   · rfl
   · dsimp [logKernel]
     cases k with
-    | zero => simp; field_simp; ring
-    | succ k => simp only [Nat.succ_sub_one, Nat.cast_add, Nat.cast_one, pow_succ]; field_simp; ring
+    | zero => simp
+    | succ k => simp only [Nat.succ_sub_one, Nat.cast_add, Nat.cast_one, pow_succ]; field_simp <;> ring
 
 private theorem logKernel_integral_bounds {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z)
     (k : ℕ) :
@@ -313,7 +314,7 @@ private theorem logKernel_integral_step {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z)
   have heq := intervalIntegral.integral_sub (hi k).neg ((hi (k + 1)).const_mul (k : ℝ))
   change (∫ t in y..z, -logKernel k t - k * logKernel (k + 1) t) = _ at heq
   rw [heq] at h
-  simp only [intervalIntegral.integral_neg, intervalIntegral.integral_const_mul] at h
+  simp only [Pi.neg_apply, intervalIntegral.integral_neg, intervalIntegral.integral_const_mul] at h
   linarith
 
 
@@ -377,8 +378,10 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
       field_simp
     · simp [c, hpp]
   rw [hsum] at habel
-  have hdtint := (hdcont.mul continuousOn_id).intervalIntegrable_of_Icc
-    (μ := MeasureTheory.volume) hyz
+  have hdtint : IntervalIntegrable (fun t => d t * t) MeasureTheory.volume y z := by
+    simpa only [Pi.mul_apply, id_eq] using
+      (hdcont.mul continuousOn_id).intervalIntegrable_of_Icc
+        (μ := MeasureTheory.volume) hyz
   have hprod : IntervalIntegrable (fun t => deriv f t * θ t)
       MeasureTheory.volume y z :=
     (intervalIntegrable_iff_integrableOn_Icc_of_le hyz).mpr (by
@@ -394,7 +397,11 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
         (fun t ht => by rw [Set.uIcc_of_le hyz] at ht; rw [(hd t ht).deriv])
       _ = (∫ t in y..z, d t * θ t - d t * t) + (∫ t in y..z, d t * t) := by
         rw [intervalIntegral.integral_sub hprod' hdtint]; ring
-      _ = _ := by congr 1; apply intervalIntegral.integral_congr; intros; ring
+      _ = _ := by
+        have heq : (∫ t in y..z, d t * θ t - d t * t) =
+            (∫ t in y..z, d t * (θ t - t)) :=
+          intervalIntegral.integral_congr (fun t _ => by ring)
+        rw [heq]
   have hmain : f z * z - f y * y - (∫ t in y..z, d t * t) =
       (∫ t in y..z, logKernel 1 t) := by
     have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
@@ -402,7 +409,9 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
       (a := y) (b := z)
       (fun t ht => by
         rw [Set.uIcc_of_le hyz] at ht
-        convert (hd t ht).mul (hasDerivAt_id t) using 1 <;> dsimp [f] <;> ring)
+        convert (hd t ht).mul (hasDerivAt_id t) using 1
+        · funext u; simp only [Pi.mul_apply, id_eq]; rfl
+        · dsimp [f]; ring)
       (((logKernel_continuous hy1 1).intervalIntegrable_of_Icc
         (μ := MeasureTheory.volume) hyz).add hdtint)
     rw [intervalIntegral.integral_add
@@ -417,9 +426,8 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
     have hLy0 : 0 < Real.log y := Real.log_pos hy1
     have hpow := pow_le_pow_left₀ hLy0.le (Real.log_le_log hy0 ht.1) 9
     have hmono : logEndpoint 9 t ≤ logEndpoint 9 y := by
-      apply one_div_le_one_div_of_le (by dsimp [logEndpoint]; positivity :
-        0 < y * Real.log y ^ 9)
-      exact mul_le_mul ht.1 hpow (by positivity) hy0.le
+      apply one_div_le_one_div_of_le (by positivity : 0 < y * Real.log y ^ 9)
+      exact mul_le_mul ht.1 hpow (by positivity) ht0.le
     have hdneg : d t ≤ 0 := by
       dsimp [d]
       exact sub_nonpos.mpr ((div_nonpos_of_nonpos_of_nonneg (by norm_num) (by positivity)).trans
@@ -429,7 +437,7 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
     · calc
         _ = f t * |θ t - t| := by rw [abs_mul, abs_of_nonneg hfpos]
         _ ≤ f t * (t / Real.log t ^ 8) := mul_le_mul_of_nonneg_left (htheta t ht) hfpos
-        _ = logEndpoint 9 t := by dsimp [f, logKernel, logEndpoint]; field_simp; ring
+        _ = logEndpoint 9 t := by dsimp [f, logKernel, logEndpoint]; field_simp <;> ring
         _ ≤ _ := hmono
     · have h10 : logKernel 10 t ≤ logKernel 9 t := by
         apply one_div_le_one_div_of_le (by positivity : 0 < t ^ 2 * Real.log t ^ 9)
@@ -446,13 +454,14 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
         _ ≤ (-d t) * (t / Real.log t ^ 8) :=
           mul_le_mul_of_nonneg_left (htheta t ht) (neg_nonneg.mpr hdneg)
         _ = 2 * logKernel 9 t + logKernel 10 t := by
-          dsimp [d, logKernel]; field_simp; ring
+          dsimp [d, logKernel]; field_simp <;> ring
         _ ≤ 3 * logKernel 9 t := by linarith
         _ ≤ 3 * ((1 / Real.log y ^ 9) / t ^ 2) := mul_le_mul_of_nonneg_left hk (by norm_num)
         _ = _ := by ring
-  have hmajor := ((continuousOn_const.div (continuousOn_id.pow 2)
-    (fun t (ht : t ∈ Set.Icc y z) => pow_ne_zero 2 (hy0.trans_le ht.1).ne')) :
-    ContinuousOn (fun t : ℝ => (3 / Real.log y ^ 9) / t ^ 2) (Set.Icc y z))
+  have hmajor : ContinuousOn
+      (fun t : ℝ => (3 / Real.log y ^ 9) / t ^ 2) (Set.Icc y z) := by
+    exact continuousOn_const.div (continuousOn_id.pow 2)
+      (fun t (ht : t ∈ Set.Icc y z) => pow_ne_zero 2 (hy0.trans_le ht.1).ne')
   have hmajorint := hmajor.intervalIntegrable_of_Icc (μ := MeasureTheory.volume) hyz
   have herr := intervalIntegral.norm_integral_le_of_norm_le hyz
     (MeasureTheory.ae_of_all _ (fun t ht => by
@@ -461,6 +470,7 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
       (3 / Real.log y ^ 9) / y - (3 / Real.log y ^ 9) / z := by
     have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
       (f := fun t : ℝ => -(3 / Real.log y ^ 9) / t)
+      (f' := fun t => (3 / Real.log y ^ 9) / t ^ 2) (a := y) (b := z)
       (fun t ht => by
         rw [Set.uIcc_of_le hyz] at ht
         convert (hasDerivAt_const t (-(3 / Real.log y ^ 9))).fun_div
@@ -520,7 +530,8 @@ theorem prime_square_tail_logarithmic_refinements :
   change |S - I 1| ≤ 5 * logEndpoint 9 y at herr
   change 0 ≤ I 3 ∧ I 3 ≤ logEndpoint 3 y at hb3
   change 0 ≤ I 4 ∧ I 4 ≤ logEndpoint 4 y at hb4
-  change I 1 + (1 : ℝ) * I 2 = logEndpoint 1 y - logEndpoint 1 z at h1
+  norm_num at h1 h2 h3
+  change I 1 + I 2 = logEndpoint 1 y - logEndpoint 1 z at h1
   change I 2 + (2 : ℝ) * I 3 = logEndpoint 2 y - logEndpoint 2 z at h2
   change I 3 + (3 : ℝ) * I 4 = logEndpoint 3 y - logEndpoint 3 z at h3
   have he2 : S - (logEndpoint 1 y - logEndpoint 2 y) +
