@@ -72,7 +72,9 @@ def source_registration : Registration arena claim where
       by_contra hne
       have hlt : 1 < n := by omega
       have hh := _root_.D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders.result.2.1 1 n (by decide) hlt
-      norm_num [_root_.D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders.a] at hh
+      have hone : _root_.D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders.a 1 = 8 := by
+        norm_num [_root_.D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders.a]
+      rw [hone, ← he] at hh
       omega
     refine ⟨(), 8, 0, ?_⟩
     change HasExactlyTwo 8 ≠ HasExactlyTwo 0
