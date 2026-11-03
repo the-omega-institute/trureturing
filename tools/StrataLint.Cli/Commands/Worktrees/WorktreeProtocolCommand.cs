@@ -13,6 +13,17 @@ internal static class WorktreeProtocolCommand
     // disposable checkout to obtain executable code.
     private static readonly Lazy<string> Program = new(LoadProgram);
 
+    internal static CommandResult CheckCreationDisk(string root, string destination,
+        IWorktreeProcessRunner runner)
+    {
+        using var program = new EmbeddedProgramFile(Program.Value
+            + "sys.exit(sys.modules['worktree_host_cleanup'].main())\n");
+        var result = runner.Run("python3", ["-I", "-B", program.FilePath, "check-disk",
+            "--path", root, "--path", destination], root, BoundedProcessRunner.HangDetectionBudget);
+        return new CommandResult(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput),
+            Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
+    }
+
     internal static CommandResult Run(string root, IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner, TimeSpan? timeout = null)
     {

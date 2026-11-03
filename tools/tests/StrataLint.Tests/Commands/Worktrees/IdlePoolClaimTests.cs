@@ -136,6 +136,46 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
+    public void ExactCreationChecksDiskWhenDeferredTargetIsMissing()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        using var executables = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        var python = TestProcessRunner.Run("python3", ["-I", "-c", "import sys; print(sys.executable)"],
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.Equal(0, python.ExitCode);
+        var shim = Path.Combine(executables.Path, "python3");
+        File.WriteAllText(shim, """
+            #!/bin/sh
+            for argument do
+              if [ "$argument" = check-disk ]; then
+                printf '%s\n' WORKTREE_LOW_DISK_fixture >&2
+                exit 73
+              fi
+            done
+            exec "$WORKTREE_TEST_PYTHON" "$@"
+            """ + "\n");
+        File.SetUnixFileMode(shim, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var target = Path.Combine(repository.Path, "removed-before-creation");
+
+        var result = TestProcessRunner.Run("env", ["WORKTREE_REQUIRE_DISK_CHECK=1",
+            "WORKTREE_TEST_PYTHON=" + Encoding.UTF8.GetString(python.StandardOutput).Trim(),
+            "PATH=" + executables.Path + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
+            "dotnet", typeof(WorktreeCommand).Assembly.Location, "worktree", "--source", repository.Path,
+            "--kind", "math", "--name", "deferred-disk", "--base", "dev", "--path", target,
+            "--skip-restore"], repository.Path, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024);
+
+        Assert.Equal(73, result.ExitCode);
+        Assert.Contains("WORKTREE_LOW_DISK_fixture", Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.False(Directory.Exists(target));
+        Assert.DoesNotContain("lane/math/deferred-disk", TestGit.Run(repository.Path, "branch", "--list"),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void IdlePoolBypassesAutomaticAgeButAllowsNamedRemoval()
     {
         using var repository = new TemporaryDirectory();

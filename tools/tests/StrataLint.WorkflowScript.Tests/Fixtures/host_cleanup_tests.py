@@ -384,6 +384,12 @@ class HostCleanupTests(unittest.TestCase):
         self.assertIn("DISK_CHECK_PENDING=1", implicit.stdout)
         self.assertNotIn("WORKTREE_LOW_DISK", implicit.stderr)
         self.assertIn("DISK_CHECK_PENDING=0", allowed.stdout)
+        (self.root / "new tree").mkdir()
+        existing = subprocess.run(arguments, cwd=self.root, env=env, capture_output=True, text=True)
+        self.assertEqual(0, existing.returncode, existing.stderr)
+        self.assertIn("DOTNET_INVOKED", existing.stdout)
+        self.assertIn("DISK_CHECK_PENDING=1", existing.stdout)
+        self.assertNotIn("WORKTREE_LOW_DISK", existing.stderr)
 
     def test_cleanup_make_forwards_paths_flags_and_literal_shell_characters(self):
         repository = self.root / "checkout with spaces"
@@ -700,6 +706,36 @@ class HostCleanupTests(unittest.TestCase):
                 self.assertTrue(directory.is_dir())
                 self.assertTrue(all(not path.exists() for path in old))
                 self.assertEqual(2, rows[-1]["counts"]["codex:removed"])
+
+    def test_rollout_group_removal_preserves_entries_added_after_final_inspection(self):
+        codex = self.root / "codex"
+        directory = codex / "sessions" / "day"
+        rollouts = [self.old_file(directory / ("rollout-" + str(index) + ".jsonl")) for index in range(2)]
+        os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+        unknown = directory / "private.txt"
+        nested = directory / "private" / "notes.txt"
+        remove = cleanup.remove_rollout_group
+        def late_entry(path, filenames, identity):
+            unknown.write_text("retain late bytes")
+            nested.parent.mkdir()
+            nested.write_text("retain nested bytes")
+            nested.parent.chmod(0o500)
+            self.addCleanup(nested.parent.chmod, 0o700)
+            return remove(path, filenames, identity)
+        warning = io.StringIO()
+        with patch.object(cleanup, "remove_rollout_group", side_effect=late_entry), \
+             contextlib.redirect_stderr(warning):
+            rows = self.run_rollout_sweep(codex, lambda *args, **kwargs: set())
+        self.assertTrue(all(not path.exists() for path in rollouts))
+        self.assertEqual("retain late bytes", unknown.read_text())
+        self.assertEqual("retain nested bytes", nested.read_text())
+        self.assertEqual(0o500, stat.S_IMODE(nested.parent.stat().st_mode))
+        result = next(row for row in rows if row.get("path") == str(directory))
+        self.assertEqual("failed", result["action"])
+        self.assertEqual(1, rows[-1]["counts"]["codex:failed"])
+        self.assertEqual(0, rows[-1]["candidate_apparent_bytes"])
+        diagnostic = json.loads(warning.getvalue())
+        self.assertEqual((str(directory), "failed"), (diagnostic["path"], diagnostic["action"]))
 
     def test_rollout_groups_preserve_session_and_archive_roots(self):
         codex = self.root / "codex"

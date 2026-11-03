@@ -143,6 +143,11 @@ internal static class WorktreeCommand
                     throw new InvalidOperationException(reason);
                 return reused;
             }
+            if (Environment.GetEnvironmentVariable("WORKTREE_REQUIRE_DISK_CHECK") == "1")
+            {
+                var disk = WorktreeProtocolCommand.CheckCreationDisk(options.Source, options.Path, runner);
+                if (!disk.Success) return disk;
+            }
             initializationScope = WorktreeInitializationScope.Acquire(options.Source, options.Path, options.Branch);
             halfBuiltRecovered = ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);

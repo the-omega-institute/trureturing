@@ -353,6 +353,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
     if shape_reason:
         return dict(reason=shape_reason)
     result = dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes, lakes=lakes)
+    if rollout_files is not None:
+        result["root_identity"] = (root_stat.st_dev, root_stat.st_ino)
     if remnant and blueprint and verify_recovery:
         missing = recovery.check(blueprint)
         if missing:
@@ -373,6 +375,26 @@ def remove_tree(path):
         if mode & stat.S_IRWXU != stat.S_IRWXU:
             os.chmod(directory, mode | stat.S_IRWXU)
     shutil.rmtree(path)
+
+
+def remove_rollout_group(path, filenames, identity):
+    """Unlink only snapshotted rollout names; retain any later directory entries."""
+    descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        info = os.fstat(descriptor)
+        if (info.st_dev, info.st_ino) != identity:
+            raise OSError("rollout_root_changed")
+        mode = stat.S_IMODE(info.st_mode)
+        if mode & stat.S_IRWXU != stat.S_IRWXU:
+            os.fchmod(descriptor, mode | stat.S_IRWXU)
+        for name in filenames:
+            os.unlink(name, dir_fd=descriptor)
+        current = path.lstat()
+        if (current.st_dev, current.st_ino) != identity:
+            raise OSError("rollout_root_changed")
+        path.rmdir()
+    finally:
+        os.close(descriptor)
 
 
 def rename_exclusive(source, destination):
@@ -443,7 +465,9 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
                     result["reason"] = "changed"
                     return result
             removal_started = True
-            if path.is_dir():
+            if rollout_files is not None:
+                remove_rollout_group(path, rollout_files, before["root_identity"])
+            elif path.is_dir():
                 remove_tree(path)
             else:
                 path.unlink()
