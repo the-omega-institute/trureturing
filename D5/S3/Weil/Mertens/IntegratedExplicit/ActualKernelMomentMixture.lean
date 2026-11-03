@@ -447,14 +447,15 @@ private lemma scaled_cauchy (λ : ℝ) (hλ : 0 < λ) (t : ℝ) :
   have ht : -|2 * λ * t| / 2 = -λ * |t| := by
     rw [abs_mul, abs_of_pos (by positivity : 0 < 2 * λ)]
     ring
-  rw [ht] at h
+  have hh := h.2
+  rw [ht] at hh
   have hp : (2 * Real.pi : ℝ) ≠ 0 := by positivity
   have hl : (λ : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hλ.ne'
   have hpi : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
-  change (↑(1 / (2 * Real.pi)) : ℂ) * (∫ w, H w) = _ at h
-  push_cast at h ⊢
-  field_simp at h ⊢
-  linear_combination (2 : ℂ) * λ * h
+  change (↑(1 / (2 * Real.pi)) : ℂ) * (∫ w, H w) = _ at hh
+  push_cast at hh ⊢
+  field_simp at hh ⊢
+  linear_combination (2 : ℂ) * λ * hh
 
 private lemma atom_fourier_square (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
     (D : ℝ) (hx : ∀ i, x i ≤ D) (ξ : ℝ) :
@@ -476,8 +477,8 @@ private lemma atom_fourier_square (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a
   calc
     _ = star ((Complex.I * (ξ : ℂ)) * OriginalActualFourier.Ahat («prefix» x a) ξ) *
         ((Complex.I * (ξ : ℂ)) * OriginalActualFourier.Ahat («prefix» x a) ξ) := by
-      simp [star_mul, Complex.normSq_eq_norm_sq, Complex.normSq_apply,
-        Complex.mul_re, Complex.mul_im, sq_abs, mul_pow, ← Complex.normSq_eq_conj_mul_self]
+      rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]
+      simp [norm_mul, mul_pow, sq_abs]
     _ = star (∑ i, a i * OriginalActualFourier.phase (-ξ) (x i)) *
         (∑ i, a i * OriginalActualFourier.phase (-ξ) (x i)) := hs
     _ = _ := by
