@@ -3028,3 +3028,465 @@ than assigning the same price to every interpreted operation.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 22. Received ML-F words with represented validation
+
+**Definition 22.1 (the service field configuration).** The particular
+service graph has persistent actual references to the initialized public
+word, the original port connection, the receipt-chain header and an
+original-indexed cache. All other variable data are linked objects,
+reference registers or binary registers. Every such object is a
+four-reference/eight-bit reserve cell of Definition 15.1, including
+headers and temporary counters. This deliberately overprovisions small
+records; all unused fields and grant slots remain charged. Reference
+one is the next-bit link, and header references one and two are head
+and tail. A receipt uses reference three for its next-receipt link.
+The cache uses one such cell per original coordinate, with mask in
+bit zero and value in bit one. Thus its logical mask/value word is
+still exactly Definition 5.1's indexed restriction, although this
+physical layout differs from that definition's two separate bit chains.
+No equality of observed values merges two cache cells.
+
+The received connection has three separately backed binary fields:
+bit, End and occupied. A producer supplies an actual binary bit or
+End only at an empty input latch. The receive graph copies an actual
+bit into its retained bit register, clears occupancy, appends that
+bit to the request chain and returns to the receive test. Its append
+retains fresh cell, old tail and continuation through the same
+initialize/link/tail phases as Definition 15.1. Missing input loops at
+an installed waiting gate; resumption does not replace the graph PC.
+At End the parser begins at the actual request head. There is no
+host-supplied length, offset, parsed command or acceptedness flag.
+
+A syntactically proper incomplete prefix retains its request and waits
+for further received bits. On the next End, parsing restarts from that
+same chain's head, now with its actual appended suffix. Old parser
+backing remains allocated and counted; restarting is not a rollback
+of acquisition or work. A nested V payload is already a complete word,
+so a missing field inside that word is BadFrame rather than a request
+for bits beyond its boundary. A represented strictness bit distinguishes
+these cases. A malformed completed command or semantic payload produces
+Definition 4.1's actual BadFrame. Input scratch is not a source reply.
+
+**Definition 22.2 (lengths, naturals and semantic scans).** The entry
+ReadV retains a stack containing one actual token for each leading
+unary mark. After its delimiter it reads one payload bit per popped
+token and appends it to a fresh word header. Both its token stack and
+unfinished output remain real material at every cut. ReadU additionally
+rejects an empty payload and a leading zero except for the single-bit
+word zero. These are the original U representations, not machine-word
+integers.
+
+When a numerical loop count is needed, convert its actual MSB-first
+canonical payload to a unary list. For each received digit, traverse a
+snapshot ending at the old tail and append one token per old token;
+then append one token if that digit is one. Snapshot, current token,
+old tail, next token, digit and unfinished append are retained. This
+is repeated doubling on a linked word, with no fixed numerical bank.
+It is intentionally sufficient rather than a claim of economical
+arithmetic.
+
+The N validator requires three or more canonical payload bits, which
+is exactly N at least four. Its unary value drives an outer scan;
+fifteen literal append blocks per token construct exactly 15N paired
+cache-shape cells. A prior reads sign zero and two canonical unsigned
+payloads. The denominator must start with one. To compare numerator
+with denominator, scan their actual chains in parallel, retain the
+first unequal pair, and first decide by total length, using the retained
+pair only when the lengths agree. Reject numerator greater than
+denominator. Neither payload is reduced or recoded.
+
+Mask validation reads one actual mask bit per shape cell, then rescans
+that new mask and reads a value bit exactly at selected positions.
+Cylinder validation reads its conflict flag. One requires an immediate
+end of that V payload. Zero requires a whole mask/value word with no
+trailing bit. A cylinder list reads its canonical unsigned count,
+converts that count to a unary list and consumes one actual V word
+per token. Its outer cursor, inner cursor, remaining count, shape and
+strictness are distinct retained locations. Arithmetic validation
+composes precisely these operations: N, prior, cache, cylinder list,
+then end. The original arithmetic payload itself is retained unchanged
+for the later loader.
+
+**Theorem 22.3 (complete ML-F acceptance and prefix interpretation).**
+Under ML-I's actual binary input and sufficient finite reserve, these
+scans accept exactly the original well-formed initialization,
+Evaluate, Read, Predict and Close inputs of Definitions 4.1, 4.3 and
+5.2. They preserve every accepted finite N, prior representation,
+mask/value assignment, cylinder count, cylinder and original operand.
+There is no common bound on their lengths or numerical values. Proper
+incomplete prefixes cannot reach a source call or evaluator loading;
+malformed completed semantic payloads cannot be loaded. Each completed
+parse has the same decoded command as ML-F on the same received bits.
+Every intermediate scan has a retained unread suffix, token count,
+partial result and actual continuation.
+
+Proof. After k unary marks, ReadV has exactly k tokens. After i payload
+bits, its result is exactly their actual prefix and its remaining stack
+has k-i tokens. This induction proves the V contract including the empty
+word. The additional two ReadU tests are exactly canonical unsigned
+syntax. In unary conversion, if the already consumed digit prefix has
+value c, its list has c tokens. Snapshot traversal appends precisely c
+more without visiting the newly appended suffix. The optional final
+append gives 2c+d. Induction on digits proves arbitrary finite counts;
+all scans are finite even when that representation is large.
+
+Canonical positive words have leading one. A canonical word with at
+least three digits is exactly a natural at least four. The fifteen-fold
+literal loop therefore constructs the exact shape, without reducing N
+modulo a register width. Parallel length comparison decides natural
+order when lengths differ; the first unequal digit decides it when
+lengths agree. The denominator test and sign test are precisely the
+prior's stated domain. In particular zero over any positive represented
+denominator, equal unreduced numerator/denominator, and all intermediate
+unreduced representations survive unchanged.
+
+Induct on shape positions for masks: the first pass fixes all selected
+positions, and the second consumes precisely their values in original
+order. Induct on the unary cylinder count for lists. The strict inner
+boundary prevents a cylinder from borrowing a later cylinder's bits.
+Its conflict case consumes no mask, exactly as ML-F requires. The four
+command tags and Predict's variant bit give disjoint exhaustive cases;
+Read has an arbitrary V operand, and Close has no payload. End tests
+exclude all trailing bits. Conversely every successful scan has passed
+these same tests and consumed exactly those words. Thus successful
+parse and original acceptance coincide.
+
+Each loop consumes a finite old list or digit word. The only unbounded
+wait is a missing supplied input completion; it has no parse commit.
+At any partial append the fresh object and old tail are retained, and
+at any partial read the current cursor and read bit are retained.
+A repeated parse uses exactly the accumulated received chain. These
+facts prove the internal-prefix assertion and completed-parse converse.
+They do not assert a full evaluator execution. $\square$
+
+## 23. Literal Read, receipt and Predict consumers
+
+**Definition 23.1 (two literal output connections).** The service's
+encoded field graph retains the existing five-bit operation and
+sixteen-bit literal selector. Its emit, End and Ack operations use
+literal selector zero for the ordinary output connection and one for
+the original-call connection. The specialized native interpreter tests
+all sixteen actual selector bits, rejects every other value, and ends
+at one of two separately wired primitive paths. Emit retains its payload
+in bx and reloads bx after this connection selection, before its actual
+bit transfer. Connection-selection tests therefore cannot replace the
+payload bit. Old field graphs keep the unchanged selector-zero path.
+All other operations retain Theorem 18.4's paths and guards.
+
+The second connection is physically bound to the same supplied original
+port, root and current Read authority. Each operand bit is sent there
+from the actual received operand cursor. A physical transfer sets one actual bit/occupied peer latch. The
+installed graph then tests its occupancy, reads that bit, appends it to
+a real transmitted-word header, and clears occupancy in a separate
+field write before advancing the operand cursor. The header, latch,
+old tail, pending cell and next cursor survive all these intervening
+cuts. A call is disabled until the last peer append/release completes.
+The received chain, rather than a host-collected output string, is the
+backing of the actual transmitted word. Its invocation is exactly the supplied
+original-root call of Assumption 1.2, using that word and the unchanged
+provider `OriginalPort.call`; it is not a law evaluation, a new probe
+menu or a numerical source reference. The private provider keeps its
+own field traversal and tariff of Definition 6.5. The call returns its
+actual occupied two-bit latch. The service captures its two separate
+fields before acknowledging that latch. The connection, its pending
+request, returned latch and provider material remain part of the same
+configuration. Source-call completion is an ML-I premise, not an
+assertion that the observer has compiled the provider or its hardware.
+
+The private connection adapter's word projection denotes its actual
+backed transmitted word at this supplied call boundary. It supplies no
+service cursor, classification, command, cache update, evaluator result
+or next continuation. The original provider's own buffer traversals and received/reply
+backing retain their original charges. The new connection acknowledge
+only releases its actual occupied reply latch; it performs no bulk
+buffer clearing. Both native transmission backing and provider-return
+objects remain retained and paid. Their existing host
+implementation is not claimed to be another native service program;
+a fully primitive joint provider/allocator timeline remains an original
+integration obligation. No composite parser, arithmetic operation or
+controller step is promoted to an ML-I primitive.
+
+**Definition 23.2 (classification on original cache positions).**
+Classification starts with the actual operand cursor and the cache's
+first coordinate reference. At an R it advances both cursors. If the
+operand ends before the coordinate chain ends it is a constant branch
+reply. At the first L it retains that current coordinate and traverses
+a fixed depth-two suffix trie. Its two possible replies are precisely
+Definition 5.2's complete slot table. A longer suffix is constant absent.
+When the coordinate chain is exhausted it instead uses the depth-three
+fixed-marker trie; longer suffixes are absent. A pair with equal replies
+clears the designated coordinate reference. A differing pair retains
+that exact cell and its two reply codes. Thus neither an operand length
+nor an original index becomes a numerical control label.
+
+On actual return, create a fresh receipt header and its payload
+V(operand) followed by the two captured reply bits. Retain the old chain
+tail, link the new receipt through its next-receipt field or the chain
+head, and only then advance the chain tail. These separate writes are
+actual field operations. The payload has exactly 2|w|+3 cells even for
+a repeated or constant operand. No historical record is consulted to
+supply the current reply.
+
+For an informative position compare the actual code with both retained
+public-table alternatives. The chosen alternative determines its zero
+or one. If the mask is already set, compare the existing value before
+writing; a disagreement refuses. Then write the mask and actual value
+in separate operations. A constant verifies its actual code and changes
+no coordinate. Build the Read service frame from the captured reply
+bits, traverse it to actual output, then End, Ack and Return. Input is
+disabled throughout this busy path.
+
+**Theorem 23.3 (original-port and indexed-receipt correspondence).**
+For every finite N at least four, every promised array z, every finite
+operand sequence and every legal internal prefix, the installed Read
+path has the same literal source returns, ordered occurrence receipts
+and original-indexed restriction as Definition 5.2, whenever its supplied
+calls and finite reserve complete. This includes all constant/absence
+classes, long extensions, partial slots, old-slot requests, repeats and
+distinct original indices having equal observations. The assertion
+requires no positive prior mass. It preserves both original once-shared
+full injections when that probabilistic model is used, without reading
+or redrawing them. Completed-operation converse holds for each handler.
+
+Proof. Prefix-tree induction on all sixteen selector bits gives exactly
+the declared zero/one connection leaf, with a refusal otherwise. Reloading
+bx after that tree preserves the actual payload rather than its last
+selector bit. The remaining field operations use Theorem 18.4 unchanged.
+For peer reception, after k completed append/release cycles the actual
+transmitted header is exactly the first k emitted operand bits and the
+latch is empty. At a transfer it contains precisely the next real bit;
+its append and separate release restore this invariant. Thus the supplied
+finite-word original-call boundary receives exactly the whole emitted
+word, with no new host selector or collected-output consumer.
+
+Each R advances one original coordinate; it can neither skip a
+coordinate nor merge equal values. Before exhaustion its first L and
+finite suffix select exactly the slot table of UJB5.3. At exhaustion,
+the marker trie is precisely that theorem's fixed final marker. Every
+longer extension is a strict leaf extension and hence absent. These
+cases exhaust every finite operand, including one ending on the spine.
+
+The emitted operand is its received chain read in order. The actual
+bound original call supplies exactly that source's value. Capturing
+both returned fields before Ack preserves that actual value throughout
+receipt, cache and answer construction. Appending a receipt first makes
+it reachable and only then advertises its tail; saved old/new references
+interpret the intervening cuts. Inducting on calls proves that the
+chain has precisely the ordered occurrences, not just distinct operands.
+
+At a differing pair the two alternatives are injective in the one
+retained original coordinate. Its comparison therefore recovers that
+actual bit, even when an alternative is absent. A repeat verifies the
+old bit and retains another occurrence. Equal pairs yield no restriction.
+This is exactly Theorem 5.3's restriction operation. No graph vertex
+grows, copies, resets or rebinds the source. Its actual array and any
+full maps underlying it stay fixed. In particular an array outside both
+prior supports is still a valid literal source for this theorem.
+Every control alternative is fixed by the same captured operands and
+actual code. The only route to Return passes the specified append,
+update and output operations once, giving the completed-handler converse.
+All their intermediate references and bit latches remain represented.
+$\square$
+
+**Definition 23.4 (the particular evaluator and Predict controller).**
+Evaluate retains the actual validated arithmetic payload and passes its
+head to the unchanged converter of Definition 16.1. The production
+service graph contains the complete fixed A image decoder, the original
+361-register conversion, loader, generic growth/maintenance and B driver,
+and actual returned-header decoder of §§12–19. Its B boundary goes
+directly to the next installed step, and its halt boundary goes directly
+to the actual output decoder. There is no host decision to choose another
+B instruction. No smaller evaluator or answer table replaces this path.
+The decoder's output is wrapped as an Arithmetic service payload and
+printed from its actual bit chain. Re-entering Evaluate uses fresh paid
+work material and retains every older root and its routing cells.
+
+Predict uses the initialization's original N/prior bits and its current
+attained indexed cache. It serializes all mask bits, then only the selected
+value bits in original order. Variant one validates and copies the actual
+cylinder list. Variant zero classifies its actual operand as above and
+constructs four cylinders in reply-code order. An impossible code gets
+only the conflict flag; a possible constant gets the empty mask; an
+informative alternative gets exactly one mask bit at that retained
+coordinate and the corresponding value. The resulting actual ML-A frame
+enters precisely the same complete evaluator path. Predict contains no
+original-call operation. Close emits its framed closed response and
+ends at a permanent input-disabled waiting gate.
+
+The frontend-only author component replaces the evaluator suffix by an
+explicit backed busy/ready latch and waiting gate. It supplies no output,
+normalizer, ratio or returned head and is never a production evaluator.
+A check at that gate establishes only the acquired evaluator input.
+
+**Theorem 23.5 (conditional particular-service composition).** For every
+valid original initialization and finite legal command history, the
+production graph has the received-input, Read, Evaluate, Predict and
+Close meanings of §§4–5, subject to ML-I, the actual complete image,
+sufficient finite material and the stated primitive completions. Every
+intermediate operation has its represented source interpretation and
+every completed handler has the specified converse. Predict uses the
+same attained restriction and no new source response. Its arithmetic
+payload retains null evidence, and ratios exist only when the actual
+base normalizer is positive.
+
+Proof. Theorem 22.3 supplies acceptedness without a host parser and
+preserves the original arithmetic word. Theorems 16.2 and 18.4 transport
+that very word into the original serialization/copier/NWMG encoding.
+Theorem 19.4 transports the entire supplied code and bindings into the
+executing target. Theorems 11.6, 12.2, 12.4 and 13.2 identify its fixed
+computation on every accepted input; Theorems 15.3 and 18.4 identify
+each actual B macro and every primitive prefix. The autonomous boundary
+has exactly the old step successor; it changes neither a B instruction
+nor a growth phase. At halt, Theorem 16.4 reads the output from the
+actual returned head. Framing wraps those actual decoded bits. Thus a
+completed Evaluate returns exactly ML.5, conditional on that actual
+execution, rather than on an external answer.
+
+For Predict, its first serialization pass is exactly the current mask,
+and its second is exactly its selected values. The public parameter
+word is unchanged. For each response code the classification proof
+identifies exactly its constant event, one-coordinate event or empty
+event. Wrapping these in the original order therefore constructs the
+four required cylinders. The explicit list variant is the received
+list itself. These are accepted ML-A frames, so the same evaluator
+argument applies. UJB17.1 supplies their conditional interpretation at
+positive evidence; Theorem 11.6 supplies NullEvidence otherwise. None
+of these operations invokes the original source or selects its reply.
+
+Theorem 23.3 handles each actual Read. Close and BadFrame use finite
+literal payloads and the same physical Print/End/Ack/Return path. Their
+phase guards prevent an output or new command in an unfinished handler.
+Induct on completed commands, and within a command on completed field
+operations, using Theorem 18.3's pending interpretation. The graph cases
+are exhaustive and deterministic on the same actual configuration.
+This gives both the forward assertion and completed-operation converse;
+a delayed supplied call, bit or acknowledgement remains a pending cut.
+No executed full evaluator witness is inferred from this ordinary proof.
+$\square$
+
+## 24. Service material, source correspondence and integration boundary
+
+**Definition 24.1 (actual service material and traffic).** Let n,r,b be
+the actual literal installation source's descriptor count, reference
+arity sum and bit-width sum for this service graph, its native graph,
+all registers, chosen reserve, image pages/directory and initial bindings.
+The new native operation labels still fit five bits and every native
+vertex still has the same four-reference/twenty-one-bit payload. Thus
+the native installation account (ML.26) applies to this actual n,r,b,
+with exactly its chronological partial-target and grant cuts. Service
+connection-selection code is among n; it is not a free dispatch action.
+The chosen reference width must cover this whole installed family and
+all its nulls, independently of the image's fixed 64-bit address premise.
+
+Every header, V length token, unary numerical token, input/output cell,
+paired cache cell, receipt header/payload, saved continuation, scan and
+partial append is either a counted register or an extracted object in
+that paid reserve. At a service boundary k=15N cache positions occupy
+k+1 reserve cells, hence 4(k+1) reference and 8(k+1) binary fields,
+including padding; their grants remain counted. At a completed receipt
+prefix with a calls and total payload length L, its chain/header and
+payload occupy 1+a+L reserve cells, with 4(1+a+L) reference and
+8(1+a+L) binary fields. These are classified subsets of the reserve,
+not extra additions to (ML.26). Its exact logical payload length is
+still the sum of 2|w|+3 over every invocation.
+
+Charge every actual native code/operand/selector/read/write/commit
+occurrence as in §21. A connection selection has its actual sixteen-bit
+test tree and payload reload. Input deliveries have their actual latch
+writes; all transmitted operand bits, original invocations, returned
+bits, occupied latches, acknowledgements and provider/connection scans
+have their own tariff. An original invocation is charged even when its
+address or value has already occurred, or its law has zero mass. Neither
+distinct-address counting nor a calculated distribution pays for it.
+
+At each reported service cut retain the actual installed material,
+connection material and same original source/rights. Their component
+censuses describe that common cut. They do not supply a common physical
+reference naming/widening construction or permit addition of unrelated
+component peaks. Connection and provider arenas retain their real buffers,
+grants, clearing and free-list backing. They are not silently assigned
+the field-machine's fixed width. A full unified width/overlap/allocator
+and source-observer account remains required before ML.16 can be claimed
+for the original complete evaluator/session.
+
+**Proposition 24.2 (reserve-parametric accounting and its limit).** Every
+finite service-prefix demand in this construction has a sufficient finite
+reserve, and its actual installed component storage and native operations
+are charged by Definition 24.1. This gives no bound on N, rational payloads,
+original indices or input/run lengths. It does not discharge shared-job,
+free-pool, width migration, acknowledgement cleanup or full common-timeline
+obligations merely by retaining an unused reserve.
+
+Proof. A finite received prefix creates finitely many append and parser
+objects. Each completed validation traverses finite words; every unary
+value constructed from a finite binary payload is finite. Each completed
+Read constructs one finite receipt and answer, and a terminating evaluator
+has a finite work prefix under the existing correspondence. For a finite
+history their extraction counts have a finite maximum. A reserve at least
+that maximum suffices, with all unextracted cells charged from installation.
+No numerical domain bound enters this existence argument. The source is
+unchanged throughout, with its own inherited material and provider traffic.
+
+Every extracted cell already has exactly the fields charged in (ML.26).
+Every service register and native path is part of its installed graph.
+Pending allocations, reply capture, unlinked receipt and output latch are
+retained at their simultaneous cuts, so no operation or pending object
+is erased by a phase change. But this construction retains spent scratch
+and older work material; it does not yet implement a shared reusable-job
+allocator or reclaim all retired backing. Fixed-width component fixtures
+also provide no widening/overlap proof. Those missing constructions cannot
+be inferred by summing these partial censuses. $\square$
+
+**Definition 24.3 (exact executable correspondence and evidence scope).**
+`field_service.Service.receive/routines` implements §22;
+`Service.classifier/commands` implements §23's actual operands, linked
+receipts, paired cache, Predict serialization and framed responses.
+`service_graph(height,361)` is the production composition with the
+unchanged complete A image and its actual decoder/converter/driver/output
+consumers. `service_native.ServiceCore` expands the two literal connection
+choices, and `ServiceEngine` uses the chronological native installer.
+`OriginalConnection` binds exactly the original provider, not a sampler.
+Its source-independent transport is distinct from the service controller.
+
+The new production graph reads neither `session.records[-1]` nor
+`framing.Print.emitted`. It supplies concrete replacement receipt/cache
+and output consumers on its own path. The older reference/session path
+still reads those values and retains its previous operational/backing
+obligations whenever that path is used; they are not relabelled audit-only.
+An original full-execution acceptance must actually use the replacement
+path through arithmetic return, framing and the next original Read.
+
+The author checks distinguish independent field-transition grammar
+comparisons, installed native frontend/Read/Predict checks, the actual
+complete-image conversion/initial-loader prefix, and the separate existing
+component/reference suites. A missing original arithmetic LAB execution is
+not replaced by a frontend ready latch, fixture output or stack-reference
+run. Operation omissions must change actual received-source operands,
+receipts, cache or output, in addition to any count discrepancy. A source
+mutation, replay substitution or host-calculated answer is no success case.
+The exact private results bind source bytes and measured component cuts.
+They are finite corroboration of the ordinary all-family inductions, not
+new Lean verification or independent acceptance.
+
+**Definition 24.4 (remaining original objects).** The conditional service
+correspondence and its selected native consumers do not close the original
+integrated LAB-driver delivery, shared jobs/free-pool/width overlap and
+cleanup, full source-observer common timeline, or whole-family integrated
+author checks. The original strict objects `ML-N-evaluator-execution` and
+`ML-Cost-full-evaluator-session` remain not-executed until the original full
+positive and null evaluator runs, actual Arithmetic output/framing, original
+Read continuation and complete same-run census execute. B completion, C
+release, D completion, fresh independent acceptance and completion of the
+long research goal remain separate later obligations.
+
+The source supply remains NWMG, the licensed stack compiler and the exact
+UJB/AA/PG scopes in §§9–21. This appendix is ordinary repository-derived
+parser/controller/refinement mathematics, with no new universality,
+minimality, physical realization, actual serial-history recovery, FIB or
+quantum frontend claim. The source port and initial primitive-control,
+valid-literal-input and current-rights premises are retained. Input is
+repo-prior-exposed; no context sterility or model diversity is asserted.
+
+## 追加锚（本行以下为增补区）
