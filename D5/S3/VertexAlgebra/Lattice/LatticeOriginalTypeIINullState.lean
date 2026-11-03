@@ -6,8 +6,46 @@
    utility: none
    digest: Original Type II physical null state and finite Fock coefficient obstruction. -/
 
+/-
+The Type II formula is classical; the new formal endpoint concerns the literal
+original carrier and its finite oscillator coefficients. No novelty in physics
+or completion of BRST comparison is claimed.
+
+admission_basis: escape-witness
+The endpoint itself is produced by the actual coefficient calculation: ell(S)
+is -5, whereas ell(Tu) is the constant coefficient of the original L(1)u.
+Polynomial induction proves these coefficient identities on all oscillator
+polynomials, followed by finite-charge linear induction. No desired-result
+premise or substituted Fock form is used.
+
+Individual after-inlining proof shapes and live consumers:
+coeff_linear_mul_X: bind-only; coeff_derivation_two, ell_translation_single,
+  coeff_mode_one.
+coeff_zero_derivation: content; coeff_derivation_two.
+coeff_derivation_two: content; ell_translation_single.
+charge_scalar: bind-only; ell_translation_single, charge_norm.
+ell_translation_single: content; ell_translation, ell_translation_squared.
+mode_mul_X: bind-only; coeff_mode_one.
+coeff_mode_one: content; ell_translation.
+ell_translation: content; original_typeII_null_obstruction.
+current_two_constant: bind-only; current_two_extracts_ell.
+current_two_extracts_ell: bind-only; ell_minus_two.
+charge_norm: bind-only; ell_minus_two, ell_translation_squared.
+ell_minus_two: bind-only; ell_typeII.
+ell_translation_squared: content; ell_typeII.
+ell_typeII: content; original_typeII_null_obstruction.
+typeII_primary: bind-only; original_typeII_null_obstruction.
+original_typeII_null_obstruction: content; public coefficient-obstruction
+  endpoint, not an auxiliary binding wrapper.
+ell and typeII are consumed private functional and literal-state definitions.
+Utility is none: these are algebraic laws for arbitrary original lattice data,
+charges, inverse matrices and finite oscillator polynomials, not a certified
+finite instance or bounded enumeration.
+-/
+
 import D5.S3.VertexAlgebra.LatticeSugawaraConformal
 import D5.S3.VertexAlgebra.SourceBPZ.OriginalMatterHermitian
+import Mathlib.Tactic.Module
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -33,7 +71,7 @@ private theorem coeff_zero_derivation (D : LatticeData) (P : Oscillator D) :
     coeff 0 (oscillatorDerivation D P) = 0 := by
   classical
   induction P using MvPolynomial.induction_on with
-  | C c => simp [oscillatorDerivation]
+  | C c => simp [C_eq_smul_one]
   | add P Q hP hQ => simp [hP, hQ]
   | mul_X P x hP =>
     simp [Derivation.leibniz, oscillatorDerivation, MvPolynomial.mkDerivation_X,
@@ -45,13 +83,15 @@ private theorem coeff_derivation_two (D : LatticeData) (i : Fin D.rank)
       coeff (Finsupp.single (i, 0) 1) P := by
   classical
   induction P using MvPolynomial.induction_on with
-  | C c => simp [oscillatorDerivation]
+  | C c => simp [C_eq_smul_one]
   | add P Q hP hQ => simp [hP, hQ]
   | mul_X P x hP =>
     rcases x with ⟨j,k⟩
     rw [Derivation.leibniz]
-    simp only [oscillatorDerivation, MvPolynomial.mkDerivation_X]
-    rw [smul_eq_mul, mul_comm (X (j,k))]
+    have hx : oscillatorDerivation D (X (j,k)) =
+        (k+1 : ℂ) • (X (j,k+1) : Oscillator D) := by
+      simp [oscillatorDerivation]
+    rw [hx, mul_comm (X (j,k))]
     simp only [coeff_add, mul_smul_comm, coeff_smul, coeff_linear_mul_X,
       coeff_zero_derivation]
     by_cases h : k = 0
@@ -94,13 +134,15 @@ private theorem mode_mul_X (D : LatticeData)
     (sugawaraMode_current_commutator D H hHG hGH i m (-((k+1 : ℕ) : ℤ)))
   have hn : neutralPolynomialMode D i p (-((k+1 : ℕ) : ℤ)) =
       LinearMap.mulLeft ℂ (X (i,k)) := by
-    simp [neutralPolynomialMode, show -((k+1 : ℕ) : ℤ) < 0 by omega]
+    rw [show -((k+1 : ℕ) : ℤ) = -(k : ℤ)-1 by omega]
+    exact neutralPolynomialMode_negative D i p k
   simp only [LinearMap.sub_apply, Module.End.mul_apply, neutralMode_single,
     sugawaraMode_single_sector, LinearMap.smul_apply, Finsupp.sub_apply,
     Finsupp.single_eq_same, Finsupp.smul_apply, hn, LinearMap.mulLeft_apply] at h
+  simp only [Int.cast_neg, neg_neg, Int.cast_natCast,
+    show m + -((k+1 : ℕ) : ℤ) = m - ((k+1 : ℕ) : ℤ) by omega] at h
   rw [mul_comm P]
-  apply sub_eq_iff_eq_add.mp at h
-  convert h using 1 <;> push_cast <;> ring
+  exact (sub_eq_iff_eq_add.mp h).trans (by abel)
 
 private theorem coeff_mode_one (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -116,14 +158,15 @@ private theorem coeff_mode_one (D : LatticeData)
         c • Finsupp.single p (1 : Oscillator D) := by simp [← C_mul']
     have hz := congrArg (fun x : Carrier D => x p) (show
         sugawaraMode D H 1 (Finsupp.single p (C c)) = 0 by rw [hc, map_smul, hg, smul_zero])
-    simpa [sugawaraMode_single_sector] using hz
+    have hx := congrArg (fun P : Oscillator D => coeff 0 P) hz
+    simpa [sugawaraMode_single_sector] using hx
   | add P Q hP hQ =>
     simp [hP, hQ, Finset.sum_add_distrib, mul_add]
   | mul_X P x hP =>
     rcases x with ⟨j,k⟩
     rw [mode_mul_X D H hHG hGH]
     simp only [coeff_add, ← constantCoeff_eq, map_mul, constantCoeff_X, zero_mul,
-      zero_add, coeff_smul]
+      zero_add, constantCoeff_smul]
     cases k with
     | zero =>
       simp [neutralPolynomialMode, chargeScalar, coeff_linear_mul_X,
@@ -209,8 +252,9 @@ private theorem ell_translation_squared (D : LatticeData) (p : Charge D) :
     ell D p (translation D (translation D (Finsupp.single p 1))) =
       (bilinear D p p : ℂ) := by
   classical
-  simp only [translation_single, map_one, zero_add, mul_one]
-  rw [ell_translation_single]
+  have tv : translation D (Finsupp.single p (1 : Oscillator D)) =
+      Finsupp.single p (chargePolynomial D p) := by simp
+  rw [tv, ell_translation_single]
   simp only [ite_true]
   have hc (i : Fin D.rank) : coeff (Finsupp.single (i,0) 1) (chargePolynomial D p) =
       (p i : ℂ) := by simp [chargePolynomial, coeff_X', eq_comm]
@@ -262,10 +306,10 @@ private theorem typeII_primary (D : LatticeData)
     exact h.trans (by abel)
   have zero_one : L 0 (L (-1) v) = 0 := by
     rw [comm, weight]
-    norm_num
+    norm_num <;> module
   have zero_two : L 0 (L (-2) v) = L (-2) v := by
     rw [comm, weight]
-    norm_num
+    norm_num <;> module
   have zero_one_one : L 0 (L (-1) (L (-1) v)) = L (-1) (L (-1) v) := by
     rw [comm, zero_one]
     norm_num
@@ -283,7 +327,7 @@ private theorem typeII_primary (D : LatticeData)
     simp [show n + -1 ≠ 0 by omega]
   have two_two : L 2 (L (-2) v) = (9 : ℂ) • v := by
     rw [comm, ground 2 (by omega), weight]
-    norm_num [hr, ← add_smul]
+    norm_num [hr] <;> module
   have two_one_one : L 2 (L (-1) (L (-1) v)) = (-6 : ℂ) • v := by
     rw [comm, higher_one 2 (by omega)]
     norm_num [one_one, smul_smul]
