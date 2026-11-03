@@ -30,7 +30,7 @@ private theorem hasDerivAt_gaussian (s : ℝ) :
   have hlinear : HasDerivAt (fun x : ℝ => -9 * x) (-9) s :=
     hasDerivAt_const_mul (x := s) (-9)
   convert (Real.hasDerivAt_exp s).add hlinear.exp using 1 <;>
-    (try simp only [gaussian]) <;> ring
+    (try funext x) <;> (try simp only [gaussian, Pi.add_apply]) <;> ring
 
 private theorem differentiable_gaussian : Differentiable ℝ gaussian :=
   fun s => (hasDerivAt_gaussian s).differentiableAt

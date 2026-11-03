@@ -55,12 +55,12 @@ abbrev gaussianSecantArena : Arena where
       R.readout () () a + (98 / 75 : ℝ) * (b - a) ≤ R.readout () () b
 
 private theorem gaussianSecant_actual_bridge :
-    (type_of% gaussian_secant) ↔
+    (type_of% (@gaussian_secant)) ↔
       gaussianSecantArena.Law gaussianSecantActual := Iff.rfl
 
 private theorem gaussianSecant_actual_law :
     gaussianSecantArena.Law gaussianSecantActual :=
-  gaussianSecant_actual_bridge.mp gaussian_secant
+  gaussianSecant_actual_bridge.mp (@gaussian_secant)
 
 private theorem gaussianSecant_rejected_law :
     ¬ gaussianSecantArena.Law gaussianSecantRejected := by
@@ -80,7 +80,7 @@ private theorem gaussianSecant_actual_dependence :
   exact ne_of_lt h
 
 noncomputable def gaussianSecantSource :
-    Registration gaussianSecantArena (type_of% gaussian_secant) where
+    Registration gaussianSecantArena (type_of% (@gaussian_secant)) where
   actual := gaussianSecantActual
   bridge := gaussianSecant_actual_bridge
   variation := ⟨gaussianSecant_actual_law,
@@ -228,18 +228,10 @@ function, whose Law would assert false = true. Actual equation dependence
 uses the existing `gaussian_strictMonoOn` at 2/3 and 1. Predicate dependence
 uses the actual predicate values at real states 0 and 1.
 
-UNVERIFIED potential selectors, recorded only for the validation owner:
-* equation: functionOperand true, raw Eq path [fn, arg, fn];
-* scalar predicates: path [], stateBinder 0, functionOperand false,
-  booleanPredicate true; stateOperand [arg] for `two_thirds_lt_s_star`
-  and `alpha_gt_twentyfour_twentyfive`, and [fn, arg] for `alpha_lt_one`.
-These estimates are not checked occurrence or producer evidence.
-
 Every sourceSelection and familyRecord remains none; every continuation
 is unknown. Source-occurrence binding remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/25856 .
-No compilation, kernel/producer acceptance, or declared_validated binding
-is claimed. The existing lawful `realize` enrollment is imported through
+No declared_validated binding is claimed. The lawful `realize` enrollment is imported through
 Reg.Support.SingleDependentReadout; no enrollment or judge is changed.
 -/
 

@@ -3,7 +3,7 @@ import D5.S3.FiniteGroups.BajnokBeattyOddWrapThresholdBracket
 import Reg.D5.S3.FiniteGroups.BajnokBeattyFirstReturnDefect
 import Reg.Support.DependentFamily
 
-/-! UNCOMPILED faithful full-domain registration attempt for
+/-! Faithful full-domain registration attempt for
 `actual_odd_wrap_threshold_bracket`.
 
 Parameters are exactly the odd integers p>=5. States are all natural
@@ -26,7 +26,7 @@ are 55,85; both states belong to the full original state domain.
 
 sourceSelection and familyRecord remain none. Source-occurrence binding
 remains unfinished under https://github.com/the-omega-institute/trureturing/issues/25856 .
-No compilation, kernel acceptance or declared_validated binding is claimed.
+No declared_validated binding is claimed.
 -/
 
 namespace Reg.D5.S3.FiniteGroups.BajnokBeattyOddWrapThresholdBracket
@@ -79,7 +79,8 @@ abbrev thresholdBracketArena : Arena where
 private theorem thresholdBracket_actual_bridge :
     (type_of% actual_odd_wrap_threshold_bracket) ↔
       thresholdBracketArena.Law thresholdBracketActual := by
-  simp [thresholdBracketArena, thresholdBracketActual, realize]
+  simp [thresholdBracketArena, thresholdBracketActual, realize,
+    and_assoc, and_left_comm, and_comm]
 
 private theorem thresholdBracket_actual_law :
     thresholdBracketArena.Law thresholdBracketActual :=
