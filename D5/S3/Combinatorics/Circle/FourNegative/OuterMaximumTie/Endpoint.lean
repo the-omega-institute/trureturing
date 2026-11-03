@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie.Certificate
 import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Endpoint
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
 /-! Source draft only. The original seed, physical labels and both complete
 OriginalOrder predicates are retained. Library boundary cuts are existential;
@@ -23,8 +24,8 @@ open private critical_allocate
   from D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie.Critical
 open private physical_joint_construction
   from D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie.Certificate
-open private strip_of_prefix
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
+open private zero_period_transport
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
 private theorem joint (a b c : ℕ) (ha : 2≤a) (hb : 2≤b) (hc : 2≤c)
     (hba : b≤a) (hca : c≤a) :
@@ -55,31 +56,6 @@ private theorem joint (a b c : ℕ) (ha : 2≤a) (hb : 2≤b) (hc : 2≤c)
       obtain ⟨sigma,hold,hnew⟩ := physical_joint_construction false a b c ha hb hc v w hs hg
       exact ⟨sigma,0,by omega,hold,hnew⟩
 
-/- No period-length, repetition-count or take cutoff. The zero case and
-overlong takes are included by InStrip's natural-prefix theorem. -/
-private theorem finite_repetitions {α : Type*} (f : α→ℤ) (B : ℤ) (l : List α)
-    (hz : (l.map f).sum=0)
-    (hp : ∀ h : ℕ, ((l.take h).map f).sum∈Set.Icc (0:ℤ) B) :
-    (∀ r : ℕ, (((List.replicate r l).flatten).map f).sum=0) ∧
-    ∀ r h : ℕ, ((((List.replicate r l).flatten).take h).map f).sum∈Set.Icc (0:ℤ) B := by
-  have strip : InStrip f B 0 l := by
-    apply strip_of_prefix
-    intro n; simpa only [zero_add,Set.mem_Icc] using hp n
-  have hB : 0≤B := by have h := hp 0; simpa using h.2
-  have all (r : ℕ) :
-      ((((List.replicate r l).flatten).map f).sum=0) ∧
-      InStrip f B 0 ((List.replicate r l).flatten) := by
-    induction r with
-    | zero => simp [InStrip,hB]
-    | succ r ih =>
-      simp only [List.replicate_succ,List.flatten_cons]
-      refine ⟨by simp only [List.map_append,List.sum_append,hz,ih.1,add_zero],?_⟩
-      apply inStrip_append strip
-      simpa only [hz,add_zero] using ih.2
-  refine ⟨fun r => (all r).1,?_⟩
-  intro r h
-  simpa only [zero_add,Set.mem_Icc] using inStrip_prefix (all r).2 h
-
 /-- The ENTIRE original d=a, b,c≤a face. Each row separately has zero
 total for every natural finite repetition, and every natural take is bounded. -/
 theorem actualSource_outer_maximum_tie_joint_lift (a b c d : ℕ)
@@ -100,12 +76,12 @@ theorem actualSource_outer_maximum_tie_joint_lift (a b c d : ℕ)
           Set.Icc (0:ℤ) (modulus (a+b+c+d+1)/2)) := by
   subst d
   obtain ⟨sigma,cut,hcut,hold,hnew⟩ := joint a b c ha hb hc hba hca
-  have old := finite_repetitions
+  have old (r : ℕ) := zero_period_transport
     (actualSource (a+b+c+a) (1+2^a+2^(a+b)+2^(a+b+c)))
-    (modulus (a+b+c+a)/2) sigma hold.2.1 hold.2.2
-  have new := finite_repetitions
+    (modulus (a+b+c+a)/2) sigma hold.2.1 hold.2.2 r
+  have new (r : ℕ) := zero_period_transport
     (actualSource (a+b+c+a+1) (2*(1+2^a+2^(a+b)+2^(a+b+c))))
-    (modulus (a+b+c+a+1)/2) (earWord (a+b+c+a) sigma cut) hnew.2.1 hnew.2.2
-  exact ⟨sigma,cut,hcut,hold,hnew,old.1,new.1,old.2,new.2⟩
+    (modulus (a+b+c+a+1)/2) (earWord (a+b+c+a) sigma cut) hnew.2.1 hnew.2.2 r
+  exact ⟨sigma,cut,hcut,hold,hnew,fun r => (old r).1,fun r => (new r).1,fun r => (old r).2,fun r => (new r).2⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie

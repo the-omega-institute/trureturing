@@ -24,7 +24,10 @@ open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private oldMass newMass
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private finiteChecks finiteEarChecks orderedPackets
+open private finiteChecks finiteEarChecks orderedPackets DataCertificate DataCertificate.mk
+  DataCertificate.packets DataCertificate.negativeOrder DataCertificate.earSlot
+  DataCertificate.positiveLabels DataCertificate.partition
+  DataCertificate.oldEndpoints DataCertificate.newEndpoints
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open private four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
@@ -55,14 +58,16 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
   have ev : (v:ℤ)=vZ := Int.toNat_of_nonneg hv0
   have ew : (w:ℤ)=wZ := Int.toNat_of_nonneg hw0
   have half (n : ℕ) (hn : 1≤n) : (2:ℤ)^n=2*2^(n-1) := by
-    rw [show n=(n-1)+1 by omega,pow_succ]; ring
+    calc
+      (2:ℤ)^n = 2^((n-1)+1) := congrArg (fun k : ℕ => (2:ℤ)^k) (by omega)
+      _ = 2*2^(n-1) := by rw [pow_succ]; ring
   have hv : v<2^(a-1) := by
     have h : (v:ℤ)<(2:ℤ)^(a-1) := by rw [ev]; nlinarith [half a (by omega)]
     exact_mod_cast h
   have hw : w<2^((if asc then c else b)-1) := by
     have h : (w:ℤ)<(2:ℤ)^((if asc then c else b)-1) := by
       rw [ew]
-      cases asc <;> simp only [Bool.false_eq_true,Bool.true_eq_true,ite_false,ite_true] at *
+      cases asc <;> simp only [Bool.false_eq_true,ite_false,ite_true] at *
       · nlinarith [half b (by omega)]
       · nlinarith [half c (by omega)]
     exact_mod_cast h
@@ -79,7 +84,7 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
       ![2*AA,2*B (2^a) (2^b)-1,2*L (2^a) (2^c)-2^c-1,
         2*M (2^a) (2^b) (2^c)-D (2^b) (2^c)] := by
     funext r; fin_cases r <;> dsimp [newBase,charge]
-    all_goals rw [hbases] <;> dsimp <;> ring
+    all_goals rw [hbases] <;> dsimp [D] <;> ring
   have inv : l.Perm (List.range (size a b c a)) := bank_inventory asc a b c v w ha hb hc hv hw
   have good (j : Fin 4) (i : ℕ) (hi : i∈P j) : i<size a b c a ∧ i∉negatives a b c a :=
     bank_good asc a b c v w ha hb hc j i hi
@@ -111,18 +116,16 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
   have os (j : Fin 4) : height f P T j=oldSeam asc (2^a) (2^b) (2^c) vZ wZ j := by
     have m0 := mo 0; have m1 := mo 1; have m2 := mo 2; have m3 := mo 3
     cases asc <;> fin_cases j
-    all_goals dsimp [height,P,T,terminal,oldSeam,eps] at *
-    all_goals simp only [masses,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
-      Matrix.cons_val_three,ev,ew,Bool.true_eq_true,Bool.false_eq_true,ite_true,ite_false] at m0 m1 m2 m3
-    all_goals dsimp [cap] at *
+    all_goals dsimp [height,P,T,terminal,oldSeam,eps]
+    all_goals dsimp [masses,cap] at m0 m1 m2 m3
+    all_goals simp only [ev,ew] at m0 m1 m2 m3
     all_goals nlinarith only [m0,m1,m2,m3,n0.1,n1.1,n2.1,n3.1]
   have ns (j : Fin 4) : AA+height g P T j=newSeam asc (2^a) (2^b) (2^c) vZ wZ j := by
     have m0 := mg 0; have m1 := mg 1; have m2 := mg 2; have m3 := mg 3
     cases asc <;> fin_cases j
-    all_goals dsimp [height,P,T,terminal,newSeam,oldSeam,eps] at *
-    all_goals simp only [masses,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
-      Matrix.cons_val_three,ev,ew,Bool.true_eq_true,Bool.false_eq_true,ite_true,ite_false] at m0 m1 m2 m3
-    all_goals dsimp [cap] at *
+    all_goals dsimp [height,P,T,terminal,newSeam,oldSeam,eps]
+    all_goals dsimp [masses,cap] at m0 m1 m2 m3
+    all_goals simp only [ev,ew] at m0 m1 m2 m3
     all_goals nlinarith only [m0,m1,m2,m3,n0.2.1,n1.2.1,n2.2.1,n3.2.1]
   have terminal_values (j : Fin 4) :
       2*f (T j)=oldHead asc (2^a) (2^b) (2^c) j-N ∧
@@ -134,8 +137,10 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
   have odd : N%2=1 := by
     have hn : N=2*((2:ℤ)^(a-1)*2^b*2^c*2^a-1)+1 := by
       dsimp [N,sourceMod]
-      conv_lhs => rw [half a (by omega)]
-      ring
+      calc
+        (2:ℤ)^a*2^b*2^c*2^a-1 = (2*2^(a-1))*2^b*2^c*2^a-1 :=
+          congrArg (fun x : ℤ => x*2^b*2^c*2^a-1) (half a (by omega))
+        _ = _ := by ring
     omega
   have parity := Int.emod_add_mul_ediv N 2
   have os0 := os 0; have os1 := os 1; have os2 := os 2; have os3 := os 3
@@ -157,14 +162,13 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
   have packetPerm (j : Fin 4) : (P j).toFinset.toList.Perm (P j) :=
     (List.perm_ext_iff_of_nodup (Finset.nodup_toList _) (nd j)).mpr (by intro i; simp)
   have packetWordPerm : (blocksWord (orderedPackets packets)).Perm l := by
-    dsimp [orderedPackets,packets,blocksWord,l,word]
     have h3 := (packetPerm 3).append (List.Perm.refl [T 3])
     have h2 := (packetPerm 2).append (h3.cons (T 2))
     have h1 := (packetPerm 1).append (h2.cons (T 1))
-    exact (packetPerm 0).append (h1.cons (T 0))
+    simpa only [orderedPackets,packets,List.map_cons,List.map_nil,blocksWord,
+      List.append_nil,l,word,P,T] using (packetPerm 0).append (h1.cons (T 0))
   have cert : Certificate a b c a := by
-    refine { packets := packets, negativeOrder := ?_, earSlot := 0,
-      positiveLabels := ?_, partition := ?_, oldEndpoints := ?_, newEndpoints := ?_ }
+    refine DataCertificate.mk packets ?_ 0 ?_ ?_ ?_ ?_
     · apply Multiset.coe_eq_coe.mp
       cases asc <;> dsimp [packets,T,terminal,negatives,size]
       all_goals simp only [List.map_cons,List.map_nil,Prod.snd,Multiset.coe_cons,Multiset.coe_nil]
