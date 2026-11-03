@@ -6,6 +6,17 @@
    utility: none
    digest: Finite original conformal and cubic current states and their literal modes. -/
 
+/-
+proof_shape: conformal_modes, current_zero_mode, Qg_signed_derivation: content
+proof_shape: current_odd: bind-only helper, consumed by current_zero_mode and Qg_signed_derivation
+escape_witness: Actual negative-residue normal products give the literal original
+Virasoro coefficients. Finite current contractions and cc antisymmetrization give
+both Ward identities; parity composition makes the difference an ordinary
+commutant. These facts identify the full original cubic before the zero-iterate
+identity supplies its signed derivation on all original homogeneous-state modes.
+admission_basis: escape-witness
+-/
+
 import D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate
 import D5.S3.Quantum.Fermionic.BcGhostBRST
 
@@ -13,7 +24,8 @@ import D5.S3.Quantum.Fermionic.BcGhostBRST
 ones. The current below is the raw cubic state, without an improvement term.
 All infinite-index sums in this module are statewise finite sums.
 
-This source has not been compiled. No native or independent acceptance is asserted.
+This module has passed the selected native Lean build. Independent review and
+official acceptance remain separate obligations.
 -/
 
 set_option autoImplicit false
@@ -455,8 +467,7 @@ private theorem c_nonneg_b (i : ℕ) :
   by_cases hi : i = 0
   · subst i
     norm_num [c, vacuum, annihilate_ket, phase, lowerCount]
-  · have site : 2 * ((i : ℤ) + 2 - 2).toNat ≠ 0 := by omega
-    simp [c, cut, annihilate_ket, hi, site]
+  · simp [c, cut, annihilate_ket, hi]
 
 private theorem c_high_b (q : ℤ) (hq : 2 ≤ q) :
     c q (ket {0}) = if q = 2 then vacuum else 0 := by
@@ -514,6 +525,7 @@ private theorem w_nonneg_b (i : ℕ) :
       norm_num only
       rw [db1, map_neg, dv, c_modes]
       norm_num [c, create_vacuum]
+      module
     · intro j hj
       simp [dc_nonneg_b, hj]
   by_cases ho : i = 1
@@ -558,8 +570,7 @@ private theorem b_nonneg_c (i : ℕ) :
   by_cases hi : i = 0
   · subst i
     norm_num [b, vacuum, annihilate_ket, phase, lowerCount, Finset.filter_singleton]
-  · have site : 2 * ((i : ℤ) - 1 + 1).toNat + 1 ≠ 1 := by omega
-    simp [b, cut, annihilate_ket, hi, site]
+  · simp [b, cut, annihilate_ket, hi]
 
 /- Both candidate Ward inputs are computed from the literal finite current.
 In particular neither the target Ward identities nor the target mode equality

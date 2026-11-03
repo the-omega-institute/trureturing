@@ -41,7 +41,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrArg (fun A : Module.End ℂ Fock => A vacuum ∅) (h 0)
-  change (1 : Module.End ℂ Fock) vacuum ∅ = _root_.D5.S3.Quantum.Fermionic.BcGhostVirasoro.L 0 vacuum ∅ at he
+  change (1 : Module.End ℂ Fock) vacuum ∅ =
+    _root_.D5.S3.Quantum.Fermionic.BcGhostVirasoro.L 0 vacuum ∅ at he
   rw [L_vacuum_nonneg 0 (by omega)] at he
   norm_num [vacuum, ket] at he
 private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () (-2) := by
@@ -121,8 +122,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   norm_num [rejected, realize, Jg, ket] at he
 private theorem actual_dependence : actual.readout () () vacuum ≠ actual.readout () () 0 := by
   intro h
+  change parity vacuum = parity 0 at h
+  rw [map_zero, show parity vacuum = vacuum by simp [vacuum, parity_ket]] at h
   have he := congrArg (fun a : Fock => a ∅) h
-  norm_num [actual, realize, vacuum, parity_ket, ket] at he
+  norm_num [vacuum, ket] at he
 
 def family : Registration arena (type_of% @current_odd) where
   actual := actual
@@ -182,7 +185,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrArg (fun A : Module.End ℂ Fock => A vacuum ∅) h
-  change (1 : Module.End ℂ Fock) vacuum ∅ = _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg vacuum ∅ at he
+  change (1 : Module.End ℂ Fock) vacuum ∅ =
+    _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg vacuum ∅ at he
   rw [_root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg_vacuum] at he
   norm_num [vacuum, ket] at he
 private theorem actual_dependence : actual.readout () () (-1) ≠ actual.readout () () 0 := by
@@ -241,7 +245,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun p _ a n => _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg * ((Y a) [[n]]) -
+  (fun _ p a n => _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg * ((Y a) [[n]]) -
     ((-1 : ℂ) ^ p) • (((Y a) [[n]]) * _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg))
   (fun e => nomatch e)
 def rejected : Realization signature := realize signature
@@ -249,24 +253,26 @@ def rejected : Realization signature := realize signature
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a : Fock) (p : ℕ), parity a = (-1 : ℂ) ^ p • a → ∀ n : ℤ,
-    R.readout p () a n = (Y (_root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg a)) [[n]]
+    R.readout () p a n = (Y (_root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg a)) [[n]]
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrArg (fun A : Module.End ℂ Fock => A vacuum ∅) (h 0 0 (by simp) 0)
   norm_num [rejected, realize, vacuum, ket] at he
-private theorem actual_dependence : actual.readout 1 () (ket {0}) ≠ actual.readout 1 () 0 := by
+private theorem actual_dependence : actual.readout () 1 (ket {0}) ≠ actual.readout () 1 0 := by
   intro h
   have qg : _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg (ket {0}) = Omega := by
     rw [← current_zero_mode]
     exact current_on_generators.1
-  have first : actual.readout 1 () (ket {0}) (-1) = (Y Omega) [[-1]] := by
+  have first : actual.readout () 1 (ket {0}) (-1) = (Y Omega) [[-1]] := by
     change _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg * ((Y (ket {0})) [[-1]]) -
       ((-1 : ℂ) ^ 1) • (((Y (ket {0})) [[-1]]) * _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg) = _
     rw [Qg_signed_derivation (ket {0}) 1 (by simp [parity_ket]) (-1), qg]
   have he := congrArg (fun A : ℤ → Module.End ℂ Fock => A (-1) vacuum {0,3}) h
-  change actual.readout 1 () (ket {0}) (-1) vacuum {0,3} = actual.readout 1 () 0 (-1) vacuum {0,3} at he
+  change actual.readout () 1 (ket {0}) (-1) vacuum {0,3} = actual.readout () 1 0 (-1) vacuum {0,3} at he
   rw [first, stateField_creation.2.1] at he
-  norm_num [actual, realize, Omega, ket] at he
+  have hz (z : ℂ) : (Finsupp.single ({1,2} : Finset ℕ) z) {0,3} = 0 :=
+    Finsupp.single_eq_of_ne (by decide)
+  norm_num [actual, realize, Omega, ket, hz] at he
 
 def family : Registration arena (type_of% @Qg_signed_derivation) where
   actual := actual
@@ -294,7 +300,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun p _ a n => _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg * ((Y a) [[n]]) - ((-1 : ℂ) ^ p) • (((Y a) [[n]]) * _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg)) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ p a n => _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg * ((Y a) [[n]]) -
+      ((-1 : ℂ) ^ p) • (((Y a) [[n]]) * _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
