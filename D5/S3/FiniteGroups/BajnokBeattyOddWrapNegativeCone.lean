@@ -97,7 +97,8 @@ private theorem left_binomial_dominates (p t : ℕ) (hp3 : 3 ≤ p) (ht2 : 2 ≤
     dsimp only [x]
     have hdiv := div_mul_cancel₀ (P+2*(i : ℝ)+1) hR.ne'
     dsimp only [R] at hdiv ⊢
-    rw [haR, hnR] at hdiv ⊢
+    rw [hnR] at hdiv
+    rw [haR, hnR]
     linear_combination -hdiv
   have hfactor (i : ℕ) (hi : i ∈ Finset.range p) :
       2*x i ≤ Real.log ((1+x i)/(1-x i)) := by
