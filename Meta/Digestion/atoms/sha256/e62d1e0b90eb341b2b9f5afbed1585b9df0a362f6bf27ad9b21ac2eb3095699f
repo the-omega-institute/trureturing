@@ -1,0 +1,28 @@
+**Definition 1.2 (Raw marginal and phase fibre).** For $1\le k\le N$ and $\psi\in\mathcal H_N$, define
+
+$$
+\rho_k(\psi)=\operatorname{Tr}_{k+1,\ldots,N}(|\psi\rangle\langle\psi|),
+\qquad
+[\rho_k(\psi)]_{u,v}=
+\sum_{b\in\{0,1\}^{N-k}}\psi_{ub}\,\overline{\psi_{vb}},
+\quad u,v\in\{0,1\}^k.
+$$
+
+The empty complement at $k=N$ gives $\rho_N(\psi)=|\psi\rangle\langle\psi|$. In particular,
+
+$$
+\operatorname{tr}\rho_k(\psi)=\|\psi\|^2,
+\qquad
+\rho_k(c\psi)=|c|^2\rho_k(\psi).
+$$
+
+For nonzero $\psi\in P_N$, its actual-model fibre is
+
+$$
+\mathcal F_{N,k}(\psi)=\{\phi\in P_N:\rho_k(\phi)=\rho_k(\psi)\},
+\qquad
+S^1\psi=\{c\psi:c\in\mathbb C,\ |c|=1\}.
+$$
+
+No norm division occurs in $\rho_k$. This is the raw map displayed after Conjecture 10 of Critch–Morton. One may instead restrict both target and competitor to unit norm; that is an additional domain restriction. Dividing the output by $\|\psi\|^2$ on the unrestricted nonzero cone defines a different map, invariant under every $c\in\mathbb C^*$, whose fibres therefore cannot be $S^1$-orbits. For a cyclically invariant state, every adjacent $k$-site block, including a block crossing the chosen site origin, has the same $\rho_k$ after identification in cyclic order.
+
