@@ -159,7 +159,10 @@ private theorem entropy_row {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
       entropy G (S.map Function.Embedding.inr) := by
   classical
   let A := S.map (Function.Embedding.inr : Fin n ↪ Fin k ⊕ Fin n)
-  have hi (q : Fin k) : Sum.inl q ∉ A := by simp only [A, Finset.mem_map]; tauto
+  have hi (q : Fin k) : Sum.inl q ∉ A := by
+    exact Finset.disjoint_left.mp
+      (Finset.disjoint_map_inl_map_inr Finset.univ S)
+      (Finset.mem_map.mpr ⟨_, Finset.mem_univ _, rfl⟩)
   let ci : {x // x ∉ A} := ⟨Sum.inl i, hi i⟩
   let cj : {x // x ∉ A} := ⟨Sum.inl j, hi j⟩
   have hne : cj ≠ ci := fun h => hij (Sum.inl.inj (congrArg Subtype.val h)).symm
@@ -291,7 +294,10 @@ private theorem bipartite_profile {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n)
       exact ⟨⟨a, ha⟩, Subtype.ext hx⟩⟩
   let M := (cut G A).submatrix r (Equiv.refl _)
   let D := (biadjacency G).submatrix id (fun a : S => (a : Fin n))
-  have hi (i : Fin k) : Sum.inl i ∉ A := by simp only [A, Finset.mem_map]; tauto
+  have hi (i : Fin k) : Sum.inl i ∉ A := by
+    exact Finset.disjoint_left.mp
+      (Finset.disjoint_map_inl_map_inr Finset.univ S)
+      (Finset.mem_map.mpr ⟨_, Finset.mem_univ _, rfl⟩)
   have hc (i : Fin k) : M.col ⟨Sum.inl i, hi i⟩ = D.transpose.col i := by
     funext a
     change (if G.Adj (Sum.inr a.1) (Sum.inl i) then (1 : ZMod 2) else 0) =
@@ -413,9 +419,8 @@ private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
     rw [← Nat.card_congr eS, Nat.card_eq_fintype_card, Fintype.card_subtype]
     have hf : Finset.univ.filter (fun T => D *ᵥ b T = 0 ∧ T ⊆ S) =
         S.powerset.filter (fun T => D *ᵥ b T = 0) := by
-      ext T
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_powerset,
-        and_comm]
+      rw [← Finset.filter_univ_mem S.powerset, Finset.filter_filter]
+      simp only [Finset.mem_powerset, and_comm]
     rw [hf, Finset.sum_boole]
     rfl
   let f : Matrix (Fin k) (Fin n) (ZMod 2) → Finset (Fin n) → ℝ :=
