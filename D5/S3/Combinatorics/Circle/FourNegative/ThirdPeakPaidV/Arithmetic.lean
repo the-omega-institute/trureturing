@@ -6,6 +6,7 @@
    utility: none
    digest: Exact quotient and all endpoint windows for paid low V and one W tail. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
+import Mathlib.Data.Int.DivMod
 
 /-! Exact unbounded arithmetic for the physical paid-V construction.
 The integer hypotheses below are derived from the original exponent inequalities
