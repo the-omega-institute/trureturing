@@ -157,14 +157,14 @@ private theorem moderate_high_positive (a b c h : ℕ)
       i ∈ stock a b c a 1 (full a b c a 1) := by
     obtain ⟨e,he,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
     rw [stock,full,chamberLabels_full]
-    simp only [chainLength,chainStart,Matrix.cons_val_one,Matrix.head_cons,Matrix.tail_cons]
+    simp only [chainLength,chainStart,Matrix.cons_val_one,Matrix.cons_val_zero,Matrix.head_cons,Matrix.tail_cons]
     apply List.mem_range'_1.mpr
     omega
   have inLo (i : ℕ) (hi : i ∈ lowV c a) :
       i ∈ stock a b c a 1 (full a b c a 1) := by
     obtain ⟨e,he,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
     rw [stock,full,chamberLabels_full]
-    simp only [chainLength,chainStart,Matrix.cons_val_one,Matrix.head_cons,Matrix.tail_cons]
+    simp only [chainLength,chainStart,Matrix.cons_val_one,Matrix.cons_val_zero,Matrix.head_cons,Matrix.tail_cons]
     apply List.mem_range'_1.mpr
     omega
   fin_cases j <;> dsimp [moderateHighBanks,highComplement] at hi
@@ -198,7 +198,7 @@ private theorem moderate_high_masses (a b c h : ℕ) (ha : 2 ≤ a) (hca : a ≤
   have mLo : ((lowV c a).map f).sum=((2:ℤ)^(c-a)-1)*H 1 := by
     have hm : 2^(c-a)-1 < 2^(c-a) := by have := Nat.two_pow_pos (c-a); omega
     have hx := chamberLabels_sum (c-a) a (2^(c-a)-1) hm f (H 1)
-      (fun e he => by simpa only [chainStart,Matrix.cons_val_one,Matrix.head_cons,Matrix.tail_cons] using hf 1 e (by simp [chainLength]; omega))
+      (fun e he => by simpa only [chainStart,Matrix.cons_val_one,Matrix.cons_val_zero,Matrix.head_cons,Matrix.tail_cons] using hf 1 e (by simp [chainLength]; omega))
     simpa only [lowV,Nat.cast_sub (show 1 ≤ 2^(c-a) by have := Nat.two_pow_pos (c-a); omega),
       Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one] using hx
   dsimp only [moderateHighBanks]
