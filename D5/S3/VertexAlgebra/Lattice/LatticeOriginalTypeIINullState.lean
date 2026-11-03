@@ -6,14 +6,20 @@
    utility: none
    digest: Original Type II physical null state and finite Fock coefficient obstruction. -/
 
-/-
-NATIVE WIP: compilation did not start because the canonical donor cache guard
-was exclusively held. All proof terms below are unverified candidate source.
-No statement in this file has a successful current native check from this attempt.
 
+import D5.S3.VertexAlgebra.LatticeSugawaraConformal
+import D5.S3.VertexAlgebra.SourceBPZ.OriginalMatterHermitian
+import Mathlib.Tactic.Module
+import D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
+import Batteries.Tactic.OpenPrivate
+
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
+/-!
 The Type II formula is classical; the new formal endpoint concerns the literal
 original carrier and its finite oscillator coefficients. No novelty in physics
-or completion of BRST comparison is claimed.
+or completion of the full string-theory goal is claimed.
 
 admission_basis: escape-witness
 The endpoint itself is produced by the actual coefficient calculation: ell(S)
@@ -47,12 +53,6 @@ charges, inverse matrices and finite oscillator polynomials, not a certified
 finite instance or bounded enumeration.
 -/
 
-import D5.S3.VertexAlgebra.LatticeSugawaraConformal
-import D5.S3.VertexAlgebra.SourceBPZ.OriginalMatterHermitian
-import Mathlib.Tactic.Module
-
-set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.LatticeOriginalTypeIINullState
 
@@ -426,6 +426,293 @@ theorem original_typeII_null_obstruction (D : LatticeData)
     norm_num [hw 2 (by omega), hw 1 (by omega)]
   · rintro ⟨u,hu,htu⟩
     exact hnot u (hu.2 1 (by omega)) htu
+
+open scoped TensorProduct
+open LatticeMatterGhostCoupling LatticeBRST LatticeRelativeMassShell
+open D5.S3.Quantum.Fermionic
+open CountableOccupationFock
+open BcGhostFock
+open private c_swap from D5.S3.Quantum.Fermionic.BcGhostCubic
+open private coeff_zero from D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
+open private number_ket from D5.S3.Quantum.Fermionic.BcGhostCharge
+open private L_vacuum from D5.S3.Quantum.Fermionic.BcGhostVirasoro
+
+private theorem ghost_R_one_vacuum : BcGhostBRST.R 1 vacuum = ket {1,3} := by
+  classical
+  change (∑ᶠ j : ℤ, BcGhostBRST.rTerm 1 j vacuum) = _
+  have ht (j : ℤ) (hj : j ∉ ({0,1} : Finset ℤ)) :
+      BcGhostBRST.rTerm 1 j vacuum = 0 := by
+    have hj01 : j ≠ 0 ∧ j ≠ 1 := by simpa using hj
+    obtain ⟨hj0,hj1⟩ := hj01
+    by_cases hjp : 2 ≤ j
+    · rw [BcGhostBRST.rTerm, c_swap j (1-j)]
+      simp [Module.End.mul_apply, ghost_vacuum.2.1 j hjp]
+    · have hq : 2 ≤ 1-j := by omega
+      simp [BcGhostBRST.rTerm, Module.End.mul_apply, ghost_vacuum.2.1 (1-j) hq]
+  rw [finsum_eq_sum_of_support_subset _ (s := ({0,1} : Finset ℤ)) (by
+    intro j hj
+    by_contra hn
+    exact hj (ht j hn))]
+  norm_num [BcGhostBRST.rTerm, Module.End.mul_apply, c, vacuum, create_ket,
+    phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.insert_comm, Finset.pair_comm, smul_smul]
+  module
+
+private theorem ghost_Q_down : BcGhostBRST.Qg (ket {1}) = ket {1,3} := by
+  have h := LinearMap.congr_fun (BcGhostBRST.ward_c 1) vacuum
+  simpa only [LinearMap.add_apply, Module.End.mul_apply, ghost_vacuum.2.2.1,
+    BcGhostBRST.Qg_vacuum, map_zero, add_zero, ghost_R_one_vacuum] using h
+
+private theorem ghost_L_minus_two_down :
+    BcGhostVirasoro.L (-2) (ket {1}) =
+      (2 : ℂ) • ket {0,1,3} + (3 : ℂ) • ket {5} := by
+  have h := LinearMap.congr_fun (BcGhostVirasoro.ward_c (-2) 1) vacuum
+  have hv : BcGhostVirasoro.L (-2) vacuum =
+      (-2 : ℂ) • ket {0,3} + ket {1,2} := by
+    rw [L_vacuum]
+    have hi : Finset.Icc (0 : ℤ) 1 = {0,1} := by decide
+    norm_num [hi, b, c, vacuum, create_ket,
+      phase, lowerCount, Finset.filter_insert, Finset.filter_singleton,
+      Finset.insert_comm, Finset.pair_comm, map_smul, smul_smul]
+    module
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, ghost_vacuum.2.2.1,
+    LinearMap.smul_apply] at h
+  rw [hv] at h
+  norm_num [b, c, vacuum, create_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.insert_comm, Finset.pair_comm, map_sub, map_smul,
+    smul_smul] at h
+  rw [show ({1,3,0} : Finset ℕ) = {0,1,3} by decide] at h
+  have h' : BcGhostVirasoro.L (-2) (ket {1}) -
+      (2 : ℂ) • ket {0,1,3} = (3 : ℂ) • ket {5} := h
+  exact (sub_eq_iff_eq_add.mp h').trans (by module)
+
+private theorem charge_on_vacuum (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (x : Carrier D)
+    (hx : ∀ n : ℤ, 1 < n → sugawaraMode D H n x = 0) :
+    totalCharge D H (x ⊗ₜ[ℂ] vacuum) =
+      sugawaraMode D H (-1) x ⊗ₜ[ℂ] ket {1} +
+      sugawaraMode D H 0 x ⊗ₜ[ℂ] ket {3} +
+      sugawaraMode D H 1 x ⊗ₜ[ℂ] ket {5} := by
+  classical
+  have hs : Function.support (fun m : ℤ =>
+      summand D H m (x ⊗ₜ[ℂ] vacuum)) ⊆ (({-1,0,1} : Finset ℤ) : Set ℤ) := by
+    intro m hm
+    by_contra hn
+    have hmneq : m ≠ -1 ∧ m ≠ 0 ∧ m ≠ 1 := by simpa using hn
+    obtain ⟨hm1,hm0,hmone⟩ := hmneq
+    by_cases hlo : m < -1
+    · exact hm (by simp [summand, ghost_vacuum.2.1 (-m) (by omega)])
+    · exact hm (by simp [summand, hx m (by omega)])
+  rw [totalCharge, LinearMap.add_apply, finite_capture D H _ _ hs]
+  simp only [ghostCharge, TensorProduct.map_tmul, LinearMap.id_apply,
+    BcGhostBRST.Qg_vacuum, TensorProduct.tmul_zero, add_zero]
+  norm_num [summand, c, vacuum, create_ket, phase, lowerCount, add_assoc]
+
+private theorem charge_on_primary_down (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (x : Carrier D) (h : ℂ)
+    (h0 : sugawaraMode D H 0 x = h • x)
+    (hx : ∀ n : ℤ, 0 < n → sugawaraMode D H n x = 0) :
+    totalCharge D H (x ⊗ₜ[ℂ] ket {1}) =
+      (1-h) • (x ⊗ₜ[ℂ] ket {1,3}) := by
+  classical
+  have hs : Function.support (fun m : ℤ =>
+      summand D H m (x ⊗ₜ[ℂ] ket {1})) ⊆ (({0} : Finset ℤ) : Set ℤ) := by
+    intro m hm
+    by_contra hn
+    have hm0 : m ≠ 0 := by simpa using hn
+    by_cases hp : 0 < m
+    · exact hm (by simp [summand, hx m hp])
+    · have hmle : m ≤ -1 := by omega
+      by_cases he : m = -1
+      · subst m
+        exact hm (by norm_num [summand, c, create_ket])
+      · have hc : ¬ -m ≤ 1 := by omega
+        have hj : 2 * (-m-2).toNat ≠ 1 := by omega
+        exact hm (by simp [summand, c, hc, annihilate_ket, hj])
+  rw [totalCharge, LinearMap.add_apply, finite_capture D H _ _ hs]
+  simp only [Finset.sum_singleton, summand, TensorProduct.map_tmul, neg_zero,
+    h0, ghostCharge, LinearMap.id_apply, ghost_Q_down]
+  norm_num [c, create_ket, phase, lowerCount, Finset.filter_singleton,
+    Finset.pair_comm]
+  simp only [← TensorProduct.smul_tmul', TensorProduct.tmul_smul,
+    TensorProduct.tmul_neg, TensorProduct.neg_tmul]
+  module
+
+/-- The literal relative ghost-number-zero primitive for the same Type II state. -/
+def typeIIPrimitive (D : LatticeData) (p : Charge D) : State D :=
+  (3/2 : ℂ) • (translation D (Finsupp.single p 1) ⊗ₜ[ℂ] vacuum) +
+    Finsupp.single p 1 ⊗ₜ[ℂ] ket {0,1}
+
+private theorem ground_translation_modes (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (p : Charge D) (hp : bilinear D p p = -2) :
+    let v : Carrier D := Finsupp.single p 1
+    sugawaraMode D H 0 v = (-1 : ℂ) • v ∧
+    sugawaraMode D H 0 (translation D v) = 0 ∧
+    sugawaraMode D H 1 (translation D v) = (-2 : ℂ) • v ∧
+    ∀ n : ℤ, 1 < n → sugawaraMode D H n (translation D v) = 0 := by
+  let v : Carrier D := Finsupp.single p 1
+  have hv : sugawaraMode D H 0 v = (-1 : ℂ) • v := by
+    dsimp [v]
+    rw [sugawaraMode_ground_zero, chargeQuadratic_eq D H hHG hGH, hp]
+    norm_num
+  have hc (m : ℤ) :
+      sugawaraMode D H m (sugawaraMode D H (-1) v) =
+        sugawaraMode D H (-1) (sugawaraMode D H m v) +
+        ((m+1 : ℤ) : ℂ) • sugawaraMode D H (m-1) v +
+        (if m-1 = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) • v := by
+    have h := LinearMap.congr_fun (sugawaraMode_virasoro D H hHG hGH m (-1)) v
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.add_apply,
+      LinearMap.smul_apply, Module.End.one_apply, sub_neg_eq_add,
+      ] at h
+    rw [show m + -1 = m - 1 by omega] at h
+    exact (sub_eq_iff_eq_add.mp h).trans (by module)
+  have ht := sugawaraMode_minus_one_eq_translation D H hHG hGH
+  refine ⟨hv, ?_, ?_, ?_⟩
+  · rw [← ht, hc, hv]
+    norm_num
+  · rw [← ht, hc, sugawaraMode_ground_positive D H p 1 (by omega)]
+    norm_num [hv, v]
+  · intro n hn
+    rw [← ht, hc, sugawaraMode_ground_positive D H p n (by omega),
+      sugawaraMode_ground_positive D H p (n-1) (by omega)]
+    simp [show n-1 ≠ 0 by omega]
+
+private theorem primitive_charge (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (p : Charge D) (hp : bilinear D p p = -2) :
+    totalCharge D H (typeIIPrimitive D p) = typeII D H p ⊗ₜ[ℂ] ket {1} := by
+  let v : Carrier D := Finsupp.single p 1
+  obtain ⟨hv, ht0, ht1, hthigh⟩ := ground_translation_modes D H hHG hGH p hp
+  have hqv := charge_on_primary_down D H v (-1) hv
+    (fun n hn => sugawaraMode_ground_positive D H p n hn)
+  have hqt : totalCharge D H (translation D v ⊗ₜ[ℂ] vacuum) =
+      translation D (translation D v) ⊗ₜ[ℂ] ket {1} -
+        (2 : ℂ) • (v ⊗ₜ[ℂ] ket {5}) := by
+    rw [charge_on_vacuum D H _ hthigh, ht0, ht1,
+      sugawaraMode_minus_one_eq_translation D H hHG hGH]
+    simp only [TensorProduct.zero_tmul, add_zero, ← TensorProduct.smul_tmul']
+    module
+  have hb1 : b (-2) (ket {1}) = ket {0,1} := by
+    norm_num [b, create_ket, phase, lowerCount]
+  have hb13 : b (-2) (ket {1,3}) = ket {0,1,3} := by
+    norm_num [b, create_ket, phase, lowerCount]
+  have hw := LinearMap.congr_fun (total_ward_b D H (-2)) (v ⊗ₜ[ℂ] ket {1})
+  simp only [LinearMap.add_apply, Module.End.mul_apply, ghostB, matterMode,
+    ghostVirasoro, TensorProduct.map_tmul, LinearMap.id_apply, hb1,
+    ghost_L_minus_two_down] at hw
+  rw [hqv] at hw
+  norm_num only [sub_neg_eq_add, one_add_one_eq_two] at hw
+  simp only [map_smul, TensorProduct.map_tmul, LinearMap.id_apply, hb13,
+    TensorProduct.tmul_add, TensorProduct.tmul_smul] at hw
+  have hqb : totalCharge D H (v ⊗ₜ[ℂ] ket {0,1}) =
+      sugawaraMode D H (-2) v ⊗ₜ[ℂ] ket {1} +
+        (3 : ℂ) • (v ⊗ₜ[ℂ] ket {5}) := by
+    calc
+      _ = (totalCharge D H (v ⊗ₜ[ℂ] ket {0,1}) +
+          (2 : ℂ) • (v ⊗ₜ[ℂ] ket {0,1,3})) -
+          (2 : ℂ) • (v ⊗ₜ[ℂ] ket {0,1,3}) := by abel
+      _ = _ := by rw [hw]; module
+  rw [typeIIPrimitive, map_add, map_smul, hqt, hqb, typeII]
+  simp only [TensorProduct.add_tmul, ← TensorProduct.smul_tmul']
+  module
+
+private theorem single_tensor_fixed (D : LatticeData) (p : Charge D)
+    (P : Oscillator D) (g : Fock) :
+    Finsupp.single p P ⊗ₜ[ℂ] g ∈ fixedMomentum D p := by
+  apply (mem_fixedMomentum_iff D p _).mpr
+  rintro ⟨⟨q,e⟩,S⟩ hq
+  rw [coeff_tmul_original]
+  simp [Ne.symm hq]
+
+private theorem primitive_relative (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (p : Charge D) (hp : bilinear D p p = -2) :
+    typeIIPrimitive D p ∈ relativeMassShell D H p ∧
+    TensorProduct.map (LinearMap.id : Module.End ℂ (Carrier D))
+      BcGhostCharge.ghostNumber (typeIIPrimitive D p) = 0 := by
+  obtain ⟨hv, ht0, ht1, hthigh⟩ := ground_translation_modes D H hHG hGH p hp
+  have hfix : typeIIPrimitive D p ∈ fixedMomentum D p := by
+    apply (fixedMomentum D p).add_mem
+    · apply (fixedMomentum D p).smul_mem
+      rw [translation_single]
+      exact single_tensor_fixed D p _ _
+    · exact single_tensor_fixed D p _ _
+  have hb : ghostB D 0 (typeIIPrimitive D p) = 0 := by
+    norm_num [typeIIPrimitive, ghostB, TensorProduct.map_tmul, b, vacuum,
+      annihilate_ket, map_add, map_smul]
+  have hg0 : BcGhostVirasoro.L 0 vacuum = 0 := by
+    rw [vacuum, BcGhostRelativeEnergy.L_zero_ket]
+    simp [BcGhostRelativeEnergy.energy]
+  have hg01 : BcGhostVirasoro.L 0 (ket {0,1}) = ket {0,1} := by
+    rw [BcGhostRelativeEnergy.L_zero_ket]
+    norm_num [BcGhostRelativeEnergy.energy, BcGhostRelativeEnergy.siteEnergy,
+      BcGhostCharge.siteMode, BcGhostCharge.siteSign]
+  have hl : totalL0 D H (typeIIPrimitive D p) = 0 := by
+    simp only [typeIIPrimitive, map_add, map_smul, totalL0, LinearMap.add_apply,
+      matterMode, ghostVirasoro, TensorProduct.map_tmul, LinearMap.id_apply,
+      hv, ht0, hg0, hg01, TensorProduct.zero_tmul, TensorProduct.tmul_zero,
+      ← TensorProduct.smul_tmul']
+    module
+  refine ⟨⟨⟨hfix,hb⟩,hl⟩, ?_⟩
+  norm_num [typeIIPrimitive, TensorProduct.map_tmul, number_ket,
+    BcGhostCharge.charge, vacuum, map_add, map_smul, Finset.filter_insert,
+    Finset.filter_singleton]
+
+/-- An explicit relative primitive for the literal nontranslation Type II state,
+with the original, unshifted ghost numbers and zero mode on both sides. -/
+theorem original_typeII_relative_boundary (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hr : D.rank = 26) (p : Charge D) (hp : bilinear D p p = -2) :
+    totalCharge D H (typeIIPrimitive D p) = typeII D H p ⊗ₜ[ℂ] ket {1} ∧
+    typeIIPrimitive D p ∈ relativeMassShell D H p ∧
+    TensorProduct.map (LinearMap.id : Module.End ℂ (Carrier D))
+      BcGhostCharge.ghostNumber (typeIIPrimitive D p) = 0 ∧
+    typeII D H p ⊗ₜ[ℂ] ket {1} ∈ relativeMassShell D H p ∧
+    TensorProduct.map (LinearMap.id : Module.End ℂ (Carrier D))
+      BcGhostCharge.ghostNumber (typeII D H p ⊗ₜ[ℂ] ket {1}) =
+      typeII D H p ⊗ₜ[ℂ] ket {1} ∧
+    totalCharge D H (typeII D H p ⊗ₜ[ℂ] ket {1}) = 0 ∧
+    typeII D H p ⊗ₜ[ℂ] ket {1} ≠ 0 := by
+  classical
+  obtain ⟨h0,hpos,horth,hne,hnot,hnotP0⟩ :=
+    original_typeII_null_obstruction D H hHG hGH hr p hp
+  obtain ⟨hu,hnum⟩ := primitive_relative D H hHG hGH p hp
+  have hfix : typeII D H p ⊗ₜ[ℂ] ket {1} ∈ fixedMomentum D p := by
+    apply (mem_fixedMomentum_iff D p _).mpr
+    rintro ⟨⟨q,e⟩,S⟩ hq
+    rw [coeff_tmul_original]
+    simp [typeII, sugawaraMode_single_sector, translation_single, Ne.symm hq]
+  have hb : ghostB D 0 (typeII D H p ⊗ₜ[ℂ] ket {1}) = 0 := by
+    simp [ghostB, TensorProduct.map_tmul, BcGhostRelativeEnergy.b_zero_down]
+  have hg : BcGhostVirasoro.L 0 (ket {1}) = -(ket {1}) := by
+    simpa only [ghost_vacuum.2.2.1] using BcGhostRelativeEnergy.L_zero_down
+  have hl : totalL0 D H (typeII D H p ⊗ₜ[ℂ] ket {1}) = 0 := by
+    simp [totalL0, matterMode, ghostVirasoro, TensorProduct.map_tmul, h0, hg, TensorProduct.tmul_neg]
+  have hnumout : TensorProduct.map (LinearMap.id : Module.End ℂ (Carrier D))
+      BcGhostCharge.ghostNumber (typeII D H p ⊗ₜ[ℂ] ket {1}) =
+      typeII D H p ⊗ₜ[ℂ] ket {1} := by
+    norm_num [TensorProduct.map_tmul, number_ket, BcGhostCharge.charge,
+      Finset.filter_singleton]
+  have hcycle : totalCharge D H (typeII D H p ⊗ₜ[ℂ] ket {1}) = 0 := by
+    rw [charge_on_primary_down D H _ 1 (by simpa using h0) hpos]
+    simp
+  have hnonzero : typeII D H p ⊗ₜ[ℂ] ket {1} ≠ 0 := by
+    intro hz
+    apply hne
+    apply Finsupp.ext
+    intro q
+    apply MvPolynomial.ext
+    intro e
+    have hc := congrArg (fun x : State D =>
+      LatticeRelativeMassShell.coeff D x ((q,e),{1})) hz
+    rw [coeff_tmul_original, coeff_zero] at hc
+    simpa only [ket, Finsupp.single_eq_same, mul_one, Finsupp.zero_apply,
+      MvPolynomial.coeff_zero] using hc
+  exact ⟨primitive_charge D H hHG hGH p hp, hu, hnum, ⟨⟨hfix,hb⟩,hl⟩,
+    hnumout, hcycle, hnonzero⟩
 
 end
 end D5.S3.VertexAlgebra.LatticeOriginalTypeIINullState
