@@ -8,6 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Selection
 import Batteries.Tactic.OpenPrivate
 
+set_option maxErrors 1
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail

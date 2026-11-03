@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 import Batteries.Tactic.OpenPrivate
 
+set_option maxErrors 1
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
@@ -73,7 +74,7 @@ private theorem physical_strips (a b c d v m : ℕ)
   have masses := bank_masses a b c d v m ha hb hc hd hv hm
   have mo := masses false
   have mg := masses true
-  dsimp only [Bool.false_eq_true,ite_false,ite_true] at mo mg
+  simp only [Bool.false_eq_true,ite_false,ite_true] at mo mg
   change ((P 0).map f).sum=C 0*AA ∧
     ((P 1).map f).sum=C 3*KK+(m:ℤ)*LL+(v:ℤ)*BB ∧
     ((P 2).map f).sum=C 2*LL-(m:ℤ)*LL ∧
