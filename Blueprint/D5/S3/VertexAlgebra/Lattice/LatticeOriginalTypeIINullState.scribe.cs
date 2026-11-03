@@ -9,6 +9,7 @@ internal sealed class LatticeOriginalTypeIINullStateDocument : IScribeDocumentDe
         "The original Type II physical null state and its actual finite oscillator coefficient obstruction.",
         H("Original Type II null state outside primary translations"),
         Blocks(
+            Paragraph(Text("NATIVE WIP: the canonical donor cache guard prevented compilation. The mathematical statements and proof account below describe unverified candidate source, not current kernel-checked results. The owning emit has not run.")),
             Paragraph(Text("The lattice data are arbitrary of rank 26. The actual complex matrix H satisfies both H Gc=1 and Gc H=1; the integral charge p is assumed, rather than asserted to exist, and has B(p,p)=-2. All operators act on the existing finite-charge oscillator carrier. No positivity, signature, unimodularity, transverse frame or BRST comparison hypothesis is supplied.")),
             Describe.Lean(DescribeId.Create("original-typeii-state"),
                 DeclarationHandle.Create(Prefix + "typeII"),

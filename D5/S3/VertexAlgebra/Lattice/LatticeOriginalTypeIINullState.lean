@@ -7,6 +7,10 @@
    digest: Original Type II physical null state and finite Fock coefficient obstruction. -/
 
 /-
+NATIVE WIP: compilation did not start because the canonical donor cache guard
+was exclusively held. All proof terms below are unverified candidate source.
+No statement in this file has a successful current native check from this attempt.
+
 The Type II formula is classical; the new formal endpoint concerns the literal
 original carrier and its finite oscillator coefficients. No novelty in physics
 or completion of BRST comparison is claimed.
