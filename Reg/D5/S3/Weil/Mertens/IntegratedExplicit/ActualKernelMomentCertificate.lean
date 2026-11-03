@@ -133,54 +133,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end SignedExpression
 
 
-namespace Asymptotic
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
-def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
-private def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-def arena : Arena where
-  signature := signature
-  Law R := ∀ p : PNTConstants,
-    Filter.Tendsto (fun D : ℝ => R.readout () ()
-      (Real.log ((order p D : ℝ) / D) / M D)) Filter.atTop (𝓝 1)
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have h0 := h pnt
-  change Filter.Tendsto (fun _ : ℝ => (0 : ℝ)) Filter.atTop (𝓝 1) at h0
-  have hn : (0 : ℝ) = 1 := tendsto_nhds_unique tendsto_const_nhds h0
-  norm_num at hn
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
-def family : Registration arena (type_of% @original_order_leading_one_asymptotic) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@original_order_leading_one_asymptotic, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
-  dependence := dependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@original_order_leading_one_asymptotic) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.original_order_leading_one_asymptotic.audit
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.Asymptotic.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end Asymptotic
+
 
 
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate

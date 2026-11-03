@@ -21,17 +21,5 @@ internal sealed class ActualMomentOrderArithmeticDocument : IScribeDocumentDefin
                         + "the Euler and endpoint constants with the retained one fifth margin. The "
                         + "definition keeps the original max, ceiling, inclusive moment degree, and "
                         + "all degenerate finite families."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("leading-one"),
-                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualMomentOrderArithmetic.leading_one"),
-                H("Original leading-one order asymptotic"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For positive alpha and C at least one, the original order satisfies "
-                        + "log(N/D)/exp(D/2) tending to one as D tends to infinity. The proof "
-                        + "retains the original beta, ceiling squeeze, and both decaying exponential "
-                        + "terms without asserting a sublinear order or an RH endpoint."))),
                 DescribeRole.Theorem))));
 }

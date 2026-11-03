@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Full actual-K endpoint certificate, finite signed expression, and leading-one asymptotic. -/
+   digest: Full actual-K endpoint certificate and finite signed expression. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentPayments
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualMomentOrderArithmetic
@@ -101,11 +101,5 @@ theorem actual_signed_expression_compensation (D : ℝ) (hD : 0 < D)
   dsimp only [signedJExpression, d0] at *
   linarith only [hK, hR, hV, hsplit]
 
-
-/-- Leading coefficient one for exactly the original ceiling/max formula.
-This limit does not assert a sublinear moment order or an RH endpoint. -/
-theorem original_order_leading_one_asymptotic (p : PNTConstants) :
-    Tendsto (fun D : ℝ => Real.log ((order p D : ℝ) / D) / M D) atTop (𝓝 1) := by
-  exact ActualKScalarSource.leading_one p.C p.alpha p.one_le_C p.alpha_pos
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
