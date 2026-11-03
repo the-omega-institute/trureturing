@@ -2946,3 +2946,580 @@ questions. Those obligations
 remain in force together with (43.26).
 
 ## 追加锚（本行以下为增补区）
+
+## 45. Strict fixed-feedback purification and global purity through thirteen-fourths
+
+**Definition 45.1 (pure levels and the unchanged effect arcs).** Retain
+exactly the original domain $\mathcal K=\operatorname{Dens}_2\times U(4)$,
+the ordinary transpose, the joint Frobenius distance (39.1), its two
+optimizer signs, and its one common scalar quotient. Keep $g$, $f=g-\kappa\rho$,
+$N=N_{\mathrm{geo}}$, $V=N+\kappa\xi$, $\mathcal G_\xi$, and the original
+and phase minimizing sets of Definitions 39.1 and 42.1. Put
+
+$$
+\begin{aligned}
+ R&=13/4,& c_0&=e^2/4,\\
+ \mathcal K_{\mathrm p}&=\{(E,U)\in\mathcal K:\operatorname{rank}E=1\},\\
+ \mathcal L_{\mathrm p,\xi}
+   &=\{X\in\mathcal K_{\mathrm p}:\rho(X)=\xi\},&
+ \mathcal P_{\mathrm p,\xi}
+   &=\mathcal P_\xi\cap\mathcal K_{\mathrm p},\\
+ m_{\mathrm p}(\xi)&=\min_{X\in\mathcal L_{\mathrm p,\xi}}f(X),&
+ m_{\mathrm{ph,p}}(\xi)&=\min_{X\in\mathcal P_{\mathrm p,\xi}}f(X).
+\end{aligned}
+\tag{45.1}
+$$
+
+Write $\mathcal A_{\mathrm p,\xi}$ and $\mathcal A_{\mathrm{ph,p},\xi}$
+for the respective minimizing sets. For $0<\xi\le R$ these pure levels
+are nonempty because they contain $\mathcal G_\xi$. They are compact:
+the rank-one condition on a normalized positive two-by-two effect is
+$\epsilon(E)=1-\operatorname{Tr}(E^2)=0$, a closed condition. Their
+minima are therefore attained, as are the full original and phase
+minima in Theorem 35.2 and Definition 42.1.
+
+For an actual $U$, all of $w,A,B,P,Q,u,v,\Delta_\pm,S_\pm,t_\sigma,
+J_\sigma,b_\sigma,I_\sigma,Q_\sigma$ retain exactly the definitions
+(23.2) and (36.1)--(36.3). Here $v=|Q|$ and $Q_\sigma$ is a real arc
+endpoint, distinct from the complex amplitude $Q$. For an admissible
+sign define its full effect arc by
+
+$$
+ \mathfrak E_\sigma(U,\xi)=
+ \left\{\bigl(TF_\sigma(q,z)T^\dagger\bigr)^{\mathsf T}:
+       q\in I_\sigma,\quad |z|^2=t_\sigma-q^2\right\},
+\tag{45.2}
+$$
+
+where $F_\pm(q,z)$ are exactly the two matrices in (36.7). No coherence
+phase condition is imposed in (45.2). Equations (36.10)--(36.13) say
+that this is precisely the nonempty compact set of original effects
+at level $\xi$ for which $\sigma$ attains the original joint distance.
+Every point on it has
+
+$$
+ \epsilon(E)=2(q-t_\sigma),\qquad
+ t_\sigma\le q\le\min\{\sqrt{t_\sigma},J_\sigma\}.
+\tag{45.3}
+$$
+
+In particular its pure effects have exactly $q=t_\sigma$; a mixed
+point has $0<t_\sigma<q<1$. The quantities in this arc always come
+from the one fixed whole feedback $U$.
+
+**Lemma 45.2 (crossed-amplitude defect floor at an active sign).** Let
+$U\in U(4)$ be actual, let $0<\xi\le R$, and let $\sigma$ be admissible
+for its level arc. Then
+
+$$
+                       \Delta_{-\sigma}>c_0.
+\tag{45.4}
+$$
+
+The bound applies to arbitrary actual unitary lifts, including zero
+amplitudes and repeated feedback eigenvalues.
+
+*Proof.* Choose any effect in (45.2). The minimizing sign is unique
+by Theorem 42.3. Set $x_i=(UU_\sigma^\dagger)_{ii}$,
+$S=|\sum_i x_i|=S_\sigma$, and $\mu=\frac14\sum_i x_i$.
+Nonnegativity of the effect-distance summand in (39.1) gives
+$8-2S\le\xi$, so $S\ge19/8$. Unitarity gives $|x_i|\le1$ and hence
+
+$$
+ \sum_{i=1}^4|x_i-\mu|^2
+   =\sum_{i=1}^4|x_i|^2-\frac{S^2}{4}
+   \le4-\frac{S^2}{4}
+   \le\frac{663}{256}<\frac{13}{5}.
+\tag{45.5}
+$$
+
+The arithmetic mean $\mu$ is only used to center this vector; it is
+not a new feedback phase or an additional quotient.
+For the positive sign, $x=w$. For the negative sign, the fixed
+identity $U_-U_+^\dagger=\operatorname{diag}(1,-1,-i,i)$ gives
+$x=(w_1,-w_2,iw_3,-iw_4)$. Consequently (23.2) yields
+
+$$
+\begin{array}{c|c|c|c}
+ \sigma&\text{crossed amplitude }\sum_i\ell_i x_i
+           &\ell&\sum_i|\ell_i|^2\\ \hline
+ +&Q&(h,-h,is,-is)&2-h\\
+ -&P&(h,-h,-ic,ic)&2+h .
+\end{array}
+\tag{45.6}
+$$
+
+In each row $\sum_i\ell_i=0$, so the amplitude equals
+$\sum_i\ell_i(x_i-\mu)$. The finite complex Cauchy--Schwarz inequality
+therefore gives
+
+$$
+\begin{aligned}
+ \sigma=+:quad v^2
+   &\le(2-h)\sum_i|x_i-\mu|^2
+          <\frac{13}{10}\frac{13}{5}=\frac{169}{50},\\
+ \sigma=-:quad u^2
+   &\le(2+h)\sum_i|x_i-\mu|^2
+          <\frac{11}{4}\frac{13}{5}=\frac{143}{20}.
+\end{aligned}
+\tag{45.7}
+$$
+
+Here $h>7/10$ and $h<3/4$ are among (42.6).
+Those same half-angle bounds, with $c>9/10$ and $s>3/8$, give
+
+$$
+\begin{aligned}
+ e^2=4(h+s)^2&>4(43/40)^2>23/5,\\
+ d^2=4(h+c)^2&>4(8/5)^2>10,\\
+ e^2&<4(23/20)^2<6,
+\end{aligned}
+\tag{45.8}
+$$
+
+where the last line uses $h<3/4$ and $s<2/5$. Thus for the same
+actual feedback as in (45.5)--(45.7),
+
+$$
+\begin{aligned}
+ \sigma=+:quad
+ \Delta_--c_0&=\frac{3e^2}{4}-v^2
+       >\frac{69}{20}-\frac{169}{50}=\frac7{100}>0,\\
+ \sigma=-:quad
+ \Delta_+&=d^2-u^2>10-\frac{143}{20}
+                  =\frac{57}{20}>\frac32>c_0.
+\end{aligned}
+\tag{45.9}
+$$
+
+This proves (45.4). Every trace and amplitude in these inequalities
+is evaluated on the given $U$; no separately attained extrema have
+been combined. The active trace cannot vanish because $S\ge19/8$;
+the inactive trace is unrestricted. $\square$
+
+**Lemma 45.3 (no low-defect mixed arc minimum).** For any actual $U$,
+any $0<\xi\le R$, and any admissible sign $\sigma$, every mixed effect
+minimizing $g(E,U)$ on $\mathfrak E_\sigma(U,\xi)$ has $g(E,U)>c_0$.
+
+*Proof.* Apply the exact arc minimum and phase-equality formulas
+(36.5)--(36.7), whose derivation minimizes each individual arc before
+taking the minimum over signs. Write $t=t_\sigma$, $b=b_\sigma$,
+$\omega=uv$ and $\Lambda=\sqrt{b^2+4\omega^2}$; thus $\Lambda$ is
+$R_\sigma$ of (36.4). Suppose a minimizing effect is mixed, so
+$0<t<q<1$. It has $q<J_\sigma$: equality would make both original
+signs minimizing by (36.11), contrary to Theorem 42.3. That theorem
+applies to every point here since its actual original level is
+$0<\xi\le R$; equivalently, its proof uses
+$\xi+\epsilon\le15/4<\zeta$ and (42.20), including mixed effects.
+
+If $\Lambda=0$, then $b=0$ and $uv=0$. Since $d^2>e^2$,
+
+$$
+ u^2-v^2=d^2-e^2>0,
+ \qquad v=0,
+ \qquad u^2=d^2-e^2,
+ \qquad \Delta_+=\Delta_-=e^2.
+\tag{45.10}
+$$
+
+The exact identity (36.14) is consequently constant with value
+$e^2>c_0$ throughout the arc, including every coherence phase.
+
+Suppose $\Lambda>0$. Formula (36.5) gives
+
+$$
+ q=\min\{Q_\sigma,\max\{t,q^\circ\}\},\qquad
+ q^\circ=\frac{\sqrt t\,(-b)_+}{\Lambda}\le\sqrt t.
+\tag{45.11}
+$$
+
+Since $q>t$, one has $q^\circ>t$, and hence $b<0$.
+The truncation at $J_\sigma$ cannot be active because $q<J_\sigma$;
+the other upper endpoint $\sqrt t$ cannot cut off $q^\circ$.
+Therefore $q=q^\circ$. The aligning-phase equality in (36.7) and
+the nonnegative square roots give, without dividing by $u$ or $v$,
+
+$$
+\begin{aligned}
+ q&=\frac{\sqrt t(-b)}{\Lambda},&
+ |z|=\sqrt{t-q^2}&=\frac{2\omega\sqrt t}{\Lambda},\\
+ g(E,U)&=\Delta_\sigma+bq-2\omega\sqrt{t-q^2}
+              =\Delta_\sigma-\Lambda\sqrt t.
+\end{aligned}
+\tag{45.12}
+$$
+
+Because $q>t$ and $t>0$, one has $-b>\Lambda\sqrt t$.
+Lemma 45.2 now yields
+
+$$
+ g(E,U)>\Delta_\sigma+b=\Delta_{-\sigma}>c_0.
+\tag{45.13}
+$$
+
+If $P=0$ or $Q=0$ and $\Lambda>0$, the same argument is exactly
+the affine case of (36.5): a mixed minimum requires $b<0$ and
+$q=\sqrt t<J_\sigma$, with $z=0$. Equations (45.12)--(45.13)
+still hold. When $\omega>0$ the minimizing phase is the one in
+(36.7); if $\omega|z|=0$ its phase condition is vacuous. Thus no
+zero-coherence endpoint is lost. An arc with $t=0$ or $t=1$ is a
+pure singleton; any other singleton has $Q_\sigma=t$ and is also
+pure. The lower endpoint $q=t$ is pure, the possible mixed endpoint
+$q=\sqrt t$ has been included, and a sign-truncation endpoint at
+$q=J_\sigma$ is excluded by the proved sign separation. This
+exhausts all degenerate and truncated arcs. $\square$
+
+**Theorem 45.4 (strict same-feedback, same-level purification below
+$c_0$).** Let $(E,U)$ be an original pair with $E$ mixed and
+$0<\rho(E,U)=\xi\le R$. If $g(E,U)\le c_0$, there is a normalized
+positive semidefinite rank-one effect $\widehat E$ satisfying
+
+$$
+\begin{aligned}
+ \rho(\widehat E,U)&=\rho(E,U)=\xi,\\
+ \rho_\sigma(\widehat E,U)&=\xi<\rho_{-\sigma}(\widehat E,U),\\
+ g(\widehat E,U)&<g(E,U),&
+ f(\widehat E,U)&<f(E,U),
+\end{aligned}
+\tag{45.14}
+$$
+
+where $\sigma$ is the unique minimizing sign of the input. The actual
+whole matrix $U$ is unchanged, and $\widehat E$ is a pure endpoint of
+that same sign arc. No uniform positive improvement size is asserted.
+
+*Proof.* The input belongs to $\mathfrak E_\sigma(U,\xi)$. Minimize
+$g(\cdot,U)$ on this nonempty compact arc. Its minimum is no larger
+than $g(E,U)\le c_0$, so Lemma 45.3 excludes every mixed minimizer.
+Every minimizing effect therefore has $q=t=t_\sigma$ by (45.3),
+and its coherence has an aligning phase by (36.7). Explicitly one
+may choose
+
+$$
+\begin{aligned}
+ \widehat z&=
+ \begin{cases}
+  \sqrt{t(1-t)}\,\bar P Q/(uv),&uv>0,\\
+  \sqrt{t(1-t)}\,\eta,&uv=0,\quad |\eta|=1,
+ \end{cases}\\
+ \widehat E&=\bigl(TF_\sigma(t,\widehat z)T^\dagger\bigr)^{\mathsf T}.
+\end{aligned}
+\tag{45.15}
+$$
+
+All allowed choices in (45.15) have that same arc-minimum value.
+For a mixed input, (45.3) gives $0<t<1$. The reconstructed matrix has
+
+$$
+ \operatorname{Tr}F_\sigma(t,\widehat z)=1,\qquad
+ \det F_\sigma(t,\widehat z)=t(1-t)-|\widehat z|^2=0,\qquad
+ F_\sigma(t,\widehat z)\succeq0.
+\tag{45.16}
+$$
+
+Unitary conjugation followed by ordinary transpose preserves positivity,
+trace and rank, so this is an actual normalized rank-one original effect.
+Moreover $t<q_{\mathrm{input}}<J_\sigma$, so its sign remains strictly
+$\sigma$. Equation (36.10), with $t^2+|\widehat z|^2=t$, proves exact
+preservation of the original level. Since $U$ is unchanged, the scalar
+phases minimizing its distance to either original $U_\pm$ are unchanged
+as well. No separate feedback is assigned to an effect component.
+
+If the new value equalled the input value, the old mixed input itself
+would attain the arc minimum at a value at most $c_0$, contradicting
+Lemma 45.3. The decrease is therefore strict. Subtracting the same
+$\kappa\xi$ proves the assertion for $f$. The construction includes
+$P=0$, $Q=0$ and zero input coherence, without dividing by a vanishing
+amplitude. $\square$
+
+**Theorem 45.5 (all original and phase global minimizers are pure).**
+For every $0<\xi\le R$,
+
+$$
+\begin{aligned}
+ m(\xi)&=m_{\mathrm p}(\xi)=m_{\mathrm{ph}}(\xi)
+                                      =m_{\mathrm{ph,p}}(\xi),\\
+ \mathcal A_\xi&=\mathcal A_{\mathrm p,\xi}
+                                      \subset\mathcal K_{\mathrm p},\\
+ \mathcal A_{\mathrm{ph},\xi}
+   &=\mathcal A_{\mathrm{ph,p},\xi}
+     =\mathcal A_\xi\cap\mathcal P_\xi.
+\end{aligned}
+\tag{45.17}
+$$
+
+These are equalities of attained values and of the minimizing sets in
+their stated domains, not a classification of those pure sets.
+
+*Proof.* Reuse the delivered geometric comparison in the proof of
+Theorem 44.3, namely (44.19) together with its stated consequence
+throughout this interval:
+
+$$
+ m(\xi)+\kappa\xi\le V(\xi)<c_0-\frac3{16},\qquad
+ m_{\mathrm{ph}}(\xi)+\kappa\xi\le V(\xi)<c_0-\frac3{16}.
+\tag{45.18}
+$$
+
+The first inequalities use $\mathcal G_\xi$ as actual feasible pairs
+in both domains. The comparison concerns the selected value $V$;
+no assumption $m=N$ or $\xi<\beta$ enters it.
+Original minima are attained by Theorem 35.2. A mixed original global
+minimizer would have $g<c_0$ by (45.18), and Theorem 45.4 would strictly
+improve it at exactly the same original level. This is impossible.
+The phase level is compact and nonempty by Definition 42.1. A mixed
+phase global minimizer has the same contradiction, because Theorem
+45.4 never changes its phase feedback $U$.
+
+Restriction to the pure subsets can consequently remove no minimizer.
+Set inclusion gives the equal values and equal minimizing sets in
+each domain. The cross-domain value equality and intersection identity
+are exactly (42.24). This proves (45.17) without using prefix purity.
+$\square$
+
+**Corollary 45.6 (pure boundary contacts and pure right branches).**
+At each of $b=\alpha$ and $b=\beta$, every original and phase global
+minimizer is pure. Every global minimizing branch whose positive levels
+remain in $(0,R]$ is pointwise pure. In particular the actual analytic
+phase branches and their attained boundary limits in (42.32) are pure
+on their sufficiently short right intervals. Separated contact at
+$\beta$ and competing global branches inside this interval can therefore
+only be pure.
+
+*Proof.* Theorem 42.2 gives $0<\alpha\le\beta<R$. Apply Theorem 45.5
+to these boundary levels and to every level of the branches. The
+endpoint limit in (42.32) is already an attained boundary global
+minimizer by Corollary 42.6, so it is pure as well. The mixed-global-contact
+implications of Corollaries 41.5 and 42.6 retain their conditional
+validity; their mixed-minimizer antecedents have no instance at these
+levels. This conclusion neither identifies a pure contact nor orders
+a competing branch. $\square$
+
+**Theorem 45.7 (exact pure phase value and geometric-equality
+certificate).** For $0<\xi\le R$, $w\in\mathbb T^4$ and an admissible
+sign $\sigma$, put
+
+$$
+ C_\sigma(w,\xi)=\Delta_\sigma(w)+b_\sigma(w)t_\sigma(w,\xi)
+       -2u(w)v(w)\sqrt{t_\sigma(w,\xi)(1-t_\sigma(w,\xi))}.
+\tag{45.19}
+$$
+
+This is the minimum over the coherence phases of the pure endpoint,
+not the minimum over the whole effect arc. Define its full aligning
+endpoint set at a real raw value $a$ by
+
+$$
+\begin{aligned}
+ \mathcal E_\xi(a)=\bigcup_{\substack{w\in\mathbb T^4,\ \sigma\ \mathrm{admissible}\\
+                                     C_\sigma(w,\xi)=a}}
+ \biggl\{\Bigl(\bigl(TF_\sigma(t_\sigma,z)T^\dagger\bigr)^{\mathsf T},
+                            \operatorname{diag}(w)U_+\Bigr):\ &
+ |z|^2=t_\sigma(1-t_\sigma),\\[-2pt]
+ &\operatorname{Re}(Pz\bar Q)=uv|z|\biggr\}.
+\end{aligned}
+\tag{45.20}
+$$
+
+Every actual common scalar representative is retained. If $uv|z|=0$,
+all phases satisfying the modulus condition are allowed. Then
+
+$$
+\begin{aligned}
+ a_\xi&:=m(\xi)+\kappa\xi
+       =\min_{\substack{w\in\mathbb T^4,\ \sigma\ \mathrm{admissible}}}
+                                      C_\sigma(w,\xi),\\
+ \mathcal A_{\mathrm{ph},\xi}
+       &=\mathcal A_{\mathrm{ph,p},\xi}=\mathcal E_\xi(a_\xi).
+\end{aligned}
+\tag{45.21}
+$$
+
+The minimum displayed here is attained. The original value certificate
+is precisely the pure phase lower inequality
+
+$$
+ m(\xi)=N(\xi)
+ \quad\Longleftrightarrow\quad
+ C_\sigma(w,\xi)\ge V(\xi)
+ \quad\text{for every }w\in\mathbb T^4
+                         \text{ and every admissible }\sigma.
+\tag{45.22}
+$$
+
+The exhaustive geometric-equality certificate requires both this
+inequality and its complete equality set:
+
+$$
+\begin{aligned}
+ \mathcal A_\xi=\mathcal G_\xi
+ \quad\Longleftrightarrow\quad
+ \mathcal A_{\mathrm{ph,p},\xi}=\mathcal G_\xi
+ \quad\Longleftrightarrow\quad
+ \bigl[&C_\sigma(w,\xi)\ge V(\xi)
+                  \text{ for every admissible }(w,\sigma),\\
+       &\mathcal E_\xi(V(\xi))=\mathcal G_\xi\bigr].
+\end{aligned}
+\tag{45.23}
+$$
+
+For an arbitrary original pure pair $X=(E,U)$, write
+$F=T^\dagger E^{\mathsf T}T=\psi\psi^\dagger$ with $\|\psi\|=1$.
+Its exact original minimizing-lift condition remains, for any
+spectral/Birkhoff decomposition of Theorem 42.3,
+
+$$
+ X\in\mathcal A_\xi
+ \quad\Longleftrightarrow\quad
+ \left\{\begin{array}{ll}
+  (E,U_j)\in\mathcal E_\xi(a_\xi)&\text{for every positive-weight }j,\\
+  (a_j-a)\psi=0&\text{for every positive-weight }j.
+ \end{array}\right.
+\tag{45.24}
+$$
+
+It is sufficient for one such decomposition to satisfy these conditions;
+when $X$ minimizes, every such decomposition satisfies them. Outside
+exhaustive geometric equality, (45.24) does not assert that $U$ is phase.
+
+*Proof.* Every pure original effect at an admissible sign has
+$q=t_\sigma$ by (45.3). Substitution in the exact same-feedback identity
+(36.14) gives its lower value (45.19), attained exactly by the phases
+in (45.20). For $uv=0$ the identity is independent of the coherence
+phase; for $t_\sigma=0$ or $1$ its coherence is zero. Thus the statement
+also includes all pure singletons and zero amplitudes. Every
+$w\in\mathbb T^4$ has the explicit whole unitary realization
+$\operatorname{diag}(w)U_+$, and every endpoint constructed in (45.20)
+has the exact original distance by (36.10)--(36.12). No relaxation of
+phase feasibility, rank or sign is being minimized.
+
+Theorem 45.5 makes the full original minimum equal to this pure phase
+minimum. Compact attainment from Definition 45.1, and the exact endpoint
+phase equality just proved, give both lines of (45.21) and attainment
+of its right side. The selected geometric pairs attain raw value
+$V(\xi)$, so $a_\xi\le V(\xi)$. Formula (45.21) now proves (45.22)
+in both directions. Under that lower inequality, equality of a pure
+phase input to $V$ forces both $C_\sigma=V$ and the aligning phase
+condition. Hence its entire minimizing set is exactly
+$\mathcal E_\xi(V)$, proving the last equivalence in (45.23).
+The first equivalence is (42.26) with the phase purity of Theorem 45.5.
+The equality-set condition by itself is not a lower bound and cannot
+replace the first condition in the brackets.
+
+Finally apply (42.25). Since $F$ is a rank-one projection,
+$F^{1/2}=F=\psi\psi^\dagger$, and
+$(a_j-a)F^{1/2}=0$ is equivalent to $(a_j-a)\psi=0$.
+Insert the phase minimizing set (45.21) to obtain (45.24), with the
+same necessity for every decomposition and sufficiency for one as in
+Theorem 42.4. This is a condition on the actual original lift, not an
+identification of every pure lift with a diagonal feedback. $\square$
+
+**Corollary 45.8 (pure phase bad sets retain the original first
+boundaries).** Define subsets of $(0,R]$ by
+
+$$
+\begin{aligned}
+ \mathcal B_{\mathrm{ph,p}}
+  &=\{\xi:\exists X\in\mathcal P_{\mathrm p,\xi}\setminus\mathcal G_\xi,
+                                            \ f(X)\le N(\xi)\},\\
+ \mathcal S_{\mathrm{ph,p}}
+  &=\{\xi:\min_{w\in\mathbb T^4,\ \sigma\ \mathrm{admissible}}
+                                  C_\sigma(w,\xi)<V(\xi)\}.
+\end{aligned}
+\tag{45.25}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ \mathcal B\cap(0,R]&=\mathcal B_{\mathrm{ph,p}},&
+ \mathcal S\cap(0,R]&=\mathcal S_{\mathrm{ph,p}},\\
+ \alpha&=\inf\mathcal B_{\mathrm{ph,p}},&
+ \beta&=\inf\mathcal S_{\mathrm{ph,p}}.
+\end{aligned}
+\tag{45.26}
+$$
+
+*Proof.* Strict loss is exactly the strict inequality in (45.21),
+which proves the assertion for $\mathcal S$. If the common value is
+below $N$, an attained pure phase global minimizer is outside
+$\mathcal G_\xi$ and witnesses $\mathcal B_{\mathrm{ph,p}}$.
+If the value is $N$, a bad-set witness in either domain is exactly
+an extra global minimizer; (45.23) identifies failure of exhaustive
+geometric equality in the two domains. Conversely every witness in
+$\mathcal B_{\mathrm{ph,p}}$ is an original witness by inclusion.
+This proves equality of the bad sets without asserting pointwise
+transport of every nonglobal witness. Both original boundaries lie
+strictly inside $(0,R)$ by (42.3), so restriction to this interval
+does not change their infima. $\square$
+
+**Mathematical source correspondence 45.9.** The objects and exact
+ordinary-transpose identities are (23.2), (23.9)--(23.12) and (39.1).
+The individual arc minimizers, all scalar truncations, aligning phases
+and impurity formula are (36.5)--(36.7) and (36.10)--(36.16).
+Theorem 42.3 supplies sign separation on the full stated interval,
+including all mixed effects; Theorems 35.2 and 42.4 supply compact
+attainment and the phase value/equality transport. The selected
+comparison below $c_0-3/16$ is the existing conclusion of Theorem 44.3,
+using (44.19) and Theorem 41.2. Its witness and scalar calculation
+are not additional hypotheses about a globally minimizing branch.
+
+The finite Cauchy--Schwarz inequality is a standard intermediate tool;
+compare [NIST DLMF, Section 1.7(i), (1.7.1)](https://dlmf.nist.gov/1.7.E1).
+For the complex sum in Lemma 45.2, the triangle inequality followed
+by that real finite-sum inequality with
+$a_i=|\ell_i|$, $b_i=|x_i-\mu|$ gives exactly the squared-norm bound
+used in (45.7). The zero-sum coefficient rows permit centering; they
+supply no new independent realization assumption. The compact-minimum
+argument is the finite-dimensional extreme-value theorem on the actual
+closed level sets. No new spectral-diagonal realization theorem is
+needed: the feedback remains fixed in Theorem 45.4, and phase endpoints
+have the explicit unitary realization in (45.20).
+
+The fixed-record deductions are the crossed-amplitude floor, the
+exclusion of low mixed arc minima, strict same-level purification under
+$g\le c_0$, and its global purity and pure phase certificate consequences.
+Theorem 36.3 proves earlier same-level purification only under its
+stated sign or small-level hypotheses; Theorem 41.4 proves purity on
+an already value-preserving prefix. Neither is used to certify a
+prefix here. Proposition 40.5's failure of universal same-feedback
+purification at arbitrary defect remains valid. The present argument
+does not assert $g>c_0$ for every mixed input: Lemma 45.3 applies to
+mixed arc minimizers, whereas a mixed input with $g\le c_0$ has the
+strict improvement in Theorem 45.4. The population-sensitive pointwise
+screen of Theorem 44.3 remains useful with its own hypotheses. These
+are constrained-optimization deductions for the fixed record, with no
+claim of literature-wide originality.
+
+**Unresolved mathematical obligations 45.10 (complete pure phase
+ordering and actual equality).** On every level of a proposed preceding
+value prefix inside $(0,R]$, the remaining universal inequality is
+(45.22), for every actual $w\in\mathbb T^4$ and both admissible signs.
+For a proposed exhaustive-equality prefix, its additional obligation
+is the complete endpoint equality classification in (45.23), with
+all zero-amplitude and zero-coherence cases retained. Equations
+(45.19)--(45.26) provide an equivalent certificate and boundary
+problem, not its evaluation.
+
+The exact infima $\alpha,\beta$, whether they coincide, the inclusion
+or exclusion of the exhaustive-equality endpoint, and any earlier
+pure equality ties remain undetermined. Every first competing global
+branch inside this interval must be pure, but its actual identity,
+ordering against all other pure branches, exhaustion, boundary limits
+and full attainment/equality sets are still required. Pure coalescence
+and separated pure contact are both retained. Determinant zero is only
+the necessary condition in the scopes of Section 43; its higher-order
+and global consequences and possible simultaneous separated pure
+contact remain unresolved.
+
+The rank-one variance-zero original lifts in (45.24) still require
+complete evaluation. Purity alone supplies no classification of
+nonphase original minimizing lifts. The sufficient phase-transport
+condition beyond $R$ retains exactly its domain in Section 42;
+no purification or pure phase reduction outside $(0,R]$ follows here.
+The inherited beyond-four geometric ordering and core-attainment
+obligations remain. The normalized-effect pair-domain conclusions
+above do not assert a whole-POVM or native-acquisition result.
+
+## 追加锚（本行以下为增补区）
