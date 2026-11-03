@@ -91,10 +91,7 @@ private lemma anticommuting_family_bound {n α : Type*}
       Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, s, a, pow_two]
   have hEHsq : expectation ρ (H * H) = s := by
     rw [hHsq]
-    simp only [expectation, Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul,
-      smul_eq_mul]
-    change ((s : ℂ) * trace ρ.1).re = s
-    rw [ρ.2.2, mul_one, Complex.ofReal_re]
+    rw [Complex.coe_smul, expect_smul, expect_one, mul_one]
   have hv := variance_nonneg ρ hH
   rw [variance, hEHsq, hEH] at hv
   change s ≤ 1
