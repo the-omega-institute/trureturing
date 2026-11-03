@@ -1,0 +1,27 @@
+## 2. 同一个反向规则怎样组成更大的结构
+
+<a id="sec-c122-reverse-laws"></a>
+
+沿用前章的二元加权互易规则，记
+
+$$
+\Gamma_\sigma(X)=\sigma^{1/2}X\sigma^{1/2},\qquad
+ \tau=\mathcal N(\sigma),\qquad
+ \mathcal P_{\sigma,\mathcal N}
+ =\Gamma_\sigma\mathcal N^*\Gamma_\tau^{-1}.
+$$
+
+这里 $\sigma>0$，$\mathcal N$ 是有限维 CPTP 通道，所有逆均为支撑逆。
+公式是已有的 Petz 反向，不是本文新发明 [3](#ref-petz1986)。本章研究这个*已确定的*反向怎样复合、何时恢复全部内容，以及有限误差下能给出什么全参考保证。
+
+令 $P=\operatorname{supp}\tau$。由于 $\sigma>0$，每个 Kraus 算子 $E_i$ 都满足
+$PE_i=E_i$，所以所有 $\mathcal N$ 输出都在 $P\mathcal B(K)P$ 中，且
+$\mathcal N^*(PXP)=\mathcal N^*(X)$。原始 Petz 映射满足
+
+$$
+\operatorname{Tr}\mathcal P_{\sigma,\mathcal N}(X)=\operatorname{Tr}(PX),\qquad
+ \mathcal P_{\sigma,\mathcal N}(\tau)=\sigma.
+$$
+
+因此它在可达支撑角代数 $P\mathcal B(K)P$ 上是 CPTP。以下四个结构定律统一在这些角代数上陈述：参考态在自身支撑上忠实，$\Gamma$ 可逆。
+

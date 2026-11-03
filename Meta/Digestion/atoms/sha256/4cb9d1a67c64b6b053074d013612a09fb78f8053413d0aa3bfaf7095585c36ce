@@ -1,0 +1,10 @@
+**定理 8.9（全部原事件的完全正表示）。** 定义 8.8 给出每个原事件的 CP、迹不增表示。在块记号下
+
+$$
+T_x(\rho)_t=\sum_{s,\mu}K^{x}_{ts\mu}\rho_sK^{x*}_{ts\mu},\qquad
+\sum_{t,\mu}K^{x*}_{ts\mu}K^{x}_{ts\mu}\le I_{d_s}.
+\tag{8.4}
+$$
+
+证明。给定有限输入维 $d$，定义 8.2 的参考族包含足够的有限参考块，使 $T_x\otimes{\rm id}_{d}$ 在正锥上正。有限 Choi 判据遂给完全正性；这正是 [Watrous, *The Theory of Quantum Information*, Definition 1.124 and Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf) 的适用接口。Choi 正矩阵的有限谱分解逐块给 (8.4)，而 $E_x\le I$ 给迹不增。这里的数学指标 $\mu$ 只是表示指标；它没有自动成为可访问记录端口。∎
+

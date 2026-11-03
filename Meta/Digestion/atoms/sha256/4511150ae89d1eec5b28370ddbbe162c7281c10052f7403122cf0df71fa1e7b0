@@ -1,0 +1,26 @@
+### 定理 13.2（密度矩阵与平方律）
+
+<a id="thm-c117-born"></a>
+
+上述评价恰为
+
+$$
+\boxed{w(E)=\operatorname{Tr}(\rho E),\qquad \rho\ge0,\quad\operatorname{Tr}\rho=1.}
+$$
+
+状态集合的极点恰为秩一投影，纯态对纯锐效果的概率为 $|\langle \phi,\psi\rangle|^2$。
+
+**证明。**
+可加性给 $w(0)=0$ 及单调性；将 $E$ 均分为 $n$ 份得到有理数齐次性，再用上下有理数夹逼得到 $w(tE)=tw(E)$，$0\le t\le1$，不必另加连续性。
+
+对任意正矩阵 $A$，取 $u\ge\|A\|$、$u>0$，定义 $W(A)=u\,w(A/u)$。齐次性说明此值不依赖 $u$；选共同上界可证 $W(A+B)=W(A)+W(B)$。对自伴元 $X=A-B$ 定义 $L(X)=W(A)-W(B)$：若 $A-B=C-D$，则 $A+D=C+B$，加性保证定义良好。因此 $L$ 是正实线性泛函，且 $L(I)=1$。
+
+自伴矩阵上的非退化配对 $\operatorname{Tr}(XY)$ 给唯一自伴 $\rho$，使 $L(X)=\operatorname{Tr}(\rho X)$。对所有秩一效果的非负评价给 $\rho\ge0$，归一化给 $\operatorname{Tr}\rho=1$。反向显然。
+
+秩至少二的密度矩阵可在两个正特征值上作相反微扰，故不极端。若秩一 $P_\psi=t\rho_1+(1-t)\rho_2$，正性使两项都支持于 $\mathbb C\psi$，归一化迫使两者均等于 $P_\psi$。最后 $\operatorname{Tr}(P_\psi P_\phi)=|\langle \phi,\psi\rangle|^2$。
+
+若删去拆并条件，二阶效果 $E=\alpha I+b\cdot\sigma$ 上的
+$\widetilde w(E)=\alpha+4b_z^3$ 仍给 $[0,1]$ 内的概率并满足互补归一化；但 $\widetilde w(P_z)=1$，而 $2\widetilde w(P_z/2)=5/8$。因此 Born 规则没有从“存在观察者”或“能复位”中自动出来。
+
+自伴可观测量 $A=\sum_j a_jP_j$ 的锐测量由这些谱投影给出，期望为 $\operatorname{Tr}(\rho A)$。一般效果分解给 POVM。随机制备混合对应密度矩阵凸组合，且相同密度重心恰好对全部效果不可区分。
+

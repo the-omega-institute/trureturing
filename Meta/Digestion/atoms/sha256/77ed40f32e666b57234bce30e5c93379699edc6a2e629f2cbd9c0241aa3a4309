@@ -1,0 +1,82 @@
+**定理 102.1（C111 的统一更新界）。** 保留定义 99.2 的全部原范围，记
+
+$$
+D=\sup_{E\ne0,F}\frac{\|T_{E,F}-\mathcal L_E\|_\diamond}{\|E\|}.
+$$
+
+固定 E,F，令 $R=\sqrt E$，分别以 $\bar s(E,F)$、$b(E,F)$ 和 $\bar s(R,F)$、$b(R,F)$ 代入 (101.1)，所得参数记 $e_E$、$e_R$、$e'_R$。若这两个返回缺陷都不超过 2^{-15}，则
+
+$$
+d(E,F)\le
+\min\{2,\ \bar h(E,F)+2e_E+\bar s(R,F)+e_R+e'_R\}.
+\tag{102.1}
+$$
+
+特别地，当 $\bar S\le1/4$、$B_*\le2^{-15}$ 时，
+
+$$
+\boxed{
+D\le\min\{2,\ \bar H+13\sqrt{\bar S}+250\sqrt{B_*}\}.
+}
+\tag{102.2}
+$$
+
+因此 $C111(\varepsilon)$ 给 $D\le\min\{2,\varepsilon+263\sqrt\varepsilon\}$。常数不含维数、秩或最小正谱值；前提中三个缺陷全都不含参考系统。
+
+证明。令 $M=\|E\|$、$m=\|R\|=\sqrt M$、$S=T_{R,F}$。定理 101.1 给 S 的纯邻居 A，满足 $AA^\dagger=\mathcal L_E$。正确成功效果及纯邻居的形式给
+
+$$
+\|S\|_\diamond=m,\qquad\|A^\dagger\|_\diamond=\|A(I)\|=\|R\|=m.
+$$
+
+使用恒等式
+
+$$
+\begin{aligned}
+T_E-\mathcal L_E
+&=(T_E-S^2)+S(S-S^\dagger)+(SS^\dagger-AA^\dagger),\\
+SS^\dagger-AA^\dagger
+&=S(S^\dagger-A^\dagger)+(S-A)A^\dagger
+\end{aligned}
+\tag{102.3}
+$$
+
+并只对第一行取正输入范数。S 是 CP，其自伴迹范数算子范数至多 m，故
+
+$$
+\nu(S(S-S^\dagger))\le M\bar s(R,F).
+$$
+
+第二行由两种独立的 diamond 近邻界给出 $M(e_R+e'_R)$。于是
+
+$$
+\nu(T_E-\mathcal L_E)
+\le M\bigl(\bar h(E,F)+\bar s(R,F)+e_R+e'_R\bigr).
+\tag{102.4}
+$$
+
+再对 $T_E$ 本身取定理 101.1 的纯邻居 $A_E$，并将引理 100.1 的 (100.1) 用于 $T_E、A_E、\mathcal L_E$，额外支付 $2Me_E$，即得 (102.1)。$\|T_E\|_\diamond=\|\mathcal L_E\|_\diamond=M$ 给平凡上界二。
+
+为核对统一常数，取 $\sigma=\bar S$、$\delta=B_*$，各局部参数均不超过以这两个上界计算的参数。在 $\delta\le2^{-15}$ 范围，(101.1) 直接给
+
+$$
+w\le23\sqrt\delta,\qquad
+a\le\sqrt\sigma+24\sqrt\delta,\qquad
+(1+\delta)w^2\le530\delta.
+$$
+
+因此 (102.1) 中除 $\bar H$ 外的项至多
+
+$$
+\begin{aligned}
+\sigma+3e+e'
+&=10a+3(1+\delta)w^2+5\sigma\\
+&\le10\sqrt\sigma+240\sqrt\delta+1590\delta+5\sigma\\
+&\le\tfrac{25}{2}\sqrt\sigma+249\sqrt\delta
+\le13\sqrt\sigma+250\sqrt\delta.
+\end{aligned}
+\tag{102.5}
+$$
+
+倒数第二步使用 $\sqrt\sigma\le1/2$ 及 $1590/\sqrt{32768}<9$。取全部原对象、效果和框架的上确界即得结论。零效果的原分支由成功效果恒为零。∎
+

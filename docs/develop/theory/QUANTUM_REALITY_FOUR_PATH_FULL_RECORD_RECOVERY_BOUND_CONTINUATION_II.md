@@ -2532,3 +2532,417 @@ ordering and actual equality/attainment problem is not settled by
 these local and endpoint alternatives.
 
 ## 追加锚（本行以下为增补区）
+## 44. Population-sensitive global spectral exclusion
+
+**Definition 44.1 (the fixed original spectral data).** Retain the original
+$\operatorname{Dens}_2\times U(4)$ domain, ordinary transpose, both original
+optimizer signs, one actual shared feedback $U$, and the single common
+scalar quotient from Definitions 11.1 and 23.1. For the actual pair
+$(E,U)$ write
+
+$$
+F=T^\dagger E^{\mathsf T}T
+ =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},
+\qquad
+0\le p\le1,\qquad |z|^2\le p(1-p),
+$$
+
+and put
+
+$$
+H=\operatorname{diag}(d^2,e^2),\qquad
+D(p)=d^2p+e^2(1-p),\qquad
+\epsilon=2\det F=2\bigl(p(1-p)-|z|^2\bigr).
+\tag{44.1}
+$$
+
+Thus $\epsilon=1-\operatorname{Tr}(E^2)$ is the original impurity of the
+same effect. Define
+
+$$
+ k=\frac{e^2}{d^2},\qquad
+ L(p,\epsilon)=
+ \frac{D(p)-\sqrt{D(p)^2-2d^2e^2\epsilon}}{2},
+\qquad
+ \theta(p)=\frac p2+k\left(\frac38-\frac p2\right).
+\tag{44.2}
+$$
+
+The square root in (44.2) is the smaller-eigenvalue expression for the
+positive matrix introduced in the proof below; its reality is part of
+that proof and does not impose a new restriction on the original domain.
+
+**Theorem 44.2 (population-sensitive lower bound and complete actual
+saturation).** For every original normalized effect $E$ and every actual
+shared feedback $U$,
+
+$$
+\boxed{\qquad g(E,U)\ge L(p,\epsilon).\qquad}
+\tag{44.3}
+$$
+
+Equality in (44.3) holds exactly in the following union, with
+$|\lambda|=1$:
+
+$$
+\begin{aligned}
+&z=0,\quad U=\lambda U_+,\quad d^2p\ge e^2(1-p),\\
+&\hspace{2.9cm}\text{or}\\[-2pt]
+&z=0,\quad U=\lambda U_-,\quad d^2p\le e^2(1-p).
+\end{aligned}
+\tag{44.4}
+$$
+
+The description includes singular effects, coincident weighted eigenvalues,
+and every common scalar representative. In the coincident case both lines
+of (44.4) are allowed. No independent feedback is assigned to the two
+certificate columns.
+
+**Proof.** For a fixed actual $U$, let $a=(P,Q)$ be the row from (23.12) and
+write
+
+$$
+K=H-a^\dagger a.
+\tag{44.5}
+$$
+
+Formula (23.12), applied to every normalized pure effect while this same
+$U$ is held fixed, and nonnegativity of the actual defect from Lemma 9.3,
+give $b^\dagger Kb\ge0$ for every unit vector $b$. Hence $K\succeq0$.
+Because $H$ is positive definite, the row
+$b_0=aH^{-1/2}$ satisfies
+
+$$
+b_0^\dagger b_0\preceq I,\qquad \|b_0\|\le1.
+\tag{44.6}
+$$
+
+Set
+
+$$
+C=H^{1/2}FH^{1/2}\succeq0.
+\tag{44.7}
+$$
+
+The same actual $U$ and the original transpose give, directly from
+(23.12),
+
+$$
+g(E,U)=\operatorname{Tr}(C)-b_0Cb_0^\dagger.
+\tag{44.8}
+$$
+
+Therefore
+
+$$
+g(E,U)\ge\operatorname{Tr}(C)-\lambda_{\max}(C)
+          =\lambda_{\min}(C).
+\tag{44.9}
+$$
+
+The trace and determinant of $C$ are
+
+$$
+\operatorname{Tr}(C)=D(p),\qquad
+\det C=d^2e^2\det F=\frac{d^2e^2\epsilon}{2}.
+\tag{44.10}
+$$
+
+The characteristic polynomial of the Hermitian two-by-two matrix $C$ has
+discriminant $D(p)^2-2d^2e^2\epsilon\ge0$. Its smaller root is exactly
+$L(p,\epsilon)$, proving (44.3).
+
+It remains to prove that no equality case has been lost. If $F$ is positive
+definite and equality holds, both inequalities in (44.9) are equalities.
+Thus $\|b_0\|=1$ and $b_0^\dagger$ lies in the top eigenspace of $C$.
+The first condition makes $K$ singular. Choose a unit vector in $\ker K$
+and use it as a pure certificate-basis effect with this same actual $U$.
+Its actual defect is zero by (44.5), so Lemma 11.2 forces
+$U=\lambda U_+$ or $U=\lambda U_-$. In the first case the row in
+(23.12) is $(\lambda d,0)$, and in the second it is $(0,\lambda e)$.
+The top-eigenspace condition then becomes respectively
+
+$$
+z=0,\quad d^2p\ge e^2(1-p),
+\qquad\text{or}\qquad
+z=0,\quad d^2p\le e^2(1-p).
+\tag{44.11}
+$$
+
+Conversely, each condition in (44.11) gives equality directly in (23.12)
+and (44.9). If $F$ is singular, its trace-one positivity makes it rank one,
+so $L=0$; equality is $g=0$, and Lemma 11.2 gives exactly the two original
+zero pairs. Those are the $p=1$ and $p=0$ instances already contained in
+(44.4). A repeated eigenvalue is the equality case
+$d^2p=e^2(1-p)$ in one of the two diagonal lines, and both optimizer rows
+attain the same value. This proves the complete saturation statement.
+
+**Theorem 44.3 (strict prescribed-level exclusion through $13/4$).** Let
+$0<\rho(E,U)=\xi\le13/4$ and suppose
+
+$$
+\epsilon(E)\ge\theta(p).
+\tag{44.12}
+$$
+
+Then
+
+$$
+\boxed{\qquad
+ f(E,U)>N_{\mathrm{geo}}(\xi)+\frac3{16}.
+\qquad}
+\tag{44.13}
+$$
+
+Consequently this sector contains neither a prescribed-level tie nor a
+strict-loss witness for the existing geometric envelope.
+
+**Proof.** Put $c_0=e^2/4$. Since $D(p)\ge e^2$, the matrix
+$C-c_0I$ has strictly positive trace. Its determinant is
+
+$$
+\det(C-c_0I)
+ =\frac{d^2e^2\epsilon}{2}-\frac{e^2D(p)}4+\frac{e^4}{16}.
+\tag{44.14}
+$$
+
+The condition (44.12) is exactly the condition that (44.14) be nonnegative:
+after division by the positive $d^2e^2$, it reads
+$\epsilon\ge D(p)/(2d^2)-e^2/(8d^2)=\theta(p)$.
+A Hermitian two-by-two matrix with positive trace and nonnegative determinant
+is positive semidefinite. Hence $L(p,\epsilon)\ge c_0$, and Theorem 44.2
+gives $g(E,U)\ge c_0$.
+
+For the strict numerical margin, reuse the actual rank-one geometric
+comparison at level $13/4$. Take $x=1/2$, $y=\sqrt3/2$ and
+$\tau\in\{+1,-1\}$, and use
+
+$$
+w_\tau=(x+\tau iy,x-\tau iy,1,1),\qquad
+\psi_\tau=\sqrt{\frac38}\,b_+-\tau i\sqrt{\frac58}\,b_-,
+$$
+
+$$
+E_\tau=\overline{\psi_\tau}\,
+       \overline{\psi_\tau}^{\dagger},\qquad
+U_\tau=\operatorname{diag}(w_\tau)U_+.
+\tag{44.15}
+$$
+
+This is one actual shared feedback and one original pure effect. Its two
+original sign distances are
+
+$$
+\rho_+(E_\tau,U_\tau)=\frac{13}{4},\qquad
+\rho_-(E_\tau,U_\tau)=\frac{35}{4}-2\sqrt3>\frac{13}{4}.
+\tag{44.16}
+$$
+
+Writing
+
+$$
+J_R=h+2c+h\sqrt5,\qquad
+G_R=\frac{3d^2+5e^2-3J_R^2}{8},
+\tag{44.17}
+$$
+
+the same-feedback formula (23.12) gives $g(E_\tau,U_\tau)=G_R$.
+Theorem 37.5's actual rank-one level ordering gives
+$V(13/4)=N_{\mathrm{geo}}(13/4)+\kappa(13/4)\le G_R$.
+The source half-angle identities and strict rational bounds give
+
+$$
+J_R>\frac{101}{25}>4,\qquad
+d^2+e^2=8+8c<\frac{31}{2}.
+\tag{44.18}
+$$
+
+Indeed the first inequality uses $h>7/10$, $c>9/10$ and
+$\sqrt5>11/5$; the second uses $c<15/16$.
+Consequently
+
+$$
+c_0-G_R=\frac38\bigl(J_R^2-d^2-e^2\bigr)>\frac3{16}.
+\tag{44.19}
+$$
+
+Theorem 41.2 says that $V$ is strictly increasing on $(0,4]$, so
+$V(\xi)\le V(13/4)<c_0-3/16$. Since
+$f(E,U)=g(E,U)-\kappa\xi$ and
+$V(\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi$, (44.13) follows.
+
+The witness is used only to bound the already selected geometric value; it
+does not assert a new globally minimizing branch. Both signs, the common
+scalar quotient, and the original joint distance remain those of
+(23.11)--(23.12). $\square$
+
+**Corollary 44.4 (the older high-impurity screen is contained).** Every
+original pair with $\epsilon(E)\ge3/8$ lies in the sector (44.12).
+
+**Proof.** Positivity gives $\epsilon=2(p(1-p)-|z|^2)\le2p(1-p)$. Thus
+$\epsilon\ge3/8$ implies $p(1-p)\ge3/16$, hence $1/4\le p\le3/4$.
+Since $d^2>2e^2$ by the strict half-angle inequality used below, $0<k<1/2$
+and
+
+$$
+\theta(p)=\frac{3k}{8}+\frac{(1-k)p}{2}
+ \le\frac{3k}{8}+\frac{3(1-k)}8=\frac38.
+\tag{44.20}
+$$
+
+Therefore $\epsilon\ge3/8\ge\theta(p)$. $\square$
+
+**Proposition 44.5 (an actual low-impurity nongeometric sector).** There are
+actual original pairs outside $\mathcal C_{34}$ and both older caps, with
+$\epsilon<3/8$, satisfying the strict sector condition. One explicit pair is
+obtained from
+
+$$
+F=\begin{pmatrix}\frac12&\frac{\sqrt6}{8}\\[2pt]
+                  \frac{\sqrt6}{8}&\frac12\end{pmatrix},\qquad
+E=(TFT^\dagger)^{\mathsf T},
+$$
+
+$$
+w=\left(1,1,\frac{1+i\sqrt3}{2},
+             \frac{1-i\sqrt3}{2}\right),\qquad
+U=\operatorname{diag}(w)U_+.
+\tag{44.21}
+$$
+
+For this actual pair,
+
+$$
+\det F=\frac5{32},\quad \epsilon=\frac5{16}<\frac38,\quad F\succ0,
+$$
+
+and
+
+$$
+\rho_+=\frac{43}{16},\qquad
+\rho_-=\frac{139}{16}-2\sqrt3,\qquad
+\rho_--\rho_+=6-2\sqrt3>0.
+\tag{44.22}
+$$
+
+Moreover $A(w)=3$, $B(w)=\sqrt3$, so $A+B>4$; the diagonal has unequal
+last two entries and is outside $\mathcal C_{34}$, while
+$A<2+\sqrt{8/3}$ and $B<23/6$, so it lies outside both older caps.
+The half-angle identities give
+
+$$
+d^2-2e^2
+ =4\left(-1+\frac{3h}{2}+c+s-4hs\right)
+ >4\left(-1+\frac{21}{20}+\frac{13}{10}-\frac87\right)
+ =\frac{29}{35}>0.
+\tag{44.23}
+$$
+
+Here $h>7/10$, $h<5/7$, $s<2/5$ and $c+s>13/10$ are the only
+strict bounds used in the displayed comparison. Hence $k<1/2$ and
+
+$$
+\theta(1/2)=\frac14+\frac{k}{8}<\frac5{16}=\epsilon.
+\tag{44.24}
+$$
+
+All inequalities in (44.22)--(44.24) are strict. They therefore persist
+on a relative neighborhood of these actual pairs inside the original
+domain. This is a nongeometric low-impurity sector for the universal
+bound; it is neither a strict competitor nor a new minimizing branch.
+The assertion is only realizability and screening, with no rank,
+feedback, optimizer-sign or coherence-phase restriction beyond the
+displayed actual construction. $\square$
+
+**Mathematical source correspondence 44.6.** The identities
+(23.9)--(23.12), the zero-set classification in Lemma 11.2, the actual
+optimizer rows, and the scalar-quotient distance formula (23.11) are
+reused exactly. Theorem 37.5 supplies only the comparison
+$V(13/4)\le G_R$, and Theorem 41.2 supplies monotonicity of the selected
+raw value $V$; neither is treated as a premise for the spectral lower
+bound. The new content is the fixed-$U$ positive residual $K$, its
+population-sensitive two-by-two spectral minimum, the complete equality
+propagation, the strict sector, and the displayed low-impurity
+realization.
+
+For primary literature overlap, compare Bandeira--Boumal--Singer,
+*Tightness of the maximum likelihood semidefinite relaxation for angular
+synchronization*, arXiv:1411.3272v3, Lemmas 4.3--4.4 and Section 4.3
+([primary HTML](https://arxiv.org/html/1411.3272v3)). Their certificate
+has a positive semidefinite Hermitian slack, an annihilation condition,
+and a real-diagonal condition for the angular-synchronization feasible
+set. Those hypotheses explain the shape of a global spectral certificate,
+but the prescribed original distance and variable $F$ here add parameters
+for which no uniform slack is supplied by their lemmas. Tangent-space
+positivity therefore cannot replace (44.3).
+
+Likewise compare Xia--Wang--Sheu, *S-Lemma with Equality and Its
+Applications*, arXiv:1403.2816v3, Theorem 3 and Section 4
+([primary HTML](https://arxiv.org/html/1403.2816v3)). Their exactness
+result concerns one real quadratic equality with its regularity and
+exceptional affine cases. The original problem has four unit-modulus
+constraints together with a prescribed joint distance and a variable
+effect. No correspondence eliminating those constraints was established
+here, so this S-lemma supplies no unclaimed equality theorem for the
+present domain. These are bounded correspondence checks, not literature
+priority claims.
+
+**Theorem 44.7 (current consumer and exact remaining boundary).** On the
+existing all-effect phase certificate (42.31), retain
+
+$$
+p_+(r)=1-r,\qquad p_-(r)=r,\qquad
+\epsilon=2(r-t_\sigma)
+\tag{44.25}
+$$
+
+on each already defined admissible effect arc. Every point satisfying
+
+$$
+2(r-t_\sigma)\ge\theta\bigl(p_\sigma(r)\bigr)
+\tag{44.26}
+$$
+
+now has the strict raw-defect conclusion
+
+$$
+f(E,U)-N_{\mathrm{geo}}(\xi)>\frac3{16}
+$$
+
+through $\xi\le13/4$, whenever that point is realized by the original
+same-$U$ arc. Thus (44.26) removes this entire screened subset from the
+possible equality or strict-loss search. The complementary arc, including
+all zero-amplitude, zero-coherence, singular, population-boundary and
+both-sign cases, remains in the exact source certificate.
+
+The universal bound (44.3) and its saturation set (44.4) do not determine
+the constrained value envelope on a fixed distance level: equality in
+$g=L$ can be incompatible with a prescribed $\rho$, and a constrained
+minimum can lie strictly above $L$. The exact alpha and beta, phase
+equality sets, exhaustive equality, first globally ordered or exhausted
+branches, higher-order determinant-zero alternatives, and all inherited
+full-global obligations therefore remain open.
+
+**Proof.** Substitute (44.25) into (44.12), then apply Theorem 44.3 to
+every original arc point with $\xi\le13/4$. The retained phase formula
+and all endpoint conventions are those of (42.31); no new minimization or
+lifting assumption is introduced. The last paragraph follows directly
+from the distinction between a universal lower bound and a constrained
+level problem, together with the unresolved obligations in (43.8).
+
+The source results used here include singular and mixed effects and the
+actual common scalar quotient. The proof never chooses separate
+feedbacks for spectral components and never changes the original metric.
+$\square$
+
+**Unresolved mathematical obligations 44.8.** The append does not prove
+the full preceding-level inequalities on the complementary arcs or beyond
+$13/4$. It does not compute exact $\alpha,\beta$, their coincidence or
+separation, endpoint inclusion, or exhaustive phase equality. It does not
+evaluate the variance-zero lift conditions (42.25), identity or
+exhaustion of first globally minimizing branches, determinant-zero
+higher-order signs, beyond-four geometric ordering, core-attainment
+questions. Those obligations
+remain in force together with (43.26).
+
+## 追加锚（本行以下为增补区）

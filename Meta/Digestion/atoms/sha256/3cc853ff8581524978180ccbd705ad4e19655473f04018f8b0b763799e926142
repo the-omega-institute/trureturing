@@ -1,0 +1,12 @@
+**命题 8.5（原词概率恒等式）。** 对任意 $h\in\mathsf H$、原成功词 $w=x_1\cdots x_n$ 及其原记录标签 $\lambda=(\lambda_1,\ldots,\lambda_n)$，令 $T_{w,\lambda}$ 为同一实现的未归一化成功后继。则
+
+$$
+p_\Omega(w,\lambda\mid s)=\operatorname{Prob}\!\left(\operatorname{Resp}_\Omega(h,w;\lambda)\right)
+=\tau\!\left(T_{w,\lambda}(\rho_s)\right).
+\tag{8.2}
+$$
+
+若 $w$ 在某一步失败，则该叶记为 $\bot$，保留失败标签、实现身份和后继；其成功分支不被条件归一化后重新命名。
+
+证明。单步时，(8.1) 是原效果的概率坐标。假设 (8.2) 对长度 $n$ 成立；原第 $n+1$ 步的记录端口决定唯一的原分支，故其未归一化后继为 $T_{x_{n+1},\lambda_{n+1}}T_{w,\lambda}$，迹配对给出乘法递推。失败端是同一原事件的补充记录，不能改写成成功词。归纳得到任意有限历史，包括重复、分支、空词和所有失败叶。∎
+
