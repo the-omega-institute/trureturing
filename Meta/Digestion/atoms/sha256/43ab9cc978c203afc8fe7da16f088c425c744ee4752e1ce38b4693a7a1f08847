@@ -1,0 +1,16 @@
+**命题 2.2（完整分割分类与精确数目）。** 在 $Q_v$ 上按输出标签重命名认同目标，亦即只计其非空纤维分割。可取得分割恰为某个 $\mathcal P_r$ 的粗化。其总数为
+
+$$
+1+(\operatorname{Bell}(2)-1)
+ +(h-1)(\operatorname{Bell}(3)-1)=4h-2.
+\tag{AA.9}
+$$
+
+以更细的分割为较大的细化序中，全部极大可取得分割恰为 $\mathcal P_0,\ldots,\mathcal P_{h-1}$；它们两两不可比，因 $h\ge2$ 而不存在最细可取得分割。这里“最细”表示细于所有可取得分割。
+
+证明。一个目标在 $\mathcal P_r$ 的各胞上恒定，等价于它的纤维分割是 $\mathcal P_r$ 的粗化。（AA.5）给两向分类，常值目标是所有 $\mathcal P_r$ 共有的单胞粗化。每个非恒定可取得目标的切口唯一，因此各 $\mathcal P_r$ 的非平凡粗化互不重复。两个非空胞有 $\operatorname{Bell}(2)=2$ 个分割，三个有 $\operatorname{Bell}(3)=5$ 个；先计共有单胞，再计其余粗化，得到（AA.9）。
+
+若 $\mathcal P_r$ 细于 $\mathcal P_t$，则以 $\mathcal P_t$ 的胞为标签的非恒定目标同时具有切口 $r,t$；唯一性给 $r=t$，故两两不可比。任一可取得分割均粗于一个 $\mathcal P_r$，而每个 $\mathcal P_r$ 本身可取得，故它们恰为全部极大元。有至少两个不可比极大元时，不可能存在一个可取得分割同时细于它们。证毕。
+
+“分别可取得但联合不可取得”及“没有最细可取得分割”的一般现象已由 [KBonacci 不可逆取得卷定理7.2与7.5](https://github.com/the-omega-institute/trureturing/blob/e271e8c9d490b299979f17661411302360adb4c6/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md)供应。这里的具体应用是同一已付混合尾档案的完整切口分类及 $4h-2$ 计数。经典分割计数、纤维交集和上述一般现象不另作为新成果。
+

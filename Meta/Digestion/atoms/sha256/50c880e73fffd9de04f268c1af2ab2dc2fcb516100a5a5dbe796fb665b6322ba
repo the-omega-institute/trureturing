@@ -1,0 +1,13 @@
+### 定义 12.1（当前切口的内容地址）
+
+对 $x,y\in M_d$，定义
+
+$$
+ x\sim_{\rho,\mathcal A}y
+ \quad\Longleftrightarrow\quad
+ \phi_\rho\bigl(a^\dagger(x-y)\bigr)=0
+ \quad\text{对全部 }a\in\mathcal A.
+$$
+
+相应等价类的规范代表为 $E_{\rho,\mathcal A}(x)$。
+

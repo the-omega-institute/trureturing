@@ -1,0 +1,21 @@
+**Proposition 30.4 (complete old-event replies can differ with the same
+new source action).** In the marked installation of §32, two histories
+$w_{n,z},w_{n,z'}$ with $z_i\ne z_i'$ have different FetchSelected$(i+1)$
+replies and different complete NextSelected$(i+1)$ replies. The latter
+requests nevertheless perform the same immediate source operation and
+have the same source successor.
+
+Proof. The fetched events are respectively $P_{p_i}$ and $S_{p_i}$.
+In both current sources the subtree at $p_i$ is
+$\langle\beta,\alpha\rangle$. Definition 20.4's actual left descent
+therefore reaches the same current $\beta$ leaf $p_iL$ and executes
+$S_{p_iL}$ in both cases. Its address $L^iRRL$ belongs to neither address
+class in (AA.98), so the new event is unselected and the final selection
+state remains zero. The full reply contains the acquired old event as
+well as this new event, and thus differs in the old kind. The retained
+selected words, and hence the selected semantic successors, still differ.
+Current source equality alone does not remove a distinction exposed by
+these complete replies. Section 32 supplies actual retained operands and
+current rights for the stated calls; event names alone do not supply them.
+$\square$
+
