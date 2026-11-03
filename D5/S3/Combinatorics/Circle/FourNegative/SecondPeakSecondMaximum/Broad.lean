@@ -4,8 +4,7 @@
    mirror-E: none(waiver:private-consumed-physical-certificate)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Physical reversed-middle certificate with the actual binary U transfer.
--/
+   digest: Physical reversed-middle certificate with the actual binary U transfer. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.BroadData
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native

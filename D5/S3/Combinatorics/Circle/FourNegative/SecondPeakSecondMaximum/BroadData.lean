@@ -4,8 +4,7 @@
    mirror-E: none(waiver:private-consumed-physical-certificate)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Numerical windows and physical label banks for the reversed-middle certificate.
--/
+   digest: Numerical windows and physical label banks for the reversed-middle certificate. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
