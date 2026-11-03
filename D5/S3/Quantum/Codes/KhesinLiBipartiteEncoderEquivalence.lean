@@ -396,9 +396,10 @@ private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
   have hs (T : Finset (Fin n)) : Function.support (b T) = (T : Set (Fin n)) := by
     have he : b T = (T : Set (Fin n)).indicator (fun _ => 1) := by
       funext a
+      change (ZMod.finEquiv 2) (finTwoEquiv.symm (decide (a ∈ T))) = _
       by_cases ha : a ∈ T <;>
-        simp [b, e, D5.S3.Quantum.MultifactorCorrelationSectorDecomposition.supportEquiv,
-          finTwoEquiv, ZMod.finEquiv, ha] <;> rfl
+        simp only [ha, decide_true, decide_false, Set.indicator_apply, Finset.mem_coe,
+          ite_true, ite_false] <;> rfl
     rw [he]
     rw [Set.support_indicator, Function.support_const one_ne_zero, Set.inter_univ]
   have hc (D : Matrix (Fin k) (Fin n) (ZMod 2)) (S : Finset (Fin n)) :
