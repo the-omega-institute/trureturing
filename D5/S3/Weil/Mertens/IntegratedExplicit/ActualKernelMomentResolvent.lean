@@ -748,6 +748,177 @@ lemma S_abs_le_W (D : ℝ) (hD : 0 ≤ D)
   rw [shifted_W D hD x a hx ha t (-1) (by norm_num)] at hm
   exact abs_le.mpr ⟨by linarith only [hp], by linarith only [hm]⟩
 
+
+private lemma literal_correlation_zero (x : I → ℝ) (a : I → ℂ)
+    (ha : ∑ i, a i = 0) : correlation x a 0 = energy x a := by
+  have hre := integral_re (shifted_hinge_prefix_energy x a ha 0).1
+  simp only [RCLike.re_to_complex] at hre
+  rw [correlation, ← hre]
+  apply integral_congr_ae
+  filter_upwards [] with v
+  simp only [add_zero]
+  rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
+    Complex.ofReal_re, Complex.normSq_eq_norm_sq]
+
+private def literalExpPair (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℝ :=
+  (∑ i, ∑ j, star (a i) * a j * (Real.exp (-|t + x i - x j| / 2) : ℂ)).re
+
+private lemma literalExpPair_neg (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
+    literalExpPair x a (-t) = literalExpPair x a t := by
+  classical
+  simp only [literalExpPair, Complex.re_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  have he : |-t + x j - x i| = |t + x i - x j| := by
+    rw [show -t + x j - x i = -(t + x i - x j) by ring, abs_neg]
+  rw [he]
+  simp only [Complex.mul_re, Complex.mul_im, Complex.star_def, Complex.conj_re,
+    Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im]
+  ring
+
+private lemma literalExpPair_shift (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
+    (quadratic (shiftedNodes x t) (shiftedCoeffs a 1)
+      (fun s => Real.exp (-|s| / 2))).re =
+      2 * literalExpPair x a 0 + 2 * literalExpPair x a t := by
+  classical
+  have hd : max t 0 - max (-t) 0 = t := by
+    rcases le_total 0 t with ht | ht
+    · rw [max_eq_left ht, max_eq_right (by linarith : -t ≤ 0)]; ring
+    · rw [max_eq_right ht, max_eq_left (by linarith : 0 ≤ -t)]; ring
+  have he₁ (i j : I) : x i + max t 0 - (x j + max t 0) = x i - x j := by ring
+  have he₂ (i j : I) : x i + max (-t) 0 - (x j + max (-t) 0) = x i - x j := by ring
+  have he₃ (i j : I) : x i + max t 0 - (x j + max (-t) 0) = t + x i - x j := by
+    linarith only [hd]
+  have he₄ (i j : I) : x i + max (-t) 0 - (x j + max t 0) = -t + x i - x j := by
+    linarith only [hd]
+  simp only [quadratic, Fintype.sum_sum_type, shiftedNodes, shiftedCoeffs,
+    Complex.ofReal_one, one_mul, he₁, he₂, he₃, he₄, Finset.sum_add_distrib,
+    Complex.add_re]
+  change literalExpPair x a 0 + literalExpPair x a t +
+    (literalExpPair x a (-t) + literalExpPair x a 0) = _
+  rw [literalExpPair_neg]
+  ring
+
+/-- Finite polarization of the actual resolvent, with support-safe shifts. -/
+private lemma literal_S_finite (D : ℝ) (hD : 0 ≤ D)
+    (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
+    (ha : ∑ i, a i = 0) (t : ℝ) :
+    S D x a t = correlation x a t - literalExpPair x a t := by
+  have hx' : ∀ i, shiftedNodes x t i ∈ Icc (0 : ℝ) (D + |t|) := by
+    intro i
+    cases i with
+    | inl i => exact ⟨add_nonneg (hx i).1 (le_max_right _ _),
+        add_le_add (hx i).2 (max_le (le_abs_self t) (abs_nonneg t))⟩
+    | inr i => exact ⟨add_nonneg (hx i).1 (le_max_right _ _),
+        add_le_add (hx i).2 (max_le (neg_le_abs t) (abs_nonneg t))⟩
+  have ha' : ∑ i, shiftedCoeffs a 1 i = 0 := by
+    simp [shiftedCoeffs, Fintype.sum_sum_type, ← Finset.mul_sum, ha]
+  have hp := shifted_W D hD x a hx ha t 1 (by norm_num)
+  have hd := W_eq_exponential_deficit (D + |t|) (by positivity) _ _ hx' ha'
+  have he := shifted_correlation x a ha t 1 0 (by norm_num)
+  rw [literal_correlation_zero _ _ ha', literal_correlation_zero _ _ ha,
+    zero_add, zero_sub, correlation_neg] at he
+  rw [W_eq_exponential_deficit D hD x a hx ha] at hp
+  rw [literalExpPair_shift] at hd
+  have hq : (quadratic x a (fun s => Real.exp (-|s| / 2))).re =
+      literalExpPair x a 0 := by simp [literalExpPair, quadratic]
+  rw [hq] at hp
+  linarith only [hp, hd, he]
+
+private def literalNuNodes (ell : ℝ) : Fin 3 → ℝ := ![0, ell / 2, ell]
+private def literalNuCoeffs (ell : ℝ) : Fin 3 → ℝ :=
+  ![1, -(1 + Real.exp (-ell / 4)), Real.exp (-ell / 4)]
+private def literalStep (q : ℕ) : ℝ := 1 / (16 * (q : ℝ))
+private def literalNodes (q : ℕ) (i : Fin q × Fin 3 × Bool) : ℝ :=
+  (i.1 : ℝ) * literalStep q + literalNuNodes (literalStep q) i.2.1 +
+    if i.2.2 then Real.log 2 else 0
+private def literalCoeffs (q : ℕ) (i : Fin q × Fin 3 × Bool) : ℂ :=
+  (((-1 : ℝ) ^ (i.1 : ℕ) * ((q - 1).choose (i.1 : ℕ) : ℝ) *
+    literalNuCoeffs (literalStep q) i.2.1 * if i.2.2 then -1 else 1) : ℝ)
+
+private lemma literal_step_bounds (q : ℕ) (hq : 1 ≤ q) :
+    0 < literalStep q ∧ literalStep q ≤ 1 / 16 ∧
+      (q : ℝ) * literalStep q = 1 / 16 := by
+  have hqr : (0 : ℝ) < q := by exact_mod_cast (by omega : 0 < q)
+  have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast hq
+  dsimp [literalStep]
+  constructor
+  · positivity
+  constructor
+  · apply (div_le_div_iff₀ (by positivity : (0 : ℝ) < 16 * q) (by norm_num : (0 : ℝ) < 16)).mpr
+    nlinarith
+  · field_simp
+
+private lemma literal_support (q : ℕ) (hq : 1 ≤ q) (i : Fin q × Fin 3 × Bool) :
+    literalNodes q i ∈ Icc (0 : ℝ) (1 / 16) ∪
+      Icc (Real.log 2) (Real.log 2 + 1 / 16) := by
+  have hl := literal_step_bounds q hq
+  have hj : (i.1 : ℝ) + 1 ≤ q := by exact_mod_cast i.1.isLt
+  have hk : 0 ≤ literalNuNodes (literalStep q) i.2.1 ∧
+      literalNuNodes (literalStep q) i.2.1 ≤ literalStep q := by
+    rcases i.2.1 with ⟨k, hk⟩
+    interval_cases k <;> simp [literalNuNodes] <;> constructor <;> linarith [hl.1]
+  have hb : 0 ≤ (i.1 : ℝ) * literalStep q + literalNuNodes (literalStep q) i.2.1 ∧
+      (i.1 : ℝ) * literalStep q + literalNuNodes (literalStep q) i.2.1 ≤ 1 / 16 := by
+    constructor
+    · positivity
+    · nlinarith [mul_le_mul_of_nonneg_right hj hl.1.le, hl.2.2]
+  cases hb' : i.2.2
+  · exact Or.inl (by simpa [literalNodes, hb'] using hb)
+  · exact Or.inr (by simp only [literalNodes, hb', ite_true, mem_Icc]; constructor <;> linarith [hb.1, hb.2])
+
+private lemma literalNu_mass (ell : ℝ) : ∑ k, (literalNuCoeffs ell k : ℂ) = 0 := by
+  simp [literalNuCoeffs, Fin.sum_univ_succ]
+  ring
+
+private lemma literalNu_exp (ell : ℝ) :
+    ∑ k, (literalNuCoeffs ell k : ℂ) * (Real.exp (literalNuNodes ell k / 2) : ℂ) = 0 := by
+  have h₁ : Real.exp (-ell / 4) * Real.exp (ell / 4) = 1 := by
+    rw [← Real.exp_add]; convert Real.exp_zero using 2 <;> ring
+  have h₂ : Real.exp (-ell / 4) * Real.exp (ell / 2) = Real.exp (ell / 4) := by
+    rw [← Real.exp_add]; congr 1; ring
+  simp [literalNuNodes, literalNuCoeffs, Fin.sum_univ_succ]
+  push_cast
+  have h₁c := congrArg (fun z : ℝ => (z : ℂ)) h₁
+  have h₂c := congrArg (fun z : ℝ => (z : ℂ)) h₂
+  push_cast at h₁c h₂c
+  linear_combination -h₁c + h₂c
+
+private lemma literal_exp_cubic (z : ℝ) (hz : 0 ≤ z) :
+    z ^ 3 / 6 ≤ (z - 2) * Real.exp z + z + 2 := by
+  let f : ℝ → ℝ := fun t => (t - 1) * Real.exp t + 1 - t ^ 2 / 2
+  have hf' (t : ℝ) : HasDerivAt f (t * (Real.exp t - 1)) t := by
+    dsimp [f]
+    convert (((hasDerivAt_id t).sub_const 1).mul (Real.hasDerivAt_exp t)).add_const 1 |>.sub
+      (((hasDerivAt_id t).pow 2).div_const 2) using 1 <;> ring
+  have hf : MonotoneOn f (Ici 0) := by
+    apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici 0)
+      (by dsimp [f]; fun_prop)
+      (fun t _ => (hf' t).hasDerivWithinAt)
+    intro t ht
+    have ht0 : 0 ≤ t := (interior_subset ht : t ∈ Ici (0 : ℝ))
+    exact mul_nonneg ht0 (sub_nonneg.mpr (Real.one_le_exp_iff.mpr ht0))
+  have hf0 (t : ℝ) (ht : 0 ≤ t) : 0 ≤ f t := by
+    have h := hf (by simp) ht ht
+    simpa [f] using h
+  let g : ℝ → ℝ := fun t => (t - 2) * Real.exp t + t + 2 - t ^ 3 / 6
+  have hg' (t : ℝ) : HasDerivAt g (f t) t := by
+    dsimp [g, f]
+    convert (((((hasDerivAt_id t).sub_const 2).mul (Real.hasDerivAt_exp t)).add
+      (hasDerivAt_id t)).add_const 2).sub (((hasDerivAt_id t).pow 3).div_const 6) using 1 <;> ring
+  have hg : MonotoneOn g (Ici 0) := by
+    apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici 0)
+      (by dsimp [g]; fun_prop) (fun t _ => (hg' t).hasDerivWithinAt)
+    intro t ht
+    exact hf0 t (interior_subset ht)
+  have h := hg (by simp) hz hz
+  dsimp [g] at h
+  norm_num at h
+  linarith
+
 /-- Concrete S/Gamma resolvent control. The lower and shift bounds come
 from the actual finite causal squares and their translated polarization;
 the upper bound consumes the retained moment-exponential theorem. -/
