@@ -49,8 +49,25 @@ class LocalEntryFixture:
         if initial is None or initial[0] != key:
             initial = key, publication.coordinates(self.root)
             type(self)._initial_seed_coordinates = initial
-        with patch.object(publication, 'coordinates', return_value=dict(initial[1])):
-            self.api = self.fixture.receipt()
+        import reuse
+        captured = reuse.capture(self.root)
+        material = getattr(type(self), '_initial_seed_material', None)
+        if material is None or material[0] != (key, captured):
+            with patch.object(publication, 'coordinates', return_value=dict(initial[1])):
+                self.fixture.receipt()
+            material = (key, captured), tuple((path.name, path.read_bytes(), path.stat().st_mode & 0o777)
+                for path in self.fixture.report.parent.iterdir() if path.is_file())
+            type(self)._initial_seed_material = material
+        else:
+            # This fixture already starts with a synthetic sealed seed. Share
+            # only its immutable construction bytes after checking every
+            # registered input and execution value; each case owns its files.
+            # The entry still exercises the real reuse/publication writer.
+            for name, data, mode in material[1]:
+                target = self.fixture.report.parent / name
+                target.write_bytes(data)
+                target.chmod(mode)
+        self.api = reuse
         self.seed = self.fixture.report
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         for name in ('Makefile', 'tools/scripts/report/lean-report.sh',
