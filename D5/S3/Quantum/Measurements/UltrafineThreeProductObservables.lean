@@ -519,7 +519,8 @@ private lemma separable_ground_exclusion
   have hqr : 0 < (star v ⬝ᵥ ((hamiltonian - (μ : ℂ) • 1) *ᵥ v)).re := by
     exact (Complex.pos_iff.mp (lt_of_le_of_ne hq hqn.symm)).1
   change μ < (trace (rankOneDensity v * hamiltonian)).re
-  rw [trace_mul_comm, rankOneDensity, mul_vecMulVec, trace_vecMulVec, dotProduct_comm]
+  rw [trace_mul_comm,
+    ← (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake v hv hamiltonian).2.2]
   simp only [sub_mulVec, smul_mulVec, one_mulVec, dotProduct_sub, dotProduct_smul,
     hv, smul_eq_mul, mul_one, Complex.sub_re, Complex.ofReal_re] at hqr
   linarith
@@ -539,8 +540,9 @@ private lemma triple_useful : ¬ IsUseless obs univ := by
     rw [mul_add, mul_add, trace_add, trace_add, h0, h1, h2,
       ← trace_add, ← trace_add, ← mul_add, ← mul_add]
     change trace (rankOneDensity g * hamiltonian) = _
-    rw [trace_mul_comm, rankOneDensity, mul_vecMulVec, trace_vecMulVec,
-      heig, smul_dotProduct, dotProduct_comm, hg, smul_eq_mul, mul_one]
+    rw [trace_mul_comm,
+      ← (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake g hg hamiltonian).2.2,
+      heig, dotProduct_smul, hg, smul_eq_mul, mul_one]
   have hstrict := separable_ground_exclusion μ hpos (no_product_ground μ hμ) σ hσ
   rw [henergy] at hstrict
   exact (lt_irrefl μ) hstrict
