@@ -32,7 +32,7 @@ Cooling maps (Supplementary Note):
 
 > A quantum channel (CPTP map) with a Kraus decomposition consisting of Kraus operators of the following two classes: Diagonal matrices $\{K_1\dots K_n\}$. Without loss of generality, we can assume $n\le d$. Matrices of the form $J_{jk}\propto|E_j\rangle\langle E_k|$, $j<k$. All matrix representations are in the standard basis $\{|E_j\rangle\}$. Note that the elements of the matrices can be complex.
 
-Conjecture 1 (main text):
+Conjecture 1 (Supplemental Material, `LTT_arXiv.tex` lines 924–927):
 
 > Cooling maps are equivalent to low-temperature thermal operations, with regard to the feasibility of state transitions.
 
