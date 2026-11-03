@@ -1,1 +1,0 @@
-WIP: integrate unbounded q-two selector and replace six finite rows

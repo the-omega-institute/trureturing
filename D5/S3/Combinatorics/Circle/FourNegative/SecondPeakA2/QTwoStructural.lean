@@ -4,9 +4,10 @@
    mirror-E: none(waiver:physical-source-family-registration)
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
-   digest: Unbounded modulus-nine q-two selection with dyadic proper submasks and exact physical windows. -/
+   digest: Unbounded q-two selector with dyadic proper submasks and exact windows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.Algebra
 
+/-! Modulus-nine selection and dyadic bit inclusion for exact physical windows. -/
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
 open D5.S3.Combinatorics.Circle.FourNegative
@@ -60,6 +61,7 @@ private theorem q_two_residue_windows (p h : ℤ) (hp : 8 ≤ p) (hh : 1 ≤ h) 
   let v := (16*p+3-5*j)/9
   have hf := q_two_residue_first p h hp hh
   change First p 2 h v (h*j) true at hf
+  change Windows p 2 h v (h*j) (h*(2*p-1)) true
   intro r
   fin_cases r
   · have he : SecondPeakHighD.oldEnds 4 p 2 h v (h*j) (h*(2*p-1)) 0=
@@ -83,15 +85,15 @@ private theorem q_two_residue_windows (p h : ℤ) (hp : 8 ≤ p) (hh : 1 ≤ h) 
     obtain ⟨a,ha,hpa⟩ : ∃ a : ℤ, 0≤a ∧ p=a+8 := ⟨p-8,by omega,by ring⟩
     obtain ⟨b,hb,hhb⟩ : ∃ b : ℤ, 0≤b ∧ h=b+1 := ⟨h-1,by omega,by ring⟩
     rw [hpa,hhb]
-    norm_num [SecondPeakHighD.oldEnds,SecondPeakHighD.newEnds,
+    dsimp [SecondPeakHighD.oldEnds,SecondPeakHighD.newEnds,
       SecondPeakHighD.oldHeads,SecondPeakHighD.newHeads,SecondPeakHighD.A,
       SecondPeakHighD.B,SecondPeakHighD.L,SecondPeakHighD.K,SecondPeakHighD.SU,
       SecondPeakHighD.SV,SecondPeakHighD.SW,SecondPeakHighD.Y,
       SecondPeakHighD.Z,SecondPeakHighD.T]
     <;> ring_nf <;> positivity
 
-/-- Live arithmetic consumer: returns the prescribed witnesses with every
-    stock bound and every physical window; Submask is a separate open bridge. -/
+/-- The arithmetic selector returns all stock bounds and physical windows;
+    the dyadic bit bridge supplies Submask. -/
 private theorem q_two_arithmetic_selection (p h : ℤ) (hp : 8 ≤ p) (hh : 1 ≤ h) :
     ∃ v m M : ℤ,
       9*v+5*((32*p+6)%9)=16*p+3 ∧
@@ -122,7 +124,7 @@ theorem q_two_dyadic_good (P H : ℕ) (hP : 3 ≤ P) :
     ∃ v m M : ℕ, Good (2^P) 2 (2^H) v m M true := by
   let p : ℕ := 2^P
   let h : ℕ := 2^H
-  have hp : 8 ≤ p := Nat.pow_le_pow_right (by decide) hP
+  have hp : 8 ≤ p := Nat.pow_le_pow_right (by decide : 0 < (2:ℕ)) hP
   have hh : 1 ≤ h := Nat.one_le_two_pow
   obtain ⟨v,m,M,heq,hm,hM,hv,hv',hm0,hmM,hstock,hw⟩ :=
     q_two_arithmetic_selection p h (by exact_mod_cast hp) (by exact_mod_cast hh)
@@ -154,11 +156,18 @@ theorem q_two_dyadic_good (P H : ℕ) (hP : 3 ≤ P) :
     push_cast [Nat.cast_sub (by omega : 1 ≤ 2*p)]
     rw [hMcast]
     exact hM
+  rw [←hvcast] at hv hv'
+  rw [←hmcast,←hMcast] at hmM
+  rw [←hMcast] at hstock
   refine ⟨v.toNat,m.toNat,M.toNat,?_,?_,?_,?_,?_,?_⟩
   · exact_mod_cast hv
-  · exact_mod_cast hv'
+  · have hn : 2*v.toNat ≤ 8*p := by exact_mod_cast hv'
+    change 2*v.toNat ≤ 4*p*2
+    omega
   · exact_mod_cast hmM
-  · exact_mod_cast hstock
+  · have hn : 2*M.toNat < 16*h*p := by exact_mod_cast hstock
+    change 2*M.toNat < 8*h*p*2
+    nlinarith only [hn]
   · rw [hmn,hMn]
     exact submask_shift _ _ H hs
   · simpa only [hvcast,hmcast,hMcast,Nat.cast_ofNat] using hw
