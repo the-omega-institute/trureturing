@@ -106,6 +106,10 @@ $$\neg (\forall (m: \mathbb{N}), (\forall (k: (\operatorname{Fin}\left(m\right))
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/WaitingTimeRandomnessSkewnessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barato-seifert-2015-waiting-time-randomness-skewness-refutation` (refuted) by `D5/S3/StatisticalMechanics/WaitingTimeRandomnessSkewnessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barato-seifert-2015-waiting-time-randomness-skewness-refutation","declaration_gid":"D5/S3/StatisticalMechanics/WaitingTimeRandomnessSkewnessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andre C. Barato, Udo Seifert (2015). *Skewness and Kurtosis in Statistical Kinetics*. DOI: [10.1103/PhysRevLett.115.188103](https://doi.org/10.1103/PhysRevLett.115.188103). URL: <https://arxiv.org/abs/1510.03279v1>.

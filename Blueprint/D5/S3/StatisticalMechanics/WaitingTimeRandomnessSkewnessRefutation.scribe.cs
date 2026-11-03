@@ -128,7 +128,10 @@ internal sealed class WaitingTimeRandomnessSkewnessRefutationDocument : IScribeD
                             + "the first-passage moment definition above and refutes the "
                             + "randomness-versus-skewness implication asked about in "
                             + "Barato and Seifert, TeX lines 350–358."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barato-seifert-2015-waiting-time-randomness-skewness-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) =>
