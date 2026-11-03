@@ -123,7 +123,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : actual.readout () () vacuum ≠ actual.readout () () 0 := by
   intro h
   change parity vacuum = parity 0 at h
-  rw [map_zero, show parity vacuum = vacuum by simp [vacuum, parity_ket]] at h
+  have hv : parity vacuum = vacuum := by simp [vacuum, parity_ket]
+  rw [map_zero, hv] at h
   have he := congrArg (fun a : Fock => a ∅) h
   norm_num [vacuum, ket] at he
 
@@ -268,7 +269,8 @@ private theorem actual_dependence : actual.readout () 1 (ket {0}) ≠ actual.rea
       ((-1 : ℂ) ^ 1) • (((Y (ket {0})) [[-1]]) * _root_.D5.S3.Quantum.Fermionic.BcGhostBRST.Qg) = _
     rw [Qg_signed_derivation (ket {0}) 1 (by simp [parity_ket]) (-1), qg]
   have he := congrArg (fun A : ℤ → Module.End ℂ Fock => A (-1) vacuum {0,3}) h
-  change actual.readout () 1 (ket {0}) (-1) vacuum {0,3} = actual.readout () 1 0 (-1) vacuum {0,3} at he
+  change actual.readout () 1 (ket {0}) (-1) vacuum {0,3} =
+    actual.readout () 1 0 (-1) vacuum {0,3} at he
   rw [first, stateField_creation.2.1] at he
   have hz (z : ℂ) : (Finsupp.single ({1,2} : Finset ℕ) z) {0,3} = 0 :=
     Finsupp.single_eq_of_ne (by decide)
