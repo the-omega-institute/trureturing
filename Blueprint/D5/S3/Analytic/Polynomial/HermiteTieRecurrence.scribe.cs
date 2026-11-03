@@ -35,12 +35,14 @@ internal sealed class HermiteTieRecurrenceDocument : IScribeDocumentDefinition
                 + "of minus one and polynomial normalization give their sum. This proves the recurrence for every n at least six, "
                 + "with no finite cutoff or additional assumption. The recurrence is the assertion named Conjecture 2 in "
                 + "OEIS A381737 revision 28, offset 1,1. Its proof is a consequence of the stronger Conjecture 1 enumeration.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a381737-hermite-tie-recurrence"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hermite-tie-recurrence-" + name), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Ints() => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
