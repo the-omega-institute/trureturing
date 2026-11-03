@@ -72,17 +72,14 @@ private lemma f_lower_bound (u : ℝ) (hu : 0 < u) (hu1 : u < 1) :
   · linarith
   · exact hu
 
-private lemma lowerBound_negative : lowerBound < 0 := by
-  have h := source_le_lower_bound (1 / 3) (by norm_num)
-  dsimp [sourceExpression] at h
-  norm_num at h ⊢
-  linarith
-
 private lemma lowerBound_lt_three_eighty : lowerBound < -(3 / 80 : ℝ) := by
   have h := source_le_lower_bound (1 / 4) (by norm_num)
   dsimp [sourceExpression] at h
   norm_num at h ⊢
   linarith
+
+private lemma lowerBound_negative : lowerBound < 0 :=
+  lt_trans lowerBound_lt_three_eighty (by norm_num)
 
 private lemma f_strict_scale (t z : ℝ) (ht : 0 < t) (htz : t < z)
     (hneg : z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6) < 0) :
