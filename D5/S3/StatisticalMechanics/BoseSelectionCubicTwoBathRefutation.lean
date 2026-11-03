@@ -123,7 +123,7 @@ private theorem neighborhood_open : IsOpen neighborhood := by
       (pfaffian_continuousOn i).isOpen_inter_preimage couplingDomain_open isOpen_Ioi
   convert h using 1
   ext p
-  simp only [neighborhood, mem_ofPred_eq, mem_iInter, mem_inter_iff, mem_preimage, mem_Ioi]
+  simp only [mem_ofPred_eq, mem_iInter, mem_inter_iff, mem_preimage, mem_Ioi]
   exact ⟨fun hp i => ⟨hp.1, hp.2 i⟩, fun hp => ⟨(hp 0).1, fun i => (hp i).2⟩⟩
 
 private theorem base_mem : base ∈ neighborhood := by
