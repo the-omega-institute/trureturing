@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceConnectedSpe
 
 *Commentary.*
 
-For arbitrary n,G,w,t, positive semidefiniteness of L-t*(I-constProj n) implies t*dotProduct x x at most dotProduct x (L*x) for every x whose coordinate sum is zero. This is a consumed bind-only interface to the actual Rayleigh infimum.
+For arbitrary n,G,w,t, positive semidefiniteness of L-t*(I-constProj n) implies t*dotProduct x x at most dotProduct x (L*x) for every x whose coordinate sum is zero.
 
 **Theorem 1.6 (The actual mean-zero infimum is the positive spectral minimum).**
 
