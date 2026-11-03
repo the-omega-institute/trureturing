@@ -66,8 +66,9 @@ theorem actual_xi_hankel_identity (N m : ℕ) (u : Fin (N + 1) → ℝ) :
     (∑' n : PositiveZero, weight n *
       (node n ^ m * ∑ a : Fin (N + 1), (u a : ℂ) * node n ^ (a : ℕ)) ^ 2).re := by
   rw [(hankel_hasSum N m u).tsum_eq]
-  simp only [Complex.re_sum, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-    mul_zero, zero_mul, sub_zero, xiCoefficient_eq]
+  simp only [Complex.re_sum, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, mul_zero, zero_mul, sub_zero, add_zero,
+    xiCoefficient_eq]
 
 /-- Under RH only, the same actual derivative Hankel form is nonnegative. -/
 theorem actual_xi_hankel_nonnegative_of_rh (hRH : RiemannHypothesis)
