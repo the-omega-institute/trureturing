@@ -7,13 +7,17 @@
    digest: Two cubic product-coupled baths admit an open set with five Bose-selected modes. -/
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Real.Sign
+import Mathlib.Basic.Real.Sign
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Topology.Algebra.Order.Field
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
+
+/-! The cubic two-bath family has a strictly positive signed-Pfaffian kernel on a nonempty
+open set. This refutes the generic non-Ohmic bound preregistered in issue #25984; the Ohmic
+bound and physical realization of the baths are outside the statement. -/
 
 namespace D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation
 
@@ -68,37 +72,81 @@ private noncomputable def neighborhood :
   {p | p ∈ couplingDomain ∧ ∀ i, 0 < pfaffianVector (asym 3 p.1 p.2.1 p.2.2) i}
 
 private theorem spectral_three (x : ℝ) : spectral 3 x = x ^ 3 := by
-  sorry
+  change Real.sign x * |x| ^ ((3 : ℕ) : ℝ) = x ^ (3 : ℕ)
+  rw [Real.rpow_natCast]
+  rcases lt_trichotomy x 0 with h | h | h
+  · rw [Real.sign_of_neg h, abs_of_neg h]
+    ring
+  · subst x
+    norm_num [Real.sign]
+  · rw [Real.sign_of_pos h, abs_of_pos h, one_mul]
 
 private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
     asym 3 ε F G j i = -asym 3 ε F G i j := by
-  sorry
+  unfold asym
+  rw [spectral_three, spectral_three]
+  ring
 
 private theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
     (h : ∀ i j, a j i = -a i j) : a *ᵥ pfaffianVector a = 0 := by
-  sorry
+  have hd (i : Fin 5) : a i i = 0 := by linarith [h i i]
+  ext i
+  fin_cases i <;>
+    norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, pfaffianVector, hd,
+      h 0 1, h 0 2, h 0 3, h 0 4, h 1 2, h 1 3, h 1 4, h 2 3, h 2 4, h 3 4] <;>
+    ring
 
 private theorem couplingDomain_open : IsOpen couplingDomain := by
-  sorry
+  change IsOpen ({p : (Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ) |
+    ∀ i, 0 < p.2.1 i} ∩ {p | ∀ i, 0 < p.2.2 i})
+  simp only [setOf_forall]
+  apply IsOpen.inter <;> apply isOpen_iInter_of_finite <;> intro i <;>
+    exact isOpen_lt continuous_const (by fun_prop)
 
 private theorem asym_continuousOn (i j : Fin 5) :
     ContinuousOn (fun p : (Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ) =>
       asym 3 p.1 p.2.1 p.2.2 i j) couplingDomain := by
-  sorry
+  intro p hp
+  have hF : (∑ k, p.2.1 k) ≠ 0 :=
+    ne_of_gt (Finset.sum_pos (fun k _ => hp.1 k) Finset.univ_nonempty)
+  have hG : (∑ k, p.2.2 k) ≠ 0 :=
+    ne_of_gt (Finset.sum_pos (fun k _ => hp.2 k) Finset.univ_nonempty)
+  apply ContinuousAt.continuousWithinAt
+  unfold asym
+  simp_rw [spectral_three]
+  unfold weight
+  fun_prop (disch := assumption)
 
 private theorem pfaffian_continuousOn (i : Fin 5) :
     ContinuousOn (fun p : (Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ) =>
       pfaffianVector (asym 3 p.1 p.2.1 p.2.2) i) couplingDomain := by
-  sorry
+  have h (j k : Fin 5) := asym_continuousOn j k
+  fin_cases i <;> dsimp [pfaffianVector] <;> fun_prop
 
 private theorem neighborhood_open : IsOpen neighborhood := by
-  sorry
+  have h : IsOpen (⋂ i : Fin 5, couplingDomain ∩
+      (fun p => pfaffianVector (asym 3 p.1 p.2.1 p.2.2) i) ⁻¹' Ioi 0) :=
+    isOpen_iInter_of_finite fun i =>
+      (pfaffian_continuousOn i).isOpen_inter_preimage couplingDomain_open isOpen_Ioi
+  convert h using 1
+  ext p
+  simp only [neighborhood, mem_ofPred_eq, mem_iInter, mem_inter_iff, mem_preimage, mem_Ioi]
+  exact ⟨fun hp i => ⟨hp.1, hp.2 i⟩, fun hp => ⟨(hp 0).1, fun i => (hp i).2⟩⟩
 
 private theorem base_mem : base ∈ neighborhood := by
-  sorry
+  refine ⟨⟨?_, ?_⟩, ?_⟩ <;> intro i <;> fin_cases i <;>
+    norm_num [base, pfaffianVector, asym, spectral_three, weight, Fin.sum_univ_succ]
 
 private theorem neighborhood_subset : neighborhood ⊆ violating 3 5 := by
-  sorry
+  intro p hp
+  refine ⟨hp.1.1, hp.1.2, Finset.univ,
+    pfaffianVector (asym 3 p.1 p.2.1 p.2.2), ?_, by decide⟩
+  intro i
+  constructor
+  · intro _
+    exact ⟨hp.2 i, congrFun (pfaffian_kernel _ (asym_skew p.1 p.2.1 p.2.2)) i⟩
+  · intro hi
+    exact (hi (Finset.mem_univ i)).elim
 
 private theorem interior_nonempty : (interior (violating 3 5)).Nonempty := by
   exact ⟨base, interior_mono neighborhood_subset
