@@ -202,33 +202,143 @@ def reportSquared (t : ℝ) : ℝ :=
       ‖E t (e i ⊗ₜ e j) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2
 
 
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 8000000 in
-private theorem report_row_z (t : ℝ) (k l : Fin 4) :
-    (∑ m : Fin 4, ∑ n : Fin 4,
-      ‖E t (e 0 ⊗ₜ e 3) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2) =
-      (if (k=0 ∨ k=3) ∧ (l=0 ∨ l=3) then 0 else 4*t^2) := by
-  fin_cases k <;> fin_cases l <;>
-    norm_num (config := { maxSteps := 1000000 }) only
-      [← real_inner_self_eq_norm_sq, Fin.sum_univ_succ, E,
-    m_tmul, gamma_tmul, d_split, s_basis, c_basis,
-    map_add, map_sub, map_smul, TensorProduct.add_tmul, TensorProduct.sub_tmul,
-    TensorProduct.tmul_add, TensorProduct.tmul_sub, TensorProduct.neg_tmul,
-    TensorProduct.tmul_neg, TensorProduct.smul_tmul', TensorProduct.tmul_smul,
-    inner_sub_left, inner_sub_right, inner_add_left, inner_add_right,
-    inner_smul_left, inner_smul_right, TensorProduct.inner_tmul, e_inner,
-    e_apply, map_zero, map_neg, LinearMap.zero_apply, TensorProduct.zero_tmul,
-    TensorProduct.tmul_zero, inner_zero_left, inner_zero_right,
-    zero_add, add_zero, sub_zero, zero_sub, zero_smul, smul_zero, one_smul,
-    zero_mul, mul_zero, one_mul, mul_one, neg_zero, neg_neg, add_neg_cancel,
-    sub_self, sub_neg_eq_add, neg_add_cancel, Fin.reduceFinMk, ite_true, ite_false]
-  <;> ring
+private theorem d_affine (t : ℝ) (a b : J) :
+    D t a b = D 0 a b + t • (D 1 a b-D 0 a b) := by
+  ext i; fin_cases i <;> simp [D,C,cross,cross_apply,shift] <;> ring
 
-private theorem report_block_z (t : ℝ) :
+private theorem d_affine_map (t : ℝ) (a : J) :
+    D t a = D 0 a+t • (D 1 a-D 0 a) := by
+  apply LinearMap.ext
+  intro b
+  exact d_affine t a b
+
+private theorem map_sub_left (f g k : J →ₗ[ℝ] J) :
+    TensorProduct.map (f-g) k=TensorProduct.map f k-TensorProduct.map g k := by
+  apply LinearMap.ext
+  intro X
+  induction X using TensorProduct.inductionOn with
+  | tmul a b => simp [TensorProduct.sub_tmul]
+  | add X Y hx hy => simp [map_add,hx,hy]
+
+private theorem map_sub_right (f g k : J →ₗ[ℝ] J) :
+    TensorProduct.map f (g-k)=TensorProduct.map f g-TensorProduct.map f k := by
+  apply LinearMap.ext
+  intro X
+  induction X using TensorProduct.inductionOn with
+  | tmul a b => simp [TensorProduct.tmul_sub]
+  | add X Y hx hy => simp [map_add,hx,hy]
+
+private theorem gamma_affine (t : ℝ) (H X : V) :
+    Gamma t H X = Gamma 0 H X + t • (Gamma 1 H X-Gamma 0 H X) := by
+  have hmap : Gamma t H = Gamma 0 H+t • (Gamma 1 H-Gamma 0 H) := by
+    induction H using TensorProduct.inductionOn with
+    | tmul a b =>
+      simp only [Gamma,TensorProduct.lift.tmul,LinearMap.mk₂_apply]
+      rw [d_affine_map t a,d_affine_map t b]
+      simp only [TensorProduct.map_add_left,TensorProduct.map_add_right,
+        map_sub_left,map_sub_right,
+        TensorProduct.map_smul_left,TensorProduct.map_smul_right]
+      module
+    | add H K hh hk => simp only [map_add,hh,hk]; module
+  exact LinearMap.congr_fun hmap X
+
+private theorem e_affine (t : ℝ) (H X Y : V) :
+    E t H X Y = E 0 H X Y + t • (E 1 H X Y-E 0 H X Y) := by
+  simp only [E, gamma_affine t, map_add, map_sub, map_smul,
+    LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply]
+  module
+
+set_option maxHeartbeats 2000000 in
+private theorem report_row_z (k l : Fin 4) :
+    (∑ m : Fin 4, ∑ n : Fin 4,
+      ‖E 1 (e 0 ⊗ₜ e 3) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2) =
+      (if (k=0 ∨ k=3) ∧ (l=0 ∨ l=3) then 0 else 4) := by
+  fin_cases k <;> fin_cases l <;>
+    norm_num [Fin.sum_univ_succ, E, m_tmul, gamma_tmul, d_split, s_basis, c_basis,
+      e_apply, map_add, map_sub, map_smul, map_neg,
+      TensorProduct.add_tmul, TensorProduct.sub_tmul,
+      TensorProduct.tmul_add, TensorProduct.tmul_sub, TensorProduct.neg_tmul,
+      TensorProduct.tmul_neg]
+  all_goals norm_num [e]
+
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 10000000 in
+private theorem e_zero_basis (i j k l m n : Fin 4) :
+    E 0 (e i ⊗ₜ e j) (e k ⊗ₜ e l) (e m ⊗ₜ e n)=0 := by
+  fin_cases i <;> fin_cases j <;> fin_cases k <;>
+    fin_cases l <;> fin_cases m <;> fin_cases n <;>
+    norm_num [E,m_tmul,gamma_tmul,d_split,s_basis,c_basis,e_apply,
+      map_add,map_sub,map_neg,TensorProduct.add_tmul,TensorProduct.sub_tmul,
+      TensorProduct.tmul_add,TensorProduct.tmul_sub,TensorProduct.neg_tmul,
+      TensorProduct.tmul_neg]
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 10000000 in
+private theorem block_one (i j : Fin 4) :
     (∑ k : Fin 4, ∑ l : Fin 4, ∑ m : Fin 4, ∑ n : Fin 4,
-      ‖E t (e 0 ⊗ₜ e 3) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2) = 48*t^2 := by
-  simp only [report_row_z]
-  norm_num [Fin.sum_univ_succ]
-  <;> ring
+      ‖E 1 (e i ⊗ₜ e j) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖^2)=
+      if (i=0 ∧ j≠0) ∨ (i≠0 ∧ j=0) then 48 else 0 := by
+  by_cases hz : i=0 ∧ j=3
+  · rcases hz with ⟨rfl,rfl⟩
+    simp_rw [report_row_z]
+    norm_num [Fin.sum_univ_succ]
+  · fin_cases i <;> fin_cases j <;>
+      norm_num [Fin.sum_univ_succ,E,m_tmul,gamma_tmul,d_split,s_basis,c_basis,
+        e_apply,map_add,map_sub,map_neg,TensorProduct.add_tmul,TensorProduct.sub_tmul,
+        TensorProduct.tmul_add,TensorProduct.tmul_sub,TensorProduct.neg_tmul,
+        TensorProduct.tmul_neg] at hz ⊢
+    all_goals norm_num [e]
+
+/-- The complete 16 by 16 by 16 actual residual, with all output coordinates, has this exact square. -/
+theorem full_report (t : ℝ) : reportSquared t=288*t^2 := by
+  have hone : reportSquared 1=288 := by
+    unfold reportSquared
+    simp_rw [block_one]
+    norm_num [Fin.sum_univ_succ]
+  have hscale : reportSquared t=t^2*reportSquared 1 := by
+    unfold reportSquared
+    simp_rw [e_affine t,e_zero_basis,sub_zero,zero_add,norm_smul,Real.norm_eq_abs,
+      mul_pow,sq_abs]
+    simp_rw [← Finset.mul_sum]
+  rw [hscale,hone]
+  ring
+
+/-- The complete local orthonormal basis. -/
+def localBasis : OrthonormalBasis (Fin 4) ℝ J := EuclideanSpace.basisFun (Fin 4) ℝ
+/-- The complete joint orthonormal basis with the product positive inner product. -/
+def jointBasis : OrthonormalBasis (Fin 4 × Fin 4) ℝ V :=
+  localBasis.tensorProduct localBasis
+
+/-- The same fixed products satisfy the complete all-input realization contract. -/
+theorem family_contract (t : ℝ) :
+    Module.finrank ℝ J=4 ∧ Module.finrank ℝ V=16 ∧
+    (∀ i : Fin 4, localBasis i=e i) ∧
+    (∀ i j : Fin 4, jointBasis (i,j)=e i ⊗ₜ e j) ∧
+    (∀ a b : J, S a b=S b a) ∧ (∀ a : J, S (e 0) a=a) ∧
+    (∀ a b c : J, inner ℝ (S a b) c=inner ℝ a (S b c)) ∧
+    (∀ a b c : J, D t a (S b c)=S (D t a b) c+S b (D t a c)) ∧
+    D t (e 1) (e 2)=e 3 ∧
+    (∀ X Y : V, M X Y=M Y X) ∧
+    (∀ X : V, M (e 0 ⊗ₜ e 0) X=X) ∧
+    (∀ X Y Z : V, inner ℝ (M X Y) Z=inner ℝ X (M Y Z)) ∧
+    (∀ X : V, 0≤inner ℝ X X ∧ (inner ℝ X X=0 ↔ X=0)) ∧
+    (∀ a b c d : J,
+      M (a ⊗ₜ e 0) (c ⊗ₜ d)=S a c ⊗ₜ d ∧
+      M (e 0 ⊗ₜ b) (c ⊗ₜ d)=c ⊗ₜ S b d ∧
+      Gamma t (a ⊗ₜ b) (c ⊗ₜ e 0)=D t a c ⊗ₜ b ∧
+      Gamma t (a ⊗ₜ b) (e 0 ⊗ₜ d)=a ⊗ₜ D t b d) ∧
+    reportSquared t=288*t^2 := by
+  refine ⟨by simp [J],?_,?_,?_,s_comm,s_unit,s_frob,d_derivation t,?_,
+    fixed_product_laws.1,fixed_product_laws.2.1,fixed_product_laws.2.2,?_,
+    all_input_contract t,full_report t⟩
+  · simpa [V,J] using (Module.finrank_tensorProduct ℝ J J)
+  · intro i
+    rfl
+  · intro i j
+    exact OrthonormalBasis.tensorProduct_apply _ _ _ _
+  · ext i; fin_cases i <;> norm_num [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
+  · intro X
+    exact ⟨real_inner_self_nonneg,inner_self_eq_zero⟩
 
 end D5.S3.Quantum.Algebra.PauliFixedProductFamily

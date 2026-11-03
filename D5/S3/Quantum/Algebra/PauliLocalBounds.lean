@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Algebra.PauliFixedProductFamily
 import Mathlib.Tactic.Positivity
+import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 noncomputable section
 open WithLp
@@ -110,5 +111,298 @@ theorem exact_defects (t : ℝ) :
     simpa [ha] using self_bound t a
   · rintro r ⟨b, hb, rfl⟩
     simpa [hb] using unit_bound t b
+
+
+/-- The actual action Gram operator, using adjoints for the fixed Euclidean inner product. -/
+def actionGram (t : ℝ) : J →ₗ[ℝ] J :=
+  ∑ i : Fin 4, (LinearMap.adjoint (D t (e i))).comp (D t (e i))
+
+private theorem d_adjoint (t : ℝ) (a : J) : LinearMap.adjoint (D t a) = -D t a := by
+  ext b
+  apply ext_inner_right ℝ
+  intro c
+  rw [LinearMap.adjoint_inner_left]
+  simp [PiLp.inner_apply, D, C, cross, cross_apply, shift, Fin.sum_univ_succ,
+    RCLike.inner_apply]
+  <;> ring
+
+private theorem gram_coordinates (t : ℝ) (a : J) :
+    actionGram t a = toLp 2 ![0,(2+t^2)*a 1,(2+t^2)*a 2,2*a 3] := by
+  simp only [actionGram, d_adjoint]
+  ext i; fin_cases i <;>
+    simp [Fin.sum_univ_succ, D, C, cross, cross_apply, shift, e, PiLp.single_apply] <;> ring
+
+private theorem common_kernel (t : ℝ) (a : J) :
+    (∀ i : Fin 4, D t (e i) a = 0) ↔ a 1=0 ∧ a 2=0 ∧ a 3=0 := by
+  constructor
+  · intro h
+    have hx := h 1
+    have hy := h 2
+    have hx2 := congrArg (fun v : J => v 2) hx
+    have hx3 := congrArg (fun v : J => v 3) hx
+    have hy3 := congrArg (fun v : J => v 3) hy
+    simp [D, C, cross, cross_apply, shift, e, PiLp.single_apply] at hx2 hx3 hy3
+    exact ⟨hy3, hx3, by linarith⟩
+  · rintro ⟨h1,h2,h3⟩ i
+    fin_cases i <;> ext k <;> fin_cases k <;>
+      simp [D, C, cross, cross_apply, shift, e, PiLp.single_apply, h1,h2,h3]
+
+private theorem scalar_axis (a : J) :
+    (a 1=0 ∧ a 2=0 ∧ a 3=0) ↔ ∃ r : ℝ, a = r • e 0 := by
+  constructor
+  · rintro ⟨h1,h2,h3⟩
+    refine ⟨a 0, ?_⟩
+    ext i; fin_cases i <;> simp [e, PiLp.single_apply, h1,h2,h3]
+  · rintro ⟨r,rfl⟩
+    simp [e, PiLp.single_apply]
+
+private theorem label_kernel (t : ℝ) (a : J) :
+    D t a = 0 ↔ ∃ r : ℝ, a = r • (e 0-t • e 3) := by
+  constructor
+  · intro h
+    have hx := LinearMap.congr_fun h (e 1)
+    have hy := LinearMap.congr_fun h (e 2)
+    have hx2 := congrArg (fun v : J => v 2) hx
+    have hx3 := congrArg (fun v : J => v 3) hx
+    have hy3 := congrArg (fun v : J => v 3) hy
+    simp [D, C, cross, cross_apply, shift, e, PiLp.single_apply] at hx2 hx3 hy3
+    refine ⟨a 0, ?_⟩
+    ext i; fin_cases i <;> simp [e, PiLp.single_apply]
+    · linarith
+    · linarith
+    · linarith
+  · rintro ⟨r,rfl⟩
+    ext b i; fin_cases i <;>
+      simp [D, C, cross, cross_apply, shift, e, PiLp.single_apply] <;> ring
+
+/-- The span of all actual local table outputs. -/
+def actionSupport (t : ℝ) : Submodule ℝ J :=
+  Submodule.span ℝ (Set.range (fun p : Fin 4 × Fin 4 => D t (e p.1) (e p.2)))
+
+private theorem support_coordinates (t : ℝ) (a : J) : a ∈ actionSupport t ↔ a 0=0 := by
+  constructor
+  · intro ha
+    refine Submodule.span_induction ?_ ?_ ?_ ?_ ha
+    · rintro v ⟨p,rfl⟩
+      simp [D,C,cross,cross_apply]
+    · rfl
+    · intro a b ha hb
+      simp_all
+    · intro r a ha
+      simp_all
+  · intro ha
+    have hx : e 1 ∈ actionSupport t := by
+      have heq : D t (e 2) (e 3) = e 1 := by
+        ext i; fin_cases i <;> norm_num [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
+      exact heq ▸ Submodule.subset_span (Set.mem_range_self (2,3))
+    have hy : e 2 ∈ actionSupport t := by
+      have heq : D t (e 3) (e 1) = e 2 := by
+        ext i; fin_cases i <;> norm_num [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
+      exact heq ▸ Submodule.subset_span (Set.mem_range_self (3,1))
+    have hz : e 3 ∈ actionSupport t := by
+      have heq : D t (e 1) (e 2) = e 3 := by
+        ext i; fin_cases i <;> norm_num [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
+      exact heq ▸ Submodule.subset_span (Set.mem_range_self (1,2))
+    have heq : a = a 1 • e 1 + a 2 • e 2 + a 3 • e 3 := by
+      ext i; fin_cases i <;> simp [e,PiLp.single_apply,ha]
+    rw [heq]
+    exact Submodule.add_mem _ (Submodule.add_mem _
+      (Submodule.smul_mem _ _ hx) (Submodule.smul_mem _ _ hy)) (Submodule.smul_mem _ _ hz)
+
+private theorem gram_eigenvalues (t lam : ℝ) :
+    (∃ a : J, a ≠ 0 ∧ actionGram t a = lam • a) ↔
+      lam=0 ∨ lam=2+t^2 ∨ lam=2 := by
+  constructor
+  · rintro ⟨a,ha,heq⟩
+    by_cases h0 : lam=0
+    · exact Or.inl h0
+    by_cases hxy : lam=2+t^2
+    · exact Or.inr (Or.inl hxy)
+    by_cases hz : lam=2
+    · exact Or.inr (Or.inr hz)
+    exfalso
+    apply ha
+    ext i
+    have h := congrArg (fun v : J => v i) heq
+    fin_cases i
+    · simp [gram_coordinates] at h
+      exact (mul_eq_zero.mp h.symm).resolve_left h0
+    · simp [gram_coordinates] at h
+      have hp : (2+t^2-lam)*a 1=0 := by nlinarith
+      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm hxy))
+    · simp [gram_coordinates] at h
+      have hp : (2+t^2-lam)*a 2=0 := by nlinarith
+      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm hxy))
+    · simp [gram_coordinates] at h
+      have hp : (2-lam)*a 3=0 := by nlinarith
+      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm hz))
+  · rintro (rfl|rfl|rfl)
+    · refine ⟨e 0, ?_, ?_⟩
+      · simp [e]
+      · ext i; fin_cases i <;> simp [gram_coordinates,e,PiLp.single_apply]
+    · refine ⟨e 1, ?_, ?_⟩
+      · simp [e]
+      · ext i; fin_cases i <;> simp [gram_coordinates,e,PiLp.single_apply]
+    · refine ⟨e 3, ?_, ?_⟩
+      · simp [e]
+      · ext i; fin_cases i <;> simp [gram_coordinates,e,PiLp.single_apply]
+
+/-- The same actual action has its exact Gram diagonal, fixed kernel, spatial support and spectrum. -/
+theorem exact_action_data (t : ℝ) :
+    (∀ a : J, actionGram t a = toLp 2 ![0,(2+t^2)*a 1,(2+t^2)*a 2,2*a 3]) ∧
+    (∀ a : J, (∀ i : Fin 4, D t (e i) a=0) ↔ ∃ r : ℝ, a=r • e 0) ∧
+    (∀ a : J, a ∈ actionSupport t ↔ a 0=0) ∧
+    (∀ a : J, D t a=0 ↔ ∃ r : ℝ, a=r • (e 0-t • e 3)) ∧
+    (∀ lam : ℝ, (∃ a : J, a≠0 ∧ actionGram t a=lam • a) ↔
+      lam=0 ∨ lam=2+t^2 ∨ lam=2) := by
+  refine ⟨gram_coordinates t, ?_, support_coordinates t, label_kernel t, gram_eigenvalues t⟩
+  intro a
+  exact (common_kernel t a).trans (scalar_axis a)
+
+
+/-- A unit label attaining the exact bilinear action constant. -/
+def extremalLabel (t : ℝ) : J :=
+  (Real.sqrt (1+t^2))⁻¹ • (t • e 0+e 3)
+
+private theorem extremal_norm (t : ℝ) : ‖extremalLabel t‖=1 := by
+  have hp : 0<Real.sqrt (1+t^2) := Real.sqrt_pos.mpr (by positivity)
+  have hs := Real.sq_sqrt (show 0≤1+t^2 by positivity)
+  have hn : ‖extremalLabel t‖^2=1 := by
+    simp [EuclideanSpace.real_norm_sq_eq,extremalLabel,e,PiLp.single_apply,
+      Fin.sum_univ_succ]
+    field_simp
+    nlinarith
+  nlinarith [norm_nonneg (extremalLabel t)]
+
+private theorem d_attained (t : ℝ) :
+    ‖D t (extremalLabel t) (e 1)‖=Real.sqrt (1+t^2) := by
+  have hp : 0<Real.sqrt (1+t^2) := Real.sqrt_pos.mpr (by positivity)
+  have hs := Real.sq_sqrt (show 0≤1+t^2 by positivity)
+  have heq : D t (extremalLabel t) (e 1)=Real.sqrt (1+t^2) • e 2 := by
+    ext i; fin_cases i <;>
+      simp [extremalLabel,D,C,cross,cross_apply,shift,e,PiLp.single_apply]
+    field_simp
+    nlinarith
+  rw [heq,norm_smul]
+  simp [e,abs_of_pos hp]
+
+private theorem spin_attained : ‖S balanced balanced‖=Real.sqrt 2 := by
+  have hs := sqrt_two_sq
+  have hn : ‖S balanced balanced‖^2=2 := by
+    simp [EuclideanSpace.real_norm_sq_eq,S,spin,balanced,e,PiLp.single_apply,
+      Fin.sum_univ_succ]
+    field_simp
+    nlinarith
+  nlinarith [norm_nonneg (S balanced balanced),sqrt_two_pos]
+
+/-- The finite curvature entry uses the original complete basis and spin multiplication. -/
+def curvature (i j k : Fin 4) : J := S (e i) (S (e j) (e k))-S (e j) (S (e i) (e k))
+
+private theorem curvature_bound (i j k : Fin 4) : ‖curvature i j k‖≤1 := by
+  apply (sq_le_sq₀ (norm_nonneg _) (by norm_num : (0:ℝ)≤1)).mp
+  fin_cases i <;> fin_cases j <;> fin_cases k <;>
+    norm_num [curvature,EuclideanSpace.real_norm_sq_eq,S,spin,e,PiLp.single_apply,
+      Fin.sum_univ_succ]
+
+private theorem curvature_attained : ‖curvature 1 2 2‖=1 := by
+  have h : curvature 1 2 2=e 1 := by
+    ext i; fin_cases i <;> norm_num [curvature,S,spin,e,PiLp.single_apply]
+  simp [h,e]
+
+/-- Exact local constants, with attaining inputs rather than only upper bounds. -/
+theorem exact_constants (t : ℝ) :
+    ‖e 0‖=1 ∧
+    IsGreatest {r : ℝ | ∃ a b : J, ‖a‖=1 ∧ ‖b‖=1 ∧ r=‖S a b‖} (Real.sqrt 2) ∧
+    IsGreatest {r : ℝ | ∃ a b : J, ‖a‖=1 ∧ ‖b‖=1 ∧ r=‖D t a b‖}
+      (Real.sqrt (1+t^2)) ∧
+    IsGreatest {r : ℝ | ∃ i j k : Fin 4, r=‖curvature i j k‖} 1 := by
+  refine ⟨by simp [e], ⟨⟨balanced,balanced,balanced_norm,balanced_norm,
+    spin_attained.symm⟩,?_⟩,
+    ⟨⟨extremalLabel t,e 1,extremal_norm t,by simp [e],(d_attained t).symm⟩,?_⟩,
+    ⟨⟨1,2,2,curvature_attained.symm⟩,?_⟩⟩
+  · rintro r ⟨a,b,ha,hb,rfl⟩
+    simpa [ha,hb] using spin_bound a b
+  · rintro r ⟨a,b,ha,hb,rfl⟩
+    simpa [ha,hb] using d_bound t a b
+  · rintro r ⟨i,j,k,rfl⟩
+    exact curvature_bound i j k
+
+/-- The actual label Gram, distinct from the action Gram. -/
+def labelGram (t : ℝ) : J →ₗ[ℝ] J :=
+  ∑ i : Fin 4, (LinearMap.adjoint ((LinearMap.flip (D t)) (e i))).comp
+    ((LinearMap.flip (D t)) (e i))
+
+private theorem label_gram_coordinates (t : ℝ) (a : J) :
+    labelGram t a=toLp 2 ![2*t^2*a 0+2*t*a 3,2*a 1,2*a 2,2*t*a 0+2*a 3] := by
+  apply ext_inner_right ℝ
+  intro b
+  simp [labelGram,inner_sum,LinearMap.adjoint_inner_left,PiLp.inner_apply,
+    D,C,cross,cross_apply,shift,e,PiLp.single_apply,Fin.sum_univ_succ,RCLike.inner_apply]
+  <;> ring
+
+private theorem label_eigenvalues (t lam : ℝ) :
+    (∃ a : J, a≠0 ∧ labelGram t a=lam • a) ↔
+      lam=0 ∨ lam=2 ∨ lam=2*(1+t^2) := by
+  constructor
+  · rintro ⟨a,ha,heq⟩
+    by_cases h0 : lam=0
+    · exact Or.inl h0
+    by_cases h2 : lam=2
+    · exact Or.inr (Or.inl h2)
+    by_cases hp : lam=2*(1+t^2)
+    · exact Or.inr (Or.inr hp)
+    exfalso
+    have hx := congrArg (fun v : J => v 0) heq
+    have hz := congrArg (fun v : J => v 3) heq
+    simp [label_gram_coordinates] at hx hz
+    have hc : lam*(lam-2*(1+t^2))≠0 :=
+      mul_ne_zero h0 (sub_ne_zero.mpr hp)
+    have ha0 : a 0=0 := by
+      have hh : (lam*(lam-2*(1+t^2)))*a 0=0 := by
+        linear_combination -(lam-2)*hx-2*t*hz
+      exact (mul_eq_zero.mp hh).resolve_left hc
+    have ha3 : a 3=0 := by
+      have hh : (lam*(lam-2*(1+t^2)))*a 3=0 := by
+        linear_combination -2*t*hx-(lam-2*t^2)*hz
+      exact (mul_eq_zero.mp hh).resolve_left hc
+    apply ha
+    ext i; fin_cases i
+    · exact ha0
+    · have hh := congrArg (fun v : J => v 1) heq
+      simp [label_gram_coordinates] at hh
+      have hp : (2-lam)*a 1=0 := by nlinarith
+      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm h2))
+    · have hh := congrArg (fun v : J => v 2) heq
+      simp [label_gram_coordinates] at hh
+      have hp : (2-lam)*a 2=0 := by nlinarith
+      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm h2))
+    · exact ha3
+  · rintro (rfl|rfl|rfl)
+    · refine ⟨e 0-t • e 3,?_,?_⟩
+      · intro h
+        have hh := congrArg (fun a : J => a 0) h
+        norm_num [e,PiLp.single_apply] at hh
+      · ext i; fin_cases i <;> simp [label_gram_coordinates,e,PiLp.single_apply] <;> ring
+    · refine ⟨e 1,by simp [e],?_⟩
+      ext i; fin_cases i <;> simp [label_gram_coordinates,e,PiLp.single_apply]
+    · refine ⟨t • e 0+e 3,?_,?_⟩
+      · intro h
+        have hh := congrArg (fun a : J => a 3) h
+        norm_num [e,PiLp.single_apply] at hh
+      · ext i; fin_cases i <;> simp [label_gram_coordinates,e,PiLp.single_apply] <;> ring
+
+/-- Both exact spectra are computed on the same local action. -/
+theorem exact_label_data (t : ℝ) :
+    (∀ a : J, labelGram t a=toLp 2 ![2*t^2*a 0+2*t*a 3,2*a 1,2*a 2,2*t*a 0+2*a 3]) ∧
+    (∀ lam : ℝ, (∃ a : J, a≠0 ∧ labelGram t a=lam • a) ↔
+      lam=0 ∨ lam=2 ∨ lam=2*(1+t^2)) ∧
+    IsLeast {lam : ℝ | 0<lam ∧ ∃ a : J, a≠0 ∧ actionGram t a=lam • a} 2 := by
+  refine ⟨label_gram_coordinates t,label_eigenvalues t,⟨⟨by norm_num,?_⟩,?_⟩⟩
+  · exact (gram_eigenvalues t 2).2 (Or.inr (Or.inr rfl))
+  · rintro lam ⟨hpos,heig⟩
+    rcases (gram_eigenvalues t lam).1 heig with h|h|h
+    · linarith
+    · rw [h]; positivity
+    · linarith
 
 end D5.S3.Quantum.Algebra.PauliFixedProductFamily
