@@ -53,6 +53,8 @@ private theorem finite_words :
     c 1 (c 0 vacuum) = W ∧ b (-2) W = Jg := by
   norm_num [b, c, vacuum, create_ket, phase, lowerCount, W, Jg,
     Finset.filter_insert, Finset.filter_singleton, Finset.insert_comm]
+  congr 1
+  decide
 
 private theorem omega_word :
     Omega = (-2 : ℂ) • b (-2) (c 0 vacuum) - b (-3) (c 1 vacuum) := by
@@ -66,7 +68,7 @@ private theorem vacuum_interval : Finset.Icc ((-2 : ℤ) + 2) 1 = {0, 1} := by
 
 private theorem omega_vacuum : Omega = BcGhostVirasoro.L (-2) vacuum := by
   rw [omega_word, L_vacuum, vacuum_interval]
-  norm_num
+  norm_num [sub_eq_add_neg]
 
 private theorem b_modes (n : ℤ) : (B [[n]]) = b (n - 1) :=
   stateField_creation.2.2.2.1 n
@@ -136,7 +138,7 @@ private theorem dc_modes (n : ℤ) : (DC [[n]]) = -(n : ℂ) • c (n + 1) := by
     simp only [rightZero, finsum_zero, sub_zero]
     rw [finsum_eq_single _ (-n - 1).toNat]
     · have hp : 0 ≤ -n - 1 := by omega
-      rw [identity_modes, Int.toNat_of_nonneg hp, if_pos (by omega)]
+      rw [identity_modes, Int.toNat_of_nonneg hp, ite_eq_left (by omega)]
       simp only [LinearMap.id_apply, c_modes]
       rw [show (-2 : ℤ) - (-n - 1) + 2 = n + 1 by omega]
       have castIndex : ((-n - 1).toNat : ℂ) = -(n : ℂ) - 1 := by
@@ -154,15 +156,15 @@ private theorem dc_modes (n : ℤ) : (DC [[n]]) = -(n : ℂ) • c (n + 1) := by
     simp only [leftZero, finsum_zero, zero_sub]
     by_cases hz : n = 0
     · subst n
-      have rightZero : ∀ i : ℕ,
-          ((i : ℂ) + 1) • ((identityField : VertexOperator ℂ Fock) [[-2 + 0 - i]])
-            ((C [[i]]) v) = 0 := by
-        intro i
-        simp [identity_modes, show (-2 : ℤ) + 0 - i ≠ -1 by omega]
-      simp [rightZero]
+      simp only [Int.cast_zero, neg_zero, zero_smul]
+      apply neg_eq_zero.mpr
+      apply finsum_eq_zero_of_forall_eq_zero
+      intro i
+      rw [identity_modes, ite_eq_right (show (-2 : ℤ) + 0 - (i : ℤ) ≠ -1 by omega)]
+      simp
     · rw [finsum_eq_single _ (n - 1).toNat]
       · have hp : 0 ≤ n - 1 := by omega
-        rw [identity_modes, Int.toNat_of_nonneg hp, if_pos (by omega)]
+        rw [identity_modes, Int.toNat_of_nonneg hp, ite_eq_left (by omega)]
         simp only [LinearMap.id_apply, c_modes]
         rw [show n - 1 + 2 = n + 1 by omega]
         rw [← neg_smul]
@@ -194,8 +196,10 @@ private theorem normal_product (a d : Fock) (p q : ℕ)
     apply VertexOperator.ext
     intro v
     simp [dividedDerivative]
-  simpa only [Nat.cast_zero, neg_zero, zero_sub, hzero] using
-    negative_product a d p q 0 ha hd
+  have h := negative_product a d p q 0 ha hd
+  norm_num only [Nat.cast_zero, neg_zero, zero_sub] at h
+  rw [hzero] at h
+  exact h
 
 private theorem bilinear_fields :
     Y (ket {0, 3}) = (signedNormalMinusOne (-1) B DC).1 ∧
@@ -212,23 +216,27 @@ private theorem bilinear_fields :
   refine ⟨?_, ?_, ?_, ?_⟩
   · have h := normal_product (ket {0}) (ket {3}) 1 1 hb hd
     rw [b_modes] at h
-    norm_num only at h
+    norm_num at h
     rw [← c0, finite_words.1] at h
+    rw [show (-1 : ℂ) ^ (1 * 1 : ℕ) = -1 by norm_num, c0] at h
     exact h
   · have h := negative_product (ket {0}) (ket {1}) 1 1 1 hb hc
     rw [b_modes] at h
-    norm_num only at h
+    norm_num at h
     rw [← c1] at h
+    rw [show (-1 : ℂ) ^ (1 * 1 : ℕ) = -1 by norm_num, c1] at h
+    rw [c1]
     exact h
   · have h := normal_product (ket {1}) (ket {3}) 1 1 hc hd
     rw [c_modes] at h
-    norm_num only at h
+    norm_num at h
     rw [← c0, finite_words.2.2.1] at h
+    rw [show (-1 : ℂ) ^ (1 * 1 : ℕ) = -1 by norm_num, c0] at h
     exact h
   · have h := normal_product (ket {0}) W 1 2 hb hw
     rw [b_modes] at h
-    norm_num only at h
-    rw [finite_words.2.2.2] at h
+    norm_num at h
+    rw [finite_words.2.2.2, show (-1 : ℂ) ^ (1 * 2 : ℕ) = 1 by norm_num] at h
     exact h
 
 /- Reindex both actual integer half-lines. Finiteness is supplied on the
@@ -249,6 +257,7 @@ private theorem integer_split (f : ℤ → Fock) (hf : Function.HasFiniteSupport
   have separate : Disjoint lower upper := by
     apply Set.disjoint_left.mpr
     rintro q ⟨i, rfl⟩ ⟨j, h⟩
+    dsimp at h
     omega
   calc
     _ = ∑ᶠ q ∈ lower ∪ upper, f q := by rw [cover, finsum_mem_univ]
@@ -263,15 +272,16 @@ private theorem u_modes (m : ℤ) (v : Fock) :
     ((Y (ket {0, 3})) [[m + 1]]) v =
       ∑ᶠ q : ℤ, (1 - (q : ℂ)) • BcGhostVirasoro.normal (m - q) q v := by
   have hf := (normal_finite m v).smul_right (fun q : ℤ => 1 - (q : ℂ))
+  change Function.HasFiniteSupport (fun q : ℤ => (1 - (q : ℂ)) •
+    BcGhostVirasoro.normal (m - q) q v) at hf
   rw [integer_split _ hf (m + 2), bilinear_fields.1,
     (signedNormalMinusOne (-1) B DC).2]
-  simp only [b_modes, dc_modes, LinearMap.smul_apply, map_smul, neg_one_smul,
-    Int.cast_natCast]
+  simp only [b_modes, dc_modes, LinearMap.smul_apply, map_smul, neg_one_smul]
   have lower (i : ℕ) :
       (1 - ((m + 2 - i - 1 : ℤ) : ℂ)) •
           BcGhostVirasoro.normal (m - (m + 2 - i - 1)) (m + 2 - i - 1) v =
         ((m + 1 - i - 1 : ℤ) : ℂ) • c (m + 1 - i - 1 + 1) (b ((i : ℤ) - 1) v) := by
-    rw [BcGhostVirasoro.normal, if_neg (by omega)]
+    rw [BcGhostVirasoro.normal, ite_eq_right (by omega)]
     simp only [Module.End.mul_apply, LinearMap.neg_apply, smul_neg, ← neg_smul]
     rw [show m - (m + 2 - (i : ℤ) - 1) = (i : ℤ) - 1 by omega,
       show m + 2 - (i : ℤ) - 1 = m + 1 - i - 1 + 1 by omega]
@@ -282,7 +292,7 @@ private theorem u_modes (m : ℤ) (v : Fock) :
       (1 - ((m + 2 + i : ℤ) : ℂ)) •
           BcGhostVirasoro.normal (m - (m + 2 + i)) (m + 2 + i) v =
         -((m + 1 + i : ℤ) : ℂ) • b (-(i : ℤ) - 1 - 1) (c (m + 1 + i + 1) v) := by
-    rw [BcGhostVirasoro.normal, if_pos (by omega)]
+    rw [BcGhostVirasoro.normal, ite_eq_left (by omega)]
     simp only [Module.End.mul_apply]
     rw [show m - (m + 2 + (i : ℤ)) = -(i : ℤ) - 1 - 1 by omega,
       show m + 2 + (i : ℤ) = m + 1 + i + 1 by omega]
@@ -297,18 +307,21 @@ private theorem v_modes (m : ℤ) (v : Fock) :
       ∑ᶠ q : ℤ, ((q - m - 2 : ℤ) : ℂ) •
         BcGhostVirasoro.normal (m - q) q v := by
   have hf := (normal_finite m v).smul_right (fun q : ℤ => ((q - m - 2 : ℤ) : ℂ))
+  change Function.HasFiniteSupport (fun q : ℤ => ((q - m - 2 : ℤ) : ℂ) •
+    BcGhostVirasoro.normal (m - q) q v) at hf
   rw [integer_split _ hf (m + 3), bilinear_fields.2.1,
     (signedNormalMinusOne (-1) (dividedDerivative 1 B) C).2]
-  simp only [db_modes, c_modes, LinearMap.smul_apply, map_smul, neg_one_smul,
-    Int.cast_natCast]
+  simp only [db_modes, c_modes, LinearMap.smul_apply, map_smul, neg_one_smul]
   have lower (i : ℕ) :
       ((m + 3 - i - 1 - m - 2 : ℤ) : ℂ) •
           BcGhostVirasoro.normal (m - (m + 3 - i - 1)) (m + 3 - i - 1) v =
         (i : ℂ) • c (m + 1 - i - 1 + 2) (b ((i : ℤ) - 2) v) := by
     cases i with
-    | zero => norm_num
+    | zero =>
+      rw [show (m + 3 - (0 : ℕ) - 1 - m - 2 : ℤ) = 0 by omega]
+      simp
     | succ i =>
-      rw [BcGhostVirasoro.normal, if_neg (by omega)]
+      rw [BcGhostVirasoro.normal, ite_eq_right (by omega)]
       simp only [Module.End.mul_apply, LinearMap.neg_apply, smul_neg, ← neg_smul]
       rw [show m - (m + 3 - ((i + 1 : ℕ) : ℤ) - 1) = ((i + 1 : ℕ) : ℤ) - 2 by omega,
         show m + 3 - ((i + 1 : ℕ) : ℤ) - 1 = m + 1 - (i + 1 : ℕ) - 1 + 2 by omega]
@@ -320,7 +333,7 @@ private theorem v_modes (m : ℤ) (v : Fock) :
           BcGhostVirasoro.normal (m - (m + 3 + i)) (m + 3 + i) v =
         -((-(i : ℤ) - 1 : ℤ) : ℂ) •
           b (-(i : ℤ) - 1 - 2) (c (m + 1 + i + 2) v) := by
-    rw [BcGhostVirasoro.normal, if_pos (by omega)]
+    rw [BcGhostVirasoro.normal, ite_eq_left (by omega)]
     simp only [Module.End.mul_apply]
     rw [show m - (m + 3 + (i : ℤ)) = -(i : ℤ) - 1 - 2 by omega,
       show m + 3 + (i : ℤ) = m + 1 + i + 2 by omega]
@@ -336,9 +349,13 @@ theorem conformal_modes (m : ℤ) : ((Y Omega) [[m + 1]]) = BcGhostVirasoro.L m 
   intro v
   have hu := (normal_finite m v).smul_right (fun q : ℤ => 1 - (q : ℂ))
   have hv := (normal_finite m v).smul_right (fun q : ℤ => ((q - m - 2 : ℤ) : ℂ))
+  change Function.HasFiniteSupport (fun q : ℤ => (1 - (q : ℂ)) •
+    BcGhostVirasoro.normal (m - q) q v) at hu
+  change Function.HasFiniteSupport (fun q : ℤ => ((q - m - 2 : ℤ) : ℂ) •
+    BcGhostVirasoro.normal (m - q) q v) at hv
   have hstate : Omega = (-2 : ℂ) • ket {0, 3} - b (-3) (c 1 vacuum) := by
     rw [omega_vacuum, L_vacuum, vacuum_interval]
-    norm_num [finite_words.1]
+    norm_num [finite_words.1, sub_eq_add_neg]
   rw [hstate, map_sub, map_smul]
   simp only [map_sub, map_smul, Pi.sub_apply, Pi.smul_apply, LinearMap.sub_apply,
     LinearMap.smul_apply]
@@ -357,10 +374,11 @@ private theorem w_integer_modes (r : ℤ) (v : Fock) :
       ∑ᶠ p : ℤ, ((p + 1 - r : ℤ) : ℂ) • (c p * c (r - p)) v := by
   have hf := (BcGhostBRST.cc_finite r v).smul_right
     (fun p : ℤ => ((p + 1 - r : ℤ) : ℂ))
+  change Function.HasFiniteSupport (fun p : ℤ => ((p + 1 - r : ℤ) : ℂ) •
+    (c p * c (r - p)) v) at hf
   rw [integer_split _ hf 2, bilinear_fields.2.2.1,
     (signedNormalMinusOne (-1) C DC).2]
-  simp only [c_modes, dc_modes, LinearMap.smul_apply, map_smul, neg_one_smul,
-    Int.cast_natCast]
+  simp only [c_modes, dc_modes, LinearMap.smul_apply, map_smul, neg_one_smul]
   have lower (i : ℕ) :
       ((2 - i - 1 + 1 - r : ℤ) : ℂ) •
           (c (2 - i - 1) * c (r - (2 - i - 1))) v =
@@ -368,7 +386,7 @@ private theorem w_integer_modes (r : ℤ) (v : Fock) :
           c (-(i : ℤ) - 1 + 2) (c (r - 2 + i + 1) v) := by
     simp only [Module.End.mul_apply]
     rw [show (2 : ℤ) - i - 1 = -(i : ℤ) - 1 + 2 by omega,
-      show r - (2 - (i : ℤ) - 1) = r - 2 + i + 1 by omega]
+      show r - (-(i : ℤ) - 1 + 2) = r - 2 + i + 1 by omega]
     congr 1
     push_cast
     ring
@@ -378,7 +396,7 @@ private theorem w_integer_modes (r : ℤ) (v : Fock) :
           c (r - 2 - i - 1 + 1) (c ((i : ℤ) + 2) v) := by
     rw [c_swap, LinearMap.neg_apply, Module.End.mul_apply, smul_neg, ← neg_smul]
     rw [show (2 : ℤ) + i = (i : ℤ) + 2 by omega,
-      show r - (2 + (i : ℤ)) = r - 2 - i - 1 + 1 by omega]
+      show r - ((i : ℤ) + 2) = r - 2 - i - 1 + 1 by omega]
     congr 1
     push_cast
     ring
@@ -393,21 +411,22 @@ private theorem w_modes (r : ℤ) : ((Y W) [[r - 2]]) = BcGhostBRST.R r := by
   let reflect : ℤ ≃ ℤ := {
     toFun p := r - p
     invFun p := r - p
-    left_inv p := by omega
-    right_inv p := by omega }
+    left_inv p := by dsimp; omega
+    right_inv p := by dsimp; omega }
   have antisym : (∑ᶠ p : ℤ, pair p) = -(∑ᶠ p : ℤ, pair p) := by
     calc
       _ = ∑ᶠ p : ℤ, pair (reflect p) := (finsum_comp_equiv reflect).symm
       _ = ∑ᶠ p : ℤ, -pair p := by
         apply finsum_congr
         intro p
-        dsimp [pair, reflect]
+        change (c (r - p) * c (r - (r - p))) v = -(c p * c (r - p)) v
         rw [show r - (r - p) = p by omega, c_swap, LinearMap.neg_apply]
-      _ = _ := finsum_neg_distrib
+      _ = _ := finsum_neg_distrib _
   have pairZero : (∑ᶠ p : ℤ, pair p) = 0 := by
     have twice : (2 : ℂ) • (∑ᶠ p : ℤ, pair p) = 0 := by
-      rw [two_smul, antisym]
-      abel
+      rw [two_smul]
+      nth_rw 1 [antisym]
+      exact neg_add_cancel _
     exact (smul_eq_zero.mp twice).resolve_left (by norm_num)
   let weight (p : ℤ) : Fock := ((p + 1 - r : ℤ) : ℂ) • pair p
   have hw : Function.HasFiniteSupport weight :=
@@ -476,31 +495,38 @@ private theorem w_nonneg_b (i : ℕ) :
     ((Y W) [[i]]) (ket {0}) =
       if i = 0 then (-2 : ℂ) • ket {3} else if i = 1 then -ket {1} else 0 := by
   rw [bilinear_fields.2.2.1, (signedNormalMinusOne (-1) C DC).2]
+  have cb0 : (C [[0]]) (ket {0}) = vacuum := by simpa using c_nonneg_b 0
+  have db1 : (DC [[1]]) (ket {0}) = -vacuum := by simpa using dc_nonneg_b 1
+  have dv : (DC [[-1]]) vacuum = ket {3} := stateField_creation.2.1 _
   have reverse :
       (∑ᶠ j : ℕ, (DC [[(i : ℤ) - j - 1]]) ((C [[j]]) (ket {0}))) =
         (DC [[(i : ℤ) - 1]]) vacuum := by
     rw [finsum_eq_single _ 0]
-    · simp [c_nonneg_b]
+    · simp only [Nat.cast_zero, sub_zero]
+      rw [cb0]
     · intro j hj
       simp [c_nonneg_b, hj]
   rw [reverse, neg_one_smul]
   by_cases hz : i = 0
   · subst i
     rw [finsum_eq_single _ 1]
-    · simp only [Nat.cast_zero, zero_add, Nat.cast_one, dc_nonneg_b,
-        if_pos rfl, map_neg, c_modes]
-      norm_num [c, create_vacuum, stateField_creation.2.1] <;> module
+    · simp only [Nat.cast_zero, zero_add, Nat.cast_one]
+      norm_num only
+      rw [db1, map_neg, dv, c_modes]
+      norm_num [c, create_vacuum]
     · intro j hj
       simp [dc_nonneg_b, hj]
   by_cases ho : i = 1
   · subst i
     rw [finsum_eq_single _ 0]
-    · simp only [Nat.cast_zero, add_zero, dc_nonneg_b, if_pos rfl, map_neg,
-        c_modes, stateField_creation.2.2.1 (ket {3}) 0 (by omega)]
+    · simp only [Nat.cast_zero, add_zero, Nat.cast_one]
+      norm_num only
+      rw [db1, map_neg, c_modes, stateField_creation.2.2.1 (ket {3}) 0 (by omega)]
       norm_num [c, create_vacuum]
     · intro j hj
+      simp only [Nat.cast_one]
       rw [show (1 : ℤ) + j = ((1 + j : ℕ) : ℤ) by omega, dc_nonneg_b]
-      simp [show 1 + j ≠ 1 by omega]
+      simp [hj]
   · have forwardZero : ∀ j : ℕ,
         (C [[-(j : ℤ) - 1]]) ((DC [[(i : ℤ) + j]]) (ket {0})) = 0 := by
       intro j
@@ -524,15 +550,14 @@ private theorem w_nonneg_c (i : ℕ) : ((Y W) [[i]]) (ket {1}) = 0 := by
 
 private theorem b_nonneg_b (i : ℕ) : b ((i : ℤ) - 1) (ket {0}) = 0 := by
   have cut : ¬(i : ℤ) - 1 ≤ -2 := by omega
-  have site : 2 * ((i : ℤ) - 1 + 1).toNat + 1 ≠ 0 := by omega
-  simp [b, cut, annihilate_ket, site]
+  simp [b, cut, annihilate_ket]
 
 private theorem b_nonneg_c (i : ℕ) :
     b ((i : ℤ) - 1) (ket {1}) = if i = 0 then vacuum else 0 := by
   have cut : ¬(i : ℤ) - 1 ≤ -2 := by omega
   by_cases hi : i = 0
   · subst i
-    norm_num [b, vacuum, annihilate_ket, phase, lowerCount]
+    norm_num [b, vacuum, annihilate_ket, phase, lowerCount, Finset.filter_singleton]
   · have site : 2 * ((i : ℤ) - 1 + 1).toNat + 1 ≠ 1 := by omega
     simp [b, cut, annihilate_ket, hi, site]
 
@@ -558,14 +583,19 @@ private theorem current_on_generators :
     norm_num [w_nonneg_b, b_modes, map_smul, map_neg, Omega,
       b, create_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton,
       Finset.insert_comm]
+    congr 1
+    decide
   · rw [bilinear_fields.2.2.2, (signedNormalMinusOne 1 B (Y W)).2]
     have forwardZero : ∀ i : ℕ,
-        (B [[-(i : ℤ) - 1]]) (((Y W) [[0 + i]]) (ket {1})) = 0 := by
+        (B [[-(i : ℤ) - 1]]) (((Y W) [[i]]) (ket {1})) = 0 := by
       intro i
       simp [w_nonneg_c]
-    simp only [forwardZero, finsum_zero, zero_add, one_smul]
+    simp only [zero_add, forwardZero, finsum_zero, one_smul]
     rw [finsum_eq_single _ 0]
-    · simp [b_modes, b_nonneg_c, stateField_creation.2.1]
+    · simp only [Nat.cast_zero, sub_zero, b_modes]
+      have bc0 : b (-1) (ket {1}) = vacuum := by simpa using b_nonneg_c 0
+      norm_num only
+      rw [bc0, stateField_creation.2.1]
     · intro i hi
       simp [b_modes, b_nonneg_c, hi]
 
