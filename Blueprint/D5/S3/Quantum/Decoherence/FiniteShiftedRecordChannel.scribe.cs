@@ -87,6 +87,7 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
             ? new[] { F.Id(part) }
             : new[] { Dot, F.Id(part) }).ToArray());
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula MatrixType(Formula index) => Call("Matrix", index, index, complexType());
     private static Formula complexType() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula.BoundVariable Bound(string name, Formula type) =>
@@ -112,8 +113,8 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
         Seq(Operatorname, Grp(F.Id("let")), Sp, body, Semi, Sp);
 
     private static Formula LambdaTyped(string name, Formula type, Formula body) =>
-        Seq(Open, F.Id("fun"), Sp, Seq(Open, F.Id(name), Colon, type, Close), Sp,
-            Mapsto, Sp, body, Close);
+        Parenthesized(Seq(F.Id("fun"), Sp, Parenthesized(Seq(F.Id(name), Colon, type)),
+            Sp, Mapsto, Sp, body));
 
     private static Formula SumOverType(string name, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(F.Id(name), Colon, type)), Sp, body);
@@ -159,10 +160,11 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
             Qualified("Matrix", "diagonal"),
             LambdaTyped("i", system, valueI));
         Formula action = Mul(Mul(diagonalI, rho), Adjoint(diagonalI));
-        Formula left = Apply(Apply(SumOverType("a", environment, action), i), j);
+        Formula left = Apply(Apply(Parenthesized(
+            SumOverType("a", environment, Parenthesized(action))), i), j);
         Formula gram = SumOverType("a", environment,
             Mul(Call("star", valueJ), valueI));
-        Formula right = Mul(gram, Apply(Apply(rho, i), j));
+        Formula right = Mul(Parenthesized(gram), Apply(Apply(rho, i), j));
         Formula statement = All([
             Bound("record", recordType),
             Bound("rho", MatrixType(system)),
