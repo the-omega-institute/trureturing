@@ -205,6 +205,9 @@ namespace NormalizedSimplex
 
 open _root_.D5.S3.Quantum.Transport.StrongAbsorption.Foundations (powerSum)
 
+-- The source theorem uses the set-valued `stdSimplex` interface.
+set_option linter.deprecated false
+
 /-- Observe the inverse-rate power sum appearing in the normalized simplex vector. -/
 abbrev signature : Signature where
   Params := ℕ
