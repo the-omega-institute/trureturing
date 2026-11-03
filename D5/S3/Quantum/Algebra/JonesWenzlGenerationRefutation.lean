@@ -8,12 +8,8 @@
 
 import Mathlib.Algebra.RingQuot
 import Mathlib.Algebra.FreeAlgebra
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.ENat.Lattice
 import Mathlib.Algebra.QuadraticAlgebra.Basic
-import Mathlib.LinearAlgebra.Matrix.Notation
 
 /-! Flores--Peltola, arXiv:1811.12364v2, Conjecture 1.2, generation half.
 The presentation, Laurent quantum integers and indexing follow issue #25910.
@@ -76,7 +72,8 @@ private def box : TL 6 (-qzero - qzero⁻¹) :=
     (1 + ((Real.sqrt 3 : ℂ)⁻¹) • gen 6 (-qzero - qzero⁻¹) 5)
 
 private def middle : TL 6 (-qzero - qzero⁻¹) :=
-  gen 6 (-qzero - qzero⁻¹) 2 * gen 6 (-qzero - qzero⁻¹) 1 * gen 6 (-qzero - qzero⁻¹) 4 * gen 6 (-qzero - qzero⁻¹) 3 *
+  gen 6 (-qzero - qzero⁻¹) 2 * gen 6 (-qzero - qzero⁻¹) 1 * gen 6 (-qzero - qzero⁻¹) 4 *
+    gen 6 (-qzero - qzero⁻¹) 3 *
     gen 6 (-qzero - qzero⁻¹) 2 * gen 6 (-qzero - qzero⁻¹) 5 * gen 6 (-qzero - qzero⁻¹) 4
 
 private theorem parameter : qzero ≠ 0 ∧ pbar qzero = 6 ∧
@@ -107,7 +104,7 @@ private theorem parameter : qzero ≠ 0 ∧ pbar qzero = 6 ∧
     rw [he]
     exact (Complex.isPrimitiveRoot_exp 6 (by norm_num)).eq_orderOf.symm
   refine ⟨Complex.exp_ne_zero _, ?_, ?_⟩
-  · simp only [pbar, if_neg hne, hord, OfNat.ofNat_ne_zero, ↓reduceIte]
+  · simp only [pbar, ite_eq_right hne, hord, OfNat.ofNat_ne_zero, ↓reduceIte]
     rfl
   · rw [hinv, hq]
     ring
@@ -129,7 +126,7 @@ private theorem projector : compProj qzero [2, 2, 2] = box := by
     simp only [h0, h1, hq, zero_div, zero_smul, add_zero, one_mul, mul_one, one_div]
   change jw qzero 6 0 2 * (jw qzero 6 2 2 * (jw qzero 6 4 2 * 1)) = box
   rw [hb, hb, hb]
-  simpa only [box, mul_one, mul_assoc]
+  simp only [box, mul_one, mul_assoc]
 
 private theorem generators :
     (insert (compProj qzero [2, 2, 2])
@@ -138,33 +135,44 @@ private theorem generators :
     ({box, box * gen 6 (-qzero - qzero⁻¹) 2 * box, box * gen 6 (-qzero - qzero⁻¹) 4 * box} :
       Set (TL 6 (-qzero - qzero⁻¹))) := by
   ext u
-  change (u = compProj qzero [2, 2, 2] ∨ (∃ i, 1 ≤ i ∧ i < 3 ∧ u = jwGen qzero [2, 2, 2] i)) ↔
-    (u = box ∨ u = box * gen 6 (-qzero - qzero⁻¹) 2 * box ∨ u = box * gen 6 (-qzero - qzero⁻¹) 4 * box)
+  change (u = compProj qzero [2, 2, 2] ∨
+    (∃ i, 1 ≤ i ∧ i < 3 ∧ u = jwGen qzero [2, 2, 2] i)) ↔
+    (u = box ∨ u = box * gen 6 (-qzero - qzero⁻¹) 2 * box ∨
+      u = box * gen 6 (-qzero - qzero⁻¹) 4 * box)
   constructor
   · rintro (hu | ⟨i, hi, hj, hu⟩)
     · exact Or.inl (hu.trans projector)
-    · have : i = 1 ∨ i = 2 := by norm_num at hj; omega
+    · have : i = 1 ∨ i = 2 := by omega
       rcases this with rfl | rfl
       · apply Or.inr; apply Or.inl
-        change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) * gen [2, 2, 2].sum (-qzero - qzero⁻¹) 2 * compProj qzero [2, 2, 2] at hu
+        change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) *
+          gen [2, 2, 2].sum (-qzero - qzero⁻¹) 2 * compProj qzero [2, 2, 2] at hu
         rw [projector] at hu
         exact hu
       · apply Or.inr; apply Or.inr
-        change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) * gen [2, 2, 2].sum (-qzero - qzero⁻¹) 4 * compProj qzero [2, 2, 2] at hu
+        change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) *
+          gen [2, 2, 2].sum (-qzero - qzero⁻¹) 4 * compProj qzero [2, 2, 2] at hu
         rw [projector] at hu
         exact hu
   · rintro (hu | hu | hu)
     · exact Or.inl (hu.trans projector.symm)
     · apply Or.inr
       refine ⟨1, by omega, by norm_num, ?_⟩
-      change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) * gen [2, 2, 2].sum (-qzero - qzero⁻¹) 2 * compProj qzero [2, 2, 2]
+      change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) *
+        gen [2, 2, 2].sum (-qzero - qzero⁻¹) 2 * compProj qzero [2, 2, 2]
       rw [projector]
       exact hu
     · apply Or.inr
       refine ⟨2, by omega, by norm_num, ?_⟩
-      change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) * gen [2, 2, 2].sum (-qzero - qzero⁻¹) 4 * compProj qzero [2, 2, 2]
+      change u = (compProj qzero [2, 2, 2] : TL 6 (-qzero - qzero⁻¹)) *
+        gen [2, 2, 2].sum (-qzero - qzero⁻¹) 4 * compProj qzero [2, 2, 2]
       rw [projector]
       exact hu
+
+/- The exact coefficient ring has ω² = 3. The nine-dimensional matrices satisfy
+all three presentation families. A common left eigenvector for the projected
+boundary generators vanishes at coordinate 6, while its witness image there is
+−2ω/3. Transporting ω to √3 gives the separating complex representation. -/
 
 private abbrev coeff := QuadraticAlgebra ℚ 3 0
 
@@ -298,7 +306,7 @@ private def rho : TL 6 (-qzero - qzero⁻¹) →ₐ[ℂ] Matrix (Fin 9) (Fin 9) 
 private theorem rho_gen (i : Fin 5) :
     rho (gen 6 (-qzero - qzero⁻¹) (i.val + 1)) = modelGen i := by
   have hi : 1 ≤ i.val + 1 ∧ i.val + 1 < 6 := by have := i.isLt; omega
-  simp only [gen, dif_pos hi, rho, RingQuot.liftAlgHom_mkAlgHom_apply,
+  simp only [gen, dite_eq_left hi, rho, RingQuot.liftAlgHom_mkAlgHom_apply,
     FreeAlgebra.lift_ι_apply, Nat.add_sub_cancel]
 
 private theorem rho_gens :
@@ -325,7 +333,7 @@ private theorem rho_box : rho box = matrixEmbedding exactP := by
   have h1 : rho (gen 6 (-qzero - qzero⁻¹) 1) = modelGen 0 := rho_gen 0
   have h3 : rho (gen 6 (-qzero - qzero⁻¹) 3) = modelGen 2 := rho_gen 2
   have h5 : rho (gen 6 (-qzero - qzero⁻¹) 5) = modelGen 4 := rho_gen 4
-  simpa only [map_add, map_one, map_smul, h1, h3, h5, modelGen]
+  simp only [map_add, map_one, map_smul, h1, h3, h5, modelGen]
 private theorem exactWitness :
     (exactRow ᵥ* (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 *
       exactGen 1 * exactGen 4 * exactGen 3 * exactP)) 6 = (⟨0, -2/3⟩ : coeff) := by
