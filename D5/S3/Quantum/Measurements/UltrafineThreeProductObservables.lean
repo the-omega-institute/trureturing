@@ -125,7 +125,8 @@ private lemma separable_blocks {d : ℕ} (u : Matrix.unitaryGroup (Fin d) ℂ)
 private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     (a b : ι → Matrix (Fin d) (Fin d) ℂ) (s : Finset ι)
     (u : Matrix.unitaryGroup (Fin d) ℂ)
-    (hd : ∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ)).IsDiag) :
+    (hd : ∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i *
+      (u : Matrix (Fin d) (Fin d) ℂ)).IsDiag) :
     IsUseless (fun i => a i ⊗ₖ b i) s := by
   classical
   let φ := Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) u
@@ -154,9 +155,11 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     change (∑ k, φ (e k)) = 1
     rw [← map_sum, hesum, map_one]
   have hqcomm (i : ι) (hi : i ∈ s) (k : Fin d) : q k * a i = a i * q k := by
-    let c := diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ))
+    let c := diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i *
+      (u : Matrix (Fin d) (Fin d) ℂ))
     have ha : a i = φ (diagonal c) := by
-      change a i = φ (diagonal (diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ))))
+      change a i = φ (diagonal (diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i *
+        (u : Matrix (Fin d) (Fin d) ℂ))))
       rw [(hd i hi).diagonal_diag]
       exact (φ.apply_symm_apply (a i)).symm
     calc
@@ -192,8 +195,7 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     ext i j
     simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
     simp [v, kroneckerMap_apply, rankOneDensity, vecMulVec_apply, mul_assoc]
-    simp only [apply_ite, map_zero, mul_ite, mul_zero, Finset.sum_ite_eq,
-      Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    simp only [apply_ite, map_zero, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     ring
   have hvp (k : Fin d) : v k * (v k).conjTranspose = p k := by
     simpa only [Matrix.mul_one] using hv k 1
@@ -245,7 +247,8 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
 private lemma diagonal_family_useless {d : ℕ} {ι : Type*}
     (a b : ι → Matrix (Fin d) (Fin d) ℂ) (s : Finset ι)
     (u : Matrix.unitaryGroup (Fin d) ℂ)
-    (hdiag : (∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ)).IsDiag) ∨
+    (hdiag : (∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i *
+      (u : Matrix (Fin d) (Fin d) ℂ)).IsDiag) ∨
       (∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * b i * u).IsDiag)) :
     IsUseless (fun i => a i ⊗ₖ b i) s := by
   classical
