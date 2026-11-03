@@ -193,7 +193,7 @@ private theorem zeroMode_primary (hHG : H * gramComplex D = 1)
   simp only [Ring.choose_zero_right, Ring.choose_one_right, Int.cast_one,
     Int.cast_add, add_zero, one_smul] at hward
   rw [← add_smul] at hward
-  have hcoef : (-1 + (-(n : ℂ)) + ((n : ℂ) + 1)) = 0 := by ring
+  have hcoef : (-(n : ℂ) - 1 + ((n : ℂ) + 1)) = 0 := by ring
   rw [hcoef, zero_smul] at hward
   simpa [mu] using hward
 
@@ -541,9 +541,8 @@ private theorem skewPrimitive_primary (hHG : H * gramComplex D = 1)
       rw [hright, ih] at hcomm
       simp [hkz] at hcomm
     have hT : translation D (actualL D H (k + 1 : ℤ) (skewPrimitive D a b)) = 0 := by
-      have hn := neg_eq_zero.mp (show -(translation D (actualL D H (k + 1 : ℤ)
-          (skewPrimitive D a b))) = 0 by simpa using hcomm)
-      exact hn
+      apply neg_eq_zero.mp
+      simpa using hcomm
     have hw := mode_weight_of_zero D H hHG hGH (k + 1 : ℤ) (skewPrimitive D a b) hs0
       (by omega)
     simpa [Int.cast_add, Int.cast_natCast] using
@@ -679,6 +678,8 @@ private theorem physicalBracket_add_self (x y : physicalQuotient D H hHG hGH) :
   apply (Submodule.Quotient.eq _).mpr
   refine ⟨⟨skewPrimitive D a.1 b.1, hs⟩, ?_⟩
   apply Subtype.ext
+  change translation D (skewPrimitive D a.1 b.1) =
+    zeroModeP D H hHG hGH a b + zeroModeP D H hHG hGH b a
   rw [skew_primitive_identity D a.1 b.1]
   rfl
 
@@ -730,6 +731,8 @@ instance physicalLieAlgebra : LieAlgebra ℂ (physicalQuotient D H hHG hGH) wher
 theorem physicalBracket_mk (a b : primarySpace D H 1) :
     ⁅(physicalIdeal D H hHG hGH).mkQ a, (physicalIdeal D H hHG hGH).mkQ b⁆ =
       (physicalIdeal D H hHG hGH).mkQ (zeroModeP D H hHG hGH a b) := by
+  change physicalBracket D H hHG hGH ((physicalIdeal D H hHG hGH).mkQ a)
+      ((physicalIdeal D H hHG hGH).mkQ b) = _
   simp [physicalBracket, quotientZeroMode, LinearMap.liftQ₂_mk, LinearMap.mk₂_apply]
 
 end
