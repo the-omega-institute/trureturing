@@ -386,7 +386,7 @@ abbrev arena : Arena where
       R.readout () ⟨U, X, fu, du, fx, dx, f⟩ v = ∑ a, v a
 
 private theorem bridge : (type_of% (@sum_push.{u,x})) ↔ arena.{u,x}.Law actual := by
-  constructor <;> intro h U X fu du fx dx f v  <;> exact @h U X fu du fx dx f v 
+  constructor <;> intro h U X fu du fx dx f v  <;> exact @h U X fu du fx dx f v
 
 private theorem rejected_law : ¬ arena.{u,x}.Law rejected := by
   intro h
