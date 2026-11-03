@@ -57,7 +57,7 @@ private theorem chain8_certificate : Chain (lower 8) (upper 8) 0 1 chain8 := by
   norm_num [chain8,Chain,lower,upper,nominal,epsLo,epsHi,etaMax]
 
 private theorem chain8_indices : ∀ r∈chain8, r.j≤31 := by
-  simp only [chain8,List.mem_cons,List.mem_singleton]
+  simp only [chain8,List.mem_cons,List.mem_nil_iff,or_false]
   intro r hr
   rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> norm_num
 
@@ -76,7 +76,7 @@ private theorem chain16_certificate : Chain (lower 16) (upper 16) 0 1 chain16 :=
   norm_num [chain16,Chain,lower,upper,nominal,epsLo,epsHi,etaMax]
 
 private theorem chain16_indices : ∀ r∈chain16, r.j≤31 := by
-  simp only [chain16,List.mem_cons,List.mem_singleton]
+  simp only [chain16,List.mem_cons,List.mem_nil_iff,or_false]
   intro r hr
   rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> norm_num
 
@@ -95,7 +95,7 @@ private theorem chain32_certificate : Chain (lower 32) (upper 32) 0 1 chain32 :=
   norm_num [chain32,Chain,lower,upper,nominal,epsLo,epsHi,etaMax]
 
 private theorem chain32_indices : ∀ r∈chain32, r.j≤31 := by
-  simp only [chain32,List.mem_cons,List.mem_singleton]
+  simp only [chain32,List.mem_cons,List.mem_nil_iff,or_false]
   intro r hr
   rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> norm_num
 
@@ -118,7 +118,7 @@ theorem continuous_cover (z eps eta x : ℚ) (hz : z=8 ∨ z=16 ∨ z=32)
     have hu' := mul_le_mul_of_nonneg_left heL hnon
     refine ⟨r.j,r.second,r.shift,hj r hr,?_,?_⟩
     all_goals dsimp [lower,upper,nominal] at hl hu
-    all_goals cases hs : r.second <;> simp only [hs,ite_false,ite_true] at * <;> nlinarith
+    all_goals cases hs : r.second <;> simp only [hs,Bool.false_eq_true,ite_false,ite_true] at * <;> nlinarith
   rcases hz with rfl|rfl|rfl
   · exact extract chain8 chain8_certificate chain8_indices
   · exact extract chain16 chain16_certificate chain16_indices

@@ -78,6 +78,13 @@ private theorem source_certificate (a b c d : ℕ)
     · exact hh.1.symm.trans (hs _)
     · exact hh.2.symm.trans (hs _)
   have tab:=chain_values a b c d ha hb hc hd
+  have oldmass (r : Fin 4) : oldMass a b c d (BB r)=((P r).map (oldValue a b c d)).sum := by
+    simpa only [Bool.false_eq_true,ite_false] using hm false r
+  have newmass (r : Fin 4) : newMass a b c d (BB r)=((P r).map (newValue a b c d)).sum := by
+    simpa only [ite_true] using hm true r
+  have indices (r : Fin 4) : chainStart b c d r+(chainLength a b c d r-1)=
+      (![N 1,N 3,N 2,N 0] : Fin 4→ℕ) r := by
+    fin_cases r <;> dsimp [chainStart,chainLength,N,terminals] <;> omega
   have row (side : Bool) :
       finiteEarChecks (if side then newMass a b c d else oldMass a b c d)
         (if side then newValue a b c d else oldValue a b c d)
@@ -109,10 +116,11 @@ private theorem source_certificate (a b c d : ℕ)
       cases side <;> dsimp [F,rowBase,E,AA,newBase,charge] <;> ring
     have native (r : Fin 4) :
         (full a b c d r:ℤ)*F r+
-          f (chainStart b c d r+(chainLength a b c d r-1))=
+          f ((![N 1,N 3,N 2,N 0] : Fin 4→ℕ) r)=
           (![F 1,F 2,F 3,AA] : Fin 4→ℤ) r-F r ∧
-        2*f (chainStart b c d r+(chainLength a b c d r-1))=
+        2*f ((![N 1,N 3,N 2,N 0] : Fin 4→ℕ) r)=
           (![F 1,F 2,F 3,AA] : Fin 4→ℤ) r-(if side then 2*NN+1 else NN) := by
+      rw [←indices r]
       have nn:=native_masses a b c d ha hb hc hd r
       cases side <;> fin_cases r
       all_goals first
@@ -129,10 +137,10 @@ private theorem source_certificate (a b c d : ℕ)
       have ht : 2*f (N r)=rowHeads a b c d side r-(if side then 2*NN+1 else NN) := by
         fin_cases r
         all_goals first
-          | simpa [N,terminals,rowHeads,F,chainStart,chainLength,size] using (native 3).2
-          | simpa [N,terminals,rowHeads,F,chainStart,chainLength,size] using (native 0).2
-          | simpa [N,terminals,rowHeads,F,chainStart,chainLength,size] using (native 2).2
-          | simpa [N,terminals,rowHeads,F,chainStart,chainLength,size] using (native 1).2
+          | simpa [rowHeads,F] using (native 3).2
+          | simpa [rowHeads,F] using (native 0).2
+          | simpa [rowHeads,F] using (native 2).2
+          | simpa [rowHeads,F] using (native 1).2
       cases side <;> dsimp [CC] <;> simp only [Bool.false_eq_true,ite_false,ite_true] at ht
       all_goals omega
     have win0:=win 0
@@ -144,8 +152,10 @@ private theorem source_certificate (a b c d : ℕ)
       simp only [ear,ps,finiteEarChecks,finiteChecks,zero_add,ite_true,ite_false,
         Bool.false_eq_true,Fin.val_one,Fin.val_ofNat]
     all_goals simp only [rowSeams,rowHeads,ite_true,ite_false,Bool.false_eq_true] at win0 win1 win2 win3
-    all_goals dsimp [N,terminals] at *
-    all_goals dsimp only [F,AA,E,mass,chainStart,chainLength] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
+    all_goals dsimp only [F,AA,E,mass] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
+    all_goals simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+      Matrix.cons_val_three,Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
+      Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 win0 win1 win2 win3 ⊢
     all_goals simp only [ite_apply]
     all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
     all_goals nlinarith only [mass0,mass1,mass2,mass3,nn0,nn1,nn2,nn3,
@@ -179,14 +189,16 @@ private theorem source_certificate (a b c d : ℕ)
     cases before <;>
       simp only [ear,ps,finiteEarChecks,finiteChecks,ite_true,ite_false,Bool.false_eq_true,
         zero_add,add_zero,Fin.val_one,Fin.val_ofNat] at hr
-    all_goals simpa only [bs,packetChecks,zero_add,add_zero,←hm false 0,←hm false 1,←hm false 2,←hm false 3] using hr
+    all_goals simp only [oldmass] at hr
+    all_goals simpa only [bs,packetChecks,zero_add,add_zero] using hr
   have newchecks : packetChecks (newValue a b c d) (sourceMod a b c d) 0 marked := by
     have hr:=row true
     have hear:=tab.2.2.2
     cases before <;>
       simp only [ear,ps,finiteEarChecks,finiteChecks,ite_true,ite_false,Bool.false_eq_true,
         zero_add,Fin.val_one,Fin.val_ofNat] at hr
-    all_goals simpa [marked,packetChecks,hear,←hm true 0,←hm true 1,←hm true 2,←hm true 3,
+    all_goals simp only [newmass] at hr
+    all_goals simpa [marked,packetChecks,hear,
       add_assoc,add_comm,add_left_comm] using hr
   have hmod : 0≤sourceMod a b c d := by have hh:=(tab.1 0); omega
   have pos (side : Bool) (r : Fin 4) (i : ℕ) (hi : i∈P r) :
@@ -202,29 +214,35 @@ private theorem source_certificate (a b c d : ℕ)
     have hs:=source_signs a b c d ha hb hc hd (N r) hnlt
     rw [if_pos hnmem] at hs
     cases side <;> simp only [ite_true,ite_false,Bool.false_eq_true] <;> omega
-  have oldpos : ∀ b∈bs, ∀ i∈b.1, 0≤oldValue a b c d i := by
-    intro b hb i hi
-    simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hb
-    rcases hb with rfl|rfl|rfl|rfl <;> exact pos false _ i hi
-  have oldneg : ∀ b∈bs, oldValue a b c d b.2≤0 := by
-    intro b hb
-    simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hb
-    rcases hb with rfl|rfl|rfl|rfl <;> exact neg false _
-  have newpos : ∀ b∈marked, ∀ i∈b.1, 0≤newValue a b c d i := by
-    intro b hb i hi
+  have oldpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b c d i := by
+    intro pkt hpkt i hi
+    simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hpkt
+    rcases hpkt with rfl|rfl|rfl|rfl
+    all_goals first | exact pos false 0 i hi | exact pos false 1 i hi | exact pos false 2 i hi | exact pos false 3 i hi
+  have oldneg : ∀ pkt∈bs, oldValue a b c d pkt.2≤0 := by
+    intro pkt hpkt
+    simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hpkt
+    rcases hpkt with rfl|rfl|rfl|rfl
+    all_goals first | exact neg false 0 | exact neg false 1 | exact neg false 2 | exact neg false 3
+  have newpos : ∀ pkt∈marked, ∀ i∈pkt.1, 0≤newValue a b c d i := by
+    intro pkt hpkt i hi
     cases before <;> simp only [marked,ite_true,ite_false,Bool.false_eq_true,
-      List.mem_cons,List.mem_nil_iff,or_false] at hb
-    all_goals rcases hb with rfl|rfl|rfl|rfl
+      List.mem_cons,List.mem_nil_iff,or_false] at hpkt
+    all_goals rcases hpkt with rfl|rfl|rfl|rfl
     all_goals first
-      | exact pos true _ i hi
+      | exact pos true 0 i hi
+      | exact pos true 1 i hi
+      | exact pos true 2 i hi
+      | exact pos true 3 i hi
       | rcases List.mem_cons.mp hi with rfl|hi
         · rw [tab.2.2.2]; have hh:=(tab.1 0).1; omega
-        · exact pos true _ i hi
-  have newneg : ∀ b∈marked, newValue a b c d b.2≤0 := by
-    intro b hb
+        · first | exact pos true 0 i hi | exact pos true 1 i hi | exact pos true 2 i hi | exact pos true 3 i hi
+  have newneg : ∀ pkt∈marked, newValue a b c d pkt.2≤0 := by
+    intro pkt hpkt
     cases before <;> simp only [marked,ite_true,ite_false,Bool.false_eq_true,
-      List.mem_cons,List.mem_nil_iff,or_false] at hb
-    all_goals rcases hb with rfl|rfl|rfl|rfl <;> exact neg true _
+      List.mem_cons,List.mem_nil_iff,or_false] at hpkt
+    all_goals rcases hpkt with rfl|rfl|rfl|rfl
+    all_goals first | exact neg true 0 | exact neg true 1 | exact neg true 2 | exact neg true 3
   have hold:=(strip_iff_packetChecks (oldValue a b c d) (sourceMod a b c d/2) 0 bs
     ⟨by omega,by omega⟩ oldpos oldneg).mpr oldchecks
   have hnew:=(strip_iff_packetChecks (newValue a b c d) (sourceMod a b c d) 0 marked

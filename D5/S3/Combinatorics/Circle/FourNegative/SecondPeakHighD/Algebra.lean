@@ -46,21 +46,5 @@ def oldHeads (x p q h : R) : Fin 4 → R :=
 def newHeads (x p q h : R) : Fin 4 → R :=
   ![A x p q h,SU x p q h,SW x p q h,SV x p q]
 
-theorem first_charge (x p q h v m M : R) :
-    newEnds x p q h v m M true 0 =
-      2*oldEnds x p q h v m M 0+2*((Y x p q h-m)*(Z x q+1)+1) := by
-  dsimp [newEnds,oldEnds,A,B,L,K,SU,SV,SW,Z,T,Y]
-  ring
-
-theorem second_charge (x p q h v m M : R) (before : Bool) :
-    newEnds x p q h v m M before 1 =
-      2*oldEnds x p q h v m M 1+2*(Y x p q h-M)*(Z x q+1) := by
-  dsimp [newEnds,oldEnds,A,B,L,K,SU,SV,SW,Z,T,Y]
-  ring
-
-theorem late_fresh_charge (x p q h v m M : R) :
-    newEnds x p q h v m M false 0 =
-      newEnds x p q h v m M true 0-2*A x p q h := by
-  simp [newEnds]
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD

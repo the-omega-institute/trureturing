@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Original a2 near-b construction: Algebra and its physical source consumer. -/
-import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SourceCertificate
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.IntegerCover
 
 set_option autoImplicit false
@@ -64,7 +64,7 @@ theorem first_of_exact (p q h v m : ℤ) (before : Bool)
   have hmQ : 0 ≤ m*Q q := mul_nonneg hm hQ.le
   cases before <;> simp only [Bool.false_eq_true,ite_false,ite_true] at hw ⊢
   all_goals dsimp [First]
-  all_goals simp only [Bool.false_eq_true,ite_false,ite_true]
+  all_goals try simp only [Bool.false_eq_true,ite_false,ite_true]
   all_goals rcases hw with ⟨hlo,hhi⟩
   all_goals refine ⟨?_,?_,?_,?_⟩
   all_goals nlinarith
@@ -161,6 +161,10 @@ theorem windows_of_first (p q h v m M : ℤ) (before : Bool)
       cases before <;> dsimp [SecondPeakHighD.newEnds,R,A,L,K,SW,SV,y,Q,
         SecondPeakHighD.A,SecondPeakHighD.L,SecondPeakHighD.K,SecondPeakHighD.SW,
         SecondPeakHighD.SV,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y] <;> ring
+    change (0≤SecondPeakHighD.oldEnds 4 p q h v m M 0 ∧
+      SecondPeakHighD.oldEnds 4 p q h v m M 0≤A p q h-1) ∧
+      (0≤SecondPeakHighD.newEnds 4 p q h v m M before 0 ∧
+      SecondPeakHighD.newEnds 4 p q h v m M before 0≤A p q h-1)
     rw [eo,en]
     exact ⟨⟨hfirst.1,hfirst.2.1⟩,hfirst.2.2⟩
   · exact ⟨h2,h2'⟩

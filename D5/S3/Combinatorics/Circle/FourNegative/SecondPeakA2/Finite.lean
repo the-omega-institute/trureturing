@@ -67,8 +67,6 @@ def boundaryRows : List BoundaryRow := [
   ⟨32,32,1,34,1584,1588,true⟩,
   ⟨32,32,2,34,3168,3176,true⟩]
 
-theorem boundary_count : boundaryRows.length=40 := by decide
-
 private theorem boundary_checked : ∀ r∈boundaryRows, r.Check := by
   simp only [boundaryRows,List.mem_cons,List.mem_singleton]
   intro r hr

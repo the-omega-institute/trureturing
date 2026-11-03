@@ -54,31 +54,5 @@ theorem submask_predecessor (k n m : ℕ) (hn : 1≤n) (hm : m<2^k) :
   intro e he
   exact multiple_predecessor_bits k n hn e (bit_below m k e hm he)
 
-/-- The six powers modulo nine are closed under doubling. -/
-theorem pow_two_mod_nine (s : ℕ) :
-    2^s%9=1 ∨ 2^s%9=2 ∨ 2^s%9=4 ∨ 2^s%9=8 ∨ 2^s%9=7 ∨ 2^s%9=5 := by
-  induction s with
-  | zero => norm_num
-  | succ s ih =>
-    rw [pow_succ,Nat.mul_mod]
-    rcases ih with h|h|h|h|h|h <;> rw [h] <;> norm_num
-
-/-- Every dyadic q>=8 has exactly a listed remainder, with no exponent cutoff. -/
-theorem dyadic_residue (s : ℕ) :
-    (8*2^s)%72=8 ∨ (8*2^s)%72=16 ∨ (8*2^s)%72=32 ∨
-    (8*2^s)%72=64 ∨ (8*2^s)%72=56 ∨ (8*2^s)%72=40 := by
-  have hscale : (8*2^s)%72=8*(2^s%9) := by omega
-  rw [hscale]
-  rcases pow_two_mod_nine s with h|h|h|h|h|h <;> rw [h] <;> norm_num
-
-theorem dyadic_residue_decomposition (s : ℕ) :
-    ∃ R r : ℕ, 8*2^s=72*R+r ∧
-      (r=8 ∨ r=16 ∨ r=32 ∨ r=64 ∨ r=56 ∨ r=40) ∧
-      ∀ R' r' : ℕ, 8*2^s=72*R'+r' → r'<72 → R'=R ∧ r'=r := by
-  refine ⟨(8*2^s)/72,(8*2^s)%72,?_,dyadic_residue s,?_⟩
-  · omega
-  · intro R' r' he hr
-    omega
-
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD

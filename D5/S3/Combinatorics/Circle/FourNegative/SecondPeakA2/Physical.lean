@@ -6,6 +6,7 @@
    utility: none
    digest: Original a2 near-b construction: Physical and its physical source consumer. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.Exhaustion
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SourceCertificate
 
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
