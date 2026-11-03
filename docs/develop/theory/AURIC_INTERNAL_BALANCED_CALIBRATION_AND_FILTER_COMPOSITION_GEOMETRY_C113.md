@@ -935,3 +935,401 @@ $$
 
  Valter Moretti, *The interplay of the polar decomposition theorem and the Lorentz group*,
 [arXiv:math-ph/0211047v1](https://arxiv.org/abs/math-ph/0211047v1) (2002).
+
+## 15. 有限均衡校准的正分支合同
+
+### 定义 15.1（同一个正成功分支与固定读回）
+
+输入仍为原简单块 $H=\mathbb C^d$，输出为原有限空间 $K$。固定已指定的等距嵌入 $J:H\to K$；同一块情形取 $K=H,J=I$。在直和对象中，$J$ 是原输入扇区在原输出中的同名嵌入，不把不同中心扇区补成可相干制备的纯态空间。
+
+取正复线性映射与其通常迹成功效果
+
+$$
+T:\mathcal B(H)\longrightarrow\mathcal B(K),\qquad
+T^\dagger(I_K)=E,\qquad 0\le E\le I_H.
+\tag{15.1}
+$$
+
+这里不假设二正、完全正、Kraus 分解或任何实际参考延伸。输入、输出和成功效果均属于同一个 $T$，不得随校准标签更换分支。
+
+保留定义 2.2 的同一有限正权复射影二阶设计 $\mathscr D=\{(w_s,p_s)\}$，并定义
+
+$$
+\begin{aligned}
+R_{\mathscr D,J}(T)
+ &=\sum_s w_s\operatorname{Tr}_K[Jp_sJ^\dagger T(p_s)],\\
+Q_{\mathscr D}(E)
+ &=\sum_s w_s\bigl(\operatorname{Tr}_H[p_s\sqrt E]\bigr)^2.
+\end{aligned}
+\tag{15.2}
+$$
+
+$Jp_sJ^\dagger$ 是指定的同向读口。一般矩形输出若没有这样的已指定读回对应，不在本合同内。这里的 $J$ 只规定原读口的对应，不供应新的物理嵌入、准备或参考系统。有限设计的矩等式仍是代数关系，不要求未知态的两个副本。
+
+## 16. 本卷有限校准在仅保正时的精确端点
+
+### 定理 16.1（正分支的平均上界与唯一饱和）
+
+在定义 15.1 中，令 $A=\sqrt E$，则
+
+$$
+R_{\mathscr D,J}(T)\le Q_{\mathscr D}(E)
+=\frac{\operatorname{Tr}E+(\operatorname{Tr}A)^2}{d(d+1)}.
+\tag{16.1}
+$$
+
+等号成立当且仅当原分支本身满足
+
+$$
+\boxed{T(X)=JA X A J^\dagger\quad\text{对全部 }X\in\mathcal B(H).}
+\tag{16.2}
+$$
+
+因此在原同一块上，有限饱和关系 $R_{\mathscr D}(T)\ge Q_{\mathscr D}(E)$ 已从正性及正确成功效果选出平方根更新；所选分支的完全正性成为结论。
+
+**证明。** 先在同一正分支中取 $P=\operatorname{supp}E$，证明输入支撑关系
+
+$$
+T(X)=T(PXP)\qquad(X\in\mathcal B(H)).
+\tag{16.3}
+$$
+
+特别地，$E=0$ 时 $T=0$。
+
+对任意输出效果 $0\le B\le I_K$，正性给
+
+$$
+0\le T^\dagger(B)\le E.
+$$
+
+若 $0\le C\le E$，对 $v\in\ker E$ 有 $\langle v,Cv\rangle=0$，由正矩阵的平方根得到 $Cv=0$；故 $C=PCP$。因此
+
+$$
+\operatorname{Tr}[BT(X)]
+=\operatorname{Tr}[T^\dagger(B)X]
+=\operatorname{Tr}[BT(PXP)].
+$$
+
+效果张成输出自伴空间，复线性延拓得到 (16.3)。$E=0$ 时 $P=0$。这是同一正分支的数学支撑性质，证明中没有供给一个物理压缩或逆滤波。这里直接复用续篇定理 114.1 中由正确成功效果取得输入支撑的步骤。
+
+再复用成熟的块正矩阵界：若 $G$ 自伴，且在每个积向量上取非负值，则
+
+$$
+0\le\operatorname{Tr}G,\qquad
+\|G\|_{\mathrm{HS}}\le\operatorname{Tr}G.
+\tag{16.4}
+$$
+
+这是 Gurvits–Barnum 可分球定理的对偶形式 [6](#ref-positive-gb)，在 Szarek–Werner–Życzkowski 的推论 3 后明确写成 $\operatorname{Tr}(G^2)\le(\operatorname{Tr}G)^2$ [7](#ref-positive-swz)。仓内已有同一不等式及秩一投影补的可分性 [8](#ref-positive-repo-gb)，这里直接应用。不同因子维数可数学补零到同维，块正性、迹与 Hilbert–Schmidt 范数均保持，故 (16.4) 也适用于矩形输入输出。不需把 $G$ 假设为正半定。
+
+零效果由输入支撑关系 (16.3) 处理。设 $E\ne0$，在 $P H$ 中选本征基 $e_1,\ldots,e_r$，写
+
+$$
+Ae_i=a_i e_i,\qquad a_i>0,\qquad
+f_i=Je_i,\qquad s=\sum_{i=1}^r a_i.
+$$
+
+把此基补成 $H$ 的正交基。采用输入因子在前的 Choi 约定
+
+$$
+C_T=\sum_{i,j=1}^{d}|e_i\rangle\langle e_j|
+          \otimes T(|e_i\rangle\langle e_j|).
+\tag{16.5}
+$$
+
+正复线性映射保持伴随，故 $C_T$ 自伴；并且
+
+$$
+\langle x\otimes y,C_T(x\otimes y)\rangle
+=\langle y,T(|\bar x\rangle\langle\bar x|)y\rangle\ge0.
+\tag{16.6}
+$$
+
+这里只得到块正性，没有使用或断言 Choi 正性。输入支撑关系 (16.3) 使 (16.5) 只有 $i,j\le r$ 的项。以下仍保留整个输出 $K$。
+
+令
+
+$$
+\Omega_J=\sum_{i=1}^{d}e_i\otimes Je_i,
+\qquad z=\langle\Omega_J,C_T\Omega_J\rangle,
+\qquad P_J=JJ^\dagger.
+$$
+
+由设计等式在第一因子取转置，
+
+$$
+\sum_s w_s p_s^{\mathsf T}\otimes Jp_sJ^\dagger
+=\frac{I_H\otimes P_J+|\Omega_J\rangle\langle\Omega_J|}{d(d+1)}.
+$$
+
+结合 $\operatorname{Tr}[C_T(p^{\mathsf T}\otimes JpJ^\dagger)]
+=\operatorname{Tr}[JpJ^\dagger T(p)]$，得到不含 Kraus 的矩公式
+
+$$
+d(d+1)R_{\mathscr D,J}(T)
+=\operatorname{Tr}[P_J T(I_H)]+z.
+\tag{16.7}
+$$
+
+对 $A\otimes A$ 使用原设计等式，则
+
+$$
+d(d+1)Q_{\mathscr D}(E)=\operatorname{Tr}E+s^2.
+\tag{16.8}
+$$
+
+在 $P H\otimes K$ 中定义数学重加权
+
+$$
+G=(A_P^{-1/2}\otimes I_K)C_T(A_P^{-1/2}\otimes I_K),
+\qquad
+v=\sum_{i=1}^r\sqrt{a_i}\,e_i\otimes f_i,
+\tag{16.9}
+$$
+
+其中 $A_P$ 是 $A$ 在支撑上的限制。局部合同变换保持块正性，且正确成功效果给
+
+$$
+\begin{aligned}
+\operatorname{Tr}G
+ &=\sum_{i=1}^r a_i^{-1}\operatorname{Tr}T(|e_i\rangle\langle e_i|)
+ =\sum_{i=1}^r a_i=s,\\
+\|v\|^2&=s,\qquad z=\langle v,Gv\rangle.
+\end{aligned}
+\tag{16.10}
+$$
+
+对矩阵的普通 Hilbert–Schmidt Cauchy–Schwarz 不等式与成熟界 (16.4)，有
+
+$$
+z=\operatorname{Tr}[G|v\rangle\langle v|]
+\le s\|G\|_{\mathrm{HS}}\le s^2.
+\tag{16.11}
+$$
+
+这不是对正映射套用一般 Schwarz 不等式。另一方面，
+
+$$
+\ell=\operatorname{Tr}[(I_K-P_J)T(I_H)]\ge0,
+\qquad \operatorname{Tr}T(I_H)=\operatorname{Tr}E.
+$$
+
+因此完整差额为
+
+$$
+\boxed{d(d+1)(Q-R)=\ell+(s^2-z),\qquad
+\ell\ge0,\quad s^2-z\ge0.}
+\tag{16.12}
+$$
+
+这里 $\ell$ 保留了原输出在指定读回空间之外的泄漏。
+
+若 $Q=R$，则 $z=s^2$。注意 $\||v\rangle\langle v|\|_{\mathrm{HS}}=s$，由 (16.4) 直接得到
+
+$$
+\begin{aligned}
+\|G-|v\rangle\langle v|\|_{\mathrm{HS}}^2
+ &=\|G\|_{\mathrm{HS}}^2+s^2-2z\le0.
+\end{aligned}
+$$
+
+故 $G=|v\rangle\langle v|$。撤去数学重加权，
+
+$$
+C_T=|a_J\rangle\langle a_J|,\qquad
+a_J=\sum_{i=1}^r a_i e_i\otimes f_i.
+\tag{16.13}
+$$
+
+逐个矩阵单位读取 (16.13)，得 $T(|e_i\rangle\langle e_j|)=a_i a_j|f_i\rangle\langle f_j|$；再由输入支撑得到全部 $X$ 上的 (16.2)。反向代入给 $\ell=0,z=s^2$，所以等号成立。
+
+支撑秩一也可单独读出：若 $E=a^2|e\rangle\langle e|$，输入支撑关系 (16.3) 给 $T(X)=\langle e,Xe\rangle B$，其中 $B\ge0,\operatorname{Tr}B=a^2$。此时 $z=\langle Je,BJe\rangle\le a^2$；饱和迫使 $B=a^2|Je\rangle\langle Je|$。不存在遗漏的相位或支撑外分支。$\square$
+
+定理 16.1 是本卷有限设计合同对成熟正锥界的应用。Barnum 定理 5、8 与附录 A 定理 12，以及 Banaszek 的操作保真度公式，已经给出以算子分解描述的量子操作平均最优性 [3](#ref-barnum)、[4](#ref-banaszek)；这里沿用其目标量与二阶矩对应。新增的源内推论是本卷选中分支的 CP 前件可由正性取代，并以相同数据取得等号唯一性；不把成熟球定理、其对偶或固定测量最小扰动另立为原创原理。
+
+## 17. 饱和的有限正比较几何
+
+### 命题 17.1（差额的积向量证书）
+
+沿用定理 16.1 的非零支撑与基。定义数学重加权映射
+
+$$
+\Phi(Y)=T(A_P^{-1}Y A_P^{-1}),\qquad
+Y\in\mathcal B(PH).
+\tag{17.1}
+$$
+
+$\Phi$ 正且保迹，$T(X)=\Phi(AXA)$。这只是同一线性映射的输入坐标变换，不被认作菜单中另有的实际过程。写 $C_\Phi$ 为输入在前的 Choi 矩阵，并将 $f_1,\ldots,f_r$ 补成整个 $K$ 的正交基。令
+
+$$
+W=s A_P\otimes I_K-|a_J\rangle\langle a_J|.
+\tag{17.2}
+$$
+
+对 $i<j$ 与 $\theta\in\{0,\pi/2,\pi,3\pi/2\}$，定义
+
+$$
+\begin{aligned}
+x_{ij\theta}&=\sqrt{a_i}e_i+e^{i\theta}\sqrt{a_j}e_j,\\
+y_{ij\theta}&=\sqrt{a_j}f_i-e^{-i\theta}\sqrt{a_i}f_j,\\
+D_{ij}&=\frac14\sum_\theta
+ |x_{ij\theta}\otimes y_{ij\theta}\rangle
+ \langle x_{ij\theta}\otimes y_{ij\theta}|.
+\end{aligned}
+\tag{17.3}
+$$
+
+记 $|i,k\rangle=e_i\otimes f_k$。则有有限可分分解
+
+$$
+\begin{aligned}
+W={}&\sum_{i<j}D_{ij}
+ +\sum_{\substack{1\le i,j\le r\\i\ne j}}
+       a_i(s-a_i)|i,j\rangle\langle i,j|\\
+ &+\sum_{i=1}^r\sum_{k=r+1}^{\dim K}
+       s a_i|i,k\rangle\langle i,k|,
+\end{aligned}
+\tag{17.4}
+$$
+
+并且
+
+$$
+\operatorname{Tr}(C_\Phi W)=s^2-z.
+\tag{17.5}
+$$
+
+**证明。** 保迹性来自 $\operatorname{Tr}\Phi(Y)=\operatorname{Tr}(A_P^{-1}EA_P^{-1}Y)=\operatorname{Tr}Y$。四相位平均消去非零相位次数的项，余项准确为
+
+$$
+\begin{aligned}
+D_{ij}={}&a_i a_j\bigl(
+ |i,i\rangle\langle i,i|+|j,j\rangle\langle j,j|
+ -|i,i\rangle\langle j,j|-|j,j\rangle\langle i,i|\bigr)\\
+ &+a_i^2|i,j\rangle\langle i,j|
+  +a_j^2|j,i\rangle\langle j,i|.
+\end{aligned}
+$$
+
+累加后，$|i,i\rangle$ 的对角系数是 $a_i(s-a_i)$，$|i,j\rangle$ 在 $i\ne j$ 时先有 $a_i^2$，再由 (17.4) 的剩余项补至 $s a_i$；支撑像以外的全部输出系数由最后一项保留。这恰等于 (17.2)。所有剩余系数非负。保迹给 $\operatorname{Tr}[C_\Phi(A_P\otimes I_K)]=s$，而 $C_T=(A_P\otimes I_K)C_\Phi(A_P\otimes I_K)$，故 (17.5) 成立。
+
+可分性也直接来自成熟结果：置
+
+$$
+\eta=s^{-1/2}\sum_i\sqrt{a_i}\,e_i\otimes f_i,\qquad
+\|\eta\|=1.
+$$
+
+则 $W=(\sqrt{s}A_P^{1/2}\otimes I_K)
+(I-|\eta\rangle\langle\eta|)
+(\sqrt{s}A_P^{1/2}\otimes I_K)$，而秩一投影的补由 Gurvits–Barnum 球定理可分 [6](#ref-positive-gb)、[8](#ref-positive-repo-gb)。式 (17.4) 把此处所用的有限比较项具体展开，没有重新证明一般可分球。$\square$
+
+### 推论 17.2（有限饱和锁住方向与相位）
+
+在 $r>1$ 时，$s^2-z=0$ 使 (17.4) 与 $C_\Phi$ 的每个积项配对均为零。因此 $\Phi$ 固定每个基投影的指定像，以及每对基方向的四个加权相位探针：
+
+$$
+\begin{aligned}
+\Phi(|e_i\rangle\langle e_i|)&=|f_i\rangle\langle f_i|,\\
+\Phi(|\bar x_{ij\theta}\rangle\langle\bar x_{ij\theta}|)
+ &=J|\bar x_{ij\theta}\rangle\langle\bar x_{ij\theta}|J^\dagger.
+\end{aligned}
+\tag{17.6}
+$$
+
+**证明。** 每个配对非负，因为 $C_\Phi$ 块正。$a_i(s-a_i)>0$，且 $s a_i>0$；故所有 $k\ne i$ 上的 $\langle f_k,\Phi(|e_i\rangle\langle e_i|)f_k\rangle$ 为零。输出正性与迹一迫使第一式成立。
+
+令 $u=\bar x_{ij\theta}$。正性及
+$0\le|u\rangle\langle u|\le(a_i+a_j)(|e_i\rangle\langle e_i|+|e_j\rangle\langle e_j|)$
+使 $\Phi(|u\rangle\langle u|)$ 支持在 $\operatorname{span}\{f_i,f_j\}$。$D_{ij}$ 的零配对又给
+
+$$
+\langle y_{ij\theta},\Phi(|u\rangle\langle u|)y_{ij\theta}\rangle=0.
+$$
+
+在这个二维空间中，$y_{ij\theta}\perp Ju$。正性使 $y_{ij\theta}$ 属于输出的核；保迹给输出迹 $a_i+a_j=\|u\|^2$，所以输出正好是 $|Ju\rangle\langle Ju|$。$\theta=0,\pi$ 的差给两个矩阵单位的实组合，$\theta=\pi/2,3\pi/2$ 的差给其虚组合；连同基投影便张成全部矩阵单位。
+
+这把同一分支的饱和解释为：正比较的有限差额不能互相抵消；基方向没有泄漏，两个相位分量也不能再丢失或翻转。重加权后 $\Phi(Y)=JYJ^\dagger$，所以在原正支持上没有额外的信息损失；$A$ 本身的减权与零支持仍保留。
+
+同一几何也可在 (16.9) 中看见：迹为 $s$ 的块正截面包含在半径 $s$ 的 Hilbert–Schmidt 球内，饱和超平面 $\langle v,Gv\rangle=s^2$ 与此球恰在 $G=|v\rangle\langle v|$ 相切。因此有限关系选择一个确定的射线端点，随后才得到原分支的 CP。若另有本卷 §13 的 CP 记录实现，其所选成功环境记录随输入方向不变，直接沿用该节的端点解释。
+
+$r=1$ 只需保留输出补空间的比较，$r=0$ 已由正确成功效果确定。式 (17.3) 的探针是证明中的数学向量；它们不必属于实际校准设计，不由门群的稠密性取得，也没有被追加到实际菜单。实际供应的仍只是原设计及定义 15.1 的读口。$\square$
+
+## 18. 原有限直和与完整输出中心
+
+### 定理 18.1（逐输入块饱和消除中心泄漏）
+
+原对象为 $\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C)$，迹为通常迹之和。设同一原正复线性分支 $T:\mathcal A\to\mathcal A$ 满足 $T^\dagger(I)=E=(E_\alpha)_\alpha$。在每个原输入块供应定义 2.2 的有限设计，读回原同一输出块，得 $R_\alpha,Q_\alpha$。则
+
+$$
+R_\alpha\le Q_\alpha\quad\text{对每个 }\alpha.
+\tag{18.1}
+$$
+
+全部非零效果块饱和，当且仅当
+
+$$
+\boxed{T(X)_\alpha=\sqrt{E_\alpha}X_\alpha\sqrt{E_\alpha}
+\quad\text{对全部 }X\in\mathcal A.}
+\tag{18.2}
+$$
+
+给各输入块固定正权 $c_\alpha>0$ 时，单一汇总关系
+$\sum_\alpha c_\alpha R_\alpha\ge\sum_\alpha c_\alpha Q_\alpha$
+也等价于 (18.2)。
+
+**证明。** 数学上把原输出代数表示为 $K=\bigoplus_\beta\mathbb C^{d_\beta}$ 上的块对角矩阵。对输入块 $\alpha$，限制原 $T$ 得到正映射 $T_\alpha:M_{d_\alpha}\to\mathcal B(K)$，其完整成功效果为 $E_\alpha$。取原同名嵌入 $J_\alpha$，直接应用定理 16.1。输出其余各中心保留在 $K$ 中，并被 (16.12) 的泄漏项计入；支撑像以外的全部方向也保留在 (17.4) 中。因此等号迫使
+
+$$
+T_\alpha(X_\alpha)=J_\alpha\sqrt{E_\alpha}
+ X_\alpha\sqrt{E_\alpha}J_\alpha^\dagger.
+$$
+
+零效果块由定理 16.1 证明中的输入支撑关系 (16.3) 为零。输入直和的线性分解给 (18.2)，没有引入跨中心相干输入。所有 $Q_\alpha-R_\alpha$ 非负，正权汇总为零等价于逐项为零。反向直接代入。$\square$
+
+## 19. 所选滤波的后果与量子起源前件
+
+在定义 15.1 或定理 18.1 的原供应中，用有限饱和关系选择每个指定滤片，则这些原分支完全正。由它们实际供应的有限接续及经典标签并列仍完全正；同一原对象上，若一组已供分支的效果之和为 $I$，则它们组成通常完全正保迹的标签仪器。
+
+这些是所选合同变换的通常后果：所选分支已是 (16.2) 或 (18.2) 的合同变换，对任意数学参考，其放大仍正；复合与标签并列保留此性质。效果求和为 $I$ 给总迹保持。这里的放大是数学性质，不由证明新增实际参考对象或联合箭头。
+
+### 推论 19.1（与已有正返回路线的对应）
+
+在相应原供应均已给出的范围内，续篇 §§113–119 的正返回、半程及同向下界关系，和本附录的有限均衡饱和关系，都选出同一个平方根族。前一路线的端点直接复用续篇定理 116.1；本附录不以其实际倒数补偿、半程族或全效果量词为前件。
+
+**证明。** 续篇定理 116.1 已给平方根族；代入本卷设计矩公式即可得到有限饱和。反向，定理 16.1 与 18.1 给平方根族，再仅对原来实际供应的效果和接续应用本卷推论 3.3。它们的供应前件不同，不能由一条数值等式推出另一条路线所需装置实际存在。$\square$
+
+### 假设与适用边界 19.2
+
+本附录的条件结论保留以下对象、概率和实际操作前件：
+
+1. 原有限复矩阵直和、通常迹、同一复结构与相位参考；其来源可接原 C101，或在 C114 的完整共同复比较合同下讨论。
+2. 正归一线性态—效果评价，或 C114.3 的准备等价与仿射概率合同；二阶设计、平方根效果及同向概率均在此已定义的模型中取值。
+3. 对同一原分支的实际有限设计准备、指定读回和效果标定；数学上存在设计、态可在某一表示中写出或门词轨道稠密，均不替代这些实际供应。
+4. 原唯一 $\omega$ 与门序列读出的解释保持其原有合同；本附录不增添复位、新 ready、反馈、独立副本或任意联合等距。
+
+由定理 16.1 减少的独立前件仅是这些已校准所选分支的预设完全正性；若对同一分支仍预先保留 C102 或 C114.5 的完整参考合同，就不能再把其 CP 计作本附录取得的新结论。全菜单 CP 仍需覆盖全部实际箭头的合同；续篇命题 119.2 已给所选滤波全部标准而菜单仍含转置正箭头的模型，直接复用该边界。
+
+实际有限校准如何由原生准备与完整历史取得、有限误差如何认证、全菜单如何供应及共同 $\omega$ 的物理解释，仍是各自的未决桥梁。本附录不从有限比较推出 Born、共同复结构、独立张量接口、时间标尺或 Hamiltonian。C114 的标准 PSD／Gram 重建不在这里重做；Buscemi 的全部联合等距量词也不被替换为某个固定允许门词半群。
+
+本附录只取精确饱和。本卷定理 6.1 的 Kraus／Stinespring diamond 估计继续使用其原 CP 前件；不能仅凭本附录把该带噪结论套用于一般正分支。精确端点成立不构成对一般正映射的近似稳定性声明。
+
+### [6] Gurvits–Barnum 正锥工具
+
+<a id="ref-positive-gb"></a>
+
+Leonid Gurvits and Howard Barnum, *Largest separable balls around the maximally mixed bipartite quantum state*, Phys. Rev. A **66**, 062311, DOI [10.1103/PhysRevA.66.062311](https://doi.org/10.1103/PhysRevA.66.062311)，[quant-ph/0204159v2](https://arxiv.org/html/quant-ph/0204159v2)，定理 1：自伴 $\Delta$ 满足 $\|\Delta\|_{\mathrm{HS}}\le1$ 时，$I+\Delta$ 可分。特别取 $\Delta=-|\eta\rangle\langle\eta|$，得到单位向量秩一投影的补可分。这里只复用其数学正锥结论。
+
+### [7] 块正矩阵的对偶范数界
+
+<a id="ref-positive-swz"></a>
+
+Stanisław J. Szarek, Elisabeth Werner and Karol Życzkowski, *Geometry of sets of quantum maps: a generic positive map acting on a high-dimensional system is not completely positive*, J. Math. Phys. **49**, 032113, DOI [10.1063/1.2841325](https://doi.org/10.1063/1.2841325)，[arXiv:0710.1571v2](https://arxiv.org/html/0710.1571v2)，推论 3 后明确陈述块正矩阵满足 $\operatorname{Tr}(G^2)\le(\operatorname{Tr}G)^2$，并将它与可分球的对偶几何联系起来。
+
+### [8] 仓内已有的成熟几何接口
+
+<a id="ref-positive-repo-gb"></a>
+
+固定源码 [GurvitsBarnumBall.lean](https://github.com/the-omega-institute/trureturing/blob/d5f7c3fd1d1e4fca459bafe6cbab5129bc1a9a90/D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.lean) 的 `frobSq_le_trace_sq_of_blockPositive` 与 `separableCone_one_sub_rankOne` 分别提供 (16.4) 和秩一投影补的可分性，前者已覆盖两因子维数不同的矩阵。源内应用是 (16.7)–(16.13) 的成功效果重加权及等号回接；这些公式的本附录证明为普通数学证明。
+
+## 追加锚（本行以下为增补区）
