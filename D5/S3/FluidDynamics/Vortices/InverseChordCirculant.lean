@@ -7,7 +7,7 @@
    digest: spectrum of the alternating inverse-chord block product. -/
 
 import D5.S3.Quantum.Matrix.CirculantCharpoly
-import D5.S3.Fourier.FullBispectrumStability
+import D5.S3.Fourier.SparseGeneratorFamily
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
@@ -33,10 +33,7 @@ private theorem circulant_product_det (N : ℕ) [NeZero N] (b c : ZMod N → ℂ
   classical
   have hb := circulant_spectral N b
   have hc := circulant_spectral N c
-  have hu := transform_unitary N
-  have hi : IsUnit (transform N) := isUnit_iff_exists_inv.mpr ⟨(transform N)ᴴ, hu⟩
-  have hd : (transform N).det ≠ 0 :=
-    ((Matrix.isUnit_iff_isUnit_det _).mp hi).ne_zero
+  have hd := D5.S3.Quantum.Matrix.CirculantCharpoly.transform_det_ne_zero N
   have he : transform N * (y • 1 - Matrix.circulant b * Matrix.circulant c) =
       Matrix.diagonal (fun k => y - ZMod.dft b k * ZMod.dft c k) * transform N := by
     rw [mul_sub, Matrix.mul_smul, mul_one, ← mul_assoc, hb, mul_assoc, hc, ← mul_assoc]
@@ -50,7 +47,7 @@ private theorem circulant_product_det (N : ℕ) [NeZero N] (b c : ZMod N → ℂ
     rw [Matrix.smul_one_eq_diagonal, Matrix.diagonal_sub]
   have he' := congrArg Matrix.det he
   rw [Matrix.det_mul, Matrix.det_mul, Matrix.det_diagonal] at he'
-  exact mul_left_cancel₀ hd (by simpa only [mul_comm (transform N).det] using he')
+  exact mul_left_cancel₀ hd (he'.trans (mul_comm _ _))
 
 private lemma half_character (m : ℕ) [NeZero (2 * m)] :
     ZMod.stdAddChar (m : ZMod (2 * m)) = (-1 : ℂ) := by
@@ -189,8 +186,8 @@ private lemma dft_modeValue_laplacian (N : ℕ) [NeZero N] (l : ZMod N) (hl : l 
     (ZMod.stdAddChar l + ZMod.stdAddChar (-l) - 2) * ZMod.dft (modeValue N) l =
       -(N : ℂ) := by
   have hs : (∑ k : ZMod N, ZMod.stdAddChar (-(k * l))) = 0 := by
-    simpa only [AddChar.mulShift_apply, mul_neg, neg_mul, mul_comm] using
-      (AddChar.sum_eq_zero_of_ne_one (ZMod.isPrimitive_stdAddChar N (neg_ne_zero.mpr hl)))
+    simpa only [mul_neg, neg_mul, mul_comm, ite_eq_right (neg_ne_zero.mpr hl)] using
+      D5.S3.Fourier.SparseGeneratorGapObstruction.char_sum (-l)
   have hd : ZMod.dft (fun k =>
       modeValue N (k + 1) + modeValue N (k - 1) - 2 * modeValue N k) l = -(N : ℂ) := by
     rw [ZMod.dft_apply]

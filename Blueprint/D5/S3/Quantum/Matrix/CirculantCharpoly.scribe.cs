@@ -11,6 +11,12 @@ internal sealed class CirculantCharpolyDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fourier modes factor circulant characteristic polynomials.",
         H("Circulants and odd cosine pairing"), Blocks(
+            Describe.Lean(DescribeId.Create("circulant-charpoly-transform-det-ne-zero"),
+                DeclarationHandle.Create(Module + ".transform_det_ne_zero"),
+                H("Fourier transform determinant"), StatementSource.FromAuthor(TransformDetFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The normalized Fourier matrix has nonzero determinant because its conjugate transpose is an inverse."))),
+                DescribeRole.Theorem),
             Item("circulant_charpoly", "Complex circulant factorization", "The characteristic polynomial of a complex circulant is the product of X minus its discrete Fourier values. This theorem is existing repository content reused from the Roldan circulant energy development.", DescribeRole.Theorem),
             Item("dft_real_of_even", "Reality of even Fourier values", "The discrete Fourier value of an even real function is real. This theorem is existing repository content reused from the Roldan circulant energy development.", DescribeRole.Theorem),
             Item("real_circulant_charpoly", "Real circulant factorization", "An even real circulant has the product of X minus the real parts of its Fourier values. This theorem is existing repository content reused from the Roldan circulant energy development.", DescribeRole.Theorem),
@@ -22,6 +28,15 @@ internal sealed class CirculantCharpolyDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For the standard complex additive character on ZMod n, opposite residues pair to twice the cosine of their angle; natural arguments are cast into ZMod n and the real right side is cast into the complex numbers."))),
                 DescribeRole.Theorem),
             Item("realCirculant_charpoly", "Odd paired factorization", "For an even generating function, the odd real characteristic polynomial has one constant factor and squared factors for modes one through m. Pairing opposite residues gives the cosine formula and pairing opposite modes gives the squares. This odd pairing factorization is proved here.", DescribeRole.Theorem))));
+
+    private static Formula TransformDetFormula()
+    {
+        Formula n = F.Id("n");
+        return Disp(Seq(Forall, n, InMacro, Mathbb, Grp(F.Id("N")), Comma,
+            n, Neq, D(0), Implies,
+            Operatorname, Grp(F.Id("det")), Open,
+            Operatorname, Grp(F.Id("transform")), Open, n, Close, Close, Neq, D(0)));
+    }
 
     private static Formula CharacterPairFormula()
     {
