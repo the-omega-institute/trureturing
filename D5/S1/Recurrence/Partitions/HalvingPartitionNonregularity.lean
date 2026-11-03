@@ -10,6 +10,8 @@ import Mathlib.Combinatorics.Enumerative.Composition
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.SetTheory.Cardinal.Finite
 
+/-! Exact source carriers and the unrestricted regularity question. -/
+
 namespace D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
 
 /-- A value-set test: coincident lower and upper halves are not separate labels. -/
@@ -42,6 +44,10 @@ def sourceEquiv (n : ℕ) : SourceLists n ≃ HalvingCompositions n where
   invFun c := ⟨c.1.blocks, ⟨fun _ h => c.1.blocks_pos h, c.1.blocks_sum, c.2⟩⟩
   left_inv p := by cases p; rfl
   right_inv c := by cases c; rfl
+
+instance (n : ℕ) : Fintype (HalvingCompositions n) := by
+  unfold HalvingCompositions
+  infer_instance
 
 instance (n : ℕ) : Finite (SourceLists n) :=
   Finite.of_equiv (HalvingCompositions n) (sourceEquiv n).symm
