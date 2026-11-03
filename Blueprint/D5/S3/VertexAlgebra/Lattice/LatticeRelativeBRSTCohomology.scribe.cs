@@ -7,7 +7,7 @@ internal sealed class LatticeRelativeBRSTCohomologyDocument : IScribeDocumentDef
     private const string Prefix = "D5/S3/VertexAlgebra/Lattice/LatticeRelativeBRSTCohomology.";
     private static DocumentBlock Node(string name, string prose, DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("latticerelativebrstcohomology-" + name.Replace(".", "-").Replace("_", "-").ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
+            DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(name), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
