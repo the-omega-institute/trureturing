@@ -144,4 +144,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 #print axioms evidence
 end Distance
+end
 end Reg.D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount
