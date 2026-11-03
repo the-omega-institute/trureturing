@@ -15,24 +15,22 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe whether the full observable family is useless for entanglement detection. -/
+/-- Observe a product matrix while varying its first factor. -/
 abbrev signature : Signature where
-  Params := Unit
-  State _ := Fin 3 → Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ
+  Params := Σ _ : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ, Fin 3
+  State _ := Matrix (Fin 3) (Fin 3) ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ _ obs => @decide (IsUseless obs univ) (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ p A => A ⊗ₖ p.1 p.2) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => true) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- Retain the Hermitian factors, every useless pair, and the useful triple. -/
 abbrev arena : Arena where
@@ -40,11 +38,7 @@ abbrev arena : Arena where
   Law r := ∃ a b : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ,
     (∀ i, (a i).IsHermitian ∧ (b i).IsHermitian) ∧
     (∀ i j, i ≠ j → IsUseless (fun k => a k ⊗ₖ b k) {i, j}) ∧
-    ¬ r.readout () () (fun k => a k ⊗ₖ b k) = true
-
-theorem rejected_law : ¬ arena.Law rejected := by
-  rintro ⟨a, b, _, _, h⟩
-  exact h rfl
+    ¬ IsUseless (fun k => r.readout () ⟨b, k⟩ (a k)) univ
 
 theorem zero_useless : IsUseless
     (fun _ : Fin 3 => (0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)) univ := by
@@ -53,11 +47,14 @@ theorem zero_useless : IsUseless
   obtain ⟨σ, hσ, hsep, _⟩ := hpairs 0 1 (by decide) ρ hρ
   exact ⟨σ, hσ, hsep, fun i _ => by simp⟩
 
+theorem rejected_law : ¬ arena.Law rejected := by
+  rintro ⟨a, b, _, _, h⟩
+  exact h zero_useless
+
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  obtain ⟨a, b, _, _, huseful⟩ := result
-  refine ⟨(), (fun _ => 0), (fun k => a k ⊗ₖ b k), ?_⟩
-  simp [actual, realize, zero_useless, huseful]
+  refine ⟨⟨(fun _ => 1), 0⟩, 0, 1, ?_⟩
+  simp [actual, realize]
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -88,8 +85,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ _ obs => @decide (IsUseless obs univ) (Classical.propDecidable _))
+  readout := some (realize signature (fun _ p A => A ⊗ₖ p.1 p.2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -101,13 +97,13 @@ def registration :
       owner := `D5.S3.Quantum.Measurements.UltrafineThreeProductObservables
       name := `D5.S3.Quantum.Measurements.UltrafineThreeProductObservables.claim
       path := #[] }
-    coordinates := #[]
+    coordinates := #[1, 2]
     readouts := #[{
-      path := #["arg", "body", "arg", "body", "arg", "arg", "arg"]
+      path := #["arg", "body", "arg", "body", "arg", "arg", "arg", "fn", "arg", "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
