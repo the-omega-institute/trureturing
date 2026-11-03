@@ -133,5 +133,131 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
+namespace DiagonalKrausEntry
+
+abbrev signature : Signature.{max (u_1 + 1) (u_2 + 1), u_1, 0, u_2, 0} where
+  Params := Σ ι : Type u_1, Σ ε : Type u_2,
+    Σ _record : ι → ε → ℂ, Σ _rho : Matrix ι ι ℂ, ι
+  State p := Sigma.fst p
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Sigma.fst (Sigma.snd p) → ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u_1, u_2} :=
+  realize signature.{u_1, u_2}
+    (fun _ p j a =>
+      star (Sigma.fst (Sigma.snd (Sigma.snd p)) j a) *
+      Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p)))) a)
+    (fun e _ => Empty.elim e)
+
+def rejected : Realization signature.{u_1, u_2} :=
+  realize signature (fun _ _ _ _ => 0) (fun e _ => Empty.elim e)
+
+abbrev arena : Arena where
+  signature := signature.{u_1, u_2}
+  Law R := ∀ {ι : Type u_1} {ε : Type u_2}
+    [Fintype ι] [DecidableEq ι] [Fintype ε]
+    (record : ι → ε → ℂ) (rho : Matrix ι ι ℂ) (i j : ι),
+    (∑ a, Matrix.diagonal (fun i => record i a) * rho *
+      (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
+      (∑ a, R.readout () ⟨ι, ⟨ε, ⟨record, ⟨rho, i⟩⟩⟩⟩ j a) * rho i j
+
+theorem actual_law : arena.{u_1, u_2}.Law actual := by
+  intro ι ε _ _ _ record rho i j
+  simpa [actual, realize] using (diagonal_kraus_entry record rho i j)
+
+theorem rejected_law : ¬ arena.{u_1, u_2}.Law rejected := by
+  intro h
+  let ι := ULift.{u_1} (Fin 1)
+  let ε := ULift.{u_2} Unit
+  have hbad := @h ι ε inferInstance inferInstance inferInstance
+    (fun _ _ => (1 : ℂ)) (fun _ _ => (1 : ℂ)) (ULift.up 0) (ULift.up 0)
+  have hentry := diagonal_kraus_entry (ι := ι) (ε := ε)
+    (fun _ _ => (1 : ℂ)) (fun _ _ => (1 : ℂ)) (ULift.up 0) (ULift.up 0)
+  have hcontradiction : (1 : ℂ) = 0 := by
+    simpa [ε, rejected, realize] using hentry.symm.trans hbad
+  exact one_ne_zero hcontradiction
+
+theorem dependence : ObservationalDependence signature.{u_1, u_2} actual := by
+  intro _
+  let p : signature.{u_1, u_2}.Params :=
+    ⟨ULift.{u_1} Bool, ⟨ULift.{u_2} Unit,
+      ⟨(fun b _ => if b.down then 1 else 0),
+        ⟨(fun _ _ => (1 : ℂ)), ULift.up true⟩⟩⟩⟩
+  refine ⟨p, ULift.up false, ULift.up true, ?_⟩
+  intro he
+  have hvalue := congrFun he (ULift.up ())
+  norm_num [actual, realize, p] at hvalue
+
+def source_registration : Registration arena.{u_1, u_2}
+    (type_of% @diagonal_kraus_entry.{u_1, u_2}) where
+  actual := realize signature.{u_1, u_2}
+    (fun _ p j a =>
+      star (Sigma.fst (Sigma.snd (Sigma.snd p)) j a) *
+      Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p)))) a)
+    (fun e _ => Empty.elim e)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl,
+        rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.{u_1, u_2})
+      (Realization signature.{u_1, u_2}) Unit Unit := {
+  unitName :=
+    `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_entry.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.DiagonalKrausEntry.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u_1, u_2}⟩
+  objectArena := .source ⟨arena.{u_1, u_2}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u_1, u_2} ⟨source_registration.{u_1, u_2}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u_1, u_2}
+    (fun _ p j a =>
+      star (Sigma.fst (Sigma.snd (Sigma.snd p)) j a) *
+      Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p)))) a)
+      (fun e _ => Empty.elim e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
+    definition := none
+    coordinates := #[0, 1, 5, 6, 7]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end DiagonalKrausEntry
+
 end
 end Reg.D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
