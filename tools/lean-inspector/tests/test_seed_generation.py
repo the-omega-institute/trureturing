@@ -463,7 +463,8 @@ if os.environ.get('FIXTURE_DELAY_FAILURE') == '1':
             path.write_bytes(data)
             path.chmod(mode)
         self.environment.update(FAKE_RELEASE_ROOT=str(self.root / 'releases'), GITHUB_ACTIONS='false',
-            PATH=str(self.root / 'bin') + os.pathsep + self.environment['PATH'])
+            PATH=str(self.root / 'bin') + os.pathsep + self.environment['PATH'],
+            STRATALINT_LEAN_REPORT_REUSE=str(self.output))
         return result
 
     def create_canonical_release_fixture(self, *, damage=None):
