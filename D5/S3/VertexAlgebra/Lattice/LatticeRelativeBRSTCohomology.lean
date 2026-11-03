@@ -19,6 +19,8 @@ import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 import Mathlib.LinearAlgebra.Isomorphisms
 import Mathlib.Tactic
 
+set_option maxHeartbeats 400000
+set_option synthInstance.maxHeartbeats 100000
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -402,7 +404,7 @@ open private actualBasis_apply M_eq_number spectral_projection_inverse
 
 variable {D : LatticeData}
 
-/-- The contraction's charge projector on the shell's ORIGINAL monomial basis. -/
+/- The contraction's charge projector on the shell's ORIGINAL monomial basis. -/
 private theorem chargeProject_original_basis (p : Charge D)
     (i : LatticeRelativeMassShell.TensorLabel D) :
     chargeProject p (LatticeRelativeMassShell.tensorBasis D i) =
@@ -435,7 +437,7 @@ private theorem chargeProject_original_coeff (p : Charge D) (x : State D)
   · simp [hi, LatticeRelativeMassShell.coeff, LatticeRelativeMassShell.tensorCoeffEquiv]
   · simp [hi]
 
-/-- Identify the original charge condition, without substituting a new shell. -/
+/- Identify the original charge condition, without substituting a new shell. -/
 private theorem mem_fixedMomentum_iff_chargeProject (p : Charge D) (x : State D) :
     x ∈ LatticeRelativeMassShell.fixedMomentum D p ↔ chargeProject p x = x := by
   classical
@@ -456,7 +458,7 @@ private theorem mem_fixedMomentum_iff_chargeProject (p : Charge D) (x : State D)
     rw [chargeProject_original_coeff] at hc
     simpa [hi] using hc.symm
 
-/-- The original zero-count projector preserves the literal relative shell. -/
+/- The original zero-count projector preserves the literal relative shell. -/
 private theorem P0_mem_shell
     (F : NullFrame D) {t : ℕ} (B : Module.Basis (Fin t) ℂ F.K)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -499,11 +501,11 @@ end GRE
 abbrev Polynomial (t : ℕ) := MvPolynomial (Fin t × ℕ) ℂ
 abbrev Exponent (t : ℕ) := (Fin t × ℕ) →₀ ℕ
 
-/-- Actual positive oscillator frequencies, with multiplicity. -/
+/- Actual positive oscillator frequencies, with multiplicity. -/
 def weight {t : ℕ} (nu : Exponent t) : ℕ :=
   Finsupp.weight (fun x : Fin t × ℕ => x.2 + 1) nu
 
-/-- Independent coefficient definition; no cutoff, P0, or shell in the definition. -/
+/- Independent coefficient definition; no cutoff, P0, or shell in the definition. -/
 def energyTarget (D : LatticeData) (t : ℕ) (p : Charge D) :
     Submodule ℂ (Polynomial t) where
   carrier := {f | ∀ nu, (weight nu : ℤ) + chargeEnergy D p ≠ 1 → f.coeff nu = 0}
@@ -519,7 +521,7 @@ def energyTarget (D : LatticeData) (t : ℕ) (p : Charge D) :
 variable (F : NullFrame D) {t : ℕ}
 variable (B : Module.Basis (Fin t) ℂ F.K)
 
-/-- Independent literal target, the genuine image of energy-restricted polynomials. -/
+/- Independent literal target, the genuine image of energy-restricted polynomials. -/
 def target (p : Charge D) : Submodule ℂ (State D) :=
   (energyTarget D t p).map (groundMap F B p)
 
@@ -532,7 +534,7 @@ private theorem groundIndex_injective (p : Charge D) :
   apply Finsupp.mapDomain_injective transverseVariable_injective
   exact congrArg (fun i : StateIndex D t => i.1.2) he
 
-/-- Recover every polynomial coefficient in the supplied actual basis. -/
+/- Recover every polynomial coefficient in the supplied actual basis. -/
 private theorem groundMap_coefficient (p : Charge D) (f : Polynomial t) (nu : Exponent t) :
     (actualBasis F B).repr (groundMap F B p f) (groundIndex p nu) = f.coeff nu := by
   classical
@@ -559,7 +561,7 @@ private theorem groundMap_injective (p : Charge D) : Function.Injective (groundM
   have hc := congrArg (fun x : State D => (actualBasis F B).repr x (groundIndex p nu)) he
   simpa only [groundMap_coefficient] using hc
 
-/-- q-1 is an integer scalar; -1 comes from the original ket {1}. -/
+/- q-1 is an integer scalar; -1 comes from the original ket {1}. -/
 private def energyOperator (p : Charge D) : Module.End ℂ (Polynomial t) :=
   diagonal (MvPolynomial.basisMonomials (Fin t × ℕ) ℂ)
     (fun nu => (((weight nu : ℤ) + chargeEnergy D p - 1 : ℤ) : ℂ))
@@ -595,7 +597,7 @@ private theorem energyOperator_zero_iff (p : Charge D) (f : Polynomial t) :
       simp [hz]
     · rw [hf nu he, mul_zero]
 
-/-- Frequency is unchanged by the transverse variable injection. -/
+/- Frequency is unchanged by the transverse variable injection. -/
 private theorem frequencyWeight_mapDomain (nu : Exponent t) :
     Finsupp.weight frequencyWeight (nu.mapDomain transverseVariable) = weight nu := by
   simp only [Finsupp.weight_apply, weight, smul_eq_mul]
@@ -605,7 +607,7 @@ private theorem frequencyWeight_mapDomain (nu : Exponent t) :
 private theorem ghost_ground_energy : GRE.energy ({1} : Finset ℕ) = -1 := by
   simp [D5.S3.Quantum.Fermionic.BcGhostRelativeEnergy.energy, GRE.siteEnergy_one]
 
-/-- The actual L0 calculation, using the supplied inverse coordinate grading. -/
+/- The actual L0 calculation, using the supplied inverse coordinate grading. -/
 private theorem totalL0_groundMap_monomial
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
@@ -638,7 +640,7 @@ private theorem totalL0_groundMap_monomial
   rw [← chargeEnergy_complex_half D p]
   push_cast; ring
 
-/-- Exact all-polynomial intertwining, before imposing an energy condition. -/
+/- Exact all-polynomial intertwining, before imposing an energy condition. -/
 private theorem totalL0_groundMap
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
@@ -676,7 +678,7 @@ private theorem groundMap_mem_shell_iff
     change totalL0 D H (groundMap F B p f) = 0
     rw [henergy, (energyOperator_zero_iff p f).mpr hf, map_zero]
 
-/-- The target was defined without P0. This theorem identifies the literal kernels. -/
+/- The target was defined without P0. This theorem identifies the literal kernels. -/
 private theorem target_eq_shell_inf_ker
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
@@ -715,13 +717,13 @@ variable (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
 variable (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
 variable (p : Charge D)
 
-/-- Literal inclusion into the SAME original relativeMassShell. -/
+/- Literal inclusion into the SAME original relativeMassShell. -/
 private def inclusion : target F B p →ₗ[ℂ] relativeMassShell D H p where
   toFun u := ⟨u, ((target_eq_shell_inf_ker F B H hHG hGH p).le u.property).1⟩
   map_add' u v := Subtype.ext rfl
   map_smul' z u := Subtype.ext rfl
 
-/-- Genuine stability is supplied here, not an additional endpoint hypothesis. -/
+/- Genuine stability is supplied here, not an additional endpoint hypothesis. -/
 private def shellP0 : Module.End ℂ (relativeMassShell D H p) where
   toFun x := ⟨P0 F B x,
     P0_mem_shell F B H hHG hGH p x x.property⟩
@@ -752,7 +754,7 @@ private def shellH : Module.End ℂ (relativeMassShell D H p) where
   map_add' _x _y := Subtype.ext (map_add _ _ _)
   map_smul' _z _x := Subtype.ext (map_smul _ _ _)
 
-/-- P0 with its actual codomain restricted by the proved target identification. -/
+/- P0 with its actual codomain restricted by the proved target identification. -/
 private def projection : relativeMassShell D H p →ₗ[ℂ] target F B p where
   toFun x := ⟨P0 F B x, by
     rw [target_eq_shell_inf_ker F B H hHG hGH p]
@@ -793,7 +795,7 @@ private theorem projection_shell_d0 :
   change P0 F B (d0 F p x) = 0
   exact LinearMap.congr_fun (P0_mul_d0 F B p) x
 
-/-- This is the ONLY endpoint needing nonzero pPlus. -/
+/- This is the ONLY endpoint needing nonzero pPlus. -/
 private theorem shell_contraction (hp : F.pPlus p ≠ 0) :
     shellD0 F H hHG hGH p * shellH F B H hHG hGH p +
       shellH F B H hHG hGH p * shellD0 F H hHG hGH p =
@@ -832,6 +834,8 @@ end ShellMaps
 
 end D5.S3.VertexAlgebra.LatticeRelativeBRSTCohomology.Ground
 
+set_option backward.isDefEq.respectTransparency true
+
 namespace D5.S3.VertexAlgebra.LatticeRelativeBRSTCohomology
 
 open LatticeGeneratingFieldLocality LatticeSugawaraCurrents
@@ -854,7 +858,7 @@ private theorem full_step_preserves_shell
     ⟨(LatticeBRST.totalCharge D H - d0 F p) x,
       (relativeMassShell D H p).sub_mem hQ hd⟩).property
 
-/-- Uniform finite nilpotence of the actual full-Q perturbation on the literal
+/- Uniform finite nilpotence of the actual full-Q perturbation on the literal
 original relative mass shell, for every integral charge, including zero. -/
 theorem h_full_remainder_nilpotent_on_relativeMassShell
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -875,8 +879,8 @@ theorem h_full_remainder_nilpotent_on_relativeMassShell
   let A : Module.End ℂ (State D) :=
     h F B p * (LatticeBRST.totalCharge D H - d0 F p)
   have hiter (k : ℕ) :
-      A ^ k x ∈ relativeMassShell D H p ∧
-        ∀ j : StateIndex D t, (actualBasis F B).repr (A ^ k x) j ≠ 0 →
+      (A ^ k) x ∈ relativeMassShell D H p ∧
+        ∀ j : StateIndex D t, (actualBasis F B).repr ((A ^ k) x) j ≠ 0 →
           -(N : ℤ) + (k : ℤ) ≤ degree j := by
     induction k with
     | zero =>
@@ -888,23 +892,22 @@ theorem h_full_remainder_nilpotent_on_relativeMassShell
     | succ k ih =>
         constructor
         · rw [pow_succ', Module.End.mul_apply]
-          exact full_step_preserves_shell F B H hHG hGH p (A ^ k x) ih.1
+          exact full_step_preserves_shell F B H hHG hGH p ((A ^ k) x) ih.1
         · intro j hj
-          have hj' : (actualBasis F B).repr (A (A ^ k x)) j ≠ 0 := by
+          have hj' : (actualBasis F B).repr (A ((A ^ k) x)) j ≠ 0 := by
             simpa only [pow_succ', Module.End.mul_apply] using hj
           have hs := (full_remainder_fixed_charge_vectors F B H hHG hGH p
-            (A ^ k x) (fun i hi => (hbound (A ^ k x) ih.1 i hi).1)
+            ((A ^ k) x) (fun i hi => (hbound ((A ^ k) x) ih.1 i hi).1)
             (-(N : ℤ) + (k : ℤ)) ih.2).2.2 j hj'
           omega
   obtain ⟨hpow, hlower⟩ := hiter (2 * N + 1)
-  change A ^ (2 * N + 1) x = 0
-  apply (actualBasis F B).repr.injective
+  change (A ^ (2 * N + 1)) x = 0
+  apply (actualBasis F B).repr.map_eq_zero_iff.mp
   ext j
-  by_cases hj : (actualBasis F B).repr (A ^ (2 * N + 1) x) j = 0
-  · simpa only [map_zero, Finsupp.zero_apply] using hj
-  · have hlo := hlower j hj
-    have hhi := (hN (A ^ (2 * N + 1) x) hpow j hj).2
-    omega
+  by_contra hj
+  have hlo := hlower j hj
+  have hhi := (hN ((A ^ (2 * N + 1)) x) hpow j hj).2
+  omega
 
 end D5.S3.VertexAlgebra.LatticeRelativeBRSTCohomology
 
@@ -923,7 +926,7 @@ open private sector_smul_right actualBasis_apply totalCount_zero_iff ghost_secto
 
 abbrev State (D : LatticeData) := LatticeMatterGhostCoupling.State D
 
-/-- Exactly 1 tensor the signed ORIGINAL occupation number. -/
+/- Exactly 1 tensor the signed ORIGINAL occupation number. -/
 abbrev N (D : LatticeData) : Module.End ℂ (State D) :=
   D5.S3.Quantum.Fermionic.BcGhostChargeTensor.number (M := Carrier D)
 
@@ -946,7 +949,7 @@ private theorem comm_smul (Z A : Module.End ℂ V) (z : ℂ) :
     Z * (z • A) - (z • A) * Z = z • (Z * A - A * Z) := by
   simp only [mul_smul_comm, smul_mul_assoc, smul_sub]
 
-/-- One actual bound captures BOTH x and Z x before either total is expanded. -/
+/- One actual bound captures BOTH x and Z x before either total is expanded. -/
 private theorem family_degree (A : Family V) (Z : Module.End ℂ V) (z : ℂ)
     (ht : ∀ r, Z * A.term r - A.term r * Z = z • A.term r) :
     Z * A.total - A.total * Z = z • A.total := by
@@ -1034,7 +1037,11 @@ private theorem N_totalL0 (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
       LatticeMatterGhostCoupling.ghostVirasoro D 0) * N D = 0
   rw [← total_ward_b D H 0, comm_add, comm_mul, comm_mul,
     N_totalCharge, N_b]
-  noncomm_ring
+  apply LinearMap.ext
+  intro x
+  simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.neg_apply, map_neg,
+    LinearMap.zero_apply]
+  abel
 
 variable (F : NullFrame D) {t : ℕ} (B : Module.Basis (Fin t) ℂ F.K)
 
@@ -1055,12 +1062,24 @@ private theorem N_rTerm (r : ℕ) : N D * rTerm F r - rTerm F r * N D = -rTerm F
   module
 
 private theorem N_unscaledD : N D * unscaledD F - unscaledD F * N D = unscaledD F := by
-  exact (by simpa only [one_smul] using family_degree (dFamily F) (N D) 1
-    (fun r => by simpa only [dFamily, one_smul] using N_dTerm F r))
+  exact (by simpa only [unscaledD, one_smul] using (family_degree (dFamily F) (N D) 1
+    (fun r => by simpa only [dFamily, one_smul] using N_dTerm F r)))
 
 private theorem N_unscaledR : N D * unscaledR F - unscaledR F * N D = -unscaledR F := by
-  exact (by simpa only [neg_one_smul] using family_degree (rFamily F) (N D) (-1)
-    (fun r => by simpa only [rFamily, neg_one_smul] using N_rTerm F r))
+  have ht (r : ℕ) : N D * (rFamily F).term r - (rFamily F).term r * N D =
+      (-1 : ℂ) • (rFamily F).term r := by
+    change N D * rTerm F r - rTerm F r * N D = (-1 : ℂ) • rTerm F r
+    rw [N_rTerm F r]
+    apply LinearMap.ext
+    intro x
+    simp only [LinearMap.neg_apply, LinearMap.smul_apply]
+    module
+  have hh := family_degree (rFamily F) (N D) (-1) ht
+  apply LinearMap.ext
+  intro x
+  have hx := LinearMap.congr_fun hh x
+  simpa only [unscaledR, LinearMap.sub_apply, Module.End.mul_apply,
+    LinearMap.smul_apply, neg_one_smul ℂ, LinearMap.neg_apply] using hx
 
 private theorem N_d0 (p : Charge D) : N D * d0 F p - d0 F p * N D = d0 F p := by
   rw [d0, comm_smul, N_unscaledD]
@@ -1107,7 +1126,10 @@ private theorem N_P0 : N D * P0 F B - P0 F B * N D = 0 := by
 
 private theorem N_h (p : Charge D) : N D * h F B p - h F B p * N D = -h F B p := by
   rw [h, comm_mul, N_quartet_R, N_invM]
-  simp only [mul_zero, add_zero, neg_mul]
+  simp only [mul_zero, add_zero]
+  apply LinearMap.ext
+  intro x
+  simp only [Module.End.mul_apply, LinearMap.neg_apply]
 
 private theorem N_original_basis (i : TensorLabel D) :
     N D (tensorBasis D i) = (charge i.2 : ℂ) • tensorBasis D i := by
@@ -1138,10 +1160,11 @@ private theorem N_preserves_relativeMassShell
     (hx : x ∈ relativeMassShell D H p) : N D x ∈ relativeMassShell D H p := by
   refine ⟨⟨N_preserves_fixedMomentum p x hx.1.1, ?_⟩, ?_⟩
   · change LatticeMatterGhostCoupling.ghostB D 0 (N D x) = 0
+    have hb : LatticeMatterGhostCoupling.ghostB D 0 x = 0 := hx.1.2
     have he := LinearMap.congr_fun (N_b (D := D) 0) x
     have hn : -LatticeMatterGhostCoupling.ghostB D 0 (N D x) = 0 := by
       simpa only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.neg_apply,
-        hx.1.2, map_zero, zero_sub, neg_zero] using he
+        hb, map_zero, zero_sub, neg_zero] using he
     exact neg_eq_zero.mp hn
   · change totalL0 D H (N D x) = 0
     calc
@@ -1157,7 +1180,7 @@ private theorem relative_zero_count_occupation (x : State D) (hb : ghostB0 x = 0
     · exact h1
     · exact False.elim (hc ((b0_coefficients F B x).mp hb i (by simp [h13])))
   refine ⟨hS, ?_⟩
-  simp [hS, charge]
+  norm_num [hS, charge, Finset.filter_singleton]
 
 private theorem P0_actual_coefficient (x : State D) (i : StateIndex D t) :
     (actualBasis F B).repr (P0 F B x) i =
@@ -1253,14 +1276,23 @@ private theorem shell_N_delta : 𝒏 * 𝜹 - 𝜹 * 𝒏 = 𝜹 := by
 
 private theorem shell_N_hdelta : 𝒏 * (𝒉 * 𝜹) = (𝒉 * 𝜹) * 𝒏 := by
   apply sub_eq_zero.mp
-  rw [comm_mul, shell_N_h F B H hHG hGH p, shell_N_delta F B H hHG hGH p]
-  noncomm_ring
+  rw [comm_mul, shell_N_h F B H hHG hGH p, shell_N_delta F H hHG hGH p]
+  apply LinearMap.ext
+  intro x
+  simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.neg_apply,
+    LinearMap.zero_apply]
+  abel
 
 private theorem shell_N_deltah : 𝒏 * (𝜹 * 𝒉) = (𝜹 * 𝒉) * 𝒏 := by
   apply sub_eq_zero.mp
-  rw [comm_mul, shell_N_delta F B H hHG hGH p, shell_N_h F B H hHG hGH p]
-  noncomm_ring
+  rw [comm_mul, shell_N_delta F H hHG hGH p, shell_N_h F B H hHG hGH p]
+  apply LinearMap.ext
+  intro x
+  simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.neg_apply,
+    LinearMap.zero_apply, map_neg]
+  abel
 
+include H hHG hGH in
 private theorem N_concrete_target (u : LatticeRelativeBRSTCohomology.Ground.target F B p) :
     N D (u : State D) = u := by
   have hb := (LatticeRelativeBRSTCohomology.Ground.inclusion F B H hHG hGH p u).property.1.2
@@ -1317,13 +1349,14 @@ private theorem correctedI_N (n : ℕ) :
 
 private theorem correctedP_N (n : ℕ) :
     (correctedP F B H hHG hGH p n).comp 𝒏 = correctedP F B H hHG hGH p n := by
-  unfold correctedP
-  calc
-    ((𝒑).comp (J F B H hHG hGH p n)).comp 𝒏 =
-        (𝒑).comp (J F B H hHG hGH p n * 𝒏) := rfl
-    _ = (𝒑).comp (𝒏 * J F B H hHG hGH p n) := by rw [N_J F B H hHG hGH p n]
-    _ = ((𝒑).comp 𝒏).comp (J F B H hHG hGH p n) := rfl
-    _ = _ := by rw [projection_N F B H hHG hGH p]
+  apply LinearMap.ext
+  intro x
+  change 𝒑 (J F B H hHG hGH p n (𝒏 x)) = 𝒑 (J F B H hHG hGH p n x)
+  have he := LinearMap.congr_fun (N_J F B H hHG hGH p n) x
+  change 𝒏 (J F B H hHG hGH p n x) = J F B H hHG hGH p n (𝒏 x) at he
+  rw [← he]
+  exact LinearMap.congr_fun (projection_N F B H hHG hGH p)
+    (J F B H hHG hGH p n x)
 
 private theorem correctedH_N (n : ℕ) :
     𝒏 * correctedH F B H hHG hGH p n - correctedH F B H hHG hGH p n * 𝒏 =
@@ -1331,7 +1364,10 @@ private theorem correctedH_N (n : ℕ) :
   unfold correctedH
   rw [comm_mul, sub_eq_zero.mpr (N_K F B H hHG hGH p n),
     shell_N_h F B H hHG hGH p]
-  simp only [zero_mul, zero_add, mul_neg]
+  simp only [zero_mul, zero_add]
+  apply LinearMap.ext
+  intro x
+  simp only [Module.End.mul_apply, LinearMap.neg_apply, map_neg]
 
 private theorem finite_transfer_zero (n : ℕ) : transferred F B H hHG hGH p n = 0 := by
   apply LinearMap.ext
@@ -1340,7 +1376,7 @@ private theorem finite_transfer_zero (n : ℕ) : transferred F B H hHG hGH p n =
   have hv : 𝒏 v = v := LinearMap.congr_fun (correctedI_N F B H hHG hGH p n) u
   have hd : 𝒏 (𝜹 v) - 𝜹 v = 𝜹 v := by
     simpa only [LinearMap.sub_apply, Module.End.mul_apply, hv] using
-      LinearMap.congr_fun (shell_N_delta F B H hHG hGH p) v
+      LinearMap.congr_fun (shell_N_delta F H hHG hGH p) v
   have hd2 : 𝒏 (𝜹 v) = (2 : ℂ) • 𝜹 v := by
     rw [two_smul]
     exact sub_eq_iff_eq_add.mp hd
@@ -1363,7 +1399,7 @@ open LatticeRelativeMassShell
 open D5.S3.HomologicalAlgebra
 open CategoryTheory
 
-/-- The shell differential is the original Q, using its proved literal-shell
+/- The shell differential is the original Q, using its proved literal-shell
 invariance, not a replacement complex or an invariant-shell parameter. -/
 private theorem original_shellQ_square {D : LatticeData}
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -1379,7 +1415,7 @@ private theorem original_shellQ_square {D : LatticeData}
     simpa [hrank, pow_two] using LatticeBRST.total_square_anomaly D H hHG hGH
   exact LinearMap.congr_fun hsq x
 
-/-- This is an actual short complex of original Q maps. Its standard ModuleCat
+/- This is an actual short complex of original Q maps. Its standard ModuleCat
 homology is canonically the genuine cycle/boundary quotient used below. -/
 def originalComplex {D : LatticeData}
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -1393,9 +1429,18 @@ def originalComplex {D : LatticeData}
 abbrev Cycles {D : LatticeData}
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (p : Charge D) := LinearMap.ker (Number.shellQ H hHG hGH p)
+    (p : Charge D) : Submodule ℂ (relativeMassShell D H p) :=
+  LinearMap.ker (Number.shellQ H hHG hGH p)
 
-/-- Reuse Mathlib's actual image-to-kernel map, rather than specifying which
+private instance cycles_add_comm_group {D : LatticeData}
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (p : Charge D) : AddCommGroup (Cycles H hHG hGH p) := by
+  letI : AddCommGroup (relativeMassShell D H p) :=
+    Submodule.addCommGroup (relativeMassShell D H p)
+  exact Submodule.addCommGroup (Cycles H hHG hGH p)
+
+/- Reuse Mathlib's actual image-to-kernel map, rather than specifying which
 vectors ought to count as boundaries. -/
 def boundaryMap {D : LatticeData}
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -1414,7 +1459,7 @@ abbrev Cohomology {D : LatticeData}
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (p : Charge D) (hrank : D.rank = 26) :=
-  Cycles H hHG hGH p ⧸ boundaries H hHG hGH p hrank
+  (Cycles H hHG hGH p : Type) ⧸ boundaries H hHG hGH p hrank
 
 private theorem mem_boundaries_iff {D : LatticeData}
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -1439,6 +1484,7 @@ variable (p : Charge D)
 private def length (D : LatticeData) (p : Charge D) : ℕ :=
   2 * LatticeRelativeMassShell.massShellCutoff D p + 1
 
+include hHG hGH in
 private theorem length_spec :
     1 ≤ length D p ∧
       ∀ x : State D, x ∈ relativeMassShell D H p →
@@ -1448,8 +1494,8 @@ private theorem length_spec :
     h_full_remainder_nilpotent_on_relativeMassShell F B H hHG hGH p⟩
 
 local notation "ℓ" => length D p
-local notation "V" => relativeMassShell D H p
-local notation "U" => Ground.target F B p
+local notation "𝒱" => (relativeMassShell D H p : Type)
+local notation "𝒰" => (Ground.target F B p : Type)
 local notation "𝒬" => Number.shellQ H hHG hGH p
 local notation "𝒩" => Number.shellN H p
 local notation "𝒅" => Ground.shellD0 F H hHG hGH p
@@ -1459,13 +1505,13 @@ local notation "𝓘" => Number.correctedI F B H hHG hGH p ℓ
 local notation "𝓟" => Number.correctedP F B H hHG hGH p ℓ
 local notation "𝓗" => Number.correctedH F B H hHG hGH p ℓ
 
-private theorem hdelta_coe (x : V) :
+private theorem hdelta_coe (x : 𝒱) :
     ((𝒉 * 𝜹) x : State D) =
       (h F B p * (LatticeBRST.totalCharge D H - d0 F p)) (x : State D) := rfl
 
-/-- Apply exact on-shell equality at every intermediate restricted state.
+/- Apply exact on-shell equality at every intermediate restricted state.
 The actual full-Q ambient word is the one used by the new nilpotence supplier. -/
-private theorem hdelta_power_coe (r : ℕ) (x : V) :
+private theorem hdelta_power_coe (r : ℕ) (x : 𝒱) :
     (((𝒉 * 𝜹) ^ r) x : State D) =
       ((h F B p * (LatticeBRST.totalCharge D H - d0 F p)) ^ r) (x : State D) := by
   let A : Module.End ℂ (State D) :=
@@ -1482,7 +1528,8 @@ private theorem hdelta_power_coe (r : ℕ) (x : V) :
         hdelta_coe F B H hHG hGH p (((𝒉 * 𝜹) ^ r) x)
       _ = A ((A ^ r) (x : State D)) := congrArg A ih
       _ = (A ^ (r + 1)) (x : State D) := by
-        rw [pow_succ', Module.End.mul_apply]
+        rw [pow_succ']
+        rfl
 
 private theorem shell_hdelta_nilpotent : (𝒉 * 𝜹) ^ ℓ = 0 := by
   apply LinearMap.ext
@@ -1494,9 +1541,9 @@ private theorem shell_hdelta_nilpotent : (𝒉 * 𝜹) ^ ℓ = 0 := by
 
 variable (hrank : D.rank = 26) (hp : F.pPlus p ≠ 0)
 
-/-- Each field is discharged by an original source proof. No conclusion field,
+/- Each field is discharged by an original source proof. No conclusion field,
 zero transfer field, arbitrary retract, or external Q-square hypothesis occurs. -/
-private def input : FinitePerturbation.Input (R := ℂ) (U := U) (V := V) where
+private def input : FinitePerturbation.Input (R := ℂ) (U := 𝒰) (V := 𝒱) where
   d0 := 𝒅
   h := 𝒉
   delta := 𝜹
@@ -1511,53 +1558,60 @@ private def input : FinitePerturbation.Input (R := ℂ) (U := U) (V := V) where
   hi := Ground.shell_h_inclusion F B H hHG hGH p
   ph := Ground.projection_shell_h F B H hHG hGH p
   perturbed_sq := by
-    rw [Number.shell_d0_add_delta F B H hHG hGH p]
+    rw [Number.shell_d0_add_delta F H hHG hGH p]
     exact original_shellQ_square H hHG hGH p hrank
 
 local notation "𝒄" => input F B H hHG hGH p hrank hp
 
-/-- This is the public theorem's primitive on the SAME original Q shell. -/
-private theorem original_cycle_decomposition (x : V) (hx : 𝒬 x = 0) :
+/- This is the public theorem's primitive on the SAME original Q shell. -/
+include hrank hp in
+private theorem original_cycle_decomposition (x : 𝒱) (hx : 𝒬 x = 0) :
     x = 𝓘 (𝓟 x) + 𝒬 (𝓗 x) := by
   have out := 𝒄.finite_perturbation ℓ (length_spec F B H hHG hGH p).1
     (shell_hdelta_nilpotent F B H hHG hGH p)
   have hz : 𝒄.transferred ℓ = 0 :=
     Number.finite_transfer_zero F B H hHG hGH p ℓ
-  have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F B H hHG hGH p
+  have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F H hHG hGH p
   have hx' : 𝒄.D x = 0 := by rwa [hD]
   have he : x - 𝓘 (𝓟 x) = 𝒬 (𝓗 x) := by
-    simpa only [hD] using (out.representatives hz).2.1 x hx'
+    simpa only [hD, FinitePerturbation.Input.D, Number.shell_d0_add_delta F H hHG hGH p, FinitePerturbation.Input.I, FinitePerturbation.Input.P, FinitePerturbation.Input.H, FinitePerturbation.Input.K, FinitePerturbation.Input.J, input, Number.correctedI, Number.correctedP, Number.correctedH, Number.K, Number.J] using (out.representatives hz).2.1 x hx'
   calc
     x = 𝒬 (𝓗 x) + 𝓘 (𝓟 x) := sub_eq_iff_eq_add.mp he
     _ = 𝓘 (𝓟 x) + 𝒬 (𝓗 x) := add_comm _ _
 
-/-- Uniqueness means equality modulo the actual image of original Q, not
+/- Uniqueness means equality modulo the actual image of original Q, not
 equality under the uncorrected P0. Used by exact_energy_representative. -/
-private theorem corrected_representatives_unique (u v : U) :
-    (∃ y : V, 𝒬 y = 𝓘 u - 𝓘 v) ↔ u = v := by
+include hrank hp in
+private theorem corrected_representatives_unique (u v : 𝒰) :
+    (∃ y : 𝒱, 𝒬 y = 𝓘 u - 𝓘 v) ↔ u = v := by
   have out := 𝒄.finite_perturbation ℓ (length_spec F B H hHG hGH p).1
     (shell_hdelta_nilpotent F B H hHG hGH p)
   have hz : 𝒄.transferred ℓ = 0 :=
     Number.finite_transfer_zero F B H hHG hGH p ℓ
-  have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F B H hHG hGH p
-  have hPQ : ∀ y : V, 𝓟 (𝒬 y) = 0 := by
+  have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F H hHG hGH p
+  have hPQ : ∀ y : 𝒱, 𝓟 (𝒬 y) = 0 := by
     intro y
-    simpa only [hD, hz, LinearMap.comp_apply, LinearMap.zero_apply, map_zero] using
-      LinearMap.congr_fun out.projection_chain y
-  have hPI : ∀ w : U, 𝓟 (𝓘 w) = w := fun w => ((out.representatives hz).1 w).2
+    have he := LinearMap.congr_fun out.projection_chain y
+    change (𝒄.P ℓ) (𝒄.D y) = (𝒄.transferred ℓ) ((𝒄.P ℓ) y) at he
+    rw [hz, LinearMap.zero_apply] at he
+    simpa only [hD, hz, LinearMap.comp_apply, LinearMap.zero_apply, map_zero, FinitePerturbation.Input.D, Number.shell_d0_add_delta F H hHG hGH p, FinitePerturbation.Input.I, FinitePerturbation.Input.P, FinitePerturbation.Input.H, FinitePerturbation.Input.K, FinitePerturbation.Input.J, input, Number.correctedI, Number.correctedP, Number.correctedH, Number.K, Number.J] using he
+  have hPI (w : 𝒰) : 𝓟 (𝓘 w) = w := by
+    have he := LinearMap.congr_fun out.retract w
+    change 𝓟 (𝓘 w) = w at he
+    exact he
   constructor
   · rintro ⟨y, hy⟩
-    have he : (0 : U) = u - v := by
+    have he : (0 : 𝒰) = u - v := by
       simpa only [hPQ, map_sub, hPI] using congrArg 𝓟 hy
     exact sub_eq_zero.mp he.symm
   · intro he
     subst v
     exact ⟨0, by simp⟩
 
-/-- N I = I and P N = P come from the actual occupation-number supplier.
+/- N I = I and P N = P come from the actual occupation-number supplier.
 The scalar separation here is over C and works for EVERY integer q != 1. -/
 private theorem corrected_projection_zero_of_charge_ne_one (q : ℤ) (hq : q ≠ 1)
-    (x : V) (hx : 𝒩 x = (q : ℂ) • x) : 𝓟 x = 0 := by
+    (x : 𝒱) (hx : 𝒩 x = (q : ℂ) • x) : 𝓟 x = 0 := by
   have hPN : 𝓟 (𝒩 x) = 𝓟 x := LinearMap.congr_fun
     (Number.correctedP_N F B H hHG hGH p ℓ) x
   have he : (q : ℂ) • 𝓟 x = 𝓟 x := by
@@ -1566,25 +1620,28 @@ private theorem corrected_projection_zero_of_charge_ne_one (q : ℤ) (hq : q ≠
       _ = 𝓟 (𝒩 x) := congrArg 𝓟 hx.symm
       _ = 𝓟 x := hPN
   have hs : ((q : ℂ) - 1) • 𝓟 x = 0 := by
-    rw [sub_smul, one_smul, he, sub_self]
+    calc
+      ((q : ℂ) - 1) • 𝓟 x = (q : ℂ) • 𝓟 x - 𝓟 x := by module
+      _ = 0 := by rw [he, sub_self]
   have hqC : (q : ℂ) ≠ 1 := by exact_mod_cast hq
   exact (smul_eq_zero.mp hs).resolve_left (sub_ne_zero.mpr hqC)
 
-/-- The actual corrected homotopy lowers integer ghost charge by one. -/
-private theorem corrected_homotopy_charge (q : ℤ) (x : V) (hx : 𝒩 x = (q : ℂ) • x) :
+/- The actual corrected homotopy lowers integer ghost charge by one. -/
+private theorem corrected_homotopy_charge (q : ℤ) (x : 𝒱) (hx : 𝒩 x = (q : ℂ) • x) :
     𝒩 (𝓗 x) = ((q - 1 : ℤ) : ℂ) • 𝓗 x := by
   have he : 𝒩 (𝓗 x) - (q : ℂ) • 𝓗 x = -𝓗 x := by
     simpa only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.neg_apply,
       hx, map_smul] using LinearMap.congr_fun
         (Number.correctedH_N F B H hHG hGH p ℓ) x
-  simp only [Int.cast_sub, Int.cast_one, sub_smul, one_smul]
+  simp only [Int.cast_sub, Int.cast_one]
   calc
     𝒩 (𝓗 x) = -𝓗 x + (q : ℂ) • 𝓗 x := sub_eq_iff_eq_add.mp he
-    _ = (q : ℂ) • 𝓗 x - 𝓗 x := by abel
+    _ = ((q : ℂ) - 1) • 𝓗 x := by module
 
-/-- Concentration is witnessed by an original boundary with a primitive of
+/- Concentration is witnessed by an original boundary with a primitive of
 the required ghost charge; no acyclicity or transfer conclusion is assumed. -/
-theorem off_charge_one_exact (q : ℤ) (hq : q ≠ 1) (x : V)
+include hrank hp in
+theorem off_charge_one_exact (q : ℤ) (hq : q ≠ 1) (x : 𝒱)
     (hx : 𝒬 x = 0) (hNx : 𝒩 x = (q : ℂ) • x) :
     x = 𝒬 (𝓗 x) ∧ 𝒩 (𝓗 x) = ((q - 1 : ℤ) : ℂ) • 𝓗 x := by
   constructor
@@ -1593,37 +1650,39 @@ theorem off_charge_one_exact (q : ℤ) (hq : q ≠ 1) (x : V)
       map_zero, zero_add] using he
   · exact corrected_homotopy_charge F B H hHG hGH p q x hNx
 
-/-- The target coordinate of an original cycle uses corrected P = p0 J. -/
-def cycleProjection : Cycles H hHG hGH p →ₗ[ℂ] U :=
-  𝓟.comp (Cycles H hHG hGH p).subtype
+/- The target coordinate of an original cycle uses corrected P = p0 J. -/
+def cycleProjection : Cycles H hHG hGH p →ₗ[ℂ] 𝒰 :=
+  (𝓟).comp (Cycles H hHG hGH p).subtype
 
-/-- Actual corrected representatives as elements of the original cycle space.
+/- Actual corrected representatives as elements of the original cycle space.
 This supplies the concrete inverse on quotient classes below. -/
-def representativeCycle (u : U) : Cycles H hHG hGH p :=
+def representativeCycle (u : 𝒰) : Cycles H hHG hGH p :=
   ⟨𝓘 u, by
     have out := 𝒄.finite_perturbation ℓ (length_spec F B H hHG hGH p).1
       (shell_hdelta_nilpotent F B H hHG hGH p)
     have hz : 𝒄.transferred ℓ = 0 :=
       Number.finite_transfer_zero F B H hHG hGH p ℓ
-    have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F B H hHG hGH p
+    have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F H hHG hGH p
     change 𝒬 (𝓘 u) = 0
-    simpa only [hD] using ((out.representatives hz).1 u).1⟩
+    simpa only [hD, FinitePerturbation.Input.D, Number.shell_d0_add_delta F H hHG hGH p, FinitePerturbation.Input.I, FinitePerturbation.Input.P, FinitePerturbation.Input.H, FinitePerturbation.Input.K, FinitePerturbation.Input.J, input, Number.correctedI, Number.correctedP, Number.correctedH, Number.K, Number.J] using ((out.representatives hz).1 u).1⟩
 
-/-- Original boundaries are exactly the kernel of corrected cycle projection.
+/- Original boundaries are exactly the kernel of corrected cycle projection.
 The equivalence is consumed directly from the public representative API. -/
+include hrank hp in
 private theorem boundaries_eq_ker_cycleProjection :
     boundaries H hHG hGH p hrank = LinearMap.ker (cycleProjection F B H hHG hGH p) := by
   ext x
   rw [mem_boundaries_iff]
-  change (∃ y : V, 𝒬 y = (x : V)) ↔ 𝓟 (x : V) = 0
+  change (∃ y : 𝒱, 𝒬 y = (x : 𝒱)) ↔ 𝓟 (x : 𝒱) = 0
   have out := 𝒄.finite_perturbation ℓ (length_spec F B H hHG hGH p).1
     (shell_hdelta_nilpotent F B H hHG hGH p)
   have hz : 𝒄.transferred ℓ = 0 :=
     Number.finite_transfer_zero F B H hHG hGH p ℓ
-  have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F B H hHG hGH p
-  have hx : 𝒄.D (x : V) = 0 := by rw [hD]; exact x.property
-  simpa only [hD] using (out.representatives hz).2.2 (x : V) hx
+  have hD : 𝒄.D = 𝒬 := Number.shell_d0_add_delta F H hHG hGH p
+  have hx : 𝒄.D (x : 𝒱) = 0 := by rw [hD]; exact x.property
+  simpa only [hD, FinitePerturbation.Input.D, Number.shell_d0_add_delta F H hHG hGH p, FinitePerturbation.Input.I, FinitePerturbation.Input.P, FinitePerturbation.Input.H, FinitePerturbation.Input.K, FinitePerturbation.Input.J, input, Number.correctedI, Number.correctedP, Number.correctedH, Number.K, Number.J] using (out.representatives hz).2.2 (x : 𝒱) hx
 
+include hrank hp in
 private theorem cycleProjection_surjective : Function.Surjective (cycleProjection F B H hHG hGH p) := by
   have out := 𝒄.finite_perturbation ℓ (length_spec F B H hHG hGH p).1
     (shell_hdelta_nilpotent F B H hHG hGH p)
@@ -1633,59 +1692,37 @@ private theorem cycleProjection_surjective : Function.Surjective (cycleProjectio
   refine ⟨representativeCycle F B H hHG hGH p hrank hp u, ?_⟩
   exact ((out.representatives hz).1 u).2
 
-/-- Use the existing first isomorphism theorem on the proved original kernel.
+/- Use the existing first isomorphism theorem on the proved original kernel.
 This is a genuine quotient of original cycles by actual original boundaries. -/
-def cohomologyEquivTarget : Cohomology H hHG hGH p hrank ≃ₗ[ℂ] U :=
-  (Submodule.quotEquivOfEq (boundaries H hHG hGH p hrank)
+def cohomologyEquivTarget : Cohomology H hHG hGH p hrank ≃ₗ[ℂ] 𝒰 :=
+  (Submodule.quotEquivOfEq (R := ℂ) (M := (Cycles H hHG hGH p : Type)) (boundaries H hHG hGH p hrank)
     (LinearMap.ker (cycleProjection F B H hHG hGH p))
     (boundaries_eq_ker_cycleProjection F B H hHG hGH p hrank hp)).trans
       ((cycleProjection F B H hHG hGH p).quotKerEquivOfSurjective
         (cycleProjection_surjective F B H hHG hGH p hrank hp))
 
-private theorem cohomologyEquivTarget_class (x : Cycles H hHG hGH p) :
-    cohomologyEquivTarget F B H hHG hGH p hrank hp (Submodule.Quotient.mk x) =
-      𝓟 (x : V) := by
-  simp only [cohomologyEquivTarget, LinearEquiv.trans_apply, Submodule.quotEquivOfEq_mk,
-    LinearMap.quotKerEquivOfSurjective_apply_mk, cycleProjection, LinearMap.comp_apply]
-
-private theorem cohomologyEquivTarget_symm (u : U) :
-    (cohomologyEquivTarget F B H hHG hGH p hrank hp).symm u =
-      Submodule.Quotient.mk (representativeCycle F B H hHG hGH p hrank hp u) := by
-  apply (cohomologyEquivTarget F B H hHG hGH p hrank hp).injective
-  rw [LinearEquiv.apply_symm_apply, cohomologyEquivTarget_class]
-  have out := 𝒄.finite_perturbation ℓ (length_spec F B H hHG hGH p).1
-    (shell_hdelta_nilpotent F B H hHG hGH p)
-  exact (LinearMap.congr_fun out.retract u).symm
-
-private def polynomialTargetEquiv : Ground.energyTarget D t p ≃ₗ[ℂ] U :=
+private def polynomialTargetEquiv : Ground.energyTarget D t p ≃ₗ[ℂ] 𝒰 :=
   Submodule.equivMapOfInjective (groundMap F B p)
     (Ground.groundMap_injective F B p) (Ground.energyTarget D t p)
 
-/-- Exact transverse polynomial coordinates, with wt(nu)+chargeEnergy(D,p)=1
+/- Exact transverse polynomial coordinates, with wt(nu)+chargeEnergy(D,p)=1
 on every nonzero coefficient, not a cutoff or an arbitrary ground retract. -/
 def cohomologyEquivEnergy :
     Cohomology H hHG hGH p hrank ≃ₗ[ℂ] Ground.energyTarget D t p :=
   (cohomologyEquivTarget F B H hHG hGH p hrank hp).trans
     (polynomialTargetEquiv F B p).symm
 
-/-- The inverse is the class of actual I applied to the supplied groundMap
+/- The inverse is the class of actual I applied to the supplied groundMap
 image of the exact-energy polynomial, not a selected quotient representative. -/
-theorem cohomologyEquivEnergy_symm (f : Ground.energyTarget D t p) :
-    (cohomologyEquivEnergy F B H hHG hGH p hrank hp).symm f =
-      Submodule.Quotient.mk (representativeCycle F B H hHG hGH p hrank hp
-        (polynomialTargetEquiv F B p f)) := by
-  change (cohomologyEquivTarget F B H hHG hGH p hrank hp).symm
-    (polynomialTargetEquiv F B p f) = _
-  exact cohomologyEquivTarget_symm F B H hHG hGH p hrank hp _
-
-/-- Every original class has a unique exact-energy transverse coordinate, and
+/- Every original class has a unique exact-energy transverse coordinate, and
 its corrected inclusion has actual ghost charge one. Uniqueness is modulo
 actual original Q boundaries. When x has charge one, its actual Hcorr primitive
 has charge zero, so the same statement uses degree-zero boundaries at q=1.
 No desired cohomology isomorphism is input. -/
-theorem exact_energy_representative (x : V) (hx : 𝒬 x = 0) :
+include hrank hp in
+theorem exact_energy_representative (x : 𝒱) (hx : 𝒬 x = 0) :
     ∃! f : Ground.energyTarget D t p,
-      (∃ y : V,
+      (∃ y : 𝒱,
         𝒬 y = x - 𝓘 (polynomialTargetEquiv F B p f) ∧
           (𝒩 x = x → 𝒩 y = 0)) ∧
         𝒩 (𝓘 (polynomialTargetEquiv F B p f)) =
