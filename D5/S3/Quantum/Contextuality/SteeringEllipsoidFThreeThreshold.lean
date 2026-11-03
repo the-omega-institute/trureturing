@@ -193,7 +193,7 @@ private lemma envelope (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1
   have ha := affine_bound ρ hρ htr
   have hb := bob_radius_le ρ hρ htr
   have hz := vlen_nonneg (blochB ρ)
-  have hr : vlen (blochB ρ) ^ 2 ≤ 1 := by nlinarith
+  have hr : vlen (blochB ρ) ^ 2 ≤ 1 := pow_le_one₀ hz hb
   by_cases hc : 0 ≤ 3 * vlen (centre ρ) - 2
   · apply le_trans (b := 1) _ (le_max_right _ _)
     nlinarith [mul_nonneg hc (sub_nonneg.mpr hr)]
