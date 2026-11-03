@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTa
 
 *Commentary.*
 
-For every positive natural n, the difference between log(n!) and n*log(n)-n+log(n)/2+log(2*pi)/2 is between zero and 1/(12*n). The upper estimate telescopes Mathlib's Robbins step and uses its certified Stirling limit; the lower estimate is the public logarithmic Stirling inequality.
+For every positive natural n, the difference between log(n!) and n*log(n)-n+log(n)/2+log(2*pi)/2 is between zero and 1/(12*n). The upper estimate is supplied by the reusable Grid logarithmic factorial envelope, whose proof telescopes Mathlib's Robbins step to its certified Stirling limit; the lower estimate is the public logarithmic Stirling inequality.
 
 **Theorem 1.2 (The literal factorial error at every real cutoff).**
 
@@ -34,4 +34,5 @@ For every real x>=1, abs(eta(x)-((1/2-fract(x))*log(x)+log(2*pi)/2))<=4/x. Here 
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Factorial.eta_phase_bound`
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Factorial.log_factorial_remainder`
+- Dependency: [D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound](../../../FactorialRatio/GridAntidiagonalTrafficBound.md)
 - Dependency: [D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic](../Basic.md)
