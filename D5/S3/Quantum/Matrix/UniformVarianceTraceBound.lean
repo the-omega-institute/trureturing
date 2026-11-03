@@ -107,8 +107,10 @@ private lemma kraus_trace_bound {a b J : Type*}
     have hh := hK A
     rw [← hBmap,StarAlgEquiv.norm_map,show ‖A‖ = ‖U.val‖ from StarAlgEquiv.norm_map _ _] at hh
     have hUnorm : ‖U.val‖ ≤ 1 := by
-      have hu := CStarRing.norm_coe_unitary_mul U (1 : Matrix b b ℂ)
-      simpa using hu.le.trans norm_one_le
+      rcases isEmpty_or_nonempty b with hb | hb
+      · have hz : U.val = 0 := Subsingleton.elim _ _
+        simp [hz]
+      · exact (CStarRing.norm_coe_unitary U).le
     exact hh.trans (by simpa using mul_le_mul_of_nonneg_left hUnorm hc)
   have ht : (U.val * (∑ j, M j * X * (M j)ᴴ)).trace = (B*X).trace := by
     simp only [B,Matrix.mul_sum,Matrix.sum_mul,Matrix.trace_sum]
