@@ -78,9 +78,7 @@ private theorem all_chains (a b c : ℕ) (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) 
     rw [hdc,hdcb,hdcba]
     simp only [Nat.zero_add,←List.range_eq_range']
     congr 1; omega
-  simpa only [full,C,cap,chainLength,chainStart,chamberLabels_full,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-    Matrix.cons_val_succ,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,
+  simpa [full,C,cap,chainLength,chainStart,chamberLabels_full,
     List.append_assoc] using hall
 
 private theorem bank_inventory (asc : Bool) (a b c v w : ℕ)
@@ -99,8 +97,10 @@ private theorem bank_inventory (asc : Bool) (a b c v w : ℕ)
   rw [←all_chains a b c ha hb hc]
   cases asc
   · have hw' := split 2 w (by simpa [chainLength] using hw)
+    have hw'' : (C a b c 2 (cap b-w) ++ C a b c 2 w).Perm (full a b c 2) := by
+      simpa [chainLength] using hw'
     have u := Multiset.coe_eq_coe.mpr hu'
-    have w' := Multiset.coe_eq_coe.mpr hw'
+    have w' := Multiset.coe_eq_coe.mpr hw''
     simp only [←Multiset.coe_add] at u w'
     calc
       (word false a b c v w : Multiset ℕ) =
@@ -108,13 +108,22 @@ private theorem bank_inventory (asc : Bool) (a b c v w : ℕ)
           (↑(C a b c 0 (cap a-v))+↑(C a b c 0 v))+
           (↑(C a b c 2 (cap b-w))+↑(C a b c 2 w))+
           {a+b+c+a-1}+{a+c-1}+{a-1}+{a+c+b-1} := by
-        dsimp [word,bank,terminal]
-        simp [word,bank,terminal]
+        have hw : word false a b c v w =
+            bank false a b c v w 0 ++ [terminal false a b c 0] ++
+            bank false a b c v w 1 ++ [terminal false a b c 1] ++
+            bank false a b c v w 2 ++ [terminal false a b c 2] ++
+            bank false a b c v w 3 ++ [terminal false a b c 3] := by
+          simp only [word,List.append_assoc,List.singleton_append]
+        rw [hw]
+        dsimp [bank,terminal]
+        simp only [←Multiset.coe_add,Multiset.coe_singleton]
         ac_rfl
       _ = _ := by rw [u,w']; simp only [←Multiset.coe_add,Multiset.coe_singleton]; ac_rfl
   · have hw' := split 1 w (by simpa [chainLength] using hw)
+    have hw'' : (C a b c 1 (cap c-w) ++ C a b c 1 w).Perm (full a b c 1) := by
+      simpa [chainLength] using hw'
     have u := Multiset.coe_eq_coe.mpr hu'
-    have w' := Multiset.coe_eq_coe.mpr hw'
+    have w' := Multiset.coe_eq_coe.mpr hw''
     simp only [←Multiset.coe_add] at u w'
     calc
       (word true a b c v w : Multiset ℕ) =
@@ -122,8 +131,15 @@ private theorem bank_inventory (asc : Bool) (a b c v w : ℕ)
           (↑(C a b c 0 (cap a-v))+↑(C a b c 0 v))+
           (↑(C a b c 1 (cap c-w))+↑(C a b c 1 w))+
           {a+b+c+a-1}+{a-1}+{a+c-1}+{a+c+b-1} := by
-        dsimp [word,bank,terminal]
-        simp [word,bank,terminal]
+        have hw : word true a b c v w =
+            bank true a b c v w 0 ++ [terminal true a b c 0] ++
+            bank true a b c v w 1 ++ [terminal true a b c 1] ++
+            bank true a b c v w 2 ++ [terminal true a b c 2] ++
+            bank true a b c v w 3 ++ [terminal true a b c 3] := by
+          simp only [word,List.append_assoc,List.singleton_append]
+        rw [hw]
+        dsimp [bank,terminal]
+        simp only [←Multiset.coe_add,Multiset.coe_singleton]
         ac_rfl
       _ = _ := by rw [u,w']; simp only [←Multiset.coe_add,Multiset.coe_singleton]; ac_rfl
 
@@ -133,17 +149,33 @@ private theorem bank_good (asc : Bool) (a b c v w : ℕ)
   have masked (r : Fin 4) (m : ℕ) (hm : i∈C a b c r m) :
       chainStart b c a r ≤ i ∧ i < chainStart b c a r + chainLength a b c a r - 1 := by
     obtain ⟨e,he,_,hei⟩ := (chamberLabels_mem _ _ _ _).mp hm
-    omega
-  cases asc <;> fin_cases j
-  all_goals dsimp [bank,full] at hi
-  all_goals simp only [List.mem_append] at hi
-  all_goals repeat' first
-    | rcases hi with hi|hi
-    | (have h := masked _ _ hi
-       dsimp [chainStart,chainLength] at h
-       constructor
-       · dsimp [size]; omega
-       · simp only [negatives,size,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false]; omega)
+    fin_cases r <;> dsimp [chainStart,chainLength] at * <;> omega
+  have goodC (r : Fin 4) (m : ℕ) (hm : i∈C a b c r m) :
+      i<size a b c a ∧ i∉negatives a b c a := by
+    have h := masked r m hm
+    fin_cases r <;> dsimp [chainStart,chainLength] at h
+    all_goals constructor <;>
+      simp only [negatives,size,List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at * <;>
+      omega
+  cases asc
+  · fin_cases j <;> dsimp [bank,full] at hi
+    · exact goodC 3 _ hi
+    · rcases List.mem_append.mp hi with h | h
+      · rcases List.mem_append.mp h with h | h
+        · exact goodC 1 _ h
+        · exact goodC 0 _ h
+      · exact goodC 2 _ h
+    · exact goodC 0 _ hi
+    · exact goodC 2 _ hi
+  · fin_cases j <;> dsimp [bank,full] at hi
+    · exact goodC 3 _ hi
+    · exact goodC 0 _ hi
+    · exact goodC 1 _ hi
+    · rcases List.mem_append.mp hi with h | h
+      · rcases List.mem_append.mp h with h | h
+        · exact goodC 2 _ h
+        · exact goodC 0 _ h
+      · exact goodC 1 _ h
 
 private theorem bank_nodup (asc : Bool) (a b c v w : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c)
@@ -170,8 +202,11 @@ private theorem physical_W_one (a b c : ℕ) (hb : 2≤b) : C a b c 2 1=[a+c] :=
     · rintro ⟨e,he,hbit,hei⟩
       change (2^0:ℕ).testBit e=true at hbit
       have he0 : 0=e := of_decide_eq_true (by simpa only [Nat.testBit_two_pow] using hbit)
-      subst e; omega
-    · intro hi; exact ⟨0,hlen,by decide,by omega⟩
+      subst e
+      simp [chainLength,chainStart] at hei ⊢
+      omega
+    · intro hi
+      refine ⟨0, ?_, by decide, ?_⟩ <;> simp [chainLength,chainStart] <;> omega
   have hlen' := hperm.length_eq
   cases he : C a b c 2 1 with
   | nil => simp [he] at hlen'
@@ -216,10 +251,9 @@ private theorem bank_masses (asc : Bool) (a b c v w : ℕ)
       (cap (chainLength a b c a r):ℤ)*F r :=
     sum r _ (by dsimp [cap]; have := Nat.two_pow_pos (chainLength a b c a r-1); omega)
   have hvc := complement_stock a v hv
-  cases side <;> dsimp [F,f] at *
-  cases asc <;> intro j <;> fin_cases j
-  all_goals dsimp [bank,masses]
-  all_goals simp only [List.map_append,List.sum_append]
+  cases side <;> cases asc <;> intro j <;> fin_cases j
+  all_goals dsimp [F,f,bank,masses] at *
+  all_goals try simp only [List.map_append,List.sum_append]
   all_goals first
     | exact fullsum 3
     | (rw [sum 0 _ (by simpa [chainLength] using hvc.2),Nat.cast_sub hvc.1])
@@ -231,6 +265,7 @@ private theorem bank_masses (asc : Bool) (a b c v w : ℕ)
          sum 2 w (by simpa [chainLength] using hw)])
     | (rw [fullsum 2,sum 0 v (by simpa [chainLength] using hv),
          sum 1 w (by simpa [chainLength] using hw)])
+  all_goals try simp [chainLength]
 
 
 end D5.S3.Combinatorics.Circle.FourNegative.OuterMaximumTie

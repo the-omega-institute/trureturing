@@ -1,0 +1,1 @@
+WIP: repaired and compiled OuterMaximumTie Physical inventory, bank masks, and paired masses; Certificate remains open at current compiler diagnostics. No endpoint acceptance, freeze, PR, or merge.
