@@ -52,6 +52,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 225976 * uS + 71816 * uR + 71848 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 0
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 1 =
@@ -84,6 +85,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 198776 * uR + 198744 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 1
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 2 =
@@ -113,6 +115,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 168784 * uS + 29336 * uR + 55632 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 2
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 3 =
@@ -142,6 +145,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 232688 * uS + 105832 * uR + 79600 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 3
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 4 =
@@ -171,6 +175,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 160720 * uS + 21144 * uR + 51664 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 4
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 5 =
@@ -200,6 +205,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 236720 * uS + 109928 * uR + 81584 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 5
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 6 =
@@ -229,6 +235,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 1078072 * uS + 350344 * uR + 350512 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 6
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 7 =
@@ -261,6 +268,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 182392 * uR + 182224 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 7
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 8 =
@@ -290,6 +298,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 344016 * uS + 62104 * uR + 114648 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 8
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 9 =
@@ -317,6 +326,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 20584 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 9
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 10 =
@@ -346,6 +356,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 327888 * uS + 45720 * uR + 106704 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 10
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 11 =
@@ -375,6 +386,7 @@ private theorem small_l_ge_windows (p h s : ℤ) (hp : 2≤p) (hh : 1≤h) (hs :
       + 466992 * uS + 216424 * uR + 159792 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uS,uR]
       ring
+    change 0≤scaledGates (4*p^2*h) p s (p*h+h) (8*p*(p*h+h+1)-8) (4*p^2*h+4*p*h) (8*p^2*h+8*p*h) 1 11
     rw [expansion]
     positivity
 

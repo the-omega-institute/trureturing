@@ -54,6 +54,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 9816 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 0
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 1 =
@@ -92,6 +93,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 25144 * uR + 25128 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 1
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 2 =
@@ -123,6 +125,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 16280 * uP + 3144 * uR + 6696 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 2
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 3 =
@@ -154,6 +157,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 26232 * uP + 14264 * uR + 10744 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 3
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 4 =
@@ -185,6 +189,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 14840 * uP + 1096 * uR + 5736 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 4
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 5 =
@@ -216,6 +221,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 26952 * uP + 15288 * uR + 11224 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 5
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 6 =
@@ -247,6 +253,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 108672 * uP + 46664 * uR + 46752 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 6
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 7 =
@@ -285,6 +292,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 21048 * uR + 20960 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 7
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 8 =
@@ -316,6 +324,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 33720 * uP + 7240 * uR + 14320 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 8
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 9 =
@@ -341,6 +350,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 8792 * uP + 10168 * uR + 3120 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 9
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 10 =
@@ -372,6 +382,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 30840 * uP + 3144 * uR + 12392 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 10
     rw [expansion]
     positivity
   · have expansion : scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 11 =
@@ -403,6 +414,7 @@ private theorem small_l_less_windows (ell p s : ℤ) (he : 1≤ell) (hp : 2*ell�
       + 52744 * uP + 29624 * uR + 21528 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uT,uP,uR]
       ring
+    change 0≤scaledGates (4*p*ell) p s ell (8*p*(ell+1)-8) (4*p*ell+4*ell) (8*p*ell+8*ell) 1 11
     rw [expansion]
     positivity
 

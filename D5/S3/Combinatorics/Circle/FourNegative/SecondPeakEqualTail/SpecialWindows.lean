@@ -25,72 +25,84 @@ private theorem special_high_windows (s : ℤ) (hs : 2≤s) :
       1448 * uR + 2904 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 0
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 1 =
       3224 * uR + 6440 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 1
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 2 =
       808 * uR + 1984 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 2
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 3 =
       1496 * uR + 2640 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 3
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 4 =
       296 * uR + 1248 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 4
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 5 =
       1752 * uR + 3008 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 5
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 6 =
       6568 * uR + 13184 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 6
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 7 =
       2200 * uR + 4352 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 7
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 8 =
       1832 * uR + 4392 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 8
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 9 =
       472 * uR + 232 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 9
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 10 =
       808 * uR + 2912 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 10
     rw [expansion]
     positivity
   · have expansion : scaledGates 4 2 s 0 8 4 8 1 11 =
       3288 * uR + 5600 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uR]
       ring
+    change 0≤scaledGates 4 2 s 0 8 4 8 1 11
     rw [expansion]
     positivity
 

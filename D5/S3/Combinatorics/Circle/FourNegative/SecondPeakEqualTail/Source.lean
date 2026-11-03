@@ -36,7 +36,7 @@ private def word (a b c alpha M v J : ℕ) : List ℕ :=
   P 0 ++ T 0 :: P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
 
 private theorem bank_inventory (a b c alpha M v J : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hj : Submask J M) :
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hj : Submask J M) :
     (word a b c alpha M v J).Perm (List.range (a+b+c+c)) := by
   let U := List.range' 0 (c-1)
   let V := chamberLabels (c-1) c
@@ -61,7 +61,7 @@ private theorem bank_inventory (a b c alpha M v J : ℕ)
     (List.perm_append_comm ..).trans (split (a-1) (c+c+b) alpha)
   have hv : (V v ++ V (vf ^^^ v)).Perm (List.range' c (c-1)) :=
     (List.perm_append_comm ..).trans (split (c-1) c v)
-  have merge (o len : ℕ) (hlen : 1≤len) :
+  have merge (o len : ℕ) (hlen : 1 ≤ len) :
       List.range' o (len-1) ++ [o+len-1]=List.range' o len := by
     simpa only [show o+(len-1)=o+len-1 by omega,show len-1+1=len by omega] using
       (List.range'_1_concat (s:=o) (n:=len-1)).symm
@@ -83,6 +83,12 @@ private theorem bank_inventory (a b c alpha M v J : ℕ)
     simp only [Nat.zero_add,←List.range_eq_range']
     congr 1
     omega
+  have hword : word a b c alpha M v J=
+      bank a b c alpha M v J 0 ++ [terminal a b c 0] ++
+      bank a b c alpha M v J 1 ++ [terminal a b c 1] ++
+      bank a b c alpha M v J 2 ++ [terminal a b c 2] ++
+      bank a b c alpha M v J 3 ++ [terminal a b c 3] := by
+    simp only [word,List.append_assoc,List.singleton_append]
   apply Multiset.coe_eq_coe.mp
   calc
     (word a b c alpha M v J : Multiset ℕ)=
@@ -90,9 +96,9 @@ private theorem bank_inventory (a b c alpha M v J : ℕ)
         ↑(W (wf ^^^ M) ++ W (M ^^^ J) ++ W J) +
         ↑(X alpha ++ X (xf ^^^ alpha)) +
         {c-1}+{c+c-1}+{c+c+b-1}+{a+b+c+c-1} := by
-      dsimp [word,bank,terminal,U,V,W,X,wf,vf,xf]
-      simp only [List.cons_append,List.singleton_append,Multiset.coe_cons,
-        Multiset.coe_nil,←Multiset.coe_add,Multiset.coe_singleton]
+      rw [hword]
+      dsimp [bank,terminal,U,V,W,X,wf,vf,xf]
+      simp only [←Multiset.coe_add,Multiset.coe_singleton]
       ac_rfl
     _ = ↑U + ↑(List.range' c (c-1)) + ↑(List.range' (c+c) (b-1)) +
         ↑(List.range' (c+c+b) (a-1)) +
@@ -105,11 +111,11 @@ private theorem bank_inventory (a b c alpha M v J : ℕ)
       ac_rfl
 
 private theorem bank_good (a b c alpha M v J : ℕ)
-    (ha : 2≤a) (hb : 2≤b) (hc : 2≤c)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
     (j : Fin 4) (i : ℕ) (hi : i∈bank a b c alpha M v J j) :
-    i<size a b c c ∧ i∉negatives a b c c := by
+    i < size a b c c ∧ i∉negatives a b c c := by
   have masked (len off mask : ℕ) (hm : i∈chamberLabels len off mask) :
-      off≤i ∧ i<off+len := by
+      off ≤ i ∧ i < off+len := by
     obtain ⟨e,he,_,hei⟩ := (chamberLabels_mem _ _ _ _).mp hm
     omega
   fin_cases j

@@ -50,7 +50,7 @@ private theorem even_low_bit (r e : ℕ) (he : e<r) :
   have hs : Submask (2^e) (2^r-1) :=
     full_submask r (2^e) (Nat.pow_lt_pow_right (by decide : 1<2) he)
   have hh := shift_submask 1 _ _ hs
-  simpa only [pow_one,pow_succ,Nat.mul_comm] using hh
+  simpa only [pow_one,pow_succ,pow_zero,Nat.mul_one,Nat.one_mul,Nat.mul_comm] using hh
 
 private theorem small_less_submask (r ellExp : ℕ) (hr : 1≤r) (he : ellExp<r) :
     Submask (2^(r+ellExp+1)+2^(ellExp+1))

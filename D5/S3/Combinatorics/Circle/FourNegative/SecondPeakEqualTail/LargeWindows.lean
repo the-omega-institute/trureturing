@@ -43,6 +43,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 28384 * uR + 28392 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 0
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 1 =
@@ -60,6 +61,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 5352 * uP + 6560 * uR + 6552 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 1
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 2 =
@@ -75,6 +77,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 1344 * uP + 2664 * uR + 3352 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 2
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 3 =
@@ -90,6 +93,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 2880 * uP + 6040 * uR + 5368 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 3
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 4 =
@@ -105,6 +109,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 1248 * uP + 1640 * uR + 2936 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 4
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 5 =
@@ -120,6 +125,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 2928 * uP + 6552 * uR + 5576 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 5
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 6 =
@@ -140,6 +146,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 52960 * uR + 52968 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 6
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 7 =
@@ -157,6 +164,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 11496 * uP + 14752 * uR + 14744 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 7
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 8 =
@@ -172,6 +180,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 2784 * uP + 5736 * uR + 7104 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 8
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 9 =
@@ -185,6 +194,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 1440 * uP + 2968 * uR + 1616 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 9
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 10 =
@@ -200,6 +210,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 2592 * uP + 3688 * uR + 6264 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 10
     rw [expansion]
     positivity
   · have expansion : scaledGates x p s 0 (4*p-4) x (2*x) 0 11 =
@@ -215,6 +226,7 @@ private theorem large_windows (x p s : ℤ) (hx : 4≤x) (hp : x≤p) (hs : 1≤
       + 5760 * uP + 12696 * uR + 10760 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uX,uP,uR]
       ring
+    change 0≤scaledGates x p s 0 (4*p-4) x (2*x) 0 11
     rw [expansion]
     positivity
 

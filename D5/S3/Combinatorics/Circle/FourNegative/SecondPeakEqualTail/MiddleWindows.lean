@@ -30,6 +30,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 23248 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 0
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 1 =
@@ -40,6 +41,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 247352 * uR + 247344 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 1
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 2 =
@@ -49,6 +51,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 24460 * uP + 10440 * uR + 17448 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 2
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 3 =
@@ -58,6 +61,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 59004 * uP + 57144 * uR + 50168 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 3
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 4 =
@@ -67,6 +71,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 23036 * uP + 6344 * uR + 15592 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 4
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 5 =
@@ -76,6 +81,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 59716 * uP + 59192 * uR + 51096 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 5
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 6 =
@@ -85,6 +91,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 198528 * uP + 166600 * uR + 166680 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 6
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 7 =
@@ -95,6 +102,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 366136 * uR + 366056 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 7
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 8 =
@@ -104,6 +112,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 50076 * uP + 22728 * uR + 36720 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 8
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 9 =
@@ -113,6 +122,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 30896 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 9
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 10 =
@@ -122,6 +132,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 47228 * uP + 14536 * uR + 33000 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 10
     rw [expansion]
     positivity
   · have expansion : scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 11 =
@@ -131,6 +142,7 @@ private theorem middle_windows (p s : ℤ) (hp : 4≤p) (hs : 1≤s) :
       + 118276 * uP + 116536 * uR + 100376 := by
       dsimp [scaledGates,A,B,L,K,SU,SV,SW,uP,uR]
       ring
+    change 0≤scaledGates (2*p) p s 0 (8*p-8) (2*p+4) (4*p+8) 1 11
     rw [expansion]
     positivity
 
