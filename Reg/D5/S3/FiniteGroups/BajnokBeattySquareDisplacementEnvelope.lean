@@ -239,6 +239,7 @@ private theorem strict_counts_step (p q t : ℤ) (hp5 : 5 ≤ p) (hpo : Odd p)
   have hc' := counts_formula p q (t+1) hp hpo hq3 hqo (by omega)
   dsimp only at hc hc'
   rw [hc.1,hc'.1,hc.2,hc'.2]
+  dsimp only [n,n',m,m'] at hA hB hD
   exact ⟨by omega,by omega⟩
 
 private theorem actual_dependence : ObservationalDependence envelopeSignature envelopeActual := by
