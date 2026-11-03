@@ -29,12 +29,12 @@ noncomputable def flow (s : Fin 3 → ℝ) (t : ℝ) : Fin 3 → ℝ :=
 noncomputable def reset (x : Fin 3 → ℝ) (i : Fin 3) : Fin 3 → ℝ :=
   Function.update x i 1
 
-def IsRun (ε η : ℝ) (s : ℕ → Fin 3 → ℝ) (lab : ℕ → Fin 3)
+def IsRun (ε θ : ℝ) (s : ℕ → Fin 3 → ℝ) (lab : ℕ → Fin 3)
     (τ : ℕ → ℝ) : Prop :=
   ∀ k, 0 < τ k ∧
-    (∀ t, 0 ≤ t → t < τ k → ∀ j, η < (coupling ε *ᵥ flow (s k) t) j) ∧
-    (coupling ε *ᵥ flow (s k) (τ k)) (lab k) ≤ η ∧
-    (∀ j, j ≠ lab k → η < (coupling ε *ᵥ flow (s k) (τ k)) j) ∧
+    (∀ t, 0 ≤ t → t < τ k → ∀ j, θ < (coupling ε *ᵥ flow (s k) t) j) ∧
+    (coupling ε *ᵥ flow (s k) (τ k)) (lab k) ≤ θ ∧
+    (∀ j, j ≠ lab k → θ < (coupling ε *ᵥ flow (s k) (τ k)) j) ∧
     (∀ t, 0 ≤ t → t ≤ τ k → Function.Injective (flow (s k) t)) ∧
     Function.Injective (s (k + 1)) ∧
     s (k + 1) = reset (flow (s k) (τ k)) (lab k)
@@ -46,9 +46,9 @@ def IsExhaustive (lab : ℕ → Fin 3) : Prop :=
   ∀ k, Function.Bijective ![lab k, lab (k + 1), lab (k + 2)]
 
 def claim : Prop :=
-  ∀ η ε : ℝ, 0 < η → η < 1 → 1 / 2 < ε → ε < 1 - η →
-    ∀ s lab τ, (∀ j, η < (coupling ε *ᵥ s 0) j) →
-      IsRun ε η s lab τ → IsPeriodic s → IsExhaustive lab
+  ∀ θ ε : ℝ, 0 < θ → θ < 1 → 1 / 2 < ε → ε < 1 - θ →
+    ∀ s lab τ, (∀ j, θ < (coupling ε *ᵥ s 0) j) →
+      IsRun ε θ s lab τ → IsPeriodic s → IsExhaustive lab
 
 private noncomputable def states : Fin 9 → Fin 3 → ℝ :=
   ![![11 / 32, 0, 1], ![3 / 16, 1, 27 / 32], ![0, 1, 19 / 32],
