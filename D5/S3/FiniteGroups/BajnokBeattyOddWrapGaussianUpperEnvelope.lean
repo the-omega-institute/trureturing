@@ -19,7 +19,7 @@ open BajnokBeattyOddWrapPositiveCone BajnokBeattyOddWrapSingleCrossing
 open BajnokBeattyOddWrapReturnCounts BajnokBeattyOddWrapGaussianEnvelope
 open Finset
 
-private theorem choose_ratio_centered_prod (n k r : ℕ) (q R : ℝ)
+theorem choose_ratio_centered_prod (n k r : ℕ) (q R : ℝ)
     (hkr : k+r ≤ n) (hR : R = (n : ℝ)+1) (hq : q = 2*(k : ℝ)-(n : ℝ)) :
     (Nat.choose n k : ℝ)/(Nat.choose n (k+r) : ℝ) =
       ∏ i ∈ Finset.range r,
@@ -49,7 +49,7 @@ private theorem log_lower_linear {x : ℝ} (hx : 0 ≤ x) (hx1 : x < 1) :
   norm_num [Finset.sum_range_succ] at h
   linarith only [h]
 
-private theorem log_upper_small {x : ℝ} (hx : 0 ≤ x) (hx2 : x ≤ 3/28) :
+theorem log_upper_small {x : ℝ} (hx : 0 ≤ x) (hx2 : x ≤ 3/28) :
     Real.log ((1+x)/(1-x)) ≤ 2*x+((2/3)+(18/775))*x^3 := by
   have hx1 : x < 1 := by linarith only [hx2]
   have hxsq : x^2 ≤ 9/784 := by
@@ -72,7 +72,7 @@ private theorem exp_one_tenth_lt : Real.exp (1/10 : ℝ) < 111/100 := by
   norm_num [Finset.sum_range_succ, Nat.factorial] at h
   linarith only [h]
 
-private theorem exp_three_quarters_lt : Real.exp (3/4 : ℝ) < 9/4 := by
+theorem exp_three_quarters_lt : Real.exp (3/4 : ℝ) < 9/4 := by
   have h := Real.exp_bound' (x := (3/4 : ℝ)) (by norm_num) (by norm_num)
     (n := 4) (by norm_num)
   norm_num [Finset.sum_range_succ, Nat.factorial] at h
@@ -325,7 +325,7 @@ private theorem integer_binomial_gaussian_upper_envelope (p t : ℤ) (hp5 : 5 �
   rw [hs, hPR] at hh
   exact hh
 
-private theorem actual_ratio_eq_binomial (p t : ℤ) (hp3 : 3 ≤ p) (hpo : Odd p)
+theorem actual_ratio_eq_binomial (p t : ℤ) (hp3 : 3 ≤ p) (hpo : Odd p)
     (ht2 : 2 ≤ t) :
     let N : ℕ := (p*(6*t-1)).toNat
     2*((original_return_pair p t).1 : ℝ)/((original_return_pair p t).2 : ℝ) =
