@@ -56,9 +56,13 @@ private theorem scaled_log_tail {z P k : ℝ}
     exact h₁.trans h₂
   have hcoef : (3/5)*(z^2*P^2)+3*((z^4*P^2)/(1-z^2)) ≤
       (3/5)*k^2+3*k^4/(25*(1-k^2/25)) := by
-    have hid : (k^4/25)/(1-k^2/25) = k^4/(25*(1-k^2/25)) := by ring
+    have hid : (k^4/25)/(1-k^2/25) = k^4/(25*(1-k^2/25)) := by rw [div_div]
     rw [hid] at hfrac
-    linarith only [h2, hfrac]
+    calc
+      _ ≤ (3/5)*k^2+3*(k^4/(25*(1-k^2/25))) :=
+        add_le_add (mul_le_mul_of_nonneg_left h2 (by norm_num))
+          (mul_le_mul_of_nonneg_left hfrac (by norm_num))
+      _ = _ := by ring
   have hlo := Real.sum_range_le_log_div hz hz1 2
   have hhi := Real.log_div_le_sum_range_add hz hz1 3
   norm_num [Finset.sum_range_succ] at hlo hhi
@@ -72,6 +76,7 @@ private theorem scaled_log_tail {z P k : ℝ}
       field_simp [hP.ne', hd.ne'] <;> ring
     rw [hid] at h
     convert h using 1 <;> ring
+  simp only [div_eq_mul_inv] at hlo hhi htail ⊢
   constructor <;> linarith only [hlo, hhi, htail]
 
 theorem coefficient_bounds {v : ℝ} (hv : 9 ≤ v) :
@@ -319,8 +324,8 @@ private theorem finite_binomial_envelope (p q n a r : ℕ)
     |(A+D)/B-(Real.exp s+Real.exp (-v*s))-
       C*s^3*(Real.exp s-v^2*Real.exp (-v*s))/P^2| ≤ 1/(5*P^4)
   intro hslo hshi
-  have hP5 : 5 ≤ P := by exact_mod_cast hp5
-  have hQ3 : 3 ≤ Q := by exact_mod_cast hq3
+  have hP5 : 5 ≤ P := by dsimp only [P]; exact_mod_cast hp5
+  have hQ3 : 3 ≤ Q := by dsimp only [Q]; exact_mod_cast hq3
   have hP : 0 < P := by linarith
   have hQ : 0 < Q := by linarith
   have hQsq : 9 ≤ Q^2 := by nlinarith only [hQ3,sq_nonneg (Q-3)]
@@ -334,7 +339,7 @@ private theorem finite_binomial_envelope (p q n a r : ℕ)
       norm_num at hc
       exact hc
     linarith only [hh]
-  have hnaR : (n : ℝ)+P = 2*(a : ℝ) := by exact_mod_cast hna
+  have hnaR : (n : ℝ)+P = 2*(a : ℝ) := by dsimp only [P]; exact_mod_cast hna
   have hqrR : ((q*r : ℕ) : ℝ) = Q*(r : ℝ) := by push_cast; rfl
   have hBR : 2*((a+r : ℕ) : ℝ)-(n : ℝ) = Q*P := by
     push_cast
@@ -389,14 +394,16 @@ private theorem finite_binomial_envelope (p q n a r : ℕ)
         (1107/6076)/P^2*((2/3)*(x i)^3) := by
     have hh := scaled_log_tail hP5 (by norm_num : (0:ℝ)≤15/28)
       (by norm_num : (15/28:ℝ)<5) (hx i hi).1 (hxP i hi)
-    norm_num at hh; exact hh
+    norm_num at hh
+    constructor <;> linarith only [hh.1, hh.2]
   have hyrem (i : ℕ) (hi : i ∈ range (q*r)) :
       0 ≤ Real.log ((1+y i)/(1-y i))-2*y i-(2/3)*(y i)^3 ∧
       Real.log ((1+y i)/(1-y i))-2*y i-(2/3)*(y i)^3 ≤
         (336555/137788)/P^2*((2/3)*(y i)^3) := by
     have hh := scaled_log_tail hP5 (by norm_num : (0:ℝ)≤45/28)
       (by norm_num : (45/28:ℝ)<5) (hy i hi).1 (hyP i hi)
-    norm_num at hh; exact hh
+    norm_num at hh
+    constructor <;> linarith only [hh.1, hh.2]
   have hxp (i : ℕ) (hi : i ∈ range r) : 0 < (1+x i)/(1-x i) :=
     div_pos (by linarith [(hx i hi).1]) (by linarith [(hx i hi).2])
   have hyp (i : ℕ) (hi : i ∈ range (q*r)) : 0 < (1+y i)/(1-y i) :=
@@ -465,14 +472,14 @@ private theorem finite_binomial_envelope (p q n a r : ℕ)
     have hh := sum_le_sum (fun i hi =>
       Real.sum_range_le_log_div (hx i hi).1 (hx i hi).2 1)
     norm_num [Finset.sum_range_succ] at hh
-    rw [← hlogL,← mul_sum,hxsum] at hh
-    linarith only [hh]
+    rw [← mul_sum,← hlogL] at hh
+    linarith only [hh,hxsum]
   have hM0 : 0 ≤ M-v*s := by
     have hh := sum_le_sum (fun i hi =>
       Real.sum_range_le_log_div (hy i hi).1 (hy i hi).2 1)
     norm_num [Finset.sum_range_succ] at hh
-    rw [← hlogM,← mul_sum,hysum] at hh
-    linarith only [hh]
+    rw [← mul_sum,← hlogM] at hh
+    linarith only [hh,hysum]
   have hs0 : 0 ≤ s := by linarith
   have hE0 : 0 ≤ E := by dsimp [E]; positivity
   have hTx' : Tx ≤ (1107/6076)*C*s^3/P^4 := by
