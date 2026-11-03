@@ -4228,3 +4228,240 @@ $$
 白话说：让一束光经过有深有浅的滤片，再接一块按原深浅倒过来补偿的滤片；如果所有还能通过的细节都能完整回来，第一块就不能偷偷把信息倒进别处，它只能在留下来的空间里做一个可逆转动。再要求把“送入什么、读出什么”两端交换后关系相同，并且一块滤片与两块相同的半深滤片接起来相同，这个额外转动就被三条关系一起排除了。留下的规则是：每个方向的振幅乘透过率的平方根，概率才乘透过率。两端互易和半程拼接只差一点时，整个更新也只差一个共同的线性预算；这个预算不随方向数量或最暗透过率恶化，但完整返回这条关系仍须精确。
 
 ## 追加锚（本行以下为增补区）
+
+## 84. 以统一返回余量代替精确返回
+
+**定义 84.1（互易、半程与归一化输出返回）。** 沿用定义 77.1 的全部有限对象、所选框架、实际成功分支与有限接续供应，仍用通常迹之和 $\tau$。本节只保留精确 S、H，不先假设 R。对非零效果 $E$，写 $P=P_E$、$q=q_E$、$E^\vee=qE^\dagger$、$\mathcal C=P\mathcal AP$。定义
+
+$$
+\begin{aligned}
+\beta(E,F)&=\sup_{\rho\in\mathcal C,\ \rho\ge0,\ \tau(\rho)=1}
+ \bigl\|q^{-1}T_{E^\vee,F}T_{E,F}(\rho)-\rho\bigr\|_1,\\
+d(E,F)&=\frac{\|T_{E,F}-\mathcal L_E\|_\diamond}{\|E\|},
+\qquad \beta_* =\sup_{E\ne0,F}\beta(E,F),\qquad D=\sup_{E\ne0,F}d(E,F).
+\end{aligned}
+\tag{84.1}
+$$
+
+上确界跨全部已有对象；$\mathcal L_E$ 和未除以二的任意输入 diamond 范数仍按定义 79.1 的公式。$\rho$ 是数学正锥中的归一元，$\beta$ 不含参考系统。它比较原实际分支及原实际补偿分支的完整输出；除以 $q$ 是比较规则，不另外供应一个可执行的放大过程。正锥全称量词也不供应全部实际准备、层析或误差证书。
+
+候选 C109 定义为 S、H 及一个统一关系
+
+$$
+\mathrm U:\qquad \exists c\in[0,1)\quad
+ \forall E\ne0,F,\qquad \beta(E,F)\le c.
+\tag{84.2}
+$$
+
+因此 U 是滤波与实际倒数补偿这两个元之间的输出约束，并由同一半程接续关系在不同效果间联结。它不把平方根公式写入定义，也不把每个效果各有一个小于一的界误写成统一的 $c$。
+
+## 85. 互易与半程留下的全部耗散
+
+**定理 85.1（支撑内的对称正收缩与返回计数）。** 在定义 84.1 的供应及 S、H 下，对每个非零效果，存在唯一的完全正映射 $\Phi_{E,F}:\mathcal C_E\to\mathcal C_E$，满足
+
+$$
+\begin{gathered}
+T_{E,F}=\mathcal L_E\Phi_{E,F},\qquad
+\Phi_{E,F}(P_E)=\Phi_{E,F}^*(P_E)=P_E,\qquad
+\Phi_{E,F}=\Phi_{E,F}^*,\\
+0\le\Phi_{E,F}\le\operatorname{id}\quad\text{在 Hilbert--Schmidt 算子序中},\qquad
+\Phi_{E^2,F}=\Phi_{E,F}^{\,2},\\
+q_E^{-1}T_{E^\vee,F}T_{E,F}|_{\mathcal C_E}
+ =\Phi_{E^\vee,F}\Phi_{E,F}.
+\end{gathered}
+\tag{85.1}
+$$
+
+这里第一行在原代数上由支撑压缩延拓；两个 $\Phi$ 均只是数学分解，不声明为实际过程。原分支不读取支撑外输入，也不向支撑外输出。即使 R 不成立，全部正输入 $\rho\in\mathcal C_E$ 仍有
+
+$$
+\tau\bigl(T_{E^\vee,F}T_{E,F}(\rho)\bigr)=q_E\tau(\rho).
+\tag{85.2}
+$$
+
+证明。省略框架。成功效果给输入支撑；S 又给 $T_E(1)=E$。对正输入 $X$，$\tau((1-P)T_E(X))=\tau(T_E(1-P)X)=0$，故输出也在角内。H 用于效果 $E^2$，给 $T_{E^2}=T_E^2$；取成功效果并用 S，得 $T_E(E)=E^2$。
+
+把各输入、输出简单块的 Kraus 算子填入 $\bigoplus_\alpha\mathbb C^{d_\alpha}$ 上的矩阵 $K_j$。成功效果与 S 分别给 $\sum_jK_j^*K_j=\sum_jK_jK_j^*=E$。因此
+
+$$
+\sum_j\|EK_j-K_jE\|_2^2
+ =2\tau(E^3)-2\tau\bigl(E T_E(E)\bigr)=0.
+\tag{85.3}
+$$
+
+每项非负，故 $EK_j=K_jE$；这包括不同中心块之间的 Kraus 算子，只允许相同数值谱的交织，不预设中心块逐一不动。置 $L_j=E^{-1/2}K_j$，逆只在支撑取。则 $\sum_jL_j^*L_j=\sum_jL_jL_j^*=P$，给所需双随机完全正映射 $\Phi_E$。所有 $L_j$ 与 $E$ 对易，故 $\Phi_E$ 与 $\mathcal L_E$ 对易。角内 $\mathcal L_E$ 可逆，S 推出 $\Phi_E=\Phi_E^*$，也给唯一性。
+
+对 $A=\sqrt E$ 做同一分解，H 及函数演算相容性给 $\Phi_E=\Phi_A^2$。所以 $\Phi_E$ 在 Hilbert--Schmidt 空间上半正定；双随机完全正映射由 Schwarz 不等式和迹保持而为 Hilbert--Schmidt 收缩，故其谱在 $[0,1]$。同理得到 $\Phi_{E^2}=\Phi_E^2$。$E^\vee$ 与 $E$ 在支撑内互为正标量倍的逆，其 Kraus 交织也与 $E$ 对易；$\mathcal L_{E^\vee}\mathcal L_E=q\operatorname{id}_{\mathcal C}$，得到 (85.1) 最后一式。两 $\Phi$ 都保迹，故得 (85.2)。∎
+
+## 86. 不带参考的返回误差控制完整参考更新
+
+**定理 86.1（对称耗散的无维数局部界）。** 在定理 85.1 的全部范围内，包括允许中心间转移的有限直和，有
+
+$$
+d(E,F)\le\min\{2,10\beta(E,F)\},\qquad
+D\le\min\{2,10\beta_*\}.
+\tag{86.1}
+$$
+
+这里结论的 diamond 范数包含全部数学矩阵参考，前提的 $\beta$ 仍只比较不带参考的正输入；常数不含维数、秩或 $q_E^{-1}$，不宣称常数十最优。
+
+证明。写 $\Phi=\Phi_E$、$\Psi=\Phi_{E^\vee}$、$\delta=\beta(E,F)$。由正、负部分解，$\|\Psi\Phi(X)-X\|_1\le\delta\|X\|_1$ 对全部自伴 $X\in\mathcal C$ 成立。若 $\Phi(X)=\lambda X$、$X=X^*\ne0$，则 $0\le\lambda\le1$，且 $\Psi$ 的迹范数收缩性给
+
+$$
+\delta\|X\|_1\ge\|X-\lambda\Psi(X)\|_1
+ \ge(1-\lambda)\|X\|_1.
+\tag{86.2}
+$$
+
+$\Phi$ 保星且自伴，每个特征空间都有自伴实基，所以 $\Phi\ge(1-\delta)\operatorname{id}$ 在 Hilbert--Schmidt 算子序中成立。以下把这个特殊谱下界转成 diamond 界，不使用一般维数相关的范数换算。
+
+把 $\mathcal C=\bigoplus_\alpha M_{r_\alpha}$ 嵌入 $B(H)$，令 $C$ 为中心块 pinching。数学延拓 $\widehat\Phi=\Phi C$ 是双随机、自伴完全正映射。它有 Hermitian Kraus 算子 $h_j$，$\sum_jh_j^2=I_H$：把任意 Kraus 表示与其伴随表示平均，再将每对 $`K,K^*`$ 换成 $`(K+K^*)/2`$ 与 $`(K-K^*)/(2i)`$。这里使用的逐项恒等式是
+
+$$
+\operatorname{Re}K\,X\operatorname{Re}K+\operatorname{Im}K\,X\operatorname{Im}K
+=\tfrac12(KXK^*+K^*XK).
+$$
+
+对任何位于一个中心块的单位向量 $\psi$，记 $p_\psi=|\psi\rangle\langle\psi|$，谱下界给
+
+$$
+\sum_j\operatorname{Var}_\psi(h_j)
+ =1-\tau\bigl(p_\psi\Phi(p_\psi)\bigr)\le\delta.
+\tag{86.3}
+$$
+
+在每个中心块任选一个单位向量 $e_\alpha$，置 $c_{j,\alpha}=\langle e_\alpha,h_je_\alpha\rangle$，$c_j=\bigoplus_\alpha c_{j,\alpha}I_\alpha$、$\ell_j=h_j-c_j$。对任意实单位系数向量 $u$，Cauchy--Schwarz 给 $\operatorname{Var}_\psi(\sum_ju_jh_j)\le\delta$，其中心块压缩的方差也不超过此值。测试压缩矩阵最大、最小特征向量的等权叠加，得谱直径至多 $2\sqrt\delta$。于是对同一块中的 $\psi$，对 $u$ 取上确界得到
+
+$$
+\sum_j\bigl(\langle\psi,h_j\psi\rangle-c_{j,\alpha}\bigr)^2\le4\delta,
+\qquad
+\sum_j\|\ell_j\psi\|^2\le5\delta.
+\tag{86.4}
+$$
+
+因此 $Q=C(\sum_j\ell_j^2)\le5\delta I_H$。在原直和代数上置 $K(X)=C(\sum_j\ell_jX\ell_j)$，它完全正，$K^*(I_H)=Q$。直接展开，得到
+
+$$
+\operatorname{id}-\Phi=\tfrac12\{Q,\cdot\}-K.
+\tag{86.5}
+$$
+
+具体地，记 $A_\alpha=\sum_jc_{j,\alpha}(h_j)_{\alpha\alpha}$、$b_\alpha=\sum_jc_{j,\alpha}^2$，则
+
+$$
+Q_\alpha=I_\alpha-2A_\alpha+b_\alpha I_\alpha,\qquad
+K(X)_\alpha=\Phi(X)_\alpha-\{A_\alpha,X_\alpha\}+b_\alpha X_\alpha.
+$$
+
+同一个交叉项在反对易式中抵消；不同中心块的 $h_j$ 分量仍留在 $K$ 和 $Q$ 中，未将它们删去。完全正范数公式与任意参考上的左右乘法界给 $\|\operatorname{id}-\Phi\|_\diamond\le2\|Q\|\le10\delta$；两个通道的距离又至多二。最后 $T_E-\mathcal L_E=\mathcal L_E(\Phi_E-\operatorname{id})$，而 $\|\mathcal L_E\|_\diamond=\|E\|$，即得 (86.1)。这里复用《AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY》定理 40.1 中的居中 Hermitian Kraus 恒等式和完全正范数工具；新增估计是 (86.3)–(86.4) 的全向量方差控制，取代固定维数的迹上界。∎
+
+## 87. 统一小于一的余量产生精确更新
+
+**定理 87.1（有限平方见证与锐阈值的一侧）。** 在定义 84.1 的范围内，下列条件等价：C109；全部指定更新为 $\mathcal L_E$；$\beta_*=0$。更具体地，若某个 $\Phi_{E,F}\ne\operatorname{id}$，则有自伴特征元 $X\ne0$ 及 $0\le\lambda<1$，使同框架的每个有限层级 $E_n=E^{2^n}$ 满足
+
+$$
+\beta(E_n,F)\ge1-\lambda^{2^n}.
+\tag{87.1}
+$$
+
+对每个 $c<1$，因此存在有限 $n$，并存在 $\mathcal C_E$ 中一个纯态，使该层级的归一化返回误差严格大于 $c$。这里的纯态是一个中心块内的秩一正归一元，不保证为实际可准备态。前述三个等价条件也等价于逐条平方链的较弱形式
+
+$$
+\forall E\ne0,F,\qquad
+\liminf_{n\to\infty}\beta(E^{2^n},F)<1.
+\tag{87.2}
+$$
+
+每条链可以各有余量，不要求不同对象、效果或框架共用同一个数。
+
+证明。定理 85.1 给自伴正收缩 $\Phi_E$；非恒等时必有上述特征元。平方链支撑不变，$\Phi_{E_n}=\Phi_E^{2^n}$。其实际补偿分支给 $\Phi_{E_n^\vee}$，它仍为迹范数收缩。把 (86.2) 用于同一 $X$，即得 (87.1)。当 $0\le\lambda<1$ 时，$\lambda^{2^n}\to0$；故对任意 $c<1$，取有限 $n$ 使 $\lambda^{2^n}<1-c$ 即得越界；$\lambda=0$ 时 $n=0$ 已足够。若两个正负部归一态的误差都不超过 $c$，其线性组合会使 $X$ 的误差也不超过 $c\|X\|_1$，矛盾。再把越界正归一元作有限纯态分解，凸性迫使至少一个纯态也越界。故 U 排除所有非恒等 $\Phi_E$，得到全部平方根分支及精确 R。反方向由定理 82.1 的标准公式直接给出。若只给 (87.2)，任何非标准链仍由 (87.1) 得下极限至少一，矛盾；标准族的下极限全为零，证明新增等价形式。对已得到的越界纯态 $\rho$，归一化返回残差自伴且迹为零，取其正谱投影 $B$，还得到有限二元读出见证
+
+$$
+\left|\tau\bigl(BT_{E_n^\vee,F}T_{E_n,F}(\rho)\bigr)
+-q_E^{2^n}\tau(B\rho)\right|>\tfrac12q_E^{2^n}c.
+\tag{87.3}
+$$
+
+它不供应实际准备或读出，也不把可能随 $n$ 急剧缩小的原始概率差说成统一可取得的预算。∎
+
+## 88. 阈值、逐点量词与有限检验的完整反模型
+
+**定理 88.1（阈值一可达，逐点小于一仍不足）。** 存在完整通常有限量子菜单上的指定族，满足精确 S、H、$T_1=\operatorname{id}$ 及全部投影分支标准，但 $D=\beta_*=1$。另有这样的非标准族，对每个非零效果均有 $\beta(E,F)<1$，而 $D=\beta_*=1$。任何固定有限个效果及其固定有限平方层级，都可在后一类模型中使返回误差任意小，却仍有 $D=1$。
+
+证明。取定理 80.1 的完整通常有限量子菜单，只改变二维交换对象 $\mathbb C\oplus\mathbb C$ 上的分支；不把它与简单块 $M_2$ 混同。令 $J=\frac12\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$ 作用于两坐标。对有限参数 $a>0$，在 $0<t<1$ 的标量效果上定义
+
+$$
+T_{t1}=t\bigl[J+t^a(\operatorname{id}-J)\bigr],\qquad
+T_1=\operatorname{id},\qquad T_0=0.
+\tag{88.1}
+$$
+
+不等坐标效果一律采用逐坐标标准乘法，其他全部对象和框架采用平方根分支。$J$ 是对称双随机投影，$J+t^a(\operatorname{id}-J)$ 是它与恒等的凸组合，因此完全正且有正确成功效果。$J^2=J$ 给半根分支的平方恰为 (88.1)，S、H 成立。对标量效果，$E^\vee=1$，而在交换两点代数上 $\|J-\operatorname{id}\|_\diamond=1$，可由两列绝对和以及单点输入直接求得。因此
+
+$$
+d(t1,F)=\beta(t1,F)=1-t^a;
+\tag{88.2}
+$$
+
+其他效果的两缺陷为零。每个 $t>0$ 的误差严格小于一，而 $t\downarrow0$ 时趋一，得到逐点反模型。把全部 $0<t<1$ 上的 $t^a$ 直接换成零，仍保留 S、H，但每个此类标量效果的缺陷都恰为一，给阈值可达模型。两构造的投影效果只有坐标投影、零和一，均为标准分支。
+
+对任一固定有限测试表，其中非零误差项只来自有限个 $t_j\in(0,1)$。包含平方层级 $n\le N$ 后，误差是 $1-t_j^{a2^n}$；有限个这样的数随 $a\downarrow0$ 同时趋零。任意 $a>0$ 的全菜单上确界仍为一。这只排除以这些有限指定效果的精确误差代替 U 的做法，不宣称否定所有附加先验下的有限认证。全部指定分支及其互补效果分支属于原全 CP 菜单，标签总映射保迹，故模型完整。∎
+
+## 89. 暗的第三方向为何掩盖返回误差
+
+**定理 89.1（未按成功率归一的误差没有统一更新模量）。** 仅有 S、H 时，即使全部投影分支和 $T_1$ 标准，也存在完整满足族 $M_s$，$s>0$，使
+
+$$
+\sup_{E\ne0,F}
+\frac{\|T_{E^\vee,F}T_{E,F}|_{\mathcal C_E}-q_E\operatorname{id}_{\mathcal C_E}\|_\diamond}{\|E\|}
+\le\frac{4s}{\mathrm e},\qquad D(M_s)=2.
+\tag{89.1}
+$$
+
+三维简单对象已经能在前项一致趋零时保留趋一的输出误差；达到上确界二的结论允许维数增长。
+
+证明。在每个非零效果的支撑内置 $\kappa(E)=\|E\|/q_E$，令
+
+$$
+\mathcal D_E(X)=\bigoplus_\alpha\sum_{\lambda>0}
+\frac{\operatorname{Tr}(P_{\alpha,\lambda}X_\alpha)}{\operatorname{rank}P_{\alpha,\lambda}}P_{\alpha,\lambda},
+\qquad
+T_E^{(s)}=\mathcal L_E\bigl[\kappa(E)^{-s}\operatorname{id}
+ +(1-\kappa(E)^{-s})\mathcal D_E\bigr].
+\tag{89.2}
+$$
+
+支撑外压缩，零效果取零。$\mathcal D_E$ 是支撑角上的保迹、自伴完全正投影，与 $\mathcal L_E$ 对易；逐个原中心块、逐个不同正谱空间平均，不另供实际操作。平方根、正平方和倒数补偿保留这些谱空间；$\kappa(\sqrt E)=\sqrt{\kappa(E)}$、$\kappa(E^\vee)=\kappa(E)$。所以各实际分支有正确成功效果，S、H 精确成立，且
+
+$$
+q_E^{-1}T_{E^\vee}^{(s)}T_E^{(s)}
+=\kappa^{-2s}\operatorname{id}+(1-\kappa^{-2s})\mathcal D_E.
+\tag{89.3}
+$$
+
+两个通道的 diamond 距离至多二，故 (89.1) 左端单项至多
+$2\kappa^{-1}(1-\kappa^{-2s})\le4s\log(\kappa)/\kappa\le4s/\mathrm e$。
+
+在 $M_3$ 中取 $E=\operatorname{diag}(1,1,q)$，$0<q<1$。任一前二维空间中的纯输入，被 $\mathcal D_E$ 变成 $I_2/2$；实际更新与标准更新的迹范数差为 $1-q^s$。例如沿 $s\downarrow0$ 取 $q=\exp(-1/s^2)$，这个差趋一，同时未归一返回误差仍服从 (89.1)。这是同一三维对象中两个明亮方向的关系，被第三个暗方向决定的全局返回成功率遮蔽，未改变成功效果或成功计数。
+
+在 $M_m\oplus\mathbb C$ 中取 $E=(I_m,q)$，纯输入位于首块，差为 $2(1-q^s)(1-1/m)$。固定 $s>0$ 后依次令 $q\downarrow0$、$m\to\infty$，得到 $D\ge2$；普遍上界二给等号。$\kappa=1$ 时 (89.2) 为标准分支，所以全部标量投影和单位效果均标准。仍取全有限 CP 菜单与互补标签补全，得到完整模型。这个构造不反驳按 $q_E$ 归一的 (86.1)，也不满足 U。∎
+
+## 90. 候选的独立性与量子理论接口
+
+**定理 90.1（C109 的完整满足模型及条件重建）。** C109 有完整通常有限复量子满足模型；三条关系 S、H、U 不能删除任一条而仍保证全部指定更新标准。在任一 C109 模型中，全部已经供应的态、效果和有限指定滤波序列满足 (82.1) 的 Born 成功、Lüders 投影及顺序更新公式。
+
+证明。标准全菜单选择 $T_E=\mathcal L_E$，S、H 成立且 $\beta_*=0$，给非空完整模型。删除 U，定理 88.1 给其余两关系成立的非标准完整族。删除 S 或 H，直接取定理 80.1 的对应完整反模型；它们满足精确 R，所以 $\beta_*=0$，特别满足 U，且仍不是标准更新。无需另造同一反模型。
+
+定理 87.1 把 C109 的指定族精确还原为平方根族，故对已供态 $\rho$、效果 $B$ 有 $p(E\mid\rho)=\tau(\rho E)$、$p(E\text{ 后 }B\mid\rho)=\tau(B\sqrt E\rho\sqrt E)$，成功后态仅在正成功率时按该概率归一。有限序列的 Kraus 乘积仍为 $\sqrt{E_n}\cdots\sqrt{E_1}$。若只保留 S、H 和逐效果返回误差，则 (86.1) 代入 (82.1)–(82.2) 的等迹输出与望远镜证明，给概率、后态和有限路径的相应误差界。
+
+C101–C103 仍承担有限经典／复矩阵直和表示、已供空间边的张量乘法、实际过程的完全正性及共同标尺。全态、一般 POVM 的共同总过程、全部复合与参考、连续可逆群和经验时间单位均须保留各自供应条件；给定连续一参数实际可逆群时才接回原 Hamilton 表示。U 约束既有成功分支，不提供这些额外对象、过程或时间。定理 85.1 的精确成功计数也说明，仅有 Born 成功率和补偿成功率不能替代输出关系。∎
+
+## 91. 正收缩先例与返回约束的白话定义
+
+**定义 91.1（成熟工具与本批关系的范围）。** 定义 83.1 的对称序贯乘积先例仍适用；本批不把 S、H 或精确平方根刻画重新认领为原创。幂次收缩、谱分解和 Hermitian Kraus 居中也是成熟工具。[Mukhamedov，*On dominant contractions and a generalization of the zero-two law*，定理 1.1、1.2](https://arxiv.org/pdf/1004.2103v1) 与 [Ganiev–Mukhamedov–Bekbaev，*On a generalized uniform zero-two law for positive contractions of non-commutative L1-spaces and its vector-valued extension*，定理 1.2、4.1](https://arxiv.org/pdf/1603.07812v1) 给正收缩相邻幂差、支配关系与渐近消失的成熟零二律。那些定理的支配条件及相邻幂差不是本节的实际倒数分支返回条件，不以相同的阈值字面代替参数对应。
+
+这里的承重综合是：由 S、H 在允许中心转移的原有限代数上得到 (85.1)，把不带参考的原实际归一化返回输出误差转为 (86.1) 的无维数完整参考界，再沿同一效果的有限平方链得到 (87.1) 与 U 的精确选择。阈值、逐点量词、有限测试及暗三方向反模型各由定理 88.1、89.1 分开承担；不作穷尽文献或原创优先权结论。相对于 C108，本批放松返回关系而保留精确 S、H，不包含三条关系同时带误差的统一结论。
+
+白话说：把滤片接上倒着补偿的滤片，成功次数对得上还不够，回来时的细节也要对得上。若一块滤片暗中磨掉了一点细节，而整块总能拆成两个相同半块，那么沿同一套拆合关系反复加深，这点损失就会累积，终会在某个有限层级显露到统一门槛之外。因此，只要所有层级归一后的返回误差始终留有同一个小于一的余量，再加上两端互易，就连那一点暗损失也不能存在，平方根更新随之确定；等价地，每条平方链各自反复留有严格余量就已足够，不必让全族共用一个数。第三个很暗的方向说明为什么必须归一：它能把返回成功率压得极低，让原始误差很小，却不能让已经丢掉的细节回来。
+
+## 追加锚（本行以下为增补区）
