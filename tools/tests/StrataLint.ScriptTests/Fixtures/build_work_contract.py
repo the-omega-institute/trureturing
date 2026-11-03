@@ -18,7 +18,7 @@ class BuildWorkContracts(unittest.TestCase):
     def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False, fib_failure=0, fib_selected=False, native_phases=()):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
-        root = Path(temp.name)
+        root = Path(temp.name).resolve()
         for name in ("tools/lean-inspector/inspect.sh", "tools/scripts/lib/resource-observation-lib.sh",
                      "tools/lean-inspector/build_work.py", "tools/scripts/workflow/ci_compute.py"):
             dest = root / name

@@ -139,6 +139,10 @@ class TypedCapacityTests(NativeTestSupport, unittest.TestCase):
                 success=False, label=f'collision-{capacity}')
             self.assertIn('incomplete_closure:dtr.generated_target:NativeCapacity.shared', diagnostic)
             self.assertEqual({side: Path(self.requests[side][5]).read_bytes() for side in previous}, previous)
+            self.record_result(f'collision-{capacity}-publication', dict(
+                before={side: hashlib.sha256(data).hexdigest() for side, data in previous.items()},
+                after={side: hashlib.sha256(Path(self.requests[side][5]).read_bytes()).hexdigest()
+                       for side in previous}), [Path(self.requests[side][5]) for side in previous])
             if capacity == 1:
                 capped = [call for call in calls if call['index_before'] is not None]
                 self.assertEqual([call['exit'] for call in capped], [0, 1])
