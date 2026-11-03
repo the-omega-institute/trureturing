@@ -122,11 +122,11 @@ open scoped BigOperators
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u v
+universe u_1 u_2
 
 /-- Evaluate the source linear-combination operator at its coefficient vector. -/
 abbrev signature : Signature where
-  Params := Σ _R : Type u, Σ ι : Type v, ι → ℂ
+  Params := Σ _R : Type u_1, Σ ι : Type u_2, ι → ℂ
   State p := (Sigma.fst (Sigma.snd p) → ℂ) → Sigma.fst p
   Role := Unit
   finiteRole := inferInstance
@@ -135,16 +135,16 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u, v} :=
+def actual : Realization signature.{u_1, u_2} :=
   realize signature (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => Empty.elim e)
 
-def rejected : Realization signature.{u, v} :=
+def rejected : Realization signature.{u_1, u_2} :=
   realize signature (fun _ _ op => op (fun _ => 0)) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
-  signature := signature.{u, v}
-  Law r := ∀ {R : Type u} [Ring R] [Algebra ℂ R]
-    {ι : Type v} [Fintype ι] [DecidableEq ι]
+  signature := signature.{u_1, u_2}
+  Law r := ∀ {R : Type u_1} [Ring R] [Algebra ℂ R]
+    {ι : Type u_2} [Fintype ι] [DecidableEq ι]
     (g : ι → R) (_hsq : ∀ j, g j * g j = 1)
     (_hanti : ∀ j k, j ≠ k → g j * g k = -(g k * g j)) (c d : ι → ℂ),
     r.readout () ⟨R, ι, c⟩ (Fintype.linearCombination ℂ g) *
@@ -152,18 +152,18 @@ abbrev arena : Arena where
       Fintype.linearCombination ℂ g d * Fintype.linearCombination ℂ g c =
         (2 * ∑ j, c j * d j) • (1 : R)
 
-theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1, u_2}.Law rejected := by
   intro h
-  have he := @h (ULift.{u} ℂ) inferInstance inferInstance
-    (ULift.{v} Unit) inferInstance inferInstance (fun _ => 1)
+  have he := @h (ULift.{u_1} ℂ) inferInstance inferInstance
+    (ULift.{u_2} Unit) inferInstance inferInstance (fun _ => 1)
     (by intro j; simp) (by intro j k hjk; exact (hjk (Subsingleton.elim j k)).elim)
     (fun _ => 1) (fun _ => 1)
   have hd := congrArg ULift.down he
   norm_num [rejected, realize, Fintype.linearCombination_apply] at hd
 
-theorem dependence : ObservationalDependence signature.{u, v} actual := by
+theorem dependence : ObservationalDependence signature.{u_1, u_2} actual := by
   intro i
-  refine ⟨⟨ULift.{u} Bool, ULift.{v} Unit, fun _ => 0⟩,
+  refine ⟨⟨ULift.{u_1} Bool, ULift.{u_2} Unit, fun _ => 0⟩,
     (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
   intro h
   have hd := congrArg ULift.down h
@@ -171,7 +171,7 @@ theorem dependence : ObservationalDependence signature.{u, v} actual := by
   cases hd
 
 def source_registration :
-    Registration arena.{u, v} (type_of% @cliffordLinear_anticommutator.{u, v}) where
+    Registration arena.{u_1, u_2} (type_of% @cliffordLinear_anticommutator.{u_1, u_2}) where
   actual := realize signature
     (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => Empty.elim e)
   bridge := Iff.rfl
@@ -186,8 +186,8 @@ def source_registration :
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@cliffordLinear_anticommutator.{u, v})
-      (Realization signature.{u, v}) Unit Unit := {
+      (@cliffordLinear_anticommutator.{u_1, u_2})
+      (Realization signature.{u_1, u_2}) Unit Unit := {
   unitName := .str
     (.str
       `Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
