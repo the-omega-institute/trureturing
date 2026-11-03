@@ -46,7 +46,7 @@ internal sealed class MorkenFirstDivisorSumDocument : IScribeDocumentDefinition
         var d = F.Id("d"); var m = F.Id("m");
         Formula Mu(Formula x) => Call("mu", x);
         Formula Coprime(Formula x, Formula y) => Equal(Call("gcd", x, y), D(1));
-        Formula Interval(Formula x, Formula top) => Seq(D(1), Le, x, Le, top);
+        Formula Interval(Formula x, Formula top) => Seq(D(1), Sp, Le, Sp, x, Sp, Le, Sp, top);
         Formula SumOver(Formula condition, Formula term) =>
             Seq(new Formula.Subscript(Sum, condition), term);
         var left = SumOver(Seq(Interval(k, n), Comma, Sp, Coprime(k, n)), Mu(k));
