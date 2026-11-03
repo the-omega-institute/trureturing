@@ -32,7 +32,7 @@ For a positive step use j=floor(fract(tau-theta)/|e|); for a negative step use f
 
 **Theorem 1.3 (Uniform hitting from a badly-approximable bound).**
 
-$$\begin{aligned}kappa>0, \forall k>0, \frac{kappa}{k}\le|kalpha-\operatorname{round}(kalpha)|\\\forall p>0, \forall theta, 0\le a\le\frac{3}{4} \Rightarrow\\\exists j \in N, j\le\frac{256p}{kappa}, \operatorname{fract}(theta+jpalpha) \in [a,a+\frac{1}{4}]\end{aligned}$$
+$$\begin{aligned}\forall \alpha,\kappa \in \mathbb{R}, 0<\kappa \Rightarrow\\(\forall k \in \mathbb{N}, 0<k \Rightarrow \frac{\kappa}{k}\le|k\cdot\alpha-\operatorname{round}(k\cdot\alpha)|) \Rightarrow\\\forall p \in \mathbb{N}, 0<p \Rightarrow \forall \theta,a \in \mathbb{R}, 0\le a \Rightarrow a\le\frac{3}{4} \Rightarrow\\\exists j \in \mathbb{N}, j\le\frac{256\cdot p}{\kappa} \land \operatorname{fract}(\theta+j\cdot p\cdot\alpha) \in [a,a+\frac{1}{4}]\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/QuadraticRotationHitting.badly_approximable_quarter_hitting` (`✓ std3`). ∎
 
@@ -40,7 +40,7 @@ $$\begin{aligned}kappa>0, \forall k>0, \frac{kappa}{k}\le|kalpha-\operatorname{r
 
 *Commentary.*
 
-Dirichlet at n=16 supplies 1<=q<=16 with beta=|qp alpha-round(qp alpha)|<=1/17. The lower approximation bound gives beta>=kappa/(qp)>0. Aim the signed mesh at a+1/8. Its error beta stays strictly inside the quarter interval, and its integer lift identifies the correct fractional representative. Its original index is jq<=q/beta<=q^2 p/kappa<=256p/kappa. The specialized theorem sqrt_two_scaled_quarter_hitting gives the integral bound 256 M(M+3)p.
+Natural numbers and rounded integers in real expressions denote their canonical real coercions. Dirichlet at n=16 supplies 1<=q<=16 with beta=|qp alpha-round(qp alpha)|<=1/17. The lower approximation bound gives beta>=kappa/(qp)>0. Aim the signed mesh at a+1/8. Its error beta stays strictly inside the quarter interval, and its integer lift identifies the correct fractional representative. Its original index is jq<=q/beta<=q^2 p/kappa<=256p/kappa. The specialized theorem sqrt_two_scaled_quarter_hitting gives the integral bound 256 M(M+3)p.
 
 ## References
 

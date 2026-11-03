@@ -8,7 +8,7 @@ The alphabet is the existing binary ReturnBit={0,1}. A configuration x is Progre
 
 **Theorem 1.1 (Closedness of all progression constraints).**
 
-$$\begin{aligned}\forall ell, \operatorname{IsClosed}(\operatorname{ProgressionLegal}(ell))\end{aligned}$$
+$$\begin{aligned}\forall ell: \mathbb{N} \to \mathbb{N}, \operatorname{IsClosed}(\{x: \mathbb{N} \to ReturnBit \mid \operatorname{ProgressionLegal}(ell, x)\})\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/ProgressionSubshift.progression_legal_closed` (`✓ std3`). ∎
 
@@ -22,7 +22,7 @@ All natural shifts preserve the constraints. Prepending a zero yields a legal pr
 
 **Theorem 1.2 (Zero-gap joining without new forbidden progressions).**
 
-$$\begin{aligned}\forall ell,x,y,a,b,n,\\\operatorname{ProgressionLegal}(ell, x) \land \operatorname{ProgressionLegal}(ell, y),\\n \ge a+\operatorname{max}(a, b) \Rightarrow \operatorname{ProgressionLegal}(ell, \operatorname{progressionJoin}(x, y, a, b, n))\end{aligned}$$
+$$\begin{aligned}\forall ell: \mathbb{N} \to \mathbb{N},\\(\forall p \in \mathbb{N}, 0<p \Rightarrow 3\le\operatorname{ell}(p)) \Rightarrow\\\forall x,y: \mathbb{N} \to ReturnBit, \operatorname{ProgressionLegal}(ell, x) \Rightarrow \operatorname{ProgressionLegal}(ell, y) \Rightarrow\\\forall a,b,n \in \mathbb{N}, a+\operatorname{max}(a, b)\le n \Rightarrow \operatorname{ProgressionLegal}(ell, \operatorname{progressionJoin}(x, y, a, b, n))\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/ProgressionSubshift.progression_join_legal` (`✓ std3`). ∎
 
