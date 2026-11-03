@@ -63,14 +63,12 @@ private lemma distinctness_certificate (m k l : ℕ)
   have hfactor :
       ((m : ℝ) - k)^2 * ((k : ℝ)^2 - 2) -
         ((m : ℝ) - l)^2 * ((l : ℝ)^2 - 2) = (k - (l : ℝ)) * Q m := by
-    dsimp [Q, s]
-    ring
+    dsimp [Q, s]; ring
   have hQ : Q m ≠ 0 := by
     by_cases hm : m < k + l
     · have hmR : (m : ℝ) ≤ s - 1 := by
         have hc : (m : ℝ) + 1 ≤ (k : ℝ) + l := by exact_mod_cast (show m + 1 ≤ k + l by omega)
-        dsimp [s]
-        linarith
+        dsimp [s]; linarith
       have hQl : Q l < 0 := by
         have hid : Q l = -((l : ℝ) - k) * ((k : ℝ)^2 - 2) := by dsimp [Q, s]; ring
         rw [hid]
@@ -82,42 +80,29 @@ private lemma distinctness_certificate (m k l : ℕ)
         have hu : 0 ≤ u := by dsimp [u]; linarith
         have hv : 0 ≤ v := by
           have hc : (k : ℝ) + 1 ≤ l := by exact_mod_cast (show k + 1 ≤ l by omega)
-          dsimp [v]
-          linarith
-        have hid : Q (s - 1) = -(2*u^2 + 2*u*v + 4*u + v + 1) := by
-          dsimp [Q, s, u, v]
-          ring
-        rw [hid]
-        nlinarith [sq_nonneg u, mul_nonneg hu hv]
+          dsimp [v]; linarith
+        have hid : Q (s - 1) = -(2*u^2 + 2*u*v + 4*u + v + 1) := by dsimp [Q, s, u, v]; ring
+        rw [hid]; nlinarith [sq_nonneg u, mul_nonneg hu hv]
       have ht : 0 < (m : ℝ) - l := by linarith
       have hr : 0 ≤ s - 1 - m := by linarith
       have hwidth : 0 < (k : ℝ) - 1 := by linarith
       have hinterp : ((k : ℝ) - 1) * Q m =
           (s - 1 - m) * Q l + ((m : ℝ) - l) * Q (s - 1) -
             s * ((k : ℝ) - 1) * ((m : ℝ) - l) * (s - 1 - m) := by
-        dsimp [Q, s]
-        ring
+        dsimp [Q, s]; ring
       have hneg := mul_neg_of_pos_of_neg ht hQb
       have hnonpos := mul_nonpos_of_nonneg_of_nonpos hr (le_of_lt hQl)
       have hnonneg : 0 ≤ s * ((k : ℝ) - 1) * ((m : ℝ) - l) * (s - 1 - m) :=
         mul_nonneg (mul_nonneg (mul_nonneg (le_of_lt hs) (le_of_lt hwidth)) (le_of_lt ht)) hr
       have : ((k : ℝ) - 1) * Q m < 0 := by linarith
-      intro he
-      rw [he, mul_zero] at this
-      linarith
+      intro he; rw [he, mul_zero] at this; linarith
     · have hmR : s ≤ m := by dsimp [s]; exact_mod_cast (show k + l ≤ m by omega)
       let h : ℝ := m - s
       have hh : 0 ≤ h := by dsimp [h]; linarith
-      have hid : Q m = 2*s + (2*(k : ℝ)*l + 4)*h + s*h^2 := by
-        dsimp [Q, h, s]
-        ring
-      have hcoef : 0 ≤ 2*(k : ℝ)*l + 4 := by positivity
-      have hpos : 0 < Q m := by
-        rw [hid]
-        have := mul_nonneg hcoef hh
-        have := mul_nonneg (le_of_lt hs) (sq_nonneg h)
-        linarith
-      exact ne_of_gt hpos
+      have hid : Q m = 2*s + (2*(k : ℝ)*l + 4)*h + s*h^2 := by dsimp [Q, h, s]; ring
+      apply ne_of_gt
+      rw [hid]
+      positivity
   intro he
   have hz : (k - (l : ℝ)) * Q m = 0 := by rw [← hfactor, he, sub_self]
   exact (mul_ne_zero (by linarith) hQ) hz
@@ -128,9 +113,7 @@ private lemma chord_sq (N : ℕ) (j k : Fin N) :
         4 * Real.sin (Real.pi * ((j.val : ℝ) - k.val) / N)^2 := by
   let a := 2 * Real.pi * (j.val + 1 : ℝ) / N
   let b := 2 * Real.pi * (k.val + 1 : ℝ) / N
-  have hab : (a - b) / 2 = Real.pi * ((j.val : ℝ) - k.val) / N := by
-    dsimp [a, b]
-    ring
+  have hab : (a - b) / 2 = Real.pi * ((j.val : ℝ) - k.val) / N := by dsimp [a, b]; ring
   change (Real.cos a - Real.cos b)^2 + (Real.sin a - Real.sin b)^2 = _
   rw [← hab, Real.cos_sub_cos, Real.sin_sub_sin]
   have hunit := Real.sin_sq_add_cos_sq ((a + b) / 2)
@@ -183,14 +166,8 @@ private lemma entry_formula (N : ℕ) (p q : Fin N ⊕ Fin N) :
   let F : ℝ → (Fin N ⊕ Fin N → ℝ) := fun t => z + t • v
   have hc (r : Fin N ⊕ Fin N) : HasDerivAt (fun t => F t r) (v r) 0 := by
     exact (hasDerivAt_mul_const (v r)).const_add (z r)
-  have hd (j k : Fin N) : HasDerivAt
-      (fun t => (F t (Sum.inl j) - F t (Sum.inl k))^2 +
-        (F t (Sum.inr j) - F t (Sum.inr k))^2)
-      (2*(z (Sum.inl j) - z (Sum.inl k))*(v (Sum.inl j) - v (Sum.inl k)) +
-        2*(z (Sum.inr j) - z (Sum.inr k))*(v (Sum.inr j) - v (Sum.inr k))) 0 := by
-    convert (((hc (Sum.inl j)).sub (hc (Sum.inl k))).pow 2).add
-      (((hc (Sum.inr j)).sub (hc (Sum.inr k))).pow 2) using 1
-    simp [F]
+  have hd (j k : Fin N) := (((hc (Sum.inl j)).sub (hc (Sum.inl k))).pow 2).add
+    (((hc (Sum.inr j)).sub (hc (Sum.inr k))).pow 2)
   have hi (r : Fin N → Fin N ⊕ Fin N) (j k : Fin N) (hkj : k ≠ j) :
       HasDerivAt
         (fun t => charge N k * (F t (r j) - F t (r k)) /
@@ -238,8 +215,7 @@ private lemma reflection_index (m : ℕ) (j k : Fin (2 * m)) :
     rw [Fin.val_add_eq_ite]
     split_ifs with h
     · rw [Nat.cast_sub h]
-      push_cast
-      ring
+      push_cast; ring
     · push_cast
       ring
   rw [Fin.intCast_val_sub_eq_sub_add_ite, ha]
@@ -252,9 +228,7 @@ private lemma reflection_index (m : ℕ) (j k : Fin (2 * m)) :
 private lemma reflection_charge (m : ℕ) (j k : Fin (2 * m)) :
     charge (2 * m) (j+j-k) = charge (2 * m) k := by
   obtain ⟨t, ht⟩ := reflection_index m j k
-  have ht' : ((j+j-k).val : ℤ) = 2*((j.val : ℤ) + t*m) - k.val := by
-    rw [ht]
-    ring
+  have ht' : ((j+j-k).val : ℤ) = 2*((j.val : ℤ) + t*m) - k.val := by rw [ht]; ring
   have hp : ((j+j-k).val + 2) % 2 = (k.val + 2) % 2 := by omega
   unfold charge
   calc
@@ -275,13 +249,10 @@ private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj 
   let b := 2 * Real.pi * (k.val + 1 : ℝ) / ((2 * m : ℕ) : ℝ)
   let c := 2 * Real.pi * ((j+j-k).val + 1 : ℝ) / ((2 * m : ℕ) : ℝ)
   obtain ⟨t, ht⟩ := reflection_index m j k
-  have htR : ((j+j-k).val : ℝ) = 2*(j.val : ℝ) - k.val + (t : ℝ)*(2 * m) := by
-    exact_mod_cast ht
+  have htR : ((j+j-k).val : ℝ) = 2*(j.val : ℝ) - k.val + (t : ℝ)*(2 * m) := by exact_mod_cast ht
   have hmR : (m : ℝ) ≠ 0 := by exact_mod_cast (show m ≠ 0 by omega)
   have hc : c = a + (a-b) + (t : ℝ)*(2*Real.pi) := by
-    dsimp [a, b, c]
-    push_cast
-    field_simp
+    dsimp [a, b, c]; push_cast; field_simp
     nlinarith [htR]
   have hcb : Real.cos b = Real.cos a * Real.cos (a-b) +
       Real.sin a * Real.sin (a-b) := by
@@ -334,8 +305,7 @@ private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
     (z (Sum.inl j)-z (Sum.inl k))^2 + (z (Sum.inr j)-z (Sum.inr k))^2
   have hcharge : ∑ k : Fin (2 * m), charge (2 * m) k = 0 := by
     simp only [charge, pow_add, neg_one_sq, mul_one]
-    rw [Fin.sum_neg_one_pow]
-    simp
+    rw [Fin.sum_neg_one_pow]; simp
   have hsum (j : Fin (2 * m)) (v : Fin (2 * m) → ℝ)
       (hp : ∀ k, k ≠ j →
         (v j-v k)/d j k + (v j-v (j+j-k))/d j (j+j-k) = v j) :
@@ -365,16 +335,10 @@ private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
         _ = _ := Finset.sum_congr rfl (fun k _ => hp' k)
     have htotal : (∑ k : Fin (2 * m),
         if k = j then 0 else charge (2 * m) k * v j) + charge (2 * m) j * v j = 0 := by
-      calc
-        _ = ∑ k : Fin (2 * m), ((if k = j then 0 else charge (2 * m) k * v j) +
-            (if k = j then charge (2 * m) k * v j else 0)) := by
-          rw [Finset.sum_add_distrib]
-          simp
-        _ = ∑ k : Fin (2 * m), charge (2 * m) k * v j := by
-          apply Finset.sum_congr rfl
-          intro k _
-          split_ifs <;> simp
-        _ = 0 := by rw [← Finset.sum_mul, hcharge, zero_mul]
+      have he : Finset.univ.filter (fun k : Fin (2 * m) => ¬k = j) =
+          Finset.univ.erase j := by ext k; simp
+      rw [Finset.sum_ite, Finset.sum_const_zero, zero_add, he,
+        Finset.sum_erase_add _ _ (Finset.mem_univ j), ← Finset.sum_mul, hcharge, zero_mul]
     change (∑ k, f k) = _
     linarith
   funext p
@@ -383,14 +347,12 @@ private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
     have hs := hsum j (fun k => z (Sum.inr k))
       (fun k hk => (reflection_pair m hm j k hk).2)
     change -charge (2 * m) j * (1/2:ℝ) * z (Sum.inr j) - _ = 0
-    rw [hs]
-    ring
+    rw [hs]; ring
   | inr j =>
     have hs := hsum j (fun k => z (Sum.inl k))
       (fun k hk => (reflection_pair m hm j k hk).1)
     change charge (2 * m) j * (1/2:ℝ) * z (Sum.inl j) + _ = 0
-    rw [hs]
-    ring
+    rw [hs]; ring
 
 private def weights (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
   fun j k => if j = k then 0 else
@@ -416,8 +378,7 @@ private def rotation (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ 
 
 private lemma rotation_mul_transpose (N : ℕ) :
     rotation N * (rotation N).transpose = 1 := by
-  unfold rotation
-  rw [Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply]
+  unfold rotation; rw [Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply]
   simp only [Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal]
   ext p q
   rcases p with j | j <;> rcases q with k | k
@@ -504,8 +465,7 @@ private lemma rotated_jacobian_off_diagonal (m : ℕ) (j k : Fin (2 * m)) (hjk :
   rcases jacobian_off_diagonal (2*m) j k hjk with ⟨hxx, hxy, hyx, hyy⟩
   rcases rotation_conjugation_entries (2*m) (jacobian (2 * m)) j k with
     ⟨hrr, hra, har, haa⟩
-  dsimp only at hxx hxy hyx hyy hrr hra har haa ⊢
-  rw [hrr, hra, har, haa, hxx, hxy, hyx, hyy, hw]
+  dsimp only at hxx hxy hyx hyy hrr hra har haa ⊢; rw [hrr, hra, har, haa, hxx, hxy, hyx, hyy, hw]
   change
     x j * (-2*charge (2*m) k*(x j-x k)*(y j-y k)/d^2*x k +
       charge (2*m) k*((x j-x k)^2-(y j-y k)^2)/d^2*y k) +
@@ -536,8 +496,7 @@ private lemma jacobian_diagonal (N : ℕ) (j : Fin N) :
       ite_true, ite_false, zero_mul, mul_zero, zero_sub, sub_zero, mul_one,
       add_zero, zero_add]
   · rw [← Finset.sum_neg_distrib]
-    apply Finset.sum_congr rfl
-    intro k _
+    refine Finset.sum_congr rfl fun k _ => ?_
     by_cases hkj : k = j <;> simp [hkj]
     ring
   · congr 1
@@ -554,8 +513,7 @@ private lemma jacobian_diagonal (N : ℕ) (j : Fin N) :
       by_cases hkj : k = j <;> simp [hkj]
       ring
   · rw [← Finset.sum_neg_distrib]
-    apply Finset.sum_congr rfl
-    intro k _
+    refine Finset.sum_congr rfl fun k _ => ?_
     by_cases hkj : k = j <;> simp [hkj]
     ring
 
@@ -583,28 +541,24 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
   have hA : ((x j)^2-(y j)^2)*T - 2*x j*y j*U = x j*sy-y j*sx := by
     dsimp only [T, U, sx, sy]
     simp_rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
-    apply Finset.sum_congr rfl
-    intro k _
+    refine Finset.sum_congr rfl fun k _ => ?_
     by_cases hkj : k = j
     · simp [hkj]
     · simp only [hkj, ite_false]
       have hd : d k ≠ 0 := chord_sq_ne_zero (2*m) j k (Ne.symm hkj)
-      dsimp only [d, x, y] at *
-      field_simp [hd]
+      dsimp only [d, x, y] at *; field_simp [hd]
       linear_combination
         -charge (2*m) k*(x j*y k-y j*x k)*hu j +
           charge (2*m) k*(x j*y k-y j*x k)*hu k
   have hB : -2*x j*y j*T - ((x j)^2-(y j)^2)*U = w-x j*sx-y j*sy := by
     dsimp only [T, U, sx, sy, w]
     simp_rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
-    apply Finset.sum_congr rfl
-    intro k _
+    refine Finset.sum_congr rfl fun k _ => ?_
     by_cases hkj : k = j
     · simp [hkj]
     · simp only [hkj, ite_false]
       have hd : d k ≠ 0 := chord_sq_ne_zero (2*m) j k (Ne.symm hkj)
-      dsimp only [d, x, y] at *
-      field_simp [hd]
+      dsimp only [d, x, y] at *; field_simp [hd]
       linear_combination
         charge (2*m) k*((x k)^2+(y k)^2-x j*x k-y j*y k)*hu j +
           charge (2*m) k*((x j)^2+(y j)^2-x j*x k-y j*y k)*hu k
@@ -617,21 +571,16 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
   have hBw : -2*x j*y j*T - ((x j)^2-(y j)^2)*U = w+charge (2*m) j/2 := by
     linear_combination hB - x j*hfy + y j*hfx + charge (2*m) j/2*hu j
   have hw : (∑ k : Fin (2*m), charge (2*m) k*weights m j k) = w := by
-    apply Finset.sum_congr rfl
-    intro k _
+    refine Finset.sum_congr rfl fun k _ => ?_
     by_cases hkj : k = j
     · simp [hkj, weights]
     · have hc := chord_sq (2*m) j k
-      dsimp only [w, d, x, y]
-      simp only [weights, hkj, Ne.symm hkj, ite_false]
-      rw [hc]
-      push_cast
+      dsimp only [w, d, x, y]; simp only [weights, hkj, Ne.symm hkj, ite_false]; rw [hc]; push_cast
       ring
   rcases jacobian_diagonal (2*m) j with ⟨hxx, hxy, hyx, hyy⟩
   rcases rotation_conjugation_entries (2*m) (jacobian (2 * m)) j j with
     ⟨hrr, hra, har, haa⟩
-  dsimp only at hxx hxy hyx hyy hrr hra har haa ⊢
-  rw [hrr, hra, har, haa, hxx, hxy, hyx, hyy, hw]
+  dsimp only at hxx hxy hyx hyy hrr hra har haa ⊢; rw [hrr, hra, har, haa, hxx, hxy, hyx, hyy, hw]
   change x j*(T*x j+(-charge (2*m) j/2-U)*y j) +
     y j*((charge (2*m) j/2-U)*x j+-T*y j) = 0 ∧ _
   dsimp only [T, U, x, y] at *
@@ -671,15 +620,11 @@ private lemma spectrum_weights (m : ℕ) [NeZero (2 * m)] :
       exact_mod_cast (show m ≠ 0 by intro h; exact NeZero.ne (2 * m) (by simp [h]))
     split_ifs at hs with hle
     · rw [hs]
-      push_cast
-      simp
+      push_cast; simp
     · have ha : Real.pi * ((j-k).val : ℝ) / (2 * m) =
           Real.pi * ((j.val : ℝ)-k.val) / (2 * m) + Real.pi := by
-        rw [hs]
-        field_simp
-      push_cast
-      rw [ha, Real.sin_add_pi]
-      simp
+        rw [hs]; field_simp
+      push_cast; rw [ha, Real.sin_add_pi]; simp
 
 private lemma alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) :
     (∑ k : Fin (2*m), charge (2*m) k*weights m j k) = charge (2*m) j*diagonalWeight m := by
@@ -706,17 +651,14 @@ private lemma alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) 
       InverseChordCirculant.chordWeight (2*m) l) = diagonalWeight m := by
     have h := congrArg Complex.re hfourier
     simp only [Complex.re_sum, Complex.ofReal_re] at h
-    dsimp only [diagonalWeight]
-    push_cast at h ⊢
+    dsimp only [diagonalWeight]; push_cast at h ⊢
     linear_combination h
   calc
     _ = charge (2*m) j * ∑ k : Fin (2*m), (-1:ℝ)^(j-k).val *
         InverseChordCirculant.chordWeight (2*m) (e (j-k)) := by
       rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro k _
-      rw [hsign, hw]
-      ring
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [hsign, hw]; ring
     _ = charge (2*m) j * ∑ k : Fin (2*m), (-1:ℝ)^k.val *
         InverseChordCirculant.chordWeight (2*m) (e k) := by
       congr 1
@@ -725,8 +667,7 @@ private lemma alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) 
     _ = _ := by
       rw [← hsum, ← e.sum_comp]
       congr 1
-      apply Finset.sum_congr rfl
-      intro k _
+      refine Finset.sum_congr rfl fun k _ => ?_
       rw [show (e k).val = k.val from spectrum_fin_val (2*m) k]
 
 private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
@@ -744,8 +685,7 @@ private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
       | simpa only [Matrix.fromBlocks_apply₁₁, Matrix.zero_apply] using hrr
       | simpa [blockB, chargeMatrix, Matrix.mul_diagonal, weights, mul_comm] using hra
       | change _ = blockC m j j
-        rw [har]
-        simp [blockC, chargeMatrix, Matrix.mul_diagonal, weights]; ring
+        rw [har]; simp [blockC, chargeMatrix, Matrix.mul_diagonal, weights]; ring
       | simpa only [Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using haa
     · rcases rotated_jacobian_off_diagonal m j k h with ⟨hrr, hra, har, haa⟩
       first
@@ -779,11 +719,9 @@ private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0)
   have hscale : x • (x • I - (-C) * (x⁻¹ • I) * (-B)) =
       x^2 • I - C * B := by
     simp [smul_sub, smul_smul, I, hx, pow_two]
-  have hd : (x • I).det ≠ 0 := by
-    simp [I, hx]
+  have hd : (x • I).det ≠ 0 := by simp [I, hx]
   change Polynomial.eval x (jacobian (2 * m)).charpoly = 0 ↔ _
-  rw [hchar, Matrix.eval_charpoly, hmat, hschur]
-  rw [mul_eq_zero, or_iff_right hd]
+  rw [hchar, Matrix.eval_charpoly, hmat, hschur]; rw [mul_eq_zero, or_iff_right hd]
   change _ ↔ (x^2 • I - C*B).det = 0
   rw [← hscale, Matrix.det_smul]
   exact (mul_eq_zero.trans (or_iff_right (pow_ne_zero _ hx))).symm
@@ -807,22 +745,15 @@ private lemma spectrum_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m)
     have hr : min (k+m).val (2 * m-(k+m).val) = m-k.val := by rw [hv]; omega
     have hc : ((m-k.val : ℕ) : ℝ) = (m : ℝ)-k.val :=
       Nat.cast_sub (by omega)
-    dsimp only [gamma]
-    rw [hr, hv, hc]
-    unfold diagonalWeight
-    push_cast
-    ring
+    dsimp only [gamma]; rw [hr, hv, hc]
+    unfold diagonalWeight; push_cast; ring
   · have hv : (k+m).val = k.val-m := by
-      rw [ZMod.val_add_of_le (by rw [hmv]; omega), hmv]
-      omega
+      rw [ZMod.val_add_of_le (by rw [hmv]; omega), hmv]; omega
     have hr : min (k+m).val (2 * m-(k+m).val) = k.val-m := by rw [hv]; omega
     have hc : ((k.val-m : ℕ) : ℝ) = (k.val : ℝ)-m :=
       Nat.cast_sub (by omega)
-    dsimp only [gamma]
-    rw [hr, hv, hc]
-    unfold diagonalWeight
-    push_cast
-    ring
+    dsimp only [gamma]; rw [hr, hv, hc]
+    unfold diagonalWeight; push_cast; ring
 
 private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
     (y • 1 - blockC m * blockB m).det =
@@ -849,20 +780,15 @@ private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : �
     change ((weights m (e.symm i) (e.symm j) : ℝ) : ℂ) = w (i-j)
     rw [spectrum_weights]
     change (InverseChordCirculant.chordWeight (2 * m) (e (e.symm i-e.symm j)) : ℂ) = _
-    rw [map_sub]
-    simp only [RingEquiv.apply_symm_apply]
+    rw [map_sub]; simp only [RingEquiv.apply_symm_apply]
     rfl
   have hsign (i j : Fin (2 * m)) :
       charge (2 * m) i * charge (2 * m) j = (-1 : ℝ)^(i-j).val := by
     have hs := Fin.intCast_val_sub_eq_sub_add_ite i j
     have hp : ((i.val+2)+(j.val+2)) % 2 = (i-j).val % 2 := by
       split_ifs at hs <;> push_cast at hs <;> omega
-    unfold charge
-    rw [← pow_add]
-    calc
-      _ = (-1 : ℝ)^(((i.val+2)+(j.val+2)) % 2) := neg_one_pow_eq_pow_mod_two _
-      _ = (-1 : ℝ)^((i-j).val % 2) := by rw [hp]
-      _ = _ := (neg_one_pow_eq_pow_mod_two _).symm
+    unfold charge; rw [← pow_add]
+    rw [neg_one_pow_eq_pow_mod_two _, neg_one_pow_eq_pow_mod_two (i-j).val, hp]
   have hU : F (chargeMatrix m * weights m * chargeMatrix m) = Matrix.circulant u := by
     ext i j
     change (((chargeMatrix m * weights m * chargeMatrix m)
@@ -884,8 +810,7 @@ private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : �
     apply congrArg Matrix.diagonal
     funext j
     simp only [charge, ← pow_add]
-    rw [show j.val+2+(j.val+2) = 2*(j.val+2) by omega, pow_mul]
-    simp
+    rw [show j.val+2+(j.val+2) = 2*(j.val+2) by omega, pow_mul]; simp
   have hCB : blockC m * blockB m =
       ((a+1) • 1 - weights m) * (a • 1 - chargeMatrix m * weights m * chargeMatrix m) := by
     change (((a+1) • 1 - weights m) * chargeMatrix m) *
@@ -893,11 +818,8 @@ private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : �
     have hmid : (chargeMatrix m * (a • 1 - weights m)) * chargeMatrix m =
         a • 1 - chargeMatrix m * weights m * chargeMatrix m := by
       rw [mul_sub, sub_mul, Matrix.mul_smul, mul_one, Matrix.smul_mul, hD]
-    calc
-      _ = ((a+1) • 1 - weights m) *
-          ((chargeMatrix m * (a • 1 - weights m)) * chargeMatrix m) := by
-        simp only [Matrix.mul_assoc]
-      _ = _ := by rw [hmid]
+    simpa only [Matrix.mul_assoc] using
+      congrArg (fun M => ((a+1) • 1 - weights m) * M) hmid
   let b : ZMod (2 * m) → ℂ := Pi.single 0 ((a+1 : ℝ) : ℂ) - w
   let c : ZMod (2 * m) → ℂ := Pi.single 0 (a : ℂ) - u
   have hb : F ((a+1) • 1 - weights m) = Matrix.circulant b := by
@@ -934,8 +856,7 @@ private lemma product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : �
     InverseChordCirculant.circulant_product_det]
   simp only [hmode]
   change _ = Complex.ofRealHom (∏ k : ZMod (2 * m), (y - gamma m k))
-  rw [map_prod Complex.ofRealHom]
-  simp only [Complex.ofRealHom_eq_coe, Complex.ofReal_sub]
+  rw [map_prod Complex.ofRealHom]; simp only [Complex.ofRealHom_eq_coe, Complex.ofReal_sub]
   exact Equiv.prod_comp (Equiv.addRight (m : ZMod (2 * m)))
     (fun k => (y : ℂ) - (gamma m k : ℂ))
 
@@ -964,17 +885,14 @@ private lemma root_iff_mode (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
     have hrlt : r < m := by
       by_contra h
       have he : r = m := by omega
-      rw [he] at hk
-      simp only [sub_self, zero_pow (by decide : (2:ℕ) ≠ 0), zero_mul, zero_div,
+      rw [he] at hk; simp only [sub_self, zero_pow (by decide : (2:ℕ) ≠ 0), zero_mul, zero_div,
         pow_eq_zero_iff (by decide : (2:ℕ) ≠ 0)] at hk
       exact hx hk
     exact ⟨r, hr2, hrlt, hk⟩
   · rintro ⟨r, hr2, hrm, hr⟩
     refine ⟨(r : ZMod (2 * m)), ?_⟩
     have hv : (r : ZMod (2 * m)).val = r := ZMod.val_natCast_of_lt (by omega)
-    have hf : min (r : ZMod (2 * m)).val (2*m - (r : ZMod (2 * m)).val) = r := by
-      rw [hv]
-      omega
+    have hf : min (r : ZMod (2 * m)).val (2*m - (r : ZMod (2 * m)).val) = r := by rw [hv]; omega
     simpa only [gamma, hf] using hr
 
 private def positiveRoot (m r : ℕ) : ℝ :=
@@ -990,8 +908,7 @@ private lemma positiveRoot_pos (m r : ℕ) (hr : 2 ≤ r) (hrm : r < m) :
 private lemma positiveRoot_sq (m r : ℕ) (hr : 2 ≤ r) :
     (positiveRoot m r)^2 = ((m : ℝ) - r)^2 * ((r : ℝ)^2 - 2) / 4 := by
   have hrR : (2 : ℝ) ≤ r := by exact_mod_cast hr
-  unfold positiveRoot
-  rw [div_pow, mul_pow, Real.sq_sqrt (by nlinarith : 0 ≤ (r : ℝ)^2 - 2)]
+  unfold positiveRoot; rw [div_pow, mul_pow, Real.sq_sqrt (by nlinarith : 0 ≤ (r : ℝ)^2 - 2)]
   norm_num
 
 private lemma real_root_count (m : ℕ) (hm : 3 ≤ m) :
@@ -1022,8 +939,7 @@ private lemma real_root_count (m : ℕ) (hm : 3 ≤ m) :
       have heq : ((m : ℝ) - k)^2 * ((k : ℝ)^2 - 2) =
           ((m : ℝ) - l)^2 * ((l : ℝ)^2 - 2) := by
         have hpow := congrArg (fun t : ℝ => t^2) h
-        rw [hsq k hk, hsq l hl] at hpow
-        linarith
+        rw [hsq k hk, hsq l hl] at hpow; linarith
       rcases lt_or_gt_of_ne hkl with hlt | hgt
       · exact distinctness_certificate m k l ((hs k).mp hk).1 hlt ((hs l).mp hl).2 heq
       · exact distinctness_certificate m l k ((hs l).mp hl).1 hgt ((hs k).mp hk).2 heq.symm
@@ -1060,8 +976,7 @@ private lemma real_root_count (m : ℕ) (hm : 3 ≤ m) :
     rw [hset, Set.ncard_coe_finset, Finset.card_union_of_disjoint hdisj,
       Finset.card_image_iff.mpr hinj, Finset.card_image_iff.mpr hneginj]
     have hcard : s.card = m-2 := by simp only [s, Nat.card_Icc]; omega
-    rw [hcard]
-    omega
+    rw [hcard]; omega
 
 def claim : Prop :=
   ∀ m : ℕ, 3 ≤ m →
