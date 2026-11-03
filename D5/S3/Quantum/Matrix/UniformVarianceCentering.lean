@@ -86,7 +86,7 @@ private theorem expectation_gap_sq_le_four_variance (T : E →ₗ[ℝ] E) (hT : 
     have hm : mean T z = (l+u)/2 := by
       simp only [mean,z,map_smul,map_add,hTa',hTb',real_inner_smul_left,
         real_inner_smul_right,inner_add_left,inner_add_right,
-        inner_self_eq_norm_sq_to_K,ha,hb,hab,hba,one_pow,mul_one,one_mul,mul_zero,zero_mul,add_zero,zero_add]
+        real_inner_self_eq_norm_sq,ha,hb,hab,hba,one_pow,mul_one,one_mul,mul_zero,zero_mul,add_zero,zero_add]
       nlinarith [ht]
     have he : ‖T z - mean T z • z‖^2 = (u-l)^2/4 := by
       have hevec : T z - mean T z • z =
@@ -224,15 +224,15 @@ private lemma complex_centering {J : Type*} [Fintype J]
   let A : J → G →ₗ[ℝ] H := fun j => (h j |>.restrictScalars ℝ).comp W.toLinearMap
   have hs (j : J) : (W.adjoint.comp (A j)).IsSymmetric := by
     intro x y
-    rw [LinearMap.comp_apply, LinearMap.comp_apply,
-      LinearMap.adjoint_inner_left, LinearMap.adjoint_inner_right]
+    change ⟪W.adjoint (A j x), y⟫ = ⟪x, W.adjoint (A j y)⟫
+    rw [LinearMap.adjoint_inner_left, LinearMap.adjoint_inner_right]
     exact (hh j).restrictScalars (W x) (W y)
-  simpa only [W,A,LinearMap.comp_apply,LinearMap.restrictScalars_apply,
-    real_inner_eq_re_inner] using
-    uniform_block_centering W A hs δ hδ (by
-      intro z hz
-      simpa only [W,A,LinearMap.comp_apply,LinearMap.restrictScalars_apply,
-        real_inner_eq_re_inner] using hv z hz) e he x hx
+  have hv' : ∀ z : G, ‖z‖ = 1 →
+      ∑ j, ‖A j z - ⟪W z,A j z⟫ • W z‖^2 ≤ δ := by
+    intro z hz
+    change (∑ j, ‖h j (V z) - (inner ℂ (V z) (h j (V z))).re • V z‖^2) ≤ δ
+    exact hv z hz
+  exact uniform_block_centering W A hs δ hδ hv' e he x hx
 
 /-- Blockwise centering bounds the complete ambient Gram operator, including leakage. -/
 theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
@@ -263,17 +263,16 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
       (∑ j, ‖L j x‖^2 ≤ 5*δ) := by
     simpa only [hL,c] using complex_centering V h hh δ hδ hv e x (he ⟨x,hx⟩) hx
   have hgram (x : G) : (inner ℂ x (Q x)).re = ∑ j, ‖L j x‖^2 := by
-    simp only [Q,LinearMap.sum_apply,LinearMap.comp_apply,inner_sum,Complex.re_sum,
-      LinearMap.adjoint_inner_right,inner_self_eq_norm_sq_to_K,← Complex.ofReal_pow,Complex.ofReal_re]
+    simp [Q,LinearMap.adjoint_inner_right,inner_self_eq_norm_sq_to_K]
   have hb (x : G) : (inner ℂ x (Q x)).re ≤ (5*δ)*‖x‖^2 := by
     rw [hgram]
     by_cases hx : x = 0
     · simp [hx]
     have hn : ‖x‖ ≠ 0 := norm_ne_zero_iff.mpr hx
-    let z : G := ‖x‖⁻¹ • x
+    let z : G := (‖x‖⁻¹ : ℂ) • x
     have hz : ‖z‖ = 1 := by simp [z,norm_smul,Real.norm_eq_abs,abs_of_nonneg (norm_nonneg x),hn]
     have heq (j : J) : ‖L j x‖^2 = ‖x‖^2 * ‖L j z‖^2 := by
-      simp only [z,map_smul_of_tower, norm_smul,Real.norm_eq_abs,abs_inv,abs_norm,mul_pow,inv_pow]
+      simp only [z,map_smul,norm_smul,Complex.norm_real,Real.norm_eq_abs,abs_inv,abs_norm,mul_pow,inv_pow]
       field_simp [hn]
     simp_rw [heq]
     rw [← Finset.mul_sum]
@@ -289,9 +288,10 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
   have hp : 0 ≤ (inner ℂ (x : G) (Q x)).re := by rw [hgram]; positivity
   simp only [ContinuousLinearMap.rayleighQuotient,ContinuousLinearMap.reApplyInnerSelf_apply,
     LinearMap.coe_toContinuousLinearMap', inner_re_symm]
+  change |(inner ℂ x (Q x)).re / ‖x‖^2| ≤ 5*δ
   rw [abs_of_nonneg (div_nonneg hp (sq_nonneg _))]
   by_cases hx : x = 0
-  · simp [hx]; positivity
+  · simpa [hx] using mul_nonneg (by norm_num : (0:ℝ) ≤ 5) hδ
   · exact (div_le_iff₀ (sq_pos_of_pos (norm_pos_iff.mpr hx))).mpr (hb x)
 
 end Complex
