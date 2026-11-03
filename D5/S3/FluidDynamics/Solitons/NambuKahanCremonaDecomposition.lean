@@ -455,43 +455,6 @@ theorem result : claim := by
   · intro A B h P mu hP hA hB
     exact covariance A B h P mu hP hA hB
 
-run_cmd do
-  let root := `D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition.result
-  let claimName := `D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition.claim
-  let auditEnv ← Lean.importModules
-    #[{ module := `D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition }] {}
-  let auditEnv := auditEnv.setExporting false
-  let some owner := auditEnv.getModuleIdxFor? root | throwError "missing module index"
-  let mut owned : Array Lean.Name := #[]
-  for (name, _) in auditEnv.constants.toList do
-    if auditEnv.getModuleIdxFor? name == some owner then
-      owned := owned.push name
-  owned := owned.qsort Lean.Name.quickLt
-  let mut pending := #[root, claimName]
-  let mut seen : Lean.NameSet := {}
-  while !pending.isEmpty do
-    let name := pending.back!
-    pending := pending.pop
-    if seen.contains name then continue
-    seen := seen.insert name
-    if let some info := auditEnv.find? name then
-      pending := pending ++ info.type.getUsedConstants
-      if let some value := info.value? (allowOpaque := true) then
-        pending := pending ++ value.getUsedConstants
-  let unused := owned.filter (fun name => !seen.contains name)
-  let axioms := seen.toList.filter fun name =>
-    if let some (.axiomInfo _) := auditEnv.find? name then true else false
-  let json := Lean.Json.mkObj [
-    ("module", Lean.toJson auditEnv.allImportedModuleNames[owner.toNat]!.toString),
-    ("owned", Lean.toJson (owned.map Lean.Name.toString)),
-    ("unused", Lean.toJson (unused.map Lean.Name.toString)),
-    ("axioms", Lean.toJson (axioms.map Lean.Name.toString)),
-    ("closure_size", Lean.toJson seen.size)]
-  IO.FS.writeFile "scratch-lane-math-op-nambu-kahan-cremona/closure-audit.json" json.pretty
-  logInfo m!"CLOSURE_AUDIT owned={owned.size} unused={unused} axioms={axioms}"
-
-#print axioms result
-
 end
 
 end D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition
