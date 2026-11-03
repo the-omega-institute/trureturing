@@ -116,7 +116,10 @@ internal sealed class CoolingMapThermalOperationRefutationDocument : IScribeDocu
                     Paragraph(Text(
                         "Finally, applying the asserted transition principle to E, ρ and σ would provide precisely such a positive finite ancilla, energy-conserving unitary and thermal output. "
                         + "The contradiction refutes the stated direction of Conjecture 1. It concerns exact finite ground-space thermal operations and does not assert a result for their approximate or positive-temperature variants."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("narasimhachar-gour-2015-cooling-map-thermal-operation-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, BlockSequence prose, AssessedProvenance provenance) => Describe.Lean(

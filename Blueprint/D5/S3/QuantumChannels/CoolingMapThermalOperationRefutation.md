@@ -96,6 +96,10 @@ $$\neg \left(\forall \left(d: \mathbb{N}\right), \left(\forall \left(E: \left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/narasimhachar-gour-2015-cooling-map-thermal-operation-refutation` (refuted) by `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"narasimhachar-gour-2015-cooling-map-thermal-operation-refutation","declaration_gid":"D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
