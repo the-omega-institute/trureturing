@@ -121,7 +121,8 @@ private theorem block_bounds (n a p r s : ℕ) (hn : n+p = 2*a)
   have fs : ((Nat.choose n a : ℤ)-Nat.choose n (a+r))*(a : ℤ) ≤
       (Nat.choose n a : ℤ)*((r : ℤ)*p+(r : ℤ)^2) := by
     have hs := Finset.sum_le_sum (fun i hi => first i (Finset.mem_range.mp hi))
-    rw [← Finset.sum_mul, ← Finset.mul_sum, sum_drops,
+    rw [← Finset.sum_mul, ← Finset.mul_sum,
+      sum_drops (fun k => (Nat.choose n k : ℤ)) a r,
       sum_linear_numerators] at hs
     push_cast at hs ⊢
     exact hs
@@ -151,7 +152,8 @@ private theorem block_bounds (n a p r s : ℕ) (hn : n+p = 2*a)
       ((s : ℤ)*(p+2*r)+(s : ℤ)^2) ≤
       ((Nat.choose n (a+r) : ℤ)-Nat.choose n (a+r+s))*((a : ℤ)+r+s) := by
     have hs := Finset.sum_le_sum (fun i hi => second i (Finset.mem_range.mp hi))
-    rw [← Finset.mul_sum, ← Finset.sum_mul, sum_drops,
+    rw [← Finset.mul_sum, ← Finset.sum_mul,
+      sum_drops (fun k => (Nat.choose n k : ℤ)) (a+r) s,
       sum_linear_numerators] at hs
     push_cast at hs ⊢
     exact hs
@@ -347,8 +349,8 @@ theorem actual_counts (u v t : ℕ) (hu : 1 ≤ u) (hv : 1 ≤ v)
   let m : ℤ := 2*q*t-1
   have hp : 0 < p := by dsimp [p,P]; positivity
   have hq : 3 ≤ q := by dsimp [q,Q]; push_cast; omega
-  have hpo : Odd p := ⟨(u : ℤ),by dsimp [p,P]; push_cast; ring⟩
-  have hqo : Odd q := ⟨(v : ℤ),by dsimp [q,Q]; push_cast; ring⟩
+  have hpo : Odd p := ⟨(u : ℤ),by simp [p,P]⟩
+  have hqo : Odd q := ⟨(v : ℤ),by simp [q,Q]⟩
   have hmo : Odd m := ⟨q*t-1,by dsimp [m]; ring⟩
   have hq2o : Odd (q^2) := by simpa only [pow_two] using hqo.mul hqo
   have htime : q+1 ≤ 2*(t : ℤ) := by dsimp [q,Q]; push_cast; omega
@@ -391,11 +393,11 @@ theorem actual_counts (u v t : ℕ) (hu : 1 ≤ u) (hv : 1 ≤ v)
   rw [hN,hA,hD] at ca
   rw [hN,hB] at cq
   constructor
-  · exact ca
-  · change (square_return_pair (P u) (Q v) t).2 = _
-    change (square_return_pair (P u) (Q v) t).2 =
+  · simpa only [square_return_pair,← hN] using ca
+  · have cq' : (square_return_pair (P u) (Q v) t).2 =
       2*(Nat.choose (N u v t) (a u v t+r u v)+
-        Nat.choose (N u v t) (a u v t+r u v)) at cq
+        Nat.choose (N u v t) (a u v t+r u v)) := by
+      simpa only [square_return_pair,← hN] using cq
     omega
 
 private theorem sampled_gap (u v t : ℕ) (hu : 1 ≤ u) (hv : 1 ≤ v)
@@ -470,7 +472,9 @@ private theorem late_binomial (u v t : ℕ) (hu : 1 ≤ u) (hv : 1 ≤ v)
     have he := (param_id u v).2.2.1
     have hz : ((late u v : ℕ) : ℤ) ≤ t := by exact_mod_cast hLate
     dsimp [late] at hz
-    have heZ : 2*(j1 u v : ℤ)+1 = qq*pp := by exact_mod_cast he
+    have heZ : 2*(j1 u v : ℤ)+1 = qq*pp := by
+      dsimp only [qq,pp]
+      exact_mod_cast he
     push_cast at hz
     omega
   have hcone : pp+qq^2*pp^2 < 2*aa := by
@@ -586,7 +590,8 @@ private theorem cofinal (u v : ℕ) (hu : 1 ≤ u) (hv : 1 ≤ v) :
     have hq : 1 ≤ Q v := by dsimp [Q]; omega
     have hqt := Nat.mul_le_mul_right t hq
     simp only [one_mul] at hqt
-    have hcoef : z+1 ≤ Q v*t-b v-1 := by dsimp [t] at hqt; omega
+    have htbound : z+b v+2 ≤ t := by dsimp [t]; omega
+    have hcoef : z+1 ≤ Q v*t-b v-1 := by omega
     have hp := Nat.mul_le_mul_right (Q v*t-b v-1) (show 1 ≤ P u by dsimp [P]; omega)
     simp only [one_mul] at hp
     dsimp [sample]; omega
