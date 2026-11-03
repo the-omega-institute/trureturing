@@ -138,4 +138,5 @@ Consumed in the construction described here, with the exact telescope supplied b
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/SmallAAllHData.residue_masks`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/SmallAAllHData.second_charge`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/SmallAAllHData.submask_scale`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural](../SecondPeakA2/QTwoStructural.md)
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableData](TableData.md)
