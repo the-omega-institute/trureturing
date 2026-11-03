@@ -1,0 +1,6 @@
+**命题 9.5（选定 B 恰好覆盖源定理的滤子量词）。** A–C 满足 [Barnum–Müller–Ududec，arXiv:1403.4147v4，Definitions 13–14 及 Theorem 16](https://arxiv.org/html/1403.4147v4) 的有限 projectivity、对称转移概率及全部滤子的纯性保持。
+
+证明。有限维闭尖生成锥及严格正单位给出该文的 base-norm state space。对正幂等 $P$，$P(C_o)=\operatorname{im}_+P$：一个方向由正性，反向由 $Py=y$。式 (9.2) 的前两行正是 Definition 13 的互补与 dual-complemented；第三行给 Definition 14 的 normalization，因而每个 $P_F$ 都是该定义的 filter，每个面由它覆盖，得到 projectivity。
+
+现在直接消费 [Barnum–Barrett–Krumm–Müller，arXiv:1508.03107v2，§3.1 Proposition 3.1](https://arxiv.org/html/1508.03107v2)：有限 projective 系统的面、滤子及 projective unit 一一对应。故任何源定义下的 filter 都等于它的面上已选的 $P_F$，不是另有一族未经 B 约束的滤子。B 的纯射线保持已覆盖它们全部，无须再添一个全称纯性前件。该双射也把纯态 $\omega$ 与原子 projective unit $e_\omega$ 配对，C 就是 BMU16 的 STP。零输出符合 BMU16 中“非负倍纯态”的定义。BMU16 因而适用；不调用其 Theorem 17 的强对称路线。∎
+

@@ -1,0 +1,10 @@
+**定义 9.6（D：原效果上的有向三元相容）。** 由命题 9.5 的 Jordan 桥及定理 10.1 的规范运输，在原效果空间 $E_o$ 上记单位为 $u_o$、Jordan 乘法为 $\circ_o$。原有向关系另供实线性指派
+
+$$
+D^o:E_o\longrightarrow\operatorname{Der}(E_o,\circ_o),\qquad
+([L_a,L_c]+[D_a,D_c])b=0\quad(a,b,c\in E_o).
+\tag{9.3}
+$$
+
+这是对尚未选择矩阵坐标的原关系之条件。$D$ 不是从重构后的矩阵交换子回填。导子性质与式 (9.3) 是独立输入；反对称、自守及正 Frobenius 配对不是另加输入。
+

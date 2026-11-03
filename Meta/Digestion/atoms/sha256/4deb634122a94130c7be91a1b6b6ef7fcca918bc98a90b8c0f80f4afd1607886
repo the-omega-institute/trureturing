@@ -1,0 +1,21 @@
+**定义 99.2（C111：无参考的互易可拆返回体）。** 不假设精确 R、S、H，不继承定理 85.1 的正常形。对每个非零效果及框架，令 $P=P_E$、$q=q_E$、$E^\vee=qE^\dagger$，其中此处效果上的 $\dagger$ 是原卷的 Moore–Penrose 逆；在映射上它仍表示迹伴随。置
+
+$$
+\begin{aligned}
+\bar s(E,F)&=\frac{\nu(T_{E,F}-T_{E,F}^\dagger)}{\|E\|},\\
+\bar h(E,F)&=\frac{\nu(T_{E,F}-T_{\sqrt E,F}^{\,2})}{\|E\|},\\
+b(E,F)&=\max_{\rho\in P\mathcal AP,\ \rho\ge0,\ \tau\rho=1}
+\|q^{-1}T_{E^\vee,F}T_{E,F}(\rho)-\rho\|_1.
+\end{aligned}
+\tag{99.3}
+$$
+
+第三式仍在原完整输出代数中比较，不先压回角；除以 q 是关系的归一规则。上确界 $\bar S、\bar H$、$B_*$ 保留全部原对象、非零效果及框架。给 $0\le\varepsilon\le2^{-15}$，$C111(\varepsilon)$ 表示同一指定族满足
+
+$$
+\max\{\bar S,\bar H,B_*\}\le\varepsilon.
+\tag{99.4}
+$$
+
+三个条件只比较原实际分支间的关系：交换配对两端，比较整程和两个相同半程，比较滤波—实际补偿的接续与返回输入。定义中不使用平方根更新公式。它比 C110 的条件弱：$\bar S\le S_*$、$\bar H\le H_*$，而 $B_*$ 完全相同；逆方向没有对一般映射成立的无维数范数等价可直接使用。精确 $\varepsilon=0$ 时，正锥张成自伴空间及其复化，故 $\bar S=\bar H=0$ 恰给原精确 S、H；精确刻画复用 C108。
+

@@ -1,0 +1,14 @@
+**定理 10.5（全部原事件的 CP、TNI 与数学 Kraus）。** A–E 下，每个原事件及其原标签分支在 (10.3) 的同一取向中完全正且迹不增：
+
+$$
+\mathcal T_x(X)_t=\sum_{s,\mu}K^x_{ts\mu}X_sK^{x*}_{ts\mu},\qquad
+\sum_{t,\mu}K^{x*}_{ts\mu}K^x_{ts\mu}\le I_{d_s}.
+\tag{10.7}
+$$
+
+原确定事件取等号。$\mu$ 是数学指标，其可访问性尚未由本定理给出。
+
+证明。不可约秩二参考在定理 10.2 下为 $M_2(\mathbb C)$；定理 10.4 把 $n$ 个原副本送到 $M_{2^n}(\mathbb C)$。给定任一输入块维数 $d_s$，选有限 $n$ 使 $2^n\ge d_s$。原延伸在整个实际联合锥上正，(9.1)、(10.4) 把该锥精确送到全矩阵正锥，所以 $\mathcal T_x\otimes\mathrm{id}_{2^n}$ 保正；限制到参考的一个 $d_s$ 维角，便得每个输入输出块的 $d_s$-positive 映射。
+
+这恰满足 [Watrous，*The Theory of Quantum Information*，§1.1.2 式 (1.124) 的 CP 定义及 Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf) 的有限输入维判据。原文 (1.124) 是定义中的公式号，不是独立编号 Definition 1.124。Theorem 2.22 对每个非零块给 CP、Choi 正性和有限 Kraus 表示；零块用空和。A 的 $u_pT_x\le u_o$ 经 (10.4) 给式 (10.7) 的效果不等式。本证明需要任意有限多个参考及全联合锥；仅产品准备正性，或只一份二阶参考，不满足这个判据。∎
+
