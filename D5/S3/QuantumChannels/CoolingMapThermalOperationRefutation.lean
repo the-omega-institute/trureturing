@@ -72,9 +72,8 @@ private def factor : Matrix (Fin 4) (Fin 2) ℂ :=
 
 private def sigma : Matrix (Fin 4) (Fin 4) ℂ := (1 / 4 : ℝ) • (factor * factorᴴ)
 
-private def kraus : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ :=
-  ![diagonal ![1, 0, 3 / 5, 3 / 5],
-    diagonal ![0, 1, 4 / 5, 4 * Complex.I / 5]]
+private def kraus (a : Fin 2) : Matrix (Fin 4) (Fin 4) ℂ :=
+  diagonal (fun i => factor i a)
 
 private lemma levels_valid : StrictMono levels ∧
     (∀ i j k l : Fin 4, i < j → k < l → levels j - levels i = levels l - levels k →
@@ -82,11 +81,7 @@ private lemma levels_valid : StrictMono levels ∧
   norm_num [StrictMono, Fin.forall_fin_succ, levels.eq_1]
 
 private lemma kraus_complete : (∑ i, (kraus i)ᴴ * kraus i) = 1 := by
-  have hk (a : Fin 2) : kraus a = diagonal (fun i => factor i a) := by
-    rw [kraus.eq_1]
-    fin_cases a <;> apply congrArg diagonal <;>
-      funext i <;> fin_cases i <;> rfl
-  simp_rw [hk]
+  simp only [kraus.eq_1]
   apply D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_complete
   intro i
   fin_cases i <;> norm_num [factor.eq_1, Fin.sum_univ_two, Complex.sq_norm,
@@ -119,11 +114,7 @@ private lemma instance_cooling : IsCoolingMap Pm sigma := by
     fin_cases i <;> exact Matrix.isDiag_diagonal _
   · change (∑ a, kraus a * Pm * (kraus a)ᴴ) = sigma
     rw [Fin.sum_univ_two]
-    change diagonal ![1, 0, 3 / 5, 3 / 5] * Pm *
-        (diagonal ![1, 0, 3 / 5, 3 / 5])ᴴ +
-      diagonal ![0, 1, 4 / 5, 4 * Complex.I / 5] * Pm *
-        (diagonal ![0, 1, 4 / 5, 4 * Complex.I / 5])ᴴ = sigma
-    simp only [Matrix.diagonal_conjTranspose]
+    simp only [kraus.eq_1, Matrix.diagonal_conjTranspose]
     ext i j
     simp only [Matrix.add_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, Pi.star_apply]
     fin_cases i <;> fin_cases j <;>
