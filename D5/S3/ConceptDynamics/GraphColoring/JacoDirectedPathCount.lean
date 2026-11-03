@@ -475,6 +475,7 @@ private theorem suffix_sum {j n : ℕ} (hj : 3 ≤ j) (hn : 0 < n)
     (hlo : Nat.fib j < n) (hhi : n ≤ Nat.fib (j + 1)) :
     psi n = ∑ h ∈ Finset.Icc (beattyOut n) (Nat.fib j), psi h := by
   classical
+  letI : Fintype (Pred (⟨n, hn⟩ : ℕ+) j) := predFintype _ _
   have hs : psi n = ∑ h : Pred ⟨n, hn⟩ j, psi h.val.val :=
     path_count_suffix hj (n := ⟨n, hn⟩) hlo hhi
   rw [hs]
