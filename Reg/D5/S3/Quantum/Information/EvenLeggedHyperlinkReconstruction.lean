@@ -190,4 +190,99 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 #print axioms registration
 end Zeta
 
+
+namespace HyperlinkZeta
+noncomputable section
+universe u
+
+/-- Observe the hyperlink of the subset zeta transform at a varying subset. -/
+abbrev signature : Signature where
+  Params := Σ α : Type u, Finset α → ℝ
+  State p := Finset (Sigma.fst p)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p I => hyperlink (fun A => ∑ K ∈ A.powerset, Sigma.snd p K) I)
+    (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {α : Type u} (v : Finset α → ℝ) (I : Finset α),
+    R.readout () ⟨α, v⟩ I = v I
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have he := h (α := ULift.{u} Unit) (fun _ => 1) ∅
+  exact zero_ne_one he
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨⟨ULift.{u} Unit, fun I => (I.card : ℝ)⟩, ∅, {ULift.up ()}, ?_⟩
+  simpa only [actual, realize, hyperlink_zeta, Finset.card_empty,
+    Finset.card_singleton, Nat.cast_zero, Nat.cast_one] using
+      (zero_ne_one : (0 : ℝ) ≠ 1)
+
+def source_registration : Registration arena (type_of% (@hyperlink_zeta.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hyperlink_zeta.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@hyperlink_zeta.{u}) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.HyperlinkZeta.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.HyperlinkZeta
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end HyperlinkZeta
+
 end Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
