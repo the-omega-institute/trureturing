@@ -141,17 +141,18 @@ private theorem physical_strips (a b c d v m : ℕ)
   have hear : insertAt k w d=pre++k::post := by
     rw [hw,←hlen]
     simp [insertAt]
+  have positiveFresh : ∀ i ∈ k::P 1, 0≤g i := by
+    intro i hi
+    rcases List.mem_cons.mp hi with rfl|hi
+    · rw [hfresh]
+      have hAA := ((chain_values a b c d ha hb hc hd).1 0).1
+      change 1≤AA at hAA
+      omega
+    · exact (pos 1 i hi).2
   have aux : InStrip g N 0 (P 0 ++ t 0 :: (k::P 1) ++ t 1 :: P 2 ++ t 2 :: P 3 ++ [t 3]) := by
     apply four_strip g (P 0) (k::P 1) (P 2) (P 3) (t 0) (t 1) (t 2) (t 3) N 0
-      (fun i hi => (pos 0 i hi).2) ?_
+      (fun i hi => (pos 0 i hi).2) positiveFresh
       (fun i hi => (pos 2 i hi).2) (fun i hi => (pos 3 i hi).2) le_rfl
-    · intro i hi
-      rcases List.mem_cons.mp hi with rfl|hi
-      · rw [hfresh]
-        have hAA := ((chain_values a b c d ha hb hc hd).1 0).1
-        change 1≤AA at hAA
-        omega
-      · exact (pos 1 i hi).2
     · have hh := hn 0; change 0≤2*(UU-2*AA) ∧ 2*(UU-2*AA)≤UU-1 at hh; constructor <;> omega
     · have hh := hn 1; change 0≤2*(((v:ℤ)+1)*UU-WW+(m:ℤ)*VV) ∧ 2*(((v:ℤ)+1)*UU-WW+(m:ℤ)*VV)≤AA-1 at hh
       simp only [List.map_cons,List.sum_cons,hfresh]
@@ -170,7 +171,7 @@ private theorem physical_strips (a b c d v m : ℕ)
       simpa using hznew
   have newstrip : InStrip g N 0 (insertAt k w d) := by
     rw [hear]
-    simpa only [pre,post,List.append_assoc,List.singleton_append,List.cons_append] using aux
+    simpa only [pre,post,List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using aux
   exact ⟨hp,by omega,oldstrip,newstrip⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail

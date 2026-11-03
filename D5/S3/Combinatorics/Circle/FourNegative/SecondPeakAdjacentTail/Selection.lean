@@ -69,60 +69,60 @@ private theorem plus_three_residue_selection (x z u : ℚ) (negative : Bool)
       refine ⟨0,((-7) + ((1 / ((1 + x) ^ 1)) * ((-1) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.positive_1 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       refine ⟨0,((-6) + ((1 / ((1 + x) ^ 1)) * (((-1) * x) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.negative_1 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · subst u
     cases negative with
     | false =>
       refine ⟨0,((-7) + ((1 / ((1 + x) ^ 1)) * ((-2) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.positive_2 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       refine ⟨0,((-6) + ((1 / ((1 + x) ^ 1)) * (1 + ((-1) * x) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.negative_2 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · subst u
     cases negative with
     | false =>
       refine ⟨0,((-7) + ((1 / ((1 + x) ^ 1)) * ((-4) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.positive_4 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       refine ⟨0,((-6) + ((1 / ((1 + x) ^ 1)) * (3 + ((-1) * x) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.negative_4 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · subst u
     cases negative with
     | false =>
       refine ⟨0,((-7) + ((1 / ((1 + x) ^ 1)) * ((-8) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.positive_8 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       refine ⟨0,((-6) + ((1 / ((1 + x) ^ 1)) * (7 + ((-1) * x) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.negative_8 (((-32) + x)) ((z + ((-2) * x))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · have hu0 : 0≤u-16 := by linarith
     cases negative with
     | false =>
       refine ⟨0,((-7) + ((1 / ((1 + x) ^ 1)) * (((-1) * u) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative, show ¬u≤8 by linarith, show ¬u≤4 by linarith, show u≠1 by linarith, show u≠2 by linarith, show u≠4 by linarith] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.positive_large (((-16) + u)) ((x + ((-2) * u))) ((z + ((-2) * x))) (by linarith) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       refine ⟨0,((-7) + ((1 / ((1 + x) ^ 1)) * ((-1) + u + ((-1) * x) + (8 * z)))),rfl,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative, show ¬u≤8 by linarith, show ¬u≤4 by linarith, show u≠1 by linarith, show u≠2 by linarith, show u≠4 by linarith] <;> field_simp [hd] <;> ring
       · have hh := PlusThree.negative_large (((-16) + u)) ((x + ((-2) * u))) ((z + ((-2) * x))) (by linarith) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
 
 private theorem plus_two_residue_selection (x z u : ℚ) (negative : Bool)
     (hx : 16≤x) (hz : 2*x≤z) (hu : 1≤u) (hux : 2*u≤x)
@@ -135,66 +135,66 @@ private theorem plus_two_residue_selection (x z u : ℚ) (negative : Bool)
   · subst u
     cases negative with
     | false =>
-      have horth : ((1 / 4) * (x ^ 2))≤z := heven rfl
+      have horth : ((1 / 4) * (x ^ 2))≤z := by convert heven rfl using 1 <;> ring
       refine ⟨((-1) + ((1 / 8) * x)),(1 + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * ((-1) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.positive_1 (((-16) + x)) ((z + ((-1 / 4) * (x ^ 2)))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       have horth : x^2≤z := hodd rfl (by norm_num)
       refine ⟨((1 / 8) * x),((-2) + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * (((-1) * x) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.negative_1 (((-16) + x)) ((z + ((-1) * (x ^ 2)))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · subst u
     cases negative with
     | false =>
-      have horth : ((1 / 2) * (x ^ 2))≤z := heven rfl
+      have horth : ((1 / 2) * (x ^ 2))≤z := by convert heven rfl using 1 <;> ring
       refine ⟨((1 / 8) * x),((-3) + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * ((-2) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.positive_2 (((-16) + x)) ((z + ((-1 / 2) * (x ^ 2)))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       have horth : x^2≤z := hodd rfl (by norm_num)
       refine ⟨((1 / 8) * x),((-2) + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * (1 + ((-1) * x) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.negative_2 (((-16) + x)) ((z + ((-1) * (x ^ 2)))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · subst u
     cases negative with
     | false =>
-      have horth : (x ^ 2)≤z := heven rfl
+      have horth : (x ^ 2)≤z := by convert heven rfl using 1 <;> ring
       refine ⟨((-1) + ((1 / 8) * x)),(1 + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * ((-4) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.positive_4 (((-16) + x)) ((z + ((-1) * (x ^ 2)))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       have horth : x^2≤z := hodd rfl (by norm_num)
       refine ⟨(1 + ((1 / 8) * x)),((-6) + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * (3 + ((-1) * x) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.negative_4 (((-16) + x)) ((z + ((-1) * (x ^ 2)))) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
   · have hu0 : 0≤u-8 := by linarith
     cases negative with
     | false =>
-      have horth : ((1 / 4) * u * (x ^ 2))≤z := heven rfl
+      have horth : ((1 / 4) * u * (x ^ 2))≤z := by convert heven rfl using 1 <;> ring
       refine ⟨(((-1 / 4) * u) + ((1 / 8) * x)),((-3) + u + ((-1 / 2) * x) + ((1 / ((1 + x) ^ 1)) * (((-1) * u) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative, show ¬u≤4 by linarith, show u≠1 by linarith, show u≠2 by linarith, show u≠4 by linarith] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative, show ¬u≤4 by linarith, show u≠1 by linarith, show u≠2 by linarith, show u≠4 by linarith] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.positive_large (((-8) + u)) ((x + ((-2) * u))) ((z + ((-1 / 4) * u * (x ^ 2)))) (by linarith) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
     | true =>
       refine ⟨0,((-3) + ((1 / ((1 + x) ^ 1)) * ((-1) + u + ((-1) * x) + (4 * z)))),?_,?_,?_⟩
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative, show ¬u≤4 by linarith, show u≠1 by linarith, show u≠2 by linarith, show u≠4 by linarith] <;> field_simp [hd] <;> ring
       · norm_num [chooseM3,chooseM2,chooseV2,residueRepresentative, show ¬u≤4 by linarith, show u≠1 by linarith, show u≠2 by linarith, show u≠4 by linarith] <;> field_simp [hd] <;> ring
       · have hh := PlusTwo.negative_large (((-8) + u)) ((x + ((-2) * u))) ((z + ((-2) * x))) (by linarith) (by linarith) (by linarith)
-        convert hh using 1 <;> field_simp [hd] <;> ring
+        convert hh using 1 <;> ring_nf <;> field_simp <;> ring
 
 private theorem plus_three_periodic_selection (a c : ℕ) (ha : 2≤a) (hamax : a≤4) (hac : a<c)
     (hex : ¬(a=2 ∧ c=3)) :
@@ -563,18 +563,19 @@ private theorem plus_two_integer_residue (a c : ℕ) (ha : 4≤a) (hac : a<c) :
   obtain ⟨he,hj,hu,hux,hrem⟩ := dyadic_residue a c 2 (by omega)
   obtain ⟨horth0,horth1⟩ := plus_two_orthant_bounds a c ha hac
   have hxQ : (16:ℚ)≤(2:ℚ)^a := by
-    exact_mod_cast (show (16:ℤ)≤xI by dsimp [xI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
+    simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha
   have hzQ : 2*(2:ℚ)^a≤(2:ℚ)^c := by
-    exact_mod_cast (show 2*xI≤zI by dsimp [xI,zI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
-  have huQ : 1≤(uI:ℚ) := by exact_mod_cast hu
-  have huxQ : 2*(uI:ℚ)≤(xI:ℚ) := by exact_mod_cast hux
-  have hdy : (uI:ℚ)=1 ∨ (uI:ℚ)=2 ∨ (uI:ℚ)=4 ∨ 8≤(uI:ℚ) := by
+    have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show a+1≤c by omega)
+    simpa only [pow_succ,mul_comm] using h
+  have huQ : (1:ℚ)≤(2:ℚ)^j := by exact_mod_cast hu
+  have huxQ : 2*(2:ℚ)^j≤(2:ℚ)^a := by exact_mod_cast hux
+  have hdy : (2:ℚ)^j=1 ∨ (2:ℚ)^j=2 ∨ (2:ℚ)^j=4 ∨ 8≤(2:ℚ)^j := by
     rcases hsmall with h1|h2|h4|h8|hl
     · exact Or.inl (by exact_mod_cast h1)
     · exact Or.inr (Or.inl (by exact_mod_cast h2))
     · exact Or.inr (Or.inr (Or.inl (by exact_mod_cast h4)))
-    · exact Or.inr (Or.inr (Or.inr (by exact_mod_cast h8)))
-    · exact Or.inr (Or.inr (Or.inr (by exact_mod_cast hl)))
+    · exact Or.inr (Or.inr (Or.inr (by exact_mod_cast (le_of_eq h8.symm))))
+    · exact Or.inr (Or.inr (Or.inr (by have h : (16:ℚ)≤(2:ℚ)^j := by exact_mod_cast hl; linarith)))
   have hq : ∃ T : ℤ,
       (2:ℤ)^(c+2)=(if ell%2=0 then uI else xI+1-uI)+(xI+1)*T := by
     simpa [ell,j,xI,uI] using dyadic_residue_integer_quotient a c 2 (by omega)
@@ -585,51 +586,66 @@ private theorem plus_two_integer_residue (a c : ℕ) (ha : 4≤a) (hac : a<c) :
   let mI : ℤ := T-4*vI-(if ell%2=0 then 3 else if uI≤4 then 2 else 3)
   have hres : (2:ℤ)^(c+2)%(xI+1)=if ell%2=0 then uI else xI+1-uI := by
     simpa [xI,uI,ell,j] using hrem
+  have hxIc : (xI:ℚ)=(2:ℚ)^a := by simp [xI]
+  have huIc : (uI:ℚ)=(2:ℚ)^j := by simp [uI]
+  have hule : uI≤4 ↔ (2:ℚ)^j≤4 := by rw [←huIc]; exact_mod_cast (Iff.rfl : uI≤4 ↔ uI≤4)
+  have hueq (n : ℤ) : uI=n ↔ (2:ℚ)^j=(n:ℚ) := by rw [←huIc]; exact_mod_cast (Iff.rfl : uI=n ↔ uI=n)
   have hTQ : (T:ℚ)=((4:ℚ)*(2:ℚ)^c-
       (if neg then (2:ℚ)^a+1-(2:ℚ)^j else (2:ℚ)^j))/((2:ℚ)^a+1) := by
-    have hT' := hT
-    have hTq : (T:ℚ)*((2:ℚ)^a+1)=
-        (2:ℚ)^(c+2)-(if ell%2=0 then (2:ℚ)^j else (2:ℚ)^a+1-(2:ℚ)^j) := by
-      exact_mod_cast hT'
-    have hneg : neg=(decide (ell%2≠0)) := by rfl
-    rw [hneg]
-    field_simp
-    rw [show (4:ℚ)*(2:ℚ)^c=(2:ℚ)^(c+2) by ring]
-    simpa [neg,show ell%2=0 ∨ ell%2≠0 by omega] using hTq
-  have hVc : (vI:ℚ)=chooseV2 ((2:ℚ)^a) ((2:ℚ)^j) neg := by
-    dsimp [vI]
+    have hTc : (2:ℚ)^(c+2)=(if ell%2=0 then (2:ℚ)^j else (2:ℚ)^a+1-(2:ℚ)^j)+((2:ℚ)^a+1)*(T:ℚ) := by
+      dsimp [xI,uI] at hT
+      exact_mod_cast hT
+    apply (eq_div_iff (by positivity : (2:ℚ)^a+1≠0)).mpr
     by_cases hp : ell%2=0
-    · simp [neg,hp]
-      by_cases h1 : uI=1 <;> by_cases h2 : uI=2
-      all_goals simp [h1,h2]
-      · have hj2 : 2≤j := by
-          by_contra hn
-          interval_cases j <;> norm_num at h1 h2 hsmall
-        have hpowU : (pU:ℚ)=(2:ℚ)^j/4 := by
-          dsimp [pU]
-          rw [show j=(j-2)+2 by omega, pow_add]
-          norm_num
-        rw [hpowA,hpowU]
-        norm_num
-    · have hp' : ell%2≠0 := by omega
-      simp [neg,hp']
-      by_cases hu4 : uI≤4
-      · by_cases h4 : uI=4 <;> simp [hu4,h4]
-        rw [hpowA]
-        norm_num
-      · simp [hu4]
+    all_goals simp [neg,hp,pow_add] at hTc ⊢; nlinarith [hTc]
+  have hVc : (vI:ℚ)=chooseV2 ((2:ℚ)^a) ((2:ℚ)^j) neg := by
+    by_cases hp : ell%2=0
+    · by_cases h1 : uI=1
+      · simp [vI,chooseV2,neg,hp,h1,(hueq 1).mp h1,hpowA]
+      · by_cases h2 : uI=2
+        · simp [vI,chooseV2,neg,hp,h1,h2,show (2:ℚ)^j≠1 from fun h => h1 ((hueq 1).mpr h), (hueq 2).mp h2,hpowA]
+        · have hj2 : 2≤j := by
+            by_contra hn
+            have hj01 : j=0 ∨ j=1 := by omega
+            rcases hj01 with h|h <;> simp [uI,h] at h1 h2
+          have hpowU : (pU:ℚ)=(2:ℚ)^j/4 := by
+            dsimp [pU]
+            push_cast
+            conv_rhs => rw [show j=(j-2)+2 by omega,pow_add]
+            norm_num
+          simp [vI,chooseV2,neg,hp,h1,h2,
+            show (2:ℚ)^j≠1 from fun h => h1 ((hueq 1).mpr h),
+            show (2:ℚ)^j≠2 from fun h => h2 ((hueq 2).mpr h),hpowA,hpowU]
+    · by_cases h4 : uI≤4
+      · by_cases heq : uI=4
+        all_goals simp [vI,chooseV2,neg,hp,h4,(hule.mp h4),heq,hpowA,
+          show ((2:ℚ)^j=4 ↔ uI=4) from (hueq 4).symm]
+      · simp [vI,chooseV2,neg,hp,h4,show ¬(2:ℚ)^j≤4 from fun h => h4 (hule.mpr h)]
   have hMc : (mI:ℚ)=chooseM2 ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^j) neg := by
-    dsimp [mI,chooseM2,residueRepresentative]
+    dsimp only [mI]
+    push_cast
     rw [hVc,hTQ]
-    ring
+    by_cases hp : ell%2=0
+    · simp [chooseM2,neg,hp,residueRepresentative]
+    · by_cases h4 : uI≤4
+      · simp [chooseM2,neg,hp,residueRepresentative,h4,hule.mp h4]
+      · simp [chooseM2,neg,hp,residueRepresentative,h4,show ¬(2:ℚ)^j≤4 from fun h => h4 (hule.mpr h)]
   obtain ⟨vR,mR,hvR,hmR,hsR⟩ := plus_two_residue_selection
     ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^j) neg hxQ hzQ huQ huxQ hdy
-    (by intro hn; exact_mod_cast horth0 (by simpa [neg] using hn))
-    (by intro hn h4; exact_mod_cast horth1 (by simpa [neg] using hn) (by exact_mod_cast h4))
+    (by
+      intro hn
+      have hp : ell%2=0 := by simpa [neg] using hn
+      have h := horth0 hp
+      have hQ : (2:ℚ)^j*((2:ℚ)^a)^2≤4*(2:ℚ)^c := by exact_mod_cast h
+      linarith)
+    (by
+      intro hn h4
+      have hp : ell%2=1 := by have hh : ell%2≠0 := by simpa [neg] using hn; omega
+      exact_mod_cast horth1 hp (by exact_mod_cast h4))
   refine ⟨vI,mI,?_,?_,?_⟩
-  · simpa [neg] using hVc
-  · simpa [neg] using hMc
-  · rw [← hVc,← hMc]
+  · simpa only [neg,ell,j] using hVc
+  · simpa only [neg,ell,j] using hMc
+  · rw [hvR,hmR,←hVc,←hMc] at hsR
     exact hsR
 
 private theorem plus_three_integer_residue (a c : ℕ) (ha : 5≤a) (hac : a<c) :
@@ -646,12 +662,13 @@ private theorem plus_three_integer_residue (a c : ℕ) (ha : 5≤a) (hac : a<c) 
   obtain ⟨he,hj,hu,hux,hrem⟩ := dyadic_residue a c 3 (by omega)
   have hsmall := dyadic_small_or_large j
   have hxQ : (32:ℚ)≤(2:ℚ)^a := by
-    exact_mod_cast (show (32:ℤ)≤xI by dsimp [xI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
+    simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha
   have hzQ : 2*(2:ℚ)^a≤(2:ℚ)^c := by
-    exact_mod_cast (show 2*xI≤zI by dsimp [xI,zI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
-  have huQ : 1≤(uI:ℚ) := by exact_mod_cast hu
-  have huxQ : 2*(uI:ℚ)≤(xI:ℚ) := by exact_mod_cast hux
-  have hdy : (uI:ℚ)=1 ∨ (uI:ℚ)=2 ∨ (uI:ℚ)=4 ∨ (uI:ℚ)=8 ∨ 16≤(uI:ℚ) := by
+    have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show a+1≤c by omega)
+    simpa only [pow_succ,mul_comm] using h
+  have huQ : (1:ℚ)≤(2:ℚ)^j := by exact_mod_cast hu
+  have huxQ : 2*(2:ℚ)^j≤(2:ℚ)^a := by exact_mod_cast hux
+  have hdy : (2:ℚ)^j=1 ∨ (2:ℚ)^j=2 ∨ (2:ℚ)^j=4 ∨ (2:ℚ)^j=8 ∨ 16≤(2:ℚ)^j := by
     rcases hsmall with h1|h2|h4|h8|hl
     · exact Or.inl (by exact_mod_cast h1)
     · exact Or.inr (Or.inl (by exact_mod_cast h2))
@@ -662,24 +679,29 @@ private theorem plus_three_integer_residue (a c : ℕ) (ha : 5≤a) (hac : a<c) 
       (2:ℤ)^(c+3)=(if ell%2=0 then uI else xI+1-uI)+(xI+1)*T := by
     simpa [ell,j,xI,uI] using dyadic_residue_integer_quotient a c 3 (by omega)
   let mI : ℤ := T-(if ell%2=0 then 7 else if uI≤8 then 6 else 7)
+  have hule : uI≤8 ↔ (2:ℚ)^j≤8 := by dsimp [uI]; exact_mod_cast (Iff.rfl : (2:ℤ)^j≤8 ↔ (2:ℤ)^j≤8)
   have hTQ : (T:ℚ)=((8:ℚ)*(2:ℚ)^c-
       (if neg then (2:ℚ)^a+1-(2:ℚ)^j else (2:ℚ)^j))/((2:ℚ)^a+1) := by
-    have hTq : (T:ℚ)*((2:ℚ)^a+1)=
-        (2:ℚ)^(c+3)-(if ell%2=0 then (2:ℚ)^j else (2:ℚ)^a+1-(2:ℚ)^j) := by
+    have hTc : (2:ℚ)^(c+3)=(if ell%2=0 then (2:ℚ)^j else (2:ℚ)^a+1-(2:ℚ)^j)+((2:ℚ)^a+1)*(T:ℚ) := by
+      dsimp [xI,uI] at hT
       exact_mod_cast hT
-    field_simp
-    rw [show (8:ℚ)*(2:ℚ)^c=(2:ℚ)^(c+3) by ring]
-    simpa [neg,show ell%2=0 ∨ ell%2≠0 by omega] using hTq
+    apply (eq_div_iff (by positivity : (2:ℚ)^a+1≠0)).mpr
+    by_cases hp : ell%2=0
+    all_goals simp [neg,hp,pow_add] at hTc ⊢; nlinarith [hTc]
   have hMc : (mI:ℚ)=chooseM3 ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^j) neg := by
-    dsimp [mI,chooseM3,residueRepresentative]
+    dsimp only [mI]
+    push_cast
     rw [hTQ]
-    ring
+    by_cases hp : ell%2=0
+    · simp [chooseM3,neg,hp,residueRepresentative]
+    · by_cases h8 : uI≤8
+      · simp [chooseM3,neg,hp,residueRepresentative,h8,hule.mp h8]
+      · simp [chooseM3,neg,hp,residueRepresentative,h8,show ¬(2:ℚ)^j≤8 from fun h => h8 (hule.mpr h)]
   obtain ⟨vR,mR,hvR,hmR,hsR⟩ := plus_three_residue_selection
     ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^j) neg hxQ hzQ huQ huxQ hdy
   refine ⟨mI,?_,?_⟩
-  · simpa [neg] using hMc
-  · have hv0 : (0:ℚ)=vR := by linarith [hvR]
-    rw [hv0,← hMc]
+  · simpa only [neg,ell,j] using hMc
+  · rw [hvR,hmR,←hMc] at hsR
     exact hsR
 
 private theorem low_integer_selection (a c s : ℕ)
@@ -696,7 +718,7 @@ private theorem low_integer_selection (a c s : ℕ)
       exact plus_two_periodic_selection a c ha hamax hac (hex2 rfl)
   · by_cases ha5 : 5≤a
     · obtain ⟨m,hm,hh⟩ := plus_three_integer_residue a c ha5 hac
-      exact ⟨0,m,by norm_num,by simpa using hh⟩
+      exact ⟨0,m,by norm_num,by have hz : (1:ℚ)≤(2:ℚ)^c/2 := by have hp := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 1≤c by omega); norm_num at hp; linarith; linarith,by simpa using hh⟩
     · have hamax : a≤4 := by omega
       obtain ⟨v,m,hh⟩ := plus_three_periodic_selection a c ha hamax hac (hex3 rfl)
       exact ⟨v,m,hh⟩
