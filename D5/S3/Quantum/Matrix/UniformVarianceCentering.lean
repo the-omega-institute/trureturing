@@ -374,4 +374,136 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
 
 end Complex
 
+
+section DirectSum
+variable {I : Type*} [Fintype I] [DecidableEq I]
+  {E : I → Type*} [∀ i, NormedAddCommGroup (E i)]
+  [∀ i, InnerProductSpace ℂ (E i)] [∀ i, FiniteDimensional ℂ (E i)]
+
+/-- The actual isometric inclusion of one summand into the Hilbert direct sum. -/
+def blockInclusion (i : I) : E i →ₗᵢ[ℂ] PiLp 2 E where
+  toLinearMap :=
+    { toFun := PiLp.single 2 i
+      map_add' := fun x y => by simp [PiLp.single_add]
+      map_smul' := fun c x => by
+        apply WithLp.ext
+        simp [PiLp.single, Pi.single_smul] }
+  norm_map' := PiLp.norm_single _ _
+
+/-- Orthogonal projection onto an actual center summand, without compressing h. -/
+def blockProjection (i : I) : PiLp 2 E →ₗ[ℂ] PiLp 2 E :=
+  (blockInclusion i).toLinearMap.comp (PiLp.projₗ 2 ℂ E i)
+
+private lemma projection_apply (i : I) (x : PiLp 2 E) :
+    blockProjection i x = PiLp.single 2 i (x i) := rfl
+
+private lemma projection_symmetric (i : I) :
+    (blockProjection (E := E) i).IsSymmetric := by
+  intro x y
+  simp only [projection_apply, PiLp.inner_apply]
+  simp [PiLp.single, Pi.single_apply, apply_dite, dite_apply]
+
+private lemma projection_partition (x : PiLp 2 E) :
+    ∑ i, ‖blockProjection i x‖^2 = ‖x‖^2 := by
+  simp only [projection_apply, PiLp.norm_single]
+  exact (PiLp.norm_sq_eq_of_L2 x _).symm
+
+/-- Coordinatewise extension by an arbitrary finite reference. -/
+def directSumReference (n : ℕ) (T : PiLp 2 E →ₗ[ℂ] PiLp 2 E) :=
+  referenceLift n T
+
+/-- The center-dependent scalar operator of the same ambient Hermitian family. -/
+def centralMean {J : Type*} (h : J → PiLp 2 E →ₗ[ℂ] PiLp 2 E)
+    (e : ∀ i, E i) (j : J) : PiLp 2 E →ₗ[ℂ] PiLp 2 E :=
+  ∑ i, ((inner ℂ (blockInclusion i (e i)) (h j (blockInclusion i (e i)))).re : ℂ) •
+    blockProjection i
+
+private lemma centralMean_single {J : Type*}
+    (h : J → PiLp 2 E →ₗ[ℂ] PiLp 2 E) (e : ∀ i, E i) (j : J) (i : I) (x : E i) :
+    centralMean h e j (blockInclusion i x) =
+      ((inner ℂ (blockInclusion i (e i)) (h j (blockInclusion i (e i)))).re : ℂ) •
+        blockInclusion i x := by
+  classical
+  simp only [centralMean, LinearMap.sum_apply, LinearMap.smul_apply]
+  rw [Finset.sum_eq_single i]
+  · rfl
+  · intro k _ hki
+    have hz : blockProjection k (blockInclusion i x) = 0 := by
+      change PiLp.single 2 k (PiLp.single 2 i x k) = 0
+      simp [hki]
+    rw [hz, smul_zero]
+  · simp
+
+/-- Blockwise ambient variance controls the same global centered family, including
+all transfers, after complete input and output center pinching and every reference. -/
+theorem hermitian_direct_sum_centering {J : Type*} [Fintype J]
+    (h : J → PiLp 2 E →ₗ[ℂ] PiLp 2 E) (hh : ∀ j, (h j).IsSymmetric)
+    (δ : ℝ) (hδ : 0 ≤ δ)
+    (hv : ∀ i (x : E i), ‖x‖ = 1 →
+      ∑ j, ‖h j (blockInclusion i x) -
+        (inner ℂ (blockInclusion i x) (h j (blockInclusion i x))).re •
+          blockInclusion i x‖^2 ≤ δ)
+    (e : ∀ i, E i) (he : ∀ i, (∃ x : E i, ‖x‖ = 1) → ‖e i‖ = 1) :
+    let ell := fun j => h j - centralMean h e j
+    ∀ n : ℕ,
+      let P := fun i => directSumReference n (blockProjection (E := E) i)
+      let L := fun j => directSumReference n (ell j)
+      let B := fun t : J × I × I => (P t.2.2).comp ((L t.1).comp (P t.2.1))
+      (∀ x, ∑ t, ‖B t x‖^2 ≤ (5*δ)*‖x‖^2) ∧
+      (∀ A : PiLp 2 (fun _ : Fin n => PiLp 2 E) →L[ℂ]
+          PiLp 2 (fun _ : Fin n => PiLp 2 E),
+        ‖(∑ t, (B t).adjoint.comp (A.toLinearMap.comp (B t))).toContinuousLinearMap‖
+          ≤ (5*δ)*‖A‖) := by
+  classical
+  let ell := fun j => h j - centralMean h e j
+  have hr (i : I) (j : J) (z : E i) :
+      ell j (blockInclusion i z) = h j (blockInclusion i z) -
+        ((inner ℂ (blockInclusion i (e i)) (h j (blockInclusion i (e i)))).re : ℂ) •
+          blockInclusion i z := by
+    simp only [ell, LinearMap.sub_apply, centralMean_single]
+  have hb (i : I) (z : E i) :
+      ∑ j, ‖ell j (blockInclusion i z)‖^2 ≤ (5*δ)*‖z‖^2 := by
+    have hp := hermitian_block_centering_and_gram_bound
+      (blockInclusion (E := E) i) h hh δ hδ (hv i) (e i) (he i)
+    have hz := (hp.2.1 z)
+    rw [hz.1] at hz
+    simpa only [hr, LinearMap.sub_apply, LinearMap.comp_apply, LinearMap.smul_apply,
+      LinearIsometry.coe_toLinearMap] using hz.2
+  have hbase (x : PiLp 2 E) :
+      ∑ t : J × I, ‖ell t.1 (blockProjection t.2 x)‖^2 ≤ (5*δ)*‖x‖^2 := by
+    rw [Fintype.sum_prod_type, Finset.sum_comm, PiLp.norm_sq_eq_of_L2]
+    calc
+      _ ≤ ∑ i, (5*δ)*‖x i‖^2 :=
+        Finset.sum_le_sum (fun i _ => hb i (x i))
+      _ = _ := (Finset.mul_sum _ _ _).symm
+  dsimp only
+  intro n
+  let P := fun i => directSumReference n (blockProjection (E := E) i)
+  let L := fun j => directSumReference n (ell j)
+  let B := fun t : J × I × I => (P t.2.2).comp ((L t.1).comp (P t.2.1))
+  have hpart (x : PiLp 2 (fun _ : Fin n => PiLp 2 E)) :
+      ∑ i, ‖P i x‖^2 = ‖x‖^2 := by
+    simp only [P, directSumReference, referenceLift, PiLp.norm_sq_eq_of_L2]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro r _
+    exact projection_partition (x r)
+  have ha (x : PiLp 2 (fun _ : Fin n => PiLp 2 E)) :
+      ∑ t : J × I, ‖L t.1 (P t.2 x)‖^2 ≤ (5*δ)*‖x‖^2 := by
+    exact reference_energy_le (fun t : J × I => (ell t.1).comp (blockProjection t.2))
+      (5*δ) hbase n x
+  have henergy (x : PiLp 2 (fun _ : Fin n => PiLp 2 E)) :
+      ∑ t, ‖B t x‖^2 ≤ (5*δ)*‖x‖^2 := by
+    change (∑ t : J × I × I, ‖P t.2.2 (L t.1 (P t.2.1 x))‖^2) ≤ _
+    simp only [Fintype.sum_prod_type]
+    simp_rw [hpart]
+    exact ha x
+  refine ⟨henergy, ?_⟩
+  intro A
+  apply kraus_adjoint_norm_le B (5*δ) (by positivity)
+  intro x hx
+  simpa only [hx, one_pow, mul_one] using henergy x
+
+end DirectSum
+
 end D5.S3.Quantum.Matrix.UniformVarianceCentering
