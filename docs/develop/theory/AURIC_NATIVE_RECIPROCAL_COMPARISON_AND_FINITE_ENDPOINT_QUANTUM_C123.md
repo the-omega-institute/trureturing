@@ -966,7 +966,7 @@ $$
 
 这不预设原 D，不使用 AC，也不预设复矩阵分类。
 
-**证明。** P/G 到 Euclidean Jordan 结构及 $L(E)\subset\operatorname{Lie}(G)$，只复用定理 3.1 中先于 V95 应用的部分。以下用到的 Jordan 内导子恒等式是成熟的 Jordan 代数事实，作为本证明的中间步骤使用：极化 Jordan 恒等式 $[L_x,L_{x^2}]=0$ 给
+**证明。** P/G 到 Euclidean Jordan 结构及 $L(E)\subset\operatorname{Lie}(G)$，只复用定理 3.1 中先于 V95 应用的 BW 部分。其成熟的稳定子构造在这里还直接给内导子恒等式：若 $T\in G_u=G\cap O(q)$，则 $TL_cT^{-1}$ 仍是原 Lie 代数中的自伴随元，在 $u$ 上取值 $Tc$，故由 $L$ 的唯一性等于 $L_{Tc}$。对 $\delta_{ab}=[L_a,L_b]$，它在原 Lie 代数内、斜伴随且消去 $u$，所以 $\exp(t\delta_{ab})\in G_u$。微分上述共轭式即得
 
 $$
 \delta_{ab}=[L_a,L_b]\in\operatorname{Der}(E,\circ),\qquad
@@ -974,7 +974,7 @@ $$
 \tag{19.3}
 $$
 
-等式右端为 $L_{a\circ(b\circ c)-b\circ(a\circ c)}$；它正是左端展开的三重乘法算子，因而也说明这里是同一个原 Jordan 乘法的内导子。$L_a$ 自伴随使这些 $\delta_{ab}$ 斜伴随。对 $z\in Z$，交换 $L_z$ 与 $L_a,L_b$ 得 $\delta_{ab}z=0$。故 $\mathfrak k$ 消去 $Z$，保持 $E_0$。由 (19.3)，$[\mathfrak k,L(E_0)]\subset L(E_0)$；再用 Jacobi 得
+后一等式作用于任意原响应就是导子 Leibniz 律，故前一归属也已证明；这是一般 Jordan 内导子性质在当前指定群内的 BW 实现，不另假设内导子来自更大的群。对 $z\in Z$，交换 $L_z$ 与 $L_a,L_b$ 得 $\delta_{ab}z=0$。故 $\mathfrak k$ 消去 $Z$，保持 $E_0$。由 (19.3)，$[\mathfrak k,L(E_0)]\subset L(E_0)$；再用 Jacobi 得
 
 $$
 [\delta,[L_a,L_b]]=[L_{\delta a},L_b]+[L_a,L_{\delta b}]
@@ -1004,7 +1004,17 @@ $$
 \tag{19.6}
 $$
 
-有限维性遂给 $[\mathfrak h,\mathfrak h]=\mathfrak h$。以上完全未用 D 或简单 Jordan 分类。这里先只称 $\theta$ 为伴随对合；后面取得矩阵表示后才使用“Cartan 对合”和“复型对称空间”的术语。
+有限维性遂给 $[\mathfrak h,\mathfrak h]=\mathfrak h$。另外 $L(Z)$ 与全部 $L(E)$ 交换，Jacobi 使它也与 $\mathfrak k$ 交换，所以
+
+$$
+\mathfrak l:=\operatorname{Lie}\langle L(E)\rangle
+=L(Z)\oplus\mathfrak h,\qquad
+Z(\mathfrak l)=L(Z),\qquad
+[\mathfrak l,\mathfrak l]=\mathfrak h.
+\tag{19.6a}
+$$
+
+因此 $\mathfrak h\cong\mathfrak l/Z(\mathfrak l)$ 的“约化”只发生在比较算子代数；其忠实作用仍在全部原 $E$ 上。以上完全未用 D 或简单 Jordan 分类。这里先只称 $\theta$ 为伴随对合；后面取得矩阵表示后才使用“Cartan 对合”和“复型对称空间”的术语。
 
 现在设 $J$ 满足 (18.2) 前两式。由反对称性，
 
