@@ -72,8 +72,7 @@ public sealed partial class WorktreeCommandTests
         var target = Path.Combine(repository.Path, "dormant");
         TestGit.Run(repository.Path, "worktree", "add", "-b", previous, target, "HEAD");
         File.WriteAllText(Path.Combine(target, "README.md"), "unmerged dormant source\n");
-        var timestamp = DateTimeOffset.UtcNow.AddHours(-5).ToUnixTimeSeconds()
-            .ToString(System.Globalization.CultureInfo.InvariantCulture);
+        const string timestamp = "1700000000";
         var committed = TestProcessRunner.Run("env",
             ["GIT_COMMITTER_DATE=@" + timestamp + " +0000", "git", "commit", "-am", "Dormant task"],
             target, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
