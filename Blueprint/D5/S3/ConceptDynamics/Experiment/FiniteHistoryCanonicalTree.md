@@ -2,104 +2,27 @@
 
 ## Abstract
 
-Pointwise finite termination on a finite candidate set yields one sufficiently unfolded passive tree that preserves every completed query/response history, terminal label, zero-error singleton consequence, and every rational weighted query-count sum.
+Pointwise finite termination on a finite candidate set yields an exact canonical passive tree preserving complete histories, labels, zero-error singleton fibres, and rational weighted query counts.
 
 **Theorem 1.1 (Exact finite-history policy/tree correspondence).**
 
-Let W : Type u, Q : Type, Y : Q → Type, and L : Type. A readout is
-read : (q : Q) → W → Y q; a deterministic history policy is
-policy : Hist Y → Sum Q L, where the left action queries and the right action
-stops with a label. For a finite C : Finset W, assume only
+Lean statement: `D5/S3/ConceptDynamics/Experiment/FiniteHistoryCanonicalTree.finite_history_canonical_tree`
 
-    ∀ x ∈ C, ∃ n t l, execute read policy n [] x = some (t,l).
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Experiment/FiniteHistoryCanonicalTree.finite_history_canonical_tree` (`✓ std3`). ∎
 
-Then there is N : Nat such that for every n ≥ N, with
-tree := boundedTree policy n []:
+*Source.* Repository-derived.
 
-    ∀ x, (runPassiveProtocol read tree x).length ≤ n
+*Commentary.*
 
-and every successful execution on x ∈ C has exactly the same complete
-dependent query/response list as the canonical tree run, the same length and
-terminal label, the terminal action is reached at that full history, and its
-candidate set is exactly the candidates executing that same complete history and
-label at the supplied fuel. For every trace/label assignment that is witnessed
-by a successful execution on every candidate and every μ : W → ℚ, the
-weighted length sum of the canonical runs equals the weighted length sum of
-those original traces. Finally, any decoder decode : L → W that is correct on
-all completed candidate runs makes each canonical candidate set a singleton and
-makes the canonical transcript injective on C.
+Let W, Q, Y and L be the independent state, query, dependent response and terminal-label types. A readout is read(q) : W -> Y(q), and a deterministic policy maps every dependent history Hist(Y) to either a query or a terminal label. Execution reads one fixed state throughout, records every query/response pair, and may repeat queries.
 
-The Lean declaration is exactly
-D5.S3.ConceptDynamics.Experiment.FiniteHistoryCanonicalTree.finite_history_canonical_tree.
-The source also retains the six public supporting declarations
-boundedTree_exact, boundedTree_length_le, execute_endpoint,
-execute_unique, terminal_candidates, and zero_error_singleton; each is
-consumed by the bridge or supplies a directly reusable operational fact.
+For a finite candidate set C, assume only pointwise termination: each x in C has some fuel n, complete history t and label l with execute read policy n [] x = some (t,l). Then a finite supremum of those witnesses supplies N. Every n >= N unfolds the existing boundedTree operation far enough to reproduce each successful run exactly, with the same full history, length, terminal action and label.
 
-*Proof.* Machine-checked in the private source listed below. The current assignment
-does not recompile or install the source in the canonical repository. ∎
+At the reproduced history, the existing candidates predicate is exactly the candidates executing the same complete history and label at the supplied fuel. For every rational weight function mu and every trace/label assignment witnessed by successful executions on all candidates, the canonical weighted sum of history lengths equals the original weighted sum. If every completed run is decoded correctly, every canonical candidate fibre is a singleton and canonical transcripts are injective on C.
 
-*Source.* Repository-derived from the existing passive-history and dependent-tree
-APIs. The exact private source and the inherited HECA receipts are recorded in
-the implementation accounting artifact.
-
-## Commentary
-
-Hist Y is the existing dependent list of query/response pairs. The policy
-never receives the hidden state; execute reads the same x at every query,
-including repeated queries, and records every occurrence. The PassiveProtocol
-and runPassiveProtocol carriers and executor are reused verbatim. The
-boundedTree operation is the existing operation owned by
-D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost; its arithmetic
-parameters are not part of this theorem.
-
-The common bound is derived from one finite fuel witness for each element of
-C and their finite supremum. No common depth is assumed as an input, and no
-finiteness is assumed for Q or for any response type Y q. Only actual
-candidate runs must terminate. Impossible histories and states outside C need
-not terminate. Because boundedTree_exact gives list equality, the result
-preserves every query, response, repetition, stop label, and query count; it
-does not merely preserve a partition.
-
-terminal_candidates transfers the exact complete-history fibre to the existing
-candidates definition. zero_error_singleton turns a universal correct
-decoder into a singleton fibre, and the main theorem then gives transcript
-injectivity. The rational weights are arbitrary, so this is a pathwise
-weighted-count equality rather than a positivity, probability, or
-normalization assumption.
-
-For the fixed-support circular-deletion model, specialize
-W = Ω(A), Q = A, Y i = Ω(A ∖ {i}), read i C = δᵢ(C), and L = W
-with identity decoding. The theorem then supplies the finite canonical-tree
-prerequisite for any pointwise terminating zero-error policy. It does not prove
-the insertion-gap count, two-deletion fibre classification, third-deletion
-separation, or the paper's 2 + 2/(n-1) optimum. The paper remains a separate
-paper-proof-only input.
-
-## Interfaces and dependencies
-
-- D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound
-  supplies PassiveProtocol and runPassiveProtocol.
-- D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization supplies
-  Hist, execute, execute_mono, execute_transfer, and candidates.
-- D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost supplies the
-  generic boundedTree operation.
-- The reverse tree-to-history direction already exists as
-  PassivePolicyNormalization.tree_execution; it is not duplicated here.
-
-## Boundaries and admission status
-
-This is an independent policy-semantic prerequisite. It carries no circular
-classification or numerical optimum, no bind-only application wrapper, no
-finite-branching claim for infinite response alphabets, and no new source API.
-The authenticated private HECA compilation is inherited evidence for the exact
-source identity only. Canonical installed-source compilation, Scribe compilation,
-Reg compilation/admission, and repository gate checks are NOT RUN in this
-content-preparation stage.
+The result assumes no common input horizon, no finiteness of Q or the response alphabets, and no termination outside C. It retains repetitions and full terminal labels. In the circular deletion specialization it is only the generic finite policy prerequisite; insertion gaps, pair fibres, third-deletion separation and the expected-cost optimum remain separate results.
 
 ## References
 
-- Truth anchor: D5/S3/ConceptDynamics/Experiment/FiniteHistoryCanonicalTree.finite_history_canonical_tree
-- Dependency: Passive Adaptive Transcript Upper Bound (PassiveAdaptiveTranscriptUpperBound.md)
-- Dependency: Passive Policy Normalization (PassivePolicyNormalization.md)
-- Consumed operation: D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.boundedTree
+- Truth anchor: `D5/S3/ConceptDynamics/Experiment/FiniteHistoryCanonicalTree.finite_history_canonical_tree`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost](../../Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.md)
