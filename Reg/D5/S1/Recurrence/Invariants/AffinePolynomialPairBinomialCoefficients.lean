@@ -62,11 +62,11 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S1.Recurrence.Invariants.AffinePolynomialPairBinomialCoefficients
     definition := none
-    coordinates := #[0, 2]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 2
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
