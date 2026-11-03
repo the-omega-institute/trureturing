@@ -1714,3 +1714,407 @@ $$
 本合同的量词不包含 FIB IX 同一历史的 JMMJM、原全网格目标或非零半程缺陷下的全效果固定返回 $H>0$ 问题，因而没有这些问题的结算结论。共同复结构、Born 形式、原唯一整体态 $\omega$、经验时间与原生全菜单的起源也不由 (20.5) 推出。这些适用边界沿用 19.2；(20.5) 增加的是原有限校准合同下的正分支近饱和控制。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 效果、准备与读回误差下的同一正分支
+
+### 定义 23.1（共同分支与未条件化联合读数）
+
+设 $H=\mathbb C^d$、$d\ge1$，$K$ 有限维，$J:H\to K$ 为指定等距。固定一族数学比较投影与权重
+$\mathscr D=\{(w_s,p_s)\}_{s\in S}$，满足
+
+$$
+w_s\ge0,\quad \sum_sw_s=1,\quad
+p_s^2=p_s=p_s^\dagger,\quad \operatorname{Tr}p_s=1,\quad
+\sum_sw_sp_s\otimes p_s=\frac{I+\mathsf S}{d(d+1)},
+\tag{23.1}
+$$
+
+其中 $\mathsf S$ 为 $H\otimes H$ 上的交换算子。比较投影的精确二阶矩是数学前件；实际准备可以不是这些投影。
+
+同一实际分支由一个正复线性映射 $T:M(H)\to M(K)$ 表示，其实际效果与名义效果满足
+
+$$
+E=T^\dagger(I_K),\qquad 0\le E,E_0\le I_H,\qquad
+\|E-E_0\|_{\mathrm{op}}\le\epsilon,\quad 0\le\epsilon\le1.
+\tag{23.2}
+$$
+
+每个标签 $s$ 对应实际态 $\rho_s$ 和实际二元效果 $F_s$：
+
+$$
+\rho_s\ge0,\quad\operatorname{Tr}\rho_s=1,\quad
+0\le F_s\le I_K,\qquad
+G_s=Jp_sJ^\dagger,\quad q_s=\operatorname{Tr}T(\rho_s).
+\tag{23.3}
+$$
+
+共同分支前件要求：在同一输入、输出和读回坐标中，标签 $s$、成功及读回接受的未条件化联合概率恰为
+
+$$
+\Pr(s,\mathrm{success},\mathrm{accept})
+=w_s\operatorname{Tr}[F_sT(\rho_s)].
+\tag{23.4}
+$$
+
+此处的 $T$ 对全部标签相同；若另有固定的记忆条件或历史索引，所有公式须在同一个条件或索引上成立。后续对任意输入调用该分支时，也使用这个 $T$。仅在校准时存在一个拟合映射，不是此共同分支前件。
+
+给定非负数 $a,b,\nu$ 与实读数 $\widehat R$，假设同时成立
+
+$$
+\begin{aligned}
+\frac12\sum_sw_s\|\rho_s-p_s\|_1&\le a,\\
+\sum_sw_sq_s\|F_s-G_s\|_{\mathrm{op}}&\le b,\\
+\left|\widehat R-\sum_sw_s\operatorname{Tr}[F_sT(\rho_s)]\right|&\le\nu.
+\end{aligned}
+\tag{23.5}
+$$
+
+读回误差按实际未条件化成功概率 $q_s$ 加权。若只给出逐标签上界
+$q_s\le\bar q_s$、$\|F_s-G_s\|_{\mathrm{op}}\le b_s$，则 $b=\sum_sw_s\bar q_sb_s$ 是允许的预算；不需要将任何读数先除以 $q_s$。这些不等式若带随机性，以下结论只在它们共同成立的同一事件上适用，不从分别的边缘置信水平断言联合事件。
+
+记
+
+$$
+\begin{aligned}
+L_A(X)&=J\sqrt A\,X\sqrt A\,J^\dagger,\qquad 0\le A\le I_H,\\
+Q(A)&=\sum_sw_s[\operatorname{Tr}(p_s\sqrt A)]^2
+=\frac{\operatorname{Tr}A+(\operatorname{Tr}\sqrt A)^2}{d(d+1)},\\
+R(T)&=\sum_sw_s\operatorname{Tr}[G_sT(p_s)],\\
+\omega_d(\epsilon)&=\min\left\{1,\frac{\epsilon+2d\sqrt\epsilon}{d+1}\right\},\\
+u&=Q(E_0)-\widehat R+a+b+\nu+\omega_d(\epsilon).
+\end{aligned}
+\tag{23.6}
+$$
+
+$R(T)$ 是同一个映射在数学比较设计上的评价，不将 $p_s$ 的精确实际供应加入 (23.3)。全文的 diamond 范数沿用 (20.4)，不带 $1/2$。
+
+### 定理 23.2（共同误差预算与名义平方根分支）
+
+在定义 23.1 的全部前件下，
+
+$$
+0\le Q(E)-R(T)\le u.
+\tag{23.7}
+$$
+
+特别地，$u<0$ 与这些前件不相容。置 $D_*=d(d+1)u$、$k=\dim K$，并沿用 (20.5) 的函数 $B$，则
+
+$$
+\boxed{
+\|T-L_{E_0}\|_\diamond
+\le B(E,d,k,D_*)+2\sqrt\epsilon.
+}
+\tag{23.8}
+$$
+
+一个只需名义读数预算与维数的上界是
+
+$$
+\boxed{
+\|T-L_{E_0}\|_\diamond\le\beta_0,
+\qquad
+\beta_0=\min\{d+1,\ 2\sqrt{dD_*}+2\sqrt\epsilon\}.
+}
+\tag{23.9}
+$$
+
+(23.8) 中的秩是实际 $\operatorname{rank}E$。不假设 $E$ 与 $E_0$ 有共同支撑，也不以 $\operatorname{rank}E_0$ 代替它。
+
+进一步，设 $\tau,\tau_0$ 为普通输入态，$\|\tau-\tau_0\|_1\le\gamma$，令
+
+$$
+p=\operatorname{Tr}(E\tau),\qquad
+q=\operatorname{Tr}(E_0\tau_0),\qquad M_0=\|E_0\|_{\mathrm{op}}.
+$$
+
+若 $\beta$ 是 (23.8) 或 (23.9) 给出的任一上界，置
+$U=\beta+M_0\gamma$、$V=\epsilon+M_0\gamma/2$。则
+
+$$
+\|T(\tau)-L_{E_0}(\tau_0)\|_1\le U,
+\qquad |p-q|\le\min\{U,V\}.
+\tag{23.10}
+$$
+
+当且仅当两边成功率都为正时，所述两个归一化输出同时有定义；在 $p,q>0$ 下，
+
+$$
+\boxed{
+\left\|\frac{T(\tau)}p-\frac{L_{E_0}(\tau_0)}q\right\|_1
+\le\min\left\{2,\frac{U+\min\{U,V\}}{\max\{p,q\}}\right\}.
+}
+\tag{23.11}
+$$
+
+同一输入时可取 $\gamma=0$，得到 $\min\{2,(\beta+\epsilon)/\max\{p,q\}\}$。若仅知名义成功率 $q>V$，则 $p\ge q-V>0$，且 (23.11) 右侧还可上界为 $\min\{2,(U+V)/q\}$。
+
+**证明。** 先比较实际联合读数与 $R(T)$。由于 $T$ 正且 $T^\dagger(I_K)=E\le I_H$，对每个标签有
+$0\le T^\dagger(G_s)\le E\le I_H$。两个等迹态之差 $X=\rho_s-p_s$ 自伴且迹为零，故
+
+$$
+\left|\operatorname{Tr}[T^\dagger(G_s)X]\right|
+\le\tfrac12\|X\|_1.
+$$
+
+这是效果与迹距离的成熟对偶估计，亦是 [Watrous，第 3 章定理 3.4](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf) 的二元态判别特例；它只对输入上的效果使用正性。同时，$T(\rho_s)\ge0$，所以
+
+$$
+\left|\operatorname{Tr}[(F_s-G_s)T(\rho_s)]\right|
+\le q_s\|F_s-G_s\|_{\mathrm{op}}.
+$$
+
+在恒等式
+
+$$
+\operatorname{Tr}[F_sT(\rho_s)]-\operatorname{Tr}[G_sT(p_s)]
+=\operatorname{Tr}[(F_s-G_s)T(\rho_s)]
+ +\operatorname{Tr}[G_sT(\rho_s-p_s)]
+$$
+
+中取加权和，并用 (23.5)，得到
+
+$$
+|R(T)-\widehat R|\le a+b+\nu.
+\tag{23.12}
+$$
+
+以下效果扰动只用成熟的正矩阵平方根单调性和 Schatten 乘子估计；为固定包括奇异效果的适用范围，将所需步骤写在本证明内。对正矩阵 $A$，谱演算给收敛的积分
+
+$$
+\sqrt A=\frac1\pi\int_0^\infty t^{-1/2}A(A+tI)^{-1}\,dt.
+$$
+
+对每个 $t>0$，$A(A+tI)^{-1}=I-t(A+tI)^{-1}$ 关于 $A\ge0$ 单调，因此平方根单调。若 $0\le A,B$、$\|A-B\|_{\mathrm{op}}\le\epsilon$，则
+
+$$
+\sqrt A\le\sqrt{B+\epsilon I}\le\sqrt B+\sqrt\epsilon I.
+$$
+
+后一不等式是 $B$ 的逐本征值标量不等式。交换 $A,B$ 后得到
+
+$$
+\|\sqrt A-\sqrt B\|_{\mathrm{op}}\le\sqrt\epsilon.
+\tag{23.13}
+$$
+
+此处未交换两个不对易的矩阵，亦未使用正谱底。取 $A=E,B=E_0$，有
+
+$$
+\begin{aligned}
+|\operatorname{Tr}E-\operatorname{Tr}E_0|&\le d\epsilon,\\
+|\operatorname{Tr}\sqrt E-\operatorname{Tr}\sqrt{E_0}|&\le d\sqrt\epsilon,\\
+\operatorname{Tr}\sqrt E+\operatorname{Tr}\sqrt{E_0}&\le2d.
+\end{aligned}
+$$
+
+代入 $Q$ 的公式，并用 $0\le Q(E),Q(E_0)\le1$，得
+
+$$
+|Q(E)-Q(E_0)|\le\omega_d(\epsilon).
+\tag{23.14}
+$$
+
+由同一正 $T$、实际效果 $E$、指定 $J$ 及 (23.1)，(16.8) 与 (20.8)–(20.17) 的代数推导适用于这里的比较评价 $R(T)$，给出
+
+$$
+\delta=Q(E)-R(T)\ge0,\qquad
+\|T-L_E\|_\diamond\le B(E,d,k,d(d+1)\delta).
+\tag{23.15}
+$$
+
+这些公式只要求比较投影的精确二阶矩；用它们评价同一 $T$ 并不声称实际准备已等于比较投影。原实际精确校准合同与这里的漂移合同通过 (23.12) 区分。由 (23.12)–(23.14)，有 $\delta\le u$，证得 (23.7)。$B$ 的各项对最后一个非负变量非减，故可用 $D_*$ 代入。
+
+令 $A=\sqrt E$、$A_0=\sqrt{E_0}$。对每个有限参考及任意矩阵输入，展开
+
+$$
+AXA-A_0XA_0=(A-A_0)XA+A_0X(A-A_0).
+$$
+
+两边张量恒等映射后，Schatten 乘子估计和等距 $J$ 给
+
+$$
+\|L_E-L_{E_0}\|_\diamond
+\le(\|A\|_{\mathrm{op}}+\|A_0\|_{\mathrm{op}})
+       \|A-A_0\|_{\mathrm{op}}
+\le2\sqrt\epsilon.
+\tag{23.16}
+$$
+
+与 (23.15) 取三角不等式即得 (23.8)。(20.12) 又给
+$\|T\|_\diamond\le\operatorname{Tr}E\le d$，而
+$\|L_{E_0}\|_\diamond=M_0\le1$；(20.5) 中的输入维数项至多 $2\sqrt{dD_*}$。两种上界共同给出 (23.9)。成熟的平均平方根最优性仍按 [Barnum，第 IV、VIII 节](https://arxiv.org/html/quant-ph/0205155v1) 的操作算子前件引用；(23.12) 与正分支 (23.15) 的组合不被归给该 CP 最优性结论。
+
+最后，对不同输入先插入 $L_{E_0}(\tau)$。其输入迹范数放大至多 $M_0$，故未归一化差至多 $U$。另一方面，
+
+$$
+p-q=\operatorname{Tr}[(E-E_0)\tau]
+       +\operatorname{Tr}[E_0(\tau-\tau_0)],
+$$
+
+第一项绝对值至多 $\epsilon$；第二项因输入差迹为零、$0\le E_0\le M_0I$，绝对值至多 $M_0\gamma/2$。取迹还给 $|p-q|\le U$，证得 (23.10)。写 $X=T(\tau)\ge0$、$Y=L_{E_0}(\tau_0)\ge0$。当 $p,q>0$ 时，
+
+$$
+\left\|\frac Xp-\frac Yq\right\|_1
+\le\frac{\|X-Y\|_1+|p-q|}{p},
+\qquad
+\left\|\frac Xp-\frac Yq\right\|_1
+\le\frac{\|X-Y\|_1+|p-q|}{q}.
+$$
+
+取较小上界，并用两个态之间的距离至多二，即得 (23.11)。全证明只要求原分支正性；没有将 $T$ 的任意参考放大解释为正输出态。$\square$
+
+## 24. 名义支撑的泄漏预算与共同证书的边界
+
+### 定理 24.1（支撑变化下的名义秩控制）
+
+保留定义 23.1 的全部前件与 $u,D_*$。令
+
+$$
+\begin{aligned}
+P_0&=\operatorname{supp}E_0,&r_0&=\operatorname{rank}E_0,&P_0^\perp&=I_H-P_0,\\
+E_c&=P_0EP_0,&T_c(X)&=T(P_0XP_0),\\
+h&=\operatorname{Tr}(P_0^\perp E),&t_c&=\operatorname{Tr}(P_0E).
+\end{aligned}
+\tag{24.1}
+$$
+
+则有
+
+$$
+\begin{aligned}
+0\le h&\le(d-r_0)\epsilon,\qquad 0\le t_c\le r_0,\\
+\|T-T_c\|_\diamond
+&\le g:=2\sqrt{t_ch}+h
+\le g_0:=2\sqrt{r_0(d-r_0)\epsilon}+(d-r_0)\epsilon.
+\end{aligned}
+\tag{24.2}
+$$
+
+对 $D_c^*=d(d+1)(u+g_0)$，进一步有
+
+$$
+\|T-L_{E_0}\|_\diamond
+\le g_0+B(E_c,d,k,D_c^*)+2\sqrt\epsilon
+\le\beta_P,
+\tag{24.3}
+$$
+
+其中完全显式的名义秩上界为
+
+$$
+\beta_P=g_0+(\sqrt{2r_0}+3)\sqrt{d(d+1)(u+g_0)}+2\sqrt\epsilon.
+\tag{24.4}
+$$
+
+因此 $\min\{\beta_0,\beta_P\}$ 可代入 (23.10)–(23.11)。若 $r_0=0$，还可直接取 $\beta=d\epsilon$。
+
+**证明。** 由 $P_0^\perp E_0=0$、$\|E-E_0\|_{\mathrm{op}}\le\epsilon$，有
+$0\le P_0^\perp EP_0^\perp\le\epsilon P_0^\perp$，于是得到 $h$ 的上界；$E\le I_H$ 给 $t_c\le r_0$。
+
+为控制输入支撑的交叉项，置 $Z=P_0-P_0^\perp$ 和
+
+$$
+\mathcal R(X)=P_0XP_0^\perp+P_0^\perp XP_0
+             =\frac{X-ZXZ}{2}.
+$$
+
+酉共轭的 diamond 范数为一，故 $\|\mathcal R\|_\diamond\le1$。对每个 $b'>0$ 令
+
+$$
+W_{b'}=b'P_0+(b')^{-1}P_0^\perp,
+\qquad \Psi_{b'}(X)=T(W_{b'}XW_{b'}).
+$$
+
+$\Psi_{b'}$ 是正映射；它不必迹不增。(20.12) 对任意正映射适用，因而
+
+$$
+\|\Psi_{b'}\|_\diamond
+\le\operatorname{Tr}\Psi_{b'}(I_H)
+=(b')^2t_c+(b')^{-2}h.
+$$
+
+由于 $W_{b'}\mathcal R(X)W_{b'}=\mathcal R(X)$，有
+$T\mathcal R=\Psi_{b'}\mathcal R$。所以
+
+$$
+\|T\mathcal R\|_\diamond
+\le\inf_{b'>0}\{(b')^2t_c+(b')^{-2}h\}
+=2\sqrt{t_ch}.
+\tag{24.5}
+$$
+
+任一系数为零时由极限取下确界。映射 $X\mapsto T(P_0^\perp XP_0^\perp)$ 仍正，其效果迹为 $h$，由 (20.12) 得 diamond 范数至多 $h$。在恒等分解
+
+$$
+T-T_c=T\mathcal R+T(P_0^\perp(\cdot)P_0^\perp)
+$$
+
+中合并两项，证得 (24.2)。这里的输入缩放只用于同一正映射的数学范数估计，没有增设 $T$ 的二正或完全正前件。
+
+$T_c$ 的实际效果是 $E_c$，满足 $0\le E_c\le I_H$、$\operatorname{rank}E_c\le r_0$，且
+
+$$
+\|E_c-E_0\|_{\mathrm{op}}
+=\|P_0(E-E_0)P_0\|_{\mathrm{op}}\le\epsilon.
+$$
+
+对每个比较投影，$\|T(p_s)-T_c(p_s)\|_1\le g_0$，而 $\|G_s\|_{\mathrm{op}}\le1$，故
+$|R(T)-R(T_c)|\le g_0$。沿用 (23.12)、(23.14)，得到
+
+$$
+\begin{aligned}
+0\le Q(E_c)-R(T_c)
+&\le Q(E_0)-\widehat R+a+b+\nu+\omega_d(\epsilon)+g_0\\
+&=u+g_0.
+\end{aligned}
+\tag{24.6}
+$$
+
+将 (20.8)–(20.17) 应用于数学压缩 $T_c$ 及同一比较设计，再以 (23.16) 比较 $L_{E_c}$ 与 $L_{E_0}$，给出
+
+$$
+\|T-L_{E_0}\|_\diamond
+\le\|T-T_c\|_\diamond+\|T_c-L_{E_c}\|_\diamond
+    +\|L_{E_c}-L_{E_0}\|_\diamond,
+$$
+
+即 (24.3)。在 $B$ 中取支撑秩项，使用 $\|E_c\|_{\mathrm{op}}\le1$ 与 $\operatorname{rank}E_c\le r_0$，即得 (24.4)。若 $E_0=0$，则 $E\le\epsilon I_H$，直接由 (20.12) 得 $\|T-L_{E_0}\|_\diamond=\|T\|_\diamond\le d\epsilon$。
+
+任意小效果误差允许实际秩改变：例如 $E_0=\operatorname{diag}(1,0)$、$E=\operatorname{diag}(1,\epsilon)$，$0<\epsilon\le1$，满足 (23.2)，但秩分别为一和二。因此这里使用名义秩必须先经 (24.2) 与 (24.6) 支付输入泄漏及比较得分误差；不能在 (23.8) 中直接换秩。输入交叉块的缩放沿用 (20.16) 的正映射方法；新增的联系是把名义输入支撑误差同时接到得分预算和目标支撑秩界。$\square$
+
+### 命题 24.2（分别精确的设计不能替代共同标签与同一过程）
+
+在 $H=K=\mathbb C^2$、$J=I$、$E=E_0=I$ 下，即使实际准备与实际读回各自组成精确射影二阶设计，未条件化得分也可等于 $Q(I)=1$ 而同一实际分支距 $\operatorname{id}$ 的 diamond 距离为二。
+
+**证明。** 取 Pauli 三轴的六个本征态投影 $p_{\alpha,\pm}=(I\pm\sigma_\alpha)/2$，各权重 $1/6$，其中 $\alpha=x,y,z$。由
+
+$$
+\sum_{\alpha,\pm}\frac16p_{\alpha,\pm}\otimes p_{\alpha,\pm}
+=\frac14I\otimes I+\frac1{12}\sum_\alpha\sigma_\alpha\otimes\sigma_\alpha
+=\frac{I+\mathsf S}{6}
+$$
+
+知它们是 (23.1) 的二阶设计。令 $Z=\sigma_z$，实际共同分支、准备和读回分别为
+
+$$
+T(X)=ZXZ,\qquad \rho_s=p_s,\qquad F_s=Zp_sZ.
+$$
+
+酉共轭保留二阶矩，故读回也自成精确设计；它在 $x,y$ 轴互换两个标签，在 $z$ 轴保留标签。每个实际联合读回项为
+$\operatorname{Tr}[Zp_sZ\,T(p_s)]=1$，所以得分为一。可是 $T$ 将 $p_{x,+}$ 送到正交的 $p_{x,-}$，从而 $\|T-\operatorname{id}\|_\diamond\ge2$；两个通道之差的上界二使其恰为二。
+
+在定义 23.1 的共同标签比较中，$a=0$、$q_s=1$，而四个 $x,y$ 轴读回的 $\|F_s-G_s\|_{\mathrm{op}}$ 都为一，另两个为零，所以可取且必须有 $b\ge2/3$。同一 $T$ 的比较评价为 $R(T)=1/3$，实际缺口为 $2/3$。两端分别为精确设计并不将这个配对误差变为零。
+
+同一过程前件也不能由校准读数推出。仍用这些比较准备和读回，若校准调用为 $T_{\rm cal}=\operatorname{id}$、后续调用为 $T_{\rm use}=\operatorname{Ad}_Z$，校准时全部误差预算可为零，两个映射的效果也同为 $I$，后续误差仍为二。这个配对不满足 (23.4) 与后续调用共用一个 $T$ 的前件，故不是定理 23.2 的反例。$\square$
+
+### 定义 24.3（普通分支、完整仪器与取得量词）
+
+(23.1)–(23.5) 的共同误差合同固定一个正分支、同一标签配对、同一坐标与同一记忆条件。实际读回误差预算 $b$、实际效果误差 $\epsilon$、准备误差 $a$ 和读数误差 $\nu$ 是共同前件，不由 $\widehat R$ 的近饱和自行供应。将此合同赋给一族历史或分支，须对要求的每个索引成立；单一分支的存在不改成全族的一致控制。
+
+实际 $T$ 若只正，(23.8) 与 (24.3) 中的参考仍是数学范数的量词；(23.11) 只对普通正输入态作条件化。实际含参考的联合输出若要作为态，须另给相应正延伸；实际完整仪器若以有限标签 CP 分支 $\{T_j\}$ 表示，须对每个真实分支给 CP 及共同完整记录空间，并要求 $\sum_jT_j$ 保迹。指定单个成功分支的合同不确定其余失败分支、后续条件更新或完整历史。全菜单边界仍用定义 19.2；近饱和不推出精确 CP 的障碍仍用命题 21.1。
+
+成功条件态使用 (23.10) 中各自的 $p,q$。在一族输入上要有一致趋零的条件态误差，须另有足以控制 (23.11) 中比值的成功概率或相对误差合同；绝对误差趋零本身不供应它，稀有成功的原反例见第 6 节。名义支撑秩只能按定理 24.1 使用，不能把趋于零的泄漏当成支撑已经相同。
+
+共同准备、效果与读回的取得量词是 (23.3)–(23.5) 的同一实际实现，不是分别存在的准备、效果和读回之积。比较二阶设计的存在、不等式的成立及实际对象的供应是不同前件。上述合同不含 FIB 原三时全 $64$ 坐标取得性，也不把行列式零闭包变为实际零点；它不补充 [C122 定理 5.8](AURIC_INTERNAL_BINARY_RECIPROCITY_AND_EXPLICIT_RECONNECTION_C122.md#thm-c122-implemented-certificate) 对实际确定性 CPTP 恢复及完整逆门误差的独立要求。
+
+## 追加锚（本行以下为增补区）

@@ -1,11 +1,3 @@
-/- GID: D5/S3/FiniteGroups/BajnokBeattySquareDisplacementEnvelope
-   generality: I
-   mirror-B: D5/B/S3/FiniteGroups/BajnokBeattySquareDisplacementEnvelope
-   mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: []
-   utility: none
-   digest: A faithful infinite signed lattice-count family supplies the source-owner envelope audit attempt. -/
-
 /- Faithful source-owner Reg attempt. No declared_validated claim.
 The original telescope, complete integer spans, actual W readouts, infinite q
 domain and both band endpoints are retained. State is the full signed triple;
