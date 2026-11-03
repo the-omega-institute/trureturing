@@ -59,8 +59,9 @@ private def hamiltonian : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
 
 private lemma factors_hermitian (i : Fin 3) :
     (alice i).IsHermitian ∧ (bob i).IsHermitian := by
+  rw [alice.eq_1, bob.eq_1]
   fin_cases i <;> constructor <;> apply IsHermitian.ext <;>
-    intro j k <;> fin_cases j <;> fin_cases k <;> norm_num [alice, bob]
+    intro j k <;> fin_cases j <;> fin_cases k <;> norm_num
 
 private lemma spectral_rankOne {d : ℕ} (c : Matrix (Fin d) (Fin d) ℂ)
     (hc : c.IsHermitian) :
@@ -351,9 +352,11 @@ private lemma pairs_useless (i j : Fin 3) (hij : i ≠ j) : IsUseless obs {i, j}
 
 private lemma hamiltonian_hermitian : hamiltonian.IsHermitian := by
   have ho (i : Fin 3) : (obs i).IsHermitian := by
+    rw [obs.eq_1]
     change (alice i ⊗ₖ bob i).conjTranspose = alice i ⊗ₖ bob i
     rw [conjTranspose_kronecker, (factors_hermitian i).1.eq,
       (factors_hermitian i).2.eq]
+  rw [hamiltonian.eq_1]
   exact ((ho 0).add (ho 1)).add (ho 2)
 
 private lemma ground_state :
