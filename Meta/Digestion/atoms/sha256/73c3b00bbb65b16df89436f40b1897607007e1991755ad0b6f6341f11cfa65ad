@@ -1,0 +1,50 @@
+**Interpretation 4.5 (reused principles and the remaining bridge).**
+The homomorphism/injective-count distinction and finite inversion in
+Theorem 4.2 use the mature methods of Lovász–Szegedy,
+[§§2.1, 2.4](https://arxiv.org/abs/math/0408173v2), and
+Levin–Chandrasekaran,
+[Proposition 2.6 and §4.1](https://arxiv.org/html/2512.23149v3).
+The latter's iid edge-sampling construction is used only with the
+explicit typed, index-preserving adapter of §3; its general limit
+results are not premises of these finite computations. Exact equality
+patterns require distinct block vertices within each type, not induced
+nonedges. The signed-law calculation and C/U/V counts are consequences
+for the actual published pair, rather than a new general sampling
+framework or a novelty claim for inversion or likelihood testing.
+
+The distinction between an action optimal for one decision problem and
+statistical sufficiency is classical; see Blackwell,
+[Equivalent Comparisons of Experiments](https://doi.org/10.1214/aoms/1177729032).
+On a common positive support, constancy of $L$ on a deterministic
+summary fiber makes the conditional distribution on that fiber the
+same for both sources: dividing $p_1(h)=L p_0(h)$ by the two fiber
+masses proves it. Conversely a common conditional distribution forces
+that ratio to be constant. The likelihood ratio consequently preserves
+all source posteriors and source decision uses there, including product
+likelihoods for conditionally independent blocks. It need not preserve
+old handles or response laws for a different continuation task.
+
+The existing repository declarations
+[`total_variation_channel_eq_iff_no_sign_mixing`](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean),
+[`bayesRisk_le_of_blackwellDominates`](../../../D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.lean),
+and [`causal_state_factorization`](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean)
+state the corresponding channel-sign criterion, decision-risk
+monotonicity and unequal-future-law obstruction under their explicit
+finite-kernel, Markov-kernel or factorization hypotheses. The finite
+experiment and positive-mass atoms above supply the concrete sign and
+fiber obstructions; the general declarations alone do not supply the
+source-specific counts (UJB.7605)–(UJB.7608).
+
+The witnessed relation still has the explicit map
+$O_6(S_i)\xrightarrow{(x^2,x^3)}A\times T$ of Proposition 3.2, with
+unit witness multiplicity on each actual edge. The two endpoint charts,
+the paired history and its sample-index order encode different
+relations of the acquired data; parity preserves just the stated
+terminal testing value. A joint-law-, permission- and cost-preserving
+implementation of the supplied uniform sampler, same-source fork,
+stable equality and retained-handle contract using the original native
+$\alpha/\beta$ preparation and acquisition operations remains unproved.
+The conditional four-sample result therefore leaves that bridge and
+the broader recursive recovery of space, time, boundary and memory
+unresolved.
+

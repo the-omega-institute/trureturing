@@ -1,0 +1,40 @@
+### 定理 3.1（正则切向递归与精确曲率递推）
+
+在定义的 $C^\infty$ 与 $v_0>0$ 条件下，每个有限层都光滑且正则。令 $q_k=\sqrt{1+\kappa_k^2}$，则
+
+$$
+\boxed{
+ v_{k+1}=v_kq_k\ge v_k>0,\qquad
+ \kappa_{k+1}=\frac{\dot\kappa_k}{v_k(1+\kappa_k^2)^{3/2}}.}
+$$
+
+相邻框架满足
+
+$$
+ n_{k+2}=\frac{-n_k+\kappa_kN_k}{q_k},\qquad
+ N_{k+1}=\frac{\kappa_kn_k+N_k}{q_k}.
+$$
+
+**证明。**若第 $k$ 层已光滑且正则，由 Darboux 关系
+
+$$
+|\dot n_{k+1}|^2=v_k^2(1+\kappa_k^2)>0,
+$$
+
+故下一层速度非零，归一操作保持光滑，归纳即知所有有限层存在，并得到第一条速度式与框架递推。为核对曲率，暂记本层为 $(n,T,N,v,\kappa)$，令 $q=\sqrt{1+\kappa^2}$、$T_1=(-n+\kappa N)/q$、$N_1=(\kappa n+N)/q$。逐项代入 Darboux 关系，
+
+$$
+\dot T_1=-vqT+\frac{\dot\kappa}{q^2}N_1.
+$$
+
+下一层 Darboux 形式为 $\dot T_1=v_1(-T+\kappa_1N_1)$，比较系数即得 $v_1=vq$ 与 $\kappa_1=\dot\kappa/(vq^3)$。
+
+若 $ds_k=v_kdt$，还可写成
+
+$$
+\boxed{ds_{k+1}=\sqrt{1+\kappa_k^2}\,ds_k,\qquad
+\kappa_{k+1}ds_{k+1}=d(\arctan\kappa_k).}
+$$
+
+所以，下一层的带向曲率记录本层弯曲角怎样继续变化。无限前向结论使用 $C^\infty$；若只供应有限阶光滑性，只能在相应可微阶数内递归。
+

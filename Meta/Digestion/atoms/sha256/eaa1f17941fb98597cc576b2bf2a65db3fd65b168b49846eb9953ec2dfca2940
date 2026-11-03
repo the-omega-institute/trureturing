@@ -1,0 +1,71 @@
+### 定理 4.1（有限重叠关系的完整正扩张）
+
+<a id="thm-c92-extension"></a>
+
+对任意有限非空 patch 族与 Hermitian 输入 $R=(R_C)_C$，以下条件等价：
+
+1. 唯一候选 C92 成立；
+
+2. $\ell_R$ 是式 [(3.1)](#eq-c92-operator-system) 上定义良好的归一正泛函；
+
+3. 存在某个全态 $\sigma\in\mathcal D(\mathcal H)$，使
+    $A(\sigma)=R$，即全部指定局部读出同时来自它。
+
+原始局部输入与所求全态均不要求满秩；patch 可重叠、分叉或形成闭环。
+
+**证明。**
+第一、二项的等价已经证明。
+若第三项成立，则
+
+$$
+b_R(h)=\operatorname{Tr}(\sigma W(h))\le\lambda_{\max}(W(h)),
+$$
+
+所以 C92 必要。
+
+证明充分性时不调用数值算法或严格可行性。
+若 $R\notin\mathcal K$，紧性保证存在到 $R$ 的 Hilbert–Schmidt 最近点
+$k_*\in\mathcal K$。令 $z=R-k_*\ne0$。
+对任意 $k\in\mathcal K$ 和 $0\le t\le1$，凸性给
+$k_*+t(k-k_*)\in\mathcal K$。最优性于是给
+
+$$
+\left\lVert z-t(k-k_*)\right\rVert_2^2\ge\left\lVert z\right\rVert_2^2.
+$$
+
+展开、除以 $t>0$ 后令 $t\downarrow0$，得到
+
+<a id="eq-c92-projection-normal"></a>
+
+$$
+\langle z,k-k_*\rangle\le0\quad(k\in\mathcal K).
+\tag{4.3}
+$$
+
+因此式 [(4.2)](#eq-c92-support-function) 给出
+$\lambda_{\max}(W(z))=\langle z,k_*\rangle$，但
+
+$$
+b_R(z)-\lambda_{\max}(W(z))
+ =\langle z,R-k_*\rangle=\left\lVert z\right\rVert_2^2>0.
+$$
+
+这构造了一个违反 C92 的有限见证，矛盾。
+故 $R\in\mathcal K$，也就是所需全态存在。
+
+这是有限量子边际问题的凸见证表述。Hall 的兼容集、兼容见证定理及正算符判据
+给出相同数学基础 [1](#ref-hall2007)；这里将其用于任意有限 patch 族，
+并给出最近点的自足分离证明，不主张这一标准凸对偶的优先权。
+本轮新增的项目接口，是把局部归一、零表达关系、闭环矛盾与完整扩张放在同一个条件中。
+
+兼容全态的集合
+
+$$
+\mathcal E_R=\{\sigma\in\mathcal D(\mathcal H):A(\sigma)=R\}
+$$
+
+可以包含多份全态。若 $\mathcal S=\operatorname{Herm}(\mathcal H)$，全部矩阵读口已被指定，
+迹配对保证扩张唯一；若 $\mathcal S$ 较小，唯一性须另外检查，
+不能仅由空间维数或 C92 本身宣布。
+这也保留了 v91 的边界：一般正扩张存在不要求全态具有 Markov 结构 [13](#ref-v91)。
+

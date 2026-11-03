@@ -1,0 +1,30 @@
+**Proposition 5.6 (what the inverse preserves and what it cannot recover).**
+On the two law supports, the decoded fields recover the complete
+indexed typed equality record $H_N$ and its pairing. On all of
+$\mathcal C_N$ they recover the ordered term and the AA17 views of
+Proposition 5.3, but neither arbitrary serial generation history nor
+fresh edge samples follow from that inverse. A full serial word is
+recoverable under the additional public recipe consisting of the
+fixed preparation in Proposition 5.3 followed by complete slot
+insertions in increasing $b$, with the displayed two-event word for
+each bit.
+
+Proof. On the supports, injectivity makes equality of complete fields
+equivalent to equality of the corresponding actual endpoints, and
+their public positions retain the common sample index. For an
+unsupported assignment the same field partitions still exist, but a
+named group realization is not implied. The inverse does not disclose
+unused map values, named group elements, their multiplication or $i$.
+With the additional public recipe, the decoded $z$ specifies every
+promotion/split and every literal event address in that recipe, so
+reconstructs that exact word. Without it, perform two disjoint slot
+insertions in opposite orders after the same fixed preparation and
+complete all other insertions identically. Both executions are legal,
+have the same endpoint, views and grade, but have different serial
+words. This is the AA17.2 distinction between a labelled causal order
+and a chosen linear extension, not a failure of the current-term
+inverse. Finally every further Read is deterministic on the same
+prepared endpoint. Repeating a Read repeats its reply; reading another
+slot exposes another part of the same finite preparation. Neither
+operation supplies a fresh independent draw. $\square$
+

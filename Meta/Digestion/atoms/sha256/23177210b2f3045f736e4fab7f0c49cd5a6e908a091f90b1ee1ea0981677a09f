@@ -1,0 +1,44 @@
+### 命题 15.2（继承重构的有限证明链）
+
+上表各项均在所列前件内成立。$C_{89}$ 新增最后一行的有限认证接口，不独立承担此前各行的前件。
+
+**证明。**共同核 $K$ 在形式组合上定义
+
+$$
+\left\langle\sum_i c_i[x_i],\sum_jd_j[y_j]\right\rangle
+=\sum_{ij}\overline c_i d_jK(x_i,y_j).
+$$
+
+Gram 正性与 Cauchy–Schwarz 使零范数方向正交于全部方向，商空间有正定内积；有限秩给有限维载体。保持全部核的标签变换保持每个零线性关系，所以良定义为线性等距；输出张成使其为酉。微分 $UU^\dagger=I$ 即得 $H=i\hbar\dot U U^\dagger=H^\dagger$ 和 Schrödinger 方程。
+
+读出复用 V67、V79 已证的标定和二次表示。对 $x\ne0$，
+
+$$
+p_e(x)=\frac{\langle x,E_ex\rangle}{\langle x,x\rangle},\qquad
+\rho=\sum_jq_j|\psi_j\rangle\langle\psi_j|\Longrightarrow p_e(\rho)=\operatorname{tr}(\rho E_e).
+$$
+
+这里 $q_j\ge0$、$\sum_jq_j=1$，使用实际经典混合的可加读数合同；同一 $\rho$ 的不同准备分解给同一式，但全部密度矩阵的数学表示不等于全部准备或效果都可执行。
+
+产品核使 $[x,y]\mapsto[x]\otimes[y]$ 保持全部 Gram；两侧声明张成时为酉同构。完整记录等距写成 $V\psi=\sum_eM_e\psi\otimes|e\rangle$，给 $\sum_eM_e^\dagger M_e=I$，偏迹给
+
+$$
+\Lambda(\rho)=\sum_eM_e\rho M_e^\dagger.
+$$
+
+若结果 $e$ 已实际记录且 $p_e=\operatorname{tr}(M_e\rho M_e^\dagger)>0$，条件态为
+
+$$
+\rho_e=\frac{M_e\rho M_e^\dagger}{p_e}.
+$$
+
+粗结果若包含多个未区分记录分量，分子须对相应 Kraus 分量求和；理想投影仪器取 $M_e=P_e$ 得 Lüders 更新。仅知道效果 $E_e=M_e^\dagger M_e$ 的概率，还不能唯一决定实际仪器及更新。
+
+最后取 Hilbert–Schmidt 向量 $u=\delta A\sqrt\rho$、$v=\delta B\sqrt\rho$，二阶 Gram 正性给
+
+$$
+\operatorname{Var}_\rho(A)\operatorname{Var}_\rho(B)\ge\left|\operatorname{tr}(\rho\,\delta A\,\delta B)\right|^2.
+$$
+
+右端实部是对称协方差，虚部是交换子均值除以 $2i$。这些证明与 $C_{89}$ 的乘法域证明接合，形成完整依赖链。
+
