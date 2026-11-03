@@ -598,11 +598,16 @@ four members of $\mathfrak P(E)$; no coordinate, hidden map or unacquired
 label is used in that enumeration.
 
 Choose one chart supplied by the literal identification in UJB Theorem 15.2.
-If $(\phi',\delta')$ is another admissible chart, the frame and full-closure
-hypotheses of Cara--Rottey--Van de Voorde, arXiv:1207.4726v3,
-Corollaries 3.6--3.7, apply to the order-three point classes and their four
-marked line directions. Their rigidity conclusion says that the two
-coordinatizations differ by an affine change
+If $(\phi',\delta')$ is another admissible chart, the hypotheses used for
+Cara--Rottey--Van de Voorde, arXiv:1207.4726v3, Corollaries 3.6--3.7, are
+present one by one: the field order is $q=3$; the four direction classes form
+the required frame; the generated line closure is full in the declared
+point-class domain; Property $(*)$ holds for the induced intersections; and
+the point classes are exactly the equal-neighbourhood classes above. The
+frame and closure terminology is the one of De Winter--Rottey--Van de Voorde,
+arXiv:1407.3953v1. Thus those corollaries apply to the order-three point
+classes and their four marked line directions. Their rigidity conclusion says
+that the two coordinatizations differ by an affine change
 $\phi'=A\phi+b$ (with the corresponding permutation of the marked direction
 classes), where $A$ is invertible over $F$. This is precisely the supplied
 $G_0$ instance; the corollaries are used as a rigidity and correspondence
