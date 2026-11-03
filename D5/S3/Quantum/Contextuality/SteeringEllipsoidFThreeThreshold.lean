@@ -53,10 +53,14 @@ def claim : Prop :=
 
 private lemma swap_trace_product (ρ : TwoQubit) (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     trace (partySwap ρ * (A ⊗ₖ B)) = trace (ρ * (B ⊗ₖ A)) := by
-  simp only [partySwap, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
-    Matrix.submatrix_apply, kronecker_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
-    Prod.swap_prod_mk]
-  ring
+  have hk : (B ⊗ₖ A).submatrix Prod.swap Prod.swap = A ⊗ₖ B := by
+    simpa only [conjTranspose_kronecker, conjTranspose_conjTranspose] using
+      (conjTranspose_kronecker' Aᴴ Bᴴ).symm
+  change trace (ρ.submatrix Prod.swap Prod.swap * (A ⊗ₖ B)) = _
+  rw [← hk]
+  exact (congrArg trace (submatrix_mul ρ (B ⊗ₖ A) Prod.swap Prod.swap Prod.swap
+    (Equiv.prodComm (Fin 2) (Fin 2)).bijective).symm).trans
+      (trace_flip (ρ * (B ⊗ₖ A)))
 
 private lemma swap_readouts (ρ : TwoQubit) :
     blochA (partySwap ρ) = blochB ρ ∧
