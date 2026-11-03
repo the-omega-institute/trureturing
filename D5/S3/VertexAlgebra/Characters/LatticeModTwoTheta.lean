@@ -374,9 +374,6 @@ private def fibreEquiv (D : LatticeData) (a : ModTwoCharge D) :
       have hi := hn i
       omega)
 
-private lemma fibreEquiv_apply (D : LatticeData) (a : ModTwoCharge D) (n : Charge D) :
-    (fibreEquiv D a n).val = fibreCharge D a n := rfl
-
 private def chargeTerm (D : LatticeData) (τ : ℂ) (p : Charge D) : ℂ :=
   Complex.exp ((Real.pi * Complex.I * τ / 2) * (bilinear D p p : ℂ))
 
