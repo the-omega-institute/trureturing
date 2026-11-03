@@ -14,7 +14,6 @@ import D5.S3.VertexAlgebra.Lattice.LatticeRelativeMassShell
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 
 open scoped BigOperators TensorProduct
 
@@ -447,8 +446,8 @@ private theorem mem_fixedMomentum_iff_chargeProject (p : Charge D) (x : State D)
     apply (LatticeRelativeMassShell.mem_fixedMomentum_iff D p x).mpr
     intro i hi
     have hc := congrArg (fun y : State D => LatticeRelativeMassShell.coeff D y i) hx
-    rw [chargeProject_original_coeff, if_neg hi] at hc
-    exact hc.symm
+    rw [chargeProject_original_coeff] at hc
+    simpa [hi] using hc.symm
 
 /-- The original zero-count projector preserves the literal relative shell. -/
 private theorem P0_mem_shell
@@ -469,7 +468,7 @@ private theorem P0_mem_shell
     exact mul_comm _ _
   have hn : number (actualBasis F B) totalCount * totalL0 D H =
       totalL0 D H * number (actualBasis F B) totalCount := by
-    simpa only [M_eq_number F B] using
+    simpa only [M_eq_number F B, LatticeQuartetEnergyPreservation.originalEnergy] using
       (LatticeQuartetEnergyPreservation.originalEnergy_M F H hHG hGH).symm
   have hep : P0 F B * totalL0 D H = totalL0 D H * P0 F B :=
     commutes_function (actualBasis F B) totalCount (totalL0 D H) hn
@@ -504,10 +503,11 @@ def energyTarget (D : LatticeData) (t : ℕ) (p : Charge D) :
   zero_mem' := by intro nu hnu; simp
   add_mem' := by
     intro f g hf hg nu hnu
-    simp only [coeff_add, hf nu hnu, hg nu hnu, add_zero]
+    simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply,
+      hf nu hnu, hg nu hnu, add_zero]
   smul_mem' := by
     intro z f hf nu hnu
-    simp [coeff_smul, hf nu hnu]
+    simp [hf nu hnu]
 
 variable (F : NullFrame D) {t : ℕ}
 variable (B : Module.Basis (Fin t) ℂ F.K)
@@ -543,7 +543,7 @@ theorem groundMap_coefficient (p : Charge D) (f : Polynomial t) (nu : Exponent t
     · subst mu; simp
     · have hi : groundIndex (D := D) p mu ≠ groundIndex p nu :=
         fun h => hm (groundIndex_injective p h)
-      simp [Finsupp.single_apply, hi, hm, Ne.symm hm]
+      simp [hi, hm]
   exact LinearMap.congr_fun he f
 
 theorem groundMap_injective (p : Charge D) : Function.Injective (groundMap F B p) := by
@@ -622,13 +622,14 @@ theorem totalL0_groundMap_monomial
     (Finsupp.single p ((F.coordinateEquiv B).symm Q) ⊗ₜ[ℂ]
       D5.S3.Quantum.Fermionic.BcGhostVirasoro.L 0 (ket {1})) = _
   rw [hL, GRE.L_zero_ket, ghost_ground_energy, TensorProduct.tmul_smul]
+  simp only [TensorProduct.smul_tmul', Int.cast_neg, Int.cast_one]
   change ((weight nu : ℂ) + (bilinear D p p : ℂ) / 2) •
       sector F B p Q (ket {1}) + (-1 : ℂ) • sector F B p Q (ket {1}) =
     (((weight nu : ℤ) + chargeEnergy D p - 1 : ℤ) : ℂ) • sector F B p Q (ket {1})
   rw [← add_smul]
   congr 1
   rw [← chargeEnergy_complex_half D p]
-  push_cast <;> ring
+  push_cast; ring
 
 /-- Exact all-polynomial intertwining, before imposing an energy condition. -/
 theorem totalL0_groundMap
@@ -709,7 +710,7 @@ variable (p : Charge D)
 
 /-- Literal inclusion into the SAME original relativeMassShell. -/
 def inclusion : target F B p →ₗ[ℂ] relativeMassShell D H p where
-  toFun u := ⟨u, ((target_eq_shell_inf_ker F B H hHG hGH p) ▸ u.property).1⟩
+  toFun u := ⟨u, ((target_eq_shell_inf_ker F B H hHG hGH p).le u.property).1⟩
   map_add' u v := Subtype.ext rfl
   map_smul' z u := Subtype.ext rfl
 
@@ -717,8 +718,8 @@ def inclusion : target F B p →ₗ[ℂ] relativeMassShell D H p where
 def shellP0 : Module.End ℂ (relativeMassShell D H p) where
   toFun x := ⟨P0 F B x,
     P0_mem_shell F B H hHG hGH p x x.property⟩
-  map_add' x y := Subtype.ext (map_add _ _ _)
-  map_smul' z x := Subtype.ext (map_smul _ _ _)
+  map_add' _x _y := Subtype.ext (map_add _ _ _)
+  map_smul' _z _x := Subtype.ext (map_smul _ _ _)
 
 def shellD0 : Module.End ℂ (relativeMassShell D H p) where
   toFun x := ⟨d0 F p x,
@@ -729,8 +730,8 @@ def shellD0 : Module.End ℂ (relativeMassShell D H p) where
           F H hHG hGH p p x
           ((mem_fixedMomentum_iff_chargeProject p x).mp hx.1.1) hx.1.2 hx.2
       exact ⟨⟨(mem_fixedMomentum_iff_chargeProject p _).mpr hc, hb⟩, he⟩⟩
-  map_add' x y := Subtype.ext (map_add _ _ _)
-  map_smul' z x := Subtype.ext (map_smul _ _ _)
+  map_add' _x _y := Subtype.ext (map_add _ _ _)
+  map_smul' _z _x := Subtype.ext (map_smul _ _ _)
 
 def shellH : Module.End ℂ (relativeMassShell D H p) where
   toFun x := ⟨h F B p x,
@@ -741,8 +742,8 @@ def shellH : Module.End ℂ (relativeMassShell D H p) where
           F B H hHG hGH p p x
           ((mem_fixedMomentum_iff_chargeProject p x).mp hx.1.1) hx.1.2 hx.2
       exact ⟨⟨(mem_fixedMomentum_iff_chargeProject p _).mpr hc, hb⟩, he⟩⟩
-  map_add' x y := Subtype.ext (map_add _ _ _)
-  map_smul' z x := Subtype.ext (map_smul _ _ _)
+  map_add' _x _y := Subtype.ext (map_add _ _ _)
+  map_smul' _z _x := Subtype.ext (map_smul _ _ _)
 
 /-- P0 with its actual codomain restricted by the proved target identification. -/
 def projection : relativeMassShell D H p →ₗ[ℂ] target F B p where
@@ -750,8 +751,8 @@ def projection : relativeMassShell D H p →ₗ[ℂ] target F B p where
     rw [target_eq_shell_inf_ker F B H hHG hGH p]
     refine ⟨(shellP0 F B H hHG hGH p x).property, ?_⟩
     exact LinearMap.congr_fun (spectral_projection_inverse F B).2.2.2.1 x⟩
-  map_add' x y := Subtype.ext (map_add _ _ _)
-  map_smul' z x := Subtype.ext (map_smul _ _ _)
+  map_add' _x _y := Subtype.ext (map_add _ _ _)
+  map_smul' _z _x := Subtype.ext (map_smul _ _ _)
 
 theorem projection_inclusion :
     (projection F B H hHG hGH p).comp (inclusion F B H hHG hGH p) = LinearMap.id := by
@@ -768,7 +769,7 @@ theorem inclusion_projection :
   rfl
 
 theorem shell_d0_square :
-    shellD0 F B H hHG hGH p * shellD0 F B H hHG hGH p = 0 := by
+    shellD0 F H hHG hGH p * shellD0 F H hHG hGH p = 0 := by
   apply LinearMap.ext
   intro x
   apply Subtype.ext
@@ -776,7 +777,7 @@ theorem shell_d0_square :
   exact LinearMap.congr_fun (d0_square F p) x
 
 theorem shell_d0_inclusion :
-    (shellD0 F B H hHG hGH p).comp (inclusion F B H hHG hGH p) = 0 := by
+    (shellD0 F H hHG hGH p).comp (inclusion F B H hHG hGH p) = 0 := by
   apply LinearMap.ext
   intro u
   apply Subtype.ext
@@ -785,7 +786,7 @@ theorem shell_d0_inclusion :
   exact LinearMap.congr_fun (d0_mul_P0 F B p) u
 
 theorem projection_shell_d0 :
-    (projection F B H hHG hGH p).comp (shellD0 F B H hHG hGH p) = 0 := by
+    (projection F B H hHG hGH p).comp (shellD0 F H hHG hGH p) = 0 := by
   apply LinearMap.ext
   intro x
   apply Subtype.ext
@@ -794,8 +795,8 @@ theorem projection_shell_d0 :
 
 /-- This is the ONLY endpoint needing nonzero pPlus. -/
 theorem shell_contraction (hp : F.pPlus p ≠ 0) :
-    shellD0 F B H hHG hGH p * shellH F B H hHG hGH p +
-      shellH F B H hHG hGH p * shellD0 F B H hHG hGH p =
+    shellD0 F H hHG hGH p * shellH F B H hHG hGH p +
+      shellH F B H hHG hGH p * shellD0 F H hHG hGH p =
     1 - (inclusion F B H hHG hGH p).comp (projection F B H hHG hGH p) := by
   apply LinearMap.ext
   intro x
