@@ -58,6 +58,10 @@ $$\neg (\forall (n: \mathbb{N}), (\forall (\theta: \mathbb{R}), (((0: \mathbb{R}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/DetectorSensorStrictAveragingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhan-gupta-hillery-2024-detector-sensor-strict-averaging-refutation` (refuted) by `D5/S3/Quantum/Measurements/DetectorSensorStrictAveragingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhan-gupta-hillery-2024-detector-sensor-strict-averaging-refutation","declaration_gid":"D5/S3/Quantum/Measurements/DetectorSensorStrictAveragingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Zhan, H. Gupta, M. Hillery (2024). *Optimizing Initial State of Detector Sensors in Quantum Sensor Networks*. DOI: [10.1145/3655028](https://doi.org/10.1145/3655028). URL: <https://arxiv.org/abs/2306.17401v6>.

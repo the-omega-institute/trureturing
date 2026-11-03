@@ -107,7 +107,10 @@ internal sealed class DetectorSensorStrictAveragingRefutationDocument : IScribeD
                         + "differ, and their errors agree. The conjecture would give an average "
                         + "error strictly smaller than the error of φ₂, contradicting the "
                         + "opposite weak inequality. This refutes the quantified strict-averaging statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhan-gupta-hillery-2024-detector-sensor-strict-averaging-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         BlockSequence prose, AssessedProvenance provenance) =>
