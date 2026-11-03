@@ -1683,7 +1683,7 @@ private lemma literal_continuum_identity (h L D : ℝ) (hh : 0 ≤ h) (hL : h �
       rw [uIcc_of_le (by linarith : h ≤ D)] at ht
       dsimp [J]
       rw [hs t (by rw [abs_of_nonneg (by linarith [ht.1])]; exact ht.1), mul_zero]
-    have hadj := intervalIntegral.integral_add_adjacent_intervals
+    have hadj := intervalIntegral.integral_add_adjacent_intervals (μ := volume)
       (hJ.intervalIntegrable 0 h) (hJ.intervalIntegrable h D)
     linarith only [hadj, hz]
   have hplus : (∫ t in (0 : ℝ)..D, Real.exp (t / 2) * F (t + L)) = 0 := by
@@ -1707,9 +1707,9 @@ private lemma literal_continuum_identity (h L D : ℝ) (hh : 0 ≤ h) (hL : h �
     dsimp [J]
     rw [hs t (by rw [abs_of_nonneg (by linarith [ht.1])]; exact ht.1), mul_zero]
   have hwindow : (∫ t in (-L)..(D - L), J t) = ∫ t in (-h)..h, J t := by
-    have ha := intervalIntegral.integral_add_adjacent_intervals
+    have ha := intervalIntegral.integral_add_adjacent_intervals (μ := volume)
       (hJ.intervalIntegrable (-L) (-h)) (hJ.intervalIntegrable (-h) (D - L))
-    have hb := intervalIntegral.integral_add_adjacent_intervals
+    have hb := intervalIntegral.integral_add_adjacent_intervals (μ := volume)
       (hJ.intervalIntegrable (-h) h) (hJ.intervalIntegrable h (D - L))
     linarith only [ha, hb, hleft, hright]
   have hminus : (∫ t in (0 : ℝ)..D, Real.exp (t / 2) * F (t - L)) =
@@ -1738,31 +1738,44 @@ private lemma literal_continuum_identity (h L D : ℝ) (hh : 0 ≤ h) (hL : h �
     rw [← intervalIntegral.integral_add_adjacent_intervals
       (hJ.intervalIntegrable (-h) 0) (hJ.intervalIntegrable 0 h), hreflect]
     rw [← intervalIntegral.integral_add
-      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2) * F t))).intervalIntegrable
-      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2) * F t))).intervalIntegrable]
+      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2) * F t))).intervalIntegrable 0 h
+      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (t / 2) * F t))).intervalIntegrable 0 h]
     apply intervalIntegral.integral_congr
     intro t _
     dsimp [J]
     ring
   have hsplit : (∫ t in (0 : ℝ)..D,
       Real.exp (t / 2) * (2 * F t - F (t + L) - F (t - L))) =
-      2 * ∫ t in (0 : ℝ)..D, J t -
+      2 * (∫ t in (0 : ℝ)..D, J t) -
       (∫ t in (0 : ℝ)..D, Real.exp (t / 2) * F (t + L)) -
-      ∫ t in (0 : ℝ)..D, Real.exp (t / 2) * F (t - L) := by
+      (∫ t in (0 : ℝ)..D, Real.exp (t / 2) * F (t - L)) := by
     have heq (t : ℝ) : Real.exp (t / 2) * (2 * F t - F (t + L) - F (t - L)) =
         2 * J t - Real.exp (t / 2) * F (t + L) - Real.exp (t / 2) * F (t - L) := by
       dsimp [J]; ring
     simp_rw [heq]
-    rw [intervalIntegral.integral_sub, intervalIntegral.integral_sub,
-      intervalIntegral.integral_const_mul] <;> fun_prop
-  rw [hsplit, hcut, hplus, hminus, heven, sub_zero]
-  rw [← intervalIntegral.integral_const_mul, ← intervalIntegral.integral_const_mul,
-    ← intervalIntegral.integral_sub] <;> try fun_prop
-  congr 1
-  apply intervalIntegral.integral_congr
-  intro t _
-  dsimp [J]
+    have hp : Continuous (fun t : ℝ => Real.exp (t / 2) * F (t + L)) := by fun_prop
+    have hm : Continuous (fun t : ℝ => Real.exp (t / 2) * F (t - L)) := by fun_prop
+    rw [intervalIntegral.integral_sub (((hJ.const_mul 2).sub hp).intervalIntegrable 0 D)
+      (hm.intervalIntegrable 0 D),
+      intervalIntegral.integral_sub ((hJ.const_mul 2).intervalIntegrable 0 D)
+        (hp.intervalIntegrable 0 D), intervalIntegral.integral_const_mul]
+  have hbracket : (∫ t in (0 : ℝ)..h,
+      (Real.exp (t / 2) - Real.exp (L / 2) *
+        (Real.exp (t / 2) + Real.exp (-t / 2)) / 2) * F t) =
+      (∫ t in (0 : ℝ)..h, J t) - Real.exp (L / 2) / 2 *
+        (∫ t in (0 : ℝ)..h, (Real.exp (t / 2) + Real.exp (-t / 2)) * F t) := by
+    have heq (t : ℝ) : (Real.exp (t / 2) - Real.exp (L / 2) *
+        (Real.exp (t / 2) + Real.exp (-t / 2)) / 2) * F t =
+        J t - Real.exp (L / 2) / 2 * ((Real.exp (t / 2) + Real.exp (-t / 2)) * F t) := by
+      dsimp [J]; ring
+    simp_rw [heq]
+    rw [intervalIntegral.integral_sub (hJ.intervalIntegrable 0 h)
+      ((by fun_prop : Continuous (fun t : ℝ => Real.exp (L / 2) / 2 *
+        ((Real.exp (t / 2) + Real.exp (-t / 2)) * F t)))).intervalIntegrable 0 h),
+      intervalIntegral.integral_const_mul]
+  rw [hsplit, hcut, hplus, hminus, heven, hbracket]
   ring
+
 
 private lemma literal_continuum_bound (h L D B : ℝ) (hh : 0 ≤ h) (hL : h ≤ L)
     (hD : L + h ≤ D) (hB : 0 ≤ B) (F : ℝ → ℝ) (hc : Continuous F)
@@ -1848,6 +1861,156 @@ private lemma literal_ratio_constant (q : ℕ) (hq : 1 ≤ q) (N Eg Wg Vv E : �
   refine ⟨hE0, (div_le_iff₀ hE0).mpr ?_⟩
   rw [hel] at hvE
   simpa only [neg_div, one_mul] using hvE
+
+
+private lemma literal_V_upper (q : ℕ) (hq : 1 ≤ q) (D : ℝ)
+    (hD : Real.log 2 + 1 / 16 ≤ D) :
+    V D (literalNodes q) (literalCoeffs q) ≤
+      -(literalN q * W D (literalNuNodes (literalStep q))
+        (fun i => (literalNuCoeffs (literalStep q) i : ℂ))) / 2 := by
+  let F : ℝ → ℝ := S D (literalEtaNodes q) (fun i => (literalEtaCoeffs q i : ℂ))
+  let B := W D (literalEtaNodes q) (fun i => (literalEtaCoeffs q i : ℂ))
+  have hL : 1 / 16 ≤ Real.log 2 := by linarith [Real.log_two_gt_d9]
+  have hD0 : 0 ≤ D := by linarith
+  have hDh : 1 / 16 ≤ D := by linarith
+  have hx := literal_support_D q hq D hD
+  have hxe : ∀ i, literalEtaNodes q i ∈ Icc (0 : ℝ) D := fun i =>
+    ⟨(literal_eta_support q hq i).1, (literal_eta_support q hq i).2.trans hDh⟩
+  have hFcont : Continuous F := by
+    have heq : F = fun t => -literalPair (literalEtaNodes q) (literalEtaCoeffs q)
+        (fun s => max s 0 + Real.exp (-|s| / 2)) t :=
+      funext (literal_S_pair D hD0 _ _ hxe (literal_eta_mass q))
+    rw [heq]
+    dsimp [literalPair]
+    fun_prop
+  have hFeven (t : ℝ) : F (-t) = F t := S_even D hD0 _ _ (literal_eta_mass q) t
+  have hFtail (t : ℝ) (ht : 1 / 16 ≤ |t|) : F t = 0 :=
+    literal_S_tail D (1 / 16) hD0 _ _ hxe (literal_eta_support q hq)
+      (literal_eta_mass q) (literal_eta_exp q) t ht
+  have hFbound (t : ℝ) : |F t| ≤ B := S_abs_le_W D hD0 _ _ hxe (literal_eta_mass q) t
+  have hB : 0 ≤ B := W_nonneg D hD0 _ _ hxe (literal_eta_mass q)
+  have htwo (t : ℝ) : S D (literalNodes q) (literalCoeffs q) t =
+      2 * F t - F (t + Real.log 2) - F (t - Real.log 2) := literal_two_S q hq D hD t
+  have htail (t : ℝ) (ht : Real.log 2 + 1 / 16 ≤ t) :
+      S D (literalNodes q) (literalCoeffs q) t = 0 := by
+    rw [htwo, hFtail t (by rw [abs_of_nonneg (by linarith)]; linarith),
+      hFtail (t + Real.log 2) (by rw [abs_of_nonneg (by linarith)]; linarith),
+      hFtail (t - Real.log 2) (by rw [abs_of_nonneg (by linarith)]; linarith)]
+    ring
+  have hSL : S D (literalNodes q) (literalCoeffs q) (Real.log 2) = -B := by
+    rw [htwo, hFtail (Real.log 2) (by rwa [abs_of_nonneg (by linarith)]),
+      hFtail (Real.log 2 + Real.log 2) (by rw [abs_of_nonneg (by linarith)]; linarith), sub_self]
+    change 2 * 0 - 0 - B = -B
+    ring
+  have hZ : Z D (literalNodes q) (literalCoeffs q) = 0 := by
+    rw [Z, htail D hD, mul_zero]
+  have hExpD0 : Real.exp (Real.log 2 + 1 / 16) < 3 := by
+    have he := Real.exp_bound_div_one_sub_of_interval
+      (by norm_num : (0 : ℝ) ≤ 1 / 16) (by norm_num : (1 / 16 : ℝ) < 1)
+    rw [Real.exp_add, Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+    norm_num at he
+    linarith
+  have hlog3 : Real.log 2 + 1 / 16 < Real.log 3 := by
+    apply Real.exp_lt_exp.mp
+    rwa [Real.exp_log (by norm_num : (0 : ℝ) < 3)]
+  have h2 : 2 ∈ primes D := by
+    apply Finset.mem_Icc.mpr
+    exact ⟨le_rfl, (log_cut_iff 2 (by norm_num) D).mp (by linarith)⟩
+  have hsqrt : 2 / Real.sqrt (2 : ℝ) = Real.sqrt 2 := by
+    apply (div_eq_iff (ne_of_gt (Real.sqrt_pos.mpr (by norm_num)))).mpr
+    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have harith : 2 * (∑ n ∈ primes D, ArithmeticFunction.vonMangoldt n / Real.sqrt n *
+      S D (literalNodes q) (literalCoeffs q) (Real.log n)) =
+      -Real.sqrt 2 * Real.log 2 * B := by
+    rw [Finset.sum_eq_single 2]
+    · rw [ArithmeticFunction.vonMangoldt_apply_prime Nat.prime_two, hSL]
+      norm_num only [Nat.cast_ofNat]
+      calc
+        _ = -(2 / Real.sqrt (2 : ℝ)) * Real.log 2 * B := by ring
+        _ = _ := by rw [hsqrt]
+    · intro n hn hn2
+      have hn3 : 3 ≤ n := by have := (Finset.mem_Icc.mp hn).1; omega
+      have hlogn : Real.log 3 ≤ Real.log (n : ℝ) :=
+        Real.log_le_log (by norm_num) (by exact_mod_cast hn3)
+      rw [htail _ (by linarith), mul_zero]
+    · exact fun hn => (hn h2).elim
+  have hC : |2 * ∫ t in Icc (0 : ℝ) D,
+      Real.exp (t / 2) * S D (literalNodes q) (literalCoeffs q) t| ≤
+      4 * (1 / 16) * Real.exp ((Real.log 2 + 1 / 16) / 2) * B := by
+    have h := literal_continuum_bound (1 / 16) (Real.log 2) D B (by norm_num)
+      hL hD hB F hFcont hFeven hFtail hFbound
+    rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hD0]
+    simpa only [htwo] using h
+  have hV : V D (literalNodes q) (literalCoeffs q) =
+      -Real.sqrt 2 * Real.log 2 * B -
+        2 * ∫ t in Icc (0 : ℝ) D,
+          Real.exp (t / 2) * S D (literalNodes q) (literalCoeffs q) t := by
+    rw [V, harith, hZ, mul_zero, sub_zero]
+  have hv : V D (literalNodes q) (literalCoeffs q) ≤ -B / 2 := by
+    have hmargin := mul_nonneg (sub_nonneg.mpr literal_numeric_margin.le) hB
+    rw [hV]
+    have hc := (abs_le.mp hC).1
+    nlinarith only [hmargin, hc]
+  simpa only [B, literal_eta_W q hq D hDh] using hv
+
+/-- The explicit six-q atom family retains the inclusive literal Mangoldt V,
+vanishes through exactly the requested polynomial order and at the positive
+exponential moment, and has a strictly negative energy-normalized value. -/
+theorem literal_V_energy_moment_obstruction (q : ℕ) (hq : 1 ≤ q) (D : ℝ)
+    (hD : Real.log 2 + 1 / 16 ≤ D) :
+    ∃ (x : Fin q × Fin 3 × Bool → ℝ) (a : Fin q × Fin 3 × Bool → ℂ),
+      (∀ i, x i ∈ Icc (0 : ℝ) (1 / 16) ∪ Icc (Real.log 2) (Real.log 2 + 1 / 16)) ∧
+      (∀ i, x i ∈ Icc (0 : ℝ) D) ∧
+      (∀ m : ℕ, m ≤ q → ∑ i, a i * (x i : ℂ) ^ m = 0) ∧
+      (∑ i, a i * (Real.exp (x i / 2) : ℂ) = 0) ∧
+      (∑ i, a i * (x i : ℂ) ^ (q + 1)) ≠ 0 ∧
+      (∑ i, a i * (x i : ℂ) * (Real.exp (x i / 2) : ℂ)) ≠ 0 ∧
+      0 < energy x a ∧ V D x a / energy x a ≤ -1 / (65536 * (q : ℝ) ^ 2) := by
+  have hl := literal_step_bounds q hq
+  have hL : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hr : 0 < 1 - Real.exp (-literalStep q / 4) := by
+    exact sub_pos.mpr (Real.exp_lt_one_iff.mpr (by linarith [hl.1]))
+  have hR : (-1 : ℝ) ^ (q + 1) * ((q + 1).factorial : ℝ) * Real.log 2 *
+      literalStep q ^ q * (1 - Real.exp (-literalStep q / 4)) / 2 ≠ 0 := by
+    exact div_ne_zero (mul_ne_zero (mul_ne_zero (mul_ne_zero
+      (mul_ne_zero (pow_ne_zero _ (by norm_num))
+        (Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _))) hL.ne')
+      (pow_ne_zero _ hl.1.ne')) hr.ne') (by norm_num)
+  have hM : (∑ i, literalCoeffs q i * (literalNodes q i : ℂ) ^ (q + 1)) ≠ 0 := by
+    rw [literal_moment_residual q hq]
+    exact_mod_cast hR
+  have hLexp : 1 < Real.exp (Real.log 2 / 2) := Real.one_lt_exp_iff.mpr (by linarith)
+  have hlexp : 1 < Real.exp (literalStep q / 2) := Real.one_lt_exp_iff.mpr (by linarith [hl.1])
+  have hqexp : 1 < Real.exp (literalStep q / 4) := Real.one_lt_exp_iff.mpr (by linarith [hl.1])
+  have hRexp : (literalStep q / 2) * (1 - Real.exp (Real.log 2 / 2)) *
+      (1 - Real.exp (literalStep q / 2)) ^ (q - 1) *
+      (Real.exp (literalStep q / 4) - 1) ≠ 0 := by
+    exact mul_ne_zero (mul_ne_zero (mul_ne_zero (ne_of_gt (by linarith : 0 < literalStep q / 2))
+      (ne_of_lt (by linarith : 1 - Real.exp (Real.log 2 / 2) < 0)))
+      (pow_ne_zero _ (ne_of_lt (by linarith : 1 - Real.exp (literalStep q / 2) < 0))))
+      (ne_of_gt (by linarith : 0 < Real.exp (literalStep q / 4) - 1))
+  have hMexp : (∑ i, literalCoeffs q i * (literalNodes q i : ℂ) *
+      (Real.exp (literalNodes q i / 2) : ℂ)) ≠ 0 := by
+    rw [literal_exp_residual q hq]
+    exact_mod_cast hRexp
+  let Eg := literalStep q * (1 + Real.exp (-literalStep q / 4) ^ 2) / 2
+  have hEg : 0 < Eg := by dsimp [Eg]; positivity
+  have hEg' : Eg ≤ literalStep q := by
+    have he : Real.exp (-literalStep q / 4) ≤ 1 := Real.exp_le_one_iff.mpr (by linarith [hl.1])
+    have hp := Real.exp_pos (-literalStep q / 4)
+    have hsq : Real.exp (-literalStep q / 4) ^ 2 ≤ 1 := by nlinarith
+    have ht := mul_nonneg hl.1.le (sub_nonneg.mpr hsq)
+    dsimp [Eg]
+    nlinarith only [ht]
+  have hD0 : 0 ≤ D := by linarith
+  have hlD : literalStep q ≤ D := by linarith [hl.2.1]
+  have hout := literal_ratio_constant q hq (literalN q) Eg
+    (W D (literalNuNodes (literalStep q)) (fun i => (literalNuCoeffs (literalStep q) i : ℂ)))
+    (V D (literalNodes q) (literalCoeffs q)) (energy (literalNodes q) (literalCoeffs q))
+    (literal_N_pos q hq) hEg hEg' (literalNu_W_lower D _ hD0 hl.1.le hlD)
+    (literal_V_upper q hq D hD) (by simpa only [Eg, mul_assoc] using literal_energy_double q hq)
+  exact ⟨literalNodes q, literalCoeffs q, literal_support q hq, literal_support_D q hq D hD,
+    literal_moments q hq, literal_exp_null q, hM, hMexp, hout.1, hout.2⟩
 
 /-- Concrete S/Gamma resolvent control. The lower and shift bounds come
 from the actual finite causal squares and their translated polarization;
