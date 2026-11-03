@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Ptaszynski's sharp lower bound for unidirectional unicyclic S times K. -/
+   digest: Ptaszyński's sharp lower bound for unidirectional unicyclic S times K. -/
 
 import D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound
 
@@ -85,12 +85,12 @@ private lemma lowerBound_lt_three_eighty : lowerBound < -(3 / 80 : ℝ) := by
   linarith
 
 private lemma f_strict_scale (t z : ℝ) (ht : 0 < t) (htz : t < z)
-    (hz : 0 < z) (hneg : z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6) < 0) :
+    (hneg : z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6) < 0) :
     t ^ 4 * (z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6)) > f z := by
   have ht4 : t ^ 4 < z ^ 4 := pow_lt_pow_left₀ htz (le_of_lt ht) (by norm_num)
   have hmul := mul_lt_mul_of_neg_right ht4 hneg
   dsimp [f]
-  convert hmul using 1 <;> ring
+  convert hmul using 1; ring
 
 private lemma normalized_product {n : ℕ} (k : Fin n → ℝ) :
     skewness k * kurtosis k =
@@ -101,13 +101,12 @@ private lemma normalized_product {n : ℕ} (k : Fin n → ℝ) :
     p q r normalizedRates
   ring
 
-private lemma product_nonnegative (p q r : ℝ) (hp : 0 < p)
+private lemma product_nonnegative (p q r : ℝ)
     (hprod : 0 ≤ (3 * p ^ 2 - 2 * q) * (15 * p ^ 2 - 20 * q + 6 * r / p)) :
     lowerBound < (3 * p ^ 2 - 2 * q) * (15 * p ^ 2 - 20 * q + 6 * r / p) := by
   exact lt_of_lt_of_le lowerBound_negative hprod
 
-private lemma product_skew_negative (p q r : ℝ) (hp : 0 < p) (hq : 0 ≤ q)
-    (hqr : q ^ 2 ≤ p * r) (hr : r < p ^ 2)
+private lemma product_skew_negative (p q r : ℝ) (hp : 0 < p) (hr : r < p ^ 2)
     (hskew : 3 * p ^ 2 - 2 * q < 0)
     (hkurt : 0 < 15 * p ^ 2 - 20 * q + 6 * r / p)
     (hskew_lower : -(1 / 16 : ℝ) ≤ 3 * p ^ 2 - 2 * q) :
@@ -133,7 +132,7 @@ private lemma product_skew_negative (p q r : ℝ) (hp : 0 < p) (hq : 0 ≤ q)
     nlinarith
   exact lt_trans lowerBound_lt_three_eighty hprod
 
-private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p) (hq : 0 ≤ q)
+private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p)
     (hqr : q ^ 2 ≤ p * r) (hr : r < p ^ 2)
     (hpq : p ^ 2 ≤ q)
     (hskew : 0 < 3 * p ^ 2 - 2 * q)
@@ -216,49 +215,35 @@ private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p) (hq : 0 ≤ q
       rw [hpt, hqt]
       ring
     exact hid ▸ hmul
-  have hscale := f_strict_scale t z ht htz hz hpolyneg
+  have hscale := f_strict_scale t z ht htz hpolyneg
   have hflb := f_lower_bound z hz hzlt
   exact lt_of_le_of_lt hflb (lt_of_lt_of_le hscale hcompare)
 
 private lemma second_sq_le_third {n : ℕ} (x : Fin n → ℝ)
     (hx : ∀ i, 0 ≤ x i) (hsum : powerSum n 1 x = 1) :
     (powerSum n 2 x) ^ 2 ≤ powerSum n 3 x := by
-  have hnon : 0 ≤ ∑ i, x i * (x i - powerSum n 2 x) ^ 2 :=
-    Finset.sum_nonneg fun i _ => mul_nonneg (hx i) (sq_nonneg _)
-  have hid : (∑ i, x i * (x i - powerSum n 2 x) ^ 2) =
-      powerSum n 3 x - (powerSum n 2 x) ^ 2 := by
-    calc
-      _ = ∑ i, (x i ^ 3 - 2 * powerSum n 2 x * x i ^ 2 +
-          (powerSum n 2 x) ^ 2 * x i) := by
-        apply Finset.sum_congr rfl
-        intro i hi
-        ring
-      _ = powerSum n 3 x - (powerSum n 2 x) ^ 2 := by
-        simp only [powerSum, Finset.sum_sub_distrib, Finset.sum_add_distrib,
-          ← Finset.sum_mul, ← Finset.mul_sum]
-        have hsum' : (∑ i, x i) = 1 := by simpa [powerSum] using hsum
-        rw [hsum']
-        ring_nf
-  rw [hid] at hnon
-  linarith
+  have hsum' : (∑ i, x i) = 1 := by simpa [powerSum] using hsum
+  have hcs := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
+    (r := fun i => x i ^ 2) (f := x) (g := fun i => x i ^ 3)
+    (fun i _ => hx i) (fun i _ => pow_nonneg (hx i) 3)
+    (fun i _ => le_of_eq (by ring))
+  simpa only [powerSum, hsum', one_mul] using hcs
 
 private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) : lowerBound < skewness k * kurtosis k := by
-  obtain ⟨hp, hq, hqr, hr⟩ := normalized_moments hn k hk
-  have hs : 0 < powerSum n 1 (fun i => (k i)⁻¹) := by
-    let i : Fin n := ⟨0, by omega⟩
-    simp only [powerSum, pow_one]
-    exact Finset.sum_pos' (fun j _ => (inv_pos.mpr (hk j)).le)
-      ⟨i, Finset.mem_univ i, inv_pos.mpr (hk i)⟩
+  obtain ⟨hp, _, hqr, hr⟩ := normalized_moments hn k hk
+  haveI : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp (by omega)
+  have hs := Matrix.CollatzWielandt.sum_pos_of_nonneg_ne_zero
+    (fun i => (inv_pos.mpr (hk i)).le)
+    (Pi.ne_zero_of_pos (fun i => inv_pos.mpr (hk i)))
   have hxpos : ∀ i, 0 < normalizedRates k i := by
     intro i
-    exact div_pos (inv_pos.mpr (hk i)) hs
-  have hs' : 0 < ∑ i, (k i)⁻¹ := by simpa [powerSum] using hs
+    exact div_pos (inv_pos.mpr (hk i)) (by simpa only [powerSum, pow_one] using hs)
   have hsum : powerSum n 1 (normalizedRates k) = 1 := by
     dsimp [powerSum, normalizedRates]
     simp only [pow_one]
     rw [← Finset.sum_div]
-    field_simp [ne_of_gt hs']
+    exact div_self (ne_of_gt hs)
   have hpq : p k ^ 2 ≤ q k := by
     simpa only [p, q] using
       second_sq_le_third (normalizedRates k) (fun i => (hxpos i).le) hsum
@@ -283,7 +268,7 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
   rw [hprod]
   by_cases hnonneg : 0 ≤ (3 * p k ^ 2 - 2 * q k) *
       (15 * p k ^ 2 - 20 * q k + 6 * r k / p k)
-  · exact product_nonnegative (p k) (q k) (r k) hp hnonneg
+  · exact product_nonnegative (p k) (q k) (r k) hnonneg
   have hneg : (3 * p k ^ 2 - 2 * q k) *
       (15 * p k ^ 2 - 20 * q k + 6 * r k / p k) < 0 := lt_of_not_ge hnonneg
   by_cases hsk : 3 * p k ^ 2 - 2 * q k < 0
@@ -291,7 +276,7 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
       by_contra h
       have hk0 : 15 * p k ^ 2 - 20 * q k + 6 * r k / p k ≤ 0 := le_of_not_gt h
       exact (not_lt_of_ge (mul_nonneg_of_nonpos_of_nonpos hsk.le hk0)) hneg
-    exact product_skew_negative (p k) (q k) (r k) hp hq hqr hr hsk hkpos hskew_lower
+    exact product_skew_negative (p k) (q k) (r k) hp hr hsk hkpos hskew_lower
   · have hsknonneg : 0 ≤ 3 * p k ^ 2 - 2 * q k := le_of_not_gt hsk
     have hskpos : 0 < 3 * p k ^ 2 - 2 * q k := by
       by_contra h
@@ -306,7 +291,7 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
           (15 * p k ^ 2 - 20 * q k + 6 * r k / p k) :=
         mul_nonneg hsknonneg hk0
       exact (not_lt_of_ge hnon) hneg
-    exact product_kurtosis_negative (p k) (q k) (r k) hp hq hqr hr hpq hskpos hkneg
+    exact product_kurtosis_negative (p k) (q k) (r k) hp hqr hr hpq hskpos hkneg
 
 private def sourceRates (u : ℝ) (m : ℕ) : Fin (m + 1) → ℝ :=
   fun i => if i = 0 then (1 - u) / (m * u) else 1
@@ -320,11 +305,12 @@ private lemma source_rates_positive (u : ℝ) (m : ℕ) (hu : 0 < u) (hu1 : u < 
   · positivity
   · norm_num
 
-private lemma source_power_sum (u : ℝ) (m j : ℕ) (hu : 0 < u) (hu1 : u < 1)
-    (hm : 1 ≤ m) :
+private lemma source_power_sum (u : ℝ) (m j : ℕ) :
     powerSum (m + 1) j (fun i => (sourceRates u m i)⁻¹) =
       ((m : ℝ) * u / (1 - u)) ^ j + m := by
-  simp [powerSum, sourceRates, Fin.sum_univ_succ]
+  simp only [powerSum, sourceRates, inv_pow, ite_pow, one_pow,
+    Fin.sum_univ_succ, ↓reduceIte, Fin.succ_ne_zero, inv_one, Finset.sum_const,
+    Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
   rw [← inv_pow, inv_div]
 
 private def sourceApproximation (u v : ℝ) : ℝ :=
@@ -339,7 +325,7 @@ private lemma source_value (u : ℝ) (m : ℕ) (hu : 0 < u) (hu1 : u < 1)
     (hm : 1 ≤ m) :
     skewness (sourceRates u m) * kurtosis (sourceRates u m) =
       sourceApproximation u (1 / (m : ℝ)) := by
-  have hs (j : ℕ) := source_power_sum u m j hu hu1 hm
+  have hs (j : ℕ) := source_power_sum u m j
   delta D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness
     D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis
     sourceApproximation
