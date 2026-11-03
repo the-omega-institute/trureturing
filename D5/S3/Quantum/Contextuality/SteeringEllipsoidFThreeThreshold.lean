@@ -237,8 +237,9 @@ private lemma balanced_setting (ρ : TwoQubit) (hρ : ρ.IsHermitian) (p q : ℝ
   have hx (i : Fin 3) : vlen (corr ρ *ᵥ β i) = L := by
     have heq : vlen (corr ρ *ᵥ β i) ^ 2 = L ^ 2 := by
       rw [vlen_sq, hT]
+      simp only [dotProduct, mulVec_diagonal]
       fin_cases i <;>
-        norm_num [β, Matrix.mulVec, dotProduct, Fin.sum_univ_three, diagonal] <;>
+        norm_num [β, Fin.sum_univ_three] <;>
         nlinarith [congrArg (fun x : ℝ => p ^ 2 * x) hc,
           congrArg (fun x : ℝ => q ^ 2 * x) hc]
     exact (sq_eq_sq₀ (vlen_nonneg _) hL.le).mp heq
