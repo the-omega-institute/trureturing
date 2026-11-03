@@ -11,6 +11,8 @@ strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaCoreProduct
   - D5/S3/Arith/ModularForms/CubicThetaIdentities
   - D5/S3/Arith/ModularForms/EtaSignK6
+  - D5/S3/Combinatorics/Partitions/RestrictedEulerCancellation
+  - D5/S3/Combinatorics/Partitions/EulerNineComparison
 license: citation-only
 triage: anchor
 ---
@@ -76,3 +78,41 @@ of the original-problem resolution. The separate k10 entry is outside
 this formalization scope.
 
 Citation and question boundary only; no source text or PDF is vendored.
+
+## Restricted-product auxiliaries for the separate denominator-ten row
+
+The separate v1 Appendix A Table 1 entry `1^9 3^(-10)` asks for the
+unshifted coefficients of `E(q)^9/E(q^3)^10`, including degree zero.
+Its proposed signs are positive at residues `0,2,5,8` and negative at
+`1,3,4,6,7` modulo nine, with no zero or exceptional index. This is a
+different endpoint from k6, notably at residue six.
+
+The source derivation *An all-index algebraic route to the denominator-ten
+eta signs* (3 November 2026, SHA256
+`f9c81115730bc353681e172d5b2ad17d199d66bd4602b56a5da7dfe8e185852b`)
+motivates new restricted-product auxiliaries. Write `Q_r` for the actual
+restricted partition series excluding residues `0,r,9-r` modulo nine,
+and put `A=Q_4`, `B=Q_2`, `C=Q_1`. The new
+`EulerNineComparison.coefficient_order` proves `C[n] <= B[n] <= A[n]`
+for every natural degree by finite mixed-block cancellation and exact
+coefficient stabilization. Its `D` is the actual coloured partition
+product with one colour at residues three and six and two at four and
+five. Its `multiplicity_relation` proves `AD=BC`, and
+`coeff_delta_nonnegative` proves that `AC-CD` is coefficientwise
+nonnegative. The product `(1-q)AC` is also proved nonnegative, with
+constant coefficient one, degree-one coefficient zero, and coefficients
+at least one in every degree at least two.
+
+`RestrictedEulerCancellation` uses Mathlib's general restricted-partition
+HasProd supplier (Weiyi Wang, Apache 2.0) to prove exact finite cancellation
+for arbitrary allowed-part predicates and injective finite weight families.
+These helpers are genuinely used in the comparison proof. The new
+comparisons and decompositions are repository-derived implementations of
+the supplied source; no literature novelty is asserted for their ordinary
+mathematics.
+
+These are auxiliaries, not the denominator-ten original. The exact Euler
+trisection identifying the actual quotient with these three products, its
+cubic consequence `B^2=AC+qCD`, and the complete k10 endpoint remain outside
+these modules. No independent review approval, full-original acceptance,
+priority or unique certification is claimed.
