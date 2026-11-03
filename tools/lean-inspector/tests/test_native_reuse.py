@@ -247,8 +247,9 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(targets)
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
-        def entry(phase):
-            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
+        def entry(phase, *, env=None):
+            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'],
+                env=self.env if env is None else env)
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
             self.record_result(phase, dict(exit_code=result.returncode,
@@ -257,7 +258,7 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
 
         self.assertFalse(output.exists(), '[FAIL] configured_report_must_start_cold')
         self.assertEqual(self.stamps(), {}, '[FAIL] no_report_before_configured_production')
-        initial = entry('production-initial')
+        initial = entry('production-initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(initial.returncode, 0, initial.stdout + initial.stderr)
         expected = output.read_bytes()
         report_stamps = self.stamps()
@@ -362,7 +363,8 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         self.assertEqual(self.stamps(), {}, '[FAIL] first_entry_must_produce_its_cold_report')
-        first = self.inspect(phase='initial-publication')
+        first = self.inspect(phase='initial-publication',
+                             env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         fact = self.root / 'build/lean-cache/build-work.json'
         self.assertTrue(fact.is_file(), '[FAIL] invocation_work_fact')
         self.assertIn('phase=report status=completed', first.stderr)
