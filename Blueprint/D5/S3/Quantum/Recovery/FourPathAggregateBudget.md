@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathAggregateBudget.certificate_dist
 
 *Commentary.*
 
-A pointwise certificate gap bounded by 1600 times the coordinatewise minimum sums to the same bound for the finite family.
+A coordinatewise minimum bounded by 1600 times its certificate gap sums to the same bound over the finite family.
 
 **Theorem 1.2 (Quartic distance budget).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathAggregateBudget.square_root_budg
 
 *Commentary.*
 
-The column estimate, certificate budget, and actual trace-defect identity propagate to the constant 480 times square root of 2 times square root of epsilon.
+The supplied scalar inequalities propagate to the constant 480 times square root of 2 times square root of epsilon.
 
 ## References
 

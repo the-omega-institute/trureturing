@@ -1,0 +1,10 @@
+# 13 条件测量的切向为什么可以不同
+
+令 A≥0，对 τ≥0 定义成功滤波
+
+```math
+M_\tau=e^{-\tau A/2},\qquad
+p_\tau=\langle\psi,e^{-\tau A}\psi\rangle,\qquad
+\psi_\tau=\frac{M_\tau\psi}{\sqrt{p_\tau}}.
+```
+

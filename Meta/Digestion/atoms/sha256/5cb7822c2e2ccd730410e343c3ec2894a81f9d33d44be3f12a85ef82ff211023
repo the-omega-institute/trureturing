@@ -1,0 +1,40 @@
+### 命题 8.2（两个纯态的圆弧读出）
+
+对归一纯态 $\rho_i=\lvert \psi_i\rangle\langle \psi_i\rvert$，定义标准纯态角
+
+$$
+\theta=\arccos|\langle\psi_0,\psi_1\rangle|\in[0,\pi/2].
+$$
+
+则
+
+<a id="eq-c90-pure-angle"></a>
+
+$$
+\boxed{\quad\mathcal I(\rho_0,\rho_1)=\sin\theta
+ =\sqrt{1-|\langle\psi_0,\psi_1\rangle|^2}.\quad}
+\tag{8.1}
+$$
+
+**证明。**
+对 $0<\theta\le\pi/2$，选择共同相位与二维正交基，使
+
+$$
+\psi_0=c e_0+s e_1,\qquad \psi_1=c e_0-s e_1,
+ \qquad c=\cos(\theta/2),\ s=\sin(\theta/2).
+$$
+
+于是 $\sigma=\operatorname{diag}(c^2,s^2)$、$\delta=cs\,\sigma_x$。
+经两侧 $\sigma^{-1/4}$ 后，非对角元为 $\sqrt{cs}$，
+所以平方范数为 $2cs=\sin\theta$。
+$\theta=0$ 时两态相同，直接使用零边界。
+
+这把二态的内生比较与纯态圆弧角接起来。
+该角采用 $\arccos|\langle\psi_0,\psi_1\rangle|$ 的约定；
+qubit Bloch 球上对应的夹角是 $2\theta$。
+公式是二态区别的读出，并未规定任意实际动力学轨迹都是圆弧。
+
+**白话图景。**两个纯态之间的相干重叠，可以读成一段角度；本轮的中点平方区别就是这个角度的正弦。
+两态重合时区别为零，彼此正交时区别达到一。
+这样圆弧直觉有了明确的二态量，但时间怎样走、轨迹怎样弯仍由实际操作决定。
+

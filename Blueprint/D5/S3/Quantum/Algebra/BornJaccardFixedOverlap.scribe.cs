@@ -60,6 +60,26 @@ internal sealed class BornJaccardFixedOverlapDocument : IScribeDocumentDefinitio
                     + "Jaccard projection geometry. The cases r=0, M=m, and c+mu(R)=0 remain "
                     + "included. This is a repository derivation, with no originality claim."))),
             DescribeRole.Theorem),
+            Paragraph(Text("For the whole interval in Definition 1.3, not only its line elements, take the pinned Mathlib "
+                + "diamond isomorphism infIccOrderIsoIccSup with a=T and b=R. Since T<=R.orthogonal, T meet R=0. "
+                + "Its forward map is U maps to U+R and its inverse is X maps to T meet X. It therefore identifies "
+                + "all U<=T with all R<=X<=R+T, uniquely. OrderIso.map_inf and OrderIso.map_sup preserve the actual "
+                + "subspace meet and join. Submodule.sup_orthogonal_inf_of_hasOrthogonalProjection with R<=X also "
+                + "writes X=R+(R.orthogonal meet X). Applying the inverse of the same isomorphism identifies this "
+                + "orthogonal component with T meet X; in particular it lies in T. These are the generic identities "
+                + "(1.8), for arbitrary U,V<=T, rather than only the disjoint-line instance interval_inf. The "
+                + "library interfaces are Mathlib/Order/ModularLattice.lean and "
+                + "Mathlib/Analysis/InnerProductSpace/Projection/Submodule.lean at revision "
+                + "56a005855ea17e0b0958f73ec801ae140b0a1679.")),
+            Paragraph(Text("For such a U, projection_orthogonal_sup and weight_orthogonal_sup apply since "
+                + "U<=T<=R.orthogonal. The orthogonal projector onto U inside T, composed with the actual inclusion "
+                + "and projection of T, is the ambient projector onto U: both fix U and have orthogonal residual. "
+                + "LinearMap.trace_comp_comm' then identifies Tr_T(K P_U) with Tr_H(rho P_U). This is the same "
+                + "trace correspondence used by compression_trace, for arbitrary U<=T; no invariant-subspace "
+                + "hypothesis on rho is inserted. For a unit line, weight_unit_line and compression_inner give "
+                + "a(L); compression_quadratic, the orthonormal coordinate sum and the ordered positive eigenvalues "
+                + "give m<=a(L)<=M. Thus b=c+mu(R), s=M+m=mu(T), and f_c(R+U)=b+Tr_T(K P_U) use the original "
+                + "subspaces and compression, including R=0, b=0 and M=m.")),
             Paragraph(Text("Coincident-line boundary (Proposition 3.2). Keep the same n, rho, c, R "
                 + "and T throughout. Write S=R+T and E(L)=R+L, with orthogonal sums. "
                 + "For y in T the actual compression is Ky=P(T)(rho y), and a(L) is "

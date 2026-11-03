@@ -1,0 +1,36 @@
+### 命题 9.1（状态对偶与显式 Kraus 表示）
+
+显式压缩的状态对偶 $E_*$ 由
+
+$$
+\boxed{E_*(s)=\bigoplus_\alpha
+\left[\operatorname{tr}_{m_\alpha}(P_\alpha sP_\alpha)\right]\otimes\tau_\alpha}
+$$
+
+定义，满足 $\operatorname{tr}(E_*(s)x)=\operatorname{tr}(sE(x))$。它完全正、迹保持、幂等且 $E_*(\rho)=\rho$。
+
+在每块写 $\tau_\alpha=\sum_\ell t_{\alpha\ell}|\ell\rangle\langle\ell|$，定义
+
+$$
+K_{\alpha\ell q}=\sqrt{t_{\alpha\ell}}
+(I_{n_\alpha}\otimes|\ell\rangle\langle q|)_\alpha.
+$$
+
+则
+
+$$
+E_*(s)=\sum_{\alpha,\ell,q}K_{\alpha\ell q}sK_{\alpha\ell q}^\dagger,
+\quad E(x)=\sum_{\alpha,\ell,q}K_{\alpha\ell q}^\dagger xK_{\alpha\ell q},
+\quad \sum K_{\alpha\ell q}^\dagger K_{\alpha\ell q}=I.
+$$
+
+因此 $E$ 是可观测量图像中的保单位元完全正映射，通常不保持普通矩阵迹；$E_*$ 是其状态对偶，保持迹。二者不能混写，也不能把任意 $E(s)$ 直接视为归一密度矩阵。由公式，$E$ 自身保持普通迹当且仅当 $\tau_\alpha=I_{m_\alpha}/m_\alpha$，这才回到 Hilbert–Schmidt 自伴迹条件期望 $E_A$。对固定旧映射，
+
+$$
+\phi_\rho\circ E_A=\phi_\rho
+\Longleftrightarrow E_A(\rho)=\rho
+\Longleftrightarrow \rho\in A.
+$$
+
+因此允许映射随锚改变，与坚持同一个普通迹映射，是两个不同要求。
+

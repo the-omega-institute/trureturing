@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00de670fec1d13763f18e5c3f8fe44dc669be779e602196521a1f66739b03563
+  normalized_sha256: sha256:00de670fec1d13763f18e5c3f8fe44dc669be779e602196521a1f66739b03563
+cas_ref: sha256:00de670fec1d13763f18e5c3f8fe44dc669be779e602196521a1f66739b03563
+coverage_gids:
+  - gid: D5/S3/Resource/SimplexCoverageProbability.uniformSamples_recovered_top
+    target_statement_id: sha256:ed7a5d168fbde172d35014946375e61aff1b8bb384c414ee6bcc2ddcc48b0b2c
+  - gid: D5/S3/Resource/SimplexCoverageWords.wordPolynomial_eq_factorial_smul
+    target_statement_id: sha256:b77406e702a78b467a61037dc30189eaf9ac48fb6fd6deae0dcaeddfac85b9b5
+receipts:
+  unresolved_subitems: []

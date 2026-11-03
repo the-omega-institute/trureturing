@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.Jensen;
 internal sealed class PositiveThreeTermRootRealityDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/nist2026dlmforthogonalzeros");
+        LibraryNoteRef.Create("D5/L/Zeros/nist2026dlmforthogonalzeros");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite positive three-term recurrence excludes a nonreal spectral parameter at a zero.",

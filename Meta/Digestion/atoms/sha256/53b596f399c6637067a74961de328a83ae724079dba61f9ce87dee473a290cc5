@@ -1,0 +1,21 @@
+## 5. 固定二元读出菜单：同一候选的有界形式
+
+<a id="sec-c92-binary-menu"></a>
+
+从本节起，局部输入为密度态 $R_C$；它们可先由
+命题 [3.1](#prop-c92-local-states) 认证，或由原有准备接口给出。
+固定任意正权 $w_C>0$、$\sum_Cw_C=1$，例如对全部 patch 等权。
+对每块选择二元效果 $0\le E_C\le I_C$，定义
+
+<a id="eq-c92-binary-mixture"></a>
+
+$$
+F(E)=\sum_Cw_C\iota_C(E_C),
+ \qquad b_R^w(E)=\sum_Cw_C\operatorname{Tr}(R_CE_C).
+\tag{5.1}
+$$
+
+由于 $0\le F(E)\le I$，它与 $I-F(E)$ 构成总载体上的二元效果。
+这可以理解为内部开关按 $w_C$ 选一个局部测量，最后只读出它的二元结果；
+不要求同时测量所有可能不对易的局部效果。
+

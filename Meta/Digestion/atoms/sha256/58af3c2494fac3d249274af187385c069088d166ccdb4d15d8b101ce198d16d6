@@ -1,0 +1,12 @@
+**Definition 18.1 (finite inherited-prefix allocation).** Let $m\ge1$ and let $b_1,\ldots,b_m$ be a finite nonempty labelled multiset of binary words; repetitions are retained as different tokens. A lower word may be empty. For every binary word $q$ put
+
+$$
+D_b(q)=\bigl|\{i:q\preceq b_i\}\bigr|,
+\qquad
+L^*(b)=\max_{\substack{q\text{ binary}\\D_b(q)>0}}
+ \left(|q|+\left\lceil\log_2D_b(q)\right\rceil\right).
+\tag{IV.40}
+$$
+
+The empty word is included among the possible $q$. A completion is a family of distinct words $x_i$ such that $b_i\preceq x_i$ and the family $\{x_i\}$ is prefix-free. The objective is to minimize $\max_{1\le i\le m}|x_i|$. The labels matter in the objective's tie-breaking, even when two lower words coincide.
+

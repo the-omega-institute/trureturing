@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:af922c5a4e46310f0de0b970e5656f1c941fc0127f30d1bccf3773d6eab45569
+  normalized_sha256: sha256:af922c5a4e46310f0de0b970e5656f1c941fc0127f30d1bccf3773d6eab45569
+cas_ref: sha256:af922c5a4e46310f0de0b970e5656f1c941fc0127f30d1bccf3773d6eab45569
+coverage_gids:
+  - gid: D5/S3/Quantum/Reduction/WeightedWordDefect.ucp_word_pair_bound
+    target_statement_id: sha256:ed920be0545adcd46812c5dee80e7749e83f852205a1bcd47f6a19fbdf629e0d
+receipts:
+  unresolved_subitems: []

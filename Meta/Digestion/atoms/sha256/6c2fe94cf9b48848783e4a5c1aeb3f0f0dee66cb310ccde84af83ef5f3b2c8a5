@@ -1,0 +1,38 @@
+### 推论 12.1（可见与不可见信息的精确分解）
+
+<a id="cor-c94-visible-relative-entropy"></a>
+
+在 C94 的结构下，对每个密度态 $\rho$ 都有
+
+<a id="eq-c94-information-chain"></a>
+
+$$
+\boxed{\quad
+ D(\rho\Vert\tau)
+ =D(\rho\Vert R(\rho))
+ +D(C(\rho)\Vert C(\tau)).
+ \quad}
+\tag{12.2}
+$$
+
+因此压缩保持相对于 $\tau$ 的全部相对熵，当且仅当 $\rho=R(\rho)$。
+
+**证明。**
+块乘积与对数张量公式给
+
+$$
+\begin{split}
+ D(R(\rho)\Vert\tau)
+ &=\sum_k\operatorname{Tr}\!\left[
+ a_k(\rho)\bigl(\log a_k(\rho)-\log(q_k\tau_{L,k})\bigr)
+ \right]\\
+ &=D(C(\rho)\Vert C(\tau)).
+ \end{split}
+$$
+
+零块项按零处理。代入式 [(11.1)](#eq-c94-pythagorean)，得到分解。
+最后由 $D(\rho\Vert R(\rho))=0$ 当且仅当二态相同，得到等号判据。
+
+这个结果直接表达了可见资料与实际整体之间还差多少内容。
+它不声称任意带关联输入都能由其可见压缩完全恢复。
+
