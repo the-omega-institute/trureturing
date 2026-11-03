@@ -16,6 +16,10 @@ open scoped InnerProductSpace
 namespace D5.S3.Quantum.Algebra.PauliFixedProductFamily
 
 private theorem sqrt_two_sq : (Real.sqrt 2)^2 = 2 := Real.sq_sqrt (by norm_num)
+private theorem sqrt_two_four : (Real.sqrt 2)^4=4 := by
+  calc
+    (Real.sqrt 2)^4=((Real.sqrt 2)^2)^2 := by ring
+    _=4 := by rw [sqrt_two_sq]; norm_num
 private theorem sqrt_two_pos : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
 
 /-- The common attaining direction for the spin product and diagonal defect. -/
@@ -26,7 +30,7 @@ private theorem balanced_norm : ‖balanced‖ = 1 := by
     rw [EuclideanSpace.real_norm_sq_eq]
     simp [balanced, e, PiLp.single_apply, Fin.sum_univ_succ]
     field_simp
-    nlinarith [sqrt_two_sq]
+    nlinarith [sqrt_two_sq,sqrt_two_four]
   nlinarith [norm_nonneg balanced]
 
 private theorem spin_bound (a b : J) : ‖S a b‖ ≤ Real.sqrt 2 * ‖a‖ * ‖b‖ := by
@@ -77,7 +81,7 @@ private theorem self_bound (t : ℝ) (a : J) : ‖D t a a‖ ≤ |t|/2*‖a‖^2
   have ht : |t|^2 = t^2 := sq_abs t
   nlinarith
 
-private theorem unit_bound (t : ℝ) (b : J) : ‖D t (e 0) b‖ ≤ |t|*‖b‖ := by
+private theorem unit_bound (t : ℝ) (b : J) : ‖D t (e 0) b‖ ≤ |t| *‖b‖ := by
   apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).mp
   simp [EuclideanSpace.real_norm_sq_eq, D, C, cross, cross_apply, shift, e,
     PiLp.single_apply, Fin.sum_univ_succ, mul_pow, sq_abs]
@@ -89,7 +93,7 @@ private theorem self_attained (t : ℝ) : ‖D t balanced balanced‖ = |t|/2 :=
     simp [EuclideanSpace.real_norm_sq_eq, balanced, D, C, cross, cross_apply,
       shift, e, PiLp.single_apply, Fin.sum_univ_succ]
     field_simp
-    nlinarith [sqrt_two_sq]
+    nlinarith [sqrt_two_sq,sqrt_two_four]
   have ht : |t|^2 = t^2 := sq_abs t
   nlinarith [norm_nonneg (D t balanced balanced), abs_nonneg t]
 
@@ -130,7 +134,8 @@ def actionGram (t : ℝ) : J →ₗ[ℝ] J :=
   ∑ i : Fin 4, (LinearMap.adjoint (D t (e i))).comp (D t (e i))
 
 private theorem d_adjoint (t : ℝ) (a : J) : LinearMap.adjoint (D t a) = -D t a := by
-  ext b
+  apply LinearMap.ext
+  intro b
   apply ext_inner_right ℝ
   intro c
   rw [LinearMap.adjoint_inner_left]
@@ -238,16 +243,13 @@ private theorem gram_eigenvalues (t lam : ℝ) :
     have h := congrArg (fun v : J => v i) heq
     fin_cases i
     · simp [gram_coordinates] at h
-      exact (mul_eq_zero.mp h.symm).resolve_left h0
+      exact h.resolve_left h0
     · simp [gram_coordinates] at h
-      have hp : (2+t^2-lam)*a 1=0 := by nlinarith
-      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm hxy))
+      exact h.resolve_left (Ne.symm hxy)
     · simp [gram_coordinates] at h
-      have hp : (2+t^2-lam)*a 2=0 := by nlinarith
-      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm hxy))
+      exact h.resolve_left (Ne.symm hxy)
     · simp [gram_coordinates] at h
-      have hp : (2-lam)*a 3=0 := by nlinarith
-      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm hz))
+      exact h.resolve_left (Ne.symm hz)
   · rintro (rfl|rfl|rfl)
     · refine ⟨e 0, ?_, ?_⟩
       · simp [e]
@@ -348,8 +350,10 @@ private theorem label_gram_coordinates (t : ℝ) (a : J) :
     labelGram t a=toLp 2 ![2*t^2*a 0+2*t*a 3,2*a 1,2*a 2,2*t*a 0+2*a 3] := by
   apply ext_inner_right ℝ
   intro b
-  simp [labelGram,inner_sum,LinearMap.adjoint_inner_left,PiLp.inner_apply,
-    D,C,cross,cross_apply,shift,e,PiLp.single_apply,Fin.sum_univ_succ,RCLike.inner_apply]
+  simp only [labelGram,LinearMap.sum_apply,LinearMap.comp_apply,sum_inner,
+    LinearMap.adjoint_inner_left]
+  simp [PiLp.inner_apply,D,C,cross,cross_apply,shift,e,PiLp.single_apply,
+    Fin.sum_univ_succ,RCLike.inner_apply]
   <;> ring
 
 private theorem label_eigenvalues (t lam : ℝ) :
@@ -382,12 +386,10 @@ private theorem label_eigenvalues (t lam : ℝ) :
     · exact ha0
     · have hh := congrArg (fun v : J => v 1) heq
       simp [label_gram_coordinates] at hh
-      have hp : (2-lam)*a 1=0 := by nlinarith
-      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm h2))
+      exact hh.resolve_left (Ne.symm h2)
     · have hh := congrArg (fun v : J => v 2) heq
       simp [label_gram_coordinates] at hh
-      have hp : (2-lam)*a 2=0 := by nlinarith
-      exact (mul_eq_zero.mp hp).resolve_left (sub_ne_zero.mpr (Ne.symm h2))
+      exact hh.resolve_left (Ne.symm h2)
     · exact ha3
   · rintro (rfl|rfl|rfl)
     · refine ⟨e 0-t • e 3,?_,?_⟩
@@ -415,7 +417,7 @@ private theorem minimum_positive (t : ℝ) : IsLeast (positiveActionSpectrum t) 
   · rintro lam ⟨hpos,heig⟩
     rcases (gram_eigenvalues t lam).1 heig with h|h|h
     · linarith
-    · rw [h]; positivity
+    · rw [h]; nlinarith [sq_nonneg t]
     · linarith
 
 /-- Both exact spectra and the actual positive square-root gap belong to the same local action. -/
@@ -446,22 +448,22 @@ private theorem support_orthogonal (t : ℝ) (a : J) :
     simpa [e,EuclideanSpace.inner_single_left] using hh
   · intro ha b hb
     rcases (fixed_mem t b).1 hb with ⟨r,rfl⟩
-    simp [e,EuclideanSpace.inner_single_left,ha]
+    simp [inner_smul_left,e,EuclideanSpace.inner_single_left,ha]
 
 private theorem spectral_lower (t : ℝ) (a : J) (ha : a∈actionSupport t) :
-    2*‖a‖^2≤inner ℝ a (actionGram t a) := by
+    2*‖a‖^2≤ inner ℝ a (actionGram t a) := by
   have h0 := (support_coordinates t a).1 ha
   have heq : inner ℝ a (actionGram t a)=2*‖a‖^2+t^2*(a 1^2+a 2^2) := by
     simp [gram_coordinates,PiLp.inner_apply,EuclideanSpace.real_norm_sq_eq,
       Fin.sum_univ_succ,RCLike.inner_apply,h0]
     <;> ring
   rw [heq]
-  positivity
+  nlinarith [mul_nonneg (sq_nonneg t) (add_nonneg (sq_nonneg (a 1)) (sq_nonneg (a 2)))]
 
 /-- The positive support has an attained uniform gap, and the label and action kernels differ. -/
 theorem exact_support_gap (t : ℝ) :
     actionSupport t=(commonFixed t).orthogonal ∧
-    (∀ a : J, a∈actionSupport t → 2*‖a‖^2≤inner ℝ a (actionGram t a)) ∧
+    (∀ a : J, a∈actionSupport t → 2*‖a‖^2≤ inner ℝ a (actionGram t a)) ∧
     (e 3∈actionSupport t ∧ ‖e 3‖=1 ∧ actionGram t (e 3)=2 • e 3) ∧
     D t≠0 ∧
     (t≠0 → (∃ a : J, D t a a≠0) ∧ D t (e 0)≠0 ∧
@@ -480,7 +482,7 @@ theorem exact_support_gap (t : ℝ) :
     have hh := congrArg (fun a : J => a 3) he
     norm_num [e,PiLp.single_apply] at hh
   · intro ht
-    have hp : 0<|t| := abs_pos.mpr ht
+    have hp : 0 < |t| := abs_pos.mpr ht
     have hself : D t balanced balanced≠0 := by
       intro h
       have hh := self_attained t

@@ -86,8 +86,8 @@ private theorem epsilon_eq (t : ℝ) : epsilon t = 12*Real.sqrt 2*|t| := by
   have hs : (Real.sqrt 2)^2=2 := Real.sq_sqrt (by norm_num)
   have heq : reportSquared t = (12*Real.sqrt 2*|t|)^2 := by
     rw [full_report]
-    simp [mul_pow, sq_abs, hs]
-    <;> ring
+    simp only [mul_pow, sq_abs, hs]
+    ring
   rw [epsilon, heq, Real.sqrt_sq (by positivity)]
 
 private theorem parameter_small (t : ℝ) (h : |t| < smallEndpoint) :
@@ -105,12 +105,12 @@ private theorem parameter_small (t : ℝ) (h : |t| < smallEndpoint) :
       mul_nonneg (sub_nonneg.mpr hs1) (abs_nonneg t)]
 
 /-- The interval is nonempty and uses its literal stated endpoint. -/
-theorem small_interval_nonempty : ∃ t : ℝ, 0<|t| ∧ |t|<smallEndpoint := by
+theorem small_interval_nonempty : ∃ t : ℝ, 0 < |t| ∧ |t|<smallEndpoint := by
   have hp : 0<smallEndpoint := by unfold smallEndpoint constant; positivity
   refine ⟨smallEndpoint/2, ?_, ?_⟩ <;> rw [abs_of_pos (by positivity)] <;> linarith
 
 /-- The complete residual of the same family supplies a strictly improved certificate. -/
-theorem actual_strict_improvement (t : ℝ) (ht : 0<|t|) (hsmall : |t|<smallEndpoint) :
+theorem actual_strict_improvement (t : ℝ) (ht : 0 < |t|) (hsmall : |t|<smallEndpoint) :
     0<Real.sqrt 2-2*constant*epsilon t ∧
     (∃ a : J, D t a a≠0) ∧ D t (e 0)≠0 ∧
     (∀ a : J, ‖a‖=1 → ‖D t a a‖ ≤ linear (epsilon t) (localBound t)) ∧
@@ -123,7 +123,7 @@ theorem actual_strict_improvement (t : ℝ) (ht : 0<|t|) (hsmall : |t|<smallEndp
   have hparam := parameter_small t hsmall
   have hd : 1≤localBound t := by
     dsimp [localBound]
-    exact Real.one_le_sqrt.mpr (by positivity)
+    exact Real.one_le_sqrt.mpr (by nlinarith [sq_nonneg t])
   have hdt : localBound t ≤ Real.sqrt 2 := by
     apply Real.sqrt_le_sqrt
     nlinarith [sq_abs t, abs_nonneg t]
@@ -131,10 +131,12 @@ theorem actual_strict_improvement (t : ℝ) (ht : 0<|t|) (hsmall : |t|<smallEndp
   have hdom : |t|/2 ≤ linear (epsilon t) (localBound t) := by
     unfold linear
     apply (le_div_iff₀ hcompare.1).2
-    have hdenle : Real.sqrt 2-2*constant*epsilon t≤Real.sqrt 2 := by positivity
+    have hdenle : Real.sqrt 2-2*constant*epsilon t≤Real.sqrt 2 :=
+      sub_le_self _ (by positivity)
     have hcd : 1≤constant*localBound t := by
       nlinarith [mul_nonneg (sub_nonneg.mpr hc) (sub_nonneg.mpr hd)]
-    have hm : 0≤(constant*localBound t-1)*(Real.sqrt 2*|t|) := by positivity
+    have hm : 0≤(constant*localBound t-1)*(Real.sqrt 2*|t|) :=
+      mul_nonneg (sub_nonneg.mpr hcd) (by positivity)
     calc
       |t|/2*(Real.sqrt 2-2*constant*epsilon t)≤|t|/2*Real.sqrt 2 :=
         mul_le_mul_of_nonneg_left hdenle (by positivity)
@@ -149,7 +151,7 @@ theorem actual_strict_improvement (t : ℝ) (ht : 0<|t|) (hsmall : |t|<smallEndp
 
 /-- An actual member of the literal interval has both nonzero defects and the strict certificate. -/
 theorem nonempty_improvement : ∃ t : ℝ,
-    0<|t| ∧ |t|<smallEndpoint ∧
+    0 < |t| ∧ |t|<smallEndpoint ∧
     (∃ a : J, D t a a≠0) ∧ D t (e 0)≠0 ∧
     |t|/2≤linear (epsilon t) (localBound t) ∧
     linear (epsilon t) (localBound t)<old (epsilon t) (localBound t) := by
