@@ -6,7 +6,6 @@
    utility: none
    digest: Three anticommuting Pauli families bound four-qubit pair correlations by three. -/
 
-import D5.S3.Quantum.Information.CovarianceSumBound
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
@@ -22,7 +21,7 @@ open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 open D5.S3.Quantum.Information.CovarianceSumBound
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.PureState.PureStateHandshake
-open D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
+open D5.S3.Quantum.Measurements.CliffordJointMeasurability
 
 namespace D5.S3.QuantumStates.FourQubitCorrelationMonogamy
 
@@ -84,7 +83,7 @@ private lemma anticommuting_family_bound {n α : Type*}
     rw [two_smul, ← mul_smul]
     simpa only [H, s, Fintype.linearCombination_apply, Complex.ofReal_sum, pow_two,
       Complex.ofReal_mul] using
-      D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum.cliffordLinear_anticommutator
+      FourierCliffordVacuum.cliffordLinear_anticommutator
         P hsq hanti (fun i => (a i : ℂ)) (fun i => (a i : ℂ))
   have hEH : expectation ρ H = s := by
     simp only [expectation, H, Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum,
