@@ -318,12 +318,15 @@ theorem spectral_correlation_convolution {A : ℝ → ℂ} (hAm : Measurable A)
   have hCT : Integrable (coefficient A ∘ T) pairMeasure :=
     hT.integrable_comp_of_integrable (coefficient_integrable hAm hA)
   have hmap : (∫ p, F p ∂pairMeasure) = ∫ p, F (T p) ∂pairMeasure := by
-    rw [← hT.map_eq]
-    exact integral_map hT.measurable.aemeasurable hF.aestronglyMeasurable
+    have hm : AEStronglyMeasurable F (Measure.map T pairMeasure) :=
+      hT.map_eq.symm ▸ hF.aestronglyMeasurable
+    simpa only [hT.map_eq] using integral_map hT.measurable.aemeasurable hm
   have hslice : ∀ᵐ s : ℝ, Integrable (fun u : ℝ => star (A (u + s)) * A u) := by
     filter_upwards [hCT.prod_right_ae] with s hs
     simpa only [Function.comp_def, T, coefficient, mul_comm, Complex.star_def] using hs
-  rw [spectral_convolution hAm hA t, hmap, integral_prod _ hFT]
+  have hprod := integral_prod (F ∘ T) hFT
+  change (∫ p, F (T p) ∂pairMeasure) = ∫ s : ℝ, ∫ u : ℝ, F (T (s, u)) at hprod
+  rw [spectral_convolution hAm hA t, hmap, hprod]
   have he : (∫ s : ℝ, ∫ u : ℝ, F (T (s, u))) =
       ∫ s : ℝ, Real.exp (-|t - s| / 2) *
         (∫ u : ℝ, star (A (u + s)) * A u).re := by
