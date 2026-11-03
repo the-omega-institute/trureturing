@@ -143,12 +143,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Matrix.UniformVarianceCentering
     definition := none
-    coordinates := #[0]
+    coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
