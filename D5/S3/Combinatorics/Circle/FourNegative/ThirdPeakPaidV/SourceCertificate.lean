@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Arithmetic
 
-/-! Uncompiled source draft. Both the reusable DataCertificate and the exact
+/-! Physical paid-V construction. Both the reusable DataCertificate and the exact
 increasing-decoder bank word are supplied, so no internal Finset enumeration
 choice is used to identify the reviewed physical order. -/
 set_option autoImplicit false
@@ -251,14 +251,20 @@ private theorem source_certificate (a b c d h : ℕ)
   have massEq (side : Bool) : ∀ pkt∈ps,
       (if side then newMass a b c d else oldMass a b c d) pkt.1=
         ∑ i∈pkt.1,(if side then newValue a b c d else oldValue a b c d) i := by
-    intro pkt hb
-    simp only [ps,List.mem_cons,List.mem_nil_iff,or_false] at hb
-    rcases hb with rfl|rfl|rfl|rfl
-    all_goals
-      have hs:=packet_masses a b c d ha (by omega) (by omega) (by omega) _ (good _)
+    have eqMass (r : Fin 4) :
+        (if side then newMass a b c d (BB r) else oldMass a b c d (BB r))=
+          ∑ i∈BB r,(if side then newValue a b c d else oldValue a b c d) i := by
+      have hs:=packet_masses a b c d ha (by omega) (by omega) (by omega) (BB r) (good r)
       cases side
       · exact hs.1.symm
       · exact hs.2.symm
+    intro pkt hb
+    simp only [ps,List.mem_cons,List.mem_nil_iff,or_false] at hb
+    rcases hb with rfl|rfl|rfl|rfl
+    · simpa only [ite_apply] using eqMass 0
+    · simpa only [ite_apply] using eqMass 1
+    · simpa only [ite_apply] using eqMass 2
+    · simpa only [ite_apply] using eqMass 3
   have hN : 0≤sourceMod a b c d := by have hh':=(tab.1 0);omega
   have oldchecks : packetChecks (oldValue a b c d) (sourceMod a b c d/2) 0 bs := by
     apply (finite_packet_checks _ _ _ bs bsnd).mp

@@ -1,14 +1,14 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakPaidV/Endpoint
    generality: I
-   mirror-B: none(waiver:uncompiled-physical-source-draft)
-   mirror-E: none(waiver:uncompiled-physical-source-draft)
+   mirror-B: none(waiver:physical-dependent-source-registration-at-endpoint)
+   mirror-E: none(waiver:physical-dependent-source-registration-at-endpoint)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Original-label paid-low-V joint lift and all natural repeated scalar prefixes. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Allocation
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! UNCOMPILED SOURCE DRAFT. This file makes no kernel or official claim.
+/-! Original-source joint lift for the paid-V region.
 Scope: every 2≤a<b≤d<c, a+2≤d, c≤b+d-2. It does not close the full
 third-peak cone or Circle J/C3.1. The seed and every occurrence are original. -/
 set_option autoImplicit false
@@ -19,14 +19,14 @@ open private paidH paidEarly paid_source
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Allocation
 open private word from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 open private freshCut from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.SourceCertificate
-open private size sourceMod base from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private size sourceMod base oldValue newValue from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private zero_period_transport
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-- Draft proof term for the entire reviewed subregion: the actual old source,
+/-- The entire original paid-V subregion: the actual old source,
 the actual doubled-seed new source, literal conditional ear, every natural
 finite repeat/take, and the two separately zero scalar totals. -/
 theorem actualSource_third_peak_paid_V_joint_lift (a b c d : ℕ)
@@ -68,7 +68,9 @@ theorem actualSource_third_peak_paid_V_joint_lift (a b c d : ℕ)
   let sigma:=l.map (label k hk)
   have ho : OriginalOrder k AA sigma := by
     apply lift_order k AA hk l hp
-    · simpa only [hmod,hseed] using data.2.2.1
+    · rw [hmod,hseed]
+      change InStrip (oldValue a b c d) (sourceMod a b c d/2) 0 l
+      exact data.2.2.1
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k AA (by dsimp [k];omega)
   let pre:=l.take j
   let post:=l.drop j
@@ -85,7 +87,10 @@ theorem actualSource_third_peak_paid_V_joint_lift (a b c d : ℕ)
   have hnew : OriginalOrder (k+1) (2*AA)
       ((pre++k::post).map (label (k+1) (by omega))) := by
     apply lift_order (k+1) (2*AA) (by omega) (pre++k::post) hp'
-    · simpa only [hmod',hseed',hhalf,insertAt,pre,post] using data.2.2.2.2
+    · rw [hmod',hseed',hhalf]
+      change InStrip (newValue a b c d) (sourceMod a b c d) 0
+        (insertAt (size a b c d) l j)
+      exact data.2.2.2.2
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*AA) (by dsimp [k];omega)
   have hn : OriginalOrder (k+1) (2*AA) (earWord k sigma j) := by
     dsimp [sigma]

@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 
-/-! Uncompiled source draft. A shifted decoder keeps the high V block literal:
+/-! Physical paid-V construction. A shifted decoder keeps the high V block literal:
 bit e of h is the physical V[c-d+e], never a divisible surrogate mass.
 Its mask in the original V coordinates is 2^(c-d)*h. -/
 set_option autoImplicit false

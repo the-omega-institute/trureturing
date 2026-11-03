@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.SourceCertificate
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
 
-/-! Uncompiled source draft. No bound on exponents or finite control is used.
+/-! Physical paid-V construction. No bound on exponents or finite control is used.
 The scope includes b=d; in the full third-peak partition its new contribution
 is the strict b<d moderate piece. -/
 set_option autoImplicit false

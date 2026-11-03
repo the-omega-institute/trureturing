@@ -7,7 +7,7 @@
    digest: Exact quotient and all endpoint windows for paid low V and one W tail. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
-/-! Uncompiled source draft, 2026-11-03. No kernel or official acceptance claimed.
+/-! Exact unbounded arithmetic for the physical paid-V construction.
 The integer hypotheses below are derived from the original exponent inequalities
 in Allocation; no allocation, window or quotient feasibility is assumed. -/
 set_option autoImplicit false
