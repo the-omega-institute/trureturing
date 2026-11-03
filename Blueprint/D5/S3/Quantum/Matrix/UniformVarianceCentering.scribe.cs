@@ -95,7 +95,7 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
     private static Formula Leq(Formula a,Formula b) => Seq(a,Sp,Le,Sp,b);
     private static Formula Eqn(Formula a,Formula b) => Seq(a,Sp,Eq,Sp,b);
     private static Formula And(Formula a,Formula b) => Seq(Open,a,Sp,Land,Sp,b,Close);
-    private static Formula Implies(Formula a,Formula b) => Seq(Open,a,Close,Sp,Rightarrow,Sp,Open,b,Close);
+    private static Formula Implies(Formula a,Formula b) => Seq(Open,Open,a,Close,Sp,Rightarrow,Sp,Open,b,Close,Close);
     private static Formula Call(string n,params Formula[] a)
     {
         var parts = new System.Collections.Generic.List<Formula> { Operatorname,Grp(F.Id(n)),Open };
