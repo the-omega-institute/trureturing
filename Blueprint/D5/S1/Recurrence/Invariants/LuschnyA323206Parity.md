@@ -42,13 +42,12 @@ $$\forall n: \mathbb{N}, \forall k: \mathbb{N}, \exists a: \mathbb{Z}, ((a: \mat
 
 *Commentary.*
 
-The degree-j coefficient equals one at j=0 and otherwise equals choose(k+j,j)-choose(k+j,j-1), with subtraction in the integers. This is ballotE(k,j+1) from BallotCoefficient. Thus the finite sum has an integer value. At an even argument its reduction modulo two is the constant coefficient one; at an odd argument it is the coefficient sum. The two hockey-stick sums give the Catalan number catalan(k+1). The binary support theorem for the shifted Catalan series then gives k+2=2^e, and k+2>=2 forces e>0.
+The degree-j coefficient equals one at j=0 and otherwise equals choose(k+j,j)-choose(k+j,j-1), with subtraction in the integers. This is ballotE(k,j+1) from IntegerIndexBinomial. Thus the finite sum has an integer value. At an even argument its reduction modulo two is the constant coefficient one; at an odd argument it is the coefficient sum. The two hockey-stick sums give the Catalan number catalan(k+1). The binary support theorem for the shifted Catalan series then gives k+2=2^e, and k+2>=2 forces e>0.
 
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.A`
 - Truth anchor: `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.claim`
 - Truth anchor: `D5/S1/Recurrence/Invariants/LuschnyA323206Parity.result`
-- Dependency: [D5/S0/Conventions/BallotCoefficient](../../../S0/Conventions/BallotCoefficient.md)
 - Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../../../S0/Conventions/IntegerIndexBinomial.md)
 - Dependency: [D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity](CatalanCompositionSquareParity.md)

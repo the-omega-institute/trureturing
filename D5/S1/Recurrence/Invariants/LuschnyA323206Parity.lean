@@ -27,16 +27,15 @@ The literal terminating sum in A and the proposition in claim use the
 preregistered expressions. Proofs reuse ordinaryHypergeometricCoefficient and
 binary_catalan. The source-specific expressions in A and claim remain literal;
 proofs use the shared ballotE owner through the consumed correspondence ballotE_eq.
-Same-delivery shared owner: D5/S0/Conventions/BallotCoefficient.ballotE.
+Shared owner: D5/S0/Conventions/IntegerIndexBinomial.ballotE.
 ballotE_eq -> coeff_eq, row_sum_q, sum_eval_even.
 -/
 
-import D5.S0.Conventions.BallotCoefficient
 import D5.S0.Conventions.IntegerIndexBinomial
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
 
-open D5.S0.Conventions.BallotCoefficient (ballotE)
+open D5.S0.Conventions.IntegerIndexBinomial (ballotE)
 open scoped BigOperators
 open PowerSeries
 namespace D5.S1.Recurrence.Invariants.LuschnyA323206Parity
@@ -107,8 +106,8 @@ private theorem coeff_eq (k j : ℕ) (hjk : j ≤ k) :
   have hden := neg_pochhammer_ne k j hjk
   have hratio := ratio_pochhammer k j hjk
   have hpos := pos_pochhammer k j
-  have hfac : (j.factorial : ℚ) ≠ 0 := by positivity
-  have hk : (k + 1 : ℚ) ≠ 0 := by positivity
+  have hfac : (j.factorial : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero j)
+  have hk : (k + 1 : ℚ) ≠ 0 := Nat.cast_add_one_ne_zero k
   simp only [hj, ite_false, Int.cast_sub, Int.cast_natCast]
   rw [hpos]
   have hchoose : ((k+j).choose (j-1) : ℚ) =
@@ -117,8 +116,9 @@ private theorem coeff_eq (k j : ℕ) (hjk : j ≤ k) :
     simp only [Nat.succ_sub_one, Nat.succ_eq_add_one]
     rw [Nat.cast_choose ℚ (by omega : j' ≤ k + (j' + 1))]
     rw [Nat.cast_choose ℚ (by omega : j' + 1 ≤ k + (j' + 1))]
-    have hs : k + (j' + 1) - j' = k + 1 := by omega
-    have ht : k + (j' + 1) - (j' + 1) = k := by omega
+    have hs : k + (j' + 1) - j' = k + 1 := by
+      simpa only [Nat.add_comm j' 1, Nat.add_assoc] using Nat.add_sub_cancel (k + 1) j'
+    have ht : k + (j' + 1) - (j' + 1) = k := Eq.symm (Nat.eq_sub_of_add_eq rfl)
     rw [hs, ht]
     simp only [Nat.factorial_succ]
     field_simp
@@ -249,7 +249,9 @@ private theorem row_sum_catalan_q (k : ℕ) :
   have hcatQ' : (k + 2 : ℚ) * (catalan (k + 1) : ℚ) =
       ((2 * k + 2).choose (k + 1) : ℚ) := by
     convert hcatQ using 1; ring
-  apply (mul_left_cancel₀ (by positivity : (k + 2 : ℚ) ≠ 0))
+  apply (mul_left_cancel₀ (by
+    simpa only [Nat.cast_add, Nat.cast_one, add_assoc, one_add_one_eq_two] using
+      (Nat.cast_add_one_ne_zero (R := ℚ) (k + 1)) : (k + 2 : ℚ) ≠ 0))
   exact hdiff.trans hcatQ'.symm
 
 
@@ -262,7 +264,7 @@ private theorem z_cast_eq_A (n k : ℕ) :
   push_cast
   apply Finset.sum_congr rfl
   intro j hj
-  have hj' : j ≤ k := by have := Finset.mem_range.mp hj; omega
+  have hj' : j ≤ k := Finset.mem_range_succ_iff.mp hj
   rw [coeff_eq k j hj']
 
 private theorem z_mod_two (n k : ℕ) :

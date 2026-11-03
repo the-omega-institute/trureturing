@@ -39,7 +39,7 @@ internal sealed class LuschnyA323206ParityDocument : IScribeDocumentDefinition
             Node("result", "The parity classification", Disp(ClaimBody()),
                 "The degree-j coefficient equals one at j=0 and otherwise equals "
                 + "choose(k+j,j)-choose(k+j,j-1), with subtraction in the integers. "
-                + "This is ballotE(k,j+1) from BallotCoefficient. "
+                + "This is ballotE(k,j+1) from IntegerIndexBinomial. "
                 + "Thus the finite sum has an integer value. At an even argument "
                 + "its reduction modulo two is the constant coefficient one; at an "
                 + "odd argument it is the coefficient sum. The two hockey-stick sums "

@@ -7,7 +7,6 @@
    digest: An exact negative shifted moment form refutes the Shankar Q Stieltjes claim. -/
 
 import D5.S0.Conventions.IntegerIndexBinomial
-import D5.S0.Conventions.BallotCoefficient
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Combinatorics.Enumerative.Catalan.Basic
 import Mathlib.Data.Fin.VecNotation
@@ -20,7 +19,7 @@ namespace D5.S0.Certificates.ShankarQStieltjesRefutation
 
 open MeasureTheory
 open D5.S0.Conventions.IntegerIndexBinomial (binom)
-open D5.S0.Conventions.BallotCoefficient (ballotE)
+open D5.S0.Conventions.IntegerIndexBinomial (ballotE)
 open scoped BigOperators
 
 set_option maxRecDepth 100000
