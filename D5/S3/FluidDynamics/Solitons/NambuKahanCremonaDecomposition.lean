@@ -13,6 +13,9 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic
 
+/-! Graffeo--Gubbiotti's generic quadratic Nambu KHK map factors through the
+standard four-dimensional Cremona lift. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -43,7 +46,7 @@ def kahanMatrix (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ) (X : Fin 4 → ℂ)
 
 /-- The homogeneous KHK lift of the quadratic Nambu system. -/
 def kahan (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ) (X : Fin 4 → ℂ) : Fin 4 → ℂ :=
-  Fin.snoc (kahanMatrix A B h X).adjugate *ᵥ (fun i : Fin 3 => X i.castSucc)
+  Fin.snoc ((kahanMatrix A B h X).adjugate *ᵥ (fun i : Fin 3 => X i.castSucc))
     (kahanMatrix A B h X).det
 
 /-- The standard cubic Cremona lift in four homogeneous coordinates. -/
@@ -73,7 +76,7 @@ private def eulerMatrix (a₁ a₂ a₃ h : ℂ) (X : Fin 4 → ℂ) :
     (h / 2) • eulerJacobian a₁ a₂ a₃ (fun i : Fin 3 => X i.castSucc)
 
 private def eulerPhi (a₁ a₂ a₃ h : ℂ) (X : Fin 4 → ℂ) : Fin 4 → ℂ :=
-  Fin.snoc (eulerMatrix a₁ a₂ a₃ h X).adjugate *ᵥ (fun i : Fin 3 => X i.castSucc)
+  Fin.snoc ((eulerMatrix a₁ a₂ a₃ h X).adjugate *ᵥ (fun i : Fin 3 => X i.castSucc))
     (eulerMatrix a₁ a₂ a₃ h X).det
 
 private def allOnes (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := fun _ _ => 1
