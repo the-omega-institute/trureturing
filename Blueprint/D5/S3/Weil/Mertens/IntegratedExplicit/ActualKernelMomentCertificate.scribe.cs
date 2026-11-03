@@ -6,7 +6,7 @@ internal sealed class ActualKernelMomentCertificateDocument : IScribeDocumentDef
         "The complete actual-K moment certificate.",
         H("Original full-kernel certificate source"), Blocks(
             Describe.Lean(DescribeId.Create("q-scalar-bounds"),
-                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.ActualKScalarSource.q_scalar_bounds"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.q_scalar_bounds"),
                 H("Original moment order scalar bounds"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For the original ceiling N(C, alpha, D), with C at least one and D positive, the order is at least one and N/D is at least eight. The exact curvature payment is at most one eighth, and the logarithmic ceiling pays beta plus the Euler and endpoint constants with the retained one fifth margin. The definition keeps the original max, ceiling, inclusive moment degree, and all degenerate finite families."))),
                 DescribeRole.Theorem),

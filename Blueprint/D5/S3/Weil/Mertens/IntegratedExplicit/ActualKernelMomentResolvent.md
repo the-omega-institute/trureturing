@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolve
 
 *Commentary.*
 
-This consumed intermediate combines the actual prime row, complete positive mixture and literal resolvent identity. Its lower expression retains the unpaid continuum, d0 W and V, and its second conjunct pays W<=delta_q E/4 from the retained moment theorem. The full endpoint below consumes the further continuum/cutoff payments; this intermediate is not a separate delivery.
+This separately proved intermediate combines the actual prime row, complete positive mixture and literal resolvent identity. Its lower expression retains the unpaid continuum, d0 W and V, and its second conjunct pays W<=delta_q E/4 from the retained moment theorem. The full endpoint below proves the further continuum/cutoff payments independently; this intermediate remains a separately recorded theorem.
 
 **Theorem 1.7 (W nonneg).**
 

@@ -188,7 +188,6 @@ theorem q_scalar_bounds (hC : 1 ≤ C) (hD : 0 < D) :
 
 end
 end ActualKScalarSource
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
