@@ -236,12 +236,11 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     have hval : -(1 / 16 : ℝ) ≤
         D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.minimumValue n := by
       dsimp [D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.minimumValue]
-      have hn1 : 0 < (n : ℝ) - 1 := by
-        have : (2 : ℝ) ≤ n := by exact_mod_cast hn
-        linarith
+      have hnreal : (2 : ℝ) ≤ n := by exact_mod_cast hn
+      have hn1 : 0 < (n : ℝ) - 1 :=
+        sub_pos.mpr (lt_of_lt_of_le (by norm_num : (1 : ℝ) < 2) hnreal)
       have hd : 0 < 16 * ((n : ℝ) - 1) ^ 2 := by positivity
       apply (le_div_iff₀ hd).2
-      have hnreal : (2 : ℝ) ≤ n := by exact_mod_cast hn
       nlinarith [sq_nonneg ((n : ℝ) - 1)]
     rw [D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness_normalized] at hmin
     change D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.minimumValue n ≤
