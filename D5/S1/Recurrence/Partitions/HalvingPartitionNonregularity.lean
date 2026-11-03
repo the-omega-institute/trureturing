@@ -686,9 +686,12 @@ theorem result :
   refine ⟨source_nonregularity, closed_matrix_iff, arbitrary_matrix_iff, ?_, ?_, source_zero⟩
   · intro h
     exact source_nonregularity ((arbitrary_matrix_iff _).mp h)
-  · intro n
+  · classical
+    intro n
+    letI : Fintype (SourceLists n) := Fintype.ofFinite _
     unfold count
-    rw [Nat.card_congr (sourceEquiv n), Nat.card_eq_fintype_card]
+    rw [Nat.card_eq_fintype_card]
+    exact Fintype.card_congr (sourceEquiv n)
 
 #print axioms result
 

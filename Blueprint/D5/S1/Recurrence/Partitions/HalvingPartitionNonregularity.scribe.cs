@@ -44,7 +44,7 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 "The forward map wraps the original list as a Composition and retains its "
                 + "Follows proof. The inverse projects that same list. Both inverse laws are "
                 + "proved by the constructors, so no source object is lost or identified. "
-                + "The transported Finite instance is the one used by the independent count.",
+                + "The transported Finite instance certifies finiteness of the independent source carrier.",
                 DescribeRole.Definition),
             Node("count", "The exact source count", CountFormula(),
                 "The function count(n) is Nat.card of SourceLists(n), defined independently "
