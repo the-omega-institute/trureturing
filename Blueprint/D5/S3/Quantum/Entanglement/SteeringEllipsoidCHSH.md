@@ -182,9 +182,7 @@ $$\forall (a: \operatorname{Fin}\left(3\right) \to \mathbb{R}), (\forall (x: \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.unit_dot_le` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Antony Milne; David Jennings; Sania Jevtic; Terry Rudolph (2014). *Quantum correlations of two-qubit states with one maximally mixed marginal*. DOI: [10.1103/PhysRevA.90.024302](https://doi.org/10.1103/PhysRevA.90.024302). URL: <https://arxiv.org/abs/1404.3951v2>.
+*Citation.* Sheldon Axler (2024). *Linear Algebra Done Right, fourth edition*. URL: <https://linear.axler.net/>.
 
 *Commentary.*
 
