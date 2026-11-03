@@ -185,7 +185,10 @@ private lemma entry_formula (N : ℕ) (p q : Fin N ⊕ Fin N) :
   let F : ℝ → (Fin N ⊕ Fin N → ℝ) := fun t => z + t • v
   have hc (r : Fin N ⊕ Fin N) : HasDerivAt (fun t => F t r) (v r) 0 := by
     change HasDerivAt (fun t => z r + t * v r) (v r) 0
-    convert (hasDerivAt_const 0 (z r)).add ((hasDerivAt_id 0).mul_const (v r)) using 1 <;> simp [funext_iff]
+    apply HasDerivAt.congr_of_eq
+      ((hasDerivAt_const 0 (z r)).add ((hasDerivAt_id 0).mul_const (v r)))
+    funext t
+    simp [F, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   have hd (j k : Fin N) : HasDerivAt
       (fun t => (F t (Sum.inl j) - F t (Sum.inl k))^2 +
         (F t (Sum.inr j) - F t (Sum.inr k))^2)
