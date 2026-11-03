@@ -21,7 +21,7 @@ open private afterW_realize
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.AfterW
 open private smallY smallM threshold small_selector
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.SmallArithmetic
-open private oldValue newValue sourceMod
+open private oldValue newValue sourceMod base
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
 private def smallB : Fin 3 → ℕ := ![2,2,3]
@@ -37,7 +37,7 @@ private theorem small_unbounded (i : Fin 3) (a : ℕ) (ha : smallB i < a)
   have hc : 2 ≤ c := by dsimp [c]; omega
   have hy : (2:ℤ)^b=smallY i := by fin_cases i <;> norm_num [b,smallB,smallY]
   have hm : (2:ℤ)^(smallC i)=smallM i := by fin_cases i <;> norm_num [smallC,smallM]
-  have hx : (2:ℤ)^a=s*smallY i := by rw [pow_split a b (by omega),hy]; rfl
+  have hx : (2:ℤ)^a=s*smallY i := by rw [pow_split a b (by omega),hy]
   have hz : (2:ℤ)^c=smallM i*(s*smallY i) := by
     dsimp [c]; rw [pow_add,hm,hx]; ring
   obtain ⟨r,v,hr,hrcap,hv,hvcap,hw⟩ := small_selector i s hs
@@ -75,10 +75,10 @@ private theorem small_A (a : ℕ) (ha : 3 ≤ a) : Joint a 2 (a+1) := by
       let post : List ℕ := [12,7,14,9,5,4,8,2,1,0,3]
       apply realize_split 4 2 5 (by decide) (by decide) (by decide) pre post
       · decide
-      · decide
-      · decide
+      · norm_num [pre,post,InStrip,oldValue,sourceMod,base,centered]
+      · norm_num [pre,post,InStrip,newValue,sourceMod,base,centered]
     · have hs : (8:ℤ) ≤ 2^(a-2) := by simpa using pow_lower (a-2) 3 (by omega)
-      simpa only [smallB,smallC] using small_unbounded 0 a (by simp [smallB]; omega)
+      simpa [smallB,smallC] using small_unbounded 0 a (by simp [smallB]; omega)
         (by simpa [smallB,threshold] using hs)
 
 private theorem small_B (a : ℕ) (ha : 3 ≤ a) : Joint a 2 (a+2) := by
@@ -88,7 +88,7 @@ private theorem small_B (a : ℕ) (ha : 3 ≤ a) : Joint a 2 (a+2) := by
       (by decide) (by decide) (by decide) (by decide)
     norm_num [AfterWWindows,Window,A,B,L,K,SU,SV,SW]
   · have hs : (4:ℤ) ≤ 2^(a-2) := by simpa using pow_lower (a-2) 2 (by omega)
-    simpa only [smallB,smallC] using small_unbounded 1 a (by simp [smallB]; omega)
+    simpa [smallB,smallC] using small_unbounded 1 a (by simp [smallB]; omega)
       (by simpa [smallB,threshold] using hs)
 
 private theorem small_C (a : ℕ) (ha : 4 ≤ a) : Joint a 3 (a+2) := by
@@ -98,7 +98,7 @@ private theorem small_C (a : ℕ) (ha : 4 ≤ a) : Joint a 3 (a+2) := by
       (by decide) (by decide) (by decide) (by decide)
     norm_num [AfterWWindows,Window,A,B,L,K,SU,SV,SW]
   · have hs : (4:ℤ) ≤ 2^(a-3) := by simpa using pow_lower (a-3) 2 (by omega)
-    simpa only [smallB,smallC] using small_unbounded 2 a (by simp [smallB]; omega)
+    simpa [smallB,smallC] using small_unbounded 2 a (by simp [smallB]; omega)
       (by simpa [smallB,threshold] using hs)
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter

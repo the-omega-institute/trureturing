@@ -63,8 +63,8 @@ private theorem moderate_realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc
   have oldzero : (l.map f).sum=0 := (hp.map f).sum_eq.trans totals.1
   have newold : (l.map g).sum= -A x y z := by
     have hh := (hp.map g).sum_eq.trans totals.2.1
-    simpa only [(bases a b c).1,F] using hh
-  have fresh : g k=A x y z := by simpa only [k,size,(bases a b c).1,F] using totals.2.2
+    simpa only [(bases a b c).1,F,Matrix.cons_val_zero] using hh
+  have fresh : g k=A x y z := by simpa only [k,size,(bases a b c).1,F,Matrix.cons_val_zero] using totals.2.2
   have hA : 1 ≤ A x y z := by
     have hh := (chain_values a b c a ha hb hc ha).1 0
     rw [(bases a b c).1] at hh
@@ -82,6 +82,7 @@ private theorem moderate_realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc
     dsimp [l] at newold
     simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton] at newold
     nlinarith only [h1n,h2n,h3n,newold]
+  have h3n' : Rp+((P 2).map g).sum+g (a+c+b-1)=SW x y z-2*A x y z := h3n
   obtain ⟨w1,w1n,w2,w2n⟩ := hfirst
   have ho : InStrip f (N/2) 0 l := by
     apply four_windows_strip f (N/2) N (P 0) (P 1) (P 2) (P 3)
@@ -156,14 +157,14 @@ private theorem moderate_high_positive (a b c h : ℕ)
       i ∈ stock a b c a 1 (full a b c a 1) := by
     obtain ⟨e,he,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
     rw [stock,full,chamberLabels_full]
-    simp only [chainLength,chainStart]
+    simp only [chainLength,chainStart,Matrix.cons_val_one]
     apply List.mem_range'_1.mpr
     omega
   have inLo (i : ℕ) (hi : i ∈ lowV c a) :
       i ∈ stock a b c a 1 (full a b c a 1) := by
     obtain ⟨e,he,_,rfl⟩ := (chamberLabels_mem _ _ _ _).mp hi
     rw [stock,full,chamberLabels_full]
-    simp only [chainLength,chainStart]
+    simp only [chainLength,chainStart,Matrix.cons_val_one]
     apply List.mem_range'_1.mpr
     omega
   fin_cases j <;> dsimp [moderateHighBanks,highComplement] at hi
@@ -197,11 +198,12 @@ private theorem moderate_high_masses (a b c h : ℕ) (ha : 2 ≤ a) (hca : a ≤
   have mLo : ((lowV c a).map f).sum=((2:ℤ)^(c-a)-1)*H 1 := by
     have hm : 2^(c-a)-1 < 2^(c-a) := by have := Nat.two_pow_pos (c-a); omega
     have hx := chamberLabels_sum (c-a) a (2^(c-a)-1) hm f (H 1)
-      (fun e he => by simpa only [chainStart] using hf 1 e (by simp [chainLength]; omega))
+      (fun e he => by simpa only [chainStart,Matrix.cons_val_one] using hf 1 e (by simp [chainLength]; omega))
     simpa only [lowV,Nat.cast_sub (show 1 ≤ 2^(c-a) by have := Nat.two_pow_pos (c-a); omega),
       Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one] using hx
   dsimp only [moderateHighBanks]
-  simp only [List.map_append,List.sum_append,mU,mW,mX,mLo,mH]
+  simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+    Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons,List.map_append,List.sum_append,mU,mW,mX,mLo,mH]
   refine ⟨rfl,?_,by ring,rfl⟩
   dsimp only [highComplement]
   dsimp [full,chainLength] at mHC ⊢
