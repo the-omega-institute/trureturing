@@ -95,7 +95,8 @@ private theorem other_above (i : Fin 9) (j : Fin 3) (hj : j ≠ labels i) :
   fin_cases i <;> fin_cases j <;>
     norm_num [mulVec, dotProduct, Fin.sum_univ_succ] at *
 
-private theorem flow_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) : Function.Injective (flow (states i) t) := by
+private theorem flow_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) :
+    Function.Injective (flow (states i) t) := by
   apply injective_three
   all_goals
     delta times states flow at *
