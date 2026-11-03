@@ -1831,3 +1831,213 @@ execution; no short reference run or closed code image discharges them.
 The spatial and minimum-information limits of §7 are unaltered.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Finite address decoding of the closed Wang image
+
+**Definition 14.1 (paged image object).** Consider the block image of
+Definition 13.1 with $m\ge1$, strictly increasing bases
+$0=b_0<\cdots<b_m$, sixteen nonempty templates, and valid resolved
+destinations. Its byte layout consists, in order, of a twenty-byte
+header; sixteen template records, each with a four-byte size and two
+ten-byte rules per template state; $m+1$ eight-byte bases; and $m$
+seventeen-byte bindings. An internal rule destination is a nonnegative
+local state. The two negative eight-byte two's-complement words encode
+the two resolved external destination slots. All multibyte integers
+have least significant byte first.
+
+Let its length be $L$, let $P=4096$, and put
+$C=\lceil L/P\rceil$, $p=2^{\lceil\log_2 C\rceil}$ and
+$z=\mathbf1_{C<p}$. Initialize $C$ pages with the actual image bits,
+padding only the last page with binary zeros. When $z=1$, initialize
+one further all-zero page. A perfect binary directory with $p$ leaves
+points to the $C$ image pages in order; each remaining leaf points to
+that same additional zero page. Each internal directory object has
+two actual reference fields. Each page has $8P$ binary fields.
+No page bit has a third value. Sharing the additional zero page does
+not identify two image addresses or change the interpretation of a
+valid address.
+
+The installation here receives the uncompressed finite image. An
+inflation performed while forming this immutable installation is not
+an operation of its address decoder. If inflation occurs inside a
+claimed runtime, its own input, output, control, scratch and overlap
+must also be represented and charged. The paged image definition
+alone supplies no such inflation account.
+
+**Definition 14.2 (register decoder).** Fix a valid image for which
+all image addresses, bases, $13b_m+1$, and the nonnegative intermediate
+sums below fit in sixty-four bits. The decoder's scalar registers are
+binary sixty-four-bit fields. Its program is a finite graph whose
+nodes have an eight-bit operation, a sixty-four-bit immediate word,
+three register-reference fields and two successor-reference fields.
+Its operations are constant assignment, copy, addition, subtraction,
+fixed shift, equality, comparison, byte/word reading, conditional and
+unconditional successor selection, and reply phases.
+
+These operations specify a finite register transition system. A register
+microstep may contain a bounded field-selection or fixed-width clearing
+circuit. Intermediate states below are cuts of that transition system.
+Expansion of these circuits and initialization into a literal installed
+ML-I primitive graph is a separate refinement obligation; the mathematical
+transition function is not itself that installed graph.
+
+Addition and subtraction scan from the low bit with one carry or
+borrow; equality scans all bits; comparison scans from the high bit,
+retaining whether the first unequal pair has been found. A word read
+first copies its byte address into a separate address register. For
+each bit, it follows the directory according to the page-number bits,
+then selects the physical page field using the twelve within-page
+address bits and the three within-byte bits. The address and unfinished
+result remain represented while the next byte address is formed by
+a carry scan. The decoder therefore does not use an integer-to-object
+map to obtain a page.
+
+Initialization reads the actual header and scans the sixteen actual
+template sizes. It obtains the start of the bases and then the start
+of the bindings by addition and fixed multiplication. Multiplication
+by a fixed nonnegative integer is the finite sequence of shifts and
+additions selected by its literal binary digits. These are public
+code operations, independent of the numerical ML-F input.
+
+For a requested PC $c$, first handle $c=13b_m$ as M and
+$c=13b_m+1$ as stopped. Reject larger PCs. Otherwise compute
+$(q,j)$ with $c=13q+j$ and $0\le j<13$ by sixty-four restoring
+division stages: shift the partial remainder, append the next actual
+PC bit, compare to thirteen, and, when necessary, subtract thirteen
+and set the corresponding quotient bit. The cases $j=0,1$ give R
+and $J(13q+8)$ directly. In the other cases, search the base array
+with a represented interval $[l,h]$, initially $[0,m]$, until
+$h-l=1$. Read the binding at $l$, scan template headers to its
+template identifier, and read the rule at local offset $q-b_l$,
+with read bit zero for $j<8$ and one otherwise. Resolve the two
+negative destination words through the actual binding. Resolve a
+local destination $v$ as $b_l+v$. The finite NWMG block selector
+then emits its actual $j$th instruction.
+
+A reply consists of a three-bit instruction kind and a sixty-four-bit
+jump destination, zero for nonjumps. Each bit passes through an
+occupied binary latch to the output. End follows the last bit.
+Acknowledgement precedes Return. A new request is disabled until
+Return; an incomplete reply retains its position and latch occupancy.
+
+**Theorem 14.3 (all-address component correspondence).** For every
+valid image and every PC in Definition 14.2's range, the register
+decoder terminates with exactly the instruction of Definition 13.1,
+including its final M and stopped PC. Every intermediate register
+state has an interpretation as an unfinished stated scan, address
+search, rule resolution or output suffix. This is a correspondence
+of this finite decoder component, not of an entire LAB/session
+controller.
+
+Proof. A page address has a unique high-bit path in the perfect
+directory. The path selects precisely its page, and its remaining
+fifteen bits select precisely the desired physical bit field.
+Induction on the result-bit position proves the little-endian word
+read, including all byte-boundary carries. During address copying,
+the preserved source address and the copied prefix give the stated
+unfinished interpretation.
+
+The elementary carry and borrow invariants prove scalar addition
+and subtraction. In restoring division, after each scanned PC prefix
+$u$ the stored quotient and remainder satisfy
+$u=13Q+r$ with $0\le r<13$. Appending one bit makes the temporary
+remainder less than twenty-six, so one comparison and at most one
+subtraction suffice. After all sixty-four stages this gives the
+unique $q,j$.
+
+For a nonterminal $q$, strict base monotonicity gives the invariant
+$b_l\le q<b_h$. Reading the midpoint base preserves that invariant
+on the selected half. The positive interval length strictly
+decreases until it is one; hence $l$ is exactly the unique source
+row whose template interval contains $q$. Header scanning terminates
+at its finite identifier. The binding supplies its actual template
+and both actual external destinations. The rule read therefore
+resolves to exactly the corresponding complete non-erasing table
+row of Theorem 13.2. The finite thirteen-position case distinction is
+the same NWMG block construction, so its selected instruction is
+correct.
+
+Each bit scan has bounded position, each directory path has finite
+height, each search interval decreases, and each header scan has
+at most sixteen entries. Thus all phases terminate. Partial results,
+carry, comparison flag, interval endpoints, current directory
+reference and output position determine the next specified transition.
+No current result is replaced by an audit transcript. End,
+acknowledgement and Return give precisely the stated reply order.
+The argument quantifies all addresses of this fixed code image;
+it does not obtain that conclusion by sampling requests. $\square$
+
+**Definition 14.4 (component storage and tariff boundary).** Let the
+register graph have $a$ nodes and $r$ named scalar registers, in
+addition to its copied-address register. Its image header retains
+length, height and root. Its controller header retains PC, saved PC,
+directory cursor, a scratch reference, decoder entry and the input,
+output-kind, output-destination and address-register bindings.
+Use a fifty-seven-bit binary continuation bank for the phase, scan
+positions, carry, comparison flags and occupied/ended/acknowledged
+flags. Let $w$ be the chosen reference width. The represented component
+has
+
+$$
+\begin{aligned}
+O&=C+z+(p-1)+a+(r+1)+2,\\
+R&=2(p-1)+5a+10,\\
+B&=8P(C+z)+72a+64(r+1)+71+57,\\
+S&=B+wR+O.
+\end{aligned}
+\tag{ML.20}
+$$
+
+Here $O$ includes the actual pages, directory, program nodes,
+scalar-register objects and two headers; the last $O$ bits are the
+retained grants. The seventy-one image-header bits store length and
+height. Binary zero padding is allocated material. All null
+references occupy reference fields. No independent output transcript,
+reference-reader result or audit counter is a register or continuation
+input.
+
+Reading or writing a scalar bit has its field tariff and the finite
+register-selection tariff. A directory edge read has width $w$ and
+one navigation step. Page selection has fifteen binary tests and
+one physical bit read. Program operation/immediate reads and actual
+successor-reference assignments have their corresponding bit and
+reference tariffs. Carry, scan-position, phase and latch changes
+are bit-field operations. Reply transmission, End, acknowledgement
+and Return have distinct events. Initializing every stated field and
+grant is part of installation. These coordinates concern this
+specified data and register-graph layout; they assert no optimality.
+A separate primitive engine adds its actual code, selector state and
+scratch to (ML.20). Its installer also adds its chronological pending
+material and overlap. The formula does not determine those extra
+quantities and cannot replace their realization.
+
+**Proposition 14.5 (retention, audit erasure and composition limit).**
+After its installation, any finite sequence of completed decoder
+requests retains exactly the component storage (ML.20).
+Erasing independent transcripts, inspection counters and comparison
+oracles leaves its represented next transition and emitted bits
+unchanged. An exact account for this component cannot by itself
+supply an exact account for a surrounding computation.
+
+Proof. The request graph allocates no new page, directory, register
+or code object. Each transition changes only initialized scalar,
+reference, continuation or latch fields. Output is transferred from
+the represented result registers, followed by End and acknowledgement;
+past output observations are never read by the controller. Induction
+on requests proves constant retained component storage and the
+audit-erasure assertion.
+
+For the last statement, the surrounding state can vary in head,
+program continuation, original-port binding, acquired cache, pending
+receipt or a live allocation while this component has the same
+represented state. Definition 3.1 or Definition 5.1 can then prescribe
+different next actions. Theorem 14.3 supplies neither their represented
+fields nor their updates. Similarly a simultaneous peak requires
+storage at one common cut, including partially initialized installation
+material, all live roots, reference-width overlap and unfinished
+source/observer transfers. Adding this component's retained amount
+to unrelated individual peaks does not establish that common cut.
+The exact-fiber condition of PG19.2 still applies to the entire
+claimed state and operation domain. $\square$
+
+## 追加锚（本行以下为增补区）
