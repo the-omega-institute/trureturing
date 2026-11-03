@@ -89,6 +89,7 @@ internal sealed class LatticeMatterGhostStateFieldDocument : IScribeDocumentDefi
                 + "5ff4245383b2cdd4eea7a0524bc1274c32041eb4, Apache-2.0. No literature novelty is asserted.")),
             Paragraph(Text("The field and current identities include degenerate lattices and rank zero. "
                 + "They impose no inverse-Gram or rank-26 hypothesis. The accepted total-charge square anomaly "
-                + "remains in LatticeBRSTSquare; pure ghost Qg is anomalous. Coupled three-index Jacobi, "
-                + "total-Q field derivation, no-ghost, full string theory and AdS/CFT remain subsequent work.")))));
+                + "remains in LatticeBRSTSquare; pure ghost Qg is anomalous. The total-Q field derivation "
+                + "is proved in LatticeMatterGhostBRSTDerivation. This module does not prove coupled "
+                + "three-index Jacobi, no-ghost, full string theory or AdS/CFT.")))));
 }

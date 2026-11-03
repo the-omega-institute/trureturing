@@ -17,28 +17,19 @@ import Mathlib.LinearAlgebra.TensorProduct.Map
 
 /-!
 Original all-state matter/ghost tensor field and polynomial-cleared locality.
-
-The carrier, both state-field maps and all operators are the original ones.
-The only infinite-index sums below are sums of actions on a fixed vector.
-In particular there is no hypothesis that an endomorphism family has finite
-support. The tensor product has its usual algebraic, not completed, meaning.
-
-Classical construction: tensor products of fields and polynomial-cleared
-locality. Matter attribution remains Bakalov--Kac, math/0402315v1, section 4.1.
-Ghost normal products and the imported coefficient calculus retain Scott
-Carnahan's Apache-2.0 attribution, as recorded in their original suppliers.
-No literature novelty is asserted.
-
+The original carrier is algebraic, not completed; both field maps and all
+operators are unchanged. Infinite sums act on fixed vectors, without any
+finite-support hypothesis on endomorphism families.
+Classical tensor-field construction: Bakalov--Kac, math/0402315v1, section 4.1.
+Ghost normal products and coefficient calculus retain Scott Carnahan's
+Apache-2.0 attribution in their suppliers. No literature novelty is asserted.
 proof_shape: Y, stateField_locality, conformal_modes, current_zero_mode: content
 admission_basis: escape-witness
-escape_witness: bounded pointwise tensor convolution descends through BOTH
-tensor relations; finite SAME-order pair families permit integer shifts of
-the clearing polynomial; both cleared factors have rectangular support.
-The actual current is computed, not specified by its desired zero mode.
-
-All private lemmas in this file are organizational helpers consumed below.
-No Jacobi, total-charge derivation, ghost square-zero, no-ghost, or full
-string/AdS completion is asserted in this module.
+escape_witness: bounded pointwise tensor convolution descends through both
+tensor relations; finite same-order pairs permit integer polynomial shifts;
+both cleared factors have rectangular support. The actual current is computed.
+Private helpers are consumed below. This module asserts no Jacobi, total-charge
+derivation, ghost square-zero, no-ghost, or full string/AdS completion.
 -/
 
 set_option autoImplicit false
@@ -77,8 +68,7 @@ private theorem term_tmul (D : LatticeData) (u v : Carrier D) (a b : Fock)
     (n k : ℤ) :
     term D n k (u ⊗ₜ[ℂ] a) (v ⊗ₜ[ℂ] b) =
       ((LatticeAllStateField.Y D u)[[k]]) v ⊗ₜ[ℂ]
-        ((BcGhostStateField.Y a)[[n - 1 - k]]) b := by
-  rfl
+        ((BcGhostStateField.Y a)[[n - 1 - k]]) b := rfl
 
 private theorem term_support (D : LatticeData) (u v : Carrier D) (a b : Fock)
     (n M G : ℤ)
@@ -429,8 +419,7 @@ def omega (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) : State D
   LatticeActualConformalState.omega D H ⊗ₜ[ℂ] CountableOccupationFock.vacuum +
     LatticeAllStateField.vacuum D ⊗ₜ[ℂ] BcGhostConformalBRSTState.Omega
 
-/-- The exact ORIGINAL total modes, as they occur in LatticeBRST.total_ward_b.
-The admitted D5 supplier contains no identifier named `totalVirasoro`. -/
+/-- The exact original total modes in `LatticeBRST.total_ward_b`. -/
 theorem conformal_modes (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (m : ℤ) :
     ((Y D (omega D H))[[m + 1]]) = matterMode D H m + ghostVirasoro D m := by
@@ -473,10 +462,8 @@ theorem current_zero_mode (D : LatticeData)
     BcGhostConformalBRSTState.current_zero_mode,
     LatticeBRST.totalCharge, LatticeBRST.ghostCharge]
 
-/- Only the finite convolution algebra needed for these ORIGINAL fields.
-There are NEVER mixed-order matter-forward/ghost-reverse families here.
-Iterating the one-step finite shift identities is polynomial multiplication;
-it avoids introducing any unproved binomial/Fubini interchange. -/
+/- Finite convolution uses only same-order factor families. Iterated finite
+shifts implement polynomial multiplication without binomial/Fubini interchange. -/
 
 open FieldNormalProductLocality (delta)
 
@@ -888,9 +875,7 @@ private theorem simple_locality (D : LatticeData) (u v : Carrier D) (a b : Fock)
   obtain ⟨Ng, hg⟩ := BcGhostStateFieldLocality.stateField_locality a b p q ha hb
   let sign : ℂ := (-1 : ℂ) ^ (p*q)
   have hs : sign * sign = 1 := by
-    dsimp [sign]
-    rw [← mul_pow]
-    norm_num
+    simp [sign, ← mul_pow]
   refine ⟨Nm + Ng, ?_⟩
   funext r s
   apply TensorProduct.ext'
@@ -936,9 +921,8 @@ private theorem simple_locality (D : LatticeData) (u v : Carrier D) (a b : Fock)
   rw [delta_evaluate] at killed
   exact congrFun (congrFun killed r) s
 
-/- Homogeneous projection is used solely to extend the proved simple-state
-law through the ACTUAL tensor relations. It changes neither carrier nor Y.
-The final theorem has arbitrary original algebraic homogeneous field states. -/
+/- Homogeneous projection extends simple-state locality through the original
+tensor relations to all homogeneous states, changing neither carrier nor Y. -/
 
 private def ghostProjection (p : ℕ) : Module.End ℂ Fock :=
   (2 : ℂ)⁻¹ • (LinearMap.id + (-1 : ℂ) ^ p • CountableOccupationFock.parity)
@@ -948,9 +932,7 @@ private theorem ghostProjection_homogeneous (p : ℕ) (a : Fock) :
       (-1 : ℂ) ^ p • ghostProjection p a := by
   let z : ℂ := (-1 : ℂ) ^ p
   have hz : z * z = 1 := by
-    dsimp [z]
-    rw [← mul_pow]
-    norm_num
+    simp [z, ← mul_pow]
   have hinv := LinearMap.congr_fun CountableOccupationFock.parity_involution a
   change CountableOccupationFock.parity (CountableOccupationFock.parity a) = a at hinv
   change CountableOccupationFock.parity ((2 : ℂ)⁻¹ •
@@ -978,8 +960,7 @@ private theorem project_formula (D : LatticeData) (p : ℕ) (x : State D) :
 private theorem project_fixed (D : LatticeData) (p : ℕ) (x : State D)
     (hx : parity D x = (-1 : ℂ) ^ p • x) : project D p x = x := by
   have hz : (-1 : ℂ) ^ p * (-1 : ℂ) ^ p = 1 := by
-    rw [← mul_pow]
-    norm_num
+    simp [← mul_pow]
   rw [project_formula, hx, smul_smul, hz, one_smul, ← two_smul ℂ x, smul_smul]
   norm_num
 
@@ -1014,5 +995,3 @@ theorem stateField_locality (D : LatticeData) (x y : State D) (p q : ℕ)
 
 end
 end D5.S3.VertexAlgebra.LatticeMatterGhostStateField
-
-
