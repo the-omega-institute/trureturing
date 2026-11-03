@@ -1891,3 +1891,644 @@ core-attainment obligations retain their stated boundaries.
 The full original first-loss and equality problem remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 43. Complete local phase isolation and attained first-boundary contact
+
+**Definition 43.1 (selected determinant and feedback displacement).**
+Retain the original domain $\mathcal K=\operatorname{Dens}_2\times U(4)$,
+ordinary transpose, joint distance (39.1), both optimizer signs, and
+one common scalar feedback phase. The phase domain is exactly
+$\mathcal K_{\mathrm{ph}}$ of Definition 42.1, with arbitrary normalized
+positive effects. All of $w,A,B,P,Q,u,v$ refer to the same actual
+$w=\operatorname{diag}(UU_+^\dagger)$.
+For $0<\xi<4$ put
+
+$$
+\begin{aligned}
+ t&=\xi/2,& \delta_\xi&=\delta_\circ(t),&
+ x_\xi&=1-\delta_\xi/2,&y_\xi&=\sqrt{1-x_\xi^2},\\
+ q_\xi&=t-\delta_\xi,&p_\xi&=1-q_\xi,&
+ D_{\mathrm{sel}}(\xi)&=\mathscr D(x_\xi,p_\xi),\\
+ \mathscr U_\xi&=\{U:(E,U)\in\mathcal G_\xi\},&
+ d_U(U,\xi)&=\operatorname{dist}_{\mathrm F}(U,\mathscr U_\xi).
+\end{aligned}
+\tag{43.1}
+$$
+
+Here $\mathscr D$ is precisely (36.43); its second argument specifies
+$p$, with $q=1-p$. The scalar selector, $N$, $V=N+\kappa\xi$ and
+$\mathcal G_\xi$ are unchanged. Theorem 37.5 gives
+$0<x_\xi,y_\xi,p_\xi,q_\xi<1$. The auxiliary displacement $d_U$
+measures proximity to both full selected scalar orbits. It does not
+replace any summand or minimization in the original distance $\rho$.
+In particular the phase orientation $\tau$ below is not the optimizer
+sign $\sigma$ in that distance.
+
+**Theorem 43.2 (a complete local chart on actual phase feedbacks).**
+Fix $0<\delta_0<2$, $x_0=1-\delta_0/2$,
+$y_0=\sqrt{1-x_0^2}$ and $\tau\in\{+1,-1\}$.
+A neighborhood, modulo the one common scalar, of
+$(x_0+\tau i y_0,x_0-\tau i y_0,1,1)$ in $\mathbb T^4$
+has the real analytic coordinates $(\delta,a,b)$
+near $(\delta_0,0,0)$ given by
+
+$$
+\begin{aligned}
+ x&=1-\delta/2,\\
+ X&=-\cos b\cos a+
+              \sqrt{(1+x)^2-\cos^2b\sin^2a},&
+ Y&=\sqrt{1-X^2},\\
+ w_\tau(\delta,a,b)
+   &=\bigl(e^{ia}(X+\tau iY),e^{ia}(X-\tau iY),
+                         e^{i\tau b},e^{-i\tau b}\bigr),\\
+ U&=\lambda\operatorname{diag}(w_\tau(\delta,a,b))U_+,
+                         &|\lambda|&=1.
+\end{aligned}
+\tag{43.2}
+$$
+
+All square roots here are the positive branches at the base point.
+The coordinate $\delta$ is exactly $4-A(w)$, not a new distance.
+For this single actual feedback, before multiplication by $\lambda$,
+
+$$
+\begin{aligned}
+ A&=2(1+x)=4-\delta,\\
+ P&=2(hXe^{ia}+c\cos b),\\
+ Q&=2\tau(ihYe^{ia}-s\sin b),\\
+ B&=2|iYe^{ia}-\sin b|.
+\end{aligned}
+\tag{43.3}
+$$
+
+Thus varying $\delta$ in (36.47), along with its two phase variables,
+exhausts every nearby phase feedback after exactly the original
+scalar identification.
+
+*Proof.* Use continuous local arguments for four phase entries near
+the displayed base point. Their third and fourth arguments determine
+one common mean phase $\lambda$. After removing it, write the last
+two entries as $e^{i\tau b},e^{-i\tau b}$, with $b$ small. The mean
+argument of the first two entries determines $a$ near zero. Their
+half difference has the form $\tau\theta$, where
+$\theta$ is near $\arccos x_0\in(0,\pi/2)$. Hence the first two
+entries are uniquely $e^{ia}(X+\tau iY),e^{ia}(X-\tau iY)$,
+where $X=\cos\theta>0$, $Y=\sin\theta>0$.
+These choices recover all three local coordinates of the quotient;
+no relative phase has been removed by the common normalization.
+
+Their trace modulus is $2|Xe^{ia}+\cos b|$. Set
+$x=A/2-1$ and $\delta=2(1-x)$. The equation for this modulus is
+
+$$
+ X^2+2X\cos b\cos a+\cos^2b=(1+x)^2.
+\tag{43.4}
+$$
+
+At the base point its derivative in $X$ is $2(1+x_0)>0$.
+The quadratic root near $x_0$ is exactly (43.2); its other root is
+$-2-x_0$ at the base point and cannot represent the recovered $X$.
+The radicals remain positive and $0<X<1$ on a smaller neighborhood.
+Conversely (43.2) solves (43.4), has four entries of modulus one,
+and recovers the same local arguments and trace coordinate.
+The argument coordinates and these square roots are analytic there,
+so both the chart and its local inverse are analytic.
+Every displayed feedback is an actual unitary. Substitution in the
+original linear amplitude formulas (23.2) proves (43.3).
+Multiplication by $\lambda$ multiplies $P,Q$ by that same scalar
+and preserves $A,B,u,v$. It supplies every actual scalar representative.
+$\square$
+
+**Theorem 43.3 (quantitative all-effect phase isolation).**
+Suppose $0<\xi_0<4$ and $D_{\mathrm{sel}}(\xi_0)>0$.
+There are an open interval $I$ about $\xi_0$, with
+$\overline I\subset(0,4)$, and constants $r,c_1,c_2>0$ such that
+every original phase pair $(E,U)$ satisfying
+
+$$
+ \rho(E,U)=\xi\in I,\qquad d_U(U,\xi)<r
+\tag{43.5}
+$$
+
+has coordinates (43.2) near one of the selected orientations and
+obeys
+
+$$
+\begin{aligned}
+ f(E,U)-N(\xi)
+ &\ge c_1\bigl[(\delta-\delta_\xi)^2+a^2+b^2\bigr]
+                         +\frac{49}{360}\epsilon(E),\\
+ f(E,U)-N(\xi)
+ &\ge c_2 d_U(U,\xi)^2+\frac{49}{360}\epsilon(E).
+\end{aligned}
+\tag{43.6}
+$$
+
+Equality $f(E,U)=N(\xi)$ within (43.5) holds if and only if
+$(E,U)\in\mathcal G_\xi$. Every normalized positive effect at
+these actual feedbacks is included, with no rank or coherence-phase
+restriction on the input.
+
+*Proof.* Work first near one selected orientation at $\xi_0$.
+The selected level and feedback lie in the open set $\Omega$ of
+Theorem 40.4. Shrink a product neighborhood in level and chart
+coordinates so that all its points remain in $\Omega$. In particular
+$uv>0$, the negative sign has $t_-<0$, and the positive pure endpoint
+$k=t_+$ satisfies $0<k<1$ and $k<J_+$. Equations (43.3) and (36.2)
+give, with $t=\xi/2$,
+
+$$
+                  k=t-\delta=:q,\qquad p=1-q.
+\tag{43.7}
+$$
+
+The unique minimizing effect at this same actual feedback and
+original level is
+
+$$
+ \widehat E=\left[T\begin{pmatrix}
+ p&\sqrt{pq}\,\bar P Q/(uv)\\
+ \sqrt{pq}\,P\bar Q/(uv)&q
+ \end{pmatrix}T^\dagger\right]^{\mathsf T}.
+\tag{43.8}
+$$
+
+It is positive, trace one and rank one, and the strict condition
+$k<J_+$ makes the positive sign uniquely minimizing in the original
+joint distance. The exclusion $t_-<0$ applies to every effect at
+this $U$ and level, not just to (43.8). The inherited comparison is
+
+$$
+ f(E,U)\ge f(\widehat E,U)+\frac{49}{360}\epsilon(E).
+\tag{43.9}
+$$
+
+This comparison is unconditional on full-domain geometric optimality.
+It retains mixed effects and singular effects on the exact feasible
+arc, including its zero-coherence upper endpoint.
+
+Define the reduced analytic objective on this neighborhood by
+
+$$
+ \Psi(t,\delta,a,b)
+   =d^2p+e^2q-(\sqrt p\,u+\sqrt q\,v)^2-2\kappa t.
+\tag{43.10}
+$$
+
+Here $u,v$ are evaluated on (43.2), and $p,q$ are (43.7).
+It equals $f(\widehat E,U)$ by the original same-feedback identity.
+All square roots and amplitude moduli are analytic because
+$p,q,u,v$ are positive. At $a=b=0$ it is exactly
+$\mathcal H_{+,t}(\delta)=H^+_\delta(t-\delta)$ of (37.12).
+Put $\gamma_c=c-h>0$ and, for these scalar parameters, write
+
+$$
+\begin{aligned}
+ y&=\sqrt{1-x^2},&
+ S_0&=2(hx+c)\sqrt p+2hy\sqrt q,\\
+ L_a&=\frac{hx^2}{1+x}
+       \left(\frac{\gamma_c\sqrt p}{hx+c}+\frac{\sqrt q}{y}\right),&
+ L_b&=\gamma_c\sqrt p+
+                      \frac{(h^2x-s^2)\sqrt q}{hy},\\
+ K&=\begin{pmatrix}L_a&-s\sqrt q\\-s\sqrt q&L_b\end{pmatrix}.
+\end{aligned}
+\tag{43.11}
+$$
+
+These are the coefficients of (36.43), with $S_0>0$, $L_a>0$.
+For every nearby $t,\delta$, (36.52)--(36.54) give
+
+$$
+ \Psi(t,\delta,a,b)
+ =\mathcal H_{+,t}(\delta)
+       +2S_0\bigl(L_aa^2+L_bb^2-2s\sqrt q\,ab\bigr)
+       +o(a^2+b^2).
+\tag{43.12}
+$$
+
+The expansion holds for both orientations. Analyticity shows that
+$\partial_a\Psi=\partial_b\Psi=0$ identically along $a=b=0$;
+therefore the scalar--phase entries of its Hessian vanish there.
+The scalar stationary point is $\delta_\xi$, by Theorem 37.5.
+
+To bound its scalar Hessian, use $F,G$ in (37.12). On the interior
+of the positive feasible scalar interval, (37.22) gives
+$F''\le1-8hc$ and $G''\le0$. They are positive concave functions
+there, so their geometric mean is concave. Indeed its second
+derivative is
+
+$$
+ (\sqrt{FG})''
+   =\tfrac12\sqrt{G/F}\,F''+\tfrac12\sqrt{F/G}\,G''
+                    -\frac{(F'G-FG')^2}{4(FG)^{3/2}}\le0.
+\tag{43.13}
+$$
+
+The remaining terms of $\mathcal H_{+,t}$ are affine in $\delta$.
+Consequently, at every selected interior point,
+
+$$
+\begin{aligned}
+ h_t&:=\mathcal H''_{+,t}(\delta_\xi)\ge8hc-1>0,\\
+ \nabla^2_{(\delta,a,b)}\Psi(t,\delta_\xi,0,0)
+       &=\begin{pmatrix}h_t&0\\0&4S_0K\end{pmatrix},&
+ \det K&=D_{\mathrm{sel}}(\xi).
+\end{aligned}
+\tag{43.14}
+$$
+
+The scalar implicit function theorem applies to
+$\mathcal H'_{+,t}(\delta)=0$ because $h_t>0$.
+The selected solution is locally analytic in $t$: uniqueness and
+continuity from Theorems 37.5 and 39.2 identify it with that implicit
+solution. Thus its stationary point in (43.14) varies analytically.
+At $\xi_0$, $L_a>0$ and $\det K>0$ make the whole three-variable
+Hessian positive definite. By continuity choose a closed parameter
+interval about $\xi_0$ and a small convex coordinate ball about
+each $(\delta_\xi,0,0)$ on which the Hessian is uniformly bounded
+below by $\mu I_3$ for some $\mu>0$. This is possible by first
+taking a ball at the base point and then shrinking the parameter
+interval so that its centers remain inside a smaller ball.
+
+For $\mathbf z=(\delta,a,b)$ and
+$\mathbf z_\xi=(\delta_\xi,0,0)$, Taylor's integral formula on
+the connecting segment gives
+
+$$
+\begin{aligned}
+ \Psi(t,\mathbf z)-N(\xi)
+ &=\int_0^1(1-s_0)(\mathbf z-\mathbf z_\xi)^{\mathsf T}
+     \nabla^2\Psi(t,\mathbf z_\xi+s_0(\mathbf z-\mathbf z_\xi))
+                 (\mathbf z-\mathbf z_\xi)\,ds_0\\
+ &\ge\frac\mu2\|\mathbf z-\mathbf z_\xi\|_2^2.
+\end{aligned}
+\tag{43.15}
+$$
+
+The constant and linear Taylor terms are respectively $N(\xi)$
+and zero. Shrinking the balls if necessary, bounded chart derivatives
+give a uniform $C>0$ with
+
+$$
+ \|U-\lambda\operatorname{diag}
+                 (w_\tau(\delta_\xi,0,0))U_+\|_{\mathrm F}
+       \le C\|\mathbf z-\mathbf z_\xi\|_2.
+\tag{43.16}
+$$
+
+The displacement $d_U$ is no larger than the left side.
+Both orientations have the same objective calculation; take the
+smaller of their neighborhoods and bounds. Their selected orbits
+are disjoint at positive levels, and remain disjoint over a small
+closed level interval. The complete chart and its local inverse,
+together with compactness of the scalar circle, supply $r>0$ such
+that every phase feedback with $d_U<r$ lies in one of these coordinate
+balls, uniformly over a smaller interval $I$. More explicitly, a
+failure of such a radius would give levels in that closed interval
+and phase feedbacks converging to its selected graph from outside
+the open chart neighborhoods. A convergent subsequence and the
+continuity of that graph contradict their openness.
+This proves complete neighborhood coverage, not just coverage of
+chosen variation curves.
+
+Combining (43.9), (43.15) and (43.16) proves (43.6), with
+$c_1=\mu/2$ and $c_2=\mu/(2C^2)$ after any needed reduction of
+$\mu$. If $f=N$, (43.15) forces
+$\delta=\delta_\xi$, $a=b=0$. At that actual selected feedback,
+Theorem 40.4 gives the unique minimizing effect (43.8), which is
+the selected effect in (39.2). In particular a pure effect with
+misaligned coherence is not an additional equality case.
+Conversely every pair in $\mathcal G_\xi$ has $f=N(\xi)$ and
+satisfies (43.5). This proves the exact equality assertion. $\square$
+
+**Theorem 43.4 (noncoalescence off zero determinant and the simple
+reduced null mode).** Let $0<\xi_0<4$ and
+$D_{\mathrm{sel}}(\xi_0)\ne0$. If $\xi_n\to\xi_0$ and
+$X_n=(E_n,U_n)$ minimizes $f$ on the actual phase level
+$\mathcal P_{\xi_n}$, with $d_U(U_n,\xi_n)\to0$, then
+$X_n\in\mathcal G_{\xi_n}$ for all sufficiently large $n$.
+Thus a sequence of nongeometric phase global minimizers coalescing
+with the selected graph at a positive interior level requires
+$D_{\mathrm{sel}}(\xi_0)=0$.
+
+If $D_{\mathrm{sel}}(\xi_0)=0$, the reduced Hessian in (43.14)
+is positive semidefinite with exactly one null direction, in the
+coordinate order $(\delta,a,b)$:
+
+$$
+ \ker\nabla^2_{(\delta,a,b)}\Psi
+    =\operatorname{span}_{\mathbb R}
+           \left\{\left(0,\frac{s\sqrt{q_{\xi_0}}}{L_a},1\right)\right\}.
+\tag{43.17}
+$$
+
+The coefficients in (43.17) are evaluated at $\xi_0$.
+This is the Hessian after the same-level effect minimum and the
+single common scalar quotient. It asserts no Hessian statement for
+the full positive-effect boundary, and no higher-order sign,
+existence of a new branch, or global sufficiency at determinant zero.
+
+*Proof.* The chart and analytic objective in the proof of Theorem
+43.3 exist irrespective of the determinant sign. The Hessian
+(43.14) is invertible when $D_{\mathrm{sel}}\ne0$. Apply the
+implicit function theorem to the three equations
+$\nabla_{(\delta,a,b)}\Psi=0$, with $t$ as parameter.
+It gives a unique stationary solution near the selected point for
+each nearby $t$. The selected analytic scalar solution already
+satisfies those equations, so it is that unique solution.
+
+By Theorem 40.4, every sufficiently late $X_n$ has the unique
+fixed-feedback minimizing effect $\widehat E_n$. Indeed phase
+minimality implies fixed-feedback minimality, since varying only
+$E$ keeps the feedback in the phase domain. After choosing the
+nearby selected orientation and its common scalar representative,
+the local inverse chart puts its coordinates near
+$(\delta_{\xi_0},0,0)$. The reduced point must be stationary:
+every nearby chart feedback with its effect (43.8) is an actual
+phase pair at this same original level. Local variation is open
+in all three coordinates. The unique stationary solution therefore
+forces $U_n\in\mathscr U_{\xi_n}$, and fixed-feedback uniqueness
+forces $X_n\in\mathcal G_{\xi_n}$. The two orientation charts
+and their compact scalar orbits give the assertion for the whole
+sequence. In the negative-determinant case the selected stationary
+point has a decreasing direction, so a global minimizer cannot
+actually occur there; the stated noncoalescence conclusion still
+holds.
+
+At zero determinant, $L_a>0$ gives $L_b=s^2q/L_a>0$, and
+
+$$
+             (a,b)K(a,b)^{\mathsf T}
+                   =L_a\left(a-\frac{s\sqrt q}{L_a}b\right)^2.
+\tag{43.18}
+$$
+
+The scalar block $h_t$ is strictly positive and $S_0>0$.
+Hence the only reduced null direction is (43.17), and both
+remaining reduced eigenvalues are positive. The common phase was
+already quotiented out; it is not an additional null coordinate
+in this statement. $\square$
+
+**Theorem 43.5 (attained separated contact at a positive-determinant
+first boundary).** At either original first boundary
+$b\in\{\alpha,\beta\}$,
+
+$$
+                         D_{\mathrm{sel}}(b)\ge0.
+\tag{43.19}
+$$
+
+If $D_{\mathrm{sel}}(b)>0$, there is an actual phase pair
+$X_b=(E_b,U_b)$ such that
+
+$$
+ X_b\in\mathcal A_{\mathrm{ph},b}\setminus\mathcal G_b
+          \subseteq\mathcal A_b\setminus\mathcal G_b,
+                   \qquad d_U(U_b,b)\ge r>0,
+\tag{43.20}
+$$
+
+for a sufficiently small isolation radius from Theorem 43.3.
+In fact every nongeometric phase global minimizer at every sufficiently
+nearby level is outside that radius of the selected feedbacks.
+Consequently
+
+$$
+\begin{aligned}
+ \mathcal A_b=\mathcal G_b
+    &\ \Longrightarrow\ D_{\mathrm{sel}}(b)=0,\\
+ D_{\mathrm{sel}}(\alpha)>0
+    &\ \Longrightarrow
+          \text{the exhaustive-equality prefix is }(0,\alpha).
+\end{aligned}
+\tag{43.21}
+$$
+
+If $\alpha<\beta$, any additional contact at $\alpha$ in
+(43.20) is pure. No identity between a determinant-zero level and
+either first boundary is asserted.
+
+*Proof.* Theorem 42.2 puts $0<\alpha\le\beta<R<4$.
+Theorem 39.5 gives $m(b)=N(b)$ and actual selected global minimizers
+at both endpoints. Their positive sign is strict by (37.23).
+A negative determinant would therefore give the actual same-distance
+strict competitor of Theorem 36.5, contradicting global minimality.
+This proves (43.19), using both original distances in that theorem.
+
+Suppose the determinant is positive. Choose the interval $I$ and
+radius $r$ in Theorem 43.3 with $\overline I\subset(0,R)$.
+For any $\xi\in I$, (42.24) gives
+$m_{\mathrm{ph}}(\xi)=m(\xi)\le N(\xi)$.
+If a phase global minimizer has $d_U<r$, (43.6) and its exact
+equality statement force its value to be $N(\xi)$ and the pair
+to lie in $\mathcal G_\xi$. Thus every nongeometric phase global
+minimizer in this interval has $d_U\ge r$.
+
+For $b=\alpha$, (42.29) supplies levels of
+$\mathcal B_{\mathrm{ph}}$ tending to $\alpha$ from at or above
+$\alpha$. An isolated bad endpoint is included by taking that level
+itself. At each such level there is a nongeometric phase global
+minimizer: if $m_{\mathrm{ph}}<N$, any phase global minimizer is
+nongeometric; if the values coincide, the bad-set witness is an
+additional global minimizer. For $b=\beta$, choose levels tending
+down to $\beta$ in the strict-loss right interval (39.29).
+Equation (42.24) supplies phase global minimizers on these levels,
+and their strictly lower values make them nongeometric.
+All chosen feedbacks satisfy $d_U\ge r$.
+
+The phase domain, with all effects, is compact. A subsequential
+limit is an actual phase pair at level $b$. Endpoint value continuity
+(39.27) makes its value $m(b)=N(b)$, so (42.24) puts it in both
+minimizing sets. Hausdorff continuity of $\mathscr U_\xi$ preserves
+$d_U\ge r$ at the limit. This proves (43.20) as an attained pair,
+without identifying an explicit globally minimizing branch.
+The first implication in (43.21) now follows from (43.19)--(43.20).
+The contact at $\alpha$ belongs to the original bad set, so the
+endpoint alternative in Theorem 39.5 proves the prefix assertion.
+If $\alpha<\beta$, Theorem 41.4 forces purity at level $\alpha$.
+That existing prefix result is used only for this final rank conclusion;
+it is not used to locate $\beta$ or to exclude a mixed strict competitor.
+$\square$
+
+**Theorem 43.6 (uniform separation of original strict global
+minimizers and their actual endpoint limits).** Suppose
+$D_{\mathrm{sel}}(\beta)>0$. Choose $0<r\le1$ as in Theorems
+43.3 and 43.5 near $\beta$. There is $\eta>0$ such that every
+original global minimizer at every level
+$\beta<\xi<\beta+\eta$ satisfies
+
+$$
+              d_U(U,\xi)\ge\frac{r^2}{4}.
+\tag{43.22}
+$$
+
+These minima have $m(\xi)<N(\xi)$; no phase-feedback or rank
+restriction is imposed on the minimizing input. Every subsequential
+actual endpoint limit of such minimizers belongs to
+$\mathcal A_\beta\setminus\mathcal G_\beta$ and retains the same
+positive feedback separation. In particular an original strict global
+minimizing branch coalescing with $\mathcal G_\beta$ can do so only
+if $D_{\mathrm{sel}}(\beta)=0$.
+
+*Proof.* Take $\eta$ small enough that the entire right interval
+lies in $(0,R)$, in the isolation interval, and in (39.29).
+Fix any $X=(E,U)\in\mathcal A_\xi$ there. The same-effect
+spectral/Birkhoff decomposition of Theorem 42.3 has
+$w=\sum_j\theta_jw_j$ with all $\theta_j>0$ and
+$w_j\in\mathbb T^4$. By (42.25), every $(E,U_j)$ is a phase
+global minimizer at this same original level. Their values are
+$m(\xi)<N(\xi)$, so none is geometric and all satisfy
+$d_U(U_j,\xi)\ge r$. This inference uses actual global minimality
+and its equality preimage, not merely existence of a strict competitor.
+
+Let $v$ be any selected diagonal, including either orientation and
+any common scalar representative. Frobenius invariance under
+multiplication by $U_+$ gives $\|w_j-v\|_2\ge r$ for every $j$.
+Since $v,w_j$ have four unit-modulus coordinates,
+
+$$
+\begin{aligned}
+ \operatorname{Re}\langle v,v-w\rangle
+    &=\sum_j\theta_j\bigl(4-
+                          \operatorname{Re}\langle v,w_j\rangle\bigr)\\
+    &=\frac12\sum_j\theta_j\|v-w_j\|_2^2
+      \ge\frac{r^2}{2}.
+\end{aligned}
+\tag{43.23}
+$$
+
+Here $\langle v,w\rangle=\sum_k\bar v_kw_k$ and $\|v\|_2=2$.
+Cauchy--Schwarz therefore implies $\|v-w\|_2\ge r^2/4$.
+The original unitary $V_U=UU_+^\dagger$ has diagonal $w$, so
+
+$$
+ \|U-\operatorname{diag}(v)U_+\|_{\mathrm F}
+   =\|V_U-\operatorname{diag}(v)\|_{\mathrm F}
+   \ge\|w-v\|_2\ge r^2/4.
+\tag{43.24}
+$$
+
+Taking the infimum over all selected $v$ proves (43.22).
+This support calculation compares alternative whole feedbacks from
+the existing transport; it does not assign independent controls to
+spectral pieces of one effect. The input $E$ is unchanged in every
+replacement, including when it is mixed or singular.
+
+The compactness and endpoint continuity of Theorem 39.6 put every
+actual subsequential limit in $\mathcal A_\beta$.
+Continuity of the selected feedback orbits preserves (43.22), excluding
+$\mathcal G_\beta$. Actual global minimizing branches on a short
+right interval exist by that theorem and obey the same uniform
+separation. Finally (43.19) excludes negative determinant at $\beta$,
+and (43.22) excludes coalescence at positive determinant, proving the
+necessary zero-determinant condition. $\square$
+
+**Mathematical source correspondence 43.7.** The complete chart uses
+the actual phase variation (36.47) and its exact trace and amplitude
+identities, now with its trace coordinate allowed to vary. Its reduced
+scalar block uses the unique interior selector and strict scalar
+convexity of Theorem 37.5. The transverse block is exactly the
+expansion (36.52)--(36.54). The unchanged-effect comparison and its
+uniform impurity coefficient are Theorem 40.4. These inputs do not
+require the selected pair to be globally minimizing. The additional
+fixed-record deductions are complete local phase coverage, the full
+reduced Hessian isolation, the simple reduced null mode, and their
+attained-contact and original-minimizer separation consequences.
+The implicit function theorem and Taylor's integral formula enter
+only with the analytic domains and invertible or positive Hessians
+specified in (43.7)--(43.15).
+
+The boundary arguments use Theorems 39.5--39.6 and the exact
+same-effect phase value and minimizing preimage in Theorems 42.3--42.4.
+The only convex decomposition used in (43.23) is the spectral/Birkhoff
+decomposition of the given actual $U$. Its matrix
+$|Z_{ik}|^2$ is doubly stochastic, as required by the finite
+Birkhoff--von Neumann theorem cited in Section 42.7. No converse
+statement about the convexity of a specified normal-unitary orbit
+is needed. The reduced null mode is a second-derivative conclusion;
+no parameter transversality or higher-order bifurcation condition
+has been established by that calculation.
+
+For comparison with a global certificate,
+[Bandeira--Boumal--Singer, *Tightness of the maximum likelihood
+semidefinite relaxation for angular synchronization*,
+arXiv:1411.3272v3, Lemmas 4.3--4.4 and Section 4.3](https://arxiv.org/html/1411.3272v3),
+consider a Hermitian objective matrix $C$ and the feasible matrices
+$X\succeq0$ with $\operatorname{diag}X=\mathbf1$. Their certificate
+requires a Hermitian slack $S\succeq0$, $SX=0$, and $S+C$ real
+diagonal; rank $n-1$ of the slack yields uniqueness. Their Section
+4.3 distinguishes this full positivity from positivity only on the
+phase tangent space. The prescribed original distance and variable
+effect of (42.31) are additional constraints and parameters. No such
+uniform slack or equality kernel for them is supplied by (43.14).
+
+Likewise [Boumal, *Nonconvex phase synchronization*,
+arXiv:1601.06114v3, Theorem 4](https://arxiv.org/html/1601.06114v3)
+proves global sufficiency of second-order conditions for its
+unconstrained torus quadratic problem with $C=zz^*+\Delta$,
+unit-modulus $z$, $\operatorname{diag}C\ge0$, and the bounds
+
+$$
+ \|\Delta\|_{\mathrm{op}}\le\frac{n^{2/3}}{14},\qquad
+ \|\Delta z\|_\infty\le\frac{n^{2/3}\sqrt{\log n}}{14}.
+\tag{43.25}
+$$
+
+An exact correspondence of its feasible set and these hypotheses
+to the prescribed-distance, all-effect problem is absent here.
+Its global conclusion therefore is not an implication of the local
+Hessian calculation. These cited standard tools are intermediate
+comparisons; Theorems 43.2--43.6 are repo-derived fixed-record
+deductions, with no literature-priority assertion.
+
+**Unresolved mathematical obligations 43.8.** For any proposed
+preceding interval, the full value certificate remains
+
+$$
+ \Delta_\sigma(w)+b_\sigma(w)r
+            -2u(w)v(w)\sqrt{t_\sigma(w,\xi)-r^2}
+       \ge V(\xi)
+ \quad
+ \left\{\begin{array}{l}
+ w\in\mathbb T^4,\quad \sigma\text{ admissible},\\
+ r\in[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}].
+ \end{array}\right.
+\tag{43.26}
+$$
+
+This is (42.31), with the complete effect arc displayed. It requires
+all preceding levels, both original signs, every mixed and singular
+arc, and all zero-amplitude and active-endpoint cases. Theorem 43.3
+controls a neighborhood of the selected phase feedbacks when its
+selected determinant is positive. It supplies no comparison on the
+complement, where separated pure or mixed pairs can tie or win.
+Exact phase equality sets still require (36.7), and all original
+minimizing lifts still require the variance-zero conditions (42.25).
+Their complete evaluation is unresolved.
+
+The exact $\alpha,\beta$, their coincidence or separation, the
+identity and exhaustion of first competing globally minimizing
+branches, separated mixed contact at $\beta$, and any earlier pure
+equality ties remain undetermined. Endpoint exclusion at $\alpha$
+is established by (43.21) only under its positive-determinant
+hypothesis; endpoint inclusion or exclusion at determinant zero is
+unresolved. Nongeometric phase coalescence and original strict global
+minimizer coalescence in the stated scopes require determinant zero,
+but a zero determinant need not produce either coalescence or first
+loss and does not exclude simultaneous separated contact.
+The higher-order and global signs in the simple reduced null direction
+remain unresolved. An attained strict right competitor from a mixed
+contact is still not thereby a globally minimizing branch.
+
+The original mixed-minimizer exclusion near selected feedbacks in
+Theorem 40.4 remains valid without a determinant hypothesis. Purity
+on the already defined pre-$\beta$ prefix is not a certificate for
+locating that prefix, and cannot remove the mixed strict competitors
+in (43.26). Beyond $R$ the same-effect transport retains only its
+proved sufficient domain; all-effect transport outside it, beyond-four
+geometric ordering, and the remaining core-attainment obligations
+retain their unresolved boundaries. The full original first-loss
+ordering and actual equality/attainment problem is not settled by
+these local and endpoint alternatives.
+
+## 追加锚（本行以下为增补区）
