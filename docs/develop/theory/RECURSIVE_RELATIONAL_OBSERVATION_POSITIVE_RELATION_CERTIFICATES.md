@@ -522,3 +522,430 @@ comparison bounds. Those stability results therefore do not provide an
 acquisition or recognition bridge for this two-source experiment.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. The certified G0 relation carries an affine torsor
+
+**Definition 8.1 (intrinsic quotient and marked parallel classes).** Let
+$E\subseteq X\times Y$ be an acquired complete-label relation which has passed
+Definition 1.2 with the unique surviving source $G_0$. Define
+
+$$
+\begin{aligned}
+Q(E)&=Y/\{y\sim y'\Longleftrightarrow N_E(y)=N_E(y')\},\\
+L(E)&=X/\{x\approx x'\Longleftrightarrow N_E(x)=N_E(x')\},
+\end{aligned}
+$$
+
+where $N_E$ denotes the complete opposite-side neighbourhood. Write
+$\bar E\subseteq L(E)\times Q(E)$ for the induced incidence. The capacities
+are two for every class in $L(E)$ and nine for every class in $Q(E)$. Let
+$\mathfrak P(E)$ be the finite set of subsets $\Pi\subseteq L(E)$ such that
+$|\Pi|=9$, the point sets
+$P_E(\ell)=\{q\in Q(E):(\ell,q)\in\bar E\}$ for its nine members are
+pairwise disjoint and their union is $Q(E)$. Thus $\Pi$ is a partition of
+the twenty-seven point classes by nine parallel line classes. A marked quotient is a bijection
+$\delta:\mathfrak P(E)\to\mathbb P_0$, where
+
+$$
+\mathbb P_0=\{F(0,0,1),F(1,0,0),F(1,2,1),F(1,1,1)\}\subseteq\mathbb P^2(F).
+$$
+
+A marked affine chart is a pair $(\phi,\delta)$ with a bijection
+$\phi:Q(E)\to F^3$ such that, for every $\Pi\in\mathfrak P(E)$ and
+$\ell\in\Pi$,
+
+$$
+\phi(\{q\in Q(E):(\ell,q)\in\bar E\})
+ =\{u+t d:t\in F\}
+$$
+
+for some $u\in F^3$ and $d\in\delta(\Pi)\setminus\{0\}$, and every affine line
+of one of the four marked directions occurs in this way. The direction marks
+are labels of the four intrinsic parallel classes; they are not an origin or
+an injected endpoint map.
+
+**Theorem 8.2 (origin-free affine operation).** For every transported $G_0$
+relation $E=(\lambda\times\varrho)(E_0)$, the sets $Q(E)$, $L(E)$ and
+$\mathfrak P(E)$ are intrinsic, $|Q(E)|=27$, $|L(E)|=36$,
+$|\mathfrak P(E)|=4$, and a marked affine chart exists. For any such chart
+put
+
+$$
+H_{\phi}(p,q,r)=\phi^{-1}\bigl(\phi(p)-\phi(q)+\phi(r)\bigr).
+\tag{RRO.8.1}
+$$
+
+Then $H_{\phi}$ is independent of every permissible chart, ordering of
+representatives inside a twin class, and choice of origin. It is the unique
+origin-free affine ternary operation whose marked affine lines are the
+incidence lines of $\bar E$. In particular, it recovers all incidences in the
+four supplied directions and satisfies
+
+$$
+H(p,q,q)=p,\qquad H(p,p,r)=r,
+$$
+
+and the affine parallelogram law
+$H(H(p,q,r),s,t)=H(p,q,H(r,s,t))$ whenever both sides are read in the same
+marked affine torsor.
+
+**Proof.** The equal-neighbourhood relation is exactly the twin relation in
+UJB Theorem 15.2. Its proof gives two-element left classes, nine-element
+right classes, the thirty-six affine lines, the twenty-seven points and the
+four listed direction vectors. A finite enumeration of partitions of $Q(E)$
+by the induced three-point incidence blocks therefore obtains exactly the
+four members of $\mathfrak P(E)$; no coordinate, hidden map or unacquired
+label is used in that enumeration.
+
+Choose one chart supplied by the literal identification in UJB Theorem 15.2.
+If $(\phi',\delta')$ is another admissible chart, the frame and full-closure
+hypotheses of Cara--Rottey--Van de Voorde, arXiv:1207.4726v3,
+Corollaries 3.6--3.7, apply to the order-three point classes and their four
+marked line directions. Their rigidity conclusion says that the two
+coordinatizations differ by an affine change
+$\phi'=A\phi+b$ (with the corresponding permutation of the marked direction
+classes), where $A$ is invertible over $F$. This is precisely the supplied
+$G_0$ instance; the corollaries are used as a rigidity and correspondence
+supplier, not as a new theorem about this repository relation.
+
+For $x,y,z\in F^3$,
+
+$$
+(Ax+b)-(Ay+b)+(Az+b)=A(x-y+z)+b.
+$$
+
+Applying this identity and then $\phi'^{-1}$ gives
+$H_{\phi'}=H_{\phi}$. Reordering the two representatives of a left class or
+the nine representatives of a right class does not change $Q(E)$, $L(E)$ or
+$\bar E$, so it cannot change $H$. Replacing the origin by $o$ replaces
+$\phi$ by $\phi-o$, and the same identity again leaves (RRO.8.1) unchanged.
+The two displayed identities and the parallelogram law are the corresponding
+identities in $F^3$, transported through $\phi$. Conversely, the condition
+that every marked line is an affine line determines the four-direction
+incidence table, so the operation is the unique ternary operation with these
+properties. $\square$
+
+The construction has a finite, explicit input contract. It consumes the
+complete acquired relation, the observed endpoint words and the declaration
+that the unique surviving branch is $G_0$; it computes neighbourhood hashes,
+twin classes, candidate partitions and a finite chart table. Its working
+storage, finite-field arithmetic and chart enumeration are additional
+computation costs. No claim of an optimal chart algorithm, a reduced
+acquisition cost, or a lower bound on this computation is made.
+
+**Theorem 8.3 (exact reverse correspondence and literal lift).** Let
+$\mathcal A=(Q,L,\bar E,\mathfrak P,\delta)$ be the marked quotient of
+Theorem 8.2, and retain actual bijections
+$\lambda:A\to X$ and $\varrho:T\to Y$ from the literal endpoint sets to
+the acquired labels. Let $[a]_L$ and $[t]_R$ denote the classes determined by
+those associations. Define
+
+$$
+\operatorname{Lift}_{\lambda,\varrho}(\mathcal A)
+ =\{(\lambda(a),\varrho(t)):
+       ([a]_L,[t]_R)\in\bar E\}.
+\tag{RRO.8.2}
+$$
+
+Then
+$\operatorname{Lift}_{\lambda,\varrho}(\mathcal A)=
+(\lambda\times\varrho)(E_0)$, and quotienting this lifted relation by equal
+neighbourhoods returns $\mathcal A$ with its four marked directions. The
+associations, the original indexed masks and values, and the capacities
+$2,9$ are retained in this inverse; they are not replaced by the chart.
+
+**Proof.** UJB Theorem 15.2 says that two literal left endpoints have the
+same neighbourhood exactly when they are the pair $(v,s),(-v,-s)$, and two
+literal right endpoints have the same neighbourhood exactly when they have
+the same $w$ and arbitrary $z$. It also says that literal adjacency is exactly
+incidence of the corresponding affine line and point, with every pair above an
+incidence present. Substituting these two equivalences into (RRO.8.2) gives
+the defining edge equation of $E_0$ in both directions. The same equivalences
+show that quotienting recovers precisely the classes and incidence table.
+No chart coordinate is consulted by this argument; the marked directions only
+identify which quotient classes correspond to the four supplied literal
+kernels. $\square$
+
+A common controller can compute $H$ and the lifted relation from retained
+labels and then continue with the existing stationary original-root Read
+menu. The computation introduces no source action. The public $N$, the
+original repeated-index coupling and all masks remain fixed. For a scan of
+$m$ completed samples, the controller still makes exactly $15m$ original
+Read invocations and pays the operands in (PCR.6); for later adaptive use it
+uses the indexed ratios (UJB.17001)--(UJB.17003). The relation-derived output,
+its finite arithmetic and its storage are charged separately from acquisition,
+preparation, installation and the $N$ prepared slots.
+
+## 9. Inversion labels: a source-specific recovery boundary
+
+**Definition 9.1 (the commuting-edge inverse).** In the finite-group witness
+of [FGP, Definitions 1.1--1.2](FINITE_GROUP_POWER_MAP_SEPARATION.md), write
+$a=(v,s)\in A=(F^2\setminus\{0\})\times F^2$ and
+$t=(w,z)\in T=F^3\times F^2$. Embed them in $S_i$ as
+
+$$
+\widetilde a=(v,0,s;0),\qquad
+\widetilde t=(0,w,z;1).
+$$
+
+The multiplication in (1.2)--(1.3) gives
+
+$$
+\widetilde a\widetilde t=\widetilde t\widetilde a
+\quad\Longleftrightarrow\quad B_i(v,w)=s,
+\tag{RRO.9.1}
+$$
+
+and $\widetilde a^{-1}=(-v,0,-s;0)$. Thus the inverse-label map on an input edge
+is
+
+$$
+\iota(v,s)=(-v,-s).
+\tag{RRO.9.2}
+$$
+
+This is a group-theoretic interpretation of the already defined relation; it
+is not an additional group-operation port supplied to the observer.
+
+**Theorem 9.2 (G0 point recovery and G1 inversion ambiguity).** Fix an
+acquired input edge $(x,y)\in E$ and suppose the certified branch is $G_0$.
+The inverse label of $x$ is recovered from $E$ and the acquired input as the
+unique label $x'\ne x$ having $N_E(x')=N_E(x)$. For the certified branch
+$G_1$, there are supported realizations with the same complete relation $E$
+and the same entire prepared label array but with different inverse labels
+for that same input edge.
+
+**Proof.** In $G_0$, UJB Theorem 15.2 gives the left class
+$\{(v,s),(-v,-s)\}$, and $v\ne0$ implies that its two members are distinct.
+Equation (RRO.9.1) identifies the second member with the group inverse, so
+the equal-neighbourhood search returns exactly $\iota(x)$.
+
+For $G_1$, identify the first two coordinates with the field
+$E_9=F[\iota]$. A left class is
+
+$$
+C_c=\{(v,s):v\in E_9^\times,\ s=cv\},\qquad |C_c|=8,
+$$
+
+whereas inversion maps $(v,cv)$ to $(-v,-cv)$ inside the same class. Choose
+$a,b\in C_c$ with $b\notin\{a,-a\}$, and let $\sigma$ transpose $a,b$ and
+fix every other left endpoint. It preserves every $G_1$ neighbourhood. Start
+with any full injections $(\lambda,\varrho)$ and put
+$\lambda'=\lambda\circ\sigma$. Since $\sigma$ preserves every left
+neighbourhood, both transports have exactly the same label relation and hence
+the same prepared array of complete edge labels, while both have positive
+prior weight under UJB.9001.
+
+Take an edge whose left label is $x=\lambda(a)$; its right endpoint exists
+because every member of $C_c$ has the same nonempty neighbourhood. Under
+$(\lambda,\varrho)$ its inverse output is $\lambda(-a)$. Under
+$(\lambda',\varrho)$ the literal preimage of $x$ is $b$, and the inverse
+output is $\lambda'(-b)=\lambda(-b)$, which differs from $\lambda(-a)$ by the
+choice of $b$. The relation and all prepared labels are unchanged, so pointwise
+inverse recovery fails on this supported pair of realizations. $\square$
+
+**Definition 9.3 (exact conditional inverse law).** Let $D$ be any retained
+indexed cache and let $\Omega_D$ be the finite set of tuples
+$\omega=(i,\lambda,\varrho,y_1,\ldots,y_N)$ with positive UJB weight that
+satisfy $D$. For a complete input edge $e$ present at an acquired index, let
+$I_\omega(e)$ be the observed label of $\iota(a)$ when $e=(a,t)$ in the
+literal realization $\omega$. The exact conditional inverse law is
+
+$$
+\Pr(I(e)=u\mid D,e)=
+\frac{\sum_{\omega\in\Omega_D:\ I_\omega(e)=u}w(\omega)e_\omega(D)}
+     {\sum_{\omega\in\Omega_D}w(\omega)e_\omega(D)}.
+\tag{RRO.9.3}
+$$
+
+For a partial slot $j$ with observed mask-value pair $(m,c)$, replace the
+numerator by
+
+$$
+\sum_{\omega\in\Omega_D}w(\omega)e_\omega(D)
+ \sum_{e\in\mathcal E_{i,\lambda,\varrho}}
+ \mathbf1_{\{\operatorname{mask}_m(e)=c\}}
+ \mathbf1_{\{I_\omega(e)=u\}},
+\tag{RRO.9.4}
+$$
+
+and the denominator by the same expression without the last indicator.
+Here $e_\omega(D)$ contains the fixed indexed likelihood, so a shared latent
+reference is summed once and is never independently redrawn for each target.
+
+**Proposition 9.4 (marginal versus pointwise inverse).** If an unread edge is
+uniform on the $1944$ edges, then $\iota(a)$ is uniform on the $72$ left
+endpoints in both sources. This marginal fact does not imply (RRO.9.3) is a
+point mass, and it does not identify the joint coupling of an input with its
+inverse. For a wholly unread slot the law is exactly the ratio in (UJB.17001);
+for a known bit, (UJB.17001) returns its recorded value with probability one.
+
+**Proof.** Every left endpoint has degree $27$ in either literal source, so
+uniform edge sampling makes $a$ uniform on $A$; (RRO.9.2) is a bijection of
+$A$. The conditional statements are the indexed continuation theorem: a
+known coordinate is replayed, while a new coordinate is conditioned through
+one common version set. Theorem 9.2 supplies a $G_1$ fiber with two distinct
+inverse outputs, so a uniform marginal cannot be promoted to pointwise
+recovery. $\square$
+
+## 10. Reference, memory and operation boundaries
+
+**Definition 10.1 (the forgetful maps).** A realized continuation state is
+$\Sigma=(i,\lambda,\varrho,D,\mathbf y)$, with fixed public $N$ and with
+$D$ recording masks and values at their original indices. Let
+$U_E(\Sigma)=E_{i,\lambda,\varrho}$ be the transported relation, let
+$U_{\rm set}(\Sigma)$ forget the indices and retain only the distinct
+complete pairs, and let $U_{\rm law}(\Sigma)$ be the unread conditional law.
+A recovery statement below is always relative to one of these maps and to the
+listed retained fields.
+
+**Proposition 10.2 (concrete ambiguity witnesses).** The following pairs of
+states have the same stated observations but different hidden structure.
+
+1. **Origin and injection.** If $\phi$ is an affine chart of a certified
+   $G_0$ quotient, then every $o\in F^3$ gives
+   $\phi_o(p)=\phi(p)-o$. These charts have the same $H$ and incidence but
+   different origins. Independently, composing the literal association
+   $\lambda$ with any nontrivial translation of $F^3$ (and the induced
+   affine permutation of line classes) preserves the transported relation.
+   Hence $E$ determines an affine torsor and its marked directions, not a
+   distinguished origin or the actual hidden injection.
+
+2. **Indexed memory.** Choose two completed original indices $j\ne k$ and
+   two distinct complete pairs $u,v$. Let $\Sigma$ store $y_j=u,y_k=v$ and
+   let $\Sigma'$ store $y_j=v,y_k=u$, with the same relation and the same
+   unordered set. Then $U_{\rm set}(\Sigma)=U_{\rm set}(\Sigma')$ and their
+   unread law is the same iid law, but a later original-root Read of $j$
+   returns $u$ in the first state and $v$ in the second. Thus an unindexed
+   posterior or complete-generator law cannot replace the fixed indexed cache.
+
+3. **Serial history.** The endpoint relation is static. The exact supplier
+   NativePromiseCausalBoundary.result gives, for every promised $N\ge4$
+   source in its declared domain, two different successful call words with
+   the same endpoint and the same labelled causal order. Therefore an endpoint
+   or a geometric quotient does not encode an actual serial preparation history.
+
+4. **G1 geometry.** In $G_1$, the quotient is nine disjoint
+   $K_{8,27}$ components. Arbitrary permutations inside each component
+   preserve the unlabelled relation, while the free $w_3$ and $z$ coordinates
+   have no incidence signature. An affine plane, an origin, or a $3$-dimensional
+   coordinate frame is therefore not recovered from this component structure.
+
+5. **Operations and samples.** The equations $B_i(v,w)=s$ and the commuting
+   interpretation (RRO.9.1) define a static relation. They supply neither an
+   executable multiplication/inversion port nor a source mutation. The model
+   contains exactly the prepared $N$ samples; computing $H$, testing a candidate
+   edge, or evaluating a posterior does not create an additional sample.
+   Nothing in the relation specifies a quantum channel, a fresh random
+   operation, or an independent latent draw.
+
+**Proof.** Items 1 and 4 are the chart and component descriptions in
+Theorem 8.2 and UJB Theorem 15.2. Item 2 is a direct two-array construction;
+its later-read distinction is exactly the completed-slot clause of UJB
+Theorem 17.1. Item 3 is the final existential clause of
+NativePromiseCausalBoundary.result. Item 5 follows from the source
+definition and the resource separation in UJB §§5, 9 and 17. Each pair has
+identical observations under the named forgetful map but differs in the
+omitted field, proving the asserted ambiguity. $\square$
+
+**Theorem 10.3 (explicit recovery domains).** The following recovery claims
+hold on exactly the stated domains.
+
+(a) From a certified complete $G_0$ relation and its acquired endpoint labels,
+$H$, the four intrinsic parallel classes, and the complete transported
+relation are recoverable by Theorems 8.2--8.3. A distinguished origin,
+literal injection, serial history, source mutation, group-operation port,
+extra sample, or quantum/random operation is not supplied by this data.
+
+(b) From fixed $N,\theta$, the full indexed partial cache, retained completed
+values, and at least one unread index, the unread closure and all native
+continuation laws are mutually recoverable by UJB Theorem 17.2. If the
+indexed cache is discarded, if no unread index remains, or if the source is
+changed, that inverse domain is absent.
+
+(c) From a certified $G_0$ relation and a complete input edge, the inverse
+label is recoverable. For $G_1$ it is recoverable only after an additional
+orientation/association datum that selects the inverse pairing inside every
+size-eight left twin class; the relation alone leaves the alternatives of
+Theorem 9.2.
+
+(d) A serial history is recoverable only when its actual causal event record
+and its legal history-readout contract are retained. The static relation,
+its affine chart, and the indexed iid law do not meet that premise.
+
+These are conditional domains, not claims of a universal reconstruction or of
+minimal acquisition. In particular, retaining a complete relation does not
+turn a derived coordinate chart into a physical reference frame.
+
+## 11. Suppliers, correspondence and scope
+
+**Definition 11.1 (supplier correspondence).** The following existing results
+are used with their stated hypotheses and no stronger interpretation.
+
+* UJB Theorem 15.2 supplies the literal $G_0/G_1$ twin classes, capacities,
+  all $72$ and $243$ endpoints, the four $G_0$ directions, the nine $G_1$
+  components, and the free coordinates. UJB Theorems 16.2 and 17.1--17.2
+  supply the exact capacity evaluator, indexed cache update, unread closure,
+  completed-slot replay and fixed-$N$ continuation. The present formulas use
+  these outputs rather than repeating their enumeration or changing their
+  cost contract.
+* FINITE_GROUP_POWER_MAP_SEPARATION.md, equations (1.2)--(1.3), (3.4), and
+  (3.6)--(3.7), supplies the two finite semidirect products, the commuting-edge
+  interpretation, and $a\mapsto a^{-1}$. It does not supply an observer
+  operation on the source.
+* InvolutionDescent.kernelStable_iff_exists_descended and
+  InvolutionDescent.descended_unique supply the general fact that a stable
+  transformation descends uniquely through a surjective readout. Applied to
+  the equal-neighbourhood quotient, they justify why a permitted label
+  involution has one quotient action when it is constant on quotient fibres;
+  Theorem 9.2 shows that quotient descent alone does not choose a pairing
+  within a $G_1$ fibre.
+* TargetRecoveryCriterion.target_recovery_criterion supplies target
+  constancy on observation fibres. Here the target is either the complete
+  relation or the inverse-label map; the latter is constant on the $G_0$
+  fibres and is not constant on the supported $G_1$ fibres exhibited above.
+  PushforwardComposition.pushforward_comp supplies composition of the
+  resulting finite conditional laws; it does not identify independently
+  sampled latent references.
+* ActualTreeReadoutAcquisition.readout supplies an actual address-indexed
+  readout and its distinct-address tariff. It is used only as the model of a
+  legal source read; the geometry computation has no extra Read. The
+  NativePromiseCausalBoundary.result supplier is the serial-history
+  counterexample used in Proposition 10.2.
+* Cara--Rottey--Van de Voorde, [arXiv:1207.4726v3,
+  Corollaries 3.6--3.7](https://arxiv.org/abs/1207.4726), supplies the
+  rigidity of the specified order-three frame/closure configuration. De
+  Winter--Rottey--Van de Voorde, [arXiv:1407.3953v1](https://arxiv.org/abs/1407.3953),
+  supplies the frame and closure terminology used to state the hypothesis.
+  These references do not supply the transported labels, the positive
+  certificate, or the controller and acquisition costs here.
+* Existing RRO Proposition 92.2, AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_II,
+  §92, is a support-safe variational bound: it restricts a norm calculation to
+  the actual support before applying an inverse. Its methodological
+  correspondence here is that a quotient or support calculation cannot be
+  treated as an acquired operation on an omitted fibre; no quantum conclusion
+  is imported.
+* The C107 collective-cut stability and StaticTensorWorld formal source are
+  comparison domains only. Their common preparation, joint effects and
+  tensor assumptions are not present in this two-source relation, so they do
+  not supply a reference, quantum, or random-operation bridge.
+
+**Proposition 11.2 (scope and falsifiers).** The constructions above are
+ordinary finite mathematics on the declared $F_3$ source and its acquired
+labels. They do not claim Lean certification, optimal certificate size,
+minimum actual sample complexity, efficient chart construction, world
+novelty, or existence of a physical spacetime interpretation. A finite
+counterexample to any of the following would falsify the corresponding
+claim: a second admissible chart not related affinely; a $G_0$ twin class of
+size other than two; a $G_1$ supported label permutation changing the inverse
+while preserving the complete relation; an indexed-cache pair with different
+replay but identical retained law; or two legal serial histories at the same
+endpoint. The existing supplier hypotheses, fixed prior, full-injection
+support, complete-label acquisition and fixed indexed masks are binding.
+
+The supplied results therefore close the affine-torsor and inversion-label
+interfaces on their explicit domains while leaving the long-term problem
+open: no geometric analogue here is a hidden origin, an actual source
+operation, a new sample, a serial history, or a quantum/random port.
+
+## 追加锚（本行以下为增补区）
