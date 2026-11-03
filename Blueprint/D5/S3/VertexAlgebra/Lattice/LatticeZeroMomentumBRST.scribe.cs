@@ -50,5 +50,5 @@ internal sealed class LatticeZeroMomentumBRSTDocument : IScribeDocumentDefinitio
             Node("shellGhostDegree", "The three branches have degrees zero, one and two respectively. These are actual signed occupation numbers on the allowed occupations.", DescribeRole.Definition),
             Node("totalGhostNumber_zeroVector", "The existing tensorNumber acts on each original zeroVector by its displayed degree, with no grading shift.", DescribeRole.Theorem),
             Node("totalGhostNumber_Psi", "For all coordinates (A,v,C), the existing actual tensorNumber sends Psi(A,v,C) to Psi(0,v,2*C), under both inverse-Gram equations.", DescribeRole.Theorem),
-            Node("zero_shell_actions", "For every state of the literal original zero-momentum relative shell, its actual totalCharge is zero and its actual tensorNumber is Psi(0,v,2*C), where (A,v,C) are its unique shellEquiv coordinates. Both actions concern the same arbitrary original state.", DescribeRole.Theorem)))));
+            Node("zero_shell_actions", "For every state of the literal original zero-momentum relative shell, its actual totalCharge is zero and its actual tensorNumber is Psi(0,v,2*C), where (A,v,C) are its unique shellEquiv coordinates. Both actions concern the same arbitrary original state.", DescribeRole.Theorem))));
 }
