@@ -9,7 +9,6 @@
 import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
-import Mathlib.FieldTheory.Finiteness
 
 /-! Khesin–Li, arXiv:2406.12083v1, Conjecture 8.3, under the decoration-free
 operation-generated reading of preregistration #26139. Both sides have only input–output edges.
