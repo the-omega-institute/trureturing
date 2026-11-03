@@ -1,5 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 import hashlib
 import json
 import os
@@ -683,35 +683,48 @@ class NativeColdPublicationTests:
         temporary = self.root / 'coordinate temporary files'
         temporary.mkdir()
         environment = dict(self.env, TMPDIR=str(temporary))
-        check_output = subprocess.check_output
+        input_coordinates = publication.selection.input_coordinates
+        manifest = self.root / 'lean-report-inputs.json'
+        manifest_bytes = manifest.read_bytes()
         observed = []
         for fault in ['none', 'none', 'address-error', 'address-malformed',
                       'coordinates-error', 'coordinates-malformed']:
             with self.subTest(fault=fault):
-                def invoke(argv, **kwargs):
-                    if argv[1] == 'address':
-                        memo = Path(kwargs['env']['STRATALINT_LEAN_INPUT_MEMO_ROOT'])
-                        self.assertEqual(memo.parent, temporary)
-                        self.assertTrue(memo.is_dir())
-                        self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
-                        observed.append(memo)
-                    result = check_output(argv, **kwargs)
-                    if fault == argv[1] + '-error':
-                        raise subprocess.CalledProcessError(2, argv)
-                    if fault == argv[1] + '-malformed':
-                        return 'malformed\n'
-                    return result
-                with patch.dict(os.environ, environment), patch.object(
-                        publication.subprocess, 'check_output', side_effect=invoke):
-                    if fault == 'none':
-                        result = publication.coordinates(self.root)
-                        self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
-                    else:
-                        error = subprocess.CalledProcessError if fault.endswith('-error') else ValueError
-                        with self.assertRaises(error):
-                            publication.coordinates(self.root)
+                def invoke(repository, *, memo_root):
+                    memo = Path(memo_root)
+                    self.assertEqual(memo.parent, temporary)
+                    self.assertTrue(memo.is_dir())
+                    self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
+                    observed.append(memo)
+                    return input_coordinates(repository, memo_root=memo)
+                try:
+                    with patch.dict(os.environ, environment), patch.object(
+                            publication.selection, 'input_coordinates', side_effect=invoke), ExitStack() as faults:
+                        # These failures now belong to the in-process input reader,
+                        # rather than the removed shell address/coordinates calls.
+                        if fault == 'address-error':
+                            faults.enter_context(patch.object(publication.selection.Selection,
+                                'validate', side_effect=OSError('fixture address read failed')))
+                        elif fault == 'address-malformed':
+                            manifest.write_text('{')
+                        elif fault == 'coordinates-error':
+                            faults.enter_context(patch.object(publication.selection,
+                                'coordinate_hashes', side_effect=OSError('fixture coordinate computation failed')))
+                        elif fault == 'coordinates-malformed':
+                            faults.enter_context(patch.object(publication.selection.Selection,
+                                'compatibility', return_value='malformed'))
+                        if fault == 'none':
+                            result = publication.coordinates(self.root)
+                            self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
+                        else:
+                            error = OSError if fault.endswith('-error') else ValueError
+                            with self.assertRaises(error):
+                                publication.coordinates(self.root)
+                finally:
+                    manifest.write_bytes(manifest_bytes)
                 self.assertFalse((self.root / '.lake').exists())
                 self.assertEqual(list(temporary.iterdir()), [])
+        self.assertEqual(len(observed), 6, 'every invocation must exercise the input reader')
         self.assertEqual(len(set(observed)), len(observed), 'each invocation must own its memo')
         with patch.dict(os.environ, dict(environment, TMPDIR=str(temporary / 'absent'))):
             with self.assertRaises(FileNotFoundError):
