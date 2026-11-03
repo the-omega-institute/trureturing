@@ -3158,7 +3158,7 @@ $$
 
 直和情形下，射线校准已排除跨中心转移，故两映射之差逐块作用。带任意参考的输入迹范数是各中心块迹范数之和，从而这个直和映射的 diamond 范数等于各块范数的最大值：上界逐块相加，下界把输入限于一块。所有块共享同一 $\phi,\omega,\delta_a,\delta_b$，所以同一个界仍成立。Stinespring 向量和参考仅用于证明范数，未供应新的实际对象或操作。∎
 
-**推论 60.2（统一极限与由内部读数决定的模量）。** 固定共同 $\omega$，令 $B_\omega(\delta_a,\delta_b)$ 为 (60.1) 右侧对 $R>0,N\ge0$ 的下确界，则
+**推论 60.2（共同包络和标定预算的统一模量）。** 固定共同 $\omega$，令 $B_\omega(\delta_a,\delta_b)$ 为 (60.1) 中不含效果因子 $\|E\|$ 的无量纲最小值对 $R>0,N\ge0$ 的下确界，则
 
 $$
 \sup_{\mathscr C_\omega}\ \sup_{E,F}
@@ -3235,7 +3235,7 @@ $$
 
 **定义 63.1（当前综合及其独立前提）。** C105 用同一二元核的距离、共同变化包络和两条实际标定预算约束整个滤波族。它由有限 Gram 几何进入平移不变关系网，再以路径预算和小权重衰减控制所有效果。共同包络不是从两条读数推出的结论；命题 61.1 给出删除它的完整失败模型。射线校准、二元环境兼容、共同调暗仍由命题 54.1–54.4 的相应模型区分，稠密生成由命题 61.2 单独检验。所选射线校准在本候选中保持精确；若射线本身也带误差，就不能直接套用 Schur 分解，需要另补从其实际误差到同一全族记录距离的桥梁。
 
-有限 Gram 距离、三角不等式、加权路径包络、稠密子群的紧集有限覆盖和完全正分支的范数界均是成熟工具。[Kretschmann–Schlingemann–Werner，The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation，arXiv:quant-ph/0605009，§III.C 式 (15)–(16)、Theorem 1](https://arxiv.org/pdf/quant-ph/0605009)，以及库内[来源条目](../../../Library/QuantumChannels/kretschmann2008continuity.md)，给 Stinespring 比较的先例；本文只用其易向的算子展开，将因子二保留为 $\|V\|+\|W\|$ 来处理非归一完全正分支，不把该文通道版的完整双向定理直接套到分支。[N1 续卷 §§7–9](AURIC_COHERENT_BRIDGES_LOSSLESS_COMPATIBILITY_AND_EFFECTIVE_RESISTANCE_N1_V78_CONTINUATION.md) 已把固定通道的有限比较网及基误差接到全参考范数；这里不重复认领那条固定通道路线。
+有限 Gram 距离、三角不等式、加权路径包络、稠密子群的紧集有限覆盖和完全正分支的范数界均是成熟工具。[Pevnyi–Sitnik，Inequalities of M.G. Krein, Yu.V. Linnik and E.A. Gorin for positive definite functions，§2 式 (2)、定理 1 及推论 1](https://arxiv.org/pdf/1609.01218) 给出正定函数的三点变化估计和饱和值周期刚性；式 (58.3) 是该成熟估计的 Gram 表达，本文将它用于同一跨谱族的共同包络。[Kretschmann–Schlingemann–Werner，The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation，arXiv:quant-ph/0605009，§III.C 式 (15)–(16)、Theorem 1](https://arxiv.org/pdf/quant-ph/0605009)，以及库内[来源条目](../../../Library/QuantumChannels/kretschmann2008continuity.md)，给 Stinespring 比较的先例；本文只用其易向的算子展开，将因子二保留为 $\|V\|+\|W\|$ 来处理非归一完全正分支，不把该文通道版的完整双向定理直接套到分支。一般完全正映射的相应先例另见 [Kretschmann–Schlingemann–Werner，A Continuity Theorem for Stinespring’s Dilation，命题 3 式 (13)–(14)](https://arxiv.org/pdf/0710.2495)。[N1 续卷 §§7–9](AURIC_COHERENT_BRIDGES_LOSSLESS_COMPATIBILITY_AND_EFFECTIVE_RESISTANCE_N1_V78_CONTINUATION.md) 已把固定通道的有限比较网及基误差接到全参考范数；这里不重复认领那条固定通道路线。
 
 当前仓内综合是：在 C104 的跨谱整族及残余质量分类上，用共同二元包络、两个近饱和读数和一个有限整数覆盖表，给独立于全部有限块阶、秩与谱最小值的更新证书，并将联合概率和条件态误差分开。路径预算的最大性只在所列伪度量类内成立，不被认作量子误差常数的最优性。无理数覆盖速率、共同包络的有限取得、统计置信率及物理资源成本没有由紧性或范数证明供应；限定来源检索不构成原创优先权结论。
 
