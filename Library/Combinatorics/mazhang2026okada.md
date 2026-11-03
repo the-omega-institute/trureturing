@@ -30,3 +30,8 @@ The conjecture numbers refer to Okada's arXiv:2003.02112v2 §9.8.3;
 Okada is the problem source author, and the proof note authors are Ma and Zhang.
 
 Source ZIP SHA256: `da99d1f3682c59285a8d9f3e47f664b8a5f844ae5c45da303328e3fef6f4ffa0`.
+
+## Verified locator
+
+- DOI: https://doi.org/10.5281/zenodo.23927424
+- Source: https://doi.org/10.5281/zenodo.23927424

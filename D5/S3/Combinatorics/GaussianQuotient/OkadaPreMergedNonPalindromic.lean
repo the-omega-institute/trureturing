@@ -665,15 +665,9 @@ private theorem width_two_degree_gap (a b : Fin 2 → ℕ)
       (a 1 - a 0) * (b 1 - b 0) = ∑ i, a i * (b i - a i) := by
   have ha01 := ha (show (0 : Fin 2) < 1 by decide)
   have hb01 := hb (show (0 : Fin 2) < 1 by decide)
-  have h00 := Nat.sub_add_cancel (hcross 0 0)
-  have h10 := Nat.sub_add_cancel (hcross 1 0)
-  have h01 := Nat.sub_add_cancel (hcross 0 1)
-  have h11 := Nat.sub_add_cancel (hcross 1 1)
-  have hax := Nat.sub_add_cancel ha01.le
-  have hby := Nat.sub_add_cancel hb01.le
-  simp only [Fin.sum_univ_two]
-  norm_num [Fin.rev]
-  nlinarith
+  norm_num [Fin.sum_univ_two, Fin.rev]
+  zify [hcross 0 0, hcross 1 0, hcross 0 1, hcross 1 1, ha01.le, hb01.le]
+  ring
 
 private theorem width_two_bounds (a b : Fin 2 → ℕ)
     (hcross : ∀ i j, a i ≤ b j) (hx : 2 ≤ a 1 - a 0) (hy : 2 ≤ b 1 - b 0) :
@@ -769,9 +763,17 @@ private theorem width_two_one_gap (a b : Fin 2 → ℕ)
   have hB := gaussian_product_shape 2 (fun i => a (Fin.rev i)) b
     (fun i => hcross (Fin.rev i) i)
   have hdeg := width_two_degree_gap a b ha hb hcross
-  have hpdeg : p.natDegree ≤ d := by
-    exact (natDegree_sub_le _ _).trans (max_le (by exact hA.2.1.le) (by
-      rw [hB.2.1]; omega))
+  have hxpos : 0 < a 1 - a 0 := Nat.sub_pos_of_lt (ha (by decide : (0 : Fin 2) < 1))
+  have hypos : 0 < b 1 - b 0 := Nat.sub_pos_of_lt (hb (by decide : (0 : Fin 2) < 1))
+  have hblt : B.natDegree < A.natDegree := by
+    rw [hB.2.1, hA.2.1]
+    have hpos := Nat.mul_pos hxpos hypos
+    omega
+  have hpdegree : p.natDegree = d := by
+    change (A - B).natDegree = d
+    rw [natDegree_sub_eq_left_of_natDegree_lt hblt]
+    exact hA.2.1
+  have hpdeg : p.natDegree ≤ d := hpdegree.le
   have hc := width_two_cancellation a b ha hb hcross hgap
   change A * (1 - X ^ r) = B * (1 - X ^ (r + h)) at hc
   have hi : p * (1 - X ^ (r + h)) = X ^ r * A * (1 - X ^ h) := by
@@ -782,7 +784,7 @@ private theorem width_two_one_gap (a b : Fin 2 → ℕ)
       _ = _ := by rw [pow_add]; ring
   have hanti (n : ℕ) : ((1 - X ^ n : ℤ[X])).reflect n = -(1 - X ^ n) := by
     rw [reflect_sub, reflect_one, reflect_monomial, revAt_le le_rfl]
-    simp
+    simp only [Nat.sub_self, pow_zero]
     ring
   have hreflect := congrArg (fun f : ℤ[X] => f.reflect (d + r + (r + h))) hi
   have hleft : (p * (1 - X ^ (r + h))).reflect (d + r + (r + h)) =
@@ -805,7 +807,7 @@ private theorem width_two_one_gap (a b : Fin 2 → ℕ)
     intro hz
     have hz0 := congrArg (fun f : ℤ[X] => f.coeff 0) hz
     have hrh : 0 < r + h := by dsimp [r]; omega
-    simpa [coeff_X_pow, hrh.ne'] using hz0
+    simpa [coeff_X_pow, hrh.ne, hrh.ne'] using hz0
   have heq : p.reflect (d + r) = p := by
     apply mul_right_cancel₀ hcancel
     linear_combination -hreflect
@@ -828,7 +830,9 @@ theorem width_two_iff (a b : Fin 2 → ℕ)
     have hlo := low_end 2 a b (by decide) ha hcross hi
     have hdeg := width_two_degree_gap a b ha hb hcross
     have hgap : (∑ i, a (Fin.rev i) * (b i - a (Fin.rev i))) + 2 ≤
-        ∑ i, a i * (b i - a i) := by nlinarith
+        ∑ i, a i * (b i - a i) := by
+      have hmul : 4 ≤ (a 1 - a 0) * (b 1 - b 0) := Nat.mul_le_mul hx hy
+      omega
     have hhi := high_end 2 a b (by decide) ha hcross hi.1 hgap (by
       norm_num; omega)
     let c := if 0 < a 0 then 2 else 1
