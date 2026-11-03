@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-paid-windows)
    mirror-E: none(waiver:private-consumed-paid-windows)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Simultaneous paid-packet windows including both small-gap dyadic boundaries. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond.Arithmetic

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-window-arithmetic)
    mirror-E: none(waiver:private-consumed-window-arithmetic)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Exact rounded allocations and paired windows on the equal-second third-peak face. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native

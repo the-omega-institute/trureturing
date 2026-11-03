@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-rounded-windows)
    mirror-E: none(waiver:private-consumed-rounded-windows)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Paired middle windows for adjacent, quadruple and floor-selected physical masks. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond.Arithmetic
