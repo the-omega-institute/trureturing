@@ -1,0 +1,46 @@
+**Corollary 39.3 (no uniform exact effective reduction for total evaluators).**
+No terminating procedure decides complete future $Q_C$ equality on all
+actually attained finite cuts for the general total-selector class of
+Definition 30.1. This remains so with the selector fixed to $C^\dagger$,
+with both histories explicitly supplied, with equal source and all
+selected records supplied, and with both cuts acquired from the known
+seed under current service rights. There is also no uniform
+computable assignment of finite codes to these cuts whose decidable
+code equality is exactly their full task equivalence. The same
+obstruction applies to a uniform procedure returning the exact finite
+partition of attainable controls at supplied $(t,\nu)$.
+
+Proof. Construct the actual pair (AA.120) from $e$ and use such a procedure
+on its returned cuts. By (AA.122) its answer decides nonhalting, hence
+also halting. A finite-code reduction with exact decidable equality would
+give that procedure by computing and comparing the two codes. An exact
+partition would decide whether the two displayed attainable controls
+belong to one class. The standard printing/halting impossibility is the
+supplier; the content of this reduction is (AA.120)–(AA.123) with the
+source prerequisites, selected identity, acquisition and actual consumer
+correspondence. $\square$
+
+For any fixed total evaluator and supplied finite semantic cuts,
+inequivalence is semidecidable: a finite source or selected-word
+inequality is decidable, and otherwise enumerate finite addressed
+continuations, check their LAB guards and compute the finitely many
+selector steps, looking for the first bit difference. Effective
+enumeration and totality ensure every fixed finite candidate finishes;
+no finite source-growth continuation that could distinguish is lost.
+The witness is converted into a complete-request distinction by
+Proposition 36.2. Thus for fixed $C^\dagger$ equality on supplied legal
+histories has a co-c.e. upper description, and (AA.122) supplies the
+matching nonhalting hardness. This statement is about the explicitly
+total fixed syntax here. It does not declare totality of arbitrary
+program indices decidable.
+
+The obstruction is not lack of a sufficient continuing representation:
+raw $q$, the actual source and selected records already supply one by
+Theorem 32.3. Nor is it lack of an abstract quotient, or proof that no
+individual pair can be settled. It excludes a uniform exact effective
+identification of all behaviorally redundant controls. In particular
+$C^\dagger$ cannot have an effective finite address presentation satisfying
+(AA.113): even the existence of one fixed such table would contradict
+Theorem 37.3 and (AA.122). No algorithm extracting an unknown presentation
+is a premise of the positive theorem.
+

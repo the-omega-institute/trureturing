@@ -491,3 +491,282 @@ The conclusion concerns the original locally uniform label law, the longest comp
 [2] J.-B. Baillon, R. Cominetti, and J. Vaisman, *A sharp uniform bound for the distribution of sums of Bernoulli trials*, arXiv:0806.2350v4, Theorem 1.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Complete-word $R_2$ fibres and quantitative $P_N$ fluctuations
+
+**Definition 9.1 (the original complete-word laws).** Let $\Omega_N$ be the set of all complete legal words from $N F_1$, let
+
+$$
+ P_N(g)=\prod_{t=1}^{L(g)}d(s_{t-1})^{-1},\qquad
+ \mu_N(g)=|\Omega_N|^{-1}\quad(g\in\Omega_N),
+$$
+
+and choose the unique $n=n(N)$ with $F_n\le N<F_{n+1}$. These are exactly the laws of [1, Definition 1.2 and §1.2]; each available label, rather than each pair of tokens, has one chance to be chosen. At $N=1$, the sole complete word is empty and $L=0$.
+
+**Theorem 9.2 (all-integer fluctuations under $P_N$).** Let $R_2$ be the complete-word contraction defined in §9.1 and put $V=\operatorname{Var}_{P_N}(L\mid R_2)$. There are absolute constants $a,b_0,c,K>0$ and an integer $N_0$ such that, for every integer $N\ge N_0$,
+
+$$
+ P_N(V<cN)\le e^{-aN}+2e^{-b_0N/n(N)},\qquad
+ \operatorname{Var}_{P_N}(L)\ge cN/2,\qquad
+ \sup_{\ell\in\mathbb Z}P_N(L=\ell)\le K/\sqrt N.
+$$
+
+The complete-word partition and both pushforward identities in §9.1 hold for every positive integer $N$. The quantitative estimates concern $P_N$.
+
+*Proof.* We use the exchange and conditional Bernoulli mechanism of [1, Lemmas 4.1–4.2], the adapted bound in Lemma 4.1 above, and the independent-trial bound in Lemma 4.3 above and [2, Theorem 1]. The construction below supplies the particular $R_2$ partition, its actual weights, and the game-specific estimates needed for the three conclusions.
+
+### 9.1. The complete-word contraction and its exact pushforward law
+
+For a configuration write $h_i$ for the height of bin $i$. Contract every consecutive occurrence of $S_2,C_1$ in a complete word, scanning from left to right, to one symbol $C_2$; call the resulting complete word $R_2=\rho_2(g)$. At a $C_2$ in $R_2$, call the slot eligible when its pre-move heights satisfy
+
+$$
+ h_1\ge1,\qquad h_2\ge2.
+$$
+
+Let $T(R_2)$ be the number of eligible slots, and for an eligible slot $j$ let $s_j$ be its pre-move configuration and
+
+$$
+ d_j=d(S_2s_j).
+$$
+
+Here $d(S_2s_j)$ is the number of legal labels after the counterfactual $S_2$ move; it is at least one because $C_1$ is then legal. The following endpoint identity is the local reason that this is an exact partition. If the relevant heights are $(a,b,c)$, then
+
+$$
+ (a,b,c)\xrightarrow{C_2}(a-1,b-1,c+1)
+$$
+
+and
+
+$$
+ (a,b,c)\xrightarrow{S_2}(a+1,b-2,c+1)
+ \xrightarrow{C_1}(a-1,b-1,c+1).
+$$
+
+Thus both routes are legal exactly when $a\ge1$ and $b\ge2$, and they have the same endpoint. The pattern $S_2,C_1$ cannot overlap itself. Replacing it by $C_2$ cannot create a new such pattern across either boundary, because the new symbol is $C_2$ and the old second symbol was $C_1$. Consequently every subset of the eligible slots of a representative $R_2$ expands to a legal complete word with contraction $R_2$. Conversely, each word with this contraction is recovered by expanding exactly the slots created by its removed pairs. An expansion starts with $S_2$ and ends with $C_1$, so no extra $S_2,C_1$ occurs across an expansion boundary, including between two expanded slots. These operations are inverse. In particular,
+
+$$
+ \rho_2^{-1}(R_2)\cong\{0,1\}^{T(R_2)}.                         \tag{9.1}
+$$
+
+Write $X_j=1$ when slot $j$ is expanded. If $g_E$ is the expansion indexed by $E\subseteq\{1,\ldots,T(R_2)\}$, the endpoint identity makes all factors outside the expanded slots identical, while the long route has one additional denominator $d_j$. Hence
+
+$$
+ P_N(g_E)=P_N(R_2)\prod_{j\in E}d_j^{-1},\qquad
+ P_N(\rho_2=R_2)=P_N(R_2)\prod_{j=1}^{T(R_2)}(1+d_j^{-1}).             \tag{9.2}
+$$
+
+It follows, with no completion-count assumption, that under $P_N$ and conditionally on $R_2$ the variables $X_j$ are independent and
+
+$$
+ p_j:=P_N(X_j=1\mid R_2)=\frac1{1+d_j},\qquad
+ L=|R_2|+\sum_jX_j.                                                   \tag{9.3}
+$$
+
+Under the separate law $\mu_N$, the same fibre has $2^{T(R_2)}$ words and therefore
+
+$$
+ \mu_N(\rho_2=R_2)=\frac{2^{T(R_2)}}{|\Omega_N|},\qquad
+ \mu_N(X_j=1\mid R_2)=\frac12.                                    \tag{9.4}
+$$
+
+The representative weights in (9.2) and (9.4) are different pushforward laws. The estimates below use (9.2) only. The local exchange and Bernoulli mechanism are those of [1, Lemmas 4.1–4.2]; that paper allows exchanges at all indices with an additional predecessor condition, whereas this $R_2$ contracts only $S_2,C_1$. The endpoint and boundary argument above establishes this particular partition without identifying the two representative spaces.
+
+### 9.2. Uniform deterministic bounds needed for all integer inputs
+
+The deterministic inputs are [1, Theorems 1.1, 1.3, 1.6 and §2]. The following potential calculation records their correspondence to the present move labels within the proof. The terminal configuration has distinct nonconsecutive Fibonacci summands: the lexicographically decreasing potential $(U,h_2)$, with $U=\sum_i(i+2)h_i$, decreases under every move (under $S_2$ it preserves $U$ and decreases $h_2$). Write its terminal digits as $z_i\in\{0,1\}$. For a complete word $g$, let $c_k(g)$ and $s_k(g)$ count its $C_k$ and $S_k$ moves, respectively, suppressing $g$ in these counts when convenient, and put
+
+$$
+ D_N=2N-\sum_iF_{i+1}z_i,\qquad
+ B_N=3N-\sum_i(i+2)z_i,\qquad
+ W(g)=\sum_{k\ge2}(k-1)c_k(g).
+$$
+
+The potential $Q=\sum_iF_{i+1}h_i$ decreases by $1$ under $C_1$, increases by $1$ under $S_2$, and is unchanged by every other label. The potential $U$ decreases by $2$ under $C_1$, by $k$ under $C_k$ for $k\ge2$, by $1$ under $S_k$ for $k\ge3$, and is unchanged under $S_2$. Therefore
+
+$$
+ c_1-s_2=D_N,\qquad B_N-L=D_N+W(g),\qquad
+ L=A_N-W(g),\quad A_N:=B_N-D_N.                              \tag{9.5}
+$$
+
+Since $\sum_iF_i z_i=N$ and $F_{i+1}\le2F_i$,
+
+$$
+ A_N=N+\sum_i(F_{i+1}-i-2)z_i
+ \le3N-\sum_i(i+2)z_i<3N.                                          \tag{9.6}
+$$
+
+Thus every complete word has $L<3N$. A configuration of weight $N$ has no occupied bin $i\ge n+1$. For $n\ge2$, $C_n$ would consume $F_{n+1}>N$ and $S_n$ would consume $2F_n>F_{n+1}>N$, leaving only $C_1,\ldots,C_{n-1}$ and $S_2,\ldots,S_{n-1}$. At $N=1$, there are no legal labels. Hence
+
+$$
+ d(s)\le\max\{0,2n-3\},\qquad d_j+1\le2n=:b.                                \tag{9.7}
+$$
+
+The number of combines is $N-\sum_i z_i\le N-1$, and a contracted $C_2$ slot is one combine, so $T(R_2)\le N-1$.
+
+### 9.3. Linear abundance of eligible slots under the actual $P_N$ law
+
+Put $r=\lfloor N/12\rfloor$ and observe only the four labels
+
+$$
+ \mathcal A=\{C_1,C_2,C_3,S_2\}.
+$$
+
+Every label outside $\mathcal A$ weakly increases both $h_1$ and $h_2$. In a complete word $h_1$ ends at $z_1\le1$, and one observed label lowers $h_1$ by at most two. Therefore at least $(N-1)/2$ observed labels occur. For $N\ge24$, the first $3r$ observed labels exist and before each of them $h_1\ge N/2$.
+
+If a prescribed label in $\mathcal A$ is legal and stays legal while no label in $\mathcal A$ is played, then its conditional probability of being the next observed label is at least $1/4$. Indeed, condition on the current full history. For every finite intervening word $h$ with no label in $\mathcal A$, let $w(h)$ be its conditional path probability, let $s_h$ be its endpoint, and let $a(s_h)$ count the available labels in $\mathcal A$. Persistence makes the prescribed label legal at every $s_h$. The game terminates, so persistence also ensures that some observed label occurs before termination. The disjoint events specifying $h$ and the first subsequent observed label therefore give
+
+$$
+ P_N(\text{next observed label is the prescribed one}\mid\text{history})
+ =\sum_h\frac{w(h)}{d(s_h)}
+ \ge\frac14\sum_h\frac{w(h)a(s_h)}{d(s_h)}=\frac14.
+$$
+
+The sums are finite by (9.6). This conditions on the actual history and assumes no independence between observation times.
+
+Partition the first $3r$ observed labels into $r$ consecutive blocks. On the history before each block, $C_1$ remains legal until the next observed label; after one prescribed $C_1$ it remains legal for the second, and after two prescribed $C_1$'s the label $C_2$ is legal and the slot is eligible. The lower bound $h_1\ge N/2$ and $N\ge24$ cover all these intermediate states; the two prescribed $C_1$ moves add two tokens to bin 2, and all intervening unobserved moves weakly increase that height. Thus each block equals $C_1,C_1,C_2$ conditionally with probability at least $u=4^{-3}=1/64$. Let $I_j$ be the indicator of this event, using the full history through block $j$ as the block filtration. The adapted Bernoulli lower-tail lemma already proved in Section 4 gives
+
+$$
+ P_N\!\left(T(R_2)<\frac r{128}\right)
+ \le P_N\!\left(\sum_{j=1}^rI_j<\frac{ru}{2}\right)
+ \le \exp(-r/512).                                                \tag{9.8}
+$$
+
+A successful block contributes a distinct $C_2$ which is not contracted and whose pre-state has $h_2\ge2$, so it contributes an eligible slot of $R_2$.
+
+### 9.4. A linear-probability degree bound for the actual representative
+
+Let $D(R_2)=\sum_jd_j$, and let $\mathcal F_i$ be the sigma-algebra generated by the first $i$ actual move labels, with one absorbing symbol repeated after termination. For the original word define, with zero padding after termination up to the endpoint $3N$ from (9.6),
+
+$$
+ Y_i=\begin{cases}
+       d(S_2s_{i-1})+1,&\text{if the $i$th move is an eligible }C_2,\\
+       0,&\text{otherwise},
+      \end{cases}\qquad
+ W_*:=\sum_{i=1}^{3N}Y_i.                                           \tag{9.9}
+$$
+
+Applying $S_2$ changes only bins $1,2,3$, so only the six labels
+$C_1,C_2,C_3,C_4,S_2,S_3$ can change availability. On a nonterminal state with $d(s)\ge1$, the conditional expectation of $Y_i$ is therefore at most
+
+$$
+ \frac{d(s)+7}{d(s)}\le8.                                          \tag{9.10}
+$$
+
+At a terminal state $Y_i=0$, so the same expectation bound holds without a denominator. Since $0\le Y_i\le b$, convexity of the exponential on $[0,1]$ gives
+
+$$
+ E\left(e^{Y_i/b}\mid\mathcal F_{i-1}\right)
+ \le\exp\!\left(\frac{8(e-1)}b\right)\le e^{16/b}.
+$$
+
+Iterating through $3N$ padded positions and applying Markov's inequality yields
+
+$$
+ P_N(W_*\ge96N)\le e^{-48N/b}.                                    \tag{9.11}
+$$
+
+Conditionally on $R_2$, (9.3) shows that the eligible $C_2$ moves in the original word are exactly the unexpanded slots, and hence
+
+$$
+ W_*\ =\sum_j(d_j+1)(1-X_j),\qquad E[W_*\mid R_2]=D(R_2).             \tag{9.12}
+$$
+
+For completeness, if $Z_j=(d_j+1)(1-X_j)$, then $0\le Z_j\le b$ and $E[Z_j\mid R_2]=d_j$. Convexity gives
+
+$$
+ E(e^{-Z_j/b}\mid R_2)\le
+ 1-(1-e^{-1})d_j/b.
+$$
+
+Independence and $1/2-e^{-1}>1/8$ therefore imply
+
+$$
+ P_N\!\left(W_*<\frac{D(R_2)}2\mid R_2\right)
+ \le\exp\!\left(-\frac{D(R_2)}{8b}\right).                         \tag{9.13}
+$$
+
+Combining (9.11)--(9.13),
+
+$$
+ P_N(D(R_2)\ge192N)
+ \le e^{-48N/b}+e^{-24N/b}
+ \le2e^{-12N/n}.                                                     \tag{9.14}
+$$
+
+### 9.5. The all-integer fluctuation bounds
+
+Define the selected conditional variance
+
+$$
+ V(R_2):=\operatorname{Var}_{P_N}(L\mid R_2)
+       =\sum_jp_j(1-p_j)=\sum_j\frac{d_j}{(1+d_j)^2}.               \tag{9.15}
+$$
+
+For every $d_j\ge1$, the inequality $1+d_j\le2d_j$ gives the first bound below. When $T(R_2)>0$, Cauchy–Schwarz applied to $T(R_2)=\sum_j\sqrt{d_j}\sqrt{1/d_j}$ gives the second:
+
+$$
+ \frac{d_j}{(1+d_j)^2}\ge\frac1{4d_j},\qquad
+ \sum_j\frac1{d_j}\ge\frac{T(R_2)^2}{D(R_2)}.                       \tag{9.16}
+$$
+
+For $N\ge24$, put
+
+$$
+ G_N=\{T(R_2)\ge r/128,\ D(R_2)<192N\}.
+$$
+
+On $G_N$, the slot set is nonempty and (9.16) gives
+
+$$
+ V(R_2)\ge v_N:=\frac{r^2}{768\,128^2N}.                            \tag{9.17}
+$$
+
+The union bound in (9.8) and (9.14) gives
+
+$$
+ P_N(G_N^c)\le e^{-r/512}+2e^{-12N/n}.
+$$
+
+For $N\ge24$, $r\ge N/24$. Set
+
+$$
+ c=\frac1{768\,128^2\,24^2},\qquad a=\frac1{12288},\qquad b_0=12.
+$$
+
+Since $v_N\ge cN$, for every integer $N\ge24$ we have
+
+$$
+ P_N(V(R_2)<cN)\le P_N(G_N^c)\le e^{-aN}+2e^{-b_0N/n}.                            \tag{9.18}
+$$
+
+The inequality $F_{j+2}\ge2F_j$ gives $n(N)\le2\log_2N+2$ for every $N$. Put $C=2/\log 2+2$. For $N\ge e$, this implies $n(N)\le C\log N$. If $x=\log N$, then $N/(\log N)^2=e^x/x^2\ge x/6\to\infty$, using $e^x\ge x^3/6$. Consequently
+
+$$
+ \frac12\log N-aN\longrightarrow-\infty,\qquad
+ \frac12\log N-\frac{12N}{n(N)}
+ \le\frac12\log N-\frac{12N}{C\log N}\longrightarrow-\infty.
+$$
+
+Thus $N^{1/2}(e^{-aN}+2e^{-12N/n(N)})\to0$ through all integers. Fix an absolute integer $N_0\ge24$ beyond which this expression is at most one and the unmultiplied sum is at most $1/2$. This supplies both bounds used below with one finite threshold.
+
+The law of total variance and (9.15) now give, for every integer $N\ge N_0$,
+
+$$
+ \operatorname{Var}_{P_N}(L)
+ =\operatorname{Var}_{P_N}(E[L\mid R_2])+E_{P_N}V(R_2)
+ \ge cN/2.                                                         \tag{9.19}
+$$
+
+Finally, use $K_0=\tfrac12\sqrt{\pi/2}$ from Lemma 4.3 above; [2, Theorem 1] supplies a stronger constant. Applying this existing independent-Bernoulli point-mass bound to (9.3) gives
+$\sup_\ell P_N(L=\ell\mid R_2)\le K_0/\sqrt{V(R_2)}$ whenever $V(R_2)>0$. Splitting according to $G_N$ and $G_N^c$, which depend only on $R_2$, and using (9.17)--(9.18),
+
+$$
+ \sup_{\ell\in\mathbb Z}P_N(L=\ell)
+ \le N^{-1/2}+\frac{K_0}{\sqrt{v_N}}
+ \le \frac{K}{\sqrt N},\qquad
+ K:=1+24\,128\sqrt{768}\,K_0.                                     \tag{9.20}
+$$
+
+Equations (9.18)--(9.20) prove Theorem 9.2, with $a,c$ as specified above, $b_0=12$, and $K$ as in (9.20), through every integer $N\ge N_0$. The exact $\mu_N$ fibre law remains (9.4); no $P_N$ degree or tail estimate is transferred to it. The exchange, conditional product calculation, deterministic bounds, adapted lower-tail inequality, and independent-trial point bound are reused inputs [1, Lemmas 4.1–4.2, Corollary 4.3 and Theorem 1.6; 2, Theorem 1; Lemmas 4.1 and 4.3 above]. The game-specific additions are the four-label observed-block estimate (9.8), the representative-degree estimate (9.14), and their consequences (9.18)--(9.20). ∎
+
+## 追加锚（本行以下为增补区）

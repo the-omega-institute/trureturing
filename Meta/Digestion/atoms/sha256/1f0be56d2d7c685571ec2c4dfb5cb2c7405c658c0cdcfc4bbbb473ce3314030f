@@ -1,0 +1,55 @@
+### 定理 6.2（全部局部二元读出的精确操作缺额）
+
+<a id="thm-c92-operational-duality"></a>
+
+对归一局部态，有
+
+<a id="eq-c92-operational-duality"></a>
+
+$$
+\boxed{\quad
+ \Delta_w(R)
+ =\max_{0\le E_C\le I_C}
+ \left[
+  \sum_Cw_C\operatorname{Tr}(R_CE_C)
+  -\lambda_{\max}\!\left(\sum_Cw_C\iota_C(E_C)\right)
+ \right].\quad}
+\tag{6.3}
+$$
+
+因此 $\Delta_w(R)=0$ 当且仅当 C92 成立，也当且仅当存在兼容全态。
+该等式不要求满秩、严格可行性或局部效果彼此对易。
+
+**证明。**
+在前文 $\mathfrak V$ 上取范数
+
+$$
+N(x)=\frac12\sum_Cw_C\left\lVert x_C\right\rVert_1.
+$$
+
+迹范数与算符范数的有限谱对偶给出
+
+$$
+N^*(h)=2\max_C\frac{\left\lVert h_C\right\rVert_\infty}{w_C}.
+$$
+
+其上界由逐块 Hölder 不等式得到。若 $h\ne0$，选择达到最大比值的块
+$C_*$，再取 $h_{C_*}$ 的单位本征向量 $v$，使对应本征值 $\lambda$
+满足 $|\lambda|=\left\lVert h_{C_*}\right\rVert_\infty$。令
+$x_{C_*}=(2/w_{C_*})\operatorname{sgn}(\lambda)\lvert v\rangle\langle v\rvert$，其余块为零，
+则 $N(x)=1$ 且 $\langle h,x\rangle=2|\lambda|/w_{C_*}$，给出反向等号；
+$h=0$ 时等式显然成立。
+所以对偶单位球恰为 $\left\lVert h_C\right\rVert_\infty\le w_C/2$。
+应用引理 [6.1](#lem-c92-norm-separation)，并使用
+式 [(4.2)](#eq-c92-support-function)，得到
+
+$$
+\Delta_w(R)=\max_{\left\lVert h_C\right\rVert_\infty\le w_C/2}
+       \bigl[b_R(h)-\lambda_{\max}(W(h))\bigr].
+$$
+
+逐块写成 $h_C=w_C(E_C-I_C/2)$。
+该变量替换与 $0\le E_C\le I_C$ 一一对应；归一性使两个标量偏移
+$-1/2$ 恰好抵消，便得到式 [(6.3)](#eq-c92-operational-duality)。
+零点资格由完整扩张定理或前一命题立即得到。
+

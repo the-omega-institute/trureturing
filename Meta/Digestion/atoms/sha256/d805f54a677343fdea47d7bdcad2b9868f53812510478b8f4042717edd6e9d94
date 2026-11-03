@@ -1,0 +1,41 @@
+**定理 15.2（重分组同步系数，但不选择量子分支）。** 定义 15.1 的两个输出一致，当且仅当
+
+$$
+\begin{aligned}
+\kappa_{AB}=\kappa_{BC}=\kappa_{(AB)C}=\kappa_{A(BC)},\\
+\beta_{AB}=\beta_{BC}=\beta_{(AB)C}=\beta_{A(BC)}.
+\end{aligned}\tag{15.1}
+$$
+
+任何共同实数 $\kappa,\beta$ 都满足该关系。因此重分组本身不排除额外变化通道，也不选择 $\kappa$ 的符号。
+
+证明。以 $SSS,SBS,\ldots,BBB$ 表示八个局部张量通道。它们由命题 14.2 的局部独立性而独立。两种比较输出分别为
+
+$$
+\begin{aligned}
+M_{(AB)C}
+&=SSS+\kappa_{AB}BBS+\kappa_{(AB)C}BSB
+ +\kappa_{(AB)C}SBB+\kappa_{(AB)C}\beta_{AB}BBB,\\
+M_{A(BC)}
+&=SSS+\kappa_{A(BC)}BBS+\kappa_{A(BC)}BSB
+ +\kappa_{BC}SBB+\kappa_{A(BC)}\beta_{BC}BBB.
+\end{aligned}\tag{15.2}
+$$
+
+两种变化输出分别为
+
+$$
+\begin{aligned}
+T_{(AB)C}
+&=BSS+SBS+SSB+\beta_{AB}BBS+\beta_{(AB)C}BSB
+ +\beta_{(AB)C}SBB\\
+&\quad +(\kappa_{AB}+\beta_{(AB)C}\beta_{AB})BBB,\\
+T_{A(BC)}
+&=BSS+SBS+SSB+\beta_{A(BC)}BBS+\beta_{A(BC)}BSB
+ +\beta_{BC}SBB\\
+&\quad +(\kappa_{BC}+\beta_{A(BC)}\beta_{BC})BBB.
+\end{aligned}\tag{15.3}
+$$
+
+比较 (15.2) 的 $BBS,BSB,SBB$ 系数给全部 $\kappa$ 相等，比较 (15.3) 的同三通道给全部 $\beta$ 相等。其余系数此时自动一致，也证明逆向。若全体活动对象可彼此组合且每个三元组都满足此条件，两次相邻三元组便同步任意两条边；若仅给部分三元组，同步只在这些等式生成的连通类内成立。∎
+

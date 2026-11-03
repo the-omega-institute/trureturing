@@ -1,0 +1,9 @@
+### 定义 4.2（有序平方缺额）
+
+对任意关系元 $x,y\in M_d$，定义
+
+$$
+\Gamma_\Phi(x,y)=\Phi(x^\dagger y)-\Phi(x)^\dagger\Phi(y),
+\qquad \Delta_\Phi(x)=\Gamma_\Phi(x,x).
+$$
+

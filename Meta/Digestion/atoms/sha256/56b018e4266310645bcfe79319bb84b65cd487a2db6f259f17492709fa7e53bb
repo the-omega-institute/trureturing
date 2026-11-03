@@ -1,0 +1,10 @@
+### 定义 5.2（乘法域）
+
+记
+
+$$
+\operatorname{MD}(\Phi)=\{c\in M_d:\Phi(cx)=\Phi(c)\Phi(x),\ \Phi(xc)=\Phi(x)\Phi(c)\ \text{对全部 }x\in M_d\}.
+$$
+
+它要求与任意关系从左右两侧组合时都能延续。
+
