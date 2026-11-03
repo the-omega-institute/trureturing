@@ -28,9 +28,10 @@ import D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate
 import D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
 import D5.S3.VertexAlgebra.BinomialKernelDelta
 
+/-! Full signed three-index identity for the original ghost fields. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 
 open scoped BigOperators VertexOperator
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
@@ -47,16 +48,16 @@ open D5.S3.VertexAlgebra.BinomialKernelDelta
 noncomputable section
 namespace D5.S3.Quantum.Fermionic.BcGhostBorcherds
 
-local notation "mu" => D5.S3.VertexAlgebra.StateFieldResidueReconstruction.mu
-  (Y := D5.S3.Quantum.Fermionic.BcGhostStateField.Y)
+private abbrev mu (a : Fock) (n : ℤ) (b : Fock) : Fock :=
+  ((BcGhostStateField.Y a) [[n]]) b
 
-private def jacobiLeftTerm (p q r : ℤ) (a b c : Fock) (i : ℕ) : Fock :=
+def jacobiLeftTerm (p q r : ℤ) (a b c : Fock) (i : ℕ) : Fock :=
   integerBinomial p i • mu (mu a (r+i) b) (p+q-i) c
 
-private def jacobiRightFirstTerm (p q r : ℤ) (a b c : Fock) (i : ℕ) : Fock :=
+def jacobiRightFirstTerm (p q r : ℤ) (a b c : Fock) (i : ℕ) : Fock :=
   (((-1 : ℂ)^i)*integerBinomial r i) • mu a (p+r-i) (mu b (q+i) c)
 
-private def jacobiRightSecondTerm (s : ℂ) (p q r : ℤ) (a b c : Fock) (i : ℕ) : Fock :=
+def jacobiRightSecondTerm (s : ℂ) (p q r : ℤ) (a b c : Fock) (i : ℕ) : Fock :=
   (((-1 : ℂ)^i)*integerBinomial r i) •
     (epsilon r * s) • mu b (q+r-i) (mu a (p+i) c)
 
@@ -69,6 +70,7 @@ private def signedCommutator (s : ℂ) (A B : VertexOperator ℂ Fock) :
    proof.  The m = 0 seed is supplied by the native signed iterate theorem;
    high r uses this actual pointwise truncation bound together with signed
    locality, so no private residue-field constructor is used here. -/
+set_option maxHeartbeats 4000000 in
 theorem borcherds (a b c : Fock) (pa pb : ℕ)
     (ha : parity a = (-1 : ℂ) ^ pa • a)
     (hb : parity b = (-1 : ℂ) ^ pb • b) (p q r : ℤ) :
@@ -91,13 +93,16 @@ by
         ∑ offset ∈ Finset.range (order + 1),
           (((-1 : ℂ)^offset) * (order.choose offset : ℂ)) •
             value (first+(order : ℤ)-offset) (second+offset) :=
-    FieldDeltaBinomial.delta_binomial value order first second
+    D5.S3.VertexAlgebra.FieldDeltaBinomial.delta_binomial value order first second
   obtain ⟨localityOrder, localityLaw⟩ := stateField_locality a b pa pb ha hb
   let supportCutoff : ℕ := (-((HahnModule.of ℂ).symm ((Y a) b)).order).toNat
   let cutoff : ℕ := localityOrder + supportCutoff
   have killedLocal : (deltaEnd ^ localityOrder) (signedCommutator superSign (Y a) (Y b)) = 0 := by
     rw [Module.End.pow_apply]
-    simpa [signedCommutator, superSign] using localityLaw
+    change delta^[localityOrder] (fun m n =>
+      ((Y a) [[m]]) * ((Y b) [[n]]) - ((-1 : ℂ) ^ (pa * pb)) •
+        (((Y b) [[n]]) * ((Y a) [[m]]))) = 0
+    exact localityLaw
   have highSeed : ∀ first second parameter : ℤ, (cutoff : ℤ) ≤ parameter →
       discrepancy first second parameter = 0 := by
     change ∀ first second parameter : ℤ, (cutoff : ℤ) ≤ parameter →
@@ -127,8 +132,9 @@ by
               (((-1 : ℂ) ^ offset) * (degree.choose offset : ℂ)) •
                 ((Y b) [[second + degree - offset]]) (((Y a) [[first + offset]]) vector) := by
         unfold jacobiRightSecondTerm mu
-        simp_rw [chooseNat, smul_smul, mul_comm]
+        simp_rw [chooseNat]
         rw [Finset.smul_sum]
+        simp_rw [smul_comm (epsilon (degree : ℤ) * superSign)]
         apply finsum_eq_sum_of_support_subset
         intro offset member
         by_contra outside
@@ -141,7 +147,7 @@ by
         (∑ offset ∈ Finset.range (degree + 1),
           (((-1 : ℂ) ^ offset) * (degree.choose offset : ℂ)) •
             ((Y a) [[first + degree - offset]]) (((Y b) [[second + offset]]) vector)) -
-          (epsilon (degree : ℤ) * superSign) • z)
+          z)
       rw [Finset.smul_sum, ← Finset.sum_range_reflect]
       apply Finset.sum_congr rfl
       intro offset member
@@ -162,7 +168,14 @@ by
           _ = (-1 : ℂ) ^ offset * (((-1 : ℂ) ^ (degree - offset)) ^ 2) *
               (degree.choose offset : ℂ) := by ring
           _ = _ := by rw [squared]; ring
-      rw [signs]
+      have signedSigns : ((-1 : ℂ) ^ degree * superSign) *
+          ((-1 : ℂ) ^ (degree - offset) * (degree.choose offset : ℂ)) =
+          ((-1 : ℂ) ^ offset * (degree.choose offset : ℂ)) * superSign := by
+        calc
+          _ = superSign * ((-1 : ℂ) ^ degree *
+              ((-1 : ℂ) ^ (degree - offset) * (degree.choose offset : ℂ))) := by ring
+          _ = _ := by rw [signs]; ring
+      rw [signedSigns]
       push_cast [Int.natCast_sub within]
       rw [show second + (degree : ℤ) - ((degree : ℤ) - offset) = second + offset by omega,
         show first + ((degree : ℤ) - offset) = first + degree - offset by omega]
@@ -181,7 +194,7 @@ by
       simp [mu]
     have rightZero : (∑ᶠ offset : ℕ, jacobiRightFirstTerm first second parameter a b c offset) -
         (∑ᶠ offset : ℕ, jacobiRightSecondTerm superSign first second parameter a b c offset) = 0 := by
-      obtain ⟨degree, rfl⟩ := Int.eq_ofNat_of_zero_le (by omega)
+      obtain ⟨degree, rfl⟩ := Int.eq_ofNat_of_zero_le (show 0 ≤ parameter by dsimp [cutoff] at high; omega)
       rw [positiveProduct]
       have vanish : (deltaEnd ^ degree) (signedCommutator superSign (Y a) (Y b)) = 0 := by
         obtain ⟨extra, equality⟩ := Nat.exists_eq_add_of_le (show localityOrder ≤ degree by omega)
@@ -211,16 +224,20 @@ by
               (((-1 : ℂ) ^ offset) * integerBinomial r offset) •
                 ((Y b) [[q + r - (offset : ℤ)]])
                   (((Y a) [[(offset : ℤ)]]) c)) := by
-      unfold jacobiRightSecondTerm
-      rw [← smul_finsum' (epsilon r * superSign) rightFinite]
+      have rightFinite' : Function.HasFiniteSupport (fun offset : ℕ =>
+          (((-1 : ℂ) ^ offset) * integerBinomial r offset) •
+            ((Y b) [[q + r - (offset : ℤ)]]) (((Y a) [[(offset : ℤ)]]) c)) := by
+        simpa only [integerBinomial, add_comm r q] using rightFinite
+      rw [smul_finsum' (epsilon r * superSign) rightFinite']
       apply finsum_congr
       intro offset
-      module
+      simp only [jacobiRightSecondTerm, mu, zero_add]
+      exact smul_comm _ _ _
     have right : mu (mu a r b) q c =
         (∑ᶠ offset : ℕ, jacobiRightFirstTerm 0 q r a b c offset) -
           (∑ᶠ offset : ℕ, jacobiRightSecondTerm superSign 0 q r a b c offset) := by
       rw [secondRewrite]
-      simpa [jacobiRightFirstTerm, mu, superSign] using iterateLaw
+      simpa [jacobiRightFirstTerm, mu, superSign, integerBinomial, epsilon, add_comm r q] using iterateLaw
     rw [left, right]
     abel
   have recurrence (p q r : ℤ) : discrepancy (p + 1) q r = discrepancy p (q + 1) r + discrepancy p q (r + 1) := by
@@ -307,15 +324,15 @@ by
         dsimp only [jacobiRightFirstTerm, weight, sequence]; push_cast
         rw [show p + (r + 1) - ((offset : ℤ) + 1) = p + r - offset by omega, show q + ((offset : ℤ) + 1) = q + 1 + offset by omega]
       simp_rw [initial, current, shifted]; exact sub_eq_iff_eq_add'.mp (sumWeightedPascal r sequence (secondFinite p q (r + 1))).symm
-    have sign : StateFieldResidueReconstruction.epsilon (r + 1) = -StateFieldResidueReconstruction.epsilon r := by rw [StateFieldResidueReconstruction.epsilon, StateFieldResidueReconstruction.epsilon, zpow_add₀ (by norm_num)]; norm_num
+    have sign : epsilon (r + 1) = -epsilon r := by rw [epsilon, epsilon, zpow_add₀ (by norm_num)]; norm_num
     have secondRightLaw : (∑ᶠ offset : ℕ, jacobiRightSecondTerm superSign (p + 1) q r a b c offset) = (∑ᶠ offset : ℕ, jacobiRightSecondTerm superSign p (q + 1) r a b c offset) + (∑ᶠ offset : ℕ,
       jacobiRightSecondTerm superSign p q (r + 1) a b c offset) := by
       let sequence (offset : ℕ) := mu b (q + (r + 1) - offset) (mu a (p + offset) c)
-      have initial (offset : ℕ) : jacobiRightSecondTerm superSign p (q + 1) r a b c offset = (StateFieldResidueReconstruction.epsilon r * superSign) • (weight r offset • sequence offset) := by
+      have initial (offset : ℕ) : jacobiRightSecondTerm superSign p (q + 1) r a b c offset = (epsilon r * superSign) • (weight r offset • sequence offset) := by
         dsimp only [jacobiRightSecondTerm, weight, sequence, superSign]; rw [show q + 1 + r = q + (r + 1) by omega, smul_comm]
-      have current (offset : ℕ) : jacobiRightSecondTerm superSign p q (r + 1) a b c offset = -(StateFieldResidueReconstruction.epsilon r * superSign) • (weight (r + 1) offset • sequence offset) := by
-        dsimp only [jacobiRightSecondTerm, weight, sequence, superSign]; rw [sign, smul_comm]
-      have shifted (offset : ℕ) : jacobiRightSecondTerm superSign (p + 1) q r a b c offset = (StateFieldResidueReconstruction.epsilon r * superSign) • (weight r offset • sequence (offset + 1)) := by
+      have current (offset : ℕ) : jacobiRightSecondTerm superSign p q (r + 1) a b c offset = -(epsilon r * superSign) • (weight (r + 1) offset • sequence offset) := by
+        dsimp only [jacobiRightSecondTerm, weight, sequence, superSign]; rw [sign, smul_comm, neg_mul]
+      have shifted (offset : ℕ) : jacobiRightSecondTerm superSign (p + 1) q r a b c offset = (epsilon r * superSign) • (weight r offset • sequence (offset + 1)) := by
         dsimp only [jacobiRightSecondTerm, weight, sequence, superSign]; push_cast
         rw [show q + (r + 1) - ((offset : ℤ) + 1) = q + r - offset by omega, show p + ((offset : ℤ) + 1) = p + 1 + offset by omega, smul_comm]
       simp_rw [initial, current, shifted, ← smul_finsum]; rw [sumWeightedPascal r sequence (thirdFinite p q (r + 1))]; module

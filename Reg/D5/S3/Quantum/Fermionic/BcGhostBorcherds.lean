@@ -57,14 +57,15 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have second (i : ℕ) : (i : ℤ) ≠ -1 := by omega
   have bad := law.2.2.2
   simp [rejected, realize, modes, first, second, integerBinomial,
-    Ring.choose_zero_ite, finsum_eq_single] at bad
-  simpa [vacuum, ket] using bad
+    Ring.choose_zero_ite] at bad
+  rw [finsum_eq_single _ 0 (by intro i hi; simp [hi])] at bad
+  simp [vacuum, ket] at bad
 private theorem actual_dependence : actual.readout () () vacuum ≠ actual.readout () () 0 := by
   intro h
   have hz := congrArg (fun A : VertexOperator ℂ Fock => (A [[-1]]) vacuum) h
   change ((Y vacuum) [[-1]]) vacuum = ((Y 0) [[-1]]) vacuum at hz
   rw [stateField_creation.2.1, stateField_creation.2.1] at hz
-  simpa [vacuum, ket] using hz
+  simp [vacuum, ket] at hz
 
 def family : Registration arena (type_of% @borcherds) where
   actual := actual
