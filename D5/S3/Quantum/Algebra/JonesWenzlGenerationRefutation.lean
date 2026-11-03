@@ -314,13 +314,11 @@ private theorem rho_gens :
 
 private theorem rho_box : rho box = scalarEmbedding.mapMatrix exactP := by
   have hs : scalarEmbedding (⟨0, 1/3⟩ : coeff) = (Real.sqrt 3 : ℂ)⁻¹ := by
-    have hr : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
-      exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
     change (0 : ℚ) • (1 : ℂ) + (1/3 : ℚ) • (Real.sqrt 3 : ℂ) = _
-    simp only [zero_smul, zero_add]
-    apply eq_inv_of_mul_eq_one_left
-    norm_num [Algebra.smul_def]
-    linear_combination hr / 3
+    norm_num [Algebra.smul_def, ← Complex.ofReal_div, ← Complex.ofReal_inv,
+      ← Real.sqrt_div_self]
+    push_cast
+    ring
   rw [exactP_eq]
   simp only [map_mul, map_add, map_one, AlgHom.mapMatrix_apply,
     Matrix.map_smul' scalarEmbedding _ _ (map_mul scalarEmbedding), hs]
