@@ -3216,3 +3216,174 @@ For the first-loss question, (36.6)--(36.7) remove the effect optimization for e
 For any actual continuation of that geometric family write $N(\xi)$ for its candidate value of $f$; on the supplied local interval it is $n(\xi/2)$. The remaining all-domain obligation is $M_\sigma(w,\xi)\ge N(\xi)+\kappa\xi$ for every realizable $w$ and every admissible sign, with equality exactly at the continued geometric pairs until the selected first transition. In particular, the feedback parameters outside (36.30), the opposite distance branch, extra tied original minimizers and possible mixed minimizers beyond the range of (36.18) are not eliminated by these theorems. A directly selected first distance boundary, the exact maximal connected positive-distance prefix, its endpoint inclusion or exclusion, and the full actual first transition remain undetermined. Neither $1$ in (36.18), the boundary of (36.30), nor (36.44)--(36.46)'s phase-instability curve is asserted to be that first boundary.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. Exact sector envelopes and core localization of the first-loss comparison
+
+**Definition 37.1 (the three screened sectors and their scalar envelopes).** Retain the original $\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose, one shared feedback unitary, joint optimizer-sign minimum, and common scalar quotient. Put
+
+$$
+A_0=2+\sqrt{\frac83},\qquad \delta_+=4-A_0,
+\qquad \delta_-^{\max}=\frac16,qquad \gamma=\frac1{25}.
+$$
+
+For reduced feedback data $w\in\mathcal W$ define
+
+$$
+\begin{aligned}
+\mathcal C_+&=\{w:A(w)\ge A_0\},\\
+\mathcal C_-&=\{w:B(w)\ge23/6\},\\
+\mathcal T&=\{w:A(w)+B(w)\le4,\ A(w)<A_0,\ B(w)<23/6\},\\
+\mathcal O&=\{w:A(w)<A_0,\ B(w)<23/6,\ A(w)+B(w)>4\}.
+\end{aligned}
+\tag{37.1}
+$$
+
+The cap estimates of Lemmas 24.2 and 25.1 make $\mathcal C_+$ and $\mathcal C_-$ disjoint; the four sets therefore partition $\mathcal W$. For $t=\xi/2$ put
+
+$$
+\begin{aligned}
+I_+(t)&=\{\delta:0\le\delta\le\delta_+,\ 0\le t-\delta\le1\},\\
+I_-(t)&=\{\delta:0\le\delta\le\delta_-^{\max},\ 0\le t-\delta\le1\}.
+\end{aligned}
+\tag{37.2}
+$$
+
+For $\delta\in I_+(t)$ set $q=t-\delta$ and retain the exact scalar expression
+
+$$
+H^+_\delta(q)=
+\left(2a\delta-\frac{\delta^2}{2}\right)(1-q)
++\left(B-2(1+\kappa)\delta+\frac{\delta^2}{2}\right)q
+-2(d-h\delta)\sqrt{\left(2\delta-\frac{\delta^2}{2}\right)q(1-q)}.
+\tag{37.3}
+$$
+
+For $\delta\in I_-(t)$ define
+
+$$
+\begin{aligned}
+u^-_\delta&=c\sqrt{4\delta-\delta^2},&
+v^-_\delta&=e-s\delta,\\
+H^-_\delta(p)&=d^2p+e^2(1-p)
+ -\bigl(u^-_\delta\sqrt p+v^-_\delta\sqrt{1-p}\bigr)^2
+ -2\kappa(p+\delta),qquad p=t-\delta.
+\end{aligned}
+\tag{37.4}
+$$
+
+Define the sector values
+
+$$
+N_+(\xi)=\min_{\delta\in I_+(t)}H^+_\delta(t-\delta),
+\qquad
+N_-(\xi)=\min_{\delta\in I_-(t)}H^-_\delta(t-\delta),
+\tag{37.5}
+$$
+
+with value $+\infty$ when the corresponding interval is empty. Finally, using the exact quantities $M_\sigma(w,\xi)$ and admissibility of Definition 36.1, put
+
+$$
+N_{\mathcal O}(\xi)=\inf_{w\in\mathcal O}\ \min_{\sigma\in\{+,-\}}M_\sigma(w,\xi)-\kappa\xi,
+\tag{37.6}
+$$
+
+where an inadmissible sign contributes $+\infty$.
+
+**Theorem 37.2 (exact cap envelopes and first-loss screening).** For every $0<\xi\le9$ the following hold.
+
+1. The infima of $f$ on the two cap sectors at the prescribed original distance are exactly
+
+$$
+\inf_{\substack{(E,U)\colon\rho(E,U)=\xi\\
+                 \operatorname{diag}(UU_+^\dagger)\in\mathcal C_+}}
+ f(E,U)=N_+(\xi),
+\qquad
+\inf_{\substack{(E,U)\colon\rho(E,U)=\xi\\
+                 \operatorname{diag}(UU_+^\dagger)\in\mathcal C_-}}
+ f(E,U)=N_-(\xi).
+\tag{37.7}
+$$
+
+2. Every positive-distance global minimizer has rank-one effect. Every minimizer whose reduced feedback lies in $\mathcal T$ satisfies
+
+$$
+f(E,U)>(\gamma-\kappa)\xi.
+\tag{37.8}
+$$
+
+Consequently, whenever $N_+(\xi)<(\gamma-\kappa)\xi$, the full original level minimum obeys
+
+$$
+m(\xi)=\min\{N_+(\xi),N_{\mathcal O}(\xi)\}.
+\tag{37.9}
+$$
+
+Thus, on every level on which the positive-cap scalar envelope lies below the strict linear screen, an additional first-loss competitor can occur only in the core $\mathcal O$; the only remaining positive-cap alternative is a second scalar minimizer of (37.3).
+
+3. If $\delta\in I_+(t)$ realizes $N_+(\xi)$ and $0<t-\delta<1$, equality in the positive-cap bound forces, up to the one common scalar $\lambda$, the actual feedback and effect to be
+
+$$
+\begin{aligned}
+w&=(x+\sigma iy,x-\sigma iy,1,1),\qquad U=\lambda\operatorname{diag}(w)U_+,\quad |\lambda|=1,\\
+x&=1-\frac{\delta}{2},&y&=\sqrt{\delta-\frac{\delta^2}{4}},\\
+E&=\overline{\psi_\sigma}\,\overline{\psi_\sigma}^{\dagger},
+&\psi_\sigma&=\sqrt{1-q}\,b_+-\sigma i\sqrt q\,b_-,qquad q=t-\delta,\quad \sigma\in\{+1,-1\}.
+\end{aligned}
+\tag{37.10}
+$$
+
+In particular, if the scalar minimizer in (37.5) is unique, the positive-cap equality set contains exactly the two Section 34 orientations modulo the original common scalar phase. No diagonal or purity assumption is made on competitors before equality is forced.
+
+**Proof.** Let $(E,U)$ minimize $f$ on a nonempty positive level. Choose a sign attaining the original joint distance. Theorem 36.3 gives, with the same actual $U$ and the same distance, a normalized rank-one effect with strictly smaller $g$ whenever $E$ is mixed. Therefore every global minimizer at $\xi>0$ is rank one. This conclusion includes singular effects, both population endpoints and sign ties, and does not replace the actual feedback by separate controls for the two spectral components.
+
+Consider first $w\in\mathcal C_+$. Write $\delta=4-A(w)$ and $q=1-p$. Lemma 24.2 gives, on the same actual feedback,
+
+$$
+r(w,p)=2(q+\delta),\qquad
+u(w)\le d-h\delta,qquad
+v(w)^2\le2\delta-\frac{\delta^2}{2}.
+\tag{37.11}
+$$
+
+For a rank-one effect the phase in (23.13) can align the two amplitudes, while (23.12) gives the lower bound for every other phase. Hence, at $\rho=\xi$, $q+\delta=t$ and
+
+$$
+f(E,U)\ge H^+_\delta(q).
+\tag{37.12}
+$$
+
+Taking the minimum over the allowed $\delta$ proves the lower bound in the first equality of (37.7). Conversely, for every such $\delta$ the actual diagonal (24.15), the single unitary $U=\operatorname{diag}(w)U_+$, and the effect in (37.10) have $\rho=2(q+\delta)=\xi$ and attain (37.12), by (23.12), (24.15) and the original common scalar minimization. This proves the positive-cap equality in (37.7), including $q=0$ and $q=1$ by continuity.
+
+For $w\in\mathcal C_-$, put $\delta=4-B(w)$ and retain $p$ as the population of $b_+$. Lemma 25.1 gives
+
+$$
+r(w,p)=2(p+\delta),\qquad
+u(w)^2\le c^2(4\delta-\delta^2),\qquad
+v(w)\le e-s\delta.
+\tag{37.13}
+$$
+
+The rank-one phase alignment in (23.13) and (23.12) therefore give
+
+$$
+f(E,U)\ge H^-_\delta(p),\qquad p+\delta=t.
+\tag{37.14}
+$$
+
+The lower bound in the negative-cap equality of (37.7) follows. The simultaneous attaining diagonal (25.13), with the same original unitary for the whole effect, and the phase-aligned rank-one effect from (23.13) attain (37.14) for every allowed $\delta,p$. This proves the second equality in (37.7). The argument uses the ordinary transpose and keeps all actual nondiagonal lifts in the lower comparison.
+
+The sector $\mathcal T$ is exactly the newly covered trace triangle of Theorem 26.4. Its strict estimate $g>\gamma\rho$ gives (37.8) after subtracting $\kappa\rho$, for every positive level. The four sets in (37.1) partition the realizable diagonal domain. Theorem 25.3 gives $N_-(\xi)\ge(\gamma-\kappa)\xi$, and (37.8) gives the same lower bound on $\mathcal T$. If $N_+(\xi)$ is strictly below it, neither sector can contain a global minimizer below $N_+(\xi)$. Theorem 36.2 then reduces the remaining sector $\mathcal O$ exactly to (37.6), proving (37.9). The strict inequality also shows that a tie at the first loss cannot be supplied by $\mathcal T$ under this condition.
+
+It remains to verify the equality preimage in the positive cap. Equality in (37.12) forces equality in both amplitude envelopes of Lemma 24.2, because the two population square roots are positive. Normalize the one common scalar so that $\sum_jw_j=A>0$. Equality in $|P|\le hA+2(c-h)$ forces $w_3+w_4=2$, hence $w_3=w_4=1$. Write $w_1=x+\zeta$, $w_2=x-\zeta$. Then $Q=2h\zeta$, while equality in the $v$ envelope gives $|\zeta|^2=1-x^2$. The two disk constraints imply
+
+$$
+|x+\zeta|^2+|x-\zeta|^2=2,qquad
+|x+\zeta|^2-|x-\zeta|^2=4x\operatorname{Re}\zeta=0.
+\tag{37.15}
+$$
+
+For $0<t-\delta<1$ one has $x>0$ and $y>0$, so $\zeta=\sigma iy$ with exactly one $\sigma\in\{+1,-1\}$. Equality in (23.12) then forces the relative effect phase $-\sigma i$, giving (37.10). The common scalar cancels from that phase condition. Conversely, substitution into (23.12), (24.15) gives equality. Endpoint populations follow by continuity and may have the expected phase degeneracy. This proves the theorem. $\square$
+
+The cap equalities (37.7) are a fixed-distance consequence of the original realizable diagonal reduction (23.1)--(23.13), the simultaneous cap envelopes (24.9), (25.2), and the exact fixed-level effect comparison (36.6)--(36.7). The strict screen (37.8) is the trace-triangle theorem 26.4. The constructions use the actual diagonal lifts (24.15) and (25.13), one shared $U$ for the entire effect, and the ordinary transpose; no auxiliary spectral feedback is introduced. The external prescribed-diagonal input remains the Thompson theorem cited in source Theorem 23.2, in the Jasper--Loreaux--Weiss formulation.
+
+For the first-loss problem this removes the mixed-effect, opposite-cap, and trace-triangle comparison obligations whenever the selected positive-cap value is below $(\gamma-\kappa)\xi$. The remaining unpaid comparison is exact and explicit: prove the ordering of $N_+(\xi)$ against $N_{\mathcal O}(\xi)$, prove uniqueness or classify scalar ties in (37.5), and then determine the first level at which the core value ties or beats the continued geometric value. No endpoint inclusion, immediate right-side failure, first competing core family, or full maximal positive-distance interval follows from this theorem.
