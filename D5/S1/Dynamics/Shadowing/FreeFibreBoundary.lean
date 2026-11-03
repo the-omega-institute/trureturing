@@ -293,8 +293,6 @@ theorem freeFibreSource_hasShadowing
     fibrePullbackSecond_continuous p (firstDifference a)
   have hHopen : IsOpenMap (fibrePullbackSecond p (firstDifference a)) :=
     fibrePullbackSecond_isOpenMap p (firstDifference a) hopen (continuous_firstDifference a)
-  have hHonto : Function.Surjective (fibrePullbackSecond p (firstDifference a)) :=
-    fibrePullbackSecond_surjective p (firstDifference a) honto
   let hExt : FibrePullback p (firstDifference a) ⊕ BinaryName → BinaryName :=
     Sum.elim (fibrePullbackSecond p (firstDifference a)) CoreShift
   have hExtcont : Continuous hExt :=

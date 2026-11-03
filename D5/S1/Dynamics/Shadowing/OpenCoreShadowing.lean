@@ -38,14 +38,6 @@ theorem fibrePullbackSecond_continuous {T S B : Type*}
     Continuous (fibrePullbackSecond p rho) := by
   exact continuous_snd.comp continuous_subtype_val
 
-theorem fibrePullbackSecond_surjective {T S B : Type*}
-    [TopologicalSpace T] [TopologicalSpace S] [TopologicalSpace B]
-    (p : T → B) (rho : S → B) (hp : Function.Surjective p) :
-    Function.Surjective (fibrePullbackSecond p rho) := by
-  intro s
-  obtain ⟨t, ht⟩ := hp (rho s)
-  exact ⟨⟨(t, s), ht⟩, rfl⟩
-
 theorem fibrePullbackSecond_isOpenMap {T S B : Type*}
     [TopologicalSpace T] [TopologicalSpace S] [TopologicalSpace B]
     (p : T → B) (rho : S → B) (hp : IsOpenMap p) (hrho : Continuous rho) :
@@ -90,13 +82,6 @@ theorem fibrePullback_t2Space {T S B : Type*}
     (p : T → B) (rho : S → B) : T2Space (FibrePullback p rho) := by
   infer_instance
 
-theorem firstDifference_surjective (a : BinaryName) :
-    Function.Surjective (firstDifference a) := by
-  obtain ⟨e, he⟩ := exists_firstDifference_section_homeomorph a
-  intro b
-  obtain ⟨s, hs⟩ := e.surjective b
-  exact ⟨s.val, (he s).symm.trans hs⟩
-
 abbrev CoreShift : BinaryName → BinaryName :=
   SymbolicDynamics.FullShift.shift (1 : ℕ)
 
@@ -128,15 +113,6 @@ theorem sourceDynamics_semiconj {T : Type*} (p : T → OnePoint ℕ) (a : Binary
     Semiconj (sourceObservation p a) (sourceDynamics p a) CoreShift := by
   intro z
   cases z <;> rfl
-
-theorem sourceObservation_surjective {T : Type*} (p : T → OnePoint ℕ) (a : BinaryName) :
-    Function.Surjective (sourceObservation p a) := by
-  intro s
-  refine ⟨Sum.inr (fun n => if n = 0 then false else s (n - 1)), ?_⟩
-  funext n
-  cases n with
-  | zero => rfl
-  | succ n => simp [sourceObservation, CoreShift, SymbolicDynamics.FullShift.shift_apply]
 
 def boolPrefixRel (k : ℕ) : SetRel BinaryName BinaryName :=
   {p | ∀ i < k, p.1 i = p.2 i}

@@ -16,7 +16,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/OpenCoreShadowing.fibrePullbackSecond_
 
 *Commentary.*
 
-If p:T to B is open and rho:S to B is continuous, the second projection from the fibre pullback of p and rho onto S is open. The proof uses neighborhoods in the product and subspace topologies and does not assume rho is open. A continuous surjective p also gives a continuous surjective projection; compact Hausdorff factors give a compact Hausdorff pullback.
+If p:T to B is open and rho:S to B is continuous, the second projection from the fibre pullback of p and rho onto S is open. The proof uses neighborhoods in the product and subspace topologies and does not assume rho is open. The projection is continuous; compact Hausdorff factors give a compact Hausdorff pullback.
 
 **Theorem 1.2 (Forward shadowing for the binary full shift).**
 
