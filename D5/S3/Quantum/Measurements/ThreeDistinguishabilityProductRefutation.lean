@@ -237,7 +237,8 @@ private lemma permutation_pairing (σ : Equiv.Perm (Fin 4)) (q : Fin 4 → ℝ)
     rw [← map_inv, hJinv]
   have hP : Function.Involutive P := by
     intro i
-    simpa only [← Equiv.Perm.inv_def, hPinv] using P.symm_apply_apply i
+    exact (congrArg (fun f : Equiv.Perm (Fin 4) => f (P i)) hPinv.symm).trans
+      (P.symm_apply_apply i)
   have hPfree : ∀ i, P i ≠ i := by
     intro i
     simpa only [P, Equiv.permCongr_apply, Equiv.apply_symm_apply] using
