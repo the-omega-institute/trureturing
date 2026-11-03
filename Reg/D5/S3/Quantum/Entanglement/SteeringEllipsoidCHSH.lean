@@ -815,3 +815,99 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.TightPsd
+
+namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.TightReadouts
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (vlen vlen_e3 blochA blochB corr centre pauli)
+open _root_.D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+open scoped ComplexOrder Kronecker
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => Fin 3 → ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ t s => blochB (tightState t s)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ![0, 0, 2]) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (t s : ℝ) (_ht₁ : t ≤ 1) (_hs₀ : 0 ≤ s) (_hs₁ : s ≤ 1),
+    trace (tightState t s) = 1 ∧
+    blochA (tightState t s) = ![0, 0, t + (1 - t) * s] ∧
+    R.readout () t s = ![0, 0, s] ∧
+    corr (tightState t s) = diagonal
+      ![Real.sqrt (1 + s) * Real.sqrt ((1 - t) * (1 - s)),
+        -(Real.sqrt (1 + s) * Real.sqrt ((1 - t) * (1 - s))), 1 - t + t * s]
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := (h 0 0 (by norm_num) (by norm_num) (by norm_num)).2.2.1
+  change (![0, 0, 2] : Fin 3 → ℝ) = ![0, 0, 0] at he
+  have hh := congrFun he 2
+  norm_num at hh
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨0, 0, 1, ?_⟩
+  change blochB (tightState 0 0) ≠ blochB (tightState 0 1)
+  rw [(tight_readouts 0 0 (by norm_num) (by norm_num) (by norm_num)).2.2.1,
+    (tight_readouts 0 1 (by norm_num) (by norm_num) (by norm_num)).2.2.1]
+  intro h
+  have he := congrFun h 2
+  norm_num at he
+
+def source_registration : Registration arena (type_of% @tight_readouts) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨tight_readouts, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@tight_readouts) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.TightReadouts.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.TightReadouts.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ t s => blochB (tightState t s)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.TightReadouts
