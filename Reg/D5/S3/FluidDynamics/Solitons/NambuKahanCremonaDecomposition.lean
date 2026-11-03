@@ -16,7 +16,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Matrix (Fin 3) (Fin 3) ℝ × Matrix (Fin 3) (Fin 3) ℝ × ℝ
+  Params := Σ _A : Matrix (Fin 3) (Fin 3) ℝ, Σ _B : Matrix (Fin 3) (Fin 3) ℝ, ℝ
   State _p := Fin 4 → ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -27,7 +27,8 @@ abbrev signature : Signature where
 
 def actual : Realization signature :=
   realize signature
-    (fun _ p X => kahan (Prod.fst p) (Prod.fst (Prod.snd p)) (Prod.snd (Prod.snd p)) X)
+    (fun _ p X => kahan (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+      (Sigma.snd (Sigma.snd p)) X)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -119,7 +120,8 @@ def registration :
   bundleNonempty := .absent
   readout := some
     (realize signature
-      (fun _ p X => kahan (Prod.fst p) (Prod.fst (Prod.snd p)) (Prod.snd (Prod.snd p)) X)
+      (fun _ p X => kahan (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+        (Sigma.snd (Sigma.snd p)) X)
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
