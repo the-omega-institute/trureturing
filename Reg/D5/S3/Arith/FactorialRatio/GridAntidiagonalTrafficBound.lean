@@ -28,7 +28,7 @@ abbrev signature : Signature where
   Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
-  
+
 def actual : Realization signature :=
   realize signature (fun _ _ => fun m : ℕ => Real.log (m.factorial : ℝ)) (fun e => nomatch e)
 
