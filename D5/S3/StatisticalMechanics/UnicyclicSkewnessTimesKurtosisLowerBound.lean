@@ -363,18 +363,18 @@ private lemma constant_minimum :
     (show (Set.Icc (0 : ℝ) 1).Nonempty from ⟨0, by norm_num⟩) hc.continuousOn
   have hneg : f u < 0 := by
     have h := hmin (show (4 / 5 : ℝ) ∈ Set.Icc (0 : ℝ) 1 by norm_num)
-    norm_num [f] at h ⊢
+    norm_num [f.eq_1] at h ⊢
     linarith
   have hu0 : 0 < u := by
     by_contra h
     have heq : u = 0 := le_antisymm (le_of_not_gt h) hu.1
     rw [heq] at hneg
-    norm_num [f] at hneg
+    norm_num [f.eq_1] at hneg
   have hu1 : u < 1 := by
     by_contra h
     have heq : u = 1 := le_antisymm hu.2 (le_of_not_gt h)
     rw [heq] at hneg
-    norm_num [f] at hneg
+    norm_num [f.eq_1] at hneg
   refine ⟨u, hu0, hu1, le_antisymm ?_ (f_lower_bound u hu0 hu1)⟩
   change f u ≤ sInf (sourceExpression '' Set.Ioi (0 : ℝ))
   apply le_csInf (show (sourceExpression '' Set.Ioi (0 : ℝ)).Nonempty from
