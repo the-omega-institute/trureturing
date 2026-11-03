@@ -137,10 +137,10 @@ namespace DiagonalKrausEntry
 
 universe u_3 u_4
 
-abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_3, 0, 0, 0} where
-  Params := Σ ι : Type u_3, Σ _ : Fintype ι, Σ _ : DecidableEq ι,
-    Σ ε : Type u_4, Σ _ : Fintype ε, Σ record : ι → ε → ℂ, Matrix ι ι ℂ
-  State p := p.1 × p.1
+abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_4, 0, 0, 0} where
+  Params := Σ ι : Type u_3, Σ ε : Type u_4,
+    Σ record : ι → ε → ℂ, Σ rho : Matrix ι ι ℂ, Σ i : ι, ι
+  State p := p.2.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -150,12 +150,8 @@ abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_3, 0, 0, 0} where
 
 def actual : Realization signature.{u_3, u_4} :=
   realize signature
-    (fun _ p ij =>
-      letI := p.2.1
-      letI := p.2.2.1
-      letI := p.2.2.2.2.1
-      (∑ a, star (p.2.2.2.2.2.1 ij.2 a) * p.2.2.2.2.2.1 ij.1 a) *
-        p.2.2.2.2.2.2 ij.1 ij.2)
+    (fun _ p a =>
+      star (p.2.2.1 p.2.2.2.2.2 a) * p.2.2.1 p.2.2.2.2.1 a)
     (fun e _ => Empty.elim e)
 
 def rejected : Realization signature.{u_3, u_4} :=
@@ -168,16 +164,12 @@ abbrev arena : Arena where
     (record : ι → ε → ℂ) (rho : Matrix ι ι ℂ) (i j : ι),
     (∑ a, Matrix.diagonal (fun i => record i a) * rho *
       (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
-      R.readout ()
-        ⟨ι, ⟨inferInstance, ⟨inferInstance, ⟨ε, ⟨inferInstance, ⟨record, rho⟩⟩⟩⟩⟩⟩
-        (i, j)
+      (∑ a, R.readout ()
+        ⟨ι, ⟨ε, ⟨record, ⟨rho, ⟨i, j⟩⟩⟩⟩⟩ a) * rho i j
 
 theorem actual_law : arena.{u_3, u_4}.Law actual := by
   intro ι ε _ _ _ record rho i j
-  change (∑ a, Matrix.diagonal (fun i => record i a) * rho *
-      (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
-    (∑ a, star (record j a) * record i a) * rho i j
-  exact diagonal_kraus_entry record rho i j
+  simpa [actual, realize] using (diagonal_kraus_entry record rho i j)
 
 theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
   intro h
@@ -185,22 +177,16 @@ theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
   let ε := ULift.{u_4} Unit
   have hbad := @h ι ε inferInstance inferInstance inferInstance
     (fun _ _ => (1 : ℂ)) (fun _ _ => (1 : ℂ)) (ULift.up 0) (ULift.up 0)
-  change _ = (0 : ℂ) at hbad
-  have hcalc := diagonal_kraus_entry
-    (record := fun _ : ι => fun _ : ε => (1 : ℂ))
-      (rho := fun _ _ : ι => (1 : ℂ))
-      (ULift.up (0 : Fin 1) : ι) (ULift.up (0 : Fin 1) : ι)
-  rw [hcalc] at hbad
-  norm_num at hbad
+  rw [diagonal_kraus_entry] at hbad
+  norm_num [rejected, realize] at hbad
 
 theorem dependence : ObservationalDependence signature.{u_3, u_4} actual := by
   intro _
   let p : signature.{u_3, u_4}.Params :=
-    ⟨ULift.{u_3} (Fin 2), ⟨inferInstance, ⟨inferInstance,
-      ⟨ULift.{u_4} Unit, ⟨inferInstance, ⟨(fun _ _ => (1 : ℂ)),
-        Matrix.diagonal (fun i : ULift.{u_3} (Fin 2) =>
-          if i = ULift.up 0 then 1 else 0)⟩⟩⟩⟩⟩⟩
-  refine ⟨p, (ULift.up 0, ULift.up 0), (ULift.up 1, ULift.up 1), ?_⟩
+    ⟨ULift.{u_3} (Fin 1), ⟨ULift.{u_4} Bool,
+      ⟨(fun _ b => if b.down then 1 else 0),
+        ⟨(fun _ _ => (1 : ℂ)), ⟨ULift.up 0, ULift.up 0⟩⟩⟩⟩⟩
+  refine ⟨p, ULift.up false, ULift.up true, ?_⟩
   norm_num [actual, realize, p]
 
 def source_registration : Registration arena.{u_3, u_4}
@@ -234,12 +220,9 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u_3, u_4}
-    (fun _ p ij =>
-      letI := p.2.1
-      letI := p.2.2.1
-      letI := p.2.2.2.2.1
-      (∑ a, star (p.2.2.2.2.2.1 ij.2 a) * p.2.2.2.2.2.1 ij.1 a) *
-        p.2.2.2.2.2.2 ij.1 ij.2) (fun e _ => Empty.elim e))
+    (fun _ p a =>
+      star (p.2.2.1 p.2.2.2.2.2 a) * p.2.2.1 p.2.2.2.2.1 a)
+      (fun e _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -247,11 +230,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1, 5, 6, 7, 8]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg", "arg"]
       stateBinder := 0
-      functionOperand := false
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
