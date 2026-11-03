@@ -58,7 +58,7 @@ internal sealed class OriginalHalfBinomialPeriodDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("original-half-binomial-period-derivative"),
                 DeclarationHandle.Create(Prefix + "period_derivative"), H("The original derivative series"),
                 StatementSource.FromAuthor(PeriodDerivativeFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every complex z of norm less than one, the series with nth term (n+1) halfBinomial(n+1) squared times z to the n sums to the complex derivative of period at z, and period is complex differentiable there. The original firstCoefficient definition is (n+1) times coefficient(n+1), where coefficient(n) is halfBinomial(n) squared. The annular moment and analytic coefficient proofs use this same derivative series, including at zero."))),
+                Blocks(Paragraph(Text("For every complex z of norm less than one, the series with nth term (n+1) halfBinomial(n+1) squared times z to the n sums to the complex derivative of period at z, and period is complex differentiable there. The original firstCoefficient definition is (n+1) times coefficient(n+1), where coefficient(n) is halfBinomial(n) squared. The analytic coefficient proofs use this same derivative series, including at zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-half-binomial-period-picard-fuchs"),
                 DeclarationHandle.Create(Prefix + "picard_fuchs"), H("The full complex disk equation"),

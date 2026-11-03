@@ -26,7 +26,7 @@ $$\forall z\in \mathbb{C}, \Vert z \Vert<1\Rightarrow \operatorname{HasSum}\left
 
 *Commentary.*
 
-For every complex z of norm less than one, the series with nth term (n+1) halfBinomial(n+1) squared times z to the n sums to the complex derivative of period at z, and period is complex differentiable there. The original firstCoefficient definition is (n+1) times coefficient(n+1), where coefficient(n) is halfBinomial(n) squared. The annular moment and analytic coefficient proofs use this same derivative series, including at zero.
+For every complex z of norm less than one, the series with nth term (n+1) halfBinomial(n+1) squared times z to the n sums to the complex derivative of period at z, and period is complex differentiable there. The original firstCoefficient definition is (n+1) times coefficient(n+1), where coefficient(n) is halfBinomial(n) squared. The analytic coefficient proofs use this same derivative series, including at zero.
 
 **Theorem 1.3 (The full complex disk equation).**
 
