@@ -148,7 +148,7 @@ def independenceComplex (G : SimpleGraph U) : AbstractSimplicialComplex U where
     intro x hx y hy hxy
     exact (hxy ((Finset.mem_singleton.mp hx).trans (Finset.mem_singleton.mp hy).symm)).elim
 
-private def restricted (G : SimpleGraph U) (p : U → Prop) :
+def restricted (G : SimpleGraph U) (p : U → Prop) :
     PreAbstractSimplicialComplex U where
   faces := {s | s.Nonempty ∧ G.IsIndepSet (s : Set U) ∧ ∀ a ∈ s, p a}
   isRelLowerSet_faces := by
@@ -156,12 +156,12 @@ private def restricted (G : SimpleGraph U) (p : U → Prop) :
     exact ⟨hn, fun t hts ht => ⟨ht, hi.mono (fun _ hx => hts hx),
       fun a ha => hp a (hts ha)⟩⟩
 
-private theorem unrestricted (G : SimpleGraph U) :
+theorem unrestricted (G : SimpleGraph U) :
     restricted G (fun _ => True) = (independenceComplex G).toPreAbstractSimplicialComplex := by
   ext s
   simp [restricted, independenceComplex]
 
-private theorem restricted_map (G : SimpleGraph U) (F : SimpleGraph X)
+theorem restricted_map (G : SimpleGraph U) (F : SimpleGraph X)
     (f : U ↪ X) (hf : ∀ a b, G.Adj a b ↔ F.Adj (f a) (f b)) (p : U → Prop) :
     (restricted G p).map f = restricted F (fun x => ∃ a, p a ∧ f a = x) := by
   classical

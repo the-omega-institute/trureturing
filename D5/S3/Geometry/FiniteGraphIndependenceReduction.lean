@@ -113,12 +113,9 @@ private theorem continuous_transfer (a : V) (D : Finset V) :
 private theorem induced_faces_le (G : SimpleGraph V) (D : Finset V) :
     ((independenceComplex (G.induce {b | b ∉ D})).toPreAbstractSimplicialComplex.map
       (embedding D)) ≤ (independenceComplex G).toPreAbstractSimplicialComplex := by
-  rintro s ⟨t, ht, rfl⟩
-  refine ⟨ht.1.image _, ?_⟩
-  rintro p hp q hq hpq hadj
-  obtain ⟨p, hp, rfl⟩ := Finset.mem_image.mp hp
-  obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
-  exact ht.2 hp hq (fun h => hpq (congrArg (embedding D) h)) hadj
+  rw [← unrestricted, restricted_map _ G _ (fun _ _ => Iff.rfl)]
+  intro s hs
+  exact ⟨hs.1, hs.2.1⟩
 
 /-- Native zero-extension inclusion of the retained induced graph. -/
 def inclusion (G : SimpleGraph V) (D : Finset V) :
