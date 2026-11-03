@@ -143,57 +143,6 @@ theorem progression_signs (m : ℕ) :
   simp only [pow_one] at p1 p2
   exact ⟨by nlinarith, by nlinarith, ps.1, by linarith [ps.2.1], by linarith [ps.2.2]⟩
 
-/-- The full unchanged BHHK k10 table entry at every unshifted natural index. -/
-theorem all_index_signs (n : ℕ) :
-    (0 < C10 n ↔ n % 9 = 0 ∨ n % 9 = 2 ∨ n % 9 = 5 ∨ n % 9 = 8) ∧
-    (C10 n < 0 ↔ n % 9 = 1 ∨ n % 9 = 3 ∨ n % 9 = 4 ∨ n % 9 = 6 ∨ n % 9 = 7) ∧
-    C10 n ≠ 0 := by
-  have h3 := progression_signs (n / 3)
-  have h9 := progression_signs (n / 9)
-  have hmod : n % 9 < 9 := Nat.mod_lt n (by decide)
-  have hn3 : n = 3 * (n / 3) + n % 3 := by omega
-  have hn9 : n = 9 * (n / 9) + n % 9 := by omega
-  have hcases : n % 9 = 0 ∨ n % 9 = 1 ∨ n % 9 = 2 ∨ n % 9 = 3 ∨
-      n % 9 = 4 ∨ n % 9 = 5 ∨ n % 9 = 6 ∨ n % 9 = 7 ∨ n % 9 = 8 := by omega
-  rcases hcases with h | h | h | h | h | h | h | h | h
-  all_goals have hres : n % 3 = (n % 9) % 3 := by omega
-  all_goals simp only [h] at hres
-  all_goals norm_num at hres
-  all_goals simp only [hres] at hn3
-  all_goals simp only [h] at hn9
-  all_goals norm_num at hn3 hn9
-  all_goals first
-    | have hp : 0 < C10 n := by simpa only [← hn9] using h9.2.2.1
-      constructor
-      · simp [h, hp]
-      constructor
-      · simp [h, not_lt_of_ge (le_of_lt hp)]
-      · exact ne_of_gt hp
-    | have hp : C10 n < 0 := by simpa only [← hn3] using h3.1
-      constructor
-      · simp [h, not_lt_of_ge (le_of_lt hp)]
-      constructor
-      · simp [h, hp]
-      · exact ne_of_lt hp
-    | have hp : 0 < C10 n := by simpa only [← hn3] using h3.2.1
-      constructor
-      · simp [h, hp]
-      constructor
-      · simp [h, not_lt_of_ge (le_of_lt hp)]
-      · exact ne_of_gt hp
-    | have hp : C10 n < 0 := by simpa only [← hn9] using h9.2.2.2.1
-      constructor
-      · simp [h, not_lt_of_ge (le_of_lt hp)]
-      constructor
-      · simp [h, hp]
-      · exact ne_of_lt hp
-    | have hp : C10 n < 0 := by simpa only [← hn9] using h9.2.2.2.2
-      constructor
-      · simp [h, not_lt_of_ge (le_of_lt hp)]
-      constructor
-      · simp [h, hp]
-      · exact ne_of_lt hp
-
 theorem C10_zero : C10 0 = 1 := by
   have he : PowerSeries.constantCoeff E = 1 := CubicThetaCoreProduct.euler_constant_one
   have hp : PowerSeries.constantCoeff P = 1 := by
@@ -201,5 +150,60 @@ theorem C10_zero : C10 0 = 1 := by
     simpa only [map_mul, he, one_mul, map_one] using h
   simp only [C10, F10_eq_expanded_inverse, PowerSeries.coeff_zero_eq_constantCoeff_apply,
     map_mul, map_pow, expand3, PowerSeries.constantCoeff_expand, he, hp, one_pow, one_mul]
+
+/-- The full unchanged BHHK k10 table entry at every unshifted natural index. -/
+theorem all_index_signs (n : ℕ) :
+    (0 < C10 n ↔ n % 9 = 0 ∨ n % 9 = 2 ∨ n % 9 = 5 ∨ n % 9 = 8) ∧
+    (C10 n < 0 ↔ n % 9 = 1 ∨ n % 9 = 3 ∨ n % 9 = 4 ∨ n % 9 = 6 ∨ n % 9 = 7) ∧
+    C10 n ≠ 0 := by
+  by_cases hn : n = 0
+  · subst n
+    rw [C10_zero]
+    norm_num
+  · have h3 := progression_signs (n / 3)
+    have h9 := progression_signs (n / 9)
+    have hmod : n % 9 < 9 := Nat.mod_lt n (by decide)
+    have hn3 : n = 3 * (n / 3) + n % 3 := by omega
+    have hn9 : n = 9 * (n / 9) + n % 9 := by omega
+    have hcases : n % 9 = 0 ∨ n % 9 = 1 ∨ n % 9 = 2 ∨ n % 9 = 3 ∨
+        n % 9 = 4 ∨ n % 9 = 5 ∨ n % 9 = 6 ∨ n % 9 = 7 ∨ n % 9 = 8 := by omega
+    rcases hcases with h | h | h | h | h | h | h | h | h
+    all_goals have hres : n % 3 = (n % 9) % 3 := by omega
+    all_goals simp only [h] at hres
+    all_goals norm_num at hres
+    all_goals simp only [hres] at hn3
+    all_goals simp only [h] at hn9
+    all_goals norm_num at hn3 hn9
+    all_goals first
+      | have hp : 0 < C10 n := by simpa only [← hn9] using h9.2.2.1
+        constructor
+        · simp [h, hp]
+        constructor
+        · simp [h, not_lt_of_ge (le_of_lt hp)]
+        · exact ne_of_gt hp
+      | have hp : C10 n < 0 := by simpa only [← hn3] using h3.1
+        constructor
+        · simp [h, not_lt_of_ge (le_of_lt hp)]
+        constructor
+        · simp [h, hp]
+        · exact ne_of_lt hp
+      | have hp : 0 < C10 n := by simpa only [← hn3] using h3.2.1
+        constructor
+        · simp [h, hp]
+        constructor
+        · simp [h, not_lt_of_ge (le_of_lt hp)]
+        · exact ne_of_gt hp
+      | have hp : C10 n < 0 := by simpa only [← hn9] using h9.2.2.2.1
+        constructor
+        · simp [h, not_lt_of_ge (le_of_lt hp)]
+        constructor
+        · simp [h, hp]
+        · exact ne_of_lt hp
+      | have hp : C10 n < 0 := by simpa only [← hn9] using h9.2.2.2.2
+        constructor
+        · simp [h, not_lt_of_ge (le_of_lt hp)]
+        constructor
+        · simp [h, hp]
+        · exact ne_of_lt hp
 
 end D5.S3.Arith.ModularForms.EtaSignK10
