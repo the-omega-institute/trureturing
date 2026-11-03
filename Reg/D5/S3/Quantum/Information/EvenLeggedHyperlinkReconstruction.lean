@@ -193,11 +193,11 @@ end Zeta
 
 namespace HyperlinkZeta
 noncomputable section
-universe u
+universe u_1
 
 /-- Observe the hyperlink of the subset zeta transform at a varying subset. -/
 abbrev signature : Signature where
-  Params := Σ α : Type u, Finset α → ℝ
+  Params := Σ α : Type u_1, Finset α → ℝ
   State p := Finset (Sigma.fst p)
   Role := Unit
   finiteRole := inferInstance
@@ -206,34 +206,34 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ p I => hyperlink (fun A => ∑ K ∈ A.powerset, Sigma.snd p K) I)
     (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {α : Type u} (v : Finset α → ℝ) (I : Finset α),
+  signature := signature.{u_1}
+  Law R := ∀ {α : Type u_1} (v : Finset α → ℝ) (I : Finset α),
     R.readout () ⟨α, v⟩ I = v I
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have he := h (α := ULift.{u} Unit) (fun _ => 1) ∅
+  have he := h (α := ULift.{u_1} Unit) (fun _ => 1) ∅
   exact zero_ne_one he
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨⟨ULift.{u} Unit, fun I => (I.card : ℝ)⟩, ∅, {ULift.up ()}, ?_⟩
+  refine ⟨⟨ULift.{u_1} Unit, fun I => (I.card : ℝ)⟩, ∅, {ULift.up ()}, ?_⟩
   simpa only [actual, realize, hyperlink_zeta, Finset.card_empty,
     Finset.card_singleton, Nat.cast_zero, Nat.cast_one] using
       (zero_ne_one : (0 : ℝ) ≠ 1)
 
-def source_registration : Registration arena.{u} (type_of% (@hyperlink_zeta.{u})) where
+def source_registration : Registration arena.{u_1} (type_of% (@hyperlink_zeta.{u_1})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@hyperlink_zeta.{u}, rejected, rejected_law⟩
+  variation := ⟨@hyperlink_zeta.{u_1}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -246,22 +246,22 @@ def source_registration : Registration arena.{u} (type_of% (@hyperlink_zeta.{u})
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@hyperlink_zeta.{u}) (Realization signature.{u}) Unit Unit := {
+      (@hyperlink_zeta.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.HyperlinkZeta.unit
   realizationName := Lean.Name.str
     `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.HyperlinkZeta
     "source_registration"
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
+  arena := .source ⟨arena.{u_1}⟩
+  objectArena := .source ⟨arena.{u_1}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  realization := .source arena.{u_1} ⟨source_registration.{u_1}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature.{u} (actual.{u}).readout (actual.{u}).anchor)
+    (realize signature.{u_1} (actual.{u_1}).readout (actual.{u_1}).anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
