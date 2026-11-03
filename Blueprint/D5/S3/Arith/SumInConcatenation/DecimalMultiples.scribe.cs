@@ -67,7 +67,7 @@ internal sealed class DecimalMultiplesDocument : IScribeDocumentDefinition
         Implies, Sp, S(V("n")), Sp, Neq, Sp, Times(D(1, 0), V("m"))));
     private static Formula Classification() => Disp(Seq(S(D(2)), Sp, Eq, Sp, D(1, 0), Sp,
         Land, Sp, Paren(Seq(Bound("m"), Range(D(1)), Sp, Implies, Sp,
-            Paren(Seq(Exists, Sp, V("n"), Sp, InMacro, Sp, Mathbb, Grp(V("N")), Comma, Sp,
+            Paren(Seq(Paren(Seq(Exists, Sp, V("n"), Sp, InMacro, Sp, Mathbb, Grp(V("N")), Comma, Sp,
                 D(1), Sp, Le, Sp, V("n"), Sp, Land, Sp, S(V("n")), Sp, Eq, Sp,
-                Times(D(1, 0), V("m")))), Sp, Iff, Sp, V("m"), Sp, Eq, Sp, D(1)))));
+                Times(D(1, 0), V("m")))), Sp, Iff, Sp, V("m"), Sp, Eq, Sp, D(1)))))));
 }

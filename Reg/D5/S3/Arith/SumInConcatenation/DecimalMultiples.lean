@@ -59,8 +59,8 @@ def family : Registration arena (type_of% @legal_multiple_ten_iff) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@legal_multiple_ten_iff) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.LegalTens.audit
-  realizationName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.LegalTens.family
+  unitName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.LegalTens.informationUnit
+  realizationName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.LegalTens.sourceBridge
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -138,8 +138,8 @@ def family : Registration arena (type_of% @sequence_ne_multiple_ten) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@sequence_ne_multiple_ten) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Exclusion.audit
-  realizationName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Exclusion.family
+  unitName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Exclusion.informationUnit
+  realizationName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Exclusion.sourceBridge
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -218,8 +218,8 @@ def family : Registration arena (type_of% sequence_multiple_ten_classification) 
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@sequence_multiple_ten_classification) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Occurrence.audit
-  realizationName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Occurrence.family
+  unitName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Occurrence.informationUnit
+  realizationName := `Reg.D5.S3.Arith.SumInConcatenation.DecimalMultiples.Occurrence.sourceBridge
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
