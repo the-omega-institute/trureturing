@@ -1011,7 +1011,7 @@ For a single partial slot the inverse formula is, explicitly,
 
 $$
 \Pr(J_g(Y_j)=u\mid D)
- =\sum_g W_D(g)\frac{
+ =\sum_{g:W_D(g)>0} W_D(g)\frac{
        |\{y\in A_j(g,D):J_g(y)=u\}|}{n_j(g,D)}.
 \tag{RRO.9.7}
 $$
