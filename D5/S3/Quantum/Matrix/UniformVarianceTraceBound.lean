@@ -178,9 +178,9 @@ private lemma centered_defect_identity {a J : Type*}
       (H j * H j)*X+X*(H j * H j) - (2 : ℂ) • (H j * X * (H j)ᴴ) := by
     have hm : (H j - (c j : ℂ) • 1)ᴴ = H j - (c j : ℂ) • 1 := by
       simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
-        Matrix.conjTranspose_one, hH j]
+        Matrix.conjTranspose_one, (hH j).eq]
       simp
-    rw [hm]
+    rw [hm, (hH j).eq]
     simp only [sub_mul, mul_sub, Algebra.smul_mul_assoc (R := ℂ),
       Algebra.mul_smul_comm (R := ℂ), one_mul, mul_one]
     module
@@ -238,7 +238,6 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
     change LinearMap.toMatrix v.toBasis v.toBasis (referenceLift n (L j)) =
       H j - (c j : ℂ) • 1
     rw [hl, map_sub, map_smul, LinearMap.toMatrix_id]
-    rfl
   have hH (j : J) : (H j).IsHermitian := by
     apply (LinearMap.isHermitian_toMatrix_iff v).mpr
     intro x y
@@ -271,9 +270,15 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
   have hk (X : Matrix (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E))))
       (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))) ℂ) :
       traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ (5*δ)*traceNorm X := by
-    simpa only [← hM] using ht n X
+    have hL (j : J) : (h j).comp V.toLinearMap -
+        ((inner ℂ (V e) (h j (V e))).re : ℂ) • V.toLinearMap = L j := by
+      simp only [V, LinearIsometry.id_apply, LinearIsometry.id_toLinearMap,
+        LinearMap.comp_id, L, c]
+    simpa only [hL, hM] using ht n X
   intro X
-  have hid := centered_defect_identity H hH hsum c X
+  have hid : X - ∑ j, H j * X * (H j)ᴴ =
+      (1/2 : ℂ) • (Q*X+X*Q) - ∑ j, M j * X * (M j)ᴴ :=
+    centered_defect_identity H hH hsum c X
   refine ⟨hid, ?_⟩
   obtain ⟨U,hU⟩ := (traceNorm_eq_max_re_tr_U (X - ∑ j, H j * X * (H j)ᴴ)).1
   have hUn : ‖U.val‖ ≤ 1 := by
@@ -298,19 +303,22 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
   have heq : traceNorm (X - ∑ j, H j * X * (H j)ᴴ) =
       (1/2 : ℝ)*((U.val*Q*X).trace.re+(Q*U.val*X).trace.re) -
         (U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re := by
-    rw [← hU, hid]
-    simp only [Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_add, Matrix.trace_sub,
-      Matrix.trace_smul, Matrix.trace_add, Complex.sub_re,
-      Complex.inv_re, Complex.ofNat_re, Complex.ofNat_im, Complex.div_re,
-      Complex.mul_re, Complex.mul_im, Complex.inv_im]
     have hc : (U.val*(X*Q)).trace = (Q*U.val*X).trace := by
       rw [← Matrix.mul_assoc, Matrix.trace_mul_comm _ Q]
-    simp only [Matrix.mul_assoc] at hc ⊢
-    rw [hc]
-    norm_num
+      simp only [Matrix.mul_assoc]
+    have ht' : (U.val*(X - ∑ j, H j * X * (H j)ᴴ)).trace =
+        (1/2 : ℂ) • ((U.val*Q*X).trace+(Q*U.val*X).trace) -
+          (U.val*(∑ j, M j * X * (M j)ᴴ)).trace := by
+      rw [hid, Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_add,
+        Matrix.trace_sub, Matrix.trace_smul, Matrix.trace_add, hc]
+      simp only [Matrix.mul_assoc]
+    rw [← hU, ht']
+    norm_num [smul_eq_mul, Complex.mul_re]
   have h3' : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
       (5*δ)*traceNorm X := by
-    exact (by simpa using h3).trans (hk X)
+    have hz : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
+        traceNorm (∑ j, M j * X * (M j)ᴴ) := by simpa using h3
+    exact hz.trans (hk X)
   rw [heq]
   linarith
 
