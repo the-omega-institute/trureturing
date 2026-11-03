@@ -34,7 +34,7 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/lean-inspector/reuse.py",
                "import sys\nsys.exit(" + str(0 if reused else 3) + " if sys.argv[1] == 'reuse' else 0)\n")
         script("tools/lean-inspector/native.py", "import sys\nfrom pathlib import Path\n" +
-               ("(Path(sys.argv[3] + '.logs') / 'report.exit.log').unlink()\n" if missing_phase_log else "") +
+               ("if sys.argv[1] == 'publish':\n    (Path(sys.argv[3] + '.logs') / 'report.exit.log').unlink()\n" if missing_phase_log else "") +
                "sys.exit(0)\n")
         script("tools/lean-inspector/fib_analysis.py", "import sys\nsys.exit(" + str(fib_failure) + ")\n")
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")

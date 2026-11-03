@@ -919,7 +919,9 @@ class EntryPointTests(unittest.TestCase):
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',
-                    'import os\nfrom pathlib import Path\nwith Path(os.environ["CALLS"]).open("a") as out: out.write("publish\\n")\nraise SystemExit(40)\n')
+                    'import os, sys\nfrom pathlib import Path\n'
+                    + 'if sys.argv[1] == "batch-size": raise SystemExit(0)\n'
+                    + 'with Path(os.environ["CALLS"]).open("a") as out: out.write("publish\\n")\nraise SystemExit(40)\n')
                 if phase == 'inputs':
                     (root / 'lean-report-inputs.json').unlink()
                 record = root / 'calls'
