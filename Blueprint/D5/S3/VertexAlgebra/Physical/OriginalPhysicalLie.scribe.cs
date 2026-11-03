@@ -14,7 +14,7 @@ internal sealed class OriginalPhysicalLieDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("exact-representative-bracket"),
                 DeclarationHandle.Create(Prefix + "physicalBracket_mk"),
                 H("Exact quotient representative bracket"),
-                StatementSource.FromAuthor(Disp(Text("The quotient bracket of two physical weight-one classes is represented literally by the original zero mode a_0 b."))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The quotient is exactly P^1 modulo the image of the actual translation restricted to P^0. The skew primitive is finite and physical, so antisymmetry descends through this exact image. Jacobi is inherited from the actual zero-mode commutator."))),
                 DescribeRole.Theorem),

@@ -193,8 +193,8 @@ private theorem zeroMode_primary (hHG : H * gramComplex D = 1)
   simp only [Ring.choose_zero_right, Ring.choose_one_right, Int.cast_one,
     Int.cast_add, add_zero, one_smul] at hward
   rw [← add_smul] at hward
-  have hcoef : (-(n : ℂ) - 1 + ((n : ℂ) + 1)) = 0 := by ring
-  rw [hcoef, zero_smul] at hward
+  have hcoef' : (-((n : ℂ) + 1) + ((n : ℂ) + 1)) = 0 := by ring
+  rw [hcoef', zero_smul] at hward
   simpa [mu] using hward
 
 theorem zeroMode_mem_primary_one (hHG : H * gramComplex D = 1)
@@ -534,20 +534,28 @@ private theorem skewPrimitive_primary (hHG : H * gramComplex D = 1)
       simp at hcomm
       rw [hright0, hi0] at hcomm
       simp at hcomm
+      have hT : translation D (actualL D H 1 (skewPrimitive D a b)) = 0 := by
+        apply neg_eq_zero.mp
+        simpa using hcomm
+      have hw := mode_weight_of_zero D H hHG hGH 1 (skewPrimitive D a b) hs0
+        (by norm_num)
+      simpa using
+        (translation_injective_negative D H hHG hGH 1 (by norm_num)
+          (actualL D H 1 (skewPrimitive D a b)) hw hT)
     · have hk0 : (k : ℤ) + 1 + (-1 : ℤ) ≠ 0 := by
         rw [hidx]
         exact_mod_cast hkz
       simp [hidx, hk0] at hcomm
       rw [hright, ih] at hcomm
       simp [hkz] at hcomm
-    have hT : translation D (actualL D H (k + 1 : ℤ) (skewPrimitive D a b)) = 0 := by
-      apply neg_eq_zero.mp
-      simpa using hcomm
-    have hw := mode_weight_of_zero D H hHG hGH (k + 1 : ℤ) (skewPrimitive D a b) hs0
-      (by omega)
-    simpa [Int.cast_add, Int.cast_natCast] using
-      (translation_injective_negative D H hHG hGH (k+1) (by omega)
-        (actualL D H (k + 1 : ℤ) (skewPrimitive D a b)) hw hT)
+      have hT : translation D (actualL D H (k + 1 : ℤ) (skewPrimitive D a b)) = 0 := by
+        apply neg_eq_zero.mp
+        simpa using hcomm
+      have hw := mode_weight_of_zero D H hHG hGH (k + 1 : ℤ) (skewPrimitive D a b) hs0
+        (by omega)
+      simpa [Int.cast_add, Int.cast_natCast] using
+        (translation_injective_negative D H hHG hGH (k+1) (by omega)
+          (actualL D H (k + 1 : ℤ) (skewPrimitive D a b)) hw hT)
 
 private theorem zeroMode_translation_left (u b : Carrier D) :
     zeroModeCarrier D (translation D u) b = 0 := by
@@ -678,10 +686,9 @@ private theorem physicalBracket_add_self (x y : physicalQuotient D H hHG hGH) :
   apply (Submodule.Quotient.eq _).mpr
   refine ⟨⟨skewPrimitive D a.1 b.1, hs⟩, ?_⟩
   apply Subtype.ext
-  change translation D (skewPrimitive D a.1 b.1) =
-    zeroModeP D H hHG hGH a b + zeroModeP D H hHG hGH b a
-  rw [skew_primitive_identity D a.1 b.1]
-  rfl
+  simpa [translationP, zeroModeP, zeroModeCarrier,
+    LatticeAllStateReconstruction.mu] using
+    (skew_primitive_identity D a.1 b.1)
 
 private theorem physicalBracket_leibniz
     (x y z : physicalQuotient D H hHG hGH) :

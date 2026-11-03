@@ -2,28 +2,28 @@
 
 ## Abstract
 
-The actual lattice state fields define the physical primary spaces and the exact quotient of weight one states by the image of the original translation operator.
+The actual original physical-state quotient carries the zero-mode Lie bracket.
 
-**Theorem 1.1 (Exact representative bracket).**
+**Theorem 1.1 (Exact quotient representative bracket).**
 
-For every lattice datum, inverse Gram matrix and actual weight one primary states, the quotient bracket represented by the zero mode is
+Lean statement: `D5/S3/VertexAlgebra/Physical/OriginalPhysicalLie.physicalBracket_mk`
 
-$$[\lbrack a\rbrack,\lbrack b\rbrack]=\lbrack a_0b\rbrack.$$ 
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Physical/OriginalPhysicalLie.physicalBracket_mk` (`✓ std3`). ∎
 
-*Formalization.* `D5/S3/VertexAlgebra/Physical/OriginalPhysicalLie.physicalBracket_mk`.
+*Source.* Repository-derived.
 
-**Theorem 1.2 (Lie structure).**
+*Commentary.*
 
-The quotient is an actual `LieRing` and `LieAlgebra ℂ`; skew symmetry is descended through the finite original skew primitive in the exact image of translation, and Jacobi is the zero-mode commutator identity.
+The quotient is exactly P^1 modulo the image of the actual translation restricted to P^0. The skew primitive is finite and physical, so antisymmetry descends through this exact image. Jacobi is inherited from the actual zero-mode commutator.
 
-*Formalization.* `D5/S3/VertexAlgebra/Physical/OriginalPhysicalLie.physicalBracket` and its native instances.
-
-*Source.* Repository-derived from the actual lattice field, Ward, derivative, skew-symmetry, Virasoro and local-nilpotence sources.
-
-The quotient is exactly `P^1 / T(P^0)`. The physical primary condition is the actual `L_0` eigenvalue together with annihilation by every positive original Virasoro mode. No positivity, critical rank, cutoff carrier, or BRST identification is used here.
+This unit formalizes the matter physical-state Lie algebra only. It does not identify it with BRST cohomology or discharge the independent original BRST, HPL, no-ghost, string and AdS/CFT obligations.
 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/Physical/OriginalPhysicalLie.physicalBracket_mk`
-- Dependency: [LatticeActualConformalEnergy](../LatticeActualConformalEnergy.md)
-- Dependency: [LatticeActualConformalWard](../LatticeActualConformalWard.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeActualConformalEnergy](../LatticeActualConformalEnergy.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeActualLZeroGrading](../LatticeActualLZeroGrading.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeActualStateDerivative](../LatticeActualStateDerivative.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](../LatticeSugawaraVirasoro.md)
+- Dependency: [D5/S3/VertexAlgebra/SourceMobius/Nilpotence](../SourceMobius/Nilpotence.md)
+- Dependency: [D5/S3/VertexAlgebra/StateField/SkewSymmetry](../StateField/SkewSymmetry.md)
