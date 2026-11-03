@@ -64,7 +64,7 @@ internal sealed class AffinePolynomialPairBinomialCoefficientsDocument : IScribe
         return Disp(All(n, Implies(LessEqual(D(1), n), All(k,
             Equal(Call("coeff", Second(Call("natSub", n, D(1))), k),
                 Add(Call("intCast", Call("binomial", Call("natSub", n, D(1)), degree)),
-                    Call("intCast", Call("binomial", n, degree)))))));
+                    Call("intCast", Call("binomial", n, degree))))))));
     }
 
     private static Formula First(Formula m) => Call("first", Call("pair", m));
