@@ -44,7 +44,7 @@ internal sealed class QuadraticRotationHittingDocument : IScribeDocumentDefiniti
                 Bar, Id("k"), Cdot, Alpha, Minus, Call("round", Seq(Id("k"), Cdot, Alpha)), Bar, Close, Sp, Rightarrow),
             Seq(Forall, Sp, Id("p"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp, D(0), Lt, Id("p"), Sp, Rightarrow, Sp,
                 Forall, Sp, Theta, Comma, Id("a"), Sp, InMacro, Sp, Mathbb, Grp(Id("R")), Comma, Sp,
-                D(0), Le, Id("a"), Sp, Rightarrow, Sp, Id("a"), Le, Frac, Grp(D(3)), Grp(D(4)), Sp, Rightarrow),
+                D(0), Le, Sp, Id("a"), Sp, Rightarrow, Sp, Id("a"), Le, Frac, Grp(D(3)), Grp(D(4)), Sp, Rightarrow),
             Seq(Exists, Sp, Id("j"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
                 Id("j"), Le, Frac, Grp(D(2,5,6), Cdot, Id("p")), Grp(Kappa), Sp, Land, Sp,
                 Call("fract", Seq(Theta, Plus, Id("j"), Cdot, Id("p"), Cdot, Alpha)), Sp, InMacro, Sp,

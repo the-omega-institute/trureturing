@@ -38,13 +38,13 @@ internal sealed class ProgressionExampleDocument : IScribeDocumentDefinition
             "For arbitrary nonempty open U,V in X times X, choose contained nonempty open rectangles. Apply open-set mixing to each coordinate pair. "
             + "The maximum of their two thresholds supplies one common hitting time and two points, proving transitivity of the square map."),
         Paragraph(Text("In the endpoint formula, X is ProgressionPoint(quadraticProgressionLength) and sigma is progressionShift(quadraticProgressionLength). "
-            + "Set(X) denotes all subsets of X; iterate(f,n,x) denotes f^[n](x), and image(f,B) denotes its direct image. "
+            + "Set(X) denotes all subsets of X; iterate(f,n,x) denotes f^[n](x), sigma^p denotes p-fold iteration, and image(f,B) denotes the direct image. MapsTo(f,B,B) means image(f,B) is a subset of B. "
             + "NeighborhoodTwoShadowing(sigma) is the existing predicate: for every epsilon>0 there is delta>0 such that every infinite natural-time delta-pseudo-orbit "
             + "admits one same nonempty finite A in X with card(A)<=2 and initial diameter<epsilon, and at every natural time its distance to the shifted set is <epsilon. The minimizing branch may vary with time.")),
         Thm("full-q56-progression-example", "quadratic_progression_example", "The full compact-system existence conclusion", St(
             Seq(Call("Nonempty", Id("X")), Sp, Land, Sp, Call("CompactSpace", Id("X")), Sp, Land),
             Seq(Call("Continuous", Id("sigma")), Sp, Land, Sp, Call("Surjective", Id("sigma")), Sp, Land),
-            Seq(Open, Forall, Sp, Id("U"), Comma, Id("V"), Colon, Sp, Call("Set", Seq(Id("X"), Times, Id("X"))), Comma, Sp,
+            Seq(Open, Forall, Sp, Id("U"), Comma, Id("V"), Colon, Sp, Call("Set", Seq(Id("X"), Times, Sp, Id("X"))), Comma, Sp,
                 Call("IsOpen", Id("U")), Sp, Rightarrow, Sp, Call("IsOpen", Id("V")), Sp, Rightarrow, Sp,
                 Call("Nonempty", Id("U")), Sp, Rightarrow, Sp, Call("Nonempty", Id("V")), Sp, Rightarrow),
             Seq(Exists, Sp, Id("n"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp, Exists, Sp, Id("z"), Sp, InMacro, Sp, Id("U"), Comma, Sp,

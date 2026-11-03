@@ -41,7 +41,7 @@ internal sealed class ProgressionSubshiftDocument : IScribeDocumentDefinition
                 Call("ProgressionLegal", Id("ell"), Id("x")), Sp, Rightarrow, Sp,
                 Call("ProgressionLegal", Id("ell"), Id("y")), Sp, Rightarrow),
             Seq(Forall, Sp, Id("a"), Comma, Id("b"), Comma, Id("n"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
-                Id("a"), Plus, Call("max", Id("a"), Id("b")), Le, Id("n"), Sp, Rightarrow, Sp,
+                Id("a"), Plus, Call("max", Id("a"), Id("b")), Le, Sp, Id("n"), Sp, Rightarrow, Sp,
                 Call("ProgressionLegal", Id("ell"), Call("progressionJoin", Id("x"), Id("y"), Id("a"), Id("b"), Id("n"))))),
             "Assume ell(p)>=3 for all positive p. Keep x on [0,a), y shifted to [n,n+b), and put zeros elsewhere. A progression with p<=max(a,b) starting in the first word cannot cross the gap, by induction on its index. "
             + "At p>max(a,b), at most one progression term lies in each word; its first three terms cannot all be supported. A progression starting in the second word contradicts legality of y. "
