@@ -11,16 +11,6 @@ internal sealed class OriginalGaussianCubicKernelDocument : IScribeDocumentDefin
             Paragraph(Text("Original Laurent residues fix the annular scalar using the original half-binomial period. The signed Neumann blocks and uniqueness equations use the unchanged lp 2 carrier, with the negative mixed identity term. The independently defined cubic kernels and finite external source rows retain the original bilinear Gram form.")),
             Paragraph(Text("These sources are an implementation checkpoint. Native verification and independent admission review are separate requirements; no official acceptance or physical realization is asserted. Full four-halfmode geometry, two-source transport, identityK crossing, Monster moonshine, VOA/CFT/anomaly/fusion, complete string theory and AdS/CFT remain unfinished.")),
             Describe.Lean(
-                DescribeId.Create("annular-moment-identity"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicKernel.annular_moment_identity"),
-                H("annular_moment_identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("On the full complex unit disk, sum the actual Laurent first-moment residues and identify their sum with the original half-binomial period and its derivative."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("scalar-normalization-iff"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicKernel.scalar_normalization_iff"),
-                H("scalar_normalization_iff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The original annular residue equation fixes the external complex scalar to scalarC; the proof uses nonvanishing of the actual period."))), DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("original-coefficient-equations-iff"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicKernel.original_coefficient_equations_iff"),
                 H("original_coefficient_equations_iff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

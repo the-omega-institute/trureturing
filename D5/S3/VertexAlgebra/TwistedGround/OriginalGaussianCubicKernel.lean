@@ -93,75 +93,7 @@ private lemma moment_coefficient_recurrence (n : ℕ) :
   field_simp [hn]
   ring
 
-private lemma half_norm_le_one (n : ℕ) : ‖halfBinomial n‖ ≤ 1 := by
-  rw [halfBinomial_eq_signed_centralWeight, norm_mul, norm_pow]
-  simpa [Complex.norm_real, Real.norm_eq_abs,
-    abs_of_nonneg (centralWeight_nonneg n)] using weight_le_one n
-
-private lemma coefficient_norm_le_one (n : ℕ) : ‖halfBinomial n ^ 2‖ ≤ 1 := by
-  simpa [norm_pow] using pow_le_pow_left₀ (norm_nonneg (halfBinomial n))
-    (half_norm_le_one n) 2
-
-private lemma period_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
-    HasSum (fun n : ℕ => halfBinomial n ^ 2 * x ^ n) (F x) := by
-  apply Summable.hasSum
-  apply Summable.of_norm_bounded (summable_norm_geometric_of_norm_lt_one hx)
-  intro n
-  simpa only [norm_mul, norm_pow, one_mul] using
-    mul_le_mul_of_nonneg_right (coefficient_norm_le_one n)
-      (pow_nonneg (norm_nonneg x) n)
-
-private lemma period_derivative_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
-    HasSum (fun n : ℕ => (n + 1 : ℂ) * halfBinomial (n + 1) ^ 2 * x ^ n)
-      (deriv F x) := by
-  exact (D5.S3.Analytic.OriginalHalfBinomialPeriod.period_derivative hx).1
-
-def annularMoment (x : ℂ) : ℂ :=
-  ∑' n : ℕ, (omegaCoefficient (n + 1)).coeff (-2) * x ^ (n + 1)
-
-/-- The two annular moments are related at ALL orders, directly from the
-literal original coefficients. Neither contour topology nor a normalization
-certificate occurs in the statement. -/
-theorem annular_moment_identity {x : ℂ} (hx : ‖x‖ < 1) :
-    annularMoment x = -x * F x + 2 * x * (1 - x) * deriv F x := by
-  have h0 := period_hasSum hx
-  have h1 := period_derivative_hasSum hx
-  have heuler : HasSum (fun n : ℕ => (n : ℂ) * halfBinomial n ^ 2 * x ^ n)
-      (x * deriv F x) := by
-    rw [← hasSum_nat_add_iff' 1]
-    convert h1.mul_left x using 1
-    · ext n
-      simp only [Nat.cast_add, Nat.cast_one, pow_succ]
-      ring
-    · simp
-  have hm : HasSum
-      (fun n : ℕ => (omegaCoefficient (n + 1)).coeff (-2) * x ^ (n + 1))
-      (-x * F x + 2 * x * (1 - x) * deriv F x) := by
-    convert ((h1.mul_left (2 * x)).sub (heuler.mul_left (2 * x))).sub
-      (h0.mul_left x) using 1
-    · ext n
-      rw [first_moment_residue, moment_coefficient_recurrence, pow_succ]
-      ring
-    · ring
-  exact hm.tsum_eq
-
 def scalarC (x : ℂ) : ℂ := x / 2 - x * (1 - x) * deriv F x / F x
-
-/-- The original diagonal coefficient residue determines exactly one scalar.
-This does not yet assert that the original sewn kernel is the cubic. -/
-theorem scalar_normalization_iff {x : ℂ} (hx : ‖x‖ < 1) (c : ℂ) :
-    annularMoment x / 2 + c * F x = 0 ↔ c = scalarC x := by
-  have hF := OriginalGaussianPeriodIdentity.period_ne_zero hx
-  rw [annular_moment_identity hx]
-  dsimp only [scalarC]
-  constructor
-  · intro h
-    field_simp [hF] at h ⊢
-    linear_combination h
-  · intro h
-    rw [h]
-    field_simp [hF]
-    ring
 
 /- Actual original signed Gaussian, including the identity term of the
 mixed block. H is indexed by n : Nat for original positive index n+1. -/
@@ -411,8 +343,6 @@ def finiteOriginalBlockTarget {I : Type*} [Fintype I] (G : Matrix I I ℂ)
 /- Independently defined cubic, not a definition by resolvent. The caller
 supplies the neck branches of w only for evaluating this scalar expression;
 there is no theorem below that assumes these values identify a resolvent. -/
-def cubic (x a : ℂ) : ℂ := a * (a + 1) * (a + x)
-
 def polar (x a b : ℂ) : ℂ :=
   a * b * (a + b) + 2 * (1 + x) * a * b + x * (a + b)
 
@@ -587,9 +517,7 @@ The full Monster/VOA/CFT/BRST goal remains unfinished.
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 
-#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.annular_moment_identity
 
-#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.scalar_normalization_iff
 
 
 #print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.original_coefficient_equations_iff

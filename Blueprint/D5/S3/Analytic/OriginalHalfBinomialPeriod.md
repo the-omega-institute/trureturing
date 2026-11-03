@@ -16,7 +16,19 @@ $$\forall z\in \mathbb{C}, \operatorname{period}\left(z\right)=\sum_{n=0}^{\inft
 
 For every complex z the period is the infinite sum of halfBinomial(n) squared times z to the n. The coefficient halfBinomial(n) is the original product of -1/2-j for 0 <= j < n divided by n factorial. The definition uses the complex sum, with the usual totalized value when a series is not summable. All convergence and differential claims below are restricted to the open unit disk.
 
-**Theorem 1.2 (The full complex disk equation).**
+**Theorem 1.2 (The original derivative series).**
+
+$$\forall z\in \mathbb{C}, \Vert z \Vert<1\Rightarrow \operatorname{HasSum}\left(n\mapsto(n+1)\operatorname{halfBinomial}\left(n+1\right)^{2}z^{n}, \operatorname{deriv}\left(period, z\right)\right)\land \operatorname{DifferentiableAt}\left(\mathbb{C}, period, z\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/OriginalHalfBinomialPeriod.period_derivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex z of norm less than one, the series with nth term (n+1) halfBinomial(n+1) squared times z to the n sums to the complex derivative of period at z, and period is complex differentiable there. The original firstCoefficient definition is (n+1) times coefficient(n+1), where coefficient(n) is halfBinomial(n) squared. The annular moment and analytic coefficient proofs use this same derivative series, including at zero.
+
+**Theorem 1.3 (The full complex disk equation).**
 
 $$\forall z\in \mathbb{C}, \Vert z \Vert<1\Rightarrow \operatorname{DifferentiableAt}\left(\mathbb{C}, period, z\right)\land \operatorname{DifferentiableAt}\left(\mathbb{C}, \operatorname{deriv}\left(period\right), z\right)\land z(1-z)(\operatorname{deriv}\left(\operatorname{deriv}\left(period\right)\right))(z)+(1-2z)(\operatorname{deriv}\left(period\right))(z)-\frac{1}{4}\operatorname{period}\left(z\right)=0$$
 
@@ -35,5 +47,6 @@ The equation is the classical Gauss hypergeometric differential equation with a=
 ## References
 
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPeriod.period`
+- Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPeriod.period_derivative`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialPeriod.picard_fuchs`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection](../VertexAlgebra/LatticeHalfFockFiniteCorrection.md)
