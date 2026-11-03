@@ -327,7 +327,7 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
       (5*δ)*traceNorm X := by
     have hz : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
         traceNorm (∑ j, M j * X * (M j)ᴴ) := by
-      simpa only [unitary.coe_neg, Matrix.neg_mul, Matrix.trace_neg, Complex.neg_re] using h3
+      simpa only [Unitary.coe_neg, Matrix.neg_mul, Matrix.trace_neg, Complex.neg_re] using h3
     exact hz.trans (hk X)
   rw [heq]
   linarith
