@@ -232,21 +232,12 @@ private lemma second_sq_le_third {n : ℕ} (x : Fin n → ℝ)
 private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) : lowerBound < skewness k * kurtosis k := by
   obtain ⟨hp, _, hqr, hr⟩ := normalized_moments hn k hk
-  have : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp (by omega)
-  have hs := Matrix.CollatzWielandt.sum_pos_of_nonneg_ne_zero
-    (fun i => (inv_pos.mpr (hk i)).le)
-    (Pi.ne_zero_of_pos (fun i => inv_pos.mpr (hk i)))
-  have hxpos : ∀ i, 0 < normalizedRates k i := by
-    intro i
-    exact div_pos (inv_pos.mpr (hk i)) (by simpa only [powerSum, pow_one] using hs)
-  have hsum : powerSum n 1 (normalizedRates k) = 1 := by
-    dsimp [powerSum, normalizedRates]
-    simp only [pow_one]
-    rw [← Finset.sum_div]
-    exact div_self (ne_of_gt hs)
+  have hx := D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.normalized_simplex
+    (by omega) k hk
   have hpq : p k ^ 2 ≤ q k := by
     simpa only [p, q] using
-      second_sq_le_third (normalizedRates k) (fun i => (hxpos i).le) hsum
+      second_sq_le_third (normalizedRates k) hx.1
+        (by simpa only [normalizedRates, powerSum, pow_one] using hx.2)
   have hskew_lower : -(1 / 16 : ℝ) ≤ 3 * p k ^ 2 - 2 * q k := by
     have hmin := (D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.result n hn).2
       ⟨k, hk, rfl⟩
