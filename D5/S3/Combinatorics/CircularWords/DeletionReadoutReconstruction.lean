@@ -27,7 +27,7 @@ private theorem mem_support (C : Cycle α) (x : α) : x ∈ C.toFinset ↔ x ∈
   | _ l => exact List.mem_toFinset
 
 omit [DecidableEq α] in
-private theorem rooted {C : Cycle α} {r : α} (hr : r ∈ C) :
+theorem rooted {C : Cycle α} {r : α} (hr : r ∈ C) :
     ∃ L : List α, C = (r :: L : List α) := by
   induction C using Quotient.inductionOn with
   | _ W =>
