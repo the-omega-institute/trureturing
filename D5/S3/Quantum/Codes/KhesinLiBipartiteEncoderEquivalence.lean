@@ -49,13 +49,294 @@ private noncomputable def biadjacency {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fi
   classical
   exact (G.adjMatrix (ZMod 2)).submatrix Sum.inl Sum.inr
 
+private theorem entropy_compl {V : Type} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) (A : Finset V) : entropy G Aᶜ = entropy G A := by
+  classical
+  have hm : cut G Aᶜ = (cut G A).transpose.submatrix
+      (Equiv.subtypeEquivRight (fun x => Finset.mem_compl))
+      (Equiv.subtypeEquivRight (fun x => by simp)) := by
+    ext a b
+    change (if G.Adj a.1 b.1 then (1 : ZMod 2) else 0) =
+      if G.Adj b.1 a.1 then 1 else 0
+    rw [G.adj_comm]
+  change (cut G Aᶜ).rank = (cut G A).rank
+  rw [hm, Matrix.rank_submatrix, Matrix.rank_transpose]
+
+private theorem entropy_relabel {V W : Type} [Fintype V] [DecidableEq V]
+    [Fintype W] [DecidableEq W] (G : SimpleGraph V) (e : W ≃ V) (A : Finset W) :
+    entropy (G.comap e) A = entropy G (A.map e.toEmbedding) := by
+  classical
+  have hm : cut (G.comap e) A = (cut G (A.map e.toEmbedding)).submatrix
+      (Equiv.subtypeEquiv e (fun x => by simp))
+      (Equiv.subtypeEquiv e (fun x => by simp)) := by
+    ext a b
+    rfl
+  change (cut (G.comap e) A).rank = _
+  rw [hm, Matrix.rank_submatrix]
+  rfl
+
+private theorem entropy_lc {V : Type} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) (v : V) (A : Finset V) : entropy (lc G v) A = entropy G A := by
+  classical
+  have inside (B : Finset V) (hv : v ∈ B) : entropy (lc G v) B = entropy G B := by
+    let N : Matrix {x // x ∈ B} {x // x ∈ B} (ZMod 2) :=
+      fun a b => if G.Adj v a.1 ∧ b.1 = v then 1 else 0
+    have hnil : N * N = 0 := by
+      ext a b
+      apply Finset.sum_eq_zero
+      intro c _
+      by_cases hc : c.1 = v
+      · simp only [N, hc, G.loopless.irrefl, false_and, ite_false, mul_zero]
+      · simp only [N, hc, and_false, ite_false, zero_mul]
+    have hinv : (1 + N) * (1 + N) = 1 := by
+      have hz : N + N = 0 := by
+        ext a b
+        exact CharTwo.add_self_eq_zero _
+      rw [add_mul, mul_add, mul_add, one_mul, mul_one, one_mul, hnil,
+        add_zero, add_assoc, hz, add_zero]
+    have hm : cut (lc G v) B = (1 + N) * cut G B := by
+      ext a b
+      rw [Matrix.add_mul, Matrix.one_mul, Matrix.add_apply, Matrix.mul_apply,
+        Finset.sum_eq_single ⟨v, hv⟩]
+      · have hab : a.1 ≠ b.1 := fun h => b.2 (h ▸ a.2)
+        simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply]
+        rw [show (lc G v).Adj a.1 b.1 ↔
+          a.1 ≠ b.1 ∧ (G.Adj a.1 b.1 ↔ ¬ (G.Adj v a.1 ∧ G.Adj v b.1)) from Iff.rfl]
+        by_cases h1 : G.Adj a.1 b.1 <;> by_cases h2 : G.Adj v a.1 <;>
+          by_cases h3 : G.Adj v b.1 <;>
+          simp only [N, h1, h2, h3, and_true,
+            and_false, iff_true, iff_false, not_true_eq_false, not_false_eq_true,
+            ite_true, ite_false, mul_one, one_mul, zero_mul, add_zero,
+            zero_add, CharTwo.add_self_eq_zero]
+        all_goals exact ite_eq_left hab
+      · intro c _ hc
+        have hcv : c.1 ≠ v := fun h => hc (Subtype.ext h)
+        simp only [N, hcv, and_false, ite_false, zero_mul]
+      · simp
+    have hu : IsUnit (1 + N).det := by
+      apply isUnit_iff_exists_inv.mpr
+      refine ⟨(1 + N).det, ?_⟩
+      rw [← Matrix.det_mul, hinv, Matrix.det_one]
+    change (cut (lc G v) B).rank = (cut G B).rank
+    rw [hm, Matrix.rank_mul_eq_right_of_isUnit_det _ _ hu]
+  by_cases hv : v ∈ A
+  · exact inside A hv
+  · rw [← entropy_compl (lc G v) A, ← entropy_compl G A]
+    exact inside Aᶜ (Finset.mem_compl.mpr hv)
+
+private theorem entropy_output_map {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
+    (σ : Equiv.Perm (Fin n)) (S : Finset (Fin n)) :
+    entropy (G.map (Equiv.sumCongr (Equiv.refl (Fin k)) σ).toEmbedding)
+      (S.map Function.Embedding.inr) =
+      entropy G ((S.image σ.symm).map Function.Embedding.inr) := by
+  rw [← SimpleGraph.comap_symm]
+  change entropy (G.comap (Equiv.sumCongr (Equiv.refl (Fin k)) σ).symm)
+    (S.map Function.Embedding.inr) = _
+  rw [entropy_relabel]
+  congr 1
+  ext x
+  cases x with
+  | inl a => simp
+  | inr a =>
+    have he : σ a ∈ S ↔ ∃ b ∈ S, σ.symm b = a := by
+      constructor
+      · intro ha
+        exact ⟨σ a, ha, σ.symm_apply_apply a⟩
+      · rintro ⟨b, hb, he⟩
+        exact ((σ.symm_apply_eq).mp he) ▸ hb
+    simpa using he
+
+private theorem add_row_adjacencies {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
+    (i j : Fin k) :
+    (∀ a b : Fin k, (addInputRow G i j).Adj (Sum.inl a) (Sum.inl b) ↔
+      G.Adj (Sum.inl a) (Sum.inl b)) ∧
+    (∀ a b : Fin n, (addInputRow G i j).Adj (Sum.inr a) (Sum.inr b) ↔
+      G.Adj (Sum.inr a) (Sum.inr b)) ∧
+    (∀ (a : Fin k) (b : Fin n), (addInputRow G i j).Adj (Sum.inl a) (Sum.inr b) ↔
+      if a = i then Xor (G.Adj (Sum.inl i) (Sum.inr b))
+        (G.Adj (Sum.inl j) (Sum.inr b)) else G.Adj (Sum.inl a) (Sum.inr b)) := by
+  constructor
+  · intro a b
+    change (_ ≠ _ ∧ (G.Adj (Sum.inl a) (Sum.inl b) ∨ G.Adj (Sum.inl b) (Sum.inl a))) ↔ _
+    rw [G.adj_comm (Sum.inl b) (Sum.inl a), or_self]
+    exact and_iff_right_of_imp G.ne_of_adj
+  constructor
+  · intro a b
+    change (_ ≠ _ ∧ (G.Adj (Sum.inr a) (Sum.inr b) ∨ G.Adj (Sum.inr b) (Sum.inr a))) ↔ _
+    rw [G.adj_comm (Sum.inr b) (Sum.inr a), or_self]
+    exact and_iff_right_of_imp G.ne_of_adj
+  · intro a b
+    change ((Sum.inl a : Fin k ⊕ Fin n) ≠ Sum.inr b ∧ (_ ∨ _)) ↔ _
+    change ((Sum.inl a : Fin k ⊕ Fin n) ≠ Sum.inr b ∧
+      ((if a = i then _ else G.Adj (Sum.inl a) (Sum.inr b)) ∨
+        (if a = i then _ else G.Adj (Sum.inr b) (Sum.inl a)))) ↔ _
+    rw [G.adj_comm (Sum.inr b) (Sum.inl a), or_self]
+    exact and_iff_right (Sum.inl_ne_inr)
+
+private theorem add_row_bipartite {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
+    (hG : IsBipartiteForm G) (i j : Fin k) : IsBipartiteForm (addInputRow G i j) := by
+  constructor
+  · intro a b
+    rw [(add_row_adjacencies G i j).1]
+    exact hG.1 a b
+  · intro a b
+    rw [(add_row_adjacencies G i j).2.1]
+    exact hG.2 a b
+
+private theorem add_row_matrix {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
+    (i j : Fin k) :
+    biadjacency (addInputRow G i j) = Matrix.transvection i j (1 : ZMod 2) * biadjacency G := by
+  classical
+  ext a b
+  by_cases ha : a = i
+  · subst a
+    rw [Matrix.transvection_mul_apply_same]
+    change (if (addInputRow G i j).Adj (Sum.inl i) (Sum.inr b) then (1 : ZMod 2) else 0) =
+      (if G.Adj (Sum.inl i) (Sum.inr b) then 1 else 0) +
+        1 * (if G.Adj (Sum.inl j) (Sum.inr b) then 1 else 0)
+    rw [(add_row_adjacencies G i j).2.2, ite_eq_left rfl]
+    by_cases h1 : G.Adj (Sum.inl i) (Sum.inr b) <;>
+      by_cases h2 : G.Adj (Sum.inl j) (Sum.inr b) <;>
+      simp [h1, h2, Xor, CharTwo.add_self_eq_zero]
+  · rw [Matrix.transvection_mul_apply_of_ne i j a b ha]
+    change (if (addInputRow G i j).Adj (Sum.inl a) (Sum.inr b) then (1 : ZMod 2) else 0) =
+      if G.Adj (Sum.inl a) (Sum.inr b) then 1 else 0
+    rw [(add_row_adjacencies G i j).2.2, ite_eq_right ha]
+
+private theorem bipartite_ext {k n : ℕ} (G H : SimpleGraph (Fin k ⊕ Fin n))
+    (hG : IsBipartiteForm G) (hH : IsBipartiteForm H)
+    (h : biadjacency G = biadjacency H) : G = H := by
+  classical
+  have hc (a : Fin k) (b : Fin n) : G.Adj (Sum.inl a) (Sum.inr b) ↔
+      H.Adj (Sum.inl a) (Sum.inr b) := by
+    have he := congrFun (congrFun h a) b
+    change (if G.Adj (Sum.inl a) (Sum.inr b) then (1 : ZMod 2) else 0) =
+      (if H.Adj (Sum.inl a) (Sum.inr b) then 1 else 0) at he
+    by_cases h1 : G.Adj (Sum.inl a) (Sum.inr b) <;>
+      by_cases h2 : H.Adj (Sum.inl a) (Sum.inr b) <;> simp_all
+  ext x y
+  cases x with
+  | inl a =>
+    cases y with
+    | inl b => exact iff_of_false (hG.1 a b) (hH.1 a b)
+    | inr b => exact hc a b
+  | inr a =>
+    cases y with
+    | inl b => rw [G.adj_comm, H.adj_comm]; exact hc b a
+    | inr b => exact iff_of_false (hG.2 a b) (hH.2 a b)
+
+private theorem entropy_row {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
+    (i j : Fin k) (hij : i ≠ j) (S : Finset (Fin n)) :
+    entropy (addInputRow G i j) (S.map Function.Embedding.inr) =
+      entropy G (S.map Function.Embedding.inr) := by
+  classical
+  let A := S.map (Function.Embedding.inr : Fin n ↪ Fin k ⊕ Fin n)
+  have hi (q : Fin k) : Sum.inl q ∉ A := by simp only [A, Finset.mem_map]; tauto
+  let ci : {x // x ∉ A} := ⟨Sum.inl i, hi i⟩
+  let cj : {x // x ∉ A} := ⟨Sum.inl j, hi j⟩
+  have hne : cj ≠ ci := fun h => hij (Sum.inl.inj (congrArg Subtype.val h)).symm
+  have hm : cut (addInputRow G i j) A =
+      cut G A * Matrix.transvection cj ci (1 : ZMod 2) := by
+    ext a b
+    obtain ⟨o, _, ho⟩ := Finset.mem_map.mp a.2
+    have ha : a.1 = Sum.inr o := ho.symm
+    by_cases hb : b = ci
+    · subst b
+      rw [Matrix.mul_transvection_apply_same]
+      simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply, ci, cj, ha]
+      rw [(addInputRow G i j).adj_comm,
+        (add_row_adjacencies G i j).2.2, ite_eq_left rfl]
+      rw [G.adj_comm (Sum.inr o) (Sum.inl i), G.adj_comm (Sum.inr o) (Sum.inl j)]
+      by_cases h1 : G.Adj (Sum.inl i) (Sum.inr o) <;>
+        by_cases h2 : G.Adj (Sum.inl j) (Sum.inr o) <;>
+        simp [h1, h2, Xor, CharTwo.add_self_eq_zero]
+    · rw [Matrix.mul_transvection_apply_of_ne cj ci a b hb]
+      simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply, ha]
+      cases hx : b.1 with
+      | inl q =>
+        have hq : q ≠ i := fun h => hb (Subtype.ext (hx.trans (congrArg Sum.inl h)))
+        rw [(addInputRow G i j).adj_comm,
+          (add_row_adjacencies G i j).2.2, ite_eq_right hq, G.adj_comm]
+      | inr q => rw [(add_row_adjacencies G i j).2.1]
+  change (cut (addInputRow G i j) A).rank = (cut G A).rank
+  rw [hm, Matrix.rank_mul_eq_left_of_isUnit_det _ _]
+  rw [Matrix.det_transvection_of_ne _ _ hne]
+  exact isUnit_one
+
+private theorem step_profile {k n : ℕ} {G H : SimpleGraph (Fin k ⊕ Fin n)}
+    (h : Step G H) : ∃ σ : Equiv.Perm (Fin n), ∀ S : Finset (Fin n),
+      entropy H (S.map Function.Embedding.inr) =
+        entropy G ((S.image σ).map Function.Embedding.inr) := by
+  classical
+  cases h with
+  | complement v =>
+    refine ⟨Equiv.refl _, ?_⟩
+    intro S
+    rw [← lc_source, entropy_lc]
+    simp only [Equiv.coe_refl, Finset.image_id]
+  | permuteOutputs σ => exact ⟨σ.symm, entropy_output_map G σ⟩
+  | permuteInputs τ =>
+    refine ⟨Equiv.refl _, ?_⟩
+    intro S
+    rw [← SimpleGraph.comap_symm]
+    change entropy (G.comap (Equiv.sumCongr τ (Equiv.refl (Fin n))).symm)
+      (S.map Function.Embedding.inr) = _
+    rw [entropy_relabel]
+    congr 1
+    ext x
+    cases x <;> simp
+  | rowOperation i j hij =>
+    refine ⟨Equiv.refl _, ?_⟩
+    intro S
+    rw [entropy_row G i j hij S]
+    simp only [Equiv.coe_refl, Finset.image_id]
+  | removeInputEdge i j =>
+    refine ⟨Equiv.refl _, ?_⟩
+    intro S
+    simp only [Equiv.coe_refl, Finset.image_id]
+    change (cut _ _).rank = (cut G _).rank
+    congr 1
+    ext a b
+    obtain ⟨o, _, ho⟩ := Finset.mem_map.mp a.2
+    simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply,
+      SimpleGraph.deleteEdges_adj, ← ho, Set.mem_singleton_iff, Sym2.eq_iff,
+      Function.Embedding.inr_apply, Sum.inr_ne_inl, false_and, false_or,
+      not_false_eq_true, and_true]
+
 private theorem equivalence_profile {k n : ℕ} (G H : SimpleGraph (Fin k ⊕ Fin n))
     (h : Relation.EqvGen Step G H) :
     ∃ σ : Equiv.Perm (Fin n), ∀ S : Finset (Fin n),
       entropy H (S.map Function.Embedding.inr) =
         entropy (G.map (Equiv.sumCongr (Equiv.refl (Fin k)) σ).toEmbedding)
           (S.map Function.Embedding.inr) := by
-  sorry
+  classical
+  have hp : ∀ {J K : SimpleGraph (Fin k ⊕ Fin n)}, Relation.EqvGen Step J K →
+      ∃ σ : Equiv.Perm (Fin n), ∀ S : Finset (Fin n),
+        entropy K (S.map Function.Embedding.inr) =
+          entropy J ((S.image σ).map Function.Embedding.inr) := by
+    intro J K hJK
+    induction hJK with
+    | rel J K hJK => exact step_profile hJK
+    | refl J => exact ⟨Equiv.refl _, fun S => by simp⟩
+    | symm J K _ hJK =>
+      obtain ⟨σ, hσ⟩ := hJK
+      refine ⟨σ.symm, ?_⟩
+      intro S
+      have he := hσ (S.image σ.symm)
+      simpa only [Finset.image_image, Function.comp_def, Equiv.apply_symm_apply,
+        ← Function.id_def, Finset.image_id] using he.symm
+    | trans J K L _ _ hJK hKL =>
+      obtain ⟨σ, hσ⟩ := hJK
+      obtain ⟨τ, hτ⟩ := hKL
+      refine ⟨τ.trans σ, ?_⟩
+      intro S
+      rw [hτ S, hσ (S.image τ), Finset.image_image]
+      rfl
+  obtain ⟨σ, hσ⟩ := hp h
+  refine ⟨σ.symm, ?_⟩
+  intro S
+  rw [entropy_output_map, Equiv.symm_symm]
+  exact hσ S
 
 private theorem permute_bipartite {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
     (hG : IsBipartiteForm G) (σ : Equiv.Perm (Fin n)) :
@@ -234,6 +515,22 @@ private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
   obtain ⟨T, rfl⟩ := hb.surjective u
   exact hmem T
 
+private theorem row_kernel_pairing {k n : ℕ} (D : Matrix (Fin k) (Fin n) (ZMod 2))
+    (u : Fin n → ZMod 2) :
+    Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u ∈
+      (Submodule.span (ZMod 2) (Set.range D.row)).dualAnnihilator ↔
+      u ∈ LinearMap.ker D.mulVecLin := by
+  change (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u ∈
+    ((Submodule.span (ZMod 2) (Set.range D.row)).dualAnnihilator :
+      Set (Module.Dual (ZMod 2) (Fin n → ZMod 2)))) ↔ _
+  rw [Submodule.coe_dualAnnihilator_span]
+  change (Set.range D.row ⊆
+    (LinearMap.ker (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u) : Set _)) ↔ _
+  rw [Set.range_subset_iff]
+  simp only [SetLike.mem_coe, LinearMap.mem_ker, Module.piEquiv_apply_apply,
+    smul_eq_mul, Matrix.mulVecLin_apply, funext_iff, Matrix.mulVec,
+    dotProduct, Pi.zero_apply, Matrix.row]
+
 private theorem kernels_row_spaces {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 2))
     (h : LinearMap.ker B.mulVecLin = LinearMap.ker C.mulVecLin) :
     Submodule.span (ZMod 2) (Set.range B.row) =
@@ -242,34 +539,74 @@ private theorem kernels_row_spaces {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZM
   apply Subspace.dualAnnihilator_inj.mp
   ext φ
   obtain ⟨u, rfl⟩ := (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2)).surjective φ
-  have hD (D : Matrix (Fin k) (Fin n) (ZMod 2)) :
-      Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u ∈
-        (Submodule.span (ZMod 2) (Set.range D.row)).dualAnnihilator ↔
-        u ∈ LinearMap.ker D.mulVecLin := by
-    change (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u ∈
-      ((Submodule.span (ZMod 2) (Set.range D.row)).dualAnnihilator :
-        Set (Module.Dual (ZMod 2) (Fin n → ZMod 2)))) ↔ _
-    rw [Submodule.coe_dualAnnihilator_span]
-    change (Set.range D.row ⊆
-      (LinearMap.ker (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u) : Set _)) ↔ _
-    rw [Set.range_subset_iff]
-    simp only [SetLike.mem_coe, LinearMap.mem_ker, Module.piEquiv_apply_apply,
-      smul_eq_mul, Matrix.mulVecLin_apply, funext_iff, Matrix.mulVec,
-      dotProduct, Pi.zero_apply, Matrix.row]
-  rw [hD B, hD C, h]
+  rw [row_kernel_pairing B u, row_kernel_pairing C u, h]
 
 private theorem row_spaces_unit {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 2))
     (h : Submodule.span (ZMod 2) (Set.range B.row) =
       Submodule.span (ZMod 2) (Set.range C.row)) :
     ∃ R : (Matrix (Fin k) (Fin k) (ZMod 2))ˣ, C = R.val * B := by
-  sorry
+  classical
+  have hk : LinearMap.ker B.mulVecLin = LinearMap.ker C.mulVecLin := by
+    ext u
+    rw [← row_kernel_pairing B u, ← row_kernel_pairing C u, h]
+  let e : LinearMap.range B.mulVecLin ≃ₗ[ZMod 2] LinearMap.range C.mulVecLin :=
+    B.mulVecLin.quotKerEquivRange.symm.trans
+      ((Submodule.quotEquivOfEq _ _ hk).trans C.mulVecLin.quotKerEquivRange)
+  obtain ⟨t, ht⟩ := Submodule.exists_linearEquiv_restrict_eq e
+  let R : (Matrix (Fin k) (Fin k) (ZMod 2))ˣ :=
+    Units.map LinearMap.toMatrixAlgEquiv'.toMonoidHom
+      (LinearMap.GeneralLinearGroup.ofLinearEquiv t)
+  refine ⟨R, ?_⟩
+  change C = LinearMap.toMatrix' t.toLinearMap * B
+  apply Matrix.mulVec_injective
+  funext u
+  rw [← Matrix.mulVec_mulVec, LinearMap.toMatrix'_mulVec]
+  have he := ht (B.mulVecLin.quotKerEquivRange (Submodule.Quotient.mk u))
+  simp only [e, LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply,
+    Submodule.quotEquivOfEq_mk, LinearMap.quotKerEquivRange_apply_mk] at he
+  exact he
 
 private theorem realize_row_equivalence {k n : ℕ} (G H : SimpleGraph (Fin k ⊕ Fin n))
     (hG : IsBipartiteForm G) (hH : IsBipartiteForm H)
     (R : (Matrix (Fin k) (Fin k) (ZMod 2))ˣ)
     (h : biadjacency H = R.val * biadjacency G) :
     Relation.ReflTransGen BipartiteStep G H := by
-  sorry
+  classical
+  let P : Matrix (Fin k) (Fin k) (ZMod 2) → Prop := fun M =>
+    ∀ J : SimpleGraph (Fin k ⊕ Fin n), IsBipartiteForm J →
+      ∃ K : SimpleGraph (Fin k ⊕ Fin n), IsBipartiteForm K ∧
+        biadjacency K = M * biadjacency J ∧ Relation.ReflTransGen BipartiteStep J K
+  have hP : P R.val := by
+    apply Matrix.diagonal_transvection_induction_of_det_ne_zero P R.val
+      (Matrix.GeneralLinearGroup.det_ne_zero R)
+    · intro D hD J hJ
+      have hones : D = fun _ => 1 := by
+        funext i
+        have hi : D i ≠ 0 := (Finset.prod_ne_zero_iff.mp (by
+          simpa only [Matrix.det_diagonal] using hD)) i (Finset.mem_univ i)
+        have binary : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
+        exact (binary (D i)).resolve_left hi
+      refine ⟨J, hJ, ?_, .refl⟩
+      rw [hones, Matrix.diagonal_one, Matrix.one_mul]
+    · intro t J hJ
+      have binary : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
+      rcases binary t.c with ht | ht
+      · refine ⟨J, hJ, ?_, .refl⟩
+        change biadjacency J = Matrix.transvection t.i t.j t.c * biadjacency J
+        rw [ht, Matrix.transvection_zero, Matrix.one_mul]
+      · refine ⟨addInputRow J t.i t.j, add_row_bipartite J hJ t.i t.j, ?_,
+          Relation.ReflTransGen.single (Or.inr (Or.inr ⟨t.i, t.j, t.hij, rfl⟩))⟩
+        change biadjacency (addInputRow J t.i t.j) =
+          Matrix.transvection t.i t.j t.c * biadjacency J
+        rw [ht, add_row_matrix]
+    · intro A B _ _ hA hB J hJ
+      obtain ⟨K, hK, hKJ, hJK⟩ := hB J hJ
+      obtain ⟨L, hL, hLK, hKL⟩ := hA K hK
+      refine ⟨L, hL, ?_, hJK.trans hKL⟩
+      rw [hLK, hKJ, Matrix.mul_assoc]
+  obtain ⟨J, hJ, hJG, hGJ⟩ := hP G hG
+  have he : J = H := bipartite_ext J H hJ hH (hJG.trans h.symm)
+  exact he ▸ hGJ
 
 theorem result : claim := by
   intro k n G H hG hH h
