@@ -144,6 +144,6 @@ theorem normalized_collision_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
     · linear_combination (r ^ 3 - r ^ 2 + r - 1) * hroot
     · linear_combination (r ^ 4 - r ^ 2 + r - 1) * hroot
     · linear_combination
-        (r ^ 6 - r ^ 5 + r ^ 4 - r ^ 3 - r ^ 2 + r - 1) * hroot
+        (r ^ 6 - r ^ 5 + r ^ 4 - r ^ 2 + r - 1) * hroot
 
 end D5.S3.Arith.Additive.PlasticPowerCollisions
